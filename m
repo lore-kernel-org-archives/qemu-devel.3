@@ -1,103 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3686B606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 12:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE724606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 12:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=rxbvcvWA
+	dkim=pass (2048-bit key, unprotected) header.d=nifty.com header.i=@nifty.com header.a=rsa-sha256 header.s=default-1th84yt82rvi header.b=CRjR16kx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMP9t-0002MU-EX; Thu, 29 Oct 2026 08:23:05 -0400
+	id 1xMPGv-0003Ff-M4; Thu, 29 Oct 2026 08:30:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMP9r-0002Lp-97
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 08:23:03 -0400
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMP9p-00016y-Mr
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 08:23:02 -0400
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-6df5e315bd1so1487957eaf.2
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 05:23:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793276580; x=1793881380; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Y+y/ky5dwzEGW2bjtHs8iNoSQngyrtGr3W8HCpbUL7g=;
- b=rxbvcvWAwudSGg+iwm02kdl5JmJYHRlPwiUgdGzW52UdZSBjGt/AtHdBh5pdu6LlFg
- WJmB+a5z+xIS+5pLTPkSWm/43S2o8iYtulIYZnSawaowBIkyi4J6nTUaw015CZ3UVygk
- ukXz70hFCaXJi92Z3edkwRNbDqebiL/SmCN3/JUzrR2CDgdHElCduGvxBj2TT7dMQX0Q
- cXl081XLxGGIuXE95br42nnBtuk4CLY8E9rcmGtTwSnFYOdX0TvJvw5VhbqFeV7Aoecw
- uMZOj+zZXjvNlagVhdW3y6ZyELxz+UhKQeqMt9umi47Y51r3yuXiBajP4QZ3oeiRo2CX
- q9xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793276580; x=1793881380;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Y+y/ky5dwzEGW2bjtHs8iNoSQngyrtGr3W8HCpbUL7g=;
- b=MIVvZB6LE/meqo/7coOC0h6Uh3XIDrTLxXULvhITOHFPF48iFs6s8gD90DkbTaLBY4
- krofsQdznKs0J2SNod+XTSFQadEF3kTkl+//1c8b9QqGymYLbHvyfsvB+tcHqhomWgWg
- tyhR+WzCqhWmyXFsawFl1tzDGwTFqrABbe68NDPcSDy49sWP/W6jQKopR4O9iQvH9RaO
- QJ3H0G0Y8EjJ0Nb4ICA+DKPIKPISGYtEPbkJdgmAFrTR0e+sHjxKtH+KDtG1zq4US5FF
- Di4gS/DnCrUE8twFJUCztnw6feXA/aBERAbBX1cNJ0u2F2MwQ8U+MHYKxa+9YzTOGlRj
- 918w==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwpksgNll8rk4QVrrOontCG2uCpwXyb9tS5EBKDTGXwrOGmtEMSao9HZ5RkGgftSodGIy7ApOEqBIoU@nongnu.org
-X-Gm-Message-State: AFq9FYKHZobQu1c26LF/4Og7WCN2LMLrHgEYtpJh3c9N4cThJ/c1WvxL
- SvajPbeLqeoVD5txoz1Df8WkrM0IkEVirfwszdyPRHzTwWhufhVGJBTXXwoF4uSePP8=
-X-Gm-Gg: AYBFou2/JBYNSKyFxYhEX+xfJpWGWpRDmzSVvvEqWtFXwMRly3r2aExvFEcUI7OjKW7
- trn5B0UZlInmzxCr52r4VxE5tdVnhyCZnbzi+4vNGho8FRCqwf6o1dhBWBQzyTJQpWkH3wty3cf
- 9AE0lgUif1nag9ty7DFiL1PelAKlb7I070ROXAZHjwzUu6vQXITMqFkMJQIFKtQ5RsZujvBaNCA
- mtcLZ8uQk4r5HOguPlJjcNNAkHN4zdS1HeL+10rTVjr8OSnZzmZkcFCwxiuKm3vdPGtuWGFb5/X
- 88aFqlaRowipVMkXmIKGD7J5Hy7O67SA9w/mxTFpCYVhG7Y3j82Z+TYAfCKVoULcmsvoF0tMCPE
- LnQOGjYdW2+qWgdXAuTzB2vvDl3ucbzWlrnycGGHGOqogf9FaSBKundRN68kWwIeYvsRjXicVaK
- x3Nvnd+oE33pgDOFA66PH71/x55z65QFlGgzQn9+eiIjNfkM+AY0z5xLQsTTfuNHczDGfhrH0bI
- vXtmHjTw48jZhcksFwS6eSn8PPZPxYAKkIqIxb+fFCrISLTw888vwbntu8eCNQNJQbxFdZRK9P8
- 5qcJZ98SR59KZbOQSLICHXBKs3spoVAEuf9AWh0ewGJGyTwJji5RDmqT63wvbSDVkA==
-X-Received: by 2002:a05:6820:f00b:b0:6e0:fb60:d5c1 with SMTP id
- 006d021491bc7-713eef427a9mr3000823eaf.11.1793276580204; 
- Thu, 29 Oct 2026 05:23:00 -0700 (PDT)
-Received: from [192.168.129.53] ([50.233.235.3])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-4a8b77abffcsm4949251fac.4.2026.10.29.05.22.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 05:22:59 -0700 (PDT)
-Message-ID: <261d3c31-e08f-4bb4-99a6-cdb01cdc5171@linaro.org>
-Date: Thu, 29 Oct 2026 07:22:57 -0500
+ (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
+ id 1xMPGs-0003Ds-Gl
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 08:30:19 -0400
+Received: from mta-snd-w10.mail.nifty.com ([106.153.227.42])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
+ id 1xMPGo-0001ep-Jn
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 08:30:18 -0400
+Received: from sakura.ysato.name by mta-snd-w10.mail.nifty.com with ESMTP
+ id <20261029123004701.LWLB.44671.sakura.ysato.name@nifty.com>;
+ Thu, 29 Oct 2026 21:30:04 +0900
+Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
+ by sakura.ysato.name (Postfix) with ESMTPSA id 2F8EE1C0169;
+ Thu, 29 Oct 2026 21:30:04 +0900 (JST)
+Date: Thu, 29 Oct 2026 21:30:01 +0900
+Message-ID: <87a4nwwuye.wl-yoshinori.sato@nifty.com>
+From: yoshinori.sato@nifty.com
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>, Stafford Horne <shorne@gmail.com>
+Subject: Re: [PATCH 4/5] target/rx: Convert to translate_for_debug
+In-Reply-To: <20261020122752.3651914-5-peter.maydell@linaro.org>
+References: <20261020122752.3651914-1-peter.maydell@linaro.org>
+ <20261020122752.3651914-5-peter.maydell@linaro.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/30.1 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/6] tests/tcg/aarch64: Add vector immediate regression
- tests
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Peter Maydell <peter.maydell@linaro.org>, Palmer Dabbelt
- <palmer@dabbelt.com>, qemu-arm@nongnu.org
-References: <20261028143330.6518-1-philmd@oss.qualcomm.com>
- <20261028143330.6518-7-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261028143330.6518-7-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2d.google.com
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+ s=default-1th84yt82rvi; t=1793277004; 
+ bh=/3RbcK/jShbNGvdU3ChIsGMz2CQ42hXLQ4jVGkUI9BE=;
+ h=Date:From:To:Cc:Subject:In-Reply-To;
+ b=CRjR16kxK/jWHA9KXDaY7TS+cbc4tI6GKvVt6JxfihLkZfAJXLpRV3cu1xxccSI76S5a3XWZ
+ SoLSe3SmpK3PWNZLIGeScg/IGnXNZGPpKiyMDLXSuDxYm3zh0jotXpthUFP/7Ip7nlqSmtHqfb
+ JvZN4u82Qu5MCiGDQmMVOFgV2ygJVwd42UFnstpLzJ/UKsnYX3iUHmkjj+mC9hyTwibXu5iGhk
+ XriG43EPKitoqWC8iUeLjC1LLK07w/d9aE3vw/NZngTteE2Fn1OX0XecjHpu4eGYadpJNa+QsQ
+ rEpbzCaKxgWZGV8Y7ufvWLkCdUNMYfAL+qDD0vkVeoNsqyfg==
+Received-SPF: pass client-ip=106.153.227.42;
+ envelope-from=yoshinori.sato@nifty.com; helo=mta-snd-w10.mail.nifty.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,31 +69,79 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/28/26 09:33, Philippe Mathieu-Daudé wrote:
-> Run SVE/AdvSIMD immediate operations after an operation
-> of another element size, at every SVE vector length,
-> against scalar references.
+On Tue, 20 Oct 2026 21:27:51 +0900,
+Peter Maydell wrote:
 > 
-> Catches backends encoding the replicated constant or
-> using a stale element size, as tcg/riscv64 did.
+> Convert rx to providing the translate_for_debug method rather than
+> the deprecated get_phys_addr_debug method.
 > 
-> AI-used-for: Regression tests
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   tests/tcg/aarch64/sve-vec-imm.c | 233 ++++++++++++++++++++++++++++++++
->   tests/tcg/aarch64/meson.build   |   1 +
->   2 files changed, 234 insertions(+)
->   create mode 100644 tests/tcg/aarch64/sve-vec-imm.c
+>  target/rx/cpu.h    |  3 ++-
+>  target/rx/cpu.c    |  2 +-
+>  target/rx/helper.c | 10 ++++++++--
+>  3 files changed, 11 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/rx/cpu.h b/target/rx/cpu.h
+> index 64ba48a7329..8ec704a9f72 100644
+> --- a/target/rx/cpu.h
+> +++ b/target/rx/cpu.h
+> @@ -136,7 +136,8 @@ struct RXCPUClass {
+>  const char *rx_crname(uint8_t cr);
+>  void rx_cpu_do_interrupt(CPUState *cpu);
+>  bool rx_cpu_exec_interrupt(CPUState *cpu, int int_req);
+> -hwaddr rx_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
+> +bool rx_cpu_translate_for_debug(CPUState *cpu, vaddr addr,
+> +                                TranslateForDebugResult *result);
+>  void rx_cpu_dump_state(CPUState *cpu, FILE *f, int flags);
+>  int rx_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+>  int rx_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
+> diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+> index 9b8473d71cf..0bcfec1d7c0 100644
+> --- a/target/rx/cpu.c
+> +++ b/target/rx/cpu.c
+> @@ -209,7 +209,7 @@ static void rx_cpu_init(Object *obj)
+>  
+>  static const struct SysemuCPUOps rx_sysemu_ops = {
+>      .has_work = rx_cpu_has_work,
+> -    .get_phys_addr_debug = rx_cpu_get_phys_addr_debug,
+> +    .translate_for_debug = rx_cpu_translate_for_debug,
+>  };
+>  
+>  static const TCGCPUOps rx_tcg_ops = {
+> diff --git a/target/rx/helper.c b/target/rx/helper.c
+> index 0f99279bbaa..1f73fed6efd 100644
+> --- a/target/rx/helper.c
+> +++ b/target/rx/helper.c
+> @@ -147,7 +147,13 @@ bool rx_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+>      return false;
+>  }
+>  
+> -hwaddr rx_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+> +bool rx_cpu_translate_for_debug(CPUState *cs, vaddr addr,
+> +                                TranslateForDebugResult *result)
+>  {
+> -    return addr;
+> +    *result = (TranslateForDebugResult) {
+> +        .physaddr = addr,
+> +        .lg_page_size = TARGET_PAGE_BITS,
+> +        .attrs.debug = 1,
+> +    };
+> +    return true;
+>  }
+> -- 
+> 2.43.0
+> 
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
 
-r~
+-- 
+Yosinori Sato
 
