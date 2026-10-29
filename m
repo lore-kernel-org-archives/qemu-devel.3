@@ -1,76 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2014D606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 21:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9C4606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 21:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mmQugFE7
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Jq0XgBdk;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=eM4hAFKi;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=tCkBZYhj;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=iCEk9/+3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMXEe-0001No-P7; Thu, 29 Oct 2026 17:00:32 -0400
+	id 1xMXJr-0002Hc-4z; Thu, 29 Oct 2026 17:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1xMXEc-0001NA-1G; Thu, 29 Oct 2026 17:00:30 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1xMXEZ-0000m1-Vd; Thu, 29 Oct 2026 17:00:29 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 3614E601EE;
- Thu, 29 Oct 2026 21:00:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A171F01816;
- Thu, 29 Oct 2026 21:00:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793307618;
- bh=eksexs5QV6m0Tl17tTXKOxOQP7ooOY8fNQ0JiEVRh3A=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=mmQugFE7sPd6+7dU3pzvRCO8WfOgYxosgpF9r7VT1HM04IeANCQUMPeOdAWQsMyRn
- UG0GDMnGbvxPmDmVjDBXZ0QhZ2YEGzqgKoAkzTfHnsS8PsAHOpfnAllRjkekFL93Z5
- lCewXmHvmfddmcb+kAbLF48oJ6xAY3+gypgGkRx8YJFQin+vmW/INe0FMnLGPoDmcI
- WkMXwKBzvEhfXqTgvW3Xv4vX83sYIqIZ3pjBtEbTKc2gRvKS7R/HLFBRya2t+cBzbx
- eidC+gX8JKb7rtLKN3ZcOhQJuzlJUud/2/i4wvJvtfIJ8pm80Rn2vqDEmVYtkDXsFy
- KIHNHS2NO389g==
-Date: Thu, 29 Oct 2026 14:00:17 -0700
-From: Drew Fustini <fustini@kernel.org>
-To: Alistair Francis <Alistair.Francis@wdc.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "mindal@semihalf.com" <mindal@semihalf.com>,
- "sunilvl@oss.qualcomm.com" <sunilvl@oss.qualcomm.com>,
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
- "liu.qingtao2@zte.com.cn" <liu.qingtao2@zte.com.cn>,
- "anup.patel@oss.qualcomm.com" <anup.patel@oss.qualcomm.com>,
- "cp0613@linux.alibaba.com" <cp0613@linux.alibaba.com>,
- "palmer@dabbelt.com" <palmer@dabbelt.com>,
- "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
- "radim.krcmar@oss.qualcomm.com" <radim.krcmar@oss.qualcomm.com>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "guo.wenjia23@zte.com.cn" <guo.wenjia23@zte.com.cn>,
- "npitre@baylibre.com" <npitre@baylibre.com>,
- "cuiyunhui@bytedance.com" <cuiyunhui@bytedance.com>,
- "atish.patra@linux.dev" <atish.patra@linux.dev>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>,
- "chao.liu@processmission.com" <chao.liu@processmission.com>
-Subject: Re: [PATCH v6 4/6] hw/riscv: implement CBQRI bandwidth controller
-Message-ID: <auOz4d4Tq4gXCOyi@thelio>
-References: <20261026-riscv-ssqosid-cbqri-v6-0-1a367a35cd0e@kernel.org>
- <20261026-riscv-ssqosid-cbqri-v6-4-1a367a35cd0e@kernel.org>
- <e0b034b0a1d9c0e5dccc912f7ce73580c4ababc2.camel@wdc.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMXJl-0002GX-Gy
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 17:05:49 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMXJj-0001HS-Dj
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 17:05:49 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 944A01FC2A;
+ Thu, 29 Oct 2026 21:05:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1793307945; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Onj0xrMaSx5UePtgc3yUbxdHw2czuvDcvMEkLV2txpA=;
+ b=Jq0XgBdkdkm91n+tmKG7S0aWT6yCfcn3Ce1rotgeZn2Yv+iob1PtMz+G9JM1IKavvHKN7F
+ /Ak1AgE1/DHewrFaRnOUpx95mGvGihGEJUzOKxY+zFYlHfhvt84dtQtNUwX0U14BWxUKCn
+ qe7Brg4mRV+2xJXXO/djcf6l+ANywoQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1793307945;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Onj0xrMaSx5UePtgc3yUbxdHw2czuvDcvMEkLV2txpA=;
+ b=eM4hAFKiPe5Y7A2MD0vI0yuvR96hzCD+axfYYshuj84t+FfDBzEhbJHtk0jfFdYIVToTDM
+ gvUvbkaa1O9qNKAg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1793307944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Onj0xrMaSx5UePtgc3yUbxdHw2czuvDcvMEkLV2txpA=;
+ b=tCkBZYhjlbaIY9yHTDBNfneTVFPEGW+RE95UsjEge6r++uPRnAq1NZRuk09iwgcc3WFyv2
+ YFVhtuTmZxxPOT2vSYOXRzCnBv0eDyQuCh5e9C6PNxv5XT+E+KtDLV1Y1mhHjr/MVfDqE3
+ w9jaWujBO+7RBk7bhNLNDZRxYGN3oAU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1793307944;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Onj0xrMaSx5UePtgc3yUbxdHw2czuvDcvMEkLV2txpA=;
+ b=iCEk9/+3k3tOtd4IcioHd1kI2rvPNnEfUk/rop1SmclIO29aIvghun5fJiQS2IiJ4QtiYG
+ 3CscFJzyoeUTmkAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B42371342D;
+ Thu, 29 Oct 2026 21:05:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id E1LmGia142qaYAAAD6G6ig:T2
+ (envelope-from <farosas@suse.de>); Thu, 29 Oct 2026 21:05:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 1/5] system/qtest: Avoid fixed-size irq_levels array for IRQ
+ intercept
+Date: Thu, 29 Oct 2026 18:05:32 -0300
+Message-ID: <20261029210536.2260016-2-farosas@suse.de>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261029210536.2260016-1-farosas@suse.de>
+References: <20261029210536.2260016-1-farosas@suse.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e0b034b0a1d9c0e5dccc912f7ce73580c4ababc2.camel@wdc.com>
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=fustini@kernel.org;
- helo=tor.source.kernel.org
+X-Spamd-Result: default: False [-11.80 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
+ BAYES_HAM(-3.00)[100.00%]; MID_CONTAINS_FROM(1.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; R_MISSING_CHARSET(0.50)[];
+ NEURAL_HAM_SHORT(-0.20)[-0.995]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCPT_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,linaro.org:email];
+ RCVD_TLS_ALL(0.00)[]
+X-Spam-Score: -11.80
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,150 +120,113 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Oct 27, 2026 at 12:18:02AM +0000, Alistair Francis wrote:
-> On Mon, 2026-10-26 at 10:47 -0700, Drew Fustini wrote:
-> > From: Nicolas Pitre <npitre@baylibre.com>
-> > 
-> > Implement a bandwidth controller according to the Capacity and
-> > Bandwidth
-> > QoS Register Interface (CBQRI) which supports these capabilities:
-> > 
-> >   - Number of access types: 2 (code and data)
-> >   - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
-> >   - Event IDs supported: None, Total read/write byte count, Total
-> >                          read byte count, Total write byte count
-> >   - Bandwidth allocation operations: CONFIG_LIMIT, READ_LIMIT
-> > 
-> > Link: https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
-> > Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
-> > [fustini: add fields introduced in the ratified spec: rpfx and p]
-> > Signed-off-by: Drew Fustini <fustini@kernel.org>
-> 
-> My review bot doesn't like the assert:
-> 
-> - [CRITICAL] In hw/riscv/cbqri_bandwidth.c (get_bw_alloc), the array
-> index mixes the architectural AT encoding (data=0, code=1) with a
-> compacted count of supported ATs. at_data and at_code are independent
-> bool properties, so at_data=false/at_code=true is a legal
-> configuration; a guest BC_ALLOC_CTL write with AT=code then passes
-> is_valid_at in riscv_cbqri_bc_write_alloc_ctl and funnels into
-> get_bw_alloc(rcid, 1), which evaluates g_assert(1 < 1) and aborts the
-> QEMU process on a guest MMIO write (QEMU maps assert to g_assert, so
-> release builds abort too). Even with the assert compiled out, realize
-> sizes the table to nb_rcids+1 entries while the code-only index for
-> the last RCID is nb_rcids+2, a guest-triggered one-past-the-end
-> access. Reject the asymmetric property combination in realize, or
-> index by AT encoding instead of the supported-count.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-This is a good point. I should not have allowed at_data=false as the
-CBQRI spec states that unsupported AT values behave as AT 0. I'll remove
-the at_data property and index by the AT encoding in both controllers.
+The current implementation of the irq_intercept_out and
+irq_intercept_in commands uses a fixed-size static irq_levels[] array
+to track the state of the intercepted IRQ lines.  This is sized at
+MAX_IRQ == 256, which is smaller than some real device models use
+(for instance the GICv2 on the virt board has 384 inputs).  A test
+that tried to intercept the inputs to such a device and then assert
+an interrupt over 255 would overrun the array.
 
-> - [MEDIUM] In riscv_cbqri_bc_class_init (hw/riscv/cbqri_bandwidth.c)
-> the device registers neither dc->vmsd nor .unmigratable, yet it is
-> user_creatable and (per series patch 6/6) pluggable on the
-> migration-capable virt machine. None of its guest-visible state -- the
-> cached bc_mon_ctl/bc_mon_ctr_val/bc_alloc_ctl registers and the
-> mon_counters[] and bw_allocations[] tables -- is migrated; the
-> destination comes up in power-on state and the guest's QoS programming
-> silently vanishes mid-workload. Add a VMStateDescription covering the
-> caches and both arrays, or set unmigratable with justification (the
-> sibling riscv-iommu-pci device already takes the latter route).
+Reimplement the IRQ interception so that it allocates an array
+of the required size rather than using a static one.
 
-I'll mark both controllers unmigratable.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ system/qtest.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
-> - [MEDIUM] riscv_cbqri_bc_realize (hw/riscv/cbqri_bandwidth.c)
-> allocates mon_counters and bw_allocations with g_new0 and initializes
-> the MMIO MemoryRegion, but the class registers no dc->unrealize and no
-> instance_finalize. With user_creatable = true, QMP/HMP device_del
-> cycles orphan both arrays and the region backing store on every
-> hot-unplug. Add an unrealize that unparents the region and frees both
-> arrays (NULL-guarded, since realize can bail early on the mmio_base
-> check)
+diff --git a/system/qtest.c b/system/qtest.c
+index 47c954838dd..a3de815ce65 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -57,12 +57,18 @@ static DeviceState *irq_intercept_dev;
+ static FILE *qtest_log_fp;
+ static QTest *qtest;
+ static GString *inbuf;
+-static int irq_levels[MAX_IRQ];
+ static GTimer *timer;
+ static bool qtest_opened;
+ static void (*qtest_server_send)(void*, const char*);
+ static void *qtest_server_send_opaque;
+ 
++typedef struct IrqInterceptState {
++    int *irq_levels;
++    int num_irqs;
++} IrqInterceptState;
++
++IrqInterceptState irq_intercept_state;
++
+ #define FMT_timeval "%.06f"
+ 
+ /**
+@@ -327,9 +333,10 @@ void qtest_sendf(CharFrontend *chr, const char *fmt, ...)
+ 
+ static void qtest_irq_handler(void *opaque, int n, int level)
+ {
+-    if (irq_levels[n] != level) {
++    assert(n >= 0 && n < irq_intercept_state.num_irqs);
++    if (irq_intercept_state.irq_levels[n] != level) {
+         CharFrontend *chr = &qtest->qtest_chr;
+-        irq_levels[n] = level;
++        irq_intercept_state.irq_levels[n] = level;
+         qtest_sendf(chr, "IRQ %s %d\n",
+                     level ? "raise" : "lower", n);
+     }
+@@ -353,6 +360,13 @@ static void qtest_install_gpio_out_intercept(DeviceState *dev, const char *name,
+     *disconnected = qdev_intercept_gpio_out(dev, icpt, name, n);
+ }
+ 
++static void qtest_init_irq_intercept(int num_irqs)
++{
++    g_free(irq_intercept_state.irq_levels);
++    irq_intercept_state.irq_levels = g_new0(int, num_irqs);
++    irq_intercept_state.num_irqs = num_irqs;
++}
++
+ static void qtest_process_command(CharFrontend *chr, gchar **words)
+ {
+     const gchar *command;
+@@ -413,12 +427,14 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
+                 /* NULL is valid and matchable, for "unnamed GPIO" */
+                 if (g_strcmp0(ngl->name, words[2]) == 0) {
+                     int i;
++                    qtest_init_irq_intercept(ngl->num_out);
+                     for (i = 0; i < ngl->num_out; ++i) {
+                         qtest_install_gpio_out_intercept(dev, ngl->name, i);
+                     }
+                     interception_succeeded = true;
+                 }
+             } else {
++                qtest_init_irq_intercept(ngl->num_in);
+                 qemu_irq_set_observer(ngl->in, qtest_irq_handler,
+                                       ngl->num_in);
+                 interception_succeeded = true;
+@@ -861,8 +877,10 @@ static void qtest_event(void *opaque, QEMUChrEvent event)
+          * used.  Injects an extra reset even when it's not used, and
+          * that can mess up tests, e.g. -boot once.
+          */
+-        for (i = 0; i < ARRAY_SIZE(irq_levels); i++) {
+-            irq_levels[i] = 0;
++        if (irq_intercept_state.irq_levels) {
++            for (i = 0; i < irq_intercept_state.num_irqs; i++) {
++                irq_intercept_state.irq_levels[i] = 0;
++            }
+         }
+ 
+         g_clear_pointer(&timer, g_timer_destroy);
+-- 
+2.53.0
 
-This should not be a problem since device_del is rejected for sysbus
-devices.
-
-> Related: the bc_bw_alloc struct field is dead state --
-> BC_BW_ALLOC traffic goes through bw_allocations[0] and nothing reads
-> or writes the field -- so use it or drop it.
-
-I will remove bc_bw_alloc.
-
-> - [MEDIUM] Commit message: the body is a bullet list of supported
-> access types, monitoring ops, event IDs and allocation ops -- a
-> restatement of the register encodings the patch adds -- with no
-> sentence explaining why QEMU should carry a CBQRI bandwidth
-> controller. That omission matters here because the model deliberately
-> performs no bandwidth enforcement and marks every counter INVALID;
-> without the motivation (e.g. the Linux RISC-V resctrl/CBQRI consumer)
-> a reviewer cannot judge whether the stub level is intended. The spec
-> Link and DCO trailers are fine; add one or two motivation sentences.
-
-I'll add more details to the commit message.
-
-> - [LOW] In riscv_cbqri_bc_realize (hw/riscv/cbqri_bandwidth.c), the
-> allocation size is computed as get_bw_alloc(bc, nb_rcids, 0) -
-> bc->bw_allocations while the pointer is still NULL: forming NULL + n
-> and subtracting pointers that do not point into the same array object
-> is undefined behavior, latent today but trapped by UBSan at realize
-> time. The capacity controller's sibling code avoids this pattern with
-> the pure-integer get_blockmask_offset helper. Compute the count
-> arithmetically (1 + nb_rcids * MAX(nb_ats, 1)) before g_new0 instead
-> of through the pointer-returning accessor.
-
-I'll add a helper that returns the index as an integer like
-get_blockmask_offset().
-
-> - [LOW] The target qdev property (hw/riscv/cbqri_bandwidth.c) is
-> stored into the target struct field by the property setter and by
-> riscv_cbqri_bc_create, but nothing in the device model ever reads it:
-> users passing target=<str> get a silently ignored option, and the
-> device never associates itself with the controlled resource. Either
-> wire it up to a real association, or drop the property, the field, and
-> the exported factory if series patch 6/6 confirms no in-tree board
-> code calls riscv_cbqri_bc_create.
-
-I'll remove the target property.
-
-> - [LOW] riscv_cbqri_bc_realize (hw/riscv/cbqri_bandwidth.c) hard-
-> requires mmio_base and self-maps its MMIO region via sysbus_mmio_map,
-> which clashes with the series-end
-> machine_class_allow_dynamic_sysbus_dev registration on virt, where the
-> platform bus normally assigns addresses for -device-created sysbus
-> devices. Stated conditionally on patch 6/6's dynamic-sysbus wiring: if
-> that registration stands, either make mmio_base optional and let the
-> platform bus map the device, or do not register it for dynamic sysbus
-> hot-plug.
-
-platform_bus_map_mmio() skips a region that is already mapped. mmio_base
-is required so the address is known for DT nodes and the RQSC table.
-
-> - [LOW] hw/riscv/cbqri_bandwidth.c re-declares MonitorCounter and the
-> 64/32-bit align-down/RMW MMIO read-write wrapper pair verbatim from
-> hw/riscv/cbqri_capacity.c and re-implements the same property-table
-> plumbing; declare the type once in cbqri.h and share the wrapper
-> helpers. The duplication is already diverging (capacity uses the
-> pure-integer get_blockmask_offset while bandwidth computes the table
-> size through a NULL pointer, per the lifecycle finding above).
-
-I'll move the MonitorCounter definition to cbqri.h.
-
-> From quickly reading it, it seems like the assert in get_bw_alloc() can
-> be triggered from guest code, so it shouldn't assert
-> 
-> Alistair
-
-That should be resolved by no longer allowing at_data=false.
-
-Thanks,
-Drew
 
