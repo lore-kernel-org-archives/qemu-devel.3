@@ -1,60 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A1A606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 18:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEBA606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 18:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k9DDWZj+
+	dkim=pass (2048-bit key, unprotected) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=rfGkawOY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMUi1-0000UW-5a; Thu, 29 Oct 2026 14:18:44 -0400
+	id 1xMUiI-0000YF-2O; Thu, 29 Oct 2026 14:19:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xMUhn-0000Tg-DU
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 14:18:29 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <aurelien@aurel32.net>)
+ id 1xMUi1-0000VZ-Gg; Thu, 29 Oct 2026 14:18:44 -0400
+Received: from hall.aurel32.net ([2001:bc8:30d7:100::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xMUhk-0007aB-CX
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 14:18:26 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 872BC6012A;
- Thu, 29 Oct 2026 18:18:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F431F01816;
- Thu, 29 Oct 2026 18:18:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793297902;
- bh=SBQgSoASz0h0Rm/cTnfLRhxlqaui/xk8gwWAk//LVVI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=k9DDWZj+ksZVdaC+7zoG6haUcQSm7WzoZXKm82vOfaUmXSzwkgD0gjhpTitSm1au3
- KCmgMn5uRiy6QvfMhQirTzd07H/BBA/xKKOjkoV+JAvtnc9xcZ8WtPw9cz5lMe+Tfu
- tyr7MfOkIqawoN34fXB/RpZHP39oHYDlg+xLMJGCtbWLQqWR5G/S76cQ8yz2KVrtez
- P6lDlwjKJDOufWDBxDJqxyx07pxLgPbndZDg/uHrxpeQzHfoEJ9uKfzr0J8l1DuhSl
- gXxWFYUInSEVJEuxO39+TsIX3jjQUYOtWa9E9b76d1MHJa667xIgCpb62KFQn9jf4S
- JLyyTWApQZraQ==
-Date: Thu, 29 Oct 2026 19:18:17 +0100
-From: Helge Deller <deller@kernel.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Keith Monahan <keith@techtravels.org>,
- Helge Deller <deller@gmx.de>, "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: Re: [PULL v2 0/9] Hppa 715 2 patches
-Message-ID: <auON6QwRA3wawcDO@carbonx1>
-References: <20261028190701.17272-1-deller@kernel.org>
- <61c1cd23-8097-4356-8797-f270a79e68df@linaro.org>
+ (Exim 4.90_1) (envelope-from <aurelien@aurel32.net>)
+ id 1xMUhq-0007aF-KP; Thu, 29 Oct 2026 14:18:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+ ; s=202004.hall;
+ h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
+ Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+ bh=d88egsE4Flh1HrHMC+XEKWtEN2xFG8NYrPa9hP0IaFk=; b=rfGkawOYqvEVOP4brPhCpu2Ok9
+ ORPmgDSg1Dx0Mc13jT9EjOoaCcoXyzy6/nhzMonEvZBWneoGTEA8tEuXolpqVREn20c42agjRJn4d
+ w1Vh90VlEsBjxDgr0sXVTXYdtm9ujAsaat3RTyfGj08imi6/DYtGK51wAUFFBctK84Ajp3XOriEeX
+ CJyuhTwRExHurTOE5QRuNUNhG5SyY1hTekRYgfBtmJWGq+vu9EonQj4ugR5Vwqo0UYNkCpfpMGa/2
+ iK2SNb4oEsxuPw5X0RTRJ3oLnZWDVC4YwgIKy193AxnPkQK2qihp6HNeBHizKdfGtf6GY5qVL9Lvn
+ cJtBRQkw==;
+Received: from authenticated user by hall.aurel32.net with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.98.2)
+ (envelope-from <aurelien@aurel32.net>) id 1xMUhj-00000006t4A-0grM;
+ Thu, 29 Oct 2026 19:18:23 +0100
+Date: Thu, 29 Oct 2026 19:18:22 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH v3 2/6] tcg/riscv64: Use a uimm5 encoder for vector shift
+ immediates
+Message-ID: <auON7vRCYNPDXAk2@aurel32.net>
+References: <20261028143330.6518-1-philmd@oss.qualcomm.com>
+ <20261028143330.6518-3-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <61c1cd23-8097-4356-8797-f270a79e68df@linaro.org>
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20261028143330.6518-3-philmd@oss.qualcomm.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
+Received-SPF: pass client-ip=2001:bc8:30d7:100::1;
+ envelope-from=aurelien@aurel32.net; helo=hall.aurel32.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, GB_FAKE_RF=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,92 +73,88 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-25.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,INCLUDES_PULL_REQUEST,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-* Richard Henderson <richard.henderson@linaro.org>:
-> On 10/28/26 14:06, Helge Deller wrote:
-> > From: Helge Deller <deller@gmx.de>
-> > 
-> > The following changes since commit 73294d096cc591e122fde9e63db4739de6d84f2b:
-> > 
-> >    Merge tag 'qga-pull-2026-10-28' of https://github.com/kostyanf14/qemu into staging (2026-10-28 06:21:59 -0500)
-> > 
-> > are available in the Git repository at:
-> > 
-> >    https://github.com/hdeller/qemu-hppa.git tags/hppa-715-2-pull-request
-> > 
-> > for you to fetch changes up to 4d5bc20de77152cecb4acdf63afe0db761b2abcf:
-> > 
-> >    target/hppa: Update SeaBIOS-hppa to version 27 (2026-10-28 20:00:56 +0100)
-> > 
-> > ----------------------------------------------------------------
-> > HPPA architecture patches for HP-UX 9 and 715 machine
-> > 
-> > A series of patches which allow to boot HP-UX 9.05 on the 715/64 machine.
-> > Includes a graphics/artist fix, adjustment to 15 bits for protection IDs on
-> > the 32-bit CPUs and various other parts which were missing up to now.
-> > Included is also the FPU patche from Kirill A. Korinsky.
-> 
-> The new hppa-fpu-test fails on big-endian.
+On 2026-10-28 15:33, Philippe Mathieu-Daud=C3=A9 wrote:
+> RVV shift .vi forms take an unsigned 5-bit immediate, but
+> encode_vi() checks for simm5, so shift counts 16..31 trip
+> the debug assertion (and are undefined behaviour in release
+> builds).
+>=20
+> Add encode_vi_u() and use it in tcg_out_vshifti().
+>=20
+> Fixes: 006352d69f14 ("tcg/riscv64: Assert immediate in range ...")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> ---
+>  tcg/riscv64/tcg-target.c.inc | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+> index 712170c1203e..0e749ae296b8 100644
+> --- a/tcg/riscv64/tcg-target.c.inc
+> +++ b/tcg/riscv64/tcg-target.c.inc
+> @@ -541,6 +541,7 @@ static tcg_insn_unit encode_vi_raw(RISCVInsn opc, TCG=
+Reg rd, unsigned imm5,
+>             (vs2 & 0x1f) << 20 | (vm << 25);
+>  }
+> =20
+> +/* OPIVI with a signed immediate (simm5). */
+>  static tcg_insn_unit encode_vi(RISCVInsn opc, TCGReg rd, tcg_target_long=
+ imm,
+>                                 TCGReg vs2, bool vm)
+>  {
+> @@ -548,6 +549,14 @@ static tcg_insn_unit encode_vi(RISCVInsn opc, TCGReg=
+ rd, tcg_target_long imm,
+>      return encode_vi_raw(opc, rd, imm, vs2, vm);
+>  }
+> =20
+> +/* OPIVI with an unsigned immediate (uimm5) */
+> +static tcg_insn_unit encode_vi_u(RISCVInsn opc, TCGReg rd, unsigned imm,
+> +                                 TCGReg vs2, bool vm)
+> +{
+> +    tcg_debug_assert(imm =3D=3D extract32(imm, 0, 5));
+> +    return encode_vi_raw(opc, rd, imm, vs2, vm);
+> +}
+> +
+>  /* Type-OPIVV/OPMVV/OPIVX/OPMVX, Vector load and store */
+> =20
+>  static tcg_insn_unit encode_v(RISCVInsn opc, TCGReg d, TCGReg s1,
+> @@ -720,6 +729,12 @@ static void tcg_out_opc_vi(TCGContext *s, RISCVInsn =
+opc,
+>      tcg_out32(s, encode_vi(opc, vd, imm, vs2, true));
+>  }
+> =20
+> +static void tcg_out_opc_vi_u(TCGContext *s, RISCVInsn opc,
+> +                             TCGReg vd, TCGReg vs2, unsigned imm)
+> +{
+> +    tcg_out32(s, encode_vi_u(opc, vd, imm, vs2, true));
+> +}
+> +
+>  static void tcg_out_opc_vv_vi(TCGContext *s, RISCVInsn o_vv, RISCVInsn o=
+_vi,
+>                                TCGReg vd, TCGReg vs2, TCGArg vi1, int c_v=
+i1)
+>  {
+> @@ -1578,7 +1593,7 @@ static void tcg_out_vshifti(TCGContext *s, RISCVIns=
+n opc_vi, RISCVInsn opc_vx,
+>                               TCGReg dst, TCGReg src, unsigned imm)
+>  {
+>      if (imm < 32) {
+> -        tcg_out_opc_vi(s, opc_vi, dst, src, imm);
+> +        tcg_out_opc_vi_u(s, opc_vi, dst, src, imm);
+>      } else {
+>          tcg_out_movi(s, TCG_TYPE_I32, TCG_REG_TMP0, imm);
+>          tcg_out_opc_vx(s, opc_vx, dst, src, TCG_REG_TMP0);
 
-The patch below will fix the issue.
-I'll include it in this patch series and resend.
-Thanks!
-Helge
+Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
 
-
-From e0c80f0b9ca5792a91a0d14d09c3da05641d8402 Mon Sep 17 00:00:00 2001
-From: Keith Monahan <keith@techtravels.org>
-Date: Thu, 29 Oct 2026 17:02:33 +0100
-Subject: [PATCH] target/hppa: Use 32-bit load of PSW in rsm and ssm
-
-Since commit ebc9401a4067 ("target/hppa: Split PSW X and B into their
-own field") env->psw is a uint32_t followed by psw_xb, but trans_rsm()
-and trans_ssm() still read it with a 64-bit load.
-
-On a big-endian host the low half of that load is psw_xb, so the value
-passed to swap_system_mask() has none of the current system mask bits.
-SSM and RSM therefore clear every PSW system mask bit except those named
-in the instruction. For example, "ssm 2,r0" with PSW_Q set clears Q, and
-the next interruption does not record IIR, ISR and IOR. This makes the
-hppa-fpu-test dtlb-load case fail on s390x hosts.
-
-Load only the 32-bit psw field.
-
-Fixes: ebc9401a4067 ("target/hppa: Split PSW X and B into their own field")
-Cc: qemu-stable@nongnu.org  # v9.1+
-Signed-off-by: Keith Monahan <keith@techtravels.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 41300c0dd7..46c0408846 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -2367,7 +2367,7 @@ static bool trans_rsm(DisasContext *ctx, arg_rsm *a)
-     nullify_over(ctx);
- 
-     tmp = tcg_temp_new_i64();
--    tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
-+    tcg_gen_ld32u_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
-     tcg_gen_andi_i64(tmp, tmp, ~a->i);
-     gen_helper_swap_system_mask(tmp, tcg_env, tmp);
-     save_gpr(ctx, a->t, tmp);
-@@ -2387,7 +2387,7 @@ static bool trans_ssm(DisasContext *ctx, arg_ssm *a)
-     nullify_over(ctx);
- 
-     tmp = tcg_temp_new_i64();
--    tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
-+    tcg_gen_ld32u_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
-     tcg_gen_ori_i64(tmp, tmp, a->i);
-     gen_helper_swap_system_mask(tmp, tcg_env, tmp);
-     save_gpr(ctx, a->t, tmp);
-> 
-> 
-> r~
+--=20
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
 
