@@ -1,75 +1,105 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F5C606A32F
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 12:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3F4606A31E
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 12:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=evTTARJW
+	dkim=pass (1024-bit key, unprotected) header.d=mvista.com header.i=@mvista.com header.a=rsa-sha256 header.s=google header.b=CD8LIF2+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMPTE-000510-I1; Thu, 29 Oct 2026 08:43:04 -0400
+	id 1xMPWB-00069q-TT; Thu, 29 Oct 2026 08:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xMPTA-00050a-BZ
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 08:43:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xMPT8-0002dz-7H
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 08:43:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793277776;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DsjtnUaCbXgRmosWNiayUz/Mx/A8eNqJRYeN04ranv0=;
- b=evTTARJWQoUoeSGdsAv1I2vdDdTguu3V1Af8TjRlaY5NN0k/FAkk4IcjNs4MW0LN1zcjJ6
- mLX7HeYXj+FrD5S0AatJ3p/jzQnVYXhEITl10yy65rzrmm/iLnRVYG8rXpa7r6kJVJrjTz
- tPyyfREyKL/Vpa4ORwsroByp263iaLI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-nWngKaruMryKyrAuuQhw3g-1; Thu,
- 29 Oct 2026 08:42:52 -0400
-X-MC-Unique: nWngKaruMryKyrAuuQhw3g-1
-X-Mimecast-MFC-AGG-ID: nWngKaruMryKyrAuuQhw3g_1793277771
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6F2E0180059F; Thu, 29 Oct 2026 12:42:51 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7E46041B; Thu, 29 Oct 2026 12:42:50 +0000 (UTC)
-Date: Thu, 29 Oct 2026 08:42:49 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, mst@redhat.com,
- devel@lists.libvirt.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH 5/5] virtio-blk-test: Test truncated serial
-Message-ID: <20261029124249.GB1506267@shajnocz.csb>
-References: <20261028232400.222535-1-kwolf@redhat.com>
- <20261028232400.222535-6-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <cminyard@mvista.com>)
+ id 1xMPW8-00069U-8B
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 08:46:04 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cminyard@mvista.com>)
+ id 1xMPW6-00030j-0X
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 08:46:03 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-4af81963f35so1303639b6e.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 05:45:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mvista.com; s=google; t=1793277959; x=1793882759; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:reply-to:message-id:subject:cc:to:from:date:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=n9z7k08eBx4jDkXGaxfs5PThl8tMfJj1lBu3r3o/XPQ=;
+ b=CD8LIF2+h5ujr4k4k6LykWH4IV+YqfF6P6rH5Bo+N9MHbcCUzIHzYtJ2XDJjxa7Ljr
+ 6yotrMS2riN38u/2S2OaNszaPT6d0s2Imk5nM8kLpWPBjjFHTyvJtAfpdKZaJZ1xMm4q
+ GrxPgdPLbeDJu2q0FGOWWpUVhor3mnpe/AimI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793277959; x=1793882759;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:reply-to:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=n9z7k08eBx4jDkXGaxfs5PThl8tMfJj1lBu3r3o/XPQ=;
+ b=uSPkOi6AtY3S7XC88+BJAmKor+RstK8XYbkHZqaNE9J6IEerZ5XSXjxnC8uLKrhBrB
+ 7kJV313xc22HdPGs87Ja42Qm9oVEpw4QQADvR1nR1RRjBNPfJOScIHO6sdI7+FlKtN6D
+ CkZuSnR+5bUBpqSv0xa6+1hchDqpQPqCkBaWuExVbWb96ot+Wltd7UMx7N7LV9nGyxIL
+ zYvx4TnGkKB0rhdB6Z94e/LSK2Zx9kMUtrSXhGLgBAFwGrbDHQfeBXNfk28KCuqvcpjG
+ /h3bhSe1sAr7+sPYPo5bJ9cMXnA5lRhPtuD/yCYNlI0k9VPBtpQr3d1nmoBJjLMkzfJt
+ y2eQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByMtYrtuwlUVmvSXa99xF+ZvEdf++X6/Wbj4fLRkO5gl46UZPpfPR9nW1j3bwydsB3SLG7+fqkM+hl4@nongnu.org
+X-Gm-Message-State: AFq9FYKBG1Mpr55bcpZdLKQsvE7KAu2iS0beidWYiBIyhi+861tSw18n
+ p7caM+fn1uTd03knneVK0ysNE41xMXtSQj6Ere1fV0oa1xy54db4qTTrxK67rugFvfU=
+X-Gm-Gg: AYBFou04laxR1GrkBqWF3rOLP4Aj8fav0bs9Q3HrPtgj7yhsi5BmrxDSqhVAJ39YKOr
+ 95kvEKrY1hD5/fzLlmIc3pOSUAr99F3oEyE1S8hOujQC3In/ClqI5Y4BiyKI1dHQaPXUcFm49Xh
+ pLlNVCg1i310ueQEQMdpylOK4KyZ4O6Pci0i3jDZveK4whB9EvG44qr9l8iwIzPFuGw1D1vc/ip
+ r+UxZZXfe16N2r19KaSup570t05oYQYyCqmaLwfH/TQ1wB51LX0oC+QkWJ5rFNl5j0VnGdIVRPR
+ RWzQxLVWyPKLg5pmyauCvg+9yt2+uidCGuXE1xjcBX/Gcjw1ksLnxFYo8yqxRmt7+yxPUexxQr8
+ CMB+ue6sDR/wWtdAEB4mXIzGk/OF+82sBxjC95MrAP59lXxW5gq78XsOayNsZncPu9FChkYnKao
+ 5Q+aFXRlnrgd8I8va9RVz7wZFDLlx93QvpBBCW6OZtGOLImDt2ewqsWd6aLRyK7xvAMAK2F2QQq
+ 1hj2go9szpsj0nKGZg47y/FbpF5WkVPZhDrwPX7frtOA30oskvTfpjv8VDBYSkLIqVGFinORK4T
+ Cf4bWZoM4d1w4TJ7z8KpYzttEC3IqJOQBh9CFT7HhKeFkJT9O63FYafE
+X-Received: by 2002:a05:6808:1927:b0:4e7:d180:7719 with SMTP id
+ 5614622812f47-563a2b4a6a7mr3014311b6e.42.1793277958607; 
+ Thu, 29 Oct 2026 05:45:58 -0700 (PDT)
+Received: from mail.minyard.net ([2001:470:b8f6:1b:2f32:e466:d3ef:5b82])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-4a8b788a09csm5008926fac.10.2026.10.29.05.45.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Oct 2026 05:45:55 -0700 (PDT)
+Date: Thu, 29 Oct 2026 07:45:51 -0500
+From: Corey Minyard <cminyard@mvista.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Timur Maksimov <gessingate@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Kane Chen <kane_chen@aspeedtech.com>, qemu-arm@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v2 1/6] hw/i2c: add dummy device
+Message-ID: <auM__1eixNuS8NMv@mail.minyard.net>
+References: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
+ <20261027-aspeed-i2c-nonpkt-fix-v2-1-07deed1dff60@gmail.com>
+ <2629ee8a-e817-4764-a1e3-72e0ccbb978b@kaod.org>
+ <874ie6ku2u.fsf@pond.sub.org>
+ <5d219f231fb1f97c6d90cbef4068e82dff803a18.camel@gmail.com>
+ <87pkwtezsz.fsf@pond.sub.org>
+ <c850cbe681b0328cf3c3f93140132f8363e253e2.camel@gmail.com>
+ <45822012-fd39-4263-a8de-d66a440d1061@kaod.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
+ micalg=sha-256; boundary="fYQA5/hgxCyf38G5"
 Content-Disposition: inline
-In-Reply-To: <20261028232400.222535-6-kwolf@redhat.com>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <45822012-fd39-4263-a8de-d66a440d1061@kaod.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=cminyard@mvista.com; helo=mail-oi1-x232.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,70 +110,161 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: cminyard@mvista.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 29, 2026 at 12:24:00AM +0100, Kevin Wolf wrote:
-> Only 20 bytes are written to the passed buffer and the returned string
-> doesn't have a NUL terminator.
-> 
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->  tests/qtest/virtio-blk-test.c | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
-> 
-> diff --git a/tests/qtest/virtio-blk-test.c b/tests/qtest/virtio-blk-test.c
-> index 14fadcb4009..99d785d9e1a 100644
-> --- a/tests/qtest/virtio-blk-test.c
-> +++ b/tests/qtest/virtio-blk-test.c
-> @@ -835,6 +835,25 @@ static void get_id_serial_short(void *obj, void *data, QGuestAllocator *t_alloc)
->      qvirtqueue_cleanup(blk_if->vdev->bus, vq, t_alloc);
->  }
->  
-> +static void get_id_serial_short_trunc(void *obj, void *data,
-> +                                      QGuestAllocator *t_alloc)
-> +{
-> +    QVirtioBlk *blk_if = obj;
-> +    QVirtioDevice *dev = blk_if->vdev;
-> +    QVirtQueue *vq;
-> +    uint8_t status;
-> +    /* Everything after the 20 character maximum is untouched, no '\0' */
-> +    const char expected[25] = "01234567890123456789\xa5\xa5\xa5\xa5\xa5";
 
-get_id_request() also uses the 0xa5 byte pattern. How about using a
-different pattern like 0x5a here to distinguish the two?
+--fYQA5/hgxCyf38G5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +    char buf[25];
-> +
-> +    vq = get_id_setup(dev, t_alloc);
-> +    status = get_id_request(dev, vq, buf, 25, t_alloc);
-> +    g_assert_cmpint(status, ==, 0);
-> +    g_assert_cmpmem(buf, 25, expected, sizeof(expected));
-> +
-> +    qvirtqueue_cleanup(blk_if->vdev->bus, vq, t_alloc);
-> +}
-> +
->  static void *virtio_blk_test_setup(GString *cmd_line, void *arg)
->  {
->      char *tmp_path = drive_create();
-> @@ -871,6 +890,10 @@ static void register_virtio_blk_test(void)
->      opts.edge.extra_device_opts = "serial=abc";
->      qos_add_test("get_id/serial_short", "virtio-blk",
->                   get_id_serial_short, &opts);
-> +
-> +    opts.edge.extra_device_opts = "serial=012345678901234567890123456789";
-> +    qos_add_test("get_id/serial_short_trunc", "virtio-blk",
-> +                 get_id_serial_short_trunc, &opts);
->  }
->  
->  libqos_init(register_virtio_blk_test);
-> -- 
-> 2.56.0
-> 
+On Thu, Oct 29, 2026 at 09:37:14AM +0100, C=C3=A9dric Le Goater wrote:
+> On 10/29/26 09:20, Timur Maksimov wrote:
+> > Hi, Markus
+> >=20
+> > On Thu, 2026-10-29 at 08:22 +0100, Markus Armbruster wrote:
+> > > Timur Maksimov <gessingate@gmail.com> writes:
+> > >=20
+> > > > Hi, thanks for the review.
+> > > >=20
+> > > > It was my decision to use such API, I thought it would be okay for
+> > > > a
+> > > > test device. I don't think there is a way to expose integer array
+> > > > as a
+> > > > single QOM property.
+> > >=20
+> > > There are ways, but I need to know what you're trying to accomplish
+> > > to
+> > > be able to provide guidance.
+> >=20
+> > We need to access the transfer buffer array with QOM. Actually, I have
+> > a few ideas on how to do this without cluttering the QOM with
+> > properties, such as using a FIFO interface.
+> > >=20
+> > > > Actually, we can go without this model. I suppose I will rewrite
+> > > > tests
+> > > > so they don't use it.
+> > >=20
+> > > You haven't answered my question on code-provenance.rst.
+> > >=20
+> > > > On Wed, 2026-10-28 at 11:17 +0100, Markus Armbruster wrote:
+> > > > > C=C3=A9dric Le Goater <clg@kaod.org> writes:
+> > > > >=20
+> > > > > > + Corey for I2C feed back.
+> > > > > >=20
+> > > > > > + Markus for QOM
+> > > > > >=20
+> > > > > > The brute-force solution to expose the contents of the device
+> > > > > > array
+> > > > > > with 128 properties has a slight AI smell. I find it ugly but I
+> > > > > > am
+> > > > > > human :)
+> > > > >=20
+> > > > > Timur, have you read docs/devel/code-provenance.rst section "Use
+> > > > > of
+> > > > > AI-generated content"?
+> > > > >=20
+> > > > > >  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 That said I d=
+on't know if there are better
+> > > > > > alternatives.
+> > >=20
+> > > [...]
+> >=20
+> > Sorry. Yes, I have read it. This is solely my work, no AI was used to
+> > write it.
+> >=20
+> > I also have a question about MAINTAINERS file. If we keep this device,
+> > where should I put this file?
+>=20
+> You can put it under Aspeed for now, since it will be only used by
+> Aspeed machines for tests. If it grows, I guess we should move it
+> under "I2C and SMBus" if Corey agrees.
 
+This seems pretty generic, so I think it makes more sense under the
+I2C directory.  But I'm fine either way.
+
+-corey
+
+>=20
+> Thanks,
+>=20
+> C.
+
+--fYQA5/hgxCyf38G5
+Content-Type: application/x-pkcs7-signature
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIINIQYJKoZIhvcNAQcCoIINEjCCDQ4CAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0B
+BwGgggpVMIIFXzCCBEegAwIBAgIQD/rh8xorQzw9muFtZDtYizANBgkqhkiG9w0BAQsFADBl
+MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3d3cuZGln
+aWNlcnQuY29tMSQwIgYDVQQDExtEaWdpQ2VydCBBc3N1cmVkIElEIFJvb3QgRzIwHhcNMTkw
+OTIzMTIyNTMyWhcNMzQwOTIzMTIyNTMyWjBqMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGln
+aUNlcnQgSW5jMRkwFwYDVQQLExB3d3cuZGlnaWNlcnQuY29tMSkwJwYDVQQDEyBEaWdpQ2Vy
+dCBBc3N1cmVkIElEIENsaWVudCBDQSBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+ggEBAOqxRa06rLwKBvrDb/qQ8RtXfeKA9o0A42oZbLF4GYr4Xdt9JE8r3PJRIOUZD1U3mEln
+4S/aZoS54Q+5Ecs3q2GGT/Z82VeAPLeGvJoT0LS5t/zXeUcbMuDFWgyj33kiesnuusnOWvpI
+SoxN+oBH4oo0+oUiHI65mMjMAlb93x6sabh9kKvHQvHC4x2u7wYv5+NXjnbOhJS/1NjGq+ug
+LMXeldFMz0O5qFIDpn3aQGU0htyJQ2SZyxEqlUrgunsrYj9wgfW7XuhAi2j0y5d9oMT0SuVe
+KFFnQhTEk5B3fq+OBOW0AU2JdW1r929UtRbAr8RpLt05WI2G2RNVVlHYaU0CAwEAAaOCAgQw
+ggIAMB0GA1UdDgQWBBSlYiBQ3LtbV5etI4814lRsqX75TjAfBgNVHSMEGDAWgBTOw0q5mVXy
+uNtgv6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwTAYDVR0lBEUwQwYIKwYBBQUHAwIGCCsG
+AQUFBwMEBgorBgEEAYI3CgMEBgorBgEEAYI3FAICBgorBgEEAYI3CgMMBgkqhkiG9y8BAQUw
+EgYDVR0TAQH/BAgwBgEB/wIBADA0BggrBgEFBQcBAQQoMCYwJAYIKwYBBQUHMAGGGGh0dHA6
+Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBFBgNVHR8EPjA8MDqgOKA2hjRodHRwOi8vY3JsMy5kaWdp
+Y2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURSb290RzIuY3JsMIHOBgNVHSAEgcYwgcMwgcAG
+BFUdIAAwgbcwKAYIKwYBBQUHAgEWHGh0dHBzOi8vd3d3LmRpZ2ljZXJ0LmNvbS9DUFMwgYoG
+CCsGAQUFBwICMH4MfEFueSB1c2Ugb2YgdGhpcyBDZXJ0aWZpY2F0ZSBjb25zdGl0dXRlcyBh
+Y2NlcHRhbmNlIG9mIHRoZSBSZWx5aW5nIFBhcnR5IEFncmVlbWVudCBsb2NhdGVkIGF0IGh0
+dHBzOi8vd3d3LmRpZ2ljZXJ0LmNvbS9ycGEtdWEwDQYJKoZIhvcNAQELBQADggEBAHZrbCQC
+o3MAIqR0kekGYrC70EAGRDRq11COufNEXhcpv3YH6BMhUoVinPPNgfo5HPrZAFrLK/KPXYdJ
+dgkASGsINabAfY2ljUaJwKlpIewwjS6KuGEn59MgidaAUPh6lbetIoRsLhCqCzAnX1aL99fj
+CMf4NMWLUC8TqotnnrKNuw4JSjx4fcQs+U5T1bbgnyDx+8ybONuIEDvinHdKDu2VjoECzez2
+y/1IVTPlh57zBfjHJQFqLWzHdou8M+ucdJtr2swXII6s3nkq4pfEn7KnbzMS9quFSuyOGILc
+g/3qVwaHNLM5R+8nB5gPI5+u5Uh56w1i+9Ds1pjYAiTHdeUwggTuMIID1qADAgECAhAImztE
+U4o9odkEsuVgiJc8MA0GCSqGSIb3DQEBCwUAMGoxCzAJBgNVBAYTAlVTMRUwEwYDVQQKEwxE
+aWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xKTAnBgNVBAMTIERpZ2lD
+ZXJ0IEFzc3VyZWQgSUQgQ2xpZW50IENBIEcyMB4XDTI0MDUwMzAwMDAwMFoXDTI2MDUwNjIz
+NTk1OVowQjEcMBoGA1UEAwwTY21pbnlhcmRAbXZpc3RhLmNvbTEiMCAGCSqGSIb3DQEJARYT
+Y21pbnlhcmRAbXZpc3RhLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJm1
+ZE9brEiQnF7EKiV+aYzHyqPFJ+z1wwdJ4wvNiwUCgXJejBxFj04Z7A62Yx6Sp59vfjbo05eA
+IOyaLOFp3vbMBQAe8Qe4XrFv7wPcKZxwS+sgCuBvNs4NVGKYGjiKZW8WPq9ZcEl5BM8BLMrl
+rchAUHJJcMdcEJUsed6rIB//EtnGOe74/vR1Tz3sN1WzC1Wa9COvcbLgVvWC/o4WysUfC9+f
+9/5JzAiib7U7S/iRigkmEahibZgYKB7y6F1v9hxUwHxfa7GtJ8cv6LtRcPLhAO86GgXMfpgq
+k3fxzQu8uwACpINbmQNLcRzg6mHFDYRK3mFp4puUnHO5EUJ8RgUCAwEAAaOCAbYwggGyMB8G
+A1UdIwQYMBaAFKViIFDcu1tXl60jjzXiVGypfvlOMB0GA1UdDgQWBBQiHrUOKuj1vJe3OXAz
+gOP5Qbl2FTAeBgNVHREEFzAVgRNjbWlueWFyZEBtdmlzdGEuY29tMBQGA1UdIAQNMAswCQYH
+Z4EMAQUBATAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwME
+MIGLBgNVHR8EgYMwgYAwPqA8oDqGOGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2Vy
+dEFzc3VyZWRJRENsaWVudENBRzIuY3JsMD6gPKA6hjhodHRwOi8vY3JsNC5kaWdpY2VydC5j
+b20vRGlnaUNlcnRBc3N1cmVkSURDbGllbnRDQUcyLmNybDB9BggrBgEFBQcBAQRxMG8wJAYI
+KwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBHBggrBgEFBQcwAoY7aHR0cDov
+L2NhY2VydHMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZElEQ2xpZW50Q0FHMi5jcnQw
+DQYJKoZIhvcNAQELBQADggEBADkBdRyx41eUGmsYXBXt3WCsYeDr26rJL7lbx2PvqaZyRCJm
+J9CN2TljF0YHsXSPU+un1RfUlYz+PtcNFIqNuSf3N5fGU0bEpSzXozd/nZ32yWFLkd5CzYyN
+F1xrpbyP2a87jKM0uqEHXZFl7NPiAfEchjFCddciHTOXjN66L+kJ/ZsOoNJLG8yFN401EGew
+Nk8z/hJjWqR7DG0/YWn9h7jQ5SmqkqyhLwTO9s6KoByacWuKpKWSc/DaOuWmROlROrOA1hD8
+0sKqC6jGeLxNpiYzSwBy8qKF0weZdhcHUeO1HOm1csrvWl1UghnlR7SLir3bb5LiesTVvSuR
+Q3aDywAxggKQMIICjAIBATB+MGoxCzAJBgNVBAYTAlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJ
+bmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xKTAnBgNVBAMTIERpZ2lDZXJ0IEFzc3Vy
+ZWQgSUQgQ2xpZW50IENBIEcyAhAImztEU4o9odkEsuVgiJc8MA0GCWCGSAFlAwQCAQUAoIHk
+MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MTAyOTEyNDU1
+MVowLwYJKoZIhvcNAQkEMSIEIPQ4RSs99Lb85jPslZKdlaZbktjUEKdQCcqXhs4b9ECOMHkG
+CSqGSIb3DQEJDzFsMGowCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIw
+CgYIKoZIhvcNAwcwDgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAcGBSsOAwIHMA0G
+CCqGSIb3DQMCAgEoMA0GCSqGSIb3DQEBAQUABIIBAG6VStgCzIMhvUELOaYQmndf98e4ykEj
+DkgWhVAOqRM/qYLDLYXTUbuiKPrPTtR4p16+v1n1XUUfHHLLG1uj8+MSGjR+xHZvH6o45sxZ
+lbv92u4YxMAD9bn3sjMEQxtNdOIF/lkEmO3OBDQRQTO8/4KHpbH26lS3VUIir3Sh6Nh3ZhO0
+XZgz7qrgGhqZrkRZKuJIYvh+AhkhCBYN3tpAUZvmvb6W/ByxoFhFVBCdcqlkN/5aEpr2bxXw
+C/j+PQMEX0beyn60weeRRDDEAjZgkWmfqmuBZ8gNbi9xZHrYuEWluc0uctUrrqqem+Sof15+
+9yZ9OtSna/Aj6+4BLMXm2Ig=
+
+--fYQA5/hgxCyf38G5--
 
