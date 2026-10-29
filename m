@@ -1,157 +1,118 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CA0606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467E2606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=p4b5qz7M;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LCwF5wMk
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=pp2a8+x2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMTg2-0000Ga-FI; Thu, 29 Oct 2026 13:12:34 -0400
+	id 1xMTf8-0006LE-So; Thu, 29 Oct 2026 13:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMTfy-0000Ba-Ef
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:12:30 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
+ id 1xMTf2-0006Fn-A0; Thu, 29 Oct 2026 13:11:33 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMTfw-0008Dg-Bh
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:12:30 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TGD9HZ3873152
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:12:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qvyaaGQNHiDM6gm2Ql1Ha0lFy9Sa0AbxZ/3j/0i8HYo=; b=p4b5qz7MgbSn4Mrd
- r4bWctl/4ZD1iQ9B0/EAtFQP0zFnipNi4lNK/H/yvHyfi4+C5WwkiUNgndXaBBA1
- MmbSzp/F3I3wwaPZ3x/5OwmLHXOCWifiFEwS2C/Hk94hd3bo2BiP/nGmLGU0ul6z
- 0wCNPk1TlvXhSTDuNcJQ8PSMLlBpujENqKH6SuoCvN2+xLmkIi0umoo6VDKJm7sJ
- he8y15T+LFQF6py5/VK16EJM1ALCdJt8+eZ1qEr1myr0zDwNxWYihVyfT97VrraR
- j2FwTNjvjd6MKEcYxXXusF87mL18COmofm0bOoIE2o38DPKCPXWfTJd2JYXSMcgn
- BuDMKA==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hm762129x-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:12:26 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-3692c5b061bso6422678eec.1
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 10:12:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793293946; x=1793898746; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qvyaaGQNHiDM6gm2Ql1Ha0lFy9Sa0AbxZ/3j/0i8HYo=;
- b=LCwF5wMkvKLhAVXXRc4qfa5/mTTqztJ2HuKrKB0rPeEtg40fg/0YCBA/3xY9ZxEh4h
- WvDPPmNX7gMRDiYMJ9lLBGbG9ZFDyZu3H2cJw0Dd48EFi9C/zshVEmN9DzGgM6piACoi
- Xb+UkjZWfsxjpdGssVLfucQO6MFLkIPymo9hVl38s0ra+5BY10jaUYpojX6HVRAaDh1I
- r8sVQiA13H4EvZss2shShAhDo4Sw7sefDCYtaInluZXiuZLYEwn2RfGLzGBMav8o5tF+
- aJ4QqEBOY5AWDOF1X532GxST03kCq5SepUTbkX50/0Dig1pYyezbxp0nT7mh75UY/7G6
- lR7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793293946; x=1793898746;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=qvyaaGQNHiDM6gm2Ql1Ha0lFy9Sa0AbxZ/3j/0i8HYo=;
- b=B1fiwVSQPLP73qk8fpk9EDYI+gCNFpnOJEEcfj4x+fkthbDd54Boxk8JvwoGTAY3ho
- sDLMwev7NgcMntUk/cFu+uX9ZZD0/wnOXbqQinWfZJ8xQ58mM82E3xRFN4jMOYV2dCYf
- inEnw9yhnGoIDxB7cHzUNkEbNFurF11TYPx5G+aT6pm2be8Tbs78KRAqtV53qV/22Dp5
- T6KDnP5hbQlUevL1OdHhf88OOKEljTcvdgcIRp7zRxocEY9JvimSXG5h8WnOMbiqcbhZ
- OsLjPJ2tTK3Ds2bXIXlbBZcYnSA6zv/k8tiAe68V90EBS6qS9hZGTGRAQ7r1wRWcFlHQ
- Z74w==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxYMcjspDXE2Omo2vyZSoGQASwxA/gBrHmNn678QnqDjwQgcFeTR0r/2VFkt6rh8gCMyAfXq5PSgmY/@nongnu.org
-X-Gm-Message-State: AFq9FYJ3v5N8zvlzzJLz7P2vPqTiXbCtfItsmzNOwa436U7RZo2FY2/J
- 6KdZcQaIXTedg2SE+bUuRncgWOypnnx+5ly/qZbLJCE0zG82pIoJuOYtcW/OyDx5raqZ6NzYVcD
- SE02N/LTulsYda3fdj9ZNno0gLRgXcwEyBJQQAO60RzwLPskdRwxiSdzLWA==
-X-Gm-Gg: AYBFou2GOHhA74s6aDpenPxoVMTPEFWbu60ZkRxrDNQDgo1fYn/xHXBHh/sMgm9rw1k
- RNgikTwX+PSobXtn/PPDtSy/DksB4TzcPlTM/enXve+Pfnt3ISwuJWOHBf80j66vV1ZKoXEZT55
- CMIYwG00wOlXWUp3rlB1pKq/k78FlDPTcxt2FGmjU3+bNVqNiIyP+nxxmp1rgouFPVxuMAupx6e
- bV0/PBl+l4CZaX3MsMk7+wAmhkyj4lwwZkkpLwyljOKsAVeAZh0ns6vXrb7b/m9TOljcSECTvBW
- ypATD15g/wHrctSq7pZv27jKdwdmc2hxblKy6niyGw7KeTX6mT3i/JFoK36Y2XHgzfoA6uTvvRo
- o4FPNvuu92a3c+plMCPrhv4e8t84ZlE7zVxoYZSTFvOlrPNw73U0rGnD3RRVEHrziyDg+5zUhkT
- 2cK6bJwpr/5yJtc+jynmNOtgU0PpQQIayWEUwGks3Id4U=
-X-Received: by 2002:a05:7300:c39f:b0:366:6644:2839 with SMTP id
- 5a478bee46e88-36a42203e90mr76621eec.3.1793293945732; 
- Thu, 29 Oct 2026 10:12:25 -0700 (PDT)
-X-Received: by 2002:a05:7300:c39f:b0:366:6644:2839 with SMTP id
- 5a478bee46e88-36a42203e90mr76588eec.3.1793293945140; 
- Thu, 29 Oct 2026 10:12:25 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a4108c52csm445056eec.16.2026.10.29.10.12.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 10:12:24 -0700 (PDT)
-Message-ID: <c8bc6def-3c86-4fac-a84b-6664d40d5006@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 09:12:23 -0800
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
+ id 1xMTf0-00080V-JQ; Thu, 29 Oct 2026 13:11:32 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69TGEIbP409737; Thu, 29 Oct 2026 17:11:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=kN2z2z
+ pwvqfKKyJGFFfzfkGYWKMPBLyflh6HYbvBJc0=; b=pp2a8+x2WXf5ZGiS0vQcqC
+ oAn2PKazZGRvJuVTAJH+WZoFuejSSQY4OVJh5hNLttyOwRW6hmTjEPwq5yVV9QtI
+ E4PPlWjmrFPWlaWRYE6D8kBd0QV5VZmjT7Bvx/ir71EUFO5xyVcnrOiI1U/7avc6
+ qVIv0q3g0Z0UCQkyhYplg3WgEOwEnF7wE/lOzIj1wfSTgJkgDOhrxMEfqlP+pMrQ
+ vR66qr/Wd0oz/xkkEETdn9jO/f+xASxHDi0z5WfjAE3JB4wkhgA4Upt1LpdB/cgR
+ UV79B6oY6U6sXDFevPIyprq+IPA8WgvhdrWViVA4OVWzgSW1JbhW7pKWLgAKb6OA
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgj3mkt7p-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2026 17:11:12 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69TGJxX12213874; Thu, 29 Oct 2026 17:11:11 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hk010s8wx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2026 17:11:11 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69THB9DI49414576
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Oct 2026 17:11:09 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CB93D58045;
+ Thu, 29 Oct 2026 17:11:09 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4DC2758050;
+ Thu, 29 Oct 2026 17:11:08 +0000 (GMT)
+Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 29 Oct 2026 17:11:08 +0000 (GMT)
+From: Saif Abrar <saif.abrar@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
+ fbarrat@linux.ibm.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ cohuck@redhat.com, pbonzini@redhat.com, thuth@redhat.com,
+ lvivier@redhat.com, danielhb413@gmail.com, kowal@linux.ibm.com,
+ chalapathi.v@linux.ibm.com, calebs@linux.ibm.com, milesg@linux.ibm.com,
+ jishnuvw@linux.ibm.com, adityag@linux.ibm.com, amachhiw@linux.ibm.com
+Subject: [PATCH v7 RESEND 9/9] pnv/phb5: Mask off LSI Source-ID based on
+ number of interrupts
+Date: Thu, 29 Oct 2026 12:10:47 -0500
+Message-ID: <20261029171047.3862430-10-saif.abrar@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20261029171047.3862430-1-saif.abrar@linux.ibm.com>
+References: <20261029171047.3862430-1-saif.abrar@linux.ibm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] scripts/checkpatch: validate fixes against
- origin/master
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Chao Liu <chao.liu@processmission.com>,
- Tyrone Ting <kfting@nuvoton.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Hao Wu <wuhaotsh@google.com>, Halil Pasic <pasic@linux.ibm.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20261029161310.2065290-1-alex.bennee@linaro.org>
- <20261029161310.2065290-2-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261029161310.2065290-2-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: TwY2UF4VzuyXWSC_mJ1xIdKskRVBP1U8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2NyBTYWx0ZWRfX/QgLd9MAMUHi
- ftnYY60TauNWVEdHDQ3Hukiqf1q0/FENBFU5eGEQjcPJxXiXW7p8kzjUHVWyEjh3wOEmdc3yIi9
- lDcY12rM8M7ZlqGdXeAbA/5bt3uvbM5bKQB3vbmWBqd8J5ce/kjQNmUHxsKd/PR9wxP2faPa89A
- hte1M/Ty1u6VrUkoom5jEZEaLDG5Ugb9MWNr15+/JnVTnLW0hfR2MdPOGwPvFiPFsmz7c2Ko/Ei
- M2nOKKASOItXkoF+nZWqEPLK4RoW4toiC4W23YtEuJxeG6QBdpG7aB3MxiVOSFOWFdbmiBHwjE5
- DjIwhZRKI5JyP7uPZ+2YMG4r4WkTNyqZ/a+bJZMg4dKvacectemORmwAkv4wXxcvvH68k4cY0Lc
- JM1UKCSDChPphqCo7kFYpxcz7z7A6T8qTtjPXKQ/BY16zMelwtz71iLaUkkaGcTwQFX7SZGNMKr
- reyi7qh8XEdun3xQVfA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2NyBTYWx0ZWRfX98LHwJcq0T6D
- 3lOZWigXwNDqJXP9/3BuWmOXSypjuLsMqRABKlqWZ+gJCoK+5EOmxMn4+u1Ksrcw1nHF+JaaCDJ
- PJAekXYwaQwAOr1zme3vHdKVNWbiFfg=
-X-Authority-Analysis: v=2.4 cv=Kv3YSmWN c=1 sm=1 tr=0 ts=6ae37e7a cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=t6Jf17RKvxzU3DPCqfQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: TwY2UF4VzuyXWSC_mJ1xIdKskRVBP1U8
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2NSBTYWx0ZWRfX7BoGpZTtvJGI
+ /BlWD+vIabHgM3olnIg4B+j4bZqUgHGBDBruyI+yK5A6sbW0YFZJh07Xx2vt2NL+ctxyq3eAXC7
+ 5xn8N/qm4/nsh+jo47Gf7eS+FIJNDIw=
+X-Proofpoint-ORIG-GUID: BQx7yECr8GI3dNQmWM9-vZvqCtNuehlA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2NSBTYWx0ZWRfX0rfFpimI1ESw
+ FRoh5AcPeUi8FSLdaePb31AN+jMJnUv1zdhOqcaWLdoa6yBj8JFHEfp/qw1RBnX8qLGDhnHvI6r
+ ff3xBEjqoiLPAPf1+atDfiz9bG5lqo2lH8FWPm1o2ngQ/vbunpauHPmNmIYju3yGraf5Ewf0jB2
+ NSCEX/JR3vd5tNo1e5L3EMt/xkneX37ApIv8NiiebmO/3GDGS2buf6nQvUAP7GqV920D8DMRp30
+ he+Id+M38+98wx8axKs7sMcVr9Qt6Pm36uPx1W0VqeWO+NME47npwmZ+s6+p7tImir8Txyny6fR
+ q2kqt+4+uTz7W6T1R+pIlWdk0QlvawB5KngLh8tNlrhBohf+2ZT1Kf5q8VJojQ1PintK5vkTJIb
+ 34rHUr7UWkibWnMlnssHuVCUtr0/vA==
+X-Authority-Analysis: v=2.4 cv=G7uJgNk5 c=1 sm=1 tr=0 ts=6ae37e30 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=kUKHeS9f1dJEPYFD:21 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22
+ a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=-uQQ_z-csOHJncX4BtYA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-GUID: g6saIVi7Gn3a7WrZtTq_4y0xgCgj-5T6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0
- malwarescore=0 priorityscore=1501 impostorscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290067
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ bulkscore=0 adultscore=0 suspectscore=0 phishscore=0 spamscore=0
+ malwarescore=0 lowpriorityscore=0 classifier=typeunknown authscore=0 authtc=
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2610190000 definitions=main-2610290065
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=saif.abrar@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,54 +124,127 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/29/2026 8:13 AM, Alex Bennée wrote:
-> The current check for a referenced fix commit relies on the developer
-> keeping their master branch up to date which is not always grunted. If
-> you create your branches directly from origin/master this will keep
-> failing.
-> 
-> Given that origin/master should always be up to date (module the
-> developer eschewing convention) lets use that in the test instead.
-> 
-> checkpatch complains about the line lengths but this seems to be
-> standard for the perl script so I didn't try and fix it.
->
+From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 
-Or... you can use something else as origin, with origin/master not being
-updated, and master as a tracking branch to upstream/master, and in this
-case, this patch doesn't work.
+Add a method to reset the value of LSI Source-ID.
+Mask off LSI source-id based on number of interrupts in the big/small PHB.
 
-Using master instead of origin/master has the advantage to not hardcode
-what your remotes should be.
+Signed-off-by: Saif Abrar <saif.abrar@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
+---
+ hw/pci-host/pnv_phb4.c         | 12 +++++++++---
+ hw/pci-host/pnv_phb5.c         | 17 -----------------
+ include/hw/pci-host/pnv_phb5.h | 10 ++++------
+ 3 files changed, 13 insertions(+), 26 deletions(-)
 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->  scripts/checkpatch.pl | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index 82f62f60212..60e8b6bf7bc 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -1913,9 +1913,9 @@ sub process {
->  				}
->  				if (which("git") ne "" && -e "$gitroot") {
->  					my $hash = defined($cid) ? $cid : $orig_commit;
-> -					`git merge-base --is-ancestor $hash master 2>/dev/null`;
-> +					`git merge-base --is-ancestor $hash origin/master 2>/dev/null`;
->  					if ($? != 0) {
-> -						WARN("Fixes: commit $hash is not an ancestor of master\n" . $herecurr);
-> +						WARN("Fixes: commit $hash is not an ancestor of origin/master\n" . $herecurr);
->  					}
->  				}
->  			}
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 956d82f551..95318c9d74 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -494,6 +494,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
+ 
+     lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
+     lsi_base <<= 3;
++    lsi_base &= (xsrc->nr_irqs - 1);
+ 
+     /* TODO: handle reset values of PHB_LSI_SRC_ID */
+     if (!lsi_base) {
+@@ -1908,6 +1909,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4Class *phb4c)
+     /* TODO: Add more RO-masks as regs are implemented in the model */
+ }
+ 
++static void pnv_phb4_xsrc_reset(PnvPHB4 *phb)
++{
++    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
++    pnv_phb4_update_xsrc(phb);
++}
++
+ static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+ {
+     STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+@@ -1964,10 +1971,11 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
+     PnvPHB4 *phb = PNV_PHB4(obj);
+ 
+     pnv_phb4_pbl_core_reset(phb);
++
++    pnv_phb4_xsrc_reset(phb);
+     pnv_phb4_err_reg_reset(phb);
+     pnv_phb4_pcie_stack_reg_reset(phb);
+     pnv_phb4_regb_err_reg_reset(phb);
+-    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
+ }
+ 
+ static void pnv_phb4_instance_init(Object *obj)
+@@ -2041,8 +2049,6 @@ void pnv_phb4_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    pnv_phb4_update_xsrc(phb);
+-
+     phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, xsrc->nr_irqs);
+ 
+     pnv_phb4_xscom_realize(phb);
+diff --git a/hw/pci-host/pnv_phb5.c b/hw/pci-host/pnv_phb5.c
+index b09351f69f..ec6dfbe2b2 100644
+--- a/hw/pci-host/pnv_phb5.c
++++ b/hw/pci-host/pnv_phb5.c
+@@ -6,24 +6,7 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#include "qemu/osdep.h"
+-#include "qemu/log.h"
+-#include "qemu/bswap.h"
+-#include "qapi/visitor.h"
+-#include "qapi/error.h"
+-#include "target/ppc/cpu.h"
+-#include "hw/pci-host/pnv_phb4_regs.h"
+-#include "hw/pci-host/pnv_phb4.h"
+ #include "hw/pci-host/pnv_phb5.h"
+-#include "hw/pci/pcie_host.h"
+-#include "hw/pci/pcie_port.h"
+-#include "hw/ppc/pnv.h"
+-#include "hw/ppc/pnv_xscom.h"
+-#include "hw/core/irq.h"
+-#include "hw/core/qdev-properties.h"
+-#include "qom/object.h"
+-#include "trace.h"
+-#include "system/reset.h"
+ 
+ void pnv_phb5_cfg_core_reset(PCIDevice *d)
+ {
+diff --git a/include/hw/pci-host/pnv_phb5.h b/include/hw/pci-host/pnv_phb5.h
+index 4534083fd5..8f1df4892f 100644
+--- a/include/hw/pci-host/pnv_phb5.h
++++ b/include/hw/pci-host/pnv_phb5.h
+@@ -9,12 +9,10 @@
+ #ifndef PCI_HOST_PNV_PHB5_H
+ #define PCI_HOST_PNV_PHB5_H
+ 
+-#include "hw/pci-host/pnv_phb.h"
+-#include "hw/pci/pci_bus.h"
+-#include "hw/ppc/pnv.h"
+-#include "hw/ppc/pnv_nest_pervasive.h"
+-#include "hw/ppc/xive.h"
+-#include "qom/object.h"
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "hw/pci-host/pnv_phb4_regs.h"
++#include "hw/pci-host/pnv_phb4.h"
+ 
+ void pnv_phb5_cfg_core_reset(PCIDevice *d);
+ 
+-- 
+2.52.0
 
 
