@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21574606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D76606A31F
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 09:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=UXjBer3p
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=iU2YBt2q
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMMNG-0007Xg-RY; Thu, 29 Oct 2026 05:24:46 -0400
+	id 1xMMMO-0006vr-6y; Thu, 29 Oct 2026 05:23:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xMMMZ-00071F-Nm
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:24:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xMMMM-0006uq-FY
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:23:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xMMMY-0005mW-4l
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:23:59 -0400
+ id 1xMMMK-0005ki-N6
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:23:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793265836;
+ s=mimecast20190719; t=1793265824;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pf3YVmdnHp2rwfpO7ZI6quhRFSbkCVd5SczqDot6ZCo=;
- b=UXjBer3pTJMF+p4uyddbNQRDJwPEe8/roIxgoO2jW85+fXVZhva0HFSwEmAjVynoXpSgw4
- 2JQVPdMpXVQODjR2fU4dpPHTPDAi6JHaLaaL02uJR+IOSnOfQG+qouHPMQ7LCyifpzKEEd
- /BATekJ8ZLLhx3tCFq9HBMtphFfSB1Q=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=GUhpes+atScnuzAiqi9pNhNc/qe56InIUpgVAarThbU=;
+ b=iU2YBt2qBNDaRcq65yTCWr1GuEapxrLs1GJ4fwhCwOnpHQnwfqBKqaEwgx/bbO1gQYQ4uk
+ UxjIPPEUA+UEoKMng+fZbXVL58fHp0Ju0akmRzJa/1nTNSaBKL8TR5Yd63H+FjpyVN0VoH
+ K6UC4RoScCZN0DT/FJsBC5aS+fgDkWI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-C44KN3JON1-71MPH-lj1vQ-1; Thu,
- 29 Oct 2026 05:23:50 -0400
-X-MC-Unique: C44KN3JON1-71MPH-lj1vQ-1
-X-Mimecast-MFC-AGG-ID: C44KN3JON1-71MPH-lj1vQ_1793265828
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-fEavanCCPnCS6ZeJvkHkqQ-1; Thu,
+ 29 Oct 2026 05:23:40 -0400
+X-MC-Unique: fEavanCCPnCS6ZeJvkHkqQ-1
+X-Mimecast-MFC-AGG-ID: fEavanCCPnCS6ZeJvkHkqQ_1793265818
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5DA1E1956057; Thu, 29 Oct 2026 09:23:48 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 260B9180A9DC; Thu, 29 Oct 2026 09:23:38 +0000 (UTC)
 Received: from laptop.redhat.corp (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A5DE930002CF; Thu, 29 Oct 2026 09:23:43 +0000 (UTC)
+ id AEF7F3000723; Thu, 29 Oct 2026 09:23:32 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, shaju.abraham@nutanix.com,
@@ -57,26 +57,25 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  milesg@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com
 Cc: armbru@redhat.com,
 	mbawa@redhat.com
-Subject: [PATCH for-11.2 6/9] target/arm/kvm: Pass an error handle to
- kvm_arm_init_cpreg_list
-Date: Thu, 29 Oct 2026 10:20:18 +0100
-Message-ID: <20261029092307.281287-7-eric.auger@redhat.com>
+Subject: [PATCH for-11.2 4/9] target/arm: Enforce MPIDR into isar.idregs[]
+ storage
+Date: Thu, 29 Oct 2026 10:20:16 +0100
+Message-ID: <20261029092307.281287-5-eric.auger@redhat.com>
 In-Reply-To: <20261029092307.281287-1-eric.auger@redhat.com>
 References: <20261029092307.281287-1-eric.auger@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,92 +94,151 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Pass an error handle to kvm_arm_init_cpreg_list(). A Subsequent patch
-will do the same with kvm_arch_init_vcpu().
+At the moment MPIDR_EL1 has no real storage. Instead cpu
+mp_affinity field stores the Aff0-Aff2 bits only and the
+ID register is reconstructed when needed. There is also
+an mp-affinity property used for TCG only.
+
+Keep the mp-affinity property and its associated storage
+while making sure the MPIDR_EL1 full register is stored
+in cpu->isar.idregs[] as other ID registers.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Suggested-by: Khushit Shah <khushit.shah@nutanix.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/kvm.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ target/arm/cpu.h             |  8 +++++++-
+ target/arm/cpu-sysregs.h.inc |  1 +
+ target/arm/cpu.c             | 17 +++++++++++++++++
+ target/arm/helper.c          | 14 +-------------
+ target/arm/hvf/hvf.c         |  2 +-
+ target/arm/kvm.c             |  1 +
+ target/arm/whpx/whpx-all.c   |  2 +-
+ 7 files changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 28f199c03f..d454346037 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -872,6 +872,7 @@ static bool kvm_arm_reg_syncs_via_cpreg_list(uint64_t regidx)
- /**
-  * kvm_arm_init_cpreg_list:
-  * @cpu: ARMCPU
-+ * @errp: Error handle
-  *
-  * Initialize the ARMCPU cpreg list according to the kernel's
-  * definition of what CPU registers it knows about (and throw away
-@@ -879,7 +880,7 @@ static bool kvm_arm_reg_syncs_via_cpreg_list(uint64_t regidx)
-  *
-  * Returns: 0 if success, else < 0 error code
-  */
--static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
-+static int kvm_arm_init_cpreg_list(ARMCPU *cpu, Error **errp)
- {
-     struct kvm_reg_list rl;
-     struct kvm_reg_list *rlp;
-@@ -889,12 +890,17 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
-     rl.n = 0;
-     ret = kvm_vcpu_ioctl(cs, KVM_GET_REG_LIST, &rl);
-     if (ret != -E2BIG) {
-+        if (ret < 0) {
-+            error_setg_errno(errp, -ret,
-+                             "failed to get KVM register list size");
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index e6b4000127..5c5f551dac 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1130,7 +1130,13 @@ struct ArchCPU {
+     uint32_t reset_sctlr;
+     uint64_t pmceid0;
+     uint64_t pmceid1;
+-    uint64_t mp_affinity; /* MP ID without feature bits */
++    /*
++     * MP ID without feature bits, ie. Aff0..Aff3 only
++     * used to store the corresponding property value for TCG vcpus.
++     * The MPIDR_EL1 value (affinity + feature bits) is stored in a
++     * consistent manner in isar.idregs[MPIDR_EL1_IDX].
++     */
++    uint64_t mp_affinity;
+     uint64_t reset_cbar;
+     uint32_t reset_auxcr;
+     bool reset_hivecs;
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+index 709dc8fc97..f148f6f565 100644
+--- a/target/arm/cpu-sysregs.h.inc
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -42,6 +42,7 @@ DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
+ DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
+ DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+ DEF(MIDR_EL1, 3, 0, 0, 0, 0)
++DEF(MPIDR_EL1, 3, 0, 0, 0, 5)
+ DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
+ DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
+ DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index e337462a7e..aba45b66f8 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2170,6 +2170,23 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+                                                  ARM_DEFAULT_CPUS_PER_CLUSTER);
+     }
+ 
++    /* Consistently update MPIDR_EL1 in isar.idregs[] by adding feature bits */
++    {
++        uint64_t mpidr = cpu->mp_affinity;
++
++        if (arm_feature(env, ARM_FEATURE_V7MP)) {
++            mpidr |= (1U << 31);
++            /*
++             * Uniprocessor (non-coherent) cores that still implement the MP
++             * extensions set U (bit 30), e.g. Cortex-R5.
++             */
++            if (cpu->mp_is_up) {
++                mpidr |= (1u << 30);
++            }
 +        }
-         return ret;
-     }
-     rlp = g_malloc(sizeof(struct kvm_reg_list) + rl.n * sizeof(uint64_t));
-     rlp->n = rl.n;
-     ret = kvm_vcpu_ioctl(cs, KVM_GET_REG_LIST, rlp);
-     if (ret) {
-+        error_setg_errno(errp, -ret, "failed to get KVM register list");
-         goto out;
-     }
-     /* Sort the list we get back from the kernel, since cpreg_tuples
-@@ -911,7 +917,7 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
-         case KVM_REG_SIZE_U64:
-             break;
-         default:
--            fprintf(stderr, "Can't handle size of register in kernel list\n");
-+            error_setg(errp, "Can't handle size of register in kernel list");
-             ret = -EINVAL;
-             goto out;
-         }
-@@ -937,7 +943,7 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
-         /* Shouldn't happen unless kernel is inconsistent about
-          * what registers exist.
-          */
--        fprintf(stderr, "Initial read of kernel register state failed\n");
-+        error_setg(errp, "Initial read of kernel register state failed");
-         ret = -EINVAL;
-         goto out;
-     }
-@@ -2015,6 +2021,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     uint64_t mpidr;
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
-+    Error *local_err = NULL;
-     uint64_t psciver;
- 
-     if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
-@@ -2113,7 +2120,11 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     SET_IDREG(&cpu->isar, MPIDR, mpidr);
-     cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
- 
--    return kvm_arm_init_cpreg_list(cpu);
-+    ret = kvm_arm_init_cpreg_list(cpu, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
++        SET_IDREG(&cpu->isar, MPIDR, mpidr);
 +    }
-+    return ret;
++
+     if (cpu->reset_hivecs) {
+             cpu->reset_sctlr |= (1 << 13);
+     }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index afaac33f2a..f413b15eb7 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3180,20 +3180,8 @@ static uint64_t midr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ static uint64_t mpidr_read_val(CPUARMState *env)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+-    uint64_t mpidr = cpu->mp_affinity;
+ 
+-    if (arm_feature(env, ARM_FEATURE_V7MP)) {
+-        mpidr |= (1U << 31);
+-        /*
+-         * Cores which are uniprocessor (non-coherent)
+-         * but still implement the MP extensions set
+-         * bit 30. (For instance, Cortex-R5).
+-         */
+-        if (cpu->mp_is_up) {
+-            mpidr |= (1u << 30);
+-        }
+-    }
+-    return mpidr;
++    return GET_IDREG(&cpu->isar, MPIDR);
  }
  
- int kvm_arch_destroy_vcpu(CPUState *cs)
+ static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index f9f3d22014..4b947e9ba5 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1476,7 +1476,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+     assert_hvf_ok(ret);
+ 
+     ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_MPIDR_EL1,
+-                              arm_cpu->mp_affinity);
++                              GET_IDREG(&arm_cpu->isar, MPIDR));
+     assert_hvf_ok(ret);
+ 
+     pfr = GET_IDREG(&arm_cpu->isar, ID_AA64PFR0);
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index de09d63d2e..724bc08edf 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2103,6 +2103,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     if (ret) {
+         return ret;
+     }
++    SET_IDREG(&cpu->isar, MPIDR, mpidr);
+     cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
+ 
+     return kvm_arm_init_cpreg_list(cpu);
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 18009d6c8d..024d18df04 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -842,7 +842,7 @@ int whpx_init_vcpu(CPUState *cpu)
+ 
+     clean_whv_register_value(&val);
+ 
+-    val.Reg64 = deposit64(arm_cpu->mp_affinity, 31, 1, 1 /* RES1 */);
++    val.Reg64 = GET_IDREG(&arm_cpu->isar, MPIDR);
+     whpx_set_reg(cpu, WHvArm64RegisterMpidrEl1, val);
+ 
+     clamp_id_aa64mmfr0_parange_to_ipa_size(&arm_cpu->isar);
 -- 
 2.53.0
 
