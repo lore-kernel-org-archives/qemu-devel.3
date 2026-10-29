@@ -1,88 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BD4606A31D
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D394B606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=CKlFuw8q
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=bXNlmp6c
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMTzq-00012V-IQ; Thu, 29 Oct 2026 13:33:02 -0400
+	id 1xMU0J-0001BD-9b; Thu, 29 Oct 2026 13:33:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMTzp-00012N-Pk
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:33:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1xMU0E-00017S-HQ
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:33:28 -0400
+Received: from mr-2001d-snip6-2.eps.apple.com ([2a01:b747:3000:200::2a]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMTzl-0002Ih-W2
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:33:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793295175;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DO9J5VhftwD966XqAn3gp9+yQW7Fd5cuIYVt9j0p9Is=;
- b=CKlFuw8q/5XJJWr6jnvY3pE7BtlYecpTVoMYP+2LzcFHum+ngBOlrHcKfeXCl4259ElwEb
- CHnVr1yE+dy25Dmt+C69uBus5BEFxyVoy4H+eyJXtQM9M6okom7nuQBpDDr+4/6vvvwZ2y
- RrMKt48VK8ItX39uu0sYg7kFLbXRyC0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-290-xLNDQG7AO5y0Ydn9_2mq5Q-1; Thu,
- 29 Oct 2026 13:32:52 -0400
-X-MC-Unique: xLNDQG7AO5y0Ydn9_2mq5Q-1
-X-Mimecast-MFC-AGG-ID: xLNDQG7AO5y0Ydn9_2mq5Q_1793295170
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 668D01956069; Thu, 29 Oct 2026 17:32:50 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A5A631955F08; Thu, 29 Oct 2026 17:32:47 +0000 (UTC)
-Date: Thu, 29 Oct 2026 17:32:44 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Blake <eblake@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH 00/21] system: introduce a live data recorder facility
-Message-ID: <auODPFwxQ0Bc0oi-@redhat.com>
-References: <20261015112044.1999748-1-berrange@redhat.com>
- <179206655287.744241.865023521920859070.b4-review@b4>
- <atDHwThz_5XPY9Yx@redhat.com>
- <CAMxuvayG8mPvVSagb6EyEH-hhA094qw3LPUWdeL_PJ5qeEk3=g@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1xMU08-0002JE-UV
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:33:24 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-60-percent-5 (Postfix) with ESMTPS id
+ EFC36180017E; Thu, 29 Oct 2026 17:33:07 +0000 (UTC)
+X-ICL-RepId: 01a188b8-ffbb-7df6-97fb-722898bef239
+X-ICL-Out-Info: HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0NWFsIWwQPH0wMUQJCBVZeVAodBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkQAOwddcV10XXw9A1QaXwBDDlULXnVTH0F6PQJVBVIANHxLcC1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1793295189; x=1824831189;
+ bh=e3LWz86LDjxYCEhClxncJ/HYfKEkzZGYYGx7eHCW9bQ=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=bXNlmp6csD+bwepd15ZeXP9LcY+F6ze0flcIAUQRlOWcbyN27TSiBlkm1GdSYOpVPtywChFngefqMYgb3/V8LM6kr1UT5shBVAmF7TWwUOlHvq+DS5tamC4RTlr/5GOOA12/nVg1/kYElrdC8zkNHq7+EmLyChPvRYZH7sAdZmGLxv9Dtvv3JRvYWYFQqB2TrVu/L7BhiJcnxLuJNud8ZPSLeby8djDeJTRkvzjrFazqrkHikIoSQ3TlxX+YmFwdATsrvTCnoednb0F/Th8TQhPvlyrlAqRc/R0ydsV8oK8Nwv0bYvBK2KhoTFOeQU6xihNu447uwAZ0GTR0/kkK/g==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.156.200.36])
+ by p00-icloudmta-asmtp-us-west-2a-60-percent-5 (Postfix) with ESMTPSA id
+ 7952C18010BB; Thu, 29 Oct 2026 17:33:06 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMxuvayG8mPvVSagb6EyEH-hhA094qw3LPUWdeL_PJ5qeEk3=g@mail.gmail.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH v2 0/6] hvf: arm: fixes for QEMU 11.2
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <CAFEAcA8Ywq6MZxO5jt4AKay8wjWGLQYxnJ1rMkFjzoF1ppUJ3w@mail.gmail.com>
+Date: Thu, 29 Oct 2026 18:32:54 +0100
+Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <49C40F6F-EE09-4237-83B8-1CE18292DE3C@unpredictable.fr>
+References: <20261027120135.53048-1-mohamed@unpredictable.fr>
+ <CAFEAcA-=bOxmonNOYC2_1MHDrdof6eciYrehJRDfWx_7kYsJmA@mail.gmail.com>
+ <1016C70E-8B1C-4F3F-A19E-59D7A0E66A33@unpredictable.fr>
+ <CAFEAcA8Ywq6MZxO5jt4AKay8wjWGLQYxnJ1rMkFjzoF1ppUJ3w@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2OCBTYWx0ZWRfXyya5to/N1NPT
+ Q7CLLYEiI/owYdID2MyCTkIf+GSXQO41N6oyRyeTp3xbblJqxUWYty8f8i1ZZRxalwGppmNtHmP
+ XzEGLird+TNTbNxDh5N72yEUDU5WxlIqQKwNoutCFwJ6/veqq+7mFtBzvxydHRd0ysv2546Xlv3
+ sTnMeKPhFYWPbM9HgbyeQn5NAvQtXTZZqM46uCX75GlVVhnkRm5eIh5a/PbSciCsV48tI4Q/9dm
+ AFbQYCmF6mRNm9PI1zuKQQE8BZaaufNVxTNFWU/7XZvldxw9htmlABnuUXUDT3nWHWhKmviKIn3
+ q6ezJGUChumwTAL1GghKSPlbWdwgzmRZ3+9ezpY9pl1IQCVHPoaMfjDFC/64TQ=
+X-Authority-Info-Out: v=2.4 cv=YJGSCBGx c=1 sm=1 tr=0 ts=6ae38354
+ cx=c_apl:c_pps:t_out a=9mRn2PO/+PIrVdEbaIuMPg==:117
+ a=9mRn2PO/+PIrVdEbaIuMPg==:17 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=jGu7mHzcN-bRX1q2kKUA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: Mi3_Tmux8CyVg5k_rcm3EH_HNGJVWIYY
+X-Proofpoint-ORIG-GUID: Mi3_Tmux8CyVg5k_rcm3EH_HNGJVWIYY
+X-JNJ: AAAAAAABA9ZON/u779LCuYjTJdxBfw/MP0dtSdUWfR9Kar8SfY/TpvGr8NG5sT70DMmp8s
+ r6Pqz42fvQ+sCrQ4bZLYbkFgSyHXUoh8oWiJsUP86x4SPUt7/jr0ZapmP7Usz2s0Hecs2L
+ IQ2Cbq++wNRF7z9jINue9MHSMirO72v0Lq9oukng+cZt7LYlcOrAH87VrA75vxYciqXukr
+ 65c9o1ZAYfzgLb7VrQDx/oCtaqOz++Ny/oWjstyEKG2SibLQrn2asyy+YjsINt2ifU8Ujl
+ oJe6iEfqsIt2KA6/nfYUbh87jnVHCN8OY7fHCs/yXp2BNnX+tFI6NvvGgxAu5KhN+OPbeX
+ q5tQcVoBjr+k22Mn5d4qFdx8JU1KlzkR4ogl4GOsUgpPalVAyREpGEn5t1K9VBeXgvZaDD
+ slXFO1yHME0f+6HPaG7ghi6xS7kuUTfUGN3c71obcCNAOsprV1ZaTBjp/GGzkuOMJovWZD
+ T0X+jgIcKmmnm+jYItf/2i6PothxzBBZIkz/vHh6EXhqh6XIQu2rqdHWJXv30SBDL+CtZT
+ dGdzFU2jnHSV763OGAtrVwksilV7GtjmbEnLnxlGvfUkwQt7eWWXrelFbrECLqmA4J6+w9
+ LydxZq0sSSpbq6x5A9dnngEMigEKnPV5bEFR7WpYYX74A7IhuWdUQdmGHqXjUPnfT8qWro
+ 8gO6XjRopdXKqbuc42myAvWG6RF6ynjKnPJ7jhJzzbK96Lh4dGHD/ZinhVPN6iVl3Ab3E7
+ yZOv8wzRcBQDP32bbMhqwjVjOAVP5UJ1GHE1NjPjUAMpOnIRkLHfn4qhmQ7lXPYUV+oPD3
+ P13VVEHJlm868qkPp09vmNPV/Gsk1GCS3tE/Y42Yt6dTgISzpznv8rJzNMi8QSsTToRGa+
+ a1vaiYR/nMcjHaKXHONKyE7Dq8xkvgJdvNOu6iR3eYgjruKvmsh3V3Uw6fPZaBXqHkT9Yj
+ 4mbqxq3YsrxbgjfmziHH2rcz+jGDxjepD069ebLjHb4aPzjp1s50X+4dpN3nFSzo+JxpZo
+ 0FDpODwq8X0SRIcv/jJnla122Z8omalSVIkvb9OUA1G/0g19yrmrEndi3m2XBhqH2rTFRh
+ 10uIw2ozayomkWh4TlYlTmWmcz1pP3BWmOWLl9Wl2f5PWGtOy9AXDaHFLU3M3OImEgY0bh
+ yguVw2MdhFJMsak5exqfLyTMM4+/9jOEj8wAUlUNZt5V0gXKSbJTe6kjYM38VHtx2abMaw
+ I8JsK7+no88CIsy7YRNcWncqaCKg5BvTpatd7mxgoYRTVnZUJOznWBoVcVWzpTh2EAl1Ml
+ 0Qe33STfj37s6xliBedIUyQVRlAZDtY7amFGDHYAmBL8i89Ag46/txrgBfNAE5upCpMSWJ
+ abYNRQ8DwLaVW8AkkJJmaKGO9+5wcg57+Yr5QOTrV/Qej3xnl0iZrog=
+Received-SPF: pass client-ip=2a01:b747:3000:200::2a;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,123 +104,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Oct 16, 2026 at 11:20:11AM +0400, Marc-André Lureau wrote:
-> Hi
-> 
-> On Thu, Oct 15, 2026 at 4:32 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Thu, Oct 15, 2026 at 04:15:52PM +0400, marcandre.lureau@redhat.com wrote:
-> > > > This series introduces a new facility called 'tldr' which is a
-> > > > live data recorder. This is intended to aid support of production
-> > > > QEMU deployments, by providing a data collection facility that
-> > > > can be left "always on", such that in the event of a QEMU crash
-> > > > or guest OS crash, certain important information will be recorded.
-> > > >
-> > > > The data recorder has to be enabled by adding a "tldr-config"
-> > > > object instance with -object / object_add.
-> > > >
-> > > > With this series, the data recorder collects
-> > > >
-> > > >  * error_report/warn_report/error_printf messages
-> > > >  * QMP events
-> > >
-> > > It should probably be recorded at emission, not per monitor
-> >
-> > Opps.
-> >
-> > > >  * QMP errors
-> > > >  * QMP commands, which are not query-XXX/qom-list,
-> > > >    or any command associated with a QMP error.
-> > > >  * qemu_log output
-> > > >
-> > > > The last item is intended primarily to be used in combination
-> > > > with tracing and its 'log' backend, to have continuous
-> > > > recording of certain interesting probes.
-> > > >
-> > > > Each type of data is collected in a distinct circular
-> > > > buffer, such that high volumes of one type of data, does
-> > > > not result in overwriting other types of low volume data.
-> > > >
-> > > > The data recorder is set to trigger on SIGBUS, SIGSEGV,
-> > > > SIGILL, SIGFPE and SIGABRT, or manually via QMP 'tldr-dump'.
-> > >
-> > > Instead of allocating and dumping by a signal handler, why not use a file-backed
-> > > mmap or a memfd? We would need to define a small fixed header for the file
-> > > layout/buckets.  This would avoid all the issues with signal handlers.
-> >
-> > That would impose a continuous I/O workload on data recording, which
-> > is something I wanted to explicitly avoid, until the time the data is
-> 
-> Yes, a file-backed mapping shouldn't be the default, but memfd/tmpfs
-> should have the same performance.
-> 
-> > needed to be preserved. This only persists the final data, not any
-> > intermediate data that is overwritten as the circular buffer wraps.
-> 
-> Same design, the reader would handle the ring data
-> 
-> > Coupling the in-memory layout to the on-disk layout also means that
-> > dumps would always be the max size, since we would not have grow-on
-> > demand buffers.
-> 
-> The dump output would not be the raw data, a reader would emit the
-> same text format, skipping the unused parts.
 
-IMHO that reader has to be QEMU owned code, as otherwise we're
-exposing a private data structure to a 3rd party and that makes
-it public ABI/API which is highly undesirable for this.
 
-> mapping reserves address space only, pages are allocated on first write.
-> 
-> The benefits:
-> - no signal handler, no conflict with MCE, ASAN etc
+> On 29. Oct 2026, at 18:13, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> On Thu, 29 Oct 2026 at 17:02, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>=20
+>>=20
+>>=20
+>>> On 29. Oct 2026, at 15:27, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>>>=20
+>>> On Tue, 27 Oct 2026 at 12:03, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>>>=20
+>>>> v2:
+>>>> - remove GIC_ISPENDR workaround: currently under further =
+investigation
+>>>> - simplify SME save/restore patch
+>>>> - rework the CPU reset strategy, with also taking care of the GIC =
+CPU interface registers.
+>>>>=20
+>>>> v1:
+>>>>=20
+>>>> - workaround for presumed Hypervisor.framework issue
+>>>> - save/restore SME state only when SME is on for the CPU
+>>>> - add ID_AA64PFR0_EL1.GIC sync to advertise the system register =
+interface
+>>>=20
+>>> I've applied patches 1-4 to target-arm.next; 5 and 6 I left comments =
+on.
+>>>=20
+>>> What's the status with the apple-gfx compile failures on macos 27?
+>>> (issue #4486)
+>>=20
+>> Hi,
+>>=20
+>> I think we should just disable building apple-gfx by default for now.
+>>=20
+>> It=E2=80=99s private API as of macOS 27, and as long as a decision on =
+whether
+>> to keep that reverse-engineered device model isn=E2=80=99t made =
+yet...
+>=20
+> That makes sense to me; we've had the vmapple machine disabled by =
+default
+> for a long time, and that I'm guessing that was the biggest reason to =
+use
+> apple-gfx.
+>=20
+> Do you think we should deprecate the "vmapple" machine type, or do
+> you hope to resurrect it still?
 
-A signal handler is integral to some extent, as captured info about
-the signal is itself is an important part of the data record. IOW,
-even if moving writing of the dump out of the signal handler in some
-manner, I still want to be able to capture several siginfo_t fields.
+Hi,
 
-You can get that info from a core dump, but the working premise
-is that a core dump is not guaranteed available, whereas the data
-record dumps are something we can more easily acquire.
+I do hope to get it resurrected as an optional feature still, but
+the issue is that it=E2=80=99ll stay (by design) a reverse-engineered =
+model.
 
-> - data survives SIGKILL, OOM, or a crash in the dump path itself
+I need to spin a new revision of the patches for that though.
 
-Simplifying the signal handler to just stash the siginfo_t would
-help.
-
-> - data can be read from a hung QEMU
-
-Data can always be read from a hung QEMU by sending it a signal.
-We could wire up a non-fatal signal for this purpose if we want
-to read hung QEMUs without killing them.
-
-> Someone needs to hold the memfd to outlive QEMU, otherwise QEMU could
-> create a file under a runtime dir on tmpfs
-
-I wonder if QEMU could simply fork a child process itself that just
-hangs around waiting for death, and has a shared memory region with
-the main QEMU.
-
-We already have a '-run-with async-teardown' comamnd line, which
-forks a child process and uses prctl(PR_SET_PDEATHSIG) to get
-notified with the parent goes away.  We could expand that child
-process to also handle crash dump writing.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+It will break from time to time and cannot come with an expectation
+of short-term (as in, anything past 6 months) stability/build-ability.
+>=20
+> thanks
+> -- PMM
 
 
