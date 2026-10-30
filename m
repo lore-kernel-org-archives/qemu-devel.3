@@ -1,96 +1,97 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E20606A31D
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 08:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1DA606A31F
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 08:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=i+VtY5+f
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AMXHVFKE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMhm0-0006XS-Hz; Fri, 30 Oct 2026 04:15:40 -0400
+	id 1xMhly-0006UK-GC; Fri, 30 Oct 2026 04:15:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1xMhls-0006R0-0O
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 04:15:36 -0400
-Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
+ id 1xMhld-0006MH-6l
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 04:15:20 -0400
+Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1xMhlm-0001br-6a
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 04:15:31 -0400
-Received: by mail-dl1-x1231.google.com with SMTP id
- a92af1059eb24-1438d9363fbso345169c88.0
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 01:15:25 -0700 (PDT)
+ id 1xMhlX-0001P0-0y
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 04:15:15 -0400
+Received: by mail-dl1-x1234.google.com with SMTP id
+ a92af1059eb24-1931ff67a29so1264327c88.1
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 01:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793348124; x=1793952924; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793348109; x=1793952909; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=UpU5RDRKzNoJvyj8f8RzWBQ1TwN1Z6+4TWa8z4piMBk=;
- b=i+VtY5+f6ShVF/Qax5qWzQRg4qYVpdpA8WNGBO8BTg1o7DFc8sKMperVOdhQuXH5IP
- qVXpyR0pGNvHh4FYvyJV4AigazJWDI+o57PmaW5Iio3V2PkE2T3N8F8eYjb67iws1D+s
- Xvb7HYF0hlS8rtGR493VUbTJYNzMVuEnvob60M6Q2vq1k4zxfaqKTsBVqNX5CCa8vCZk
- yiqTxMexaDN9CfKqrxSlFcIndtK3UsUuJBQ4j5G+nZYtJD2DdFXRJdzO7ljUe5L4MKhP
- jUegnWz6Upmy5sNYrTI1f6vFxHKVpRiCQi/r4F6x3+2BpUCem7OICBNqHLWYGd1XYg6u
- Dfug==
+ bh=nAdljkISQ75QNeWlz6TQpkKdNNAEruYPkaLPZ1Gh7PA=;
+ b=AMXHVFKE4p1Ww40FQjy3kblnTEUggWDxf3ao3RBm7c3GqEtCBm0fQhyzRApjHP2Xgg
+ IirqrlR+Za3yVVf8vqsDwEb3IgZCgJgKlcfckGnX9n3c8JpQfzU/g2sDL/Ga80w1OP/E
+ e/fRcJfOEzMmaalI8RfgMBw/anPM7Sd4tmIqOBDcV0dND7gzthgTpwDL74SXzOv/+ST2
+ YMpnqYh+hEZjqTgHrsW8NA161hv8J3wZZkiI9vRzO/OVxcA8CKanvv0vqdX0V5BcUIor
+ DJoPeDeQBFEetNOd9Lao0gYlN/SYaeCnSLkaWVCFP+22Zt1KcUlH4xV/4NNQ7+/GsZS/
+ kXNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793348124; x=1793952924;
+ d=1e100.net; s=20260707; t=1793348109; x=1793952909;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=UpU5RDRKzNoJvyj8f8RzWBQ1TwN1Z6+4TWa8z4piMBk=;
- b=J090Xh6dc1GysbG8U8OHcot/QEUBPWQmkFspPPj70TaYWGc3u/hCRXJ7wUl9UA+6uG
- ePu7t7nCqx1M1m/dsjonsDvNdBEA1NG8VjaP+76r4w18JIXVsXh/YRV0XnPV7WCr8NqG
- d0eYohDrrtGD7ymJFnhoWh2hXOW7X0S/4vlCP3Q1mxV3IRw5ET8QmRj7FK1SHzD7VvOj
- 7bdIxD7bhwdaI+d1rYk5K1f/knR0lfAfHPfyXRWxyRHpZiQvNILw6KVoYj8p9YhHbn+A
- hqFAC3wAZjEvWBmRMISeTreGGjOotY0lrw+cB+ZofbiSL2URX3ntaIqbbA+3w5Ujfp3H
- rIBw==
-X-Gm-Message-State: AFq9FYKUN2p9Tzi6UQwycNMziMYdkCKocpnuTyVUzCskqgLvbtxxpYOq
- wIX2n9V2xCWRPClJi5J7juM2hjjMIN9V2kbCLe/8o9cuPmZlqQnvqViNeIh1Wg==
-X-Gm-Gg: AYBFou0Yx7RR4ttTK3ukOhm+1kO7Gl8uTVOHnc8DFhxDerIBw1oTHk/of/gekd04U4a
- bSDREf08nr/z3AF8S9HmZtdYlkr/be3DWmRSphr3tHm8RbxzrjyJDcqGKlaVmM3Uefbzv/IUlRP
- HnWye4tVdPTVSWYoTpk65+bFGpKe2xlLva04LBq1z5MMtbELcupI/s5Pt3MGmOWBUHAavdMm6YQ
- Jt5T/u6ahs3+nmhNPxTcWCaYY07aX2CSl47Zq+/imUzdK1KkVILK0ywuxZsvDjBQ4iCGMDEHAgo
- 8ORhAo9ogQRRKPyxqrjZR2YIYZIdgPfdystM/wn4n/JLsqOZb+KvHvfBTbew3X9T502xwKSmmyC
- h+AcGL1iKtZJUer+5nBBpHLVq8F3pA9a5jIjLiq8qUw2DspVk3hbFow4QPxoOutnYdcVnH+1zTD
- 99/ViKQ/rowBBnV861bGHgbTCdwECskRZApecIsZ0NHMxvKTYC3JwAnwcBJXA+DwD16iHVlhiN7
- NNuHn/C6BzLqBSJNOfkYA6oCeBlnJ/Rs03u32ciV4ZbseBvYtURrgdMH4a1tSCCJhwtxPjllbEp
- Bf4ly04TQn+pICfghBs+Cip/SO4bl7smFRn/d6z0ZXbyrFgpuWJjA/rDSVL3HIJOIg==
-X-Received: by 2002:a05:701b:2710:b0:196:7590:8bed with SMTP id
- a92af1059eb24-1ac55960a88mr2309924c88.2.1793348124495; 
- Fri, 30 Oct 2026 01:15:24 -0700 (PDT)
+ bh=nAdljkISQ75QNeWlz6TQpkKdNNAEruYPkaLPZ1Gh7PA=;
+ b=ESTN2Bx/e1qv+3ZnceerhQImA38oqnh5fTZtJmv70mO8Nl9xGp97OF67oHt4HvP57P
+ QEBJZ8E/anCx0pe+gW6MjEnxXHX75Im5rxVyzupJekNUvoCMA5JSpUFx+5wIrj/7CNnM
+ PPp/wljIqT45duebTmtt0IoObFboNynZcd/9HkwT+tVlgjC2PTTCH79LnxwX1ElghMHO
+ ysjj2X63kehYSp2Yfm063T9GzZtjJYH2THoH5lZWqJ5GRZ/SKmQcdRXYW00V6DnS3jj4
+ 7Qa2mbejWJgQKCtlT5nmFWr6hOHt+MVurMmSoR5hqVHCjvNc3L+zmmoSSwN0I2XeEkiv
+ XdqQ==
+X-Gm-Message-State: AFq9FYKoFtwtR/puMZgZw5yszuOf1+hfFFht8vZkA5jj3CrcVBQvoMZj
+ +2mlkid12YjKIErRzStL64Wma5OvXsP701E+M2wcfXgyF9WuIPM2tbVhjWlYJA==
+X-Gm-Gg: AYBFou2YyrkOVM8PpDSJq17WjLIroKw07nCD/Oyrmev3n2IB1boTfGA0PFP6Bj07JSi
+ uWX5/2UxrjAOlW9VFAGdqsBnov3oi0XAF7x1ULDrSAyo0kLw07GEXZKXipV9tuay1Ff50HXp6tt
+ 9xvMoNl2/DOOiiPwx0dkCU3L/9Jasce0rvx0TGWnltBzTFagUTTeXyLIrc+cocTAmTBCpO5bEaT
+ zEDPpcvTELzJgeibGQWmPdpq5UTztqlhWgJBeSJZtySHdqdUKlypskG+D66Iu0JuL0TXp1w+orc
+ rdLxb+diKansw3iOrdBM9856Kz8dxp5VI2YE33VWKIJ7rjnYBc3Wbja46TFT17mra6rRILnSXSN
+ IJspydrzNqhEBYhv+xT/xW/klgLKD5GNs6HLk7iAZC0iv5S+KfKHWIOinzld35krsJmjuRwcxg9
+ dikA2cYptadQVYRr/3Enw/H0TLpWaFfl7qh2KFZNlphCisPxSomL3ebUkSEBvP+iNZ6pcDh7m6+
+ TSRsgBBeaMKt838en+F67Nkqn45dYl/hOVgT57ZM8Wy9DqJxcf6JSNaJ6vNDdC91VROHvSp5S0Q
+ ZUYO3QMRcekCl0TCHK12mem/dH0waN6p2iNV0pcl1QYneq8pn5estGQm28uBW4wAbjGv1vR2oVU
+ yTPMqPcSMJKI=
+X-Received: by 2002:a05:701b:424e:10b0:1a1:47b2:5512 with SMTP id
+ a92af1059eb24-1ac5b7dfd1cmr2385869c88.26.1793348108546; 
+ Fri, 30 Oct 2026 01:15:08 -0700 (PDT)
 Received: from jeuk-MS-7D42.. ([211.226.54.223])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1ac193b8179sm5905766c88.11.2026.10.30.01.15.21
+ a92af1059eb24-1ac193b8179sm5905766c88.11.2026.10.30.01.15.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 01:15:23 -0700 (PDT)
+ Fri, 30 Oct 2026 01:15:08 -0700 (PDT)
 From: Jeuk Kim <jeuk20.kim@gmail.com>
 To: qemu-devel@nongnu.org,
 	richard.henderson@linaro.org
 Cc: stefanha@redhat.com, pbonzini@redhat.com, fam@euphon.net, kwolf@redhat.com,
  hreitz@redhat.com, qemu-block@nongnu.org, daejun7.park@samsung.com,
  stanleyjhu@google.com, dridiha98@gmail.com, jeuk20.kim@samsung.com,
- j-young.choi@samsung.com
-Subject: [PULL 09/12] tests/qtest/ufs-test: Add TMR and async MCQ SCSI
- submission helpers
-Date: Fri, 30 Oct 2026 17:14:35 +0900
-Message-ID: <4da9629dd63c9d92056608b9bbea446004f55431.1793347487.git.jeuk20.kim@samsung.com>
+ j-young.choi@samsung.com, qemu-stable@nongnu.org
+Subject: [PULL 04/12] hw/ufs: Check the PRDT size against the transfer length
+ of the CDB
+Date: Fri, 30 Oct 2026 17:14:30 +0900
+Message-ID: <f9e0f4d949a0cec465e5f40ce8721b49b7850371.1793347487.git.jeuk20.kim@samsung.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1793347487.git.jeuk20.kim@samsung.com>
 References: <cover.1793347487.git.jeuk20.kim@samsung.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-dl1-x1231.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-dl1-x1234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,83 +111,317 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Stanley Jhu <stanleyjhu@google.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-Add ufs_send_tmr() and ufs_mcq_send_scsi_cmd_async() helper functions
-in preparation for UTMRL task management and QOM fault injection unit
-tests.
+scsi-hd moves as many bytes as the SG list of a request holds, and
+ufs-lu builds that list from the whole PRDT. When the PRDT is larger
+than the transfer length in the CDB, a WRITE writes more blocks than
+the CDB names and a READ reads more. A one-block WRITE(10) at LBA 0
+with an 8 KiB PRDT also wrote LBA 1, and its response reported no
+residual. A UFS device transfers what the CDB asks for and reports the
+rest of the Expected Data Transfer Length as a residual.
 
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+The commands that scsi-hd emulates had their residual computed against
+the PRDT too: an INQUIRY with an allocation length of 36, a 4 KiB PRDT
+and an Expected Data Transfer Length of 4096 reported an overflow of
+4294959176 bytes. It now reports an underflow of 4060.
+
+When the PRDT is smaller than the transfer length, scsi-hd moved what it
+holds and the request completed without an error, for example a
+two-block WRITE(10) with a 4 KiB PRDT. Such a request now fails with OCS
+MISMATCH DATA BUFFER SIZE, as one without a PRDT does. As in
+virtio-scsi, the PRDT is compared with the transfer length of the CDB,
+which for commands that return data is the allocation length, and before
+scsi-hd checks the CDB.
+
+The new ufs_fit_data_buffer() in ufs.c, where the SG list is built from
+the PRDT, cuts a longer list and reports a shorter one; ufs-lu passes it
+the transfer length that scsi_req_new() parsed. The HID qtest wrote
+eight blocks from a one-block buffer, so give it eight blocks. The new
+long-prdt and short-prdt qtests failed before this change.
+
+Fixes: 2a8b36a4967d ("hw/ufs: Support for UFS logical unit")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Stanley Jhu <stanleyjhu@google.com>
 Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
 Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
 ---
- tests/qtest/ufs-test.c | 53 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ hw/ufs/lu.c            |  20 +++---
+ hw/ufs/trace-events    |   1 +
+ hw/ufs/ufs.c           |  35 ++++++++++
+ hw/ufs/ufs.h           |   1 +
+ tests/qtest/ufs-test.c | 141 ++++++++++++++++++++++++++++++++++++++++-
+ 5 files changed, 189 insertions(+), 9 deletions(-)
 
+diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
+index a7b6d778f9b..bbb0554fb0d 100644
+--- a/hw/ufs/lu.c
++++ b/hw/ufs/lu.c
+@@ -436,15 +436,19 @@ static UfsReqResult ufs_process_scsi_cmd(UfsLu *lu, UfsRequest *req)
+                             req);
+ 
+     /*
+-     * A command that moves data needs a PRDT. Without one there is no SG
+-     * list, and the SCSI layer would call the transfer_data callback, which
+-     * ufs-lu does not set. Fail the request with OCS MISMATCH DATA BUFFER
+-     * SIZE, as virtio-scsi fails a buffer that does not match the command.
+-     * A request that reports a pending unit attention instead moves no data;
+-     * its sense is already set, so let it through and the guest sees the UA.
++     * scsi-hd moves as many bytes as the SG list holds, and without an SG
++     * list it would call the transfer_data callback, which ufs-lu does not
++     * set. A UFS device moves what the CDB asks for, so fit the PRDT to the
++     * transfer length, and fail a request whose PRDT describes less, a
++     * missing PRDT included, with OCS MISMATCH DATA BUFFER SIZE, as
++     * virtio-scsi fails a buffer that does not match the command. The
++     * response reports the rest of the Expected Data Transfer Length as a
++     * residual. A request that reports a pending unit attention moves no
++     * data; its sense is already set, so let it through and the guest sees
++     * the UA.
+      */
+-    if (scsi_req->cmd.mode != SCSI_XFER_NONE && !req->sg &&
+-        !scsi_req->sense_len) {
++    if (!scsi_req->sense_len &&
++        !ufs_fit_data_buffer(req, scsi_req->cmd.xfer)) {
+         scsi_req_unref(scsi_req);
+         return UFS_REQUEST_MISMATCH_DATA_BUF;
+     }
+diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
+index 5e5a54a3fb3..db9d1727135 100644
+--- a/hw/ufs/trace-events
++++ b/hw/ufs/trace-events
+@@ -22,6 +22,7 @@ ufs_hce_reset(void) "HCE 1 -> 0 reset: cancelling BHs, resetting MCQ and request
+ ufs_err_dma_read_utrd(uint32_t slot, uint64_t addr) "failed to read utrd. UTRLDBR slot %"PRIu32", UTRD dma addr %"PRIu64""
+ ufs_err_dma_read_req_upiu(uint32_t slot, uint64_t addr) "failed to read req upiu. UTRLDBR slot %"PRIu32", request upiu addr %"PRIu64""
+ ufs_err_dma_read_prdt(uint32_t slot, uint64_t addr) "failed to read prdt. UTRLDBR slot %"PRIu32", prdt addr %"PRIu64""
++ufs_err_mismatch_data_buf(uint32_t slot, uint8_t task_tag, uint64_t xfer, uint64_t prdt_size) "slot %"PRIu32", task tag %"PRIu8", transfer length %"PRIu64", PRDT %"PRIu64""
+ ufs_err_dma_read_sq(uint8_t sqid, uint64_t addr) "failed to read sq entry. sqid %"PRIu8", hwaddr %"PRIu64""
+ ufs_err_dma_write_utrd(uint32_t slot, uint64_t addr) "failed to write utrd. UTRLDBR slot %"PRIu32", UTRD dma addr %"PRIu64""
+ ufs_err_dma_write_rsp_upiu(uint32_t slot, uint64_t addr) "failed to write rsp upiu. UTRLDBR slot %"PRIu32", response upiu addr %"PRIu64""
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index dda615da7ce..cd28f97a123 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -227,6 +227,41 @@ static MemTxResult ufs_dma_read_prdt(UfsRequest *req)
+     return MEMTX_OK;
+ }
+ 
++/*
++ * Fit the SG list built from the PRDT to the len bytes that the command of
++ * req moves: keep only the first len bytes of a longer list. Return false if
++ * the PRDT describes fewer than len bytes.
++ */
++bool ufs_fit_data_buffer(UfsRequest *req, uint64_t len)
++{
++    QEMUSGList *prdt_sg = req->sg;
++    uint64_t prdt_size = prdt_sg ? prdt_sg->size : 0;
++    QEMUSGList *sg;
++    int i;
++
++    if (prdt_size < len) {
++        trace_ufs_err_mismatch_data_buf(req->slot,
++                                        req->req_upiu.header.task_tag, len,
++                                        prdt_size);
++        return false;
++    }
++    if (prdt_size == len) {
++        return true;
++    }
++
++    sg = g_new0(QEMUSGList, 1);
++    qemu_sglist_init(sg, prdt_sg->dev, prdt_sg->nsg, prdt_sg->as);
++    for (i = 0; i < prdt_sg->nsg && sg->size < len; i++) {
++        qemu_sglist_add(sg, prdt_sg->sg[i].base,
++                        MIN(prdt_sg->sg[i].len, len - sg->size));
++    }
++    qemu_sglist_destroy(prdt_sg);
++    g_free(prdt_sg);
++    req->sg = sg;
++    req->data_len = sg->size;
++    return true;
++}
++
+ static MemTxResult ufs_dma_read_upiu(UfsRequest *req)
+ {
+     MemTxResult ret;
+diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
+index adf74b6833d..15b3a352f3b 100644
+--- a/hw/ufs/ufs.h
++++ b/hw/ufs/ufs.h
+@@ -306,6 +306,7 @@ void ufs_build_upiu_header(UfsRequest *req, uint8_t trans_type, uint8_t flags,
+                            uint16_t data_segment_length);
+ void ufs_build_query_response(UfsRequest *req);
+ void ufs_complete_req(UfsRequest *req, UfsReqResult req_result);
++bool ufs_fit_data_buffer(UfsRequest *req, uint64_t len);
+ void ufs_wb_update_avail_buffer(UfsHc *u);
+ void ufs_init_wlu(UfsLu *wlu, uint8_t wlun);
+ bool ufs_realize(UfsHc *u, DeviceState *dev, AddressSpace *dma_as,
 diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index e8993e8c246..2914723430c 100644
+index 3c9e9e4032c..e8993e8c246 100644
 --- a/tests/qtest/ufs-test.c
 +++ b/tests/qtest/ufs-test.c
-@@ -1899,6 +1899,59 @@ static void ufstest_hid(void *obj, void *data, QGuestAllocator *alloc)
+@@ -859,6 +859,142 @@ static void ufstest_sync_cache(void *obj, void *data, QGuestAllocator *alloc)
      ufs_exit(ufs, alloc);
  }
  
-+static G_GNUC_UNUSED void ufs_send_tmr(QUfs *ufs, uint64_t utmrlba, int slot,
-+                         uint8_t tm_func, uint8_t lun,
-+                         uint32_t task_tag,
-+                         UtpTaskReqDesc *utrd_out)
++static void ufstest_long_prdt(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    uint64_t desc_addr = utmrlba + slot * sizeof(UtpTaskReqDesc);
-+    UtpTaskReqDesc desc = { 0 };
++    QUfs *ufs = obj;
++    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
++        REQUEST_SENSE,
++    };
++    /* One block at LBA 0 and at LBA 1 */
++    const uint8_t write_lba0_cdb[UFS_CDB_SIZE] = {
++        WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00,
++    };
++    const uint8_t read_lba0_cdb[UFS_CDB_SIZE] = {
++        READ_10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00,
++    };
++    const uint8_t read_lba1_cdb[UFS_CDB_SIZE] = {
++        READ_10, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01, 0x00,
++    };
++    /* Allocation length 36 */
++    const uint8_t inquiry_cdb[UFS_CDB_SIZE] = {
++        INQUIRY, 0x00, 0x00, 0x00, 0x24, 0x00,
++    };
++    uint8_t buf[2 * 4096];
++    uint8_t zero_buf[4096] = { 0 };
++    uint8_t write_buf[2 * 4096];
++    UtpUpiuRsp rsp_upiu, write_rsp_upiu;
++    enum UtpOcsCodes ocs;
 +
-+    desc.header.dword_0 = cpu_to_le32(UFS_UTP_REQ_DESC_INT_CMD);
-+    desc.header.dword_2 = cpu_to_le32(UFS_OCS_INVALID_COMMAND_STATUS);
++    ufs_init(ufs, alloc);
++    ocs = ufs_send_scsi_command(ufs, 1, request_sense_cdb, NULL, 0, buf, 4096,
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
 +
-+    desc.upiu_req.req_header.trans_type = UFS_UPIU_TRANSACTION_TASK_REQ;
-+    desc.upiu_req.req_header.query_func = tm_func;
-+    desc.upiu_req.req_header.lun = lun;
-+    desc.upiu_req.req_header.task_tag = 0x10 + slot;
-+    desc.upiu_req.input_param1 = cpu_to_be32(lun);
-+    desc.upiu_req.input_param2 = cpu_to_be32(task_tag);
++    /* A one-block WRITE with a two-block PRDT writes one block */
++    memset(write_buf, 0xa5, sizeof(write_buf));
++    ocs = ufs_send_scsi_command(ufs, 1, write_lba0_cdb, write_buf,
++                                sizeof(write_buf), NULL, 0, &write_rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(write_rsp_upiu.header.scsi_status, ==, GOOD);
 +
-+    qtest_memwrite(ufs->dev.bus->qts, desc_addr, &desc, sizeof(desc));
++    ocs = ufs_send_scsi_command(ufs, 1, read_lba1_cdb, NULL, 0, buf, 4096,
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpmem(buf, 4096, zero_buf, sizeof(zero_buf));
 +
-+    ufs_wreg(ufs, A_UTMRLDBR, 1 << slot);
-+    ufs_wait_for_irq(ufs);
-+    g_assert_true(FIELD_EX32(ufs_rreg(ufs, A_IS), IS, UTMRCS));
-+    ufs_wreg(ufs, A_IS, FIELD_DP32(0, IS, UTMRCS, 1));
-+    g_assert_cmpuint(ufs_rreg(ufs, A_UTMRLDBR) & (1 << slot), ==, 0);
++    g_assert_cmpuint(write_rsp_upiu.header.flags, ==, UFS_UPIU_FLAG_UNDERFLOW);
++    g_assert_cmpuint(be32_to_cpu(write_rsp_upiu.sr.residual_transfer_count),
++                     ==, 4096);
 +
-+    qtest_memread(ufs->dev.bus->qts, desc_addr, utrd_out, sizeof(*utrd_out));
++    /* A one-block READ with a two-block PRDT reads one block */
++    ocs = ufs_send_scsi_command(ufs, 1, read_lba0_cdb, NULL, 0, buf,
++                                sizeof(buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpuint(rsp_upiu.header.flags, ==, UFS_UPIU_FLAG_UNDERFLOW);
++    g_assert_cmpuint(be32_to_cpu(rsp_upiu.sr.residual_transfer_count), ==,
++                     4096);
++    g_assert_cmpmem(buf, 4096, write_buf, 4096);
++
++    /* A 36-byte INQUIRY with a 4 KiB PRDT reports the rest as a residual */
++    ocs = ufs_send_scsi_command(ufs, 1, inquiry_cdb, NULL, 0, buf, 4096,
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpuint(rsp_upiu.header.flags, ==, UFS_UPIU_FLAG_UNDERFLOW);
++    g_assert_cmpuint(be32_to_cpu(rsp_upiu.sr.residual_transfer_count), ==,
++                     4096 - 36);
++
++    ufs_exit(ufs, alloc);
 +}
 +
-+static G_GNUC_UNUSED int ufs_mcq_send_scsi_cmd_async(QUfs *ufs, uint8_t lun,
-+                                       const uint8_t *cdb)
++static void ufstest_short_prdt(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    int cmd_desc_slot = alloc_cmd_desc_slot(ufs);
-+    uint64_t req_upiu_addr =
-+        ufs->cmd_desc_addr + cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
-+    UtpUpiuReq req_upiu = { 0 };
-+    UtpTransferReqDesc utrd;
++    QUfs *ufs = obj;
++    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
++        REQUEST_SENSE,
++    };
++    /* Two blocks at LBA 2, and one */
++    const uint8_t write_2_cdb[UFS_CDB_SIZE] = {
++        WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x02, 0x00,
++    };
++    const uint8_t read_2_cdb[UFS_CDB_SIZE] = {
++        READ_10, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x02, 0x00,
++    };
++    const uint8_t write_1_cdb[UFS_CDB_SIZE] = {
++        WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x01, 0x00,
++    };
++    const uint8_t read_1_cdb[UFS_CDB_SIZE] = {
++        READ_10, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x01, 0x00,
++    };
++    /* Allocation length 36 */
++    const uint8_t inquiry_cdb[UFS_CDB_SIZE] = {
++        INQUIRY, 0x00, 0x00, 0x00, 0x24, 0x00,
++    };
++    uint8_t buf[4096];
++    uint8_t zero_buf[4096] = { 0 };
++    uint8_t write_buf[4096];
++    UtpUpiuRsp rsp_upiu;
++    enum UtpOcsCodes ocs;
 +
-+    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_COMMAND;
-+    req_upiu.header.flags = UFS_UPIU_CMD_FLAGS_NONE;
-+    req_upiu.header.lun = lun;
-+    req_upiu.header.task_tag = cmd_desc_slot;
-+    memcpy(req_upiu.sc.cdb, cdb, UFS_CDB_SIZE);
-+    qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
-+                   sizeof(req_upiu));
++    ufs_init(ufs, alloc);
++    ocs = ufs_send_scsi_command(ufs, 1, request_sense_cdb, NULL, 0, buf, 4096,
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    memset(write_buf, 0x5a, sizeof(write_buf));
 +
-+    utrd = ufs_build_req_utrd(req_upiu_addr, UFS_UTP_NO_DATA_TRANSFER, 0);
-+    __ufs_send_transfer_request_mcq_async(ufs, lun, &utrd);
++    /* A PRDT that describes less than the command moves fails */
++    ocs = ufs_send_scsi_command(ufs, 1, write_2_cdb, write_buf,
++                                sizeof(write_buf), NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
++    ocs = ufs_send_scsi_command(ufs, 1, read_2_cdb, NULL, 0, buf, sizeof(buf),
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
++    ocs = ufs_send_scsi_command(ufs, 1, inquiry_cdb, NULL, 0, buf, 16,
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
 +
-+    return cmd_desc_slot;
++    /* The failed WRITE wrote nothing */
++    ocs = ufs_send_scsi_command(ufs, 1, read_1_cdb, NULL, 0, buf, sizeof(buf),
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpmem(buf, sizeof(buf), zero_buf, sizeof(zero_buf));
++
++    /* A matching PRDT still works */
++    ocs = ufs_send_scsi_command(ufs, 1, write_1_cdb, write_buf,
++                                sizeof(write_buf), NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    ocs = ufs_send_scsi_command(ufs, 1, read_1_cdb, NULL, 0, buf, sizeof(buf),
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpmem(buf, sizeof(buf), write_buf, sizeof(write_buf));
++
++    ufs_exit(ufs, alloc);
 +}
 +
-+
- static void ufs_register_nodes(void)
+ static void ufstest_mcq_cq_wraparound(void *obj, void *data,
+                                       QGuestAllocator *alloc)
  {
-     const char *arch;
+@@ -1577,7 +1713,8 @@ static void ufstest_hid(void *obj, void *data, QGuestAllocator *alloc)
+         /* WRITE(10) to LBA 0, transfer length 8 sectors = 1 fragment */
+         WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00
+     };
+-    uint8_t write_buf[4096];
++    /* The PRDT must hold the eight blocks that the WRITE(10) moves */
++    uint8_t write_buf[8 * 4096];
+     uint8_t read_buf[4096];
+     int i;
+ 
+@@ -1812,6 +1949,8 @@ static void ufs_register_nodes(void)
+     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
+     qos_add_test("no-prdt", "ufs", ufstest_no_prdt, &io_test_opts);
+     qos_add_test("sync-cache", "ufs", ufstest_sync_cache, &io_test_opts);
++    qos_add_test("long-prdt", "ufs", ufstest_long_prdt, &io_test_opts);
++    qos_add_test("short-prdt", "ufs", ufstest_short_prdt, &io_test_opts);
+     qos_add_test("mcq-cq-wraparound", "ufs", ufstest_mcq_cq_wraparound,
+                  &mcq_test_opts);
+     qos_add_test("query-flag", "ufs", ufstest_query_flag_request,
 -- 
 2.43.0
 
