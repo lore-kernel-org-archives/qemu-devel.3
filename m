@@ -1,152 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5725606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 16:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AFC606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 16:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jwhkR+7P;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=S4ujcFat
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=cwM0cdSc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMpgn-0000vp-Ls; Fri, 30 Oct 2026 12:42:50 -0400
+	id 1xMphR-0001Lc-5q; Fri, 30 Oct 2026 12:43:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xMpgj-0000uX-6y
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 12:42:45 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xMpgf-0001Mc-7c
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 12:42:44 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69UERKOg2968111
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 16:42:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- TU8jHmk2uLMgwuwk13Gs2rXwiuyZ9eCjry52indLm2w=; b=jwhkR+7PfRtLQV5T
- 0hpjqgqxY4dUbFenl03AwC8LnQPkifzaptAfHQ4PP5HY8NpiLSfriXADV7tqOYI9
- mzZZjz6fpDTMUHzn9RYznjF0pxDfDDfGIS2/vMU8l/1SxmL34P8dXcc8WRaO22qS
- 688LLf4ecQvuTfb2EBjom0NMbjYwS0E7Xa2N8+oLb3neHtSJd7w7TXbBO/RIEDKd
- qP1+dYQFIv/EEAd5Ss3JkQL15mC6Ge6LSBPCDzi4GoZXquSHQsu46KO2E/5Beqfu
- eOzxCb/anZiyYvb9kyhcfUUJfYr0z+XBnU4KaNo09jWfU9u083gXVVF1FCExJ7ve
- WLutFA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qm2dw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 16:42:39 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-917a7c17166so18947366d6.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 09:42:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xMphJ-0001KB-KD
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 12:43:23 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xMphD-0001Xh-FL
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 12:43:21 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4a35a60499eso9327505e9.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 09:43:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793378558; x=1793983358; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=TU8jHmk2uLMgwuwk13Gs2rXwiuyZ9eCjry52indLm2w=;
- b=S4ujcFatT3sMehPVsV0djnEbDAoEsUKWPGT8/xBskzHb3nKJ0RfDkTo8AcF8QFDiCV
- hZ/16cC2cfZgTm+8Cq9mM0nqqnZLgsAUEU2ns3mhBkLDtg2npSc/CpbOJc1GY3yXJDLV
- CvQ9Id1IsThzTFvCFMv24f2aLTVA2jCm4mCEVvcQOSO+R5b9lH+68wVb09ARorQnerJa
- Fcm+d5Lr1R2umTwEPmZqkKl0W69pjFUJ7XAcSJLglBjGLYYq/w2l+W0lPTR7PGqSUNTD
- zQGKayUfPkey8GQf7JCB9ogMRMLiCbJFa+tboeX+ixRCtfv+CadB/axKDCud7f95Zt35
- sTWA==
+ d=linaro.org; s=google; t=1793378594; x=1793983394; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=XsAr2+WVSEhog8k5E0fRJm+o1Xwf4Pru9NbYC3h/E0g=;
+ b=cwM0cdScT1eEYhEZFBAbtEsjXJqvu8DHwSnU+RUUjAURB3dkJQxURY1gOSY+xsyV+G
+ KZWK9dKlndW7uJB5tKKKEqWYPUWia5ScggRqVTKoYn8NYzAsnHoTOHD5OfSyZLp/vopa
+ 9unt5Q7LmU8RqTk7n00ETOJE9C/N6GibgUjztt3gh9Y521OWxXTYd0C2X1JpANWkss4p
+ ld79tEjuMwXE7vcizs0ZKn2GsvvUCUffogSrXLZ9nqj9icoKOYJ5n9ZbGvE6DC0WyI55
+ IYx1t05lGl7TK0UOXcvIk1bS2DWT86tnCUy9Q3hdnPQRDZrPuvx6xVLZEYVNZMoiwEJU
+ 5wMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793378558; x=1793983358;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=TU8jHmk2uLMgwuwk13Gs2rXwiuyZ9eCjry52indLm2w=;
- b=B7JNAot0inJROMGFXlLqNx/dCXF+Fl4zdzMYDGq7aNSwzmXRfg3yDpRziQfGs49/Kb
- /BHOQqyQu4MgF+kZ4Rg0ObSlUradDWANv+iSHnof36xoiMF1Q6/SwVPx5hKiv7H8T+Ek
- 6geZESWA8/Ils3zU8cgfd2+/SNxAVGV5LV7cEdNiW9zcBskYNCeoAwLKVvDh1cat+2b3
- /jukw/QhC/rCnTybf+EnLSn4UmO56gbearCfDylXLi/peHM7p5a5t5eqQvq//lEzv5gC
- O5MO9F1QSIHcsjBG/uFk94I6DpBIWVojuB97G6IzA0cx6Re3nHSMB8hnbxvWD2WeHBuL
- mKZw==
-X-Forwarded-Encrypted: i=1;
- AKwUvByy6yfGT/VQEjVmO/vlFUYavbD8NetwZb+pCOqJNnihGHhC+4GNlkrm65UD/XtPmW+yhnMxSWGMcZuk@nongnu.org
-X-Gm-Message-State: AFq9FYLHadt8mQEShreyYfsc96UyiUVMzax0ynkwuPEE1/b7EVXoUHPr
- buy25lcuO4EX/xyq5ZDTeXrknme6aAJ1c8qit3OhkR5j8CV+c0VOwyA4Ngq8WZlJFJxxdXRJUmX
- kyZKqJ5Hs2ArkYrn14VClc9/mODpsF5IW/PrhbHEbKvxE4aX0IdmXXiyLkcC0zLI3Xw==
-X-Gm-Gg: AYBFou3Cca9g0SPNSHAlWfM/dYgoU/Osd94gVlBng+4vJTuxpK7uPgDVoyWAFPVNil+
- UtEy3fgV37nfTyfC4JOrTGHAgkB0BTApLv9WZe1uinrskZS7cC6P68DtLLOY77zJY6p/PUzBiaR
- P05TsqsY6CCiRCeW40PQd49avRGPddly/XNFBQ/fRuxcWQLEHxT3ELm0NFn4EAFQoJasTmSgm/B
- +SOESYaoyEfnj7FgQPQsRqjJ1uU0QFClG72C4gXjFCMgYPT9/vRWIVvdaN1j1+L1XalNg92/IJY
- E8CgDoAUvR1nxDR+xaMjKhjlwdaVCk76I1DsfZnPF74XggPY6Tr70VA9Ki0dddWzT76g4rt4bUv
- 7sr0wPeWvrdDACiQCv40ANZUGe80/zfRMB63Lir6/MRvvQTvmoheO+qBdgU3Xb42Nm28+pLy2xg
- 9yHTrvrn7VQlnMNR5onv4wwWcx/frrilamV4gncw==
-X-Received: by 2002:a05:6214:4016:b0:91c:61e9:7b76 with SMTP id
- 6a1803df08f44-91ca4b1d39dmr41662996d6.26.1793378557871; 
- Fri, 30 Oct 2026 09:42:37 -0700 (PDT)
-X-Received: by 2002:a05:6214:4016:b0:91c:61e9:7b76 with SMTP id
- 6a1803df08f44-91ca4b1d39dmr41662446d6.26.1793378557183; 
- Fri, 30 Oct 2026 09:42:37 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91ca7f3f903sm19219806d6.17.2026.10.30.09.42.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 30 Oct 2026 09:42:35 -0700 (PDT)
-Message-ID: <a06084bd-6995-4174-8d88-557ce087b4d1@oss.qualcomm.com>
-Date: Fri, 30 Oct 2026 11:42:34 -0500
+ d=1e100.net; s=20260707; t=1793378594; x=1793983394;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=XsAr2+WVSEhog8k5E0fRJm+o1Xwf4Pru9NbYC3h/E0g=;
+ b=Rgx1ZqMzao3yggQHVX5Xuli2CtgDpzxWB3hmp3HDmkQlnevmwuYClfe8HjXyjKnt13
+ WIux7ajm2AVoUOkKQp6+FKltEK9vfkt9oc3yL7uSzp5aVcMEghJ8RrhGTahYnQH6MNvz
+ BpfHPGCOmHssV5/WDsjIzdGjdOP+DA/+fZMUFnoIlNxKy4i9isRsxCSj7OJ/NotD211m
+ WLrTfmkpExCidAl4vPinTbaJIxgR08Cpk2ROtv2d15BaLyEVdxHJtcIrWxDQbJOCqmAX
+ UAaBMqsmN7OHPS9o0n7amfw6ua7V1gGOBQc8Dl4hcGwz6BzSEFLKK5LCLDZjoIML55/t
+ lKxg==
+X-Gm-Message-State: AFq9FYJkIPRlHEcF3vXqYIdHjOAgK+sZnHo5jjnAWQIxobllBE1UqVTy
+ 6MIJux49KMbAVhuaMGiEU+T2ecE475Q8aIVwoKEnYdhB2zsj8FMWLtsWPNbKUWEaROM=
+X-Gm-Gg: AYBFou2JmZg+p1FhrR0MPljG9C+BFPKgTKb6kS23FMTQLGLJipe7D8UkEin4+KoVT87
+ c01SiVsRwvJKQ9v6Ukg3ivEcR8qhsO7CSNaVlpRSDueDquAFfN9FPqvN0TmSs/TBTZft6O7DNn7
+ C3e3V5OlJDw4xDiND/NYTagPrmtTI649xBOwk8iK1WwHCdIAAGX32vPuHBzuZhVF12PWBj+neN7
+ S1QWfrAYLJZU7IIfiJB+yjHXjorlRUCN1mphig0BZD092VqXgObUgQ91OEIbBVcGyjoQrpdGfK2
+ IWRbXsUjexmPS4xMSrw1ON6zQjCJp+1tFCq0qwUZ7ZjZsevThyUrXcEVIgM8ytfL/1yMKWaLGab
+ Cj+eFhl7lWMGTKOCUQt814Smv5rzpsizTfNHPHAZ1q8k3ebPg/Z/e/LMXpaMmQwJCZsg1MJHNHi
+ 4ElZDfC1TiCeWCAJFtLUQnfJ+66AWEs2FhLk/dBXlZuGYV6Ty170kXa+YhF35pMHtYwU3G5eQI1
+ G5B06iubWPAgUea8F0Q7FESENncODb0ChIxZQsqTYjAuXlpkTE9owb2UvnciGC6HbS37tdTgX4a
+ 8crlNxCVB+F+xRscno6CcLWkiRxTlxMuC8RfN9+SNc0iUR6++A==
+X-Received: by 2002:a05:600c:4e50:b0:4a1:7d9b:d4ae with SMTP id
+ 5b1f17b1804b1-4ac16fa3523mr63593395e9.5.1793378593564; 
+ Fri, 30 Oct 2026 09:43:13 -0700 (PDT)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4aa8213ead6sm145917035e9.14.2026.10.30.09.43.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 30 Oct 2026 09:43:12 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2920E5F7FD;
+ Fri, 30 Oct 2026 16:43:12 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH 3/4] target/arm: simplify wfxt_timer_cb to only trigger
+ cpu_interrupt
+In-Reply-To: <CAFEAcA_vh2WhO8wAX8=6cmZx0Fe2UQYJBoRjaJb1YVAG-Lm8Jw@mail.gmail.com>
+ (Peter Maydell's message of "Fri, 30 Oct 2026 14:41:47 +0000")
+References: <20261030141046.2710206-1-alex.bennee@linaro.org>
+ <20261030141046.2710206-4-alex.bennee@linaro.org>
+ <CAFEAcA_vh2WhO8wAX8=6cmZx0Fe2UQYJBoRjaJb1YVAG-Lm8Jw@mail.gmail.com>
+User-Agent: mu4e 1.14.4; emacs 30.1
+Date: Fri, 30 Oct 2026 16:43:12 +0000
+Message-ID: <877biz87hb.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/20] target/hexagon: emit basic HLX vector operations
- inline
-To: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Alessandro Di Federico <ale@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
- <20261029174413.643130-8-marco.liebel@oss.qualcomm.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261029174413.643130-8-marco.liebel@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA2NiBTYWx0ZWRfX2kI5L0mAKKHL
- ROBW+yX57hvAJG2mKVhzCQIAKgTbGPqGTj3eNjycuOGMttKCY+oITSVXlqWTbYKnKK5cQCrwmsl
- suIloCaV6ifreiTM8ZMJyywT4NerrEhazhE41oAZ65KOhzo0LxRwjKqoHFwy56Mp9e/w8AYj5Nh
- 6RZWA6xIBdSSqDZAFim0WObXCb9M80ldW2ZwCuxjTXMVUn/tmwPfBMLkB9qVhPbZx33R6kMuTKw
- /5gadRRIGtxjKTHgC5Vdb2AOUB9wJqx8GTpn7sCiyFG4AEWFdbwxuMF6irgP2T/oETrm8ep82ZL
- cM6Zoa53n2yZ3YmInKKSTGD6Iq2zkvnRzsS+uatFoPVVRHa6r0EGNA2aMUUSjcAU13tHM0fLlrw
- a/9iWX78ecKAxN9195WNuxh1WJBoixXTBNKsvzq6uWM+MjVK1d0DHmq+vLwjimN0gMyVrR0PJpb
- voKhSZbtpcSZEOFmg1A==
-X-Proofpoint-GUID: fCANdF9OYoZVsjJ2C_X-dD0aBL68w7IP
-X-Proofpoint-ORIG-GUID: fCANdF9OYoZVsjJ2C_X-dD0aBL68w7IP
-X-Authority-Analysis: v=2.4 cv=IumL47/g c=1 sm=1 tr=0 ts=6ae4c8ff cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=00npYO4BYMms5FIVoiYA:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA2NiBTYWx0ZWRfX3cmWRvqR3CLc
- 4BYXei3RLvMPDOVlZCEsdv0KqqdUF2Z/sfQshfvyWpNBwTUsgGuKvL/gP7oFt3aXna9PvatVxyv
- PuxmH3dUU9t7y6cldsm8Qpkihpl9OLI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-30_05,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 clxscore=1015 spamscore=0 bulkscore=0
- malwarescore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300066
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,240 +107,121 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-On 10/29/2026 12:44 PM, Marco Liebel wrote:
-> Emit basic HLX arithmetic, logical, min, max, and abs operations with
-> gvec instead of helpers.
+> On Fri, 30 Oct 2026 at 14:10, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
+>>
+>> HALT_WFE will always be cleared when leaving halt via
+>> arm_cpu_leaving_halt so we don't need to worry about atomic games in
+>> the asynchronous timer callback. Furthermore, a WFET timeout or
+>> event-stream expiration is not an event that sets the event register;
 >
-> Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->   target/hexagon/genptr.c      |   1 +
->   target/hexagon/hex_common.py | 149 +++++++++++++++++++++++++----------
->   2 files changed, 107 insertions(+), 43 deletions(-)
+> No, this is still not true. WFET timeouts don't set the
+> event register, but event-stream expiration does.
 
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Oops I missed that comment, how about something like this:
+
+--8<---------------cut here---------------start------------->8---
+modified   target/arm/cpu.h
+@@ -984,8 +984,12 @@ struct ArchCPU {
+      * pmu_op_finish() - it does not need other handling during migration
+      */
+     QEMUTimer *pmu_timer;
+-    /* Timer used for WFxT timeouts OR event stream events */
++    /*
++     * Timer used for WFxT timeouts OR event stream events,
++     * wfxt_triggers_event set depending on what will come first.
++     */
+     QEMUTimer *wfxt_timer;
++    bool wfxt_triggers_event;
+=20
+     /* GPIO outputs for generic timer */
+     qemu_irq gt_timer_outputs[NUM_GTIMERS];
+modified   target/arm/cpu.c
+@@ -885,26 +885,17 @@ static void arm_cpu_leaving_halt(CPUState *cs)
+ }
+ #endif
+=20
+-/*
+- * Unlike almost everything else that messes with the halt_reason and
+- * event_register details the timer callbacks are not in the vCPU
+- * context.
+- *
+- * To prevent races we atomically consume a HALT_WFE and set the event
+- * register. Either way we trigger the an exit event.
+- */
+ static void arm_wfxt_timer_cb(void *opaque)
+ {
+     ARMCPU *cpu =3D opaque;
+     CPUState *cs =3D CPU(cpu);
+     CPUARMState *env =3D &cpu->env;
+=20
+-    if (qatomic_cmpxchg(&env->halt_reason, HALT_WFE, NOT_HALTED)) {
++    if (cpu->wfxt_triggers_event) {
+         qatomic_set(&env->event_register, true);
+     }
+-
+     /*
+-     * We expect the CPU to be halted; this will cause arm_cpu_is_work()
++     * We expect the CPU to be halted; this will cause arm_cpu_has_work()
+      * to return true (so we will come out of halt even with no other
+      * pending interrupt), and the TCG accelerator's cpu_exec_interrupt()
+      * function auto-clears the CPU_INTERRUPT_EXITTB flag for us.
+modified   target/arm/tcg/op_helper.c
+@@ -377,6 +377,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
+     return;
+ #else
+     CPUState *cs =3D env_cpu(env);
++    ARMCPU *cpu =3D env_archcpu(env);
+     uint32_t excp;
+     int target_el =3D check_wfx_trap(env, false, &excp);
+=20
+@@ -398,6 +399,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
+                         target_el);
+     }
+=20
++    cpu->wfxt_triggers_event =3D false;
+     qatomic_set(&env->halt_reason, HALT_WFI);
+     cs->exception_index =3D EXCP_HLT;
+     cs->halted =3D 1;
+@@ -461,6 +463,7 @@ void HELPER(wfit)(CPUARMState *env, uint32_t rd)
+     } else {
+         timer_mod(cpu->wfxt_timer, nexttick);
+     }
++    cpu->wfxt_triggers_event =3D false;
+     qatomic_set(&env->halt_reason, HALT_WFI);
+     cs->exception_index =3D EXCP_HLT;
+     cs->halted =3D 1;
+@@ -720,12 +723,14 @@ void HELPER(wfet)(CPUARMState *env, uint32_t rd)
+     next_event =3D gt_calc_next_event_stream(env);
+     if (next_event > 0 && next_event < nexttick) {
+         timer_mod(cpu->wfxt_timer, next_event);
++        cpu->wfxt_triggers_event =3D true;
+     } else {
+         if (nexttick =3D=3D INT64_MAX) {
+             timer_mod_ns(cpu->wfxt_timer, INT64_MAX);
+         } else {
+             timer_mod(cpu->wfxt_timer, nexttick);
+         }
++        cpu->wfxt_triggers_event =3D false;
+     }
+=20
+     qatomic_set(&env->halt_reason, HALT_WFE);
+--8<---------------cut here---------------end--------------->8---
 
 
 >
-> diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
-> index fd3f6a1edf..808caf4289 100644
-> --- a/target/hexagon/genptr.c
-> +++ b/target/hexagon/genptr.c
-> @@ -18,6 +18,7 @@
->   #include "qemu/osdep.h"
->   #include "qemu/log.h"
->   #include "cpu.h"
-> +#include "hw/hexagon/hexagon_hlx.h"
->   #include "internal.h"
->   #include "tcg/tcg-op.h"
->   #include "tcg/tcg-op-gvec.h"
-> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-> index 091c1bf7ef..a6ac84d792 100755
-> --- a/target/hexagon/hex_common.py
-> +++ b/target/hexagon/hex_common.py
-> @@ -321,6 +321,63 @@ def skip_qemu_helper(tag):
->       "LX_assign_w":   {"op": "mov",          "vece": "MO_64",
->                         "size": "2 * sizeof(HLXVector)"},
->       "LX_combine_w":  {"op": "combine_pair", "vece": "MO_64"},
-> +    "LX_add_h_sat":  {"op": "gvec3_fn", "fn": "ssadd",
-> +                      "vece": "MO_16"},
-> +    "LX_add_uh_sat": {"op": "gvec3_fn", "fn": "usadd",
-> +                      "vece": "MO_16"},
-> +    "LX_sub_h_sat":  {"op": "gvec3_fn", "fn": "sssub",
-> +                      "vece": "MO_16"},
-> +    "LX_sub_uh_sat": {"op": "gvec3_fn", "fn": "ussub",
-> +                      "vece": "MO_16"},
-> +    # Word forms use helpers because their halfwords are split.
-> +    "LX_add_hp_sat": {"op": "gvec3_fn", "fn": "ssadd",
-> +                      "vece": "MO_16", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_add_uhp_sat":{"op": "gvec3_fn", "fn": "usadd",
-> +                      "vece": "MO_16", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_sub_hp_sat": {"op": "gvec3_fn", "fn": "sssub",
-> +                      "vece": "MO_16", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_sub_uhp_sat":{"op": "gvec3_fn", "fn": "ussub",
-> +                      "vece": "MO_16", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_and":        {"op": "gvec3_fn",     "fn": "and",
-> +                      "vece": "MO_64"},
-> +    "LX_or":         {"op": "gvec3_fn",     "fn": "or",
-> +                      "vece": "MO_64"},
-> +    "LX_xor":        {"op": "gvec3_fn",     "fn": "xor",
-> +                      "vece": "MO_64"},
-> +    "LX_andn":       {"op": "gvec3_fn",     "fn": "andc",
-> +                      "vece": "MO_64"},
-> +    "LX_orn":        {"op": "gvec3_fn",     "fn": "orc",
-> +                      "vece": "MO_64"},
-> +    "LX_and_w":      {"op": "gvec3_fn",     "fn": "and",
-> +                      "vece": "MO_64", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_or_w":       {"op": "gvec3_fn",     "fn": "or",
-> +                      "vece": "MO_64", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_xor_w":      {"op": "gvec3_fn",     "fn": "xor",
-> +                      "vece": "MO_64", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_andn_w":     {"op": "gvec3_fn",     "fn": "andc",
-> +                      "vece": "MO_64", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_orn_w":      {"op": "gvec3_fn",     "fn": "orc",
-> +                      "vece": "MO_64", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_min_h":      {"op": "gvec3_fn", "fn": "smin",
-> +                      "vece": "MO_16"},
-> +    "LX_max_h":      {"op": "gvec3_fn", "fn": "smax",
-> +                      "vece": "MO_16"},
-> +    "LX_min_uh":     {"op": "gvec3_fn", "fn": "umin",
-> +                      "vece": "MO_16"},
-> +    "LX_max_uh":     {"op": "gvec3_fn", "fn": "umax",
-> +                      "vece": "MO_16"},
-> +    "LX_min_hp":     {"op": "gvec3_fn", "fn": "smin",
-> +                      "vece": "MO_16", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_max_hp":     {"op": "gvec3_fn", "fn": "smax",
-> +                      "vece": "MO_16", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_min_uhp":    {"op": "gvec3_fn", "fn": "umin",
-> +                      "vece": "MO_16", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_max_uhp":    {"op": "gvec3_fn", "fn": "umax",
-> +                      "vece": "MO_16", "size": "2 * sizeof(HLXVector)"},
-> +    "LX_abs_uh":     {"op": "gvec2_fn", "fn": "abs",
-> +                      "vece": "MO_16"},
-> +    "LX_abs_uhp":    {"op": "gvec2_fn", "fn": "abs",
-> +                      "vece": "MO_16", "size": "2 * sizeof(HLXVector)"},
->   }
->   
->   def is_hlx_inline_tag(tag):
-> @@ -449,27 +506,29 @@ def reg(i):
->                                      {b}_base, {b}_off,
->                                      {oprsz}, {maxsz}, &{table});
->               """))
-> -    elif op == "gvec3_arr":
-> -        # Like gvec3, but table is a GVecGen3[4] indexed by vece.
-> +    elif op == "gvec3_fn":
->           d, a, b = reg(0), reg(1), reg(2)
-> -        table = desc["table"]
-> +        fn = desc["fn"]
->           if pair_dst:
->               f.write(code_fmt(f"""\
-> -                tcg_gen_gvec_3_var({d}_base, {d}_off,
-> -                                   {a}_base, {a}_off,
-> -                                   {b}_base, {b}_off,
-> -                                   {oprsz}, {maxsz}, &{table}[{vece}]);
-> -                tcg_gen_gvec_3_var({d}_base, {d}_off + sizeof(HLXVector),
-> -                                   {a}_base, {a}_off + sizeof(HLXVector),
-> -                                   {b}_base, {b}_off + sizeof(HLXVector),
-> -                                   {oprsz}, {maxsz}, &{table}[{vece}]);
-> +                tcg_gen_gvec_{fn}_var({vece},
-> +                                      {d}_base, {d}_off,
-> +                                      {a}_base, {a}_off,
-> +                                      {b}_base, {b}_off,
-> +                                      {oprsz}, {maxsz});
-> +                tcg_gen_gvec_{fn}_var({vece},
-> +                                      {d}_base, {d}_off + sizeof(HLXVector),
-> +                                      {a}_base, {a}_off + sizeof(HLXVector),
-> +                                      {b}_base, {b}_off + sizeof(HLXVector),
-> +                                      {oprsz}, {maxsz});
->               """))
->           else:
->               f.write(code_fmt(f"""\
-> -                tcg_gen_gvec_3_var({d}_base, {d}_off,
-> -                                   {a}_base, {a}_off,
-> -                                   {b}_base, {b}_off,
-> -                                   {oprsz}, {maxsz}, &{table}[{vece}]);
-> +                tcg_gen_gvec_{fn}_var({vece},
-> +                                      {d}_base, {d}_off,
-> +                                      {a}_base, {a}_off,
-> +                                      {b}_base, {b}_off,
-> +                                      {oprsz}, {maxsz});
->               """))
->       elif op == "combine_pair":
->           dd, u, v = reg(0), reg(1), reg(2)
-> @@ -486,7 +545,7 @@ def reg(i):
->                                    {single}, {single});
->           """))
->       elif op == "gvec2":
-> -        # Two-operand op: dest and one source.  table is a const GVecGen2.
-> +        # Two-operand op: dest and one source. table is a const GVecGen2.
->           d, a = reg(0), reg(1)
->           table = desc["table"]
->           if pair_dst:
-> @@ -504,46 +563,50 @@ def reg(i):
->                                      {a}_base, {a}_off,
->                                      {oprsz}, {maxsz}, &{table});
->               """))
-> -    elif op == "gvec2_arr":
-> -        # Like gvec2, but table is a GVecGen2[4] indexed by vece.
-> +    elif op == "gvec2_fn":
->           d, a = reg(0), reg(1)
-> -        table = desc["table"]
-> +        fn = desc["fn"]
->           if pair_dst:
->               f.write(code_fmt(f"""\
-> -                tcg_gen_gvec_2_var({d}_base, {d}_off,
-> -                                   {a}_base, {a}_off,
-> -                                   {oprsz}, {maxsz}, &{table}[{vece}]);
-> -                tcg_gen_gvec_2_var({d}_base, {d}_off + sizeof(HLXVector),
-> -                                   {a}_base, {a}_off + sizeof(HLXVector),
-> -                                   {oprsz}, {maxsz}, &{table}[{vece}]);
-> +                tcg_gen_gvec_{fn}_var({vece},
-> +                                      {d}_base, {d}_off,
-> +                                      {a}_base, {a}_off,
-> +                                      {oprsz}, {maxsz});
-> +                tcg_gen_gvec_{fn}_var({vece},
-> +                                      {d}_base, {d}_off + sizeof(HLXVector),
-> +                                      {a}_base, {a}_off + sizeof(HLXVector),
-> +                                      {oprsz}, {maxsz});
->               """))
->           else:
->               f.write(code_fmt(f"""\
-> -                tcg_gen_gvec_2_var({d}_base, {d}_off,
-> -                                   {a}_base, {a}_off,
-> -                                   {oprsz}, {maxsz}, &{table}[{vece}]);
-> +                tcg_gen_gvec_{fn}_var({vece},
-> +                                      {d}_base, {d}_off,
-> +                                      {a}_base, {a}_off,
-> +                                      {oprsz}, {maxsz});
->               """))
-> -    elif op == "cmp_gt":
-> -        # a > b is done as b < a, with the less-than descriptor in "table"
-> +    elif op == "cmp":
->           d, a, b = reg(0), reg(1), reg(2)
-> -        table = desc["table"]
-> +        cond = desc["cond"]
->           if pair_dst:
->               f.write(code_fmt(f"""\
-> -                tcg_gen_gvec_3_var({d}_base, {d}_off,
-> -                                   {b}_base, {b}_off,
-> -                                   {a}_base, {a}_off,
-> -                                   {oprsz}, {maxsz}, &{table});
-> -                tcg_gen_gvec_3_var({d}_base, {d}_off + sizeof(HLXVector),
-> -                                   {b}_base, {b}_off + sizeof(HLXVector),
-> -                                   {a}_base, {a}_off + sizeof(HLXVector),
-> -                                   {oprsz}, {maxsz}, &{table});
-> +                tcg_gen_gvec_cmp_var({cond}, {vece},
-> +                                     {d}_base, {d}_off,
-> +                                     {a}_base, {a}_off,
-> +                                     {b}_base, {b}_off,
-> +                                     {oprsz}, {maxsz});
-> +                tcg_gen_gvec_cmp_var({cond}, {vece},
-> +                                     {d}_base, {d}_off + sizeof(HLXVector),
-> +                                     {a}_base, {a}_off + sizeof(HLXVector),
-> +                                     {b}_base, {b}_off + sizeof(HLXVector),
-> +                                     {oprsz}, {maxsz});
->               """))
->           else:
->               f.write(code_fmt(f"""\
-> -                tcg_gen_gvec_3_var({d}_base, {d}_off,
-> -                                   {b}_base, {b}_off,
-> -                                   {a}_base, {a}_off,
-> -                                   {oprsz}, {maxsz}, &{table});
-> +                tcg_gen_gvec_cmp_var({cond}, {vece},
-> +                                     {d}_base, {d}_off,
-> +                                     {a}_base, {a}_off,
-> +                                     {b}_base, {b}_off,
-> +                                     {oprsz}, {maxsz});
->               """))
->       elif op == "conv_h_to_w_pair":
->           # lo = the source; hi = zeros (zxt) or the source >> 15 (sxt)
+> -- PMM
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
