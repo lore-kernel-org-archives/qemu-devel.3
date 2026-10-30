@@ -1,79 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7437F606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EA2606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ysIc9Dpu
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=TY002fMw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMrmH-00070o-Ec; Fri, 30 Oct 2026 14:56:37 -0400
+	id 1xMrn4-0007eb-Hg; Fri, 30 Oct 2026 14:57:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMrlp-0006sL-C2
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:09 -0400
+ id 1xMrm0-0006uP-UI
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:21 -0400
 Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMrln-0004oa-6o
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:08 -0400
+ id 1xMrlw-0004pk-Ra
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:20 -0400
 Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-8b0f59a5fdeso9413537b3.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 11:56:06 -0700 (PDT)
+ 00721157ae682-8b0d91601bdso18475357b3.1
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 11:56:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793386566; x=1793991366; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793386575; x=1793991375; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=q7yVmOjDkEbe0BVZGoC/5nOMtAyC/kW47+ufduY/aMM=;
- b=ysIc9DpuAUX8XtE+nB4aZ8Dp1uYjKsPiQqBzljl43VP7QH8GNG/qjZfr6MPvQHapOQ
- f1biuTkyb2RIpH7v1F7MProelc7nmEuDr+wzGa8aD83KanDrE6YclxleOhRQymc/0ijY
- LnPYhEUNWAGM5iZK7rq0Pc55SucTO4B2PeLb14cxyKhtEp3Oeo7WPjePVqAzZg48sLLc
- 1DmlEHt8nFREk7ks5fMdnwEt/CbkefdPpCCae3FozkEgJWLXJOHgsKC/jr71JMiQhXus
- vJjXR8qp0XWuRqMp2lq0Lk4xMyh/NwGN4wMJ4MqUE9y0EULHRUZ1cWqTYVl5ApVgyNEe
- A7Pg==
+ bh=RB/sKLvvfUB0Wfzn/1ltw/gBKjTDiPFiEr9fRa8ubkg=;
+ b=TY002fMwfqlP8ygxjKy2QCXQjTvu6ZymNUGI2NpyggT2lPSt5TqwFziO2/D1PsT4vC
+ ClU8tlQGxCVjWPNLsZHAPsxIemxG7vx79KOEGhHsBBrhSVa38SRTgyGBx7XPWr98PObD
+ YGhTI0SCvvpCkJBZ/jAcaP9Q8Hbkr9xphmAWWudyG9yUa869ly8KXJ151JSSIYNXzHyG
+ tsxI+TPg3RgOS1tB3RQQeeQNqcj8hNAkhOrM3uzcKNIi7DxnSih1aW4Gd4Q3Uc4N7BhX
+ ngMwTAaFQiCqnFqs+25hLaZ0sop7/QuT0JhpOGFTDqp+FXb+finXKiZh24b/oqWGLZHp
+ AdkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793386566; x=1793991366;
+ d=1e100.net; s=20260707; t=1793386575; x=1793991375;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=q7yVmOjDkEbe0BVZGoC/5nOMtAyC/kW47+ufduY/aMM=;
- b=QYtQnlIMxw3Rg8XkhIT4jpxRRfQXmiTSFLyYn4SdhZQ/ECM6Z7Ioy7ZoGUBKXAk/G+
- Lrlfrs9TSy9ukR9KCNS3mvkblVOzPQrokJcL8sPGc1LbRQpeRUaIyPhbAPK27gJ7BAjN
- bJZW/VGg66FLT/RtWq2JbssU6pVj9RXbbjCtz2RWDRs2VP+7MCesi1oe77N6isXEWVc4
- 5kMMEv43LQ1CmL72+zD63x3RamJ909b/fRYL5QY67hSyV/K9tQGlgCwQiLsNxLkhZCZV
- oWR98UhrL+aYkPXy+magk8D7rgiKpz46WBPP/Ub8gFODK3Uj4L56JHfkx79exvXXN+eg
- LrDQ==
-X-Gm-Message-State: AFq9FYJH1Y0mzJ+XcqcSmkHOrr7SUhCeZJqjn1CXgS+3oYVSowp6cLpT
- veLlZFlnMAnUZIz1fZu51meYbsOvsCdq8R/Vsnk7MgHt+NEVyPP879Rzf4ECRCwgtY30hTgZhM8
- 08nRh
-X-Gm-Gg: AYBFou07GEKZgfOk3xH51wQtej2X4tsfoZrYZoTzRecBtG+p/iM2LsPEaKnHFO3Zc6M
- GZlu79VKACqxpDp6jq1yTqp8Vmz2TPOY9vnXs7jLVMs/vbXUkvWoxa2FcDwYw0LcqWDAHG+fmPR
- 86tv6vZq+ZHiSvXRq2y6Y2iEPIVFZ17wZwkq3hu3Jeu0KGi7irF2YYlGRsazb3hJ3iRGT0arrs+
- Ci+rttPfB9ynH/t2bupqTvxwjliwSgTRni91kKU868Ha9Tk1NOgcQE31G5PW7YbFfhXZ1mAnbQe
- xPhT8Af8mDadEdeRWNNZLAW58Cw8tRLK0pZJ4YVpHzeGYAB5l3xopWi5RAErofZfoLDp6/V7x/S
- 31k6dqe7YxXq9lxb99HIZ7FCzxkCRXar8fT0a4wBrHppvJbwzxbjtNbqEGFJBeSGAYX8zEUNUfm
- Lq3rV5ldVnBz9+szCvbUznqEoh/5bfCQmOpyplE5LEkNNwAbwajPfzF6Sp9BQN94fAKhJPFQzy8
- nAEK21y7IJ+R6JT3ZGalsO8NOOECkfqEIGj6z3Q3K4tCj3j/MJqpSLZ7El7TiV/9X9YipIBP2eJ
- DUpbjLQDyINZEcaX5E9PCZKLRLlJXqjnLsg=
-X-Received: by 2002:a05:690c:348a:b0:88f:df4:1c8e with SMTP id
- 00721157ae682-8b2b66c5d61mr19291407b3.22.1793386565880; 
- Fri, 30 Oct 2026 11:56:05 -0700 (PDT)
+ bh=RB/sKLvvfUB0Wfzn/1ltw/gBKjTDiPFiEr9fRa8ubkg=;
+ b=O/0jOMVcYxOkQEgiAuAT0+cQvXd7T2OExy2m5CfBe/dFdxfke1Ma0/yWru1CLazVAY
+ jea7hq+FUmgHkgeoGLNP+Qt2XQpz1+ePE9pQJkEch3u7+yUtQlwGhoek0vEjpi/8rAOV
+ ed5hqZN3Q+ZAvj+HbiJdQpXTMKL3AJK0ZYKl9dc64g22IIBnTfwY4oQJGuPDoMqBDL1o
+ eg2TOXtpubv5hLlkhHtC8GEMfsWpOcwGGcAGxAp+s0nJQb+0a/bdGPGHlIUb29U8n03j
+ 5i5Zyq2b2bgqdLkU6QZrP+nVVGmVWRYFTFZ0A5ZMWPZXisrOCkFYGhWd4A7iwKHmwYC8
+ zvYA==
+X-Gm-Message-State: AFq9FYJ394g1pzTLpiLVPrvROMsI0ZG9Te58Nr0Fgga+AL9Ba8046qrQ
+ l7dUztuDDTazDFD+qDiOjd1dGQ38GrH1JCyCIJxccR/B3MELdAxfALHhCEERXzeM0iimr4dwlFr
+ YeRPd
+X-Gm-Gg: AYBFou28iQo0W52axBITz3d3L6w5gdLtXNzE3g0dUsYooHNefiSDMlPsVvKvxNEyBi/
+ feBHQ01wLudomNnRLhcMrpWVrqrY+9dFA5X8BAu9JinYXGIeONaBKFAJxq4mWmczuOxQK4VjvU9
+ ufo6UguYWDViRGRyMXGdzdE7O6ARRAnOlIYp9FDTQz9Cxs1KjEHryUcnSzTqF8qS7p/T4CaaxAP
+ 0n58J8GhFzJU3zRIVxAUO76KHfYu4Pr/din2qv7VlkkMsQJ4UjIEWjZXxKDtaeNRiczoaE39KUJ
+ rHHiS55rB7QCil4SAAV2UX67WEOHSEXd7/yHf3CG0kiqjVM9SRi7KmymiXCF+ZkuNgAz2tQMIst
+ BBF9gMB1rV68RdXfsv8tkEtFGbHmb9nqiUf8Jhrgii92ytLDRvMmSfPp1HLOK/A9yxenG+BgInx
+ LBB3/FCM9HJhFzps5CJ6hVFmFbQtVr1RVio5XnAjO0wbCoNooGaE5jxt9Tw8aaI1a2LvelZAiU2
+ K6y9TiB4JPdVj/v/66K4jMkKCG3YeJnKzVKse7eIDsUNna6qpw0V6kmYO51dgr+vtWGemDyQptN
+ sLa9wIqahf78VTbL46Vf+bujuW2/koQ+mEw=
+X-Received: by 2002:a05:690c:a906:10b0:8b0:cc88:cbe3 with SMTP id
+ 00721157ae682-8b1c6691f71mr38533737b3.11.1793386575200; 
+ Fri, 30 Oct 2026 11:56:15 -0700 (PDT)
 Received: from stoup ([2607:fb90:5e62:412b:1381:b0c1:1339:9c82])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8b2b71a13b1sm13209657b3.39.2026.10.30.11.56.04
+ 00721157ae682-8b2b71a13b1sm13209657b3.39.2026.10.30.11.56.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 11:56:05 -0700 (PDT)
+ Fri, 30 Oct 2026 11:56:14 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: iii@linux.ibm.com,
 	mattst88@gmail.com
-Subject: [PATCH v7 07/14] accel/tcg: add CF_NO_GOTO_JC,
- set while a breakpoint is present
-Date: Fri, 30 Oct 2026 13:55:44 -0500
-Message-ID: <20261030185551.193092-8-richard.henderson@linaro.org>
+Subject: [PATCH v7 14/14] accel/tcg: Move tb_jmp_cache to
+ CPUNegativeOffsetState
+Date: Fri, 30 Oct 2026 13:55:51 -0500
+Message-ID: <20261030185551.193092-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261030185551.193092-1-richard.henderson@linaro.org>
 References: <20261030185551.193092-1-richard.henderson@linaro.org>
@@ -107,182 +107,131 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Matt Turner <mattst88@gmail.com>
-
-The next patch dispatches a goto_jc by probing the TB jump cache from
-generated code. That probe cannot check everything helper_lookup_tb_ptr()
-checks, and the one that matters is breakpoints: check_for_breakpoints()
-raises EXCP_DEBUG on an exact pc match and selects CF_BP_PAGE cflags for the
-rest of the page, and inserting a breakpoint deliberately invalidates no TB.
-
-The probe compares the destination's cflags against the cflags of the block
-doing the dispatching, and only takes the destination when they are equal.
-So a cflag is all that is needed.  Add CF_NO_GOTO_JC, set it in
-CPUState::tcg_cflags while cpu->breakpoints is non-empty, and blocks
-translated from then on both decline to dispatch inline themselves -- the
-next patch makes them emit the plain helper call -- and are unreachable from
-blocks that do, because their cflags no longer match.
-
-The two ends of the flag are cpu_breakpoint_insert() and
-cpu_breakpoint_remove_by_ref(), which are the only places the list changes.
-Both already run either on the CPU's own thread or with it stopped, or reach
-another CPU exactly as cpu_single_step() does, which is where the previous
-patch put the same kind of update.
-
-That leaves blocks translated before the breakpoint was inserted, which are
-still live and still chain to each other. They do so on the old cflags, so
-inline dispatch among them keeps working until the vCPU reaches its main
-loop, which then looks up with the new cflags and translates afresh. In
-system mode gdb inserts breakpoints with the vCPUs stopped, so there is no
-window at all. In user mode the window is the one goto_tb chaining already
-has: a chained direct jump consults nothing either, and is not broken by
-inserting a breakpoint.
-
-Nothing reads CF_NO_GOTO_JC yet; the next patch does.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260901034808.3524945-6-mattst88@gmail.com>
 ---
- include/exec/translation-block.h |  5 +++--
- accel/tcg/cpu-exec-common.c      | 13 ++++++++++++-
- accel/tcg/cpu-exec.c             |  2 +-
- cpu-common.c                     | 27 +++++++++++++++++++++++++--
- 4 files changed, 41 insertions(+), 6 deletions(-)
+ include/hw/core/cpu.h     | 4 ++--
+ accel/tcg/cpu-exec.c      | 8 ++++----
+ accel/tcg/cputlb.c        | 2 +-
+ accel/tcg/tb-maint.c      | 2 +-
+ accel/tcg/translate-all.c | 2 +-
+ tcg/tcg-op.c              | 2 +-
+ 6 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
-index 5a7a638b08..4406db5ab2 100644
---- a/include/exec/translation-block.h
-+++ b/include/exec/translation-block.h
-@@ -76,8 +76,8 @@ struct TranslationBlock {
- #define CF_COUNT_MASK    0x000001ff
- #define CF_NO_GOTO_TB    0x00000200 /* Do not chain with goto_tb */
- #define CF_NO_GOTO_PTR   0x00000400 /* Do not chain with goto_ptr */
--#define CF_SINGLE_STEP   0x00000800 /* gdbstub single-step in effect */
--#define CF_MEMI_ONLY     0x00001000 /* Only instrument memory ops */
-+#define CF_NO_GOTO_JC    0x00000800 /* Do not dispatch via the inline probe */
-+#define CF_SINGLE_STEP   0x00001000 /* gdbstub single-step in effect */
- #define CF_USE_ICOUNT    0x00002000
- #define CF_INVALID       0x00004000 /* TB is stale. Set with @jmp_lock held */
- #define CF_PARALLEL      0x00008000 /* Generate code for a parallel context */
-@@ -85,6 +85,7 @@ struct TranslationBlock {
- #define CF_PCREL         0x00020000 /* Opcodes in TB are PC-relative */
- #define CF_BP_PAGE       0x00040000 /* Breakpoint present in code page */
- #define CF_STEP_ATOMIC   0x00080000 /* Running in cpu_exec_step_atomic */
-+#define CF_MEMI_ONLY     0x00100000 /* Only instrument memory ops */
- #define CF_CLUSTER_MASK  0xff000000 /* Top 8 bits are cluster ID */
- #define CF_CLUSTER_SHIFT 24
- 
-diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
-index 4e5e69649a..32e76d5f41 100644
---- a/accel/tcg/cpu-exec-common.c
-+++ b/accel/tcg/cpu-exec-common.c
-@@ -33,7 +33,7 @@ bool tcg_allowed;
-  * they are derived from gdb single-step, one-insn-per-tb and -d nochain.
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 5b7c330047..5d1b624e6c 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -369,9 +369,11 @@ typedef union IcountDecr {
+  * @plugin_mem_cbs: active plugin memory callbacks
+  * @plugin_mem_value_low: 64 lower bits of latest accessed mem value.
+  * @plugin_mem_value_high: 64 higher bits of latest accessed mem value.
++ * @tb_jmp_cache: Hash table of recently accessed TranslationBlocks.
   */
- #define CF_DERIVED  (CF_COUNT_MASK | CF_NO_GOTO_TB | CF_NO_GOTO_PTR | \
--                     CF_SINGLE_STEP)
-+                     CF_NO_GOTO_JC | CF_SINGLE_STEP)
+ typedef struct CPUNegativeOffsetState {
+     CPUTLB tlb;
++    struct CPUJumpCache *tb_jmp_cache;
+ #ifdef CONFIG_PLUGIN
+     /*
+      * The callback pointer are accessed via TCG (see gen_empty_mem_helper).
+@@ -528,8 +530,6 @@ struct CPUState {
+     AddressSpace *as;
+     MemoryRegion *memory;
  
- bool tcg_cflags_has(CPUState *cpu, uint32_t flags)
- {
-@@ -65,6 +65,17 @@ void tcg_update_cflags(CPUState *cpu)
-         cflags |= CF_NO_GOTO_TB;
-     }
- 
-+    /*
-+     * A block that dispatches through the jump cache inline does not consult
-+     * cpu->breakpoints, and inserting a breakpoint deliberately invalidates
-+     * nothing.  Give blocks translated while one is set a distinct cflags, so
-+     * that they neither dispatch inline themselves nor are reached by a block
-+     * that does, and check_for_breakpoints() gets to run on every dispatch.
-+     */
-+    if (unlikely(!QTAILQ_EMPTY(&cpu->breakpoints))) {
-+        cflags |= CF_NO_GOTO_JC;
-+    }
-+
-     cpu->tcg_cflags = cflags;
- }
- 
+-    struct CPUJumpCache *tb_jmp_cache;
+-
+     GArray *gdb_regs;
+     int gdb_num_regs;
+     int gdb_num_g_regs;
 diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index cf690e0e11..4c20091ef5 100644
+index 4c20091ef5..2ed8f7c251 100644
 --- a/accel/tcg/cpu-exec.c
 +++ b/accel/tcg/cpu-exec.c
-@@ -593,7 +593,7 @@ void cpu_exec_step_atomic(CPUState *cpu)
-         /* Execute in a serial context. */
-         s.cflags &= ~CF_PARALLEL;
-         /* After 1 insn, return and release the exclusive lock. */
--        s.cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR |
-+        s.cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | CF_NO_GOTO_JC |
-                     CF_NOIRQ | CF_STEP_ATOMIC | 1;
+@@ -237,7 +237,7 @@ static inline TranslationBlock *tb_lookup(CPUState *cpu, TCGTBCPUState s)
+     tcg_debug_assert(!(s.cflags & CF_INVALID));
  
-         /*
-diff --git a/cpu-common.c b/cpu-common.c
-index adb76b3a78..81a302ace9 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -22,6 +22,7 @@
- #include "exec/cpu-common.h"
- #include "hw/core/cpu.h"
- #include "qemu/lockable.h"
-+#include "system/tcg.h"
- #include "trace/trace-root.h"
+     hash = tb_jmp_cache_hash_func(s.pc);
+-    jc = cpu->tb_jmp_cache;
++    jc = cpu->neg.tb_jmp_cache;
  
- QemuMutex qemu_cpu_list_lock;
-@@ -429,6 +430,11 @@ int cpu_breakpoint_insert(CPUState *cpu, vaddr pc, int flags,
-         *breakpoint = bp;
-     }
+     tb = qatomic_read(&jc->array[hash].tb);
+     if (likely(tb &&
+@@ -1012,7 +1012,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
+                  * for the fast lookup
+                  */
+                 h = tb_jmp_cache_hash_func(s.pc);
+-                jc = cpu->tb_jmp_cache;
++                jc = cpu->neg.tb_jmp_cache;
+                 jc->array[h].pc = s.pc;
+                 qatomic_set(&jc->array[h].tb, tb);
+             }
+@@ -1109,7 +1109,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+     /* Pick up one-insn-per-tb and -d nochain from the command line. */
+     tcg_update_cflags(cpu);
  
-+    /* The first breakpoint takes the CPU off the inline dispatch path. */
-+    if (tcg_enabled()) {
-+        tcg_update_cflags(cpu);
-+    }
-+
-     trace_breakpoint_insert(cpu->cpu_index, pc, flags);
-     return 0;
+-    cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
++    cpu->neg.tb_jmp_cache = g_new0(CPUJumpCache, 1);
+     tlb_init(cpu);
+ #ifndef CONFIG_USER_ONLY
+     tcg_iommu_init_notifier_list(cpu);
+@@ -1127,5 +1127,5 @@ void tcg_exec_unrealizefn(CPUState *cpu)
+ #endif /* !CONFIG_USER_ONLY */
+ 
+     tlb_destroy(cpu);
+-    g_free_rcu(cpu->tb_jmp_cache, rcu);
++    g_free_rcu(cpu->neg.tb_jmp_cache, rcu);
  }
-@@ -452,7 +458,7 @@ int cpu_breakpoint_remove(CPUState *cpu, vaddr pc, int flags)
- }
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index dc83f3bad8..c777f5ac3f 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -149,7 +149,7 @@ static void tlb_window_reset(CPUTLBDesc *desc, int64_t ns,
  
- /* Remove a specific breakpoint by reference.  */
--void cpu_breakpoint_remove_by_ref(CPUState *cpu, CPUBreakpoint *bp)
-+static void cpu_breakpoint_remove_by_ref_int(CPUState *cpu, CPUBreakpoint *bp)
+ static void tb_jmp_cache_clear_page(CPUState *cpu, vaddr page_addr)
  {
-     QTAILQ_REMOVE(&cpu->breakpoints, bp, entry);
+-    CPUJumpCache *jc = cpu->tb_jmp_cache;
++    CPUJumpCache *jc = cpu->neg.tb_jmp_cache;
+     int i, i0;
  
-@@ -460,14 +466,31 @@ void cpu_breakpoint_remove_by_ref(CPUState *cpu, CPUBreakpoint *bp)
-     g_free(bp);
- }
+     if (unlikely(!jc)) {
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index 4313864d2c..ca1b0089fc 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -905,7 +905,7 @@ static void tb_jmp_cache_inval_tb(TranslationBlock *tb)
+         uint32_t h = tb_jmp_cache_hash_func(tb->pc);
  
-+void cpu_breakpoint_remove_by_ref(CPUState *cpu, CPUBreakpoint *bp)
-+{
-+    cpu_breakpoint_remove_by_ref_int(cpu, bp);
-+
-+    /* The last breakpoint puts the CPU back on the inline dispatch path. */
-+    if (tcg_enabled()) {
-+        tcg_update_cflags(cpu);
-+    }
-+}
-+
- /* Remove all matching breakpoints. */
- void cpu_breakpoint_remove_all(CPUState *cpu, int mask)
+         CPU_FOREACH(cpu) {
+-            CPUJumpCache *jc = cpu->tb_jmp_cache;
++            CPUJumpCache *jc = cpu->neg.tb_jmp_cache;
+ 
+             if (qatomic_read(&jc->array[h].tb) == tb) {
+                 qatomic_set(&jc->array[h].tb, NULL);
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index ea8257935e..3dd1714414 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -624,7 +624,7 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+  */
+ void tcg_flush_jmp_cache(CPUState *cpu)
  {
-     CPUBreakpoint *bp, *next;
-+    bool removed = false;
+-    CPUJumpCache *jc = cpu->tb_jmp_cache;
++    CPUJumpCache *jc = cpu->neg.tb_jmp_cache;
  
-     QTAILQ_FOREACH_SAFE(bp, &cpu->breakpoints, entry, next) {
-         if (bp->flags & mask) {
--            cpu_breakpoint_remove_by_ref(cpu, bp);
-+            cpu_breakpoint_remove_by_ref_int(cpu, bp);
-+            removed = true;
-         }
-     }
-+
-+    /* The last breakpoint puts the CPU back on the inline dispatch path. */
-+    if (tcg_enabled() && removed) {
-+        tcg_update_cflags(cpu);
-+    }
- }
+     /* During early initialization, the cache may not yet be allocated. */
+     if (unlikely(jc == NULL)) {
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index 0040d149e0..7969875d20 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -1914,7 +1914,7 @@ static void gen_jc_probe(TCGTemp *pc, TCGTemp *cs_base, uint32_t flags)
+     /* p = &jc->array[tb_jmp_cache_hash_func(pc)] */
+     gen_jc_hash(h, t, pc);
+     tcg_gen_ld(TCG_TYPE_I64, t, tcgv_ptr_temp(tcg_env),
+-               offsetof(CPUState, tb_jmp_cache) - sizeof(CPUState));
++               offsetof(CPUState, neg.tb_jmp_cache) - sizeof(CPUState));
+     tcg_gen_lea(TCG_TYPE_I64, p, t, h, 4, 0);
+ 
+     if (tcg_op_supported(INDEX_op_goto_jc, TCG_TYPE_PTR, 0)) {
 -- 
 2.53.0
 
