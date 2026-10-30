@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384F460A261C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CB4606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=i5FFtFIn;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=e8+UKFLj
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=BJQOScWF;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=XvtCVadU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMqtJ-0002jr-Re; Fri, 30 Oct 2026 13:59:50 -0400
+	id 1xMqtL-0002oe-UJ; Fri, 30 Oct 2026 13:59:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMqrH-0000CD-SG
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:57:47 -0400
+ id 1xMqrX-0000Nj-2M
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:58:03 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMqrF-0008Kp-FU
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:57:43 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1xMqrV-0008Ls-6a
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:57:58 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69UHu2qr2414338
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:57:40 GMT
+ 69UHuKZi3057335
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:57:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Ka9NepUS/T16sYjS22/BcE7c4UjpSbWQrADWR0F4DX0=; b=i5FFtFInIHVi8/ij
- PcFixFmZzaL8MpxrLfbDlVN3PaSNgkJcB92bgQC+6Ub7CYjpXRV3K3mHH91yAttY
- fn4ASjKQ1IEXLpmaXsYfoKwt7lxtZQG5kPVV5bCiCmmGYyKGEjqnSy7v5Qlc+w5A
- LF895w/Ww9p5tlvtFPNQ3TOStUQT6itGpjW8xloE+2bf/BcghxcExbBt9gRLCV1E
- GS9FAdP3HkSUjWZQbod23V/xRjEm4kxQn6S16npapUl2PHdWWywwU3b/iD8nXUKg
- FWdBDQVRgLAmjaGtzGrHPn2MAgKTwW57ogldHNPcbABdpfCBtin+frZxCB8e0Vc4
- xNIBXA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6pmbjm-1
+ 9ezxwTOoRrCT1s9gzKXBUfjV1t2eO52tFy0eMGfZLsI=; b=BJQOScWFOuMbF+ys
+ 2R4Rs4I5IlPTACB/68FLi6jP5XnxuwdQ0GhSRPj8AmdjsODIIdzorDiYdB7U+ljZ
+ 3X6wZrlvAd7aOam6qL/1h9BqJdAMgpALTGBwK8Ldy4aKt9VLfjaIjPfRaaKLv8us
+ MS4Ks+Xi0iy0ttGRV/jTOsi97rlVrw1HDW6V701ICl4cbbOTK3I87EumjvsoGVgq
+ t2RBVk2YHDecYaBYGknKCFMt6vCwt3wybArTC7Cw1HxWVGMFvCODUcp3lTIn0cKx
+ z87UFYAgproQC0XMoDwsJNqrtVepGibKDWLQPuQ9W+ru0Mh4RK8vAoKFMSdIH+Tn
+ EQyA8A==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6pcbkw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:57:40 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93cb93c874bso401302885a.0
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 10:57:39 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:57:53 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-7c124d17880so181168137.1
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 10:57:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793383058; x=1793987858; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793383073; x=1793987873; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Ka9NepUS/T16sYjS22/BcE7c4UjpSbWQrADWR0F4DX0=;
- b=e8+UKFLjERgRyDb2bFN488dN3SYlqYTXj5196qsehAxijRdFM6X2o+R2ezu7nmAyzO
- w5BTw6eLf06ydbbXAzDtM8/FKfWAbKlR2qbJ+1oY6QMM0m04VfO4StH316SngAJtiltn
- qZA+QqvHm76Ya6eJ4O2R8mu1ZQGp5/9Mgeh5dUCTXCbX9x3DlAG21f9vj6xjJRmUncY2
- VBG/KdfJv3zLdz5rQIKzGkN5ozMYt7v7FMTqh8Cj4Pucy8Wy+pU9B5KWCNjlaWpUB2R9
- QjYRskxKpSjUcjHM05cKTQ0tqd+Hd9JrSHo1kWS2KnbWVdVgXfsM1mQPQK3nglgPvheJ
- NJqw==
+ bh=9ezxwTOoRrCT1s9gzKXBUfjV1t2eO52tFy0eMGfZLsI=;
+ b=XvtCVadUtNwp5Q0yQq4KHVebF0MnJKbjj/3fotAGuGF2wwBqGDU39NqQonYHQpswXl
+ NxIfxGrSFFbKq1twbM1RGm2N5t6Al80CF7epVs6VcA+jBHqCciDm7inDplOM+ulbUJdE
+ NlbNyhi+5pBMJ78UAvCDgYJyyl9VtjLlzDgLdqJuUUlzo06F8MHOZdlEs9foAc9+zfe3
+ AmToYkEUhPPlQBLaJqi6Mv+m3hDQg0/tufPLIQ3hlbJxA37K83A7QRbkNBrY71SDdViI
+ 7zNjLGpJlap1/qavrye0IsQ/BjfB3TR9Vr+/h9Wj/s8pHen5AbJjuDPLKRt7rXID5PPD
+ ptZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793383058; x=1793987858;
+ d=1e100.net; s=20260707; t=1793383073; x=1793987873;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Ka9NepUS/T16sYjS22/BcE7c4UjpSbWQrADWR0F4DX0=;
- b=xGzwZDbtfKVR+BjDipiYqBc2sgOOvkkAAiNH6dLLRHDMheF3adeCyynjwzQlOvB/iJ
- B1EpaDUhfvMLQnlqUycSxOSTG2u0bknwyJ6dtTTv/bWA7iAhqgzfmF83Xd5Sj+MSoPAH
- 4LAFgUm+pcQ55160vAtoC21PDAn1yyYqOy08wAMsqN4dAwYtHcosrG9DBp5WtR7aMMbc
- QCR7nwgFugLJOyoTIJCwrxKt94FuYhTMSlm0C4ZdaXITZLw4Xjrb/CJqxJpvyYC7UOiW
- Zgb9ayPdvaxENO1TGRR77sKVdfZ2c+PB/lCATpdHpq1s9VG37eWIyiXEYt00jiidKgrk
- B4Rg==
-X-Gm-Message-State: AFq9FYJI7/Q+YxgGWL3E06Ke6FRPZJ6ul0w8vbOUb4VGwp6wKY4pKe3D
- t6ZTIhtUgdfrwmKCUK9ASJNZ8XhQOEP/RThNp6PFtre+J6R1PAW1DK4R2jOnS9fIwvtJylE7Naw
- E69YwzHLw8UnCPK59CYP2bWnbaIZKtpPQ6icnPzEuzz40fR41P3KEaK6Eovv4da4uDp6S
-X-Gm-Gg: AYBFou00ATWe2OUOxOWPpl7UWFhCLNuxF8yXobaVKH2JxhAOmWgO0fW2WomEbl1HSmY
- RblXruOJeaRWxErfdJsl7Y2xY+lkPdyQc/7eRPiM3rxUulYcnngO/CfUcpL2Z8vL22qRwJzK6w4
- KTqWQU+WjwSwEexUc7YpCpd7/GpbM6uJKzh+EI3/02TnlMkjS/rzndZrP0mWJTXKtmP7AvLTK0B
- xysn9E774atLdxSGkGssac87jfmXGPl7HQJb6MCDxIVHrdwaTSeJ++PMJL2oHZtt/wZGrUs7saA
- 6AY7QfTPRXcq/1UEWbNoR3wyW49FiPyigSeUUi8/vEtmnJuhUb/DfBS3Jf11RtB1OeND5gIDfhG
- ERREGmPsB4CAf8nin4+9ys63+PSNe50qsskp+RWlgegbef0OPVN3xJSLVk8jSrhO6umYzAQJyGf
- 8NvLfsE1Tk1v0RSO9AirorGfbYeiJPjQ==
-X-Received: by 2002:a05:620a:1a19:b0:93e:e111:2778 with SMTP id
- af79cd13be357-944133591eemr1007271585a.14.1793383057994; 
- Fri, 30 Oct 2026 10:57:37 -0700 (PDT)
-X-Received: by 2002:a05:620a:1a19:b0:93e:e111:2778 with SMTP id
- af79cd13be357-944133591eemr1007266985a.14.1793383057343; 
- Fri, 30 Oct 2026 10:57:37 -0700 (PDT)
+ bh=9ezxwTOoRrCT1s9gzKXBUfjV1t2eO52tFy0eMGfZLsI=;
+ b=tKi278RgPThgZVYUGqjhk7XTvbuwIQCEQiopoFFe3T20u9fsPNLByAde9NFN+L8HqV
+ vonoBDyx5o52za6kHDej854fEplDYKLNOflDJw7UoHb3t21GD0ocyw4sTthBhE7JeHFq
+ 1YCXkL0W2vJpqWXIUGJA+G6+7NRtYtySbcsgpqzvDruXzAS8JVIJxnCtcRGaZy/muMwR
+ eA5uKo9yOWPdZiyAmIcTVroJ/n+y+ZXfPM6a/NgCO2SjvsrJE02KmaD5pE10/4GzhScb
+ 8sA3Idgd6F3bIhf7YRdFaNvL1xOELlfeYnAxmoRPCMuJ+uRfns9KIayW9zV/+u1zGJuR
+ /kDQ==
+X-Gm-Message-State: AFq9FYK06YD95saivVEjbn/spHqm9SVz959ggovijb1vPoDahk9mWS0Z
+ d6rkqCSNW1/e/9CZOmihjyYypXcEIhrwcU7qbo87E8lAMjRIjI5F10ZjXrKxUsnyZgX05htdfeD
+ 82OcCbYnrf5t7JI9ZIKvKCyr7Lz1tqYExnROaAvaxnpn57xHcF7r1WJstMKmfTcxqRQFu
+X-Gm-Gg: AYBFou1NzXXdOqF9UIpzA4yQ+KSmcVqlIj40zU2XmXSJx60s0JUY2qZGNLbgACCf7qy
+ FOsxCvXSYyBf9tN3DQq25ldjvAcwwP6sQ7uQNw3qkXQc+zOqqhQARFnPuHLIHhqdSn1g6fLlylq
+ TTVV7u3uIHRqOnlAhR2h4Uvd/cf6SRWwFZgx7Ji93Qdrs2YoRTjiMGm0uq7/ZURlXs62ywtoLPU
+ rurfhL39czAUTzC8U21t/7dnM5uAWCB0vSrZiT7aFH+ejjnLmsWjiJeb1xz5/+Gp0HuFaiENh6t
+ w07gzGYf00Qd0MHml2hHHi6/e1aB6bFC1X/xYLOBV4wSb8adLrNJAmiaZNYNyc5lWuk5eN9ot+A
+ Ix0AelYsjLOYLj0PEQ+4/TqwQMeD/iedErL/xXe/yzrxXW33gJLGWaQfpcQcxOyZxGaapu4U62t
+ kqT33x8WTROUfSUdSvwfufm4Uq9rZB+w==
+X-Received: by 2002:a05:6102:84d3:b0:7cc:25bc:3b26 with SMTP id
+ ada2fe7eead31-7d072bb31e8mr1050878137.9.1793383072767; 
+ Fri, 30 Oct 2026 10:57:52 -0700 (PDT)
+X-Received: by 2002:a05:6102:84d3:b0:7cc:25bc:3b26 with SMTP id
+ ada2fe7eead31-7d072bb31e8mr1050866137.9.1793383072284; 
+ Fri, 30 Oct 2026 10:57:52 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d3cesm4789415f8f.7.2026.10.30.10.57.33
+ ffacd0b85a97d-48e71b727c6sm4593482f8f.16.2026.10.30.10.57.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 30 Oct 2026 10:57:36 -0700 (PDT)
+ Fri, 30 Oct 2026 10:57:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -95,9 +95,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v4 26/32] tests/tcg/mips: Group MSA int-multiply tests
-Date: Fri, 30 Oct 2026 18:53:48 +0100
-Message-ID: <20261030175357.99684-27-philmd@oss.qualcomm.com>
+Subject: [PATCH v4 28/32] tests/tcg/mips: Group MSA interleave tests
+Date: Fri, 30 Oct 2026 18:53:50 +0100
+Message-ID: <20261030175357.99684-29-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261030175357.99684-1-philmd@oss.qualcomm.com>
 References: <20261030175357.99684-1-philmd@oss.qualcomm.com>
@@ -105,34 +105,33 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX0iaDeDoCfx55
- K59ufYoIrFw5XYaHsUyUIM1KqL+E3ViOZ+Z5+6S9iDTS559XP9ViZ+PMK0v1Nt10AF5Ds6xE12W
- aknK7AsLiEFuY5bxP5ROLCovWcMnTKUSvhhi3cYXXmWLB2ojOJ1Kkm+o3Jhyw+my9fPmXCPqWHS
- L2cb8NBwmkwcHLrUikxoWGPHrJST+UY8zQu7Def5UE71R0MLtaJ0wABoYcBwpd+cvJZs7gj6kol
- aXolhQtN0Q/s+x9Ut2Xsqio0fsIJ7GpexqC1oIVnT0d361rr+SYx3cISRc4oUA2HfrABfZE6Uwd
- 51NJeuQQxp8RSq4ydghckPXAZWpx5cep61AhtxlinatbuRjSrSkv3AdmD0hwe3K/CUvB1/mrrxp
- wEBpbsTAW0K3qRQDpoI/LhFtg6kcAQVSq7YnQtAx0Cv4FyME9j4enIV0jwhiIoAoyNPffXINrtN
- PwEj+0VcZ4+0bRpdVvw==
-X-Proofpoint-ORIG-GUID: MBNTe1ZgfmKDGOXeD_-R0gy7GkMQxqy3
-X-Proofpoint-GUID: MBNTe1ZgfmKDGOXeD_-R0gy7GkMQxqy3
-X-Authority-Analysis: v=2.4 cv=AJ83otAg c=1 sm=1 tr=0 ts=6ae4da94 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX6/1TsFRTdlDU
+ lrHQOfWhzh2hCtw4KB8Voz0srsV8puMeyaVCE0VUMcbH13c5iroufTCvc6TdPEHOeHugRmjxWVn
+ njggdv9Qfm2xIcrWJkrqe9C0BpylhIJAJsdrZduS3tl3wSGghb2eDLJnN86Nmxg5PJIfpoZkQbR
+ L6CDF0X8mnDAqROgUvSR159dDmLg5TUZMCK4rRc6a/XdipwTMFpz3xql1kgyoURnUltv0jqnsTl
+ 5Wp3h8Rrfglc2qfJCR2CW7RsKdYcP8ubo95LIX9PMCpshoCfh+HJJiu/GHwjL9yGUgtvBJuOU7Q
+ vD3JGLp5vIV1Mb8KUXDSZGPRiBakXLabxCArZsRrncTsGGIdlPRuF0FFsmuNkXNyC6a3UtM6D89
+ 8GM7yHNNRCk1FWUxpp80/1emeZ9o0jYHWgIB03pgLVZ5DgRpm+BHsrUEG/mJEZCJsLL9PcfYRJw
+ 8e68a6+fZ4WS8Sq3bvA==
+X-Proofpoint-GUID: eB_0xMrbKpcmjBvxHDgh6iuRWhVJO2M8
+X-Authority-Analysis: v=2.4 cv=Lp4HWXdc c=1 sm=1 tr=0 ts=6ae4daa1 cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=kAGlr9DBaqhD0l0nM9oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX+tyYaKBJUBSn
- Q4Ea4P5RO6v0xbMdBPyWZpP2dumFVkWyWlfpRnEKs4P6yQ1LP7zbUK0IsbLvJ9xGSYbuL3d58Vj
- FCuIGD9CAy6MfkF5WTEb4cux+C8uazA=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=XlFCZ7tVMrZGAbOMMLgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=ODZdjJIeia2B_SHc_B0f:22
+X-Proofpoint-ORIG-GUID: eB_0xMrbKpcmjBvxHDgh6iuRWhVJO2M8
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX8Vqmo/I1kTB0
+ AxEVOZE2ndJVLuUQswfcDYbH1fPaQXHd9dRlRBVkYb9/5zbY7KEqrfn+FKKnTt1efnTy7rSstjp
+ iCICYXsYlJwKV8ypbjdTUzoLO22UdWI=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-30_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 bulkscore=0 phishscore=0 malwarescore=0
- lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610300071
+ phishscore=0 adultscore=0 malwarescore=0 clxscore=1015 impostorscore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300071
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -160,89 +159,109 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Build the 12 per-opcode int-multiply tests as a single executable,
-test_msa_int_multiply.c, to reduce the number of test binaries.
+Build the 16 per-opcode interleave tests as a single executable,
+test_msa_interleave.c, to reduce the number of test binaries.
 Each opcode reports one TAP line.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/mips/test_msa_int_multiply.c | 99 ++++++++++++++++++++++++++
- tests/tcg/mips/meson.build             | 13 +---
- 2 files changed, 100 insertions(+), 12 deletions(-)
- create mode 100644 tests/tcg/mips/test_msa_int_multiply.c
+ tests/tcg/mips/test_msa_interleave.c | 123 +++++++++++++++++++++++++++
+ tests/tcg/mips/meson.build           |  17 +---
+ 2 files changed, 124 insertions(+), 16 deletions(-)
+ create mode 100644 tests/tcg/mips/test_msa_interleave.c
 
-diff --git a/tests/tcg/mips/test_msa_int_multiply.c b/tests/tcg/mips/test_msa_int_multiply.c
+diff --git a/tests/tcg/mips/test_msa_interleave.c b/tests/tcg/mips/test_msa_interleave.c
 new file mode 100644
-index 000000000000..ce8ddafe8776
+index 000000000000..f561ebe25aa4
 --- /dev/null
-+++ b/tests/tcg/mips/test_msa_int_multiply.c
-@@ -0,0 +1,99 @@
++++ b/tests/tcg/mips/test_msa_interleave.c
+@@ -0,0 +1,123 @@
 +/*
-+ * MIPS MSA tests: Int Multiply instructions
++ * MIPS MSA tests: Interleave instructions
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "../include/tap.h"
 +
-+#define main test_msa_maddv_b
-+#include "user/ase/msa/int-multiply/test_msa_maddv_b.c"
++#define main test_msa_ilvev_b
++#include "user/ase/msa/interleave/test_msa_ilvev_b.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_maddv_d
-+#include "user/ase/msa/int-multiply/test_msa_maddv_d.c"
++#define main test_msa_ilvev_d
++#include "user/ase/msa/interleave/test_msa_ilvev_d.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_maddv_h
-+#include "user/ase/msa/int-multiply/test_msa_maddv_h.c"
++#define main test_msa_ilvev_h
++#include "user/ase/msa/interleave/test_msa_ilvev_h.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_maddv_w
-+#include "user/ase/msa/int-multiply/test_msa_maddv_w.c"
++#define main test_msa_ilvev_w
++#include "user/ase/msa/interleave/test_msa_ilvev_w.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_msubv_b
-+#include "user/ase/msa/int-multiply/test_msa_msubv_b.c"
++#define main test_msa_ilvl_b
++#include "user/ase/msa/interleave/test_msa_ilvl_b.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_msubv_d
-+#include "user/ase/msa/int-multiply/test_msa_msubv_d.c"
++#define main test_msa_ilvl_d
++#include "user/ase/msa/interleave/test_msa_ilvl_d.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_msubv_h
-+#include "user/ase/msa/int-multiply/test_msa_msubv_h.c"
++#define main test_msa_ilvl_h
++#include "user/ase/msa/interleave/test_msa_ilvl_h.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_msubv_w
-+#include "user/ase/msa/int-multiply/test_msa_msubv_w.c"
++#define main test_msa_ilvl_w
++#include "user/ase/msa/interleave/test_msa_ilvl_w.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_mulv_b
-+#include "user/ase/msa/int-multiply/test_msa_mulv_b.c"
++#define main test_msa_ilvod_b
++#include "user/ase/msa/interleave/test_msa_ilvod_b.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_mulv_d
-+#include "user/ase/msa/int-multiply/test_msa_mulv_d.c"
++#define main test_msa_ilvod_d
++#include "user/ase/msa/interleave/test_msa_ilvod_d.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_mulv_h
-+#include "user/ase/msa/int-multiply/test_msa_mulv_h.c"
++#define main test_msa_ilvod_h
++#include "user/ase/msa/interleave/test_msa_ilvod_h.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_mulv_w
-+#include "user/ase/msa/int-multiply/test_msa_mulv_w.c"
++#define main test_msa_ilvod_w
++#include "user/ase/msa/interleave/test_msa_ilvod_w.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_ilvr_b
++#include "user/ase/msa/interleave/test_msa_ilvr_b.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_ilvr_d
++#include "user/ase/msa/interleave/test_msa_ilvr_d.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_ilvr_h
++#include "user/ase/msa/interleave/test_msa_ilvr_h.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_ilvr_w
++#include "user/ase/msa/interleave/test_msa_ilvr_w.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
@@ -251,18 +270,22 @@ index 000000000000..ce8ddafe8776
 +    const char *name;
 +    int32_t (*fn)(void);
 +} msa_tests[] = {
-+    { "maddv.b", test_msa_maddv_b },
-+    { "maddv.d", test_msa_maddv_d },
-+    { "maddv.h", test_msa_maddv_h },
-+    { "maddv.w", test_msa_maddv_w },
-+    { "msubv.b", test_msa_msubv_b },
-+    { "msubv.d", test_msa_msubv_d },
-+    { "msubv.h", test_msa_msubv_h },
-+    { "msubv.w", test_msa_msubv_w },
-+    { "mulv.b", test_msa_mulv_b },
-+    { "mulv.d", test_msa_mulv_d },
-+    { "mulv.h", test_msa_mulv_h },
-+    { "mulv.w", test_msa_mulv_w },
++    { "ilvev.b", test_msa_ilvev_b },
++    { "ilvev.d", test_msa_ilvev_d },
++    { "ilvev.h", test_msa_ilvev_h },
++    { "ilvev.w", test_msa_ilvev_w },
++    { "ilvl.b", test_msa_ilvl_b },
++    { "ilvl.d", test_msa_ilvl_d },
++    { "ilvl.h", test_msa_ilvl_h },
++    { "ilvl.w", test_msa_ilvl_w },
++    { "ilvod.b", test_msa_ilvod_b },
++    { "ilvod.d", test_msa_ilvod_d },
++    { "ilvod.h", test_msa_ilvod_h },
++    { "ilvod.w", test_msa_ilvod_w },
++    { "ilvr.b", test_msa_ilvr_b },
++    { "ilvr.d", test_msa_ilvr_d },
++    { "ilvr.h", test_msa_ilvr_h },
++    { "ilvr.w", test_msa_ilvr_w },
 +};
 +
 +int main(void)
@@ -272,42 +295,46 @@ index 000000000000..ce8ddafe8776
 +    TAP_START();
 +    for (i = 0; i < sizeof(msa_tests) / sizeof(msa_tests[0]); i++) {
 +        tap_report(!msa_tests[i].fn(), "MSA %s %s",
-+                   "Int Multiply", msa_tests[i].name);
++                   "Interleave", msa_tests[i].name);
 +    }
 +
 +    return tap_done();
 +}
 diff --git a/tests/tcg/mips/meson.build b/tests/tcg/mips/meson.build
-index c10d4e7342f4..0f4d55a2f26b 100644
+index 516da867cadf..cc94623f8f20 100644
 --- a/tests/tcg/mips/meson.build
 +++ b/tests/tcg/mips/meson.build
-@@ -13,6 +13,7 @@ tests_mips_msa_groups = [
-   '../mips/test_msa_int_div_mod.c',
-   '../mips/test_msa_int_dot_product.c',
+@@ -15,6 +15,7 @@ tests_mips_msa_groups = [
    '../mips/test_msa_int_max_min.c',
-+  '../mips/test_msa_int_multiply.c',
+   '../mips/test_msa_int_multiply.c',
+   '../mips/test_msa_int_subtract.c',
++  '../mips/test_msa_interleave.c',
  ]
  
  tests += tcg_tests['multiarch-linux-user']['tests']
-@@ -72,18 +73,6 @@ tests_mips_msa = [
-   '../mips/user/ase/msa/int-subtract/test_msa_asub_u_h.c',
-   '../mips/user/ase/msa/int-subtract/test_msa_asub_s_b.c',
-   '../mips/user/ase/msa/int-subtract/test_msa_subs_s_w.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_mulv_w.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_msubv_d.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_msubv_h.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_maddv_w.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_msubv_b.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_mulv_b.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_maddv_d.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_msubv_w.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_maddv_b.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_mulv_h.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_mulv_d.c',
--  '../mips/user/ase/msa/int-multiply/test_msa_maddv_h.c',
-   '../mips/user/ase/msa/interleave/test_msa_ilvr_b.c',
-   '../mips/user/ase/msa/interleave/test_msa_ilvr_d.c',
-   '../mips/user/ase/msa/interleave/test_msa_ilvod_b.c',
+@@ -40,22 +41,6 @@ if 'qemu-mips' in emulators
+ endif
+ 
+ tests_mips_msa = [
+-  '../mips/user/ase/msa/interleave/test_msa_ilvr_b.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvr_d.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvod_b.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvl_b.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvev_w.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvr_w.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvr_h.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvev_h.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvev_b.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvod_w.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvev_d.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvl_d.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvod_d.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvl_h.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvl_w.c',
+-  '../mips/user/ase/msa/interleave/test_msa_ilvod_h.c',
+   '../mips/user/ase/msa/pack/test_msa_vshf_b.c',
+   '../mips/user/ase/msa/pack/test_msa_pckev_b.c',
+   '../mips/user/ase/msa/pack/test_msa_vshf_w.c',
 -- 
 2.55.0
 
