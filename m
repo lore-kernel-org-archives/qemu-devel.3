@@ -1,70 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D53606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807E9606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mF3vkaOy
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UpI0Xd7v
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMnJ4-0004xO-IN; Fri, 30 Oct 2026 10:10:10 -0400
+	id 1xMnJ3-0004ux-IZ; Fri, 30 Oct 2026 10:10:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rao232328@gmail.com>)
- id 1xMmoc-000699-5u
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:38:42 -0400
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ id 1xMmoU-000639-5p
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:38:34 -0400
+Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rao232328@gmail.com>)
- id 1xMmoa-0007cQ-3x
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:38:41 -0400
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-6df7f544919so455827eaf.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 06:38:39 -0700 (PDT)
+ id 1xMmoS-0007c3-BL
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:38:33 -0400
+Received: by mail-oo1-xc29.google.com with SMTP id
+ 006d021491bc7-702dedeb70dso487766eaf.1
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 06:38:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793367519; x=1793972319; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=DvwnfkxM9sorbQR/zXxvf5R6xwOBdfOZMc+U57NOVTs=;
- b=mF3vkaOyEmNgBRRpRjxCjJ2XJdRBqskTbd/ZFZvn901Ra0YF9SMHjvQELxSeojnaij
- Joz/3LmSWKaMQKTjSnlgJ6fR8ha80yuSc4KLsTct7Z+jH4LFRAxKOPLS8RIVOPV8SeQ4
- OGtg18fN42ElR+bLMvl+nM3yX4LEYv7LHhrQrUIKbBm67+PjIt8NZEBbcxfrlu9nGHiE
- 6Jb+lzh3GXBS0/ejhCLYwOpzRanhy0KtExqLyBSEPIVvPRFGB4bvWQCNjyAZO2Ea8az7
- kFSG28/4SxPwTgvIA1A8jT+q7gdzwMmFck9FEl9xLXKM30DoHOScIL9vOPgoOI1h5iTr
- oBvw==
+ d=gmail.com; s=20260707; t=1793367511; x=1793972311; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=M54vx+wx4hKVGaumjpxsRCNAzEUUl0ekxzc9Veev8CM=;
+ b=UpI0Xd7vRGBDv0LT9YQCgKt5wKEhi5571imhpKs62zdndgBNBv4g8NcBpyve2S4H4V
+ WWnZoLXZW0VHqKuDxGq0+z7vitzEHnXJ8H7ye14g4mUJbO/2SV9ATSveE2fU85BsDlqv
+ k+2OHhU8kmm4Okj7iZmPK7zM1nVrxuYzZU1vilcV6KKm/aVL8JvwvsbV57n3O8hy8mXf
+ bd9vlbPU5uCyXqD11QxfJSnGJ8FQ9DvxnH/xYXqwyc5YNI7qzqQeU23vCmhPdSQ2l4Sk
+ 4eGKkL0d0AMf/+MGN12hvhBFGQkCh52t1kwntGCkDsK4y1LZpjPcVzQCahS/GH8pwXuv
+ xzvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793367519; x=1793972319;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=DvwnfkxM9sorbQR/zXxvf5R6xwOBdfOZMc+U57NOVTs=;
- b=jUgIKB6Sqb9lMNT1IH8Y2DjLLfHzefRuPW0dTzTOupHdfT+0JkujBWqfJx945tCqY8
- KTDtgb0PfvBxoPEQM/AmHdA3wwwYMZMF6wLLP6WpF0tSO9jN1pROxLzoW9YU4DS3wsE/
- HINiS5cAFjC2n2u+fIoxLd+3YWHCpPqA686Eh9qUWRY+vNEQUyg2yxiTXSqihaqUVaZq
- Op0D8CYtkjquWyvjJEfoBrbvI9djg4+9j59iNaxhGHv9eaXFiRWqASDVOjYQWgbplpCb
- GhXjNUFShEqGfwRZRQJ3+SxFyZ8ToCyRAdZvPaRS6foniJCHfEQIh4LuSh6MjCgjRMVI
- lhxw==
-X-Gm-Message-State: AFq9FYIJTyGa0QXSmF1Hk8qhFeJ9GU4VurRc7kb3pkPhEO5ww1WG0gD6
- R2kAQUlmy/dS/IkkMs7noWzrL05V1plDKCWgjUmGAdOHm7GhDiS/SYZGQHXc8w==
-X-Gm-Gg: AYBFou2W9J0GWupuLytdcrOSlurPMomjKtAGgPYjlbdbHjNBYClPxSRgWU8ogxWV5Nr
- tGroIA4vkPR0afwByo/VGlyiFc99mgaODv4xz2ySXXm0/jKznu23d4CXWTGFI1iOFb5QNM89+N/
- ryuqbStPwlNWR8icuqNe6ZU4cCYGM3qjpJs/paJezW2KT+wFamgxgP70MA5SnWwZK3DF0G7ot3S
- YLIhqyH+3EAiOULbC+tO3ckYqnPsb8iqKXT3TLHZp3InzuJH2RqfCnIxJD2cbOCOTnv5qW6rr2U
- 3oIfc/ohtvDgfDV3kdeGPsq+oiBfLHiaWnJXQP16C6D+2ysET28VMa9dIovC0/rPUYKVtQNXeBl
- 3ffmjYs53FW5o04hokytWGIdYrlwSH1N0DuJOolVP6IeoyDzVbuTI7iJF1BN2tC0i39GVz8a7aJ
- g7vaEjLLdZaE25QnBwFGjr4mjoDkpIF2bERTcYIueSHWyZZZd+w16m4vOlpLtYAjvx0rS7AwLCG
- tQK6800j81EapMcjMYmSraBjUH5GlSbYwIp31AjBLksMKezLf2ORvs+Gbm3zfgkZgN/z/KECHt3
- 4jNxs6q49mAPX0mKIJU/vlwjpVlQtqG0UpEM2nPGXA==
-X-Received: by 2002:a05:6820:80c:b0:713:e433:7e6d with SMTP id
- 006d021491bc7-714f2927fe1mr1479673eaf.36.1793367518737; 
- Fri, 30 Oct 2026 06:38:38 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793367511; x=1793972311;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=M54vx+wx4hKVGaumjpxsRCNAzEUUl0ekxzc9Veev8CM=;
+ b=vOoUKzE92d+whOSZaFXe52LW4TtkH6aEuVzAtZaTNrt/VdV2KiwHFGSoBSsiFPxg2Y
+ FZqslSR6vU5arym59GRw2yrLERYnOcgGXkuspFeRJVY/T3Tb5ZnRYUsJ34EW4HjXFZpn
+ Hezq7w0ACePUlkJOrro8qiNj2DIlcPtAW15Z4XNY1JynouNatWc4Lvoaj6Lvdoq76jbv
+ YbdEDlKAkZ61BfFT80x/lJkec6BIXXKSI75cC/u2gS5T1ey1mijkB3comDvXVEC/XvLW
+ UTM+tCX4NwItc/z73v5a25lyRUCqvP6Rl47rOo3XVh4pp/ON6HtrgfIHEee0pqP3Fp47
+ hWKA==
+X-Gm-Message-State: AFq9FYJnM03fZg+8TxqpKeuyxAsIcciAgIme7EC9OazMj5FGJqeeQobl
+ grmd1v87+VTjCsRE0n7R1DJbc5yYiCxMjgZpcEiCQARgBnjTOowtyNe8LV8G/Q==
+X-Gm-Gg: AYBFou2TCPgfvxpwn/vQjR15/FwlI4dABSd62YGjjxm5hEXLVsYwHmDPmnnmbYlD+pb
+ szNRcHoQEp8v8ARgbat8Xbn9uL4u8/FvWCGLbiaZjpGFmh+wk9eH5/SbY/0k9jR9VuVEuSpVSKc
+ V8/huhOQr2gob+aM0VMKqpnMvryrlGNVxfBfWmdkABQAhQh46nTztuUCsY3QcZtZyl5EyO5R4Jx
+ Q8h35zxcv06BYcNylEGJifvTGy1AlhhCwIo+UCV+UKzn07ix9XdQZaznnm1tRYZweErlHs3LvmP
+ ozYxxVJ3WUjDMOWcLCVMzvX+WYHVRpBSGV1W5eOgUhFLPJpRzINpKjBIT6eIOsvBrNemg4W4SC5
+ tSFOIRsWKqiKe6pCvHi+nx8p20PxVKjgBs6YkyhTuoTKY0SpChE4bPAVHwshGtcNcCb6ylRHiOw
+ VjFoAnvh7Z81qm/GpEgXrQK1c5oKn5cjcyjfh03nxiScSKB3qWo3ZxJoyRE0eMkbJgAn7WMrnyg
+ HQdhSJoel7uHGJx6nMQkOjk6Uo2weoSjuQd+qSSx7hd/ngzOlqq22Qq782QtFgagk2nOOt8TcwJ
+ VxO8H6jO+gNw/1sUlsecfrqvx4hJ3FoPXUiEai40S9eD+/lkCTfYtKcF1Sb7dQA=
+X-Received: by 2002:a05:6820:1ca5:b0:700:52ae:7e4a with SMTP id
+ 006d021491bc7-714f27855cdmr1319617eaf.71.1793367510876; 
+ Fri, 30 Oct 2026 06:38:30 -0700 (PDT)
 Received: from DESKTOP-DFGP8OG.lan ([120.235.190.244])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-714f30600f0sm1861421eaf.12.2026.10.30.06.38.31
+ 006d021491bc7-714f30600f0sm1861421eaf.12.2026.10.30.06.38.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 06:38:38 -0700 (PDT)
+ Fri, 30 Oct 2026 06:38:25 -0700 (PDT)
 From: raoyi <rao232328@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
@@ -72,18 +73,19 @@ Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  bmeng.cn@gmail.com, philmd@oss.qualcomm.com, pbonzini@redhat.com,
  lvivier@redhat.com, farosas@suse.de, caojunze424@gmail.com,
- raoyi <rao232328@gmail.com>, Bin Meng <bin.meng@processmission.com>
-Subject: [PATCH v6 3/3] tests/qtest: add k230 dwapb timer test
-Date: Fri, 30 Oct 2026 21:37:04 +0800
-Message-ID: <20261030133704.99678-4-rao232328@gmail.com>
+ raoyi <rao232328@gmail.com>
+Subject: [PATCH v6 2/3] hw/riscv: add DesignWare APB timer to K230 board
+Date: Fri, 30 Oct 2026 21:37:03 +0800
+Message-ID: <20261030133704.99678-3-rao232328@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261030133704.99678-1-rao232328@gmail.com>
 References: <20261030133704.99678-1-rao232328@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=rao232328@gmail.com; helo=mail-oo1-xc34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
+ envelope-from=rao232328@gmail.com; helo=mail-oo1-xc29.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,7 +95,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 30 Oct 2026 10:09:57 -0400
+X-Mailman-Approved-At: Fri, 30 Oct 2026 10:09:55 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -112,327 +114,135 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add qtest coverage for K230 DW APB timer, including free-running,
-periodic, interrupt mask, disable behavior, current value, dynamic
-reload, and multi-channel scenarios.
-
-Add timer test file to MAINTAINERS.
+Wire up the DesignWare APB timer to the K230 SoC with
+num-timers=6 and a 50 MHz clock. Connect timer IRQs
+to the PLIC. Remove the previous unimplemented timer stub.
 
 Signed-off-by: raoyi <rao232328@gmail.com>
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- MAINTAINERS                         |   1 +
- tests/qtest/k230-dwapb-timer-test.c | 274 ++++++++++++++++++++++++++++
- tests/qtest/meson.build             |   3 +-
- 3 files changed, 277 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/k230-dwapb-timer-test.c
+ hw/riscv/Kconfig        |  1 +
+ hw/riscv/k230.c         | 33 ++++++++++++++++++++++++++++++---
+ include/hw/riscv/k230.h |  8 ++++++++
+ 3 files changed, 39 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 60a5664ce5..3817598c29 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1897,6 +1897,7 @@ F: include/hw/misc/k230_decomp_gzip.h
- F: include/hw/timer/dw-apb-timer.h
- F: tests/functional/riscv64/test_k230.py
- F: tests/qtest/k230-ddr-test.c
-+F: tests/qtest/k230-dwapb-timer-test.c
- F: tests/qtest/k230-wdt-test.c
- F: tests/qtest/k230-gsdma-test.c
- F: tests/qtest/k230-decomp-gzip-test.c
-diff --git a/tests/qtest/k230-dwapb-timer-test.c b/tests/qtest/k230-dwapb-timer-test.c
-new file mode 100644
-index 0000000000..01bf03a8b6
---- /dev/null
-+++ b/tests/qtest/k230-dwapb-timer-test.c
-@@ -0,0 +1,274 @@
-+/*
-+ * QTest testcase for the DesignWare APB timer through the K230 machine
-+ *
-+ * Copyright (c) 2026 raoyi <rao232328@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "qemu/timer.h"
-+#include "libqtest.h"
-+
-+#define TIMER_BASE 0x91105800
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index d89fdfcc86..dea1430b94 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -181,6 +181,7 @@ config K230
+     select K230_WDT
+     select K230_GSDMA
+     select K230_DECOMP_GZIP
++    select DW_APB_TIMER
+ 
+ config SOPHGO_CV1800B
+     bool
+diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+index 1e4ca38579..a5d789c070 100644
+--- a/hw/riscv/k230.c
++++ b/hw/riscv/k230.c
+@@ -24,6 +24,8 @@
+ #include "target/riscv/cpu.h"
+ #include "hw/core/loader.h"
+ #include "hw/core/sysbus.h"
++#include "hw/core/clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/riscv/k230.h"
+ #include "hw/riscv/boot.h"
+ #include "hw/intc/riscv_aclint.h"
+@@ -36,6 +38,9 @@
+ #define K230_DIRECT_KERNEL_ADDR  0x8200000
+ #define K230_DIRECT_DTB_ADDR     0xa000000
+ 
 +#define K230_TIMER_NUM_CHANNELS 6
 +#define K230_TIMER_DEFAULT_FREQ 50000000
 +
-+#define DW_APB_TIMER_STRIDE       0x14
-+#define DW_APB_TIMER_N_LOAD_COUNT     0x00
-+#define DW_APB_TIMER_N_CURRENT_VALUE  0x04
-+#define DW_APB_TIMER_N_CONTROL        0x08
-+#define DW_APB_TIMER_N_EOI            0x0c
-+#define DW_APB_TIMER_N_INT_STATUS     0x10
-+#define DW_APB_TIMER_INT_STATUS        0xa0
-+#define DW_APB_TIMER_EOI               0xa4
-+#define DW_APB_TIMER_RAW_INT_STATUS    0xa8
-+#define DW_APB_TIMER_CONTROL_ENABLE        BIT(0)
-+#define DW_APB_TIMER_CONTROL_MODE_PERIODIC BIT(1)
-+#define DW_APB_TIMER_CONTROL_INT_MASK      BIT(2)
+ static const MemMapEntry memmap[] = {
+     [K230_DEV_DDRC] =         { 0x00000000,  0x80000000 },
+     [K230_DEV_KPU_L2_CACHE] = { 0x80000000,  0x00200000 },
+@@ -118,6 +123,19 @@ static void k230_soc_init(Object *obj)
+     object_initialize_child(obj, "k230-gsdma", &s->gsdma, TYPE_K230_GSDMA);
+     object_initialize_child(obj, "k230-decomp-gzip", &s->decomp_gzip,
+                             TYPE_K230_DECOMP_GZIP);
++    object_initialize_child(obj, "dw-apb-timer", &s->timer,
++                            TYPE_DW_APB_TIMER);
 +
-+#define TIMER_REG(n, reg) (TIMER_BASE + (n) * DW_APB_TIMER_STRIDE + (reg))
-+#define TIMER_TICK_NS (NANOSECONDS_PER_SECOND / K230_TIMER_DEFAULT_FREQ)
++    qdev_prop_set_uint32(DEVICE(&s->timer), "num-timers",
++                         K230_TIMER_NUM_CHANNELS);
 +
-+static void timer_load(QTestState *qts, int n, uint32_t value)
-+{
-+    qtest_writel(qts, TIMER_REG(n, DW_APB_TIMER_N_LOAD_COUNT), value);
-+}
++    Clock *timer_clk = clock_new(OBJECT(s), "timer-clk");
++    clock_set_hz(timer_clk, K230_TIMER_DEFAULT_FREQ);
++    for (int i = 0; i < K230_TIMER_NUM_CHANNELS; i++) {
++        g_autofree char *clock_name = g_strdup_printf("timer[%d]", i);
 +
-+static void timer_enable(QTestState *qts, int n, uint32_t ctrl)
-+{
-+    qtest_writel(qts, TIMER_REG(n, DW_APB_TIMER_N_CONTROL), ctrl);
-+}
-+
-+static void timer_disable(QTestState *qts, int n)
-+{
-+    qtest_writel(qts, TIMER_REG(n, DW_APB_TIMER_N_CONTROL), 0);
-+}
-+
-+static uint32_t timer_get_and_clear_status(QTestState *qts, int n)
-+{
-+    uint32_t int_status = qtest_readl(qts,
-+                            TIMER_REG(n, DW_APB_TIMER_N_INT_STATUS));
-+
-+    if (int_status) {
-+        qtest_readl(qts, TIMER_REG(n, DW_APB_TIMER_N_EOI));
++        qdev_connect_clock_in(DEVICE(&s->timer), clock_name, timer_clk);
 +    }
-+
-+    return int_status;
-+}
-+
-+static void test_timer_free_running(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    timer_load(qts, 0, 100);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE);
-+
-+    qtest_clock_step(qts, 101ULL * TIMER_TICK_NS + 1);
-+    g_assert_cmphex(timer_get_and_clear_status(qts, 0), ==, 1);
-+
-+    qtest_clock_step(qts, 10ULL * TIMER_TICK_NS);
-+    uint32_t cur = qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE));
-+    g_assert_cmphex(cur, <, UINT32_MAX);
-+    g_assert_cmphex(cur, >, 0);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_INT_STATUS)), ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_periodic(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+    int i;
-+
-+    timer_load(qts, 0, 100);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+
-+    for (i = 0; i < 3; i++) {
-+        qtest_clock_step(qts, 101ULL * TIMER_TICK_NS + 1);
-+        g_assert_cmphex(timer_get_and_clear_status(qts, 0), ==, 1);
-+        uint32_t cur = qtest_readl(qts,
-+                          TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE));
-+        g_assert_cmphex(cur, <=, 100);
-+    }
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_int_mask(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    timer_load(qts, 0, 100);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC |
-+                        DW_APB_TIMER_CONTROL_INT_MASK);
-+
-+    qtest_clock_step(qts, 101ULL * TIMER_TICK_NS + 1);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_INT_STATUS)) & 1, ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_BASE + DW_APB_TIMER_INT_STATUS), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_BASE + DW_APB_TIMER_RAW_INT_STATUS) & 1, ==, 1);
-+
-+    /* Unmasking a pending interrupt must assert it immediately. */
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_INT_STATUS)), ==, 1);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_BASE + DW_APB_TIMER_INT_STATUS) & 1, ==, 1);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_disable_clears_irq(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    timer_load(qts, 0, 100);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+
-+    qtest_clock_step(qts, 101ULL * TIMER_TICK_NS + 1);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_INT_STATUS)) & 1, ==, 1);
-+
-+    timer_disable(qts, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_INT_STATUS)) & 1, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_current_disabled(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    /* TRM: "A '0' is always read back when the timer is not enabled" */
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE)), ==, 0);
-+
-+    timer_load(qts, 0, 9999);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE)), ==, 0);
-+
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE);
-+    qtest_clock_step(qts, 10ULL * TIMER_TICK_NS);
-+    uint32_t cur_enabled = qtest_readl(qts,
-+                              TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE));
-+    g_assert_cmphex(cur_enabled, >, 0);
-+    g_assert_cmphex(cur_enabled, <, UINT32_MAX);
-+
-+    timer_disable(qts, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE)), ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_dynamic_reload(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+    uint32_t cur;
-+
-+    timer_load(qts, 0, 1000);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+
-+    qtest_clock_step(qts, 100ULL * TIMER_TICK_NS);
-+
-+    timer_load(qts, 0, 200);
-+
-+    qtest_clock_step(qts, 901ULL * TIMER_TICK_NS + 1);
-+    g_assert_cmphex(timer_get_and_clear_status(qts, 0), ==, 1);
-+
-+    qtest_clock_step(qts, 100ULL * TIMER_TICK_NS);
-+    cur = qtest_readl(qts, TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE));
-+    g_assert_cmphex(cur, ==, 99);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_all_channels(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+    int i;
-+
-+    for (i = 0; i < K230_TIMER_NUM_CHANNELS; i++) {
-+        timer_load(qts, i, 100 + i * 50);
-+        timer_enable(qts, i, DW_APB_TIMER_CONTROL_ENABLE |
-+                             DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+    }
-+
-+    /* Step past timer 0 expiry (load=100) - only timer 0 should fire */
-+    qtest_clock_step(qts, 101ULL * TIMER_TICK_NS + 1);
-+    uint32_t sts = qtest_readl(qts, TIMER_BASE + DW_APB_TIMER_INT_STATUS);
-+    g_assert_cmphex(sts & 1, ==, 1);
-+    g_assert_cmphex(sts & 0x3e, ==, 0);
-+
-+    /* Step to timer 1 expiry (another 50 ticks) */
-+    qtest_clock_step(qts, 50ULL * TIMER_TICK_NS + 1);
-+    sts = qtest_readl(qts, TIMER_BASE + DW_APB_TIMER_INT_STATUS);
-+    g_assert_cmphex(sts & 0x3, ==, 0x3);
-+    g_assert_cmphex(sts & 0x3c, ==, 0);
-+
-+    /* Step to expiry of all remaining timers (another 200 ticks) */
-+    qtest_clock_step(qts, 200ULL * TIMER_TICK_NS + 1);
-+    sts = qtest_readl(qts, TIMER_BASE + DW_APB_TIMER_INT_STATUS);
-+    g_assert_cmphex(sts, ==, 0x3f);
-+
-+    /* EOI_ALL clears all */
-+    qtest_readl(qts, TIMER_BASE + DW_APB_TIMER_EOI);
-+    sts = qtest_readl(qts, TIMER_BASE + DW_APB_TIMER_INT_STATUS);
-+    g_assert_cmphex(sts, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_reset(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    timer_load(qts, 0, 100);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+    qtest_clock_step(qts, 10ULL * TIMER_TICK_NS);
-+
-+    qtest_system_reset(qts);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_LOAD_COUNT)), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CONTROL)), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE)), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_BASE + DW_APB_TIMER_RAW_INT_STATUS), ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/dw-apb-timer/free_running", test_timer_free_running);
-+    qtest_add_func("/dw-apb-timer/periodic", test_timer_periodic);
-+    qtest_add_func("/dw-apb-timer/int_mask", test_timer_int_mask);
-+    qtest_add_func("/dw-apb-timer/disable_clears_irq",
-+                   test_timer_disable_clears_irq);
-+    qtest_add_func("/dw-apb-timer/current_disabled",
-+                   test_timer_current_disabled);
-+    qtest_add_func("/dw-apb-timer/dynamic_reload",
-+                   test_timer_dynamic_reload);
-+    qtest_add_func("/dw-apb-timer/all_channels", test_timer_all_channels);
-+    qtest_add_func("/dw-apb-timer/reset", test_timer_reset);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 46d4fc1d2b..9cadae79f4 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -318,7 +318,8 @@ qtests_riscv64 = ['riscv-csr-test'] + \
-    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-    ['iommu-riscv-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_K230') ?
--   ['k230-ddr-test', 'k230-wdt-test', 'k230-gsdma-test', 'k230-decomp-gzip-test'] : []) + \
-+   ['k230-ddr-test', 'k230-wdt-test', 'k230-gsdma-test',
-+    'k230-decomp-gzip-test', 'k230-dwapb-timer-test'] : []) + \
-    ['milkv-duo-test']
  
- qtests_hexagon = ['boot-serial-test', 'hexagon-config-test', 'l2vic-test',
+     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
+     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
+@@ -212,6 +230,18 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+         k230_create_uart(sys_mem, DEVICE(s->c908_plic), i);
+     }
+ 
++    /* Timer */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->timer), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->timer), 0, memmap[K230_DEV_TIMER].base);
++
++    for (int i = 0; i < K230_TIMER_NUM_CHANNELS; i++) {
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->timer), i,
++                           qdev_get_gpio_in(DEVICE(s->c908_plic),
++                                            K230_TIMER0_IRQ + i));
++    }
++
+     /* Watchdog */
+     for (int i = 0; i < 2; i++) {
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
+@@ -325,9 +355,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+     create_unimplemented_device("iomux", memmap[K230_DEV_IOMUX].base,
+                                 memmap[K230_DEV_IOMUX].size);
+ 
+-    create_unimplemented_device("timer", memmap[K230_DEV_TIMER].base,
+-                                memmap[K230_DEV_TIMER].size);
+-
+     create_unimplemented_device("wdt0", memmap[K230_DEV_WDT0].base,
+                                 memmap[K230_DEV_WDT0].size);
+ 
+diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
+index 8679d09891..4c416573eb 100644
+--- a/include/hw/riscv/k230.h
++++ b/include/hw/riscv/k230.h
+@@ -21,6 +21,7 @@
+ #include "hw/watchdog/k230_wdt.h"
+ #include "hw/dma/k230_gsdma.h"
+ #include "hw/misc/k230_decomp_gzip.h"
++#include "hw/timer/dw-apb-timer.h"
+ 
+ #define C908_CPU_HARTID   (0)
+ 
+@@ -40,6 +41,7 @@ typedef struct K230SoCState {
+     K230WdtState wdt[2];
+     K230GSDMAState gsdma;
+     K230DecompGzipState decomp_gzip;
++    DWAPBTimerState timer;
+     MemoryRegion sram;
+     MemoryRegion bootrom;
+ 
+@@ -135,6 +137,12 @@ enum {
+     K230_UART2_IRQ  = 18,
+     K230_UART3_IRQ  = 19,
+     K230_UART4_IRQ  = 20,
++    K230_TIMER0_IRQ = 101,
++    K230_TIMER1_IRQ = 102,
++    K230_TIMER2_IRQ = 103,
++    K230_TIMER3_IRQ = 104,
++    K230_TIMER4_IRQ = 105,
++    K230_TIMER5_IRQ = 106,
+     K230_WDT0_IRQ   = 107,
+     K230_WDT1_IRQ   = 108,
+     K230_GSDMA_IRQ  = 140,
 -- 
 2.53.0
 
