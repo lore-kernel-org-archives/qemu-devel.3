@@ -1,150 +1,149 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2B1606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102E1606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=D0TecW/y;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=TL+P+in0
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hX2NUxEu;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Kgr/pwl6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMbV4-0001Sm-9O; Thu, 29 Oct 2026 21:33:46 -0400
+	id 1xMbiy-0003rd-1B; Thu, 29 Oct 2026 21:48:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xMbV0-0001Se-Uk
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:33:43 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xMbiu-0003rO-QF
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:48:04 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xMbUz-0008Sk-Gu
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:33:42 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1xMbir-0001If-Me
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:48:04 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TNKKca2586099
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 01:33:39 GMT
+ 69TNKjZf1579385
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 01:47:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- vd89vHclIETA3vcViu05nDKlgu0GJNlBXcamOvodw04=; b=D0TecW/ySUgMuZeF
- 5KT3aMA2c04jAm/caPC8Pin989NGMfbe3JXUe0i+qkZ4swwPOgC/QziL8mWOXTpX
- ibdDzrAmv6197ZKZmojmXdYFS3e5WZCYAWRauy+32fYVVZkBkgcUqsOY+VlpmOUd
- nZXZPtnPNCxmW/i93T7X8hRxeMXN0OQFrFgYOjqIKoYHqiOJJUqPD2RVygN1Zm23
- jV/2it9g0LTDv5Y/fIsEiGM7FKXXSaUlLx2O2wbW+ph6ldPVOdlKCUUbyycs/DEm
- +LDRcGn1yte6BMi4n/MebpCbSqKme30+Q7YaR8TYwddDLfgNuhY8aQI3dQnRZPmb
- OOif8Q==
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme750m71-1
+ 5Y4dmIN4hycdDKLHBBjtGcZdaWUQP7V8T+ezPlFx8uY=; b=hX2NUxEuk8HB09AF
+ h8lMparAo5SGaQ0DjsOnmCiEXMp6rLk2SX7cnQgAudWY7Wscm7LgN1ZoOkkBMKTg
+ C0Ab3YrCHZ2a+gk8e7+wlQRV+t9DXjvX5f9EcF50hPz5xiQqmR2LShigdK+fMK3O
+ 4d20riCA913OSpfN9P80J/3QJj+QiwkQ1yRBtvMMlYGioqgzoPczF1x50kdgCkVt
+ 6iDGYbGmF5V8F+ILLNetSTD8V/uz7sJnf6nKnNnRbMwoAGxqMkv/gq/eRb3bpkMu
+ EMO4z+27ioD11yKfE0fSYhBMSNQQGFDTZRw5KEKWTG7vyquRoml5xknbKsMBOWxv
+ qKVK7w==
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qgp67-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 01:33:39 +0000 (GMT)
-Received: by mail-oi1-f200.google.com with SMTP id
- 5614622812f47-4f4612a1a5cso1672346b6e.0
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:33:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793324019; cv=none;
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 01:47:59 +0000 (GMT)
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-4db3db8687fso393751b6e.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:47:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793324879; cv=none;
  d=google.com; s=arc-20260327;
- b=JLvgcWEyjz1ej+vRRHy+H9xGv1D7UeQ9Lh2LigqPCV5YwL1ZcmnYIH6D+aetJXs198
- 6/w1gyAcDUovB7F4hdANbn7aMfqbjOx3pNPwpLBUFx7/lslTEak91pMSvE3SR9XiQ+wA
- XuKSjfzTtcCJpzvdgTK/1PHWs/0mVnz+x/niEmhAK1x8QPKKVkpgHvOCK3bjof+mPh1f
- /L90PnP80tTGUVei6tHQcu5BgJRsh4BA1cCikqX6oqSzXazNzuHzv/dz0gN3O338t3aD
- TBnfnMmEpVLwQf6HCxn/7LFmhKGl2SuHyzWRLEvNPk0NbE46eY5zbfpLcHoKXMlxhzZ+
- uXVw==
+ b=YMJ2BcHbmWpnFyt0dJWWSjomd9VIlxfISU+nLEOl9szrBiXdxLqox+Rj2QM6QH3Eno
+ dVQ9J1/egTlCUpY6q5Zy9gWKj9vCBYt2x/5cxZ3jS+lO5a9HCBSMANrBy9D/BEbV/y5O
+ KX7ceBYVYT7u7GlgXw0D2gLYipz/fMYJiQ4/6mkwH7yOQWeLDMGqNFlrmo8Zj3UExDPm
+ TTjJ5SbweAlh3/2ti+gdm1yrl7MPs4L29OlAkNquxHU8Y5yC0iJ7kCduCiTNUU/v2rRG
+ 7kx86GSU54HM/aMEw2/y7XpIaJ8pjKW6sTin8bE+s04m0PgBFi7EK6yymYdRCWtCvWze
+ ouWA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=vd89vHclIETA3vcViu05nDKlgu0GJNlBXcamOvodw04=;
+ bh=5Y4dmIN4hycdDKLHBBjtGcZdaWUQP7V8T+ezPlFx8uY=;
  fh=AvdUgREFPBGnLKtDjjPes0731VMeA8MKp16N55VMDg4=;
- b=LCcQZzDy0WaLNwf7GYJyrrbVU/0uIcJ6ltmTY38tSu1mLahWqPpqwwa826mhHJQSq9
- AHWoDHxhGIGad483PNT2fgqY9JX4G2D1BwKtnmPh8wOmu46RbPhXv61jsf7+cFw+C2OJ
- 0ZoxIAVSLAf/zCPIvIo/q2jlbMGuZrGOZt5acFYhtmP3Da76q1UrHmEMyfwznonNuKfJ
- e6r8edNGVsQsGOUXmj2iv5IptZXa9aPnHtrfwlO0m1/jBT3BLwmC1sNFwDViALyci4Kj
- cknROUgrzeExH4kAiYlGtdUSN7+Y2GKMBekzdanvmYLQwqmoim0ApdlSpUrJJexA0f24
- KhSA==; darn=nongnu.org
+ b=oeQyflCCDWr8psmk0XE8tCZvONhEA6booi8kNGWr8yXdIG5agx6w/U7qzasragnk/8
+ w9/zIsHlhZ/Lvd1y1dEvkORpM/6BGZLarj7ohSWy8tiLWzxNIm8ZhD/Auk1YWczw0nUK
+ OVIekzMxjni8iBYYULUq7IXCZILqpUhPw0cmlqSQHupXrf73+OfRVVLq5lN3/KteHOQD
+ v0Eer5YaheuSAshlnkbo3SX4i41iDWPyVWUoE0BRqnCBa0N9LTSH8rIDU2zRF0njBKGW
+ hYFrj8ZvVmgUE/bL8vDZnCihgpINX7Q3r2eC/OW9lvvge+9PbTyHLi3j+mNFP5LGv2fx
+ 38pg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793324019; x=1793928819; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793324879; x=1793929679; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=vd89vHclIETA3vcViu05nDKlgu0GJNlBXcamOvodw04=;
- b=TL+P+in0PjiTIVBJYfmQcCjq3dTcStvGCzRWGoS9orFQfAyOk+jPydOU1Y1pH/UuqK
- BBSolmqtYj87nISa59zrFQ7J1pnKj3oIg9YSK/9jrzRAXXQYBQw5I4v4Wb/9SaXPlxXa
- cbC/qgwEm4kiplgfvLoosfa2zYE2DMcEKmfm+Fzc7vSDmIt/p4fk+/7zsSwANL/4+2QL
- Ftn1hcKI0iLeyaLJXh4/prAgKCLOCdH8wyanCKMPoA+kka46WEb9aoter9TtzB9Vwqpc
- I4DxKXjGx/MuIdD+/1YcCL1tbP3oEagIvaH3RFS0XdFr5t086t8R0Iu5M54drkiiVBPS
- MDYQ==
+ bh=5Y4dmIN4hycdDKLHBBjtGcZdaWUQP7V8T+ezPlFx8uY=;
+ b=Kgr/pwl6OM048Ikz34Uzqc7wTS2aTYGkUDxnQXfvyB1DLAqoK+W+1LtEwcm/heE2hN
+ sx3s2F4UXI7J0Xzdk/+4iTFmlCNWg7HTekEWU/RHYs1VoVHPjJew4lZ4AAbQXDR3tySU
+ JuQJgzkfrNvQjUzd4ADr1iLH6V7tT7ky95+N25uaf8T4VJs+2Hxqx7E60LXV5JVP7CnU
+ 7/Y7OAAKlVZ8HR6yOLTW551+do5eqlIUi3qIs0NirP9uV8yrCH3rnLXcBUdyJL+ta8rK
+ mAWNNLHafP5kPY2CaSiEuMz2LP4fGNo3GO+Q23k8WIMbSJk6xb02IQPeyXNnuJ3D+Phj
+ cQxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793324019; x=1793928819;
+ d=1e100.net; s=20260707; t=1793324879; x=1793929679;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=vd89vHclIETA3vcViu05nDKlgu0GJNlBXcamOvodw04=;
- b=ha2q67zhzj5O7Ubfmg38c5OLhFoLNfQnFW/rmr6fhAfEIv1FZT/al4S4Yf59/HpDu0
- PGm921sYa2UhoavLtfmUGm3u4XuQj7X3rIp8WyHieTJGmj+0vXcfE3mowhOMxZH4ZTBt
- 9eHO3PMlDNWJX0u5tXDEde0pW1klqj7zbgYxNS9xQ4WlYpJ5q3/xg6imGicukpWb5Het
- LPnoON/sptcJ1XbnYIyAIfB47c9wjT/RWczeM3HB1D6z8xFQIE1uoSrpGKFKUDMt2wmZ
- u9ZSoBi/hmNxKL0CMnClfkGQkcSJu5EAB0jao2IJ1q97cJGY+ZOGRddx/ze6AxjMBLyr
- 4A4A==
-X-Gm-Message-State: AFq9FYLwFRXzOXqJAylWyjYwGrXx6mSeRFuSR/1piwUyyHsNUzpZVFEt
- RFSxz7jA5XeiEUOBYFNZn74CDNlyXqqtls572M2wPfHPlvQLjRYnlnoLjoZsajBJd2NdzUERlcL
- 8OHKs+hj4NFlzpWg7LSSt5JjYaAquDNXxTeUD0lNxkwkKN9zSAyl5nl8ryEWCgMCzSX5BuRgul+
- Qu/TFXVhTUZ+x9n0e40r84A3ty0GyMVFlaLqQVUKWc5s0=
-X-Gm-Gg: AYBFou1ahEW2Xl/lmI72ov/ZHyoEXmlei29TI1368PjQ6mN8jIvQ8wGkN+gbaZ0Z+ty
- OqTnzoiJdOvTC+i1MBFFZPtc1GD2fi4KicC5l/NSDmzJgCH2RK/Kh6friEIZIbIWo6iSVF+TYiK
- CMwsJpWVUC9s1dCHPkjHNdBABPUEuTs4QxXRRqLPhXQWpSprdlCz8Mop1vPiqD0XbAhtJ5e9GKu
- OAXXNUQRcE3y3PWMoQ=
-X-Received: by 2002:a05:6808:bca:b0:4b8:4703:db97 with SMTP id
- 5614622812f47-563efb4d666mr2404693b6e.32.1793324018874; 
- Thu, 29 Oct 2026 18:33:38 -0700 (PDT)
-X-Received: by 2002:a05:6808:bca:b0:4b8:4703:db97 with SMTP id
- 5614622812f47-563efb4d666mr2404680b6e.32.1793324018224; Thu, 29 Oct 2026
- 18:33:38 -0700 (PDT)
+ bh=5Y4dmIN4hycdDKLHBBjtGcZdaWUQP7V8T+ezPlFx8uY=;
+ b=mP0fQPMysjPBjosSHR9xspwrnrAlpCPhxVlblDTY2QtagdDlLHtN8RzYIN6TevId8F
+ lyro5SQgfQITyzPstfKHssdFHUOWh765Ou4iVcY7k8o8BvTr966SaHdBBTx9RPnh4BA9
+ /I/qXYrWf9to3ez5ymWmZPtZF6TOnsJI9UgOX5BWAYnbAIcbMepkiPoYAm3ERAWVa2+s
+ tbp68VtyzvvXbclNOeRD/2S27uUbvZ1WZy+Mcm1x9e/D5sQQxwar75zMEqfOi9jRhb4O
+ 7ApbfnufCPqyBUwM5YzcRU/rE2nLBVDXi+zrnCJCGiFyT9nnSTs42AZm3QIHFXS6PCc2
+ wNFQ==
+X-Gm-Message-State: AFq9FYJN8HZKBEwv8O5v9G18NzcR9G7HXmOS1qAjQarGKrYKVHZvqWNp
+ uJ8gpMyKyBaArgLD4mMkoJ9YN18bDIXN18naHv3+fKhPSwAY5dIMO36Fm9UtdN+Oo4sPRkbrQHx
+ TKCdfrANOBDe3UficJUwZH/97fW/dLNKaGgYfpnEDsWnKo9FombrccdMF38ApprY7HblMiBeRY8
+ jtBkaxrhh6lmieAdd3QZvx9Zvfs7ah0QFq
+X-Gm-Gg: AYBFou2rAgKFb9/X0Jr3nOy6UjXlZ8oqFc/U52lO70NfkuCLfcr4nMBzsloHYVBP0Zj
+ 93pW9zKBxsFG7gb7ua/ZLQF/SGZi+CrFmt9ROKAOv34+fV3tbC+9zPT6zAPUMPaE6f6rJRaoqMr
+ alCrxCslmIKqOq/QUFjydpQjfayBGol7ikOPjhZ0oPxMddeLX8JhnWR0liKufjJHoZnqVafGLa5
+ gZ613tRL4efHcvylTw=
+X-Received: by 2002:a05:6808:10cf:b0:4f8:4a95:9b3b with SMTP id
+ 5614622812f47-5640df9396cmr728333b6e.68.1793324879036; 
+ Thu, 29 Oct 2026 18:47:59 -0700 (PDT)
+X-Received: by 2002:a05:6808:10cf:b0:4f8:4a95:9b3b with SMTP id
+ 5614622812f47-5640df9396cmr728328b6e.68.1793324878577; Thu, 29 Oct 2026
+ 18:47:58 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20261029230310.1632334-1-brian.cain@oss.qualcomm.com>
- <20261029230310.1632334-6-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261029230310.1632334-6-brian.cain@oss.qualcomm.com>
+ <20261029230310.1632334-7-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20261029230310.1632334-7-brian.cain@oss.qualcomm.com>
 From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 20:33:26 -0500
-X-Gm-Features: AclHuK99pUAWv1MtSYyZUbwAswE-OcrMtXrtZSP1kP-EDJSYItLH5FGnn2pBSqU
-Message-ID: <CAJ+KCYPnuZ6AsVzqtJDOHMbVnk5LtKxgHWLPee_-xsZYHcdujQ@mail.gmail.com>
-Subject: Re: [PATCH 5/8] target/hexagon: gate HMX exec on SSR:XE2
+Date: Thu, 29 Oct 2026 20:47:47 -0500
+X-Gm-Features: AclHuK9hUT4dyPt8qsj0DwyIjZmpf0c7GaTuYJ-ybT6C_3B3bONqPtdc--2IYyw
+Message-ID: <CAJ+KCYP8FeOWd9ghCi-+vOB_=RRb3Tueo7n67pPRnpsNCJxPBA@mail.gmail.com>
+Subject: Re: [PATCH 6/8] hw/hexagon: describe HMX in the device tree
 To: Brian Cain <brian.cain@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: OXr887tRyCKG8bq2iAvtEZjxvSN5tAdZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAwNSBTYWx0ZWRfX6pytEJ4niiQF
- 0ywRDGs7K0OrSQmavyaJH4MJYfeBpZ3EVI7TwApqqyS8UkU/3miPLHKC1ZNeIhBJtdqLuOhCHyf
- G057f4DidT6+/WlGSwVSsrAm9N8InuDRF+gNS7zdmK41it0cnywLbSL8FujVT3hJmEjn6ncNZfO
- YwlDszPiHlym5TXy3qeb7gyvmT9imQmFGCkhkKz8vW+8uVcQbD8eXvfChBg0NLehnuIgy0CLYTx
- wHXw/OiF4jJ+/HI4xppth/DI9EKXdb/2Ho/nH+BWMWOL98PRZxM+iep+boDNgMnWs6QGbzIRKg+
- /1xhnVCvYI7PbRgSv/a8R1yRqEEumi+oXS7AsiJ/PIN5EB0jkm5gq7/BSVzfam3NOwt4RTX+ep3
- WEokaRm3W3zTPfKxuyLr2y/QqwDVfgTwXQLckHqsRn9Vc/fcwx5sDU++hQrStWqnHPIq84NsXpp
- vU8Cq6SBrfZtPjir3sA==
-X-Proofpoint-ORIG-GUID: OXr887tRyCKG8bq2iAvtEZjxvSN5tAdZ
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAwNSBTYWx0ZWRfX3u+lBKHvF0jW
- KixzqXbMfX0Hc2BHWw3WvpHHqyVR9cFd6ltMTs7DoIcEcxQ1BnITr2r1xX8roLckhLu7nhUaQMU
- 9GUU7H7ZUL7AoXQi22iBWinsMNFvsDU=
-X-Authority-Analysis: v=2.4 cv=KdtHIgYD c=1 sm=1 tr=0 ts=6ae3f3f3 cx=c_pps
- a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
+X-Proofpoint-GUID: afVPBAUebyqM_aZBusOau5WvqEibxf23
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAwNiBTYWx0ZWRfX+qllv/E9sRZO
+ Zj1o9CW61YAfKPBRU8NevpFXrFVujcO8vXbrmqD05xUqJy3NgZOC4VXMgjpF2wwFn7lz4I5lTos
+ irIaqzEFEt9z3v3licWkq5z8iJ15WXY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAwNiBTYWx0ZWRfX9JMVh1yAbB3Q
+ HmaHogHw9yoxtZ7SaV+/0UiNfOsr/3rkvjD3QNnOsDhT/uNx/oRy4+WwiLPPWKlS1No3kc6WUxz
+ ZXasxH/6COlu3Yvb6D4qanpDZtT9umWt7h+f4yIJG6XM3IsFuDBAMPTcZ612wVpQTi3/0KHEV8W
+ kiLSwfLTjBEyGwaMTbar2FvPF4crRkU5qBXz9QxqfuS/8xPCI31d9qu1ZuiuHyJDpGY0L17hwhn
+ gFJLgIpo137jGWAaKsK8pcBqPiMr104YV3VUUv4Y/ZAHPa0LSogRnrpDo1wF5kZ4uwhrIxl2ux4
+ QCQch4sd1so7Qkq8XT7ULS05/f0HW6k+GWemA2sMilUJDRCcpuPpqW7Vf+5oTQmQRMy2zQhDaxs
+ eiqlPR7CmG/Zh8b1q5XF2Z/U3pipEw7iRzaLic1LoU39P7rzrXeONkuhh64V3IpbwiehI/UZMQo
+ evECvWegR5jQlJb6snQ==
+X-Proofpoint-ORIG-GUID: afVPBAUebyqM_aZBusOau5WvqEibxf23
+X-Authority-Analysis: v=2.4 cv=TpVzFzXh c=1 sm=1 tr=0 ts=6ae3f74f cx=c_pps
+ a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
  a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8 a=Kp0rOEhd_mCZagt_z8gA:9
- a=QEXdDO2ut3YA:10 a=pF_qn-MSjDawc0seGVz6:22
+ a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8 a=uCBZdDBFx-Qh9TLS0TAA:9
+ a=QEXdDO2ut3YA:10 a=efpaJB4zofY2dbm2aIRb:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_07,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 phishscore=0
- suspectscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610300005
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ impostorscore=0 adultscore=0 suspectscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300006
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -173,23 +172,28 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 On Thu, Oct 29, 2026 at 6:03=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
 .com> wrote:
 >
-> Executing an HMX instruction with SSR:XE2 clear raises a NO_COPROC2_ENABL=
-E
-> exception.
->
-> Log packets one as LOG_UNIMP for now.
+> Add a /soc/hmx node for HMX units.
 >
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  target/hexagon/cpu.h                      |  1 +
->  target/hexagon/insn.h                     |  1 +
->  target/hexagon/translate.h                |  2 ++
->  target/hexagon/cpu.c                      |  2 ++
->  target/hexagon/decode.c                   |  3 +++
->  target/hexagon/translate.c                | 21 +++++++++++++++++++++
->  tests/functional/hexagon/test_systests.py |  3 +++
->  7 files changed, 33 insertions(+)
+>  hw/hexagon/hex-board.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 >
+> diff --git a/hw/hexagon/hex-board.c b/hw/hexagon/hex-board.c
+> index 3bf09e4e7c7..f38c244bb2b 100644
+> --- a/hw/hexagon/hex-board.c
+> +++ b/hw/hexagon/hex-board.c
+> @@ -106,6 +106,12 @@ void hex_board_fdt_add_hvx(MachineState *ms,
+>          qemu_fdt_setprop_cells(ms->fdt, "/soc/hvx", "qcom,hvx-vlength",
+>                                 t->hvx_vec_log_length);
+>      }
+> +
+> +    if (HEXAGON_CFGTABLE_HAS_HMX(t)) {
+> +        qemu_fdt_add_subnode(ms->fdt, "/soc/hmx");
+> +        qemu_fdt_setprop_string(ms->fdt, "/soc/hmx", "compatible",
+> +                                "qcom,hexagon-hmx");
+> +    }
 
-Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Should HEXAGON_CFGTABLE_HAS_HMX check rev >=3D V75 too? As
+it is right now using it will change machines older than V75 adding HMX.
 
