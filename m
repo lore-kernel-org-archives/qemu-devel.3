@@ -1,93 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3104E606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CACA606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=rHQEe2yZ
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=k0XHg3cW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMb54-0002NX-Jk; Thu, 29 Oct 2026 21:06:54 -0400
+	id 1xMb4w-0002I2-Sf; Thu, 29 Oct 2026 21:06:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4t-0002Fl-6y
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:45 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4l-0002DK-HA
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:35 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4l-0006Fu-9A
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:38 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-48e0d1da913so124698f8f.1
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:06:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4h-0006FC-BQ
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:32 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-48e20ed3b9dso160921f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:06:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793322393; x=1793927193; darn=nongnu.org;
+ d=openvz.org; s=google; t=1793322389; x=1793927189; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=f20d2Ek+xNWNYFT8dEXpzY4CN9pgSsWok3ap5ujGf/Q=;
- b=rHQEe2yZo/nr5t6mPfgMa1ysuaXmR42K0g9Q0fKvkrm5l5fhlpyTB6SJxxra1JVtya
- j1T/dahWh55Ou3by563b2Kuf/dBjzQHTKi9M6gpB9mG7weQZxMEnwY3ns+UUyNPIOlcP
- /xIFldmLXIXw11V56And884AN3vqATkUH657+DNNzEqQOWrNP68EwZUh/+D5/1AWKf2p
- 42V69YrAqHMBmUsn5hXcT8E5bx6GmRNn0BQraUECOs0xMNo6v5dDU3OvtZva9bK+tZkk
- /XpRhr0Ts79nNzSlRAlxPmol3ch4xUQyyNAqXapljBwGcQXvIpCH2pz4iVz7+RMTcIdA
- 7n4w==
+ bh=fJ9DARarrY1aTYCtlvGS85iKEp5hs4edfrbJfuPj5Sg=;
+ b=k0XHg3cW6lOZbNOaWhrBkG7iMg6VddxC5sYdUfx8gdhZJ4XU8Oww7GP11YF0YojmxU
+ uDIkchiJNcelIy6I5iTahltxrnjRnDuaIX/euXnOt/w1W/8dE7O36+GckEcNmfs6nVaJ
+ jJWBmB1Bn1BfQMYMKx6cOOwIPXYdVr6tofLChpZChLhtooo1Lt7n+5gmA8mY4QBHpcMe
+ 92vuan/TDCspG6XqlC/QH4zD9ZM+urcmXJAIx+a7M9wJUvCFihpxG7zR1jxQuDHdIMZs
+ XgemZ4O1H/3yTUs04CvW9u/v9lgXNRrCdf0u1ZIKfIANPp+92i9oYKBSz/vwS66zUB++
+ lI+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793322393; x=1793927193;
+ d=1e100.net; s=20260707; t=1793322389; x=1793927189;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=f20d2Ek+xNWNYFT8dEXpzY4CN9pgSsWok3ap5ujGf/Q=;
- b=ROCjJPf4JfmCtoddtsPgi0gTet7ZeTeBxG6p7ZoxMC8btrQzIlrQ/l6hF3DuAi/Xb5
- r3jvwtLb6rdAZUxy0K0NCVE3jh9mD5ynL2CkVUEPqtb0VJXola8UmLRiNOFCHfo6WcYw
- 5hn9VCPq27fwbd+hLK7bZYVS42u5BVhLSzZ9nsq30Xgi6zqaW9VBRdw2ijSUwJ1l6JQE
- khc6+O8WO5JomSVO0cKDcwYirsMQUHGIqOYwxpt8x2uGGFysJE/cNEjYaVfRcxXlkNIW
- PGNR9AwLEmKSBvgz4YGNQPA8JW77fYdMvbm99WYcO2fYeaewtWaSJZnrezcj3Izw3xKS
- E4rw==
-X-Gm-Message-State: AFq9FYJbkPxUuPD36o3JFGRzW5XqCx19X1yIcBCJC+EAnOIp70SXzM27
- Z89CA8Zlb84m1MNUBu8WCx6+ps5Qa3vZijNpQUL/MDEZmSMsRhgKFnHRLZtRmSkPnzd0AY6MRSu
- C7YT3
-X-Gm-Gg: AYBFou3w0NwRCuSFYnhBm4oYIC4EErevpMPmAy7b/pqU72O0Jud+uktqXQZfIi50d+1
- EMnYY8OZ6yW7c3LfLUpkFIP5Dr2+o9RPapXdf6149GhXZJECiPFryTvIUWrjOuYukk/1r53bkks
- z7p3deGnZXz3rotKEuoebG/kZR7Xqs5kZhDGk1oApYTw3lUEBMllJEMQGQlKLwWwOL5lKYceqlX
- 4p1+gTC8U/iyFzw37vAJ44TSOGB0OgFGRstrsjpluT+VIJF6swhmTkg7BOkDBescmAUtolLwLrR
- Yk5w1hYcK24w1mZRgwjEc2wjK+lIMEDYj3XOI8crDh6ERVXOGjB5ENlh42aYJBwpsuzMlOIXE09
- DM1Vs0dT8PaRLvIkq4mzFF+V8deTBkkoAOx1zvoB7yg0uzDp+IPTc5wUH+N8moGcY1GfZjWL/Zm
- NqwsFgZdy+z2qc/KQpduRcRzhueUSvKPW7M4CkfN+0xVGkDSrxd0QCJiXlBVvZgOyiCmr+xag28
- eCBXWtXPGVpQQHVYH793DRhNtWvQtYXMnTr3dksdIbYGVEPvJV6dcS/EKVJP4cRcyHXOjXCgcZJ
- hqOWnhrG/RoqWljjiw==
-X-Received: by 2002:a05:6000:2c0d:b0:48e:661e:8766 with SMTP id
- ffacd0b85a97d-48e661e88c5mr9849074f8f.17.1793322392992; 
- Thu, 29 Oct 2026 18:06:32 -0700 (PDT)
+ bh=fJ9DARarrY1aTYCtlvGS85iKEp5hs4edfrbJfuPj5Sg=;
+ b=uglTXnoFryBOFMUAMi73PtcTFTX0Ks5sB8YM883e8FRr8f9YYKoZklyTahlxYjDG5y
+ gGSVyihiNzfWOR/tpZU4MOnIBNnLS1PiVi7Yv5OvS5VNSK8uNokAC/1CyC9Saeh/690j
+ peZIJ5Bqbv6qdu7LzwvcTDQO+pLrSCnzFpZPN9E+pNav7amKngjF/QxZDJ4H+MRnYfub
+ aEIltQRbz6qPTv1TWo+hvIbDSn7bodOw04oTbGm6LOoM00M44Tht8mxiuVQ//Prst0Yo
+ UCS0ai200FKw3NhPTWIsdU8vKA4Bke83YItE7amw+M3+B4qc0nODp6cxvk60XYYC059E
+ sinA==
+X-Gm-Message-State: AFq9FYJrGs6PNqnIkdvwGBu41OHM1xJmDOG8zYzaZRU0rSoYL95+4yoh
+ J/TjCwkqk7tSDs2pm57arkiCXqtKNrAsHojYEdil90B+918ix0pa5UL/WIQfI70VB/fRw5g2ceI
+ /hPSZ
+X-Gm-Gg: AYBFou2nt+MrS/MNWf5ApGcPLuNBirr5Q+YsifTmvH47QeTE0axvdZI71et6Cond/CR
+ lHx52yaq/w4Q6aK2/vAxBpE6v07cqhql6N13afpyT5JOWArNYOxJFbuPNePLqNUw0sqLEzTFMc7
+ mGZIDVgBb19Ve95BjydmDbORJRGgeCICBiJ/HIMtbKs5WcgDDEZsD1QyA03j03yYM59C/WjVW1x
+ M15gSs/Qz4m3NK0K5vuT4RAEGV7toLh9RVyzcu8WBg0y26yCN9sas589gCQLON2NNOIWsFgfWx+
+ 98RXPyHNNKfd7Q34I2psFb4L+avFWQ0lLkpdsMVt5yMePawaDbGie1zZQbaAcP8B9PRF6+TTxid
+ fPRYYs/8+E9iq1aQEQa7D2opVNm6jciobe4J8/seYYYn3hcIzf4eHm9yRWCQFreEfE/r/Eph1fU
+ oPgvTJm95PfRIk+CeiW947KmozxqZfLwirVrIstcDSCU/JG4vxvhIkT/VnD9TSOo/0aDAj3S1e3
+ gH2u6MzMblDY25nHQBG0C8q79NZxk3Loi+4LpShqqX1Wk+BBBcqexTcv7IR3RgdzVqfydzfL1Ci
+ r62ARL2cb/o9zW3KGFhwa7y05YmneaSi4mOwbGI=
+X-Received: by 2002:a5d:4391:0:b0:487:219e:5e20 with SMTP id
+ ffacd0b85a97d-48e6e529631mr1474478f8f.51.1793322388584; 
+ Thu, 29 Oct 2026 18:06:28 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:f4be:f111:4ee0:40d3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b80333sm210023f8f.32.2026.10.29.18.06.31
+ ffacd0b85a97d-48e71b80333sm210023f8f.32.2026.10.29.18.06.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Oct 2026 18:06:31 -0700 (PDT)
+ Thu, 29 Oct 2026 18:06:28 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 07/12] block/backup: pre-fill zero_bitmap for full/bitmap
-Date: Fri, 30 Oct 2026 02:06:07 +0100
-Message-ID: <20261030010613.1612771-8-den@openvz.org>
+Subject: [PATCH v4 05/12] block/block-copy: extract
+ block_copy_set_task_method()
+Date: Fri, 30 Oct 2026 02:06:05 +0100
+Message-ID: <20261030010613.1612771-6-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261030010613.1612771-1-den@openvz.org>
 References: <20261030010613.1612771-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=den@openvz.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=den@openvz.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,232 +109,108 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Denis V. Lunev <den@openvz.org>
 
-Only sync=top runs an up-front scan, so the previous patch did nothing
-for the other modes. FULL and BITMAP know their complete copy_bitmap
-before copying starts, and the same copy-before-write guarantee holds:
-a cluster still dirty when the copy loop reaches it has not been written
-since the scan.
+Move the per-task block-status query and its skip_unallocated and
+BDRV_BLOCK_ZERO handling out of block_copy_dirty_clusters() into
+block_copy_set_task_method(). No behavior change. The next patch
+changes that decision, and having it in one place keeps that change to
+just the new logic.
 
-Add block_copy_calculate_zero_bitmap(), driven one query at a time from
-backup_scan_source() so the graph rdlock and the pause point are taken
-per query, and query each confirmed span once however many dirty areas
-it covers. Each step searches copy_bitmap only a bounded window ahead,
-since for sync=full the rest of the image is one dirty area. The scan
-only fills zero_bitmap and never clears copy_bitmap, so sync=full still
-writes zeroes for clusters the source never allocated; it just stops
-re-querying to find that out. Unlike the per-task queries it replaces
-the scan is serial, so a sparsely dirtied job against a slow source may
-spend more time here than it saves. The sync=top loop had the same
-shape, so both fold into backup_scan_source().
-
-sync=none keeps the per-task query. Its bitmap says "anything may be
-copied", not "this will be copied", and it only ever copies what the
-guest writes during the fleecing window, so scanning the whole image at
-attach is the wrong trade.
+The block-status result no longer lands in the caller's @ret, so drop
+the note saying @ret may be positive at the out: label.
 
 Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: John Snow <jsnow@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- block/backup.c             | 94 ++++++++++++++++++++++++--------------
- block/block-copy.c         | 42 +++++++++++++++++
- include/block/block-copy.h |  4 ++
- 3 files changed, 106 insertions(+), 34 deletions(-)
+ block/block-copy.c | 46 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 30 insertions(+), 16 deletions(-)
 
-diff --git a/block/backup.c b/block/backup.c
-index 11d70243e2..38b0838d69 100644
---- a/block/backup.c
-+++ b/block/backup.c
-@@ -247,59 +247,85 @@ static void backup_init_bcs_bitmap(BackupBlockJob *job)
-     job_progress_set_remaining(&job->common.job, estimate);
- }
- 
--static int coroutine_fn backup_run(Job *job, Error **errp)
-+/*
-+ * Walk the source before copying starts: fill zero_bitmap and, for sync=top,
-+ * drop the clusters that are not allocated above the backing.
-+ */
-+static int coroutine_fn backup_scan_source(BackupBlockJob *s)
- {
--    BackupBlockJob *s = container_of(job, BackupBlockJob, common.job);
--    int ret;
--
--    backup_init_bcs_bitmap(s);
--
--    if (s->sync_mode == MIRROR_SYNC_MODE_TOP) {
--        int64_t offset = 0;
--        int64_t count;
-+    Job *job = &s->common.job;
-+    bool top = s->sync_mode == MIRROR_SYNC_MODE_TOP;
-+    int64_t offset, cached_end = 0, count;
-+    int ret = 0;
- 
--        for (offset = 0; offset < s->len; ) {
--            if (job_is_cancelled(job)) {
--                return -ECANCELED;
--            }
-+    for (offset = 0; offset < s->len; offset += count) {
-+        if (job_is_cancelled(job)) {
-+            return -ECANCELED;
-+        }
- 
--            job_pause_point(job);
-+        job_pause_point(job);
- 
--            if (job_is_cancelled(job)) {
--                return -ECANCELED;
--            }
-+        if (job_is_cancelled(job)) {
-+            return -ECANCELED;
-+        }
- 
--            /* rdlock protects the subsequent call to bdrv_is_allocated() */
--            bdrv_graph_co_rdlock();
-+        /* rdlock protects the block-status queries below */
-+        bdrv_graph_co_rdlock();
-+        if (top) {
-             ret = block_copy_reset_unallocated(s->bcs, offset, &count);
--            bdrv_graph_co_rdunlock();
--            if (ret < 0) {
--                return ret;
--            }
-+        } else {
-+            block_copy_calculate_zero_bitmap(s->bcs, offset, &cached_end,
-+                                             &count);
-+        }
-+        bdrv_graph_co_rdunlock();
- 
--            offset += count;
-+        if (ret < 0) {
-+            return ret;
-         }
-+    }
-+
-+    if (top) {
-         block_copy_set_skip_unallocated(s->bcs, false);
--        block_copy_set_zero_bitmap_valid(s->bcs);
-     }
-+    block_copy_set_zero_bitmap_valid(s->bcs);
- 
--    if (s->sync_mode == MIRROR_SYNC_MODE_NONE) {
-+    return 0;
-+}
-+
-+static int coroutine_fn backup_run(Job *job, Error **errp)
-+{
-+    BackupBlockJob *s = container_of(job, BackupBlockJob, common.job);
-+    int ret;
-+
-+    backup_init_bcs_bitmap(s);
-+
-+    switch (s->sync_mode) {
-+    case MIRROR_SYNC_MODE_TOP:
-+    case MIRROR_SYNC_MODE_FULL:
-+    case MIRROR_SYNC_MODE_BITMAP:
-+        ret = backup_scan_source(s);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+        break;
-+
-+    case MIRROR_SYNC_MODE_NONE:
-         /*
-          * All bits are set in bcs bitmap to allow any cluster to be copied.
--         * This does not actually require them to be copied.
-+         * This does not actually require them to be copied. Yield until the
-+         * job is cancelled and let the before_write notify callback service
-+         * CoW requests.
-          */
-         while (!job_is_cancelled(job)) {
--            /*
--             * Yield until the job is cancelled.  We just let our before_write
--             * notify callback service CoW requests.
--             */
-             job_yield(job);
-         }
--    } else {
--        return backup_loop(s);
-+        return 0;
-+
-+    default:
-+        g_assert_not_reached();
-     }
- 
--    return 0;
-+    return backup_loop(s);
- }
- 
- static void coroutine_fn backup_pause(Job *job)
 diff --git a/block/block-copy.c b/block/block-copy.c
-index 507c4bab90..4f128a0ebd 100644
+index 1826c2e1c7..33c43cdf92 100644
 --- a/block/block-copy.c
 +++ b/block/block-copy.c
-@@ -808,6 +808,48 @@ int64_t coroutine_fn block_copy_reset_unallocated(BlockCopyState *s,
+@@ -736,6 +736,35 @@ int64_t coroutine_fn block_copy_reset_unallocated(BlockCopyState *s,
      return ret;
  }
  
 +/*
-+ * One scan step, like block_copy_reset_unallocated(); @cached_end
-+ * tracks progress across calls, @count how far @offset should move.
++ * Decide how @task is copied: COPY_WRITE_ZEROES if it reads as zero. May
++ * shrink @task. Returns false if @task is to be skipped (already ended,
++ * not freed).
 + */
-+void coroutine_fn GRAPH_RDLOCK
-+block_copy_calculate_zero_bitmap(BlockCopyState *s, int64_t offset,
-+                                 int64_t *cached_end, int64_t *count)
++static bool coroutine_fn GRAPH_RDLOCK
++block_copy_set_task_method(BlockCopyState *s, BlockCopyTask *task)
 +{
-+    int64_t max_bytes = QEMU_ALIGN_DOWN(BDRV_REQUEST_MAX_BYTES,
-+                                        s->cluster_size);
-+    int64_t dirty_offset, dirty_bytes, dirty_end;
-+    bool found;
++    int ret;
++    int64_t status_bytes;
 +
-+    /* CBW mutates copy_bitmap from its own AioContext meanwhile. */
-+    WITH_QEMU_LOCK_GUARD(&s->lock) {
-+        found = bdrv_dirty_bitmap_next_dirty_area(s->copy_bitmap, offset,
-+                                                  s->len, max_bytes,
-+                                                  &dirty_offset, &dirty_bytes);
++    ret = block_copy_block_status(s, task->req.offset, task->req.bytes,
++                                  &status_bytes);
++    assert(ret >= 0); /* never fail */
++    if (status_bytes < task->req.bytes) {
++        block_copy_task_shrink(task, status_bytes);
++    }
++    if (qatomic_read(&s->skip_unallocated) && !(ret & BDRV_BLOCK_ALLOCATED)) {
++        block_copy_task_end(task, 0);
++        trace_block_copy_skip_range(s, task->req.offset, task->req.bytes);
++        return false;
++    }
++    if (ret & BDRV_BLOCK_ZERO) {
++        task->method = COPY_WRITE_ZEROES;
 +    }
 +
-+    if (!found) {
-+        *count = s->len - offset;
-+        return;
-+    }
-+    dirty_end = dirty_offset + dirty_bytes;
-+
-+    if (*cached_end < dirty_end) {
-+        int64_t clusters;
-+        int64_t query_offset = MAX(dirty_offset, *cached_end);
-+        int ret = block_copy_is_cluster_allocated(s, query_offset, &clusters);
-+
-+        if (ret >= 0) {
-+            *cached_end = query_offset + clusters * s->cluster_size;
-+        } else {
-+            /* Best-effort: leave this area unmarked; it copies as data. */
-+            *cached_end = dirty_end;
-+        }
-+    }
-+
-+    *count = MIN(*cached_end, dirty_end) - offset;
++    return true;
 +}
 +
  /*
-  * Decide how @task is copied: COPY_WRITE_ZEROES if it reads as zero. May
-  * shrink @task. Returns false if @task is to be skipped (already ended,
-diff --git a/include/block/block-copy.h b/include/block/block-copy.h
-index e4e5b56753..3a61066b55 100644
---- a/include/block/block-copy.h
-+++ b/include/block/block-copy.h
-@@ -44,6 +44,10 @@ void block_copy_reset(BlockCopyState *s, int64_t offset, int64_t bytes);
- int64_t coroutine_fn GRAPH_RDLOCK
- block_copy_reset_unallocated(BlockCopyState *s, int64_t offset, int64_t *count);
+  * block_copy_dirty_clusters
+  *
+@@ -768,7 +797,6 @@ block_copy_dirty_clusters(BlockCopyCallState *call_state)
+     while (bytes && aio_task_pool_status(aio) == 0 &&
+            !qatomic_read(&call_state->cancelled)) {
+         BlockCopyTask *task;
+-        int64_t status_bytes;
  
-+void coroutine_fn GRAPH_RDLOCK
-+block_copy_calculate_zero_bitmap(BlockCopyState *s, int64_t offset,
-+                                 int64_t *cached_end, int64_t *count);
-+
- int coroutine_fn block_copy(BlockCopyState *s, int64_t offset, int64_t bytes,
-                             bool ignore_ratelimit, uint64_t timeout_ns,
-                             BlockCopyAsyncCallbackFunc cb,
+         task = block_copy_task_create(s, call_state, offset, bytes);
+         if (!task) {
+@@ -782,24 +810,12 @@ block_copy_dirty_clusters(BlockCopyCallState *call_state)
+ 
+         found_dirty = true;
+ 
+-        ret = block_copy_block_status(s, task->req.offset, task->req.bytes,
+-                                      &status_bytes);
+-        assert(ret >= 0); /* never fail */
+-        if (status_bytes < task->req.bytes) {
+-            block_copy_task_shrink(task, status_bytes);
+-        }
+-        if (qatomic_read(&s->skip_unallocated) &&
+-            !(ret & BDRV_BLOCK_ALLOCATED)) {
+-            block_copy_task_end(task, 0);
+-            trace_block_copy_skip_range(s, task->req.offset, task->req.bytes);
++        if (!block_copy_set_task_method(s, task)) {
+             offset = task_end(task);
+             bytes = end - offset;
+             g_free(task);
+             continue;
+         }
+-        if (ret & BDRV_BLOCK_ZERO) {
+-            task->method = COPY_WRITE_ZEROES;
+-        }
+ 
+         if (!call_state->ignore_ratelimit) {
+             uint64_t ns = ratelimit_calculate_delay(&s->rate_limit, 0);
+@@ -840,8 +856,6 @@ out:
+          * block_copy_task_run. If it fails, it means some task already failed
+          * for real reason, let's return first failure.
+          * Still, assert that we don't rewrite failure by success.
+-         *
+-         * Note: ret may be positive here because of block-status result.
+          */
+         assert(ret >= 0 || aio_task_pool_status(aio) < 0);
+         ret = aio_task_pool_status(aio);
 -- 
 2.53.0
 
