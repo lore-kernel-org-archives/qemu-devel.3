@@ -1,91 +1,148 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3708606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 19:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3802D606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 20:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=nOx6QNnZ
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Bq7ctBpC;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=kG7YNYzP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMsW8-00069w-2d; Fri, 30 Oct 2026 15:44:00 -0400
+	id 1xMtH1-0007uf-VX; Fri, 30 Oct 2026 16:32:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMsVg-00063U-BJ
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 15:43:34 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMsVe-00009A-5O
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 15:43:32 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-7f48c750afcso766467a34.0
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 12:43:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xMtGw-0007uA-Rq
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 16:32:23 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xMtGu-0004NK-WA
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 16:32:22 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69UIhx2C3776953
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 20:32:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ I7ofQHPDYUhsx1VmN5hK75S+MsRjqV4oOEDVpjwlSyU=; b=Bq7ctBpCKlFedg8g
+ 4VdZw6WU8Qlu/2m9SDoQ/au6sGNFCfae/d4Ipgxr0cn9D8xXw++yetztaCwma2GP
+ PcTjS5SjdCht/AItdedoGnXdFAcOF3MTQxMuoofiujshkIR8u1UxFGElSRePQqRR
+ sqXrR97jz5nxksfVFZRZg9XA26l90w88DFN6kORgFnG7xtfRo2AbrQLLXNjrx1+0
+ DmEpjYuRSL64KiIrY+bw1V6VH10DE832+CHNzpH28d1rmuB9osG7vK0ogmqn2lDG
+ Zm8MovZ3LQJ90YTKLcYKDtPRvuNIGLb3wjxfhISrfrBqA7DijJlZC0geO065AFpx
+ /pf1qA==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hn0s9ra56-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 20:32:18 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-3662e7a9299so4149050eec.1
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 13:32:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793389409; x=1793994209; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MeuLuPZYwOdXNfYKOD6A+UEuVbDk00qgFvrdKJmF5B8=;
- b=nOx6QNnZUWW/8Bc1EhrXRCzOziJ2ektBq4oAKmo4QMNnGBA0oG+RD3Nj8H4yd4n5uW
- gMVrqLI8xMqotyTecfY2mnIpC586EFj66OVefV0+ruo12pLbXp5e3Ybt4vvXSJRi4WYg
- 5znb7skKJfENOVCYEwYEhvcvW5gt5mnRakiXFX37Ormkbd59eEc89MmC7bdzlxV8sS3c
- Kq05AJLbPbw7w51vV0a/dX8X8Z5bP42TF5SEj/RoPcUTVWQC/+Ndz9zVW8bPXF7cwEQz
- RAYqALX9682CWzwUFAXjk2eUHRkDfTaBh568ER6x/tp4DYJ+HJ1Fwhc3gPtEF8yJaulY
- K9Uw==
+ d=oss.qualcomm.com; s=google; t=1793392337; x=1793997137; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=I7ofQHPDYUhsx1VmN5hK75S+MsRjqV4oOEDVpjwlSyU=;
+ b=kG7YNYzPuEO9Ivi66K7+DuB4d9V/J5UptSNCTxBIC0I4NzbR6BOjsFgn3MVYMPL1Kr
+ 7mtwkDFDiXfcn/pqMKqUnFHES1Bw2pIm09VIPyWs6qZP3azFasBl5bW0/ueV52e5fZbx
+ visYeFnPFIQZbicRmZbcgqo59dD9uJlYwaTZ0yPoj3NKR/1ZGUKkYbn0VOlked3IXPmZ
+ 7e4V2j42UGmrNAxgKqPGPQHLP0W5zhT1NuO964DanJVH22VPYwic28Y6CuftPa/UlmsI
+ o8CWXaOET/+JUgvnuVG1859Jklv76zKseR1VRMhqW/UKdD5tTcwPGBOPZRL/IAoj6dy0
+ fMnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793389409; x=1793994209;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=MeuLuPZYwOdXNfYKOD6A+UEuVbDk00qgFvrdKJmF5B8=;
- b=etp7+yJWrUt/bL/eR4kvVAXFxVVTJPhhzfmuTMysmZEQheYO9QfB+QlxTzARfBCxCh
- XXJtzKf7WgSQhfIxyubpm1CVamJj5FqVjkpKy8L2nIf7uIV3In6rXAl9gCKiFzKjp4wr
- JgL9vN52RxCCf43kOi/uV2H954M33okYHVOtDmx42iJk4GnPlUPsc+Wuxs3eUa3HnPO5
- /KkPA1vIzRWtoqGrrhgI+YeD0f4KvB6VnJyZNLnWxF9LOf948abg2F/0MKhU+HJH4vAu
- LWuKgWMlZ0X4nKNm+M9uinwIZxN0YZo01ILRZE5QJkjljUMHzBMKRWpDyCNWoWgDcEl0
- ntRg==
-X-Gm-Message-State: AFq9FYLS33c0ENhZyW66K9/rCj74KTX68vZB8qTcJ2Wgn8b8ph3EgIM/
- Xnmky+eBpkP52UeWE0ehMqb1r1I+sg+esT3M8TOqVGVNprdHlsolzkScbmVVpmEq+EDEzV71fay
- q17lh
-X-Gm-Gg: AYBFou2Ybeun0RMNZ1e1k+zCoitUBswGtx5L3erG1ugHG5dbNp9bYXYxjVPpqLnLmwl
- viklz5y0VqbGsrmW7q5DVTtKIpL0Odv4oEeS1OMvmCGDChph2ACM666y9bhWsIMM4cZorpEuWHY
- fgvSceFXguwhd/tPTCV7VzFEcunp7cqTk8SFEJueuNpL13Bhad/XpOL1QpnpfhbPS0EZEZt+No4
- RScw5V/xEGEi46vnaX+O1tVe1JEcteh6OKNln1OdFTfQBmERIeOlwjZyWBxz9Uw2AS1hRJ/b7oa
- TRAQb86XuEywPoze4jGQrWf2vfei1UbaPK+PoteXiI5lXhQlOiStQlcPdwpsq1ViwEvKUsOgNzz
- BXD4WY+w0SWubVJHOleousyVAn7G95Hbhv8Cjd7ismx86zRO2cKY8EWHDyJWYQ3gfLyGKKap7+m
- oo41GGB6QJcUDUkKSu2e60XHlX638EueNjbmqZgrXdor1gZkRt4iOKA+Wt8SS+WeXaYaQmOYpsR
- sUxQ3PQuGTAkkk0dlD+Xf1hu6tLXcHT6Y1ERtYks7VXKBkS2wWRMHgWkMNz85s8DI8HziRn6lfj
- Qcc7L93Sqvua/2w7MZWdUy8Qg/XM7yHZ+lg=
-X-Received: by 2002:a05:6830:640e:b0:7fa:ac4f:79c with SMTP id
- 46e09a7af769-85d364471d1mr2382376a34.24.1793389408926; 
- Fri, 30 Oct 2026 12:43:28 -0700 (PDT)
-Received: from stoup ([2607:fb90:5e62:412b:1381:b0c1:1339:9c82])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-85d351e77c8sm2654768a34.2.2026.10.30.12.43.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 12:43:28 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH 6/9] target/arm: Split out gen_cbranch_goto_tb
-Date: Fri, 30 Oct 2026 14:43:15 -0500
-Message-ID: <20261030194318.319310-7-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261030194318.319310-1-richard.henderson@linaro.org>
-References: <20261030194318.319310-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20260707; t=1793392337; x=1793997137;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=I7ofQHPDYUhsx1VmN5hK75S+MsRjqV4oOEDVpjwlSyU=;
+ b=UUSA/NO7OCz4K/Y3IojhTPBfnLHEfJQtPs4sI1rhM+CBfBIwJkGH1EkEjKtXl1cxx4
+ 2y1xnA2TsHaCEPRlE8pvA+dRegme7D67cb5GETaN0dXw6LpEQgTEf2V6byxWUODBAnC2
+ M1XZN7O7uS3BnVXLTfq3LVGcXOc/kSVORDcHa70+hzBb5+iYVOsmC4Jo1gSnGnemLWTA
+ dw1pw8y3iamYVxXLXopXCJoMS4u+3mpz8+P3MBlgUKkyYKo05PTfmftkkdTAvgxY/Wvm
+ zY2pb221iXc9x4OFT/e3R0DdvGGJ6nhjBgdQ30GGussAvNFd84AmUVWVYUoL54+mPuS/
+ DgvQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByiPxOv0BpWhGWh0//7X2Ax4XrDjJGJXGFSBJ6C0w/k5sAGP0ivDmmSF2a0e34UWHSYlTcTceD5mcwU@nongnu.org
+X-Gm-Message-State: AFq9FYItbc2Sf6CUdyI6eTnYkb84eL1W7twt2hYa4WtuguO354345Zdf
+ tXT/dz6Uwr15fY7gy6PslbhTSGJlQDF+bEU1BMcjZKdIui0mFXOmX2v1R7vtPXCyWOlWfM7fWGf
+ uj5kb2VMWgKUcWddnSqsUfK1KOmPOJig21TX6aBU+fKdOzWpbyetem9ZN9w==
+X-Gm-Gg: AYBFou1aO1ukz4zqLmSgL5c9AA0cDmypUeKQycv1oOSL5H7j794pnSEdw3kzE4iCu3w
+ KM+/xfAY0cGw8s9jpQo+hwSz7j/hUZmjNLhoRKLv/YvL4xEZoZsb9CpRH0LF5JvvftU7tLe6ryp
+ LooGLhqMG0hQGB63//i6wknqxFgi7i2/HILhw8EyMiU1HVK0XV/cU3yfQLtjByQugau48zH7anH
+ owwlD0o82xN0KG/zLPkb1fxIk0Cia8oJCyLEAkdzlnqR5brXDUSpBuQMVHnaLEzOFs11hK/OLCz
+ B+eo1PFMr6dmLweyca6gxr5WjSBxrbBenzO1Mtx3JLz30Uck7Hi+KfAGwURDMGD/vZ5QJHn2nMP
+ ieTaoEPQqEei/WiowwQ4G4s1Bf5H27CCt4ZjL7EvDQ6FycJ78HZTw2euFKYEfQNbB76kB0uZRZH
+ AJROZ9peMqToo1vdbIwlORebtSUDYmcLHqLHNwxP+OjCk=
+X-Received: by 2002:a05:7300:fb88:b0:36a:437a:4c00 with SMTP id
+ 5a478bee46e88-36a437a4eeemr6192637eec.24.1793392337303; 
+ Fri, 30 Oct 2026 13:32:17 -0700 (PDT)
+X-Received: by 2002:a05:7300:fb88:b0:36a:437a:4c00 with SMTP id
+ 5a478bee46e88-36a437a4eeemr6192590eec.24.1793392336763; 
+ Fri, 30 Oct 2026 13:32:16 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-36a42a98f65sm9288786eec.28.2026.10.30.13.32.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 30 Oct 2026 13:32:16 -0700 (PDT)
+Message-ID: <f43f22f9-c782-49a4-ae4f-a8fbcbbd0a6f@oss.qualcomm.com>
+Date: Fri, 30 Oct 2026 12:32:15 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] scripts/checkpatch: validate fixes against upstream
+ repo
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Chao Liu <chao.liu@processmission.com>
+References: <20261030183054.2875292-1-alex.bennee@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261030183054.2875292-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=bPyDs/+Z c=1 sm=1 tr=0 ts=6ae4fed2 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=G2UGLN--7Ljvuk1bJC4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: vczGS7mp08bMi4Pp_Jn-64LXere1Y0mp
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA4MSBTYWx0ZWRfX9KAQSENc2NWe
+ pmJRRvA/C90P7cIGYwRCZL2y1citcarJr+YM00YZHb+2Pj6nSHaNPz9p7TLWWHjHc0gPm2VUx4n
+ Xmodm4+50v8YeSldQy/efrwXtuh3MF2qIwMOUq4WYlOppXfotPjqwJHH49CdnQRRsmP/yx43eYH
+ m23f6yHXocgztgg5d5li8ME8zlFclMAX1HCy5dZfPTAHbgFlXnSu5n0hH91Soy/xkFUNP8UpLbW
+ fkPiK3tbc0Cs6cm91bSiq5cjgi0kXE/bWqrgkt4ImbS535EqTGgKlOAoKsV1j2F1r+JS09YHMpV
+ jb0NM29TDt+bzb/4tp4awwBLz2LFjmBqkvLKTcHJOT4uZ9HLWD55ij0Kkg0crezYjxuP6GRSkfm
+ qL+NGKAPQTJNdPa1DKAZGXW1+m6hncsWCJ7K2BGnBjUbIUGA/7uJ6XWEH1HkbiVttmj9liWlcM5
+ c4vn5Syzgc5RqtCRkyA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA4MSBTYWx0ZWRfXyvSfF9w7Iec9
+ NtxSnteod75AWE4zZvGvG0Z1yt4r1+MgKsZ3oOcEVNNGjwEGYGSl8UdJchxzzBLaq0McbhXlw0n
+ WJoKX4r2sqwDIJkYFNoqlydw6PyiIHo=
+X-Proofpoint-GUID: vczGS7mp08bMi4Pp_Jn-64LXere1Y0mp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-30_06,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 spamscore=0 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610300081
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,234 +155,96 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-A common helper for all conditional branches, using DisasCompare64.
+On 10/30/2026 10:30 AM, Alex Bennée wrote:
+> The current check for a referenced fix commit relies on the developer
+> keeping their master branch up to date which is not always guaranteed.
+> If you create your branches directly from the upstream repo this will
+> keep failing. Besides the local master could be anything.
+> 
+> Improve the logic to divine which remote is pointing at the upstream
+> repo and use the remote master to check the fixes.
+> 
+> checkpatch complains about the line lengths but this seems to be
+> standard for the perl script so I didn't try and fix it.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+> v2
+>   - drop hard coding of remote in favour discovering it
+> ---
+>  scripts/checkpatch.pl | 40 +++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 37 insertions(+), 3 deletions(-)
+> 
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index 4984a258ee5..cc311684d66 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -586,6 +586,37 @@ sub git_commit_info {
+>  	return ($id, $desc);
+>  }
+>  
+> +my $git_upstream_branch_checked = 0;
+> +my $git_upstream_branch_cached = undef;
+> +
+> +sub git_upstream_branch {
+> +	return $git_upstream_branch_cached if ($git_upstream_branch_checked);
+> +	$git_upstream_branch_checked = 1;
+> +
+> +	return undef if ((which("git") eq "") || !(-e "$gitroot"));
+> +
+> +	my $url_regex =
+> +		qr{(?:gitlab\.com[/: ]qemu-project|github\.com[/: ]qemu)/qemu(?:\.git)?$}i;
+> +
+> +	# Scan configured remotes for the upstream repository
+> +	my $output = `git remote -v 2>/dev/null`;
+> +	for my $line (split(/\n/, $output)) {
+> +		if ($line =~ /^\s*(\S+)\s+(\S+)\s+\(fetch\)/) {
+> +			my ($remote, $url) = ($1, $2);
+> +			if ($url =~ $url_regex) {
+> +				my $ref = "$remote/master";
+> +				`git rev-parse --verify --quiet $ref 2>/dev/null`;
+> +				if ($? == 0) {
+> +					$git_upstream_branch_cached = $ref;
+> +					return $git_upstream_branch_cached;
+> +				}
+> +			}
+> +		}
+> +	}
+> +
+> +	return undef;
+> +}
+> +
+>  sub expand_tabs {
+>  	my ($str) = @_;
+>  
+> @@ -1914,9 +1945,12 @@ sub process {
+>  				}
+>  				if (which("git") ne "" && -e "$gitroot") {
+>  					my $hash = defined($cid) ? $cid : $orig_commit;
+> -					`git merge-base --is-ancestor $hash master 2>/dev/null`;
+> -					if ($? != 0) {
+> -						WARN("Fixes: commit $hash is not an ancestor of master\n" . $herecurr);
+> +					my $upstream = git_upstream_branch();
+> +					if (defined($upstream)) {
+> +						`git merge-base --is-ancestor $hash $upstream 2>/dev/null`;
+> +						if ($? != 0) {
+> +							WARN("Fixes: commit $hash is not an ancestor of $upstream\n" . $herecurr);
+> +						}
+>  					}
+>  				}
+>  			}
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate-a64.c | 142 ++++++++++++++++++---------------
- 1 file changed, 79 insertions(+), 63 deletions(-)
+The gitlab/github is a bit arbitrary, but should work as it is.
+Acked-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index c8d1251f13..e66ccdff6f 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -584,6 +584,50 @@ static void gen_goto_tb(DisasContext *s, unsigned tb_slot_idx, int64_t diff)
-     }
- }
- 
-+static bool gen_cbranch(DisasContext *s, const DisasCompare64 *c,
-+                        int64_t taken_diff)
-+{
-+    int64_t not_taken_diff = 4;
-+    bool may_goto_t = use_goto_tb(s, s->pc_curr + taken_diff);
-+    bool may_goto_f = use_goto_tb(s, s->pc_curr + not_taken_diff);
-+
-+    /*
-+     * If there is a choice, place a real goto_tb path first.
-+     * If neither path can use goto_tb, convert to an indirect branch.
-+     */
-+    if (may_goto_f) {
-+        DisasLabel l = gen_disas_label(s);
-+
-+        tcg_gen_brcond_i64(c->cond, c->v1, c->v2, l.label);
-+        gen_goto_tb_int(s, 0, not_taken_diff);
-+
-+        set_disas_label(s, l);
-+        if (may_goto_t) {
-+            gen_goto_tb_int(s, 1, taken_diff);
-+            s->base.is_jmp = DISAS_NORETURN;
-+            return true;
-+        }
-+        gen_a64_update_pc(s, taken_diff);
-+    } else if (may_goto_t) {
-+        DisasLabel l = gen_disas_label(s);
-+
-+        tcg_gen_brcond_i64(tcg_invert_cond(c->cond), c->v1, c->v2, l.label);
-+        gen_goto_tb_int(s, 1, taken_diff);
-+
-+        set_disas_label(s, l);
-+        gen_a64_update_pc(s, not_taken_diff);
-+    } else {
-+        TCGv_i64 pc_t = tcg_temp_new_i64();
-+        TCGv_i64 pc_f = tcg_temp_new_i64();
-+
-+        gen_pc_plus_diff(s, pc_t, taken_diff);
-+        gen_pc_plus_diff(s, pc_f, not_taken_diff);
-+        tcg_gen_movcond_i64(c->cond, cpu_pc, c->v1, c->v2, pc_t, pc_f);
-+        s->pc_save = -1;
-+    }
-+    return gen_indirect_branch(s);
-+}
-+
- /*
-  * Register access functions
-  *
-@@ -1758,38 +1802,26 @@ static bool trans_BL(DisasContext *s, arg_i *a)
- 
- static bool trans_CBZ(DisasContext *s, arg_cbz *a)
- {
--    DisasLabel match;
--    TCGv_i64 tcg_cmp;
-+    DisasCompare64 c = {
-+        .cond = a->nz ? TCG_COND_NE : TCG_COND_EQ,
-+        .v1 = read_cpu_reg(s, a->rt, a->sf),
-+        .v2 = tcg_constant_i64(0),
-+    };
- 
--    tcg_cmp = read_cpu_reg(s, a->rt, a->sf);
-     reset_btype(s);
--
--    match = gen_disas_label(s);
--    tcg_gen_brcondi_i64(a->nz ? TCG_COND_NE : TCG_COND_EQ,
--                        tcg_cmp, 0, match.label);
--    gen_goto_tb(s, 0, 4);
--    set_disas_label(s, match);
--    gen_goto_tb(s, 1, a->imm);
--    return true;
-+    return gen_cbranch(s, &c, a->imm);
- }
- 
- static bool trans_TBZ(DisasContext *s, arg_tbz *a)
- {
--    DisasLabel match;
--    TCGv_i64 tcg_cmp;
--
--    tcg_cmp = tcg_temp_new_i64();
--    tcg_gen_andi_i64(tcg_cmp, cpu_reg(s, a->rt), 1ULL << a->bitpos);
-+    DisasCompare64 c = {
-+        .cond = a->nz ? TCG_COND_TSTNE : TCG_COND_TSTEQ,
-+        .v1 = cpu_reg(s, a->rt),
-+        .v2 = tcg_constant_i64(1ULL << a->bitpos),
-+    };
- 
-     reset_btype(s);
--
--    match = gen_disas_label(s);
--    tcg_gen_brcondi_i64(a->nz ? TCG_COND_NE : TCG_COND_EQ,
--                        tcg_cmp, 0, match.label);
--    gen_goto_tb(s, 0, 4);
--    set_disas_label(s, match);
--    gen_goto_tb(s, 1, a->imm);
--    return true;
-+    return gen_cbranch(s, &c, a->imm);
- }
- 
- static bool trans_B_cond(DisasContext *s, arg_B_cond *a)
-@@ -1801,11 +1833,10 @@ static bool trans_B_cond(DisasContext *s, arg_B_cond *a)
-     reset_btype(s);
-     if (a->cond < 0x0e) {
-         /* genuinely conditional branches */
--        DisasLabel match = gen_disas_label(s);
--        arm_gen_test_cc(a->cond, match.label);
--        gen_goto_tb(s, 0, 4);
--        set_disas_label(s, match);
--        gen_goto_tb(s, 1, a->imm);
-+        DisasCompare64 c;
-+
-+        a64_test_cc(&c, a->cond);
-+        return gen_cbranch(s, &c, a->imm);
-     } else {
-         /* 0xe and 0xf are both "always" conditions */
-         gen_goto_tb(s, 0, a->imm);
-@@ -1825,35 +1856,27 @@ static bool trans_CB_cond(DisasContext *s, arg_CB_cond *a)
-         [6] = TCG_COND_EQ,
-         [7] = TCG_COND_NE,
-     };
--    TCGCond cond = cb_cond[a->cc];
--    TCGv_i64 t, m;
--    DisasLabel match;
-+    DisasCompare64 c = { .cond = cb_cond[a->cc] };
- 
--    if (!dc_isar_feature(aa64_cmpbr, s) || cond == TCG_COND_NEVER) {
-+    if (!dc_isar_feature(aa64_cmpbr, s) || c.cond == TCG_COND_NEVER) {
-         return false;
-     }
- 
--    t = cpu_reg(s, a->rt);
--    m = cpu_reg(s, a->rm);
-+    c.v1 = cpu_reg(s, a->rt);
-+    c.v1 = cpu_reg(s, a->rm);
-     if (a->esz != MO_64) {
--        MemOp mop = a->esz | (is_signed_cond(cond) ? MO_SIGN : 0);
-+        MemOp mop = a->esz | (is_signed_cond(c.cond) ? MO_SIGN : 0);
-         TCGv_i64 tt = tcg_temp_new_i64();
-         TCGv_i64 tm = tcg_temp_new_i64();
- 
--        tcg_gen_ext_i64(tt, t, mop);
--        tcg_gen_ext_i64(tm, m, mop);
--        t = tt;
--        m = tm;
-+        tcg_gen_ext_i64(tt, c.v1, mop);
-+        tcg_gen_ext_i64(tm, c.v1, mop);
-+        c.v1 = tt;
-+        c.v1 = tm;
-     }
- 
-     reset_btype(s);
--    match = gen_disas_label(s);
--
--    tcg_gen_brcond_i64(cond, t, m, match.label);
--    gen_goto_tb(s, 0, 4);
--    set_disas_label(s, match);
--    gen_goto_tb(s, 1, a->imm);
--    return true;
-+    return gen_cbranch(s, &c, a->imm);
- }
- 
- static bool trans_CB_cond_imm(DisasContext *s, arg_CB_cond_imm *a)
-@@ -1869,34 +1892,27 @@ static bool trans_CB_cond_imm(DisasContext *s, arg_CB_cond_imm *a)
-         [6] = TCG_COND_EQ,
-         [7] = TCG_COND_NE,
-     };
--    TCGCond cond = cb_cond[a->cc];
--    TCGv_i64 t;
--    DisasLabel match;
-+    DisasCompare64 c = { .cond = cb_cond[a->cc] };
- 
--    if (!dc_isar_feature(aa64_cmpbr, s) || cond == TCG_COND_NEVER) {
-+    if (!dc_isar_feature(aa64_cmpbr, s) || c.cond == TCG_COND_NEVER) {
-         return false;
-     }
- 
--    t = cpu_reg(s, a->rt);
-+    c.v1 = cpu_reg(s, a->rt);
-     if (!a->sf) {
-         TCGv_i64 tt = tcg_temp_new_i64();
- 
--        if (is_signed_cond(cond)) {
--            tcg_gen_ext32s_i64(tt, t);
-+        if (is_signed_cond(c.cond)) {
-+            tcg_gen_ext32s_i64(tt, c.v1);
-         } else {
--            tcg_gen_ext32u_i64(tt, t);
-+            tcg_gen_ext32u_i64(tt, c.v1);
-         }
--        t = tt;
-+        c.v1 = tt;
-     }
-+    c.v2 = tcg_constant_i64(a->imm6);
- 
-     reset_btype(s);
--    match = gen_disas_label(s);
--
--    tcg_gen_brcondi_i64(cond, t, a->imm6, match.label);
--    gen_goto_tb(s, 0, 4);
--    set_disas_label(s, match);
--    gen_goto_tb(s, 1, a->imm9);
--    return true;
-+    return gen_cbranch(s, &c, a->imm9);
- }
- 
- static void set_btype_for_br(DisasContext *s, int rn)
--- 
-2.53.0
-
+Regards,
+Pierrick
 
