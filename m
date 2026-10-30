@@ -1,70 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCB5606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411E0606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VGpjbsEi
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Is2yst8E
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMoOV-0007as-OH; Fri, 30 Oct 2026 11:19:51 -0400
+	id 1xMoO1-0006vO-QG; Fri, 30 Oct 2026 11:19:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMoNN-00061U-AF
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:18:43 -0400
-Received: from mail-dl1-x1235.google.com ([2607:f8b0:4864:20::1235])
+ id 1xMoNU-0006Cv-EL
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:18:50 -0400
+Received: from mail-dl1-x1233.google.com ([2607:f8b0:4864:20::1233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMoNI-0000Ep-8Y
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:18:40 -0400
-Received: by mail-dl1-x1235.google.com with SMTP id
- a92af1059eb24-15943c9c005so1428384c88.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:18:33 -0700 (PDT)
+ id 1xMoNR-0000GZ-BN
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:18:48 -0400
+Received: by mail-dl1-x1233.google.com with SMTP id
+ a92af1059eb24-1a3c08d6928so1023238c88.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:18:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793373513; x=1793978313; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793373524; x=1793978324; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=NpRZPrdA7p4HsMufejy4KcfzX3kqDfNgpM3OElffcBU=;
- b=VGpjbsEiZpc0+NaYLJ+UL8uzEaaiqm40dUD0RYNxYf/874QzQDOEH/qtfgmJjLW2mB
- NKbFKV8Ga7C6ixOyyePxFs0GOLibUy1906FCoA5biZaxZz7Ca870lMgbcCTfyWAUPeTy
- emah0qZd9/s80KFUmW/4XbpeXzqgQqDZCRe/wXgzjsPZvp/um5lhXngkBNBudIhX8H9m
- PbaFtq45jMg4098rVWuH+wfiDhM4m+Cb3qUCnagBzUFYthGfRCsNU68oJ7NcWpE4/Cc+
- W+tD69MAtSJJoE13W1s+t2HbjgKLcmjxKfY1D/VIRrlr1+Xxt+qrCMfBub9fcdCjC17a
- rwnw==
+ bh=D80p8QWI+5BbGopzHjtSexJQceQpYTApqX3mxRXadD8=;
+ b=Is2yst8EyHFOaiq/1yRYZe7mjO2GdcYrlmk+rQ2cyHn67iT3DlRc5p9Idhd28zg5Ty
+ fUDVsS5BvuNzeUkLuDKPunILd9Q5Meau+IuU3xqNXsNOMW/QgAae3nN6uF0AIDTAw9+q
+ OjFU83MeShbejIYDWgs8Sagxpmf/kbt6GuONrNAwTWwNmNbmkTM0jk4CjmQn9QSdsyAJ
+ S6EuFMwx9jrynG3HZeOEcs7PPmmv7u8dMuL+Gsf5Qd4XYcfkIweb3qit4av5QPHvuVRo
+ AuljmWINgV40iL7EWhj40UKZC07Ng/0jqBPcsORi98JNumrKkJ8/0B6TOE55QeAxUq9n
+ mK5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793373513; x=1793978313;
+ d=1e100.net; s=20260707; t=1793373524; x=1793978324;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=NpRZPrdA7p4HsMufejy4KcfzX3kqDfNgpM3OElffcBU=;
- b=1O0u1P69ti25oE2OIxTQ0dYO6YgNMpz9FcVZ1OFvCmyPAbvBkloUJnkYaCFY+Z/6ut
- cl3qWIhR9T89pmBBo/1UzBXy3RsjJYkQyeTrWa8v5smDUSEO12cgjyz9OMMmcBPzu7n+
- UHz3r5G9lDIv9R9r+vzc96fQzbG1alB+mbFpV+iXn4wj7WPl3tDj7rr9Xb5C4gZebEQt
- 7CxiDo8jrAjU6QSFTqg2F9lwCMoimELgiYXD/Kl0P1Hpx4toi8rFIE4bMpCSVuaybM36
- frn6w1K/ojtCbv8rCHvwFuUU/6GJBJunZgZclgEvUiEpxp59lhryZwbTXk7zfsbHeRGk
- mfQQ==
-X-Gm-Message-State: AFq9FYJrpyh+RBw5Pb3R0BX6w3Ts3A11+IP8GGPtzRNqnB7WvD7Dswv8
- VUmVawKXzs38mChds4LaJv7qq1OF2DcLrmZ6AWe77GY8XioLP1RjVhbFtxyUV9U9vTk=
-X-Gm-Gg: AYBFou1I2VPIsnjm051AwkXMi6+6W1CIC+qT1Im8qVzk/xmKrlJtkYF1mtN5RWuDLFd
- iIfctoPWOfta9aIVdT04EJlrGznBtEmw4wDoX0c3HJz2wuOXGlQX3RoP93T1upkPAUhy+1wZGw7
- 1PGxXNTLAJNQJe1TWbEsBDIEJ3acMzorfC1qX3IOle2EeUbewlUIy+EP3Tk/YSfnG9C4fJKpP3M
- J/kDCmuQLMhWWeh9ZaR6fK1X0xiIVpZw79UIKb2NJEQUUnLKSIDary11tUM8BXZuzc0+C4OK6Da
- C0788COEZzoeGp+EYJRWLOYHBAzPytsJH4WopZFwnJhgusrM57DvSSx5ak90btxgv9keCXnU0zF
- ei7FGEc6XQaOv5jfkfuaKtrOlJBvkKxe+Tk3UpQc1+4vX/ZuO9H8Im9nfWuhHLbAPu2vl9z3xLz
- Ya0HKd/wn4qBKB+vwveTJ1GlGlob5DYRYXODtxNOc/MIcuRGL1BJskbw6dcffpFLyN/vcEC5mU1
- eU5Ewl8ETuuMpzwu84CV2yiMxQX0a41MdrnDhnLwJENap6ccX+QGXLg2SiyimZZtpjPFoeVj5dJ
- agOIvZAEOM/06STEvjLwExbbCfsxvj1+IsxnIN5a6nbd1bNOffmddey+udqJAUQBfV7Jlg==
-X-Received: by 2002:a05:701b:2082:b0:143:271a:3df2 with SMTP id
- a92af1059eb24-1ac5eea21f1mr3303233c88.44.1793373512457; 
- Fri, 30 Oct 2026 08:18:32 -0700 (PDT)
+ bh=D80p8QWI+5BbGopzHjtSexJQceQpYTApqX3mxRXadD8=;
+ b=ofzPmFin7FMCHCHU0k9uM5roBWkcg5Y36axYB9k+7au56c8RTAkLQ9oi2Tw+mTTPeK
+ kFN5PdjJOa4tODd7el/LJafGGAiWP/WVpxOgRsCnbFysCxnORg7AMKlwkNzfjh70s73/
+ aVW/xVKJ+CdDbF9mNBO+rqoJSV2mRmmG42pHndmB6jJ4l646sKffjw08+2BZfaVNdK6K
+ VBMT6OvUnTEjzSuNpoMpbglFWlWtmwfrCaWwGSnwwx0jK4ApnzI402gerqGQbB0N2J4b
+ 5KgMKXRh5Hds1cx0MtyTO9lFm57NMZFCnPtpo5sPqoKhDW+De87k0jxEMO3BhHd3xSyA
+ n8Lw==
+X-Gm-Message-State: AFq9FYJdavAIHpIYaovfjxxfkGIoAHPy8tsXCxuGqwcUHJ0m7gy6EuIO
+ cEKgbL3IQov7k752mBBa3scfJ1cOqJykpYT3zq3mEXfhPGR+WtU/gV6AaPEyo/xzPFk=
+X-Gm-Gg: AYBFou1eeoUFwh/ppLpqchQK/PtQggr3sdzz+CIOA8LJG6yGPHSfAueEhW+Gt4nbf7F
+ KH+2WobTJG8HDd8ENhcd73Ymq4vpqtVZiOtEJUgbm+EIGKmeyvTIxAfgYIGhTBd6pYL9vyCdUzY
+ 7Bt5/l+0deyhtMK9RtNuEQ6snB5ji9cHCItCi7cYDgosXuWn2AOAkI9PeN8Q0ZK2CA4mkhMUzel
+ xPUxwJyevaq58LJ0Z6YwfgGBETtn/YBZz/043T38M72asoFUYS5f/zR43SjEMCt8fcTbsl4Mtxz
+ Id4TTB6z65dHBiDQLJupCCtlwte3adCDzaXdIK0XVtj/Wpy9PBnBIX4M3cGlcZ8CkPiSGvAzSoB
+ ticoQOiFrDqz/NCBRBgH0r/fSGv52D4qExoY100amymEa/ijVTEZx0jpI8uF3MZFIK/LRD00lH1
+ /JJgGrIjV82kQJU6uNrqoOu7AA84OJpVDZZpIhazM8WMbER5dHPZEF+i6YU8/BzNNgi+0oWMYKA
+ DAhGIpLrgXQ/cIzvB+zmSJANjsXmm3NQ1GXsmt1fxFd3Aj1D8hJRKVmR0XePl4+mMlB8PhcvuR+
+ PouN66u156a5wffXEfOO/cJFH4UK4/QWGo/rrxsAe1aGrxXy
+X-Received: by 2002:a05:7022:7f13:b0:195:76af:b810 with SMTP id
+ a92af1059eb24-1ac5bf91b35mr3525078c88.25.1793373523578; 
+ Fri, 30 Oct 2026 08:18:43 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1ac1854d925sm12770449c88.7.2026.10.30.08.18.23
+ a92af1059eb24-1ac1854d925sm12770449c88.7.2026.10.30.08.18.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 08:18:31 -0700 (PDT)
+ Fri, 30 Oct 2026 08:18:42 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Anthony PERARD <anthony@xenproject.org>, Felipe Balbi <balbi@kernel.org>,
@@ -100,24 +100,24 @@ Cc: Anthony PERARD <anthony@xenproject.org>, Felipe Balbi <balbi@kernel.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>,
  Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
-Subject: [PATCH 14/15] hw/xtensa: expand DEFINE_MACHINE in virt.c
-Date: Fri, 30 Oct 2026 23:15:35 +0800
-Message-ID: <20261030151539.1872-15-luoyonggang@gmail.com>
+Subject: [PATCH 15/15] hw/core/boards: remove unused DEFINE_MACHINE* macros
+Date: Fri, 30 Oct 2026 23:15:36 +0800
+Message-ID: <20261030151539.1872-16-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261030151539.1872-1-luoyonggang@gmail.com>
 References: <20261030151539.1872-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1235;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1235.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1233;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,48 +137,74 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Expand DEFINE_MACHINE() in hw/xtensa/virt.c to xtensa_virt_machine_typeinfo
-and xtensa_virt_machine_register_types() calling type_register_static().
+All DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED callers have been
+expanded to explicit TypeInfo definitions, leaving DEFINE_MACHINE* and
+DEFINE_SECURE_MACHINE* in include/hw/core/boards.h unused. Remove them.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/xtensa/virt.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ include/hw/core/boards.h | 48 ----------------------------------------
+ 1 file changed, 48 deletions(-)
 
-diff --git a/hw/xtensa/virt.c b/hw/xtensa/virt.c
-index 271f06e0953..8c8fdad72f0 100644
---- a/hw/xtensa/virt.c
-+++ b/hw/xtensa/virt.c
-@@ -115,8 +115,10 @@ static void xtensa_virt_init(MachineState *machine)
-     xtensa_sim_load_kernel(cpu, machine);
- }
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index d0e4ad98201..8af927e9b7c 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -513,54 +513,6 @@ struct MachineState {
+  *      DEFINE_VIRT_MACHINE_IMPL(false, major, minor, micro, _, tag)
+  */
  
--static void xtensa_virt_machine_init(MachineClass *mc)
-+static void xtensa_virt_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "virt machine (" XTENSA_DEFAULT_CPU_MODEL ")";
-     mc->init = xtensa_virt_init;
-     mc->max_cpus = 32;
-@@ -124,4 +126,16 @@ static void xtensa_virt_machine_init(MachineClass *mc)
-     mc->default_nic = "virtio-net-pci";
- }
- 
--DEFINE_MACHINE("virt", xtensa_virt_machine_init)
-+static const TypeInfo xtensa_virt_machine_typeinfo = {
-+    .name       = MACHINE_TYPE_NAME("virt"),
-+    .parent     = TYPE_MACHINE,
-+    .class_init = xtensa_virt_machine_class_init,
-+    .instance_size = sizeof(MachineState),
-+};
-+
-+static void xtensa_virt_machine_register_types(void)
-+{
-+    type_register_static(&xtensa_virt_machine_typeinfo);
-+}
-+
-+type_init(xtensa_virt_machine_register_types)
+-#define DEFINE_MACHINE_EXTENDED(namestr, PARENT_NAME, InstanceName, \
+-                                machine_initfn, ABSTRACT, SECURE, ifaces...) \
+-    static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
+-    { \
+-        MachineClass *mc = MACHINE_CLASS(oc); \
+-        machine_initfn(mc); \
+-    } \
+-    static const TypeInfo machine_initfn##_typeinfo = { \
+-        .name       = MACHINE_TYPE_NAME(namestr), \
+-        .parent     = TYPE_##PARENT_NAME, \
+-        .class_init = machine_initfn##_class_init, \
+-        .instance_size = sizeof(InstanceName), \
+-        .abstract = ABSTRACT, \
+-        .secure     = SECURE, \
+-        .interfaces = ifaces, \
+-    }; \
+-    static void machine_initfn##_register_types(void) \
+-    { \
+-        type_register_static(&machine_initfn##_typeinfo); \
+-    } \
+-    type_init(machine_initfn##_register_types)
+-
+-/* Implicitly insecure */
+-#define DEFINE_MACHINE(namestr, machine_initfn) \
+-    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
+-                            false, false, NULL)
+-
+-#define DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, ifaces...) \
+-    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
+-                            false, false, ifaces)
+-
+-#define DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...)    \
+-    DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
+-                                        (const InterfaceInfo[]) { __VA_ARGS__ })
+-
+-
+-#define DEFINE_SECURE_MACHINE(namestr, machine_initfn) \
+-    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
+-                            false, true, NULL)
+-
+-#define DEFINE_SECURE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, ifaces...) \
+-    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
+-                            false, true, ifaces)
+-
+-#define DEFINE_SECURE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...) \
+-    DEFINE_SECURE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
+-                                               (const InterfaceInfo[]) { __VA_ARGS__ })
+-
+ /*
+  * Helper for dispatching different macros based on how
+  * many __VA_ARGS__ are passed. Supports 1 to 5 variadic
 -- 
 2.55.0.windows.3
 
