@@ -1,59 +1,59 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8812606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66FB606A31C
 	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 00:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=hYyp/04h
+	dkim=pass (2048-bit key, unprotected) header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=SMHDQdgO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMada-0004WU-Js; Thu, 29 Oct 2026 20:38:31 -0400
+	id 1xMadj-0004Yc-QS; Thu, 29 Oct 2026 20:38:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1xMadY-0004Vo-89
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:38:28 -0400
+ id 1xMadZ-0004WJ-Ry
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:38:29 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1xMadW-0003d0-EF
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:38:27 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ id 1xMadW-0003ci-6k
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:38:29 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TLXjH73672987; Fri, 30 Oct 2026 00:38:24 GMT
+ 69TLYNiC1913021; Fri, 30 Oct 2026 00:38:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=fS878
- JvDwSoxy21uWvQp1e6kUR96roNKbLzoZATfr7c=; b=hYyp/04hEGxpBnBAn3tlL
- 9yZ9JvgYUSFHs3BP7FcQfY3we5zj3mTGxw4hRR4eo/G3GKi1PQWa/IpPcqmHskjv
- 8AhPmTZB3ntNHIY+VvH+bC6XhUruiktdLGdbNlLlk9A9CVHtxBlCDNrv4denGHBv
- XsyC0IuGTyE/AvGKYlrjnM4hu0WE10Zj55wWzisThYQ9PeL6NNfzRLQGfCYsrXPz
- gOWMY4jGNMj6+d6lZf4szQEX/bOoQfNFUZ3kHRzw4FO/reTs1aHAQQ+XpyDygKQ7
- LTj6NwPDpgqN9IX5d/0gsqXQL8IH+M3/rSh7g/I6x4Ver5QkrX0+nFmvCHJ906ir
- w==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=O7UOL
+ G7qLDkhqiUSc32Mb+g0QQ9McU5BeJZscq4zAds=; b=SMHDQdgOHQY1JsDrE3sjb
+ 8kZ6JXwMVx8w5cY4m3KauMCRmdHmAs9O3RG2T7nc39wHRlo+mOunyaRAwSRkiKMw
+ jxVMJNxp7DHqdPKTvx3hnmlWYyROdAim8UBaPYe0Qy4G8zRVivWtkHY3wP0cowxk
+ 8As2kdI+DTtzwnaW41ZwmcQk2hFR4cl92NboQ+6WCJEWb3fQaghfEd3ObIyHlCCF
+ xCsx5DggbfmeVv9jpovOgoy69m+xIy+g5CNLh5YTxNEMc4l6Ormru//w8vHsz8TK
+ mufAe2n4etCin6bwdE8KOpHOL7MPasupKv6138DrKr/395PWKSOVjF5mNt6IFmOA
+ A==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4hme5m04b0-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4hme5mr4ch-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=OK);
- Fri, 30 Oct 2026 00:38:24 +0000 (GMT)
+ Fri, 30 Oct 2026 00:38:21 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.11/8.18.1.11)
- with ESMTP id 69TNg6vT2004177; Fri, 30 Oct 2026 00:38:23 GMT
+ with ESMTP id 69TNg6vS2004177; Fri, 30 Oct 2026 00:38:19 GMT
 Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
  (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.250.206])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4hmg231tmh-5; Fri, 30 Oct 2026 00:38:22 +0000 (GMT)
+ 4hmg231tmh-2; Fri, 30 Oct 2026 00:38:18 +0000 (GMT)
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: mst@redhat.com, dongli.zhang@oracle.com
 Cc: qemu-devel@nongnu.org, sarunkod@amd.com, pbonzini@redhat.com,
  richard.henderson@linaro.org, joe.jin@oracle.com,
  alejandro.j.jimenez@oracle.com
-Subject: [PATCH v3 4/5] amd_iommu: Make extended feature register read-only
-Date: Fri, 30 Oct 2026 00:38:16 +0000
-Message-ID: <20261030003817.3521476-5-alejandro.j.jimenez@oracle.com>
+Subject: [PATCH v3 1/5] amd_iommu: Do not create duplicate MSI capability
+Date: Fri, 30 Oct 2026 00:38:13 +0000
+Message-ID: <20261030003817.3521476-2-alejandro.j.jimenez@oracle.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261030003817.3521476-1-alejandro.j.jimenez@oracle.com>
 References: <20261030003817.3521476-1-alejandro.j.jimenez@oracle.com>
@@ -68,25 +68,25 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  mlxlogscore=999 suspectscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
  bulkscore=0 spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.22.0-2610190000 definitions=main-2610300001
-X-Authority-Analysis: v=2.4 cv=T6EZ3PKQ c=1 sm=1 tr=0 ts=6ae3e700 b=1 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfX7jIFYUgijWWY
+ aGD7zbtm+7nE73cxqes7JuS+v+EY7vIAtvNeTpQwsbIXV7EANKwEomwkj7dct54/wC2/uFthIoF
+ NoA6qyS8LxE0jkgM2lvR++rn2VT52H5Av0rvV57dnJQjhBRzgzAl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfX83kzk0hle8ZT
+ 9P5lz7YxkHiv/fUPLDQW8zPw/Tj/qONMruBBE3wjwNSvJLTijwDcf+dvr4dyps7zVtzckIiGE1X
+ 0ckfV6lhEFI7+UHu4tlJ4mZAPqZuOixL44y2Ibu2og+VMOtiZ7HRPRjhnmxgiOzOT32CPZ4so/r
+ IduQpb+YSZW3HelgC1dOKZ3gs9UgY82V2fTmeDHcfWkkT+ApEXHWhaKqsHlpJ6IxgARtPL0S1r9
+ buhsNpbZUvfITjhGhfkrU47qSW/QKktKjW0ruCYlgIxXUWjudggbkcfEeIINCb4L915l5o1riqO
+ Hae2PhwHB2PQ8AqebV1j7YgDyxeV6oWRruXahAUrj2VC2x7hM5shjpY5p6i7pqptHzTf9DdYmk9
+ d9JdDRPVrVpoKKhKDtdrFJjKWPpcY6gn2jYtdvc/v8b+A3hxYT3aVt23zfygRvSOiG9++cmsNKa
+ Le0PQBeWomOzy0AEpsA==
+X-Authority-Analysis: v=2.4 cv=TvFzFzXh c=1 sm=1 tr=0 ts=6ae3e6fd b=1 cx=c_pps
  a=WeWmnZmh0fydH62SvGsd2A==:117
  a=WeWmnZmh0fydH62SvGsd2A==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=BqU2WV_vvsyTyxaotp0D:22 a=yPCof4ZbAAAA:8 a=zd2uoN0lAAAA:8
- a=7djCcrdboBqnOOnk728A:9 a=WmVTiCyuxqgg3mnwYu6p:22
-X-Proofpoint-GUID: wDKLyuU7kYR1J5m0A3PnM95-i2AzBbX6
-X-Proofpoint-ORIG-GUID: wDKLyuU7kYR1J5m0A3PnM95-i2AzBbX6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfX8gjnLIf5qbEo
- zSCyUNohqAQXBSszHMUKSBR8ocxogykixod6+dKlR1euKf1jjS5LVSdKSFVIDg/hU9I4lPfoA3a
- h4s2PE1ZxmBoDgOoW7ds9g25w5SBBhEwgnitljTqkQQ1Oolgeh7ljlmLjYg7xbyIQ+3HVbW0M/m
- H21sZlx9v1P2e/fZw3YgUN+dmA48yM9VmCiNatVqaJyTsLHz2CsUKoTnVoSjLsXVaBbCjxejxTQ
- uX4Z9/Rn6RYEnwnaNklUyDzci1WAUH6oyKnYG5ZWtQnBQ4eyMi+iSNZD3wvmMNESZvEnlIG6awb
- 4zRX42LDDDtfpe4RVS2sZDQYvS8NShLzAIQEpol8h9oeA+vEDPhqrD+JuebuQrAEn1QtIe8Jdgc
- Gk7os6fcWrTGPk8Nl6ExH6i+G31bGg83jLYLj5uAYl3Nj0IPEBKVWT/GZ/k8jk8m62xDUrvaUo7
- D8lRG8yUz9Vc8duc1CA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfX/d0OeQ3wu+Pz
- rd6m0Re2Ouzasp66qv6aRths/jzxrw838YKZxAyRt10HK9wkK56zBnDKNs67s3B/gK2jQErOw/d
- GNHVTmZm7MV0nWnDqc1eTT3Cs/89DfKmKHS4DwLw2q7nyJMvChzG
+ a=3I1J8UUJPc9JN9BFgKH3:22 a=yPCof4ZbAAAA:8 a=zd2uoN0lAAAA:8
+ a=w9z83O1xWNOsbQloCHQA:9 a=WmVTiCyuxqgg3mnwYu6p:22
+X-Proofpoint-GUID: SsZARSDI27OQ9_UI11KWv2WGxAfsXXaB
+X-Proofpoint-ORIG-GUID: SsZARSDI27OQ9_UI11KWv2WGxAfsXXaB
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -117,42 +117,59 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Dongli Zhang <dongli.zhang@oracle.com>
 
-AMDVI_MMIO_EXT_FEATURES is populated from QEMU's advertised AMD-Vi
-extended feature set during reset. Guest writes to this register do not
-enable or disable any corresponding QEMU emulation behavior.
+amdvi_pci_realize() manually adds an MSI capability before calling
+msi_init(). msi_init() creates the MSI capability itself, so the device
+can expose duplicate MSI capabilities to the guest.
 
-Make the register fully read-only so the visible feature bits remain
-controlled by QEMU.
+Drop the manual MSI capability and let msi_init() create the single MSI
+capability used by QEMU.
 
-According to the AMD IOMMU SDM, bits 25:24 (DualPprLogSup),
-29:28 (DualEventLogSup), and 37 (USSup) are not specified as RO.
-This commit modifies only bit 4 (GTSup), while leaving the rest as they
-are.
+Otherwise, there are duplicate MSI capabilities in guest VM lspci.
 
-Suggested-by: Sairaj Kodilkar <sarunkod@amd.com>
+[root@vm ~]# lspci -vvv -s 00:02.0
+00:02.0 IOMMU: Advanced Micro Devices, Inc. [AMD] Family 15h (Models 10h-1fh) I/O Memory Management Unit
+	Subsystem: Red Hat, Inc. Device 1100
+	Control: I/O+ Mem+ BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR+ FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Interrupt: pin ? routed to IRQ 24
+	Capabilities: [60] MSI: Enable+ Count=1/1 Maskable- 64bit+
+		Address: 00000000fee02000  Data: 0021
+	Capabilities: [5c] HyperTransport: Slave or Primary Interface
+		Command: BaseUnitID=0 UnitCnt=0 MastHost- DefDir-
+		Link Control 0: CFlE- CST+ CFE- <LkFail- Init- EOC- TXO- <CRCErr=c
+		Link Config 0: MLWI=16bit MLWO=8bit LWI=8bit LWO=8bit
+		Link Control 1: CFlE- CST- CFE- <LkFail- Init- EOC- TXO- <CRCErr=0
+		Link Config 1: MLWI=8bit MLWO=[6] LWI=[6] LWO=N/C
+		Revision ID: 0.00
+	Capabilities: [58] MSI: Enable- Count=1/1 Maskable- 64bit-
+		Address: 00005808  Data: 5c05
+	Capabilities: [40] Secure device <?>
+
+Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
 Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
 Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-[ajz: Remove guest modification claim. AMDVI_MMIO_EXT_FEATURES writes are
-not handled in amdvi_mmio_write(), so a guest cannot modify the register]
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 ---
- hw/i386/amd_iommu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/i386/amd_iommu.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 00842fd487..b0a721bc00 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -244,7 +244,7 @@
-         (AMDVI_FEATURE_PREFETCH | AMDVI_FEATURE_IA | AMDVI_FEATURE_GT | \
-          AMDVI_GATS_MODE | AMDVI_HATS_MODE | AMDVI_FEATURE_GA)
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 2d5c7b5cdf..fa590c9223 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -2576,11 +2576,6 @@ static void amdvi_pci_realize(PCIDevice *pdev, Error **errp)
+     }
+     s->capab_offset = ret;
  
--#define AMDVI_MMIO_EXT_FEATURE_RO_MASK 0xffffffffffffffefULL
-+#define AMDVI_MMIO_EXT_FEATURE_RO_MASK (~0ULL)
- 
- /* capabilities header */
- #define AMDVI_CAPAB_FEATURES (AMDVI_CAPAB_FLAT_EXT | \
+-    ret = pci_add_capability(pdev, PCI_CAP_ID_MSI, 0,
+-                             AMDVI_CAPAB_REG_SIZE, errp);
+-    if (ret < 0) {
+-        return;
+-    }
+     ret = pci_add_capability(pdev, PCI_CAP_ID_HT, 0,
+                              AMDVI_CAPAB_REG_SIZE, errp);
+     if (ret < 0) {
 -- 
 2.47.3
 
