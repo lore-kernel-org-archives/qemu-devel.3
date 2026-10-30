@@ -1,72 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA88606A31D
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F42C606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=g61Pryev
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Y/dRej7R
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMnJo-00064x-9w; Fri, 30 Oct 2026 10:10:56 -0400
+	id 1xMnJu-0006Km-H4; Fri, 30 Oct 2026 10:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xMnJl-0005xG-AC
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:10:53 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1xMnJn-00069H-HL
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:10:56 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xMnJj-0002Cd-7q
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:10:52 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-48afbd2c386so416168f8f.3
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 07:10:50 -0700 (PDT)
+ id 1xMnJl-0002DD-Oj
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:10:55 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-48df4f540ebso374775f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 07:10:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793369449; x=1793974249; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=KTxi2PJIPb2Jh25HIxJewBV4piE3oe0if8hJVlqlwTY=;
- b=g61Pryevi6BY/gT4bsBojsdsEt53iCbqURpouJoxV3BpuDQYEHG73FJGgGCej6875z
- QwslGEaRR9ViyVBYqdCEEgpRgZjsyiyYdJ/MGNOerQ8wja9vBfU0yHlcpVSynoouwIZB
- IfWC8BRiZAVfWKdH2WX0JTam1WCV09roKFDgsFmAl72uocY2qvZnkQIY7q6PixeQ7nTj
- DY2XdN2TsmCmrFzyi/rPyTgvFZj/u7OBeztAn+yPj8/EimPGkt21tffiHyQ0unJmI9zK
- s1abAIaVjiP1DevVH0fTJJnN2JgZEcbMen4Gu8J1+YXp4mlwSvAPGy3PC9Kczu4b2Wph
- qDeQ==
+ d=linaro.org; s=google; t=1793369452; x=1793974252; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=nUiRTSaU1NPVMMFHoiQHThk5jM4+SyPW56vy2Xn7Qco=;
+ b=Y/dRej7RrmQg2NH+BWvb3PqtRBCfL/xQGZSoy/QVNHix+rwBWXdYh8B0oGo73JjBBH
+ cIk8ukc9NGoPZx5Q/V25d15veSbFdP+MW1Ye9JDV8zMrDs6QC8vRZmJKIuKEx1iQT5BI
+ d5fDwwbu50t0uvjypM1CMK6nE/BmfN0LgF6bDYxtq4/DV9pr98LGUHj9jU8rU98KRxPV
+ dB/xSZkY3c1xa1KnDUofz1w63LROeJpT7S1np1NEQW1j6PgpPX562AwWKk/aglERIFQ/
+ O/3mD6AqL+Bkj9O9qQ7+YWaYe2KVh7x6lHHMLoEq4Uah1Z/TnnwTKxz8I4f3p3m3rs54
+ VMmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793369449; x=1793974249;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=KTxi2PJIPb2Jh25HIxJewBV4piE3oe0if8hJVlqlwTY=;
- b=LGPKoW5IGkV/0PaeLJkLCyAUOsNYH2p9pURb6H2XqhKcYKMmm/fT8bOKea9X+P/I56
- Ts+Tvp8Iv0KJfdkFJ+2T9ayv9rKE9i4oRnjJbKMOGifcxbloHLH9hS/itj+GxyL0udk1
- sXm6DzQOHdNAWy6Chx+Ym9orc6KUBZ6aoqsoLxUtEpRsu9g81AjVSbp+hdh9nIUB+7tQ
- 2+JoJIPP+in1sDYZYwwvFw/Duaq/g41F0/3wEHTFHAHrC1+PwSgdZjK/cUuigEZDD1Jc
- LGo5ssms7g+N3vKiYSvpRtfOQwV/lmJvTLCe/Y+Avzy/lKZmyibBLrpGJII4Y62+2GxE
- kA1g==
-X-Gm-Message-State: AFq9FYLY+aFDw/yHVQ7HxX1wuUKD8gUWdF66K098+wfO8WooeslW3c/n
- taaZdzHMEQINQ4YvG2UVNCdgkKLpwWn5tAvbWSBE1v2QMPa+30z2AE5CQmppXAgJjTo=
-X-Gm-Gg: AYBFou0QUe6GCuacHX5jcbJNe+VusTaAUhX17I1itApU9/R0s6Xo6i1AGh+LfI1RxKw
- Qxmldm1AplcIlgUAE052Yilywfozqw5idfzVmf2CYfpTsLI8ZWtrcsM7gjMPJPgM7riZb9iQzHL
- 3puPK9t3Pi7FJNT2lwIDtLcCux5LhlvcYieGHXY6A2D02KpqY+Yk7AB8QMiBsdoz9wMziKdYZK8
- xSPXrNpBWED4oSdFrhIKB47kOiZ32AgaO1QOqSxSYp8Y/vFCIG8cawUqPKJ5Um0in4cwIEIWBNh
- wO55829L78ofcckHr9gtBgVr2JWsdNioUeIM+mayuZHTi9py0GZE4ldj9+OT4PnAvP4g3sF4KsL
- GuSRpOL5fh3JwryPfKQs2JvkzFAVx4tHC9bXGvE/b0JF0ZmjUjikgXrNCXPwR6kvEyX6uE0r4aZ
- rwXwBS1VzaTegLKxuytzZGL0MO0ykLzzMKwMn461boDQebul8+QZWrWNRQBD3g0vhWwUbkk3cVG
- WLEAck7Y/co8RfaFTCaAtM7zH1reLjpdDhxaDSuAWobMVE1gOUDHBHyCDa9CR/8RusigG7OCf/2
- nYI4QhUWko72Gi95WocXJCj+6jbj
-X-Received: by 2002:a05:6000:40dc:b0:48e:4325:4e60 with SMTP id
- ffacd0b85a97d-48e6e2f677dmr5887745f8f.10.1793369449374; 
- Fri, 30 Oct 2026 07:10:49 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793369452; x=1793974252;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=nUiRTSaU1NPVMMFHoiQHThk5jM4+SyPW56vy2Xn7Qco=;
+ b=XTMUjcYn0YB8Xy0EXfGpyhht67Em4l4zCIPHogfvn08z1m4z4zoxGYkXefYTODcmrM
+ jA03lXB0KByznNl6qwqQY2GxZUmrz7M9HqLaYaA9tQyr+MihlyQ8kMPD0Ycxx6dO6BIz
+ XWNRF6svkJqGEi+MjkpHkzG5vw1wMVK5y5e2qMSFsHT1fPx2go7SOal4ZNuYWgySULSq
+ mfXzeEKPj0cdYjtAswT46zUI+3QW7WvwkIsVzrvpDQvCFQaBf2+sYNXbZ9K6hDwlDJEF
+ pocJREmFmSPcCLR1ctxrL6HaTBmuqkTUKNV3snlPn0kMr8+rDwix1ACGEGuAdrbzUrBr
+ DjvA==
+X-Gm-Message-State: AFq9FYK/FgiiAtO4JLa8Y/xaBJnRGaS0n3v8ZMdtqVAr9J5iqhFx33Y7
+ +wVt5Qn/VSdUqWVFWxmotzWD8TEDsNv0jAL21QP3jz4L49KG8RT5qfcbMSoT205aABY=
+X-Gm-Gg: AYBFou1Fkm2fB2qScv6mVK8F64xshx9zc4ZeY5MBRwvJGL+2OW/wYG54DYr3tdRyzhv
+ oVDoK1qxeHfZs3fMu4EAnig/LymR0tbMgsM03y4w9YKfRp8njaS5S7Ee0HNarWWCcMFFBPVXpuq
+ 7CmfHaibkvmi9NGZ4Io1NXL0KTkb0df2TKquoCTEWM+8tr4lZFUdTpDHqq12XexM56qAmg3VXUl
+ 56zOVeiWjc6ZFTkIq/KBL1Jpe7gbAWjcKbCGGjguY0qren1NshjUQr6/kU+Z6vi1Ist0fR1LSGf
+ JPrqhMzP+hJdcLSriXHRVqi3DzLKMFbTtDhOlGv5jz5GLoyu7PLCuUGT+gPpgyj1c8k0mWls8Yf
+ YL7Asm/2N1Oo26+/R/BDRl3oVnYUlcjVW2zCEDZAaiVWA8cxIKn3Q3kMunAZd6NARpMDJQm6tig
+ pkQbf7bXHFGH1Ne2DtmiG3Xt7BQ+qHZiOtCsfJoUVg4ksHuAorcu3ruVGhgnpUgowqSVbl2klEC
+ 0uZL9W2K/yxV80/wtlXuihRTt3T5z2ZPs+6RNQbM5qrGtUX1J8qkE2AdxMH0JQU9N0Ga+Gui45m
+ hq9z/SoWZKdKxyqRarvmlY62+z5141HNUuSUhmdIMxYgB0+/8Q==
+X-Received: by 2002:a05:6000:cc8:b0:48a:fa0a:34d8 with SMTP id
+ ffacd0b85a97d-48e6e50a10dmr4203645f8f.38.1793369451824; 
+ Fri, 30 Oct 2026 07:10:51 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b8a7d1sm3414388f8f.38.2026.10.30.07.10.47
+ ffacd0b85a97d-48e71a4d404sm3965685f8f.5.2026.10.30.07.10.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 30 Oct 2026 07:10:47 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 732A65F917;
+ by draig.lan (Postfix) with ESMTP id 18BDA5F7FD;
  Fri, 30 Oct 2026 14:10:47 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -75,26 +73,23 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 3/4] target/arm: simplify wfxt_timer_cb to only trigger
- cpu_interrupt
-Date: Fri, 30 Oct 2026 14:10:45 +0000
-Message-ID: <20261030141046.2710206-4-alex.bennee@linaro.org>
+Subject: [PATCH 0/4] arm fixes (WxFT, bcm2835_fb)
+Date: Fri, 30 Oct 2026 14:10:42 +0000
+Message-ID: <20261030141046.2710206-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261030141046.2710206-1-alex.bennee@linaro.org>
-References: <20261030141046.2710206-1-alex.bennee@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,74 +101,33 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-HALT_WFE will always be cleared when leaving halt via
-arm_cpu_leaving_halt so we don't need to worry about atomic games in
-the asynchronous timer callback. Furthermore, a WFET timeout or
-event-stream expiration is not an event that sets the event register;
-doing so causes a subsequent WFE to wake up immediately.
+These are the arm specific fixes from my last series. All reviewed and
+ready to pull.
 
-As we only need CPUState to call cpu_interrupt we can also simplify
-the user data and avoid needless casting to get to it.
+Alex.
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Fixes: 01b223f895a7 ("target/arm: enable WFE sleeping for A-profile")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20261029161310.2065290-6-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/arm/cpu.c | 20 +++-----------------
- 1 file changed, 3 insertions(+), 17 deletions(-)
+Alex Bennée (4):
+  target/arm: hold bql when SEV sets the event_register
+  target/arm: don't pass env to the sev helper
+  target/arm: simplify wfxt_timer_cb to only trigger cpu_interrupt
+  target/arm: fix bcm2835 migration issue
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 510fc9eeb3b..c690e2c8937 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -885,26 +885,12 @@ static void arm_cpu_leaving_halt(CPUState *cs)
- }
- #endif
- 
--/*
-- * Unlike almost everything else that messes with the halt_reason and
-- * event_register details the timer callbacks are not in the vCPU
-- * context.
-- *
-- * To prevent races we atomically consume a HALT_WFE and set the event
-- * register. Either way we trigger the an exit event.
-- */
- static void arm_wfxt_timer_cb(void *opaque)
- {
--    ARMCPU *cpu = opaque;
--    CPUState *cs = CPU(cpu);
--    CPUARMState *env = &cpu->env;
--
--    if (qatomic_cmpxchg(&env->halt_reason, HALT_WFE, NOT_HALTED)) {
--        qatomic_set(&env->event_register, true);
--    }
-+    CPUState *cs = opaque;
- 
-     /*
--     * We expect the CPU to be halted; this will cause arm_cpu_is_work()
-+     * We expect the CPU to be halted; this will cause arm_cpu_has_work()
-      * to return true (so we will come out of halt even with no other
-      * pending interrupt), and the TCG accelerator's cpu_exec_interrupt()
-      * function auto-clears the CPU_INTERRUPT_EXITTB flag for us.
-@@ -2302,7 +2288,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-      */
-     if (tcg_enabled() && arm_feature(env, ARM_FEATURE_V6K)) {
-         cpu->wfxt_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                       arm_wfxt_timer_cb, cpu);
-+                                       arm_wfxt_timer_cb, cs);
-     }
- #endif
- 
+ target/arm/tcg/helper-defs.h   |  2 +-
+ hw/display/bcm2835_fb.c        | 11 +++++++++++
+ system/cpus.c                  |  2 +-
+ target/arm/cpu.c               | 20 +++-----------------
+ target/arm/tcg/op_helper.c     |  7 +++++--
+ target/arm/tcg/translate-a64.c |  2 +-
+ target/arm/tcg/translate.c     |  2 +-
+ 7 files changed, 23 insertions(+), 23 deletions(-)
+
 -- 
 2.47.3
 
