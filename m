@@ -1,89 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E4A606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 10:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE102606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 10:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=TLbxqhYH
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=GrcZhzUT
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMjzw-00079U-GF; Fri, 30 Oct 2026 06:38:12 -0400
+	id 1xMk0B-0007G2-9I; Fri, 30 Oct 2026 06:38:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMjzv-00079L-73
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 06:38:11 -0400
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ id 1xMk0A-0007Fo-Ev
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 06:38:26 -0400
+Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMjzt-0006oP-Gu
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 06:38:10 -0400
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-7f84a55cc06so346500a34.2
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 03:38:09 -0700 (PDT)
+ id 1xMk07-0006of-2e
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 06:38:25 -0400
+Received: by mail-oa1-x2e.google.com with SMTP id
+ 586e51a60fabf-4a6f2825dd6so114302fac.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 03:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793356688; x=1793961488; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793356701; x=1793961501; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=BPcSbjG1Ykp+OFiI/iKJjg/z077DqWi7U5WIV1e2lDo=;
- b=TLbxqhYHDw0uZHiMIPEO4KnCXhuCcvdu1IW1U5OmJhTuag5koxBvheWOEP4E43P/cg
- BqPjDaZuzk59Iig4/Sxxat4o40LNbp3i1QMEVWybGpXzdsKBOu4Tupcd7NeaNp6z7PIt
- 6lg4pO5MWK7UwHKSknZcQlhZDxhtCVB1VqYRwTxl4W6YjPA1cIW2/CWP6FZKGMiwqMn+
- SyU6C+l4q97pP6h0ko0w3TJVErf5IA+IPFm5n71aL1Jv/ZmV2MjzAi8yzbr+Rp7RHW6G
- s6XAmrtLu+hJSrKumt0AEB9G6XQclXeXu4yklvjXhUMmJV9hk4bBTpzDoI+Ip/B7z7kC
- AqBw==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=kHwXobIj5KV9j80y3le3AfLG/CZL8Istolec8SV/lec=;
+ b=GrcZhzUTFMa6w5NKwCRNDrj+g0djncp0pWvrlwySuAXKiyVAx6iXr6NtENJzgJIlXk
+ bH4o80LkLZXjbqSu0KHCXk8gkfnDjdqylgKEKjUZOEDszLqlPZE72MS1/wy2RnEEjFz0
+ uYWj14i5GjkYR2ETuLIfkRbGPR6e1x3gekOQJJMbJErgo2LyYPrK5DJ8t2UW6XsutyMe
+ Im6r9v2DQ162ndlJOB34MJQUBODjgRRa5lnaRcVl2aU/hDSw/ezYT9DMBUFxy0iR+OjW
+ +d5chVFEjqPXZKh01TEtWhoetWbIcHAR5hynfLIaaDkBqCA3z0Q7BRlI+rIBOEtBQNzd
+ Uknw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793356688; x=1793961488;
+ d=1e100.net; s=20260707; t=1793356701; x=1793961501;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=BPcSbjG1Ykp+OFiI/iKJjg/z077DqWi7U5WIV1e2lDo=;
- b=mN/LThJQZXddxFMBwjzSPSh2gqLigCi+T3lvl2WPkpIX3rcoJyRipJNlWbm9nBvq50
- JKFI7h5n8xZPABECNV4vXEpJ2nruHeqnApp6maO9uBTBzZCbD9TRoVJGy6yNo2WUkpUr
- NpdLOfJ3rCETqEy+HEuSOFU+R+z2ecVItJGf2xDkDcXpvaKnR2I1S5v6kpEqBPNvo6oS
- Rnu3vneLI8fIdcriBgeGpB699WAoX66OZGmv4L3qe1DGJk3n9nWv/LHr/zZ0ds3hQN1B
- 6SMc7XMnEPFMYVCt6kFSX4Rth6DdrgY01uG8cYTjcibGXlsuP7nQ4dUFJItjStsQSCpI
- tE3A==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=kHwXobIj5KV9j80y3le3AfLG/CZL8Istolec8SV/lec=;
+ b=by/w5ZYxAnMLd5MuwlZhcn8FwemojUCEtGdosMkt5sqyCcjJHz1K2DIhZ1nGQqaRHB
+ 3Z7mMRpaS18XLAj3zwqAJGRw4U5mlOwyoJuxcZZ9SO9ow2NWcF1/SxP2vNbDeTNERRJi
+ H7H1Hts0f1a6an4lqwC+gFE+QYH/iQop1Esd2YDay64iqbkIMQ0qxi1KewvjK8q3fKlt
+ d/VYiNMSnHDL8/nluGuTq2CGfxfJm4ofI4vistPoQTOjKhcOgK3qu0eJl5XNlWRhRXwI
+ 2eEu1NF6u3yWYqCeyLbvjnGnaqd5UqYqUk5wAO/40tVifGp2RN98wvB4rzCB8Cy7uXqC
+ 2YyQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBz365LBJadsQjyu/XDgJN1esnGtf0wkj8NkhdEvPL37rOwDmRX+UaeuOkNpWGH7s2DIF7TjcroC+RZ4@nongnu.org
-X-Gm-Message-State: AFq9FYKowGuduWtCOolKC6UR34FWtJEe286bcdGQ+YVpiwilaQG755mG
- n3a5ndGR/9clObLNTiceM5F3YpUSZoSbqn8T4prpRLmxNtOPF38uuwgzxYa1Y9AYyGg=
-X-Gm-Gg: AYBFou3iGCcDeaMqS3teK4p88QfIfjod9VgU2DVmB7KeZfScYqtVXExLbD2HWA2t1HK
- SICXnVJ9PRvzd854IXq4w+hhdB1C0eCshFrPyMhjQGeigtbOdoIYizHbUMrASHmA2oNLjab4c85
- s9L2mNMkIwfZQxae7rtN4vJoGXvkvcypklbj81M9pKBglfApNoE4ztCxjiTqupUAwbmGalF8J0j
- FT3cjZhnfsbDv/3628uKe7oVzrai88fVn411GiGmRJ9bhimWmfhRD+zukovI8GFmOCCKKL+Wc3x
- cl9YfSh+/HoHtjHsshG3a34AkmN7hT0xxumDkOIRjmIbyKUzTdg/uwaHXW70aBXc5EuAgfswZC1
- F/p/jGzpa4qTPhF1I9NatngnOzWpAnC8MtFFPhrX+cPOf+b+/gvx2Yc7lFc03q/zorSIZcMFfR6
- enBjNWtuukHNOseJ0yubBlpXt9IPVxEWgLMDbF+lEzQBNsq/2bvHS7CJTQBkphTSvVHRrRMCBNJ
- eqO8Ien+MbYC1Sg6mN9KtBcBfH71sEelU3T83fBXxzQoshPxmoa9ASDgvEMrRmmIEcwIyW+4VUI
- bLUHjm0tkGqR9n9Gu+Tsk8HyBcJdYT/IUVFoljRZ9GguR1LjhDliZxPhfd59lMvKow==
-X-Received: by 2002:a05:6830:264c:b0:845:156f:5899 with SMTP id
- 46e09a7af769-85d3661f4b2mr1533812a34.29.1793356688050; 
- Fri, 30 Oct 2026 03:38:08 -0700 (PDT)
+ AKwUvBwIzwLmMnjCRdACpiQ8KDcVFhrc3tJLPuwKIT2LNFPFzUzYaS7OYiKoiJpHGMWSzokIEzljmMcnm6Jp@nongnu.org
+X-Gm-Message-State: AFq9FYKSFanLl/X1dr6P9QfXCa3DiyAnzTQ4TbNCkMxv/XJihvn6NZ/G
+ 3hXgmUJoKcQhOZsUpxDi1/U/QSDBzKWbdQrrz1ApEetoBx6NwOzliEsPed+Kui4+0j3Vo7DhWE4
+ j+yYv
+X-Gm-Gg: AYBFou0h9fLdqWJ8nu/b4Y5hGt4pzo7yzMMNbS3ZqYMUCETpcB8GUXvJ4mg/nUf39MN
+ h1o6CgDV4A4Y0j/fMPJ+Jp0h207kGFYsR0A1dH4EXxc6QDB6rbP5EDg2HqaOwHGHjw8Ic/vwvno
+ zdGd3dwGURNrIlh1SJc2lle3RqZ4bvm3rnSCJIobFN6g2mTkux/oouYoU5T5YKtk7Er5/+Kyuyc
+ u/CQFwdv1TcfioCTqoOuV8taGYDPjrg7kqjksh0Tqac0a6L8e4+Eor3K97DBl7pNPvAtb9Em4IL
+ 3UtK3WGcln2+jivGj5NmYtcanJyNQySKMUkl+0ew3N3LMyHBPYGgLHHQ1XZKLUPKOgOiAZ5BD29
+ 0mzQHwlLXxLL4wuKevsVVJwDiAyTtLi8FP8H6XW8ym8lBrCBRV/3PjtBYnTixbFN6epX7SDLwvB
+ sTOW/heozFMBeEtKfi4niyWXPg89mMV0P7NV+q5bxyREldq5YZdntJDovZFRhzgm/WGpBfjtiX8
+ 1b/28hpbkUj2sxjiGmsOUDU2TkzU+HOxDk1Vf0soHCgZslCaM6wLDbDdDScn+B29RE8zWPOVuBN
+ 86UEjQ74pGAvt3yMacQhSH5T2JgiuygZEyy3tLdNKBJd
+X-Received: by 2002:a05:6808:124d:b0:4d6:90f3:74b3 with SMTP id
+ 5614622812f47-5640de496bemr1237432b6e.51.1793356700487; 
+ Fri, 30 Oct 2026 03:38:20 -0700 (PDT)
 Received: from [192.168.129.53] ([50.233.235.3])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-85d3545bfebsm1678044a34.4.2026.10.30.03.38.06
+ 586e51a60fabf-4a90ae4e9absm1544491fac.4.2026.10.30.03.38.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 30 Oct 2026 03:38:07 -0700 (PDT)
-Message-ID: <47cebe93-116e-4646-84bf-b74586735f1e@linaro.org>
-Date: Fri, 30 Oct 2026 05:38:04 -0500
+ Fri, 30 Oct 2026 03:38:19 -0700 (PDT)
+Message-ID: <007adea4-c2d7-4443-873e-fa4483e12ff5@linaro.org>
+Date: Fri, 30 Oct 2026 05:38:17 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/8] Migration patches for 2026-10-29
+Subject: Re: [PULL 0/5] Qtest patches for 2026-10-29
 To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-References: <20261029184641.1973813-1-farosas@suse.de>
+References: <20261029210536.2260016-1-farosas@suse.de>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261029184641.1973813-1-farosas@suse.de>
+In-Reply-To: <20261029210536.2260016-1-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,25 +110,24 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/29/26 13:46, Fabiano Rosas wrote:
+On 10/29/26 16:05, Fabiano Rosas wrote:
 > The following changes since commit 5624b266cdd513506fb333e9041778407b6d1ac4:
 > 
 >    Merge tag 'qga-pull-2026-10-28-2' ofhttps://github.com/kostyanf14/qemu into staging (2026-10-28 14:53:37 -0500)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/farosas/qemu.git tags/migration-20261029-pull-request
+>    https://gitlab.com/farosas/qemu.git tags/qtest-20261029-pull-request
 > 
-> for you to fetch changes up to 232489829c3bf5b5c13d5e1f6d8d1e63244637b4:
+> for you to fetch changes up to d4a85ac217b653da355f256791d4abd15980022a:
 > 
->    migration: Postpone the outgoing preempt channel for preempt_pre_7_2 (2026-10-29 13:13:13 -0300)
+>    qtest: don't close listener socket in qtest_socket_accept (2026-10-29 15:55:29 -0300)
 > 
 > ----------------------------------------------------------------
-> Migration pull-request
+> QTest pull request
 > 
-> - Compatibility fix for multifd+postcopy migration against older versions
-> - Rework of early connection code
-> - Adjustment to snapshot thread name
+> - Lift limit of 256 intercepted IRQs
+> - Fixes to socket_accept
 
 Applied, thanks.
 
