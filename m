@@ -1,92 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139C9606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF9E606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s1omSTY7
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=SJOLPJPI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMolb-0001SD-Gb; Fri, 30 Oct 2026 11:43:43 -0400
+	id 1xMoys-00059A-Uf; Fri, 30 Oct 2026 11:57:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMolY-0001RW-5N
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:43:41 -0400
-Received: from mail-dy1-x132d.google.com ([2607:f8b0:4864:20::132d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xMoyq-000589-0q
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:57:24 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMolW-0002gT-2W
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:43:39 -0400
-Received: by mail-dy1-x132d.google.com with SMTP id
- 5a478bee46e88-3550c917fd3so1225920eec.0
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:43:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xMoyn-0004R9-Rm
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:57:23 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-8439fe796ebso650297a34.3
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793375017; x=1793979817; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LjY640+5hXYIzmOYfko7rpSId7DPU5DcwkBqnyO+aH8=;
- b=s1omSTY7Iuv7vOwINgm7+9z1KicECSh1hT54gdLgHNOugw/4EC1uauMrkOBPVraD0k
- n2//yyU5kq1OL2mszK+rSqPmMtjJmNetUCwBuldh+gK9nbxxkSjQKaNJ3W4fIF8mQnbx
- hfje4FOy07UiByj/dV1PHXB/UzxXeJnHN/r3jNNI/F7aV2vlPvlBF56x1ucgNMWF4iII
- rpS6cXqXFqxczTUIrDy+15PXBtZDfE6Mwjw2QwVv27JegMtPuPtUE94molgY8NmNyJpu
- Qmb/uuVdGeSGK94aHuDJRffIpKmMvOHbnt75Zy5RzCuzT71/9pdF9HU6vk1MyP44lzN0
- 8+Cg==
+ d=linaro.org; s=google; t=1793375840; x=1793980640; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8FLy1IVBSFoy+pCwoMM5Z3zaCHkIMQJT6C82sCooXvQ=;
+ b=SJOLPJPIU5n/RMRVn+IROg2GnHDK9F02W9CjCN+KXsWOcFajGH7czPLL0jHG7o6lcD
+ fSrSeqFSQRGwWm+KM//vBVVJSmEhQrCqjoR5fRZQidUrnMTs2TYoXs1pDamwdPeHwIXK
+ mhGOu1v6IJo45F2WVcuox8IzkkLqTUosSIV9VD2LU4MCsq1yllwmsutiRJdHTOhExP2k
+ /u74rzoHS4dgZIW4F8Sj6z4W1RaWSS9lRD6CCjlkr1CIFs1LVTxbhZfdHQfH4JhNptTX
+ WZsPhcesqZs+YvnDYrsRzJAeh45KB+pdJAd8XcuWSavn2FO2kHmpa7dE6scpcPGj8QQy
+ cQwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793375017; x=1793979817;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=LjY640+5hXYIzmOYfko7rpSId7DPU5DcwkBqnyO+aH8=;
- b=sZu7d1UsgSGN01yKQe+9zetpYkt5ptJT4kF1TW7ny3CmH8SEPbyAnftg1J8rgF8SBk
- T/9p1ImFxH6iEOUF7bEdXhQntwIW92it5JhjeSeX2Ihy0BJISqsHcytV2lVRoQoDGxgy
- Gn/o571eoUpG4VJBK1gwXFN5Xn4JIVVrJUzSQDMw2JTdp/C+H+8dSjhDkrmmg96NAmuB
- AJJdISWgem0Bw+m4VlBP02+hgVbjfj6uTnrV6MommMxdW9jjII+CebX2If3BXm8rc1Xm
- fCuArIwq1XDP1eo922KSaJfuKr2tC9pL05odiVnWh+A+v1s7I1CAOutmu2hK5A/jsanr
- VieA==
-X-Gm-Message-State: AFq9FYLjHdKQ8W0ai4M9hH9IDY7SEOdw0BxBdEjQ353yjcHmS384iQRF
- FXvydv2zUQiMc0MEXFAPkagcZFM0ZlCuc6FKhw8NgkYvxenxuuUN1wMi70Pe/5do
-X-Gm-Gg: AYBFou0MIJfsRyiw0RK2+qnai5LDkC/W57DPxQBRIj/DDeCpfbNoMPKbydWEx7XmTGU
- LcTcJsds2F3wRze76Ar9alGqyaEhLBLYLwL/nVAr93+jIL/zeOMinhMJaoLvOZhBj8PPjIpVYQG
- rpy8a+arjYOYVz2Z7JjR0+jPpx8Zwcs7TpECwG/2FC6ZRQ2vVpSCEpTInqrmts4yEYzyhYIJn3a
- kjSLFG/sT/BIF/piWKj225y7PURaMQCzz9zOomA12TyJoFpZD+/pRNWmSyYvI9eLnL8yvLQQaa7
- N+zlnE8Ken90Zz/H2elIGB9cxGVbZNAUzDAl1vD0Ppd1Hj94vAvWMvZ/GyixUMhwuTCYiuJjiEX
- eBx/BBUU0O/g8nUMra4dFWb5IPmpFX6/c0Vgyw9fCqkfN5wttQdW67724j0HG9oCl/Z22DpjYkp
- wOD/PvVe3h5It3gJg5Trbd2eTlH3ee/pbFnYzDgoJ69LZEbEbKXZ/mKqGpZLkQjOnc/aUsKdGbX
- 2JsVaRimAFujzJYDOncRopek6eyxgGqhE6TBxHt7YAYPFF/YZ8Hig6Tr7PZ13F+09G+QGUXd+hN
- P7xMKQfYUGJbbvgffszHP7kvBpPSYut0FhBVPC4kzhRk1km0
-X-Received: by 2002:a05:7300:ec97:b0:359:8492:20ff with SMTP id
- 5a478bee46e88-36a4240193fmr3784978eec.12.1793375016603; 
- Fri, 30 Oct 2026 08:43:36 -0700 (PDT)
-Received: from DESKTOP-Q716RM7 ([103.94.185.75])
- by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-36a42a61a0csm9620706eec.22.2026.10.30.08.43.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 08:43:35 -0700 (PDT)
-From: Yonggang Luo <luoyonggang@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 3/3] tests/qtest: increase ASPEED SMC timeout to 720 second
-Date: Fri, 30 Oct 2026 23:43:16 +0800
-Message-ID: <20261030154317.1807-4-luoyonggang@gmail.com>
-X-Mailer: git-send-email 2.55.0.windows.3
-In-Reply-To: <20261030154317.1807-1-luoyonggang@gmail.com>
-References: <20261030154317.1807-1-luoyonggang@gmail.com>
+ d=1e100.net; s=20260707; t=1793375840; x=1793980640;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=8FLy1IVBSFoy+pCwoMM5Z3zaCHkIMQJT6C82sCooXvQ=;
+ b=g3S4bEAVqMSjgZgkXCYOo5OYgDuseZzunXXwQ6FilVPtrRDtgd8ag0VTsPdLsH9n/x
+ tRX88M4scb+VlaQFP9X1AMDHA7uwP7KXP8musrmmI04FiruD0zPrsZUIuF3AdgGXDUBe
+ Hkpv7gmoK9TV7aZX8xVgeGPApr2NZmyisJR281wsAKuNyAREq92FwhFWuivbl63cklzZ
+ /YWGLp6SrTSw16mKcuy30prViWzxk6METvB45p3+443KgOq2IaYoCKHm/AYzkPFMYQEW
+ PeSbW5kG5a1AIC8vdu3Juczj06RQahlStjpTtK9bKt5IIcBPUjsmxcQY3UpOU07LPJy/
+ upBQ==
+X-Gm-Message-State: AFq9FYIBHNmcRg4dRC0hODp9Pq9NtwNF8xFS3FBYka0L7e5PabwGqRlX
+ qfu1DOERoF0FVYU2vKtVE70ea/f6TcQGkMkrBIBkUDqJHqiTQTTWuka69mrLwfpZozDm9tiqHEF
+ DsKwk
+X-Gm-Gg: AYBFou0MsgdXm2VXP3ZF9OIfcNiM8slc3ldrYsDaczhu0I2Sj4uzgo3Z6c2lQ7hy4dY
+ ukn9xc88f356c5Z0cuoaJhZEDIlAy4sygB1tGYcixyCWoVS2CpvC5dftehUnTbs5Nh9Vv7wg9cw
+ jLpID1NOcqG8IE+b3q7S0K3XjjySLtdH0UkO96lf5V0fnFCE/Y6kpXmjw6oSm5jaU7QVom7hkGv
+ 7NGiBknYeKdVAM+rX26IeRZqmq1PY1AYju3GHLOPPOOkx1siJLd8v48uu2yXkeNd5MkXCWVzi4Y
+ 7ggEa7V79uvkpdFJM2b9XW7zCm3Z/AdupHYcZxna1WW+hCzED/Gl9wEe4qZKSncOYkqq+LL/Jtr
+ 0n6xAtVR3Mhf3BnaTWwhJaUOUiD7q0mxpq4kZ30VTe3sD4PWXP+CyGRh2KX7YXOtB5fY+VREP9A
+ uM+MJjr0s+vujFxsB3eplUycRIjOw9HNZ8YcwGJwVdA2HgM37BpHwlW9+mXtfISoZaT9eztjAy0
+ KMCWzlHiMPBaSOPbEuo4AyB69CF58sM5/CIBr/da/iWhGs0zY5+AfOalrFj1S7Q8z91GhKUHdfh
+ CpCdrxTh8jYt3eWLXFYxcJu6J0PGrTH3ihbfXsYz2cPK
+X-Received: by 2002:a05:6808:1713:b0:4d6:9412:46a3 with SMTP id
+ 5614622812f47-5640deb2c05mr1964053b6e.68.1793375839564; 
+ Fri, 30 Oct 2026 08:57:19 -0700 (PDT)
+Received: from [192.168.129.53] ([50.233.235.3])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-5640fd9888bsm1896604b6e.5.2026.10.30.08.57.18
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 30 Oct 2026 08:57:19 -0700 (PDT)
+Message-ID: <dd0813ab-584d-4332-afac-33f979e1268e@linaro.org>
+Date: Fri, 30 Oct 2026 10:57:17 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132d;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x132d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/19] tcg patch queue 20261030
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20261030131554.41208-1-richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261030131554.41208-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,32 +101,40 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
----
- tests/qtest/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 10/30/26 08:15, Richard Henderson wrote:
+> The following changes since commit 61436f5ff1c4e5ee8f60fa1a37962a60f73ea7a4:
+> 
+>    Merge tag 'pbouvier/pr/dockerfiles-20261029' ofhttps://gitlab.com/p-b-o/qemu into staging (2026-10-29 17:09:01 -0500)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20261030
+> 
+> for you to fetch changes up to 0e68878f962a2117fc5de8a0025f3064bf5cbe9a:
+> 
+>    tcg/s390x: Implement INDEX_op_lea (2026-10-30 07:06:16 -0500)
+> 
+> ----------------------------------------------------------------
+> accel/tcg: Fix false awakening of gdb
+> accel/tcg: Do not flush and retry in place in tb_gen_code
+> tcg: Adjust NONNULL annotation on *_diff functions
+> tcg: Add tcg_gen_lea_{i32,i64,tl}
+> target/alpha: Use tcg_gen_lea_i64 for S{4,8}ADD{L,Q}
+> target/loongarch: Use tcg_gen_lea_tl for ALSL
+> target/riscv: Use tcg_gen_lea_tl for SH*ADD
+> target/s390x: Use tcg_gen_lea_i64 in get_address
+> target/i386: Use tcg_gen_lea_tl in gen_lea_modrm_1
+> target/mips: Use tcg_gen_lea() for [D]LSA and MXU S32LD*V opcodes
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 6c710f8d1bd..b9de0872833 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -1,6 +1,6 @@
- slow_qtests = {
-   'ahci-test': 150,
--  'aspeed_smc-test': 360,
-+  'aspeed_smc-test': 720,
-   'bios-tables-test' : 910,
-   'cdrom-test' : 610,
-   'device-introspect-test' : 720,
--- 
-2.55.0.windows.3
+Applied, thanks.
 
+r~
 
