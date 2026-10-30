@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CE3606A32E
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 17:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864AD60A2612
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Pps8XEqn;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Hzq5BQBH
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=FttOhTpa;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=D9J4f1m4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMqsa-0001pn-Iv; Fri, 30 Oct 2026 13:59:08 -0400
+	id 1xMqsO-0001IT-7r; Fri, 30 Oct 2026 13:58:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMqrd-0000Th-Dh
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:58:09 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xMqqq-0008Nh-8A
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:57:27 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMqra-0008MI-PD
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:58:04 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1xMqqn-0008JH-TI
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:57:15 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69UHu33R3977499
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:58:01 GMT
+ 69UHu28a4025492
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:57:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- VakULRF/ZlzQg9DlX20JmxO+/KBixFvRDBeFbdHtf/0=; b=Pps8XEqnjahPkGNO
- CkxEzM5ZASrcj+GZkTrcTUKqL3TyhcIqBuLSt1LMNhR8C842uRvU7SFHJrWC/EWi
- zPSgHe6iSForemdZ88X/nuYY8McLL4gidtqiIDdqZxlqU1tI4kE78RCjY9OmFUWf
- 9s9Dg9p+suwWAXh0nX9adoyT/dqpjQQHcHRVEbnxWr37LFrrcG/H01ImgEEIUi4E
- xtB573v69ST91TJcDG9hzehm6EIAW4MvomXBn8jb4DOqXCxyoe+TjX46X6VMR7RK
- 2i7En3sdZaRWEwiSfI8t4pj4yZ5kGSmchUVvWJQKEPhtqRTGuefKknEqZxF6LzjE
- gnjRjg==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qmd7a-1
+ 6RyVs3nUetjaaD9VgdwFw8WA7SXZIHT2DbGgv6Jstn0=; b=FttOhTpaMOAfrzaE
+ 0Pe7ngUGY16g7wcRbiT+uXB6Uui2Zgu+dRC/qzg5vhNcdoQhkMZGoA8B7tTkd0/P
+ CuJ6GnWh7V3sUs3yeZzZaG39MNO6TfKIP+LyXalkBgCEIjdVrTc+mzNYKq4uJRDb
+ m+IEItZ5Z2Rd7tdTwfWRwHTlodxITL+ii4YUC414WBS73iMUgsnF4l4ppagIvIFJ
+ HnSxY5SGLrvg68/vZLULOhF5wyIYQNbGzGFnMDnLncvpDdWRnNL00AvPpiZyKY5M
+ 2kMaOc4M433ia3ImuymcT8+7kEUuTFgJBZjt0XrlXDcJp8uHGwHZGMip1TnCiplW
+ Hn1yCg==
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qm9gg-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:58:00 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-98a829c43f3so258870241.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 10:58:00 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:57:12 +0000 (GMT)
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-7cc23a549a9so697904137.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 10:57:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793383080; x=1793987880; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793383031; x=1793987831; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=VakULRF/ZlzQg9DlX20JmxO+/KBixFvRDBeFbdHtf/0=;
- b=Hzq5BQBHM9tNjRMG+QcGh8bo5sw2RzeAu2+KtuhCkgvSpxHPlgKqbqqauRogW09Jsu
- 3mo9K1a0ALgtd72fez7C+7z3ZgEzYLCsEzjYCAuxWdp05zfpZZqwg15I/zZML9FiBKrM
- LmWTjnjC7V9FWUanYs8Gim2Ulqe8BPcEPNBoSbMwBatZH/FPTbRw9S37TjsQwmnozIGv
- DKedDkPQlHqvG3BFjvNkemA+2POlTnfZhLl6sVB+1eFygH1Hm+1n0johXpFrZ+KfTw9/
- OjusKmYTQB1jjijNv4yN+lhma1qWMBXbbHNkNdBpL32sZPeltQHsDDn+8DxcW2m/1Brj
- DHQg==
+ bh=6RyVs3nUetjaaD9VgdwFw8WA7SXZIHT2DbGgv6Jstn0=;
+ b=D9J4f1m4+3g6NzNzie1a0JBIjtUB6aEAzhGP/scLU8xe7/Ba34/wMsdwQFeI5fsBr2
+ 3tmlawcAQ6c/rMoSZCjGIPkyn8aL3cZV3hQlitKIl1m48NvFcON1KKHs3xPK76/nYoZI
+ TySo02MPdl8wQJvAda197OUkQd9hvjbKYc1uWOH8wpD5hUnN859ewilCowiEGdDAMFHK
+ 4cOMLOJob8wPcoyoNcYSKKjat3ahrG6hJ3M7QTw611IpUBJtcCZlSp1FvKZx5WOMSg0u
+ BMjTfXVdxDxBNbe87cpbOGki1mvFSRcYfJrXpuu3bgK5kvpcI9I3mBvTdqlMDJUu7IQl
+ 2txA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793383080; x=1793987880;
+ d=1e100.net; s=20260707; t=1793383031; x=1793987831;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=VakULRF/ZlzQg9DlX20JmxO+/KBixFvRDBeFbdHtf/0=;
- b=wJ17RC8LI1qpIPy+0rGv3f355mQpR0tEzkdpp9nUWZJ0KdzD36pssIPTzl150anW2V
- V0tU17ZksBZUolMUAFTiGx76bCYihT+Duma29tbwvt7ShCWnw39pG6yb9eQmOyj3qV9M
- 4st7YA6P2NlOHzcoFp/LgjZj6ZDUU0rOZwoWbbO1kdEXHiQbLnYYrjtnjErhVkqswoGz
- sBzhMrP6Gn80r65BjueHtGs0XFgk0FtA4spU0Q+vss8h8z7SCNvWhqsJPv7e2etd7emX
- IZNuJWvC+gHcIL7DQS88UQYcoHEFUZ4TUYqugiUUdhtue4AgegVMPjQkIitHyUp/bhWS
- bF2w==
-X-Gm-Message-State: AFq9FYJUYKdqusHdipbZcBIvxPJW4fheSaev2Czp72LGB50V7XOvf20u
- 6bQRR7n2G5axWkNj8UzkUxoomg6utKBhiOu9ErplNr8OdTMATtf4N4lyt8X+9oyt1mdx1YeIG8S
- ILc3yA5i/JfpRi4uXJ1/Hnn0CXURnaXbM0rsa7E72oCxcXqHazwOfPuiDxtA7kZwR/nc3
-X-Gm-Gg: AYBFou1sq6wbybpvkaUw8zSYlTVXpaf470L8RjQaUvWiC6mTwgVBs+673fo3YAbwv9u
- jJv9dWSTbic1aBWb8lr8M1XbB4K51NKr/kWorjyGpfZ4fdf7a4foozjbQbIMk7GaMIRyaX5VcGq
- mpHpDy+FJKzFFZgyaO0U/jRpP2Z/PyMby+904SXBQkCMSd9a1I2v9i+wopoZMzwIGNsN3lcDnT+
- G1cWOLUSu2Cm6xVTJaeBZNeDjU5Ym+WV7oJG5jqwLfc7wSwAUcASW/cpJF03SNmzKKqbZ/WEZvu
- U1daCQPxWpMC4d4pAnczvNnK/57pGUesi3/LYpZyL0AdSiP9PPQob+4y1bYVs6W67NBA589beXO
- 0yXTHcWlafFffauNxMrQuzQ3dS4XCRBUgqLB6yYzKZ9X7Z1fph0Jxz6vgNwKtKUOL+j3jYady+X
- PuNcuMk7AzoTOBvl2i/jXzkfu2+SIOwg==
-X-Received: by 2002:a05:6102:3ec5:b0:7cc:2bb7:131d with SMTP id
- ada2fe7eead31-7d072baa484mr1429303137.9.1793383080000; 
- Fri, 30 Oct 2026 10:58:00 -0700 (PDT)
-X-Received: by 2002:a05:6102:3ec5:b0:7cc:2bb7:131d with SMTP id
- ada2fe7eead31-7d072baa484mr1429293137.9.1793383079503; 
- Fri, 30 Oct 2026 10:57:59 -0700 (PDT)
+ bh=6RyVs3nUetjaaD9VgdwFw8WA7SXZIHT2DbGgv6Jstn0=;
+ b=fob0sQ8wBLQ27mFjshpYt1pTZR1d76+KCIO3COrEFBIu4DOLpKmstON2qGcs6PF1wi
+ mMHvIr0BVAf9H08iTteSomyq9jV18W5NQXecUpvU6jEJkU+KY7wFRErzXgYHIrwZgfw6
+ ksa0NdgAhbl8qxKdvYFB+dwgOqtmRhsgDrzBAwN5i+dfvsXzZHW7q9bcaTdq1NHuRIzi
+ eZibXdgJTcM0s5p88VimJ8K0ZQNrZTaqrIdaB1KM9Qv3nxc1W8GBDUIhR3EJYh0gO1KX
+ OxlxYzCxek7r6SPBPnWunvZiKS4KBYTm08rhZjmDPugbEobDnHjcivBG5/IPXJyw+mUI
+ kAtw==
+X-Gm-Message-State: AFq9FYJMLx3xB80fgZU5gFWxuxAoClUdwXUOgJlEUO8Z+U41Pxz7Pb09
+ 6xfy0TOT06Ja3mXBo7cjnHuZ2dTrPVq3+A9I6+c1lUJol3lmqwk1gZOJ40SzFTjM5+KarbZC8d7
+ iNCcMyc027Sk16h+XU3U724R0SSuIV9Me2r08pRYdyqEw0CF52m59WdFXJKaTO7+zQ/e3
+X-Gm-Gg: AYBFou0ZkigMp5MFzEmTe2pp+fGQzYaigfrAumu5JtfLonXEgwl1xmPNe7+iZXfxe6B
+ 3b//DZWtSbC9IMW5dbBWZryucdrgXWWmZwGRtASJ6qeqOgAk16jc2uqfTzMTw1U8rC2YyN79UeY
+ hy9W3dm628GdAAkxuf+FGydRF79O/zCX87SslyXm/r6hNKShxFS1C+VJd8/SnW/8UdmxwhWmD9L
+ r3KpcNMJxzHzNfHHUCI9YTbF7bIiE7nvzU9r3LyjHkE9YNseG7A+tv4Z++Y422QYFqw+eKcf639
+ AMepuZFU8fAhWUbyZz2b22sCZ/eM2Sys7Q7QLGT8qGosEtZHKX8GZGU/bS8kgDhZnCksJQHdcAH
+ OabNJ7U6FHOfVOkJgft8EnQjZhlHpgRS69/VFz84rqJeVFcTh5AUqKmzeS/8t8reOWnJ07n177n
+ BI+UqrtWolVuGTm5nNWPYlRMP87z+pJQ==
+X-Received: by 2002:a05:6102:2b85:b0:79e:373e:8216 with SMTP id
+ ada2fe7eead31-7d0723d2480mr1755027137.0.1793383031555; 
+ Fri, 30 Oct 2026 10:57:11 -0700 (PDT)
+X-Received: by 2002:a05:6102:2b85:b0:79e:373e:8216 with SMTP id
+ ada2fe7eead31-7d0723d2480mr1755018137.0.1793383031150; 
+ Fri, 30 Oct 2026 10:57:11 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b8c0b6sm4139333f8f.41.2026.10.30.10.57.58
+ ffacd0b85a97d-48e71b789c6sm4821765f8f.26.2026.10.30.10.57.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 30 Oct 2026 10:57:58 -0700 (PDT)
+ Fri, 30 Oct 2026 10:57:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -95,9 +95,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v4 29/32] tests/tcg/mips: Group MSA logic tests
-Date: Fri, 30 Oct 2026 18:53:51 +0100
-Message-ID: <20261030175357.99684-30-philmd@oss.qualcomm.com>
+Subject: [PATCH v4 23/32] tests/tcg/mips: Group MSA int-div-mod tests
+Date: Fri, 30 Oct 2026 18:53:45 +0100
+Message-ID: <20261030175357.99684-24-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261030175357.99684-1-philmd@oss.qualcomm.com>
 References: <20261030175357.99684-1-philmd@oss.qualcomm.com>
@@ -105,36 +105,35 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: ozLpBzaqmVPsd-6SpQCN7X3p5CX53U6N
-X-Authority-Analysis: v=2.4 cv=KLzPn1Fo c=1 sm=1 tr=0 ts=6ae4daa9 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-GUID: o7IUdLTNs24QJakvOzLj1x-BxSMs7hOd
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX655IgkFRVUoo
+ HivHPUWnAXeDswvBc14c37I3ihXi8cNhee6pd5QNekydjT8Lrf1AshwIKECFf3J80Zf9Z4mgcNe
+ 9ys/n6m7OPSPIL+BtkXoflxByDQrW/o=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX2sngw8cM8b2v
+ 5qt+aI9VRZhGF0prNCwxqtAyJmsSkVQsMIAv+7BzCYW9Qr1ffupAmVwN0ywhDhS01V+65FQqVs2
+ VhgQbsvD11QsE/MZnR7PjpsXLqm25O9Qln/Nw5EDl6wMXQTDoz0oc0Z98krlmwVqJ8z1ZmSkjbi
+ 6ApKd3nLcTx+Ut9CSQURiUry2IxfmgYiDNld2j6uqqJvVc74QxY2w5pR2PGs4x1rz/Kub63ewqG
+ JJd5pyv/tTu9PnGKdqxcWv5SqHKjDN2YZk6CcErkTB7LlPMP1MMEQzn9X38vIKMpjhY9x4/MsYd
+ EfzMs2UHGyhfkGAxWZ5rdahdxCTN+iNNPpC57ac/ZecMa4UYw0T2lUuQdvdMlbSQM/gA1FYglqX
+ hjTODrOT6vgwkyJlCjuAiHTcEPY9tvbXWt137W0zT7d9imLdqm2I2l6oGzEPPd/0V4Fvlwusc3Y
+ 1KuhG/V2BfqttPWCmdg==
+X-Proofpoint-ORIG-GUID: o7IUdLTNs24QJakvOzLj1x-BxSMs7hOd
+X-Authority-Analysis: v=2.4 cv=TpVzFzXh c=1 sm=1 tr=0 ts=6ae4da78 cx=c_pps
+ a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=XEEDF0r_pM4_IqxSCIsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1WsBpfsz9X-RYQiigVTh:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfXzEztP8lvXIQ/
- fXpKTrN9usMVAVb9Y1nyg2OOH4tOhzmnCLqbUKz1PMiCo4S88m0or7mr25GHw5abk89OKGwV78Z
- tdDlyxNDg2bMVsdC5VCMmbA8Pg+7m3qAtPk0bCncpaBXZSU5agXOzHjK7Pp4NGnz/oCO9a/Lp73
- 0/K2FSJyxeaFl9eXGbv1tMj+2eimo//fFjClT6I/62JijT0kTTen6onsC7BpQUEoQDrin0h84E0
- BCgfFy8CJMl32Un35IVwf4tnXqsqbAUzVdOZyYpzaGo+aCs6dE9NCfF8nFEXLxylylqY5Sa9SUc
- +1Fz4n8tszs9Z5R2IPV8Gry9q0H9oDisE8WWAIjUNPUAJ8aR+VCaoC0skLV0JwFH8fL352NQxnB
- sb9+8t9CWOm6olLCoQh6V8YsClo+mPZ9hAV04zsyfqw/TfFN8OsBCLqshCE1G/2+kww+zY7LYZV
- hDmzIGWrjxxGKi4gzJg==
-X-Proofpoint-ORIG-GUID: ozLpBzaqmVPsd-6SpQCN7X3p5CX53U6N
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX01rpk8fNtyZt
- jPM8CtkuKxU31mN5jDSEMMXXcHTkRfKCbX0KMFc3FJMAYFpgTO1I+2LgPycpZujX0BvUsXM6xYw
- e2rZM1OcsEbkw28G4/R/frj6ksFBCMk=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=XlFCZ7tVMrZGAbOMMLgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=gYDTvv6II1OnSo0itH1n:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-30_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 spamscore=0 malwarescore=0 impostorscore=0
- clxscore=1015 bulkscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610300071
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ impostorscore=0 adultscore=0 suspectscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300071
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -160,54 +159,109 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Build the 5 per-opcode logic tests as a single executable,
-test_msa_logic.c, to reduce the number of test binaries.
+Build the 16 per-opcode int-div-mod tests as a single executable,
+test_msa_int_div_mod.c, to reduce the number of test binaries.
 Each opcode reports one TAP line.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/mips/test_msa_logic.c | 57 +++++++++++++++++++++++++++++++++
- tests/tcg/mips/meson.build      |  6 +---
- 2 files changed, 58 insertions(+), 5 deletions(-)
- create mode 100644 tests/tcg/mips/test_msa_logic.c
+ tests/tcg/mips/test_msa_int_div_mod.c | 123 ++++++++++++++++++++++++++
+ tests/tcg/mips/meson.build            |  17 +---
+ 2 files changed, 124 insertions(+), 16 deletions(-)
+ create mode 100644 tests/tcg/mips/test_msa_int_div_mod.c
 
-diff --git a/tests/tcg/mips/test_msa_logic.c b/tests/tcg/mips/test_msa_logic.c
+diff --git a/tests/tcg/mips/test_msa_int_div_mod.c b/tests/tcg/mips/test_msa_int_div_mod.c
 new file mode 100644
-index 000000000000..4e96c3ebf0e9
+index 000000000000..764054c2a57f
 --- /dev/null
-+++ b/tests/tcg/mips/test_msa_logic.c
-@@ -0,0 +1,57 @@
++++ b/tests/tcg/mips/test_msa_int_div_mod.c
+@@ -0,0 +1,123 @@
 +/*
-+ * MIPS MSA tests: Logic and Move instructions
++ * MIPS MSA tests: Int Divide and Modulo instructions
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "../include/tap.h"
 +
-+#define main test_msa_and_v
-+#include "user/ase/msa/logic/test_msa_and_v.c"
++#define main test_msa_div_s_b
++#include "user/ase/msa/int-divide/test_msa_div_s_b.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_nor_v
-+#include "user/ase/msa/logic/test_msa_nor_v.c"
++#define main test_msa_div_s_d
++#include "user/ase/msa/int-divide/test_msa_div_s_d.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_or_v
-+#include "user/ase/msa/logic/test_msa_or_v.c"
++#define main test_msa_div_s_h
++#include "user/ase/msa/int-divide/test_msa_div_s_h.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_xor_v
-+#include "user/ase/msa/logic/test_msa_xor_v.c"
++#define main test_msa_div_s_w
++#include "user/ase/msa/int-divide/test_msa_div_s_w.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_move_v
-+#include "user/ase/msa/move/test_msa_move_v.c"
++#define main test_msa_div_u_b
++#include "user/ase/msa/int-divide/test_msa_div_u_b.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_div_u_d
++#include "user/ase/msa/int-divide/test_msa_div_u_d.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_div_u_h
++#include "user/ase/msa/int-divide/test_msa_div_u_h.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_div_u_w
++#include "user/ase/msa/int-divide/test_msa_div_u_w.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_mod_s_b
++#include "user/ase/msa/int-modulo/test_msa_mod_s_b.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_mod_s_d
++#include "user/ase/msa/int-modulo/test_msa_mod_s_d.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_mod_s_h
++#include "user/ase/msa/int-modulo/test_msa_mod_s_h.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_mod_s_w
++#include "user/ase/msa/int-modulo/test_msa_mod_s_w.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_mod_u_b
++#include "user/ase/msa/int-modulo/test_msa_mod_u_b.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_mod_u_d
++#include "user/ase/msa/int-modulo/test_msa_mod_u_d.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_mod_u_h
++#include "user/ase/msa/int-modulo/test_msa_mod_u_h.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_mod_u_w
++#include "user/ase/msa/int-modulo/test_msa_mod_u_w.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
@@ -216,11 +270,22 @@ index 000000000000..4e96c3ebf0e9
 +    const char *name;
 +    int32_t (*fn)(void);
 +} msa_tests[] = {
-+    { "and.v", test_msa_and_v },
-+    { "nor.v", test_msa_nor_v },
-+    { "or.v", test_msa_or_v },
-+    { "xor.v", test_msa_xor_v },
-+    { "move.v", test_msa_move_v },
++    { "div.s.b", test_msa_div_s_b },
++    { "div.s.d", test_msa_div_s_d },
++    { "div.s.h", test_msa_div_s_h },
++    { "div.s.w", test_msa_div_s_w },
++    { "div.u.b", test_msa_div_u_b },
++    { "div.u.d", test_msa_div_u_d },
++    { "div.u.h", test_msa_div_u_h },
++    { "div.u.w", test_msa_div_u_w },
++    { "mod.s.b", test_msa_mod_s_b },
++    { "mod.s.d", test_msa_mod_s_d },
++    { "mod.s.h", test_msa_mod_s_h },
++    { "mod.s.w", test_msa_mod_s_w },
++    { "mod.u.b", test_msa_mod_u_b },
++    { "mod.u.d", test_msa_mod_u_d },
++    { "mod.u.h", test_msa_mod_u_h },
++    { "mod.u.w", test_msa_mod_u_w },
 +};
 +
 +int main(void)
@@ -230,33 +295,53 @@ index 000000000000..4e96c3ebf0e9
 +    TAP_START();
 +    for (i = 0; i < sizeof(msa_tests) / sizeof(msa_tests[0]); i++) {
 +        tap_report(!msa_tests[i].fn(), "MSA %s %s",
-+                   "Logic and Move", msa_tests[i].name);
++                   "Int Divide and Modulo", msa_tests[i].name);
 +    }
 +
 +    return tap_done();
 +}
 diff --git a/tests/tcg/mips/meson.build b/tests/tcg/mips/meson.build
-index cc94623f8f20..ae2c2fa6aa48 100644
+index 199b1b934a5e..537de9ea4a2f 100644
 --- a/tests/tcg/mips/meson.build
 +++ b/tests/tcg/mips/meson.build
-@@ -16,6 +16,7 @@ tests_mips_msa_groups = [
-   '../mips/test_msa_int_multiply.c',
-   '../mips/test_msa_int_subtract.c',
-   '../mips/test_msa_interleave.c',
-+  '../mips/test_msa_logic.c',
+@@ -10,6 +10,7 @@ tests_mips_msa_groups = [
+   '../mips/test_msa_int_add.c',
+   '../mips/test_msa_int_average.c',
+   '../mips/test_msa_int_compare.c',
++  '../mips/test_msa_int_div_mod.c',
  ]
  
  tests += tcg_tests['multiarch-linux-user']['tests']
-@@ -73,9 +74,4 @@ tests_mips_msa = [
-   '../mips/user/ase/msa/shift/test_msa_srar_w.c',
-   '../mips/user/ase/msa/shift/test_msa_srlr_b.c',
-   '../mips/user/ase/msa/shift/test_msa_srlr_w.c',
--  '../mips/user/ase/msa/logic/test_msa_or_v.c',
--  '../mips/user/ase/msa/logic/test_msa_nor_v.c',
--  '../mips/user/ase/msa/logic/test_msa_and_v.c',
--  '../mips/user/ase/msa/logic/test_msa_xor_v.c',
--  '../mips/user/ase/msa/move/test_msa_move_v.c',
- ]
+@@ -35,14 +36,6 @@ if 'qemu-mips' in emulators
+ endif
+ 
+ tests_mips_msa = [
+-  '../mips/user/ase/msa/int-modulo/test_msa_mod_s_b.c',
+-  '../mips/user/ase/msa/int-modulo/test_msa_mod_u_d.c',
+-  '../mips/user/ase/msa/int-modulo/test_msa_mod_s_d.c',
+-  '../mips/user/ase/msa/int-modulo/test_msa_mod_s_w.c',
+-  '../mips/user/ase/msa/int-modulo/test_msa_mod_s_h.c',
+-  '../mips/user/ase/msa/int-modulo/test_msa_mod_u_b.c',
+-  '../mips/user/ase/msa/int-modulo/test_msa_mod_u_h.c',
+-  '../mips/user/ase/msa/int-modulo/test_msa_mod_u_w.c',
+   '../mips/user/ase/msa/int-subtract/test_msa_asub_s_w.c',
+   '../mips/user/ase/msa/int-subtract/test_msa_hsub_u_d.c',
+   '../mips/user/ase/msa/int-subtract/test_msa_hsub_s_w.c',
+@@ -89,14 +82,6 @@ tests_mips_msa = [
+   '../mips/user/ase/msa/int-multiply/test_msa_mulv_h.c',
+   '../mips/user/ase/msa/int-multiply/test_msa_mulv_d.c',
+   '../mips/user/ase/msa/int-multiply/test_msa_maddv_h.c',
+-  '../mips/user/ase/msa/int-divide/test_msa_div_s_b.c',
+-  '../mips/user/ase/msa/int-divide/test_msa_div_u_b.c',
+-  '../mips/user/ase/msa/int-divide/test_msa_div_s_d.c',
+-  '../mips/user/ase/msa/int-divide/test_msa_div_s_h.c',
+-  '../mips/user/ase/msa/int-divide/test_msa_div_s_w.c',
+-  '../mips/user/ase/msa/int-divide/test_msa_div_u_w.c',
+-  '../mips/user/ase/msa/int-divide/test_msa_div_u_h.c',
+-  '../mips/user/ase/msa/int-divide/test_msa_div_u_d.c',
+   '../mips/user/ase/msa/interleave/test_msa_ilvr_b.c',
+   '../mips/user/ase/msa/interleave/test_msa_ilvr_d.c',
+   '../mips/user/ase/msa/interleave/test_msa_ilvod_b.c',
 -- 
 2.55.0
 
