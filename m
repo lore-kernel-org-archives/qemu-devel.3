@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FE0606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F43606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ACK2wGOk
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=S+RDiYEm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMnQM-0002Wv-Nv; Fri, 30 Oct 2026 10:17:42 -0400
+	id 1xMnQE-0002Sp-5u; Fri, 30 Oct 2026 10:17:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMnQD-0002Sm-Uq
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:17:33 -0400
+ id 1xMnQA-0002Rr-3Z
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:17:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMnQC-0002pI-DW
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:17:33 -0400
+ id 1xMnQ8-0002ol-Fm
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:17:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793369851;
+ s=mimecast20190719; t=1793369847;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hg4m0qnP4zApKR9oX18gAhUpWkWXdYL/ayjjVX4YKRI=;
- b=ACK2wGOkD7qTclGPRufQKJwb1R7+oVqkQOulTpXBeLeN0pgSLec/dZ+wTZ/mpA3EwlXHLE
- ibFFQJqeI0dad0zG2dp/oRj7FZGAOR1InyZQN2kq7ws/3FqouQAWlf8/QZZJ3foPJ4kST7
- 5NBGuVyTjEv4A97gAEa/XNCGh8cC/r4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=7mqwlJ2cpKXvG3aCVAUW6xKejx28WZYL1+my44fhoRE=;
+ b=S+RDiYEmTkyAWq+kD1JjMXogNG+R7cTPugHRdKyQel9YPy6Y+GYc4dzFsAqIBLBdYZMFJe
+ 1K8lscPikQ946KuKr7wTMyQjbrsoNd012n1HqcgieE9ebKE2ATsLDvLCSQi6Vdpiczkvws
+ mTJCoUljoZQHlX2tU44Z6ezrRWPWL7Q=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-357-1nNWhZZ3OYOuS1vTvqXyyg-1; Fri,
- 30 Oct 2026 10:17:28 -0400
-X-MC-Unique: 1nNWhZZ3OYOuS1vTvqXyyg-1
-X-Mimecast-MFC-AGG-ID: 1nNWhZZ3OYOuS1vTvqXyyg_1793369847
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-131-lA6IkVTiND6l7LpWhxEitg-1; Fri,
+ 30 Oct 2026 10:17:20 -0400
+X-MC-Unique: lA6IkVTiND6l7LpWhxEitg-1
+X-Mimecast-MFC-AGG-ID: lA6IkVTiND6l7LpWhxEitg_1793369839
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D68818021F7; Fri, 30 Oct 2026 14:17:27 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B6A311956049; Fri, 30 Oct 2026 14:17:18 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9FD5318004D2; Fri, 30 Oct 2026 14:17:25 +0000 (UTC)
+ id 1F50F1800480; Fri, 30 Oct 2026 14:17:16 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -54,9 +54,10 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Michael Roth <michael.roth@amd.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eric Blake <eblake@redhat.com>
-Subject: [PATCH v2 5/8] qapi: rename compat_policy_check_security method
-Date: Fri, 30 Oct 2026 14:17:10 +0000
-Message-ID: <20261030141713.2841710-6-berrange@redhat.com>
+Subject: [PATCH v2 1/8] qapi: make 'CompatPolicy' the first arg in
+ compat_policy_input_ok
+Date: Fri, 30 Oct 2026 14:17:06 +0000
+Message-ID: <20261030141713.2841710-2-berrange@redhat.com>
 In-Reply-To: <20261030141713.2841710-1-berrange@redhat.com>
 References: <20261030141713.2841710-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -66,13 +67,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,73 +93,119 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Rename to compat_policy_security_ok to match the naming convention
-established by compat_policy_input_ok.
+The typical API design pattern is for a method to be named after
+the type of the first arg passed into the method. For the
+compat_policy_input_ok method, this points towards 'CompatPolicy'
+being the first arg, matching compat_policy_check_security.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qapi/compat-policy.h | 8 ++++----
- qapi/qapi-util.c             | 8 ++++----
- qom/object.c                 | 8 ++++----
- 3 files changed, 12 insertions(+), 12 deletions(-)
+ include/qapi/compat-policy.h |  4 ++--
+ qapi/qapi-util.c             | 16 ++++++++--------
+ qapi/qapi-visit-core.c       |  4 ++--
+ qapi/qmp-dispatch.c          |  2 +-
+ qapi/qobject-input-visitor.c |  2 +-
+ 5 files changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/include/qapi/compat-policy.h b/include/qapi/compat-policy.h
-index df87d716439..b7b543ffe74 100644
+index f5af2090692..df87d716439 100644
 --- a/include/qapi/compat-policy.h
 +++ b/include/qapi/compat-policy.h
-@@ -24,10 +24,10 @@ bool compat_policy_input_ok(const CompatPolicy *policy,
+@@ -18,8 +18,8 @@
+ 
+ extern CompatPolicy compat_policy;
+ 
+-bool compat_policy_input_ok(uint64_t features,
+-                            const CompatPolicy *policy,
++bool compat_policy_input_ok(const CompatPolicy *policy,
++                            uint64_t features,
+                             ErrorClass error_class,
                              const char *kind, const char *name,
                              Error **errp);
- 
--bool compat_policy_check_security(const CompatPolicy *policy,
--                                  const char *typename,
--                                  bool is_secure,
--                                  Error **errp);
-+bool compat_policy_security_ok(const CompatPolicy *policy,
-+                               const char *typename,
-+                               bool is_secure,
-+                               Error **errp);
- 
- /*
-  * Create a QObject input visitor for @obj for use with QMP
 diff --git a/qapi/qapi-util.c b/qapi/qapi-util.c
-index e8ecc7346bb..806533c7b3d 100644
+index 38b1cec7a41..93898f57a05 100644
 --- a/qapi/qapi-util.c
 +++ b/qapi/qapi-util.c
-@@ -64,10 +64,10 @@ bool compat_policy_input_ok(const CompatPolicy *policy,
-     return true;
+@@ -19,8 +19,8 @@
+ 
+ CompatPolicy compat_policy;
+ 
+-static bool compat_policy_input_ok1(const char *adjective,
+-                                    CompatPolicyInput policy,
++static bool compat_policy_input_ok1(CompatPolicyInput policy,
++                                    const char *adjective,
+                                     ErrorClass error_class,
+                                     const char *kind, const char *name,
+                                     Error **errp)
+@@ -38,21 +38,21 @@ static bool compat_policy_input_ok1(const char *adjective,
+     }
  }
  
--bool compat_policy_check_security(const CompatPolicy *policy,
--                                  const char *typename,
--                                  bool is_secure,
--                                  Error **errp)
-+bool compat_policy_security_ok(const CompatPolicy *policy,
-+                               const char *typename,
-+                               bool is_secure,
-+                               Error **errp)
+-bool compat_policy_input_ok(uint64_t features,
+-                            const CompatPolicy *policy,
++bool compat_policy_input_ok(const CompatPolicy *policy,
++                            uint64_t features,
+                             ErrorClass error_class,
+                             const char *kind, const char *name,
+                             Error **errp)
  {
-     ERRP_GUARD();
+     if ((features & 1u << QAPI_DEPRECATED)
+-        && !compat_policy_input_ok1("Deprecated",
+-                                    policy->deprecated_input,
++        && !compat_policy_input_ok1(policy->deprecated_input,
++                                    "Deprecated",
+                                     error_class, kind, name, errp)) {
+         return false;
+     }
+     if ((features & (1u << QAPI_UNSTABLE))
+-        && !compat_policy_input_ok1("Unstable",
+-                                    policy->unstable_input,
++        && !compat_policy_input_ok1(policy->unstable_input,
++                                    "Unstable",
+                                     error_class, kind, name, errp)) {
+         return false;
+     }
+diff --git a/qapi/qapi-visit-core.c b/qapi/qapi-visit-core.c
+index 706c61e0260..66d57dd447a 100644
+--- a/qapi/qapi-visit-core.c
++++ b/qapi/qapi-visit-core.c
+@@ -410,8 +410,8 @@ static bool input_type_enum(Visitor *v, const char *name, int *obj,
+     }
  
-diff --git a/qom/object.c b/qom/object.c
-index 96498f3d001..ceb8e9eebec 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -3276,10 +3276,10 @@ void object_class_property_set_description(ObjectClass *klass,
- 
- bool object_class_check_security(ObjectClass *klass, Error **errp)
+     if (lookup->features
+-        && !compat_policy_input_ok(lookup->features[value],
+-                                   &v->compat_policy,
++        && !compat_policy_input_ok(&v->compat_policy,
++                                   lookup->features[value],
+                                    ERROR_CLASS_GENERIC_ERROR,
+                                    "value", enum_str, errp)) {
+         return false;
+diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+index 965cad64998..f2fb8f7976c 100644
+--- a/qapi/qmp-dispatch.c
++++ b/qapi/qmp-dispatch.c
+@@ -185,7 +185,7 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
+                   "The command %s has not been found", command);
+         goto out;
+     }
+-    if (!compat_policy_input_ok(cmd->features, &compat_policy,
++    if (!compat_policy_input_ok(&compat_policy, cmd->features,
+                                 ERROR_CLASS_COMMAND_NOT_FOUND,
+                                 "command", command, &err)) {
+         goto out;
+diff --git a/qapi/qobject-input-visitor.c b/qapi/qobject-input-visitor.c
+index c52d36997df..17d91746d3a 100644
+--- a/qapi/qobject-input-visitor.c
++++ b/qapi/qobject-input-visitor.c
+@@ -667,7 +667,7 @@ static bool qobject_input_policy_reject(Visitor *v, const char *name,
+                                         uint64_t features,
+                                         Error **errp)
  {
--    return compat_policy_check_security(&compat_policy,
--                                        object_class_get_name(klass),
--                                        object_class_is_secure(klass),
--                                        errp);
-+    return compat_policy_security_ok(&compat_policy,
-+                                     object_class_get_name(klass),
-+                                     object_class_is_secure(klass),
-+                                     errp);
+-    return !compat_policy_input_ok(features, &v->compat_policy,
++    return !compat_policy_input_ok(&v->compat_policy, features,
+                                    ERROR_CLASS_GENERIC_ERROR,
+                                    "parameter", name, errp);
  }
- 
- static void object_class_init(ObjectClass *klass, const void *data)
 -- 
 2.56.0
 
