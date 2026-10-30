@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664A3606A31F
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 13:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D941606A31D
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 13:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ATQP36M0
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=fvEc2fhg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMmS2-0001M4-Rr; Fri, 30 Oct 2026 09:15:23 -0400
+	id 1xMmRm-0000fQ-CH; Fri, 30 Oct 2026 09:15:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xMmRz-0001DF-8l
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:15:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xMmRf-0000U6-9m
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:15:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xMmRv-0005Pr-Ua
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:15:18 -0400
+ id 1xMmRd-0005C7-JO
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:14:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793366115;
+ s=mimecast20190719; t=1793366096;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8cxputGmZ3JXZXRm5sHq/Fjnsxhk83VtPil5rs77aNw=;
- b=ATQP36M0dEyYND/Yy6HPUqb48NBQtHhkQYCR8k7FqQe9UYfwtgiNTFzXZ4kko1EiesgEPB
- l18FE2FDdRbGMKKWX75QyyzP5FlxgJI7hBIO8db/hZjMu01OPYKZ0nFLwd7Eb5sS28m3UM
- PoMkupdvtnGXSimSn79epaVlwl0EIUs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=6Q09bIrHyMRfqhA+APYF83tIQQVVEpS67ZFlJfhAFQU=;
+ b=fvEc2fhgjDUPCQz1zIoCZjbOZf/zHJbpRApxLwRp3lta1K3mVXBE6/xwj2lCqx7K1CkKSN
+ 0pWf+p4W5sONZRe+9VLQ09Qu892A3g2R1y/Ue3OnqjT298/nOlT/6wL0nARTsgqQIeZIZs
+ VOyWj21dMi6CsxzjNgfL12f2/PgGyiM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-527-Bg953bgqOjaQ8RdG2tVCpQ-1; Fri,
- 30 Oct 2026 09:15:10 -0400
-X-MC-Unique: Bg953bgqOjaQ8RdG2tVCpQ-1
-X-Mimecast-MFC-AGG-ID: Bg953bgqOjaQ8RdG2tVCpQ_1793366108
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-682--OdqEJ1jOmu9ThkXa03kvg-1; Fri,
+ 30 Oct 2026 09:14:23 -0400
+X-MC-Unique: -OdqEJ1jOmu9ThkXa03kvg-1
+X-Mimecast-MFC-AGG-ID: -OdqEJ1jOmu9ThkXa03kvg_1793366061
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 857BD1956058; Fri, 30 Oct 2026 13:15:08 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 748CA18021F1; Fri, 30 Oct 2026 13:14:20 +0000 (UTC)
 Received: from laptop.redhat.corp (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BD9871956088; Fri, 30 Oct 2026 13:15:03 +0000 (UTC)
+ id 8F9091956088; Fri, 30 Oct 2026 13:14:15 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, shaju.abraham@nutanix.com,
@@ -58,26 +58,25 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  alireza.sanaee@huawei.com
 Cc: armbru@redhat.com,
 	mbawa@redhat.com
-Subject: [PATCH v4 for-11.2 10/10] target/arm/kvm: Improve error handling on
- scratch vcpu probe
-Date: Fri, 30 Oct 2026 14:13:18 +0100
-Message-ID: <20261030131406.461599-11-eric.auger@redhat.com>
+Subject: [PATCH v4 for-11.2 01/10] target/arm/cpu-sysregs.h.inc: Sort by name
+ alphabetical order
+Date: Fri, 30 Oct 2026 14:13:09 +0100
+Message-ID: <20261030131406.461599-2-eric.auger@redhat.com>
 In-Reply-To: <20261030131406.461599-1-eric.auger@redhat.com>
 References: <20261030131406.461599-1-eric.auger@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,190 +91,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Pass an error handle to both kvm_arm_create_scratch_host_vcpu()
-and kvm_arm_get_host_cpu_features(). This allows to improve the
-error reporting on kvm_arm_set_cpu_features_from_host().
+Sort by register name alphabetical order. This will allow to
+easily diff with the future content, automatically generated.
 
-If any, the error is stored in the new cpu->host_cpu_probe_err
-field and further propagated on realize().
-
-In arm_gic_cap_kvm_probe() call path we just pass a NULL error handle
-to kvm_arm_create_scratch_host_vcpu because we don't care about the
-failure nature and just want to revert to emulated versions if it
-fails.
+No functional change intended.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- target/arm/kvm_arm.h |  3 ++-
- target/arm/kvm.c     | 40 ++++++++++++++++++++++++++++------------
- 2 files changed, 30 insertions(+), 13 deletions(-)
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Khushit Shah <khushit.shah@nutanix.com>
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index e7c40fb003..9c7e7f654a 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -105,6 +105,7 @@ struct kvm_vcpu_init;
-  * @init: filled in with the necessary values for creating a host
-  * vcpu. If NULL is provided, will not init the vCPU (though the cpufd
-  * will still be set up).
-+ * @errp: Error handle
-  *
-  * Create a scratch vcpu in its own VM of the type preferred by the host
-  * kernel (as would be used for '-cpu host'), for purposes of probing it
-@@ -114,7 +115,7 @@ struct kvm_vcpu_init;
-  * false on failure (and fdarray and init are not valid).
-  */
- bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
--                                      struct kvm_vcpu_init *init);
-+                                      struct kvm_vcpu_init *init, Error **errp);
- 
- /**
-  * kvm_arm_destroy_scratch_host_vcpu:
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index f9c7577460..b66eb4f6c2 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -62,6 +62,7 @@ typedef struct ARMHostCPUFeatures {
-     uint32_t target;
-     uint32_t sve_vq_supported;
-     const char *dtb_compatible;
-+    Error *probe_err;
- } ARMHostCPUFeatures;
- 
- static ARMHostCPUFeatures arm_host_cpu_features;
-@@ -104,13 +105,14 @@ static int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
- }
- 
- bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
--                                      struct kvm_vcpu_init *init)
-+                                      struct kvm_vcpu_init *init, Error **errp)
- {
-     int ret = 0, kvmfd = -1, vmfd = -1, cpufd = -1;
-     int max_vm_pa_size;
- 
-     kvmfd = qemu_open_old("/dev/kvm", O_RDWR);
-     if (kvmfd < 0) {
-+        error_setg_errno(errp, errno, "Failed to open /dev/kvm");
-         goto err;
-     }
-     max_vm_pa_size = ioctl(kvmfd, KVM_CHECK_EXTENSION, KVM_CAP_ARM_VM_IPA_SIZE);
-@@ -121,6 +123,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
-         vmfd = ioctl(kvmfd, KVM_CREATE_VM, max_vm_pa_size);
-     } while (vmfd == -1 && errno == EINTR);
-     if (vmfd < 0) {
-+        error_setg_errno(errp, errno, "Failed to create the scratch VM");
-         goto err;
-     }
- 
-@@ -140,6 +143,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
- 
-     cpufd = ioctl(vmfd, KVM_CREATE_VCPU, 0);
-     if (cpufd < 0) {
-+        error_setg_errno(errp, errno, "Failed to create the scratch VCPU");
-         goto err;
-     }
- 
-@@ -153,12 +157,16 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
- 
-         ret = ioctl(vmfd, KVM_ARM_PREFERRED_TARGET, &preferred);
-         if (ret < 0) {
-+            error_setg_errno(errp, errno,
-+                             "Failed to get the preferred KVM target");
-             goto err;
-         }
-         init->target = preferred.target;
-     }
-     ret = ioctl(cpufd, KVM_ARM_VCPU_INIT, init);
-     if (ret < 0) {
-+        error_setg_errno(errp, errno,
-+                         "Failed to initialize the scratch VCPU");
-         goto err;
-     }
- 
-@@ -312,13 +320,19 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
-     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
- }
- 
--static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-+/**
-+ * kvm_arm_get_host_cpu_features:
-+ * @ahcf: host CPU feature struct to populate
-+ * @errp: error handle
-+ *
-+ * Identify the feature bits corresponding to the host CPU by creating a
-+ * scratch VM/vCPU and querying its ID registers.
-+ *
-+ * On failure, @ahcf->target is QEMU_KVM_ARM_TARGET_NONE and *errp is set
-+ * On success, @ahcf->target is set to a valid KVM target.
-+ */
-+static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf, Error **errp)
- {
--    /* Identify the feature bits corresponding to the host CPU, and
--     * fill out the ARMHostCPUClass fields accordingly. To do this
--     * we have to create a scratch VM, create a single CPU inside it,
--     * and then query that CPU for the relevant ID registers.
--     */
-     int fdarray[3];
-     bool sve_supported;
-     bool el2_supported;
-@@ -330,6 +344,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     ahcf->dtb_compatible = "arm,armv8";
- 
-     if (!kvm_enabled()) {
-+        error_setg(errp, "KVM is not enabled");
-         return;
-     }
- 
-@@ -371,7 +386,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         features |= 1ULL << ARM_FEATURE_PMU;
-     }
- 
--    if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init)) {
-+    if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init, errp)) {
-         return;
-     }
- 
-@@ -502,6 +517,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     kvm_arm_destroy_scratch_host_vcpu(fdarray);
- 
-     if (err < 0) {
-+        error_setg(errp, "Failed to read some host CPU ID registers");
-         return;
-     }
- 
-@@ -528,7 +544,8 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-     CPUARMState *env = &cpu->env;
- 
-     if (!arm_host_cpu_features.dtb_compatible) {
--        kvm_arm_get_host_cpu_features(&arm_host_cpu_features);
-+        kvm_arm_get_host_cpu_features(&arm_host_cpu_features,
-+                                      &arm_host_cpu_features.probe_err);
-     }
- 
-     cpu->kvm_target = arm_host_cpu_features.target;
-@@ -538,8 +555,7 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-          * We can't report this error yet, so flag that we need to
-          * in arm_cpu_realizefn().
-          */
--        error_setg(&cpu->host_cpu_probe_err,
--                   "failed to retrieve host CPU features");
-+        cpu->host_cpu_probe_err = error_copy(arm_host_cpu_features.probe_err);
-         return;
-     }
- 
-@@ -2674,7 +2690,7 @@ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
- {
-     int fdarray[3];
- 
--    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL)) {
-+    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL, NULL)) {
-         return;
-     }
- 
+---
+v5 -> v6:
+- v5 version conflicted because ID_AA64FPFR0_EL1 has been
+  added
+
+v4 -> v5:
+- remove spurious CCSIDR definition
+---
+ target/arm/cpu-sysregs.h.inc | 46 ++++++++++++++++++------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
+
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+index d9e058a57e..b5c7970971 100644
+--- a/target/arm/cpu-sysregs.h.inc
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -1,13 +1,13 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
+-DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
+-DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
+-DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
+-DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
+-DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
+-DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
+-DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
++DEF_MUX(CCSIDR_EL1, 3, 1, 0, 0, 0, 16)
++DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
++DEF(CTR_EL0, 3, 3, 0, 0, 1)
++DEF(DCZID_EL0, 3, 3, 0, 0, 7)
+ DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
+ DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
++DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
++DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
++DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
+ DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
+ DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
+ DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
+@@ -17,30 +17,30 @@ DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
+ DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
+ DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
+ DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
+-DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
+-DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
+-DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
++DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
++DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
++DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
++DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
++DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
+ DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
+-DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
+-DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
+-DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
+-DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
++DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
++DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
+ DEF(ID_ISAR0_EL1, 3, 0, 0, 2, 0)
+ DEF(ID_ISAR1_EL1, 3, 0, 0, 2, 1)
+ DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
+ DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
+ DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
+ DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
+-DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
+ DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
++DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
++DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
++DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
++DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
++DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
++DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
++DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
++DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
++DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+ DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
+ DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
+ DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
+-DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+-DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
+-DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
+-DEF_MUX(CCSIDR_EL1, 3, 1, 0, 0, 0, 16)
+-DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
+-DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
+-DEF(CTR_EL0, 3, 3, 0, 0, 1)
+-DEF(DCZID_EL0, 3, 3, 0, 0, 7)
 -- 
 2.53.0
 
