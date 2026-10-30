@@ -1,115 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A21C606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3C8606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Pbtbk6ph;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=R9z132zQ
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ppIBHENw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMni6-0002F9-JN; Fri, 30 Oct 2026 10:36:02 -0400
+	id 1xMno7-0004zJ-5O; Fri, 30 Oct 2026 10:42:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1xMni3-0002Eb-S6
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:35:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1xMni2-0004nz-Cy
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:35:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793370957;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=y9HoDy1Tx6gNEjwMWbZHwxdCtdDapQQ7mAdhRiFhnG8=;
- b=Pbtbk6phO1ug0EYPTh9if+lCwmSyrHzj645/kQmMyQWsRmuTyMBmM846s6QGDb54YpQTJm
- v3DFS47kYaB0o0KTjGM49uH15dr4HIV0NL15NP/J6/ChAr866LdkUOyfXSHYl10mxqhhyU
- qGqS64WAPD5CzTJ2Uojh4YeCiCrsU4o=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-5J4xZa0iPvqDvJb0s9Zl8A-1; Fri, 30 Oct 2026 10:34:45 -0400
-X-MC-Unique: 5J4xZa0iPvqDvJb0s9Zl8A-1
-X-Mimecast-MFC-AGG-ID: 5J4xZa0iPvqDvJb0s9Zl8A_1793370885
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-48e0ef019a4so607078f8f.3
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 07:34:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xMnnx-0004yE-CO
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:42:06 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xMnnt-0005BG-G0
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:42:04 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-8b0d63f60bcso6623717b3.3
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 07:42:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793371320; cv=none;
+ d=google.com; s=arc-20260327;
+ b=G9Zq91ef9HRhAHukwtdWOeXuX2DW9WM5Q8QRmajDMa4jmv0atibQWTm8XkqHSxC1kU
+ qP6JG3+lVYDbjuaRAnU5PgqffjwPD7U0bNngpGuclT0uqebgoOnKrvuo4vBjRG4Kh83p
+ QhWrUxftHUPkNuAzZZTllzAZRbccXDDSRzrwETPB/XFLAYeMFT/kiUaPp1FKMBwlyDx3
+ PaYMjC0p4a+/Egqx18200sqIuUukgpaD77zOFSwq0375UkrFyIKRYOZ1yAX0s9WJKhMD
+ tkvD2LHoQhyvl5STZ4+J96jR6zoFJTsoMpjtCIgtbclFO92WuQMBgprqRgO6xYGjXxyT
+ mytw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=gapw+KcNZWU+ikQlgPzLdw+ct1Lqqn2Tg9Otb2s+/eI=;
+ fh=5Pmahbx9qiuY0/ciWFYXo9MkH+eOx2AOyAapaCKQ3CA=;
+ b=Y9/3oTBU2cCZ9TB+oJ61ylYRSx4cG0A9t/UZblDIbWopffEK/U200QN9CWceLPnJ8h
+ Wx+b92U0J0a/68W4hxoEgFkqJ6N2R5XQUMYPmlsIgY4sqmbhVF34wpap/KccnwXl6h/0
+ xtit7fsFXx+Elk/M8DUuVwclpILH5VDGwzoKeZ5I6jqBsIV9MS9EokuF3cHC/WG/LsKd
+ OePYzXEdhtxg3aXqLGNUkDes5ofgjV9B4Ub+EciFPcC+MwFP0EWxjkinVAeKngLc/HD8
+ pdI1XhaVAC9jY4ZhLOQKAcGS4rHJztSbwP2UypR9B2iiIdcHIWEjfuESaE7lyoP4RD/y
+ v/xQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793370885; x=1793975685; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=y9HoDy1Tx6gNEjwMWbZHwxdCtdDapQQ7mAdhRiFhnG8=;
- b=R9z132zQgEiUAEs+JgHzqRTosVPqsY78dEws1hNNaajSQD5kN9SNBk10RJ0GSayuNr
- K7jt867o4rtiTpKSJ3SHM1D8LUseLjHeGrMMAL8vNxdVkF2CobmmK8Upn2tvqighNbwM
- YC+4zGaCXoQsHUO8NejsKokf6oYbwR4mMSJoqL1aC9jxb04KOdIeleKds87OtVRfBpgc
- xCcoBat83OCryPjKZbkiPMBXqk4h+k54yLSgtEjfocD8j/lYyf60SWFunhHlQYOVqWvy
- 8+XM1D8PaL2oLB7AvY0gDfthBRCxGPP7Xzxd56MC8v7+PN2uYol4iwx2EPlaUyojovd2
- j97w==
+ d=linaro.org; s=google; t=1793371320; x=1793976120; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=gapw+KcNZWU+ikQlgPzLdw+ct1Lqqn2Tg9Otb2s+/eI=;
+ b=ppIBHENwcVh9kILs5pSiLj62oQOzAKJ1AaD7F9X8weTB90uo9W5lGny6h6bimGnKGx
+ H22L9iajm68XxJjXWNDgEt9+7SYq4LOdzKqNHdWsNy0x157Il8/DTDfZdMpitMIJo5Qu
+ Nuj22yqKuLSd4D7XsG9OMr9WNlDdZBKCoSTLgZzo5o6ldyxngvIGuXBfRQANW4DLsqy0
+ lJ/YgXz9CozVLAm17jAi/T2m15SttCVV7Mv/0rozFnN8gnTiX3oIrFnSs3H1PwPBJJyO
+ O+k0C22Nq8cD7cIpRMGSAr/mqKKNbHrMZCttCBcv0DYxDEt9mQza1l+bLvIBk3C1bGWH
+ +fwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793370885; x=1793975685;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=y9HoDy1Tx6gNEjwMWbZHwxdCtdDapQQ7mAdhRiFhnG8=;
- b=alNv+sNKLgegNkoO9IJOi5NaTjB2xdcyujan/RzdLSwpXI53x6wXry5s9sbcKH+e4W
- 0fKk/GqKy+VnkuGzo9Kj0t4LT+HBOiGuxo+KIUM204+stum8U98e2X8/cYoyUrZ99aN/
- XR/kxsrxSGDzoM1Dii6M9EAZ20cncJrfKBEbtWvl31cMMeWmEN6vsLmp5yDCFpNLyBGv
- HKquG5OL54QWZrWrD/dQiL3ZNpUbq/wsLgmV8VN0AQ99uMD7EWXWWLDopuCwHPV6azL2
- 6wz/MmQzstyRHH40nd+8gZmqFAVdUxgZJzAnYLQNUW8IYHn4xgHcIPiQodQaSegG+vN2
- eUSg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzlPXkanEGZvfOq+uENP21cxMrwFWqT0y6bD3f0uR7GJxtps9C/mGVBMRSyJtrFlGbBFqQF2RgGonMr@nongnu.org
-X-Gm-Message-State: AFq9FYI7uWDHcNvm7VTwkhS0i713YyUMX0v3Hhm8K2EQr7VHRNy4u5g8
- Ao1Ky4Vd434aPMBP08kCczPbwuOYbq+cCtqsKMyfpMJNbY6WMnb5esay65ZDr6yOl5Wm6Qg1ucS
- n4wsCbZjVYn7lG7RezkZqrng4rf3OzwqTDoWdTEpSDpMgiViSCWrpCVFz
-X-Gm-Gg: AYBFou3lb8be11LpnMo1ujjCNb025OpOQHsa/kM+8i9HaKCDXuyWYyNXayecAtVopzp
- OSnYc5+ZHGynMDe1PzcS4wioE+p+To0LsKDED4v7SNtQNOoHQ4MYmFn5MvoSYxrAgzblFcsPUM9
- sixDGpaILU66RjY2fdffGZvQbf5ULTK4PSLyeUqCtORdh++Ed4u6u4pQdjUQQ45KkRwvIlE20SU
- Wlh95/IL17CNAUWV1QXz4bMUgXd3vgKmtoN/Jk1LRZ0cXB7M+6hVaDkekL0GXdL9GspnKlJn05M
- plyYHF6/+/34A5oUkvso+AxiAn/ghVqz0WYWJG7fqNOVm5RMEWys0LcfHY+0eEFhSf4xEzeUGxU
- k+YEA3u40sHHxlXYzo51oxRVFeXy7Fff64eLQRFqZGOcFyey0+z4PbeGUATZzr/DdvBKVo2QaI5
- 3Ghf55Za9hWZlrks16VnwU9fdp4rLQftTNxwYQO2U4Wlh1ZYUn
-X-Received: by 2002:a05:6000:4914:b0:48c:69b3:610f with SMTP id
- ffacd0b85a97d-48e6e5008b4mr6301869f8f.26.1793370884689; 
- Fri, 30 Oct 2026 07:34:44 -0700 (PDT)
-X-Received: by 2002:a05:6000:4914:b0:48c:69b3:610f with SMTP id
- ffacd0b85a97d-48e6e5008b4mr6301815f8f.26.1793370884360; 
- Fri, 30 Oct 2026 07:34:44 -0700 (PDT)
-Received: from seott-rh.redhat.corp
- (p200300f6af1574019b2c5947d8ec139e.dip0.t-ipconnect.de.
- [2003:f6:af15:7401:9b2c:5947:d8ec:139e])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71bae25dsm3102924f8f.59.2026.10.30.07.34.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 07:34:44 -0700 (PDT)
-From: Sebastian Ott <sebott@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Sebastian Ott <sebott@redhat.com>
-Subject: [PATCH 2/2] target/arm/cpu64: Define cpreg migration tolerance for
- PMMIR_EL1
-Date: Fri, 30 Oct 2026 15:34:32 +0100
-Message-ID: <20261030143435.57230-3-sebott@redhat.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261030143435.57230-1-sebott@redhat.com>
-References: <20261030143435.57230-1-sebott@redhat.com>
+ d=1e100.net; s=20260707; t=1793371320; x=1793976120;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=gapw+KcNZWU+ikQlgPzLdw+ct1Lqqn2Tg9Otb2s+/eI=;
+ b=OuoT5hjF8a/6BbLHhSOEcGL49S9ZIWHZW+ak1rWrYFsND2MzxTBZ1Ux51Qro1DfeVI
+ p0NUoRAXJ8K7U2XT6/C10mkRkNHrUxu+1LZmohGFuYcjIiLxDPIXWoUe98aIAzEr0RnT
+ hVEajuEjWJkko0LjVBtudAv3bmjfOK3R9yb/NVUlaBs9KFVoqukzNfN+bkUT6oUOo4+b
+ tdcCMKUPiY8Rc5pQ+87Wh5T5yojIKjY/xA1GpDuSEYfrqh2bONlLN6zBy1ICs1/mWq5C
+ SdlgM28lM3JLfoakuxvSaywlVFooVAGRwzxm/LWpxDMVW9mSxDrcuh29u0TrZ5UGQ4vs
+ N8pg==
+X-Gm-Message-State: AFq9FYKMVzOV+/T/2oN0tnEdxv6mwf7cDwXivRh+i5RTh/EOHO73xMbm
+ pf/YKjSYiRz/6MnFnHIxRYItzu+e8wJRgj/tzRK+ObsXsHbCxfVaVtT2h4QeBoJJxCBcK1onfqO
+ oX+ozLVyIEFHBzZr1BMvaUF9HsCiaKjDZguF2qV68kw==
+X-Gm-Gg: AYBFou325Ot+nNax4pBvhstd0yvzQL6cY/10Asadtz6XB8/7gh/5n0PLeMFBfdbPQoa
+ 7zYRYyRyUtfDDqyZb4WmBoBp0LXlJ37v/JxJXuTU6rZLsZh/Xg04W7Mr+d8pHAdk8W6e4HPopjX
+ L7uxYfecwC/ZUwFkto1dowNon4tEu7E2C/fGFj4xSWWpyDzigVA3KaLIYQ/V4EPv+1W6PyZ/uj3
+ oMhr2kQ1HLSdgj2VmHRvNLFUXbhezUIQFu4x8tQX8NC5QKE7XANKMro24lJXmMVta8Ymgi1qw7L
+ 4eBHpBk2hWJkRs1b4/9OLOY0EScO15JMmLexJokcgcTbk7sxgIaopjaSaTo/2IVqpnKlw/tWIMG
+ LQLHugoOWfgGZzWkqWL8FQx4I22D5XfeuvroDofmhInu5SgXArz8gJva4CRmx3aZe4Xp6gQpNof
+ pxFjM2jmMyh0HkJ9KdiUoZ
+X-Received: by 2002:a05:690c:660e:b0:8b0:ad5b:d487 with SMTP id
+ 00721157ae682-8b2b6594f19mr17597007b3.2.1793371319634; Fri, 30 Oct 2026
+ 07:41:59 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261030141046.2710206-1-alex.bennee@linaro.org>
+ <20261030141046.2710206-4-alex.bennee@linaro.org>
+In-Reply-To: <20261030141046.2710206-4-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 30 Oct 2026 14:41:47 +0000
+X-Gm-Features: AclHuK-EWDk5Qyojad4VZyhSRBazgVRsio9eRAAor9pxoAeC5bbyTe53sI-_unI
+Message-ID: <CAFEAcA_vh2WhO8wAX8=6cmZx0Fe2UQYJBoRjaJb1YVAG-Lm8Jw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] target/arm: simplify wfxt_timer_cb to only trigger
+ cpu_interrupt
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,46 +118,23 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-PMMIR_EL1 is exposed from Linux v7.3 onwards. Backward migration
-to an older kernel would fail without cpreg migration tolerance
-definition for this register.
+On Fri, 30 Oct 2026 at 14:10, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> HALT_WFE will always be cleared when leaving halt via
+> arm_cpu_leaving_halt so we don't need to worry about atomic games in
+> the asynchronous timer callback. Furthermore, a WFET timeout or
+> event-stream expiration is not an event that sets the event register;
 
-Since qemu does not set KVM_ARM_VCPU_PMU_V3_STRICT the guest will
-RAZ this register for both the old and new kernel.
+No, this is still not true. WFET timeouts don't set the
+event register, but event-stream expiration does.
 
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
----
- target/arm/cpu64.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 96aeb6c7a0..1547ad1cd3 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -787,6 +787,14 @@ static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
-     arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 3),
-                                      0, 0, ToleranceNotOnBothEnds);
- 
-+    /*
-+     * PMMIR_EL1 was unconditionally exposed for linux 7.3 with commit
-+     * 453f6ff04b8d ("KVM: arm64: Expose PMMIR_EL1.SLOTS under strict
-+     * PMUv3 UAPI"). Tolerate backward migration to an older kernel.
-+     */
-+    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 9, 14, 6),
-+                                     0, 0, ToleranceNotOnBothEnds);
-+
-     /*
-      * KVM_REG_ARM_VENDOR_HYP_BMAP_2 pseudo FW register is exposed
-      * from v6.15 onwards. Backward migration from a >= v6.15 to an older
--- 
-2.56.0
-
+-- PMM
 
