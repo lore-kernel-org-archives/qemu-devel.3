@@ -1,93 +1,105 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3096D606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 11:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A03606A31D
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 11:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=xrw55xgX
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZpGgcVCa
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMkgI-0001Vv-Q4; Fri, 30 Oct 2026 07:21:59 -0400
+	id 1xMkg4-0001OV-3a; Fri, 30 Oct 2026 07:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMkgH-0001VL-Fb
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:57 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
+ id 1xMkfz-0001Mr-UA
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:39 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMkgF-0002oR-Kl
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:57 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-85d363fb73cso361183a34.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 04:21:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
+ id 1xMkfy-0002lz-9f
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:39 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-48e4831c028so584814f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 04:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793359314; x=1793964114; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7InvAxPaqKli4FmAnHy8UfyygTa9T2epB99mWPSea1c=;
- b=xrw55xgXlH94dVtUXVzPOfOtkDKo9Z/MSKCXpFKpkSj/Y6yHkd8QspPZ26LYtCtMmL
- eECCss/YF2clS2KoiY9M7IJRE4fcJwYbo479PvK+8rLG4fG1nhO65X8cIdKLz4nNLJX9
- yNhNAfXc32gmR8ALQh1fhTCoW0dPvEMMmFFGQTdr3/8aySt7uLNhhr58JsNpDqExD1Vw
- BQpxOMSjK+amqQvYWqi3JprqpNoiQYTExq2AS9ORgqtx20Chxa35+USjMJbJMzZtaE76
- fzJ8sjlhP3TnZPqa1R81RMcc+rbsxwgq2vg1SNE3DP8YYCgIstja5duB8lMwtlIi/60Z
- 4zmA==
+ d=gmail.com; s=20260707; t=1793359296; x=1793964096; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=CtFQfS3ZPQMOHEPZqYufRtBAPULATHXGwg5wUHbxOvE=;
+ b=ZpGgcVCaQv35s2rtRailCdSaz2g7IinJ7HZFfdg2QIwm6AHiPvXBV/kfl+Qeo6VA2h
+ RZ05d7znfV0Kkx4S/nTCOPOiG7p2oRkwqVkinF1uU/e9Vc27jsWnglaPnym0es+nwMQF
+ 8HOzCMkn7eIYIcTWkHrYEadLxYRyvOySck+08X0dxEjAedoft7qU/NtrlB57XgWCWOhS
+ JEKFMzynXg0PwOuZcougLsaLTwIuv4G/xplCjFeaGrCezYAysOGqh03X0Fu965uDz1IX
+ 4i3kGIhmxsdtcpdpCpvJG0Jy9u8uIiUHOptCkhnPGgOsEHZLhrJvxScPikCIsGBTKCx8
+ 5xYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793359314; x=1793964114;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=7InvAxPaqKli4FmAnHy8UfyygTa9T2epB99mWPSea1c=;
- b=ElvdYnxdf+Iyv5g53s1Q/uFdSqyahjryVgqj+Uvb7m74/7NoTGbOrg9xxgI18XLnK2
- hGTsZYyzForu7P4KezwKdYU8KeM8WSZp/wf4JfbkwtZbcvPx+UBZQ2kKm/XQAd93GWUG
- 3T0PEmWSqaNK3TdXtPx7zEtBbkVSere3Jy8GDCq3Wk/ott/ufUu+cz6WFckjK+b+JKo2
- ZJl8gmjKBztNoEzoUTd9dKE2BYt55uAFpYZPAPA0kF3nK0j27S80dizopR8R+D/4WitZ
- ViJ7TVLIhjaJwJWmaiqXJJJqhOB1DXIQwVpYyxLkfc709ZvLPOY3Gxaw7gVH92OEh4xm
- sU4A==
-X-Gm-Message-State: AFq9FYJ1zIPo9j+fwnU013JdarC5lV4aVkdj47hszII0lOGHRTxB+o/G
- EP8eKxpQs1UpzTjU5uDMZZgMl2bH67YgyZfNH7E2gwnn2uwxpdHxVWGoISvht89GtSeT2w2CRXR
- FFzJk
-X-Gm-Gg: AYBFou3sJ+BsR0c17bTD6U0J82rDrXp1II/GNXD8kNBbKvw1tfNpujGR+mh0MbNn7z/
- iJNHMM03+YnsNCtbA8UseCOOlEJdZgLVqjqALnFQLakX12af9LiIPft/X+UKWuBpDQxsfjVH6Zq
- E4iWM5N3e2kQtTOC98X+bWvIr3SnfV0q48OG1zb9f1PY8JoITPgN2Pz/mo0CpD9a7o+yl39Nsfw
- DOPCwZmz2JT41RD5Qb9KfDOsoMurfppOKx1jJtIGDcGuAe8taMAmi9uVQl6dhFQZ8VzSKFedB3z
- qS5FTNoKRHLgv/VJ/lL76QsIEtnXE8qCudH0oScAsgniHCEI34zhC61VIz1g3Px/tGbW/tnQjec
- RWiHD5F8OzupPtOEI4eAWfE6w3GkgrW0pflxvhZi+ihtA8nBWLr4PDbwNnuZGMb90dDTFFuuhEb
- po1JzTrtLimuFPfBSVGpa+REzNzKBOTKKmbOduLitBpkHc8ka6oq2o+6gfduPFnY/3SDrzqOCo8
- DnUGSrBixYIIPq1MG6hAlAtDAEKeoWPWlloli9cBMLyOOLsOfx6ZZF1pwSwfdS1/9CuHgR3n2EQ
- qyzAKFuB8ykU+Z+gmZafyUEVPulXJ/OU5Gzh/WV3f6uG
-X-Received: by 2002:a05:6820:168a:b0:6f3:6cf9:f182 with SMTP id
- 006d021491bc7-714f2480119mr1309798eaf.50.1793359314162; 
- Fri, 30 Oct 2026 04:21:54 -0700 (PDT)
-Received: from [192.168.129.53] ([50.233.235.3])
+ d=1e100.net; s=20260707; t=1793359296; x=1793964096;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=CtFQfS3ZPQMOHEPZqYufRtBAPULATHXGwg5wUHbxOvE=;
+ b=NRuhAD3HdCkLx6/CIZ2gponVMFnahia7Oy2fAy021uZWmM9DWR4ZFSfRHxmlJQUPS3
+ 6Mtjbdhxwwv6UPpcNY7gz0ojsil1eq1A+Pgr4vdjrLHhbBLqHdQdeiYFjOMv4vBxpfR7
+ nKRBUbeJKgLvKFFkFeLB2mLBv1kCxfU8n1gk5psGE2lyGcrvFg5Jqkg4tItstl5wzMsO
+ R0DisUaI2ahqtR5XXZUShzlmzVxZhAtG/Y+9/MWwtPoWjtMFuwcU3iFZOI3cbqkiWf9g
+ V4uaw39lvdboo6lRq3ke2E3240TPK0ZNoBgbZONGb+elO3pCjHwZO87awAFogrGXIOwa
+ K6cg==
+X-Gm-Message-State: AFq9FYKIwq8GfITMXCnJf2zLLavqzh/amUIeJP5W47bLF6Qqu61aKhOo
+ WrkNvWHTAuVj9awG0afNVn91SFhlAwuPHRKXvF7er00AS+HxM9UYa4fD
+X-Gm-Gg: AYBFou1n/7c47i70TFbjwr19jmaNMk6xga69RVbTYndCFw/T+W5JzUIDaU5guG5Mu9u
+ Q3SqmyOnfwF3z3I8bpmgtsT1sfQLZbkcPd+fbq5T+7rV+Wo4uwqjCxgfd7sR0o6ByiDf3lBlxcA
+ 6MiKf1rkkSkiAjsTaNWN4vO6hkMXjd0fqK3851nBoOlycXPaIi8+6mnykXG4nK+BhlsX8nkchI7
+ FSNcMCwRwTwc5g22dX/pMhw7KyhMzrdd4rFg0B08OIAtCZZaxR9EdWwkAj+6WQArJAkE99y3GNK
+ nu6QlGH6cX/xg4JLwWYhUj8iu/fSQ1wUncRloOpX+8PJ6socshc9oxlFOsc1JyN19/QdyhE0p/K
+ wAihXLgm3siOWhsmcQm2Qnk3Ob5FP+4k4JkDg9iob4NU6NLd6VJ9i6Xw0gv5PbJATcNpGoUInZj
+ cdA1M/cZryqOwfj5G7STuU2gjMJ+dvj4HAp5cb0Rv51KKo3EWxOBbvdKicUYMydsPWCN4eKAndb
+ Utj1XKSZ+28rdwNuWKVSxlJTEPrZREQlderiIg1omcIIcjf/yV3aHlnbMQvsTCcm4ilBo6rKoVX
+ ZcHZFSYNamzH63ZxpmL9B9VyM77l5g2cM/T7bkZ79Sr0zNhcGq1sVVccMbjkfzLiBxj81GK8XA2
+ cjqlB0rhBhTMcFUaVYgHDBJK29PP2CINPNNQOMZs7+klWcMgiynmM4uTzItZrkw==
+X-Received: by 2002:a05:6000:200e:b0:48c:466e:9d08 with SMTP id
+ ffacd0b85a97d-48e6e50ab18mr4700925f8f.43.1793359296428; 
+ Fri, 30 Oct 2026 04:21:36 -0700 (PDT)
+Received: from tim-m2.local
+ (dynamic-2a02-3100-61d8-3600-98fd-cd98-7ae6-cb49.310.pool.telefonica.de.
+ [2a02:3100:61d8:3600:98fd:cd98:7ae6:cb49])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-85d355295fbsm1780767a34.25.2026.10.30.04.21.53
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 30 Oct 2026 04:21:53 -0700 (PDT)
-Message-ID: <6eae5b75-5f7b-4ce2-bb51-df3156ce968b@linaro.org>
-Date: Fri, 30 Oct 2026 06:21:52 -0500
+ ffacd0b85a97d-48e71a4d3e9sm2893608f8f.6.2026.10.30.04.21.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 30 Oct 2026 04:21:35 -0700 (PDT)
+From: Tim Pambor <timpambor@gmail.com>
+Date: Fri, 30 Oct 2026 12:20:58 +0100
+Subject: [PATCH v2 5/9] util/oslib-posix: implement qemu_set_blocking()
+ with fcntl()
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm: Deprecate Nuvoton quanta-gsj board model
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261030-vhost-user-posix-v2-5-cda7c17aad13@gmail.com>
+References: <20261030-vhost-user-posix-v2-0-cda7c17aad13@gmail.com>
+In-Reply-To: <20261030-vhost-user-posix-v2-0-cda7c17aad13@gmail.com>
 To: qemu-devel@nongnu.org
-References: <20261030095731.581512-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261030095731.581512-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowangio@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-block@nongnu.org, 
+ Raphael Norwitz <rnorwitz@nvidia.com>, Brad Smith <brad@comstyle.com>, 
+ vhost-user@lists.linux.dev, Tim Pambor <timpambor@gmail.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+X-Mailer: b4 0.16.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=timpambor@gmail.com; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,37 +113,70 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/30/26 04:57, Peter Maydell wrote:
-> The latest OpenBMC release as of June 2026 no longer supports the
-> quanta-gsj board model (as noted in docs/system/arm/nuvoton.rst);
-> support was removed by OpenBMC back in 2023:
-> https://github.com/openbmc/openbmc/commit/ 
-> ab5062cf6f562ad0c844570ba1ea0089961848ca
-> 
-> If OpenBMC don't care about this model any more, it's unlikely to
-> have many users.  Deprecate it, with the intention of deletion after
-> the usual two-release period.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
-> I don't insist on deprecating this if the Nuvoton maintainers
-> think it's still useful. But this is a "hello, are you paying
-> attention" call, since you didn't respond when I asked in
-> code review on a different patchset 🙂
-> ---
->   docs/about/deprecated.rst | 10 ++++++++++
->   hw/arm/npcm7xx_boards.c   |  1 +
->   2 files changed, 11 insertions(+)
+qemu_set_blocking() relies on g_unix_set_fd_nonblocking(), which always
+issues fcntl(F_SETFL) even if O_NONBLOCK already has the requested
+value.  macOS rejects F_SETFL on POSIX shared memory descriptors.  The
+socket channel treats this like a read error and disconnects.  Those
+descriptors are passed in blocking mode anyway, so there is nothing to
+change on them.  Query the flags with F_GETFL first and only issue
+F_SETFL when O_NONBLOCK is actually set.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Tim Pambor <timpambor@gmail.com>
+---
+ util/oslib-posix.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-r~
+diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+index dc001da66d..3d5bb16ca6 100644
+--- a/util/oslib-posix.c
++++ b/util/oslib-posix.c
+@@ -252,17 +252,29 @@ void qemu_anon_ram_free(void *ptr, size_t size)
+ 
+ bool qemu_set_blocking(int fd, bool block, Error **errp)
+ {
+-    g_autoptr(GError) err = NULL;
++    int flags, new_flags;
+ 
+-    if (!g_unix_set_fd_nonblocking(fd, !block, &err)) {
+-        error_setg_errno(errp, errno,
+-                         "Can't set file descriptor %d %s: %s", fd,
+-                         block ? "blocking" : "non-blocking",
+-                         err->message);
+-        return false;
++    flags = fcntl(fd, F_GETFL);
++    if (flags < 0) {
++        goto fail;
++    }
++
++    if (block) {
++        new_flags = flags & ~O_NONBLOCK;
++    } else {
++        new_flags = flags | O_NONBLOCK;
++    }
++
++    if (new_flags != flags && fcntl(fd, F_SETFL, new_flags) < 0) {
++        goto fail;
+     }
+ 
+     return true;
++
++fail:
++    error_setg_errno(errp, errno, "Can't set file descriptor %d %s", fd,
++                     block ? "blocking" : "non-blocking");
++    return false;
+ }
+ 
+ int socket_set_fast_reuse(int fd)
+
+-- 
+2.55.0
+
 
