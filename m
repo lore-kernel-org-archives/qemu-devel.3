@@ -1,157 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D11F606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6582E606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=j9gzLfOm;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IrRWGmRe
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=LTU+oGRr
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMb3V-0001pA-TL; Thu, 29 Oct 2026 21:05:18 -0400
+	id 1xMb4w-0002HI-36; Thu, 29 Oct 2026 21:06:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xMb3U-0001op-A6
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:05:16 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xMb3S-000608-CP
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:05:16 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TNKXJ1506071
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 01:05:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- WW1mK7YWRhEi8nOJNc8YcXciUvp7NsDnAdrPs9VF5qA=; b=j9gzLfOmHjnEUs4z
- iHI4zCrcpqCXgp1Utgmop0ZOuSPzMt64Bc+iS1QlQoS7dwz3HR0yHby0uYO3xfzU
- YYi51qjFXlyrCHkNET5eDeko/nSaLlj1sSilzhXtN67H9rffmPaPfbrNw8QKgIuB
- yTd9Lx6IildQHq0l8VQTFZmTT+0inyRk0nwZ5EkQFIEmEx93cT5OMiezc4zNgbGo
- zarejAYFPmoYG6T+BXmS5vsuO8T21FDtzZhB30u5+M90X9CRMPqswcw4xOC2ZcVg
- yqNg4xfD56XLKg9RkmM40sNjCMx8s7U7PFgligu77oXW/OcHtZQPRK09iIeEflsl
- VVwClQ==
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
- [209.85.210.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6p0kcf-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 01:05:11 +0000 (GMT)
-Received: by mail-ot1-f70.google.com with SMTP id
- 46e09a7af769-83edc5c5ae9so226501a34.1
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:05:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793322311; cv=none;
- d=google.com; s=arc-20260327;
- b=FxWqlJs0VPur5P5OB24kckjozTF13Q0q5uYtLHGgB3MiKTwJQ+Q7W7zH5jMdaEtlO4
- za5j/Fmq7umgSBktGBCvrmoQTvNHC2tZKR/R2jOFEnBMm9aPQuHW8DbnCCibXZGDYKVw
- BUdDkBv4brqynS9CORe8h7aJDP0m5aQOOzytrtn84N//iCc+aVP4eRiNY8pirA4Su7/W
- /NIC+pJx04omApwROwGd6UBQPbRauDfq8BO/QtyZ2P/fC295aIUOB52UWd6VDLF/KMss
- HQ2vMgtbxOXarjSOZoAzNlj7vq1WDfvJhX919FJ/5Nnvz//8Rlnas7o+4tOgH9pjSKhK
- QjzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=WW1mK7YWRhEi8nOJNc8YcXciUvp7NsDnAdrPs9VF5qA=;
- fh=AvdUgREFPBGnLKtDjjPes0731VMeA8MKp16N55VMDg4=;
- b=O1rnb5HkORTZOb7rgdOd52ml/0yfUV0xIrOQrA2MhxPRPYogM8kW11+9ltBe+LBOH4
- Qg2uta52EQ7kGGfmzicHgr0ylkXVla/s9giqMGaJ9/wLZlztZcVkZ+vf2FFD4JI1nEUO
- YVWrurQW5n5Tf8Tctc3+zAhvrJ2CwcnqzuiJVOtLfNs4T01hVbbhy80iNslkyQRjMFuV
- uoHQMNBlHcXF/4ctSSaz9VLhoZINqlwAiOJjY8Q62chz+qcEt5yD/CUQvyVWXsISV0Q6
- mEKd3bxX5xlXFu5z72mgUR1pnbOqrT36WdLsHih1S2NVUikyZI9IAUbVMGT3ruC0BImK
- Z1Bg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4e-0002CN-Pv
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:35 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4b-0006EN-Mr
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:27 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-48c5358fc28so141248f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793322311; x=1793927111; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=WW1mK7YWRhEi8nOJNc8YcXciUvp7NsDnAdrPs9VF5qA=;
- b=IrRWGmReWEmgfKN2iIMJ7kyvBujYuzTQkM3gJEPBvFsCxguGfp61WSyaneAk2QBduk
- vlJ/LaHr/Xu5lPETcHi+/NtF8mjlyUhmqjUhkyBUSZYWni+IMonEWlPlD0LTBU8eDT/Y
- qki0zlfazjdinxtsQ1BH+RI187SM/Lqq1ftAlchECMKF90GIYBVubgRKLk5FqoTzZhM+
- sA546ZavvJGspyuQDc2PTOYEUpaSpTIudyvC/qnOzTcot5ksur8FJwA6ZRN8lSHDOiJ0
- i9pDAickWcxi6REnfDO+OsnJ+gxoYuQXIjbHaOrYAKrlei41Rgoep0BR4AYokPERHxWF
- ZbMg==
+ d=openvz.org; s=google; t=1793322384; x=1793927184; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Tzcnv4iV/M0//lehS771fIWvmHTFMU4220mA9TA0Wtk=;
+ b=LTU+oGRr9C59gJfxsi3rZKYdXli1dZFjD8z/xZFlDcbcpkePJTYUpYghk6f9zQStNZ
+ nSD45RAwrTexIPbILymka1JxHeBlcgnhtStUVjQwcpTSn1uk9WmmeeWeAD87Dmokslc9
+ mdMIS4Be9rsWMMjDL3RI0uZsa2OnihTm9TTdrdklbayF6vfldD/YUafOyrhdY9nb7FOa
+ 8/lXU7yeXFU7ZMIw/VJWnPemLpZ4YLtp6BStqw/rzDqc5tGRPOmaOkFc9xF/ZGiIClkX
+ HWpKC6esDbF/muv1c1uvmAme1EWnr0j5DO2zybUX5ddw+Zfz3R96yx0hLwhWYb7PZRuM
+ Q1Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793322311; x=1793927111;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=WW1mK7YWRhEi8nOJNc8YcXciUvp7NsDnAdrPs9VF5qA=;
- b=A1Fs8P9Sxo+/E6N1I4HC5x6Xlmf1J2mwlr2djll8TwYGP5glm/IOQnqyMJGLeonJDI
- NMoMYhdD6CJHigOwHKRYly4gEO4Gx5DP/X+R4oMux65SAdObH1Uxv6ts3UgVbQBGkJhx
- k4Z6bHFez0D0wSSiPnkO5kaWpx39lKSsTzt6R7VxennYrRll7dPXcT0AxE0Vuyx3z5Me
- 5NMRVpeuzYEokRnhZUqcs6H5A0ga5vdIFDCy+n9kiJDsbodaRJEN2u9uck1MVrKt1iLr
- e3wS6e5Tq8b3dp+dHb7pmcIaYce8DzCqJY0rjIJCuUOAvivuwC8p/KbmdF4HjnJ1/MTv
- ulzA==
-X-Gm-Message-State: AFq9FYIJ4NTt6X+8m36VMEg98b/uosyZQK9Ln0mBigI6G7040Ky92d6G
- DlmEvg9NY9/JIkMkmNF1y42TCgy/RfBduVwWnSR5zgJCAVVZ6MYnfV4CWmJYV1qhhnWOVLzaoNr
- CGT4+2qoGeQ09yjPf9sah0pDosAr/+emsNgdCbP65rwjWZ2ySlMtC5vg5tVflaXlKA/TbPLDlb0
- DghbjU5OheatzLI+pVZkjmdAPqgceyXL6n
-X-Gm-Gg: AYBFou3Q4xCFisKrOhROCOdw4dekJvFFVVdK5+/+IV05DZxp18gC+NxJk2QcqfKkEiT
- +wln238/l7c4v6G1VWfTvmDDNpuBOxOG8qelBhUvnIZR54e8oRWjOyGV74mR051MGOegCU9z+S/
- +UMcxP8Z13O86LZsAK22/rHKDNzcWTZkHuWK1bjOgoh8akKZYb1n1UBob4nc39YDIovQgAhHA6H
- qT1JtwoyUutTMTkF9g=
-X-Received: by 2002:a05:6808:2207:b0:563:c491:8b5f with SMTP id
- 5614622812f47-5640de2851dmr705983b6e.47.1793322311164; 
- Thu, 29 Oct 2026 18:05:11 -0700 (PDT)
-X-Received: by 2002:a05:6808:2207:b0:563:c491:8b5f with SMTP id
- 5614622812f47-5640de2851dmr705966b6e.47.1793322310685; Thu, 29 Oct 2026
- 18:05:10 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793322384; x=1793927184;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Tzcnv4iV/M0//lehS771fIWvmHTFMU4220mA9TA0Wtk=;
+ b=biTO/YcJdMo/u+VscqZtQX67Yb/9nl1c9LHXNVmq4XSNlmRPwIcvWhyr4egbnNbYr2
+ EKV1qha4TrGg6fXj8NswrD+coSHWj+TN8jlEjPqe/sIbMLcLMQeJxnYfJRFPgip1ruaW
+ Pqg1R5zKDj2EuvgPf4u1dRlh1K8LnHwzyhvoAWiuCrpncEGTZyfSRTsgLqxFzHfeQ7s5
+ IS8PTiBJz6kLaYVf3KDGEFT5jTBMHqT8CDPyw/NZ7iaNae6icosAAodeRaN7P4sladj1
+ Mn44vRYnhs2yK4COmejceFTNr9CIjYAN5epy6+uQctSsWSAhUYpIJ3Anbjbuq/mERUMb
+ lllQ==
+X-Gm-Message-State: AFq9FYIcuzEflaw95mT3029wnXxpuU5JRxZtjklqC4Av2Z13+7dPv9bg
+ r/J+Ov9KO5DMXhWlWEmn8qZr/OFHKLjYLrT8FZwYkr/5/cIu4lqQDFz39Cx1lSehi2BksD9qO/Y
+ qL4Md
+X-Gm-Gg: AYBFou0TN4zTSq36vzVer724W+K4wn7heDqCiA9qQVI7YEMnt6PluMVAZVjLVeTDOL4
+ RmbQff2FbHW7vo/oWpyymWR3CoOd27t4SI3f1nIcJkJCA3iw/PTGCRPIIpb1QZxfH8gDFb1E3Vy
+ fVvGjz/eB4+R7J/npiADQ3vrJea8c/Hgom1FEe80zy7lFscfDNtDPIb0OL2phAx+/7tdxmtWhEk
+ WDSEauFTe3/CsCxYdaWhqqJq5NPKOxIEAacvCUEhrH4IegCjaRPqIVV8MCFdL9KT306cS0kyb61
+ 6AY+5slwl6be+8+6/cSPZAnj7ilPZxqx4Bc2m760TixFUeyCTxLvU5Fk8UGyUKORK4G8tC5hzjO
+ IqHcuFskYes4p0Ey73VG6j0Wj6bgyLKGUKmyIYCMgpJhZ9wxXwu2N99GuIfSsrmJ+Hos5EQL0Qc
+ P3fKTPW7Kp0Sz8qWvBjr1JaNaRoCvA2koEG+s7IwBXKtp8A5BkLtsima+SQ3TWPlesm5Ug23e+q
+ XTxpUpvWwfDpX9ljmK7wRxjDYK86axd3VDjoX1k9y2NkvpBxW8l5M4tXovfgoG8+kKMyBFQ5Mnr
+ W/1tOu0LguZWyB1uFD3aGbslZS8mvtvJs+JngPE=
+X-Received: by 2002:a05:6000:4b02:b0:48d:f99d:a0d2 with SMTP id
+ ffacd0b85a97d-48e6e2e76famr2147601f8f.15.1793322384063; 
+ Thu, 29 Oct 2026 18:06:24 -0700 (PDT)
+Received: from athena ([2a06:5b06:b600:300:f4be:f111:4ee0:40d3])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e71b80333sm210023f8f.32.2026.10.29.18.06.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Oct 2026 18:06:23 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH v4 02/12] iotests/040: cover large and fragmented commit runs
+Date: Fri, 30 Oct 2026 02:06:02 +0100
+Message-ID: <20261030010613.1612771-3-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261030010613.1612771-1-den@openvz.org>
+References: <20261030010613.1612771-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261029230310.1632334-1-brian.cain@oss.qualcomm.com>
- <20261029230310.1632334-4-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261029230310.1632334-4-brian.cain@oss.qualcomm.com>
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 20:04:59 -0500
-X-Gm-Features: AclHuK-FXoO0OZRYgCTawcI8ezvXuQzyqr1JWZJ9ffbWWyr--TxY1AB7JoUqOZs
-Message-ID: <CAJ+KCYNCFb4JjXHqi086TZjth296mzsD-zRS-zhF-JX-ENA6mw@mail.gmail.com>
-Subject: Re: [PATCH 3/8] target/hexagon: add per-CPU HMX configuration
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAwNCBTYWx0ZWRfXy5kDrO0ptkR/
- 8/R9YZRQFapJOnKywxF8TgvVhjheZOpUuiEn010iw0R90fTxO+SMFTs2M4geZ3WS1Wz1IZg6EK4
- OsbOlVxhQqlFiC/Ze/OOszSV6cx4YPGITEUoL4/B/z0QkEOUg3CXr1XEumynB+3wBUFxz7HcRBs
- 3ivDcXax/NugYva4efn/2QfLpWZIDn2hpTPjeigunq8BpDu6JAG8l93IfJj9Vf7YVqf4zk8B+JS
- muN1v9ygqBLnTDiCUxGL4Qx3rF3WnkSHNLkW+kJzn7C3eGVquaWbOzTPpol4MJ6kTTpQi5HtEVg
- tqTYRGbeiCERCplY5xHQRz9VaoFIfDXnMniWoDl3BxmEmoC7kTB1aY+0YIoJBpn9BCWtLxL5LE9
- BdfgvyLdfBMlFssygrlsGDHnwCwQ28N0e7hYTfHvBdMsrHLK6XcpGcvJR7udVpHh+2bvX9AURfg
- /AknZpla7BkGbTb6qcA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAwNCBTYWx0ZWRfX7+hH0U2fiimf
- MI+9yuLZ2n5u+8gJ6KR/C4eo0ExFh77fqGGWaVaEkjTScrlngw9dT1SHjewIxPOFE9v2/BrT8mU
- 8ySCkZmBJZnXyaY8DHbX9VJZsxZzgmU=
-X-Proofpoint-ORIG-GUID: a6kpJ50qluqy9OXP3qU8WRArsKLy-TNG
-X-Proofpoint-GUID: a6kpJ50qluqy9OXP3qU8WRArsKLy-TNG
-X-Authority-Analysis: v=2.4 cv=TL3Q2Fla c=1 sm=1 tr=0 ts=6ae3ed47 cx=c_pps
- a=7uPEO8VhqeOX8vTJ3z8K6Q==:117 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8 a=oiUj86p4EGMqR00RCskA:9
- a=QEXdDO2ut3YA:10 a=EXS-LbY8YePsIyqnH6vw:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-29_07,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 clxscore=1015
- adultscore=0 bulkscore=0 malwarescore=0 phishscore=0 suspectscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610300004
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=den@openvz.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,31 +99,175 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 29, 2026 at 6:03=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
-.com> wrote:
->
-> Add HmxConfig and hmx_init_config(), which derive the HMX configuration
-> from the CPU revision.
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/cpu.h        |  8 ++++++++
->  target/hexagon/hmx_config.h | 17 +++++++++++++++++
->  hw/hexagon/hex-subsys.c     |  7 +++++++
->  target/hexagon/cpu.c        | 23 +++++++++++++++++++++++
->  target/hexagon/hmx_config.c | 15 +++++++++++++++
->  target/hexagon/meson.build  |  1 +
->  6 files changed, 71 insertions(+)
->  create mode 100644 target/hexagon/hmx_config.h
->  create mode 100644 target/hexagon/hmx_config.c
->
+From: Denis V. Lunev <den@openvz.org>
 
-Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+040 never commits runs long enough to span more than one block-status
+query, so the answer that commit_iteration() is about to start caching
+goes untested.
+
+Add two cases on a base <- mid <- active chain, committing mid so the
+job takes the regular commit path rather than active commit, and compare
+base against a snapshot of mid taken before the commit. One case mixes
+multi-megabyte data, zero and hole runs, the other fragments them down
+to single clusters with every transition off the 512K boundary.
+
+Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: John Snow <jsnow@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+ tests/qemu-iotests/040     | 102 ++++++++++++++++++++++++++++++++++++-
+ tests/qemu-iotests/040.out |   4 +-
+ 2 files changed, 103 insertions(+), 3 deletions(-)
+
+diff --git a/tests/qemu-iotests/040 b/tests/qemu-iotests/040
+index 5c18e413ec..e01c9385ba 100755
+--- a/tests/qemu-iotests/040
++++ b/tests/qemu-iotests/040
+@@ -25,13 +25,14 @@
+ import time
+ import os
+ import iotests
+-from iotests import qemu_img, qemu_io
++from iotests import qemu_img, qemu_img_create, qemu_io, compare_images
+ import struct
+ import errno
+ 
+ backing_img = os.path.join(iotests.test_dir, 'backing.img')
+ mid_img = os.path.join(iotests.test_dir, 'mid.img')
+ test_img = os.path.join(iotests.test_dir, 'test.img')
++reference_img = os.path.join(iotests.test_dir, 'reference.img')
+ 
+ class ImageCommitTestCase(iotests.QMPTestCase):
+     '''Abstract base class for image commit test cases'''
+@@ -951,6 +952,105 @@ class TestCommitWithOverriddenBacking(iotests.QMPTestCase):
+         self.vm.qmp('block-job-complete', device='commit')
+         self.vm.event_wait('BLOCK_JOB_COMPLETED')
+ 
++class TestCommitLargeRuns(iotests.QMPTestCase):
++    """Commit runs long enough to cross commit_iteration()'s cached span."""
++
++    MB = 1024 * 1024
++    CLUSTER = 64 * 1024
++
++    # Runs several COMMIT_BUFFER_SIZE (512K) chunks long, of every kind.
++    SIZE = 32 * MB
++    LAYOUT = [
++        (0, 4 * MB, 'data'),
++        (4 * MB, 6 * MB, 'hole'),
++        (10 * MB, 4 * MB, 'data'),
++        (14 * MB, 6 * MB, 'zero'),
++        (20 * MB, 4 * MB, 'data'),
++        (24 * MB, 8 * MB, 'hole'),
++    ]
++
++    # The same, with every transition off the 512K boundary.
++    SIZE_FRAGMENTED = 384 * CLUSTER  # 24M
++    LAYOUT_FRAGMENTED = [
++        (0, 45 * CLUSTER, 'data'),
++        (45 * CLUSTER, 55 * CLUSTER, 'hole'),
++        (100 * CLUSTER, CLUSTER, 'data'),
++        (101 * CLUSTER, 49 * CLUSTER, 'zero'),
++        (150 * CLUSTER, 80 * CLUSTER, 'data'),
++        (230 * CLUSTER, CLUSTER, 'hole'),
++        (231 * CLUSTER, 69 * CLUSTER, 'data'),
++        (300 * CLUSTER, 83 * CLUSTER, 'zero'),
++        (383 * CLUSTER, CLUSTER, 'hole'),
++    ]
++
++    def setUp(self):
++        self.vm = iotests.VM()
++        self.vm.launch()
++
++    def tearDown(self):
++        self.vm.shutdown()
++        for img in (backing_img, mid_img, test_img, reference_img):
++            if os.path.exists(img):
++                os.remove(img)
++
++    def build_images(self, layout, size):
++        # A pattern of its own in base, so a misplaced cluster shows up.
++        qemu_img_create('-f', iotests.imgfmt, backing_img, str(size))
++        qemu_io('-c', f'write -P 0x11 0 {size}', backing_img)
++
++        qemu_img_create('-f', iotests.imgfmt, '-b', backing_img, '-F',
++                        iotests.imgfmt, mid_img, str(size))
++        for offset, length, kind in layout:
++            if kind == 'data':
++                qemu_io('-c', f'write -P 0x22 {offset} {length}', mid_img)
++            elif kind == 'zero':
++                qemu_io('-c', f'write -z {offset} {length}', mid_img)
++
++        # What base must equal once mid is committed into it.
++        qemu_img('convert', '-f', iotests.imgfmt, '-O', iotests.imgfmt,
++                 mid_img, reference_img)
++
++        # An empty layer above mid, so top_node=mid is not the active one.
++        qemu_img_create('-f', iotests.imgfmt, '-b', mid_img, '-F',
++                        iotests.imgfmt, test_img, str(size))
++
++        self.vm.cmd('blockdev-add', {
++            'node-name': 'base',
++            'driver': iotests.imgfmt,
++            'file': {'driver': 'file', 'filename': backing_img},
++        })
++        self.vm.cmd('blockdev-add', {
++            'node-name': 'mid',
++            'driver': iotests.imgfmt,
++            'file': {'driver': 'file', 'filename': mid_img},
++            'backing': 'base',
++        })
++        self.vm.cmd('blockdev-add', {
++            'node-name': 'active',
++            'driver': iotests.imgfmt,
++            'file': {'driver': 'file', 'filename': test_img},
++            'backing': 'mid',
++        })
++
++    def commit_and_verify(self):
++        self.vm.cmd('block-commit', job_id='commit0', device='active',
++                    top_node='mid', base_node='base')
++        self.wait_until_completed(drive='commit0')
++
++        self.vm.cmd('blockdev-del', node_name='active')
++        self.vm.cmd('blockdev-del', node_name='mid')
++        self.vm.cmd('blockdev-del', node_name='base')
++        self.assertTrue(compare_images(reference_img, backing_img))
++
++    def test_commit_large_runs(self):
++        self.build_images(self.LAYOUT, self.SIZE)
++        self.commit_and_verify()
++
++    def test_commit_fragmented_runs(self):
++        self.build_images(self.LAYOUT_FRAGMENTED, self.SIZE_FRAGMENTED)
++        self.commit_and_verify()
++
++
+ if __name__ == '__main__':
+     iotests.main(supported_fmts=['qcow2', 'qed'],
+                  supported_protocols=['file'])
+diff --git a/tests/qemu-iotests/040.out b/tests/qemu-iotests/040.out
+index 1bb1dc5f0e..d2e2a2d98f 100644
+--- a/tests/qemu-iotests/040.out
++++ b/tests/qemu-iotests/040.out
+@@ -1,5 +1,5 @@
+-.................................................................
++...................................................................
+ ----------------------------------------------------------------------
+-Ran 65 tests
++Ran 67 tests
+ 
+ OK
+-- 
+2.53.0
+
 
