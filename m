@@ -1,102 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D36D606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 00:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8CD606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 00:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gE6Gjk8f;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=iDCqgXEO
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=BnVYDJ4D;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Kp2+xv4V
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMaLy-0001LQ-Or; Thu, 29 Oct 2026 20:20:20 -0400
+	id 1xMaMT-0001og-P8; Thu, 29 Oct 2026 20:20:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xMaLv-0001JC-DS
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:20:15 -0400
+ id 1xMaMR-0001o6-Cx
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:20:47 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xMaLt-0001v4-8U
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:20:15 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1xMaMO-00027F-WE
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:20:47 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TNKL8h1529957
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 00:20:11 GMT
+ 69TNKY634163177
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 00:20:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- j5fIotj24/9KD11n5qlqkUNTRRY+p27lI9eQ9IfqSgU=; b=gE6Gjk8fF2d+L+vx
- Jut5saZHLlG/m5S1rHMwwdJQTeCUfzrlK0fA5KUOuye4t6xs1YMn1nUtV/9041lg
- Bm+IIKeKz1sb9Ir/G2KA1uDMNfR1aC+Hrhvd0OXHnZGpuKRv4ogHHk0G3RGGd2SF
- pmW7eyZBURq7m7/B9puQk25ql4SopM8xlkPn9fVlse0eH0KqBF3uQNXmN59RueAj
- k0vsDo9R82MBjSBWqapke1dZEX5GDx78NYt45PQA5kgdvspxNP+0aNeJNXhzTgio
- u8r25A842yvdX8ZqUkx4CmAmzgqVy/3OIlguWLJZ00mfVN178B3KvLKDOKdB58Yu
- 61zfpg==
+ wS1CQm6uT+cL7emN36oMQ0vMXGCU/zw4yFn2erntLA0=; b=BnVYDJ4DWt4iDkjQ
+ wwbwF2CwdymHz1w5zUwAwVdwhyZ3/eMjW1ZRhgri7A2F/8WOvGF/QbSvecBQpqiv
+ g2vfvO1HjztHmioZyIzNdvH+Z33cxvdzutiXDy3ElHoYGKUrRCEBBdpYvyQ1vodi
+ AmuayuiFg46YvX/M4r+lMCKoLiANP1f70UXD4qwk8VDq3RE7seohGT06oBbMuVcF
+ GdMR41XyNMcp0+sRyFeQ5zKHFwzBOtO+a6/7PDHMg1THCWj9Y1zcToQLJ2skcEVQ
+ 5Iql4G/FRnnrCPDLYlZQ381tq4+CEXUH/NknchCgwnNEKQA1js/pEko8nXEIGRbP
+ 8TarAQ==
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
  [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qgf6e-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6pgedp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 00:20:11 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 00:20:43 +0000 (GMT)
 Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93cbf2fd504so20270285a.2
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:20:11 -0700 (PDT)
+ af79cd13be357-93caf6c528aso19564685a.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:20:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793319610; x=1793924410; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793319642; x=1793924442; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=j5fIotj24/9KD11n5qlqkUNTRRY+p27lI9eQ9IfqSgU=;
- b=iDCqgXEO1//n6VPmhky72HJ+3789OZguHIEGltQs1ldwIE30xpTNVEUlZHuvcf7L3B
- NEmQVExL/wjHLcjY+Ryn61QCWPpcgiBKEHVrW3n7eWlZ5zn+qrGfFNjlBg7vdYOusI2d
- HlsslF6+MkZnOBJ+Mqq88Aib37yPCoM51Rxo1ClvKceLfCTPBEfNErNLc/FftE7h6kVc
- 0kPGmeX9fBQQOkavkPx4tzOzUcZcthrObnztW3MNaIrr5ZxCylV3QX6ycfNLDVYec9zK
- ojkEuSAY0YEk30JDuxOs8/UiH3oY9B71DneVUCSjHp/GKwPpvjs926rCa2Kl3bxINFdY
- cJFQ==
+ :content-type; bh=wS1CQm6uT+cL7emN36oMQ0vMXGCU/zw4yFn2erntLA0=;
+ b=Kp2+xv4VUeqeyi0gK3YKOEjBEt+qpvLvrVDkotGEuzW4+nH67jfIii50NlvJcpX5oJ
+ hnfAtLCLEgW72YmHGtjp79XQ9q5VdVLQaH8fPoPFx6Xvp0Sg2JD3qU/N8mrOQ8Jtt6wq
+ Kd19Ny/v9LDgCHYHM2lwtaRnq5Ucc+ToO+Xtxdi0Jik2QqUgiQ5BCa7Bjl7g1Ci4be1L
+ QE6qVN3BeXvIAn5e3pM5Z1SdPT9L6uyTsOE52HVzzXQCrAE12Rj1/+aCChY/QhoU2DiW
+ tVMYCbb1/RnSXuLE89fCOyBfbX1GeBrccb2QasaUatzWBFs17cGIWA1eL4wRJrk6HvSY
+ AJcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793319610; x=1793924410;
+ d=1e100.net; s=20260707; t=1793319642; x=1793924442;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=j5fIotj24/9KD11n5qlqkUNTRRY+p27lI9eQ9IfqSgU=;
- b=GiJONqyAGzEkcYuFOKvwGUybXJycBF+fqWhMxAoDxFeIQVkqcuBbrLMSQXsOWCkgaM
- sElzUMrtI4M0AtZMbdMYn5NMaGZrNlCOHh6oxkMXrUV2HGDyjUsGX7sWGUXR6GxjmOER
- IfAXzJ8AbQDG4eZimtJwjqJJOEu9ghLvMcO3SS+kHhzztCaKWGRAI0aN3DjG7bPfmuqI
- TYCuTK4cAq1DMqzAiMq6A9xTKTAXfiy4Zlk4jl+HhWZgkglKkDm9LPfM0Za2WmvBl8jQ
- QaMEAb1HtTirsYaX7ezMusb0QuUTh7NAi7N0LzdlivtiZlBlvdCTHD4wUaMnlpcsmrHO
- wCkw==
+ bh=wS1CQm6uT+cL7emN36oMQ0vMXGCU/zw4yFn2erntLA0=;
+ b=OEtYmOYPzOnWlplBSm6tPWjLu9LUcALcECmQQZACKbnh5NUTnNLMMFs0TlqG1t+AJY
+ pCHKMlItUaqJY9ixK77kgawXRxo7fJGrbp/7ewUNY3fINYXKTSUBWwni2aKmr7M/rN6V
+ tNH3jddIlRJzRF1s7kShp6O7tOBKxJootZpB3QcvwSyKzuwtZLU+k5dzjN+i4ABDSP/+
+ vnaWIflDp5CrTxxL0+u2phhcFlmf+AsVtqIfvY9HyYXZV58jbIOIbmSO/MYmwVgZriuA
+ LX/0RhuXcwt51D0HpaqnXm/LoV2UKj/dtrmQDhneUec7WTERjas9hRff+Eq9dOHGBxpH
+ gQEg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwMG+u7EUl2nRXsNyPubnoD+EmrUD08C1OkPjMIszUuLj2nkOO2+IylpcEKvdSPqsnnzO6acel7rynz@nongnu.org
-X-Gm-Message-State: AFq9FYKBJW2b1NnpUIaeS0TjkAufMNSazVfVFaVRvNljeg5844OBQ4Q2
- kD8g85hr+rNDtBCTLRN0WrQsiRt5j7UZwJApo1EAE8q58HNv8OF3luYHHJ3G1Zf+WqfCUKW3vRx
- rXvr+MGzIhxUJAM69YFGwf2gcU89ax0K/FKjf/Dc4ZOx7s6PFRbpDOTNrSQ==
-X-Gm-Gg: AYBFou3jQBl4nx4adFrBSeCSI4hzp5QG0A+0Hx0ZXNkKd8MZrcozNWZe/OR2bD1almH
- wJhvKPECs5JJOA9ud234wZW1Z/XXVdTPr83RemZVJiG7hj4ekwUIR6CQBakTKZcRS+lOVAO1I2/
- LXB7/TYNzoMd6iCNzlKXsYTOT/DEAGmwifgG12rXgeAMHl/AOgypZOH3U+pHJdX8vrS5lWNrPMK
- VFzYvNJ1lFwa4B9X9sbARJbAnmvr155laTfIER7TyxaXQjwuYKCEg+3MZyqD4G7XQ3DeqPBmc1c
- KdB61fOUv1ESCIEA0kx3P22QZ26Pq1iFjCnUM6T4x2cKhddyze3bOrXJf55CK5mUJxWDCYN4LFT
- XmtnNEkS09k5Y6ydvQjxi6fhzh36BTzXgak/RRX9FZnrRkWxMFl75q607K3klFTCFUNISSY3TzR
- VzOEFsszpu/TStUelmsnQE1bOzPwCJTezGRK+U/Uvmz4h2K0bdJfOG
-X-Received: by 2002:a05:620a:4627:b0:93e:d364:c9fc with SMTP id
- af79cd13be357-94421585475mr152986985a.5.1793319610256; 
- Thu, 29 Oct 2026 17:20:10 -0700 (PDT)
-X-Received: by 2002:a05:620a:4627:b0:93e:d364:c9fc with SMTP id
- af79cd13be357-94421585475mr152982085a.5.1793319609759; 
- Thu, 29 Oct 2026 17:20:09 -0700 (PDT)
+ AKwUvBwFSxXac+XVqr2MYmT4Nb1Gyr1wiVUFrxwlLNU0+VynwgIlT/LI3gt8sILfHdSxcx2DuFX8OTp44Axm@nongnu.org
+X-Gm-Message-State: AFq9FYIINekbgvU4kufy2l4qNbW5lNQTcT5qHuN08nY6Xq6o7KNAkjGN
+ TYk3FqXmwK3ntSw+GmwhtvWASdnKlZGUEoi8I3JEO6fLXZE/o3z5+vcm6V0Ao8JevuHai2gwRkQ
+ c6ZWAta35bZ7WK+TG8Rus58qkHK4X7BnL5fXD8eBRtyGZs0gvUeZBXfQ2ew==
+X-Gm-Gg: AYBFou2NJnx4d+pN7Cbl+kLcKEy9dC77QBIUVD3wYUemwY0bjrR5zKKkNbMHMteygQ/
+ v6klfHvi51DrelmsLCcsrp3WviJaDPpagex+6SrweXORg92SoH+zzGiy1Ar6vA9Hsy25VAZdbK1
+ RbCqZPFJBHp5yX/H9+znwkyVL4/reUJUnGmp+71k+WM61QbHsfE52KgW6XI5zIPbTKfiB8RQVJi
+ S1WvHPzH/1m6b1wsZdlW4dRoiPpqC2STb+YyPHaMlAQBc+GSeUtrK/zbuGILCuN/JoBqU6lOZrC
+ BrQv1YOLMjNcNaRGgcbUt1HCMl3aUMTbXNWZytQ3xdTFHP5knZMVQ0hJ+9/hnGIVAMvKPr7h+xM
+ A2rKF+UarYS/KcTP141N5BlGKnYsPU0TExVbCF6GTaSTfo/SAOtgZCN+tLjANe3NTAdaJoJMKz5
+ WjRRX8grGEqjbmR1hS1FQYGhdjGCwyJGd3yMeQ9oTnN7fEayZVpct3
+X-Received: by 2002:a05:620a:31a6:b0:93e:8614:bbe7 with SMTP id
+ af79cd13be357-944214d6b44mr155209685a.12.1793319642202; 
+ Thu, 29 Oct 2026 17:20:42 -0700 (PDT)
+X-Received: by 2002:a05:620a:31a6:b0:93e:8614:bbe7 with SMTP id
+ af79cd13be357-944214d6b44mr155207485a.12.1793319641723; 
+ Thu, 29 Oct 2026 17:20:41 -0700 (PDT)
 Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
  [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-94425ab9c73sm581385a.34.2026.10.29.17.20.07
+ af79cd13be357-9442586685esm1367185a.23.2026.10.29.17.20.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 17:20:08 -0700 (PDT)
-Message-ID: <f69e9bc7-8910-4448-b497-7e29558ecc1b@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 19:20:07 -0500
+ Thu, 29 Oct 2026 17:20:41 -0700 (PDT)
+Message-ID: <c463c10c-b3bb-4e1f-8051-47e6c501b870@oss.qualcomm.com>
+Date: Thu, 29 Oct 2026 19:20:39 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/20] target/hexagon: add HLX absdiff and sign-fill gvec
- operations
+Subject: Re: [PATCH 11/20] target/hexagon: translate packets with HLX
+ instructions
 To: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -105,38 +105,38 @@ Cc: Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Laurent Vivier <laurent@vivier.eu>
 References: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
- <20261029174413.643130-11-marco.liebel@oss.qualcomm.com>
+ <20261029174413.643130-12-marco.liebel@oss.qualcomm.com>
 Content-Language: en-US
 From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261029174413.643130-11-marco.liebel@oss.qualcomm.com>
+In-Reply-To: <20261029174413.643130-12-marco.liebel@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: iUSsEPelCKRWqypfvPdeKppsUrX_Vm3i
-X-Authority-Analysis: v=2.4 cv=KLzPn1Fo c=1 sm=1 tr=0 ts=6ae3e2bb cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfXzWeLLILFp8ua
+ iOM8UUY15Y/xFsapQfZ1tVYBRuNmofkB6fTkM/glluYRd1pKDuCDgfX/LBP+1KL47Y+S0ns0SVg
+ hoGpyI+xa2Bl33Nin/JT8zL5RpNTWiDep5k+FNexBgyZV6jJ4J2gOfUfxTcdOgXD1yTEv0WDCJ3
+ 2EANzHCRCYTqJLjEAN5vCicBvat9e7vwchw3YJJ6N3vpkzC/uyobBBMKFpN0iRrc680Cpi457ZP
+ TtNWRGx7OUYH3NgTwc6/YUeXDV6AtNjc08LSx6z1EkBZPqKAOhJ8d8BcUFRv/ODQir9JRjp8NW0
+ 5sVYi5tLbDI4IRPUW6kraCyzui7MohYwwHpY0o0odA8D3UQU82zmUqLf5UYX4RR3d2Ot5cnABNX
+ 9Nu8Ahxjs89jhg0yjuDsfWq8+sY2UsSFgak3GIdhGP0q0jZ8arI6hrlR1q5RxMik50u5CQ6Jj7A
+ Xtmq3Jo/MCh3gwGhQEw==
+X-Proofpoint-ORIG-GUID: YWFQ9jkd_BBTQvjJiOzlwV1R97DXs8Qh
+X-Proofpoint-GUID: YWFQ9jkd_BBTQvjJiOzlwV1R97DXs8Qh
+X-Authority-Analysis: v=2.4 cv=AJ83otAg c=1 sm=1 tr=0 ts=6ae3e2db cx=c_pps
  a=qKBjSQ1v91RyAK45QCPf5w==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=CcBTekESmXp-EHdDyGkA:9 a=QEXdDO2ut3YA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=mofBcHnhcE-rAXqJ63AA:9 a=QEXdDO2ut3YA:10
  a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfX7vUkUI17ELXO
- v0PE4sXTPEQNDQxvwylDKgTtxKRJ7tw5FAWTUMpsKVse/jLGfOy6ddZ6OuVorshqhh9aEAYPFWY
- 0cgTHjePoGTAP6dl5g0o6ePmA2zh48HqwOgZvzN8BvYmJ75jrCHfwrJpNXQg2DnxUw9jbyMClgX
- /BNN9SwN+E+2Wz3D2p+3QXo+3DXZOSkjoRd4XMKtyBExV1kg/cpGdFyAp2U4TX556DYbn6ID3Il
- tJuUJOLiQw9SdXKEnEYGdbPO7H2wt7tOubqNHueaTzHR1ldM9U1tJskeUbTQvwdtA63BLWuWSNQ
- siPeDbm7IRlqiMCU7R4c3h5sKYSWcUVpc/lLL5D8ukP0UeDvCRaZBstnu/k4hV32K91bAvapetg
- 8A6ITHLrOWM28bfNAnOcQVXQ+5oMlr3yGkWOwnBHEl5uku6NSVCRxnhOATp/F4pvBiu0vYurr6U
- HJ2J2rxRwnH5Z6Wz1EA==
-X-Proofpoint-ORIG-GUID: iUSsEPelCKRWqypfvPdeKppsUrX_Vm3i
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfX6bg+5ScVYgHm
- 9owjgcj8gpG7YPu+2t2AOEMcnSpdE0NpYPRlX+ZUgi7EAzucbrjKELUvW0bBdJrMD64YmkQAc2f
- C1LVzBEY4fJA5ykkhkgcIRFQ1ruuAMw=
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfX8Z/Vwxwpsrmz
+ oEH0aBIcU8bU7YMfl9nX0owgHT4izWxBNqgALF866tepZjGstnVYNxgffIN1MnsRVCNpMj0fxwH
+ 6NtERgbCrq7Jbb/95oTptIEx3k15bG4=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_07,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 spamscore=0 malwarescore=0 impostorscore=0
- clxscore=1015 bulkscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ spamscore=0 adultscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
  definitions=main-2610300001
 Received-SPF: pass client-ip=205.220.168.131;
@@ -169,197 +169,292 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 
 On 10/29/2026 12:44 PM, Marco Liebel wrote:
-> Add gvec helpers for halfword absolute difference and sign fill.
+> Track HLX register updates and commit them at packet end. Run .tmp
+> loads, other instructions, and stores in separate passes.
+>
+> Raise the disabled-coprocessor exception without an active context.
 >
 > Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   target/hexagon/helper.h          |  9 +++++
->   target/hexagon/hex_common.py     | 10 +++++
->   target/hexagon/hlx_gvec_tables.c | 68 ++++++++++++++++++++++++++++++++
->   target/hexagon/hlx_gvec_tables.h |  5 +++
->   target/hexagon/hlx_helper.c      | 39 ++++++++++++++++++
->   5 files changed, 131 insertions(+)
+>   target/hexagon/translate.c | 108 +++++++++++++++++++++++++++++++++++--
+>   target/hexagon/translate.h |  48 +++++++++++++++++
+>   2 files changed, 153 insertions(+), 3 deletions(-)
 
 Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
 
-> diff --git a/target/hexagon/helper.h b/target/hexagon/helper.h
-> index f42cb8d9b6..1ced8c5651 100644
-> --- a/target/hexagon/helper.h
-> +++ b/target/hexagon/helper.h
-> @@ -54,6 +54,15 @@ DEF_HELPER_FLAGS_4(hlx_gvec_avg_uh16, TCG_CALL_NO_RWG,
->   DEF_HELPER_FLAGS_4(hlx_gvec_avg_uh16_rnd, TCG_CALL_NO_RWG,
->                      void, ptr, ptr, ptr, i32)
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index ed246e226f..41b7d3b0fb 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -18,6 +18,7 @@
+>   #define QEMU_GENERATE
+>   #include "qemu/osdep.h"
+>   #include "cpu.h"
+> +#include "hw/hexagon/hexagon_hlx.h"
+>   #include "tcg/tcg-op.h"
+>   #include "tcg/tcg-op-gvec.h"
+>   #include "exec/helper-gen.h"
+> @@ -33,6 +34,8 @@
+>   #include "genptr.h"
+>   #include "printinsn.h"
+>   #include "exec/target_page.h"
+> +#include "hlx/hlx.h"
+> +#include "trace.h"
 >   
-> +/* GVec helpers for MO_16 absolute differences. */
-> +DEF_HELPER_FLAGS_4(hlx_gvec_absdiff_sh16, TCG_CALL_NO_RWG,
-> +                   void, ptr, ptr, ptr, i32)
-> +DEF_HELPER_FLAGS_4(hlx_gvec_absdiff_uh16, TCG_CALL_NO_RWG,
-> +                   void, ptr, ptr, ptr, i32)
-> +
-> +/* GVec helper for a halfword arithmetic shift by 15. */
-> +DEF_HELPER_FLAGS_3(hlx_gvec_sari15_h16, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-> +
->   /* Floating point */
->   DEF_HELPER_3(conv_sf2df, f64, env, f32, i32)
->   DEF_HELPER_3(conv_df2sf, f32, env, f64, i32)
-> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-> index d0b36b8e06..fc6f69b411 100755
-> --- a/target/hexagon/hex_common.py
-> +++ b/target/hexagon/hex_common.py
-> @@ -404,6 +404,16 @@ def skip_qemu_helper(tag):
->                            "vece": "MO_16"},
->       "LX_avg_uh_rnd":    {"op": "gvec3", "table": "hlx_avg_uh_rnd_op",
->                            "vece": "MO_16"},
-> +    "LX_absdiff_h":     {"op": "gvec3", "table": "hlx_absdiff_sh_op",
-> +                         "vece": "MO_16"},
-> +    "LX_absdiff_uh":    {"op": "gvec3", "table": "hlx_absdiff_uh_op",
-> +                         "vece": "MO_16"},
-> +
-> +    # These use one source register, not a pair destination.
-> +    "LX_conv_uw_uh":    {"op": "conv_h_to_w_pair", "sign_extend": False,
-> +                         "vece": "MO_16"},
-> +    "LX_conv_w_h":      {"op": "conv_h_to_w_pair", "sign_extend": True,
-> +                         "vece": "MO_16", "table": "hlx_sari15_h_op"},
+>   #define HELPER_H "helper.h"
+>   #include "exec/helper-info.c.inc"
+> @@ -341,6 +344,26 @@ static bool need_slot_cancelled(Packet *pkt)
+>       return false;
 >   }
 >   
->   def is_hlx_inline_tag(tag):
-> diff --git a/target/hexagon/hlx_gvec_tables.c b/target/hexagon/hlx_gvec_tables.c
-> index a5d40e149c..f1e36bd20b 100644
-> --- a/target/hexagon/hlx_gvec_tables.c
-> +++ b/target/hexagon/hlx_gvec_tables.c
-> @@ -216,3 +216,71 @@ const GVecGen3 hlx_avg_uh_rnd_op = {
->       .fno     = gen_helper_hlx_gvec_avg_uh16_rnd,
->       .vece    = MO_16,
->   };
-> +
-> +/* Halfword absolute difference as uint16_t. */
-> +static void hlx_fniv_absdiff_sh(unsigned vece, TCGv_vec r,
-> +                                 TCGv_vec a, TCGv_vec b)
+> +#ifndef CONFIG_USER_ONLY
+> +static void gen_hlx_check(DisasContext *ctx)
 > +{
-> +    TCGv_vec mx = tcg_temp_new_vec_matching(r);
-> +    TCGv_vec mn = tcg_temp_new_vec_matching(r);
-> +    tcg_gen_smax_vec(vece, mx, a, b);
-> +    tcg_gen_smin_vec(vece, mn, a, b);
-> +    tcg_gen_sub_vec(vece, r, mx, mn);
+> +    TCGv xe = tcg_temp_new();
+> +    TCGv_ptr hlx_ctx = tcg_temp_new_ptr();
+> +    TCGLabel *raise = gen_new_label();
+> +    TCGLabel *enabled = gen_new_label();
+> +
+> +    tcg_gen_extract_tl(xe, hex_t_sreg[HEX_SREG_CCR],
+> +            reg_field_info[CCR_XE3].offset,
+> +            reg_field_info[CCR_XE3].width);
+> +    tcg_gen_brcondi_tl(TCG_COND_EQ, xe, 0, raise);
+> +    tcg_gen_ld_ptr(hlx_ctx, tcg_env, offsetof(CPUHexagonState, hlx_ctx));
+> +    tcg_gen_brcondi_ptr(TCG_COND_NE, hlx_ctx, 0, enabled);
+> +    gen_set_label(raise);
+> +    gen_precise_exception(HEX_CAUSE_NO_COPROC3_ENABLE, ctx->pkt.pc);
+> +    gen_set_label(enabled);
 > +}
+> +#endif
 > +
-> +static void hlx_fniv_absdiff_uh(unsigned vece, TCGv_vec r,
-> +                                 TCGv_vec a, TCGv_vec b)
-> +{
-> +    TCGv_vec mx = tcg_temp_new_vec_matching(r);
-> +    TCGv_vec mn = tcg_temp_new_vec_matching(r);
-> +    tcg_gen_umax_vec(vece, mx, a, b);
-> +    tcg_gen_umin_vec(vece, mn, a, b);
-> +    tcg_gen_sub_vec(vece, r, mx, mn);
-> +}
-> +
-> +static const TCGOpcode hlx_vecop_absdiff_sh[] = {
-> +    INDEX_op_smax_vec,
-> +    INDEX_op_smin_vec,
-> +    INDEX_op_sub_vec,
-> +    0
-> +};
-> +
-> +static const TCGOpcode hlx_vecop_absdiff_uh[] = {
-> +    INDEX_op_umax_vec,
-> +    INDEX_op_umin_vec,
-> +    INDEX_op_sub_vec,
-> +    0
-> +};
-> +
-> +const GVecGen3 hlx_absdiff_sh_op = {
-> +    .fniv    = hlx_fniv_absdiff_sh,
-> +    .opt_opc = hlx_vecop_absdiff_sh,
-> +    .fno     = gen_helper_hlx_gvec_absdiff_sh16,
-> +    .vece    = MO_16,
-> +};
-> +
-> +const GVecGen3 hlx_absdiff_uh_op = {
-> +    .fniv    = hlx_fniv_absdiff_uh,
-> +    .opt_opc = hlx_vecop_absdiff_uh,
-> +    .fno     = gen_helper_hlx_gvec_absdiff_uh16,
-> +    .vece    = MO_16,
-> +};
-> +
-> +/* Fill LX_conv_w_h's high register with sign bits. */
-> +
-> +static void hlx_fniv_sari15_h(unsigned vece, TCGv_vec r, TCGv_vec a)
-> +{
-> +    tcg_gen_sari_vec(vece, r, a, 15);
-> +}
-> +
-> +static const TCGOpcode hlx_vecop_sari15_h[] = {
-> +    INDEX_op_sari_vec,
-> +    0
-> +};
-> +
-> +const GVecGen2 hlx_sari15_h_op = {
-> +    .fniv    = hlx_fniv_sari15_h,
-> +    .opt_opc = hlx_vecop_sari15_h,
-> +    .fno     = gen_helper_hlx_gvec_sari15_h16,
-> +    .vece    = MO_16,
-> +};
-> diff --git a/target/hexagon/hlx_gvec_tables.h b/target/hexagon/hlx_gvec_tables.h
-> index e01c853eb1..4375bf3ff8 100644
-> --- a/target/hexagon/hlx_gvec_tables.h
-> +++ b/target/hexagon/hlx_gvec_tables.h
-> @@ -17,4 +17,9 @@ extern const GVecGen3 hlx_avg_sh_rnd_op;
->   extern const GVecGen3 hlx_avg_uh_op;
->   extern const GVecGen3 hlx_avg_uh_rnd_op;
+>   #ifndef CONFIG_USER_ONLY
+>   static bool sreg_write_ends_tb(int reg_num)
+>   {
+> @@ -678,6 +701,12 @@ static void clear_pkt_ctx(DisasContext *ctx)
+>       bitmap_zero(ctx->qregs_multi_write, NUM_QREGS);
+>       bitmap_zero(ctx->qregs_uncond, NUM_QREGS);
+>       ctx->qreg_log_idx = 0;
+> +    ctx->lreg_log_idx = 0;
+> +    ctx->lreg_tmp_log_idx = 0;
+> +    bitmap_zero(ctx->lregs_updated, NUM_LREGS);
+> +    bitmap_zero(ctx->lregs_multi_write, NUM_LREGS);
+> +    bitmap_zero(ctx->lregs_updated_tmp, NUM_LREGS);
+> +    ctx->hlx_base_loaded = false;
+>       for (i = 0; i < STORES_MAX; i++) {
+>           ctx->store_width[i] = 0;
+>       }
+> @@ -701,6 +730,11 @@ static bool pkt_has_write_conflict(DisasContext *ctx)
+>           return true;
+>       }
 >   
-> +extern const GVecGen3 hlx_absdiff_sh_op;
-> +extern const GVecGen3 hlx_absdiff_uh_op;
+> +    /* HLX instructions are unpredicated, so multiple writes conflict. */
+> +    if (!bitmap_empty(ctx->lregs_multi_write, NUM_LREGS)) {
+> +        return true;
+> +    }
 > +
-> +extern const GVecGen2 hlx_sari15_h_op;
+>   #ifndef CONFIG_USER_ONLY
+>       if (!bitmap_empty(ctx->gregs_multi_write, NUM_GREGS)) {
+>           return true;
+> @@ -742,6 +776,17 @@ static void analyze_packet(DisasContext *ctx)
+>       ctx->need_commit = need_commit(ctx);
+>   }
+>   
+> +static bool pkt_has_hlx_store(Packet *pkt)
+> +{
+> +    for (int i = 0; i < pkt->num_insns; i++) {
+> +        int opcode = pkt->insn[i].opcode;
+> +        if (GET_ATTRIB(opcode, A_HLX) && GET_ATTRIB(opcode, A_STORE)) {
+> +            return true;
+> +        }
+> +    }
+> +    return false;
+> +}
 > +
->   #endif /* HLX_GVEC_TABLES_H */
-> diff --git a/target/hexagon/hlx_helper.c b/target/hexagon/hlx_helper.c
-> index c624b66f83..c063706cfa 100644
-> --- a/target/hexagon/hlx_helper.c
-> +++ b/target/hexagon/hlx_helper.c
-> @@ -195,3 +195,42 @@ void HELPER(hlx_gvec_avg_uh16_rnd)(void *d, void *a, void *b, uint32_t desc)
->           *(uint16_t *)((char *)d + i) = r;
+>   static void gen_start_packet(DisasContext *ctx)
+>   {
+>       int i;
+> @@ -776,6 +821,11 @@ static void gen_start_packet(DisasContext *ctx)
+>       if (need_slot_cancelled(&ctx->pkt)) {
+>           tcg_gen_movi_tl(hex_slot_cancelled, 0);
+>       }
+> +    if (pkt_has_hlx_store(&ctx->pkt)) {
+> +        /* An earlier fault can leave a store logged. */
+> +        tcg_gen_st8_i32(tcg_constant_i32(0), tcg_env,
+> +                        offsetof(CPUHexagonState, hlx_store_pending));
+> +    }
+>       ctx->branch_taken = NULL;
+>       if (ctx->pkt.pkt_has_cof) {
+>           ctx->branch_taken = tcg_temp_new();
+> @@ -860,6 +910,14 @@ static void gen_start_packet(DisasContext *ctx)
+>           gen_precise_exception(HEX_CAUSE_NO_COPROC_ENABLE, ctx->pkt.pc);
+>           ctx->hvx_check_emitted = true;
+>       }
+> +    if (ctx->pkt.pkt_has_hlx) {
+> +        if (!ctx->hlx_coproc_enabled) {
+> +            gen_precise_exception(HEX_CAUSE_NO_COPROC3_ENABLE, ctx->pkt.pc);
+> +        } else if (!ctx->hlx_check_emitted) {
+> +            gen_hlx_check(ctx);
+> +            ctx->hlx_check_emitted = true;
+> +        }
+> +    }
+>   #endif
+>   }
+>   
+> @@ -1206,6 +1264,17 @@ static void gen_commit_hvx(DisasContext *ctx)
 >       }
 >   }
-> +
-> +void HELPER(hlx_gvec_absdiff_sh16)(void *d, void *a, void *b, uint32_t desc)
+>   
+> +static void gen_commit_hlx(DisasContext *ctx)
 > +{
-> +    intptr_t oprsz = simd_oprsz(desc);
-> +    intptr_t i;
+> +    int i;
 > +
-> +    for (i = 0; i < oprsz; i += sizeof(int16_t)) {
-> +        int16_t av = *(int16_t *)((char *)a + i);
-> +        int16_t bv = *(int16_t *)((char *)b + i);
-> +        int16_t mx = (av > bv) ? av : bv;
-> +        int16_t mn = (av > bv) ? bv : av;
-> +        *(uint16_t *)((char *)d + i) = (uint16_t)(mx - mn);
+> +    for (i = 0; i < ctx->lreg_log_idx; i++) {
+> +        int rnum = ctx->lreg_log[i];
+> +        gen_helper_hlx_commit_reg(tcg_env, tcg_constant_i32(rnum));
+> +    }
+> +
+> +}
+> +
+>   static void update_exec_counters(DisasContext *ctx)
+>   {
+>       int num_real_insns = 0;
+> @@ -1332,6 +1401,9 @@ static void gen_commit_packet(DisasContext *ctx)
+>       }
+>   
+>       process_store_log(ctx);
+> +    if (pkt_has_hlx_store(&ctx->pkt)) {
+> +        gen_helper_hlx_commit_store(tcg_env);
+> +    }
+>   
+>       gen_reg_writes(ctx);
+>   #ifndef CONFIG_USER_ONLY
+> @@ -1342,6 +1414,9 @@ static void gen_commit_packet(DisasContext *ctx)
+>       if (ctx->pkt.pkt_has_hvx) {
+>           gen_commit_hvx(ctx);
+>       }
+> +    if (ctx->pkt.pkt_has_hlx) {
+> +        gen_commit_hlx(ctx);
+> +    }
+>       update_exec_counters(ctx);
+>   
+>       if (ctx->pkt.vhist_insn != NULL) {
+> @@ -1404,9 +1479,31 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
+>           }
+>   #endif
+>           gen_start_packet(ctx);
+> -        for (i = 0; i < ctx->pkt.num_insns; i++) {
+> -            ctx->insn = &ctx->pkt.insn[i];
+> -            gen_insn(ctx);
+> +        if (ctx->pkt.pkt_has_hlx) {
+> +            /* Run .tmp loads first and stores last. */
+> +            for (int pass = 0; pass < 3; pass++) {
+> +                for (i = 0; i < ctx->pkt.num_insns; i++) {
+> +                    Insn *insn = &ctx->pkt.insn[i];
+> +                    bool tmp = GET_ATTRIB(insn->opcode, A_HLX_TMP);
+> +                    bool store = !tmp && GET_ATTRIB(insn->opcode, A_STORE);
+> +                    if (pass != (tmp ? 0 : store ? 2 : 1)) {
+> +                        continue;
+> +                    }
+> +                    ctx->insn = insn;
+> +                    if (GET_ATTRIB(insn->opcode, A_HLX) &&
+> +                        trace_event_get_state_backends(
+> +                            TRACE_HEXAGON_HLX_OP)) {
+> +                        gen_helper_hlx_trace_op(tcg_env,
+> +                            tcg_constant_i32(insn->opcode));
+> +                    }
+> +                    gen_insn(ctx);
+> +                }
+> +            }
+> +        } else {
+> +            for (i = 0; i < ctx->pkt.num_insns; i++) {
+> +                ctx->insn = &ctx->pkt.insn[i];
+> +                gen_insn(ctx);
+> +            }
+>           }
+>           gen_commit_packet(ctx);
+>           ctx->base.pc_next += ctx->pkt.encod_pkt_size_in_bytes;
+> @@ -1426,6 +1523,11 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
+>       ctx->num_packets = 0;
+>       ctx->num_insns = 0;
+>       ctx->num_hvx_insns = 0;
+> +#ifndef CONFIG_USER_ONLY
+> +    ctx->hlx_coproc_enabled = hex_cpu->hlx != NULL &&
+> +                              hex_cpu->hlx->contexts_bitmap != 0;
+> +    ctx->hlx_check_emitted = false;
+> +#endif
+>       ctx->branch_cond = TCG_COND_NEVER;
+>       ctx->is_tight_loop = FIELD_EX32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP);
+>       ctx->short_circuit = hex_cpu->cfg.short_circuit;
+> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+> index bc5f202163..fa7e627200 100644
+> --- a/target/hexagon/translate.h
+> +++ b/target/hexagon/translate.h
+> @@ -91,6 +91,7 @@ typedef struct DisasContext {
+>       TCGCond branch_cond;
+>       target_ulong branch_dest;
+>       bool is_tight_loop;
+> +    bool hlx_check_emitted;
+>       bool short_circuit;
+>       bool ieee_fp_extension;
+>       bool read_after_write;
+> @@ -101,10 +102,57 @@ typedef struct DisasContext {
+>       TCGv dczero_addr;
+>       bool hvx_coproc_enabled;
+>       bool hvx_check_emitted;
+> +    bool hlx_coproc_enabled;
+> +    TCGv_ptr hlx_base;
+> +    bool     hlx_base_loaded;
+> +    int lreg_log[NUM_LREGS];
+> +    int lreg_log_idx;
+> +    int lreg_tmp_log[NUM_LREGS];
+> +    int lreg_tmp_log_idx;
+> +    DECLARE_BITMAP(lregs_updated, NUM_LREGS);
+> +    DECLARE_BITMAP(lregs_multi_write, NUM_LREGS);
+> +    DECLARE_BITMAP(lregs_updated_tmp, NUM_LREGS);
+>   } DisasContext;
+>   
+>   bool is_gather_store_insn(DisasContext *ctx);
+>   
+> +static inline TCGv_ptr ctx_get_hlx_base(DisasContext *ctx)
+> +{
+> +    if (!ctx->hlx_base_loaded) {
+> +        ctx->hlx_base = tcg_temp_new_ptr();
+> +        tcg_gen_ld_ptr(ctx->hlx_base, tcg_env,
+> +                       offsetof(CPUHexagonState, hlx_ctx));
+> +        ctx->hlx_base_loaded = true;
+> +    }
+> +    return ctx->hlx_base;
+> +}
+> +
+> +static inline void ctx_log_lreg_write(DisasContext *ctx, int rnum)
+> +{
+> +    if (test_bit(rnum, ctx->lregs_updated)) {
+> +        set_bit(rnum, ctx->lregs_multi_write);
+> +    } else {
+> +        ctx->lreg_log[ctx->lreg_log_idx] = rnum;
+> +        ctx->lreg_log_idx++;
+> +        set_bit(rnum, ctx->lregs_updated);
 > +    }
 > +}
 > +
-> +void HELPER(hlx_gvec_absdiff_uh16)(void *d, void *a, void *b, uint32_t desc)
+> +static inline void ctx_log_lreg_write_pair(DisasContext *ctx, int rnum)
 > +{
-> +    intptr_t oprsz = simd_oprsz(desc);
-> +    intptr_t i;
+> +    ctx_log_lreg_write(ctx, rnum ^ 0);
+> +    ctx_log_lreg_write(ctx, rnum ^ 1);
+> +}
 > +
-> +    for (i = 0; i < oprsz; i += sizeof(uint16_t)) {
-> +        uint16_t av = *(uint16_t *)((char *)a + i);
-> +        uint16_t bv = *(uint16_t *)((char *)b + i);
-> +        uint16_t mx = (av > bv) ? av : bv;
-> +        uint16_t mn = (av > bv) ? bv : av;
-> +        *(uint16_t *)((char *)d + i) = mx - mn;
+> +static inline void ctx_log_lreg_tmp_write(DisasContext *ctx, int rnum)
+> +{
+> +    if (!test_bit(rnum, ctx->lregs_updated_tmp)) {
+> +        ctx->lreg_tmp_log[ctx->lreg_tmp_log_idx] = rnum;
+> +        ctx->lreg_tmp_log_idx++;
+> +        set_bit(rnum, ctx->lregs_updated_tmp);
 > +    }
 > +}
 > +
-> +void HELPER(hlx_gvec_sari15_h16)(void *d, void *a, uint32_t desc)
-> +{
-> +    intptr_t oprsz = simd_oprsz(desc);
-> +    intptr_t i;
-> +
-> +    for (i = 0; i < oprsz; i += sizeof(int16_t)) {
-> +        int16_t av = *(int16_t *)((char *)a + i);
-> +        *(uint16_t *)((char *)d + i) = (uint16_t)(av >> 15);
-> +    }
-> +}
+>   #ifndef CONFIG_USER_ONLY
+>   static inline void ctx_log_greg_write(DisasContext *ctx, int rnum)
+>   {
 
