@@ -1,74 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D077606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 11:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5D6606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 12:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Gcj4MtcF
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=QRFrvCEa
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMl8r-0002PA-TJ; Fri, 30 Oct 2026 07:51:29 -0400
+	id 1xMlJo-0004jh-U5; Fri, 30 Oct 2026 08:02:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMl8q-0002Oo-67
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:51:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xMlJn-0004j4-1m
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 08:02:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMl8o-0005O2-P5
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:51:27 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xMlJk-0006Pz-DS
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 08:02:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793361085;
+ s=mimecast20190719; t=1793361761;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ITfifQxJ5dvnLVXGM8ajHEkJDOvV+Pmyp34mTTdau4U=;
- b=Gcj4MtcFvCGHOiohg6Q9gBZJ1ksgOOaEEIAFSve+6of9iM2eTyFB4CCTXKMIEDLabTdXTB
- R+D/T2wyP/0s2ky7pdTltIND6v7USyDbqO326nIrR3U+OEbxee+t+I5uN2HZzsHoUJXwPM
- HmfFOD9Gp4BO3Nq0/ikUdcB0pvk3bnQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gMbH46NIuuR3tz1VhQI6SevZ/s/DcUHVJE6FSXi7Zjw=;
+ b=QRFrvCEaXrWWCw60shwj6Keb+c8sGAsdZ3JbFyxZP0LxGENpzSy5DzpOZ+rd9Hgjsdofl7
+ 5zwEsfovYDNViNez2FRZL9TRroXVzZcnaL370uNRtoVEJcfAKYetaXnsnjWEJQSpOrJzAG
+ v5nvPdbWq0CM1KKIDgNpMuUruLv2Ydo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-550-Yo78F_BfPcukDTw2bPmjdA-1; Fri,
- 30 Oct 2026 07:51:22 -0400
-X-MC-Unique: Yo78F_BfPcukDTw2bPmjdA-1
-X-Mimecast-MFC-AGG-ID: Yo78F_BfPcukDTw2bPmjdA_1793361081
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-495-qi_V1V9EOJ6L76Olrf62Bw-1; Fri,
+ 30 Oct 2026 08:02:37 -0400
+X-MC-Unique: qi_V1V9EOJ6L76Olrf62Bw-1
+X-Mimecast-MFC-AGG-ID: qi_V1V9EOJ6L76Olrf62Bw_1793361757
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5AD071955DCE; Fri, 30 Oct 2026 11:51:21 +0000 (UTC)
-Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 052491800990; Fri, 30 Oct 2026 12:02:37 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.48.136])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EA0AF18004D2; Fri, 30 Oct 2026 11:51:19 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ id 5F9981800480; Fri, 30 Oct 2026 12:02:36 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 5223418326C7; Fri, 30 Oct 2026 12:54:55 +0100 (CET)
+From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2] block: fix leak of block histogram data
-Date: Fri, 30 Oct 2026 11:51:18 +0000
-Message-ID: <20261030115118.2745896-1-berrange@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH v2 1/2] pci id: clarify pci subsystem id usage
+Date: Fri, 30 Oct 2026 12:54:54 +0100
+Message-ID: <20261030115455.1121808-2-kraxel@redhat.com>
+In-Reply-To: <20261030115455.1121808-1-kraxel@redhat.com>
+References: <20261030115455.1121808-1-kraxel@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,28 +87,31 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The block_acct_cleanup method failed to release memory associated
-with block histograms.
+Qemu uses the pci subsystem id not only for emulated devices, but also
+for virtio devices and generic pci class devices such as pci bridges,
+xhci + nvme controllers etc.  Update the documentation accordingly.
 
-Fixes: b741ae7417 (block/accounting: introduce latency histogram)
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- block/accounting.c | 2 ++
- 1 file changed, 2 insertions(+)
+ docs/specs/pci-ids.rst | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/block/accounting.c b/block/accounting.c
-index 038af370170..d10c06de05e 100644
---- a/block/accounting.c
-+++ b/block/accounting.c
-@@ -80,6 +80,8 @@ bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
- void block_acct_cleanup(BlockAcctStats *stats)
- {
-     BlockAcctTimedStats *s, *next;
-+    block_latency_histograms_clear(stats);
-+
-     QSLIST_FOREACH_SAFE(s, &stats->intervals, entries, next) {
-         g_free(s);
-     }
+diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+index 261b0f359fe5..832f8bd1b802 100644
+--- a/docs/specs/pci-ids.rst
++++ b/docs/specs/pci-ids.rst
+@@ -46,8 +46,9 @@ maintained as part of the virtio specification.
+   upstream merge or shipping a distro/product) to avoid conflicts.
+ 
+ 1af4:1100
+-  Used as PCI Subsystem ID for existing hardware devices emulated
+-  by QEMU.
++  Used as PCI Subsystem ID for existing hardware devices emulated by
++  QEMU, such as the intel chipset devices.  Also used for virtio
++  devices and generic pci class devices (1b36:00xx, see below).
+ 
+ 1af4:1110
+   ivshmem device (:doc:`ivshmem-spec`)
 -- 
 2.56.0
 
