@@ -1,87 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EA2606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25D6606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=TY002fMw
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=PMybKzay
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMrn4-0007eb-Hg; Fri, 30 Oct 2026 14:57:27 -0400
+	id 1xMrmY-00071X-2R; Fri, 30 Oct 2026 14:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMrm0-0006uP-UI
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:21 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1xMrlx-0006tI-9a
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:19 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMrlw-0004pk-Ra
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:20 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-8b0d91601bdso18475357b3.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 11:56:16 -0700 (PDT)
+ id 1xMrlt-0004p9-74
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:16 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-8b0d63f60bcso9408557b3.3
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 11:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793386575; x=1793991375; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793386571; x=1793991371; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RB/sKLvvfUB0Wfzn/1ltw/gBKjTDiPFiEr9fRa8ubkg=;
- b=TY002fMwfqlP8ygxjKy2QCXQjTvu6ZymNUGI2NpyggT2lPSt5TqwFziO2/D1PsT4vC
- ClU8tlQGxCVjWPNLsZHAPsxIemxG7vx79KOEGhHsBBrhSVa38SRTgyGBx7XPWr98PObD
- YGhTI0SCvvpCkJBZ/jAcaP9Q8Hbkr9xphmAWWudyG9yUa869ly8KXJ151JSSIYNXzHyG
- tsxI+TPg3RgOS1tB3RQQeeQNqcj8hNAkhOrM3uzcKNIi7DxnSih1aW4Gd4Q3Uc4N7BhX
- ngMwTAaFQiCqnFqs+25hLaZ0sop7/QuT0JhpOGFTDqp+FXb+finXKiZh24b/oqWGLZHp
- AdkQ==
+ bh=BSf4yzgKqdfUtkbrvtphNnKJMg2rwq5r2CRGhdXxOZc=;
+ b=PMybKzayJqHOK3Mu02+iSdJO0NITScXcfv+M/r2yk/9Rcxt5yx/3rGbnHOF45Fp/4w
+ Oh6jSQXwABFDcbhV6hTWYQENODC+kl8c819E73roLFYG5Mk464et6FaUvy6muptnvoSC
+ HUT2U7ZjRmswPjZbmMNo6vYo9I6ZBSK+9YBs/Lo8WBYU5m+nMqy0o5t55eFhB2nmaMb4
+ f6glBnKud9fRUw7ly38KlkNpMrLgoF/j0jArQyfMIAP3Khut/QJEojayyc0lJVmRr5Kd
+ C0mC1oNH/UgGl7C4O2eptX5z+a9jGZo5RBNCxTOYQ08DNbUHVOcRPeWujpYhsHDGDZ65
+ cMbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793386575; x=1793991375;
+ d=1e100.net; s=20260707; t=1793386571; x=1793991371;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=RB/sKLvvfUB0Wfzn/1ltw/gBKjTDiPFiEr9fRa8ubkg=;
- b=O/0jOMVcYxOkQEgiAuAT0+cQvXd7T2OExy2m5CfBe/dFdxfke1Ma0/yWru1CLazVAY
- jea7hq+FUmgHkgeoGLNP+Qt2XQpz1+ePE9pQJkEch3u7+yUtQlwGhoek0vEjpi/8rAOV
- ed5hqZN3Q+ZAvj+HbiJdQpXTMKL3AJK0ZYKl9dc64g22IIBnTfwY4oQJGuPDoMqBDL1o
- eg2TOXtpubv5hLlkhHtC8GEMfsWpOcwGGcAGxAp+s0nJQb+0a/bdGPGHlIUb29U8n03j
- 5i5Zyq2b2bgqdLkU6QZrP+nVVGmVWRYFTFZ0A5ZMWPZXisrOCkFYGhWd4A7iwKHmwYC8
- zvYA==
-X-Gm-Message-State: AFq9FYJ394g1pzTLpiLVPrvROMsI0ZG9Te58Nr0Fgga+AL9Ba8046qrQ
- l7dUztuDDTazDFD+qDiOjd1dGQ38GrH1JCyCIJxccR/B3MELdAxfALHhCEERXzeM0iimr4dwlFr
- YeRPd
-X-Gm-Gg: AYBFou28iQo0W52axBITz3d3L6w5gdLtXNzE3g0dUsYooHNefiSDMlPsVvKvxNEyBi/
- feBHQ01wLudomNnRLhcMrpWVrqrY+9dFA5X8BAu9JinYXGIeONaBKFAJxq4mWmczuOxQK4VjvU9
- ufo6UguYWDViRGRyMXGdzdE7O6ARRAnOlIYp9FDTQz9Cxs1KjEHryUcnSzTqF8qS7p/T4CaaxAP
- 0n58J8GhFzJU3zRIVxAUO76KHfYu4Pr/din2qv7VlkkMsQJ4UjIEWjZXxKDtaeNRiczoaE39KUJ
- rHHiS55rB7QCil4SAAV2UX67WEOHSEXd7/yHf3CG0kiqjVM9SRi7KmymiXCF+ZkuNgAz2tQMIst
- BBF9gMB1rV68RdXfsv8tkEtFGbHmb9nqiUf8Jhrgii92ytLDRvMmSfPp1HLOK/A9yxenG+BgInx
- LBB3/FCM9HJhFzps5CJ6hVFmFbQtVr1RVio5XnAjO0wbCoNooGaE5jxt9Tw8aaI1a2LvelZAiU2
- K6y9TiB4JPdVj/v/66K4jMkKCG3YeJnKzVKse7eIDsUNna6qpw0V6kmYO51dgr+vtWGemDyQptN
- sLa9wIqahf78VTbL46Vf+bujuW2/koQ+mEw=
-X-Received: by 2002:a05:690c:a906:10b0:8b0:cc88:cbe3 with SMTP id
- 00721157ae682-8b1c6691f71mr38533737b3.11.1793386575200; 
- Fri, 30 Oct 2026 11:56:15 -0700 (PDT)
+ bh=BSf4yzgKqdfUtkbrvtphNnKJMg2rwq5r2CRGhdXxOZc=;
+ b=Kw5j6+8ouMyUr8T4l9inBHD8R4/h0RMvGi4R3I19M7OR8pzh7NkD5nOHPBN7Ya2mWY
+ wxg+QmPcok49PjUw00CRq5hefmzMkNQquP90I4lysMWHYGKewS2JE7+cMA5BIZSZmmrZ
+ uiBm00C2KVcID8VmyecQYvpXLpVT+eicH3BTcqy1x1FlgnoVWTUv8aQy5YoVAYkz0GJg
+ QHfI/n2rUPwPxxeMGB59VeE6ULP8zhKLFWxnCtXDJ6yg4539bvSrh15aa20TDsZHDQlc
+ gyLWuVwXUUUQN6SGXqVy69B1p+bLPSxItlxevhj45ke5wkaxL/WFmj7JuZG5EZZzLvbb
+ l9Ag==
+X-Gm-Message-State: AFq9FYIcStZ7oYpxPZLYVJ0QyHDe767qlUL16e72SM6YCrz3B0AAWkz3
+ pHiUum4YWU/JiHtZfmn8PVdLnyBiKjF12q3GnSbKr6fvAC0eN8dmGA44/pq9ZJ31AMAmwwNhxPu
+ oMK2q
+X-Gm-Gg: AYBFou2FjiDMylpwAewfwP4vw/kr6LqCIAsYZB+UtMYvlvXeHEOHg7rjJEzvzNsCVYx
+ zcDBIensLe4woDZmB5OcoLWCua5IDXCfXKdV/1qIpr2Iv3kY2S47rjvKi+0PxHy9om0FodyFyrA
+ bL8M6mgk68SfdB5adWAUp3Dlha+fl3odezCZocuzsNH4OvBkP83nYSBZlePvr/IqiFsuQYKsVs8
+ 5ntcMdQb3uL/ST6Errn5a7QHnzDh+f9t6puRqQ4qcvVEbGse2HAzP+7+r3kPDTpYYWoJcInh95q
+ 13cRbd144h0DbYpe6RhB7tyj7DuKC191tNk6YXUevOtJkwM3p4ZoBOfrGw9mi7l5yVrJnh5Wbue
+ XJLaZIAJFcbO4OAhY3mZ8ZG0D2rGynZPl9u4zjR6SAzziBN/EpzFg1czt0XXWVyKz/ekf4gcjNb
+ xPHeOZyQfwDyVC1l9Ld3ojxOZdmU1TSu/lyAaI57YsESmnTAauR6xCX/nT4M6gw605/k0qjzwug
+ 40EurmqxWZ1IByZkCyn8yDSyC95JZn36ogtq2p+lr9FEgWP0opRtTm/LOIcHEncsvTKWlDgjjfl
+ epD4MMK9kkjs1je861aWXOE77SL3UmIu9hU=
+X-Received: by 2002:a05:690c:4003:b0:8b0:ad62:19aa with SMTP id
+ 00721157ae682-8b2b671babcmr16965717b3.33.1793386571087; 
+ Fri, 30 Oct 2026 11:56:11 -0700 (PDT)
 Received: from stoup ([2607:fb90:5e62:412b:1381:b0c1:1339:9c82])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8b2b71a13b1sm13209657b3.39.2026.10.30.11.56.14
+ 00721157ae682-8b2b71a13b1sm13209657b3.39.2026.10.30.11.56.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 11:56:14 -0700 (PDT)
+ Fri, 30 Oct 2026 11:56:10 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: iii@linux.ibm.com,
 	mattst88@gmail.com
-Subject: [PATCH v7 14/14] accel/tcg: Move tb_jmp_cache to
- CPUNegativeOffsetState
-Date: Fri, 30 Oct 2026 13:55:51 -0500
-Message-ID: <20261030185551.193092-15-richard.henderson@linaro.org>
+Subject: [PATCH v7 11/14] tcg/x86_64: Implement INDEX_op_goto_jc
+Date: Fri, 30 Oct 2026 13:55:48 -0500
+Message-ID: <20261030185551.193092-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261030185551.193092-1-richard.henderson@linaro.org>
 References: <20261030185551.193092-1-richard.henderson@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,131 +106,123 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Use comparisons vs memory, short branches, and
+an indirect memory jump.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/cpu.h     | 4 ++--
- accel/tcg/cpu-exec.c      | 8 ++++----
- accel/tcg/cputlb.c        | 2 +-
- accel/tcg/tb-maint.c      | 2 +-
- accel/tcg/translate-all.c | 2 +-
- tcg/tcg-op.c              | 2 +-
- 6 files changed, 10 insertions(+), 10 deletions(-)
+ tcg/tcg.c                   |  1 +
+ tcg/x86_64/tcg-target.c.inc | 77 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 77 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 5b7c330047..5d1b624e6c 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -369,9 +369,11 @@ typedef union IcountDecr {
-  * @plugin_mem_cbs: active plugin memory callbacks
-  * @plugin_mem_value_low: 64 lower bits of latest accessed mem value.
-  * @plugin_mem_value_high: 64 higher bits of latest accessed mem value.
-+ * @tb_jmp_cache: Hash table of recently accessed TranslationBlocks.
-  */
- typedef struct CPUNegativeOffsetState {
-     CPUTLB tlb;
-+    struct CPUJumpCache *tb_jmp_cache;
- #ifdef CONFIG_PLUGIN
-     /*
-      * The callback pointer are accessed via TCG (see gen_empty_mem_helper).
-@@ -528,8 +530,6 @@ struct CPUState {
-     AddressSpace *as;
-     MemoryRegion *memory;
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 671cf8fd0e..24eee302eb 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -61,6 +61,7 @@
+ #ifdef CONFIG_USER_ONLY
+ #include "user/guest-base.h"
+ #endif
++#include "../accel/tcg/tb-hash.h"
  
--    struct CPUJumpCache *tb_jmp_cache;
--
-     GArray *gdb_regs;
-     int gdb_num_regs;
-     int gdb_num_g_regs;
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 4c20091ef5..2ed8f7c251 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -237,7 +237,7 @@ static inline TranslationBlock *tb_lookup(CPUState *cpu, TCGTBCPUState s)
-     tcg_debug_assert(!(s.cflags & CF_INVALID));
- 
-     hash = tb_jmp_cache_hash_func(s.pc);
--    jc = cpu->tb_jmp_cache;
-+    jc = cpu->neg.tb_jmp_cache;
- 
-     tb = qatomic_read(&jc->array[hash].tb);
-     if (likely(tb &&
-@@ -1012,7 +1012,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
-                  * for the fast lookup
-                  */
-                 h = tb_jmp_cache_hash_func(s.pc);
--                jc = cpu->tb_jmp_cache;
-+                jc = cpu->neg.tb_jmp_cache;
-                 jc->array[h].pc = s.pc;
-                 qatomic_set(&jc->array[h].tb, tb);
-             }
-@@ -1109,7 +1109,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-     /* Pick up one-insn-per-tb and -d nochain from the command line. */
-     tcg_update_cflags(cpu);
- 
--    cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
-+    cpu->neg.tb_jmp_cache = g_new0(CPUJumpCache, 1);
-     tlb_init(cpu);
- #ifndef CONFIG_USER_ONLY
-     tcg_iommu_init_notifier_list(cpu);
-@@ -1127,5 +1127,5 @@ void tcg_exec_unrealizefn(CPUState *cpu)
- #endif /* !CONFIG_USER_ONLY */
- 
-     tlb_destroy(cpu);
--    g_free_rcu(cpu->tb_jmp_cache, rcu);
-+    g_free_rcu(cpu->neg.tb_jmp_cache, rcu);
+ /* Forward declarations for functions declared in tcg-target.c.inc and
+    used here. */
+diff --git a/tcg/x86_64/tcg-target.c.inc b/tcg/x86_64/tcg-target.c.inc
+index 04c83fbe6b..d21fc2e9c7 100644
+--- a/tcg/x86_64/tcg-target.c.inc
++++ b/tcg/x86_64/tcg-target.c.inc
+@@ -1532,6 +1532,12 @@ static int tcg_out_cmp(TCGContext *s, TCGCond cond, TCGArg arg1,
+     return jz;
  }
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index dc83f3bad8..c777f5ac3f 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -149,7 +149,7 @@ static void tlb_window_reset(CPUTLBDesc *desc, int64_t ns,
  
- static void tb_jmp_cache_clear_page(CPUState *cpu, vaddr page_addr)
- {
--    CPUJumpCache *jc = cpu->tb_jmp_cache;
-+    CPUJumpCache *jc = cpu->neg.tb_jmp_cache;
-     int i, i0;
++static void tgen_cmp_mem_reg(TCGContext *s, int rexw, TCGReg reg,
++                             TCGReg base, intptr_t ofs)
++{
++    tcg_out_modrm_offset(s, OPC_CMP_GvEv | rexw, reg, base, ofs);
++}
++
+ static void tcg_out_brcond(TCGContext *s, int rexw, TCGCond cond,
+                            TCGArg arg1, TCGArg arg2, int const_arg2,
+                            TCGLabel *label, bool small)
+@@ -3374,8 +3380,77 @@ static const TCGOutOpLea outop_lea = {
+     .out = tgen_lea,
+ };
  
-     if (unlikely(!jc)) {
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index 4313864d2c..ca1b0089fc 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -905,7 +905,7 @@ static void tb_jmp_cache_inval_tb(TranslationBlock *tb)
-         uint32_t h = tb_jmp_cache_hash_func(tb->pc);
++static void tgen_goto_jc_cmp_part(TCGContext *s, TCGArg val, bool const_val,
++                                  TCGReg scratch, const TranslationBlock *tb,
++                                  TCGReg base, ptrdiff_t ofs)
++{
++    if (!const_val) {
++        /* cmpq ofs(base), %val */
++        tgen_cmp_mem_reg(s, P_REXW, val, base, ofs);
++    } else if (val == (int8_t)val) {
++        tcg_out_modrm_offset(s, OPC_ARITH_EvIb | P_REXW, ARITH_CMP, base, ofs);
++        tcg_out8(s, val);
++    } else if (val == (int32_t)val) {
++        tcg_out_modrm_offset(s, OPC_ARITH_EvIz | P_REXW, ARITH_CMP, base, ofs);
++        tcg_out32(s, val);
++    } else {
++        uintptr_t tb_slot = (uintptr_t)tb + ofs;
++
++        tcg_out_ld(s, TCG_TYPE_I64, scratch, base, ofs);
++        /*
++         * Compare the value vs a rip-relative reference.
++         * If the value is unchanged from the current TB,
++         * we can reuse that.  Otherwise drop it in the pool.
++         */
++        if (val == *(uint64_t *)tb_slot) {
++            tcg_out_modrm_sib_offset(s, OPC_CMP_GvEv | P_REXW, scratch,
++                                     TCG_REG_NONE, TCG_REG_NONE, 0, tb_slot);
++        } else {
++            tcg_out_modrm_pool(s, OPC_CMP_GvEv | P_REXW, scratch);
++            new_pool_label(s, val, R_386_PC32, s->code_ptr - 4, -4);
++        }
++    }
++}
++
++static void tgen_goto_jc(TCGContext *s, TCGReg ptr, TCGReg pc,
++                         TCGArg cs, bool const_cs, TCGArg fl, bool const_fl,
++                         TCGLabel *label)
++{
++    const TranslationBlock *tb = s->gen_tb;
++    unsigned free = (ALL_GENERAL_REGS & ~s->reserved_regs & ~(1 << ptr)
++                     & ~(const_fl ? 0 : 1 << fl));
++    TCGReg scratch = ctz32(free);
++
++    /* ptr is CPUJumpCache */
++
++    /* Validate pc match */
++    tgen_cmp_mem_reg(s, P_REXW, pc, ptr, offsetof(CPUJumpCache, array[0].pc));
++    tcg_out_jxx(s, JCC_JNE, label, true);
++
++    /* Load and validate tb non-null */
++    tcg_out_ld(s, TCG_TYPE_PTR, ptr, ptr, offsetof(CPUJumpCache, array[0].tb));
++    tcg_out_brcond(s, P_REXW, TCG_COND_EQ, ptr, 0, true, label, true);
++
++    /* ptr is now TranslationBlock */
++
++    /* Validate cs_base match */
++    tgen_goto_jc_cmp_part(s, cs, const_cs, scratch, tb, ptr,
++                          offsetof(TranslationBlock, cs_base));
++    tcg_out_jxx(s, JCC_JNE, label, true);
++
++    /* Validate cflags:flags match */
++    tgen_goto_jc_cmp_part(s, fl, const_fl, scratch, tb, ptr,
++                          offsetof(TranslationBlock, flags));
++    tcg_out_jxx(s, JCC_JNE, label, true);
++
++    /* Jump to tb */
++    tcg_out_modrm_offset(s, OPC_GRP5, EXT5_JMPN_Ev,
++                         ptr, offsetof(TranslationBlock, tc.ptr));
++}
++
+ static const TCGOutOpGotoJC outop_goto_jc = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_O0_I4(r, r, ri, ri),
++    .out = tgen_goto_jc,
+ };
  
-         CPU_FOREACH(cpu) {
--            CPUJumpCache *jc = cpu->tb_jmp_cache;
-+            CPUJumpCache *jc = cpu->neg.tb_jmp_cache;
- 
-             if (qatomic_read(&jc->array[h].tb) == tb) {
-                 qatomic_set(&jc->array[h].tb, NULL);
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index ea8257935e..3dd1714414 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -624,7 +624,7 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
-  */
- void tcg_flush_jmp_cache(CPUState *cpu)
- {
--    CPUJumpCache *jc = cpu->tb_jmp_cache;
-+    CPUJumpCache *jc = cpu->neg.tb_jmp_cache;
- 
-     /* During early initialization, the cache may not yet be allocated. */
-     if (unlikely(jc == NULL)) {
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 0040d149e0..7969875d20 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -1914,7 +1914,7 @@ static void gen_jc_probe(TCGTemp *pc, TCGTemp *cs_base, uint32_t flags)
-     /* p = &jc->array[tb_jmp_cache_hash_func(pc)] */
-     gen_jc_hash(h, t, pc);
-     tcg_gen_ld(TCG_TYPE_I64, t, tcgv_ptr_temp(tcg_env),
--               offsetof(CPUState, tb_jmp_cache) - sizeof(CPUState));
-+               offsetof(CPUState, neg.tb_jmp_cache) - sizeof(CPUState));
-     tcg_gen_lea(TCG_TYPE_I64, p, t, h, 4, 0);
- 
-     if (tcg_op_supported(INDEX_op_goto_jc, TCG_TYPE_PTR, 0)) {
+ static int const umin_insn[4] = {
 -- 
 2.53.0
 
