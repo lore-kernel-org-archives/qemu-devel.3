@@ -1,120 +1,117 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C457606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 10:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E0E606A332
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 10:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aAmfb46A
+	dkim=pass (2048-bit key, unprotected) header.d=summations.net header.i=@summations.net header.a=rsa-sha256 header.s=google header.b=bPord5Ek
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMk5R-0001Gc-Q7; Fri, 30 Oct 2026 06:43:54 -0400
+	id 1xMk7g-00021j-5s; Fri, 30 Oct 2026 06:46:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMk5H-0001Em-PP
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 06:43:46 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <rahul@summations.net>)
+ id 1xMk7T-0001yZ-U7
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 06:46:04 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMk5F-0007H0-Su
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 06:43:43 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-c4550d8ab15so60726066b.2
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 03:43:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793357020; cv=none;
+ (Exim 4.90_1) (envelope-from <rahul@summations.net>)
+ id 1xMk7R-0007ZM-A9
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 06:45:59 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-67b9bd530b7so394505d50.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 03:45:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793357153; cv=none;
  d=google.com; s=arc-20260327;
- b=dpIZBhl0nar1LARLQKsm1oxp09kEqbGOOT8rBW8qlljeRgHh3v+B+EZjblFmlY3/m5
- fBeC6T94ug12S1JMWjUG/0M7tUyHmPmn/SsfbaOtDr0fPCWaSalKdDIuqBBlhw1EkMSl
- XH/Qz2ui9FvRbO57I3gHSERlPYAVHyevTcmcvjnLJT996Bw+k/+qmtgF1KTW5B0hzXzO
- hhCCLzOxLhsjfiKA3h1BeFrizQ9qoESj/TgWzu7HgOZJ7VH7EP4XdRsbLHe4CcTN76Bn
- ouL2OAZkz2Dd71T4pJLPdad0p9LnnxC+d9cOQC0/8bAEiBLP5w0V90HI7sRdo7k2fbEy
- PtnQ==
+ b=qjB5NrNFQJivOJRo1BiCs2JOVRxTIevhDbU698/D5LaGew4DP6qwQDH7oNDvmkeQeO
+ 2PLBCidwIDa++jiRePpsYV6haqj7jiTVu4Ydh9ErRsV0yMgx0n9LWi44Y1meBP08GZjR
+ rrneVoClf5h7W+1G/oOaZsMS9wJd9HzNNX4iVoJJ2/fq6e0DrVPP/+dJN0FDX1dO6eNq
+ D95C/VSkQjYT7JptbaClW7FLVE5BSBwqgTJrFBbPzT/E1qmkvRGHvWQKGhm33qu/5ga0
+ PqBKR+j6CEVawEJjUoR8kbXDkAZEwC49piyLdUCQSfdA/M8mMN8Gav+o62B5aSsJB7IB
+ fKeA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=f5rI0BWT3n0kBoLerRp5ox5Uq/BHcuPSAQy/GKv1oWc=;
- fh=lBnBKJEESecAWV1i/8p2tjfgp4D2xVLY4WHtATGyEtU=;
- b=r7yeqGczH8UTux9KjI9+++JJLt9AFMHnwHjIaoH2zW30HhD4TB73lO+nSoU1gi6ruV
- SyX+wzf2EAyU6EnuCqpAGdGRMP34ToWDxnPfNjGcrciHGzw8ZF/MsXP2IyLE+5gE+K6n
- GYQVTmWR1CokM+0QNz+IDsotMpB290/76NsgTStk39uHVYAiEyT1V/qs9ONjPDEP7B4V
- DLK6X2qdgVQ8k9y2puz/skqftHiA6FJkhG7EDsYVXejTLcEE2/JGK5tnxMRwfDq2zV8e
- 1Fy/eFwYsP99Kw3xborkL6uMEFoZpHV3uf0TgrNk8IXcAMKfzBUu5U7P5Ikbl+noJXcn
- 7RuQ==; darn=nongnu.org
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=dIs7lC+ZTuo8fyy3O3yGHwNg2RDTT67WltyHYKq634E=;
+ fh=7FvbfQGd5mk6jUFOl8TVKrZG+MkHtL63dmEz2F7Gt6g=;
+ b=qKiTMQgY8wwAciZgV445y07fBogbyOU7LWCho6P1aaO765WtJ+csL5id5fjjSGySDh
+ qpMhvWl1YQV+Mf7ti9ha7gDN2a2d3DWBDO52uHeVvaz3fqqfiRm9nCu3OdAVYfwkemrl
+ GMrsJKAR9KNJbQE5xm/gWdsYhLT0klLyQtvusF7GPQBtYx6dxAer3wwAeGJ7/9o1v0jU
+ p41sD3uIm/7I93jwQS9z5yjzxnxFHi3iZfJEsUtMExbVtH+oNtK22ybPV5/UWctCKhzX
+ +dvD9lKQyqA/qJHekT9jLtybSWVqURxtgrIIia/BbTPqs2PkzZSY2t/T5lpcrifci8lp
+ mIkA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793357020; x=1793961820; darn=nongnu.org;
+ d=summations.net; s=google; t=1793357153; x=1793961953; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=f5rI0BWT3n0kBoLerRp5ox5Uq/BHcuPSAQy/GKv1oWc=;
- b=aAmfb46Avo9Xv4LJuW+T9zxOPGacmkZWrnoprTQQUfHQaArV+PQH1pfkqucbUVCoi/
- eL1y/Y3FVWY8AhidUd15VP/t57EnvPpxMxgsL00oC2ZRdPzfnt9FuyjTfwUOtf1NLfiz
- ZFVLxFyz5LSk2z0K1egwR980j9YXSE3pTnrhu4XMrQ9JSMx6CALmulykmD9Mfv/gkErQ
- LuIwrdWsUEnkr1Rv4esiJ47roiK+s9hXSxPL1X8M3iKsXv83seFosjD+qEqb62bXEJdB
- NfkApm+0/A4sVLo6EVUV+c1ukfeafqQBsgI/ZNDMEQLTDhzLlpbxtJo2RAzsRq6bnrKM
- +3vg==
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=dIs7lC+ZTuo8fyy3O3yGHwNg2RDTT67WltyHYKq634E=;
+ b=bPord5EkjOe0bD+BWEH9RmInRmuERXILI9ud15hoHiiFei4rO7GBR6YaHogrmnlKF3
+ SiySqmkc7zE/wQyu8dcYlwrfn3rEIFmdQJGilr9xlLRJJ03qn5382KoxkN7eeq3EVaWg
+ vTE30+J7Pme+n2pKJFvK7uwEINXNB7RgDC2U+QgQ90C/eljACDJx8E3nxvXZdRTMHowh
+ KUXcL79mmc59/c2uFqoy/Xjl2bEXcSkEgjnjWAYiCDaC0Zr6dTj0kU1mFy1v4gTbSkX9
+ 8sGER90LqTIHqSyYSf8kYcsJRbR8bOV/LUwuRtxQUUx+EFXf5JmVFfpypD4+XRQk5+8V
+ znIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793357020; x=1793961820;
+ d=1e100.net; s=20260707; t=1793357153; x=1793961953;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=f5rI0BWT3n0kBoLerRp5ox5Uq/BHcuPSAQy/GKv1oWc=;
- b=AzWXajdHn6+hHt9POsxvd2+Y6K1qjJTUeOXG1v9UAkM2bMAtUs+UktX8AlQveCKiG3
- 0kyV98Zz0Z3Ku4UbuPouHU5dY10Pf+ec8nWnUqROG5PMjLK9KuzdeUb8kVqougjUbRbc
- SmCgUWO5z6u+JrYcxoBWBHIpTLZDYqbhY9P3FCgQ3x/VcRUbUsopnbxDef3d211gIwFg
- qCp8zmuYEmDpcdI7sctOjscX5f5UIT+TNdRk2H7HLwI5nh0dgh4wLW+eutsulTvZ3gJC
- A+lIv9jU0JSra2/Z9EoJ/JjMqI3BPPmhelrE4CP2smRYv2hdsrxMJ5+XPj2eamjYlQAd
- 9HDQ==
-X-Gm-Message-State: AFq9FYKLtc+ktJVt7XqYoocUcN/rgiy7cbbvlXPdW6LVc9Ge2TiEjzYa
- qcEnmFvFihzdf8DzI69J7MFliNXcGFlWLTTAYU40w0oARxCoF/W8TmefJBpstOjYzZ28+Q7qFHT
- 0For2tZgQ3hvd6NksWueHOHuIAAhul0k=
-X-Gm-Gg: AYBFou3rkmQo3jajyLgQeT0ipptfO6uw0s/iH1u9qs4/sYDjzwFegDOLhHnNFWA1dmh
- 9lgvqt/GazaYJHqEFK5jjPT8fdtphVU7sh4IogvEcG32btF/wHTqWT1hGrlI1NtRgleLZ28iht/
- dfMvNfE38ee5HE24PbsuiPArWY1XYidVf6pKEV1zSrFYzSSJQnQFV+gqtOQYIoBBBhTonuAYKg6
- UYUbBzMKDnx385whbpKRZakPzjsZqKusk9iQMzIa/LCYnJ4KjX1lUFADVeT7Yk8j+FJ7YJJg/lh
- t8t3Ff1WqIlX7zebo+4HuWaIVlqqMO5ad5aulm/+Y0sUSgRIC87jSCg9U3mmt8nB/2HZnoKayom
- 5IHZ1bjRanwO5xcbOuNPBdxAuIGwSoQR1SwFE
-X-Received: by 2002:a17:907:9c06:b0:c42:24ea:3220 with SMTP id
- a640c23a62f3a-c4ca7ab31cdmr162391166b.31.1793357019729; Fri, 30 Oct 2026
- 03:43:39 -0700 (PDT)
+ bh=dIs7lC+ZTuo8fyy3O3yGHwNg2RDTT67WltyHYKq634E=;
+ b=fxFyg8FbVV7M8sx9YYq3zWeH/NPIYwetAboPEunym3Of7j2XiWB+fOg0T3oQLO85kq
+ rS9/sFasRB2eMBPBJXJkTV/GT4WiQuZ7ILGNf0pZNbi7+mmHb0i4WmCi3VUxrJ6gFc9O
+ gM8frAi3VwJMublgf6Gyzqz2lQ+2Ublo/I+dAzV7zOTDb/GPUTM4i/IdSVxAADWfULAw
+ gQ68EpxwiZRRey8PklNZY3Wg0vJcl9o9ekxw1z7A2F73XS5mK34MNRUr88OQ19fIshEl
+ J82Hjcxxn1jqiB6Npdw88AavGL7ScQA5huwaW2LlIyU0wJq4N7jSjd2jCFGaRC1C2n1n
+ JSaw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByre8P8eJHUC/MmBd7GoSgd1NftOLBeU0Mz2U19/2lAaQGHKupn/bl2imqMG1kLtryXLXPWWbbxEqPj@nongnu.org
+X-Gm-Message-State: AFq9FYJNwkPGFFOB8G6TeYbzMnGpE4/KBWRdCMhkOUnLuod7Qx3N+GfE
+ O3OmICGkkKUb5l3nRzSn4PsXIyQ62LqhImG/qYwvXAh1aNaYIGqnohZNACzPrM973YpBN2wULJv
+ l3PD9DnrkNiYPrzAyefzd/Q83a85RYJu8S6BGxMSleIo=
+X-Gm-Gg: AYBFou2wn6rQz4GKjUeZMw2wQ7exl5oi5/wjiIzAWYiOAHEc/W3nhfkgqHhEc9V/Ujt
+ snj8Ps1Vgmk/83sIKCTjTskZZT2K6PXgP4A0b2wkDlzrfEPDtKkE/PWzMNJDRPdQ1/lchU/vH8y
+ LT5TeMp2hNT66cQpYgvVoXdfQvxuuQDtm6uvorhAE+W8opPlg6xiua4OjOZSWlJqMQXKi78arW1
+ 0MGnDGQruI86wuuihtEHZxHqHqFjzaLmFocdKliN3Wa5F0nmOvfUHRkJ2LvSeG9Y0DTuh2C36KF
+ SXU69OUTfVZb0MXeKcSSALcMRuZmEZyrdC4dZ4+0oO223Z8mmGW8Dtk+D0YKZzWJe+heeAdzyy7
+ K6zKvIvTJJ93KcHyd+SwPW97wH0YRY/4Cvqc7EFEw6RPUaeZ2vJ+YqG8b39ODCJwwgG0BMJrMNd
+ nzLkU8kGng5HTUlRGNGX4TsnLyUw==
+X-Received: by 2002:a05:690e:484f:b0:679:941a:5b7e with SMTP id
+ 956f58d0204a3-67ba50b7a03mr1049439d50.84.1793357152707; Fri, 30 Oct 2026
+ 03:45:52 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261028201557.2688-1-luoyonggang@gmail.com>
- <20261028201557.2688-12-luoyonggang@gmail.com>
- <18efc198-f211-4219-b6c9-9ff34dc94e3b@oss.qualcomm.com>
-In-Reply-To: <18efc198-f211-4219-b6c9-9ff34dc94e3b@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Fri, 30 Oct 2026 18:43:27 +0800
-X-Gm-Features: AclHuK8NPPc7G1Oyy6cxQR2ulef7CuHQzbqrz5yJ5GvRKpKZ610h41x4_9C0_Us
-Message-ID: <CAE2XoE8iRfxXyTRb3X2Nmchw-RbnzrRf_megBhw1KqS9OxmujA@mail.gmail.com>
-Subject: Re: [PATCH 11/12] hw/virtio/virtio-mem: register legacy-guest variant
- with is_available
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Eric Farman <farman@linux.ibm.com>, Song Gao <17746591750@163.com>, 
- Max Filippov <jcmvbkbc@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
- Fam Zheng <fam@euphon.net>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>, qemu-arm@nongnu.org, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
+References: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
+ <73bc69a4-a3e6-47c8-9c7f-92443706b250@oss.qualcomm.com>
+ <397f4ece-067b-4714-93f3-082e07fad06d@linux.alibaba.com>
+In-Reply-To: <397f4ece-067b-4714-93f3-082e07fad06d@linux.alibaba.com>
+From: Rahul Pathak <rahul@summations.net>
+Date: Fri, 30 Oct 2026 16:15:41 +0530
+X-Gm-Features: AclHuK9kEtitJkXM97BtGOyYaRQhX8-ax_cQ2ODmDFY8ss3XYFjPcKlwMTWGRiM
+Message-ID: <CABdD5xku3v1hGGHQA=WNiB-zTYkHdg=Pou5nci7ShUyERLp-CA@mail.gmail.com>
+Subject: Re: [PATCH v8 00/11] target/riscv: Implement Smsdid and Smmpt
+ extension
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, chao.liu.zevorn@gmail.com, 
+ liwei1518@gmail.com, qemu-riscv@nongnu.org, xiangyi.zeng@linux.alibaba.com, 
+ cxx194832@alibaba-inc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=luoyonggang@gmail.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=rahul@summations.net; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,169 +122,214 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 29, 2026 at 4:57=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
+Hi Zhiwei,
+
+The SMMPT spec has been updated following the ARC comments
+ and the big change is the merging of both SMSDID and SMMPT
+ sub extensions into one with new name "SMSD" which is much better now.
+
+https://github.com/riscv/riscv-smmtt/commit/ff5069fa99fc1fdd97c9fb8d96329e1=
+3afa82712
+
+Can you please update this series.
+
+Thanks
+Rahul
+
+On Sat, Oct 10, 2026 at 12:13=E2=80=AFPM LIU Zhiwei
+<zhiwei_liu@linux.alibaba.com> wrote:
 >
-> On 10/28/2026 12:15 PM, Yonggang Luo wrote:
-> > virtio-mem decided in class_init and realize whether x86 guests can
-> > leave unplugged memory accessible. Register a second virtio-mem type
-> > that adds virtio_mem_legacy_guests_properties and sets
-> > VirtIOMEMClass.has_legacy_guests. Select the two with
-> > target_base_i386() and target_not_base_i386().
-> >
-> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > ---
-> >  hw/virtio/virtio-mem.c         | 47 +++++++++++++++++++---------------
-> >  include/hw/virtio/virtio-mem.h |  2 ++
-> >  2 files changed, 29 insertions(+), 20 deletions(-)
-> >
-> > diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-> > index 7130ed852d9..bf241a3112b 100644
-> > --- a/hw/virtio/virtio-mem.c
-> > +++ b/hw/virtio/virtio-mem.c
-> > @@ -15,6 +15,7 @@
-> >  #include "qemu/cutils.h"
-> >  #include "qemu/error-report.h"
-> >  #include "qemu/units.h"
-> > +#include "qemu/target-info.h"
-> >  #include "qemu/target-info-qapi.h"
-> >  #include "system/memory.h"
-> >  #include "system/numa.h"
-> > @@ -35,22 +36,6 @@
-> >
-> >  static const VMStateDescription vmstate_virtio_mem_device_early;
-> >
-> > -static bool virtio_mem_has_legacy_guests(void)
-> > -{
-> > -    /*
-> > -     * We only had legacy x86 guests that did not support
-> > -     * VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE. Other targets don't have
-> > -     * legacy guests.
-> > -     */
-> > -    switch (target_arch()) {
-> > -    case SYS_EMU_TARGET_I386:
-> > -    case SYS_EMU_TARGET_X86_64:
-> > -        return true;
-> > -    default:
-> > -        return false;
-> > -    }
-> > -}
-> > -
-> >  /*
-> >   * Let's not allow blocks smaller than 1 MiB, for example, to keep the=
- tracking
-> >   * bitmap small.
-> > @@ -859,7 +844,7 @@ static void virtio_mem_device_realize(DeviceState *=
-dev, Error **errp)
-> >      rb =3D vmem->memdev->mr.ram_block;
-> >      page_size =3D qemu_ram_pagesize(rb);
-> >
-> > -    if (virtio_mem_has_legacy_guests()) {
-> > +    if (VIRTIO_MEM_GET_CLASS(vmem)->has_legacy_guests) {
-> >          switch (vmem->unplugged_inaccessible) {
-> >          case ON_OFF_AUTO_AUTO:
-> >              if (virtio_mem_has_shared_zeropage(rb)) {
-> > @@ -1635,9 +1620,6 @@ static void virtio_mem_class_init(ObjectClass *kl=
-ass, const void *data)
-> >      RamDiscardSourceClass *rdsc =3D RAM_DISCARD_SOURCE_CLASS(klass);
-> >
-> >      device_class_set_props(dc, virtio_mem_properties);
-> > -    if (virtio_mem_has_legacy_guests()) {
-> > -        device_class_set_props(dc, virtio_mem_legacy_guests_properties=
-);
-> > -    }
-> >      dc->vmsd =3D &vmstate_virtio_mem;
-> >
-> >      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-> > @@ -1660,6 +1642,14 @@ static void virtio_mem_class_init(ObjectClass *k=
-lass, const void *data)
-> >      rdsc->is_populated =3D virtio_mem_rds_is_populated;
-> >  }
-> >
-> > +static void virtio_mem_legacy_class_init(ObjectClass *klass, const voi=
-d *data)
-> > +{
-> > +    virtio_mem_class_init(klass, data);
-> > +    device_class_set_props(DEVICE_CLASS(klass),
-> > +                           virtio_mem_legacy_guests_properties);
-> > +    VIRTIO_MEM_CLASS(klass)->has_legacy_guests =3D true;
-> > +}
-> > +
-> >  static const TypeInfo virtio_mem_info =3D {
-> >      .name =3D TYPE_VIRTIO_MEM,
-> >      .parent =3D TYPE_VIRTIO_DEVICE,
-> > @@ -1668,6 +1658,22 @@ static const TypeInfo virtio_mem_info =3D {
-> >      .instance_finalize =3D virtio_mem_instance_finalize,
-> >      .class_init =3D virtio_mem_class_init,
-> >      .class_size =3D sizeof(VirtIOMEMClass),
-> > +    .is_available =3D target_not_base_i386,
-> > +    .interfaces =3D (const InterfaceInfo[]) {
-> > +        { TYPE_RAM_DISCARD_SOURCE },
-> > +        { }
-> > +    },
-> > +};
-> > +
-> > +static const TypeInfo virtio_mem_legacy_info =3D {
-> > +    .name =3D TYPE_VIRTIO_MEM,
-> > +    .parent =3D TYPE_VIRTIO_DEVICE,
-> > +    .instance_size =3D sizeof(VirtIOMEM),
-> > +    .instance_init =3D virtio_mem_instance_init,
-> > +    .instance_finalize =3D virtio_mem_instance_finalize,
-> > +    .class_init =3D virtio_mem_legacy_class_init,
-> > +    .class_size =3D sizeof(VirtIOMEMClass),
-> > +    .is_available =3D target_base_i386,
-> >      .interfaces =3D (const InterfaceInfo[]) {
-> >          { TYPE_RAM_DISCARD_SOURCE },
-> >          { }
-> > @@ -1677,6 +1683,7 @@ static const TypeInfo virtio_mem_info =3D {
-> >  static void virtio_register_types(void)
-> >  {
-> >      type_register_static(&virtio_mem_info);
-> > +    type_register_static(&virtio_mem_legacy_info);
-> >  }
-> >
-> >  type_init(virtio_register_types)
-> > diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-=
-mem.h
-> > index 5d1d19c6bec..f367959ecb0 100644
-> > --- a/include/hw/virtio/virtio-mem.h
-> > +++ b/include/hw/virtio/virtio-mem.h
-> > @@ -134,6 +134,8 @@ struct VirtIOMEMClass {
-> >      VirtioDeviceClass parent_class;
-> >
-> >      /* public */
-> > +    bool has_legacy_guests;
-> > +
-> >      void (*fill_device_info)(const VirtIOMEM *vmen, VirtioMEMDeviceInf=
-o *vi);
-> >      MemoryRegion *(*get_memory_region)(VirtIOMEM *vmem, Error **errp);
-> >      void (*decide_memslots)(VirtIOMEM *vmem, unsigned int limit);
 >
-> Fine for me, let's see what virtio maintainers think about it.
-
-Ping it, also the V2 version is ready, may I send it now?
-
+> On 10/8/26 10:42 AM, Daniel Henrique Barboza wrote:
+> > Hi Zhiwei,
+> >
+> >
+> > Sorry from taking this long to take a look at this work.  I am afraid
+> > I'll
+> > need to ask you to send a v9 due to the following upstream changes, asi=
+de
+> > from some review comments I made:
+> >
+> > - upstream changed how tcg tests are invoked (we use meson now), i.e. y=
+ou
+> > need to add changes in tests/tcg/riscv64/system/meson.build instead of
+> > Makefile.softmmu-target;
+> >
+> > - upstream also changed how we declare things in disas/riscv.c.
+> >
+> >
+> > If you send a v9 I'll prioritize it for review.  We can get this done f=
+or
+> > 11.2.
+> >
+> Hi Daniel,
 >
-> Regards,
-> Pierrick
-
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+> Thank you for taking the time to review this! No worries about the delay.
+>
+> I appreciate the heads-up on the upstream changes. I will update the
+> patch accordingly:
+>
+> Switch from Makefile.softmmu-target to
+> tests/tcg/riscv64/system/meson.build for the TCG test invocation;
+> Update the declarations in disas/riscv.c to align with the latest
+> upstream changes.
+> I will send out v9 as soon as possible. Really glad to hear we can
+> target 11.2 for this =E2=80=94 I'll make sure to prioritize it on my end =
+as well.
+>
+> Thanks again for the review and for keeping this moving!
+>
+> Best regards,
+> Zhiwei
+> >
+> > Cheers,
+> > Daniel
+> >
+> > On 7/23/2026 5:03 PM, LIU Zhiwei wrote:
+> >> This patch set introduces support for the RISC-V Smsdid and Smmpt
+> >> (Supervisor Domain Identifier and Memory Protection Table) extensions
+> >> v0.4.9(https://github.com/riscv/riscv-smmtt/releases/tag/v0.4.9).
+> >> Smmpt provides a hardware mechanism for fine-grained memory protection=
+,
+> >> checked after address translation, which is particularly useful for
+> >> supervisor-level sandboxing and security monitoring.
+> >>
+> >> The rfc patch set:
+> >> https://mail.gnu.org/archive/html/qemu-riscv/2025-09/msg00216.html
+> >>
+> >> Rahul Pathak is working on SMMPT OpenSBI support -
+> >> https://lists.infradead.org/pipermail/opensbi/2026-July/010235.html
+> >>
+> >> based on his QEMU SMMPT branch -
+> >> https://github.com/pathakraul/qemu/tree/rpathak_smmpt_v1
+> >>
+> >> As we all agree -
+> >> https://patchew.org/QEMU/20260715145016.17369-1-zhiwei._5Fliu@linux.al=
+ibaba.com/
+> >>
+> >> , we will collaborate on this work and not duplicate efforts. Rahul wi=
+ll
+> >> focus on OpenSBI upstream and I will update the QEMU patch set to v8.
+> >>
+> >> Xiangyi will review the OpenSBI SMMPT patch set and may collaborate to
+> >> upstream the other parts, such as SMSDIA and IOMPT.
+> >>
+> >> v7->v8:
+> >>      1. Update the mfence.pa and minval.pa instruction encodings to
+> >> match the
+> >>         upstream riscv-opcodes definition
+> >>         (https://github.com/riscv/riscv-opcodes/pull/389/): mfence.pa
+> >> now uses
+> >>         funct7=3D0b0011001 and minval.pa uses funct7=3D0b0011011. The
+> >> decoder,
+> >>         disassembler and the system test are updated accordingly.
+> >>
+> >> v6->v7:
+> >>      The implementation is updated from the v0.3.4 specification to
+> >>      v0.4.9. The main changes are:
+> >>      1. Update the mmpt CSR number to 0x382 and msdcfg to 0x74E.
+> >>      2. Update the mmpt register layout: the SDID and PPN field
+> >> positions
+> >>         changed and the RV64 PPN is now 44 bits.
+> >>      3. Rework the MPTE format: the N (NAPOT) bit now lives at bit 2,
+> >> the
+> >>         non-leaf NAPOT form is removed, NAPOT leaf entries encode a
+> >> single
+> >>         XWR tuple plus a G granularity field, and non-NAPOT leaf entri=
+es
+> >>         hold per-page XWR tuples.
+> >>      4. Treat XWR=3D000 as "no access" and a non-leaf entry with N=3D1=
+ as a
+> >>         fault.
+> >>      5. Enforce the Smmpt64 root-table PPN alignment (low 3 bits zero)=
+.
+> >>      6. Rename the fence instructions mfence.spa/minval.spa to
+> >>         mfence.pa/minval.pa.
+> >>      7. Drop stale Reviewed-by tags on the substantially reworked
+> >> patches.
+> >>      8. Introduce the configurable "smmpt-sdidlen" CPU property.
+> >>      9. Add disassembly support for the Smmpt.
+> >>      10. Add bare-metal M-mode system tests.
+> >>      11. Rebase to master.
+> >>
+> >> v5->v6:
+> >>      1. Use explicitly bit fields extract instead of mpte_union_t.
+> >>      2. Use the same exception behavior for MPT valiation as PMP
+> >>         valiation.
+> >>      3. Use PAGE_* instead of MPT_ACCESS_* as they have same value.
+> >>      4. Use address_space_*_le instead of address_space_* for SMMPT.
+> >>      5. Only print SMMPT address check log when SMMPT is enabled.
+> >>      6. Add implied rule for SMMPT as it depends on SMSDID.
+> >>      7. Rebase to master.
+> >>
+> >> v4->v5:
+> >>      1. Rebase to master.
+> >> v3->v4:
+> >>      1. Add missing review tags.
+> >> v2->v3:
+> >>      1. Fix build error in patch 2.
+> >>      2. Rebase to master.
+> >>
+> >> rfc->v2:
+> >>      1. When ext_smmpt is false or BARE mode, make other fields in mmp=
+t
+> >>         CSR zero.
+> >>      2. Add patch 5 to fix smrnmi ISA string order.
+> >>      3. Fix patch 6 smmpt and smsdid ISA string order.
+> >>      4. Make smmpt and smsdid experiment extensions.
+> >>      5. Add review tags.
+> >>
+> >> LIU Zhiwei (11):
+> >>    target/riscv: Add basic definitions and CSRs for SMMPT
+> >>    target/riscv: Add smmpt-sdidlen property for the mmpt SDID field
+> >>    target/riscv: Implement core SMMPT lookup logic
+> >>    target/riscv: Integrate SMMPT checks into MMU and TLB fill
+> >>    target/riscv: Implement SMMPT fence instructions
+> >>    target/riscv: Fix smrnmi isa alphabetical order
+> >>    target/riscv: Add disassembly for Smmpt instructions and CSRs
+> >>    target/riscv: Enable SMMPT extension
+> >>    target/riscv: Add system test for SMMPT extension
+> >>    target/riscv: Add system tests for Smmpt52 and Smmpt64
+> >>    target/riscv: Add system test for Smmpt34
+> >>
+> >>   disas/riscv.c                                 |   9 +-
+> >>   target/riscv/cpu.c                            |  60 +++-
+> >>   target/riscv/cpu.h                            |   8 +
+> >>   target/riscv/cpu_bits.h                       |  27 ++
+> >>   target/riscv/cpu_cfg_fields.h.inc             |   3 +
+> >>   target/riscv/insn32.decode                    |   2 +
+> >>   target/riscv/meson.build                      |   1 +
+> >>   target/riscv/riscv_smmpt.c                    | 339 ++++++++++++++++=
+++
+> >>   target/riscv/riscv_smmpt.h                    |  26 ++
+> >>   target/riscv/tcg/cpu_helper.c                 | 119 +++++-
+> >>   target/riscv/tcg/csr.c                        | 106 ++++++
+> >>   .../tcg/insn_trans/trans_privileged.c.inc     |  30 ++
+> >>   target/riscv/tcg/pmp.h                        |   3 +
+> >>   tests/tcg/riscv64/Makefile.softmmu-target     |  12 +
+> >>   tests/tcg/riscv64/smmpt-common.S              | 257 +++++++++++++
+> >>   tests/tcg/riscv64/test-smmpt.S                |  85 +++++
+> >>   tests/tcg/riscv64/test-smmpt34.S              |  97 +++++
+> >>   tests/tcg/riscv64/test-smmpt52.S              |  91 +++++
+> >>   tests/tcg/riscv64/test-smmpt64.S              |  98 +++++
+> >>   19 files changed, 1354 insertions(+), 19 deletions(-)
+> >>   create mode 100644 target/riscv/riscv_smmpt.c
+> >>   create mode 100644 target/riscv/riscv_smmpt.h
+> >>   create mode 100644 tests/tcg/riscv64/smmpt-common.S
+> >>   create mode 100644 tests/tcg/riscv64/test-smmpt.S
+> >>   create mode 100644 tests/tcg/riscv64/test-smmpt34.S
+> >>   create mode 100644 tests/tcg/riscv64/test-smmpt52.S
+> >>   create mode 100644 tests/tcg/riscv64/test-smmpt64.S
+> >>
+> >>
+> >> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+> >
 
