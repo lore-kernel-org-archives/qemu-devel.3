@@ -1,51 +1,51 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E73A606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE6C606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DUKfJ4Bj
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ipcMkHHV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNbsb-0006Vt-MH; Sun, 01 Nov 2026 15:10:15 -0500
+	id 1xNbtB-0007Rj-89; Sun, 01 Nov 2026 15:10:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbsX-0006TW-4s
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:10:09 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbt8-0007HI-Fo
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:10:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbsT-00064u-Qr
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:10:08 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbt5-0006LB-M4
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:10:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793563805;
+ s=mimecast20190719; t=1793563843;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:resent-to:
  resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
- bh=gck7WLOTrBQhNTX4CI2N2ElJBfdRYTOJB0Zo1uYJWh4=;
- b=DUKfJ4Bjv4POJCit63twpqzve0f3Q59ShT1zHupDBmLQlRwK/FSDcTDVeVkZYKXElhCXs0
- 6EhoLR34UPy7aiSQPj0C1O25BuKWlZd+wY2a2YZxUiYbFZL/e+pkYIUH+mlUCtd1qyEaKy
- +JRHzUFxvPC9ZV6Wgc/3rKzi91Pp7v0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ky1zk6thScAqYqHATy6gr4bYU7NPm4fM3/3dmXxNTDM=;
+ b=ipcMkHHVNn4QrHMLx3E6fwiF5lHC+SP6F1aNi94Fo1duxua91vv1JmnxAFyxUdHfdJRfvE
+ NUITM9fxHGgEZvpT+V5qvSJf18aigeOCGl5ER/mCTPXMFmZ/2CpwHtuMtPgEdgRi5S+2XP
+ YeOfxj5AMWlEm+jlaqM2HjZQtONJY2o=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-urAbHKg2Pm61HrOGJHCLTg-1; Sun,
- 01 Nov 2026 15:10:00 -0500
-X-MC-Unique: urAbHKg2Pm61HrOGJHCLTg-1
-X-Mimecast-MFC-AGG-ID: urAbHKg2Pm61HrOGJHCLTg_1793563796
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-400-NyKQmjqwPNCy-wEX0umkxA-1; Sun,
+ 01 Nov 2026 15:10:39 -0500
+X-MC-Unique: NyKQmjqwPNCy-wEX0umkxA-1
+X-Mimecast-MFC-AGG-ID: NyKQmjqwPNCy-wEX0umkxA_1793563835
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5AA941954AE2; Sun,  1 Nov 2026 20:09:55 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 872EA1801324; Sun,  1 Nov 2026 20:10:34 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9BC5C30002CB; Sun,  1 Nov 2026 20:09:52 +0000 (UTC)
+ id 853CA30002CF; Sun,  1 Nov 2026 20:10:31 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 46A7D21E6A04; Sun, 01 Nov 2026 21:09:50 +0100 (CET)
+ id 0F7E521E6A04; Sun, 01 Nov 2026 21:10:29 +0100 (CET)
 Resent-To: 17746591750@163.com, alistair@alistair23.me, graf@amazon.com,
  FangSheng.Huang@amd.com, michael.roth@amd.com, jamin_lin@aspeedtech.com,
  kane_chen@aspeedtech.com, palmer@dabbelt.com, rbolshakov@ddn.com,
@@ -54,10 +54,14 @@ Resent-To: 17746591750@163.com, alistair@alistair23.me, graf@amazon.com,
  edgar.iglesias@gmail.com, jasowangio@gmail.com, liwei1518@gmail.com,
  npiggin@gmail.com, zhangckid@gmail.com, titusr@google.com,
  wuhaotsh@google.com, arei.gonglei@huawei.com, berto@igalia.com,
- mark.cave-ayland@ilande.co.uk, junjie.cao@intel.com, pasic@linux.ibm.com,
- zhao1.liu@intel.com, rathc@linux.ibm.com, its@irrelevant.dk,
- stefanb@linux.vnet.ibm.com, clg@kaod.org, xen-devel@lists.xenproject.org,
- conor@kernel.org, luc@lmichel.fr, david@kernel.org,
+ mark.cave-ayland@ilande.co.uk, junjie.cao@intel.com, zhao1.liu@intel.com,
+ its@irrelevant.dk, clg@kaod.org, conor@kernel.org, david@kernel.org,
+ jic23@kernel.org, kbusch@kernel.org, mchehab+huawei@kernel.org,
+ sstabellini@kernel.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pasic@linux.ibm.com,
+ zhiwei_liu@linux.alibaba.com, rathc@linux.ibm.com, zhenwei.pi@linux.dev,
+ stefanb@linux.vnet.ibm.com, adityag@linux.ibm.com,
+ xen-devel@lists.xenproject.org, alifm@linux.ibm.com, luc@lmichel.fr,
  lixianglai@loongson.cn, maobibo@loongson.cn, pbarbuda@microsoft.com,
  yoshinori.sato@nifty.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
@@ -69,31 +73,27 @@ Resent-To: 17746591750@163.com, alistair@alistair23.me, graf@amazon.com,
  chao.liu@processmission.com, jiri@resnulli.us, sam@rfc1149.net,
  anisa.su@samsung.com, alex@shazbot.org, farosas@suse.de,
  mohamed@unpredictable.fr, kvm@vger.kernel.org, linux-cxl@vger.kernel.org,
- alistair.francis@wdc.com, anthony@xenproject.org, jic23@kernel.org,
- kbusch@kernel.org, mchehab+huawei@kernel.org, sstabellini@kernel.org,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- zhiwei_liu@linux.alibaba.com, zhenwei.pi@linux.dev, adityag@linux.ibm.com,
- alifm@linux.ibm.com, amachhiw@linux.ibm.com, borntraeger@linux.ibm.com,
- brueckner@linux.ibm.com, farman@linux.ibm.com, harshpb@linux.ibm.com,
- iii@linux.ibm.com, jjherne@linux.ibm.com, milesg@linux.ibm.com,
- mjrosato@linux.ibm.com
+ alistair.francis@wdc.com, anthony@xenproject.org, amachhiw@linux.ibm.com,
+ borntraeger@linux.ibm.com, brueckner@linux.ibm.com, farman@linux.ibm.com,
+ harshpb@linux.ibm.com, iii@linux.ibm.com, jjherne@linux.ibm.com,
+ milesg@linux.ibm.com, mjrosato@linux.ibm.com
 Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Sun, 01 Nov 2026 21:09:50 +0100
-Resent-Message-ID: <87qzh41fg1.fsf@pond.sub.org>
+Resent-Date: Sun, 01 Nov 2026 21:10:29 +0100
+Resent-Message-ID: <87mrrs1fey.fsf@pond.sub.org>
 From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  qemu-devel@nongnu.org,  Michael Roth
- <michael.roth@amd.com>,  John Snow <jsnow@redhat.com>,  Peter Maydell
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Michael
+ Roth <michael.roth@amd.com>,  John Snow <jsnow@redhat.com>,  Peter Maydell
  <peter.maydell@linaro.org>,  Mauro Carvalho Chehab
  <mchehab+huawei@kernel.org>,  Pierrick Bouvier
  <pierrick.bouvier@oss.qualcomm.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  David Hildenbrand <david@kernel.org>,  Igor Mammedov
- <imammedo@redhat.com>,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Jason Wang <jasowangio@gmail.com>,  Marcelo Tosatti
- <mtosatti@redhat.com>,  kvm@vger.kernel.org,  Alberto Garcia
- <berto@igalia.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Kostiantyn
+ Kostiuk
+ <kkostiuk@redhat.com>,  Eric Blake <eblake@redhat.com>,  David Hildenbrand
+ <david@kernel.org>,  Igor Mammedov <imammedo@redhat.com>,  "Edgar E.
+ Iglesias" <edgar.iglesias@gmail.com>,  Jason Wang <jasowangio@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,  kvm@vger.kernel.org,  Alberto
+ Garcia <berto@igalia.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
  <hreitz@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
  <philmd@oss.qualcomm.com>,
  Zhao Liu <zhao1.liu@intel.com>,  Jonathan Cameron <jic23@kernel.org>,
@@ -146,18 +146,17 @@ Cc: Markus Armbruster <armbru@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
  <atar4qemu@gmail.com>,  Yoshinori Sato <yoshinori.sato@nifty.com>,  Jiri
  Pirko <jiri@resnulli.us>,  Eric Auger <eric.auger@redhat.com>,  Laurent
  Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v7 54/65] qdev: adjust PciDevfn declared type
-In-Reply-To: <auNiLX-dsm8XsFG-@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Thu, 29 Oct 2026 15:11:41 +0000")
+Subject: Re: [PATCH v7 38/65] qom: convert scalar properties to QAPI-aware
+ registration
+In-Reply-To: <CAMxuvaya+Tihnwjf8JNjhmhBMwE7XpTF8zPL7tbfb8DFiAV62g@mail.gmail.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Fri, 30 Oct 2026
+ 13:01:17 +0400")
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
- <20261020-qom-qapi-v7-54-431a86b02b58@redhat.com>
- <atsxLV5YZo8dr-8G@redhat.com>
- <CAMxuvazd7G_NBOM_c6BxZn5PFSw=XQUHueHqBoQQfpzPPgi9qA@mail.gmail.com>
- <87zevz5h4k.fsf@pond.sub.org> <auC-ilqUJq27neSR@redhat.com>
- <87o6ce47rr.fsf@pond.sub.org> <auNiLX-dsm8XsFG-@redhat.com>
-Date: Fri, 30 Oct 2026 10:21:05 +0100
-Message-ID: <87o6cba6im.fsf@pond.sub.org>
+ <20261020-qom-qapi-v7-38-431a86b02b58@redhat.com>
+ <87y0bfa81j.fsf@pond.sub.org>
+ <CAMxuvaya+Tihnwjf8JNjhmhBMwE7XpTF8zPL7tbfb8DFiAV62g@mail.gmail.com>
+Date: Fri, 30 Oct 2026 10:31:46 +0100
+Message-ID: <87bj8ba60t.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -166,14 +165,13 @@ Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -185,158 +183,43 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-> On Wed, Oct 28, 2026 at 08:13:44AM +0100, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > On Tue, Oct 27, 2026 at 03:54:03PM +0100, Markus Armbruster wrote:
->> >> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->> >>=20
->> >> > Hi
->> >> >
->> >> > On Fri, Oct 23, 2026 at 2:04=E2=80=AFPM Daniel P. Berrang=C3=A9 <be=
-rrange@redhat.com> wrote:
->> >> >>
->> >> >> On Tue, Oct 20, 2026 at 02:46:11PM +0400, Marc-Andr=C3=A9 Lureau w=
-rote:
->> >> >> > PciDevfn is a bit special, since it accepts integer and string as
->> >> >> > setter, but only output integer as getter.
->> >
->> > snip
->> >
->> >> >                                                       But I agree we
->> >> > could do better.
->> >> >
->> >> > There are multiple options. We could keep declaring the property as
->> >> > str instead. In this case, the getter should probably return a stri=
-ng
->> >> > for consistency and correctness. This might surprise some existing
->> >> > users though.
->> >>=20
->> >> I.e. ditch numeric suppport for numeric addresses, right?
->> >>=20
->> >> Incompatible change.  Do we care?
->> >>=20
->> >> If we don't, we should be honest about it and mark qom-get unstable.
->> >>=20
->> >> > We could introduce new properties like `devfn-str` and `devfn-int`
->> >> > that alias the same value.
->> >>=20
->> >> Compatibility break.  If breaking compatibility is okay, I'd rather u=
-se
->> >> the opportunity to get rid of cleverness, and go with your first opti=
-on.
->> >>=20
->> >> > We could also introduce a new structured QAPI type.
->> >>=20
->> >> What kind of type do you have in mind?
->> >
->> > IMHO the root cause design flaw here was to overload 'addr' as a
->> > way to set both the slot number and function number, as using
->> > one property for two pieces of data is a well known anti-pattern
->> > we caution against.
->> >
->> > IOW, we should have had 'slot' and 'function' as separate properties
->> > from the start.
->>=20
->> Fair.
->>=20
->> Our modeling of PCI is old and weird.
->>=20
->> What we call "pci-device" isn't a device, it's a function, where
->> function 0 sort of stands in for the device.
+> Hi
 >
-> Mmm, yes, interesting way of looking at it.
+> On Fri, Oct 30, 2026 at 12:48=E2=80=AFPM Markus Armbruster <armbru@redhat=
+.com> wrote:
+>>
+>> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+>>
+>> > Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+>> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>>
+>> How did you create this patch?  It looks almost mechanical.
 >
->> Its "addr" isn't a PCI address, it's the address of the function on its
->> PCI bus, i.e. the tail of a PCI address.
->>=20
->> > From a CLI POV, we could easily change 'addr' to mean only the slot
->> > number, since it is always parsed in string format without the
->> > magic (slot << 4) | function encoding. Then add a 'function' prop
->>=20
->> In CLI, HMP and QMP string (not integer), value "5" is shorthand for
->> "5.0", and means device 5, function 0.
->>=20
->> We could deprecate the .FN part in favor of a new property "function".
->>=20
->> Once we drop support for .FN from "addr", its name becomes even more
->> misleading than it always was.
+> Repeated grep / multi-cursor in zed iirc
 >
-> Yes.
+>>
+>> It misses a few conversions, almost certainly in code added since you
+>> made this patch.  I can take care of them.
 >
->> > The challenge is the impact on QMP with strict typing, as ideally
->> > int format would soley represent the slot number, but today the
->> > int format is encoded (slot << 4) | function.  So anyone relying
->> > on int format in QMP would silently have a semantic change if we
->> > altered what 'addr' means.=20
->>=20
->> That's a no-go.
->>=20
->> > Deprecating 'addr' entirely and adding brand new 'slot' and
->> > 'function' properties would be a significant disruption to
->> > a syntax which has been documented for years (decades).
->>=20
->> What about this:
->>=20
->> * No change to PCIDevice member @devfn: encodes slot and function as an
->>   integer.
->>=20
->> * New "pci-device" properties "slot" and "function".  "slot" sets just
->>   the slot bits of @devfn, and "function" sets just the function bits.
->>   Both default to zero, so specifying just "slot" gives you
->>   PCI_DEVFN(slot, 0), which makes sense.
->>=20
->> * Deprecate "pci-device" property "addr" for QMP.  We can keep it around
->>   for longer than the required grace period if that helps.
->>=20
->> * Declare it legacy for CLI and HMP, with no intent to remove it.
->
-> We can't easily keep it in CLI/HMP, while removing from QMP can we ?
-> As long as the property exists on the PCIDevice object, it will be
-> accessible everywhere.
+> Not surprising after several months.
 
-You're right.  The way device_add / -device work, providing "addr" just
-for CLI and HMP would require gross hacks.
+Not at all.  Almost surprised it's so few.
 
-> Perhaps keep it relatively simple and merely deprecate the string
-> syntax of 'addr' in QMP. That's the place where it is really ugy.
-> Force QMP over to only the integer syntax for 'addr', and leave
-> CLI/HMP accepting the (optionally dotted) string syntax.
->
-> Mgmt apps like libvirt will have to adapt. Tedious, but actually
-> quite simple compared to most deprecations, as the integer syntax
-> can already be used with all historical QEMU versions in QMP that
-> mgmt apps ever need to deal with. They can unconditionally change
-> their code to int syntax and not worry about old/new QEMUs at all.
+[...]
 
-Yes, but if management applications have to adapt anyway, why not use
-the opportunity to adapt to the interface we actually want, i.e. "slot"
-and "function"?
+> Are you working on v8 or should I start rebasing?
 
-If we add "slot" and "function", then what to do about "addr"?  Options:
-
-1. Do nothing.  We provide two interfaces for setting slot / function,
-and no guidance on which to use.
-
-2. We declare "addr" legacy, and recommend "slot" and "function".  This
-tells users that using it is fine, but there's a better way.
-
-3. We deprecate "addr" in favor of "slot and "function" without intent
-to remove it.  Yes, we normally deprecate with intent to remove, but we
-don't have to.
-
-4. We deprecate "addr" with intent to remove it.  Grace period
-debatable.  You argued against such a "significant disruption to a
-syntax which has been documented for years (decades)."  I'm listing it
-for completeness.
+I think it's overall less work if I do v8 at this point.
 
 
