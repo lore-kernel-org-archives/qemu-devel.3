@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E60C60A2600
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B7A606A33D
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=P5jejkQO;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=gqZXk+Vu
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Azrk07eS;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=gM4mc8WM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMqrE-0008Un-By; Fri, 30 Oct 2026 13:57:46 -0400
+	id 1xMqro-0000Xn-Fd; Fri, 30 Oct 2026 13:58:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMqqJ-0007zK-AX
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:56:43 -0400
+ id 1xMqqa-0008Ci-5N
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:57:09 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMqqH-0008Hj-Jf
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:56:43 -0400
+ id 1xMqqY-0008Ik-5H
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:56:59 -0400
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69UHu7FE373342
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:56:39 GMT
+ 69UHu8LC373415
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:56:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- NGE4WrTGJIc4moSGjwi6R1+HFVCc3oj2PkHiPocQhVE=; b=P5jejkQOTiVcCGeI
- h2mxkGn8LF/Wp6yocoiBAVn2aYdLkLO8ZH5dP+VBYTnva+XzHOlC/TCo4/ow2eOx
- ZZOtnSY2pBIGnChKtvP7HgSNT8E1j7p3Y5cuFF6f0tQMYdhxwOL1UXLvcLI10XfA
- O9Vi9jyJeJkikjCApoBBStEjTXpcOc6gOt5C6mXom/Gqvo3XzXBBKMAW3kV0yG59
- jooSMZKMF6OXs9iwcgcEJ28AKAafVfir1v3Wz0cLFofwbjvJVNRHHqztfktoiOLD
- hfaNGLMAbgCf4l0YX0Mjt346jsJpTYGV5Vp9EEWjWSwgGQSN2WrO7S/8KAZ45uNy
- KhDGlQ==
+ J5zM6rPAVM4954wK0YJT2FXUcIUk7rKVpkzOWfHeu3A=; b=Azrk07eS+2CbrVi9
+ TcizPCBVBXE02M0iTy9vMLLfwk72Z1SVXSendNZgfGQGwyRU1AwRhoHky9KLQOQq
+ 2TjpUoXFUeKoRDnFZW5sQBQI1M+/RPQ/SYFYk+V8jhbN2FFls83cT8qQecJNjogt
+ YXhYL+emN+YyXWMv9ZQh6zVYfYF0N1/Biplx9gauY3Qwu5HYMZPZWSqLvf7i06Iy
+ 0+ePpucr1Tiw4P9DBY3yWvTQGqAbXBSsT3CLuAdGbdrx9K6HdQmLGA7BNyPyMagy
+ 5hJ31oBa8grt96qLJlWRa4GgU+HcE4MvozQlU2JAsVN/l6syD4Ars7/UkVFJgwdJ
+ YvZLFw==
 Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
  [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qmb81-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qmb8x-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:56:39 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:56:56 +0000 (GMT)
 Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93f5844cb60so207427785a.0
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 10:56:39 -0700 (PDT)
+ af79cd13be357-93f3969a2a7so153477985a.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 10:56:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793382999; x=1793987799; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793383016; x=1793987816; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=NGE4WrTGJIc4moSGjwi6R1+HFVCc3oj2PkHiPocQhVE=;
- b=gqZXk+VuNua60u1pGWLcK1/lQbhAqxWwwuLP1HCqMrw9ogLDPUZ8UQobJF1x8P84+3
- R3yrqnsgrUVoUErXqKYtKQQIS5G7YXPI1daAl0ylJOAQoRdfpRQdCgQEbvREIiQDi08n
- 7yl4MsOAM9ab8qbB6Wa5K15C+s7i3vZAege6KYNgRvJ1Azf0CC5ggTG2wLKRH0ax+rgL
- S6/7I+27HBdKrbIPWCk2bjAJOL9Mx8YmDBgO1u17wdlCzBslG/b2SvWRCEPPPRqe+EAS
- xS9LlvdPmLSmFpEB9/+aKJ/BPKTSpJUjAnj788ggcTpgCxpEV/lyEheN+Ah8ddo1PA1Q
- vo7Q==
+ bh=J5zM6rPAVM4954wK0YJT2FXUcIUk7rKVpkzOWfHeu3A=;
+ b=gM4mc8WMSxW5bv2qSsdjObKex0onkLIhXXxfpkkR3Qn+ZxfIbacg64U9JXOltRw218
+ xKiEK3HvjCiBxRJO06Y+QGBEiMcDO/PQE2dqR5rNmqr9IRCklh5TzkgEvHC+m+wdv46J
+ cvuQusSKUAlGIj3Is0QVBhjiaDn/QqkhiOWYAoz5Kp8I79KKEborQarzRijG08bI0Iml
+ lR1c1xkcnYhA1QJCSwltkgCwdYz+48X/BXERu3AYoPzVs56v3PLGjWb150cF141y4Sr8
+ /PD/5pKXN5tib0uccsMp0vqG8O2eoRK3NPWqtxzY8TYrD2SAL2Ba9SHl3mqhOVvTXVLl
+ huBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793382999; x=1793987799;
+ d=1e100.net; s=20260707; t=1793383016; x=1793987816;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=NGE4WrTGJIc4moSGjwi6R1+HFVCc3oj2PkHiPocQhVE=;
- b=i4ofhc8+bUGoMRarTnKxk9FPfxAs0Sqy+thb8gkP4oKMB+Y3a4rkIr2UiN+BFUaCCw
- Ul0uY22bszbLNEAQo6hycd5doOW9BiqcAKqCuVq0kBuAQjCc29kp5n25RDtxFNiiBmsS
- 1ByG0GI9vgMr12EJ7Od192fDKyG2/7uHLjhxY2V8cZgMfj+yRwZeXy/kU7uHfAQ5MV45
- pSnX/7VNitqjK+p9etK9VfEPagmCGMUOXB5RknMbALjXbXFoJPLzNdgU8bLavciA5CvW
- ocqX6iSWfs4CVDl43GT+v0z1mL02LZ/ZFLVkrVSK39PpKHwJ6iAfU6xVeKTEw9oiMnM5
- +NJw==
-X-Gm-Message-State: AFq9FYI9z0D2+dLIKtikbKlUd84GTyRbON0SJ/PYmc1/n9dUoGU33hEe
- CdO3GfMGkLX54RZnR7B09us3FAvyqWyfF2/UkhFG/A6RCp1RSPg/eYbqqQYJBGrDlaTYd65Z0dJ
- gnDhCE/sMxAVpBAQGPsTjXnfv0Kist8E+owyP94TOTqzoE7Kv0WM0ARTpJkg8zSO+QD+e
-X-Gm-Gg: AYBFou1O+6+nrtWH2iHWpXdcOyI/A9XqjmKjWsIIShOHL8JJLRJJbY4Q99KMOxTrlym
- 1VBtd3Jjs1+qhYM8EE8eX/rcfd0uFlHNDeyGd97I+fpaK32gUZTNpMSQnTORBGngO42JUXpnmpN
- UDy2dgs8Cihexwiv5hKOJYQNUQXWMLp7LQGNyEEt8QkB2iotiqzaPO0qW95tZr5a3vl39KFjoMG
- 2fubP9HB+bFbpeVFaQ4Mc0mzXXWN/DkAEkFG9UJU5xiP+3k6WRB+TSjnipOgoGauxR859X7dIIG
- TXqr6YmeQNf+ov1Wcpu4pLFm+PNN8XVb3O+Q5nNWD4hhgDs6O/+HtgMwI8NUZtG6PUnne82y6bd
- mBWzvpfwCKkOFVaNtsy9cT4aJGSGYvvAgMDrNOzuAu/cnUCPoQT3P8s7enciqR2lspmtL9GwXaJ
- 0gakLXYKUgjaPaYYlBMBERt0joJinHHA==
-X-Received: by 2002:a05:620a:410f:b0:93e:53db:d59e with SMTP id
- af79cd13be357-9441338b4cfmr978198885a.23.1793382998548; 
- Fri, 30 Oct 2026 10:56:38 -0700 (PDT)
-X-Received: by 2002:a05:620a:410f:b0:93e:53db:d59e with SMTP id
- af79cd13be357-9441338b4cfmr978195785a.23.1793382998098; 
- Fri, 30 Oct 2026 10:56:38 -0700 (PDT)
+ bh=J5zM6rPAVM4954wK0YJT2FXUcIUk7rKVpkzOWfHeu3A=;
+ b=zWJFYgrUGyPI8J7XKMC/DBBh+HZADWW2t2ZnjeK4qHqOixB9GqKfJxdaN0zzaUd0+S
+ OYgiwTVUXvzIA7ICiwHpqs/49TAIwf9g4GjaZM5tklbwHWM2mwlxNqTv7yket/Dy6JCO
+ JLCTvOvHd9/GtHT0IYaLmYg592z+4Vn/3vHs0t66qc0lXjZDDoDtsemZCYJVepLzf3OQ
+ swGl9PZu7B/qo6xFGU8FWjCnYf9W25M2tLKWIaWgqFOIHR/3zRhTEAioc9N2LIn9+YH5
+ 5Vsd/li8JRw12oKyDy+80UBhBEHFrTSp/HntGeTs+PRbY6IgRG5sxcPFuH5Y32c+80RS
+ v+zg==
+X-Gm-Message-State: AFq9FYK4vRuzVrg6CRMFGE+8iVWGEttLP2b2vng/ynL+oEeubbyPiZDN
+ oczp0CsOPxbD1kyr4LtzRaf1u4WnH6Jl+g09WhQLhC6/Y0uhY8E4HgRQJazud8aR6bSSJ/BxDX4
+ 9/m+aGBWx2t/XlTg8CEjF54b2YijyNRP5BtxKI3YxCbNaps2YEmSTteyKY9Op05r31/TO
+X-Gm-Gg: AYBFou1FQIkeXfKGYZnNYXd4gt9TYMyzrBeH8jYH14vm4tQQwL7uXBKLdEHh7Yti2Nw
+ x/QRKrrHqBfrNAMedhN+9Hu/ygrSr6ppzV6LlDnD3xPaCMm5PcNJtx839LPjvQywHfIzal5KE+G
+ W8YeusAiXPR8xwuq6EEjei/os7lViXm40GVN+IGaBzgwIXByH0BgG7yStUfqYgZaaJMG/xVvGNf
+ RWL9hyHsnC/lHnT0fYdx1MPuNXg9+21+D2S/P2BzbumROqhvE1WS6xr0UX3rb7zDGm/eZCioW/r
+ aPLuijug1PTQkc8YgkQaKvaNUn5HEkZx77Mt9EEzqlBVfWxtn/xQ7rKrVq89Z7pe6JzITK6ToZ0
+ d+C4IT31sz9La+b/Oxo8ljdnsL1chtCSAaCeB5ttk6ewhdu9hl+qzzXa3360MJoUDzNHYOkB/Fr
+ ns5ZKixiQ67ZTH9IhIzVyEOEwepCM8TA==
+X-Received: by 2002:a05:620a:6014:b0:93b:ebd8:9147 with SMTP id
+ af79cd13be357-94421611a7amr528263585a.18.1793383015683; 
+ Fri, 30 Oct 2026 10:56:55 -0700 (PDT)
+X-Received: by 2002:a05:620a:6014:b0:93b:ebd8:9147 with SMTP id
+ af79cd13be357-94421611a7amr528259785a.18.1793383015185; 
+ Fri, 30 Oct 2026 10:56:55 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4abf6c7852esm69301075e9.11.2026.10.30.10.56.35
+ 5b1f17b1804b1-4abf396dfdbsm78342605e9.1.2026.10.30.10.56.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 30 Oct 2026 10:56:36 -0700 (PDT)
+ Fri, 30 Oct 2026 10:56:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -95,9 +95,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v4 19/32] tests/tcg/mips: Group MSA float-max-min tests
-Date: Fri, 30 Oct 2026 18:53:41 +0100
-Message-ID: <20261030175357.99684-20-philmd@oss.qualcomm.com>
+Subject: [PATCH v4 21/32] tests/tcg/mips: Group MSA int-average tests
+Date: Fri, 30 Oct 2026 18:53:43 +0100
+Message-ID: <20261030175357.99684-22-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261030175357.99684-1-philmd@oss.qualcomm.com>
 References: <20261030175357.99684-1-philmd@oss.qualcomm.com>
@@ -105,25 +105,25 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX2PFLtv8pvakb
- 7XuIqnaAMgVeUz2xzBWsVpYIxAn7In2au/3jdW1dxwjPNP0aj2GPbgZGdqcEVzhwc93JTe2BQTm
- cfVU2vSOqgSpAjVQxOjkIo6jJ/A+xCgnjbbFt0Z8TMwS3km8zQb0ZjFzhKZl0B3SV22sQwYl8OR
- Htrr9f/6hu74s+TaZYX2DVgMi25pNIlgsEkL7DqNzJtrqCmW10LCX/peJaRhXmyQu1278cwRm/T
- rKW4kiA+LGArJGvcLgDw9owongJeO3Gtb0r6Gh2oc8JPaV+MIxnaiqtdqUwxMxWa8ZQ0Byl5WvP
- v+R6dXwqEKIJY8VuRxIU8bbgchU1omT8blSkjkpqv1fdygtjcUK9mSehYYRJiesndZi/lziZbeA
- +wWtvwipESSbOukNUN+baGnBgzPVFZKbV+AJjHfIeWoTmvbqZgeo0pCofAi8ql/MZefgyHBQizf
- +94ZYD5VMQDq/22OcWA==
-X-Proofpoint-ORIG-GUID: y8UjNT67Db5Vi2KH0PcNrOa8JEDk5vXx
-X-Authority-Analysis: v=2.4 cv=IeoSymqa c=1 sm=1 tr=0 ts=6ae4da57 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX0jM4a6gnJkFZ
+ fN3C561GGl+VsfGky7d4A927wUVjES88xI6XsvtRdokmnimJwfS4wHtbWwtHxI5cPVMHWzUcO8m
+ A0XVS+Wq7qwmpi+eDqA9pkYyPPfxf8N+56wY0p/hXGQIBruIlAyxD2TQegMkKaXHbLvVbLv80HT
+ OuFuhAHaAcRei0W1wPCcN84hffxerz5p1Af4inQjFhFZx+d1RNsY6axmDXvDFkqNTf4s4iXQLpU
+ eChWzBtcnhWMRA2tkUHhmAxq5zfe+xgSNaJIhzGJ3PJWsoTAWobMkRkJCBGfOfQMsmT/a9FWZ4q
+ Fb84skfepfV7PHzwEaFoMJqRXbCkV3WdcvATOoIAYl5oDVLlfFQ7L3eesBpqcItzTrGaNGlaCB0
+ pz57kYjWCFKYlvoimvErozfqnCgC7gzEWCXCx/CAuPnwOcR9AVBtlraTYifeZYE/7E5R+x30VDH
+ jtvME4mL5wkkiP8gy4w==
+X-Proofpoint-ORIG-GUID: 3ZiGQ1Fa-3z99KUwf32LINREV044M4av
+X-Authority-Analysis: v=2.4 cv=IeoSymqa c=1 sm=1 tr=0 ts=6ae4da68 cx=c_pps
  a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=oKQZkuFmXZLJHpf79lgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=EUspDBNiAAAA:8 a=XlFCZ7tVMrZGAbOMMLgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
  a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX/CrCooyNTd3u
- euAjti2nEPjYYJ7/IBf9tHMte99ZOA0eSvwhFdd1yMc5Ivx2NZrMpuoWOwSy+o0YFCqgtRPQjSO
- FtFascZNKCuVCgXKKtHRDUqP8BnE+h8=
-X-Proofpoint-GUID: y8UjNT67Db5Vi2KH0PcNrOa8JEDk5vXx
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfXzRlK/kSjypSw
+ bSzeunSCUi8+0a22QIxUOJmwQLfj7qoQPtmKMASoGM3AlDHYtpNatzL1YYMlkzEYmm0qswE1Li9
+ PpwMafwjQMhuMSExO5/VTrCjv6MWXt8=
+X-Proofpoint-GUID: 3ZiGQ1Fa-3z99KUwf32LINREV044M4av
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-30_06,2026-10-21_02,2025-10-01_01
@@ -159,69 +159,109 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Build the 8 per-opcode float-max-min tests as a single executable,
-test_msa_float_max_min.c, to reduce the number of test binaries.
+Build the 16 per-opcode int-average tests as a single executable,
+test_msa_int_average.c, to reduce the number of test binaries.
 Each opcode reports one TAP line.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/mips/test_msa_float_max_min.c | 75 +++++++++++++++++++++++++
- tests/tcg/mips/meson.build              |  9 +--
- 2 files changed, 76 insertions(+), 8 deletions(-)
- create mode 100644 tests/tcg/mips/test_msa_float_max_min.c
+ tests/tcg/mips/test_msa_int_average.c | 123 ++++++++++++++++++++++++++
+ tests/tcg/mips/meson.build            |  17 +---
+ 2 files changed, 124 insertions(+), 16 deletions(-)
+ create mode 100644 tests/tcg/mips/test_msa_int_average.c
 
-diff --git a/tests/tcg/mips/test_msa_float_max_min.c b/tests/tcg/mips/test_msa_float_max_min.c
+diff --git a/tests/tcg/mips/test_msa_int_average.c b/tests/tcg/mips/test_msa_int_average.c
 new file mode 100644
-index 000000000000..13f8bc79b0e6
+index 000000000000..f3ff9fd345bc
 --- /dev/null
-+++ b/tests/tcg/mips/test_msa_float_max_min.c
-@@ -0,0 +1,75 @@
++++ b/tests/tcg/mips/test_msa_int_average.c
+@@ -0,0 +1,123 @@
 +/*
-+ * MIPS MSA tests: Float Min / Max instructions
++ * MIPS MSA tests: Int Average instructions
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "../include/tap.h"
 +
-+#define main test_msa_fmax_a_d
-+#include "user/ase/msa/float-max-min/test_msa_fmax_a_d.c"
++#define main test_msa_ave_s_b
++#include "user/ase/msa/int-average/test_msa_ave_s_b.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_fmax_a_w
-+#include "user/ase/msa/float-max-min/test_msa_fmax_a_w.c"
++#define main test_msa_ave_s_d
++#include "user/ase/msa/int-average/test_msa_ave_s_d.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_fmax_d
-+#include "user/ase/msa/float-max-min/test_msa_fmax_d.c"
++#define main test_msa_ave_s_h
++#include "user/ase/msa/int-average/test_msa_ave_s_h.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_fmax_w
-+#include "user/ase/msa/float-max-min/test_msa_fmax_w.c"
++#define main test_msa_ave_s_w
++#include "user/ase/msa/int-average/test_msa_ave_s_w.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_fmin_a_d
-+#include "user/ase/msa/float-max-min/test_msa_fmin_a_d.c"
++#define main test_msa_ave_u_b
++#include "user/ase/msa/int-average/test_msa_ave_u_b.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_fmin_a_w
-+#include "user/ase/msa/float-max-min/test_msa_fmin_a_w.c"
++#define main test_msa_ave_u_d
++#include "user/ase/msa/int-average/test_msa_ave_u_d.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_fmin_d
-+#include "user/ase/msa/float-max-min/test_msa_fmin_d.c"
++#define main test_msa_ave_u_h
++#include "user/ase/msa/int-average/test_msa_ave_u_h.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
-+#define main test_msa_fmin_w
-+#include "user/ase/msa/float-max-min/test_msa_fmin_w.c"
++#define main test_msa_ave_u_w
++#include "user/ase/msa/int-average/test_msa_ave_u_w.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_aver_s_b
++#include "user/ase/msa/int-average/test_msa_aver_s_b.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_aver_s_d
++#include "user/ase/msa/int-average/test_msa_aver_s_d.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_aver_s_h
++#include "user/ase/msa/int-average/test_msa_aver_s_h.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_aver_s_w
++#include "user/ase/msa/int-average/test_msa_aver_s_w.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_aver_u_b
++#include "user/ase/msa/int-average/test_msa_aver_u_b.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_aver_u_d
++#include "user/ase/msa/int-average/test_msa_aver_u_d.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_aver_u_h
++#include "user/ase/msa/int-average/test_msa_aver_u_h.c"
++#undef main
++#undef TEST_COUNT_TOTAL
++
++#define main test_msa_aver_u_w
++#include "user/ase/msa/int-average/test_msa_aver_u_w.c"
 +#undef main
 +#undef TEST_COUNT_TOTAL
 +
@@ -230,14 +270,22 @@ index 000000000000..13f8bc79b0e6
 +    const char *name;
 +    int32_t (*fn)(void);
 +} msa_tests[] = {
-+    { "fmax.a.d", test_msa_fmax_a_d },
-+    { "fmax.a.w", test_msa_fmax_a_w },
-+    { "fmax.d", test_msa_fmax_d },
-+    { "fmax.w", test_msa_fmax_w },
-+    { "fmin.a.d", test_msa_fmin_a_d },
-+    { "fmin.a.w", test_msa_fmin_a_w },
-+    { "fmin.d", test_msa_fmin_d },
-+    { "fmin.w", test_msa_fmin_w },
++    { "ave.s.b", test_msa_ave_s_b },
++    { "ave.s.d", test_msa_ave_s_d },
++    { "ave.s.h", test_msa_ave_s_h },
++    { "ave.s.w", test_msa_ave_s_w },
++    { "ave.u.b", test_msa_ave_u_b },
++    { "ave.u.d", test_msa_ave_u_d },
++    { "ave.u.h", test_msa_ave_u_h },
++    { "ave.u.w", test_msa_ave_u_w },
++    { "aver.s.b", test_msa_aver_s_b },
++    { "aver.s.d", test_msa_aver_s_d },
++    { "aver.s.h", test_msa_aver_s_h },
++    { "aver.s.w", test_msa_aver_s_w },
++    { "aver.u.b", test_msa_aver_u_b },
++    { "aver.u.d", test_msa_aver_u_d },
++    { "aver.u.h", test_msa_aver_u_h },
++    { "aver.u.w", test_msa_aver_u_w },
 +};
 +
 +int main(void)
@@ -247,38 +295,46 @@ index 000000000000..13f8bc79b0e6
 +    TAP_START();
 +    for (i = 0; i < sizeof(msa_tests) / sizeof(msa_tests[0]); i++) {
 +        tap_report(!msa_tests[i].fn(), "MSA %s %s",
-+                   "Float Max Min", msa_tests[i].name);
++                   "Int Average", msa_tests[i].name);
 +    }
 +
 +    return tap_done();
 +}
 diff --git a/tests/tcg/mips/meson.build b/tests/tcg/mips/meson.build
-index 17e3fe3e55ae..5e14bc3197a5 100644
+index 7ef3d6aafa8a..7da4aece8409 100644
 --- a/tests/tcg/mips/meson.build
 +++ b/tests/tcg/mips/meson.build
-@@ -6,6 +6,7 @@ tests_mips_msa_groups = [
-   '../mips/test_msa_bit_move.c',
-   '../mips/test_msa_bit_set.c',
+@@ -8,6 +8,7 @@ tests_mips_msa_groups = [
    '../mips/test_msa_fixed_multiply.c',
-+  '../mips/test_msa_float_max_min.c',
+   '../mips/test_msa_float_max_min.c',
+   '../mips/test_msa_int_add.c',
++  '../mips/test_msa_int_average.c',
  ]
  
  tests += tcg_tests['multiarch-linux-user']['tests']
-@@ -73,14 +74,6 @@ tests_mips_msa = [
-   '../mips/user/ase/msa/int-subtract/test_msa_asub_u_h.c',
-   '../mips/user/ase/msa/int-subtract/test_msa_asub_s_b.c',
-   '../mips/user/ase/msa/int-subtract/test_msa_subs_s_w.c',
--  '../mips/user/ase/msa/float-max-min/test_msa_fmin_w.c',
--  '../mips/user/ase/msa/float-max-min/test_msa_fmax_w.c',
--  '../mips/user/ase/msa/float-max-min/test_msa_fmax_a_d.c',
--  '../mips/user/ase/msa/float-max-min/test_msa_fmin_a_w.c',
--  '../mips/user/ase/msa/float-max-min/test_msa_fmax_a_w.c',
--  '../mips/user/ase/msa/float-max-min/test_msa_fmax_d.c',
--  '../mips/user/ase/msa/float-max-min/test_msa_fmin_d.c',
--  '../mips/user/ase/msa/float-max-min/test_msa_fmin_a_d.c',
-   '../mips/user/ase/msa/int-multiply/test_msa_mulv_w.c',
-   '../mips/user/ase/msa/int-multiply/test_msa_msubv_d.c',
-   '../mips/user/ase/msa/int-multiply/test_msa_msubv_h.c',
+@@ -192,22 +193,6 @@ tests_mips_msa = [
+   '../mips/user/ase/msa/int-max-min/test_msa_min_s_b.c',
+   '../mips/user/ase/msa/int-max-min/test_msa_min_u_w.c',
+   '../mips/user/ase/msa/int-max-min/test_msa_max_u_w.c',
+-  '../mips/user/ase/msa/int-average/test_msa_aver_s_b.c',
+-  '../mips/user/ase/msa/int-average/test_msa_ave_s_b.c',
+-  '../mips/user/ase/msa/int-average/test_msa_ave_u_w.c',
+-  '../mips/user/ase/msa/int-average/test_msa_ave_s_h.c',
+-  '../mips/user/ase/msa/int-average/test_msa_aver_u_w.c',
+-  '../mips/user/ase/msa/int-average/test_msa_ave_s_w.c',
+-  '../mips/user/ase/msa/int-average/test_msa_aver_u_h.c',
+-  '../mips/user/ase/msa/int-average/test_msa_ave_s_d.c',
+-  '../mips/user/ase/msa/int-average/test_msa_ave_u_h.c',
+-  '../mips/user/ase/msa/int-average/test_msa_aver_u_b.c',
+-  '../mips/user/ase/msa/int-average/test_msa_aver_s_d.c',
+-  '../mips/user/ase/msa/int-average/test_msa_aver_s_w.c',
+-  '../mips/user/ase/msa/int-average/test_msa_ave_u_d.c',
+-  '../mips/user/ase/msa/int-average/test_msa_aver_u_d.c',
+-  '../mips/user/ase/msa/int-average/test_msa_ave_u_b.c',
+-  '../mips/user/ase/msa/int-average/test_msa_aver_s_h.c',
+   '../mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_h.c',
+   '../mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_h.c',
+   '../mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_w.c',
 -- 
 2.55.0
 
