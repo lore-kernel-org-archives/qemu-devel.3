@@ -1,99 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A925E606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F08606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UwQWSCyS;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=H0LcIV5s
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=SfSybaHO;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=goTIzUpb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMo8N-0007jY-PO; Fri, 30 Oct 2026 11:03:12 -0400
+	id 1xMo83-0007Px-8Q; Fri, 30 Oct 2026 11:02:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMo8A-0007Yw-11
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:02:59 -0400
+ id 1xMo80-0007Jy-EK
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:02:48 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMo85-00078n-UZ
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:02:56 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1xMo7y-00077n-EW
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:02:48 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69UERjhd3207537
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 15:02:52 GMT
+ 69UERBq52494580
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 15:02:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Y6iUJBzjLMb142rUcRxI2nGbYdvciJWZ6b2O6Rm7Fi4=; b=UwQWSCyS86tFsjec
- VNbNtpezWC6D6bHlYKERcqLn82EchVpCAd36OeW3RrqpI/plancAU8WCab4D/J8J
- avfTAe2TaVlQWVCWjWWixgzzo04rh3PBvBaH7ZxzPh0/46Fv6NkXnd3CCeaJPjii
- oAw2zFgM8qrMBKK9lLqpdpymnxvweHdWne2yv2wb6A6hh4q7xvaWJN8QKRuyxxus
- yTmjKNSg0gHmGF0xWpT0E0XQYGYip+GU33Cs99HM+J00UCF8Tw2tTojA7hjIR63R
- ZwoO0cOxpMoVShf7JYDwqdxievRQuJ0oWPIcqouNmpHbXXw/BIENpgd9a/AW9Nkl
- rGFI6g==
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qkmh0-1
+ Z63GwOrdI4x+GXU7UyHKS586C1xC/1OcZnKuijV3FEM=; b=SfSybaHO5VAgAOjR
+ MsBaffwMPEFjOuG5f+heHp2kddkq/g5Aa7b5NbfS/QX5897rvbnfnWf7I2oOyCVr
+ lMvu2DJlpYWkXxb5/lV87SvTHLDiLC1aD+2cXmtUOZXhS9UuGeJCTrxnLfMy0Qub
+ XmybmlMpb+bjNsLIFRXC9vVJN1hv4iHPN4e+P+EIqFkI/aLhQKSyKHEaqOJifcGe
+ lzEV/meNxeW41VxlyMd5MceY4JTsCmxhk30Xm9XxtL3BV7UHXAtSgMOeCTRrSO3m
+ VFpKK5LxukzRQMsOihn5l43OivK/Jkg1aMReZGGfsZjniaqzHHBfep0kLLTgiHZ9
+ Hc9l+A==
+Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com
+ [209.85.221.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6p3p9x-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 15:02:52 +0000 (GMT)
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-988bea8fed6so618401241.2
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:02:52 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 15:02:45 +0000 (GMT)
+Received: by mail-vk1-f198.google.com with SMTP id
+ 71dfb90a1353d-5eabb3a1bd8so895895e0c.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:02:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793372572; x=1793977372; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793372564; x=1793977364; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Y6iUJBzjLMb142rUcRxI2nGbYdvciJWZ6b2O6Rm7Fi4=;
- b=H0LcIV5sj/Z6KGueEjUFHjVlAew5rBG0q/U6cAzu8LHNMFk3PuALvzfzkTeTe60TXN
- CIdbbt8/KyzrTkvoIdMkiM7iSh5fx3YQZz7gX1LhkVQqkFkx39eLdIoPcprvh8gfoO/x
- A1eH6QITB3qY9oduS7ewceAfSxoXxLWdV040407ashlaIjZGONLpMsdphKY0uAzw6nAt
- w5IEXLswXeKtMsfQ6cqWuEzVhUT/IyZi8a683wcIywr325c5AY5Qr7hQfrJE8Vhj/R42
- U5OcgcaYppUfpGU9lgbZlVfFymB1ZAgNlNSVqzKfttCKm5gATNfOXhZKSXJAJjVq3a2f
- bqoQ==
+ bh=Z63GwOrdI4x+GXU7UyHKS586C1xC/1OcZnKuijV3FEM=;
+ b=goTIzUpbDWk/iczIrBxHTvRH9i3p65ObaQpb1yinwHbA2AWtvxB8dumtbFAfmUNj0M
+ HBp8SJrUykWHg7ijUvlOkdlZ0Zjr93Nfo8/ZC7bzTfnbzgDAoqY3ECWWCEbd3+rFDJdE
+ WJl6G9JDxtZaOLXD9i4LobEO3UtMGdQi7hLahKswgzkOt4thZLCbagrsqOMT4+5PwU6h
+ k2V833wJ38outQ/NPIqcxRAPf+8HzhdIWTxlGxTnlirP6DzdXcdc3rV3zCvxMARfvbUM
+ 5awVgBXWglwW4L4OkebmaiFJo5SLJGf1ciOVn69yGqqT1pQpH5UbWpExqkYVCkApltgf
+ 0xSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793372572; x=1793977372;
+ d=1e100.net; s=20260707; t=1793372564; x=1793977364;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Y6iUJBzjLMb142rUcRxI2nGbYdvciJWZ6b2O6Rm7Fi4=;
- b=tYpi13ahQmydG2r2Vo0gE2HLioMZYHH4pth07Fi/TSWVUUG2DA340U6BfFXD6q5HGN
- ZyRnN2e6d2MuEKsWsNQIZJR8ejpzaSIiWuEJHs8Cf1jd3+kMKPPDLlZr6KccpcLyXgBO
- CW0ZjmhoqQLFQ0hSMXYBTKHufo0YpfQffqa/0w3Jl3O9UJBBEAbO2rZxPssI/ar188Y+
- r/SpNa04wi4p2HQhErhPYkqYfDEeOWKc+G8CeQxovfII1RLTzvloQTHBJg41n0NmAEzR
- EelK7E8lVysxo0uuft548P3j+kjS6OB0BM2a/RUfqPu8AdpVl7SgJR9v5ZMQ3ku1Zgjn
- GJBw==
-X-Gm-Message-State: AFq9FYIy6hRHbrdE3b3AIuKN1c5gENQGbNq4nL5oVIi388ePsV1MDssZ
- rwFouPiI5D8hhmIYC8+VaStb1St0O9EPY5wq66gevNDX9ODLIAzPcO3ASMh7+/bNVb/eu2vdxxY
- 7pZlMtBg7P/2zndaoK8zkxf6dODCIZWL3RyoD1qZiPtvAFyIDIL36Q4q91jTUfEfWTT5Y
-X-Gm-Gg: AYBFou1iN+9H69PuvZrEdO6be9Zfjcm9E1Y8aVV/DtU+d2bdeCB9FsURca7Lz9Kz0CH
- jDiATUZ0f1k9XWy/mp4mZlmQx7QkoqO1om8dgglONrXCRg8U6h+hnHtd8uA6Bz5L1Az63gUraaE
- 2tAc7C6hpYqV/JPzRQx6EMFhR7d++ON+AkeFbqV0eawvwvhl9Py2Z6gT5HbvlUwETxX/4+gFlCS
- 4BDVwXdca10yarzlSuQXHfCamnTitZ3sMa7QqMNK908JDkD33N9T42Ac7SqXYlD2FmttSh9Knq0
- vFh6eX+DFcSJKQGsX4sOGS7UuyTvJ1isjdDOtIjMrTupMp+zOBB6czMkNkp7Ep00kzAlMci2KmL
- Lm2ShJqbMzIQRLf1GboOe7gsuo/Is3SDCaWJTFETZN61VN2CUKexlCdSyWBZGtEjuqnn7jlfCx3
- g7vFxQQ2HS9Wb/JaEsEn8UrYq+A4HA0A==
-X-Received: by 2002:a05:6102:fa0:b0:7cb:70ed:ff90 with SMTP id
- ada2fe7eead31-7d072725679mr1323794137.26.1793372571439; 
- Fri, 30 Oct 2026 08:02:51 -0700 (PDT)
-X-Received: by 2002:a05:6102:fa0:b0:7cb:70ed:ff90 with SMTP id
- ada2fe7eead31-7d072725679mr1323662137.26.1793372570272; 
- Fri, 30 Oct 2026 08:02:50 -0700 (PDT)
+ bh=Z63GwOrdI4x+GXU7UyHKS586C1xC/1OcZnKuijV3FEM=;
+ b=IbxufkhiY/dTHTpYo1hWaj3FUZc+Lrjind7gZO+tjnW0evR5VM6TQHRg0+IeuyQTPW
+ SMshJJVpZkdRaEGNaI/+O4IFALQl+L+zECTDQJp0nrNo/2OCpvwipaNpQZMuiqc9U64V
+ SpgOITcLKFn02XvwbLdf3Iz2WV53ReUbyp2gMjnx0oAXUNW6ZvgQ5/CRkiE6Er64FAbr
+ KDad1VSHCBBAznXe3FysPUaJW1DDeJ4gS4HamTrbObjcY4zeIlryBJ+fC4srydj88wE5
+ 2LqjkYnhTChq+3tzosJR8pNY7b7PsdVIMO82ZG6lnbxaYOpHfzB2l/ST7IEYeYiAXK9L
+ 5A5Q==
+X-Gm-Message-State: AFq9FYIoVx5BERK7/nS2OW1wkhuvfIPjzxlv4tlrlxr/Oqj8PwB+7o4L
+ a42tulU9TZd1tMyXuREvHrxS4haAthCA3QlEsDrPPcx9x9QA8vMG5DRJ69Zzc8xnwUYRyojhxCn
+ e3Owbq4F5LT6u303SluMyMN+r93uGCHXX2AiNDOKknpvuEOwAg2PRyCSn4XWYFlkMxERv
+X-Gm-Gg: AYBFou3/EI7k7Nm/mF1ItkCe1hIfUaRGIjpb+NVV846g6wNBesuWX92LwXg0vdutZgx
+ wUvH3BmWgPACY1NTGKqdxonJcJuXth483MgX3WoCcLFiYK0CdB2meKP7rEHnxz3gmocwGgsNV8p
+ bELFs9iQOLeibUmRZndEplPcUhn4OtLMDkekEOLbqzYSn1BtEmw8xMbRo+esaOctaN29S2mbZX2
+ QF4fkBQaT2T1vpQdwENaFQFjXQQ6CBDGpUkv6L3MhJK6PQ+aUUxNbyd3l33TGnF+kE+EIKyPNeQ
+ MCjniYXnB2i6879VLQ3r+1hZzdNiDzS8KWX0PDy3+/ej9txv+h/Z5bltsIcWVKdug9Dt0ZoSV13
+ qv04esWMbG5DGG/saqeNOr3Cd8tQVYQdHuUIWdvbKX//WARjjvQXp6chKszudfD4dMem3mfBrLO
+ SaNjtaaBmRZ7/HeKAKUgw4OjFZ+GtiMQ==
+X-Received: by 2002:a05:6122:e46c:b0:5e9:6d96:a598 with SMTP id
+ 71dfb90a1353d-5ec68953084mr1447294e0c.6.1793372563829; 
+ Fri, 30 Oct 2026 08:02:43 -0700 (PDT)
+X-Received: by 2002:a05:6122:e46c:b0:5e9:6d96:a598 with SMTP id
+ 71dfb90a1353d-5ec68953084mr1447205e0c.6.1793372562770; 
+ Fri, 30 Oct 2026 08:02:42 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4abf368bff7sm67360455e9.2.2026.10.30.08.02.49
+ ffacd0b85a97d-48e71b9c4f4sm3655393f8f.48.2026.10.30.08.02.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 30 Oct 2026 08:02:49 -0700 (PDT)
+ Fri, 30 Oct 2026 08:02:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v3 05/31] tests/tcg/mips: Group DSP dot tests
-Date: Fri, 30 Oct 2026 16:01:35 +0100
-Message-ID: <20261030150202.61556-6-philmd@oss.qualcomm.com>
+Subject: [PATCH v3 04/31] tests/tcg/mips: Group DSP ctrl tests
+Date: Fri, 30 Oct 2026 16:01:34 +0100
+Message-ID: <20261030150202.61556-5-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261030150202.61556-1-philmd@oss.qualcomm.com>
 References: <20261030150202.61556-1-philmd@oss.qualcomm.com>
@@ -101,33 +101,34 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=KsrYSmWN c=1 sm=1 tr=0 ts=6ae4b19c cx=c_pps
- a=R6oCqFB+Yf/t2GF8e0/dFg==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA1OSBTYWx0ZWRfX0JlyNNMQu76T
+ ez1LmevNRumQR0hOPO7oePly68cGTT+AoHNbH0+T3eWtLP/f3Bzqsbz7u9X181LJzv5j2i8KR68
+ tuysvj2o5FsgZHsV8Y7sYwerGpEFdMXW3bewormnjU3PcXTUF5v33VDxndDM0ATydKWQEJ1kK74
+ w6ofVVsjg82aKPv7pStyBpYYcUKoLAs4UzgCptLy57Rriuxft/8/oV9wxOa0KDweErl/+MqB32L
+ aV5pqzLjAgcakM+WZ9qbnMTvcFLVkhvxLRCul17q7qlfVE4nzBgAuhb6ds+uFTpXeDR3FeBo85B
+ eqoqUKO68ItgpOx0/GjgjP2yDRAf+uefLRP/vccBjCossXT5FnRWk2ASNnvii7sqMTK1EWEOmuo
+ wnQwaeluDOWPoTpfB9x0IP997ET2hbB89wCObssVZPoMRZ58eZwberwK0n8sweL6fC0TDBL2+b2
+ Z2JN94nW/hU45j05QQA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA1OSBTYWx0ZWRfX2AqwhR3juv7K
+ m01Zo6ZFY5vmfBmrkw5eG3g7o8WBAWUzvfWEBU4UImqYABkVVD6Yd7oYT7nfFi7R1khGCZky+aT
+ AIOXyScPnVc4Avf7Y0Hn6imjYbAhWVU=
+X-Proofpoint-ORIG-GUID: YSqANjIUBlLLAA7C3f8c3MdIL7tkCb0g
+X-Proofpoint-GUID: YSqANjIUBlLLAA7C3f8c3MdIL7tkCb0g
+X-Authority-Analysis: v=2.4 cv=TL3Q2Fla c=1 sm=1 tr=0 ts=6ae4b195 cx=c_pps
+ a=1Os3MKEOqt8YzSjcPV0cFA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=Ss58A6hLZCuk7yZQP4AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TD8TdBvy0hsOASGTdmB-:22
-X-Proofpoint-ORIG-GUID: u6UNB-anSIaWM5KlRc7V5FIE6jrmjlLk
-X-Proofpoint-GUID: u6UNB-anSIaWM5KlRc7V5FIE6jrmjlLk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA1OSBTYWx0ZWRfX6GV/DODpNGb9
- hMi+YZZ4kQXBHiPslJ6qhF7T8m56tQoYgwBBYGynpQgqDvDXXoGMeU7Cobw3RCJvXihuTGWhZhm
- pqLed5YfW1d2mHZ/71W8W0+7PewPXyTarqRUy1Lg7EzAeldycULzr+D2OJTCH4y4ht/nFJAlwdZ
- Cb9HrmyWFQ82qo5ns78yJg6+AvPZgmcXC6bqHr3ppHiQ8UCJxHCtyvxaDOpranK8HAXk2H+OI2L
- VIL9lkvHK18q6DsTTM1I/bJYWzZ32Nf6gBpZCMyt93lx2e8GoN6BdU+1YuIs/Ifz7a97uLtQSXy
- XJYlN8INkgFp2QoQ87wDI5lnpH2reggkTzZTYldFF1nXFLwuakexVaDMfGPkUIHgve032SZImLy
- F7gbxTHZb4oibylk1r/i0R61srelzXzcm4BnD/FsQoWbOBxP2nkjUcHk/xhToR6wq7Z8vw2QF/v
- BHUl+xWugU/D/LcoUMQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA1OSBTYWx0ZWRfX0Ldh1TA7m6ud
- VmQcAD1xU+cplu56Pd+RM4PWFbmChN3MbxMoxmC7u1Vi3ImNiiPl4Slxi6MPl+lpLWmto9cik+Q
- VLxBrYRGo9Q34ZTBd4F8GrSG/CxmKOA=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=kAGlr9DBaqhD0l0nM9oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=hhpmQAJR8DioWGSBphRh:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-30_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
- lowpriorityscore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300059
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 clxscore=1015
+ adultscore=0 bulkscore=0 malwarescore=0 phishscore=0 suspectscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610300059
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -155,479 +156,127 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Build the 28 per-opcode dot tests as a single executable,
-test_dsp_dot.c, to reduce the number of test binaries.
+Build the 6 per-opcode ctrl tests as a single executable,
+test_dsp_ctrl.c, to reduce the number of test binaries.
 Each opcode reports one TAP line.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/mipsel/test_dsp_dot.c              | 153 +++++++++++++++++++
- tests/tcg/mipsel/test_dsp_r1_dpaq_s_w_ph.c   |   1 -
- tests/tcg/mipsel/test_dsp_r1_dpaq_sa_l_w.c   |   1 -
- tests/tcg/mipsel/test_dsp_r1_dpau_h_qbl.c    |   1 -
- tests/tcg/mipsel/test_dsp_r1_dpau_h_qbr.c    |   1 -
- tests/tcg/mipsel/test_dsp_r1_dpsq_s_w_ph.c   |   1 -
- tests/tcg/mipsel/test_dsp_r1_dpsq_sa_l_w.c   |   1 -
- tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbl.c    |   1 -
- tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbr.c    |   1 -
- tests/tcg/mipsel/test_dsp_r1_madd.c          |   1 -
- tests/tcg/mipsel/test_dsp_r1_maddu.c         |   1 -
- tests/tcg/mipsel/test_dsp_r1_maq_s_w_phl.c   |   1 -
- tests/tcg/mipsel/test_dsp_r1_maq_s_w_phr.c   |   1 -
- tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phl.c  |   1 -
- tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phr.c  |   1 -
- tests/tcg/mipsel/test_dsp_r1_msub.c          |   1 -
- tests/tcg/mipsel/test_dsp_r1_msubu.c         |   1 -
- tests/tcg/mipsel/test_dsp_r1_mult.c          |   1 -
- tests/tcg/mipsel/test_dsp_r1_multu.c         |   1 -
- tests/tcg/mipsel/test_dsp_r2_dpa_w_ph.c      |   1 -
- tests/tcg/mipsel/test_dsp_r2_dpaqx_s_w_ph.c  |   1 -
- tests/tcg/mipsel/test_dsp_r2_dpaqx_sa_w_ph.c |   1 -
- tests/tcg/mipsel/test_dsp_r2_dpax_w_ph.c     |   1 -
- tests/tcg/mipsel/test_dsp_r2_dps_w_ph.c      |   1 -
- tests/tcg/mipsel/test_dsp_r2_dpsqx_s_w_ph.c  |   1 -
- tests/tcg/mipsel/test_dsp_r2_dpsqx_sa_w_ph.c |   1 -
- tests/tcg/mipsel/test_dsp_r2_dpsx_w_ph.c     |   1 -
- tests/tcg/mipsel/test_dsp_r2_mulsa_w_ph.c    |   1 -
- tests/tcg/mipsel/test_dsp_r2_mulsaq_s_w_ph.c |   1 -
- tests/tcg/mipsel/meson.build                 |  29 +---
- 30 files changed, 154 insertions(+), 56 deletions(-)
- create mode 100644 tests/tcg/mipsel/test_dsp_dot.c
+ tests/tcg/mipsel/test_dsp_ctrl.c        | 43 +++++++++++++++++++++++++
+ tests/tcg/mipsel/test_dsp_r1_bposge32.c |  1 -
+ tests/tcg/mipsel/test_dsp_r1_lbux.c     |  1 -
+ tests/tcg/mipsel/test_dsp_r1_lhx.c      |  1 -
+ tests/tcg/mipsel/test_dsp_r1_lwx.c      |  1 -
+ tests/tcg/mipsel/test_dsp_r1_rddsp.c    |  1 -
+ tests/tcg/mipsel/test_dsp_r1_wrdsp.c    |  1 -
+ tests/tcg/mipsel/meson.build            |  7 +---
+ 8 files changed, 44 insertions(+), 12 deletions(-)
+ create mode 100644 tests/tcg/mipsel/test_dsp_ctrl.c
 
-diff --git a/tests/tcg/mipsel/test_dsp_dot.c b/tests/tcg/mipsel/test_dsp_dot.c
+diff --git a/tests/tcg/mipsel/test_dsp_ctrl.c b/tests/tcg/mipsel/test_dsp_ctrl.c
 new file mode 100644
-index 000000000000..4086bcd39741
+index 000000000000..4f7c648d5472
 --- /dev/null
-+++ b/tests/tcg/mipsel/test_dsp_dot.c
-@@ -0,0 +1,153 @@
++++ b/tests/tcg/mipsel/test_dsp_ctrl.c
+@@ -0,0 +1,43 @@
 +/*
-+ * MIPS DSP ASE tests: Dot Product and Multiply-Accumulate instructions
++ * MIPS DSP ASE tests: Indexed Load and DSPControl access instructions
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "test_dsp_runner.h"
 +
-+#define main test_dsp_r1_dpaq_s_w_ph
-+#include "test_dsp_r1_dpaq_s_w_ph.c"
++#define main test_dsp_r1_bposge32
++#include "test_dsp_r1_bposge32.c"
 +#undef main
 +
-+#define main test_dsp_r1_dpaq_sa_l_w
-+#include "test_dsp_r1_dpaq_sa_l_w.c"
++#define main test_dsp_r1_lbux
++#include "test_dsp_r1_lbux.c"
 +#undef main
 +
-+#define main test_dsp_r1_dpau_h_qbl
-+#include "test_dsp_r1_dpau_h_qbl.c"
++#define main test_dsp_r1_lhx
++#include "test_dsp_r1_lhx.c"
 +#undef main
 +
-+#define main test_dsp_r1_dpau_h_qbr
-+#include "test_dsp_r1_dpau_h_qbr.c"
++#define main test_dsp_r1_lwx
++#include "test_dsp_r1_lwx.c"
 +#undef main
 +
-+#define main test_dsp_r1_dpsq_s_w_ph
-+#include "test_dsp_r1_dpsq_s_w_ph.c"
++#define main test_dsp_r1_rddsp
++#include "test_dsp_r1_rddsp.c"
 +#undef main
 +
-+#define main test_dsp_r1_dpsq_sa_l_w
-+#include "test_dsp_r1_dpsq_sa_l_w.c"
-+#undef main
-+
-+#define main test_dsp_r1_dpsu_h_qbl
-+#include "test_dsp_r1_dpsu_h_qbl.c"
-+#undef main
-+
-+#define main test_dsp_r1_dpsu_h_qbr
-+#include "test_dsp_r1_dpsu_h_qbr.c"
-+#undef main
-+
-+#define main test_dsp_r1_maq_s_w_phl
-+#include "test_dsp_r1_maq_s_w_phl.c"
-+#undef main
-+
-+#define main test_dsp_r1_maq_s_w_phr
-+#include "test_dsp_r1_maq_s_w_phr.c"
-+#undef main
-+
-+#define main test_dsp_r1_maq_sa_w_phl
-+#include "test_dsp_r1_maq_sa_w_phl.c"
-+#undef main
-+
-+#define main test_dsp_r1_maq_sa_w_phr
-+#include "test_dsp_r1_maq_sa_w_phr.c"
-+#undef main
-+
-+#define main test_dsp_r1_madd
-+#include "test_dsp_r1_madd.c"
-+#undef main
-+
-+#define main test_dsp_r1_maddu
-+#include "test_dsp_r1_maddu.c"
-+#undef main
-+
-+#define main test_dsp_r1_msub
-+#include "test_dsp_r1_msub.c"
-+#undef main
-+
-+#define main test_dsp_r1_msubu
-+#include "test_dsp_r1_msubu.c"
-+#undef main
-+
-+#define main test_dsp_r1_mult
-+#include "test_dsp_r1_mult.c"
-+#undef main
-+
-+#define main test_dsp_r1_multu
-+#include "test_dsp_r1_multu.c"
-+#undef main
-+
-+#define main test_dsp_r2_dpa_w_ph
-+#include "test_dsp_r2_dpa_w_ph.c"
-+#undef main
-+
-+#define main test_dsp_r2_dpaqx_s_w_ph
-+#include "test_dsp_r2_dpaqx_s_w_ph.c"
-+#undef main
-+
-+#define main test_dsp_r2_dpaqx_sa_w_ph
-+#include "test_dsp_r2_dpaqx_sa_w_ph.c"
-+#undef main
-+
-+#define main test_dsp_r2_dpax_w_ph
-+#include "test_dsp_r2_dpax_w_ph.c"
-+#undef main
-+
-+#define main test_dsp_r2_dps_w_ph
-+#include "test_dsp_r2_dps_w_ph.c"
-+#undef main
-+
-+#define main test_dsp_r2_dpsqx_s_w_ph
-+#include "test_dsp_r2_dpsqx_s_w_ph.c"
-+#undef main
-+
-+#define main test_dsp_r2_dpsqx_sa_w_ph
-+#include "test_dsp_r2_dpsqx_sa_w_ph.c"
-+#undef main
-+
-+#define main test_dsp_r2_dpsx_w_ph
-+#include "test_dsp_r2_dpsx_w_ph.c"
-+#undef main
-+
-+#define main test_dsp_r2_mulsa_w_ph
-+#include "test_dsp_r2_mulsa_w_ph.c"
-+#undef main
-+
-+#define main test_dsp_r2_mulsaq_s_w_ph
-+#include "test_dsp_r2_mulsaq_s_w_ph.c"
++#define main test_dsp_r1_wrdsp
++#include "test_dsp_r1_wrdsp.c"
 +#undef main
 +
 +int main(void)
 +{
-+    RUN_TEST(test_dsp_r1_dpaq_s_w_ph);
-+    RUN_TEST(test_dsp_r1_dpaq_sa_l_w);
-+    RUN_TEST(test_dsp_r1_dpau_h_qbl);
-+    RUN_TEST(test_dsp_r1_dpau_h_qbr);
-+    RUN_TEST(test_dsp_r1_dpsq_s_w_ph);
-+    RUN_TEST(test_dsp_r1_dpsq_sa_l_w);
-+    RUN_TEST(test_dsp_r1_dpsu_h_qbl);
-+    RUN_TEST(test_dsp_r1_dpsu_h_qbr);
-+    RUN_TEST(test_dsp_r1_maq_s_w_phl);
-+    RUN_TEST(test_dsp_r1_maq_s_w_phr);
-+    RUN_TEST(test_dsp_r1_maq_sa_w_phl);
-+    RUN_TEST(test_dsp_r1_maq_sa_w_phr);
-+    RUN_TEST(test_dsp_r1_madd);
-+    RUN_TEST(test_dsp_r1_maddu);
-+    RUN_TEST(test_dsp_r1_msub);
-+    RUN_TEST(test_dsp_r1_msubu);
-+    RUN_TEST(test_dsp_r1_mult);
-+    RUN_TEST(test_dsp_r1_multu);
-+    RUN_TEST(test_dsp_r2_dpa_w_ph);
-+    RUN_TEST(test_dsp_r2_dpaqx_s_w_ph);
-+    RUN_TEST(test_dsp_r2_dpaqx_sa_w_ph);
-+    RUN_TEST(test_dsp_r2_dpax_w_ph);
-+    RUN_TEST(test_dsp_r2_dps_w_ph);
-+    RUN_TEST(test_dsp_r2_dpsqx_s_w_ph);
-+    RUN_TEST(test_dsp_r2_dpsqx_sa_w_ph);
-+    RUN_TEST(test_dsp_r2_dpsx_w_ph);
-+    RUN_TEST(test_dsp_r2_mulsa_w_ph);
-+    RUN_TEST(test_dsp_r2_mulsaq_s_w_ph);
++    RUN_TEST(test_dsp_r1_bposge32);
++    RUN_TEST(test_dsp_r1_lbux);
++    RUN_TEST(test_dsp_r1_lhx);
++    RUN_TEST(test_dsp_r1_lwx);
++    RUN_TEST(test_dsp_r1_rddsp);
++    RUN_TEST(test_dsp_r1_wrdsp);
 +
 +    return tap_done();
 +}
-diff --git a/tests/tcg/mipsel/test_dsp_r1_dpaq_s_w_ph.c b/tests/tcg/mipsel/test_dsp_r1_dpaq_s_w_ph.c
-index a6425b6edc84..3818ba7c2a48 100644
---- a/tests/tcg/mipsel/test_dsp_r1_dpaq_s_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_dpaq_s_w_ph.c
+diff --git a/tests/tcg/mipsel/test_dsp_r1_bposge32.c b/tests/tcg/mipsel/test_dsp_r1_bposge32.c
+index d25417ea77b2..f39eae531c8f 100644
+--- a/tests/tcg/mipsel/test_dsp_r1_bposge32.c
++++ b/tests/tcg/mipsel/test_dsp_r1_bposge32.c
 @@ -1,5 +1,4 @@
  #include<stdio.h>
 -#include<assert.h>
  
  int main()
  {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_dpaq_sa_l_w.c b/tests/tcg/mipsel/test_dsp_r1_dpaq_sa_l_w.c
-index cbf900713f33..56a3c2f6e1d1 100644
---- a/tests/tcg/mipsel/test_dsp_r1_dpaq_sa_l_w.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_dpaq_sa_l_w.c
+diff --git a/tests/tcg/mipsel/test_dsp_r1_lbux.c b/tests/tcg/mipsel/test_dsp_r1_lbux.c
+index 2337abea2acb..3436289b5a65 100644
+--- a/tests/tcg/mipsel/test_dsp_r1_lbux.c
++++ b/tests/tcg/mipsel/test_dsp_r1_lbux.c
+@@ -1,5 +1,4 @@
+ #include <stdio.h>
+-#include <assert.h>
+ 
+ int main(void)
+ {
+diff --git a/tests/tcg/mipsel/test_dsp_r1_lhx.c b/tests/tcg/mipsel/test_dsp_r1_lhx.c
+index 10be3b385fee..28795dbf701a 100644
+--- a/tests/tcg/mipsel/test_dsp_r1_lhx.c
++++ b/tests/tcg/mipsel/test_dsp_r1_lhx.c
+@@ -1,5 +1,4 @@
+ #include <stdio.h>
+-#include <assert.h>
+ 
+ int main(void)
+ {
+diff --git a/tests/tcg/mipsel/test_dsp_r1_lwx.c b/tests/tcg/mipsel/test_dsp_r1_lwx.c
+index e6543c9e7eae..ac15edb7cf94 100644
+--- a/tests/tcg/mipsel/test_dsp_r1_lwx.c
++++ b/tests/tcg/mipsel/test_dsp_r1_lwx.c
+@@ -1,5 +1,4 @@
+ #include <stdio.h>
+-#include <assert.h>
+ 
+ int main(void)
+ {
+diff --git a/tests/tcg/mipsel/test_dsp_r1_rddsp.c b/tests/tcg/mipsel/test_dsp_r1_rddsp.c
+index 2f3028503324..a0e413614d58 100644
+--- a/tests/tcg/mipsel/test_dsp_r1_rddsp.c
++++ b/tests/tcg/mipsel/test_dsp_r1_rddsp.c
 @@ -1,5 +1,4 @@
  #include<stdio.h>
 -#include<assert.h>
  
  int main()
  {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_dpau_h_qbl.c b/tests/tcg/mipsel/test_dsp_r1_dpau_h_qbl.c
-index 6017b5e73ab2..b90a9e9e72cc 100644
---- a/tests/tcg/mipsel/test_dsp_r1_dpau_h_qbl.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_dpau_h_qbl.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_dpau_h_qbr.c b/tests/tcg/mipsel/test_dsp_r1_dpau_h_qbr.c
-index e4abb2e2af03..7828182f3151 100644
---- a/tests/tcg/mipsel/test_dsp_r1_dpau_h_qbr.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_dpau_h_qbr.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_dpsq_s_w_ph.c b/tests/tcg/mipsel/test_dsp_r1_dpsq_s_w_ph.c
-index 74058fe7ecd0..14698262d589 100644
---- a/tests/tcg/mipsel/test_dsp_r1_dpsq_s_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_dpsq_s_w_ph.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_dpsq_sa_l_w.c b/tests/tcg/mipsel/test_dsp_r1_dpsq_sa_l_w.c
-index eda3b14e2be2..900f3f90bcb8 100644
---- a/tests/tcg/mipsel/test_dsp_r1_dpsq_sa_l_w.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_dpsq_sa_l_w.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbl.c b/tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbl.c
-index 94e2bf625499..6958bbeb753b 100644
---- a/tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbl.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbl.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbr.c b/tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbr.c
-index a1e66356310d..f127d1662714 100644
---- a/tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbr.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbr.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_madd.c b/tests/tcg/mipsel/test_dsp_r1_madd.c
-index af4bfcfe9df3..f724fd9a27c0 100644
---- a/tests/tcg/mipsel/test_dsp_r1_madd.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_madd.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_maddu.c b/tests/tcg/mipsel/test_dsp_r1_maddu.c
-index af4bfcfe9df3..f724fd9a27c0 100644
---- a/tests/tcg/mipsel/test_dsp_r1_maddu.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_maddu.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_maq_s_w_phl.c b/tests/tcg/mipsel/test_dsp_r1_maq_s_w_phl.c
-index 0f7c070155a8..aa29fd5e3821 100644
---- a/tests/tcg/mipsel/test_dsp_r1_maq_s_w_phl.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_maq_s_w_phl.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_maq_s_w_phr.c b/tests/tcg/mipsel/test_dsp_r1_maq_s_w_phr.c
-index 942722a530c2..42833686936c 100644
---- a/tests/tcg/mipsel/test_dsp_r1_maq_s_w_phr.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_maq_s_w_phr.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phl.c b/tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phl.c
-index d83dce6f3272..9dda4ebdbbe9 100644
---- a/tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phl.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phl.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phr.c b/tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phr.c
-index d2331118abb8..1b34664280dc 100644
---- a/tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phr.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phr.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_msub.c b/tests/tcg/mipsel/test_dsp_r1_msub.c
-index 5779e6f47ac7..74146284ffe2 100644
---- a/tests/tcg/mipsel/test_dsp_r1_msub.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_msub.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_msubu.c b/tests/tcg/mipsel/test_dsp_r1_msubu.c
-index e0f9b5a77ae3..2eb728af64b4 100644
---- a/tests/tcg/mipsel/test_dsp_r1_msubu.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_msubu.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_mult.c b/tests/tcg/mipsel/test_dsp_r1_mult.c
-index 15e6fde92c0e..c0509396de72 100644
---- a/tests/tcg/mipsel/test_dsp_r1_mult.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_mult.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r1_multu.c b/tests/tcg/mipsel/test_dsp_r1_multu.c
-index 85d36c1b621a..1c8a7f1e01e7 100644
---- a/tests/tcg/mipsel/test_dsp_r1_multu.c
-+++ b/tests/tcg/mipsel/test_dsp_r1_multu.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r2_dpa_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpa_w_ph.c
-index fae49f10eb95..68eae5a08346 100644
---- a/tests/tcg/mipsel/test_dsp_r2_dpa_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r2_dpa_w_ph.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r2_dpaqx_s_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpaqx_s_w_ph.c
-index ce8783024685..06b1a0a0d7e8 100644
---- a/tests/tcg/mipsel/test_dsp_r2_dpaqx_s_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r2_dpaqx_s_w_ph.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r2_dpaqx_sa_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpaqx_sa_w_ph.c
-index d551d64ae293..6dd106d74cae 100644
---- a/tests/tcg/mipsel/test_dsp_r2_dpaqx_sa_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r2_dpaqx_sa_w_ph.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r2_dpax_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpax_w_ph.c
-index 514797cfd1b4..a812c8a7f854 100644
---- a/tests/tcg/mipsel/test_dsp_r2_dpax_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r2_dpax_w_ph.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r2_dps_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dps_w_ph.c
-index f51f9b9d13d7..a656d219d89f 100644
---- a/tests/tcg/mipsel/test_dsp_r2_dps_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r2_dps_w_ph.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r2_dpsqx_s_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpsqx_s_w_ph.c
-index e40543fd8292..960f2bbbdf36 100644
---- a/tests/tcg/mipsel/test_dsp_r2_dpsqx_s_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r2_dpsqx_s_w_ph.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r2_dpsqx_sa_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpsqx_sa_w_ph.c
-index 7da278eacc0e..68f20348c2c9 100644
---- a/tests/tcg/mipsel/test_dsp_r2_dpsqx_sa_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r2_dpsqx_sa_w_ph.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r2_dpsx_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpsx_w_ph.c
-index bb49a4031d34..d85b504b402e 100644
---- a/tests/tcg/mipsel/test_dsp_r2_dpsx_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r2_dpsx_w_ph.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r2_mulsa_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_mulsa_w_ph.c
-index a6940939ca50..842233b2785b 100644
---- a/tests/tcg/mipsel/test_dsp_r2_mulsa_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r2_mulsa_w_ph.c
-@@ -1,5 +1,4 @@
- #include<stdio.h>
--#include<assert.h>
- 
- int main()
- {
-diff --git a/tests/tcg/mipsel/test_dsp_r2_mulsaq_s_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_mulsaq_s_w_ph.c
-index 06c91a43e7ea..c0f8e51ad389 100644
---- a/tests/tcg/mipsel/test_dsp_r2_mulsaq_s_w_ph.c
-+++ b/tests/tcg/mipsel/test_dsp_r2_mulsaq_s_w_ph.c
+diff --git a/tests/tcg/mipsel/test_dsp_r1_wrdsp.c b/tests/tcg/mipsel/test_dsp_r1_wrdsp.c
+index dc54943a99e8..57869203102e 100644
+--- a/tests/tcg/mipsel/test_dsp_r1_wrdsp.c
++++ b/tests/tcg/mipsel/test_dsp_r1_wrdsp.c
 @@ -1,5 +1,4 @@
  #include<stdio.h>
 -#include<assert.h>
@@ -635,64 +284,45 @@ index 06c91a43e7ea..c0f8e51ad389 100644
  int main()
  {
 diff --git a/tests/tcg/mipsel/meson.build b/tests/tcg/mipsel/meson.build
-index 1c2851f56369..c26f5fba06b7 100644
+index e8737308c40d..1c2851f56369 100644
 --- a/tests/tcg/mipsel/meson.build
 +++ b/tests/tcg/mipsel/meson.build
-@@ -8,31 +8,14 @@ tests_dsp = [
+@@ -7,8 +7,8 @@ tests_dsp = [
+   'test_dsp_acc.c',
    'test_dsp_arith.c',
    'test_dsp_cmp.c',
-   'test_dsp_ctrl.c',
-+  'test_dsp_dot.c',
++  'test_dsp_ctrl.c',
    'test_dsp_r1_bitrev.c',
--  'test_dsp_r1_dpaq_s_w_ph.c',
--  'test_dsp_r1_dpaq_sa_l_w.c',
--  'test_dsp_r1_dpau_h_qbl.c',
--  'test_dsp_r1_dpau_h_qbr.c',
--  'test_dsp_r1_dpsq_s_w_ph.c',
--  'test_dsp_r1_dpsq_sa_l_w.c',
--  'test_dsp_r1_dpsu_h_qbl.c',
--  'test_dsp_r1_dpsu_h_qbr.c',
+-  'test_dsp_r1_bposge32.c',
+   'test_dsp_r1_dpaq_s_w_ph.c',
+   'test_dsp_r1_dpaq_sa_l_w.c',
+   'test_dsp_r1_dpau_h_qbl.c',
+@@ -18,9 +18,6 @@ tests_dsp = [
+   'test_dsp_r1_dpsu_h_qbl.c',
+   'test_dsp_r1_dpsu_h_qbr.c',
    'test_dsp_r1_insv.c',
--  'test_dsp_r1_madd.c',
--  'test_dsp_r1_maddu.c',
--  'test_dsp_r1_maq_s_w_phl.c',
--  'test_dsp_r1_maq_s_w_phr.c',
--  'test_dsp_r1_maq_sa_w_phl.c',
--  'test_dsp_r1_maq_sa_w_phr.c',
--  'test_dsp_r1_msub.c',
--  'test_dsp_r1_msubu.c',
-   'test_dsp_r1_muleq_s_w_phl.c',
-   'test_dsp_r1_muleq_s_w_phr.c',
-   'test_dsp_r1_muleu_s_ph_qbl.c',
-   'test_dsp_r1_muleu_s_ph_qbr.c',
-   'test_dsp_r1_mulq_rs_ph.c',
--  'test_dsp_r1_mult.c',
--  'test_dsp_r1_multu.c',
-   'test_dsp_r1_packrl_ph.c',
-   'test_dsp_r1_preceq_w_phl.c',
-   'test_dsp_r1_preceq_w_phr.c',
-@@ -70,21 +53,11 @@ tests_dsp = [
+-  'test_dsp_r1_lbux.c',
+-  'test_dsp_r1_lhx.c',
+-  'test_dsp_r1_lwx.c',
+   'test_dsp_r1_madd.c',
+   'test_dsp_r1_maddu.c',
+   'test_dsp_r1_maq_s_w_phl.c',
+@@ -51,7 +48,6 @@ tests_dsp = [
+   'test_dsp_r1_precrq_qb_ph.c',
+   'test_dsp_r1_precrq_rs_ph_w.c',
+   'test_dsp_r1_precrqu_s_qb_ph.c',
+-  'test_dsp_r1_rddsp.c',
+   'test_dsp_r1_repl_ph.c',
+   'test_dsp_r1_repl_qb.c',
+   'test_dsp_r1_replv_ph.c',
+@@ -72,7 +68,6 @@ tests_dsp = [
+   'test_dsp_r1_shrav_r_w.c',
+   'test_dsp_r1_shrl_qb.c',
    'test_dsp_r1_shrlv_qb.c',
+-  'test_dsp_r1_wrdsp.c',
    'test_dsp_r2_append.c',
    'test_dsp_r2_balign.c',
--  'test_dsp_r2_dpa_w_ph.c',
--  'test_dsp_r2_dpaqx_s_w_ph.c',
--  'test_dsp_r2_dpaqx_sa_w_ph.c',
--  'test_dsp_r2_dpax_w_ph.c',
--  'test_dsp_r2_dps_w_ph.c',
--  'test_dsp_r2_dpsqx_s_w_ph.c',
--  'test_dsp_r2_dpsqx_sa_w_ph.c',
--  'test_dsp_r2_dpsx_w_ph.c',
-   'test_dsp_r2_mul_ph.c',
-   'test_dsp_r2_mul_s_ph.c',
-   'test_dsp_r2_mulq_rs_w.c',
-   'test_dsp_r2_mulq_s_ph.c',
-   'test_dsp_r2_mulq_s_w.c',
--  'test_dsp_r2_mulsa_w_ph.c',
--  'test_dsp_r2_mulsaq_s_w_ph.c',
-   'test_dsp_r2_precr_qb_ph.c',
-   'test_dsp_r2_precr_sra_ph_w.c',
-   'test_dsp_r2_precr_sra_r_ph_w.c',
+   'test_dsp_r2_dpa_w_ph.c',
 -- 
 2.55.0
 
