@@ -1,82 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58905606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 11:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094A6606A321
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 11:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OFcuf2+u
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D0MJWIi0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMkg3-0001Nq-S5; Fri, 30 Oct 2026 07:21:43 -0400
+	id 1xMkgF-0001Tl-OY; Fri, 30 Oct 2026 07:21:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
- id 1xMkfx-0001LD-NW
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:37 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1xMkg5-0001PU-26
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:45 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
- id 1xMkfw-0002lC-6s
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:37 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4a2084d62cdso4758595e9.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 04:21:35 -0700 (PDT)
+ id 1xMkg2-0002nI-PI
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:44 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-48c4d870d54so346835f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 04:21:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793359294; x=1793964094; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793359301; x=1793964101; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=EEwSVgmgSkQ5ZAKDlh9daWSH5HudgGHgylwl/5eaU1k=;
- b=OFcuf2+uLMy8cvqYlbdGkmn1szWgqjSCBaUPVu6YLSpUhjjqJqQDThNOB3aqjYFpd+
- HPXfv9aAhfJS/ik1vntKyrN2UxZP3SXCZCNOhkcacc61zFbn9GBsTMxUE0Xx7FkeFBS1
- AlGse/Xwm57+onjxcUtRSSfQ0xNPSiOkT8h5o7Sfg1mdfAaSCbNr4M/JJcHlSFPL16Jh
- 4wD2NJDSPV2iAR1it4iIMVw7jOMsiXgoXOxVZrZO/WQrRnTSkzkEuQ1mVupV6esAqGuW
- FwKSerOQtKENM6KtUkIq4hdtANz1HTZg2bgsW4i777Mddf3jBds3FNtlxMPj0Fv6QYXw
- l4sg==
+ bh=6GoihID3NL4nc1Mkmoc/1/qZ8Kz/J2UXjW1hpXDbIGU=;
+ b=D0MJWIi0Z2wZDBeY5srXrQJQi/yC+75hbGjcsz+i8eI6i2tbVflHSjuP6jG9xgT0Tb
+ RmldrRFFcFT5RudSjzK7D3ZmiA7/9Z1M3LkMNrvf/kz2tHqjawQtiniHeBcLWkXX1FWp
+ uaFgqfo3dG+VxpRX6MFKQibiJi+spHncT4aXILL23l21WPoZAB8lhPgvwwk2oQMKA43M
+ ujLXUD/srnbvqBWl1bGY/sviR4E/gM073BHVxake2diJ7HXRAoQ1pMhbvkY9MBqQIZq/
+ Eteu+GFu270MX1THBb8SysTCdTi9/pxA9D6SrNvEHjauLtg5x97Ast1JXSx74eedCIpO
+ BczQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793359294; x=1793964094;
+ d=1e100.net; s=20260707; t=1793359301; x=1793964101;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=EEwSVgmgSkQ5ZAKDlh9daWSH5HudgGHgylwl/5eaU1k=;
- b=B48f2tzVjE8FWpbnaKKqtAFm4lyi8UHqxfa7zEmds6PfkUIEoPUsr2f2MtqKfw0SJj
- s2BXpaj02jXzunVWeyK0rlGaivMQnxoHjqUJA1n2fL7ic1M7yV7bWnLAKKrsNklVZhcj
- xkkuLfEBNOdGOHNaBKEkc+MgJ+3XGVHXsMYnPXkG2PLwS2VtSN/8yaEhokfpRcO/TfhZ
- NfNsDE0y1x7rYGXH/eDbBzl0h4yej8XbJjMdObpcLmdLLApBWJGIWp9vphQH94e7DxzF
- NNAAbjyLr8I+RlExdTqDfXHxQ04vIcxAD4m+sILmlb8PFKecsx2L4eXNT7Yf5wRHyoho
- ibRQ==
-X-Gm-Message-State: AFq9FYKtCylmDX7sCs6GTlb2/TuHBPbzkc7S8SHxTWmtNWvK54zX65VT
- tgfGyCF+Q0RfE+pGRBOWLWkDnmBJtq9BirzwmqqPBKXyE1Di6mZzjiFx
-X-Gm-Gg: AYBFou2hi+N4ruORblfR0aPNU6q8ZBy4+jl1Bbq8EMOIhSCU1mgSt0Q5iYLeNGm16RJ
- xWCC/OxlDvWqAr6mU+ZVaKeHnPxwU/VGwTGeC0YbFz2Mwuisz8EQVOVZTZqi6P6XIGdFNWalans
- gHEbAKYnYo24aBoxL3ENviG3HEn0ixQ38+STossjnfkdgkf3wlsMv/cJZGa2dqbU2KAZjy93sGc
- 4StyVBgVlJBNyeRS3pIP5ul/hYbzCoOP6G17VmtLwOHhrTNQV1tsp6qebyyVKpDDklYPbwLi8iB
- 5T9gl9648iHcli0x7UTngPIDcrz1GBxti1JAgpvnY0zQj8ASSsLmnbHFaMVee22CaydUKxdRtUc
- AAs5TKPwTOOlW7Qwys0MZjEajMSO19yMNRGsXawQ9N/Gcn3xNfb/brZj1DpAShrww12TZ9N15ql
- xuttIMOGbpNDG9ePAXaNYW3Xgc3xRaSGqWDB3rsQRfYTly6t/Mvpo94WvRy1i/WDTQNcnN/xiLl
- q4llvmTazXLntDX1Ye2MSawZeMzbCnmIL2s8qHpw3MmhLCrPdxigOfHeWLqmGqRXyR6fP6CjElB
- skkEGgiNY8WNgHUp7kjddEp4GUdwlduHdT+c8PlxBHNzRCPlUEiulRU9qVv+N3PpM/rK5GARgYV
- WjccHbcSDVlufgm/X6IP7i2+ZJHA2+0MGgubMaA4q80XdjfEntAJuOdMmGCG3Xt4=
-X-Received: by 2002:a05:600c:6087:b0:4a1:fe26:24f0 with SMTP id
- 5b1f17b1804b1-4ac1765ce52mr40569815e9.20.1793359293737; 
- Fri, 30 Oct 2026 04:21:33 -0700 (PDT)
+ bh=6GoihID3NL4nc1Mkmoc/1/qZ8Kz/J2UXjW1hpXDbIGU=;
+ b=INKLxqoC/9B0+qLQikv3ZXSLSr0Ux+tAAes2yRgBCaHdX6lj8zLatLxbwYNJ9otkkE
+ bniquqaweysFC4jYnl/PS96DW7kkEfwSP/jMO3uY2f7oFmEJWSgg9A2Inlq97BT5igM0
+ 1TYcEZjqw/xBPpOms8AZ9UJN0N9XY0gSHLarkwORObf54x9Pn07vhi77VZMkXNmzjLeI
+ pZDc1rxpT79SlMZJriA0/UyXEmCuZlU15TUxGZ80OlThKJ+47R2cI55J/4uwsCt+vtWy
+ RSFJC50JIdshv3KqK4GT28xSXg1TAmztdpaRSjPRXa69/R5rHDbkI2J0VpaLfqFc1TFZ
+ /jlg==
+X-Gm-Message-State: AFq9FYJRwIMIfQK9iljaRaaYJFFzIhFYVFgqMq0BNUITWlh9OjMUFgq7
+ H9RpWMk8aLJdq6K9bivJzJ/5SJ7heptYgJtn63VlazKmy0U7AdCtVs3V
+X-Gm-Gg: AYBFou1xBen3aYzA8hhpGzdjnsoAZfFs8K3+Rbw7eklHvPc6kxCJkEUYETU6jAjxrDe
+ ZnSg4ueKHu35qKf/1Hn9Oixeo1POILXze4Ndyp0VihYbbiSw+J6UlWhN5KteiV8WpysB65eWCAm
+ KpZ6rG/zPB8KGmfa5hvYjy2Xa7ToCERL6MdxhXwonpzRERI7yUoKGa5nrD5xsZvLUaJaFKjG/aJ
+ 4gMOr6PioGuFUbHCNrm4tSASRCE+gzsD8zkHX+AijZonx8IpWwEulPDf8KoaK0mtDuF0BYet8Cu
+ Hx8DmrrqcibqUDnVREc3kbVKFTwcZ1vLiZ7k6APgl9uPDt8h2QzPdz3hEr17Ko0K4mhqluEYaQb
+ m+q3Zys4XpCpmTphlmeNDwCi3sI+1ee39deNeNEp7SeJUZ9QvFShn7g0Z+SbGc34y/O0MYGZT+T
+ FA3STGrRiBuixxv1st7/U5vVXGxNZL2uv+crNPJS/JRUl7T1pt9ImA6rcGeZpcw4rSYHtwJ6sbq
+ NWNAm7GOYf8m63IfEs9a123bKtwKnc+awi2B7UiCHO1DmzqJgZK3qshHpL5MBRWAtjLxjRVRWO5
+ FWmmE525PC1GXk5UAexV4ihBMo6GHW9XidS0cMdjlhjuj8kvZk4S/eGUh7KzT0sIPRzq1TDht71
+ JSX0IDmE860yvao9HbCXeS2CvEkm2xs7Sid0m39xyot3Xz/cvTGXV2/W4kH3eWg==
+X-Received: by 2002:a05:6000:2f84:b0:48e:e98:8b64 with SMTP id
+ ffacd0b85a97d-48e6e2eb232mr4479528f8f.19.1793359301149; 
+ Fri, 30 Oct 2026 04:21:41 -0700 (PDT)
 Received: from tim-m2.local
  (dynamic-2a02-3100-61d8-3600-98fd-cd98-7ae6-cb49.310.pool.telefonica.de.
  [2a02:3100:61d8:3600:98fd:cd98:7ae6:cb49])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d3e9sm2893608f8f.6.2026.10.30.04.21.32
+ ffacd0b85a97d-48e71a4d3e9sm2893608f8f.6.2026.10.30.04.21.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 04:21:33 -0700 (PDT)
+ Fri, 30 Oct 2026 04:21:40 -0700 (PDT)
 From: Tim Pambor <timpambor@gmail.com>
-Date: Fri, 30 Oct 2026 12:20:56 +0100
-Subject: [PATCH v2 3/9] vhost-user: kick via event_notifier_set()
+Date: Fri, 30 Oct 2026 12:21:02 +0100
+Subject: [PATCH v2 9/9] contrib/vhost-user-blk: enable it on any POSIX system
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261030-vhost-user-posix-v2-3-cda7c17aad13@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261030-vhost-user-posix-v2-9-cda7c17aad13@gmail.com>
 References: <20261030-vhost-user-posix-v2-0-cda7c17aad13@gmail.com>
 In-Reply-To: <20261030-vhost-user-posix-v2-0-cda7c17aad13@gmail.com>
 To: qemu-devel@nongnu.org
@@ -92,8 +92,8 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 X-Mailer: b4 0.16.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=timpambor@gmail.com; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=timpambor@gmail.com; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,53 +120,81 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-vhost-user injects a kick by writing to the fd it has just passed to the
-back-end. With an eventfd that fd is writable, but when pipes are used
-it is the read end and the write fails.
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Instead, kick via event_notifier_set() on the queue's host notifier,
-which writes to the correct end in both cases.
+Let's make the code more portable by adding defines from
+block/file-posix.c to support O_DIRECT in other systems (e.g. macOS).
 
+vhost-user-server.c is a dependency, let's enable it for any POSIX
+system.
+
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Tim Pambor <timpambor@gmail.com>
 ---
-Changes in v2:
-- Add comment about eventfd vs pipe
-- Add assert file->fd == event_notifier_get_fd()
----
- hw/virtio/vhost-user.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ contrib/vhost-user-blk/vhost-user-blk.c | 14 ++++++++++++++
+ meson.build                             |  2 --
+ util/meson.build                        |  4 +++-
+ 3 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 65889b0776..868b3d25ca 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -1527,16 +1527,17 @@ static int vhost_user_set_vring_kick(struct vhost_dev *dev,
-      * receiving a kick. The spec suggests this to improve compatibility.
-      */
-     if (file->fd != -1) {
--        uint64_t val = 1;
--        ssize_t nwritten;
--
--        do {
--            nwritten = write(file->fd, &val, sizeof(val));
--        } while (nwritten < 0 && errno == EINTR);
-+        /*
-+         * With an eventfd that fd is writable, but when pipes are used it is
-+         * the read end and the write fails. Instead, kick via
-+         * event_notifier_set() on the queue's host notifier, which writes
-+         * to the correct end in both cases.
-+         */
-+        VirtQueue *vq = virtio_get_queue(dev->vdev, file->index);
-+        EventNotifier *n = virtio_queue_get_host_notifier(vq);
+diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user-blk/vhost-user-blk.c
+index 6cc18a1c04..419ad2a10d 100644
+--- a/contrib/vhost-user-blk/vhost-user-blk.c
++++ b/contrib/vhost-user-blk/vhost-user-blk.c
+@@ -25,6 +25,20 @@
+ #include <sys/ioctl.h>
+ #endif
  
--        if (nwritten < 0 && errno != EAGAIN /* back-end can already read */) {
--            return -errno;
--        }
-+        assert(file->fd == event_notifier_get_fd(n));
-+        return event_notifier_set(n);
-     }
++/* OS X does not have O_DSYNC */
++#ifndef O_DSYNC
++#ifdef O_SYNC
++#define O_DSYNC O_SYNC
++#elif defined(O_FSYNC)
++#define O_DSYNC O_FSYNC
++#endif
++#endif
++
++/* Approximate O_DIRECT with O_DSYNC if O_DIRECT isn't available */
++#ifndef O_DIRECT
++#define O_DIRECT O_DSYNC
++#endif
++
+ enum {
+     VHOST_USER_BLK_MAX_QUEUES = 8,
+ };
+diff --git a/meson.build b/meson.build
+index 4f4068e7a7..1250d467a0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2177,8 +2177,6 @@ osdep_prefix = '''
+ '''
  
-     return 0;
+ have_vhost_user_blk_server = get_option('vhost_user_blk_server') \
+-  .require(host_os == 'linux',
+-           error_message: 'vhost_user_blk_server requires linux') \
+   .require(have_vhost_user,
+            error_message: 'vhost_user_blk_server requires vhost-user support') \
+   .disable_auto_if(not have_tools and not have_system) \
+diff --git a/util/meson.build b/util/meson.build
+index fa174c07a5..54ca587362 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -105,10 +105,12 @@ if have_block
+     util_ss.add(files('filemonitor-stub.c'))
+   endif
+   if host_os == 'linux'
+-    util_ss.add(files('vhost-user-server.c'), vhost_user)
+     util_ss.add(files('vfio-helpers.c'))
+     util_ss.add(files('chardev_open.c'))
+   endif
++  if host_os != 'windows'
++    util_ss.add(files('vhost-user-server.c'), vhost_user)
++  endif
+   util_ss.add(files('yank.c'))
+ endif
+ 
 
 -- 
 2.55.0
