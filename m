@@ -1,112 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3E8606A31D
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 16:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA89606A324
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 17:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eeXEnt8n;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=CAIS+Ao5
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NRy7riFG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMpwh-00055N-G5; Fri, 30 Oct 2026 12:59:20 -0400
+	id 1xMq7z-00085L-GT; Fri, 30 Oct 2026 13:10:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
- id 1xMpw4-00050h-80
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 12:58:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1xMq7w-000841-Vv; Fri, 30 Oct 2026 13:10:53 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
- id 1xMpw2-0002i4-Bk
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 12:58:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793379511;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=J1o+PRN4DVqEIfpLV3TncXaeckRaX+lXbN/raetLtEg=;
- b=eeXEnt8n65RmjxGvn/zztPXzZsGbdPTbUttInb4iO+7cXy0Vr+1OJP20OSuaHqlIeCgAyk
- HIHD3N4D/wZfZeBIt0uvmLSZAjS4jebhxK2vwDZ7bIOyZeGs/efk+XQlcuaTM65hquV6BT
- XNgJxSmUfP4IsNs+4YKY5eeA4Y1/+BE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-6eLlmCR6PfWhHMS7g3pGjg-1; Fri, 30 Oct 2026 12:58:28 -0400
-X-MC-Unique: 6eLlmCR6PfWhHMS7g3pGjg-1
-X-Mimecast-MFC-AGG-ID: 6eLlmCR6PfWhHMS7g3pGjg_1793379508
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-48e0389d6f9so542246f8f.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 09:58:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793379508; x=1793984308; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=J1o+PRN4DVqEIfpLV3TncXaeckRaX+lXbN/raetLtEg=;
- b=CAIS+Ao5OZtkAL4WxPE9uWNNfyyv0UMl+2rVyc5jsHBEEVkyE1eRK/CgxsrR+RcLJ3
- DTUYn4FlCgfT7DmV49Kgtb5wSq3+Xor2n9r/0opTWU6WfnAOtENFokB70ruTCp5JQ+y+
- K6O4Iu8AwGXofIQJSBdTyTJh9kc+9BCIl8lmAG8shSLQfUpDPaVwyy08OEYEGoOvDAjl
- s/9IBSYDWWI0ZWDu663iq8mgSjF8gxUrol2/sE4XaucTh2d+o4E/s84YZIlHHOS9oYxL
- Glz5QfcB58WIMW2sn6h5ZuR8wojhzkRSg2QV+Kyf4QIxcpUjoCDDM50r0m4IyPfiS2XY
- hOFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793379508; x=1793984308;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=J1o+PRN4DVqEIfpLV3TncXaeckRaX+lXbN/raetLtEg=;
- b=xXwWn1Z722VCbYd+8rE6hLA4wWnHDnaPtFrgmyuWfFjmtmCe8/E50bn0/utq/jaK2s
- 8iyPDM1NDjixzxytZQECSgOqytsgBSAQPjKvp5FcNuzvjPowFnAOr4W9KrUZGx++DYQ5
- yXJMMtTs5nBcozgwfGN8jeDh4hEDHWpbUV6Qsjqrt+dwgf91+Hy4ZQDPpgDPw1uppYqK
- cIaRgsR8ZnAwCLuP/8Gj/An4SjWZ4Oj4jQ0HpmvDgv20gaF1gntQpkEF9x+tZIF3z+QX
- OXNmFioWxJ76viQn5k0LgORu95+16Mev3f6xtNUNsIy4rjjV8kPoZPRzVOGCbfKovvGM
- NWzw==
-X-Gm-Message-State: AFq9FYIqvZpeMQphmcbGRAtfksIqE+4QSCj5XAXHGNiPww6ioA0vYErM
- kGBx4Vo3ko1Kjeq+rGTNV0oVyk88kly8lX5lj2cLZ2A+cJdFxg6yw/OmNNMXNfofauKtBw8wQXM
- 6430xpsIkcg8+d0tvePU1wzFovJxg8cuRyhx6iNM1DQqc9xKCvPVj7LExuyYvOz31qhc+qzYI2E
- JdWuIE7RIR64sWpT5MmgvkIYTbiHXtJMF5cuSCz33Acg==
-X-Gm-Gg: AYBFou1dAH29Sdhcew/UZwP6epPqpgoHKGkfJHMJuVxlSGebt+VimFFANIoaay1qQhL
- +Qs6A0Reb8r6fFtSXMdFwNL0EPQLV3IY7vskzB7fWEpmBa/VeCXnVazj3bvqDzh2PTIlrPElNhg
- XIgqnM1PV67TEm9S2MgEheB7MlCbvlQJomaojVWUERxB9ezcAwVb6Iq7HWIQTssNweqkl6NiZtW
- 2Ph/Nzo6v1MmAVdePxsJJeZjDbxUEymOkhdb85fKJT6ScwpmxBwdFk5XXU5CKObxtiYiorPff67
- vU3tGwtLdsZT/JnAHFr1GcB+8oJD+93qnF/YIJgBEid3zQN3l8yhmY8P+wbg812FMihxYjJSR09
- yGWrFk0UkX9579l1nYfLvmGPZ1WE4Fggcj24sn/32xl12xw==
-X-Received: by 2002:a05:6000:2486:b0:48d:ff81:5201 with SMTP id
- ffacd0b85a97d-48e6e4f44f2mr6996338f8f.41.1793379507696; 
- Fri, 30 Oct 2026 09:58:27 -0700 (PDT)
-X-Received: by 2002:a05:6000:2486:b0:48d:ff81:5201 with SMTP id
- ffacd0b85a97d-48e6e4f44f2mr6996281f8f.41.1793379507124; 
- Fri, 30 Oct 2026 09:58:27 -0700 (PDT)
-Received: from tcalifan-p1g8.csb ([213.175.46.86])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b725a2sm4023311f8f.13.2026.10.30.09.58.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 09:58:26 -0700 (PDT)
-From: Tommaso Califano <tcalifano@redhat.com>
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1xMq7u-00049V-RM; Fri, 30 Oct 2026 13:10:52 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id E2AD5417EB;
+ Fri, 30 Oct 2026 17:10:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48CC1F000C1;
+ Fri, 30 Oct 2026 17:10:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1793380246;
+ bh=4xJTLLGBqZyngV0/j7/0g2fKTW/dX8ug96Okd2O+5is=;
+ h=From:To:Cc:Subject:Date;
+ b=NRy7riFGwSeZrYKwCaq979kJR26N0VMd21aCna6QNmkJuitGy1s7B4JUVzmw8UPQr
+ Di+Uaswpl0+cD+O5eUei/CJQAS8D0AXLb5jRv49p4yDzF7aiEj1iBsKHc7038AVXdv
+ pC+ZJBgFFeKQoEGBlNzX8Gt2mDaTKw8Yf3mWtXYzXhB5/St4dFy3cpMRDWqG1Fn+EF
+ u+F1kPk+mBWu6YhwI6Oq5AoW1f0RwayF9Ehe9ixNfjiYhCyFhkNhiVMO/vxXfACK1n
+ +mXByirfiBa6T87RetE2hEYpEK6XzMrAYSuB/Cbci4D9CEaonYocSWrx54rT5YErwF
+ t1+1Mb5mtOTww==
+From: Niklas Cassel <cassel@kernel.org>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Junjie Cao <junjie.cao@linux.dev>
-Subject: [PATCH 2/2] tests/qtest/usb-hcd-xhci: test a CSW TD queued behind the
- data TD
-Date: Fri, 30 Oct 2026 17:58:06 +0100
-Message-ID: <20261030165807.79423-3-tcalifano@redhat.com>
+Cc: Niklas Cassel <cassel@kernel.org>, dlemoal@kernel.org,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
+ Sam Li <faithilikerun@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Jeuk Kim <jeuk20.kim@samsung.com>,
+ Daejun Park <daejun7.park@samsung.com>
+Subject: [PATCH v16 0/9] Add full zoned storage emulation to the qcow2 driver
+Date: Fri, 30 Oct 2026 18:10:27 +0100
+Message-ID: <20261030171038.702962-1-cassel@kernel.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261030165807.79423-1-tcalifano@redhat.com>
-References: <20261030165807.79423-1-tcalifano@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=tcalifano@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,144 +72,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Junjie Cao <junjie.cao@linux.dev>
+This patch series adds a new extension - zoned format - to the
+qcow2 driver, allowing full zoned storage emulation on a qcow2
+image file. A user can attach such an image to a guest and have
+it appear as a host-managed zoned block device.
 
-Issue a READ(10) to usb-storage with the data TD and the CSW TD on the
-bulk IN ring and a single doorbell while the read is still in flight,
-and expect the CSW once the data has arrived. Without the usb-storage
-fix the CSW transfer stays pending forever.
+The zoned format is opt-in through a new qcow2 header extension
+that pins the zone geometry. Behind the extension is a dedicated
+zoned metadata region that stores one 8-byte write pointer (WP)
+per zone. The extension is gated by an incompatible bit, so an
+older qcow2 implementation cannot accidentally open the image.
 
-The TEST UNIT READY in front clears the reset unit attention; without
-it the read fails synchronously and never parks a packet. A blkdebug
-breakpoint holds the read until both TDs are on the ring, as they are
-when a host controller runs a prepared schedule.
+Each write pointer is routed through the write pointer cache,
+a Qcow2Cache object. The write pointer cache is written to disk
+after the qcow2 metadata is written, thus guaranteeing that
+the write pointer is updated after the corresponding data is
+written.
 
-Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
----
- tests/qtest/usb-hcd-xhci-test.c | 89 +++++++++++++++++++++++++++++++++
- 1 file changed, 89 insertions(+)
+Zone states are in memory. Read-only and offline states are
+device-internal events, which are not modelled in qcow2
+emulation for simplicity. The other zone states
+(closed, empty, full) can be inferred from write pointer
+values, persistent across QEMU reboots. The open states are
+kept in memory using open zone lists.
 
-diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
-index add2290bff..2949e5f078 100644
---- a/tests/qtest/usb-hcd-xhci-test.c
-+++ b/tests/qtest/usb-hcd-xhci-test.c
-@@ -58,8 +58,10 @@
- #define CC_SUCCESS              1
- 
- #define EP_TYPE_ISOCH_OUT       1
-+#define EP_TYPE_BULK_OUT        2
- #define EP_TYPE_CONTROL         4
- #define EP_TYPE_ISOCH_IN        5
-+#define EP_TYPE_BULK_IN         6
- #define EP_TYPE_INTR_IN         7
- 
- #define XHCI_RING_TRBS          64
-@@ -467,6 +469,91 @@ static void test_xhci_isoch_ep_type_mismatch(void)
-     xhci_test_end(&x);
- }
- 
-+/*
-+ * usb-storage parks the CSW packet while the SCSI request is in flight and
-+ * sends it when the request completes. With the data TD and the CSW TD of
-+ * one command on the bulk IN ring and a single doorbell, the CSW packet is
-+ * queued behind the async data packet.
-+ */
-+static void test_xhci_msd_chained_csw(void)
-+{
-+    /* TEST UNIT READY: clears the reset unit attention */
-+    static const uint8_t tur[31] = {
-+        'U', 'S', 'B', 'C', 1, 0, 0, 0, 0, 0, 0, 0, 0x00, 0, 6,
-+    };
-+    /* READ(10), LBA 0, 1 block: 512 bytes IN */
-+    static const uint8_t read10[31] = {
-+        'U', 'S', 'B', 'C', 2, 0, 0, 0, 0x00, 0x02, 0, 0, 0x80, 0, 10,
-+        0x28, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-+    };
-+    static const uint8_t zeroes[512];
-+    uint8_t data[512], csw[13];
-+    uint32_t status, control;
-+    uint64_t ring_in, ring_out, buf;
-+    XHCITest x;
-+
-+    if (!xhci_test_supported("usb-storage")) {
-+        return;
-+    }
-+
-+    /*
-+     * A blkdebug breakpoint holds the read until both TDs are on the
-+     * ring, as they are when a host controller runs a prepared schedule.
-+     */
-+    xhci_test_start(&x, "-drive if=none,id=stick,format=raw,"
-+                        "file.driver=blkdebug,file.image.driver=null-co,"
-+                        "file.image.read-zeroes=on "
-+                        "-device usb-storage,drive=stick");
-+    qtest_qemu_io(x.qts, "stick", "break read_aio A");
-+    ring_in = xhci_configure_ep(&x, 3, EP_TYPE_BULK_IN, 0, 512);
-+    ring_out = xhci_configure_ep(&x, 4, EP_TYPE_BULK_OUT, 0, 512);
-+    buf = xhci_alloc_page(&x);
-+
-+    qtest_memwrite(x.qts, buf, tur, sizeof(tur));
-+    xhci_write_trb(&x, ring_out, buf, sizeof(tur),
-+                   TRB_TYPE(TR_NORMAL) | TRB_TR_IOC | TRB_C);
-+    xhci_writel(&x, x.doorbell + 4 * x.slot, 4);
-+    g_assert_true(xhci_next_event(&x, &status, &control));
-+    g_assert_cmpuint(TRB_GET_TYPE(control), ==, ER_TRANSFER);
-+    g_assert_cmpuint(TRB_GET_CCODE(status), ==, CC_SUCCESS);
-+    xhci_write_trb(&x, ring_in, buf + 0x800, sizeof(csw),
-+                   TRB_TYPE(TR_NORMAL) | TRB_TR_IOC | TRB_C);
-+    xhci_writel(&x, x.doorbell + 4 * x.slot, 3);
-+    g_assert_true(xhci_next_event(&x, &status, &control));
-+    g_assert_cmpuint(TRB_GET_CCODE(status), ==, CC_SUCCESS);
-+
-+    qtest_memwrite(x.qts, buf + 0x40, read10, sizeof(read10));
-+    xhci_write_trb(&x, ring_out + 16, buf + 0x40, sizeof(read10),
-+                   TRB_TYPE(TR_NORMAL) | TRB_TR_IOC | TRB_C);
-+    xhci_writel(&x, x.doorbell + 4 * x.slot, 4);
-+    g_assert_true(xhci_next_event(&x, &status, &control));
-+    g_assert_cmpuint(TRB_GET_CCODE(status), ==, CC_SUCCESS);
-+
-+    /* data TD and CSW TD, one doorbell, the read still held */
-+    xhci_write_trb(&x, ring_in + 16, buf + 0x200, sizeof(data),
-+                   TRB_TYPE(TR_NORMAL) | TRB_TR_IOC | TRB_C);
-+    xhci_write_trb(&x, ring_in + 32, buf + 0x800, sizeof(csw),
-+                   TRB_TYPE(TR_NORMAL) | TRB_TR_IOC | TRB_C);
-+    xhci_writel(&x, x.doorbell + 4 * x.slot, 3);
-+    g_assert_false(xhci_next_event(&x, NULL, NULL));
-+
-+    qtest_qemu_io(x.qts, "stick", "resume A");
-+    g_assert_true(xhci_next_event(&x, &status, &control));
-+    g_assert_cmpuint(TRB_GET_TYPE(control), ==, ER_TRANSFER);
-+    g_assert_cmpuint(TRB_GET_CCODE(status), ==, CC_SUCCESS);
-+    g_assert_true(xhci_next_event(&x, &status, &control));
-+    g_assert_cmpuint(TRB_GET_CCODE(status), ==, CC_SUCCESS);
-+    qtest_memread(x.qts, buf + 0x200, data, sizeof(data));
-+    g_assert_cmpmem(data, sizeof(data), zeroes, sizeof(zeroes));
-+    qtest_memread(x.qts, buf + 0x800, csw, sizeof(csw));
-+    g_assert_cmpmem(csw, 4, "USBS", 4);
-+    g_assert_cmpmem(csw + 4, 4, read10 + 4, 4);
-+    g_assert_cmpmem(csw + 8, 4, zeroes, 4);
-+    g_assert_cmpuint(csw[12], ==, 0);
-+
-+    xhci_test_end(&x);
-+}
-+
- int main(int argc, char **argv)
- {
-     int ret;
-@@ -487,6 +574,8 @@ int main(int argc, char **argv)
-                    test_xhci_intr_mfindex_32bit);
-     qtest_add_func("/xhci/pci/isoch/ep-type-mismatch",
-                    test_xhci_isoch_ep_type_mismatch);
-+    qtest_add_func("/xhci/pci/bulk/msd-chained-csw",
-+                   test_xhci_msd_chained_csw);
- 
-     qtest_start("-device nec-usb-xhci,id=xhci"
-                 " -drive id=drive0,if=none,file=null-co://,"
+To create a qcow2 file with the zoned format:
+
+    qemu-img create -f qcow2 zbc.qcow2 \
+        -o size=768M \
+        -o zone.size=64M \
+        -o zone.capacity=64M \
+        -o zone.conventional_zones=0 \
+        -o zone.max_open_zones=6 \
+        -o zone.max_active_zones=8 \
+        -o zone.mode=host-managed
+
+Then attach it to a guest via the QEMU command line:
+    -blockdev node-name=drive1,driver=qcow2,file.driver=file,file.filename=zbc.qcow2 \
+    -device virtio-blk-pci,drive=drive1 \
+
+Tested with blktests, fio, zbd_state (an internal test suite) and
+zonefs, comparing a zoned qcow2 image attached via virtio-blk with
+zloop, null_blk and scsi_debug (passed/failed/skipped):
+
+    +--------------------+----------+---------+-----------+---------+
+    | Testrun            | blktests | fio     | zbd_state | zonefs  |
+    +--------------------+----------+---------+-----------+---------+
+    | zloop              | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
+    | null_blk           | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
+    | scsi_debug         | 10/0/12  | 61/0/14 | 29/0/8    | 113/0/0 |
+    | virtio-blk + qcow2 | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
+    +--------------------+----------+---------+-----------+---------+
+
+The last two patches are not used by the qcow2 driver. Both Daejun
+Park's zoned UFS series and an upcoming series that adds zoned support
+to ATA depend on this series, and both also require these two patches,
+so they are included here, to avoid both series needing to carry them
+separately as dependencies.
+
+Git branch can be found at:
+https://github.com/floatious/qemu/tree/qcow2-v16
+
+v15->v16:
+- rebase on master, which now contains the series "block: fix the zone
+  write granularity and the zone append limit"
+- report a write to a full zone with a dedicated errno, BLK_ZE_FULL
+  (EXFULL), as ZAC, ZBC, NVMe ZNS and virtio-blk all report it
+  differently from a write that is not at the write pointer; virtio-blk
+  reports it as VIRTIO_BLK_S_ZONE_INVALID_CMD (pointed out by Daejun
+  Park)
+- refuse the management of a conventional zone with EINVAL instead of
+  EIO
+- trace rejected zone requests instead of reporting them with
+  error_report(), which a guest could use to flood stderr (pointed out
+  by Daejun Park)
+- add "block: add accessors for the zone model, capacity and open zone
+  limit" and "scsi: add the sense codes of zoned block devices" (new
+  patches), for the zoned UFS and zoned ATA series
+
+Niklas Cassel (5):
+  block: define errnos for zone protocol errors
+  qcow2: validate the write pointer table when opening an image
+  virtio-blk: report zone errors with their zone status codes
+  block: add accessors for the zone model, capacity and open zone limit
+  scsi: add the sense codes of zoned block devices
+
+Sam Li (4):
+  docs/qcow2: add the zoned format feature
+  qcow2: add configurations for zoned format extension
+  qcow2: add zoned emulation capability
+  iotests: test the zoned format feature for qcow2 file
+
+ MAINTAINERS                                   |    1 +
+ block/block-backend.c                         |   33 +
+ block/io.c                                    |   13 +-
+ block/qcow2-cache.c                           |   11 +-
+ block/qcow2-refcount.c                        |   18 +
+ block/qcow2.c                                 | 1674 ++++++++++++++++-
+ block/qcow2.h                                 |   86 +-
+ block/trace-events                            |   10 +
+ docs/interop/qcow2.rst                        |  115 +-
+ docs/system/qemu-block-drivers.rst.inc        |   44 +
+ hw/block/block.c                              |    7 +
+ hw/block/virtio-blk.c                         |   49 +-
+ include/block/block-common.h                  |   17 +
+ include/block/block-io.h                      |    6 +
+ include/block/block_int-common.h              |   12 +
+ include/qemu/osdep.h                          |    6 +
+ include/scsi/utils.h                          |    6 +
+ include/system/block-backend-io.h             |    3 +
+ qapi/block-core.json                          |   86 +-
+ scsi/utils.c                                  |   15 +
+ tests/qemu-iotests/031.out                    |    8 +-
+ tests/qemu-iotests/036.out                    |    4 +-
+ tests/qemu-iotests/061.out                    |   14 +-
+ tests/qemu-iotests/082.out                    |  108 ++
+ tests/qemu-iotests/303.out                    |    4 +-
+ tests/qemu-iotests/tests/qcow2-encryption.out |    4 +-
+ tests/qemu-iotests/tests/zoned-qcow2          |  362 ++++
+ tests/qemu-iotests/tests/zoned-qcow2.out      |  258 +++
+ 28 files changed, 2937 insertions(+), 37 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/zoned-qcow2
+ create mode 100644 tests/qemu-iotests/tests/zoned-qcow2.out
+
+
+base-commit: 9703b6cf418d2ce72fae8d00e511135ce0bfda43
 -- 
 2.56.0
 
