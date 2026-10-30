@@ -1,89 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91055606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E81D606A31C
 	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 21:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FJi+0jBb
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Ppyk5lAR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMtvy-0007Kh-LJ; Fri, 30 Oct 2026 17:14:46 -0400
+	id 1xMtwM-0007f6-KO; Fri, 30 Oct 2026 17:15:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xMtvx-0007KY-TC
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 17:14:45 -0400
+ id 1xMtwD-0007c4-Fl
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 17:15:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xMtvw-0007ph-DQ
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 17:14:45 -0400
+ id 1xMtwC-0007qO-3Z
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 17:15:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793394883;
+ s=mimecast20190719; t=1793394899;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7uSO1MBrUYVrFvlTPHQeezTq48bM4sccwd0zAs6JrO4=;
- b=FJi+0jBbO6ZUSonRPhwDV1+OYK8cCSOmGcKEr3MyxvywV5Zyv7xvhHS8Do73gfzYSxzWNt
- IA6lv0fyqm5twHPyNZtQne2S/a9nw7gVnxeAwfvo8ef3MxEQLl9/tUCAGXA6IqE8d3AxPh
- IUOzCIZhweysenvoqaSdzgpTWCOktSI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VyXgq1DDXioBHKFmhDSRrecUaXRMoobWR+jycwhTqQs=;
+ b=Ppyk5lARQbjv/d9/8qcXQ2ijgqe4hLr5JaknpX5czQK/sdL7ubKa/5cxCGx5yKLcwsMl6V
+ yBhd1LmyPtdjwTknHONNpIxGZVnbgAhBqarZQNMx07Jc6yVZ8UX2H9hWQdN5snX8WdsxIg
+ opq9iFXM5N9KPyFWeA/AvkLYg53Rjr8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-EmyKhYEWOSeMCdMS5aU5dQ-1; Fri,
- 30 Oct 2026 17:14:40 -0400
-X-MC-Unique: EmyKhYEWOSeMCdMS5aU5dQ-1
-X-Mimecast-MFC-AGG-ID: EmyKhYEWOSeMCdMS5aU5dQ_1793394878
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-POs7zeh4NoSOr4tRj2GaHA-1; Fri,
+ 30 Oct 2026 17:14:50 -0400
+X-MC-Unique: POs7zeh4NoSOr4tRj2GaHA-1
+X-Mimecast-MFC-AGG-ID: POs7zeh4NoSOr4tRj2GaHA_1793394889
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7844019541A4; Fri, 30 Oct 2026 21:14:38 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C485D195604A; Fri, 30 Oct 2026 21:14:48 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 97E9D18005B7; Fri, 30 Oct 2026 21:14:37 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DE8AD1956087; Fri, 30 Oct 2026 21:14:47 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 31 Oct 2026 01:14:10 +0400
-Subject: [GIT PULL 07/10] hw/s390x/ipl: fix short SCSI loadparm buffer
- over-read
+Date: Sat, 31 Oct 2026 01:14:13 +0400
+Subject: [GIT PULL 10/10] tests/xilinx-zynq-sdhci-test: fix GIOChannel leak
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261031-nohmp-next-v1-7-9a9fb205cf3f@redhat.com>
+Message-Id: <20261031-nohmp-next-v1-10-9a9fb205cf3f@redhat.com>
 References: <20261031-nohmp-next-v1-0-9a9fb205cf3f@redhat.com>
 In-Reply-To: <20261031-nohmp-next-v1-0-9a9fb205cf3f@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Jared Rossi <jrossi@linux.ibm.com>, 
- Zhuoying Cai <zycai@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Joshua Daley <jdaley@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
- Cornelia Huck <cohuck@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1963;
+Cc: richard.henderson@linaro.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-block@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1381;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=c9YOix2NRFd+vbdfX3IxVTNQ3IqV3wTDUd97DXtw4WI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq5QigvogaaMqN0o1YbwF9pYpRTbPtjOyODqMgE
- PhyjTouTa2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCauUIoAAKCRDa6OEJdZac
- 5SuPEAC2uq7SkAk1z95gNFjbZr5U4MqqTtiJqLT6UR5PWYe/ml6xe/wAWkc4VgP1tD4arPM0TkO
- ztubhv3AIboWqk1NTEF0UndTYkAMW2oSaYBSvAKCZNo55hdt5YGhIsB+vvdhytVXZHNsWyCgcbm
- qi3+3zZZ2Xcn+5L4f1iCnI8pVSU3Q8KriH9bfVSS03yd8tcQF/GztMV5FxTKtYtuwtO4p2E37rq
- P6bp/Q5elzOP6aP3VXhwzmviGKpx2Pv9YZcmeSWGc82/FbFxAsSgRKVQpTXmqZwcy2m12fuHYX/
- Aud5OPIm/EOmcp8aKawL61Pyk2T9o25CsFd8cwfxRyifAXfq9junxYpmcl9f5cYyIck24BjYm6T
- Di7a0J75BynrclpFIqbrGgP86yW4/Dxox9SjhPz8xZNLKkJISAs2yUCQFdfIQlF0pwKHRG12m/t
- LpVwSdXCG0WXY2j8MxDwQ7h0/sCjMkMUOB+WZjQ/16EFLXG9BV1JqfDDuwGkRB9R6v+KQeM3KVX
- mLmtgesEyz/VaxUT17tnZXeNfh9dnuR5WswBJnQ3Cbuap43Ez3xfrFDpHXbdvMDeNcy2vOGm7gL
- mrdmYsWOacDJ083jpR0wlIwUaaP5gLxdjZbN+qUUDBEcCUQKHZt+oi1sXCV5f9FuWahgLRl+4ND
- jhKiW91YQ2EkLZQ==
+ bh=DZK5TRFGQWVf7qNN++WjgyYu3fgIJg6uTk9cT5heCmE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq5Qih7AcSFmOfK/lZEcPlHToMXQJujUFaJbrPT
+ jXaql45U9aJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCauUIoQAKCRDa6OEJdZac
+ 5ZoIEACvNGDJYHa1RYsEh5BFE4d4iFHskYtbbxTuDKbbGEj4AXgUpMiFqSjbHhrmtlk2GpMAPRR
+ lKfni9q39EJgH9jOoRhN2Ad+L6L6jzNkKENJryPjSEj5G+Id+1QPOjF8zt7PDO3j7qqSA/bFnuG
+ 6qatqSjIqIf1cdcwsCtxaixzbLfUTK2w8QY+kupGaGsrix0td6+GLveDDpsx8q/ArXpxWWVFA42
+ Ke/cpU2PI8H0UhNVyBAKpgQJRFch3jmwy+2Dr701htTjiTtoY/3pxnXAtqMGyrX8KRhMEcxPd4q
+ trQS7najIbut7A7LfJJL6y2GV0UyFYGNZSjbTZvC0Dy/fcraRc0auf33t5dZndAjDxUm+r55gsU
+ mpjTTKsZrfKt6v38VmrtvRme7+exgcDNOHTNDSwq077/XlY5aVm2MrTupzH0jgRr2HphzP41HSr
+ AOXzIk+ZJjUUk8Q/LUIrz51mrP/ZtcNXX8cqR7XEDyT+z4t588t8S4JYeR+ot/v//7vknTU6yAL
+ 1CNsAKOADWdOwyUDqBb59MYBINx8voF/xqbDsuSz4jPQEjrfBkHJ+ye+vcIsSHnGM/1/LyUOsrK
+ u47NF8u9Cg+DxUfGC1zn5F7piQ2QFUBmjJ6ur4lnQ6pD+2A31efHQPSMaorFpDbL92FUm++9iR3
+ vMGOai2Qp/sTOgA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -113,55 +110,43 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-s390_build_iplb() initially points lp at the eight-byte CCW loadparm
-array. For SCSI devices, it can replace lp with a variable-length string
-returned by object_property_get_str().
+Reported by ASAN.
 
-The following memcmp() still reads eight bytes. ASan reports
-buffer-overflow on value "3", when running test_scsi_loadparm
-func-s390x-boot_4k test.
-
-Check the fixed-size CCW loadparm for the 8-zero before the SCSI
-property can replace lp.
-
-Fixes: 429442e52d94 ("hw: Add "loadparm" property to scsi disk devices for booting on s390x")
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Fixes: 255c627c645b ("qtest: add xilinx-zynq SDHCI sdma test")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Tested-by: Gerd Hoffmann <kraxel@redhat.com>
 Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/s390x/ipl.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tests/qtest/xilinx-zynq-sdhci-test.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index 1add11ad7b2c..fe107af84de0 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -570,6 +570,11 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-     if (ccw_dev) {
-         lp = ccw_dev->loadparm;
+diff --git a/tests/qtest/xilinx-zynq-sdhci-test.c b/tests/qtest/xilinx-zynq-sdhci-test.c
+index 7957358cf5d4..42e1b8f46e88 100644
+--- a/tests/qtest/xilinx-zynq-sdhci-test.c
++++ b/tests/qtest/xilinx-zynq-sdhci-test.c
+@@ -58,10 +58,10 @@ static QTestState *setup_sd_card(void)
  
-+        /* If the device loadparm is empty use the global machine loadparm */
-+        if (memcmp(lp, NO_LOADPARM, 8) == 0) {
-+            lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
-+        }
-+
-         switch (devtype) {
-         case CCW_DEVTYPE_SCSI:
-             sd = SCSI_DEVICE(dev_st);
-@@ -605,11 +610,6 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-             break;
-         }
+ static void write_pattern_to_image(size_t offset, size_t len)
+ {
+-    gchar *buf = g_malloc(len);
++    g_autofree gchar *buf = g_malloc(len);
++    g_autoptr(GIOChannel) chan = NULL;
+     GError *err = NULL;
+     gsize bytes_written;
+-    GIOChannel *chan;
  
--        /* If the device loadparm is empty use the global machine loadparm */
--        if (memcmp(lp, NO_LOADPARM, 8) == 0) {
--            lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
--        }
+     for (size_t i = 0; i < len; i++) {
+         buf[i] = (i * 13 + 7) & 0xff;
+@@ -78,8 +78,6 @@ static void write_pattern_to_image(size_t offset, size_t len)
+     g_assert_cmpint(bytes_written, ==, len);
+     g_io_channel_shutdown(chan, TRUE, &err);
+     g_assert_no_error(err);
 -
-         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
-         iplb->flags |= DIAG308_FLAGS_LP_VALID;
+-    g_free(buf);
+ }
  
+ static void wait_for_block_count(QTestState *qts, uint16_t expected)
 
 -- 
 2.56.0.116.g6de20f6092dc
