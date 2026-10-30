@@ -1,83 +1,83 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B10606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 11:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147AE606A31D
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 11:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ljWCKYkh
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=B63epMw9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMkgD-0001Rf-D5; Fri, 30 Oct 2026 07:21:53 -0400
+	id 1xMkgD-0001Rc-Ca; Fri, 30 Oct 2026 07:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
- id 1xMkg2-0001O0-Se
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:43 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1xMkg1-0001Nm-Jc
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:42 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
- id 1xMkg0-0002mf-RR
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:42 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-48df4f540ebso278118f8f.3
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 04:21:40 -0700 (PDT)
+ id 1xMkfz-0002mP-93
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:41 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-48e46e449e8so368873f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 04:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793359299; x=1793964099; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793359298; x=1793964098; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wATYT6BvjZcVXWDHqPLOg+g6BseY/5lYU9MCydp+P3g=;
- b=ljWCKYkhXyFwN7A9knIjItNdZC/0Ob1JSJaVxC/V71qcfDvkS1cfe3G/7pxFnLtEtb
- RHeS8MIUljdF7cnxwdmuzcWKSO5qBMHcmJCgWok0sagMDGNSykjPOz1kebyzv7vKnjfR
- IjbLmfpW+iQaQH+URhR56N46z3+LRPKNd9dYeiEAjFpnZJYP0OuWRUFTwgTtZdHeAY5C
- mPyaMhyMwvr2+gpyXBzKVP0H8fx3UTJPhP3dsRk8eDnTlTTexkGfs/+lIjZ8hDxPmI7U
- F9fqUJwyU65Fc4T5QSFY5xo1P8/Rq4TvWuNcCnPOtsVLtijN+rr/Ti6D/vAM+375UlvM
- 4BQg==
+ bh=pcS+Jwk9ybuv9CPMRa2h0bU6xc+TDlXMtbvBgX/ZHzE=;
+ b=B63epMw90NTSeAoW3SvGIVD9/7hJZ0zbgQdlu/Z1uW2zBOp2aHXK5+L/p+4xEVFx2X
+ 3FUdc4VZdoCvHGJB1FwkChMFB4JlCSZD1ejKvqmv5oWK1gkIX4Q+fsnBMTXzu7qk/ZT7
+ MwhcYcTzuzMuWFCWO2eFJH1r/OChE1lLDcqBCJNo3iIM/tEb1egBcgz5Fho3JX3shOqx
+ 7M6wFp0mVQFi2/QmmpDD98kaU/Rp6bcrVBWAJitz2pnjhy1y42ykKaWGCHIscahVpIAX
+ QMhI+2wJDolsY4c9h0G/VoV3jaA0kalyFXIF9NdXoQgNuqoBIvecgQ0RdUH9XwTy0Q9R
+ q+KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793359299; x=1793964099;
+ d=1e100.net; s=20260707; t=1793359298; x=1793964098;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=wATYT6BvjZcVXWDHqPLOg+g6BseY/5lYU9MCydp+P3g=;
- b=eMyebkEHnD8Dlz03tKpTyLK/AzaRwM+k0xb9CnASgDBCvEWxY/9vHP07eDvrIyE67w
- XrRsQNSOmRbB7bo80bqE7Yg5Fkwp7nZUnSEUZtdRPzJ+T77u5P8C/bF6D4JxxawEKR/m
- ZpLBfbtBjdjTEkjICdYzoQN//D1gZZB38tg1E0tAihR+CwjPSHHwj++awwXDfOE57A8x
- fW4+OGurzKXM9aHW1KgsUbsA1u3R9d9RqHyGJiSuPtvc7LFiticPg+iZHIZlye1dChLb
- TpNxL25cSvlzVrnc26XPDwQX6lb5GDhZoY3SJTSQ9IhzN9HERvC9HQ2gF5r3xXOwn0iT
- oXwA==
-X-Gm-Message-State: AFq9FYJvZWMywse9HDjCQyY1ILVN1uXlcEcKtH40000bAUZq1AgyoyAV
- iLcDkce5AIWekfJ7CUv04VigyDlzjNxPzW15w5CN2YcHpj8zds6zx5O9
-X-Gm-Gg: AYBFou2vfZrI9n/Tq0rCCy2WKBOZlQUX5XpU0jSt3pc0RB2JSQKw9cKBwqGoZyTnAKJ
- i4gTXOCeJyl2t37Bke0CpD9bk8bFRPBJyCUDnBXSkPQ1+e6H36m3RKnq/bmeOYYPuz7Fztvjoib
- PXF3h2PPuvWtTet3VSjYic0dOR7H0VmKBml+daNgoNoYRQ1ZWpXjxy0AMDbdd95huh2nJXIgKP3
- eZEXO0DoM9IW4AZViZC56f50PMVc40aKeTl8yezJNpOLs7uPAic7QYsKAz51otlqXWWXWu/XCVY
- 74OtS+uqs01FokDgyMObjKPuvWCrqzwA9reS68C5RgRjRhRV5lHL1vL4ohF5f63Vc7xLe2agjzr
- K2b+06Xg54f9dqE23gLtmqVHnXxwjuO1WiDAa8AZYLmuFNtgJYFChrPy3WRxlb5dWCEVESIf2yF
- wd+Hb2XPjH5aN/F9D6z7C8tvPQG+XjIyDijA2RVWBzZYkIQzZXHKYeg4ExQ2deYPICoZ1Ub8zvH
- 610GotgpGLV9zdYII4QAAKYKc+A/XT/pJirIUIkPryYMKW4ZWpVYstcsfxiuxegmDTfZIphxLuA
- PK20pCPZa2i9O57XUy0uopFZhuDi5c3QIe3Df2dgijCXj2kv3lnJR7FtSXwe+eoQ8Hxj+FPj4tn
- 7S15JuGgbc+PXugdcXijy33UB4lNlvX+uRc2nSRsdaDONtAKtBOsXlqz6LFWYP/CLk48/9bMFrq
- IpxhTAn7o=
-X-Received: by 2002:a05:6000:d8c:b0:48e:1c72:abc with SMTP id
- ffacd0b85a97d-48e6e5066a2mr3651079f8f.35.1793359298840; 
- Fri, 30 Oct 2026 04:21:38 -0700 (PDT)
+ bh=pcS+Jwk9ybuv9CPMRa2h0bU6xc+TDlXMtbvBgX/ZHzE=;
+ b=Y979pisrKmGjckcMAZUmF9M8Pyh2xBdgVeUzFTp3sj6myxQQdw0qwhVs51jXZfI3MS
+ bl01rl6Rhnv0yPoTdRiTAo7/gjncAZ5/JHETJZjpWFaylpN9RKySCQ6ktH6p0KjketFU
+ TUA5+++R9KIUwJV/j/9ORgH6UtS3m96B3WlrLj7sJJ557TViY7ukf9J4tOedEAKtwkPf
+ MWY/haHNAq5EBwBw/osnHkx0zps4P2A5Apoby0b3Ohs5RgmmXWXjohVzAfy+bMQ9Fq3C
+ CdcCUjBJnNgEKOGLdz35zjpaelcJmaRqp71uEyjA8yl4WI1p5spGMsTAqGI9INptDUqb
+ HGyA==
+X-Gm-Message-State: AFq9FYK1SfkeRFmf+EevVhzClcRu30k9GVqR8ftOFrEQKsjyrao9nw8m
+ jlm4e+EiKVFpNIAfzQFu5IJ/ldj2kvv3aUCp9B5/qZdxKxlMKG9PoF866G/WnpsU
+X-Gm-Gg: AYBFou38+Yi6Tvwf81+PXczp5icyD5aqHsRQ5uJApmXTRppu7H4PdjF6dEf5R4Bg7W8
+ kRUTw8AOZ+TkZmgBvoy7Agow2t01fJKCKI5cEW1DB0pzu9xPPm0Jgtl0w21Re20Aajaq5MpeNmn
+ 4pORHxbhX+WzlFpg8RSzcJZQ0rpN7Xe/M2cLcCA0/TpfioQSMoYsdxvO4KfpQH1JXjerddKVhQL
+ JBE8mGOcEBojQV0odQOCED4uvd+ZqcPoeBHRLBEz8bh+1TijxCj4ZPq9DicMMZHmsisnOWvWZwp
+ pI/aLEFZquAZRqZeZIbNcHXBZFC9/eyQsiRYBXI98vWug0e5ynfN+1flukSyzAE2bGbrdshR5w/
+ 6OtmK2Qj6wiPe3eisifCZuPFrUflJl2aVOVPfw5tv4KIa6YQTq4A/2rP9wez3QYjsfGjPILg/oC
+ nSwp6UbNIdPGXehj1jGZKFGps57HBN5jnnCG9m3H8nOWXffNZp0Z4rLjZDQ6epcEDLMOm55iDPr
+ SErBLEp3TP+eEX5SGKurF9q2i81EwnMEIqd2reuNRo10B+LwAf1zTVcl9A8oDDSOOiKlyVWVJZQ
+ eOXpcwHba0Hk2LLaFV9gVMHGVHiBY6WKuZoIFYSX3C3hRpb7JEbdZyY194rQcFbkNvArDLmjMNV
+ py5PifML/DI3olhka0CNUdc9GvhMnmnr4Vq+dP98jXsrmRgss6JYPTBBXKhzZRO3vrRayx8QCD8
+ Ch3xFVpWw=
+X-Received: by 2002:a05:6000:29d1:b0:48e:37dc:7ff8 with SMTP id
+ ffacd0b85a97d-48e6e5008bfmr2729956f8f.22.1793359297651; 
+ Fri, 30 Oct 2026 04:21:37 -0700 (PDT)
 Received: from tim-m2.local
  (dynamic-2a02-3100-61d8-3600-98fd-cd98-7ae6-cb49.310.pool.telefonica.de.
  [2a02:3100:61d8:3600:98fd:cd98:7ae6:cb49])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d3e9sm2893608f8f.6.2026.10.30.04.21.37
+ ffacd0b85a97d-48e71a4d3e9sm2893608f8f.6.2026.10.30.04.21.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 04:21:38 -0700 (PDT)
+ Fri, 30 Oct 2026 04:21:37 -0700 (PDT)
 From: Tim Pambor <timpambor@gmail.com>
-Date: Fri, 30 Oct 2026 12:21:00 +0100
-Subject: [PATCH v2 7/9] vhost-user: enable frontends on any POSIX system
+Date: Fri, 30 Oct 2026 12:20:59 +0100
+Subject: [PATCH v2 6/9] chardev/char-socket: detect peer close portably
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261030-vhost-user-posix-v2-7-cda7c17aad13@gmail.com>
+Message-Id: <20261030-vhost-user-posix-v2-6-cda7c17aad13@gmail.com>
 References: <20261030-vhost-user-posix-v2-0-cda7c17aad13@gmail.com>
 In-Reply-To: <20261030-vhost-user-posix-v2-0-cda7c17aad13@gmail.com>
 To: qemu-devel@nongnu.org
@@ -93,15 +93,15 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 X-Mailer: b4 0.16.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=timpambor@gmail.com; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=timpambor@gmail.com; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,72 +121,141 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The vhost-user protocol is not really Linux-specific so let's enable
-vhost-user frontends for any POSIX system.
+A hang-up watch for G_IO_HUP alone is not a portable disconnect
+detector.  Linux wakes such a poll() when the peer closes, but FreeBSD
+registers a wakeup only for read/write interest and macOS drops its
+one-shot read filter on any non-EOF event, so as long as nobody polls
+the socket for readability the hang-up is not noticed until something
+unrelated wakes the main loop.  Frontends that never read from the
+chardev, such as vhost-user, are the ones without a G_IO_IN watch, and
+that is what makes the vhost-user/reconnect qtest fail under load on
+FreeBSD with "wait_for_fds: assertion failed: (s->fds_num)".
 
-vhost_net.c uses VHOST_FILE_UNBIND, which is defined in a Linux specific
-header. The kernel's VHOST_NET_SET_BACKEND documentation asks to pass
-fd -1 to unbind, so replace the macro with -1 and drop the include,
-nothing else in the file needs it. Long-term a constant could be
-introduced and used for it.
+While the frontend has no read handler at all, also ask for G_IO_IN on
+the hang-up watch and treat EOF as a hang-up.
 
-Co-authored-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Tim Pambor <timpambor@gmail.com>
 ---
-Changes in v2:
-- Replaced VHOST_FILE_UNBIND with -1 and dropped the include
----
- hw/block/Kconfig   | 2 +-
- hw/net/vhost_net.c | 3 +--
- meson.build        | 1 -
- 3 files changed, 2 insertions(+), 4 deletions(-)
+ chardev/char-socket.c | 78 ++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 59 insertions(+), 19 deletions(-)
 
-diff --git a/hw/block/Kconfig b/hw/block/Kconfig
-index 737dbcdb3e..7edcd7a8f6 100644
---- a/hw/block/Kconfig
-+++ b/hw/block/Kconfig
-@@ -28,7 +28,7 @@ config VHOST_USER_BLK
-     bool
-     # Only PCI devices are provided for now
-     default y if VIRTIO_PCI
--    depends on VIRTIO && VHOST_USER && LINUX
-+    depends on VIRTIO && VHOST_USER
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 81bac42a15..62e8871c51 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -36,11 +36,14 @@
+ #include "trace.h"
  
- config SWIM
-     bool
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index 6e05c995f1..d0f1014ce1 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -33,7 +33,6 @@
- #include "standard-headers/linux/virtio_ring.h"
- #include "hw/virtio/vhost.h"
- #include "hw/virtio/virtio-bus.h"
--#include "linux-headers/linux/vhost.h"
+ #include "chardev/char-io.h"
++#include "chardev/char-fe.h"
+ #include "chardev/char-socket.h"
  
- void vhost_net_get_features_ex(struct vhost_net *net, uint64_t *features)
+ static gboolean socket_reconnect_timeout(gpointer opaque);
+ static void tcp_chr_telnet_init(Chardev *chr);
+ static char *qemu_chr_compute_filename(SocketChardev *s);
++static gboolean tcp_chr_hup(QIOChannel *channel, GIOCondition cond,
++                            void *opaque);
+ 
+ static void tcp_chr_change_state(SocketChardev *s, TCPChardevState state)
  {
-@@ -681,7 +680,7 @@ err_start:
-     error_report("Error when restarting the queue.");
+@@ -345,6 +348,33 @@ static void remove_hup_source(SocketChardev *s)
+     }
+ }
  
-     if (net->nc->info->type == NET_CLIENT_DRIVER_TAP) {
--        file.fd = VHOST_FILE_UNBIND;
-+        file.fd = -1;
-         file.index = idx;
-         int ret = vhost_net_set_backend(&net->dev, &file);
-         assert(ret >= 0);
-diff --git a/meson.build b/meson.build
-index b67a97ab45..eb296346a8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -221,7 +221,6 @@ have_tpm = get_option('tpm') \
++static void add_hup_source(SocketChardev *s, GIOCondition cond)
++{
++    Chardev *chr = CHARDEV(s);
++
++    remove_hup_source(s);
++    s->hup_source = qio_channel_create_watch(s->ioc, cond);
++    /*
++     * poll() is liable to return POLLHUP even when there is
++     * still incoming data available to read on the FD. If
++     * we have the hup_source at the same priority as the
++     * main io_add_watch_poll GSource, then we might end up
++     * processing the POLLHUP event first, closing the FD,
++     * and as a result silently discard data we should have
++     * read.
++     *
++     * By setting the hup_source to G_PRIORITY_DEFAULT + 1,
++     * we ensure that io_add_watch_poll GSource will always
++     * be dispatched first, thus guaranteeing we will be
++     * able to process all incoming data before closing the
++     * FD
++     */
++    g_source_set_priority(s->hup_source, G_PRIORITY_DEFAULT + 1);
++    g_source_set_callback(s->hup_source, (GSourceFunc)tcp_chr_hup,
++                          chr, NULL);
++    g_source_attach(s->hup_source, chr->gcontext);
++}
++
+ static void char_socket_yank_iochannel(void *opaque)
+ {
+     QIOChannel *ioc = QIO_CHANNEL(opaque);
+@@ -520,6 +550,30 @@ static gboolean tcp_chr_hup(QIOChannel *channel,
+                                void *opaque)
+ {
+     Chardev *chr = CHARDEV(opaque);
++    SocketChardev *s = SOCKET_CHARDEV(opaque);
++
++    if (!(cond & G_IO_HUP)) {
++        /* Readable while nobody reads: only EOF counts as a hang-up. */
++        int flags = MSG_PEEK;
++        ssize_t n;
++        char c;
++
++#ifdef MSG_DONTWAIT
++        flags |= MSG_DONTWAIT;
++#endif
++
++        n = recv(s->sioc->fd, &c, 1, flags);
++
++        if (n < 0 && (errno == EAGAIN || errno == EINTR)) {
++            return G_SOURCE_CONTINUE;
++        }
++
++        if (n > 0) {
++            /* Data nobody will read: stop watching for it, or we spin. */
++            add_hup_source(s, G_IO_HUP);
++            return G_SOURCE_REMOVE;
++        }
++    }
+     trace_chr_socket_hangup(chr, chr->label);
+     tcp_chr_disconnect(chr);
+     return G_SOURCE_REMOVE;
+@@ -611,27 +665,13 @@ static void update_ioc_handlers(SocketChardev *s)
+                                      tcp_chr_read, chr,
+                                      chr->gcontext);
  
- # vhost
- have_vhost_user = get_option('vhost_user') \
--  .disable_auto_if(host_os != 'linux') \
-   .require(host_os != 'windows',
-            error_message: 'vhost-user is not available on Windows').allowed()
- have_vhost_vdpa = get_option('vhost_vdpa') \
+-    remove_hup_source(s);
+-    s->hup_source = qio_channel_create_watch(s->ioc, G_IO_HUP);
+     /*
+-     * poll() is liable to return POLLHUP even when there is
+-     * still incoming data available to read on the FD. If
+-     * we have the hup_source at the same priority as the
+-     * main io_add_watch_poll GSource, then we might end up
+-     * processing the POLLHUP event first, closing the FD,
+-     * and as a result silently discard data we should have
+-     * read.
+-     *
+-     * By setting the hup_source to G_PRIORITY_DEFAULT + 1,
+-     * we ensure that io_add_watch_poll GSource will always
+-     * be dispatched first, thus guaranteeing we will be
+-     * able to process all incoming data before closing the
+-     * FD
++     * A G_IO_HUP-only poll() is not woken by a peer close on FreeBSD
++     * nor reliably on macOS.  Therefore, while nobody reads, ask for
++     * G_IO_IN too and let tcp_chr_hup tell EOF from data.
+      */
+-    g_source_set_priority(s->hup_source, G_PRIORITY_DEFAULT + 1);
+-    g_source_set_callback(s->hup_source, (GSourceFunc)tcp_chr_hup,
+-                          chr, NULL);
+-    g_source_attach(s->hup_source, chr->gcontext);
++    add_hup_source(s, G_IO_HUP |
++                   (chr->fe && chr->fe->chr_can_read ? 0 : G_IO_IN));
+ }
+ 
+ static void tcp_chr_connect(void *opaque)
 
 -- 
 2.55.0
