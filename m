@@ -1,87 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12762606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B411F606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=iacgTs0l
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=fk3LcVEO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMrm6-0006xw-KM; Fri, 30 Oct 2026 14:56:26 -0400
+	id 1xMrnR-0008Id-Ii; Fri, 30 Oct 2026 14:57:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMrln-0006s9-5l
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:09 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ id 1xMrm0-0006uN-UK
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:21 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMrll-0004oJ-O3
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:06 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-8ae8607e8afso8576697b3.3
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 11:56:05 -0700 (PDT)
+ id 1xMrlw-0004pR-R5
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:56:20 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-8b05bf699easo11198277b3.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 11:56:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793386564; x=1793991364; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793386574; x=1793991374; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=snPje9eTvXO8WBl9g3A/YZtenSR0D0gyFjZLY0cCXkA=;
- b=iacgTs0lnxo0ClmV0QWQ/QeVxa3zvHS8pIUjKT+46noTDd7D/qlsOFiYx6fi6UXTqy
- M7/xFQycRwgA7ySMKQ87PP2itsXZj0zKI4PPHN1rJ5L3I/UH8D0pVE2DKdV0O6q/BFkR
- QTbfI1v/q/qKTyii+4F2GwPOz+kbuwIfb3qapYiQ8U7PkYQj36sSH7dmLMEMwdlLCeai
- mhNizt8EOtk7c/Exgdgc3IOtJjormsUg3EYo4lGmcfV1CPa6dfgMsE6SzrQaEZH9khS0
- kkyMKiuvo4kcQobOraNC3M32AE49n52ytJTcsmRer5aYH5HMI+vxCmlY4fP+Am2F6xAb
- afIw==
+ bh=PKaovmZvoy42vyhXFWLgIndq++j7MuMZxApm2MP9S5U=;
+ b=fk3LcVEO3UhyCTtpJdlVsO9AdPIB7eCaj28YUU5XN6dj2A4yTb3KwP+hb69EQvqSyw
+ KMCKGEdo0Ji9Ures5dxvAGinOWb3Nx4qYuVDSAQJzvYHYotUHlPf1+w4CKQRM/OLpZrt
+ curSeJ6hB9kObJSscdNNZOAfKXZ5m6jss6TqhXnr50x9m9CAGKb9LPsKck0UFtGA7KHJ
+ YMeAOojxIss391JpjZAhD+Ve0HqS7xSP7Qc51shxQufWLWDOU7xAnAeWQ/OFO2t1o2pD
+ Ehky8Rsm3JphBLEfqPjBexfixhc1GQU+zypMBd4hZqodort/vtHmqahg3QWDGh01j0DY
+ HRvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793386564; x=1793991364;
+ d=1e100.net; s=20260707; t=1793386574; x=1793991374;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=snPje9eTvXO8WBl9g3A/YZtenSR0D0gyFjZLY0cCXkA=;
- b=AMfDTvMlWqRpnIvdeWc96+LqadpPda4bASmjXffuSP2e/hK7iiwLLtyzI4e71oyjN+
- xzXfbYpOZ6vzy17dt12sC2raeIizRc0lqt+zvVZzzX3jIcG5O/gHepJaqBDyRkdiUjRa
- qmRnKZP7RJ9UHe2SAzrR9S8INtj2FAig0/A2AaBJLT8IT8jRdQ0AUPV//8ni2A6s0ISK
- Np+JxBAk/ArjO1dtxp0H5zmh80mXFus7ELqbf867E2ud3athbT52J65veBhFBRrJ/FXD
- BWKQkLIIN3nABzzF76gUE0wYsogZLIZOt1oJ9KZA9iY+sufCInr3Whr9zqK5QHZ6nnOq
- 0DIQ==
-X-Gm-Message-State: AFq9FYKBY5fwSK9cqHGoDWoqBW7oiakb8nC2vzYVPv2qXAnKjTq/Xrj4
- QvIkwnSAn82kv43ec9KUyiPFSg4HQCIgzL461bIsEv5tf4PPwz0GIDE3mokEcUvG6YPmN0XwNxu
- JQkug
-X-Gm-Gg: AYBFou1/8mm1TwDyx2GgcXJw1irKqOSx84E1/DsoQmOvSgeMOoMpy0bRZSXAvYhpqW+
- nrNGp6bNQxoCIFoZqdolBCbunwwG3fHT6Bn1lYJ973K51Q8QE8NerM+w/UXSwz4qjWrDfudOAVn
- roeZ977t/Vq9uivq2GvLztHTPxk+ISs7JqDqkOSqX1fpF8epjd+xZfFomwbdJnvzn+MWQx1pWT+
- hdBB+bIH8i7qMycdzvTdwSb2fyvl/s5Zy+hnR3+YV/485yMBdBseOhVlmYVyOON5qlA3eBV/Vss
- giUP5jxQ/koDmXugfOjJ0lyExmMvJrTAzAp7ybH7LOOm3HqKrKDNA+1UKkOAmWiroDvXcne36hA
- 7yWWH/npi9C6INAGmG1Qnp4XRHef2/WOzfHkML4m0W5ssMYy0/rlVVYwd9gO6hpX8esOLYXztJ9
- 5z8phGNQ09i8BjtyQ+IEY1ABnfCt0Bo4haJHt2xLHdOoOzYT5T2T57gznIizqpp6oW2cU8jNTg2
- wy4x1D+0T1LImEKxNeWoZadKz840XQyZSJlu7ryD23vj3czKbd5AagmeZ6A2y053k9z8Vtp6dCx
- YUecCgqzbxzAWggt4KbTh85mZV0AIYzf/34=
-X-Received: by 2002:a05:690c:289:b0:871:bc3:9856 with SMTP id
- 00721157ae682-8b2b672fd3bmr15544327b3.33.1793386564590; 
- Fri, 30 Oct 2026 11:56:04 -0700 (PDT)
+ bh=PKaovmZvoy42vyhXFWLgIndq++j7MuMZxApm2MP9S5U=;
+ b=bfDJU8ZqJrTOERnH33C6H75ubBF4Z1PyvIyuBVSoTqR1DX23SIxwmCchIZuDROpKeG
+ otvh1hNLBugouijbM3LVqm8iL79AkvmdwkWBhxOsRyLdBvlM9TZ12+8b1t34tm6dpwY+
+ xMCdfEMpt9pOCYBGTG1M/m/77gCoYOWMX4kI2NNNT9vfsfzY6NFTzn0x2b0gxt5vUy+A
+ a7NEExplYL79LpIkQTDB1UgTWw29ruSibl8msTKO1Dix1ckdqNbX7A408hrWtKpls0VM
+ hwrrUcYE4L56WD7qqsj3ltgpaqn5d6SreIu8tRb84otFQqhGT5cqbCk3M6o4X88rEM/E
+ kMaQ==
+X-Gm-Message-State: AFq9FYKN1virF9ElerePYfIyvjMnzx57ezU18XAIyReJh1kyyjvXLqy2
+ YF+DqDmMXjPjgZY1yO4j3QPcYMWscrfSq8/b7JHkDStvRVM85guvKsm6yr8YCGvnY6fPEOVtLnp
+ 9OJIe
+X-Gm-Gg: AYBFou2cebS8a8upmylRUbi2RnE1GgxM05koC9mRvO0pKkz615MLU314UNP/szcuaI4
+ r9vKjTVMNjlHMAeoK2RwXI066UU4W5BYIzxFHZx+kwoXa0g7GDqAKeEVCK0J5VLepni8J6Q0CsX
+ rSj0muWn+NiRCojTTGUY7O6VUrFfFV3mMxoGR8qu6NI1c6svIT4A8eL+NlIu3xcI/KfkrY2Sn10
+ kzm9XlD29tNapEuAZOmwWUEqATbFsWKhRi3g5h2jmliBJclgN2w8noXJ25G3bbdjLR5AJPcCHhA
+ n5lJSJp8euGLzMLU02KnS0iNghB0iOACUoMgAhoFByVkup0hvThATvF2lq8+gVsA1EDcLj6Lxuj
+ mYcS2OsMGC/vlAV9a1brlwJjKzEcyEL3M598jiQqEnwEAz1JtdrX+SipSqs/veVADWCQbRjRSJs
+ 3J+xyTlhZBRSmmjsBi6uJuCNiEo+gSLkIghkK7hYss9LAHCDMZhqm4AVPeQU+VCyM/n1Jm/q9L6
+ UsI6iz9EhFvhcFo73CuoIbzuQgDQgRVNVud6gCMGzNPgbpoJBAuMh6zKcqjM2wxGJ5fez64RT+m
+ 7KOxgyx/P4qiZbpBP1/xfAYeP49UBNdeCF4=
+X-Received: by 2002:a05:690c:ec3:b0:8ae:8607:e6cc with SMTP id
+ 00721157ae682-8b2b65b261bmr19140547b3.2.1793386574006; 
+ Fri, 30 Oct 2026 11:56:14 -0700 (PDT)
 Received: from stoup ([2607:fb90:5e62:412b:1381:b0c1:1339:9c82])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8b2b71a13b1sm13209657b3.39.2026.10.30.11.56.03
+ 00721157ae682-8b2b71a13b1sm13209657b3.39.2026.10.30.11.56.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 11:56:04 -0700 (PDT)
+ Fri, 30 Oct 2026 11:56:13 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: iii@linux.ibm.com,
 	mattst88@gmail.com
-Subject: [PATCH v7 06/14] target/s390x/tcg: Use tcg_gen_goto_jc3_i64 for
- branches
-Date: Fri, 30 Oct 2026 13:55:43 -0500
-Message-ID: <20261030185551.193092-7-richard.henderson@linaro.org>
+Subject: [PATCH v7 13/14] tcg/s390x: Implement INDEX_op_goto_jc
+Date: Fri, 30 Oct 2026 13:55:50 -0500
+Message-ID: <20261030185551.193092-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261030185551.193092-1-richard.henderson@linaro.org>
 References: <20261030185551.193092-1-richard.henderson@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,87 +106,111 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Introduce gen_goto_jc as a helper.  Use it instead of
-DISAS_PC_CC_UPDATED or tcg_gen_lookup_and_goto_ptr
-within help_goto_direct, help_goto_indirect, and help_branch.
-Always return DISAS_NORETURN from those functions.
-
-Do not use goto_jc elsewhere as yet.
-At least op_ex, op_sacf, op_sam require other updates;
-icount and PER_IFETCH want to use goto_tb not goto_jc.
-and PER_IFETCH needs some TLC.
+Use LGM to load multiple values at once.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/s390x/tcg/translate.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ tcg/s390x/tcg-target-con-set.h |  1 +
+ tcg/s390x/tcg-target-con-str.h |  1 +
+ tcg/s390x/tcg-target.c.inc     | 60 +++++++++++++++++++++++++++++++++-
+ 3 files changed, 61 insertions(+), 1 deletion(-)
 
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index 3a29555605..685628789f 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -638,6 +638,15 @@ static bool use_goto_tb(DisasContext *s, uint64_t dest)
-     return translator_use_goto_tb(&s->base, dest);
- }
+diff --git a/tcg/s390x/tcg-target-con-set.h b/tcg/s390x/tcg-target-con-set.h
+index f67fd7898e..b22614d718 100644
+--- a/tcg/s390x/tcg-target-con-set.h
++++ b/tcg/s390x/tcg-target-con-set.h
+@@ -18,6 +18,7 @@ C_O0_I2(r, ri)
+ C_O0_I2(r, rC)
+ C_O0_I2(v, r)
+ C_O0_I3(o, m, r)
++C_O0_I4(r, h, hi, hi)
+ C_O1_I1(r, r)
+ C_O1_I1(v, r)
+ C_O1_I1(v, v)
+diff --git a/tcg/s390x/tcg-target-con-str.h b/tcg/s390x/tcg-target-con-str.h
+index 636a38a168..e44b2a92d5 100644
+--- a/tcg/s390x/tcg-target-con-str.h
++++ b/tcg/s390x/tcg-target-con-str.h
+@@ -9,6 +9,7 @@
+  * REGS(letter, register_mask)
+  */
+ REGS('r', ALL_GENERAL_REGS)
++REGS('h', 0xfff8) /* general regs other than r0-r2 */
+ REGS('v', ALL_VECTOR_REGS)
+ REGS('o', 0xaaaa) /* odd numbered general regs */
  
-+static void gen_goto_jc(DisasContext *s)
+diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
+index 3b63383315..f31835da2b 100644
+--- a/tcg/s390x/tcg-target.c.inc
++++ b/tcg/s390x/tcg-target.c.inc
+@@ -3202,8 +3202,66 @@ static const TCGOutOpLea outop_lea = {
+     .out = tgen_lea,
+ };
+ 
++static void tgen_goto_jc_cmp_part(TCGContext *s, TCGReg reg,
++                                  TCGArg ref, bool const_ref,
++                                  const uint64_t *tb_slot, TCGLabel *l)
 +{
-+    /*
-+     * ex_value, aka cs_base, is only ever live at the start of a TB
-+     * and is immediately cleared.  It is only ever set by op_ex().
-+     */
-+    tcg_gen_goto_jc3_i64(psw_addr, tcg_constant_i64(0), s->base.tb->flags);
++    if (!const_ref || ref == (int32_t)ref || ref == (uint32_t)ref) {
++        tgen_brcond(s, TCG_TYPE_I64, TCG_COND_NE, reg, ref, const_ref, l);
++    } else {
++        if (ref == *tb_slot) {
++            tcg_out_insn(s, RIL, CGRL, reg, tcg_pcrel_diff(s, tb_slot) >> 1);
++        } else {
++            tcg_out_insn(s, RIL, CGRL, reg, 0);
++            new_pool_label(s, ref, R_390_PC32DBL, s->code_ptr - 2, 2);
++        }
++        tgen_branch(s, S390_CC_NE, l);
++    }
 +}
 +
- static void account_noninline_branch(DisasContext *s, int cc_op)
- {
- #ifdef DEBUG_INLINE_BRANCHES
-@@ -1082,11 +1091,11 @@ static DisasJumpType help_goto_direct(DisasContext *s, uint64_t dest)
-         tcg_gen_goto_tb(0);
-         tcg_gen_movi_i64(psw_addr, dest);
-         tcg_gen_exit_tb(s->base.tb, 0);
--        return DISAS_NORETURN;
-     } else {
-         tcg_gen_movi_i64(psw_addr, dest);
--        return DISAS_PC_CC_UPDATED;
-+        gen_goto_jc(s);
-     }
-+    return DISAS_NORETURN;
- }
++static void tgen_goto_jc(TCGContext *s, TCGReg ptr, TCGReg pc,
++                         TCGArg cs, bool const_cs,
++                         TCGArg fl, bool const_fl, TCGLabel *label)
++{
++    const TranslationBlock *tb = tcg_splitwx_to_rx(s->gen_tb);
++
++    /*
++     * Note that pc, cs, fl are constrained to r3 or higher, r0 and r1
++     * are always reserved as scratch, this is the end of the translation
++     * block so r2 may now be clobbered, and the input ptr * is dead
++     * after the initial LMG.
++     */
++
++    /* ptr is CPUJumpCache */
++
++    QEMU_BUILD_BUG_ON(offsetof(CPUJumpCache, array[0].pc) !=
++                      offsetof(CPUJumpCache, array[0].tb) + 8);
++    /* lmg r1,r2,tb(ptr) */
++    tcg_out_insn(s, RXY, LMG, TCG_REG_R1, ptr, TCG_REG_R2,
++                 offsetof(CPUJumpCache, array[0].tb));
++
++    tgen_brcond(s, TCG_TYPE_I64, TCG_COND_NE, TCG_REG_R2, pc, false, label);
++    tgen_brcond(s, TCG_TYPE_PTR, TCG_COND_EQ, TCG_REG_R1, 0, true, label);
++
++    /* R1 is now TranslationBlock */
++
++    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, flags) !=
++                      offsetof(TranslationBlock, cs_base) + 8);
++    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, tc.ptr) !=
++                      offsetof(TranslationBlock, cs_base) + 16);
++    /* lmg r0,r2,cs(r1) */
++    tcg_out_insn(s, RXY, LMG, TCG_REG_R0, TCG_REG_R1, TCG_REG_R2,
++                 offsetof(TranslationBlock, cs_base));
++
++    tgen_goto_jc_cmp_part(s, TCG_REG_R0, cs, const_cs, &tb->cs_base, label);
++    tgen_goto_jc_cmp_part(s, TCG_REG_R1, fl, const_fl,
++                          (const uint64_t *)&tb->flags, label);
++    tcg_out_goto_ptr(s, TCG_REG_R2);
++}
++
+ static const TCGOutOpGotoJC outop_goto_jc = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_O0_I4(r, h, hi, hi),
++    .out = tgen_goto_jc,
+ };
  
- static DisasJumpType help_goto_indirect(DisasContext *s, TCGv_i64 dest)
-@@ -1095,7 +1104,8 @@ static DisasJumpType help_goto_indirect(DisasContext *s, TCGv_i64 dest)
-     per_breaking_event(s);
-     tcg_gen_mov_i64(psw_addr, dest);
-     per_branch(s, psw_addr);
--    return DISAS_PC_CC_UPDATED;
-+    gen_goto_jc(s);
-+    return DISAS_NORETURN;
- }
- 
- static DisasJumpType help_branch(DisasContext *s, DisasCompare *c,
-@@ -1157,7 +1167,7 @@ static DisasJumpType help_branch(DisasContext *s, DisasCompare *c,
-         tcg_gen_goto_tb(0);
-         tcg_gen_exit_tb(s->base.tb, 0);
-     } else {
--        tcg_gen_lookup_and_goto_ptr();
-+        gen_goto_jc(s);
-     }
- 
-     gen_set_label(lab);
-@@ -1167,9 +1177,10 @@ static DisasJumpType help_branch(DisasContext *s, DisasCompare *c,
-     if (use_goto_tb(s, s->pc_tmp)) {
-         tcg_gen_goto_tb(1);
-         tcg_gen_exit_tb(s->base.tb, 1);
--        return DISAS_NORETURN;
-+    } else {
-+        gen_goto_jc(s);
-     }
--    return DISAS_PC_CC_UPDATED;
-+    return DISAS_NORETURN;
- }
- 
- /* ====================================================================== */
+ static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
 -- 
 2.53.0
 
