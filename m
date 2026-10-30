@@ -1,176 +1,149 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5405606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 17:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B35606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 17:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hOaeq5yt;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RBayfcLN
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=WFL2jdek;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IsP9gGEi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMqjc-0001qR-Cv; Fri, 30 Oct 2026 13:49:50 -0400
+	id 1xMqje-0001tH-Nl; Fri, 30 Oct 2026 13:49:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMqj9-0001fL-4b
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xMqj9-0001fP-EI
  for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:49:19 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMqj6-0007PS-RR
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:49:18 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xMqj6-0007PU-JA
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:49:19 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69UER6a53515356
+ 69UERHNU378541
  for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:49:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6UX8J6tayYdcMuVbYI0MgDwbUxidzIgfE/ULZAD4kYA=; b=hOaeq5yt3cEVyZFR
- 0tcQK3F875a+bmOxQFt3NzEAIrxoXbA6yPh5NhgW4MAf9cAj0/4TZ4yrn4KP1kcD
- Kp9GGGOq7DiRWMlvGrdeNt7vTD2zwg+2ndYttukoJgHotjFNQ5DTwFgFPFfGcxrQ
- S84ZD1SE/RRcXjnwA/ZNC3H2KbAaplCR2GEzUffSZmN4TcKb3jpsUkqQO3khlwkA
- BwLuhVO07EJk7pqktnw+tpYOXlTyFSkZnednle311tiKR9MXSfi7Kixi0d5uxm+Y
- uZOYYiE9IWpSMHVtN5WwCvRISpf0uYqtn/fWrJANW8KPSQZLDmBLOxLlmjpfLxtJ
- rydZKQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qmc1k-1
+ whLAdLiSV9opK2YAMzkPtKh8Y73NllRKu95DQ3RQRiE=; b=WFL2jdekQk2iuzTR
+ lsAlMPgXjiwHuWGKV7Q9dhZdQOQoVY2b40OkcacPJRcKZ9oRSx8Vht2emTeWSAW1
+ NNGjlx+nUDQnqfP6QKzu/3FKpo10hV+8L9+Rm/nGmwIWY4M6vdUSMHCqGAmmlULR
+ 5Sca4CqHqlK0AGVMieZBkLMLxzZ+2imuDHlVlNb3bdvmVqYpI11e3ryrukIEhVj0
+ YL4HeqFojTN1vFaoavUaIcbrJ3Pqt+54xoKghtn5FA1NkDHMn56yWrfOcrSefmkl
+ q+nVnpNUdfKIclOnUqNHZgcGmttOipWvRjRprBDhKnt160pgPY8x42I396tGBHn5
+ b5kQlg==
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
+ [209.85.222.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme7549bx-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
  for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:49:14 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-36a190c53a3so1286009eec.0
+Received: by mail-ua1-f71.google.com with SMTP id
+ a1e0cc1a2514c-9806756ea40so834258241.1
  for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 10:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oss.qualcomm.com; s=google; t=1793382554; x=1793987354; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6UX8J6tayYdcMuVbYI0MgDwbUxidzIgfE/ULZAD4kYA=;
- b=RBayfcLN8KwwVuWpvliAainNPyJk/ui99a9+0d/1GKCVW9/nIZvBA1P/j4Y8SvT2Yt
- OG2kQCrV17tgu4c8KjJ0YvNdxyxbKCVU5Rowrqnrnqn3y+I1c0syP59SGsGlICsFej6y
- Nze5Rqkr9njL/eiCxwiVxRKNTc45oB4qiMu6OafJz50jzyIx7IkZxRG5cyCxui3UIPXv
- Tdh2/4pia1FFMkcjVQ0WHSmcA72ZGnVTexdcn9lc+PhYosmVuYCaG9k2/9qToQCPC+KM
- ob1KAdmLYb4ma2ODZy10gsQYsVnvciJY9NzkvTBcyB8es/09Mc4hbaS3Wo7Y/wrJ6TPi
- 38Bg==
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=whLAdLiSV9opK2YAMzkPtKh8Y73NllRKu95DQ3RQRiE=;
+ b=IsP9gGEioN4V/V6bVV7rWZFBDBno0Bv+NfliBxMGVFz84pcPG057t8Qn070DR7b6Rv
+ 2vlASB50z4CBX0Q4WV4WHVb+ijhTl6t1+A7hwuytKoqTuDEvwcWLdpUd5XYepK0tm1W7
+ q1chEM9v7f6ZH+q0Hf/q/J6VCX1YDpLiymASKJ2AaqtCnN5Ra7olYYaxA++x8gT1+PIX
+ nb/LZcAoMkZIIB9qGrUSVteKNsuc7mFv/shHyh50ubikpKVn6TTMjoDNQ6NUk6YIWfpt
+ ygnCC+S18uBj0kPUMmLfY70iwM+QZArS9qmmjboqDpy8E6+1sYTJ5kVKeVOBvNXK39gF
+ PJSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20260707; t=1793382554; x=1793987354;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6UX8J6tayYdcMuVbYI0MgDwbUxidzIgfE/ULZAD4kYA=;
- b=KW5g9jf56NjP+JIMXGPOh9UrDh+iD5fHL7cQYsHmHZ8KnEcM9MVMRjBuv2cgvxH2Jc
- sVoJOpzz9ujeN7OxL48jHQvAenBVU/TwhQ8ZIbe0jHx5GbHJPpruLP8zF1Poysg+G3Nh
- X0o7lw9u7rtOOdwKbW3Y6ojo79+uB196lqpJyQg/feJ4x0yBlmkTCv55U5v9zRjfc6uF
- uDKboX3ofC2weaSmorjLIeY6n6qf0U9BoCesHShdk/0IdqXVSfSqPINPdI8k128S+IXB
- 9NEz5dU67Z9u9OzBq5YFgvgCOtdVIYB4Iuqlh+eU6f8fn5Xj3g4OJ2DBBl6Q1JT8qD6y
- kzCw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBz0T97giTdcTf/iF/1wyzzJ9d5zotlxJwHuxXWUf9zoOa0vsR/fjqckDGoHZ8suMaFncgjKxlQY+Cy3@nongnu.org
-X-Gm-Message-State: AFq9FYKDLw4UU+vQe+OpqVhzTD7SI86TcMlJU0RFOY2ScM4CCO+9peNJ
- Cw0sCOE0ppd4dijPygzsBO7Lu7biygcswdzJggSywRNkmpdZ5xogeo0ZJNYKpuCA/9WOh9/EstW
- XwjKl8ORRw33oQI7OZ9t1gF0V5KtL5vvsyiO8h1zxzVGTV1GPfFfxcu2LjA==
-X-Gm-Gg: AYBFou3ae5arMzG7Lj/dVSwMjqu9UWk9CfQ0O3sGp2HMWSW4Zfy5LXcMsf5gE1suVV+
- yPV0ox09J0f9lGz7D1hijyVDtGcjwu4mPajwqBe8SJUQBdQgK5aUL8Au1MABMHdBloRRStKoNYS
- NblEwZlbyoerKOqVk9G1eVieafL/WKyBPX/FkyZZ7KfRetcqEDOEf5FraZ5SZjkdBUS/Yl92NdL
- FbhxK3QYX9VFU/LW+WyYFiJJIrB1Dndsuymtrh8SQNJ1bcBMPbzmMPGe6g5txt7yc7tsJVHBd5N
- 8ofMbcOPOs9hPoOMw1EDAUT0CjSqAzdItQ9eOWpEjcbUvofqfwdVEc3qDdCtzb4bpzvclfzPt8v
- iS0SWuTB6upNLAbavcgZCPy78cerdjE7DjugmDak6MR/LbllGo8AQcT53AnJUx/OkFPRYoDlwep
- sSXm63IQtuzflY3q7Zc9heKYWOz+gPx8114VgpFKtGbL0=
-X-Received: by 2002:a05:7300:3d0a:b0:35e:2c6:d462 with SMTP id
- 5a478bee46e88-36a2fc203c3mr7976391eec.0.1793382553950; 
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=whLAdLiSV9opK2YAMzkPtKh8Y73NllRKu95DQ3RQRiE=;
+ b=hSiQ3wff48AU02slPLKpufqBN9LBt3vfRw0qPVSWxTC1h/hRr7Qj+RXyG6VohIypDJ
+ +/363SgWWbxS1PQwCAYjSF7zZj7mI2HC64ti9IA0OzxQJosPhw+BKszNKbTt/PsifuiP
+ 6zBjwWhSZqpZIPLMrmR6daOrOCK2LyENAotBeLpAhwRUXH8qw/6+/UQ6XmbFF+cD5kr7
+ MSGegZDjTt3K8P+RNlAEQzUB/grzUN4JUN1HhL49dKSjJzzX4uIiefnLX2BEB4Pc6W1R
+ 6cF4eHfcQwMGsK6lNXeB00hhNAzmJFB98pZUoAopyIKEJ2kt5ZkXoW+MUaTxMlYQmt4B
+ PIwg==
+X-Gm-Message-State: AFq9FYLPJfHv2lWATKSgAk3H2XzMJAIm6XFKhQEO2ezWKSLRlqN0Eb/T
+ 9n1FY3a9xjm5waQteXH7irL6uaXU/U3cGjb2us7JjsyzssP978hFxP3kWcdS3G3Aco2Q57qq6pP
+ 5wujEp9Wrw7v6CMy1sLYWCtDEgdIrJcNO2wHuP5WjUNnIOe5tflO38nQXWrGFzsQ++eWV
+X-Gm-Gg: AYBFou2YkQ+vPHZbR2QFvFn7KAyZmPFBfKPAb6vp/THW4fmduYewYqrRTX64/J9PlZZ
+ OX2SctGX3PSSV1fXHhQ3V+S8hT9KGSRW0N6k3IDsjtM2g3g2gpssS1MJnKc62neTGbiz44PzEXN
+ pe6ZbeA0Y/sTBnQy6kaVPldEOYUYCI4hh4p9PqmO6Z941Gg9GX8BVa0iWR5SflIYUCcMtdL8JHK
+ uV8eYU9dkNqXa9i072AhsZWMLYo20G0sOpeMruCE6Qp73nTL0cFfmtAzLDeYmov0UV4Mx/3sInA
+ d8ZroNQ/pJeXknMHoObruuMqhehLWzK84Z+mJe2tmLitDVSHEE0TFTOGgu16fXvBxK37cOaj/Ib
+ HqjR3tc1j7IoNtZ2cKY5/IsLZZcHBdXqkwpFVJK0HzONswy+7vsITrmOksZSLYpQBSSZi4MTYRt
+ 5PcgdHjyzxT4Y+dsYwIIuzRlQSvkBN2A==
+X-Received: by 2002:a05:6102:4426:b0:7c3:2f13:d905 with SMTP id
+ ada2fe7eead31-7d07277b610mr1717819137.3.1793382553803; 
  Fri, 30 Oct 2026 10:49:13 -0700 (PDT)
-X-Received: by 2002:a05:7300:3d0a:b0:35e:2c6:d462 with SMTP id
- 5a478bee46e88-36a2fc203c3mr7976358eec.0.1793382553364; 
+X-Received: by 2002:a05:6102:4426:b0:7c3:2f13:d905 with SMTP id
+ ada2fe7eead31-7d07277b610mr1717801137.3.1793382553356; 
  Fri, 30 Oct 2026 10:49:13 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a429467cdsm8795841eec.19.2026.10.30.10.49.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 30 Oct 2026 10:49:12 -0700 (PDT)
-Message-ID: <9c2a2e48-e15f-43ee-9eef-0ebb607ccafc@oss.qualcomm.com>
-Date: Fri, 30 Oct 2026 09:49:10 -0800
+Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
+ [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e71b789c6sm4787256f8f.26.2026.10.30.10.49.07
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 30 Oct 2026 10:49:07 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v3 1/4] tests/tcg: Add minimal TAP helper header
+Date: Fri, 30 Oct 2026 18:48:52 +0100
+Message-ID: <20261030174856.98759-2-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261030174856.98759-1-philmd@oss.qualcomm.com>
+References: <20261030174856.98759-1-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/15] hw: expand DEFINE_MACHINE to explicit TypeInfo
- registration
-To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
-Cc: Anthony PERARD <anthony@xenproject.org>, Felipe Balbi <balbi@kernel.org>, 
- Aleksandar Rikalo <arikalo@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Antony Pavlov <antonynpavlov@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Max Filippov <jcmvbkbc@gmail.com>, Niek Linnenbank
- <nieklinnenbank@gmail.com>,
- xen-devel@lists.xenproject.org, qemu-riscv@nongnu.org,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-ppc@nongnu.org,
- Alexandre Iooss <erdnaxe@crans.org>, Weiwei Li <liwei1518@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
- <chigot@adacore.com>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Frederic Konrad <konrad.frederic@yahoo.fr>,
- Palmer Dabbelt <palmer@dabbelt.com>, Peter Maydell
- <peter.maydell@linaro.org>, Chao Liu <chao.liu@processmission.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
-References: <20261030151539.1872-1-luoyonggang@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261030151539.1872-1-luoyonggang@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: z0EMh4VJzxiJIadCBc-5Sj6L5_hIS_--
-X-Authority-Analysis: v=2.4 cv=KLzPn1Fo c=1 sm=1 tr=0 ts=6ae4d89a cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=6Hdeo9sKUei7lKwjsM4A:9 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MCBTYWx0ZWRfX8kKamFWBCqDX
- Q3EJ+7hnbCtpp6Za880SXq/bO+hWVn/p9/rcsoHsqPZckZf1Gw/TKkolKQasj+LsORaNnfSaX44
- /hclLnnzNR5JmalQzvph9WnEMRnT6h9WhWtB65J+YEbF0NZ/KGL+4tqErVZvfHFfqwLKU52jB6J
- uDgRDu/QP3z/M0yjCy3/a5XFHdANeA/feVTY6VfL0zQSQMqb7XiCkAuyEuN3M78M/R4GPRj/wre
- k3sYxhVrworo4xrVAJ05KmO65mm08kmmNNsJ3Sj3vTeTVpDRqlSeejjzBarApgCqZ/Z4ajNJhcF
- gD8EaQBNMKDULshMl48q1yApRP2Fibkn2iarQvglHNjXS/W5VJjftd3YA4Nd2dA15ugtPq4c8Hb
- XRNvPoDVf38ZyCgaPCnjiB1odr+ic6Q+9Dt/0BFGISo+sOkmlkYgw/FaaAI6Sa8mKyPFswwL0tG
- EH4Kj4F5tqNyVzDBtFA==
-X-Proofpoint-ORIG-GUID: z0EMh4VJzxiJIadCBc-5Sj6L5_hIS_--
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MCBTYWx0ZWRfX66CGpyxW40jJ
- rNZh1PG4iid1dDCRgjwtTDtFcajUhbGl/ykn1T1MFkB2kafiKbsSbO5qGB1tOp4sr3P652cG60z
- 3PMhIyXv/Varh0i9xwXyFBw7rhd+bEU=
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: L1VFYCGjKIRSFhDCmgORhjgmMgXGrqUo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MCBTYWx0ZWRfX3DNdYq2aetaB
+ pDiF3UtkFkoPsEH40CV0jWWEraSCm4oPEsLL+xEg8FZ1ZyQZ67j/a0rn1FAFc5ncoIP0TAd+2PU
+ BtKtWEcPxzaCVDgqUtM4NGJDKYRhur/Xf1pS+vN0CVKxAAgpnTJjSUK0i7zGcgbBIEezqMZZsTD
+ xC4Xlkj2qK3Ar5IgE+VRl72E/idINuITQlu3WHYH/LAL4kG/B0V53dCDkd+PGkkUNp2FHC/wqgJ
+ pqk32aeg39oTuxYmlVAIZnE8b7CXVr5edvwidDywk57gQU1ke1bKb+0zGej+ppSsaKTSqzOvECZ
+ TBivnJz/79/N5SuVLvKoUbm7DMxKDbC5vDg9+hMSD2hn0llY/BzraycHO5wbsyoCRDRm2DL4Y8+
+ 5AD1RkO2BRJmNUGQoazQQfplENi6ptFrfAHAzITk4VpBVaoVSkVeF5VrUpNa+bvJD3w0i6UqxsX
+ PE9umtF2IUmirCvD6GA==
+X-Proofpoint-ORIG-GUID: L1VFYCGjKIRSFhDCmgORhjgmMgXGrqUo
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MCBTYWx0ZWRfXxTmT7YazMnZk
+ +7WqjYiidfK2Mhy/HLiXJ4kFHoMpstpBkwR+28THBZrCafYs8qFTrGJRpTkiATTkFMN2o8NOcAE
+ v2NuLEK9B7NOrwpp66K/R9+W+bbueH8=
+X-Authority-Analysis: v=2.4 cv=KdtHIgYD c=1 sm=1 tr=0 ts=6ae4d89a cx=c_pps
+ a=KB4UBwrhAZV1kjiGHFQexw==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=4NmYxyE9tqdsvi3zJEYA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=o1xkdb1NAhiiM49bd1HK:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-30_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 spamscore=0 malwarescore=0 impostorscore=0
- clxscore=1015 bulkscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 phishscore=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
  definitions=main-2610300070
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,90 +155,152 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/30/2026 7:15 AM, Yonggang Luo wrote:
-> DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED hide the TypeInfo and the type_init
-> function that calls type_register_static(). A later change needs to pass a
-> target mask into that registration, and the macros have no parameter for it.
-> This series expands every caller first, with no behavior change, so the
-> follow-up only replaces the type_register_static() call.
-> 
-> Each machine file gains a class_init function, a TypeInfo, and a type_init
-> function that calls type_register_static(). The last patch removes
-> DEFINE_MACHINE* and DEFINE_SECURE_MACHINE* from include/hw/core/boards.h.
-> 
-> Yonggang Luo (15):
->   hw/alpha: expand DEFINE_MACHINE in dp264.c
->   hw/m68k: expand DEFINE_MACHINE for M68K machines
->   hw/microblaze: expand DEFINE_MACHINE for MicroBlaze
->   hw/tricore: expand DEFINE_MACHINE in tricore_testboard.c
->   hw/arm: expand DEFINE_MACHINE for ARM machines
->   hw/riscv: expand DEFINE_MACHINE for RISC-V machines
->   hw/core/null-machine: expand DEFINE_MACHINE
->   hw/mips: expand DEFINE_MACHINE for MIPS machines
->   hw/ppc: expand DEFINE_MACHINE for PowerPC machines
->   hw/sh4: expand DEFINE_MACHINE in r2d.c
->   hw/sparc: expand DEFINE_MACHINE in leon3.c
->   hw/xenpv: expand DEFINE_MACHINE in xen_machine_pv.c
->   hw/xtensa: expand DEFINE_MACHINE in sim.c
->   hw/xtensa: expand DEFINE_MACHINE in virt.c
->   hw/core/boards: remove unused DEFINE_MACHINE* macros
-> 
->  hw/alpha/dp264.c                    | 18 +++++++++--
->  hw/arm/bananapi_m2u.c               | 18 +++++++++--
->  hw/arm/cubieboard.c                 | 19 +++++++++---
->  hw/arm/digic_boards.c               | 18 +++++++++--
->  hw/arm/imx25_pdk.c                  | 18 +++++++++--
->  hw/arm/imx8mm-evk.c                 | 20 +++++++++---
->  hw/arm/integratorcp.c               | 14 ++++++---
->  hw/arm/kzm.c                        | 18 +++++++++--
->  hw/arm/max78000fthr.c               | 17 ++++++++--
->  hw/arm/mcimx6ul-evk.c               | 18 +++++++++--
->  hw/arm/mcimx7d-sabre.c              | 20 +++++++++---
->  hw/arm/msf2-som.c                   | 17 ++++++++--
->  hw/arm/netduino2.c                  | 17 ++++++++--
->  hw/arm/netduinoplus2.c              | 17 ++++++++--
->  hw/arm/olimex-stm32-h405.c          | 18 +++++++++--
->  hw/arm/orangepi.c                   | 19 +++++++++---
->  hw/arm/stm32vldiscovery.c           | 18 +++++++++--
->  hw/core/null-machine.c              | 18 +++++++++--
->  hw/m68k/an5206.c                    | 18 +++++++++--
->  hw/m68k/mcf5208.c                   | 18 +++++++++--
->  hw/microblaze/petalogix_ml605_mmu.c | 19 ++++++++++--
->  hw/microblaze/xlnx-zynqmp-pmu.c     | 19 ++++++++++--
->  hw/mips/boston.c                    | 18 +++++++++--
->  hw/mips/fuloong2e.c                 | 18 +++++++++--
->  hw/mips/malta.c                     | 12 ++++++--
->  hw/ppc/amigaone.c                   | 18 +++++++++--
->  hw/ppc/pegasos.c                    | 21 ++++++++-----
->  hw/ppc/ppc440_bamboo.c              | 18 +++++++++--
->  hw/ppc/prep.c                       | 18 +++++++++--
->  hw/ppc/sam460ex.c                   | 18 +++++++++--
->  hw/ppc/virtex_ml507.c               | 18 +++++++++--
->  hw/riscv/boston-aia.c               | 18 +++++++++--
->  hw/riscv/microblaze-v-generic.c     | 18 +++++++++--
->  hw/sh4/r2d.c                        | 18 +++++++++--
->  hw/sparc/leon3.c                    | 18 +++++++++--
->  hw/tricore/tricore_testboard.c      | 18 +++++++++--
->  hw/xenpv/xen_machine_pv.c           | 18 +++++++++--
->  hw/xtensa/sim.c                     | 18 +++++++++--
->  hw/xtensa/virt.c                    | 18 +++++++++--
->  include/hw/core/boards.h            | 48 -----------------------------
->  40 files changed, 605 insertions(+), 142 deletions(-)
-> 
+Add a small header to report test results using the Test Anything
+Protocol, which meson parses when the test declares the 'tap'
+protocol:
 
-So far, this expansion has been done only on machines that required to
-modify TypeInfo: mostly virt types, which are ambiguous between targets
-and require to introduce is_available.
+ - TAP_START() prints the TAP version line.
+ - tap_report() prints one numbered "ok" / "not ok" line, with a
+   printf-style description.
+ - TAP_CHECK() reports a condition, using its text as description.
+ - tap_info() prints a printf-style diagnostic line prefixed with '# ',
+   exposed as TAP_INFO(). It is not a test result: it neither prints a
+   number nor counts towards the plan or the exit status.
+ - tap_assert() is a non-fatal assert: it prints a '# FAIL' TAP
+   diagnostic (via TAP_INFO()) and counts the failure in
+   tap_assert_failures, for tests grouping several asserts into a
+   single reported result.
+ - tap_done() prints the plan and returns the exit status for main().
 
-Maybe this can be delayed for when such machines require it also.
+The counters are static, so each test must be a single translation
+unit.
 
-Regards,
-Pierrick
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ MAINTAINERS             |  1 +
+ tests/tcg/include/tap.h | 92 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 93 insertions(+)
+ create mode 100644 tests/tcg/include/tap.h
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8884e4177e4f..761b2f5d4dc6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4699,6 +4699,7 @@ Guest Test Compilation Support
+ M: Alex Bennée <alex.bennee@linaro.org>
+ M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ S: Maintained
++F: tests/tcg/include/tap.h
+ F: tests/tcg/meson.build
+ 
+ GitLab custom runners (HW sponsored by Linaro, OSUOSL and IBM)
+diff --git a/tests/tcg/include/tap.h b/tests/tcg/include/tap.h
+new file mode 100644
+index 000000000000..b372e9850672
+--- /dev/null
++++ b/tests/tcg/include/tap.h
+@@ -0,0 +1,92 @@
++/*
++ * Minimal TAP (Test Anything Protocol) helpers for TCG tests.
++ *
++ * Select the protocol with 'protocol': 'tap' in the meson setup entry.
++ * Each test is a single translation unit: the counters are file-local.
++ *
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef TESTS_TCG_TAP_H
++#define TESTS_TCG_TAP_H
++
++#include <stdarg.h>
++#include <stdbool.h>
++#include <stdio.h>
++#include <stdlib.h>
++
++static bool tap_initialized;
++static unsigned tap_tests, tap_failures;
++static unsigned tap_assert_failures __attribute__((unused));
++
++/* Print the version line; must be called before any other output. */
++static inline void tap_start(void)
++{
++    tap_initialized = true;
++    puts("TAP version 14");
++}
++
++#define TAP_START() tap_start()
++
++/* Report one result; the description is a printf-style format. */
++static inline __attribute__((format(printf, 2, 3)))
++void tap_report(int ok, const char *fmt, ...)
++{
++    va_list ap;
++
++    printf("%s %u - ", ok ? "ok" : "not ok", ++tap_tests);
++    va_start(ap, fmt);
++    vprintf(fmt, ap);
++    va_end(ap);
++    putchar('\n');
++    tap_failures += !ok;
++}
++
++/* Print a diagnostic line, prefixed with '#'; the format is printf-style. */
++static inline __attribute__((format(printf, 1, 2)))
++void tap_info(const char *fmt, ...)
++{
++    va_list ap;
++
++    fputs("# ", stdout);
++    va_start(ap, fmt);
++    vprintf(fmt, ap);
++    va_end(ap);
++    putchar('\n');
++}
++
++#define TAP_INFO(...) tap_info(__VA_ARGS__)
++
++/* Note: the stringified condition must not contain '#'. */
++#define TAP_CHECK(cond) tap_report(!!(cond), "%s", #cond)
++
++/*
++ * Check a condition without aborting: print a TAP diagnostic ('# ' line)
++ * and count the failure, to be consumed by the test reporting its result
++ * (see tap_assert_failures).
++ */
++#define tap_assert(cond) \
++    do { \
++        if (!(cond)) { \
++            TAP_INFO("FAIL %s:%d: %s", __FILE__, __LINE__, #cond); \
++            tap_assert_failures++; \
++        } \
++    } while (0)
++
++/*
++ * Print the plan and return the exit status for main(). Abort if TAP_START()
++ * was not called, as the output would not be valid TAP.
++ */
++static inline int tap_done(void)
++{
++    if (!tap_initialized) {
++        puts("Bail out! TAP_START() not called");
++        abort();
++    }
++    printf("1..%u\n", tap_tests);
++
++    return tap_failures ? 1 : 0;
++}
++
++#endif
+-- 
+2.55.0
+
 
