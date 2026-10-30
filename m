@@ -1,34 +1,34 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9E8606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3ED606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=X9hgED6b
+	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=XbCjrfAR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMnTS-00062Y-7x; Fri, 30 Oct 2026 10:20:54 -0400
+	id 1xMnTQ-00061u-Af; Fri, 30 Oct 2026 10:20:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1xMnTQ-00062N-Ts
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:20:52 -0400
+ id 1xMnTN-00061K-WA
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:20:50 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1xMnTP-0003Fp-Dw
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:20:52 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1xMnTM-0003Fe-LA
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:20:49 -0400
 Received: from laptop.localdomain (unknown [81.196.141.157])
- by linux.microsoft.com (Postfix) with ESMTPSA id 07D4D20B7179;
- Fri, 30 Oct 2026 07:20:35 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 07D4D20B7179
+ by linux.microsoft.com (Postfix) with ESMTPSA id 6469F20B7178;
+ Fri, 30 Oct 2026 07:20:33 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6469F20B7178
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1793370037;
- bh=qMoWfAMYrAlxTuuGIAD7xyrYHldWeC0AqbZ5Al9A/Vc=;
+ s=default; t=1793370035;
+ bh=RoTPilzhI0RpLGadQWoMd959of4JyHV8Ny5ZCkpFLG0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=X9hgED6bDCIa/P/jKIffrOPfr1N5km+BGAnzY/PqREQNuQc7ThTxMIrn6hztzmUR/
- L47qhgnAza38aol1CFLC8WXsnmsZhKn987hrOO/vyXq++qXXpidP1aNYsvk0fAC4aK
- Gs7S6xmm+XELpkR4QvCVS7KqIHWyJRbVtJUDnlHE=
+ b=XbCjrfARyzwJOiI8MDXMgkTVF5wELMteg1b4niaaZKxioLjLQqkyOnxDGPLWUplCq
+ TMZi9a3cUujjmACktOfw6LvVfYqL9dUx7dmz2fBSLdoaCQF6XvrhzzaiUATK70JYjs
+ 9zBxRzbBVy0xc4ZbPG9EW1c77uw4/zUYmrrZjjqM=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <wei.liu@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -38,9 +38,9 @@ Cc: Wei Liu <wei.liu@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
  Cornelia Huck <cohuck@redhat.com>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [RFC PATCH 3/3] accel/mshv: use scrub_partition ioctl on init
-Date: Fri, 30 Oct 2026 16:20:37 +0200
-Message-ID: <20261030142037.267641-4-dblanzeanu@linux.microsoft.com>
+Subject: [RFC PATCH 2/3] include/hw/hyperv: Add SCRUB_PARTITION ioctl
+Date: Fri, 30 Oct 2026 16:20:36 +0200
+Message-ID: <20261030142037.267641-3-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261030142037.267641-1-dblanzeanu@linux.microsoft.com>
 References: <20261030142037.267641-1-dblanzeanu@linux.microsoft.com>
@@ -74,59 +74,24 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This is relevant on soft resets, when the MSHV partition will have a
-preinitialized state for guest enlightenments and LAPIC state.
-Without invoking the ioctl, a rebooted guest will fail during boot
-when attempting to init Hyper-V enlightenments or the APIC.
-
 Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ include/hw/hyperv/hvgdk_mini.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index a7b7017fb1..5e51d0f1fa 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -84,6 +84,17 @@ static int mshv_load_cleanup(void *opaque)
-     return 0;
- }
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index 0983e3a58d..5178ed07a1 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -545,6 +545,8 @@ struct hv_input_assert_virtual_interrupt {
+ #define MSHV_IOEVENTFD              _IOW(MSHV_IOCTL, 0x04, struct mshv_user_ioeventfd)
+ #define MSHV_SET_MSI_ROUTING        _IOW(MSHV_IOCTL, 0x05, struct mshv_user_irq_table)
  
-+static int scrub_partition(int vm_fd)
-+{
-+    int ret = ioctl(vm_fd, MSHV_SCRUB_PARTITION);
++#define MSHV_SCRUB_PARTITION        _IO(MSHV_IOCTL, 0x0B)
 +
-+    if (ret < 0) {
-+        error_report("Failed to scrub partition");
-+        return -errno;
-+    }
-+
-+    return 0;
-+}
- 
- static int get_host_partition_property(int mshv_fd, uint32_t property_code,
-                                        uint64_t *value)
-@@ -906,7 +917,19 @@ static void mshv_cpu_synchronize_post_init(CPUState *cpu)
- 
- static void mshv_cpu_synchronize_post_reset(CPUState *cpu)
- {
--    int ret = mshv_arch_store_vcpu_state(cpu);
-+    int ret;
-+    bool is_bsp = (cpu == first_cpu);
-+
-+    if (is_bsp) {
-+        ret = scrub_partition(mshv_state->vm);
-+        if (ret < 0) {
-+            error_report("Failed to scrub partition during reset: %s",
-+                         strerror(-ret));
-+            vm_stop(RUN_STATE_INTERNAL_ERROR);
-+        }
-+    }
-+
-+    ret = mshv_arch_store_vcpu_state(cpu);
-     if (ret) {
-         error_report("Failed to put registers after reset: %s",
-                      strerror(-ret));
+ /*
+  ********************************
+  * VP APIs for child partitions *
 -- 
 2.54.0
 
