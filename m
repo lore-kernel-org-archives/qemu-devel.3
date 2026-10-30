@@ -1,97 +1,97 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A21606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 13:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992AD606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 13:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=u181vLHX
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=UNuI+/H7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMmak-0002pj-IN; Fri, 30 Oct 2026 09:24:22 -0400
+	id 1xMmcM-0003cS-VW; Fri, 30 Oct 2026 09:26:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xMmai-0002pC-Mg
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:24:20 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1xMmcK-0003bl-UG
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:26:00 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xMmah-0006Rn-Ag
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:24:20 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-8b10ac6ab7bso5999797b3.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 06:24:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793366658; cv=none;
+ id 1xMmcJ-0006hc-Gy
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:26:00 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-8ae8607e8afso5153897b3.3
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 06:25:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793366758; cv=none;
  d=google.com; s=arc-20260327;
- b=YVdNKPjkn+atnzYuc3wJ17mTs7g1sDoLnrEFJB5/Oamkb8dY1ZylXkP8IMQpX0399h
- /QJQ77Ciu7/QWFs1aj8HULifUcrqP4Ad34M1F7jVLf6UBXvp7n702K61xpse9dm4bTQ8
- chfB4XKCAgFV0jeCZPMX4jfnMpY15OI4YhvP3ZGMGYIbsUJkHaAm+IB5i1QOlx4tJElW
- 3vgH7GC3bxhQTuBi4ixZ/9chEnzAy88gsIFhSDR7TEemg8C58oJgDkQXFLs4tSceHSe0
- C/PoLkrOdIlvRN15IdnwZ08YnSl8pIE9fchfdIFzYvmS+eCRMkpO8tWh0u+s6DarPMfW
- gARA==
+ b=naAiHBjOE2MhQHyh12QbE3GRXfiN1JMzf0wJhPKBPBn+A9oUTi4DIta6A6qVoM2JrU
+ 8uN/IyRZ1mtwKhVyCAg01O8+8NBDihleemArhLQ/8o2v/tVzHL5J2THJOjU45tnnOxGA
+ B0lXYJemKfQleaorm2lntefnxJJGS0cfWYZzWY51k/ruscPVnKYgk8Jw5QaO9jTb5J9x
+ Lgz0nHVVnZnACVmtzcDURUJT+URAaccQlZrl45IuX6RjZ7beMszoR94e7tTh8Dln8/T5
+ 3IS/qymssKbqHuF0sjcsVxnmNTNUKpIZfX2l7zISc2u0CytC0gGsW8KjL5PEQ7xAKLJG
+ 59hA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=Zh0klMc/byD8klEQMo1lKnHHSoxDXyOKSTywb5KwxHQ=;
- fh=GGSrIBMEclvrn3eB+XzlWtsnNSyGs3PrBavMwBQsE+8=;
- b=qNIfttdMBGzJyMC7GKBnuDLQntr+8q6mndQfzQoadndS48AgcN0bc/dKFjE5rwJ3kh
- WJ7mOtIQYk4dqtNFON9CzdOduBzfbEPQg9K+eyLjn1ETyMxVI8/z7PKkJwKgPmHF3el/
- pIhaSSP1jhtIKKtnqk0aflcoR1iYcawJD2LDOWkeuxqknKwrSUYJBVEwE4EwHpYfHvC5
- Ei01VazV+IMmPM4fXeYDGWL3k60z1jO0z9VhMANEvGaNMkKW2EKe5QM4I2ndHpJQOKju
- FOmwX0IdllIkVgxW6qA4VzaYO2q3TyC6qBXKq+w/FTFcdHFjfNhfYXl0+UItTrNfCaZ3
- 1T1Q==; darn=nongnu.org
+ bh=eDxMGrYndojBgZZTFuQ1dDtBn6PBp8RE1QbmxJJDRCw=;
+ fh=MjwBXOYEfL/DgFW1V4NhEgisjaFIu9W1HAL3oNndow4=;
+ b=JQJiUJyqzKawyD2SROEzQJrP+LZT029+Fb81dpyhVXAkFgthTYXjg0YpzBe8ZYm7ci
+ 02mHBYknUyPTRsp+BdPARq9f89z5tVSWGkjXbq6Bb3K5MdF/z+TyYkpYFOh6SFhkR8TY
+ hiKtFcwNnO7gM0nrAs18vkJ7k4/RTMAlDflHYLXyxtTg7QJKR/Bf4Pype8eiI0wDyl2z
+ 7agDq/bQ6iti/vxFXZfHHG8TYM1z1c6LMOwZ08/j3imZav4+L8GfxDuivXN1qcW/1rNE
+ CU2oERmd75C5xU2okeNR3GerIHiJ4zuSKs5UYWW+IYqrUKAYOfkVt0glHy3K4cAxwpF5
+ pcaA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793366658; x=1793971458; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793366758; x=1793971558; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Zh0klMc/byD8klEQMo1lKnHHSoxDXyOKSTywb5KwxHQ=;
- b=u181vLHXoo32IofuC5SU/6fLjxxmc6Rp4BBA3rdq/fUAgmd+E3GSTu2eqPw5HhVGTF
- 5kVfeSKnXd/F8c/gPzfgWJXKOiWgCoDIlzSk7XZYjQCWwscPTs8TYhEPoZsFwFAApByc
- RHe42wV9jsdwqxiHKsU+837upNxlJUf0RfyQ1qZK4KjQ5fowve91KqDfFbyXJv5kEnfV
- k/aEmGUeWknPZ/4yR1RqKx6AOKOus0tUO5w7PrnHFoPilTf4qWVuCr8SI/e0KHffgKKe
- fSVf4tcinNsFX3PXxj+jWMz5VcTXJQQFUYRZeEmQsUBmJTnozEN/D2e4iiADBWkLvN+v
- 4tfQ==
+ :content-type; bh=eDxMGrYndojBgZZTFuQ1dDtBn6PBp8RE1QbmxJJDRCw=;
+ b=UNuI+/H75WkK3V+5JbhmI7v6GPnXwSW7cLDe76mibDnbfIqZoNPNWGR9QTl3VdzMkp
+ 96cKfh7PzhiHUmt6RXz80LFRmH5K/MPctz9S7gFIWJie6kfzXGQnMCK+7GjQIezt5T8h
+ PJezdB2gkMKUMtHmD+5/DNXJcNSU5lkRPmYRpAqtoEw5N7wP9sydvA9zzAIEJ/vUR2kO
+ Z4amRJWZAfBQWcDzA7Ul3GQcSuFyCqh5FjpcKU4dLiEbsiOqWP8q0+QD/27vphieygIm
+ 4CPBjJTHjVLLFY5VE9lUZ8JE56m3WOm2USuM/XSGHdVf90JyRWiYs4iW1+dISOyb73Yq
+ HPtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793366658; x=1793971458;
+ d=1e100.net; s=20260707; t=1793366758; x=1793971558;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=Zh0klMc/byD8klEQMo1lKnHHSoxDXyOKSTywb5KwxHQ=;
- b=EIkkzFATLwN3ynvy+MO4hep53i+4RuS8XTi2PrhvUcDLaeNE55SFTr+50cuQ7k5td4
- 4x9RCTM1ouyiMDshK86BadMRuev9knDx557LS6qvexMVCfwN+Y20WexFJ0+NQ4IkTETj
- 99crDiqAcIKCAW/kRTWolgwhIspNN4Y9//hXwqXcgSso5WdBqhsmdc77V2OAMxF9vhbe
- ITEzQvSgHf9j8Tdy50IJyzNXv9jKy/8KyWXBk2UwDnl4MoS4OnBmIN+/oySMcw25GVAz
- 7jWvJJNyQfit43BB5NBYaHOHe48b4L6DULyHv+jXUHO8hGLflOitrQfk4IS+n0lOsHGZ
- N7uQ==
+ bh=eDxMGrYndojBgZZTFuQ1dDtBn6PBp8RE1QbmxJJDRCw=;
+ b=wAmTcJR7F1XK3aS6EwQqdwk+6P5DuyC5iRTvRAluT76h1gGVylY2RGK0mHlLMt1RvT
+ cHtRqtZdQrDf/V707jHHX0JYOeL9JGJMCREANOQUq/Fhwaz/mCEJjzmItutSNQkbORIg
+ lf8YtKdrfksceDXrQ9VsWR2ggYn2RHksE57VNQtrKrg1t/uNtxkZCJQfcOTFBtEfURm3
+ /Oinw8v0AxLuUZl8OZ1Q2LupNFQhH1cHHz6CotJXYGc+e+3CHJio0vaH7HBIlbYJewNF
+ l5hDlvC3ZiHn8mArZO29/DKuphdpLyTkhOJ3SV0Bebe2KXVIJ164mhZIQfkjX9K632Oo
+ TOSA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxapNYHfdA3ThdRYx4nJ8T2uOANG+ugcecKhfZN3hcb02/jHWjK9xPzfSlAf0NxMH137UOYlZEr/APE@nongnu.org
-X-Gm-Message-State: AFq9FYJ2Q96UiWkBAsB6+MR/zOkye2J4n+Enw5cwh7i+gYcrhpMXLjgt
- 0V0lb1wwp6qszo7LB9qSBqI5w9newKoDr0Rp0sF8VmALSIDBvdgMzmwFWY7HFLvPaZJbiYVd90k
- L3WHAVO6fpJiV6jWQukvehL5RCDBWxJl+eWIRlYRVuQ==
-X-Gm-Gg: AYBFou33xPqSa7MfFpFlYt5lAcwD9HmKZ22jqjzk60qXoDiZgtOvPIYEtW0hWdYVn3d
- sP6ZXpH+jl7uEuAq/eBWzwgpLHxOjz77VWBLg6EwjoH5pt6p68r9i10Ih3tIU1X3ypZXc9SLw+m
- rVpgrAn/xPb5XnaaAUuwAf49hgB/+axSAMfhauiPF14WkC958Y7IJKD8LhwF88F21iOENM+Gbxt
- /oSFYmBemKxtWbt5KoCrQIZZJu8LJwKuJNpBGNJt/ZiD64PdDB55Va+jkqVA9G3nfAn+0MPq0aW
- 9TOD7+NpyW7SbVowyIMK1tskLmh/BNPePPkHctXtQrR0TUsecvrHU6PiYwpBOh6ro5YPWnL5TqB
- OF6yFSbKnRPjbQNrlBWWdgr1DJsGljEK+c6nqsZ9TW3Q8leeCUV4T1xD7rTbEeYsfSVOOd7yasg
- bMa1b3+wcES4lRW8AFalWk
-X-Received: by 2002:a05:690c:f8a:b0:8ae:88fb:3e12 with SMTP id
- 00721157ae682-8b2b67babf9mr14041797b3.61.1793366657834; Fri, 30 Oct 2026
- 06:24:17 -0700 (PDT)
+ AKwUvBz7OuRCYOgGoDwB80ZMJDit3AHJMIv81K5lCsZFZDWBHZJQbSG3Sh4ds1jlsryVoo0zjAq0x58fCwYU@nongnu.org
+X-Gm-Message-State: AFq9FYK1+yCqDEF++q/iSaSZHfnuYku4+5v4S7hlEZOvCGd84laumaJc
+ fMN5zk5eA4h9zvW3PuRXcbcfHU4QLBO8JsQutrDmD955JzJVEug0gVL0qV0K24lK/Ly5nrf8u8I
+ 7cpM0qqGp82qH2sSNMUUzd630ZXbMC9/zpvdG31eD9g==
+X-Gm-Gg: AYBFou1G04lsvJZpx90AlPQGDiiRoAUjuM3R7x5yj0lk77y1MF+WDXJcMOn/FS0fy92
+ tkCDPo1Fm2hGUUAmYhmo2dElbog8tUKgd1UmoMf4ZqEcWY7bV/QjontxJV5vmSYLiTZR0z3TTBx
+ hjCdM/3FWT4djavzjX3tE/sw/V1ax+14k9+Za3p7548SyuZPo3Rza0kfMyCq6kaGYVnLCiO4ZVz
+ 9B8EoKSUHBlizntOnNPEQ5yED/1I6iBnOkWQmmSX1oUP0mJhInJEU8Cbcp6L6ghIa324FUlbnjy
+ s3dWP5grOB2Lux8+Cb5rkEQlm6qr4IGX6AnjSr/Kmi9By1e6ksnDrFU3XUL1/I0KY+aN/ge265G
+ 4q2kcAmFIBxHjJY1CWFZ2/gGOyf6QVnfyvPIWvvDKLc6u4IkhficBHnKsziNxWHEozp/1yQB4bh
+ pivbBX3nqGWwOxvQ9ZVIfN
+X-Received: by 2002:a05:690c:dd4:b0:8b0:a352:f979 with SMTP id
+ 00721157ae682-8b2b672ce98mr12479167b3.29.1793366757554; Fri, 30 Oct 2026
+ 06:25:57 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20261030131406.461599-1-eric.auger@redhat.com>
- <20261030131406.461599-10-eric.auger@redhat.com>
-In-Reply-To: <20261030131406.461599-10-eric.auger@redhat.com>
+ <20261030131406.461599-11-eric.auger@redhat.com>
+In-Reply-To: <20261030131406.461599-11-eric.auger@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 30 Oct 2026 13:24:06 +0000
-X-Gm-Features: AclHuK_NhxH9SQYIqT84fpZntkgUpapM4hWVMvLS1XY2v76ZMswonXdxEnMxK7s
-Message-ID: <CAFEAcA9ceuoQOq5EMys1Z9V6CJZkgUB2UuVoBhac+fy_5sc3JA@mail.gmail.com>
-Subject: Re: [PATCH v4 for-11.2 09/10] target/arm: Directly store cpu probe
- failure error
+Date: Fri, 30 Oct 2026 13:25:46 +0000
+X-Gm-Features: AclHuK-jdzEfOQiCDg1duKYGH31bmbdjvged0btjCWkDLRbmId0M_BvVFFcxyEI
+Message-ID: <CAFEAcA9koKTMaxgAhv6qnwRr2RBdtkoJSX5dOZaiq4r0K-ueUw@mail.gmail.com>
+Subject: Re: [PATCH v4 for-11.2 10/10] target/arm/kvm: Improve error handling
+ on scratch vcpu probe
 To: Eric Auger <eric.auger@redhat.com>
 Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
  shaju.abraham@nutanix.com, khushit.shah@nutanix.com, 
@@ -102,15 +102,15 @@ Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  cohuck@redhat.com, alireza.sanaee@huawei.com, armbru@redhat.com, 
  mbawa@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,15 +131,19 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 On Fri, 30 Oct 2026 at 13:15, Eric Auger <eric.auger@redhat.com> wrote:
 >
-> In case *_arm_host_cpu_features() fails, we currently
-> record that state in cpu->host_cpu_probe_failed to later
-> report the error on realize().
+> Pass an error handle to both kvm_arm_create_scratch_host_vcpu()
+> and kvm_arm_get_host_cpu_features(). This allows to improve the
+> error reporting on kvm_arm_set_cpu_features_from_host().
 >
-> Replace the boolean by an error handle to allow
-> more relevant error reports.
+> If any, the error is stored in the new cpu->host_cpu_probe_err
+> field and further propagated on realize().
+>
+> In arm_gic_cap_kvm_probe() call path we just pass a NULL error handle
+> to kvm_arm_create_scratch_host_vcpu because we don't care about the
+> failure nature and just want to revert to emulated versions if it
+> fails.
 >
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
