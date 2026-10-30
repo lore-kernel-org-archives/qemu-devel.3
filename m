@@ -1,144 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC291606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 03:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=KyGA2uzD;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ZgP7fJ2G
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C9A606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 03:16:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMcsx-0001Eo-5K; Thu, 29 Oct 2026 23:02:31 -0400
+	id 1xMd5j-0003CM-GC; Thu, 29 Oct 2026 23:15:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xMcsu-0001ET-Sa
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 23:02:29 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xMcst-0007rG-6M
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 23:02:28 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69U2K0sT1961172
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 03:02:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- OqWBAFJ1Xv6jdfCEx6zo6ILKN8HzKkNWWXhu94TAQm8=; b=KyGA2uzDb3bZrG9E
- xJW9gMPsI6i2xqOpyCwegW0lI9pagF9qoJrxIuBM48HvFhSBs2uerPc0FoqnyymR
- fAlhChItw5X8gxQio0k2X69aSLZXGplICs3NEAD/tggmbkZBi0ZDWEMANnDwS5al
- 17ayGsNF2DHQKxh9WHU6XptAqV1MWyeg49jzT6qm7Yq3Lw7wfLwwCLlqsnidSr02
- vy7PbJNlWHfuhPJMv2188RrIniSXPnyHsptapa9zdPBGUziG06PBJGdAsXJKb/Kd
- uDbugkoW9OAw7d3PYvXjIQj7MAEjvkoapekBpnxGIMkKaFeOKDUFcgXLku1ntPpQ
- bsU+IQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qgwc3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 03:02:25 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5375488b238so24156131cf.0
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 20:02:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793329344; x=1793934144; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=OqWBAFJ1Xv6jdfCEx6zo6ILKN8HzKkNWWXhu94TAQm8=;
- b=ZgP7fJ2G23/giLNdkonUB4EDB6tJlMMHWHpXKK8jxOvP9Z/MksUaciu40zVeJIsR+K
- HiilmwmrcHPoKSpkirlDPwjMHRJS2yRu89e07hRrivTpjv33QYM3Yv5t+o7ByZvbzQ/F
- CG05m3KWlFbSZXb2ckC95gnFW7FIeydQuNR/qspaXiOLPhX2lEo6dnIYdhx2n2TzLSof
- GOXEfnQRbXf/L9zTywR6H/WwLVKYcIaeF7gPe5rwbWRAeo69atwCIM42OZgNhMLNFqar
- Pt1aXeshrjQiXJBgCkkrvOhENLAku26YwPEzUkNF9tlOU0DWPBr6CGpnkZXl0qRvFQpb
- xAKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793329344; x=1793934144;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=OqWBAFJ1Xv6jdfCEx6zo6ILKN8HzKkNWWXhu94TAQm8=;
- b=KVWqJI2d1gi/3kATD1q9ICvUsrLeEq+Ip3ONjH5/SUrmt0TU6XDV3KsBsYLFWY7Xi0
- vnZitTAeW9p+hzMzMnHZfLKbmdeDJj+3VrokLjcCFrVcpwQr+y+YctlCMLK4D5iWcJ+B
- 2QwCan6wcUvrHRt2mWzybzj9vfdc+fCdIBn3C+fNbLZK0KtSjwvog/8JYdslgXDkhjkj
- qmiFQrbmJ3vwjEpGVVfRsayFQA1d12C/Fk/eR5LFqae4hS7/jLGCbzrt2Xuhi+uKvmDk
- XIeJXYawzF8skGo48tAAWi/F3GSIRRMJ1KAZi1hqiY/5LREN35gMnxCoJMHpt8No/HHq
- GBMQ==
-X-Gm-Message-State: AFq9FYJVSNdOQi0INL9vgcDLX6TGfWavP+rxFbElongZJv15LOwNsRSo
- fpFo4+h5c+2e6+vcKXDNlL7boXw/nD6s+AeC8/YmWpWKk1G4rErxrQH+QdGuGImo4MQmeyFzOoW
- C6PIj/71BXkKw7Y58ujx8e3wtt4UcPnaBRgK1Us+aKbDYsQa/zZ13XTMuSg==
-X-Gm-Gg: AYBFou1P3KnKJ8hvbbhT4IKKWFD54boQZ0XeohFcAZd6oZmSLlSDnoXFKcN1w3VwIec
- MTICN8cY/V7ci+t7cLyvQ82ggl1ZY1DqDzInoF2dnFmla1jNg0FEDJPQjbZD6YK+DEtYjTBQAo5
- vuuEExYknon1PJf5R4tdYFIOBGOxas2ZCpk8Y/ztNZ2d2Tm2qgjmCGHTQDky3pd72ZRJGsb87l8
- vWWy3+YrQudja99Fh11XTeXWPAhXDw8+cz9Fj57/nZKLbzHoVmQAjiDzgJnZqTVUV0azR5AHVOG
- tur/gzQPJLpv0lSJfiafDNwV+3MCCtbwdpSHWSE1fr4yml4Nu9zCFr+2NKr+wN0rzT5Ooe4emAw
- cVYmobvrKjIof1Kn7YCYUjV08txCKwMa9JBLgBmfQ9/z09ePnA4UKO3Hoo/jCKWg6KZedJo+oTp
- kzr1kTRCmuKX0bxh98zdUuCjFf/ZI5hyJfIjNAGiVWgKTAApfbMYnI
-X-Received: by 2002:ac8:5d8d:0:b0:536:7c84:be57 with SMTP id
- d75a77b69052e-542b7ef4f3emr14936971cf.26.1793329344045; 
- Thu, 29 Oct 2026 20:02:24 -0700 (PDT)
-X-Received: by 2002:ac8:5d8d:0:b0:536:7c84:be57 with SMTP id
- d75a77b69052e-542b7ef4f3emr14936641cf.26.1793329343373; 
- Thu, 29 Oct 2026 20:02:23 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-54311995157sm2275121cf.8.2026.10.29.20.02.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 20:02:22 -0700 (PDT)
-Message-ID: <c515e590-49aa-4cc8-8986-b43ab0b5b8a5@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 22:02:21 -0500
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xMd5f-0003C8-VQ
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 23:15:40 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xMd5Y-0000k2-6w
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 23:15:36 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8BxrtLNC+RqB7QaAA--.12214S3;
+ Fri, 30 Oct 2026 11:15:26 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [127.0.0.1])
+ by front1 (Coremail) with SMTP id qMiowJCxf8_MC+Rqx1sxAA--.39031S2;
+ Fri, 30 Oct 2026 11:15:24 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] target/loongarch: Support unaligned access for atomic
+ instructions
+Date: Fri, 30 Oct 2026 11:16:55 +0800
+Message-ID: <20261030031655.226617-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] hw/hexagon: describe HMX in the device tree
-To: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20261029230310.1632334-1-brian.cain@oss.qualcomm.com>
- <20261029230310.1632334-7-brian.cain@oss.qualcomm.com>
- <CAJ+KCYP8FeOWd9ghCi-+vOB_=RRb3Tueo7n67pPRnpsNCJxPBA@mail.gmail.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <CAJ+KCYP8FeOWd9ghCi-+vOB_=RRb3Tueo7n67pPRnpsNCJxPBA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: omJpULPPnegzRKAskLty2yRYb9qYmjPr
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAxMSBTYWx0ZWRfX1RISB3PFczvB
- vUV1hSacq9blR6277jxZyfzKNM4W+fNT3piNP2Dz6Sh+dAQ51P7TtFsVZVbmrq+hmGKqhBaNk+2
- txQpbjk50cNIdL+OPkKaQKhed7+1sVM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAxMSBTYWx0ZWRfX56QQ/Y0by/ZD
- QSwKhwo+E0ZbBqwMmZ8PKUWq3Y+xSgcKb+Aaav+uyLQ5SCNhTiMv1v80wqTd0HNTOltTF6AfsvC
- oJtP9E92x8RYXUbA14NoVJO3OVB6w5HZInjtzGIY11fTNBQNz/YZPyx9K62WTDl7wJp3XaV/RdS
- d72+7HCWxCy8H6N51IeQPe5ah+X9S7g8K4tCbSP7w80BVRopCSOwX52HgLNSEJBokfcrM64VllZ
- VYnMcRdP+G6edoH5K/aM0jENJNDWl9l7jR2SLuvG7ds0YjjgP+3NHfq//fdkxm0v5FMT1zR2lyC
- BeyVI/sCGokarZu/Aj3DlY+FVL1DQgRK2h4NRnTlSMNQFGzyv2FW54DsO3Fgwjca+qpYfJRIP0s
- Psalc56UCkOYTAeHKc802fXkHKqsRoFd3V/Q9/T7+6lV3CxL/e0FqZCtkqJ4N9mkIRq9r5AYlZD
- C0PdDKF3fPbHiOGvKOg==
-X-Proofpoint-ORIG-GUID: omJpULPPnegzRKAskLty2yRYb9qYmjPr
-X-Authority-Analysis: v=2.4 cv=TpVzFzXh c=1 sm=1 tr=0 ts=6ae408c1 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=4JwpjGQ1WGWj7_rwshIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-30_01,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- impostorscore=0 adultscore=0 suspectscore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300011
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-CM-TRANSID: qMiowJCxf8_MC+Rqx1sxAA--.39031S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZF4rCr1xKr4UXFW7Kw1rAFc_yoW5Ww4Upr
+ y7u3s8KrW8KrZrA3sYq34YqFn8urn7Cw42qay3t34SkF4Yqr1xXF4kt3yqqFyUGa1kWw1j
+ qFnYyw1UXFyUWagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1WlkUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,23 +71,90 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+For atomic instructions and LL/SC instruction pairs, the accessed
+address must be aligned to the access size. Otherwise, an EXCCODE_ALE
+exception is raised.
 
-On 10/29/2026 8:47 PM, Marco Liebel wrote:
-> Should HEXAGON_CFGTABLE_HAS_HMX check rev >= V75 too? As
-> it is right now using it will change machines older than V75 adding HMX.
+Add support for unaligned address accesses for these instructions.
 
-If it's present in the config table, it should be present in the device 
-tree and QOM.  Regardless of which arch rev.
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/tcg/tcg_cpu.c       |  2 ++
+ target/loongarch/tcg/tcg_loongarch.h |  4 ++++
+ target/loongarch/tcg/tlb_helper.c    | 16 ++++++++++++++++
+ 3 files changed, 22 insertions(+)
 
-At best it could be an assertion IMO.
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index cbf0e12c81..0549506035 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -92,6 +92,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     case EXCCODE_PME:
+     case EXCCODE_PNR:
+     case EXCCODE_PPI:
++    case EXCCODE_ALE:
+         cause = cs->exception_index;
+         break;
+     default:
+@@ -289,5 +290,6 @@ const TCGCPUOps loongarch_tcg_ops = {
+     .cpu_exec_reset = cpu_reset,
+     .do_interrupt = loongarch_cpu_do_interrupt,
+     .do_transaction_failed = loongarch_cpu_do_transaction_failed,
++    .do_unaligned_access = loongarch_cpu_do_unaligned_access,
+ #endif
+ };
+diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
+index 7fb627f2d6..9c8627972f 100644
+--- a/target/loongarch/tcg/tcg_loongarch.h
++++ b/target/loongarch/tcg/tcg_loongarch.h
+@@ -15,6 +15,10 @@ void loongarch_csr_translate_init(void);
+ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                             MMUAccessType access_type, int mmu_idx,
+                             bool probe, uintptr_t retaddr);
++G_NORETURN void loongarch_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
++                                                  MMUAccessType access_type,
++                                                  int mmu_idx,
++                                                  uintptr_t retaddr);
+ 
+ TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env,
+                                    MMUContext *context,
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index a707de9876..5662b2c49a 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -706,6 +706,22 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     cpu_loop_exit_restore(cs, retaddr);
+ }
+ 
++G_NORETURN void loongarch_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
++                                                  MMUAccessType access_type,
++                                                  int mmu_idx,
++                                                  uintptr_t retaddr)
++{
++    CPULoongArchState *env = cpu_env(cs);
++    CPUSysState *sys = env_sys(env);
++
++    /*
++     * Unaligned accesses are currently triggered by atomic instructions
++     * that impose alignment requirements on memory operands.
++     */
++    sys->CSR_BADV = vaddr;
++    do_raise_exception(env, EXCCODE_ALE, retaddr);
++}
++
+ static inline uint64_t loongarch_sanitize_hw_pte(CPULoongArchState *env,
+                                                  uint64_t pte)
+ {
 
--Brian
+base-commit: 73294d096cc591e122fde9e63db4739de6d84f2b
+-- 
+2.54.0
 
 
