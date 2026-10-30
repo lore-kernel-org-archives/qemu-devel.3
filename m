@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C13A606A326
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D070F606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Cz0yPf5P;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=XsNHBKEh
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OFIlwI+B;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=hQRH5djS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMrJP-0005L1-2Z; Fri, 30 Oct 2026 14:26:47 -0400
+	id 1xMrJb-0005zF-J1; Fri, 30 Oct 2026 14:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMrJH-0005FS-3X
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:26:39 -0400
+ id 1xMrJY-0005o6-KS
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:26:56 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMrJE-0002O3-IT
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:26:38 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1xMrJW-0002PP-Ph
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:26:56 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69UHu2xM4011198
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 18:26:34 GMT
+ 69UHuRM8411165
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 18:26:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- /ppuAHVKzdnaZcaz0VZJLUE/73N1uz51RNcxnbHlXUU=; b=Cz0yPf5PldBy4sRK
- LIj5pZEIjrFOKSwZPo0rL7oPBMOgL9zBrMci0LDsJZMrJZcnJR8YAdT3t/oRWTiM
- +ZEq0/6zehd0o29W1dZBoNiEUwIZyB/oz1B1U+GAYHXWDKr7FnshXvx1BHu5d+WS
- +Yj0NRQZ4q17l7gSo8IFbVnbf2ABC5ydgVxgHRH6HNNf7XQqhR66AK97C5QWxciR
- E1ofIQdQGIux480p0Qo5Mcb7f/cdDMVw+aM7u9+ktrM1Mzllq2G84Ej6a2pvRvVN
- DDDxBEolbFHFyBpzDtAUfBO+tgyUibbAmZ+nXtSPWKgumaXFfXBTjf1n79CIc/1P
- dfEUAw==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qmc69-1
+ 2lyv5b79nTQdp4OncOwo6NDlb6bPO/fzYsDUGatZXvw=; b=OFIlwI+BJ4oETDuS
+ tceeRtIxFjbnB+mwyysl9TO2+04QuBCtp3bElipqmuQAJxCXFlclSD2WrGu3BjqK
+ 1WZfGXqce+fQU3eVe9/KwX+e3o4qfrneHD4sMNYsqf/Bhg9Yq1c7o9rTB/hhg2MD
+ NkVG1uQzL0jcCoK76utUMu7YiKBT2rW3W9uRY34nnTFMjf1GQoCLhb4nGeR3MHXZ
+ JkOjcB95017shahnXZIJAlvncHopmBc6DpICk9+DXdGWETO9GTm3rmiZjzPUKmD4
+ 1sOdOZEaq/gGKub9dzOvhXUy5RwhE4Z+F3P++s4ElUXEkKVp4g5bM8JOxXYI3eUW
+ tdhtYQ==
+Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
+ [209.85.222.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qvd7e-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 18:26:34 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id
- a1e0cc1a2514c-9905fc56b60so829656241.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 11:26:34 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 18:26:53 +0000 (GMT)
+Received: by mail-ua1-f72.google.com with SMTP id
+ a1e0cc1a2514c-988bea8fed6so782596241.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 11:26:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793384794; x=1793989594; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793384813; x=1793989613; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=/ppuAHVKzdnaZcaz0VZJLUE/73N1uz51RNcxnbHlXUU=;
- b=XsNHBKEh5WBSHEctWY0qAgPEhj/n44FK62dR7A8W0gyzdpfh65Cmc45icCEsYEDmVt
- pUfPK56PPA57FlvExuU0XxINg5PV0ee7pS70ltv22iqYOm5trtydnNK/FtpaheaTcdzW
- cTBHGLj5q93xJp6dust3xK1apYxW9Oqe76IWVy6DPqQOwld4cYJIP/NntRd0PFigGVgG
- OiFEi7kiQFii/6xB6y4n/e9u92urpjtfFR8r+d8VU/cd/AZIeQuHxoz87nXA5BSYWOgN
- GMxsfDcuLuef1nz6Tyge2byAJ2eamincx7jkW1j3X/ylzp9zXk91yKNFzRQLyq3/zEp/
- SpoQ==
+ bh=2lyv5b79nTQdp4OncOwo6NDlb6bPO/fzYsDUGatZXvw=;
+ b=hQRH5djSIhma6Kj6r+wkqXGC1Wcs3AhV9n9lsP2xY2KED+Nuqxu0SD2NshbNy3Z5i+
+ QPgkeSC62T+KVO0yQpTHL7+LnLy6em90K9CGRHOGLeIqkEcE+lxPNeW+uP2605uYUBmH
+ oKGkFG9cDI2p8AzHsy2qimH66VWEG48uyky/U7UrSNo3LO7+LVGFf+Giv1niNfHVRYLT
+ 1rVXusEqm9IHPukmU5x7d6Ir+aTBPQx+Bg4Q3abYcc6bVFunyTqtV/lPN58uqSrWU3vW
+ xBH94M2w9LJ9pX/4oPYduO3Agf4zZHzwvwIZKuhAeTtjqx3N6hv74j5YSK9z3DivMFeG
+ J/ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793384794; x=1793989594;
+ d=1e100.net; s=20260707; t=1793384813; x=1793989613;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=/ppuAHVKzdnaZcaz0VZJLUE/73N1uz51RNcxnbHlXUU=;
- b=kaUzf7G66i7ER9nxbLeuo7XDhXNT+lRDUJosB9Dk0bamc4B/334QhGAvR+itXO3opg
- RH3tZn9mCO4AqV4MicS8UPpWdLEJmwSomIOxDuLTLqLa0kU041sbzuuPBT8cjJmlMn19
- g4ovqBvdOEL1CXRM6Eab1D9gNBRu/nVFjZxTXG4zsmurYNqEUMLQgbMVaypssPV5l3mK
- nT9+xYz3YqiEsVbUzwqpVHBH/2YYK/2Rsma4ZDaBrs0ny2IZHDbrt2CtO8B5EZ7T3ozq
- s9fHNrWcxnaud3ErRy03z46kfjC1Vdlvrr18nR720wjlCRxXSuioW3ip3BtkNSenu6zN
- QF2g==
-X-Gm-Message-State: AFq9FYLz7KCle2rDMCFlCoIs6KcJEC/7gPHEyZ5aDmmpRDIOQIl1O1Zf
- lO11TULeoknpWvoEapVgtK7I5Y4tjblNG+LGGr5yzLAevJjsRC9DTkLlwpn+US/y9rqoRpkbBZp
- N0fr3W+xhhGacuC0Iz55ypWsNHwaEqSBb6QjhbQA7Vgz2Rke/gJPIUobu4XSxln/IZP+D
-X-Gm-Gg: AYBFou0htGfDoGnfg/gvJoB+B/fiC0waDzGhLuQXnlEk+DgHc0wseR8IBlWisRpDKwl
- wr66SMyfrSZ5G6OeHK6ytXJ3iwiIA/mi/e/9S5CdfH3ALfMvmmwZMVg9iTnslIaN6O9ojgVwCv4
- WPpsW+BtqkNft59VvY83KrHOf4AyS+ACPWygLSkKfs7xXmdThrgO2TnBpRm3yyoYrHtY8dbZbc2
- b9+RNrscbLgS1gCinH4UC9J12L65SVgwVwaTKNymej4i3H3T3rPydEDsUGQcTA1hrZM7NYGBpCO
- NLdXzuMmS0wSr/hQSfk0Vf6H8XKrrNVhDdGxm0SnQ+bho9+Z7ON8ZMp12sGG+NafNDDZVPNHwQE
- FyNxNrYGdhgOmeIzjiXiP2cY0k9EDniDq7iKggic6Yjg9ClkFq9AMr0sWad9Ui3YWdXCmZb9jmq
- cqiQSS+obCPgmxSbPzkfXMlLR30Qt2aw==
-X-Received: by 2002:a67:e112:0:b0:7b0:bd98:68df with SMTP id
- ada2fe7eead31-7d0543acf6dmr1734066137.41.1793384793704; 
- Fri, 30 Oct 2026 11:26:33 -0700 (PDT)
-X-Received: by 2002:a67:e112:0:b0:7b0:bd98:68df with SMTP id
- ada2fe7eead31-7d0543acf6dmr1734052137.41.1793384793231; 
- Fri, 30 Oct 2026 11:26:33 -0700 (PDT)
+ bh=2lyv5b79nTQdp4OncOwo6NDlb6bPO/fzYsDUGatZXvw=;
+ b=qLn2ZUrCik5Ow5R4agztWxMYMQUQQCUEpfMX5pNdSrSmF8htPHWewiKA3377ZDtb/R
+ 9CB/5WX8dwkLBeI2td1etI9xEmNBOC8b/meOEIEck/buhW5A15GFz/Meluxpwz5AUUpv
+ 82I5x9+1WNoDIiXtoMZ1x5cDADOLtS6epbtSUenTLCrgDFv9Ci+zgxWwTP77oXv7Qn6F
+ PT28MK0LyrRU0b45007hUEKYb4hnZVj0fNMGKLcIVTXzPxQuZJXIje999ZFSTsSQgwhL
+ ki/CNgkoH/3qlHVEwVQLASqvo2ZydfRHLLEgo9YcFNZCSyLacv75UslNdIhPGYdnOrZf
+ WTOg==
+X-Gm-Message-State: AFq9FYLSIPInizk74tjT5itwUylYzBIVcGmyC/hPfMaeF/0zJJ3cN2z8
+ BOdUX2d3IdbNrip6xgqZP9mbr6bOkkLAdCtKq1XzfNWDwE+4Z3dS16tS+oeFyxSYSuzbOiM8CTz
+ f5RLBkY2UqetlhZBVaW2tiA5dTkilWt+Iw/5JVp0jO6CfJokU+5quWAFh4+eQAHmohw1j
+X-Gm-Gg: AYBFou2nopN53yc8n8HlRnWCxNJ3tTPqCiUz7j1tto8NseStqEIhH4vn1Up1+dR07s7
+ UCG0Opx1WjyagLlJXi7/BGXlSbrldhfHX9Y5Wm11nxVc2kienhxqfpZlh3El6aNwehK/YLZ0eNm
+ 0YJg5+hly+OmP3FzB2Putrpfh/y2uLH8tonL778Q2W3Ajlebu5POi4iNS91xuzdZitCyk4yNE3w
+ 5guamh6bT31wqR4P2z5hZdLtkHe1e0mRlm+k1zclgkiuoDHDNfPd5XDX7NfAJW0QpHvUc2gJFRk
+ 5sUyU3tyMvZ63YPZm8Go/nB2OdIzGGAN2bp5R5DiLJaVeBhAiv07w7yct5z8iLEAiZc79ZPDRfr
+ auX8fD+LorH6/Go6r3SK3BwggxzLiMyUIOaMuSntFRC4WxdNuJek3CAhBGzi0Lonm2F6G+ii9/l
+ aiJAKmMRsGDVJekLK7hxGvQjXX5+fp5w==
+X-Received: by 2002:a05:6102:3ec5:b0:7ce:6289:314 with SMTP id
+ ada2fe7eead31-7d07269900fmr1755346137.14.1793384812761; 
+ Fri, 30 Oct 2026 11:26:52 -0700 (PDT)
+X-Received: by 2002:a05:6102:3ec5:b0:7ce:6289:314 with SMTP id
+ ada2fe7eead31-7d07269900fmr1755326137.14.1793384812226; 
+ Fri, 30 Oct 2026 11:26:52 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b8c0b6sm4244898f8f.41.2026.10.30.11.26.31
+ ffacd0b85a97d-48e71a4d3f9sm4920719f8f.4.2026.10.30.11.26.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 30 Oct 2026 11:26:31 -0700 (PDT)
+ Fri, 30 Oct 2026 11:26:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -96,9 +96,9 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v2 05/12] tests/tcg/mipsel: Add MIPS32R6 bit operation tests
-Date: Fri, 30 Oct 2026 19:25:38 +0100
-Message-ID: <20261030182546.2508-6-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 07/12] tests/tcg/mipsel: Add MIPS32R6 PC-relative tests
+Date: Fri, 30 Oct 2026 19:25:40 +0100
+Message-ID: <20261030182546.2508-8-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261030182546.2508-1-philmd@oss.qualcomm.com>
 References: <20261030182546.2508-1-philmd@oss.qualcomm.com>
@@ -106,31 +106,31 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 5xuKWk4QGdQAE2Rieu58D0Y58hz7P1Ni
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MyBTYWx0ZWRfX9QlOBpIcOK/i
- p5WDaW+qZg2V6IByy9tDHE7VxNDRPwdXnu5PSL73/kt7JckAbvwieuNCjY2e4NO+vAeEMDXZLlK
- 35OokSa4f+Bh1253QTJUffahKnlPlCc=
-X-Authority-Analysis: v=2.4 cv=DfSCOftW c=1 sm=1 tr=0 ts=6ae4e15a cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-GUID: -E5I8ohcRQ6oqvg6U0nQeCkZs81U1CxR
+X-Proofpoint-ORIG-GUID: -E5I8ohcRQ6oqvg6U0nQeCkZs81U1CxR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MyBTYWx0ZWRfX2/drvon+KA3w
+ YQphPNSz4fRKdaRqvKl/eogRbd/0TV9qYZYAjnkUbUEPqGrE6ufziU8nhM5EBrpof+GXjbPOlFX
+ wLIjXClV3Kksh+OfVBeDplS5aNpyeApggKj22JlrcpeUqvV4YQLsMFy5UMbblCbtABvB1dqauSN
+ kRiE/zLIVep69W5o9/DHJbabGHfmEBNTbQFQhuMMoa/qCFui+JTsEgqle0kq/x+JJ21Wa4dNM6q
+ qOq3trJS9Y0kGR/PucL+5MPjX9X+gZ6h85d63sbSlQdDIq4Up9339H2olzBAwFMrLmwWU1Tnv1H
+ azS8Z8/rX/RRZuA5HD0tZJMTJ0vmVUOzldqUYguVD1a+IOrM4Nuxy6qz1bZucOc5sNgkm6ou4fx
+ K1+wpCsE5en+38ZmrpYvs8qM5DIQq74S5ndh6PHuWrArMUrYknNZulwNLAqPER2xLGCHqyjrSy6
+ Lot/aJEzuIwAKtvoVsQ==
+X-Authority-Analysis: v=2.4 cv=dPgzC+Zb c=1 sm=1 tr=0 ts=6ae4e16d cx=c_pps
+ a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=xpWpbzVTnifO-OPWo9MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=o1xkdb1NAhiiM49bd1HK:22
-X-Proofpoint-GUID: 5xuKWk4QGdQAE2Rieu58D0Y58hz7P1Ni
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MyBTYWx0ZWRfXz9dyzt/A4xXO
- pCkB0odnIrVN6GI/+TwdMHDJp4ptVjgB2142Opb1obwElYR6qTWTbAeMZowfgncuACsecn5s/vn
- l6mSHfvvvhW4B3IwvUcGNttzihPXnc9yo78qtC+VMe1TJ0xW873xUJRUWXL9IjZc1o3owIkDqAc
- RrhPbtUYoGFkhwKdOJN5DJTD+BHqbJ+CzgMvqIGSFnzWrK+3kj2aRU+LaBf360b5bowCS6yb5h5
- Mrq/CzbMwsv3UGWCwFbNgkXw1xaLokGaXCfqUAJ1KvDGN5dKPo8Z478f4AdshNWidSQYtIPn3hr
- fcakO/ZfmcwJKOYQx3ueV4WjKFiLQVc65C/HqfzVeiMCU7KRR00vr9FHaDAstiCI8D9IoAOKSca
- 8XgOFGNZ2QpYYYvLQZa0aORIg/ufzt/cIC5pBSZn/rVEaY2Z817hNR+uBkncu92/SqexkPhretC
- Z2lxi1byfwSLB9r+9Lw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=Qa2biqyKpYfkMrCa2ZwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1WsBpfsz9X-RYQiigVTh:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MyBTYWx0ZWRfXwru5rjIWUOXk
+ YLD0/m3p4W5A2FtsHGCP4gzSZLCKiR89en054eOUApb7Q56/3IMpZ63yjyQq1Ni+jhJce5J5KTc
+ HG6+NC3RuWoaCf9e864rePDjfi7bZDo=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-30_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 adultscore=0 priorityscore=1501 spamscore=0
- phishscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0
+ adultscore=0 impostorscore=0 spamscore=0 malwarescore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 bulkscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300073
 Received-SPF: pass client-ip=205.220.180.131;
@@ -160,24 +160,23 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Test CLO, CLZ and bitswap.
+Test A[L]UIPC opcodes.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- tests/tcg/mipsel/test_mips32r6_bitops.c | 79 +++++++++++++++++++++++++
- tests/tcg/mipsel/test_mips32r6_shift.c  |  8 +--
- tests/tcg/mipsel/meson.build            |  1 +
- 3 files changed, 83 insertions(+), 5 deletions(-)
- create mode 100644 tests/tcg/mipsel/test_mips32r6_bitops.c
+ tests/tcg/mipsel/test_mips32r6_pcrel.c | 88 ++++++++++++++++++++++++++
+ tests/tcg/mipsel/meson.build           |  1 +
+ 2 files changed, 89 insertions(+)
+ create mode 100644 tests/tcg/mipsel/test_mips32r6_pcrel.c
 
-diff --git a/tests/tcg/mipsel/test_mips32r6_bitops.c b/tests/tcg/mipsel/test_mips32r6_bitops.c
+diff --git a/tests/tcg/mipsel/test_mips32r6_pcrel.c b/tests/tcg/mipsel/test_mips32r6_pcrel.c
 new file mode 100644
-index 000000000000..8546209b50dd
+index 000000000000..c93bca0ac06e
 --- /dev/null
-+++ b/tests/tcg/mipsel/test_mips32r6_bitops.c
-@@ -0,0 +1,79 @@
++++ b/tests/tcg/mipsel/test_mips32r6_pcrel.c
+@@ -0,0 +1,88 @@
 +/*
-+ * MIPS32R6 tests: bit operations instructions
++ * MIPS32R6 tests: PC-relative AUIPC and ALUIPC instructions
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
@@ -185,108 +184,97 @@ index 000000000000..8546209b50dd
 +#include <stdint.h>
 +
 +#include "../include/tap.h"
-+#include "../mips/include/wrappers_mips32r6.h"
-+#include "../mips/include/test_inputs_32.h"
 +
-+typedef void (*unary_op_32)(const uint32_t *, uint32_t *);
-+typedef uint32_t (*ref_op_32)(uint32_t);
++/*
++ * Run INSN with the immediate IMM, and probe the address of INSN with a
++ * second AUIPC (which yields its own address, +4 being INSN's size).
++ */
++#define PCREL(insn, imm, res, addr)                                     \
++    __asm__ volatile (                                                  \
++        ".set push\n\t"                                                 \
++        ".set noreorder\n\t"                                            \
++        insn " %0, " #imm "\n\t"                                        \
++        "auipc %1, 0\n\t"                                               \
++        ".set pop\n\t"                                                  \
++        : "=r" (res), "=r" (addr))
 +
-+static uint32_t ref_clz(uint32_t a) { return a ? __builtin_clz(a) : 32; }
-+static uint32_t ref_clo(uint32_t a) { return ref_clz(~a); }
-+
-+/* BITSWAP reverses the bit order inside each byte. */
-+static uint32_t ref_bitswap(uint32_t a)
++static int check(const char *name, uint32_t imm, uint32_t res, uint32_t probe,
++                 int aligned)
 +{
-+    uint32_t res = 0;
++    /* The probe AUIPC is the instruction after the tested one. */
++    uint32_t addr = probe - 4;
++    uint32_t expected = addr + (imm << 16);
++    int ok;
 +
-+    for (int byte = 0; byte < 4; byte++) {
-+        for (int bit = 0; bit < 8; bit++) {
-+            if (a & (1u << (byte * 8 + bit))) {
-+                res |= 1u << (byte * 8 + 7 - bit);
-+            }
-+        }
++    if (aligned) {
++        expected &= ~0xffffu;
 +    }
-+    return res;
++    ok = res == expected;
++    if (!ok) {
++        TAP_INFO("%s imm=0x%04x at 0x%08x: got 0x%08x expected 0x%08x",
++                 name, imm, addr, res, expected);
++    }
++    return !ok;
 +}
 +
-+static int check_all(const char *name, unary_op_32 op, ref_op_32 ref,
-+                     const uint32_t *input, size_t count)
-+{
-+    int fail = 0;
++#define CHECK_AUIPC(imm)                                                \
++    do {                                                                \
++        uint32_t res, probe;                                            \
++        PCREL("auipc", imm, res, probe);                                \
++        ret |= check("AUIPC", imm, res, probe, 0);                      \
++    } while (0)
 +
-+    for (size_t i = 0; i < count; i++) {
-+        uint32_t a = input[i], res = 0;
++#define CHECK_ALUIPC(imm)                                               \
++    do {                                                                \
++        uint32_t res, probe;                                            \
++        PCREL("aluipc", imm, res, probe);                               \
++        ret |= check("ALUIPC", imm, res, probe, 1);                     \
++    } while (0)
 +
-+        op(&a, &res);
-+        if (res != ref(a)) {
-+            TAP_INFO("%s: %08x: got %08x expected %08x",
-+                     name, a, res, ref(a));
-+            fail = 1;
-+        }
-+    }
-+    return fail;
-+}
-+
-+static int run(const char *name, unary_op_32 op, ref_op_32 ref)
++static int test_auipc(void)
 +{
 +    int ret = 0;
 +
-+    ret |= check_all(name, op, ref, b32_pattern, PATTERN_INPUTS_32_COUNT);
-+    ret |= check_all(name, op, ref, b32_random, RANDOM_INPUTS_32_COUNT);
-+    /* Every leading-run length, for both polarities. */
-+    for (int n = 0; n < 32; n++) {
-+        uint32_t v[2] = { 0xffffffffu >> n, ~(0xffffffffu >> n) };
++    CHECK_AUIPC(0);
++    CHECK_AUIPC(1);
++    CHECK_AUIPC(0x7fff);
++    CHECK_AUIPC(0x8000);
++    CHECK_AUIPC(0xffff);
++    return ret;
++}
 +
-+        ret |= check_all(name, op, ref, v, 2);
-+        v[0] = 1u << n;
-+        v[1] = ~(1u << n);
-+        ret |= check_all(name, op, ref, v, 2);
-+    }
-+    tap_report(!ret, "MIPS32R6 bitops %s", name);
++static int test_aluipc(void)
++{
++    int ret = 0;
++
++    CHECK_ALUIPC(0);
++    CHECK_ALUIPC(1);
++    CHECK_ALUIPC(0x7fff);
++    CHECK_ALUIPC(0x8000);
++    CHECK_ALUIPC(0xffff);
 +    return ret;
 +}
 +
 +int main(void)
 +{
 +    TAP_START();
-+    run("CLO", do_mips32r6_CLO, ref_clo);
-+    run("CLZ", do_mips32r6_CLZ, ref_clz);
-+    run("BITSWAP", do_mips32r6_BITSWAP, ref_bitswap);
++    tap_report(!test_auipc(), "MIPS32R6 AUIPC");
++    tap_report(!test_aluipc(), "MIPS32R6 ALUIPC");
 +
 +    return tap_done();
 +}
-diff --git a/tests/tcg/mipsel/test_mips32r6_shift.c b/tests/tcg/mipsel/test_mips32r6_shift.c
-index 0594796709f3..6828e90dd8af 100644
---- a/tests/tcg/mipsel/test_mips32r6_shift.c
-+++ b/tests/tcg/mipsel/test_mips32r6_shift.c
-@@ -62,12 +62,10 @@ static int run(const char *name, binary_op_32 op, ref_op_32 ref)
- 
- int main(void)
- {
--    int ret = 0;
--
-     TAP_START();
--    ret |= run("SLLV", do_mips32r6_SLLV, ref_sllv);
--    ret |= run("SRLV", do_mips32r6_SRLV, ref_srlv);
--    ret |= run("SRAV", do_mips32r6_SRAV, ref_srav);
-+    run("SLLV", do_mips32r6_SLLV, ref_sllv);
-+    run("SRLV", do_mips32r6_SRLV, ref_srlv);
-+    run("SRAV", do_mips32r6_SRAV, ref_srav);
- 
-     return tap_done();
- }
 diff --git a/tests/tcg/mipsel/meson.build b/tests/tcg/mipsel/meson.build
-index 3c40a556ad46..0c43c31e7355 100644
+index f540d18b3bd2..a7af2f16192f 100644
 --- a/tests/tcg/mipsel/meson.build
 +++ b/tests/tcg/mipsel/meson.build
-@@ -67,6 +67,7 @@ endif
- tests = []
- 
- tests_mips32r6 = [
-+  'test_mips32r6_bitops.c',
+@@ -70,6 +70,7 @@ tests_mips32r6 = [
+   'test_mips32r6_bitops.c',
    'test_mips32r6_logic.c',
+   'test_mips32r6_multiply.c',
++  'test_mips32r6_pcrel.c',
    'test_mips32r6_shift.c',
  ]
+ 
 -- 
 2.55.0
 
