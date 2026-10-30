@@ -1,87 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6B0606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D07606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=GNphpGHl
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=iox2hQmD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMb4w-0002HL-AO; Thu, 29 Oct 2026 21:06:46 -0400
+	id 1xMb51-0002MN-Qo; Thu, 29 Oct 2026 21:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4e-0002CL-La
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:34 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4x-0002Is-JZ
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:47 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4a-0006E2-5w
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:25 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4a5036bbac7so602485e9.3
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:06:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4n-0006GN-6L
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:43 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-48e0d885929so133857f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:06:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793322382; x=1793927182; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=71SB0FrjFwut8s/0OfdT1uGzvIsW+clScFF+JCSKOjE=;
- b=GNphpGHl+pgVUE1oG1HATk9vhu1aOq6bQBC9jgpmKdkDwxK53a+S1lz7BwWfrxEbh/
- FTpEgZ4qmTcmB7ODSTN+OPs6gG+DbWF5pnzyd79ncvH6M256Pe+WCSKPTWqAHPvf4n0Q
- zBmL/uj/H5r6s8TgRDiIhFFm4liKs0wf4S2Ajp+XLnHU59TsXHMzngl2PtLpu5ebjl8N
- VDCy9VdL8965I8YAMrGmMpNezbwDZyU0o6i0Q415ATU1iP0UhYAct9j+QC+Y5iASlN4d
- a/SUkZubVts8v3Df6hj33mVo6/XJnpaTKKK0/CF/kYS2P3YBbcvmx3yau70+0WRzK/+3
- TuOA==
+ d=openvz.org; s=google; t=1793322395; x=1793927195; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=FOP9eWIZEsEM0uhGEfT1U3RerCwOgmk215ry3JCIszA=;
+ b=iox2hQmDy0mMeo3i2hg01bBUGP1FXQdIhx+H5BrHxTe+bCnOWJvFQizK8S/UWmuiQ+
+ Xw3RLKv8XomDHlby53NtZ6v09Z7KmATNT/4kNquD37q058k+ldXN7BvSAbKgJ9RVMxi9
+ Bnt4SmzP5JuwhxhOLpYjc+y8MK6krCuWO2afJ3htuMK6fVwvvZWzCXdGElYXsOe3iw8X
+ 2jwTk9HSQqBWYg7pkuB0bRXl3AxMTluVG5NH8yUu5ChI7odg5fpELoAdjbNSUO9dUOXp
+ RXWnxDQiVYgOLaA7uz/dpzDjL2bwAUjNE+IUr90F9jSutTfaB//piiyivr5+m/S2NM61
+ 2VRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793322382; x=1793927182;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=71SB0FrjFwut8s/0OfdT1uGzvIsW+clScFF+JCSKOjE=;
- b=da1qtbgc0nZ1iMNM6JTwbU9Vi2nWtnwh+2pw17baG8Ko15LFTpTNYWTK1EpsJFJFGC
- MVPzwQr++I/n6FyM/PxvptrTMuZOnI0Gra3nDk6g8zO+amhOhSo6IjHo67WM0XCY3NQQ
- qJQQWEpF0MScBJjJq3M1OA4oHj5943sXklrrZRddXXRmHSbybeFdUdXDlLIQl8V4XlxO
- kcd9hebdaFmmFxC46SGm7GaLA/yLZezuhwPRn+RFgZcaiH15Gsw+yF+tTE+Zc5+nN4tA
- hbr3eqEqufL+kQBqqysoYHNSlwmbpCom4kI3ays/yVIghD0pJQ89aiW1nMFB9luOaxdf
- hN/A==
-X-Gm-Message-State: AFq9FYIKPP9YExhM80yQzihdcUYlnar0DYDcD2JhzVXXa0xaI8k7BqKO
- fk1cnGhduVPtHQHqUt02uFZsdqXKsTovtZ/vBfp6/ZE2ZQLBb95hz8M8q1tKuHgQoebRkATup81
- ymVZm
-X-Gm-Gg: AYBFou3n325aReJ6ULbN/Ufoj4bY5mZrsT/H6/gqNMbBcKOgL44FIrF66ZabRiocQFc
- q73czCQBqDjtt7eoMLGfZmEjBp2/2kyUmVirEtJ9gnvXa0QZjitBteaT+IoKq3qglGHd4cVmk1o
- V2MV4eG49a72XjwdqYLZ1x3QqZs93CuFOggPOVLTnkv3dxAsQTR4ihgx5OfVRpOuoQ8EdjLuvSo
- knx/ox5H+8ur2MSFViboEICRHzDZ+oXsplgMI0+NM5GC5BTdxAVaqRUmYUiPlvRU7XiUZ8E4N8o
- MUQtzprb+dDCAssh/5Ve57swFgVUalnIhm2B2SIRAM+lKSyVLQNr7x08zNUh6Bej8HI91v+G1NR
- 9FOl7X1dS/+KAF6x+CSKrvNqCC3DlcZyLL0AXkQCdAIJN1fbokFW19h/0SeZ9RE6UchPBSsB/Ny
- 8wP0CC5eBk8dfapUPXp4GfWfHAq9j8xl/Sw8qnHpKC46B8it1UoOVLEhV03yGqYW2N3SOqDsBuz
- jIxFl0jXO8gzKzKDYE4YI9zJ0nHSvP9wACUYEwWUouq429MVZ7prqC9weeqLB614lIdGYOVZH7/
- 8G3skPOTQJqe6FRDHSO5XCmRBy+DEl2EnA19Gk4=
-X-Received: by 2002:a5d:5d06:0:b0:48e:2a04:4ea3 with SMTP id
- ffacd0b85a97d-48e6e2c05e3mr2283359f8f.8.1793322382350; 
- Thu, 29 Oct 2026 18:06:22 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793322395; x=1793927195;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=FOP9eWIZEsEM0uhGEfT1U3RerCwOgmk215ry3JCIszA=;
+ b=Twu5muP5EInhyeTbD6+nGPt6kzAk+8HotQnVl9UWeEJ8pGkb8CM6s0p0QtOhE49Psl
+ TLfiKKtz2SFSijexdZWp4LHA6ejAjbNyeeJmk4BcUuU/u4POn+55spiVOrS2bbLio8t4
+ GQmdLjzTIKEciElurTzlfYLB0EYOUhh6usFIYrb/qrp0edgt5jlZaYqn7Q8JZvlz9oMP
+ JjJ3qQBOUkCHpK830C+Ssb0fcHv456a4B3L9Mswy0iQ1MY3ocdJyqSvyGVExcjht+zWl
+ xHk4c7N4ZooxAV8Cth3bo5JLPdKzfG0NnuDzT3ZVOOdnPvfgcEaNgPoFskymdgIpRdHv
+ myXw==
+X-Gm-Message-State: AFq9FYJ70GerjYtZLn10rZ5cYwjEpuY9P3gAGub3T4AUKQYADIfbNNYf
+ OU+c4yNz9Yw33UPSZm3YXi/khSI12gTlb3jJTH/yEDkIoGjQBO1R1tvNKUO5v6U7zp+6b49J33r
+ HX/UK
+X-Gm-Gg: AYBFou2JH3TZLqsCreEIlKVhq1T7yZOMreXAqEH9prk2Mp9hc1yjQ1u9xFhdMIuZW39
+ 4mbDkykPcYyhA93mgI3tH0MEuvzu5tsq6/n66ySXmGr6H3sCuvLMSI7S/X16XkNljgKx0L2fTaO
+ ch7h1B9Sv3OsqCg9UCxgfx1GS7epHAsqFeFqM1KoE7dndnR581+O5tRnv5bYM1+SuHIE9HjCnTF
+ c4+xdR0fQQNVjat94BsJbAGFc4hoo1o0p63nShzFBv0J/O7tc1UsUlp/8+rEinD9QcZvQ/1l1BG
+ h/P6Tl4JM2wEcSmVtqrrol8KHZZ8klKmcVVyWCqDNlwxce76zAGGcpiaBAOeYHzJzRIK38kN40m
+ feE9CBaH8iqm1UfhbLxyimyZxYDpRnv1oBPy888K8WIGN/rQe350pahh1hVhAe46YlHMXSxHRQA
+ 6BWZZR6F795pnwRxkHK9On0p/JKX0RyXRBrZ/vm5UO2JFPQvyyk1PKP80kmzbt/AQBHqlguNVN5
+ dBGS9JtdkX5IOYwV/YLdlAGap+1Zl6rRqPBSQDlAkL2Lu9znRj7VVkarwRjI3sE/0+GpLpEIIsL
+ Mqn/kjcglKPwyTEyYvvFtXtkUo9JOzJhx/f0tu1u
+X-Received: by 2002:a05:6000:4007:b0:48e:6812:5ef1 with SMTP id
+ ffacd0b85a97d-48e6e4f55f9mr2391871f8f.25.1793322394903; 
+ Thu, 29 Oct 2026 18:06:34 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:f4be:f111:4ee0:40d3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b80333sm210023f8f.32.2026.10.29.18.06.19
+ ffacd0b85a97d-48e71b80333sm210023f8f.32.2026.10.29.18.06.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Oct 2026 18:06:21 -0700 (PDT)
+ Thu, 29 Oct 2026 18:06:34 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 01/12] block/commit: pass BDRV_WANT_PRECISE to block-status
-Date: Fri, 30 Oct 2026 02:06:01 +0100
-Message-ID: <20261030010613.1612771-2-den@openvz.org>
+ John Snow <jsnow@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v4 09/12] block/block-copy: merge the two backup scan steps
+ into block_copy_prescan()
+Date: Fri, 30 Oct 2026 02:06:09 +0100
+Message-ID: <20261030010613.1612771-10-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261030010613.1612771-1-den@openvz.org>
 References: <20261030010613.1612771-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=den@openvz.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=den@openvz.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,39 +111,168 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Denis V. Lunev <den@openvz.org>
 
-c33159dec790 replaced the want_zero bool with a bitmask of BDRV_WANT_*
-flags. block/commit.c was missed and still passes "true", which is
-BDRV_BLOCK_DATA, not BDRV_WANT_PRECISE. Convert it like the other
-callers.
+block_copy_reset_unallocated() and block_copy_calculate_zero_bitmap()
+are both one step of the same scan and differ only in what they do with
+the answer. Fold them into block_copy_prescan(), which drops unallocated
+clusters from copy_bitmap while skip_unallocated is set, so
+backup_scan_source() loses its per-mode branch.
 
-Fixes: c33159dec790 ("block: Expand block status mode from bool to flags")
-Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+sync=top now walks the dirty areas the way full and bitmap do, so it no
+longer queries what copy-before-write has already copied during the
+scan. A failed query still fails sync=top, as nothing else can tell
+which clusters to skip, and still leaves the area to be copied as data
+otherwise.
+
+Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: John Snow <jsnow@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-CC: Eric Blake <eblake@redhat.com>
 ---
- block/commit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/backup.c             |  7 +----
+ block/block-copy.c         | 63 ++++++++++++++------------------------
+ include/block/block-copy.h |  9 ++----
+ 3 files changed, 27 insertions(+), 52 deletions(-)
 
-diff --git a/block/commit.c b/block/commit.c
-index 2d52c39594..4e0b0f9029 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -140,8 +140,8 @@ commit_iteration(CommitBlockJob *s, int64_t offset,
-     /* Copy if allocated above the base */
-     WITH_GRAPH_RDLOCK_GUARD() {
-         ret = bdrv_co_common_block_status_above(blk_bs(s->top),
--            s->base_overlay, true, true, offset, COMMIT_BUFFER_SIZE,
--            &bytes, NULL, NULL, NULL);
-+            s->base_overlay, true, BDRV_WANT_PRECISE, offset,
-+            COMMIT_BUFFER_SIZE, &bytes, NULL, NULL, NULL);
+diff --git a/block/backup.c b/block/backup.c
+index 38b0838d69..60c00fca67 100644
+--- a/block/backup.c
++++ b/block/backup.c
+@@ -271,12 +271,7 @@ static int coroutine_fn backup_scan_source(BackupBlockJob *s)
+ 
+         /* rdlock protects the block-status queries below */
+         bdrv_graph_co_rdlock();
+-        if (top) {
+-            ret = block_copy_reset_unallocated(s->bcs, offset, &count);
+-        } else {
+-            block_copy_calculate_zero_bitmap(s->bcs, offset, &cached_end,
+-                                             &count);
+-        }
++        ret = block_copy_prescan(s->bcs, offset, &cached_end, &count);
+         bdrv_graph_co_rdunlock();
+ 
+         if (ret < 0) {
+diff --git a/block/block-copy.c b/block/block-copy.c
+index ad358f4d2f..78cc855b5b 100644
+--- a/block/block-copy.c
++++ b/block/block-copy.c
+@@ -153,8 +153,8 @@ typedef struct BlockCopyState {
+      * This is indicated by skip_unallocated.
+      *
+      * In this case, block_copy() will query the source’s allocation status,
+-     * skip unallocated regions, clear them in the copy_bitmap, and invoke
+-     * block_copy_reset_unallocated() every time it does.
++     * skip unallocated regions and clear them in the copy_bitmap, as
++     * block_copy_prescan() does.
+      */
+     bool skip_unallocated; /* atomic */
+     /* State fields that use a thread-safe API */
+@@ -781,40 +781,17 @@ void block_copy_reset(BlockCopyState *s, int64_t offset, int64_t bytes)
+ }
+ 
+ /*
+- * Reset bits in copy_bitmap starting at offset if they represent unallocated
+- * data in the image. May reset subsequent contiguous bits.
+- * @return 0 when the cluster at @offset was unallocated,
+- *         1 otherwise, and -ret on error.
+- */
+-int64_t coroutine_fn block_copy_reset_unallocated(BlockCopyState *s,
+-                                                  int64_t offset,
+-                                                  int64_t *count)
+-{
+-    int ret;
+-    int64_t clusters, bytes;
+-
+-    ret = block_copy_scan_status(s, offset, &clusters);
+-    if (ret < 0) {
+-        return ret;
+-    }
+-
+-    bytes = clusters * s->cluster_size;
+-
+-    if (!ret) {
+-        block_copy_reset(s, offset, bytes);
+-    }
+-
+-    *count = bytes;
+-    return ret;
+-}
+-
+-/*
+- * One scan step, like block_copy_reset_unallocated(); @cached_end
+- * tracks progress across calls, @count how far @offset should move.
++ * One step of the scan run before copying: query the next dirty area, fill
++ * zero_bitmap and, while skip_unallocated is set, drop the clusters which
++ * are not allocated above the backing from copy_bitmap. @cached_end tracks
++ * progress across calls, @count how far @offset should move.
++ *
++ * A failed query only leaves the area unmarked, so it copies as data, but
++ * sync=top cannot tell what to skip and fails instead.
+  */
+-void coroutine_fn GRAPH_RDLOCK
+-block_copy_calculate_zero_bitmap(BlockCopyState *s, int64_t offset,
+-                                 int64_t *cached_end, int64_t *count)
++int coroutine_fn GRAPH_RDLOCK
++block_copy_prescan(BlockCopyState *s, int64_t offset, int64_t *cached_end,
++                   int64_t *count)
+ {
+     int64_t max_bytes = QEMU_ALIGN_DOWN(BDRV_REQUEST_MAX_BYTES,
+                                         s->cluster_size);
+@@ -830,7 +807,7 @@ block_copy_calculate_zero_bitmap(BlockCopyState *s, int64_t offset,
+ 
+     if (!found) {
+         *count = s->len - offset;
+-        return;
++        return 0;
+     }
+     dirty_end = dirty_offset + dirty_bytes;
+ 
+@@ -839,15 +816,21 @@ block_copy_calculate_zero_bitmap(BlockCopyState *s, int64_t offset,
+         int64_t query_offset = MAX(dirty_offset, *cached_end);
+         int ret = block_copy_scan_status(s, query_offset, &clusters);
+ 
+-        if (ret >= 0) {
+-            *cached_end = query_offset + clusters * s->cluster_size;
+-        } else {
+-            /* Best-effort: leave this area unmarked; it copies as data. */
++        if (ret < 0) {
++            if (qatomic_read(&s->skip_unallocated)) {
++                return ret;
++            }
+             *cached_end = dirty_end;
++        } else {
++            *cached_end = query_offset + clusters * s->cluster_size;
++            if (!ret && qatomic_read(&s->skip_unallocated)) {
++                block_copy_reset(s, query_offset, clusters * s->cluster_size);
++            }
+         }
      }
  
-     trace_commit_one_iteration(s, offset, bytes, ret);
+     *count = MIN(*cached_end, dirty_end) - offset;
++    return 0;
+ }
+ 
+ /*
+diff --git a/include/block/block-copy.h b/include/block/block-copy.h
+index 3a61066b55..dc51316fcf 100644
+--- a/include/block/block-copy.h
++++ b/include/block/block-copy.h
+@@ -41,12 +41,9 @@ void block_copy_state_free(BlockCopyState *s);
+ 
+ void block_copy_reset(BlockCopyState *s, int64_t offset, int64_t bytes);
+ 
+-int64_t coroutine_fn GRAPH_RDLOCK
+-block_copy_reset_unallocated(BlockCopyState *s, int64_t offset, int64_t *count);
+-
+-void coroutine_fn GRAPH_RDLOCK
+-block_copy_calculate_zero_bitmap(BlockCopyState *s, int64_t offset,
+-                                 int64_t *cached_end, int64_t *count);
++int coroutine_fn GRAPH_RDLOCK
++block_copy_prescan(BlockCopyState *s, int64_t offset, int64_t *cached_end,
++                   int64_t *count);
+ 
+ int coroutine_fn block_copy(BlockCopyState *s, int64_t offset, int64_t bytes,
+                             bool ignore_ratelimit, uint64_t timeout_ns,
 -- 
 2.53.0
 
