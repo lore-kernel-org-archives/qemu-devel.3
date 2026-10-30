@@ -1,93 +1,157 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9B1606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0569B606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=jWklFvcW
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=cnmPZTby;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=PVLuXxIh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMb52-0002MU-MK; Thu, 29 Oct 2026 21:06:52 -0400
+	id 1xMbQh-0000gx-Nj; Thu, 29 Oct 2026 21:29:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4h-0002Cj-OE
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:35 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4e-0006Ee-Fz
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:30 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-48e00eee27dso79323f8f.0
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:06:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1xMbQf-0000gp-R2
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:29:14 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1xMbQd-00082l-Ka
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:29:13 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69TNKN901530125
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 01:29:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ MjLHi9XI4SQmX9rK74/0E9bFPkWOqjilg+HFoVwuiOg=; b=cnmPZTbyWg5wAvsN
+ OfC8MxCyB+VnqkjwDvz96vl3BYw5N9xcoTaUS6KSfS5ZfXKFyOlLggzsnxBELK5C
+ m8fwzYlyW56VZflEN9Zy0TKpgupdt5oko13kqVrZQ1Yxf/GvhuyZqGYOO0rIbeb9
+ HbARxyQdnYadBlosL/kFzpeRl1YkHEpmw3yMlBG+FqwpWsNQ3+/jHB9UG0dI4wj8
+ 1oGPezMIEkW58YkumUPUW+Sb+//htvuWR3pIuDCutmTPwd2EDlILOYkbyoZ/uOVs
+ 0agM2pGSzxkm5Gp+5ph/sWQ3GBaWxmJVjLyFOgjcRbhQK0yiJjjYwYnI0jZ97ZgV
+ AcYitw==
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qgmpk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 01:29:08 +0000 (GMT)
+Received: by mail-oi1-f198.google.com with SMTP id
+ 5614622812f47-54dbbf252cdso296464b6e.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:29:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793323748; cv=none;
+ d=google.com; s=arc-20260327;
+ b=MwyAVET01wG8XUVA5tZgBZ+Azzq7JZvJcw7U6oLMPJGK/a7Elcu6IKokmyRsOWO8V8
+ EzLwjnoOk9WhbDBQoO9rRx5vur8yqzybceIauwnSkcTLxL/m1YffDlHswI4zK08aXHdS
+ ylhHu3YLogCzErP2jgcz8tViM8OQWreqL6I+E4pXINrRE7MAbFMdpwSuN/OAiwigxea6
+ a9xJjOBFbW0Zss/C7MIRSiWkuWz6WJSFhP0xBSrsxNzontJ7pC6736cwHUp7yam+TBt9
+ YUnQri63LKWUkQ+fhy9x1/qFB8G8pugtCEpYB05aOtxRcKxk93M5KjS+pj19AbjADOwZ
+ C8LQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=MjLHi9XI4SQmX9rK74/0E9bFPkWOqjilg+HFoVwuiOg=;
+ fh=AvdUgREFPBGnLKtDjjPes0731VMeA8MKp16N55VMDg4=;
+ b=rTcFMa60KC8/L6e3e8lNCv7VXTD01s7/MVkJ4nCAUyaqdYFvJSv/gXfBSUqJ5gv2gc
+ sJs6MZUiVGHqWSmlMbEazinZYiQML4L3w3CCge9/AdMtpL5RWpkfYQT3HqRw6L8v6fMB
+ vR14HB26IV2IqYdwInRD4J3FejhWybgs7cjiCi6b9Az/B6jGHpSsSLZgwajIIg1P1oI+
+ ZqI81ka8dRVAjFuOYReTzG7u3IyHiymuLdsVB4zlujIsGIdcUXSfHc6K+EnqR0sbkaHm
+ mlfOBrsosRiroyk707HvsmXnqzkxXaoU1VcqeuIE4AHzJObyM3p6R4YhlVJRgN+rfvGd
+ 58oQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793322386; x=1793927186; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CoR8CLrpuVAT0u8yvV1K/ZhWofQiYj1zPlWlm27XYIA=;
- b=jWklFvcWXWxi3r3XNMIKWQrSHdR6jlW9gSRKpsUSoJoDsI04FgNeOM7ZY4IXGODf3l
- TRYQwLExqgYnVqvjVsh/3OIwVx89VDd0pyZIXu8gxt9odMqinMJT4BR6lK03CgopCfLN
- sdKBBUSn2z+9qMz2NCd/x8I2BEjG0cIE5xF/CmxsR53h9ox1aoJpXE38f4F81wi0w+3v
- h0m6iPCyRsvL2J421mbPrgcK6e2/Piv9Uokwr6Pu/ZZXcSxIgzxSaFD//ADT/1Z6OOsC
- tPfDRe6CHRXZK3QuaBhJTo9yvvoTAL1b6YoLrOs37U7cDKv30tfJSxNPgQvnDWNzJf39
- IsfA==
+ d=oss.qualcomm.com; s=google; t=1793323748; x=1793928548; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=MjLHi9XI4SQmX9rK74/0E9bFPkWOqjilg+HFoVwuiOg=;
+ b=PVLuXxIh3B9JmJkTICvgeTRYKD5uFC+RXylP437VxjFsf7aLlXiTemsR0aaAd3C3eW
+ FWTIXJ7SehCaojefW1DDI8uLe+kNhW8Ys1YzmsWCKVXneHMd9+dtUPVlhKNvkYVIPr17
+ iDxoQcmeFSH0UjtscFAMukaeYrtqNMMeYrzchnKiqHqPwoK/HeACwg691nctemwJiCsQ
+ A5k/ekRd0cpDVDbeS2m8ZG4qeKIQbumoi1PeYK1bpXLNHbrxkai/VE5lCbXDw9s91bfL
+ 3rZ/QqmfooyNLoO8mRebqfbiIYkgfvrmkSPu623yFKdAM9BzQG88EJBzeYEp6jr7YMaS
+ G6dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793322386; x=1793927186;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=CoR8CLrpuVAT0u8yvV1K/ZhWofQiYj1zPlWlm27XYIA=;
- b=GmOQGD5LeauuCqDMY96+Png/eDqkGDZpDTwd6Q7/++YGeyRsHAXOEq/BnqIyJ0d3YU
- A5jnR/eGu15it+shpcDwILmZrgKiK6+CPY+qScCXgCSfmw3eA2MLH0QMVspOo7KqrVsk
- HYGwZvsVXQxK1YBSechNj5nB92hvNnhHlEVAA53uhwc6qXHW4SYlY1pTvtVVxH+/8I50
- 9ffGaXTXGKe4TEFd+sLHhs0fpUM+GLNtv+kqB4f4euGLzDgp4++YyiUcZ1zwJeXGvIAn
- GeovG25tYTY5YACUizgZuXFoskhY37+M5hqUMZtOZP6qy83aKQNNFfZC1/LPkhzU116U
- 0alA==
-X-Gm-Message-State: AFq9FYIh/r2iqledclkNJUaPHsY7YbhKZQ+tlinJDkl5ulOiDzxB62ua
- V2bd6ZK5nN5nXTqbpbENzao6xuKsdTxOxwRVJgsip2gjfFZYPL1NhM6pT/SiJ+FNnPIRUKjNA2w
- fK326
-X-Gm-Gg: AYBFou3i91TGmOyHO17JkXWJDKr48rl71xZOrwr0iHMPKcZ1kNQyoiSKCSLgzyrJnku
- r3NOlk76GQY5mnSUesf6DUIjhl04Gai2KD7brpyztQl3iIin8NkOCGeEHsIsgOlt4jmHpWZo8UY
- t6dudWTcAMdon8miItQA2wF+SM4roqvGYiY6D77+v9Vr/hVP2qKTx6rUls8uXvW65ZVk4MDXll5
- lB3Gvwo6Sc9+aphXWbnNS7yGAP8cVDfHl11FPgDQv9duWf/UnSwwB/YCdm887azH59Tc1pRAumY
- 2ciF79qPEm3/b/P0ADPpzL91KLCFxzwxtWEmPgWquRTQDfWLFvAdJA2FpnJFA/Sj3S+y6ETloc7
- AxO4KDR65mw/HNuXxUwGrDRfRkx/WX5m2AMtXPg+ydbuxhOpLg0h3IECdonsy2I5E5GxY/vLNzO
- pcLuCbBLX9iUjS2p+2LlWiwl+E6Rrq8vWTL32zhRNKpm32BneE9TRX71nt7TtMxZzWZZ4H6gDQO
- 0yGRhyrZ114ZmD32L8O4CoKErUkdWoxAvu8Zhn9P5BJZ3uS04g9A8ZPwXeQO4a/OOUX+w1aqoUq
- d6eoiYsfMxMlYsTCvg==
-X-Received: by 2002:a5d:5d13:0:b0:48e:103e:846f with SMTP id
- ffacd0b85a97d-48e6e2f91b5mr2229959f8f.9.1793322386194; 
- Thu, 29 Oct 2026 18:06:26 -0700 (PDT)
-Received: from athena ([2a06:5b06:b600:300:f4be:f111:4ee0:40d3])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b80333sm210023f8f.32.2026.10.29.18.06.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Oct 2026 18:06:25 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 03/12] block/commit: batch block-status queries
-Date: Fri, 30 Oct 2026 02:06:03 +0100
-Message-ID: <20261030010613.1612771-4-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261030010613.1612771-1-den@openvz.org>
-References: <20261030010613.1612771-1-den@openvz.org>
+ d=1e100.net; s=20260707; t=1793323748; x=1793928548;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=MjLHi9XI4SQmX9rK74/0E9bFPkWOqjilg+HFoVwuiOg=;
+ b=eCFChb4oIlX6pwK+hFcqT9y33vbrpubdDRp3Al9Je8gYhyB9iChsQRRkFGvinesyPq
+ ZyALfdmgI+jiK7NNzLxgI7FvX0NxY6rE8nUAqriTsAJJ8jnacO7kbOtRmJZ/3U2M4Fqu
+ ys4Sv7yIqS0FD7iG4IjTHyNhkBdqGDRwBEwt+1CnVycVxqzKTwWWF+0XwdVtGNGp2D61
+ 7zgakHM3lIPGDI5MTheYuQcmOhF51vrUSnWWdvCqPJOp9zJi0XpEafbM0YuYhizDEiib
+ 1uo7pRYXUyp0MPiGgJkRoeh2ljQSvxqT114I/WVJO7DePE6QIrcmr4+lsYWxu1aAJGBt
+ IERw==
+X-Gm-Message-State: AFq9FYL0W3FLILhQxGu8Y1+Of2tJnp14KklMNur0YNXbxqwAsLol4jUD
+ Ghxjbz/WmGE0S82I2zaKoTFwpWsgS4sh4h3mPXXQ3Owa1ldpTBgbN6jiDgba8NbqtPZ91tYMpMp
+ lYnm+B847FWOzgKhNJoOdHd2kAEWHFob+IyR4jolJFM8hxr4fokv7ft2GkmeYDWciTQgF/r5NTs
+ VPCefEqzWxKLKdwZQT3yMvP4Por2uGP+bN
+X-Gm-Gg: AYBFou19KsY0YDVHmkz5z2/pimvxpx7WvEGm7EQjI9qMf1NG3XJuyqSrab6znckX1PY
+ ZyYZr0G74jvLyEP5Jd6vpGv29ftnJLkv0QOHiAxu83e94PsalPZlGnVg5nJ2doi57+36nlDRq83
+ fARQhQpvIUwHhQq51KYhS3q8QzMNAZEyJ+8JM4l93bb1ngK/JFb9PBJSQqlIaGw4jvxuz4OsI95
+ sQFRBkW0PWoNMJ/qSA=
+X-Received: by 2002:a05:6808:1811:b0:54f:ee4e:51ed with SMTP id
+ 5614622812f47-5640dcb8774mr755926b6e.19.1793323747767; 
+ Thu, 29 Oct 2026 18:29:07 -0700 (PDT)
+X-Received: by 2002:a05:6808:1811:b0:54f:ee4e:51ed with SMTP id
+ 5614622812f47-5640dcb8774mr755903b6e.19.1793323747220; Thu, 29 Oct 2026
+ 18:29:07 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=den@openvz.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20261029230310.1632334-1-brian.cain@oss.qualcomm.com>
+ <20261029230310.1632334-5-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20261029230310.1632334-5-brian.cain@oss.qualcomm.com>
+From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Date: Thu, 29 Oct 2026 20:28:55 -0500
+X-Gm-Features: AclHuK9fRdvNp5NPi-Z-GD1yinc5cdj2yksmq9e_xMjc8uLdoerRsuskbjH2AbI
+Message-ID: <CAJ+KCYPkOvjksBpeCaECZwKyjvTaxmEx2UzQMo9Y5n71ahdx7Q@mail.gmail.com>
+Subject: Re: [PATCH 4/8] target/hexagon: import HMX instruction definitions
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: eR7ugSIYqUJMwdyScEw2PkhgLwgZEJWA
+X-Authority-Analysis: v=2.4 cv=KLzPn1Fo c=1 sm=1 tr=0 ts=6ae3f2e4 cx=c_pps
+ a=4ztaESFFfuz8Af0l9swBwA==:117 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8 a=7np3Ac_fZ-WTbpGUDPMA:9
+ a=QEXdDO2ut3YA:10 a=TPnrazJqx2CeVZ-ItzZ-:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAwNSBTYWx0ZWRfX22Pe0pqKZV6u
+ nFmG6pwPIpFjvnje0Lp6yUMfScRcJj2dGWA78DpTlPfkSs6qXQEBnCppZmnkFzpk2JWgkJu4gsh
+ fGyGMNRVAagv49/cV7dHFzA1shRwCTMX/ENUKwjuMZyqLNirCd9hdyoas2vYRsH+GUeBMtYVPbH
+ AMvHUmk5k8RsEpzCTFvGqOwjBNI4n3hV5jX9RPGT3wuJ2EWBsWNjldDZMbIrebZI3lOglJANjlM
+ HgKIN55VoQZgpPT6v+VdbGku+Bj6Y08qRGf5gMemWWZoYxyaOhj8KBFSwMvqI0K/yM9ZLl2kk4a
+ ErYGvMMnbdDlnsdjGvF0n4SDzmiYXgSpAUz50tRG+i5mcejZ1Hxn1WyQsGyCeSiPnIKpf2gTM6l
+ 2OHaxjfnL7JjEq8xW+iOZyP8QNz8ZFz0Y6rXYsrNk18+GvlwviG5tB8NoW7hQX/PGnl430kJnhv
+ Kr7tkrGQCdfHmW2WDHA==
+X-Proofpoint-ORIG-GUID: eR7ugSIYqUJMwdyScEw2PkhgLwgZEJWA
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAwNSBTYWx0ZWRfX6lnF/LYwvAzF
+ zNh/WPLyrLMLhdjUPMpzYJlgH0Ncaw5zMwGY/BZR9XKJX8sd9NXauFcGxg9iFQ7DvjrsLfLYJIS
+ LDcnqHzS8+fnXD2GeWqu3ePX+FLlUi8=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-29_07,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 spamscore=0 malwarescore=0 impostorscore=0
+ clxscore=1015 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610300005
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,153 +163,54 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Denis V. Lunev <den@openvz.org>
+On Thu, Oct 29, 2026 at 6:03=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com> wrote:
+>
+> Import the HMX instruction encodings and definitions.  The semantics are
+> no-ops for now.
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/tag_rev_info.c.inc          | 247 +++++++++++++++++++++
+>  target/hexagon/imported/allext.idef        |   6 +
+>  target/hexagon/imported/allextenc.def      |   4 +
+>  target/hexagon/imported/hmx/encode_ext.def | 149 +++++++++++++
+>  target/hexagon/imported/hmx/ext.idef       | 175 +++++++++++++++
+>  5 files changed, 581 insertions(+)
+>  create mode 100644 target/hexagon/imported/hmx/encode_ext.def
+>  create mode 100644 target/hexagon/imported/hmx/ext.idef
+>
+> diff --git a/target/hexagon/tag_rev_info.c.inc b/target/hexagon/tag_rev_i=
+nfo.c.inc
+> index da0b1a648cf..5a57d66fa45 100644
+> --- a/target/hexagon/tag_rev_info.c.inc
+> +++ b/target/hexagon/tag_rev_info.c.inc
+> @@ -620,6 +620,253 @@ static const struct tag_rev_info tag_rev_info[XX_LA=
+ST_OPCODE] =3D {
 
-commit_iteration() asks for block status COMMIT_BUFFER_SIZE (512K) at a
-time, so a long run above base pays one query per 512K for an answer
-the whole run shares.
+Some instructions have a wrong intro revision. These are the ones I found:
 
-Query the remainder of the image instead and keep the answer in a
-CommitStatus owned by commit_run(). No device or export writes top
-above base_overlay while the job runs: they ask for
-BLK_PERM_CONSISTENT_READ along with BLK_PERM_WRITE, and the job
-withholds CONSISTENT_READ there, having to share WRITE or it would
-block its own writes to base through the backing chain. A job target
-asks for WRITE alone and is refused by the op blocker instead. From
-filtered_base downwards CONSISTENT_READ is shared again, and there only
-the job writes.
+Marked v81, should be v79:
+- M8_mxmem_blk_sm_act_f8
+- M8_mxmem_sm_act_f8
+- M8_mxmemu_blk_sm_act_f8
+- M8_mxmems_blk_sm_act_f8
+- M8_mxmemd_blk_sm_act_f8
+- M8_mxmem_wei_f8
+- M8_mxmems_wei_f8
+- M8_mxmemdr_wei_f8
+- M8_mxmemdp_wei_f8
+- M8_mxmema_wei_f8
+- M8_mxmemdi_wei_f8
 
-Copying is still bounded by the read buffer. Zeroes need no buffer, so
-COMMIT_ZERO_CHUNK bounds them, keeping a cancel from waiting on a huge
-write-zeroes, and an unallocated span is crossed in one step.
-
-Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-CC: John Snow <jsnow@redhat.com>
-CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- block/commit.c | 58 ++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 47 insertions(+), 11 deletions(-)
-
-diff --git a/block/commit.c b/block/commit.c
-index 4e0b0f9029..e8ddd46053 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -31,8 +31,23 @@ enum {
-      * contiguous regions of the image is efficient.
-      */
-     COMMIT_BUFFER_SIZE = 512 * 1024, /* in bytes */
-+
-+    /*
-+     * Zeroes need no buffer, so they are bounded by this instead. It stays
-+     * well under BDRV_REQUEST_MAX_BYTES and keeps a cancel from waiting on
-+     * a multi-gigabyte write.
-+     */
-+    COMMIT_ZERO_CHUNK = 256 * 1024 * 1024, /* in bytes */
- };
- 
-+/* Last block-status answer, covering [offset, end). Empty when equal. */
-+typedef struct CommitStatus {
-+    int64_t len;
-+    int64_t offset;
-+    int64_t end;
-+    int ret;
-+} CommitStatus;
-+
- typedef struct CommitBlockJob {
-     BlockJob common;
-     BlockDriverState *commit_top_bs;
-@@ -130,26 +145,45 @@ static void commit_clean(Job *job)
- 
- static int coroutine_fn
- commit_iteration(CommitBlockJob *s, int64_t offset,
--                 int64_t *requested_bytes, void *buf)
-+                 int64_t *requested_bytes, void *buf, CommitStatus *st)
- {
-     BlockErrorAction action;
--    int64_t bytes = *requested_bytes;
-+    int64_t bytes;
-     int ret = 0;
-     bool error_in_source = true;
- 
--    /* Copy if allocated above the base */
--    WITH_GRAPH_RDLOCK_GUARD() {
--        ret = bdrv_co_common_block_status_above(blk_bs(s->top),
--            s->base_overlay, true, BDRV_WANT_PRECISE, offset,
--            COMMIT_BUFFER_SIZE, &bytes, NULL, NULL, NULL);
-+    assert(offset >= st->offset);
-+
-+    if (offset >= st->end) {
-+        /* Copy if allocated above the base */
-+        WITH_GRAPH_RDLOCK_GUARD() {
-+            ret = bdrv_co_common_block_status_above(blk_bs(s->top),
-+                s->base_overlay, true, BDRV_WANT_PRECISE, offset,
-+                st->len - offset, &bytes, NULL, NULL, NULL);
-+        }
-+
-+        if (ret < 0) {
-+            trace_commit_one_iteration(s, offset, 0, ret);
-+            goto fail;
-+        }
-+
-+        st->offset = offset;
-+        st->end = offset + bytes;
-+        st->ret = ret;
-     }
- 
--    trace_commit_one_iteration(s, offset, bytes, ret);
-+    ret = st->ret;
-+    bytes = st->end - offset;
- 
--    if (ret < 0) {
--        goto fail;
-+    /* An unallocated span costs no I/O, so it is crossed in one step. */
-+    if (ret & BDRV_BLOCK_ZERO) {
-+        bytes = MIN(bytes, COMMIT_ZERO_CHUNK);
-+    } else if (ret & BDRV_BLOCK_ALLOCATED) {
-+        bytes = MIN(bytes, COMMIT_BUFFER_SIZE);
-     }
- 
-+    trace_commit_one_iteration(s, offset, bytes, ret);
-+
-     if (ret & BDRV_BLOCK_ALLOCATED) {
-         if (ret & BDRV_BLOCK_ZERO) {
-             /*
-@@ -215,6 +249,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-     int64_t n = 0; /* bytes */
-     QEMU_AUTO_VFREE void *buf = NULL;
-     int64_t len, base_len;
-+    CommitStatus st = { 0 };
- 
-     len = blk_co_getlength(s->top);
-     if (len < 0) {
-@@ -235,6 +270,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-     }
- 
-     buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
-+    st.len = len;
- 
-     for (offset = 0; offset < len; offset += n) {
-         /* Note that even when no rate limit is applied we need to yield
-@@ -245,7 +281,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-             break;
-         }
- 
--        ret = commit_iteration(s, offset, &n, buf);
-+        ret = commit_iteration(s, offset, &n, buf, &st);
- 
-         if (ret < 0) {
-             return ret;
--- 
-2.53.0
-
+Marked v75, should be v79:
+- M8_mxmem_deep: mxmem(Rs,Rt):deep=3Dcvt
+- M8_mxmem_cm_deep: mxmem(Rs,Rt):cm:deep=3Dcvt
 
