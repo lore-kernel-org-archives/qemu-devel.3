@@ -1,146 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E278606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067F1606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=c4J+2SjP;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Bg6w/SQP
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Mb/regRW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMrUm-0003HH-Jn; Fri, 30 Oct 2026 14:38:32 -0400
+	id 1xMrdD-0004pV-5l; Fri, 30 Oct 2026 14:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMrUl-0003Gt-4C
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:38:31 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMrUj-00038O-MX
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:38:30 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69UHu8Qb373415
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 18:38:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- lfmQWKHoHsFJjpRZ32bOsnNPrAR9wXkDimZMVAWRowk=; b=c4J+2SjPLN7U7glg
- yLL745Ae/atEHbzjf5O/SrrUo9c5AvpqwyaNF38Kbau4EBNWbONXavx+EG9nl2IT
- L7AG5gOv4PIttkN438yPQmzTtxp3mxOsbSTpbvMPqiqhCS6fJcu1tlluY0kGHhB7
- FceJIogDefWGzKXyeIZ3RXVSx7VwFO28CQvEmdMX57Z28enZRuVzjtnDKWY20YIs
- tNt3AUcNc3yrExRnkG1Pf+vuHga3zS8b/t1SsB1s0y8id+0/KANchXgheWmzNPlL
- ZlnA3dJsEJjqHfzeF/V3ZsUxk4iLq9mHD+nmAitRSnLW5JsD33C6BhBmSdw+GCOC
- 02yojw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qmgcj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 18:38:28 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-943e8ff02d0so93713585a.2
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 11:38:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1xMrd5-0004ng-Mg
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:47:08 -0400
+Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1xMrd3-0003xz-W5
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 14:47:07 -0400
+Received: by mail-qk1-x734.google.com with SMTP id
+ af79cd13be357-93f2a8cfd4fso20521485a.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 11:47:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793386025; cv=none;
+ d=google.com; s=arc-20260327;
+ b=RqrmsK092TyeKL5oFi9sM5sTOh73zFo6tNZj35Iaur5Mili/cUCXVGdEIywYyeUfxL
+ 4eq+khT3Ln82LdW008GlHYj/fR32dR5RWFmUlpRRG4AfkbpERtwguMSz+qZpzxkI8DKm
+ 94ebXUKqxorArqust5074IFe2brozHPOFjNJq9GgPUGuNXNbK3yHhCRKsO3/qtu7qhJ5
+ xwqUIBsjR2x+xMl6X5ixqDOsjPiJNDRu8k21dNcdStQTrIEX6T4R8cWMXmRXH888rFrn
+ /STDdYMFWYYGNCSlVtawrf/EWNkz+Y5LQK3RSTgs6EEfjIZViwUwRvpzIGBinRzOYQNL
+ MEdA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=j4yh7nQRVb8uOL3VoGxI35GLKTnLJ3xEHrJnWbQiP9g=;
+ fh=gOSx22aQXdrwULJpxwJD0N8CmiHKF2c5r9J8ThNfWr4=;
+ b=LUh6iIKgK15aS0mwPX2Rf0myQn+/lyNvGHTn5uAn5fDitrPZqPvHQfoxgvcNbxNXPv
+ Eoj1P06R+c8qfjInSZw7taD7rsZ7jPovEkmA+HCo6EY7Gccl4KGmKEaZEb97pCVCXscA
+ Gjjcyw1Z1g1O/OUdOjyVgEMTPLg1nqqpT3+cw2kZyx9U73fE+D6G6OUy2XXX6zVPdVl2
+ 9OY3jUyd7Q5J/oPaJ66ZOzfQZKY6YskGV7hqtRJYMtzai80mdaiIwjgzJRRzQGje2HM8
+ +c89+LXOzIIRpXRa+BuUe3zgCzma0PvnM04eeUC//CQXaSxK1uxDxX+LjTTGgbQ4QkYY
+ k8Jw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793385508; x=1793990308; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=lfmQWKHoHsFJjpRZ32bOsnNPrAR9wXkDimZMVAWRowk=;
- b=Bg6w/SQP+M5ey+0JTudJiAmCDzPd8RYPTmsf8WqNOmTtUdpJB6iY16IRobkSaHvxGa
- sqCqUZdkfolWQIaCqU2HETzoOMk/CS7IVpXJrn800spoLwbu2/8rogQtS/CXuEEeyLdg
- BYh7nvR019P+k9+uc/eI4Y3J9FqpoKICobGPydOQPMLS3GTsHlwA4rwejUVI5zS+y0Pa
- v2h3D91GCOQ6SRjJP3e1TysFknkyHP7Iq9T+pQ+LIhrEnGdrup3gE6Far4otvcVlpBoG
- 98LT9MiEFLbQTR5pqnyBY3kYFY+VX0eXzdghMdAEZDnqPQyBhlcRvMwSvPkRXpr+wRmr
- x5YQ==
+ d=gmail.com; s=20260707; t=1793386025; x=1793990825; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=j4yh7nQRVb8uOL3VoGxI35GLKTnLJ3xEHrJnWbQiP9g=;
+ b=Mb/regRW78KIy96O003O27S5ciz72dUeI3WikZCgfBGNAskyQ8a6N4/rNYQo6bmNsY
+ 3XuxPEdVDx/GquC+cc4Mqi7kR/QhQrQe6Ku6B7vXKeDkU4uFPWV498uhgXF6T04N+PRN
+ 65x52/Pqp2WXyECooar0Uhzv/ksHY8Qh6mqTZ4O5f4BUvq9b0Qb7tKGcQFiIA4GBgI2N
+ hoVsoBLfdhEeXjisa6T+I6no0bViaBH5+gPFJxhUJ+r+Q9+vpf88n/E9kLYfrq6MVvB9
+ HhSAnN68eJPB1jsnRYqxjz2EplH6JmgpBsLL7kPdjlwgMBD5vRfEIlcmOe8XYiY667tB
+ GyXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793385508; x=1793990308;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=lfmQWKHoHsFJjpRZ32bOsnNPrAR9wXkDimZMVAWRowk=;
- b=E+1JM9e1VNvaGLCwbV0Lu6siP5kVNxcIRMdkld/yBPG7cbqshubAU8n2oioYyZHL+b
- rAdtIWiZPI2X1zebAZL8Uxzdh2f1v48M5rZyEpgUFHR1Ky/dSWO2BSCCvGDjTnxyEaP4
- N8xHez/qseKHKf9JN8aBmLx0oGIY4JqtUsn6ShcNmq1LZG+BknZWu/+ukMf0FuS1a4gX
- yKbExnffNfOYsWolSafe+w1bG3kxRj3uibywLeq5p6YNNnTQZnm3GKmPHQF3EnrTSiQQ
- kQ4ezo+oHP3J6EdAtuLrqcODJThfRokiNXZDpojrEXD1Z84ajL2QK7WVef+MvBOoOswF
- 2HQA==
+ d=1e100.net; s=20260707; t=1793386025; x=1793990825;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=j4yh7nQRVb8uOL3VoGxI35GLKTnLJ3xEHrJnWbQiP9g=;
+ b=yll1XfghzwxaA4PReK7UoIwhq/Ua6Go+NxV6NB23go0JzXMPNii4OrFLw1s3e8EkiX
+ pbuZk1QS+NK6dZFvW1ve3rbOf5xcTNYnsSV+at5vIBzIlaFIEpF4A7S0Ph9z4SvNKNTB
+ TTc7/SE346RlTg1pR78I0tBxidiUFl+pkMBT2r+tRmfa4GWw6TResLBhaFLKpyYoVl58
+ t/mfGsChYXBdGZScoG4F8ihna+1EJBwC2KshJX6lAFx3tw6q0bu1kRVNx5Jc7t8udn+4
+ b6OHrcvEZynA+Fdnp8cVAtXUh/TPQntT1a8QDBqXXlo0s8tIMAo3+cZqzlNco1x+BZuT
+ E2lw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzo87GFnQdUD1TcClJkh81yeUdNfFCoPVK/Pu2pS64pMZdIYZZIGA3S6ZiTWXGgbp3AXAGfkofpN7OR@nongnu.org
-X-Gm-Message-State: AFq9FYKeqitFMCoHCwvu6ugXZ8VRYgcfaBhxpxb6v9MmCJzxNOQAzwR4
- qPejtTGyg1jHKeFsXbA9zX52VIQ88gGz3A0zew0uZ1XPS+jzO4H47X6Vwc4IlL7joXZE2VYTytD
- QnkTluEETHDbblsDe3nO9+9OoP97HlNV7yiOXG0HNc3aNf+AXuACpAguVSQ==
-X-Gm-Gg: AYBFou0OXkiDxvULMflr58NiXCOyVrsPhPb0gjNrQrYTPk1Xd4b6q8LCoctn+D7fQYZ
- g/Bw4oP4YNDzI+IEjYWatPjD093s54zojkWZo6xUsKRPq38pN6kVSQay01UY1dayh2jEN2M2bSr
- WPY5r1eNQz8bpOpYNBRwSYAhyzy3VdKfnxiu8Y1Uv5NJf3y4bUbA8Ypvy7cR0RvJtWiThFcMqQb
- 92OZBY46ZkOM5ax8IiC8Bjmv4SnyemvgJt/Z7eOEkhraZJEm6sALz9sp2RnidgChZ6R+2gHISRc
- rED+pE9PIivj1pA9dLGZgU4U/RWJuPniEt5/pMyeDUDDXMGv2Et6CktTApNRtR4Zfduc7U7keTb
- Hlju8/dSI2B31as5TOdbRVRk6drEZrRGib+yqFWxYn+ZjV1d54hKdACPj6Ew2pWIqocN1erGaDh
- Dd1QtGnzcOYm8U1dHJbJwcclI=
-X-Received: by 2002:a05:620a:4586:b0:940:f224:5a69 with SMTP id
- af79cd13be357-9442178df00mr539413885a.65.1793385507614; 
- Fri, 30 Oct 2026 11:38:27 -0700 (PDT)
-X-Received: by 2002:a05:620a:4586:b0:940:f224:5a69 with SMTP id
- af79cd13be357-9442178df00mr539409785a.65.1793385507014; 
- Fri, 30 Oct 2026 11:38:27 -0700 (PDT)
-Received: from [192.168.69.229] (82-67-153-177.subs.proxad.net.
- [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4abf60f1076sm80718605e9.6.2026.10.30.11.38.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 30 Oct 2026 11:38:23 -0700 (PDT)
-Message-ID: <58da1949-2281-4f08-9a79-d1c15457ae05@oss.qualcomm.com>
-Date: Fri, 30 Oct 2026 19:38:21 +0100
+ AKwUvBx4/BC97fc1Bse1A8k+xUeCZ7P/B3i27pUN1Csao+/5o0TSyFqkYYsWlq7xUogiwJCr1kW61vg/8Gb3@nongnu.org
+X-Gm-Message-State: AFq9FYJ+YXoQcUy5FqPag+lkEbNWILKDWKTqs3KARK6oYFkFFb9KAylV
+ NmSN8mTfmLhmcJshgY0qPqG1GaefSPAUpkNRNzj9cPF1CFJqnSQ8z+69iA9Fk00YnaVn2U3gwn6
+ Su07rJWL5BIcA2pEDSqKxkQmOV9YWQnA=
+X-Gm-Gg: AYBFou07sogEeo3UtIPta3qJYZm93s5HZZZD6UaJ1GVFOVTQC0ymNyV+Kj8JxP7M1JW
+ UWLKLub903HHdg09f71L2KOppWtoCN7rzd+CE8xGWpMN+CoQEVR3GavqhusWYb4rpL2Ci2BXcug
+ 0Ra4uImiLMAkxZp1d32Y+qi3/TLXXcKLdZcXHtz7AF/zmhYMRILU3UzigjPBg2+865KGdGMG9lP
+ KEu0o2E4ZMPU2Yxf3Wv45y2P5hCQIWUgyAMzH79LCi7dLPX50kcK4E8sgnlV8LDKubL8Ln+dWnF
+ z7ItNfDazhWHGeW27W1ax97BCL3EGZywsOoUdyYqhxUZRnu4GxPdiFXFyQeAmYc7BkvUwCgWP0u
+ Owv0ln4jCcxNMTyn+PW0s3X9w5rVc82Jg7PPxYyBM9Ur06RjdXILYsB5WsU7Kb7ex88PJXEQWmg
+ RsyEwo/4Qr9MBIDqOGiz+uD4pC6JZ4
+X-Received: by 2002:a05:620a:72cf:10b0:93e:e111:2771 with SMTP id
+ af79cd13be357-94421619197mr527331985a.2.1793386024760; Fri, 30 Oct 2026
+ 11:47:04 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 8/8] hw/sd/sd: Remove unneeded forward declaration
-Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Christian Speich <c.speich@avm.de>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
-References: <20261006094447.43491-1-shentey@gmail.com>
- <20261006094447.43491-9-shentey@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261006094447.43491-9-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3NCBTYWx0ZWRfX7vUOx8f87XmA
- fuzrvmPCzIEU223UXrkBnEV6CsuMry7eie+f5acIyWPWiYglJdKIuKzoYPT8k+lBPeipmSM363G
- HuNq4+bDkHb1dBuMfSAQd7ZBGlgzAcV14rTYsL3OSx3K/KV8z2zctcGNd0fx5Aondyg8mygs7fr
- gRhPPG4pzz5ewnl6hNMEKVOtUxdXEgOiN8n/3ibswpm75V89dsDyJ/sdkQZ4A2MTYUq0tGqEhvz
- C0Yh+JLT9k4ug7nKPKcfrUNuEnoG6ag1bqn/dkVVpvvYcoqdGkXKsL//V3Xx+Jiuaiu1WPuZvzg
- UVbXgWg64+bPPNsYR5/iZSZADNc+G6gKiJmVa+TCX22rB3+q1EyqxvLITO54Q0OFt47lX0Au+qm
- maMMhkccxUKebdl3zfp+yQT6p+daEdef9ivrgrBrHL+EYq6QLJTbY6QSPVxxK4COweM1I+61ZCo
- Wv/Mh/KJUwJSkXXaaMA==
-X-Proofpoint-ORIG-GUID: QW0qXakSpVegCD9XYXgAr0SZ-SwRtSfa
-X-Authority-Analysis: v=2.4 cv=IeoSymqa c=1 sm=1 tr=0 ts=6ae4e424 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3NCBTYWx0ZWRfXzGA2XtOzcWwr
- sO59vzCl0G6O/entEroO5VaMvohk3Ty2NwDhMGupnx57FgLU1u9hmQ8sOQzLfNUEqRYXbneLzg6
- pDbfaocxbsL/6dHsj3HCK+2su0F8cXw=
-X-Proofpoint-GUID: QW0qXakSpVegCD9XYXgAr0SZ-SwRtSfa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-30_06,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- bulkscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300074
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <cover.1793207602.git.mst@redhat.com>
+ <ca7c24b7c8f69c13fef24a31660e1b6ea73686d3.1793207602.git.mst@redhat.com>
+ <CANukVxsB2n2GCGxQk3X2SUzNTJQ0M30ZxxmF=oGZtS-OCmbw_A@mail.gmail.com>
+ <fe0694c6-383b-4cf2-abc0-c6d73a3d6c3c@tls.msk.ru>
+ <20261030091030-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20261030091030-mutt-send-email-mst@kernel.org>
+From: Daniel Paziyski <danielpaziyski@gmail.com>
+Date: Fri, 30 Oct 2026 19:46:53 +0100
+X-Gm-Features: AclHuK8CsycuRM1g5JSt2nRpwh2ma6uIOgrkrlMzPOFE5pRagELTt-SnnOWRnQk
+Message-ID: <CANukVxup5pBM=33-S8pN8ADioLkqg3fWUm=6piXow7a0+WPT7w@mail.gmail.com>
+Subject: Re: [PULL 40/78] pcie_sriov: register user created virtual function
+ before realizing it
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
+ envelope-from=danielpaziyski@gmail.com; helo=mail-qk1-x734.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,36 +119,78 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 6/10/26 11:44, Bernhard Beschow wrote:
-> No need for a forward declaration of sd_realize() since it is only used
-> after its definition.
-> 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->   hw/sd/sd.c | 2 --
->   1 file changed, 2 deletions(-)
-> 
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 6295e7a942..e6452226bc 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -209,8 +209,6 @@ struct SDState {
->       char *preset_auth_key;
->   };
->   
-> -static void sd_realize(DeviceState *dev, Error **errp);
+On Fri, 30 Oct 2026 at 14:11, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> On Fri, Oct 30, 2026 at 09:28:50AM +0300, Michael Tokarev wrote:
+> > On 10/28/26 20:34, Daniel Paziyski wrote:
+> > > Hello Michael,
+> > >
+> > > I think you have queued this patch for pulling on accident. There is a bug here,
+> > > which is yet to be solved, as you have pointed out in
+> > >
+> > > https://lore.kernel.org/qemu-devel/20261028074508-mutt-send-email-mst@kernel.org/T/#mca344ac148a62107cdc298e97e6713b6657b5c55
+> > >
+> > > Please, hold off this patch for a while, until I come up with a fix soon.
+> > Am I right this buggy version of the patch has just landed in the master branch,
+> > instead of the fixed v2 one?
+> >
+> > Here's the difference between what's in current master and the v2:
+> >
+> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> > index d4187293b1f..6242204a52c 100644
+> > --- a/hw/pci/pci.c
+> > +++ b/hw/pci/pci.c
+> > @@ -2310,10 +2310,8 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+> >          pci_dev->cap_present |= QEMU_PCIE_CAP_CXL;
+> >      }
+> >
+> > -    pci_dev = do_pci_register_device(pci_dev,
+> > -                                     object_get_typename(OBJECT(qdev)),
+> > -                                     pci_dev->devfn, errp);
+> > -    if (pci_dev == NULL) {
+> > +    if (!do_pci_register_device(pci_dev, object_get_typename(OBJECT(qdev)),
+> > +                                pci_dev->devfn, errp)) {
+> >          pci_unregister_acpi_index(pci_dev);
+> >          return;
+> >      }
+> > @@ -2332,6 +2330,11 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+> >          }
+> >      }
+> >
+> > +    if (!pcie_sriov_check_after_realize(pci_dev, errp)) {
+> > +        pci_qdev_unrealize(DEVICE(pci_dev));
+> > +        return;
+> > +    }
+> > +
+> >      /*
+> >       * A PCIe Downstream Port that do not have ARI Forwarding enabled must
+> >       * associate only Device 0 with the device attached to the bus
+>
+>
+> Yes sorry, pls post a fix as a patch.
+>
 
-Indeed, since commit bda21477f523 ("hw/sd: Remove unused legacy
-functions, stop killing mammoths").
+If you are referring to me, do you want me to make a v3 fixing master,
+or will you revert
+the patch in master and include the v2 (which is already in the lists)
+when you request pull?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+fwiw, here's the link to v2:
+https://lore.kernel.org/qemu-devel/20261028213800.236067-1-danielpaziyski@gmail.com/
 
+Daniel
+
+> > ~
+> >
+> > Thanks,
+> >
+> > /mjt
+>
 
