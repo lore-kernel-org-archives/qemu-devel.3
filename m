@@ -1,93 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6582E606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA38A606A31D
 	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=LTU+oGRr
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=qV8eyf6T
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMb4w-0002HI-36; Thu, 29 Oct 2026 21:06:46 -0400
+	id 1xMb55-0002Nt-3l; Thu, 29 Oct 2026 21:06:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4e-0002CN-Pv
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:35 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4x-0002Ir-JQ
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:47 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4b-0006EN-Mr
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:27 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-48c5358fc28so141248f8f.0
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:06:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4q-0006Gf-Jp
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:45 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-48df54150dfso74976f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793322384; x=1793927184; darn=nongnu.org;
+ d=openvz.org; s=google; t=1793322396; x=1793927196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Tzcnv4iV/M0//lehS771fIWvmHTFMU4220mA9TA0Wtk=;
- b=LTU+oGRr9C59gJfxsi3rZKYdXli1dZFjD8z/xZFlDcbcpkePJTYUpYghk6f9zQStNZ
- nSD45RAwrTexIPbILymka1JxHeBlcgnhtStUVjQwcpTSn1uk9WmmeeWeAD87Dmokslc9
- mdMIS4Be9rsWMMjDL3RI0uZsa2OnihTm9TTdrdklbayF6vfldD/YUafOyrhdY9nb7FOa
- 8/lXU7yeXFU7ZMIw/VJWnPemLpZ4YLtp6BStqw/rzDqc5tGRPOmaOkFc9xF/ZGiIClkX
- HWpKC6esDbF/muv1c1uvmAme1EWnr0j5DO2zybUX5ddw+Zfz3R96yx0hLwhWYb7PZRuM
- Q1Zg==
+ bh=Oz8qaSH8q7QLfFH7Onpz/KPGPQOPaL0tV0IWAOGIqq0=;
+ b=qV8eyf6Tl27P6BJmMS7XelrlKTpzj7A3AsbSjevtXXUXh26e2VpEMH7xrhY/ipGn1k
+ MYH4D2t13wZPYiqjvFYqNBvfWmJoGqIu7KCFjJVmIkDwoOMD6h754sXt5vM27/WIYsBH
+ OI3SOnBLb/5rHX9lFWlYNfHSU9klfRKeTNNpKGEc507GjNnqsPG36gMzZ58PPbi80yf+
+ IlOYodsGRJD6mMm0yupG+Hbshu095PpcKEf9Ob4GYcLdIJQxUJ6eYrLEEptbDXucleS2
+ 0GNRyzJ3qd8Ae+rVMmFgdQZ/yaK8v+XWAVf98JANGyueJsFgHjmjsFBcZLd4lEnzW9kI
+ BC5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793322384; x=1793927184;
+ d=1e100.net; s=20260707; t=1793322396; x=1793927196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Tzcnv4iV/M0//lehS771fIWvmHTFMU4220mA9TA0Wtk=;
- b=biTO/YcJdMo/u+VscqZtQX67Yb/9nl1c9LHXNVmq4XSNlmRPwIcvWhyr4egbnNbYr2
- EKV1qha4TrGg6fXj8NswrD+coSHWj+TN8jlEjPqe/sIbMLcLMQeJxnYfJRFPgip1ruaW
- Pqg1R5zKDj2EuvgPf4u1dRlh1K8LnHwzyhvoAWiuCrpncEGTZyfSRTsgLqxFzHfeQ7s5
- IS8PTiBJz6kLaYVf3KDGEFT5jTBMHqT8CDPyw/NZ7iaNae6icosAAodeRaN7P4sladj1
- Mn44vRYnhs2yK4COmejceFTNr9CIjYAN5epy6+uQctSsWSAhUYpIJ3Anbjbuq/mERUMb
- lllQ==
-X-Gm-Message-State: AFq9FYIcuzEflaw95mT3029wnXxpuU5JRxZtjklqC4Av2Z13+7dPv9bg
- r/J+Ov9KO5DMXhWlWEmn8qZr/OFHKLjYLrT8FZwYkr/5/cIu4lqQDFz39Cx1lSehi2BksD9qO/Y
- qL4Md
-X-Gm-Gg: AYBFou0TN4zTSq36vzVer724W+K4wn7heDqCiA9qQVI7YEMnt6PluMVAZVjLVeTDOL4
- RmbQff2FbHW7vo/oWpyymWR3CoOd27t4SI3f1nIcJkJCA3iw/PTGCRPIIpb1QZxfH8gDFb1E3Vy
- fVvGjz/eB4+R7J/npiADQ3vrJea8c/Hgom1FEe80zy7lFscfDNtDPIb0OL2phAx+/7tdxmtWhEk
- WDSEauFTe3/CsCxYdaWhqqJq5NPKOxIEAacvCUEhrH4IegCjaRPqIVV8MCFdL9KT306cS0kyb61
- 6AY+5slwl6be+8+6/cSPZAnj7ilPZxqx4Bc2m760TixFUeyCTxLvU5Fk8UGyUKORK4G8tC5hzjO
- IqHcuFskYes4p0Ey73VG6j0Wj6bgyLKGUKmyIYCMgpJhZ9wxXwu2N99GuIfSsrmJ+Hos5EQL0Qc
- P3fKTPW7Kp0Sz8qWvBjr1JaNaRoCvA2koEG+s7IwBXKtp8A5BkLtsima+SQ3TWPlesm5Ug23e+q
- XTxpUpvWwfDpX9ljmK7wRxjDYK86axd3VDjoX1k9y2NkvpBxW8l5M4tXovfgoG8+kKMyBFQ5Mnr
- W/1tOu0LguZWyB1uFD3aGbslZS8mvtvJs+JngPE=
-X-Received: by 2002:a05:6000:4b02:b0:48d:f99d:a0d2 with SMTP id
- ffacd0b85a97d-48e6e2e76famr2147601f8f.15.1793322384063; 
- Thu, 29 Oct 2026 18:06:24 -0700 (PDT)
+ bh=Oz8qaSH8q7QLfFH7Onpz/KPGPQOPaL0tV0IWAOGIqq0=;
+ b=o2QyhRUf8AC3PO3ZvQIFiNwS98r86Cy30jROac1tTcd5Hf7NZ3/vRwen6VBhK6AC0L
+ rAg3LOY1xnoUrkxj9lGMxyh02CemjbRqNSB6NBX+czVZgf3ZxJ4bEW4oWk+anJoXc/9W
+ eRplDiGBANFvO5+VaU+VT9KHBieOyIjsbW2P6r70fqn04lafTJsQlW5TLEA2pROixlF/
+ fMaOdsJeEDIwuZ6rQJT8dJ2eLhpb1SXwaN8Sol/N/qbeErKfhIkQxmDzV8Q/Z/ISYa0/
+ pQ8gUImlbCWByISXNN/RNXC7WE6lbis7hMp3lB85okXI7a7xR5XCD2lmuNehGjOmMdx8
+ AitA==
+X-Gm-Message-State: AFq9FYJB9VfFG22yDcZkcJEr1f+jMHY6dX7Z2XcgIcfy+ffnCL9o5GIr
+ vwBjygy71sZnKOsYtOfyqqaeO6KC+wEC9XUi2N+EayeUipFbolh5udOcGiiVib+grtsKHfiPohn
+ Ydbxb
+X-Gm-Gg: AYBFou2u3UDO9HW+F747bJbY44fy3FhbBsNblJJEaCHlBYOAmtkiUKbQM3L6Zv/RC0A
+ cSBM/MCBoxK1/ribFTzv29KXc0RoyLGrf17X51jNC4YwSoZCrKPfEuwEozsQnDp2IunAusKtMO7
+ 6bJqcHtgTuynDbJF8bGCU0oyOr/nFXt9GCbjzg+Mu3/3RvVfnhvuM8ltJGDU2asRUEs+pd4LR+F
+ w0dbf3TUYcwfTlXaFfgzf2Z20ULSA6rHlvwkj3o5KJukDEkwDMR5ow5elZj62kjCmjvmPTBC0nF
+ HESdcorSf1lQa19G9LuLYSy9Zcfkz5RTB9L7m6zlamjtkv/lPiSAFBAkixGtdx1uL/z08cQfg8V
+ DjIMRQQ3v1GvW2ENQNFVk04mF+SzHMbYBlzN3LtIoRWOR65dSqF8gOZWVDtKRKdldrvIi8Sfmuh
+ 47WiMYTQ9TEVJWZ1ho/66FeGORScbiugfkzNppwXhcnYV2GAOv0cC/SYrlLbvsfKPgrMXxB7WUy
+ 8WvFbH7et/xCtLKTpCRsTzeeiL/RUkAnU6cmQNoNj8+stP1hqBEwK5nbw3uEGskEZbi9oblh7up
+ as9g+5dSX41gMTcEaQ==
+X-Received: by 2002:a05:6000:cb:b0:486:f42f:6860 with SMTP id
+ ffacd0b85a97d-48e6e50361dmr1612813f8f.56.1793322396583; 
+ Thu, 29 Oct 2026 18:06:36 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:f4be:f111:4ee0:40d3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b80333sm210023f8f.32.2026.10.29.18.06.22
+ ffacd0b85a97d-48e71b80333sm210023f8f.32.2026.10.29.18.06.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Oct 2026 18:06:23 -0700 (PDT)
+ Thu, 29 Oct 2026 18:06:36 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 02/12] iotests/040: cover large and fragmented commit runs
-Date: Fri, 30 Oct 2026 02:06:02 +0100
-Message-ID: <20261030010613.1612771-3-den@openvz.org>
+ John Snow <jsnow@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v4 10/12] block/block-copy: replace zero_bitmap_valid with
+ scan_done
+Date: Fri, 30 Oct 2026 02:06:10 +0100
+Message-ID: <20261030010613.1612771-11-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261030010613.1612771-1-den@openvz.org>
 References: <20261030010613.1612771-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=den@openvz.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,165 +109,124 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Denis V. Lunev <den@openvz.org>
 
-040 never commits runs long enough to span more than one block-status
-query, so the answer that commit_iteration() is about to start caching
-goes untested.
+zero_bitmap_valid says more than its name: a task created once it is
+set skips its own block-status query, the sync=top skipping included,
+because the scan has already settled what to copy. And the end of the
+scan was announced twice, clearing skip_unallocated and then publishing
+zero_bitmap_valid, with an ordering rule in a comment tying the two.
 
-Add two cases on a base <- mid <- active chain, committing mid so the
-job takes the regular commit path rather than active commit, and compare
-base against a snapshot of mid taken before the commit. One case mixes
-multi-megabyte data, zero and hole runs, the other fragments them down
-to single clusters with every transition off the 512K boundary.
+Rename the flag to scan_done, and let block_copy_set_scan_done() clear
+skip_unallocated before publishing it, so backup_scan_source() makes one
+call and the order is kept in one place. skip_unallocated is left to
+mean that a sync=top scan is in progress. No behavior change.
 
-Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: John Snow <jsnow@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- tests/qemu-iotests/040     | 102 ++++++++++++++++++++++++++++++++++++-
- tests/qemu-iotests/040.out |   4 +-
- 2 files changed, 103 insertions(+), 3 deletions(-)
+ block/backup.c             |  6 +-----
+ block/block-copy.c         | 19 ++++++++++++-------
+ include/block/block-copy.h |  2 +-
+ 3 files changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/tests/qemu-iotests/040 b/tests/qemu-iotests/040
-index 5c18e413ec..e01c9385ba 100755
---- a/tests/qemu-iotests/040
-+++ b/tests/qemu-iotests/040
-@@ -25,13 +25,14 @@
- import time
- import os
- import iotests
--from iotests import qemu_img, qemu_io
-+from iotests import qemu_img, qemu_img_create, qemu_io, compare_images
- import struct
- import errno
+diff --git a/block/backup.c b/block/backup.c
+index 60c00fca67..1bf6cbedac 100644
+--- a/block/backup.c
++++ b/block/backup.c
+@@ -254,7 +254,6 @@ static void backup_init_bcs_bitmap(BackupBlockJob *job)
+ static int coroutine_fn backup_scan_source(BackupBlockJob *s)
+ {
+     Job *job = &s->common.job;
+-    bool top = s->sync_mode == MIRROR_SYNC_MODE_TOP;
+     int64_t offset, cached_end = 0, count;
+     int ret = 0;
  
- backing_img = os.path.join(iotests.test_dir, 'backing.img')
- mid_img = os.path.join(iotests.test_dir, 'mid.img')
- test_img = os.path.join(iotests.test_dir, 'test.img')
-+reference_img = os.path.join(iotests.test_dir, 'reference.img')
+@@ -279,10 +278,7 @@ static int coroutine_fn backup_scan_source(BackupBlockJob *s)
+         }
+     }
  
- class ImageCommitTestCase(iotests.QMPTestCase):
-     '''Abstract base class for image commit test cases'''
-@@ -951,6 +952,105 @@ class TestCommitWithOverriddenBacking(iotests.QMPTestCase):
-         self.vm.qmp('block-job-complete', device='commit')
-         self.vm.event_wait('BLOCK_JOB_COMPLETED')
+-    if (top) {
+-        block_copy_set_skip_unallocated(s->bcs, false);
+-    }
+-    block_copy_set_zero_bitmap_valid(s->bcs);
++    block_copy_set_scan_done(s->bcs);
  
-+class TestCommitLargeRuns(iotests.QMPTestCase):
-+    """Commit runs long enough to cross commit_iteration()'s cached span."""
-+
-+    MB = 1024 * 1024
-+    CLUSTER = 64 * 1024
-+
-+    # Runs several COMMIT_BUFFER_SIZE (512K) chunks long, of every kind.
-+    SIZE = 32 * MB
-+    LAYOUT = [
-+        (0, 4 * MB, 'data'),
-+        (4 * MB, 6 * MB, 'hole'),
-+        (10 * MB, 4 * MB, 'data'),
-+        (14 * MB, 6 * MB, 'zero'),
-+        (20 * MB, 4 * MB, 'data'),
-+        (24 * MB, 8 * MB, 'hole'),
-+    ]
-+
-+    # The same, with every transition off the 512K boundary.
-+    SIZE_FRAGMENTED = 384 * CLUSTER  # 24M
-+    LAYOUT_FRAGMENTED = [
-+        (0, 45 * CLUSTER, 'data'),
-+        (45 * CLUSTER, 55 * CLUSTER, 'hole'),
-+        (100 * CLUSTER, CLUSTER, 'data'),
-+        (101 * CLUSTER, 49 * CLUSTER, 'zero'),
-+        (150 * CLUSTER, 80 * CLUSTER, 'data'),
-+        (230 * CLUSTER, CLUSTER, 'hole'),
-+        (231 * CLUSTER, 69 * CLUSTER, 'data'),
-+        (300 * CLUSTER, 83 * CLUSTER, 'zero'),
-+        (383 * CLUSTER, CLUSTER, 'hole'),
-+    ]
-+
-+    def setUp(self):
-+        self.vm = iotests.VM()
-+        self.vm.launch()
-+
-+    def tearDown(self):
-+        self.vm.shutdown()
-+        for img in (backing_img, mid_img, test_img, reference_img):
-+            if os.path.exists(img):
-+                os.remove(img)
-+
-+    def build_images(self, layout, size):
-+        # A pattern of its own in base, so a misplaced cluster shows up.
-+        qemu_img_create('-f', iotests.imgfmt, backing_img, str(size))
-+        qemu_io('-c', f'write -P 0x11 0 {size}', backing_img)
-+
-+        qemu_img_create('-f', iotests.imgfmt, '-b', backing_img, '-F',
-+                        iotests.imgfmt, mid_img, str(size))
-+        for offset, length, kind in layout:
-+            if kind == 'data':
-+                qemu_io('-c', f'write -P 0x22 {offset} {length}', mid_img)
-+            elif kind == 'zero':
-+                qemu_io('-c', f'write -z {offset} {length}', mid_img)
-+
-+        # What base must equal once mid is committed into it.
-+        qemu_img('convert', '-f', iotests.imgfmt, '-O', iotests.imgfmt,
-+                 mid_img, reference_img)
-+
-+        # An empty layer above mid, so top_node=mid is not the active one.
-+        qemu_img_create('-f', iotests.imgfmt, '-b', mid_img, '-F',
-+                        iotests.imgfmt, test_img, str(size))
-+
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'base',
-+            'driver': iotests.imgfmt,
-+            'file': {'driver': 'file', 'filename': backing_img},
-+        })
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'mid',
-+            'driver': iotests.imgfmt,
-+            'file': {'driver': 'file', 'filename': mid_img},
-+            'backing': 'base',
-+        })
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'active',
-+            'driver': iotests.imgfmt,
-+            'file': {'driver': 'file', 'filename': test_img},
-+            'backing': 'mid',
-+        })
-+
-+    def commit_and_verify(self):
-+        self.vm.cmd('block-commit', job_id='commit0', device='active',
-+                    top_node='mid', base_node='base')
-+        self.wait_until_completed(drive='commit0')
-+
-+        self.vm.cmd('blockdev-del', node_name='active')
-+        self.vm.cmd('blockdev-del', node_name='mid')
-+        self.vm.cmd('blockdev-del', node_name='base')
-+        self.assertTrue(compare_images(reference_img, backing_img))
-+
-+    def test_commit_large_runs(self):
-+        self.build_images(self.LAYOUT, self.SIZE)
-+        self.commit_and_verify()
-+
-+    def test_commit_fragmented_runs(self):
-+        self.build_images(self.LAYOUT_FRAGMENTED, self.SIZE_FRAGMENTED)
-+        self.commit_and_verify()
-+
-+
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2', 'qed'],
-                  supported_protocols=['file'])
-diff --git a/tests/qemu-iotests/040.out b/tests/qemu-iotests/040.out
-index 1bb1dc5f0e..d2e2a2d98f 100644
---- a/tests/qemu-iotests/040.out
-+++ b/tests/qemu-iotests/040.out
-@@ -1,5 +1,5 @@
--.................................................................
-+...................................................................
- ----------------------------------------------------------------------
--Ran 65 tests
-+Ran 67 tests
+     return 0;
+ }
+diff --git a/block/block-copy.c b/block/block-copy.c
+index 78cc855b5b..3b7e282e5b 100644
+--- a/block/block-copy.c
++++ b/block/block-copy.c
+@@ -161,8 +161,12 @@ typedef struct BlockCopyState {
+     BdrvDirtyBitmap *copy_bitmap;
+     /* Clusters reading as zero; allocated on demand, frozen once valid. */
+     HBitmap *zero_bitmap;
+-    /* Published only after the scan, with skip_unallocated already false. */
+-    bool zero_bitmap_valid; /* atomic, store-release/load-acquire */
++    /*
++     * Set when the scan is over: zero_bitmap is complete, and for sync=top
++     * copy_bitmap holds no unallocated clusters, so a task needs no
++     * block-status query of its own.
++     */
++    bool scan_done; /* atomic, store-release/load-acquire */
+     ProgressMeter *progress;
+     SharedResource *mem;
+     RateLimit rate_limit;
+@@ -214,7 +218,7 @@ block_copy_task_create(BlockCopyState *s, BlockCopyCallState *call_state,
+      * The scan already knows how this range reads: pick the method here and
+      * stop the task where the answer changes.
+      */
+-    if (qatomic_load_acquire(&s->zero_bitmap_valid)) {
++    if (qatomic_load_acquire(&s->scan_done)) {
+         int64_t boundary;
  
- OK
+         if (hbitmap_get(s->zero_bitmap, offset)) {
+@@ -687,7 +691,7 @@ int block_copy_block_status(BlockCopyState *s, int64_t offset, int64_t bytes,
+     return ret;
+ }
+ 
+-/* Only the scan allocates, and it runs before zero_bitmap_valid. */
++/* Only the scan allocates, and it runs before scan_done. */
+ static HBitmap *block_copy_zero_bitmap(BlockCopyState *s)
+ {
+     if (!s->zero_bitmap) {
+@@ -845,7 +849,7 @@ block_copy_set_task_method(BlockCopyState *s, BlockCopyTask *task)
+     int64_t status_bytes;
+ 
+     /* block_copy_task_create() already decided, from zero_bitmap. */
+-    if (qatomic_load_acquire(&s->zero_bitmap_valid)) {
++    if (qatomic_load_acquire(&s->scan_done)) {
+         return true;
+     }
+ 
+@@ -1179,10 +1183,11 @@ void block_copy_set_skip_unallocated(BlockCopyState *s, bool skip)
+     qatomic_set(&s->skip_unallocated, skip);
+ }
+ 
+-void block_copy_set_zero_bitmap_valid(BlockCopyState *s)
++void block_copy_set_scan_done(BlockCopyState *s)
+ {
+     block_copy_zero_bitmap(s);
+-    qatomic_store_release(&s->zero_bitmap_valid, true);
++    qatomic_set(&s->skip_unallocated, false);
++    qatomic_store_release(&s->scan_done, true);
+ }
+ 
+ void block_copy_set_speed(BlockCopyState *s, uint64_t speed)
+diff --git a/include/block/block-copy.h b/include/block/block-copy.h
+index dc51316fcf..e82c96586e 100644
+--- a/include/block/block-copy.h
++++ b/include/block/block-copy.h
+@@ -102,6 +102,6 @@ void block_copy_call_cancel(BlockCopyCallState *call_state);
+ BdrvDirtyBitmap *block_copy_dirty_bitmap(BlockCopyState *s);
+ int64_t block_copy_cluster_size(BlockCopyState *s);
+ void block_copy_set_skip_unallocated(BlockCopyState *s, bool skip);
+-void block_copy_set_zero_bitmap_valid(BlockCopyState *s);
++void block_copy_set_scan_done(BlockCopyState *s);
+ 
+ #endif /* BLOCK_COPY_H */
 -- 
 2.53.0
 
