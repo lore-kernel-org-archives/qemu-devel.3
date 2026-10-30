@@ -1,75 +1,81 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680DF606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 19:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F1F606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 19:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HxiHvhbV
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ab8NDvEU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMsNH-0000Tt-Vm; Fri, 30 Oct 2026 15:34:52 -0400
+	id 1xMsNT-0000Wx-89; Fri, 30 Oct 2026 15:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xMsNE-0000Sn-SJ
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 15:34:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xMsNN-0000Vf-E2
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 15:34:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xMsND-0007iq-CZ
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 15:34:48 -0400
+ id 1xMsNL-0007ji-VC
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 15:34:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793388886;
+ s=mimecast20190719; t=1793388895;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vyGKFRtWpjEyNLmDr+kd4ANcnRFFfZ204j6f2xYOlrk=;
- b=HxiHvhbVnHPs7MekHzOLFMCiovJq82b0tTgFiWgcwldTAwotK+Xlbc3DXo0UxQw0aUEuPk
- JrVFWTpbldAx8pm+dNsKfu/s/k7NO13znVboULL6+ECNJW6Q8FcNvlyIh9qOmuX7WrXvlu
- EueS100Yhgef07geNfOPv1rF2BLousQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=XLGA493Vj9xh8BrJe/Qqc+qXudIfkdp9yKAHfyhO/UY=;
+ b=ab8NDvEUyX9dl4d291aJHjB50EWsA0qpg/5kMnR819nkFc3VsN8lPJ3Q59kKb2c28peTMQ
+ CesH+Ax4UTszurqbNgXrw0X+qrvns45YCzMlSo/pddJOWsgMiOADGZAEM7rn0n7wVuCmtp
+ RFROMm2Ny61k16SJiqNZL7pV8YcURgE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-aON0Awf5OV6VpLX55f43Kw-1; Fri,
- 30 Oct 2026 15:34:41 -0400
-X-MC-Unique: aON0Awf5OV6VpLX55f43Kw-1
-X-Mimecast-MFC-AGG-ID: aON0Awf5OV6VpLX55f43Kw_1793388880
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-h8Z0FjoNPiu73h0N_fNJIg-1; Fri,
+ 30 Oct 2026 15:34:52 -0400
+X-MC-Unique: h8Z0FjoNPiu73h0N_fNJIg-1
+X-Mimecast-MFC-AGG-ID: h8Z0FjoNPiu73h0N_fNJIg_1793388888
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D77431954B14; Fri, 30 Oct 2026 19:34:39 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E65821800616; Fri, 30 Oct 2026 19:34:47 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9216818001CA; Fri, 30 Oct 2026 19:34:39 +0000 (UTC)
-Date: Fri, 30 Oct 2026 15:31:59 -0400
+ id 51EE218001CA; Fri, 30 Oct 2026 19:34:47 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, mst@redhat.com,
- devel@lists.libvirt.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 0/4] virtio-blk: Deprecate silent truncation of serial
-Message-ID: <20261030193159.GE1686233@shajnocz.csb>
-References: <20261029231001.194240-1-kwolf@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Fam Zheng <fam@euphon.net>, devel@lists.libvirt.org,
+ "Denis V. Lunev" <den@openvz.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ John Snow <jsnow@redhat.com>
+Subject: [PULL 4/5] virtio-blk: Deprecate silent truncation of serial
+Date: Fri, 30 Oct 2026 15:34:15 -0400
+Message-ID: <20261030193416.1691807-5-stefanha@redhat.com>
+In-Reply-To: <20261030193416.1691807-1-stefanha@redhat.com>
+References: <20261030193416.1691807-1-stefanha@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261029231001.194240-1-kwolf@redhat.com>
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,54 +89,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Oct 30, 2026 at 12:09:57AM +0100, Kevin Wolf wrote:
-> QEMU has allowed the user to specify serials of arbitrary length for
-> virtio-blk devices, even though the virtio-blk protocol can only
-> communicate 20 characters of the serial to the guest. This means that a
-> longer serial number on the command line is silently truncated to 20
-> characters from the guest perspective.
-> 
-> As a first step to fix this, deprecate the silent truncation and turn it
-> into a warning; we can later make this a hard error. While touching
-> GET_ID, let's make it more spec compliant and clean up the internal
-> state.
-> 
-> Another part is planned that will actually enable users to use longer
-> serials and additional device identifiers. This will need spec changes
-> and would take more time than we have until the QEMU 11.2 freeze anyway,
-> so I'll address this later. For now, the important thing is to get the
-> deprecation period started.
-> 
-> v2:
-> - Drop truncation of qdev property for now [Stefan]
-> - Add test case for exactly 20 characters [Stefan]
-> - Fix missing guest_free() [Stefan]
-> - Pass pattern_byte to get_id_request() instead of hardcoding it
->   [Stefan]
-> 
-> Kevin Wolf (4):
->   virtio-blk: Implement full NUL padding for GET_ID
->   virtio-blk-test: Add a basic GET_ID test case
->   virtio-blk: Deprecate silent truncation of serial
->   virtio-blk-test: Test truncated serial
-> 
->  docs/about/deprecated.rst     |  13 ++++
->  hw/block/virtio-blk.c         |  18 +++--
->  tests/qtest/virtio-blk-test.c | 119 ++++++++++++++++++++++++++++++++++
->  3 files changed, 146 insertions(+), 4 deletions(-)
-> 
-> -- 
-> 2.56.0
-> 
+From: Kevin Wolf <kwolf@redhat.com>
 
-Thanks, applied to my block tree:
-https://gitlab.com/stefanha/qemu/commits/block
+Commit a8686a9b, which made serial a qdev property instead of relying on
+-drive options, accidentally allowed specifying serial strings of
+arbitraty length while the virtio-blk protocol can only communicate 20
+characters to the guest. This means that a longer serial number on the
+command line is silently truncated to 20 characters from the guest
+perspective.
 
-Stefan
+This is obviously bad behaviour. People are specifying longer serials in
+practice and guests will see something different than what was
+configured. Instead of silent truncation, this should be an error.
+
+Deprecate the silent truncation for now as a first step towards making
+it an error later.
+
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20261029231001.194240-4-kwolf@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ docs/about/deprecated.rst | 13 +++++++++++++
+ hw/block/virtio-blk.c     |  6 ++++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index dab47b6ca38..0891bbc44de 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -362,6 +362,19 @@ the addition of volatile memory support, it is now necessary to distinguish
+ between persistent and volatile memory backends.  As such, memdev is deprecated
+ in favor of persistent-memdev.
+ 
++``-device virtio-blk,serial=more_than_20_characters`` (since 11.2)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The ``virtio-blk`` device has a limitation of 20 characters for the serial
++string. Accidentally, QEMU started accepting longer strings on the command line
++in version 0.15.0, but it was still silently truncated to 20 characters for
++guests.
++
++Specifying a longer serial than can be exposed to the guest is a configuration
++error and deprecated; it will become a hard error in later versions. If the
++truncation is intentional, explicitly specify the serial already in truncated
++form on the command line instead.
++
+ Block device options
+ ''''''''''''''''''''
+ 
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 3f236f22d57..eeeb405127c 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -1849,6 +1849,12 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    if (conf->serial && strlen(conf->serial) > VIRTIO_BLK_ID_BYTES) {
++        warn_report("serial is longer than %d characters and will be truncated "
++                    "for the guest. This configuration is deprecated.",
++                    VIRTIO_BLK_ID_BYTES);
++    }
++
+     if (!blkconf_apply_backend_options(&conf->conf,
+                                        !blk_supports_write_perm(conf->conf.blk),
+                                        true, errp)) {
+-- 
+2.56.0
 
 
