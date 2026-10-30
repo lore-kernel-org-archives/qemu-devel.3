@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D941606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A67606A31D
 	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 13:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=fvEc2fhg
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=IkljX3ml
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMmRm-0000fQ-CH; Fri, 30 Oct 2026 09:15:06 -0400
+	id 1xMmRY-0000As-1O; Fri, 30 Oct 2026 09:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xMmRf-0000U6-9m
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:15:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xMmRT-0008UE-1V
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:14:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xMmRd-0005C7-JO
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:14:58 -0400
+ id 1xMmRR-00059Y-34
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 09:14:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793366096;
+ s=mimecast20190719; t=1793366084;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6Q09bIrHyMRfqhA+APYF83tIQQVVEpS67ZFlJfhAFQU=;
- b=fvEc2fhgjDUPCQz1zIoCZjbOZf/zHJbpRApxLwRp3lta1K3mVXBE6/xwj2lCqx7K1CkKSN
- 0pWf+p4W5sONZRe+9VLQ09Qu892A3g2R1y/Ue3OnqjT298/nOlT/6wL0nARTsgqQIeZIZs
- VOyWj21dMi6CsxzjNgfL12f2/PgGyiM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PoQNe54zxPa1RyFl+zm/Uzbvagx6U+xZ+2kF/c0AhcQ=;
+ b=IkljX3mlruRz411fYhGG8I6G6xJKEVsTMJUprkYTOPpuU4Ei7asVk/p7ULAWDkaotFHr2C
+ qF71wddBtVBTY67smpUmDWBkW+letqIe8JHhFqRlm4tqjJ83ibRRvtQP8qrpYwjzcBkUuI
+ ruV8G7dY5Me9gUqkCXjHy6GgI1bk1vk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-682--OdqEJ1jOmu9ThkXa03kvg-1; Fri,
- 30 Oct 2026 09:14:23 -0400
-X-MC-Unique: -OdqEJ1jOmu9ThkXa03kvg-1
-X-Mimecast-MFC-AGG-ID: -OdqEJ1jOmu9ThkXa03kvg_1793366061
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-92hdAXTZOzqen35zskcinQ-1; Fri,
+ 30 Oct 2026 09:14:39 -0400
+X-MC-Unique: 92hdAXTZOzqen35zskcinQ-1
+X-Mimecast-MFC-AGG-ID: 92hdAXTZOzqen35zskcinQ_1793366077
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 748CA18021F1; Fri, 30 Oct 2026 13:14:20 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B6111800675; Fri, 30 Oct 2026 13:14:37 +0000 (UTC)
 Received: from laptop.redhat.corp (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8F9091956088; Fri, 30 Oct 2026 13:14:15 +0000 (UTC)
+ id 4FAC3195608A; Fri, 30 Oct 2026 13:14:32 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, shaju.abraham@nutanix.com,
@@ -58,24 +58,24 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  alireza.sanaee@huawei.com
 Cc: armbru@redhat.com,
 	mbawa@redhat.com
-Subject: [PATCH v4 for-11.2 01/10] target/arm/cpu-sysregs.h.inc: Sort by name
- alphabetical order
-Date: Fri, 30 Oct 2026 14:13:09 +0100
-Message-ID: <20261030131406.461599-2-eric.auger@redhat.com>
+Subject: [PATCH v4 for-11.2 04/10] target/arm: Enforce MPIDR into
+ isar.idregs[] storage
+Date: Fri, 30 Oct 2026 14:13:12 +0100
+Message-ID: <20261030131406.461599-5-eric.auger@redhat.com>
 In-Reply-To: <20261030131406.461599-1-eric.auger@redhat.com>
 References: <20261030131406.461599-1-eric.auger@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,99 +95,153 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Sort by register name alphabetical order. This will allow to
-easily diff with the future content, automatically generated.
+At the moment MPIDR_EL1 has no real storage. Instead cpu
+mp_affinity field stores the Aff0-Aff2 bits only and the
+ID register is reconstructed when needed. There is also
+an mp-affinity property used for TCG only.
 
-No functional change intended.
+Keep the mp-affinity property and its associated storage
+while making sure the MPIDR_EL1 full register is stored
+in cpu->isar.idregs[] as other ID registers.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Suggested-by: Khushit Shah <khushit.shah@nutanix.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
 Reviewed-by: Khushit Shah <khushit.shah@nutanix.com>
-
 ---
-v5 -> v6:
-- v5 version conflicted because ID_AA64FPFR0_EL1 has been
-  added
+ target/arm/cpu.h             |  8 +++++++-
+ target/arm/cpu-sysregs.h.inc |  1 +
+ target/arm/cpu.c             | 17 +++++++++++++++++
+ target/arm/helper.c          | 14 +-------------
+ target/arm/hvf/hvf.c         |  2 +-
+ target/arm/kvm.c             |  1 +
+ target/arm/whpx/whpx-all.c   |  2 +-
+ 7 files changed, 29 insertions(+), 16 deletions(-)
 
-v4 -> v5:
-- remove spurious CCSIDR definition
----
- target/arm/cpu-sysregs.h.inc | 46 ++++++++++++++++++------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
-
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index e6b4000127..5c5f551dac 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1130,7 +1130,13 @@ struct ArchCPU {
+     uint32_t reset_sctlr;
+     uint64_t pmceid0;
+     uint64_t pmceid1;
+-    uint64_t mp_affinity; /* MP ID without feature bits */
++    /*
++     * MP ID without feature bits, ie. Aff0..Aff3 only
++     * used to store the corresponding property value for TCG vcpus.
++     * The MPIDR_EL1 value (affinity + feature bits) is stored in a
++     * consistent manner in isar.idregs[MPIDR_EL1_IDX].
++     */
++    uint64_t mp_affinity;
+     uint64_t reset_cbar;
+     uint32_t reset_auxcr;
+     bool reset_hivecs;
 diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-index d9e058a57e..b5c7970971 100644
+index 709dc8fc97..f148f6f565 100644
 --- a/target/arm/cpu-sysregs.h.inc
 +++ b/target/arm/cpu-sysregs.h.inc
-@@ -1,13 +1,13 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
--DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
--DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
--DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
--DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
--DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
--DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
--DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-+DEF_MUX(CCSIDR_EL1, 3, 1, 0, 0, 0, 16)
-+DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
-+DEF(CTR_EL0, 3, 3, 0, 0, 1)
-+DEF(DCZID_EL0, 3, 3, 0, 0, 7)
- DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
- DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
-+DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
-+DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-+DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
- DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
- DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
- DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
-@@ -17,30 +17,30 @@ DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
- DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
- DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
- DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
--DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
--DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
--DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-+DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
-+DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
-+DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
-+DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
-+DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
- DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
--DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
--DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
--DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
--DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
-+DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-+DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
- DEF(ID_ISAR0_EL1, 3, 0, 0, 2, 0)
- DEF(ID_ISAR1_EL1, 3, 0, 0, 2, 1)
- DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
- DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
- DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
- DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
--DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
- DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
-+DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
-+DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
-+DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
-+DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
-+DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
-+DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
-+DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
-+DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
-+DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+@@ -42,6 +42,7 @@ DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
+ DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
+ DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+ DEF(MIDR_EL1, 3, 0, 0, 0, 0)
++DEF(MPIDR_EL1, 3, 0, 0, 0, 5)
  DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
  DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
  DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
--DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
--DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
--DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
--DEF_MUX(CCSIDR_EL1, 3, 1, 0, 0, 0, 16)
--DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
--DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
--DEF(CTR_EL0, 3, 3, 0, 0, 1)
--DEF(DCZID_EL0, 3, 3, 0, 0, 7)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index e337462a7e..aba45b66f8 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2170,6 +2170,23 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+                                                  ARM_DEFAULT_CPUS_PER_CLUSTER);
+     }
+ 
++    /* Consistently update MPIDR_EL1 in isar.idregs[] by adding feature bits */
++    {
++        uint64_t mpidr = cpu->mp_affinity;
++
++        if (arm_feature(env, ARM_FEATURE_V7MP)) {
++            mpidr |= (1U << 31);
++            /*
++             * Uniprocessor (non-coherent) cores that still implement the MP
++             * extensions set U (bit 30), e.g. Cortex-R5.
++             */
++            if (cpu->mp_is_up) {
++                mpidr |= (1u << 30);
++            }
++        }
++        SET_IDREG(&cpu->isar, MPIDR, mpidr);
++    }
++
+     if (cpu->reset_hivecs) {
+             cpu->reset_sctlr |= (1 << 13);
+     }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index afaac33f2a..f413b15eb7 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3180,20 +3180,8 @@ static uint64_t midr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ static uint64_t mpidr_read_val(CPUARMState *env)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+-    uint64_t mpidr = cpu->mp_affinity;
+ 
+-    if (arm_feature(env, ARM_FEATURE_V7MP)) {
+-        mpidr |= (1U << 31);
+-        /*
+-         * Cores which are uniprocessor (non-coherent)
+-         * but still implement the MP extensions set
+-         * bit 30. (For instance, Cortex-R5).
+-         */
+-        if (cpu->mp_is_up) {
+-            mpidr |= (1u << 30);
+-        }
+-    }
+-    return mpidr;
++    return GET_IDREG(&cpu->isar, MPIDR);
+ }
+ 
+ static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index f9f3d22014..4b947e9ba5 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1476,7 +1476,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+     assert_hvf_ok(ret);
+ 
+     ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_MPIDR_EL1,
+-                              arm_cpu->mp_affinity);
++                              GET_IDREG(&arm_cpu->isar, MPIDR));
+     assert_hvf_ok(ret);
+ 
+     pfr = GET_IDREG(&arm_cpu->isar, ID_AA64PFR0);
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index de09d63d2e..724bc08edf 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2103,6 +2103,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     if (ret) {
+         return ret;
+     }
++    SET_IDREG(&cpu->isar, MPIDR, mpidr);
+     cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
+ 
+     return kvm_arm_init_cpreg_list(cpu);
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 18009d6c8d..024d18df04 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -842,7 +842,7 @@ int whpx_init_vcpu(CPUState *cpu)
+ 
+     clean_whv_register_value(&val);
+ 
+-    val.Reg64 = deposit64(arm_cpu->mp_affinity, 31, 1, 1 /* RES1 */);
++    val.Reg64 = GET_IDREG(&arm_cpu->isar, MPIDR);
+     whpx_set_reg(cpu, WHvArm64RegisterMpidrEl1, val);
+ 
+     clamp_id_aa64mmfr0_parange_to_ipa_size(&arm_cpu->isar);
 -- 
 2.53.0
 
