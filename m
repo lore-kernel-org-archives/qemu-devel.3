@@ -1,143 +1,140 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5389606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD340606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 18:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=AcHFhJsN;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OrQKcyTq
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Z2v5yjRH;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jCk7KZKb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMquQ-0003eg-3i; Fri, 30 Oct 2026 14:00:58 -0400
+	id 1xMquZ-0004E6-B7; Fri, 30 Oct 2026 14:01:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMqso-0002Aj-Ii
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:59:23 -0400
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xMqs9-00019u-UR
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:58:46 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMqsm-0008TK-ON
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:59:18 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xMqs7-0008Pd-Ry
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 13:58:37 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69UHu5MR3430785
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:59:15 GMT
+ 69UHu2tF2414394
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:58:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Pu8+7VefQUDC3SJKE4np9xKxjD+bROI9jxnlmyFSeWk=; b=AcHFhJsNUQXcqjKb
- OiS/q2AqMphLJDXE/+WwmJwODFeWg87GujVxLcVbAwutt9GnHajAJzPyINhVEjH1
- LwNQEdvZndtFYyYCwkqixrbJ0f53b/pkx5a11Z67hGXjnAikFBM4JHbO+qrP4oK/
- 4zQAgmUeUhLveO7XasJnT7uN2YtQ7gWFsjAI0lovqrCvmx9DUtbzW37M2iQuvAZv
- xuY+AMkhI8VhFs10VbUZo97stskuoSUAWT/AfCA8tG8oHySBgOPUdDPNKPqjTtc9
- 6WhMpVfcLMLclQzPJzmzcmOUYdFD8XwEXa2lJGfIFHtsa7Z1DMBluEcD20AjG/Ju
- NZti+w==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qmc7j-1
+ +MyDPkZFnkC2V63+SpPR9axBurtzML6X5sZJvQlbQV8=; b=Z2v5yjRHVWbSWIt/
+ 2O90u70a+xIp+1O2RBxTBRJxJTbkZTdfAdd+jhIlURWCdWyeLJlXkISNvAz+8vR5
+ Md0w4+tsXJJSRXisPJRPIZreS2y+fi6dZQN9viGTEWvtSKrkSZPTh0Hv4hRX3ViZ
+ Xr2tL2Sb6kOOi0sx2Hnjj955ZQy8skNH+oaPSy2eLB6WWK+SX2m2rUovAiBWZT6w
+ Id57dHabS2Dj+85iO/GCpBcdqYNXiyK9UfOqwp7rtIyR/uLkE4iBGMvggogbrYkR
+ 3f8Fw7ln5/A56KLgE3RGWstEFpDa+w6+wTFP83BzbdRGSX9nUfuS0gXbsMoLiWBL
+ 6TlRVg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6pmbn9-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:59:15 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-36a190c53a3so1297766eec.0
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 10:59:15 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 17:58:33 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93e49a1d3b1so227626185a.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 10:58:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793383154; x=1793987954; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Pu8+7VefQUDC3SJKE4np9xKxjD+bROI9jxnlmyFSeWk=;
- b=OrQKcyTqrAN+hWQGhlYHzz+z5vCyLxMvuU4DqU8+HrByz76klhDQuaxshz2k/t3x/b
- Ce3VPDajCpvx8Ih2luCy4OeFcDH3V+765sma/GCulsBStoKfdXCbdFbMrvPYCYK7qxzy
- t651fkFJxPC9AcVaYZlB7Xth86hcoauff+a0R8TJmA1WfWYs9HendnMfSbucp5UUdlbk
- 0BliQcamR6cYoAfJUovYAVQFhBHAdyKZHYhYD4FeHTNXl4DW99rR8PEla6F0F4j8Mdro
- FurbWnfvlNEYkHew8zFC6v14N7d9qavqR1IIthxJOb1LVwOjeMOFraoNVC5fC0isC5KD
- 8Wjw==
+ d=oss.qualcomm.com; s=google; t=1793383112; x=1793987912; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=+MyDPkZFnkC2V63+SpPR9axBurtzML6X5sZJvQlbQV8=;
+ b=jCk7KZKbT41J0cmkxiyrv0SpDuRgqNg9apQKtOd7kywAS2sofjyTNclaCh9b74x4dh
+ TIBVOZZDJsPO222t6Qc9RsLIVyIq67UvZcjcJ1q1EA+OvmXizMrZse8Xtv7jV1pc+sni
+ M5iYiNgQElnLqGED/mUFNUEKEwZnzeKopk9IgqT22RRVmDevP4tWAHBIWfTg8dXYetjg
+ lwsv3KpHYF6ob1r86hnZZc5atl8pdoot+FuQ4b1snnBr8MBtGJkb6w6l8f+80Xj0BPqm
+ sXmGhVG4pKq6KS1A8K5RXUVsqo1bpM615UgG3pmI6GH4b+MefujXHlUGfndMkb+ZxWJY
+ sYOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793383154; x=1793987954;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Pu8+7VefQUDC3SJKE4np9xKxjD+bROI9jxnlmyFSeWk=;
- b=wTTO7xbSWUp7dCKlYPMB5QRcZqoMLwIzPjllmnckhwA9RUgc4NUVGdN5TGOkI2jL3e
- wnw52rJTwpxZumCmMU8o5HOywoopPvFNXfLNeVbfGDqIAplwFvWiuc2Ui6wEcJqbtrAR
- Uh8VVo9ILGtDcCu1T+/2GqR8jPMOSVk2X7khN8ymXkIxPp5QmPlj10hNwAr+Yj42pstM
- //G3yXaDCuijluJWpZej5SGY95Xo8qLOdIOVuMG1fIgYVGHFqSTpVuIE2kz8cmgAtJR8
- PmT0HDg0kP8r6oLTyOXjYeflI4b6BgkCUtZOtXav6iXV0TxPWr+9HEW1gB8EOm+H8iD7
- ioWA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxXxRdRV2QxwT8BVSiej4kkdWiC/+k1wZV4iDdfwLTYVU7tboiA5uI20ns9qcTidKoMUrSDblGJbypv@nongnu.org
-X-Gm-Message-State: AFq9FYJfvL9EbZfNMSTM0m0OMBiJSckuGyrpkHZTwDyrCPwQgJD0d7oy
- dX30xGt8AeeWpKxuA/q7OHDlPsPLhvJnQsG4tYUSesDX6oJjhXnaJUylAPPHFAwiAa6VWwav3r1
- Yh1J8puGQPN+sMvDF11rLFw4Fo6VNZpmbVWxKxM1BQU6SAW6VpNx4fiy0GQ==
-X-Gm-Gg: AYBFou3tEmWoyhX4quw9ySnl0hgCUavX6nE3Z8ll6pPz/eD1LpYWS/5qGXkER3J/ioi
- LGHkdu8FBKOhhhhlQuI/q2FdcYjF+tcNoTbzkN854cSYyIEdgM1Pt7ypNzercz0IyeD/FBvsqCk
- lEkiGFbU/06fu18bPDZsqF0XWZjGgqPe3nnReQVYvAb+eLb3lVaEyspro4mesKkBfFOFv7v8jpB
- 9MKImjxXQ1jM/eS72/QLvh3oAVLrU07cLnPilYyrWp3+IuT5z8EE4Akt4focfxt+Xkb0bov3p3A
- KCdHyE0iDQkqacBUrPD8OCmGGh5Y63AtTLUvWePgUitnKL1TjA/1NvODzWMSPLIvd5qzM991L+1
- XACuKUZxnb5c0jjP6qLjd2GBfedwTUE2qWaFoiSURbOMlTfK8Os9txKLZQwMkeG5sYOzt2sy3Ys
- NRB1eSPfOcRx4XoqVzlhw5GjE1I/9jGwdWR9rPYdB7TwA=
-X-Received: by 2002:a05:693c:61dc:b0:36a:1a7b:d1bb with SMTP id
- 5a478bee46e88-36a300756bcmr10377702eec.22.1793383154344; 
- Fri, 30 Oct 2026 10:59:14 -0700 (PDT)
-X-Received: by 2002:a05:693c:61dc:b0:36a:1a7b:d1bb with SMTP id
- 5a478bee46e88-36a300756bcmr10377662eec.22.1793383153759; 
- Fri, 30 Oct 2026 10:59:13 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a42902649sm9898940eec.11.2026.10.30.10.59.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 30 Oct 2026 10:59:13 -0700 (PDT)
-Message-ID: <3348be46-6b62-47a4-9590-0a0aef261707@oss.qualcomm.com>
-Date: Fri, 30 Oct 2026 09:59:12 -0800
+ d=1e100.net; s=20260707; t=1793383112; x=1793987912;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=+MyDPkZFnkC2V63+SpPR9axBurtzML6X5sZJvQlbQV8=;
+ b=FUEeTWfn6m2F6HhOCA8MPYWAB40Fog8RjF8c/2Y+w4SSA2abq+13gnC+ZGOT1BNHN+
+ 0RVIt+nZRfhaEFRVNIARIVlya18lhz09Lf32+Qs6a+cjIcB2jdjJ+42CRnsAFj0T2cQW
+ apT1BhB6S5SUvCf1gMFTDnMhkSapaZuFtvwo7n9EF+HySe2pHlKsmlP4oiiRg9T34RRW
+ 9Gt5eGOahfIU8nTOQ+MW3/CV5tA4/5AD13tNY6zGuiHR6vtBBTJz02jDMIfmzHgOX0fr
+ Gf/kVOvJPsBtT2DcyRFQ8XPoGMqYhlx2U6Tok0nfBSz2axfJSpY2O2VDVMkhLljL6IZR
+ qmXQ==
+X-Gm-Message-State: AFq9FYLQ8g6TVDY/QjCeflPyYarOK3OOMRL4jsCCFDBrHsu4aJ7Ulmad
+ g/rAKe6y2MtIkkwdtZbrPEzMv6RMZo/FbSGVbjKKXBwNfdVnb7NLS8R43kRgII7j5kIlmyViE4Z
+ gTGvNE+Uyok3h2KnwkTFjFyjIZmbg/Fv0/feXfAyHxQ7iB4Lw+HSo6l0+PPGSJa5cVWkU
+X-Gm-Gg: AYBFou37F8qi6n3qsF8sj5BswPXs3CPOLBAxj0MVyF00Taqlh8XBCEQ3aiqwGmN7ID7
+ z6t+f6PuaKEuN7MuQulnlojOHJ7tck243gH3skKps7tIHplRbnXDPNOthxRz+RbRl+R4LC+bMsN
+ vNLrqPNRlRugqyhk56S4ycfY/B3xTBwsdgn1i1dR+sq1WI1sp0YupyeJdYqs5yc90OM5ieWQjGz
+ cet+w8xSGKotV0GKYpBqnUdMHfDIc7qhsjOioC5PpqCFC2ZRgmvU+wwYSbV59HN1mkL2jNvO7W8
+ +MRV03Ml5Cko5f+GMoWUtt1SepTozO5tDoV1V9e8kLSKWogJKAz/HCLP9eCV7pWliPW6pQ9pUS8
+ dgMpfAGXITAtQ6NGOD86Iy/JGKYRIRbkrpMp65lihNvJq4YzFgZ14RHFoLKijbMtMqa/2m4mmon
+ vbc3ulpY7MseRyzJdrfZC0osohvO3+Ug==
+X-Received: by 2002:a05:620a:461e:b0:93f:707f:28d2 with SMTP id
+ af79cd13be357-94421712d14mr521113785a.26.1793383112193; 
+ Fri, 30 Oct 2026 10:58:32 -0700 (PDT)
+X-Received: by 2002:a05:620a:461e:b0:93f:707f:28d2 with SMTP id
+ af79cd13be357-94421712d14mr521110285a.26.1793383111701; 
+ Fri, 30 Oct 2026 10:58:31 -0700 (PDT)
+Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
+ [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4aa8213ead6sm149754045e9.14.2026.10.30.10.58.27
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 30 Oct 2026 10:58:30 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v4 32/32] tests/tcg/mips: Add MSA load/store tests
+Date: Fri, 30 Oct 2026 18:53:54 +0100
+Message-ID: <20261030175357.99684-33-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261030175357.99684-1-philmd@oss.qualcomm.com>
+References: <20261030175357.99684-1-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/32] tests/tcg/mips: Remove unused test_utils_32.h
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20261030175357.99684-1-philmd@oss.qualcomm.com>
- <20261030175357.99684-2-philmd@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261030175357.99684-2-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX1x9oNVYddIzj
- wE2JaXmVBX98erTvheTz10kJUj8GGq7Mb+ybFd1YH4DpUV0OY1ciqrTnOb4jmtTBnq4BAv9vMNq
- wJbsu7ZjEs7BN/a1LyJb64dZffaCLo48D09nYj+u8BdcraaOoAf/9B/lgRV55FtCXDmUB3cNmxo
- JA5UrFmqnaf93MMbj4qWeQ1idOiS95G26Ue+YpgrzCWFYiyXGJtr4FTHhBCnzg8TLWnkosVef7J
- SYZo+q/Ek2+4rO6pxNK7IMW2YOdhnyMvmggQKhhvKxH1TYkJEH3grMIGa84YSlKAKgIPa/LE3T8
- TZ7OKvd0D8hSRrj0H1isZUNPLSLXVkdlV+14dIalKWYi7EfvKLSwtjILrRvpcAmNcQcTyJm6H9Q
- T3S03zqbIcMGJEx6Mzod2DJVWFTztVtbeaBLEvoGv1/C2DM+kcj7Ui+TwdNDDSCGIYR5tz2Nf6+
- H+aIL0i8sS4k2DKFV2g==
-X-Proofpoint-GUID: 2T6pM7rb7lvpHA10t-jnUuKE9v3_TAtd
-X-Proofpoint-ORIG-GUID: 2T6pM7rb7lvpHA10t-jnUuKE9v3_TAtd
-X-Authority-Analysis: v=2.4 cv=IumL47/g c=1 sm=1 tr=0 ts=6ae4daf3 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=KAK_GFpBjN3eYroQ7JUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX/3rHd6h5Rf7h
- +ybJHHfX9zKEEi7EFfqVMp/SxBTnIxUKhKShgs7ztuyWXBDzf9uqVn9+CAb3pIs5VrSlrpAQgKq
- yRGa90loUP94u5loSEWU+MsHvOFqorI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX5/VA0GiOTMyR
+ Xp7YnnJTUdFbpuslI7L3eGulxGyvpmRTcKHZmaoxhJXNro2WQ23SkeQkiP6UQJBkGmXvOKKVUIk
+ WV7vSnpr7xN6Max7VQcrj6iFUpEnGIEE7EFVUwpjd8kD1y3WJ0cV0DWWrMdf5mbVlMNqPENOVfx
+ uQFgl1eRNvUQQi133niMt0i1+1PaDHUuI3+yrbaCHJTGzvHPb55jnMTVUm5//4ifYixoAYQZi94
+ 91RraxBXD/wz9axXBRRpmjoiBlbesKEHqrN3prXZEoZyYLkyr2tL8+rSKDqGGwU2wMT7Mw4A0fS
+ IWtbGbGTUmIFHH1gSULB0sQYXukb2pLye2e1nN07UFiMMqzHVzjnHbpapsZhSDHY+uQfAJPvYXt
+ bTZm7aBlddkGnFBdAJ82QQiqnDIVyXrG3vHlIJUEjqgVopOcGcG0AE3nx2nIn1TV7tuyda7CRop
+ +vtijnwyCPhYdq1FRCA==
+X-Proofpoint-ORIG-GUID: hvilZawSWm9ae7riHKqyxri4A6kLuo8B
+X-Proofpoint-GUID: hvilZawSWm9ae7riHKqyxri4A6kLuo8B
+X-Authority-Analysis: v=2.4 cv=AJ83otAg c=1 sm=1 tr=0 ts=6ae4dac9 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=kUBLggdYPbBL_tJofOAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA3MSBTYWx0ZWRfX6pxbu8dbyHbL
+ 5GxzvbWN2t+K3KDkt5Bc5nSlRWFQPJZ/T+A7tvcerHXX3seOb9ExYGnkYnMMHMpmN54vjqfhYkw
+ i7kZFW5wbqRZkkRCVhwb191eA9YqRj0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-30_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 clxscore=1015 spamscore=0 bulkscore=0
- malwarescore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300071
+ spamscore=0 adultscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610300071
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -156,24 +153,223 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/30/2026 9:53 AM, Philippe Mathieu-Daudé wrote:
-> The 32-bit test utilities header added in 26b3256392e0 is not
-> included by any test, and check_results_32() is never called.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->  tests/tcg/mips/include/test_utils_32.h | 78 --------------------------
->  1 file changed, 78 deletions(-)
->  delete mode 100644 tests/tcg/mips/include/test_utils_32.h
-> 
+Add coverage for the MSA LD/ST.B/H/W/D instructions at every source
+and destination byte offset within a vector-sized block, including
+accesses that cross a page boundary. Verify per-element endian
+ordering, destination contents, and source register preservation.
 
+Test both little-endian (P5600, MIPS32R5) and big-endian
+(I6400, MIPS64R6).
+
+AI-used-for: tests
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+Since this is a TCG test ran under linux-user, ignore checkpatch:
+
+  ERROR: use qemu_real_host_page_size() instead of sysconf(_SC_PAGESIZE)
+  #138: FILE: tests/tcg/mips/test_msa_load_store.c:110:
+  +    long page_size = sysconf(_SC_PAGESIZE);
+---
+ tests/tcg/mips/test_msa_load_store.c | 168 +++++++++++++++++++++++++++
+ tests/tcg/mips/meson.build           |   1 +
+ 2 files changed, 169 insertions(+)
+ create mode 100644 tests/tcg/mips/test_msa_load_store.c
+
+diff --git a/tests/tcg/mips/test_msa_load_store.c b/tests/tcg/mips/test_msa_load_store.c
+new file mode 100644
+index 000000000000..b0c9404f122d
+--- /dev/null
++++ b/tests/tcg/mips/test_msa_load_store.c
+@@ -0,0 +1,168 @@
++/*
++ * MIPS MSA tests: Load / Store instructions
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <errno.h>
++#include <stdbool.h>
++#include <stdint.h>
++#include <stdio.h>
++#include <string.h>
++#include <sys/mman.h>
++#include <unistd.h>
++
++#include "../include/tap.h"
++
++enum {
++    VECTOR_BYTES = 16,
++    BUFFER_BYTES = 64,
++};
++
++#define DEFINE_MSA_COPY(format)                                          \
++static void copy_##format(const uint8_t *source, uint8_t *destination,    \
++                          uint8_t *loaded, uint8_t *after_store)         \
++{                                                                       \
++    __asm__ volatile(                                                   \
++        "ld." #format " $w0, 0(%[source])\n\t"                          \
++        "st.b $w0, 0(%[loaded])\n\t"                                    \
++        "st." #format " $w0, 0(%[destination])\n\t"                     \
++        "st.b $w0, 0(%[after_store])\n\t"                               \
++        :                                                               \
++        : [source] "r" (source), [destination] "r" (destination),         \
++          [loaded] "r" (loaded), [after_store] "r" (after_store)          \
++        : "f0", "memory");                                             \
++}
++
++DEFINE_MSA_COPY(b)
++DEFINE_MSA_COPY(h)
++DEFINE_MSA_COPY(w)
++DEFINE_MSA_COPY(d)
++
++typedef void (*MsaCopy)(const uint8_t *source, uint8_t *destination,
++                        uint8_t *loaded, uint8_t *after_store);
++
++static const struct {
++    const char *name;
++    unsigned element_bytes;
++    MsaCopy copy;
++} formats[] = {
++    { "b", 1, copy_b },
++    { "h", 2, copy_h },
++    { "w", 4, copy_w },
++    { "d", 8, copy_d },
++};
++
++static bool check_format(size_t format_index, const uint8_t *source,
++                         uint8_t *destination, size_t first_offset,
++                         const char *region)
++{
++    _Alignas(VECTOR_BYTES) uint8_t loaded[VECTOR_BYTES];
++    _Alignas(VECTOR_BYTES) uint8_t after_store[VECTOR_BYTES];
++    uint8_t expected_vector[VECTOR_BYTES];
++    uint8_t expected_memory[BUFFER_BYTES];
++    const uint16_t endian_probe = 1;
++    unsigned endian_mask = *(const uint8_t *)&endian_probe ? 0 :
++                           formats[format_index].element_bytes - 1;
++
++    for (size_t source_offset = first_offset;
++         source_offset < first_offset + VECTOR_BYTES; source_offset++) {
++        for (size_t destination_offset = first_offset;
++             destination_offset < first_offset + VECTOR_BYTES;
++             destination_offset++) {
++            memset(destination, 0xa5, BUFFER_BYTES);
++            memset(expected_memory, 0xa5, BUFFER_BYTES);
++            memcpy(expected_memory + destination_offset,
++                   source + source_offset, VECTOR_BYTES);
++
++            for (size_t byte = 0; byte < VECTOR_BYTES; byte++) {
++                expected_vector[byte] =
++                    source[source_offset + (byte ^ endian_mask)];
++            }
++
++            formats[format_index].copy(source + source_offset,
++                                      destination + destination_offset,
++                                      loaded, after_store);
++
++            if (memcmp(loaded, expected_vector, VECTOR_BYTES)) {
++                TAP_INFO("ld.%s endian mismatch (%s, offset %zu)",
++                         formats[format_index].name, region, source_offset);
++                return false;
++            }
++            if (memcmp(destination, expected_memory, BUFFER_BYTES)) {
++                TAP_INFO("st.%s memory mismatch (%s, offset %zu)",
++                         formats[format_index].name, region,
++                         destination_offset);
++                return false;
++            }
++            if (memcmp(after_store, loaded, VECTOR_BYTES)) {
++                TAP_INFO("st.%s changed its source register (%s)",
++                         formats[format_index].name, region);
++                return false;
++            }
++        }
++    }
++
++    return true;
++}
++
++int main(void)
++{
++    _Alignas(VECTOR_BYTES) uint8_t source[BUFFER_BYTES];
++    _Alignas(VECTOR_BYTES) uint8_t destination[BUFFER_BYTES];
++    long page_size = sysconf(_SC_PAGESIZE);
++    size_t mapping_bytes;
++    uint8_t *source_mapping;
++    uint8_t *destination_mapping;
++    uint8_t *page_source;
++    uint8_t *page_destination;
++
++    TAP_START();
++    if (page_size < BUFFER_BYTES) {
++        TAP_INFO("Invalid guest page size: %ld", page_size);
++        tap_report(0, "MSA ld/st guest page size");
++        return tap_done();
++    }
++    mapping_bytes = 4 * (size_t)page_size;
++    source_mapping = mmap(NULL, mapping_bytes, PROT_NONE,
++                          MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    destination_mapping = mmap(NULL, mapping_bytes, PROT_NONE,
++                               MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    if (source_mapping == MAP_FAILED || destination_mapping == MAP_FAILED) {
++        TAP_INFO("mmap: %s", strerror(errno));
++        tap_report(0, "MSA ld/st mmap");
++        return tap_done();
++    }
++    if (mprotect(source_mapping + page_size, 2 * page_size,
++                 PROT_READ | PROT_WRITE) != 0 ||
++        mprotect(destination_mapping + page_size, 2 * page_size,
++                 PROT_READ | PROT_WRITE) != 0) {
++        TAP_INFO("mprotect: %s", strerror(errno));
++        tap_report(0, "MSA ld/st mprotect");
++        return tap_done();
++    }
++
++    page_source = source_mapping + 2 * page_size - BUFFER_BYTES / 2;
++    page_destination = destination_mapping + 2 * page_size - BUFFER_BYTES / 2;
++    for (size_t byte = 0; byte < BUFFER_BYTES; byte++) {
++        source[byte] = page_source[byte] = byte * 13 + 7;
++    }
++
++    for (size_t format_index = 0;
++         format_index < sizeof(formats) / sizeof(formats[0]); format_index++) {
++        bool passed = check_format(format_index, source, destination, 0,
++                                   "buffer") &&
++                      check_format(format_index, page_source, page_destination,
++                                   VECTOR_BYTES, "page boundary");
++
++        tap_report(passed, "MSA ld/st.%s", formats[format_index].name);
++    }
++
++    if (munmap(source_mapping, mapping_bytes) != 0 ||
++        munmap(destination_mapping, mapping_bytes) != 0) {
++        TAP_INFO("munmap: %s", strerror(errno));
++        tap_report(0, "MSA ld/st munmap");
++        return tap_done();
++    }
++    return tap_done();
++}
+diff --git a/tests/tcg/mips/meson.build b/tests/tcg/mips/meson.build
+index 560d07ad6357..179502504582 100644
+--- a/tests/tcg/mips/meson.build
++++ b/tests/tcg/mips/meson.build
+@@ -16,6 +16,7 @@ tests_mips_msa_groups = [
+   '../mips/test_msa_int_multiply.c',
+   '../mips/test_msa_int_subtract.c',
+   '../mips/test_msa_interleave.c',
++  '../mips/test_msa_load_store.c',
+   '../mips/test_msa_logic.c',
+   '../mips/test_msa_pack.c',
+   '../mips/test_msa_shift.c',
+-- 
+2.55.0
+
 
