@@ -1,70 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F42C606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E90E606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 14:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Y/dRej7R
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=s7Q3KSPk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMnJu-0006Km-H4; Fri, 30 Oct 2026 10:11:02 -0400
+	id 1xMnJy-0006W0-H1; Fri, 30 Oct 2026 10:11:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xMnJn-00069H-HL
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:10:56 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1xMnJp-0006Bu-Se
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:10:58 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xMnJl-0002DD-Oj
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:10:55 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-48df4f540ebso374775f8f.3
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 07:10:53 -0700 (PDT)
+ id 1xMnJo-0002Dz-43
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 10:10:57 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4a208d93758so7671485e9.3
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 07:10:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793369452; x=1793974252; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=nUiRTSaU1NPVMMFHoiQHThk5jM4+SyPW56vy2Xn7Qco=;
- b=Y/dRej7RrmQg2NH+BWvb3PqtRBCfL/xQGZSoy/QVNHix+rwBWXdYh8B0oGo73JjBBH
- cIk8ukc9NGoPZx5Q/V25d15veSbFdP+MW1Ye9JDV8zMrDs6QC8vRZmJKIuKEx1iQT5BI
- d5fDwwbu50t0uvjypM1CMK6nE/BmfN0LgF6bDYxtq4/DV9pr98LGUHj9jU8rU98KRxPV
- dB/xSZkY3c1xa1KnDUofz1w63LROeJpT7S1np1NEQW1j6PgpPX562AwWKk/aglERIFQ/
- O/3mD6AqL+Bkj9O9qQ7+YWaYe2KVh7x6lHHMLoEq4Uah1Z/TnnwTKxz8I4f3p3m3rs54
- VMmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793369452; x=1793974252;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=linaro.org; s=google; t=1793369454; x=1793974254; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=nUiRTSaU1NPVMMFHoiQHThk5jM4+SyPW56vy2Xn7Qco=;
- b=XTMUjcYn0YB8Xy0EXfGpyhht67Em4l4zCIPHogfvn08z1m4z4zoxGYkXefYTODcmrM
- jA03lXB0KByznNl6qwqQY2GxZUmrz7M9HqLaYaA9tQyr+MihlyQ8kMPD0Ycxx6dO6BIz
- XWNRF6svkJqGEi+MjkpHkzG5vw1wMVK5y5e2qMSFsHT1fPx2go7SOal4ZNuYWgySULSq
- mfXzeEKPj0cdYjtAswT46zUI+3QW7WvwkIsVzrvpDQvCFQaBf2+sYNXbZ9K6hDwlDJEF
- pocJREmFmSPcCLR1ctxrL6HaTBmuqkTUKNV3snlPn0kMr8+rDwix1ACGEGuAdrbzUrBr
- DjvA==
-X-Gm-Message-State: AFq9FYK/FgiiAtO4JLa8Y/xaBJnRGaS0n3v8ZMdtqVAr9J5iqhFx33Y7
- +wVt5Qn/VSdUqWVFWxmotzWD8TEDsNv0jAL21QP3jz4L49KG8RT5qfcbMSoT205aABY=
-X-Gm-Gg: AYBFou1Fkm2fB2qScv6mVK8F64xshx9zc4ZeY5MBRwvJGL+2OW/wYG54DYr3tdRyzhv
- oVDoK1qxeHfZs3fMu4EAnig/LymR0tbMgsM03y4w9YKfRp8njaS5S7Ee0HNarWWCcMFFBPVXpuq
- 7CmfHaibkvmi9NGZ4Io1NXL0KTkb0df2TKquoCTEWM+8tr4lZFUdTpDHqq12XexM56qAmg3VXUl
- 56zOVeiWjc6ZFTkIq/KBL1Jpe7gbAWjcKbCGGjguY0qren1NshjUQr6/kU+Z6vi1Ist0fR1LSGf
- JPrqhMzP+hJdcLSriXHRVqi3DzLKMFbTtDhOlGv5jz5GLoyu7PLCuUGT+gPpgyj1c8k0mWls8Yf
- YL7Asm/2N1Oo26+/R/BDRl3oVnYUlcjVW2zCEDZAaiVWA8cxIKn3Q3kMunAZd6NARpMDJQm6tig
- pkQbf7bXHFGH1Ne2DtmiG3Xt7BQ+qHZiOtCsfJoUVg4ksHuAorcu3ruVGhgnpUgowqSVbl2klEC
- 0uZL9W2K/yxV80/wtlXuihRTt3T5z2ZPs+6RNQbM5qrGtUX1J8qkE2AdxMH0JQU9N0Ga+Gui45m
- hq9z/SoWZKdKxyqRarvmlY62+z5141HNUuSUhmdIMxYgB0+/8Q==
-X-Received: by 2002:a05:6000:cc8:b0:48a:fa0a:34d8 with SMTP id
- ffacd0b85a97d-48e6e50a10dmr4203645f8f.38.1793369451824; 
- Fri, 30 Oct 2026 07:10:51 -0700 (PDT)
+ bh=i3ewVD0XqjJnKLOhDKPQ2xLdqcFlOTBh0kaoafSBw6g=;
+ b=s7Q3KSPkY+TMFcjN6iuJmpYxgBwnnDMZXissPdZdh1Uy7R/XBDfRoNcmbBBU/qi/IU
+ Do6xur1Zy6WGAIibxt4+BXPP0kbqUmUhf6o9RJAjE7ViLzj9zJLuDrkYmeNZO8SCN9pG
+ H+xxYPV5NtT38XdiElyrdFkMBRFYfDIjhMTkLRQ21AOB5AltuFsSktnTCZgate0zaYv0
+ 6hRqXYMqg+09QZdK32IeM01itnXpGc3wg+rxt9mGZm0iJIlit9nwhlI6W775I7UFBAiY
+ d+BOdrposvDxIrUPNzq4ADG3sV23DmciuxE6supnL7nclm4dQKxeVBsgR9L0PgKsAOr2
+ OjJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793369454; x=1793974254;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=i3ewVD0XqjJnKLOhDKPQ2xLdqcFlOTBh0kaoafSBw6g=;
+ b=Yv5N3f3Gwhrg/IbWPRhPD88rnveIu2cZc5paC0hr8KIXhSTOhq/EeOnv61T7+V5JjA
+ zgy5EbV2VvTIVymgwpYEP4PMnySUCHUnjFKlDMo5phdKE99ePrVXeCfnSqKwNmkJm3BL
+ mIdZnSdA6iWnzOFYXv8mZAkYTGeByXs5xtvv28oheyJPwVQsPLCzy1tAzI1YtpICJiow
+ smDakRl3ttPbyuGiaB5NXqykBLE2lUHYNmIdESPA/3+tA2ZUanDEK3T2b0wSFCwbAV1i
+ GzD2t6dQKvUKhd2iUAjEFs1G0wEJMfpcFVdP+y9mGrxkTHLZi2zl/PJfLx5WrtbKwDQd
+ R+fg==
+X-Gm-Message-State: AFq9FYIsNYZc+luZRl9oKS8B8bS/LpTKMScCU5iXB5HfW/6wGKe7EXVH
+ UytDTg53VmXeSnDptFtfvZbhSdIYB/9hXtKLJiixApb0ynPI1s2fXzvbE3tjGcfbTD0=
+X-Gm-Gg: AYBFou0Cp/SrC1Vb/GsU0jKqVHpJuoBNlZmUgMDM7OMB2f4kssUpxwE7qps0pSAbGxS
+ j5j0CiHcZ+7ZBMxuaULtccj51Xix2dlOG7hDaK68ByBCMjwvnusUrn72LamYLV6ZZjSLyXZbnud
+ S4jOJAMfdJQhXRb4aUFugYf90EZCRxMQA7QVA/pbAxfbwwL+1bYWzArd2f9rf9kKFfJawWKdbSd
+ oNBre3kF5ZqHT3jhJw5P2TcNt0dEc9J9rHy5iwl10gqualr35rP43fBHNas6ArYLESSN318zKLw
+ 1f03qXtqOcruskQfYegxEFsU33i+NCdpcxr10/GgQ1UHhXFfCDjVT7UGZe8Up6I9bSryg/AgPFO
+ WkbwMmX0d/x9TpRQSvQlgPOwiZwi7n3iQ36lIfobE1EHKYQbuH9iXeR2xrlwzDMqjPKMgqN4maf
+ XkjY2ZJYDjlAkyXrhsgBxqD6zpSzvd27fKY8K8ppf2bfy/qT/kX+oouEyYB1Tw6rpd+mq5Xo8Po
+ Zq38xH7b0LQlLu+dxKSDOaHzBgu/OUhDaNBqbmxVI5j3pnUZgm3exDK7i6kitTyKuLwg0gVWe3D
+ HvC2O0q1zyG7CLV8FSvIoDgp/hcT
+X-Received: by 2002:a05:600c:4f0f:b0:4a1:e00b:a10b with SMTP id
+ 5b1f17b1804b1-4ac17b2cde9mr60167055e9.7.1793369454537; 
+ Fri, 30 Oct 2026 07:10:54 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d404sm3965685f8f.5.2026.10.30.07.10.47
+ ffacd0b85a97d-48e71b728f9sm3488559f8f.10.2026.10.30.07.10.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 30 Oct 2026 07:10:47 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 18BDA5F7FD;
+ by draig.lan (Postfix) with ESMTP id 57F615F904;
  Fri, 30 Oct 2026 14:10:47 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -73,16 +75,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 0/4] arm fixes (WxFT, bcm2835_fb)
-Date: Fri, 30 Oct 2026 14:10:42 +0000
-Message-ID: <20261030141046.2710206-1-alex.bennee@linaro.org>
+Subject: [PATCH 2/4] target/arm: don't pass env to the sev helper
+Date: Fri, 30 Oct 2026 14:10:44 +0000
+Message-ID: <20261030141046.2710206-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261030141046.2710206-1-alex.bennee@linaro.org>
+References: <20261030141046.2710206-1-alex.bennee@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +105,81 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-These are the arm specific fixes from my last series. All reviewed and
-ready to pull.
+It was pointed out during reviewing a recent fix that cs is only
+needed as a loop variable for CPU_FOREACH so passing env is just
+wasteful.
 
-Alex.
+Fixes: d238858bff60 ("target/arm: Implement WFE, SEV and SEVONPEND for Cortex-M")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20261029161310.2065290-5-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ target/arm/tcg/helper-defs.h   | 2 +-
+ target/arm/tcg/op_helper.c     | 2 +-
+ target/arm/tcg/translate-a64.c | 2 +-
+ target/arm/tcg/translate.c     | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-Alex Bennée (4):
-  target/arm: hold bql when SEV sets the event_register
-  target/arm: don't pass env to the sev helper
-  target/arm: simplify wfxt_timer_cb to only trigger cpu_interrupt
-  target/arm: fix bcm2835 migration issue
-
- target/arm/tcg/helper-defs.h   |  2 +-
- hw/display/bcm2835_fb.c        | 11 +++++++++++
- system/cpus.c                  |  2 +-
- target/arm/cpu.c               | 20 +++-----------------
- target/arm/tcg/op_helper.c     |  7 +++++--
- target/arm/tcg/translate-a64.c |  2 +-
- target/arm/tcg/translate.c     |  2 +-
- 7 files changed, 23 insertions(+), 23 deletions(-)
-
+diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
+index 269ac515065..4f9736e6796 100644
+--- a/target/arm/tcg/helper-defs.h
++++ b/target/arm/tcg/helper-defs.h
+@@ -60,7 +60,7 @@ DEF_HELPER_1(yield, void, env)
+ DEF_HELPER_1(pre_hvc, void, env)
+ DEF_HELPER_2(pre_smc, void, env, i32)
+ DEF_HELPER_1(vesb, void, env)
+-DEF_HELPER_1(sev, void, env)
++DEF_HELPER_0(sev, void)
+ 
+ DEF_HELPER_3(cpsr_write, void, env, i32, i32)
+ DEF_HELPER_2(cpsr_write_eret, void, env, i32)
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 5788a094123..4a31ce979c6 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -468,7 +468,7 @@ void HELPER(wfit)(CPUARMState *env, uint32_t rd)
+ #endif
+ }
+ 
+-void HELPER(sev)(CPUARMState *env)
++void HELPER(sev)(void)
+ {
+     CPUState *cs;
+ 
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 0c712e7ac2e..941254983e9 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -2148,7 +2148,7 @@ static bool trans_SEV(DisasContext *s, arg_SEV *a)
+      * SEV is a NOP for user-mode emulation.
+      */
+ #ifndef CONFIG_USER_ONLY
+-    gen_helper_sev(tcg_env);
++    gen_helper_sev();
+ #endif
+     return true;
+ }
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 6983153ffc6..c1970f93c8f 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -3282,7 +3282,7 @@ static bool trans_SEV(DisasContext *s, arg_SEV *a)
+ #ifndef CONFIG_USER_ONLY
+     if (arm_dc_feature(s, ARM_FEATURE_M) ||
+         arm_dc_feature(s, ARM_FEATURE_V6K)) {
+-        gen_helper_sev(tcg_env);
++        gen_helper_sev();
+     }
+ #endif
+     return true;
 -- 
 2.47.3
 
