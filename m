@@ -1,54 +1,51 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF05606A322
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 06:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2170B606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 06:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=QnwIiqFA
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=UNs4/6EG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMg6y-0000TO-Kn; Fri, 30 Oct 2026 02:29:12 -0400
+	id 1xMgCy-0001YE-99; Fri, 30 Oct 2026 02:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xMg6s-0000Sy-Ob; Fri, 30 Oct 2026 02:29:06 -0400
+ id 1xMgCj-0001XT-BS; Fri, 30 Oct 2026 02:35:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xMg6p-0008Tm-O7; Fri, 30 Oct 2026 02:29:06 -0400
+ id 1xMgCh-0000b7-OW; Fri, 30 Oct 2026 02:35:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793341731; bh=41rW1JU1AalmldNknZz3tMlHY3fw5QoNbMOLn5DnNs8=;
+ t=1793342104; bh=6731h3+ujd/myX06y5bK3DkN8Lvanfed0M3yzMI/1/Y=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=QnwIiqFA8vk2GQ1Zak63pkNob3mMk9/gsy3IZL+zXC2+JJvkpKJ1+e1dj0xanLsxa
- M/C7drcRXIVbnGi5ekw+RyEdj/isq327yt0A80kKOa6awB+9aAO6sJOj8PAo564NG8
- as/KEgTk9LrCqN/N4E/j3sy+yARTkPMLF9mDdJIxqakd2/UIB3Eg7ALhHkH/D12xoe
- ZSvmMdHSIk7VAveMqTXGHYWgrxWDhjZ/gxlXl3vur8Zt/7fRP5shv7xn+bFfvgxjFQ
- 995+xEFoooTXcMBCaVN/vUmGZNgEHF4phje7QievBUGkneggMszG8YWJDbRGrIQFYV
- 8Ls2qvN3t/chA==
+ b=UNs4/6EGiUQrp7K27j03TLu3m0xonlLk4OET4/pPhdA90gsj4byccyKO7FwWkPmNU
+ e0ASXJHpMk1WxSlQqERdgRZglcFupWi3ELkc+8sMQ7x1aME4E6EvUJ37XmEDDk983E
+ vccwFmNn0J6ACKw+RILYgBqqai2oRfNAyPNdxf3pu2TfZtNGQ7vBVlgys+9qw4FwtR
+ nXDy9bCPaU+VWGsYJp6CXK+ABkXhDdB8APKDg4zG1vYS292TqTwBwAPnCPwiujCz0q
+ 6B5ra8+em9kUPz0p9src6vq70djihmkELX9Ke7bYNKFVOLtLj0qGoJHJ9NbHnNFZP/
+ vgE72DNTb4NRA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0CE111E2739;
- Fri, 30 Oct 2026 09:28:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E9EBD1E2740;
+ Fri, 30 Oct 2026 09:35:04 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CC1F144EC54;
- Fri, 30 Oct 2026 09:28:50 +0300 (MSK)
-Message-ID: <fe0694c6-383b-4cf2-abc0-c6d73a3d6c3c@tls.msk.ru>
-Date: Fri, 30 Oct 2026 09:28:50 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id A3E8144EC5D;
+ Fri, 30 Oct 2026 09:35:04 +0300 (MSK)
+Message-ID: <379a2300-b1af-4b32-9d10-7a8347c22476@tls.msk.ru>
+Date: Fri, 30 Oct 2026 09:35:04 +0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 40/78] pcie_sriov: register user created virtual function
- before realizing it
-To: Daniel Paziyski <danielpaziyski@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Subject: Re: [PATCH v3 0/7] hw/cxl: fix Type-3 device reset resource leaks and
+ convert to three-phase
+To: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org
+Cc: jic23@kernel.org, linux-cxl@vger.kernel.org, philmd@oss.qualcomm.com,
  qemu-stable@nongnu.org
-References: <cover.1793207602.git.mst@redhat.com>
- <ca7c24b7c8f69c13fef24a31660e1b6ea73686d3.1793207602.git.mst@redhat.com>
- <CANukVxsB2n2GCGxQk3X2SUzNTJQ0M30ZxxmF=oGZtS-OCmbw_A@mail.gmail.com>
+References: <20260729144645.1552511-1-junjie.cao@intel.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <CANukVxsB2n2GCGxQk3X2SUzNTJQ0M30ZxxmF=oGZtS-OCmbw_A@mail.gmail.com>
+In-Reply-To: <20260729144645.1552511-1-junjie.cao@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -70,57 +67,49 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/28/26 20:34, Daniel Paziyski wrote:
-> Hello Michael,
+On 7/29/26 17:46, Junjie Cao wrote:
+> The CXL Type-3 device reset path (ct3d_reset) has several issues:
 > 
-> I think you have queued this patch for pulling on accident. There is a bug here,
-> which is yet to be solved, as you have pointed out in
+> 1) Resource leaks:
+> 2) Incomplete state cleanup:
+> 3) Deprecated API usage:
 > 
-> https://lore.kernel.org/qemu-devel/20261028074508-mutt-send-email-mst@kernel.org/T/#mca344ac148a62107cdc298e97e6713b6657b5c55
-> 
-> Please, hold off this patch for a while, until I come up with a fix soon.
-Am I right this buggy version of the patch has just landed in the master branch,
-instead of the fixed v2 one?
+> This series fixes the issues incrementally:
+>    - Patches 1-2: fix resource leaks (deterministic bugs)
+>    - Patch 3: mechanical conversion to three-phase reset
+>    - Patch 4: factor the primary CCI teardown into a
+>      cxl_destroy_mailbox_t3() helper pairing cxl_initialize_mailbox_t3()
+>    - Patches 5-7: clean up device state on reset
 
-Here's the difference between what's in current master and the v2:
+> Junjie Cao (7):
+>    hw/cxl: fix timer leak in cxl_destroy_cci()
+>    hw/cxl: destroy primary CCI before re-initialization on reset
+>    hw/cxl: convert cxl-type3 to three-phase reset
+>    hw/cxl: add cxl_destroy_mailbox_t3() as the mailbox teardown
+>      counterpart
+>    hw/cxl: discard in-flight sanitize state on mailbox teardown
+>    hw/cxl: clear event logs, scan media and interrupt policy on reset
+>    hw/cxl: clear poison lists and feature transfer state on reset
+Hi!
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index d4187293b1f..6242204a52c 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2310,10 +2310,8 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
-          pci_dev->cap_present |= QEMU_PCIE_CAP_CXL;
-      }
+This patch series has been Cc'ed to qemu-stable@.  It is interesting how
+it's been Cc'ed, and I think there's some error here.  From whole series,
+only patch 2 (destroy primary CCI before re-initialization on reset) is
+tagged for-stable.  Patch 1, which is a fix, is not tagged, and not Cc'ed
+to qemu-stable@ either.  The rest - patches 3-7 - has been Cc'ed to the
+qemu-stable mailing list, but are not tagged for-stable.
 
--    pci_dev = do_pci_register_device(pci_dev,
--                                     object_get_typename(OBJECT(qdev)),
--                                     pci_dev->devfn, errp);
--    if (pci_dev == NULL) {
-+    if (!do_pci_register_device(pci_dev, object_get_typename(OBJECT(qdev)),
-+                                pci_dev->devfn, errp)) {
-          pci_unregister_acpi_index(pci_dev);
-          return;
-      }
-@@ -2332,6 +2330,11 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
-          }
-      }
+ From this list, I'm only picking up patch 2, and only for 11.1.x series.
+The other active stable series, 10.0.x, - apparently it's not needed there.
 
-+    if (!pcie_sriov_check_after_realize(pci_dev, errp)) {
-+        pci_qdev_unrealize(DEVICE(pci_dev));
-+        return;
-+    }
-+
-      /*
-       * A PCIe Downstream Port that do not have ARI Forwarding enabled must
-       * associate only Device 0 with the device attached to the bus
-~
+FWIW.
 
 Thanks,
 
