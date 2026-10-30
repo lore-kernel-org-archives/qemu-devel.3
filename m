@@ -1,70 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29287606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CB5606A31C
 	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kky5W2Ev
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s8cjdxin
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMoMj-0005I2-Hs; Fri, 30 Oct 2026 11:18:01 -0400
+	id 1xMoM1-0004aC-3h; Fri, 30 Oct 2026 11:17:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMoMR-0004x6-2h
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:17:47 -0400
-Received: from mail-dy1-x1331.google.com ([2607:f8b0:4864:20::1331])
+ id 1xMoKz-0004Jt-MW
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:16:15 -0400
+Received: from mail-dl1-x1235.google.com ([2607:f8b0:4864:20::1235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMoMO-00007f-Ba
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:17:42 -0400
-Received: by mail-dy1-x1331.google.com with SMTP id
- 5a478bee46e88-33bf40b0c8bso88106eec.0
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:17:38 -0700 (PDT)
+ id 1xMoKw-0008Pi-V6
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:16:13 -0400
+Received: by mail-dl1-x1235.google.com with SMTP id
+ a92af1059eb24-181516de561so770750c88.1
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793373457; x=1793978257; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793373368; x=1793978168; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gGfzDRU1LJ6XJUC1FoxM7ZI/nsagUrCZ0XaVKskAYMY=;
- b=kky5W2EvPUOaj5JYr0Nh9nG5Hxdp0n7cqt69aoaov6YE/ZxHP7QpFvVlS6j23VJyrh
- +Y1sRP6q/PpD2yVSKlRAoTDFyrWJ8K71KldSPaH1z1/85SwiDLVSIeOA/R1APkEnAh/P
- AZ9UcDw1QBBTiHkAqy0N9VKKHQUM3wqBO6YkBB+WtxoXhs5Vwp3HtAmhBzDaRSuTnExs
- fU0SFq80K+EHMiMvOIPtRf4dFRr65tXmbipoBUxzQRZt8lip9cOBbOo11G6PBFxiIC9C
- 3d2IopQVZw2AqG5upTdcv4I6+A7+ohZ/CzpPX6/Mr+DKkhJKn9GgREPeFEdSMIwNX25h
- 74mQ==
+ bh=etdm1aeawsytO27AD2qjJhqW2J7wH4UjI2RO2JWtCa8=;
+ b=s8cjdxinyd7QRoKvA7vJC+7PAQe4KEGVx1Je0jfh6rIA03/cfwmh+VlZ6tk7GcOreD
+ A+jjuCehSnCzXTics+wlFT6oCczCtz+iPU9WfXou6YqQPqgZDnFsBbdi7AHKIxEvLO+8
+ G88G++j8cGb8nvQS1DoxSYx2KCnF0/boCvQvX4LtDkU8vlXB1Z12bCCIUNBnVsAMCpNN
+ Spzxj+JN+saavfkfYOCSn2vh/oTWighgWB/zc64iVHDVZJskUjXqgBezED4mvJhA8CKU
+ F8JcxO75yeqx5q2ddbIdqGTs/zrs9LW0u5Dj/Mru2EzcezCoGFdKDbS912MnmtWHKgI6
+ N5GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793373457; x=1793978257;
+ d=1e100.net; s=20260707; t=1793373368; x=1793978168;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=gGfzDRU1LJ6XJUC1FoxM7ZI/nsagUrCZ0XaVKskAYMY=;
- b=kkPsd8RM7NiehYKeN1p8LBe5uvdGZtU1aH07Zca6y6xpttMV69B6q+SW6qnbS1g1Zl
- 74Loyk1pt94IeaxAMjYUvTW9dTX6gNrhlTHIOZCgVLT0veezKuf4fmblIpth82alOtNI
- Zaur/V7scYabJNt9gzXdIy60WJSCISDY9FF9X3ufx2otrUHpgjjMufntnSpHj177vYd+
- l9i3AhIfrfaEEqeEbhYZGP7LR9I+SH6oOaxOmxnqkb1ZfvR2m4qQQAR8B1FgREQPGHTo
- 8SSOZ+9evobk2K+wuQBrVT30mioxD1K8hDIwE/iNusGbbE7GrgbZFnVS/H6xvxZbuhck
- vmkw==
-X-Gm-Message-State: AFq9FYKnbtASuUdw2M+uabtDFjCyS5n3MF12t1zPwa9HM5w94vR3mAE6
- pad93Vz/d098lPbdwpPXV2vc9Z7siS2tIUUB3lOK34b51Ub1Ao8yagVucnBWKIAeRgM=
-X-Gm-Gg: AYBFou1PgRhsBAUAYLA1zsQdvYid117QA0lEBQfIaHwj+k56F95KQ4l2IwUD2wJ21eZ
- qpkFpeb2sjuQhV+9zOQlIRTCmHL1oejQX6u5g7R4gG7xjLoqpPYA3UwbtrIRz7aaeQw3UZhsvuO
- 5OXLl1g5mCXIMHPkqxu8EJSR7/QK6Y1LFTWC5kIG+jaPl4e3t/mjWoyEij3P8NdtP40Un1eUDnu
- BpOFBIzqkpccVHmEiwHGh0VtgsjFqImcXjQpSFbxQvH1ivNP8dqwGNa+63VfZJokdL4Y9DUPcgs
- 1ufjUZzplFIBcTkCp2BruuExtfXnrbvbIxx7U8O/yx2m/pSZZsH2L23DQdX4P7Yb7kSaOiTTG7Z
- RtfQslWuVnXTeehGwNemkEQBcA1bIPlOAXsCFhYuDUts5zr8r/OWCZtPmaFg6gcdr2SyoQnnX0F
- nts/vlgQYaRm8tAycetkxbuCEBQrC8yqXHR7bZ5kYJgEGUKkHirrm5IgEsZ1s+capEFxb9GbxQQ
- PEjPoLo2+2+u7CgtWvj1I/9vpv8t+aVz0usdxS1rbOzbSvqa81WCSh0k5yd4AAxF5SqCex1oUtk
- JhAoR0N9gKEHRcYkX4QGeegcsdEeJdYqQ5LKOU4iSL1x5MeG
-X-Received: by 2002:a05:701b:4589:b0:19b:39f4:88c9 with SMTP id
- a92af1059eb24-1ac5bbb487bmr3398481c88.10.1793373456937; 
- Fri, 30 Oct 2026 08:17:36 -0700 (PDT)
+ bh=etdm1aeawsytO27AD2qjJhqW2J7wH4UjI2RO2JWtCa8=;
+ b=io3tKTEbDB/3UVNGQ2+xJhEGM2M3Ev4UjzIHAVsE8UErDxMXUYmrDwh2mYR+91FmJO
+ Hw0odTjTHBg9zJ7gldRvpwn/P49weSzgRHzwsbGCVkVuY4fU4Np0IPHL7P8q+Tmxbjin
+ sPwgHv591n058jUkGsEUb1DGQPDDu8kasXWBVB7eryR6hq0z+KKeIG0ZcCIyLkctFvjY
+ vZI/FRC8I6/LPzt8fJ8Iu2SikYJQJsSZm57jwqbTpdUPko/mwAWUiqphPJY9Wm+LFPDz
+ bwX59jwnII7mabTssgSfxckiuz/HX7mZkGMOT8MZXj5tf1r+Ib2EDJ35CbdxbKZK3qin
+ phpA==
+X-Gm-Message-State: AFq9FYLJg7XaNxG9eKVE+mdXCV6b+aakee6YbzY+eBvz1HwAhqWr+JJj
+ xZqLegAPmagbEsoLfQ9jNPdzQ+bC30ZdMa11KymtMhbWff9g7EelgD1AxBMk1Pv10g8=
+X-Gm-Gg: AYBFou1nb+nc/YZBqR/L4vhdcQS6FkLPTEfs1zwaEQKjsdtHNjFsO30+75FAogV7/o0
+ EOrE2F1IyjILG5zlPzlEbspr+FjH4Z35V+KtkyUxEjZBX9ZaX5WOFG2OLtI5fd+ym4zRYR5a2+t
+ k9qY+F7NcVcCcoeTFmlO0ceG5sBaPBEn5EooVcfZx+RT/hB0v/LwN9LOMF2b+Ec1cNpLFZMJ3zC
+ 3RFjYs5XZhWD7NDJ3LezMrRp7VUaGIq9f3/59xiWI3LISAE4/c6vwrlnOCbSSiAqZjWifYgLcQH
+ diqCtDvrP56WeaIkCYYhMcZsSRiHeOgZv5ZN4ci4VTis8/dB/WJqzQf4qs8Xxc8H2gq+sAXuaiW
+ XX3rZOL7u4uJsGoZTiWMoxohhe08biE+bHHel55Dg08NGW9zaG6NWpIyJF11QZwGtR8QFng3Rg9
+ uLur18Y5T8VtAjEJdIB4lq2XYWVmDT8q+83yQ+nNs3bGk+pVPoNMSZhSoTEJs2EXDmtO1fGfhh/
+ oJ7aUHaqZcwlHI1tI04lEG1wdW4NRn1i0IFsZ2XgPNlUzsKbdCmpdaG0w1NUs10yOBF0wD1rQsr
+ hiP81kFKAnK39XHjeLvclz/XZHChVXWFntooNncVwQyJLotqbfZVTqISj5X2ejoF5lU/NA==
+X-Received: by 2002:a05:7022:ea57:b0:190:716:4822 with SMTP id
+ a92af1059eb24-1ac599f506cmr3074840c88.8.1793373367717; 
+ Fri, 30 Oct 2026 08:16:07 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1ac1854d925sm12770449c88.7.2026.10.30.08.17.27
+ a92af1059eb24-1ac1854d925sm12770449c88.7.2026.10.30.08.15.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 08:17:36 -0700 (PDT)
+ Fri, 30 Oct 2026 08:16:06 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Anthony PERARD <anthony@xenproject.org>, Felipe Balbi <balbi@kernel.org>,
@@ -100,17 +100,17 @@ Cc: Anthony PERARD <anthony@xenproject.org>, Felipe Balbi <balbi@kernel.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>,
  Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
-Subject: [PATCH 09/15] hw/ppc: expand DEFINE_MACHINE for PowerPC machines
-Date: Fri, 30 Oct 2026 23:15:30 +0800
-Message-ID: <20261030151539.1872-10-luoyonggang@gmail.com>
+Subject: [PATCH 01/15] hw/alpha: expand DEFINE_MACHINE in dp264.c
+Date: Fri, 30 Oct 2026 23:15:22 +0800
+Message-ID: <20261030151539.1872-2-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261030151539.1872-1-luoyonggang@gmail.com>
 References: <20261030151539.1872-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1331;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1235;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -137,231 +137,48 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Expand DEFINE_MACHINE() and DEFINE_MACHINE_EXTENDED() in the PowerPC
-machine files to explicit TypeInfo and type_register_static() calls,
-adding the pegasos base machine to pegasos_machine_types[] in
-hw/ppc/pegasos.c.
+Expand DEFINE_MACHINE() for the clipper machine to clipper_machine_typeinfo
+and clipper_machine_register_types() calling type_register_static().
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/ppc/amigaone.c      | 18 ++++++++++++++++--
- hw/ppc/pegasos.c       | 21 ++++++++++++++-------
- hw/ppc/ppc440_bamboo.c | 18 ++++++++++++++++--
- hw/ppc/prep.c          | 18 ++++++++++++++++--
- hw/ppc/sam460ex.c      | 18 ++++++++++++++++--
- hw/ppc/virtex_ml507.c  | 18 ++++++++++++++++--
- 6 files changed, 94 insertions(+), 17 deletions(-)
+ hw/alpha/dp264.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index 2e94e80b569..3cd3e92d2d8 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -416,8 +416,10 @@ static void amigaone_init(MachineState *machine)
+diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
+index f928e0cee82..83e9a0853c1 100644
+--- a/hw/alpha/dp264.c
++++ b/hw/alpha/dp264.c
+@@ -201,8 +201,10 @@ static void clipper_init(MachineState *machine)
      }
  }
  
--static void amigaone_machine_init(MachineClass *mc)
-+static void amigaone_machine_class_init(ObjectClass *oc, const void *data)
+-static void clipper_machine_init(MachineClass *mc)
++static void clipper_machine_class_init(ObjectClass *oc, const void *data)
  {
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +
-     mc->desc = "Eyetech AmigaOne/Mai Logic Teron";
-     mc->init = amigaone_init;
+     mc->desc = "Alpha DP264/CLIPPER";
+     mc->init = clipper_init;
      mc->block_default_type = IF_IDE;
-@@ -427,4 +429,16 @@ static void amigaone_machine_init(MachineClass *mc)
-     mc->default_ram_size = 512 * MiB;
- }
- 
--DEFINE_MACHINE("amigaone", amigaone_machine_init)
-+static const TypeInfo amigaone_machine_typeinfo = {
-+    .name       = MACHINE_TYPE_NAME("amigaone"),
-+    .parent     = TYPE_MACHINE,
-+    .class_init = amigaone_machine_class_init,
-+    .instance_size = sizeof(MachineState),
-+};
-+
-+static void amigaone_machine_register_types(void)
-+{
-+    type_register_static(&amigaone_machine_typeinfo);
-+}
-+
-+type_init(amigaone_machine_register_types)
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index fba2a558905..ffa63456320 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -732,8 +732,9 @@ static bool pegasos_setprop(MachineState *ms, const char *path,
-     return true;
- }
- 
--static void pegasos_machine_init(MachineClass *mc)
-+static void pegasos_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-     PPCVirtualHypervisorClass *vhc = PPC_VIRTUAL_HYPERVISOR_CLASS(mc);
-     VofMachineIfClass *vmc = VOF_MACHINE_CLASS(mc);
- 
-@@ -787,13 +788,19 @@ static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
-     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("7457_v1.2");
- }
- 
--DEFINE_MACHINE_EXTENDED("pegasos", MACHINE, PegasosMachineState,
--                        pegasos_machine_init, true, false,
--                        (const InterfaceInfo[]) {
--                        { TYPE_PPC_VIRTUAL_HYPERVISOR },
--                        { TYPE_VOF_MACHINE_IF }, { } })
--
- static const TypeInfo pegasos_machine_types[] = {
-+    {
-+        .name          = MACHINE_TYPE_NAME("pegasos"),
-+        .parent        = TYPE_MACHINE,
-+        .class_init    = pegasos_machine_class_init,
-+        .instance_size = sizeof(PegasosMachineState),
-+        .abstract      = true,
-+        .interfaces    = (const InterfaceInfo[]) {
-+            { TYPE_PPC_VIRTUAL_HYPERVISOR },
-+            { TYPE_VOF_MACHINE_IF },
-+            { }
-+        },
-+    },
-     {
-         .name          = MACHINE_TYPE_NAME("pegasos1"),
-         .parent        = TYPE_PEGASOS_MACHINE,
-diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
-index 2dde008b0e4..401f7bee572 100644
---- a/hw/ppc/ppc440_bamboo.c
-+++ b/hw/ppc/ppc440_bamboo.c
-@@ -256,8 +256,10 @@ static void bamboo_init(MachineState *machine)
-     }
- }
- 
--static void bamboo_machine_init(MachineClass *mc)
-+static void bamboo_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "bamboo";
-     mc->init = bamboo_init;
-     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("440epb");
-@@ -265,4 +267,16 @@ static void bamboo_machine_init(MachineClass *mc)
+@@ -213,4 +215,16 @@ static void clipper_machine_init(MachineClass *mc)
      mc->default_nic = "e1000";
  }
  
--DEFINE_MACHINE("bamboo", bamboo_machine_init)
-+static const TypeInfo bamboo_machine_typeinfo = {
-+    .name       = MACHINE_TYPE_NAME("bamboo"),
+-DEFINE_MACHINE("clipper", clipper_machine_init)
++static const TypeInfo clipper_machine_typeinfo = {
++    .name       = MACHINE_TYPE_NAME("clipper"),
 +    .parent     = TYPE_MACHINE,
-+    .class_init = bamboo_machine_class_init,
++    .class_init = clipper_machine_class_init,
 +    .instance_size = sizeof(MachineState),
 +};
 +
-+static void bamboo_machine_register_types(void)
++static void clipper_machine_register_types(void)
 +{
-+    type_register_static(&bamboo_machine_typeinfo);
++    type_register_static(&clipper_machine_typeinfo);
 +}
 +
-+type_init(bamboo_machine_register_types)
-diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-index 2672eb9e7a7..4afc4e20c67 100644
---- a/hw/ppc/prep.c
-+++ b/hw/ppc/prep.c
-@@ -441,8 +441,10 @@ static void ibm_40p_init(MachineState *machine)
-     }
- }
- 
--static void ibm_40p_machine_init(MachineClass *mc)
-+static void ibm_40p_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "IBM RS/6000 7020 (40p)",
-     mc->init = ibm_40p_init;
-     mc->max_cpus = 1;
-@@ -456,4 +458,16 @@ static void ibm_40p_machine_init(MachineClass *mc)
-     machine_add_audiodev_property(mc);
- }
- 
--DEFINE_MACHINE("40p", ibm_40p_machine_init)
-+static const TypeInfo ibm_40p_machine_typeinfo = {
-+    .name       = MACHINE_TYPE_NAME("40p"),
-+    .parent     = TYPE_MACHINE,
-+    .class_init = ibm_40p_machine_class_init,
-+    .instance_size = sizeof(MachineState),
-+};
-+
-+static void ibm_40p_machine_register_types(void)
-+{
-+    type_register_static(&ibm_40p_machine_typeinfo);
-+}
-+
-+type_init(ibm_40p_machine_register_types)
-diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-index b13dd224ba1..934ae3874c3 100644
---- a/hw/ppc/sam460ex.c
-+++ b/hw/ppc/sam460ex.c
-@@ -509,8 +509,10 @@ static void sam460ex_init(MachineState *machine)
-     boot_info->entry = entry;
- }
- 
--static void sam460ex_machine_init(MachineClass *mc)
-+static void sam460ex_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "aCube Sam460ex";
-     mc->init = sam460ex_init;
-     mc->block_default_type = IF_IDE;
-@@ -519,4 +521,16 @@ static void sam460ex_machine_init(MachineClass *mc)
-     mc->default_ram_id = "ppc4xx.sdram";
- }
- 
--DEFINE_MACHINE("sam460ex", sam460ex_machine_init)
-+static const TypeInfo sam460ex_machine_typeinfo = {
-+    .name       = MACHINE_TYPE_NAME("sam460ex"),
-+    .parent     = TYPE_MACHINE,
-+    .class_init = sam460ex_machine_class_init,
-+    .instance_size = sizeof(MachineState),
-+};
-+
-+static void sam460ex_machine_register_types(void)
-+{
-+    type_register_static(&sam460ex_machine_typeinfo);
-+}
-+
-+type_init(sam460ex_machine_register_types)
-diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-index 09686360e16..2a4c8c9fc93 100644
---- a/hw/ppc/virtex_ml507.c
-+++ b/hw/ppc/virtex_ml507.c
-@@ -281,12 +281,26 @@ static void virtex_init(MachineState *machine)
-     env->load_info = &boot_info;
- }
- 
--static void virtex_machine_init(MachineClass *mc)
-+static void virtex_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "Xilinx Virtex ML507 reference design";
-     mc->init = virtex_init;
-     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("440-xilinx");
-     mc->default_ram_id = "ram";
- }
- 
--DEFINE_MACHINE("virtex-ml507", virtex_machine_init)
-+static const TypeInfo virtex_machine_typeinfo = {
-+    .name       = MACHINE_TYPE_NAME("virtex-ml507"),
-+    .parent     = TYPE_MACHINE,
-+    .class_init = virtex_machine_class_init,
-+    .instance_size = sizeof(MachineState),
-+};
-+
-+static void virtex_machine_register_types(void)
-+{
-+    type_register_static(&virtex_machine_typeinfo);
-+}
-+
-+type_init(virtex_machine_register_types)
++type_init(clipper_machine_register_types)
 -- 
 2.55.0.windows.3
 
