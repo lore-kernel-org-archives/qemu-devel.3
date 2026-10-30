@@ -1,70 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DB0606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAED606A323
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kR8oF5LW
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=K/a0C0tU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMoMH-0004si-Lm; Fri, 30 Oct 2026 11:17:33 -0400
+	id 1xMoM6-0004ep-VK; Fri, 30 Oct 2026 11:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMoME-0004n7-L4
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:17:30 -0400
-Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
+ id 1xMoLY-0004Pl-OW
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:16:55 -0400
+Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMoMB-00005j-CP
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:17:30 -0400
-Received: by mail-dl1-x1230.google.com with SMTP id
- a92af1059eb24-1ae18eb9b69so218893c88.0
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:17:26 -0700 (PDT)
+ id 1xMoLU-0008Ss-Nw
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:16:47 -0400
+Received: by mail-dl1-x1231.google.com with SMTP id
+ a92af1059eb24-15dd124bbe7so1420465c88.1
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:16:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793373446; x=1793978246; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793373401; x=1793978201; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=8lrMJa0QKyERxDe5fpQfZvS/Pcg04syvA9gM/OyRcBA=;
- b=kR8oF5LW0Y79ydIYo5RMFRkYct55xYcszAyYA9Z6+M49DST4/AhZiS5F2v71HN1LGU
- Mr+4xhvaBmBVPb/vot1otcD++uKakm3dk/V/OUliRAfvvc6dKN3QPO44EtuB1iLaxISU
- iJaDXwjg9hnoVZD8f0f39kNFfTvCMRrn31lPfh8ZltaBzEckawP+3bPwNiwUtp9z0GCN
- xE2vScUQzdlK/Ef2Ksn5cTCRtfnIDpuBZcQo3lrwmriMJ5WJELZCR0G9yH/qMk42T3y1
- gm7uJGwfubTiEY+AADduyIJxxjv3xSen4p6B9YGfXQTdf8BlO56M8Nt3fd1+NQMmodUZ
- YoYg==
+ bh=zA4vatNcIKJhE+Eb39umMv/j/wzlc1JpQpFuLfiMq1c=;
+ b=K/a0C0tUUuO6kNQZf4bTC+W1V6fsZtma4zFADfaRDP/o0WNzWpbkhaJqJL1EqkmMSa
+ nxqes8o3pJxyj2CRDcfW3yD/T6fJSpAvEap8Sc9qQqnvDsholViI5jXLQ/M7mX3ak2J0
+ vqViKaCYSgBrsMBlKN8QyYpUUOxNN8NReVh8avw8W89CeS9/6HdZHUakxXUNMVXd3DWP
+ u1MKsW7FUSFO1Trw8ohc1na0+B97NbcWGVPLpeI0z5dP7nTIjmuE4WDDvNa5iV0qxNWq
+ mj52WWPs+BrIOgUdYIw6xVHvuQe0Plin/66wXTtSK7jxVcYq3Fbuv+fGLY6I0+EC6AZ5
+ t6kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793373446; x=1793978246;
+ d=1e100.net; s=20260707; t=1793373401; x=1793978201;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=8lrMJa0QKyERxDe5fpQfZvS/Pcg04syvA9gM/OyRcBA=;
- b=2Br/8mOzrXbBSA0MvA0hiM6SkZM49i0tAHBSLXoNhKU0Y3QNS5krRiGaogxqo+SV4y
- FkvNPFzod8D3Hmud1RTPp3yZM1+MH74ozFhHwJsITtuOrr8cd0Q9OtE6qx9nxz4661O6
- Rj4YGrc9BUjQUXP6oE/5SUPv887aC6NRtcwAxCRF5oFMDI09+mBjJDptAtfxddZ8fIAW
- QfSPyQ+aQ7AFuscxBBJrIdr+6bm5TTdo4SVuMJToEthiZM4aNdPxIy7ajDESuXR72arv
- 5ohkdgM7oUn6zBjU8nVElF19Mw0QrDBlv1jpbKVVMCaLh0BlLv9rtY1lajYvZBeM9nRr
- tn2g==
-X-Gm-Message-State: AFq9FYImmYIVwvS/JYwi8jg4WKUGqs5tjjZDopgI+AgJScd1pLIoHcg8
- 6rq51MvGN7KbTMfKl/FOwFVEjA3AYlilTW+NrTGRmFw87W0LAyHu9nRV2vF6DC0kVx8=
-X-Gm-Gg: AYBFou3YwobSG5B8OEpB7a8rbAL08qhUp2LHqc7Lc0iW7T/ta3CsrscIu7/kPGTMroN
- ZABitW3PEkALLZl8nDHow5hWVW2JdX+XbHVdAgAcezbJJbS5IGXx6h/q3ITURdxv8iiFkZHwDck
- lUkKXLm+2jfv85HYKYMRSeTh8WZyu3rv63CR8R68pov20N6hSKNFrYkdOumIzCcnFncGJpCH4hz
- k7MN3UbNOQVC0r/VHXyy3ASRyiBbAwh6HTGQII/q9cGHQ/6jZftMY/JBpIJyO2sZDLHFj2seDYs
- eOZIfukRdG0p5w8HepJQpD1iKcT29E875/bMidgigVsWcNmvLVvmJXtx56nYpKyl0E+OndP5BzP
- U1GWaAbZGayQQ5ejyKAJ9hc3ZScnq/j/OB3QizS+zabRe1WZRu8iq1CvYZZLDBHQace+iooFivC
- 9w6PxZZcYmvWwFtI+xAUmjEwVin8yRBV8P75nbhIbtOOZ18gpkRxLSQkdu6gLElckQt4bRJNwjB
- THS7ykRLTsQ4D0VkftoqcWSk3FmBAfFC7Upb30Uo1g54pC7aiTYeKoOJ+wKEA7rfHE+rs4biy11
- fzcq3bupL+y9JdyzWnEkQjYKR0g6ejuaelcr3a1D+cbIjr78SwlE9twdT0YwI8i6yhMGBw==
-X-Received: by 2002:a05:7023:a5b:10b0:160:90a3:ca8c with SMTP id
- a92af1059eb24-1ac5cb1c615mr3223077c88.7.1793373445630; 
- Fri, 30 Oct 2026 08:17:25 -0700 (PDT)
+ bh=zA4vatNcIKJhE+Eb39umMv/j/wzlc1JpQpFuLfiMq1c=;
+ b=CfNzZj/yz81DK03Q7mhaoXJB4CQQkGy9UDERFyfqTAHgsd9DhKZqerCtLA+ZzgXEBh
+ dTrLFH7ildr+HQ1bbpA5buKet+Wve9HyH8Y4Iu6I9YHmv1gAkGMbOXbG3eLwnWHFtbC5
+ smcgv8M0RfMJDUaLoeCFntwZ8eujZQmLft1CxTBgQICTu+iyxSZbF4otTTSWdgpN4JCo
+ wcBYy7I8pIyDhAwJdc6Eqipn/oMGmJpz2noPLFpoR+ZmNzaDtgl0hcJRS485htqyS8lB
+ teNTNBup3jDsnbtNnh64jn4kD3yjV6qFt4vDpFXEyWtPm8jmWfEIgYaPYi2q5DiuBE14
+ i4ZA==
+X-Gm-Message-State: AFq9FYLCyMbLExO8wYbtZegCFce4qkjmrvAyOgG57TQEy6BYOgxJWiFq
+ uQCkgGvFMksb0jzry5eu4RzemiOHwdXRC8yHdPKapUcdzVCPeJ0PMKPFz+0KzbN+gzU=
+X-Gm-Gg: AYBFou1OO3Y9VSrLpSOTvkejaVDV8N86QybRYZrVVfHua0fMbCw/CUtpJZR25O0+ZC2
+ t8bnK5ymRF1bVe0ZouH4PeEw8jJfy6QdrI0MksOlXytX2U6IoP7sZEOXYHCc+t/3eXGG9FJpEBV
+ nIio/xA3XVYmR7kVK4VErIpWq1AXHYqLtPxqnNAwAclii1YwYeXWEmLvkk6a5q0IXIzs1ripmST
+ D/i8QCs6NqSuLyVEI1A8OtfBAfOWGYMqa5QCb/BmCGlaV7f8wHFqtw7MNAlLaW21TtmA7theGaC
+ LFTC3GD1bJygaWC214xlBUGRvyMe1sKX2iPJA5KkSYHWCLCIg+Odw/CgSk7Kn/550b5TkRRAFh2
+ YzTpPCZB09DRj9x/BxC4RvFPdRsfWJKfu3UztUPHs5DzVEA0Rq+r+x1z6sy8YA8L4z+CDpNObrY
+ Sdb7Y0eh2GrhSb+p42WiiWecc6+saJi5idFPmdSEnNcrKE0FsD92CN7br4ZyLrJ//zsd+UlgfRI
+ 4mnt2IbeiEaSHNbNCwNy3Vnq8ay6H4uAlCB61jgJMX6FhRpjVf/dtcb3WUnn3wFuCq85ri0Qb7V
+ 5y9u/UCWnF0OnNzUR+DFLqWYapOeuYdePxvWEo7At5dKpX8O6Tgql9EHbeny8/tcziSobg==
+X-Received: by 2002:a05:7022:ea46:10b0:177:9a5b:a89 with SMTP id
+ a92af1059eb24-1ac5b5f270emr4076428c88.29.1793373401184; 
+ Fri, 30 Oct 2026 08:16:41 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1ac1854d925sm12770449c88.7.2026.10.30.08.17.16
+ a92af1059eb24-1ac1854d925sm12770449c88.7.2026.10.30.08.16.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 08:17:24 -0700 (PDT)
+ Fri, 30 Oct 2026 08:16:40 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Anthony PERARD <anthony@xenproject.org>, Felipe Balbi <balbi@kernel.org>,
@@ -100,17 +100,17 @@ Cc: Anthony PERARD <anthony@xenproject.org>, Felipe Balbi <balbi@kernel.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>,
  Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
-Subject: [PATCH 08/15] hw/mips: expand DEFINE_MACHINE for MIPS machines
-Date: Fri, 30 Oct 2026 23:15:29 +0800
-Message-ID: <20261030151539.1872-9-luoyonggang@gmail.com>
+Subject: [PATCH 04/15] hw/tricore: expand DEFINE_MACHINE in tricore_testboard.c
+Date: Fri, 30 Oct 2026 23:15:25 +0800
+Message-ID: <20261030151539.1872-5-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261030151539.1872-1-luoyonggang@gmail.com>
 References: <20261030151539.1872-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1230.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -137,120 +137,47 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Expand DEFINE_MACHINE() in hw/mips/boston.c, hw/mips/fuloong2e.c, and
-hw/mips/malta.c to explicit TypeInfo and type_register_static() calls,
-reusing mips_malta_register_types() in hw/mips/malta.c.
+Expand DEFINE_MACHINE() in hw/tricore/tricore_testboard.c to
+ttb_machine_typeinfo and ttb_machine_register_types() calling
+type_register_static().
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/mips/boston.c    | 18 ++++++++++++++++--
- hw/mips/fuloong2e.c | 18 ++++++++++++++++--
- hw/mips/malta.c     | 12 ++++++++++--
- 3 files changed, 42 insertions(+), 6 deletions(-)
+ hw/tricore/tricore_testboard.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/hw/mips/boston.c b/hw/mips/boston.c
-index 4579df23eb7..2c6edebe257 100644
---- a/hw/mips/boston.c
-+++ b/hw/mips/boston.c
-@@ -839,8 +839,10 @@ static void boston_mach_init(MachineState *machine)
-     }
+diff --git a/hw/tricore/tricore_testboard.c b/hw/tricore/tricore_testboard.c
+index d5d796c8eec..2a25f090520 100644
+--- a/hw/tricore/tricore_testboard.c
++++ b/hw/tricore/tricore_testboard.c
+@@ -106,11 +106,25 @@ static void tricoreboard_init(MachineState *machine)
+     tricore_testboard_init(machine, 0x183);
  }
  
--static void boston_mach_class_init(MachineClass *mc)
-+static void boston_mach_class_init(ObjectClass *oc, const void *data)
+-static void ttb_machine_init(MachineClass *mc)
++static void ttb_machine_class_init(ObjectClass *oc, const void *data)
  {
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +
-     mc->desc = "MIPS Boston";
-     mc->init = boston_mach_init;
-     mc->block_default_type = IF_IDE;
-@@ -850,4 +852,16 @@ static void boston_mach_class_init(MachineClass *mc)
-     mc->default_cpu_type = MIPS_CPU_TYPE_NAME("I6400");
+     mc->desc = "a minimal TriCore board";
+     mc->init = tricoreboard_init;
+     mc->default_cpu_type = TRICORE_CPU_TYPE_NAME("tc1796");
  }
  
--DEFINE_MACHINE("boston", boston_mach_class_init)
-+static const TypeInfo boston_mach_typeinfo = {
-+    .name       = MACHINE_TYPE_NAME("boston"),
+-DEFINE_MACHINE("tricore_testboard", ttb_machine_init)
++static const TypeInfo ttb_machine_typeinfo = {
++    .name       = MACHINE_TYPE_NAME("tricore_testboard"),
 +    .parent     = TYPE_MACHINE,
-+    .class_init = boston_mach_class_init,
++    .class_init = ttb_machine_class_init,
 +    .instance_size = sizeof(MachineState),
 +};
 +
-+static void boston_mach_register_types(void)
++static void ttb_machine_register_types(void)
 +{
-+    type_register_static(&boston_mach_typeinfo);
++    type_register_static(&ttb_machine_typeinfo);
 +}
 +
-+type_init(boston_mach_register_types)
-diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-index 9a712ee9309..96610ec1fdd 100644
---- a/hw/mips/fuloong2e.c
-+++ b/hw/mips/fuloong2e.c
-@@ -328,8 +328,10 @@ static void mips_fuloong2e_init(MachineState *machine)
-     network_init(pci_bus);
- }
- 
--static void mips_fuloong2e_machine_init(MachineClass *mc)
-+static void mips_fuloong2e_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "Fuloong 2e mini pc";
-     mc->init = mips_fuloong2e_init;
-     mc->block_default_type = IF_IDE;
-@@ -339,4 +341,16 @@ static void mips_fuloong2e_machine_init(MachineClass *mc)
-     machine_add_audiodev_property(mc);
- }
- 
--DEFINE_MACHINE("fuloong2e", mips_fuloong2e_machine_init)
-+static const TypeInfo mips_fuloong2e_machine_typeinfo = {
-+    .name       = MACHINE_TYPE_NAME("fuloong2e"),
-+    .parent     = TYPE_MACHINE,
-+    .class_init = mips_fuloong2e_machine_class_init,
-+    .instance_size = sizeof(MachineState),
-+};
-+
-+static void mips_fuloong2e_machine_register_types(void)
-+{
-+    type_register_static(&mips_fuloong2e_machine_typeinfo);
-+}
-+
-+type_init(mips_fuloong2e_machine_register_types)
-diff --git a/hw/mips/malta.c b/hw/mips/malta.c
-index 38c71f66f2e..0a10a2fea13 100644
---- a/hw/mips/malta.c
-+++ b/hw/mips/malta.c
-@@ -1285,8 +1285,10 @@ GlobalProperty malta_compat[] = {
- };
- const size_t malta_compat_len = G_N_ELEMENTS(malta_compat);
- 
--static void mips_malta_machine_init(MachineClass *mc)
-+static void mips_malta_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "MIPS Malta Core LV";
-     mc->init = mips_malta_init;
-     mc->block_default_type = IF_IDE;
-@@ -1301,11 +1303,17 @@ static void mips_malta_machine_init(MachineClass *mc)
-     compat_props_add(mc->compat_props, malta_compat, malta_compat_len);
- }
- 
--DEFINE_MACHINE("malta", mips_malta_machine_init)
-+static const TypeInfo mips_malta_machine_typeinfo = {
-+    .name       = MACHINE_TYPE_NAME("malta"),
-+    .parent     = TYPE_MACHINE,
-+    .class_init = mips_malta_machine_class_init,
-+    .instance_size = sizeof(MachineState),
-+};
- 
- static void mips_malta_register_types(void)
- {
-     type_register_static(&mips_malta_device);
-+    type_register_static(&mips_malta_machine_typeinfo);
- }
- 
- type_init(mips_malta_register_types)
++type_init(ttb_machine_register_types)
 -- 
 2.55.0.windows.3
 
