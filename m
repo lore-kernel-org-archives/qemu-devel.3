@@ -1,102 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8CD606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 00:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E25606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 00:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=BnVYDJ4D;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Kp2+xv4V
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=E7JmTwXv;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=XMRZo5qL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMaMT-0001og-P8; Thu, 29 Oct 2026 20:20:49 -0400
+	id 1xMaRy-0002jO-7k; Thu, 29 Oct 2026 20:26:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xMaMR-0001o6-Cx
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:20:47 -0400
+ id 1xMaRu-0002ij-4L
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:26:27 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xMaMO-00027F-WE
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:20:47 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1xMaRr-0002V3-EM
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 20:26:25 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TNKY634163177
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 00:20:43 GMT
+ 69TNKiKO614015
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 00:26:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- wS1CQm6uT+cL7emN36oMQ0vMXGCU/zw4yFn2erntLA0=; b=BnVYDJ4DWt4iDkjQ
- wwbwF2CwdymHz1w5zUwAwVdwhyZ3/eMjW1ZRhgri7A2F/8WOvGF/QbSvecBQpqiv
- g2vfvO1HjztHmioZyIzNdvH+Z33cxvdzutiXDy3ElHoYGKUrRCEBBdpYvyQ1vodi
- AmuayuiFg46YvX/M4r+lMCKoLiANP1f70UXD4qwk8VDq3RE7seohGT06oBbMuVcF
- GdMR41XyNMcp0+sRyFeQ5zKHFwzBOtO+a6/7PDHMg1THCWj9Y1zcToQLJ2skcEVQ
- 5Iql4G/FRnnrCPDLYlZQ381tq4+CEXUH/NknchCgwnNEKQA1js/pEko8nXEIGRbP
- 8TarAQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6pgedp-1
+ BLS6U/13+msDXX//d/eNc4iNopzMVfY5iIUy76jIxcw=; b=E7JmTwXvJQ0oe+My
+ a2cIcPztLPoCH7SmihVkhD+4xrrhZeZG3Pr+fSRHoBI51Be7IB87JJFgEEpFZnq3
+ z0a7JCIlE7vVoxsbC0VGT8pML1EgoXlHNFCj7HmIvd1OlCua9RhDAMB9rDDf9Fx7
+ C4mpOuVUXOZEMkA0joLbVbk2KxGA9pi8YPeiUphdHcWxUC+MDdr6PRppjaQOYRW0
+ DOkz7PfzbqatV2b28WmuTtASOpAfYe8T4ypWK1HXd4XRJ3pteE1COZj+c/F0EngL
+ YFtim8NgONZQNnLQ/ClnpXsXwaaEosJbT1ieFPXHOvE8LCvhN4g99ailP2UxNqPg
+ FEfq3w==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6p8fay-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 00:20:43 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93caf6c528aso19564685a.0
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:20:43 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 00:26:20 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-91c861b562eso4498466d6.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793319642; x=1793924442; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793319980; x=1793924780; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=wS1CQm6uT+cL7emN36oMQ0vMXGCU/zw4yFn2erntLA0=;
- b=Kp2+xv4VUeqeyi0gK3YKOEjBEt+qpvLvrVDkotGEuzW4+nH67jfIii50NlvJcpX5oJ
- hnfAtLCLEgW72YmHGtjp79XQ9q5VdVLQaH8fPoPFx6Xvp0Sg2JD3qU/N8mrOQ8Jtt6wq
- Kd19Ny/v9LDgCHYHM2lwtaRnq5Ucc+ToO+Xtxdi0Jik2QqUgiQ5BCa7Bjl7g1Ci4be1L
- QE6qVN3BeXvIAn5e3pM5Z1SdPT9L6uyTsOE52HVzzXQCrAE12Rj1/+aCChY/QhoU2DiW
- tVMYCbb1/RnSXuLE89fCOyBfbX1GeBrccb2QasaUatzWBFs17cGIWA1eL4wRJrk6HvSY
- AJcQ==
+ :content-type; bh=BLS6U/13+msDXX//d/eNc4iNopzMVfY5iIUy76jIxcw=;
+ b=XMRZo5qLo0inMMa+oVQakNV7Y1uSmE5GoklvYfP9iAkUhxAGc97sLYupRnpo0V57fW
+ TbxExuEkUTh+TMyDrt1QNPHuSPGJ6su/cWd3X2VJIVPXd6DeKCj5zVe76NCP0JBpJ61L
+ b84H8hEbx/nrL5bNQAVqy0e+OPjBJaY2yGqEnXubvQh3FoRDXE7K3SZNXdNhc2f0Gv5X
+ pN9klLDAdZNOjeM4DACX8S7DdHqIRpJg95WfyOi51YiTDEtj9kt6o3eIlY3A/4MBsS9h
+ PdEsKPO+3xtglos/vyQd5twa6lsA8IMAr99V3JIC5roJsnkiDpj0FgFSgcrkxPmQk3hL
+ Gl7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793319642; x=1793924442;
+ d=1e100.net; s=20260707; t=1793319980; x=1793924780;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wS1CQm6uT+cL7emN36oMQ0vMXGCU/zw4yFn2erntLA0=;
- b=OEtYmOYPzOnWlplBSm6tPWjLu9LUcALcECmQQZACKbnh5NUTnNLMMFs0TlqG1t+AJY
- pCHKMlItUaqJY9ixK77kgawXRxo7fJGrbp/7ewUNY3fINYXKTSUBWwni2aKmr7M/rN6V
- tNH3jddIlRJzRF1s7kShp6O7tOBKxJootZpB3QcvwSyKzuwtZLU+k5dzjN+i4ABDSP/+
- vnaWIflDp5CrTxxL0+u2phhcFlmf+AsVtqIfvY9HyYXZV58jbIOIbmSO/MYmwVgZriuA
- LX/0RhuXcwt51D0HpaqnXm/LoV2UKj/dtrmQDhneUec7WTERjas9hRff+Eq9dOHGBxpH
- gQEg==
+ bh=BLS6U/13+msDXX//d/eNc4iNopzMVfY5iIUy76jIxcw=;
+ b=ny3IjVLkwhqUQl2m2i6bT2jZEKB/8xheee8Z8RMlLEYnNxcaMzSHAEuAkIvlfM5U1i
+ fT8XMDuF+HoXDcyR5K5n0kTS/Iwg1Abna85Rtcg1qGWK9Id40yvpIkjekZRbULl6ZHid
+ 2oFFeIN7NlDolMxNfiAD+pc9Tpg+YKGM3jbN2L/uOC5JtcK9M/d5U+9beBfWt4nbAejj
+ sEYXV4vMtKDObj1kkEwZ5H1fsNicEGmpnRxPmx9jyaEjOEIaywylRLlvmErPHcrdwZOj
+ 3J/7uMjapN12yZK/NQ1U6O8F6Q4vaV3ZkaL5Vf/MVCu/QtU4w0sVOejlxDCi/IdL6MCF
+ UASQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwFSxXac+XVqr2MYmT4Nb1Gyr1wiVUFrxwlLNU0+VynwgIlT/LI3gt8sILfHdSxcx2DuFX8OTp44Axm@nongnu.org
-X-Gm-Message-State: AFq9FYIINekbgvU4kufy2l4qNbW5lNQTcT5qHuN08nY6Xq6o7KNAkjGN
- TYk3FqXmwK3ntSw+GmwhtvWASdnKlZGUEoi8I3JEO6fLXZE/o3z5+vcm6V0Ao8JevuHai2gwRkQ
- c6ZWAta35bZ7WK+TG8Rus58qkHK4X7BnL5fXD8eBRtyGZs0gvUeZBXfQ2ew==
-X-Gm-Gg: AYBFou2NJnx4d+pN7Cbl+kLcKEy9dC77QBIUVD3wYUemwY0bjrR5zKKkNbMHMteygQ/
- v6klfHvi51DrelmsLCcsrp3WviJaDPpagex+6SrweXORg92SoH+zzGiy1Ar6vA9Hsy25VAZdbK1
- RbCqZPFJBHp5yX/H9+znwkyVL4/reUJUnGmp+71k+WM61QbHsfE52KgW6XI5zIPbTKfiB8RQVJi
- S1WvHPzH/1m6b1wsZdlW4dRoiPpqC2STb+YyPHaMlAQBc+GSeUtrK/zbuGILCuN/JoBqU6lOZrC
- BrQv1YOLMjNcNaRGgcbUt1HCMl3aUMTbXNWZytQ3xdTFHP5knZMVQ0hJ+9/hnGIVAMvKPr7h+xM
- A2rKF+UarYS/KcTP141N5BlGKnYsPU0TExVbCF6GTaSTfo/SAOtgZCN+tLjANe3NTAdaJoJMKz5
- WjRRX8grGEqjbmR1hS1FQYGhdjGCwyJGd3yMeQ9oTnN7fEayZVpct3
-X-Received: by 2002:a05:620a:31a6:b0:93e:8614:bbe7 with SMTP id
- af79cd13be357-944214d6b44mr155209685a.12.1793319642202; 
- Thu, 29 Oct 2026 17:20:42 -0700 (PDT)
-X-Received: by 2002:a05:620a:31a6:b0:93e:8614:bbe7 with SMTP id
- af79cd13be357-944214d6b44mr155207485a.12.1793319641723; 
- Thu, 29 Oct 2026 17:20:41 -0700 (PDT)
+ AKwUvBz12N/t/XgIouYLvEQZ9fUhs4740SaIHAOjL9Aqxpc/Or1S5ScXjwpdR5mpb3l79JsXQcCnmbMGCxnM@nongnu.org
+X-Gm-Message-State: AFq9FYIgS8d7fY1dyc4jBa8CE+a6THMUe58WEVEeOF8UvWpyBNOiK0h+
+ qEaeT8klbD+hueIgXH47IbmzgctQFifWKvqgLhVAgCyukLXJqE/OLGY0PzdlFFqTcAp2Ni97MOq
+ FgQnR6BOlAzCYKvnNLpF63RTX4xIm0HrNnsN9HsA0sD7lhxsBTnMJ/ANYZg==
+X-Gm-Gg: AYBFou0mtYWIwdu/asFNF4ymU49zuiSHR/NaPdbY/ppznqseJTJuSs45QeIDTrz51GL
+ UXXgZYjHRpphmBPyzsN3s+55yFp4ah8p2L94H51YuR/qss5uCNJykxYq2ZmL0rdu2O7O1YeE6+6
+ ks601IcIldQEQHjOM/oYJdSixadakEYIx4V4HvPt0ZBzrhduMp6icnkFoaIpU1szipQwGndfcrs
+ yGrjoYAfoHGwHBhRMHMdHLcB9xSVkR/iGxKQ8ieKGO4OIKkYoPt/VgCXqdr/bJJaRDARVg0JJKW
+ imH2iPHcosu2iw07V5rRCRxEsXHFB2Z7beBq6r5I7/MI1YTlMWeqOEet1p0fch2CCRaP9tuk5hO
+ 3pRm8cair1KC3toW9j5cSbzUF07wUTKLa61DAVSbL3xF29yTUo86GK3dQnbFtJxwEyeUSgwKCYS
+ fdJ+vmIhYljDd+BY3xGGmLRa1hBxVkCzv4nzal4omTKPDrCw+LwhhU
+X-Received: by 2002:a05:6214:40f:b0:91c:5f4b:d2d7 with SMTP id
+ 6a1803df08f44-91ca4b6d8eamr9779316d6.47.1793319980050; 
+ Thu, 29 Oct 2026 17:26:20 -0700 (PDT)
+X-Received: by 2002:a05:6214:40f:b0:91c:5f4b:d2d7 with SMTP id
+ 6a1803df08f44-91ca4b6d8eamr9778886d6.47.1793319979449; 
+ Thu, 29 Oct 2026 17:26:19 -0700 (PDT)
 Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
  [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9442586685esm1367185a.23.2026.10.29.17.20.39
+ 6a1803df08f44-91ca7f401f5sm332996d6.19.2026.10.29.17.26.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 17:20:41 -0700 (PDT)
-Message-ID: <c463c10c-b3bb-4e1f-8051-47e6c501b870@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 19:20:39 -0500
+ Thu, 29 Oct 2026 17:26:18 -0700 (PDT)
+Message-ID: <4ab05d09-1c35-4fd7-9e84-8f7b97057685@oss.qualcomm.com>
+Date: Thu, 29 Oct 2026 19:26:16 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/20] target/hexagon: translate packets with HLX
- instructions
+Subject: Re: [PATCH 12/20] target/hexagon: add HLX packet slot and resource
+ checks
 To: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -105,40 +105,39 @@ Cc: Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Laurent Vivier <laurent@vivier.eu>
 References: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
- <20261029174413.643130-12-marco.liebel@oss.qualcomm.com>
+ <20261029174413.643130-13-marco.liebel@oss.qualcomm.com>
 Content-Language: en-US
 From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261029174413.643130-12-marco.liebel@oss.qualcomm.com>
+In-Reply-To: <20261029174413.643130-13-marco.liebel@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfXzWeLLILFp8ua
- iOM8UUY15Y/xFsapQfZ1tVYBRuNmofkB6fTkM/glluYRd1pKDuCDgfX/LBP+1KL47Y+S0ns0SVg
- hoGpyI+xa2Bl33Nin/JT8zL5RpNTWiDep5k+FNexBgyZV6jJ4J2gOfUfxTcdOgXD1yTEv0WDCJ3
- 2EANzHCRCYTqJLjEAN5vCicBvat9e7vwchw3YJJ6N3vpkzC/uyobBBMKFpN0iRrc680Cpi457ZP
- TtNWRGx7OUYH3NgTwc6/YUeXDV6AtNjc08LSx6z1EkBZPqKAOhJ8d8BcUFRv/ODQir9JRjp8NW0
- 5sVYi5tLbDI4IRPUW6kraCyzui7MohYwwHpY0o0odA8D3UQU82zmUqLf5UYX4RR3d2Ot5cnABNX
- 9Nu8Ahxjs89jhg0yjuDsfWq8+sY2UsSFgak3GIdhGP0q0jZ8arI6hrlR1q5RxMik50u5CQ6Jj7A
- Xtmq3Jo/MCh3gwGhQEw==
-X-Proofpoint-ORIG-GUID: YWFQ9jkd_BBTQvjJiOzlwV1R97DXs8Qh
-X-Proofpoint-GUID: YWFQ9jkd_BBTQvjJiOzlwV1R97DXs8Qh
-X-Authority-Analysis: v=2.4 cv=AJ83otAg c=1 sm=1 tr=0 ts=6ae3e2db cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfX0bC2XrTaUaUu
+ 4y6qH/oKNNBOYuHf2Ao4KCKXVAnfvSRY486WcDThAudVGK7UawKT8xNOjrZtM+yfuyrN06GiwdJ
+ 1/cXg7K1Qrr2LshZG9xg0SOGv7dF2PYidOhgpQp+mFUm6DNYk9EP5qxkMwehvA76Awa8ilZQNnH
+ vyhVkSiB2DosQJxYaZv85omf2aIAncIPLIAUxySmlxC7YAG/HuLCh2L6pRLjg70DB+iP0PMUNpk
+ bSNhoXqu2X5avzoP3xTNpHRv8iycWVAdd/gULxf9Dl0GJa54y7bJcj7sJiLroSzP6YXqokLhAly
+ W0upaaDeDOL43woWKiaQFintf5L7arSInoDBhiI/fJZrB0kJ/rNfycLsxTWEqgFyUVTCGLV3dFL
+ 6Q4DBq2u8jcjK2kLMpTuHMvv3YxF7zVIlSVqC2R8w8yHVIxvAgHHzpXDeGhTYCUFgJyNNRBHeXg
+ vCvqrGop1lkb9uKLX9Q==
+X-Proofpoint-GUID: rr8B4xOU8hY4bIxiQLzkUwFjKxVfzqBw
+X-Authority-Analysis: v=2.4 cv=Lp4HWXdc c=1 sm=1 tr=0 ts=6ae3e42d cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=mofBcHnhcE-rAXqJ63AA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfX8Z/Vwxwpsrmz
- oEH0aBIcU8bU7YMfl9nX0owgHT4izWxBNqgALF866tepZjGstnVYNxgffIN1MnsRVCNpMj0fxwH
- 6NtERgbCrq7Jbb/95oTptIEx3k15bG4=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=vAVFwSlfQmMQzj924bcA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-ORIG-GUID: rr8B4xOU8hY4bIxiQLzkUwFjKxVfzqBw
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDAwMSBTYWx0ZWRfX6pBrPCtJz4+6
+ Ag6jmcfWpGM6T+Gec4tTu0NU2+bCpQGR4CaYA52D3Fd2CnRnX/6IllYUFSFJnHJ/MzWzRVkrJ7n
+ Tv90mjFWaXdEtjxaII5nRHAkvnnTd5w=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_07,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 bulkscore=0 phishscore=0 malwarescore=0
- lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610300001
+ phishscore=0 adultscore=0 malwarescore=0 clxscore=1015 impostorscore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300001
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -169,292 +168,173 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 
 On 10/29/2026 12:44 PM, Marco Liebel wrote:
-> Track HLX register updates and commit them at packet end. Run .tmp
-> loads, other instructions, and stores in separate passes.
->
-> Raise the disabled-coprocessor exception without an active context.
+> Add HLX slot rules and reject packets that reuse an HLX resource.
 >
 > Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   target/hexagon/translate.c | 108 +++++++++++++++++++++++++++++++++++--
->   target/hexagon/translate.h |  48 +++++++++++++++++
->   2 files changed, 153 insertions(+), 3 deletions(-)
+>   target/hexagon/hlx/decode_ext_hlx.c | 117 ++++++++++++++++++++++++++++
+>   target/hexagon/hlx/decode_ext_hlx.h |  14 ++++
+>   target/hexagon/meson.build          |   1 +
+>   3 files changed, 132 insertions(+)
+>   create mode 100644 target/hexagon/hlx/decode_ext_hlx.c
+>   create mode 100644 target/hexagon/hlx/decode_ext_hlx.h
 
 Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
-
-> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-> index ed246e226f..41b7d3b0fb 100644
-> --- a/target/hexagon/translate.c
-> +++ b/target/hexagon/translate.c
-> @@ -18,6 +18,7 @@
->   #define QEMU_GENERATE
->   #include "qemu/osdep.h"
->   #include "cpu.h"
-> +#include "hw/hexagon/hexagon_hlx.h"
->   #include "tcg/tcg-op.h"
->   #include "tcg/tcg-op-gvec.h"
->   #include "exec/helper-gen.h"
-> @@ -33,6 +34,8 @@
->   #include "genptr.h"
->   #include "printinsn.h"
->   #include "exec/target_page.h"
+> diff --git a/target/hexagon/hlx/decode_ext_hlx.c b/target/hexagon/hlx/decode_ext_hlx.c
+> new file mode 100644
+> index 0000000000..cb7fc58d7d
+> --- /dev/null
+> +++ b/target/hexagon/hlx/decode_ext_hlx.c
+> @@ -0,0 +1,117 @@
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "decode.h"
+> +#include "opcodes.h"
+> +#include "insn.h"
+> +#include "iclass.h"
 > +#include "hlx/hlx.h"
-> +#include "trace.h"
->   
->   #define HELPER_H "helper.h"
->   #include "exec/helper-info.c.inc"
-> @@ -341,6 +344,26 @@ static bool need_slot_cancelled(Packet *pkt)
->       return false;
->   }
->   
-> +#ifndef CONFIG_USER_ONLY
-> +static void gen_hlx_check(DisasContext *ctx)
+> +#include "hlx/decode_ext_hlx.h"
+> +
+> +typedef struct {
+> +    bool store;
+> +    bool load;
+> +    bool shift;
+> +    bool mpy;
+> +} hlx_pkt_resources_t;
+> +
+> +static bool check_hlx_slot_constraints(Packet *pkt, int slot, int insn_idx,
+> +                                       hlx_pkt_resources_t *resources)
 > +{
-> +    TCGv xe = tcg_temp_new();
-> +    TCGv_ptr hlx_ctx = tcg_temp_new_ptr();
-> +    TCGLabel *raise = gen_new_label();
-> +    TCGLabel *enabled = gen_new_label();
+> +    int opcode = pkt->insn[insn_idx].opcode;
 > +
-> +    tcg_gen_extract_tl(xe, hex_t_sreg[HEX_SREG_CCR],
-> +            reg_field_info[CCR_XE3].offset,
-> +            reg_field_info[CCR_XE3].width);
-> +    tcg_gen_brcondi_tl(TCG_COND_EQ, xe, 0, raise);
-> +    tcg_gen_ld_ptr(hlx_ctx, tcg_env, offsetof(CPUHexagonState, hlx_ctx));
-> +    tcg_gen_brcondi_ptr(TCG_COND_NE, hlx_ctx, 0, enabled);
-> +    gen_set_label(raise);
-> +    gen_precise_exception(HEX_CAUSE_NO_COPROC3_ENABLE, ctx->pkt.pc);
-> +    gen_set_label(enabled);
+> +    if (slot == 0) {
+> +        if (!GET_ATTRIB(opcode, A_STORE)) {
+> +            return false;
+> +        }
+> +        if (resources->store) {
+> +            return false;
+> +        }
+> +        resources->store = true;
+> +    } else if (slot == 1) {
+> +        if (!GET_ATTRIB(opcode, A_LOAD)) {
+> +            return false;
+> +        }
+> +        if (resources->load) {
+> +            return false;
+> +        }
+> +        resources->load = true;
+> +    } else if (slot == 2) {
+> +        if (!GET_ATTRIB(opcode, A_HLX_SHIFT) &&
+> +            !GET_ATTRIB(opcode, A_HLX_COMMON_ALU)) {
+> +            return false;
+> +        }
+> +        if (resources->shift) {
+> +            return false;
+> +        }
+> +        resources->shift = true;
+> +    } else if (slot == 3) {
+> +        if (!GET_ATTRIB(opcode, A_HLX_MPY) &&
+> +            !GET_ATTRIB(opcode, A_HLX_COMMON_ALU)) {
+> +            return false;
+> +        }
+> +        if (resources->mpy) {
+> +            return false;
+> +        }
+> +        resources->mpy = true;
+> +    }
+> +
+> +    return true;
 > +}
-> +#endif
 > +
->   #ifndef CONFIG_USER_ONLY
->   static bool sreg_write_ends_tb(int reg_num)
->   {
-> @@ -678,6 +701,12 @@ static void clear_pkt_ctx(DisasContext *ctx)
->       bitmap_zero(ctx->qregs_multi_write, NUM_QREGS);
->       bitmap_zero(ctx->qregs_uncond, NUM_QREGS);
->       ctx->qreg_log_idx = 0;
-> +    ctx->lreg_log_idx = 0;
-> +    ctx->lreg_tmp_log_idx = 0;
-> +    bitmap_zero(ctx->lregs_updated, NUM_LREGS);
-> +    bitmap_zero(ctx->lregs_multi_write, NUM_LREGS);
-> +    bitmap_zero(ctx->lregs_updated_tmp, NUM_LREGS);
-> +    ctx->hlx_base_loaded = false;
->       for (i = 0; i < STORES_MAX; i++) {
->           ctx->store_width[i] = 0;
->       }
-> @@ -701,6 +730,11 @@ static bool pkt_has_write_conflict(DisasContext *ctx)
->           return true;
->       }
->   
-> +    /* HLX instructions are unpredicated, so multiple writes conflict. */
-> +    if (!bitmap_empty(ctx->lregs_multi_write, NUM_LREGS)) {
+> +bool hlx_ext_decode_checks(Packet *pkt, bool disas_only)
+> +{
+> +    hlx_pkt_resources_t resources = {
+> +        .store = false,
+> +        .load = false,
+> +        .shift = false,
+> +        .mpy = false
+> +    };
+> +
+> +    /* Slots are assigned only for execution. */
+> +    if (disas_only) {
 > +        return true;
 > +    }
 > +
->   #ifndef CONFIG_USER_ONLY
->       if (!bitmap_empty(ctx->gregs_multi_write, NUM_GREGS)) {
->           return true;
-> @@ -742,6 +776,17 @@ static void analyze_packet(DisasContext *ctx)
->       ctx->need_commit = need_commit(ctx);
->   }
->   
-> +static bool pkt_has_hlx_store(Packet *pkt)
-> +{
 > +    for (int i = 0; i < pkt->num_insns; i++) {
-> +        int opcode = pkt->insn[i].opcode;
-> +        if (GET_ATTRIB(opcode, A_HLX) && GET_ATTRIB(opcode, A_STORE)) {
-> +            return true;
+> +        if (GET_ATTRIB(pkt->insn[i].opcode, A_HLX) &&
+> +            !check_hlx_slot_constraints(pkt, pkt->insn[i].slot, i,
+> +                                        &resources)) {
+> +            return false;
 > +        }
 > +    }
-> +    return false;
+> +    return true;
 > +}
 > +
->   static void gen_start_packet(DisasContext *ctx)
->   {
->       int i;
-> @@ -776,6 +821,11 @@ static void gen_start_packet(DisasContext *ctx)
->       if (need_slot_cancelled(&ctx->pkt)) {
->           tcg_gen_movi_tl(hex_slot_cancelled, 0);
->       }
-> +    if (pkt_has_hlx_store(&ctx->pkt)) {
-> +        /* An earlier fault can leave a store logged. */
-> +        tcg_gen_st8_i32(tcg_constant_i32(0), tcg_env,
-> +                        offsetof(CPUHexagonState, hlx_store_pending));
-> +    }
->       ctx->branch_taken = NULL;
->       if (ctx->pkt.pkt_has_cof) {
->           ctx->branch_taken = tcg_temp_new();
-> @@ -860,6 +910,14 @@ static void gen_start_packet(DisasContext *ctx)
->           gen_precise_exception(HEX_CAUSE_NO_COPROC_ENABLE, ctx->pkt.pc);
->           ctx->hvx_check_emitted = true;
->       }
-> +    if (ctx->pkt.pkt_has_hlx) {
-> +        if (!ctx->hlx_coproc_enabled) {
-> +            gen_precise_exception(HEX_CAUSE_NO_COPROC3_ENABLE, ctx->pkt.pc);
-> +        } else if (!ctx->hlx_check_emitted) {
-> +            gen_hlx_check(ctx);
-> +            ctx->hlx_check_emitted = true;
-> +        }
-> +    }
->   #endif
->   }
->   
-> @@ -1206,6 +1264,17 @@ static void gen_commit_hvx(DisasContext *ctx)
->       }
->   }
->   
-> +static void gen_commit_hlx(DisasContext *ctx)
+> +SlotMask hlx_ext_decode_find_iclass_slots(int opcode)
 > +{
-> +    int i;
-> +
-> +    for (i = 0; i < ctx->lreg_log_idx; i++) {
-> +        int rnum = ctx->lreg_log[i];
-> +        gen_helper_hlx_commit_reg(tcg_env, tcg_constant_i32(rnum));
+> +    if (GET_ATTRIB(opcode, A_RESTRICT_SLOT0ONLY) ||
+> +        GET_ATTRIB(opcode, A_STORE)) {
+> +        return SLOTS_0;
+> +    }
+> +    if (GET_ATTRIB(opcode, A_RESTRICT_SLOT1ONLY) ||
+> +        GET_ATTRIB(opcode, A_LOAD)) {
+> +        return SLOTS_1;
+> +    }
+> +    if (GET_ATTRIB(opcode, A_RESTRICT_SLOT2ONLY) ||
+> +        GET_ATTRIB(opcode, A_HLX_SHIFT)) {
+> +        return SLOTS_2;
+> +    }
+> +    if (GET_ATTRIB(opcode, A_RESTRICT_SLOT3ONLY) ||
+> +        GET_ATTRIB(opcode, A_HLX_MPY)) {
+> +        return SLOTS_3;
+> +    }
+> +    if (GET_ATTRIB(opcode, A_HLX_COMMON_ALU) ||
+> +        GET_ATTRIB(opcode, A_HLX_SLOT23)) {
+> +        return SLOTS_23;
+> +    }
+> +    if (GET_ATTRIB(opcode, A_HLX_ANY_RESOURCE)) {
+> +        return SLOTS_0123;
 > +    }
 > +
+> +    g_assert_not_reached();
+> +    return SLOTS_0123;
 > +}
+> diff --git a/target/hexagon/hlx/decode_ext_hlx.h b/target/hexagon/hlx/decode_ext_hlx.h
+> new file mode 100644
+> index 0000000000..7feecff6c1
+> --- /dev/null
+> +++ b/target/hexagon/hlx/decode_ext_hlx.h
+> @@ -0,0 +1,14 @@
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
->   static void update_exec_counters(DisasContext *ctx)
->   {
->       int num_real_insns = 0;
-> @@ -1332,6 +1401,9 @@ static void gen_commit_packet(DisasContext *ctx)
->       }
->   
->       process_store_log(ctx);
-> +    if (pkt_has_hlx_store(&ctx->pkt)) {
-> +        gen_helper_hlx_commit_store(tcg_env);
-> +    }
->   
->       gen_reg_writes(ctx);
->   #ifndef CONFIG_USER_ONLY
-> @@ -1342,6 +1414,9 @@ static void gen_commit_packet(DisasContext *ctx)
->       if (ctx->pkt.pkt_has_hvx) {
->           gen_commit_hvx(ctx);
->       }
-> +    if (ctx->pkt.pkt_has_hlx) {
-> +        gen_commit_hlx(ctx);
-> +    }
->       update_exec_counters(ctx);
->   
->       if (ctx->pkt.vhist_insn != NULL) {
-> @@ -1404,9 +1479,31 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
->           }
->   #endif
->           gen_start_packet(ctx);
-> -        for (i = 0; i < ctx->pkt.num_insns; i++) {
-> -            ctx->insn = &ctx->pkt.insn[i];
-> -            gen_insn(ctx);
-> +        if (ctx->pkt.pkt_has_hlx) {
-> +            /* Run .tmp loads first and stores last. */
-> +            for (int pass = 0; pass < 3; pass++) {
-> +                for (i = 0; i < ctx->pkt.num_insns; i++) {
-> +                    Insn *insn = &ctx->pkt.insn[i];
-> +                    bool tmp = GET_ATTRIB(insn->opcode, A_HLX_TMP);
-> +                    bool store = !tmp && GET_ATTRIB(insn->opcode, A_STORE);
-> +                    if (pass != (tmp ? 0 : store ? 2 : 1)) {
-> +                        continue;
-> +                    }
-> +                    ctx->insn = insn;
-> +                    if (GET_ATTRIB(insn->opcode, A_HLX) &&
-> +                        trace_event_get_state_backends(
-> +                            TRACE_HEXAGON_HLX_OP)) {
-> +                        gen_helper_hlx_trace_op(tcg_env,
-> +                            tcg_constant_i32(insn->opcode));
-> +                    }
-> +                    gen_insn(ctx);
-> +                }
-> +            }
-> +        } else {
-> +            for (i = 0; i < ctx->pkt.num_insns; i++) {
-> +                ctx->insn = &ctx->pkt.insn[i];
-> +                gen_insn(ctx);
-> +            }
->           }
->           gen_commit_packet(ctx);
->           ctx->base.pc_next += ctx->pkt.encod_pkt_size_in_bytes;
-> @@ -1426,6 +1523,11 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
->       ctx->num_packets = 0;
->       ctx->num_insns = 0;
->       ctx->num_hvx_insns = 0;
-> +#ifndef CONFIG_USER_ONLY
-> +    ctx->hlx_coproc_enabled = hex_cpu->hlx != NULL &&
-> +                              hex_cpu->hlx->contexts_bitmap != 0;
-> +    ctx->hlx_check_emitted = false;
-> +#endif
->       ctx->branch_cond = TCG_COND_NEVER;
->       ctx->is_tight_loop = FIELD_EX32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP);
->       ctx->short_circuit = hex_cpu->cfg.short_circuit;
-> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-> index bc5f202163..fa7e627200 100644
-> --- a/target/hexagon/translate.h
-> +++ b/target/hexagon/translate.h
-> @@ -91,6 +91,7 @@ typedef struct DisasContext {
->       TCGCond branch_cond;
->       target_ulong branch_dest;
->       bool is_tight_loop;
-> +    bool hlx_check_emitted;
->       bool short_circuit;
->       bool ieee_fp_extension;
->       bool read_after_write;
-> @@ -101,10 +102,57 @@ typedef struct DisasContext {
->       TCGv dczero_addr;
->       bool hvx_coproc_enabled;
->       bool hvx_check_emitted;
-> +    bool hlx_coproc_enabled;
-> +    TCGv_ptr hlx_base;
-> +    bool     hlx_base_loaded;
-> +    int lreg_log[NUM_LREGS];
-> +    int lreg_log_idx;
-> +    int lreg_tmp_log[NUM_LREGS];
-> +    int lreg_tmp_log_idx;
-> +    DECLARE_BITMAP(lregs_updated, NUM_LREGS);
-> +    DECLARE_BITMAP(lregs_multi_write, NUM_LREGS);
-> +    DECLARE_BITMAP(lregs_updated_tmp, NUM_LREGS);
->   } DisasContext;
->   
->   bool is_gather_store_insn(DisasContext *ctx);
->   
-> +static inline TCGv_ptr ctx_get_hlx_base(DisasContext *ctx)
-> +{
-> +    if (!ctx->hlx_base_loaded) {
-> +        ctx->hlx_base = tcg_temp_new_ptr();
-> +        tcg_gen_ld_ptr(ctx->hlx_base, tcg_env,
-> +                       offsetof(CPUHexagonState, hlx_ctx));
-> +        ctx->hlx_base_loaded = true;
-> +    }
-> +    return ctx->hlx_base;
-> +}
+> +#ifndef HEXAGON_DECODE_EXT_HLX_H
+> +#define HEXAGON_DECODE_EXT_HLX_H
 > +
-> +static inline void ctx_log_lreg_write(DisasContext *ctx, int rnum)
-> +{
-> +    if (test_bit(rnum, ctx->lregs_updated)) {
-> +        set_bit(rnum, ctx->lregs_multi_write);
-> +    } else {
-> +        ctx->lreg_log[ctx->lreg_log_idx] = rnum;
-> +        ctx->lreg_log_idx++;
-> +        set_bit(rnum, ctx->lregs_updated);
-> +    }
-> +}
+> +#include "insn.h"
 > +
-> +static inline void ctx_log_lreg_write_pair(DisasContext *ctx, int rnum)
-> +{
-> +    ctx_log_lreg_write(ctx, rnum ^ 0);
-> +    ctx_log_lreg_write(ctx, rnum ^ 1);
-> +}
+> +bool hlx_ext_decode_checks(Packet *pkt, bool disas_only);
+> +SlotMask hlx_ext_decode_find_iclass_slots(int opcode);
 > +
-> +static inline void ctx_log_lreg_tmp_write(DisasContext *ctx, int rnum)
-> +{
-> +    if (!test_bit(rnum, ctx->lregs_updated_tmp)) {
-> +        ctx->lreg_tmp_log[ctx->lreg_tmp_log_idx] = rnum;
-> +        ctx->lreg_tmp_log_idx++;
-> +        set_bit(rnum, ctx->lregs_updated_tmp);
-> +    }
-> +}
-> +
->   #ifndef CONFIG_USER_ONLY
->   static inline void ctx_log_greg_write(DisasContext *ctx, int rnum)
->   {
+> +#endif /* HEXAGON_DECODE_EXT_HLX_H */
+> diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+> index fd4983343d..f9e820286e 100644
+> --- a/target/hexagon/meson.build
+> +++ b/target/hexagon/meson.build
+> @@ -265,6 +265,7 @@ hexagon_ss.add(files(
+>       'mmvec/system_ext_mmvec.c',
+>       'mmvec/hvx_ieee_fp.c',
+>       'mmvec/hvx_qfloat.c',
+> +    'hlx/decode_ext_hlx.c',
+>       'hlx_helper.c',
+>       'hlx_gvec_tables.c',
+>   ))
 
