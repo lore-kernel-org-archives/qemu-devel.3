@@ -1,83 +1,83 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DB4606A323
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 11:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8781E606A325
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 11:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Cd0E4BlS
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zURiqgz3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMkgE-0001Se-8d; Fri, 30 Oct 2026 07:21:54 -0400
+	id 1xMkgG-0001Up-RT; Fri, 30 Oct 2026 07:21:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
- id 1xMkfw-0001L5-Fk
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:37 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1xMkg3-0001OM-SU
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:43 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
- id 1xMkfs-0002kj-Uj
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:35 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-48e3b22e971so275919f8f.0
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 04:21:32 -0700 (PDT)
+ id 1xMkg1-0002mw-Q6
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 07:21:43 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-48e00eee27dso315541f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 04:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793359291; x=1793964091; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793359300; x=1793964100; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=vd5BWeOhgl4OJE0+2tUQcWMWNMpBRcJ6kN3JbG9lrMQ=;
- b=Cd0E4BlSvDpPikwFm9m6opqrk++Zo1sCsfN0zBmcVR9ogwUxrNFT3o4IothA3+KxXK
- OWgB0rDG945PK6qc0euXraa6mZHn/VyT+RKNGZ7Avv+NYWDa26HXnIB+ulLuDcOyEXXB
- 2n2RCavU9avvF1yFel3z+lwiD8Mp4X70wSzgi4NCJRFJH5uzrByvPg2eQtZ6t/MxcwrX
- h74jiUXnzihbeOMnnWAoHHDBURmlUPYs1tDSURZyZg2ITGKRoSG2KDzDDarKtZ2Kv9gE
- Tg+ekqqAdzvuiMoOzPd2zcxsqog9dwGRxUEFQxlur/XfMhaTYkPH1lOZcIUyhWiG1vnC
- QDSA==
+ bh=NQyHj/7isbZq1anOngku43wTHeR8eA80fkM1Z6NDWCo=;
+ b=zURiqgz3n6a+0WA9DLO/Wu0m2LYKWtGr99O/WjKDYKtFAkY1W9ukEK4GD8H/LR6Sau
+ DBYoIZq7dhPr3OjI/7e3dZIGL7TZV3iNd8IMlNHJyzQgfiyTAnratFnmIdmUf8ZFw9Qf
+ BCfwW86WiFlLcdlo0rewmLBYmnP29UgIhEUH2/N86UgZxmya/8tr+RKiWuRo0dqlKnFI
+ HK8F4TCFbbOFClMMp4qrS21U4cwDEQmlIDcKKJLD6IvWK7RsOcb9n6GDVLxJRaj0XSmn
+ ge9ARApeplouQE8JnfuporPtaF1XK/WqAWQbQR9m8ko9T+hxrlikGEXlVl+Z3p/sTbX0
+ AKIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793359291; x=1793964091;
+ d=1e100.net; s=20260707; t=1793359300; x=1793964100;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=vd5BWeOhgl4OJE0+2tUQcWMWNMpBRcJ6kN3JbG9lrMQ=;
- b=rXqN7gmfUSKZiR2duFwNOrjPwICZBLI3ulwC9f64Tkw7u1mP5bzMLj6ryfXLAWFSgU
- 6iDbI/I4HziC9Sm/R9XveUKp6kksAlu61hoP5ECRCz+4stbq3GMw0ymlO8CE/KbiAyeF
- dtnFIbTbIDXF6EPkn6zBiopi/hVPUPK5fzV1Srp2JL4SysjP4DXXjj3DhKs7bIx0XHjK
- JOkeKrpv6OOmxn8K9Raks45ZtxpaCbCDyeU6NZQPcsSwarrH9WTLv4dYKj+4sbvS1kiN
- 2YP0G85QmJgp6nXsjbqdnbDrj+QPbo8Y3LkmTbJUeYRulQrjTD07n0Z5mC9fXTVJsrx9
- b+gQ==
-X-Gm-Message-State: AFq9FYLVJbm+hoJrtlz2yMUwte1rPXk6fXnIEltR9BmG8/t8LeO1sa2H
- jbe2SHp4md1Df2jzAd2hW8G0nsaH2WEqXZPIDu+UokkNQ25Rqwu5D8co
-X-Gm-Gg: AYBFou2ck0Q1sbLPgohja8Vm95lP25QiAzEmdkKDfsZD50+eLZwfXa78bAMf+0J/RIV
- CIqz2naXlUny5+iHcxCc5b7XP42J/RT7Pgtg1lP+BJ2R0ZCeQF52YiMXhal55Br9tWGQ3IdyaQr
- s6wPvTFToI0BVL3Kq2avXxBkT9eQGKsdcRfKKTo3NPPo6ngTSvkfw8dKd2Vk5fwrC9vu6BdG/uz
- CgSYqaYDx3BFg5WH/kx7JT+WZNKNf99cPlTEZcarvJOU5037lvyQQF5RLjuE3MW6CIxtitEgwck
- +KIjwGU3GizvQAuTj/Gwtmgc9PC/iisvWLh2T80odigqSpHI/gRNJofOFpTZJU4cCcGwP+aQpRt
- vgXh8zSKc3EMMUWls6+GH7QsJky+VnyX8EImp12F9iRbXFaf8qbAi1ZFhvyHfV/BCpfURmF7HG1
- r49d6ma0y7OLoBaM99IpANVBf686gUlQ2I50toUjyvish0GoudFLXntQoKjFctXfkwOK9DOYgDX
- Gzwg1hItaKI1S8j7dUKKbLlXKWYGuh2aLhETJyzxQEnhpsgs7zusJ6GVKiRqcgH3TmlNGk909K1
- 4j26CTpGedW50MC6X88ZHwPScFPJDAkg7uYEUn8AL1K802UXRWGMv21feYN1MaYjBGYJK8essg7
- kpNWbLEL38t4I7uDjJXuL25SO7VMOfW+qdgInoBwM4uu8c3368FmFW4V6ezSmaA==
-X-Received: by 2002:a05:6000:41c8:b0:48d:faa6:cedf with SMTP id
- ffacd0b85a97d-48e6e50645dmr4644278f8f.56.1793359291162; 
- Fri, 30 Oct 2026 04:21:31 -0700 (PDT)
+ bh=NQyHj/7isbZq1anOngku43wTHeR8eA80fkM1Z6NDWCo=;
+ b=itr3Wx3Wam0aXXM1X5UfPgzry43cGkadM2ODgnOxeX7jDaT4IUWNdLD1YR/bQQCUKG
+ ir1CvJngBXhOht8B+7hsp0jbWWFfkCpwPBHmw2A0mz2QJegVsfLROW+ekRB+QV7FyqXg
+ cJ9l64nTi6AO+ll3cwPbYeaLGPUj+/WAZ8gidrU+YrhmX4vrmYzq/s2e1h7z4sjNeIp/
+ Tj5NOzsEkNbH2QVMZi+ZUVgfp9oBELlf5gdwswtYAlZqU65pz4FQCBPVeJ3aUSdAdzm0
+ I1U+xNfNxuAAqlI1rMYAp0aNf5t8dc5+NR3q4+NbWekMpF1MfOyRm9VLxHr7EIRzD7Mq
+ 2gBQ==
+X-Gm-Message-State: AFq9FYKOe4HfnnttNUiCmUen17NL5X55dpGmqZZVoJyO+xesAhGrwO4T
+ VOsI4V82pUH6uL54G++QV017ygZysN+5xwPhT11mawFYJBSvD2J8+rO7
+X-Gm-Gg: AYBFou3zkLV37hb828l9GBNb/KIAQgRyAq4XS/tPSqnSY0Q5lfwzbryX1Ynfq+QU6Db
+ q5yEwA+VCBz14lgtQjdHydiktp+jC/IRpNelABTa0pSS0DsHd7Aq/cP/QD7AVtGdAXtltTR12Lg
+ mznVvlTKY/KRbeKgvo1EOT020lsSCgvtZY5GNH/oE3t+RajsLyjWj/6ETe3knQy/IoGKLncorTp
+ dC6riXZTg6yTj7L4bP44ueeJvzNZ2hHAsPpDmZB8OlEyS0DuQvXF9BrbvFkkQTdei319Iplgmy0
+ hGjpL4blZPS22GyRUpLJrRcXmbiWWJsSDqPcT8mt6BR0PEPKAtIhOUtQ3WMCDcr4I5hHiS0X8hM
+ Q6JhcsIprzAau4VrsEhiBUbn6V7f2F3lWamIsuCmTfJbON9RniTfCJFFZBTv4i2Wd1gYMep23Ep
+ LjX8UCHKTmsBoYYA7xvtEyR6wLAXyyf0tFqSxW+GB65Ot7YjuhVN4V9oXkYI2sE02PpVLUu3C3J
+ k1915y/+spWi4Rontrl6eti/RKgrM3GJVBD5SbHCJvkgrrGJkIssnneQKcZH35B8C35oQU8LQk/
+ FRS6D+99U1NlTtKdGodXfmfpEdtKDIGyLtivIT33rzQ8HptHi6Wto8Dx05ef1Wxw5p2+IB62BU/
+ Je7Bn1ct6ijAEV2PNoHChy6v+10b1IBTh/K4b8n9yjmkbSahvnxBWJySFnq1aWnRZz5gguWNIk4
+ DFsc+vnpA=
+X-Received: by 2002:a05:6000:40ca:b0:48c:5304:5e50 with SMTP id
+ ffacd0b85a97d-48e6e2620d8mr5235192f8f.0.1793359300014; 
+ Fri, 30 Oct 2026 04:21:40 -0700 (PDT)
 Received: from tim-m2.local
  (dynamic-2a02-3100-61d8-3600-98fd-cd98-7ae6-cb49.310.pool.telefonica.de.
  [2a02:3100:61d8:3600:98fd:cd98:7ae6:cb49])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d3e9sm2893608f8f.6.2026.10.30.04.21.30
+ ffacd0b85a97d-48e71a4d3e9sm2893608f8f.6.2026.10.30.04.21.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 04:21:30 -0700 (PDT)
+ Fri, 30 Oct 2026 04:21:39 -0700 (PDT)
 From: Tim Pambor <timpambor@gmail.com>
-Date: Fri, 30 Oct 2026 12:20:54 +0100
-Subject: [PATCH v2 1/9] libvhost-user: detect memfd support with a link
- test
+Date: Fri, 30 Oct 2026 12:21:01 +0100
+Subject: [PATCH v2 8/9] libvhost-user: enable it on any POSIX system
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261030-vhost-user-posix-v2-1-cda7c17aad13@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261030-vhost-user-posix-v2-8-cda7c17aad13@gmail.com>
 References: <20261030-vhost-user-posix-v2-0-cda7c17aad13@gmail.com>
 In-Reply-To: <20261030-vhost-user-posix-v2-0-cda7c17aad13@gmail.com>
 To: qemu-devel@nongnu.org
@@ -93,8 +93,8 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 X-Mailer: b4 0.16.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=timpambor@gmail.com; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=timpambor@gmail.com; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,93 +121,134 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The inflight fd code is guarded by #ifdef MFD_ALLOW_SEALING, which only
-tells us that the headers define the flag, not that memfd_create() is
-available in the C library. There are environments where the flag is
-defined but the link fails:
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-  ld: error: libvhost-user.a(libvhost-user.c.o): undefined symbol: memfd_create
+The vhost-user protocol is not really Linux-specific so let's enable
+libvhost-user for any POSIX system.
 
-Probe for memfd_create() with MFD_ALLOW_SEALING in the subproject's
-meson.build, using the same test QEMU's top-level meson.build uses for
-CONFIG_MEMFD, and guard the code with CONFIG_MEMFD instead.
+Compiling it on macOS and FreeBSD some problems came up:
+- avoid to include linux/vhost.h which is available only on Linux
+  (vhost_types.h contains many of the things we need)
+- macOS doesn't provide sys/endian.h, so let's define them
+  (note: libvhost-user doesn't include QEMU's headers, so we can't use
+   use "qemu/bswap.h")
+- copy SEAL defines from include/qemu/memfd.h to make the code works
+  on FreeBSD where MFD_ALLOW_SEALING is defined
+- define MAP_NORESERVE if it's not defined (e.g. on FreeBSD)
 
-When memfd is not available, VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD is
-masked out as before, so the frontend never sends
-VHOST_USER_GET_INFLIGHT_FD.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Tim Pambor <timpambor@gmail.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 15 +++++++--------
- subprojects/libvhost-user/meson.build     | 11 ++++++++++-
- 2 files changed, 17 insertions(+), 9 deletions(-)
+ meson.build                               |  2 +-
+ subprojects/libvhost-user/libvhost-user.c | 42 ++++++++++++++++++++++++++++++-
+ subprojects/libvhost-user/libvhost-user.h |  2 +-
+ 3 files changed, 43 insertions(+), 3 deletions(-)
 
+diff --git a/meson.build b/meson.build
+index eb296346a8..4f4068e7a7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3468,7 +3468,7 @@ if have_system and vfio_user_server_allowed
+ endif
+ 
+ vhost_user = not_found
+-if host_os == 'linux' and have_vhost_user
++if have_vhost_user
+   libvhost_user = subproject('libvhost-user')
+   vhost_user = libvhost_user.get_variable('vhost_user_dep')
+ endif
 diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 2fed792e85..adda700630 100644
+index 5f649a3d52..7c5b89dc0b 100644
 --- a/subprojects/libvhost-user/libvhost-user.c
 +++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1800,13 +1800,12 @@ vu_get_protocol_features_exec(VuDev *dev, VhostUserMsg *vmsg)
-         features |= dev->iface->get_protocol_features(dev);
-     }
+@@ -29,7 +29,6 @@
+ #include <sys/types.h>
+ #include <sys/socket.h>
+ #include <sys/mman.h>
+-#include <endian.h>
  
--#ifndef MFD_ALLOW_SEALING
-+#ifndef CONFIG_MEMFD
-     /*
--     * If MFD_ALLOW_SEALING is not defined, we are not able to handle
--     * VHOST_USER_GET_INFLIGHT_FD messages, since we can't create a memfd.
--     * Those messages are used only if VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD
--     * is negotiated. A device implementation can enable it, so let's mask
--     * it to avoid a runtime panic.
-+     * Without memfd we are not able to handle VHOST_USER_GET_INFLIGHT_FD
-+     * messages. Those messages are used only if
-+     * VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD is negotiated. A device
-+     * implementation can enable it, so let's mask it to avoid a runtime panic.
-      */
-     features &= ~(1ULL << VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD);
+ /* Necessary to provide VIRTIO_F_VERSION_1 on system
+  * with older linux headers. Must appear before
+@@ -38,6 +37,7 @@
+ #include "standard-headers/linux/virtio_config.h"
+ 
+ #if defined(__linux__)
++#include <endian.h>
+ #include <sys/syscall.h>
+ #include <fcntl.h>
+ #include <sys/ioctl.h>
+@@ -51,6 +51,24 @@
+ 
  #endif
-@@ -2001,7 +2000,7 @@ vu_inflight_queue_size(uint16_t queue_size)
-            sizeof(uint16_t), INFLIGHT_ALIGNMENT);
+ 
++#if defined(__APPLE__) && (__MACH__)
++#include <libkern/OSByteOrder.h>
++#define htobe16(x) OSSwapHostToBigInt16(x)
++#define htole16(x) OSSwapHostToLittleInt16(x)
++#define be16toh(x) OSSwapBigToHostInt16(x)
++#define le16toh(x) OSSwapLittleToHostInt16(x)
++
++#define htobe32(x) OSSwapHostToBigInt32(x)
++#define htole32(x) OSSwapHostToLittleInt32(x)
++#define be32toh(x) OSSwapBigToHostInt32(x)
++#define le32toh(x) OSSwapLittleToHostInt32(x)
++
++#define htobe64(x) OSSwapHostToBigInt64(x)
++#define htole64(x) OSSwapHostToLittleInt64(x)
++#define be64toh(x) OSSwapBigToHostInt64(x)
++#define le64toh(x) OSSwapLittleToHostInt64(x)
++#endif
++
+ #ifdef CONFIG_EVENTFD
+ #include <sys/eventfd.h>
+ #else
+@@ -67,6 +85,28 @@ int eventfd_read(int fd, eventfd_t *value)
  }
+ #endif
  
--#ifdef MFD_ALLOW_SEALING
 +#ifdef CONFIG_MEMFD
- static void *
- memfd_alloc(const char *name, size_t size, unsigned int flags, int *fd)
- {
-@@ -2068,7 +2067,7 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
- 
-     mmap_size = vu_inflight_queue_size(queue_size) * num_queues;
- 
--#ifdef MFD_ALLOW_SEALING
-+#ifdef CONFIG_MEMFD
-     addr = memfd_alloc("vhost-inflight", mmap_size,
-                        F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-                        &fd);
-diff --git a/subprojects/libvhost-user/meson.build b/subprojects/libvhost-user/meson.build
-index a18014e7f2..aa5894a642 100644
---- a/subprojects/libvhost-user/meson.build
-+++ b/subprojects/libvhost-user/meson.build
-@@ -11,10 +11,19 @@ add_project_arguments(cc.get_supported_arguments('-Wsign-compare',
- threads = dependency('threads')
- glib = dependency('glib-2.0')
- 
-+vhost_user_flags = ['-D_GNU_SOURCE']
++#include <fcntl.h>
 +
-+if cc.links('''
-+    #define _GNU_SOURCE
-+    #include <sys/mman.h>
-+    int main(void) { return memfd_create("foo", MFD_ALLOW_SEALING); }''')
-+  vhost_user_flags += '-DCONFIG_MEMFD'
-+endif
++#ifndef F_LINUX_SPECIFIC_BASE
++#define F_LINUX_SPECIFIC_BASE 1024
++#endif
 +
- vhost_user = static_library('vhost-user',
-                             files('libvhost-user.c'),
-                             dependencies: threads,
--                            c_args: '-D_GNU_SOURCE')
-+                            c_args: vhost_user_flags)
++#ifndef F_ADD_SEALS
++#define F_ADD_SEALS (F_LINUX_SPECIFIC_BASE + 9)
++#define F_GET_SEALS (F_LINUX_SPECIFIC_BASE + 10)
++
++#define F_SEAL_SEAL     0x0001  /* prevent further seals from being set */
++#define F_SEAL_SHRINK   0x0002  /* prevent file from shrinking */
++#define F_SEAL_GROW     0x0004  /* prevent file from growing */
++#define F_SEAL_WRITE    0x0008  /* prevent writes */
++#endif
++#endif
++
++#ifndef MAP_NORESERVE
++#define MAP_NORESERVE 0
++#endif
++
+ #include "include/atomic.h"
  
- executable('link-test', files('link-test.c'),
-            link_whole: vhost_user)
+ #include "libvhost-user.h"
+diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
+index aedb1da96d..a2f0add832 100644
+--- a/subprojects/libvhost-user/libvhost-user.h
++++ b/subprojects/libvhost-user/libvhost-user.h
+@@ -18,9 +18,9 @@
+ #include <stdbool.h>
+ #include <stddef.h>
+ #include <poll.h>
+-#include <linux/vhost.h>
+ #include <pthread.h>
+ #include "standard-headers/linux/virtio_ring.h"
++#include "standard-headers/linux/vhost_types.h"
+ 
+ /* Based on qemu/hw/virtio/vhost-user.c */
+ #define VHOST_USER_F_PROTOCOL_FEATURES 30
 
 -- 
 2.55.0
