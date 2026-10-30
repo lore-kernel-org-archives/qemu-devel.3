@@ -1,142 +1,76 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6291B606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE300606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 15:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Slyie1Hu;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=e7kkE4ce
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=N0aJW63N
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMoAM-0002Mc-UI; Fri, 30 Oct 2026 11:05:24 -0400
+	id 1xMoAm-0002rZ-F3; Fri, 30 Oct 2026 11:05:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMo9O-000201-T4
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:04:17 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xMo9d-00025H-E6
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:04:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMo9M-0007Ew-7w
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:04:14 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69UERhUE3207514
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 15:04:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- uh7R+WUK65DSoj2eoTgV+wO/P005Serb3BiQpUylYyw=; b=Slyie1Hutuy9J0/G
- hKEqE0Xg7iVdMb9DjZlMASMs93YRBK8yMPJiY47vmQoG0cMR9/z4tIFDIH5a5n3g
- SUW2atCmmTVtKoYhKMwe7G0MBnex+hhqaYGFmdUClaUloQIjboKYSxOveEqe7u5a
- 0L0y+baK+YxMW8d9Rocbdsq8b2KrDis7OjlrVeWQVofGB9gpGE4dVE4T8T1wXa6Z
- Ishf/pBkWucqfa+1YOlnLQtpfK//Ms4766Rmhd/2HsdEWYLc/Dy6gRPUGVj0JpcU
- GfLlj4wyFe75IeyTVKg01CTgc/oIo4pHFpN9tG2KqLhTamQ442rqZSJS5DANs7Ow
- deZjiA==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hme6qkms6-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 15:04:11 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-9806756ea40so685322241.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 08:04:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793372650; x=1793977450; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=uh7R+WUK65DSoj2eoTgV+wO/P005Serb3BiQpUylYyw=;
- b=e7kkE4cesR889fRm2GPL1KBrmZQsazGPBlFmp9isu8DQQqSof3Sh7QLlQDKBy5jiAE
- ED+pedBUhJv99q/lgDccx1NixY3pMFil564sFYD/Vb5v9X6aQBkxH8Enw8+Qo0sAkf4D
- w1TDwcchAQb7xdVJCDYTQTBhmU4jwnT6/71/jLCdr9Pw/91u99t7NzhuVnhraQQyINRm
- Qm1z9bEbsZI9OZNhKaxwE8E6pmgCaBJQwnjxScE423HSbHC2YB8+GBIWBJx86Nv0ZRMa
- ybfWAM1uHNcod6/WDwrcNuaxiIEvFqMcJLfnJsi5nh3EesiTDeNpkwQtp2Om4gYn4fom
- E+0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793372650; x=1793977450;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=uh7R+WUK65DSoj2eoTgV+wO/P005Serb3BiQpUylYyw=;
- b=mXXz3RCZXxWXnkhQ9RKCs/mZR3Y7xIWiz8MFZakzwSi8+t3QRvr2wz95FROotipgJG
- Fr8fGnralSBSN3r98O9+YX06/r56NYLCEOyonUinwKnjRxijBR10RZ7V6T5/8wwHQ/7X
- PFgmDZlbRYrld7EsbCfQfMy+DSidUpVn1ux4aQ6WZB7CdLXHPlf7aD3nZffsaXYo5E6X
- IaD/57ZTrBhkpY1ZXUtZcdu8mOjtXfF0gj7mx5DtL5PcbD5RhL4gQWUc3Sy7nFDivs+N
- eu7WWyKEpHT295Y21E/t3NeDl0uMl0lgSJVyzSpj505zAya7g7VxslSz2ICQJi3QLjvX
- s3JA==
-X-Gm-Message-State: AFq9FYK/0A0Z0mL94dqAXv7zC1Uvi/5KPWUEE2rVRxErRfpmLbl0oChB
- 0wc64twZ/n6oOF2Lai6skdOX03TFuV0yA7KGJ4aNzlBVgtLIeuACc2UtKQjI7vk+yU4ukH39Wm3
- fFXmFs+poIAj18MXrz2JzSH/MQ4GEWjEdfjh3txVcjT1K8X6RO76GCc7ykDjRZZ3QK5Ng
-X-Gm-Gg: AYBFou0XCAEmjWoE8CJx/q972gnfUvFMqgHAAeaz2+uaQ77DziG6jxiyKnAfnBaKlFQ
- BPkMFHLAa/orTCttsTOyt9xEnx54xL/IFbtlZhKO1kylH5ksLgbUMNnWLHgMPMG+7t+K7aPTjqo
- 5/DWgrMR2VOMycok35hElqcGt/I8RzzXEaopXipqppSHsXPZyaWXY5/GI+m30ZTnHivpvU/oN5g
- WJBmSNkZ8nVkZfu229S6z4uRTEUJDKkZoTIBgzdSlZiS8TEcqG0ICLjL9HpBITBqgcqdp9PAlRe
- CbQmzkYHpBbziWPJG5WPV+pEo8mnOrFxZPzySkLEG44oK1mLnWA0vjJgSP/HYj24AvpNzVy44mD
- i0kQIhmNjXwEcJuIqLUaH7EU6NYvQsua7kWHUhYhxaf4GZcW950Zbhw+ZP+YEUEd3Mws8PoxW4I
- 944BYyPFXrJ7n/XjQ=
-X-Received: by 2002:a05:6123:86:b0:5ea:d0b0:e6f1 with SMTP id
- 71dfb90a1353d-5ec6871d3ddmr1289947e0c.6.1793372650095; 
- Fri, 30 Oct 2026 08:04:10 -0700 (PDT)
-X-Received: by 2002:a05:6123:86:b0:5ea:d0b0:e6f1 with SMTP id
- 71dfb90a1353d-5ec6871d3ddmr1289887e0c.6.1793372649419; 
- Fri, 30 Oct 2026 08:04:09 -0700 (PDT)
-Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
- [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b723bfsm3583392f8f.15.2026.10.30.08.04.02
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 30 Oct 2026 08:04:03 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xMo9a-0007Fz-C4
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 11:04:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793372665;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3ahEu6P9+WQGtrcigda+rkZcqqXsaiIlqMiVEDQP1EQ=;
+ b=N0aJW63N349F0zbOvAwrprjZg9FjWDYMFLdWNGSDcbIPKia7/+e7UNlsHqdtTfuuixRIPa
+ IcuRTVlPXOY/e80G47hWGLzwzvslXtF/igWRa5puDx64ZA/4xMTPLTTcwUnNzMYop+ex5o
+ 5zWO72FcpBcdaApBn4qgutoS2CcUxec=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-xllzEd10MwK10aACsMGABA-1; Fri,
+ 30 Oct 2026 11:04:19 -0400
+X-MC-Unique: xllzEd10MwK10aACsMGABA-1
+X-Mimecast-MFC-AGG-ID: xllzEd10MwK10aACsMGABA_1793372659
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C069B18009C4
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 15:04:18 +0000 (UTC)
+Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0D4841956088; Fri, 30 Oct 2026 15:04:17 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v3 14/31] tests/tcg/mips: Group MSA bit-count tests
-Date: Fri, 30 Oct 2026 16:01:44 +0100
-Message-ID: <20261030150202.61556-15-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261030150202.61556-1-philmd@oss.qualcomm.com>
-References: <20261030150202.61556-1-philmd@oss.qualcomm.com>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 3/3] crypto: add preventative measures wrt uninitialized hash
+ info
+Date: Fri, 30 Oct 2026 15:04:13 +0000
+Message-ID: <20261030150413.2999685-4-berrange@redhat.com>
+In-Reply-To: <20261030150413.2999685-1-berrange@redhat.com>
+References: <20261030150413.2999685-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=KsrYSmWN c=1 sm=1 tr=0 ts=6ae4b1eb cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=MrkvrxfUm_GaFPyPbecA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1WsBpfsz9X-RYQiigVTh:22
-X-Proofpoint-ORIG-GUID: -4tYtETqHQOl-PSd57wYf0SyKDIqxwdS
-X-Proofpoint-GUID: -4tYtETqHQOl-PSd57wYf0SyKDIqxwdS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA1OSBTYWx0ZWRfX6i3fr0HTnGkY
- Szi5ka77SKvnE5Q0fhlf8f00m2lkn7m8iRH57w/zHpS+SlCD+FaZAeJT9yMvCKKB4Kp40e3RBTj
- YALuT71i4FZ6uAATFz1sZDje13SjJJyt4cU6JSiFJpqqEKv4Tvu8Tup1m7aWDjXsRogBNK3Yx4Z
- O2HOobVVGL9eQmY7JQz+sc3ehITGDKFCH5NdisV85ZWktIg6NJIlIR43m83WYSwR+LgFctYLbij
- /pnZVn+i0NKFPYpYM7XfPHq1dWnat4qHEX0QUwPxTWsg+eeERqBWxAtUQKQIw3z+rzYn9CMYpVy
- dtUyYNKPHgnReR66iQsz1x+LgB6hNTlD02L3FzUNfWh0mAThJ+1PAqx8E0RK/IPwr1rPPbKQEJ6
- 71UomtyIyvHRleQUIYibHJZnjSubvcpqze62hsGG59hlE8zQH+w0z/cksZ9mwSM630HPh7vOedH
- uA8i3ub8tbBfKmFOCOQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA1OSBTYWx0ZWRfXxixTF+bCyHW0
- zTthYSeyX+tVpP8YRoTPUUF21GGyHWVK7324jvsXFkkU28WmD3JXLyJrz5S/UoT0aQ2twVaGZ2E
- BLSHO1QX0aLQRbK3s7d+FwIKi0IGZz0=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-30_05,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
- lowpriorityscore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610300059
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,210 +82,149 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Build the 12 per-opcode bit-count tests as a single executable,
-test_msa_bit_count.c, to reduce the number of test binaries.
-Each opcode reports one TAP line.
+Several static arrays can create incorrect behaviour if a new hash
+algorithm is added without them being explicitly initialized. Be
+more robust against this problem by using a static assert for the
+array size, instead of predeclaring the array size.
 
-Prefix the per-instruction summary of test_utils_128.h with '# '
-so TAP parsers treat it as a comment.
+When querying the arrays also add further sanity checks for missing
+initializers.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4786
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/tcg/mips/include/test_utils_128.h |  2 +-
- tests/tcg/mips/test_msa_bit_count.c     | 99 +++++++++++++++++++++++++
- tests/tcg/mips/meson.build              | 17 ++---
- tests/tcg/mips64/meson.build            |  2 +-
- tests/tcg/mipsel/meson.build            |  2 +-
- 5 files changed, 107 insertions(+), 15 deletions(-)
- create mode 100644 tests/tcg/mips/test_msa_bit_count.c
+ crypto/hash-glib.c | 18 ++++++++++++++++--
+ crypto/hash.c      | 12 +++++++++++-
+ crypto/hmac-glib.c | 18 ++++++++++++++++--
+ 3 files changed, 43 insertions(+), 5 deletions(-)
 
-diff --git a/tests/tcg/mips/include/test_utils_128.h b/tests/tcg/mips/include/test_utils_128.h
-index 0dd38684cf33..9ba877d84b5c 100644
---- a/tests/tcg/mips/include/test_utils_128.h
-+++ b/tests/tcg/mips/include/test_utils_128.h
-@@ -59,7 +59,7 @@ static inline int32_t check_results_128(const char *isa_ase_name,
-     uint32_t pass_count = 0;
-     uint32_t fail_count = 0;
+diff --git a/crypto/hash-glib.c b/crypto/hash-glib.c
+index 39040f1856e..d83caec8cab 100644
+--- a/crypto/hash-glib.c
++++ b/crypto/hash-glib.c
+@@ -25,7 +25,7 @@
+ #include "hashpriv.h"
  
--    printf("| %-10s \t| %-20s\t| %-16s \t|",
-+    printf("# %-10s \t| %-20s\t| %-16s \t|",
-            isa_ase_name, group_name, instruction_name);
-     for (i = 0; i < test_count; i++) {
-         if ((b128_result[2 * i] == b128_expect[2 * i]) &&
-diff --git a/tests/tcg/mips/test_msa_bit_count.c b/tests/tcg/mips/test_msa_bit_count.c
-new file mode 100644
-index 000000000000..7f965bc9ec4d
---- /dev/null
-+++ b/tests/tcg/mips/test_msa_bit_count.c
-@@ -0,0 +1,99 @@
+ 
+-static int qcrypto_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
++static int qcrypto_hash_alg_map[] = {
+     [QCRYPTO_HASH_ALGO_MD5] = G_CHECKSUM_MD5,
+     [QCRYPTO_HASH_ALGO_SHA1] = G_CHECKSUM_SHA1,
+     [QCRYPTO_HASH_ALGO_SHA224] = -1,
+@@ -35,11 +35,25 @@ static int qcrypto_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
+     [QCRYPTO_HASH_ALGO_RIPEMD160] = -1,
+     [QCRYPTO_HASH_ALGO_SM3] = -1,
+ };
 +/*
-+ * MIPS MSA tests: Bit Count instructions
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Prefer the assert over declaring the array with
++ * size QCRYPTO_HASH_ALGO__MAX so we get better
++ * detection of uninitialize elements.
 + */
-+
-+#include "../include/tap.h"
-+
-+#define main test_msa_nloc_b
-+#include "user/ase/msa/bit-count/test_msa_nloc_b.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_nloc_d
-+#include "user/ase/msa/bit-count/test_msa_nloc_d.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_nloc_h
-+#include "user/ase/msa/bit-count/test_msa_nloc_h.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_nloc_w
-+#include "user/ase/msa/bit-count/test_msa_nloc_w.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_nlzc_b
-+#include "user/ase/msa/bit-count/test_msa_nlzc_b.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_nlzc_d
-+#include "user/ase/msa/bit-count/test_msa_nlzc_d.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_nlzc_h
-+#include "user/ase/msa/bit-count/test_msa_nlzc_h.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_nlzc_w
-+#include "user/ase/msa/bit-count/test_msa_nlzc_w.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_pcnt_b
-+#include "user/ase/msa/bit-count/test_msa_pcnt_b.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_pcnt_d
-+#include "user/ase/msa/bit-count/test_msa_pcnt_d.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_pcnt_h
-+#include "user/ase/msa/bit-count/test_msa_pcnt_h.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+#define main test_msa_pcnt_w
-+#include "user/ase/msa/bit-count/test_msa_pcnt_w.c"
-+#undef main
-+#undef TEST_COUNT_TOTAL
-+
-+
-+static const struct {
-+    const char *name;
-+    int32_t (*fn)(void);
-+} msa_tests[] = {
-+    { "nloc.b", test_msa_nloc_b },
-+    { "nloc.d", test_msa_nloc_d },
-+    { "nloc.h", test_msa_nloc_h },
-+    { "nloc.w", test_msa_nloc_w },
-+    { "nlzc.b", test_msa_nlzc_b },
-+    { "nlzc.d", test_msa_nlzc_d },
-+    { "nlzc.h", test_msa_nlzc_h },
-+    { "nlzc.w", test_msa_nlzc_w },
-+    { "pcnt.b", test_msa_pcnt_b },
-+    { "pcnt.d", test_msa_pcnt_d },
-+    { "pcnt.h", test_msa_pcnt_h },
-+    { "pcnt.w", test_msa_pcnt_w },
-+};
-+
-+int main(void)
-+{
-+    unsigned i;
-+
-+    TAP_START();
-+    for (i = 0; i < sizeof(msa_tests) / sizeof(msa_tests[0]); i++) {
-+        tap_report(!msa_tests[i].fn(), "MSA %s %s",
-+                   "Bit Count", msa_tests[i].name);
-+    }
-+
-+    return tap_done();
-+}
-diff --git a/tests/tcg/mips/meson.build b/tests/tcg/mips/meson.build
-index 88d598a4f89b..88ec44520377 100644
---- a/tests/tcg/mips/meson.build
-+++ b/tests/tcg/mips/meson.build
-@@ -1,5 +1,10 @@
- tests = []
++G_STATIC_ASSERT(G_N_ELEMENTS(qcrypto_hash_alg_map) ==
++                QCRYPTO_HASH_ALGO__MAX);
  
-+# MSA tests shared by the mipsel and mips64 targets
-+tests_mips_msa_groups = [
-+  '../mips/test_msa_bit_count.c',
-+]
-+
- tests += tcg_tests['multiarch-linux-user']['tests']
+ gboolean qcrypto_hash_supports(QCryptoHashAlgo alg)
+ {
++    /*
++     * The default static initializer value of 0
++     * matches G_CHECKSUM_MD5, so protect against
++     * accidentally uninitialized fields
++     */
+     if (alg < G_N_ELEMENTS(qcrypto_hash_alg_map) &&
+-        qcrypto_hash_alg_map[alg] != -1) {
++        qcrypto_hash_alg_map[alg] != -1 &&
++        (alg == QCRYPTO_HASH_ALGO_MD5 ||
++         qcrypto_hash_alg_map[alg] != G_CHECKSUM_MD5)) {
+         return true;
+     }
+     return false;
+diff --git a/crypto/hash.c b/crypto/hash.c
+index 42a0a8ec56f..e966fc1a633 100644
+--- a/crypto/hash.c
++++ b/crypto/hash.c
+@@ -25,7 +25,7 @@
+ #include "crypto/hash.h"
+ #include "hashpriv.h"
  
- tests += {
-@@ -93,18 +98,6 @@ tests_mips_msa = [
-   '../mips/user/ase/msa/int-divide/test_msa_div_u_w.c',
-   '../mips/user/ase/msa/int-divide/test_msa_div_u_h.c',
-   '../mips/user/ase/msa/int-divide/test_msa_div_u_d.c',
--  '../mips/user/ase/msa/bit-count/test_msa_pcnt_h.c',
--  '../mips/user/ase/msa/bit-count/test_msa_pcnt_b.c',
--  '../mips/user/ase/msa/bit-count/test_msa_nloc_h.c',
--  '../mips/user/ase/msa/bit-count/test_msa_pcnt_w.c',
--  '../mips/user/ase/msa/bit-count/test_msa_nlzc_h.c',
--  '../mips/user/ase/msa/bit-count/test_msa_pcnt_d.c',
--  '../mips/user/ase/msa/bit-count/test_msa_nloc_d.c',
--  '../mips/user/ase/msa/bit-count/test_msa_nloc_w.c',
--  '../mips/user/ase/msa/bit-count/test_msa_nloc_b.c',
--  '../mips/user/ase/msa/bit-count/test_msa_nlzc_d.c',
--  '../mips/user/ase/msa/bit-count/test_msa_nlzc_w.c',
--  '../mips/user/ase/msa/bit-count/test_msa_nlzc_b.c',
-   '../mips/user/ase/msa/int-add/test_msa_addv_d.c',
-   '../mips/user/ase/msa/int-add/test_msa_adds_a_h.c',
-   '../mips/user/ase/msa/int-add/test_msa_add_a_h.c',
-diff --git a/tests/tcg/mips64/meson.build b/tests/tcg/mips64/meson.build
-index 894f8e9e23e1..ebb4006e7eb5 100644
---- a/tests/tcg/mips64/meson.build
-+++ b/tests/tcg/mips64/meson.build
-@@ -39,7 +39,7 @@ foreach src: tests_mips64r6
-   tests += {src: {'cflags': '-march=mips64r6', 'protocol': 'tap'}}
- endforeach
+-static size_t qcrypto_hash_alg_size[QCRYPTO_HASH_ALGO__MAX] = {
++static size_t qcrypto_hash_alg_size[] = {
+     [QCRYPTO_HASH_ALGO_MD5]       = QCRYPTO_HASH_DIGEST_LEN_MD5,
+     [QCRYPTO_HASH_ALGO_SHA1]      = QCRYPTO_HASH_DIGEST_LEN_SHA1,
+     [QCRYPTO_HASH_ALGO_SHA224]    = QCRYPTO_HASH_DIGEST_LEN_SHA224,
+@@ -35,10 +35,20 @@ static size_t qcrypto_hash_alg_size[QCRYPTO_HASH_ALGO__MAX] = {
+     [QCRYPTO_HASH_ALGO_RIPEMD160] = QCRYPTO_HASH_DIGEST_LEN_RIPEMD160,
+     [QCRYPTO_HASH_ALGO_SM3]       = QCRYPTO_HASH_DIGEST_LEN_SM3,
+ };
++/*
++ * Prefer the assert over declaring the array with
++ * size QCRYPTO_HASH_ALGO__MAX so we get better
++ * detection of uninitialized elements. We don't
++ * want to ever return digest lengths of zero, as
++ * that risks a div-by-zero in callers.
++ */
++G_STATIC_ASSERT(G_N_ELEMENTS(qcrypto_hash_alg_size) ==
++                QCRYPTO_HASH_ALGO__MAX);
  
--foreach src: tests_mips_msa
-+foreach src: tests_mips_msa + tests_mips_msa_groups
-   tests += {
-     src: {
-       'cflags': ['-march=mips64r6', '-mmsa'],
-diff --git a/tests/tcg/mipsel/meson.build b/tests/tcg/mipsel/meson.build
-index 9e446eed0f6e..edb59a25454b 100644
---- a/tests/tcg/mipsel/meson.build
-+++ b/tests/tcg/mipsel/meson.build
-@@ -40,7 +40,7 @@ endif
+ size_t qcrypto_hash_digest_len(QCryptoHashAlgo alg)
+ {
+     assert(alg < G_N_ELEMENTS(qcrypto_hash_alg_size));
++    assert(qcrypto_hash_alg_size[alg] != 0);
+     return qcrypto_hash_alg_size[alg];
+ }
  
- tests = []
+diff --git a/crypto/hmac-glib.c b/crypto/hmac-glib.c
+index 8f652c5064e..34090444083 100644
+--- a/crypto/hmac-glib.c
++++ b/crypto/hmac-glib.c
+@@ -17,7 +17,7 @@
+ #include "crypto/hmac.h"
+ #include "hmacpriv.h"
  
--foreach src: tests_mips_msa
-+foreach src: tests_mips_msa + tests_mips_msa_groups
-   tests += {
-     src: {
-       'cflags': ['-mabi=32', '-march=mips32r5', '-mmsa', '-mno-odd-spreg',
+-static int qcrypto_hmac_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
++static int qcrypto_hmac_alg_map[] = {
+     [QCRYPTO_HASH_ALGO_MD5] = G_CHECKSUM_MD5,
+     [QCRYPTO_HASH_ALGO_SHA1] = G_CHECKSUM_SHA1,
+     [QCRYPTO_HASH_ALGO_SHA256] = G_CHECKSUM_SHA256,
+@@ -27,6 +27,13 @@ static int qcrypto_hmac_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
+     [QCRYPTO_HASH_ALGO_RIPEMD160] = -1,
+     [QCRYPTO_HASH_ALGO_SM3] = -1,
+ };
++/*
++ * Prefer the assert over declaring the array with
++ * size QCRYPTO_HASH_ALGO__MAX so we get better
++ * detection of uninitialize elements.
++ */
++G_STATIC_ASSERT(G_N_ELEMENTS(qcrypto_hmac_alg_map) ==
++                QCRYPTO_HASH_ALGO__MAX);
+ 
+ typedef struct QCryptoHmacGlib QCryptoHmacGlib;
+ struct QCryptoHmacGlib {
+@@ -35,8 +42,15 @@ struct QCryptoHmacGlib {
+ 
+ bool qcrypto_hmac_supports(QCryptoHashAlgo alg)
+ {
++    /*
++     * The default static initializer value of 0
++     * matches G_CHECKSUM_MD5, so protect against
++     * accidentally uninitialized fields
++     */
+     if (alg < G_N_ELEMENTS(qcrypto_hmac_alg_map) &&
+-        qcrypto_hmac_alg_map[alg] != -1) {
++        qcrypto_hmac_alg_map[alg] != -1 &&
++        (alg == QCRYPTO_HASH_ALGO_MD5 ||
++         qcrypto_hmac_alg_map[alg] != G_CHECKSUM_MD5)) {
+         return true;
+     }
+ 
 -- 
-2.55.0
+2.56.0
 
 
