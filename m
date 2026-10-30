@@ -1,85 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB22606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 19:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CC9606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 19:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=OY4f7YWq
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=UoXEuGfP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMsW6-00069Q-Ii; Fri, 30 Oct 2026 15:43:59 -0400
+	id 1xMsW4-00068z-Cu; Fri, 30 Oct 2026 15:43:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMsVi-00063u-K2
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 15:43:35 -0400
-Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
+ id 1xMsVg-00063S-AK
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 15:43:34 -0400
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMsVg-0000A5-TH
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 15:43:34 -0400
-Received: by mail-oo1-xc2e.google.com with SMTP id
- 006d021491bc7-713e6ecf595so1051056eaf.0
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 12:43:32 -0700 (PDT)
+ id 1xMsVb-00008o-O9
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 15:43:31 -0400
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-83bbcfba0ffso859290a34.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 12:43:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793389411; x=1793994211; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793389406; x=1793994206; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=L9U3xpR2VVEc/VBrMNdYEpXepFo3fcltUSwxFqBgYFE=;
- b=OY4f7YWqz5cjhOU2KECWVccQCRJ/PSqH5PTDPzFGDqt6xUQXxCgcNrfaSgZXIo45XT
- XoTmXU01C29v1NXUDaVEQdKrzAHkcBoxHuvpQUHV3Yd0uZHnwVvML29xcP86v5jgfrGi
- vXLo49Djau9OH5sazcgB3qtS48Rr+icCEZsFqV2V6CoXuV3A/xbbRn+HX7T7cEPypZDd
- EyGlmaSSjHFGSzWsVtwek5d/zYfVaJsDrOzTeDVNEgSPrZCT43v7MtICbBA+l6VUQxcn
- dUD7ljRwiZ8xvtN8OOyTkks/r5LWLI8AtcdD4FJHwaHc/m5jEBWCVODyy3hMpvLNKD1m
- NIdA==
+ bh=4s+HOF9Q3xtcH8tmlmlazPhw+aN08WYT48sQMLUqAZo=;
+ b=UoXEuGfPCvmQTVBewMSbQct0HoZECrDiJFRwGcunJjRAC7W/gGfN32awJCaCgfH1Ye
+ 4y7uGLYiSPJBrS7Kwni1I0Ngry8WwM3UNQNS/ALHCgTo7G2hmAyXcj7fqzRRqGrqCf0v
+ wMITGcVa0CYTu2+IrcA5emEAl3UvSPTksJdQ8pfv6fJ4K7QmCcQHJUMB0AbU62SX6Sye
+ 6pbQ7alr8s85VBnjwgrASYPNEG/PBe7c+peB2ILbG/XaaW4ZTAznuh3ujiBcrgTocHSu
+ 8iRFR4OO/mEGQvEmYCFHBB2AN1/smURpd1/TWhpImDdrm8DDkYf6gxzFUqkgp5BVssEb
+ Pjrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793389411; x=1793994211;
+ d=1e100.net; s=20260707; t=1793389406; x=1793994206;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=L9U3xpR2VVEc/VBrMNdYEpXepFo3fcltUSwxFqBgYFE=;
- b=gnqc5UW9o8xe84gKiHdoRrQntJowq3Ao/HePRqs4j4SFFMPd7suAKRzw+rSqFmcMEa
- pgWZ7l+qjRllSCgOJDelnNZTnHT7F0d61n3Yz+gS/OJ3a4h+WYvJvFhN6VnusKYWO7yc
- 3xkE2H9+XfwVm9IIsLhWGdHkkhzgUykScoe1XShe0lW6jP6YlHs/wSYgJtgr0zOgkiX5
- I5984NV3lHdZfXtXj6UYEtuk5XupUDQHc2Lxrvazm4uEMK712QiC/tf8/foeGKWVHTzI
- Fa0fXDlYxCsh68Dkn4kHP+Hcv6SpKKdo0KnWx2K5k9DGfCHg8hZi50lulkY301E898YR
- 6eoQ==
-X-Gm-Message-State: AFq9FYI2GLG2wCbHM4KiQYUT0gBlfYbrIx17DLKzPDOn3yPAny7rNd+n
- 4j+IsjZvd0met9AYdPFS8nf3NEkMF/LJjNp4p+CSgCCD8FTe59xtWy+k6cEm+d4HZMs3bFPAiYb
- 5f5ut
-X-Gm-Gg: AYBFou1M0CCm74367orRPEpoYIzcjYeyRKww1//aht3hvkJ9z0cj/6ryhFpEIz0+ArH
- VaWDv2q8o1B+o9911yq3ucUpn4aZHuot5xpI9L/YKHkwTXrP6OKe0OLzKrGyXumJVXeap7rVgTb
- +facV5XCCS54uzUgKf290jmtq3e+7/56oNuhv+aIxfreH4t4duGzSL3xW22UQAswZkHkISTbmtF
- 6Zr8s3m8YQFxIxZE82dGlK7GrJARFPMYf0nz2KAS/J7yIiOLUVc119sGfNffkPDCf8QF3IxO/pW
- 1EWo8In7HlF4RfAtL2URw9pt14J1C1IQ8cXg/kItQO/WanU3aBIFpKaQZPosgUNjUncKftGB22Z
- wuwh5NLcUdB2DbI19BXbFtGOo42RGBZkb6gLQ9oQEsMZ59SyliMVA5ff+rsBu2KkoFUuGw0C1OI
- M50KPgKZJu1Dw1smzSGMeABY0ACGCI61ZKxllFFqu5syA2HFPm4PV9I0MlMc31mGg6srXNsdviQ
- 8yAj4tFBqIDoSWIGDr0rYcWLGH/XXCXyo2W5L0bYE19ntg8pyvwquRBzqUTyVVoBusYBURFgKs+
- rppPOEY5JtZjkFDbD0jFFweFfeyUNQDLs2I=
-X-Received: by 2002:a05:6820:1898:b0:6f6:1e3a:6e1 with SMTP id
- 006d021491bc7-714ddf7f9c1mr3641187eaf.44.1793389411493; 
- Fri, 30 Oct 2026 12:43:31 -0700 (PDT)
+ bh=4s+HOF9Q3xtcH8tmlmlazPhw+aN08WYT48sQMLUqAZo=;
+ b=CMRMrhuvl6DySCwIFhks5GIDtowRFmR+nNCzlq/Z2a+TnAIBm08OSBdHTMkLOJSWJC
+ /GcWtwISssm/RXTVGr7bN3KEuc3aYSCQsiZNG4PTNy6RAiApsnPCdOhttc9NNi0Ckqh0
+ 2OAxoQsY+exkd9arRtX7QK+DA3tOHwcLAdMuFZCHmm6nx4w/zFPulQlKCLpOcD+W8eeQ
+ gT9kcgEWaUPcA+cbLUpunaM6Vo1M0tkNLvaGjkyfz5KXiJrnBk4F5/Q0NWe/k5yqXH6R
+ iz+YD8U02DqV+88MC80WxZwxkppz7gykWadV/uxIf/3oELI1H0KeMSxAlsAt1zVGQZuh
+ xZug==
+X-Gm-Message-State: AFq9FYIE/X5ElcPY/xprfA9oFtiMpJEBPvO8qCj29WSANl9QI6ESj5bn
+ 0e6PqKXruC/YFxig8CXXRqHIpu02P/z/2bYl6W37mzsCwSbrEBIftwFHXZXrk8+T+W/gD8wmtEz
+ xeQHh
+X-Gm-Gg: AYBFou3FoAK+RnpUrldN+EStqFhG8hTBqaFlh006ge3qnJaRk08fcFaFtWpkBEAQwRP
+ t1Uab4uIlnTO5NqhSjRXjMgx92eedxhnXe9EZSv3llKjFs+HFylhedI5mKzJXBDkbvP/zBI7mWt
+ eZF/aNh6ScmAHFqQu/64XeeAfgxoMaMDbyEK8BcWRIxYabWN3CJF/ixPbNKftTaeG4xqC3Ln9gK
+ dIk8RVRWyD1J7SCy2M2Yibh4W/Z0OWf63b5mare+TlFYIJ1Zu8hBlulcP/uPUxfsO0R6fnL2F8u
+ dHdaJbtTVrJQ+J/ezlA/6bqma11PRtU04AhzPP7xT1pAYxXt3QnymDZQ7Mg4OrZjF+8ZbIM6aXd
+ e0aB93F2BvgXSDgPpUlHMgDNHdTnehhAgSR8BR9ME2tpnf6GVZ3KutSyKNufgOsls2i6DFHpYtu
+ rLRD3Q3VFO6V48FfqMhoJ4IJaBVpzYYjlv6CZ8t091m2jjo09nmCjloa7SDYBvXZcV0PZCksz3k
+ SEGNfih/74PVvJlBfE3cdAyRNPMNui8/xMplvuHgOiasH3EzYfO3+Sa+zMPk+SrlfY7gyOCl4sN
+ a/UXSK3zgUPig8IEu7LIwzSA9PcC48ll5ulRViPyqzfTbXjmAio3GA9UXw==
+X-Received: by 2002:a05:6830:4393:b0:817:bb8:cb7d with SMTP id
+ 46e09a7af769-85d36575f5emr2814404a34.18.1793389406400; 
+ Fri, 30 Oct 2026 12:43:26 -0700 (PDT)
 Received: from stoup ([2607:fb90:5e62:412b:1381:b0c1:1339:9c82])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-85d351e77c8sm2654768a34.2.2026.10.30.12.43.30
+ 46e09a7af769-85d351e77c8sm2654768a34.2.2026.10.30.12.43.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Oct 2026 12:43:31 -0700 (PDT)
+ Fri, 30 Oct 2026 12:43:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 8/9] target/arm: Rework gen_goto_tb to gen_direct_branch
-Date: Fri, 30 Oct 2026 14:43:17 -0500
-Message-ID: <20261030194318.319310-9-richard.henderson@linaro.org>
+Subject: [PATCH 4/9] target/arm: Split out gen_goto_tb_int
+Date: Fri, 30 Oct 2026 14:43:13 -0500
+Message-ID: <20261030194318.319310-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261030194318.319310-1-richard.henderson@linaro.org>
 References: <20261030194318.319310-1-richard.henderson@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,87 +101,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The only remaining uses are true direct branches, or
-simple chaining from one TB to the next via fallthru.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ target/arm/tcg/translate-a64.c | 38 ++++++++++++++++++++--------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
 
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 0f6331a695..edbf67b03c 100644
+index 884b7d78e2..4289b65fdd 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -573,15 +573,15 @@ static bool gen_indirect_branch(DisasContext *s)
-     return true;
+@@ -541,25 +541,31 @@ static inline bool use_goto_tb(DisasContext *s, uint64_t dest)
+     return translator_use_goto_tb(&s->base, dest);
  }
  
--static void gen_goto_tb(DisasContext *s, unsigned tb_slot_idx, int64_t diff)
-+static bool gen_direct_branch(DisasContext *s, int64_t diff)
++/* We must have already tested use_goto_tb. */
++static void gen_goto_tb_int(DisasContext *s, unsigned tb_slot_idx, int64_t diff)
++{
++    /*
++     * For pcrel, the pc must always be up-to-date on entry to
++     * the linked TB, so that it can use simple additions for all
++     * further adjustments.  For !pcrel, the linked TB is compiled
++     * to know its full virtual address, so we can delay the
++     * update to pc to the unlinked path.  A long chain of links
++     * can thus avoid many updates to the PC.
++     */
++    if (tb_cflags(s->base.tb) & CF_PCREL) {
++        gen_a64_update_pc(s, diff);
++        tcg_gen_goto_tb(tb_slot_idx);
++    } else {
++        tcg_gen_goto_tb(tb_slot_idx);
++        gen_a64_update_pc(s, diff);
++    }
++    tcg_gen_exit_tb(s->base.tb, tb_slot_idx);
++}
++
+ static void gen_goto_tb(DisasContext *s, unsigned tb_slot_idx, int64_t diff)
  {
      if (use_goto_tb(s, s->pc_curr + diff)) {
--        gen_goto_tb_int(s, tb_slot_idx, diff);
-+        gen_goto_tb_int(s, 0, diff);
+-        /*
+-         * For pcrel, the pc must always be up-to-date on entry to
+-         * the linked TB, so that it can use simple additions for all
+-         * further adjustments.  For !pcrel, the linked TB is compiled
+-         * to know its full virtual address, so we can delay the
+-         * update to pc to the unlinked path.  A long chain of links
+-         * can thus avoid many updates to the PC.
+-         */
+-        if (tb_cflags(s->base.tb) & CF_PCREL) {
+-            gen_a64_update_pc(s, diff);
+-            tcg_gen_goto_tb(tb_slot_idx);
+-        } else {
+-            tcg_gen_goto_tb(tb_slot_idx);
+-            gen_a64_update_pc(s, diff);
+-        }
+-        tcg_gen_exit_tb(s->base.tb, tb_slot_idx);
++        gen_goto_tb_int(s, tb_slot_idx, diff);
          s->base.is_jmp = DISAS_NORETURN;
--    } else {
--        gen_a64_update_pc(s, diff);
--        gen_indirect_branch(s);
-+        return true;
-     }
-+    gen_a64_update_pc(s, diff);
-+    return gen_indirect_branch(s);
- }
- 
- static bool gen_cbranch(DisasContext *s, const DisasCompare64 *c,
-@@ -1780,8 +1780,7 @@ static inline void gen_check_sp_alignment(DisasContext *s)
- static bool trans_B(DisasContext *s, arg_i *a)
- {
-     reset_btype(s);
--    gen_goto_tb(s, 0, a->imm);
--    return true;
-+    return gen_direct_branch(s, a->imm);
- }
- 
- static bool trans_BL(DisasContext *s, arg_i *a)
-@@ -1795,8 +1794,7 @@ static bool trans_BL(DisasContext *s, arg_i *a)
-     tcg_gen_mov_i64(cpu_reg(s, 30), link);
- 
-     reset_btype(s);
--    gen_goto_tb(s, 0, a->imm);
--    return true;
-+    return gen_direct_branch(s, a->imm);
- }
- 
- 
-@@ -1837,11 +1835,9 @@ static bool trans_B_cond(DisasContext *s, arg_B_cond *a)
- 
-         a64_test_cc(&c, a->cond);
-         return gen_cbranch(s, &c, a->imm);
--    } else {
--        /* 0xe and 0xf are both "always" conditions */
--        gen_goto_tb(s, 0, a->imm);
-     }
--    return true;
-+    /* 0xe and 0xf are both "always" conditions */
-+    return gen_direct_branch(s, a->imm);
- }
- 
- static bool trans_CB_cond(DisasContext *s, arg_CB_cond *a)
-@@ -11265,7 +11261,7 @@ static void aarch64_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-         switch (dc->base.is_jmp) {
-         case DISAS_NEXT:
-         case DISAS_TOO_MANY:
--            gen_goto_tb(dc, 1, 4);
-+            gen_direct_branch(dc, 4);
-             break;
-         default:
-         case DISAS_UPDATE_EXIT:
+     } else {
+         gen_a64_update_pc(s, diff);
 -- 
 2.53.0
 
