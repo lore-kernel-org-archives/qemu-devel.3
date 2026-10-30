@@ -1,94 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CACA606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6B0606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 01:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=k0XHg3cW
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=GNphpGHl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMb4w-0002I2-Sf; Thu, 29 Oct 2026 21:06:46 -0400
+	id 1xMb4w-0002HL-AO; Thu, 29 Oct 2026 21:06:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4l-0002DK-HA
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:35 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4e-0002CL-La
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:34 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4h-0006FC-BQ
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:32 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-48e20ed3b9dso160921f8f.2
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:06:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xMb4a-0006E2-5w
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 21:06:25 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4a5036bbac7so602485e9.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 18:06:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793322389; x=1793927189; darn=nongnu.org;
+ d=openvz.org; s=google; t=1793322382; x=1793927182; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fJ9DARarrY1aTYCtlvGS85iKEp5hs4edfrbJfuPj5Sg=;
- b=k0XHg3cW6lOZbNOaWhrBkG7iMg6VddxC5sYdUfx8gdhZJ4XU8Oww7GP11YF0YojmxU
- uDIkchiJNcelIy6I5iTahltxrnjRnDuaIX/euXnOt/w1W/8dE7O36+GckEcNmfs6nVaJ
- jJWBmB1Bn1BfQMYMKx6cOOwIPXYdVr6tofLChpZChLhtooo1Lt7n+5gmA8mY4QBHpcMe
- 92vuan/TDCspG6XqlC/QH4zD9ZM+urcmXJAIx+a7M9wJUvCFihpxG7zR1jxQuDHdIMZs
- XgemZ4O1H/3yTUs04CvW9u/v9lgXNRrCdf0u1ZIKfIANPp+92i9oYKBSz/vwS66zUB++
- lI+Q==
+ bh=71SB0FrjFwut8s/0OfdT1uGzvIsW+clScFF+JCSKOjE=;
+ b=GNphpGHl+pgVUE1oG1HATk9vhu1aOq6bQBC9jgpmKdkDwxK53a+S1lz7BwWfrxEbh/
+ FTpEgZ4qmTcmB7ODSTN+OPs6gG+DbWF5pnzyd79ncvH6M256Pe+WCSKPTWqAHPvf4n0Q
+ zBmL/uj/H5r6s8TgRDiIhFFm4liKs0wf4S2Ajp+XLnHU59TsXHMzngl2PtLpu5ebjl8N
+ VDCy9VdL8965I8YAMrGmMpNezbwDZyU0o6i0Q415ATU1iP0UhYAct9j+QC+Y5iASlN4d
+ a/SUkZubVts8v3Df6hj33mVo6/XJnpaTKKK0/CF/kYS2P3YBbcvmx3yau70+0WRzK/+3
+ TuOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793322389; x=1793927189;
+ d=1e100.net; s=20260707; t=1793322382; x=1793927182;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=fJ9DARarrY1aTYCtlvGS85iKEp5hs4edfrbJfuPj5Sg=;
- b=uglTXnoFryBOFMUAMi73PtcTFTX0Ks5sB8YM883e8FRr8f9YYKoZklyTahlxYjDG5y
- gGSVyihiNzfWOR/tpZU4MOnIBNnLS1PiVi7Yv5OvS5VNSK8uNokAC/1CyC9Saeh/690j
- peZIJ5Bqbv6qdu7LzwvcTDQO+pLrSCnzFpZPN9E+pNav7amKngjF/QxZDJ4H+MRnYfub
- aEIltQRbz6qPTv1TWo+hvIbDSn7bodOw04oTbGm6LOoM00M44Tht8mxiuVQ//Prst0Yo
- UCS0ai200FKw3NhPTWIsdU8vKA4Bke83YItE7amw+M3+B4qc0nODp6cxvk60XYYC059E
- sinA==
-X-Gm-Message-State: AFq9FYJrGs6PNqnIkdvwGBu41OHM1xJmDOG8zYzaZRU0rSoYL95+4yoh
- J/TjCwkqk7tSDs2pm57arkiCXqtKNrAsHojYEdil90B+918ix0pa5UL/WIQfI70VB/fRw5g2ceI
- /hPSZ
-X-Gm-Gg: AYBFou2nt+MrS/MNWf5ApGcPLuNBirr5Q+YsifTmvH47QeTE0axvdZI71et6Cond/CR
- lHx52yaq/w4Q6aK2/vAxBpE6v07cqhql6N13afpyT5JOWArNYOxJFbuPNePLqNUw0sqLEzTFMc7
- mGZIDVgBb19Ve95BjydmDbORJRGgeCICBiJ/HIMtbKs5WcgDDEZsD1QyA03j03yYM59C/WjVW1x
- M15gSs/Qz4m3NK0K5vuT4RAEGV7toLh9RVyzcu8WBg0y26yCN9sas589gCQLON2NNOIWsFgfWx+
- 98RXPyHNNKfd7Q34I2psFb4L+avFWQ0lLkpdsMVt5yMePawaDbGie1zZQbaAcP8B9PRF6+TTxid
- fPRYYs/8+E9iq1aQEQa7D2opVNm6jciobe4J8/seYYYn3hcIzf4eHm9yRWCQFreEfE/r/Eph1fU
- oPgvTJm95PfRIk+CeiW947KmozxqZfLwirVrIstcDSCU/JG4vxvhIkT/VnD9TSOo/0aDAj3S1e3
- gH2u6MzMblDY25nHQBG0C8q79NZxk3Loi+4LpShqqX1Wk+BBBcqexTcv7IR3RgdzVqfydzfL1Ci
- r62ARL2cb/o9zW3KGFhwa7y05YmneaSi4mOwbGI=
-X-Received: by 2002:a5d:4391:0:b0:487:219e:5e20 with SMTP id
- ffacd0b85a97d-48e6e529631mr1474478f8f.51.1793322388584; 
- Thu, 29 Oct 2026 18:06:28 -0700 (PDT)
+ bh=71SB0FrjFwut8s/0OfdT1uGzvIsW+clScFF+JCSKOjE=;
+ b=da1qtbgc0nZ1iMNM6JTwbU9Vi2nWtnwh+2pw17baG8Ko15LFTpTNYWTK1EpsJFJFGC
+ MVPzwQr++I/n6FyM/PxvptrTMuZOnI0Gra3nDk6g8zO+amhOhSo6IjHo67WM0XCY3NQQ
+ qJQQWEpF0MScBJjJq3M1OA4oHj5943sXklrrZRddXXRmHSbybeFdUdXDlLIQl8V4XlxO
+ kcd9hebdaFmmFxC46SGm7GaLA/yLZezuhwPRn+RFgZcaiH15Gsw+yF+tTE+Zc5+nN4tA
+ hbr3eqEqufL+kQBqqysoYHNSlwmbpCom4kI3ays/yVIghD0pJQ89aiW1nMFB9luOaxdf
+ hN/A==
+X-Gm-Message-State: AFq9FYIKPP9YExhM80yQzihdcUYlnar0DYDcD2JhzVXXa0xaI8k7BqKO
+ fk1cnGhduVPtHQHqUt02uFZsdqXKsTovtZ/vBfp6/ZE2ZQLBb95hz8M8q1tKuHgQoebRkATup81
+ ymVZm
+X-Gm-Gg: AYBFou3n325aReJ6ULbN/Ufoj4bY5mZrsT/H6/gqNMbBcKOgL44FIrF66ZabRiocQFc
+ q73czCQBqDjtt7eoMLGfZmEjBp2/2kyUmVirEtJ9gnvXa0QZjitBteaT+IoKq3qglGHd4cVmk1o
+ V2MV4eG49a72XjwdqYLZ1x3QqZs93CuFOggPOVLTnkv3dxAsQTR4ihgx5OfVRpOuoQ8EdjLuvSo
+ knx/ox5H+8ur2MSFViboEICRHzDZ+oXsplgMI0+NM5GC5BTdxAVaqRUmYUiPlvRU7XiUZ8E4N8o
+ MUQtzprb+dDCAssh/5Ve57swFgVUalnIhm2B2SIRAM+lKSyVLQNr7x08zNUh6Bej8HI91v+G1NR
+ 9FOl7X1dS/+KAF6x+CSKrvNqCC3DlcZyLL0AXkQCdAIJN1fbokFW19h/0SeZ9RE6UchPBSsB/Ny
+ 8wP0CC5eBk8dfapUPXp4GfWfHAq9j8xl/Sw8qnHpKC46B8it1UoOVLEhV03yGqYW2N3SOqDsBuz
+ jIxFl0jXO8gzKzKDYE4YI9zJ0nHSvP9wACUYEwWUouq429MVZ7prqC9weeqLB614lIdGYOVZH7/
+ 8G3skPOTQJqe6FRDHSO5XCmRBy+DEl2EnA19Gk4=
+X-Received: by 2002:a5d:5d06:0:b0:48e:2a04:4ea3 with SMTP id
+ ffacd0b85a97d-48e6e2c05e3mr2283359f8f.8.1793322382350; 
+ Thu, 29 Oct 2026 18:06:22 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:f4be:f111:4ee0:40d3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b80333sm210023f8f.32.2026.10.29.18.06.27
+ ffacd0b85a97d-48e71b80333sm210023f8f.32.2026.10.29.18.06.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Oct 2026 18:06:28 -0700 (PDT)
+ Thu, 29 Oct 2026 18:06:21 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 05/12] block/block-copy: extract
- block_copy_set_task_method()
-Date: Fri, 30 Oct 2026 02:06:05 +0100
-Message-ID: <20261030010613.1612771-6-den@openvz.org>
+Subject: [PATCH v4 01/12] block/commit: pass BDRV_WANT_PRECISE to block-status
+Date: Fri, 30 Oct 2026 02:06:01 +0100
+Message-ID: <20261030010613.1612771-2-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261030010613.1612771-1-den@openvz.org>
 References: <20261030010613.1612771-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=den@openvz.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,108 +109,39 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Denis V. Lunev <den@openvz.org>
 
-Move the per-task block-status query and its skip_unallocated and
-BDRV_BLOCK_ZERO handling out of block_copy_dirty_clusters() into
-block_copy_set_task_method(). No behavior change. The next patch
-changes that decision, and having it in one place keeps that change to
-just the new logic.
+c33159dec790 replaced the want_zero bool with a bitmask of BDRV_WANT_*
+flags. block/commit.c was missed and still passes "true", which is
+BDRV_BLOCK_DATA, not BDRV_WANT_PRECISE. Convert it like the other
+callers.
 
-The block-status result no longer lands in the caller's @ret, so drop
-the note saying @ret may be positive at the out: label.
-
+Fixes: c33159dec790 ("block: Expand block status mode from bool to flags")
 Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: John Snow <jsnow@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+CC: Eric Blake <eblake@redhat.com>
 ---
- block/block-copy.c | 46 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 30 insertions(+), 16 deletions(-)
+ block/commit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/block-copy.c b/block/block-copy.c
-index 1826c2e1c7..33c43cdf92 100644
---- a/block/block-copy.c
-+++ b/block/block-copy.c
-@@ -736,6 +736,35 @@ int64_t coroutine_fn block_copy_reset_unallocated(BlockCopyState *s,
-     return ret;
- }
+diff --git a/block/commit.c b/block/commit.c
+index 2d52c39594..4e0b0f9029 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -140,8 +140,8 @@ commit_iteration(CommitBlockJob *s, int64_t offset,
+     /* Copy if allocated above the base */
+     WITH_GRAPH_RDLOCK_GUARD() {
+         ret = bdrv_co_common_block_status_above(blk_bs(s->top),
+-            s->base_overlay, true, true, offset, COMMIT_BUFFER_SIZE,
+-            &bytes, NULL, NULL, NULL);
++            s->base_overlay, true, BDRV_WANT_PRECISE, offset,
++            COMMIT_BUFFER_SIZE, &bytes, NULL, NULL, NULL);
+     }
  
-+/*
-+ * Decide how @task is copied: COPY_WRITE_ZEROES if it reads as zero. May
-+ * shrink @task. Returns false if @task is to be skipped (already ended,
-+ * not freed).
-+ */
-+static bool coroutine_fn GRAPH_RDLOCK
-+block_copy_set_task_method(BlockCopyState *s, BlockCopyTask *task)
-+{
-+    int ret;
-+    int64_t status_bytes;
-+
-+    ret = block_copy_block_status(s, task->req.offset, task->req.bytes,
-+                                  &status_bytes);
-+    assert(ret >= 0); /* never fail */
-+    if (status_bytes < task->req.bytes) {
-+        block_copy_task_shrink(task, status_bytes);
-+    }
-+    if (qatomic_read(&s->skip_unallocated) && !(ret & BDRV_BLOCK_ALLOCATED)) {
-+        block_copy_task_end(task, 0);
-+        trace_block_copy_skip_range(s, task->req.offset, task->req.bytes);
-+        return false;
-+    }
-+    if (ret & BDRV_BLOCK_ZERO) {
-+        task->method = COPY_WRITE_ZEROES;
-+    }
-+
-+    return true;
-+}
-+
- /*
-  * block_copy_dirty_clusters
-  *
-@@ -768,7 +797,6 @@ block_copy_dirty_clusters(BlockCopyCallState *call_state)
-     while (bytes && aio_task_pool_status(aio) == 0 &&
-            !qatomic_read(&call_state->cancelled)) {
-         BlockCopyTask *task;
--        int64_t status_bytes;
- 
-         task = block_copy_task_create(s, call_state, offset, bytes);
-         if (!task) {
-@@ -782,24 +810,12 @@ block_copy_dirty_clusters(BlockCopyCallState *call_state)
- 
-         found_dirty = true;
- 
--        ret = block_copy_block_status(s, task->req.offset, task->req.bytes,
--                                      &status_bytes);
--        assert(ret >= 0); /* never fail */
--        if (status_bytes < task->req.bytes) {
--            block_copy_task_shrink(task, status_bytes);
--        }
--        if (qatomic_read(&s->skip_unallocated) &&
--            !(ret & BDRV_BLOCK_ALLOCATED)) {
--            block_copy_task_end(task, 0);
--            trace_block_copy_skip_range(s, task->req.offset, task->req.bytes);
-+        if (!block_copy_set_task_method(s, task)) {
-             offset = task_end(task);
-             bytes = end - offset;
-             g_free(task);
-             continue;
-         }
--        if (ret & BDRV_BLOCK_ZERO) {
--            task->method = COPY_WRITE_ZEROES;
--        }
- 
-         if (!call_state->ignore_ratelimit) {
-             uint64_t ns = ratelimit_calculate_delay(&s->rate_limit, 0);
-@@ -840,8 +856,6 @@ out:
-          * block_copy_task_run. If it fails, it means some task already failed
-          * for real reason, let's return first failure.
-          * Still, assert that we don't rewrite failure by success.
--         *
--         * Note: ret may be positive here because of block-status result.
-          */
-         assert(ret >= 0 || aio_task_pool_status(aio) < 0);
-         ret = aio_task_pool_status(aio);
+     trace_commit_one_iteration(s, offset, bytes, ret);
 -- 
 2.53.0
 
