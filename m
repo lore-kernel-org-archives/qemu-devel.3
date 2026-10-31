@@ -1,93 +1,136 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D2B606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 13:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E278606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 14:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=W41sDnpR
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=v5ejj5LG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xN8lf-0002pX-4S; Sat, 31 Oct 2026 09:05:08 -0400
+	id 1xN9p1-0003yE-Fg; Sat, 31 Oct 2026 10:12:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xN8lV-0002oT-TD
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 09:04:59 -0400
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xN9oz-0003xj-SP
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 10:12:37 -0400
 Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xN8lU-0006go-2S
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 09:04:57 -0400
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xN9oy-0003fd-25
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 10:12:37 -0400
 Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-6b47c1a3c74so2059388a12.3
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 06:04:55 -0700 (PDT)
+ 4fb4d7f45d1cf-6afbc363efeso2084393a12.3
+ for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 07:12:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793455953; cv=none;
+ d=google.com; s=arc-20260327;
+ b=svLApYtfNp+OgoGEWo4xTYI9rvoR+EmuZCxtnQ4gfCAy1PC7N/9gSWwze8s3A2BWGX
+ XmQBrO56QBBBgmuXRdS73sgTHtVqsYMYC9Rp6h335wHPV89rquaOjWOV8eFkcw26i/6Y
+ wPUsp4umkCazxayo99rIA5xaTcAsfVtpNxXPM66hRmbGNtlpgDD3x67kFR7DklhHeNhu
+ noAKZE9QoCaXnFFPYE95Rc66vKRQY26rCtUHlkmeNRSNUxq+dl+r++wdp/NdSy9MbHPa
+ dtsMAIzJZXnZHyc+iZZizKpSmBVwznjUKk5RbZ7Sk8FKYKgraWotneXbDCdVrfnT59eF
+ r8MA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=pUOpZRf0p30wCsLBnhRcgac97jM7shsYjyb+5CboCrE=;
+ fh=Chk7A6x2fJwhYIZ0TeB/5VgjILlZ7KwI7w+evCag5TM=;
+ b=L1+hX2ARA/be4zXE1+klWFswn9rmtLqkwWIoh/PnmpzGotj3fHUSgk8hXJL/lbT37Y
+ FfNHVYLEHXecjtJYG62WsGlbgloWZtiZ9UqPoCgawY9+q4uNEdeZElT1WyyAvj5TGT4I
+ FvH3ImmDcTqFMWAzig6IxqbXe1W9ZsXporq3zsYBuFXX9pA+8WyBPkm3/Heu2Y3NDkb8
+ Bn7TrDyiGC/o5EVY3g2OP/E5Xu8EZlob5rf5f62xmo5L2d0NWk6q6UKqVmOPflA+wTBc
+ WX44a3e/187gqr/9s4dfRjFda+WfK+cM1VW6D8bh2Elbe8LblxQ0lot0tuI/73S46zpb
+ 10UQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793451893; x=1794056693; darn=nongnu.org;
- h=user-agent:in-reply-to:content-disposition:content-type
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=3kpnxy/dkNVgLeYH9rmGoeq5+ddp6wHYdgw1ctYbh6s=;
- b=W41sDnpRkpwut3ePIqLNG8VONVfL0vK6IrW6wvWEm54lUsOQZWa3Kr/9RUNrpznGB1
- kaAmQoSbaXUthADaZaUqgPeDvd8f3rcvqjE0Hrd+oG2krPqTUr48aSeFWPCp0kYGHrgK
- PFtIhEnQektgsOz/0D0lRR+FP/Ya3aHEVBDgTMSLb9jsXEfb+AXUFE+KQfQ/GPBtR8tc
- iXcFV7jiqVVm0ZHcQ5Ljq99MbfQ+N7yI2T1L1uMpfYZ01pdZbcBg8Pcdbv/CA5FP8hgU
- MbA2pSxHb4mieyIe40731vn8bxBgoN162Nho6++k4WMbo1/mGBJCezCcPswKbPmreYj2
- O4wA==
+ d=gmail.com; s=20260707; t=1793455953; x=1794060753; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=pUOpZRf0p30wCsLBnhRcgac97jM7shsYjyb+5CboCrE=;
+ b=v5ejj5LGfgQErWbcdKUhpcSG2djQEzS5b+nJyho/1Xwo+XqNB3RDssjr4Ev+8FK1Cd
+ oi/6oTKa83zpladKbddWExFD3K60KAQBpmACGsidouSEVUPqQmXXVRKTnAJNaFlENjsd
+ 6tf/QYFU+bGCZ71gYFdS2PmCPmDiIbr7YgjaTKIAoAKASj875dIDsfBC+9+XRceY8Euw
+ IrLTtSXwCA+HtmSpm2Cevt19mXfh/60tqC9kUp8r0+ISwrLW3gU0TA1aVTagspJ2m5l4
+ CWf/gfxbhyzSdkStATasJFqxsvuug0EDp5hDg7+4t9IpNNw1ZBma9LLJePGJ42KmM0tH
+ Hi4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793451893; x=1794056693;
- h=user-agent:in-reply-to:content-disposition:content-type
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20260707; t=1793455953; x=1794060753;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=3kpnxy/dkNVgLeYH9rmGoeq5+ddp6wHYdgw1ctYbh6s=;
- b=HX95Do3KLobb8HFUQe5Ff0o9LqvwuKZ6O+Kgv2qW1xnzLMrO6EcfgmhSYYuA03S6tE
- 6+ua4i3KfHVedhaxhLYvRhJ0oLJbVom8OTD2DniwKWprFvZiLEZCuywjQDORZhn2ahq4
- YM/710qcJPpWW1t07Qn2x4Bl2VYYl0NxqBXPDxKY7m60sFnOdb5UOpbfha/7P2Vi7dcS
- Bo1DsjDfHGaPLCrnatZ5dAzor1Cx/XwVb8xjVHdGup4P6CdfPL+dWAnPQHu65fJ+l3ys
- 0VGTkW58yxmPFqBa2Am9SENiDwNAK+Vhe64fE7JfvRmiUwkEcKrIBqaF5/wj868sJdLQ
- Tjow==
+ bh=pUOpZRf0p30wCsLBnhRcgac97jM7shsYjyb+5CboCrE=;
+ b=HzARp4dTTIbBrcypefIiCXnqhB2wQsKv4gpbirSGLl2Gztzb/vMcdJl2pgdO+es4qy
+ hGPgI3lpnXo+4E+csgUoTfHhK/v75ZA0vegIkOYFc44zamQpvXbf+BF+91FUJ1haJKBr
+ eZ4wTpYYehNwAgkzAR06GrjmWCKPY+O8AOmPJHn3IdZPSRFKjuC+i2U67x6C8iKr1+lI
+ x8GrcYoPhJQ6BlxJGbmQH5ivV41bNv4ZjCATJSlG8ipMxxFs+mMCgsuaDoiRk2bDMO7k
+ g5a4RaPo9Gvl8f8oR1kcMJ/lphFST3ck2iNhZOnQb6nVGh8n4rBFzvs67G10GTBqNbzs
+ 1SlA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxNY1bAKd5NNBEfTevB6F5rcGICUptsJSj1l1Fx7q+0wRXEkcudw17KsFTX7CdJtkZxQRHuCB0O5Y53@nongnu.org
-X-Gm-Message-State: AFq9FYJAGi+zzsQiH+uJ98/enASpyKb13CYhI0Ed67/S8wtaM1YqjLc0
- 6SofSXyENC/NFFlAbICSLHTmOt+GhmwHRkb4IprseuDnnnw7BPKZrk1W
-X-Gm-Gg: AYBFou00uMjZqN0Z7cPXAbZX+0gWwWQxpEQz0PJrKVhWCRtBXVaIjUs1X4HWB7+ypP8
- KTgcBT+Yynr4cXtNlS0o61nt/R1bqE5bagcf5zzLwmEmSZ3rtDewe08OMJi5UV4eICuIDGX2m2v
- 3GW6DLz1JslfU7A4XMK7Q2gzCMoiZwzlIdafRQPR/MXZK4E79itZhKcDEgYyGnkqG8optYEb1TX
- 8TMC4MQrLhc10SaIqCDJMjxVFPlU0/I2y1OMlbeEiLCWlwm16mbQvGtE6V0x41dJ3fTKSnXAteT
- 1KgI/zaSAK5Y12s4Fx2vRrCBrpHY2jcxhxIckw4eXi1DQXoOZEPlDCPDJSmO38pvnxRt3tPkX8f
- uFcBgGj3xrlN+64nB9lXP51xnIcTXrwhAI1llBeoIX4lkLSz+TsUi7VMOsMAON1thkgs/wfy2Ql
- vF5OU8eASZmBwcQg4xH+uerNZIWhqJozianzcysbyTBNDcIweI06PhnaD4hkJW2wvIBJS9xlgQQ
- QjKeqzF7EphJ/A9/sAISud/R7CdernxrZjWyM/sbV+Eqc7+ABb2XYm9eO35W57otB4i6OQxXeYa
- J5mWdRDGzBCZuNWzHDIeyYq13BRQJTl09vFprPWM1M7QWgXAAcg71B6tW6zpMX6cT8JAAv0srJ6
- 7G7q62deA5YpPq9LrcT0XfYvnhw==
-X-Received: by 2002:a05:6402:c9:b0:6b4:12df:3ee0 with SMTP id
- 4fb4d7f45d1cf-6b4d4c73442mr2564739a12.34.1793451893046; 
- Sat, 31 Oct 2026 06:04:53 -0700 (PDT)
-Received: from tulp
- (2001-1c02-1a15-3000-25f6-628e-6064-de9b.cable.dynamic.v6.ziggo.nl.
- [2001:1c02:1a15:3000:25f6:628e:6064:de9b])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6b4eca0f376sm1060403a12.26.2026.10.31.06.04.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 31 Oct 2026 06:04:52 -0700 (PDT)
-Date: Sat, 31 Oct 2026 14:03:54 +0100
-From: Roman Bogorodskiy <bogorodskiy@gmail.com>
-To: Brad Smith <brad@comstyle.com>
-Cc: Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] tests/unit/test-qga: only run tests for commands the
- host provides
-Message-ID: <auXnOpeNx5eToSWA@tulp>
-References: <auUjhZW4dqR63oA3@humpty.home.comstyle.com>
+ AKwUvBxTnQDoRPiakKwljPJlhBkEw/3jennYSyMYkIkc/PrVQx20rjxt776YMfR70GbVGOOdnH5CbJt9YaYA@nongnu.org
+X-Gm-Message-State: AFq9FYKwiV3YVwiU0TiKSNHr0Laz2qncnHVY0nOZfwJYaeUF5LxEjMcK
+ eJDD9hc//aNFwLVBjWePem+o5Lsgu7s10umFjeS1F4j+HfxgAt2tTz1ZSd0ZwvfS4Pd/RIplIpT
+ kLgsv3cXrDgkWI8CvosLCc1eK2Bgz7cE=
+X-Gm-Gg: AYBFou3ND6KXwRw4x1mv1CBcYEH7jdeiVM3qWk/dL4kdSAdFPARQy4xN4YXd642cjfQ
+ t2fcdqghKVjDBTitBwGEJ2C6+UCclZfF5WOpXTZpByXFfjh6olsgapWo+W1kj1+3YFHMf82fXBL
+ ZotQKY4MFkRLrXLkuCApOgpYe/PAdyBgOXKYJgDbMKIZfLE3xXoKbBJ/J2U8P7PxlZb8bNQwz0v
+ mEz0WguT0U30ub99j86gJ9VoCtiuiZA0uhtmnVQREulcqqkgibA4fkg2ZzvHHXQkKqDBnJ9VPUM
+ LgPlaPvXoGcE2I3/LmkX+Y8P3Hg46rP0ryykCmRo0ZXKDUyZLAaEdNpZCr+F6UunzbMk90a/vmv
+ Vvm9gr55KnjJKkn8Ve4sUszXkmS5zxklqHcWV
+X-Received: by 2002:a05:6402:44c8:b0:6af:a566:6f13 with SMTP id
+ 4fb4d7f45d1cf-6b4d5edb54fmr3002982a12.44.1793455953008; Sat, 31 Oct 2026
+ 07:12:33 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <auUjhZW4dqR63oA3@humpty.home.comstyle.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+References: <20261030151539.1872-1-luoyonggang@gmail.com>
+ <d1db54c6-b802-676a-7779-0c2c63f5f807@eik.bme.hu>
+ <aa70e94c-d9a8-41c9-850f-7ded87f7f327@oss.qualcomm.com>
+ <ba106173-fca3-6019-3028-122831887921@eik.bme.hu>
+In-Reply-To: <ba106173-fca3-6019-3028-122831887921@eik.bme.hu>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Sat, 31 Oct 2026 22:12:20 +0800
+X-Gm-Features: AclHuK-zfjnfDk2iP11Oo2plNAe19bvSiGLggXOtrbkzp1_jiPrf_zVAr1PBvDc
+Message-ID: <CAE2XoE9cR_X0kkDfGTU4Mt_5Hc3WZ8K5rghw2AeL4Vh=eugGag@mail.gmail.com>
+Subject: Re: [PATCH 00/15] hw: expand DEFINE_MACHINE to explicit TypeInfo
+ registration
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org,
+ Anthony PERARD <anthony@xenproject.org>, Felipe Balbi <balbi@kernel.org>, 
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>, 
+ Antony Pavlov <antonynpavlov@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
+ Max Filippov <jcmvbkbc@gmail.com>, Niek Linnenbank <nieklinnenbank@gmail.com>, 
+ xen-devel@lists.xenproject.org, qemu-riscv@nongnu.org, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-ppc@nongnu.org, 
+ Alexandre Iooss <erdnaxe@crans.org>, Weiwei Li <liwei1518@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Frederic Konrad <konrad.frederic@yahoo.fr>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chao Liu <chao.liu@processmission.com>, 
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>, 
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ed1-x52f.google.com
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,107 +148,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-  Brad Smith wrote:
+On Sat, Oct 31, 2026 at 8:42=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
+ wrote:
+>
+> On Fri, 30 Oct 2026, Pierrick Bouvier wrote:
+> > On 10/30/2026 4:09 PM, BALATON Zoltan wrote:
+> >> On Fri, 30 Oct 2026, Yonggang Luo wrote:
+> >>> DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED hide the TypeInfo and the
+> >>> type_init
+> >>> function that calls type_register_static(). A later change needs to
+> >>> pass a
+> >>
+> >> That's the point of the macro to hide the boiler plate code.
+> >>
+> >>> target mask into that registration, and the macros have no parameter
+> >>> for it.
+> >>
+> >> Couldn't you just change the macros to take that parameter instead of
+> >> expanding it everywhere?
+> >>
+> >
+> > Problem of macros is that they don't have default parameters, so you
+> > need variants for everything:
+> >
+> > DEFINE_MACHINE
+> > DEFINE_MACHINE_EXTENDED
+> > DEFINE_MACHINE_WITH_INTERFACES
+> > DEFINE_MACHINE_WITH_INTERFACE_ARRAY
+> > and now would need a new variant, with variant for other existing ones.
+> >
+> > In the end, it's just simpler to remove this and add the boilerplate.
+> > It's written once and never modified, so using a macro just save typing
+> > those lines once.
+> >
+> >> Regards,
+> >> BALATON Zoltan
+> >>
+> >>> This series expands every caller first, with no behavior change, so t=
+he
+> >>> follow-up only replaces the type_register_static() call.
+> >>>
+> >>> Each machine file gains a class_init function, a TypeInfo, and a
+> >>> type_init
+> >>> function that calls type_register_static(). The last patch removes
+> >>> DEFINE_MACHINE* and DEFINE_SECURE_MACHINE* from include/hw/core/board=
+s.h.
+>
+> Macros help reading the code not saving typing. If the actual
+> functionality is buried in a lot of boiler plate it's harder to understan=
+d
+> and spot bugs so putting the unintresting boiler plate behind a macro is
+> better even if you need a separate version for different cases. Then the
+> code that uses the macro will be much more obvious and not just a lot of
 
-> tests/unit/test-qga: only run tests for commands the host provides
-> 
-> guest-fsfreeze-status is only implemented when CONFIG_FSFREEZE is
-> set (Linux and FreeBSD), and guest-get-users is only built on POSIX
-> hosts when HAVE_UTMPX is set, so neither command exists on hosts such
-> as OpenBSD. Only build and register these tests where the commands
-> are available.
+I think mainly because DEFINE_MACHINE* and DEFINE_SECURE_MACHINE* are
+not defined properly
+that causes them to not be extended easily.
 
-Does that also need something like:
+DEFINE_TYPES is another example, use them can extend easily, how about
+always use DEFINE_TYPES?
+Or add a DEFINE_TYPE to replace DEFINE_MACHINE* and DEFINE_SECURE_MACHINE*?
 
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -170,7 +170,7 @@ if have_system
-   tests += {'test-qdev': [qom, hwcore]}
- endif
 
--if have_ga and host_os in ['freebsd', 'linux']
-+if have_ga and host_os in ['freebsd', 'linux', 'openbsd']
-   tests += {'test-qga': ['../qtest/libqmp.c', '../qtest/libqtest.c']}
-   test_deps += {'test-qga': qga}
- endif
+> boiler plate.
+>
+> Regards,
+> BALATON Zoltan
 
-Otherwise it's not clear how to spot these issues if the test never runs
-on OpenBSD.
 
-> Signed-off-by: Brad Smith <brad@comstyle.com>
-> ---
->  tests/unit/test-qga.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/tests/unit/test-qga.c b/tests/unit/test-qga.c
-> index b1c84c188b..ef796f2f7d 100644
-> --- a/tests/unit/test-qga.c
-> +++ b/tests/unit/test-qga.c
-> @@ -787,6 +787,7 @@ static void test_qga_config(gconstpointer data)
->      g_free(env[0]);
->  }
->  
-> +#ifdef CONFIG_FSFREEZE
->  static void test_qga_fsfreeze_status(gconstpointer fix)
->  {
->      const TestFixture *fixture = fix;
-> @@ -800,6 +801,7 @@ static void test_qga_fsfreeze_status(gconstpointer fix)
->      status = qdict_get_try_str(ret, "return");
->      g_assert_cmpstr(status, ==, "thawed");
->  }
-> +#endif
->  
->  static QDict *wait_for_guest_exec_completion(int fd, int64_t pid)
->  {
-> @@ -1028,6 +1030,7 @@ static void test_qga_guest_get_timezone(gconstpointer fix)
->      g_assert(qdict_haskey(val, "offset"));
->  }
->  
-> +#ifdef HAVE_UTMPX
->  static void test_qga_guest_get_users(gconstpointer fix)
->  {
->      const TestFixture *fixture = fix;
-> @@ -1042,6 +1045,7 @@ static void test_qga_guest_get_users(gconstpointer fix)
->      val = qdict_get_qlist(ret, "return");
->      g_assert_nonnull(val);
->  }
-> +#endif
->  
->  static void test_qga_guest_get_osinfo(gconstpointer data)
->  {
-> @@ -1133,8 +1137,10 @@ int main(int argc, char **argv)
->      g_test_add_data_func("/qga/invalid-oob", &fix, test_qga_invalid_oob);
->      g_test_add_data_func("/qga/invalid-cmd", &fix, test_qga_invalid_cmd);
->      g_test_add_data_func("/qga/invalid-args", &fix, test_qga_invalid_args);
-> +#ifdef CONFIG_FSFREEZE
->      g_test_add_data_func("/qga/fsfreeze-status", &fix,
->                           test_qga_fsfreeze_status);
-> +#endif
->  
->      g_test_add_data_func("/qga/blockedrpcs", NULL, test_qga_blockedrpcs);
->      g_test_add_data_func("/qga/allowedrpcs", NULL, test_qga_allowedrpcs);
-> @@ -1152,8 +1158,10 @@ int main(int argc, char **argv)
->                           test_qga_guest_get_host_name);
->      g_test_add_data_func("/qga/guest-get-timezone", &fix,
->                           test_qga_guest_get_timezone);
-> +#ifdef HAVE_UTMPX
->      g_test_add_data_func("/qga/guest-get-users", &fix,
->                           test_qga_guest_get_users);
-> +#endif
->  
->      ret = g_test_run();
->  
-> -- 
-> 2.56.0
-> 
-> 
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
