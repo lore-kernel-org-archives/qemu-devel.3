@@ -1,102 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7CA606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 13:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D2B606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 13:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=M5QPAOJS
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=W41sDnpR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xN8kO-0002YJ-77; Sat, 31 Oct 2026 09:03:48 -0400
+	id 1xN8lf-0002pX-4S; Sat, 31 Oct 2026 09:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
- id 1xN8kM-0002Y4-ET
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 09:03:46 -0400
-Received: from mail-qk2-x01.google.com ([2607:f8b0:4864:34::1])
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1xN8lV-0002oT-TD
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 09:04:59 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
- id 1xN8kK-0006fU-VQ
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 09:03:46 -0400
-Received: by mail-qk2-x01.google.com with SMTP id
- d75a77b69052e-534b7b19206so10861211cf.0
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 06:03:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793451824; cv=none;
- d=google.com; s=arc-20260327;
- b=YqZbo2FKgVEKQIDqi1U2bBiio+E/2N5m5G6pQUq25J+1bJcE7e8V1mDwvxJqi+C06Y
- /GJpqpNm38KDJeB/SBeySSd+e5q2RrXcZjGoHOG60DEu0g84BSuhZK1E+JDV8hwLV45J
- 0LE9WSdVpcndzB0n1WtNZ8x615sj55mZGLk9sL+DZ115zWYAtLkM9I8C8wpzVnxtHoud
- RdxfHyrUqgrDgGyKdoBOQq9NZYUy6nwRW1zZnobFzjJq5Y8juJOqipOUkcH9esmHyVkq
- pTqN0IxjzSbmb7afNPz+imzn/u5MDqwv6NGLjy0SiYCdK81zQjOz4tZWSHHHr65RzFg1
- 6j3Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=81hA2BAJ0CH6xDTbL6IG5M7Re7R0iTUS3HxX916hbUE=;
- fh=xstARF0ZwselbUhOm666/USMzGlNtVenayhoulrajug=;
- b=P4PhDs9HRjTsu90AtQAsb8+Yggh3aJlHNJ1vJoBpcoC8hHjJ+DbOIna++GzC3Vb/aE
- WQnQ6a7Hxpdje8mCZkXKyoZQFr2KQBz0prSo5gVu84lz9uMlcowJ02wvT9pf2KvmRiYO
- eB6GqeWybKOaa8yD8aCogpdUYRKIPivQ3VQwMBp/sknmOU9vAmWJ4pmQ1QlqDSUiEZ3j
- ZZ3OnBxBLzyLwuzgdUJrTz8dI3OwCmLi+JT2kNsnYdBCSjHNxBHdKOiIs54Gm/BCX/To
- 02mTb35rIbQ+eJkVCfhPlsR9W12jxrhKU9HLSwyhnEHtL7SvRSvXc8of7QHb0FFI8L4L
- EpMg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1xN8lU-0006go-2S
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 09:04:57 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-6b47c1a3c74so2059388a12.3
+ for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 06:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793451824; x=1794056624; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=81hA2BAJ0CH6xDTbL6IG5M7Re7R0iTUS3HxX916hbUE=;
- b=M5QPAOJSeNbvAcsYDEr89vUIHYUKcoQDxWMO/BMvhSzU5QxXkeLuIMkeHVvbJxlccp
- EbY4cAvk1nFC+05bBMYWH7Xoti3rsPvjKuS2v+36PSEk3O4iRRuI4PTqziJLdMbguhwX
- 7VtPRL/auvRl/RmIS63cGuKSqJTyoarrpgFUpsf7ITome1pXNhuJ+6q+K4nKSuGCJVoo
- Xtzg30vC29F24PXlIUMQvluzuJK/6TLtbh7dt6XcghTYhY4ZUVgNi18wYLhiBXwhbNGt
- Xvc7k2pE/k5ILkm7Lt7LtHwL34fOz7mTPym1iD7uvuYfOA8xaSNMuJMPGvoAlHKtnj8I
- j8ag==
+ d=gmail.com; s=20260707; t=1793451893; x=1794056693; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-disposition:content-type
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=3kpnxy/dkNVgLeYH9rmGoeq5+ddp6wHYdgw1ctYbh6s=;
+ b=W41sDnpRkpwut3ePIqLNG8VONVfL0vK6IrW6wvWEm54lUsOQZWa3Kr/9RUNrpznGB1
+ kaAmQoSbaXUthADaZaUqgPeDvd8f3rcvqjE0Hrd+oG2krPqTUr48aSeFWPCp0kYGHrgK
+ PFtIhEnQektgsOz/0D0lRR+FP/Ya3aHEVBDgTMSLb9jsXEfb+AXUFE+KQfQ/GPBtR8tc
+ iXcFV7jiqVVm0ZHcQ5Ljq99MbfQ+N7yI2T1L1uMpfYZ01pdZbcBg8Pcdbv/CA5FP8hgU
+ MbA2pSxHb4mieyIe40731vn8bxBgoN162Nho6++k4WMbo1/mGBJCezCcPswKbPmreYj2
+ O4wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793451824; x=1794056624;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20260707; t=1793451893; x=1794056693;
+ h=user-agent:in-reply-to:content-disposition:content-type
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=81hA2BAJ0CH6xDTbL6IG5M7Re7R0iTUS3HxX916hbUE=;
- b=aNFfQxi+1PmkejTBEMJUA4fPtnmyPe9Tr9XKBavnUsZ61fXhMKpLhUWwfJpm1Rgl9s
- 21S6aVaAKTkrt+q3yRSnrO8tksg/4fjZdZSgTVaZ2GSI/ozHzTefwHLiWWCii4fIlRAD
- +2emd+7QvUyrN353+U4Yps4qgOJLtrTtxQOq9nn2nBj7lntpERftNieEsTuhL3dC/f9f
- rDNqimXzsonYxA18wQGdO3LnwLME8tPkYQ5yUA9/3SjHWhxDUNt/O3bn4Xh72Sl3iuNl
- hc56EMQBezKx3TAOKklolrlaKLjoYHdoYs/DLuraemTqSchcS2pnfknXsv+wJLwnauTh
- y7vg==
-X-Gm-Message-State: AFq9FYKLOv67d1M+63vywtrM8wImLchTKxLfV9gmNn/4o/J4/jigJjgu
- pfI7BkbxVBWq83+7NQ0JDx0Ugrq6uVkIP4MMR5AL/kSagNDEWHDcPSJVHCPmmFdTpCYkvONYp8d
- QFGwj2Ba4MrgsK6EBZXvMawUXE4pcC4I=
-X-Gm-Gg: AYBFou06SUNmIj90UDM4RrSD0XsUdGbaTD2vDWretsW4rM/3bQlt1rjFghvjN8fOlUX
- y9dkD/prl4YbxfBqwHHooKahu7zHud590VmTlzBqBM+MWw5lCtV/oTczrhyz9OY7GecQcm4st+x
- SPx7qnYzUnfuP/G7VyZUm2npM2zjz/JwRwwi4m5iW4GZOWbeTCh4zb9IQv5vvLIAW9bbp3t/MN2
- XKanxCn/xyGIWCoy0Xe0KxxDn71Wmft1FeNlRjld8JagZSnmS3PQhKwv1VhSKCom6sJx4L8DQNF
- 4W8I8aCPzIDyDjSwDGQtFesPs2ulcrWdLjmIT+RJ77fCENgskXDFNa9pyWRkNYw3HyyxvjHJdeu
- qIQtYV6pPdLtjHRyIa7uitHkScUL+nhMj5GZmlAFrm9Gr/ot1T0n8vvKxBH0/nrtBOOx4
-X-Received: by 2002:a05:622a:342:b0:536:780e:8f42 with SMTP id
- d75a77b69052e-542b7046270mr86545681cf.33.1793451823677; Sat, 31 Oct 2026
- 06:03:43 -0700 (PDT)
+ bh=3kpnxy/dkNVgLeYH9rmGoeq5+ddp6wHYdgw1ctYbh6s=;
+ b=HX95Do3KLobb8HFUQe5Ff0o9LqvwuKZ6O+Kgv2qW1xnzLMrO6EcfgmhSYYuA03S6tE
+ 6+ua4i3KfHVedhaxhLYvRhJ0oLJbVom8OTD2DniwKWprFvZiLEZCuywjQDORZhn2ahq4
+ YM/710qcJPpWW1t07Qn2x4Bl2VYYl0NxqBXPDxKY7m60sFnOdb5UOpbfha/7P2Vi7dcS
+ Bo1DsjDfHGaPLCrnatZ5dAzor1Cx/XwVb8xjVHdGup4P6CdfPL+dWAnPQHu65fJ+l3ys
+ 0VGTkW58yxmPFqBa2Am9SENiDwNAK+Vhe64fE7JfvRmiUwkEcKrIBqaF5/wj868sJdLQ
+ Tjow==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxNY1bAKd5NNBEfTevB6F5rcGICUptsJSj1l1Fx7q+0wRXEkcudw17KsFTX7CdJtkZxQRHuCB0O5Y53@nongnu.org
+X-Gm-Message-State: AFq9FYJAGi+zzsQiH+uJ98/enASpyKb13CYhI0Ed67/S8wtaM1YqjLc0
+ 6SofSXyENC/NFFlAbICSLHTmOt+GhmwHRkb4IprseuDnnnw7BPKZrk1W
+X-Gm-Gg: AYBFou00uMjZqN0Z7cPXAbZX+0gWwWQxpEQz0PJrKVhWCRtBXVaIjUs1X4HWB7+ypP8
+ KTgcBT+Yynr4cXtNlS0o61nt/R1bqE5bagcf5zzLwmEmSZ3rtDewe08OMJi5UV4eICuIDGX2m2v
+ 3GW6DLz1JslfU7A4XMK7Q2gzCMoiZwzlIdafRQPR/MXZK4E79itZhKcDEgYyGnkqG8optYEb1TX
+ 8TMC4MQrLhc10SaIqCDJMjxVFPlU0/I2y1OMlbeEiLCWlwm16mbQvGtE6V0x41dJ3fTKSnXAteT
+ 1KgI/zaSAK5Y12s4Fx2vRrCBrpHY2jcxhxIckw4eXi1DQXoOZEPlDCPDJSmO38pvnxRt3tPkX8f
+ uFcBgGj3xrlN+64nB9lXP51xnIcTXrwhAI1llBeoIX4lkLSz+TsUi7VMOsMAON1thkgs/wfy2Ql
+ vF5OU8eASZmBwcQg4xH+uerNZIWhqJozianzcysbyTBNDcIweI06PhnaD4hkJW2wvIBJS9xlgQQ
+ QjKeqzF7EphJ/A9/sAISud/R7CdernxrZjWyM/sbV+Eqc7+ABb2XYm9eO35W57otB4i6OQxXeYa
+ J5mWdRDGzBCZuNWzHDIeyYq13BRQJTl09vFprPWM1M7QWgXAAcg71B6tW6zpMX6cT8JAAv0srJ6
+ 7G7q62deA5YpPq9LrcT0XfYvnhw==
+X-Received: by 2002:a05:6402:c9:b0:6b4:12df:3ee0 with SMTP id
+ 4fb4d7f45d1cf-6b4d4c73442mr2564739a12.34.1793451893046; 
+ Sat, 31 Oct 2026 06:04:53 -0700 (PDT)
+Received: from tulp
+ (2001-1c02-1a15-3000-25f6-628e-6064-de9b.cable.dynamic.v6.ziggo.nl.
+ [2001:1c02:1a15:3000:25f6:628e:6064:de9b])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6b4eca0f376sm1060403a12.26.2026.10.31.06.04.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 31 Oct 2026 06:04:52 -0700 (PDT)
+Date: Sat, 31 Oct 2026 14:03:54 +0100
+From: Roman Bogorodskiy <bogorodskiy@gmail.com>
+To: Brad Smith <brad@comstyle.com>
+Cc: Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] tests/unit/test-qga: only run tests for commands the
+ host provides
+Message-ID: <auXnOpeNx5eToSWA@tulp>
+References: <auUjhZW4dqR63oA3@humpty.home.comstyle.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <CALU8FV9KC48FC2FGahqSh2uEqyedy-QZAgZ9qgap147d=Hr-+Q@mail.gmail.com>
- <1a022cad-2010-4b1a-bef7-ae9effe0b12b@linaro.org>
-In-Reply-To: <1a022cad-2010-4b1a-bef7-ae9effe0b12b@linaro.org>
-From: mdspan <mdspan.github@gmail.com>
-Date: Sat, 31 Oct 2026 07:03:32 -0600
-X-Gm-Features: AclHuK9J7vUYqRkaBCC0w3DmnY8uoTQ0kaSy7brGn3yGlrmWvrzhv94Pm8z8664
-Message-ID: <CALU8FV9M7+Cm4m963Fx_-g+TGiZXVxe6mUiKkzax5f=Gn6Odsw@mail.gmail.com>
-Subject: Re: [RFC] target/i386: design for TCG emulation of LAM
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, zhao1.liu@intel.com, 
- laurent@vivier.eu, deller@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:34::1;
- envelope-from=mdspan.github@gmail.com; helo=mail-qk2-x01.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <auUjhZW4dqR63oA3@humpty.home.comstyle.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=bogorodskiy@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,49 +106,106 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/21/26 14:20, Richard Henderson wrote:
-> In particular, arm requires the complete address, including tagging, to
-> be available for any raised exception.  So clipping the address at any
-> other place loses that information.  Dunno if that applies to LAM.
+  Brad Smith wrote:
 
-It doesn't for LAM. LAM masking applies before paging, so CR2 gets
-the masked address (ISE 319433-048, section 6.5). The non-canonical
-case riases #GP, which doesn't report an address.
+> tests/unit/test-qga: only run tests for commands the host provides
+> 
+> guest-fsfreeze-status is only implemented when CONFIG_FSFREEZE is
+> set (Linux and FreeBSD), and guest-get-users is only built on POSIX
+> hosts when HAVE_UTMPX is set, so neither command exists on hosts such
+> as OpenBSD. Only build and register these tests where the commands
+> are available.
 
-One change would touch common code: tlb_flush_range_locked() compares
-large_page_addr in all 64 bits, so INVLPG of the untagged address
-misses a large page entered under a tagged alias. I'd compare under
-the flush mask:
+Does that also need something like:
 
-    if (((addr + len - 1) & d->large_page_mask & mask) =3D=3D
-        (d->large_page_addr & mask)) {
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -170,7 +170,7 @@ if have_system
+   tests += {'test-qdev': [qom, hwcore]}
+ endif
 
-If that's fine, I'll post the system-mode series.
+-if have_ga and host_os in ['freebsd', 'linux']
++if have_ga and host_os in ['freebsd', 'linux', 'openbsd']
+   tests += {'test-qga': ['../qtest/libqmp.c', '../qtest/libqtest.c']}
+   test_deps += {'test-qga': qga}
+ endif
 
-On Wed, Oct 21, 2026 at 6:20=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 10/21/26 12:57, mdspan wrote:
-> > Ping.
-> >
-> > Paolo, Richard: does masking in get_physical_address(), with TLB
-> > entries kept per tag and INVLPG flushing all aliases through
-> > tlb_flush_page_bits_by_mmuidx(), look acceptable to you? I have a
-> > prototype of items 1 and 2 and can post it as an RFC series if that
-> > would be easier to review.
->
-> Yes, this is what we do in target/arm for top-byte-ignore.
->
-> In particular, arm requires the complete address, including tagging, to
-> be available for any raised exception.  So clipping the address at any
-> other place loses that information.  Dunno if that applies to LAM.
->
-> r~
+Otherwise it's not clear how to spot these issues if the test never runs
+on OpenBSD.
+
+> Signed-off-by: Brad Smith <brad@comstyle.com>
+> ---
+>  tests/unit/test-qga.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/tests/unit/test-qga.c b/tests/unit/test-qga.c
+> index b1c84c188b..ef796f2f7d 100644
+> --- a/tests/unit/test-qga.c
+> +++ b/tests/unit/test-qga.c
+> @@ -787,6 +787,7 @@ static void test_qga_config(gconstpointer data)
+>      g_free(env[0]);
+>  }
+>  
+> +#ifdef CONFIG_FSFREEZE
+>  static void test_qga_fsfreeze_status(gconstpointer fix)
+>  {
+>      const TestFixture *fixture = fix;
+> @@ -800,6 +801,7 @@ static void test_qga_fsfreeze_status(gconstpointer fix)
+>      status = qdict_get_try_str(ret, "return");
+>      g_assert_cmpstr(status, ==, "thawed");
+>  }
+> +#endif
+>  
+>  static QDict *wait_for_guest_exec_completion(int fd, int64_t pid)
+>  {
+> @@ -1028,6 +1030,7 @@ static void test_qga_guest_get_timezone(gconstpointer fix)
+>      g_assert(qdict_haskey(val, "offset"));
+>  }
+>  
+> +#ifdef HAVE_UTMPX
+>  static void test_qga_guest_get_users(gconstpointer fix)
+>  {
+>      const TestFixture *fixture = fix;
+> @@ -1042,6 +1045,7 @@ static void test_qga_guest_get_users(gconstpointer fix)
+>      val = qdict_get_qlist(ret, "return");
+>      g_assert_nonnull(val);
+>  }
+> +#endif
+>  
+>  static void test_qga_guest_get_osinfo(gconstpointer data)
+>  {
+> @@ -1133,8 +1137,10 @@ int main(int argc, char **argv)
+>      g_test_add_data_func("/qga/invalid-oob", &fix, test_qga_invalid_oob);
+>      g_test_add_data_func("/qga/invalid-cmd", &fix, test_qga_invalid_cmd);
+>      g_test_add_data_func("/qga/invalid-args", &fix, test_qga_invalid_args);
+> +#ifdef CONFIG_FSFREEZE
+>      g_test_add_data_func("/qga/fsfreeze-status", &fix,
+>                           test_qga_fsfreeze_status);
+> +#endif
+>  
+>      g_test_add_data_func("/qga/blockedrpcs", NULL, test_qga_blockedrpcs);
+>      g_test_add_data_func("/qga/allowedrpcs", NULL, test_qga_allowedrpcs);
+> @@ -1152,8 +1158,10 @@ int main(int argc, char **argv)
+>                           test_qga_guest_get_host_name);
+>      g_test_add_data_func("/qga/guest-get-timezone", &fix,
+>                           test_qga_guest_get_timezone);
+> +#ifdef HAVE_UTMPX
+>      g_test_add_data_func("/qga/guest-get-users", &fix,
+>                           test_qga_guest_get_users);
+> +#endif
+>  
+>      ret = g_test_run();
+>  
+> -- 
+> 2.56.0
+> 
+> 
 
