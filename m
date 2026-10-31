@@ -1,70 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A3F606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 16:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D21E606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 16:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=O4jIaxxt
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iDhVLnpQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNC9C-0002i4-UP; Sat, 31 Oct 2026 12:41:40 -0400
+	id 1xNC9H-00034E-5w; Sat, 31 Oct 2026 12:41:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNC8y-0002bw-Tw
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:25 -0400
-Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
+ id 1xNC9C-0002mF-39
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:38 -0400
+Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNC8w-0007mU-Lq
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:24 -0400
-Received: by mail-dl1-x1234.google.com with SMTP id
- a92af1059eb24-14394530ec6so2227994c88.1
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 09:41:22 -0700 (PDT)
+ id 1xNC99-0007nR-NU
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:37 -0400
+Received: by mail-dl1-x1230.google.com with SMTP id
+ a92af1059eb24-1ae18eb9ad0so1462544c88.1
+ for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 09:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793464881; x=1794069681; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793464894; x=1794069694; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=F4BZlHQ4uuWh3AcM0lAUJwiu4sRioxBd7xwErjYLxjk=;
- b=O4jIaxxtb6Ih1uoqJWOKOaTWBdm2KZQPfsu71kkUYDnrNmqUHFj99inGb9RVSOvjtc
- NgOpWkIMUW0i+Djy2fmaq9IuvsAc1evDVKjUjaCylbJsFlawUfxQZ5LGWjZ2f815rALy
- kU4I+oP0xMEBXIDRjiSC580oMh/u7yj507+V3r8kjrPyVrCdn+a0Zt2kS6fDAyA9f7b7
- vE0WpHaFS7AgtHjebawKG1Cf2k5nIAMTUAHV9vItibL2tw6DwN84cEZk0LgREssbGG9G
- eA6zmBzZ5bvtIrbykv6RBP+3EiHm+40Djdyc00QDmQ2OWobFgy8gctte00u0teOLKJxN
- Pgug==
+ bh=n0fy6txPXVLFBkZT0x5hxzLsyPhrX+VI0hJdqwY6DdA=;
+ b=iDhVLnpQKBXENvrDTk+bnTEgb2jmncj1dy2qYL7dUkVizGTDAFsXZYRDXlulZsOAMb
+ dbWaw7Ii2U7xEhuljdgB15XM+9W3aA3yXK04T3U82ZydVgO9VCmswmpatJKAHfHTbbLm
+ 0ce9eZxTl38jbziqnyI9t7us35L/wv0Z21svOFaCp5o6Gz72RNqSEOAqkevcZNwn9ZBh
+ K3ykGYEfDqMWBLxFrvqw5lTmZccX1S1d3pimAnsfCvy+Sbs9nOGjjZu/TamgZ87ATXiE
+ cse5Xdlqx4tofoxlGO+u92BKebWndgs35NdegyMsQy2HdNDIlZBSHGxieg6pHNbbSb4b
+ d23A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793464881; x=1794069681;
+ d=1e100.net; s=20260707; t=1793464894; x=1794069694;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=F4BZlHQ4uuWh3AcM0lAUJwiu4sRioxBd7xwErjYLxjk=;
- b=Tbx5a7I2Y1YPEe6PVFA3Ae8KCYJfD6NDU673z5kvQYXJOTn392NivAmdFj9Dt19Hiv
- zLNLNOZIwB2PyBnDj8Qo3nZmMltjMY4iBYgpJmFgANTsif3WrzEcraUksM6MocsKObHa
- hWLVNQhon2hpNmRS6jtBUuTKtvjCnXoq49OhjJu2kOyLM3ZiVwzuXkGPaoZcFZ7GK8HL
- cbaI2pUfWfWfvuDovsZLPPWvRDKWKrYasKOpv27ir9aiGgOaPNwjPeMVEOlQROf8GoOx
- W7XAZLyYjrcnD9pG5HvCPVJG9snw+Y5lqIrFi5F2RZ7NkcZLgc+uBF4DnrpOLJXJ9kya
- Q4Hg==
-X-Gm-Message-State: AFq9FYIBd4dK4C3kJL3ovzkluJxMMDYh9WfVDJGDLFKE0ufu8oJcfFAp
- H2cuVK86eyzxOq1w0cc138CdiH0cVO6mgmh8RwKP2ETqG1m+rX5vGIVpnqm2zfGz
-X-Gm-Gg: AYBFou0f/G0nEWG1m3qH/dpuWvM9Z/GbMq4VoJ/t1+EpQI9RhKFyRaZRkeqY5+J3gDk
- ye/XGJqvUM1cOWYaR7xvEDWfvTKjtP/Cv1I/jdtCbTtaYM5J+Lb7DQLPh6mOkw281h6XbILrR+k
- iiWF81YTweFkEFGGuPsZMQypQ5gv1tb51SGOFykR1xq9jWUSAWF3KYstpMUwtp0F0ONyiEsU/aC
- taGvUqtAHCKbBhOdG9lyz1bZFPxaomWTfTzSulrYkCz4QCtPaEzIGx+1MTV5F844Ufx1SM7kQV+
- D/GwyQQEkuP2aacu+syAZCHV9k7QEkA2zmhdzDSe2ZtsHJS+o67pCJdUm7viJyTjLC1ev1fAGtn
- pjuUvet7IKilfLdaV6aDPVyis/lfFhtE+GtIWapTpPdgWeADM0znWz9tB1HPKVCa6Vytq38dTiv
- sX1gyCjUyA2HMOs1prvfWT7OQhq12ePirl+CsRrbURUQq9qYLVc/dIbPe42EOM3S9UbdLaS6LMb
- naxczgISWfONTk8YtiUe/TaCZlgWJb1szuWrzzLjNKEQUp4Dc9sYHH44HgehrHjU+ydK24hMZEG
- fmNxGvAFxg2SishPkrAR1NbZ45y8Q2yjZtnSRacgfWDKQI01
-X-Received: by 2002:a05:7023:90c:b0:138:30b1:4c00 with SMTP id
- a92af1059eb24-1ac56d95448mr8838301c88.3.1793464881306; 
- Sat, 31 Oct 2026 09:41:21 -0700 (PDT)
+ bh=n0fy6txPXVLFBkZT0x5hxzLsyPhrX+VI0hJdqwY6DdA=;
+ b=SHuxqJJjmQ7WgD3Yx1Tz3LgbxctA4+6/dVyWSsT05qrOUCsEk25E/kdd4V4j0hG+wN
+ FA76yUvsBd+UFO1BMWYfTimSLxCSK+jTwMMKURaR4l5L1kUMbhZOsbxq+V1fZM5UMyFt
+ GDhQC+wGVolKY3Oi6Al21etfszq787Il1ovFRaOIhc3KPCYzBnOjSmB46YTZYjWBy3lw
+ MlQw3NlNik5fkr4cHx2FhdW33xHRcIaj5YDgyYRvgZkmobPPThQBimeehN/GVz2+Vm4y
+ cKbmP69jPqjC/kW2RU1FxpCh9Lsl7Y7gZKv3WRM/NueM7Bf+mvDm4lWzikLRAIG6KwT4
+ mvcw==
+X-Gm-Message-State: AFq9FYIRsKOOghpB4tf6MX7oZEctS/pEDn4TIgI/Y18aTYsJme7PHzc1
+ Yj6h8GqAMsRbtoySViTozaviVorA3NMdE7An6DH8K6MJM7j1XyixmST/1fqWIDP5
+X-Gm-Gg: AYBFou2CSdgrtDkNH2sv5Gp+bUEzkmprBZETZPou2wQ+MAPuTnLE2ujxRQeiD8OEsB0
+ NbsL5REgSojvTr8qOeFlacDACpxNLnywYcq1BD2KnWP9pLCvTLGFBGfdlOF2Y3whgEXNSeuCT8A
+ wjdS81N8Xvp0bzlNwk7+lVPXcxgxVHEkiHKwnaT6mq0fOH44y4biF2wCgB3PvnP6w87L1KRz3sB
+ jAHKzST40BByX7YMJLIIM0yIzgUHRtMl4vEMdJTBEYP/R5v9ZjCFv5baSWn5s/JpWpTNvazrcHc
+ jnyZ7mQYqA5HgDuhwxBikgOsdL5nvrSYW1eHJeVfvrJ7/mR947ZfTZLGKVgovRQ4gE1ZS2JMOt5
+ VJZYoKVtEi4aTw0NEsplppaevfW0sGTKV1He7iK2SphwfIzwDuSj4uMGPyeaBywDXIMA7bD9/zR
+ 46bsCpJe5+muP+fh9pVWYxwUNbbMhKPKmOxWwfqqKs1F+FwUoXjHnOTvkm+IrTSeIN2PtrAG7sw
+ eXhYUU+G2kzyFtHpnV4gH1+MFPAJ9Q0fraXKIF1m3ZjWtYpr3XmM5kY3hlJdkwQl2/RWQZ9QwCe
+ MZNdNJgm/KaGTINRRWBYxL07ZuUZjixDNywFDBwGpVqUCkWx28THAWWmyuMpYs+dg+Z2aA==
+X-Received: by 2002:a05:701b:428b:20b0:1a3:dfb6:e593 with SMTP id
+ a92af1059eb24-1ac5eea3690mr8130854c88.27.1793464893501; 
+ Sat, 31 Oct 2026 09:41:33 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1ac193b8179sm19574572c88.11.2026.10.31.09.41.15
+ a92af1059eb24-1ac193b8179sm19574572c88.11.2026.10.31.09.41.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 31 Oct 2026 09:41:20 -0700 (PDT)
+ Sat, 31 Oct 2026 09:41:32 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -80,24 +80,25 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Cornelia Huck <cohuck@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 10/12] target-info: add target_base_i386()
-Date: Sun,  1 Nov 2026 00:40:05 +0800
-Message-ID: <20261031164009.2048-11-luoyonggang@gmail.com>
+Subject: [PATCH v2 12/12] hw/microblaze: defer PetaLogix endianness default
+ until init
+Date: Sun,  1 Nov 2026 00:40:07 +0800
+Message-ID: <20261031164009.2048-13-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261031164009.2048-1-luoyonggang@gmail.com>
 References: <20261031164009.2048-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1234.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,56 +118,51 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-target_base_arm(), target_base_ppc() and target_base_riscv() report
-whether the selected target belongs to a CPU family. Add the same
-predicate for i386 and x86_64.
+The PetaLogix machine read its endianness default from
+target_big_endian() in class_init. In a multi-target binary the target
+is not selected yet at class_init, so the default cannot be computed
+there. Set the property default to "unspecified" instead, and resolve
+it to big or little in petalogix_s3adsp1800_init(), where the target is
+known.
 
+Until the machine is initialized, endianness reads back as
+"unspecified" rather than big or little.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- include/qemu/target-info.h |  7 +++++++
- target-info.c              | 11 +++++++++++
- 2 files changed, 18 insertions(+)
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 1d6c6f4472c..beb7980ca87 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -57,6 +57,13 @@ bool target_heterogeneous(void);
-  */
- bool target_base_arm(void);
- 
-+/**
-+ * target_base_i386:
-+ *
-+ * Returns whether the target architecture is i386 or x86_64.
-+ */
-+bool target_base_i386(void);
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index c5f64319009..4abb6e0f0bf 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -83,7 +83,13 @@ petalogix_s3adsp1800_init(MachineState *machine)
+     MemoryRegion *phys_ram = g_new(MemoryRegion, 1);
+     qemu_irq irq[32];
+     MemoryRegion *sysmem = get_system_memory();
+-    EndianMode endianness = psms->endianness;
++    EndianMode endianness;
 +
- /**
-  * target_arm:
-  *
-diff --git a/target-info.c b/target-info.c
-index 07dc88fd366..d8cd2209018 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -59,6 +59,17 @@ bool target_base_arm(void)
-     }
- }
- 
-+bool target_base_i386(void)
-+{
-+    switch (target_arch()) {
-+    case SYS_EMU_TARGET_I386:
-+    case SYS_EMU_TARGET_X86_64:
-+        return true;
-+    default:
-+        return false;
++    if (psms->endianness == ENDIAN_MODE_UNSPECIFIED) {
++        psms->endianness = target_big_endian() ? ENDIAN_MODE_BIG :
++                                                 ENDIAN_MODE_LITTLE;
 +    }
-+}
-+
- bool target_arm(void)
- {
-     return target_arch() == SYS_EMU_TARGET_ARM;
++    endianness = psms->endianness;
+ 
+     cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
+     object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
+@@ -178,8 +184,7 @@ static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
+                                           &EndianMode_lookup,
+                                           machine_get_endianness,
+                                           machine_set_endianness);
+-    object_property_set_default_str(prop, target_big_endian() ? "big"
+-                                                              : "little");
++    object_property_set_default_str(prop, "unspecified");
+     object_class_property_set_description(oc, "endianness",
+             "Defines whether the machine runs in big or little endian mode");
+ }
 -- 
 2.55.0.windows.3
 
