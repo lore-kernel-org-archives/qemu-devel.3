@@ -1,58 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6A1606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAD9606A31A
 	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 07:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ha3FgUxM
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gwhCvK43
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xN3R6-00058T-K4; Sat, 31 Oct 2026 03:23:32 -0400
+	id 1xN3R1-00057E-6L; Sat, 31 Oct 2026 03:23:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xN3R5-00058L-BA
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 03:23:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xN3Qx-00056w-A3
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 03:23:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xN3R4-0005Bn-20
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 03:23:31 -0400
+ id 1xN3Qv-0005BT-L6
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 03:23:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793431409;
+ s=mimecast20190719; t=1793431400;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=62FmMalj4JslFcj/8pvcN0huwgOGqefp/qPZEUPG7QY=;
- b=ha3FgUxMSGEe1r9wxBrYE6zyHGnoyKanovPE8/8Gz0r5hornVApMVaa0y4IGcbsG5orkPW
- UhlohJnpboA8BvUnUnfMMc1iu0Z5KXNiTFaXyt49xZeCH2QNmgfPX6bDZDj+VBoEEDPmBw
- FEs527/t1A+WMr2B58dmTktwOggaX8o=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=cGGZpn9KZHzDsh2JHh0nMLcwz4H6eKy76lEsfZPesco=;
+ b=gwhCvK439PNqLX1mHz5gndfTEjF2MPpWSLkRzTGyHELsx3a1p7p1Rd32RL81id66ToNIXx
+ K9KjdbdUM0S1fRRoHA7Ih1GaEfAzM+2LAAMQW5Vbl3ouDyNfbQQANZp2ZzfsDwXVCjrq6b
+ PnN7+3pQz7plUEAlDvCS4eMvQfnfLIA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-v9aedIvpNqy6TzdTUJFsdg-1; Sat,
- 31 Oct 2026 03:23:23 -0400
-X-MC-Unique: v9aedIvpNqy6TzdTUJFsdg-1
-X-Mimecast-MFC-AGG-ID: v9aedIvpNqy6TzdTUJFsdg_1793431402
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-Bz1AI_h4Ooy3L_2PtugNaQ-1; Sat,
+ 31 Oct 2026 03:23:16 -0400
+X-MC-Unique: Bz1AI_h4Ooy3L_2PtugNaQ-1
+X-Mimecast-MFC-AGG-ID: Bz1AI_h4Ooy3L_2PtugNaQ_1793431395
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E460180066E; Sat, 31 Oct 2026 07:23:22 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 709B01955F44; Sat, 31 Oct 2026 07:23:14 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0381A1800495; Sat, 31 Oct 2026 07:23:20 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1C74B1956086; Sat, 31 Oct 2026 07:23:12 +0000 (UTC)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 3/4] ui/vnc-clipboard: factor out clipboard peer
- registration
+Subject: Re: [PATCH v3 1/4] ui/clipboard: add clipboard peer update
+ notification
 From: marcandre.lureau@redhat.com
 To: Lukasz Kornicki <lucas.kornicki@nutanix.com>
 Cc: qemu-devel@nongnu.org, 
@@ -60,39 +60,40 @@ Cc: qemu-devel@nongnu.org,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  Peter Maydell <peter.maydell@linaro.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261030141442.264308-4-lucas.kornicki@nutanix.com>
+In-Reply-To: <20261030141442.264308-2-lucas.kornicki@nutanix.com>
 References: <20261030141442.264308-1-lucas.kornicki@nutanix.com>
- <20261030141442.264308-4-lucas.kornicki@nutanix.com>
+ <20261030141442.264308-2-lucas.kornicki@nutanix.com>
 Date: Sat, 31 Oct 2026 11:23:07 +0400
-Message-Id: <179343138751.2067999.8594296569917696065.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=474;
+Message-Id: <179343138749.2067999.7248786643362385972.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=505;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=q2qWfshe5FWnpWPxX5900E+V7BpCHJS7GJ2xVw1HVGQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq5Zde4qNZByXVhr0lT/ZGgjUZMARYSJ2LLKFEg
- +qiRvxxHEeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCauWXXgAKCRDa6OEJdZac
- 5XqnD/4lwbwBplCDDmyn+YnfQe4u7WtJhh43P+2kuUBi9rN51qR+oKuuH4hBJUUZsQzPgdWCQRS
- 7j74UMlON6NIloeSjA+oRNOG3HqNR62N13DZ14uVpPry9dwJIbS3uIAB3Ap0RbKWdabA/G8/a5X
- ZlQbwUtssQFgU/GeYrIp/ahtrgPetxMSMEIfKPglOoZPH8Wnrg3cxoEli3hna8u2SITZc7jaTKZ
- lhJB78LjKBamtjFcmLsD8B7wYMEPvw2zPmUYUZfHoVDF6SqU+4pZ93nhFd0LFoNgpHjm0mqnGh5
- l0nyjtAt1tawKL0ADSC7s28lfvOpsNJDf1Nw0MPPBP0VOTeX5EOV72yBV4ucCrW+q3btGye8Zo6
- uDqFXiO0krfCHrW3ktozqAWN39jyTvTJZGC/B/kMoYApZdZL/FeVYUcVJCqGmS2KaJwrCPhrnD/
- QYmHyOBLT9XBg3MqJuvvULYH5mfYJtCuNQ6aMVTJkZX06wAqSiM6zns+s7pEqdOkIrD0fRtz7ag
- RCaba2QVNIferIk2Kr1oGYj3tGW0RjaohJaIwU0tyPYIa7w1AtJZ9vPZQyu0cuiCnr4QRORCdrq
- b4rnB1lMGeTon7nR+amRIw6WU8OrZ6fjxgHFxmPzINql4F8bbiVb5CN6KwLuqgfH/jBYcIq5QtL
- FzvyqSVYRHHtgVQ==
+ bh=mtRazoM3idB22fygMhz0/VbOlZPQJ7qe6IYUDAI239c=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq5ZddVMRy/J8O4dvBMeNV1qR9+E//8msklnMxk
+ na/wp5R2SmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCauWXXQAKCRDa6OEJdZac
+ 5ZP0EACbKFmQtnhZlsruSTw+6/d3HKU6spnOL6XcPGWD3y6Z/nWdm4gw0OviDu2uyFsZID8Ibgl
+ 9WrTpqbb5+GqGw/l8xYmUnTW8mbeSUzciQLy3DJxNN00pJzjcMYz1/iY13sfSXdUpVTfM0Vm9/M
+ JsNpFxYfZp/gM9RptGzIKxlx3jclYgdhbU1IeeGjKU20kzqHbloM3ghmSvJlE1h84/CXHVwLIgj
+ yPCXZHLsSACOKXaP7ON1XvUqC8wCo2pPwHhwBru5GOg7jOXBUahi1LoFX+ZUE4HFwQBLPN3eWiv
+ xLdB2gIEA9Nd354SEQPxXMqZUCf02NsUyTbBip1cZB4Zs+dFllJ/yCMPZRNwLV+wjZzVlhkGIl8
+ Y13PhJ4KTSv3d5NQrxJ/6VHbnxlAN8UkCGIuUiwgyN2R7kdzjELI+8hA6yZijrMXHCUgaFchK/j
+ cvXPcrVTHV1W+jhrKOnbqZOnTtfAP4Inet8bgwGKwofY7XU5JYPC5YAXhpIrILeO1B1pJ5k/1Fs
+ EIWiYEAXKZhtFHtbg3uvcj01P/GJIX8fMJ5G/SOZwZ9Z7RjoV90BXQ36sdvWLTcurvAHFEFRTmq
+ bCrRF1/pYsTOU5QCbWvMaCcFbppCkZ97PftlnOrg6PP+UKu5MZbJFqhR7ieUPm3h0iFYY4MmmVE
+ pzm3wSQgrlhMfgA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,13 +112,13 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 30 Oct 2026 15:14:41 +0100, Lukasz Kornicki <lucas.kornicki@nutanix.com> wrote:
-> VNC clipboard peer is registered inline from vnc_server_cut_text_caps.
+On Fri, 30 Oct 2026 15:14:39 +0100, Lukasz Kornicki <lucas.kornicki@nutanix.com> wrote:
+> Add a new QEMU_CLIPBOARD_PEER_UPDATE notify type which carries
+> a payload with affected peer and whether it just registered or
+> unregistered.
 > 
-> Move the registration logic into a function so a subsequent change can
-> register the peer independently of extended clipboard capability.
-> 
-> No functional change.
+> All existing notifier handlers are updated to explicitly ignore
+> the new event so that the enum switch remains exhaustive.
 > 
 > [...]
 
