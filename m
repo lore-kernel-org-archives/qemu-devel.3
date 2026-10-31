@@ -1,70 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC8E606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 16:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9999606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 16:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s4ElI+G2
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AHVWUTrQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNC8V-0002G6-Qv; Sat, 31 Oct 2026 12:40:55 -0400
+	id 1xNC8r-0002XV-5A; Sat, 31 Oct 2026 12:41:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNC8T-0002Eb-Bw
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:40:53 -0400
-Received: from mail-dy1-x132b.google.com ([2607:f8b0:4864:20::132b])
+ id 1xNC8m-0002Ue-OF
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:14 -0400
+Received: from mail-dl1-x122d.google.com ([2607:f8b0:4864:20::122d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNC8R-0007j5-U0
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:40:53 -0400
-Received: by mail-dy1-x132b.google.com with SMTP id
- 5a478bee46e88-36a1947498bso2087133eec.1
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 09:40:51 -0700 (PDT)
+ id 1xNC8k-0007l9-8g
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:11 -0400
+Received: by mail-dl1-x122d.google.com with SMTP id
+ a92af1059eb24-1438d9363fbso1304706c88.0
+ for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 09:41:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793464850; x=1794069650; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793464869; x=1794069669; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ijec5IqKtte5FEFZKHuL2v/76f/YDRGlyoBcQv2L4Uw=;
- b=s4ElI+G2vqSPwYwlcIjA2K0PcSKxEovzUhO4M9mIbR5NAKKDdviGshirY9SLqXtyA/
- yXISa6bbc/BYavBlPFrCsS1QmasFgi9LEjwU2mkh5vmEcMQrNHv1jRJXuLAzjgIEXs8i
- HK5nQ/UZYTWjZ/g4Hp296F1s6kI32OEp0jDbLWefXuzIHfGs3oyDvVVcjALTvzdtkM/1
- yKh+69rGwcuBhgzCXQnKB3KNM0H2fQ9lH2GdxbaHa2TbTdh0QNGFQmJ7R10knOESZwF7
- u1J7/7M31q8dhQ+KMWdhTQgLm1Jgf5VXWvn+yu0ZNIswwghjDDyn4Rum/8D6M6Jp/jFs
- FUnw==
+ bh=+9DnP+gTwSEOX7zrI2haaQoi28yWED+v2p12ws9Ei1k=;
+ b=AHVWUTrQHl/xgZBeEF4sENHZpdrAzM0Lmm30Pta1hw49jarWUOnAl30/je1IPu+u/W
+ NxtfwhN99RJBgjvXxLSv1dmTZ7GZSZAJBdxQkrjseEDlJ0ADGnBSYONn0FXoqsuV0Vnf
+ vk6IvKVr6ePaxzVdYrHDR1zXT3q8Q1nxLGRgYf/gUrn73f92/yaB1pQUBtfH3vxIb34o
+ 4VT1MrVTpSovBUOE0qPA2B/fXQgY6OsjSTTXogY8Ckex1WBTJV8bqmjeJE1vq9l43jDk
+ 6vs8hu9C9/7O3En7eA0Z+6f1/Phw+JcIkqjAcekG8WwSJtrqJOggd04J0SMN/ATQMQL9
+ Jdcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793464850; x=1794069650;
+ d=1e100.net; s=20260707; t=1793464869; x=1794069669;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ijec5IqKtte5FEFZKHuL2v/76f/YDRGlyoBcQv2L4Uw=;
- b=Z0hV6/891H0rLvM6i83jQA7l3egaSW1s/dpFL370MkYaMgGjSdrA4RxiUgoPkOe0nB
- x6o2KI6iBpr5K9NQaimh7lKQTXosLtsN2aCpcpZyRgmvkwCmSOQXaSNcD4wdcg1E1+eb
- CxP+kY35VJeFWB141hZHK63dl/BCo4ccGXGxoTDggCI8/OQrzF1lx/XMxNzoK9p+Slg1
- SEU9V8Ii7yo6O9RlztuHVXJ8Q8A2ref8Ae8dgZJTc1+yAqVKoQ1yqbtZ1m/3KUSKMKbC
- dLvBjlNjlEof+zkZ2AtlYzGW2LXQ4UDuM08XdvIqhBXdzFwBwPuXJQRXm7mXwomFMMBh
- fq1A==
-X-Gm-Message-State: AFq9FYIKEI1jrEvnZaPiGM2Ps9bcDWm3ROmmKMJe9dVcn/riOrewsgly
- Nfy/TKbYzH5t2l34YbsBhDluvn+iK/kz/BV/pSu7NAuyXqNzmy+JCCiy3va3//n1
-X-Gm-Gg: AYBFou3QJDqryzfMCpZBk5AOjtGgTGLdIqQ5xCXGnwosVcQar9vl3vVZ7GQfL3jFKp5
- RfNSZvK/p4/Amyjqh0J7wWoZAhBa6F3hRPs7P4v7zm2V+JA2swLd6d8tHwmhuNRUAYv8Q69XWPZ
- eJko/DQexuUsDoTSZ3L5hGmbYryTBOIg8X1YSu1CDribUMWtXePSva3b3XcXWJKrHsEJIQucibn
- YyZ/2LNUk4Yo9Dy2E1jy4d+wy3XfAT1fnkk95iM42GNABHpUj8XElXTNKDc0HIRAPGgiJjKqhqR
- Gy8vBDABXWAmDkTPfoFzPkrJzcIFz3VNU3kzm3A4fLBZOS4H15rqdk9V4TOjqyibrn+kIQz85rq
- KQnGISVWbJxmpolSVwmGdhwH9NWeS8wQoIjyzu2bQmhwVP/1LMNJWLLJkES/Ccr0+y0MiFQJbt9
- 0P81EjpVB3kwGxnBT45brTSRL7HbF3GxxRDTpO0kC6+LrCSfjRPFPPoDhLwfQzdl9Sk8jFoEOLK
- 1xwNoXmDORdBUW0MXpwAk+GowL7rsL3/W6ZpowV+ph+qMAYmZnoKmq6Z68nrMDk8TzdoTEX+uae
- h8WD1lcGqSDK70B7dNP0tgNQmAowpm8iF9i8rTBAz4crzlBZtw==
-X-Received: by 2002:a05:701b:2710:b0:189:ff2b:b194 with SMTP id
- a92af1059eb24-1ac5b9cb051mr7767795c88.16.1793464850203; 
- Sat, 31 Oct 2026 09:40:50 -0700 (PDT)
+ bh=+9DnP+gTwSEOX7zrI2haaQoi28yWED+v2p12ws9Ei1k=;
+ b=WeRh8zj3GY7ej6zHB/+HL6bAHdxUD48qRVufuhooem5oAK0U46C1lrCN8PEi0Ku0LH
+ xnkCBQKm/f7/U14M9hjKosDPJEPfTO48O21NIiPvRYxwrkP13jGBSTjMuU7pgTxzqEX3
+ 2lcwab4wzZJkJK8JBtHLg5UWYobwmftSWB6otB85I2mdUs42+S/BQ5v0s0+yuTxVhT0l
+ tnepZSmg8xmUfl5uWDROnpwmxzxsAdC+QeLZ883yYYYGHE/1DDCxDv3BtlkfR4Wb5nHe
+ w6mCWi+9rLvupgyWNQNT3cv25xTa+50dtUpw2C6ekpBfogHzMwdaVkU39c+1C3TXCSOJ
+ 5uGw==
+X-Gm-Message-State: AFq9FYKCwq+AY8BjY8BnVUYZKaNrpedKpdp68hM0c73+fXDJkHUrnI5C
+ 7PQ8R1bAg1qAQ6Jlxl5Cky1u6HNCp3RNjByo5vng4gIHnH6kEhwSNsgG4SxAPz6B
+X-Gm-Gg: AYBFou1Z056fwQruHA6Wdb6+Tz9nXcntknCdBuFdUjXHdRapEZWbZNHGBdBwwGh1r8h
+ +8jdsAD1pO3hg1iLC7457d4Vf4DYusXWc+x+rsbEDzfdvr7+ZDl2H31l3HUc0V1oDor/UpZsp55
+ lCieA62QGkO8g1lKuXFPB9DTd3KMN7NyO+Vsa7abVYx5UzAxrKP2zHZbNQpZjs9Vbv9lVT9dOF8
+ RsZwoBx2fqkgpHaEs+Lrr1mvXkuOoaQa6f7NurO9D0BktgvN5nqjVvyY6nxi5FfNemJpd1q3+fy
+ Uaeyu7hjIv6/C8QEyydly85eXIpjSKXyInFkg8wGN+3kxhgavS6InhiEndaFw8keAblczXm7NNL
+ Q16S7xVzCW6K+evpZhViWR30wFL3RQ7MZM1hKSocve3rg0/+5qmAs6OCvYXhrB6D3LirfaiuKyo
+ NXdb075AZaX6n/69l1Mgm2AsLbbFsA7+JrBR7f9j5Su9LaorYjNNFT8YhdmA9BjKIF8d3hRZ8hT
+ BL6xlTW/++nPPS+fmV1dpJLLdqPGGHPue68USxr69+pVeKTZbZkGmE94xtCtlNEDRLuP+vKSk/i
+ VcyIp1EBlmbiAPuXg8ao8QscwXlGVXzc19dmz2xEmnx4tQZS
+X-Received: by 2002:a05:7022:619b:b0:144:eb3f:563a with SMTP id
+ a92af1059eb24-1a9497b9d52mr17080343c88.15.1793464868541; 
+ Sat, 31 Oct 2026 09:41:08 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1ac193b8179sm19574572c88.11.2026.10.31.09.40.45
+ a92af1059eb24-1ac193b8179sm19574572c88.11.2026.10.31.09.41.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 31 Oct 2026 09:40:49 -0700 (PDT)
+ Sat, 31 Oct 2026 09:41:07 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -80,18 +80,18 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Cornelia Huck <cohuck@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 05/12] hw/xtensa/virt: select virt machine types with
- is_available
-Date: Sun,  1 Nov 2026 00:40:00 +0800
-Message-ID: <20261031164009.2048-6-luoyonggang@gmail.com>
+Subject: [PATCH v2 08/12] hw/virtio/virtio-pci: pass is_available through
+ VirtioPCIDeviceTypeInfo
+Date: Sun,  1 Nov 2026 00:40:03 +0800
+Message-ID: <20261031164009.2048-9-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261031164009.2048-1-luoyonggang@gmail.com>
 References: <20261031164009.2048-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132b;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x132b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122d;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x122d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,36 +118,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The Xtensa virt machine uses the QOM name virt-machine, which other
-targets register as well. Register it only when the selected target
-is Xtensa, via target_xtensa().
+virtio_pci_types_register() builds the base, generic, transitional
+and non-transitional TypeInfos for one virtio-pci device. Copy an
+is_available callback onto each of them so a device can register
+target-specific variants of the same names.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/xtensa/virt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/virtio/virtio-pci.c         | 4 ++++
+ include/hw/virtio/virtio-pci.h | 1 +
+ 2 files changed, 5 insertions(+)
 
-diff --git a/hw/xtensa/virt.c b/hw/xtensa/virt.c
-index 8c8fdad72f0..962646ba98d 100644
---- a/hw/xtensa/virt.c
-+++ b/hw/xtensa/virt.c
-@@ -29,6 +29,7 @@
- #include "qapi/error.h"
- #include "system/reset.h"
- #include "hw/core/boards.h"
-+#include "qemu/target-info.h"
- #include "hw/core/loader.h"
- #include "hw/pci-host/gpex.h"
- #include "net/net.h"
-@@ -131,6 +132,7 @@ static const TypeInfo xtensa_virt_machine_typeinfo = {
-     .parent     = TYPE_MACHINE,
-     .class_init = xtensa_virt_machine_class_init,
-     .instance_size = sizeof(MachineState),
-+    .is_available = target_xtensa,
- };
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index c73f1f546cb..1ce39e92e9d 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2522,11 +2522,13 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+         .class_size    = t->class_size,
+         .abstract      = true,
+         .interfaces    = t->interfaces,
++        .is_available  = t->is_available,
+     };
+     TypeInfo generic_type_info = {
+         .name = t->generic_name,
+         .parent = base_type_info.name,
+         .class_init = virtio_pci_generic_class_init,
++        .is_available = t->is_available,
+         .interfaces = (const InterfaceInfo[]) {
+             { INTERFACE_PCIE_DEVICE },
+             { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+@@ -2562,6 +2564,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+             .name          = t->non_transitional_name,
+             .parent        = base_type_info.name,
+             .instance_init = virtio_pci_non_transitional_instance_init,
++            .is_available  = t->is_available,
+             .interfaces = (const InterfaceInfo[]) {
+                 { INTERFACE_PCIE_DEVICE },
+                 { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+@@ -2576,6 +2579,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+             .name          = t->transitional_name,
+             .parent        = base_type_info.name,
+             .instance_init = virtio_pci_transitional_instance_init,
++            .is_available  = t->is_available,
+             .interfaces = (const InterfaceInfo[]) {
+                 /*
+                  * Transitional virtio devices work only as Conventional PCI
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index ee50fb0d551..6c3561d319a 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -236,6 +236,7 @@ typedef struct VirtioPCIDeviceTypeInfo {
+     void (*instance_init)(Object *obj);
+     void (*instance_finalize)(Object *obj);
+     void (*class_init)(ObjectClass *klass, const void *data);
++    bool (*is_available)(void);
+     const InterfaceInfo *interfaces;
+ } VirtioPCIDeviceTypeInfo;
  
- static void xtensa_virt_machine_register_types(void)
 -- 
 2.55.0.windows.3
 
