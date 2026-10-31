@@ -1,70 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D21E606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 16:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598EE606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 16:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iDhVLnpQ
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Nrgs83P5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNC9H-00034E-5w; Sat, 31 Oct 2026 12:41:43 -0400
+	id 1xNC9F-0002u9-Bj; Sat, 31 Oct 2026 12:41:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNC9C-0002mF-39
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:38 -0400
-Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
+ id 1xNC98-0002gd-04
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:34 -0400
+Received: from mail-dl1-x122a.google.com ([2607:f8b0:4864:20::122a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNC99-0007nR-NU
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:37 -0400
-Received: by mail-dl1-x1230.google.com with SMTP id
- a92af1059eb24-1ae18eb9ad0so1462544c88.1
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 09:41:35 -0700 (PDT)
+ id 1xNC93-0007n1-CK
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:33 -0400
+Received: by mail-dl1-x122a.google.com with SMTP id
+ a92af1059eb24-1931ff67a29so1890038c88.1
+ for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 09:41:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793464894; x=1794069694; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793464888; x=1794069688; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=n0fy6txPXVLFBkZT0x5hxzLsyPhrX+VI0hJdqwY6DdA=;
- b=iDhVLnpQKBXENvrDTk+bnTEgb2jmncj1dy2qYL7dUkVizGTDAFsXZYRDXlulZsOAMb
- dbWaw7Ii2U7xEhuljdgB15XM+9W3aA3yXK04T3U82ZydVgO9VCmswmpatJKAHfHTbbLm
- 0ce9eZxTl38jbziqnyI9t7us35L/wv0Z21svOFaCp5o6Gz72RNqSEOAqkevcZNwn9ZBh
- K3ykGYEfDqMWBLxFrvqw5lTmZccX1S1d3pimAnsfCvy+Sbs9nOGjjZu/TamgZ87ATXiE
- cse5Xdlqx4tofoxlGO+u92BKebWndgs35NdegyMsQy2HdNDIlZBSHGxieg6pHNbbSb4b
- d23A==
+ bh=MmRCsAW5mavSOXDoD+r4sX5W+ESmptKLUqpCEz6dVjI=;
+ b=Nrgs83P5QEeZi0YGWgRBGH+TvTSBwOrStM4h2ErHelxVJ7/3q9NsDOODPflV8Sv150
+ pR+A4aG2LsPXLHHMC8p0e+FBqRLem0m0kRsvh5yOPm1hoHI7y4TmbsEeF2Z90ff5paoQ
+ gbAWfiNHNNHw2gm8UA6cny2QB3lrA31W7vKtOUoVD2edGoFlKUaZYZ2U00K+kthiUi3L
+ tYddi7wxOqUqbiHdkpxCuqNnnJ7wIJ85VgvdelIJnBn48dF4/DDZ71IS2jgkw+KmCA2C
+ CoITvUTaQYp838O/uzAGRb/cZvWKemi9kCAWc35EK874GL6f0B6pBkO3miNNapuVXJwJ
+ MyZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793464894; x=1794069694;
+ d=1e100.net; s=20260707; t=1793464888; x=1794069688;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=n0fy6txPXVLFBkZT0x5hxzLsyPhrX+VI0hJdqwY6DdA=;
- b=SHuxqJJjmQ7WgD3Yx1Tz3LgbxctA4+6/dVyWSsT05qrOUCsEk25E/kdd4V4j0hG+wN
- FA76yUvsBd+UFO1BMWYfTimSLxCSK+jTwMMKURaR4l5L1kUMbhZOsbxq+V1fZM5UMyFt
- GDhQC+wGVolKY3Oi6Al21etfszq787Il1ovFRaOIhc3KPCYzBnOjSmB46YTZYjWBy3lw
- MlQw3NlNik5fkr4cHx2FhdW33xHRcIaj5YDgyYRvgZkmobPPThQBimeehN/GVz2+Vm4y
- cKbmP69jPqjC/kW2RU1FxpCh9Lsl7Y7gZKv3WRM/NueM7Bf+mvDm4lWzikLRAIG6KwT4
- mvcw==
-X-Gm-Message-State: AFq9FYIRsKOOghpB4tf6MX7oZEctS/pEDn4TIgI/Y18aTYsJme7PHzc1
- Yj6h8GqAMsRbtoySViTozaviVorA3NMdE7An6DH8K6MJM7j1XyixmST/1fqWIDP5
-X-Gm-Gg: AYBFou2CSdgrtDkNH2sv5Gp+bUEzkmprBZETZPou2wQ+MAPuTnLE2ujxRQeiD8OEsB0
- NbsL5REgSojvTr8qOeFlacDACpxNLnywYcq1BD2KnWP9pLCvTLGFBGfdlOF2Y3whgEXNSeuCT8A
- wjdS81N8Xvp0bzlNwk7+lVPXcxgxVHEkiHKwnaT6mq0fOH44y4biF2wCgB3PvnP6w87L1KRz3sB
- jAHKzST40BByX7YMJLIIM0yIzgUHRtMl4vEMdJTBEYP/R5v9ZjCFv5baSWn5s/JpWpTNvazrcHc
- jnyZ7mQYqA5HgDuhwxBikgOsdL5nvrSYW1eHJeVfvrJ7/mR947ZfTZLGKVgovRQ4gE1ZS2JMOt5
- VJZYoKVtEi4aTw0NEsplppaevfW0sGTKV1He7iK2SphwfIzwDuSj4uMGPyeaBywDXIMA7bD9/zR
- 46bsCpJe5+muP+fh9pVWYxwUNbbMhKPKmOxWwfqqKs1F+FwUoXjHnOTvkm+IrTSeIN2PtrAG7sw
- eXhYUU+G2kzyFtHpnV4gH1+MFPAJ9Q0fraXKIF1m3ZjWtYpr3XmM5kY3hlJdkwQl2/RWQZ9QwCe
- MZNdNJgm/KaGTINRRWBYxL07ZuUZjixDNywFDBwGpVqUCkWx28THAWWmyuMpYs+dg+Z2aA==
-X-Received: by 2002:a05:701b:428b:20b0:1a3:dfb6:e593 with SMTP id
- a92af1059eb24-1ac5eea3690mr8130854c88.27.1793464893501; 
- Sat, 31 Oct 2026 09:41:33 -0700 (PDT)
+ bh=MmRCsAW5mavSOXDoD+r4sX5W+ESmptKLUqpCEz6dVjI=;
+ b=dxSkUjAYCSix/nNAdWY0uImmrI3gPwcyDxQnkCfHKl7+sW2aKO9AawGBcwShsdF2oF
+ Y2XVLpx7h9h5rImxpMarXNU+Gx1HNWNLza/xpFnxJ92wCTzgQaWMvWAnEQVsIRNd/e6+
+ EJynmeqSrQdhP7SZz9tnke7M8693sQbfIzfSTMks4NZsau+6CUnCiA+N7BbLW2WJliwY
+ T4L6FUGLaPCnACv+gJFyGrkHXkjZuzM6GQ0QmPGiPYR//lsj8SO2WlVpkrmcbIlP+kOq
+ 3Nn8wbbt1OE2VF8nMXhz1KlhdKz8TYtxUJB6lqiXIHDznaal7L8T3hJ9yaP1rw+oatIl
+ 4ulQ==
+X-Gm-Message-State: AFq9FYIG7KnHpdoHr8b7XFHisZA4vtoPPXrUF0rUS7VKrO1EALUc4xpF
+ jTC0OJAGngdqrE/6EBlCwLLMTPza04zGZhbAQhdxO77LTuKgsqRA4XPY2JnCSruA
+X-Gm-Gg: AYBFou0DvCfxp/m30CbgfSylJJ3Y+nhgKorikQ/crcyiwX/Whw2MnU89SGp1O5ittb0
+ km7t2IShzWCt0S0H2OyLFh1R33ef219hA4C01almuYZV05q/fBtIvv4VsGG7XwyPoeZ1v/9hVEu
+ AUh9BatHKu1ApL5FfZWoj3yorbsOC9VfcaOchHwj7WJVVnlYuRxgwp6AjyaIF+3DBTkYoUiPqVm
+ bGg10DrXHOXnx/jAP2t6fBRtTdUDTr/GVfwIlqIKhMr5K9Cdtg/eVmRltaoO0jI3Jx4ZWUx2VtH
+ TUA4u9hujU6Dn/dQci/+gXHTvWlbOFV2j5qF531LFq6IIL8DvPx3CWKNFwo66TeOyuXmpisIOJj
+ Pj6Meo3mLzx2PfArrZ7w3VrW8wYkbbfzPX/YExdNGVN7zDIw0NRxQIfiMN6hiP9jvPYjJe83AhK
+ 35fEeHZtN/GLwJ6WeIxpNeXWF4yY4TZUBTzCNxAyJ7M4KIVtElf7S6H02SJSc5YYJWT3PLS9SWn
+ w/zLHK6SMBfkVuU0P/KRCegFg0rejIVgIcwiuHy8vwQGhIdAcMwSb4N18jeOUY9UdGlxWZi3UlJ
+ 4ZhKBG8nJby2NH2RtpRyZwbFm5kDuOIQpZMjCTu37DxX6AMe
+X-Received: by 2002:a05:7022:170c:b0:1b0:166c:6a94 with SMTP id
+ a92af1059eb24-1b0166c6be4mr1392307c88.28.1793464887661; 
+ Sat, 31 Oct 2026 09:41:27 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1ac193b8179sm19574572c88.11.2026.10.31.09.41.28
+ a92af1059eb24-1ac193b8179sm19574572c88.11.2026.10.31.09.41.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 31 Oct 2026 09:41:32 -0700 (PDT)
+ Sat, 31 Oct 2026 09:41:26 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -80,25 +80,25 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Cornelia Huck <cohuck@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 12/12] hw/microblaze: defer PetaLogix endianness default
- until init
-Date: Sun,  1 Nov 2026 00:40:07 +0800
-Message-ID: <20261031164009.2048-13-luoyonggang@gmail.com>
+Subject: [PATCH v2 11/12] hw/virtio/virtio-mem: register legacy-guest variant
+ with is_available
+Date: Sun,  1 Nov 2026 00:40:06 +0800
+Message-ID: <20261031164009.2048-12-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261031164009.2048-1-luoyonggang@gmail.com>
 References: <20261031164009.2048-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1230.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122a;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x122a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,51 +118,136 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The PetaLogix machine read its endianness default from
-target_big_endian() in class_init. In a multi-target binary the target
-is not selected yet at class_init, so the default cannot be computed
-there. Set the property default to "unspecified" instead, and resolve
-it to big or little in petalogix_s3adsp1800_init(), where the target is
-known.
+virtio-mem decided in class_init and realize whether x86 guests can
+leave unplugged memory accessible. Register a second virtio-mem type
+that adds virtio_mem_legacy_guests_properties and sets
+VirtIOMEMClass.has_legacy_guests. Select the two with
+target_base_i386() and target_not_base_i386().
 
-Until the machine is initialized, endianness reads back as
-"unspecified" rather than big or little.
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/microblaze/petalogix_s3adsp1800_mmu.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ hw/virtio/virtio-mem.c         | 52 +++++++++++++++++++++-------------
+ include/hw/virtio/virtio-mem.h |  2 ++
+ 2 files changed, 34 insertions(+), 20 deletions(-)
 
-diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-index c5f64319009..4abb6e0f0bf 100644
---- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-+++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-@@ -83,7 +83,13 @@ petalogix_s3adsp1800_init(MachineState *machine)
-     MemoryRegion *phys_ram = g_new(MemoryRegion, 1);
-     qemu_irq irq[32];
-     MemoryRegion *sysmem = get_system_memory();
--    EndianMode endianness = psms->endianness;
-+    EndianMode endianness;
-+
-+    if (psms->endianness == ENDIAN_MODE_UNSPECIFIED) {
-+        psms->endianness = target_big_endian() ? ENDIAN_MODE_BIG :
-+                                                 ENDIAN_MODE_LITTLE;
-+    }
-+    endianness = psms->endianness;
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index ee6a0c206af..ab2864d18c3 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -15,6 +15,7 @@
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+ #include "qemu/units.h"
++#include "qemu/target-info.h"
+ #include "qemu/target-info-qapi.h"
+ #include "system/memory.h"
+ #include "system/numa.h"
+@@ -35,22 +36,6 @@
  
-     cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
-     object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
-@@ -178,8 +184,7 @@ static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
-                                           &EndianMode_lookup,
-                                           machine_get_endianness,
-                                           machine_set_endianness);
--    object_property_set_default_str(prop, target_big_endian() ? "big"
--                                                              : "little");
-+    object_property_set_default_str(prop, "unspecified");
-     object_class_property_set_description(oc, "endianness",
-             "Defines whether the machine runs in big or little endian mode");
+ static const VMStateDescription vmstate_virtio_mem_device_early;
+ 
+-static bool virtio_mem_has_legacy_guests(void)
+-{
+-    /*
+-     * We only had legacy x86 guests that did not support
+-     * VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE. Other targets don't have
+-     * legacy guests.
+-     */
+-    switch (target_arch()) {
+-    case SYS_EMU_TARGET_I386:
+-    case SYS_EMU_TARGET_X86_64:
+-        return true;
+-    default:
+-        return false;
+-    }
+-}
+-
+ /*
+  * Let's not allow blocks smaller than 1 MiB, for example, to keep the tracking
+  * bitmap small.
+@@ -859,7 +844,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+     rb = vmem->memdev->mr.ram_block;
+     page_size = qemu_ram_pagesize(rb);
+ 
+-    if (virtio_mem_has_legacy_guests()) {
++    if (VIRTIO_MEM_GET_CLASS(vmem)->has_legacy_guests) {
+         switch (vmem->unplugged_inaccessible) {
+         case ON_OFF_AUTO_AUTO:
+             if (virtio_mem_has_shared_zeropage(rb)) {
+@@ -1635,9 +1620,6 @@ static void virtio_mem_class_init(ObjectClass *klass, const void *data)
+     RamDiscardSourceClass *rdsc = RAM_DISCARD_SOURCE_CLASS(klass);
+ 
+     device_class_set_props(dc, virtio_mem_properties);
+-    if (virtio_mem_has_legacy_guests()) {
+-        device_class_set_props(dc, virtio_mem_legacy_guests_properties);
+-    }
+     dc->vmsd = &vmstate_virtio_mem;
+ 
+     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+@@ -1660,6 +1642,19 @@ static void virtio_mem_class_init(ObjectClass *klass, const void *data)
+     rdsc->is_populated = virtio_mem_rds_is_populated;
  }
+ 
++static void virtio_mem_legacy_class_init(ObjectClass *klass, const void *data)
++{
++    virtio_mem_class_init(klass, data);
++    device_class_set_props(DEVICE_CLASS(klass),
++                           virtio_mem_legacy_guests_properties);
++    VIRTIO_MEM_CLASS(klass)->has_legacy_guests = true;
++}
++
++static bool target_not_base_i386(void)
++{
++    return !target_base_i386();
++}
++
+ static const TypeInfo virtio_mem_info = {
+     .name = TYPE_VIRTIO_MEM,
+     .parent = TYPE_VIRTIO_DEVICE,
+@@ -1668,6 +1663,22 @@ static const TypeInfo virtio_mem_info = {
+     .instance_finalize = virtio_mem_instance_finalize,
+     .class_init = virtio_mem_class_init,
+     .class_size = sizeof(VirtIOMEMClass),
++    .is_available = target_not_base_i386,
++    .interfaces = (const InterfaceInfo[]) {
++        { TYPE_RAM_DISCARD_SOURCE },
++        { }
++    },
++};
++
++static const TypeInfo virtio_mem_legacy_info = {
++    .name = TYPE_VIRTIO_MEM,
++    .parent = TYPE_VIRTIO_DEVICE,
++    .instance_size = sizeof(VirtIOMEM),
++    .instance_init = virtio_mem_instance_init,
++    .instance_finalize = virtio_mem_instance_finalize,
++    .class_init = virtio_mem_legacy_class_init,
++    .class_size = sizeof(VirtIOMEMClass),
++    .is_available = target_base_i386,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_RAM_DISCARD_SOURCE },
+         { }
+@@ -1677,6 +1688,7 @@ static const TypeInfo virtio_mem_info = {
+ static void virtio_register_types(void)
+ {
+     type_register_static(&virtio_mem_info);
++    type_register_static(&virtio_mem_legacy_info);
+ }
+ 
+ type_init(virtio_register_types)
+diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-mem.h
+index 5d1d19c6bec..f367959ecb0 100644
+--- a/include/hw/virtio/virtio-mem.h
++++ b/include/hw/virtio/virtio-mem.h
+@@ -134,6 +134,8 @@ struct VirtIOMEMClass {
+     VirtioDeviceClass parent_class;
+ 
+     /* public */
++    bool has_legacy_guests;
++
+     void (*fill_device_info)(const VirtIOMEM *vmen, VirtioMEMDeviceInfo *vi);
+     MemoryRegion *(*get_memory_region)(VirtIOMEM *vmem, Error **errp);
+     void (*decide_memslots)(VirtIOMEM *vmem, unsigned int limit);
 -- 
 2.55.0.windows.3
 
