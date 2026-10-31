@@ -1,70 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4D4606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC8E606A31A
 	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 16:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Aldaomoy
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s4ElI+G2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNC8i-0002SY-6X; Sat, 31 Oct 2026 12:41:08 -0400
+	id 1xNC8V-0002G6-Qv; Sat, 31 Oct 2026 12:40:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNC8h-0002S0-BO
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:07 -0400
-Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
+ id 1xNC8T-0002Eb-Bw
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:40:53 -0400
+Received: from mail-dy1-x132b.google.com ([2607:f8b0:4864:20::132b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNC8e-0007kS-4t
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:07 -0400
-Received: by mail-dl1-x1234.google.com with SMTP id
- a92af1059eb24-1438d9363fbso1304674c88.0
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 09:41:03 -0700 (PDT)
+ id 1xNC8R-0007j5-U0
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:40:53 -0400
+Received: by mail-dy1-x132b.google.com with SMTP id
+ 5a478bee46e88-36a1947498bso2087133eec.1
+ for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 09:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793464863; x=1794069663; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793464850; x=1794069650; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=13JWMDuL1/kg2WARtJ9HlJ9hNXkjKRwhhY6NmWBu4Ck=;
- b=AldaomoyfocljUdKLWGXlzPV1dy/1kyaw48gpFagT1K/VuXB5bS8o0Q2Iwy7joyr8/
- 85Pv7zKNw+YuRMYnfrV5HPPsVqzoLXxqQuxZnDhEVfiHZ/eUneACHe9KW6DinCIy4c3q
- Pj0e4jMEwymlAJ2p5LFsBxgbMYBp5flPqPBvbLXFfGQU3o2VQUQS4ZhIRbnaGeb0rMbV
- 5f0S08sk9lsbzYquRcuNhKKRPV0G3o3ynQlPLVnGC0c5VKTMPGuKsmR4SuDCfKAwJkcL
- /8t58c2qwzspyLLdyAQmM+Orx18/CHiamvvfDAPWXqgOPtWqQAifeNrO8xIWIdZhB80G
- X9aA==
+ bh=ijec5IqKtte5FEFZKHuL2v/76f/YDRGlyoBcQv2L4Uw=;
+ b=s4ElI+G2vqSPwYwlcIjA2K0PcSKxEovzUhO4M9mIbR5NAKKDdviGshirY9SLqXtyA/
+ yXISa6bbc/BYavBlPFrCsS1QmasFgi9LEjwU2mkh5vmEcMQrNHv1jRJXuLAzjgIEXs8i
+ HK5nQ/UZYTWjZ/g4Hp296F1s6kI32OEp0jDbLWefXuzIHfGs3oyDvVVcjALTvzdtkM/1
+ yKh+69rGwcuBhgzCXQnKB3KNM0H2fQ9lH2GdxbaHa2TbTdh0QNGFQmJ7R10knOESZwF7
+ u1J7/7M31q8dhQ+KMWdhTQgLm1Jgf5VXWvn+yu0ZNIswwghjDDyn4Rum/8D6M6Jp/jFs
+ FUnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793464863; x=1794069663;
+ d=1e100.net; s=20260707; t=1793464850; x=1794069650;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=13JWMDuL1/kg2WARtJ9HlJ9hNXkjKRwhhY6NmWBu4Ck=;
- b=ykbxapN3xZelETZUtl2wIl9J3Uh4luCc50lvDCiXnzir9TDOX+gRWqhJo2tjLyNk93
- FAlVfhFhVLhreKkZb9HeQ5UZ8LyZ5AcvQcFz+LQZMHrZScfbnY7svBUnrpdfZQCEhn0+
- i8zwsgto0VSMiaFSOlEmctdCIU1eCPHEQa1ZaXBX4/OJXHTOu5h1QEhCaGw0cuJ1BXPI
- V7xxNrBudeS2wZLwBA9lMVsFNtCN2Y3DW9RZS1Kv87G21f36nXkTv6T1pqkJE152X4la
- wrK2DtX4CgrTf/GrvXjplDsgzaILn/A2IP+95DW4svgu7RfkM3Gyg0zcdZBQT0C1hkGU
- GQFg==
-X-Gm-Message-State: AFq9FYIRLegMc3/BpFznWI21dgdVCUwnHC2MBdgQs49Yr2iXFyFi8s1D
- oChBRrbfe/gxFVPwQQLEt3rDt9Trus/4al5l+4m66jwWER7xVpAu5AOrN+cBES7Z
-X-Gm-Gg: AYBFou3IWNeudTlUQuN2+pKU1yDdcthY/95iR/Ss5hoJk9kTpnR1oPjrqPf02mRcDgp
- +oM79LoBCwjP91zrD+6GL3ZvNCt/fMH1QKlyz+NOLMru/k67lurVOz1Sxid+BZ1uERLdFs27phT
- zOsZooJZMoP9EIrqOkt7IzHrj+vu513bLxlfKJ80jJI1OgP7jd7Xbwr1IjfaU0F8paasFx122bA
- EkvKrLWiQ4juwxsYMLjjAPlGMK5lw4KEtr2A4ZuVPoN8Y1ZrMyEqHsohLrv4BzRqFxZxPh8S9KJ
- /Ll8E2NY2rRl6ah7VtIUJTolhXvcwkf44uKpojBrx2VgZzZkaP5fVrJssuwda4JApvGOArOJa3F
- eYJmEGyMgCaFrJiech1zk68JBBZLRzM11KsqztqKqy66VHIyofUOmRSpFuMnCoLd0isenEuOHRK
- luaqvUPjON2v7JAi/f+YcnTQdSiypV5GsS/impQVBiN8MoqzryQ3rEv8Utzme5un1Jq+YX3mj22
- Nac8r46Jaef2wCIsH8jxUuMhnU2gpWmgeeW+LLJRK9sbTu7H5oalrGwhWqfNoN5KeWIU8MxooCw
- v+Q22FboTZES76enh5/kLngM/zXdC6kPGxWY9TdQJMX0BNLm
-X-Received: by 2002:a05:701a:ca8a:b0:1af:194e:8264 with SMTP id
- a92af1059eb24-1af194e82e0mr2685741c88.22.1793464862627; 
- Sat, 31 Oct 2026 09:41:02 -0700 (PDT)
+ bh=ijec5IqKtte5FEFZKHuL2v/76f/YDRGlyoBcQv2L4Uw=;
+ b=Z0hV6/891H0rLvM6i83jQA7l3egaSW1s/dpFL370MkYaMgGjSdrA4RxiUgoPkOe0nB
+ x6o2KI6iBpr5K9NQaimh7lKQTXosLtsN2aCpcpZyRgmvkwCmSOQXaSNcD4wdcg1E1+eb
+ CxP+kY35VJeFWB141hZHK63dl/BCo4ccGXGxoTDggCI8/OQrzF1lx/XMxNzoK9p+Slg1
+ SEU9V8Ii7yo6O9RlztuHVXJ8Q8A2ref8Ae8dgZJTc1+yAqVKoQ1yqbtZ1m/3KUSKMKbC
+ dLvBjlNjlEof+zkZ2AtlYzGW2LXQ4UDuM08XdvIqhBXdzFwBwPuXJQRXm7mXwomFMMBh
+ fq1A==
+X-Gm-Message-State: AFq9FYIKEI1jrEvnZaPiGM2Ps9bcDWm3ROmmKMJe9dVcn/riOrewsgly
+ Nfy/TKbYzH5t2l34YbsBhDluvn+iK/kz/BV/pSu7NAuyXqNzmy+JCCiy3va3//n1
+X-Gm-Gg: AYBFou3QJDqryzfMCpZBk5AOjtGgTGLdIqQ5xCXGnwosVcQar9vl3vVZ7GQfL3jFKp5
+ RfNSZvK/p4/Amyjqh0J7wWoZAhBa6F3hRPs7P4v7zm2V+JA2swLd6d8tHwmhuNRUAYv8Q69XWPZ
+ eJko/DQexuUsDoTSZ3L5hGmbYryTBOIg8X1YSu1CDribUMWtXePSva3b3XcXWJKrHsEJIQucibn
+ YyZ/2LNUk4Yo9Dy2E1jy4d+wy3XfAT1fnkk95iM42GNABHpUj8XElXTNKDc0HIRAPGgiJjKqhqR
+ Gy8vBDABXWAmDkTPfoFzPkrJzcIFz3VNU3kzm3A4fLBZOS4H15rqdk9V4TOjqyibrn+kIQz85rq
+ KQnGISVWbJxmpolSVwmGdhwH9NWeS8wQoIjyzu2bQmhwVP/1LMNJWLLJkES/Ccr0+y0MiFQJbt9
+ 0P81EjpVB3kwGxnBT45brTSRL7HbF3GxxRDTpO0kC6+LrCSfjRPFPPoDhLwfQzdl9Sk8jFoEOLK
+ 1xwNoXmDORdBUW0MXpwAk+GowL7rsL3/W6ZpowV+ph+qMAYmZnoKmq6Z68nrMDk8TzdoTEX+uae
+ h8WD1lcGqSDK70B7dNP0tgNQmAowpm8iF9i8rTBAz4crzlBZtw==
+X-Received: by 2002:a05:701b:2710:b0:189:ff2b:b194 with SMTP id
+ a92af1059eb24-1ac5b9cb051mr7767795c88.16.1793464850203; 
+ Sat, 31 Oct 2026 09:40:50 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1ac193b8179sm19574572c88.11.2026.10.31.09.40.57
+ a92af1059eb24-1ac193b8179sm19574572c88.11.2026.10.31.09.40.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 31 Oct 2026 09:41:01 -0700 (PDT)
+ Sat, 31 Oct 2026 09:40:49 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -80,25 +80,25 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Cornelia Huck <cohuck@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 07/12] hw/scsi/scsi-disk: register s390x scsi-hd and
- scsi-cd variants
-Date: Sun,  1 Nov 2026 00:40:02 +0800
-Message-ID: <20261031164009.2048-8-luoyonggang@gmail.com>
+Subject: [PATCH v2 05/12] hw/xtensa/virt: select virt machine types with
+ is_available
+Date: Sun,  1 Nov 2026 00:40:00 +0800
+Message-ID: <20261031164009.2048-6-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261031164009.2048-1-luoyonggang@gmail.com>
 References: <20261031164009.2048-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1234.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132b;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x132b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,111 +118,36 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-scsi-hd and scsi-cd added the s390x loadparm property from class_init
-when target_s390x() was true. Register a second type for each name
-that always adds loadparm, and select the two with target_s390x() and
-target_not_s390x().
+The Xtensa virt machine uses the QOM name virt-machine, which other
+targets register as well. Register it only when the selected target
+is Xtensa, via target_xtensa().
 
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/scsi/scsi-disk.c | 48 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 38 insertions(+), 10 deletions(-)
+ hw/xtensa/virt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 6341089ddf2..bb5377fb7fa 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -3221,14 +3221,11 @@ static void scsi_property_add_specifics(DeviceClass *dc)
- {
-     ObjectClass *oc = OBJECT_CLASS(dc);
- 
--    /* The loadparm property is only supported on s390x */
--    if (target_s390x()) {
--        object_class_property_add_str(oc, "loadparm",
--                                      scsi_property_get_loadparm,
--                                      scsi_property_set_loadparm);
--        object_class_property_set_description(oc, "loadparm",
--                                              "load parameter (s390x only)");
--    }
-+    object_class_property_add_str(oc, "loadparm",
-+                                  scsi_property_get_loadparm,
-+                                  scsi_property_set_loadparm);
-+    object_class_property_set_description(oc, "loadparm",
-+                                          "load parameter (s390x only)");
- }
- 
- static void scsi_disk_base_class_initfn(ObjectClass *klass, const void *data)
-@@ -3362,14 +3359,31 @@ static void scsi_hd_class_initfn(ObjectClass *klass, const void *data)
-     dc->desc = "virtual SCSI disk";
-     device_class_set_props(dc, scsi_hd_properties);
-     dc->vmsd  = &vmstate_scsi_disk_state;
-+}
-+
-+static void scsi_hd_s390x_class_initfn(ObjectClass *klass, const void *data)
-+{
-+    scsi_hd_class_initfn(klass, data);
-+    scsi_property_add_specifics(DEVICE_CLASS(klass));
-+}
- 
--    scsi_property_add_specifics(dc);
-+static bool target_not_s390x(void)
-+{
-+    return !target_s390x();
- }
- 
- static const TypeInfo scsi_hd_info = {
-     .name          = "scsi-hd",
-     .parent        = TYPE_SCSI_DISK_BASE,
-     .class_init    = scsi_hd_class_initfn,
-+    .is_available  = target_not_s390x,
-+};
-+
-+static const TypeInfo scsi_hd_s390x_info = {
-+    .name          = "scsi-hd",
-+    .parent        = TYPE_SCSI_DISK_BASE,
-+    .class_init    = scsi_hd_s390x_class_initfn,
-+    .is_available  = target_s390x,
+diff --git a/hw/xtensa/virt.c b/hw/xtensa/virt.c
+index 8c8fdad72f0..962646ba98d 100644
+--- a/hw/xtensa/virt.c
++++ b/hw/xtensa/virt.c
+@@ -29,6 +29,7 @@
+ #include "qapi/error.h"
+ #include "system/reset.h"
+ #include "hw/core/boards.h"
++#include "qemu/target-info.h"
+ #include "hw/core/loader.h"
+ #include "hw/pci-host/gpex.h"
+ #include "net/net.h"
+@@ -131,6 +132,7 @@ static const TypeInfo xtensa_virt_machine_typeinfo = {
+     .parent     = TYPE_MACHINE,
+     .class_init = xtensa_virt_machine_class_init,
+     .instance_size = sizeof(MachineState),
++    .is_available = target_xtensa,
  };
  
- static const Property scsi_cd_properties[] = {
-@@ -3405,14 +3419,26 @@ static void scsi_cd_class_initfn(ObjectClass *klass, const void *data)
-     dc->desc = "virtual SCSI CD-ROM";
-     device_class_set_props(dc, scsi_cd_properties);
-     dc->vmsd  = &vmstate_scsi_disk_state;
-+}
- 
--    scsi_property_add_specifics(dc);
-+static void scsi_cd_s390x_class_initfn(ObjectClass *klass, const void *data)
-+{
-+    scsi_cd_class_initfn(klass, data);
-+    scsi_property_add_specifics(DEVICE_CLASS(klass));
- }
- 
- static const TypeInfo scsi_cd_info = {
-     .name          = "scsi-cd",
-     .parent        = TYPE_SCSI_DISK_BASE,
-     .class_init    = scsi_cd_class_initfn,
-+    .is_available  = target_not_s390x,
-+};
-+
-+static const TypeInfo scsi_cd_s390x_info = {
-+    .name          = "scsi-cd",
-+    .parent        = TYPE_SCSI_DISK_BASE,
-+    .class_init    = scsi_cd_s390x_class_initfn,
-+    .is_available  = target_s390x,
- };
- 
- #ifdef __linux__
-@@ -3462,7 +3488,9 @@ static void scsi_disk_register_types(void)
- {
-     type_register_static(&scsi_disk_base_info);
-     type_register_static(&scsi_hd_info);
-+    type_register_static(&scsi_hd_s390x_info);
-     type_register_static(&scsi_cd_info);
-+    type_register_static(&scsi_cd_s390x_info);
- #ifdef __linux__
-     type_register_static(&scsi_block_info);
- #endif
+ static void xtensa_virt_machine_register_types(void)
 -- 
 2.55.0.windows.3
 
