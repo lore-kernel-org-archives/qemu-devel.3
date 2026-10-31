@@ -1,111 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C06606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 03:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1731C606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 03:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=w+uzuvCc
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FWwVM7K3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xN01y-0005hw-6u; Fri, 30 Oct 2026 23:45:22 -0400
+	id 1xN03x-00065m-GH; Fri, 30 Oct 2026 23:47:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xN01w-0005hg-EB
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 23:45:20 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ id 1xN03w-00065e-18
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 23:47:24 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xN01u-0004SZ-PY
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 23:45:20 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-3acc7a0b558so327341fa.3
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 20:45:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793418316; cv=none;
+ id 1xN03u-0004Vh-Cs
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 23:47:23 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-3a9e87ba696so10517141fa.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 20:47:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793418440; cv=none;
  d=google.com; s=arc-20260327;
- b=gqAcEJLl48bXE+86YOmy13iM376pTTS3WY12Z2SUMt79C+TK74xD6lGMvqtxEZAFKT
- Hen8oJL3K4/o2wXSjE0JKkvM2flz9VUa4oYrBTEA7fbJ73DphdM7GvotgA2Gk/9J0J6j
- 1zwUmru4EvJrYwizE2U4A7/QY9yzBUTYC8+odfuZMIuiMYeXllujydL3dhDGE+IYDYl/
- /A+ZKTc/QYAxFnY/n7/4isgoT8tUuCN+lCHQIYC9qGxcawvwTNZVrWziIPgWjum0fCZH
- 6ZJo1oJX36ZybjJa9R3LUI2p126OJsXqfJ3XjXlxspujocSNpaXcTjnNgLXoby33Gi/Z
- JdIw==
+ b=c3qWLexaRlns2Y+tg45AIkOn8piyt09AfTkE97rkqFdUiVfDjyFbBL22TB3v2Ckj2k
+ PHTfPaJM+1qoEAnQ3jY2Hh3Cufj7eHVxMlqBJhNXSs3CgGsJuHoUdFcBR3P64ASOx/+V
+ vm8+XgthSqizN6I97KU3WJ2eeCYsu6nAsabQY0eOSpZgoAFgS1asTlDMDYbJUdD0aPPn
+ v/gxG8RHaEPtZQa0Ai3Q7hbWzXP5tNtnWzKAqUQEWnDHSXcguGZrtHiS3XokuH8AkaZE
+ WlmnFubeXpZuF/dZAtmHZO0TQiX2NVyIh/NYIEyIQQ7kdC30gP3F5+gWgYh58UbxUFO1
+ Pbsw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=F6FUAHfJNmgj4HE3XgmNkbOFq5v92Yzc1jQXHXzlNXw=;
+ bh=FnXm10rtDzRvyNRirsY3bL1FmAg6/9/rARD30hM8gR8=;
  fh=4SkwuoYsohTajnS9ThUOqh8nRYX1V8duGt1952VKGEc=;
- b=ia6sF9ayX67XPEVLqF3qiDkMbeGYK72F/4yldkAo0XclBpDDtJzqS1FRCMMjnsH9RR
- AwKKyCDi6YkHkVxkIuiZSa1wUARCY4OWZpRkK25CIaw6lU3MPnMRwzappyKxA0ehZtjP
- nq7KyFZWb5qEVMUv/b5W7YAPg0Trui1fWnSQrlKhqQ0LHgDaPY9qRW20450On1++2Hid
- BHA/XteavqcCnf1vw8JQM0lIXopYhZtBCZAxyJGx2uZSoJZkNCn5lqh7QPlazsfl4ncL
- 9NNJmrz7PpOcj9qP4+caNbG+YOJoT64bheVLmATSqKftAtCDYeznLJCWbl8olUtOirj9
- B7Vw==; darn=nongnu.org
+ b=RgMBU1IKY8/ATDikfBV6OJ/GN3qTMzA35XwU+3d/oayMFVbe6soZz2CpW4+G+UfJT9
+ T2ji3QRXELlMlOOK/p68cKzygEMIkRvMSLGVAC/h+FJjZuuUVOW7W/ikYhqPlG2awWZG
+ GIW54EfhfXfAekO8Pi58Qc3Lksb3ZM49CtHxPgzcEw/foE5L5qU+7d12OeYCFSrlQ8EY
+ J2Ls2UWyuquW7oUMKXvaMnHY2F5OT6LbQVEQ4NSL/GMbw1gdy58Yg6/x7FSZ70UFgjSr
+ A+Ycpx8r2ORHM8EUJ8e4HoAYktgqgvDDZks8JXc564cUg1HKqwVCD52yv2Y5NsCuS8h7
+ 5GYw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793418316; x=1794023116; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793418440; x=1794023240; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=F6FUAHfJNmgj4HE3XgmNkbOFq5v92Yzc1jQXHXzlNXw=;
- b=w+uzuvCc5OcwSqxpUyFBoMxC2hX9TLh2lABMfwWjbGxl5Jj7VXMsWSk48gW7H7OQRQ
- S2Qy6MpBRfyrrtV8zz3K5fJvKFE2evvs+Ex8mrwl/kIznNc5G+x2a/ioorD8hurHQCo4
- s5KTARR8DbIJeMAHI6aD4h2WbAzdb9j05F33A9/ctC+Py+RHPMLcaxEqlyKRvIXRbjsZ
- dEg/oF4R1LuI1yP+cadAVSK72m+QsM08Wx5mey8Nmv6ug++OaEId4yr9hg/7hex02b6P
- EuJBTna/rsBb7GUxMi55+4H16Ca29kOqjUCqG6Irtqzqa71B3jd6525ji7yts6fQH9xp
- NlFg==
+ bh=FnXm10rtDzRvyNRirsY3bL1FmAg6/9/rARD30hM8gR8=;
+ b=FWwVM7K3E0XxkR1QX2QhlM47v9jAElzZB1aQUbNOMRuzvCMuWDrtb0N2z5bTmFBsmY
+ xpENve5XZ6+2an/n7yXQI2pIp9QTC5+xZ4lZyVgS3yPU/rJbXb5FWQAbo4GS7B2zzpLW
+ XWt3WBFbAtjooi7yj+hK+i5xN5OYoZwJ3zgu49qSDkK+aLterWekrZP2DGvoLo3omRyv
+ XJxWm/D6EC7Fp1RsbnKI4mS4dDDnvAJaSU/rkayY0ayJ+W1YFvrbMPP+fCc7ROes4g9s
+ jkCGMxc1VnUNM6UpOnwoC39Cfqp8VAEb2zRV3KHT4k84yUc/MPNFfGB8/zijqPIlqJXg
+ VPgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793418316; x=1794023116;
+ d=1e100.net; s=20260707; t=1793418440; x=1794023240;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=F6FUAHfJNmgj4HE3XgmNkbOFq5v92Yzc1jQXHXzlNXw=;
- b=Rf7U1sj6oV06e3LIcoyykTtx1X0Xe2ApuH8Uoa9eITXOjqRPJolCpBC/YrW2pVMHg2
- j4u4OoxGJt6giZmwF0zj4lJ8IhanhXHT9Mnznuu2yTHr00ADHvK2vi7np0DQx2D2c3q3
- Pu2gNLr+SbJvqBnsp72lxXS7z5575gZa0eAsbxrf9NkPBMaUUA/6YdVqT/G+79Y4Hb1R
- Qm968WQuNXHNA3Npcy5pM7h/2/xz229PaKLS2t5IRjtzuOKzhRfiwKDnmT9/26w3LABI
- 88SSLilWMgbiSJSX7TCwUxAq9bYhGZtvaKjHue/e7rtncEkXHLLweQ3FyySQYOsxzVCk
- KxfQ==
-X-Gm-Message-State: AFq9FYJS5H/UNuPqgVSLclXhqZHNa8rlHxbheQDZidevcVYh+xhrXHKE
- oDymteUjdCZBJ9In4Mu9wHO6L/YPPCN7/DIULK3Ie0tiM90xoeBcRkOGuoiFcjZzuydKqR+yIsI
- VBc16sgoq5ao6IGLoMaMTreQ2eob4AWR/paXKBLk=
-X-Gm-Gg: AYBFou1WmosS7M79RZk45tymKkWqy2N+V7+mHL2LLI8rcxNi+TCyn8O3/7fBPTUDqBp
- TEZLCEGEU8GpCHWZSpHQO8+MJiAmE/et3v4YnDatpZNwpiSUNJiYVIK3ZAyI4cXQeaY3Ub+dQMB
- oWPATbq5hcAuc71M6vkXuP0MKm6CjrEy/iDNybj2nuwtLaWOJtEFbM1EKf8BpU8YZO4pWaORxLE
- 1WEmQ53Om5EdPSNrw/CZQq6Af+ffIqQRVNG+YvZtp3SnEsqB0oG8cLxtFUTJ0RvS3YRfI7LAR7L
- 04A/MyYvrsj8Udt2tYLPnYEiti7q1/7wt3fzks8GomqHXvat8TSBbRZUxo2KmwNU/+MIGjMacsz
- sey/bK0C42P/vWaskGrDSEX0b5YlHuoS3HFHheBooo2A5ivwYPLBUHANQw22V7e7g16H/Ub54nr
- l6mzVi5GlPpJUWCxnwlwYE7vHDWU1sqp3ijOf7sCVcqIiTj+0ShY8E
-X-Received: by 2002:a05:651c:4216:b0:3ac:418f:332 with SMTP id
- 38308e7fff4ca-3acb7b269cbmr7750271fa.23.1793418316403; Fri, 30 Oct 2026
- 20:45:16 -0700 (PDT)
+ bh=FnXm10rtDzRvyNRirsY3bL1FmAg6/9/rARD30hM8gR8=;
+ b=CZuILNFTi0y0WxHWce2tHKNruVeT5+89Z0zovf/TpVGF44uebL7RnGEsDArIr44DMS
+ Ua5A2hoxBadTQ0dCAvJ4mOLrQ4ONZMUtOLj7A8fXWkPC3WGUEI5sgfCStKDo7zP5Dxqm
+ yfHieZYK1oNSV3VzQoSdl7fnKkSO8eoJPNQs7xD/ZiQRJsoFOofwvTNno9+K/9kAQnil
+ UG0rWtiPtSSir8vnVZm+5zA0oAHHih1x4hJscO0Yz0nmoHnukQhZuQjy++AuLrTnBent
+ Fzq/YDg8/jNr/rfU0MHT4heMtSShN+q5WQurwdV+Y3/5eZXo0FJ0jJLYMvTuPJupcZXH
+ 8PzQ==
+X-Gm-Message-State: AFq9FYIS9W9wm+CiHNcv5aquJnzD8zLv31arH5S00Q/500+/LDsJUMI/
+ TlC+QP7IewNssKrUdz0l/wUdGs2N+Poio+4MiTFfZ//VgUvnv+RAY/UJiLneujh6HIbWzju+NrB
+ AS27Qxf6A1rMvMeH9dqZpVyqLOe5saE8=
+X-Gm-Gg: AYBFou265QszL8WmD4MIP8JPBPk1ALtGacIJErtFzrigYF7/dJ6+7eSezXox4CxZ2pA
+ qLf7rptV709nEIS0P9cLA0yn+tyISimnEb3/QXlbOo0v5t40LuJ3WbF3vW0c7CopazbQahqfsGY
+ UkSM3Roim1auDTbPvGxPDT//ia5cC1uVSQk84JS/FtCq1uuP86LD86jz8CNiZtTq6VOVZSovLjz
+ Bin9aSiEOIlUiHjnR7c+s/w9ZFSTxOpr301rl8QJmA1n7t2ylwR6Ba3jx1KpexuK9ftj1oEeLpe
+ y0a6a2tiRH5v6Rvmyo2A3wo8Yi3Te8BhKkaGzSNIqd992NcrCfRVrh6Rpnnf/tGNC9EDy7IOmay
+ /n5VbmHwKOUJkUaot6cdSnxnHJiCyHcm74R8RVcJ+eZtW4XV3msuV8OhsXKpCi6+PjA1aJD4SdN
+ dlpCzvTqMTw28j2Ia/eqqSi9MvVr1W4A9w6gU1CtCMKyJ3q2Cvird1
+X-Received: by 2002:a2e:b88b:0:b0:3a7:6d4a:1c9f with SMTP id
+ 38308e7fff4ca-3acb7aacdebmr9710401fa.15.1793418440276; Fri, 30 Oct 2026
+ 20:47:20 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20261030185551.193092-1-richard.henderson@linaro.org>
- <20261030185551.193092-8-richard.henderson@linaro.org>
-In-Reply-To: <20261030185551.193092-8-richard.henderson@linaro.org>
+ <20261030185551.193092-10-richard.henderson@linaro.org>
+In-Reply-To: <20261030185551.193092-10-richard.henderson@linaro.org>
 From: Matt Turner <mattst88@gmail.com>
-Date: Fri, 30 Oct 2026 23:45:04 -0400
-X-Gm-Features: AclHuK9KgbdD-rWSy79f3jPLOgVtXR0ccdqFV-HBp7-IxQlp6E9lpMAPDlwmCJ8
-Message-ID: <CAEdQ38HXrausXZonjOk-zZvM5MFMSmygMVV42ApGCY3zZdd5QQ@mail.gmail.com>
-Subject: Re: [PATCH v7 07/14] accel/tcg: add CF_NO_GOTO_JC, set while a
- breakpoint is present
+Date: Fri, 30 Oct 2026 23:47:07 -0400
+X-Gm-Features: AclHuK9BwbWludaNZiYPYtzDPpoFQwg5JDiSKjm-uQTzKOZx27TBVyX9zL4_TTI
+Message-ID: <CAEdQ38HhRhnCf2k=rvwVz7g9fNNYo_vHgwf060wZFUZyNDLyuw@mail.gmail.com>
+Subject: Re: [PATCH v7 09/14] tcg: Probe the TB jump cache inline instead of
+ calling a helper
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, iii@linux.ibm.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=mattst88@gmail.com; helo=mail-lj1-x22e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=mattst88@gmail.com; helo=mail-lj1-x236.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,38 +117,64 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-1.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On Fri, Oct 30, 2026 at 2:56=E2=80=AFPM Richard Henderson
 <richard.henderson@linaro.org> wrote:
-> Both already run either on the CPU's own thread or with it stopped, or re=
-ach
-> another CPU exactly as cpu_single_step() does, which is where the previou=
-s
-> patch put the same kind of update.
+> +    if (tcg_ctx->gen_tb->cflags & CF_NO_GOTO_JC) {
+> +        tcg_gen_lookup_and_goto_ptr();
+> +    } else {
+> +        plugin_gen_disable_mem_helpers();
+> +        gen_jc_probe(pc, cs_base, flags);
+> +    }
 
-"The previous patch" doesn't apply anymore after the split. That was
-my wording, sorry.
+This drops the CF_NO_GOTO_PTR check for migrated targets. Both the hit
+path and the slow path in gen_jc_probe() end in goto_ptr, and
+tcg_update_cflags() sets CF_NO_GOTO_PTR for gdb single-step without
+CF_NO_GOTO_JC. cpu_exec_step_atomic() sets both, so only single-step is
+exposed.
 
-> In system mode gdb inserts breakpoints with the vCPUs stopped, so there i=
-s no
-> window at all.
+The result is that stepping over a branch doesn't stop if the
+destination is already in the jump cache. With qemu-alpha -g, on a
+200-iteration bsr/ret loop, one 's' packet on the bne ran the remaining
+199 iterations. Patch 8 steps it correctly.
 
-True for gdb, but not for BP_CPU breakpoints. On ppc64, spr_write_ciabr()
-inserts one from the running vCPU and doesn't end the TB, so old blocks
-keep probing each other until the next return to the main loop. That's
-the same window as goto_tb, so I don't think it needs code, but the
-message should say so.
+Honoring both flags fixes it, and the step trace then matches patch 8:
 
-> +    /* The first breakpoint takes the CPU off the inline dispatch path. =
-*/
+    if (tcg_ctx->gen_tb->cflags & (CF_NO_GOTO_JC | CF_NO_GOTO_PTR)) {
 
-The CF_DERIVED comment and the one above tcg_update_cflags() in
-include/system/tcg.h still only list single-step, one-insn-per-tb and
-nochain. Both need breakpoints added.
+Second problem: a probe hit skips the log_cpu_exec() call in
+helper_lookup_tb_ptr(), so -d exec and -d cpu lose every inline
+dispatch. Same loop, counting Trace lines:
+
+    -d exec            205 at patch 8, 6 at patch 14
+    -d exec,nochain    602 at patch 8, 5 at patch 14
+
+The second one hurts most, since nochain exists so that those logs show
+every TB. Taking the logging case off the inline path restores both
+counts:
+
+    if (unlikely(!QTAILQ_EMPTY(&cpu->breakpoints) ||
+                 qemu_loglevel_mask(CPU_LOG_TB_CPU | CPU_LOG_EXEC))) {
+        cflags |=3D CF_NO_GOTO_JC;
+    }
+
+The monitor path already calls tcg_update_all_cflags() after changing
+the log mask, so it stays correct. The comment there only mentions
+CPU_LOG_TB_NOCHAIN and would want updating.
+
+The commit message needs a pass too, and most of this is mine:
+
+ - "What is left is one_insn_per_tb and -d nochain; see below." There's
+   nothing below. one_insn_per_tb is fine as it is, and the logging case
+   is the part that needed covering.
+ - "the flags, cflags and cs_base ... are constants at translation
+   time" is no longer true of cs_base with goto_jc3.
+ - The last paragraph calls a backend opcode "a separate series", but
+   it's patches 10-13.
 
