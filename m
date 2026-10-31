@@ -1,92 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9010606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 12:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7CA606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 13:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Kb8UhQ/D
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=M5QPAOJS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xN8XA-0000l0-H1; Sat, 31 Oct 2026 08:50:08 -0400
+	id 1xN8kO-0002YJ-77; Sat, 31 Oct 2026 09:03:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xN8X7-0000ka-GK
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 08:50:05 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
+ id 1xN8kM-0002Y4-ET
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 09:03:46 -0400
+Received: from mail-qk2-x01.google.com ([2607:f8b0:4864:34::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xN8X5-0005dP-PZ
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 08:50:05 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-c468bd799ecso194957966b.1
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 05:50:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
+ id 1xN8kK-0006fU-VQ
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 09:03:46 -0400
+Received: by mail-qk2-x01.google.com with SMTP id
+ d75a77b69052e-534b7b19206so10861211cf.0
+ for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 06:03:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793451824; cv=none;
+ d=google.com; s=arc-20260327;
+ b=YqZbo2FKgVEKQIDqi1U2bBiio+E/2N5m5G6pQUq25J+1bJcE7e8V1mDwvxJqi+C06Y
+ /GJpqpNm38KDJeB/SBeySSd+e5q2RrXcZjGoHOG60DEu0g84BSuhZK1E+JDV8hwLV45J
+ 0LE9WSdVpcndzB0n1WtNZ8x615sj55mZGLk9sL+DZ115zWYAtLkM9I8C8wpzVnxtHoud
+ RdxfHyrUqgrDgGyKdoBOQq9NZYUy6nwRW1zZnobFzjJq5Y8juJOqipOUkcH9esmHyVkq
+ pTqN0IxjzSbmb7afNPz+imzn/u5MDqwv6NGLjy0SiYCdK81zQjOz4tZWSHHHr65RzFg1
+ 6j3Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=81hA2BAJ0CH6xDTbL6IG5M7Re7R0iTUS3HxX916hbUE=;
+ fh=xstARF0ZwselbUhOm666/USMzGlNtVenayhoulrajug=;
+ b=P4PhDs9HRjTsu90AtQAsb8+Yggh3aJlHNJ1vJoBpcoC8hHjJ+DbOIna++GzC3Vb/aE
+ WQnQ6a7Hxpdje8mCZkXKyoZQFr2KQBz0prSo5gVu84lz9uMlcowJ02wvT9pf2KvmRiYO
+ eB6GqeWybKOaa8yD8aCogpdUYRKIPivQ3VQwMBp/sknmOU9vAmWJ4pmQ1QlqDSUiEZ3j
+ ZZ3OnBxBLzyLwuzgdUJrTz8dI3OwCmLi+JT2kNsnYdBCSjHNxBHdKOiIs54Gm/BCX/To
+ 02mTb35rIbQ+eJkVCfhPlsR9W12jxrhKU9HLSwyhnEHtL7SvRSvXc8of7QHb0FFI8L4L
+ EpMg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793451001; x=1794055801; darn=nongnu.org;
- h=user-agent:in-reply-to:content-disposition:content-type
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=pu9ySH8wzdJoDr7hznf3MAjhVSU3v9f1o/vWoFVp6HE=;
- b=Kb8UhQ/D2ZuqBm6jRZMTo+ySdjndz96HiLk4hbMYb9QTg8UifEpYiTwbNumflzrmza
- JwOM5wWUuajdT77R3BPvOKGGhcuO32ubLL77lSVqLLGBgBj5GG7CDcrEeQH3IRlyjBZJ
- neN2WpZwqZ8q+fV4J4J78TxVDLMkByKe0nlzs9xI0/MJi9CXdHbezOU+MfOyXUlL+T30
- T33/+OTlRhYDjmc0ipOR1JWXtegRfuBwFpxnomvN26/1KypqG5naaTryMlt/qNtaH7bT
- He9boLKxP2rq5nExTCoUAoeg75X56v6louC66xAR5CZs1YVgIT8XjGRpQ7fDe9e472kY
- wvOw==
+ d=gmail.com; s=20260707; t=1793451824; x=1794056624; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=81hA2BAJ0CH6xDTbL6IG5M7Re7R0iTUS3HxX916hbUE=;
+ b=M5QPAOJSeNbvAcsYDEr89vUIHYUKcoQDxWMO/BMvhSzU5QxXkeLuIMkeHVvbJxlccp
+ EbY4cAvk1nFC+05bBMYWH7Xoti3rsPvjKuS2v+36PSEk3O4iRRuI4PTqziJLdMbguhwX
+ 7VtPRL/auvRl/RmIS63cGuKSqJTyoarrpgFUpsf7ITome1pXNhuJ+6q+K4nKSuGCJVoo
+ Xtzg30vC29F24PXlIUMQvluzuJK/6TLtbh7dt6XcghTYhY4ZUVgNi18wYLhiBXwhbNGt
+ Xvc7k2pE/k5ILkm7Lt7LtHwL34fOz7mTPym1iD7uvuYfOA8xaSNMuJMPGvoAlHKtnj8I
+ j8ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793451001; x=1794055801;
- h=user-agent:in-reply-to:content-disposition:content-type
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20260707; t=1793451824; x=1794056624;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=pu9ySH8wzdJoDr7hznf3MAjhVSU3v9f1o/vWoFVp6HE=;
- b=V0g9XbkNNfqoIoivutLVNDh5KSI+CDydehbpGWcgApH78wd0FZUPu2vXhfvRJ9kYZb
- /5zqNMFGXdW/asDEnKni8J87kVejSuaTSHjUzIb5WhS1a7tddWUkTCxKHt2aVOnRMkTh
- 9ddFtKnQi/5eI8ZcqTAydQlnG//8UzwY3kGgsi1EnC8+N/nOafcLVL3q+LgL4sV0FfX5
- cyfLYrJDJC3O/gfAp551Aer/StHiBhDGRM17JrsWv4dEI8gsxQd8rbXDf+Hvi57AC3Fr
- NTa+y76IkTRoHTRy/Krqi6rhMmYNZlaSAlgw3KCgAGfmzaxIT+UJTsEjf2qtcR9+cKXv
- vpkA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzPXzk2uH7ruC3lPnKnAbJdDC0zdojUXmsGrV8+t/Tup2jRcOMIcYUO4k/NaYJ3sOJ6UsMTqW0/A4/W@nongnu.org
-X-Gm-Message-State: AFq9FYI3tNXPkxt1flV1h3NDAGeytFzJiSQVK2SWi/HEMkGUVAC9ehp5
- KbZbP1WKJ2FmAvOGAMolxvU4PMc0tEgp4dhatbeqP28r35u6cRgL4i9Z
-X-Gm-Gg: AYBFou2dQ8kSZ8/RPYNK8Mr8BwB0aaVq81vjU+YAkIEtrDEm1c0vGn+M8IXefmta+Lw
- delgmQs+oj0BfYI9/5SwVKW9NQgGl1hHYy62ZIQiI5x9zId7fRgqV3YQStLhxzy6d08t7+qeiDo
- h1xdD/7jiQZPBra9pJzjUiN5NgKUQRxLpx6RZLka4sj2zagEPWlpmM6FCQMV/pWVYmS1i0577Kh
- CmRjlnuE0wC7VH1G8USMae5Amgh6QNqablO1sm/QjZOFP/X6fObM5DrFjRFy6tIgISu5Y1v4e/+
- Sd6QplPZUcz8XGZRcFC3ZbHB50XAssQtYGKmlo4+ZGbnS5J5NwMuRseQGkB52XHN4IklBDIDYFj
- BqSQZwTdlCGo6WwNh0dWA2+K2ODPmrgc3ubVS7zfHvGFicGy6UZC+QTFfK/4f2NxSkSlP0P42Pr
- 5FioBPmPT+LIxhhgTe1Cc2PdsMUJIWRwe3M1DFJyqprYRDs0k3yBzHwy3hkscX3m4z4Iym8ADY5
- IsSAujhobzZ5DU306i05HwWzx+m8gnDICEh1ycRy5k8uqyj13CNx2i2FqrPddbEFus/DidbhZr2
- SNN3SEm6l+r8jYc3mQd9G1BSvjkFbBw/GvkeBhZ1/WLhHxUrqs41C149THoGjc0Cb3yvBOVvNkp
- qshEljl76r7LIj76SCucHcoX2Tw==
-X-Received: by 2002:a17:907:a890:b0:c46:9ca9:f522 with SMTP id
- a640c23a62f3a-c4ca7a69782mr413209566b.26.1793451001044; 
- Sat, 31 Oct 2026 05:50:01 -0700 (PDT)
-Received: from tulp
- (2001-1c02-1a15-3000-25f6-628e-6064-de9b.cable.dynamic.v6.ziggo.nl.
- [2001:1c02:1a15:3000:25f6:628e:6064:de9b])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c4cabcfd21asm180292666b.18.2026.10.31.05.50.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 31 Oct 2026 05:50:00 -0700 (PDT)
-Date: Sat, 31 Oct 2026 13:49:02 +0100
-From: Roman Bogorodskiy <bogorodskiy@gmail.com>
-To: Brad Smith <brad@comstyle.com>
-Cc: Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] qga: fix crash when a signal arrives during shutdown
-Message-ID: <auXjvuRiFvkCxkAN@tulp>
-References: <auU_X4KYujIpR2Qo@humpty.home.comstyle.com>
+ bh=81hA2BAJ0CH6xDTbL6IG5M7Re7R0iTUS3HxX916hbUE=;
+ b=aNFfQxi+1PmkejTBEMJUA4fPtnmyPe9Tr9XKBavnUsZ61fXhMKpLhUWwfJpm1Rgl9s
+ 21S6aVaAKTkrt+q3yRSnrO8tksg/4fjZdZSgTVaZ2GSI/ozHzTefwHLiWWCii4fIlRAD
+ +2emd+7QvUyrN353+U4Yps4qgOJLtrTtxQOq9nn2nBj7lntpERftNieEsTuhL3dC/f9f
+ rDNqimXzsonYxA18wQGdO3LnwLME8tPkYQ5yUA9/3SjHWhxDUNt/O3bn4Xh72Sl3iuNl
+ hc56EMQBezKx3TAOKklolrlaKLjoYHdoYs/DLuraemTqSchcS2pnfknXsv+wJLwnauTh
+ y7vg==
+X-Gm-Message-State: AFq9FYKLOv67d1M+63vywtrM8wImLchTKxLfV9gmNn/4o/J4/jigJjgu
+ pfI7BkbxVBWq83+7NQ0JDx0Ugrq6uVkIP4MMR5AL/kSagNDEWHDcPSJVHCPmmFdTpCYkvONYp8d
+ QFGwj2Ba4MrgsK6EBZXvMawUXE4pcC4I=
+X-Gm-Gg: AYBFou06SUNmIj90UDM4RrSD0XsUdGbaTD2vDWretsW4rM/3bQlt1rjFghvjN8fOlUX
+ y9dkD/prl4YbxfBqwHHooKahu7zHud590VmTlzBqBM+MWw5lCtV/oTczrhyz9OY7GecQcm4st+x
+ SPx7qnYzUnfuP/G7VyZUm2npM2zjz/JwRwwi4m5iW4GZOWbeTCh4zb9IQv5vvLIAW9bbp3t/MN2
+ XKanxCn/xyGIWCoy0Xe0KxxDn71Wmft1FeNlRjld8JagZSnmS3PQhKwv1VhSKCom6sJx4L8DQNF
+ 4W8I8aCPzIDyDjSwDGQtFesPs2ulcrWdLjmIT+RJ77fCENgskXDFNa9pyWRkNYw3HyyxvjHJdeu
+ qIQtYV6pPdLtjHRyIa7uitHkScUL+nhMj5GZmlAFrm9Gr/ot1T0n8vvKxBH0/nrtBOOx4
+X-Received: by 2002:a05:622a:342:b0:536:780e:8f42 with SMTP id
+ d75a77b69052e-542b7046270mr86545681cf.33.1793451823677; Sat, 31 Oct 2026
+ 06:03:43 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <auU_X4KYujIpR2Qo@humpty.home.comstyle.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x634.google.com
+References: <CALU8FV9KC48FC2FGahqSh2uEqyedy-QZAgZ9qgap147d=Hr-+Q@mail.gmail.com>
+ <1a022cad-2010-4b1a-bef7-ae9effe0b12b@linaro.org>
+In-Reply-To: <1a022cad-2010-4b1a-bef7-ae9effe0b12b@linaro.org>
+From: mdspan <mdspan.github@gmail.com>
+Date: Sat, 31 Oct 2026 07:03:32 -0600
+X-Gm-Features: AclHuK9J7vUYqRkaBCC0w3DmnY8uoTQ0kaSy7brGn3yGlrmWvrzhv94Pm8z8664
+Message-ID: <CALU8FV9M7+Cm4m963Fx_-g+TGiZXVxe6mUiKkzax5f=Gn6Odsw@mail.gmail.com>
+Subject: Re: [RFC] target/i386: design for TCG emulation of LAM
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, zhao1.liu@intel.com, 
+ laurent@vivier.eu, deller@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:34::1;
+ envelope-from=mdspan.github@gmail.com; helo=mail-qk2-x01.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,133 +115,49 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-  Brad Smith wrote:
+On 10/21/26 14:20, Richard Henderson wrote:
+> In particular, arm requires the complete address, including tagging, to
+> be available for any raised exception.  So clipping the address at any
+> other place loses that information.  Dunno if that applies to LAM.
 
-> qga: fix crash when a signal arrives during shutdown
+It doesn't for LAM. LAM masking applies before paging, so CR2 gets
+the masked address (ISE 319433-048, section 6.5). The non-canonical
+case riases #GP, which doesn't report an address.
 
-For some reason your commit message bodies duplicate the title.
+One change would touch common code: tlb_flush_range_locked() compares
+large_page_addr in all 64 bits, so INVLPG of the untagged address
+misses a large page entered under a tagged alias. I'd compare under
+the flush mask:
 
-> quit_handler() stays installed for SIGINT and SIGTERM for the life
-> of the process and dereferences the global ga_state. cleanup_agent()
-> frees the agent state and clears ga_state, so a SIGINT or SIGTERM
-> arriving after cleanup makes quit_handler() dereference NULL in
-> ga_is_frozen() and the agent crashes with SIGSEGV.
-> 
-> This happens in practice when qemu-ga runs under something that
-> forwards signals. For example, running it under sudo and stopping it
-> with "pkill -f" signals both sudo and qemu-ga, so the agent receives
-> SIGTERM twice.
-> 
-> Reproduced on FreeBSD by sending SIGTERM after cleanup_agent() under
-> lldb.
-> 
-> Return early from quit_handler() when ga_state is NULL, and clear
-> ga_state as soon as the command state cleanup is done, before the
-> main loop and the state are freed, so a signal during the rest of
-> cleanup does not touch freed memory. ga_state cannot be cleared
-> earlier, as command cleanup callbacks such as
-> guest_fsfreeze_cleanup() still use it.
-> 
-> Signed-off-by: Brad Smith <brad@comstyle.com>
-> ---
->  qga/main.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/qga/main.c b/qga/main.c
-> index fd19c7037d..8cc9810572 100644
-> --- a/qga/main.c
-> +++ b/qga/main.c
-> @@ -167,6 +167,10 @@ init_dfl_pathnames(void)
->  
->  static void quit_handler(int sig)
->  {
-> +    if (!ga_state) {
-> +        return;
-> +    }
-> +
->      /* if we're frozen, don't exit unless we're absolutely forced to,
->       * because it's basically impossible for graceful exit to complete
->       * unless all log/pid files are on unfreezable filesystems. there's
-> @@ -1589,13 +1593,13 @@ static void cleanup_agent(GAState *s)
->          ga_command_state_free(s->command_state);
->          json_message_parser_destroy(&s->parser);
->      }
-> +    ga_state = NULL;
->      g_free(s->pstate_filepath);
->      g_free(s->state_filepath_isfrozen);
->      if (s->main_loop) {
->          g_main_loop_unref(s->main_loop);
->      }
->      g_free(s);
-> -    ga_state = NULL;
->  }
->  
->  static int run_agent_once(GAState *s)
-> -- 
-> 2.56.0
-> 
+    if (((addr + len - 1) & d->large_page_mask & mask) =3D=3D
+        (d->large_page_addr & mask)) {
 
-I was testing this change by sending SIGTERM in a loop and noticed that
-it still crashes with SIGSEGV or SIGARBT from time to time. I was able
-to fix that by ignoring signals in the clean up routines:
+If that's fine, I'll post the system-mode series.
 
-diff --git a/qga/main.c b/qga/main.c
-index 8cc9810572..47686bca80 100644
---- a/qga/main.c
-+++ b/qga/main.c
-@@ -167,6 +167,12 @@ init_dfl_pathnames(void)
- 
- static void quit_handler(int sig)
- {
-+#ifndef _WIN32
-+    struct sigaction action = {
-+        .sa_handler = SIG_IGN,
-+    };
-+#endif
-+
-     if (!ga_state) {
-         return;
-     }
-@@ -203,6 +209,13 @@ static void quit_handler(int sig)
-         return;
- #endif
-     }
-+
-+#ifndef _WIN32
-+    sigemptyset(&action.sa_mask);
-+    sigaction(SIGINT, &action, NULL);
-+    sigaction(SIGTERM, &action, NULL);
-+#endif
-+
-     g_debug("received signal num %d, quitting", sig);
- 
-     stop_agent(ga_state, true);
-@@ -1587,6 +1600,18 @@ static void cleanup_agent(GAState *s)
-     if (s->load_avg_pdh_query) {
-         PdhCloseQuery(s->load_avg_pdh_query);
-     }
-+#else
-+    struct sigaction action = {
-+        .sa_handler = SIG_IGN,
-+    };
-+
-+    sigemptyset(&action.sa_mask);
-+    if (sigaction(SIGINT, &action, NULL) != 0) {
-+        g_warning("error configuring signal handler: %s", strerror(errno));
-+    }
-+    if (sigaction(SIGTERM, &action, NULL) != 0) {
-+        g_warning("error configuring signal handler: %s", strerror(errno));
-+    }
- #endif
-     if (s->command_state) {
-         ga_command_state_cleanup_all(s->command_state);
-
+On Wed, Oct 21, 2026 at 6:20=E2=80=AFAM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 10/21/26 12:57, mdspan wrote:
+> > Ping.
+> >
+> > Paolo, Richard: does masking in get_physical_address(), with TLB
+> > entries kept per tag and INVLPG flushing all aliases through
+> > tlb_flush_page_bits_by_mmuidx(), look acceptable to you? I have a
+> > prototype of items 1 and 2 and can post it as an RFC series if that
+> > would be easier to review.
+>
+> Yes, this is what we do in target/arm for top-byte-ignore.
+>
+> In particular, arm requires the complete address, including tagging, to
+> be available for any raised exception.  So clipping the address at any
+> other place loses that information.  Dunno if that applies to LAM.
+>
+> r~
 
