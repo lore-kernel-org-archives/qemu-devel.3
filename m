@@ -1,136 +1,174 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47289606A322
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 07:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C2F606A31C
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 08:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=jZsRJq8F
+	dkim=pass (2048-bit key, unprotected) header.d=gmx.de header.i=deller@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=Wzu1U3Xv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xN3vd-0002eJ-Ov; Sat, 31 Oct 2026 03:55:05 -0400
+	id 1xN4Sg-0001lI-7O; Sat, 31 Oct 2026 04:29:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xN3vc-0002cj-AK; Sat, 31 Oct 2026 03:55:04 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xN4SX-0001jD-4i
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 04:29:06 -0400
+Received: from mout.gmx.net ([212.227.17.22])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xN3va-0007eR-HO; Sat, 31 Oct 2026 03:55:04 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=siV+sDcscSmo2Ck0lC20mjWdyHq2sR5c7sKG5fMhfbuMommj/SxyWjtc6ujlYyHoHsyDDpXGLEZrIe117bEq6OxnDJiKT19mmnWtZs4cPjmJkDYYp3OVhU8Flnf/LyjO1IZYCmIemxD9Zdbx/eY/LI0Q/bNfrO4JU/uuIGsDUsNryj6Z+oW1ThYtIJiaNVeSYji323KesYhBR/vYhC+FqV1/IjcFAXvWdCas+uzKtrsbvelxVGUzvIwCH6tllFcwIlmRsoNu+6NChpd2BGslm7/qbJtFicxCPCTqoY6gcJ39c6saDxjpvWw+R2csOYXZ0aEW5YTHjomoFwvdC1NBQw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rH2KRKynvdUv0C3yJMboUHpzHCF/jl/ikfSwsjcmcqM=;
- b=pLWyqQQlcriowxFtbkiPJbXFKjKdyJ0QJP9+EN0T6zW/Qw2TZvzlbYqpN5rSMsmQGLxP4pxfFayYNYCsjvm5zt7ipmX75X52tOGbU6PFRUz4WtbCMqgDU251EuZ0GOvIIs34D59bLv/jL8f7184uX0G9OZStXWj4M9T3slbfvnU0sWd6DOpm+IoHpezYniofk7Hr6SeILR1n4PpajWDZDJ6MysFvWSg300HHxDAyyzGejE8l7xDyApUBE78mwLgGQ1NRjanbFTWk7QZQ2p3FPiIseXjdY+EZH9sFmE4n5GLITExbNQnvuEvzrtCzBbEsinJISW1/CY2t42GVrSmKmQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rH2KRKynvdUv0C3yJMboUHpzHCF/jl/ikfSwsjcmcqM=;
- b=jZsRJq8FTqeSALsdwdjU3yFJHoWBessAqwPfcDSQESNIc3xMyUtHVSIO14H5yQPVPaC4HD4iXBRH48yTfGphToyEu29qAd07Qijx2Vx+BbrD4PoFWoeTUrdf5yOb/m0pDLJ9/ojx8FFpKp61bxWee3s396q/XOt4TambHotLCujzn86x1PtpJYUghlbqsJQ3tjiVmrsftXOZkCl7OUWcao92L2Iq53p15pv0BuDc7Uc33jWTIGgY0wFyzVKOm4oZiC+JaKOv9TvfggBHirIotYC4HSzTPqjr8iPbD3aZnppo4oS1cq7lgQA2FFle3FW+N4Fe4feqNlx0CtbuvEx9ww==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by TYZPR02MB9051.apcprd02.prod.outlook.com (2603:1096:405:39a::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.10; Sat, 31 Oct
- 2026 07:54:54 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0569.009; Sat, 31 Oct 2026
- 07:54:54 +0000
-From: Chao Liu <chao.liu@processmission.com>
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xN4ST-0001sE-T0
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 04:29:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1793435339; x=1794040139; i=deller@gmx.de;
+ bh=NPSaqlz7Sfk9dhwFR7LeTiiPGoJtY7nIz14pw9WSgIs=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
+ References:MIME-Version:Content-Transfer-Encoding:cc:
+ content-transfer-encoding:content-type:date:from:message-id:
+ mime-version:reply-to:subject:to;
+ b=Wzu1U3XvLMJpS1XrHGNyOOZ9YQSgoCQ7j22Yva7308c7vIpOqSfHJKtPSHPnCwfR
+ yv+ir8G55ve9NewPsz6N6LPpb1ha9VO8A0WIm8YoZ/Li8L0TY3L2aQymFsu/1QP+w
+ 1soB1LG1j3XGELz2AM+4JYfWnqtR17Mfc+/URhkC8pBSrGHzmC5cbWC+NqpDW7LO3
+ O9Tr1l2CcziF1gAZaqet8GzAIDST5z+JyquOZhqC/F87Ok3vCvcFVif6FLFo/cF4m
+ bIUdkKwX+xWsxZh08w05ph/BsyLjtwiAvN2NMEVsl2ExHY+jD5pCpwFy+i2NNAEYX
+ ENWWFt8AoYBC2yq7Uw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1ps8-1xPHNb1W6S-008oH7; Sat, 31
+ Oct 2026 09:28:59 +0100
+From: Helge Deller <deller@gmx.de>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- bin.meng@processmission.com, Chao Liu <chao.liu@processmission.com>
-Subject: [PATCH 1/2] tests/functional/riscv64: boot K230 from
- qemu-machine-images
-Date: Sat, 31 Oct 2026 15:54:32 +0800
-Message-ID: <8ccce284bed69c31ee16bcbd95d562e2861bd636.1793433265.git.chao.liu@processmission.com>
+Cc: Helge Deller <deller@gmx.de>, Fabiano Rosas <farosas@suse.de>,
+ "Kirill A . Korinsky" <kirill@korins.ky>,
+ Keith Monahan <keith@techtravels.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL v3 06/10] target/hppa: Preload I/O-space BTLB entries for LASI
+ and the central bus
+Date: Sat, 31 Oct 2026 09:28:46 +0100
+Message-ID: <20261031082850.439293-7-deller@gmx.de>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <cover.1793433265.git.chao.liu@processmission.com>
-References: <cover.1793433265.git.chao.liu@processmission.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PH0P220CA0016.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:d3::19) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
+In-Reply-To: <20261031082850.439293-1-deller@gmx.de>
+References: <20261031082850.439293-1-deller@gmx.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TYZPR02MB9051:EE_
-X-MS-Office365-Filtering-Correlation-Id: f70d75f4-0533-400b-9ce8-08df37243fdf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|366016|1800799024|3023799007|10067099003|18002099003|22082099003|13003099007|56012099006|261021121427099003|261026140227099003|261028144727099003|261022115727099003|261022075727099003|261026121527099003|261021123027099003|261022105027099003|261009223027099003;
-X-Microsoft-Antispam-Message-Info: TpOQyqA3U3CrUDx6etMqqQ5/DB/2kH8aRWoxqee9at6Yj32jUnHTAs/vSm/8yHBvt1NzkJG1Y3QBhWuNoqjp4JAdW1lgRWSvxLblP/GSkE6ULC6FBpa/ApTIU72njL8bjoyHp39Rlv/ztI6Cba+0W2GifXnkG6uncdj+3E/9OoT/x6XZ8B1VJXjoIZ8MHg/AqYC2PU8J64z0Zck431GXWjblZQqiezByb2ikumYmcEPIXcGzwa6dP3UOBhfXSFHnt1eyXocgBaZOaZyxWaDjRNQhVM5Up2/690jX/ehv1xDszq+KBD/+XeVZa8kxoj9amQwna5OiNp290HWCQ78oZ456wQAbgIbMTNQKxdGvULtsPN6cDLU+VWq1/kMsqtnkxYV86rt6y5arSbVedMHULiRB+YnK82rIJQYCvzZBLsfrXNWeLUB4azbfYOaSuz17HyCa4gpj7dRTJAhYeEpqn0zmUG2UXuUyHl6B6f4J/g3JyF51JKDTX34T18hGaj4GT6y4YIv/bnpdb3bkhaNMXpGWPnIRdyyV3dn1t3mVwK0AftgXRL+0WrvEBAtwCXjee+W6+hT66uOqOxPYh/QPnco1YKFGuE5pS1enOuV4DrA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(3023799007)(10067099003)(18002099003)(22082099003)(13003099007)(56012099006)(261021121427099003)(261026140227099003)(261028144727099003)(261022115727099003)(261022075727099003)(261026121527099003)(261021123027099003)(261022105027099003)(261009223027099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?WdOw6QIQcnLADDBgvtvExNhbS43Ss40J/hp72di9ZCe05+Sgg+/cuy2FfZ81?=
- =?us-ascii?Q?BcAbyCHezoPn7Fgq6p1q1lQyUWYJ4ly1oTzfy1xBWthWC9LP+xyaCWW4TOCe?=
- =?us-ascii?Q?Zvbqz0ssI8S9ZaQs5RVkzvW04x2mFEjEZzbJC8FuBJFfXf8+cLam50AMiilx?=
- =?us-ascii?Q?EwafHdb5hZ+Ur1pFUIZNgsubblwEC44E4lsV+f4iB0kZNvUoShOHoJwvms66?=
- =?us-ascii?Q?6tCYDrtuQktDWKUxuYdlXgQeGzXkA9SsUc9/23ALyH/opOhLYHJYGejQxNEP?=
- =?us-ascii?Q?RYne3nfqWrLwkcrfJk+imm1U6Jrx9cpgav1pBNp7YXCDHV7xB+92qSlUnMoT?=
- =?us-ascii?Q?t1zY95PYHgivhfqYP9CW5av+MySjP2lBqEnbNvH50coLq/llbxu268tglY2K?=
- =?us-ascii?Q?gaeqjQF/BfEl93P2wlChfyumTIOYoExyDahbK9GMf4R5wTHt92maIPesxjdS?=
- =?us-ascii?Q?7xm2nrmKTjVWOy/mf30bRi0Vgv7o1LH0W5tTIs0zRxxbgbsxr2/AkfNDn0ZZ?=
- =?us-ascii?Q?/8UMvfEj+Ecq1XDKWR1tPXlI3DyhNB9IAFjeXXePr5InPBT60jGTTBMoOgDH?=
- =?us-ascii?Q?1Sk5AHLzqsvgCjimcprTOselYske2cSzzf9D3I01iTKzKOh9v9Itbn3UhB6r?=
- =?us-ascii?Q?UdLRBgm+EPWcTnSDBRUjpc0GPsFc/cTOoHsZjmWhGqGBStQSh5dOz/VawUu6?=
- =?us-ascii?Q?SXZiqSEbZUbqio7Wl8JlKoDPCWRFt33ZLQ1YGRWp/nP5GBH50W9iUCD3fe4O?=
- =?us-ascii?Q?hXLNC/VUiWU0s0XaT8wbWq21fFlTxSc0ckiNi2VknYif+4FwABGNCeWiehsy?=
- =?us-ascii?Q?UZvQszibw4BkwNSZK7mSE2wOI2suFOxzTZnmD8hU/a/4ewRocG9o/yi/TUDS?=
- =?us-ascii?Q?MUTOmcnOuILxVhaplIgeXUgs4jqa5FS62UzgSTDYD/+VAYd22fQVwbMse0Lx?=
- =?us-ascii?Q?5o9JQjAH1oXMHZy6cz+U0qZLxgfO4csZ2Jstgs96mXWpCpEeSxcyo8ZuRWtT?=
- =?us-ascii?Q?AeZiUpB/i6eU4IZSpzKQnsSrI0/m/AnTxetUylAaz9WSA0yD7Vmz2808dBml?=
- =?us-ascii?Q?NbBdf7utYxjFj6oCM/nXA+qQfe5qsrkFmXIXcxHPA3TYKnmgZQKDf777I3tb?=
- =?us-ascii?Q?zJ4Fvn6qfdLIW5m9feFmXQvtg1lxWgubVluv+VJWlDQXsH22hbCJP9RIHRMq?=
- =?us-ascii?Q?zGNQ9uDf7CRqkrVVgO49HgFEdFTtsDScT3WOWYu4Xmt1k603BXcWdGT8jbYC?=
- =?us-ascii?Q?YuxbdRVqenP1x3fcHsJQMRVm5JTL1hb+8NkHUn4/eO/U6vCjNo8zeRfLBWU1?=
- =?us-ascii?Q?sZCeeeLkyVRdvhhzS3UeBBPlgAmjaZnOjUQ5s2Eo4279yqz9sBl+T4kwUiFJ?=
- =?us-ascii?Q?JS/c9ZXAuPA84TfKPlc3voUCxMhOGl+MrxUepJHxR6x3eYCwCJhEfmFgiWzN?=
- =?us-ascii?Q?3IyJUmcDJzFo6Wc4B1uWz/mdTUIbKxbVxIArKtPwUtvZpCAQsMSG/NTqvrID?=
- =?us-ascii?Q?pSMa2pKRL0CFrk2llIifNHAZIqD+J7PwV+AFhFctMjIUu7iNBI+lh7/h99Hb?=
- =?us-ascii?Q?jfP0siCHBOfoH0r5+Nnh6jcrTKYB01ioafl8NRTs4Jg6f26AdEhUGHzXhI09?=
- =?us-ascii?Q?gqaAOLZUIhvwPjFBuaEhBmcguK3LwbdVE7hWfoOcpRZUhCU5UwoewxY7G/Hv?=
- =?us-ascii?Q?p3oIgSLSwzVab0DZ+/cKnH4GWRcRM+vkgby4Mkfu5YIM6ZblgcGUiTAaxtoG?=
- =?us-ascii?Q?lNiF+/kxZ4qjKsW6DK8CIT03EVlIKwI=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f70d75f4-0533-400b-9ce8-08df37243fdf
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2026 07:54:54.1458 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6QFDJ4OnqTdhP6UFPNMOjIGJcXoFuQU2qewhGDh48Zr8Lh/PwkfoUxu003c8rmLog9CBopwIk7bPJLLDtsKZ1TB/UTCSEFLKw29pCn7tsNE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB9051
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=chao.liu@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:6aMVeduJ6s8oJoP4idQxno+NfWwG7cVcPN69GWZBfCn9EZwjEsI
+ Bpl6JAdPKV+TTG4UtSlR51gXeXNsnQBl2AaCq6CLbKacGWl3yhphW+QSDtBz/mTnFQTz0k3
+ I52AN+XACsvhF816PF9LJCQgy2XB/8yqsftLCmXiPtZaetxSpXA6hX6njxqnuk+nEi693zF
+ HabGHmjp9Wl9dMvkef+PQ==
+UI-OutboundReport: notjunk:1;M01:P0:Ll+KrchMSqA=;o3/lUfIVL/KXJ58Rte/SeGDlqBw
+ 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
+Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,154 +180,73 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Fetch the prebuilt K230 images from the processmission
-qemu-machine-images v1.2.0 release archive instead of the
-zevorn/k230-boot-assets repository.
+From: Keith Monahan <keith@techtravels.org>
 
-Signed-off-by: Chao Liu <chao.liu@processmission.com>
----
- tests/functional/riscv64/test_k230.py | 90 +++++++++------------------
- 1 file changed, 29 insertions(+), 61 deletions(-)
+Set up the BTLB to allow operating systems to access LASI and central
+bus addresses.
 
-diff --git a/tests/functional/riscv64/test_k230.py b/tests/functional/riscv64/test_k230.py
-index 6ccbf2d581..c2a3f44849 100755
---- a/tests/functional/riscv64/test_k230.py
-+++ b/tests/functional/riscv64/test_k230.py
-@@ -11,96 +11,64 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
--import os
--
- from qemu_test import Asset, LinuxKernelTest
- from qemu_test import exec_command_and_wait_for_pattern
--from qemu_test import interrupt_interactive_console_until_pattern
-+from qemu_test import skipIfMissingCommands
-+from qemu_test import wait_for_console_pattern
- 
- 
- class K230Machine(LinuxKernelTest):
- 
--    ASSET_KERNEL = Asset(
--        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
--         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
--         'yocto/direct-boot/Image'),
--        '3a44970213fa68ad318d308518adfc0bf4bee72ed1b2926f9b468f82ef7d7829')
--    ASSET_DTB = Asset(
--        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
--         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
--         'yocto/direct-boot/k230-canmv.dtb'),
--        '5050240b48ce0988c73eaefa73e4945a40abca503cf488d22a3adf6ef50bbe4c')
--    ASSET_INITRD = Asset(
--        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
--         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
--         'yocto/direct-boot/rootfs.cpio.gz'),
--        '4e1869a99a232ee60324f71f3a9e84a79b03ccabb5b73f8a727c5ff5be5c0914')
--    ASSET_UBOOT = Asset(
--        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
--         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/common/u-boot'),
--        '0915b9a92a7c911846a8cf691866ef14ef050a51d04209f884ae8e9ec33f36d2')
--    ASSET_FW_JUMP = Asset(
--        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
--         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
--         'common/fw_jump.uImage'),
--        'cf7788e470f1d6e8c85491ecdc2705518db1b6af54080e8c7a3464bad0d902b7')
-+    # The release archive contains Image, rootfs.cpio.gz, k230-qemu.dtb,
-+    # u-boot, fw_jump.uImage, and boot.itb under the images/ directory.
-+    ASSET_IMAGES = Asset(
-+        ('https://github.com/processmission/qemu-machine-images/releases/'
-+         'download/v1.2.0/riscv64-k230-v1.2.0.tar.zst'),
-+        'fde65d0542127486078121c1748c7edacfe9d3ca29b5c2bcc93c67485139385c')
+Signed-off-by: Keith Monahan <keith@techtravels.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+=2D--
+ hw/hppa/machine.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 8d378385b2..e403ae5fc9 100644
+=2D-- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -896,6 +896,38 @@ static void hppa_machine_reset(MachineState *ms, Rese=
+tType type)
+         cpu[i]->env.gr[5] =3D CPU_HPA + i * 0x1000;
+     }
+=20
++    /*
++     * BTLB equivalence maps for the I/O ranges HP-UX 9 uses
++     * without creating page directory entries: the LASI block and the
++     * central bus (CPU HPA, broadcast).  Must not cover other I/O space,=
+ as
++     * HP-UX probes with LPA and skips pdir setup for already mapped page=
+s.
++     */
++    if (!hppa_is_pa20(&cpu[0]->env)) {
++        static const struct { uint32_t start, last; } io_btlb[] =3D {
++            { 0xf0100000, 0xf01fffff },     /* LASI */
++            { 0xfff80000, 0xffffffff },     /* central bus */
++        };
++        CPUHPPAState *env =3D &cpu[0]->env;
 +
-+    def extract_images(self):
-+        archive = self.uncompress(self.ASSET_IMAGES, target='images.tar',
-+                                  format='zstd')
-+        self.archive_extract(archive, format='tar')
- 
-     def wait_for_linux_shell(self):
--        self.wait_for_console_pattern('meta-k230 initramfs starting...')
--        self.wait_for_console_pattern('~ #')
-+        wait_for_console_pattern(self, 'k230 login:')
-+        exec_command_and_wait_for_pattern(self, 'root', '# ')
- 
-+    @skipIfMissingCommands('zstd')
-     def test_k230_direct_boot(self):
-         self.set_machine('k230')
--        kernel_path = self.ASSET_KERNEL.fetch()
--        dtb_path = self.ASSET_DTB.fetch()
--        initrd_path = self.ASSET_INITRD.fetch()
-+        self.extract_images()
-+        kernel_path = self.scratch_file('images', 'Image')
-+        dtb_path = self.scratch_file('images', 'k230-qemu.dtb')
-+        initrd_path = self.scratch_file('images', 'rootfs.cpio.gz')
- 
-         self.vm.set_console()
-         self.vm.add_args('-kernel', kernel_path,
-                          '-dtb', dtb_path,
-                          '-initrd', initrd_path,
--                         '-append', 'console=ttyS0,115200 earlycon=sbi',
-+                         '-append', 'console=ttyS0,115200 '
-+                         'earlycon=uart8250,mmio32,0x91400000 cma=0',
-                          '-no-reboot')
-         self.vm.launch()
-         self.wait_for_linux_shell()
- 
--    def test_k230_uboot_boot(self):
-+    @skipIfMissingCommands('zstd')
-+    def test_k230_firmware_boot(self):
-         self.set_machine('k230')
--        kernel_path = self.ASSET_KERNEL.fetch()
--        dtb_path = self.ASSET_DTB.fetch()
--        initrd_path = self.ASSET_INITRD.fetch()
--        uboot_path = self.ASSET_UBOOT.fetch()
--        fw_jump_path = self.ASSET_FW_JUMP.fetch()
--        initrd_end = 0x0a100000 + os.path.getsize(initrd_path)
-+        self.extract_images()
-+        uboot_path = self.scratch_file('images', 'u-boot')
-+        boot_itb_path = self.scratch_file('images', 'boot.itb')
- 
-         self.vm.set_console()
-         self.vm.add_args(
-             '-bios', uboot_path,
-             '-device',
--            f'loader,file={fw_jump_path},addr=0xc100000,force-raw=on',
--            '-device',
--            f'loader,file={kernel_path},addr=0x8200000,force-raw=on',
--            '-device',
--            f'loader,file={initrd_path},addr=0xa100000,force-raw=on',
--            '-device',
--            f'loader,file={dtb_path},addr=0xa000000,force-raw=on',
-+            f'loader,file={boot_itb_path},addr=0xc100000,force-raw=on',
-             '-no-reboot')
-         self.vm.launch()
- 
--        interrupt_interactive_console_until_pattern(self, 'K230#')
--        commands = (
--            'setenv bootargs console=ttyS0,115200 earlycon=sbi',
--            'fdt addr 0xa000000',
--            'fdt resize 8192',
--            'fdt set /chosen linux,initrd-start <0x0 0xa100000>',
--            f'fdt set /chosen linux,initrd-end <0x0 0x{initrd_end:x}>',
--        )
--        for command in commands:
--            exec_command_and_wait_for_pattern(self, command, 'K230#')
--
--        exec_command_and_wait_for_pattern(
--            self, 'bootm 0xc100000 - 0xa000000',
--            'Starting kernel ...', failure_message='ERROR')
-+        wait_for_console_pattern(self, 'Starting kernel ...')
-         self.wait_for_linux_shell()
- 
- 
--- 
++        for (i =3D 0; i < ARRAY_SIZE(io_btlb); i++) {
++            HPPATLBEntry *ent =3D &env->tlb[HPPA_BTLB_ENTRIES(env) - 1 - =
+i];
++
++            ent->itree.start =3D io_btlb[i].start;
++            ent->itree.last =3D io_btlb[i].last;
++            ent->pa =3D io_btlb[i].start;
++            ent->access_id =3D 0;
++            ent->u =3D 1;
++            ent->ar_pl2 =3D 0;
++            ent->ar_pl1 =3D 0;
++            ent->ar_type =3D 1;
++            ent->b =3D 0;
++            ent->d =3D 1;
++            ent->t =3D 0;
++            ent->entry_valid =3D 1;
++            interval_tree_insert(&ent->itree, &env->tlb_root);
++        }
++    }
++
+     cpu[0]->env.gr[26] =3D ms->ram_size;
+     cpu[0]->env.gr[25] =3D cpu[0]->env.kernel_entry;
+     cpu[0]->env.gr[24] =3D cpu[0]->env.cmdline_or_bootorder;
+=2D-=20
 2.56.0
 
 
