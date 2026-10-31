@@ -1,146 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89807606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Oct 2026 23:48:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=U/nSIeaV;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IDOMWL4T
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9F9606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 00:10:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMwJp-0002lE-Gp; Fri, 30 Oct 2026 19:47:35 -0400
+	id 1xMwfi-00050x-Mf; Fri, 30 Oct 2026 20:10:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xMwJh-0002l5-N8
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 19:47:25 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xMwff-000500-Ok; Fri, 30 Oct 2026 20:10:07 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xMwJf-00049y-R2
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 19:47:25 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69ULtQow3568410
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 23:47:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xa0ojj3aOuX2vPhZn40ENk7zbPPb+DTW4MbgVWtSOS0=; b=U/nSIeaVMGAEWIn5
- a9hE0pxKh52ORKsL1EyvP6bwtvQ5Z1yZTVxHPZVFjEs6ReGtOmB0GUEd/kUerCGd
- Yr8Z7mEB/WOLzLiGnc4rJE7WvwXflMf4xAeCaU7DgJ80taE2yNZTiZuhjMWIhA+M
- Awk9mx6X/qXyoa9oC7Mv+L5yh3TRMlvUKslxeZXNNsSKMOpGcLMbi0CqjY3SOznx
- G0c6pSH68VHlfU70cEeCvTA2FQp6EM0W957nceYCxb6Sg9kvBwFBD8So8rqPo7x1
- IU8sbzsp9WVz4AlUVlM0jXaIgjkLtKjK69keFluFCrCfskCH33zA2fXMjzESaofX
- ia2OgQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hn2x0gc0c-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 23:47:18 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-537548d4bc0so31800571cf.2
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 16:47:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793404038; x=1794008838; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=xa0ojj3aOuX2vPhZn40ENk7zbPPb+DTW4MbgVWtSOS0=;
- b=IDOMWL4TuxN/dXPhF0tF4DY5+/m9O8PeF6t01PE7IXzAX7POtExhMtJ3u3wIKYXR+X
- Zi2bKe/QSIz0zELDI6suOX4hBppxt6mU6kFSDOd8MD/o7V5pNI6buUDwA9sxseMvNg8p
- Y5F/yBXo6x2VkgyladEk3EbVD2bd7ect56O77EK1rm/SnZounWR2AMySPogOHQEF9w6l
- /qA9K7gqNrl51da7iVKFKhe0/+j1uJuL9LIBKRhjPEa+cLdhfKLIaGpnF5RMjgTV8ymL
- U45MpWsF4bbnzMBgaymN7t5eQqICkc6SpcSyBnLB95RZCzhFUvY6NrqOTME777HbjvuG
- P5ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793404038; x=1794008838;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xa0ojj3aOuX2vPhZn40ENk7zbPPb+DTW4MbgVWtSOS0=;
- b=V34AOGJMqyjBjJhoqzyKqviwP9UeRZlDfVXSgNqGHM7+7MV3o1XOUJ7514ovD/MmZZ
- IG97sAircqfs0/o3lJdtGS/OHQJ+pd1fCppgE+Pqsh5yy/StoK8pdkqAkdRun64aYwb5
- ujvH36LNCJScCL1t/jmlYSjZQ8Z1fLFKPXcRbavulEtTFCR/nK9kZN94veZRUmSFpwW3
- 1nb1dCXJ6EVwAG2PEmRjW1yx2fooiuWtbFv0n2lZmg/puH33MoENs3DQAXspgs4KqICe
- 0MxZ9XVLdqnOsHmIfICLiUbcwTRdj151fiUIk5SVnd3Wjs+xisX7Gm1FgBO/xs13k9ti
- 9bGA==
-X-Gm-Message-State: AFq9FYLju4NZLg/2EfgmN3X9HY9+L2aSJp7B0w1aH+QGyn4+WyL1FlUr
- YWEPDhEcs0BBa6YMPzBuYHxYeSulnnVHt2rRcSCI6SH5Nd5d8T6Z0EMs6bZMY5225i2LhZYaB6z
- HJ3ntYOb9mutH0ssahyyvP0ixKKpkXkY5aWOwFyrCAcz8yaTq/U3C3Mqxyc9p00BaOg==
-X-Gm-Gg: AYBFou3QA6gAVBeKZjp0EyDejl3ow6fFO5XTAuLqAgsD6nulbRnuZbotBSuccbgqPt0
- 6TyT3UcfBKx/F/adPqa3TJ2epCdjXyJPeWQZ+Vjz4YuUhWk61werVFSr055wuL7P4qBh38WYp3x
- 5w6CwtkLKGIZfagC9aBkBsZlba2VXF5df2lhFKWZkq6tESY+5a/JTUuOMl8v4xo1q6Dq3f9z5Wn
- EHNZ8g4Z7fyQCPKEZc78qASxWnLBmBJK76rgNrkSOxQWRbQQTfoqDAXzY1KlqxPZLGK5lBgn01J
- 1nyM+mUpbfGintleq2Z49ShtKldZWhoGLH34mJpLoJ7Da8y2IycoDhhda57jb3lbRbB7L9GI1rX
- dOkJc86WPZV+Ufd4LIJrB8Tma4oI6FN09OdM6iYW9e2kJQY8WA/1SzHsIBeOhs9ClC2IwVTVstk
- smnjdF/u0jhsNi7pKNBbgXFSGb6ZGfLDVj6x0Um4QuoKf0rZW66aga
-X-Received: by 2002:a05:622a:a15:b0:536:5f01:7016 with SMTP id
- d75a77b69052e-542b6f4c77emr59361101cf.38.1793404037614; 
- Fri, 30 Oct 2026 16:47:17 -0700 (PDT)
-X-Received: by 2002:a05:622a:a15:b0:536:5f01:7016 with SMTP id
- d75a77b69052e-542b6f4c77emr59360901cf.38.1793404037194; 
- Fri, 30 Oct 2026 16:47:17 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-543fcb3c30fsm8449751cf.13.2026.10.30.16.47.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 30 Oct 2026 16:47:15 -0700 (PDT)
-Message-ID: <05fe787a-fb5c-4203-879c-062303a7bfed@oss.qualcomm.com>
-Date: Fri, 30 Oct 2026 18:47:13 -0500
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xMwfd-0005iY-CX; Fri, 30 Oct 2026 20:10:07 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EA36A60C0DB;
+ Sat, 31 Oct 2026 01:09:57 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 9e_z2L1I9kjY; Sat, 31 Oct 2026 01:09:55 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id D12A760C072; Sat, 31 Oct 2026 01:09:55 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id CA50A13996F;
+ Sat, 31 Oct 2026 01:09:55 +0100 (CET)
+Date: Sat, 31 Oct 2026 01:09:55 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Yonggang Luo <luoyonggang@gmail.com>
+cc: qemu-devel@nongnu.org, Anthony PERARD <anthony@xenproject.org>, 
+ Felipe Balbi <balbi@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>, 
+ Antony Pavlov <antonynpavlov@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ Niek Linnenbank <nieklinnenbank@gmail.com>, xen-devel@lists.xenproject.org, 
+ qemu-riscv@nongnu.org, Jean-Christophe Dubois <jcd@tribudubois.net>, 
+ qemu-ppc@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>, 
+ Weiwei Li <liwei1518@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Frederic Konrad <konrad.frederic@yahoo.fr>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Chao Liu <chao.liu@processmission.com>, 
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>, 
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH 00/15] hw: expand DEFINE_MACHINE to explicit TypeInfo
+ registration
+In-Reply-To: <20261030151539.1872-1-luoyonggang@gmail.com>
+Message-ID: <d1db54c6-b802-676a-7779-0c2c63f5f807@eik.bme.hu>
+References: <20261030151539.1872-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] target/hexagon: implement mxclracc
-To: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Alessandro Di Federico <ale@rev.ng>, Anton Johansson <anjo@rev.ng>
-References: <20261030024110.1986536-1-brian.cain@oss.qualcomm.com>
- <20261030024110.1986536-9-brian.cain@oss.qualcomm.com>
- <CAJ+KCYMZ2m7W8_xvOvA=uwUSt7AvaaSgD5Ngc-PF+ZWJFbWDEA@mail.gmail.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <CAJ+KCYMZ2m7W8_xvOvA=uwUSt7AvaaSgD5Ngc-PF+ZWJFbWDEA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDMwMDA5NCBTYWx0ZWRfX7h0dhT8UhDQY
- Z3GBYB9YgwKxkyH9Tr5fD4VF5CHkwN1QZHp46SGsi4OawQyesl4T4JxXXhbmSnClbsQiBn3OBzs
- o92g+QEyiqYOkYvhNLkcxQYtO4GEefGtSRi9UszGOQZanjnsd/MTzh/sSTlaPJAFjSJimeNsPup
- t/R0bFD4VCfT/px2TV/ID0VSrHYCCGTY9UpUuZ48yhvUNKAtuc9t1L8l7/7D/DIb+kVgGEUsjL8
- av3UEwSz/Pnkr98FPnZY8lsXcWSgMTD6iSjQL9qj+gq2SEn0uCDWm+GFB99FMEyFNniZuBUvbLw
- YdS6ZDShL0ZpXRZU9qnfcpQ3LPnliNhuSR0JG7X9Vz2Xjk7MWh9SamEab6A4/hRrHy4eDt1Z8lF
- krcaLD3kjypW2M+NeMgEHV9d64TVHxKrdKhHk4ZacBfRvE4AP87zZM4dQQ9R+a5yYxXiR7eBbUi
- QhcSrBV6Ir3CM6XQrSA==
-X-Proofpoint-ORIG-GUID: mGJ18B5YNNTTb_BuPI5yzhUWOG5pcHow
-X-Proofpoint-GUID: mGJ18B5YNNTTb_BuPI5yzhUWOG5pcHow
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDMwMDA5NCBTYWx0ZWRfX88N6di4WnA2X
- Thvpn07KTnMUAYJm1OBp6mm2irVwv39DWYSAy9ECQLSaaaorwNBW77U7BV+tlSFEodXcn/P5OzY
- /1VdIjQ84S29H0+IIbG15U46U6qw/0g=
-X-Authority-Analysis: v=2.4 cv=Arx7T+9P c=1 sm=1 tr=0 ts=6ae52c86 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=PNBS9oBbFst-8Hn2rtUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-30_07,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0 phishscore=0
- suspectscore=0 spamscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2610300094
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,45 +89,92 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On Fri, 30 Oct 2026, Yonggang Luo wrote:
+> DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED hide the TypeInfo and the type_init
+> function that calls type_register_static(). A later change needs to pass a
 
-On 10/30/2026 12:47 PM, Marco Liebel wrote:
-> On Thu, Oct 29, 2026 at 9:41 PM Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->> Implement an HMX accumulator clear instruction - mxclracc.
->>
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>   target/hexagon/gen_tcg_hmx.h            | 13 +++++++++++++
->>   target/hexagon/helper.h                 |  2 ++
->>   target/hexagon/genptr.c                 |  1 +
->>   target/hexagon/op_helper.c              | 10 ++++++++++
->>   target/hexagon/translate.c              |  3 ++-
->>   target/hexagon/gen_idef_parser_funcs.py |  6 ++++++
->>   target/hexagon/hex_common.py            |  2 ++
->>   target/hexagon/meson.build              | 17 +++++++++--------
->>   8 files changed, 45 insertions(+), 9 deletions(-)
->>   create mode 100644 target/hexagon/gen_tcg_hmx.h
->>
->> +void HELPER(mxclracc)(CPUHexagonState *env)
->> +{
->> +    HmxState *hmx = env->hmx_state;
->> +    int i;
->> +
->> +    for (i = 0; i < HMX_NUM_ACC_SETS; i++) {
->> +        memset(&hmx->acc[i].fxp_primary, 0, sizeof(hmx->acc[i].fxp_primary));
->> +    }
->> +}
-> The helper clears live state before packet commit. A store fault in the same
-> packet can leave the accumulators cleared without a commit.
-> It also dereferences hmx_state without checking that an HMX context exists.
-> env->hmx_state can be NULL here, because gen_start_packet() only checks
-> XE2.
-Sent a v3 with fixes for these.
+That's the point of the macro to hide the boiler plate code.
+
+> target mask into that registration, and the macros have no parameter for it.
+
+Couldn't you just change the macros to take that parameter instead of 
+expanding it everywhere?
+
+Regards,
+BALATON Zoltan
+
+> This series expands every caller first, with no behavior change, so the
+> follow-up only replaces the type_register_static() call.
+>
+> Each machine file gains a class_init function, a TypeInfo, and a type_init
+> function that calls type_register_static(). The last patch removes
+> DEFINE_MACHINE* and DEFINE_SECURE_MACHINE* from include/hw/core/boards.h.
+>
+> Yonggang Luo (15):
+>  hw/alpha: expand DEFINE_MACHINE in dp264.c
+>  hw/m68k: expand DEFINE_MACHINE for M68K machines
+>  hw/microblaze: expand DEFINE_MACHINE for MicroBlaze
+>  hw/tricore: expand DEFINE_MACHINE in tricore_testboard.c
+>  hw/arm: expand DEFINE_MACHINE for ARM machines
+>  hw/riscv: expand DEFINE_MACHINE for RISC-V machines
+>  hw/core/null-machine: expand DEFINE_MACHINE
+>  hw/mips: expand DEFINE_MACHINE for MIPS machines
+>  hw/ppc: expand DEFINE_MACHINE for PowerPC machines
+>  hw/sh4: expand DEFINE_MACHINE in r2d.c
+>  hw/sparc: expand DEFINE_MACHINE in leon3.c
+>  hw/xenpv: expand DEFINE_MACHINE in xen_machine_pv.c
+>  hw/xtensa: expand DEFINE_MACHINE in sim.c
+>  hw/xtensa: expand DEFINE_MACHINE in virt.c
+>  hw/core/boards: remove unused DEFINE_MACHINE* macros
+>
+> hw/alpha/dp264.c                    | 18 +++++++++--
+> hw/arm/bananapi_m2u.c               | 18 +++++++++--
+> hw/arm/cubieboard.c                 | 19 +++++++++---
+> hw/arm/digic_boards.c               | 18 +++++++++--
+> hw/arm/imx25_pdk.c                  | 18 +++++++++--
+> hw/arm/imx8mm-evk.c                 | 20 +++++++++---
+> hw/arm/integratorcp.c               | 14 ++++++---
+> hw/arm/kzm.c                        | 18 +++++++++--
+> hw/arm/max78000fthr.c               | 17 ++++++++--
+> hw/arm/mcimx6ul-evk.c               | 18 +++++++++--
+> hw/arm/mcimx7d-sabre.c              | 20 +++++++++---
+> hw/arm/msf2-som.c                   | 17 ++++++++--
+> hw/arm/netduino2.c                  | 17 ++++++++--
+> hw/arm/netduinoplus2.c              | 17 ++++++++--
+> hw/arm/olimex-stm32-h405.c          | 18 +++++++++--
+> hw/arm/orangepi.c                   | 19 +++++++++---
+> hw/arm/stm32vldiscovery.c           | 18 +++++++++--
+> hw/core/null-machine.c              | 18 +++++++++--
+> hw/m68k/an5206.c                    | 18 +++++++++--
+> hw/m68k/mcf5208.c                   | 18 +++++++++--
+> hw/microblaze/petalogix_ml605_mmu.c | 19 ++++++++++--
+> hw/microblaze/xlnx-zynqmp-pmu.c     | 19 ++++++++++--
+> hw/mips/boston.c                    | 18 +++++++++--
+> hw/mips/fuloong2e.c                 | 18 +++++++++--
+> hw/mips/malta.c                     | 12 ++++++--
+> hw/ppc/amigaone.c                   | 18 +++++++++--
+> hw/ppc/pegasos.c                    | 21 ++++++++-----
+> hw/ppc/ppc440_bamboo.c              | 18 +++++++++--
+> hw/ppc/prep.c                       | 18 +++++++++--
+> hw/ppc/sam460ex.c                   | 18 +++++++++--
+> hw/ppc/virtex_ml507.c               | 18 +++++++++--
+> hw/riscv/boston-aia.c               | 18 +++++++++--
+> hw/riscv/microblaze-v-generic.c     | 18 +++++++++--
+> hw/sh4/r2d.c                        | 18 +++++++++--
+> hw/sparc/leon3.c                    | 18 +++++++++--
+> hw/tricore/tricore_testboard.c      | 18 +++++++++--
+> hw/xenpv/xen_machine_pv.c           | 18 +++++++++--
+> hw/xtensa/sim.c                     | 18 +++++++++--
+> hw/xtensa/virt.c                    | 18 +++++++++--
+> include/hw/core/boards.h            | 48 -----------------------------
+> 40 files changed, 605 insertions(+), 142 deletions(-)
+>
+>
 
