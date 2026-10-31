@@ -1,166 +1,164 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB9C606A31E
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 08:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31CD606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 08:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmx.de header.i=deller@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=fVbk0m+B
+	dkim=pass (2048-bit key, unprotected) header.d=gmx.de header.i=deller@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=jTCbPzBv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xN4TM-0001sw-VU; Sat, 31 Oct 2026 04:29:57 -0400
+	id 1xN4T6-0001ot-9F; Sat, 31 Oct 2026 04:29:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xN4Sc-0001kz-QF
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 04:29:10 -0400
-Received: from mout.gmx.net ([212.227.17.22])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xN4SY-0001jH-1Y
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 04:29:07 -0400
+Received: from mout.gmx.net ([212.227.17.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xN4SY-0001tP-Pd
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 04:29:10 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xN4SV-0001se-45
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 04:29:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1793435344; x=1794040144; i=deller@gmx.de;
- bh=Dw3LFXM0YgxvGWIPZNyqdOMim8Mx0acSGBmMO99krzk=;
+ s=s31663417; t=1793435341; x=1794040141; i=deller@gmx.de;
+ bh=/ytFg8llYcAFax05RoNhk5LQslOLDQR0UBjmQ9yZlu4=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
  References:MIME-Version:Content-Transfer-Encoding:cc:
  content-transfer-encoding:content-type:date:from:message-id:
  mime-version:reply-to:subject:to;
- b=fVbk0m+B5UNAb5XGipCgwf5NEAuavCEMyiZz1cV2b9s05AXEpGHLB607ZfTe21PJ
- D6T+1GsY9UGGwC9hsWHadGmf8Joc+90iW8Tou7xes5nXMjsZyLTm5cnknNKA5T4v0
- iznp5Fi7s7sF6x+WEXXNioWB1TdJEd5Lm8Tm+pN8svDpHQLg9BrwZHv4TLwvLh+TF
- 5PksIyty2WzJcFnGxm3y9SBGtQ9+//C93EtyxErCGx2bPacWulNhpO1b8VHoYgwaK
- XuqFL1V0GutSJTBuvEaMbhi9DTZ8hU7xAeOtEvLSzkFvMR97nVE8dSVvJc9OK8fkB
- /ut4zO04ejzuwT9Qzg==
+ b=jTCbPzBvLapFkKtSXkiZMONOQLELPh7AyUjspt2fa8ONZ147iOsuLHTjkU905NQ7
+ ZStdju23SZ+pgpjyKO3UAlN3VMR9Zqss7OTtDQzJY9617B1zo5hKqC8N1oVRrGYSr
+ x9tU9JmHlwLI/Hvm7qhtmbl0qnCvaN/GEh8EcgcjcbCDR11dH6kxD4rqsqCExZav6
+ V/Y1ouUH43XG2FXw/Tbv1YqCOWwFANp4+TpVWa6ZPaNIcIeNAKODOQaVfbJ9AsV3y
+ LAblnMU8I8vHzwPc7boXBqv0Qk7BpZ2k8ytKvJobnX5dixItmYI+b61OWJF0fuDnu
+ 2YcRegEyTPNQBLyuDA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mlw3X-1wfAw71OU7-00cOWM; Sat, 31
- Oct 2026 09:29:04 +0100
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0XD2-1wZW930WHs-017WbZ; Sat, 31
+ Oct 2026 09:29:01 +0100
 From: Helge Deller <deller@gmx.de>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Fabiano Rosas <farosas@suse.de>,
  "Kirill A . Korinsky" <kirill@korins.ky>,
  Keith Monahan <keith@techtravels.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v3 10/10] target/hppa: Map CPUs at same addresses as on
- physical machines
-Date: Sat, 31 Oct 2026 09:28:50 +0100
-Message-ID: <20261031082850.439293-11-deller@gmx.de>
+Subject: [PULL v3 08/10] hw/misc/lasi: LASI Harmony Audio presence emulation
+Date: Sat, 31 Oct 2026 09:28:48 +0100
+Message-ID: <20261031082850.439293-9-deller@gmx.de>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261031082850.439293-1-deller@gmx.de>
 References: <20261031082850.439293-1-deller@gmx.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Csc+kIhQGsPL7zIwfs6ChBEJ43WN2hEeyWmYJJyGMjuZKvTesVO
- iMvrFGJ0xGvq0K1Uta28loimq7zFvy1EPjrflRmvMG1dx7KSHez9htNXXafk887o6Xo0kiL
- p7sY0anOQkO2qlKy7NSNd2vpJ+0riiSEAgzqUqojMWbozTdBoB6B8V0kZmKZQBGn/YVmc1E
- LcJf7q3edq2k/eNWAzHVw==
-UI-OutboundReport: notjunk:1;M01:P0:8LbfAlIdjwg=;E4iGne1UCoPnQulkDXFtMsw33hA
- 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
- 4457Az9cIPN4+lvZF5g==
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:1mFZthQ8EjJY9N8ZzwPjoYgeqmhl+P6u2S6ttkWTzyG8yLkqcwO
+ aV0rkGpsfvDHrumEzzD/MRAdeGuubs9BHU7DMG3yQDiSLYO07tBlj8TSo2rvIwm7AqVCCYX
+ 050h/+lf3g+Yg7hCccZqoZn/dYrwD6s7E3/DrEp57G+pvQ0qaGExsC1NgLlZPnWmJ6wHW7i
+ csZSiUrzRSHWHG/pWVi6A==
+UI-OutboundReport: notjunk:1;M01:P0:w0zE8g5bH8Q=;boXH+jGytlhMZIuRn17zNeM7/Jy
+ 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
+Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -188,144 +186,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-SeaBIOS version 27 allows to use random addresses for CPU_HPA, so drop
-the hardcoded CPU_HPA which was used until now for all machines, and use
-individual addresses which correspond to the CPU HPA on the physical
-machines.
+HP-UX 9 beeps through the harmony audio chip, and it panics if there
+isn't one, because the 715/64 has no HIL keyboard to beep through
+instead. Emulate the bare minimum of the chip's registers and report a
+running audio clock. There's still no sound.
+In the long run we plan to add a Harmony driver, but for now this is
+sufficient.
 
+Suggested-by: Keith Monahan <keith@techtravels.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 =2D--
- hw/hppa/machine.c | 23 +++++++++++++----------
- target/hppa/cpu.h |  1 +
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ hw/misc/lasi.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index e403ae5fc9..f23936fc5b 100644
-=2D-- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -241,11 +241,11 @@ static FWCfgState *create_fw_cfg(MachineState *ms, P=
-CIBus *pci_bus,
-     fw_cfg_add_file(fw_cfg, "/etc/hppa/power-button-addr",
-                     g_memdup2(&val, sizeof(val)), sizeof(val));
+diff --git a/hw/misc/lasi.c b/hw/misc/lasi.c
+index f0dfd78b4d..76029804e1 100644
+=2D-- a/hw/misc/lasi.c
++++ b/hw/misc/lasi.c
+@@ -36,8 +36,7 @@ static bool lasi_chip_mem_valid(void *opaque, hwaddr add=
+r,
+     case LASI_IAR:
 =20
--    val =3D cpu_to_le64(CPU_HPA + 16);
-+    val =3D cpu_to_le64(cpu[0]->env.cpu_hpa + 16);
-     fw_cfg_add_file(fw_cfg, "/etc/hppa/rtc-addr",
-                     g_memdup2(&val, sizeof(val)), sizeof(val));
+     case LASI_LPT:
+-    case LASI_AUDIO:
+-    case LASI_AUDIO + 4:
++    case LASI_AUDIO ... LASI_AUDIO + 0xFF:
+     case LASI_UART:
+     case LASI_LAN:
+     case LASI_LAN + 12: /* LASI LAN MAC */
+@@ -87,6 +86,13 @@ static MemTxResult lasi_chip_read_with_attrs(void *opaq=
+ue, hwaddr addr,
+         val =3D s->iar;
+         break;
 =20
--    val =3D cpu_to_le64(CPU_HPA + 24);
-+    val =3D cpu_to_le64(cpu[0]->env.cpu_hpa + 24);
-     fw_cfg_add_file(fw_cfg, "/etc/hppa/DebugOutputPort",
-                     g_memdup2(&val, sizeof(val)), sizeof(val));
-=20
-@@ -286,7 +286,8 @@ static DinoState *dino_init(MemoryRegion *addr_space)
- /*
-  * Step 1: Create CPUs and Memory
-  */
--static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
-+static TranslateFn *machine_HP_common_init_cpus(MachineState *machine,
-+                        target_ulong initial_cpu_hpa)
- {
-     MemoryRegion *addr_space =3D get_system_memory();
-     unsigned int smp_cpus =3D machine->smp.cpus;
-@@ -299,6 +300,7 @@ static TranslateFn *machine_HP_common_init_cpus(Machin=
-eState *machine)
-     /* Create CPUs.  */
-     for (unsigned int i =3D 0; i < smp_cpus; i++) {
-         cpu[i] =3D HPPA_CPU(cpu_create(machine->cpu_type));
-+        cpu[i]->env.cpu_hpa =3D initial_cpu_hpa + i * 0x1000;
-     }
-=20
-     /* Initialize memory */
-@@ -321,7 +323,7 @@ static TranslateFn *machine_HP_common_init_cpus(Machin=
-eState *machine)
-         memory_region_init_io(cpu_region, OBJECT(cpu[i]), &hppa_io_eir_op=
-s,
-                               cpu[i], name, 4);
-         memory_region_add_subregion(addr_space,
--                                    translate(NULL, CPU_HPA + i * 0x1000)=
-,
-+                                    translate(NULL, cpu[i]->env.cpu_hpa),
-                                     cpu_region);
-=20
-         if (!hppa_is_pa20(&cpu[0]->env)) {
-@@ -339,7 +341,7 @@ static TranslateFn *machine_HP_common_init_cpus(Machin=
-eState *machine)
-         memory_region_init_io(cflush, NULL, &hppa_pci_ignore_ops,
-                               NULL, cflush_name, 4);
-         memory_region_add_subregion(addr_space,
--                              translate(NULL, CPU_HPA + i * 0x1000 + 0x50=
-0),
-+                              translate(NULL, cpu[i]->env.cpu_hpa + 0x500=
-),
-                               cflush);
-     }
-=20
-@@ -347,7 +349,8 @@ static TranslateFn *machine_HP_common_init_cpus(Machin=
-eState *machine)
-     cpu_region =3D g_new(MemoryRegion, 1);
-     memory_region_init_io(cpu_region, OBJECT(cpu[0]), &hppa_io_helper_ops=
-,
-                           cpu[0], "cpu0-io-rtc", 2 * sizeof(uint64_t));
--    memory_region_add_subregion(addr_space, translate(NULL, CPU_HPA + 16)=
-,
-+    memory_region_add_subregion(addr_space,
-+                                translate(NULL, cpu[0]->env.cpu_hpa + 16)=
-,
-                                 cpu_region);
-=20
-     /* Main memory region. */
-@@ -626,7 +629,7 @@ static void machine_HP_715_init(MachineState *machine)
-     ISABus *isa_bus;
-=20
-     /* Create CPUs and RAM.  */
--    translate =3D machine_HP_common_init_cpus(machine);
-+    translate =3D machine_HP_common_init_cpus(machine, 0xfffbe000);
-=20
-     if (hppa_is_pa20(&cpu[0]->env)) {
-         error_report("The HP 715/64 workstation requires a 32-bit "
-@@ -713,7 +716,7 @@ static void machine_HP_B160L_init(MachineState *machin=
-e)
-     PCIBus *pci_bus;
-=20
-     /* Create CPUs and RAM.  */
--    translate =3D machine_HP_common_init_cpus(machine);
-+    translate =3D machine_HP_common_init_cpus(machine, 0xfff10000);
-=20
-     if (hppa_is_pa20(&cpu[0]->env)) {
-         error_report("The HP B160L workstation requires a 32-bit "
-@@ -810,7 +813,7 @@ static void machine_HP_C3700_init(MachineState *machin=
-e)
-     bool is_C3700 =3D strcmp(mc->name, "C3700") =3D=3D 0;
-=20
-     /* Create CPUs and RAM.  */
--    translate =3D machine_HP_common_init_cpus(machine);
-+    translate =3D machine_HP_common_init_cpus(machine, 0xfffa0000);
-=20
-     if (!hppa_is_pa20(&cpu[0]->env)) {
-         error_report("The HP C3000 workstation requires a 64-bit CPU. "
-@@ -893,7 +896,7 @@ static void hppa_machine_reset(MachineState *ms, Reset=
-Type type)
-         cpu[i]->env.psw =3D PSW_Q;
-         /* Firmware uses FP registers before configuring CCR. */
-         cpu[i]->env.cr[CR_SCRCCR] =3D 0xc0;
--        cpu[i]->env.gr[5] =3D CPU_HPA + i * 0x1000;
-+        cpu[i]->env.gr[5] =3D cpu[i]->env.cpu_hpa;
-     }
-=20
-     /*
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index da48a78569..7b708a564b 100644
-=2D-- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -272,6 +272,7 @@ typedef struct CPUArchState {
-     /* Fields up to this point are cleared by a CPU reset */
-     struct {} end_reset_fields;
-=20
-+    target_ulong cpu_hpa;      /* HPA of this CPU */
-     target_ulong kernel_entry; /* Linux kernel was loaded here */
-     target_ulong cmdline_or_bootorder;
-     target_ulong initrd_base, initrd_end;
++    case LASI_AUDIO ... LASI_AUDIO + 0xFF:
++        /*
++         * Harmony audio not yet emulated.  DIAG (0x3c) reports a running
++         * sample clock, which HP-UX 9 checks before using the beeper.
++         */
++        val =3D (addr =3D=3D LASI_AUDIO + 0x3c);
++        break;
+     case LASI_LPT:
+     case LASI_UART:
+     case LASI_LAN:
+@@ -158,9 +164,8 @@ static MemTxResult lasi_chip_write_with_attrs(void *op=
+aque, hwaddr addr,
+     case LASI_LPT:
+         /* XXX: reset parallel port */
+         break;
+-    case LASI_AUDIO:
+-    case LASI_AUDIO + 4:
+-        /* XXX: reset audio port */
++    case LASI_AUDIO ... LASI_AUDIO + 0xFF:
++        /* XXX: Harmony audio is not emulated */
+         break;
+     case LASI_UART:
+         /* XXX: reset serial port */
 =2D-=20
 2.56.0
 
