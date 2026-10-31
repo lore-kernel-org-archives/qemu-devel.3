@@ -1,85 +1,83 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92FC606A31D
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 14:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1624606A31C
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 14:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JDfxgXce
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lYlUEw2l
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNAWv-00012G-BR; Sat, 31 Oct 2026 10:58:01 -0400
+	id 1xNAWx-00013J-0H; Sat, 31 Oct 2026 10:58:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dovankhai97@gmail.com>)
- id 1xNAR9-0008OI-Ri
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 10:52:05 -0400
-Received: from mail-dy1-x1329.google.com ([2607:f8b0:4864:20::1329])
+ id 1xNAR8-0008O8-5H
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 10:52:03 -0400
+Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dovankhai97@gmail.com>)
- id 1xNAR7-0006Yl-0C
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 10:52:03 -0400
-Received: by mail-dy1-x1329.google.com with SMTP id
- 5a478bee46e88-36a18fc7a38so1640654eec.1
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 07:52:00 -0700 (PDT)
+ id 1xNAR5-0006YP-Nd
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 10:52:01 -0400
+Received: by mail-dy1-x1333.google.com with SMTP id
+ 5a478bee46e88-3514b90bb89so3218819eec.1
+ for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 07:51:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793458319; x=1794063119; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=y9OcbmBQT6++Wgt2GiPCy82GPlfqJY+SVl7s/7VpF78=;
- b=JDfxgXceiJzKwS73RKGpG9GK67PRkGq7lr6SwbkpvQ/Dzdi7iVuziQBngS0TJ6Y/TR
- xVxP4Z0GyU2YWXpWcIJB02C1QiDzRSsc8LOicqCMVI6NmKNyfNqiMgYeXaSE2xoIY8i1
- LbcZ9rxYdcPzOJYbFukMQcZ5/H552GJ4RVK3KhV+MUlrUVS3Ng7loZP95ZPUQOE51lmb
- 1Io3iBeRdQPcwwHfGIGG2C9nVgjhUzIoUEikBDcSwwzeH+WX2413NI7bfO5CXZee/ywq
- 0rejewAu1I64TT+96DG/c53e+FH8BNwBXqtziBkPWiFVxBML6e+U8yFiIwnBg9x0vHR7
- oTGw==
+ d=gmail.com; s=20260707; t=1793458313; x=1794063113; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=L7ochma7yIOUoWS70+D40B5SHG6wByT/y6Iu6Vp3fks=;
+ b=lYlUEw2looVlrrwI7L3Z+ToDmAtnkPjH74d1U8WSX/bCAIAds1hBw2iOwHSOCUauy2
+ pSodhK4BrMZ1WvSO9CH2/Ru9URJZ+re9Hno6lzzWg8zdo9pEjAEsk0foUsG09+lbzFc2
+ dgFFiMlJ960tgiL+spsiryuLtnTvbFw0vemxp03Hs/k7i1wUf1xne7cYtWLXV8Fq6BLW
+ 6aHqHkleboj4E7JznJeOnqB/enwhLG5yzt7o0C25nbDeUYwlA1Nt93b2Ut4iUxZhdLRR
+ hdD5f4PbWHClz5QkdUCFnpjYb2MFfQCGRs7b50MJ4k92iVSOwDPgODeya1Dq1PlsuOEt
+ MNyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793458319; x=1794063119;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=y9OcbmBQT6++Wgt2GiPCy82GPlfqJY+SVl7s/7VpF78=;
- b=b5/PoBmfrZYnUZqC66w2fJNsnlVitBmLjFpUCsuY2ybDf3TrIywK2+8MtVABFLqVOO
- Yqhz277712vJjZ1j1rWQw8ZHNNAmJ0zw8v1b6dch3ubXKUti9XjmVrBzR7jUSbGmJBJH
- 8GFyIXJYuPca/JmVG0jquZInZ2e+DRDdU7lMJ9uI9eTC2WfvSATlxFAXEcn+j2IaBZ8h
- xVUJ7TkVHdp2VcHAmYTY3nItkr9eC6zjEQZBEHmfJdXABWpe3vkr0eXiOC1e/uFb42Bb
- 52ImFqVGooVWxUS3RwKRW4dtf0d+Qqc13vWLnKfBlidrSZcwdUapSQwOKq31aHFdK7V3
- g3Xw==
-X-Gm-Message-State: AFq9FYLLCHTje98eYycOjt8XCtYi0STA3ggqCeuw/VwqllZWDHsiZ3mt
- 3ahdlnYxpxXHpRbXtRnKZ/9XIoRgeXxTZXaHY07vXpwlzQPQVDfHi83touROHEz/
-X-Gm-Gg: AYBFou1B0scaf/BP5cVYZUPZEYkz/3s/UurRM2VFltL6IDUOqhyxfTAWkMuXSA5SZFp
- AQvvtzyz6EaQCpVhZW5HVIKPMmfGKhUnVu/8Vl6FV3Rgj8K8lmjOBKSKje+XOEQUSxCpjvZHP6I
- jLW0ZbotgOm1GdLi/jiiC6nNI7XnHN6Kccv8TxOaDZuMU40JPOMzEoRsNFVbYSuHLBX4tmcphdo
- 0ZVT89jWMQ6JTLPRCpHaC1MGt5hF3mDRIBtSbGEsTwrTYs29SJxUF3Mxnix/CC6TCU2HczxCo7k
- RBwGGlVW0s7Ac4B5pT+qtgXI+f9TjNQU4JgPbDeGXNUIRDNwUlPv+SgtgqsEL1i/ekvaaxg4cBm
- B6wQLSv1EUzUpVCaoYyH46BjMTNl3qWLjTdKvrO1I6thfkyeE+nfKzFhFB6Wq5FBLGbfHD6cdqt
- xrq9hyxzNdbsHjm55a14jG3ebs5VXzH2zc6gzTFFlbzTFTXmMhYRa8aZfo82Ar/ttSrpqP083Gy
- gDi4qPj6KSCFlyteqJJfmsAbpKD9ICpSPUi5Ty0suRTb60W03qqE0EBDr4MLYMg00n8ux8BOYic
- C6PKnrNKi2OtcwiCIC+bYqG+VkVQ5q6B
-X-Received: by 2002:a05:7300:6ca2:b0:366:fabf:6273 with SMTP id
- 5a478bee46e88-36a423e35famr11757472eec.22.1793458319364; 
- Sat, 31 Oct 2026 07:51:59 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793458313; x=1794063113;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=L7ochma7yIOUoWS70+D40B5SHG6wByT/y6Iu6Vp3fks=;
+ b=0asvfXHCnJFVTF221dU1ecUjXGKkajqsjcg7EzyiGdf48WCe/ZF84J26uLfFVxBqSk
+ FH37D2DHTJj1IfOfdI6dsa2StwkMeG3FAOW7s/1eCRS8JHc+KiMTekZG5xU9b/T2XLzo
+ lMTTBLW0ehc8THMLW44V1hLVbAeXtvgft9GOvdhDT1RGfEhlRAk5lnM5fM6M/aDlRR01
+ 1SLjW3jBC2WrXLzN0IeGcJE+W1aGRRiQHnRtr/D9mqX/TD+86F1D/Ow32J0bSj76fQWi
+ cEnXeV/ZfH+Mbod+n0z2qenetfIpT57Nm+VLjXF3kY0ziG7a4In4XZFvuC6ybi9xFPTv
+ nZRQ==
+X-Gm-Message-State: AFq9FYI0ja9OTJHGZPzJ08xALWc4I+lS9vHL4pLxZmcXlBc4vLi1Qa6p
+ 68MkxPqFzGmdMzWvzSrlen18O+Xm1WZZ6EI3eZdb+wI3vtPS3woeuOSGl8J73brx
+X-Gm-Gg: AYBFou34qV7gRuYLUxK5yGenva7EQjxoTOTsjkbROTZu6OWph/BT68Pl1F7GiquKt20
+ faiJiniUO0+NMVg9s2RDgRtsdDWfJNXvNayVQo1SKGYImpUPsAVWU75sRs8/6RSflfYfkuy0LUW
+ cIHm/TNlV34y+ODUQtKPqebPOG948J+3ERMw2EfhFqM1UPvTIKhFB1Fosa67mn5GgpvHpxpxb6v
+ aJEpECJxJ0rLnKjSEraUTOzD0P2wcjm9ks5mMsOPm0dIIz9npx2PJ8GVqOe3Y7U78xUqX6ctukk
+ ds+K+zmtKuQVWyptObbFBM8qEFVGCTBDL/hz6NShDBfuqyQByCYVabw41by7fHn3IlIBKMIDudy
+ zmFIQiVMqBlX4TLwYxKME0Vs+p4UN3VIRnSCJqwbupmf23oLaEwGSEbPMzk4OQvRsAJZc/Tr3S6
+ RHEeqkhpdxytFk7OzHZr3AeYSNPaLMx3O9dZnkKtgh3BQY5ZkTqr1+sBvRMWgXXBoJxjtu2HS3h
+ pdQtV03Zc44kQxKnC9o6fzKH0EsX/h3Nc7JHBdTwEXMGTKVSvYEj4Q4tr2L9/ktfMKzoTwrX/Wm
+ C2rEhxCqxww2d02yRYtfRsj9ESE6MOJX
+X-Received: by 2002:a05:693c:2805:b0:36a:4009:58f with SMTP id
+ 5a478bee46e88-36a423e5474mr7640678eec.22.1793458313403; 
+ Sat, 31 Oct 2026 07:51:53 -0700 (PDT)
 Received: from ubuntu.lan ([2405:4802:913e:86f0:fc32:76b2:b6d6:a3f6])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a428c17bdsm17541006eec.6.2026.10.31.07.51.57
+ 5a478bee46e88-36a428c17bdsm17541006eec.6.2026.10.31.07.51.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 31 Oct 2026 07:51:59 -0700 (PDT)
+ Sat, 31 Oct 2026 07:51:53 -0700 (PDT)
 From: Khai Do <dovankhai97@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com,
  strahinja.p.jankovic@gmail.com, Khai Do <dovankhai97@gmail.com>
-Subject: [PATCH 2/5] hw/arm/orangepi-zero2w: Add Orange Pi Zero 2W machine
-Date: Sat, 31 Oct 2026 21:51:44 +0700
-Message-ID: <20261031145147.32683-3-dovankhai97@gmail.com>
+Subject: [PATCH 0/5] hw/arm: Add Allwinner H618 SoC and Orange Pi Zero 2W
+ machine
+Date: Sat, 31 Oct 2026 21:51:42 +0700
+Message-ID: <20261031145147.32683-1-dovankhai97@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261031145147.32683-1-dovankhai97@gmail.com>
-References: <20261031145147.32683-1-dovankhai97@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1329;
- envelope-from=dovankhai97@gmail.com; helo=mail-dy1-x1329.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
+ envelope-from=dovankhai97@gmail.com; helo=mail-dy1-x1333.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,136 +98,57 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The Orange Pi Zero 2W is a single-board computer powered by the
-Allwinner H618 SoC. This commit adds machine emulation with:
-- Allwinner H618 SoC instance
-- 1 GiB default system SDRAM at 0x40000000
-- Kernel and firmware loading via arm_load_kernel
+This patch series adds emulation support for the Allwinner H618 SoC and
+the Orange Pi Zero 2W single-board computer (SBC).
 
-Signed-off-by: Khai Do <dovankhai97@gmail.com>
----
- MAINTAINERS              |  1 +
- hw/arm/meson.build       |  2 +-
- hw/arm/orangepi-zero2w.c | 77 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 79 insertions(+), 1 deletion(-)
+The Allwinner H618 is a quad-core 64-bit ARM Cortex-A53 SoC. This series
+follows the incremental skeleton design established for Allwinner SoCs:
+- Patch 1: Introduces the basic H618 SoC model with 4x Cortex-A53 cores,
+  GICv2, ARM Generic Timer PPIs, UART0/1, SRAM A1/A2, and stubbed unimp MMIO.
+- Patch 2: Adds the Orange Pi Zero 2W machine with 1 GiB SDRAM and kernel loader.
+- Patch 3: Separates the ALLWINNER_SID Kconfig symbol so other SoCs can reuse it.
+- Patch 4: Extends the Allwinner SID eFuse controller to support configurable
+  capacity up to 512 bytes (required by H618), preserving backward compatibility.
+- Patch 5: Connects the SID controller into the H618 SoC and sets the default UID.
+
+Verification:
+- The series has been tested using Zephyr RTOS (v4.5) running on the
+  orangepi-zero2w target, verifying UART0 output, multi-threading with
+  ARM Generic Timer (k_msleep), HWINFO UID reading, and SID OTP (512B capacity).
+- All patches pass ./scripts/checkpatch.pl with 0 errors and 0 warnings.
+
+
+Khai Do (5):
+  hw/arm/allwinner-h618: Add Allwinner H618 SoC emulation
+  hw/arm/orangepi-zero2w: Add Orange Pi Zero 2W machine
+  hw/misc/allwinner-sid: Separate ALLWINNER_SID config symbol
+  hw/misc/allwinner-sid: Support configurable eFuse capacity up to 512
+    bytes
+  hw/arm/allwinner-h618: Connect Allwinner SID controller
+
+ MAINTAINERS                     |   8 ++
+ hw/arm/Kconfig                  |   9 ++
+ hw/arm/allwinner-h618.c         | 233 ++++++++++++++++++++++++++++++++
+ hw/arm/meson.build              |   1 +
+ hw/arm/orangepi-zero2w.c        |  85 ++++++++++++
+ hw/misc/Kconfig                 |   3 +
+ hw/misc/allwinner-sid.c         |   8 +-
+ hw/misc/meson.build             |   2 +-
+ include/hw/arm/allwinner-h618.h |  60 ++++++++
+ include/hw/misc/allwinner-sid.h |   8 ++
+ 10 files changed, 415 insertions(+), 2 deletions(-)
+ create mode 100644 hw/arm/allwinner-h618.c
  create mode 100644 hw/arm/orangepi-zero2w.c
+ create mode 100644 include/hw/arm/allwinner-h618.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 68f1c31d60..d5f60db054 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -785,6 +785,7 @@ L: qemu-arm@nongnu.org
- S: Maintained
- F: hw/*/allwinner-h618*
- F: include/hw/*/allwinner-h618*
-+F: hw/arm/orangepi-zero2w.c
- 
- ARM PrimeCell and CMSDK devices
- M: Peter Maydell <peter.maydell@linaro.org>
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 42ed065b17..947ee2c7b4 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -24,7 +24,7 @@ arm_common_ss.add(when: 'CONFIG_OMAP', if_true: files('omap1.c'))
- arm_common_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('allwinner-a10.c', 'cubieboard.c'))
- arm_common_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3.c', 'orangepi.c'))
- arm_common_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40.c', 'bananapi_m2u.c'))
--arm_common_ss.add(when: 'CONFIG_ALLWINNER_H618', if_true: files('allwinner-h618.c'))
-+arm_common_ss.add(when: 'CONFIG_ALLWINNER_H618', if_true: files('allwinner-h618.c', 'orangepi-zero2w.c'))
- arm_common_ss.add(when: 'CONFIG_MAX78000_SOC', if_true: files('max78000_soc.c'))
- arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files(
-   'bcm2836.c',
-diff --git a/hw/arm/orangepi-zero2w.c b/hw/arm/orangepi-zero2w.c
-new file mode 100644
-index 0000000000..fe87a98efc
---- /dev/null
-+++ b/hw/arm/orangepi-zero2w.c
-@@ -0,0 +1,77 @@
-+/*
-+ * Orange Pi Zero 2W machine emulation
-+ *
-+ * Copyright (C) 2026 Khai Do <dovankhai97@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "system/address-spaces.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "hw/core/boards.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/arm/allwinner-h618.h"
-+#include "hw/arm/boot.h"
-+
-+#define TYPE_ORANGEPI_ZERO2W_MACHINE MACHINE_TYPE_NAME("orangepi-zero2w")
-+OBJECT_DECLARE_SIMPLE_TYPE(OrangePiZero2WMachineState, ORANGEPI_ZERO2W_MACHINE)
-+
-+struct OrangePiZero2WMachineState {
-+    MachineState parent;
-+
-+    struct arm_boot_info bootinfo;
-+};
-+
-+static void orangepi_zero2w_init(MachineState *machine)
-+{
-+    OrangePiZero2WMachineState *opms = ORANGEPI_ZERO2W_MACHINE(machine);
-+    AwH618State *h618;
-+
-+    /* BIOS is not supported by this board */
-+    if (machine->firmware) {
-+        error_report("BIOS not supported for this machine");
-+        exit(1);
-+    }
-+
-+    h618 = AW_H618(object_new(TYPE_AW_H618));
-+    object_property_add_child(OBJECT(machine), "soc", OBJECT(h618));
-+    object_unref(OBJECT(h618));
-+
-+    /* Mark H618 object realized */
-+    qdev_realize(DEVICE(h618), NULL, &error_abort);
-+
-+    /* SDRAM */
-+    memory_region_add_subregion(get_system_memory(),
-+                                h618->memmap[AW_H618_DEV_SDRAM],
-+                                machine->ram);
-+
-+    opms->bootinfo.loader_start = h618->memmap[AW_H618_DEV_SDRAM];
-+    opms->bootinfo.ram_size = machine->ram_size;
-+    opms->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
-+    arm_load_kernel(&h618->cpus[0], machine, &opms->bootinfo);
-+}
-+
-+static void orangepi_zero2w_machine_init(MachineClass *mc)
-+{
-+    static const char * const valid_cpu_types[] = {
-+        ARM_CPU_TYPE_NAME("cortex-a53"),
-+        NULL
-+    };
-+
-+    mc->desc = "Orange Pi Zero 2W (Cortex-A53)";
-+    mc->init = orangepi_zero2w_init;
-+    mc->min_cpus = AW_H618_NUM_CPUS;
-+    mc->max_cpus = AW_H618_NUM_CPUS;
-+    mc->default_cpus = AW_H618_NUM_CPUS;
-+    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a53");
-+    mc->valid_cpu_types = valid_cpu_types;
-+    mc->default_ram_size = 1 * GiB;
-+    mc->default_ram_id = "orangepi-zero2w.ram";
-+}
-+
-+DEFINE_MACHINE_EXTENDED("orangepi-zero2w", MACHINE, OrangePiZero2WMachineState,
-+                        orangepi_zero2w_machine_init, false, false,
-+                        NULL)
 -- 
 2.43.0
 
