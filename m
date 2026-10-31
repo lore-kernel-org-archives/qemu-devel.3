@@ -1,103 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9999606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 16:43:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AHVWUTrQ
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DB3606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 17:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNC8r-0002XV-5A; Sat, 31 Oct 2026 12:41:17 -0400
+	id 1xNCXX-0002lR-KW; Sat, 31 Oct 2026 13:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNC8m-0002Ue-OF
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:14 -0400
-Received: from mail-dl1-x122d.google.com ([2607:f8b0:4864:20::122d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNC8k-0007l9-8g
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 12:41:11 -0400
-Received: by mail-dl1-x122d.google.com with SMTP id
- a92af1059eb24-1438d9363fbso1304706c88.0
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 09:41:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793464869; x=1794069669; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+9DnP+gTwSEOX7zrI2haaQoi28yWED+v2p12ws9Ei1k=;
- b=AHVWUTrQHl/xgZBeEF4sENHZpdrAzM0Lmm30Pta1hw49jarWUOnAl30/je1IPu+u/W
- NxtfwhN99RJBgjvXxLSv1dmTZ7GZSZAJBdxQkrjseEDlJ0ADGnBSYONn0FXoqsuV0Vnf
- vk6IvKVr6ePaxzVdYrHDR1zXT3q8Q1nxLGRgYf/gUrn73f92/yaB1pQUBtfH3vxIb34o
- 4VT1MrVTpSovBUOE0qPA2B/fXQgY6OsjSTTXogY8Ckex1WBTJV8bqmjeJE1vq9l43jDk
- 6vs8hu9C9/7O3En7eA0Z+6f1/Phw+JcIkqjAcekG8WwSJtrqJOggd04J0SMN/ATQMQL9
- Jdcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793464869; x=1794069669;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+9DnP+gTwSEOX7zrI2haaQoi28yWED+v2p12ws9Ei1k=;
- b=WeRh8zj3GY7ej6zHB/+HL6bAHdxUD48qRVufuhooem5oAK0U46C1lrCN8PEi0Ku0LH
- xnkCBQKm/f7/U14M9hjKosDPJEPfTO48O21NIiPvRYxwrkP13jGBSTjMuU7pgTxzqEX3
- 2lcwab4wzZJkJK8JBtHLg5UWYobwmftSWB6otB85I2mdUs42+S/BQ5v0s0+yuTxVhT0l
- tnepZSmg8xmUfl5uWDROnpwmxzxsAdC+QeLZ883yYYYGHE/1DDCxDv3BtlkfR4Wb5nHe
- w6mCWi+9rLvupgyWNQNT3cv25xTa+50dtUpw2C6ekpBfogHzMwdaVkU39c+1C3TXCSOJ
- 5uGw==
-X-Gm-Message-State: AFq9FYKCwq+AY8BjY8BnVUYZKaNrpedKpdp68hM0c73+fXDJkHUrnI5C
- 7PQ8R1bAg1qAQ6Jlxl5Cky1u6HNCp3RNjByo5vng4gIHnH6kEhwSNsgG4SxAPz6B
-X-Gm-Gg: AYBFou1Z056fwQruHA6Wdb6+Tz9nXcntknCdBuFdUjXHdRapEZWbZNHGBdBwwGh1r8h
- +8jdsAD1pO3hg1iLC7457d4Vf4DYusXWc+x+rsbEDzfdvr7+ZDl2H31l3HUc0V1oDor/UpZsp55
- lCieA62QGkO8g1lKuXFPB9DTd3KMN7NyO+Vsa7abVYx5UzAxrKP2zHZbNQpZjs9Vbv9lVT9dOF8
- RsZwoBx2fqkgpHaEs+Lrr1mvXkuOoaQa6f7NurO9D0BktgvN5nqjVvyY6nxi5FfNemJpd1q3+fy
- Uaeyu7hjIv6/C8QEyydly85eXIpjSKXyInFkg8wGN+3kxhgavS6InhiEndaFw8keAblczXm7NNL
- Q16S7xVzCW6K+evpZhViWR30wFL3RQ7MZM1hKSocve3rg0/+5qmAs6OCvYXhrB6D3LirfaiuKyo
- NXdb075AZaX6n/69l1Mgm2AsLbbFsA7+JrBR7f9j5Su9LaorYjNNFT8YhdmA9BjKIF8d3hRZ8hT
- BL6xlTW/++nPPS+fmV1dpJLLdqPGGHPue68USxr69+pVeKTZbZkGmE94xtCtlNEDRLuP+vKSk/i
- VcyIp1EBlmbiAPuXg8ao8QscwXlGVXzc19dmz2xEmnx4tQZS
-X-Received: by 2002:a05:7022:619b:b0:144:eb3f:563a with SMTP id
- a92af1059eb24-1a9497b9d52mr17080343c88.15.1793464868541; 
- Sat, 31 Oct 2026 09:41:08 -0700 (PDT)
-Received: from DESKTOP-Q716RM7 ([103.94.185.75])
- by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1ac193b8179sm19574572c88.11.2026.10.31.09.41.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 31 Oct 2026 09:41:07 -0700 (PDT)
-From: Yonggang Luo <luoyonggang@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Song Gao <17746591750@163.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- David Hildenbrand <david@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Fam Zheng <fam@euphon.net>, Max Filippov <jcmvbkbc@gmail.com>,
- qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eric Farman <farman@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 08/12] hw/virtio/virtio-pci: pass is_available through
- VirtioPCIDeviceTypeInfo
-Date: Sun,  1 Nov 2026 00:40:03 +0800
-Message-ID: <20261031164009.2048-9-luoyonggang@gmail.com>
-X-Mailer: git-send-email 2.55.0.windows.3
-In-Reply-To: <20261031164009.2048-1-luoyonggang@gmail.com>
-References: <20261031164009.2048-1-luoyonggang@gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xNCXR-0002jM-Cr; Sat, 31 Oct 2026 13:06:42 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xNCXP-0001ER-Bg; Sat, 31 Oct 2026 13:06:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1C40360C0F3;
+ Sat, 31 Oct 2026 18:06:34 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id fr4sjKasLPmZ; Sat, 31 Oct 2026 18:06:32 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 04BE860C072; Sat, 31 Oct 2026 18:06:32 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0153713996F;
+ Sat, 31 Oct 2026 18:06:31 +0100 (CET)
+Date: Sat, 31 Oct 2026 18:06:31 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Yonggang Luo <luoyonggang@gmail.com>
+cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ qemu-devel@nongnu.org, Anthony PERARD <anthony@xenproject.org>, 
+ Felipe Balbi <balbi@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>, 
+ Antony Pavlov <antonynpavlov@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ Niek Linnenbank <nieklinnenbank@gmail.com>, xen-devel@lists.xenproject.org, 
+ qemu-riscv@nongnu.org, Jean-Christophe Dubois <jcd@tribudubois.net>, 
+ qemu-ppc@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>, 
+ Weiwei Li <liwei1518@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Frederic Konrad <konrad.frederic@yahoo.fr>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Chao Liu <chao.liu@processmission.com>, 
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>, 
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH 00/15] hw: expand DEFINE_MACHINE to explicit TypeInfo
+ registration
+In-Reply-To: <CAE2XoE9cR_X0kkDfGTU4Mt_5Hc3WZ8K5rghw2AeL4Vh=eugGag@mail.gmail.com>
+Message-ID: <bf45a858-db07-de03-70ea-ca0061d7a5d1@eik.bme.hu>
+References: <20261030151539.1872-1-luoyonggang@gmail.com>
+ <d1db54c6-b802-676a-7779-0c2c63f5f807@eik.bme.hu>
+ <aa70e94c-d9a8-41c9-850f-7ded87f7f327@oss.qualcomm.com>
+ <ba106173-fca3-6019-3028-122831887921@eik.bme.hu>
+ <CAE2XoE9cR_X0kkDfGTU4Mt_5Hc3WZ8K5rghw2AeL4Vh=eugGag@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122d;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x122d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1954894860-1793466392=:93531"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,72 +94,86 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-virtio_pci_types_register() builds the base, generic, transitional
-and non-transitional TypeInfos for one virtio-pci device. Copy an
-is_available callback onto each of them so a device can register
-target-specific variants of the same names.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
----
- hw/virtio/virtio-pci.c         | 4 ++++
- include/hw/virtio/virtio-pci.h | 1 +
- 2 files changed, 5 insertions(+)
+--3866299591-1954894860-1793466392=:93531
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index c73f1f546cb..1ce39e92e9d 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2522,11 +2522,13 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-         .class_size    = t->class_size,
-         .abstract      = true,
-         .interfaces    = t->interfaces,
-+        .is_available  = t->is_available,
-     };
-     TypeInfo generic_type_info = {
-         .name = t->generic_name,
-         .parent = base_type_info.name,
-         .class_init = virtio_pci_generic_class_init,
-+        .is_available = t->is_available,
-         .interfaces = (const InterfaceInfo[]) {
-             { INTERFACE_PCIE_DEVICE },
-             { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-@@ -2562,6 +2564,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-             .name          = t->non_transitional_name,
-             .parent        = base_type_info.name,
-             .instance_init = virtio_pci_non_transitional_instance_init,
-+            .is_available  = t->is_available,
-             .interfaces = (const InterfaceInfo[]) {
-                 { INTERFACE_PCIE_DEVICE },
-                 { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-@@ -2576,6 +2579,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-             .name          = t->transitional_name,
-             .parent        = base_type_info.name,
-             .instance_init = virtio_pci_transitional_instance_init,
-+            .is_available  = t->is_available,
-             .interfaces = (const InterfaceInfo[]) {
-                 /*
-                  * Transitional virtio devices work only as Conventional PCI
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index ee50fb0d551..6c3561d319a 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -236,6 +236,7 @@ typedef struct VirtioPCIDeviceTypeInfo {
-     void (*instance_init)(Object *obj);
-     void (*instance_finalize)(Object *obj);
-     void (*class_init)(ObjectClass *klass, const void *data);
-+    bool (*is_available)(void);
-     const InterfaceInfo *interfaces;
- } VirtioPCIDeviceTypeInfo;
- 
--- 
-2.55.0.windows.3
+On Sat, 31 Oct 2026, Yonggang Luo wrote:
+> On Sat, Oct 31, 2026 at 8:42 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>
+>> On Fri, 30 Oct 2026, Pierrick Bouvier wrote:
+>>> On 10/30/2026 4:09 PM, BALATON Zoltan wrote:
+>>>> On Fri, 30 Oct 2026, Yonggang Luo wrote:
+>>>>> DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED hide the TypeInfo and the
+>>>>> type_init
+>>>>> function that calls type_register_static(). A later change needs to
+>>>>> pass a
+>>>>
+>>>> That's the point of the macro to hide the boiler plate code.
+>>>>
+>>>>> target mask into that registration, and the macros have no parameter
+>>>>> for it.
+>>>>
+>>>> Couldn't you just change the macros to take that parameter instead of
+>>>> expanding it everywhere?
+>>>>
+>>>
+>>> Problem of macros is that they don't have default parameters, so you
+>>> need variants for everything:
+>>>
+>>> DEFINE_MACHINE
+>>> DEFINE_MACHINE_EXTENDED
+>>> DEFINE_MACHINE_WITH_INTERFACES
+>>> DEFINE_MACHINE_WITH_INTERFACE_ARRAY
+>>> and now would need a new variant, with variant for other existing ones.
+>>>
+>>> In the end, it's just simpler to remove this and add the boilerplate.
+>>> It's written once and never modified, so using a macro just save typing
+>>> those lines once.
+>>>
+>>>> Regards,
+>>>> BALATON Zoltan
+>>>>
+>>>>> This series expands every caller first, with no behavior change, so the
+>>>>> follow-up only replaces the type_register_static() call.
+>>>>>
+>>>>> Each machine file gains a class_init function, a TypeInfo, and a
+>>>>> type_init
+>>>>> function that calls type_register_static(). The last patch removes
+>>>>> DEFINE_MACHINE* and DEFINE_SECURE_MACHINE* from include/hw/core/boards.h.
+>>
+>> Macros help reading the code not saving typing. If the actual
+>> functionality is buried in a lot of boiler plate it's harder to understand
+>> and spot bugs so putting the unintresting boiler plate behind a macro is
+>> better even if you need a separate version for different cases. Then the
+>> code that uses the macro will be much more obvious and not just a lot of
+>
+> I think mainly because DEFINE_MACHINE* and DEFINE_SECURE_MACHINE* are
+> not defined properly
+> that causes them to not be extended easily.
+>
+> DEFINE_TYPES is another example, use them can extend easily, how about
+> always use DEFINE_TYPES?
+> Or add a DEFINE_TYPE to replace DEFINE_MACHINE* and DEFINE_SECURE_MACHINE*?
 
+Maybe I'm missing the problem but DEFINE_MACHINE macros are just 
+convenience wrappers around DEFINE_MACHINE_EXTENDED. So why can't you add 
+the needed parameter to DEFINE_MACHINE_EXTENDED and use that for machines 
+that need it, or if it's needed by all machines then make the new 
+parameter required and add it to all convenience wrappers too so you can 
+keep using DEFINE_MACHINE* and just need to add one parameter to it in 
+machines?
+
+Regards,
+BALATON Zoltan
+--3866299591-1954894860-1793466392=:93531--
 
