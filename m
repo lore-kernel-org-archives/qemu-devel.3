@@ -1,57 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A5F606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 07:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFAA606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 07:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=jHIZ2Pkc
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ZYXpYg+0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xN35c-00075o-9o; Sat, 31 Oct 2026 03:01:20 -0400
+	id 1xN35W-0006bO-P2; Sat, 31 Oct 2026 03:01:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xN33t-00039I-3Q
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 02:59:38 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xN34B-0003KL-8u
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 02:59:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xN33m-0002tp-E5
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 02:59:30 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xN349-0002yB-DN
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 02:59:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793429965;
+ s=mimecast20190719; t=1793429986;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CVo7U+fQfD5nsezD4RWCImgsw75rCg9XkL0nGp8bZks=;
- b=jHIZ2PkcV2mD7CGWfT6FHTcWuRXVsLTyQnqRFcTZRb2R6ARxSELX8X7DYWK6/QuLeJoJYe
- Oz0AdFdsKOEFVbjd5AjpKSq97M+xICWtPE012JWW1WpUH/vqXyniKs1ZnvipZge/ZeWR1b
- jPClfbfOc05PBQcXmg7WmD/aW1CSg+A=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=+VFY0KVkbYhzMpjjxz+ZB10++vO6McIBTLk+f50ahS0=;
+ b=ZYXpYg+01N6SiqkTLUsNV8YKSUH0KP1HpeH9+DjhzGs+JDbcxFmGQje0DV6vkuMaP5L/Vq
+ KtEE1Fgq5QYaMgXNx+9GMMbP/qHxuwBX4k7/Coya9Wi1ti2xqaxQg2O49jCgWNjm8P2lQh
+ nrfmAGVh095J3RSyCWUdinaUzOGZjsc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-29fPNoA4Nnej8_IjoV2DMQ-1; Sat,
- 31 Oct 2026 02:59:21 -0400
-X-MC-Unique: 29fPNoA4Nnej8_IjoV2DMQ-1
-X-Mimecast-MFC-AGG-ID: 29fPNoA4Nnej8_IjoV2DMQ_1793429960
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-FQTq5jUgMdeyYBq7yxtczA-1; Sat,
+ 31 Oct 2026 02:59:40 -0400
+X-MC-Unique: FQTq5jUgMdeyYBq7yxtczA-1
+X-Mimecast-MFC-AGG-ID: FQTq5jUgMdeyYBq7yxtczA_1793429979
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD2DB195609F; Sat, 31 Oct 2026 06:59:20 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8914D195607B; Sat, 31 Oct 2026 06:59:39 +0000 (UTC)
 Received: from circe.redhat.com (unknown [10.44.32.2])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1F66A1800677; Sat, 31 Oct 2026 06:59:18 +0000 (UTC)
+ id 06FB41800677; Sat, 31 Oct 2026 06:59:37 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Emmanuel Blot <emmanuel.blot@free.fr>, Jamin Lin <jaminlin1207@gmail.com>,
+Cc: Emmanuel Blot <emmanuel.blot@free.fr>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 23/34] docs/system/arm/aspeed: add the catalina-bmc machine
-Date: Sat, 31 Oct 2026 07:58:12 +0100
-Message-ID: <20261031065823.191966-24-clg@redhat.com>
+Subject: [PULL 32/34] hw/rtc: ds1338: implement Resettable reset
+Date: Sat, 31 Oct 2026 07:58:21 +0100
+Message-ID: <20261031065823.191966-33-clg@redhat.com>
 In-Reply-To: <20261031065823.191966-1-clg@redhat.com>
 References: <20261031065823.191966-1-clg@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -83,49 +83,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Emmanuel Blot <emmanuel.blot@free.fr>
 
-The Facebook Catalina BMC machine is supported by hw/arm but has never
-been listed in the Aspeed documentation. Add it to the AST2600 machine
-table.
+The device relied on device_class_set_legacy_reset(), a compatibility
+shim around the legacy DeviceState reset hook. Convert ds1338_reset()
+into a proper Resettable hold phase, dropping the legacy shim.
 
-While at it, shorten the document title. Listing every machine name in
-the title duplicates the tables right below it, and made the title (and
-its underline) grow past 350 columns. The machine list stays available
-where it is readable, in the per-SoC tables.
-
-Reviewed-by: Jamin Lin <jaminlin1207@gmail.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-Link: https://lore.kernel.org/qemu-devel/20261015-bmc-minerva-v3-1-7d50c8a108e5@free.fr
+Link: https://lore.kernel.org/qemu-devel/20261015-bmc-minerva-v3-10-7d50c8a108e5@free.fr
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/system/arm/aspeed.rst | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/rtc/ds1338.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index be74ee39fa16..d3749c07e848 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -1,5 +1,5 @@
--Aspeed family boards (``anacapa-bmc``, ``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
--===============================================================================================================================================================================================================================================================================================================================================
-+Aspeed family boards
-+====================
+diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
+index f8b3340bf0f5..74aee6c74633 100644
+--- a/hw/rtc/ds1338.c
++++ b/hw/rtc/ds1338.c
+@@ -208,9 +208,9 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
+     return 0;
+ }
  
- The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
- Aspeed evaluation boards. They are based on different releases of the
-@@ -33,6 +33,7 @@ AST2600 SoC based machines :
- - ``fuji-bmc``             Facebook Fuji BMC
- - ``bletchley-bmc``        Facebook Bletchley BMC
- - ``fby35-bmc``            Facebook fby35 BMC
-+- ``catalina-bmc``         Facebook Catalina BMC
- - ``anacapa-bmc``          Facebook Anacapa BMC
- - ``gb200nvl-bmc``         Nvidia GB200nvl BMC
+-static void ds1338_reset(DeviceState *dev)
++static void ds1338_reset_hold(Object *obj, ResetType type)
+ {
+-    DS1338State *s = DS1338(dev);
++    DS1338State *s = DS1338(obj);
+ 
+     /* The clock is running and synchronized with the host */
+     s->offset = 0;
+@@ -224,11 +224,12 @@ static void ds1338_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+     k->event = ds1338_event;
+     k->recv = ds1338_recv;
+     k->send = ds1338_send;
+-    device_class_set_legacy_reset(dc, ds1338_reset);
++    rc->phases.hold = ds1338_reset_hold;
+     dc->vmsd = &vmstate_ds1338;
+ }
  
 -- 
 2.56.0
