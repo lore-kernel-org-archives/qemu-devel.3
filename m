@@ -1,102 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF809606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 03:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C03606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 03:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DOyIjbRo
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=r2XONrw+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xN050-0006Q8-U9; Fri, 30 Oct 2026 23:48:30 -0400
+	id 1xN05l-0006k2-2n; Fri, 30 Oct 2026 23:49:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xN04y-0006Py-Qz
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 23:48:29 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ id 1xN05j-0006ju-9Z
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 23:49:15 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xN04x-0004XP-4P
- for qemu-devel@nongnu.org; Fri, 30 Oct 2026 23:48:28 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-3ab3dd9670bso12101691fa.1
- for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 20:48:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793418505; cv=none;
+ id 1xN05h-0004Yp-T5
+ for qemu-devel@nongnu.org; Fri, 30 Oct 2026 23:49:15 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-3ab07d956f2so10745811fa.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Oct 2026 20:49:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793418552; cv=none;
  d=google.com; s=arc-20260327;
- b=jPofdu8YW4sTzlQtztBj/gLzyFXEG3zeLiUar5GLWhig4CAmYkWkgfddUbBqofbIdj
- Df2uXWU3uow0+FIZBupzP8W/ni7FGzaTHX+MX5RUxIWnAYsx2+W/VKHRJzYrVzCuMPJT
- Bg5yvd1V8IWPJPDotE3lIx7sELjxJY/Fi5EEsRvTNoyTTfyuIyD0xzOqXV1GerUBtjjm
- jH07UlucKCQsx9/abzeVWZr/pu8ltYf5xD+LcY5d2u4w/Eon51FmVbCMw/fa9w7fJUpL
- EM2XPDJGkX/z1S3GKGksTbWIFHo5vnO5SF+OfAbMcxb+boUD4bYl5LW6LbwmedhLraM5
- HrZQ==
+ b=LQBZ5awOqkPc8MRXldR3ZqSysKVEXlPUfOk5/EsV5PNCGSTmuJv2reZ9sN3p9I6CkY
+ idt+ZwBzKmyoZaHGvIyfitW4slkWuc0jScF++LtfR6Pi0XIPMlpNNpdq7nfcptK8wXGL
+ 94NIwYVxaYQAzBQzkGWa93jBfKAw8qHK5pmb54OWEKO/Bz3ccxK+rlj9J43L5NFAyLRq
+ 0g7ImxCbIxV2NPIm+KCyXUCfKkWKZ9nb/RFBs4RrK7JSNjxyf2QJTRBDi73nPAReOkCi
+ o6M1mLZSVvli4PFNYYqzEe5/sgD2pIK7LkCibE/v7+PI8OcPI2DvcgcH8Li2xqIINWKz
+ byuA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=GYEdyPbOh31NQ28PRtFb/nQwOWBqjP6BqeYNQFgCCfs=;
+ bh=MZX5hbM8MLZTJK5axEQT0gXM1MXnhc36nhCJCZFTKSo=;
  fh=4SkwuoYsohTajnS9ThUOqh8nRYX1V8duGt1952VKGEc=;
- b=qNmaQ6K5uiRWXsQ1l11lB7Q76zhR7y6kHtRgn05vUwAfCtdjmmgh83GbGaczVhT+mZ
- QlNkYqTypeF91I9cOfDAAp3H4riNNv9JSqjCWluQmzBARDc9sTn7snsrFX3wrMBV5HGY
- 0Tztm4tLKskPhInPVaaxlRY+oZFTqGmzNu2WqrqPT2Jzrdhu7JiuMRzkoAbsTex7y0X0
- +AtS1ZHDpw87FS1+E3IZt7OSzDHhGFec3RyVVZDJlfg8tTtXTkiKDtP1DmShyYggyBS/
- pXNzlkfGE7MNIdExVMhSdIFXYvzvDxGz3WEw2zOhVUmGCu22RNFnq8RzLvjVNtIBUNW5
- 3wvQ==; darn=nongnu.org
+ b=JgQEkv58GwCy9w6cS4ddL0GO/vkoNME5N+lp21RQZ4FlAC+plt1nsgFTY/yu5uSsKM
+ /9cYaPL3rAWivEWEkPAFjcm9mLZq2QEjAuDxYohFM0MOoeLGZgcyPyh9r6QiJRB2YWtp
+ 53F8tORTHiI1dgl43YnoiHqu3PHtohknGjd/XVEBigaqJCvd0blluLS1UDtDuQ2mvagU
+ xhQRduayIP1QmWNBmKv/lxY1YcOBBD3DgFubNlfllcl6sAmjUp5zPDPiLTRXQ1oEldBf
+ R+y9g4V2eJ3+UAl0MSOBBU1aklJkMsG1m1/VCK+GU1W/Zz3RW4+zguOSzGlVOJQnUuMi
+ 0uBA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793418505; x=1794023305; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793418552; x=1794023352; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=GYEdyPbOh31NQ28PRtFb/nQwOWBqjP6BqeYNQFgCCfs=;
- b=DOyIjbRoNvgAO51mADFZ1BgSu1acL+H9hbfPZmzZiE7MI1mxRLtuqSOkJIn7BT7fz8
- CL/NkYGtgHaHjVVZZtjsxLmW8h+kFHeliotJr6MHMgysMfScJmjCFEN2sC5GVV68Rit8
- gtB9xsp65ofE0Qypt4f7eYI4xow1LwGjFoOeixrbKAqPWwpvqtYuBTD26rNv/wEEAuBe
- wAecxXiAP/mMF66k85e/RibW160bjbyNgS/8BYH4zhS5vRDMRxHjfihYCI8euCD6tyQr
- f2OS0njmr4Tu/dE4mvz1ZBhBQxe91DueJfm5xY1bpnCd/TF0j3VJL8Jlg9V39T3pdiZu
- qOEQ==
+ bh=MZX5hbM8MLZTJK5axEQT0gXM1MXnhc36nhCJCZFTKSo=;
+ b=r2XONrw+J400VqK6omm9gEId2nfVvlLOwmgGdGpuKcg+yha175V8nQ6PPCFo8fg8jG
+ qnk8i25HBGWqLs7GU/6t/Kxyrz11FV9gSXF5WRfXfOrrGAIrBPVsW6y8bQDTw+F0szE2
+ GkkxEicvzQgGRCs/AXeCGQSIfowkiaDjc6x95sPBIJfYsmqeGAWMrbqyeq7qjpKh08Uu
+ rtOGwgOx+eXPQ9qcPNUztu18fB3CSvDxILKMTawpYJHyKA70ORqRimDf2YFeEidYa3Rw
+ 4Lmg2y7/Rh48KQe76f7TWqWaJVYl7zuJHiSyFVsbMhBvx94wtUdBRMzoCY7R46sQUSl4
+ ogow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793418505; x=1794023305;
+ d=1e100.net; s=20260707; t=1793418552; x=1794023352;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=GYEdyPbOh31NQ28PRtFb/nQwOWBqjP6BqeYNQFgCCfs=;
- b=mMJh3blF7AWCRZBOtV1DYGhoTbVay6YaBgmCRVA83gG9P0EkaZzAD4Bu5Y00oN0QI0
- Md9UYff3wqhgNUR6LxRyI0fPVuIs+UMc7V1Sq45XOHXmTpUz+mQy4CxWzw95lBC1GOu5
- qFFCcJaRe9NqobeVWiN0nRrjRM/QAUJ4KAIhFHL4Wo8qSWr8xOshrE8okS3xpc6eAfFW
- altI7jCmSBtNUsxiErurTgpm1z5MFHMwY+4SsV5HebBUQSUJjk/zyhrP3dv22PBBp87O
- Jj4G6aGwQYHAVJynTUtsUj5vOkuq/Kh9xD4xDBi4qvnvxUB+nMmBk7/AIwmPBpp+Z/iQ
- MyLg==
-X-Gm-Message-State: AFq9FYI2rBi7dfLr+1xY2/GZFq/X3fiiZ3LweFki/YIs1EwRTFqb7vXh
- F3cSQHQySYC5/FZmFRGqPOHhLZx66sewnKdymN/1yMh4zR1WfvIvhiTfblCfadqTVEacc2hEKzD
- +ThCFQNw94Fun4H1efl4iA1czOLyvw/g=
-X-Gm-Gg: AYBFou28n+86brpaH/VyAHFVJ4DG22BkvkCXF24BnoI61L/gdAqzR6WKPqyTLi6cyyx
- ljEHuY6zh1ikCOWG5DJOGovqSTKBdn6lmSpoVJ7dak3F+QC7dwRCzTxtEiDWwdlmkFEyftsIbvb
- Icr5R4pTpVBHBN1AJOs9tYHsuX3CIY3oyXYFmpG7TjffnLCYjVYGySfLAiJ5TyooSU6af2weNP3
- 9lve6KDw7pIthLDEDu5EbhSo0BYXhTiQuMKUiV3N0/pL/SB6CG8qIe8YK8Qltm8QIZa1wfY+BR/
- kaQR+i6poaBRDfYSA1aSHD82MRe4ToXsiWwtur6dAiL4WRijZYJmDYZIj8Tv3YK6bN1oCQhQ6Vl
- oCLdCU1yIUp9/YRVyKPWICN302qmYC2Y5yLScn6ZbYSau82HtzSTCrlqAaPZa34uMxG54Sx8QUJ
- pyRZC4PGP/SxlVcfIHQ845MKyufmeb3WYazPlTm5orEjnfs0clOvcM
-X-Received: by 2002:a2e:b896:0:b0:3a6:4452:bff1 with SMTP id
- 38308e7fff4ca-3acb7a65e2amr9342521fa.16.1793418505292; Fri, 30 Oct 2026
- 20:48:25 -0700 (PDT)
+ bh=MZX5hbM8MLZTJK5axEQT0gXM1MXnhc36nhCJCZFTKSo=;
+ b=T6toYu+L4JgdvwQBIh1jyS6wjJ5SHpub8Dc8G5zUV+fotd5tucLX7YBn/6+jhnxoiJ
+ GxZDZEH4vBNto9+e1WECNGqZmY8lt9lxqy9npNNX2WdjHhsCvRLYhuEhnVjoBJrll+IE
+ hVqh0z27gQzreByGZS32ZtZwgQGrHTMgc0C0F3easKAjXLTuJq7KvCdoPQUyl6sFDA1V
+ /aB8HVH2Kg8kCO1a2KQsMZoTb8gEj4dI2D1wcGzxJK6SvL57OvhyMjGZO9tPxx11zFvY
+ 0aCt5U1kYNMtRQmsacmCgp1y5GdhgZfer4lMMqTohFSxMCauf+y2g+pLXzEeZCcTUj/w
+ pfsw==
+X-Gm-Message-State: AFq9FYLkzVmpmgYpVgm1z3FnQIqdmqooR/MG72dxC71PNDqJDMvk0VKc
+ qI7dGTcGoMracYX0aodmniFy60B2OX3XXi2dPnfgeJ7Meo0YRK85a08xskdEiA85CNm1RsZNifH
+ iTEij6OPYiPbIOj9mSnnQdgCG8VjizHIrbstkzeo=
+X-Gm-Gg: AYBFou3jgSOgANJB2fbYbTSVXVZD2VWWwADCHEvC5MloSWoC0m44Gkwz9nu0Gboi+D9
+ 7vpZgbeqi27rYFZYC32gobrTfMtXaqycK6yfYUEZ90tGsm++oeHfVHerC+wCogm8X+4YpEgsD+/
+ Y9RSHHGTYoEo5UGn26ptJ/wWdxHP2Ic0HvPV+8CqNx2e1vi5inOeuf76fFfnRDIaE2OCUmQ+r7f
+ 4FTBugPPtrYoKfqJotr8U+jsecVXYBWWWRtHJUsmrGOB4UAHEyN3l2BBJw+eQOZb+hZ/DQS+6rK
+ +hsHiqLF0sLmaF5NGNKvmGe82eW7iPjLYWClwDbtp76m7Atojk/XsCSBiOTtIdUWE+Z1RuD2Oq7
+ 8fC3/XPOequw9mUSQlTrGj1WHFvEv5NszwCtcqTAas/YB8Y9xEm0zDfforv7VV0WZPoJdqJez5D
+ g+KMOXCmlNRAWv+xibjOuLKNefV+LnsY/wMChsb4n4j7Dh8+2TqUSd
+X-Received: by 2002:a2e:bd07:0:b0:3ab:fecf:51f5 with SMTP id
+ 38308e7fff4ca-3acb7ac1064mr8817711fa.14.1793418551821; Fri, 30 Oct 2026
+ 20:49:11 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20261030185551.193092-1-richard.henderson@linaro.org>
- <20261030185551.193092-11-richard.henderson@linaro.org>
-In-Reply-To: <20261030185551.193092-11-richard.henderson@linaro.org>
+ <20261030185551.193092-13-richard.henderson@linaro.org>
+In-Reply-To: <20261030185551.193092-13-richard.henderson@linaro.org>
 From: Matt Turner <mattst88@gmail.com>
-Date: Fri, 30 Oct 2026 23:48:12 -0400
-X-Gm-Features: AclHuK8f2MyLlGyYFtBzCvBc8dZ595mD9YaKvFgMdMCCK9kmWt-U7_A8uOgVKXY
-Message-ID: <CAEdQ38G7W9PDX0OpMLRrYXvP=4VRAbCHvxWANUH=fo_PgT3dBA@mail.gmail.com>
-Subject: Re: [PATCH v7 10/14] tcg: Add INDEX_op_goto_jc
+Date: Fri, 30 Oct 2026 23:48:57 -0400
+X-Gm-Features: AclHuK_Mhzw9D0fJc0UWuNAYl7PmrEJyXW8gLNKV_2ydfSXegdDQgxSpi6YgN8E
+Message-ID: <CAEdQ38F24sfE8=rdtnHokqw3MT8+G78vcjQQwEMnvp9c0DR_jQ@mail.gmail.com>
+Subject: Re: [PATCH v7 12/14] tcg/aarch64: Implement INDEX_op_goto_jc
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, iii@linux.ibm.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=mattst88@gmail.com; helo=mail-lj1-x22e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=mattst88@gmail.com; helo=mail-lj1-x230.google.com
 X-Spam_score_int: -7
 X-Spam_score: -0.8
 X-Spam_bar: /
@@ -125,18 +125,9 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 On Fri, Oct 30, 2026 at 2:56=E2=80=AFPM Richard Henderson
 <richard.henderson@linaro.org> wrote:
-> +   * - goto_jc *jc*, *pc*, *cs_base*, *flags*, *label*
-> +
-> +     - | *jc* is a CPUJumpCache pointer.  Generate code for:
-> +       |
-> +       | if (jc->pc !=3D pc) goto label;
-> +       | tb =3D jc->tb;
-> +       | if (tb =3D=3D NULL) goto label;
-> +       | if (tb->flags !=3D flags) goto label;
+>
+> Use ldp to load multiple values at once.
+> Use ccmp to reduce the number of branhes.
 
-*flags* is the 64-bit flags:cflags pair, not tb->flags, and the backends
-load it as one word. Please say so here, along with the host-endian
-layout. *jc* also isn't a plain CPUJumpCache pointer: it's biased by
-hash * 16, and the backends use array[0] offsets from it. It also needs
-the "This operation is optional" line that goto_ptr has.
+s/branhes/branches/
 
