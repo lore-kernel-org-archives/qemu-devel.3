@@ -1,58 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE6B606A31C
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 08:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4D6606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 09:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=OAgXhCKK
+	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=vujUdwFE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xN4vL-0002iL-P5; Sat, 31 Oct 2026 04:58:51 -0400
+	id 1xN539-00044f-3i; Sat, 31 Oct 2026 05:06:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xN4vJ-0002i5-K6
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 04:58:49 -0400
+ id 1xN535-00044I-34
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 05:06:51 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xN4vH-0004Cu-PZ
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 04:58:49 -0400
+ id 1xN533-0004v2-7H
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 05:06:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=gg/I+x8OE54SZtJ9NGxEhXmGUzydAQgMH1kdRC41Mwc=; b=OAgXhCKKx9Ic1IU/0cDzzWfDql
- D7Od3GVneGi662qxNxPaeT8bxUlm0L1rX7e3xboTqre16cFtOvRGLIW7IbxuWww6dEdEZ1IGLzlSU
- u62FiVOhhANY3MycL+VP7Mh3iLz+fRHI1PdZD/NCpTv20cTRsgsxZHl0kmeCNguA029l+pkca0rrF
- AXaxJ1GkT3Qrex+h/PSiaqgPUQtA3GRBZzxOUKtdDC62JTVGV3T32EOJ47zxd5KfJfzoMaSCX4DZh
- F7Bg/haDuKoJMUn8hp8Fz6ipk62Uzsu5DY6c60aojnXVT1TOGDgWlsaN6/Tn3PfP/aCTIkPxPetM8
- 3LvXdD2VTno/gFTnb1Ay+3va5f2Fx5RvMsr5Yf76pYPLeQIrFDUEXuQLrM9z/Cn3y71Jg9zx/9aNN
- 5iiZSBzbaXbMEr/6VRjUledxkUB3KwY/QvaV/NMjNDLoCJbU2JqAX/Hg9naAxa1CibT2Zgdv/tcxX
- qe4ZDUODmEPjMMXEWjH9vTUeKC1x3wcEhdsQKxOHaIlSJIHHh9qNvDEvETTwaxgUMYjYfZ8Fyra7E
- 4qCNY3JybK7mGcL7JGfuNgEtx4AGCWQIM9b8OeHuoJN33ZP8+D2MMv0kfb3rY56el9BuUik476+8Z
- 1iIKO+ZUsKCGh6HJDNiA8RBsq844X2rgjJVbDrVY4=;
+ bh=bRJ+BvLe/parBpI9QLuLAeGwRiQNV4v+nOSc3u4C6Kc=; b=vujUdwFEjkkGDW0ArQ8rlB/J+P
+ c46CbiLXWwuzgEXMgm0zOkuDidl3H/Z8vdXryIWUOQpkHrdNGA7akIc+IFBI+iUu8ZQxhuB1VaGCI
+ v/9CAh8/0K0mkdhzoCjIs0ZUkfBqTTCpuaUMB5rqGqJ7MuOG6K9YzwNoRYzcMDeGAyBca+VptO+WO
+ MkQ5VBeq7pgCcB/cFilkf377O1/9TrK3dooj01sQoFMORlQHAVnL5APNHdxcdSZPO0KhLvx1LEerl
+ e5Ol2bcVizjW1JtOMJ+wePijzUDeaijxfjjPD/PBka63Kq2vdbTUAqobbGMEywdBe3rnzsoJCaahl
+ jhg+dspcdc/YYq/tJgfket6t6b3snzfnp8o1v51uHFxNc03OK71OzAMkueitMxG3IbmtkuMxUUx9Z
+ 48KZdYmid9n2QEw+sewTyP3kUmmgIPItJ+5JQuNcHCxqFDgLacCONIdSUSSGPnhIdAFirDqFlpXrt
+ r69iz6Zu7DQIGKNl06Bro3vqR39hFYWmgbl+xgOY5LnGvOKbLmmXOrOX8465vDCOAR+gGCOGgUu4V
+ OnW1qXl7WMWeZuNm6TY4nvizxzjL9weQezSWWf2Zi7ItNYPdqYO45CdWBp0f38nlRlqD2Ak8IijHJ
+ Pa+Mobuq8XsegbRl6S4AZIK2AjhP7m52+QYWwmmM8=;
 Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xN4uT-004tLj-SY; Sat, 31 Oct 2026 08:57:58 +0000
-Message-ID: <ddf69aa4-d601-4f18-a530-b71354b21160@ilande.co.uk>
-Date: Sat, 31 Oct 2026 08:58:38 +0000
+ id 1xN52G-004tNZ-5w; Sat, 31 Oct 2026 09:06:00 +0000
+Message-ID: <ca0df428-9726-4b36-938f-cd3678aec697@ilande.co.uk>
+Date: Sat, 31 Oct 2026 09:06:43 +0000
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Stian Halseth <stian@itx.no>, qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Biggers <ebiggers@kernel.org>
-References: <20261028113816.1651212-1-stian@itx.no>
- <20261028113816.1651212-2-stian@itx.no>
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20261028190729.1941434-1-stian@itx.no>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -79,12 +75,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20261028113816.1651212-2-stian@itx.no>
+In-Reply-To: <20261028190729.1941434-1-stian@itx.no>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 1/2] target/sparc: Model block-initializing stores
+Subject: Re: [PATCH] hw/sparc64: Pass hwcap-list to OpenBIOS via fw_cfg
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -113,97 +109,105 @@ X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 28/10/2026 11:38, Stian Halseth wrote:
+On 28/10/2026 19:07, Stian Halseth wrote:
 
-> On T4 and later, a block-initializing store to the first doubleword of
-> a 32-byte block zeroes the rest of the block (measured on a T4).
-> glibc's niagara4 memset and Linux's NG4memset rely on this, and
-> OpenSSL's T4 AES code uses the FP form, stdfa.
+> Linux needs hwcap-list to enable crypto instructions, but only sun4v
+> firmware provides it.
 > 
-> QEMU only accepted the integer form, on HYPV CPUs, as a plain store, so
-> with the crypto hwcap a multiarch glibc memset leaves stale data. Accept
-> both forms when the CPU has the crypto feature, which implies T4 or
-> later, and zero the 32-byte block as T4 does.
+> When the CPU has crypto, pass the list through fw_cfg for OpenBIOS
+> to copy onto the cpu node. Include the capabilities linux-user reports,
+> since Linux trusts the list instead of guessing.
+> 
+> Without crypto, nothing changes.
 > 
 > Signed-off-by: Stian Halseth <stian@itx.no>
 > ---
->   target/sparc/translate.c | 43 ++++++++++++++++++++++++++++++++++++++--
->   1 file changed, 41 insertions(+), 2 deletions(-)
+> Based-on: <20261028113816.1651212-1-stian@itx.no>
 > 
-> diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-> index 1fc8439a47..416625c6dc 100644
-> --- a/target/sparc/translate.c
-> +++ b/target/sparc/translate.c
-> @@ -1853,6 +1853,27 @@ static void gen_ld_asi(DisasContext *dc, DisasASI *da, TCGv dst, TCGv addr)
->       }
+> This exposes the crypto hwcap to guests, so it should land after the
+> block-init series, which glibc's memset needs.
+> 
+> The OpenBIOS side, which copies the file onto the cpu node, is on the
+> OpenBIOS list as "SPARC64: set hwcap-list on the cpu node from fw_cfg".
+> The kernel change to read the property on sun4u goes to sparclinux.
+> 
+>   hw/sparc64/sun4u.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 46 insertions(+)
+> 
+> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+> index a348096aee..7e38a55102 100644
+> --- a/hw/sparc64/sun4u.c
+> +++ b/hw/sparc64/sun4u.c
+> @@ -121,6 +121,51 @@ static void fw_cfg_boot_set(void *opaque, const char *boot_device,
+>       fw_cfg_modify_i16(opaque, FW_CFG_BOOT_DEVICE, boot_device[0]);
 >   }
 >   
 > +/*
-> + * On T4 and later, a block-initializing store to the first doubleword of
-> + * a 32-byte block zeroes the rest of the block. glibc and Linux memset
-> + * rely on this and store only one doubleword per block when zeroing.
+> + * OpenBIOS copies this list to the cpu node's hwcap-list property
+> + * for Linux, which gets it from the machine description on sun4v.
 > + */
-> +static void gen_blkinit_zero(DisasContext *dc, DisasASI *da, TCGv addr,
-> +                             MemOp size)
+
+I wonder if we need to make it more obvious via the property name that this is 
+something that is not present on real hardware? As a lot of people use QEMU for 
+testing SPARC installations, we should make sure that people understand this property 
+is not expected to be present outside of an emulated environment.
+
+> +static void fw_cfg_build_hwcap_list(FWCfgState *fw_cfg, SPARCCPU *cpu)
 > +{
-> +    TCGLabel *skip = gen_new_label();
-> +    TCGv t = tcg_temp_new();
-> +    TCGv_i64 zero = tcg_constant_i64(0);
+> +    static const struct {
+> +        uint32_t mask;
+> +        const char *name;
+> +    } capabilities[] = {
+> +        { 0, "popc" },
+> +        { CPU_FEATURE_FSMULD, "fsmuld" },
+> +        { CPU_FEATURE_VIS1, "vis" },
+> +        { CPU_FEATURE_VIS2, "vis2" },
+> +        { CPU_FEATURE_FMAF, "fmaf" },
+> +        { CPU_FEATURE_VIS3, "vis3" },
+> +        { CPU_FEATURE_IMA, "ima" },
+> +        { CPU_FEATURE_CRYPTO, "aes" },
+> +        { CPU_FEATURE_CRYPTO, "sha1" },
+> +        { CPU_FEATURE_CRYPTO, "sha256" },
+> +        { CPU_FEATURE_CRYPTO, "sha512" },
+> +        { CPU_FEATURE_CRYPTO, "crc32c" },
+> +    };
+
+For the existing CPU features we have a direct mapping between the feature and the 
+name, but for crypto it is split into individual instruction groups. Presumably this 
+is because the crypto instruction implementation is incomplete?
+
+> +    uint32_t features = cpu->env.def.features;
+> +    GByteArray *array;
+> +    size_t len;
 > +
-> +    tcg_gen_brcondi_tl(TCG_COND_TSTNE, addr, 31, skip);
-> +    /* A narrower store also zeroes the rest of the first doubleword. */
-> +    for (int i = size == MO_64 ? 8 : 0; i < 32; i += 8) {
-> +        tcg_gen_addi_tl(t, addr, i);
-> +        tcg_gen_qemu_st_i64(zero, t, da->mem_idx, MO_UQ);
+> +    if (!(features & CPU_FEATURE_CRYPTO)) {
+> +        return;
 > +    }
-> +    gen_set_label(skip);
+> +
+> +    array = g_byte_array_new();
+> +    for (size_t i = 0; i < ARRAY_SIZE(capabilities); i++) {
+> +        if ((features & capabilities[i].mask) == capabilities[i].mask) {
+> +            const char *name = capabilities[i].name;
+> +
+> +            g_byte_array_append(array, (const guint8 *)name, strlen(name) + 1);
+> +        }
+> +    }
+> +
+> +    len = array->len;
+> +    fw_cfg_add_file(fw_cfg, "etc/sparc64/hwcap-list",
+> +                    g_byte_array_free(array, FALSE), len);
 > +}
 > +
->   static void gen_st_asi(DisasContext *dc, DisasASI *da, TCGv src, TCGv addr)
->   {
->       switch (da->type) {
-> @@ -1863,12 +1884,19 @@ static void gen_st_asi(DisasContext *dc, DisasASI *da, TCGv src, TCGv addr)
->           if (TARGET_LONG_BITS == 32) {
->               gen_exception(dc, TT_ILL_INSN);
->               break;
-> -        } else if (!(dc->def->features & CPU_FEATURE_HYPV)) {
-> -            /* Pre OpenSPARC CPUs don't have these */
-> +        } else if (!(dc->def->features &
-> +                    (CPU_FEATURE_HYPV | CPU_FEATURE_CRYPTO))) {
-> +            /*
-> +             * Pre-OpenSPARC CPUs lack block-init stores. Crypto
-> +             * instructions imply T4 or later, which has them.
-> +             */
->               gen_exception(dc, TT_ILL_INSN);
->               break;
->           }
->           /* In OpenSPARC T1+ CPUs TWINX ASIs in store are ST_BLKINIT_ ASIs */
-> +        if (dc->def->features & CPU_FEATURE_CRYPTO) {
-> +            gen_blkinit_zero(dc, da, addr, da->memop & MO_SIZE);
-> +        }
->           /* fall through */
+>   static int sun4u_NVRAM_set_params(Nvram *nvram, uint16_t NVRAM_size,
+>                                     const char *arch, ram_addr_t RAM_size,
+>                                     const char *boot_devices,
+> @@ -717,6 +762,7 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
+>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_WIDTH, graphic_width);
+>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_HEIGHT, graphic_height);
+>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_DEPTH, graphic_depth);
+> +    fw_cfg_build_hwcap_list(fw_cfg, cpu);
 >   
->       case GET_ASI_DIRECT:
-> @@ -2169,6 +2197,17 @@ static void gen_stf_asi(DisasContext *dc, DisasASI *da, MemOp orig_size,
->           }
->           break;
->   
-> +    case GET_ASI_DTWINX:
-> +        /* stdfa with a block-initializing ASI, T4 and later */
-> +        if (orig_size == MO_64 && (dc->def->features & CPU_FEATURE_CRYPTO)) {
-> +            gen_blkinit_zero(dc, da, addr, MO_64);
-> +            d64 = gen_load_fpr_D(dc, rd);
-> +            tcg_gen_qemu_st_i64(d64, addr, da->mem_idx, memop | MO_ALIGN);
-> +        } else {
-> +            gen_exception(dc, TT_ILL_INSN);
-> +        }
-> +        break;
-> +
->       case GET_ASI_BLOCK:
->           /* Valid for stdfa on aligned registers only.  */
->           if (orig_size == MO_64 && (rd & 7) == 0) {
-
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>       qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
 
 
 ATB,
