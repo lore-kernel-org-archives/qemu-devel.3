@@ -1,93 +1,68 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FAA606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 20:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC05E606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Oct 2026 21:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FTM336Sa
+	dkim=pass (1024-bit key, unprotected) header.d=comstyle.com header.i=@comstyle.com header.a=rsa-sha256 header.s=default header.b=jAPi5xtZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNG6e-0000ma-0M; Sat, 31 Oct 2026 16:55:16 -0400
+	id 1xNGVY-0006Aa-0o; Sat, 31 Oct 2026 17:21:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <takano32@gmail.com>)
- id 1xNG6c-0000ls-74
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 16:55:14 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <takano32@gmail.com>)
- id 1xNG6a-0004ix-Gn
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 16:55:13 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-3ad41b47541so1525290a91.1
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 13:55:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793480111; x=1794084911; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=gFVk3oih9DS0LLY5asZ/G/Ce34H8tbZKr/F/Tvew0YQ=;
- b=FTM336SasaH5oHfS242n9fyaMA8U3yxUSLxiUYomMvJ5X619xO3TNlCcR4zczHr2Kp
- EevFPv/C7v7ZQeYQVBiHpZzhzbodjABy7WGZAvLTShu1FqV92nXIQfAukU5xgxKZoNzO
- uOoCwGAl1oJR7+nKGub6OmdqqP2H96Oon6yvEY47AEDzlX2DqEBT9g/pWYyEpqCW9VNU
- N0w6wypZtmFr3BdOiO/QIT8Z2IJ/0LYfZJp2n767dZkGNEob3+jWPk+SvVFSixH/MDru
- n9bMp34ot2WQj3T2SkUbe6dfZ9mzD9BKSn4zX7qjhiZ3w+/SBp6zqAVsZq3hYOvZE3Nd
- IjIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793480111; x=1794084911;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=gFVk3oih9DS0LLY5asZ/G/Ce34H8tbZKr/F/Tvew0YQ=;
- b=rEHHkab3dCBGYJJIfnJcl09khJmy+b6gKRcjBj4mzrqhxm39TjlaNhWWKxMZWPfP+L
- nHaXa/P9LmyTg42NVfIo4StTFo/8LtAfWlKtqvtOHdtlNOSCVyhn+qQYIfCIby/GZ6s6
- 8iVnlHb/xtzXPtB1tfr9qFSW1iq+izkepk7T4A27xkOHVamOLepuxWRv467r7evJnQGE
- mK2ju67JccMGr71ICpE8OPM14zDX6DKFBkxSCpHYiVq7Jm/zl/6Gf6S63MQScxJB82KQ
- YdhiqxsdTJJgMnS6mY0AmtWsfyThfHijUAINd2DFKsrvLHKuwcDP817RYili/n5QqLAp
- IVDg==
-X-Gm-Message-State: AFq9FYKrurNAK3Yy29QEtKQjsi+31jElUrx0QsTTeHEktOtWzVfkER2E
- yUc1AC5lpg6tYJ3btdHX3kulP2yxmGRfoA0zbvKYF0iD1UIx+21u8CIIe8mKWQ==
-X-Gm-Gg: AYBFou02q4iIRdRn0YyjhrS2418ekQCGOUlgHbaka2gWEPEa/znyTxCi2nfhCwmIkY3
- 5UtZ0ACbLqUJjNchR3A9Dwq7vYPvlGagskBYLdk6vB9E6sBkgbosGckncJe56avtPJ01WwETTrM
- HOHmia5NzIJy7Cbfl93Z/zWYmQacSoh3mSif+8AgQkMrdDPa8w098RANrv1a2F7WGs1VDkaxkrR
- mV60Xeh4g08IGIa60y6ADHrQTDGH60+cjSZKlgekkUvbyNCcgPl7YLHNvxz8/y4KqpiEeK94caB
- hmFRFuUA0mi4r+LgVvNdIixe5XviAawUAp/9UTxURMsIhQt4GruGY6Pup2gGfVfw7922utH8eUt
- LUvNysBpY3fUklDCl8dh5tZaHNQ8pzd7hnw922Ln4QitONBIptnqceLxtpcjBpfcyl0bN84Z8Kg
- /c7J3wLWxPHZFtsjMUjjShntdcnz0z1Xs1NBS1KlmFJgmmoaZBfH+6qNELGGbZpc/cbWufX92b5
- eehd6fH/YodeBhqh7+3KWFP5v9lRbfi6Jhmdsy+QADrYmSwHHIEpgZbY5TTxbKs0vHbbMUt7jRI
- kz38Lm0XqvT6brkpCNP6shFTcUbfiyvF5GoA+pNuiA==
-X-Received: by 2002:a17:90b:3b85:b0:3ab:188b:c5b1 with SMTP id
- 98e67ed59e1d1-3ae897e4182mr5100681a91.56.1793480110720; 
- Sat, 31 Oct 2026 13:55:10 -0700 (PDT)
-Received: from a1-free ([161.33.196.121]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ae87ee7765sm4772952a91.2.2026.10.31.13.55.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 31 Oct 2026 13:55:09 -0700 (PDT)
-From: TAKANO Mitsuhiro <takano32@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 2/2] linux-user: report EFAULT for a NULL sysinfo/getitimer
- buffer
-Date: Sat, 31 Oct 2026 20:55:01 +0000
-Message-ID: <20261031205501.1988785-3-takano32@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261031205501.1988785-1-takano32@gmail.com>
-References: <20261031205501.1988785-1-takano32@gmail.com>
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1xNGVW-0006AP-FJ
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 17:20:58 -0400
+Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
+ helo=mail.comstyle.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1xNGVU-0007Hj-NX
+ for qemu-devel@nongnu.org; Sat, 31 Oct 2026 17:20:58 -0400
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+ by mail.comstyle.com (Postfix) with ESMTP id 4jH9qq14Bdz8Pbj;
+ Sat, 31 Oct 2026 17:20:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=default;
+ bh=E15AUcnI/H2ByM8R3jPI8uhJK9HeRxJJKolF3G4F2P0=; b=jAPi5xtZOXTd
+ URT817z7JXhzBT0FGcgNQuffC3lc0K2xDYmN+en8VJFRPsUg+y1YXw1fiI3b/OJZ
+ MeGki4Pc99WHos0op82UG44UA5mfNR3VgcUZi72TdiGsbRO6IC1164uAMqVn9/No
+ 0SjLwCYLoJXLidfr11uDHSfjxy0WtBY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=message-id
+ :date:mime-version:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding; q=dns; s=default; b=AuN
+ X8JVTnVN/DMcKy7gkTfhaNzZLbuSdudALQlJrU7yvHYHuq5iy1+BIOPp00x4GP5s
+ +wSz9IyxXdIDd0rDLZ8V5WeSsCCs+TRTMfDX+B5H0E/rGnd39CofeagU1BBP/rux
+ 1B0fbQswUoIDuQaRCc5uKnUHpIgy0CRCFHwQAEt8=
+Received: from [192.168.6.99] (66-49-215-17.cpe.distributel.net [66.49.215.17])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: brad)
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4jH9qq0DjRz8Pbg;
+ Sat, 31 Oct 2026 17:20:55 -0400 (EDT)
+Message-ID: <90b3b643-56af-4b43-9df6-e7481030c95f@comstyle.com>
+Date: Sat, 31 Oct 2026 17:20:53 -0400
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=takano32@gmail.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/unit/test-qga: only run tests for commands the host
+ provides
+To: Roman Bogorodskiy <bogorodskiy@gmail.com>
+Cc: Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org
+References: <auUjhZW4dqR63oA3@humpty.home.comstyle.com> <auXnOpeNx5eToSWA@tulp>
+Content-Language: en-US
+From: Brad Smith <brad@comstyle.com>
+In-Reply-To: <auXnOpeNx5eToSWA@tulp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f938:3000:8::2;
+ envelope-from=brad@comstyle.com; helo=mail.comstyle.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,105 +75,107 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Both handlers skip the copy-out when the guest pointer is zero and return
-success, so a caller that forgets the buffer gets an uninitialised result
-instead of the EFAULT the kernel reports for a NULL address.
-
-Copy unconditionally: a NULL pointer then fails in lock_user_struct() and
-in copy_to_user_timeval() like any other unusable address.
-
-Signed-off-by: TAKANO Mitsuhiro <takano32@gmail.com>
----
- linux-user/syscall.c                          |  4 +--
- tests/tcg/multiarch/linux/linux-null-buffer.c | 35 +++++++++++++++++--
- 2 files changed, 34 insertions(+), 5 deletions(-)
-
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 59cbf5feaad..2fc61b3eabc 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -11551,7 +11551,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-             struct itimerval value;
- 
-             ret = get_errno(getitimer(arg1, &value));
--            if (!is_error(ret) && arg2) {
-+            if (!is_error(ret)) {
-                 if (copy_to_user_timeval(arg2,
-                                          &value.it_interval)
-                     || copy_to_user_timeval(arg2 + sizeof(struct target_timeval),
-@@ -11666,7 +11666,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-             struct target_sysinfo *target_value;
-             struct sysinfo value;
-             ret = get_errno(sysinfo(&value));
--            if (!is_error(ret) && arg1)
-+            if (!is_error(ret))
-             {
-                 if (!lock_user_struct(VERIFY_WRITE, target_value, arg1, 0))
-                     return -TARGET_EFAULT;
-diff --git a/tests/tcg/multiarch/linux/linux-null-buffer.c b/tests/tcg/multiarch/linux/linux-null-buffer.c
-index 6246e477070..b099803c574 100644
---- a/tests/tcg/multiarch/linux/linux-null-buffer.c
-+++ b/tests/tcg/multiarch/linux/linux-null-buffer.c
-@@ -1,6 +1,15 @@
- /*
-- * A zero-length getrandom() needs no valid buffer: the kernel never looks at
-- * the pointer, so getrandom(NULL, 0, 0) succeeds.
-+ * Degenerate buffer pointers must behave like they do in the kernel.
-+ *
-+ * A zero-length getrandom() needs no valid buffer: the pointer is never
-+ * used, so getrandom(NULL, 0, 0) succeeds.  A required output buffer, on
-+ * the other hand, must not be silently skipped: sysinfo() and getitimer()
-+ * have to report EFAULT for a NULL pointer.
-+ *
-+ * The NULL cases go through syscall() rather than the libc wrappers: on
-+ * 32-bit x86, for example, getitimer() hands the kernel a local structure
-+ * and copies the result out itself, so it would follow the NULL pointer
-+ * before the kernel's answer could be seen.
-  *
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
-@@ -9,11 +18,31 @@
- #include <errno.h>
- #include <stdlib.h>
- #include <sys/random.h>
-+#include <sys/syscall.h>
-+#include <sys/sysinfo.h>
-+#include <sys/time.h>
-+#include <unistd.h>
- 
- int main(void)
- {
-+    char buf[8];
-+    struct itimerval it;
-+    struct sysinfo si;
-+
-+    /* A zero-length request is not rejected for a NULL buffer. */
-     errno = 0;
--    assert(getrandom(NULL, 0, 0) == 0);
-+    assert(syscall(SYS_getrandom, NULL, 0, 0) == 0);
-+
-+    /* A NULL output pointer is reported, not silently skipped. */
-+    errno = 0;
-+    assert(syscall(SYS_sysinfo, NULL) == -1 && errno == EFAULT);
-+    errno = 0;
-+    assert(syscall(SYS_getitimer, ITIMER_REAL, NULL) == -1 && errno == EFAULT);
-+
-+    /* The ordinary calls still work. */
-+    assert(getrandom(buf, sizeof(buf), 0) == sizeof(buf));
-+    assert(sysinfo(&si) == 0);
-+    assert(getitimer(ITIMER_REAL, &it) == 0);
- 
-     return EXIT_SUCCESS;
- }
--- 
-2.53.0
-
+On 2026-10-31 9:03 a.m., Roman Bogorodskiy wrote:
+>    Brad Smith wrote:
+>
+>> tests/unit/test-qga: only run tests for commands the host provides
+>>
+>> guest-fsfreeze-status is only implemented when CONFIG_FSFREEZE is
+>> set (Linux and FreeBSD), and guest-get-users is only built on POSIX
+>> hosts when HAVE_UTMPX is set, so neither command exists on hosts such
+>> as OpenBSD. Only build and register these tests where the commands
+>> are available.
+> Does that also need something like:
+>
+> --- a/tests/unit/meson.build
+> +++ b/tests/unit/meson.build
+> @@ -170,7 +170,7 @@ if have_system
+>     tests += {'test-qdev': [qom, hwcore]}
+>   endif
+>
+> -if have_ga and host_os in ['freebsd', 'linux']
+> +if have_ga and host_os in ['freebsd', 'linux', 'openbsd']
+>     tests += {'test-qga': ['../qtest/libqmp.c', '../qtest/libqtest.c']}
+>     test_deps += {'test-qga': qga}
+>   endif
+>
+> Otherwise it's not clear how to spot these issues if the test never runs
+> on OpenBSD.
+There are multiple patches pending. Once they're in then I'll send the 
+proper patch.
+>> Signed-off-by: Brad Smith <brad@comstyle.com>
+>> ---
+>>   tests/unit/test-qga.c | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/tests/unit/test-qga.c b/tests/unit/test-qga.c
+>> index b1c84c188b..ef796f2f7d 100644
+>> --- a/tests/unit/test-qga.c
+>> +++ b/tests/unit/test-qga.c
+>> @@ -787,6 +787,7 @@ static void test_qga_config(gconstpointer data)
+>>       g_free(env[0]);
+>>   }
+>>   
+>> +#ifdef CONFIG_FSFREEZE
+>>   static void test_qga_fsfreeze_status(gconstpointer fix)
+>>   {
+>>       const TestFixture *fixture = fix;
+>> @@ -800,6 +801,7 @@ static void test_qga_fsfreeze_status(gconstpointer fix)
+>>       status = qdict_get_try_str(ret, "return");
+>>       g_assert_cmpstr(status, ==, "thawed");
+>>   }
+>> +#endif
+>>   
+>>   static QDict *wait_for_guest_exec_completion(int fd, int64_t pid)
+>>   {
+>> @@ -1028,6 +1030,7 @@ static void test_qga_guest_get_timezone(gconstpointer fix)
+>>       g_assert(qdict_haskey(val, "offset"));
+>>   }
+>>   
+>> +#ifdef HAVE_UTMPX
+>>   static void test_qga_guest_get_users(gconstpointer fix)
+>>   {
+>>       const TestFixture *fixture = fix;
+>> @@ -1042,6 +1045,7 @@ static void test_qga_guest_get_users(gconstpointer fix)
+>>       val = qdict_get_qlist(ret, "return");
+>>       g_assert_nonnull(val);
+>>   }
+>> +#endif
+>>   
+>>   static void test_qga_guest_get_osinfo(gconstpointer data)
+>>   {
+>> @@ -1133,8 +1137,10 @@ int main(int argc, char **argv)
+>>       g_test_add_data_func("/qga/invalid-oob", &fix, test_qga_invalid_oob);
+>>       g_test_add_data_func("/qga/invalid-cmd", &fix, test_qga_invalid_cmd);
+>>       g_test_add_data_func("/qga/invalid-args", &fix, test_qga_invalid_args);
+>> +#ifdef CONFIG_FSFREEZE
+>>       g_test_add_data_func("/qga/fsfreeze-status", &fix,
+>>                            test_qga_fsfreeze_status);
+>> +#endif
+>>   
+>>       g_test_add_data_func("/qga/blockedrpcs", NULL, test_qga_blockedrpcs);
+>>       g_test_add_data_func("/qga/allowedrpcs", NULL, test_qga_allowedrpcs);
+>> @@ -1152,8 +1158,10 @@ int main(int argc, char **argv)
+>>                            test_qga_guest_get_host_name);
+>>       g_test_add_data_func("/qga/guest-get-timezone", &fix,
+>>                            test_qga_guest_get_timezone);
+>> +#ifdef HAVE_UTMPX
+>>       g_test_add_data_func("/qga/guest-get-users", &fix,
+>>                            test_qga_guest_get_users);
+>> +#endif
+>>   
+>>       ret = g_test_run();
+>>   
+>> -- 
+>> 2.56.0
+>>
+>>
 
