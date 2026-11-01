@@ -1,63 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB87606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 14:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51766606A325
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 14:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=OBYvWPUc;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=nczj1GpJ
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=h0rztcnV;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=ygsg9jMM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNWYd-0007eH-5v; Sun, 01 Nov 2026 09:29:15 -0500
+	id 1xNWYc-0007dY-SW; Sun, 01 Nov 2026 09:29:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xNWXK-0006d3-FL
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 09:27:56 -0500
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xNWXE-0006c6-3W
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 09:27:52 -0500
 Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xNWXI-00084p-4k
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 09:27:54 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Em6Z4/a
- AdTyG4TULbHwNUo2wCkoh8Cnz8d7WtmKj2q9g3AL7dbmxbW+nT8W9w88ZFh3Ceuzyjoai/
- euG7BfHZFFCE5/z4WRxxD03gohPq99bbeBj7itE7ctGGL5E0xFHLMkh3mgc7evafJ2BPfb
- b0xCaVfx5CT4FREwQktmIqSyJd/xut4CwSgzF0Sokbsvj1Teoc8qwD93HoPJIMKLh/duOb
- jFgPdK6WoYtaf8N5qd2U1XaOe/DvligJXG+gK4W/ILgpZPIIg/T/lspO6uJW1easO2qDM7
- sqjL5oelDQEgf85o4Ja8haFOK6NgoMOSu7wN4A5DXwGLhrrHn+ceOTQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=L
- WuL5xRz2EvlFGkO8LiwTl4SwMnMruspZ6rp8ItofV0=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xNWX9-00084p-SV
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 09:27:47 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=coujTKo
+ v1bapchu282vPaL9LRCsIvA4olDOVFipuotpDPSEypfNw9pe68bHpR45oPof/IAvDwG9H8
+ a9ZKu1W0hkXkDsLE/26iNZrwl2UJD29MMT942+6+8dFdeMMKgKbrSAA11SVnPdVeTjSS5I
+ ncj4pXCM/hlbWmf7vZR9YsYUR4a96Rae20vbn0f5maADI9eaYngLEOQOiddgvQS6shldh9
+ nlovHO50YCKNSCoVcMGHlMWa23/SSr5fUM4Uilct0+I8Y//23nohJpTL8IUA9Xt6MB/lvC
+ gJtQXn2/6bCA3MU1jGqd6ySW5IOdPfbufEEI6NIfSoPw3C40qCVhoOQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=p
+ k+vgKApg2D0X70xtAGuxiKhSbL9gNLVQCeVqq1D8Xs=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=gewTtRVSIT3+1PWODzGj7oIXday+UpkkczAIAYvYCwtZaCLdihDLEsJqiwHK6g+PoCwd
- 6vaI7peZI4HvPOCOB62V10iEAJ5fThQPjXwxcfubssf00VdxDFm1Pm5OMeWyqfhrgGep2f
- ktyGK49JBuX/q1PxERn6B0I/hYjBJhK2OY9cJ2OoyJ0DDlaYuDTzPDhKgOawQKihQya7od
- knra2tMxZRXnQAmSuwmNpELWwePLL9rVhuhzx3p6skOp001qXLzyV6Oe0MUuCRfCW4GA1m
- 1IukrVFDr6atY/Qyg282fQqp20APzwwOHN9eM2LGHrPw6Bz33LYHNqOlXMZ1+bAw==
+ b=cPz3M+vIy4ziL+wrSHqbjFALy1XF1oZPe97ttG2S+ERTfIJu7hDPqf/G2pc+Co9hJq1m
+ 96+4bhkpt8c3sFuK5k2uxiZ7HNoJf1vj39iFh2yQuFL1TFFt+isE0nwM380U9BOfu0bFXw
+ 7RutMScNukyuVVIGkt7S2MPQGv7isk5eYXb1X2C6ip2I1DW9G3OqleDGul7N8ZJW8aKheF
+ LTf06omPj4GIDrU1KQn7buItR8vxdaXfzorHDx+2X7qPgWB/jY8emxTiVsJoenNFoc3Vuh
+ VDcgdriot1EVyDzYOsQfH33yXCYFwTo0JzvFAHqBURBhg6ohNQnwVPcKoqwk1X9A==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=OBYvWPUc; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=nczj1GpJ;
+ header.b=h0rztcnV; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=ygsg9jMM;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=LWuL5xRz
- 2EvlFGkO8LiwTl4SwMnMruspZ6rp8ItofV0=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=pk+vgKAp
+ g2D0X70xtAGuxiKhSbL9gNLVQCeVqq1D8Xs=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=OBYvWPUcl5e/fMCfmzrMuZqIXh2+7tk91kt
- OGr23wWBQwu0ZKmGtNgqULXTxxZLqBCPM5YXRezSEfqLe/LxJ0369wHX/oJXlQculNIOiG
- 5z/+uWkoQFncCJb9CrLUygcELJhMyfDYn4/M51iEFukPeiUGNH2QfwtjPFbAPKRFZNhKWK
- 3uajcq8U4QkvQtSgNMXIGwWeqDCjLk2qYy5dMtVPCRNoraiTOEhcWELli5cA1AMsFLQixc
- KSZgYJwS1QMI0kIudew3c85HEuvrjw1fMXvSLdX0GnexDP629d4SCvFrglrPfAP1M2rfSk
- YFhr69XM+oOWBmlJsGhVmQVF9Og==
+ subject:cc:to:from; d=korins.ky; b=h0rztcnVH5zJCpez3Q1Sp4wibmJcySLb5zc
+ 1mNK0n1IOgbqUi+bNzizfwPHb89oURvrjN/oBQnk2+1mED3vz6Tpmy89K73/doP6FDCgG6
+ 2L5p4/ra5HC6haxKPrK+ANuHKC6Oxj7JiHuxssMHz8VSzLYU24lxpY/spnvklqh3g19KTO
+ J4ob9Ji2aum07g6++myo71V5EIkaBolmf3qffVO4kr4CTn8BVCYUg+P8akmHCUwnA7exY5
+ G6d24isf8kOjWCN3Nyu11IjoIKKE5RBHGiB2p+2V2dPz+NRDrzHDxNKMmzp8IEkPTQQoto
+ uL6J7QgqK+S4AMI3Lm2e8d20+qw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=LWuL5xRz2EvlFGkO8LiwTl4SwMnMruspZ6rp8ItofV0=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=nczj1GpJzyrv3tpJB6
- PQM421N4GydnEntpZhHNQLKYMpWpkq3iSkq9KkEGzFeiJvqEuW4H/uRvqBVfXB6OIgBQ==
-Received: by mx1.catap.net (OpenSMTPD) id c6660a63;
- Sun, 1 Nov 2026 15:27:39 +0100 (CET)
+ bh=pk+vgKApg2D0X70xtAGuxiKhSbL9gNLVQCeVqq1D8Xs=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=ygsg9jMMS+jZYl1Ry5
+ G2u2QfjR1xln9HyChWXQw41cI9gC9Mbb4ajfUKbQXTMEOZ/MW/OZLLVayNM9d9vIPZBQ==
+Received: by mx1.catap.net (OpenSMTPD) id be4467b0;
+ Sun, 1 Nov 2026 15:27:36 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 69d55121;
- Sun, 1 Nov 2026 15:27:32 +0100 (CET)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id f2b8c246;
+ Sun, 1 Nov 2026 15:27:31 +0100 (CET)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -66,9 +66,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v6 25/26] hw/pci-bridge: add Octeon PCI memory window
-Date: Sun,  1 Nov 2026 15:23:41 +0100
-Message-ID: <20261101142723.41346-26-kirill@korins.ky>
+Subject: [PATCH v6 12/26] hw/mips: add Octeon CIU3 CPU control
+Date: Sun,  1 Nov 2026 15:23:28 +0100
+Message-ID: <20261101142723.41346-13-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261101142723.41346-1-kirill@korins.ky>
 References: <20261101142723.41346-1-kirill@korins.ky>
@@ -102,39 +102,249 @@ X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Map the PCI memory aperture and PEXP register bank. Apply SUBID
-controlled byte swapping to transactions between the big endian CPU and
-little endian PCI memory space.
+Model the CIU3 CPU reset, NMI and fuse registers. Park secondary
+cores after reset and release them through the CIU3 reset register or
+NMI path, while leaving interrupt source routing for a separate change.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- hw/mips/octeon.c           |  26 ++++++
- hw/mips/octeon_internal.h  |   8 ++
- hw/pci-bridge/octeon_pci.c | 174 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 208 insertions(+)
+ hw/mips/octeon.c          | 247 +++++++++++++++++++++++++++++++++++++-
+ hw/mips/octeon_internal.h |   6 +
+ 2 files changed, 252 insertions(+), 1 deletion(-)
 
 diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 19d1451464..596fd678ff 100644
+index 4fc5a71a90..eeca7ca67e 100644
 --- a/hw/mips/octeon.c
 +++ b/hw/mips/octeon.c
-@@ -2075,6 +2075,27 @@ static void octeon_stateful_io_write(OcteonState *s, uint64_t base,
-     octeon_csr_store(s, reg, octeon_write64(old, addr, value, size));
+@@ -20,9 +20,12 @@
+ #include "hw/mips/mips.h"
+ #include "system/blockdev.h"
+ #include "system/address-spaces.h"
++#include "system/cpus.h"
+ #include "system/memory.h"
+ #include "system/reset.h"
++#include "exec/cpu-interrupt.h"
+ #include "qemu/error-report.h"
++#include "qemu/atomic.h"
+ #include "hw/mips/octeon_internal.h"
+ #include "target/mips/cpu.h"
+ 
+@@ -35,6 +38,10 @@ OBJECT_DECLARE_TYPE(OcteonPeripheralState, OcteonPeripheralClass,
+ 
+ #define TYPE_OCTEON_RST "octeon-rst"
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
++#define TYPE_OCTEON_INTC "octeon-intc"
++OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
++
++#define OCTEON_CSR_64BIT_SIZE       8
+ 
+ /*
+  * Clock defaults follow a Ubiquiti E1000 EBB7304 U-Boot banner.
+@@ -61,6 +68,13 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
+ #define OCTEON_DR1_BASE             0x020000000ULL
+ #define OCTEON_DR1_SIZE             (OCTEON_MAX_PHY_MEM_SIZE - OCTEON_DR0_SIZE)
+ 
++#define OCTEON_CIU3_BASE            0x1010000000000ULL
++#define OCTEON_CIU3_SIZE            0xb0000000ULL
++#define OCTEON_CIU3_PP_RST          0x100
++#define OCTEON_CIU3_PP_RST_PENDING  0x110
++#define OCTEON_CIU3_NMI             0x160
++#define OCTEON_CIU3_FUSE            0x1a0
++
+ /*
+  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
+  * the guest sees the virtual CVMSEG window, not this physical address.
+@@ -108,6 +122,59 @@ struct OcteonRstState {
+     uint64_t rst_pp_power;
+ };
+ 
++struct OcteonIntcState {
++    OcteonPeripheralState parent_obj;
++    MemoryRegion ciu3;
++    uint64_t ciu3_pp_rst;
++};
++
++uint64_t octeon_read64(uint64_t value, hwaddr addr, unsigned size)
++{
++    if (size == 4) {
++        if (addr & 4) {
++            return value & 0xffffffffU;
++        }
++        return value >> 32;
++    }
++
++    return value;
++}
++
++uint64_t octeon_write64(uint64_t old, hwaddr addr,
++                        uint64_t value, unsigned size)
++{
++    if (size == 4) {
++        if (addr & 4) {
++            return (old & 0xffffffff00000000ULL) | (value & 0xffffffffU);
++        }
++        return (old & 0xffffffffULL) | ((value & 0xffffffffU) << 32);
++    }
++
++    return value;
++}
++
++static uint64_t octeon_atomic_write64(uint64_t *ptr, hwaddr addr,
++                                      uint64_t value, unsigned size,
++                                      uint64_t and_mask, uint64_t or_mask,
++                                      uint64_t *oldp)
++{
++    uint64_t old;
++    uint64_t new;
++    uint64_t cmp = qatomic_read(ptr);
++
++    do {
++        old = cmp;
++        new = (octeon_write64(old, addr, value, size) & and_mask) | or_mask;
++        cmp = qatomic_cmpxchg(ptr, old, new);
++    } while (old != cmp);
++
++    if (oldp) {
++        *oldp = old;
++    }
++
++    return new;
++}
++
+ static void octeon_validate_clocks(OcteonMachineState *oms)
+ {
+     if (!oms->cpu_hz || !oms->ref_hz || !oms->io_hz || !oms->ddr_hz) {
+@@ -132,6 +199,140 @@ static uint64_t octeon_secondary_cpu_mask(OcteonState *s)
+     return octeon_present_cpu_mask(s) & ~1ULL;
  }
  
-+static uint64_t octeon_pexp_read(void *opaque, hwaddr addr, unsigned size)
++static void octeon_cpu_park_now(MIPSCPU *cpu)
 +{
-+    return octeon_pci_pexp_read(opaque, addr, size);
++    CPUMIPSState *env = &cpu->env;
++    CPUState *cs = CPU(cpu);
++
++    env->active_tc.CP0_TCHalt = 1;
++    env->tcs[0].CP0_TCHalt = 1;
++    cs->halted = 1;
++    cpu_reset_interrupt(cs, CPU_INTERRUPT_WAKE);
 +}
 +
-+static void octeon_pexp_write(void *opaque, hwaddr addr,
++static void octeon_cpu_park_work(CPUState *cs, run_on_cpu_data data)
++{
++    octeon_cpu_park_now(MIPS_CPU(cs));
++}
++
++static void octeon_cpu_start_work(CPUState *cs, run_on_cpu_data data)
++{
++    MIPSCPU *cpu = MIPS_CPU(cs);
++    CPUMIPSState *env = &cpu->env;
++
++    cpu->mvp->CP0_MVPControl |= (1 << CP0MVPCo_EVP);
++    env->CP0_VPEConf0 |= (1 << CP0VPEC0_MVP) | (1 << CP0VPEC0_VPA);
++    env->active_tc.CP0_TCHalt = 0;
++    env->tcs[0].CP0_TCHalt = 0;
++    env->active_tc.CP0_TCStatus = (1 << CP0TCSt_A);
++    env->tcs[0].CP0_TCStatus = (1 << CP0TCSt_A);
++    env->active_tc.PC = cpu_mips_phys_to_kseg1(NULL, OCTEON_FLASH_RESET_BASE);
++    cs->halted = 0;
++    cpu_interrupt(cs, CPU_INTERRUPT_WAKE | CPU_INTERRUPT_EXITTB);
++}
++
++static void octeon_start_cpu(OcteonState *s, unsigned int cpu_index)
++{
++    MIPSCPU *cpu;
++
++    if (cpu_index >= s->cpu_count || !s->cpu[cpu_index].cpu) {
++        return;
++    }
++
++    cpu = s->cpu[cpu_index].cpu;
++    async_run_on_cpu(CPU(cpu), octeon_cpu_start_work, RUN_ON_CPU_NULL);
++}
++
++static void octeon_ciu3_start_cpu(OcteonState *s, unsigned int cpu_index)
++{
++    if (qatomic_read(&s->intc->ciu3_pp_rst) & (1ULL << cpu_index)) {
++        return;
++    }
++
++    octeon_start_cpu(s, cpu_index);
++}
++
++static void octeon_ciu3_nmi(OcteonState *s, uint64_t mask)
++{
++    unsigned int cpu;
++
++    for (cpu = 1; cpu < s->cpu_count; cpu++) {
++        if (mask & (1ULL << cpu)) {
++            octeon_ciu3_start_cpu(s, cpu);
++        }
++    }
++}
++
++static uint64_t octeon_ciu3_read(void *opaque, hwaddr addr, unsigned size)
++{
++    OcteonState *s = opaque;
++    hwaddr reg = addr & ~7ULL;
++    uint64_t value;
++
++    if (reg == OCTEON_CIU3_PP_RST) {
++        return octeon_read64(qatomic_read(&s->intc->ciu3_pp_rst), addr, size);
++    }
++
++    if (reg == OCTEON_CIU3_PP_RST_PENDING) {
++        return 0;
++    }
++
++    if (reg == OCTEON_CIU3_NMI) {
++        return 0;
++    }
++
++    if (reg == OCTEON_CIU3_FUSE) {
++        value = octeon_present_cpu_mask(s);
++        return octeon_read64(value, addr, size);
++    }
++
++    return 0;
++}
++
++static void octeon_ciu3_write(void *opaque, hwaddr addr,
 +                              uint64_t value, unsigned size)
 +{
-+    octeon_pci_pexp_write(opaque, addr, value, size);
++    OcteonState *s = opaque;
++    hwaddr reg = addr & ~7ULL;
++    uint64_t old;
++    unsigned int cpu;
++
++    if (reg == OCTEON_CIU3_PP_RST) {
++        value = octeon_atomic_write64(&s->intc->ciu3_pp_rst, addr, value, size,
++                                      octeon_present_cpu_mask(s), 0, &old);
++
++        for (cpu = 1; cpu < s->cpu_count; cpu++) {
++            uint64_t mask = 1ULL << cpu;
++
++            if (!((old ^ value) & mask)) {
++                continue;
++            }
++            if (value & mask) {
++                async_run_on_cpu(CPU(s->cpu[cpu].cpu), octeon_cpu_park_work,
++                                 RUN_ON_CPU_NULL);
++            } else {
++                octeon_ciu3_start_cpu(s, cpu);
++            }
++        }
++        return;
++    }
++
++    if (reg == OCTEON_CIU3_NMI) {
++        octeon_ciu3_nmi(s, octeon_write64(0, addr, value, size));
++        return;
++    }
 +}
 +
-+static const MemoryRegionOps octeon_pexp_ops = {
-+    .read = octeon_pexp_read,
-+    .write = octeon_pexp_write,
++static const MemoryRegionOps octeon_ciu3_ops = {
++    .read = octeon_ciu3_read,
++    .write = octeon_ciu3_write,
 +    .endianness = DEVICE_BIG_ENDIAN,
 +    .valid = {
 +        .min_access_size = 4,
@@ -142,307 +352,135 @@ index 19d1451464..596fd678ff 100644
 +    },
 +};
 +
- static uint64_t octeon_dpi_read(void *opaque, hwaddr addr, unsigned size)
+ static void octeon_cpu_after_reset(OcteonCPUState *cs)
  {
-     return octeon_stateful_io_read(opaque, OCTEON_DPI_BASE, addr, size);
-@@ -2854,6 +2875,11 @@ static void mips_octeon_init(MachineState *machine)
-     memory_region_add_subregion_overlap(get_system_memory(), OCTEON_CSR_BASE,
-                                         &s->csr_bank->csr, -1);
+     CPUMIPSState *env = &cs->cpu->env;
+@@ -139,7 +340,13 @@ static void octeon_cpu_after_reset(OcteonCPUState *cs)
+     env->CP0_CvmMemCtl = 0x100;
+     env->CP0_CvmCtl = 0;
  
-+    memory_region_init_io(&s->pexp, NULL, &octeon_pexp_ops, s,
-+                          "octeon.pexp", OCTEON_PEXP_SIZE);
-+    memory_region_add_subregion(get_system_memory(), OCTEON_PEXP_BASE,
-+                                &s->pexp);
+-    if (cs->boot_cpu && cs->board->firmware_entry) {
++    if (!cs->boot_cpu) {
++        /* Secondary cores are released by the Octeon reset controller. */
++        octeon_cpu_park_now(cs->cpu);
++        return;
++    }
 +
-     memory_region_init_io(&s->dpi, NULL, &octeon_dpi_ops, s,
-                           "octeon.dpi", OCTEON_DPI_SIZE);
-     memory_region_add_subregion(get_system_memory(), OCTEON_DPI_BASE,
-diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index c2a88dac46..f4ecbbac4f 100644
---- a/hw/mips/octeon_internal.h
-+++ b/hw/mips/octeon_internal.h
-@@ -18,6 +18,8 @@
- #define OCTEON_CIU_GPIO_COUNT       32
- #define OCTEON_CIU3_CP0_IRQ_COUNT   4
- #define OCTEON_CIU3_IDT_COUNT       (OCTEON_MAX_CPUS * 4)
-+#define OCTEON_PEXP_BASE            0x11f0000000000ULL
-+#define OCTEON_PEXP_SIZE            0x40000
- #define OCTEON_MIO_BOOT_REG_CFG_COUNT 8
- #define OCTEON_MIO_BOOT_LOC_SIZE    0x100
- #define OCTEON_MIO_EMM_BUF_SIZE     512
-@@ -78,6 +80,7 @@ struct OcteonState {
-     MemoryRegion boot_flash;
-     MemoryRegion boot_flash_alias;
-     MemoryRegion cvmseg;
-+    MemoryRegion pexp;
-     MemoryRegion dpi;
-     MemoryRegion fpa;
-     MemoryRegion ipd;
-@@ -98,6 +101,8 @@ struct OcteonState {
-     MemoryRegion pcie_cfg;
-     MemoryRegion pcie_sli_cfg;
-     MemoryRegion pcie0_io;
-+    MemoryRegion pcie0_mem;
-+    AddressSpace pcie0_mem_as;
- 
-     DeviceState *pci_host;
-     PCIBus *pci_bus;
-@@ -122,5 +127,8 @@ uint64_t octeon_pci_pem_read(OcteonState *s, hwaddr reg,
-                              hwaddr addr, unsigned size);
- void octeon_pci_pem_write(OcteonState *s, hwaddr reg, hwaddr addr,
-                           uint64_t value, unsigned size);
-+uint64_t octeon_pci_pexp_read(OcteonState *s, hwaddr addr, unsigned size);
-+void octeon_pci_pexp_write(OcteonState *s, hwaddr addr,
-+                           uint64_t value, unsigned size);
- 
- #endif
-diff --git a/hw/pci-bridge/octeon_pci.c b/hw/pci-bridge/octeon_pci.c
-index e2f856e164..02c42c4d09 100644
---- a/hw/pci-bridge/octeon_pci.c
-+++ b/hw/pci-bridge/octeon_pci.c
-@@ -7,6 +7,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/bswap.h"
- #include "qapi/error.h"
- #include "hw/core/resettable.h"
- #include "hw/core/sysbus.h"
-@@ -14,6 +15,7 @@
- #include "hw/pci/pci.h"
- #include "hw/pci/pci_host.h"
- #include "qemu/module.h"
-+#include "system/address-spaces.h"
- #include "system/memory.h"
- 
- #define TYPE_OCTEON_PCI_HOST "octeon-pci-host"
-@@ -29,7 +31,15 @@ OBJECT_DECLARE_TYPE(OcteonPCIHostState, OcteonPCIHostClass,
-     (OCTEON_PCIE_SLI_CFG_PORTS * OCTEON_PCIE_SLI_CFG_PORT_SIZE)
- #define OCTEON_PCIE0_IO_BASE        0x11a0400000000ULL
- #define OCTEON_PCIE0_IO_SIZE        (1ULL << 32)
-+#define OCTEON_PCIE0_MEM_BASE       0x11b0000000000ULL
- #define OCTEON_PCIE0_MEM_SIZE       (1ULL << 32)
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_BASE   0x000000e0
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_STRIDE 16
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_ESR_M  0x0000003000000000ULL
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_ESR_S  36
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_ESW_M  0x0000000c00000000ULL
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_ESW_S  34
-+#define OCTEON_SLI_MEM_ACCESS_SWAP         3
- #define OCTEON_PCIE0_ENDPOINT_DEVFN PCI_DEVFN(0x0b, 0)
- #define OCTEON_PEMX_CFG_WR0         0xc0000028
- #define OCTEON_PEMX_CFG_RD0         0xc0000030
-@@ -45,6 +55,7 @@ struct OcteonPCIHostState {
-     uint32_t pem_cfg_rd_addr;
-     uint64_t pem_cfg_wr;
-     GHashTable *root_cfg;
-+    GHashTable *pexp_regs;
- };
- 
- struct OcteonPCIHostClass {
-@@ -64,6 +75,7 @@ static void octeon_pci_host_reset_hold(Object *obj, ResetType type)
-     host->pem_cfg_rd_addr = 0;
-     host->pem_cfg_wr = 0;
-     g_hash_table_remove_all(host->root_cfg);
-+    g_hash_table_remove_all(host->pexp_regs);
- }
- 
- static OcteonPCIHostState *octeon_pci_host(OcteonState *s)
-@@ -160,6 +172,34 @@ void octeon_pci_pem_write(OcteonState *s, hwaddr reg, hwaddr addr,
++    if (cs->board->firmware_entry) {
+         env->active_tc.PC = cs->board->firmware_entry;
      }
  }
+@@ -151,6 +358,8 @@ static void octeon_create_cpus(OcteonState *s)
+     s->cpuclk = clock_new(OBJECT(s->machine), "cpu-refclk");
+     clock_set_hz(s->cpuclk, s->cpu_hz);
+     s->cpu_count = s->machine->smp.cpus;
++    qatomic_set(&s->intc->ciu3_pp_rst, octeon_secondary_cpu_mask(s));
++
+     for (i = 0; i < s->cpu_count; i++) {
+         DeviceState *dev = qdev_new(s->machine->cpu_type);
  
-+uint64_t octeon_pci_pexp_read(OcteonState *s, hwaddr addr, unsigned size)
+@@ -348,6 +557,19 @@ static void octeon_rst_reset_hold(Object *obj, ResetType type)
+     rst->rst_pp_power = octeon_secondary_cpu_mask(rst->parent_obj.board);
+ }
+ 
++static void octeon_intc_reset_hold(Object *obj, ResetType type)
 +{
-+    OcteonPCIHostState *host = octeon_pci_host(s);
-+    uint64_t reg = OCTEON_PEXP_BASE + (addr & ~7ULL);
-+    uint64_t value;
++    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
++    OcteonIntcState *intc = OCTEON_INTC(obj);
++    OcteonState *s = intc->parent_obj.board;
 +
-+    if (!octeon_reg_lookup(host->pexp_regs, reg, &value)) {
-+        value = 0;
++    if (opc->parent_phases.hold) {
++        opc->parent_phases.hold(obj, type);
 +    }
 +
-+    return octeon_read64(value, addr, size);
++    qatomic_set(&intc->ciu3_pp_rst, octeon_secondary_cpu_mask(s));
 +}
 +
-+void octeon_pci_pexp_write(OcteonState *s, hwaddr addr,
-+                           uint64_t value, unsigned size)
-+{
-+    OcteonPCIHostState *host = octeon_pci_host(s);
-+    uint64_t reg = OCTEON_PEXP_BASE + (addr & ~7ULL);
-+    uint64_t old;
-+
-+    if (!octeon_reg_lookup(host->pexp_regs, reg, &old)) {
-+        old = 0;
-+    }
-+
-+    octeon_reg_store(host->pexp_regs, reg,
-+                     octeon_write64(old, addr, value, size));
-+}
-+
- static uint64_t octeon_pci_absent(unsigned size)
+ static void octeon_peripheral_class_init(ObjectClass *klass,
+                                           const void *data)
  {
-     return size == 1 ? 0xff : size == 2 ? 0xffff : 0xffffffffU;
-@@ -256,6 +296,130 @@ static const MemoryRegionOps octeon_pcie_sli_cfg_ops = {
+@@ -365,6 +587,15 @@ static void octeon_rst_class_init(ObjectClass *klass, const void *data)
+                                        NULL, &opc->parent_phases);
+ }
+ 
++static void octeon_intc_class_init(ObjectClass *klass, const void *data)
++{
++    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    resettable_class_set_parent_phases(rc, NULL, octeon_intc_reset_hold,
++                                       NULL, &opc->parent_phases);
++}
++
+ static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
+                                                      const char *type,
+                                                      unsigned int index)
+@@ -380,6 +611,7 @@ static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
+ static void octeon_create_peripherals(OcteonState *s)
+ {
+     s->rst = OCTEON_RST(octeon_new_peripheral(s, TYPE_OCTEON_RST, 0));
++    s->intc = OCTEON_INTC(octeon_new_peripheral(s, TYPE_OCTEON_INTC, 0));
+ }
+ 
+ static void octeon_realize_peripheral(OcteonPeripheralState *dev)
+@@ -389,6 +621,7 @@ static void octeon_realize_peripheral(OcteonPeripheralState *dev)
+ 
+ static void octeon_realize_peripherals(OcteonState *s)
+ {
++    octeon_realize_peripheral(&s->intc->parent_obj);
+     octeon_realize_peripheral(&s->rst->parent_obj);
+ }
+ 
+@@ -418,6 +651,12 @@ static void mips_octeon_init(MachineState *machine)
+     octeon_load_firmware(s);
+     octeon_create_cpus(s);
+ 
++    memory_region_init_io(&s->intc->ciu3, OBJECT(s->intc),
++                          &octeon_ciu3_ops, s,
++                          "octeon.ciu3", OCTEON_CIU3_SIZE);
++    memory_region_add_subregion(get_system_memory(), OCTEON_CIU3_BASE,
++                                &s->intc->ciu3);
++
+     octeon_realize_peripherals(s);
+ }
+ 
+@@ -490,6 +729,12 @@ static const TypeInfo octeon_machine_types[] = {
+         .instance_size = sizeof(OcteonRstState),
+         .class_init = octeon_rst_class_init,
      },
++    {
++        .name = TYPE_OCTEON_INTC,
++        .parent = TYPE_OCTEON_PERIPHERAL,
++        .instance_size = sizeof(OcteonIntcState),
++        .class_init = octeon_intc_class_init,
++    },
+     {
+         .name = TYPE_OCTEON_MACHINE,
+         .parent = TYPE_MACHINE,
+diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
+index 9c1baee292..884eed8994 100644
+--- a/hw/mips/octeon_internal.h
++++ b/hw/mips/octeon_internal.h
+@@ -16,6 +16,7 @@
+ #define OCTEON_MAX_CPUS             16
+ typedef struct OcteonState OcteonState;
+ typedef struct OcteonRstState OcteonRstState;
++typedef struct OcteonIntcState OcteonIntcState;
+ 
+ typedef struct OcteonCPUState {
+     OcteonState *board;
+@@ -41,6 +42,11 @@ struct OcteonState {
+     MemoryRegion boot_flash_alias;
+     MemoryRegion cvmseg;
+     OcteonRstState *rst;
++    OcteonIntcState *intc;
  };
  
-+static uint64_t octeon_pcie_bswap(uint64_t value, unsigned size)
-+{
-+    switch (size) {
-+    case 1:
-+        return value;
-+    case 2:
-+        return bswap16(value);
-+    case 4:
-+        return bswap32(value);
-+    case 8:
-+        return bswap64(value);
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
++uint64_t octeon_read64(uint64_t value, hwaddr addr, unsigned size);
++uint64_t octeon_write64(uint64_t old, hwaddr addr,
++                        uint64_t value, unsigned size);
 +
-+static uint64_t octeon_pcie_mem_subid_reg(hwaddr addr)
-+{
-+    unsigned int subid = (addr >> 28) & 3;
-+
-+    return OCTEON_PEXP_BASE + OCTEON_SLI_MEM_ACCESS_SUBID_BASE +
-+           subid * OCTEON_SLI_MEM_ACCESS_SUBID_STRIDE;
-+}
-+
-+static bool octeon_pcie_mem_swap_enabled(OcteonPCIHostState *host,
-+                                         hwaddr addr, bool write)
-+{
-+    uint64_t value;
-+    uint64_t mask = write ? OCTEON_SLI_MEM_ACCESS_SUBID_ESW_M :
-+                            OCTEON_SLI_MEM_ACCESS_SUBID_ESR_M;
-+    unsigned int shift = write ? OCTEON_SLI_MEM_ACCESS_SUBID_ESW_S :
-+                                 OCTEON_SLI_MEM_ACCESS_SUBID_ESR_S;
-+
-+    if (!octeon_reg_lookup(host->pexp_regs,
-+                           octeon_pcie_mem_subid_reg(addr), &value)) {
-+        return false;
-+    }
-+
-+    return ((value & mask) >> shift) == OCTEON_SLI_MEM_ACCESS_SWAP;
-+}
-+
-+static uint64_t octeon_pcie0_mem_read(void *opaque, hwaddr addr,
-+                                      unsigned size)
-+{
-+    OcteonState *s = opaque;
-+    OcteonPCIHostState *host = octeon_pci_host(s);
-+    uint64_t value;
-+
-+    switch (size) {
-+    case 1:
-+        value = address_space_ldub(&s->pcie0_mem_as, addr,
-+                                   MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 2:
-+        value = address_space_lduw_le(&s->pcie0_mem_as, addr,
-+                                      MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 4:
-+        value = address_space_ldl_le(&s->pcie0_mem_as, addr,
-+                                     MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 8:
-+        value = address_space_ldq_le(&s->pcie0_mem_as, addr,
-+                                     MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (TARGET_BIG_ENDIAN &&
-+        !octeon_pcie_mem_swap_enabled(host, addr, false)) {
-+        value = octeon_pcie_bswap(value, size);
-+    }
-+
-+    return value;
-+}
-+
-+static void octeon_pcie0_mem_write(void *opaque, hwaddr addr,
-+                                   uint64_t value, unsigned size)
-+{
-+    OcteonState *s = opaque;
-+    OcteonPCIHostState *host = octeon_pci_host(s);
-+
-+    if (TARGET_BIG_ENDIAN &&
-+        !octeon_pcie_mem_swap_enabled(host, addr, true)) {
-+        value = octeon_pcie_bswap(value, size);
-+    }
-+
-+    switch (size) {
-+    case 1:
-+        address_space_stb(&s->pcie0_mem_as, addr, value,
-+                          MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 2:
-+        address_space_stw_le(&s->pcie0_mem_as, addr, value,
-+                             MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 4:
-+        address_space_stl_le(&s->pcie0_mem_as, addr, value,
-+                             MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 8:
-+        address_space_stq_le(&s->pcie0_mem_as, addr, value,
-+                             MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+static const MemoryRegionOps octeon_pcie0_mem_ops = {
-+    .read = octeon_pcie0_mem_read,
-+    .write = octeon_pcie0_mem_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+    .impl = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
-+
- static int octeon_pci_map_irq(PCIDevice *pci_dev, int irq_num)
- {
-     return 0;
-@@ -273,6 +437,9 @@ static void octeon_pci_host_init(Object *obj)
-     host->root_cfg = g_hash_table_new_full(octeon_uint64_hash,
-                                            octeon_uint64_equal,
-                                            g_free, g_free);
-+    host->pexp_regs = g_hash_table_new_full(octeon_uint64_hash,
-+                                            octeon_uint64_equal,
-+                                            g_free, g_free);
- }
- 
- static void octeon_pci_host_finalize(Object *obj)
-@@ -280,6 +447,7 @@ static void octeon_pci_host_finalize(Object *obj)
-     OcteonPCIHostState *host = OCTEON_PCI_HOST(obj);
- 
-     g_hash_table_destroy(host->root_cfg);
-+    g_hash_table_destroy(host->pexp_regs);
- }
- 
- static void octeon_pci_host_class_init(ObjectClass *klass, const void *data)
-@@ -353,4 +521,10 @@ void octeon_init_pci(OcteonState *s)
-     memory_region_add_subregion(get_system_memory(), OCTEON_PCIE0_IO_BASE,
-                                 &s->pcie0_io);
- 
-+    address_space_init(&s->pcie0_mem_as, &host->mem,
-+                       "octeon.pcie0-mem-as");
-+    memory_region_init_io(&s->pcie0_mem, NULL, &octeon_pcie0_mem_ops, s,
-+                          "octeon.pcie0-mem", OCTEON_PCIE0_MEM_SIZE);
-+    memory_region_add_subregion(get_system_memory(), OCTEON_PCIE0_MEM_BASE,
-+                                &s->pcie0_mem);
- }
+ #endif
 -- 
 2.56.0
 
