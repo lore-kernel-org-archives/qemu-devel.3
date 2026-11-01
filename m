@@ -1,60 +1,59 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CE8606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 10:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D44606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 10:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=MO9oRLf2
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VuwuYGba
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNSLA-0006ia-L7; Sun, 01 Nov 2026 04:59:04 -0500
+	id 1xNSLI-0006lx-LX; Sun, 01 Nov 2026 04:59:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xNSL8-0006hm-8O
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 04:59:02 -0500
+ id 1xNSLG-0006lR-P5
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 04:59:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xNSL6-0007tF-Os
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 04:59:01 -0500
+ id 1xNSLF-0007um-0W
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 04:59:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793527139;
+ s=mimecast20190719; t=1793527148;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4mVqWofxzxr+R41ROxlFMUfJeczvCtanxN0ktKWM0nA=;
- b=MO9oRLf24V5mQwq5tPdDx6u59eKISX1xUR55cRi2Kw9sbqPO7xk+2+nxYMIcO8z+Uf9jFE
- lBn7aA0MNye7Pzg6KI3dAzQBnJiRoPivUvWjUlNmrdjFWZe7ObXFsdg0BTtWqFHqEOShYV
- BBa3ymDv20RB2lBgp4DQ0ZBgYfpybR0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=A0es++qsMg/zmMX4B/0WgpK4UOzZEP4CCB3rBHFwTpU=;
+ b=VuwuYGbamjvWIwiawXBX31tJFm6Zk9efqqdnyLq6ctmZn/bq0lDsBbpMIgPAYeAymNctVt
+ EGbcX1fwfdqF13chwU2Mf5Hw9I8ZPmdLa0k6imwMUxVvzSl0U/3fOCh291/boul1LJb6Iu
+ A87qRilKM6Y8ihoF464SqFgQGQJ2qzA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-tlYK0KiMN-GJCydjYw6EDQ-1; Sun,
- 01 Nov 2026 04:58:58 -0500
-X-MC-Unique: tlYK0KiMN-GJCydjYw6EDQ-1
-X-Mimecast-MFC-AGG-ID: tlYK0KiMN-GJCydjYw6EDQ_1793527137
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-398-WgYTd0WPM52VHrrFNrgH2Q-1; Sun,
+ 01 Nov 2026 04:59:06 -0500
+X-MC-Unique: WgYTd0WPM52VHrrFNrgH2Q-1
+X-Mimecast-MFC-AGG-ID: WgYTd0WPM52VHrrFNrgH2Q_1793527145
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D7D0B1955F1A
- for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 09:58:56 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C03711954B06
+ for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 09:59:05 +0000 (UTC)
 Received: from pbonzini-thinkpadx1carbon6th.rmtit.csb
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 312561800446
- for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 09:58:55 +0000 (UTC)
+ id 1DFA01800495
+ for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 09:59:04 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/10] target/i386/tcg: change popl_esp_hack to an
- X86InsnSpecial
-Date: Sun,  1 Nov 2026 10:58:43 +0100
-Message-ID: <20261101095851.1557351-3-pbonzini@redhat.com>
+Subject: [PULL 09/10] include: introduce qemu/version.h
+Date: Sun,  1 Nov 2026 10:58:50 +0100
+Message-ID: <20261101095851.1557351-10-pbonzini@redhat.com>
 In-Reply-To: <20261101095851.1557351-1-pbonzini@redhat.com>
 References: <20261101095851.1557351-1-pbonzini@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -89,75 +88,224 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+In preparation for moving some of the qemu-version.sh logic to meson
+and the preprocessor, create a wrapper header for the generated
+qemu-version.h.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.h     | 6 ++++++
- target/i386/tcg/translate.c      | 1 -
- target/i386/tcg/decode-new.c.inc | 8 +++-----
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ include/qemu/version.h               | 12 ++++++++++++
+ bsd-user/main.c                      |  2 +-
+ linux-user/main.c                    |  2 +-
+ monitor/qmp-cmds-control.c           |  2 +-
+ qemu-img.c                           |  2 +-
+ qemu-io.c                            |  2 +-
+ qemu-nbd.c                           |  2 +-
+ qga/main.c                           |  2 +-
+ scsi/qemu-pr-helper.c                |  2 +-
+ storage-daemon/qemu-storage-daemon.c |  2 +-
+ system/vl.c                          |  2 +-
+ tools/i386/qemu-vmsr-helper.c        |  3 +--
+ tools/qemu-vnc/qemu-vnc.c            |  2 +-
+ util/module.c                        |  2 +-
+ 14 files changed, 25 insertions(+), 14 deletions(-)
+ create mode 100644 include/qemu/version.h
 
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index 5f76b0c1b7a..a823143bbdf 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -242,6 +242,12 @@ typedef enum X86InsnSpecial {
- 
-     /* Memory operand size of MOV from segment register is MO_16 */
-     X86_SPECIAL_Op0_Mw,
+diff --git a/include/qemu/version.h b/include/qemu/version.h
+new file mode 100644
+index 00000000000..38405495c0e
+--- /dev/null
++++ b/include/qemu/version.h
+@@ -0,0 +1,12 @@
++/*
++ * QEMU version strings
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+    /*
-+     * If the address uses ESP as the base register, use the value
-+     * of ESP after the pop.
-+     */
-+    X86_SPECIAL_PopESP,
- } X86InsnSpecial;
++#ifndef QEMU_VERSION_H
++#define QEMU_VERSION_H
++
++#include "qemu-version.h"
++
++#endif
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 29ee59de2cf..6720dbde6f8 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -25,7 +25,7 @@
+ #include "qemu/help-texts.h"
+ #include "qemu/units.h"
+ #include "qemu/accel.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ #include <machine/trap.h>
  
- /*
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 5199c330ac7..b2cbce046cb 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -108,7 +108,6 @@ typedef struct DisasContext {
-     uint8_t vex_v;  /* vex vvvv register, without 1's complement.  */
-     bool vex_ndd; /* is this a 3-operand instruction? */
-     bool vex_w; /* used by AVX even on 32-bit processors */
--    uint8_t popl_esp_hack; /* for correct popl with esp base handling */
-     uint8_t rip_offset; /* only used in x86_64, but left for simplicity */
+ #include "qapi/error.h"
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 60a695b7ca3..2f0c0a50c8a 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -21,7 +21,7 @@
+ #include "qemu/help-texts.h"
+ #include "qemu/units.h"
+ #include "qemu/accel.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ #include <sys/syscall.h>
+ #include <sys/resource.h>
+ #include <sys/shm.h>
+diff --git a/monitor/qmp-cmds-control.c b/monitor/qmp-cmds-control.c
+index 8fe0876a3da..bc938712f3d 100644
+--- a/monitor/qmp-cmds-control.c
++++ b/monitor/qmp-cmds-control.c
+@@ -25,7 +25,7 @@
+ #include "qemu/osdep.h"
  
-     uint8_t rex_r; /* 0 for i386, but left for simplicity */
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 3845fab5c85..2756953c744 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1615,8 +1615,7 @@ static void decode_group1A(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
-         *entry = UNKNOWN_OPCODE;
-     } else {
-         entry->gen = gen_POP;
--        /* The address must use the value of ESP after the pop.  */
--        s->popl_esp_hack = 1 << mo_pushpop(s, s->dflag);
-+        entry->special = X86_SPECIAL_PopESP;
-     }
- }
+ #include "monitor-internal.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ #include "qapi/compat-policy.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-control.h"
+diff --git a/qemu-img.c b/qemu-img.c
+index edf75e43aba..766d8540bfe 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -27,7 +27,7 @@
  
-@@ -2360,8 +2359,8 @@ static void decode_modrm(DisasContext *s, CPUX86State *env,
-         }
+ #include "qemu/help-texts.h"
+ #include "qemu/qemu-progress.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-block-core.h"
+ #include "qapi/qapi-visit-block-core.h"
+diff --git a/qemu-io.c b/qemu-io.c
+index 598d5b1c9ca..b5f2ae631a4 100644
+--- a/qemu-io.c
++++ b/qemu-io.c
+@@ -34,7 +34,7 @@
+ #include "block/block_int.h"
+ #include "trace/control.h"
+ #include "crypto/init.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
  
-         /* For correct popl handling with esp.  */
--        if (base == R_ESP && s->popl_esp_hack) {
--            disp += s->popl_esp_hack;
-+        if (base == R_ESP && decode->e.special == X86_SPECIAL_PopESP) {
-+            disp += 1 << mo_pushpop(s, s->dflag);
-         }
-         if (base == R_EBP || base == R_ESP) {
-             def_seg = R_SS;
-@@ -3287,7 +3286,6 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+ #define CMD_NOFILE_OK   0x01
  
-     s->pc = s->base.pc_next;
-     s->override = -1;
--    s->popl_esp_hack = 0;
- #ifdef TARGET_X86_64
-     s->rex_r = 0;
-     s->rex_x = 0;
+diff --git a/qemu-nbd.c b/qemu-nbd.c
+index fcca88932a3..a9c75bffa9c 100644
+--- a/qemu-nbd.c
++++ b/qemu-nbd.c
+@@ -45,7 +45,7 @@
+ #include "crypto/init.h"
+ #include "crypto/tlscreds.h"
+ #include "trace/control.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ 
+ #ifdef CONFIG_SELINUX
+ #include <selinux/selinux.h>
+diff --git a/qga/main.c b/qga/main.c
+index fd19c7037db..06358cb213c 100644
+--- a/qga/main.c
++++ b/qga/main.c
+@@ -30,7 +30,7 @@
+ #include "qemu/help_option.h"
+ #include "qemu/sockets.h"
+ #include "qemu/systemd.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ #ifdef _WIN32
+ #include <windows.h>
+ #include <objbase.h>
+diff --git a/scsi/qemu-pr-helper.c b/scsi/qemu-pr-helper.c
+index 54d196a503f..5f4e7ab4b79 100644
+--- a/scsi/qemu-pr-helper.c
++++ b/scsi/qemu-pr-helper.c
+@@ -50,7 +50,7 @@
+ #include "qobject/qstring.h"
+ #include "io/channel-socket.h"
+ #include "trace/control.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ 
+ #include "block/thread-pool.h"
+ 
+diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-storage-daemon.c
+index 50dbfbd97ae..b2e29f00054 100644
+--- a/storage-daemon/qemu-storage-daemon.c
++++ b/storage-daemon/qemu-storage-daemon.c
+@@ -43,7 +43,7 @@
+ #include "qapi/qobject-input-visitor.h"
+ 
+ #include "qemu/help-texts.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ #include "qemu/cutils.h"
+ #include "qemu/config-file.h"
+ #include "qemu/error-report.h"
+diff --git a/system/vl.c b/system/vl.c
+index fbe580746d3..22f07d4753e 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -37,7 +37,7 @@
+ #include "qobject/qdict.h"
+ #include "qobject/qstring.h"
+ #include "qobject/qjson.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ #include "qemu/cutils.h"
+ #include "qemu/help_option.h"
+ #include "qemu/hw-version.h"
+diff --git a/tools/i386/qemu-vmsr-helper.c b/tools/i386/qemu-vmsr-helper.c
+index f12fd3c3e81..fac7fbe6b61 100644
+--- a/tools/i386/qemu-vmsr-helper.c
++++ b/tools/i386/qemu-vmsr-helper.c
+@@ -34,7 +34,7 @@
+ #include "qemu/module.h"
+ #include "qemu/error-report.h"
+ #include "qemu/config-file.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+@@ -42,7 +42,6 @@
+ #include "io/channel.h"
+ #include "io/channel-socket.h"
+ #include "trace/control.h"
+-#include "qemu-version.h"
+ #include "rapl-msr-index.h"
+ 
+ #define MSR_PATH_TEMPLATE "/dev/cpu/%u/msr"
+diff --git a/tools/qemu-vnc/qemu-vnc.c b/tools/qemu-vnc/qemu-vnc.c
+index 5c2ba3b7a56..2b7cac34fab 100644
+--- a/tools/qemu-vnc/qemu-vnc.c
++++ b/tools/qemu-vnc/qemu-vnc.c
+@@ -15,7 +15,7 @@
+ #include "qemu/option.h"
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ #include "ui/vnc.h"
+ #include "crypto/secret.h"
+ #include "crypto/tlscredsx509.h"
+diff --git a/util/module.c b/util/module.c
+index 8f8e6994f11..6de9ff2e411 100644
+--- a/util/module.c
++++ b/util/module.c
+@@ -23,7 +23,7 @@
+ #include "qemu/config-file.h"
+ #include "qapi/error.h"
+ #ifdef CONFIG_MODULE_UPGRADES
+-#include "qemu-version.h"
++#include "qemu/version.h"
+ #endif
+ #include "trace.h"
+ 
 -- 
 2.56.0
 
