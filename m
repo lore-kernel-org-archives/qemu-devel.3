@@ -1,92 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F1A606A325
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 16:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875DA606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 16:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BxRdLY5p
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ac6dAwGl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNYJR-0004XI-Tn; Sun, 01 Nov 2026 11:21:42 -0500
+	id 1xNYJX-0004am-En; Sun, 01 Nov 2026 11:21:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
- id 1xNYJP-0004WX-BH
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 11:21:39 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1xNYJU-0004YV-0h
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 11:21:44 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
- id 1xNYJN-0008MI-Qw
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 11:21:39 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4af520023fdso4008995e9.1
- for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 08:21:37 -0800 (PST)
+ id 1xNYJS-0008N8-5h
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 11:21:43 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4a78ec32fadso4121115e9.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 08:21:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793550096; x=1794154896; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=/6YBiYZ+QK3WluY3yWpbh7daE4I8gR/HYZYvR0FbOOc=;
- b=BxRdLY5p8hOhFSHbvo4LcQCzejPciJbD41rR08M3qIgHzq3cekDx8ktWoohMJTptRn
- 2cTthuhiwBUZzircoHqI7HcL/bHIA5znWyvqng12+qKJuNNj+r+2GU6eKfh9E14XOtn4
- 1Zhybih+c5bQhtmO9JXso0I5INOexK+k9eeIvmVm2A+69EMVmA7C+y6s1zjrTfNdK90b
- 2FUNFFyDNyn+TiB+brtsU7kATjuK9zxmhWUqdoZyEeuHTXR90V34TKlQb/tjP/8Ihgdm
- ZAe8l0E3yc6CfqQ3R/lt6/WTRIZ6AkrbFnYUbJAFs7sR8ZZW5L7/GaheujBFxA9L9GLj
- /I3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793550096; x=1794154896;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20260707; t=1793550101; x=1794154901; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/6YBiYZ+QK3WluY3yWpbh7daE4I8gR/HYZYvR0FbOOc=;
- b=Qij37NViTGaPNQD7FhYAbx4aPuGbIdOYr8hvabA+oBqpaXBxnWmOmCRB+acrYp02Tv
- +kdMVlt/69+bgknKXPsJ0IFBD9sfE9K/19ioE82c8AshmXzymoskKloTY9VlTnYexAoF
- vlcKwN028FzBz1J7MdvYqGkPrP77amQyHS4rTPF88WJzANUZTZhH6kHTHARWH6xIXGts
- 0jUWr+MBqdKttuOLlXqyjY7lH+wvIIZRhvnB3lLzcQKiO6OtDAHbhLgQVLqZvT+6Qbcc
- MGXTiTlEcidumHZYloIY8QMYQxLIQxkY30GIZ7X17AbT9UpewCUO06gpP27j8BkQElYY
- jxcg==
+ bh=2hhR2YuIT0xv5LOPPT7Hlt+EDaoi3+8UIv1NmjBiJaE=;
+ b=Ac6dAwGl2T8cJ//aeHRsawRTqqPdWpFrtuC25l0UPJqJYi4zF7M6WgUQlO/RxIqrFm
+ NCLYfysrfjV5116ieu+DOSX++JS3ckn16UdRbyySW/ASQ3SRN9WsVzkMKt7xMyNwsZeS
+ BvfItfWNOr8PhDDZT/ZipMTHylZxaRsTNhGuy6UCR6G+QirfBgKj9cggMq2F3QYWaaPR
+ 3ZPlj/mj7hI2bLMaIa8UR7WoyjzOL4NqiOEjxmRBbunQBruDvWPopaRCuNZNQXcrNngr
+ NJfVMC410q1js6RBDrH1VcuDPcSfg8WRX+I9xwAO3UzPxbskrvAQPQwKZs3sHfMZ/LJt
+ gmvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793550101; x=1794154901;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=2hhR2YuIT0xv5LOPPT7Hlt+EDaoi3+8UIv1NmjBiJaE=;
+ b=IX1I6PGh+3jizkh5q0ZchCJpyGwDMSAtqN7t54TvitEKv8kbbuHLXfJASQCKtKB5z+
+ iRjBLYZiM6h7RNAtdC5g6EQGSlvtWhJnLYmIzT1OCCgksAdcsUpZuCs8WZTO+JrJr3LA
+ S648G2Ruvw8WzwciskTSRgdGCr9qyfShE6AkVZWA95SYXBrCcddxe2KgjJNQ5q5/XsDt
+ Ayfnw5rD0jnzhLdun04sfkv0Biiln8PxiwLSpDbP2ShYnQsL9sYL1dWQcMohTLsChjuu
+ kJD3FXP9EaEqi+qDCNeZE7dWPcHkMHQGaN3JWwzT2REaEEQv3MFlgpSyYuK9B72ilrFX
+ Ij1w==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzwXD/GglQFNiB+c+QrzD9jmpCrOUWMGFR8jeEFbHNwIEdeaFGk2MfXMilr/Y3e5mqOBQNMBW8is4Rq@nongnu.org
-X-Gm-Message-State: AFq9FYKrKr7GQJjm0vx2XF4fsiiTuzIv8DpPh+Xvb7mFP/axIZv2wLB5
- e5GWFUy/tXfph07VbYJi4kXMIHJpeYFlDC08MFkMusRO4HydNex6Bdlw
-X-Gm-Gg: AYBFou1t/9fIB5finKbOiwfTD1/W3d63tmRIuopQa4I3P5OXr1OHspUT/IZxo0ggZvQ
- kHb+YNMf0JdBD+fhzgbxPbrLIQ9uGCNqsqX6cMr6oug1RdVdsPu2EF9acBdYNSbfvSuBGaTJkgc
- U8YS93S7YmmaXNl43dXn3I/gurXneGdtuO4vmQr7bZ+vl8qG6heUFa2/kmuLppW3JgErorGMtWh
- 5SXE2cX/POPF1vRNOuJtCLLcwPQrDQ/Cp+uRLg+1DLeD8qaogPkpRQNw4D2PC0IqrOSwXgGkntR
- mgGZhmhpuVeFlHhNRrQ/EHwukosGOVfDOP/YeXtvHNFpQywhwUpYP+esxPJito8fZiw9kfs3OqK
- HwxP8SruoIT8A7235B61W31elYH0bbQ71QfAtZ8xUQ1CqEpUTEXewF6b0VN7+qNFIlFaYiWgjsd
- VSeiKIOxQYZooEYxUhyhI3fQ57Lrer9Bjdt5U/nyzi8WEd3uZQVa5ubYzBGgPDPjVQfPvqdgobH
- UKVTxBDk6BSNii0if+FUc2VygL397pcY7tuOWwXguaGnNb3wakGdCkmnTG/u3v2B9fvXwAUxujA
- QzCF+Xn6VErq+DVndD8llh2pfddGeZvaRdiP91LH4lO4fSYOU1amWQHy4R4LjWQi8LXh8kalabA
- 9+DlwS82k7w==
-X-Received: by 2002:a05:600c:a5a5:b0:4a1:e774:370d with SMTP id
- 5b1f17b1804b1-4ac1765d60fmr117179945e9.1.1793550095841; 
- Sun, 01 Nov 2026 08:21:35 -0800 (PST)
+ AKwUvBzSpXmQ49yFgiAy5DD7WiJYblO9LKSRMWlyZ1/9FFzvY97QWad/iTU8Uxe7YNK8MONBIhixoFAzt/0w@nongnu.org
+X-Gm-Message-State: AFq9FYI+zcFz5Q2nAkFxub2pdHf06u3LgOeuQRfX8KBivEasTSGaxhcZ
+ 3MhZrvBKSTqlnlVuIvyXsdCe8vDJt5HvWL3n89OOM5kTlYDoqz1WVCkw
+X-Gm-Gg: AYBFou1nU/5GPKDF59AAljHtWLl2gopXJ2HT0zp0EP/rUSMUxRNSio8nc5VxlSB+XVb
+ DsHMarBv13F+ECkuPbxBaTkCqtuunvNphfd+/tXn8StUANFs8/lq+cdCvMHamgko60PpmBpsG0R
+ sSpeyZVPmce0nUq5AUWpY/f/Ql5v2ojY4G44M2ke/LwEV2L/KN9b+Nk7qpyrXr+p6wUibN0qCtX
+ i+8qwlS2xgZgKrW6s8nGgsEBGriWeQT3ehXq0EIc7xmyIV5cnLEl61/JZwjxegSm8uEu+igDrZY
+ tf13utSlH/vht2YXDqvYMIUxT8JGsi0HN7ZsnhsgU+GBbPj7YqVD7e0ZF1oJAe/2khjUt3sHFQG
+ DeRNf+YoTyUsBk3PpLQzapB6gDjqBhpodC1hOsQ7O3e6LQ3PuZeYZA05XTLH4kLPTYGpyMqBms9
+ ftzEPB9D10UaCkgQu2WAOKc2eDgZvW7mM97iME5kyYI1gPdvD0v5vs1Q0WeMpM6u8/TcIhSl7yp
+ hMNUtI/kOpheqyf5cJRpJDyEpKwAaDNe3wr1t6yn98iAafvPSQJIbmMfOUI4IS1lE69699CbfJY
+ rp37lK/Eg/8j4hF2DSyN8XXefa/AImcjy703nRR43HnHHHPsVE68TCv45R+CFlXZ
+X-Received: by 2002:a05:600c:1798:b0:4a0:1f9e:5f78 with SMTP id
+ 5b1f17b1804b1-4ac1228a41emr117770255e9.0.1793550100685; 
+ Sun, 01 Nov 2026 08:21:40 -0800 (PST)
 Received: from AtiePC ([2a0c:5a87:5006:4800:78cf:63bd:d449:f7bc])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa80f04785sm283897765e9.4.2026.11.01.08.21.34
+ 5b1f17b1804b1-4aa80f04785sm283897765e9.4.2026.11.01.08.21.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Nov 2026 08:21:35 -0800 (PST)
+ Sun, 01 Nov 2026 08:21:40 -0800 (PST)
 From: Daniel Paziyski <danielpaziyski@gmail.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Daniel Paziyski <danielpaziyski@gmail.com>, qemu-stable@nongnu.org,
  qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH 0/3] pci, pcie_sriov fixes (null dereferences, checks)
-Date: Sun,  1 Nov 2026 17:21:28 +0100
-Message-ID: <20261101162132.147838-1-danielpaziyski@gmail.com>
+Subject: [PATCH 3/3] pcie_sriov: fix null pointer dereference when
+ initializing PFs in a system with user and device created VFs
+Date: Sun,  1 Nov 2026 17:21:31 +0100
+Message-ID: <20261101162132.147838-4-danielpaziyski@gmail.com>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261101162132.147838-1-danielpaziyski@gmail.com>
+References: <20261101162132.147838-1-danielpaziyski@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=danielpaziyski@gmail.com; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=danielpaziyski@gmail.com; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,40 +101,62 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The first patch fixes a null pointer deference on pci device registration
-failure, caused by the accidental merge of 432ea8cc7d27
-("pcie_sriov: register user created virtual function before realizing it").
+pcie_sriov_pf_init is only used to initialize PFs for device created VFs, and
+as such, it is checked that the PF has not been referenced by a user created VF
+by means of the sriov-pf parameter.
 
-The second patch reintroduces some checks done before that commit, which are
-present in the v2 of the patch introduced by the mentioned commit, but due
-to the accidental merge they are included in this series.
+This check crashes if it is performed for a PF that does not have an ID, and
+there are already user created VFs in the system.
 
-The third patch fixes a null dereference that I have discovered testing the
-previous two patches, it is not a big deal since it only occurs during device
-realization of a PF of device created VFs without an ID, when there are already
-user created VFs, but is still nice to have fixed.
+Example:
+
+    qemu-system-x86_64 -M q35                                   \
+        -device pcie-root-port,id=rp1,chassis=1,slot=1          \
+        -device virtio-net-pci,sriov-pf=f,addr=0.1,bus=rp1      \
+        -device virtio-net-pci,id=f,addr=0.0,bus=rp1            \
+        -device pcie-root-port,id=rp2,chassis=1,slot=2          \
+        -device nvme-subsys,id=subsys0                          \
+        -device nvme,sriov_max_vfs=1,serial=s,sriov_vq_flexible=2,sriov_vi_flexible=1,bus=rp2,subsys=subsys0
+
+ASAN message:
+
+The signal is caused by a READ memory access.
+Hint: address points to the zero page.
+    #0 in g_str_hash (/usr/lib/libglib-2.0.so.0+0x49954)
+    #1 in g_hash_table_contains (/usr/lib/libglib-2.0.so.0+0x4ad3b)
+    #2 in pcie_sriov_pf_init ../hw/pci/pcie_sriov.c:161
+    #3 in nvme_init_sriov ../hw/nvme/ctrl.c:9088
+    #4 in nvme_init_pci ../hw/nvme/ctrl.c:9218
+    #5 in nvme_realize ../hw/nvme/ctrl.c:9696
 
 Cc: qemu-stable@nongnu.org
+Fixes: 19e55471d4e8 ("pcie_sriov: Allow user to create SR-IOV device")
+Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+---
+ hw/pci/pcie_sriov.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Daniel Paziyski (3):
-  pci: fix null pointer dereference on pci device registration failure
-  pcie_sriov: perform additional checks after pci device realization
-  pcie_sriov: fix null pointer dereference when initializing PFs in a
-    system with user and device created VFs
-
- hw/pci/pci.c                | 11 +++++++----
- hw/pci/pcie_sriov.c         | 21 ++++++++++++++++++++-
- include/hw/pci/pcie_sriov.h |  2 ++
- 3 files changed, 29 insertions(+), 5 deletions(-)
-
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 618d2a4a64..7111f2f399 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -158,7 +158,7 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+     BusState *bus = qdev_get_parent_bus(&dev->qdev);
+     int32_t devfn = dev->devfn + vf_offset;
+ 
+-    if (pfs && g_hash_table_contains(pfs, dev->qdev.id)) {
++    if (pfs && dev->qdev.id && g_hash_table_contains(pfs, dev->qdev.id)) {
+         error_setg(errp, "attaching user-created SR-IOV VF unsupported");
+         return false;
+     }
 -- 
 2.56.0
 
