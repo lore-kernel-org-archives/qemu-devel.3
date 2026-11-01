@@ -1,70 +1,55 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA60606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FEF8606A325
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=TdjC/i7p
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=du+2YA9N
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNbw5-0001sg-Dh; Sun, 01 Nov 2026 15:13:49 -0500
+	id 1xNbw3-0001mc-Q0; Sun, 01 Nov 2026 15:13:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbvm-0001Su-5E
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:13:35 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbuw-00018a-2z
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:12:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbvk-0006il-Ny
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:13:29 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbus-0006b0-4d
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:12:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793564008;
+ s=mimecast20190719; t=1793563953;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
- references:references; bh=XB5EnWMeZC+TuUTfvw5ippbkRaPu3bjzBuwOlljxabM=;
- b=TdjC/i7pf309rewU8fbkbD73it8Vn4TC1eoz2YLW74PyyKACZdznrSEnT6Y23xLxTlr8RR
- OKoSOvGy5H/OQjC9jkTrUXnN4ccRY1B4zYY2o8a6REryCnOOyFEPN40JJaiUfqpSW8AFUD
- NMlzO8B/LZJEwzTJjeRpwvJtOxQKhY8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=oNopvIrGwggCQ0510MgqgZL4xJk+ROUgtmVb33nxu5Y=;
+ b=du+2YA9Nflw4J2Quok8v5zdQlDRCvaCHoAMdKGsvA9661afpN9Wj5Qhft8P80Oc4lhiudG
+ aJixyjpNqqkLm1/zY/lD3do7Pe8DUN2PsSOha63zqhFuBwFx+ASwPQVOCUjRXR5QRtyMsq
+ LpQEgV+x/xGTkGxiH82r9s0Zqa7H0oM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-EOQDkoJqOrSzuYyhPjyxGw-1; Sun,
- 01 Nov 2026 15:13:26 -0500
-X-MC-Unique: EOQDkoJqOrSzuYyhPjyxGw-1
-X-Mimecast-MFC-AGG-ID: EOQDkoJqOrSzuYyhPjyxGw_1793564002
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-400--bl76eGfOWKWgGNyjcKPkw-1; Sun,
+ 01 Nov 2026 15:12:27 -0500
+X-MC-Unique: -bl76eGfOWKWgGNyjcKPkw-1
+X-Mimecast-MFC-AGG-ID: -bl76eGfOWKWgGNyjcKPkw_1793563943
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 305B619560B3; Sun,  1 Nov 2026 20:13:22 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CA7C11955BFE; Sun,  1 Nov 2026 20:12:21 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E9645195608B; Sun,  1 Nov 2026 20:13:20 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BF59767; Sun,  1 Nov 2026 20:12:19 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7626A21E6A04; Sun, 01 Nov 2026 21:13:18 +0100 (CET)
-Resent-To: 17746591750@163.com, alistair@alistair23.me, graf@amazon.com,
- FangSheng.Huang@amd.com, michael.roth@amd.com, jamin_lin@aspeedtech.com,
- kane_chen@aspeedtech.com, palmer@dabbelt.com, rbolshakov@ddn.com,
- foss@defmacro.it, sebastian.huber@embedded-brains.de, fam@euphon.net,
- jiaxun.yang@flygoat.com, lizhijian@fujitsu.com, atar4qemu@gmail.com,
- edgar.iglesias@gmail.com, jasowangio@gmail.com, liwei1518@gmail.com,
- npiggin@gmail.com, zhangckid@gmail.com, titusr@google.com,
- wuhaotsh@google.com, arei.gonglei@huawei.com, berto@igalia.com,
- mark.cave-ayland@ilande.co.uk, junjie.cao@intel.com, zhao1.liu@intel.com,
- pasic@linux.ibm.com, its@irrelevant.dk, rathc@linux.ibm.com, clg@kaod.org,
- stefanb@linux.vnet.ibm.com, conor@kernel.org,
- xen-devel@lists.xenproject.org, david@kernel.org, luc@lmichel.fr,
- jic23@kernel.org, kbusch@kernel.org, mchehab+huawei@kernel.org,
- sstabellini@kernel.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com,
- zhenwei.pi@linux.dev, adityag@linux.ibm.com, alifm@linux.ibm.com,
- amachhiw@linux.ibm.com, borntraeger@linux.ibm.com,
- brueckner@linux.ibm.com, farman@linux.ibm.com, harshpb@linux.ibm.com,
- iii@linux.ibm.com, jjherne@linux.ibm.com, milesg@linux.ibm.com,
- mjrosato@linux.ibm.com, lixianglai@loongson.cn, maobibo@loongson.cn,
+ id 3331821E6A04; Sun, 01 Nov 2026 21:12:17 +0100 (CET)
+Resent-To: pasic@linux.ibm.com, 17746591750@163.com, rathc@linux.ibm.com,
+ alistair@alistair23.me, stefanb@linux.vnet.ibm.com, graf@amazon.com,
+ xen-devel@lists.xenproject.org, FangSheng.Huang@amd.com, luc@lmichel.fr,
+ michael.roth@amd.com, lixianglai@loongson.cn, maobibo@loongson.cn,
  pbarbuda@microsoft.com, yoshinori.sato@nifty.com, qemu-arm@nongnu.org,
  qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
  qemu-riscv@nongnu.org, qemu-s390x@nongnu.org, john.levon@nutanix.com,
@@ -75,10 +60,26 @@ Resent-To: 17746591750@163.com, alistair@alistair23.me, graf@amazon.com,
  tangtao1634@phytium.com.cn, chao.liu@processmission.com, jiri@resnulli.us,
  sam@rfc1149.net, anisa.su@samsung.com, alex@shazbot.org, farosas@suse.de,
  mohamed@unpredictable.fr, kvm@vger.kernel.org, linux-cxl@vger.kernel.org,
- alistair.francis@wdc.com, anthony@xenproject.org
+ alistair.francis@wdc.com, anthony@xenproject.org,
+ jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com, palmer@dabbelt.com,
+ rbolshakov@ddn.com, foss@defmacro.it, sebastian.huber@embedded-brains.de,
+ fam@euphon.net, jiaxun.yang@flygoat.com, lizhijian@fujitsu.com,
+ atar4qemu@gmail.com, edgar.iglesias@gmail.com, jasowangio@gmail.com,
+ liwei1518@gmail.com, npiggin@gmail.com, zhangckid@gmail.com,
+ titusr@google.com, wuhaotsh@google.com, arei.gonglei@huawei.com,
+ berto@igalia.com, mark.cave-ayland@ilande.co.uk, junjie.cao@intel.com,
+ zhao1.liu@intel.com, its@irrelevant.dk, clg@kaod.org, conor@kernel.org,
+ david@kernel.org, jic23@kernel.org, kbusch@kernel.org,
+ mchehab+huawei@kernel.org, sstabellini@kernel.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ zhiwei_liu@linux.alibaba.com, zhenwei.pi@linux.dev, adityag@linux.ibm.com,
+ alifm@linux.ibm.com, amachhiw@linux.ibm.com, borntraeger@linux.ibm.com,
+ brueckner@linux.ibm.com, farman@linux.ibm.com, harshpb@linux.ibm.com,
+ iii@linux.ibm.com, jjherne@linux.ibm.com, milesg@linux.ibm.com,
+ mjrosato@linux.ibm.com
 Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Sun, 01 Nov 2026 21:13:18 +0100
-Resent-Message-ID: <871p941fa9.fsf@pond.sub.org>
+Resent-Date: Sun, 01 Nov 2026 21:12:17 +0100
+Resent-Message-ID: <87a4ns1fby.fsf@pond.sub.org>
 From: Markus Armbruster <armbru@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  John Snow
@@ -144,19 +145,20 @@ Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  John Snow
  <atar4qemu@gmail.com>,  Yoshinori Sato <yoshinori.sato@nifty.com>,  Jiri
  Pirko <jiri@resnulli.us>,  Eric Auger <eric.auger@redhat.com>,  Laurent
  Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v7 07/65] qapi: add QAPITypeInfo struct definition
-In-Reply-To: <87ik2g7cd6.fsf@pond.sub.org> (Markus Armbruster's message of
- "Sun, 01 Nov 2026 17:19:49 +0100")
+Subject: Re: [PATCH v7 64/65] qom: use QAPITypeInfo in object_property_get_enum
+In-Reply-To: <20261020-qom-qapi-v7-64-431a86b02b58@redhat.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?=
+ Lureau"'s message of "Tue, 20 Oct 2026 14:46:21 +0400")
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
- <20261020-qom-qapi-v7-7-431a86b02b58@redhat.com>
- <87ik2g7cd6.fsf@pond.sub.org>
-Date: Sun, 01 Nov 2026 17:27:17 +0100
-Message-ID: <87a4ns7c0q.fsf@pond.sub.org>
+ <20261020-qom-qapi-v7-64-431a86b02b58@redhat.com>
+Date: Sun, 01 Nov 2026 17:15:34 +0100
+Message-ID: <87mrrs7ck9.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
@@ -178,19 +180,58 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Markus Armbruster <armbru@redhat.com> writes:
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-> As far as I can tell, @name is used outside tests only for an error
-> message in object_property_get_enum(), and I'm not sure that error makes
-> sense.  Observation, not a demand.
+> The typename parameter becomes a QAPITypeInfo pointer, and the
+> validation compares prop->qapi_type against it instead of matching
+> prop->type strings.
+>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-No, I managed to confuse myself.  Please ignore.
+[...]
+
+> diff --git a/qom/object.c b/qom/object.c
+> index 791d981dc689..40b569d4d574 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -1775,7 +1775,7 @@ uint64_t object_property_get_uint(Object *obj, cons=
+t char *name,
+>  }
+>=20=20
+>  int object_property_get_enum(Object *obj, const char *name,
+> -                             const char *typename, Error **errp)
+> +                             const QAPITypeInfo *type_info, Error **errp)
+>  {
+>      char *str;
+>      int ret;
+> @@ -1785,10 +1785,10 @@ int object_property_get_enum(Object *obj, const c=
+har *name,
+>          return -1;
+>      }
+>=20=20
+> -    if (!g_str_equal(prop->type, typename)) {
+> +    if (prop->qapi_type !=3D type_info) {
+>          error_setg(errp, "Property %s on %s is not '%s' enum type",
+> -                   name, object_class_get_name(
+> -                       object_get_class(obj)), typename);
+> +                   name, object_class_get_name(object_get_class(obj)),
+> +                   type_info->name);
+
+How can this happen?  Or is it a programming error?
+
+>          return -1;
+>      }
+>=20=20
+
+[...]
 
 
