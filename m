@@ -1,75 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D44606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 10:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207A3606A325
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 11:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VuwuYGba
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=OI5TfxnZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNSLI-0006lx-LX; Sun, 01 Nov 2026 04:59:12 -0500
+	id 1xNTZh-00085O-Tv; Sun, 01 Nov 2026 06:18:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xNSLG-0006lR-P5
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 04:59:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xNSLF-0007um-0W
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 04:59:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793527148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=A0es++qsMg/zmMX4B/0WgpK4UOzZEP4CCB3rBHFwTpU=;
- b=VuwuYGbamjvWIwiawXBX31tJFm6Zk9efqqdnyLq6ctmZn/bq0lDsBbpMIgPAYeAymNctVt
- EGbcX1fwfdqF13chwU2Mf5Hw9I8ZPmdLa0k6imwMUxVvzSl0U/3fOCh291/boul1LJb6Iu
- A87qRilKM6Y8ihoF464SqFgQGQJ2qzA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-398-WgYTd0WPM52VHrrFNrgH2Q-1; Sun,
- 01 Nov 2026 04:59:06 -0500
-X-MC-Unique: WgYTd0WPM52VHrrFNrgH2Q-1
-X-Mimecast-MFC-AGG-ID: WgYTd0WPM52VHrrFNrgH2Q_1793527145
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C03711954B06
- for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 09:59:05 +0000 (UTC)
-Received: from pbonzini-thinkpadx1carbon6th.rmtit.csb
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1DFA01800495
- for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 09:59:04 +0000 (UTC)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 09/10] include: introduce qemu/version.h
-Date: Sun,  1 Nov 2026 10:58:50 +0100
-Message-ID: <20261101095851.1557351-10-pbonzini@redhat.com>
-In-Reply-To: <20261101095851.1557351-1-pbonzini@redhat.com>
-References: <20261101095851.1557351-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xNTZg-00084Y-25
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 06:18:08 -0500
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xNTZd-0006HH-SX
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 06:18:07 -0500
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-8ab43af5e97so22618677b3.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 03:18:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793531884; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lhednqTQv4nI8DKHlodXVJ9wfrsvlIY89Go0Akg/hqkPGk+RMADt94MQnzdYgevptY
+ kWL7O9/2iMEMwezeDwXSOThKNpegZNgooL98DdqfYm7mUub8t0g1AjkemH3Cie92SNCY
+ 7IRAfJwX2PxegUb2Qzc07QyJBM5lvO0Xg9ZrNjOIeJPd9yUGP36Cvv6P76tGx2T/hDhf
+ qLspjM9WEqgq8DQJmfIpMYLNa7m0+LLJetKob9ZlK+y+6c/qz4tWzipLi6AZcOnnmI0O
+ OTcRIMpU1fj1cd7lGQjt/GhjXZjpqqkmFUn1GZIjQ8fckxn+TulYNnFfLV8zUALgM/PK
+ jHWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Iz2aB3fbR7pTJKdioeDsQd7zU+F7Y1nK34xOfdODwoA=;
+ fh=9poLHRP5IP2SM/po373n9NwnHrSTo4hQPXNHYKtHtfg=;
+ b=ietHGD8EyF09Qe3EOQwUBPqWaz9ZPDV1om8aOBUI0FO6X/YR7u3eEKzjLQ+2DzjvLM
+ A/6OJfYD4iMPC3T2GkN9OcvgeO9kaje3O7OkK4rOAKUgWta448eMHSSL9JIey5lvklCQ
+ 7oJFAYxA/IK+4QU4ZBnF+vQJmvHlZdIeG/kMC4FKB58qUgPQj1pBPk4GpGtpspAuk/73
+ VgvgLP06B5DHpNK3nicwlTdHqef7thn/ZWEQd02uSRAMr1HicPjlaUSkulMyKHNnBA/B
+ aEX2lUU26FxkEeSrFdygyQjM4eYSI0MipJRiN/DoLphXzzRml+AhOk0X1xKlgbmRhIfe
+ Dh6Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793531884; x=1794136684; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Iz2aB3fbR7pTJKdioeDsQd7zU+F7Y1nK34xOfdODwoA=;
+ b=OI5TfxnZzH8rzoxuXsvP7COG1jkgSE8GvgMWVx6uP3dwFqYuCus0n5pJY9JhQiQ9xZ
+ clCg/D9SXWUnaUOL0UaIfqoI/L3p3OmwkFaUMdHTFp6UaTRKGUuGlZh4Md5Dc9mh/Kqe
+ yx0WZ11dPekstOm2wbnoAdA3i1cC1OeOVNOfLdy1NnTKLZ8LNb63dJOMn9SfTZ+snSdT
+ gTo7qWCYuOH2jJHEPieA5fvtsgY1Oep+jZ9XJpkU9/8q2nb59frmiqqJ/nxU/d+glW3C
+ vRn0+A/h2haJatTzcpLQu96Re60rOYtxEbt/EyGhdlPxMl1VdnLDriZa/oWMdi6HB8Jo
+ XtmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793531884; x=1794136684;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Iz2aB3fbR7pTJKdioeDsQd7zU+F7Y1nK34xOfdODwoA=;
+ b=yWCJ7JcWZCGXFyWx5D3vBXCcCnv//ek8JwZp+c/QF8eqP/cvZYDWpS5hf4fR380ufv
+ 3gd0YuqjwmPbtlbCGECXwWS7AfReGhB9Y9JDQNgO6H7RP8S1v+ulQWF5yjRvSUMvpjm5
+ sWWv3QFXuDQBG3mqe4Ojm/OEl/YrLuRa8JRLRYGyIRPFRN/vdvH9P8AkPnSuW9RdxOfY
+ i5Jg1R0CYsdTSPD9PQuTunjh0VnwfNLKMb8/jyuVOZD/Pp47f1OT88xifCJ+BUiwi8CY
+ ZTSPtj8rh4khBNqmPjQ7KLcCcgaEBECfckkmNgFR+BYpS/WV8J/vEMhPB8gCWekdaTC3
+ 4Tjw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxZoki8oU7MRt4qUWCH2KxDGLOUgdeuGjANMOUp1DwADVlSuAhZ7lOx6VfFDHfBbHC/Qi+QpHtBOczS@nongnu.org
+X-Gm-Message-State: APuU4Z+7RFKY2PCsST2oDhYomwgtXFdp40s0kYpE9dS4oj98CMMOFp+y
+ Xha6+MHeBKTB2w7mh+e36acJEsaiaAvsFbqbtUQ33AYM8TXpHBDJaZHgv244vsh6GDisTgso67f
+ 1XmShT2WL08Tlxq4l7H7VF3wjhthSDB5YKSONLVb4aQ==
+X-Gm-Gg: AYBFou3QioL0gwIQjo1Ufmuu8Vv8OrTig4bNkS4LUFXfGoWH68x3wafOGsRufx7ggZM
+ /2Kjwh9PCvK61Sj7wBsVI4WpEjWuKCLBh5zbLD+lY9PBxd5jSj4RDIVDd2K24H3bsi/cgjgrfaK
+ WJ811S+4TbJAEYJusXldOxg/gMkOD/JX+iwDklZFuQb3X+Ah14CdHJB2cNfik4mRFV8hz9RJj6S
+ 2GcCuvvRhrTeO+dPdyjwmgmxd/ZbZHFhefHOOatnY6d6QRPgmpvc1Bgj6y4VSrZ8vfMh6wKXk0u
+ zEQkDW0v11x72LsqU/prQhtCKhT/RrJ5uLygvvcgSeU9NpzqJqPdHImTXiLmt4VDnsohJMCv2rw
+ c/yog0R8nUEN7STNt3wsa9qduvK/fOLHU3God7gk/u8jXeaKCNrG5Gjc6rdcLo5j8yNMX1n8Au+
+ M5Ec3tM4Bl3BwAhdCNubP0
+X-Received: by 2002:a05:690c:c:b0:8a9:9f40:24b4 with SMTP id
+ 00721157ae682-8b2b6720e21mr52862257b3.15.1793531883783; Sun, 01 Nov 2026
+ 03:18:03 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <cover.1793207602.git.mst@redhat.com>
+ <ca7c24b7c8f69c13fef24a31660e1b6ea73686d3.1793207602.git.mst@redhat.com>
+ <CANukVxsB2n2GCGxQk3X2SUzNTJQ0M30ZxxmF=oGZtS-OCmbw_A@mail.gmail.com>
+ <fe0694c6-383b-4cf2-abc0-c6d73a3d6c3c@tls.msk.ru>
+ <20261030091030-mutt-send-email-mst@kernel.org>
+ <CANukVxup5pBM=33-S8pN8ADioLkqg3fWUm=6piXow7a0+WPT7w@mail.gmail.com>
+In-Reply-To: <CANukVxup5pBM=33-S8pN8ADioLkqg3fWUm=6piXow7a0+WPT7w@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sun, 1 Nov 2026 11:17:52 +0000
+X-Gm-Features: AclHuK_m0s78F-eoyeNo5WO0KbXRdsRa-9Ny2l_5fg60am6sgZuPc5vwcemx-Qc
+Message-ID: <CAFEAcA-ncDKy-VooKJY1OzTYkd1SriaYKZNkkWWK3cAP6g-M9w@mail.gmail.com>
+Subject: Re: [PULL 40/78] pcie_sriov: register user created virtual function
+ before realizing it
+To: Daniel Paziyski <danielpaziyski@gmail.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,233 +120,78 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In preparation for moving some of the qemu-version.sh logic to meson
-and the preprocessor, create a wrapper header for the generated
-qemu-version.h.
+On Fri, 30 Oct 2026 at 18:47, Daniel Paziyski <danielpaziyski@gmail.com> wrote:
+>
+> On Fri, 30 Oct 2026 at 14:11, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > On Fri, Oct 30, 2026 at 09:28:50AM +0300, Michael Tokarev wrote:
+> > > On 10/28/26 20:34, Daniel Paziyski wrote:
+> > > > Hello Michael,
+> > > >
+> > > > I think you have queued this patch for pulling on accident. There is a bug here,
+> > > > which is yet to be solved, as you have pointed out in
+> > > >
+> > > > https://lore.kernel.org/qemu-devel/20261028074508-mutt-send-email-mst@kernel.org/T/#mca344ac148a62107cdc298e97e6713b6657b5c55
+> > > >
+> > > > Please, hold off this patch for a while, until I come up with a fix soon.
+> > > Am I right this buggy version of the patch has just landed in the master branch,
+> > > instead of the fixed v2 one?
+> > >
+> > > Here's the difference between what's in current master and the v2:
+> > >
+> > > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> > > index d4187293b1f..6242204a52c 100644
+> > > --- a/hw/pci/pci.c
+> > > +++ b/hw/pci/pci.c
+> > > @@ -2310,10 +2310,8 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+> > >          pci_dev->cap_present |= QEMU_PCIE_CAP_CXL;
+> > >      }
+> > >
+> > > -    pci_dev = do_pci_register_device(pci_dev,
+> > > -                                     object_get_typename(OBJECT(qdev)),
+> > > -                                     pci_dev->devfn, errp);
+> > > -    if (pci_dev == NULL) {
+> > > +    if (!do_pci_register_device(pci_dev, object_get_typename(OBJECT(qdev)),
+> > > +                                pci_dev->devfn, errp)) {
+> > >          pci_unregister_acpi_index(pci_dev);
+> > >          return;
+> > >      }
+> > > @@ -2332,6 +2330,11 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+> > >          }
+> > >      }
+> > >
+> > > +    if (!pcie_sriov_check_after_realize(pci_dev, errp)) {
+> > > +        pci_qdev_unrealize(DEVICE(pci_dev));
+> > > +        return;
+> > > +    }
+> > > +
+> > >      /*
+> > >       * A PCIe Downstream Port that do not have ARI Forwarding enabled must
+> > >       * associate only Device 0 with the device attached to the bus
+> >
+> >
+> > Yes sorry, pls post a fix as a patch.
+> >
+>
+> If you are referring to me, do you want me to make a v3 fixing master,
+> or will you revert
+> the patch in master and include the v2 (which is already in the lists)
+> when you request pull?
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/qemu/version.h               | 12 ++++++++++++
- bsd-user/main.c                      |  2 +-
- linux-user/main.c                    |  2 +-
- monitor/qmp-cmds-control.c           |  2 +-
- qemu-img.c                           |  2 +-
- qemu-io.c                            |  2 +-
- qemu-nbd.c                           |  2 +-
- qga/main.c                           |  2 +-
- scsi/qemu-pr-helper.c                |  2 +-
- storage-daemon/qemu-storage-daemon.c |  2 +-
- system/vl.c                          |  2 +-
- tools/i386/qemu-vmsr-helper.c        |  3 +--
- tools/qemu-vnc/qemu-vnc.c            |  2 +-
- util/module.c                        |  2 +-
- 14 files changed, 25 insertions(+), 14 deletions(-)
- create mode 100644 include/qemu/version.h
+Please send a patch which takes current master to the state it should
+be in. We usually don't do revert-and-reapply unless it's a big obvious
+failure where we're not yet sure of the fix.
 
-diff --git a/include/qemu/version.h b/include/qemu/version.h
-new file mode 100644
-index 00000000000..38405495c0e
---- /dev/null
-+++ b/include/qemu/version.h
-@@ -0,0 +1,12 @@
-+/*
-+ * QEMU version strings
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef QEMU_VERSION_H
-+#define QEMU_VERSION_H
-+
-+#include "qemu-version.h"
-+
-+#endif
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 29ee59de2cf..6720dbde6f8 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -25,7 +25,7 @@
- #include "qemu/help-texts.h"
- #include "qemu/units.h"
- #include "qemu/accel.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- #include <machine/trap.h>
- 
- #include "qapi/error.h"
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 60a695b7ca3..2f0c0a50c8a 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -21,7 +21,7 @@
- #include "qemu/help-texts.h"
- #include "qemu/units.h"
- #include "qemu/accel.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- #include <sys/syscall.h>
- #include <sys/resource.h>
- #include <sys/shm.h>
-diff --git a/monitor/qmp-cmds-control.c b/monitor/qmp-cmds-control.c
-index 8fe0876a3da..bc938712f3d 100644
---- a/monitor/qmp-cmds-control.c
-+++ b/monitor/qmp-cmds-control.c
-@@ -25,7 +25,7 @@
- #include "qemu/osdep.h"
- 
- #include "monitor-internal.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- #include "qapi/compat-policy.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-control.h"
-diff --git a/qemu-img.c b/qemu-img.c
-index edf75e43aba..766d8540bfe 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -27,7 +27,7 @@
- 
- #include "qemu/help-texts.h"
- #include "qemu/qemu-progress.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-block-core.h"
- #include "qapi/qapi-visit-block-core.h"
-diff --git a/qemu-io.c b/qemu-io.c
-index 598d5b1c9ca..b5f2ae631a4 100644
---- a/qemu-io.c
-+++ b/qemu-io.c
-@@ -34,7 +34,7 @@
- #include "block/block_int.h"
- #include "trace/control.h"
- #include "crypto/init.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- 
- #define CMD_NOFILE_OK   0x01
- 
-diff --git a/qemu-nbd.c b/qemu-nbd.c
-index fcca88932a3..a9c75bffa9c 100644
---- a/qemu-nbd.c
-+++ b/qemu-nbd.c
-@@ -45,7 +45,7 @@
- #include "crypto/init.h"
- #include "crypto/tlscreds.h"
- #include "trace/control.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- 
- #ifdef CONFIG_SELINUX
- #include <selinux/selinux.h>
-diff --git a/qga/main.c b/qga/main.c
-index fd19c7037db..06358cb213c 100644
---- a/qga/main.c
-+++ b/qga/main.c
-@@ -30,7 +30,7 @@
- #include "qemu/help_option.h"
- #include "qemu/sockets.h"
- #include "qemu/systemd.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- #ifdef _WIN32
- #include <windows.h>
- #include <objbase.h>
-diff --git a/scsi/qemu-pr-helper.c b/scsi/qemu-pr-helper.c
-index 54d196a503f..5f4e7ab4b79 100644
---- a/scsi/qemu-pr-helper.c
-+++ b/scsi/qemu-pr-helper.c
-@@ -50,7 +50,7 @@
- #include "qobject/qstring.h"
- #include "io/channel-socket.h"
- #include "trace/control.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- 
- #include "block/thread-pool.h"
- 
-diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-storage-daemon.c
-index 50dbfbd97ae..b2e29f00054 100644
---- a/storage-daemon/qemu-storage-daemon.c
-+++ b/storage-daemon/qemu-storage-daemon.c
-@@ -43,7 +43,7 @@
- #include "qapi/qobject-input-visitor.h"
- 
- #include "qemu/help-texts.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- #include "qemu/cutils.h"
- #include "qemu/config-file.h"
- #include "qemu/error-report.h"
-diff --git a/system/vl.c b/system/vl.c
-index fbe580746d3..22f07d4753e 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -37,7 +37,7 @@
- #include "qobject/qdict.h"
- #include "qobject/qstring.h"
- #include "qobject/qjson.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- #include "qemu/cutils.h"
- #include "qemu/help_option.h"
- #include "qemu/hw-version.h"
-diff --git a/tools/i386/qemu-vmsr-helper.c b/tools/i386/qemu-vmsr-helper.c
-index f12fd3c3e81..fac7fbe6b61 100644
---- a/tools/i386/qemu-vmsr-helper.c
-+++ b/tools/i386/qemu-vmsr-helper.c
-@@ -34,7 +34,7 @@
- #include "qemu/module.h"
- #include "qemu/error-report.h"
- #include "qemu/config-file.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/log.h"
-@@ -42,7 +42,6 @@
- #include "io/channel.h"
- #include "io/channel-socket.h"
- #include "trace/control.h"
--#include "qemu-version.h"
- #include "rapl-msr-index.h"
- 
- #define MSR_PATH_TEMPLATE "/dev/cpu/%u/msr"
-diff --git a/tools/qemu-vnc/qemu-vnc.c b/tools/qemu-vnc/qemu-vnc.c
-index 5c2ba3b7a56..2b7cac34fab 100644
---- a/tools/qemu-vnc/qemu-vnc.c
-+++ b/tools/qemu-vnc/qemu-vnc.c
-@@ -15,7 +15,7 @@
- #include "qemu/option.h"
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
--#include "qemu-version.h"
-+#include "qemu/version.h"
- #include "ui/vnc.h"
- #include "crypto/secret.h"
- #include "crypto/tlscredsx509.h"
-diff --git a/util/module.c b/util/module.c
-index 8f8e6994f11..6de9ff2e411 100644
---- a/util/module.c
-+++ b/util/module.c
-@@ -23,7 +23,7 @@
- #include "qemu/config-file.h"
- #include "qapi/error.h"
- #ifdef CONFIG_MODULE_UPGRADES
--#include "qemu-version.h"
-+#include "qemu/version.h"
- #endif
- #include "trace.h"
- 
--- 
-2.56.0
+(Coverity points out part of this error as CID 1689947, calling
+pci_unregister_acpi_index() on a NULL pointer).
 
-
+thanks
+-- PMM
 
