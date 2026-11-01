@@ -1,77 +1,77 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE992606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15512606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ZFInMrls
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NONwIPeO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNc1E-000658-Si; Sun, 01 Nov 2026 15:19:09 -0500
+	id 1xNc1z-00088S-6t; Sun, 01 Nov 2026 15:19:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzr-00051j-5N
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzt-00055b-OH
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzg-0007DG-0F
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:42 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzi-0007Eq-9P
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793564251;
+ s=mimecast20190719; t=1793564253;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JeFlJKvXhLiiDJb7ON7nTTGjSqZFkZ8LoJ9RHte+nF4=;
- b=ZFInMrlsKTbXmmj8/WQU5Z7nsSyqcMwJuYPfC8HZ19isJ3GXafhIwXWlUyPft6bIeGn9JN
- C67qUYCErM4VtP6Eud+ATfvli+6vQS2dSQccjdmM5auovNy2Gb9grQvHlvm2+uFtDnEon4
- 15SxwTcHzvp061/t3WAKRjNBvbjMJD4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=JAac/l1KwmkzTW2jlMu4iQVrlvI/OwkdwDrVyptuG7k=;
+ b=NONwIPeOcLYAKRtpar5stZEvA9eKksBfmMVZelR+E1kXNq4YSN8ryIGV6/lFQkPi6jT3FQ
+ e2kD2wfIWmWj1Whxu4Gb/JHUu7MIOoZCQiluiXozUFkKMDxHOjCEAo76BUnXvRSI0M0C2a
+ ndhcMOCEgonBVBQ+lAeCF4xr2Nw4Ykw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-326-qQ0aQNJ5NaOwnt1Ulz_4tg-1; Sun,
- 01 Nov 2026 15:17:29 -0500
-X-MC-Unique: qQ0aQNJ5NaOwnt1Ulz_4tg-1
-X-Mimecast-MFC-AGG-ID: qQ0aQNJ5NaOwnt1Ulz_4tg_1793564249
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-0WltvZ2ZOn-iTNkQkjJAoA-1; Sun,
+ 01 Nov 2026 15:17:32 -0500
+X-MC-Unique: 0WltvZ2ZOn-iTNkQkjJAoA-1
+X-Mimecast-MFC-AGG-ID: 0WltvZ2ZOn-iTNkQkjJAoA_1793564251
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 130871955F41
- for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 20:17:29 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CB531954AC2
+ for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 20:17:31 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 920361800480
- for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 20:17:28 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 13C3430002CB
+ for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 20:17:31 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8048321E683F; Sun, 01 Nov 2026 21:17:18 +0100 (CET)
+ id A00D321E66BB; Sun, 01 Nov 2026 21:17:18 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com,
 	pbonzini@redhat.com,
 	berrange@redhat.com
-Subject: [PATCH v8 49/56] hw: convert device-local PropertyInfo definitions to
- use qapi_type
-Date: Sun,  1 Nov 2026 21:17:10 +0100
-Message-ID: <20261101201717.3911097-50-armbru@redhat.com>
+Subject: [PATCH v8 56/56] tests/qmp-cmd-test: assert qapi-type resolves in
+ query-qmp-schema
+Date: Sun,  1 Nov 2026 21:17:17 +0100
+Message-ID: <20261101201717.3911097-57-armbru@redhat.com>
 In-Reply-To: <20261101201717.3911097-1-armbru@redhat.com>
 References: <20261101201717.3911097-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
+X-Spam_score_int: -4
+X-Spam_score: -0.5
 X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -94,254 +94,108 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Add a .qapi_type pointer to PropertyInfo definitions in
-device-specific files. Mechanical, except for "display_mode" in
-apple-gfx.m, which is a string of a specific format.
+For every QOM type returned by qom-list-types, call qom-list-properties
+and verify that each property's qapi-type value (when present) maps to
+a valid entry in the query-qmp-schema introspection output.
+
+The test is gated behind g_test_slow() since it iterates all registered
+QOM types.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- hw/block/xen-block.c       | 2 ++
- hw/misc/xlnx-versal-trng.c | 2 ++
- hw/nvme/nguid.c            | 2 ++
- hw/nvram/xlnx-bbram.c      | 2 ++
- hw/nvram/xlnx-efuse.c      | 2 ++
- hw/pci/pci.c               | 2 ++
- hw/s390x/ccw-device.c      | 2 ++
- hw/s390x/css.c             | 3 +++
- hw/s390x/s390-pci-bus.c    | 2 ++
- hw/vfio/pci-quirks.c       | 2 ++
- hw/display/apple-gfx.m     | 2 ++
- 11 files changed, 23 insertions(+)
+ tests/qtest/qmp-cmd-test.c | 55 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 54 insertions(+), 1 deletion(-)
 
-diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
-index 474c12fe4a..ffdb080657 100644
---- a/hw/block/xen-block.c
-+++ b/hw/block/xen-block.c
-@@ -29,6 +29,7 @@
- #include "dataplane/xen-block.h"
- #include "hw/xen/interface/io/xs_wire.h"
- #include "trace.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- 
- #define XVDA_MAJOR 202
- #define XVDQ_MAJOR (1 << 20)
-@@ -664,6 +665,7 @@ invalid:
-  */
- static const PropertyInfo xen_block_prop_vdev = {
-     .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Virtual Disk specifier (d*p*/xvd*/hd*/sd*)",
-     .get = xen_block_get_vdev,
-     .set = xen_block_set_vdev,
-diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
-index 0584ee089e..3204e083ea 100644
---- a/hw/misc/xlnx-versal-trng.c
-+++ b/hw/misc/xlnx-versal-trng.c
-@@ -36,6 +36,7 @@
- #include "qapi/visitor.h"
- #include "migration/vmstate.h"
- #include "hw/core/qdev-properties.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- 
- #ifndef XLNX_VERSAL_TRNG_ERR_DEBUG
- #define XLNX_VERSAL_TRNG_ERR_DEBUG 0
-@@ -663,6 +664,7 @@ static void trng_prop_fault_event_get(Object *obj, Visitor *v,
- 
- static const PropertyInfo trng_prop_fault_events = {
-     .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "Set to trigger TRNG fault events",
-     .set = trng_prop_fault_event_set,
-     .get = trng_prop_fault_event_get,
-diff --git a/hw/nvme/nguid.c b/hw/nvme/nguid.c
-index 4cd6fad6ac..ccc12ac9f9 100644
---- a/hw/nvme/nguid.c
-+++ b/hw/nvme/nguid.c
-@@ -18,6 +18,7 @@
- #include "qapi/visitor.h"
- #include "qemu/ctype.h"
- #include "nvme.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- 
- #define NGUID_SEPARATOR '-'
- 
-@@ -180,6 +181,7 @@ static void set_nguid(Object *obj, Visitor *v, const char *name, void *opaque,
- 
- const PropertyInfo qdev_prop_nguid = {
-     .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description =
-         "NGUID or \"" NGUID_VALUE_AUTO "\" for random value",
-     .get   = get_nguid,
-diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
-index e336874bde..8e7597621d 100644
---- a/hw/nvram/xlnx-bbram.c
-+++ b/hw/nvram/xlnx-bbram.c
-@@ -34,6 +34,7 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
- #include "hw/nvram/xlnx-efuse.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- 
- #ifndef XLNX_BBRAM_ERR_DEBUG
- #define XLNX_BBRAM_ERR_DEBUG 0
-@@ -487,6 +488,7 @@ static void bbram_prop_release_drive(Object *obj, const char *name,
- 
- static const PropertyInfo bbram_prop_drive = {
-     .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Node name or ID of a block device to use as BBRAM backend",
-     .realized_set_allowed = true,
-     .get = bbram_prop_get_drive,
-diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
-index 03c9fbc0d0..7d2030f7aa 100644
---- a/hw/nvram/xlnx-efuse.c
-+++ b/hw/nvram/xlnx-efuse.c
-@@ -34,6 +34,7 @@
- #include "system/blockdev.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- 
- #define TBIT0_OFFSET     28
- #define TBIT1_OFFSET     29
-@@ -252,6 +253,7 @@ static void efuse_prop_release_drive(Object *obj, const char *name,
- 
- static const PropertyInfo efuse_prop_drive = {
-     .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Node name or ID of a block device to use as eFUSE backend",
-     .realized_set_allowed = true,
-     .get = efuse_prop_get_drive,
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 0efb4eb4bb..0f4c900991 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -53,6 +53,7 @@
- #include "qapi/error.h"
- #include "qemu/cutils.h"
- #include "pci-internal.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- 
- #include "hw/xen/xen.h"
- #include "hw/i386/kvm/xen_evtchn.h"
-@@ -81,6 +82,7 @@ static void prop_pci_busnr_get(Object *obj, Visitor *v, const char *name,
- 
- static const PropertyInfo prop_pci_busnr = {
-     .type = "busnr",
-+    .qapi_type = &uint8_type_info,
-     .get = prop_pci_busnr_get,
- };
- 
-diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
-index 25c4273279..54766f53e1 100644
---- a/hw/s390x/ccw-device.c
-+++ b/hw/s390x/ccw-device.c
-@@ -17,6 +17,7 @@
- #include "qapi/visitor.h"
- #include "qemu/ctype.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- 
- static void ccw_device_refill_ids(CcwDevice *dev)
- {
-@@ -75,6 +76,7 @@ static void ccw_device_set_loadparm(Object *obj, Visitor *v,
- 
- const PropertyInfo ccw_loadparm = {
-     .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Up to 8 chars in set of [A-Za-z0-9. ] to select"
-             " a guest kernel",
-     .get = ccw_device_get_loadparm,
-diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-index 65341c68c3..44805ceb49 100644
---- a/hw/s390x/css.c
-+++ b/hw/s390x/css.c
-@@ -24,6 +24,7 @@
- #include "hw/s390x/s390-virtio-ccw.h"
- #include "hw/s390x/s390-ccw.h"
- #include "exec/cpu-common.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- 
- typedef struct CrwContainer {
-     CRW crw;
-@@ -2531,6 +2532,7 @@ out:
- 
- const PropertyInfo css_devid_propinfo = {
-     .type = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Identifier of an I/O device in the channel "
-                    "subsystem, example: fe.1.23ab",
-     .get = get_css_devid,
-@@ -2539,6 +2541,7 @@ const PropertyInfo css_devid_propinfo = {
- 
- const PropertyInfo css_devid_ro_propinfo = {
-     .type = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Read-only identifier of an I/O device in the channel "
-                    "subsystem, example: fe.1.23ab",
-     .get = get_css_devid,
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index cdd75cdfd2..6703d4c1cb 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -35,6 +35,7 @@
- #include "system/runstate.h"
- 
- #include "trace.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- 
- S390pciState *s390_get_phb(void)
- {
-@@ -1852,6 +1853,7 @@ static void s390_pci_set_fid(Object *obj, Visitor *v, const char *name,
- 
- static const PropertyInfo s390_pci_fid_propinfo = {
-     .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "zpci_fid",
-     .get = s390_pci_get_fid,
-     .set = s390_pci_set_fid,
-diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-index c5b4f9091d..a38a0e7a3a 100644
---- a/hw/vfio/pci-quirks.c
-+++ b/hw/vfio/pci-quirks.c
-@@ -26,6 +26,7 @@
- #include "pci.h"
- #include "pci-quirks.h"
- #include "trace.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- 
- /*
-  * List of device ids/vendor ids for which to disable
-@@ -1437,6 +1438,7 @@ static void set_nv_gpudirect_clique_id(Object *obj, Visitor *v,
- 
- const PropertyInfo qdev_prop_nv_gpudirect_clique = {
-     .type = "uint8",
-+    .qapi_type = &uint8_type_info,
-     .description = "NVIDIA GPUDirect Clique ID (0 - 15)",
-     .get = get_nv_gpudirect_clique_id,
-     .set = set_nv_gpudirect_clique_id,
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index be0061b9db..4db80f0b10 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
+diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
+index 279a8f5614..acb7b0dd6a 100644
+--- a/tests/qtest/qmp-cmd-test.c
++++ b/tests/qtest/qmp-cmd-test.c
 @@ -15,6 +15,7 @@
- #include "qemu/lockable.h"
- #include "qemu/cutils.h"
- #include "qemu/log.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- #include "qapi/visitor.h"
  #include "qapi/error.h"
- #include "qemu/aio-wait.h"
-@@ -872,6 +873,7 @@ static void apple_gfx_set_display_mode(Object *obj, Visitor *v,
+ #include "qapi/qapi-visit-introspect.h"
+ #include "qobject/qdict.h"
++#include "qobject/qlist.h"
+ #include "qapi/qobject-input-visitor.h"
  
- const PropertyInfo qdev_prop_apple_gfx_display_mode = {
-     .type  = "display_mode",
-+    .qapi_type = &str_type_info,
-     .description =
-         "Display mode in pixels and Hertz, as <width>x<height>@<refresh-rate> "
-         "Example: 3840x2160@60",
+ const char common_args[] = "-nodefaults -machine none";
+@@ -131,6 +132,8 @@ typedef struct {
+     GHashTable *hash;
+ } QmpSchema;
+ 
++static QmpSchema schema;
++
+ static void qmp_schema_init(QmpSchema *schema)
+ {
+     QDict *resp;
+@@ -343,9 +346,56 @@ static void test_object_add_failure_modes(void)
+     qtest_quit(qts);
+ }
+ 
++static void test_qapi_type(void)
++{
++    QTestState *qts;
++    g_autoptr(QDict) resp = NULL;
++    QList *types;
++    QListEntry *type_entry, *prop_entry;
++
++    qts = qtest_init(common_args);
++
++    resp = qtest_qmp(qts,
++                     "{ 'execute': 'qom-list-types',"
++                     "  'arguments': { 'abstract': true } }");
++    g_assert(qdict_haskey(resp, "return"));
++    types = qdict_get_qlist(resp, "return");
++
++    QLIST_FOREACH_ENTRY(types, type_entry) {
++        QDict *type = qobject_to(QDict, qlist_entry_obj(type_entry));
++        const char *name = qdict_get_str(type, "name");
++        g_autoptr(QDict) props_resp = NULL;
++        QList *props;
++
++        props_resp = qtest_qmp(qts,
++                               "{ 'execute': 'qom-list-properties',"
++                               "  'arguments': { 'typename': %s } }",
++                               name);
++        if (!qdict_haskey(props_resp, "return")) {
++            continue;
++        }
++        props = qdict_get_qlist(props_resp, "return");
++
++        QLIST_FOREACH_ENTRY(props, prop_entry) {
++            QDict *prop = qobject_to(QDict, qlist_entry_obj(prop_entry));
++            const char *qapi_type = qdict_get_try_str(prop, "qapi-type");
++            const char *propname = qdict_get_str(prop, "name");
++            const char *ty = qdict_get_str(prop, "type");
++
++            if (qapi_type) {
++                g_assert_nonnull(qmp_schema_lookup(&schema, qapi_type));
++            } else if (!g_str_has_prefix(ty, "child<") &&
++                       !g_str_has_prefix(ty, "link<")) {
++                g_test_message("%s.%s %s has no associated qapi-type",
++                               name, propname, ty);
++            }
++        }
++    }
++    qtest_quit(qts);
++}
++
+ int main(int argc, char *argv[])
+ {
+-    QmpSchema schema;
+     int ret;
+ 
+     g_test_init(&argc, &argv, NULL);
+@@ -355,6 +405,9 @@ int main(int argc, char *argv[])
+ 
+     qtest_add_func("qmp/object-add-failure-modes",
+                    test_object_add_failure_modes);
++    if (g_test_slow()) {
++        qtest_add_func("qmp/qapi-type", test_qapi_type);
++    }
+ 
+     ret = g_test_run();
+ 
 -- 
 2.55.0
 
