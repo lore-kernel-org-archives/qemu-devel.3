@@ -1,62 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D70606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF61606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ewXRHVuD
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=J2p6+RGl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNc1f-0007Mb-05; Sun, 01 Nov 2026 15:19:35 -0500
+	id 1xNc2E-0001nZ-NT; Sun, 01 Nov 2026 15:20:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzq-00050z-6c
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzn-0004yI-QD
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzf-0007Cz-R6
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:41 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzd-0007BU-SH
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793564250;
+ s=mimecast20190719; t=1793564248;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Vg44w5tHT/SOGNvVlCcL+D/bgIpE20M0OpMKYxWv5T0=;
- b=ewXRHVuDOicyXCIDMDgoSSK/qpw99UgRc8hbZyPzjatIq3Kf0xnL/SxFoDZWR2bkg5XK8i
- 26nzCxkn+h93nUkVJieHIpTTkOX7igYSEFW2SxRqbpcVQPAa0pzwSMxv1tnrrpBBnefqVm
- aOHyIUoSLQnvzIN6WwCoIfDG66MjX9Q=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=jdePFbhOURNRs5zd35yfXCP91ARvGJ0yg1D6DV9jb3U=;
+ b=J2p6+RGlhF8+BgMcooDMtnZJqzF4kkAVwti2gueHL0hrrIcUw7z6uUKmFKY2ShSnR9Zywa
+ enBerqNv9KSj6TdEVjwsAu5fJKXdcZSoXP/lHSkei4xTuhSdpJL9v1Il5vubWD56V1aTJL
+ NV+nIChHAZsjdmN/US6ukBH5MuDmdh0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-V3ZyipqKPSeH6kmvejWonQ-1; Sun,
- 01 Nov 2026 15:17:29 -0500
-X-MC-Unique: V3ZyipqKPSeH6kmvejWonQ-1
-X-Mimecast-MFC-AGG-ID: V3ZyipqKPSeH6kmvejWonQ_1793564248
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-cLyhqbRPPlCAsgqaVxeNTg-1; Sun,
+ 01 Nov 2026 15:17:27 -0500
+X-MC-Unique: cLyhqbRPPlCAsgqaVxeNTg-1
+X-Mimecast-MFC-AGG-ID: cLyhqbRPPlCAsgqaVxeNTg_1793564246
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C9DAC180061E
- for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 20:17:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B61E1954AE9
+ for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 20:17:26 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 88FF41956088
- for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 20:17:28 +0000 (UTC)
+ id E9FE4195608B
+ for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 20:17:25 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6458521E6838; Sun, 01 Nov 2026 21:17:18 +0100 (CET)
+ id 1415321E689E; Sun, 01 Nov 2026 21:17:18 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com,
 	pbonzini@redhat.com,
 	berrange@redhat.com
-Subject: [PATCH v8 43/56] hw/s390-virtio-ccw: convert loadparm property to
+Subject: [PATCH v8 26/56] hostmem: convert OnOffAuto rom property to
  QAPI-aware registration
-Date: Sun,  1 Nov 2026 21:17:04 +0100
-Message-ID: <20261101201717.3911097-44-armbru@redhat.com>
+Date: Sun,  1 Nov 2026 21:16:47 +0100
+Message-ID: <20261101201717.3911097-27-armbru@redhat.com>
 In-Reply-To: <20261101201717.3911097-1-armbru@redhat.com>
 References: <20261101201717.3911097-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -64,15 +64,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,35 +94,137 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Pass appropriate QAPITypeInfo to object_class_property_add().
+Convert the hostmem-file's rom property and hostmem-memfd's
+guest-memfd property from manual visitor-based callbacks to
+object_class_property_add_enum().
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- hw/s390x/s390-virtio-ccw.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ backends/hostmem-file.c  | 25 ++++++++++---------------
+ backends/hostmem-memfd.c | 23 ++++++++++-------------
+ 2 files changed, 20 insertions(+), 28 deletions(-)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 7d4392d73f..393e4d261d 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -43,6 +43,7 @@
- #include "system/hostmem.h"
- #include "target/s390x/kvm/pv.h"
- #include "migration/blocker.h"
-+#include "qapi/qapi-builtin-type-infos.h"
+diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
+index aec38bac2f..15b5fee246 100644
+--- a/backends/hostmem-file.c
++++ b/backends/hostmem-file.c
+@@ -19,7 +19,7 @@
+ #include "qom/object_interfaces.h"
+ #include "qom/object.h"
  #include "qapi/visitor.h"
- #include "qapi/qapi-visit-machine-s390x.h"
- #include "hw/s390x/cpu-topology.h"
-@@ -908,7 +909,7 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, "dea-key-wrap",
-             "enable/disable DEA key wrapping using the CPACF wrapping key");
+-#include "qapi/qapi-visit-common.h"
++#include "qapi/qapi-type-infos-common.h"
  
--    object_class_property_add(oc, "loadparm", "loadparm", NULL,
-+    object_class_property_add(oc, "loadparm", "loadparm", &str_type_info,
-                               machine_get_loadparm, machine_set_loadparm,
-                               NULL, NULL);
-     object_class_property_set_description(oc, "loadparm",
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendFile, MEMORY_BACKEND_FILE)
+ 
+@@ -230,30 +230,24 @@ static void file_memory_backend_set_readonly(Object *obj, bool value,
+     fb->readonly = value;
+ }
+ 
+-static void file_memory_backend_get_rom(Object *obj, Visitor *v,
+-                                        const char *name, void *opaque,
+-                                        Error **errp)
++static int file_memory_backend_get_rom(Object *obj, Error **errp)
+ {
+     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(obj);
+-    OnOffAuto rom = fb->rom;
+-
+-    visit_type_OnOffAuto(v, name, &rom, errp);
++    return fb->rom;
+ }
+ 
+-static void file_memory_backend_set_rom(Object *obj, Visitor *v,
+-                                        const char *name, void *opaque,
+-                                        Error **errp)
++static void file_memory_backend_set_rom(Object *obj, int value, Error **errp)
+ {
+     HostMemoryBackend *backend = MEMORY_BACKEND(obj);
+     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(obj);
+ 
+     if (host_memory_backend_mr_inited(backend)) {
+-        error_setg(errp, "cannot change property '%s' of %s.", name,
++        error_setg(errp, "cannot change property 'rom' of %s.",
+                    object_get_typename(obj));
+         return;
+     }
+ 
+-    visit_type_OnOffAuto(v, name, &fb->rom, errp);
++    fb->rom = value;
+ }
+ 
+ static void file_backend_unparent(Object *obj)
+@@ -298,9 +292,10 @@ file_backend_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add_bool(oc, "readonly",
+         file_memory_backend_get_readonly,
+         file_memory_backend_set_readonly);
+-    object_class_property_add(oc, "rom", "OnOffAuto", NULL,
+-                              file_memory_backend_get_rom,
+-                              file_memory_backend_set_rom, NULL, NULL);
++    object_class_property_add_enum(oc, "rom", "OnOffAuto",
++                                   &OnOffAuto_type_info, NULL,
++                                   file_memory_backend_get_rom,
++                                   file_memory_backend_set_rom);
+     object_class_property_set_description(oc, "rom",
+         "Whether to create Read Only Memory (ROM)");
+ }
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 15dc8814ba..4e1b23a1d6 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -20,7 +20,7 @@
+ #include "migration/cpr.h"
+ #include "system/kvm.h"
+ #include <linux/kvm.h>
+-#include "qapi/qapi-visit-common.h"
++#include "qapi/qapi-type-infos-common.h"
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+ 
+@@ -95,24 +95,20 @@ have_fd:
+                                           backend->size, ram_flags, fd, 0, errp);
+ }
+ 
+-static void
+-memfd_backend_get_guest_memfd(Object *o, Visitor *v,
+-                              const char *value, void *opaque,
+-                              Error **errp)
++static int
++memfd_backend_get_guest_memfd(Object *o, Error **errp)
+ {
+     HostMemoryBackendMemfd *m = MEMORY_BACKEND_MEMFD(o);
+ 
+-    visit_type_OnOffAuto(v, value, &m->guest_memfd, errp);
++    return m->guest_memfd;
+ }
+ 
+ static void
+-memfd_backend_set_guest_memfd(Object *o, Visitor *v,
+-                              const char *value, void *opaque,
+-                              Error **errp)
++memfd_backend_set_guest_memfd(Object *o, int value, Error **errp)
+ {
+     HostMemoryBackendMemfd *m = MEMORY_BACKEND_MEMFD(o);
+ 
+-    visit_type_OnOffAuto(v, value, &m->guest_memfd, errp);
++    m->guest_memfd = value;
+ }
+ 
+ static bool
+@@ -203,9 +199,10 @@ memfd_backend_class_init(ObjectClass *oc, const void *data)
+                                               "Huge pages size (ex: 2M, 1G)");
+     }
+ 
+-    object_class_property_add(oc, "guest-memfd", "OnOffAuto", NULL,
+-                              memfd_backend_get_guest_memfd,
+-                              memfd_backend_set_guest_memfd, NULL, NULL);
++    object_class_property_add_enum(oc, "guest-memfd",  "OnOffAuto",
++                                   &OnOffAuto_type_info, NULL,
++                                   memfd_backend_get_guest_memfd,
++                                   memfd_backend_set_guest_memfd);
+     object_class_property_set_description(oc, "guest-memfd",
+                                           "Use guest memfd");
+ 
 -- 
 2.55.0
 
