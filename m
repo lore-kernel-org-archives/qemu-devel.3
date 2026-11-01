@@ -1,82 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B71606A325
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 12:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23E4606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 12:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PQgTk1qW
+	dkim=pass (1024-bit key, unprotected) header.d=foxmail.com header.i=@foxmail.com header.a=rsa-sha256 header.s=s201512 header.b=BuOym+Bv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNUTj-0003vW-Bo; Sun, 01 Nov 2026 07:16:03 -0500
+	id 1xNUTi-0003ut-Sb; Sun, 01 Nov 2026 07:16:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tavhadia@gmail.com>)
- id 1xNSW1-0006Zq-5W
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 05:10:17 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tavhadia@gmail.com>)
- id 1xNSVz-0000Zh-Np
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 05:10:16 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-ca766c1c9ccso615600a12.0
- for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 02:10:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793527814; x=1794132614; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qH6ite90XrQgwVrKxwUVy9zH4hj5U42obetdpMO0lFs=;
- b=PQgTk1qWf/T9i0hNGVwOQppHyKbZSbv1LmBZFokgOqC6DfEh1NtgCci1bI2Lgfclgf
- YZVLa+jCFc/sGBrLH4v17DLXsvN6pOmHm9qN2BuZNuhbfzvqMwYPtBC3K/kUKNB1W5O4
- gd/aWtmHeof8wFxHQ/YhZQiLgv3vPw+czaXIbbvzboOHQtd2Fklx8mDNgRNeAcuP3s9J
- 9ajNcjnnP/gcFCH+3CsBEC+WpnnytszqQvBrH7PLRSfXV04Q/oHBQP16EvonutnLffz+
- Mzh0Psk2kEcYDcWd4722qYw9V5slg7WjYmJISgsJPmQx22SzXS2Eq/vpPbTIkIycAj5T
- EUpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793527814; x=1794132614;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=qH6ite90XrQgwVrKxwUVy9zH4hj5U42obetdpMO0lFs=;
- b=2lFnhsiTLk5WX41o4sjWEuSJ/pagjqyTAhe6hAwELBPb7rJUepjZXTpsOlhaoXxBzv
- TWazsWS+2m1inJ9yVaY7ctR5yLnu1ajZv6TNnkFGZr44ytFeINgtEC1gGCwYURNnwv/e
- 5CbPXrQ1vMOGg46LAknOA4UuFpkvD0CX6avBshxEJibCAw6b1EaTpCOP/ae/HhmTLgNQ
- eUDwccgiCfYsdR3Wuwjq59nsvBlkDCs75G9BEhIjugmvpUKeFSrBrkCYpibx6/2nVLr1
- c275RKQLLJIoM1InXV/GwajdekcdOs6u2NDnlTHLiSeTJVcmGBSoxS/LxoySq1r+JV0g
- ZJMg==
-X-Gm-Message-State: APuU4Z+/0K0qCXa0OVCqVEAd0qaQNPz9JGD9oYwwKNcz7cua8EipMP3c
- /EbrLUP0CS3Gth8fDeTlY+oV5lZuZU8WhrzEro7HIHp1LyxwpsU1/fenOZSeBSTG
-X-Gm-Gg: AYBFou0v9t4iVoFBrTqFQI5Xoc3R2GoBlDAlXabsmtRQbU4RF/iMu6HR3TyNhk0Nqbi
- ccATDhO934l2V2YjLylaoRNUPjyBDJ8n4cnpQ4zNN2fSUnb78NwxyhLL+pu4jm7NfCiVE+bWD0A
- ZQFSqinzEXAwCBZYcw7pOrJ4r1YMjaQQ3StG4o5ahemUtCq46JHokGSE7/96ksCcIHb7e9kO1J0
- wCc/mqH9xTqbofilNTFBC7rPfGBAQtMN46PTqtKJWpIe2BxYPTX7j2L0L9hjpcaCyWsJYqHtiSO
- yQrgXUBncwVHybM1EKUYMYW3QEy0XVGy9E9RzutvJ8uvvkf+nnDzaDdsP/MO2sy75HIRO5VtwA0
- LbPI82v1ttHyWbH8gbGhE2khYS0mPfF3yEJ4es3beQ+LTko6hnNciJtHAJwuSsnb+mXdLmLlTgB
- 23t1WDNDhq6jK43o0Ifkeunw9AslE9/T748OLhvah/Zz4T5q52beXTSgHPYF/cMfnMToUR6OpRN
- r/Oh+XgrJdmWbt9xDbLauw2KMyzjlv8RKvZMR7SfN5Yl4RxEDd7D4LkQtF5LsG+N6gXg9BCics5
- i/eONlimvRUkW5kvfbHujouY
-X-Received: by 2002:a17:90b:17cb:b0:3ac:9ed8:f309 with SMTP id
- 98e67ed59e1d1-3ae89736030mr6307640a91.29.1793527813681; 
- Sun, 01 Nov 2026 02:10:13 -0800 (PST)
-Received: from oslab.. ([140.120.15.183]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ae6e949077sm14429336a91.9.2026.11.01.02.10.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Nov 2026 02:10:13 -0800 (PST)
-From: tavha <tavhadia@gmail.com>
+ (Exim 4.90_1) (envelope-from <holypumpkin@foxmail.com>)
+ id 1xNMtx-0003HL-1K
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 00:10:41 -0400
+Received: from xmbghk7.mail.qq.com ([43.163.128.43])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <holypumpkin@foxmail.com>)
+ id 1xNMtr-0004Xv-4j
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 00:10:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+ s=s201512; t=1793506219;
+ bh=5ikS364LHECGsXOw3SDibIJR0X5EJ8U7EnVscpl04A4=;
+ h=From:To:Subject:Date:In-Reply-To:References;
+ b=BuOym+BvE/mbduLqjqMk15cEayN29daE6D0ywIJVLVfqd6FbLMGzxI/RNR5ltQ3NX
+ N4HLp25LyaGFX6iXDXXcrpNDCBGaJyPi/OZ+onxAnNgwAXoIioL5+1E3lWxcoOvuSM
+ 59FwUuz2oxQwMQW0IkKzDKX2kIlhuIiftY+h7eJ0=
+Received: from localhost.localdomain ([113.200.174.63])
+ by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
+ id 2212124A; Sun, 01 Nov 2026 12:08:33 +0800
+X-QQ-mid: xmsmtpt1793506150tc4mj2d4o
+Message-ID: <tencent_9256BC46CB818A63AA22812B8422798DE205@qq.com>
+X-QQ-XMAILINFO: MoZ/+D/yktIRRgAFk4c7ISP2eY6m/qPqOqOPAZvT/x83/Ioila1PEfVvL+ro5b
+ kaxqsfr+Dj562e2hwHX0OaZGtJj2B7ACUl7uDA/REcLP1go8jcsf1u1I1rIx85W9+GWN7qtJpIoi
+ VR/5tginYuZRf+9PtjUimPJkawoUe4ctkfLAvpY5eKMbq2n0csrzGxQsauFm3YciwCjqUC/XzGaO
+ nng1qeecgBr4esOiAUX6Mq7Mv0i2NRT4UWrXYxD1cNTGGgkXGwwqt4eoYTF3D2IzgMFpOOvW1hJl
+ C4slmCDxYeMZ8MeglezKUrzPR497nfdkMNKFRIxUkxWauWHMlDWOBh8kTBgOxB9MwhhI6unuDiYy
+ Z+GbnKQBqYAkS8fKNiae2sN3ipzMEaAgtxXBZwPmXbtleO7/LL3isCUrByh8SASB7HNNv5oWTJ6h
+ b6U0l0IK/gtiVeRvcdAwFiqTCwtUI6yU0vo5zrM14fcxTkp9FUQpqPzpN/I4/FTwVOZtzX/kjrEg
+ Nj0icgxkGW/WPUYhq3m6MjKzMLg4dh9izCeWGybSa0aoI3ne2pKRMEuHaVaNyM7I3qP68G8nA5y9
+ 8ZiI25sIOtkzKsPLs9+ZKdy5oiSQNpPOcdwl9D5acqgVvXSRiF3C/oBa1W62iyV0EE6Z4CEGH4rO
+ yDJX6OrmOApNX1R/vqqqMN6gLCXk4S4dT2nTPPLf+W0i2bNekLBmFXCRrsBegOKRR7GIHoIrJtrD
+ tt+mIEu7+LrEXHSZg+1z5vSg05/R8IfZeN976LyXMXp9c4/xxrTeuarUwRBNAXsshYxqL/OWCd5/
+ QeMq2WAlAC8+ke1GiQWM9NI7Nhkv96fQNlj5ZQZwONTjfS4NRQN3bn3gtNWcwEeEIEkKaFbx3I6D
+ RCHYY42bi9abhBthR6YIvnhI7xvZG0lr/7k9Bd71vq60817dGQS6i4DFaH4Pv0AWpdZV+ATFvOPV
+ 0Zom+4hBdMN+0/xC66yjJ/PawdAdx4WPi+fk7bW9FaA6yBsNFZNNz1RVgQBQ/sMQOv4M9C68Nl8M
+ oDnowukwLMlB/AuboqEXACy4DPE5TiwkWTIAslvOyzptDqyF1MBrMLbDILNZTPbr4A19e+R19bbT
+ gOjmf5IRnqDGRyrM7XMw/3Zy5LPxmSNoOdZfY+WsZnjoHDxIpyNQwT/Frog5hTPDTRBgizaoF83s
+ EjZ2rKuLkw5KEXbJ52Ol7PBYXf
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+From: Haoyu Nan <Holypumpkin@foxmail.com>
 To: qemu-devel@nongnu.org
-Cc: lvivier@redhat.com, amit@kernel.org, mst@redhat.com,
- marcandre.lureau@redhat.com, pbonzini@redhat.com,
- tavha <tavhadia@gmail.com>
-Subject: [PATCH] virtio-console: Fix typo in comment
-Date: Sun,  1 Nov 2026 18:10:08 +0800
-Message-ID: <20261101101008.72831-1-tavhadia@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Subject: [PATCH v1 2/2] target/riscv: inline RV64 LMUL=1 vector configuration
+Date: Sun,  1 Nov 2026 12:08:21 +0800
+X-OQ-MSGID: <20261101040821.1841-2-Holypumpkin@foxmail.com>
+X-Mailer: git-send-email 2.47.0.windows.1
+In-Reply-To: <20261101040821.1841-1-Holypumpkin@foxmail.com>
+References: <20261101040821.1841-1-Holypumpkin@foxmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=tavhadia@gmail.com; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=43.163.128.43;
+ envelope-from=holypumpkin@foxmail.com; helo=xmbghk7.mail.qq.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,33 +81,155 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Signed-off-by: tavha <tavhadia@gmail.com>
----
- hw/char/virtio-console.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+vsetvli and vsetivli currently call the generic vsetvl helper even
+when their immediate vtype can be validated during translation. For
+legal RV64 LMUL=1 configurations, generate the VL calculation and
+architectural state updates directly in TCG to avoid the runtime
+helper call and repeated validation of the constant type.
 
-diff --git a/hw/char/virtio-console.c b/hw/char/virtio-console.c
-index db9d8ca797..3374a4630a 100644
---- a/hw/char/virtio-console.c
-+++ b/hw/char/virtio-console.c
-@@ -259,7 +259,7 @@ static void virtconsole_realize(DeviceState *dev, Error **errp)
-         /*
-          * For consoles we don't block guest data transfer just
-          * because nothing is connected - we'll just let it go
--         * whetherever the chardev wants - /dev/null probably.
-+         * wherever the chardev wants - /dev/null probably.
-          *
-          * For serial ports we need 100% reliable data transfer
-          * so we use the opened/closed signals from chardev to
+Restrict this path to encodings without reserved or alternate-format
+bits and with an element width supported by the configured ELEN.
+Compute VL during translation for vsetivli, where AVL is also an
+immediate. For vsetvli with a nonzero source register, generate an
+unsigned minimum and, when required, conditional selection for the
+rvv_vl_half_avl policy. Preserve the rounded-up half-AVL result for
+VLMAX < AVL < 2 * VLMAX.
+
+Write vl and vtype, clear vstart and VILL, and return the selected VL
+through the destination register. Compute the result before writing
+the destination so that rd may alias the AVL source register. Use
+the existing 32-bit TCG globals for vl and vstart.
+
+Keep the generic helper for RV32, other LMUL values, unsupported
+types, register-supplied vtype, and vsetvli with rs1=x0. In particular,
+retain the existing handling of the x0 forms and their VILL policy.
+Leave instruction checks, finalization, PC updates and the subsequent
+translation-block lookup unchanged.
+
+The preceding regression test covers AVL boundaries, register aliases,
+state updates, helper fallback cases and subsequent vector arithmetic
+with both VL selection policies.
+---
+ target/riscv/tcg/insn_trans/trans_rvv.c.inc | 79 +++++++++++++++++++--
+ 1 file changed, 72 insertions(+), 7 deletions(-)
+
+diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+index 7e1295f33e..d26844c99c 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+@@ -221,7 +221,26 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
+     return true;
+ }
+ 
+-static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
++static bool vsetvl_inline_vtype(DisasContext *s, unsigned vtype)
++{
++    unsigned vsew = FIELD_EX64(vtype, VTYPE, VSEW);
++
++    /* RV64, LMUL=1, no reserved or alternate-format bits. */
++    return get_xl(s) == MXL_RV64 && !(vtype & ~0xf8u) &&
++           (8u << vsew) <= s->cfg_ptr->elen;
++}
++
++static void gen_vsetvl_inline_state(TCGv vl, unsigned vtype)
++{
++    tcg_gen_trunc_tl_i32(cpu_vl, vl);
++    tcg_gen_st_tl(tcg_constant_tl(vtype), tcg_env,
++                  offsetof(CPURISCVState, vtype));
++    tcg_gen_movi_i32(cpu_vstart, 0);
++    tcg_gen_st8_i32(tcg_constant_i32(0), tcg_env,
++                   offsetof(CPURISCVState, vill));
++}
++
++static bool do_vsetivli(DisasContext *s, int rd, unsigned avl, unsigned vtype)
+ {
+     TCGv dst;
+ 
+@@ -231,7 +250,20 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
+ 
+     dst = dest_gpr(s, rd);
+ 
+-    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl(0));
++    if (vsetvl_inline_vtype(s, vtype)) {
++        unsigned vsew = FIELD_EX64(vtype, VTYPE, VSEW);
++        unsigned vlmax = vext_get_vlmax(s->cfg_ptr->vlenb, vsew, 0);
++        unsigned vl = MIN(avl, vlmax);
++
++        if (avl > vlmax && avl < 2 * vlmax && s->cfg_ptr->rvv_vl_half_avl) {
++            vl = (avl + 1) >> 1;
++        }
++        tcg_gen_movi_tl(dst, vl);
++        gen_vsetvl_inline_state(tcg_constant_tl(vl), vtype);
++    } else {
++        gen_helper_vsetvl(dst, tcg_env, tcg_constant_tl(avl),
++                         tcg_constant_tl(vtype), tcg_constant_tl(0));
++    }
+     gen_set_gpr(s, rd, dst);
+     finalize_rvv_inst(s);
+     gen_update_pc(s, s->cur_insn_len);
+@@ -249,15 +281,48 @@ static bool trans_vsetvl(DisasContext *s, arg_vsetvl *a)
+ 
+ static bool trans_vsetvli(DisasContext *s, arg_vsetvli *a)
+ {
+-    TCGv s2 = tcg_constant_tl(a->zimm);
+-    return do_vsetvl(s, a->rd, a->rs1, s2);
++    TCGv avl, vl;
++    unsigned vsew, vlmax;
++
++    /* The x0 AVL encodings retain the helper's special VILL semantics. */
++    if (a->rs1 == 0 || !vsetvl_inline_vtype(s, a->zimm)) {
++        return do_vsetvl(s, a->rd, a->rs1, tcg_constant_tl(a->zimm));
++    }
++    if (!require_rvv(s) || !s->cfg_ptr->ext_zve32x) {
++        return false;
++    }
++
++    avl = get_gpr(s, a->rs1, EXT_ZERO);
++    vl = tcg_temp_new();
++    vsew = FIELD_EX64(a->zimm, VTYPE, VSEW);
++    vlmax = vext_get_vlmax(s->cfg_ptr->vlenb, vsew, 0);
++    tcg_gen_umin_tl(vl, avl, tcg_constant_tl(vlmax));
++    if (s->cfg_ptr->rvv_vl_half_avl) {
++        TCGv half = tcg_temp_new();
++
++        /* Overflow of AVL+1 is harmless outside the selected small range. */
++        tcg_gen_addi_tl(half, avl, 1);
++        tcg_gen_shri_tl(half, half, 1);
++        tcg_gen_movcond_tl(TCG_COND_LTU, half, avl,
++                           tcg_constant_tl(2 * vlmax), half,
++                           tcg_constant_tl(vlmax));
++        tcg_gen_movcond_tl(TCG_COND_LEU, vl, avl,
++                           tcg_constant_tl(vlmax), avl, half);
++    }
++
++    /* Compute VL before writing rd, which may alias the AVL register. */
++    gen_vsetvl_inline_state(vl, a->zimm);
++    gen_set_gpr(s, a->rd, vl);
++    finalize_rvv_inst(s);
++    gen_update_pc(s, s->cur_insn_len);
++    lookup_and_goto_ptr(s);
++    s->base.is_jmp = DISAS_NORETURN;
++    return true;
+ }
+ 
+ static bool trans_vsetivli(DisasContext *s, arg_vsetivli *a)
+ {
+-    TCGv s1 = tcg_constant_tl(a->rs1);
+-    TCGv s2 = tcg_constant_tl(a->zimm);
+-    return do_vsetivli(s, a->rd, s1, s2);
++    return do_vsetivli(s, a->rd, a->rs1, a->zimm);
+ }
+ 
+ /* vector register offset from env */
 -- 
-2.43.0
+2.47.0.windows.1
 
 
