@@ -1,91 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848A8606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 11:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13A9606A325
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 12:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QURniKtR
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=LZYs2+id
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNU66-0004pS-Sl; Sun, 01 Nov 2026 06:51:38 -0500
+	id 1xNUL6-0007xE-7P; Sun, 01 Nov 2026 07:07:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nagendranjairam52@gmail.com>)
- id 1xNU65-0004ov-09
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 06:51:37 -0500
-Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nagendranjairam52@gmail.com>)
- id 1xNU62-0001ud-Tp
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 06:51:36 -0500
-Received: by mail-dy1-x1330.google.com with SMTP id
- 5a478bee46e88-36a1947498bso789566eec.1
- for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 03:51:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793533893; x=1794138693; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=iUsGrThjNefYxcPqScCdOMiyGxht+SN9iKA89LsuUdY=;
- b=QURniKtRCNmVQcLYpu09GPp2nZRQhYpLBmLGVDlx7AD1AIYfAMGfRDh2Bv4g5SHB/k
- 6kjrvrV1VFEe4CIqBsok77au9gAAXOxDd3H9ZZN6xjfSPdxbTIaJH7eiv3WTvIiZe08W
- xQuIz1PK5Gm1B3xsEXw7GWC8oyngvJck3g1uWegL7HpprBzzUmOxR29cCtjPgVDDsE3e
- HfY9F9MHgU8jrK6Vavu2gBAPlVY+m83MUbJf4/eQ+SbOve4MHMViQ8Q7KeL6IpPnT8am
- AHW+949D3WnN+/57kBqUl++GOAXLqg/i24vvLDuq+J5PAVkxpCbpmmPMPKEYIgvomSfu
- wH5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793533893; x=1794138693;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=iUsGrThjNefYxcPqScCdOMiyGxht+SN9iKA89LsuUdY=;
- b=Xxq08uKxvrSctL6rTnQxi4VHlTmNnE0hEQsR/1lg7HXA8DVaQvGmoXFKF/KpIet11n
- Th6TGySC4v6gauE6ZPTq4jwQq5f+XKYrLffhhHE1I31SJfYNHXBkD3Pl46w1hbKs29dd
- ybNLgah27GXsOLytAigSeyPz1U70KgUC8Sx++0WYEryKgvF6bKAOI7XK4xKXTWannbHL
- b4Dp36xBPX3Z9Oqm8FdpRciIj60TwUCHuGTSIcylNV8mKzzjSCkXkkIvQBfKbFuBAceX
- xst7U1C32CqijiUZf8scNn09S2smnuUzj31tcY0Qovsk7zvheNObegQXHDyMvDXpu0qj
- yKbQ==
-X-Gm-Message-State: APuU4Z+xvPty0unJzPJhffVLIfFZAlRiZxQ8DISoxlYNdgAd+BH6zZPt
- ZsTOSnG5MutAQ8IRw1Z/GJbHjsBv74MbXKPnhzM7oHFJLlITzB0OCo6GG55o/QfF
-X-Gm-Gg: AYBFou2do4Qf+YTlJSKJ5AfdWGQkp4oWMeBaaNE9wOak5dLq38nqav2Fpl/mtOk9d8U
- wnfKHnvOq88OnbQ9TNALeIA9iuF74TvpOw2EY/K3fBK3Ixa2Reb6RvViFDDj5rE/Q/qd5b9IdDJ
- JRNHL7EQZYV/JQ974eytKsgXHfj4Hi5FhVqX7nmSolQh3u4nAFpi6gF+21TLWKAVIIsxs8bfBuT
- aFGxkyB7pSVpFHmmmsP5D1zHsTYQ1qsBZIyW/45lxrSonNgua6XBesOYEzc+cskG9NJ6HuTmVM9
- 6nxjFmARePjEbp4RxaEig73ZlPXkVXLOhkg3WdjpcNdGqWGNthm4JwjS/rO1XKf17PO00Nq5g9f
- 7hKPc6jFpD/No6ahDucaeRBsFd/RxfOKmWMyFwVFj3g04IxSXi5z5MwRGgbWP882Sen0VKTsJMo
- c8AYmbbPDalmq21p3g2mTg9pHLogEf9x9/AYVB04pQSaGieoi0a1jTjcoEqePlrdxBn9pKDTOqf
- M4tuq/Mp0P+CQpXVgCy5Q0kWbbO6OaqgQ6cxGrxqidNp+yggcWpKdplqzg6i2ILd588pbm0K6re
- 0IUdCEOOY8LyREmOSe5tZoM6litoM60LQCFEFSAaHOcBImkkCQ==
-X-Received: by 2002:a05:7300:d215:b0:366:c0a2:642f with SMTP id
- 5a478bee46e88-36a423b3b95mr10898829eec.22.1793533892291; 
- Sun, 01 Nov 2026 03:51:32 -0800 (PST)
-Received: from DESKTOP-G8U0VEE ([2405:201:e03d:48:18d9:11ce:48d5:7dbc])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a42a98f65sm25839559eec.28.2026.11.01.03.51.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Nov 2026 03:51:31 -0800 (PST)
-From: Nagendran K <nagendranjairam52@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, philmd@linaro.org, daan.j.demeyer@gmail.com,
- peter.maydell@linaro.org, alistair@alistair23.me,
- Nagendran K <nagendranjairam52@gmail.com>
-Subject: [PATCH v2] hw/core/loader.c: Add Extended Tektronix HEX file support
-Date: Sun,  1 Nov 2026 17:21:19 +0530
-Message-ID: <20261101115119.2010-1-nagendranjairam52@gmail.com>
-X-Mailer: git-send-email 2.54.0.windows.1
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xNUL0-0007wH-AQ
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 07:07:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xNUKy-0003Yk-7u
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 07:07:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793534819;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KKZNkPurnsixgCG+iI2UK2v8YyNheyZcp5HjsaqDYT0=;
+ b=LZYs2+idtLxE1gHq2howLvK4bAfbkdMAiUoi5YjgsKzZr7DM8QZYOb4OGcaZ/Ba2so6BWp
+ ec5IaZ5//zAbBc+9gh9KiGLPa6+QqlfMt2G3o1qfVzBlDBPxqUc1xkEgEqB60i/bHAgqoE
+ PrlPK5+scL6KtQUvvxlb3G9V1b8vjwE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-Uf_ZPot1MAS3lqMjIRrRzw-1; Sun,
+ 01 Nov 2026 07:06:58 -0500
+X-MC-Unique: Uf_ZPot1MAS3lqMjIRrRzw-1
+X-Mimecast-MFC-AGG-ID: Uf_ZPot1MAS3lqMjIRrRzw_1793534817
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2513518001FB; Sun,  1 Nov 2026 12:06:57 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 100DF767; Sun,  1 Nov 2026 12:06:55 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Sun, 01 Nov 2026 16:06:37 +0400
+Subject: [GIT PULL 4/9] ui/vnc: notify client of clipboard availability
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
- envelope-from=nagendranjairam52@gmail.com; helo=mail-dy1-x1330.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20261101-ui-v1-4-8af305cef69a@redhat.com>
+References: <20261101-ui-v1-0-8af305cef69a@redhat.com>
+In-Reply-To: <20261101-ui-v1-0-8af305cef69a@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8680;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=jv6PBu2liTwOEjymAnq22f7sojFCFZ4gjZ3BesuAWPM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq5ytOz71kvSZNXL4DeNME/mpGFSlkYfOhCnBi4
+ rhikMgn9Y2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaucrTgAKCRDa6OEJdZac
+ 5bPtEACbcIaXLEbP5s85GMljiWM+8aXCXWWSKNMQouzyqESUkZXllSQPH2EU1fLJ55g4Yt4aUrw
+ luTmcTm5oM7H1waBvfl/B9Yu1m+g/27oBstctJeZHcQh6obpQNNMMjPLbghjaAtBKTvxtnQHWKI
+ ae03q7Ur5RlyY26vIy22F88KeBWeIUPWB6akOyCi+UpV7GTrRWfCZmU0eKT8gFAEUl+XYrj7bO2
+ o0nScz8DEgBXTuifpjcE7cVK1TBAN4a+CgtBKmKyfRERONN2YlaMMgLkoj1Ca4GV+98M1bBWD04
+ O6unHPsm7j+ZtXLyyHe56W6c9Oz20apWx9JrVKv72XnwCawf+zlFddoZXOtoBp/WQAsWII0UeIj
+ i/0KjB95hgyzjcRpGK9x9KQmWRBjH/ArUY/6bFTM/XY8cCL24Lp8VBw0Qy7O7COhdq8nMi62ijI
+ M5ZCuyVUdSrKJT8idFWBoTUKolktfOzvN3BSZ2VtKE44BEcIAHFPWXjkvGZApTG7cg1eJvvSOxf
+ c2Wt3HhbUuDZa0voGFmab1H2/xZeTIPbyM52IsnpcUm3lLB6jT3QICyxAR6X/0jlpEXAQF0wIWh
+ lIzKUxVXaqBCJND6l81PsyCr7dOoyxuVFbQukpZV3v8YquAafog0H2SLwz+lLD3djk5+NyZmBje
+ YMyPm2MpdGior3Q==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,279 +99,227 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add support for loading Extended Tektronix HEX files through the
-generic loader.
+From: Lukasz Kornicki <lucas.kornicki@nutanix.com>
 
-The loader parses Extended Tektronix records, validates their
-checksums, and loads the data at the addresses specified in the file.
+Adds support for vnc ClipboardAvailability pseudo-encoding.
 
-This allows Extended Tektronix files to be loaded directly without
-manual conversion to another supported format.
+When a client requests this feature, the server will inform the client
+whether a guest clipboard peer is present. The server will repeat the
+notification each time availability of a guest clipboard peer changes.
 
-Tested by loading an Extended Tektronix file containing a simple UART
-application on the RealView EB machine. The application executed
-successfully and produced the expected UART output.
+This change enables the VNC client to determine if a guest side
+clipboard peer is available for clipboard exchange and react to
+changes of its availability.
 
-Signed-off-by: Nagendran K <nagendranjairam52@gmail.com>
+Until now the VNC clipboard peer was only registered when
+VNC_FEATURE_CLIPBOARD_EXT was enabled. With this change the VNC peer
+can be registered just for the purpose of receiving peer status
+updates. This requires introducing a VNC_FEATURE_CLIPBOARD_EXT guard
+before the QEMU_CLIPBOARD_UPDATE_INFO handler which previously only ran
+if VNC_FEATURE_CLIPBOARD_EXT was enabled.
+
+Signed-off-by: Lukasz Kornicki <lucas.kornicki@nutanix.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20261030141442.264308-5-lucas.kornicki@nutanix.com>
 ---
- hw/core/loader.c         | 141 +++++++++++++++++++++++----------------
- include/hw/core/loader.h |   7 +-
- 2 files changed, 87 insertions(+), 61 deletions(-)
+ tools/qemu-vnc/qemu-vnc.c |  7 ++++++-
+ ui/trace-events           |  1 +
+ ui/vnc-clipboard.c        | 34 +++++++++++++++++++++++++++++++++-
+ ui/vnc.c                  |  9 +++++++++
+ ui/vnc.h                  |  8 ++++++++
+ 5 files changed, 57 insertions(+), 2 deletions(-)
 
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 2943f69e92..33ccb51d56 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -1958,8 +1958,11 @@ typedef struct {
- } Ext_Tek_HexLine;
+diff --git a/tools/qemu-vnc/qemu-vnc.c b/tools/qemu-vnc/qemu-vnc.c
+index 5c2ba3b7a564..c915589ca7e1 100644
+--- a/tools/qemu-vnc/qemu-vnc.c
++++ b/tools/qemu-vnc/qemu-vnc.c
+@@ -95,6 +95,7 @@ on_manager_ready(GObject *source_object,
+     g_autoptr(GPtrArray) console_paths = NULL;
+     bool found = false;
+     Error *local_err = NULL;
++    VncDisplay *vd;
  
- /* return 0 or -1 if error */
--static bool parse_ext_tek_hex_record(Ext_Tek_HexLine *line, uint8_t *our_checksum, const uint8_t c,
--                         uint32_t *index, const bool in_process)
-+static bool parse_ext_tek_hex_record(Ext_Tek_HexLine *line,
-+                                     uint8_t *our_checksum,
-+                                     const uint8_t c,
-+                                     uint32_t *index,
-+                                     const bool in_process)
+     manager = G_DBUS_OBJECT_MANAGER(
+         g_dbus_object_manager_client_new_finish(res, &err));
+@@ -145,13 +146,17 @@ on_manager_ready(GObject *source_object,
+      * Create the VNC display now that consoles exist, so that the
+      * display change listener is registered against a valid console.
+      */
+-    if (!vnc_display_new("default", &local_err)) {
++    vd = vnc_display_new("default", &local_err);
++    if (!vd) {
+         error_report("Failed to create VNC display: %s",
+                      error_get_pretty(local_err));
+         g_assert_not_reached();
+         return;
+     }
+ 
++    /* guest clipboard peer presence is not exposed over D-Bus */
++    vd->clipboard_availability = false;
++
+     vnc_dbus_setup(state->bus);
+ 
+     clipboard_setup(manager, state->bus);
+diff --git a/ui/trace-events b/ui/trace-events
+index 917d116d90e1..f5f82c75db0b 100644
+--- a/ui/trace-events
++++ b/ui/trace-events
+@@ -45,6 +45,7 @@ vnc_msg_server_audio_end(void *state, void *ioc) "VNC server msg audio end state
+ vnc_msg_server_audio_data(void *state, void *ioc, const void *buf, size_t len) "VNC server msg audio data state=%p ioc=%p buf=%p len=%zd"
+ vnc_msg_server_desktop_resize(void *state, void *ioc, int width, int height) "VNC server msg ext resize state=%p ioc=%p size=%dx%d"
+ vnc_msg_server_ext_desktop_resize(void *state, void *ioc, int width, int height, int reason) "VNC server msg ext resize state=%p ioc=%p size=%dx%d reason=%d"
++vnc_msg_server_clipboard_availability(void *state, void *ioc, bool available) "VNC server msg clipboard availability state=%p ioc=%p available=%d"
+ vnc_msg_client_audio_enable(void *state, void *ioc) "VNC client msg audio enable state=%p ioc=%p"
+ vnc_msg_client_audio_disable(void *state, void *ioc) "VNC client msg audio disable state=%p ioc=%p"
+ vnc_msg_client_audio_format(void *state, void *ioc, int fmt, int channels, int freq) "VNC client msg audio format state=%p ioc=%p fmt=%d channels=%d freq=%d"
+diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
+index 67f710f6ed80..7c5bd94cb62d 100644
+--- a/ui/vnc-clipboard.c
++++ b/ui/vnc-clipboard.c
+@@ -26,6 +26,7 @@
+ #include "qemu/error-report.h"
+ #include "vnc.h"
+ #include "vnc-jobs.h"
++#include "trace.h"
+ 
+ static uint8_t *inflate_buffer(uint8_t *in, uint32_t in_len, uint32_t *size)
  {
-     /* +---------+---------------+-----------+---------------+-------------+
-      * | record  |    record     |           |               |             |
-@@ -1977,27 +1980,35 @@ static bool parse_ext_tek_hex_record(Ext_Tek_HexLine *line, uint8_t *our_checksu
-     if (!g_ascii_isxdigit(c) || !in_process) {
-         return false;
+@@ -224,6 +225,26 @@ static void vnc_clipboard_update_info(VncState *vs, QemuClipboardInfo *info)
      }
--    //still idx is computed nibble wise
-+    /* still idx is computed nibble wise */
-     value = g_ascii_xdigit_value(c);
-     value = (idx & 0x1) ? (value & 0xf) : (value << 4);
-     if (idx < 2) {
-         line->record_length |= value;
--    } else if (idx==2) {
-+    } else if (idx == 2) {
-         line->record_type |= value;
--    } else if (2 < idx && idx <=4) {
-+    } else if (2 < idx && idx <= 4) {
-         line->checksum |= value;
-     }
--    //Extracting address length from record to fill that many no of address characters in the address field of the line structure. 
--    else if ( idx==5){
-+    /*
-+     * Extracting address length from record to fill that many no of address
-+     * characters in the address field of the line structure.
-+     */
-+    else if (idx == 5) {
-         address_len |= value;
--    }else if (6 <= idx && idx <= (6 + address_len)) {
-+    } else if (6 <= idx &&
-+                   idx <= (6 + address_len)) {
-         line->address <<= address_len;
-         line->address += g_ascii_xdigit_value(c);
-     }
--    //Checking whether index above address last char index and reaches till record length 
-+    /*
-+     * Checking whether index above address last char index
-+     * and reaches till record length. Right shifting one divides the
-+     * nibble wise index by 2 to get the byte wise index to
-+     * fill the data field of the line structure
-+     */
-     else if ((6 + address_len) < idx &&
--               idx <= line->record_length) {
--        //Right shifting one divides the nibble wise index by 2 to get the byte wise index to fill the data field of the line structure.
-+              idx <= line->record_length) {
-         line->data[(idx - (6 + address_len)) >> 1] |= value;
-     } else {
-         return false;
-@@ -2040,12 +2051,12 @@ static int handle_ext_tek_hex_record_type(Ext_TekHexParser *parser)
-         }
- 
-         /* copy from line buffer to output bin_buf */
--        //sizeof(line->data) is given to dynamically calculate the size of data field
-+        /* sizeof(line->data) dynamically calculates the size of data field */
-         memcpy(parser->bin_buf + parser->current_rom_index, line->data,
-                sizeof(line->data));
-         parser->current_rom_index += sizeof(line->data);
-         parser->total_size += sizeof(line->data);
--        //As address is absolute address, we dont need to calculate next address to write
-+        /* As address is absolute, we dont need to calculate next address */
-         break;
- 
-     case TEK_TERMINATION_RECORD:
-@@ -2065,15 +2076,18 @@ static int handle_ext_tek_hex_record_type(Ext_TekHexParser *parser)
  }
  
- /* return size or -1 if error */
--static int parse_ext_tek_hex_blob(const char *filename, hwaddr *addr, uint8_t *ext_tek_blob,
--    size_t ext_tek_blob_size, AddressSpace *as)
--{
--        bool in_process = false; /* avoid re-enter and
--                * check whether record begin with '%' */
-+static int parse_ext_tek_hex_blob(const char *filename,
-+                                  hwaddr *addr,
-+                                  uint8_t *ext_tek_blob,
-+                                  size_t ext_tek_blob_size,
-+                                  AddressSpace *as)
++void vnc_clipboard_availability_send(VncState *vs, bool available)
 +{
-+    /* avoid re-enter and check whether record begin with '%' */
-+        bool in_process = false;
-         uint8_t *end = ext_tek_blob + ext_tek_blob_size;
-         uint8_t our_checksum = 0;
-         uint32_t record_index = 0;
--        
++    if (!vnc_has_feature(vs, VNC_FEATURE_CLIPBOARD_AVAILABILITY)) {
++        return;
++    }
 +
-         Ext_TekHexParser parser = {
-         .filename = filename,
-         .bin_buf = g_malloc(ext_tek_blob_size),
-@@ -2085,47 +2099,52 @@ static int parse_ext_tek_hex_blob(const char *filename, hwaddr *addr, uint8_t *e
-         rom_transaction_begin();
- 
-         for (; ext_tek_blob < end && !parser.complete; ++ext_tek_blob) {
--        switch (*ext_tek_blob) {
--        case '\r':
--        case '\n':
--        if (!in_process) {
--        break;
--        }
-+            switch (*ext_tek_blob) {
-+            case '\r':
-+            case '\n':
-+                if (!in_process) {
-+                    break;
-+                }
- 
--        in_process = false;
--        //record_length byte stores the number of hex characters (nibbles) in the record
--        //so, record_length as the authoritative count of hex characters (nibbles) in the record 
--        //and compare it directly to the nibble index(record index).
--        if ((parser.line.record_length != record_index) || (our_checksum != 0)) {
--        parser.total_size = -1;
--        goto out;
--        }
-+                in_process = false;
-+                /*
-+                 * record_length byte stores the number of hex characters
-+                 * (nibbles) in the record and compare it directly to
-+                 * the nibble index(record index).
-+                 */
-+                if ((parser.line.record_length != record_index) ||
-+                    (our_checksum != 0)) {
-+                    parser.total_size = -1;
-+                    goto out;
-+                }
- 
--        if (handle_ext_tek_hex_record_type(&parser) == -1) {
--        parser.total_size = -1;
--        goto out;
--        }
--        break;
-+                if (handle_ext_tek_hex_record_type(&parser) == -1) {
-+                    parser.total_size = -1;
-+                    goto out;
-+                }
-+                break;
- 
--        /* start of a new record. */
--        case '%':
--        memset(&parser.line, 0, sizeof(Ext_Tek_HexLine));
--        in_process = true;
--        record_index = 0;
--        break;
-+            /* start of a new record. */
-+            case '%':
-+                memset(&parser.line, 0, sizeof(Ext_Tek_HexLine));
-+                in_process = true;
-+                record_index = 0;
-+                break;
- 
--        /* decoding lines */
--        default:
--        if (!parse_ext_tek_hex_record(&parser.line, &our_checksum, *ext_tek_blob,
--                &record_index, in_process)) {
--        parser.total_size = -1;
--        goto out;
--        }
--        break;
--        }
-+            /* decoding lines */
-+            default:
-+                if (!parse_ext_tek_hex_record(&parser.line,
-+                                            &our_checksum,
-+                                            *ext_tek_blob,
-+                                            &record_index, in_process)) {
-+                    parser.total_size = -1;
-+                    goto out;
-+                }
-+                break;
-+            }
-         }
- 
--        out:
-+    out:
-         g_free(parser.bin_buf);
-         rom_transaction_end(parser.total_size != -1);
-         return parser.total_size;
-@@ -2133,18 +2152,22 @@ static int parse_ext_tek_hex_blob(const char *filename, hwaddr *addr, uint8_t *e
- 
- 
- /* return size or -1 if error */
--ssize_t load_targphys_ext_tek_hex_as(const char *filename, hwaddr *entry, AddressSpace *as)
-+ssize_t load_targphys_ext_tek_hex_as(const char *filename,
-+                                     hwaddr *entry,
-+                                     AddressSpace *as)
- {
-     gsize ext_tek_blob_size;
-     gchar *ext_tek_blob;
-     int total_size = 0;
- 
--    if (!g_file_get_contents(filename, &ext_tek_blob, &ext_tek_blob_size, NULL)) {
-+    if (!g_file_get_contents(filename, &ext_tek_blob,
-+                             &ext_tek_blob_size, NULL)) {
-         return -1;
-     }
--    total_size = parse_ext_tek_hex_blob(filename, entry, (uint8_t *)ext_tek_blob,
--                                ext_tek_blob_size, as);
-+    total_size = parse_ext_tek_hex_blob(filename, entry,
-+                                       (uint8_t *)ext_tek_blob,
-+                                       ext_tek_blob_size, as);
- 
-     g_free(ext_tek_blob);
-     return total_size;
--}
-\ No newline at end of file
++    trace_vnc_msg_server_clipboard_availability(vs, vs->ioc, available);
++
++    vnc_lock_output(vs);
++    vnc_write_u8(vs, VNC_MSG_SERVER_FRAMEBUFFER_UPDATE);
++    vnc_write_u8(vs, 0);
++    vnc_write_u16(vs, 1);
++    vnc_framebuffer_update(vs, 0, 0, 0, 0,
++                           VNC_ENCODING_CLIPBOARD_AVAILABILITY);
++    vnc_write_u8(vs, available ? VNC_CLIPBOARD_AVAILABLE
++                               : VNC_CLIPBOARD_UNAVAILABLE);
++    vnc_unlock_output(vs);
++    vnc_flush(vs);
 +}
-diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
-index 336a987f85..c0d29b1d44 100644
---- a/include/hw/core/loader.h
-+++ b/include/hw/core/loader.h
-@@ -57,7 +57,8 @@ ssize_t load_image_targphys_as(const char *filename,
- ssize_t load_targphys_hex_as(const char *filename, hwaddr *entry,
-                              AddressSpace *as);
++
+ static void vnc_clipboard_notify(Notifier *notifier, void *data)
+ {
+     VncState *vs = container_of(notifier, VncState, cbpeer.notifier);
+@@ -231,13 +252,24 @@ static void vnc_clipboard_notify(Notifier *notifier, void *data)
  
--                             /**load_targphys_ext_tek_as:
-+/**
-+ * load_targphys_ext_tek_as:
-  * @filename: Path to the .tek file
-  * @entry: Store the entry point given by the .tek file
-  * @as: The AddressSpace to load the .tek file to. The value of
-@@ -67,7 +68,9 @@ ssize_t load_targphys_hex_as(const char *filename, hwaddr *entry,
-  *
-  * Returns the size of the loaded .tek file on success, -1 otherwise.
-  */
--ssize_t load_targphys_ext_tek_hex_as(const char *filename, hwaddr *entry, AddressSpace *as);
-+ssize_t load_targphys_ext_tek_hex_as(const char *filename,
-+                                     hwaddr *entry,
-+                                     AddressSpace *as);
+     switch (notify->type) {
+     case QEMU_CLIPBOARD_UPDATE_INFO:
++        /* ignore the update if client does not want ext messages */
++        if (!vnc_has_feature(vs, VNC_FEATURE_CLIPBOARD_EXT)) {
++            return;
++        }
++
+         vnc_clipboard_update_info(vs, notify->info);
+         return;
+     case QEMU_CLIPBOARD_RESET_SERIAL:
+         /* ignore */
+         return;
+     case QEMU_CLIPBOARD_PEER_UPDATE:
+-        /* ignore */
++        /* only guest side peers affect the status we relay to the client */
++        if (!notify->peer_update.peer->guest) {
++            return;
++        }
++
++        vnc_clipboard_availability_send(vs,
++            qemu_clipboard_guest_peer_present());
+         return;
+     }
+ }
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 656768f9c998..8b1d03ef2434 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2191,6 +2191,14 @@ static void set_encodings(VncState *vs, int32_t *encodings, size_t n_encodings)
+             vnc_set_feature(vs, VNC_FEATURE_CLIPBOARD_EXT);
+             vnc_server_cut_text_caps(vs);
+             break;
++        case VNC_ENCODING_CLIPBOARD_AVAILABILITY:
++            if (vs->vd->clipboard_availability) {
++                vnc_set_feature(vs, VNC_FEATURE_CLIPBOARD_AVAILABILITY);
++                vnc_clipboard_peer_register(vs);
++                vnc_clipboard_availability_send(vs,
++                    qemu_clipboard_guest_peer_present());
++            }
++            break;
+         case VNC_ENCODING_COMPRESSLEVEL0 ... VNC_ENCODING_COMPRESSLEVEL0 + 9:
+             vc->worker.tight.compression = (enc & 0x0F);
+             break;
+@@ -3459,6 +3467,7 @@ VncDisplay *vnc_display_new(const char *id, Error **errp)
  
- /** load_image_targphys:
-  * Same as load_image_targphys_as(), but doesn't allow the caller to specify
+     vd->share_policy = VNC_SHARE_POLICY_ALLOW_EXCLUSIVE;
+     vd->connections_limit = 32;
++    vd->clipboard_availability = true;
+ 
+     vnc_start_worker_thread(vd);
+ 
+diff --git a/ui/vnc.h b/ui/vnc.h
+index d8b0070396dc..8eae550c96d6 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -171,6 +171,7 @@ struct VncDisplay
+     bool lossy;
+     bool non_adaptive;
+     bool power_control;
++    bool clipboard_availability;
+     QCryptoTLSCreds *tlscreds;
+     char *tlsauthzid;
+ #ifdef CONFIG_VNC_SASL
+@@ -422,6 +423,7 @@ enum {
+ #define VNC_ENCODING_DESKTOP_RESIZE_EXT   0XFFFFFECC /* -308 */
+ #define VNC_ENCODING_XVP                  0XFFFFFECB /* -309 */
+ #define VNC_ENCODING_ALPHA_CURSOR         0XFFFFFEC6 /* -314 */
++#define VNC_ENCODING_CLIPBOARD_AVAILABILITY  0XFFFFFEC2 /* -318 */
+ #define VNC_ENCODING_WMVi                 0x574D5669
+ #define VNC_ENCODING_CLIPBOARD_EXT        0xc0a1e5ce
+ 
+@@ -466,6 +468,7 @@ enum VncFeatures {
+     VNC_FEATURE_LED_STATE,
+     VNC_FEATURE_XVP,
+     VNC_FEATURE_CLIPBOARD_EXT,
++    VNC_FEATURE_CLIPBOARD_AVAILABILITY,
+     VNC_FEATURE_AUDIO,
+ };
+ 
+@@ -541,6 +544,10 @@ enum VncFeatures {
+ #define VNC_CLIPBOARD_NOTIFY   (1 << 27)
+ #define VNC_CLIPBOARD_PROVIDE  (1 << 28)
+ 
++/* ClipboardAvailability pseudo-encoding values */
++#define VNC_CLIPBOARD_UNAVAILABLE  0
++#define VNC_CLIPBOARD_AVAILABLE    1
++
+ VncDisplay *vnc_display_new(const char *id, Error **errp);
+ void vnc_display_free(VncDisplay *vd);
+ 
+@@ -637,6 +644,7 @@ void vnc_zrle_clear(VncWorker *worker);
+ 
+ /* vnc-clipboard.c */
+ void vnc_clipboard_peer_register(VncState *vs);
++void vnc_clipboard_availability_send(VncState *vs, bool available);
+ void vnc_server_cut_text_caps(VncState *vs);
+ void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text);
+ void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t flags, uint8_t *data);
+
 -- 
-2.54.0.windows.1
+2.56.0.116.g6de20f6092dc
 
 
