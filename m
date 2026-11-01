@@ -1,61 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A0B606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8409606A324
 	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EOVMn+du
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Z4dnY8MP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNc1D-00061l-I3; Sun, 01 Nov 2026 15:19:07 -0500
+	id 1xNbzz-00058F-6f; Sun, 01 Nov 2026 15:17:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzf-0004rN-Pp
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:32 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzd-0004qc-OZ
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbza-00079f-Ds
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:30 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbza-00079U-3S
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1793564245;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XJjhP1BkvYlI8yYC+l6PVE20U9iCYk6O6nPiXkZNmHw=;
- b=EOVMn+duQpQywzQ24NP0S7W/Id4ud++EDuTqnOLMm4yvpEpEjw6IVP8/0RAtkuzAx2SRv9
- XnF1CVLRLLXW0jvrjJdz0qs0Z7i6VYpVIG5bijNDtehm9BMaGxP3qOMQ6XIu2fo9Ddp5EF
- 4llxc0IwayQ/Un2SO04EDN3UEUJnIqE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=O7RNZYnm+eF4OzlPujJSw4fjnHCyCQO0WFgeUq72Aac=;
+ b=Z4dnY8MPfM3WYdnAkE8ucJtv07c0BNiLL15o6TKsRXpL8IUwwaBerlAHU2PUZEeUyLhzgX
+ Aea8Coa40A0CAD64bcPIMuu9Naj/jZp/dq38zk1keGQnX3UCl6XtAhJ2gvZeSz8T92u+cC
+ wfPs4/4kqE64S7oT1xQWKFX6lBEUeHM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-ek-ULeB6MmmJIUPN-aAK8A-1; Sun,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-BvXEXWlkMNi0VJFnY3x6TA-1; Sun,
  01 Nov 2026 15:17:24 -0500
-X-MC-Unique: ek-ULeB6MmmJIUPN-aAK8A-1
-X-Mimecast-MFC-AGG-ID: ek-ULeB6MmmJIUPN-aAK8A_1793564243
+X-MC-Unique: BvXEXWlkMNi0VJFnY3x6TA-1
+X-Mimecast-MFC-AGG-ID: BvXEXWlkMNi0VJFnY3x6TA_1793564243
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 63A831800616
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5F9081800364
  for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 20:17:23 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22FD73000B78
+ id 1E60F30002CF
  for <qemu-devel@nongnu.org>; Sun,  1 Nov 2026 20:17:23 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BC9CA21E688A; Sun, 01 Nov 2026 21:17:17 +0100 (CET)
+ id CA20421E6890; Sun, 01 Nov 2026 21:17:17 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com,
 	pbonzini@redhat.com,
 	berrange@redhat.com
-Subject: [PATCH v8 10/56] qom: add qapi_type field to ObjectProperty
-Date: Sun,  1 Nov 2026 21:16:31 +0100
-Message-ID: <20261101201717.3911097-11-armbru@redhat.com>
+Subject: [PATCH v8 13/56] qom/qmp: populate description & default-value in
+ qom_property_info()
+Date: Sun,  1 Nov 2026 21:16:34 +0100
+Message-ID: <20261101201717.3911097-14-armbru@redhat.com>
 In-Reply-To: <20261101201717.3911097-1-armbru@redhat.com>
 References: <20261101201717.3911097-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -92,51 +93,67 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Add a const pointer to QAPITypeInfo in ObjectProperty. NULL for now,
-but future patches will add means to make it non-null. The
-QAPITypeInfo will then be used by QOM introspection to tie the
-property to a QAPI type.
+Move description and default_value population from the individual QMP
+handlers into qom_property_info(), so all callers get them.
+
+This also adds description and default-value to qom-list responses,
+which previously only returned name and type. The handler doesn't care.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/qom/object.h | 2 ++
- qom/object.c         | 1 +
- 2 files changed, 3 insertions(+)
+ qom/qom-qmp-cmds.c | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 90c1a34e49..e9b380462d 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -15,6 +15,7 @@
- #define QEMU_OBJECT_H
+diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+index 47bf3bf293..84a2959051 100644
+--- a/qom/qom-qmp-cmds.c
++++ b/qom/qom-qmp-cmds.c
+@@ -35,6 +35,8 @@ static ObjectPropertyInfo *qom_property_info(ObjectProperty *prop)
  
- #include "qapi/qapi-builtin-types.h"
-+#include "qapi/qapi-type-info.h"
- #include "qemu/module.h"
+     info->name = g_strdup(prop->name);
+     info->type = g_strdup(prop->type);
++    info->description = g_strdup(prop->description);
++    info->default_value = qobject_ref(prop->defval);
+     if (prop->qapi_type) {
+         assert(prop->qapi_type->masked_name);
+         info->qapi_type = g_strdup(prop->qapi_type->masked_name);
+@@ -243,8 +245,6 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
  
- struct TypeImpl;
-@@ -91,6 +92,7 @@ struct ObjectProperty
-     char *name;
-     char *type;
-     char *description;
-+    const QAPITypeInfo *qapi_type;
-     ObjectPropertyAccessor *get;
-     ObjectPropertyAccessor *set;
-     ObjectPropertyResolve *resolve;
-diff --git a/qom/object.c b/qom/object.c
-index 96498f3d00..c34b47312f 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -3171,6 +3171,7 @@ object_property_add_alias(Object *obj, const char *name,
-                              property_release_alias,
-                              prop);
-     op->resolve = property_resolve_alias;
-+    op->qapi_type = target_prop->qapi_type;
-     if (target_prop->defval) {
-         op->defval = qobject_ref(target_prop->defval);
+     object_property_iter_init(&iter, obj);
+     while ((prop = object_property_iter_next(&iter))) {
+-        ObjectPropertyInfo *info;
+-
+         /* Skip Object and DeviceState properties */
+         if (strcmp(prop->name, "type") == 0 ||
+             strcmp(prop->name, "realized") == 0 ||
+@@ -254,11 +254,7 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
+             continue;
+         }
+ 
+-        info = qom_property_info(prop);
+-        info->description = g_strdup(prop->description);
+-        info->default_value = qobject_ref(prop->defval);
+-
+-        QAPI_LIST_PREPEND(prop_list, info);
++        QAPI_LIST_PREPEND(prop_list, qom_property_info(prop));
      }
+ 
+     object_unref(obj);
+@@ -295,12 +291,7 @@ ObjectPropertyInfoList *qmp_qom_list_properties(const char *typename,
+         object_property_iter_init(&iter, obj);
+     }
+     while ((prop = object_property_iter_next(&iter))) {
+-        ObjectPropertyInfo *info = qom_property_info(prop);
+-
+-        info->description = g_strdup(prop->description);
+-        info->default_value = qobject_ref(prop->defval);
+-
+-        QAPI_LIST_PREPEND(prop_list, info);
++        QAPI_LIST_PREPEND(prop_list, qom_property_info(prop));
+     }
+ 
+     object_unref(obj);
 -- 
 2.55.0
 
