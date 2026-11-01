@@ -1,109 +1,154 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0804C606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 08:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E908C606A325
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 09:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=K3heLzKX
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=e36N8xfE;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=HjvPPV+h
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNQxu-0000Sd-OL; Sun, 01 Nov 2026 03:30:58 -0500
+	id 1xNRuu-0001GB-EM; Sun, 01 Nov 2026 04:31:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xNQxr-0000SA-8j
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 03:30:56 -0500
-Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xNQxp-0000wl-Ja
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 03:30:54 -0500
-Received: by mail-dy1-x1330.google.com with SMTP id
- 5a478bee46e88-36a315ed211so2481842eec.0
- for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 01:30:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793521851; cv=none;
- d=google.com; s=arc-20260327;
- b=bq5mcdEURfXC+Myx63hYxsOWPRJ6hGIsLSUuSydHnW7L0t0Pb92uDhjkf87IrY/r78
- nMIxGGIW/3pD/ZHl/5gIY8x66aWQikJCnogxUTUy45MAAIJpltRCIuHqTgipTSqcDryK
- h134DqfB3S+/OPnMBoy7jl7MsoifRwq72T8UjrXrvXluPaWPK0Sv9w/ooKaU1cW8dEPw
- GcalPbkKCnPJhl91YCjfjgrYTzrhHHk4D/F2EwX2AzA5ys+lUgV8NOAJsuERfvrF7avL
- FO5k+OZm93KGUbKRF/i96N/xNAabMEqlb3DYWUdNlne7LcS1wPX5S4Qu+PQe8DLSJHhO
- Vm0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GzXRn7YCFKIPc+rapsRL629I71VbpYSqluWKUJ0GIpM=;
- fh=VHm4GSR0eoGqeLtGAb/Vbwr27V+Q+3pjmzq6sAMKmDA=;
- b=EGRl/opLE81+8bXncVrOOJot4GNjSv6c4OsMCKnbNb0PSYWd9ak+xCRUmYiHMK2sEE
- ZbZkbcQuB09z4yKALqOpjgOt+x/SKntAfkDeTUX2JE9kxOwAK1IjzRlQbrTrOPXHu3yr
- IlaBbaJJ6R+6qQGNupjkR0UuVkHMPzf2FXxqRMIKcMdVM1XEoXMGd9pLS6UCUDb9of4X
- yhWvjcUPHGHm12IbE2AnpyRKztEmd6kC0QoaTU5MfUexEBBbPmsQCWRA38WZTrpAby3b
- rtEFBKsnVjcpPwReIgOnhKPAlRf/TsDEX7i938BFLN/1lgEcYnp3ak4AfCIwz+XwPuiv
- WFRQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xNRuj-0001Bl-66
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 04:31:46 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xNRug-0005ci-VL
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 04:31:44 -0500
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A18KJNN3977810
+ for <qemu-devel@nongnu.org>; Sun, 1 Nov 2026 09:31:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ k+OI2r0QnlmiqpCj7p8JkPjMy+HTw2hRCcXztFIShNo=; b=e36N8xfE/GHBMTnb
+ pfoPJgOlrUWiCI3WfPYF26KVW+aHCKldcK56dU1guZdGNZaH4F+bM4mYSciD2UVi
+ JNWaKV3VARNG6GNn2XxWhEtx2sgXl1HUd6c0peKFMtEKtVTBuEVJRoNDkFxhtaBz
+ WLC+pBUob3/n4SGis/vhqulfUjPEMFXa2M/Q5JjYPgS6ydPFxEBhh0PXpdWqXBBI
+ fN093vVjAQlV5yyFxdOoG/sSok5Ec5HACBy6JaCBhiNn9l2YShvh6XEwWYYsCQM0
+ +ERZfHbCmyhFNPKAk0g+2C4KhGR8kB3AVdBfK0viIr2yErVCm6+h9qDN2ukbnr/P
+ 1Y0Lbw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hn93ejxcw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 09:31:39 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93cb71b1443so429321385a.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 01:31:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793521851; x=1794126651; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=GzXRn7YCFKIPc+rapsRL629I71VbpYSqluWKUJ0GIpM=;
- b=K3heLzKXXaitug/DhCBBt88ceA3Hdbq4bxeAwG7w2pva4PHEmg/I8EDbiaU0AsjfZU
- mh/7MaBBCkdpEQsy9PKn5NfleK8mIxKF8uUYjqArSkMSmE/Hey3NxNxcll1Uzv0VdT0T
- dZCX6Pe0rVLDHZnT+EGZ7Qfs24YteOI4or94lU6Ml6MZ9NorvegYHkxM1bvmeu8Yn+jM
- YkyB63FMxSE9S1J0CFpDcPRZUnbVnQk1NfnzhdijSFHbY4PCPsfKtrx7+9fpBUq4YQck
- kW5unPZFNygC12EXTMG7TVUn8V40RaD7JEMStxTCQmJOewADDBhY0ewB791KFQrofTmc
- 4PWQ==
+ d=oss.qualcomm.com; s=google; t=1793525498; x=1794130298; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=k+OI2r0QnlmiqpCj7p8JkPjMy+HTw2hRCcXztFIShNo=;
+ b=HjvPPV+hFsVn2bhIhMxDZ41dR6aeVAx3WOwoNUDHbNxT05wo0g40aKs5N/2RmjRnKc
+ aNHm3hHbYFsm/BzKCnqBRhRUrStiHaBBLZIKRwNi73fBROrTMft5ZGSL12fvG7FcCo8K
+ aDkMQHOPnaG6OPPsnMnbdTDdIpFk2GPmlvA8LpjWgjOmW1xFVqewFjW73rFfEH7tVrPE
+ YlkwxVqMkIPbiAgzhSzp/7sBGSlWvgw0c5GRgUafqciwhwcvLH8al/ifrjyqT6S6OGmB
+ n38bQQHucE/qaw9k7OuYr6F59ijacJh49GVo8RVCD3vwuGqMbbfwo86Px3QU8mJwbHNi
+ Mpnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793521851; x=1794126651;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=GzXRn7YCFKIPc+rapsRL629I71VbpYSqluWKUJ0GIpM=;
- b=wvZ9m2drTAQEJtHeWeDB+Vg4Q/gafRqIbf0YLi/kxZBO4J0v4qmaIbWgDaYMnuSj4c
- gi5X7mw70PxAwDcwrRi2+6A8mwe72a69EK+3qPUxS37cDOWLVuGABVvZIPZmnT0J1csz
- kFXKJ8783DiESNBV/iasLqkdTjpnNOJBJ0b7QlR14GTVuIeYkWTB1nF/KfVBoJ/dsMZ6
- huCUJ9SCeNfwrGRIwmypiV1FiWltEgy2S0r8mqwRilBz8FAha5OR+KOywiJsSidWGAMw
- rGBFBCQzgLCqhaZ8jOFl+oeUzt/Z5UhyIL9uBsUXh9+1k7FdBo/+4EsTfXmd2CAvNfqR
- 9CMw==
-X-Gm-Message-State: AFq9FYIH/RdwFIMDVmvrq9U6seLdAZu4B4a9beYPbR15Rn3XcoNI20yY
- eMtEiHZNE9/aEzTbvz1hWtRK9qe5P8b/wlX4+15LX4iGsn1lh5TiKikx0/gJuKuNWhR2li32Gd5
- 7l0Zix4vBvLGc2JdvS0h0EBEQy+wlW7krV+fA
-X-Gm-Gg: AYBFou0RhR6qox9zpNy5HJCptZbjmrtqTVB7V37igh4+1pC3XofpLZ0k9D6OxAYdg+G
- gtG2G4FX2tJcFGRwVOAUB19xvR43uUAxwj+dloolZhxeh2CRiNXMHPAkdHKPaBlacV0a8wcK4j6
- 11oFjsHjAR0wOWim6L3r52KiVBI0RprztKsVAYvQYh4WSMa3Gw1QbiVVPOMIts/GTbA/iIsiJDk
- rcbC9tWL3UsPdy7cK7+S/Rx6emaoK+E8GGdTYVsqR6RWFNsQvjfSdcjAFB1Hj9B9B7b4pxysjUj
- MkmW2dOQofLZeFQwluyXZSXXz4UIa7ZxdcKuK1maqzs2WTqjLh8oO+gf6wRMCAoOuoMYxV2/1Dc
- y+cem64ePYpQBYsdUThuAbKURJB3xkNETTxLKN4Xp1+RRo8I211xBWQne6CJpLv0fhjr9phJFe6
- lq7e/j8UGZKdVOoA==
-X-Received: by 2002:a05:7300:7b22:b0:369:f5e0:b801 with SMTP id
- 5a478bee46e88-36a30052111mr14789728eec.17.1793521851155; Sun, 01 Nov 2026
- 01:30:51 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793525498; x=1794130298;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=k+OI2r0QnlmiqpCj7p8JkPjMy+HTw2hRCcXztFIShNo=;
+ b=pcTYauytfcPPW0+5KZj5Xq3CZuSWso0VW2PerjGtH2WKQWUdybgfYoK5knqASGq213
+ 9aNFcG9IHNzhnvD+gyG6GPPyrpkdwg1ELdRtMMBMo7ZwMC0nlGgGLk9mO4qMseMj/5s0
+ QLn59qLCPojS1kOf7JnrIvHbHcHcj4RDvBqHcjmmGh4eMaPptBSvGe+mWyq6VKa1+RFE
+ TRgABTwCtp0W46Hr2fvxD5zyRJU5K6BixoGMvi3h7Xh+XudDE9JYIpjELuCmmBN8DrjV
+ Jg+jJ8jlTlza4+opKtEIkWsrIgvvyTVg4biOHmg9VjBHJUN408Nc3eX5IfUnJc7SCDvN
+ VyNQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxdiEwjglkdt9vDpfLvahqkcashRoLDd6KxOjFsKMu6YdBIfT6BECXt90l8fY9JCGSYorwbWtv8tfd3@nongnu.org
+X-Gm-Message-State: AFq9FYKu1LHgl8t4918NO/qMFXERloDeEEtKUF1b35B1Vyz4jrMc0n2p
+ mfO77I8HH6iGyLpOkIGLDmQrQShN2ZGv2g4gO9p3ikeLhb8et8vyMhVZ8WgDU3V7iP6zIM8q3S3
+ 8i+P4SAHI6wSDVox8egfyVxA3GIH2Oc2YrnhHL0v41esR7jBWq3kQxJyIrw==
+X-Gm-Gg: AYBFou3DJVQKDGr9F6a68thNPNHzQM2b00OzcLW7Cap9h6uPLJ3U8cLm9LZPXNFpbc0
+ bqmjIxyXrTbcML7+I4SVel/Xnd2VJCYt9q4xyCPlL+kDxFRgyITE1K4QAUqlIFEEbMkXdcA+fp3
+ NP7Pr59FTEB5/XPs2SBFDSVtw9WTjxU0pBX6nBTBmJuEQnwWRErtrn14YOf+FLz0Sc2n4xJfO5N
+ NoVmSblKg9ULa9bCA4i3YUkzRP+4XnpUPOFFLE5V7Fx8j0WPbw3o9Iah7fR4Q4/JHnVgM7CvD+y
+ XoPT+HbHlDfrReEH1jaRkAiLWue8QowEO3vjKZag0s9iCOdesOOSqXDDHSCYvtG1sSP0PrevPkf
+ SpKtmlvxGGhNaHO9hIW7Yf6SZbIY0iz2RlvSGKlpObRa+gFWIQ/RJNmHd6ubhcJuCuY3tTgBBWd
+ OyhWHItfn7
+X-Received: by 2002:a05:620a:2610:b0:93f:19c2:da4 with SMTP id
+ af79cd13be357-9442184e69dmr971639985a.70.1793525498314; 
+ Sun, 01 Nov 2026 01:31:38 -0800 (PST)
+X-Received: by 2002:a05:620a:2610:b0:93f:19c2:da4 with SMTP id
+ af79cd13be357-9442184e69dmr971637785a.70.1793525497660; 
+ Sun, 01 Nov 2026 01:31:37 -0800 (PST)
+Received: from [192.168.68.102] ([152.234.122.251])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-944252e516dsm563502985a.4.2026.11.01.01.31.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 01 Nov 2026 01:31:37 -0800 (PST)
+Message-ID: <7abfa611-06ec-439d-b127-bdb62ff025d5@oss.qualcomm.com>
+Date: Sun, 1 Nov 2026 06:31:33 -0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261001103412.2162829-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20261001103412.2162829-1-marcandre.lureau@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sun, 1 Nov 2026 12:30:38 +0400
-X-Gm-Features: AclHuK-cdlXjKJtInNcRznFgeQNjnOq7hXH1iQ5QSSO_GL9EfP-YOJ4WXiXAc3w
-Message-ID: <CAJ+F1CKcS_UK8c9M328Jkpxnq22k-5GTW9zLVmEH=b0yAC4rOQ@mail.gmail.com>
-Subject: Re: [PATCH] RFC: chardev: disconnect backend when frontend closes
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1330.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 05/27] hw/riscv: pfsoc: Map the SiFive L2CC memory
+ windows
+To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
+Cc: Conor Dooley <conor.dooley@microchip.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chao Liu <chao.liu@processmission.com>, Conor Dooley <conor@kernel.org>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
+References: <20261014012323.322790-1-bin.meng@processmission.com>
+ <20261014012323.322790-6-bin.meng@processmission.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261014012323.322790-6-bin.meng@processmission.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAxMDAzNyBTYWx0ZWRfX9n/WZIxj1wyB
+ fEdNo7b98Hr4FAq1Dh3Ikxb5at7va3/mCt3r30YSiCnSLNJAqmUkrK5y8+HPMiPe9/PCBCdOtPl
+ 1ydyyUXRtMYFr5+MkIkdczzd7Zav0PPvdq9cwovLvnlF0WvED0c6e05oNkcc5BBI4UWuVOHcugb
+ ChH8AtiqAOP/8EkD8+8Umeirr5prjPaXZy++5ij1IUitXGSgJrFVl6QT3+89v35rWmBZMDdKtGT
+ ysQWfBxZX3n3zwa23uLvPvhG6oiSI/Ev7ngFMcudRWYxkm/Ssn7J1GWf3qjMx3cmwvREj4WlzuI
+ qZZP94NqkUi9bWQ2jjQ4VIrHLEUg4NmlCjbCzWBM9L997Mw+IF7M4LcLPOavKC/k7xe3v1R8W7x
+ 9cr8JLQunSAtgskGNzskg6L5C3CP3HqV7OQ9M0Gdorwi+1dDm+5NcVAdi8gOHwxM9KCFVDTyika
+ b9Ux6b7C1G6CcSkG7sA==
+X-Authority-Analysis: v=2.4 cv=FciiV5+6 c=1 sm=1 tr=0 ts=6ae706fb cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=QOY8BskYDu05dfarAz2gNQ==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=FRSEYCzRAAAA:8 a=XYAwZIGsAAAA:8 a=EUspDBNiAAAA:8 a=q3K8DOYYDC0vxjoJZ6QA:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=H4N_Y-AU75W7NKDNhZlT:22
+ a=E8ToXWR_bxluHZ7gmE-Z:22
+X-Proofpoint-ORIG-GUID: ttILGXeORTnp9xTWmGudBZ4qqi2ChddT
+X-Proofpoint-GUID: ttILGXeORTnp9xTWmGudBZ4qqi2ChddT
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAxMDAzNyBTYWx0ZWRfX4Pe691D+om5W
+ nlWaZhtDplVzTn7pqSB+U3HcTT5ArAKHdUI0Wpdx9mU1AEnGlZRMIKyizLTPqwXbGOVCakhBtQg
+ NoMVpoauskyEL/4x9nFPTE2QoPQZnSM=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-01_03,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 impostorscore=0 suspectscore=0 malwarescore=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611010037
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,76 +160,153 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi
 
-On Thu, Oct 1, 2026 at 2:35=E2=80=AFPM <marcandre.lureau@redhat.com> wrote:
->
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> When the guest closes a virtio-serial channel, QEMU notifies some
-> backends (spice, dbus) via their chr_set_fe_open handlers. Backends
-> without such a handler, like socket, keep the connection open even
-> though the frontend is no longer active. This is problematic for
-> stateful protocols, as the peer has no way to know the channel was
-> reset and must handle re-synchronization on its own. Disconnecting
-> gives the peer a clean signal to reset its state.
->
-> Add a base-class chr_set_fe_open handler that calls chr_disconnect
-> when the frontend signals close. Subclasses that already override
-> chr_set_fe_open are unaffected. For the socket backend, this tears
-> down the connection and allows reconnection when combined with the
-> reconnect option.
->
-> Note: this is a behavior change that may break existing setups that
-> rely on the connection staying up across frontend close/reopen cycles.
-> It may be preferable to make this opt-in via a chardev property rather
-> than changing the default.
 
-ping
-
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On 10/13/2026 10:22 PM, Bin Meng wrote:
+> L2-LIM consists of cache SRAM ways controlled by L2CC WayEnable, and
+> L2 Zero is the controller's scratchpad allocation interface. Creating
+> their RAM stand-ins in the SoC and passing a LIM link splits ownership
+> of the register state and the memory views it controls.
+> 
+> Instantiate the shared SiFive L2CC with 15 masters and the existing
+> 2 MiB modeled Zero aperture. Let the controller own the backing and
+> both windows, and map its register, LIM, and Zero regions from the SoC.
+> Remove the external RAM allocations and the l2-lim link.
+> 
+> The device restores the visible LIM range after reset or migration.
+> L2 Zero keeps its fixed aperture as a RAM approximation of scratchpad
+> access rather than tracking the remaining LIM capacity.
+> 
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> Tested-by: Conor Dooley <conor.dooley@microchip.com>
+> 
 > ---
->  chardev/char.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/chardev/char.c b/chardev/char.c
-> index 7daf87f0363e..58c69db7340e 100644
-> --- a/chardev/char.c
-> +++ b/chardev/char.c
-> @@ -331,12 +331,22 @@ static int null_chr_write(Chardev *chr, const uint8=
-_t *buf, int len)
->      return len;
->  }
->
-> +static void chr_set_fe_open(Chardev *chr, int fe_open)
-> +{
-> +    ChardevClass *cc =3D CHARDEV_GET_CLASS(chr);
+
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+> 
+> (no changes since v3)
+> 
+> Changes in v3:
+> - Configure and instantiate the shared SiFive L2CC
+> - Map the register, LIM, and Zero windows exposed by the controller
+> - Remove the external RAM allocations and l2-lim link
+> - Keep the PolarFire master count and modeled Zero aperture unchanged
+> 
+>   include/hw/riscv/microchip_pfsoc.h |  2 ++
+>   hw/riscv/microchip_pfsoc.c         | 45 ++++++++++--------------------
+>   hw/riscv/Kconfig                   |  1 +
+>   3 files changed, 17 insertions(+), 31 deletions(-)
+> 
+> diff --git a/include/hw/riscv/microchip_pfsoc.h b/include/hw/riscv/microchip_pfsoc.h
+> index 612fd2b69c..18f5003850 100644
+> --- a/include/hw/riscv/microchip_pfsoc.h
+> +++ b/include/hw/riscv/microchip_pfsoc.h
+> @@ -27,6 +27,7 @@
+>   #include "hw/cpu/cluster.h"
+>   #include "hw/dma/sifive_pdma.h"
+>   #include "hw/misc/mchp_pfsoc_dmc.h"
+> +#include "hw/misc/sifive_l2cc.h"
+>   #include "hw/misc/mchp_pfsoc_ioscb.h"
+>   #include "hw/misc/mchp_pfsoc_sysreg.h"
+>   #include "hw/net/cadence_gem.h"
+> @@ -43,6 +44,7 @@ typedef struct MicrochipPFSoCState {
+>       RISCVHartArrayState e_cpus;
+>       RISCVHartArrayState u_cpus;
+>       DeviceState *plic;
+> +    SiFiveL2CCState l2cc;
+>       MchpPfSoCDdrSgmiiPhyState ddr_sgmii_phy;
+>       MchpPfSoCDdrCfgState ddr_cfg;
+>       MchpPfSoCIoscbState ioscb;
+> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+> index 8106dbb3ad..d0d8c8f84c 100644
+> --- a/hw/riscv/microchip_pfsoc.c
+> +++ b/hw/riscv/microchip_pfsoc.c
+> @@ -174,6 +174,12 @@ static void microchip_pfsoc_soc_instance_init(Object *obj)
+>       object_initialize_child(obj, "dma-controller", &s->dma,
+>                               TYPE_SIFIVE_PDMA);
+>   
+> +    object_initialize_child(obj, "l2-cache-controller", &s->l2cc,
+> +                            TYPE_SIFIVE_L2CC);
+> +    qdev_prop_set_uint32(DEVICE(&s->l2cc), "num-masters", 15);
+> +    qdev_prop_set_uint64(DEVICE(&s->l2cc), "zero-size",
+> +                         microchip_pfsoc_memmap[MICROCHIP_PFSOC_L2ZERO].size);
 > +
-> +    if (!fe_open && cc->chr_disconnect) {
-> +        cc->chr_disconnect(chr);
-> +    }
-> +}
-> +
->  static void char_class_init(ObjectClass *oc, const void *data)
->  {
->      ChardevClass *cc =3D CHARDEV_CLASS(oc);
->
->      cc->chr_write =3D null_chr_write;
->      cc->chr_be_event =3D chr_be_event;
-> +    cc->chr_set_fe_open =3D chr_set_fe_open;
->  }
->
->  static void char_finalize(Object *obj)
-> --
-> 2.56.0.rc0.29.g47ce80527c56
->
->
+>       object_initialize_child(obj, "sysreg", &s->sysreg,
+>                               TYPE_MCHP_PFSOC_SYSREG);
+>   
+> @@ -200,8 +206,6 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+>       MemoryRegion *system_memory = get_system_memory();
+>       MemoryRegion *rsvd0_mem = g_new(MemoryRegion, 1);
+>       MemoryRegion *e51_dtim_mem = g_new(MemoryRegion, 1);
+> -    MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
+> -    MemoryRegion *l2zero_mem = g_new(MemoryRegion, 1);
+>       MemoryRegion *envm_data = g_new(MemoryRegion, 1);
+>       MemoryRegion *qspi_xip_mem = g_new(MemoryRegion, 1);
+>       char *plic_hart_config;
+> @@ -260,35 +264,14 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+>           RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+>           iks->clint_timebase_freq, false);
+>   
+> -    /* L2 cache controller */
+> -    create_unimplemented_device("microchip.pfsoc.l2cc",
+> -        memmap[MICROCHIP_PFSOC_L2CC].base, memmap[MICROCHIP_PFSOC_L2CC].size);
+> -
+> -    /*
+> -     * Add L2-LIM at reset size.
+> -     * This should be reduced in size as the L2 Cache Controller WayEnable
+> -     * register is incremented. Unfortunately I don't see a nice (or any) way
+> -     * to handle reducing or blocking out the L2 LIM while still allowing it
+> -     * be re returned to all enabled after a reset. For the time being, just
+> -     * leave it enabled all the time. This won't break anything, but will be
+> -     * too generous to misbehaving guests.
+> -     */
+> -    memory_region_init_ram(l2lim_mem, NULL, "microchip.pfsoc.l2lim",
+> -                           memmap[MICROCHIP_PFSOC_L2LIM].size, &error_fatal);
+> -    memory_region_add_subregion(system_memory,
+> -                                memmap[MICROCHIP_PFSOC_L2LIM].base,
+> -                                l2lim_mem);
+> -
+> -    /*
+> -     * HSS decompresses into the L2 zero-device window and executes there.
+> -     * Model it as RAM because QEMU does not model the backing L2 cache.
+> -     */
+> -    memory_region_init_ram(l2zero_mem, NULL, "microchip.pfsoc.l2zero",
+> -                           memmap[MICROCHIP_PFSOC_L2ZERO].size,
+> -                           &error_fatal);
+> -    memory_region_add_subregion(system_memory,
+> -                                memmap[MICROCHIP_PFSOC_L2ZERO].base,
+> -                                l2zero_mem);
+> +    /* The L2CC owns the SRAM backing and both software-visible windows */
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->l2cc), errp);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->l2cc), SIFIVE_L2CC_MMIO_REGS,
+> +                    memmap[MICROCHIP_PFSOC_L2CC].base);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->l2cc), SIFIVE_L2CC_MMIO_LIM,
+> +                    memmap[MICROCHIP_PFSOC_L2LIM].base);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->l2cc), SIFIVE_L2CC_MMIO_ZERO,
+> +                    memmap[MICROCHIP_PFSOC_L2ZERO].base);
+>   
+>       /* create PLIC hart topology configuration string */
+>       plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index d06ac26648..46a499f70f 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -21,6 +21,7 @@ config MICROCHIP_PFSOC
+>       select MCHP_PFSOC_MMUART
+>       select MCHP_PFSOC_SYSREG
+>       select RISCV_ACLINT
+> +    select SIFIVE_L2CC
+>       select SIFIVE_PDMA
+>       select SIFIVE_PLIC
+>       select UNIMP
+
 
