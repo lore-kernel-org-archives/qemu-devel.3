@@ -1,54 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B974A606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2CB606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VY+N5JiH
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RTEHkke3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNbtl-0008Vh-1N; Sun, 01 Nov 2026 15:11:25 -0500
+	id 1xNbub-0000tH-VU; Sun, 01 Nov 2026 15:12:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbti-0008RE-9W
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:11:22 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbuM-0000jJ-0X
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:12:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbtf-0006P1-2y
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:11:22 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbuJ-0006Uq-R4
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:12:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793563877;
+ s=mimecast20190719; t=1793563919;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:resent-to:
  resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
- bh=9GKjds795ZOn0qLQCvSAqATX0f0l3wXdmlJ13Y6Fxbk=;
- b=VY+N5JiH+ZXym/3VSnCV6Wvm6fmpeyZHjO05WNshFtrNJU8Tybaeh4lTkXfzUMZwQPMirs
- L65JNPpc/3Th52jHZNhUSLvdNrawYrhqtoVSYjIgSPPTDoT75KR29FH41E0h4bgjBl6Jmi
- ugDkJBUGMSriABXpa4DJ9j7vHMRK0vs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=pn06HY/bU7f4uyfbIipnbJnjf3nU/iS9+J50VskAMwg=;
+ b=RTEHkke3vtp7bYWhz4pCrjjq545SbT4JaFXnbyYX77/Bnfc3tpmAWT5V4ckUsfQF/zJl7/
+ j26rMHkdqvQ421ZOT+jEYexF8OOLoyVA8ck0xkyxfDH3ZjjiBn28KBBG8TLc7apaaxt2RF
+ TH8GJ97DO0CPuqjScLVrrAnYcBbR6gA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-dbNBgUI3NkO7qJoX7yVMQQ-1; Sun,
- 01 Nov 2026 15:11:14 -0500
-X-MC-Unique: dbNBgUI3NkO7qJoX7yVMQQ-1
-X-Mimecast-MFC-AGG-ID: dbNBgUI3NkO7qJoX7yVMQQ_1793563870
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-4TFtM2YWOHWzydJNIPJiaQ-1; Sun,
+ 01 Nov 2026 15:11:53 -0500
+X-MC-Unique: 4TFtM2YWOHWzydJNIPJiaQ-1
+X-Mimecast-MFC-AGG-ID: 4TFtM2YWOHWzydJNIPJiaQ_1793563909
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 23A951800619; Sun,  1 Nov 2026 20:11:09 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9B4FC1955F45; Sun,  1 Nov 2026 20:11:48 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D6A2730002CB; Sun,  1 Nov 2026 20:11:06 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C405C1956088; Sun,  1 Nov 2026 20:11:47 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5DB5421E6A04; Sun, 01 Nov 2026 21:11:04 +0100 (CET)
-Resent-To: pasic@linux.ibm.com, 17746591750@163.com, rathc@linux.ibm.com,
- alistair@alistair23.me, stefanb@linux.vnet.ibm.com, graf@amazon.com,
- xen-devel@lists.xenproject.org, FangSheng.Huang@amd.com,
+ id 6A55721E6A04; Sun, 01 Nov 2026 21:11:45 +0100 (CET)
+Resent-To: 17746591750@163.com, pasic@linux.ibm.com, alistair@alistair23.me,
+ rathc@linux.ibm.com, graf@amazon.com, stefanb@linux.vnet.ibm.com,
+ FangSheng.Huang@amd.com, xen-devel@lists.xenproject.org,
  michael.roth@amd.com, jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
  palmer@dabbelt.com, rbolshakov@ddn.com, foss@defmacro.it,
  sebastian.huber@embedded-brains.de, fam@euphon.net,
@@ -78,8 +78,8 @@ Resent-To: pasic@linux.ibm.com, 17746591750@163.com, rathc@linux.ibm.com,
  mohamed@unpredictable.fr, kvm@vger.kernel.org, linux-cxl@vger.kernel.org,
  alistair.francis@wdc.com, anthony@xenproject.org
 Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Sun, 01 Nov 2026 21:11:04 +0100
-Resent-Message-ID: <87ik2g1fdz.fsf@pond.sub.org>
+Resent-Date: Sun, 01 Nov 2026 21:11:45 +0100
+Resent-Message-ID: <87ecd41fcu.fsf@pond.sub.org>
 From: Markus Armbruster <armbru@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  John Snow
@@ -146,28 +146,31 @@ Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  John Snow
  Pirko <jiri@resnulli.us>,  Eric Auger <eric.auger@redhat.com>,  Laurent
  Vivier <lvivier@redhat.com>
 Subject: Re: [PATCH v7 17/65] qom: add object_{class_}property_add_qapi_enum
-In-Reply-To: <20261020-qom-qapi-v7-17-431a86b02b58@redhat.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?=
- Lureau"'s message of "Tue, 20 Oct 2026 14:45:34 +0400")
+In-Reply-To: <CAMxuvayHXMftaQP6X_14pAf63bjX8mXxsW4TsXnLf_wbOq6eUA@mail.gmail.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Fri, 30 Oct 2026
+ 16:11:12 +0400")
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
  <20261020-qom-qapi-v7-17-431a86b02b58@redhat.com>
-Date: Fri, 30 Oct 2026 11:02:00 +0100
-Message-ID: <871p97a4mf.fsf@pond.sub.org>
+ <871p97a4mf.fsf@pond.sub.org>
+ <CAMxuvayHXMftaQP6X_14pAf63bjX8mXxsW4TsXnLf_wbOq6eUA@mail.gmail.com>
+Date: Sun, 01 Nov 2026 12:18:09 +0100
+Message-ID: <87se1k7qby.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,135 +185,102 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  include/qom/object.h | 74 ++++++++++++++++++++++++++++++++++++++++++
->  qom/object.c         | 90 ++++++++++++++++++++++++++++++++++++++++++++++=
-+++---
->  2 files changed, 159 insertions(+), 5 deletions(-)
+> Hi
 >
-> diff --git a/include/qom/object.h b/include/qom/object.h
-> index eb61d8842b80..e04be4caed57 100644
-> --- a/include/qom/object.h
-> +++ b/include/qom/object.h
-> @@ -2027,6 +2027,80 @@ ObjectProperty *object_class_property_add_enum(Obj=
-ectClass *klass,
->                                      int (*get)(Object *, Error **),
->                                      void (*set)(Object *, int, Error **)=
-);
->=20=20
-> +/**
-> + * struct QapiEnumProp: Descriptor for a property backed by a QAPI enum =
-type
-> + *
-> + * Binds a QOM object property to a QAPI enum, providing automatic
-> + * string<->int conversion through QAPI visitors and optional
-> + * default-value initialization during object instance init.
-> + *
-> + * Use the QAPI_ENUM_PROP() macro to construct instances inline.
-> + *
-> + * @name: property name exposed on the QOM object
-> + * @description: human-readable description (shown in ``-device help``, =
-etc.)
-> + * @default_value: initial enum value applied via @set during instance i=
-nit,
-> + *                 or -1 (the QAPI_ENUM_PROP default) to skip initializa=
-tion
-> + * @qapi_type: pointer to the generated QAPITypeInfo for the enum
-> + *             (provides the string<->int lookup table)
-> + * @get: getter that returns the current enum value as int, or -1 on err=
-or
-> + * @set: setter that receives the enum value as int; %NULL for read-only=
- props
-> + */
-> +typedef struct QapiEnumProp {
-> +    const char *name;
-> +    const char *description;
-> +    const int default_value;
-> +    const QAPITypeInfo *qapi_type;
-> +    int (*get)(Object *, Error **);
-> +    void (*set)(Object *, int, Error **);
-> +} QapiEnumProp;
-> +
-> +#define QAPI_ENUM_PROP(...) ({                                          =
- \
-> +    static const QapiEnumProp _prop =3D {                               =
-   \
-> +        .default_value =3D -1, __VA_ARGS__                              =
-   \
-> +    };                                                                  =
- \
-> +    &_prop; })
+> On Fri, Oct 30, 2026 at 2:02=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+>>
+>> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>> > ---
+>> >  include/qom/object.h | 74 ++++++++++++++++++++++++++++++++++++++++++
+>> >  qom/object.c         | 90 +++++++++++++++++++++++++++++++++++++++++++=
+++++++---
+>> >  2 files changed, 159 insertions(+), 5 deletions(-)
+>> >
+>> > diff --git a/include/qom/object.h b/include/qom/object.h
+>> > index eb61d8842b80..e04be4caed57 100644
+>> > --- a/include/qom/object.h
+>> > +++ b/include/qom/object.h
+>> > @@ -2027,6 +2027,80 @@ ObjectProperty *object_class_property_add_enum(=
+ObjectClass *klass,
+>> >                                      int (*get)(Object *, Error **),
+>> >                                      void (*set)(Object *, int, Error =
+**));
+>> >
+>> > +/**
+>> > + * struct QapiEnumProp: Descriptor for a property backed by a QAPI en=
+um type
+>> > + *
+>> > + * Binds a QOM object property to a QAPI enum, providing automatic
+>> > + * string<->int conversion through QAPI visitors and optional
+>> > + * default-value initialization during object instance init.
+>> > + *
+>> > + * Use the QAPI_ENUM_PROP() macro to construct instances inline.
+>> > + *
+>> > + * @name: property name exposed on the QOM object
+>> > + * @description: human-readable description (shown in ``-device help`=
+`, etc.)
+>> > + * @default_value: initial enum value applied via @set during instanc=
+e init,
+>> > + *                 or -1 (the QAPI_ENUM_PROP default) to skip initial=
+ization
+>> > + * @qapi_type: pointer to the generated QAPITypeInfo for the enum
+>> > + *             (provides the string<->int lookup table)
+>> > + * @get: getter that returns the current enum value as int, or -1 on =
+error
+>> > + * @set: setter that receives the enum value as int; %NULL for read-o=
+nly props
+>> > + */
+>> > +typedef struct QapiEnumProp {
+>> > +    const char *name;
+>> > +    const char *description;
+>> > +    const int default_value;
+>> > +    const QAPITypeInfo *qapi_type;
+>> > +    int (*get)(Object *, Error **);
+>> > +    void (*set)(Object *, int, Error **);
+>> > +} QapiEnumProp;
+>> > +
+>> > +#define QAPI_ENUM_PROP(...) ({                                       =
+    \
+>> > +    static const QapiEnumProp _prop =3D {                            =
+      \
+>> > +        .default_value =3D -1, __VA_ARGS__                           =
+      \
+>> > +    };                                                               =
+    \
+>> > +    &_prop; })
+>>
+>> This is a cute and reasonably well-known macro trick for optional
+>> keyword arguments in C.
+>>
+>> The example [*] below specifies all arguments.  What happens when we
+>> omit any?  They default to zero via default initializaion, except for
+>> .default_value, which defaults to -1.
+>>
+>> Trap for developers: some arguments aren't actually optional!  If you
+>> forget to specify @name or @qapi_type, the code compiles, but crashes at
+>> run time.
+>>
+>> Not a fan.
+>
+> Agree (not a fan of C either). We could probably add more
+> static/runtime checks. Or clearly state that there is room for
+> improvements, or just drop it altogether - either as follow up or with
+> the series. I leave that up to you since you are going to respin it.
+> thanks!
 
-This is a cute and reasonably well-known macro trick for optional
-keyword arguments in C.
-
-The example [*] below specifies all arguments.  What happens when we
-omit any?  They default to zero via default initializaion, except for
-.default_value, which defaults to -1.
-
-Trap for developers: some arguments aren't actually optional!  If you
-forget to specify @name or @qapi_type, the code compiles, but crashes at
-run time.
-
-Not a fan.
-
-> +
-> +/**
-> + * object_property_add_qapi_enum:
-> + * @obj: the object to add a property to
-> + * @prop: property descriptor
-> + *
-> + * Add an enum property with QAPI type association.
-> + *
-> + * Returns: The newly added property on success, or %NULL on failure.
-> + */
-> +ObjectProperty *
-> +object_property_add_qapi_enum(Object *obj, const QapiEnumProp *prop);
-> +
-> +/**
-> + * object_class_property_add_qapi_enum:
-> + * @klass: the class object to add a property to
-> + * @prop: property descriptor
-> + *
-> + * Add an enum property with QAPI type association.
-> + *
-> + * Use the QAPI_ENUM_PROP() macro to construct the property descriptor
-> + * inline. If .default_value is not set, the property is not initialized
-> + * (default_value is -1). Otherwise, the setter is called with
-> + * default_value during object instance init.
-> + *
-> + * Example::
-
-[*]
-
-> + *
-> + *   object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> + *       .name =3D "policy",
-> + *       .description =3D "Set the NUMA policy",
-> + *       .default_value =3D HOST_MEM_POLICY_DEFAULT,
-> + *       .qapi_type =3D &HostMemPolicy_type_info,
-> + *       .get =3D my_get_policy,
-> + *       .set =3D my_set_policy,
-> + *   ));
-> + *
-> + * Returns: The newly added property on success, or %NULL on failure.
-> + */
-> +ObjectProperty *
-> +object_class_property_add_qapi_enum(ObjectClass *klass,
-> +                                    const QapiEnumProp *prop);
-> +
->  /**
->   * object_property_add_qapi:
->   * @obj: the object to add a property to
+I dropped it for v8.  Was a bit of a pain, but the patches became
+simpler.
 
 [...]
 
