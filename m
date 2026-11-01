@@ -1,118 +1,65 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1948C606A329
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 03:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IsN1hthj
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8453D606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 03:18:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNM3z-0003eB-E8; Sat, 31 Oct 2026 23:16:55 -0400
+	id 1xNM3H-00038X-9U; Sat, 31 Oct 2026 23:16:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNM3i-0003Os-8x
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 23:16:43 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xNM3g-0000Lr-K4
- for qemu-devel@nongnu.org; Sat, 31 Oct 2026 23:16:38 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6b167ffd132so3098158a12.1
- for <qemu-devel@nongnu.org>; Sat, 31 Oct 2026 20:16:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793502957; cv=none;
- d=google.com; s=arc-20260327;
- b=V/ety9zc7ICW017udohBsxErca/1NSVWuZI1NLcmRjJJDb1n0jzhg9f5rOSKXyBb40
- WU3UElAm0PTrHYEJwh9Ko1j+rTdoU+yfE37qycc48zHplpmTLbqpAGQ81xObBa/Y+Iuf
- P7+0Jx4cHa6T9YQj0R9Hh/b8Aic+9FZl4JpglN+xpMF4Bm6WiHcyM7xWIlUo0R4c9ZrC
- mtcshjVvyn0Bd8EDJ0rrSfdLPPXwuQUmXy3gNgUYyluYaMtAqTL2XTJ9TaXoBWdhEmid
- wBspzzwivbAg1HjcspamZkXcuYSWqZ8ri+aMpcOTlnPpu6zj0omAKRFifEU6quGooU19
- dnjQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=r9RUt2IXHKg06Mu1ZGYuVCpKJ9eEOlApJVqg4Ts1TkM=;
- fh=CuMQAoYa5MSfB4/jg2AJWDkHpW+EwAWW35rP1TsWYBU=;
- b=JfLP9CIfHQUyUkasY7iRMyL3oHNbacpUjWpSohbTpQpzwS2wQiuEixxRGOHvteskDg
- RcRK1K9t4Cu8nQiAoCxeGFIoyQoaGTGaWbzumPPUmGP2wAkntvB4kCaT7HXhb54SnKwh
- aPbEWaULct3y4mYSNwnMk9/xUAaTC1JHuBx5lQE7iO2jaKmW5npOHfEbS/SuxHUY+VkY
- +2odTRTzM3xLqsnD92Yykp1ryROaDi7ZBfAOZztom/Fh/3MqWP2aFs+P8OdhAag2WaPK
- 02nqyD6x2iI2/uuwVIqNVDhNjaU/ulYUrakI0aFoX2kfvuBav/FW2bSU8uvb2O3Xg/GV
- 1Osg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793502957; x=1794107757; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=r9RUt2IXHKg06Mu1ZGYuVCpKJ9eEOlApJVqg4Ts1TkM=;
- b=IsN1hthjfBwZUvnVied+YVhcaNfQHy7BWQcBqtJkBv3U5T5iSTLhJUiHe24ZOBQvmz
- NZXyj8j9zXwEO63oizlYojmBMxknCe6OJzZgPindWkzaGQ4qGFs4Eda3sTCIWJEAAvKP
- tDcyZ3p5qehN1+hW/6pEtME3dfW0zvdCCLR3Rn49VLjojqO4g7IRIDvpJGQnT0OnI7pf
- 26vKRubk2jKFBbDRULEknzKy2QdX+vqf2na2UndZLnB684ejl5tLAI8sJ2AkVmxBkVul
- izTZv2mJ2JaoDRsBLaRpBVqgA3tcJaIyvg4k52T9305ZxTzM7SDhnykoJbY2BiYGakx6
- 4y/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793502957; x=1794107757;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=r9RUt2IXHKg06Mu1ZGYuVCpKJ9eEOlApJVqg4Ts1TkM=;
- b=znfu6quqJguuyTrJsDCIkY7B7w9SCnSylQVQeuEj5dZnXOO3AI7KZEcfQzVigYW/Lw
- aNEOLfdjqYWR7o4SyGcxNeBhNrGB/yHSiBVhWJd/cu/F+OPMTZb0/Bzf05mQ8fWPS7Jp
- wjd0t0stjm/OdcUDjCcsdH5YAZm5FQBvz5bag7m4i9hzai7NKv3QtMqa+oJiW3C3M+w5
- c0zMMlMplAlRBQNxh4pNTouVtBOgyWM5tOKgk2YYtgn+yeWPQLfUJIhFIBK2e8d8eP5J
- gLcfP6fzhsairx8jq5NUaC+H1KmEzgdZAX6cnFYivKuxfBIl1KqtmuWfjmgX6yOukeTi
- Mavg==
-X-Gm-Message-State: AFq9FYJ7IxWyq2bSMOMPg8mGMDR6x5BlUgonXHPVbZ6PJOo7F1mNaRM6
- RbJMcdWW3fRI/JQQx4UoXSzwTNJCnAA/01BZ+JH6MAX6iIZo+Ndn8JS/ESqIOJw/QPunaRypqI7
- prS7BWRUw38Bbj2YXqInTxuVM07ywuI+TqorcYgU=
-X-Gm-Gg: AYBFou1pBwOSA6ZQAmK1nlrPCoRwCpvW+WBfGdgCE9qnKxYM0vW+GImBiCT4wQHVOeD
- 5Q+qQmiMNfrNs+M5Q3P1SbdqIvcyKDnvEj4Y6MLRg2vluCMPJy0sBwdjtVd/UUyChl3aaF/CKsP
- mBtCOHBnvFkMZShwHQsiWMypNJtFxtamCNqyL3uMbvTWc74VQn+l6AER5xm3urlzGNWRXrzn5jl
- 9jXSBLcQHrRDaAdcv9aM8Mz+2UxsTqyKWnSdTIbolzyMj3AgYfuq0RCNhVhqrr1QebURat0UdaV
- TLm0L/KH0rZ+aak7jCpQtloKUeM1gnSXs2D6CEBfxfbbKE2DoRDZmAZU1UZs7QyFktZR1uogPPu
- 5KWw8cdf+uOOSAst5FBS7dIOt704yPb1KiFzr
-X-Received: by 2002:a05:6402:a6c1:20b0:6b4:be3f:51b3 with SMTP id
- 4fb4d7f45d1cf-6b4d4686eebmr3117352a12.12.1793502956445; Sat, 31 Oct 2026
- 20:15:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
+ id 1xNM3C-00035F-Sm; Sat, 31 Oct 2026 23:16:07 -0400
+Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
+ id 1xNM38-0000K6-B0; Sat, 31 Oct 2026 23:16:06 -0400
+Received: from k3-03 (unknown [159.226.43.8])
+ by APP-03 (Coremail) with SMTP id rQCowAAXJ5jlruZqSD4aAA--.22476S5;
+ Sun, 01 Nov 2026 11:15:56 +0800 (CST)
+From: Tan Chi <tanchi25@mails.ucas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, Tan Chi <tanchi25@mails.ucas.ac.cn>
+Subject: [PATCH 3/5] hw/riscv: Move platform bus FDT creation to machine code
+Date: Sun,  1 Nov 2026 11:15:45 +0800
+Message-ID: <20261101031547.125591-4-tanchi25@mails.ucas.ac.cn>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261101031547.125591-1-tanchi25@mails.ucas.ac.cn>
+References: <20261101031547.125591-1-tanchi25@mails.ucas.ac.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261031164009.2048-1-luoyonggang@gmail.com>
- <20261031164009.2048-5-luoyonggang@gmail.com>
-In-Reply-To: <20261031164009.2048-5-luoyonggang@gmail.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Sun, 1 Nov 2026 11:15:44 +0800
-X-Gm-Features: AclHuK8CM7KX5nUvQA8vJ9Qk2qxRZGPQLFv1TDJEYuTjHitxrrjGnHE_UY4e4fU
-Message-ID: <CAE2XoE8W+UXtfUi9VqfN9k9oA6KaQP1RTk4L9Mr0NnJNHiJjZA@mail.gmail.com>
-Subject: Re: [PATCH v2 04/12] hw/xtensa: expand DEFINE_MACHINE in virt.c
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, 
- Song Gao <17746591750@163.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
- Philippe Mathieu-Daude <philmd@mailo.com>, David Hildenbrand <david@kernel.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Fam Zheng <fam@euphon.net>, Max Filippov <jcmvbkbc@gmail.com>,
- qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Eric Farman <farman@linux.ibm.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Cornelia Huck <cohuck@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: rQCowAAXJ5jlruZqSD4aAA--.22476S5
+X-Coremail-Antispam: 1UD129KBjvJXoW3XFyrKry8uFykGrW3uryfJFb_yoWxGw45pF
+ W8CF47ZFW8GF1aga13Aw48XrW3CwsYkr47Xw1xuryIywsrXr43Ja1kt3WUZFy5tFyUAas0
+ 9a1vgry5AF4FgF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUH214x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JrWl82xGYIkIc2
+ x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+ Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJw
+ A2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4UJVWx
+ Jr1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2
+ IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4U
+ McvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I64
+ 8v4I1lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67AK
+ 6r48MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI
+ 0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y
+ 0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1l
+ IxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUj6uWPUUUU
+ U==
+X-CM-SenderInfo: pwdquxrlsvqzpdlo2hpxfd2hldfou0/
+Received-SPF: pass client-ip=159.226.251.81;
+ envelope-from=tanchi25@mails.ucas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,82 +70,167 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sun, Nov 1, 2026 at 12:40=E2=80=AFAM Yonggang Luo <luoyonggang@gmail.com=
-> wrote:
->
-> Expand DEFINE_MACHINE() in hw/xtensa/virt.c to xtensa_virt_machine_typein=
-fo
-> and xtensa_virt_machine_register_types() calling type_register_static().
->
-> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> ---
->  hw/xtensa/virt.c | 18 ++++++++++++++++--
->  1 file changed, 16 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/xtensa/virt.c b/hw/xtensa/virt.c
-> index 271f06e0953..8c8fdad72f0 100644
-> --- a/hw/xtensa/virt.c
-> +++ b/hw/xtensa/virt.c
-> @@ -115,8 +115,10 @@ static void xtensa_virt_init(MachineState *machine)
->      xtensa_sim_load_kernel(cpu, machine);
->  }
->
-> -static void xtensa_virt_machine_init(MachineClass *mc)
-> +static void xtensa_virt_machine_class_init(ObjectClass *oc, const void *=
-data)
->  {
-> +    MachineClass *mc =3D MACHINE_CLASS(oc);
-> +
->      mc->desc =3D "virt machine (" XTENSA_DEFAULT_CPU_MODEL ")";
->      mc->init =3D xtensa_virt_init;
->      mc->max_cpus =3D 32;
-> @@ -124,4 +126,16 @@ static void xtensa_virt_machine_init(MachineClass *m=
-c)
->      mc->default_nic =3D "virtio-net-pci";
->  }
->
-> -DEFINE_MACHINE("virt", xtensa_virt_machine_init)
-> +static const TypeInfo xtensa_virt_machine_typeinfo =3D {
-> +    .name       =3D MACHINE_TYPE_NAME("virt"),
-> +    .parent     =3D TYPE_MACHINE,
-> +    .class_init =3D xtensa_virt_machine_class_init,
-> +    .instance_size =3D sizeof(MachineState),
-> +};
+riscv_create_fdt_socket_aplic() contains a direct reference to
+platform_bus_add_all_fdt_nodes(), even though fdt-common.c is
+built unconditionally and CONFIG_PLATFORM_BUS may be disabled.
 
-In case I forgot,     .instance_size =3D sizeof(MachineState), should be re=
-moved
-from this, it's redundant. And maybe for less boilerplate, we should
-use DEFINE_TYPES
-instead.
+This causes an undefined reference in minimal RISC-V builds
+without platform bus support.
 
+Move platform bus FDT creation to the virt and server reference
+machines, which both select CONFIG_PLATFORM_BUS. Export a helper
+to obtain the APLIC node name and remove the platform bus fields
+from APLICFdtProps.
 
-> +
-> +static void xtensa_virt_machine_register_types(void)
-> +{
-> +    type_register_static(&xtensa_virt_machine_typeinfo);
-> +}
-> +
-> +type_init(xtensa_virt_machine_register_types)
-> --
-> 2.55.0.windows.3
->
+This removes the dependency from the common APLIC FDT helper
+while preserving the platform bus interrupt-parent configuration.
 
+Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
+---
+ hw/riscv/fdt-common.c          | 13 ++-----------
+ hw/riscv/server_platform_ref.c |  9 +++++++--
+ hw/riscv/virt.c                | 11 +++++++++--
+ include/hw/riscv/fdt-common.h  |  3 +--
+ 4 files changed, 19 insertions(+), 17 deletions(-)
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+index ce2dcb43b4..e90502b1bc 100644
+--- a/hw/riscv/fdt-common.c
++++ b/hw/riscv/fdt-common.c
+@@ -11,7 +11,6 @@
+ #include "qemu/error-report.h"
+ #include "system/device_tree.h"
+ #include "hw/core/boards.h"
+-#include "hw/core/sysbus-fdt.h"
+ #include "hw/riscv/fdt-common.h"
+ #include "target/riscv/cpu_bits.h"
+ #include "hw/riscv/riscv-iommu-bits.h"
+@@ -599,7 +598,7 @@ void riscv_create_fdt_imsic(void *fdt, IMSICFdtProps *props,
+ }
+ 
+ /* Caller must free string after use */
+-static char *fdt_get_aplic_nodename(hwaddr aplic_addr)
++char *riscv_fdt_get_aplic_nodename(hwaddr aplic_addr)
+ {
+     return g_strdup_printf("/soc/interrupt-controller@%"HWADDR_PRIx,
+                            aplic_addr);
+@@ -613,7 +612,7 @@ static void create_fdt_one_aplic(void *fdt, APLICFdtProps *props,
+                                  uint32_t aplic_child_phandle,
+                                  bool m_mode)
+ {
+-    g_autofree char *aplic_name = fdt_get_aplic_nodename(aplic_addr);
++    g_autofree char *aplic_name = riscv_fdt_get_aplic_nodename(aplic_addr);
+     g_autofree uint32_t *aplic_cells = g_new0(uint32_t, props->num_harts * 2);
+     static const char * const aplic_compat[2] = {
+         "qemu,aplic", "riscv,aplic"
+@@ -695,14 +694,6 @@ void riscv_create_fdt_socket_aplic(void *fdt, APLICFdtProps *props,
+                          aplic_s_phandle, 0,
+                          false);
+ 
+-    if (!props->socket && props->platform_bus_irq) {
+-        g_autofree char *aplic_name = fdt_get_aplic_nodename(aplic_addr);
+-        platform_bus_add_all_fdt_nodes(fdt, aplic_name,
+-                                       props->platform_bus->base,
+-                                       props->platform_bus->size,
+-                                       props->platform_bus_irq);
+-    }
+-
+     aplic_phandles[props->socket] = aplic_s_phandle;
+ }
+ 
+diff --git a/hw/riscv/server_platform_ref.c b/hw/riscv/server_platform_ref.c
+index 5f485b1c79..3526c80d79 100644
+--- a/hw/riscv/server_platform_ref.c
++++ b/hw/riscv/server_platform_ref.c
+@@ -192,6 +192,7 @@ static void create_fdt_sockets(RISCVServerRefMachineState *s,
+ {
+     int socket, phandle_pos;
+     MachineState *ms = MACHINE(s);
++    g_autofree char *aplic_name = NULL;
+     uint32_t msi_m_phandle = 0, msi_s_phandle = 0;
+     uint32_t xplic_phandles[MAX_NODES];
+     g_autofree uint32_t *intc_phandles = NULL;
+@@ -251,8 +252,6 @@ static void create_fdt_sockets(RISCVServerRefMachineState *s,
+     aplic_fdt_props.aplic_m = !kvm_enabled()
+                               ? &memmap[RVSERVER_APLIC_M] : NULL;
+     aplic_fdt_props.aplic_s = &memmap[RVSERVER_APLIC_S];
+-    aplic_fdt_props.platform_bus = &memmap[RVSERVER_PLATFORM_BUS];
+-    aplic_fdt_props.platform_bus_irq = RVSERVER_PLATFORM_BUS_IRQ;
+     aplic_fdt_props.num_harts = ms->smp.cpus;
+     aplic_fdt_props.numa_enabled = numa_enabled;
+     aplic_fdt_props.irqchip_num_sources = RVSERVER_IRQCHIP_NUM_SOURCES;
+@@ -270,6 +269,12 @@ static void create_fdt_sockets(RISCVServerRefMachineState *s,
+                                       xplic_phandles);
+     }
+ 
++    aplic_name = riscv_fdt_get_aplic_nodename(memmap[RVSERVER_APLIC_S].base);
++    platform_bus_add_all_fdt_nodes(ms->fdt, aplic_name,
++                                   memmap[RVSERVER_PLATFORM_BUS].base,
++                                   memmap[RVSERVER_PLATFORM_BUS].size,
++                                   RVSERVER_PLATFORM_BUS_IRQ);
++
+     for (socket = 0; socket < socket_count; socket++) {
+         if (socket == 0) {
+             *irq_mmio_phandle = xplic_phandles[socket];
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index d4b501802f..7ec7596b24 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -290,8 +290,6 @@ static void create_fdt_sockets(RISCVVirtState *s,
+     if (s->aia_type != VIRT_AIA_TYPE_NONE) {
+         aplic_props.aplic_m = !kvm_enabled() ? &s->memmap[VIRT_APLIC_M] : NULL;
+         aplic_props.aplic_s = &s->memmap[VIRT_APLIC_S];
+-        aplic_props.platform_bus = &s->memmap[VIRT_PLATFORM_BUS];
+-        aplic_props.platform_bus_irq = VIRT_PLATFORM_BUS_IRQ;
+         aplic_props.socket = 0;
+         aplic_props.num_harts = ms->smp.cpus;
+         aplic_props.numa_enabled = numa_enabled;
+@@ -347,6 +345,15 @@ static void create_fdt_sockets(RISCVVirtState *s,
+         }
+     }
+ 
++    if (s->aia_type != VIRT_AIA_TYPE_NONE) {
++        g_autofree char *aplic_name =
++            riscv_fdt_get_aplic_nodename(s->memmap[VIRT_APLIC_S].base);
++        platform_bus_add_all_fdt_nodes(ms->fdt, aplic_name,
++                                       s->memmap[VIRT_PLATFORM_BUS].base,
++                                       s->memmap[VIRT_PLATFORM_BUS].size,
++                                       VIRT_PLATFORM_BUS_IRQ);
++    }
++
+     riscv_socket_fdt_write_distance_matrix(ms);
+ }
+ 
+diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+index eb9db8278d..b3b14ada0a 100644
+--- a/include/hw/riscv/fdt-common.h
++++ b/include/hw/riscv/fdt-common.h
+@@ -54,8 +54,6 @@ typedef struct IMSICFdtProps {
+ typedef struct APLICFdtProps {
+     const MemMapEntry *aplic_m;
+     const MemMapEntry *aplic_s;
+-    const MemMapEntry *platform_bus;
+-    int platform_bus_irq;
+     int socket;
+     int num_harts;
+     bool numa_enabled;
+@@ -129,6 +127,7 @@ void riscv_create_fdt_socket_aplic(void *fdt, APLICFdtProps *props,
+ void riscv_create_fdt_socket_aclint(void *fdt, ACLINTFdtProps *props,
+                                     uint32_t *intc_phandles);
+ /* Caller must free the returned string.  */
++char *riscv_fdt_get_aplic_nodename(hwaddr addr);
+ char *riscv_fdt_get_uart_nodename(hwaddr addr);
+ void riscv_create_fdt_uart(void *fdt, const MemMapEntry *uart_mem,
+                            int uart_irq, int aia_type,
+-- 
+2.53.0
+
 
