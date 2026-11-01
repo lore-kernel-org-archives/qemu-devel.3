@@ -1,84 +1,84 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F39D606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 12:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A4F606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 12:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HJCiY+n6
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=MB74YPYI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNULu-0008I1-V5; Sun, 01 Nov 2026 07:07:58 -0500
+	id 1xNULn-00083G-2j; Sun, 01 Nov 2026 07:07:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xNULK-0007zT-39
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 07:07:25 -0500
+ id 1xNULH-0007zJ-Tb
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 07:07:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xNULG-0003Zm-9g
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 07:07:21 -0500
+ id 1xNULD-0003Zf-W1
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 07:07:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793534836;
+ s=mimecast20190719; t=1793534834;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=26/s8sEZNBXIsx5Wr5/GaGGm1a/rnBlrK+go4bjG/jM=;
- b=HJCiY+n6VZzFCFsecILlMOTlyhk+edMI325bNxccPRh80Q5dAPfAtbsbvSD57IW90Ojtqw
- J0YQ3iNfE1za+7Tx1+U9TynCnUp0snDivVtJ755vvvoEGfh3ltbWGbq/zX8mlzXGD6aCYK
- /MZZ7/WvJaj/U6ubDYyaw2OPucok1eQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=TYKYNppDjZ2+QFHOmhj7/cGhBC3OPvjqnczzFl+yEuU=;
+ b=MB74YPYIjN6WhePNHjr8sOi2fnwRpowPDZu0A8Q/04aculj8VaspsG+T8hCDUiuO21Fo0a
+ ZLe1P5Y9KK6Bozn/Y0s2USNBpZlEYoxz9HjfzpUcHFybum7nTXxrKQLMPIAeAbf9poU/IU
+ MLY1en3EShyyKaPe5p22He5rrhMPsTw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-RgYkRBRxMlaEYdh-f6Phyg-1; Sun,
- 01 Nov 2026 07:07:14 -0500
-X-MC-Unique: RgYkRBRxMlaEYdh-f6Phyg-1
-X-Mimecast-MFC-AGG-ID: RgYkRBRxMlaEYdh-f6Phyg_1793534833
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-iqwwWoAkORqyrH6lPbk7Ew-1; Sun,
+ 01 Nov 2026 07:07:11 -0500
+X-MC-Unique: iqwwWoAkORqyrH6lPbk7Ew-1
+X-Mimecast-MFC-AGG-ID: iqwwWoAkORqyrH6lPbk7Ew_1793534830
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D09921956059; Sun,  1 Nov 2026 12:07:13 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B0AD1955EB6; Sun,  1 Nov 2026 12:07:10 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D95941956088; Sun,  1 Nov 2026 12:07:12 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9080D1956087; Sun,  1 Nov 2026 12:07:09 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 01 Nov 2026 16:06:42 +0400
-Subject: [GIT PULL 9/9] io: report a warning when a file channel is created
- from a stdio fd
+Date: Sun, 01 Nov 2026 16:06:41 +0400
+Subject: [GIT PULL 8/9] char-stdio: avoid closing stdio fds
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261101-ui-v1-9-8af305cef69a@redhat.com>
+Message-Id: <20261101-ui-v1-8-8af305cef69a@redhat.com>
 References: <20261101-ui-v1-0-8af305cef69a@redhat.com>
 In-Reply-To: <20261101-ui-v1-0-8af305cef69a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2513;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1664;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=VuyJ8aQWu3Y1CNMB49n9YLvC65L+XUt0Y2YzxF4G9po=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq5ytO5p4HMacBhWGptP4SYrvtyOuWVu27308JR
- yPfndzAVPmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaucrTgAKCRDa6OEJdZac
- 5UntD/9SVyznw1LeLXHVaRiVqi5u2m5pUtDxoW76lIuWTW5k+Y2M8YtxpYnTWXVB8Q5AosnWy+q
- CYJnJ2lPezEN7WC4yIE7u7nRs0c9iXo3SOyCjXig4uUagwkcenEVbB1ilMvPx+pU2YHNGLi3x9j
- 3WADIGn/efNGucmJanE8IO8TvhWaU/+SIDI7B7lx1s8XZtPd7+2coSd6q1ekWSicMVhMqMmJ9Ef
- Q3YbkZw6QGsON2H4urZaGzpJptFDO66lGNFwy4DkLdwfzEj4Ztt0nTZOmf1wMkp5fc3IzRbAvXl
- jdKP8NeMPHx3A9+XYsWvpUjuXcJnRf08G6WNKXQEQBNNskvHndm79zQ25qruWj6BGE5UbuW64Ls
- PVvCWYrPnsdvFPTzomlTd6liXbisEWKbWvQyYOjGCoTNJHWiLbJ1oU8XcQsNWKxi39X4LcfRHAm
- Cdmx0GD2HaMRmJB5KC9jOECIIECALkLJDkDlqcr4PRSKVuLhqiG0qRPX0MyFMhs295YoQAvnaNL
- xHj603iEtWAFdo9N1esEFL6WQzY3ZxoPLdDgRHhInWa3L4ceTEQvR5XDHg0wOflpSyCZa2CjMPs
- o2ZnOZ4/0GmpDOJO2xCdWOgaNZcM8N127gcq5idDGEschR/gfCoBbusCoJ482SLPpQimiykcLco
- b74j02ovfvpCQnw==
+ bh=okG3HUjiRm3CoUHuHRbRSC964CXB2rNsWNtet4+T37A=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq5ytOqzY8P7ZZ3m4d223GhP7p8xBDz2XTsXBk0
+ hteuCgfQISJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaucrTgAKCRDa6OEJdZac
+ 5TeKEACUy/MPW/UhRExfLnrar3VzuX7hmYlTOxsTkHoH6MF7VzhrJDRFCqnlS1JpRrfFYN9ZLp3
+ 7xhp7/btOwDQ4DpokkmzPszfOxW+PzI/ojDDZ1omgxXMMpa7UiJYIOdQFz9aMl3wPR19ZuThoI2
+ t8yVyOUABBGAvd1ugXTsIPOhS7I+Xp9nfqSr+V6FE5s7oClJMdSCwmT7H/PXjhxF9c/2rYai8j/
+ geaiPzH8wwlqBa/PLMdBgJ2U5HnrmUXywXCeRSYQaqyxhs9kH4lIzZJIODyVBhT2tG+JXZyuwGm
+ EASdUnD+/gnT2vgugF7qG2icGzaSt3siD0apiJxWt6vKGWfNyyhKnSTMXpNWDl8lpmkQSAxhcO9
+ i8f6sKoz3t/AZVHZqTP7V+gkzJpybNVguafHm+zXF0czkPXhMVH+pDyhaf10m3LWTK5WhQNQOwo
+ WTuVKrNGWubw5ohETPUa/R3eNsI3VmMj/hRPcNY4vSGzm0vkZeoNZIO6snJPnL8pl7XDS9TfF6s
+ YSdmT3py/nrQhbohF9WyMbpyJ+W6B4pBqzEkItoFvWvz753u7snGpvEqY2Wpx2nCfh2pk7MkP6S
+ zKoSTDZKg2inKr45bT5cw3gwDzz0qucl2jvfFKZAqi6G2iT+2bSpmnhE80/DyeUcFwva/B1stFR
+ K95oLCk8DBPH6+g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,69 +110,51 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Filip Hejsek <filip.hejsek@gmail.com>
 
-A channel closes its fd when the last reference to it is dropped.
-Closing stdio fds is typically unwanted, so warn when they are passed to
-qio_channel_file_new_fd().
-
-Change the documentation of qio_channel_file_new_fd() to explicitly say
-that passing stdio descriptors is incorrect.
+Use a duplicate of stdin and stdout fds to avoid closing the standard
+descriptors when the stdio chardev is destroyed.
 
 Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20261017-fix-stdio-close-v3-2-cfff0122a2a4@gmail.com>
+Message-ID: <20261017-fix-stdio-close-v3-1-cfff0122a2a4@gmail.com>
 ---
- include/io/channel-file.h | 12 ++++++++----
- io/channel-file.c         |  6 ++++++
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ chardev/char-stdio.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/include/io/channel-file.h b/include/io/channel-file.h
-index d373a4e44d9d..6a6776ff8e79 100644
---- a/include/io/channel-file.h
-+++ b/include/io/channel-file.h
-@@ -58,10 +58,14 @@ struct QIOChannelFile {
-  * should be used instead, as this provides greater
-  * functionality and cross platform portability.
-  *
-- * The channel will own the passed in file descriptor
-- * and will take responsibility for closing it, so the
-- * caller must not close it. If appropriate the caller
-- * should dup() its FD before opening the channel.
-+ * The channel will own the file descriptor that was
-+ * passed to it and will take responsibility for closing
-+ * it. This means the caller must not close it, and must
-+ * not pass in descriptors that will remain in use after
-+ * the channel is destroyed. In particular, @fd must
-+ * not be one of the stdin/stdout/stderr descriptors. If
-+ * requiring a channel to wrap a descriptor that should
-+ * remain open, use qio_channel_file_new_dupfd() instead.
-  *
-  * Returns: the new channel object
-  */
-diff --git a/io/channel-file.c b/io/channel-file.c
-index 5cef75a67c62..4c9da6619b9b 100644
---- a/io/channel-file.c
-+++ b/io/channel-file.c
-@@ -23,6 +23,7 @@
- #include "io/channel-util.h"
- #include "io/channel-watch.h"
- #include "qapi/error.h"
-+#include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "qemu/sockets.h"
- #include "trace.h"
-@@ -32,6 +33,11 @@ qio_channel_file_new_fd(int fd)
- {
-     QIOChannelFile *ioc;
+diff --git a/chardev/char-stdio.c b/chardev/char-stdio.c
+index f63bf413c741..16b49fd924d1 100644
+--- a/chardev/char-stdio.c
++++ b/chardev/char-stdio.c
+@@ -114,6 +114,7 @@ static bool stdio_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+     StdioChardev *s = STDIO_CHARDEV(chr);
+     ChardevStdio *opts = backend->u.stdio.data;
+     struct sigaction act;
++    int fd_in, fd_out;
  
-+    if (fd <= STDERR_FILENO) {
-+        warn_report("potential bug: creating a channel from stdio fd %d; "
-+                    "the fd will be closed when the channel is destroyed", fd);
+     if (is_daemonized()) {
+         error_setg(errp, "cannot use stdio with -daemonize");
+@@ -133,7 +134,20 @@ static bool stdio_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+         return false;
+     }
+ 
+-    if (!qemu_chr_open_fd(chr, 0, 1, errp)) {
++    fd_in = qemu_dup(0);
++    if (fd_in < 0) {
++        error_setg_errno(errp, errno, "Failed to dup stdin fd");
++        return false;
 +    }
-+
-     ioc = QIO_CHANNEL_FILE(object_new(TYPE_QIO_CHANNEL_FILE));
++    fd_out = qemu_dup(1);
++    if (fd_out < 0) {
++        error_setg_errno(errp, errno, "Failed to dup stdout fd");
++        qemu_close(fd_in);
++        return false;
++    }
++    if (!qemu_chr_open_fd(chr, fd_in, fd_out, errp)) {
++        qemu_close(fd_in);
++        qemu_close(fd_out);
+         return false;
+     }
  
-     ioc->fd = fd;
 
 -- 
 2.56.0.116.g6de20f6092dc
