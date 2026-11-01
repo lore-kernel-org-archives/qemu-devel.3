@@ -1,97 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55EB606A325
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 13:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF97C606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 13:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=n+RbxwUY
+	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=N0Daw6La
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNVSr-0005B0-NP; Sun, 01 Nov 2026 08:19:13 -0500
+	id 1xNVYN-00061Y-Dd; Sun, 01 Nov 2026 08:24:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xNVSi-000592-0a
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 08:19:04 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xNVSg-0001En-7Y
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 08:19:03 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4a4d7ae1ae9so19543335e9.1
- for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 05:19:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793539140; x=1794143940; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ksHhiQCiUnxbhloByktUJ8gXU9lR2HIKf8kgi+Hc+8M=;
- b=n+RbxwUYTh2tPLP6nbmK2655EFfJJD63fHgjYns3AukMgjczmG1COu1kgh8NHpX6Gs
- /2iRP/35+PngarZYH3m7qVdolI++QGL6X+mTiy+QRDQHVsLpCB+s2h0Hk4tYAUKlq2a/
- Ebk4yGF1i4zJNU8IEHlztS6CWIgxiSu6yERPUPC686hNUjTEVj3Al5LaDDptiq6dy1IG
- V1rnri7xGZR8luOfT5ToVNIbGDEPRBbcdQUGWO82p1YDSd1OqJJh+5kN7q53iwtFrLI6
- PpIMhDuBSqh+jpVudhiJpOpbPVNiCKcG3xZXICZL0bwd9aaqzy2IjI+qNj8qo7HQC9Yg
- U5Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793539140; x=1794143940;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ksHhiQCiUnxbhloByktUJ8gXU9lR2HIKf8kgi+Hc+8M=;
- b=t9ApRf2ivDIM3B7FIVGMs+CfTRX4T4B7LLn3l2UuqWt88JsEzNcewrHy/tK5kdI2+v
- CZT7ifnZgRGw5fXNfbfgMZ0ljbb+UkcTy9DKvAgxxtWyrbF+7vlSAipF8Hpku88/4Rkv
- 7Q4iOk3DorvJd5Knd3YQbHLK9O7mUcZ9Hc5q5iGRa8ga/rMlGQKUTle2+AsJP4FXSzJz
- Tp+fkdFp0qlMuTVe+iJuCkuwA5rAJg6fXUREDhlNyNq3e7AkQMpwAXWPAJE2YpWyNaAp
- IxUpT8DmIRQabkUZuZfsj7DJ+5cCKbonR40TSuQd7WtMHbjNvm//Rz52TCGoMjNmdh6a
- OAcw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxr63GxaeQ6R5HCSfwpqzcG+6VdlbzrVn77yGOMSfvngK39Xt7iarbH9NB9fiTBV7IMS3/ueOeIzh6l@nongnu.org
-X-Gm-Message-State: AFq9FYJN8dw0mYDwEZyYTenXSHgUEorraChN9w1zlt2Udj/h9BwNSoU2
- pwZRkUYmnXXEh2KdkPy5qQDuzpoWxWun69tTCMXmc5KeEOXLEuRMR3w/
-X-Gm-Gg: AYBFou0Nlg8OiAd+ATW522xZbGIR0DInXmlcjNu8F8rCM4YwZuVN1GGfKpKTNrQT3eS
- VEPOlPJ1kzIUOPtX0gt/VGc9DiRx6NNqTLKveTJ6dx9q2+tUJp9AawUoizwMvUlVHpGuzd5TYfD
- toGrjdGSvKcM6NJCmnnmDf9mfz/ddPoHvi1rKvWV2gdtkPg185EC0xDZinu5gcp+BxqDYGTNDFR
- pTS8mF3c42vzGc6AmwrSWKgtANeTLIOgN+ovKGdexU3ak9P3H5Rrz8VDHxicXZ9pCL96niVBFnq
- XnlYyoU+m1tbAMdhsddXgvQd+ljWDJCz6FgsRHex4xYs43dQqwhxcNevxuWYclVURHxPlMGrF4N
- aFiEUuVTel+D3I0/5HXinHfs6mjMVjL92cj1/VRvodq9g5mstd8nCsoW8IIcZi8L5EXXry/weMw
- 7VmQ7uzdVf+nPhs1OESbPhHffZajbFB2ed+H2ehPP9042yOiQwYtbOQbM7UvU54UxfJlcdEQdWu
- oVKMVoO1smSUdtjfMZJboCPTZ6XySS+EKcOKDgyqDO8/z8R0f4sTz37dMWgUylHDh2bVsioBuJJ
- fG2kpsAdHca6NOosxNYOlwUi9yAl0p4egH1mwwAx7NniCXhJOUiU95Jr0XEgDUb3rSTwPELwhOU
- Ij0i+uifYV75ij7Y=
-X-Received: by 2002:a05:600c:1909:b0:4a5:26b8:4507 with SMTP id
- 5b1f17b1804b1-4ac18b7dff9mr164059855e9.21.1793539140029; 
- Sun, 01 Nov 2026 05:19:00 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (dynamic-077-013-241-109.77.13.pool.telefonica.de. [77.13.241.109])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71bab1a8sm14207266f8f.57.2026.11.01.05.18.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Nov 2026 05:18:58 -0800 (PST)
-Date: Sun, 01 Nov 2026 13:18:58 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>, qemu-devel@nongnu.org
-CC: qemu-arm@nongnu.org, pbonzini@redhat.com, peter.maydell@linaro.org,
- pierrick.bouvier@oss.qualcomm.com
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCHv4_03/11=5D_tests/functiona?=
- =?US-ASCII?Q?l=3A_Fix_i=2EMX8MP_EVK_SMP_configuration?=
-In-Reply-To: <20261007101105.3917771-4-gaurav.sharma_7@nxp.com>
-References: <20261007101105.3917771-1-gaurav.sharma_7@nxp.com>
- <20261007101105.3917771-4-gaurav.sharma_7@nxp.com>
-Message-ID: <AE3F9CD0-3F2F-4BF9-BD20-427E15706EA4@gmail.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xNVYE-00061F-Lq
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 08:24:48 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xNVYC-0001sV-Kj
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 08:24:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=fYtUshqMa4Mz4ezJdtPYUwwD2GAhmfQs/131yb1od3Y=; b=N0Daw6LaoxVeEOabQSVM/e5c7Q
+ TQqooisS7bciwfDrRhW5zlWQXMJj4s33+umcMzAxg8j+5iOzInKg4kZmJ124Kq0c9lAAvaWK24rlI
+ a9C3smpe7U0CADvqheJZRKArzQE/aJnydAlcCK/97lAelpYy2NorkVuOfzAlpzTLmLfT/uROke2zt
+ MxQbENcjd/eCsSUVB7jSCBb+aJRJDk8i9pPziLukfiwYJWJYlqVVQZZPJJm1/JoqwbPElNK+t1Hc4
+ t0lBaSX9nO9Gf+Qvush28p2CDzhSb6iG9UCXtC9exFYWtZg3n4KhHFM0ALepZC3ntDu/Za+VCg+da
+ cl/Ea7OgjnHHE4gYdqn6vHjK/GXDnGYmW6oiIm0KFfYzdfIYbFfoYQpYZv4Lgc/z2SnOrajfHGalF
+ 32I/98PYuKw/R6SZBAkG+QUDTrKVDrKbt8sfR6tiITDBDAS+EVA3+8LrZRBh2FOgqItAtkeAySuLc
+ QdVj6P6gwqQ2OzFVK/++g4q5cwSC/UF0s8r1RuXrWW7KF0kBznSWIeXnO+q1/Bp/H/XtnmwPipbXC
+ vzH48h6GhbOzgwRvs6+0R9i5zgurVevSChI8Nyegm3Jxal5w8PxQxZv2DF35qXsZBmNEvgOtHdYzS
+ 5B6F55vTPdXMyZWVAkBHVGVsZ27LEmxTc2hP6svU8=;
+Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xNVXJ-0054qo-Rg; Sun, 01 Nov 2026 13:23:50 +0000
+Message-ID: <7a40ba68-3ed0-4ff9-9d7c-2cfc04615f13@ilande.co.uk>
+Date: Sun, 1 Nov 2026 13:24:29 +0000
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x329.google.com
+User-Agent: Mozilla Thunderbird
+To: Stian Halseth <stian@itx.no>, qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20261031094841.3407049-1-stian@itx.no>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20261031094841.3407049-1-stian@itx.no>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2] hw/sparc64: Pass hwcap-list to OpenBIOS via fw_cfg
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,47 +102,115 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On 31/10/2026 09:48, Stian Halseth wrote:
+
+> Linux needs hwcap-list to enable crypto instructions, but only sun4v
+> firmware provides it.
+> 
+> When the CPU has crypto, pass the list through fw_cfg for OpenBIOS
+> to copy onto the cpu node as qemu,hwcap-list. Include the capabilities
+> linux-user reports, since Linux trusts the list instead of guessing.
+> 
+> Without crypto, nothing changes.
+> 
+> Signed-off-by: Stian Halseth <stian@itx.no>
+> ---
+> v2:
+> - The property is now "qemu,hwcap-list", to mark it as emulator-only
+>    (Mark). The fw_cfg file name is unchanged.
+> - Comment that the crypto entries are the groups in the CFR value (Mark)
+> 
+> v1: https://lore.kernel.org/qemu-devel/20261028190729.1941434-1-stian@itx.no/
+> 
+> Based-on: <20261028113816.1651212-1-stian@itx.no>
+> 
+> This exposes the crypto hwcap to guests, so it should land after the
+> block-init series, which glibc's memset needs.
+> 
+> The OpenBIOS side, v2 with the same rename, is on the OpenBIOS list as
+> "SPARC64: set qemu,hwcap-list on the cpu node from fw_cfg". The kernel
+> change to read the property on sun4u goes to sparclinux.
+> 
+>   hw/sparc64/sun4u.c | 47 ++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 47 insertions(+)
+> 
+> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+> index a348096aee..1057c59152 100644
+> --- a/hw/sparc64/sun4u.c
+> +++ b/hw/sparc64/sun4u.c
+> @@ -121,6 +121,52 @@ static void fw_cfg_boot_set(void *opaque, const char *boot_device,
+>       fw_cfg_modify_i16(opaque, FW_CFG_BOOT_DEVICE, boot_device[0]);
+>   }
+>   
+> +/*
+> + * OpenBIOS copies this list to the cpu node's qemu,hwcap-list property
+> + * for Linux, which gets it from the machine description on sun4v.
+> + */
+> +static void fw_cfg_build_hwcap_list(FWCfgState *fw_cfg, SPARCCPU *cpu)
+> +{
+> +    static const struct {
+> +        uint32_t mask;
+> +        const char *name;
+> +    } capabilities[] = {
+> +        { 0, "popc" },
+> +        { CPU_FEATURE_FSMULD, "fsmuld" },
+> +        { CPU_FEATURE_VIS1, "vis" },
+> +        { CPU_FEATURE_VIS2, "vis2" },
+> +        { CPU_FEATURE_FMAF, "fmaf" },
+> +        { CPU_FEATURE_VIS3, "vis3" },
+> +        { CPU_FEATURE_IMA, "ima" },
+> +        /* The groups in the CFR value, see CFR_* in target/sparc/translate.c */
+> +        { CPU_FEATURE_CRYPTO, "aes" },
+> +        { CPU_FEATURE_CRYPTO, "sha1" },
+> +        { CPU_FEATURE_CRYPTO, "sha256" },
+> +        { CPU_FEATURE_CRYPTO, "sha512" },
+> +        { CPU_FEATURE_CRYPTO, "crc32c" },
+> +    };
+> +    uint32_t features = cpu->env.def.features;
+> +    GByteArray *array;
+> +    size_t len;
+> +
+> +    if (!(features & CPU_FEATURE_CRYPTO)) {
+> +        return;
+> +    }
+> +
+> +    array = g_byte_array_new();
+> +    for (size_t i = 0; i < ARRAY_SIZE(capabilities); i++) {
+> +        if ((features & capabilities[i].mask) == capabilities[i].mask) {
+> +            const char *name = capabilities[i].name;
+> +
+> +            g_byte_array_append(array, (const guint8 *)name, strlen(name) + 1);
+> +        }
+> +    }
+> +
+> +    len = array->len;
+> +    fw_cfg_add_file(fw_cfg, "etc/sparc64/hwcap-list",
+> +                    g_byte_array_free(array, FALSE), len);
+> +}
+> +
+>   static int sun4u_NVRAM_set_params(Nvram *nvram, uint16_t NVRAM_size,
+>                                     const char *arch, ram_addr_t RAM_size,
+>                                     const char *boot_devices,
+> @@ -717,6 +763,7 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
+>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_WIDTH, graphic_width);
+>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_HEIGHT, graphic_height);
+>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_DEPTH, graphic_depth);
+> +    fw_cfg_build_hwcap_list(fw_cfg, cpu);
+>   
+>       qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
+
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
-Am 7=2E Oktober 2026 10:10:57 UTC schrieb Gaurav Sharma <gaurav=2Esharma_7=
-@nxp=2Ecom>:
->Remove the explicit '-smp 4' argument from the functional test=2E
->The SMP CPU count is now fixed internally via mc->default_cpus and
->no longer needs to be specified by the caller=2E
->
->Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
->---
-> tests/functional/aarch64/test_imx8mp_evk=2Epy | 1 -
-> 1 file changed, 1 deletion(-)
->
->diff --git a/tests/functional/aarch64/test_imx8mp_evk=2Epy b/tests/functi=
-onal/aarch64/test_imx8mp_evk=2Epy
->index 99ddcdef83=2E=2E6046c573d5 100755
->--- a/tests/functional/aarch64/test_imx8mp_evk=2Epy
->+++ b/tests/functional/aarch64/test_imx8mp_evk=2Epy
->@@ -53,7 +53,6 @@ def test_aarch64_imx8mp_evk_usdhc(self):
->         self=2Eset_machine('imx8mp-evk')
->         self=2Evm=2Eset_console(console_index=3D1)
->         self=2Evm=2Eadd_args('-m', '2G',
->-                         '-smp', '4',
+ATB,
 
-The -m and -smp parameters are both removed in current master=2E However, =
-this patch is not obsolete: It should contain the smp hardcoding to 4 which=
- is still mixed into patch "[PATCHv4 11/11] hw/arm: Enable Cortex-M7 AMP bo=
-ot on i=2EMX8MP"=2E
+Mark.
 
-Best regards,
-Bernhard
-
->                          '-kernel', self=2Ekernel_path,
->                          '-initrd', self=2Einitrd_path,
->                          '-dtb', self=2Edtb_path,
 
