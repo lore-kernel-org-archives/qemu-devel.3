@@ -1,66 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF6F606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B13F606A325
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 20:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OeTtuTgx
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=doiveBNM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNc2E-0001iz-7d; Sun, 01 Nov 2026 15:20:10 -0500
+	id 1xNc1H-0006La-0X; Sun, 01 Nov 2026 15:19:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzu-00056p-LC
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:50 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzg-0004ra-PF
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzi-0007Ec-8k
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:46 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNbzd-0007AV-32
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 15:17:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793564253;
+ s=mimecast20190719; t=1793564248;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z6QtiCWszoDvq+oJvCKXSbkcKh+jiykbh8awKa6VF8s=;
- b=OeTtuTgx4LzDG4PSCaMP8XJ8feXvORPJvYTuT/hRukmtZ6y6FzF23RvlrvByAXOJk5LZFu
- V0Au8feMZb8f800jucvi9rW+ZMi8FsXx1U3s4ERzyZocSKOZ56vgGlftugkfSzZ3qUSax5
- xG/nXUbTD832Xzg/4zVyV+Pv0ZPDakU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tvV5cI3E2ha6ruHv165a0fCyfphNnmtO2pq8RN/esRE=;
+ b=doiveBNMaDuQDFmTH0crUzaU5lC3o1vwmglC9zjfLwbROi23EY9b9YO5A9cHqesmY9ZvnR
+ a3EuaeIppyxXvzd4x8keP9y/XxGl7UgytZ6pCQdxepNqVxxXmkBUHDVyu5zjjNQxys6X1o
+ gdL2XE1pog8RCGeV7ZrM9wraPrNQH9w=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-vOc-9bqsNA2mXUq7mnfzIA-1; Sun,
- 01 Nov 2026 15:17:30 -0500
-X-MC-Unique: vOc-9bqsNA2mXUq7mnfzIA-1
-X-Mimecast-MFC-AGG-ID: vOc-9bqsNA2mXUq7mnfzIA_1793564249
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-8dV_e344NZSQEOk1rLs9Kg-1; Sun,
+ 01 Nov 2026 15:17:26 -0500
+X-MC-Unique: 8dV_e344NZSQEOk1rLs9Kg-1
+X-Mimecast-MFC-AGG-ID: 8dV_e344NZSQEOk1rLs9Kg_1793564246
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 494FC1955F43; Sun,  1 Nov 2026 20:17:29 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DBEFF1955F6E; Sun,  1 Nov 2026 20:17:25 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE3FD1956086; Sun,  1 Nov 2026 20:17:28 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96F1718004D2; Sun,  1 Nov 2026 20:17:25 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 84E9A21E6742; Sun, 01 Nov 2026 21:17:18 +0100 (CET)
+ id 0AD0E21E689C; Sun, 01 Nov 2026 21:17:18 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v8 50/56] target/riscv: convert PropertyInfo definitions to
- use qapi_type
-Date: Sun,  1 Nov 2026 21:17:11 +0100
-Message-ID: <20261101201717.3911097-51-armbru@redhat.com>
+Subject: [PATCH v8 24/56] riscv/virt: convert OnOffAuto properties to
+ QAPI-aware registration
+Date: Sun,  1 Nov 2026 21:16:45 +0100
+Message-ID: <20261101201717.3911097-25-armbru@redhat.com>
 In-Reply-To: <20261101201717.3911097-1-armbru@redhat.com>
 References: <20261101201717.3911097-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -4
@@ -91,140 +91,98 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Mechanically add a .qapi_type pointer to PropertyInfo definitions in
-target/riscv/cpu.c.
+Convert the acpi and iommu-sys OnOffAuto properties from manual
+visitor-based callbacks to object_class_property_add_enum().
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- target/riscv/cpu.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ hw/riscv/virt.c | 40 +++++++++++++++-------------------------
+ 1 file changed, 15 insertions(+), 25 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index adb53aad96..362e561809 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1730,6 +1730,7 @@ static void prop_pmu_num_get(Object *obj, Visitor *v, const char *name,
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 65f4c67bff..31fecdc964 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -58,7 +58,7 @@
+ #include "hw/pci-host/gpex.h"
+ #include "hw/display/ramfb.h"
+ #include "hw/acpi/aml-build.h"
+-#include "qapi/qapi-visit-common.h"
++#include "qapi/qapi-type-infos-common.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/uefi/var-service-api.h"
  
- static const PropertyInfo prop_pmu_num = {
-     .type = "uint8",
-+    .qapi_type = &uint8_type_info,
-     .description = "pmu-num",
-     .get = prop_pmu_num_get,
-     .set = prop_pmu_num_set,
-@@ -1772,6 +1773,7 @@ static void prop_pmu_mask_get(Object *obj, Visitor *v, const char *name,
+@@ -1055,38 +1055,28 @@ bool virt_is_iommu_sys_enabled(RISCVVirtState *s)
+     return s->iommu_sys == ON_OFF_AUTO_ON;
+ }
  
- static const PropertyInfo prop_pmu_mask = {
-     .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "pmu-mask",
-     .get = prop_pmu_mask_get,
-     .set = prop_pmu_mask_set,
-@@ -1804,6 +1806,7 @@ static void prop_mmu_get(Object *obj, Visitor *v, const char *name,
+-static void virt_get_iommu_sys(Object *obj, Visitor *v, const char *name,
+-                               void *opaque, Error **errp)
++static int virt_get_iommu_sys(Object *obj, Error **errp)
+ {
+     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
+-    OnOffAuto iommu_sys = s->iommu_sys;
+-
+-    visit_type_OnOffAuto(v, name, &iommu_sys, errp);
++    return s->iommu_sys;
+ }
  
- static const PropertyInfo prop_mmu = {
-     .type = "bool",
-+    .qapi_type = &bool_type_info,
-     .description = "mmu",
-     .get = prop_mmu_get,
-     .set = prop_mmu_set,
-@@ -1837,6 +1840,7 @@ static void prop_pmp_get(Object *obj, Visitor *v, const char *name,
+-static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name,
+-                               void *opaque, Error **errp)
++static void virt_set_iommu_sys(Object *obj, int value, Error **errp)
+ {
+     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
++    s->iommu_sys = value;
+ }
  
- static const PropertyInfo prop_pmp = {
-     .type = "bool",
-+    .qapi_type = &bool_type_info,
-     .description = "pmp",
-     .get = prop_pmp_get,
-     .set = prop_pmp_set,
-@@ -1877,6 +1881,7 @@ static void prop_num_pmp_regions_get(Object *obj, Visitor *v, const char *name,
+-static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
+-                          void *opaque, Error **errp)
++static int virt_get_acpi(Object *obj, Error **errp)
+ {
+     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
+-    OnOffAuto acpi = s->acpi;
+-
+-    visit_type_OnOffAuto(v, name, &acpi, errp);
++    return s->acpi;
+ }
  
- static const PropertyInfo prop_num_pmp_regions = {
-     .type = "uint8",
-+    .qapi_type = &uint8_type_info,
-     .description = "num-pmp-regions",
-     .get = prop_num_pmp_regions_get,
-     .set = prop_num_pmp_regions_set,
-@@ -1915,6 +1920,7 @@ static void prop_pmp_granularity_get(Object *obj, Visitor *v, const char *name,
+-static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
+-                          void *opaque, Error **errp)
++static void virt_set_acpi(Object *obj, int value, Error **errp)
+ {
+     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &s->acpi, errp);
++    s->acpi = value;
+ }
  
- static const PropertyInfo prop_pmp_granularity = {
-     .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "pmp-granularity",
-     .get = prop_pmp_granularity_get,
-     .set = prop_pmp_granularity_set,
-@@ -1991,6 +1997,7 @@ static void prop_priv_spec_get(Object *obj, Visitor *v, const char *name,
+ static const HotplugHandler *
+@@ -1184,15 +1174,15 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+         object_class_property_set_description(oc, "aia-guests", str);
+     }
  
- static const PropertyInfo prop_priv_spec = {
-     .type = "str",
-+    .qapi_type = &str_type_info,
-     .description = "priv_spec",
-     /* FIXME enum? */
-     .get = prop_priv_spec_get,
-@@ -2024,6 +2031,7 @@ static void prop_vext_spec_get(Object *obj, Visitor *v, const char *name,
+-    object_class_property_add(oc, "acpi", "OnOffAuto", NULL,
+-                              virt_get_acpi, virt_set_acpi,
+-                              NULL, NULL);
++    object_class_property_add_enum(oc, "acpi", "OnOffAuto",
++                                   &OnOffAuto_type_info, NULL,
++                                   virt_get_acpi, virt_set_acpi);
+     object_class_property_set_description(oc, "acpi",
+                                           "Enable ACPI");
  
- static const PropertyInfo prop_vext_spec = {
-     .type = "str",
-+    .qapi_type = &str_type_info,
-     .description = "vext_spec",
-     /* FIXME enum? */
-     .get = prop_vext_spec_get,
-@@ -2108,6 +2116,7 @@ static void prop_elen_get(Object *obj, Visitor *v, const char *name,
- 
- static const PropertyInfo prop_elen = {
-     .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "elen",
-     .get = prop_elen_get,
-     .set = prop_elen_set,
-@@ -2144,6 +2153,7 @@ static void prop_cbom_blksize_get(Object *obj, Visitor *v, const char *name,
- 
- static const PropertyInfo prop_cbom_blksize = {
-     .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "cbom_blocksize",
-     .get = prop_cbom_blksize_get,
-     .set = prop_cbom_blksize_set,
-@@ -2180,6 +2190,7 @@ static void prop_cbop_blksize_get(Object *obj, Visitor *v, const char *name,
- 
- static const PropertyInfo prop_cbop_blksize = {
-     .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "cbop_blocksize",
-     .get = prop_cbop_blksize_get,
-     .set = prop_cbop_blksize_set,
-@@ -2216,6 +2227,7 @@ static void prop_cboz_blksize_get(Object *obj, Visitor *v, const char *name,
- 
- static const PropertyInfo prop_cboz_blksize = {
-     .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "cboz_blocksize",
-     .get = prop_cboz_blksize_get,
-     .set = prop_cboz_blksize_set,
-@@ -2252,6 +2264,7 @@ static void prop_mvendorid_get(Object *obj, Visitor *v, const char *name,
- 
- static const PropertyInfo prop_mvendorid = {
-     .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "mvendorid",
-     .get = prop_mvendorid_get,
-     .set = prop_mvendorid_set,
-@@ -2288,6 +2301,7 @@ static void prop_mimpid_get(Object *obj, Visitor *v, const char *name,
- 
- static const PropertyInfo prop_mimpid = {
-     .type = "uint64",
-+    .qapi_type = &uint64_type_info,
-     .description = "mimpid",
-     .get = prop_mimpid_get,
-     .set = prop_mimpid_set,
-@@ -2345,6 +2359,7 @@ static void prop_marchid_get(Object *obj, Visitor *v, const char *name,
- 
- static const PropertyInfo prop_marchid = {
-     .type = "uint64",
-+    .qapi_type = &uint64_type_info,
-     .description = "marchid",
-     .get = prop_marchid_get,
-     .set = prop_marchid_set,
+-    object_class_property_add(oc, "iommu-sys", "OnOffAuto", NULL,
+-                              virt_get_iommu_sys, virt_set_iommu_sys,
+-                              NULL, NULL);
++    object_class_property_add_enum(oc,  "iommu-sys", "OnOffAuto",
++                                   &OnOffAuto_type_info, NULL,
++                                   virt_get_iommu_sys, virt_set_iommu_sys);
+     object_class_property_set_description(oc, "iommu-sys",
+                                           "Enable IOMMU platform device");
+ }
 -- 
 2.55.0
 
