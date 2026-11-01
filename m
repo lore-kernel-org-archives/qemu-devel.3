@@ -1,102 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897DF606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 17:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A904606A324
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 17:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=f2a4v76m
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=kTigs/J7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNZmN-0004Fo-2W; Sun, 01 Nov 2026 12:55:39 -0500
+	id 1xNZo8-0004v5-KU; Sun, 01 Nov 2026 12:57:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xNZmK-0004Dx-Ad
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 12:55:36 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xNZo5-0004uL-Ob
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 12:57:26 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xNZmH-0003qs-Ch
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 12:55:36 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4a2d6d01ecbso14247275e9.0
- for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 09:55:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xNZo3-0003th-Dm
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 12:57:24 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-cd5c9e52398so995639a12.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 09:57:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793555731; x=1794160531; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=kbyVS+otGky4UZYa5VNF43sU1BE0orrmhILbibDS1L8=;
- b=f2a4v76mvzysQ8iQws1M2kecWaxbXwMPuHofKyacjsTyf33UrKKSDSDJH+gZBwMqGu
- zOet26VZikZWXxjdv6woYBjPfxE6W0p7pf3ST7saFT1oxVsUOqE+RRIh+To4DpfYaWGF
- kVU7z4OPWwfO21g2xN2zM6qdNEj6SqstDWZJau052QoMNYjvAUIIvEJLVhfEophY+bmD
- jcXAzyBqZ1mxGC+Rb7jFbta0Zquz1yDAADuxu8+J0rKsfflHKSgjbReyY010N4Vn4eOR
- X2pkc3CTA+Nm2R82DbSkz6Wq5BOw4DW+BRDDojIdX07326lLi3i3jLuz9F6OWgQqWTgv
- OSlQ==
+ d=linaro.org; s=google; t=1793555841; x=1794160641; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=kPCoufGABZV1JjVgWGoZXXAxbJCakER03TORpeATVNo=;
+ b=kTigs/J75FWn7xccimb5GYHiFGY0J47NWwy5fEEmyysyqDATObQ7PxW8f29RjdU22N
+ q+HlsX0amJZN/cuVk387ZxcJj1Z2IvR4PDmSbII++z5zZiC6AGUi3kQsulPBOGrXwxFV
+ tHXSXfosMpoUhMmGVhrGjJXIAbclabOOYzHkjkO8jBCD7Xj9bBIWV6Yh5LZ95auYdMHU
+ DNtgoeBkJdpIO6Rzal0AJ5P+QpzxgP+TJrHAH4LWDhfm7JMBn2edoUboK9kM2jUQu42O
+ iKpz31mU38mcPODe1abMopTfdV92iNDxUvJFzIq0pMSizEzwNiVucW6jiBHnkK4W+hff
+ xG9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793555731; x=1794160531;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=kbyVS+otGky4UZYa5VNF43sU1BE0orrmhILbibDS1L8=;
- b=dmGXnj69vxNLoiRJUFO7IG5c/TpL3Gj8KQ1Ha7N41V7UQg4p6qdldFtelWt+zuayUR
- J5pdA0MFvgVcNyEZTK3krK5cH5gp+vAYZz4d+WV3I6URBuVOJWklOHoXYd39fX5r82Ud
- WuZKMW9/pS4XktKZC6CcForNJzxDjePHOVkWdLcXgU2GRIgrN0E0EdpOqprPg4YCL3oU
- st+6H6eb19lPWJOjNogX+dJ9tYcANn867yY1Ju8kvxCZ9NmT+mBqoAoPVSXdxQiMoNg0
- iJD39ZB+TEyVWXy0ItyDukGWbAOc2iTLyHDFlVQr/RLIA2AKC7JbAUaz6R1+s41EmacW
- 1rPg==
-X-Gm-Message-State: AFq9FYJ4XCg548DjPyg28lOFuhicwcHHmu+Dk15iLJhWTIiQB30/af2f
- umSn9nuTQB/ZkKKmoZ/VVrf1pSd7XhjwhxiH1G5bLdmsVo5oTuxycn3s1cp5O7HLrdY=
-X-Gm-Gg: AYBFou2SO5VM2Hgxcq5chqpWe+miOPTR17AUa99zzLY4otUEA9m1MnPrhOXmJZ8vl6f
- HpEMJYK7ZlItOuPI8SB1AeNp7uyMxaJeQO4/d+4HNiKBDzkKAPY7Fo6XwSBuxGWfwqgq2DQxlNK
- tSTFItE0BzHc7dI5lLaawh02ImKYjSKRRMSVN6MiBXW0dT9gfnyMTkjGJn5HmskWlHgms7bsrce
- w6P/T+6MYsYfRW2+2uNZDg1+g+kXW0PBSxt9ShHgl5vSU/z+5K4K1yVe3jyU9PSmClHjDgAsLll
- q6NHEe1eGuc5vgeXlqE//9IH6tDvZ9xFknBt4YxtQWI8XD5blNO87GyNT/kGV8G6lPD+fXnfOIQ
- l7UP9TXNeX0nFk6W77KbnbjW8HzFv4/C/oaKQ4sKwcK3yktijUACTxuav5ZnZfC6f6oOXTS1zrL
- Eis08nkG6DvBAhQK8YcYfTJsF4Jujn0zu5RuaRFJFdIlRc2f1z4v/ssEHMkM5NV7uQK7Z8WXdm+
- zMqbC8Q3Kt/ZDXW/xPbZuocvP3AFagCN9swA4SX/EZ1H+VRGCybR5mSPMbuUiLYYprmf2leSyhq
- 0LimfPb2RNib47frfdpiNFv3wRL4
-X-Received: by 2002:a05:600c:46ce:b0:4a6:7d6:821f with SMTP id
- 5b1f17b1804b1-4ac189928e9mr190176175e9.29.1793555730743; 
- Sun, 01 Nov 2026 09:55:30 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa820492cesm311964355e9.13.2026.11.01.09.55.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Nov 2026 09:55:29 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 29D315F833;
- Sun, 01 Nov 2026 17:55:29 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Lorand Marton <lorandmarton.dev@gmail.com>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Paolo Bonzini
- <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  qemu-stable@nongnu.org
-Subject: Re: [PATCH 1/4] target/arm: hold bql when SEV sets the event_register
-In-Reply-To: <20261101172901.873975-1-lorandmarton.dev@gmail.com> (Lorand
- Marton's message of "Sun, 1 Nov 2026 18:29:01 +0100")
-References: <20261030141046.2710206-1-alex.bennee@linaro.org>
- <20261030141046.2710206-2-alex.bennee@linaro.org>
- <20261101172901.873975-1-lorandmarton.dev@gmail.com>
-User-Agent: mu4e 1.14.4; emacs 30.1
-Date: Sun, 01 Nov 2026 17:55:29 +0000
-Message-ID: <87ik2g77xq.fsf@draig.linaro.org>
+ d=1e100.net; s=20260707; t=1793555841; x=1794160641;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=kPCoufGABZV1JjVgWGoZXXAxbJCakER03TORpeATVNo=;
+ b=W4HzlO5jOujzVNPlP21QPB4/1b+Xlcs8WJOE41mAY0EVbB/WpUpgO0SxvbLRj12aPi
+ 0BjjwA6YaI4Kx/N/2QpmccMWQffZ/3cAh5L3vTYwX6WUFRMcn4Ce6PGCNGlt8A5qW0R/
+ zgggCevKsKrCuTfbfn7VYvTtrWsHCaS0dY/hlyHKV79+H6uH8Z6j9o4gfPhGaHaKxW8Q
+ 9jVmoB4P+o4/p8sOWiLIiRbQIuxMikGOPGq0dez3McZOrPJ+yxa6b4AnHhGMVd+9Qs7D
+ zrLOsVjAzc1PsqtWzUTrvec3nLddfLv1P0QGzsjsPCXctoSDhzWQ/rA34+wEXh6pz+rk
+ 1dKQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByP1Np3cBTzPjRIAKO3+BeqPgl5tfajIgkjfEr3nGwCQrc5qibUTe09RrFJ2GShWDjfIoH8JVZi0aza@nongnu.org
+X-Gm-Message-State: APuU4Z9/2vfTLJoPwq2isYioYHgYXcJM7i3Kd0c6QPdlguQb1+sIL5/b
+ lrYHI1owaWvMj28P98jJbEs7n5DF7rjrLtJZN6tpl4z6XkVbw2teDHkJ/iVRbA1pQzY=
+X-Gm-Gg: AYBFou2Jt10w5nogwA5TRuS/rQ8uUz267PrM3UMovFdLUC1FFiVqANsfURJHd1A+kEa
+ 8fnKm5rzwzj4EjM7VMRabiJMXJ6tT3NB1tyDM+WP0mg5b1GHnx3aZC6HMWUfJnJTaVH7yYTBVFQ
+ sjy8t1fNmazmG3rLHDbMULXhOaFxtle7pyhusyT0qpzxpfvcVuX+AYax2M6KPL8ni3aXbSRAuA8
+ aSnj0p/2otHIxR/yUcYTDvABQwSeTE5qE+FixKE/gzlos91GJ6RWHRj6crn5UUeSr3DH7bWVRS9
+ MiMH48LoqFIP66V4eEvp85GtGncw/mlaqrLJIRt2nIg1SFVSJAJ+TmlBdS2uTANmxC+6jHvtzSW
+ yTQBkWcgBLjmjNcWY1nBtcdoLa3FdrWPcH1LtdIaZY99hJBXN9VgYm8l1WUZEe++6m4TF7eb5ES
+ +U5kX6qpYkkYc718FLlLXtcfEsI4a/rUXRq98JvTxOhxOGr0WN7iEXb5L1dt6g+dzdetjRttztK
+ 2ObkaAXLJiUcnwE9ITzTh3y140EZcrX5oXrFy1IQ53W7UnylZ1H3XitmqHU8W+1mnuJ+gumezXT
+ R95d7TRmbz8EPiX70ptELzq2+Qx5/Q4+yijDl5MMHceeaU2Q0cgokw4z8EMow0+W7Qch25I=
+X-Received: by 2002:a17:90b:184f:b0:3ac:83c1:2c0 with SMTP id
+ 98e67ed59e1d1-3ae897e06efmr6244611a91.64.1793555840423; 
+ Sun, 01 Nov 2026 09:57:20 -0800 (PST)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3ae87f5dcc3sm6441574a91.3.2026.11.01.09.57.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 01 Nov 2026 09:57:18 -0800 (PST)
+Message-ID: <94812fe8-954c-41ae-932a-c18bfd5747ba@linaro.org>
+Date: Sun, 1 Nov 2026 09:57:17 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GIT PULL 0/9] UI-related improvements & fixes
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20261101-ui-v1-0-8af305cef69a@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261101-ui-v1-0-8af305cef69a@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,54 +102,42 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Lorand Marton <lorandmarton.dev@gmail.com> writes:
+On 11/1/26 04:06, Marc-André Lureau wrote:
+> The following changes since commit 33eb51c859834f2024090bf843c69814267b6c26:
+> 
+>    Merge tag 'pull-vfio-20261031' ofhttps://github.com/legoater/qemu into staging (2026-10-31 16:52:00 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pr-v1
+> 
+> for you to fetch changes up to cfe14e550370100ebf27cfeea65f6b1b1e11004f:
+> 
+>    io: report a warning when a file channel is created from a stdio fd (2026-11-01 16:06:27 +0400)
+> 
+> ----------------------------------------------------------------
+> UI-related improvements & fixes
+> 
+> - clipboard: add QEMU_CLIPBOARD_PEER_UPDATE notifications and guest-peer tracking,
+>    and factor VNC peer registration out of extended clipboard support.
+> - VNC clipboard: implement ClipboardAvailability so clients are told when a guest
+>    clipboard peer appears or disappears.
+> - VNC: stop losing updates (stale pixels, stuck client) when a queued job is
+>    dropped by a display surface switch.
+> - D-Bus: send a whole-surface Scanout before the first Update of a new surface,
+>    with a qtest for the VGA text-mode resize.
+> - stdio/io: duplicate stdio fds in char-stdio and warn when they are passed to
+>    qio_channel_file_new_fd().
 
-> On Fri, 30 Oct 2026 at 14:10, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
->> There is a race in qemu_process_cpu_events and sleeping on halt_cond
->> where we can miss the setting of the event_register which would cause
->> arm_cpu_has_work to report we shouldn't sleep. As by definition the
->> bql has to be held when we go to sleep against halt_cond guard the
->> kicking of the cpus by the SEV helper with the BQL to ensure things
->> are properly serialised.
->
-> I hit this race with a bare-metal test in which two CPUs pass a turn
-> back and forth 500000 times with WFE and SEV (virt, -smp 2,
-> semihosting).
->
-> On master (af1179b406) it hangs in 10 of 10 runs with -cpu max and in
-> 10 of 10 with cortex-a72 (no result after 20 s; a passing run takes
-> 2 s). A second test, in which a CPU waits in WFE for a broadcast TLBI
-> and an SEV, hangs in 23 of 100 runs with cortex-a53.
->
-> With this series applied on the same master, the first test passes
-> 150 of 150 runs (50 each with max, cortex-a72 and cortex-a53) and the
-> second 600 of 600 (200 each).
->
-> Tested-by: Lorand Marton <lorandmarton.dev@gmail.com>
->
-> The series has no test case now; I can post these two as
-> tests/tcg/aarch64/system tests if that helps.
+Applied, thanks.
 
-Are they hand written? I did include the test cases pulled from one of
-the bugs here:
-
-  20261029161310.2065290-1-alex.bennee@linaro.org
-
-but I suspect the violate the current AI policy.
-
->
-> Thanks,
-> Lorand
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
