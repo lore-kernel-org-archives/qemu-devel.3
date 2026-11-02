@@ -1,87 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157B2606A324
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731C0606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=x5qJtIMF
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Mq6LdzXP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNsDu-00052v-CD; Mon, 02 Nov 2026 08:37:18 -0500
+	id 1xNsEN-00064T-OP; Mon, 02 Nov 2026 08:37:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNsD7-0003KU-8A
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:32 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1xNsDI-0003Z4-Tp
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:41 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNsD5-0002JP-HA
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:28 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-48c4be28b82so3176872f8f.2
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:36:26 -0800 (PST)
+ id 1xNsDH-0002Lg-9m
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:40 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-c4c9abc1824so462327566b.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:36:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793626586; x=1794231386; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=c40oTYCHBPAU/0H7nxE4+WKzLNjvPCTvo3lBvrt5mww=;
- b=x5qJtIMFa6UDJhFaJS4P02tfzAcOSEiiuHTsFUERpPna6rC5/Sh66dbh/tYlHIkml/
- 8oVt9A+SUEeFkjWzNdVHWXTpJQA6nsu2xcSG0kKqPKXYrdPAVBKwqXK4DQ09hiHxbe27
- v046VlfsK67zc1EelOtkU+Qe/LQdLN8WN0OWXOUsSV3z1r0X4+9yoh2CDzbkWd+Q4L6y
- ATgy2Z4Otlj0mHP3EH+PPKBEdco0+F1WD6xjS9+UZ0Xe6ADlQiyCcBddX7YLPmBdCuhr
- XlzAxr5xa6VW5w/Vy4UGOD9s8Y0Uwd6AhGAaSoniNTCpSFpcXrWskffOFWZ5olPtA3Uh
- WbeQ==
+ d=linaro.org; s=google; t=1793626598; x=1794231398; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0cdn64WeUW3Way1jjCtIVpAHZi4hV73QPVPO/GKMz0Q=;
+ b=Mq6LdzXP7w7JDom75GGHxEUpPhH0LtacEOkOO8FAO4HcEPlp3EpvMF9mFCpYM7tF14
+ Z3mLZQXnuGQtM6/KCF9fsgJVCXjZbFVFwu2F+jcC8rnRoll+yoEO8o+EHS8awO/wMQrc
+ kGZUGFRmb6AnQ6Mf+WTFEz9duFs+ett9ueIZpJM0qGzsqtcLUN8AmaPrkBpj/jnOjuLw
+ g7GT2ollthdFpo+jHUCsiM06LfcxvkZm7SDDqaI4EdVZAXNgiKbv8u7/6ngNECT2Rmc+
+ k+zDNg53SNJWwIf53Jw/3pY+BPqbHIUFPiGqf+OVJeSVH883LMQrB5aYD4lQ5CUSYcqS
+ 3yCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793626586; x=1794231386;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=c40oTYCHBPAU/0H7nxE4+WKzLNjvPCTvo3lBvrt5mww=;
- b=Pu0hIMYMbB32wNHdHx6G4CjKQJ95n81UZjnP382r3MYfLzz4SSu3LU90add62vaSZ7
- qV/sgwSpKY0pGlYRk38It64BmWHMJY6oNSnl6G45KnCsKRHFsQlYnzTT4/DVC/5XjQ17
- Borcsn2sL2VlEVvl+IrOQIDufPA+ZxsyNBnYMzUWjQIL9VCJ92/xp+9pKBjMZlrXoTXk
- H/CW5B/J/vZyye0w++emaCDqGnzwHfee7vHGFiniHwS/mKkKKw+pZLC4zFRxC1UnuLWy
- g9j/87n0ZidzUnRECc6f5mYpHuaUHV7N8Zp6sKIFpYCQN7UwWlzhKus/0SRUM6Kowynq
- EXDw==
-X-Gm-Message-State: APuU4Z8CZ+KVlh7yKNjEog5QxkimQ0TqWwA9mgq5q0pkfJs4G3AxF1UG
- IjhxGB9Hx0NaFIXnUQ0V003OBUig4FcaNTKFJ2SuyjcOG/bZ3+1QxnUpo1k5RQn0SWWrvnhxELg
- B5R7j19s=
-X-Gm-Gg: AYBFou3BI228lph/AzwLGfd1zV5+Y7cBMsQ88SutK3ArL5zeL4l4HRaSyCUZlYOQBci
- i4m/4jh259z+PT/C66qQuTZ2t33nORFrueW5zuF2QOcKRvM+fFJ7oludw9RIrQLiSygIHYgrs2s
- zI0Z0PrmsRTBc1e6P5FlRuo4+tjyLqj4dUsUMTQs+znVRQI4Os4TtI/oGzmHkFtzA56v2fShSwU
- 7JyyexfiMDcIHRYLV++zsIkkenneIqRuu9J0w63peeKV+IlPaoLArN4PwExsxXkgPA9+zHG6BCk
- xbo4gn5Xfw4afQC8nDhBN5n/Ta6TCkFYo4U3QV4ZJzpyXXrseQaHF1ZlIMtcOpIPhW+8Fjdn6rg
- LOnesNxUXyL6A/yu8856ViQL1qzz+ptQ1BjG6kAvgGF1hhUtY50T52Sv2gvWg+UopykY4dn8B8M
- kbuO+1hThoz1YlZ+s8DBSaX8UhjTvRC0kmwG8IJNzTOTQWlES1jhi+S+kBGAuOyD9w9jPgN2ixE
- tv2Rrs8o1M1T7u8ntrlfN2lzISlNqJYQKVil2MJ7VXS+mOiVrMCpb3J6lH8HpOQEPAzyuOIjLF6
- 0HkaZ296RXtCbDVjzJ9OY+xD1SuzDflkstEBId3TctsD8d5CxVmgP4qNynrlG9kGWVzd6a7bSku
- g8QUPrBHdn18CwW7OMTTeWEJRiV/7mnVDtg==
-X-Received: by 2002:a5d:6d02:0:b0:48e:5fde:8437 with SMTP id
- ffacd0b85a97d-48e6e50e4f1mr19030339f8f.56.1793626585878; 
- Mon, 02 Nov 2026 05:36:25 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793626598; x=1794231398;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=0cdn64WeUW3Way1jjCtIVpAHZi4hV73QPVPO/GKMz0Q=;
+ b=DcxUYxSISQn2kH5imLGKtQ1A8XiEazfg5fklNT2xRK7080OcEa6chOhhXig7ePgTdH
+ WeeTBRRmo5bGizfuLvzt88TsQehDgKx5+mrCoQV4AsGyLtdAZhLAk2Ype502LAiRen4E
+ IzavAB2yb4SczybAIXOvKIwbY/84OM20LGxURFcAH/D1dCAvIOiURSsA+1zesiEn/4hh
+ Yu/waIhQgqZVwJJyQ+CQ8xYVxMFW8R/5dbKXoujnOtf6c2ostQy8TcOSdbUpbYCI99nv
+ v47AAPiEU7Y8fDMek6tHu2ZSvRWWdOs/zUaTchBCYvEOgWtlAaX6tY0VFtVT8ymsGZ2E
+ QKOQ==
+X-Gm-Message-State: APuU4Z/S6QV/YH1L2tX/l+X7GS71rLat2eA5LXYUQyov4bG8KPNDBgwR
+ AmszJ11MeAkaJ5s6U+bOiuNthlrhrQTXyzd9TlFia4KeZjQt5B4SzlQF6Zd98EspkUy6Xe2lKKW
+ AhANHYjk=
+X-Gm-Gg: AYBFou0F5mv3Wl5fbWP05cO+KUyjZrclyqQsynOvqCyXlPJk96ZXpTb6Lh4lOO0/BL1
+ ffnZuzO/Ntu2wQ+qwrAnOd9kYw3mdH9u2KYMQrJI3aa2TEEQHeZdgaKxrHMJC61XPJnZjtXsC30
+ AxlXSCmy1q0oLLawcHBbnqia097xJWkD9kFZDG98z/pixJdU+xtmchK7GB65xPQFAXF/fxWOdZY
+ +U51aKux3AyrlMjo2w+mdbtdmpR1tIZGtAp7aFPY3NPaGCoKCR9N84kf1oIWwbLqwBeTtzlJj0r
+ 7T7tkNxd0vJiEkYoyZkWSq1z51eZiuiQCqPNSkwwS/zoXFoQnMZcJB5qanO76dMj3ySQHz5KpEW
+ jE4Flqwq4IJLxfrmiCmgg2uVhng0uhf6g5+DUVOs4O5njrfBrGOjiNo5/NgOkIx3iq00r6tGlJq
+ bH34neLiEz/LT26nePLWZ+x9B12U0A7V4gyFTm8TEpMYtxaf231mH5Ebhj9HaIm5ZF5gxCbVX1W
+ FGQcNXGm9tvmYW7tWJrP+2pMKskfuvvD1exhlrL3mRb3nv5HdBc2CMR9Mf8HAhsvNr1H51Ez7h8
+ MAqgI24VWgv2LN8Ttq9A5/Jmhji/UKpB6vdI+t+pTgEi74VBa8euALH4/fWuup1UAwWnRitti2C
+ a/7iV6OV5aSqy6/iJxnCSkvra6h8UUQ5yCg==
+X-Received: by 2002:a17:907:a785:b0:c46:ca3a:10d5 with SMTP id
+ a640c23a62f3a-c4ca7ae14cdmr867954766b.45.1793626597632; 
+ Mon, 02 Nov 2026 05:36:37 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d3e9sm22556760f8f.6.2026.11.02.05.36.24
+ ffacd0b85a97d-48e71a4d3e9sm22556760f8f.6.2026.11.02.05.36.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Nov 2026 05:36:25 -0800 (PST)
+ Mon, 02 Nov 2026 05:36:36 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 32/47] target/arm/kvm: Introduce
- kvm_arm_vcpu_prepare_init_features helper
-Date: Mon,  2 Nov 2026 13:35:32 +0000
-Message-ID: <20261102133547.1375701-33-peter.maydell@linaro.org>
+Subject: [PULL 43/47] hw/intc/arm_gicv5: Pass cpuidx rather than iaffid in
+ gicv5_get_hppi()
+Date: Mon,  2 Nov 2026 13:35:43 +0000
+Message-ID: <20261102133547.1375701-44-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261102133547.1375701-1-peter.maydell@linaro.org>
 References: <20261102133547.1375701-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,101 +109,70 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Eric Auger <eric.auger@redhat.com>
+Now the CPU interface knows its own cpuidx, we can pass that to
+gicv5_get_hppi() and avoid the IAFFID->cpuidx lookup in the IRS.
 
-Factorize the code that initializes the kvm init features from the
-cpu settings in a helper. Use it in kvm_arch_init_vcpu(). Soon it will
-be used by another function.
-
-The only change in the code relates to the check of kvm_state. The
-future caller won't have the VM created when calling the helper and
-for this caller it is OK ignoring PSCI version setting.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Gustavo Romero <gromero@redhat.com>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
-Reviewed-by: Mohammadfaiz Bawa <mbawa@redhat.com>
-Message-id: 20261030131406.461599-8-eric.auger@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/arm/kvm.c | 50 ++++++++++++++++++++++++++++--------------------
- 1 file changed, 29 insertions(+), 21 deletions(-)
+ include/hw/intc/arm_gicv5_stream.h | 4 ++--
+ hw/intc/arm_gicv5.c                | 5 ++---
+ target/arm/tcg/gicv5-cpuif.c       | 2 +-
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 86a4d2a6b1c..b4b20c5dc27 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2008,34 +2008,18 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
+diff --git a/include/hw/intc/arm_gicv5_stream.h b/include/hw/intc/arm_gicv5_stream.h
+index f45072d8c57..641f3d0f499 100644
+--- a/include/hw/intc/arm_gicv5_stream.h
++++ b/include/hw/intc/arm_gicv5_stream.h
+@@ -204,14 +204,14 @@ void gicv5_forward_interrupt(ARMCPU *cpu, GICv5Domain domain);
+  * gicv5_get_hppi
+  * @cs: GIC IRS to query
+  * @domain: interrupt domain to act on
+- * @iaffid: IAFFID of this CPU interface
++ * @cpuidx: IRS CPU index of this CPU interface
+  *
+  * Ask the IRS for the highest priority pending interrupt that it has
+  * for this CPU. This returns the equivalent of what in the stream
+  * protocol is the outstanding interrupt sent with a Forward packet.
+  */
+ GICv5PendingIrq gicv5_get_hppi(GICv5Common *cs, GICv5Domain domain,
+-                               uint32_t iaffid);
++                               uint32_t cpuidx);
+ 
+ /**
+  * gicv5_deactivate
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index d354ac6b992..5d0a50ab6aa 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -531,12 +531,11 @@ static void irs_recall_hppis(GICv5 *s, GICv5Domain domain)
  }
  
--int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
-+/* Determine init features for this CPU */
-+static void kvm_arm_vcpu_prepare_init_features(ARMCPU *cpu)
+ GICv5PendingIrq gicv5_get_hppi(GICv5Common *cs, GICv5Domain domain,
+-                               uint32_t iaffid)
++                               uint32_t cpuidx)
  {
--    int ret;
--    uint64_t mpidr;
--    ARMCPU *cpu = ARM_CPU(cs);
-+    CPUState *cs = CPU(cpu);
-     CPUARMState *env = &cpu->env;
--    uint64_t psciver;
+     GICv5 *s = ARM_GICV5(cs);
+-    int cpuidx = irs_cpuidx_from_iaffid(cs, iaffid);
  
--    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
--        error_setg(errp, "KVM is not supported for this guest CPU type");
--        return -EINVAL;
--    }
--
--    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A53 ||
--        cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A57) {
--        warn_report_once("Using the cortex-a53 and cortex-a57 CPU types "
--                         "with KVM is deprecated. Use the max or host CPU "
--                         "types instead.");
--    }
--
--    qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
--
--    /* Determine init features for this CPU */
-     memset(cpu->kvm_init_features, 0, sizeof(cpu->kvm_init_features));
-+
-     if (cs->start_powered_off) {
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_POWER_OFF;
-     }
--    if (cpu->psci_version != QEMU_PSCI_VERSION_0_1 &&
-+    if (cpu->psci_version != QEMU_PSCI_VERSION_0_1 && cs->kvm_state &&
-         kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
-         /*
-          * Versions >= v0.2 are backward compatible with v0.2
-@@ -2059,6 +2043,30 @@ int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
-     if (cpu->has_el2 && kvm_arm_el2_supported()) {
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
-     }
-+}
-+
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
-+{
-+    int ret;
-+    uint64_t mpidr;
-+    ARMCPU *cpu = ARM_CPU(cs);
-+    uint64_t psciver;
-+
-+    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
-+        error_setg(errp, "KVM is not supported for this guest CPU type");
-+        return -EINVAL;
-+    }
-+
-+    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A53 ||
-+        cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A57) {
-+        warn_report_once("Using the cortex-a53 and cortex-a57 CPU types "
-+                         "with KVM is deprecated. Use the max or host CPU "
-+                         "types instead.");
-+    }
-+
-+    qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
-+
-+    kvm_arm_vcpu_prepare_init_features(cpu);
+-    assert(cpuidx >= 0);
++    assert(cpuidx < cs->num_cpus);
+     return s->hppi[domain][cpuidx];
+ }
  
-     /* Do KVM_ARM_VCPU_INIT ioctl */
-     ret = kvm_arm_vcpu_init(cpu);
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index 74c456f60c6..46039fe4a4c 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -147,7 +147,7 @@ static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
+         return GICV5_PENDING_IRQ_NONE;
+     }
+ 
+-    irs_hppi = gicv5_get_hppi(gic, domain, env->gicv5.iaffid);
++    irs_hppi = gicv5_get_hppi(gic, domain, env->gicv5.cpuidx);
+ 
+     /*
+      * If the best PPI and the best interrupt from the IRS have the
 -- 
 2.43.0
 
