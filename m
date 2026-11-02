@@ -1,67 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34701606C3D6
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D1D606C545
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=I9sUhndj
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=fSFFAkuW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNtDe-0003Qp-KW; Mon, 02 Nov 2026 09:41:06 -0500
+	id 1xNtDc-0003QX-Qf; Mon, 02 Nov 2026 09:41:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD8-0003Cg-KT
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD9-0003Cq-6f
  for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD4-0008Qr-IK
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:33 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD5-0008Ro-Us
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793630429;
+ s=mimecast20190719; t=1793630431;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6JEwzPFuhB5b4vJDRyOhOxziu9bh78D5MMKrJXO2rdI=;
- b=I9sUhndjNf0Z5jAekcvfQMDmYO8EBfKkPpQ1TKwLp8hHDG79/T5eLJ+yPSa13QmQrkgAXS
- JZ8NuNw1v6wFIGGOVi/AR7zZc3p2NBYMWr0TYhCiqqdflR2HuIs+5cYc2hDmezXc3Rtx2N
- SRhSgOyaseAx8LryTRDMmXKE2M22dkY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1s/mvrx1q0S5I50XUQhf0u/EhOrFqP6tNTATwJHH3RU=;
+ b=fSFFAkuWk7ayeDRivYv85i50n+5rum9v3Zw2pbBanWPZYSSXBed5Z6afA13w7ImF3Qwta0
+ loawIdUNLsNjBZ6Av9TDfMvGZdpgzA9CWuyBxdBHJ2Rg5+Y/uORKqsYvZbSkCfkI1v1I/D
+ 0JxXs+cVB9ks5hjaQq7r1Lgd65wIL0g=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-195-dmqP1cbJP9qHI_svq6HgiA-1; Mon,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-zMetqqBTMSGu-zEoY-TseA-1; Mon,
  02 Nov 2026 09:40:28 -0500
-X-MC-Unique: dmqP1cbJP9qHI_svq6HgiA-1
-X-Mimecast-MFC-AGG-ID: dmqP1cbJP9qHI_svq6HgiA_1793630427
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+X-MC-Unique: zMetqqBTMSGu-zEoY-TseA-1
+X-Mimecast-MFC-AGG-ID: zMetqqBTMSGu-zEoY-TseA_1793630427
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66DDB195D00D; Mon,  2 Nov 2026 14:40:27 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B78D1954102; Mon,  2 Nov 2026 14:40:27 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2720018004D2; Mon,  2 Nov 2026 14:40:27 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF1AA1800677; Mon,  2 Nov 2026 14:40:26 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 32FBE21E6895; Mon, 02 Nov 2026 15:40:19 +0100 (CET)
+ id 2E9C421E6894; Mon, 02 Nov 2026 15:40:19 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 17/74] qapi: print a message before aborting for -compat
- violations
-Date: Mon,  2 Nov 2026 15:39:21 +0100
-Message-ID: <20261102144018.3212223-18-armbru@redhat.com>
+Subject: [PULL 16/74] qemu-options: document -compat insecure-input parameter
+Date: Mon,  2 Nov 2026 15:39:20 +0100
+Message-ID: <20261102144018.3212223-17-armbru@redhat.com>
 In-Reply-To: <20261102144018.3212223-1-armbru@redhat.com>
 References: <20261102144018.3212223-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
@@ -92,40 +91,61 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-When using the 'crash' policy with -compat options, QEMU will
-abort() on a policy violation. All the user sees is a core
-dump though and while the stack trace will ultimately show
-what the violation was, it can be hard to reverse engineer
-the cause when variables are optimized out. If the crash is
-within a CI system, it can be even harder to determine what
-the cause was as a core dump may not be available.
-
-Printing a message when crashing is easier to diagnose when
-limited context is available.
+This adds documentation for the previously added 'insecure-input'
+parameter to -compat, which controls policy for insecure
+configuration requests.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20261030141713.2841710-9-berrange@redhat.com>
+Message-ID: <20261030141713.2841710-8-berrange@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
+[Doc text typo fixed]
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/qapi-util.c | 3 +++
- 1 file changed, 3 insertions(+)
+ qemu-options.hx | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/qapi/qapi-util.c b/qapi/qapi-util.c
-index 29d01653e7..7067b4ddf6 100644
---- a/qapi/qapi-util.c
-+++ b/qapi/qapi-util.c
-@@ -38,6 +38,9 @@ static bool compat_policy_input_ok1(CompatPolicyInput policy,
-                   adjective, kind, name);
-         return false;
-     case COMPAT_POLICY_INPUT_CRASH:
-+        error_report("%s %s %s disabled by policy, aborting",
-+                     adjective, kind, name);
-+        /* fallthrough */
-     default:
-         abort();
-     }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 854341e7a0..5fe9d73eaa 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4696,7 +4696,9 @@ DEF("compat", HAS_ARG, QEMU_OPTION_compat,
+     "-compat [deprecated-input=accept|reject|crash|warn][,deprecated-output=accept|hide]\n"
+     "                Policy for handling deprecated management interfaces\n"
+     "-compat [unstable-input=accept|reject|crash|warn][,unstable-output=accept|hide]\n"
+-    "                Policy for handling unstable management interfaces\n",
++    "                Policy for handling unstable management interfaces\n"
++    "-compat [insecure-input=accept|reject|crash|warn]\n"
++    "                Policy for handling insecure configuration requests\n",
+     QEMU_ARCH_ALL)
+ SRST
+ ``-compat [deprecated-input=<input-policy>][,deprecated-output=<output-policy>]``
+@@ -4736,6 +4738,25 @@ SRST
+         Suppress unstable command results and events
+ 
+     Limitation: covers only syntactic aspects of QMP.
++
++``-compat [insecure-input=<input-policy>]``
++    Set policy for handling insecure configuration requests:
++
++    ``insecure-input=accept`` (default)
++        Accept insecure configurations requests silently
++    ``insecure-input=warn``
++        Accept insecure configuration requests with repeated warnings
++	on stderr
++    ``insecure-input=reject``
++        Reject insecure configuration requests
++    ``insecure-input=crash``
++        Crash on insecure configuration requests
++
++    Limitation: an insecure configuration is one where QEMU does
++    not provide a security boundary to protect against malicious
++    usage / untrusted data. Covers only user creatable QOM types
++    for devices, machine types and accelerators. Implicitly created
++    QOM types and parent types are not checked at this time.
+ ERST
+ 
+ DEF("fw_cfg", HAS_ARG, QEMU_OPTION_fwcfg,
 -- 
 2.55.0
 
