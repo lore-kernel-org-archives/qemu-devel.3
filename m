@@ -1,65 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC0D606AB95
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8768A606AB8D
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gj1uq+VH
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Rj8sa+pZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNtDM-0003DS-Sc; Mon, 02 Nov 2026 09:40:53 -0500
+	id 1xNtFA-00061u-7d; Mon, 02 Nov 2026 09:42:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD0-00034E-Ch
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:26 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDM-0003Ho-CP
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtCy-0008OO-TJ
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:26 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDB-0008WG-M5
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793630423;
+ s=mimecast20190719; t=1793630436;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0DdFKHqe5GUihwYRJEAX0e5YrBigo3dCGxPlsV2eZsk=;
- b=gj1uq+VHKOSOV2sHy8uI+ROVuP/ovIvm7uvj5oF/QOfkr/1NpbllbFNqsnCVuNfbQ2xuL+
- OMMZ+maNse9fA6c5ZhIYpMc033z+hkLP6DqGvJGG6m3ptMexMEQQEI74OlwUoV9Q1CWOug
- Vc2EW9jOGY2Z8AdzZcaNJkdxB4UiNJY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Q2Esz/MEkk0GrEmq3Kukq6w++DRn/e542UjS+tX639c=;
+ b=Rj8sa+pZnIWyAaa9A+YOd1rQu0lP9nO+ezUfW65Nn88I63Vo40UUsv68zpcJ6PhG2kT8FP
+ gcRuJHAWku/fM5TTKwkuD7fu4ArFkScWKrGUgyPnvd4BYmQpDX8HIwjTmss4m6Q1aWcKk1
+ NvJ5WS5CLf4gWAfpzUfLz1a5q1X89X4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-303-K7kOrDW7MVKAFeb5Uk5_2w-1; Mon,
- 02 Nov 2026 09:40:22 -0500
-X-MC-Unique: K7kOrDW7MVKAFeb5Uk5_2w-1
-X-Mimecast-MFC-AGG-ID: K7kOrDW7MVKAFeb5Uk5_2w_1793630421
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-9HJjKY3gNP2tbcJvIQqkgg-1; Mon,
+ 02 Nov 2026 09:40:33 -0500
+X-MC-Unique: 9HJjKY3gNP2tbcJvIQqkgg-1
+X-Mimecast-MFC-AGG-ID: 9HJjKY3gNP2tbcJvIQqkgg_1793630432
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A3004180AC6C; Mon,  2 Nov 2026 14:40:21 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A8BF2180A8FC; Mon,  2 Nov 2026 14:40:32 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 55675195604B; Mon,  2 Nov 2026 14:40:21 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6BDF1410; Mon,  2 Nov 2026 14:40:32 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EA88521E6882; Mon, 02 Nov 2026 15:40:18 +0100 (CET)
+ id DBA4421E66BB; Mon, 02 Nov 2026 15:40:19 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL 03/74] qga/qapi-schema: Deemphasize numeric @whence in
- guest-file-seek
-Date: Mon,  2 Nov 2026 15:39:07 +0100
-Message-ID: <20261102144018.3212223-4-armbru@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 56/74] i386/x86: convert SgxEPCList property to QAPI-aware
+ registration
+Date: Mon,  2 Nov 2026 15:40:00 +0100
+Message-ID: <20261102144018.3212223-57-armbru@redhat.com>
 In-Reply-To: <20261102144018.3212223-1-armbru@redhat.com>
 References: <20261102144018.3212223-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -87,47 +88,38 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-guest-file-seek accepts both symbolic and numeric @whence values, but
-the former is documented as "preferred interface".  Remove or replace
-mentions of numeric values by symbolic ones.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Pass appropriate QAPITypeInfo to object_class_property_add().
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260923070351.855246-1-armbru@redhat.com>
-Reviewed-by: John Snow <jsnow@redhat.com>
-[Straightforward conflict with commit ae42905b2a (qapi: convert simple
-intros for qga/qapi-schema.json) resolved]
+Message-ID: <20261101201717.3911097-40-armbru@redhat.com>
 ---
- qga/qapi-schema.json | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/i386/x86.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index a6cda5eae1..de42dfe77d 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -327,11 +327,11 @@
- # @QGASeek:
- #     Symbolic names for use in `guest-file-seek`
- #
--# @set: Set to the specified offset (same effect as 'whence':0)
-+# @set: Set to the specified offset
- #
--# @cur: Add offset to the current location (same effect as 'whence':1)
-+# @cur: Add offset to the current location
- #
--# @end: Add offset to the end of the file (same effect as 'whence':2)
-+# @end: Add offset to the end of the file
- #
- # Since: 2.6
- ##
-@@ -356,7 +356,7 @@
- # @guest-file-seek:
- #     Seek to a position in the file, as with fseek(), and return the
- #     current file position afterward.  Also encapsulates ftell()'s
--#     functionality, with offset=0 and whence=1.
-+#     functionality, with offset=0 and whence=cur.
- #
- # @handle: filehandle returned by `guest-file-open`
- #
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index b490c4e715..4e5a7cf270 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -25,6 +25,7 @@
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-type-infos-common.h"
++#include "qapi/qapi-type-infos-machine.h"
+ #include "qapi/qapi-visit-machine.h"
+ #include "qapi/visitor.h"
+ #include "system/qtest.h"
+@@ -423,7 +424,7 @@ static void x86_machine_class_init(ObjectClass *oc, const void *data)
+     object_class_property_set_description(oc, X86_MACHINE_BUS_LOCK_RATELIMIT,
+             "Set the ratelimit for the bus locks acquired in VMs");
+ 
+-    object_class_property_add(oc, "sgx-epc", "SgxEPC", NULL,
++    object_class_property_add(oc, "sgx-epc", "SgxEPC", &SgxEPCList_type_info,
+                               machine_get_sgx_epc, machine_set_sgx_epc,
+                               NULL, NULL);
+     object_class_property_set_description(oc, "sgx-epc",
 -- 
 2.55.0
 
