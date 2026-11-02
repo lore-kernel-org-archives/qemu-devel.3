@@ -1,116 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8195F606A327
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 03:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F427606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 04:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Iun37jPR
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zjCNPG9E
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNj9n-0003LS-1Y; Sun, 01 Nov 2026 22:56:28 -0500
+	id 1xNjno-0002VP-8O; Sun, 01 Nov 2026 23:37:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xNj9b-00036K-RH; Sun, 01 Nov 2026 22:56:17 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xNj9X-0003Qo-Hp; Sun, 01 Nov 2026 22:56:14 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A20iuFq4055105; Mon, 2 Nov 2026 03:56:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=PDIaCI+ux1OsFiBWS
- oTvDqyTyCliISuTpjpNh9a8VUQ=; b=Iun37jPRNEXqNpaJEDunKIqYyrwSHYX0E
- tChbbW90iq4KyiiD0mTOM9VL0itW00FBXbGWAbOMLIMPulm7q8cvScBRe/SQZnRe
- tkAiyPQ6F+Wp/DKKEnjUat1wg/7T8gxh20JkZKMkFoL02wCw4nKmbqigaIJm6WSh
- I6arJRoVpw5ArtvLXGFg8/MiyDnY4hg8VYtMzUFa6Ea+uqOwFiDGKP3tPzBfGXze
- oeakmneIxO8iTAnCyrK87XBh6+6SX00bcRP6ivz1RTOsmF08UyrpNTb0scii/Tkr
- qqA0vEtPf15lwcS7nqvhn3BEMQ+ISVWusJBv8mRFCskjsIu6klYrQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn80seh94-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 02 Nov 2026 03:56:03 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A20KBkh112103; Mon, 2 Nov 2026 03:56:02 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hntnpv6h4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Nov 2026 03:56:02 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A23u2Nm31457882
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 2 Nov 2026 03:56:02 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E876758052;
- Mon,  2 Nov 2026 03:56:01 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EA39A58056;
- Mon,  2 Nov 2026 03:55:54 +0000 (GMT)
-Received: from li-bd0dea4c-2912-11b2-a85c-e84940f94d2e.ibmuc.com (unknown
- [9.43.104.91]) by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  2 Nov 2026 03:55:54 +0000 (GMT)
-From: uverma@linux.ibm.com
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, jishnuvw@linux.ibm.com, harshpb@linux.ibm.com,
- amachhiw@linux.ibm.com, jsnow@redhat.com, farosas@suse.de,
- lvivier@redhat.com, pbonzini@redhat.com, odaki@rsg.ci.i.u-tokyo.ac.jp,
- aleksandr.mikhalitsyn@futurfusion.io,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Utkarsh Verma <uverma@linux.ibm.com>
-Subject: [PATCH v7 09/10] qtest/libqos/pci: Fix qpci_msix_enable sharing bar0
-Date: Mon,  2 Nov 2026 09:23:05 +0530
-Message-ID: <20261102035306.2291147-10-uverma@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261102035306.2291147-1-uverma@linux.ibm.com>
-References: <20261102035306.2291147-1-uverma@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1xNjnm-0002VE-V8
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 23:37:46 -0500
+Received: from mail-dy1-x1331.google.com ([2607:f8b0:4864:20::1331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1xNjnl-0001li-F6
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 23:37:46 -0500
+Received: by mail-dy1-x1331.google.com with SMTP id
+ 5a478bee46e88-369f33df08eso5246759eec.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 20:37:44 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793594263; cv=none;
+ d=google.com; s=arc-20260327;
+ b=HOP5R0YGrcLbJCtGZccvmOpY9bzlM0NoTUvTLFAuKuYhg6vipUrFQ55ePTb5E0CPbu
+ i4jbdk7C4SdU7lo7NiqGYv2ZnQ3ixYFN2Rj7dKHfTcJ87HV7DXSpaj/JhJuUgj4swbZd
+ aWUFwyC70UsNwUflPXzUMKMsS4CLWqHTJpYwkr/g7Z02iV8sTR3kUfpJRnQkDt6QjIZY
+ UJm5e1tFVZ+weTmgM6tW/XFohg5FfLUMzMhghXAAoY+WCAXNLOSRaNSAAqs3+TawXsNM
+ WvlH9A+tv+med+Zn7iUX7funtQCcTeWK0d8sK//vKNZryeU7vcFXQECKQUYJs0HU1nNE
+ r7lw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=d9xhA7mhp596/P3Akjgkw9ezQTZPw3FEjGMGcRwbmFA=;
+ fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
+ b=Kjot5/ziY/Jh1WNfXZcPuAnO4kagNtKxTYYXDIGP712/++PEW7uBOek51Ig4zGNgVS
+ pbhLvAi95J+IzBa9ADLi7Nr76nGL3bRrPf8M4J2KEPED85L8XirRgQctRMBoJB2lrWM8
+ E1n9oqOzB4oBi/wFRc9d+gX8l8xhJvxBgfM3gbN248nqr1dDoGwE43Obqr9cxlNNIGL9
+ dggAgNYjOhsebvRFr+8So5CsvRfGavIW7q1KDFx2/UcMdzPBR6lBTOiYBdtD9sEP8pZ/
+ LJ+W1XBt2sxMo6Rru/TpszahRo9k3AMaDDGqeoLbtOI1M2IfQMheMbyouLH6QCFzhF4y
+ Ib7w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1793594263; x=1794199063; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=d9xhA7mhp596/P3Akjgkw9ezQTZPw3FEjGMGcRwbmFA=;
+ b=zjCNPG9Ez3A+ZHzAyppYX1js3BhrO9quO2ZqsD8uIjUXY3KmFV2kUw6YIIC3f5atpm
+ EFHnuqE8MQ+WZUOF3ah2oWJc3qBvJ1n87WOcM1GVJ3yQWtQqcC2g/EwhqwE5pO09GI/E
+ 8aXtKLKCiXHQTYNAh/e+4u8YS8eGz+XaCO7YCVV8J3ut/ZjTCWbj+DJLQmHlIfS21Lh+
+ v9K5nLRF/zclMYdx7r+cQ/xD+1CeVh4FLlalCdr+k7pnT6fWf705JsKi6i1NcoOW2/Es
+ eflgNVwgkaCHAYqS3NbLkzKd/f2O0Rp66oDN7CVwrc15plp3llRi5F2f5FMbjttik+xf
+ 8ObA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793594263; x=1794199063;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=d9xhA7mhp596/P3Akjgkw9ezQTZPw3FEjGMGcRwbmFA=;
+ b=kBqps+FgvE5NLIw7zC6LWmrYvwKc8v74bpVlkMQKXzRtNp35YilbCbFaylHEM7SCml
+ 9qov3/gqao6iBmsniz8Bw4ZtCW4HXjnaBjnu1hDGogTpvbX2IcYN0n2CGk8b3+CKgQmW
+ C4DiYA4DVoGzygwVAOihSKNdN/q9ci+q6gS1BdKDpIWh0VsYYHHLSUd9UQEu4+eUqsI5
+ 9MZyP4PnQeme7+nogEcMeU8WEQt/bgddWegE6xEzbuxbbaxFVu8ZdXwqBs1OO42xwRJT
+ /N0nVB+jaAXqU7PWB64KYVL/Gut8TXHHZOCdY2UbeakUEmKYEoWtPP2doEN3VMU8TfiF
+ oYwQ==
+X-Gm-Message-State: APuU4Z8YlLKfMPojlUTtylEFcTBMihZyzy/b42Jgcu1KZEvwZe0mjfoK
+ ZvjlbNh/LILfIC4GH9yxwS2hzqNzcOWx5iLlseuGsfovQ5a6qyEX/vRx7wLDjkxMexPwPR3WgbC
+ QxVdFXqXlxw4LSsAQB6fgTl6hu9YC8bw=
+X-Gm-Gg: AYBFou0BVD6vYsRQNb2D2yZHGyM/swbo0h6pI6B5CNTm7XIlV5gXueDEGv2SRGbUJGz
+ 78dGuhRqNB5njv/nwSZvdHcTwwzF+Rf3mhrNvYrGEN0KeSNkpGsEHUH5Jv0SHBrQF8WCMzGBrrF
+ kevfsMj4vpicopwZ11Ya3qXrzMjkk1TmNi4l8Go6Vk5lw/jolPPPpaiypotDJmQ3wX9+2K6iNmP
+ mzAeV44Og2KIzrxMIlCMEhL8GJsozhHaDw/AJTBBmBT4Y6c2CZhqqvvC1DK69HDk/QS9KUxbgKf
+ m3xwl9C3f0OF0Fh2vDw2jdcPlSlqA8cJB3dR0Ug0XI0zFXBpSPEzQzHiGA7RMSC2Mixp6rDfRsB
+ cDwW3gaNy216HfXNUHjc/CluIlxEdmYHTlXPXRx6oxhv9ybLDsgPEHiNjDdfp4u3jKTCYlOtGfy
+ 6ULql9PL1SUTpwzcg=
+X-Received: by 2002:a05:7300:e9d3:20b0:369:fe81:a575 with SMTP id
+ 5a478bee46e88-36a4243ab94mr16363989eec.35.1793594263225; Sun, 01 Nov 2026
+ 20:37:43 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: zloJGkYjgdbpBNJWx6yqLoeZ3G_rv1DN
-X-Proofpoint-ORIG-GUID: l7sVGp8Yn1i7BeqTaRlIXBTyaazMiFB4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAyMDAxNCBTYWx0ZWRfXzhkcPCT0aawg
- BZnhI2u7g+/4+7daFm7h5gWIVLz240cg+gv3b2LMpR/sAl1HYhMlubV3zqJepVlHhBCNpAaChEY
- l2VwqYbzlvQ6gKor63abL1SL+XLMMp3inBMNM3HdOGqA3sToTfTHi4eD9kD1s0Nr3Ux2cAQHAUW
- yUYGL7t9xHqYm9b5d/VaBsc6KSNPvX4zmTQ/O7VbLiwTYsnZNEqAQYqeCeHVP+STZ8CtKzvX0RZ
- HCJlpXDgMx3D1nqyVfiyxiY4ef00tf3dD7b2hz+PVP6u1pi7NUPpdzCruPAt3DvNv8urtDYqSea
- R4yLs1RIloKX9K9KLw2hFa3ZFlj0M6eFMlaBhjWLzAeNqeUkm4YMbw5kCBzKxel1EFynNax3BJo
- BAPdeDIJo1ybgnucCK/ORl3mml2r2Vragn9rBJ97NNJG7pR2J9gW+TagTVEqVsrT5OT5246lXi0
- JbN7GbNj0aTl5Ycj7qg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAyMDAxNCBTYWx0ZWRfX7iqazg/zoTAP
- FkugUBAbCIsC/W7tIaUXFOfI7ws4g09+ZQdkbkgx/ul5dL7+2sIPSxbGjYtopEAifSdDoLjxxjG
- aRek6UBVWdkco39Vpnyu9Gm0+JnAqSs=
-X-Authority-Analysis: v=2.4 cv=FIqOVOos c=1 sm=1 tr=0 ts=6ae809d4 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=pGLkceISAAAA:8 a=20KFwNOVAAAA:8 a=z4glEzOvAAAA:8
- a=VnNF1IyMAAAA:8 a=tR4rV30ZD3m4PndClJ0A:9 a=92dS5hN0c3Q7EetK7xW5:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-02_01,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
- bulkscore=0 suspectscore=0 clxscore=1011 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611020014
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+References: <20261031082849.1306244-1-pbonzini@redhat.com>
+ <CAGscdFu8E6q6CObDiMbxje1UOZpnO4CiQwFmABSgv3VxGhHqqA@mail.gmail.com>
+In-Reply-To: <CAGscdFu8E6q6CObDiMbxje1UOZpnO4CiQwFmABSgv3VxGhHqqA@mail.gmail.com>
+From: Andrey Polivoda <apolivodaa433@gmail.com>
+Date: Mon, 2 Nov 2026 14:37:31 +1000
+X-Gm-Features: AclHuK-VhBNvTpxxk8462POck0hFBZGIcVv2QW42LS3RNtnNcUZBktHwMOAMFak
+Message-ID: <CAGscdFv4KLOcYgd-hY6wLZz=WEF=jTQcFibgU6nw7exxDShWSA@mail.gmail.com>
+Subject: Re: [PATCH] target/i386/tcg: reject VEX.NP for MMX instructions
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1331;
+ envelope-from=apolivodaa433@gmail.com; helo=mail-dy1-x1331.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,121 +113,12 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Nicholas Piggin <npiggin@gmail.com>
-
-Devices where the MSI-X addresses are shared with other MMIO on BAR0
-can not use msi_enable because it unmaps and remaps BAR0, which
-interferes with device MMIO mappings. xhci-nec is one such device we
-would like to test with msix.
-
-Use the BAR iomap tracking structure introduced in the previous change
-to have qpci_misx_enable() use existing iomaps if msix bars are
-already mapped.
-
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Jishnu Warrier <jishnuvw@linux.ibm.com>
-Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
----
- tests/qtest/libqos/pci.c | 40 ++++++++++++++++++++++++++++++++++------
- tests/qtest/libqos/pci.h |  1 +
- 2 files changed, 35 insertions(+), 6 deletions(-)
-
-diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-index 365fde1fb9..41f9673022 100644
---- a/tests/qtest/libqos/pci.c
-+++ b/tests/qtest/libqos/pci.c
-@@ -274,15 +274,21 @@ void qpci_msix_enable(QPCIDevice *dev)
- 
-     table = qpci_config_readl(dev, addr + PCI_MSIX_TABLE);
-     bir_table = table & PCI_MSIX_FLAGS_BIRMASK;
--    dev->msix_table_bar = qpci_iomap(dev, bir_table, NULL);
-+    if (dev->bars_mapped[bir_table]) {
-+        dev->msix_table_bar = dev->bars[bir_table];
-+    } else {
-+        dev->msix_table_bar_iomap = true;
-+        dev->msix_table_bar = qpci_iomap(dev, bir_table, NULL);
-+    }
-     dev->msix_table_off = table & ~PCI_MSIX_FLAGS_BIRMASK;
- 
-     table = qpci_config_readl(dev, addr + PCI_MSIX_PBA);
-     bir_pba = table & PCI_MSIX_FLAGS_BIRMASK;
--    if (bir_pba != bir_table) {
--        dev->msix_pba_bar = qpci_iomap(dev, bir_pba, NULL);
-+    if (dev->bars_mapped[bir_pba]) {
-+        dev->msix_pba_bar = dev->bars[bir_pba];
-     } else {
--        dev->msix_pba_bar = dev->msix_table_bar;
-+        dev->msix_pba_bar_iomap = true;
-+        dev->msix_pba_bar = qpci_iomap(dev, bir_pba, NULL);
-     }
-     dev->msix_pba_off = table & ~PCI_MSIX_FLAGS_BIRMASK;
- 
-@@ -293,6 +299,7 @@ void qpci_msix_disable(QPCIDevice *dev)
- {
-     uint8_t addr;
-     uint16_t val;
-+    uint32_t table;
- 
-     g_assert(dev->msix_enabled);
-     addr = qpci_find_capability(dev, PCI_CAP_ID_MSIX, 0);
-@@ -301,10 +308,31 @@ void qpci_msix_disable(QPCIDevice *dev)
-     qpci_config_writew(dev, addr + PCI_MSIX_FLAGS,
-                                                 val & ~PCI_MSIX_FLAGS_ENABLE);
- 
--    if (dev->msix_pba_bar.addr != dev->msix_table_bar.addr) {
-+    if (dev->msix_pba_bar_iomap) {
-+        dev->msix_pba_bar_iomap = false;
-         qpci_iounmap(dev, dev->msix_pba_bar);
-+    } else {
-+        /*
-+         * If we had reused an existing iomap, ensure it is still mapped
-+         * otherwise it would be a bug if it were unmapped before msix is
-+         * disabled. A refcounting iomap implementation could avoid this
-+         * issue entirely, but let's wait until that's needed.
-+         */
-+        uint8_t bir_pba;
-+        table = qpci_config_readl(dev, addr + PCI_MSIX_PBA);
-+        bir_pba = table & PCI_MSIX_FLAGS_BIRMASK;
-+        g_assert(dev->bars_mapped[bir_pba]);
-+    }
-+
-+    if (dev->msix_table_bar_iomap) {
-+        dev->msix_table_bar_iomap = false;
-+        qpci_iounmap(dev, dev->msix_table_bar);
-+    } else {
-+        uint8_t bir_table;
-+        table = qpci_config_readl(dev, addr + PCI_MSIX_TABLE);
-+        bir_table = table & PCI_MSIX_FLAGS_BIRMASK;
-+        g_assert(dev->bars_mapped[bir_table]);
-     }
--    qpci_iounmap(dev, dev->msix_table_bar);
- 
-     dev->msix_enabled = 0;
-     dev->msix_table_off = 0;
-diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
-index 2f9555ae4e..2fcddd19a8 100644
---- a/tests/qtest/libqos/pci.h
-+++ b/tests/qtest/libqos/pci.h
-@@ -75,6 +75,7 @@ struct QPCIDevice
-     bool bars_mapped[QPCI_NUM_REGIONS];
-     QPCIBar bars[QPCI_NUM_REGIONS];
-     bool msix_enabled;
-+    bool msix_table_bar_iomap, msix_pba_bar_iomap;
-     QPCIBar msix_table_bar, msix_pba_bar;
-     uint64_t msix_table_off, msix_pba_off;
- };
--- 
-2.55.0
-
+Reviewed-by: Andrey Polivoda <apolivodaa433@gmail.com>
 
