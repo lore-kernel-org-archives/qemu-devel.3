@@ -1,61 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C609F606B0D6
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 16:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA410608360D
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 16:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=O2BE/Oaq
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ba4C4F+g
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNuva-0006RW-Np; Mon, 02 Nov 2026 11:30:34 -0500
+	id 1xNuvg-0006ZK-4F; Mon, 02 Nov 2026 11:30:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvV-0006ME-KA
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:29 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvc-0006UT-JE
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvS-0002Hg-H5
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:29 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvb-0002Jl-0n
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793637025;
+ s=mimecast20190719; t=1793637034;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+Yo8Hvb77133Kk1jaEY7ns+qlp58O3vRAeFfWtcz4eI=;
- b=O2BE/Oaq9DcGQdIFoKgt2mcu1WuTMbm6xlYMw6B8r3HRQ7UWpeKeBy/R36A89jmSvrySCG
- Xg6qnRDkTKSUT+Se36/DvgXmSlWWM40JhhjAfGye0Ep7a3gcgkQAF+Hh/6fOkinN0ll0NH
- stfUcYCiIYlVb2bUTsi8ytnkFV2P+6U=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=EGft5l89forK5BEe/UweOJcLrptF/K5bhxty+3xkJL0=;
+ b=ba4C4F+g1Rs/3R36iPmzO7keYx479Je6/wcO1W8EDu3IK7rIsXwjypJxYfyfnMhaE8o7cs
+ ZeOMlO84scA/8qdND41s9XWccC9eI/lEkGdKrsAsH+LRD4QoC5gr6tJCxa0BwvjsMFqpdX
+ cU3WEKgAQok+B9AH3OZA1YKpnsaLRQM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-312-u9SUBWCWMN6RZWViYOyr8A-1; Mon,
- 02 Nov 2026 11:30:23 -0500
-X-MC-Unique: u9SUBWCWMN6RZWViYOyr8A-1
-X-Mimecast-MFC-AGG-ID: u9SUBWCWMN6RZWViYOyr8A_1793637022
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-8596ZaW-MiKne-deNQUw_w-1; Mon,
+ 02 Nov 2026 11:30:30 -0500
+X-MC-Unique: 8596ZaW-MiKne-deNQUw_w-1
+X-Mimecast-MFC-AGG-ID: 8596ZaW-MiKne-deNQUw_w_1793637029
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F64A19560B1; Mon,  2 Nov 2026 16:30:22 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07A2119560AD; Mon,  2 Nov 2026 16:30:29 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.32.164])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DA22A1956087; Mon,  2 Nov 2026 16:30:20 +0000 (UTC)
+ id 9AC561956087; Mon,  2 Nov 2026 16:30:27 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 10/17] iotests: Add loop-accept-ro-dev test
-Date: Mon,  2 Nov 2026 17:29:48 +0100
-Message-ID: <20261102162955.268763-11-kwolf@redhat.com>
+Subject: [PULL 13/17] block: fix leak of block histogram data
+Date: Mon,  2 Nov 2026 17:29:51 +0100
+Message-ID: <20261102162955.268763-14-kwolf@redhat.com>
 In-Reply-To: <20261102162955.268763-1-kwolf@redhat.com>
 References: <20261102162955.268763-1-kwolf@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
@@ -86,138 +87,33 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a test for the accept-read-only-device option of host_device.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20261029164522.103918-3-kwolf@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+The block_acct_cleanup method failed to release memory associated
+with block histograms.
+
+Fixes: b741ae7417 (block/accounting: introduce latency histogram)
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20261030115118.2745896-1-berrange@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- tests/qemu-iotests/tests/loop-accept-ro-dev   | 88 +++++++++++++++++++
- .../qemu-iotests/tests/loop-accept-ro-dev.out | 19 ++++
- 2 files changed, 107 insertions(+)
- create mode 100755 tests/qemu-iotests/tests/loop-accept-ro-dev
- create mode 100644 tests/qemu-iotests/tests/loop-accept-ro-dev.out
+ block/accounting.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tests/qemu-iotests/tests/loop-accept-ro-dev b/tests/qemu-iotests/tests/loop-accept-ro-dev
-new file mode 100755
-index 00000000000..fe4ddf419e5
---- /dev/null
-+++ b/tests/qemu-iotests/tests/loop-accept-ro-dev
-@@ -0,0 +1,88 @@
-+#!/usr/bin/env bash
-+# group: quick
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Copyright Red Hat, Inc.
-+#
-+# Test the accept-read-only-device option on a loop device
+diff --git a/block/accounting.c b/block/accounting.c
+index 038af370170..d10c06de05e 100644
+--- a/block/accounting.c
++++ b/block/accounting.c
+@@ -80,6 +80,8 @@ bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
+ void block_acct_cleanup(BlockAcctStats *stats)
+ {
+     BlockAcctTimedStats *s, *next;
++    block_latency_histograms_clear(stats);
 +
-+seq="$(basename $0)"
-+echo "QA output created by $seq"
-+
-+status=1	# failure is the default!
-+
-+_cleanup() {
-+    if [ -n "$loopdev" ]; then
-+        sudo losetup --detach "$loopdev"
-+    fi
-+
-+    _cleanup_test_img
-+}
-+
-+trap "_cleanup; exit \$status" 0 1 2 3 15
-+
-+# get standard environment, filters and checks
-+cd ..
-+. ./common.rc
-+. ./common.filter
-+
-+_supported_fmt raw
-+_supported_proto file
-+_supported_os Linux
-+
-+do_run_qemu()
-+{
-+    echo Testing: "$@"
-+    $QEMU -nographic -qmp stdio -nodefaults "$@"
-+    echo
-+}
-+
-+run_qemu()
-+{
-+    printf '{"execute":"qmp_capabilities"}\n{"execute":"quit"}' |
-+    do_run_qemu "$@" 2>&1 | _filter_testdir | _filter_qemu | _filter_qmp |
-+        _filter_generated_node_ids | _filter_imgfmt |
-+        _filter_actual_image_size | _filter_img_info |
-+        sed -e "s#/dev/loop[0-9]\\+#LOOPDEV#g"
-+}
-+
-+if ! sudo -n losetup &>/dev/null; then
-+    _notrun "sudo losetup not available"
-+fi
-+
-+if ! command -v blockdev >/dev/null 2>&1; then
-+    _notrun "blockdev tool not available"
-+fi
-+
-+echo
-+echo "=== Start QEMU on a loop device after blockdev --setro ==="
-+echo
-+
-+_make_test_img -f $IMGFMT 1M
-+
-+loopdev=$(sudo losetup --find --show "$TEST_IMG")
-+if [ -z "$loopdev" ]; then
-+    _fail
-+fi
-+
-+sudo blockdev --setro "$loopdev"
-+sudo chmod a+rw "$loopdev"
-+
-+run_qemu \
-+    -blockdev host_device,node-name=disk,filename="$loopdev" \
-+    -device virtio-blk,drive=disk
-+
-+run_qemu \
-+    -blockdev host_device,node-name=disk,filename="$loopdev",accept-read-only-device=off \
-+    -device virtio-blk,drive=disk
-+
-+run_qemu \
-+    -blockdev host_device,node-name=disk,filename="$loopdev",accept-read-only-device=on \
-+    -device virtio-blk,drive=disk
-+
-+# success, all done
-+echo
-+echo '*** done'
-+rm -f $seq.full
-+status=0
-diff --git a/tests/qemu-iotests/tests/loop-accept-ro-dev.out b/tests/qemu-iotests/tests/loop-accept-ro-dev.out
-new file mode 100644
-index 00000000000..6b75f7fdd14
---- /dev/null
-+++ b/tests/qemu-iotests/tests/loop-accept-ro-dev.out
-@@ -0,0 +1,19 @@
-+QA output created by loop-accept-ro-dev
-+
-+=== Start QEMU on a loop device after blockdev --setro ===
-+
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576
-+Testing: -blockdev host_device,node-name=disk,filename=LOOPDEV -device virtio-blk,drive=disk
-+QEMU_PROG: -blockdev host_device,node-name=disk,filename=LOOPDEV: The device is not writable: Permission denied
-+
-+Testing: -blockdev host_device,node-name=disk,filename=LOOPDEV,accept-read-only-device=off -device virtio-blk,drive=disk
-+QEMU_PROG: -blockdev host_device,node-name=disk,filename=LOOPDEV,accept-read-only-device=off: The device is not writable: Permission denied
-+
-+Testing: -blockdev host_device,node-name=disk,filename=LOOPDEV,accept-read-only-device=on -device virtio-blk,drive=disk
-+QMP_VERSION
-+{"return": {}}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+
-+*** done
+     QSLIST_FOREACH_SAFE(s, &stats->intervals, entries, next) {
+         g_free(s);
+     }
 -- 
 2.56.0
 
