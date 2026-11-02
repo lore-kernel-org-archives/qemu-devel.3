@@ -1,86 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACAF606A32F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157B2606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=AC/Cypl+
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=x5qJtIMF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNsE5-0005Ed-EJ; Mon, 02 Nov 2026 08:37:32 -0500
+	id 1xNsDu-00052v-CD; Mon, 02 Nov 2026 08:37:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNsDE-0003QG-RB
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:38 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1xNsD7-0003KU-8A
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:32 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNsDC-0002Kf-ND
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:36 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4a2167bd087so25286825e9.3
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:36:34 -0800 (PST)
+ id 1xNsD5-0002JP-HA
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:28 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-48c4be28b82so3176872f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:36:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793626593; x=1794231393; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793626586; x=1794231386; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=iBiMuIp9n8up73RHu4vxqBSnWbGZ6MRGnHsIe4y3uJI=;
- b=AC/Cypl+I4xgbwPT43xCaDjEWPygn5aM4/C2NStHNhxrpSt6DWsOOI1/Fd/Qf6yuXU
- lMafP9OmjdF4B66QK8DW6Ise09oBxHoJTp/qcnbR4OX/CRxPHwDUtLxPnremVW1Qr3jC
- V3GMyckWi+nE70JubE5odMLw41nkaebOuuYx6cHF0BXkXrU0QiLVfEKGrWyLrM3pNAhD
- 4aqaWmZz65efvbvHPuADEI+de9Pq0BEsvrvr916yQHpCh/xc6IjBioersvrOLrH1dHko
- goGaRwVxACjW7XeFWCXsKYuSMc4qCAvd/inLPT2gOQMf4s1n4esCUPJWisuRy8w5UipO
- gMyA==
+ bh=c40oTYCHBPAU/0H7nxE4+WKzLNjvPCTvo3lBvrt5mww=;
+ b=x5qJtIMFa6UDJhFaJS4P02tfzAcOSEiiuHTsFUERpPna6rC5/Sh66dbh/tYlHIkml/
+ 8oVt9A+SUEeFkjWzNdVHWXTpJQA6nsu2xcSG0kKqPKXYrdPAVBKwqXK4DQ09hiHxbe27
+ v046VlfsK67zc1EelOtkU+Qe/LQdLN8WN0OWXOUsSV3z1r0X4+9yoh2CDzbkWd+Q4L6y
+ ATgy2Z4Otlj0mHP3EH+PPKBEdco0+F1WD6xjS9+UZ0Xe6ADlQiyCcBddX7YLPmBdCuhr
+ XlzAxr5xa6VW5w/Vy4UGOD9s8Y0Uwd6AhGAaSoniNTCpSFpcXrWskffOFWZ5olPtA3Uh
+ WbeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793626593; x=1794231393;
+ d=1e100.net; s=20260707; t=1793626586; x=1794231386;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=iBiMuIp9n8up73RHu4vxqBSnWbGZ6MRGnHsIe4y3uJI=;
- b=2AB0acpUYf+mQc/nuna8gyMGHtr52bzoy+Peh7Kr+OJEScLqSE12xHxvcOZDnWTIuO
- fIUdvt/7Guku40AfakDMyUy1XeIdac1GbWA+XJuOfOM0aXZK5PQPg2hUQ4xwKuerm+ED
- 3As/Q0DA/fGxmUS/8GVCqXo9EAfTUhh0tKoaWc6mEMRsfPQj6DcUE2/a6ibBp/ziApij
- NRkQaD6LN6n7f9PcqWTHNf1lvdq/A3ZoYc55rzhOq77jzvEkeJ2eGiWN/UisVveKzCkp
- qkb/OQSCkWbJBOywmBLN85bffimo8djqdcnDLyF5i7fdzYtXMd10wZE+QpTfLZ2Sgx7e
- IZ1Q==
-X-Gm-Message-State: AFq9FYL+X0+yTZ9dts7ymSPUGfP6dLfBtYydRpg9QRl0jaSA06BjHW7b
- PSBvyxOc4jZjl0Gajv8YrBkekGVYMZjW/eYDIU5k8BQA9zrzEeW5U98VcqEau0ajwbEILOk9wBm
- bNvImazM=
-X-Gm-Gg: AYBFou0peyBEMy2Q3GVitTj24mKiUmtKyHcFQB416i8KUv88nSrwtJn5SAEnBJn0eMn
- AUCCX5p8FchpwWnvrQRW62rPFhMInHRbRS/EYk5Wmsm1rofCyHExB8QRsbIqDLmUHJLg73Nejyi
- yzMvnP+Yd6j/sOiHFzetQ9j9ET2cOC1xt57APzmTVg0JmSz8mTk6xc5ETGAkncsQlida9Jtak5S
- +4wXnrYVCcxx2mHN6ztHcrWsHe4S6/jm+vKDxcKo7p0h+RuK/ZQFUYf1sDJD+8jNxhMfCB40lR+
- P6I0fHP1X3spe8Xjk3Q9UFKlUuV18laPzkvE0RQ7tymqiqRDXzDchUp9mgXfVu/dO4S2AL2uomB
- cKCKLfJWjT6FAqOGQdHBytNmA/yf2oim4A7JJf3mY5AnTgewj6Jo1DwAGfkDpxkcxUQWPLsG6ei
- gpGz9T7+KhJwyQVWaneDnSrGVYFDiP0ML80M7tu/USHradNYIFdYebV353Qg61jTRiqbr391407
- nbBzTcfVvyrSyLEQNqzd12N2aHU0OL4n/yK78fy1f2znG1t6KP1/JGM+IXljXcH8X3DOlDVjZO0
- S3fDIg5C7YMb0PXhhRCzYSGD1v65JyCW4uCRqq143nVmxD/prarhfBilBttU7pdk8HprdmaPJFN
- s5guN6fx9UJmDbMwxA45A6ek+YK6sJXjLew==
-X-Received: by 2002:a05:600c:8b55:b0:4a2:1655:87e2 with SMTP id
- 5b1f17b1804b1-4ac17b2b023mr247058325e9.19.1793626593220; 
- Mon, 02 Nov 2026 05:36:33 -0800 (PST)
+ bh=c40oTYCHBPAU/0H7nxE4+WKzLNjvPCTvo3lBvrt5mww=;
+ b=Pu0hIMYMbB32wNHdHx6G4CjKQJ95n81UZjnP382r3MYfLzz4SSu3LU90add62vaSZ7
+ qV/sgwSpKY0pGlYRk38It64BmWHMJY6oNSnl6G45KnCsKRHFsQlYnzTT4/DVC/5XjQ17
+ Borcsn2sL2VlEVvl+IrOQIDufPA+ZxsyNBnYMzUWjQIL9VCJ92/xp+9pKBjMZlrXoTXk
+ H/CW5B/J/vZyye0w++emaCDqGnzwHfee7vHGFiniHwS/mKkKKw+pZLC4zFRxC1UnuLWy
+ g9j/87n0ZidzUnRECc6f5mYpHuaUHV7N8Zp6sKIFpYCQN7UwWlzhKus/0SRUM6Kowynq
+ EXDw==
+X-Gm-Message-State: APuU4Z8CZ+KVlh7yKNjEog5QxkimQ0TqWwA9mgq5q0pkfJs4G3AxF1UG
+ IjhxGB9Hx0NaFIXnUQ0V003OBUig4FcaNTKFJ2SuyjcOG/bZ3+1QxnUpo1k5RQn0SWWrvnhxELg
+ B5R7j19s=
+X-Gm-Gg: AYBFou3BI228lph/AzwLGfd1zV5+Y7cBMsQ88SutK3ArL5zeL4l4HRaSyCUZlYOQBci
+ i4m/4jh259z+PT/C66qQuTZ2t33nORFrueW5zuF2QOcKRvM+fFJ7oludw9RIrQLiSygIHYgrs2s
+ zI0Z0PrmsRTBc1e6P5FlRuo4+tjyLqj4dUsUMTQs+znVRQI4Os4TtI/oGzmHkFtzA56v2fShSwU
+ 7JyyexfiMDcIHRYLV++zsIkkenneIqRuu9J0w63peeKV+IlPaoLArN4PwExsxXkgPA9+zHG6BCk
+ xbo4gn5Xfw4afQC8nDhBN5n/Ta6TCkFYo4U3QV4ZJzpyXXrseQaHF1ZlIMtcOpIPhW+8Fjdn6rg
+ LOnesNxUXyL6A/yu8856ViQL1qzz+ptQ1BjG6kAvgGF1hhUtY50T52Sv2gvWg+UopykY4dn8B8M
+ kbuO+1hThoz1YlZ+s8DBSaX8UhjTvRC0kmwG8IJNzTOTQWlES1jhi+S+kBGAuOyD9w9jPgN2ixE
+ tv2Rrs8o1M1T7u8ntrlfN2lzISlNqJYQKVil2MJ7VXS+mOiVrMCpb3J6lH8HpOQEPAzyuOIjLF6
+ 0HkaZ296RXtCbDVjzJ9OY+xD1SuzDflkstEBId3TctsD8d5CxVmgP4qNynrlG9kGWVzd6a7bSku
+ g8QUPrBHdn18CwW7OMTTeWEJRiV/7mnVDtg==
+X-Received: by 2002:a5d:6d02:0:b0:48e:5fde:8437 with SMTP id
+ ffacd0b85a97d-48e6e50e4f1mr19030339f8f.56.1793626585878; 
+ Mon, 02 Nov 2026 05:36:25 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d3e9sm22556760f8f.6.2026.11.02.05.36.32
+ ffacd0b85a97d-48e71a4d3e9sm22556760f8f.6.2026.11.02.05.36.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Nov 2026 05:36:32 -0800 (PST)
+ Mon, 02 Nov 2026 05:36:25 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 39/47] hw/intc/arm_gicv5: Ignore low bits in L1_ISTE.L2_ADDR
-Date: Mon,  2 Nov 2026 13:35:39 +0000
-Message-ID: <20261102133547.1375701-40-peter.maydell@linaro.org>
+Subject: [PULL 32/47] target/arm/kvm: Introduce
+ kvm_arm_vcpu_prepare_init_features helper
+Date: Mon,  2 Nov 2026 13:35:32 +0000
+Message-ID: <20261102133547.1375701-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261102133547.1375701-1-peter.maydell@linaro.org>
 References: <20261102133547.1375701-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,61 +107,101 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The GICv5 spec defines that an L2 IST is always aligned to its size,
-by stating that bits [N:0] of the address are 0 where
-    N = 11 + (2 * L2SZ)
+From: Eric Auger <eric.auger@redhat.com>
 
-We were missing this check, and only aligning by applying
-R_L1_ISTE_L2_ADDR_MASK, so we would only enforce 4K alignment even if
-the L2 IST was 16K or 64K.
+Factorize the code that initializes the kvm init features from the
+cpu settings in a helper. Use it in kvm_arch_init_vcpu(). Soon it will
+be used by another function.
 
-Add the missing masking of low bits.  We already needed to calculate
-the number of bits needed to index each byte in the L2 table, so add
-it to the GICv5ISTConfig to save having to re-calculate it later.
+The only change in the code relates to the check of kvm_state. The
+future caller won't have the VM created when calling the helper and
+for this caller it is OK ignoring PSCI version setting.
 
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Gustavo Romero <gromero@redhat.com>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Reviewed-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+Message-id: 20261030131406.461599-8-eric.auger@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/intc/arm_gicv5.h | 1 +
- hw/intc/arm_gicv5.c         | 6 ++++++
- 2 files changed, 7 insertions(+)
+ target/arm/kvm.c | 50 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 29 insertions(+), 21 deletions(-)
 
-diff --git a/include/hw/intc/arm_gicv5.h b/include/hw/intc/arm_gicv5.h
-index b8baf003ad6..d763a7939c7 100644
---- a/include/hw/intc/arm_gicv5.h
-+++ b/include/hw/intc/arm_gicv5.h
-@@ -23,6 +23,7 @@ typedef struct GICv5ISTConfig {
-     uint8_t id_bits; /* number of bits in an ID for this table */
-     uint8_t l2_idx_bits; /* number of ID bits that index into L2 table */
-     uint8_t istsz; /* L2 ISTE size in bytes */
-+    uint8_t l2bits; /* bits needed to index L2 table in bytes */
-     bool structure; /* true if using 2-level table */
-     bool valid; /* true if this table is valid and usable */
-     /* This caches IST information about pending LPIs */
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 3c50238634e..2b08f8feec2 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -595,6 +595,11 @@ static bool get_l2_iste_addr(GICv5Common *cs, const GICv5ISTConfig *cfg,
-             return false;
-         }
-         l2_base = l1_iste & R_L1_ISTE_L2_ADDR_MASK;
-+        /*
-+         * The effective base address of the L2 table is always
-+         * aligned to the size of the L2 table.
-+         */
-+        l2_base &= ~MAKE_64BIT_MASK(0, cfg->l2bits);
-         id = extract32(id, 0, cfg->l2_idx_bits);
-     } else {
-         /* 1-level table */
-@@ -1358,6 +1363,7 @@ static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
-         cfg->id_bits = id_bits;
-         cfg->istsz = 1 << istbits;
-         cfg->l2_idx_bits = l2_idx_bits;
-+        cfg->l2bits = l2bits;
-         cfg->structure = FIELD_EX64(cs->irs_ist_cfgr[domain],
-                                     IRS_IST_CFGR, STRUCTURE);
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 86a4d2a6b1c..b4b20c5dc27 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2008,34 +2008,18 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+     return 0;
+ }
  
+-int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
++/* Determine init features for this CPU */
++static void kvm_arm_vcpu_prepare_init_features(ARMCPU *cpu)
+ {
+-    int ret;
+-    uint64_t mpidr;
+-    ARMCPU *cpu = ARM_CPU(cs);
++    CPUState *cs = CPU(cpu);
+     CPUARMState *env = &cpu->env;
+-    uint64_t psciver;
+ 
+-    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
+-        error_setg(errp, "KVM is not supported for this guest CPU type");
+-        return -EINVAL;
+-    }
+-
+-    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A53 ||
+-        cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A57) {
+-        warn_report_once("Using the cortex-a53 and cortex-a57 CPU types "
+-                         "with KVM is deprecated. Use the max or host CPU "
+-                         "types instead.");
+-    }
+-
+-    qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
+-
+-    /* Determine init features for this CPU */
+     memset(cpu->kvm_init_features, 0, sizeof(cpu->kvm_init_features));
++
+     if (cs->start_powered_off) {
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_POWER_OFF;
+     }
+-    if (cpu->psci_version != QEMU_PSCI_VERSION_0_1 &&
++    if (cpu->psci_version != QEMU_PSCI_VERSION_0_1 && cs->kvm_state &&
+         kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
+         /*
+          * Versions >= v0.2 are backward compatible with v0.2
+@@ -2059,6 +2043,30 @@ int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
+     if (cpu->has_el2 && kvm_arm_el2_supported()) {
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
+     }
++}
++
++int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
++{
++    int ret;
++    uint64_t mpidr;
++    ARMCPU *cpu = ARM_CPU(cs);
++    uint64_t psciver;
++
++    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
++        error_setg(errp, "KVM is not supported for this guest CPU type");
++        return -EINVAL;
++    }
++
++    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A53 ||
++        cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A57) {
++        warn_report_once("Using the cortex-a53 and cortex-a57 CPU types "
++                         "with KVM is deprecated. Use the max or host CPU "
++                         "types instead.");
++    }
++
++    qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
++
++    kvm_arm_vcpu_prepare_init_features(cpu);
+ 
+     /* Do KVM_ARM_VCPU_INIT ioctl */
+     ret = kvm_arm_vcpu_init(cpu);
 -- 
 2.43.0
 
