@@ -1,64 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0168B606A324
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 11:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB48606A326
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 11:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=EVQBuiuM
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lTqS+XS0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNqVj-00060H-ET; Mon, 02 Nov 2026 06:47:35 -0500
+	id 1xNqVm-000653-7Z; Mon, 02 Nov 2026 06:47:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1xNqVh-0005oi-3n
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 06:47:33 -0500
+ id 1xNqVk-00062Q-Oa
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 06:47:36 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1xNqVe-0005JD-FC
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 06:47:32 -0500
+ id 1xNqVi-0005JV-JU
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 06:47:36 -0500
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A29EFZ82489493; Mon, 2 Nov 2026 11:47:04 GMT
+ 6A29E7cf2489446; Mon, 2 Nov 2026 11:47:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=2rRTHH
- hMe8j9L2G+uFn4MmUo2nuxMKfUus0v/LFNEts=; b=EVQBuiuMElZV6ROnOXdRBm
- JW7kg8ypSz4n+VWCT6oQJpZN/QkysSD49xUAFZtMF/l1EQ+CaXByCWiwANFoXzoW
- zHMHMMmZIT8PaigCyWSmnw015NpaNHidvDJWYlf5zfF4VFxc0wD/5+WuVXmAuVvg
- 8Y64AGPkz7NsVNYqRP2X3qqpEEMR/SxfipwmsuvHRQYKUukyANKGqpA66emubEBu
- NRnBlZVIrJmt6TnSYRKPgCi6hz/OD93BQi9TRqGCGG4B18ZtKgdIcmYZw/vQTTMT
- 5NtF9aINYcyrEqXnWgJN3IPPIfFCuF+KHBN4IME5erL3cQqbhbxdP5XXHIO3hpAQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=e3AOsx
+ ib4f26902mV8sgMHryscvYXhztlX7RhmrwaPw=; b=lTqS+XS09I+Ap4JD6CHZxG
+ ft26SgNqu7mgHJK7iydcTlG0JT/MWvgVeQQrYi3OR8g7GLEMZ2luEw3dZdnFaUZQ
+ vjW2+urO2tCPT0TRGmG4wPnlRdh3sblPHrCA5fhC6enLRwZ05g/97WejkyeJLm/B
+ Sx9KIFzVebLINDIyXuJJJG/tO3sxpDjsRreYpywWM5M5MLQWVUg7E5WleYvOXydL
+ iM/Jzz7xp2xKOzX2LdY1Zj+P9thGf4NvEg7XbhqBts3FZJBjD2kTjBGz2cFfbDti
+ Dw6a53Vv1wXUCkr6n+jDpaG3v+Z0iaYfuxLUHXGEdRqrzGZeR2x+zDVownnZlRVA
  ==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn826g74c-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn826g74k-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 02 Nov 2026 11:47:04 +0000 (GMT)
+ Mon, 02 Nov 2026 11:47:09 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
  by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A29JvWI629627; Mon, 2 Nov 2026 11:47:03 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnunjwjuf-1
+ 6A29K7wF629786; Mon, 2 Nov 2026 11:47:08 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnunjwjut-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Nov 2026 11:47:03 +0000 (GMT)
+ Mon, 02 Nov 2026 11:47:08 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A2BkwI848955880
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6A2Bl2eC53346700
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 2 Nov 2026 11:46:58 GMT
+ Mon, 2 Nov 2026 11:47:02 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1878920043;
+ by IMSVA (Postfix) with ESMTP id 9672D20040;
+ Mon,  2 Nov 2026 11:47:02 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DB5EF2004B;
  Mon,  2 Nov 2026 11:46:58 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6934920040;
- Mon,  2 Nov 2026 11:46:54 +0000 (GMT)
 Received: from Mac.com (unknown [9.43.40.115])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  2 Nov 2026 11:46:53 +0000 (GMT)
+ Mon,  2 Nov 2026 11:46:58 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: Saif Abrar <saif.abrar@linux.vnet.ibm.com>,
@@ -66,9 +66,10 @@ Cc: Saif Abrar <saif.abrar@linux.vnet.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Caleb Schlossin <calebs@linux.ibm.com>,
  Aditya Gupta <adityag@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>
-Subject: [PULL 8/9] pnv/phb5: Implement IODA PCT table
-Date: Mon,  2 Nov 2026 17:15:56 +0530
-Message-ID: <20261102114558.62509-9-harshpb@linux.ibm.com>
+Subject: [PULL 9/9] pnv/phb5: Mask off LSI Source-ID based on number of
+ interrupts
+Date: Mon,  2 Nov 2026 17:15:57 +0530
+Message-ID: <20261102114558.62509-10-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20261102114558.62509-1-harshpb@linux.ibm.com>
 References: <20261102114558.62509-1-harshpb@linux.ibm.com>
@@ -77,24 +78,24 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: fDUqKrsLuoheIMrv2kEfIy89E2Hn17MA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAyMDA0NiBTYWx0ZWRfX1jhbReErYUS0
- JN76HtAvMc1Sfh+lxlCzczXZGJUGVl+ork00M/oNTgH5vcrU5P6k0vE16JneoLr3FKKO+CuE01f
- s2bAj67NLJWTkl8eXJdvXk1zHqcjm3QgxMao9TNFk7K0GjMHCvkVULPj1cD39cGH513wcGcAdtg
- 6Bb8WyvvYAdubpcZssMsDtP2z3Y14QF+1OcOhaTUsAW7XTyaF+w1dVUD60lWpqPnb8R7//aCv0X
- 1samUf+u9zur40dBcizngxiIxGvKNKAZnoHYtL0s35SFqcJiw6RraA7zqdoYPcvePToixpqeHrh
- cF9c4EG1tW1PjjytRsaRtg4MHgrVBoXEHap4NubdkgqCWPxR2HGa95BuNmZj5wsrL88MFDFcdVZ
- xjFevSHwZ3XtKGvz1ICrJgxKpNNDM0AUZqQYqASqndmNf+hbL8vI9H1l0yM5lkwHhv3iJ4XqtL5
- +4KoYjXmVU1ecUWduvA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAyMDA0NiBTYWx0ZWRfXzFTv+Pu5Tscg
- J28exkN96lzAOEl2dj0Z1fTuh5Xnv0vVkdSJXZoJ9aQ3Oq5zlB2T+5lkwuodE3gI9GRDd7kd82f
- +yT79iQT/2HHqcBM+DPFmK+/y4hMHM4=
-X-Proofpoint-GUID: fDUqKrsLuoheIMrv2kEfIy89E2Hn17MA
-X-Authority-Analysis: v=2.4 cv=EsJHPicA c=1 sm=1 tr=0 ts=6ae87838 cx=c_pps
+X-Proofpoint-ORIG-GUID: q0gSUrqJNn3VEfiVnJ9eBWA-qZbtiSxM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAyMDA0NiBTYWx0ZWRfX1V4rA6ZjzbBR
+ +UsdToqhsUKqT92PCBcOdd5gxrenzDtFCwEGADFbwsblXCDTH3hggKutpNTkrJVyXNhxKZT5GlD
+ GjozjQJJCNUN923LB/Dbvb39MranDw8O6go2FMn6ApfJ22rlE5vWao8IAVG/9PpDxz5mgBEGKNU
+ Ar29cVtmK1q0fPt0uGQjGzMZCmYTjd0qqcOdgS2jI07aj+N8vG47Dym/qX7NYU+n85JCP1D1R/t
+ StDfY+J7qfEwa3fkoiWXzJH4UExLJLstwcBnDLwzGrknR48J+p1hyozyA5fqMbYIavRu0obbpRk
+ wSU8JUXb/BAipg6JX/dDtZnMPNxfLkWL83a+LKcLSlQ1v9ibO2FWo7oAii+++sysc4pv+nkvvlY
+ h2xsZY9cz1PgqlFg56STEZ1Kwvpo2qURCAsL9mEoX0qk26N/c4OkL9mvJmvSaUcASBBXpSUH5uY
+ /0iX1jHy8MEskkpf2BQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAyMDA0NiBTYWx0ZWRfX6tkhWP+EAWeN
+ ozoClBOyrH3fnU46e7/i02V+tx1xT//aohGpIrSkGXCLqnOHCjp1qH0Cp2yGZq+58ms4YafyjXu
+ BydBkWE7SqfSL+0mbD2/LMIrFlCnD4o=
+X-Proofpoint-GUID: q0gSUrqJNn3VEfiVnJ9eBWA-qZbtiSxM
+X-Authority-Analysis: v=2.4 cv=EsJHPicA c=1 sm=1 tr=0 ts=6ae8783d cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=f7IdgyKtn90A:10
+ a=kUKHeS9f1dJEPYFD:21 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=f7IdgyKtn90A:10
  a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=eaHzrZHkp109S6yiJ2wA:9
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=sSvOn4XaDObZyaToecoA:9
  a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
@@ -134,79 +135,119 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 
-IODA PCT table is implemented
-without any functionality, being a debug table.
+Add a method to reset the value of LSI Source-ID.
+Mask off LSI source-id based on number of interrupts in the big/small PHB.
 
 Signed-off-by: Saif Abrar <saif.abrar@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
 Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
 Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20261029171047.3862430-9-saif.abrar@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20261029171047.3862430-10-saif.abrar@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- include/hw/pci-host/pnv_phb4.h      | 2 ++
- include/hw/pci-host/pnv_phb4_regs.h | 1 +
- hw/pci-host/pnv_phb4.c              | 7 +++++++
- 3 files changed, 10 insertions(+)
+ include/hw/pci-host/pnv_phb5.h | 10 ++++------
+ hw/pci-host/pnv_phb4.c         | 12 +++++++++---
+ hw/pci-host/pnv_phb5.c         | 17 -----------------
+ 3 files changed, 13 insertions(+), 26 deletions(-)
 
-diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
-index 33e11a3fe8..8d5822f339 100644
---- a/include/hw/pci-host/pnv_phb4.h
-+++ b/include/hw/pci-host/pnv_phb4.h
-@@ -65,6 +65,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4RootBus, PNV_PHB4_ROOT_BUS)
- #define PNV_PHB4_MAX_LSIs          8
- #define PNV_PHB4_MAX_INTs          4096
- #define PNV_PHB4_MAX_MIST          (PNV_PHB4_MAX_INTs >> 2)
-+#define PNV_PHB4_MAX_PCT           (128 * 2)
- #define PNV_PHB4_MAX_MMIO_WINDOWS  32
- #define PNV_PHB4_MIN_MMIO_WINDOWS  16
- #define PNV_PHB4_NUM_REGS          (0x3000 >> 3)
-@@ -138,6 +139,7 @@ struct PnvPHB4 {
-     /* On-chip IODA tables */
-     uint64_t ioda_LIST[PNV_PHB4_MAX_LSIs];
-     uint64_t ioda_MIST[PNV_PHB4_MAX_MIST];
-+    uint64_t ioda_PCT[PNV_PHB4_MAX_PCT];
-     uint64_t ioda_TVT[PNV_PHB4_MAX_TVEs];
-     uint64_t ioda_MBT[PNV_PHB4_MAX_MBEs];
-     uint64_t ioda_MDT[PNV_PHB4_MAX_PEs];
-diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
-index 9ad6713d37..897c869d20 100644
---- a/include/hw/pci-host/pnv_phb4_regs.h
-+++ b/include/hw/pci-host/pnv_phb4_regs.h
-@@ -478,6 +478,7 @@
+diff --git a/include/hw/pci-host/pnv_phb5.h b/include/hw/pci-host/pnv_phb5.h
+index 4534083fd5..8f1df4892f 100644
+--- a/include/hw/pci-host/pnv_phb5.h
++++ b/include/hw/pci-host/pnv_phb5.h
+@@ -9,12 +9,10 @@
+ #ifndef PCI_HOST_PNV_PHB5_H
+ #define PCI_HOST_PNV_PHB5_H
  
- #define IODA3_TBL_LIST          1
- #define IODA3_TBL_MIST          2
-+#define IODA3_TBL_PCT           3
- #define IODA3_TBL_RCAM          5
- #define IODA3_TBL_MRT           6
- #define IODA3_TBL_PESTA         7
+-#include "hw/pci-host/pnv_phb.h"
+-#include "hw/pci/pci_bus.h"
+-#include "hw/ppc/pnv.h"
+-#include "hw/ppc/pnv_nest_pervasive.h"
+-#include "hw/ppc/xive.h"
+-#include "qom/object.h"
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "hw/pci-host/pnv_phb4_regs.h"
++#include "hw/pci-host/pnv_phb4.h"
+ 
+ void pnv_phb5_cfg_core_reset(PCIDevice *d);
+ 
 diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index 4a49461f4e..956d82f551 100644
+index 956d82f551..95318c9d74 100644
 --- a/hw/pci-host/pnv_phb4.c
 +++ b/hw/pci-host/pnv_phb4.c
-@@ -267,6 +267,11 @@ static uint64_t *pnv_phb4_ioda_access(PnvPHB4 *phb,
-         mask = phb->big_phb ? PNV_PHB4_MAX_MIST : (PNV_PHB4_MAX_MIST >> 1);
-         mask -= 1;
-         break;
-+    case IODA3_TBL_PCT:
-+        tptr = phb->ioda_PCT;
-+        mask = phb->big_phb ? PNV_PHB4_MAX_PCT : (PNV_PHB4_MAX_PCT >> 1);
-+        mask -= 1;
-+        break;
-     case IODA3_TBL_RCAM:
-         mask = phb->big_phb ? 127 : 63;
-         break;
-@@ -365,6 +370,8 @@ static void pnv_phb4_ioda_write(PnvPHB4 *phb, uint64_t val)
-     /* Handle side effects */
-     switch (table) {
-     case IODA3_TBL_LIST:
-+    case IODA3_TBL_PCT:
-+        /* No action for debug tables */
-         break;
-     case IODA3_TBL_MIST: {
-         /* Special mask for MIST partial write */
+@@ -494,6 +494,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
+ 
+     lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
+     lsi_base <<= 3;
++    lsi_base &= (xsrc->nr_irqs - 1);
+ 
+     /* TODO: handle reset values of PHB_LSI_SRC_ID */
+     if (!lsi_base) {
+@@ -1908,6 +1909,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4Class *phb4c)
+     /* TODO: Add more RO-masks as regs are implemented in the model */
+ }
+ 
++static void pnv_phb4_xsrc_reset(PnvPHB4 *phb)
++{
++    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
++    pnv_phb4_update_xsrc(phb);
++}
++
+ static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+ {
+     STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+@@ -1964,10 +1971,11 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
+     PnvPHB4 *phb = PNV_PHB4(obj);
+ 
+     pnv_phb4_pbl_core_reset(phb);
++
++    pnv_phb4_xsrc_reset(phb);
+     pnv_phb4_err_reg_reset(phb);
+     pnv_phb4_pcie_stack_reg_reset(phb);
+     pnv_phb4_regb_err_reg_reset(phb);
+-    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
+ }
+ 
+ static void pnv_phb4_instance_init(Object *obj)
+@@ -2041,8 +2049,6 @@ void pnv_phb4_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    pnv_phb4_update_xsrc(phb);
+-
+     phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, xsrc->nr_irqs);
+ 
+     pnv_phb4_xscom_realize(phb);
+diff --git a/hw/pci-host/pnv_phb5.c b/hw/pci-host/pnv_phb5.c
+index b09351f69f..ec6dfbe2b2 100644
+--- a/hw/pci-host/pnv_phb5.c
++++ b/hw/pci-host/pnv_phb5.c
+@@ -6,24 +6,7 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#include "qemu/osdep.h"
+-#include "qemu/log.h"
+-#include "qemu/bswap.h"
+-#include "qapi/visitor.h"
+-#include "qapi/error.h"
+-#include "target/ppc/cpu.h"
+-#include "hw/pci-host/pnv_phb4_regs.h"
+-#include "hw/pci-host/pnv_phb4.h"
+ #include "hw/pci-host/pnv_phb5.h"
+-#include "hw/pci/pcie_host.h"
+-#include "hw/pci/pcie_port.h"
+-#include "hw/ppc/pnv.h"
+-#include "hw/ppc/pnv_xscom.h"
+-#include "hw/core/irq.h"
+-#include "hw/core/qdev-properties.h"
+-#include "qom/object.h"
+-#include "trace.h"
+-#include "system/reset.h"
+ 
+ void pnv_phb5_cfg_core_reset(PCIDevice *d)
+ {
 -- 
 2.52.0
 
