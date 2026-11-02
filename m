@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36E1606A327
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 19:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D09606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 19:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=h9yRMac/
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=MXaQ6834
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNxIr-0003Ik-0G; Mon, 02 Nov 2026 14:02:45 -0500
+	id 1xNxJn-000513-9v; Mon, 02 Nov 2026 14:03:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xNxHw-00020B-Jn
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xNxI2-00026L-2Q
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xNxHt-0008Gl-IG
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:47 -0500
+ id 1xNxHy-0008HU-9M
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793646104;
+ s=mimecast20190719; t=1793646108;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4/XTSFHkdQ+Pw5IV0/sk+ny/n4mSrenG0IJ4ieTlAdY=;
- b=h9yRMac/5HPAMyEyt/X5BesMY5dW2tMk1x4VoExkFZ0yP7e010fkrKrPgHifkI1cnSFbF4
- 5nHwU0Ph6Iu+mrlRfOXumoVxGWfZiGJqXB6uOA2b9t+z3aWN1cT46SLj35plaUK7kDqFWU
- XSRiN97XfTdbIFkCqhEXgdjLqun1nVQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=bzIJc3V05DowmcLi7i1y5B9HyXtVMAI3zmPBHgeliGU=;
+ b=MXaQ68344H6uaqwPbfDibYI6uN02o13ySmejZEhKdO9jq52+kYf5FBEoxPBzSPMdCVKmSi
+ oxCUOLN67TPAzVeQD0upYEraYCfR8YnDqZ0BIZyc6tA0/7HzKGqN/YNSt/ELMeGVLbf+wb
+ Q9+rwBayr16PhNcItksquA6GyhY8KEg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-qqnTlvRmMw6I5OQLW16cZQ-1; Mon,
- 02 Nov 2026 14:01:39 -0500
-X-MC-Unique: qqnTlvRmMw6I5OQLW16cZQ-1
-X-Mimecast-MFC-AGG-ID: qqnTlvRmMw6I5OQLW16cZQ_1793646097
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-3BTEOu_1OvuJtXdIogW4JA-1; Mon,
+ 02 Nov 2026 14:01:45 -0500
+X-MC-Unique: 3BTEOu_1OvuJtXdIogW4JA-1
+X-Mimecast-MFC-AGG-ID: 3BTEOu_1OvuJtXdIogW4JA_1793646103
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E12B180257A; Mon,  2 Nov 2026 19:01:37 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 86ADB1955EAE; Mon,  2 Nov 2026 19:01:43 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 283BC1955F73; Mon,  2 Nov 2026 19:01:37 +0000 (UTC)
+ id 380E81955F73; Mon,  2 Nov 2026 19:01:43 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>,
@@ -61,11 +61,10 @@ Cc: qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Alexey Kardashevskiy <aik@ozlabs.ru>,
  Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 18/25] hw/ppc: remove mistaken use of trace_event_get_state()
-Date: Mon,  2 Nov 2026 13:58:24 -0500
-Message-ID: <20261102185831.1880189-19-stefanha@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 22/25] trace: remove "disable" property from trace files
+Date: Mon,  2 Nov 2026 13:58:28 -0500
+Message-ID: <20261102185831.1880189-23-stefanha@redhat.com>
 In-Reply-To: <20261102185831.1880189-1-stefanha@redhat.com>
 References: <20261102185831.1880189-1-stefanha@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -73,15 +72,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,69 +102,68 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-Conditional checks must call trace_event_get_state_backends()
-which checks the state of all backends (dtrace, ftrace, log,
-syslog, simple & ust), while trace_event_get_state() only
-validates state for backends using QEMU's internal state
-tracking (ftrace, log, syslog, simple).
+The scenarios are not significant enough to justify its use
 
-Furthermore, checking qemu_loglevel_mask() is inappropriate since
-there are many trace backends, of which 'log' is only one.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-id: 20261102142844.3464712-19-berrange@redhat.com
+Message-id: 20261102142844.3464712-23-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/ppc/vof.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ hw/display/trace-events  |  2 +-
+ target/hppa/trace-events | 28 ++++++++++++++--------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-index 873e967f1e4..e2ff9bf96a3 100644
---- a/hw/ppc/vof.c
-+++ b/hw/ppc/vof.c
-@@ -252,8 +252,7 @@ static uint32_t vof_getprop(const void *fdt, uint32_t nodeph, uint32_t pname,
-              */
-             ret = proplen;
-             /* Do not format a value if tracepoint is silent, for performance */
--            if (trace_event_get_state(TRACE_VOF_GETPROP) &&
--                qemu_loglevel_mask(LOG_TRACE)) {
-+            if (trace_event_get_state_backends(TRACE_VOF_GETPROP)) {
-                 prop_format(trval, sizeof(trval), prop, ret);
-             }
-         }
-@@ -337,8 +336,7 @@ static uint32_t vof_setprop(MachineState *ms, void *fdt, Vof *vof,
-         goto trace_exit;
-     }
+diff --git a/hw/display/trace-events b/hw/display/trace-events
+index c5e7e42af23..223a085922b 100644
+--- a/hw/display/trace-events
++++ b/hw/display/trace-events
+@@ -60,7 +60,7 @@ virtio_gpu_dec_inflight_fences(uint32_t inflight) "in-flight- %u"
+ virtio_gpu_cmd_suspended(uint32_t cmd) "cmd 0x%x"
  
--    if (trace_event_get_state(TRACE_VOF_SETPROP) &&
--        qemu_loglevel_mask(LOG_TRACE)) {
-+    if (trace_event_get_state_backends(TRACE_VOF_SETPROP)) {
-         prop_format(trval, sizeof(trval), val, vallen);
-     }
-     ret = vallen;
-@@ -584,8 +582,7 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
-         }
+ # qxl.c
+-disable qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
++qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
+ qxl_create_guest_primary(int qid, uint32_t width, uint32_t height, uint64_t mem, uint32_t format, uint32_t position) "%d %ux%u mem=0x%" PRIx64 " %u,%u"
+ qxl_create_guest_primary_rest(int qid, int32_t stride, uint32_t type, uint32_t flags) "%d %d,%d,%d"
+ qxl_destroy_primary(int qid) "%d"
+diff --git a/target/hppa/trace-events b/target/hppa/trace-events
+index 9514f039f2d..9fd37b1e2cb 100644
+--- a/target/hppa/trace-events
++++ b/target/hppa/trace-events
+@@ -1,19 +1,19 @@
+ # See docs/devel/tracing.rst for syntax documentation.
  
-         /* FIXME: there is no backend(s) yet so just call a trace */
--        if (trace_event_get_state(TRACE_VOF_WRITE) &&
--            qemu_loglevel_mask(LOG_TRACE)) {
-+        if (trace_event_get_state_backends(TRACE_VOF_WRITE)) {
-             tmp[cb] = '\0';
-             trace_vof_write(ihandle, cb, tmp);
-         }
-@@ -599,9 +596,7 @@ static void vof_claimed_dump(GArray *claimed)
-     int i;
-     OfClaimed c;
+ # mem_helper.c
+-disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
+-disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
+-disable hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=0x%" PRIx64
+-disable hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%" PRIx64 " phys=0x%" PRIx64 ""
+-disable hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%" PRIx64 " size=%d type=%d mmu_idx=%d"
+-disable hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%" PRIx64 " phys=0x%" PRIx64 " size=%d type=%d mmu_idx=%d"
+-disable hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
+-disable hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=0x%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
+-disable hppa_tlb_ptlb(void *env) "env=%p"
+-disable hppa_tlb_ptlb_local(void *env) "env=%p"
+-disable hppa_tlb_ptlbe(void *env) "env=%p"
+-disable hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%" PRIx64 " phys=0x%" PRIx64 ""
+-disable hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%" PRIx64 ""
++hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
++hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
++hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=0x%" PRIx64
++hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%" PRIx64 " phys=0x%" PRIx64 ""
++hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%" PRIx64 " size=%d type=%d mmu_idx=%d"
++hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%" PRIx64 " phys=0x%" PRIx64 " size=%d type=%d mmu_idx=%d"
++hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
++hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=0x%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
++hppa_tlb_ptlb(void *env) "env=%p"
++hppa_tlb_ptlb_local(void *env) "env=%p"
++hppa_tlb_ptlbe(void *env) "env=%p"
++hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%" PRIx64 " phys=0x%" PRIx64 ""
++hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%" PRIx64 ""
  
--    if (trace_event_get_state(TRACE_VOF_CLAIMED) &&
--        qemu_loglevel_mask(LOG_TRACE)) {
--
-+    if (trace_event_get_state_backends(TRACE_VOF_CLAIMED)) {
-         for (i = 0; i < claimed->len; ++i) {
-             c = g_array_index(claimed, OfClaimed, i);
-             trace_vof_claimed(c.start, c.start + c.size, c.size);
+ # op_helper.c
+-disable hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%" PRIx64 " level=%d want=%d"
++hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%" PRIx64 " level=%d want=%d"
 -- 
 2.56.0
 
