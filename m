@@ -1,58 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B13B606A324
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2333606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=fmLv2+5i
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=WvjwvOxe
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNsjs-0001RB-69; Mon, 02 Nov 2026 09:10:22 -0500
+	id 1xNskX-0002cU-L4; Mon, 02 Nov 2026 09:11:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xNsiJ-00085w-P2
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:08:47 -0500
+ id 1xNsi1-0007w8-Hj
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:08:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xNsiG-0005Gl-I0
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:08:42 -0500
+ id 1xNsi0-0005Ei-7R
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:08:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793628519;
+ s=mimecast20190719; t=1793628502;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=grg9FKd6iKJomJal3CYJ4U4vQMCnT6o8hFeIMXOlPVI=;
- b=fmLv2+5ifTcU/Y8xonlnfX3eFDECAL5my0pxZHwfhb/Cv6x2bolxywdArHTOr9rVlGAtiz
- 4P0cYasKPxHPKBS7r/Q8yTxSanV0vZK5gA9kezihVWrCFD7yRycaLIha0CV4kHidn7Q1Ku
- IwwAdlEdIyT9AoQGKiCFMXvTylDZhSs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=oRYFyhvztTbkAukZo7KAzMM/k2TGcsNGgppNT+XfV2o=;
+ b=WvjwvOxevSq/bgltVoUiE8I3N59JVAP9lPhEa7IpVgsWtwNQOkaAWydQDfIoiUufVsqcTf
+ I8I4jCKpie8052ueJa5KLfmNORaGWpfeUn1h//JtrsuduOfYOBWLtPYLE/QFuTCy6+OME1
+ +2P05a6iFz+6FDNjL4Fyi/LC44zj3t0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-70-crF7Vc6JPmmHrsO_N-7TnA-1; Mon,
- 02 Nov 2026 09:08:34 -0500
-X-MC-Unique: crF7Vc6JPmmHrsO_N-7TnA-1
-X-Mimecast-MFC-AGG-ID: crF7Vc6JPmmHrsO_N-7TnA_1793628510
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-ifbzGeCfMVW4F7APk82Ang-1; Mon,
+ 02 Nov 2026 09:08:17 -0500
+X-MC-Unique: ifbzGeCfMVW4F7APk82Ang-1
+X-Mimecast-MFC-AGG-ID: ifbzGeCfMVW4F7APk82Ang_1793628493
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 403571956062; Mon,  2 Nov 2026 14:08:30 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5AB6119344AC; Mon,  2 Nov 2026 14:08:11 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0E0831955D6F; Mon,  2 Nov 2026 14:08:28 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CF589433; Mon,  2 Nov 2026 14:08:09 +0000 (UTC)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v8 17/18] hw/usb/redirect-server: Implement isochronous
- OUT transfers
+Subject: Re: [PATCH v8 09/18] hw/arm/npcm7xx: Keep the automatic hub
 From: marcandre.lureau@redhat.com
 To: Jamin Lin <jamin_lin@aspeedtech.com>
 Cc: kraxel@redhat.com, marcandre.lureau@redhat.com, junjie.cao@intel.com, 
@@ -71,29 +70,29 @@ Cc: kraxel@redhat.com, marcandre.lureau@redhat.com, junjie.cao@intel.com,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
  "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>, 
  Troy Lee <troy_lee@aspeedtech.com>
-In-Reply-To: <20261102092201.1729245-18-jamin_lin@aspeedtech.com>
+In-Reply-To: <20261102092201.1729245-10-jamin_lin@aspeedtech.com>
 References: <20261102092201.1729245-1-jamin_lin@aspeedtech.com>
- <20261102092201.1729245-18-jamin_lin@aspeedtech.com>
+ <20261102092201.1729245-10-jamin_lin@aspeedtech.com>
 Date: Mon, 02 Nov 2026 18:07:30 +0400
-Message-Id: <179362845024.3960472.4540726377291333778.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=784;
+Message-Id: <179362845015.3960472.7956229698285370567.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=651;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=hJvGUxn6plNHSiGGl7omQzqPVVmIxQziy7e/MT9o/6E=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq6JklfS+mn8zeM4IpV8GvoTwsJ5L78+CmeqKvL
- ELYRm1g/oyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCauiZJQAKCRDa6OEJdZac
- 5Rc7EACF+C6p8LW5n/I8XO5Cs+PHM7mSX7pum8MHr+ws1ln+w3dQa0b+q7PoE1tu0mpXYIuGXoT
- icrBIGj5rhYBjzTdohkpSDkEoMJwDn+I4d5eJiyy9DCStKHRFp7Xj6mhvUvddnMClVecKTbC526
- fSKS/93FE0eY7AU8YyCG3e2y1Jd68XaBaicRcjAqYTZM4lNrRePBHW32xYnAUjY2he8EAUXN5mc
- 22lxrZ3ZC+K+OyaoM5S0sWkiT2KM7q/XvforGmwR42R39dWktzIg2M/RTk3A1C9ojYqaLvu4L4H
- FgvS+G08Cak7LpB5rTff1h1B+KDgT39Jb6fR67JChoQESX3YXt7hFgGAp0HdK40qjsjqsVTxgLO
- FB4caTSba5qalcyWgTY8b7KdyRADPk+H42fdLSXwjB6mQs0Gdruuy6I3Vkux2160eFQ/MncqAjB
- gGoryaBaaKKSPTytzsRm06wg4TXAXicnWI/ZzBFU/qVmNVuxX9Uk0GdPq2xSUyl0r9tQoGpkmC5
- uJZi1wB9Re3Q1h4jS2F2GArMXHb1P8tciSxwgqrTs3wzZW/eH5soANXhH+z7hPeoccdvAzc5MpR
- qXNqXT0S5/nOH5TImx9KUgUoiTLyGxS7HnsPJeCGoH+bsQh4InjH3mJbbGZ0s1kVJWExGjl+yAX
- aEemQuWUnWPszbA==
+ bh=F1IrbKA0eXHyGj63rZO602lR1wmaDvVNygpKzIbsQX0=;
+ b=owEBbAKT/ZANAwAKAdro4Ql1lpzlAcsmYgBq6JkkeaLYF+AtHQBBK7iTU+SkFbe1mwtPh4elo
+ swuBjx87TyJAjIEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCauiZJAAKCRDa6OEJdZac
+ 5SL/D/dEgMfDef1nufgtacHeM88sqlRC+DndeOTQhU+jJEmw5Jl465vxJWDG1uMDBnu9zRSiVRp
+ iGwEI8+ROjB7aGGdaREGVUlaSDL44AOBVsBgrK9QywI4KydZs6E9u9nI9IPcqHaUkQgNpku5/C8
+ q8pk+c9VLHEV60NjWH9Ya6YVqfjDSZjcvmJUz3aArt2tCkLHemIFPSF6FgYqOv+wGAVeGoJHks3
+ +qSJR/FAknrfwg0y9zi4FYc2I3B4AWCeNY0mh+8GQCHNidCwuhmAY0X7ePAUW2hALVcYr6FyXQN
+ OVrqxFvsZ8xIecbayAUjXqqqVJ5oFz1lJwoOIyB4k03s6nxMrgB/dlA4HUyaGjPJQeLoOr6+5DL
+ tpUkRHegrPCLQiMqkpg363qgtkKeLMNvTifN6PqveL6TtD5rm0DAGakKYVBimKlv+sPWlYgubtv
+ hVhsfcFnvNg+sAmsdwbpEclwiUtfNNEU5T9eCRCcZ3CZkDWjF1BL7+cpAm4JaY4YOa6Y40QN6uv
+ 0xiRH7UPu1P32e0QJFrEGzczet9k6qVatluWoEdG1eyDNLSz9lsF8qAviXZkjBwS2xNczzlFFGP
+ pE3cEuae9dtzJiTw2yDqyP1YoBc/6aYdgecqa646ZGdczk7lzFoxulYYUBWxRMQNgCi/XaLDfaq
+ eKQ6YpIiTytZ9
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -123,20 +122,19 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 02 Nov 2026 09:22:27 +0000, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
-> The protocol has three callbacks for isochronous transfers:
-> start_iso_stream_func, stop_iso_stream_func and iso_packet_func.
-> Isochronous has no capability bit, and the parser calls them without
-> checking, so a server cannot leave them out.
+> The OHCI companion has one port, so a second device only fits behind
+> the hub.
 > 
-> Implement the three for an OUT endpoint. Endpoint 0 is control, so
-> refuse it. The host sends a packet for every OUT transfer. It sends
-> nothing for an IN transfer, so refuse an IN endpoint with a stall.
-> Only a stall makes the host close the stream. Any other status leaves
-> it open on the host side.
+> npcm7xx has no versioned machine type, so compat cannot reach it. Turn
+> the property on here instead. The companion shares the EHCI bus, so
+> the EHCI carries the property.
 > 
-> [...]
+> Suggested-by: Gerd Hoffmann <kraxel@redhat.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Message-ID: <20261102092201.1729245-10-jamin_lin@aspeedtech.com>
 
+Place this patch before the previous one, turning the default to false.
+otherwise
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 -- 
