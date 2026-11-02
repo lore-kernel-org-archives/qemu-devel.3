@@ -1,60 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3718F606A33D
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 12:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8013D606A32F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 12:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Jd3Ipn7a
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=d4+ZP1pj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNr83-0008Hg-A3; Mon, 02 Nov 2026 07:27:11 -0500
+	id 1xNr7r-00088v-0A; Mon, 02 Nov 2026 07:26:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xNr7z-0008E1-I0
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 07:27:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xNr7n-000885-NB
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 07:26:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xNr7w-0001m5-7i
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 07:27:06 -0500
+ id 1xNr7m-0001kp-Am
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 07:26:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793622423;
+ s=mimecast20190719; t=1793622413;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6HdOfHCro5ZnQmMnzKxFQCHgjIGof5RJf6ZoHqQfLTw=;
- b=Jd3Ipn7aBQCXiY8WZnz+jFqY41BzMFVVcnWeEL0q3C9l9nHb0n0+e9QK9nuUNCZe6P0LGl
- nAvbFG3tEhg48VVOU0SdhfjApccfSeTuQXBeStoiu1XsgplcsYqSdLuSOBGVvhfcP1AxjB
- kwWbCEFpIROveTQ7eN4II3mNL3TybgI=
+ bh=ZMzwxrJ6hVsyZEVFlenB65CnoyKXy5QWkXAJ7ofXgcc=;
+ b=d4+ZP1pjjT/G/Kma1bMiPvzDlAWhvmflSzGLFwkAX1afXBYjYga1Cipx4gjmjNpOpIKwXY
+ uNqZF2GYlwE9/JcyXSvyHZkX5kkwUGgEA2raOHIzgcG4Ax//zamzyox0cpQkQU05w5243f
+ AO4GGMlWws0+nCt4vxoWPTbWWHfrvdQ=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-pG2Vbd6iOfqB2ILyzroaag-1; Mon,
- 02 Nov 2026 07:27:02 -0500
-X-MC-Unique: pG2Vbd6iOfqB2ILyzroaag-1
-X-Mimecast-MFC-AGG-ID: pG2Vbd6iOfqB2ILyzroaag_1793622421
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-qxiJTc_1O-mSpX0jBMc_ag-1; Mon,
+ 02 Nov 2026 07:26:52 -0500
+X-MC-Unique: qxiJTc_1O-mSpX0jBMc_ag-1
+X-Mimecast-MFC-AGG-ID: qxiJTc_1O-mSpX0jBMc_ag_1793622411
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 490B21800148; Mon,  2 Nov 2026 12:27:01 +0000 (UTC)
+ id 94B241800476; Mon,  2 Nov 2026 12:26:51 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 13D291956087; Mon,  2 Nov 2026 12:26:59 +0000 (UTC)
+ id 722691956087; Mon,  2 Nov 2026 12:26:50 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Alexander Graf <graf@amazon.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 10/13] hw/nitro: mark 'nitro' machine as secure
-Date: Mon,  2 Nov 2026 12:26:42 +0000
-Message-ID: <20261102122645.3353402-11-berrange@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 03/13] hw/arm: mark 'virt' as a secure machine
+Date: Mon,  2 Nov 2026 12:26:35 +0000
+Message-ID: <20261102122645.3353402-4-berrange@redhat.com>
 In-Reply-To: <20261102122645.3353402-1-berrange@redhat.com>
 References: <20261102122645.3353402-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -62,14 +62,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,29 +89,29 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Unlike the 'nitro-enclave' machine which provides emulation, the
-'nitro' machine is used with a real AWS deployment and thus is
-considered to be secure.
+The 'virt' arm machine is already declared secure in
+docs/system/security.rst, due too its intended usage in virtualization
+scenarios.
 
-Reviewed-by: Alexander Graf <graf@amazon.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/nitro/machine.c | 1 +
+ hw/arm/virt.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/nitro/machine.c b/hw/nitro/machine.c
-index 88d01960a01..2e88e150c93 100644
---- a/hw/nitro/machine.c
-+++ b/hw/nitro/machine.c
-@@ -261,6 +261,7 @@ static const TypeInfo nitro_machine_info = {
-     .parent = TYPE_MACHINE,
-     .instance_size = sizeof(NitroMachineState),
-     .class_init = nitro_machine_class_init,
-+    .secure = true,
- };
- 
- static void nitro_machine_register(void)
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3ab3ad8c3b6..55531c7eecd 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -132,6 +132,7 @@ static void arm_virt_compat_default_set(MachineClass *mc)
+         .parent = TYPE_VIRT_MACHINE, \
+         .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
+         .is_available = target_base_arm, \
++        .secure = true, \
+     }; \
+     static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
+     { \
 -- 
 2.56.0
 
