@@ -1,113 +1,130 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AA1606ABBA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 17:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C96C606A327
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 18:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZZ+6IxdH
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=A7159ig0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNwA6-0007mP-KJ; Mon, 02 Nov 2026 12:49:38 -0500
+	id 1xNwX0-0004sj-LO; Mon, 02 Nov 2026 13:13:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xNw9x-0007l8-VN; Mon, 02 Nov 2026 12:49:30 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
+ id 1xNwWz-0004sA-Fl; Mon, 02 Nov 2026 13:13:17 -0500
+Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xNw9w-0001QX-4K; Mon, 02 Nov 2026 12:49:29 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A2HiQxK1933872; Mon, 2 Nov 2026 17:49:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=Lzwa2Ly7KFIjahhSneRhG5TBBsz30tHOKyBhH1VyF
- ls=; b=ZZ+6IxdHe56hdr3nZk5hIwsHppWz7ksNvii5R2iKYNGTAUpiJ57H09LRN
- 22AAwaDJ3o7bIGVhteTNPUlVbKtvRVyBJ4+GRLikLWnTicEbSX15NzeQ4sde5vaO
- jsM9lRIAv8zLWQhdh4ZNWHbj8yEPV/pYgIGWhaEH6UR56NWjA21lDYc4GMzUFMni
- ACpgOOVovLLkyHSPiRacMuyWywm2ua6/oYtbNlG/bhxWt7sS3xGHqf50fbEFQqFB
- KGZiKNEIcye5+qWjTNviKEcHbI9tirhgE3oQnTsfDRRwOob3Rzi3MDse+KDe/19d
- UkcVaRWsQi8Mt4VzxxGrCKQWhhSHQ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn80sj1er-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 02 Nov 2026 17:49:25 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A2HYx871340225; Mon, 2 Nov 2026 17:49:25 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnv5gq1e2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Nov 2026 17:49:24 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A2HnKOP45810108
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 2 Nov 2026 17:49:21 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 662622004B;
- Mon,  2 Nov 2026 17:49:20 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 46C6320043;
- Mon,  2 Nov 2026 17:49:20 +0000 (GMT)
-Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with SMTP;
- Mon,  2 Nov 2026 17:49:20 +0000 (GMT)
-Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 2EE04161028; Mon, 02 Nov 2026 18:49:20 +0100 (CET)
-From: Eric Farman <farman@linux.ibm.com>
-To: "'Michael S . Tsirkin'" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH for 11.2] vhost: do not get config notifier when one doesn't
- exist
-Date: Mon,  2 Nov 2026 18:49:16 +0100
-Message-ID: <20261102174916.2301985-1-farman@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
+ id 1xNwWx-0003Yr-LH; Mon, 02 Nov 2026 13:13:17 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=b+Ie+nYA61OndrrSlzRyqst7FW/PSdqxLBBcmfnIm0x0xIjsVPYmAPecvrJtkt39cMm70ZsgyE25S/CNQj2ubbMjF7MkT/Kf1SwtnWCgc47lZzWpPyOlRIy2mTpjEZuf6XbACmCXN62RDocfP7OZE3ocBBr5njR+hrgxojd7sQHvIM1Wb0zy+CTuahmlEZcESImhwV2jEW5+bd7p8W489XmFtfEU11JiIzud0llSaV5O8t5mfgbzckB4YAqDQ8veHMpwCVOhIod3d6DdyQG3OHExJ0tZEp7smslaEI7HgdrhSHKDPb6QKXIypaOyVf6bvdhCSynoTsicyCZMPf20sw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aeiQmhkMoH7ycEGOuCk2VLtswxGQw/HGPDstG3BE+Io=;
+ b=dikNeV3BcfBd+3c63jhEh0wuP1M6j4yaFF89Yg+4hrrVFUYB87fJPXcbKXVTfvVn44KbYfKMuyxnO6xyh/oFQQQ+6jHvi54u7aYhw/dWsADGvJQS3vfw/InFevyynGd6yROHtafntS0jeoOFNKhwBcO1TAIrCvw7hzxZ10x33sXpM05RG9yriCxy0scbcAW9Mt58FB9xqONPTX5umd670ZJJdKW6tzo17/KvOOAJeP+jRYi1jWukM22lml+Ydm6YeqTfFfpbRuc6f0Zb22IqafV0IUG+z1Z2o+70s5futW5JVq901vR6I32Y1vpH2IwXgz4MnJsYgFdxrG+y570mBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aeiQmhkMoH7ycEGOuCk2VLtswxGQw/HGPDstG3BE+Io=;
+ b=A7159ig07Oj8ydrjNPvLuzq5nn87HxlVWMHtmi+JcWuTNo39+luj/wlEAEqoQklUnK3/ORqa29Dch7CIIVPMm9K1BX1+CgczbOMLjyfwfcnoRMsaAl4JO2ZluhhWB8Zsu9WzDvWo84Ty426ZtsURWbedXiALNn6XjPIvHJrtcLiKCG710l1Fww779oVJOMUflQkcRYPd3NvnfdaGrLzjVO8nL8mMkvFzHkVvacydKkzaOqpGM3+bm1WYntLz8TdLNv0N7VqMHLC0/c2SEa8jdbFyi3kZc+WQZ4bbqMfY61YnYrU4C6rjlwnqQGZ5UIoHEfz8ovjKexJITgLr8GPcrA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA3PR12MB923065.namprd12.prod.outlook.com
+ (2603:10b6:208:627::17) by BL1PR12MB5993.namprd12.prod.outlook.com
+ (2603:10b6:208:399::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Mon, 2 Nov
+ 2026 18:13:05 +0000
+Received: from IA3PR12MB923065.namprd12.prod.outlook.com
+ ([fe80::1c83:bf47:4202:50b1]) by IA3PR12MB923065.namprd12.prod.outlook.com
+ ([fe80::1c83:bf47:4202:50b1%5]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
+ 18:13:05 +0000
+From: Tushar Dave <tdave@nvidia.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, mst@redhat.com,
+ marcel@redhat.com, devel@edk2.groups.io, alwilliamson@nvidia.com,
+ jgg@nvidia.com, skolothumtho@nvidia.com, ardb@kernel.org,
+ kraxel@redhat.com, tdave@nvidia.com
+Subject: [PATCH v2 4/5] hw/arm/virt: export fixed BAR metadata via fw_cfg
+Date: Mon,  2 Nov 2026 12:12:40 -0600
+Message-Id: <20261102181241.3077981-5-tdave@nvidia.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20261102181241.3077981-1-tdave@nvidia.com>
+References: <20261102181241.3077981-1-tdave@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: CH0PR04CA0031.namprd04.prod.outlook.com
+ (2603:10b6:610:77::6) To IA3PR12MB923065.namprd12.prod.outlook.com
+ (2603:10b6:208:627::17)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: cHEYhr8GnsY1mTSN3hHujh-EgdCiTA8H
-X-Proofpoint-ORIG-GUID: cHEYhr8GnsY1mTSN3hHujh-EgdCiTA8H
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAyMDA3MCBTYWx0ZWRfX6v4PHFqyFAoa
- czlqYJB4QwiBIIMPZhkonxR3cIN6HWi4g7Ne1jazWA9DlNHN+9RFHvuCVbW+dMA7R7FVDdeYXeA
- SDmSEf50R3lSHVol6cmJYZpq//EzPBnM2gcleKHzYwi9vrUNwckI1s9OxnuJnSBsDqqb00hTl7N
- uImvRH//WaagZA5PbogQh+FOpBm5xqDZb6KdcMy1P9+NL7L2HzviYNLkN92RbxBsMOXCJzzSIJ6
- bzHk8wCmMomfiRLJR/VEtg4EQujra8ps5Xn8lPu3aAehlmxvI3BcqA62x++7ua7g8oE59jdrgfk
- 082NyHw1QIkkIoHggXpHlsxbJ+9KpACGpOE2IDkfjq/aH/RkMi7ub8yBAdvBl6DQYr3s6VV5tKF
- oVSQXzPVVevxKJ5FZ8pAYSKnGBse6907aCTG8Y06jDsc/czam3XzBsGAkPLO206tmVciRYgxu5/
- XhDrbGaj99Bg2KiKPXw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAyMDA3MCBTYWx0ZWRfX/Shg451KrLok
- kOivhazBxhz8Fl56OUHVE8R9szxsYkUyuv/9WiMaKXxr09VzajL0i736P7ISSJQlxxS/XQ2UZw9
- yYYCzBjNpKzs7RJgROrYSDq14nuoQ7E=
-X-Authority-Analysis: v=2.4 cv=FIqOVOos c=1 sm=1 tr=0 ts=6ae8cd25 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=imYxtfgo-3jAVhZrOLEA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-02_05,2026-11-02_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
- bulkscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611020070
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|BL1PR12MB5993:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1b7a9ece-4975-4c91-5557-08df390cefa1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|23010399003|376014|11063799006|56012099006|261009223027099003|261021121427099003|261022075727099003|261026121527099003|10067099003|22082099003|18002099003|261102123227099003|6133799003|261102130727099003;
+X-Microsoft-Antispam-Message-Info: WV8iBx5IkuEB5Ml1dJK96U1IOHb2c6qN78TnBnBFb+ExLVRE3eLh5jIfeQbsBeHY4CdZO6qh8vhbq58ftxAoTODKqPeypUwDt242aOV5iS5tYCz5BSyzYKZ9+4QxuN2Z63eU4ll3LbByYpvlbJjW4wg5HNBQ92NegMaI5krJbtsYCOoLKOGa+C/VFdZ3o4LY2KBPlvW2DvomMgkdQkMgrKAky0x5WLVEGIjh048qxhrUG+AQZNwzsyv9wwXE66gPUaX2YAfSrljdh5uAl8Y8Isd18N+mQ59n6gMwKXlMscEVBuc9h9wgIz3TnXbYASvI0iMaBq13SAO14ZgFdaPqVRujvl6T1NtRzk9uzIQKyx44KAC7EiWOICmSLrjKdjxyTTdwr1m8oZmcdBvvzlVPvOHcpJRgvpCG+rtm8XHOPR6xeR6ktPeN6mhGq3JDdn8YiK7Vv1ZcM2rxBpoMBIMi9fzbaub3/pxsy1mcrEIq8DHDWW3RlHSq24bEY1zr9KUWUvHN+bgnevqXVMZHFtOMqF/ICRW2/WEN4H0Ebaeb6yQpUtsFDWgMvwsyX0t7pRewOOvH5EJ7iytGyDUNLguHoc3dwq0hzm4dAuNBQzvPCUHJDLMToQxUy/cYMKaf6pjTRBuEsJU6Jg4ECC+5jTJSDHtc7Xg5i0Do0UHAulvP6rU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR12MB923065.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(11063799006)(56012099006)(261009223027099003)(261021121427099003)(261022075727099003)(261026121527099003)(10067099003)(22082099003)(18002099003)(261102123227099003)(6133799003)(261102130727099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?sPPZLGNMwaCOUMYhXXmRGxeEpYU7dJHoPc6DebMbeALPoSe41EVwiSnctAmG?=
+ =?us-ascii?Q?QWp/1IkU4olwwUtHeS4Rvy/BpeskzDTNUDwgW2icTJ6OazvZmVz1m4PzffXK?=
+ =?us-ascii?Q?a4oT7AqBzpjF8/LNuP+e3g1XOFOukRRj58yL/UqF73EgJGUJolU7fC+c5cxR?=
+ =?us-ascii?Q?lxZpuJp7PYsiiMKLHBk6ssVjLyXGXnrQmNs8a9qtJkEgzOBKkISooew7RDxz?=
+ =?us-ascii?Q?nJ59pZoNDz2oT2j9Y9DCSZdki5a6VA3U5NM0ZGwTJ1zkNo8NHR/2OjgFDTWj?=
+ =?us-ascii?Q?gNboWfoMqvClePUp8ANPNg4Yd/JenXtK5ZD1OGYSRxXXIztS3N/jNPo3VmMI?=
+ =?us-ascii?Q?AT/Pj+m4PPGvPfkWrYrysQ0Y8Ja616m5mgLcCN9ft/CExG6OccZ484KcnIrC?=
+ =?us-ascii?Q?sWxX4Il6Sgrce8nzD6e/Gug1rf47F7uYA7SzNZf4qX/1ChAJL2b3B0v83ovX?=
+ =?us-ascii?Q?jINj3Dd/Bu3ZOcTsbrF7Cd8DXGMFgbsidIcI1r7wzBVbMNowYxaiuJIxNLRD?=
+ =?us-ascii?Q?ov1vg6ff6vYvbiccqlE3aYRV9JjxcAAGUafa4jQSQ4DCecUTrH+AdQpYyAJG?=
+ =?us-ascii?Q?HTZKohaZ69plIUgtnzIpvZLhcEGt+6xRmsQXR3TiSWffPVQa1+9XmQWcL9oo?=
+ =?us-ascii?Q?agQYXv3gBAGIC7QEx5uVxgxV6ayEnWjYpF3oTa/qp2Rp3aofDeSXuh2yduCN?=
+ =?us-ascii?Q?eyCNkrHO5zQLuGZEm6oTZ2zjzmyzkie8GjbpO6wPXvDTgDkDaQZMxpur/EmC?=
+ =?us-ascii?Q?hl3T3XHj0GLFp9Jys1vKjwmNz++8R6lNVyCVwY9Ju+FTat01wFPSVnfAUya0?=
+ =?us-ascii?Q?lcVgBpIlav+dV7y1DnfFfOSWQSBMBC08cjbJLir4afO5Oe1cWDrNk2n+0WeC?=
+ =?us-ascii?Q?YNMayks6b5lMOcp/kfRT+OqneGak+GbUHnmL20QKQ878juhvrop6wR+Mopmk?=
+ =?us-ascii?Q?/0MobkLExUaAFbK7YzT9UZm8/4Mpb6xqrMEXBkR5FnW5mze2x/OvPnVugvUt?=
+ =?us-ascii?Q?UXORiUcjLGunSgECmY0bKgxB4CCE5DdQRuXqppSXCOm7iHET4OqeEMWORHC6?=
+ =?us-ascii?Q?7Ujj/+gHhWHL+5n/4L0edsskKIO/TBIqbjPtCYE7FVJGDE1CqI8onJdT9GBK?=
+ =?us-ascii?Q?aoM44SM9cvppQEaJibVy/xYSUjLS3Jt9yo0E8xc8gReiSRv80G4hqeWHil/Q?=
+ =?us-ascii?Q?yFtvkdKn4+lUBO5rjIffyV3peq7DyjdgHn9o3PHydzfCdSFDxPjgQiGJ2yVF?=
+ =?us-ascii?Q?k1f6AcccDn971rXbEoe92CPQ5s1JqO1nIjJ6ZSLZwjZtqs2420ANrXFHPLUa?=
+ =?us-ascii?Q?pzIC60MKAQRGjDK7rMYIGcc2jz+VaIBn0ZiEXeXMLbkTO7EsOOpoSwV1huTz?=
+ =?us-ascii?Q?bzlCWI7u0StVumYBDPdK5/JeFzSwCCKzItSzA9ZOVRa2qRW2B8D/Kx6XRyi8?=
+ =?us-ascii?Q?FXg0Kwvj3GyeSablTuWP4Xkt1Wnm2QsROpbq52aPGmBefzk1rFYPtJpYpywV?=
+ =?us-ascii?Q?rcghaXV7dQDb/KIXyVR6enxtHqdXptkOANIPmjdIr5YuTZ7YiIL6zEZTnoZb?=
+ =?us-ascii?Q?cGCXZznp+L5E57geaJVoWmeIxjTgjMBn8AJBmbEDc8G0ukugmycwqfZX5Fio?=
+ =?us-ascii?Q?lS/L5h3e8HexYp5oguu3etdI9W67tLGSIaI5kzNeCtZY0jDKU65aeFWkv4Jw?=
+ =?us-ascii?Q?KOHBi2c3Zq6W3rs/+1qN10Knja7OQGyWuR01Eszk0rE7aoXJ?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1b7a9ece-4975-4c91-5557-08df390cefa1
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR12MB923065.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2026 18:13:03.3198 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0YQELaaWrj2n+8mg2ABgPcSzzUzCUOZsTyyXSALNEnBKgeJ+464xFBn1yfJN4+8r7WmGaJwu6AaIGSGGY9ESPw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5993
+Received-SPF: pass client-ip=2a01:111:f403:c10d::1;
+ envelope-from=tdave@nvidia.com;
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,43 +136,77 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Commit e3b12d0c55e4 ("util/event_notifier: more strict API") added an
-assert for an uninitialized file descriptor in event_notifier_get_fd(),
-but it presumes that such a thing always exists.
+Export fixed BAR metadata through the "etc/fixed-bars" fw_cfg file
+and set pci_fixed_bar_supported to allow the fixed-bar-N properties
+on the virt machine.
 
-Since it's only vhost_ops->vhost_set_config_call that expects to use
-this file descriptor, move the retrieval of that fd inside the non-null
-check to avoid an assertion failure when it does not exist.
+Fixed BAR placement requires the guest to preserve the PCI resource
+configuration established by firmware, preventing the fixed BAR
+addresses from being reassigned during guest boot. ACPI provides
+this through the PCI boot configuration preservation mechanism
+(_DSM function 5).
 
-Fixes: e3b12d0c55e4 ("util/event_notifier: more strict API")
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Reject fixed BAR configuration if firmware is not loaded or ACPI
+is disabled, since PCI boot configuration preservation cannot
+otherwise be guaranteed.
+
+Signed-off-by: Tushar Dave <tdave@nvidia.com>
 ---
- hw/virtio/vhost.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/virt.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index b25919c5c7d..998518c3b2e 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -2119,8 +2119,8 @@ static void vhost_start_config_intr(struct vhost_de=
-v *dev)
-         virtio_config_get_guest_notifier(dev->vdev);
-=20
-     assert(dev->vhost_ops);
--    int fd =3D event_notifier_get_fd(config_notifier);
-     if (dev->vhost_ops->vhost_set_config_call) {
-+        int fd =3D event_notifier_get_fd(config_notifier);
-         r =3D dev->vhost_ops->vhost_set_config_call(dev, fd);
-         if (!r) {
-             event_notifier_set(config_notifier);
---=20
-2.53.0
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3ab3ad8c3b..4bacb57770 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -94,6 +94,7 @@
+ #include "hw/cxl/cxl_host.h"
+ #include "qemu/guest-random.h"
+ #include "hw/watchdog/sbsa_gwdt.h"
++#include "hw/pci/pci-fixed-bar.h"
+ 
+ static GlobalProperty arm_virt_compat_defaults[] = {
+     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+@@ -2435,6 +2436,23 @@ void virt_machine_done(Notifier *notifier, void *data)
+                                        vms->memmap[VIRT_PLATFORM_BUS].size,
+                                        vms->irqmap[VIRT_PLATFORM_BUS]);
+     }
++    if (fixed_bars_write_blob(vms->fw_cfg,
++                              vms->memmap[VIRT_PCIE_MMIO].base,
++                              vms->memmap[VIRT_PCIE_MMIO].size,
++                              vms->memmap[VIRT_HIGH_PCIE_MMIO].base,
++                              vms->highmem_mmio ?
++                              vms->memmap[VIRT_HIGH_PCIE_MMIO].size : 0,
++                              &error_fatal)) {
++        if (!(vms->bootinfo.firmware_loaded && virt_is_acpi_enabled(vms))) {
++            error_report("fixed-bar: fixed BAR placement requires firmware "
++                         "and ACPI to preserve the PCI boot configuration, "
++                         "otherwise these BAR assignments could be "
++                         "reassigned later with no protection");
++            exit(1);
++        }
++        vms->pci_preserve_config = true;
++    }
++
+     if (arm_load_dtb(info->dtb_start, info, info->dtb_limit, as, ms, cpu) < 0) {
+         exit(1);
+     }
+@@ -4192,6 +4210,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     hc->unplug_request = virt_machine_device_unplug_request_cb;
+     hc->unplug = virt_machine_device_unplug_cb;
+     mc->nvdimm_supported = true;
++    mc->pci_fixed_bar_supported = true;
+     mc->smp_props.clusters_supported = true;
+ 
+     /* Supported caches */
+-- 
+2.34.1
 
 
