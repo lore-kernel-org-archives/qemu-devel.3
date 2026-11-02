@@ -1,102 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993F0606A324
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 06:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E52F606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 06:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vplavfxn
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Y89/+QYy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNlWO-0007IS-U7; Mon, 02 Nov 2026 01:27:56 -0500
+	id 1xNlY4-0008Bf-St; Mon, 02 Nov 2026 01:29:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1xNlWN-0007IH-Qt
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 01:27:55 -0500
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ id 1xNlY3-0008BV-MZ
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 01:29:39 -0500
+Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1xNlWM-0002Mr-A5
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 01:27:55 -0500
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-4a71d0c4233so1399730fac.0
- for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 22:27:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793600872; cv=none;
+ id 1xNlY1-0002Ti-SE
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 01:29:39 -0500
+Received: by mail-oa1-x36.google.com with SMTP id
+ 586e51a60fabf-4a755bbe158so1862139fac.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Nov 2026 22:29:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793600976; cv=none;
  d=google.com; s=arc-20260327;
- b=SttSk6wiGPgGb0PsoDNuS9mk4zvzmK7lBWPianL0lW7za0d4WLa2dIqAVTzWFuR6Rb
- WOYKx7bEEDdglqMGBSBWbizegcf35UwED2nPRiGgI+Ennpaqj/mNeF1SAKYRBQKoWXt7
- Bv2X1QPcvN2bmOnWwDPmiv2/O0lJ9mviurw8bnhFRaXr7h8bHLtcTuot/r0bE4o2T9dt
- TAZCDaf9upQEpNhb1JzfNj/RxL4Ewrs5lWn26yZyLsKGPK3q7EU2R2PfC+yZB1+tZQFK
- K8PwgAZwOl/nIPZcUAemaGcuymUrEan0a0mDp+LhRAB/jjdncs5VIaAPKHp7nm3o28hQ
- 5MhQ==
+ b=d1Wp0+aZOLD4Hpji8ZeRgqvIrJF4cl9LXTMxZrqY+V1dGHzcbmScRc8yqSqeX3Du8z
+ Sf6TPETeLK0FFrruXgEhgutPJqzQDLA7LjZLKog/qKAZoH+OTvBzdarlZQowZHb6YQFd
+ BpDNDAU9E9jjKGjv8HFFJdVBHATs5IPrO8Lbhb9HaR67wtkWwQONUzfMwwoZiDwouQMV
+ NrLjyOaKlbKe/2ptT7UFP1YWO6PGNSDSN/g9S1TH/RL4Ooz7mrA88GqfI/MjUv8Yp/rU
+ uCVDD6je4wb0juXB3OHWWUHp/8PUAG7Zt7zvxtdqpWp6w8wrB3Z+CNYyF9oLdgcs4P6P
+ OsfA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=FBlh56DDUe+mELSFkXbKhdhUoMz8rcbqMLOZ97PnnpQ=;
+ bh=LgNEZpKudtf7pIpCmWJukKb15bb47V5V97eXm32D82A=;
  fh=t5KLznR9BWgEdiJtBtJ19cLI+afAuYM6Q5kEz2FYrRc=;
- b=WgZDA2MUYZ5uDjDdIIvRKfOw/pxfP04EYFCThAsq+qGf91hGq0LQ7Z3OtdXZNGYP92
- 5QXEQFCryTDidQBsVAdJ/FvxC9f9VFLRQhGSYOD3USN658ktL052TrmR71NsnRrRxdsM
- M4kvMNRJQdCWE9C399stRS/d6Mgg3FHALwz/Z7pOpZFdUEX8PyRbksPQOTV5WL7B5FQs
- oFICpKh0ka4mrJ+mzTvot4ywv6KLHTCbmLJp5Es/SLgYOjxiAZ19rH9YlxtNaoVYTKgk
- GQ1WrABeMsV1ojM9nyLTWH773wPBLsRLfxqGcF9t8GADEEkK64fsukt4Z3MKFZL60yr0
- E9PA==; darn=nongnu.org
+ b=Z6COYCVfRK+pTZeu2J4o3W9e6p8T1iAaDkd4dQM0a7dOyg2GaMw4reU8fF3omCN8Ac
+ AlQ/YeWQegWP6iyPS3Xzej4qLMsQ6ge0DslfsvHl3uJRECfX+F+hy8iSGjOI91e6nCc/
+ Jgzy5RYMlme0W+HWtDzRvtBO1SJKxgHjgBvvPxnkwT/wL2iA0AFgh+znLHsRmQsb8u27
+ Z5E9sTxH3aUxlSP8aU6HQ1x+fj8o4mxMcYDrODRUueyH2S0HCy6ciOKVvkBaYmLByep7
+ SLNrWtQ3W4G1tbVfhdJmsxw42y7VfhGbqYxhD2YD4XD3oEqU71i+ZJZ43Ybxz2s/zEaL
+ sBIw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793600872; x=1794205672; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793600976; x=1794205776; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=FBlh56DDUe+mELSFkXbKhdhUoMz8rcbqMLOZ97PnnpQ=;
- b=vplavfxn9G7HH5glSdyRHfZOVmKgB2dWPy1U6qpVbt4A6cHa+NUnjertm+58i23cF/
- TIuqQwTjsBjGbyJaFqDpFBly1K/hRBfRTE5v52IQMeNJtAvnx4FJRUssBah/cADoVtMY
- ha59bFDaB5wvTMdJ0Rg0GUOi7y/FOX7mfa8En5dGc76w/AOQat6zU4tubKoqTQOy11Fh
- 0++3LVu4Mv8T0+PYmmhBlU2Q8cLJIRB0gAGqBHaUzWyRWYs1uZEJZ2iuv08hfUipAc5g
- 22JaENrghrz29nBVdDrJOWiZ9OgyG0ttFtnphWojdAfR+PEUMYGfHIdahw5gZ+d09Cz6
- 2K1A==
+ bh=LgNEZpKudtf7pIpCmWJukKb15bb47V5V97eXm32D82A=;
+ b=Y89/+QYyuR5Vn1OQv0ZpKEhPTfig/rqYpQsuKZp9sGfqBPqW1Zu/FQBQKEKwNUL2Wz
+ aaWMR6C977HnTVWosTDM/YDjpac4h8taM7ycEAnRYfMQkEPGeavVOsPKRKOIqCeMNLh+
+ GCEaYdf75c5I/aW7okcSHINhw6s8s2btEuxJJMp/MEQVpIaYdafalKb+ejA4z/qIDGj7
+ u1iPAlbNtNB+UjES3grrtJnq6vqCRNEbJb8eHrUDIsiaKge/GjWoNB/By5SYwOqthgn3
+ cjV/np80OxY5SFZdtD4ZBU8PEqA+VkE/8uzumT7SebhjH+wRu7guCOpyeN7wg6ULY25Q
+ zU/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793600872; x=1794205672;
+ d=1e100.net; s=20260707; t=1793600976; x=1794205776;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=FBlh56DDUe+mELSFkXbKhdhUoMz8rcbqMLOZ97PnnpQ=;
- b=fxEu3QJkYwBc38OHXDqLSwh3IAMw1Qd2o/BXZrgrHgX/okaj6zzdbAuZdM3H2+1QTt
- 3mT41yH1PgDtjCvDCou0JaDj77susQ7Fdi8S/PhAdr5CEY4DGK8B2HH8BOuGjLFioXmT
- JKRF8QWJECjziX1iz41rnNTvh91AfizAV+63Ty0n52g3Ee4ceKSPpgv7+LVBTlqXF89v
- VjHN/+n6z9TWWzSJoDAiMXAFhksCXo8bt+AUusO9EcOW48A/JmT+BJx531G5Tj5dANq3
- YBMGUISOKFtDpibmV5f+OtcSjFtJrrOWYZeZCzBMGIf/sxCcXamp2n78QKCyeEThxs5l
- YQ+A==
-X-Gm-Message-State: AFq9FYLGs1tiBRmbELdjp4K1uxkbV4nnLEbOOl3sORxSEa5aOaJwltRK
- VqRrWCiWcIVafJwqMgbvDgxK9XTI6Z0Dr1T6vonNgFDZi/FHa2tfxFLO+g3i/aAa3DmYF2WCRL7
- GVGfX9C+UV5BTFSc+vsHDOoFV3bhFiB8=
-X-Gm-Gg: AYBFou2gd4piWhgseDxOiRMxJ7kmf6B+DuJIepCDzJKb39RlUvI6WL1FWfKBS+BqyUT
- l36M3+atPmZAj1Yh6Nv4KcrfI5hx+q1gPqs8OycY9umZNZE4svZCirmwRcP/PMTLXcDrM0xPTkd
- jkCBHRT9Vu2fhnoUr2H/IiL2EDlI9XVNlsJPxHXOf7zN5plXnc5NL/GR3CeU3l/X8SZ8btc57Sv
- P7w9wX9TGgJ5wABs5jFt9E6sHTlMckWzmaP/LGbPHfYU6edp+zJ+L1vUkoEQAznZEFgzKmi/934
- wmiF6fjxoYDTIaCEgYjnZhn1RdN9A3iYTVjKZvEOg3myPE/vNLsu8Smpb/pTxWK0Cs7O86c7j9K
- F0W1WmI3t6vjtSuF3C7kXEJj71zka6zQd4kA6lQ==
-X-Received: by 2002:a05:6870:3b15:b0:49e:7e48:9314 with SMTP id
- 586e51a60fabf-4a90771ad85mr5552580fac.39.1793600872430; Sun, 01 Nov 2026
- 22:27:52 -0800 (PST)
+ bh=LgNEZpKudtf7pIpCmWJukKb15bb47V5V97eXm32D82A=;
+ b=wbUEQZZftPnG2eqGyMljCy5hNdGJAm4REl+YOBY56UO4qD2UOBqUhVCoqxrt6RieYt
+ /SOYTV96XzW33oMkH4RXEmx4brxVDlEwtq8T1dANtBtboncDhfYVNomA6Dys1HNOAI82
+ jl4czI7H13lwpJim7+b0GsVkIMOiQLn/P17QmS1FmcWXiVR2+AKfOQqjCvtTcKfMrvXa
+ DlAppeOmSYEHhtd5G7xZ026wYQ4FUWEZRLNZIn8Y3YQQ1yRPd6S5/KPkQ4X5hfbd40ZZ
+ sxM2iq+CMdyWr2/eD5H9Trc2RYENFivKnF04dyVBBlRJ9WzF2K77GjNTPVmIs6oHzuH0
+ J88g==
+X-Gm-Message-State: AFq9FYIb8flRmb/wKeyCHYeXHLf7dejvI28wi0FtE3K9GBiYC9LBEFEJ
+ qkKurWEy9iQnXkCCKHLLn6H1wTgg9UJkkbSvWc1ZkQjLaHrCfSYeZxVfk5SsSBMvNWgOeNSAWD4
+ YYfF1b1u4eYsWHVHWjCOThvVtX8mR5Q8=
+X-Gm-Gg: AYBFou0TwC/oZdAMUTi+LGJJvV8INg5U8Xw+WTF+a+/VdqOned9a7P904/sdCiJx1hG
+ VJQAUJDUPisdEPHQO70YLiMuo3yCpWafFACqFBtaZn1hUuKDju5HMBpfLfycW5a68v8mtoT0Jb5
+ cImTTyWIkrQz7eDh1kQMnjry9BtcU4PVSn1iUM4fo7fXH33h/FjGBGQO7Vd6eTB7mOXbsHYVHyt
+ /nXtSQLF0vs30ccGRwo+up+fJoMlQR+Mmahr4zfPJ8m7T7oLiuC4Yl13n3w491d7oZfDbqbq9lI
+ zCXPHC3sBxfE4BFETmfzd1fv8sUIanNOdSv9TcjDu2kbeXBznf1+8K3kQGSwxzceo4dnvH8U7sw
+ DdfgMdjWorSOKmZK8fqOiSe7KeE87So6dsCsRGVR/Hfw6BG4B2f4v0B0WdHI=
+X-Received: by 2002:a05:6870:be90:b0:470:e97e:8f87 with SMTP id
+ 586e51a60fabf-4a8e099c2d7mr5992595fac.23.1793600976624; Sun, 01 Nov 2026
+ 22:29:36 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20260903044626.24453-1-54weasels@gmail.com>
- <20260903044626.24453-2-54weasels@gmail.com>
- <49426047-ad68-4e43-8c60-7b0daef46161@vivier.eu>
-In-Reply-To: <49426047-ad68-4e43-8c60-7b0daef46161@vivier.eu>
+ <20260903044626.24453-3-54weasels@gmail.com>
+ <030196b2-a90c-4d26-815b-d7f04d3448dc@vivier.eu>
+In-Reply-To: <030196b2-a90c-4d26-815b-d7f04d3448dc@vivier.eu>
 From: Purr Box <54weasels@gmail.com>
-Date: Sun, 1 Nov 2026 22:27:41 -0800
-X-Gm-Features: AclHuK_g78tt7hfbTPvU-BKwKHO4AeBMJ6EQ0oMrCGRM5XomTuOtGYhDR6w5_s4
-Message-ID: <CAFWf6u_1F6kEyNRmUX9Wyj-+JWwOdGkG5hAwbHiESzdkZm0CTg@mail.gmail.com>
-Subject: Re: [PATCH v5 1/6] target/m68k: Add dummy CAAR register
+Date: Sun, 1 Nov 2026 22:29:25 -0800
+X-Gm-Features: AclHuK9Qpc54Gn_uNOQLylHFjuZYb-d4ni7p32No1YQTLhx3fy0QC7eAHvNtSJE
+Message-ID: <CAFWf6u_HpeHG2spNs+qeVfB-sp1e33R1CMLMXsYTq08vf2h1nw@mail.gmail.com>
+Subject: Re: [PATCH v5 2/6] target/m68k: Fix fsave/frestore for 68881 FPU
 To: Laurent Vivier <laurent@vivier.eu>
 Cc: qemu-devel@nongnu.org, balaton@eik.bme.hu
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=54weasels@gmail.com; helo=mail-oa1-x31.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::36;
+ envelope-from=54weasels@gmail.com; helo=mail-oa1-x36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,71 +123,93 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Oct 28, 2026 at 7:54=E2=80=AFAM Laurent Vivier <laurent@vivier.eu> =
+On Wed, Oct 28, 2026 at 8:29=E2=80=AFAM Laurent Vivier <laurent@vivier.eu> =
 wrote:
 >
 > Le 03/09/2026 =C3=A0 06:45, 54weasels a =C3=A9crit :
 > > Why this change is made & How it will be used:
-> > The Sun-3 ROM expects the Cache Control Register (CAAR) to exist on the=
- 68020. Reading/writing this register currently aborts QEMU. This patch pro=
-vides a dummy implementation that simply ignores writes and returns 0 on re=
-ads, allowing the ROM to continue booting.
+> > The 68881/68882 FPUs require fsave/frestore instructions to read/write =
+state frames. QEMU only fully implemented this for the 68040. The Sun-3 use=
+s a 68881 FPU, and the boot ROM executes `fsave` to probe FPU presence. Thi=
+s patch adds basic 68881 FPU state frame handling (NULL frame) to accuratel=
+y simulate an idle FPU state.
 > >
 > > Impact on existing functionality:
-> > No impact on existing targets. ColdFire and Mac targets do not access C=
-AAR in a way that currently aborts, and providing a safe dummy implementati=
-on ensures robustness across M68k boards.
+> > Fixes FPU detection for 68881/68882 across all M68k boards without affe=
+cting 68040 specific state logic.
 > >
 > > Signed-off-by: 54weasels <54weasels@gmail.com>
 > > ---
-> >   target/m68k/helper.c | 8 ++++++--
-> >   1 file changed, 6 insertions(+), 2 deletions(-)
+> >   target/m68k/translate.c | 20 +++++++++++++-------
+> >   1 file changed, 13 insertions(+), 7 deletions(-)
 > >
-> > diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-> > index 5f91d206f5..68f523ea84 100644
-> > --- a/target/m68k/helper.c
-> > +++ b/target/m68k/helper.c
-> > @@ -281,8 +281,10 @@ void HELPER(m68k_movec_to)(CPUM68KState *env, uint=
-32_t reg, uint32_t val)
-> >               return;
-> >           }
-> >           break;
-> > -    /* Unimplemented Registers */
-> > +    /* Dummy implementation for CAAR */
-> >       case M68K_CR_CAAR:
+> > diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+> > index 138c89d3e5..c89ef213ed 100644
+> > --- a/target/m68k/translate.c
+> > +++ b/target/m68k/translate.c
+> > @@ -5364,11 +5364,11 @@ DISAS_INSN(frestore)
+> >           gen_exception(s, s->base.pc_next, EXCP_PRIVILEGE);
+> >           return;
+> >       }
+> > -    if (m68k_feature(s->env, M68K_FEATURE_M68040)) {
+> > +    if (m68k_feature(s->env, M68K_FEATURE_FPU)) {
 >
-> CAAR is only supported on 020 and 030, use m68k_feature() here to check t=
-hem and return. Otherwise
-> use break to go to raise_exception_ra()
+> This is not correct for 68060, it has FPU feature bit set but not 040 fea=
+tuer bit, so it will be
+> managed as 68881/68882. To keep existing behavior, it needs to call disas=
+_undef()
 >
-> > +        return;
-> > +    /* Unimplemented Registers */
-> >       case M68K_CR_PCR:
-> >       case M68K_CR_BUSCR:
-> >           cpu_abort(env_cpu(env),
-> > @@ -385,8 +387,10 @@ uint32_t HELPER(m68k_movec_from)(CPUM68KState *env=
-, uint32_t reg)
-> >               return env->mmu.ttr[M68K_DTTR1];
-> >           }
-> >           break;
-> > -    /* Unimplemented Registers */
-> > +    /* Dummy implementation for CAAR */
-> >       case M68K_CR_CAAR:
-> > +        return 0;
+
+Good catch, thanks. In v6 I'll leave the 68040 path as it is and add an
+explicit branch for M68020/M68030 (NULL frame). Everything else, 68060
+included, goes to disas_undef() as it does today.
+
+> >           SRC_EA(env, addr, OS_LONG, 0, NULL);
+> >           /* FIXME: check the state frame */
+> >       } else {
+> > -        disas_undef(env, s, insn);
+> > +        disas_undef_fpu(env, s, insn);
 >
-> Same comment as for m68k_movec_to()
+> unrelated, needs a separate patch or omitted.
 >
-> > +    /* Unimplemented Registers */
-> >       case M68K_CR_PCR:
-> >       case M68K_CR_BUSCR:
-> >           cpu_abort(env_cpu(env), "Unimplemented control register read =
-0x%x\n",
+
+Agreed, I'll drop the disas_undef_fpu() change.
+
+> >       }
+> >   }
+> >
+> > @@ -5379,12 +5379,18 @@ DISAS_INSN(fsave)
+> >           return;
+> >       }
+> >
+> > -    if (m68k_feature(s->env, M68K_FEATURE_M68040)) {
+> > -        /* always write IDLE */
+> > -        TCGv idle =3D tcg_constant_i32(0x41000000);
+> > -        DEST_EA(env, insn, OS_LONG, idle, NULL);
+> > +    if (m68k_feature(s->env, M68K_FEATURE_FPU)) {
+> > +        TCGv frame;
+> > +        if (m68k_feature(s->env, M68K_FEATURE_M68040)) {
+> > +            /* 68040 FSAVE: always write IDLE */
+> > +            frame =3D tcg_constant_i32(0x41000000);
+>
+> same as previously
+>
+>
+> > +        } else {
+> > +            /* 68881/68882 FSAVE: always write NULL frame */
+> > +            frame =3D tcg_constant_i32(0x00000000);
+> > +        }
+> > +        DEST_EA(env, insn, OS_LONG, frame, NULL);
+> >       } else {
+> > -        disas_undef(env, s, insn);
+> > +        disas_undef_fpu(env, s, insn);
+>
+> same as previously
+>
+> >       }
+> >   }
+> >   #endif
 >
 > Thanks,
 > Laurent
->
-
-Thanks Laurent, will do in v6: CAAR is accepted only when M68020 or M68030
-is set, and every other CPU falls through to raise_exception_ra(). Same
-change in m68k_movec_from().
 
