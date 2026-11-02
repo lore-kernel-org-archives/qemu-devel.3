@@ -1,92 +1,159 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243E3606A331
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 10:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADF0606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 10:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kLsLuHl8
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Iv2vRJct;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=L5SVVjcN
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNoz4-00064I-Co; Mon, 02 Nov 2026 05:09:47 -0500
+	id 1xNoz5-00064h-Rj; Mon, 02 Nov 2026 05:09:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lorandmarton.dev@gmail.com>)
- id 1xNoy4-0005vw-Cr
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 05:08:57 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lorandmarton.dev@gmail.com>)
- id 1xNoy2-0004wp-Gw
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 05:08:44 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-48e20ed3b9dso2502748f8f.2
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 02:08:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1xNoxo-0005td-8j
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 05:08:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1xNoxm-0004vJ-5O
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 05:08:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793614104;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=z4QIWdQCrDK0qnVh/p5m8lR1tD8alH2y0vj4XN67fBA=;
+ b=Iv2vRJctHatOxoh7ezYSK4afqFeFmucy3Pt1kkEQKexhk6phiMHcMHGqE5+yKpmn4TgyrW
+ 7484PTDVWp4anjnZrSm7K4xfsGhLr2wvt+PYIObWF4qpTPUjbXpKR0/eEOaxl3pTjqqPKH
+ iBjSkiiPuOn6DgViXPlsgVhXq8CuRSA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-270-VUug-S6AOTq-XJYpxCtWgA-1; Mon, 02 Nov 2026 05:07:18 -0500
+X-MC-Unique: VUug-S6AOTq-XJYpxCtWgA-1
+X-Mimecast-MFC-AGG-ID: VUug-S6AOTq-XJYpxCtWgA_1793614038
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48af4046a3bso2805370f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 02:07:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793614121; x=1794218921; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=UU8HoqaxYwWUV6gd0mqcHfedU48+471QZqL+QlLFBRQ=;
- b=kLsLuHl88W7JFhnmecdLghIgWeInSg09wH+JQYI/sYp2gYrbmelqISq8J8aVeRmYo6
- 3E0TEobdUVTeT2HDPeQv4VR7WA8L9vtMVsWDmKEJNXIHwg3iBwrHW+GfUyjlALjAuuHr
- gqP8Iqo0iLIJr6WXW/qT+0SyAfKNdrvcCaTu5kvmoCm6f3Aykmp/BXvSUwM8bWpdqiX+
- bj002Oqoee70wQjqYjNoODqrzlq5X2vSdJhtvn8E+wwDimP0GfaeymtbuO7NdSF7bab0
- 0hoovDx96RKULFylaYGyQ7yw4gxfhCxshU+sBE9WG9+kiu+eVeQcTt053LUeKhp8ioex
- 0ALw==
+ d=redhat.com; s=google; t=1793614037; x=1794218837; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=z4QIWdQCrDK0qnVh/p5m8lR1tD8alH2y0vj4XN67fBA=;
+ b=L5SVVjcNJlpGHZZexcn8xy6AFSuzuwPRscINZgC+9lGmVniFb6xYI3vx+6VJobOs7l
+ Xpv3Wda2/R3Yv3Fx4IZRR5Zdymvh+WHCnonnav5LrE5cowVMyQxmis5NlWv50HGBb6J9
+ kBjiQVJTKtsAyJOs4N/x7LtKYu2ww/ewEBEvMY9kBDWJSMUousunJNA3uPIkA9QTQfWi
+ 0ZYkEVbwCYAetjiVjsWEpYuPPyyLJdMjFoRbjhUABZmPsT9bPn/kuVuSYim3NV+ZAYVX
+ Myi7qv6pz5hE6oqwFxJhxCPombxEM4kgSOfKtvRMOBkMLElJ1shuFWUGjYjm9EwpxGv5
+ l4XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793614121; x=1794218921;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1793614037; x=1794218837;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=UU8HoqaxYwWUV6gd0mqcHfedU48+471QZqL+QlLFBRQ=;
- b=1RHqonS0lE3vyo63jhT+zPdgKVht5/63HaoFjeuMy2WZkMK1BJwHGditAZJXhWnIOo
- 2PcPXxH8thZlApT3lMY4HCE50lzdnGAsfrU/nOAb9VCeOqsnWw1NWTX7lEXg7QrzayqI
- AFT2CkiPsGYFIlUBPSmXDa5X1DrfdSzqUGJYMU8ooaTqKGU7zXbWP0K0cH785jQf2sDH
- x4q961IT42m8mYKGALSKCN7+ngdiQ0Re5tB1AJZsnmiiZQCL3NLf27uhYJaz7p/dnrKg
- 5ULXrAaEtNcwGZJoIasg9OtFXqh/Ed/3yEv7Y0PsGXJY36TvAQwf3R73N+G+1wU8sUWD
- /mHw==
-X-Gm-Message-State: APuU4Z9tyuAOBm82dIqrGruKDQOyCYcteZb5AVaGPQTsKiaN9QQTRdDN
- mLFLEhz7hqb6HcAcEZMCwR/MOcxhc6G/WmjolMoc84lbquJTNk59PhuZBIghLHotock=
-X-Gm-Gg: AYBFou0NRypz/U//CQ0uyyLEfgzTrGLFe+RDpNYLci21YxvUGxaC7BUVTOArxsohYgZ
- jDfx/6BXYMb/5fqzUaUs3A+mhMYmb/EOEaPEHbbdRHjmYmrpElVTLclpCSwMAiahHVhphNlo84N
- U+gPbMYMhBMVZWoJfWREulIhc2VOSuZOuj50m1dg2ZWnuZmQv4rJegEll3By8aGEyHd3v7XhHDD
- MWPIYjsIUjz7f4mHpskwBXK6Uiyg587qKyaNFMHaRDuIc+L+/bBK1A3atsHuMm2vuNZNBqKezxq
- s+GcCTIDvMx0Ni35TrV1pQgKy5RwUQe17aVaTsGp1jrQ4C7YGhTYdbX3vEU8VjNLhUZF4a1Tw3f
- 9ZNOUuZXzqkukqwDmANLTlWSuqiiW27WgaOrxpwZ/1bf5Ul+YSyMZziOnKczSurXeb4aBULcmWZ
- /xQjvy1ZhwhyxNRu6E3q6oEGB7MzG000EqClwOAJi/V//+YP9FRMDS8DZEN8yxcsQQY6E2U18Af
- fA9zMMniZPHa3KSm+vFBkxdz5v+OVt8vfBpWkCIKlBRBfAZiGP50J9VYFTsYUSBYPfPd2KvRBcS
- 8CLMOwP/NcEhsbH11jcTQB+DcaB4lElmAwxbYGpetcNKdlm4EubxA78ubjHF2i2FJbSSrxbm59k
- V5w==
-X-Received: by 2002:a05:6000:2603:b0:48e:6852:aea0 with SMTP id
- ffacd0b85a97d-48e6e526830mr20832788f8f.48.1793614120774; 
- Mon, 02 Nov 2026 02:08:40 -0800 (PST)
-Received: from localhost.localdomain (email.telematik-zentrum.de.
- [87.138.218.176]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b77f06sm19166398f8f.21.2026.11.02.02.08.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Nov 2026 02:08:40 -0800 (PST)
-From: Lorand Marton <lorandmarton.dev@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, philmd@oss.qualcomm.com, qemu-arm@nongnu.org,
- farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
- alistair@alistair23.me
-Subject: [PATCH 0/5] hw: interrupt,
- reset and divider fixes for BCM2835 peripherals
-Date: Mon,  2 Nov 2026 11:08:33 +0100
-Message-ID: <cover.1793613972.bcm2835-fixes-v1.git.lorandmarton.dev@gmail.com>
-X-Mailer: git-send-email 2.56.0
+ bh=z4QIWdQCrDK0qnVh/p5m8lR1tD8alH2y0vj4XN67fBA=;
+ b=ZwHhzi7PiMNn3HcqnSupQ/FmyY9KNWC4oHmneDa7WiwhqIa8Ud0SN/5MFzpuxR1MZM
+ fPP8pRYBUtRw013yBIcmzqfHeY8PfyxHqNg+Dupna/0hHCIuO/ifeWT6E6o+tqD7QmOB
+ i1kwlkw6ja8GgSN/EpuJSooAnkDQdLOlUgc4jcywfh2Z5uQUvwf1DHXKjFqTIYSXSNUn
+ rEHZaENqQx6DlGqwj+I3b7AT5izfPcILytTbXzt4+H1DRNEPbm6EW54hDz1oQi8uKpqQ
+ Bnak4UD3e5cuRBbRhnzD8X7iTneGvXd012KcK1ycKx2zv5YVmSEzZSyBCnk81O0cFw2Q
+ Zzhw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxNuiXMt9Hi3w48TW89SDfz/p1Ey3fn7ddVp9URUHvk4XPjP3uoynrl2NSoaC+40rvycAnjATrvl5WU@nongnu.org
+X-Gm-Message-State: APuU4Z8v/tTISze5lLfI5ZYQmkEg0EVm7v7ItvPG7Eq6gwni2qxGjeka
+ FoEun7BEXK/zp/xDFWw1TGXKWJ420RwsetUjYmKatCZswq0DqZUMP8IpMNynXPmBtmp6aIEl5us
+ 8sbXIetGohe+E6I7LEoWh+3U2bHMlLM1HMOzZOXidhk9s/xBpzfMFLTfp
+X-Gm-Gg: AYBFou1RT3UlJxBf/vq34naEo+n61Xvz1sY1KliAfHpz4qik/GqFONxoIMgrEayNgDQ
+ UZSPEooJBKu0cNJ4uRqXLIC/MwFeqvlyixtB2xI3VTB8DXAEMD9DRv4za2KHxoACFOz5NIYVASS
+ W2NmIfkGtdacn2QEeDBGqA1lk7BbpOmIBbJBHeZL8wzp3XxTrYdNVHZKERBF9RgCfRStrnsrCTH
+ NcZhSpMZlN1mnJCVBpY6Qby/YZA6QVuagLd2cWjDvRBTcTuj/glbsftn0/XswML9IgRAG1EbIKz
+ Vhyzf98Jkm7zh/aZA2dbOJ/M98SHi68iO6jpMaYVCtGSlGX/fAzuytnWTieHS1H9/8UgWNxQERF
+ OkyidT3GHuvzF8w6hv+iixMQ/HRLCNWbkzd4nhimjo7FueV4xQvAYvav+zS3ZkiT0cbv792ypMu
+ asgyYXxTuz4uE4DSE=
+X-Received: by 2002:a05:6000:18a8:b0:48d:e696:8a65 with SMTP id
+ ffacd0b85a97d-48e6e50b4f4mr21339354f8f.46.1793614037589; 
+ Mon, 02 Nov 2026 02:07:17 -0800 (PST)
+X-Received: by 2002:a05:6000:18a8:b0:48d:e696:8a65 with SMTP id
+ ffacd0b85a97d-48e6e50b4f4mr21339310f8f.46.1793614037113; 
+ Mon, 02 Nov 2026 02:07:17 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:e10:ef90:e9e7:d9a0:a4eb:dc4b?
+ ([2a01:e0a:e10:ef90:e9e7:d9a0:a4eb:dc4b])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e71a4d425sm19605298f8f.1.2026.11.02.02.07.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Nov 2026 02:07:16 -0800 (PST)
+Message-ID: <8b74c033-6efb-4729-b0d6-6d1288fe3811@redhat.com>
+Date: Mon, 2 Nov 2026 11:07:15 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=lorandmarton.dev@gmail.com; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] rng: Remove deprecated "rng-backend" property "opened"
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: amit@kernel.org, pbonzini@redhat.com, berrange@redhat.com,
+ eblake@redhat.com
+References: <20261028152612.953491-1-armbru@redhat.com>
+Content-Language: en-US
+From: Laurent Vivier <lvivier@redhat.com>
+Autocrypt: addr=lvivier@redhat.com; keydata=
+ xsFNBFYFJhkBEAC2me7w2+RizYOKZM+vZCx69GTewOwqzHrrHSG07MUAxJ6AY29/+HYf6EY2
+ WoeuLWDmXE7A3oJoIsRecD6BXHTb0OYS20lS608anr3B0xn5g0BX7es9Mw+hV/pL+63EOCVm
+ SUVTEQwbGQN62guOKnJJJfphbbv82glIC/Ei4Ky8BwZkUuXd7d5NFJKC9/GDrbWdj75cDNQx
+ UZ9XXbXEKY9MHX83Uy7JFoiFDMOVHn55HnncflUncO0zDzY7CxFeQFwYRbsCXOUL9yBtqLer
+ Ky8/yjBskIlNrp0uQSt9LMoMsdSjYLYhvk1StsNPg74+s4u0Q6z45+l8RAsgLw5OLtTa+ePM
+ JyS7OIGNYxAX6eZk1+91a6tnqfyPcMbduxyBaYXn94HUG162BeuyBkbNoIDkB7pCByed1A7q
+ q9/FbuTDwgVGVLYthYSfTtN0Y60OgNkWCMtFwKxRaXt1WFA5ceqinN/XkgA+vf2Ch72zBkJL
+ RBIhfOPFv5f2Hkkj0MvsUXpOWaOjatiu0fpPo6Hw14UEpywke1zN4NKubApQOlNKZZC4hu6/
+ 8pv2t4HRi7s0K88jQYBRPObjrN5+owtI51xMaYzvPitHQ2053LmgsOdN9EKOqZeHAYG2SmRW
+ LOxYWKX14YkZI5j/TXfKlTpwSMvXho+efN4kgFvFmP6WT+tPnwARAQABzSNMYXVyZW50IFZp
+ dmllciA8bHZpdmllckByZWRoYXQuY29tPsLBeAQTAQIAIgUCVgVQgAIbAwYLCQgHAwIGFQgC
+ CQoLBBYCAwECHgECF4AACgkQ8ww4vT8vvjwpgg//fSGy0Rs/t8cPFuzoY1cex4limJQfReLr
+ SJXCANg9NOWy/bFK5wunj+h/RCFxIFhZcyXveurkBwYikDPUrBoBRoOJY/BHK0iZo7/WQkur
+ 6H5losVZtrotmKOGnP/lJYZ3H6OWvXzdz8LL5hb3TvGOP68K8Bn8UsIaZJoeiKhaNR0sOJyI
+ YYbgFQPWMHfVwHD/U+/gqRhD7apVysxv5by/pKDln1I5v0cRRH6hd8M8oXgKhF2+rAOL7gvh
+ jEHSSWKUlMjC7YwwjSZmUkL+TQyE18e2XBk85X8Da3FznrLiHZFHQ/NzETYxRjnOzD7/kOVy
+ gKD/o7asyWQVU65mh/ECrtjfhtCBSYmIIVkopoLaVJ/kEbVJQegT2P6NgERC/31kmTF69vn8
+ uQyW11Hk8tyubicByL3/XVBrq4jZdJW3cePNJbTNaT0d/bjMg5zCWHbMErUib2Nellnbg6bc
+ 2HLDe0NLVPuRZhHUHM9hO/JNnHfvgiRQDh6loNOUnm9Iw2YiVgZNnT4soUehMZ7au8PwSl4I
+ KYE4ulJ8RRiydN7fES3IZWmOPlyskp1QMQBD/w16o+lEtY6HSFEzsK3o0vuBRBVp2WKnssVH
+ qeeV01ZHw0bvWKjxVNOksP98eJfWLfV9l9e7s6TaAeySKRRubtJ+21PRuYAxKsaueBfUE7ZT
+ 7zfOwU0EVgUmGQEQALxSQRbl/QOnmssVDxWhHM5TGxl7oLNJms2zmBpcmlrIsn8nNz0rRyxT
+ 460k2niaTwowSRK8KWVDeAW6ZAaWiYjLlTunoKwvF8vP3JyWpBz0diTxL5o+xpvy/Q6YU3BN
+ efdq8Vy3rFsxgW7mMSrI/CxJ667y8ot5DVugeS2NyHfmZlPGE0Nsy7hlebS4liisXOrN3jFz
+ asKyUws3VXek4V65lHwB23BVzsnFMn/bw/rPliqXGcwl8CoJu8dSyrCcd1Ibs0/Inq9S9+t0
+ VmWiQWfQkz4rvEeTQkp/VfgZ6z98JRW7S6l6eophoWs0/ZyRfOm+QVSqRfFZdxdP2PlGeIFM
+ C3fXJgygXJkFPyWkVElr76JTbtSHsGWbt6xUlYHKXWo+xf9WgtLeby3cfSkEchACrxDrQpj+
+ Jt/JFP+q997dybkyZ5IoHWuPkn7uZGBrKIHmBunTco1+cKSuRiSCYpBIXZMHCzPgVDjk4viP
+ brV9NwRkmaOxVvye0vctJeWvJ6KA7NoAURplIGCqkCRwg0MmLrfoZnK/gRqVJ/f6adhU1oo6
+ z4p2/z3PemA0C0ANatgHgBb90cd16AUxpdEQmOCmdNnNJF/3Zt3inzF+NFzHoM5Vwq6rc1JP
+ jfC3oqRLJzqAEHBDjQFlqNR3IFCIAo4SYQRBdAHBCzkM4rWyRhuVABEBAAHCwV8EGAECAAkF
+ AlYFJhkCGwwACgkQ8ww4vT8vvjwg9w//VQrcnVg3TsjEybxDEUBm8dBmnKqcnTBFmxN5FFtI
+ WlEuY8+YMiWRykd8Ln9RJ/98/ghABHz9TN8TRo2b6WimV64FmlVn17Ri6FgFU3xNt9TTEChq
+ AcNg88eYryKsYpFwegGpwUlaUaaGh1m9OrTzcQy+klVfZWaVJ9Nw0keoGRGb8j4XjVpL8+2x
+ OhXKrM1fzzb8JtAuSbuzZSQPDwQEI5CKKxp7zf76J21YeRrEW4WDznPyVcDTa+tz++q2S/Bp
+ P4W98bXCBIuQgs2m+OflERv5c3Ojldp04/S4NEjXEYRWdiCxN7ca5iPml5gLtuvhJMSy36gl
+ U6IW9kn30IWuSoBpTkgV7rLUEhh9Ms82VWW/h2TxL8enfx40PrfbDtWwqRID3WY8jLrjKfTd
+ R3LW8BnUDNkG+c4FzvvGUs8AvuqxxyHbXAfDx9o/jXfPHVRmJVhSmd+hC3mcQ+4iX5bBPBPM
+ oDqSoLt5w9GoQQ6gDVP2ZjTWqwSRMLzNr37rJjZ1pt0DCMMTbiYIUcrhX8eveCJtY7NGWNyx
+ FCRkhxRuGcpwPmRVDwOl39MB3iTsRighiMnijkbLXiKoJ5CDVvX5yicNqYJPKh5MFXN1bvsB
+ kmYiStMRbrD0HoY1kx5/VozBtc70OU0EB8Wrv9hZD+Ofp0T3KOr1RUHvCZoLURfFhSQ=
+In-Reply-To: <20261028152612.953491-1-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,65 +165,113 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Four fixes for BCM2835 peripheral models that the raspi3b and raspi4b
-machines use, each with a qtest that fails without the fix:
+On 10/28/26 16:26, Markus Armbruster wrote:
+> This property was deprecated in commit 6815bc1d03c (qapi/qom: Add
+> ObjectOptions for rng-*, deprecate 'opened') in v6.0.0.  Commit
+> 6e577937485 (rng: make opened property read-only) in v7.1.0 made it
+> read-only, and also moved the its entry from docs/about/deprecated.rst
+> to docs/about/removed-features.rst.  I have no idea why it made the
+> property read-only instead of dropping it.
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-- bcm2835_i2c: writing 1 to DONE in S did not lower the interrupt.
-- bcm2835_spi: a reset left the interrupt line raised.
-- bcm2835_systmr: a reset left raised interrupts raised, and a compare
-  set before the reset still fired after it.
-- bcm2835_cprman: a PLL channel divider of 0 divided by 255, not 256.
+Reviewed-by: Laurent Vivier <lvivier@redhat.com>
 
-Patch 1 adds the BCM283x qtests to the Raspberry Pi section of
-MAINTAINERS: the three that exist have no entry, and patches 3 to 5
-add three more.
-
-The fixes are independent bug fixes and apply to master.
-
-I found these bugs while running Raspberry Pi OS images on a model of
-the Compute Module 4: https://github.com/LorandMarton/boardtwin. Its
-QEMU changes are on the boardtwin-develop branch of
-https://github.com/LorandMarton/qemu. I intend to send the board model
-(raspicm4) after the 11.2 release.
-
-Checked: each patch builds and passes its qtests; each new test fails
-with only its fix reverted; the aarch64 qtests pass (35, 3 skipped:
-the slow cdrom test and the two swtpm tests).
-
-Lorand Marton (5):
-  MAINTAINERS: list the BCM283x qtests under Raspberry Pi
-  hw/i2c/bcm2835_i2c: update the interrupt when the status is cleared
-  hw/ssi/bcm2835_spi: lower the interrupt on reset
-  hw/timer/bcm2835_systmr: cancel the compares and lower the IRQs on
-    reset
-  hw/misc/bcm2835_cprman: a PLL channel divider of 0 divides by 256
-
- MAINTAINERS                       |  1 +
- hw/i2c/bcm2835_i2c.c              |  1 +
- hw/misc/bcm2835_cprman.c          |  6 ++--
- hw/ssi/bcm2835_spi.c              |  2 ++
- hw/timer/bcm2835_systmr.c         |  4 +++
- tests/qtest/bcm2835-cprman-test.c | 49 ++++++++++++++++++++++++++++
- tests/qtest/bcm2835-i2c-test.c    | 24 ++++++++++++++
- tests/qtest/bcm2835-spi-test.c    | 42 ++++++++++++++++++++++++
- tests/qtest/bcm2835-systmr-test.c | 54 +++++++++++++++++++++++++++++++
- tests/qtest/meson.build           |  4 ++-
- 10 files changed, 183 insertions(+), 4 deletions(-)
- create mode 100644 tests/qtest/bcm2835-cprman-test.c
- create mode 100644 tests/qtest/bcm2835-spi-test.c
- create mode 100644 tests/qtest/bcm2835-systmr-test.c
-
-
-base-commit: 56afd82bd4db9688f1c1c9d0e2ea163b8cde3283
--- 
-2.56.0
+> ---
+>   qapi/qom.json  | 22 ----------------------
+>   backends/rng.c | 11 -----------
+>   2 files changed, 33 deletions(-)
+> 
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 4810d53e58..2a98b1de5f 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -925,25 +925,6 @@
+>     'data': { 'pci-bus': 'str',
+>               'node': 'uint32' } }
+>   
+> -##
+> -# @RngProperties:
+> -#     Properties for objects of classes derived from rng.
+> -#
+> -# @opened: if true, the device is opened immediately when applying
+> -#     this option and will probably fail when processing the next
+> -#     option.  Don't use; only provided for compatibility.
+> -#     (default: false)
+> -#
+> -# Features:
+> -#
+> -# @deprecated: Member @opened is deprecated.  Setting true doesn't
+> -#     make sense, and false is already the default.
+> -#
+> -# Since: 1.3
+> -##
+> -{ 'struct': 'RngProperties',
+> -  'data': { '*opened': { 'type': 'bool', 'features': ['deprecated'] } } }
+> -
+>   ##
+>   # @RngEgdProperties:
+>   #     Properties for rng-egd objects.
+> @@ -954,7 +935,6 @@
+>   # Since: 1.3
+>   ##
+>   { 'struct': 'RngEgdProperties',
+> -  'base': 'RngProperties',
+>     'data': { 'chardev': 'str' } }
+>   
+>   ##
+> @@ -967,7 +947,6 @@
+>   # Since: 1.3
+>   ##
+>   { 'struct': 'RngRandomProperties',
+> -  'base': 'RngProperties',
+>     'data': { '*filename': 'str' },
+>     'if': 'CONFIG_POSIX' }
+>   
+> @@ -1372,7 +1351,6 @@
+>         'pr-manager-helper':          { 'type': 'PrManagerHelperProperties',
+>                                         'if': 'CONFIG_LINUX' },
+>         'qtest':                      'QtestProperties',
+> -      'rng-builtin':                'RngProperties',
+>         'rng-egd':                    'RngEgdProperties',
+>         'rng-random':                 { 'type': 'RngRandomProperties',
+>                                         'if': 'CONFIG_POSIX' },
+> diff --git a/backends/rng.c b/backends/rng.c
+> index bc9c7a5ab3..08d57e47ab 100644
+> --- a/backends/rng.c
+> +++ b/backends/rng.c
+> @@ -41,13 +41,6 @@ void rng_backend_request_entropy(RngBackend *s, size_t size,
+>       }
+>   }
+>   
+> -static bool rng_backend_prop_get_opened(Object *obj, Error **errp)
+> -{
+> -    RngBackend *s = RNG_BACKEND(obj);
+> -
+> -    return s->opened;
+> -}
+> -
+>   static void rng_backend_complete(UserCreatable *uc, Error **errp)
+>   {
+>       RngBackend *s = RNG_BACKEND(uc);
+> @@ -123,10 +116,6 @@ static void rng_backend_class_init(ObjectClass *oc, const void *data)
+>       UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
+>   
+>       ucc->complete = rng_backend_complete;
+> -
+> -    object_class_property_add_bool(oc, "opened",
+> -                                   rng_backend_prop_get_opened,
+> -                                   NULL);
+>   }
+>   
+>   static const TypeInfo rng_backend_info = {
 
 
