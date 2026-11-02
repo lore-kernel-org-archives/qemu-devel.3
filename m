@@ -1,73 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBAC608B07C
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 16:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633C3606B0E4
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 16:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DahnTlmW
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GdA4PpxU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNuvW-0006N2-L2; Mon, 02 Nov 2026 11:30:30 -0500
+	id 1xNuw3-0007H7-Me; Mon, 02 Nov 2026 11:31:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvT-0006JU-3y
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xNuw1-00078W-NU
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:31:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvP-00023r-Km
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:26 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xNuvz-0002Pk-Pw
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:31:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793637013;
+ s=mimecast20190719; t=1793637059;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NcgXpS8K6nkVztL9r1gh1IdujBadbHGz0oW8c9Nh6u0=;
- b=DahnTlmWTbuG89lZLCWxoMGXjqyRacRH+1vH5VsQlSIZjTo22gCjandWKO/sR02lEn1czQ
- Zr0tA1ws9HTsU7MAkydgP6osPmcHfehw9hB01THFKSYGOMJd+hwUWE1utZN0tEYJocrqe/
- UWxV0ONVdVuK0skhaAOmgb7rDUQUS88=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=87ExfFHZFD95QHZX5dNBYrN9jmmMcRmJcsTv/jdDa/s=;
+ b=GdA4PpxUWhdJ2UlCd0NQhHCaWUwWyrY9zRyEZVMS+nsBMu5ER0wUwzKaIsLE5XsC60todt
+ h2cpN3aXO2JwmBqJ1tttEKTHOgocYlGKdpNgFonkzzmJykMSl7wTdldlWxD8oJzNdvDi6V
+ hmTkrcCvkyL0EegWru1EW3fcSQ1hSTw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-dy2euz_XPUGRLMvKNjnWoQ-1; Mon,
- 02 Nov 2026 11:30:10 -0500
-X-MC-Unique: dy2euz_XPUGRLMvKNjnWoQ-1
-X-Mimecast-MFC-AGG-ID: dy2euz_XPUGRLMvKNjnWoQ_1793637009
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-ToivS_rxNZ-JbGS6VTZjJw-1; Mon,
+ 02 Nov 2026 11:30:56 -0500
+X-MC-Unique: ToivS_rxNZ-JbGS6VTZjJw-1
+X-Mimecast-MFC-AGG-ID: ToivS_rxNZ-JbGS6VTZjJw_1793637055
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B77619560A2; Mon,  2 Nov 2026 16:30:09 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.44.32.164])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A5EB11956087; Mon,  2 Nov 2026 16:30:07 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	richard.henderson@linaro.org,
-	qemu-devel@nongnu.org
-Subject: [PULL 03/17] qemu-nbd: Add --all-bitmaps option
-Date: Mon,  2 Nov 2026 17:29:41 +0100
-Message-ID: <20261102162955.268763-4-kwolf@redhat.com>
-In-Reply-To: <20261102162955.268763-1-kwolf@redhat.com>
-References: <20261102162955.268763-1-kwolf@redhat.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71C071800661; Mon,  2 Nov 2026 16:30:55 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.48.50])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ED66E1800444; Mon,  2 Nov 2026 16:30:53 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Richard Henderson <richard.henderson@linaro.org>
+Cc: Junjie Cao <junjie.cao@linux.dev>, Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 4/5] hw/usb/hcd-xhci: fail Address Device when the DCBAA entry
+ is unreadable
+Date: Mon,  2 Nov 2026 17:30:43 +0100
+Message-ID: <20261102163044.644663-5-thuth@redhat.com>
+In-Reply-To: <20261102163044.644663-1-thuth@redhat.com>
+References: <20261102163044.644663-1-thuth@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,241 +78,126 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Eric Blake <eblake@redhat.com>
+From: Junjie Cao <junjie.cao@linux.dev>
 
-When exporting bitmaps over NBD, we previously required a user to pass
-one '-B name' per bitmap, which they would have to use 'qemu-img info'
-to learn the list of names to pass.  More convenient is an option to
-export all possible bitmaps at once, as discussed here [1].
+xhci_address_slot() ignores the result of reading the slot's DCBAA
+entry. When that read fails the output context pointer is whatever the
+failed read left behind, zero for unassigned memory, so the slot and
+ep0 contexts land at guest address 0 and the command completes with
+Success.
 
-Implementation-wise, mixing --all-bitmaps and -B is harmless (grabbing
-all bitmap names already requires crawling the backing chain and
-deduplicating, so either the -B name is already detected as a
-duplicate from adding the name again, or it is an invalid name that
-will still cause a later error about bitmap not found). I also tested
-that mixing -s and --all-bitmaps still works (the temporary overlay
-image to make -s work has no bitmaps of its own, so starting the crawl
-for bitmap names at the original bs is just fine).
+Log the failed read and raise HCE, as the context DMA helpers do, and
+return TRB Error, as Address Device already does for an unreadable
+input control context. xhci_die() only flags HCE and leaves the
+controller running; the HSE and halt of xHCI 1.2 section 4.10.2.6 are
+not added here.
 
-Also, now that parallels can have bitmaps (and not just qcow2), a
-slight doc wording change for -B is warranted.
+usb_xhci_post_load() reads the same entry; a failure there now disables
+the slot, as an unresolvable slot context already does.
 
-[1] https://lists.nongnu.org/archive/html/qemu-devel/2026-10/msg01234.html
-
-Signed-off-by: Eric Blake <eblake@redhat.com>
-CC: Denis V. Lunev <den@openvz.org>
-Message-ID: <20261019222205.2028202-2-eblake@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Fixes: 62c6ae04cf43 ("xhci: Initial xHCI implementation")
+Fixes: 37352df30fbc ("xhci: add live migration support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4706
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
+Message-ID: <20261031033725.1275414-2-junjie.cao@linux.dev>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/tools/qemu-nbd.rst                       | 12 +++-
- qemu-nbd.c                                    | 57 ++++++++++++++++++-
- tests/qemu-iotests/tests/qemu-img-bitmaps     | 13 +++++
- tests/qemu-iotests/tests/qemu-img-bitmaps.out | 12 ++++
- 4 files changed, 90 insertions(+), 4 deletions(-)
+ hw/usb/hcd-xhci.c | 41 +++++++++++++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 14 deletions(-)
 
-diff --git a/docs/tools/qemu-nbd.rst b/docs/tools/qemu-nbd.rst
-index 336b4aa46e7..a966c282be2 100644
---- a/docs/tools/qemu-nbd.rst
-+++ b/docs/tools/qemu-nbd.rst
-@@ -83,9 +83,15 @@ driver options if :option:`--image-opts` is specified.
- 
- .. option:: -B, --bitmap=NAME
- 
--  If *filename* has a qcow2 persistent bitmap *NAME*, expose
--  that bitmap via the ``qemu:dirty-bitmap:NAME`` metadata context
--  accessible through NBD_OPT_SET_META_CONTEXT.
-+  If *filename* has a persistent bitmap *NAME* (possibly via a backing
-+  chain), expose that bitmap via the ``qemu:dirty-bitmap:NAME`` metadata
-+  context accessible through NBD_OPT_SET_META_CONTEXT.
-+
-+.. option:: --all-bitmaps
-+
-+  If *filename* has any persistent bitmaps (possibly via a backing
-+  chain), expose one ``qemu:dirty-bitmap:NAME`` metadata context per
-+  bitmap, accessible through NBD_OPT_SET_META_CONTEXT.
- 
- .. option:: -s, --snapshot
- 
-diff --git a/qemu-nbd.c b/qemu-nbd.c
-index fcca88932a3..fa28609d7dc 100644
---- a/qemu-nbd.c
-+++ b/qemu-nbd.c
-@@ -28,6 +28,7 @@
- #include "system/runstate.h" /* for qemu_system_killed() prototype */
- #include "block/block_int.h"
- #include "block/nbd.h"
-+#include "block/dirty-bitmap.h"
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
- #include "qemu/option.h"
-@@ -71,6 +72,7 @@
- #define QEMU_NBD_OPT_SELINUX_LABEL   266
- #define QEMU_NBD_OPT_TLSHOSTNAME     267
- #define QEMU_NBD_OPT_HANDSHAKE_LIMIT 268
-+#define QEMU_NBD_OPT_ALL_BITMAPS     269
- 
- #define MBR_SIZE 512
- 
-@@ -109,6 +111,7 @@ static void usage(const char *name)
- "  -o, --offset=OFFSET       offset into the image\n"
- "  -A, --allocation-depth    expose the allocation depth\n"
- "  -B, --bitmap=NAME         expose a persistent dirty bitmap\n"
-+"      --all-bitmaps         expose all persistent dirty bitmaps\n"
- "\n"
- "General purpose options:\n"
- "  -L, --list                list exports available from another NBD server\n"
-@@ -530,6 +533,48 @@ static void qemu_nbd_shutdown(void)
-     bdrv_close_all();
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 5d7a77b8bcf..b5cc1ad2ff5 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -534,6 +534,23 @@ static inline void xhci_dma_write_u32s(XHCIState *xhci, dma_addr_t addr,
+     }
  }
  
-+/* Helpers to implement --all-bitmaps option. */
-+static bool is_duplicate_bitmap(BlockDirtyBitmapOrStrList *bitmaps,
-+                                const char *name)
++static bool xhci_read_dcbaa(XHCIState *xhci, unsigned int slotid,
++                            dma_addr_t *octx)
 +{
-+    /* Treat an anonymous bitmap as a duplicate. */
-+    if (!name) {
-+        return true;
++    dma_addr_t dcbaap = xhci_addr64(xhci->dcbaap_low, xhci->dcbaap_high);
++    uint64_t poctx;
++
++    if (ldq_le_dma(xhci->as, dcbaap + 8 * slotid, &poctx,
++                   MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: DMA memory access failed!\n",
++                      __func__);
++        xhci_die(xhci);
++        return false;
 +    }
-+    for (; bitmaps; bitmaps = bitmaps->next) {
-+        if (bitmaps->value->type == QTYPE_QSTRING &&
-+            strcmp(bitmaps->value->u.local, name) == 0) {
-+            return true;
-+        }
-+    }
-+    return false;
++    *octx = xhci_mask64(poctx);
++    return true;
 +}
 +
-+static void collect_all_bitmaps(BlockDriverState *bs,
-+                                BlockDirtyBitmapOrStrList **bitmaps)
-+{
-+    GLOBAL_STATE_CODE();
-+    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+
-+    for (; bs; bs = bdrv_filter_or_cow_bs(bs)) {
-+        for (BdrvDirtyBitmap *bm = bdrv_dirty_bitmap_first(bs); bm;
-+             bm = bdrv_dirty_bitmap_next(bm)) {
-+            const char *name = bdrv_dirty_bitmap_name(bm);
-+            BlockDirtyBitmapOrStr *el;
-+
-+            if (is_duplicate_bitmap(*bitmaps, name)) {
-+                continue;
-+            }
-+            el = g_new(BlockDirtyBitmapOrStr, 1);
-+            *el = (BlockDirtyBitmapOrStr) {
-+                .type = QTYPE_QSTRING,
-+                .u.local = g_strdup(name),
-+            };
-+            QAPI_LIST_PREPEND(*bitmaps, el);
-+        }
-+    }
-+}
-+
- int main(int argc, char **argv)
+ static XHCIPort *xhci_lookup_port(XHCIState *xhci, struct USBPort *uport)
  {
-     BlockBackend *blk;
-@@ -553,6 +598,7 @@ int main(int argc, char **argv)
-         { "offset", required_argument, NULL, 'o' },
-         { "read-only", no_argument, NULL, 'r' },
-         { "allocation-depth", no_argument, NULL, 'A' },
-+        { "all-bitmaps", no_argument, NULL, QEMU_NBD_OPT_ALL_BITMAPS },
-         { "bitmap", required_argument, NULL, 'B' },
-         { "connect", required_argument, NULL, 'c' },
-         { "disconnect", no_argument, NULL, 'd' },
-@@ -602,6 +648,7 @@ int main(int argc, char **argv)
-     const char *export_description = NULL;
-     BlockDirtyBitmapOrStrList *bitmaps = NULL;
-     bool alloc_depth = false;
-+    bool all_bitmaps = false;
-     const char *tlscredsid = NULL;
-     const char *tlshostname = NULL;
-     bool imageOpts = false;
-@@ -725,6 +772,9 @@ int main(int argc, char **argv)
-         case 'A':
-             alloc_depth = true;
-             break;
-+        case QEMU_NBD_OPT_ALL_BITMAPS:
-+            all_bitmaps = true;
-+            break;
-         case 'B':
-             {
-                 BlockDirtyBitmapOrStr *el = g_new(BlockDirtyBitmapOrStr, 1);
-@@ -837,7 +887,8 @@ int main(int argc, char **argv)
-         }
-         if (export_name || export_description || dev_offset ||
-             opts.device || disconnect || fmt || sn_id_or_name || bitmaps ||
--            alloc_depth || seen_aio || seen_discard || seen_cache) {
-+            all_bitmaps || alloc_depth || seen_aio || seen_discard ||
-+            seen_cache) {
-             error_report("List mode is incompatible with per-device settings");
-             exit(EXIT_FAILURE);
-         }
-@@ -1185,6 +1236,10 @@ int main(int argc, char **argv)
-         exit(EXIT_FAILURE);
-     }
+     int index;
+@@ -2103,8 +2120,7 @@ static TRBCCode xhci_address_slot(XHCIState *xhci, unsigned int slotid,
+     XHCISlot *slot;
+     USBPort *uport;
+     USBDevice *dev;
+-    dma_addr_t ictx, octx, dcbaap;
+-    uint64_t poctx;
++    dma_addr_t ictx, octx;
+     uint32_t ictl_ctx[2];
+     uint32_t slot_ctx[4];
+     uint32_t ep0_ctx[5];
+@@ -2113,10 +2129,10 @@ static TRBCCode xhci_address_slot(XHCIState *xhci, unsigned int slotid,
  
-+    if (all_bitmaps) {
-+        collect_all_bitmaps(orig_bs, &bitmaps);
+     assert(slotid >= 1 && slotid <= xhci->numslots);
+ 
+-    dcbaap = xhci_addr64(xhci->dcbaap_low, xhci->dcbaap_high);
+-    ldq_le_dma(xhci->as, dcbaap + 8 * slotid, &poctx, MEMTXATTRS_UNSPECIFIED);
++    if (!xhci_read_dcbaa(xhci, slotid, &octx)) {
++        return CC_TRB_ERROR;
 +    }
-+
-     bs->detect_zeroes = detect_zeroes;
+     ictx = xhci_mask64(pictx);
+-    octx = xhci_mask64(poctx);
  
-     nbd_server_is_qemu_nbd(shared);
-diff --git a/tests/qemu-iotests/tests/qemu-img-bitmaps b/tests/qemu-iotests/tests/qemu-img-bitmaps
-index 979bc0d6c9c..5484fe6f424 100755
---- a/tests/qemu-iotests/tests/qemu-img-bitmaps
-+++ b/tests/qemu-iotests/tests/qemu-img-bitmaps
-@@ -131,6 +131,19 @@ $QEMU_IMG map --output=json --image-opts \
+     DPRINTF("xhci: input context at "DMA_ADDR_FMT"\n", ictx);
+     DPRINTF("xhci: output context at "DMA_ADDR_FMT"\n", octx);
+@@ -3522,24 +3538,21 @@ static int usb_xhci_post_load(void *opaque, int version_id)
+     XHCIState *xhci = opaque;
+     XHCISlot *slot;
+     XHCIEPContext *epctx;
+-    dma_addr_t dcbaap, pctx;
++    dma_addr_t pctx;
+     uint32_t slot_ctx[4];
+     uint32_t ep_ctx[5];
+     int slotid, epid, state;
+-    uint64_t addr;
+-
+-    dcbaap = xhci_addr64(xhci->dcbaap_low, xhci->dcbaap_high);
  
- nbd_server_stop
- 
-+# Repeat with the --all-bitmaps option
-+nbd_server_start_unix_socket -r -f qcow2 --all-bitmaps "$TEST_IMG"
-+$QEMU_IMG map --output=json --image-opts \
-+    "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:b0" | _filter_qemu_img_map
-+$QEMU_IMG map --output=json --image-opts \
-+    "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:b1" | _filter_qemu_img_map
-+$QEMU_IMG map --output=json --image-opts \
-+    "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:b2" | _filter_qemu_img_map
-+$QEMU_IMG map --output=json --image-opts \
-+    "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:b3" | _filter_qemu_img_map
-+
-+nbd_server_stop
-+
- echo
- echo "=== Check handling of inconsistent bitmap ==="
- echo
-diff --git a/tests/qemu-iotests/tests/qemu-img-bitmaps.out b/tests/qemu-iotests/tests/qemu-img-bitmaps.out
-index 99290d3ba5e..f2e97a090b0 100644
---- a/tests/qemu-iotests/tests/qemu-img-bitmaps.out
-+++ b/tests/qemu-iotests/tests/qemu-img-bitmaps.out
-@@ -103,6 +103,18 @@ Format specific information:
- 
- === Check bitmap contents ===
- 
-+[{ "start": 0, "length": 3145728, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
-+{ "start": 3145728, "length": 1048576, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false},
-+{ "start": 4194304, "length": 6291456, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET}]
-+[{ "start": 0, "length": 1048576, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
-+{ "start": 1048576, "length": 1048576, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false},
-+{ "start": 2097152, "length": 8388608, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET}]
-+[{ "start": 0, "length": 2097152, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
-+{ "start": 2097152, "length": 1048576, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false},
-+{ "start": 3145728, "length": 7340032, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET}]
-+[{ "start": 0, "length": 2097152, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
-+{ "start": 2097152, "length": 1048576, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false},
-+{ "start": 3145728, "length": 7340032, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET}]
- [{ "start": 0, "length": 3145728, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
- { "start": 3145728, "length": 1048576, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false},
- { "start": 4194304, "length": 6291456, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET}]
+     for (slotid = 1; slotid <= xhci->numslots; slotid++) {
+         slot = &xhci->slots[slotid-1];
+         if (!slot->addressed) {
+             continue;
+         }
+-        ldq_le_dma(xhci->as, dcbaap + 8 * slotid, &addr, MEMTXATTRS_UNSPECIFIED);
+-        slot->ctx = xhci_mask64(addr);
+-
+-        xhci_dma_read_u32s(xhci, slot->ctx, slot_ctx, sizeof(slot_ctx));
+-        slot->uport = xhci_lookup_uport(xhci, slot_ctx);
++        slot->uport = NULL;
++        if (xhci_read_dcbaa(xhci, slotid, &slot->ctx)) {
++            xhci_dma_read_u32s(xhci, slot->ctx, slot_ctx, sizeof(slot_ctx));
++            slot->uport = xhci_lookup_uport(xhci, slot_ctx);
++        }
+         if (!slot->uport) {
+             /* should not happen, but may trigger on guest bugs */
+             slot->enabled = 0;
 -- 
 2.56.0
 
