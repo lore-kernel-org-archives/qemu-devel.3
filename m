@@ -1,69 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA2A606B0DB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C609F606B0D6
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 16:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GOxqrGOc
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=O2BE/Oaq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNuw0-00072A-BK; Mon, 02 Nov 2026 11:31:00 -0500
+	id 1xNuva-0006RW-Np; Mon, 02 Nov 2026 11:30:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xNuvs-0006kO-3W
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:52 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvV-0006ME-KA
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xNuvq-0002Mz-Gj
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:51 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvS-0002Hg-H5
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793637049;
+ s=mimecast20190719; t=1793637025;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=2VloB1kJtnNK2y3OGMuA50FXNKUgSiFNyy7Vs/YFzTI=;
- b=GOxqrGOcD/gC5Nfvd+Z0P1ccL/7jr9PJ3iRfaQM5xJNCQR1RZ7Y6GdK8kwKK3OKsCcQvpi
- 3fI2QRbgf3SD8VZZaqx3D6vzURXoPIpB0TgxkO8WvZzMm4jDUuIiTwiCvCdFs71T4CyDIc
- Cn8fxqBxGxs4OPxF8IQ6mIlc+9DlfHw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+Yo8Hvb77133Kk1jaEY7ns+qlp58O3vRAeFfWtcz4eI=;
+ b=O2BE/Oaq9DcGQdIFoKgt2mcu1WuTMbm6xlYMw6B8r3HRQ7UWpeKeBy/R36A89jmSvrySCG
+ Xg6qnRDkTKSUT+Se36/DvgXmSlWWM40JhhjAfGye0Ep7a3gcgkQAF+Hh/6fOkinN0ll0NH
+ stfUcYCiIYlVb2bUTsi8ytnkFV2P+6U=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-Ze4hqV8gOYKHbpu6rRbHbg-1; Mon,
- 02 Nov 2026 11:30:48 -0500
-X-MC-Unique: Ze4hqV8gOYKHbpu6rRbHbg-1
-X-Mimecast-MFC-AGG-ID: Ze4hqV8gOYKHbpu6rRbHbg_1793637047
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-312-u9SUBWCWMN6RZWViYOyr8A-1; Mon,
+ 02 Nov 2026 11:30:23 -0500
+X-MC-Unique: u9SUBWCWMN6RZWViYOyr8A-1
+X-Mimecast-MFC-AGG-ID: u9SUBWCWMN6RZWViYOyr8A_1793637022
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B2221800603; Mon,  2 Nov 2026 16:30:47 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.48.50])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A89D81800444; Mon,  2 Nov 2026 16:30:45 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Cc: Junjie Cao <junjie.cao@linux.dev>, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 0/5] Misc patches before the v11.2 softfreeze
-Date: Mon,  2 Nov 2026 17:30:39 +0100
-Message-ID: <20261102163044.644663-1-thuth@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5F64A19560B1; Mon,  2 Nov 2026 16:30:22 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.44.32.164])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DA22A1956087; Mon,  2 Nov 2026 16:30:20 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	richard.henderson@linaro.org,
+	qemu-devel@nongnu.org
+Subject: [PULL 10/17] iotests: Add loop-accept-ro-dev test
+Date: Mon,  2 Nov 2026 17:29:48 +0100
+Message-ID: <20261102162955.268763-11-kwolf@redhat.com>
+In-Reply-To: <20261102162955.268763-1-kwolf@redhat.com>
+References: <20261102162955.268763-1-kwolf@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,55 +79,146 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
- Hi Richard!
+Add a test for the accept-read-only-device option of host_device.
 
-The following changes since commit 56afd82bd4db9688f1c1c9d0e2ea163b8cde3283:
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20261029164522.103918-3-kwolf@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ tests/qemu-iotests/tests/loop-accept-ro-dev   | 88 +++++++++++++++++++
+ .../qemu-iotests/tests/loop-accept-ro-dev.out | 19 ++++
+ 2 files changed, 107 insertions(+)
+ create mode 100755 tests/qemu-iotests/tests/loop-accept-ro-dev
+ create mode 100644 tests/qemu-iotests/tests/loop-accept-ro-dev.out
 
-  Merge tag 'qemu-sparc-20261101' of https://github.com/mcayland/qemu into staging (2026-11-01 08:37:48 -0800)
-
-are available in the Git repository at:
-
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2026-11-02
-
-for you to fetch changes up to 213c716c58738be9d39488e56e6d6ed25dacd14e:
-
-  tests/qtest/usb-hcd-xhci: test Address Device with an unreadable DCBAA (2026-11-02 15:34:15 +0100)
-
-----------------------------------------------------------------
-* Add a "check-thorough" test target
-* Make sure that the next-cube machine shows a deprecation note
-* Reset the open retry count after a successful open in the usb-host code
-* Make sure that XHCI code does not ignore failure when reading the DCBAA
-
-  Note: I really don't have time to look for USB patches anymore, so after
-        this pull request, I'll stop helping out here. We really need a
-        dedicated person acting as a maintainer for the USB code...
-
-----------------------------------------------------------------
-Junjie Cao (3):
-      usb-host: reset the open retry count after a successful open
-      hw/usb/hcd-xhci: fail Address Device when the DCBAA entry is unreadable
-      tests/qtest/usb-hcd-xhci: test Address Device with an unreadable DCBAA
-
-Peter Maydell (1):
-      hw/m68k/next-cube: Show deprecation notice to users
-
-Thomas Huth (1):
-      tests: Add a target to run all tests in thorough mode
-
- hw/m68k/next-cube.c             |  1 +
- hw/usb/hcd-xhci.c               | 41 ++++++++++++-------
- hw/usb/host-libusb.c            |  1 +
- tests/qtest/usb-hcd-xhci-test.c | 87 +++++++++++++++++++++++++++++++++++------
- tests/Makefile.include          | 13 ++++--
- 5 files changed, 114 insertions(+), 29 deletions(-)
+diff --git a/tests/qemu-iotests/tests/loop-accept-ro-dev b/tests/qemu-iotests/tests/loop-accept-ro-dev
+new file mode 100755
+index 00000000000..fe4ddf419e5
+--- /dev/null
++++ b/tests/qemu-iotests/tests/loop-accept-ro-dev
+@@ -0,0 +1,88 @@
++#!/usr/bin/env bash
++# group: quick
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Copyright Red Hat, Inc.
++#
++# Test the accept-read-only-device option on a loop device
++
++seq="$(basename $0)"
++echo "QA output created by $seq"
++
++status=1	# failure is the default!
++
++_cleanup() {
++    if [ -n "$loopdev" ]; then
++        sudo losetup --detach "$loopdev"
++    fi
++
++    _cleanup_test_img
++}
++
++trap "_cleanup; exit \$status" 0 1 2 3 15
++
++# get standard environment, filters and checks
++cd ..
++. ./common.rc
++. ./common.filter
++
++_supported_fmt raw
++_supported_proto file
++_supported_os Linux
++
++do_run_qemu()
++{
++    echo Testing: "$@"
++    $QEMU -nographic -qmp stdio -nodefaults "$@"
++    echo
++}
++
++run_qemu()
++{
++    printf '{"execute":"qmp_capabilities"}\n{"execute":"quit"}' |
++    do_run_qemu "$@" 2>&1 | _filter_testdir | _filter_qemu | _filter_qmp |
++        _filter_generated_node_ids | _filter_imgfmt |
++        _filter_actual_image_size | _filter_img_info |
++        sed -e "s#/dev/loop[0-9]\\+#LOOPDEV#g"
++}
++
++if ! sudo -n losetup &>/dev/null; then
++    _notrun "sudo losetup not available"
++fi
++
++if ! command -v blockdev >/dev/null 2>&1; then
++    _notrun "blockdev tool not available"
++fi
++
++echo
++echo "=== Start QEMU on a loop device after blockdev --setro ==="
++echo
++
++_make_test_img -f $IMGFMT 1M
++
++loopdev=$(sudo losetup --find --show "$TEST_IMG")
++if [ -z "$loopdev" ]; then
++    _fail
++fi
++
++sudo blockdev --setro "$loopdev"
++sudo chmod a+rw "$loopdev"
++
++run_qemu \
++    -blockdev host_device,node-name=disk,filename="$loopdev" \
++    -device virtio-blk,drive=disk
++
++run_qemu \
++    -blockdev host_device,node-name=disk,filename="$loopdev",accept-read-only-device=off \
++    -device virtio-blk,drive=disk
++
++run_qemu \
++    -blockdev host_device,node-name=disk,filename="$loopdev",accept-read-only-device=on \
++    -device virtio-blk,drive=disk
++
++# success, all done
++echo
++echo '*** done'
++rm -f $seq.full
++status=0
+diff --git a/tests/qemu-iotests/tests/loop-accept-ro-dev.out b/tests/qemu-iotests/tests/loop-accept-ro-dev.out
+new file mode 100644
+index 00000000000..6b75f7fdd14
+--- /dev/null
++++ b/tests/qemu-iotests/tests/loop-accept-ro-dev.out
+@@ -0,0 +1,19 @@
++QA output created by loop-accept-ro-dev
++
++=== Start QEMU on a loop device after blockdev --setro ===
++
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576
++Testing: -blockdev host_device,node-name=disk,filename=LOOPDEV -device virtio-blk,drive=disk
++QEMU_PROG: -blockdev host_device,node-name=disk,filename=LOOPDEV: The device is not writable: Permission denied
++
++Testing: -blockdev host_device,node-name=disk,filename=LOOPDEV,accept-read-only-device=off -device virtio-blk,drive=disk
++QEMU_PROG: -blockdev host_device,node-name=disk,filename=LOOPDEV,accept-read-only-device=off: The device is not writable: Permission denied
++
++Testing: -blockdev host_device,node-name=disk,filename=LOOPDEV,accept-read-only-device=on -device virtio-blk,drive=disk
++QMP_VERSION
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
++{"return": {}}
++
++
++*** done
+-- 
+2.56.0
 
 
