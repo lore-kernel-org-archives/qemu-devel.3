@@ -1,57 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2333606A324
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC08606A326
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:11:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=WvjwvOxe
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=h+Za3BoD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNskX-0002cU-L4; Mon, 02 Nov 2026 09:11:01 -0500
+	id 1xNskX-0002eL-Rt; Mon, 02 Nov 2026 09:11:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xNsi1-0007w8-Hj
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:08:26 -0500
+ id 1xNsiB-00083t-5b
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:08:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xNsi0-0005Ei-7R
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:08:25 -0500
+ id 1xNsi9-0005GG-Nf
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:08:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793628502;
+ s=mimecast20190719; t=1793628513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oRYFyhvztTbkAukZo7KAzMM/k2TGcsNGgppNT+XfV2o=;
- b=WvjwvOxevSq/bgltVoUiE8I3N59JVAP9lPhEa7IpVgsWtwNQOkaAWydQDfIoiUufVsqcTf
- I8I4jCKpie8052ueJa5KLfmNORaGWpfeUn1h//JtrsuduOfYOBWLtPYLE/QFuTCy6+OME1
- +2P05a6iFz+6FDNjL4Fyi/LC44zj3t0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=m5AxJABtUjhPH0VKiaWYWLYGlmOV99WIySfO7K7RwbY=;
+ b=h+Za3BoD99H9ayuSHbIC2K7MbPzTtlFuWppX5aeNgSri64WsBs+BiIgZbAUZ1mSqPm+2+E
+ oO6vq2fVzuuOv75iB3tkdr+iJlTLRZNCSa2seq3tJvJIy0RG7yObvrGXSPUWHvRelkENVJ
+ yMxn0Buubj6BZ0jrY6rkb7t6NLbwAYM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-ifbzGeCfMVW4F7APk82Ang-1; Mon,
- 02 Nov 2026 09:08:17 -0500
-X-MC-Unique: ifbzGeCfMVW4F7APk82Ang-1
-X-Mimecast-MFC-AGG-ID: ifbzGeCfMVW4F7APk82Ang_1793628493
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-_M8_NFfANFOt9i6xUkdRvg-1; Mon,
+ 02 Nov 2026 09:08:28 -0500
+X-MC-Unique: _M8_NFfANFOt9i6xUkdRvg-1
+X-Mimecast-MFC-AGG-ID: _M8_NFfANFOt9i6xUkdRvg_1793628506
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5AB6119344AC; Mon,  2 Nov 2026 14:08:11 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1597F1955F28; Mon,  2 Nov 2026 14:08:26 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CF589433; Mon,  2 Nov 2026 14:08:09 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 01E8A1956049; Mon,  2 Nov 2026 14:08:24 +0000 (UTC)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v8 09/18] hw/arm/npcm7xx: Keep the automatic hub
+Subject: Re: [PATCH v8 16/18] hw/usb/redirect-server: Stream interrupt IN
+ endpoints
 From: marcandre.lureau@redhat.com
 To: Jamin Lin <jamin_lin@aspeedtech.com>
 Cc: kraxel@redhat.com, marcandre.lureau@redhat.com, junjie.cao@intel.com, 
@@ -70,29 +71,29 @@ Cc: kraxel@redhat.com, marcandre.lureau@redhat.com, junjie.cao@intel.com,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
  "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>, 
  Troy Lee <troy_lee@aspeedtech.com>
-In-Reply-To: <20261102092201.1729245-10-jamin_lin@aspeedtech.com>
+In-Reply-To: <20261102092201.1729245-17-jamin_lin@aspeedtech.com>
 References: <20261102092201.1729245-1-jamin_lin@aspeedtech.com>
- <20261102092201.1729245-10-jamin_lin@aspeedtech.com>
+ <20261102092201.1729245-17-jamin_lin@aspeedtech.com>
 Date: Mon, 02 Nov 2026 18:07:30 +0400
-Message-Id: <179362845015.3960472.7956229698285370567.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=651;
+Message-Id: <179362845022.3960472.7149018835120290019.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=898;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=F1IrbKA0eXHyGj63rZO602lR1wmaDvVNygpKzIbsQX0=;
- b=owEBbAKT/ZANAwAKAdro4Ql1lpzlAcsmYgBq6JkkeaLYF+AtHQBBK7iTU+SkFbe1mwtPh4elo
- swuBjx87TyJAjIEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCauiZJAAKCRDa6OEJdZac
- 5SL/D/dEgMfDef1nufgtacHeM88sqlRC+DndeOTQhU+jJEmw5Jl465vxJWDG1uMDBnu9zRSiVRp
- iGwEI8+ROjB7aGGdaREGVUlaSDL44AOBVsBgrK9QywI4KydZs6E9u9nI9IPcqHaUkQgNpku5/C8
- q8pk+c9VLHEV60NjWH9Ya6YVqfjDSZjcvmJUz3aArt2tCkLHemIFPSF6FgYqOv+wGAVeGoJHks3
- +qSJR/FAknrfwg0y9zi4FYc2I3B4AWCeNY0mh+8GQCHNidCwuhmAY0X7ePAUW2hALVcYr6FyXQN
- OVrqxFvsZ8xIecbayAUjXqqqVJ5oFz1lJwoOIyB4k03s6nxMrgB/dlA4HUyaGjPJQeLoOr6+5DL
- tpUkRHegrPCLQiMqkpg363qgtkKeLMNvTifN6PqveL6TtD5rm0DAGakKYVBimKlv+sPWlYgubtv
- hVhsfcFnvNg+sAmsdwbpEclwiUtfNNEU5T9eCRCcZ3CZkDWjF1BL7+cpAm4JaY4YOa6Y40QN6uv
- 0xiRH7UPu1P32e0QJFrEGzczet9k6qVatluWoEdG1eyDNLSz9lsF8qAviXZkjBwS2xNczzlFFGP
- pE3cEuae9dtzJiTw2yDqyP1YoBc/6aYdgecqa646ZGdczk7lzFoxulYYUBWxRMQNgCi/XaLDfaq
- eKQ6YpIiTytZ9
+ bh=TyfjPl6Lgm8UNGDmROu5LHcqrGAlz9tyrpdNL8OotC0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq6Jkkkje6d1wtaLxQWLGZIajGkc23jr3gOUspm
+ 3ASTAxEMyKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCauiZJAAKCRDa6OEJdZac
+ 5T6tD/9D/gkZAqCeh/AA+ooUg2bIId70Ip/ZbgSWTXJnMwNYpRa4IVa9XTDjKS6aQ3ISHbiys1X
+ do5GvFmrKFO/ZsOczKvYBEKdW/NDq+34BoHAMuDxJ/ylfMGX33BT2nP5rWIrnzkWbf7/dObC4mb
+ vGdW5YrS7H3Fk4AIWZ32Wqm1VBcjyZ1WwZ6TcFjN2iEza1/A0qUGBKr+zBP0wFZLk9g2A9l+fGc
+ +usYHrgfywsIFD7Z3dm5j1UWHV+Hde9Jog0z9rGS7FGsu7QR9FOVIshQt1QVPXVCRkPgVj/8bmv
+ Kl80hB7vEoM0jEdlXkhBSExH3NgvvC3Kei8K3Ib4DhIte0IQnKzzCekaWngdF5meStKUX51U1JG
+ ZSe2h79btEJ+nJf/LkUqnUpgJ0P3LnbVP172AFunGEeb1XPNlKx09puC8nSFVJnHLutN0JXet/C
+ EGll2La3iTyBaMkgvjIC1PLFgB0Y6rrotM5h1tfSWmGr8wAvY3R0xNcyrtN4bJZ1yjBEJ5E/9Jn
+ RnPyhyhbFyAHec3vi2ABkHNE25iwgnZk+0oSkpj9phj68xuBDiuB14LxdXSGYslWVuHoWTaWI5k
+ yVOiYrdKDZUfEezWd0uVnEPJhM7Ct8CQLkO4cMop6tKqzfDsQuhjmz4LKRWB0fqJqaPB+5gGwCI
+ LKo2QnUPfJq55sg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -122,19 +123,21 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-> The OHCI companion has one port, so a second device only fits behind
-> the hub.
+On Mon, 02 Nov 2026 09:22:26 +0000, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
+> Interrupt IN is not a request and an answer in usbredir. The host asks
+> once with start_interrupt_receiving. After that it expects a packet
+> every time the device has data.
 > 
-> npcm7xx has no versioned machine type, so compat cannot reach it. Turn
-> the property on here instead. The companion shares the EHCI bus, so
-> the EHCI carries the property.
+> Park one IN packet on the device for each streaming endpoint. A device
+> that answers USB_RET_ASYNC holds the packet and completes it when it
+> has data. A device that answers USB_RET_NAK gives the packet back at
+> once, so park a new one when the bus reports a wakeup on that endpoint.
+> A slow timer parks one too, for a device that does not report a wakeup.
+> A streamed request does not wait on the endpoint's list the way a host
+> request does, because this timer already asks again.
 > 
-> Suggested-by: Gerd Hoffmann <kraxel@redhat.com>
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Message-ID: <20261102092201.1729245-10-jamin_lin@aspeedtech.com>
+> [...]
 
-Place this patch before the previous one, turning the default to false.
-otherwise
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 -- 
