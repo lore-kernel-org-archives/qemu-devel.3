@@ -1,73 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB40607E0D1
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779AD606A5B4
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eGuPhjnc
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DwTDR0ka
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNtDb-0003Q4-EW; Mon, 02 Nov 2026 09:41:03 -0500
+	id 1xNtDe-0003Qs-MM; Mon, 02 Nov 2026 09:41:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD1-00036y-NH
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDC-0003DQ-8I
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtCz-0008OX-8M
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:27 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD8-0008TD-Bg
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793630424;
+ s=mimecast20190719; t=1793630432;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2WAQR7L5ckqMN1VmfC17If5uXdLKJHj7DvAGvVdAeXs=;
- b=eGuPhjncMrA0fsGshRJjwx7vb4+IiC2qgTs2HG1rJT4sNZ9hbJXoal3CJb5Na4koFy7Zu2
- s3Nn1cIJLlsd3CeKnBe0xDLawTFn1GxbsIfIXfQY5ZRr+L2JUi9wDhJqosanZxGwhTGMQW
- e6ezmqa5ff4R5gtuQ1D5Wvt8ZwXzFoU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tPPauJnjUL8+o9J/As9+2TU1FvW5xFz73JCg7sYruek=;
+ b=DwTDR0kaFl4LSHtdxxG4uXTH9W02rcPeMGoKt6/6nyo9f7yvLHTjlEdipXfaVu81jGy5yo
+ RgR66cmj+tg01tGnnweIUuaT7apoBz9NE8JOSIYDRtXHf7LEA2STq/44FGKUAfFaZCWI1G
+ ceEnDXzhXYfc0KDSxLTzSkMxL6qu+2Q=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-jhtCPAYMMpua-EpbwfjVCQ-1; Mon,
- 02 Nov 2026 09:40:22 -0500
-X-MC-Unique: jhtCPAYMMpua-EpbwfjVCQ-1
-X-Mimecast-MFC-AGG-ID: jhtCPAYMMpua-EpbwfjVCQ_1793630421
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-237-iKakli4SMqWPKYxua4Zi6w-1; Mon,
+ 02 Nov 2026 09:40:31 -0500
+X-MC-Unique: iKakli4SMqWPKYxua4Zi6w-1
+X-Mimecast-MFC-AGG-ID: iKakli4SMqWPKYxua4Zi6w_1793630430
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A5E551944DF2; Mon,  2 Nov 2026 14:40:21 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94D0C19540E2; Mon,  2 Nov 2026 14:40:30 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6400D30001A2; Mon,  2 Nov 2026 14:40:21 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 506A41800345; Mon,  2 Nov 2026 14:40:30 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E286121E692D; Mon, 02 Nov 2026 15:40:18 +0100 (CET)
+ id C9C9821E66D8; Mon, 02 Nov 2026 15:40:19 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 01/74] qapi/machine: Drop misleading (for OptsVisitor) doc
-Date: Mon,  2 Nov 2026 15:39:05 +0100
-Message-ID: <20261102144018.3212223-2-armbru@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 52/74] hw/misc/xlnx-versal-trng: add missing getter for
+ fips-fault-events
+Date: Mon,  2 Nov 2026 15:39:56 +0100
+Message-ID: <20261102144018.3212223-53-armbru@redhat.com>
 In-Reply-To: <20261102144018.3212223-1-armbru@redhat.com>
 References: <20261102144018.3212223-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
 X-Spam_score: 0.5
 X-Spam_bar: /
 X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -88,50 +89,42 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The QMP Reference Manual describes NumaOptions and NumaNodeOptions as
-"(for OptsVisitor)".  This makes no sense; the OptsVisitor is a purely
-internal thing.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-When commit 0042109a6a (NUMA: convert -numa option to use OptsVisitor)
-added these QAPI types, both "(for OptsVisitor)" were correct and
-merely schema comments.  They have since become wrong (both types are
-part of QMP according to query-qmp-schema) and reference
-documentation.
-
-Delete both instances.
-
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260911095350.2020964-2-armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[Straightforward conflict with commit 74c1a2e9a3 (qapi: convert simple
-data struct intros for machine.json) and commit c4d2c31e05 (qapi:
-convert remaining simple intros for machine.json) resolved]
+Message-ID: <20261101201717.3911097-36-armbru@redhat.com>
 ---
- qapi/machine.json | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/misc/xlnx-versal-trng.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 9b145c635b..9dc63c1c8b 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -455,7 +455,7 @@
+diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+index aa1d65de7b..0584ee089e 100644
+--- a/hw/misc/xlnx-versal-trng.c
++++ b/hw/misc/xlnx-versal-trng.c
+@@ -650,10 +650,22 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
+     trng_fault_event_set(XLNX_VERSAL_TRNG(obj), *events);
+ }
  
- ##
- # @NumaOptions:
--#     A discriminated record of NUMA options.  (for OptsVisitor)
-+#     A discriminated record of NUMA options.
- #
- # @type: NUMA option type
- #
-@@ -473,7 +473,7 @@
++static void trng_prop_fault_event_get(Object *obj, Visitor *v,
++                                      const char *name,
++                                      void *opaque,
++                                      Error **errp)
++{
++    const Property *prop = opaque;
++    uint32_t *events = object_field_prop_ptr(obj, prop);
++
++    visit_type_uint32(v, name, events, errp);
++}
++
+ static const PropertyInfo trng_prop_fault_events = {
+     .type = "uint32",
+     .description = "Set to trigger TRNG fault events",
+     .set = trng_prop_fault_event_set,
++    .get = trng_prop_fault_event_get,
+     .realized_set_allowed = true,
+ };
  
- ##
- # @NumaNodeOptions:
--#     Create a guest NUMA node.  (for OptsVisitor)
-+#     Create a guest NUMA node.
- #
- # @nodeid: NUMA node ID (increase by 1 from 0 if omitted)
- #
 -- 
 2.55.0
 
