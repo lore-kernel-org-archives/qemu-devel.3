@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7806E606A330
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 09:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DF2606A326
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 09:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=XQRJrSky
+	dkim=pass (2048-bit key, unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=iNv/6b0V
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNoGK-0007eN-US; Mon, 02 Nov 2026 04:23:32 -0500
+	id 1xNoGE-0007WU-9f; Mon, 02 Nov 2026 04:23:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xNoFN-0007LW-5h; Mon, 02 Nov 2026 04:22:33 -0500
+ id 1xNoFK-0007LE-KD; Mon, 02 Nov 2026 04:22:33 -0500
 Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
  ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xNoFL-0000W7-Ka; Mon, 02 Nov 2026 04:22:32 -0500
+ id 1xNoFJ-0000W7-32; Mon, 02 Nov 2026 04:22:30 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MnFfrHdPwWx8Y4Sw+qrKCqW1aK7frxtME5hYGM9EKBRdKCPf7LER1NMO5HZFpjviFp7Zw+wzLa3UAHSbAzNff9gN29yb5NLdLqIWExnOik9ba5ME9kKwzTqU7cCAEpHAefz7sk/SeLdXSc4BPdbdXtk0FnC3Wce2pk0xx00nO+FS4UWYDOIB7eGuYiKsELKdLx2rsK5ia/SeOmDu/Lvc5tzdFMupz5tV5NxIIrjp3v+5DlE7SeAuwuqRjZvgPr/pSc+LJYXxs8LTrYeDHFpgF28uhPFKRjhvF6JbmuXZBn74w7kcOR1M/Nyke3LaPhaOL/5KBbmYU2/jPFzLACmduA==
+ b=hjx/b7ZkOY7jcsUD3VMnC1vAhlhOrp6gdKSdJmZ4sdfCKGL0Bh3f4sCtbwCo9BaVpZdNu40I3a/lUS3YXlrBMJJzqIFZj+uAUL8Of6Ln08tg5kW0V8vkZwKDJrhW0i576d4SdZKv0txDnPjGnGyCLc2pV/DqFhhmjlzlFZvhSIqiHfCOR+hVFTlMRVn4omH8P2IMiUUZVPN4K66iyKxbGibkUL+4snj/Cd/Kcc+sA3EifGlh3WwJcu3UdaVFQ1U9tgTPySOUtwTz9ur1scCaehZuZavIlG1tTx1xFBWSUXi9TmVFUI2W93EieLJ5r5a77e1LXc7/OrzQyLeL6h7A0A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xE60Gd690uM3B6chIq8hl6krRCwchDFsLEoPfV4qomo=;
- b=LsV+cYKjbQ70aqzu8Dzd+5utFdXP/qqETsiAdGjqCj+3lZ1LSIzqX5Oh+VcjVCv8VWEvkBWYdYzSP+acu+ty5F72UXIoM9sZjb7ZKOA6PJpQyLI5ku9Xwdr+FmtzkZEVzjesWkpdVafh/l3/d//Ape+iYyD5Aqq0vLk+eurSpcSIyJcwusrw5wPUl6jQY9ERcMlqxcHwv1vNvF9VbG+jfLcBo6fyCd/rizrzcgP1WL4olOnE4r1iVkuTZU5UYChzsspHI6f601EIjhCy4zfIsX4HkGzV1mxZZpg5ChlGftrlPX5qHcsE1N5kU9P3L7AGwmtzX5YNe7Aqo+qGkhgQ6g==
+ bh=DX9Bu5iUcluzz1IwNbqqdX2x3rrq6ZvYTGoWFsJ0rB8=;
+ b=TtGzs64+llQOq3kH/z243omwQv6jzfFpTUvcLBOckwN3AhrqHqwOfM2S5VsX1IKC/Luy5FowII5Yo4LpkzQvSLuookHxDDALOYY9khI7EsSQVAAwqxZ7rzeUAUHNbMdYFTQ7y0nLzXHYGOM0/RVLQJ3SItD/1rQ1pemIX82FNKU4N0vMD8duuuDWPFiNjhcYNDlJr87/mYRS+lHTl9yzyNYwHEmORGzNkdZHV600CyvsSDMp/GFnSlUCaWNjrF8khYIcdcEOmfQoi6tieVCwViM6pRa590qDyFKn77s9YRi8nfCmSb4d0yET/F+4ss8f3JGelPQD53s7GgZi6zCGVw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xE60Gd690uM3B6chIq8hl6krRCwchDFsLEoPfV4qomo=;
- b=XQRJrSkyp5A6kuYitfEB57Qt+rDgE3EzphhYTbs5IjAsrZVAF1l1H11/BOcbsjw607n0ibJ1Rg9y3LEiuXFqNlMVwQrCAjtTO8ujTIWqJ1P7D+h27itE3A1tPn0XHXpCMxbYthp3BAOLMd1gxJCVKLLZSzP3PifpNLR9f9zHhLXmpU0cw7RFYbpzrvKFnHOK86wU2IDlZI7USjTPkMtM1/MzczKqKlbtUF4daFs1kJdaRz0Y/6vkw9tL860qJDj/rSUB4CcRd3BoNAjLzbi5Y8WiXOxx2bXvb4KU1fP26o6owDV3dYX7fkhxiLU27LvKADD3/G41qcGVBWrODlvnTg==
+ bh=DX9Bu5iUcluzz1IwNbqqdX2x3rrq6ZvYTGoWFsJ0rB8=;
+ b=iNv/6b0VSTbzyUmjbhSALDOvOEzbmIx+DhiQXTlqtbv54wXCrOW717+tZf4bvUzc1/fhIaH60inpBQMKC7Zwc4tHSfXFFaaMJR0S3eXRBAlhf75n3PMUK2GRaBZK4+I7yMhXNu1da2Vgif8dfLEMfX/gvNCeAHGHrfyiMJW6wBRKUIAXvS8Piie4D8WJH6NsssHyBCdUNgIzapuOPVprxFm4z686gvc2FIJghjCnnm/vaDR7mIUAEOHxE5jjg+uJh37l98EnR70UP5xZH5eLwyU+Urxcw+TDsqyKYGnZ8ZwBOYdUqRNThncXlS83E4slx/qqCo6HrmK/ILdQq+ZjNA==
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
  by SI2PR06MB5265.apcprd06.prod.outlook.com (2603:1096:4:1e4::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Mon, 2 Nov 2026
- 09:22:10 +0000
+ 09:22:06 +0000
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
  ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
  ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0592.007; Mon, 2 Nov 2026
- 09:22:08 +0000
+ 09:22:05 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: "kraxel@redhat.com" <kraxel@redhat.com>, "marcandre.lureau@redhat.com"
  <marcandre.lureau@redhat.com>, "junjie.cao@intel.com" <junjie.cao@intel.com>, 
@@ -57,13 +57,13 @@ To: "kraxel@redhat.com" <kraxel@redhat.com>, "marcandre.lureau@redhat.com"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
  list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v8 04/18] hw/usb/hcd-uhci: Add an auto-hub property and leave
+Subject: [PATCH v8 02/18] hw/usb/hcd-xhci: Add an auto-hub property and leave
  it off
-Thread-Topic: [PATCH v8 04/18] hw/usb/hcd-uhci: Add an auto-hub property and
+Thread-Topic: [PATCH v8 02/18] hw/usb/hcd-xhci: Add an auto-hub property and
  leave it off
-Thread-Index: AQHdaquijhRoEsXvw0qx1kFWlJ7X5g==
-Date: Mon, 2 Nov 2026 09:22:08 +0000
-Message-ID: <20261102092201.1729245-5-jamin_lin@aspeedtech.com>
+Thread-Index: AQHdaqugzonZbCOsyEq5GblPuZWDag==
+Date: Mon, 2 Nov 2026 09:22:05 +0000
+Message-ID: <20261102092201.1729245-3-jamin_lin@aspeedtech.com>
 References: <20261102092201.1729245-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20261102092201.1729245-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -74,62 +74,62 @@ authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|SI2PR06MB5265:EE_
-x-ms-office365-filtering-correlation-id: b49c7ea6-26db-4e7a-990f-08df38c2c4ed
+x-ms-office365-filtering-correlation-id: 2d6ec937-2625-4464-37ab-08df38c2c325
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|23010399003|366016|10067099003|18002099003|22082099003|921020|38070700021|56012099006|261021121427099003|261022113327099003|261026121527099003|261009223027099003;
-x-microsoft-antispam-message-info: kz6AOl4PzjbI36rDYqpZnY2m7YaweWoUI0wI2MSTe0iTWC+GOGhsSFounPEd1eLsYwAnXRp6QT7tmqgLDhBQp7sYJMSxRSJl/P6EylsIsYEYjkPEKx9kMWejs+WChtwc3IyFbbxX/F+9MEOYl4BwxeEBw4IsC7hp0QIbOUAT2GsFa99kFMutgg3WvgXU3b3JK/aMwKxL9x8xQX4cdLKYeMH+G1NTal/8AU1ynWRYs08Y0eRqUzQdUFHm6otbu+w4SlGAVu5+7HeEaNj4pOr+e732y7d1hFfGzA1Si1zzFBZjl+paSi68NQj01ZHIAvPe9obKTBADxAmEFwc5LOjH1w3sUItVuTYRH09pDjHyRpWXa4lWqoYqFwAg2BII1rTDooJX5kPOtVLRHLrGb8qRv0a2ib8uoyzJFK1NzgP4tU+hbnxCtU4QJ5BBs/jIFNcar2ZFJJ3SREgUrrejByQZ3FqQ1ODvkOKH0SpqjX9g4pUb3pyhQL6ACCnTruGIwqsiWlDLeWSiAVxl5dscuXbUmOV2V2O8/e5JEANvz/NuMYp7Kspcz1JgiKJ8nqyWpzZtwSYsBtsle9XnBcaiD3nNe3AghhMQxD2plmCpH+irbZBO8drOoCLzNWJ+rBrbomVbtwUj1dHCmJYky5UEl3QQucowthMdtoP5kDRhvodtkrWTvc99oislOWAOSLRfVLz4PbT/RSIADM+iLBIV8UjYF2jFXh5Ly+1GolfYrFc6CNxWK3AZejxHe5pcERPeqF6r
+ ARA:13230040|376014|7416014|1800799024|23010399003|366016|10067099003|18002099003|22082099003|921020|38070700021|56012099006|261021121427099003|261022105027099003|261026140227099003|261026121527099003|261009223027099003|261028144727099003;
+x-microsoft-antispam-message-info: kRWFjeDMcxv0jMuXmpMHLnnynSRQWnTws00M51ITlck2EWF9Lko6aW/QfbyWCwBIsA9MB3qq0HjTmfCojNRXWGrVbBOqeI1GPap0QslNIhPO05yyu6Dnlsr3V/ZQUyCVVjxKOk5p7EZ8KE7p081G8ydcEGeqA0l/GZP0Tg/1hXwEPxbVlQzwTVDNXQKAEpLd/scdvQvKPes5dQEgdtn2fV/qxtba0Tdj8HP0vLMdfffPEzs25hsP8ItaOBK8dZ5+scxxWqEyKDkO7CE/fTNtl/Wjy+XDPl/UvjL6xuJ+lUuHYgfqP1qJKT9ZWNEDevW4EOnJMnjZI2rjch93M8lfW4U8BQkfNCFzTOVSxuucvwxwWeCPnmi60NSnDeEO+SOio0vfmXaQANCg/QiP90VQ3MleXp2XQecwVTms507WQeK+MFQbLR2wBvHBlXlPt88f2b1JpJvICk0lHNyr3S+XmEGuc41T1IGjZRuNO5nLIqCzgBrtQrJktdlNuWft5MK1tq1Vr5osjBipYPjxDzBQ56+LfY9YmcZJBOkh1SFPFnSG8pZVFB9XFa6zYPS52XN+l9PdqlDibZBgOWpJQP2sgJLuE+pWk7UOB2VAvqFWf6DcQ2GztjnXLq+v87AaixQToAbDJ3MQ2PnSy8H+rUv0CrR2nnZtopCxKrTwiB3bqCYQKsWeML9nzXqGSjVwlFsbJSc1XMZ+SHzIwdyjNF5ZNH6wD7Tlm5YHgjlFI0aox/smTAxLRzXnyB8bzgvLX0aA
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(23010399003)(366016)(10067099003)(18002099003)(22082099003)(921020)(38070700021)(56012099006)(261021121427099003)(261022113327099003)(261026121527099003)(261009223027099003);
+ SFS:(13230040)(376014)(7416014)(1800799024)(23010399003)(366016)(10067099003)(18002099003)(22082099003)(921020)(38070700021)(56012099006)(261021121427099003)(261022105027099003)(261026140227099003)(261026121527099003)(261009223027099003)(261028144727099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?KTwT2wbUYlaFwjzRm9rICONNE83T24EmUZu+qaF1epqdIkT4nsyCnu6z4u?=
- =?iso-8859-1?Q?IoDcieBngK+GucMjQBY/iCC/4AehB17OeP48hGPUosaXZnfLiZbCqy/ZYL?=
- =?iso-8859-1?Q?6wtC2Ud5kuoPHLju0hZr0XG2u0cCtGi6vxKOXETGheV7Masxqd9s6b7AAK?=
- =?iso-8859-1?Q?09lBgWq9hNYmE90mlGJSHkdhFl7sy2C4lmJFGkLUIzvJGhZE+cixcxQtGV?=
- =?iso-8859-1?Q?tCxNr8ekxHOAzhtao41nVuoZilegZ4nxcIZBvG2RgmQhSibAjjVeAbfhH/?=
- =?iso-8859-1?Q?HFbE9Nz/Z9/bugHOhmbYygcPf8WTXBP68CQ4JxMkJc1nIbO+5nkwBIBLie?=
- =?iso-8859-1?Q?GTn06AHEG481jKztsZ8H0YDLIiC3meNjR75oiG6DXzwfvd0UyBzIzKlphS?=
- =?iso-8859-1?Q?84vXXel8W3Uqep8I04j4lQtBaRyClEPzQYIWraOAgcW6hnVVzttyPAQNCV?=
- =?iso-8859-1?Q?6R5rY6kwPT9ktIu+idMpys/gUr1dGogoO4tsBjDiy14gNwgRrLXu+a3oJ8?=
- =?iso-8859-1?Q?1rOtdKd5lrBWmHZiI0RHN0YiDxoQyBcYkIUW8cOSTUlRTXV9gSY/ZbJjEE?=
- =?iso-8859-1?Q?+/435kOpLJLDN1cky4b+4JMDN48wAyHhsU1ZEX0xNELnxXCeQytHsJHdg3?=
- =?iso-8859-1?Q?8uAaXr6YjtLvjGglsaDelkKd8qsL2GcN3Hbg37XMupUwHf5bVjd7PC5R72?=
- =?iso-8859-1?Q?rer9yIYsEp0ZSxcT9bBBQY+MhCqY3ZP6b+XHTyzM0QacvxaL/uYS7uq2WH?=
- =?iso-8859-1?Q?E096NgH4ey1ipE22CYkQ0chv4t4tQdN2bBgDTA3Zixfxx/ofsxEIOIblf6?=
- =?iso-8859-1?Q?pM4pzkZvxyxXMwKXRND8J2oWF+nXwWUY0qB7hwwkPzQBmyiWBw9jSYInOn?=
- =?iso-8859-1?Q?nRkHN5LnQrOmxiryxn8ml3dmCcfk/DXM7eTQxR5vAHbnv8U2gHXnTBAwqo?=
- =?iso-8859-1?Q?eIfCi0f0o4rTbgm/WnixsH8niaPlbu74tCVE2IF3r1hkgM91nf9Y/upUA6?=
- =?iso-8859-1?Q?ag+Ca7KQpYC9slFo78dlbWVs8Bg0s6M8AK9WwEmlFOBAUz2ShyfKvCls1k?=
- =?iso-8859-1?Q?uM1WfaBilGrpakwyuRygrTXGQ/Yy/5caxOc/tl41hvlWv35EQKVMBbWFEt?=
- =?iso-8859-1?Q?EKzKFkYMAj7EmgcbdaY2eUR2g1OqUzzma5ttUF90DO/TY5vqiWLiiVbsvN?=
- =?iso-8859-1?Q?i66v9d8n7iGtzBHVlCKC1JxL/7FiL7oKdeRGnoUOGuvRUJV6g2nXlw20wp?=
- =?iso-8859-1?Q?jLlY1hXyjKbq3y3qkrikvZYX7ZGYmCGZs/w8HZTFHAzm6sKsk4eNPUz0sF?=
- =?iso-8859-1?Q?n4rzKPKqysf6nmW1I35rO1uFiNLQmAfueCThgIztTiiVhxDOVXXV3+hs8A?=
- =?iso-8859-1?Q?eoLX+OIzVwGrZNgJBM0gbHkMyf7DQ36G/OE9Eezewy7PmZxsXefcQQ79fe?=
- =?iso-8859-1?Q?4tWt711uklhOSaRtLEVyjh6PkjHaJL27DHpoxpOxnzPVqzztYTklwQHHW+?=
- =?iso-8859-1?Q?RBcuyPwAJ+6DnBUKdhj4UDFRa8lfV8rHPCM6EhgYsazlJf1X77of3J7stn?=
- =?iso-8859-1?Q?s/sFRz1/OuTg2cMqYOfhV1sTwlS9asrl8CvQacmx6EhnLcGnk5685Ehduf?=
- =?iso-8859-1?Q?dJQ6zfAq/DAXnF8P1Kg8uuQcP/HS8zzdrFnS4enY+cEaX/QJGsDWl3H0Kr?=
- =?iso-8859-1?Q?mAcpk6I+DAEKnpncz3sLA8WkUG8aZddFBpUlHl7vDnL4q5LQD8b47VMeB+?=
- =?iso-8859-1?Q?Sjy9MKuQXQmzvyaYpjkUWzVlVxBExZYBT7PUIjuKcr/N9FqNj2iNFrfqTs?=
- =?iso-8859-1?Q?xYpxFes/Dw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?cWkPFXBUrn2VTilTuRkTdk/l5GqnSrmMDTMP6bvGn+REAq9JS+70oygBn9?=
+ =?iso-8859-1?Q?qUz23QCIrcruU9n28LNOGI2Tqf4Qgicui8nNGIO25bGYNngcvpufTFqX1D?=
+ =?iso-8859-1?Q?cjSYSb8rSpKOKVRHj/DobdQJpGA9Rsu7f9TAuqDWHSt0AUFaIXTVIAXuaf?=
+ =?iso-8859-1?Q?/IiSc3JE2niqzlQ3+xlDgt9BUjDOKgXFxLVEt3S1HncbeH/jGC5ToU86Ht?=
+ =?iso-8859-1?Q?9g6gEOT+noGg70yTFKGc4vE88U/I+A0r7x/SM5PISXiuPrO1qfDlXWSYet?=
+ =?iso-8859-1?Q?pgJWl/SVkbJehjrTnwB+VPOSnUDmNxJuQwU+RbxeFIM4jVioRJo9zadON6?=
+ =?iso-8859-1?Q?TCwwEawzTBnojVbf2wj9NjXSmXKlp2xazvKsowifaZScEWaRLeBM8AgOgY?=
+ =?iso-8859-1?Q?l/wwWB2OFqUZrP5nRnPBrzHEkJQ/gRkIZukS9gPgb6AEpsyPHZPN0T7eMz?=
+ =?iso-8859-1?Q?/bcxipBLPEwQv8oRHDiAU4tqUpl49q2G550WEUPgKPidVvMY3jfaA6wyro?=
+ =?iso-8859-1?Q?db30nrHCVbOPygNlaWzBI0imiiBgC0LdikQV2jHSsDunAfU0LuoRM1yPRo?=
+ =?iso-8859-1?Q?psKKCZyG0iYmGcehlF/teM6VVWSNWvDKPu2q2wqwG2Taw1zIajJE2PfSfY?=
+ =?iso-8859-1?Q?yGZGeCiKTrCr3mqn46sGQRZxewBddlpBTvY6xL42aFe76uvATMGVS38E9m?=
+ =?iso-8859-1?Q?lE4/bnMXBU9o7EtCcoaIvSWrTJhGALN/bXYqbq/gZPVmVG1CpWq0VVSg0L?=
+ =?iso-8859-1?Q?nEDbj5tkRnb1G/tymnQ7C6hFuTJEYQQk5KWVnXLrq3v7eTA8m0G5Qf6qdn?=
+ =?iso-8859-1?Q?vfZEceNhelsplDu6qr7FPftvLEYeE5Gr1xaITMoVfQIKm8O91/3NXovMJX?=
+ =?iso-8859-1?Q?0616VDtQjWAUIoBBTyJ2OomgjhLceQqEi83WT6CKXN722AFQXh8TXKH4hd?=
+ =?iso-8859-1?Q?LmWFNQzsdGnZJb/9iAFKIbzC51Ck8Gcwz6J+G0GQQWOAUkqgsjgzdvQCbu?=
+ =?iso-8859-1?Q?dKAufrnsce261v7z8RZvxvU3A8OChvsDz9nJbi1Hrgqdj1MoIyyAk9Zb0J?=
+ =?iso-8859-1?Q?6MJZmETch8qN3kgrZhoHxAglvjtHhWQiu+/4hwwb7TEinSkJvkOB3fFFtv?=
+ =?iso-8859-1?Q?WBZ6H2KDsA5z5WxLmZrQY7tV1lVdMg/HN730PCfRM35A1S2oL4dvelm5xl?=
+ =?iso-8859-1?Q?4eptTWOCsz1+iehrul9mpxsusoD/UV1MoTAY7m/qduOUUC1kwRFQpE3Nuw?=
+ =?iso-8859-1?Q?md6AD0EpTdRsBZZTwjkPOlcizOJsnEdnxdtXRH+N+3XCwpPv+3dBvQKEHO?=
+ =?iso-8859-1?Q?IJA6ZUjnUHFLYYDUbJudGVZy3GRWfxB5EOvf9XqC+G0wlRMFVp2dD6MuRn?=
+ =?iso-8859-1?Q?UxYhiA1yZhKMhfoZBjQgZiquq3F4x3eO87NX2/2m1/FcNU7TpNJ02Auky9?=
+ =?iso-8859-1?Q?5IMqJV+kpgqTDCic7N+1fqnn9lNhDFxi/wl5XyDrCwziKSen+WlAIfez1+?=
+ =?iso-8859-1?Q?O81h4Dp+ZbneiUduWIBLx20N6djHx/R+veh0M+u8Ayy6ucu5bSyfWzsWeT?=
+ =?iso-8859-1?Q?lv4pZWLXERukiEO4VsYbtM5leD2j8/IF/sKQfUr/gAXcVNTF1YnGUzdn9V?=
+ =?iso-8859-1?Q?c52qk4MohvVQCMGku14mwFuKpZV3j54rmPNz+kHnWMEoEoI7rcoDDPKtS3?=
+ =?iso-8859-1?Q?w3tTR2IzlG7OnDgEuVm9QJeTiXwpVMtpt0AVxPbmHSNSOO8j4dpCwKpOSH?=
+ =?iso-8859-1?Q?mB1y8TDs87srTK4Ttk/qI6ha2OC7MP4i1h5TUk69H058dBnvzGIul2G26w?=
+ =?iso-8859-1?Q?esrMSBZiVA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: T26Jhc52y+vZhkfPPHQRZg+ajmrG+JqMVzeP7Kn8iTI3+RbmA33CceHIkTzRSX/UvA8i/GT0WzwM0n1s4WzH+SZj37u76MFomBOuZ+w/nKwFbNXpFlLt1jxykWGyT4ACO6uBsCidil2uRNSS3VKQcit+VjK6grGOo0w8vNoYziBLdSK0naT/5UWAao7b/5778ViNna209cDW4PPR0ct3iDZXMigyVymozt0HRJYZiFxdzhim/nFaCSmaj5ZRTz61cLxxlekiH3dW+huXfkoWxI3xLbNF6LJrP58hnF8o/f0mJvSYVFoP6pnAtQZTcktBfRoJ2EJv3AoeLRHtgz3tKg==
+X-Exchange-RoutingPolicyChecked: p3IQ89Atc4rbIhOmeCBHoKP+gIaHDMzpiaCyLFMZdstyqT0e/hanFh+GYU/506CGx/xMkpWerNAg+0voiee0q4uJQtXJha12Ai0LbsCcrNBDtKDnqWYHQzt0iIjy3aDdm9HLh/lfrInzbcgKGX5UW1hAR8VpLaGkEDhY3XL7ozLB/UezCON8Q8p91JUe6RrCCZBDpvxCg8FZaoeGRnss+xkSLEVw4SX+eCA8cmWQBxjpa8U05XJl1SP7FGeVl9nRNblSNqUESwoLmavcSEqhi0x79P41Ivm44ZVFkCs69aiXqWE6uVWsCr14ScunefKhI5jFZUkaUwZra3bGN4sBOQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b49c7ea6-26db-4e7a-990f-08df38c2c4ed
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Nov 2026 09:22:08.7727 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2d6ec937-2625-4464-37ab-08df38c2c325
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Nov 2026 09:22:05.8411 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 8zqZA4Fk7xR6O5nYc40QpiG+pjjYwCVp3XWWlHn65j+V9XrPJHspshqxW0/SWYK7jxsAcepVx3AmwEoA79iGLXg87pzauQ8qCao7qIBDIBU=
+X-MS-Exchange-CrossTenant-userprincipalname: Dh2SfPW7gBFu02TycU1M7fnbrY0nn+Y1egDAWfjagvjbTGQw9sRSRcpJ3W8RNZEKo/Hag/Lwd3MAMZ+cRHiJBwAGPKQEtq1QijBMb/VCa8I=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR06MB5265
 Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -158,77 +158,67 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+xHCI has up to 15 root ports and does not need a hub to fit more=0A=
+devices.=0A=
+=0A=
 Add auto-hub and leave it off. hw_compat_11_1 turns it on, so an older=0A=
 machine type keeps the hub it has today and a guest saved by an older=0A=
 QEMU still loads.=0A=
 =0A=
-A companion UHCI adds its ports to the EHCI bus instead of making one,=0A=
-so there the EHCI property decides. Both property lists still define=0A=
-auto-hub, because hw_compat_11_1 names pci-uhci-usb, and QEMU stops=0A=
-when a global names a property the device does not have.=0A=
-=0A=
 Suggested-by: Gerd Hoffmann <kraxel@redhat.com>=0A=
+Reported-by: Junjie Cao <junjie.cao@linux.dev>=0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- hw/usb/hcd-uhci.h | 1 +=0A=
+ hw/usb/hcd-xhci.h | 1 +=0A=
  hw/core/machine.c | 1 +=0A=
- hw/usb/hcd-uhci.c | 3 +++=0A=
- 3 files changed, 5 insertions(+)=0A=
+ hw/usb/hcd-xhci.c | 2 ++=0A=
+ 3 files changed, 4 insertions(+)=0A=
 =0A=
-diff --git a/hw/usb/hcd-uhci.h b/hw/usb/hcd-uhci.h=0A=
-index 3154837f1d..06433ce3de 100644=0A=
---- a/hw/usb/hcd-uhci.h=0A=
-+++ b/hw/usb/hcd-uhci.h=0A=
-@@ -72,6 +72,7 @@ typedef struct UHCIState {=0A=
-     char *masterbus;=0A=
-     uint32_t firstport;=0A=
-     uint32_t maxframes;=0A=
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h=0A=
+index 5cb9e06d1d..a3eaf2ebb6 100644=0A=
+--- a/hw/usb/hcd-xhci.h=0A=
++++ b/hw/usb/hcd-xhci.h=0A=
+@@ -191,6 +191,7 @@ typedef struct XHCIState {=0A=
+     uint32_t numslots;=0A=
+     uint32_t flags;=0A=
+     uint32_t max_pstreams_mask;=0A=
 +    bool auto_hub;=0A=
- } UHCIState;=0A=
- =0A=
- #define TYPE_UHCI "pci-uhci-usb"=0A=
+     void (*intr_update)(XHCIState *s, int n, bool enable);=0A=
+     bool (*intr_raise)(XHCIState *s, int n, bool level);=0A=
+     /*=0A=
 diff --git a/hw/core/machine.c b/hw/core/machine.c=0A=
-index 0103038cad..f79337e7d7 100644=0A=
+index d9ac4b419a..f8f5b01117 100644=0A=
 --- a/hw/core/machine.c=0A=
 +++ b/hw/core/machine.c=0A=
-@@ -46,6 +46,7 @@ GlobalProperty hw_compat_11_1[] =3D {=0A=
-     { "sysbus-ehci-usb", "auto-hub", "on" },=0A=
-     { "pci-ehci-usb", "auto-hub", "on" },=0A=
-     { "base-xhci", "auto-hub", "on" },=0A=
-+    { "pci-uhci-usb", "auto-hub", "on" },=0A=
+@@ -43,6 +43,7 @@=0A=
+ GlobalProperty hw_compat_11_1[] =3D {=0A=
+     { "sysbus-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },=0A=
+     { "pci-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },=0A=
++    { "base-xhci", "auto-hub", "on" },=0A=
  };=0A=
  const size_t hw_compat_11_1_len =3D G_N_ELEMENTS(hw_compat_11_1);=0A=
  =0A=
-diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c=0A=
-index a7b9fe1317..36d4076c25 100644=0A=
---- a/hw/usb/hcd-uhci.c=0A=
-+++ b/hw/usb/hcd-uhci.c=0A=
-@@ -1213,6 +1213,7 @@ void usb_uhci_common_realize(PCIDevice *dev, Error **=
-errp)=0A=
-         }=0A=
-     } else {=0A=
-         usb_bus_new(&s->bus, sizeof(s->bus), &uhci_bus_ops, DEVICE(dev));=
-=0A=
-+        s->bus.auto_hub =3D s->auto_hub;=0A=
-         for (i =3D 0; i < UHCI_PORTS; i++) {=0A=
-             usb_register_port(&s->bus, &s->ports[i].port, s, i, &uhci_port=
-_ops,=0A=
-                               USB_SPEED_MASK_LOW | USB_SPEED_MASK_FULL);=
-=0A=
-@@ -1260,10 +1261,12 @@ static const Property uhci_properties_companion[] =
-=3D {=0A=
-     DEFINE_PROP_UINT32("firstport", UHCIState, firstport, 0),=0A=
-     DEFINE_PROP_UINT32("bandwidth", UHCIState, frame_bandwidth, 1280),=0A=
-     DEFINE_PROP_UINT32("maxframes", UHCIState, maxframes, 128),=0A=
-+    DEFINE_PROP_BOOL("auto-hub", UHCIState, auto_hub, false),=0A=
- };=0A=
- static const Property uhci_properties_standalone[] =3D {=0A=
-     DEFINE_PROP_UINT32("bandwidth", UHCIState, frame_bandwidth, 1280),=0A=
-     DEFINE_PROP_UINT32("maxframes", UHCIState, maxframes, 128),=0A=
-+    DEFINE_PROP_BOOL("auto-hub", UHCIState, auto_hub, false),=0A=
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c=0A=
+index 376bc00264..1e42c851b4 100644=0A=
+--- a/hw/usb/hcd-xhci.c=0A=
++++ b/hw/usb/hcd-xhci.c=0A=
+@@ -3377,6 +3377,7 @@ static void usb_xhci_init(XHCIState *xhci)=0A=
+     xhci->numports =3D xhci->numports_2 + xhci->numports_3;=0A=
+ =0A=
+     usb_bus_new(&xhci->bus, sizeof(xhci->bus), &xhci_bus_ops, xhci->hostOp=
+aque);=0A=
++    xhci->bus.auto_hub =3D xhci->auto_hub;=0A=
+ =0A=
+     for (i =3D 0; i < usbports; i++) {=0A=
+         speedmask =3D 0;=0A=
+@@ -3660,6 +3661,7 @@ static const Property xhci_properties[] =3D {=0A=
+     DEFINE_PROP_UINT32("p3",    XHCIState, numports_3, 4),=0A=
+     DEFINE_PROP_LINK("host",    XHCIState, hostOpaque, TYPE_DEVICE,=0A=
+                      DeviceState *),=0A=
++    DEFINE_PROP_BOOL("auto-hub", XHCIState, auto_hub, false),=0A=
  };=0A=
  =0A=
- static void uhci_class_init(ObjectClass *klass, const void *data)=0A=
+ static void xhci_class_init(ObjectClass *klass, const void *data)=0A=
 -- =0A=
 2.43.0=0A=
 
