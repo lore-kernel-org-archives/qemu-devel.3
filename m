@@ -1,66 +1,65 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD6A606C541
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E487D606A5BC
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=CGrwwvEU
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=O1osAJbH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNtDm-0003VX-Ex; Mon, 02 Nov 2026 09:41:14 -0500
+	id 1xNtEK-0004l8-7Q; Mon, 02 Nov 2026 09:41:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDM-0003Hs-Dr
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:53 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDH-0003G7-S6
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDB-0008V3-NE
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:47 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD8-0008T2-EP
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793630435;
+ s=mimecast20190719; t=1793630432;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YCQ44BCIZJt+h8SHa+MrvoTQ81VBPJ8aYx0cUgelBUM=;
- b=CGrwwvEUeDBSrJXxNUzzfBpM2WVZtaY1hKp2yTthp4TRULKIe3e5f3TIdJbrdQgOYtJx/s
- qk3YVggTERXK8kO7RbDUgaIuvFkplNXVH+bgzucNviaerLkz2Df3656u5cF7zKWEG/3JH8
- thDWuq/O6gLbj3JsdGepEpg2JSR26iU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=UkO1Zo2bHx/UoA2ROy1uaJ3Bvjqi/TP11BUdnNreuU4=;
+ b=O1osAJbHZF7Ay2PsnJj8cZjChX431eW2fzWtQJdfIpn812A9iG6GdQNZ9ooFB0V9KxYiz+
+ 4Hv/ZPsA20v7CwIAEfIeMN3RSZxcKS8z9uh1Be8R7/ncsyfGfm1FCmEs+OgU8W6duGGY0k
+ TPwxswH+CXjxZq1AgMkVmUX2W3jsbGU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-w5fJOLb-MSi6zJxzEP6BMw-1; Mon,
- 02 Nov 2026 09:40:34 -0500
-X-MC-Unique: w5fJOLb-MSi6zJxzEP6BMw-1
-X-Mimecast-MFC-AGG-ID: w5fJOLb-MSi6zJxzEP6BMw_1793630433
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-ergpGdC8P2KXLIAWTldkYA-1; Mon,
+ 02 Nov 2026 09:40:31 -0500
+X-MC-Unique: ergpGdC8P2KXLIAWTldkYA-1
+X-Mimecast-MFC-AGG-ID: ergpGdC8P2KXLIAWTldkYA_1793630430
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60FCB180A9D7; Mon,  2 Nov 2026 14:40:33 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C250180AEBE; Mon,  2 Nov 2026 14:40:30 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D0D6E433; Mon,  2 Nov 2026 14:40:32 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16C571800444; Mon,  2 Nov 2026 14:40:30 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 054B921E662B; Mon, 02 Nov 2026 15:40:20 +0100 (CET)
+ id C57BC21E66D7; Mon, 02 Nov 2026 15:40:19 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 63/74] qdev: add qapi_type field to PropertyInfo with fallback
- registration
-Date: Mon,  2 Nov 2026 15:40:07 +0100
-Message-ID: <20261102144018.3212223-64-armbru@redhat.com>
+Subject: [PULL 51/74] net/colo-compare: fix max_queue_size setter visitor type
+Date: Mon,  2 Nov 2026 15:39:55 +0100
+Message-ID: <20261102144018.3212223-52-armbru@redhat.com>
 In-Reply-To: <20261102144018.3212223-1-armbru@redhat.com>
 References: <20261102144018.3212223-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -90,116 +89,34 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Add a qapi_type field to PropertyInfo to prepare for the transition
-from string-based type metadata to QAPI type-info.
+The setter was using visit_type_uint64, accepting values wider than
+the uint32_t field. Use visit_type_uint32 to match the getter, field,
+and typename.
 
-Update qdev_property_add_static() and qdev_class_add_property() to
-pass qapi_type instead of NULL to object_property_add() and
-object_class_property_add().
-
-Update the shared enum accessor functions to prefer .qapi_type->lookup
-over .enum_table via a new qdev_propinfo_enum_lookup() helper.
-
-No PropertyInfo definitions are changed, all .qapi_type fields default
-to NULL, so this patch is no-op for now.
-
+Fixes: 0c4266ef2690 ("net/colo-compare.c: Fix compare_timeout format issue")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20261101201717.3911097-47-armbru@redhat.com>
+Message-ID: <20261101201717.3911097-35-armbru@redhat.com>
 ---
- include/hw/core/qdev-properties.h |  1 +
- hw/core/qdev-properties.c         | 26 +++++++++++++++++++-------
- 2 files changed, 20 insertions(+), 7 deletions(-)
+ net/colo-compare.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
-index eba5436e53..1ea2ba66bb 100644
---- a/include/hw/core/qdev-properties.h
-+++ b/include/hw/core/qdev-properties.h
-@@ -34,6 +34,7 @@ struct PropertyInfo {
-     const char *type;
-     const char *description;
-     const QEnumLookup *enum_table;
-+    const QAPITypeInfo *qapi_type;
-     bool realized_set_allowed; /* allow setting property on realized device */
-     char *(*print)(Object *obj, const Property *prop);
-     void (*set_default_value)(ObjectProperty *op, const Property *prop);
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 61dca80c95..71580c04e4 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -99,13 +99,22 @@ static ObjectPropertyAccessor *field_prop_setter(const PropertyInfo *info)
-     return info->set ? field_prop_set : NULL;
- }
- 
-+static const QEnumLookup *qdev_propinfo_enum_lookup(const PropertyInfo *info)
-+{
-+    if (info->qapi_type) {
-+        assert(info->qapi_type->lookup);
-+        return info->qapi_type->lookup;
-+    }
-+    return info->enum_table;
-+}
-+
- void qdev_propinfo_get_enum(Object *obj, Visitor *v, const char *name,
-                             void *opaque, Error **errp)
+diff --git a/net/colo-compare.c b/net/colo-compare.c
+index a9c6cca5e1..6bc43e0696 100644
+--- a/net/colo-compare.c
++++ b/net/colo-compare.c
+@@ -1129,9 +1129,9 @@ static void set_max_queue_size(Object *obj, Visitor *v,
+                                const char *name, void *opaque,
+                                Error **errp)
  {
-     const Property *prop = opaque;
-     int *ptr = object_field_prop_ptr(obj, prop);
+-    uint64_t value;
++    uint32_t value;
  
--    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
-+    visit_type_enum(v, name, ptr, qdev_propinfo_enum_lookup(prop->info), errp);
- }
- 
- void qdev_propinfo_set_enum(Object *obj, Visitor *v, const char *name,
-@@ -114,14 +123,15 @@ void qdev_propinfo_set_enum(Object *obj, Visitor *v, const char *name,
-     const Property *prop = opaque;
-     int *ptr = object_field_prop_ptr(obj, prop);
- 
--    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
-+    visit_type_enum(v, name, ptr, qdev_propinfo_enum_lookup(prop->info), errp);
- }
- 
- void qdev_propinfo_set_default_value_enum(ObjectProperty *op,
-                                           const Property *prop)
- {
-     object_property_set_default_str(op,
--        qapi_enum_lookup(prop->info->enum_table, prop->defval.i));
-+        qapi_enum_lookup(qdev_propinfo_enum_lookup(prop->info),
-+                         prop->defval.i));
- }
- 
- /* Bit */
-@@ -941,8 +951,8 @@ void qdev_prop_set_enum(DeviceState *dev, const char *name, int value)
- 
-     prop = qdev_prop_find(dev, name);
-     object_property_set_str(OBJECT(dev), name,
--                            qapi_enum_lookup(prop->info->enum_table, value),
--                            &error_abort);
-+        qapi_enum_lookup(qdev_propinfo_enum_lookup(prop->info), value),
-+        &error_abort);
- }
- 
- void qdev_prop_set_array(DeviceState *dev, const char *name, QList *values)
-@@ -1150,7 +1160,8 @@ void qdev_property_add_static(DeviceState *dev, const Property *prop)
- 
-     assert(!prop->info->create);
- 
--    op = object_property_add(obj, prop->name, prop->info->type, NULL,
-+    op = object_property_add(obj, prop->name, prop->info->type,
-+                             prop->info->qapi_type,
-                              field_prop_getter(prop->info),
-                              field_prop_setter(prop->info),
-                              prop->info->release,
-@@ -1176,7 +1187,8 @@ static void qdev_class_add_property(DeviceClass *klass, const char *name,
-     if (prop->info->create) {
-         op = prop->info->create(oc, name, prop);
-     } else {
--        op = object_class_property_add(oc, name, prop->info->type, NULL,
-+        op = object_class_property_add(oc, name, prop->info->type,
-+                                       prop->info->qapi_type,
-                                        field_prop_getter(prop->info),
-                                        field_prop_setter(prop->info),
-                                        prop->info->release,
+-    if (!visit_type_uint64(v, name, &value, errp)) {
++    if (!visit_type_uint32(v, name, &value, errp)) {
+         return;
+     }
+     if (!value) {
 -- 
 2.55.0
 
