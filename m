@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF67D606A324
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 19:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB44606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 19:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=htLIblZn
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=jOFD199n
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNxIJ-0002M7-K6; Mon, 02 Nov 2026 14:02:11 -0500
+	id 1xNxIr-0003P2-SD; Mon, 02 Nov 2026 14:02:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xNxHs-0001za-OI
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xNxHY-0001sj-CY
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xNxHq-0008FL-Cn
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:44 -0500
+ id 1xNxHW-0008CI-Ej
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793646100;
+ s=mimecast20190719; t=1793646081;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j3nROunoF4CikVbyQLt/Mk8W5QtQdfAuIa85rpQ5scA=;
- b=htLIblZnf83p80YeM70ieHYKXG0lTkk7pbRjDY7ZWjZymreeJgs6EmivxODMiXoLIo6p3X
- 8Gdx04EwpIiay5xioYT1csL+peqs8iPF4PXPpSkNhUegl4pNNx2be+UggZLPTVfT4CWoJX
- DPGgbUSot6uNpZiBIn+Zkl4IXiJf5w0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=s2fQy26Nzh4pevOCqiRqluICNBTrWSgxg/L8ugtFtns=;
+ b=jOFD199n83fASCknFL/UKV5zUxEulOb9Aatef50Vy6vZLSjA/biSo9aqwhdPgewzCs/B5Z
+ NKwxYgZ8Ks8NOHUjDUFdBe5Ri4eX7eIb/xSXEQPIA2TpGHJSmMF3s2Hged4LGVYWBBSBJE
+ kp11AQKhUflGtUmpow0vE2kYxgPwp4M=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-DUNpg03DMMWJpI_aTrXcYA-1; Mon,
- 02 Nov 2026 14:01:36 -0500
-X-MC-Unique: DUNpg03DMMWJpI_aTrXcYA-1
-X-Mimecast-MFC-AGG-ID: DUNpg03DMMWJpI_aTrXcYA_1793646095
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-164-FYOnKF7dNwWxwGciaH3gdA-1; Mon,
+ 02 Nov 2026 14:01:20 -0500
+X-MC-Unique: FYOnKF7dNwWxwGciaH3gdA-1
+X-Mimecast-MFC-AGG-ID: FYOnKF7dNwWxwGciaH3gdA_1793646078
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED08B18015CC; Mon,  2 Nov 2026 19:01:34 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70EEF19560B1; Mon,  2 Nov 2026 19:01:18 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD4FE433; Mon,  2 Nov 2026 19:01:33 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 243541800765; Mon,  2 Nov 2026 19:01:18 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>,
@@ -61,27 +61,28 @@ Cc: qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Alexey Kardashevskiy <aik@ozlabs.ru>,
  Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 16/25] trace: eliminate dupe
- trace_event_get_state_dynamic_by_id() calls
-Date: Mon,  2 Nov 2026 13:58:22 -0500
-Message-ID: <20261102185831.1880189-17-stefanha@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 07/25] trace: remove obsolete references to vcpu property
+Date: Mon,  2 Nov 2026 13:58:13 -0500
+Message-ID: <20261102185831.1880189-8-stefanha@redhat.com>
 In-Reply-To: <20261102185831.1880189-1-stefanha@redhat.com>
 References: <20261102185831.1880189-1-stefanha@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,197 +103,126 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-Each backend generates the same trace_event_get_state_dynamic_by_id()
-call for the TRACE....DSTATE() macro body, so when multiple backends
-are enabled, the same check is repeated:
+The 'vcpu' property for trace events was removed 2 years ago
+but some mentions of it remain in the code.
 
- #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
-     QEMU_TEST_WIBBLE_ENABLED() || \
-     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
-     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
-     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
-     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
-     tracepoint_enabled(qemu, test_wibble) || \
-     false)
-
-Expanding the use of the 'backend.check_trace_event_get_state'
-attr in the C header generator removes the duplication, in the
-same way that the Rust generator already does.
-
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Fixes: 7ffc4894a63b ("trace: Remove deprecated 'vcpu' field from QMP trace events")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-id: 20261102142844.3464712-17-berrange@redhat.com
+Message-id: 20261102142844.3464712-8-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- tests/tracetool/all.h                 | 22 ++++++++--------------
- scripts/tracetool/backend/__init__.py |  4 ++--
- scripts/tracetool/backend/ftrace.py   |  4 ----
- scripts/tracetool/backend/log.py      |  4 ----
- scripts/tracetool/backend/simple.py   |  5 -----
- scripts/tracetool/backend/syslog.py   |  4 ----
- scripts/tracetool/format/h.py         |  8 +++++++-
- 7 files changed, 17 insertions(+), 34 deletions(-)
+ trace/control.h        | 12 ------------
+ trace/event-internal.h | 11 -----------
+ trace/control-target.c |  6 ------
+ trace/control.c        |  6 ------
+ 4 files changed, 35 deletions(-)
 
-diff --git a/tests/tracetool/all.h b/tests/tracetool/all.h
-index 41fa4d0e8a2..5627c1d8930 100644
---- a/tests/tracetool/all.h
-+++ b/tests/tracetool/all.h
-@@ -44,11 +44,8 @@ void _simple_trace_test_wibble(void *context, int value);
+diff --git a/trace/control.h b/trace/control.h
+index 6754bfe052b..20033fb6669 100644
+--- a/trace/control.h
++++ b/trace/control.h
+@@ -139,8 +139,6 @@ static bool trace_event_get_state_static(TraceEvent *ev);
+  * trace_event_get_state_dynamic:
+  *
+  * Get the dynamic tracing state of an event.
+- *
+- * If the event has the 'vcpu' property, gets the OR'ed state of all vCPUs.
+  */
+ static bool trace_event_get_state_dynamic(TraceEvent *ev);
  
- #define TRACE_TEST_BLAH_BACKEND_DSTATE() ( \
-     QEMU_TEST_BLAH_ENABLED() || \
--    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
--    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
--    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
--    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
-     tracepoint_enabled(qemu, test_blah) || \
-+    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
-     false)
+@@ -149,8 +147,6 @@ static bool trace_event_get_state_dynamic(TraceEvent *ev);
+  *
+  * Set the dynamic tracing state of an event.
+  *
+- * If the event has the 'vcpu' property, sets the state on all vCPUs.
+- *
+  * Pre-condition: trace_event_get_state_static(ev) == true
+  */
+ void trace_event_set_state_dynamic(TraceEvent *ev, bool state);
+@@ -203,14 +199,6 @@ extern QemuOptsList qemu_trace_opts;
+  */
+ void trace_opt_parse(const char *optstr);
  
- static inline void trace_test_blah(void *context, const char *filename)
-@@ -58,26 +55,23 @@ static inline void trace_test_blah(void *context, const char *filename)
-     if (trace_event_get_state(TRACE_TEST_BLAH)) {
- #line 4 "trace-events"
-         ftrace_write("test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
--#line 62 "all.h"
-+#line 59 "all.h"
-         if (qemu_loglevel_mask(LOG_TRACE)) {
- #line 4 "trace-events"
-             qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
--#line 66 "all.h"
-+#line 63 "all.h"
-         }
-         _simple_trace_test_blah(context, filename);
- #line 4 "trace-events"
-         syslog(LOG_INFO, "test_blah " "Blah context=%p filename=%s" , context, filename);
--#line 71 "all.h"
-+#line 68 "all.h"
-     }
+-/**
+- * trace_get_vcpu_event_count:
+- *
+- * Return the number of known vcpu-specific events
+- */
+-uint32_t trace_get_vcpu_event_count(void);
+-
+-
+ #include "control-internal.h"
+ 
+ #endif /* TRACE__CONTROL_H */
+diff --git a/trace/event-internal.h b/trace/event-internal.h
+index 1d57b0ff1b5..cc095a6ad54 100644
+--- a/trace/event-internal.h
++++ b/trace/event-internal.h
+@@ -10,12 +10,6 @@
+ #ifndef TRACE__EVENT_INTERNAL_H
+ #define TRACE__EVENT_INTERNAL_H
+ 
+-/*
+- * Special value for TraceEvent.vcpu_id field to indicate
+- * that the event is not VCPU specific
+- */
+-#define TRACE_VCPU_EVENT_NONE ((uint32_t)-1)
+-
+ /**
+  * TraceEvent:
+  * @id: Unique event identifier.
+@@ -23,11 +17,6 @@
+  * @sstate: Static tracing state.
+  * @dstate: Dynamic tracing state
+  *
+- * Interpretation of @dstate depends on whether the event has the 'vcpu'
+- *  property:
+- * - false: Boolean value indicating whether the event is active.
+- * - true : Integral counting the number of vCPUs that have this event enabled.
+- *
+  * Opaque generic description of a tracing event.
+  */
+ typedef struct TraceEvent {
+diff --git a/trace/control-target.c b/trace/control-target.c
+index 24d9b7abbde..87b0f5037df 100644
+--- a/trace/control-target.c
++++ b/trace/control-target.c
+@@ -14,12 +14,6 @@ void trace_event_set_state_dynamic(TraceEvent *ev, bool state)
+ {
+     assert(trace_event_get_state_static(ev));
+ 
+-    /*
+-     * There is no longer a "vcpu" property, dstate can only be 1 or
+-     * 0. With it, we haven't instantiated any vCPU yet, so we will
+-     * set a global state instead, and trace_init_vcpu will reconcile
+-     * it afterwards.
+-     */
+     bool state_pre = *ev->dstate;
+     if (state_pre != state) {
+         if (state) {
+diff --git a/trace/control.c b/trace/control.c
+index 49f0a4c5cda..6971157cbe7 100644
+--- a/trace/control.c
++++ b/trace/control.c
+@@ -37,7 +37,6 @@ typedef struct TraceEventGroup {
+ static TraceEventGroup *event_groups;
+ static size_t nevent_groups;
+ static uint32_t next_id;
+-static uint32_t next_vcpu_id;
+ #ifdef CONFIG_TRACE_SIMPLE
+ static bool init_trace_on_startup;
+ #endif
+@@ -304,8 +303,3 @@ void trace_opt_parse(const char *optstr)
+     trace_opts_file = g_strdup(qemu_opt_get(opts, "file"));
+     qemu_opts_del(opts);
  }
- 
- #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
-     QEMU_TEST_WIBBLE_ENABLED() || \
--    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
--    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
--    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
--    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
-     tracepoint_enabled(qemu, test_wibble) || \
-+    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
-     false)
- 
- static inline void trace_test_wibble(void *context, int value)
-@@ -87,16 +81,16 @@ static inline void trace_test_wibble(void *context, int value)
-     if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
- #line 5 "trace-events"
-         ftrace_write("test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
--#line 91 "all.h"
-+#line 85 "all.h"
-         if (qemu_loglevel_mask(LOG_TRACE)) {
- #line 5 "trace-events"
-             qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
--#line 95 "all.h"
-+#line 89 "all.h"
-         }
-         _simple_trace_test_wibble(context, value);
- #line 5 "trace-events"
-         syslog(LOG_INFO, "test_wibble " "Wibble context=%p value=%d" , context, value);
--#line 100 "all.h"
-+#line 94 "all.h"
-     }
- }
- #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/backend/__init__.py
-index 9109a783c72..72f549c77c4 100644
---- a/scripts/tracetool/backend/__init__.py
-+++ b/scripts/tracetool/backend/__init__.py
-@@ -133,8 +133,8 @@ def generate_begin(self, events, group):
-     def generate(self, event, group, check_trace_event_get_state=None):
-         self._run_function("generate_%s", event, group, check_trace_event_get_state=check_trace_event_get_state)
- 
--    def generate_backend_dstate(self, event, group):
--        self._run_function("generate_%s_backend_dstate", event, group)
-+    def generate_backend_dstate(self, event, group, check_trace_event_get_state=None):
-+        self._run_function("generate_%s_backend_dstate", event, group, check_trace_event_get_state=check_trace_event_get_state)
- 
-     def generate_end(self, events, group):
-         self._run_function("generate_%s_end", events, group)
-diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
-index e304ef21999..94cffc45a9d 100644
---- a/scripts/tracetool/backend/ftrace.py
-+++ b/scripts/tracetool/backend/ftrace.py
-@@ -40,10 +40,6 @@ def generate_h(event, group):
-         argnames=argnames)
- 
- 
--def generate_h_backend_dstate(event, group):
--    out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
--        event_id="TRACE_" + event.name.upper())
 -
- def generate_rs(event, group):
-     out('        let format_string = c"%(fmt)s\\n";',
-         '        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, %(args)s);}',
-diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
-index 9e3e5046f5f..577ee158584 100644
---- a/scripts/tracetool/backend/log.py
-+++ b/scripts/tracetool/backend/log.py
-@@ -41,10 +41,6 @@ def generate_h(event, group):
-         argnames=argnames)
- 
- 
--def generate_h_backend_dstate(event, group):
--    out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
--        event_id="TRACE_" + event.name.upper())
--
- def generate_rs(event, group):
-     out('        let format_string = c"%(fmt)s\\n";',
-         '        if (unsafe { bindings::qemu_loglevel } & bindings::LOG_TRACE) != 0 {',
-diff --git a/scripts/tracetool/backend/simple.py b/scripts/tracetool/backend/simple.py
-index e22683c7d2a..15f27e26bd5 100644
---- a/scripts/tracetool/backend/simple.py
-+++ b/scripts/tracetool/backend/simple.py
-@@ -42,11 +42,6 @@ def generate_h(event, group):
-         args=", ".join(event.args.names()))
- 
- 
--def generate_h_backend_dstate(event, group):
--    out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
--        event_id="TRACE_" + event.name.upper())
--
--
- def generate_c_begin(events, group):
-     out('#include "trace/simple.h"',
-         '')
-diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/backend/syslog.py
-index 746efd35fb9..ba269cb6a33 100644
---- a/scripts/tracetool/backend/syslog.py
-+++ b/scripts/tracetool/backend/syslog.py
-@@ -43,7 +43,3 @@ def generate_rs(event, group):
-         '        unsafe {::trace::syslog(::trace::LOG_INFO, format_string.as_ptr() as *const c_char, %(args)s);}',
-         fmt=expand_format_string(event.fmt, event.name + " "),
-         args=event.args.rust_call_varargs())
--
--def generate_h_backend_dstate(event, group):
--    out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
--        event_id="TRACE_" + event.name.upper())
-diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-index 6ffb7256e31..5ad3a419f82 100644
---- a/scripts/tracetool/format/h.py
-+++ b/scripts/tracetool/format/h.py
-@@ -55,7 +55,13 @@ def generate(events, backend, group):
-             api=e.api(e.QEMU_BACKEND_DSTATE))
- 
-         if "disable" not in e.properties:
--            backend.generate_backend_dstate(e, group)
-+            backend.generate_backend_dstate(e, group, check_trace_event_get_state=False)
-+
-+            if backend.check_trace_event_get_state:
-+                event_id = 'TRACE_' + e.name.upper()
-+                out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
-+                    event_id=event_id)
-+                backend.generate_backend_dstate(e, group, check_trace_event_get_state=True)
- 
-         out('    false)')
- 
+-uint32_t trace_get_vcpu_event_count(void)
+-{
+-    return next_vcpu_id;
+-}
 -- 
 2.56.0
 
