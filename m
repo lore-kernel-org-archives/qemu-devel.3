@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8E7606A324
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 19:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36E1606A327
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 19:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eBGIsbKn
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=h9yRMac/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNxIu-0003Z8-3g; Mon, 02 Nov 2026 14:02:48 -0500
+	id 1xNxIr-0003Ik-0G; Mon, 02 Nov 2026 14:02:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xNxI0-00025S-9a
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:56 -0500
+ id 1xNxHw-00020B-Jn
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xNxHw-0008Gy-C4
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:51 -0500
+ id 1xNxHt-0008Gl-IG
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793646107;
+ s=mimecast20190719; t=1793646104;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e7tj2P/oslojgIW5ujruyi9WhhnGXEZAXlDkuQg0Gso=;
- b=eBGIsbKnO+Qcw/GdvGNaj25WktSnCLVymLdAES7HwO+m1MiEfzmaC5rsDmeTr5BssM2vl3
- Kf8K4vaNNCXBYVhYTOkwbwD1fRxzH+bg4vcR8FDbLVt6x0FP6mbkaK+GB3xDqU67o2Mbay
- DHksLBe9n9DJOxwIuG0hbRkr0lIUFfM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=4/XTSFHkdQ+Pw5IV0/sk+ny/n4mSrenG0IJ4ieTlAdY=;
+ b=h9yRMac/5HPAMyEyt/X5BesMY5dW2tMk1x4VoExkFZ0yP7e010fkrKrPgHifkI1cnSFbF4
+ 5nHwU0Ph6Iu+mrlRfOXumoVxGWfZiGJqXB6uOA2b9t+z3aWN1cT46SLj35plaUK7kDqFWU
+ XSRiN97XfTdbIFkCqhEXgdjLqun1nVQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-yX8_BfRaNQe1Cyd_Mm-UjA-1; Mon,
- 02 Nov 2026 14:01:42 -0500
-X-MC-Unique: yX8_BfRaNQe1Cyd_Mm-UjA-1
-X-Mimecast-MFC-AGG-ID: yX8_BfRaNQe1Cyd_Mm-UjA_1793646100
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-qqnTlvRmMw6I5OQLW16cZQ-1; Mon,
+ 02 Nov 2026 14:01:39 -0500
+X-MC-Unique: qqnTlvRmMw6I5OQLW16cZQ-1
+X-Mimecast-MFC-AGG-ID: qqnTlvRmMw6I5OQLW16cZQ_1793646097
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 370CB1954102; Mon,  2 Nov 2026 19:01:39 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8E12B180257A; Mon,  2 Nov 2026 19:01:37 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5D0771800347; Mon,  2 Nov 2026 19:01:38 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 283BC1955F73; Mon,  2 Nov 2026 19:01:37 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>,
@@ -61,27 +61,27 @@ Cc: qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Alexey Kardashevskiy <aik@ozlabs.ru>,
  Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 19/25] monitor: remove mistaken use of trace_event_get_state()
-Date: Mon,  2 Nov 2026 13:58:25 -0500
-Message-ID: <20261102185831.1880189-20-stefanha@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 18/25] hw/ppc: remove mistaken use of trace_event_get_state()
+Date: Mon,  2 Nov 2026 13:58:24 -0500
+Message-ID: <20261102185831.1880189-19-stefanha@redhat.com>
 In-Reply-To: <20261102185831.1880189-1-stefanha@redhat.com>
 References: <20261102185831.1880189-1-stefanha@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,36 +108,63 @@ syslog, simple & ust), while trace_event_get_state() only
 validates state for backends using QEMU's internal state
 tracking (ftrace, log, syslog, simple).
 
+Furthermore, checking qemu_loglevel_mask() is inappropriate since
+there are many trace backends, of which 'log' is only one.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-id: 20261102142844.3464712-20-berrange@redhat.com
+Message-id: 20261102142844.3464712-19-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- monitor/qmp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/ppc/vof.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index eb44012643f..8fad090fbe3 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -439,7 +439,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+index 873e967f1e4..e2ff9bf96a3 100644
+--- a/hw/ppc/vof.c
++++ b/hw/ppc/vof.c
+@@ -252,8 +252,7 @@ static uint32_t vof_getprop(const void *fdt, uint32_t nodeph, uint32_t pname,
+              */
+             ret = proplen;
+             /* Do not format a value if tracepoint is silent, for performance */
+-            if (trace_event_get_state(TRACE_VOF_GETPROP) &&
+-                qemu_loglevel_mask(LOG_TRACE)) {
++            if (trace_event_get_state_backends(TRACE_VOF_GETPROP)) {
+                 prop_format(trval, sizeof(trval), prop, ret);
+             }
+         }
+@@ -337,8 +336,7 @@ static uint32_t vof_setprop(MachineState *ms, void *fdt, Vof *vof,
+         goto trace_exit;
+     }
  
-         /* Process request */
-         if (req_obj->req) {
--            if (trace_event_get_state(TRACE_MONITOR_QMP_CMD_IN_BAND)) {
-+            if (trace_event_get_state_backends(TRACE_MONITOR_QMP_CMD_IN_BAND)) {
-                 QDict *qdict = qobject_to(QDict, req_obj->req);
-                 QObject *id = qdict ? qdict_get(qdict, "id") : NULL;
-                 GString *id_json;
-@@ -495,7 +495,7 @@ static void handle_qmp_command(void *opaque, QObject *req, Error *err)
+-    if (trace_event_get_state(TRACE_VOF_SETPROP) &&
+-        qemu_loglevel_mask(LOG_TRACE)) {
++    if (trace_event_get_state_backends(TRACE_VOF_SETPROP)) {
+         prop_format(trval, sizeof(trval), val, vallen);
+     }
+     ret = vallen;
+@@ -584,8 +582,7 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
+         }
  
-     if (qdict && qmp_is_oob(qdict)) {
-         /* OOB commands are executed immediately */
--        if (trace_event_get_state(TRACE_MONITOR_QMP_CMD_OUT_OF_BAND)) {
-+        if (trace_event_get_state_backends(TRACE_MONITOR_QMP_CMD_OUT_OF_BAND)) {
-             QObject *id = qdict_get(qdict, "id");
-             GString *id_json;
+         /* FIXME: there is no backend(s) yet so just call a trace */
+-        if (trace_event_get_state(TRACE_VOF_WRITE) &&
+-            qemu_loglevel_mask(LOG_TRACE)) {
++        if (trace_event_get_state_backends(TRACE_VOF_WRITE)) {
+             tmp[cb] = '\0';
+             trace_vof_write(ihandle, cb, tmp);
+         }
+@@ -599,9 +596,7 @@ static void vof_claimed_dump(GArray *claimed)
+     int i;
+     OfClaimed c;
  
+-    if (trace_event_get_state(TRACE_VOF_CLAIMED) &&
+-        qemu_loglevel_mask(LOG_TRACE)) {
+-
++    if (trace_event_get_state_backends(TRACE_VOF_CLAIMED)) {
+         for (i = 0; i < claimed->len; ++i) {
+             c = g_array_index(claimed, OfClaimed, i);
+             trace_vof_claimed(c.start, c.start + c.size, c.size);
 -- 
 2.56.0
 
