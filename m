@@ -1,106 +1,129 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958E9606ABA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 17:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2611608441B
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 17:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=oYrxmLR2
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VlVagXCx;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=GalYYdOm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNvYc-0007uP-If; Mon, 02 Nov 2026 12:10:54 -0500
+	id 1xNveA-0001BF-K4; Mon, 02 Nov 2026 12:16:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNvYW-0007rQ-Gg
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 12:10:49 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNvYU-0006TN-Q1
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 12:10:48 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-c450ab1483cso545512266b.3
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 09:10:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793639445; cv=none;
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xNvdn-00018A-Vc
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 12:16:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xNvdl-00070a-OK
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 12:16:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793639771;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=R1cbDGwr8PmyHixE6Fyn+pRIVCcQjoctPl2TZJMnV+w=;
+ b=VlVagXCxi3MA1upfvnRI+Z2axt3TNNMcSq/LoHosUZC2xG7GNoIEYmYiJ1WqezO00nLK4N
+ /4mXMjUxZXdWrIlUn52s4UtHFYDN9W3/hVG6PeB7wnXQsYZLGiwVt4c+0rQVybfPHoF9yz
+ nuxHkIFCTAb1pzDkk8RkyRyeMo4ZPYA=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-83-yCEyhWkANuGZLlwIuYKW_Q-1; Mon, 02 Nov 2026 12:16:09 -0500
+X-MC-Unique: yCEyhWkANuGZLlwIuYKW_Q-1
+X-Mimecast-MFC-AGG-ID: yCEyhWkANuGZLlwIuYKW_Q_1793639769
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-88322409239so57309027b3.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 09:16:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793639769; cv=none;
  d=google.com; s=arc-20260327;
- b=hvg9vQaQh8EWzfMt4xnNTXFY6yn43kf3wH+6ar3xpzB+Z8wzEyR85QFvE9DAXpHG0/
- olG/ngp+lyK15CWvy70Z3S+DBKLUAtsel8ZhBcg8yt3aEHwnxYQy92qcmPtYULTjXHxR
- oyZsfGLgS3Yr6xxh1JxpFe0fRzqAWHA4eAme/vBPDcM535T4tOrRzLGsTMiDS5gPuVEI
- jpAylekQHR2RpHCnYYoLoe/bH+tW2XuiIbhKjzc3PiRXr0TeR3NBR5EnIvzk21b4adtQ
- xBmPGpEb3JZvIJFx2eELV+8IiUsOG3CJqQYkdSJehHf+SI4GyGBRejA2ZE4S4Q+usMun
- N89A==
+ b=SsTPyYtqM8nAJowONfbsR+tMeAZc8IpPl/xmO9p5ed4YkYGcM4Q/OlI29F0BiqUo05
+ LYeXPUrzuSmXSobHGV39Q4x5NMgb5wosMCXrw+IX+E61uCovOpP62UX2JfhU4n8yQRFj
+ FvQNq3X6HJ+MqSIp8qsKy3D15Y2/udVtn0/LkBdigAY+yyXWKV+NBmUFmTih+0ZBpNbl
+ OY9Y3UBx70vqjdJEK7Y3+Pyx5jXweMW1W69Nfd1hNVDBdGNtN04R67Yi4Ave1wcv3j4O
+ 2ffI2CiT4pJNqPjdgRhEelbiLjn+9MGZkUnhCOBocgVhmO7UIMqkjqVDKytG+X9Hb5hy
+ m2xw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=AkUDcZO13b5CDOBhwhbxw4u4HE2qnVF6JfiKNmGNzfM=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=NHMLMIrrlm8Mc6oHRQKxQW9hbyRZTDXC/pN4kKMFr1Ll86ulgi3J2dP2Qco0xgfH4Y
- 0k9n2Wz75oAEYYCIwnHQLJuc6iS/UnX1PkFtZ9GHu9PN9PdaTxGGUE0TbGu0Oxc/XkL9
- /zbaUUq8Yn40p/rMTVLpTbicZ8T06goWbqYv5DGVlMrdg9SYfd25dkZ5gNVeWGfG9xqr
- 5ZfCSpRxrPeVwqymbogxlSml+fCv81feDUfz8w+1hZj38vSFIJ3s2/S3GBNTpiAibeY7
- 9PIPM1CMPQ4x3yoK+JL5AyK7uolKJIOGTVByhT8/2jXwAkCb5frwN2RrrSHPyb4BMlFC
- W2Yw==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=R1cbDGwr8PmyHixE6Fyn+pRIVCcQjoctPl2TZJMnV+w=;
+ fh=CE0FkwzGJ8LY89xVhD74poZ1QR+EhyA9dPmSQRNKqmM=;
+ b=nFAGcLUMb/Ppd5O8zS6AW5tRXmMUmJgxI6jUuOpskO6kDuagRLiC77BHRoi/+YfvMr
+ arH1DN4LWeiwGH1Aq78iWJUdtEb2Xor+cv0lqv3/bPcnge2LdCUuqHiTDCSXIIDg5ko+
+ BSIyB9v54WwxQAVpL7EnMYosjCWkCoHyUBE/chhhRwBJOeYVyNRza1vlyc2L8IuQ6qI6
+ SVp/t+scUUsw0SJzgXh5kiE1gvjZEUIDU2KFgbEbKpXAjCACt0RYeQhn0KY06ds1qKEE
+ ripQQbwXHy0Bv6x2arYHxoy+UxRV8eGbYJJ6F3KiwuJy5t5j9RTPNpnNCloWLiQI+l/z
+ QkGQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793639445; x=1794244245; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=AkUDcZO13b5CDOBhwhbxw4u4HE2qnVF6JfiKNmGNzfM=;
- b=oYrxmLR2qRuo9ryzUY/W4zBdNNDRup5SUDppwpUzwiiSq8Yv5KJNKzfSvUkb3Muumm
- 1oCJPNq3gH4R0WaLQYsVC1Z6xBfYows6qtgwIG5v0Op3jnxOxeyKdPvKVRYwb4c6MmNT
- Z/IcT7B/qtLGzc60B/q6nXSlssOfFYYvSEJM4Hi+xVzdIRNtdnGw67WTpOrzXHv6MDSh
- yUo7rDTj7EUIWzU8Ao7VPt3HVJfIcMelDx9X0EdGMr8sAmusFQk8zzKwCtc8aR1cEtGf
- QpaUAKXWuWJ3yc314J4Ka5x7rW8iaobg0dNam0bBnidXQVa4hammICur6MjbQq+xSaJ+
- DJbw==
+ d=redhat.com; s=google; t=1793639769; x=1794244569; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=R1cbDGwr8PmyHixE6Fyn+pRIVCcQjoctPl2TZJMnV+w=;
+ b=GalYYdOmm79VqtYvnIFdSZ8EPFBpv2aDypVczgbeNPxy5qetRKPJseQOVmxoROnf4k
+ mQijHmcUNFzBoqOypMPD+uUA8fnUNZA9HBfYACQH3VWhaG/J9qXnr9GFiL/Ug9cofkD+
+ t5NnwCs7gpffo+GSNp31ICHspTKsn3wZqhWZoFBO4kEGkgJbZATlngDt+nyD0HguK6kb
+ PMsdtL5orbnk9oU14Tsg4fn+5EUhNmnoZ8D8RuVFmh16/0o94R+1vERTq2qJgP3EWUCf
+ 7NQ2ucwSSOgeOUQ/Y4AQ43cHl5Ebd9fMNoTytjkghXpxm723SNuvPz1JH1oBaH+UFbMb
+ Zjpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793639445; x=1794244245;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=AkUDcZO13b5CDOBhwhbxw4u4HE2qnVF6JfiKNmGNzfM=;
- b=f6DFSDfu9FUhCYsaSgQGgTHM+XD6v0nkNh00ZeXhiKaN3CXrFN5dcs1iRxdRRr5OMD
- 7Vq/GKCFAxTHiOBP4cGvDatU/A9N4PAHYtjnZG0BoqnK6Anspe2/EA8z8tdJZVE5Ri4/
- ho4EdkPkt+ThRfk2VXvWuiN3Y1JYAMwGblA2WK+LD79YbqJrUffqdpWPv6RQ8Vg1Ck60
- AXdtg+laNaQijyPyK8usaXNIlueM6Q2OrLdu2WW3EfcG3L334QP0CGcbpO4//36uoGQw
- wep3jQMc6zT8A7bZMB1oz3sx91o1gWBTrLUWT98A19GsefKpgI76qyvILj6QJq0nxOvX
- Yw0g==
-X-Gm-Message-State: AFq9FYKqjyJNLDNmJCxyVxGVXvGbtQXi08RCZgoT01gBM8Vzie7D3lW3
- WNJQU3uxGKqXeDLHJCY8dXt8Kl0WlsSv2qXhp4Y0wW7ADWQdbd5RvOPIlh7fIaRWODJxXlxVyxR
- CV+Ej+c/Rv67UPNUJDQa/BgRNqBUca97UT8AvQaadKQ==
-X-Gm-Gg: AYBFou2Zt7SWbU3igkwCgEDDfOEi/j67Upt+QGgWd0BqI1/kFgl8QZGCd5DlhxnRBkZ
- 90dWRNRZoQdrYODPrOgoKCj8kXy7UkeLjtmDRLca0DN+B1i6JMzmIA57O2PSOUujIfj+wQmg1vE
- BLHPI3uZqPi7rOwiHEvWyzE/K3V2zy0UPJV3oUibDM7wu2/CZIZPlU1oKQLrRPrN2Rm64r+XqeE
- pUM/7GbI4TF3+tCG96D8Rg/49a+MvQXriinXPFFl5b8/H7ADUkK70sXpQSAzBoU/snr9wAu9e8v
- qWCfr9+ik9ft9VK9QMJEP/YQACq6TUXU+GFl25s8vWct+5TXjLec/NsN9isYMLe32xVvnKB/Q6N
- S+M3i2+giqgfNqpPFFlKdn3NgzsUEHueTGTARmu5a0+WJ/YN8xUrQqnIO58017yZoBfFS2wxodJ
- bNje4bHn4qFFTNAe7GrPsG
-X-Received: by 2002:a17:907:6eaa:b0:c40:bbd2:62f6 with SMTP id
- a640c23a62f3a-c4ca7a730acmr861405566b.19.1793639444922; Mon, 02 Nov 2026
- 09:10:44 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793639769; x=1794244569;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=R1cbDGwr8PmyHixE6Fyn+pRIVCcQjoctPl2TZJMnV+w=;
+ b=ZL6aU29Hx0sKxanvZ1UVX2DOr+PhaLCTn4iuTuLrRIRlhX1U7jeOkuikXVUBS0T0ah
+ MSx9P0yhltJTBA0ZzmcmzQ9xhTka1/PpHp04bEEHj5GU+hwYgbxXpKIo/H3KvbUJWqCL
+ qebb3UqzgJnNx6jSI0E8K7LfQisbiA1sT3P4vcxNFDXNAVkxTtEpL28DSOxeJK/DKktd
+ GKGIHmZC1tc7BqJ620bR6erdXjVQeJive8ughxfbgYUzbidTj5B7leQuIrueSyh/fFPZ
+ //K0iLrSJPHK8BwPWplUUhQ+fnaXca+lUYSvqbkFvM8NjPbSCq6aICITcsF8qbdCkz6g
+ mw2w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByrat5iVpJCCXq6kKdxDOrdswRTMHra3mJ2+Ww4ae7gIsnLEu1jho7MeHtFzqA437RGeS81BRz4A3H1@nongnu.org
+X-Gm-Message-State: APuU4Z8CWCXG3FYMF4TDiTN0WNzZWLwzOFcJfODkdNZyzCXXECNfCFPa
+ TX1kY0sfRPVVB9QzyZUfllrWE631U6fgr/qG//xrcHaC0zpRsB/QzDHUVYX/vcixacuJc+d511d
+ BfAiOBSgB3Rh5dlbgNwDnTey2T+ioawQSxXxdre/euz6cQ/AglEn1mZ6vCVoa9iRoylMs5h/+Vs
+ Zr3rFpuZS28b9IyXRIaGoJF7+bwyv5z30=
+X-Gm-Gg: AYBFou2QlrBmX10cc/+rnvkAaXaQPkReD5LL3Zu1ZfRoKsGVM8wKa2DxwaqB1PlJLVY
+ TIzbv6xbVatVZtkMvIpM2Rd3JZBQwtkxv+s6gtCRaJ0P+jd4cwdYPP7tQ5ufZ23ollF2M8fpyTv
+ 7XNkPjIegrCg6lQkhKjVCY7YVxmGFUXuIhqVoDV/ff6ntaNOMMbLdC/e28XCdiOHbZb9UuMln1S
+ iLt4hvErsrRM6AB
+X-Received: by 2002:a05:690e:4548:10b0:679:b744:a2f7 with SMTP id
+ 956f58d0204a3-67ba4fb945amr5448574d50.59.1793639768770; 
+ Mon, 02 Nov 2026 09:16:08 -0800 (PST)
+X-Received: by 2002:a05:690e:4548:10b0:679:b744:a2f7 with SMTP id
+ 956f58d0204a3-67ba4fb945amr5448558d50.59.1793639768341; Mon, 02 Nov 2026
+ 09:16:08 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261102133547.1375701-1-peter.maydell@linaro.org>
- <9fbd0709-b62f-40fd-a055-5483bea6e83b@linaro.org>
-In-Reply-To: <9fbd0709-b62f-40fd-a055-5483bea6e83b@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 2 Nov 2026 17:10:31 +0000
-X-Gm-Features: AclHuK-N3PMQXRsoLC-IIwbeWE-Cusybe5MdRlH01F16vtAeoZbCZobxd-U3Y2c
-Message-ID: <CAFEAcA-gttAwVf=5L+OQERXN-qiSf5ROm0qNvbZ56bPSMM_YjQ@mail.gmail.com>
-Subject: Re: [PULL 00/47] target-arm queue
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+References: <20261102134115.282413-1-abhisek.panda1@nutanix.com>
+ <468bcc37-699b-45d9-a0dd-63f957ef1af5@virtuozzo.com>
+In-Reply-To: <468bcc37-699b-45d9-a0dd-63f957ef1af5@virtuozzo.com>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 2 Nov 2026 12:15:56 -0500
+X-Gm-Features: AclHuK-UROTkGEJtti3G9XrZZd-dfyapX4HH1V__aDa0DvDg4OmHksN8kDMKekE
+Message-ID: <CAFn=p-aLhjXJi_TvXTMfkC3NarXbV2+wMzMk+n3VWqqb9co0Ow@mail.gmail.com>
+Subject: Re: [PATCH] ahci: Check Bus Master before starting DMA/FIS engines
+To: "Denis V. Lunev" <den@virtuozzo.com>
+Cc: Abhisek Panda <abhisek.panda1@nutanix.com>, qemu-devel@nongnu.org, 
+ qemu-block@nongnu.org, den@openvz.org, andychiu <andychiu@synology.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,56 +135,79 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 2 Nov 2026 at 16:38, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Mon, Nov 2, 2026 at 10:42=E2=80=AFAM Denis V. Lunev <den@virtuozzo.com> =
+wrote:
 >
-> On 11/2/26 05:35, Peter Maydell wrote:
-> > Hi; here's the target-arm queue for softfreeze. There are various
-> > bugfixes and refactorings; the big "new functionality" patchset
-> > is the reapi4b pci and ethernet support.
-> >
-> > thanks
-> > -- PMM
-> >
-> > The following changes since commit 56afd82bd4db9688f1c1c9d0e2ea163b8cde3283:
-> >
-> >    Merge tag 'qemu-sparc-20261101' ofhttps://github.com/mcayland/qemu into staging (2026-11-01 08:37:48 -0800)
-> >
-> > are available in the Git repository at:
-> >
-> >    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20261102
-> >
-> > for you to fetch changes up to 79b27f3d0832c2b0ffa3e1a59f0f2c46fc0cdc3a:
-> >
-> >    target/arm: fix bcm2835 migration issue (2026-11-02 11:41:14 +0000)
-> >
-> > ----------------------------------------------------------------
-> > target-arm queue:
-> >   * raspi4b: Implement PCI and GENET ethernet device
-> >   * target/arm: Initialize SMCR_EL1.EZT0 for linux-user
-> >   * hw/dma/xlnx_dpdma: Don't allow DMA off end of host buffers
-> >   * target/arm: For linux-user, prioritize PC misalignment fault over insn abort
-> >   * net/tap: Avoid "close(-1)" in net_init_tap() error path
-> >   * hvf: arm: save/restore SME state only when SME on
-> >   * hvf: arm: advertise ID_AA64PFR0_EL1.GIC correctly
-> >   * target/arm: Refactoring preparatory to ID register configurability
-> >   * target/arm/cpu64: Define cpreg migration tolerance for PMMIR_EL1
-> >   * gicv5: minor cleanups and bugfixes
-> >   * target/arm: hold bql when SEV sets the event_register
-> >   * target/arm: fix bcm2835 migration issue
+> On 11/2/26 14:41, Abhisek Panda wrote:
+> > When a Windows guest puts an idle SATA drive into standby, it disables
+> > PCI bus mastering on the AHCI controller but fails to clear the port
+> > engine bits in the port command register. During post-migration
+> > handling, QEMU=E2=80=99s ahci_state_post_load function checks only thes=
+e port
+> > engine bits to determine whether to start the engines and map the FIS
+> > receive buffer (PxFB) and Command List buffer (PxCLB). Because PCI bus
+> > mastering is disabled, DMA access to guest memory is blocked.
+> > Consequently, the memory mapping requests fail or incorrectly route
+> > through bounce buffers instead of direct guest memory, causing the
+> > destination QEMU process to abort the migration.
+> The fix is right, but on current master the abort is the less common
+> outcome. Since 637b0aa139 ("softmmu: Support concurrent bounce
+> buffers") each PCI device has its own 4k bounce budget, and a started
+> port takes 1024 bytes for the command list plus 256 for the FIS area.
+> While the started ports fit into that budget, post_load succeeds with
+> lst and res_fis pointing at private zero-filled bounce buffers, and the
+> migration completes. When the guest later stops the port, the unmap
+> writes those buffers back, i.e. zeros land on PxCLB/PxFB in guest
+> memory. Only when the budget is exceeded does post_load fail.
 >
-> Fails macos builds:
+> I have checked both on q35 with a qtest: clear bus mastering, migrate,
+> re-enable it, stop and restart port 0, issue IDENTIFY. With one disk
+> master migrates fine and stopping the port zeroes the whole command
+> list and FIS area. With three disks the destination fails with "bad
+> FIS receive buffer address". With your patch both cases migrate,
+> guest memory stays intact, and the restarted port works.
+>
+> Please describe both outcomes in the commit message, the silent memory
+> corruption is the more important one.
+>
+> > Starting DMA/FIS engines when bus mastering is disabled might lead to
+> > buffer mapping failures or improper bounce buffer allocations. Do not
+> > start the engines in the aforementioned scenario. When the guest
+> > re-enables bus mastering to access an idle drive, it should reset the
+> > port engine, safely allocating the buffers and starting the engines.
+> "it should" is what the patch relies on, as nothing restarts the
+> engines on a bus master 0->1 transition. Andy's trace in the 2019
+> thread shows that Windows 10 does exactly that: it re-enables bus
+> mastering, rewrites PxCLB/PxFB, clears and restarts PxCMD and issues a
+> COMRESET. Windows 7 does not clear bus mastering at all. Please state
+> this instead of "should".
+>
+> > Reported-by: andychiu <andychiu@synology.com>
+> > Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+> > Suggested-by: John Snow <jsnow@redhat.com>
+> > Link: https://lists.gnu.org/archive/html/qemu-devel/2019-09/msg01544.ht=
+ml
+> > Signed-off-by: Abhisek Panda <abhisek.panda1@nutanix.com>
+> With the commit message updated:
+>
+> Tested-by: Denis V. Lunev <den@openvz.org>
+> Reviewed-by: Denis V. Lunev <den@openvz.org>
+>
+> Den
+>
+> P.S. John - will you take this?
 
-Oops. I've just sent a v2 which drops the patch that added those;
-hopefully it will pass CI now.
+My attention is currently pulled very strongly to an in-house project;
+If you believe it should be merged I will trust your judgement and I
+wouldn't be upset if you merged it.
 
-thanks
--- PMM
+--js
+
 
