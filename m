@@ -1,97 +1,105 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7AB606AEA9
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 17:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958E9606ABA4
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 17:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=U5ufy/c/
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=oYrxmLR2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNvYY-0007rR-6V; Mon, 02 Nov 2026 12:10:50 -0500
+	id 1xNvYc-0007uP-If; Mon, 02 Nov 2026 12:10:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xNvYT-0007qS-KE
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 12:10:45 -0500
-Received: from ms-2004e-snip6-11.eps.apple.com ([2a01:b747:3002:205::33]
- helo=outbound.ms.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xNvYR-0006T9-Lt
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 12:10:45 -0500
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-7 (Postfix) with ESMTPS id
- 3841B18001DB; Mon, 02 Nov 2026 17:10:39 +0000 (UTC)
-X-ICL-RepId: 01a19d3d-de1e-7af4-ba2f-3264c0b4a1b0
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0NWFsIWwQPH0wMUQJCBVZeVAsdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDjIOOQMpcykLXQ9OdSkaX3cxfVVyXwEpHzINTndddF8HSAhBdi1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1793639441; x=1825175441;
- bh=o4Pt1QCgsqB5Kjn2ruHTCmf0+yuQZD2Ht6pw3UGJMMk=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=U5ufy/c/NCNekIKzOOAKnBDbyTRH+zkptLhxWT6YnswPBwHDHy2lVCf4fzOMAs7FTLwS0Cco96n7EPWBcETZ870UkZcjY/R1dV4avxhlePq/06eVs/qEU6csFmuj6WHyfDB9DoV7P8QQgNpAU+6p5b62bI83Yq6lqsQkUZFXVZohjTmCDfRhnEis5bZXmlZ2ldIp/7UnjNzH5BGrYdZM2wylKw8BkgfNTKWz/C6UHqT9zq3HJqJqG5DH9xL4eYofVjoq+Xb0V1SRbMrXSTHtkYuVTXwkVl1ApU0NmHuTHkjuOMKX/TWLfcTnEC/m09wSrt2lCycYeG6OOh8aVFSk3g==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.156.208.39])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-7 (Postfix) with ESMTPSA id
- A883618001D2; Mon, 02 Nov 2026 17:10:38 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xNvYW-0007rQ-Gg
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 12:10:49 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xNvYU-0006TN-Q1
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 12:10:48 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-c450ab1483cso545512266b.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 09:10:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793639445; cv=none;
+ d=google.com; s=arc-20260327;
+ b=hvg9vQaQh8EWzfMt4xnNTXFY6yn43kf3wH+6ar3xpzB+Z8wzEyR85QFvE9DAXpHG0/
+ olG/ngp+lyK15CWvy70Z3S+DBKLUAtsel8ZhBcg8yt3aEHwnxYQy92qcmPtYULTjXHxR
+ oyZsfGLgS3Yr6xxh1JxpFe0fRzqAWHA4eAme/vBPDcM535T4tOrRzLGsTMiDS5gPuVEI
+ jpAylekQHR2RpHCnYYoLoe/bH+tW2XuiIbhKjzc3PiRXr0TeR3NBR5EnIvzk21b4adtQ
+ xBmPGpEb3JZvIJFx2eELV+8IiUsOG3CJqQYkdSJehHf+SI4GyGBRejA2ZE4S4Q+usMun
+ N89A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=AkUDcZO13b5CDOBhwhbxw4u4HE2qnVF6JfiKNmGNzfM=;
+ fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
+ b=NHMLMIrrlm8Mc6oHRQKxQW9hbyRZTDXC/pN4kKMFr1Ll86ulgi3J2dP2Qco0xgfH4Y
+ 0k9n2Wz75oAEYYCIwnHQLJuc6iS/UnX1PkFtZ9GHu9PN9PdaTxGGUE0TbGu0Oxc/XkL9
+ /zbaUUq8Yn40p/rMTVLpTbicZ8T06goWbqYv5DGVlMrdg9SYfd25dkZ5gNVeWGfG9xqr
+ 5ZfCSpRxrPeVwqymbogxlSml+fCv81feDUfz8w+1hZj38vSFIJ3s2/S3GBNTpiAibeY7
+ 9PIPM1CMPQ4x3yoK+JL5AyK7uolKJIOGTVByhT8/2jXwAkCb5frwN2RrrSHPyb4BMlFC
+ W2Yw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793639445; x=1794244245; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=AkUDcZO13b5CDOBhwhbxw4u4HE2qnVF6JfiKNmGNzfM=;
+ b=oYrxmLR2qRuo9ryzUY/W4zBdNNDRup5SUDppwpUzwiiSq8Yv5KJNKzfSvUkb3Muumm
+ 1oCJPNq3gH4R0WaLQYsVC1Z6xBfYows6qtgwIG5v0Op3jnxOxeyKdPvKVRYwb4c6MmNT
+ Z/IcT7B/qtLGzc60B/q6nXSlssOfFYYvSEJM4Hi+xVzdIRNtdnGw67WTpOrzXHv6MDSh
+ yUo7rDTj7EUIWzU8Ao7VPt3HVJfIcMelDx9X0EdGMr8sAmusFQk8zzKwCtc8aR1cEtGf
+ QpaUAKXWuWJ3yc314J4Ka5x7rW8iaobg0dNam0bBnidXQVa4hammICur6MjbQq+xSaJ+
+ DJbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793639445; x=1794244245;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=AkUDcZO13b5CDOBhwhbxw4u4HE2qnVF6JfiKNmGNzfM=;
+ b=f6DFSDfu9FUhCYsaSgQGgTHM+XD6v0nkNh00ZeXhiKaN3CXrFN5dcs1iRxdRRr5OMD
+ 7Vq/GKCFAxTHiOBP4cGvDatU/A9N4PAHYtjnZG0BoqnK6Anspe2/EA8z8tdJZVE5Ri4/
+ ho4EdkPkt+ThRfk2VXvWuiN3Y1JYAMwGblA2WK+LD79YbqJrUffqdpWPv6RQ8Vg1Ck60
+ AXdtg+laNaQijyPyK8usaXNIlueM6Q2OrLdu2WW3EfcG3L334QP0CGcbpO4//36uoGQw
+ wep3jQMc6zT8A7bZMB1oz3sx91o1gWBTrLUWT98A19GsefKpgI76qyvILj6QJq0nxOvX
+ Yw0g==
+X-Gm-Message-State: AFq9FYKqjyJNLDNmJCxyVxGVXvGbtQXi08RCZgoT01gBM8Vzie7D3lW3
+ WNJQU3uxGKqXeDLHJCY8dXt8Kl0WlsSv2qXhp4Y0wW7ADWQdbd5RvOPIlh7fIaRWODJxXlxVyxR
+ CV+Ej+c/Rv67UPNUJDQa/BgRNqBUca97UT8AvQaadKQ==
+X-Gm-Gg: AYBFou2Zt7SWbU3igkwCgEDDfOEi/j67Upt+QGgWd0BqI1/kFgl8QZGCd5DlhxnRBkZ
+ 90dWRNRZoQdrYODPrOgoKCj8kXy7UkeLjtmDRLca0DN+B1i6JMzmIA57O2PSOUujIfj+wQmg1vE
+ BLHPI3uZqPi7rOwiHEvWyzE/K3V2zy0UPJV3oUibDM7wu2/CZIZPlU1oKQLrRPrN2Rm64r+XqeE
+ pUM/7GbI4TF3+tCG96D8Rg/49a+MvQXriinXPFFl5b8/H7ADUkK70sXpQSAzBoU/snr9wAu9e8v
+ qWCfr9+ik9ft9VK9QMJEP/YQACq6TUXU+GFl25s8vWct+5TXjLec/NsN9isYMLe32xVvnKB/Q6N
+ S+M3i2+giqgfNqpPFFlKdn3NgzsUEHueTGTARmu5a0+WJ/YN8xUrQqnIO58017yZoBfFS2wxodJ
+ bNje4bHn4qFFTNAe7GrPsG
+X-Received: by 2002:a17:907:6eaa:b0:c40:bbd2:62f6 with SMTP id
+ a640c23a62f3a-c4ca7a730acmr861405566b.19.1793639444922; Mon, 02 Nov 2026
+ 09:10:44 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH v2 4/6] hvf: arm: fetch more features
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <CAFEAcA8YN2+YuU94W=+6Z-YBaG54Db4E1hkYdzn4DrSW0J8dkw@mail.gmail.com>
-Date: Mon, 2 Nov 2026 18:10:26 +0100
-Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B7A0DDB9-66FD-4EAD-A26B-B46D0C45819E@unpredictable.fr>
-References: <20261027120135.53048-1-mohamed@unpredictable.fr>
- <20261027120135.53048-5-mohamed@unpredictable.fr>
- <CAFEAcA8YN2+YuU94W=+6Z-YBaG54Db4E1hkYdzn4DrSW0J8dkw@mail.gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-X-Mailer: Apple Mail (2.3901.200.71.1.16)
-X-Proofpoint-ORIG-GUID: bo9bSOrlcV5vcUWKg1d2pO8O0g-7qS1P
-X-Proofpoint-GUID: bo9bSOrlcV5vcUWKg1d2pO8O0g-7qS1P
-X-Authority-Info-Out: v=2.4 cv=DMmCIiNb c=1 sm=1 tr=0 ts=6ae8c410
- cx=c_apl:c_pps:t_out a=kRaGL2Q7qLiahLf3O6OaIA==:117
- a=kRaGL2Q7qLiahLf3O6OaIA==:17 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8
- a=0mXhovE3T8ghJ8cGMUsA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAyMDA2OCBTYWx0ZWRfX71HVW9GTPnxi
- NWvTYUI8hWuioVP0mrFJ2Ur9lPZfayLHH7eBV46nTYyOB5bhiwJrds8bT1TLeFTQyRXjUm+0jF/
- 8mhEzirUDrgiimMxj3TEh118BlxmYIxp7ofCibIHaOsPUWgXuwCea71NahuKeOHfHAPvet7fh9l
- PgqiAItSVaVNPCajDv5HQtIHZfqiAmh2HZddNBq07sWTRVLmaD5Gl3WNfjwqCpTAJ8XJNcMSHC1
- ud45ubYYfZIeRuaHEh6KY+VofIuaEzQnsId+s5huzLib9cYlV1qaZaKd54NTmkSt6bR/2eIa6bA
- A2sxfW73rDJcdg5vuwGrYg9ulHM7bTETdEr+e8mSs/pAzWmkHfeU0ym77/+Rn8=
-X-JNJ: AAAAAAABw3fyT60KwIyAW2x53+ytUUlBrZMlCSUDRrTdFArDCejIlxFBp3npvkIW691NpB
- 7pUdXjiP6c/YUIvAkBZEYfNwYdF7y6zDhQhQSZvteuDYySTHGPOD9+eEqsGasEcpZXX1+6
- MV5Kdo5lVsoPLMEz+S/v7DBRZi+YGi6QUzvLES3azxc1514Amgn//WKbjGXjZPLXtWO+vW
- a9PvwOpKto5Hkbb5B5qdM2BIy3RKSdSeBaflfoQnNgq+D0rlsGYVGTttf2+etqS/GOnji/
- y9rIUc1V5g0Yfd4FVod/NY5S9pYPZ9etz3hMn6vUGAQZKPza5Dw1HycW9XwogKi8qDaBj3
- +QXjkMCaiybQatzPCva9xE3TVUhoPisFAbBI44UKbPr1aiNakWB5t17DjxwAU6QWOLLgqH
- f9Ns1D7p0csJclhpbFLKkgBevNaJUY2kdCmfEcD2O7gvj6hUiKpG8IZemMwsOJuSJnUJSx
- pUevlylcU0V+4gr/YfdbazJOrHdoO93nJ1F7fx0lVLjle5AwCuf3qdPYV8SSM4AeTRh8hn
- 7w2YhM1KUcPm/rPhdLGrQbdIduCJgbIxBdJcpzuUHQA2st0aT+zDTCCQvEob7BSxkJvF5W
- 1sYPfEK2K8kBE89voPlvZmTikvxQbUOVRBv/QvxbBnaTcbSK7b5cBj7JjgZCB+deVDB2Ze
- HW48M+BY8sd0RVtS5SOf2K2eq1zytUgly+4JKIhYOO5I3hap9KrAH4DD6RtmuSQmgLf6qN
- Qzxau+FwMrEqF1CJS6jhugf/K/Jzbf4Fyu/uWmqbn5d46wMGRbtR8rIxnFPvq1M4PdWn4I
- A5dNMYLQkRHF+6YvO7FnPAiqO9USMrw413i+aCvRgyEvXnMt7h6Kb/WT2DbR9r0IwuIQ3J
- A6vbCgxHorV64ILFhQw5gTGOqwa2SaYbi+Pz9XFtqO7VQgJVeV/8GqP9fQ4yMBefno7qgX
- tjon2NHOk2EWOYB6dlpUiT/HTZeim26ilT4rnkY6WNL6+8J4tug72/N0pixR8NszDfM2SH
- Yr2mKEU3V3xQP7dy9X8q06xvMJJBE4BMIYIWVqKQcFPmA/Z4YaqyYdFQkjF5ywaA4106hI
- wuDViPRmiANodi+IvTxz1LLgcNlG9GX4VUJ4IpGWkN0dCiSmyy2R2a2Yx/311G5Sl2MiBS
- ZpM/3xj7Zkp49+sLh42rtYhV1lGLBJDsmGUgTRTHvf6os+ns+qFmZn7PWE3M3DcZ/mypxZ
- SHVwn6cL6TnZ5OYBvW0pP3jMyd2iqX9DZjbCBS5t4f47q381v1K7LT9kjHZp0xro+AThfW
- FnveRFWomNd/EbTzVPoY/A5cgT7od+WawG+QgS+rV/I7KvfWf+VGN/XdfOoexhZg5GTVXS
- +1NjKEbmnsIAxauDAT73dJY=
-Received-SPF: pass client-ip=2a01:b747:3002:205::33;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+MIME-Version: 1.0
+References: <20261102133547.1375701-1-peter.maydell@linaro.org>
+ <9fbd0709-b62f-40fd-a055-5483bea6e83b@linaro.org>
+In-Reply-To: <9fbd0709-b62f-40fd-a055-5483bea6e83b@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 2 Nov 2026 17:10:31 +0000
+X-Gm-Features: AclHuK-N3PMQXRsoLC-IIwbeWE-Cusybe5MdRlH01F16vtAeoZbCZobxd-U3Y2c
+Message-ID: <CAFEAcA-gttAwVf=5L+OQERXN-qiSf5ROm0qNvbZ56bPSMM_YjQ@mail.gmail.com>
+Subject: Re: [PULL 00/47] target-arm queue
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,83 +114,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On Mon, 2 Nov 2026 at 16:38, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 11/2/26 05:35, Peter Maydell wrote:
+> > Hi; here's the target-arm queue for softfreeze. There are various
+> > bugfixes and refactorings; the big "new functionality" patchset
+> > is the reapi4b pci and ethernet support.
+> >
+> > thanks
+> > -- PMM
+> >
+> > The following changes since commit 56afd82bd4db9688f1c1c9d0e2ea163b8cde3283:
+> >
+> >    Merge tag 'qemu-sparc-20261101' ofhttps://github.com/mcayland/qemu into staging (2026-11-01 08:37:48 -0800)
+> >
+> > are available in the Git repository at:
+> >
+> >    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20261102
+> >
+> > for you to fetch changes up to 79b27f3d0832c2b0ffa3e1a59f0f2c46fc0cdc3a:
+> >
+> >    target/arm: fix bcm2835 migration issue (2026-11-02 11:41:14 +0000)
+> >
+> > ----------------------------------------------------------------
+> > target-arm queue:
+> >   * raspi4b: Implement PCI and GENET ethernet device
+> >   * target/arm: Initialize SMCR_EL1.EZT0 for linux-user
+> >   * hw/dma/xlnx_dpdma: Don't allow DMA off end of host buffers
+> >   * target/arm: For linux-user, prioritize PC misalignment fault over insn abort
+> >   * net/tap: Avoid "close(-1)" in net_init_tap() error path
+> >   * hvf: arm: save/restore SME state only when SME on
+> >   * hvf: arm: advertise ID_AA64PFR0_EL1.GIC correctly
+> >   * target/arm: Refactoring preparatory to ID register configurability
+> >   * target/arm/cpu64: Define cpreg migration tolerance for PMMIR_EL1
+> >   * gicv5: minor cleanups and bugfixes
+> >   * target/arm: hold bql when SEV sets the event_register
+> >   * target/arm: fix bcm2835 migration issue
+>
+> Fails macos builds:
 
+Oops. I've just sent a v2 which drops the patch that added those;
+hopefully it will pass CI now.
 
-> On 2. Nov 2026, at 18:07, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
->=20
-> On Tue, 27 Oct 2026 at 12:01, Mohamed Mediouni =
-<mohamed@unpredictable.fr> wrote:
->>=20
->> macOS 27.0 has some more feature registers available. Fetch them (but =
-not using the values yet).
->>=20
->> Also fetch DCZID_EL0 at the same time.
->>=20
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->=20
-> This patch failed on the macos CI jobs, so I've dropped it from =
-target-arm:
->=20
->=20
-> https://gitlab.com/qemu-project/qemu/-/jobs/17671032296#L4708
-> https://gitlab.com/qemu-project/qemu/-/jobs/17671063089#L4702
-
-Hi,
-
-Thank you, sounds like an SDK versioning issue again=E2=80=A6
-
-Will look more at how to decouple the SDK situation (or we=E2=80=99ll =
-have to have
-#ifdef everywhere for everything new)...
-
-The latest SDK provided by the CLTs can back-deploy to older macOS =
-versions
-all the way back to macOS 11. But that still supposes having the newer =
-SDK
-available in the first place.
-
-=46rom the CI logs, looks like they are at macOS 15.0 SDK which is =
-pretty old by now...
-
->=20
->> ../target/arm/hvf/hvf.c:1197:11: error: use of undeclared identifier =
-'HV_FEATURE_REG_ID_AA64ISAR2_EL1'
->> 1197 |         { HV_FEATURE_REG_ID_AA64ISAR2_EL1, =
-ID_AA64ISAR2_EL1_IDX },
->>      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> ../target/arm/hvf/hvf.c:1198:11: error: use of undeclared identifier =
-'HV_FEATURE_REG_ID_AA64PFR2_EL1'
->> 1198 |         { HV_FEATURE_REG_ID_AA64PFR2_EL1, ID_AA64PFR2_EL1_IDX =
-},
->>      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> ../target/arm/hvf/hvf.c:1199:11: error: use of undeclared identifier =
-'HV_FEATURE_REG_ID_AA64MMFR3_EL1'
->> 1199 |         { HV_FEATURE_REG_ID_AA64MMFR3_EL1, =
-ID_AA64MMFR3_EL1_IDX },
->>      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> ../target/arm/hvf/hvf.c:1200:11: error: use of undeclared identifier =
-'HV_FEATURE_REG_ID_AA64MMFR4_EL1'
->> 1200 |         { HV_FEATURE_REG_ID_AA64MMFR4_EL1, =
-ID_AA64MMFR4_EL1_IDX },
->>      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> ../target/arm/hvf/hvf.c:1202:25: error: invalid application of =
-'sizeof' to an incomplete type 'const struct isar_regs[]'
->> 1202 |         for (i =3D 0; i < ARRAY_SIZE(new_regs); i++) {
->>      |                         ^~~~~~~~~~~~~~~~~~~~
->> /Users/gitlab/builds/qemu-project/qemu/include/qemu/osdep.h:541:31: =
-note: expanded from macro 'ARRAY_SIZE'
->>  541 | #define ARRAY_SIZE(x) ((sizeof(x) / sizeof((x)[0])) + \
->>      |                               ^~~
->> 5 errors generated.
->=20
-> thanks
-> -- PMM
-
+thanks
+-- PMM
 
