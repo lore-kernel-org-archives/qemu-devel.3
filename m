@@ -1,86 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C77460A2635
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9364C60A3806
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=hjBeh/zf
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=FIUbzllk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNsDt-0004zK-DH; Mon, 02 Nov 2026 08:37:17 -0500
+	id 1xNsDQ-0003xG-Ez; Mon, 02 Nov 2026 08:36:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNsCz-0003Cn-Go
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:21 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1xNsD5-0003K5-DK
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:32 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNsCx-0002I7-Tr
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:21 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-48c45111bebso1266688f8f.0
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:36:19 -0800 (PST)
+ id 1xNsD3-0002J0-4m
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:27 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-48e46e449e8so1860233f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:36:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793626578; x=1794231378; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793626583; x=1794231383; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=4kwwaqJxjuVwg1OFAjh08fpY/P+95fDa3sgZEYeQYWo=;
- b=hjBeh/zf4mmZ7svkfM333YVf4NXaQka0FouYLF00UDCqKOpJqfy0l4WKVj0Cmb2vvO
- V4Hmcehmpe+P6tWzTwkitNjFuQ6CLLptHKWDE0N1wkcpXOSVF2PWUhF32UTeHUtTBsfi
- PjK9zs3XJxZVGEAD1J85xJJwCQZowrY1/N+IDKY8T6cnR/Dws0IhISv2+CxgToSf8DEI
- yuwyH4K5zn8dOW21Cjrti4hVYoXthcqXSPA5tpDlqvUvQ+StRPVD2HZ0Q7nNMkYsZ1K1
- hJec7g46j6bkb83rS19gDglsTLA3C4n8FGOSHaW5ys3Zgm2IID8LS/E2kox03l7G1L/6
- JTAw==
+ bh=OQO+t1vU0lYyhkW6nJ7lUduEhDAihAorPNs8zu7/Ijk=;
+ b=FIUbzllklbwiIcIAKoYlScoLr1EOQOnk+5LhuCxZR5qHvI6VQbMxyMzqZ9IkZ/EGS3
+ aNXeIU7g5qhGpaHYQSbPWXqCIad6iX/dJd9vY0ZJZa97d4rXuEbro5/r5YhmBgG67MGF
+ WQR/8SfmaaLEytjHyRyW/EFYqgdN85CTT1Xp74d7Y2W3V2nGExDut9PuuhaXUc0LHEfx
+ ULxvBiNDsgrQNZDaWpsSBHdAANTz0gF/fwy4rvAshixJV0W+/8+4w5aw+T/N/Zn54+W9
+ kjj/YVlw8wHP0F+AoCGxgv50usPwJuxIy0kDMeLe8rCmeN7Ul52cqAszdg4Auy5sudZq
+ LucA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793626578; x=1794231378;
+ d=1e100.net; s=20260707; t=1793626583; x=1794231383;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=4kwwaqJxjuVwg1OFAjh08fpY/P+95fDa3sgZEYeQYWo=;
- b=mOAntMIYduFLXJr+jtsvWrWZuQdP04Qi5GNEtMcWELG8vlo8/iacgRwwb3KqYJ6E7S
- TG0n8MCufBTdtihE9i1HFBZgXxhdwTPgASHB2Oxpt5tIfmJ3JnlIvrQTQxvvybSNd534
- 8UlTJ0QyAROrSbjyyNZOZp50LIMDqYSoUUHsER4zBC4HKbU7bmhoQVssmlMpo5WeVEF9
- OYqEamKmM9rOUoOGPyqUn7aXbdwcfJNLhkUvFRfPZP3nQnZ7ZdDyHo5NHncDBMmewXPw
- IEmgZLPaJdUzLW5u87BgOnU+jkfDTGq+zyxyemvqvv859mh1WAapv51EDqt9/NAarEF3
- sX+g==
-X-Gm-Message-State: APuU4Z+3DAj7E6M+sdy0cHhokfoL6peYdGL5f3+cOclj0ySSM7bHkRW4
- Ukj6OthyxsPj3xTQenff2vrm6yGPmhkOBKsc61SFPo5FudywSktIgXrjFMJLiZq0TENBS5DcTnB
- JvaiLrpA=
-X-Gm-Gg: AYBFou2VDVHngT0nzHF1qVtFpzcwEp+mnZuq27/U/uIQ/65E95atWlzADHnSj4tNqAW
- /nv8UU6qy9AlkbGtIIK0TG9dGS9J08yqrlTyTP5UeYOKbuQhg8aUjJB078RhBVmnx6z18S5U4YX
- BYPIYZRRA5MfiFukrQaWjc7/00uDIljI1tzAUw+9utBjRBumIKzwzAOAHtN1ruUlaknPpgs2NCZ
- FIKeUI1eK/vv0Uzf3u8yD6UxGU+aX2jvhU3HBhkAMpKZbYIWYqNSCd6mRSYuFA8oRBTTtcQ+CQD
- wNoqc8bhwobNa24b9o9v70OYoPl2fdjPH86VdK2N97oHHEJbwxQ3FePtfRqb2Hzr6FFbd+AgMI7
- zX+DcRrClNKORoZBhUHOmEMuzHclTTUqHvlA3pN04VXrX9i6SA6kCiD5aJhg7Szx1EltsGbJBGz
- SJRYI3+CLVXn2vdu15gmRC0zzQFISggjGSHF6Uq+2zh3kUNRc1WH2RfqKy9XvsOmlfISE5uOFFO
- pvI7zEhJisjqkxmQrzLwiMr4jYPmO084FOpWaQrCbHWFYYC+rHy1gMQ8Z3a/0fjVKg+3dnjVQO6
- z7vBvjz8E7dnhsKlrM7xeNLTMHZDlmfRRU1A6I19LgN86XJG54Iy0lhI9lnlvjwfMm8+UhKpphr
- FJoZmYTHeTXbD/VLDuMblopLd0AbUxUb1hg==
-X-Received: by 2002:a05:6000:144f:b0:48d:de0f:b79 with SMTP id
- ffacd0b85a97d-48e6e264067mr26275725f8f.0.1793626578322; 
- Mon, 02 Nov 2026 05:36:18 -0800 (PST)
+ bh=OQO+t1vU0lYyhkW6nJ7lUduEhDAihAorPNs8zu7/Ijk=;
+ b=u7twhe/bsS4SVWBHE0TkzJcXPMur13m4uAEkEsuPVWx8hxjHwz7fIWPIlCupmFiZGj
+ ondCKF7sAugVKveduxSI28HwaNbMQzf1BWkaMpuZ5fj4YIdqhsYCuapTgmZkMVItpvGk
+ XE8HnqNZx9B0TjumZBwiWezqSsWQSXkAOecignGvL/lW0/8MYnX4T6scxe3uW0nQ03qs
+ Fmac7IdyrOJY/5sewav+Us3k38UdBweJsXYaIlj4A7PKKdUlRga6abEcsbB2fDC+4LeZ
+ MYRDFkJYyYY6Fc+jWTcqKwrKeYMe9IPWSzyvd64DZyKoPTuDU6HphIltyanWtc+2hNiB
+ 1LXQ==
+X-Gm-Message-State: APuU4Z+fX7/+8TuJC0HaYSKjO2RTwB/SzbYkVQaRgIc2Zem9xw4G5TT7
+ LMlItEILBFwUfZZ/0STaXpCR0HuaV/Fql8Mr8JkpcFtD3toKM6dtHJt5M7LlBhxESA/cgAZqfPQ
+ bgJdLtbs=
+X-Gm-Gg: AYBFou3U4BCui2E3/xY3m5fVO+0h3l3QxdFDAxoLY1wi6oq33hy3aKok4hFmdqSivup
+ v+liDbqbI0wNJguAR7rHNXeiStq4UDWcSntaUdXR2Xv0JnhmJGuy+GGJeMdxgxzszcHFUr3PR2B
+ Jh1RQYcXKXAjOFpK/mZboVOIQmIJT4rQSAzEUi+ZffLaZ1H9G7zU7bvKqI8WoswgGLG0CgrznXE
+ 4U+CSHP8hNe0IxCcZNzywOMsSScUEop9F/2TePKA2vOaWazL0A/Ye7+YYH/+vK4iqeI/1f1SbNw
+ 7p4IL+p1UlWeC2J45gQ+vFf7K9fwGZ4GGBEKbOdqAt/qbSE4TsbmWpozTrgrJ6WLCdu4pLGKBKk
+ QPNKvcB3wujRyAuJ45D5kV3YbehSOE5YAZBEbkOT7N6T0qqoGp018fOUNv1i1PD7ljR0lQ9n4KL
+ qQX6qZUamcil4ljmhzf4wL/yTHivXkGrLCqindVoCq0C1Pdk40MV1zXDREuLkTBiIjK4R2ce02W
+ LAlMfsB2/7opHpuugOwwhSG19TEPGwYpzGu6KOpNMN6GmV57sWYK3B6acdyZztnswe/ANVnxWkH
+ agU6UnRiiCIpNLI9hGFugCdJgs4F3ywsR348l/62oNsvOeM1ljTUYArY42Tt2SMkPnQ8pDkZJM7
+ NnXGGCZjnvMpLYfB2UX52FFjfZrtXh1OMfA==
+X-Received: by 2002:a5d:588e:0:b0:48e:b32:9d1c with SMTP id
+ ffacd0b85a97d-48e6e4f5507mr20930102f8f.19.1793626583511; 
+ Mon, 02 Nov 2026 05:36:23 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d3e9sm22556760f8f.6.2026.11.02.05.36.17
+ ffacd0b85a97d-48e71a4d3e9sm22556760f8f.6.2026.11.02.05.36.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Nov 2026 05:36:17 -0800 (PST)
+ Mon, 02 Nov 2026 05:36:22 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/47] hvf: arm: fetch more features
-Date: Mon,  2 Nov 2026 13:35:25 +0000
-Message-ID: <20261102133547.1375701-26-peter.maydell@linaro.org>
+Subject: [PULL 30/47] target/arm/kvm: Pass an error handle to
+ kvm_arm_init_cpreg_list
+Date: Mon,  2 Nov 2026 13:35:30 +0000
+Message-ID: <20261102133547.1375701-31-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261102133547.1375701-1-peter.maydell@linaro.org>
 References: <20261102133547.1375701-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,65 +107,99 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Eric Auger <eric.auger@redhat.com>
 
-macOS 27.0 has some more feature registers available. Fetch them (but not using the values yet).
+Pass an error handle to kvm_arm_init_cpreg_list(). A Subsequent patch
+will do the same with kvm_arch_init_vcpu().
 
-Also fetch DCZID_EL0 at the same time.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Gustavo Romero <gromero@redhat.com>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20261027120135.53048-5-mohamed@unpredictable.fr
+Message-id: 20261030131406.461599-6-eric.auger@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/hvf/hvf.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ target/arm/kvm.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index acbc257091f..e1ddfe14c7a 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1142,16 +1142,14 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     } regs[] = {
-         { HV_FEATURE_REG_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_IDX },
-         { HV_FEATURE_REG_ID_AA64PFR1_EL1, ID_AA64PFR1_EL1_IDX },
--        /* Add ID_AA64PFR2_EL1 here when HVF supports it */
-         { HV_FEATURE_REG_ID_AA64DFR0_EL1, ID_AA64DFR0_EL1_IDX },
-         { HV_FEATURE_REG_ID_AA64DFR1_EL1, ID_AA64DFR1_EL1_IDX },
-         { HV_FEATURE_REG_ID_AA64ISAR0_EL1, ID_AA64ISAR0_EL1_IDX },
-         { HV_FEATURE_REG_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_IDX },
--        /* Add ID_AA64ISAR2_EL1 here when HVF supports it */
-         { HV_FEATURE_REG_ID_AA64MMFR0_EL1, ID_AA64MMFR0_EL1_IDX },
-         { HV_FEATURE_REG_ID_AA64MMFR1_EL1, ID_AA64MMFR1_EL1_IDX },
-         { HV_FEATURE_REG_ID_AA64MMFR2_EL1, ID_AA64MMFR2_EL1_IDX },
--        /* Add ID_AA64MMFR3_EL1 here when HVF supports it */
-+        { HV_FEATURE_REG_DCZID_EL0, DCZID_EL0_IDX},
-     };
-     hv_return_t r = HV_SUCCESS;
-     hv_vcpu_config_t config = hv_vcpu_config_create();
-@@ -1191,6 +1189,22 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         }
-     }
- 
-+    if (__builtin_available(macOS 27.0, *)) {
-+        static const struct isar_regs {
-+            hv_feature_reg_t reg;
-+            ARMIDRegisterIdx index;
-+        } new_regs[] = {
-+        { HV_FEATURE_REG_ID_AA64ISAR2_EL1, ID_AA64ISAR2_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64PFR2_EL1, ID_AA64PFR2_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64MMFR3_EL1, ID_AA64MMFR3_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64MMFR4_EL1, ID_AA64MMFR4_EL1_IDX },
-+        };
-+        for (i = 0; i < ARRAY_SIZE(new_regs); i++) {
-+            r |= hv_vcpu_config_get_feature_reg(config, new_regs[i].reg,
-+                                            &host_isar.idregs[new_regs[i].index]);
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 724bc08edfe..76b3996d3b5 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -865,6 +865,7 @@ static bool kvm_arm_reg_syncs_via_cpreg_list(uint64_t regidx)
+ /**
+  * kvm_arm_init_cpreg_list:
+  * @cpu: ARMCPU
++ * @errp: Error handle
+  *
+  * Initialize the ARMCPU cpreg list according to the kernel's
+  * definition of what CPU registers it knows about (and throw away
+@@ -872,7 +873,7 @@ static bool kvm_arm_reg_syncs_via_cpreg_list(uint64_t regidx)
+  *
+  * Returns: 0 if success, else < 0 error code
+  */
+-static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
++static int kvm_arm_init_cpreg_list(ARMCPU *cpu, Error **errp)
+ {
+     struct kvm_reg_list rl;
+     struct kvm_reg_list *rlp;
+@@ -882,12 +883,17 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
+     rl.n = 0;
+     ret = kvm_vcpu_ioctl(cs, KVM_GET_REG_LIST, &rl);
+     if (ret != -E2BIG) {
++        if (ret < 0) {
++            error_setg_errno(errp, -ret,
++                             "failed to get KVM register list size");
 +        }
-+    }
-+
-     os_release(config);
+         return ret;
+     }
+     rlp = g_malloc(sizeof(struct kvm_reg_list) + rl.n * sizeof(uint64_t));
+     rlp->n = rl.n;
+     ret = kvm_vcpu_ioctl(cs, KVM_GET_REG_LIST, rlp);
+     if (ret) {
++        error_setg_errno(errp, -ret, "failed to get KVM register list");
+         goto out;
+     }
+     /* Sort the list we get back from the kernel, since cpreg_tuples
+@@ -904,7 +910,7 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
+         case KVM_REG_SIZE_U64:
+             break;
+         default:
+-            fprintf(stderr, "Can't handle size of register in kernel list\n");
++            error_setg(errp, "Can't handle size of register in kernel list");
+             ret = -EINVAL;
+             goto out;
+         }
+@@ -930,7 +936,7 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
+         /* Shouldn't happen unless kernel is inconsistent about
+          * what registers exist.
+          */
+-        fprintf(stderr, "Initial read of kernel register state failed\n");
++        error_setg(errp, "Initial read of kernel register state failed");
+         ret = -EINVAL;
+         goto out;
+     }
+@@ -2008,6 +2014,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     uint64_t mpidr;
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
++    Error *local_err = NULL;
+     uint64_t psciver;
  
-     /*
+     if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
+@@ -2106,7 +2113,11 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     SET_IDREG(&cpu->isar, MPIDR, mpidr);
+     cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
+ 
+-    return kvm_arm_init_cpreg_list(cpu);
++    ret = kvm_arm_init_cpreg_list(cpu, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
++    return ret;
+ }
+ 
+ int kvm_arch_destroy_vcpu(CPUState *cs)
 -- 
 2.43.0
 
