@@ -1,121 +1,119 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED316606A326
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 11:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E05606A32C
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 11:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=QGIijm3N;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=bzwX5pFQ
+	dkim=temperror header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=biz0HOs4;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=oZZvM/74
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNq4W-000728-Rj; Mon, 02 Nov 2026 06:19:28 -0500
+	id 1xNq5h-0007ZB-Uv; Mon, 02 Nov 2026 06:20:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xNq4T-00071d-M6
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 06:19:26 -0500
+ id 1xNq5f-0007YU-MS
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 06:20:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xNq4R-00030i-7Z
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 06:19:25 -0500
+ id 1xNq5d-0003GF-Md
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 06:20:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793618361;
+ s=mimecast20190719; t=1793618436;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ah+WpKYvkXPp8UCvFsZ+hV5CREW7lSVfg/8FMQmg24M=;
- b=QGIijm3NnfK+smJNu1RiwS4yQwU0OJanjdBP96/DxmZgBNlwT1P72yfz4TtaH7sg5YvA2Q
- UZ20JhtaxK89lhWhv4hjFpzZvFuh1DVtq6fmMziWLfDfqKjG9fYAKZIB3Iqd8m3E4d5nMk
- WRgGLm5PSR0o6XbIsHgCXe8/LSGUX1w=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=reZ4KvMRpiYBfWvauEmLonF58ltzO9Dk3TPTnzkrIM0=;
+ b=biz0HOs4M5EWstxQElYPuclTbuuwskh2V77vY544bX6EyjL5BJSAHDhYdG3XFRTrpWQPEp
+ l2683ubRUPzTKFw+YlLgYZcTdOBTCRNps+9zlr55fgFB9Sdi/dafL8iK/jdcpy7CNJbwaY
+ WbA5bG0lMGB8RVjcwa1TgyBY3DKjcwg=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-215-gtRAMa5wMpat-zupYr__FA-1; Mon, 02 Nov 2026 06:19:19 -0500
-X-MC-Unique: gtRAMa5wMpat-zupYr__FA-1
-X-Mimecast-MFC-AGG-ID: gtRAMa5wMpat-zupYr__FA_1793618359
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3ae7faf4ff7so4033244a91.3
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 03:19:19 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793618359; cv=none;
+ us-mta-547-ivLsq3xJMWSAyiEzOdVVVQ-1; Mon, 02 Nov 2026 06:20:35 -0500
+X-MC-Unique: ivLsq3xJMWSAyiEzOdVVVQ-1
+X-Mimecast-MFC-AGG-ID: ivLsq3xJMWSAyiEzOdVVVQ_1793618434
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-cc7e0321ec1so3507760a12.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 03:20:35 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793618434; cv=none;
  d=google.com; s=arc-20260327;
- b=Piswco/tU3Jg0MuBHZE67m21AZVga7azUaEFB+kU06jWSnOTpNP/grvIp/LkG2sdXi
- UhbJVoavmEdQw3TH9fm7v5wu/th/eSRc7CHVIEX8yKMl04R+nyQy+0FWn6i4C5ZgkKfL
- 7PHTb0saDOfzAzAHi6j9/ZQ589jR+HkT5RsJus0Lyrj8fsfuN0KN6p3jxylTxpYdLLrC
- 0Om6bJHk3lDEXz9KfyK4O3eHBunyvUodddMe5WffWkhcgWGcZd2Yy8q42gIaufdkgspy
- OZWnzx9cJa/sryys/qL/SE8uE6W6ggpbIipi2CazFrupdMOZpWkRl4MQ1FyM27Z9Rkkg
- pYFA==
+ b=cnVTsMifR8V4t+YbD1OknjOLAY6TLe6hflrimyGoTJT29KteIW4LkJlw7f4DHiZwEr
+ oI44RYMraeAbZJTg5TQyk9Te+qswgAg/xvWVoeOZih5hvo6Lec+zbAhoexlOQB3k4J+6
+ nSh3GngFNQcrJhQF6wM3kg9YhhGVKl+3HDHUdQAuW4x+tG/hkkxx9tTb2pOiviGfL0X/
+ JmVga3m2W5w4uWXJakVPcP/Qofofb/b+W6/KpGwV4cmGkWo3uKoTyVkAbWXWMbNl1Vh5
+ ir75edi9jYKFLsYr17Gdp2cBKpcmy6u5mr2C2Xo5Hh0QzP7jV3E3ZIFJ2I+cXTQj2yPz
+ 22PA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Ah+WpKYvkXPp8UCvFsZ+hV5CREW7lSVfg/8FMQmg24M=;
- fh=zOT1kvACi2WkeAzl60r00J4rhcyGvXhcNQxmgCxdCLs=;
- b=p0wadmv3Bmd1nj08YUxP3abYtLh9X0N/YI88lFcr0l2/M0K4w618iA57GnyYM7wN0E
- Q0TajKDFEhU1DiU7Be2IKJ8Axj26BaB5vtflTvbKU2RcB631wyUcv11J+vXjV5JaSWdQ
- hxZkt1DU2VnanXsisuxIhTsCJq77CqaFxLtFi7QCYbGr3a0aosz7QuJXjdg0a1ynjeDm
- 2WUcZHJ6VwffWFOiPkVG5QItvvAh/omNWIEH/Wj5fP6V68daU9osF+4GmuygW6PpbkLh
- g9TT7/Ong4DJ+0CFIuzfk/vHteUK+XvRELVbDsvNm0BzPnVQnm4Ob+XnrXjCygwy56OF
- CqaQ==; darn=nongnu.org
+ bh=reZ4KvMRpiYBfWvauEmLonF58ltzO9Dk3TPTnzkrIM0=;
+ fh=JX2I+55v+lOxShsKPMdWwgcbtP1Gb6oPO+6PLX8ToUE=;
+ b=CST3toEP1SmKaiERKoMgjn1pFT7i+mlydxN9q53rHRL15v1ct/1/Wrr0wzn9lM3UPw
+ Zy9+Uy6YBFor/ISZoaOpd2V8/DBELdctDJOfaU3owZEofuOBQlpXU1gj0riIWdYI/2L2
+ PPf8mTBMkGYXfzPtuk6LPZeGFOvUH3BTK0picK3btEVMFon8VRFLURfa1jleawF6JvXu
+ hmUQX26Py6JjQD6eoTYymOG5/xnZdZRB7lahj2hNCKvKgJaT3M9qdfQ4D7Z8oOIvzDqy
+ YQOELJhSzlXqQdapS9PFCqEA4g9/DbV8L/mMty5M53fFsxwfS7k+xHYPzfkH0i37aPLb
+ mXrw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793618359; x=1794223159; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793618434; x=1794223234; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Ah+WpKYvkXPp8UCvFsZ+hV5CREW7lSVfg/8FMQmg24M=;
- b=bzwX5pFQ8UcD6cDFYP+KU44GjCZjLwai4yBXVzCljqra6HH4GgBH8gWxZc3f/ASo2d
- xv0+pqDXluQayWJPZDUFpAIxPDisizYropZbx8yhqZYxSyoKkLgafsxA949Q4YLLFKtz
- c934gox8YJJtiJkNIDaUKsBQCYvu+o0qpp3afRdnfzZF1jsr0Z9Bqv7AJbPaEnMLssn4
- iUZXBH7WbwhGQaGdfGM4TOabDoeFRxMa7j2RbNHgExeKjBeSgcskbjhaa8MOQX1/YGwa
- 2YIJax8DtHEKkf5Undv6TIctmZPxxxH+zO5zJow+whc9rEJCnd4bgjKTFwmjfD4b/NtV
- NnQQ==
+ bh=reZ4KvMRpiYBfWvauEmLonF58ltzO9Dk3TPTnzkrIM0=;
+ b=oZZvM/74FuC4os45PUI3YWZ+O/ZxDA/qDBtDSikmgj6ezeZxxvQKz0EdNdAH5HWpPg
+ 0btbhoumF15v1ZXxuSrOIwEIfGBPokExmosSSGsRnSxQxmoIw84iWlDIChqZzkSDulzp
+ ODgUse8YTh/9LQlU+s2evR8v31CQAWBOI0WR9ieFv7UTlMvCnZbDdzy3yGSMYLMKHjNn
+ UEu+7m1xsTc5KG/foheRMgTkmOeSQ8NPVkfQsmANgBgR1LDWOepLV54hHD0TjdcNFH+c
+ Y/UBnnkGuRizAeLHPUOdeKjupIbfsmInFAd94V+eaOSnhEWHoR6uM5hprwQ+A6m+tNJX
+ bSVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793618359; x=1794223159;
+ d=1e100.net; s=20260707; t=1793618434; x=1794223234;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Ah+WpKYvkXPp8UCvFsZ+hV5CREW7lSVfg/8FMQmg24M=;
- b=HqgMnG3Wx2VcHxe0dTRbKFAmfJA3b5Utmb/DzFPbMVornVtzrroA8Qa+g10r8sH5Y2
- tUTxNm8Sy/hW/4NCrdPdTFDOjKQzZ6iPuVsrmdxJrl4XDcucAah3vbbw5iR93/8q6hHL
- ff877XIKDs3d9IB/7YVFSwLN3EVphTKaIOaxLRBp1/tjBv55jldTTCQmsAvPkNdXLwcI
- qwxMoamaAJR+ssNtDXGe6jtAFN1IE5NmVMBuDMuSabPWD+zGDoIxnVc6K2gXFAz4hJh4
- 8mfjqKfBbBekWkNd+8P1sD272TB9DSYic4Ad9Kt4lYGK+4/ZXf22rKd4jm3KzNAG2dnK
- JizQ==
-X-Gm-Message-State: APuU4Z+OqCNe7bMwZpKEDMHD4wEwzOLA/Gh0J3AKyuoBDtEelKk33fft
- +lyi0nGBY8bT3AO8uQlW1W5s0Gam/FETRdfBeOEF82BjjLuRhIMBPH70swA1RYcurHhPkC0I60C
- X+VFi/ThsWIovZzfkg973xfERve01QuPqePox40ZW+yv9KbIQ6usD5fmFLYuLyV0ELUBC036/av
- KXPBSNC/zgYEcngFr4qVfiafqyVYuKsJk=
-X-Gm-Gg: AYBFou2juZS8Fk40D9OgHyd3aQuiAIxwuwk2rf0fjQk4OHFruR8qvU1KjGY906dMwRZ
- A0H5I6J3dgOUEEhlxB3H1H3BGDA1uH+VlHlDIeD0BIwzAM0E5RnHz+VVNGAXgVYIlxSEWJd0K1i
- 73t/lbfH7WKLRqlpwj0K7RdaIJ9sKohd+XZNGcn7m61sS3eIMkim+33rcPk/Vrmtlg+rPagihA/
- fTJqKf3Ww4BHnJyhX/u/2EuGoH1oWZPOfBPeK0/KF0+R+WPyuAHIVf76gjrP91rduOuSDwJzh/1
- Ow==
-X-Received: by 2002:a17:90b:2549:b0:3ac:4e18:238e with SMTP id
- 98e67ed59e1d1-3ae89847e94mr7383838a91.46.1793618358604; 
- Mon, 02 Nov 2026 03:19:18 -0800 (PST)
-X-Received: by 2002:a17:90b:2549:b0:3ac:4e18:238e with SMTP id
- 98e67ed59e1d1-3ae89847e94mr7383820a91.46.1793618358115; Mon, 02 Nov 2026
- 03:19:18 -0800 (PST)
+ bh=reZ4KvMRpiYBfWvauEmLonF58ltzO9Dk3TPTnzkrIM0=;
+ b=wsBtmDQ6JMxrn70FAlGHeSMsztj+kKqXQqG/5VSw8UlGDe9KPqco0RHjS5JpbA8OSr
+ 8CgiOEJmH1KU6NPvukIbO/2RtVk0/1ZZR2bq498CbnV12JbChbLJ/JGAD1ICgGPskmiD
+ u6Wb1npcufilJWqgH82zbZygZnJOkFYwzg6KWepjj+YQyEkP9TbB3vDG9yY4v+z09mTJ
+ VyaUEF3Jju8Wj0DawDk01YeORZhXP6BRwbyxGhFnpPpfCVJWV1bAK8sxTV0dB5Sal2qj
+ UapnUghWmVEz7zht4P6wIvyfvQYJWxCCjtPb+tBw81e3nOJNQTMqywuZe3cdP62VMlba
+ +Rtg==
+X-Gm-Message-State: APuU4Z/EAVCFe5TMAMP5Sj1zAmXDZ36JP0iGj8Hz+jqTYqr+HRi44yiF
+ iuKS1NnIU0lcmk5VXYh7LdI0d38GMpoYPIllFDKBX5mh9eHc0k+Dt0rTbtqmQhmor/LbhB4M1R4
+ Z7jH1BK4jKM+YWrIejQRQ9aHYIwpodYA7H1Xf4TqQqdpZlW+J7DM+V59hovW+hmoLIkAzKXbQqG
+ C8wbSxvaGpGL+UuX2JVIppex26PrqZ+no=
+X-Gm-Gg: AYBFou0LvqFi0Kppci9ikFI7dNhJCO4fvR7o6FejgBrwO2Q+Gl45z11GX2yVWBAbgZR
+ tyOld7OkFv/Mzj7OchbtkFr/HQQ4unxXOKAcRcRaPWgRhtFC5yctX8jisHQpWIsICodOC7O9uqt
+ LWHkx93+8LwykaJJgZ6UyyHWpex3XEUZmJAhI3SdRGDb6luwn5FIAjHBLWW2q3zfghcg4SBF96l
+ n4e3ESBUa5izUgN3sLJ05c7PtJclTHTT/pZkGllMOZYGNM1ygpHtkkWlJFWA8usHFanc6Skj855
+ hQ==
+X-Received: by 2002:a17:90a:d887:b0:3a8:6045:5a19 with SMTP id
+ 98e67ed59e1d1-3ae89777139mr8710474a91.37.1793618434139; 
+ Mon, 02 Nov 2026 03:20:34 -0800 (PST)
+X-Received: by 2002:a17:90a:d887:b0:3a8:6045:5a19 with SMTP id
+ 98e67ed59e1d1-3ae89777139mr8710446a91.37.1793618433570; Mon, 02 Nov 2026
+ 03:20:33 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261030141442.264308-1-lucas.kornicki@nutanix.com>
- <20261030141442.264308-3-lucas.kornicki@nutanix.com>
- <179343138750.2067999.4231298981143140799.b4-review@b4>
- <2f95e624-974b-46e1-9d00-490a3e690534@nutanix.com>
-In-Reply-To: <2f95e624-974b-46e1-9d00-490a3e690534@nutanix.com>
+References: <20261101201717.3911097-1-armbru@redhat.com>
+ <20261101201717.3911097-49-armbru@redhat.com>
+ <87tslzr2a6.fsf_-_@pond.sub.org>
+In-Reply-To: <87tslzr2a6.fsf_-_@pond.sub.org>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 2 Nov 2026 15:19:06 +0400
-X-Gm-Features: AclHuK9ttY_tarVtOMY5GRSoIVtfoZNjFTSyRd-mTt3spgkvHmJeh7aqF3UuTLg
-Message-ID: <CAMxuvaw-0hxv7+e6XFQACKS1D5TUbDSyawN=SW9gdbqZUZJtkQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] ui/clipboard: keep track of clipboard peer side
-To: Lucas Kornicki <lucas.kornicki@nutanix.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Date: Mon, 2 Nov 2026 15:20:21 +0400
+X-Gm-Features: AclHuK-BtO_qzBRiLbn9BOqfmzWAU5w1xeM5ctU1f49XomqsKIUbi0VW_3FVGbo
+Message-ID: <CAMxuvayLOm-ZUV9ac6ybkXVvW5Ed=ZXN9jv9ZOsUtym6k1XX+w@mail.gmail.com>
+Subject: Re: [PATCH v8 48.5/56] hw/ufs: Convert PropertyInfo to QAPITypeInfo
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, berrange@redhat.com, 
+ stanleyjhu@google.com, jeuk20.kim@samsung.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
@@ -145,92 +143,184 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, Nov 2, 2026 at 2:11=E2=80=AFPM Lucas Kornicki
-<lucas.kornicki@nutanix.com> wrote:
+On Mon, Nov 2, 2026 at 1:49=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
+> wrote:
 >
+> This gives properties "x-fault-inject-tag" and "x-fault-inject-mode" a
+> generated type_info with a valid masked_name, so it appears in
+> query-qmp-schema introspection and the qapi-type field of
+> qom-list-properties output.
 >
-> On 10/31/26 08:23, marcandre.lureau@redhat.com wrote:
-> >> Add a "guest" flag to QemuClipboardPeer and set it on vdagent peer.
-> >>
-> >> Use the flag to keep track of number of registered guest peers and
-> >> allow to query for their presence with
-> >> qemu_clipboard_guest_peer_present().
-> >>
-> >> This change makes it possible for a clipboard peer to determine if
-> >> any guest side peers are present so they can tell whether a guest is
-> >> actually able to participate in clipboard exchange.
-> >>
-> >> Signed-off-by: Lukasz Kornicki <lucas.kornicki@nutanix.com>
-> >> Message-ID: <20261030141442.264308-3-lucas.kornicki@nutanix.com>
-> >> ---
-> >>   include/ui/clipboard.h |  9 +++++++++
-> >>   ui/clipboard.c         | 17 +++++++++++++++++
-> >>   ui/vdagent.c           |  1 +
-> >>   3 files changed, 27 insertions(+)
-> >>
-> >> diff --git a/include/ui/clipboard.h b/include/ui/clipboard.h
-> >> index 6166af513906..250f1d8ea53e 100644
-> >> --- a/include/ui/clipboard.h
-> >> +++ b/include/ui/clipboard.h
-> >> @@ -62,6 +62,7 @@ enum QemuClipboardSelection {
-> >>    * struct QemuClipboardPeer
-> >>    *
-> >>    * @name: peer name.
-> >> + * @guest: is peer guest side.
-> >>    * @notifier: notifier for clipboard updates.
-> >>    * @request: callback for clipboard data requests.
-> >>    *
-> >> @@ -69,6 +70,7 @@ enum QemuClipboardSelection {
-> >>    */
-> >>   struct QemuClipboardPeer {
-> >>       const char *name;
-> >> +    bool guest;
-> >>       Notifier notifier;
-> >>       void (*request)(QemuClipboardInfo *info,
-> >>                       QemuClipboardType type);
-> >> @@ -179,6 +181,13 @@ void qemu_clipboard_peer_register(QemuClipboardPe=
-er *peer);
-> >>    */
-> >>   void qemu_clipboard_peer_unregister(QemuClipboardPeer *peer);
-> >>
-> >> +/**
-> >> + * qemu_clipboard_guest_peer_present
-> >> + *
-> >> + * Return TRUE if a guest side clipboard peer is currently registered=
-.
-> >> + */
-> >> +bool qemu_clipboard_guest_peer_present(void);
-> >> +
-> >>   /**
-> >>    * qemu_clipboard_peer_owns
-> >>    *
-> >> diff --git a/ui/clipboard.c b/ui/clipboard.c
-> >> index 3d8f58a85508..f750b494eb6b 100644
-> >> --- a/ui/clipboard.c
-> >> +++ b/ui/clipboard.c
-> >> @@ -12,6 +12,8 @@ static VMChangeStateEntry *cb_change_state_entry =3D=
- NULL;
-> >>
-> >>   static bool cb_reset_serial_on_resume =3D false;
-> >>
-> >> +static int guest_peer_count;
-> > Rather than adding an extra global (that must be sync), why not simply
-> > iterate the clipboard_notifiers?
-> >
-> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> The conversion is trivial for ufs_prop_get_fault_inject_tag.  For
+> ufs_prop_get_fault_inject_tag, we need to conver UfsFaultInjectMode to
+> a QAPI enum.
 >
-> Good question. I wasn't positive if it was thread safe to walk the list
-> at the time,
-> hence going with a global counter felt like a safer bet since there are
-> others like it.
->
-> It looks like this is not an issue and cost of recomputing seems reasonab=
-le.
-> Since the series was pulled, should I send in a separate patch fixing thi=
-s?
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-yes, should be acceptable as minor fix during rc, otherwise I will
-just queue it for later
-thanks
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+
+> ---
+> Fixup needed for commit c821f2f69f1 (hw/ufs: Add experimental fault
+> injection properties for holding requests)
+>
+>  qapi/common.json | 30 ++++++++++++++++++++++++++++++
+>  hw/ufs/ufs.h     | 34 ----------------------------------
+>  hw/ufs/ufs.c     | 15 +++------------
+>  3 files changed, 33 insertions(+), 46 deletions(-)
+>
+> diff --git a/qapi/common.json b/qapi/common.json
+> index 68b649ecf2..84f12c133a 100644
+> --- a/qapi/common.json
+> +++ b/qapi/common.json
+> @@ -245,3 +245,33 @@
+>      'tm_hour': 'int32',
+>      'tm_min': 'int32',
+>      'tm_sec': 'int32' } }
+> +
+> +##
+> +# @UfsFaultInjectMode:
+> +#     Fault injection modes for x-fault-inject-mode property.
+> +#     Controls how the held transfer request and subsequent Task
+> +#     Management Request (TMR) are resolved by the controller:
+> +#
+> +# @abort-success: TMR ABORT_TASK aborts the held request, clears its
+> +#     state, and returns SUCCESS (COMPL).
+> +#
+> +# @abort-failed: TMR ABORT_TASK returns TASK_MANAGEMENT_FUNC_FAILED,
+> +#     forcing host driver to escalate to Host Reset.
+> +#
+> +# @in-transition: TMR QUERY_TASK releases the held request to execute
+> +#     normally through the SCSI layer and returns the real task status
+> +#     (SUCCEEDED while the command is still in flight); ABORT_TASK
+> +#     cancels the held request and returns FUNCTION_COMPLETE.
+> +#
+> +# @timeout: TMR ABORT_TASK does not complete or clear doorbell,
+> +#     triggering hardware-level TMR timeout.
+> +#
+> +# @ssu-timeout: Intercepts SCSI START_STOP (0x1B) commands targeting
+> +#     the UFS Device WLUN when x-fault-inject-tag is armed.
+> +#
+> +# Since: 11.2
+> +##
+> +{ 'enum': 'UfsFaultInjectMode',
+> +  'prefix': 'UFS_FAULT_INJECT',
+> +  'data': [ 'abort-success', 'abort-failed', 'in-transition', 'timeout',
+> +            'ssu-timeout' ] }
+> diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
+> index 7ddc540546..0014978322 100644
+> --- a/hw/ufs/ufs.h
+> +++ b/hw/ufs/ufs.h
+> @@ -90,39 +90,6 @@ typedef struct UfsLu {
+>      UfsScsiOp scsi_op;
+>  } UfsLu;
+>
+> -/*
+> - * Fault injection modes for x-fault-inject-mode property.
+> - * Controls how the held transfer request and subsequent Task Management
+> - * Request (TMR) are resolved by the controller:
+> - *
+> - * UFS_FAULT_INJECT_ABORT_SUCCESS: TMR ABORT_TASK aborts the held reques=
+t,
+> - *                                 clears its state, and returns SUCCESS
+> - *                                 (COMPL).
+> - * UFS_FAULT_INJECT_ABORT_FAILED:  TMR ABORT_TASK returns
+> - *                                 TASK_MANAGEMENT_FUNC_FAILED, forcing =
+host
+> - *                                 driver to escalate to Host Reset.
+> - * UFS_FAULT_INJECT_IN_TRANSITION: TMR QUERY_TASK releases the held requ=
+est to
+> - *                                 execute normally through the SCSI lay=
+er and
+> - *                                 returns the real task status (SUCCEED=
+ED while
+> - *                                 the command is still in flight);
+> - *                                 ABORT_TASK cancels the held request a=
+nd
+> - *                                 returns FUNCTION_COMPLETE.
+> - * UFS_FAULT_INJECT_TIMEOUT:       TMR ABORT_TASK does not complete or c=
+lear
+> - *                                 doorbell, triggering hardware-level T=
+MR
+> - *                                 timeout.
+> - * UFS_FAULT_INJECT_SSU_TIMEOUT:   Intercepts SCSI START_STOP (0x1B) com=
+mands
+> - *                                 targeting the UFS Device WLUN when
+> - *                                 x-fault-inject-tag is armed.
+> - */
+> -typedef enum UfsFaultInjectMode {
+> -    UFS_FAULT_INJECT_ABORT_SUCCESS =3D 0,
+> -    UFS_FAULT_INJECT_ABORT_FAILED,
+> -    UFS_FAULT_INJECT_IN_TRANSITION,
+> -    UFS_FAULT_INJECT_TIMEOUT,
+> -    UFS_FAULT_INJECT_SSU_TIMEOUT,
+> -    UFS_FAULT_INJECT_MODE_MAX,
+> -} UfsFaultInjectMode;
+> -
+>  /*
+>   * Sentinel values for x-fault-inject-tag property.
+>   * Task Tags in UFS are 8-bit (0..255). Values >=3D 256 are reserved as
+> @@ -375,6 +342,5 @@ void ufs_unrealize(UfsHc *u);
+>
+>  extern const PropertyInfo ufs_prop_fault_inject_tag;
+>  extern const PropertyInfo ufs_prop_fault_inject_mode;
+> -extern const QEnumLookup UfsFaultInjectMode_lookup;
+>
+>  #endif /* HW_UFS_UFS_H */
+> diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+> index f8da7c9554..3de67831ea 100644
+> --- a/hw/ufs/ufs.c
+> +++ b/hw/ufs/ufs.c
+> @@ -15,6 +15,7 @@
+>
+>  #include "qemu/osdep.h"
+>  #include "qapi/error.h"
+> +#include "qapi/qapi-type-infos-common.h"
+>  #include "qapi/visitor.h"
+>  #include "scsi/constants.h"
+>  #include "hw/core/irq.h"
+> @@ -3234,17 +3235,6 @@ static void ufs_init_hc(UfsHc *u)
+>      ufs_fault_inject_init(u);
+>  }
+>
+> -const QEnumLookup UfsFaultInjectMode_lookup =3D {
+> -    .array =3D (const char *const[]) {
+> -        [UFS_FAULT_INJECT_ABORT_SUCCESS] =3D "abort-success",
+> -        [UFS_FAULT_INJECT_ABORT_FAILED] =3D "abort-failed",
+> -        [UFS_FAULT_INJECT_IN_TRANSITION] =3D "in-transition",
+> -        [UFS_FAULT_INJECT_TIMEOUT] =3D "timeout",
+> -        [UFS_FAULT_INJECT_SSU_TIMEOUT] =3D "ssu-timeout",
+> -    },
+> -    .size =3D UFS_FAULT_INJECT_MODE_MAX,
+> -};
+> -
+>  static void ufs_prop_get_fault_inject_tag(Object *obj, Visitor *v,
+>                                            const char *name, void *opaque=
+,
+>                                            Error **errp)
+> @@ -3300,6 +3290,7 @@ static void ufs_prop_set_default_fault_inject_tag(O=
+bjectProperty *op,
+>
+>  const PropertyInfo ufs_prop_fault_inject_tag =3D {
+>      .type =3D "uint32",
+> +    .qapi_type =3D &uint32_type_info,
+>      .description =3D "Task tag to hold for fault injection",
+>      .get =3D ufs_prop_get_fault_inject_tag,
+>      .set =3D ufs_prop_set_fault_inject_tag,
+> @@ -3309,9 +3300,9 @@ const PropertyInfo ufs_prop_fault_inject_tag =3D {
+>
+>  const PropertyInfo ufs_prop_fault_inject_mode =3D {
+>      .type =3D "UfsFaultInjectMode",
+> +    .qapi_type =3D &UfsFaultInjectMode_type_info,
+>      .description =3D "Fault injection mode: abort-success, abort-failed,=
+ "
+>                     "in-transition, timeout, ssu-timeout",
+> -    .enum_table =3D &UfsFaultInjectMode_lookup,
+>      .get =3D qdev_propinfo_get_enum,
+>      .set =3D qdev_propinfo_set_enum,
+>      .set_default_value =3D qdev_propinfo_set_default_value_enum,
+> --
+> 2.55.0
+>
 
 
