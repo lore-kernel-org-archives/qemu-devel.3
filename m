@@ -1,89 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F88606A324
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 20:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1CC606A326
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 20:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mtOJ4dnk
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=su0gW1q/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNyUm-00072a-U1; Mon, 02 Nov 2026 15:19:10 -0500
+	id 1xNyUk-00070p-Qn; Mon, 02 Nov 2026 15:19:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNyUF-0006yH-GJ
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 15:18:35 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1xNyUG-0006ye-Nm
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 15:18:37 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNyUD-0006i8-LX
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 15:18:35 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-48df8fe8513so2948349f8f.0
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 12:18:32 -0800 (PST)
+ id 1xNyUE-0006iF-Vw
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 15:18:36 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4a208d93758so36624085e9.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 12:18:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793650711; x=1794255511; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793650713; x=1794255513; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=t24QZAPTVs1RY8XVA5r9uFyJSsdgfHnAH1qIEZM4lLI=;
- b=mtOJ4dnkDK9thEK5HMex7lAX3ILiUXB79dywiW/nKXJ3Kx/ulvJDqBsgJhtYQ1UgKu
- M1B0YGF7x4S5PLZgFqVQYPgRf/TfBIQYtnGJGbnCxCAH37UCJwDUCiqrBcwwwuhKN7+R
- qaL9RtN9TCVqLoKgQhEcOjO6k0Ump6Gkjp2czTW6zHwR/4SBq7aglEoumrIDXJDXe2Vy
- prIE9rzx7gHFWcp7pF8Q/45H0wGb1+sTqiCR643XXf17BcWeJLqp1089UFkL92h4KbG8
- OFmjecfQ9mNeSB9eB6Gj5lTd2+6o78FgdUD4+ZCQpnrYUlWb4n5tDQEBU9qZvsGQsImo
- VRcA==
+ bh=3Atfu0g8wY0eKizwD/l8cX4C3K+pWhHyMdzqeBKdenA=;
+ b=su0gW1q/dyKL5l6YZ+mmmEBdmoITt29CBxuuXOqgxJJuQlYgaEDWX5Vol5qhaq6m14
+ /9wmshni9+4PYbaMLW0CI0TeNSX71N1tzc7Ws+dqsqT658zcbPJIXSF2jR1q5t93Ckse
+ x7i4ilDAhmECk3hl/hRZnBd7aGuwOH702kJREiFU4C+pdxkq01ex861FkcMWSfj2OgaU
+ 5yjWcJqv+bKqTtrxtiV/glbRmJab+V2yZkeQsg7ZmFySkIs1YCocBgmpFvMuRa7xfqd9
+ 0u/Le5500GD1H2gNel5Hwn00v91L0VknLfVVAIKiNPyz3rm9TNt8czrWjJ1enoCbC+YV
+ wXsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793650711; x=1794255511;
+ d=1e100.net; s=20260707; t=1793650713; x=1794255513;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=t24QZAPTVs1RY8XVA5r9uFyJSsdgfHnAH1qIEZM4lLI=;
- b=paeEPPmXDMEuMWdVaBJqXFvzlrfx2zY1pyuaFejbwwKu+lp9kyrp3UnmToWEdGZsP/
- 3sQiuQ2Dcuu9hAuXLt/cMuOu7nmm9MxceuFvGdkE2mnwP+M8Ro4eBZR/hNd/8b/caZdV
- BmxP9HC3xU2+zAGeTmXXC47f1wqoGgP1Vq0l+0PVieI6z7w5evVurM8w8clK9smxIpDH
- 8kKYUQPKWYYGcI8MmaxjZwIKc6GohPZMFGNYRUryQdoOPNXNSwPX6X1M78Q9hDi0Fchf
- ipnbHluvmOdoNxyU1Y3oYT7NpsTE8SzWCrlg4P14fjDXofyz4U442on95FD+2G3swPCk
- I4qw==
-X-Gm-Message-State: APuU4Z8Aaa6xFj1IJTaK6V6FZCwUg4gVuFX4j3Z3sT3makwopjLRL3zr
- xaIL6v5cKP+s8Uo51RV1x595z8ukjinzHhERORVgNpAeOTSGDNW3tCSOD57nncmJ2MFqV7piuUA
- klRXK260=
-X-Gm-Gg: AYBFou2+k42oH+kH13lmsV9BtYJwxZmjojfweO20Er/gd/AzjvPtn3mXTx/yFkwEjbU
- AvLbE4dwC7G4qUwSLH83EoZI+10xoTAabXVxeA6tcgzlQ4okIcG0ACI5zw8gZUDIP3SlH0vv91P
- J/k3KnvN1gBg8RCXlCeMtYdhlfXD4yiAFyBvwHOndTpOP8+jpHwz0j9FA2hN+fL6pdt9/HWom/8
- iHgwQ62+1v8CVUJ2rE7pqnaPh4chrvVNrnI8mGuRo9iDJkT6M5icNIgKNsCQBrESPZWoI20kYXk
- WlCCLfEFJWKpX34cnb09hRDy+eNPkaE0k/X8+8mz1HFNqhq47jVJ5ij/Bvlqn7qsKnpbNoeKLU1
- sLYV21z4/gpIi9vto2GaaBg+w+2k0hBWS5cUYxiOCli/zRTuJC/shIrCl2GCrRxVw8s4c4sECy/
- WlQEFBT7h1ZeQ/Xvf+w+imspkWZ7AY2yEssYjPPtUPC0xm7AUeZDM1Yzw4yLqlHBfUpivPBrc7h
- oLidzJkIJl+h3YDHi5wZ3cBXce2wxghWIUyLTT8+AFSlwi/DKlKG2kWqisneRL+fonAk7ZVjYhk
- 4s6YR38MBedwKLXOKLp1FV3ftBewEXhKSnPQQ5OCLPNsUKGERx6erDAqtAUpornOKWgsgbFtcxf
- Z9sqBqurnn7nRodfxHe4/WnRW4q67mKPR+3k=
-X-Received: by 2002:a05:6000:2207:b0:48e:e98:8b6a with SMTP id
- ffacd0b85a97d-48e6e2db50fmr22513811f8f.4.1793650711593; 
- Mon, 02 Nov 2026 12:18:31 -0800 (PST)
+ bh=3Atfu0g8wY0eKizwD/l8cX4C3K+pWhHyMdzqeBKdenA=;
+ b=2p0S0NmjOK5FjIEOSlfKItp3+ZjM6SbrQKpulBd/F5zQ2LGi3/NxVWyYBURuQvNV53
+ i9KiToP0ubwcIgpbeOGl/6EsreafGCzSXdLUpXHt8mxtJbSWXrG3mvn5VldE6UZ7lkBt
+ pmMOXb+JA7DwYI2wk7Gwh6cJXFty7MYQcBHsPfJJ57bKebHPdKHQZ5/i/UXrwt3XBKKg
+ 9JS+6UR2Z9FAQfmKuE4BVd5DOePv6NaDlDTXzqtRw3Ac+Dd6MwGzOtmQ/nheqFiyxB4t
+ Ec+UMODPuZeRJ4dsyFD7z1ObX04WFVPMbDAaI7u5ld2Ytq1YKG20CCLNo+gEEKq0JseV
+ SkNw==
+X-Gm-Message-State: AFq9FYJg7ZmnC6WL7p5rwBjaeYh4LWnHJRHGziuLkGsUFzWtt9foinG3
+ rO6jojtS11L6gqCKit3AfijA9xsJjyfeVyx0pIMbAAeTvlfSqWhYMQ2KW4Ti1xWnDv66a5Fllxe
+ cHAGQ0sE=
+X-Gm-Gg: AYBFou0R93e+Gj4skVNJuapgjgkCan91b1rme7t9f7uq3Z3zioVouoM4QbfC5u+Fj0y
+ DfM6cqxrjIkxZVj7XdAwlLryhkYH91YL02US7M8ukXQHy8+pQwCYjI2qFsoYZAZb8qZYzcWECkl
+ WEux/ta3PCOyAX3Jnwqef1NRnMa5dJqhEFidfHCQRSOC267ZkUgJDgRxXrrPsNe8T9CIIP9Pzv1
+ 02jbqF1IZYI1lyIBPCtt5pv/3mniBAK3D9yQFuIIEondIfx15U6lYnYETSDvzopk7NJTrodcX8k
+ NRljyrFIxUFI82kg2UKuoHGnHaM5fQqWntX8oTVWZ6rg7yJCgfb5pnp0Ej0ajM1xS93a9xnCOwR
+ YyAmE95TJIGLH6Pw5A2s77rb2gra0GyAnFRdhmXmLCncO12fbzuKhptE0V5OO0IhQdSxESN2Aph
+ K6vBHUfEmB3HMaEsVVQwvL/jiEB+cbfjNArkTFzc+fJLxKXyiB1PxMde+7KaAomqHHw/pLa1HYQ
+ E/6r1Q6oOv8Bz+OgP9ZuX/91F3TUJXWai4PpnjNoxRD5XpraPqBLR/d6SAzAr6z/XClVUOFFmKJ
+ Eu5PiR4RMnKmbG5+GKpFnlJ1eh5ROlq2C+VouUJFAIq3K6lXUuAgymFcOfs0Dn4487r46x6Xe0S
+ 2319MO4M+tlyQShw6VuA5Nw3RRr8r8M8uvw==
+X-Received: by 2002:a05:600c:4f86:b0:4a7:669c:c988 with SMTP id
+ 5b1f17b1804b1-4ac18b7df2cmr261711115e9.23.1793650713546; 
+ Mon, 02 Nov 2026 12:18:33 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b79059sm22152836f8f.30.2026.11.02.12.18.30
+ ffacd0b85a97d-48e71b79059sm22152836f8f.30.2026.11.02.12.18.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Nov 2026 12:18:30 -0800 (PST)
+ Mon, 02 Nov 2026 12:18:31 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowangio@gmail.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Subject: [PATCH 01/11] hw/net/net_rx_pkt: Handle bogus l4hdr_off when
- validating SCTP checksum
-Date: Mon,  2 Nov 2026 20:18:18 +0000
-Message-ID: <20261102201828.1879576-2-peter.maydell@linaro.org>
+Subject: [PATCH 02/11] net/eth.c: In eth_parse_ipv6_hdr(),
+ fix check of input size
+Date: Mon,  2 Nov 2026 20:18:19 +0000
+Message-ID: <20261102201828.1879576-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261102201828.1879576-1-peter.maydell@linaro.org>
 References: <20261102201828.1879576-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,75 +102,76 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In _net_rx_pkt_validate_sctp_sum() we calculate a checksum that
-starts at the NetRxPkt::l4hdr_off offset.  If this offset (which
-might be guest controlled) is larger than the size of the packet, the
-loop that walks through the iovec can walk off the end of it.  The
-resulting out-of-bounds read in attempting to convert the iov to a
-buffer might cause a segfault.
+In the eth_parse_ipv6_hdr() function, when parsing the
+extension headers we check
+        if (input_size < ip6hdr_off + info->full_hdr_len) {
+            return false;
+        }
+This is checking that an extension header did not specify an
+extension header length that claims to extend off the end of the
+actual packet. However, we do it at the wrong end of the loop:
 
-We also weren't correctly checking the return values of iov_to_buf()
-and iov_from_buf() when reading and writing the checksum word: if the
-l4hdr_off claims the checksum word is half off the end of the packet
-these functions will return the count of how much data they were able
-to access, and we should fail if they don't write the entire 4 byte
-word.
+ * In the first iteration, full_hdr_len is sizeof(struct ipv6_header)
+   (i.e. just the initial fixed IPv6 header); but this check is
+   redundant because the initial part of the function did an
+   iov_to_buf() of sizeof(ip6_hdr) bytes from offset ip6hdr_off,
+   and checked that it read that many bytes. If input_size was
+   small enough to fail the check here then the iov_to_buf()
+   would have reported a short read
+ * In the last iteration, we update full_hdr_len at the end of
+   the loop, and then exit the loop without checking that that
+   final extension header had a valid length
 
-Return "checksum not valid" if the l4hdr_off is too large or the iov
-accesses don't do the full read/write.
+Moving the length check to the end of the loop fixes this.
 
-Note that this affects only the igb network device; the other user of
-this function (e1000e) does its own check on the l4 header and won't
-calculate a checksum if it's out of range.
+This bug has no visible effects provided that all the callers
+validate accessses into the packet before doing them, but spotting
+the invalid headers at this level provides a defence in depth against
+bugs elsewhere; so it's cc'd to stable on that basis.
+
+Bugs #4138 and #4516 both note this mistake (in amongst a pile of
+other things).
 
 Cc: qemu-stable@nongnu.org
-Fixes: 907209e3111dd62 ("igb: Implement Rx SCTP CSO")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4138
+Fixes: eb700029c78367 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/net_rx_pkt.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/eth.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/net/net_rx_pkt.c b/hw/net/net_rx_pkt.c
-index f87b6f046cc..03a35f03154 100644
---- a/hw/net/net_rx_pkt.c
-+++ b/hw/net/net_rx_pkt.c
-@@ -549,19 +549,23 @@ _net_rx_pkt_validate_sctp_sum(struct NetRxPkt *pkt)
-     uint32_t original;
-     bool valid;
+diff --git a/net/eth.c b/net/eth.c
+index 12ec316e240..bc26d38dc21 100644
+--- a/net/eth.c
++++ b/net/eth.c
+@@ -485,10 +485,6 @@ bool eth_parse_ipv6_hdr(const struct iovec *pkt, int pkt_frags,
+     info->has_ext_hdrs = true;
  
--    for (vec = pkt->vec; vec->iov_len < off; vec++) {
-+    for (vec = pkt->vec; vec_len > 0 && vec->iov_len < off; vec++) {
-         off -= vec->iov_len;
-         vec_len--;
-     }
-+    if (vec_len == 0) {
-+        return false;
-+    }
+     do {
+-        if (input_size < ip6hdr_off + info->full_hdr_len) {
+-            return false;
+-        }
+-
+         bytes_read = iov_to_buf(pkt, pkt_frags, ip6hdr_off + info->full_hdr_len,
+                                 &ext_hdr, sizeof(ext_hdr));
  
-     csum_off = off + 8;
+@@ -514,6 +510,10 @@ bool eth_parse_ipv6_hdr(const struct iovec *pkt, int pkt_frags,
  
--    if (!iov_to_buf(vec, vec_len, csum_off, &original, sizeof(original))) {
-+    if (iov_to_buf(vec, vec_len, csum_off,
-+                   &original, sizeof(original)) != sizeof(original)) {
-         return false;
-     }
+         info->full_hdr_len += (ext_hdr.ip6r_len + 1) * IP6_EXT_GRANULARITY;
+         curr_ext_hdr_type = ext_hdr.ip6r_nxt;
++        if (input_size < ip6hdr_off + info->full_hdr_len) {
++            /* This extension header's length field was bogus */
++            return false;
++        }
+     } while (eth_is_ip6_extension_header_type(curr_ext_hdr_type));
  
--    if (!iov_from_buf(vec, vec_len, csum_off,
--                      &calculated, sizeof(calculated))) {
-+    if (iov_from_buf(vec, vec_len, csum_off,
-+                     &calculated, sizeof(calculated)) != sizeof(calculated)) {
-         return false;
-     }
- 
+     info->l4proto = ext_hdr.ip6r_nxt;
 -- 
 2.43.0
 
