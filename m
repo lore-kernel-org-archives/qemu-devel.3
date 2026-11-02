@@ -1,74 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DED3607A891
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AswTisAF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A930E606F3C3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:56:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNtDp-0003Wr-US; Mon, 02 Nov 2026 09:41:17 -0500
+	id 1xNtSU-0005Pf-FB; Mon, 02 Nov 2026 09:56:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDN-0003JV-Ty
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xNtSC-0005MT-Dq; Mon, 02 Nov 2026 09:56:09 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDC-0008VK-8Z
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793630435;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ewvAgkD9GAfp3lCfHi8sHctDQKVaGgR88BS56rPMxYk=;
- b=AswTisAFVwuJV/p2CvGfGTAApHC6ukakO4GCyrfUpKR+vHyUN4IBAa0Vt7xcWHtG9p8ZMu
- E3lIRa840UfMrBFB5iqzFRUNevM7ZGhPM2zRYv4BosC0Wf5fb0f4VjL+R5O4cnYm1dVs/l
- KYZGex8SJiYCDuxjKEDhkZ1RHS6Wqdw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-jlDRAg_XO-6wmJGwza7oUA-1; Mon,
- 02 Nov 2026 09:40:34 -0500
-X-MC-Unique: jlDRAg_XO-6wmJGwza7oUA-1
-X-Mimecast-MFC-AGG-ID: jlDRAg_XO-6wmJGwza7oUA_1793630433
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D11A180A97C; Mon,  2 Nov 2026 14:40:33 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DED281800677; Mon,  2 Nov 2026 14:40:32 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 12A9A21E663A; Mon, 02 Nov 2026 15:40:20 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 66/74] hw/ufs: Convert PropertyInfo to QAPITypeInfo
-Date: Mon,  2 Nov 2026 15:40:10 +0100
-Message-ID: <20261102144018.3212223-67-armbru@redhat.com>
-In-Reply-To: <20261102144018.3212223-1-armbru@redhat.com>
-References: <20261102144018.3212223-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xNtS9-0001pE-U9; Mon, 02 Nov 2026 09:56:08 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3C50A60C532;
+ Mon, 02 Nov 2026 15:56:01 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id VTz4k38AQKv2; Mon,  2 Nov 2026 15:55:59 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id F184D60C4E7; Mon, 02 Nov 2026 15:55:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id ED86A13991F;
+ Mon, 02 Nov 2026 15:55:58 +0100 (CET)
+Date: Mon, 2 Nov 2026 15:55:58 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Yonggang Luo <luoyonggang@gmail.com>
+cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ qemu-devel@nongnu.org, Anthony PERARD <anthony@xenproject.org>, 
+ Felipe Balbi <balbi@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>, 
+ Antony Pavlov <antonynpavlov@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ Niek Linnenbank <nieklinnenbank@gmail.com>, xen-devel@lists.xenproject.org, 
+ qemu-riscv@nongnu.org, Jean-Christophe Dubois <jcd@tribudubois.net>, 
+ qemu-ppc@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>, 
+ Weiwei Li <liwei1518@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Frederic Konrad <konrad.frederic@yahoo.fr>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Chao Liu <chao.liu@processmission.com>, 
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>, 
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH 00/15] hw: expand DEFINE_MACHINE to explicit TypeInfo
+ registration
+In-Reply-To: <CAE2XoE8pNaP3rAR5Y2BpUZ2vSu-UC-wG9V9U7gPXrEGY=kx0RA@mail.gmail.com>
+Message-ID: <e5ce0ea8-7e97-aa76-6384-025fc43cb85a@eik.bme.hu>
+References: <20261030151539.1872-1-luoyonggang@gmail.com>
+ <d1db54c6-b802-676a-7779-0c2c63f5f807@eik.bme.hu>
+ <aa70e94c-d9a8-41c9-850f-7ded87f7f327@oss.qualcomm.com>
+ <ba106173-fca3-6019-3028-122831887921@eik.bme.hu>
+ <CAE2XoE9cR_X0kkDfGTU4Mt_5Hc3WZ8K5rghw2AeL4Vh=eugGag@mail.gmail.com>
+ <bf45a858-db07-de03-70ea-ca0061d7a5d1@eik.bme.hu>
+ <CAE2XoE9_b5UiE2+BXFRqB3RPv=M+8jr1HQy7rEFVEb6w1DdoGg@mail.gmail.com>
+ <a479df5b-721d-c357-5c69-c3760a73e521@eik.bme.hu>
+ <CAE2XoE-2w3A4=BeskGgp7NYUtkRVNkNufu4SZjW_OQ-KAQZvhg@mail.gmail.com>
+ <6efa9f73-75dd-efd0-3fd9-6b2654b69737@eik.bme.hu>
+ <CAE2XoE8pNaP3rAR5Y2BpUZ2vSu-UC-wG9V9U7gPXrEGY=kx0RA@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-608982516-1793631358=:93499"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,170 +100,227 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This gives properties "x-fault-inject-tag" and "x-fault-inject-mode" a
-generated type_info with a valid masked_name, so it appears in
-query-qmp-schema introspection and the qapi-type field of
-qom-list-properties output.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The conversion is trivial for ufs_prop_get_fault_inject_tag.  For
-ufs_prop_get_fault_inject_tag, we need to conver UfsFaultInjectMode to
-a QAPI enum.
+--3866299591-608982516-1793631358=:93499
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <87tslzr2a6.fsf_-_@pond.sub.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- qapi/common.json | 30 ++++++++++++++++++++++++++++++
- hw/ufs/ufs.h     | 34 ----------------------------------
- hw/ufs/ufs.c     | 15 +++------------
- 3 files changed, 33 insertions(+), 46 deletions(-)
+On Mon, 2 Nov 2026, Yonggang Luo wrote:
+> On Mon, Nov 2, 2026 at 4:57 AM BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>
+>> On Sun, 1 Nov 2026, Yonggang Luo wrote:
+>>> On Sun, Nov 1, 2026 at 7:29 AM BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>>>
+>>>> On Sun, 1 Nov 2026, Yonggang Luo wrote:
+>>>>> On Sun, Nov 1, 2026 at 1:06 AM BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>>>>>
+>>>>>> On Sat, 31 Oct 2026, Yonggang Luo wrote:
+>>>>>>> On Sat, Oct 31, 2026 at 8:42 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>>>>>>>
+>>>>>>>> On Fri, 30 Oct 2026, Pierrick Bouvier wrote:
+>>>>>>>>> On 10/30/2026 4:09 PM, BALATON Zoltan wrote:
+>>>>>>>>>> On Fri, 30 Oct 2026, Yonggang Luo wrote:
+>>>>>>>>>>> DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED hide the TypeInfo and the
+>>>>>>>>>>> type_init
+>>>>>>>>>>> function that calls type_register_static(). A later change needs to
+>>>>>>>>>>> pass a
+>>>>>>>>>>
+>>>>>>>>>> That's the point of the macro to hide the boiler plate code.
+>>>>>>>>>>
+>>>>>>>>>>> target mask into that registration, and the macros have no parameter
+>>>>>>>>>>> for it.
+>>>>>>>>>>
+>>>>>>>>>> Couldn't you just change the macros to take that parameter instead of
+>>>>>>>>>> expanding it everywhere?
+>>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> Problem of macros is that they don't have default parameters, so you
+>>>>>>>>> need variants for everything:
+>>>>>>>>>
+>>>>>>>>> DEFINE_MACHINE
+>>>>>>>>> DEFINE_MACHINE_EXTENDED
+>>>>>>>>> DEFINE_MACHINE_WITH_INTERFACES
+>>>>>>>>> DEFINE_MACHINE_WITH_INTERFACE_ARRAY
+>>>>>>>>> and now would need a new variant, with variant for other existing ones.
+>>>>>>>>>
+>>>>>>>>> In the end, it's just simpler to remove this and add the boilerplate.
+>>>>>>>>> It's written once and never modified, so using a macro just save typing
+>>>>>>>>> those lines once.
+>>>>>>>>>
+>>>>>>>>>> Regards,
+>>>>>>>>>> BALATON Zoltan
+>>>>>>>>>>
+>>>>>>>>>>> This series expands every caller first, with no behavior change, so the
+>>>>>>>>>>> follow-up only replaces the type_register_static() call.
+>>>>>>>>>>>
+>>>>>>>>>>> Each machine file gains a class_init function, a TypeInfo, and a
+>>>>>>>>>>> type_init
+>>>>>>>>>>> function that calls type_register_static(). The last patch removes
+>>>>>>>>>>> DEFINE_MACHINE* and DEFINE_SECURE_MACHINE* from include/hw/core/boards.h.
+>>>>>>>>
+>>>>>>>> Macros help reading the code not saving typing. If the actual
+>>>>>>>> functionality is buried in a lot of boiler plate it's harder to understand
+>>>>>>>> and spot bugs so putting the unintresting boiler plate behind a macro is
+>>>>>>>> better even if you need a separate version for different cases. Then the
+>>>>>>>> code that uses the macro will be much more obvious and not just a lot of
+>>>>>>>
+>>>>>>> I think mainly because DEFINE_MACHINE* and DEFINE_SECURE_MACHINE* are
+>>>>>>> not defined properly
+>>>>>>> that causes them to not be extended easily.
+>>>>>>>
+>>>>>>> DEFINE_TYPES is another example, use them can extend easily, how about
+>>>>>>> always use DEFINE_TYPES?
+>>>>>>> Or add a DEFINE_TYPE to replace DEFINE_MACHINE* and DEFINE_SECURE_MACHINE*?
+>>>>>>
+>>>>>> Maybe I'm missing the problem but DEFINE_MACHINE macros are just
+>>>>>> convenience wrappers around DEFINE_MACHINE_EXTENDED. So why can't you add
+>>>>>> the needed parameter to DEFINE_MACHINE_EXTENDED and use that for machines
+>>>>>> that need it, or if it's needed by all machines then make the new
+>>>>>> parameter required and add it to all convenience wrappers too so you can
+>>>>>> keep using DEFINE_MACHINE* and just need to add one parameter to it in
+>>>>>> machines?
+>>>>>
+>>>>> That's the issue, add parameter to DEFINE_MACHINE_EXTENDED means all
+>>>>> calls to it also need
+>>>>> to be changed, that means touch many $target_arch files. currently
+>>>>> it's 13. But after these
+>>>>
+>>>> That's not different from expanding the macro which would touch the same
+>>>> files.
+>>>>
+>>>>> changes, there will be much more usage on it, and if we want to add
+>>>>> more parameters or attributes
+>>>>> to it, it will be a new tree-wide change.
+>>>>
+>>>> Do you expect to need more parameters? Can't you add them at once then?
+>>>>
+>>>>> And DEFINE_TYPES do not suffer from such issues. As the TypeInfo[] is
+>>>>> explicit defined for
+>>>>> DEFINE_TYPES
+>>>>
+>>>> My point is that keeping the boiler plate as little as possible makes the
+>>>> code more readable. DEFINE_TYPES hides some of the boiler plate,
+>>>> DEFINE_MACHINE hides even more so converting to DEFINE_TYPES would expose
+>>>> some even if it's better than no macro at all.
+>>>>
+>>>> What exactly are the parameters missing from DEFINE_MACHINE_EXTENDED that
+>>>> need to be added?
+>>>
+>>> Hi BALATON
+>>> the things we faced is we first is to add TypeInfo::is_available parameter to
+>>> DEFINE_MACHINE_EXTENDED, and have more usage of it.
+>>> Then we will add targets:uint64_t parameter to DEFINE_MACHINE_EXTENDED, this is
+>>> a prepare to remove TypeInfo::is_available parameter from
+>>> DEFINE_MACHINE_EXTENDED,
+>>>
+>>> And finally, once all usage of TypeInfo::is_available can be replaced with
+>>> targets:uint64_t, then we finally need to remove
+>>> TypeInfo::is_available parameter from DEFINE_MACHINE_EXTENDED,
+>>
+>> Is there a way to avoid the temporary is_available churn and introduce the
+>> targets:uint64_t right away? (I'm not following this so I don't really
+>> know what you're talking about just looks like there's some churn here
+>> which might be good to awoid anyway independent of these macros.)
+>>
+>>> That's what I am facing now. And the explicit
+>>> static const TypeInfo xxx_machine_typeinfo = {
+>>>    .name       = MACHINE_TYPE_NAME("xxx"),
+>>>    .parent     = TYPE_MACHINE,
+>>>    .class_init = xxx_machine_class_init,
+>>> };
+>>>
+>>> Will help me avoid the issue. And I think this is a little boilerplate
+>>> and very explicit.
+>>
+>> That's not all DEFINE_MACHINE hides though. It's longer with .abstract,
+>> .secure and .iterfaces plus the machine initfn that would also need to be
+>> expanded if you used DEFINE_TYPES.
+>>
+>> Is this conversion needed for all machines using all DEFINE_MACHINE
+>
+> At the end, only "none" machine do not have targets parameter or
+> (QEMU_ARCH_ALL), as that's the sole
+> machine that supports all targets.
+>
+>> variants or only some of them? If the latter why not convert those to
+>
+>
+>
+>
+>> DEFINE_MACHINE_EXTENDED and then only that macro needs to be changed with
+>> other wrappers passing a default value without needing a new parameter.
+>> That does not work if all machines need to do this but even then, keeping
+>> the macro and adding a new required parameter is better in my opinion as
+>> it keeps boiler plate hidden.
+>
+> Another option is keep DEFINE_MACHINE and introduce DEFINE_MACHINE_TARGETS
+> and remove DEFINE_MACHINE_EXTENDED, and we only use DEFINE_MACHINE for
+> simple case,
+> that is parent is TYPE_MACHINE and have no custom type and no more
+> attributes assigned.
+> DEFINE_MACHINE_EXTENDED is too verbose, when calling it, it less clear
+> than calling to DEFINE_MACHINE.
+> And if we want to set more attributes to TypeInfo, just expand it to
+> use type_init or DEFINE_TYPES, how about this way.
+>
+> This will be something like:
+>
+> #define DEFINE_MACHINE_TARGETS(namestr, machine_initfn, targets) \
+>    static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
+>    { \
+>        MachineClass *mc = MACHINE_CLASS(oc); \
+>        machine_initfn(mc); \
+>    } \
+>    static const TypeInfo machine_initfn##_typeinfo = { \
+>        .name       = MACHINE_TYPE_NAME(namestr), \
+>        .parent     = TYPE_MACHINE, \
+>        .class_init = machine_initfn##_class_init, \
+>    }; \
+>    static void machine_initfn##_register_types(void) \
+>    { \
+>        type_register_targets(&machine_initfn##_typeinfo, targets); \
+>    } \
+>    type_init(machine_initfn##_register_types)
+>
+> /* Implicitly insecure */
+> #define DEFINE_MACHINE(namestr, machine_initfn) \
+>    DEFINE_MACHINE_TARGETS(namestr, machine_initfn, QEMU_ARCH_ALL) \
+>
+> As the many call is to DEFINE_MACHINE.
+>
+> And after all conversion, all existing usage of DEFINE_MACHINE will be
+> converted to
+> DEFINE_MACHINE_TARGETS.
+> DEFINE_MACHINE will be called for ('none') machine or future heterogeneous
+> machines
+>
+>
+> Either way, these patches will be dropped. We will introduce
+> DEFINE_MACHINE_TARGETS first.
 
-diff --git a/qapi/common.json b/qapi/common.json
-index 68b649ecf2..84f12c133a 100644
---- a/qapi/common.json
-+++ b/qapi/common.json
-@@ -245,3 +245,33 @@
-     'tm_hour': 'int32',
-     'tm_min': 'int32',
-     'tm_sec': 'int32' } }
-+
-+##
-+# @UfsFaultInjectMode:
-+#     Fault injection modes for x-fault-inject-mode property.
-+#     Controls how the held transfer request and subsequent Task
-+#     Management Request (TMR) are resolved by the controller:
-+#
-+# @abort-success: TMR ABORT_TASK aborts the held request, clears its
-+#     state, and returns SUCCESS (COMPL).
-+#
-+# @abort-failed: TMR ABORT_TASK returns TASK_MANAGEMENT_FUNC_FAILED,
-+#     forcing host driver to escalate to Host Reset.
-+#
-+# @in-transition: TMR QUERY_TASK releases the held request to execute
-+#     normally through the SCSI layer and returns the real task status
-+#     (SUCCEEDED while the command is still in flight); ABORT_TASK
-+#     cancels the held request and returns FUNCTION_COMPLETE.
-+#
-+# @timeout: TMR ABORT_TASK does not complete or clear doorbell,
-+#     triggering hardware-level TMR timeout.
-+#
-+# @ssu-timeout: Intercepts SCSI START_STOP (0x1B) commands targeting
-+#     the UFS Device WLUN when x-fault-inject-tag is armed.
-+#
-+# Since: 11.2
-+##
-+{ 'enum': 'UfsFaultInjectMode',
-+  'prefix': 'UFS_FAULT_INJECT',
-+  'data': [ 'abort-success', 'abort-failed', 'in-transition', 'timeout',
-+            'ssu-timeout' ] }
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 7ddc540546..0014978322 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -90,39 +90,6 @@ typedef struct UfsLu {
-     UfsScsiOp scsi_op;
- } UfsLu;
- 
--/*
-- * Fault injection modes for x-fault-inject-mode property.
-- * Controls how the held transfer request and subsequent Task Management
-- * Request (TMR) are resolved by the controller:
-- *
-- * UFS_FAULT_INJECT_ABORT_SUCCESS: TMR ABORT_TASK aborts the held request,
-- *                                 clears its state, and returns SUCCESS
-- *                                 (COMPL).
-- * UFS_FAULT_INJECT_ABORT_FAILED:  TMR ABORT_TASK returns
-- *                                 TASK_MANAGEMENT_FUNC_FAILED, forcing host
-- *                                 driver to escalate to Host Reset.
-- * UFS_FAULT_INJECT_IN_TRANSITION: TMR QUERY_TASK releases the held request to
-- *                                 execute normally through the SCSI layer and
-- *                                 returns the real task status (SUCCEEDED while
-- *                                 the command is still in flight);
-- *                                 ABORT_TASK cancels the held request and
-- *                                 returns FUNCTION_COMPLETE.
-- * UFS_FAULT_INJECT_TIMEOUT:       TMR ABORT_TASK does not complete or clear
-- *                                 doorbell, triggering hardware-level TMR
-- *                                 timeout.
-- * UFS_FAULT_INJECT_SSU_TIMEOUT:   Intercepts SCSI START_STOP (0x1B) commands
-- *                                 targeting the UFS Device WLUN when
-- *                                 x-fault-inject-tag is armed.
-- */
--typedef enum UfsFaultInjectMode {
--    UFS_FAULT_INJECT_ABORT_SUCCESS = 0,
--    UFS_FAULT_INJECT_ABORT_FAILED,
--    UFS_FAULT_INJECT_IN_TRANSITION,
--    UFS_FAULT_INJECT_TIMEOUT,
--    UFS_FAULT_INJECT_SSU_TIMEOUT,
--    UFS_FAULT_INJECT_MODE_MAX,
--} UfsFaultInjectMode;
--
- /*
-  * Sentinel values for x-fault-inject-tag property.
-  * Task Tags in UFS are 8-bit (0..255). Values >= 256 are reserved as
-@@ -375,6 +342,5 @@ void ufs_unrealize(UfsHc *u);
- 
- extern const PropertyInfo ufs_prop_fault_inject_tag;
- extern const PropertyInfo ufs_prop_fault_inject_mode;
--extern const QEnumLookup UfsFaultInjectMode_lookup;
- 
- #endif /* HW_UFS_UFS_H */
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index f8da7c9554..3de67831ea 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -15,6 +15,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qapi/visitor.h"
- #include "scsi/constants.h"
- #include "hw/core/irq.h"
-@@ -3234,17 +3235,6 @@ static void ufs_init_hc(UfsHc *u)
-     ufs_fault_inject_init(u);
- }
- 
--const QEnumLookup UfsFaultInjectMode_lookup = {
--    .array = (const char *const[]) {
--        [UFS_FAULT_INJECT_ABORT_SUCCESS] = "abort-success",
--        [UFS_FAULT_INJECT_ABORT_FAILED] = "abort-failed",
--        [UFS_FAULT_INJECT_IN_TRANSITION] = "in-transition",
--        [UFS_FAULT_INJECT_TIMEOUT] = "timeout",
--        [UFS_FAULT_INJECT_SSU_TIMEOUT] = "ssu-timeout",
--    },
--    .size = UFS_FAULT_INJECT_MODE_MAX,
--};
--
- static void ufs_prop_get_fault_inject_tag(Object *obj, Visitor *v,
-                                           const char *name, void *opaque,
-                                           Error **errp)
-@@ -3300,6 +3290,7 @@ static void ufs_prop_set_default_fault_inject_tag(ObjectProperty *op,
- 
- const PropertyInfo ufs_prop_fault_inject_tag = {
-     .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "Task tag to hold for fault injection",
-     .get = ufs_prop_get_fault_inject_tag,
-     .set = ufs_prop_set_fault_inject_tag,
-@@ -3309,9 +3300,9 @@ const PropertyInfo ufs_prop_fault_inject_tag = {
- 
- const PropertyInfo ufs_prop_fault_inject_mode = {
-     .type = "UfsFaultInjectMode",
-+    .qapi_type = &UfsFaultInjectMode_type_info,
-     .description = "Fault injection mode: abort-success, abort-failed, "
-                    "in-transition, timeout, ssu-timeout",
--    .enum_table = &UfsFaultInjectMode_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
--- 
-2.55.0
+I think I'm lost and cannot follow what you want. As far as I understood 
+you want to add a new field "target" to machine TypeInfo but instead of 
+adding that straight away you proposed to first add is_available then 
+later replace that with target. I asked why do you need is_available and 
+not add target right away?
 
+Then if this target parameter will be needed for all machines why can't 
+you add that to all DEFINE_MACHINE macros as a required parameter and set 
+it for all machines passing it through to DEFINE_MACHINE_EXTENDED which 
+sets in the TypeInfo. That way no machines need changing other than adding 
+the target parameter to the existing DEFINE_MACHINE calls.
+
+What am I missing?
+
+Regards,
+BALATON Zoltan
+--3866299591-608982516-1793631358=:93499--
 
