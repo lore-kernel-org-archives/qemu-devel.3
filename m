@@ -1,66 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332F360703B5
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E286083618
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NpyJhV+l
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HEUabVP1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNtDc-0003QL-Gf; Mon, 02 Nov 2026 09:41:04 -0500
+	id 1xNtDn-0003Va-1x; Mon, 02 Nov 2026 09:41:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD5-0003Bu-9l
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:35 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDM-0003Hk-BY
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD3-0008Q7-FW
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:30 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDB-0008VZ-VJ
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793630428;
+ s=mimecast20190719; t=1793630435;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GV5CZqebP/VpiQ6tYNOvrerKYMSDFf96jRCYs+9ffFQ=;
- b=NpyJhV+lxPq1Vg9o0yZAfjzM/hJVGNcngd8rHCzQ5ReNbJGWUvkD5FGiejiqY63RJzkEeo
- H65BnwqfBwpGTPD0iCx8VN8z5kUaWg5sdJGJ1PXUwZlmuiopyQ5kPDifWRehawg+S9PsTE
- eRxuBMyWc30w3UE5DwfgjdY+4Y3+1TQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=u0iU0ttoL7ujOmehcyyDtSdZYzSCwePenv3PHjWi51k=;
+ b=HEUabVP1eJOiMqB5noLsUi66/lmYE/UuNhfupIJCJG5T5DXQexrNTCerXPa+aKJQeBsZHm
+ ozoCxrfedJZSIpaPnWWKPNrLswDpgNltS7uGtUBKzEdtrajHNVKift2eqi7/5EUoDWCgMw
+ Oo1hhwbsNFJR6+ErM39XqS7bcCgMnFs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-159-afUM_U4qOeSdR6PCM3bcSw-1; Mon,
- 02 Nov 2026 09:40:25 -0500
-X-MC-Unique: afUM_U4qOeSdR6PCM3bcSw-1
-X-Mimecast-MFC-AGG-ID: afUM_U4qOeSdR6PCM3bcSw_1793630424
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-yG4_DhRjOoqwB77mUPaPKA-1; Mon,
+ 02 Nov 2026 09:40:34 -0500
+X-MC-Unique: yG4_DhRjOoqwB77mUPaPKA-1
+X-Mimecast-MFC-AGG-ID: yG4_DhRjOoqwB77mUPaPKA_1793630433
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F431180A8FC; Mon,  2 Nov 2026 14:40:24 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C1C9180AC71; Mon,  2 Nov 2026 14:40:33 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E5975BC; Mon,  2 Nov 2026 14:40:24 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D921030000E3; Mon,  2 Nov 2026 14:40:32 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1025D21E6888; Mon, 02 Nov 2026 15:40:19 +0100 (CET)
+ id 1B47221E65C0; Mon, 02 Nov 2026 15:40:20 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Subject: [PULL 09/74] rng: Remove deprecated "rng-backend" property "opened"
-Date: Mon,  2 Nov 2026 15:39:13 +0100
-Message-ID: <20261102144018.3212223-10-armbru@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 68/74] target/riscv: convert PropertyInfo definitions to use
+ qapi_type
+Date: Mon,  2 Nov 2026 15:40:12 +0100
+Message-ID: <20261102144018.3212223-69-armbru@redhat.com>
 In-Reply-To: <20261102144018.3212223-1-armbru@redhat.com>
 References: <20261102144018.3212223-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -88,105 +89,143 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This property was deprecated in commit 6815bc1d03c (qapi/qom: Add
-ObjectOptions for rng-*, deprecate 'opened') in v6.0.0.  Commit
-6e577937485 (rng: make opened property read-only) in v7.1.0 made it
-read-only, and also moved the its entry from docs/about/deprecated.rst
-to docs/about/removed-features.rst.  I have no idea why it made the
-property read-only instead of dropping it.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Mechanically add a .qapi_type pointer to PropertyInfo definitions in
+target/riscv/cpu.c.
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20261028152612.953491-1-armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Laurent Vivier <lvivier@redhat.com>
+Message-ID: <20261101201717.3911097-51-armbru@redhat.com>
 ---
- qapi/qom.json  | 22 ----------------------
- backends/rng.c | 11 -----------
- 2 files changed, 33 deletions(-)
+ target/riscv/cpu.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 4810d53e58..2a98b1de5f 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -925,25 +925,6 @@
-   'data': { 'pci-bus': 'str',
-             'node': 'uint32' } }
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index adb53aad96..362e561809 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1730,6 +1730,7 @@ static void prop_pmu_num_get(Object *obj, Visitor *v, const char *name,
  
--##
--# @RngProperties:
--#     Properties for objects of classes derived from rng.
--#
--# @opened: if true, the device is opened immediately when applying
--#     this option and will probably fail when processing the next
--#     option.  Don't use; only provided for compatibility.
--#     (default: false)
--#
--# Features:
--#
--# @deprecated: Member @opened is deprecated.  Setting true doesn't
--#     make sense, and false is already the default.
--#
--# Since: 1.3
--##
--{ 'struct': 'RngProperties',
--  'data': { '*opened': { 'type': 'bool', 'features': ['deprecated'] } } }
--
- ##
- # @RngEgdProperties:
- #     Properties for rng-egd objects.
-@@ -954,7 +935,6 @@
- # Since: 1.3
- ##
- { 'struct': 'RngEgdProperties',
--  'base': 'RngProperties',
-   'data': { 'chardev': 'str' } }
+ static const PropertyInfo prop_pmu_num = {
+     .type = "uint8",
++    .qapi_type = &uint8_type_info,
+     .description = "pmu-num",
+     .get = prop_pmu_num_get,
+     .set = prop_pmu_num_set,
+@@ -1772,6 +1773,7 @@ static void prop_pmu_mask_get(Object *obj, Visitor *v, const char *name,
  
- ##
-@@ -967,7 +947,6 @@
- # Since: 1.3
- ##
- { 'struct': 'RngRandomProperties',
--  'base': 'RngProperties',
-   'data': { '*filename': 'str' },
-   'if': 'CONFIG_POSIX' }
+ static const PropertyInfo prop_pmu_mask = {
+     .type = "uint32",
++    .qapi_type = &uint32_type_info,
+     .description = "pmu-mask",
+     .get = prop_pmu_mask_get,
+     .set = prop_pmu_mask_set,
+@@ -1804,6 +1806,7 @@ static void prop_mmu_get(Object *obj, Visitor *v, const char *name,
  
-@@ -1372,7 +1351,6 @@
-       'pr-manager-helper':          { 'type': 'PrManagerHelperProperties',
-                                       'if': 'CONFIG_LINUX' },
-       'qtest':                      'QtestProperties',
--      'rng-builtin':                'RngProperties',
-       'rng-egd':                    'RngEgdProperties',
-       'rng-random':                 { 'type': 'RngRandomProperties',
-                                       'if': 'CONFIG_POSIX' },
-diff --git a/backends/rng.c b/backends/rng.c
-index bc9c7a5ab3..08d57e47ab 100644
---- a/backends/rng.c
-+++ b/backends/rng.c
-@@ -41,13 +41,6 @@ void rng_backend_request_entropy(RngBackend *s, size_t size,
-     }
- }
+ static const PropertyInfo prop_mmu = {
+     .type = "bool",
++    .qapi_type = &bool_type_info,
+     .description = "mmu",
+     .get = prop_mmu_get,
+     .set = prop_mmu_set,
+@@ -1837,6 +1840,7 @@ static void prop_pmp_get(Object *obj, Visitor *v, const char *name,
  
--static bool rng_backend_prop_get_opened(Object *obj, Error **errp)
--{
--    RngBackend *s = RNG_BACKEND(obj);
--
--    return s->opened;
--}
--
- static void rng_backend_complete(UserCreatable *uc, Error **errp)
- {
-     RngBackend *s = RNG_BACKEND(uc);
-@@ -123,10 +116,6 @@ static void rng_backend_class_init(ObjectClass *oc, const void *data)
-     UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
+ static const PropertyInfo prop_pmp = {
+     .type = "bool",
++    .qapi_type = &bool_type_info,
+     .description = "pmp",
+     .get = prop_pmp_get,
+     .set = prop_pmp_set,
+@@ -1877,6 +1881,7 @@ static void prop_num_pmp_regions_get(Object *obj, Visitor *v, const char *name,
  
-     ucc->complete = rng_backend_complete;
--
--    object_class_property_add_bool(oc, "opened",
--                                   rng_backend_prop_get_opened,
--                                   NULL);
- }
+ static const PropertyInfo prop_num_pmp_regions = {
+     .type = "uint8",
++    .qapi_type = &uint8_type_info,
+     .description = "num-pmp-regions",
+     .get = prop_num_pmp_regions_get,
+     .set = prop_num_pmp_regions_set,
+@@ -1915,6 +1920,7 @@ static void prop_pmp_granularity_get(Object *obj, Visitor *v, const char *name,
  
- static const TypeInfo rng_backend_info = {
+ static const PropertyInfo prop_pmp_granularity = {
+     .type = "uint32",
++    .qapi_type = &uint32_type_info,
+     .description = "pmp-granularity",
+     .get = prop_pmp_granularity_get,
+     .set = prop_pmp_granularity_set,
+@@ -1991,6 +1997,7 @@ static void prop_priv_spec_get(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo prop_priv_spec = {
+     .type = "str",
++    .qapi_type = &str_type_info,
+     .description = "priv_spec",
+     /* FIXME enum? */
+     .get = prop_priv_spec_get,
+@@ -2024,6 +2031,7 @@ static void prop_vext_spec_get(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo prop_vext_spec = {
+     .type = "str",
++    .qapi_type = &str_type_info,
+     .description = "vext_spec",
+     /* FIXME enum? */
+     .get = prop_vext_spec_get,
+@@ -2108,6 +2116,7 @@ static void prop_elen_get(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo prop_elen = {
+     .type = "uint16",
++    .qapi_type = &uint16_type_info,
+     .description = "elen",
+     .get = prop_elen_get,
+     .set = prop_elen_set,
+@@ -2144,6 +2153,7 @@ static void prop_cbom_blksize_get(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo prop_cbom_blksize = {
+     .type = "uint16",
++    .qapi_type = &uint16_type_info,
+     .description = "cbom_blocksize",
+     .get = prop_cbom_blksize_get,
+     .set = prop_cbom_blksize_set,
+@@ -2180,6 +2190,7 @@ static void prop_cbop_blksize_get(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo prop_cbop_blksize = {
+     .type = "uint16",
++    .qapi_type = &uint16_type_info,
+     .description = "cbop_blocksize",
+     .get = prop_cbop_blksize_get,
+     .set = prop_cbop_blksize_set,
+@@ -2216,6 +2227,7 @@ static void prop_cboz_blksize_get(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo prop_cboz_blksize = {
+     .type = "uint16",
++    .qapi_type = &uint16_type_info,
+     .description = "cboz_blocksize",
+     .get = prop_cboz_blksize_get,
+     .set = prop_cboz_blksize_set,
+@@ -2252,6 +2264,7 @@ static void prop_mvendorid_get(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo prop_mvendorid = {
+     .type = "uint32",
++    .qapi_type = &uint32_type_info,
+     .description = "mvendorid",
+     .get = prop_mvendorid_get,
+     .set = prop_mvendorid_set,
+@@ -2288,6 +2301,7 @@ static void prop_mimpid_get(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo prop_mimpid = {
+     .type = "uint64",
++    .qapi_type = &uint64_type_info,
+     .description = "mimpid",
+     .get = prop_mimpid_get,
+     .set = prop_mimpid_set,
+@@ -2345,6 +2359,7 @@ static void prop_marchid_get(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo prop_marchid = {
+     .type = "uint64",
++    .qapi_type = &uint64_type_info,
+     .description = "marchid",
+     .get = prop_marchid_get,
+     .set = prop_marchid_set,
 -- 
 2.55.0
 
