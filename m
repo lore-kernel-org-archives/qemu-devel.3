@@ -1,128 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB73606A327
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC611606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GFD8pKBt;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=AZQ95hAM
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=h1bGPVxa
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNs77-0001wB-Jw; Mon, 02 Nov 2026 08:30:18 -0500
+	id 1xNsCZ-000304-T7; Mon, 02 Nov 2026 08:35:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xNs6w-0001oK-4F
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:30:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xNs6t-0001Nl-63
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:30:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793626201;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w3xb9KNV8Q+mg/P2ABtbnKok637xmHiivsbYsBaLFjs=;
- b=GFD8pKBtH646OaKH/1lYZnnVaCM8N1C1kojYFYrJ61pdQTHZUMsd/Au72kZEXEUzLXBRVp
- zKu+V1+QL7dcK0wtqbIrQ6P8PbkiJlFo0ML9FIbj47TxH2n/BYtsrU/4TzE8ULUNJWUwXm
- 7E24Vr48olcppbtRtj/t4NNVhu0qNVQ=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-Evm7ViiwNUWotqlPy9fx8g-1; Mon, 02 Nov 2026 08:29:59 -0500
-X-MC-Unique: Evm7ViiwNUWotqlPy9fx8g-1
-X-Mimecast-MFC-AGG-ID: Evm7ViiwNUWotqlPy9fx8g_1793626199
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-3ade5b3ae97so2552012a91.1
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:29:59 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793626198; cv=none;
- d=google.com; s=arc-20260327;
- b=a+IuQphgaodGDz9iYspBuIeMS5UOmaPaX+hQJoovsMzdLDV+1Wd2CoXnhs0iL6MXVg
- lwF+N3/sJI5FIPtkJCHZZMPMnnBZWTrHNZgNOemSajMcwApDF2ZsL+2R4rksgysoYM1K
- FYuarLcPfLONpi77yBOfHCXuSUETsf1l1VUroCzxRzfVvnh6lFnsIwNztYdS3ZVUwtzI
- FSY+wsstjuzGUaaLoTIaIenkO/1AmrlbLFntpV93hvCH46km0mGSr7Ai1kG8ujuhhYre
- r5wkw/Tmthzqel0KPGFy+7/qGxlqJCoO6Ug3rPGwSwun6O1BHuNfM636C+91XcUaEG4I
- OiUw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=w3xb9KNV8Q+mg/P2ABtbnKok637xmHiivsbYsBaLFjs=;
- fh=PbRjv5tYea0s8pzu68CJJSWeonCRJ/BmoFu++GPo9Uw=;
- b=oYZKS8mPh4HbiIDm45dagWHG9HZ6g2woXzHIf7DyvfGxWxnWtdYyw+i2W5OPY/HVGX
- M4932UVH9jKBSfp4A0ks6E2UNBpI6eweuAzD/+b054IErT7TK/7lXXW/+uctsgQ2BhKT
- eUNsbVWNvcN8KwY7ySCaEvCwIPiyGyp0OV2eSlFzB/DiiAExQDmxK9uou3wwJebdQy0h
- nxZS5TeM6fYVFQpUk9ePrOvxAqosMguXjYOeAmALKDRVUN6bLOiWXmtGlhbbNMsaVExm
- K6Sr5wehaabailZjlKQ+2p5ahZRhZR0/Tm5AVlMFtQhyuqm7uO5VgxduiMf8USXCu/1F
- iO0w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xNsCZ-0002zf-4Y
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:35:55 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xNsCW-0002DM-Sl
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:35:54 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-48b001cd92bso1637138f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:35:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793626198; x=1794230998; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=w3xb9KNV8Q+mg/P2ABtbnKok637xmHiivsbYsBaLFjs=;
- b=AZQ95hAMhOPf4ZQ6L74QnFAxH8lcR9g6r7/vggs2pPeQpHTmb94CodGJg7MO7z43Ov
- Z5GK00+woQizEu+9HOGYxQbOqrKfuh0e4E1Mro/ie9BpqfjOTw49L410LwwXbgVuzB1w
- 0rw7z341l3IsdgkOGZQYeRm0/CI+2ThLzfLJH1mxdwYAlepeJFsYN923fw7Uk7OFr58f
- vMWp8B3DruBkbPRpYT0DsJ0tpWVtxGdZXTpS6AV3+lfR02CMyP/rVWtgkdnAheEV0+HN
- 2O9hWShXfUkFf6QYQI0H7yAccefqEUASA5bU9WFmff7gAnDKWj3A/pSGzZJyKBHGV/HT
- dnUg==
+ d=linaro.org; s=google; t=1793626551; x=1794231351; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=yQ+2GB3UOTI75peeRfyLCyAxcVqzqbmShg2g3uozfaI=;
+ b=h1bGPVxaJmwsKkGKBUiSUNpn5ODUSkuQV9QznpnYWTnDDzsOnDVMnwXXYq0eRdOWyl
+ q55Br2GIXRctUW7RobWwOvKYzRde8HTMrhPFnphbcdRw9dY0Pu3FaedS9X4EOCM36j7j
+ Lpz+JoKFrZMe1YvpQo5pnmtGORdxvGp6W7tUm1Nnfc2a+jTmBGCpxU0TltRA+UPET+6I
+ WtwxORwC3Lg7gZu70NAWHXVhJBwz5DfUn49foufnmLQ/OBlrLSvIr9pb6v3+jaJHiMEX
+ m4BvcUYUggaw6WPQBozKz+A7Oln0cZSXafT2UzJ1+vx9N8S7StBpDtkSWfvx5j4L7wO/
+ gTBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793626198; x=1794230998;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=w3xb9KNV8Q+mg/P2ABtbnKok637xmHiivsbYsBaLFjs=;
- b=tZNuY3/4nh4HmXuIythjaaLennl13QbYtT2fkKbWWt2GMB/tceSd4i2bLzopNBZW+Y
- pHhGE9Kfg+LAkWKhmt8e4jITNyL4wBAZlwUyxTBQ2qy+gR09nOSk7rUmt3Qcz0o/V0V4
- tf0B/ceudjxXY8XMGfB7+aw77miUAGKJj0QhiDvmLGnSDCj0fiPCvoybNpBzhW+rNtsb
- CWQnXqjJLDOSOsgukgj1Lr8cPPS34OgA81lrDb1ohjAv0tp8fjSpDlMocHaV25aEVdqA
- lkUDflfD2QHuvhd6ihAnCaER36J3oedoMdbQYkqO3Ttf1KSIT7BARF+TMR8q+m0Wrfpv
- JXnQ==
-X-Gm-Message-State: APuU4Z8zvsyZymP7tVhiXrdTjzSzbE11ioTbNIgTLRf2tWYxHnMgeOkr
- W4fY+8g2B3DhB9+s55Ecw02sgEw9pftC4gXEXG8qiyev/kpZGkol6RYmvMfVUSb0H59RnKKWQxY
- fhMKIPM5u04CqyHzYehsaDU0KfZ2ihf5/R1ZI+lY3qL0SpGhFM/BmORyoAqOupli1+T6np0eCEw
- DfRdUISLH0BuBejnn9WO2pnPLhqGBrgMs=
-X-Gm-Gg: AYBFou2FC3aA6rFyc4JsLv88V7dl51XABBiKMRILyUqST2PKOZWk0efCHupbMETGspo
- MZQVbSDBCKr6Uh2vSuF2K/Q7HBcsG8zOJ31XZPJLQ7IES6SKETRVo9dt5i3qoXOvhZbziLeUya0
- LO0Afj/VKvlc3UJtvxwfvMBYkjFJmlmPmlKPnSft5gQE6Mhf1O44VDjDuDiNbaD7rSrGl5kC5B0
- zWiPIU3QJqM8L8UjmMOHSqHxV2ud0CFZ9Re9gols9WTOSNQIP6ji0x5erOBt2NIVuZQlZ8kWbCj
- WQ==
-X-Received: by 2002:a17:90b:2751:b0:3a7:96d:feaf with SMTP id
- 98e67ed59e1d1-3ae8972a321mr5486632a91.16.1793626198441; 
- Mon, 02 Nov 2026 05:29:58 -0800 (PST)
-X-Received: by 2002:a17:90b:2751:b0:3a7:96d:feaf with SMTP id
- 98e67ed59e1d1-3ae8972a321mr5486614a91.16.1793626197921; Mon, 02 Nov 2026
- 05:29:57 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793626551; x=1794231351;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=yQ+2GB3UOTI75peeRfyLCyAxcVqzqbmShg2g3uozfaI=;
+ b=eRS7sNRa4C0PkYu+SN418KeoHdkTbVhZWRbyIwZF/Vb8N0vMYkbXwLuxDkjVPJ/+Qi
+ JL+hCDDJ6oWH7z0tjm78YOdF99TnWhTNWC0pvDBvemvcnoqeKxrtPPbmEf7fAI14U/VZ
+ 7qxfY/tTKNDQxai8AVsKke4CmVcpNN5LhhwskAJPKkUN/TNyL+ykcX1J9U+U1mvgxpoa
+ Nu3Z3QjyLQwETRTRYbCdeO2xkXFvTBE0VFxFWuZ0MM2w0tSr49HMXm6qrRXOxFPkc7mi
+ huU/76kbtAGtDN/ByB3DXx/S9BQ21E8j7CtQR+2NjNPwuRyiUfHu9ZqpuZ/U+PINf/8j
+ F3Jg==
+X-Gm-Message-State: APuU4Z9fIdw92k14mdKIuZHQmjowPRG+DJRuXrRg8a7romPGErWdidNE
+ RoOiguO4hzRhdgalwFMmClfNLA0B4qAaAK/Y6FXKntLjVvC3Ct2xtxwCiy6KWSSK7ACpbqtepNb
+ Hyf6W1zw=
+X-Gm-Gg: AYBFou3NesSWeBMurdymkQ5AziracPSM6j6YHjMfMiLSk3kw7K/VjaV0og+LilDYHDi
+ h1bLayPUXn+qbPTcUeRFoqIFysWgJeU+KPh5nDTqmt2qkV11JzDQ8XDr1ZbNlSdAJkvnV7zadf2
+ ZrJAljPyoZSpZ6DCP6hy/aCnuVmbe3f2k7Tpe7HTYE77Qlc87ITz/S0n1htKLwvvOITlAKa98Je
+ y8RpQIDOjZ8RmbKgQGpLBSU1lbiyqZ5ZuXYWav6W3PMISf8zK2hwUxK1y4l2/TeYyTRpro+st3T
+ kigfzcQYT34FNAYFdzO10qaGsiasOjqHGgGDbhgl/o3Ab3404Sh9Qsabwd/fIsIpvNXmvINnJfd
+ LHOl3HooAJ4qqPXxFnXn8OQVR1vYQtbB08B1vnB2hKaS5w3fiW3aQ4smKgp4GkQI1tbyZxil4uj
+ 9UlQUTRAmlGuEiEbf+zR2Hp6d3wIGJD9e9DvmwIksShhhAFGeXblxxyqzTm8IOREWmqem5cVx0l
+ tOPZ02fizsNm82EcyVYeLPyuyWg34SlGcBH4Zs/2EZ4xeuZw/Y+7kueMR77WbDk65GR0RUVRBDu
+ UkC+OSGXHW/dDNbcR3Z/1S2rNO9KuvMXuRvmDHx33fC6G4AE8CdGjb3s+0t8OSrZuF0WonKVhjo
+ HyH+G7isZKV95zQDiFSOQjVdGpRwdjrUr+Q==
+X-Received: by 2002:a05:6000:25f0:b0:48e:f10:ce6e with SMTP id
+ ffacd0b85a97d-48e6e2e7602mr20832216f8f.13.1793626551171; 
+ Mon, 02 Nov 2026 05:35:51 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e71a4d3e9sm22556760f8f.6.2026.11.02.05.35.49
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Nov 2026 05:35:50 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 01/47] hw/arm/bcm2838_pcie: add BCM2838 PCIe Root Complex
+Date: Mon,  2 Nov 2026 13:35:01 +0000
+Message-ID: <20261102133547.1375701-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261102133547.1375701-1-peter.maydell@linaro.org>
+References: <20261102133547.1375701-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261001103412.2162829-1-marcandre.lureau@redhat.com>
- <auhhZP8151vP_wSt@redhat.com>
-In-Reply-To: <auhhZP8151vP_wSt@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 2 Nov 2026 17:29:46 +0400
-X-Gm-Features: AclHuK_OnmTWf71GaHFLRsbUXYJzgxS7EzHjZ14exC0nCbbX0E9AtGxOsGOYaSQ
-Message-ID: <CAMxuvayrvy6SiPSUpQcjRyNPGqNObXdLg3bSgWy+JTmEOZ9iiA@mail.gmail.com>
-Subject: Re: [PATCH] RFC: chardev: disconnect backend when frontend closes
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,106 +99,223 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi
+From: Marcelo Manzo <marcelomanzo@gmail.com>
 
-On Mon, Nov 2, 2026 at 2:09=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Thu, Oct 01, 2026 at 02:34:12PM +0400, marcandre.lureau@redhat.com wro=
-te:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > When the guest closes a virtio-serial channel, QEMU notifies some
-> > backends (spice, dbus) via their chr_set_fe_open handlers. Backends
-> > without such a handler, like socket, keep the connection open even
-> > though the frontend is no longer active. This is problematic for
-> > stateful protocols, as the peer has no way to know the channel was
-> > reset and must handle re-synchronization on its own. Disconnecting
-> > gives the peer a clean signal to reset its state.
->
-> Do you have a real world example of where this was causing a
-> problem ?
+Add the PCI-facing "root" part (D0:F0) of the BCM2838 (Raspberry Pi
+4B / BCM2711) PCIe Root Complex: a PCIe root port with the vendor's
+device/vendor IDs and capability offsets, not usable on its own
+without the host-facing part added in the next patch.
 
-I wrote a tool that speaks HTTP over virtio-serial. Unfortunately,
-closing the socket/handle on the guest doesn't disconnect the host
-client as I expected..
+Adapted from patch 13/41 of Sergey Kambalin's "Raspberry Pi 4B
+machine" series (patchwork series 829638, posted to qemu-devel in
+2024 but never merged) against current QEMU master; the surrounding
+PCIe/GENET networking support for raspi4b was left unmerged upstream
+(base scaffolding aside), so this and the following patches complete
+and debug that series to get real networking working under
+raspi4b.
 
->
-> > Add a base-class chr_set_fe_open handler that calls chr_disconnect
-> > when the frontend signals close. Subclasses that already override
-> > chr_set_fe_open are unaffected. For the socket backend, this tears
-> > down the connection and allows reconnection when combined with the
-> > reconnect option.
-> >
-> > Note: this is a behavior change that may break existing setups that
-> > rely on the connection staying up across frontend close/reopen cycles.
->
-> IIUC, libvirt expects the agent TCP socket to remain open for
-> the lifetime of the QEMU process & any premature closure of that
-> socket would be considered a bug.
+Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20261027143036.44973-2-marcelomanzo@gmail.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ include/hw/arm/bcm2838_pcie.h |  54 ++++++++++++++++++
+ hw/arm/bcm2838_pcie.c         | 101 ++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build            |   4 +-
+ 3 files changed, 158 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/arm/bcm2838_pcie.h
+ create mode 100644 hw/arm/bcm2838_pcie.c
 
-So libvirt has to rely on out-of-band signals to know that the guest
-agent disconnected... sigh
-
->
-> > It may be preferable to make this opt-in via a chardev property rather
-> > than changing the default.
->
-> If we want this feature, making it opt-in looks unavoidable.
-
-I guess that's the easy path indeed - probably a tad late for 11.2
-
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  chardev/char.c | 10 ++++++++++
-> >  1 file changed, 10 insertions(+)
-> >
-> > diff --git a/chardev/char.c b/chardev/char.c
-> > index 7daf87f0363e..58c69db7340e 100644
-> > --- a/chardev/char.c
-> > +++ b/chardev/char.c
-> > @@ -331,12 +331,22 @@ static int null_chr_write(Chardev *chr, const uin=
-t8_t *buf, int len)
-> >      return len;
-> >  }
-> >
-> > +static void chr_set_fe_open(Chardev *chr, int fe_open)
-> > +{
-> > +    ChardevClass *cc =3D CHARDEV_GET_CLASS(chr);
-> > +
-> > +    if (!fe_open && cc->chr_disconnect) {
-> > +        cc->chr_disconnect(chr);
-> > +    }
-> > +}
-> > +
-> >  static void char_class_init(ObjectClass *oc, const void *data)
-> >  {
-> >      ChardevClass *cc =3D CHARDEV_CLASS(oc);
-> >
-> >      cc->chr_write =3D null_chr_write;
-> >      cc->chr_be_event =3D chr_be_event;
-> > +    cc->chr_set_fe_open =3D chr_set_fe_open;
-> >  }
-> >
-> >  static void char_finalize(Object *obj)
-> > --
-> > 2.56.0.rc0.29.g47ce80527c56
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
+diff --git a/include/hw/arm/bcm2838_pcie.h b/include/hw/arm/bcm2838_pcie.h
+new file mode 100644
+index 00000000000..cb95c653318
+--- /dev/null
++++ b/include/hw/arm/bcm2838_pcie.h
+@@ -0,0 +1,54 @@
++/*
++ * BCM2838 PCIe Root Complex emulation
++ *
++ * Copyright (C) 2022 Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef BCM2838_PCIE_H
++#define BCM2838_PCIE_H
++
++#include "exec/hwaddr.h"
++#include "hw/core/sysbus.h"
++#include "hw/pci/pci.h"
++#include "hw/pci/pcie_host.h"
++#include "hw/pci/pcie_port.h"
++#include "qom/object.h"
++
++#define TYPE_BCM2838_PCIE_ROOT "bcm2838-pcie-root"
++OBJECT_DECLARE_TYPE(BCM2838PcieRootState, BCM2838PcieRootClass,
++                    BCM2838_PCIE_ROOT)
++
++#define BCM2838_PCIE_VENDOR_ID      0x14E4
++#define BCM2838_PCIE_DEVICE_ID      0x2711
++#define BCM2838_PCIE_REVISION       20
++
++#define BCM2838_PCIE_REGS_SIZE      0x9310
++#define BCM2838_PCIE_NUM_IRQS       4
++
++#define BCM2838_PCIE_EXP_CAP_OFFSET 0xAC
++#define BCM2838_PCIE_AER_CAP_OFFSET 0x100
++
++#define BCM2838_PCIE_EXT_CFG_DATA   0x8000
++#define BCM2838_PCIE_EXT_CFG_INDEX  0x9000
++
++struct BCM2838PcieRootState {
++    /*< private >*/
++    PCIESlot parent_obj;
++
++    /*< public >*/
++    /* Controller registers above the 4KB config space; little-endian bytes */
++    uint8_t regs[BCM2838_PCIE_REGS_SIZE - PCIE_CONFIG_SPACE_SIZE];
++};
++
++struct BCM2838PcieRootClass {
++    /*< private >*/
++    PCIERootPortClass parent_obj;
++
++    /*< public >*/
++    void (*parent_realize)(PCIDevice *dev, Error **errp);
++};
++
++
++#endif /* BCM2838_PCIE_H */
+diff --git a/hw/arm/bcm2838_pcie.c b/hw/arm/bcm2838_pcie.c
+new file mode 100644
+index 00000000000..edd174c3768
+--- /dev/null
++++ b/hw/arm/bcm2838_pcie.c
+@@ -0,0 +1,101 @@
++/*
++ * BCM2838 PCIe Root Complex emulation
++ *
++ * Copyright (C) 2022 Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "hw/core/irq.h"
++#include "hw/pci-host/gpex.h"
++#include "hw/core/qdev-properties.h"
++#include "migration/vmstate.h"
++#include "qemu/module.h"
++#include "hw/pci/pcie.h"
++#include "hw/pci/pcie_aer.h"
++#include "hw/arm/bcm2838_pcie.h"
++#include "trace.h"
++
++/*
++ * RC root part (D0:F0)
++ */
++
++static void bcm2838_pcie_root_port_reset_hold(Object *obj, ResetType type)
++{
++    PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(obj);
++    PCIDevice *dev = PCI_DEVICE(obj);
++    BCM2838PcieRootState *s = BCM2838_PCIE_ROOT(dev);
++
++    if (rpc->parent_phases.hold) {
++        rpc->parent_phases.hold(obj, type);
++    }
++
++    memset(s->regs, 0xFF, sizeof(s->regs));
++}
++
++static void bcm2838_pcie_root_init(Object *obj)
++{
++    PCIBridge *br = PCI_BRIDGE(obj);
++    br->bus_name = "pcie.1";
++}
++
++static const VMStateDescription vmstate_bcm2838_pcie_root = {
++    .name = "bcm2838-pcie-root",
++    .priority = MIG_PRI_PCI_BUS,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load = pcie_cap_slot_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_PCI_DEVICE(parent_obj.parent_obj.parent_obj, PCIESlot),
++        VMSTATE_STRUCT(parent_obj.parent_obj.parent_obj.exp.aer_log,
++                       PCIESlot, 0, vmstate_pcie_aer_log, PCIEAERLog),
++        VMSTATE_UINT8_ARRAY(regs, BCM2838PcieRootState,
++                            BCM2838_PCIE_REGS_SIZE - PCIE_CONFIG_SPACE_SIZE),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void bcm2838_pcie_root_class_init(ObjectClass *class, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(class);
++    PCIDeviceClass *k = PCI_DEVICE_CLASS(class);
++    ResettableClass *rc = RESETTABLE_CLASS(class);
++    PCIERootPortClass *rpc = PCIE_ROOT_PORT_CLASS(class);
++
++    dc->desc = "BCM2711 PCIe Bridge";
++    dc->vmsd = &vmstate_bcm2838_pcie_root;
++
++    resettable_class_set_parent_phases(rc, NULL,
++                                       bcm2838_pcie_root_port_reset_hold,
++                                       NULL, &rpc->parent_phases);
++
++    /*
++     * PCI-facing part of the host bridge, not usable without the host-facing
++     * part, which can't be device_add'ed.
++     */
++    dc->user_creatable = false;
++    k->vendor_id = BCM2838_PCIE_VENDOR_ID;
++    k->device_id = BCM2838_PCIE_DEVICE_ID;
++    k->revision = BCM2838_PCIE_REVISION;
++
++    rpc->exp_offset = BCM2838_PCIE_EXP_CAP_OFFSET;
++    rpc->aer_offset = BCM2838_PCIE_AER_CAP_OFFSET;
++}
++
++static const TypeInfo bcm2838_pcie_root_info = {
++    .name = TYPE_BCM2838_PCIE_ROOT,
++    .parent = TYPE_PCIE_ROOT_PORT,
++    .instance_size = sizeof(BCM2838PcieRootState),
++    .instance_init = bcm2838_pcie_root_init,
++    .class_init = bcm2838_pcie_root_class_init,
++};
++
++static void bcm2838_pcie_register(void)
++{
++    type_register_static(&bcm2838_pcie_root_info);
++}
++
++type_init(bcm2838_pcie_register)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index bcc068de040..f3c1b0e00f1 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -104,7 +104,9 @@ arm_common_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4_boards.c'))
+ arm_common_ss.add(when: 'CONFIG_MAX78000FTHR', if_true: files('max78000fthr.c'))
+ arm_common_ss.add(when: 'CONFIG_NETDUINO2', if_true: files('netduino2.c'))
+ arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_peripherals.c'))
+-arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2838_peripherals.c'))
++arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files(
++    'bcm2838_peripherals.c',
++    'bcm2838_pcie.c'))
+ arm_common_ss.add(when: 'CONFIG_STRONGARM', if_true: files('strongarm.c'))
+ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
+ arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
+-- 
+2.43.0
 
 
