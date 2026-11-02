@@ -1,57 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B43606A935
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 16:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBAC608B07C
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 16:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=jKQwIIVy
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DahnTlmW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNuvp-0006jv-PF; Mon, 02 Nov 2026 11:30:49 -0500
+	id 1xNuvW-0006N2-L2; Mon, 02 Nov 2026 11:30:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvj-0006ex-Gz
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:45 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvT-0006JU-3y
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvg-0002LA-JF
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:42 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xNuvP-00023r-Km
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 11:30:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793637039;
+ s=mimecast20190719; t=1793637013;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N9hhlAkcrGliWFggE7ppOGsL+hEkXQAdW19xosQy6t8=;
- b=jKQwIIVymTKZmYtloa/Zg+dtw/jvoZKNllb3GjipFKP9VAVpBBrqjTjr6kbZ/lelqHpnvj
- /HNfiAp3JiDWU+LmVoTnaVVowoHcpXV65VmmnOdsSJAe4KhJ8FNtLQEw0J2rJd1IuSDR2R
- 2eO7t0Qj7+kICtMwNeViMmTa38vJMjA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=NcgXpS8K6nkVztL9r1gh1IdujBadbHGz0oW8c9Nh6u0=;
+ b=DahnTlmWTbuG89lZLCWxoMGXjqyRacRH+1vH5VsQlSIZjTo22gCjandWKO/sR02lEn1czQ
+ Zr0tA1ws9HTsU7MAkydgP6osPmcHfehw9hB01THFKSYGOMJd+hwUWE1utZN0tEYJocrqe/
+ UWxV0ONVdVuK0skhaAOmgb7rDUQUS88=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-lBsGuWbtOUioSG_ZCmZldg-1; Mon,
- 02 Nov 2026 11:30:37 -0500
-X-MC-Unique: lBsGuWbtOUioSG_ZCmZldg-1
-X-Mimecast-MFC-AGG-ID: lBsGuWbtOUioSG_ZCmZldg_1793637036
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-dy2euz_XPUGRLMvKNjnWoQ-1; Mon,
+ 02 Nov 2026 11:30:10 -0500
+X-MC-Unique: dy2euz_XPUGRLMvKNjnWoQ-1
+X-Mimecast-MFC-AGG-ID: dy2euz_XPUGRLMvKNjnWoQ_1793637009
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 277201801354; Mon,  2 Nov 2026 16:30:36 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B77619560A2; Mon,  2 Nov 2026 16:30:09 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.32.164])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B2B011956087; Mon,  2 Nov 2026 16:30:34 +0000 (UTC)
+ id A5EB11956087; Mon,  2 Nov 2026 16:30:07 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 17/17] block/vmdk: add eos marker for stream optimized disks
-Date: Mon,  2 Nov 2026 17:29:55 +0100
-Message-ID: <20261102162955.268763-18-kwolf@redhat.com>
+Subject: [PULL 03/17] qemu-nbd: Add --all-bitmaps option
+Date: Mon,  2 Nov 2026 17:29:41 +0100
+Message-ID: <20261102162955.268763-4-kwolf@redhat.com>
 In-Reply-To: <20261102162955.268763-1-kwolf@redhat.com>
 References: <20261102162955.268763-1-kwolf@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -60,13 +60,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,99 +86,234 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Sanne Raymaekers <sraymaek@redhat.com>
+From: Eric Blake <eblake@redhat.com>
 
-The end of stream marker should be at the very end of a stream optimized
-disk. It consists of a regular marker struct with `val`, `size` and
-`type` set to 0. It is then padded with more 0s to fill out a
-sector. This effectively results in 512 zero bytes.[^1]
+When exporting bitmaps over NBD, we previously required a user to pass
+one '-B name' per bitmap, which they would have to use 'qemu-img info'
+to learn the list of names to pass.  More convenient is an option to
+export all possible bitmaps at once, as discussed here [1].
 
-[^1] Virtual Disk Format 5.0 Technical Note.
+Implementation-wise, mixing --all-bitmaps and -B is harmless (grabbing
+all bitmap names already requires crawling the backing chain and
+deduplicating, so either the -B name is already detected as a
+duplicate from adding the name again, or it is an invalid name that
+will still cause a later error about bitmap not found). I also tested
+that mixing -s and --all-bitmaps still works (the temporary overlay
+image to make -s work has no bitmaps of its own, so starting the crawl
+for bitmap names at the original bs is just fine).
 
-Signed-off-by: Sanne Raymaekers <sraymaek@redhat.com>
-Message-ID: <20261016123750.94769-4-sraymaek@redhat.com>
+Also, now that parallels can have bitmaps (and not just qcow2), a
+slight doc wording change for -B is warranted.
+
+[1] https://lists.nongnu.org/archive/html/qemu-devel/2026-10/msg01234.html
+
+Signed-off-by: Eric Blake <eblake@redhat.com>
+CC: Denis V. Lunev <den@openvz.org>
+Message-ID: <20261019222205.2028202-2-eblake@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/vmdk.c | 48 ++++++++++++++++++++++++++++--------------------
- 1 file changed, 28 insertions(+), 20 deletions(-)
+ docs/tools/qemu-nbd.rst                       | 12 +++-
+ qemu-nbd.c                                    | 57 ++++++++++++++++++-
+ tests/qemu-iotests/tests/qemu-img-bitmaps     | 13 +++++
+ tests/qemu-iotests/tests/qemu-img-bitmaps.out | 12 ++++
+ 4 files changed, 90 insertions(+), 4 deletions(-)
 
-diff --git a/block/vmdk.c b/block/vmdk.c
-index e090e122f11..b6e78a2b5d9 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -195,6 +195,13 @@ typedef struct VmdkGrainMarker {
-     uint8_t  data[];
- } QEMU_PACKED VmdkGrainMarker;
+diff --git a/docs/tools/qemu-nbd.rst b/docs/tools/qemu-nbd.rst
+index 336b4aa46e7..a966c282be2 100644
+--- a/docs/tools/qemu-nbd.rst
++++ b/docs/tools/qemu-nbd.rst
+@@ -83,9 +83,15 @@ driver options if :option:`--image-opts` is specified.
  
-+typedef struct EosMarker {
-+    uint64_t val;
-+    uint32_t size;
-+    uint32_t type;
-+    uint8_t pad[512 - 16];
-+} QEMU_PACKED EosMarker;
+ .. option:: -B, --bitmap=NAME
+ 
+-  If *filename* has a qcow2 persistent bitmap *NAME*, expose
+-  that bitmap via the ``qemu:dirty-bitmap:NAME`` metadata context
+-  accessible through NBD_OPT_SET_META_CONTEXT.
++  If *filename* has a persistent bitmap *NAME* (possibly via a backing
++  chain), expose that bitmap via the ``qemu:dirty-bitmap:NAME`` metadata
++  context accessible through NBD_OPT_SET_META_CONTEXT.
 +
- enum {
-     MARKER_END_OF_STREAM    = 0,
-     MARKER_GRAIN_TABLE      = 1,
-@@ -987,12 +994,7 @@ vmdk_open_vmdk4(BlockDriverState *bs, BdrvChild *file, int flags,
-             VMDK4Header header;
-             uint8_t pad[512 - 4 - sizeof(VMDK4Header)];
- 
--            struct {
--                uint64_t val;
--                uint32_t size;
--                uint32_t type;
--                uint8_t pad[512 - 16];
--            } QEMU_PACKED eos_marker;
-+            EosMarker eos_marker;
-         } QEMU_PACKED footer;
- 
-         ret = bdrv_pread(file, bs->file->bs->total_sectors * 512 - 1536,
-@@ -2182,23 +2184,29 @@ vmdk_co_pwritev_compressed(BlockDriverState *bs, int64_t offset, int64_t bytes,
-                            QEMUIOVector *qiov)
- {
-     if (bytes == 0) {
--        /* The caller will write bytes 0 to signal EOF.
--         * When receive it, we align EOF to a sector boundary. */
-+        /* The caller will write bytes 0 to signal EOF. */
-         BDRVVmdkState *s = bs->opaque;
--        int i, ret;
-+        int ret;
-         int64_t length;
-+        QEMU_AUTO_VFREE EosMarker *eos_marker = NULL;
- 
--        for (i = 0; i < s->num_extents; i++) {
--            length = bdrv_co_getlength(s->extents[i].file->bs);
--            if (length < 0) {
--                return length;
--            }
--            length = QEMU_ALIGN_UP(length, BDRV_SECTOR_SIZE);
--            ret = bdrv_co_truncate(s->extents[i].file, length, false,
--                                   PREALLOC_MODE_OFF, 0, NULL);
--            if (ret < 0) {
--                return ret;
--            }
-+        /* Stream optimized disks should only contain a single extent. */
-+        assert(s->num_extents == 1);
++.. option:: --all-bitmaps
 +
-+        /*
-+         * Stream optimized disks end with an EOS marker,
-+         * consisting of 512 null bytes.
-+         */
-+        eos_marker = qemu_blockalign0(bs, sizeof(EosMarker));
-+        length = bdrv_co_getlength(s->extents[0].file->bs);
-+        if (length < 0) {
-+            return length;
++  If *filename* has any persistent bitmaps (possibly via a backing
++  chain), expose one ``qemu:dirty-bitmap:NAME`` metadata context per
++  bitmap, accessible through NBD_OPT_SET_META_CONTEXT.
+ 
+ .. option:: -s, --snapshot
+ 
+diff --git a/qemu-nbd.c b/qemu-nbd.c
+index fcca88932a3..fa28609d7dc 100644
+--- a/qemu-nbd.c
++++ b/qemu-nbd.c
+@@ -28,6 +28,7 @@
+ #include "system/runstate.h" /* for qemu_system_killed() prototype */
+ #include "block/block_int.h"
+ #include "block/nbd.h"
++#include "block/dirty-bitmap.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
+ #include "qemu/option.h"
+@@ -71,6 +72,7 @@
+ #define QEMU_NBD_OPT_SELINUX_LABEL   266
+ #define QEMU_NBD_OPT_TLSHOSTNAME     267
+ #define QEMU_NBD_OPT_HANDSHAKE_LIMIT 268
++#define QEMU_NBD_OPT_ALL_BITMAPS     269
+ 
+ #define MBR_SIZE 512
+ 
+@@ -109,6 +111,7 @@ static void usage(const char *name)
+ "  -o, --offset=OFFSET       offset into the image\n"
+ "  -A, --allocation-depth    expose the allocation depth\n"
+ "  -B, --bitmap=NAME         expose a persistent dirty bitmap\n"
++"      --all-bitmaps         expose all persistent dirty bitmaps\n"
+ "\n"
+ "General purpose options:\n"
+ "  -L, --list                list exports available from another NBD server\n"
+@@ -530,6 +533,48 @@ static void qemu_nbd_shutdown(void)
+     bdrv_close_all();
+ }
+ 
++/* Helpers to implement --all-bitmaps option. */
++static bool is_duplicate_bitmap(BlockDirtyBitmapOrStrList *bitmaps,
++                                const char *name)
++{
++    /* Treat an anonymous bitmap as a duplicate. */
++    if (!name) {
++        return true;
++    }
++    for (; bitmaps; bitmaps = bitmaps->next) {
++        if (bitmaps->value->type == QTYPE_QSTRING &&
++            strcmp(bitmaps->value->u.local, name) == 0) {
++            return true;
 +        }
-+        length = QEMU_ALIGN_UP(length, BDRV_SECTOR_SIZE);
-+        ret = bdrv_co_pwrite(s->extents[0].file, length, sizeof(EosMarker),
-+                             eos_marker, 0);
-+        if (ret < 0) {
-+            return ret;
++    }
++    return false;
++}
++
++static void collect_all_bitmaps(BlockDriverState *bs,
++                                BlockDirtyBitmapOrStrList **bitmaps)
++{
++    GLOBAL_STATE_CODE();
++    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    for (; bs; bs = bdrv_filter_or_cow_bs(bs)) {
++        for (BdrvDirtyBitmap *bm = bdrv_dirty_bitmap_first(bs); bm;
++             bm = bdrv_dirty_bitmap_next(bm)) {
++            const char *name = bdrv_dirty_bitmap_name(bm);
++            BlockDirtyBitmapOrStr *el;
++
++            if (is_duplicate_bitmap(*bitmaps, name)) {
++                continue;
++            }
++            el = g_new(BlockDirtyBitmapOrStr, 1);
++            *el = (BlockDirtyBitmapOrStr) {
++                .type = QTYPE_QSTRING,
++                .u.local = g_strdup(name),
++            };
++            QAPI_LIST_PREPEND(*bitmaps, el);
++        }
++    }
++}
++
+ int main(int argc, char **argv)
+ {
+     BlockBackend *blk;
+@@ -553,6 +598,7 @@ int main(int argc, char **argv)
+         { "offset", required_argument, NULL, 'o' },
+         { "read-only", no_argument, NULL, 'r' },
+         { "allocation-depth", no_argument, NULL, 'A' },
++        { "all-bitmaps", no_argument, NULL, QEMU_NBD_OPT_ALL_BITMAPS },
+         { "bitmap", required_argument, NULL, 'B' },
+         { "connect", required_argument, NULL, 'c' },
+         { "disconnect", no_argument, NULL, 'd' },
+@@ -602,6 +648,7 @@ int main(int argc, char **argv)
+     const char *export_description = NULL;
+     BlockDirtyBitmapOrStrList *bitmaps = NULL;
+     bool alloc_depth = false;
++    bool all_bitmaps = false;
+     const char *tlscredsid = NULL;
+     const char *tlshostname = NULL;
+     bool imageOpts = false;
+@@ -725,6 +772,9 @@ int main(int argc, char **argv)
+         case 'A':
+             alloc_depth = true;
+             break;
++        case QEMU_NBD_OPT_ALL_BITMAPS:
++            all_bitmaps = true;
++            break;
+         case 'B':
+             {
+                 BlockDirtyBitmapOrStr *el = g_new(BlockDirtyBitmapOrStr, 1);
+@@ -837,7 +887,8 @@ int main(int argc, char **argv)
          }
-         return 0;
+         if (export_name || export_description || dev_offset ||
+             opts.device || disconnect || fmt || sn_id_or_name || bitmaps ||
+-            alloc_depth || seen_aio || seen_discard || seen_cache) {
++            all_bitmaps || alloc_depth || seen_aio || seen_discard ||
++            seen_cache) {
+             error_report("List mode is incompatible with per-device settings");
+             exit(EXIT_FAILURE);
+         }
+@@ -1185,6 +1236,10 @@ int main(int argc, char **argv)
+         exit(EXIT_FAILURE);
      }
+ 
++    if (all_bitmaps) {
++        collect_all_bitmaps(orig_bs, &bitmaps);
++    }
++
+     bs->detect_zeroes = detect_zeroes;
+ 
+     nbd_server_is_qemu_nbd(shared);
+diff --git a/tests/qemu-iotests/tests/qemu-img-bitmaps b/tests/qemu-iotests/tests/qemu-img-bitmaps
+index 979bc0d6c9c..5484fe6f424 100755
+--- a/tests/qemu-iotests/tests/qemu-img-bitmaps
++++ b/tests/qemu-iotests/tests/qemu-img-bitmaps
+@@ -131,6 +131,19 @@ $QEMU_IMG map --output=json --image-opts \
+ 
+ nbd_server_stop
+ 
++# Repeat with the --all-bitmaps option
++nbd_server_start_unix_socket -r -f qcow2 --all-bitmaps "$TEST_IMG"
++$QEMU_IMG map --output=json --image-opts \
++    "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:b0" | _filter_qemu_img_map
++$QEMU_IMG map --output=json --image-opts \
++    "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:b1" | _filter_qemu_img_map
++$QEMU_IMG map --output=json --image-opts \
++    "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:b2" | _filter_qemu_img_map
++$QEMU_IMG map --output=json --image-opts \
++    "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:b3" | _filter_qemu_img_map
++
++nbd_server_stop
++
+ echo
+ echo "=== Check handling of inconsistent bitmap ==="
+ echo
+diff --git a/tests/qemu-iotests/tests/qemu-img-bitmaps.out b/tests/qemu-iotests/tests/qemu-img-bitmaps.out
+index 99290d3ba5e..f2e97a090b0 100644
+--- a/tests/qemu-iotests/tests/qemu-img-bitmaps.out
++++ b/tests/qemu-iotests/tests/qemu-img-bitmaps.out
+@@ -103,6 +103,18 @@ Format specific information:
+ 
+ === Check bitmap contents ===
+ 
++[{ "start": 0, "length": 3145728, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
++{ "start": 3145728, "length": 1048576, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false},
++{ "start": 4194304, "length": 6291456, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET}]
++[{ "start": 0, "length": 1048576, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
++{ "start": 1048576, "length": 1048576, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false},
++{ "start": 2097152, "length": 8388608, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET}]
++[{ "start": 0, "length": 2097152, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
++{ "start": 2097152, "length": 1048576, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false},
++{ "start": 3145728, "length": 7340032, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET}]
++[{ "start": 0, "length": 2097152, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
++{ "start": 2097152, "length": 1048576, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false},
++{ "start": 3145728, "length": 7340032, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET}]
+ [{ "start": 0, "length": 3145728, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
+ { "start": 3145728, "length": 1048576, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false},
+ { "start": 4194304, "length": 6291456, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET}]
 -- 
 2.56.0
 
