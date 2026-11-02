@@ -1,60 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC19606A796
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 12:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489C8606A781
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 12:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=i4NQBSRG
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=frOeljst
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNr89-0008SO-EA; Mon, 02 Nov 2026 07:27:17 -0500
+	id 1xNr7o-00088G-DJ; Mon, 02 Nov 2026 07:26:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xNr82-0008Hd-8F
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 07:27:10 -0500
+ id 1xNr7m-00087d-Qc
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 07:26:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xNr80-0001mj-QE
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 07:27:09 -0500
+ id 1xNr7l-0001kf-BR
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 07:26:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793622428;
+ s=mimecast20190719; t=1793622412;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=J90sM9BvmEkVOSyjIqEfgWmK8j3jEDEHzKIZeiSJnMs=;
- b=i4NQBSRGFcru7Af6IhMtdQIgGB9bTcPHcdBKcMpYYzCZ1FR2vaZbzXWDZxPejiOrdYKRuD
- FBXK7QO58ULCFDUmuanZJhUISvmMAefiQyDxyNk9YjjQcO8aBPTNto8TvF7/meQykvq9lX
- 2El/z9kWJ18pQfSH/3zCE4zhJZ60FmY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=czC0djcfad1fwTSbct+0/IyDyBrjtTIk4lY2CdI2QRI=;
+ b=frOeljstBeG6o4HswkQcoHSS51Bg69OJEfxtjUg2CbWrlwTm9h5JdJBQtIAL9d9sCq1jp7
+ ev6NxYGyvs13IZeyRXGaUVMZxgH3uQlr2Lfo75v3+dC6t1dxb7aFekgYPq3WhU/c5sMzt7
+ g/ndTeT1SIEo3PqCrtawxbuTDpzIMgo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-hBVTQGC0PziEPoN1cFFRlQ-1; Mon,
- 02 Nov 2026 07:27:06 -0500
-X-MC-Unique: hBVTQGC0PziEPoN1cFFRlQ-1
-X-Mimecast-MFC-AGG-ID: hBVTQGC0PziEPoN1cFFRlQ_1793622425
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-x_NPKuq3Nqmm242z6uxa2Q-1; Mon,
+ 02 Nov 2026 07:26:51 -0500
+X-MC-Unique: x_NPKuq3Nqmm242z6uxa2Q-1
+X-Mimecast-MFC-AGG-ID: x_NPKuq3Nqmm242z6uxa2Q_1793622410
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C512818001F3; Mon,  2 Nov 2026 12:27:05 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21B21195607D; Mon,  2 Nov 2026 12:26:50 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 943C1195608B; Mon,  2 Nov 2026 12:27:04 +0000 (UTC)
+ id 28EA51956087; Mon,  2 Nov 2026 12:26:48 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Alexander Graf <graf@amazon.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 13/13] accel/nitro: mark 'nitro' accelerator as secure
-Date: Mon,  2 Nov 2026 12:26:45 +0000
-Message-ID: <20261102122645.3353402-14-berrange@redhat.com>
+ Brad Smith <brad@comstyle.com>
+Subject: [PULL 02/13] util/cutils: Use getexecpath() on OpenBSD for
+ qemu_init_exec_dir()
+Date: Mon,  2 Nov 2026 12:26:34 +0000
+Message-ID: <20261102122645.3353402-3-berrange@redhat.com>
 In-Reply-To: <20261102122645.3353402-1-berrange@redhat.com>
 References: <20261102122645.3353402-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -64,13 +64,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,28 +90,57 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The 'nitro' accelerator is used with a real AWS deployment and
-thus is considered to be secure.
+From: Brad Smith <brad@comstyle.com>
 
-Reviewed-by: Alexander Graf <graf@amazon.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+util/cutils: Use getexecpath() on OpenBSD for qemu_init_exec_dir()
+
+OpenBSD has introduced a function getexecpath() to be
+able to retrieve the executable name and path.
+
+Signed-off-by: Brad Smith <brad@comstyle.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- accel/nitro/nitro-accel.c | 1 +
- 1 file changed, 1 insertion(+)
+ meson.build   | 8 ++++++++
+ util/cutils.c | 6 ++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/accel/nitro/nitro-accel.c b/accel/nitro/nitro-accel.c
-index a1e97a9162e..a1489b8019a 100644
---- a/accel/nitro/nitro-accel.c
-+++ b/accel/nitro/nitro-accel.c
-@@ -251,6 +251,7 @@ static const TypeInfo nitro_accel_type = {
-     .parent = TYPE_ACCEL,
-     .instance_size = sizeof(NitroAccelState),
-     .class_init = nitro_accel_class_init,
-+    .secure = true,
- };
- module_obj(TYPE_NITRO_ACCEL);
+diff --git a/meson.build b/meson.build
+index 71f135f0530..1b1523c5917 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3040,6 +3040,14 @@ config_host_data.set('CONFIG_ELF_AUX_INFO', cc.links(osdep_prefix + '''
+     return hwcap;
+   }'''))
  
++config_host_data.set('CONFIG_GETEXECPATH', cc.links(osdep_prefix + '''
++  #include <limits.h>
++  #include <unistd.h>
++  int main(void) {
++    char buf[PATH_MAX];
++    getexecpath(buf, sizeof(buf));
++  }'''))
++
+ config_host_data.set('CONFIG_USBFS', have_linux_user and cc.compiles('''
+   #include <linux/usbdevice_fs.h>
+ 
+diff --git a/util/cutils.c b/util/cutils.c
+index d8a04ead5a4..2996baa677c 100644
+--- a/util/cutils.c
++++ b/util/cutils.c
+@@ -1097,6 +1097,12 @@ void qemu_init_exec_dir(const char *argv0)
+             p = buf;
+         }
+     }
++#elif defined(__OpenBSD__) && defined(CONFIG_GETEXECPATH)
++    {
++        if (getexecpath(buf, sizeof(buf)) == 0) {
++            p = buf;
++        }
++    }
+ #elif defined(__APPLE__)
+     {
+         char fpath[PATH_MAX];
 -- 
 2.56.0
 
