@@ -1,123 +1,145 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E658606A336
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 08:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10454606A32D
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 08:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=gUWr4h8p
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=XBPxHrwe;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=HkiCYTMC
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNnT6-0002nG-Pg; Mon, 02 Nov 2026 03:32:41 -0500
+	id 1xNnTf-0002xi-94; Mon, 02 Nov 2026 03:33:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xNnSh-0002lM-24
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 03:32:15 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
+ id 1xNnTA-0002r0-CP
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 03:32:49 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xNnSe-0004nL-7f
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 03:32:14 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A24ECTb1880694; Mon, 2 Nov 2026 08:31:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ck6pn3
- s5h+6YnN3681jfAV/YaumdS7kJvIDzCxEdFLM=; b=gUWr4h8p8SKf/9ELACTuSN
- rxFAvJpuyNphvT2eND7W+Apst6B1r47JBcLnJ5FLff5c8veEsdw0msBdCA9ZciLf
- Yq/U0LiGBNHbuasKPnnXibuPPQvH5HdnYqN14dbnbv+jBdf4/MTlGuFDk+tP8smg
- j4AUwII3PnSUFw6dm42Hb8I+XExI9JA5d2E5CSArqnnrNxatSFSU+DY1qCPWCZYD
- XbYDatDm33XTqwt8ODTiMqmMadyX7JCWLCCly3CTQt0iGAvJaeMsfz4ctVXOrhfA
- JkLXoNMoKBREu0u/zGXSvqOYBfGqCCXYYRS/UM2XjT1v96yKZHL/LeXZysxQ4Mdw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn826fg3k-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 02 Nov 2026 08:31:55 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A2452ME280560; Mon, 2 Nov 2026 08:31:54 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnunjvx51-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Nov 2026 08:31:54 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A28Vrgj22479470
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 2 Nov 2026 08:31:53 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A009058053;
- Mon,  2 Nov 2026 08:31:53 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B4D0C58043;
- Mon,  2 Nov 2026 08:31:49 +0000 (GMT)
-Received: from [9.123.12.1] (unknown [9.123.12.1])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  2 Nov 2026 08:31:49 +0000 (GMT)
-Message-ID: <1fe583e8-c4cf-4fc1-abf5-0ee9fe6486a7@linux.ibm.com>
-Date: Mon, 2 Nov 2026 14:01:48 +0530
+ (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
+ id 1xNnT6-0004qK-O7
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 03:32:42 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A24w2JF1262028
+ for <qemu-devel@nongnu.org>; Mon, 2 Nov 2026 08:32:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=TWBnGbwuz+q
+ DPVFESpXXqRRCe0rhy78MEhLbH1dXTfI=; b=XBPxHrwey+cdapik/ZE4JDX4WyT
+ +pExIWAFjdA7qN9R4y5qTmTSK8HKJQMasv3fBulTT8tVQ3EhRqiDx5GQ+LWU+O6q
+ 05giUGcYJhkO/OBcbus5vWXoAjrOEpLiquBrpkHW5qRVd39XpynA/PP6N8e3cqdi
+ dXsO6tCFObKSrVopAFK6V3EqoLPlKF0VFsY03YPnPjnf8v2mIaKwhlgGklClW6cE
+ nM3QB4czKR47KmJaj5lHgrUJ4s28wVhSFOfnG/EQNohlcnt+G9DaOm1aak71gg6O
+ SmMh4j9eAAVusdLKpAQ3TFfgaeN1dDKrc7CXdROF5V08pQQf6946NGg2Q/Q==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hpky4gqrk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 08:32:39 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-313b1501a0aso400833eec.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 00:32:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793608359; x=1794213159; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=TWBnGbwuz+qDPVFESpXXqRRCe0rhy78MEhLbH1dXTfI=;
+ b=HkiCYTMCN97Jfzjx8wgeQ+urhfNp6ckRtcOLWQolIi3BMPvnaCBm0LY1CgPcaF+iAJ
+ NB2aum3abbAEye3gDGvRijWbll91IsRixNV95WIFb486kM/WYbYL4OI0OnonWLig/Hy5
+ NVEfAWlfAj/FH80bCOzrstXdBhkfWDzGSWCnYlQrHhTUWoIgqeYZXM/9y7T2Bv9TBPLW
+ NzcRXYa/VAu16cCczMLqbZNSQ13GaMFvQsx10Uw28Vm7FLWi+pMWC5SUR3UHBmIIJI3M
+ ib+M0VRMdNNXPU7TmB93cLuM2fi1OBEXELPRKd3P9TV1jsWrZHv9T0CS0larelhq34PO
+ EoQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793608359; x=1794213159;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=TWBnGbwuz+qDPVFESpXXqRRCe0rhy78MEhLbH1dXTfI=;
+ b=wX07SfRWBGMs3KmlFwqUIYy3ACBZ+T7GLX3/d/lxYnHTLVfadOgplVXqDR1HctAdp2
+ DmPrV1yixMqEeXE3tR3igsihLFVd+EkfYX8w+hXFlPtJoo/YeEUUsPMq1kfc0Ly4bUdS
+ V/p5zCxl3ifs+W5luWZ1cOhzVo6ZbI6vGqgjOze4LT/nSyTKVQhBlKPWhzdIQb0N+or4
+ 6P50HpFwIzpnXpTfnSKSO3TGQbUTI/40xuZcJsI4tjkqx89uUeKOeyoWP359a607zkrJ
+ eRSSOJaAwXcQgZghrEpKNCeoBEGF4KWHnVlZx2hc8Bt0pHJ0nHJ5XWSTKy7ZzkKY7qFm
+ 8RwA==
+X-Gm-Message-State: AFq9FYLwqw5Ti1bv50r2VEGFYH5p8IRd+H60AvUjzodZ/vz17mauO3eL
+ tgn6j5EB54vPvwayEzvbHaMGU/uBazwhwiIot1Opb7SEVn5E2gkmyKPQ/i7g1+QGbVehM1VfksJ
+ mZW/iI+lYCMWpV3QMUqj4BXugKsg8g3GjmDXa4bM5XyX424nlst5bzCp5bd4hdvqd0Q==
+X-Gm-Gg: AYBFou1vh4uc9MIh46FcIZT85sSpAQaZPUSDP4JqUJEM0WmzVHI0hCLbCaG/oYiuMX0
+ 8QOzo9mTFR7ausPgpE/WZPFdHPLKd4mRvh5EDgt3TxHuU+21uAmRyEjPNrPxjYvnMGLBg1wMxCF
+ /bly+EuVhG3FfAUcleMTKWh9mYMMny1LiPke6bUNAyMqunPEyYCXXnIafU5dE0WQX7Fn6I7N552
+ 9YuCA5AKRq+d1usolLqmD5ku6aTfkhvdWoZJd972O88TyhGcgP9TT8tZSzAaWAHfro23BJH2Tk6
+ 4VQtbIulMPjMpbTpI80fpG0jekXKytjK1R/lKK1/dXn446yZP/DiUo6a+xAros+Og4ZSD8tYCle
+ 2g68S4CJFeXB4FJi0sbSnKDRCfH2xL45BLvMLF6742AXV9dk/C/9JSe9rFzXubKMyIgXld9G4eH
+ uLdWFUSEyWmeakISQ6y3VlGz1OEBgP1sJ1IVMkHHBY/PrEZVNIWiYA/ijFp/0zqmoQx7OaFSZ9F
+ HdE7u6P
+X-Received: by 2002:a05:7022:b053:20b0:144:fd17:3b21 with SMTP id
+ a92af1059eb24-1ac500d67e6mr24101767c88.0.1793608358498; 
+ Mon, 02 Nov 2026 00:32:38 -0800 (PST)
+X-Received: by 2002:a05:7022:b053:20b0:144:fd17:3b21 with SMTP id
+ a92af1059eb24-1ac500d67e6mr24101720c88.0.1793608357888; 
+ Mon, 02 Nov 2026 00:32:37 -0800 (PST)
+Received: from hu-slingapp-blr.qualcomm.com
+ (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1b106edc7f8sm15083213c88.9.2026.11.02.00.32.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Nov 2026 00:32:37 -0800 (PST)
+From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org,
+ Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v13 08/10] docs/system/riscv: document initial virt RPMI
+ support
+Date: Mon,  2 Nov 2026 14:01:56 +0530
+Message-ID: <20261102083159.3383468-9-subrahmanya.lingappa@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261102083159.3383468-1-subrahmanya.lingappa@oss.qualcomm.com>
+References: <20261102083159.3383468-1-subrahmanya.lingappa@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/10] tests/qtest: pci and MSI-X fixes
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Jishnu Warrier <jishnuvw@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, philmd@linaro.org,
- farosas@suse.de, akihiko.odaki@daynix.com, marcel.apfelbaum@gmail.com,
- david@gibson.dropbear.id.au, adityag@linux.ibm.com,
- harshpb@linux.ibm.com, amachhiw@linux.ibm.com
-References: <20260817185539.376740-1-jishnuvw@linux.ibm.com>
- <20261028102612-mutt-send-email-mst@kernel.org>
-Content-Language: en-US, en-ZM
-From: Utkarsh Verma <uverma@linux.ibm.com>
-In-Reply-To: <20261028102612-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: -OkstqWannid97SfwyV3rK7hVOcaUZYq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAyMDAzMiBTYWx0ZWRfXx8dGZnnepuMt
- tqSjc4paYiiSi1viCQL/mmpzPh/VQidjZuLRX4ItsXkVbsEsuSbxrS1qKW5k8vWBjaVSMvDfUpb
- 8qGMhnu8ZG9remDANWnr9CdrXzYnvAYdpKxrqldzoGxCLHzaXvzHn5pXR9dnuc7o96/pKTFrhBL
- pJOSQPgln7YMrFTj5F6I6tDKMUHZ46C8qTSMl2QvRJrO56taHlRWyQMVPsiJKQY3MbWrCFGiS0h
- 0be/lMpAuGpz0reQJy4gKcz943Le20DmH+tvFWbr0v2jViXpfbj5rerUgaS9Q+EORkuvckTcLGV
- pysCAOIp/qv4JriUq3eOQWLYavQojc+MOaBmqdxtyJNxdkMN20wxAEAujU1fY8vTTWpYn3fL+/k
- rehy/B7aDJopYiRiBrYkyYSLWi/TOPl7kkz51bU9HbMBzrlZZ1xqMqEeYLiMFHUPLB7qayJz2EM
- JaRcrgQQ4LICEehUT6Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAyMDAzMiBTYWx0ZWRfX1JMw+XzxpyO8
- Xh4OQ9RRcDeXcIlkh5r+lHcajkLpBLlYsdCt2SQOB0APakIeH0urSxonLGMU8mKsTW1HNDLQWlN
- U8cEiGGJU6/pgJ6UJLRpFZjbShiJ/m8=
-X-Proofpoint-GUID: 7lBkRZj-CISbd-TiiMBQ5BctEGv4j809
-X-Authority-Analysis: v=2.4 cv=EsJHPicA c=1 sm=1 tr=0 ts=6ae84a7c cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=p0WdMEafAAAA:8
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8
- a=KKAkSRfTAAAA:8 a=z4glEzOvAAAA:8 a=20KFwNOVAAAA:8 a=P_L9fI11Hn0w-Uy76A8A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
- a=cvBusfyB2V15izCimMoJ:22 a=92dS5hN0c3Q7EetK7xW5:22
+X-Proofpoint-ORIG-GUID: fLEJcYOl1cpJSpmATinBph4KAySXddMV
+X-Proofpoint-GUID: fLEJcYOl1cpJSpmATinBph4KAySXddMV
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAyMDAzMyBTYWx0ZWRfXyRqju1CqBxeP
+ RjKH45fI0BABeYM9u7TfkCX/XQn+7ven+7/tfaGr3aGJ3+NzY9mcvPtO7I+l2At3qmdDiXpM/20
+ MJs5j5CIJM5Ir2pnx5QLaw2wVpICFLQ=
+X-Authority-Analysis: v=2.4 cv=QoHLTlyd c=1 sm=1 tr=0 ts=6ae84aa7 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=NEAV23lmAAAA:8
+ a=V1jnuoLLAAAA:20 a=EUspDBNiAAAA:8 a=bNRx8rSjxjkR0t5bZ0UA:9
+ a=PxkB5W3o20Ba91AHUih5:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAyMDAzMyBTYWx0ZWRfXyB/sZ9cxfnyT
+ cG/VNMQJfX7Si1KSdOpOdN2i4hAPqY8xqzhOGrL/H871ce6MeBRZ66Q1VP9fM4NC55f1TEddiyi
+ rXMgkWBeMC63mFokh2kD6kcbQ7goLfsXWaethqAP0oxl7UqegaMzPzcD7B9grNa3PMJYuRIGnyn
+ 2oM95UfqprEfMSmBlvbyDeF/QEKkVuFE6T+i92VStuc1pGqVmTjBW5WfRGvmRyQxUB0EYj7d4Tp
+ ro+Wxs1Fv8lxrneQsFg6Glw8LzrjwxXOM/D+Jc7Pz8p0fkdaKlcK9ej42xiv9Da1/odsJb5GOQw
+ h2FQf70atwKjSnz8lhRuSmfPSXFEh4mqrFPrVxJG38rEq5OM1YxSNeDwTvwW5q+jIng3CfuJxPe
+ obvLb/EDNxLrbjeFHm0qlaR6EDus5E2+jAmcwO+Frr5USnzLKB+TjL221ayrbaVvkuv13JDiPI0
+ SuW+BMEsUU0I7u1sLhQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-02_02,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
- definitions=main-2611020032
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ malwarescore=0 lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0
+ suspectscore=0 impostorscore=0 clxscore=1015 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611020033
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,119 +152,114 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Document the opt-in virt RPMI transport and the initial HSM, system
+reset, and system suspend service groups.
 
-On 10/28/26 8:02 PM, Michael S. Tsirkin wrote:
-> On Tue, Aug 18, 2026 at 12:25:30AM +0530, Jishnu Warrier wrote:
->> To: qemu-devel@nongnu.org
->> Cc: Nicholas Piggin <npiggin@gmail.com>
->> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Cc: Fabiano Rosas <farosas@suse.de>
->> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
->> Cc: Michael S. Tsirkin <mst@redhat.com>
->> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
->> Cc: David Gibson <david@gibson.dropbear.id.au>
->> Cc: Aditya Gupta <adityag@linux.ibm.com>
->> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> Cc: Amit Machhiwal <amachhiw@linux.ibm.com>
->>
->> This series fixes a number of issues in the pci and MSI-X qtest
->> infrastructure, and adds new functionality.
->>
->> Nicholas Piggin is the original author of all patches in this series.
->> This submission takes his v5 posting forward, with the additional
->> changes described below.
->>
->> It was originally posted as v5 in May 2025 but was not merged.
-> 
-> 
-> Decided to dig this out and tried applying.
-> 
-> Breaks nvme in CI:
->   https://gitlab.com/mstredhat/qemu/-/jobs/17536598571
-> 
-> If you can try rebasing, would be appreciated.
-> 
-Hi Michael,
+Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ docs/system/riscv/virt.rst | 79 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 79 insertions(+)
 
-I submitted a v7 for this series.
-https://lore.kernel.org/qemu-devel/20261102035306.2291147-1-uverma@linux.ibm.com/
-
-Regards,
-Utkarsh
-
->> Changes since v5
->> (https://lore.kernel.org/qemu-devel/20250502030446.88310-1-npiggin@gmail.com/):
->>
->> - Use sizeof(data) instead of literal 4 in qtest_memread/qtest_memset
->>    calls inside qpci_msix_test_interrupt() [Akihiko Odaki]
->>
->> - Fix MSI-X capitalisation in the qpci_msix_test_interrupt() doc
->>    comment (was "msix", now "MSI-X" throughout) [Akihiko Odaki]
->>
->> - Replace the per-device boolean flags (pci_enabled in AHCIQState,
->>    enabled in QVirtioPCIDevice) with a bool mapped field on QPCIBar
->>    itself. qpci_iounmap() is now a graceful no-op when called on a
->>    bar that was never mapped, removing the need for guards in callers.
->>    [Akihiko Odaki]
->>
->> - Remove missed qpci_check_buggy_msi() guard in nvme-test.c
->>
->> - Fix off-by-one bound check: use barno < QPCI_NUM_REGIONS instead of
->>    barno <= QPCI_NUM_REGIONS in qpci_bar_reg() and qpci_iomap(); the
->>    previous condition allowed barno == 6 which is one past the end of
->>    the 6-element array [Amit Machhiwal]
->>
->> - Remove redundant memset(&dev->bars_mapped[i], ...) in qpci_iounmap()
->>    that immediately followed dev->bars_mapped[i] = false [Amit Machhiwal]
->>
->> - Add explanatory comment before the msix_addr/msix_data != 0
->>    assertions in qpci_msix_test_interrupt() clarifying that 0 is a
->>    libqos-internal sentinel value [Amit Machhiwal]
->>
->> - Remove always-true g_assert_cmpint(entry, >=, 0) assertions on
->>    uint16_t parameters in qpci_msix_set_entry(), qpci_msix_pending(),
->>    qpci_msix_masked(), and qpci_msix_set_masked() [Amit Machhiwal]
->>
->> Nicholas Piggin (10):
->>    tests/qtest: Enforce zero for the "un-fired" MSI-X message value
->>    tests/qtest: Fix virtio MSI-X message endianness
->>    tests/qtest: Add libqos function for testing MSI-X interrupt status
->>    tests/qtest: Enable spapr dma with linear iommu map
->>    tests/qtest/ahci: unmap pci bar before reusing device
->>    tests/qtest/ahci: don't unmap pci bar if it wasn't mapped
->>    tests/qtest/libquos/pci: Add migration fixup helper for pci devices
->>    qtest/libqos/pci: Enforce balanced iomap/unmap
->>    qtest/libqos/pci: Fix qpci_msix_enable sharing bar0
->>    qtest/libqos/pci: Factor MSI-X entry helpers into pci common code
->>
->>   hw/ppc/spapr_iommu.c                   |  10 +-
->>   tests/qtest/ahci-test.c                |   8 +
->>   tests/qtest/e1000e-test.c              |  21 ---
->>   tests/qtest/igb-test.c                 |  21 ---
->>   tests/qtest/libqos/ahci.c              |  12 ++
->>   tests/qtest/libqos/ahci.h              |   2 +
->>   tests/qtest/libqos/generic-pcihost.c   |   1 -
->>   tests/qtest/libqos/pci-pc.c            |   3 -
->>   tests/qtest/libqos/pci-spapr.c         |   7 +-
->>   tests/qtest/libqos/pci.c               | 215 ++++++++++++++++++++++---
->>   tests/qtest/libqos/pci.h               |  21 ++-
->>   tests/qtest/libqos/virtio-pci-modern.c |  30 +---
->>   tests/qtest/libqos/virtio-pci.c        |  86 ++--------
->>   tests/qtest/nvme-test.c                |   4 -
->>   tests/qtest/vhost-user-blk-test.c      |   6 -
->>   tests/qtest/virtio-blk-test.c          |  12 --
->>   16 files changed, 262 insertions(+), 197 deletions(-)
->>
->> -- 
->> 2.55.0
-> 
-> 
+diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+index 3c87246891..7835913e16 100644
+--- a/docs/system/riscv/virt.rst
++++ b/docs/system/riscv/virt.rst
+@@ -149,6 +149,85 @@ The following machine-specific options are supported:
+ 
+   Enables the riscv-iommu-sys platform device. Defaults to 'off'.
+ 
++- rpmi=[on|off]
++
++  Enables the RISC-V RPMI shared-memory transport. This option defaults to
++  "off", is TCG-only, and is available only when QEMU is built with librpmi
++  support. This support targets the RISC-V Platform Management Interface
++  (RPMI) Specification v1.0 Ratified (`RPMI v1.0 specification`_). The initial
++  ``virt`` implementation exposes RPMI system reset, system suspend, and HSM
++  service groups. System reset can request shutdown or cold reboot through
++  RPMI. HSM uses the ``virt`` hart IDs and supports hart discovery, status,
++  start, stop, and suspend commands. System suspend uses QEMU's suspend and
++  wakeup path. Migration is currently blocked while RPMI transport and service
++  VMState support is being designed.
++
++  The build dependency is provided by `librpmi`_. QEMU requires librpmi 1.0.0
++  or newer. If the host distribution does not provide a librpmi development
++  package, build and install it from the upstream source tree so that
++  ``pkg-config`` can find ``librpmi.pc``:
++
++  .. code-block:: bash
++
++    $ git clone https://github.com/riscv-software-src/librpmi.git
++    $ cd librpmi
++    $ make
++    $ make install I=/usr/local
++    $ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
++    $ pkg-config --modversion librpmi
++
++  The librpmi repository can also generate installable ``librpmi-dev`` Debian
++  packages with ``make deb-pkg`` and ``librpmi-devel`` RPM packages with
++  ``make rpm-pkg``. After installing librpmi, configure QEMU with
++  ``--enable-librpmi`` or ``-Dlibrpmi=enabled``.
++
++.. _RPMI v1.0 specification: https://github.com/riscv-non-isa/riscv-rpmi/releases/download/v1.0/riscv-rpmi.pdf
++.. _librpmi: https://github.com/riscv-software-src/librpmi
++
++RPMI qtest coverage
++-------------------
++
++QEMU includes qtest coverage for the RPMI transport and the initial service
++groups in ``tests/qtest/riscv-rpmi-test.c``. To run the qtest from a build
++configured with librpmi support and the ``riscv64-softmmu`` target:
++
++.. code-block:: bash
++
++  $ meson test -C build qemu:qtest-riscv64/riscv-rpmi-test
++
++The qtest covers Base service discovery, System Reset, HSM, System Suspend,
++negative transport cases, reset behavior, and migration blocking while RPMI
++VMState support is being designed.
++
++RPMI firmware and guest smoke
++-----------------------------
++
++A firmware-level RPMI smoke test can be run with OpenSBI, a Linux kernel, and a
++RISC-V disk image:
++
++.. code-block:: bash
++
++  $ qemu-system-riscv64 \
++      -machine virt,rpmi=on \
++      -cpu rv64 -smp 4 -m 4G -nographic \
++      -bios /path/to/fw_jump.bin \
++      -kernel /path/to/Image \
++      -append "root=/dev/vda rw console=ttyS0 earlycon=sbi" \
++      -drive file=/path/to/rootfs.img,format=raw,if=virtio,snapshot=on
++
++The OpenSBI banner should report RPMI-backed HSM and system suspend support.
++After the guest reaches a shell, normal guest reboot/poweroff commands exercise
++the RPMI system reset path.
++
++RPMI device tree policy
++-----------------------
++
++RPMI is currently described through FDT only; no ACPI representation is emitted
++for the RPMI transport or service groups. The ``virt`` machine uses the
++``riscv,rpmi-shmem-mbox`` shared-memory mailbox node plus sibling service nodes
++with ``riscv,rpmi-*`` compatible strings. Each service node references the
++mailbox with an ``mboxes`` property containing the RPMI service-group ID.
++
+ Running Linux kernel
+ --------------------
+ 
+-- 
+2.43.0
 
 
