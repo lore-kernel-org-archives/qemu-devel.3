@@ -1,92 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E132C606A90F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605FC606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=AYNhszeg
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=BCL/tTFD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNsEP-00069f-F7; Mon, 02 Nov 2026 08:37:49 -0500
+	id 1xNsJV-00021t-Gk; Mon, 02 Nov 2026 08:43:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNsDD-0003OD-PC
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:35 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNsDC-0002Kb-0e
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:35 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-48df54150dfso1386455f8f.0
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:36:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793626592; x=1794231392; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=/2SrWZg7LL1ZwpuOyRIqi3zRSq3vmKujN0kG0k7wCts=;
- b=AYNhszegH+o9CnYT9+whuoG1fbxaTnb8dXL6mv1yRiPqvwFF8VqSkTLRHIWiXusIFD
- y3fqbTeWBu+AGX5LQQea3iH7wT9hBR5j4jUgfouD9ERl/l3GANVQYecxds+wJTz/GXJh
- /pOn5BRggqACykKsc+OZRFE14wjQ/GVodE+BLFP4NeAEjAcl/eNVMM7b8GfWc3wji14K
- av9gzvxkB+jXyYqybAAwr7DuWpRvVElpidrwC5eTkYnb8FaKbM/HIJVBkvIaKL7scLxg
- 3ZPfG9M+KaDn0VpUf9gpXjALUuB/oHwvgKB+04gcOBFxjw1pwjB/YvbCSV7/rUneNa16
- HvFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793626592; x=1794231392;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=/2SrWZg7LL1ZwpuOyRIqi3zRSq3vmKujN0kG0k7wCts=;
- b=WWk5/FmYFICx4EihRz+r239pe1eR2Tpsy4MQg5/f1mgnmAaivkxqyIFO4o4hiGS67t
- GmoM6yaWBPfcf0NhL5PfewFxFthwD6/uqJo5YOYEGYc01gzBS9/3B9oylbdjIGS7q2G0
- fvpvdg7pj9JwSb/X8aUTjmTugeloH58qd4lFIDnOfuNCfH1X1OXr0cm2/cY8Ppd1Zv3R
- DPvDKMRQgf9p8Ob6g1J736siCSJhuTVc8DA8gXD3gysE2b1qzD4x0YsDfJqpxPNgPwbJ
- 0F8FG24ui2+z8BJGSPv71VZ9rPNe+s59NSIkjxqh7xfulSzbrXJFLF/b6JXrLXQjAICC
- 8Taw==
-X-Gm-Message-State: APuU4Z8aMCDVyVVKzeP34dQsLf+wIhtWXF4scHOobg+cDcZyIe0qxgBd
- K7YB/DHAo4bZ0hV63hsAFEqYtgodV9LTatIAtNjOyjyP9tQml/qjRxK1ifJX5Ghzws3laMs2oXm
- M1XHLKGo=
-X-Gm-Gg: AYBFou2sLTrG54Gx2A/8mUW5K+20Zwl1Ad/4qIDGeXLyBNZmqqrmzrc1/YRgzSRLW2B
- OAKC6tgkVjYfUwNsTo2X3WrzpdDCIIa5f8g1/Ky3TNHzKZGna48G/UwUgAYDzp5SVR1SnDraM0Q
- NJtcjgBb6TZxzsYpIUhLGVCwatn271ZjRZYwRhe5PUNxKf0QV8DKb0XY05w4+pFC0PBge2GS3zO
- YJIIyQ0r68PcuaWgOjX/pOiVRHucl7bjNz7AZSjd9A2mmd88EHRlqrngMEdVL0X5nQzwpczignH
- 3f1r5C7+rCW1ukypya5xPmsiuevh0Tj59UJjE37RTINqeyOdmvtKR93UHHzjigZfM2gdfhgm8UC
- nz4mCRJFUvNbPLpMMZWVdY5BoOA1OXeQ+57m97/y6IRFtkVDRmJgIjeP4enUy4m6ExcYa0kGRAg
- PjgZjd3iSsdlhrgTqguavb383KWurw72S+zvkK7DVl6a45ZGHhFez8LQxb0xazzs46h4U1R9pD0
- vfdv1xrken8ITvhlABtfOJPmK7yCmcFlmfz6ASEJ9Kb01uV9Ph8zR5Lq3B+3RQ33aYVqullNbBQ
- xWzjGsgVTYR2AINNkFDUwc1uBhM+tvMYAkHtZDbVVCHk2+qaqAKGxyzShVzTZJ+6Nz7cJFct70j
- OVM1rNkZjfxu6nqtMIBMPvCTQYsXBwb1qgA==
-X-Received: by 2002:a05:6000:468f:b0:48e:6710:ecd8 with SMTP id
- ffacd0b85a97d-48e6e2fcdb9mr13828226f8f.26.1793626592308; 
- Mon, 02 Nov 2026 05:36:32 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d3e9sm22556760f8f.6.2026.11.02.05.36.31
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Nov 2026 05:36:31 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 38/47] hw/intc/arm_gicv5: Ignore low bits in IRS_IST_BASER.ADDR
-Date: Mon,  2 Nov 2026 13:35:38 +0000
-Message-ID: <20261102133547.1375701-39-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261102133547.1375701-1-peter.maydell@linaro.org>
-References: <20261102133547.1375701-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xNsJO-000215-T7; Mon, 02 Nov 2026 08:43:00 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xNsJL-0002oS-4v; Mon, 02 Nov 2026 08:42:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1793626963; bh=gNmzncyRRVIjyr2E1DuEnhGKsq1rYFcerQr9+HfNpmc=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=BCL/tTFDoJUa1+HFHGqdmEmWgZnkDr1nNWhjFW0QlMxCdL8mEUmA9E0XKYJu2BmN3
+ 9Jkk590P++uvBtt1x+oWHO9Abbk22ZB1z0EMLA1vJ9NtcCKy0S3NoTnx8rXovRhud4
+ AOhS2cdf08GsC/cJxxu6Maci9XA2wfjRZU4yGjbp18pyZzWEHXyY92CtkiLLTTZzQz
+ UWiSH7lTHOUtUy5UpvQcnntVTGZw16IyKQ/F15Ewa4FivGDVXfid/5IWYTp1MvCU79
+ gY6jAdHWt6nk1qTpJBjM8Mv4aSndsKrcY0bhnn04/tu5fMEKgK7jnxmheJy+sdJ1wg
+ VRriXIcr2Zwdg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5AEEC1E3351;
+ Mon, 02 Nov 2026 16:42:43 +0300 (MSK)
+Message-ID: <92da7631-c19b-43e0-9122-618f98cc102c@tls.msk.ru>
+Date: Mon, 2 Nov 2026 16:42:42 +0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 04/12] hw/ufs: Check the PRDT size against the transfer
+ length of the CDB
+To: Jeuk Kim <jeuk20.kim@gmail.com>, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org
+Cc: stefanha@redhat.com, pbonzini@redhat.com, fam@euphon.net,
+ kwolf@redhat.com, hreitz@redhat.com, qemu-block@nongnu.org,
+ daejun7.park@samsung.com, stanleyjhu@google.com, dridiha98@gmail.com,
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com, qemu-stable@nongnu.org
+References: <cover.1793347487.git.jeuk20.kim@samsung.com>
+ <f9e0f4d949a0cec465e5f40ce8721b49b7850371.1793347487.git.jeuk20.kim@samsung.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <f9e0f4d949a0cec465e5f40ce8721b49b7850371.1793347487.git.jeuk20.kim@samsung.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,97 +111,86 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The IRS_IST_BASER.ADDR documentation says:
+On 30.10.2026 11:14, Jeuk Kim wrote:
+> From: Daejun Park <daejun7.park@samsung.com>
+> 
+> scsi-hd moves as many bytes as the SG list of a request holds, and
+> ufs-lu builds that list from the whole PRDT. When the PRDT is larger
+> than the transfer length in the CDB, a WRITE writes more blocks than
+> the CDB names and a READ reads more. A one-block WRITE(10) at LBA 0
+> with an 8 KiB PRDT also wrote LBA 1, and its response reported no
+> residual. A UFS device transfers what the CDB asks for and reports the
+> rest of the Expected Data Transfer Length as a residual.
+> 
+> The commands that scsi-hd emulates had their residual computed against
+> the PRDT too: an INQUIRY with an allocation length of 36, a 4 KiB PRDT
+> and an Expected Data Transfer Length of 4096 reported an overflow of
+> 4294959176 bytes. It now reports an underflow of 4060.
+> 
+> When the PRDT is smaller than the transfer length, scsi-hd moved what it
+> holds and the request completed without an error, for example a
+> two-block WRITE(10) with a 4 KiB PRDT. Such a request now fails with OCS
+> MISMATCH DATA BUFFER SIZE, as one without a PRDT does. As in
+> virtio-scsi, the PRDT is compared with the transfer length of the CDB,
+> which for commands that return data is the allocation length, and before
+> scsi-hd checks the CDB.
+> 
+> The new ufs_fit_data_buffer() in ufs.c, where the SG list is built from
+> the PRDT, cuts a longer list and reports a shorter one; ufs-lu passes it
+> the transfer length that scsi_req_new() parsed. The HID qtest wrote
+> eight blocks from a one-block buffer, so give it eight blocks. The new
+> long-prdt and short-prdt qtests failed before this change.
+> 
+> Fixes: 2a8b36a4967d ("hw/ufs: Support for UFS logical unit")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+> Reviewed-by: Stanley Jhu <stanleyjhu@google.com>
+> Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
+> Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+> ---
+>   hw/ufs/lu.c            |  20 +++---
+>   hw/ufs/trace-events    |   1 +
+>   hw/ufs/ufs.c           |  35 ++++++++++
+>   hw/ufs/ufs.h           |   1 +
+>   tests/qtest/ufs-test.c | 141 ++++++++++++++++++++++++++++++++++++++++-
+>   5 files changed, 189 insertions(+), 9 deletions(-)
 
-For IRS_IST_CFGR.STRUCTURE = 0:
- Bits[N:0] of the resulting address are 0 where N depends on the ISTSZ
- and LPI_ID_BITS fields in IRS_IST_CFGR as follows:
-    N = Max(5, (ISTSZ + 1) + LPI_ID_BITS)
-For IRS_IST_CFGR.STRUCTURE = 1:
+Hi!
 
- Bits[N:0] of the resulting address are 0 where N depends on L2SZ,
- ISTSZ, and LPI_ID_BITS in IRS_IST_CFGR as follows:
-    N = Max(5, LPI_ID_BITS - ((10 - ISTSZ) + (2 * L2SZ)) + 2)
+This patch is tagged for-stable.  When trying to cherry-pick it to 10.0.x
+series, I notieced the change to ufs-test.c does not apply, this one:
 
-This enforces that the IST is aligned to the size of the IST table,
-or to a 64-byte boundary if the table is smaller than 64 bytes, even
-if the guest programs the low bits in the ADDR field to specify an
-insufficiently aligned address.
+> --- a/tests/qtest/ufs-test.c
+> +++ b/tests/qtest/ufs-test.c
+> @@ -1577,7 +1713,8 @@ static void ufstest_hid(void *obj, void *data, QGuestAllocator *alloc)
+>           /* WRITE(10) to LBA 0, transfer length 8 sectors = 1 fragment */
+>           WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00
+>       };
+> -    uint8_t write_buf[4096];
+> +    /* The PRDT must hold the eight blocks that the WRITE(10) moves */
+> +    uint8_t write_buf[8 * 4096];
+>       uint8_t read_buf[4096];
+>       int i;
+>   
 
-We were missing this check, and instead trusted the guest-provided
-address to be sufficiently aligned already; add the alignment
-enforcement.
+This is because 10.0.x has no UFS HID support.
 
-The GICv5 spec defines the masking to be used with the expressions
-quoted above, which work with the raw field values from the
-IRS_IST_CFGR register; these simplify down to some straightforward
-expressions based on the sanitized values we've already extracted
-form those fields.  You can get to the expressions we use here either
-by working through the simplification of the GIC spec expressions, or
-from first principles (the number of bits needed for the size of the
-table in bytes is the number of bits that index it plus the number of
-bits specifying the size of an individual table entry).
+So, it is not the test itself which does not apply, but modifying parameters
+for another test, which, apparently, triggers this PRDT one.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- hw/intc/arm_gicv5.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+Without knowing all the details about all hardware specifics involved,
+I can't say for sure what's going on here.  How the two (HID & this
+PRTD change) are related and what should be the test for 10.0.x ?
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index ebfb0878af3..3c50238634e 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -1313,6 +1313,7 @@ static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
-          */
-         GICv5ISTConfig *cfg = &s->phys_lpi_config[domain];
-         uint8_t istbits, l2bits, l2_idx_bits;
-+        int tableszbits;
-         uint8_t id_bits = FIELD_EX64(cs->irs_ist_cfgr[domain],
-                                      IRS_IST_CFGR, LPI_ID_BITS);
-         id_bits = MIN(MAX(id_bits, QEMU_GICV5_MIN_LPI_ID_BITS), QEMU_GICV5_ID_BITS);
-@@ -1359,6 +1360,33 @@ static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
-         cfg->l2_idx_bits = l2_idx_bits;
-         cfg->structure = FIELD_EX64(cs->irs_ist_cfgr[domain],
-                                     IRS_IST_CFGR, STRUCTURE);
-+
-+        /*
-+         * Bits [N:0] of the base addr are ignored, to enforce that in a
-+         * 1-level IST it is aligned to the size of the ISTE array,
-+         * and in a 2-level IST it is aligned to the size of the L1 table.
-+         * The spec defines N in terms of the raw L2SZ, ISTSZ and LPI_ID_BITS
-+         * fields, but we have already sanitized these to
-+         *  istbits = ISTSZ + 2
-+         *  l2bits = (L2SZ * 2) + 12
-+         *  id_bits = LPI_ID_BITS
-+         * We have also already enforced the "bottom 6 bits are 0" via
-+         * R_IRS_IST_BASER_ADDR_MASK, so can skip the Max() operation.
-+         * We want tableszbits == the number of bits to zero, which is N + 1.
-+         */
-+        if (cfg->structure) {
-+            /*
-+             * L1 table is indexed by the (id_bits - l2_idx_bits) bits in
-+             * the ID, so has 2^(id_bits - l2_idx_bits) entries, and each
-+             * entry is 8 bytes == 2^3.
-+             */
-+            tableszbits = id_bits - l2_idx_bits + 3;
-+        } else {
-+            /* table has 2^id_bits entries of 2^istbits size each */
-+            tableszbits = id_bits + istbits;
-+        }
-+        cfg->base &= ~MAKE_64BIT_MASK(0, tableszbits);
-+
-         if (!cfg->lpi_cache) {
-             /*
-              * Keys are GINT_TO_POINTER(intid), so we want the g_direct_hash
--- 
-2.43.0
+Thanks!
 
+/mjt
 
