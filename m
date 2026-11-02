@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C350C606D810
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 19:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CD8606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 19:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PcFOZTOq
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=SOjOWsG+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNxIm-0002wM-3E; Mon, 02 Nov 2026 14:02:40 -0500
+	id 1xNxIs-0003Qt-4A; Mon, 02 Nov 2026 14:02:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xNxI2-00026K-1h
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:58 -0500
+ id 1xNxHj-0001vr-C6
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xNxHy-0008HJ-Ab
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:53 -0500
+ id 1xNxHf-0008DU-II
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 14:01:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793646108;
+ s=mimecast20190719; t=1793646090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vbjdzJandTBXbN/NbJQon1SW3S6mArhMeBbnMOT68dI=;
- b=PcFOZTOqp7m08bJua81Boz/j0iZ4dMff7/JcFXn8L5BRcL4BVYs/DsjLVsKWz9rA2NXSDV
- 30zB2glMqAYrlkprlWTUJFhox2AmNBVUoIWu+DUOJdvASs/owR0Dd7PeWk81f3EGiHot1k
- nU/Z/sCsGToBI1EUW/jMM+Ob2+s8vqA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jKP5HFz810ebf9alfWmuhAqqhtocmxxt5vjo0KJQomg=;
+ b=SOjOWsG+PB4e0c1LMMfUzAVBOLth+uGBdjSioSouy/W2UzaRRitmP9zVUS/LEEPSBu0ytn
+ 3rMdzOfLUbHlZ8N72WSRxJNhlvrDoyHTl0MKOTiMPLhH4UI2ivhgc5E+kvLeDHmDL5+oCn
+ r0qCCkRsV0mSCrWZptG6Eq35+vpSAGE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-f8FrEhflMc6y5NwCc4s7bw-1; Mon,
- 02 Nov 2026 14:01:45 -0500
-X-MC-Unique: f8FrEhflMc6y5NwCc4s7bw-1
-X-Mimecast-MFC-AGG-ID: f8FrEhflMc6y5NwCc4s7bw_1793646102
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-O__lPeZ8OP6EyAo73df12Q-1; Mon,
+ 02 Nov 2026 14:01:25 -0500
+X-MC-Unique: O__lPeZ8OP6EyAo73df12Q-1
+X-Mimecast-MFC-AGG-ID: O__lPeZ8OP6EyAo73df12Q_1793646083
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 412771954B04; Mon,  2 Nov 2026 19:01:42 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF7571954AC2; Mon,  2 Nov 2026 19:01:22 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 610C01956087; Mon,  2 Nov 2026 19:01:41 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A5A451800446; Mon,  2 Nov 2026 19:01:22 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>,
@@ -62,16 +62,16 @@ Cc: qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 21/25] target/hppa: use PRIx64 in trace-events
-Date: Mon,  2 Nov 2026 13:58:27 -0500
-Message-ID: <20261102185831.1880189-22-stefanha@redhat.com>
+Subject: [PULL 02/25] trace: use 'ignore_value()' instead of a dummy variable
+Date: Mon,  2 Nov 2026 13:58:08 -0500
+Message-ID: <20261102185831.1880189-3-stefanha@redhat.com>
 In-Reply-To: <20261102185831.1880189-1-stefanha@redhat.com>
 References: <20261102185831.1880189-1-stefanha@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
@@ -102,53 +102,69 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-%lx is not portable to Windows platforms. This bug was not noticed
-since the trace events are annotated with 'disable', but this will
-be removed in the next commit. Addresses should also be prefixed
-with "0x".
+This pattern is more concise than using a dummy variable which
+in turn needs annotating as unused.
 
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-id: 20261102142844.3464712-22-berrange@redhat.com
+Message-id: 20261102142844.3464712-3-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- target/hppa/trace-events | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ trace/ftrace.c | 3 +--
+ trace/simple.c | 9 ++++-----
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/target/hppa/trace-events b/target/hppa/trace-events
-index 01761a4559b..9514f039f2d 100644
---- a/target/hppa/trace-events
-+++ b/target/hppa/trace-events
-@@ -1,19 +1,19 @@
- # See docs/devel/tracing.rst for syntax documentation.
+diff --git a/trace/ftrace.c b/trace/ftrace.c
+index 6875faedb9c..c1ed6ad4454 100644
+--- a/trace/ftrace.c
++++ b/trace/ftrace.c
+@@ -41,7 +41,6 @@ static int find_mount(char *mount_point, const char *fstype)
+ void ftrace_write(const char *fmt, ...)
+ {
+     char ftrace_buf[MAX_TRACE_STRLEN];
+-    int unused __attribute__ ((unused));
+     int trlen;
+     va_list ap;
  
- # mem_helper.c
--disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
--disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
--disable hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=%08lx"
--disable hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%lx phys=0x%lx"
--disable hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%lx size=%d type=%d mmu_idx=%d"
--disable hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%lx phys=0x%lx size=%d type=%d mmu_idx=%d"
--disable hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
--disable hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
-+disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
-+disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
-+disable hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=0x%" PRIx64
-+disable hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%" PRIx64 " phys=0x%" PRIx64 ""
-+disable hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%" PRIx64 " size=%d type=%d mmu_idx=%d"
-+disable hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%" PRIx64 " phys=0x%" PRIx64 " size=%d type=%d mmu_idx=%d"
-+disable hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
-+disable hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=0x%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
- disable hppa_tlb_ptlb(void *env) "env=%p"
- disable hppa_tlb_ptlb_local(void *env) "env=%p"
- disable hppa_tlb_ptlbe(void *env) "env=%p"
--disable hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%lx phys=0x%lx"
--disable hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%lx"
-+disable hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%" PRIx64 " phys=0x%" PRIx64 ""
-+disable hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%" PRIx64 ""
+@@ -50,7 +49,7 @@ void ftrace_write(const char *fmt, ...)
+     va_end(ap);
  
- # op_helper.c
--disable hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%lx level=%d want=%d"
-+disable hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%" PRIx64 " level=%d want=%d"
+     trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
+-    unused = write(trace_marker_fd, ftrace_buf, trlen);
++    ignore_value(write(trace_marker_fd, ftrace_buf, trlen));
+ }
+ 
+ bool ftrace_init(void)
+diff --git a/trace/simple.c b/trace/simple.c
+index c0aba00cb7f..e148ca44530 100644
+--- a/trace/simple.c
++++ b/trace/simple.c
+@@ -163,7 +163,6 @@ static gpointer writeout_thread(gpointer opaque)
+     } dropped;
+     unsigned int idx = 0;
+     int dropped_count;
+-    size_t unused __attribute__ ((unused));
+     uint64_t type = TRACE_RECORD_TYPE_EVENT;
+ 
+     for (;;) {
+@@ -179,13 +178,13 @@ static gpointer writeout_thread(gpointer opaque)
+             } while (!g_atomic_int_compare_and_exchange(&dropped_events,
+                                                         dropped_count, 0));
+             dropped.rec.arguments[0] = dropped_count;
+-            unused = fwrite(&type, sizeof(type), 1, trace_fp);
+-            unused = fwrite(&dropped.rec, dropped.rec.length, 1, trace_fp);
++            ignore_value(fwrite(&type, sizeof(type), 1, trace_fp));
++            ignore_value(fwrite(&dropped.rec, dropped.rec.length, 1, trace_fp));
+         }
+ 
+         while (get_trace_record(idx, &recordptr)) {
+-            unused = fwrite(&type, sizeof(type), 1, trace_fp);
+-            unused = fwrite(recordptr, recordptr->length, 1, trace_fp);
++            ignore_value(fwrite(&type, sizeof(type), 1, trace_fp));
++            ignore_value(fwrite(recordptr, recordptr->length, 1, trace_fp));
+             writeout_idx += recordptr->length;
+             free(recordptr); /* don't use g_free, can deadlock when traced */
+             idx = writeout_idx % TRACE_BUF_LEN;
 -- 
 2.56.0
 
