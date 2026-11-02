@@ -1,59 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D495606A329
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 06:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D51606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 06:12:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DSj5z1FA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNlGl-0005Tv-VJ; Mon, 02 Nov 2026 01:11:48 -0500
+	id 1xNlHg-0005dJ-O7; Mon, 02 Nov 2026 01:12:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
- id 1xNlGh-0005Tf-Pw; Mon, 02 Nov 2026 01:11:44 -0500
-Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
- id 1xNlGf-0001FC-8a; Mon, 02 Nov 2026 01:11:43 -0500
-Received: from k3-03 (unknown [159.226.43.8])
- by APP-05 (Coremail) with SMTP id zQCowAAXsbaDKehqt8kuAA--.230S2;
- Mon, 02 Nov 2026 14:11:18 +0800 (CST)
-From: Tan Chi <tanchi25@mails.ucas.ac.cn>
-To: Alistair.Francis@wdc.com
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com,
- daniel.barboza@oss.qualcomm.com, chao.liu@processmission.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH v2 1/2] hw/riscv/riscv-iommu: serialize IOATC accesses
-Date: Mon,  2 Nov 2026 14:11:14 +0800
-Message-ID: <20261102061114.177516-1-tanchi25@mails.ucas.ac.cn>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <f5db45e1a898592666c182584996e9f40d5f9124.camel@wdc.com>
-References: <f5db45e1a898592666c182584996e9f40d5f9124.camel@wdc.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNlHN-0005XQ-8j
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 01:12:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNlHJ-0001Gr-6h
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 01:12:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793599938;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AyhB37DOdN3owM/aPKWLOqI3rUyir0MWJgjl5vooCe4=;
+ b=DSj5z1FA4aJG9sCjJen0jy4PKQlonwEV+DhULmCHV557lpT1FeUGiipZTA65ScLYmMId81
+ NrEO2bpyNgYKpWjYWG1qqOe1odtDoJUxs1KweXLfVky1ZpjH8syGoUKywV50jWt/R5aJFD
+ c4PNwq98Wjytn2Au8Fd44Ygd8ikNgNQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-15al_pkvOHe_EYOttUdhBg-1; Mon,
+ 02 Nov 2026 01:12:15 -0500
+X-MC-Unique: 15al_pkvOHe_EYOttUdhBg-1
+X-Mimecast-MFC-AGG-ID: 15al_pkvOHe_EYOttUdhBg_1793599934
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D2C351800147; Mon,  2 Nov 2026 06:12:14 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 67416180057F; Mon,  2 Nov 2026 06:12:14 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0EE0521E6A04; Mon, 02 Nov 2026 07:12:12 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v2 7/8] qemu-options: document -compat insecure-input
+ parameter
+In-Reply-To: <20261030141713.2841710-8-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 30 Oct 2026 14:17:12
+ +0000")
+References: <20261030141713.2841710-1-berrange@redhat.com>
+ <20261030141713.2841710-8-berrange@redhat.com>
+Date: Mon, 02 Nov 2026 07:12:12 +0100
+Message-ID: <87wlqvvk1v.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowAAXsbaDKehqt8kuAA--.230S2
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
- VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUYd7k0a2IF6F4UM7kC6x804xWl14x267AK
- xVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGw
- A2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26F1j
- 6w1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1l84ACjcxK6I8E87Iv67AKxV
- W0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1lnxkEFVAIw20F6cxK64vIFxWl
- e2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI
- 8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwAC
- jcxG0xvY0x0EwIxGrwCY02Avz4vE14v_GF1l42xK82IYc2Ij64vIr41l4c8EcI0Ec7CjxV
- Aaw2AFwI0_JF0_Jw1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWU
- GwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI4
- 8JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4U
- MIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I
- 8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jr_-PUUUUU=
-X-CM-SenderInfo: pwdquxrlsvqzpdlo2hpxfd2hldfou0/
-Received-SPF: pass client-ip=159.226.251.25;
- envelope-from=tanchi25@mails.ucas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,22 +86,75 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Alistair,
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-I agree that this looks like a false positive.
+> This adds documentation for the previously added 'insecure-input'
+> parameter to -compat, which controls policy for insecure
+> configuration requests.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  qemu-options.hx | 23 ++++++++++++++++++++++-
+>  1 file changed, 22 insertions(+), 1 deletion(-)
+>
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 854341e7a07..0b8e6d0d8a9 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -4696,7 +4696,9 @@ DEF("compat", HAS_ARG, QEMU_OPTION_compat,
+>      "-compat [deprecated-input=3Daccept|reject|crash|warn][,deprecated-o=
+utput=3Daccept|hide]\n"
+>      "                Policy for handling deprecated management interface=
+s\n"
+>      "-compat [unstable-input=3Daccept|reject|crash|warn][,unstable-outpu=
+t=3Daccept|hide]\n"
+> -    "                Policy for handling unstable management interfaces\=
+n",
+> +    "                Policy for handling unstable management interfaces\=
+n"
+> +    "-compat [insecure-input=3Daccept|reject|crash|warn]\n"
+> +    "                Policy for handling insecure configuration requests=
+\n",
+>      QEMU_ARCH_ALL)
+>  SRST
+>  ``-compat [deprecated-input=3D<input-policy>][,deprecated-output=3D<outp=
+ut-policy>]``
+> @@ -4736,6 +4738,25 @@ SRST
+>          Suppress unstable command results and events
+>=20=20
+>      Limitation: covers only syntactic aspects of QMP.
+> +
+> +``-compat [insecure-input=3D<input-policy>]``
+> +    Set policy for handling insecure configuration requests:
+> +
+> +    ``insecure-input=3Daccept`` (default)
+> +        Accept insecure configurations requests silently
+> +    ``insecure-input=3Dwarn``
+> +        Accept insecure configuration requests with warning repeated
+> +        warnings on stderr
 
-The newly allocated RISCVIOMMUEntry is not shared until it is
-inserted into s->iot_cache under iot_lock. All its fields are
-initialized before insertion, so no other thread can access the
-entry during initialization.
+Scratch "warning".
 
-Thanks,
-Tan Chi
+> +    ``insecure-input=3Dreject``
+> +        Reject insecure configuration requests
+> +    ``insecure-input=3Dcrash``
+> +        Crash on insecure configuration requests
+> +
+> +    Limitation: an insecure configuration is one where QEMU does
+> +    not provide a security boundary to protect against malicious
+> +    usage / untrusted data. Covers only user creatable QOM types
+> +    for devices, machine types and accelerators. Implicitly created
+> +    QOM types and parent types are not checked at this time.
+>  ERST
+>=20=20
+>  DEF("fw_cfg", HAS_ARG, QEMU_OPTION_fwcfg,
 
 
