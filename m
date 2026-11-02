@@ -1,73 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5733606C541
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C462606A5BC
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Mg0RI//Q
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=W6l/ZNn2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNtEB-0003zf-FH; Mon, 02 Nov 2026 09:41:39 -0500
+	id 1xNtEz-00056r-SP; Mon, 02 Nov 2026 09:42:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD2-0003AT-QQ
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDN-0003JT-Td
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD1-0008P0-8J
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:28 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDC-00004u-8s
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793630426;
+ s=mimecast20190719; t=1793630437;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nx+JQzVuV6SfoCUfbG7m6RhpcRShrhNZwmG6nyMCMQY=;
- b=Mg0RI//Q8aSNDefcPn2wTrjIzYZEUuiXLyUZRlyRAdIUKxrSaDJaNK2/Et3kIlApHX97xp
- Z4vRAcAOTbfmUebF4PU8D5xfK6OPNLY+hTV8Io1iyq1VTnEfVBx7pk8W1e8MSZGIMcAteD
- Zqj9/G1VdCJOQLTFIpaBhi/mDwHtLNw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=LGwT9Xba9basFM/Zk3ocexrZUU7eWJPbJZyN8Tmle90=;
+ b=W6l/ZNn26ggaQ7siX2gGBiw7A2UceUhPAsMWaH+Ou3xtZIlEpZyKNch/LH+Vp4XNw1OBJm
+ ajyJgvLjvnKxyXOwtdQ/oiLhjVHzI+B4t6SY6zZbr4YmbQwhxZ4VTONUBgQKo4RZ9YjYvJ
+ 8FiNXRLrlKYwjK7p4XpzFFY61fX1680=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-104-uz9Hewr3OJSB4qYiQH-Kbw-1; Mon,
- 02 Nov 2026 09:40:22 -0500
-X-MC-Unique: uz9Hewr3OJSB4qYiQH-Kbw-1
-X-Mimecast-MFC-AGG-ID: uz9Hewr3OJSB4qYiQH-Kbw_1793630421
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-LMzYdp5QNAq6uni54MuYJw-1; Mon,
+ 02 Nov 2026 09:40:34 -0500
+X-MC-Unique: LMzYdp5QNAq6uni54MuYJw-1
+X-Mimecast-MFC-AGG-ID: LMzYdp5QNAq6uni54MuYJw_1793630433
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C509A1977034; Mon,  2 Nov 2026 14:40:21 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CCEE1953964; Mon,  2 Nov 2026 14:40:33 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5024D433; Mon,  2 Nov 2026 14:40:21 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DA3E01800347; Mon,  2 Nov 2026 14:40:32 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EED2321E6883; Mon, 02 Nov 2026 15:40:18 +0100 (CET)
+ id 16F2821E663D; Mon, 02 Nov 2026 15:40:20 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, John Snow <jsnow@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Subject: [PULL 04/74] qapi/control: Turn the reference to qmp-spec.rst into a
- link
-Date: Mon,  2 Nov 2026 15:39:08 +0100
-Message-ID: <20261102144018.3212223-5-armbru@redhat.com>
+Cc: richard.henderson@linaro.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 67/74] hw: convert device-local PropertyInfo definitions to use
+ qapi_type
+Date: Mon,  2 Nov 2026 15:40:11 +0100
+Message-ID: <20261102144018.3212223-68-armbru@redhat.com>
 In-Reply-To: <20261102144018.3212223-1-armbru@redhat.com>
 References: <20261102144018.3212223-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
 X-Spam_score: 0.5
 X-Spam_bar: /
 X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -88,50 +89,259 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: John Snow <jsnow@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Add a new anchor to qmp-spec that allows us to cross-reference the
-Out-of-band execution section of the spec directly.
+Add a .qapi_type pointer to PropertyInfo definitions in
+device-specific files. Mechanical, except for "display_mode" in
+apple-gfx.m, which is a string of a specific format.
 
-Amend the documentation in qapi/control.json to use this new cross
-reference instead of a plaintext "see also".
-
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260929192403.2972132-1-jsnow@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20261101201717.3911097-50-armbru@redhat.com>
+[hw/ufs/ufs.c updated for c821f2f69f1e (hw/ufs: Add experimental fault
+injection properties for holding requests)]
 ---
- docs/interop/qmp-spec.rst | 2 ++
- qapi/control.json         | 3 +--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ hw/block/xen-block.c       | 2 ++
+ hw/misc/xlnx-versal-trng.c | 2 ++
+ hw/nvme/nguid.c            | 2 ++
+ hw/nvram/xlnx-bbram.c      | 2 ++
+ hw/nvram/xlnx-efuse.c      | 2 ++
+ hw/pci/pci.c               | 2 ++
+ hw/s390x/ccw-device.c      | 2 ++
+ hw/s390x/css.c             | 3 +++
+ hw/s390x/s390-pci-bus.c    | 2 ++
+ hw/vfio/pci-quirks.c       | 2 ++
+ hw/display/apple-gfx.m     | 2 ++
+ 11 files changed, 23 insertions(+)
 
-diff --git a/docs/interop/qmp-spec.rst b/docs/interop/qmp-spec.rst
-index 563344160e..ea713a96ac 100644
---- a/docs/interop/qmp-spec.rst
-+++ b/docs/interop/qmp-spec.rst
-@@ -119,6 +119,8 @@ Where:
+diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
+index 474c12fe4a..ffdb080657 100644
+--- a/hw/block/xen-block.c
++++ b/hw/block/xen-block.c
+@@ -29,6 +29,7 @@
+ #include "dataplane/xen-block.h"
+ #include "hw/xen/interface/io/xs_wire.h"
+ #include "trace.h"
++#include "qapi/qapi-builtin-type-infos.h"
  
- The actual commands are documented in the :doc:`qemu-qmp-ref`.
+ #define XVDA_MAJOR 202
+ #define XVDQ_MAJOR (1 << 20)
+@@ -664,6 +665,7 @@ invalid:
+  */
+ static const PropertyInfo xen_block_prop_vdev = {
+     .type  = "str",
++    .qapi_type = &str_type_info,
+     .description = "Virtual Disk specifier (d*p*/xvd*/hd*/sd*)",
+     .get = xen_block_get_vdev,
+     .set = xen_block_set_vdev,
+diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+index 0584ee089e..3204e083ea 100644
+--- a/hw/misc/xlnx-versal-trng.c
++++ b/hw/misc/xlnx-versal-trng.c
+@@ -36,6 +36,7 @@
+ #include "qapi/visitor.h"
+ #include "migration/vmstate.h"
+ #include "hw/core/qdev-properties.h"
++#include "qapi/qapi-builtin-type-infos.h"
  
-+.. _out-of-band execution:
-+
- Out-of-band execution
- ---------------------
+ #ifndef XLNX_VERSAL_TRNG_ERR_DEBUG
+ #define XLNX_VERSAL_TRNG_ERR_DEBUG 0
+@@ -663,6 +664,7 @@ static void trng_prop_fault_event_get(Object *obj, Visitor *v,
  
-diff --git a/qapi/control.json b/qapi/control.json
-index ef63a8a261..e97fe317af 100644
---- a/qapi/control.json
-+++ b/qapi/control.json
-@@ -44,8 +44,7 @@
- #     client connection, used for agreeing on particular QMP extension
- #     behaviors.
- #
--# @oob: QMP ability to support out-of-band requests.  (Please refer to
--#     qmp-spec.rst for more information on OOB)
-+# @oob: QMP ability to support :ref:`out-of-band execution` requests.
- #
- # Since: 2.12
- ##
+ static const PropertyInfo trng_prop_fault_events = {
+     .type = "uint32",
++    .qapi_type = &uint32_type_info,
+     .description = "Set to trigger TRNG fault events",
+     .set = trng_prop_fault_event_set,
+     .get = trng_prop_fault_event_get,
+diff --git a/hw/nvme/nguid.c b/hw/nvme/nguid.c
+index 4cd6fad6ac..ccc12ac9f9 100644
+--- a/hw/nvme/nguid.c
++++ b/hw/nvme/nguid.c
+@@ -18,6 +18,7 @@
+ #include "qapi/visitor.h"
+ #include "qemu/ctype.h"
+ #include "nvme.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ #define NGUID_SEPARATOR '-'
+ 
+@@ -180,6 +181,7 @@ static void set_nguid(Object *obj, Visitor *v, const char *name, void *opaque,
+ 
+ const PropertyInfo qdev_prop_nguid = {
+     .type  = "str",
++    .qapi_type = &str_type_info,
+     .description =
+         "NGUID or \"" NGUID_VALUE_AUTO "\" for random value",
+     .get   = get_nguid,
+diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
+index e336874bde..8e7597621d 100644
+--- a/hw/nvram/xlnx-bbram.c
++++ b/hw/nvram/xlnx-bbram.c
+@@ -34,6 +34,7 @@
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/qdev-properties-system.h"
+ #include "hw/nvram/xlnx-efuse.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ #ifndef XLNX_BBRAM_ERR_DEBUG
+ #define XLNX_BBRAM_ERR_DEBUG 0
+@@ -487,6 +488,7 @@ static void bbram_prop_release_drive(Object *obj, const char *name,
+ 
+ static const PropertyInfo bbram_prop_drive = {
+     .type  = "str",
++    .qapi_type = &str_type_info,
+     .description = "Node name or ID of a block device to use as BBRAM backend",
+     .realized_set_allowed = true,
+     .get = bbram_prop_get_drive,
+diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
+index 03c9fbc0d0..7d2030f7aa 100644
+--- a/hw/nvram/xlnx-efuse.c
++++ b/hw/nvram/xlnx-efuse.c
+@@ -34,6 +34,7 @@
+ #include "system/blockdev.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/qdev-properties-system.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ #define TBIT0_OFFSET     28
+ #define TBIT1_OFFSET     29
+@@ -252,6 +253,7 @@ static void efuse_prop_release_drive(Object *obj, const char *name,
+ 
+ static const PropertyInfo efuse_prop_drive = {
+     .type  = "str",
++    .qapi_type = &str_type_info,
+     .description = "Node name or ID of a block device to use as eFUSE backend",
+     .realized_set_allowed = true,
+     .get = efuse_prop_get_drive,
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 2d2fe02c68..9691c514e0 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -53,6 +53,7 @@
+ #include "qapi/error.h"
+ #include "qemu/cutils.h"
+ #include "pci-internal.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ #include "hw/xen/xen.h"
+ #include "hw/i386/kvm/xen_evtchn.h"
+@@ -81,6 +82,7 @@ static void prop_pci_busnr_get(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo prop_pci_busnr = {
+     .type = "busnr",
++    .qapi_type = &uint8_type_info,
+     .get = prop_pci_busnr_get,
+ };
+ 
+diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
+index 25c4273279..54766f53e1 100644
+--- a/hw/s390x/ccw-device.c
++++ b/hw/s390x/ccw-device.c
+@@ -17,6 +17,7 @@
+ #include "qapi/visitor.h"
+ #include "qemu/ctype.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ static void ccw_device_refill_ids(CcwDevice *dev)
+ {
+@@ -75,6 +76,7 @@ static void ccw_device_set_loadparm(Object *obj, Visitor *v,
+ 
+ const PropertyInfo ccw_loadparm = {
+     .type  = "str",
++    .qapi_type = &str_type_info,
+     .description = "Up to 8 chars in set of [A-Za-z0-9. ] to select"
+             " a guest kernel",
+     .get = ccw_device_get_loadparm,
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index 65341c68c3..44805ceb49 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -24,6 +24,7 @@
+ #include "hw/s390x/s390-virtio-ccw.h"
+ #include "hw/s390x/s390-ccw.h"
+ #include "exec/cpu-common.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ typedef struct CrwContainer {
+     CRW crw;
+@@ -2531,6 +2532,7 @@ out:
+ 
+ const PropertyInfo css_devid_propinfo = {
+     .type = "str",
++    .qapi_type = &str_type_info,
+     .description = "Identifier of an I/O device in the channel "
+                    "subsystem, example: fe.1.23ab",
+     .get = get_css_devid,
+@@ -2539,6 +2541,7 @@ const PropertyInfo css_devid_propinfo = {
+ 
+ const PropertyInfo css_devid_ro_propinfo = {
+     .type = "str",
++    .qapi_type = &str_type_info,
+     .description = "Read-only identifier of an I/O device in the channel "
+                    "subsystem, example: fe.1.23ab",
+     .get = get_css_devid,
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index cdd75cdfd2..6703d4c1cb 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -35,6 +35,7 @@
+ #include "system/runstate.h"
+ 
+ #include "trace.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ S390pciState *s390_get_phb(void)
+ {
+@@ -1852,6 +1853,7 @@ static void s390_pci_set_fid(Object *obj, Visitor *v, const char *name,
+ 
+ static const PropertyInfo s390_pci_fid_propinfo = {
+     .type = "uint32",
++    .qapi_type = &uint32_type_info,
+     .description = "zpci_fid",
+     .get = s390_pci_get_fid,
+     .set = s390_pci_set_fid,
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index c5b4f9091d..a38a0e7a3a 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -26,6 +26,7 @@
+ #include "pci.h"
+ #include "pci-quirks.h"
+ #include "trace.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ /*
+  * List of device ids/vendor ids for which to disable
+@@ -1437,6 +1438,7 @@ static void set_nv_gpudirect_clique_id(Object *obj, Visitor *v,
+ 
+ const PropertyInfo qdev_prop_nv_gpudirect_clique = {
+     .type = "uint8",
++    .qapi_type = &uint8_type_info,
+     .description = "NVIDIA GPUDirect Clique ID (0 - 15)",
+     .get = get_nv_gpudirect_clique_id,
+     .set = set_nv_gpudirect_clique_id,
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index be0061b9db..4db80f0b10 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -15,6 +15,7 @@
+ #include "qemu/lockable.h"
+ #include "qemu/cutils.h"
+ #include "qemu/log.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ #include "qapi/visitor.h"
+ #include "qapi/error.h"
+ #include "qemu/aio-wait.h"
+@@ -872,6 +873,7 @@ static void apple_gfx_set_display_mode(Object *obj, Visitor *v,
+ 
+ const PropertyInfo qdev_prop_apple_gfx_display_mode = {
+     .type  = "display_mode",
++    .qapi_type = &str_type_info,
+     .description =
+         "Display mode in pixels and Hertz, as <width>x<height>@<refresh-rate> "
+         "Example: 3840x2160@60",
 -- 
 2.55.0
 
