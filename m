@@ -1,62 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC528606ABA5
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B078606AB8B
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=F7ZO2sCm
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OqyzpPtW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNt2J-0007wC-I9; Mon, 02 Nov 2026 09:29:23 -0500
+	id 1xNt2h-0008Et-St; Mon, 02 Nov 2026 09:29:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xNt2H-0007v3-1n
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:29:21 -0500
+ id 1xNt2Y-0008AB-25
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:29:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xNt2F-0007BU-Gm
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:29:20 -0500
+ id 1xNt2V-0007DD-U9
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:29:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793629758;
+ s=mimecast20190719; t=1793629775;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Wha8pve/S0YCfpjuANSumn6xFX6+g9XAO20nEsxA+TA=;
- b=F7ZO2sCmNqTdhRZ49t0yKh4qRGvoS7Vs2XQBcusTWpllnm05K4Fg3/QYGh0Tm2ZKRprcFW
- ex1YZp5t3AZpj/GYO7u+QUWOfBbw+i9crPJdIvVCIqxzcb6PVutNfKqWdEpT3bT/Qtzj/3
- +xRbD6joOB1XEgAchAH0ZP3CMNIric8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Lu6+drg66abBaGeER6CdTUQLuSTnldG42ZoylZEa6/w=;
+ b=OqyzpPtWk8dCdMTJhwa60W4LNlN8JznCrEoKPFyrH14eq95UTc2cLkBZTDv7l+JPtacZOP
+ PA4eVJGcWl8BEsPKI2BUL2GdJgRvS4XrL/Mgf73ACGTHHNn8u1q1JgPjF6/NnsfgcMaYRU
+ JmaHugLD5alLpdb1CKHwQQ26dG3+6ks=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-303-6XSzh8srMQCZexhddmxLTw-1; Mon,
- 02 Nov 2026 09:29:17 -0500
-X-MC-Unique: 6XSzh8srMQCZexhddmxLTw-1
-X-Mimecast-MFC-AGG-ID: 6XSzh8srMQCZexhddmxLTw_1793629757
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-OLIgRGJdNIu3t4qDHrj3CQ-1; Mon,
+ 02 Nov 2026 09:29:31 -0500
+X-MC-Unique: OLIgRGJdNIu3t4qDHrj3CQ-1
+X-Mimecast-MFC-AGG-ID: OLIgRGJdNIu3t4qDHrj3CQ_1793629771
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB8561964CF9
- for <qemu-devel@nongnu.org>; Mon,  2 Nov 2026 14:29:16 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0FE991802140
+ for <qemu-devel@nongnu.org>; Mon,  2 Nov 2026 14:29:31 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A87A31800480; Mon,  2 Nov 2026 14:29:15 +0000 (UTC)
+ id C520418004D2; Mon,  2 Nov 2026 14:29:29 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v4 19/25] monitor: remove mistaken use of
- trace_event_get_state()
-Date: Mon,  2 Nov 2026 14:28:38 +0000
-Message-ID: <20261102142844.3464712-20-berrange@redhat.com>
+Subject: [PATCH v4 25/25] trace: remove 'trace_event_get_state' wrapper
+Date: Mon,  2 Nov 2026 14:28:44 +0000
+Message-ID: <20261102142844.3464712-26-berrange@redhat.com>
 In-Reply-To: <20261102142844.3464712-1-berrange@redhat.com>
 References: <20261102142844.3464712-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -66,14 +65,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,40 +90,218 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Conditional checks must call trace_event_get_state_backends()
-which checks the state of all backends (dtrace, ftrace, log,
-syslog, simple & ust), while trace_event_get_state() only
-validates state for backends using QEMU's internal state
-tracking (ftrace, log, syslog, simple).
+The 'trace_event_get_state' macro is a wrapper around the
+'trace_event_get_state_dynamic_by_id' macro, which is a direct
+check of the _TRACE_...._DSTATE global variable.
+
+The only code that should be using this is the generated trace
+probes, but the name looks rather appealing causing it to be
+mistakenly used in other places, instead of the recommended
+'trace_event_get_state_dynamic_backends'.
+
+Removing the 'trace_event_get_state' macro reduces the potential
+for confusion.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/qmp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/tracetool/backend/__init__.py | 3 ++-
+ scripts/tracetool/backend/log.py      | 2 +-
+ scripts/tracetool/format/h.py         | 2 +-
+ tests/tracetool/all.h                 | 8 ++++----
+ tests/tracetool/ftrace.h              | 4 ++--
+ tests/tracetool/log.h                 | 4 ++--
+ tests/tracetool/simple.h              | 4 ++--
+ tests/tracetool/syslog.h              | 4 ++--
+ trace/control.h                       | 9 ---------
+ 9 files changed, 16 insertions(+), 24 deletions(-)
 
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index eb44012643f..8fad090fbe3 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -439,7 +439,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/backend/__init__.py
+index 72f549c77c4..2749c4e6315 100644
+--- a/scripts/tracetool/backend/__init__.py
++++ b/scripts/tracetool/backend/__init__.py
+@@ -26,7 +26,8 @@
+                             considered "public".
+ CHECK_TRACE_EVENT_GET_STATE If exists and is set to 'True', the backend-specific
+                             code inside the tracepoint is emitted within an
+-                            ``if trace_event_get_state()`` conditional.
++                            ``if trace_event_get_state_dynamic_by_id()``
++                            conditional.
+ =========================== ====================================================
  
-         /* Process request */
-         if (req_obj->req) {
--            if (trace_event_get_state(TRACE_MONITOR_QMP_CMD_IN_BAND)) {
-+            if (trace_event_get_state_backends(TRACE_MONITOR_QMP_CMD_IN_BAND)) {
-                 QDict *qdict = qobject_to(QDict, req_obj->req);
-                 QObject *id = qdict ? qdict_get(qdict, "id") : NULL;
-                 GString *id_json;
-@@ -495,7 +495,7 @@ static void handle_qmp_command(void *opaque, QObject *req, Error *err)
  
-     if (qdict && qmp_is_oob(qdict)) {
-         /* OOB commands are executed immediately */
--        if (trace_event_get_state(TRACE_MONITOR_QMP_CMD_OUT_OF_BAND)) {
-+        if (trace_event_get_state_backends(TRACE_MONITOR_QMP_CMD_OUT_OF_BAND)) {
-             QObject *id = qdict_get(qdict, "id");
-             GString *id_json;
+diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
+index 4a622dd4dcb..00a0dd9c9dc 100644
+--- a/scripts/tracetool/backend/log.py
++++ b/scripts/tracetool/backend/log.py
+@@ -28,7 +28,7 @@ def generate_h(event, group):
+     if len(event.args) > 0:
+         argnames = ", " + argnames
  
+-    out('    if (trace_event_get_state(%(event_id)s) &&',
++    out('    if (trace_event_get_state_dynamic_by_id(%(event_id)s) &&',
+         '        qemu_loglevel_mask(LOG_TRACE)) {',
+         '#line %(event_lineno)d "%(event_filename)s"',
+         '            qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
+index f719fe09397..ad4ce4414fe 100644
+--- a/scripts/tracetool/format/h.py
++++ b/scripts/tracetool/format/h.py
+@@ -66,7 +66,7 @@ def generate(events, backend, group):
+ 
+         if backend.check_trace_event_get_state:
+             event_id = 'TRACE_' + e.name.upper()
+-            cond = "trace_event_get_state(%s)" % event_id
++            cond = "trace_event_get_state_dynamic_by_id(%s)" % event_id
+             out('    if (%(cond)s) {',
+                 cond=cond)
+             backend.generate(e, group, check_trace_event_get_state=True)
+diff --git a/tests/tracetool/all.h b/tests/tracetool/all.h
+index 01971827e4b..d4c91cdd1a4 100644
+--- a/tests/tracetool/all.h
++++ b/tests/tracetool/all.h
+@@ -51,14 +51,14 @@ void _simple_trace_test_wibble(void *context, int value);
+ static inline void trace_test_blah(void *context, const char *filename)
+ {
+     QEMU_TEST_BLAH(context, filename);
+-    if (trace_event_get_state(TRACE_TEST_BLAH) &&
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) &&
+         qemu_loglevel_mask(LOG_TRACE)) {
+ #line 4 "trace-events"
+             qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
+ #line 59 "all.h"
+     }
+     tracepoint(qemu, test_blah, context, filename);
+-    if (trace_event_get_state(TRACE_TEST_BLAH)) {
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH)) {
+ #line 4 "trace-events"
+         ftrace_write("test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
+ #line 65 "all.h"
+@@ -80,14 +80,14 @@ static inline void trace_test_blah(void *context, const char *filename)
+ static inline void trace_test_wibble(void *context, int value)
+ {
+     QEMU_TEST_WIBBLE(context, value);
+-    if (trace_event_get_state(TRACE_TEST_WIBBLE) &&
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) &&
+         qemu_loglevel_mask(LOG_TRACE)) {
+ #line 5 "trace-events"
+             qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
+ #line 88 "all.h"
+     }
+     tracepoint(qemu, test_wibble, context, value);
+-    if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE)) {
+ #line 5 "trace-events"
+         ftrace_write("test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
+ #line 94 "all.h"
+diff --git a/tests/tracetool/ftrace.h b/tests/tracetool/ftrace.h
+index 4eba6b4d599..b55ee08bbfe 100644
+--- a/tests/tracetool/ftrace.h
++++ b/tests/tracetool/ftrace.h
+@@ -19,7 +19,7 @@ extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ 
+ static inline void trace_test_blah(void *context, const char *filename)
+ {
+-    if (trace_event_get_state(TRACE_TEST_BLAH)) {
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH)) {
+ #line 4 "trace-events"
+         ftrace_write("test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
+ #line 26 "ftrace.h"
+@@ -32,7 +32,7 @@ static inline void trace_test_blah(void *context, const char *filename)
+ 
+ static inline void trace_test_wibble(void *context, int value)
+ {
+-    if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE)) {
+ #line 5 "trace-events"
+         ftrace_write("test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
+ #line 39 "ftrace.h"
+diff --git a/tests/tracetool/log.h b/tests/tracetool/log.h
+index 9afbe721a47..02bb1309e20 100644
+--- a/tests/tracetool/log.h
++++ b/tests/tracetool/log.h
+@@ -20,7 +20,7 @@ extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ 
+ static inline void trace_test_blah(void *context, const char *filename)
+ {
+-    if (trace_event_get_state(TRACE_TEST_BLAH) &&
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) &&
+         qemu_loglevel_mask(LOG_TRACE)) {
+ #line 4 "trace-events"
+             qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
+@@ -35,7 +35,7 @@ static inline void trace_test_blah(void *context, const char *filename)
+ 
+ static inline void trace_test_wibble(void *context, int value)
+ {
+-    if (trace_event_get_state(TRACE_TEST_WIBBLE) &&
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) &&
+         qemu_loglevel_mask(LOG_TRACE)) {
+ #line 5 "trace-events"
+             qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
+diff --git a/tests/tracetool/simple.h b/tests/tracetool/simple.h
+index 9b066364b0a..0b9e7cba35c 100644
+--- a/tests/tracetool/simple.h
++++ b/tests/tracetool/simple.h
+@@ -20,7 +20,7 @@ void _simple_trace_test_wibble(void *context, int value);
+ 
+ static inline void trace_test_blah(void *context, const char *filename)
+ {
+-    if (trace_event_get_state(TRACE_TEST_BLAH)) {
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH)) {
+         _simple_trace_test_blah(context, filename);
+     }
+ }
+@@ -31,7 +31,7 @@ static inline void trace_test_blah(void *context, const char *filename)
+ 
+ static inline void trace_test_wibble(void *context, int value)
+ {
+-    if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE)) {
+         _simple_trace_test_wibble(context, value);
+     }
+ }
+diff --git a/tests/tracetool/syslog.h b/tests/tracetool/syslog.h
+index 6a9304489f6..173b35dcf69 100644
+--- a/tests/tracetool/syslog.h
++++ b/tests/tracetool/syslog.h
+@@ -19,7 +19,7 @@ extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ 
+ static inline void trace_test_blah(void *context, const char *filename)
+ {
+-    if (trace_event_get_state(TRACE_TEST_BLAH)) {
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH)) {
+ #line 4 "trace-events"
+         syslog(LOG_INFO, "test_blah " "Blah context=%p filename=%s" , context, filename);
+ #line 26 "syslog.h"
+@@ -32,7 +32,7 @@ static inline void trace_test_blah(void *context, const char *filename)
+ 
+ static inline void trace_test_wibble(void *context, int value)
+ {
+-    if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
++    if (trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE)) {
+ #line 5 "trace-events"
+         syslog(LOG_INFO, "test_wibble " "Wibble context=%p value=%d" , context, value);
+ #line 39 "syslog.h"
+diff --git a/trace/control.h b/trace/control.h
+index 71f254728d4..dfb52b23ac4 100644
+--- a/trace/control.h
++++ b/trace/control.h
+@@ -97,15 +97,6 @@ static uint32_t trace_event_get_id(TraceEvent *ev);
+  */
+ static const char * trace_event_get_name(TraceEvent *ev);
+ 
+-/**
+- * trace_event_get_state:
+- * @id: Event identifier name.
+- *
+- * Get the tracing state of an event, both static and the QEMU dynamic state.
+- */
+-#define trace_event_get_state(id)                       \
+-    (trace_event_get_state_dynamic_by_id(id))
+-
+ /**
+  * trace_event_get_state_backends:
+  * @id: Event identifier name.
 -- 
 2.56.0
 
