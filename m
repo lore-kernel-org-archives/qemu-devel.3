@@ -1,74 +1,76 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E487D606A5BC
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37568606C541
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 14:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=O1osAJbH
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RcMbFPV6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNtEK-0004l8-7Q; Mon, 02 Nov 2026 09:41:48 -0500
+	id 1xNtDm-0003VU-Bl; Mon, 02 Nov 2026 09:41:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDH-0003G7-S6
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD8-0008T2-EP
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtDB-0003DE-Ti
  for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xNtD8-0008Sq-AX
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 09:40:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1793630432;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UkO1Zo2bHx/UoA2ROy1uaJ3Bvjqi/TP11BUdnNreuU4=;
- b=O1osAJbHZF7Ay2PsnJj8cZjChX431eW2fzWtQJdfIpn812A9iG6GdQNZ9ooFB0V9KxYiz+
- 4Hv/ZPsA20v7CwIAEfIeMN3RSZxcKS8z9uh1Be8R7/ncsyfGfm1FCmEs+OgU8W6duGGY0k
- TPwxswH+CXjxZq1AgMkVmUX2W3jsbGU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=aA15N391HVWG2S+kFZZWxT6Crrg8XwMSyJFL8FGzrC0=;
+ b=RcMbFPV6u3wKJrMcSKIITrH/3+v8paI1dQ4qJRoyY04JPqo8QC9grsCbf1hDYEwCsKiwfE
+ vveMsVK3TNbmA66IQS7KbjmBm+8+S26HZW3s4yhnoJx9rpvYEhcLZZIvUqtLqVrvwL6EVQ
+ aubRtVOM4pGln9iBrt15raJ1vPc2/iY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-ergpGdC8P2KXLIAWTldkYA-1; Mon,
- 02 Nov 2026 09:40:31 -0500
-X-MC-Unique: ergpGdC8P2KXLIAWTldkYA-1
-X-Mimecast-MFC-AGG-ID: ergpGdC8P2KXLIAWTldkYA_1793630430
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-vX7tBCxdMdWg4bK6mNdDRw-1; Mon,
+ 02 Nov 2026 09:40:30 -0500
+X-MC-Unique: vX7tBCxdMdWg4bK6mNdDRw-1
+X-Mimecast-MFC-AGG-ID: vX7tBCxdMdWg4bK6mNdDRw_1793630430
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C250180AEBE; Mon,  2 Nov 2026 14:40:30 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E12641953971; Mon,  2 Nov 2026 14:40:29 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 16C571800444; Mon,  2 Nov 2026 14:40:30 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A122230000E7; Mon,  2 Nov 2026 14:40:29 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C57BC21E66D7; Mon, 02 Nov 2026 15:40:19 +0100 (CET)
+ id 966C421E682C; Mon, 02 Nov 2026 15:40:19 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 51/74] net/colo-compare: fix max_queue_size setter visitor type
-Date: Mon,  2 Nov 2026 15:39:55 +0100
-Message-ID: <20261102144018.3212223-52-armbru@redhat.com>
+Subject: [PULL 40/74] arm/virt: convert OnOffAuto acpi property to QAPI-aware
+ registration
+Date: Mon,  2 Nov 2026 15:39:44 +0100
+Message-ID: <20261102144018.3212223-41-armbru@redhat.com>
 In-Reply-To: <20261102144018.3212223-1-armbru@redhat.com>
 References: <20261102144018.3212223-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,34 +91,68 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The setter was using visit_type_uint64, accepting values wider than
-the uint32_t field. Use visit_type_uint32 to match the getter, field,
-and typename.
+Convert the acpi OnOffAuto property from manual visitor-based
+callbacks to object_class_property_add_enum().
 
-Fixes: 0c4266ef2690 ("net/colo-compare.c: Fix compare_timeout format issue")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20261101201717.3911097-35-armbru@redhat.com>
+Message-ID: <20261101201717.3911097-24-armbru@redhat.com>
 ---
- net/colo-compare.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/arm/virt.c | 21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/net/colo-compare.c b/net/colo-compare.c
-index a9c6cca5e1..6bc43e0696 100644
---- a/net/colo-compare.c
-+++ b/net/colo-compare.c
-@@ -1129,9 +1129,9 @@ static void set_max_queue_size(Object *obj, Visitor *v,
-                                const char *name, void *opaque,
-                                Error **errp)
- {
--    uint64_t value;
-+    uint32_t value;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index dad3f8c39b..e39d77eba6 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -72,7 +72,7 @@
+ #include "whpx_arm.h"
+ #include "hw/firmware/smbios.h"
+ #include "qapi/visitor.h"
+-#include "qapi/qapi-visit-common.h"
++#include "qapi/qapi-type-infos-common.h"
+ #include "qobject/qlist.h"
+ #include "standard-headers/linux/input.h"
+ #include "hw/arm/smmuv3.h"
+@@ -3564,21 +3564,16 @@ bool virt_is_acpi_enabled(const VirtMachineState *vms)
+     return true;
+ }
  
--    if (!visit_type_uint64(v, name, &value, errp)) {
-+    if (!visit_type_uint32(v, name, &value, errp)) {
-         return;
-     }
-     if (!value) {
+-static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
+-                          void *opaque, Error **errp)
++static int virt_get_acpi(Object *obj, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+-    OnOffAuto acpi = vms->acpi;
+-
+-    visit_type_OnOffAuto(v, name, &acpi, errp);
++    return vms->acpi;
+ }
+ 
+-static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
+-                          void *opaque, Error **errp)
++static void virt_set_acpi(Object *obj, int value, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &vms->acpi, errp);
++    vms->acpi = value;
+ }
+ 
+ static bool virt_get_ras(Object *obj, Error **errp)
+@@ -4206,9 +4201,9 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     mc->default_ram_id = "mach-virt.ram";
+     mc->default_nic = "virtio-net-pci";
+ 
+-    object_class_property_add(oc, "acpi", "OnOffAuto", NULL,
+-                              virt_get_acpi, virt_set_acpi,
+-                              NULL, NULL);
++    object_class_property_add_enum(oc, "acpi", "OnOffAuto",
++                                   &OnOffAuto_type_info, NULL,
++                                   virt_get_acpi, virt_set_acpi);
+     object_class_property_set_description(oc, "acpi",
+         "Enable ACPI");
+     object_class_property_add_bool(oc, "secure", virt_get_secure,
 -- 
 2.55.0
 
