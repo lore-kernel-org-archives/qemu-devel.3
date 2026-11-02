@@ -1,100 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA599606A324
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 03:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B34606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 03:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=grspioeo
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=nuEr30SY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNj9A-0002SL-H3; Sun, 01 Nov 2026 22:55:48 -0500
+	id 1xNj8d-00022e-0u; Sun, 01 Nov 2026 22:55:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xNj98-0002Q4-6c; Sun, 01 Nov 2026 22:55:46 -0500
+ id 1xNj8Y-00021M-KC; Sun, 01 Nov 2026 22:55:11 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xNj96-0003NP-9e; Sun, 01 Nov 2026 22:55:45 -0500
+ id 1xNj8W-0003Gq-M9; Sun, 01 Nov 2026 22:55:10 -0500
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A20iLPh1467125; Mon, 2 Nov 2026 03:55:40 GMT
+ 6A20ieFp1467410; Mon, 2 Nov 2026 03:55:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=2R3rzjY5gF9Lj0vxo
- YveHloOqYr0Skq30ZFVjOHSrwQ=; b=grspioeoO3yp+laD11YTDNsuLChptKv/E
- BfTkI3izeEb7VaZr9aR2duPZcwEeLtUwCyndFd+evv5AXogTYxQQHWrvdTsICXTz
- ja0BSLhyryMdj4MPgEMDjpdh4GmdwfAp+vpTHsWZVkBR/KKioBwBnM/4SQmbiHnO
- xkklOI+Urt4IG7Hyel1FIkV8/xrvTGRgREdWJ+QjS0WhMx0go3Egwm+p3vOzrtZJ
- 4Cg7ijL2Jk3FDHiwv40JhlRLE34vU6pXX4hAkaGbj+7GiNKQO5hzwtOlJYg+i2V+
- /SK5hAWY5d1p+WsCjMXXsqcWWZGW5FsQarXmOp8f5EmSLkW2sS8zw==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn826ehcd-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=+I9IXf
+ apI9v9YdK6k/c3mk77lveHLBPtw0Uhyc76whU=; b=nuEr30SYfLDGhGbSbxPYQ+
+ 7Cs8AT0Vd9ihC0zFGKXqS4Ppy/XFv7lLjtfXV5Ay1KTf0OpGYqbmiAaXYrVvNsKw
+ 7HBbqI3uFy7TH7a6aNd/7jAusBBXXt6+z16yRoqauA27HjSdO+tQ9n4hdoC9JtFr
+ /+hSMFF/5TT4owA6EZsS6kf2I5Tdv8x82xfxpfkX0fcE9jmjBRXTCWCADWktV7tb
+ SD8w+yjTnl6oOKEjN/3LdalmbTJg6Sh+rtpy9E/VBM7YNNdcb85MRceV6s797tu8
+ WdZVMZdSrswItT9edQS9NcsB4VMooZDW7KJi/oa/7i+ZKbsgqtQ6E3gtVgCOfV1Q
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn826ehap-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 02 Nov 2026 03:55:39 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A20K8Ao148915; Mon, 2 Nov 2026 03:55:38 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hnwbxusgc-1
+ Mon, 02 Nov 2026 03:55:03 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A20KCPW034910; Mon, 2 Nov 2026 03:55:02 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnunjv10e-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Nov 2026 03:55:38 +0000 (GMT)
+ Mon, 02 Nov 2026 03:55:02 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A23tbkG22675978
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6A23t0Tu63701358
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 2 Nov 2026 03:55:37 GMT
+ Mon, 2 Nov 2026 03:55:01 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9EA505805E;
- Mon,  2 Nov 2026 03:55:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DA24658056;
+ Mon,  2 Nov 2026 03:55:00 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0B9FB58062;
- Mon,  2 Nov 2026 03:55:30 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3F81658052;
+ Mon,  2 Nov 2026 03:54:54 +0000 (GMT)
 Received: from li-bd0dea4c-2912-11b2-a85c-e84940f94d2e.ibmuc.com (unknown
  [9.43.104.91]) by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  2 Nov 2026 03:55:29 +0000 (GMT)
+ Mon,  2 Nov 2026 03:54:53 +0000 (GMT)
 From: uverma@linux.ibm.com
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: npiggin@gmail.com, jishnuvw@linux.ibm.com, harshpb@linux.ibm.com,
  amachhiw@linux.ibm.com, jsnow@redhat.com, farosas@suse.de,
  lvivier@redhat.com, pbonzini@redhat.com, odaki@rsg.ci.i.u-tokyo.ac.jp,
  aleksandr.mikhalitsyn@futurfusion.io,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Utkarsh Verma <uverma@linux.ibm.com>
-Subject: [PATCH v7 06/10] tests/qtest/ahci: unmap pci bar before reusing device
-Date: Mon,  2 Nov 2026 09:23:02 +0530
-Message-ID: <20261102035306.2291147-7-uverma@linux.ibm.com>
+Subject: [PATCH v7 01/10] tests/qtest: Enforce zero for the "un-fired" msix
+ message value
+Date: Mon,  2 Nov 2026 09:22:57 +0530
+Message-ID: <20261102035306.2291147-2-uverma@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261102035306.2291147-1-uverma@linux.ibm.com>
 References: <20261102035306.2291147-1-uverma@linux.ibm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: 5pRwD2qAd5GOYKOOR0E9KBksG6Ar0v7W
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAyMDAxNCBTYWx0ZWRfX8m4XMWG40zJC
- dVF7S3vt9LEqxCFlGyGqNve18RURzsPPxFPZoUaMbCFxpN06bpxvEqgf7BrzxUoFCW1kM6yFRiH
- 5z8BxVk3nu6vJBWRWPKqCd1xLWs7udakWwltADlcNmJGU7UxCclg6vx0bBfO8TAUVkaYFhprqnY
- BOdJh8d2wEbpzNuluLCLfEmO+g3/7a0QKyJVCdqXND2fAxCDkKFaqKef3MM8B0x2xNLWGHRr4ve
- z1tdnCoCEwAoXlZAE0PQLGheg5HB6lzag0sPI8jPUEJPYy6mfzuBaB9eGpxreXoTQ+CpM83Cj9e
- NcolBRzrQs5XJL+UvvBReTphg4ysFU5AeKry4tP9L2OqsEgrTg4KmSjE8hRxIhwt2dFT7pwurDG
- B31ZSyLL91svpa3UffjB6w4pN0gA1Gyaym91KVVQyqAdKINn4pr63NmwINGlsnrC065Bsae0ebh
- TrXDZxoUwkn/tZE7Svg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAyMDAxNCBTYWx0ZWRfXx49q3cfyyIU1
- gbTn+hFhAfmfXu3YZZFwDDJcfQ+IPONI8AYua5LwC5imwRd1dh17XebRrMP3/VWHX/q5wbHbf2E
- fwK4O5MuSM9Ed5rSMz21u18s64ihL3o=
-X-Proofpoint-GUID: ImvFCXVH3zoycyVLNZlEh0PLUx1OvTdz
-X-Authority-Analysis: v=2.4 cv=EsJHPicA c=1 sm=1 tr=0 ts=6ae809bb cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=pGLkceISAAAA:8 a=20KFwNOVAAAA:8 a=z4glEzOvAAAA:8
- a=VnNF1IyMAAAA:8 a=vef69Nw4dH7SYshA8_MA:9 a=92dS5hN0c3Q7EetK7xW5:22
+X-Proofpoint-ORIG-GUID: m3u9wGxDTVqrfhhdtICKQgCqtNGy9Do-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAyMDAxNCBTYWx0ZWRfX1t3+6eU8qTFq
+ eD9au9pDrmDElIVUK5q1WkRH+SYeUnSu+7Wg64ZJh3H+7SrzMcc1Q1tZoelv49d4bolUsyao5lT
+ I+0q4Oq73cNVm0EeXOdDjACFKcsakRpQdO1zRJDudTFGoB7ZJdfn+e4D6BSgNrSuIsKD+fcUaDl
+ /5ip9jUYKl1jKIa/UjXWUGyRTx4UwHiz0d8/MFxdMqgRU353ITDlzRvZNHauzIoQEwxR4mPRMn/
+ qIIsYqgX1OSnSe+xFMb9OCZint0iwU8OWQpAF67yHblD6SpjDm3Rd8DjGY8cTO1krS8LSSZ65T3
+ SBK+JdTOCHwgvPztYA0KjMsT8ucXNJu1K0vT+CfKbdAJE1tV1Sicgnc5aoUmW5w7IgXTmyAfG5J
+ UjlupsRNUwGNvdjyDMQ63dt2AnQdvEpmasjRApd7tZgCwnwxUeJ9o2mjrzic+9807mXNGgLUYEw
+ Q1ggT6bWQiCSKubeWZA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAyMDAxNCBTYWx0ZWRfXz9rn2bhMlteA
+ xW9OJNfGQnuxcs18PjlzdAJl+QK6Ht1jbmW7llzUL1laL4qRcZ7ZHprjQfePSQtJAL6hrt2uQsD
+ JQGqmg14erjGOOhesJiWH3hhYLeqVUk=
+X-Proofpoint-GUID: D0fFiq8Ty8_P-0Ll72w8FX-946YXnVOK
+X-Authority-Analysis: v=2.4 cv=EsJHPicA c=1 sm=1 tr=0 ts=6ae80997 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=pGLkceISAAAA:8
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=cluJ50jZ9R0NNln75_EA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-02_01,2026-10-21_02,2025-10-01_01
@@ -133,105 +135,104 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Nicholas Piggin <npiggin@gmail.com>
 
-ahci-test double-maps the hba bar in the pending_callback test.
-Unmap it first, to keep iomaps balanced.
+virtio-pci detects an unmasked msix interrupt has fired by looking
+for the data payload value at the target address. If a value of zero
+is enforced for the memory value when an interrupt has not fired,
+then an assertion can be added to catch the case where something
+changed the memory to an unexpected value.
 
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+This catches an endian conversion bug in the message value when
+running these tests on a big endian target. Previously the test
+just times out waiting for interrupt, after this it fails nicely.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Jishnu Warrier <jishnuvw@linux.ibm.com>
 Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
 ---
- tests/qtest/ahci-test.c   |  6 ++++++
- tests/qtest/libqos/ahci.c | 11 +++++++++++
- tests/qtest/libqos/ahci.h |  2 ++
- 3 files changed, 19 insertions(+)
+ tests/qtest/libqos/virtio-pci-modern.c |  9 +++++----
+ tests/qtest/libqos/virtio-pci.c        | 20 ++++++++++++--------
+ 2 files changed, 17 insertions(+), 12 deletions(-)
 
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index c49aa61862..043a916fdd 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -85,6 +85,8 @@ static void verify_state(AHCIQState *ahci, uint64_t hba_old)
-     uint64_t hba_base;
-     AHCICommandHeader cmd;
- 
-+    g_assert_cmphex(ahci->hba_bar.addr, ==, hba_old);
-+
-     ahci_fingerprint = qpci_config_readl(ahci->dev, PCI_VENDOR_ID);
-     g_assert_cmphex(ahci_fingerprint, ==, ahci->fingerprint);
- 
-@@ -198,6 +200,7 @@ static void ahci_shutdown(AHCIQState *ahci)
- {
-     QOSState *qs = ahci->parent;
- 
-+    ahci_pci_disable(ahci);
-     ahci_clean_mem(ahci);
-     free_ahci_device(ahci->dev);
-     g_free(ahci);
-@@ -1457,7 +1460,9 @@ static void test_reset(void)
-                                CMD_READ_DMA_EXT,
-                                CMD_WRITE_DMA_EXT);
-         ahci_set(ahci, AHCI_GHC, AHCI_GHC_HR);
-+        stop_ahci_device(ahci);
-         ahci_clean_mem(ahci);
-+        start_ahci_device(ahci);
+diff --git a/tests/qtest/libqos/virtio-pci-modern.c b/tests/qtest/libqos/virtio-pci-modern.c
+index 4e67fcbd5d..f31b3be656 100644
+--- a/tests/qtest/libqos/virtio-pci-modern.c
++++ b/tests/qtest/libqos/virtio-pci-modern.c
+@@ -137,12 +137,13 @@ static bool get_msix_status(QVirtioPCIDevice *dev, uint32_t msix_entry,
      }
  
-     ahci_shutdown(ahci);
-@@ -1523,6 +1528,7 @@ static void test_reset_pending_callback(void)
-     sleep(1);
- 
-     /* Start again. */
-+    stop_ahci_device(ahci);
-     ahci_clean_mem(ahci);
-     ahci_pci_enable(ahci);
-     ahci_hba_enable(ahci);
-diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-index 50b63239c2..a709558aac 100644
---- a/tests/qtest/libqos/ahci.c
-+++ b/tests/qtest/libqos/ahci.c
-@@ -206,6 +206,11 @@ void ahci_pci_enable(AHCIQState *ahci)
- 
+     data = qtest_readl(dev->pdev->bus->qts, msix_addr);
+-    if (data == msix_data) {
+-        qtest_writel(dev->pdev->bus->qts, msix_addr, 0);
+-        return true;
+-    } else {
++    if (data == 0) {
+         return false;
+     }
++    /* got a message, ensure it matches expected value then clear it. */
++    g_assert_cmphex(data, ==, msix_data);
++    qtest_writel(dev->pdev->bus->qts, msix_addr, 0);
++    return true;
  }
  
-+void ahci_pci_disable(AHCIQState *ahci)
-+{
-+    stop_ahci_device(ahci);
-+}
-+
- /**
-  * Map BAR5/ABAR, and engage the PCI device.
-  */
-@@ -218,6 +223,12 @@ void start_ahci_device(AHCIQState *ahci)
-     qpci_device_enable(ahci->dev);
- }
+ static bool get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+diff --git a/tests/qtest/libqos/virtio-pci.c b/tests/qtest/libqos/virtio-pci.c
+index 002bf8b8c2..102e45b524 100644
+--- a/tests/qtest/libqos/virtio-pci.c
++++ b/tests/qtest/libqos/virtio-pci.c
+@@ -132,12 +132,13 @@ static bool qvirtio_pci_get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+             return qpci_msix_pending(dev->pdev, vqpci->msix_entry);
+         } else {
+             data = qtest_readl(dev->pdev->bus->qts, vqpci->msix_addr);
+-            if (data == vqpci->msix_data) {
+-                qtest_writel(dev->pdev->bus->qts, vqpci->msix_addr, 0);
+-                return true;
+-            } else {
++            if (data == 0) {
+                 return false;
+             }
++            /* got a message, ensure it matches expected value then clear it. */
++            g_assert_cmphex(data, ==, vqpci->msix_data);
++            qtest_writel(dev->pdev->bus->qts, vqpci->msix_addr, 0);
++            return true;
+         }
+     } else {
+         return qpci_io_readb(dev->pdev, dev->bar, VIRTIO_PCI_ISR) & 1;
+@@ -156,12 +157,13 @@ static bool qvirtio_pci_get_config_isr_status(QVirtioDevice *d)
+             return qpci_msix_pending(dev->pdev, dev->config_msix_entry);
+         } else {
+             data = qtest_readl(dev->pdev->bus->qts, dev->config_msix_addr);
+-            if (data == dev->config_msix_data) {
+-                qtest_writel(dev->pdev->bus->qts, dev->config_msix_addr, 0);
+-                return true;
+-            } else {
++            if (data == 0) {
+                 return false;
+             }
++            /* got a message, ensure it matches expected value then clear it. */
++            g_assert_cmphex(data, ==, dev->config_msix_data);
++            qtest_writel(dev->pdev->bus->qts, dev->config_msix_addr, 0);
++            return true;
+         }
+     } else {
+         return qpci_io_readb(dev->pdev, dev->bar, VIRTIO_PCI_ISR) & 2;
+@@ -323,6 +325,7 @@ void qvirtqueue_pci_msix_setup(QVirtioPCIDevice *d, QVirtQueuePCI *vqpci,
+     vqpci->msix_entry = entry;
  
-+void stop_ahci_device(AHCIQState *ahci)
-+{
-+    /* Unmap AHCI's ABAR */
-+    qpci_iounmap(ahci->dev, ahci->hba_bar);
-+}
-+
- /**
-  * Test and initialize the AHCI's HBA memory areas.
-  * Initialize and start any ports with devices attached.
-diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
-index 6d861c79ee..f098c91b47 100644
---- a/tests/qtest/libqos/ahci.h
-+++ b/tests/qtest/libqos/ahci.h
-@@ -580,7 +580,9 @@ void ahci_clean_mem(AHCIQState *ahci);
- QPCIDevice *get_ahci_device(QTestState *qts, uint32_t *fingerprint);
- void free_ahci_device(QPCIDevice *dev);
- void ahci_pci_enable(AHCIQState *ahci);
-+void ahci_pci_disable(AHCIQState *ahci);
- void start_ahci_device(AHCIQState *ahci);
-+void stop_ahci_device(AHCIQState *ahci);
- void ahci_hba_enable(AHCIQState *ahci);
+     vqpci->msix_addr = guest_alloc(alloc, 4);
++    qtest_memset(d->pdev->bus->qts, vqpci->msix_addr, 0, 4);
+     qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
+                    off + PCI_MSIX_ENTRY_LOWER_ADDR, vqpci->msix_addr & ~0UL);
+     qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
+@@ -355,6 +358,7 @@ void qvirtio_pci_set_msix_configuration_vector(QVirtioPCIDevice *d,
  
- /* Port Management */
+     d->config_msix_data = 0x12345678;
+     d->config_msix_addr = guest_alloc(alloc, 4);
++    qtest_memset(d->pdev->bus->qts, d->config_msix_addr, 0, 4);
+ 
+     qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
+                    off + PCI_MSIX_ENTRY_LOWER_ADDR, d->config_msix_addr & ~0UL);
 -- 
 2.55.0
 
