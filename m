@@ -1,95 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359AF606A324
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Nov 2026 23:42:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=AjzQPUg5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDDD606A324
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 01:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNfBt-00075Y-RA; Sun, 01 Nov 2026 18:42:21 -0500
+	id 1xNges-000057-AT; Sun, 01 Nov 2026 20:16:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xNfBr-000759-Mf
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 18:42:19 -0500
-Received: from st-2003j-snip6-4.eps.apple.com ([2a01:b747:3001:200::5f]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xNfBp-0006mA-8C
- for qemu-devel@nongnu.org; Sun, 01 Nov 2026 18:42:19 -0500
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-2 (Postfix) with ESMTPS id
- D03BD1800226; Sun, 01 Nov 2026 23:42:09 +0000 (UTC)
-X-ICL-RepId: 01a1997d-eee0-70be-84e8-dcbfeaaef538
-X-ICL-Out-Info: HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0KWFsIWwQPH0wMUQJCBVZeSgwdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDjMATwErAC0CXXo5cikaX3AzClUKVXJdH0B4SXJZdC8FQHw7ci1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1793576532; x=1825112532;
- bh=iSryCHl6qWv5VmvaFXPSDSRN2FMUTBxmvFf62RIzX3E=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=AjzQPUg56dTMaIk/ohhr3Lpc+fnBWSZK/lG956YQoEXCUYmUPJ+c4B8mOpSG/fnEZnWj0J4slDH3XWHtHGFJNPehnuopvJ0eMw6udAuzLWoRGg2L3QWlISqWwAebmttPyLPR7MNhxqjPyvKjg3RmBxDFofZd0xmxuTxBRLJEI3n7KOpMcKn6HfFJ+WJrxYh2oS42D18swwiFtY4LWwHn+InNa5hWs74zhYq84qGJQi+kt8KKQUgcQpw8kWJ25lM+Pwk14Hi3BTipW4YGbicn0aRrV13wbIS23JmAQ7vJGgS17Qy7OSLt/zZI17Tm9+Gs1j5JdMWqxrtjTvM1mLme5A==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.156.216.30])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-2 (Postfix) with ESMTPSA id
- 640D31800119; Sun, 01 Nov 2026 23:42:08 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xNgeo-0008WP-Vd
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 20:16:19 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xNgel-00063S-TP
+ for qemu-devel@nongnu.org; Sun, 01 Nov 2026 20:16:18 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxLNJQ5OdqBWUbAA--.13853S3;
+ Mon, 02 Nov 2026 09:16:00 +0800 (CST)
+Received: from [127.0.0.1] (unknown [127.0.0.1])
+ by front1 (Coremail) with SMTP id qMiowJAx2c1N5Odq9r0xAA--.37906S2;
+ Mon, 02 Nov 2026 09:15:57 +0800 (CST)
+Subject: Re: [RFC] target/i386: design for TCG emulation of LAM
+To: mdspan <mdspan.github@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, zhao1.liu@intel.com,
+ laurent@vivier.eu, deller@gmx.de
+References: <CALU8FV9KC48FC2FGahqSh2uEqyedy-QZAgZ9qgap147d=Hr-+Q@mail.gmail.com>
+ <1a022cad-2010-4b1a-bef7-ae9effe0b12b@linaro.org>
+ <CALU8FV9M7+Cm4m963Fx_-g+TGiZXVxe6mUiKkzax5f=Gn6Odsw@mail.gmail.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <7a7e1172-25eb-8dab-0ba5-b03b33bed2fa@loongson.cn>
+Date: Mon, 2 Nov 2026 09:17:15 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: Qemu qurt and fastrpc?
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <aue3t9EKkoeb0FnG@gallifrey>
-Date: Mon, 2 Nov 2026 00:41:55 +0100
-Cc: brian.cain@oss.qualcomm.com,
- qemu-devel@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C972F7F0-CAAD-4BC3-98E6-0A1A4CD70ECA@unpredictable.fr>
-References: <aue3t9EKkoeb0FnG@gallifrey>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-X-Mailer: Apple Mail (2.3901.200.71.1.16)
-X-Proofpoint-ORIG-GUID: rB19hvxhcyKK1d_FCYiCgOsYzED7XHM_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAxMDA5NCBTYWx0ZWRfX8JEid9T8J5gS
- EPEZ6nWY5emvreXtFWQGEpAWfAVDf+AhzEjSWSAdvvOfotocKGvmbTQngZjMXZLGJnD+oIcBbcw
- Cnq5LWy9CbLnLh4FICUJZYq4O7b8WPbUGHbxMqdQAzxnutxBIUyyixh/tLutKqKrdZbAg93vkpz
- 9e86tzfV24n6Q11LKbr8gmV5AUn8uUqErvnqRcZz93tpuF3B9n8crU8vqLTK/dRBLKpqw465HP5
- izeuwH+eQfGr8wMbcM/iDHiNTDuRxKrx9ySytOzrA9DXq8+oRIrhJKXkuNJGjzR5Y5w8x+XgacU
- w6Vw4Ut0FD6TtDyohZRqsTAXJJbAeeA5PP0KrgXOXmm66FurZZcRO6dpnXCAMw=
-X-Authority-Info-Out: v=2.4 cv=BpeQAIX5 c=1 sm=1 tr=0 ts=6ae7ce52
- cx=c_apl:c_pps:t_out a=oyWFxbOnq+dmhQrAPgaJYA==:117
- a=oyWFxbOnq+dmhQrAPgaJYA==:17 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=qC_FGOx9AAAA:8
- a=3WJfbomfAAAA:8 a=_xDdhpmNWSdOSigtvkgA:9 a=QEXdDO2ut3YA:10
- a=fsdK_YakeE02zTmptMdW:22 a=1cNuO-ABBywtgFSQhe9S:22
-X-Proofpoint-GUID: rB19hvxhcyKK1d_FCYiCgOsYzED7XHM_
-X-JNJ: AAAAAAABkz8WNgFlihITAkSBxiA8MwF9USkeXBDSNsClmFGYADXGYDm8J+Xb/X9ifjf/tV
- qh2vN38cX1MWceGKILg2eVB7OVod3Geec3HmdaY95Iw+jIKL+6wlAG/ocGMUPdkUI0EutK
- /2D8jUphQRemj5IIgfo7tECtZE0ZB0ZIl0D8W8wSwNfDsUbzoBJmFCawraibPJ+WzlJMXh
- SwP3OS999b98YEhOMCvbXV9L7eCAl6sreDeGhjt8DCoZ1Voi6B8F4c1HfPzV/cWy1Yq9Vf
- wcTirA2qJzZMwANW3TsWpQh9W1HKqNAtRbFt1+oqa3dLVNJ+ar4f2c7SHVBe971SEK156n
- atzAHXwlGh0m7vFex97YO7mIiCSEhR9kIbKCI6x0fpXF3f5qfxooAnw1vTHR+Niws2qMQd
- FbZZ76hGa3m+20qzPcj/AuPDyy/JTtmqQyXFUlRL+UjYurzXPIZEOMPp3qEjThV2Sez8Ef
- muRSvQbcGscNWNe1Acwwgx7oS5QZN4xpptAbp1CwXL8eJrPSl5lZtIjwxjWHzm4qgorrK7
- CtQa8LyzVvhvuqtXanVxPQrMUo88j+xMVOj6ot976s3DL6Ip9p5cSWy9x3eGj9DqE+cTIq
- QtKDj2GfYPdlh5NGOg1QhmpHL1uDlMemZHcFtGItCEJV1MHR/BmTLU60Dz+l80IkK901Bx
- 3tRdYTuY7kjOyz28/qc/6/b1gT0b1faGY7vwtz/TpEsurMhl+QZsG/MBcm/37ckkcbhGAv
- mjJNStkAjDG6ovhm/oFhTkvCW6ov2ApEZ1D4dVVBAZsRnzaIDZ35TwqGRegQHmswMDCm7V
- IdwFFkyewEhk0arzGSAFf0fKM5vcb/XT5M4qPJR0XJl6jIUwctphZu7DXmD15Im3fXiWXR
- BdfFhuynTi1Pfdznd/7qMt0CJcfMbcIm0tb8DqewnK7LgcvfHe6Q8Q5rkRZZT3QAaq1O/R
- gi/+pINJxh046b88iS7R5GJsS0iWOSIubZoh6AwaxDPZ4lfJVSGblWgAe8uBtazhmHNwOu
- mjg3c9JUUSNREfe49uIjIzmnzBRVAEQdFl3xk5re+/vCtrb5hMBiLZEJI1sSzvsM3G3V7f
- OZipyHj6kjI6pHt+vVRiPVPawSzs2yajQPRxt8Lqm+pd/9k317mP+F+Q56wCWHta5xgl7u
- 2P6KKbYOlV1GZuJkgq82QYqmWXTHPue3lA0HCD/rr3cXxGOy8tkUnCqeAZk9ikLa/cjBKm
- RrG2hHP6RCLe71hFIDFFUcOJCNSv6cbDzZUS5ufk5nwdr87+rhzNhl6cgx+dYHjxISuvUS
- NfQuYEAfGboPDWlbBootw3/0aX/mKXlE9LqtGRFsC6YhI=
-Received-SPF: pass client-ip=2a01:b747:3001:200::5f;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+MIME-Version: 1.0
+In-Reply-To: <CALU8FV9M7+Cm4m963Fx_-g+TGiZXVxe6mUiKkzax5f=Gn6Odsw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAx2c1N5Odq9r0xAA--.37906S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7urWrArWDuw1kGF18ur1ktFc_yoW8Zr1Upa
+ s5CanYkrWDAay0kw4q9w1DtF15Zan8Aay8JayUKr1rCr13Zr1I9rZ8Kas3ua48Kw4rt3yj
+ yFWYyayxuF98JFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8zwZ7UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.853,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,84 +79,60 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 
 
-> On 1. Nov 2026, at 23:05, Dr. David Alan Gilbert <dave@treblig.org> =
-wrote:
->=20
-> Hi Brian,
->  I tried your hexagon support booting qurt images, very nice!
-> I did:
->=20
->  ./qemu-system-hexagon -M virt  -kernel ./qccdsp8380.mbn -nographic
->=20
-> and got something believable.
->=20
->  Do you have glue that lets you run comms to the emulated qurt via
-> fastrpc in the same way that, say a Llama running on a normal
-> Linux host would?
->  It feels useful for debugging/watching what maths kernels are
-> doing.
+On 2026/10/31 下午9:03, mdspan wrote:
+> On 10/21/26 14:20, Richard Henderson wrote:
+>> In particular, arm requires the complete address, including tagging, to
+>> be available for any raised exception.  So clipping the address at any
+>> other place loses that information.  Dunno if that applies to LAM.
+> 
+> It doesn't for LAM. LAM masking applies before paging, so CR2 gets
+> the masked address (ISE 319433-048, section 6.5). The non-canonical
+> case riases #GP, which doesn't report an address.
+> 
+> One change would touch common code: tlb_flush_range_locked() compares
+> large_page_addr in all 64 bits, so INVLPG of the untagged address
+> misses a large page entered under a tagged alias. I'd compare under
+> the flush mask:
+> 
+>      if (((addr + len - 1) & d->large_page_mask & mask) ==
+>          (d->large_page_addr & mask)) {
+There is similar issue on LoongArch, there is windows mapping before MMU 
+TLB, such as 64bit virtual address 0x9000 XXXX XXXX XXXX -> 48 bit PA 
+0xXXXX XXXX XXXX. I try to add 48 bit page size when adding QEMU TLB 
+with API tlb_set_page(), but qemu LoongArch fails to boot, so I give up :(
 
-Hi,
-
-There=E2=80=99s no FastRPC=E2=80=A6 however:
-
-You can download the Hexagon SDK from =
-https://softwarecenter.qualcomm.com/catalog/item/Hexagon_SDK
-
-That comes with a version of QuRT that is semi-hosted as runelf.pbn.
-
-A working QuRT loading on top of that (w/ a semi-hosted -M option):
-
--kernel =
-/opt/Hexagon_SDK/6.7.0.0/rtos/qurt/computev75/sdksim_bin/runelf.pbn \
--append =
-'/opt/Hexagon_SDK/6.7.0.0/libs/run_main_on_hexagon/ship/hexagon_toolv19_v7=
-5/run_main_on_hexagon_sim -- libmain.so'
-
-The QEMU on Hexagon inside of the Hexagon also (used to) comes with an =
-oddball QEMU Hexagon
-version inside the package that has HMX emulation as a closed-source =
-module, but that=E2=80=99s a
-separate story that is going to be wound down thankfully.
-
-If you don=E2=80=99t want to use the Hexagon SDK, there=E2=80=99s =
-another option through hexagon-hypervisor which
-has a very partial QuRT compat story. Or outright Linux on Hexagon which =
-works too=E2=80=A6
-
-The (modern) kernel tree for Linux on Hexagon being at =
-https://git.kernel.org/pub/scm/linux/kernel/git/bcain/linux.git/log/?h=3Dh=
-exagon
-
-A pre-built artefact exists at =
-https://artifacts.codelinaro.org/ui/native/codelinaro-toolchain-for-hexago=
-n/23.1.2/qcs6490-cdsp/ with the booter at =
-https://artifacts.codelinaro.org/ui/native/codelinaro-toolchain-for-hexago=
-n/23.1.2/hexagon-hypervisor/
-
->=20
->  (Not urgent, I'm just trying to get my head around it on my
-> X1 laptop)
->=20
->  Thanks in advance,
->=20
-> Dave
-> --=20
-> -----Open up your eyes, open up your mind, open up your code -------  =20=
-
-> / Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \=20=
-
-> \        dave @ treblig.org |                               | In Hex /
-> \ _________________________|_____ http://www.treblig.org   |_______/
->=20
+Regards
+Bibo Mao
+> 
+> If that's fine, I'll post the system-mode series.
+> 
+> On Wed, Oct 21, 2026 at 6:20 AM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> On 10/21/26 12:57, mdspan wrote:
+>>> Ping.
+>>>
+>>> Paolo, Richard: does masking in get_physical_address(), with TLB
+>>> entries kept per tag and INVLPG flushing all aliases through
+>>> tlb_flush_page_bits_by_mmuidx(), look acceptable to you? I have a
+>>> prototype of items 1 and 2 and can post it as an RFC series if that
+>>> would be easier to review.
+>>
+>> Yes, this is what we do in target/arm for top-byte-ignore.
+>>
+>> In particular, arm requires the complete address, including tagging, to
+>> be available for any raised exception.  So clipping the address at any
+>> other place loses that information.  Dunno if that applies to LAM.
+>>
+>> r~
 
 
