@@ -1,87 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E760B60A6F6F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E93360A3808
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Nov 2026 13:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=jO3cafqV
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=cumkbECG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xNsCh-00032y-4F; Mon, 02 Nov 2026 08:36:03 -0500
+	id 1xNsDT-0004Hd-MC; Mon, 02 Nov 2026 08:36:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNsCf-000325-9C
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:01 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1xNsDA-0003Ms-AH
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:34 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xNsCd-0002EJ-17
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:00 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-48dfc0421d9so2471148f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:35:58 -0800 (PST)
+ id 1xNsD8-0002Jz-8B
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 08:36:32 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-48afcd7ba9bso1655275f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 05:36:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793626557; x=1794231357; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793626589; x=1794231389; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=cYVxhRKJXxTmJpSzggwUrFWsQarrJnKSY6cYLl/kqQw=;
- b=jO3cafqV6AHplSL942iBdmvTqVcKkfDbr8LiWMu3OKfNHaWjb4XGKFICKnvNA0vRph
- BG2I8PGJkuhy9xaZw0t8osmBNEzHizLXWmq0JkIG8jIYSt9ElZXd3xnotWmfFCPZPjz3
- /J4rrV13VmS2BYaQsBanHS7vb8NO1ANjskwq96sJimBrjEwbkbmkwfhUc3Pw1n/F7Pn1
- tjS7/IgKc+cAu8LHrNp1t2H4K/5ozHYS92nmwsnzCQsRs1u70tx31uKqjwcLyerGZxhN
- bZbjdHTGoKHN+NsxTk10qdduM0vKSqjJjs05Dnd9RFF1OI39SFM+a7jSL4qXYVwVEc6J
- mGtA==
+ bh=aAtq2+DRw/kNlpvv8Go3OvNCyJm7o7aDW7YY9zZnYGU=;
+ b=cumkbECGgM+RiAIOam8cE7qprjFt3DcZ5veWGyWbUb3Fv7+999+MMkc8ihFxlevjO+
+ n4VNNgFu9SN/0MNyJV2RB2wpNTDnoU+8JtOtgRPl+IBKc3/wPY7XbZuboacRg+yGqywk
+ jjLu4ThGL+Ruf3lmOkqn0xBamwzPzHwWu+D1GBVXaZjdUiOZYR1gyuazWAz9WMlFrxWZ
+ DyHvSmAkNtDnRr2aRbHpBysIOlMx8SuVIdm1EA5jfIi9AEfYo3qdBAvAWu/1u2uezD62
+ w6ZG10eHWP+WtqN4A4Y2XKhT1H1CX+KE3qkBkShC4RDx9pmAcsWvmcYOmPqArw5svxWV
+ 8/vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793626557; x=1794231357;
+ d=1e100.net; s=20260707; t=1793626589; x=1794231389;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=cYVxhRKJXxTmJpSzggwUrFWsQarrJnKSY6cYLl/kqQw=;
- b=v0iskM1eDSQgGyGfXGSboLXEkMOMaqFt8Wl9piGX6yGWdS5PViOi7FxYf/uahVKBRC
- CvdPK4Kd476+cAxsrP33SqYlDDQvtFtCcT5SWKjZ6tSr556Stp12yinrVwA0UBHjzxn1
- j+Pcvl2vfh4d9kNLWT8fvaobaWbOSvQ+HpzfGq5uFiuG2quVpEG7oVaMfVF0Vw/qGxBC
- VO+Y+WzBLX99UWqIN+zZs2XXh6odh60zPzVYwrF9gWHBmUPdFMNR3WWUhMRK4D7abHn4
- KGv3AIMoewUniz55Eagxx2GPpe8QrRkyKBHFrrQdJnS7U+B7sHZi9wyKmbxcUomcLLC6
- sjbA==
-X-Gm-Message-State: APuU4Z8KkSJ056ih3sbkhEPgniOIuTrV7EhrI550nRGVumWWqS2o3HZz
- ymq4cLHbjIV/qQ9K85ROXpBLV9x1Ill4d8c5ejUAM6lA9+1x3SKjE8+GYKWpXihSc36gKBgpfEO
- pm9OC0Cw=
-X-Gm-Gg: AYBFou2kY3lyZD4DCUvO9fbupa73sz8iMxyIefVyH1NAb6bpBrCs+5mzczI9V/fHpUh
- PjrmpZap2/RHwSKUP5iuRHGf6zP2Hv3m7pXGUzQndCrgVJ5JLYby20PZHG5CrcR8TvPJ4W/zKKH
- ZaHA3UVpQ1NFVm2+vstlLyKUm8ALnSFUXUBxICEER0F9H3X5tT0K5eqNY0wagzBGcAqRgtWtcui
- RDWrnGWCiM04b4gUNQf6trKhrxAVYWxxqEvBJSBwfvqw8nM7sBwFvotmhNBeshEemX97X0KLSO/
- uTseXDGYwlt7lWc35BCo1qpOs7AksuR9Wi6cI4pFvHVbzKRuxXTs4BeJDR7C4PNdqQYZTSdAzy2
- 60lC8OcSh9lHlDyUSjGZtHAT16nSZ1zHEkpeE10y8o7i2gTAAanwxPacvE/MbIEe2UxtQOiSiK3
- /QizDkc4ZlCug4qdjaD7EcH2dXzWdBp0R3PbhfOJsxid8AWdK4GBnkUHHSyTzGEaiIpDpCnxpLu
- p7JXvAnOICp+GAN199O9RZRhLYjzpS2K/hmoMQtmrIKmNvro1cFEID5/rvwaoeNAJMPFWZ6DRrd
- pCpIPhQk2u+TScnzvVlT9oDskyV7QrgQ4ixxIwyjoD1WhqCTLSRQt9A34pec2iSgE4H9xz/AWSk
- ZkJSUpRLnc4gZMX+mXPFHy70O87qria14PA==
-X-Received: by 2002:a05:6000:4914:b0:48c:69b3:610f with SMTP id
- ffacd0b85a97d-48e6e5008b4mr22690628f8f.26.1793626557117; 
- Mon, 02 Nov 2026 05:35:57 -0800 (PST)
+ bh=aAtq2+DRw/kNlpvv8Go3OvNCyJm7o7aDW7YY9zZnYGU=;
+ b=plQptGC/hnVMplEaRGJyIV1aA6XyH6HE0PJH4Lf+U+CPKBNbgCKAn5c5LzJNFWF1gq
+ Akjg17tvW0UEm+8JscgrJr0rhjnFlkjgSxGWoGx3O9y0zKA7Mi906nXk52HuLbNOQh67
+ tFoQvUJ0i2jrqKJDoASI8R37scBav2xeLZiKxN3zhTPWbMidZD3A/MInmvCjpfc0CNSU
+ TBUYFFCeRS/+o5ckgb91ZjChwMrjOBtIvD4/CUCzxhXHi04XmQa2PkFAtFrYD/tfGwi/
+ Lzi1ciehB3vlYwKXolCspv/29C56929hc0yl8F9UnTo6oe6ey0m+XCheo7G0egW8wXUR
+ 0esg==
+X-Gm-Message-State: APuU4Z+KHq71Nofvx93L7JKgteFNeox1N9elzYxatNUmFF9x5+F2k0T0
+ GfFElwczCdei0+ZwW+KuNiunmK+ql2KWg9A3XQdnRpi1RO/su4VPWzyVVUwjOke5pAoHgCxT+XM
+ tB0qtIMc=
+X-Gm-Gg: AYBFou0a1rzILcrJRtijo6FJYmwAwmbBb8219Cr7p1+OY/Pt0sqsUvyR2TcDu2clsmz
+ 0svw49WPZGn5qmDLqbzK7ND3QXwgUQxW13TtYDs2ifPTeg9HPvwfKd+mc/nA3Yul+/9987CZyTn
+ PEqd865HL8J8FSCemoY7ZKXajM7HvU5oNdKWC7AcN7rCk3pATPb8VsZvCFZ87KUbvQLsrK/2eP8
+ KJY7ewT1EiUrJRZx73UXMam1q6T9fddTp+yBx0fKrH3pyFO2Np2G6x/0d+w8gQNOgJJtdmt1OB4
+ AZi58M7mK3OObR4fKMQHTrQlMaJNPq9riKgwRt+ITTL9lFtUd+FvkMX6gEOpV/ebrY8U61VTaK9
+ XwJQiUYhL+LrKgfvI5FaB7gyOJzmtMhw+lO7pF9DgMj2Co115TqBcQkqLejBNxExUZ9XbxE0BrT
+ alPuHt6mcc2gtrKrpLyQPdQoNIduM0LxQyrjhaG7yWCKNCCJdRqfI/dJYuJ92kwe3catJvoRMjK
+ r1Q4e/Dg10orRJQrhUSfrS8ZhGN2zzvs488LClyZrTzsy+hkWmDmEWReirWJV5HEU3qoCE8XSiD
+ asC9ZU0OIXJIKKweBWVE5iVbnoLpOsBgOLH0W0CMSeSpSTZCIED9imSSXTQG1fdQdiWy4XTp6Tg
+ gMzu8RXDbDJPeNG/DWswKpT2eusXJb7nUgHfs/bPXSRfLX9Q9td3+haw=
+X-Received: by 2002:a05:6000:2311:b0:48a:f320:dba0 with SMTP id
+ ffacd0b85a97d-48e6e4ffa7bmr22635399f8f.45.1793626588864; 
+ Mon, 02 Nov 2026 05:36:28 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d3e9sm22556760f8f.6.2026.11.02.05.35.56
+ ffacd0b85a97d-48e71a4d3e9sm22556760f8f.6.2026.11.02.05.36.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Nov 2026 05:35:56 -0800 (PST)
+ Mon, 02 Nov 2026 05:36:28 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/47] hw/net/bcm2838_genet: add GENET register structs,
- part 2/4
-Date: Mon,  2 Nov 2026 13:35:06 +0000
-Message-ID: <20261102133547.1375701-7-peter.maydell@linaro.org>
+Subject: [PULL 35/47] target/arm/kvm: Improve error handling on scratch vcpu
+ probe
+Date: Mon,  2 Nov 2026 13:35:35 +0000
+Message-ID: <20261102133547.1375701-36-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261102133547.1375701-1-peter.maydell@linaro.org>
 References: <20261102133547.1375701-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,249 +107,191 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Sergey Kambalin <serg.oker@gmail.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-Add the UMAC (CMD, MAC address, MDIO command) and DMA (ring config,
-control, producer/consumer index, status, RX descriptor
-length/status) register layouts and their field accessors.
+Pass an error handle to both kvm_arm_create_scratch_host_vcpu()
+and kvm_arm_get_host_cpu_features(). This allows to improve the
+error reporting on kvm_arm_set_cpu_features_from_host().
 
-Part of Sergey Kambalin's original Raspberry Pi 4B PCIe/GENET
-networking series (patchwork series 829638, posted to qemu-devel in
-2024, never merged). Carried forward and completed by Marcelo Manzo.
+If any, the error is stored in the new cpu->host_cpu_probe_err
+field and further propagated on realize().
 
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
-Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
+In arm_gic_cap_kvm_probe() call path we just pass a NULL error handle
+to kvm_arm_create_scratch_host_vcpu because we don't care about the
+failure nature and just want to revert to emulated versions if it
+fails.
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20261027143036.44973-7-marcelomanzo@gmail.com
+Message-id: 20261030131406.461599-11-eric.auger@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/net/bcm2838_genet.h | 89 +++++++++++++++++++++++++++++++++
- hw/net/bcm2838_genet.c         | 91 ++++++++++++++++++++++++++++++++++
- 2 files changed, 180 insertions(+)
+ target/arm/kvm_arm.h |  3 ++-
+ target/arm/kvm.c     | 40 ++++++++++++++++++++++++++++------------
+ 2 files changed, 30 insertions(+), 13 deletions(-)
 
-diff --git a/include/hw/net/bcm2838_genet.h b/include/hw/net/bcm2838_genet.h
-index af5e8abd2e9..b3893c2dad0 100644
---- a/include/hw/net/bcm2838_genet.h
-+++ b/include/hw/net/bcm2838_genet.h
-@@ -18,6 +18,10 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GenetState, BCM2838_GENET)
- #define BCM2838_GENET_REV_MAJOR         6
- #define BCM2838_GENET_REV_MINOR         0
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index e7c40fb003e..9c7e7f654a0 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -105,6 +105,7 @@ struct kvm_vcpu_init;
+  * @init: filled in with the necessary values for creating a host
+  * vcpu. If NULL is provided, will not init the vCPU (though the cpufd
+  * will still be set up).
++ * @errp: Error handle
+  *
+  * Create a scratch vcpu in its own VM of the type preferred by the host
+  * kernel (as would be used for '-cpu host'), for purposes of probing it
+@@ -114,7 +115,7 @@ struct kvm_vcpu_init;
+  * false on failure (and fdarray and init are not valid).
+  */
+ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+-                                      struct kvm_vcpu_init *init);
++                                      struct kvm_vcpu_init *init, Error **errp);
  
-+#define BCM2838_GENET_DMA_DESC_CNT      256
-+#define BCM2838_GENET_DMA_RING_CNT      17
-+#define BCM2838_GENET_DMA_RING_DEFAULT  (BCM2838_GENET_DMA_RING_CNT - 1)
-+
- typedef struct {
-     uint32_t rev_ctrl;
-     uint32_t port_ctrl;
-@@ -83,6 +87,88 @@ typedef struct {
-     uint32_t reserved_0x18[58];
- } BCM2838GenetRegsTbuf;
+ /**
+  * kvm_arm_destroy_scratch_host_vcpu:
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index f9c75774605..b66eb4f6c24 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -62,6 +62,7 @@ typedef struct ARMHostCPUFeatures {
+     uint32_t target;
+     uint32_t sve_vq_supported;
+     const char *dtb_compatible;
++    Error *probe_err;
+ } ARMHostCPUFeatures;
  
-+typedef struct {
-+    uint32_t reserved_0x0;
-+    uint32_t hd_bkp_ctrl;
-+    uint32_t cmd;
-+    uint32_t mac0;
-+    uint32_t mac1;
-+    uint32_t max_frame_len;
-+    uint32_t pause_quanta;
-+    uint32_t reserved_0x1C[10];
-+    uint32_t mode;
-+    uint32_t frm_tag0;
-+    uint32_t frm_tag1;
-+    uint32_t reserved_0x50[3];
-+    uint32_t tx_ipg_len;
-+    uint32_t reserved_0x60;
-+    uint32_t eee_ctrl;
-+    uint32_t eee_lpi_timer;
-+    uint32_t eee_wake_timer;
-+    uint32_t eee_ref_count;
-+    uint32_t reserved_0x74;
-+    uint32_t rx_ipg_inv;
-+    uint32_t reserved_0x7C[165];
-+    uint32_t macsec_prog_tx_crc;
-+    uint32_t macsec_ctrl;
-+    uint32_t reserved_0x318[6];
-+    uint32_t pause_ctrl;
-+    uint32_t tx_flush;
-+    uint32_t rx_fifo_status;
-+    uint32_t tx_fifo_status;
-+    uint32_t reserved_0x340[48];
-+    uint32_t mib[96];
-+    uint32_t mib_ctrl;
-+    uint32_t reserved_0x584[36];
-+    uint32_t mdio_cmd;
-+    uint32_t reserved_0x618[2];
-+    uint32_t mpd_ctrl;
-+    uint32_t mpd_pw_ms;
-+    uint32_t mpd_pw_ls;
-+    uint32_t reserved_0x62C[3];
-+    uint32_t mdf_err_cnt;
-+    uint32_t reserved_0x63C[5];
-+    uint32_t mdf_ctrl;
-+    uint32_t mdf_addr;
-+    uint32_t reserved_0x658[106];
-+} BCM2838GenetRegsUmac;
-+
-+typedef struct {
-+    uint32_t length_status;
-+    uint32_t address_lo;
-+    uint32_t address_hi;
-+} BCM2838GenetRdmaDesc;
-+
-+typedef struct {
-+    uint32_t write_ptr;
-+    uint32_t write_ptr_hi;
-+    uint32_t prod_index;
-+    uint32_t cons_index;
-+    uint32_t ring_buf_size;
-+    uint32_t start_addr;
-+    uint32_t start_addr_hi;
-+    uint32_t end_addr;
-+    uint32_t end_addr_hi;
-+    uint32_t mbuf_done_tresh;
-+    uint32_t xon_xoff_tresh;
-+    uint32_t read_ptr;
-+    uint32_t read_ptr_hi;
-+    uint32_t reserved_0x34[3];
-+} BCM2838GenetRdmaRing;
-+
-+typedef struct {
-+    BCM2838GenetRdmaDesc descs[BCM2838_GENET_DMA_DESC_CNT];
-+    BCM2838GenetRdmaRing rings[BCM2838_GENET_DMA_RING_CNT];
-+    uint32_t ring_cfg;
-+    uint32_t ctrl;
-+    uint32_t status;
-+    uint32_t scb_burst_size;
-+    uint32_t reserved_0x1050[7];
-+    uint32_t ring_timeout[17];
-+    uint32_t index2ring[8];
-+    uint32_t reserved_0x10D0[972];
-+} BCM2838GenetRegsRdma;
-+
- typedef struct {
-     BCM2838GenetRegsSys sys;
-     BCM2838GenetRegsGrBridge gr_bridge;
-@@ -95,6 +181,9 @@ typedef struct {
-     uint32_t reserved_0x400[128];
-     BCM2838GenetRegsTbuf tbuf;
-     uint32_t reserved_0x700[64];
-+    BCM2838GenetRegsUmac umac;
-+    uint32_t reserved_0x1000[1024];
-+    BCM2838GenetRegsRdma rdma;
- } BCM2838GenetRegs;
+ static ARMHostCPUFeatures arm_host_cpu_features;
+@@ -104,13 +105,14 @@ static int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
+ }
  
- struct BCM2838GenetState {
-diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
-index 7c4b036224f..3d22c28b0c1 100644
---- a/hw/net/bcm2838_genet.c
-+++ b/hw/net/bcm2838_genet.c
-@@ -20,6 +20,7 @@
- #include "hw/net/bcm2838_genet.h"
- #include "trace.h"
- 
-+/* GENET layouts */
- REG32(GENET_SYS_REV_CTRL,              0)
- FIELD(GENET_SYS_REV_CTRL, GPHY_REV,    0, 16)
- FIELD(GENET_SYS_REV_CTRL, MINOR_REV,   16, 4)
-@@ -56,6 +57,96 @@ REG32(GENET_INTRL_1,              0)
- FIELD(GENET_INTRL_1, TX_INTRS,    0, 16)
- FIELD(GENET_INTRL_1, RX_INTRS,    16, 16)
- 
-+REG32(GENET_UMAC_CMD,                  0)
-+FIELD(GENET_UMAC_CMD, TX_EN,           0, 1)
-+FIELD(GENET_UMAC_CMD, RX_EN,           1, 1)
-+FIELD(GENET_UMAC_CMD, SPEED,           2, 2)
-+FIELD(GENET_UMAC_CMD, PROMISC,         4, 1)
-+FIELD(GENET_UMAC_CMD, PAD_EN,          5, 1)
-+FIELD(GENET_UMAC_CMD, CRC_FWD,         6, 1)
-+FIELD(GENET_UMAC_CMD, PAUSE_FWD,       7, 1)
-+FIELD(GENET_UMAC_CMD, RX_PAUSE_IGNORE, 8, 1)
-+FIELD(GENET_UMAC_CMD, TX_ADDR_INS,     9, 1)
-+FIELD(GENET_UMAC_CMD, HD_EN,           10, 1)
-+FIELD(GENET_UMAC_CMD, SW_RESET_OLD,    11, 1)
-+FIELD(GENET_UMAC_CMD, RSVD_12,         12, 1)
-+FIELD(GENET_UMAC_CMD, SW_RESET,        13, 1)
-+FIELD(GENET_UMAC_CMD, RSVD_14,         14, 1)
-+FIELD(GENET_UMAC_CMD, LCL_LOOP_EN,     15, 1)
-+FIELD(GENET_UMAC_CMD, RSVD_16_21,      16, 6)
-+FIELD(GENET_UMAC_CMD, AUTO_CONFIG,     22, 1)
-+FIELD(GENET_UMAC_CMD, CNTL_FRM_EN,     23, 1)
-+FIELD(GENET_UMAC_CMD, NO_LEN_CHK,      24, 1)
-+FIELD(GENET_UMAC_CMD, RMT_LOOP_EN,     25, 1)
-+FIELD(GENET_UMAC_CMD, RX_ERR_DISC,     26, 1)
-+FIELD(GENET_UMAC_CMD, PRBL_EN,         27, 1)
-+FIELD(GENET_UMAC_CMD, TX_PAUSE_IGNORE, 28, 1)
-+FIELD(GENET_UMAC_CMD, TX_RX_EN,        29, 1)
-+FIELD(GENET_UMAC_CMD, RUNT_FILTER_DIS, 30, 1)
-+FIELD(GENET_UMAC_CMD, RSVD_31,         31, 1)
-+
-+REG32(GENET_UMAC_MAC_0,         0)
-+FIELD(GENET_UMAC_MAC_0, ADDR_3, 0,  8)
-+FIELD(GENET_UMAC_MAC_0, ADDR_2, 8,  8)
-+FIELD(GENET_UMAC_MAC_0, ADDR_1, 16, 8)
-+FIELD(GENET_UMAC_MAC_0, ADDR_0, 24, 8)
-+
-+REG32(GENET_UMAC_MAC_1,             0)
-+FIELD(GENET_UMAC_MAC_1, ADDR_5,     0,  8)
-+FIELD(GENET_UMAC_MAC_1, ADDR_4,     8,  8)
-+FIELD(GENET_UMAC_MAC_1, RSVD_16_31, 16, 8)
-+
-+REG32(GENET_UMAC_MDIO_CMD,             0)
-+FIELD(GENET_UMAC_MDIO_CMD, REG_DATA,   0, 16)
-+FIELD(GENET_UMAC_MDIO_CMD, REG_ID,     16, 5)
-+FIELD(GENET_UMAC_MDIO_CMD, PHY_ID,     21, 5)
-+FIELD(GENET_UMAC_MDIO_CMD, WR,         26, 1)
-+FIELD(GENET_UMAC_MDIO_CMD, RD,         27, 1)
-+FIELD(GENET_UMAC_MDIO_CMD, RD_FAIL,    28, 1)
-+FIELD(GENET_UMAC_MDIO_CMD, START_BUSY, 29, 1)
-+FIELD(GENET_UMAC_MDIO_CMD, RSVD_30_31, 30, 2)
-+
-+REG32(GENET_DMA_RING_CFG,             0)
-+FIELD(GENET_DMA_RING_CFG, EN,         0, 17)
-+FIELD(GENET_DMA_RING_CFG, RSVD_17_31, 17, 14)
-+
-+REG32(GENET_DMA_CTRL,              0)
-+FIELD(GENET_DMA_CTRL, EN,          0, 1)
-+FIELD(GENET_DMA_CTRL, RING_BUF_EN, 1, 17)
-+FIELD(GENET_DMA_CTRL, RSVD_18_19,  18, 2)
-+FIELD(GENET_DMA_CTRL, TSB_SWAP_EN, 20, 1)
-+FIELD(GENET_DMA_CTRL, RSVD_21_31,  21, 11)
-+
-+REG32(GENET_DMA_PROD_INDEX,              0)
-+FIELD(GENET_DMA_PROD_INDEX, INDEX,       0, 16)
-+FIELD(GENET_DMA_PROD_INDEX, DISCARD_CNT, 16, 16)
-+
-+REG32(GENET_DMA_CONS_INDEX,             0)
-+FIELD(GENET_DMA_CONS_INDEX, INDEX,      0, 16)
-+FIELD(GENET_DMA_CONS_INDEX, RSVD_16_31, 16, 16)
-+
-+REG32(GENET_DMA_STATUS,                     0)
-+FIELD(GENET_DMA_STATUS, DISABLED,           0, 1)
-+FIELD(GENET_DMA_STATUS, DESC_RAM_INIT_BUSY, 1, 1)
-+FIELD(GENET_DMA_STATUS, RSVD_2_31,          2, 30)
-+
-+#define GENET_DMA_ENABLE_MASK ((1U << 18) - 1)
-+
-+REG32(GENET_RDMA_LENGTH_STATUS,             0)
-+FIELD(GENET_RDMA_LENGTH_STATUS, OVERRUN,    0, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, CRC_ERROR,  1, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, RXERR,      2, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, NO,         3, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, LG,         4, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, MULTICAST,  5, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, BROADCAST,  6, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, RSVD_7_11,  7, 5)
-+FIELD(GENET_RDMA_LENGTH_STATUS, WRAP,       12, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, SOP,        13, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, EOP,        14, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, OWN,        15, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, BUFLENGTH,  16, 12)
-+FIELD(GENET_RDMA_LENGTH_STATUS, RSVD_28_31, 29, 4)
- 
- static uint64_t bcm2838_genet_read(void *opaque, hwaddr offset, unsigned size)
+ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+-                                      struct kvm_vcpu_init *init)
++                                      struct kvm_vcpu_init *init, Error **errp)
  {
+     int ret = 0, kvmfd = -1, vmfd = -1, cpufd = -1;
+     int max_vm_pa_size;
+ 
+     kvmfd = qemu_open_old("/dev/kvm", O_RDWR);
+     if (kvmfd < 0) {
++        error_setg_errno(errp, errno, "Failed to open /dev/kvm");
+         goto err;
+     }
+     max_vm_pa_size = ioctl(kvmfd, KVM_CHECK_EXTENSION, KVM_CAP_ARM_VM_IPA_SIZE);
+@@ -121,6 +123,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+         vmfd = ioctl(kvmfd, KVM_CREATE_VM, max_vm_pa_size);
+     } while (vmfd == -1 && errno == EINTR);
+     if (vmfd < 0) {
++        error_setg_errno(errp, errno, "Failed to create the scratch VM");
+         goto err;
+     }
+ 
+@@ -140,6 +143,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+ 
+     cpufd = ioctl(vmfd, KVM_CREATE_VCPU, 0);
+     if (cpufd < 0) {
++        error_setg_errno(errp, errno, "Failed to create the scratch VCPU");
+         goto err;
+     }
+ 
+@@ -153,12 +157,16 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+ 
+         ret = ioctl(vmfd, KVM_ARM_PREFERRED_TARGET, &preferred);
+         if (ret < 0) {
++            error_setg_errno(errp, errno,
++                             "Failed to get the preferred KVM target");
+             goto err;
+         }
+         init->target = preferred.target;
+     }
+     ret = ioctl(cpufd, KVM_ARM_VCPU_INIT, init);
+     if (ret < 0) {
++        error_setg_errno(errp, errno,
++                         "Failed to initialize the scratch VCPU");
+         goto err;
+     }
+ 
+@@ -312,13 +320,19 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
+     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
+ }
+ 
+-static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
++/**
++ * kvm_arm_get_host_cpu_features:
++ * @ahcf: host CPU feature struct to populate
++ * @errp: error handle
++ *
++ * Identify the feature bits corresponding to the host CPU by creating a
++ * scratch VM/vCPU and querying its ID registers.
++ *
++ * On failure, @ahcf->target is QEMU_KVM_ARM_TARGET_NONE and *errp is set
++ * On success, @ahcf->target is set to a valid KVM target.
++ */
++static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf, Error **errp)
+ {
+-    /* Identify the feature bits corresponding to the host CPU, and
+-     * fill out the ARMHostCPUClass fields accordingly. To do this
+-     * we have to create a scratch VM, create a single CPU inside it,
+-     * and then query that CPU for the relevant ID registers.
+-     */
+     int fdarray[3];
+     bool sve_supported;
+     bool el2_supported;
+@@ -330,6 +344,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     ahcf->dtb_compatible = "arm,armv8";
+ 
+     if (!kvm_enabled()) {
++        error_setg(errp, "KVM is not enabled");
+         return;
+     }
+ 
+@@ -371,7 +386,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+         features |= 1ULL << ARM_FEATURE_PMU;
+     }
+ 
+-    if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init)) {
++    if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init, errp)) {
+         return;
+     }
+ 
+@@ -502,6 +517,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     kvm_arm_destroy_scratch_host_vcpu(fdarray);
+ 
+     if (err < 0) {
++        error_setg(errp, "Failed to read some host CPU ID registers");
+         return;
+     }
+ 
+@@ -528,7 +544,8 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+     CPUARMState *env = &cpu->env;
+ 
+     if (!arm_host_cpu_features.dtb_compatible) {
+-        kvm_arm_get_host_cpu_features(&arm_host_cpu_features);
++        kvm_arm_get_host_cpu_features(&arm_host_cpu_features,
++                                      &arm_host_cpu_features.probe_err);
+     }
+ 
+     cpu->kvm_target = arm_host_cpu_features.target;
+@@ -538,8 +555,7 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+          * We can't report this error yet, so flag that we need to
+          * in arm_cpu_realizefn().
+          */
+-        error_setg(&cpu->host_cpu_probe_err,
+-                   "failed to retrieve host CPU features");
++        cpu->host_cpu_probe_err = error_copy(arm_host_cpu_features.probe_err);
+         return;
+     }
+ 
+@@ -2674,7 +2690,7 @@ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
+ {
+     int fdarray[3];
+ 
+-    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL)) {
++    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL, NULL)) {
+         return;
+     }
+ 
 -- 
 2.43.0
 
