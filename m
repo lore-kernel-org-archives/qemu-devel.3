@@ -1,95 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426FF606A328
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEC6606A31B
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=E+7hEY4w
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=BMfVCHDH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOIFk-00073A-I1; Tue, 03 Nov 2026 12:24:58 -0500
+	id 1xOIHB-00007M-Bb; Tue, 03 Nov 2026 12:26:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xOIFV-00071a-Kd
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:24:42 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xOIH9-000068-6r
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:26:23 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xOIFS-00068u-Vg
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:24:41 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4a2167bd087so38009515e9.3
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 09:24:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xOIH6-0006Pz-TP
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:26:22 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4a2000d5fb1so30907565e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 09:26:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793726677; x=1794331477; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=rGywHVh6qF/42/I9LijS7+mtQCR/TGa4FzDOj5IQyyY=;
- b=E+7hEY4wER623dQmPGonBdnQVVJco0kDDvNOq5FnqMIwvetGhrNxGdjzZ6Xo0SiFBZ
- kmfBhUU52HAZBUtz26DpismVkmB+grjW4/7Ht+E2qD1+68UJHHwr29QOK6f+TNTxdlGW
- TNWUpUW2ExyEIYJieL7xPxW66Z9cF7JJn75P7RRPkzvMEaScstdQQpehjU0fChnfnxFG
- gsQi3eWCGAvjtRaxicNR/venEin0AoBlY1oDHpW75mLD93b8cByt6DsmjHrGPCbwNOAx
- ApBKhmqmGC0KtzLJssduRFRqZT8yBmBhrQsR5V96uGCwkw1/aNEIJ5Ldxbt442/T7TRx
- hfOg==
+ d=linaro.org; s=google; t=1793726779; x=1794331579; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=t7evk/PGY2aqSKb/cWcU+O9P2cepKPm4a8WtSjNhe3M=;
+ b=BMfVCHDHBfzsYBaPF142daHbpW3/U9C2ixwwymmhrcDRI8A/jEPH/LZk6RiVRmDWEk
+ MkTmn/8gm7J/MPZ7K/P5WWPkwqD8absx9S36kzubZ6GfSI2vNLDuR5yTZqoAOkg5Xp3d
+ pu4QHy/jt4T6oOdmp+Ai4K0IA2oV0sNmCBwSCmE/cPU/q0ETKxVY7yVZZLzSefpl+rcW
+ RIqEOByukU+FH4SO7pAFVohi7zDEPLc4E8L6p//XsGacbEYdfSl6UGYoL/y8WVgTI08N
+ ejcZYP5glJJqIBuOVnSYIOz4e7mJLxng05QpLwwu0NZFw8RB2cyMw2ZCFD5z/3fc5HOk
+ Cafg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793726677; x=1794331477;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=rGywHVh6qF/42/I9LijS7+mtQCR/TGa4FzDOj5IQyyY=;
- b=TyDHJ8szYTu+8PEX8QpdvcHuonmlcUXQzYzviEHkX+BLgmqnvZ2jAiJkQCLAyiMOZX
- 7FA/PssS5pMJ17HFXd1qRfch8PPovIS1H8uSFBVUc4fOTuPT9/24UNKqRR30x7NW3aOg
- MjhFrg1q84dqAkKEvT++bbvnQWsTOJRn1WoDzzZjwPk+9vDkuEYOnSJ+joRZgmlJvhA2
- U3i2OyebT8fc96WCTcUEDaSpNoFQ3V/rGBMgRWbm3l4W0eGxT9IS6ZWJViTnx5NVOdXy
- f2JDYvIXwTW39SGp6KEbukv1UqCII+ZzqTY6THakr69Qfds2Gs6sbGPn+e8WF96Y7BNk
- DNjQ==
-X-Gm-Message-State: APuU4Z8yoQU2Bwa+5uHU71glrxaZG0Pmz/PuKeBRZuwsouZky84tlT5B
- Bqif9E0GNmJ+PZPOGWjz44+ryx9KTsXvoRRd+20petlZIcJIr7FcDCglPndhcNUmDsjSP1JmuxU
- Yy/OA
-X-Gm-Gg: AYBFou18pek6PZ9GD+OxQO1E2QRuSN99S3zMsrtakKGlPVpO+kSqsXNJbNQdWlNtpg/
- KyznTsCXenTc5J9R7+hqFCiS1w6efxQdiwPDVLzM5V+LtBvEACyOaXQOAYMkyq6h7O802jvVo13
- N0X+pTQr832p+l4NdbUc5qC4piRb8PCIChwzOSmC790fo5jeQOjUZRiQKDT67d9zDdFkiW7bBhH
- GVpqHvKBqwLetY9NpRvAAkz2Zhea5T6j/09/2l4KoqHE6Ld71oL9LgU6+niBtux3SfW+1fu36Hv
- JQ+2QULdu6uHJv3dYdCB6zv0BYM/Ju3Vw+syQUg5oolERCpIAwX1L/4DWU0vRpPXoacpyrQuSkO
- GbF4hRPmH10L3NkWsGorqJKpLV06Cuqc9awQg9pXohPIvruaiguF6xy9GPFXsHa4tDbgSPnmppw
- 1MPtd0SuS9PIQFMWIB3qz0M2a6q77Fdhebx8db921w18oLu2qdP893ylnndkdALsqm56uH9cwur
- doRRfpLjxm6Ua/J0hdNzihkvfsJnwiT5IE8g/coVjF9OMzlWmSMAdq0QLtfiXqqwdlOBYBEohfa
- bCkir7vnkaRbwf0/xh1i3hCviXMZ
-X-Received: by 2002:a05:600c:34d1:b0:4a2:526b:d3fd with SMTP id
- 5b1f17b1804b1-4ac1793fb5emr324275035e9.15.1793726677004; 
- Tue, 03 Nov 2026 09:24:37 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b2a96fc933sm77829825e9.11.2026.11.03.09.24.32
+ d=1e100.net; s=20260707; t=1793726779; x=1794331579;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=t7evk/PGY2aqSKb/cWcU+O9P2cepKPm4a8WtSjNhe3M=;
+ b=ZGLuaTNgXTlkNQEC8/X9NRcYZq2vFEBx//GmxTgWEP9gu2wLnl27ifYX7rX29LH/CX
+ 12v73Yu0eGVTLxcAonZoj8P1BL3TfVEBq3SJpR7aPtovR3mZRcmBN0Ddy8mOa1a1cNLn
+ kddIoLzHqFWZCiCi1lUerCIKgr8o67CyIxKaZnFYV8QfRCiVLIyn2ouC6xiqY6Uz1qtW
+ 6yGX4zp1qNggpzP3O1wmUmgKRSJaxHzeAnLuRR9WyVClzTqkZRpjO1xnQT57ttkqvrgx
+ JwnD5pWqveLD9T0Zgajwwxplj396q6hhh794U9m1Q5x/B6ldCvjrbay4q5FRmjTQtwxa
+ 2FTw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw8c+LOOU4uuBWEga/N+kG9yaaVRwsazelMG5V9qrOEps+Otnbl6NarsatEMlYEH4pXbxDjRLyZD7J0@nongnu.org
+X-Gm-Message-State: APuU4Z+CckR8/tKAiuvyllBHOeAixsD7jjidSsDnivQ+YxVDs7IZYyUR
+ /mJOzwWj+/V5Jyz80jOQLQ+yIePqC3yTYpJC9wvSum71qt0WwPq/rw5Kq/nV6zwAsaM=
+X-Gm-Gg: AYBFou1s6PRzPfTGwV5S7xLG7qYvG/kH97FJHNI8Pp4j216jZPzhbqF+KsAEDW5AFdt
+ WgiwYa9Cf0AWGjwfMP/IghTW0tq8ISbm5PBqpkbsq3c8/Hx3FBQ+Uqo7SsEZIuInK07rEnZ3cAK
+ eC2k7mL947521ApwoxAwJfjAci8lY9BcnL5ESiCTfZi+QXnwcJWAW0LSKiU3S6JeoQHATXnGqH3
+ vSgJvP7yomBrYLsfbyp3/xv/SjjJ9B77qahZ0woDScC9X/rpsOmK+/w5D0Ai3KRi7BZyHzkAw3O
+ AgqH7Qpo0jQTYJq3aLOzuqPMC7Vv96m+vVl3KqxkBHE2yOXQbwe6FDhHzKep1zO5JIvZTlwukcQ
+ s/IO8pgOtmSh3MzIrZx8h5wJ7jsPSF2W5GQF8W3zAu7p5dv+iHixDcuF1YFBsPNtZpuiz8KLEaO
+ 54qQ1Bb9dNw0DzUAYVwC36klwlms+/R3NVKt1bN9BJN7xjJfr/hwGeOWfqTREBq6c0hR4JE37aj
+ YlqREXp2yoJXI9yJrM6A5LrRNtQFktSjVebVrLEqiLc6DbJ9xT6JLBveL+LJovQBnkDnqFV/wcf
+ cPEhLU4uXavStOI4psm5kdIluCxWn2IVYSgmQydEGC6RMIBtvYyLs28Xlua2+2POtj8zOUIuVEE
+ PSyJ+GjAiXzyGC+ybCte50D1ZJB3hM6MvtQ==
+X-Received: by 2002:a05:600c:a11b:b0:4b2:3c81:d1 with SMTP id
+ 5b1f17b1804b1-4b23c810353mr76095235e9.5.1793726779360; 
+ Tue, 03 Nov 2026 09:26:19 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4ac0950d533sm211082605e9.3.2026.11.03.09.26.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Nov 2026 09:24:33 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 65F935F909;
- Tue, 03 Nov 2026 17:24:32 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- qemu-s390x@nongnu.org (open list:S390 Virtio-ccw)
-Subject: [PULL 3/3] tests/functional: fix call to common_tuxrun_gdb
-Date: Tue,  3 Nov 2026 17:24:31 +0000
-Message-ID: <20261103172431.1180482-4-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261103172431.1180482-1-alex.bennee@linaro.org>
-References: <20261103172431.1180482-1-alex.bennee@linaro.org>
+ Tue, 03 Nov 2026 09:26:18 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH for-11.2 1/4] hw/intc/arm_gicv5: Use cached
+ IRS_IST_BASER.VALID state
+Date: Tue,  3 Nov 2026 17:26:13 +0000
+Message-ID: <20261103172616.2400758-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261103172616.2400758-1-peter.maydell@linaro.org>
+References: <20261103172616.2400758-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,26 +108,49 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-I applied a last minute review fix to the api as it was not used but
-evidently missed the one place where it had been set by copy & paste.
+When the guest writes to IRS_IST_BASER we effectively cache the value
+of the VALID bit in the GICv5ISTConfig valid field entry.  In a few
+places we check whether the IST is valid by doing a bit extract on
+the register value; switch those to look at cfg->structure instead.
 
-Message-ID: <20261029161310.2065290-3-alex.bennee@linaro.org>
-Fixes: e0a7139b2134 ("tests/functional: add tuxrun kvm gdb test for s390x")
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/intc/arm_gicv5.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/s390x/test_tuxrun.py b/tests/functional/s390x/test_tuxrun.py
-index 3821f985196..1dd662aaaf0 100755
---- a/tests/functional/s390x/test_tuxrun.py
-+++ b/tests/functional/s390x/test_tuxrun.py
-@@ -55,7 +55,6 @@ def test_s390_kvm_gdb(self):
-                                rootfs_asset=self.ASSET_S390X_ROOTFS,
-                                symbol_off="0x3ffe0000000",
-                                drive="virtio-blk-ccw",
--                               haltmsg="Requesting system halt",
-                                accel="kvm")
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 5d0a50ab6aa..d0a8574916b 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -1222,8 +1222,7 @@ static void irs_map_l2_istr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+     uint64_t l1_iste;
+     MemTxResult res;
  
- if __name__ == '__main__':
+-    if (!FIELD_EX64(cs->irs_ist_baser[domain], IRS_IST_BASER, VALID) ||
+-        !cfg->structure) {
++    if (!cfg->valid || !cfg->structure) {
+         /* WI if no IST set up or it is not 2-level */
+         return;
+     }
+@@ -1293,7 +1292,7 @@ static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+ {
+     GICv5Common *cs = ARM_GICV5_COMMON(s);
+ 
+-    if (FIELD_EX64(cs->irs_ist_baser[domain], IRS_IST_BASER, VALID)) {
++    if (s->phys_lpi_config[domain].valid) {
+         /* If VALID is set, ADDR is RO and we can only update VALID */
+         bool valid = FIELD_EX64(value, IRS_IST_BASER, VALID);
+         if (valid) {
+@@ -1604,7 +1603,7 @@ static bool config_writel(GICv5 *s, GICv5Domain domain, hwaddr offset,
+                             deposit64(cs->irs_ist_baser[domain], 32, 32, data));
+         return true;
+     case A_IRS_IST_CFGR:
+-        if (FIELD_EX64(cs->irs_ist_baser[domain], IRS_IST_BASER, VALID)) {
++        if (s->phys_lpi_config[domain].valid) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "guest tried to write IRS_IST_CFGR for %s config frame "
+                           "while IST_BASER.VALID set\n", domain_name[domain]);
 -- 
-2.47.3
+2.43.0
 
 
