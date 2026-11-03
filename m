@@ -1,112 +1,118 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F95D606D81F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 11:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401F1606D827
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 11:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ClGaJCV3;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=hcXKTcBE
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cd+kI/cS;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=qLP5zsEr
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOD2S-0003l2-L7; Tue, 03 Nov 2026 06:50:52 -0500
+	id 1xOD2S-0003l5-Uz; Tue, 03 Nov 2026 06:50:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2O-0003gR-Op
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:50:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2R-0003k5-Pm
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:50:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2L-0000Ko-D2
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:50:47 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2P-0000LR-QY
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:50:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793706644;
+ s=mimecast20190719; t=1793706648;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7QHNDyK/phJ9tU0kowrtkVbtSo8Bjfz9PyfAuxDA36k=;
- b=ClGaJCV3Ua+i26nRBd9oi/8GNh1m+xMu2WZy2/xPLBvv9LhOmMJ+AvPMCZxU7IIzeZaW3n
- Q7iQSPXORgJ23x6XudmIeYTuBLhyziqSbosKDMy3FphtO5BbweIQpyeV9NtGw+cer7Spbs
- Upy2imGoDBGXEG7z0hoDx46AOBmF8Fc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UHKNN3BJbuzXQxrUE+/Ofxxpwwy9gN/qPKU69iR6cNE=;
+ b=cd+kI/cS5LJwasOx3cCKHqAsRzozcJEO0WaWYpBo/2xonesyEAlaFjgUKa1WNSI9Y5uybe
+ SwvnQPPpxm9Z17jagePaS/yrKhfG9a/TRwzx6JGm28T+CGmhn8MadoyrHa6VcG99Gy0frU
+ 77sZyCEC1MgkYG8whxgsE9WhfOA4j5Q=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-538-lG6V0QNhOpCH_4zBnYcFdQ-1; Tue, 03 Nov 2026 06:50:43 -0500
-X-MC-Unique: lG6V0QNhOpCH_4zBnYcFdQ-1
-X-Mimecast-MFC-AGG-ID: lG6V0QNhOpCH_4zBnYcFdQ_1793706642
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4a1f03f2e8aso36228815e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 03:50:42 -0800 (PST)
+ us-mta-345-HOIOmq62NLiOm5JcRNzjvw-1; Tue, 03 Nov 2026 06:50:47 -0500
+X-MC-Unique: HOIOmq62NLiOm5JcRNzjvw-1
+X-Mimecast-MFC-AGG-ID: HOIOmq62NLiOm5JcRNzjvw_1793706646
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-48b0a199b20so3444975f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 03:50:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793706642; x=1794311442; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=7QHNDyK/phJ9tU0kowrtkVbtSo8Bjfz9PyfAuxDA36k=;
- b=hcXKTcBEpJP9KZvZpQd+B6yPT17tmxe+o5usAzBg3U2dyHj2SL8Dnn+JAn1PvGTfOD
- DpD6QC9haUa2oTKegp22+zkei0RFdpVCxdn79TIpzQao5c1sXiRZCuBiV9Cat4a1zgUm
- 0WM5O9rXtivpkDm9TQVSEm78BCohjdIxW5qDPXJrmq+eIf9UJ2WSk56XGvLfyfM1a/4B
- 3Neb2eZegb3SaXQ1gvYlXuL1F2Romp2HVpBsfNqdCByl5DB6pKEmD3yLPcmL0A9FL0tr
- oLDz5+3cJPOvEJ7Wr8NdCSZ/UuIat/AkTof6ynQekBLO0lfJ4MVz1vZ7v01ZUm64gAEz
- Mb1g==
+ d=redhat.com; s=google; t=1793706646; x=1794311446; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=UHKNN3BJbuzXQxrUE+/Ofxxpwwy9gN/qPKU69iR6cNE=;
+ b=qLP5zsErhsBa5SJX1vSGgyBm+blF/wFWVjCPIRbt8XaksxrKWnsz0YxcG3aElkPUFb
+ QCnsQWo7yFYHrruA/6qfcSjwy9bdMwAKWV7InYDycTFt4pttNQ6Og7olbLW5tA3PQZMd
+ d4r/+ZTVWIYmm0WqLWjjkId+3xgIpHKdZ806Cjs9qZMQHsfRwasYk03lOp4+hu0vFrFn
+ 58QwzWY66OVqO5PPhMo0+z0pzuSyVQDAmk9X52143RMYVd1e+OiHLz4q6kH7hik5FeEV
+ VEliLo7PGBEGeLyYIY93BE1Nct95yMDxPgSEU+lvrZqXEWjxo/6xmlqb0o/s5Aa1C/FK
+ sffA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793706642; x=1794311442;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=7QHNDyK/phJ9tU0kowrtkVbtSo8Bjfz9PyfAuxDA36k=;
- b=z8NT1shn2hnaW1Cm7e2YbMDr+etuV+KznqQuy86H4Eg2bNeOwOnkqRqkiN1XRtbxyV
- VugoIi2eBJUV/4QByLw5CNAmuglxwrC8QLV1ppML1EK00MuFCIFaAdCQw1+c0lzXVrpm
- vFBESBZ8ZSpezh3sCYTGWpxsFfz9eV3ABJSSilOyQk8cGqH2/GeKoXAZBzmP2HRzCyMC
- q6/rUY3iK2AvdUrZVDn90dk8BF3/065De9HfO065CGdJJZ5ai2snfBLhebq3f930RQB2
- 9jkU8oIT6hwGAxkYzA6bXJl4RIwUvslTTg3kP6luoQBLQXqjAVHFeQxwAMforAJJ9Z5d
- BA7A==
-X-Gm-Message-State: APuU4Z8XdhkTaeWEYSvs69VumjyGjQuc4YBg+nkrFpHzNkyWvZwbuyiy
- VBMuSh51bxkwkawmuuSq7ew4r/AF40dTPmSOl+Zutse4704BcEMVs2cYu+2e1ueSsdqbZ3Jx9Ty
- c7VzFOJoXEFkC5rJ/PBZKFd8Z5QitmWxzeJjTvIQ9/yBxkAZrBERIMRxpGfhouoq4DZJUhj2Rlq
- PWALn2q64U0kLCA3TlWv0dgYnRwovkMwRyvw==
-X-Gm-Gg: AYBFou2lJliyHeoFe1MEkEPeF0vmLCt+pxKvpxZT7zVt463Bj7pTaY2nnktI4FwRBO2
- Ou0OMSNLP8GObhdHDys1Dbz9MxjG3MTdSMWPTWaLsGwBvgv1+akEpMeVSIs5yNHDrYxLunQBphH
- Gmhsqwrgkdn7eGHniSLlenOXDXrqpmue6eWUXuR0yiJDR0xMdCme3DR3RwTbuTW4n/lGgnFlG9H
- ywbyJ3ee84ifOgOxMxdcAIm0OXiz2GI+NpTx7j0IlPvV30McBqZo/fFcBRb2h1c+p/0jnjAV/di
- OrMQJf6MsAycU2FrXIqnA5R7JKalRt6CoNWRxMYcb006u1yMOq4aHl/so8xfcgp8Ii8mhUXIA5L
- l5zW3G/YNtWYSV2Jp9BLR06j3Ps8nHiDMyN0hG3zZJg==
-X-Received: by 2002:a05:600c:4454:b0:4a3:5a7b:6002 with SMTP id
- 5b1f17b1804b1-4ac17d19777mr285784415e9.28.1793706641628; 
- Tue, 03 Nov 2026 03:50:41 -0800 (PST)
-X-Received: by 2002:a05:600c:4454:b0:4a3:5a7b:6002 with SMTP id
- 5b1f17b1804b1-4ac17d19777mr285783805e9.28.1793706641020; 
- Tue, 03 Nov 2026 03:50:41 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793706646; x=1794311446;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=UHKNN3BJbuzXQxrUE+/Ofxxpwwy9gN/qPKU69iR6cNE=;
+ b=wMYSFrdO/hqcIMsNeije+m9VbNiKYN37OyRW9jbBCCq8k4w/2BKDFS+ZUVliXFaZAa
+ JOTW7l+NWrXsJOLBGkNp1aiXsd5B/n7S1tns5BrEQTRWUGWodc+L16uG2m0ySq3CghnU
+ BGoUHmQViQG0BQADh3z7/Zp+yPFH4Dd5Uo+wWccEkic17NOAn7YIS4hfBWEuCG2E70S6
+ ha2wBmkidV3J0Lu+2EUThbDAlTktHUgD8fityavZuaPAr3HHCGz+GC1CeJ2b9vjSjNNC
+ vlwU6BymsRO/+JqPYTyDVMLiFSwQ9E8DXHpdLygGBv+Oh9qMZ3kJc1EYUjjlZ01JijbV
+ 97rA==
+X-Gm-Message-State: APuU4Z8++afcvoENB2TgWazVSL6QuuH9/eA3EJHzZU7+jOjYQ5drIu9u
+ IgI54tMlAR2z6vj9eOZINdCKgsdSSx2I5e7vI/OZY+rCwbgiPWdJ9KAGVaKouFGXvwtrHCjqgHf
+ moaEp+i6lvX9jcUKrtF+r9DW5GwGROs0R3bJLgAZh3ir5GOfzKiuHC2ckcQM/74veg87G+XBLwo
+ D2zoCqx18ZXhMWKWJA+5ITE9gACnN0Ba9duA==
+X-Gm-Gg: AYBFou1EK0MxHfOZ7DeJXVuCFHlpt5sZrgI4SJjMQ4v1qRpsm4OX8cRWgACCJzs9kS1
+ Vv7IFVZ1p6HvC9SX9/idAi4K7dIHR9TEMuENEmWnn3fqGKHPeBZUWhes78I5luvcf62Can458wd
+ 9V2kHbJ7B+39qs4v4oVAIxzQHWwEDagEnR/NB5Jpjj/R53pM7yoT/WGvat1a2XOofJqtupt1vij
+ jtnPxWUSM2pUS/mHwpxxsgEaZcj8dbBJd+Jq0bPTfZ/mkLiqtuZpXMGG9uTezfESiWOEQH3aICl
+ 2C88ZpwjrvAAZR0lD1RvgkU7Z9C/YIHaP2Me6ObJq4XT9k2U8scc/sW2Vbc8zsX3ZZaGT56fDtL
+ Knh37kahFiUXmjOZy1Pf3rUr4Ru8Umn3gW/Dt8zKdVA==
+X-Received: by 2002:a5d:588a:0:b0:48e:932:af0b with SMTP id
+ ffacd0b85a97d-48e6e4f6a88mr28298086f8f.32.1793706646363; 
+ Tue, 03 Nov 2026 03:50:46 -0800 (PST)
+X-Received: by 2002:a5d:588a:0:b0:48e:932:af0b with SMTP id
+ ffacd0b85a97d-48e6e4f6a88mr28298017f8f.32.1793706645754; 
+ Tue, 03 Nov 2026 03:50:45 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc0:1506:fd00:9e19:9994:44b1:e6f2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b8bd8esm24811724f8f.42.2026.11.03.03.50.39
+ ffacd0b85a97d-48e71b80eb1sm26123209f8f.34.2026.11.03.03.50.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Nov 2026 03:50:40 -0800 (PST)
-Date: Tue, 3 Nov 2026 06:50:38 -0500
+ Tue, 03 Nov 2026 03:50:43 -0800 (PST)
+Date: Tue, 3 Nov 2026 06:50:41 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Daniel Paziyski <danielpaziyski@gmail.com>, qemu-stable@nongnu.org
-Subject: [PULL 07/17] pcie_sriov: fix null pointer dereference when
- initializing PFs in a system with user and device created VFs
-Message-ID: <e1b6779cd4c29e9cc24f88a45552a93219c68241.1793706601.git.mst@redhat.com>
+ Nicholas Piggin <npiggin@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Jishnu Warrier <jishnuvw@linux.ibm.com>,
+ Utkarsh Verma <uverma@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 08/17] tests/qtest: Enforce zero for the "un-fired" msix
+ message value
+Message-ID: <370993e916a0b5f35c3284355e373db654112310.1793706601.git.mst@redhat.com>
 References: <cover.1793706601.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793706601.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,59 +131,109 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Daniel Paziyski <danielpaziyski@gmail.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-pcie_sriov_pf_init is only used to initialize PFs for device created VFs, and
-as such, it is checked that the PF has not been referenced by a user created VF
-by means of the sriov-pf parameter.
+virtio-pci detects an unmasked msix interrupt has fired by looking
+for the data payload value at the target address. If a value of zero
+is enforced for the memory value when an interrupt has not fired,
+then an assertion can be added to catch the case where something
+changed the memory to an unexpected value.
 
-This check crashes if it is performed for a PF that does not have an ID, and
-there are already user created VFs in the system.
+This catches an endian conversion bug in the message value when
+running these tests on a big endian target. Previously the test
+just times out waiting for interrupt, after this it fails nicely.
 
-Example:
-
-    qemu-system-x86_64 -M q35                                   \
-        -device pcie-root-port,id=rp1,chassis=1,slot=1          \
-        -device virtio-net-pci,sriov-pf=f,addr=0.1,bus=rp1      \
-        -device virtio-net-pci,id=f,addr=0.0,bus=rp1            \
-        -device pcie-root-port,id=rp2,chassis=1,slot=2          \
-        -device nvme-subsys,id=subsys0                          \
-        -device nvme,sriov_max_vfs=1,serial=s,sriov_vq_flexible=2,sriov_vi_flexible=1,bus=rp2,subsys=subsys0
-
-ASAN message:
-
-The signal is caused by a READ memory access.
-Hint: address points to the zero page.
-    #0 in g_str_hash (/usr/lib/libglib-2.0.so.0+0x49954)
-    #1 in g_hash_table_contains (/usr/lib/libglib-2.0.so.0+0x4ad3b)
-    #2 in pcie_sriov_pf_init ../hw/pci/pcie_sriov.c:161
-    #3 in nvme_init_sriov ../hw/nvme/ctrl.c:9088
-    #4 in nvme_init_pci ../hw/nvme/ctrl.c:9218
-    #5 in nvme_realize ../hw/nvme/ctrl.c:9696
-
-Cc: qemu-stable@nongnu.org
-Fixes: 19e55471d4e8 ("pcie_sriov: Allow user to create SR-IOV device")
-Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Jishnu Warrier <jishnuvw@linux.ibm.com>
+Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261101162132.147838-4-danielpaziyski@gmail.com>
+Message-ID: <20261102035306.2291147-2-uverma@linux.ibm.com>
 ---
- hw/pci/pcie_sriov.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/libqos/virtio-pci-modern.c |  9 +++++----
+ tests/qtest/libqos/virtio-pci.c        | 20 ++++++++++++--------
+ 2 files changed, 17 insertions(+), 12 deletions(-)
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 63d19ea488..9ba14d46c4 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -158,7 +158,7 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
-     BusState *bus = qdev_get_parent_bus(&dev->qdev);
-     int32_t devfn = dev->devfn + vf_offset;
+diff --git a/tests/qtest/libqos/virtio-pci-modern.c b/tests/qtest/libqos/virtio-pci-modern.c
+index 4e67fcbd5d..f31b3be656 100644
+--- a/tests/qtest/libqos/virtio-pci-modern.c
++++ b/tests/qtest/libqos/virtio-pci-modern.c
+@@ -137,12 +137,13 @@ static bool get_msix_status(QVirtioPCIDevice *dev, uint32_t msix_entry,
+     }
  
--    if (pfs && g_hash_table_contains(pfs, dev->qdev.id)) {
-+    if (pfs && dev->qdev.id && g_hash_table_contains(pfs, dev->qdev.id)) {
-         error_setg(errp, "attaching user-created SR-IOV VF unsupported");
+     data = qtest_readl(dev->pdev->bus->qts, msix_addr);
+-    if (data == msix_data) {
+-        qtest_writel(dev->pdev->bus->qts, msix_addr, 0);
+-        return true;
+-    } else {
++    if (data == 0) {
          return false;
      }
++    /* got a message, ensure it matches expected value then clear it. */
++    g_assert_cmphex(data, ==, msix_data);
++    qtest_writel(dev->pdev->bus->qts, msix_addr, 0);
++    return true;
+ }
+ 
+ static bool get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+diff --git a/tests/qtest/libqos/virtio-pci.c b/tests/qtest/libqos/virtio-pci.c
+index 002bf8b8c2..102e45b524 100644
+--- a/tests/qtest/libqos/virtio-pci.c
++++ b/tests/qtest/libqos/virtio-pci.c
+@@ -132,12 +132,13 @@ static bool qvirtio_pci_get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+             return qpci_msix_pending(dev->pdev, vqpci->msix_entry);
+         } else {
+             data = qtest_readl(dev->pdev->bus->qts, vqpci->msix_addr);
+-            if (data == vqpci->msix_data) {
+-                qtest_writel(dev->pdev->bus->qts, vqpci->msix_addr, 0);
+-                return true;
+-            } else {
++            if (data == 0) {
+                 return false;
+             }
++            /* got a message, ensure it matches expected value then clear it. */
++            g_assert_cmphex(data, ==, vqpci->msix_data);
++            qtest_writel(dev->pdev->bus->qts, vqpci->msix_addr, 0);
++            return true;
+         }
+     } else {
+         return qpci_io_readb(dev->pdev, dev->bar, VIRTIO_PCI_ISR) & 1;
+@@ -156,12 +157,13 @@ static bool qvirtio_pci_get_config_isr_status(QVirtioDevice *d)
+             return qpci_msix_pending(dev->pdev, dev->config_msix_entry);
+         } else {
+             data = qtest_readl(dev->pdev->bus->qts, dev->config_msix_addr);
+-            if (data == dev->config_msix_data) {
+-                qtest_writel(dev->pdev->bus->qts, dev->config_msix_addr, 0);
+-                return true;
+-            } else {
++            if (data == 0) {
+                 return false;
+             }
++            /* got a message, ensure it matches expected value then clear it. */
++            g_assert_cmphex(data, ==, dev->config_msix_data);
++            qtest_writel(dev->pdev->bus->qts, dev->config_msix_addr, 0);
++            return true;
+         }
+     } else {
+         return qpci_io_readb(dev->pdev, dev->bar, VIRTIO_PCI_ISR) & 2;
+@@ -323,6 +325,7 @@ void qvirtqueue_pci_msix_setup(QVirtioPCIDevice *d, QVirtQueuePCI *vqpci,
+     vqpci->msix_entry = entry;
+ 
+     vqpci->msix_addr = guest_alloc(alloc, 4);
++    qtest_memset(d->pdev->bus->qts, vqpci->msix_addr, 0, 4);
+     qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
+                    off + PCI_MSIX_ENTRY_LOWER_ADDR, vqpci->msix_addr & ~0UL);
+     qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
+@@ -355,6 +358,7 @@ void qvirtio_pci_set_msix_configuration_vector(QVirtioPCIDevice *d,
+ 
+     d->config_msix_data = 0x12345678;
+     d->config_msix_addr = guest_alloc(alloc, 4);
++    qtest_memset(d->pdev->bus->qts, d->config_msix_addr, 0, 4);
+ 
+     qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
+                    off + PCI_MSIX_ENTRY_LOWER_ADDR, d->config_msix_addr & ~0UL);
 -- 
 MST
 
