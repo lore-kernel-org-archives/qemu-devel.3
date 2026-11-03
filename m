@@ -1,108 +1,116 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD66606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29753606A328
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CiIQz1cA
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=gSqf5yg6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOIPY-0003mY-KR; Tue, 03 Nov 2026 12:35:04 -0500
+	id 1xOITg-0004fl-PU; Tue, 03 Nov 2026 12:39:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
- id 1xOIPS-0003lv-N6
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:34:58 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xOITX-0004ek-Gm
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:39:12 -0500
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
- id 1xOIPQ-0006zU-Or
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:34:58 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-3ad787e0593so2141022a91.3
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 09:34:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xOITQ-0007IP-9d
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:39:09 -0500
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-8b2d149b483so20473057b3.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 09:39:00 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793727540; cv=none;
+ d=google.com; s=arc-20260327;
+ b=fwnh2AiUIe6WJNQu4D7B3kSISIbSSjQGNFFHuFcHjGHrbKE0j/FYj3f0kaoPsWxppO
+ TyAegVzfxIEgdovnUs93Cd682H7fumaJbKFsvI8DET+nCkPlhcmPsQxVWg1GgUYypzKc
+ YcK/1H+BoEyL0VdS6HOadT8deH82Js9vPJvVV/+x0UyuiBDQkMKo4iximhIgYcZ8a3mi
+ WaKnqgak8OvStEqUq99kgjNRHNsMrijYrpucKSfRdbt6TaQUXinFmdODB71YHVNMaxWn
+ wu+7gH968Aax0nbO+4DzZpvCds+etsVPQe0N2hCJCDwZwT54kK+RuycCJlglaNx2NflH
+ xJzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=eYJsPy2af8MtLz+Lbc9s1O6GV6rp9tzvQ4qATqX/8aM=;
+ fh=HhVnZIVgDvgRQluOQPzGzgOcqIdQcHm0kkiIkgMVLLQ=;
+ b=Sz0JzdCeCTWgmwjX/z1z9pZIRyucRIxVl4/536uPEWSO8mnd0DzKakq3CXIybjVRg7
+ sabb1NybZNga+bHptniaad0ALt3VipvYgrsTl4VVIUjZ3qgJZKpaA+75dWgJuwkSHdxx
+ HyhWCetKOxHwEO8BWtVzyqxIzGujLfdrQXRLb4D6NydUXJgLi21wmALgkGZmKfo7H2E4
+ wglT2FG4H6ORx0P0mh+osXcFfFxhDdIpjHP2xrhSHYVbkRDv9lhZs/+0UAfHF8UCMx/s
+ v6ijuEaN6QWyhRlRyfcdNrtDZclOYHkun+lFUF8xERCfHT5WsAUb4DIpoUC3vsLG65E6
+ n3Lw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793727295; x=1794332095; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=QQO1Xf2j9XcVjlks5fKh5jx3ufcS3ux+RAnPnyK5/Rg=;
- b=CiIQz1cAj2NB43ldswNEr8uFN0UbB+n7+/nid8fAwuLZMQ0j+VuCD2eLVmFV7cUYvo
- XTiZ9PfZIL+hEbLZ9xqGgjm9oqKKIrEe9JF577PwooINZLq1SnMRTr1Eq9Yj4aCDTcWP
- 8F8AxOQQsauQ48tPqGOh8EKWVq2jkMqOqY8GNk74MzeAzaxmRvX6zEJMFt+9Jl/1qf/l
- CIaDij2syXRL6FC4bi80E5SKWUe8EkaiVQG1L9Ui9DE5IvXzUlZU7Q/9E8+pJW+Zx/uZ
- B56ui43GpWZJc0NmRK6J4qYF70xvhZHUfN8URvchIEo7DrYJmD3ph1Wqtbk7bSPo2zN2
- EUQw==
+ d=linaro.org; s=google; t=1793727540; x=1794332340; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=eYJsPy2af8MtLz+Lbc9s1O6GV6rp9tzvQ4qATqX/8aM=;
+ b=gSqf5yg6APN+ePySeegDhxsGi+x/Q1Nrq5rbi1zaiJ7jjaoIa1XRqh2XOal+sJrf2r
+ E7rNoUrwbjWgjOM2B1kfSJt1kEYp4INSOy7wgr563HzxOG9jAQvS49k7qV5OsHtqxd3w
+ w61FsJjtfVw1P2W5VYFaRWJZAh1Mr9VqQZwjJBoefPvqtk5+PxZzeQH/VAfOmpu74Khm
+ h0eV3t/RAhPVLOvGoo4rDuWqayTGESNhe604wC1q/zjLmlS3hepEzVPphgDsf96d6Dpu
+ u0h55ycw7cJJnA9CuGkv4Un2KRLCP/hx7ks2DXuweLxrJTQ6IdqDwEGX70ct8H14VqRU
+ H03Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793727295; x=1794332095;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=QQO1Xf2j9XcVjlks5fKh5jx3ufcS3ux+RAnPnyK5/Rg=;
- b=wzdht0zNFOIXFzobIILKfc+eq6024mWdyo2IzwEDVHa1EwfoE+lFfqiiXTDvoagLTp
- aJQpPCkzoE3qSqY20inn2e/TSYKlTailAOcI9knWEp5ved0ovSWWBe8sobTt6hskEn9f
- IB7F0wQcteHAs9j4kzZStIISMONaoRbBtEbFlBW9rCs4ikV8U6DBB2s/LAZjSvnJ0dzG
- I2F286JUU/+gVLsp2RN042+8jQtT1KEK4Emj9lR+UqL8wf1cO4vf5xtgWk0dOUvoXELB
- gEKHV0Q/ztpoOa0t+S0qB3+yp0MPYcikPXnhBrzGWDuzi3t/SOryiWVTT78HnXdhlTPb
- IY5Q==
-X-Gm-Message-State: APuU4Z8nfitsXVUwaCt4ya10/4gcIRt8uER+med8WXNLSHDQ/lPivzis
- rpvrOldU0jYxAmUtKzPoArLFHiHVviKXs4c0WANRYdRTgUCy7gDxHcic
-X-Gm-Gg: AYBFou0YKk1mBz4WGVN9VHvtDJH8zByJHnTldgXosjZ1LcjSqO/wzMsS6Xzk9rP5YC7
- kIf7wrwGkAGS1LGF26BnoCUw3oDq7xc0wSg3+ZoJZ7P+9JfHiZfG9lXvARnfdZugq1BmK5dUhoe
- lYkT0D2Sxw6zcRcjpzBKOuliMZ0CZE6QjEWnwhc0mE12Dj7pj0mvf5snIfR0n9Mc+b4sDzcqXkA
- qVjSCwDyxgapiwnJLMt74muP3vG2IyT3Sd3b+L232y/Zcwj5RqwG2ZtNdKZR4cRpr0dCrUJCCCr
- Yz2/OlQkG/yzADohVkdkEGSTlswR38F9VXx2JjZYHOm4zIdu/iXPGV1kWYQFxt3i3cri46wCAeL
- THwmFT6YLxkAsypGl9dVWDZTX6sFCAgUcue3go11f89QSvS2anGYRgW5e7SCYXH/tSTI5dU1Gwh
- NAjrDF9H2OeR6broqTTNTRkuSGpb6W5nb7762XG+0C7jZFfEZSVyoCErFv6i8xk9waes557/RHU
- G94zHxEPTwwDFjMPZ4x+ZGfLxX54nUuo65op3K8+YnYkRD9y8vmMU0xv8hsWR7aBHiXOuYm+jTx
- 020OYz+aapVBklfV3k3we9XHx+CCoDDd10MHjok3I2RKGxsYVvHdozjqHNpJ6OcYFp59EhXjZ4J
- NSUAVQMDq7PoIEwGiJM+TPi7YpRst6oLQ
-X-Received: by 2002:a17:90b:3887:b0:3ac:97e3:73a3 with SMTP id
- 98e67ed59e1d1-3ae89574e10mr9417536a91.6.1793727294725; 
- Tue, 03 Nov 2026 09:34:54 -0800 (PST)
-Received: from [127.0.1.1]
- (ec2-47-130-4-255.ap-southeast-1.compute.amazonaws.com. [47.130.4.255])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ae85f662basm9829139a91.1.2026.11.03.09.34.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Nov 2026 09:34:54 -0800 (PST)
-From: WX Chen <wxchen0913@gmail.com>
-Date: Wed, 04 Nov 2026 01:34:44 +0800
-Subject: [PATCH] target/riscv: Use gen_goto_tb() for vsetivli exits
+ d=1e100.net; s=20260707; t=1793727540; x=1794332340;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=eYJsPy2af8MtLz+Lbc9s1O6GV6rp9tzvQ4qATqX/8aM=;
+ b=ZzkRFFtbRDPZjH83wMmCwfcyu/0ko9273lwamBRaFaHv14917W40ioe0OyIoNasnhL
+ eKLacy6LLD8sZyGtcJZM1LG0w3irRp9cKD1/Rv0uReIz6ktY5HWOlW/mpOy0txi4zLVh
+ o5Uhjfnyk7melczySrLUTQwq9Gk1gmr9BSiCW9yUYa6rJx/oZGF+cGynsqKOziJ9f29G
+ UnsYLxkwUNYG9yIduRfUOqMj3sF5i+kbD+wY8B91fJd8vxXcyND3q3MhQZoi+uPXPyip
+ 2YEjC1LtUK4YmedcLbmwyj/DiyB4tdpcyDPfwERBf3VO2BHjzdSbx9YXRklB9z3UlQaB
+ YgIg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByRmcUwRH8Ryykf+bSHgp0zcACRffD34z4ojYs3wjmlLZAdXyYGEEzIagYJhldc/9CgNkjhI8JRfCXT@nongnu.org
+X-Gm-Message-State: APuU4Z96wYJhCEa8EHtPU3uWswDelSb/mV76ETFV553KJScND/Heqyi7
+ SDfH+CjdBxEIi5if0KJmEMmqRZmvfzKmcwLBZK6n0p3fLxu0b8IBj2m/KBvsJEAbAH7B8ujEOaZ
+ fLhhxyi3uOoUQQoZBaUkVY6LwZ5w6mCLLKnyX5b645A==
+X-Gm-Gg: AYBFou2BMbkDBZJ7IFs7lyiLO0QFCVwbhuj4dcWAOb2HwR4D0hDRKPZCnXzwMG+rhMA
+ W1L1+Bqvqc5hXXbl6aIrMkDLEC6Mf6ouCduIK3iy9dq6uPa86HQs6wHKjAtrJsoLIEqqmnXN4pH
+ 2zzOC4v2/S/ilvYw3jD3vmZ+LCUpJhx4UCUfBOph1J8tJuxqMqhj/HMUwMwU6FaGG0E4At0SlSV
+ QtRd67OOROLPQxh9rScHitXTszjbLXPHBEmOYbTjx8K5qUVWYE5SbiD3EEgn7BoIhR9QyWPwQ0O
+ qZyZMmRQOH5yBKTiRpVePpstYFISYMU5pXWNdrFoSl2afGZRAE+5dweBaIrPX1FzhuZVgbseH/e
+ /9WrK0s0EtA5r+u2hVU1ViYaMeIajJqImftq5d7/l7h5j8c6Th/hFKqJtI5PSIn34R/HASfYKFL
+ 7qPW7vYYt9HS9cwsShCz19
+X-Received: by 2002:a05:690c:800c:10b0:8b0:a8c1:b203 with SMTP id
+ 00721157ae682-8b2b6723069mr67438167b3.29.1793727539613; Tue, 03 Nov 2026
+ 09:38:59 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261104-research-vsetivli-direct-chain-20261103-v1-1-ace12cf5280a@gmail.com>
-X-B4-Tracking: v=1; b=H4sIADMb6moC/y2NQQrCMBAAv1L27ELSaIp+RXpI0q1Z0Ci7IQilf
- zeKx4FhZgMlYVK4DBsINVZ+lg72MEDKodwIeekMoxm9teaIQkpBUsamVLndGRcWShW7zgX/nkN
- /Pjm/mimSm6DXXkIrv3+n69w5BiWMEkrK3/4jaCWBff8AtheKeZIAAAA=
-X-Change-ID: 20261104-research-vsetivli-direct-chain-20261103-69536f07be37
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
- WX Chen <wxchen0913@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793727288; l=2695;
- i=wxchen0913@gmail.com; s=20260725; h=from:subject:message-id;
- bh=wAVMFhGmPaGtZ+CzZ/XRpadW7vJEAcquvP323qo+hE4=;
- b=FKYtHd2DE0BYqYqEFzp0SmUMFmoGR2hB0JTU5m7c5+Qip0se4Wzu8zqZfTgCUBFbuB7Awp1xI
- WRTJqP0n7oUBFYHMdcvKz+nok/j3R29rc04c0RsIiMvIhbJDqt7Xwy6
-X-Developer-Key: i=wxchen0913@gmail.com; a=ed25519;
- pk=FX63IRxmtz1BCNzHxOOWDPTo8L/D0YUxlIKc1WKi7wo=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=wxchen0913@gmail.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <cover.1793207602.git.mst@redhat.com>
+ <05f5ab90ea52b0151958fd2506c15858e3e80442.1793207602.git.mst@redhat.com>
+ <92a5bdce-af21-4e8a-b869-57e903531a77@linux.ibm.com>
+ <0af8c97e-55bf-421c-8b38-de1f88f44547@linux.ibm.com>
+In-Reply-To: <0af8c97e-55bf-421c-8b38-de1f88f44547@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 3 Nov 2026 17:38:48 +0000
+X-Gm-Features: AclHuK9CkhCVJe0dxfLGQ9dSYLi3TTLaLivqVZblePfmMDmBXX0_RR2g61VogL0
+Message-ID: <CAFEAcA8+x3Bf0LDyh9hU6J9N-A8Lii6fb8orB2Coucn-fAYtTA@mail.gmail.com>
+Subject: Re: [PULL 49/78] util/event_notifier: more strict API
+To: Eric Farman <farman@linux.ibm.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x <qemu-s390x@nongnu.org>, 
+ Konstantin Shkolnyy <kshk@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,71 +124,59 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This change adjusts the translation exit of `vsetivli`. While preserving
-the existing helper, state update flow, and TB boundaries, it uses the
-generic `gen_goto_tb()` path to reduce the overhead of repeated successor-TB
-lookups.
+On Tue, 3 Nov 2026 at 17:32, Eric Farman <farman@linux.ibm.com> wrote:
+>
+>
+>
+> On 11/2/26 10:48 AM, Eric Farman wrote:
+> >
+> >
+> > On 10/28/26 1:16 PM, Michael S. Tsirkin wrote:
+> >> From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> >>
+> >> We have .initialized in EventNotifier to track was it actually
+> >> initialized, and we have a comment that @fd passed to
+> >> event_notifier_init_fd() must be an eventfd object.
+> >>
+> >> Still, there are two specific users, which ignore these things,
+> >> and use -1 as specific value storing in notifier, to mark it
+> >> "uninitialized".
+> >>
+> >> Let's make strict API:
+> >>
+> >> - store only valid FDs in initialized notifier
+> >> - _set() asserts that passed fd is valid
+> >> - _get() asserts that notifier is initialized (actually, except
+> >>    the two specific cases we rework, all other callers are not
+> >>    prepared to notifier being uninitialized when _get() is called.
+> >>    In this case _get() returns 0 (which is a valid fd), and caller
+> >>    will mistakenly use it, which is worse than abort())
+> >
+> > Well, there are other cases that would require rework not addressed
+> > here, as this commit breaks (at least) vhost-vsock-ccw and virtio-net-
+> > ccw (for vhost=on) on an s390x host. I'll look into that, but was not
+> > prepared for such a late surprise.
+>
+> I sent a fix [0] for the assertion that shows up with this particular
+> patch in some of the common configurations, but it still leaves VDPA
+> broken on s390x (which was also working before this commit). So, not a
+> good idea.
+>
+> I just posted a variation [1] of that which restores VDPA functionality.
+> Would that be doable? Or can we get the assertions here removed until we
+> can adhere to the API restriction?
 
-`vsetivli` is used to set the vector length and type, and both its AVL and
-vtype encodings are provided by immediates. Given the CPU configuration and
-the source TB execution context, after this instruction completes normally,
-the vector state changes relevant to subsequent translation are
-deterministic. Therefore, this exit is eligible for direct TB linking.
+If this change regressed something, and we don't have an immediately
+obvious fix for that, we should probably revert this change.
+Can we do that without too much trouble?
 
-Measured on an AMD Ryzen AI 9 H 365 (x86-64) host, using qemu-riscv64
-with -cpu rv64,v=true,vlen=128,elen=64. A RISC-V GCC 14.2.0 cc1 built for
-rv64gcv compiles the packages with -O2 -g0 -march=rv64gcv -mabi=lp64d.
-Only cc1 runs under emulation; make, the compiler driver, assembler and
-linker run on the host.
-
-Each variant is warmed up once, followed by three paired clean builds in
-AB/BA/AB order, using -j1 and fixed host CPU affinity (CPU 7). Median build
-wall times are:
-
-                  Before (s)    After (s)    Wall time reduction
-  LZ4 1.10.0         125.017      123.060                  1.57%
-  zlib 1.3.1          71.062       70.310                  1.06%
-
-In a separate untimed test, a loop executes two vsetivli instructions per
-iteration for 37 iterations. Host-side GDB entry breakpoints show that
-helper_lookup_tb_ptr() entries at the two successor PCs fall from 74 to 0.
-The guest still executes 74 vsetivli instructions. Initial TB dispatch and
-link establishment still occur through the normal dispatcher.
-
-Signed-off-by: WX Chen <wxchen0913@gmail.com>
----
- target/riscv/tcg/insn_trans/trans_rvv.c.inc | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-index a22e2cae6ce8e5a055c106fb76c305c92ac53d3c..b299c82d7a29057433e280b49b5220e6ad71498f 100644
---- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-@@ -234,8 +234,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
-     gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl(0));
-     gen_set_gpr(s, rd, dst);
-     finalize_rvv_inst(s);
--    gen_update_pc(s, s->cur_insn_len);
--    lookup_and_goto_ptr(s);
-+    gen_goto_tb(s, 0, s->cur_insn_len);
-     s->base.is_jmp = DISAS_NORETURN;
- 
-     return true;
-
----
-base-commit: d73149283205645625bfa9fe029cfb68e4c4a9ae
-change-id: 20261104-research-vsetivli-direct-chain-20261103-69536f07be37
-
-Best regards,
--- 
-WX Chen <wxchen0913@gmail.com>
-
+thanks
+-- PMM
 
