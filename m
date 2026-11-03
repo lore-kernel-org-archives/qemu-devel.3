@@ -1,100 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB78606D83A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 11:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6736C606A331
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 11:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=I9Xr7Z8R;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=FT+i9P29
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bmfzcp4s;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=ZFC465lB
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOD2o-0004lZ-Mw; Tue, 03 Nov 2026 06:51:14 -0500
+	id 1xOD2s-0004zh-Ja; Tue, 03 Nov 2026 06:51:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2m-0004bI-73
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:51:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2p-0004sw-Gp
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:51:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2j-0000N8-Ac
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:51:11 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2n-0000Nx-S3
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:51:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793706668;
+ s=mimecast20190719; t=1793706673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=VKqxlI/UASRAYwg9QvB0xV8ul06yjEI6yc9Z7vxiWlw=;
- b=I9Xr7Z8RHvUoxG06Xkw8j9x6Z4c5wIJrFxc7F858MHaUSaxI2Hroc16abYujZWK4nWuYws
- XxEapExqvDDDngDRNJzhFDLRn/Nw/4C3Mrd/0FOL7aAHN+aACjVktKhrphGKcLLpNLqsRg
- GcnK5q8cAmPxuBqKL/ET55G+QihluFo=
+ bh=99ub510hspfjTNbRaNnKOoklgZRp2udwZpVPiomHk3Q=;
+ b=bmfzcp4sQjqw+2Mt26waxHN6MTb+40o5p3uhtBVBfJ7keOMeiYaXsBp+cn/DV16mII3G58
+ jeLwxyUfG7gfN7E3GrQa2U93Dl39+wFCGxp4Uy+qOmCgOBGAORrtHPCWiJfCOThRrx2nc2
+ kSCL0LOR4A1rf7GzxK3n4qk7KQ9FW5c=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-taNxD8_eOXWJyHTpTgkBlA-1; Tue, 03 Nov 2026 06:51:07 -0500
-X-MC-Unique: taNxD8_eOXWJyHTpTgkBlA-1
-X-Mimecast-MFC-AGG-ID: taNxD8_eOXWJyHTpTgkBlA_1793706666
+ us-mta-147-dLeiZGywMTqERpDYHVg_cw-1; Tue, 03 Nov 2026 06:51:11 -0500
+X-MC-Unique: dLeiZGywMTqERpDYHVg_cw-1
+X-Mimecast-MFC-AGG-ID: dLeiZGywMTqERpDYHVg_cw_1793706671
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-48e0c896d05so3465242f8f.1
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 03:51:07 -0800 (PST)
+ ffacd0b85a97d-48df5b058ddso2686277f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 03:51:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793706666; x=1794311466; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793706670; x=1794311470; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=VKqxlI/UASRAYwg9QvB0xV8ul06yjEI6yc9Z7vxiWlw=;
- b=FT+i9P29/otoAKQwxpJJwXiPLNa2eoPzTiJZKt84lzULq1xxZeIofTwnwlqLPEMlN4
- LhhShO101w8Xrqam15xXLL502lJ/vAynm9v/YKfLoyNJUBPzbjtm2R68j+9GQcckqWHM
- rSdM4nu7g3OyduYbOYC7t192106/vf34K/rYdaVXQXdSS6KD6ojlOIj/uhJT5Pc/aL39
- esIAg2BijPpQkFYY6Hv0BJsz/vdGKDcGUMJf9I3Zl/uy6sYF+oYoUmc2a4jyW4rxj7gh
- Fk8iMgms/5jxD46RRhUbsAfPbnw71nKDct+UXnU6ubMuhlURb1t/dbbQeVjCY824Z1bG
- LU3A==
+ bh=99ub510hspfjTNbRaNnKOoklgZRp2udwZpVPiomHk3Q=;
+ b=ZFC465lB7O8ra04ScduDcDRo9YuGGVViK3B+i7EOkSo7Y6JOMYDgrs4V6Tiw8k6t5E
+ 5YxL7r4IF6UPgDIn7AAhKg+4ZVizMz5/TlOko9dRBJbVTy40J/DiPo1E9Oq9PYQlOqX8
+ sNbdayPAOIu/YXWNWCgiyFvehHTYjLKM0lbuxdxBe2YmVoYEsutv2XP2V3UC5ZmN7/EX
+ KfFPsxsJkQrv4mCnW1DDHLpNL/M8uzX9NMQNi77ApvyXV9bCj8L2rKUqhwTjel8Ozp/O
+ SUGtaEadqiv8xEamZ1Dgg5WV821TnwTj7i/SD6m/WF0cFtKfUShXitxjUeV7hGq71cPu
+ 4Qnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793706666; x=1794311466;
+ d=1e100.net; s=20260707; t=1793706670; x=1794311470;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=VKqxlI/UASRAYwg9QvB0xV8ul06yjEI6yc9Z7vxiWlw=;
- b=2GwzcO5b5vLTO5a6vC6+W48zd7V8qZkNwqAi582FKZMLrfHIDYL2AzrgU7vzoY1BMc
- ol3CVov5jWA9VJae2HwBtZC3Ac6eDFCcayRBvL7vYPCz04YziZWGX7dOCKFHjohm6py1
- 3JmCpNa0YO7gWmq21DREX2YeHhNUmWXa89HAdomDaCiAB8SgGY0J7jXC+ziVxqGeemRd
- YvOyTKvFlM/vYdLMc0wFg14eQ06CmsVYnnQhtTaLRkbBfka2tdTZb8TOUPoiHvWHpw+G
- h3x425TbqfndvSHasskknB8AoaE8tqyMqyVOwLsNOCyRQ1hVGfyDx7PRJUEG7f9rQq9i
- vReA==
-X-Gm-Message-State: APuU4Z8QSSg60EN7excjXanfPWXh4Selg/MHvrPxNnDjzqp+NY1EaURH
- HqyexG0p3Utkdyuo1iQljcup3lFJbiZGAPue6bVGUosgewEM/++piPSLSJL37XMhyNYILx51ePW
- SsfvsYcFo4HSOynLu2vS6G+p10B7xHsmorit5SXQLKg+BH402EKmHrtBGOtyPcpZ8lRn8oDHJxH
- rqo73C4UFuDnlm5H/ctVBdnIMFGkGN01IcIQ==
-X-Gm-Gg: AYBFou1AS3m8QtnzB7vhpUworqLX41mUnu1jgkeThyHtUPuWio8L2pM9eYKfgwIRJqf
- v8kxJk2uoJY9gtn8R7AndVvPU5sIkWqpAxoqpRhu536Y8f8Uq17DSgS63FHp+lTbcXGBJT4hjtw
- usnxiaH0AiqrSCb3kK78BcWiJxgrozRprO/X6Mk/R4VF7WMbaIy3o4g7v6r+Yb1Ynn7AxosSM/R
- M48N7FNjraIYZ/x8tPQanDO3SKIHTKKi0L6qZqFzZlc2S/fObO4XSrGehZ7tZ3cbdd91M0YGUz5
- nFelxz3vRMFLLWsd0T9i4WOY0LqnKGN3l7uzQ0x3whq8uWlEJBQwOlSWKSBFJT2FyGP/445TLLC
- jnaVeSy8f/NNlJ8TOFGTXyanM66hoo4C2QS6eu8Gtvg==
-X-Received: by 2002:a5d:59c4:0:b0:48e:3085:425f with SMTP id
- ffacd0b85a97d-48e6e2dbbdamr30505940f8f.2.1793706666161; 
- Tue, 03 Nov 2026 03:51:06 -0800 (PST)
-X-Received: by 2002:a5d:59c4:0:b0:48e:3085:425f with SMTP id
- ffacd0b85a97d-48e6e2dbbdamr30505879f8f.2.1793706665604; 
- Tue, 03 Nov 2026 03:51:05 -0800 (PST)
+ bh=99ub510hspfjTNbRaNnKOoklgZRp2udwZpVPiomHk3Q=;
+ b=otPnhJBflR+CuwLD6kNCa/wAPYYnB8/Omgi1EW2kkElUeYhW88R3u/C/2wuJ0mZAB/
+ aGLRuSq4bQ/v7s50NB6AKF7wLoA5o8fbuDwl7smQEV7am3mgFOsaAiU5Ir/FGSXO4Lja
+ 2R2Xu1gpdhjBsebrnbh8vjCyr0zDGCPVyfxEttkE6jEYpxpKn/2iwD5XB57SzFfsdRV8
+ OW7Y9ZQsrXEG5d+11gsWujFKjENRg/llOuIxG++S635orh657bjjYLR4cU9KTXAF1FId
+ NTu3c6O4fehopcEL9o1iURqMq0Y6Fj7CPdoZosRhQiY2PWCb8JM5bFFfJXFlvReL7s2t
+ aWhQ==
+X-Gm-Message-State: APuU4Z8UrCKIYjly8xlAewDrOA+h400gqYsFML3uSF+kRhojYarJbNNk
+ GqqiD9ABwIzPnjHdX5d4Bz+krINc2LFH1uoKJnAmzTqsBVdLKY124ZCZJoJ2sQ0tr/xgXRXzRFK
+ phH8jRYb9CNjDbPWSTn33A3726hvroftYzEkN56ImifPaxF34AYVwoaPHqf1aQuNqdQTYrxxUEa
+ 9GcW0D810Hk4bM7BJOgq1bAp+udCfv+tlyaA==
+X-Gm-Gg: AYBFou0gbBhvJ784ghqd8YbJORGa/n0oOknNJBkh7DswRDyk61xVAJ7WF4ywaW69LPR
+ 3YDnPdemK2Zg9OFey7aa2tYe3cGJbHKEl4DPwEgXbaMt0fX+zqWkEMytU0eyFZGfBc12VFy3nK6
+ QvFRQPj9AIBIyBmyQBPPXUkQkI3SqpJR5wUzoEM/V1WoM+8UYFJLlXqu58ohNeXoXf5l+aeiCUE
+ n/mo+de7Ito/iMGhYxpZ1rGXYvShNaZOwk5F4ZnTK5T28L3RA38w1FeIs1Yy9y9dN92PoWts4jM
+ BwzdD5KxVKBE/8CBjy1RokY3r0KgdbjAzjyIUcxco47UBfvV3XHthuoBMSgv+Yeas4rq1FOnUpF
+ mWFqslMVlYuDSIqSNa54OKRF8xKZfIS0TmpBKDDSXnA==
+X-Received: by 2002:a05:6000:46c5:b0:48e:5db7:fd6c with SMTP id
+ ffacd0b85a97d-48e6e2bde59mr17109050f8f.4.1793706670350; 
+ Tue, 03 Nov 2026 03:51:10 -0800 (PST)
+X-Received: by 2002:a05:6000:46c5:b0:48e:5db7:fd6c with SMTP id
+ ffacd0b85a97d-48e6e2bde59mr17109018f8f.4.1793706669743; 
+ Tue, 03 Nov 2026 03:51:09 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc0:1506:fd00:9e19:9994:44b1:e6f2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71a4d4f9sm25011883f8f.2.2026.11.03.03.51.03
+ ffacd0b85a97d-48e71b80ecbsm25280492f8f.35.2026.11.03.03.51.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Nov 2026 03:51:05 -0800 (PST)
-Date: Tue, 3 Nov 2026 06:51:02 -0500
+ Tue, 03 Nov 2026 03:51:08 -0800 (PST)
+Date: Tue, 3 Nov 2026 06:51:05 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Fabiano Rosas <farosas@suse.de>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
  Jishnu Warrier <jishnuvw@linux.ibm.com>,
  Utkarsh Verma <uverma@linux.ibm.com>, John Snow <jsnow@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org
-Subject: [PULL 13/17] tests/qtest/ahci: unmap pci bar before reusing device
-Message-ID: <0ca8f676d5f334e3c1d2c4b93dd7c8ad695320c5.1793706601.git.mst@redhat.com>
+ "Denis V. Lunev" <den@openvz.org>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: [PULL 14/17] tests/qtest/libquos/pci: Add migration fixup helper for
+ pci devices
+Message-ID: <4de39eb9370b7518c3c8e6668e73b88e5c7efb20.1793706601.git.mst@redhat.com>
 References: <cover.1793706601.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -103,14 +105,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1793706601.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,108 +134,90 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Nicholas Piggin <npiggin@gmail.com>
 
-ahci-test double-maps the hba bar in the pending_callback test.
-Unmap it first, to keep iomaps balanced.
+Migration tests can create new QPCI devices for the destination
+machine which may need to take on some state of the source machine
+after destination is complete.
 
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+Add a migration fixup helper and call it from ahci and nvme migration
+tests.
+This is currently a noop and will be used subsequently.
+
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Jishnu Warrier <jishnuvw@linux.ibm.com>
 Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261102035306.2291147-7-uverma@linux.ibm.com>
+Message-ID: <20261102035306.2291147-8-uverma@linux.ibm.com>
 ---
- tests/qtest/libqos/ahci.h |  2 ++
- tests/qtest/ahci-test.c   |  6 ++++++
- tests/qtest/libqos/ahci.c | 11 +++++++++++
- 3 files changed, 19 insertions(+)
+ tests/qtest/libqos/pci.h | 1 +
+ tests/qtest/ahci-test.c  | 1 +
+ tests/qtest/libqos/pci.c | 4 ++++
+ tests/qtest/nvme-test.c  | 4 +---
+ 4 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
-index 6d861c79ee..f098c91b47 100644
---- a/tests/qtest/libqos/ahci.h
-+++ b/tests/qtest/libqos/ahci.h
-@@ -580,7 +580,9 @@ void ahci_clean_mem(AHCIQState *ahci);
- QPCIDevice *get_ahci_device(QTestState *qts, uint32_t *fingerprint);
- void free_ahci_device(QPCIDevice *dev);
- void ahci_pci_enable(AHCIQState *ahci);
-+void ahci_pci_disable(AHCIQState *ahci);
- void start_ahci_device(AHCIQState *ahci);
-+void stop_ahci_device(AHCIQState *ahci);
- void ahci_hba_enable(AHCIQState *ahci);
+diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
+index c3a0f85fef..cfb7c17dd3 100644
+--- a/tests/qtest/libqos/pci.h
++++ b/tests/qtest/libqos/pci.h
+@@ -120,6 +120,7 @@ void qpci_memwrite(QPCIDevice *bus, QPCIBar token, uint64_t off,
+                    const void *buf, size_t len);
+ QPCIBar qpci_iomap(QPCIDevice *dev, int barno, uint64_t *sizeptr);
+ void qpci_iounmap(QPCIDevice *dev, QPCIBar addr);
++void qpci_migrate_fixup(QPCIDevice *to, QPCIDevice *from);
+ QPCIBar qpci_legacy_iomap(QPCIDevice *dev, uint16_t addr);
  
- /* Port Management */
+ void qpci_unplug_acpi_device_test(QTestState *qs, const char *id, uint8_t slot);
 diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index c49aa61862..043a916fdd 100644
+index 043a916fdd..291f29e762 100644
 --- a/tests/qtest/ahci-test.c
 +++ b/tests/qtest/ahci-test.c
-@@ -85,6 +85,8 @@ static void verify_state(AHCIQState *ahci, uint64_t hba_old)
-     uint64_t hba_base;
-     AHCICommandHeader cmd;
+@@ -137,6 +137,7 @@ static void ahci_migrate(AHCIQState *from, AHCIQState *to, const char *uri)
+     memcpy(to, from, sizeof(AHCIQState));
+     to->parent = tmp;
+     to->dev = dev;
++    qpci_migrate_fixup(to->dev, from->dev);
  
-+    g_assert_cmphex(ahci->hba_bar.addr, ==, hba_old);
+     tmp = from->parent;
+     dev = from->dev;
+diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
+index e9233c81e9..e78dd4d4c7 100644
+--- a/tests/qtest/libqos/pci.c
++++ b/tests/qtest/libqos/pci.c
+@@ -625,6 +625,10 @@ QPCIBar qpci_legacy_iomap(QPCIDevice *dev, uint16_t addr)
+     return bar;
+ }
+ 
++void qpci_migrate_fixup(QPCIDevice *to, QPCIDevice *from)
++{
++}
 +
-     ahci_fingerprint = qpci_config_readl(ahci->dev, PCI_VENDOR_ID);
-     g_assert_cmphex(ahci_fingerprint, ==, ahci->fingerprint);
- 
-@@ -198,6 +200,7 @@ static void ahci_shutdown(AHCIQState *ahci)
+ void add_qpci_address(QOSGraphEdgeOptions *opts, QPCIAddress *addr)
  {
-     QOSState *qs = ahci->parent;
+     g_assert(addr);
+diff --git a/tests/qtest/nvme-test.c b/tests/qtest/nvme-test.c
+index 09972b50ff..dfa59cfbce 100644
+--- a/tests/qtest/nvme-test.c
++++ b/tests/qtest/nvme-test.c
+@@ -517,8 +517,6 @@ static void test_migrate(void *obj, void *data, QGuestAllocator *alloc)
+     test_migrate_setup_nvme_ctrl(ctrl);
+     test_migrate_send_nvme_reqs(ctrl, test_reqs, ARRAY_SIZE(test_reqs));
  
-+    ahci_pci_disable(ahci);
-     ahci_clean_mem(ahci);
-     free_ahci_device(ahci->dev);
-     g_free(ahci);
-@@ -1457,7 +1460,9 @@ static void test_reset(void)
-                                CMD_READ_DMA_EXT,
-                                CMD_WRITE_DMA_EXT);
-         ahci_set(ahci, AHCI_GHC, AHCI_GHC_HR);
-+        stop_ahci_device(ahci);
-         ahci_clean_mem(ahci);
-+        start_ahci_device(ahci);
-     }
+-    qpci_iounmap(ctrl->pdev, ctrl->bar);
+-
+     dest_cmdline = g_string_new(qos_get_current_command_line());
+     g_string_append_printf(dest_cmdline, " -incoming %s", uri);
  
-     ahci_shutdown(ahci);
-@@ -1523,6 +1528,7 @@ static void test_reset_pending_callback(void)
-     sleep(1);
+@@ -528,8 +526,8 @@ static void test_migrate(void *obj, void *data, QGuestAllocator *alloc)
+     /* Get access to PCI device from destination VM */
+     nvme = qos_allocate_objects(to, &ctrl->alloc);
+     pdev = &nvme->dev;
++    qpci_migrate_fixup(pdev, ctrl->pdev);
+     ctrl->pdev = pdev;
+-    ctrl->bar = qpci_iomap(ctrl->pdev, 0, NULL);
+     g_assert(pdev->bus->qts == to);
  
-     /* Start again. */
-+    stop_ahci_device(ahci);
-     ahci_clean_mem(ahci);
-     ahci_pci_enable(ahci);
-     ahci_hba_enable(ahci);
-diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-index 50b63239c2..a709558aac 100644
---- a/tests/qtest/libqos/ahci.c
-+++ b/tests/qtest/libqos/ahci.c
-@@ -206,6 +206,11 @@ void ahci_pci_enable(AHCIQState *ahci)
- 
- }
- 
-+void ahci_pci_disable(AHCIQState *ahci)
-+{
-+    stop_ahci_device(ahci);
-+}
-+
- /**
-  * Map BAR5/ABAR, and engage the PCI device.
-  */
-@@ -218,6 +223,12 @@ void start_ahci_device(AHCIQState *ahci)
-     qpci_device_enable(ahci->dev);
- }
- 
-+void stop_ahci_device(AHCIQState *ahci)
-+{
-+    /* Unmap AHCI's ABAR */
-+    qpci_iounmap(ahci->dev, ahci->hba_bar);
-+}
-+
- /**
-  * Test and initialize the AHCI's HBA memory areas.
-  * Initialize and start any ports with devices attached.
+     /* Migrate VM */
 -- 
 MST
 
