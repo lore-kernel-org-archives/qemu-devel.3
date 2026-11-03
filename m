@@ -1,76 +1,78 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94338606A324
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 03:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC46606A324
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 03:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=L5jzKzwd
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=R/LDRDbJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO5cM-0006OF-RZ; Mon, 02 Nov 2026 22:55:27 -0500
+	id 1xO5cV-0006Ri-38; Mon, 02 Nov 2026 22:55:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5cK-0006N6-Fd
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:55:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5cS-0006Q8-5B
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:55:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5cI-0000a8-Sg
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:55:24 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5cQ-0000bd-FS
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:55:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793678122;
+ s=mimecast20190719; t=1793678129;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UW3eAHIVbNg3x5s+iHlq9p1VjyqRHEnAy06IQicSRoE=;
- b=L5jzKzwdKW200CruoHrvVoRFYRJhumB/mO5oeij7UjUSJtQYvA4nAnYbbl4zD23pWAH2B/
- VPqx8W+Z14GwSSOEhoco5bhc1DYgOsXGMKs6F4tVXWuodsB1l98DVjiMEZKGWlzjT+mfW9
- An9p+36x5YdsUhBo134Zee536P6wYs4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=lbDOZMrnoovdgvZbU+ME7GmL1tQpLGQ3Ex+2H8vLRJ4=;
+ b=R/LDRDbJuGGXTwksgYuoQhFP3BsEGBIwpegCW3kUM0hE8wfBnbTJTbzIcm3cFiP1IiIl87
+ IFe0HX+7eSJhXFkLmZyggzK2bJ61l98fiG477u6O1AxqJFRmQoog2c4asXkwvecPRSaiIT
+ nDWn8JqI+JMl8EjMBCzuF/K7FScALmo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-RtR-wQCNO6Ozn9skfB5QEA-1; Mon,
- 02 Nov 2026 22:55:18 -0500
-X-MC-Unique: RtR-wQCNO6Ozn9skfB5QEA-1
-X-Mimecast-MFC-AGG-ID: RtR-wQCNO6Ozn9skfB5QEA_1793678117
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-6uKHZtofMLCWNr2ZV2eC3g-1; Mon,
+ 02 Nov 2026 22:55:26 -0500
+X-MC-Unique: 6uKHZtofMLCWNr2ZV2eC3g-1
+X-Mimecast-MFC-AGG-ID: 6uKHZtofMLCWNr2ZV2eC3g_1793678125
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 443661800760; Tue,  3 Nov 2026 03:55:17 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45E9A195605A; Tue,  3 Nov 2026 03:55:25 +0000 (UTC)
 Received: from eblake.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8D9067E2; Tue,  3 Nov 2026 03:55:15 +0000 (UTC)
+ id A7B3F7E2; Tue,  3 Nov 2026 03:55:23 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Denis V. Lunev" <den@openvz.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PULL 03/16] tests/qtest/virtio-scsi: cover a replacement that
- changes the size
-Date: Mon,  2 Nov 2026 21:54:14 -0600
-Message-ID: <20261103035506.2688772-21-eblake@redhat.com>
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org (open list:Block Jobs)
+Subject: [PULL 07/16] block/commit: batch block-status queries
+Date: Mon,  2 Nov 2026 21:54:18 -0600
+Message-ID: <20261103035506.2688772-25-eblake@redhat.com>
 In-Reply-To: <20261103035506.2688772-18-eblake@redhat.com>
 References: <20261103035506.2688772-18-eblake@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,112 +93,146 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-Realize a scsi-hd on a 1 MiB node, replace it with a 128 MiB one using
-qom-set, and check that the device reports CAPACITY DATA HAS CHANGED and
-then serves a read which only fits in the new node.
+commit_iteration() asks for block status COMMIT_BUFFER_SIZE (512K) at a
+time, so a long run above base pays one query per 512K for an answer
+the whole run shares.
 
-Both halves regress on their own. Without the notification from
-bdrv_replace_child_bs() the first command after the replacement fails with
-ILLEGAL REQUEST / LOGICAL BLOCK ADDRESS OUT OF RANGE instead of the unit
-attention. Without the refresh in scsi_disk_resize_cb() the read after it
-is refused the same way, since nothing here issues READ CAPACITY.
+Query the remainder of the image instead and keep the answer in a
+CommitStatus owned by commit_run(). No device or export writes top
+above base_overlay while the job runs: they ask for
+BLK_PERM_CONSISTENT_READ along with BLK_PERM_WRITE, and the job
+withholds CONSISTENT_READ there, having to share WRITE or it would
+block its own writes to base through the backing chain. A job target
+asks for WRITE alone and is refused by the op blocker instead. From
+filtered_base downwards CONSISTENT_READ is shared again, and there only
+the job writes.
 
+Copying is still bounded by the read buffer. Zeroes need no buffer, so
+COMMIT_ZERO_CHUNK bounds them, keeping a cancel from waiting on a huge
+write-zeroes, and an unallocated span is crossed in one step.
+
+Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-Message-ID: <20260812121500.1034178-4-den@openvz.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: John Snow <jsnow@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Message-ID: <20261030010613.1612771-4-den@openvz.org>
 Signed-off-by: Eric Blake <eblake@redhat.com>
 ---
- tests/qtest/virtio-scsi-test.c | 63 ++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
+ block/commit.c | 60 ++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 48 insertions(+), 12 deletions(-)
 
-diff --git a/tests/qtest/virtio-scsi-test.c b/tests/qtest/virtio-scsi-test.c
-index e2350c52f6f..f82b7e5de9c 100644
---- a/tests/qtest/virtio-scsi-test.c
-+++ b/tests/qtest/virtio-scsi-test.c
-@@ -236,6 +236,53 @@ static void test_unmap_large_lba(void *obj, void *data,
-     qvirtio_scsi_pci_free(vs);
- }
+diff --git a/block/commit.c b/block/commit.c
+index 4e0b0f9029b..e8ddd460534 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -31,8 +31,23 @@ enum {
+      * contiguous regions of the image is efficient.
+      */
+     COMMIT_BUFFER_SIZE = 512 * 1024, /* in bytes */
++
++    /*
++     * Zeroes need no buffer, so they are bounded by this instead. It stays
++     * well under BDRV_REQUEST_MAX_BYTES and keeps a cancel from waiting on
++     * a multi-gigabyte write.
++     */
++    COMMIT_ZERO_CHUNK = 256 * 1024 * 1024, /* in bytes */
+ };
 
-+/* Test replacing the backing node with one of a different size */
-+static void test_replaced_node_size(void *obj, void *data,
-+                                    QGuestAllocator *t_alloc)
-+{
-+    QVirtioSCSI *scsi = obj;
-+    QVirtioSCSIQueues *vs;
-+    uint8_t buf[512] = { 0 };
-+    /* READ(10), LBA 0, transfer length 1 */
-+    const uint8_t read_low_cdb[VIRTIO_SCSI_CDB_SIZE] = {
-+        0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00
-+    };
-+    /* READ(10), LBA 0x1000 (2 MiB), transfer length 1 */
-+    const uint8_t read_high_cdb[VIRTIO_SCSI_CDB_SIZE] = {
-+        0x28, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x01, 0x00
-+    };
-+    struct virtio_scsi_cmd_resp resp;
++/* Last block-status answer, covering [offset, end). Empty when equal. */
++typedef struct CommitStatus {
++    int64_t len;
++    int64_t offset;
++    int64_t end;
++    int ret;
++} CommitStatus;
 +
-+    alloc = t_alloc;
-+    vs = qvirtio_scsi_init(scsi->vdev);
-+
-+    /* LBA 0 is inside the 1 MiB node the device was realized with */
-+    virtio_scsi_do_command(vs, read_low_cdb, buf, sizeof(buf), NULL, 0, &resp);
-+    g_assert_cmphex(resp.response, ==, 0);
-+    g_assert_cmphex(resp.status, ==, GOOD);
-+
-+    /* Swap in a 128 MiB node; the device is not reset by this */
-+    qtest_qmp_assert_success(global_qtest,
-+                             "{'execute': 'qom-set', 'arguments': {"
-+                             "  'path': '/machine/peripheral/scsi-hd0',"
-+                             "  'property': 'drive', 'value': 'big'}}");
-+
-+    /* The guest has to be told that the capacity it knows is stale */
-+    virtio_scsi_do_command(vs, read_high_cdb, buf, sizeof(buf), NULL, 0, &resp);
-+    g_assert_cmphex(resp.response, ==, 0);
-+    g_assert_cmphex(resp.status, ==, CHECK_CONDITION);
-+    g_assert_cmphex(resp.sense[2], ==, UNIT_ATTENTION);
-+    g_assert_cmphex(resp.sense[12], ==, 0x2a);
-+    g_assert_cmphex(resp.sense[13], ==, 0x09); /* CAPACITY DATA HAS CHANGED */
-+
-+    /* LBA 0x1000 is past the old node but well inside the new one */
-+    virtio_scsi_do_command(vs, read_high_cdb, buf, sizeof(buf), NULL, 0, &resp);
-+    g_assert_cmphex(resp.response, ==, 0);
-+    g_assert_cmphex(resp.status, ==, GOOD);
-+
-+    qvirtio_scsi_pci_free(vs);
-+}
-+
- static void test_write_to_cdrom(void *obj, void *data,
-                                 QGuestAllocator *t_alloc)
+ typedef struct CommitBlockJob {
+     BlockJob common;
+     BlockDriverState *commit_top_bs;
+@@ -130,26 +145,45 @@ static void commit_clean(Job *job)
+
+ static int coroutine_fn
+ commit_iteration(CommitBlockJob *s, int64_t offset,
+-                 int64_t *requested_bytes, void *buf)
++                 int64_t *requested_bytes, void *buf, CommitStatus *st)
  {
-@@ -365,6 +412,18 @@ static void *virtio_scsi_setup_4k(GString *cmd_line, void *arg)
-     return arg;
- }
+     BlockErrorAction action;
+-    int64_t bytes = *requested_bytes;
++    int64_t bytes;
+     int ret = 0;
+     bool error_in_source = true;
 
-+static void *virtio_scsi_setup_replace(GString *cmd_line, void *arg)
-+{
-+    g_string_append(cmd_line,
-+                    " -blockdev driver=null-co,read-zeroes=on,"
-+                    "size=1048576,node-name=small"
-+                    " -blockdev driver=null-co,read-zeroes=on,"
-+                    "size=134217728,node-name=big"
-+                    " -device scsi-hd,id=scsi-hd0,drive=small,"
-+                    "lun=0,scsi-id=1");
-+    return arg;
-+}
+-    /* Copy if allocated above the base */
+-    WITH_GRAPH_RDLOCK_GUARD() {
+-        ret = bdrv_co_common_block_status_above(blk_bs(s->top),
+-            s->base_overlay, true, BDRV_WANT_PRECISE, offset,
+-            COMMIT_BUFFER_SIZE, &bytes, NULL, NULL, NULL);
++    assert(offset >= st->offset);
 +
- static void *virtio_scsi_setup_cd(GString *cmd_line, void *arg)
- {
-     g_string_append(cmd_line,
-@@ -399,6 +458,10 @@ static void register_virtio_scsi_test(void)
-     qos_add_test("large-lba-unmap", "virtio-scsi",
-                  test_unmap_large_lba, &opts);
-
-+    opts.before = virtio_scsi_setup_replace;
-+    qos_add_test("replaced-node-size", "virtio-scsi",
-+                 test_replaced_node_size, &opts);
++    if (offset >= st->end) {
++        /* Copy if allocated above the base */
++        WITH_GRAPH_RDLOCK_GUARD() {
++            ret = bdrv_co_common_block_status_above(blk_bs(s->top),
++                s->base_overlay, true, BDRV_WANT_PRECISE, offset,
++                st->len - offset, &bytes, NULL, NULL, NULL);
++        }
 +
-     opts.before = virtio_scsi_setup_cd;
-     qos_add_test("write-to-cdrom", "virtio-scsi", test_write_to_cdrom, &opts);
++        if (ret < 0) {
++            trace_commit_one_iteration(s, offset, 0, ret);
++            goto fail;
++        }
++
++        st->offset = offset;
++        st->end = offset + bytes;
++        st->ret = ret;
++    }
++
++    ret = st->ret;
++    bytes = st->end - offset;
++
++    /* An unallocated span costs no I/O, so it is crossed in one step. */
++    if (ret & BDRV_BLOCK_ZERO) {
++        bytes = MIN(bytes, COMMIT_ZERO_CHUNK);
++    } else if (ret & BDRV_BLOCK_ALLOCATED) {
++        bytes = MIN(bytes, COMMIT_BUFFER_SIZE);
+     }
 
+     trace_commit_one_iteration(s, offset, bytes, ret);
+
+-    if (ret < 0) {
+-        goto fail;
+-    }
+-
+     if (ret & BDRV_BLOCK_ALLOCATED) {
+         if (ret & BDRV_BLOCK_ZERO) {
+             /*
+@@ -215,6 +249,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+     int64_t n = 0; /* bytes */
+     QEMU_AUTO_VFREE void *buf = NULL;
+     int64_t len, base_len;
++    CommitStatus st = { 0 };
+
+     len = blk_co_getlength(s->top);
+     if (len < 0) {
+@@ -235,6 +270,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+     }
+
+     buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
++    st.len = len;
+
+     for (offset = 0; offset < len; offset += n) {
+         /* Note that even when no rate limit is applied we need to yield
+@@ -245,7 +281,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+             break;
+         }
+
+-        ret = commit_iteration(s, offset, &n, buf);
++        ret = commit_iteration(s, offset, &n, buf, &st);
+
+         if (ret < 0) {
+             return ret;
 -- 
 2.56.0
 
