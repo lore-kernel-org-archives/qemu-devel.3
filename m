@@ -1,100 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9BA606A33C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 11:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22DA606A33D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 11:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=BJZ2ZfjK;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=qu4fleSj
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=WAoRK5ob;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Y+zeoFJP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOD2H-0003bg-C3; Tue, 03 Nov 2026 06:50:41 -0500
+	id 1xOD2F-0003bB-1g; Tue, 03 Nov 2026 06:50:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2D-0003aw-7q
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:50:37 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2B-0003aL-B1
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:50:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2B-0000Jw-B6
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:50:37 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD28-0000Ji-At
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:50:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793706634;
+ s=mimecast20190719; t=1793706631;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tZcQd4j24SOkPd+c0T3lL/TJVy1cifbr427VoGmUk7A=;
- b=BJZ2ZfjK0OEgO9cSMSj3l0O+MsNVBjZXLkyTi4ovS1Ep4uD6IsMvkPNO51ZZYo1JijCHxP
- ZhHoVMCAl6aa4YNqiJ+zOSVRsdUvUAm0XHQ9f93xQdjeUvFnziPuC0hxcyUIgu5W4Lnd48
- AbD09g5H5JrSx1siSj/MKINNnK/vE2A=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZJfs1agcLVWNKY9WfuxjZM5yPYkv4w0s3t6dLQQ+mPM=;
+ b=WAoRK5obiEqWxwBMSvUvc/QNrmUJAcvFgzmkGmOwh3G53sZU6ZNbrxv2Drl3ChtUgI+wFG
+ ECYDI9xKzGLr9n3nVy+3CnSQ8VFPaEtoQJWe3SeDD/L3bXyj+OLqEyfxSdEY+/+DQiAUdh
+ PBqA1IDUcwZZUPEjGYQ9qqhGTMo6rIA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-185-3UHSQGR_PYe4WkmEPTzgqA-1; Tue, 03 Nov 2026 06:50:32 -0500
-X-MC-Unique: 3UHSQGR_PYe4WkmEPTzgqA-1
-X-Mimecast-MFC-AGG-ID: 3UHSQGR_PYe4WkmEPTzgqA_1793706631
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4a1fa972b4fso21196165e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 03:50:32 -0800 (PST)
+ us-mta-131-AfzpXS8MMG-ig6DpwTsdIQ-1; Tue, 03 Nov 2026 06:50:30 -0500
+X-MC-Unique: AfzpXS8MMG-ig6DpwTsdIQ-1
+X-Mimecast-MFC-AGG-ID: AfzpXS8MMG-ig6DpwTsdIQ_1793706629
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4ae2756fa7aso21580385e9.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 03:50:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793706631; x=1794311431; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=tZcQd4j24SOkPd+c0T3lL/TJVy1cifbr427VoGmUk7A=;
- b=qu4fleSjVsyG0qbf7yNox2Q/Fy70PHEknnXeWKno5AKhsXFUStjuMuIP3xHmJgev1h
- KfWV7nF8G9IfXwoupdFJ8Mdy/5vzigJ6ZgrgPtVAV6p0UGFI5p3pOVz8Kb0AbAEtb1yg
- sL4NZ0QLZGSNyBElkgsIfmx3UvKhTMu3ObNqU9yikA5FcsXmA0PLtRzP0F5+gHp34rPn
- 3Xap1eMRLU5Aw8SKH4oneQtzVzAFwZnWLbx7nNp0DCKs+1PCZz5CWd2AAwrj5CIly1EP
- dbk0YfNVd/dRfUViE8F375hbdre3hcOtCnqOQRPQyc49i/NOYzUmjvYIoS76LLDqR/rB
- XbXA==
+ d=redhat.com; s=google; t=1793706629; x=1794311429; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZJfs1agcLVWNKY9WfuxjZM5yPYkv4w0s3t6dLQQ+mPM=;
+ b=Y+zeoFJPfyJjl5NnA18ylX4gOJyhadh4PLsfd0aY0T9BccmY/OIAIENGpaPX7gvAcM
+ T9+kgGf3QkKxLlPVnuoeda6Ymn/RP7YkzZYPk4i/T4MMOwy+lScUf3nElzZZN2pdP0i4
+ wcRouOmKZ7lYWnFVpcEkwTf0MVocb6cU8Z2c9L13oHfupTD3nkjKR762HBJCn/PY296c
+ madCK8337MM3vkEA9f5ME0S0LF7Wzjo/0miz5wUcKIv1aAhG1poN2UfV98dlFwuorVDP
+ S+ePdVuIloz2x+1+tnDX8JYw50KN5MrDj+R3CTicOfh+bUMN/IC2PgAbytMmaovAOdqG
+ Wtgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793706631; x=1794311431;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=tZcQd4j24SOkPd+c0T3lL/TJVy1cifbr427VoGmUk7A=;
- b=f03b5BGLWWb7ssIsU3VlbwNSiH2nH8xEKqZw76lfe95MpFETMs4/cnZi/Y3GdfcwCQ
- vnhG/EIaoQHWza+d1HKzfT7slF27BRYxMkk1lECvSiWntDjEQvOUF4uirevNrm+zeP28
- uV818vzc20JZODpLzqvT3OjyCXp+LBp8Wg73pTzZEbPzuJi80Iek00YU/6WKG29QSwu0
- D+y1/bUwrumfQkoQtfVoNZ8g1KTBn2uipVVU9VDyfECPNqNcfGG4nUjiV6rkGHGpa2bM
- 0GlHWeNSJ2m/qANfoixxNpMRrO7ZLqkeNeCe82HnngAkGlOH3SiqwV6OEvG9rqIs8emG
- Py8w==
-X-Gm-Message-State: APuU4Z9Q5u22z0OZF9VwaOFL/UKRn8Db0dUthsuTzaptfso2dLI246H3
- TMz8INMfRxwLZ0wFHqZa/ek37VWIR8SxMH5ySIEXtlZO7qq3qZfjx7M1RmwH6qg/BNNBzrvq4Dx
- pwdD829EsUWl0pArTHnQOKqy7gA6oLqusTz3f4GS7qgwmfaUKP4ZREOMA7onYXPTJouffKfkRZw
- bFhWU2SamHviY/G/zeK9iJRyN2Qk5Fsik45A==
-X-Gm-Gg: AYBFou3pdDpnnz9sSfE3Gqt3hxjrfm/vxNKFNzk6eCSgYtHZC1DDHVch5nMCenp4QGL
- hH3vNjiH8Z85qGnwvwFhAsAAfL4tFKXyoL/13Bk3LmPds57yeqG4H9Ucc24Y7yFzFvChlGCCa4o
- EtZKethhxrsgsiRZ7Tx4kKO1ZUlA5bVd1si2wwPoUwxriimeuPcOJnVl4TQr0TbxmoIpHifWhTW
- QqbG9eeoWf8n5SGupqQYYu9cL8ilCCDabwJe6g697PdAumgN/POogSLIWTNP2mSomL7RNN4VWW9
- GjarhoXuSMlzVZqy9JjIntoISfrbRykTgC+q1DjUHKSodRqAKe9hSFpAt1wD2emHdn9okuJjPw+
- pOR/9X+rNkA9kDFuMTPkMzHBFCScI2Pa/RYyCzEwGhw==
-X-Received: by 2002:a05:600c:4e08:b0:4a1:ce33:1536 with SMTP id
- 5b1f17b1804b1-4ac1719112emr282931205e9.9.1793706631462; 
- Tue, 03 Nov 2026 03:50:31 -0800 (PST)
-X-Received: by 2002:a05:600c:4e08:b0:4a1:ce33:1536 with SMTP id
- 5b1f17b1804b1-4ac1719112emr282930595e9.9.1793706630961; 
- Tue, 03 Nov 2026 03:50:30 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793706629; x=1794311429;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=ZJfs1agcLVWNKY9WfuxjZM5yPYkv4w0s3t6dLQQ+mPM=;
+ b=EW0gXt0U+/OhOXdQlHU+FEIOzhJl93hyidfIAPNUvZki3QGbxFlVYT7ALE7HQVFqhL
+ rVZMRmEvyMY1B8l0PewPlvkLUM/ge3vuzsVcUcoW39YuE5srupn8F9CiIuamRfga4uxM
+ zKM7jSqUFdsZ40iJc7ehz1HDgnnSahQll91VjlYiYuUFOtaajfeIfMr6fYxD6vu+Rrgu
+ 6N4922t3k4ut+IdCkyMZYgx9rqCvFq+lMoomtIWHM/B9QNkHfjntirrIR8IEd6kBS+O3
+ sFlerscd7XaH5FYPTXOVrGhC4Ggk/Z1Nxf51RG/mnBFt8CS1Hj3ulY+LG3uDSLPJNQ/r
+ NEuQ==
+X-Gm-Message-State: APuU4Z/4trqA3pFoQYbOeZEcEb7+rjYmaIMtm9zeZgQfH7eSKKC6ThuK
+ K/35aZnJwB4GRsIRPoypgdsq28FIBOmLlNSGjlv50hQKxd4DuZxgCoptEGpxRKeBhDHxE+nq7h6
+ +RY1ZMcqIw9BCGeCYmMnFYvA8g2bYUlTxNrLNr/i4su0ygTznkdAHXkVFNcLWJDj8Dvo29euCKr
+ IT15S64e6I0o4foXn5GgpBmXAueupB+zu7ig==
+X-Gm-Gg: AYBFou2yf4L/YrLljWq59Dj9Zb/FkJLO6Rmg53m/ypeHvCyFZZs6D3tsa6IjAmzdHAa
+ wmearO02LeeWsN7e1QTtlumBO2YJTo1hWNpi45YjsknL5aLJ1KuFvljs62jvI6jHnmfUF9RzhgE
+ N0Kn3lSZx7R1SbnIMLiEJ4vPrVDVL/Ys5yVsiiGthT2nLDWBOpQ4lqE14wrEajJz4rDzuIdHoOu
+ Sm/Nec7X4/h10+q8XmfdD7bAl983hvsTAIyC0nlf+0PLc3uAgzjuLOyCVIckTbs5kuF8ip62yOZ
+ Ewp8d5/S0sE4hZu9ZX6svk/L3rhR7axdp8fH0JmnaiTTh+qsbnQVFy95c779TGZ/CURkvlDIx7c
+ 9ZLdJiuYuEPYG3skCaCwq7N96p6uY8J+m6rzITSi41w==
+X-Received: by 2002:a05:600c:19d1:b0:4a2:677:ad8e with SMTP id
+ 5b1f17b1804b1-4ac1970b9f7mr285799965e9.34.1793706628947; 
+ Tue, 03 Nov 2026 03:50:28 -0800 (PST)
+X-Received: by 2002:a05:600c:19d1:b0:4a2:677:ad8e with SMTP id
+ 5b1f17b1804b1-4ac1970b9f7mr285799485e9.34.1793706628407; 
+ Tue, 03 Nov 2026 03:50:28 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc0:1506:fd00:9e19:9994:44b1:e6f2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b2a879f401sm49067545e9.5.2026.11.03.03.50.29
+ ffacd0b85a97d-48e71baa1b3sm23678876f8f.56.2026.11.03.03.50.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Nov 2026 03:50:30 -0800 (PST)
-Date: Tue, 3 Nov 2026 06:50:28 -0500
+ Tue, 03 Nov 2026 03:50:27 -0800 (PST)
+Date: Tue, 3 Nov 2026 06:50:26 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 03/17] pci id: clarify pci subsystem id usage
-Message-ID: <16085c7f27f95d6c178d77894d35de46d6b83e86.1793706601.git.mst@redhat.com>
+ =?utf-8?Q?Cl=C3=A9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>
+Subject: [PULL 02/17] pcie_sriov: Adapt bar type array size to the number of
+ regions
+Message-ID: <fde9c56973ffd70818ef6f7967050bf5dcf86494.1793706601.git.mst@redhat.com>
 References: <cover.1793706601.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793706601.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -125,35 +127,28 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
 
-Qemu uses the pci subsystem id not only for emulated devices, but also
-for virtio devices and generic pci class devices such as pci bridges,
-xhci + nvme controllers etc.  Update the documentation accordingly.
-
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261030115455.1121808-2-kraxel@redhat.com>
+Message-ID: <20261028144539.691098-2-clement.mathieu--drif@bull.com>
 ---
- docs/specs/pci-ids.rst | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/hw/pci/pcie_sriov.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-index 60cb0f7db6..53dd571de2 100644
---- a/docs/specs/pci-ids.rst
-+++ b/docs/specs/pci-ids.rst
-@@ -46,8 +46,9 @@ maintained as part of the virtio specification.
-   upstream merge or shipping a distro/product) to avoid conflicts.
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index b0ea6a62c7..5f81e3b1bb 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -16,7 +16,7 @@
+ #include "hw/pci/pci.h"
  
- 1af4:1100
--  Used as PCI Subsystem ID for existing hardware devices emulated
--  by QEMU.
-+  Used as PCI Subsystem ID for existing hardware devices emulated by
-+  QEMU, such as the intel chipset devices.  Also used for virtio
-+  devices and generic pci class devices (1b36:00xx, see below).
- 
- 1af4:1110
-   ivshmem device (:doc:`ivshmem-spec`)
+ typedef struct PCIESriovPF {
+-    uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
++    uint8_t vf_bar_type[PCI_SRIOV_NUM_BARS];   /* Store type for each VF bar */
+     PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
+     bool vf_user_created; /* If VFs are created by user */
+ } PCIESriovPF;
 -- 
 MST
 
