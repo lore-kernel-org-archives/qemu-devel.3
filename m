@@ -1,167 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33554606A32E
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD66606A31B
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=TTTUDDeG
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CiIQz1cA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOIN4-0002nA-1z; Tue, 03 Nov 2026 12:32:30 -0500
+	id 1xOIPY-0003mY-KR; Tue, 03 Nov 2026 12:35:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xOIMz-0002mT-49; Tue, 03 Nov 2026 12:32:26 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xOIMw-0006s1-Qw; Tue, 03 Nov 2026 12:32:24 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A3EEGu02251810; Tue, 3 Nov 2026 17:32:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=R/ju8P
- RO9wQuLuNyLFS0rNuHqbqkK4BDwyN++THX/fg=; b=TTTUDDeGhUiz7uf8nyDv1V
- saRrRDPBFahiotSVOfapscqaDE6IxWTwRvY7iVmIQvH+3dJp9edxQfnu/ARweiqZ
- lrj3wRkd1MALf+q0KWFplLe3x/dq7IPPmn+I8oFTl42lBuNGjdzI0tcgBj8EMqrb
- 9Q3J+FWOIMd/L9Vh5U1kxDbzCwQ5ZODdzHvwFOZWJkb2UkAvd0//q2sj1Mh8G6kJ
- 4TbhUILcJn3FTm9r3BjtpFk41juNfVYlxfC5SoE9o31nDZSS2pJpepk/pYQoEr9l
- 9SGvX6N/4BYotrg8knpgXzE3MF34TrLoc9UssdrKV0xa01jyktcEjCDit0+6KjCA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn7u3fcfe-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 03 Nov 2026 17:32:19 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A3HElsx2652734; Tue, 3 Nov 2026 17:32:18 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnu1vkuk6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Nov 2026 17:32:18 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A3HWHMc28377834
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 3 Nov 2026 17:32:17 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 62ABF58053;
- Tue,  3 Nov 2026 17:32:17 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0EC8858043;
- Tue,  3 Nov 2026 17:32:16 +0000 (GMT)
-Received: from [9.61.98.239] (unknown [9.61.98.239])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  3 Nov 2026 17:32:15 +0000 (GMT)
-Message-ID: <0af8c97e-55bf-421c-8b38-de1f88f44547@linux.ibm.com>
-Date: Tue, 3 Nov 2026 12:32:15 -0500
+ (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
+ id 1xOIPS-0003lv-N6
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:34:58 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
+ id 1xOIPQ-0006zU-Or
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:34:58 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-3ad787e0593so2141022a91.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 09:34:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1793727295; x=1794332095; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=QQO1Xf2j9XcVjlks5fKh5jx3ufcS3ux+RAnPnyK5/Rg=;
+ b=CiIQz1cAj2NB43ldswNEr8uFN0UbB+n7+/nid8fAwuLZMQ0j+VuCD2eLVmFV7cUYvo
+ XTiZ9PfZIL+hEbLZ9xqGgjm9oqKKIrEe9JF577PwooINZLq1SnMRTr1Eq9Yj4aCDTcWP
+ 8F8AxOQQsauQ48tPqGOh8EKWVq2jkMqOqY8GNk74MzeAzaxmRvX6zEJMFt+9Jl/1qf/l
+ CIaDij2syXRL6FC4bi80E5SKWUe8EkaiVQG1L9Ui9DE5IvXzUlZU7Q/9E8+pJW+Zx/uZ
+ B56ui43GpWZJc0NmRK6J4qYF70xvhZHUfN8URvchIEo7DrYJmD3ph1Wqtbk7bSPo2zN2
+ EUQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793727295; x=1794332095;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=QQO1Xf2j9XcVjlks5fKh5jx3ufcS3ux+RAnPnyK5/Rg=;
+ b=wzdht0zNFOIXFzobIILKfc+eq6024mWdyo2IzwEDVHa1EwfoE+lFfqiiXTDvoagLTp
+ aJQpPCkzoE3qSqY20inn2e/TSYKlTailAOcI9knWEp5ved0ovSWWBe8sobTt6hskEn9f
+ IB7F0wQcteHAs9j4kzZStIISMONaoRbBtEbFlBW9rCs4ikV8U6DBB2s/LAZjSvnJ0dzG
+ I2F286JUU/+gVLsp2RN042+8jQtT1KEK4Emj9lR+UqL8wf1cO4vf5xtgWk0dOUvoXELB
+ gEKHV0Q/ztpoOa0t+S0qB3+yp0MPYcikPXnhBrzGWDuzi3t/SOryiWVTT78HnXdhlTPb
+ IY5Q==
+X-Gm-Message-State: APuU4Z8nfitsXVUwaCt4ya10/4gcIRt8uER+med8WXNLSHDQ/lPivzis
+ rpvrOldU0jYxAmUtKzPoArLFHiHVviKXs4c0WANRYdRTgUCy7gDxHcic
+X-Gm-Gg: AYBFou0YKk1mBz4WGVN9VHvtDJH8zByJHnTldgXosjZ1LcjSqO/wzMsS6Xzk9rP5YC7
+ kIf7wrwGkAGS1LGF26BnoCUw3oDq7xc0wSg3+ZoJZ7P+9JfHiZfG9lXvARnfdZugq1BmK5dUhoe
+ lYkT0D2Sxw6zcRcjpzBKOuliMZ0CZE6QjEWnwhc0mE12Dj7pj0mvf5snIfR0n9Mc+b4sDzcqXkA
+ qVjSCwDyxgapiwnJLMt74muP3vG2IyT3Sd3b+L232y/Zcwj5RqwG2ZtNdKZR4cRpr0dCrUJCCCr
+ Yz2/OlQkG/yzADohVkdkEGSTlswR38F9VXx2JjZYHOm4zIdu/iXPGV1kWYQFxt3i3cri46wCAeL
+ THwmFT6YLxkAsypGl9dVWDZTX6sFCAgUcue3go11f89QSvS2anGYRgW5e7SCYXH/tSTI5dU1Gwh
+ NAjrDF9H2OeR6broqTTNTRkuSGpb6W5nb7762XG+0C7jZFfEZSVyoCErFv6i8xk9waes557/RHU
+ G94zHxEPTwwDFjMPZ4x+ZGfLxX54nUuo65op3K8+YnYkRD9y8vmMU0xv8hsWR7aBHiXOuYm+jTx
+ 020OYz+aapVBklfV3k3we9XHx+CCoDDd10MHjok3I2RKGxsYVvHdozjqHNpJ6OcYFp59EhXjZ4J
+ NSUAVQMDq7PoIEwGiJM+TPi7YpRst6oLQ
+X-Received: by 2002:a17:90b:3887:b0:3ac:97e3:73a3 with SMTP id
+ 98e67ed59e1d1-3ae89574e10mr9417536a91.6.1793727294725; 
+ Tue, 03 Nov 2026 09:34:54 -0800 (PST)
+Received: from [127.0.1.1]
+ (ec2-47-130-4-255.ap-southeast-1.compute.amazonaws.com. [47.130.4.255])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3ae85f662basm9829139a91.1.2026.11.03.09.34.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Nov 2026 09:34:54 -0800 (PST)
+From: WX Chen <wxchen0913@gmail.com>
+Date: Wed, 04 Nov 2026 01:34:44 +0800
+Subject: [PATCH] target/riscv: Use gen_goto_tb() for vsetivli exits
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 49/78] util/event_notifier: more strict API
-From: Eric Farman <farman@linux.ibm.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Stefano Garzarella <sgarzare@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
- <eperezma@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- qemu-s390x <qemu-s390x@nongnu.org>,
- Konstantin Shkolnyy <kshk@linux.ibm.com>
-References: <cover.1793207602.git.mst@redhat.com>
- <05f5ab90ea52b0151958fd2506c15858e3e80442.1793207602.git.mst@redhat.com>
- <92a5bdce-af21-4e8a-b869-57e903531a77@linux.ibm.com>
-Content-Language: en-US
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <92a5bdce-af21-4e8a-b869-57e903531a77@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Zsp4uN7G c=1 sm=1 tr=0 ts=6aea1aa3 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=6R7veym_AAAA:8 a=20KFwNOVAAAA:8 a=kKIZro9CSXlhRldgMCwA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=ILCOIF4F_8SzUMnO7jNM:22
-X-Proofpoint-ORIG-GUID: gpvA86baq2E6vA1rvkThkMuQluP2d9tQ
-X-Proofpoint-GUID: gpvA86baq2E6vA1rvkThkMuQluP2d9tQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDA2OCBTYWx0ZWRfX9MblNhrub9b9
- 3V0sd8lG2Lzl5v6E1Wd/qUlnpbqpEmQTPFLxmyFSeptss8SEJOgGAce5giHCK86TNiyKX297QRc
- YAOKhCNkYGGwBy8WsuSXoRacQDJAbnwA4tSNjdSw4vzb4Bn7OXzRmfviPcXwdn3o/9+8kfkQEPX
- caOZtDKWP3nhaXrm0y3Uu61tTFGkVbji159UyucCT8bShw2hkPPIXiqhdZB8mZ0xMIlhC4xx7lD
- aJ3F2zvph8RXe1peYO8SA7OYYgwiRJb9Kmp3vwcVOd/Bxp8HPxgzdmlMmDM1MtVbUuB49sBxJwY
- Hg0xlvZ9TtF2aOqiJwt/UW5ih2WQbKK5hautXBILR9CubVpsA3SnnzPdyCiFM0TJiYnTQmY3A/b
- KFG/66LySOquGwi1oW00LDObxMZo83lPRoh5mgxCEXrqu0XPuSj7UG7ABcwktMy/pzYjM5draDl
- g0I0xIBVQzSb0+rAI9w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDA2OCBTYWx0ZWRfXwgOGCokvHfrE
- AOTwGW+vWpuvoAP8nAPkUXBQHxtgZT481qma2a7Ea0xbHTEwXxZ8K3V82mprzzyr7/cKz+seOQ8
- TvGKz4BeI66uCeeaaJUywY9432hZnl0=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-03_03,2026-11-03_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
- impostorscore=0 spamscore=0 malwarescore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611030068
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261104-research-vsetivli-direct-chain-20261103-v1-1-ace12cf5280a@gmail.com>
+X-B4-Tracking: v=1; b=H4sIADMb6moC/y2NQQrCMBAAv1L27ELSaIp+RXpI0q1Z0Ci7IQilf
+ zeKx4FhZgMlYVK4DBsINVZ+lg72MEDKodwIeekMoxm9teaIQkpBUsamVLndGRcWShW7zgX/nkN
+ /Pjm/mimSm6DXXkIrv3+n69w5BiWMEkrK3/4jaCWBff8AtheKeZIAAAA=
+X-Change-ID: 20261104-research-vsetivli-direct-chain-20261103-69536f07be37
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ WX Chen <wxchen0913@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793727288; l=2695;
+ i=wxchen0913@gmail.com; s=20260725; h=from:subject:message-id;
+ bh=wAVMFhGmPaGtZ+CzZ/XRpadW7vJEAcquvP323qo+hE4=;
+ b=FKYtHd2DE0BYqYqEFzp0SmUMFmoGR2hB0JTU5m7c5+Qip0se4Wzu8zqZfTgCUBFbuB7Awp1xI
+ WRTJqP0n7oUBFYHMdcvKz+nok/j3R29rc04c0RsIiMvIhbJDqt7Xwy6
+X-Developer-Key: i=wxchen0913@gmail.com; a=ed25519;
+ pk=FX63IRxmtz1BCNzHxOOWDPTo8L/D0YUxlIKc1WKi7wo=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=wxchen0913@gmail.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -174,220 +116,71 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+This change adjusts the translation exit of `vsetivli`. While preserving
+the existing helper, state update flow, and TB boundaries, it uses the
+generic `gen_goto_tb()` path to reduce the overhead of repeated successor-TB
+lookups.
 
+`vsetivli` is used to set the vector length and type, and both its AVL and
+vtype encodings are provided by immediates. Given the CPU configuration and
+the source TB execution context, after this instruction completes normally,
+the vector state changes relevant to subsequent translation are
+deterministic. Therefore, this exit is eligible for direct TB linking.
 
-On 11/2/26 10:48 AM, Eric Farman wrote:
-> 
-> 
-> On 10/28/26 1:16 PM, Michael S. Tsirkin wrote:
->> From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>
->> We have .initialized in EventNotifier to track was it actually
->> initialized, and we have a comment that @fd passed to
->> event_notifier_init_fd() must be an eventfd object.
->>
->> Still, there are two specific users, which ignore these things,
->> and use -1 as specific value storing in notifier, to mark it
->> "uninitialized".
->>
->> Let's make strict API:
->>
->> - store only valid FDs in initialized notifier
->> - _set() asserts that passed fd is valid
->> - _get() asserts that notifier is initialized (actually, except
->>    the two specific cases we rework, all other callers are not
->>    prepared to notifier being uninitialized when _get() is called.
->>    In this case _get() returns 0 (which is a valid fd), and caller
->>    will mistakenly use it, which is worse than abort())
-> 
-> Well, there are other cases that would require rework not addressed 
-> here, as this commit breaks (at least) vhost-vsock-ccw and virtio-net- 
-> ccw (for vhost=on) on an s390x host. I'll look into that, but was not 
-> prepared for such a late surprise.
+Measured on an AMD Ryzen AI 9 H 365 (x86-64) host, using qemu-riscv64
+with -cpu rv64,v=true,vlen=128,elen=64. A RISC-V GCC 14.2.0 cc1 built for
+rv64gcv compiles the packages with -O2 -g0 -march=rv64gcv -mabi=lp64d.
+Only cc1 runs under emulation; make, the compiler driver, assembler and
+linker run on the host.
 
-I sent a fix [0] for the assertion that shows up with this particular 
-patch in some of the common configurations, but it still leaves VDPA 
-broken on s390x (which was also working before this commit). So, not a 
-good idea.
+Each variant is warmed up once, followed by three paired clean builds in
+AB/BA/AB order, using -j1 and fixed host CPU affinity (CPU 7). Median build
+wall times are:
 
-I just posted a variation [1] of that which restores VDPA functionality. 
-Would that be doable? Or can we get the assertions here removed until we 
-can adhere to the API restriction?
+                  Before (s)    After (s)    Wall time reduction
+  LZ4 1.10.0         125.017      123.060                  1.57%
+  zlib 1.3.1          71.062       70.310                  1.06%
 
-[0] 
-https://lore.kernel.org/qemu-devel/20261102174916.2301985-1-farman@linux.ibm.com/
-[1] 
-https://lore.kernel.org/qemu-devel/20261103172732.837511-1-farman@linux.ibm.com/
+In a separate untimed test, a loop executes two vsetivli instructions per
+iteration for 37 iterations. Host-side GDB entry breakpoints show that
+helper_lookup_tb_ptr() entries at the two successor PCs fall from 74 to 0.
+The guest still executes 74 vsetivli instructions. Initial TB dispatch and
+link establishment still occur through the normal dispatcher.
 
-> 
->> - for two specific cases, implement additional getter for .initialized
->>    field itself
->> - zeroed notifier is uninitialized(.initialized is false)
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
->> Message-ID: <20260911185800.134135-1-vsementsov@yandex-team.ru>
->> ---
->>   include/qemu/event_notifier.h      |  1 +
->>   hw/remote/iohub.c                  | 11 +++++-----
->>   hw/virtio/vhost-shadow-virtqueue.c | 32 +++++++++++++++++-------------
->>   util/event_notifier-posix.c        | 10 ++++++++++
->>   4 files changed, 35 insertions(+), 19 deletions(-)
->>
->> diff --git a/include/qemu/event_notifier.h b/include/qemu/ 
->> event_notifier.h
->> index 8a4ff308e1..820efe7722 100644
->> --- a/include/qemu/event_notifier.h
->> +++ b/include/qemu/event_notifier.h
->> @@ -39,6 +39,7 @@ int event_notifier_test_and_clear(EventNotifier *);
->>   void event_notifier_init_fd(EventNotifier *, int fd);
->>   int event_notifier_get_fd(const EventNotifier *);
->>   int event_notifier_get_wfd(const EventNotifier *);
->> +bool event_notifier_initialized(const EventNotifier *e);
->>   #else
->>   HANDLE event_notifier_get_handle(EventNotifier *);
->>   #endif
->> diff --git a/hw/remote/iohub.c b/hw/remote/iohub.c
->> index 988d3285cc..ab698d9f03 100644
->> --- a/hw/remote/iohub.c
->> +++ b/hw/remote/iohub.c
->> @@ -28,8 +28,6 @@ void remote_iohub_init(RemoteIOHubState *iohub)
->>       for (pirq = 0; pirq < REMOTE_IOHUB_NB_PIRQS; pirq++) {
->>           qemu_mutex_init(&iohub->irq_level_lock[pirq]);
->>           iohub->irq_level[pirq] = 0;
->> -        event_notifier_init_fd(&iohub->irqfds[pirq], -1);
->> -        event_notifier_init_fd(&iohub->resamplefds[pirq], -1);
->>       }
->>   }
->> @@ -85,9 +83,12 @@ void process_set_irqfd_msg(PCIDevice *pci_dev, 
->> MPQemuMsg *msg)
->>       pirq = remote_iohub_map_irq(pci_dev, intx);
->> -    if (event_notifier_get_fd(&iohub->irqfds[pirq]) != -1) {
->> -        qemu_set_fd_handler(event_notifier_get_fd(&iohub- 
->> >resamplefds[pirq]),
->> -                            NULL, NULL, NULL);
->> +    if (event_notifier_initialized(&iohub->irqfds[pirq])) {
->> +        if (event_notifier_initialized(&iohub->resamplefds[pirq])) {
->> +            qemu_set_fd_handler(
->> +                event_notifier_get_fd(&iohub->resamplefds[pirq]),
->> +                NULL, NULL, NULL);
->> +        }
->>           event_notifier_cleanup(&iohub->irqfds[pirq]);
->>           event_notifier_cleanup(&iohub->resamplefds[pirq]);
->>           memset(&iohub->token[pirq], 0, sizeof(ResampleToken));
->> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost- 
->> shadow-virtqueue.c
->> index 0fae35ba1a..c97bd9f93f 100644
->> --- a/hw/virtio/vhost-shadow-virtqueue.c
->> +++ b/hw/virtio/vhost-shadow-virtqueue.c
->> @@ -751,6 +751,15 @@ static void vhost_svq_handle_call(EventNotifier *n)
->>       vhost_svq_flush(svq, true);
->>   }
->> +static void event_notifier_set_or_zero(EventNotifier *e, int fd)
->> +{
->> +    if (fd == VHOST_FILE_UNBIND) {
->> +        memset(e, 0, sizeof(*e));
->> +    } else {
->> +        event_notifier_init_fd(e, fd);
->> +    }
->> +}
->> +
->>   /**
->>    * Set the call notifier for the SVQ to call the guest
->>    *
->> @@ -761,17 +770,13 @@ static void vhost_svq_handle_call(EventNotifier *n)
->>    */
->>   void vhost_svq_set_svq_call_fd(VhostShadowVirtqueue *svq, int call_fd)
->>   {
->> -    if (call_fd == VHOST_FILE_UNBIND) {
->> -        /*
->> -         * Fail event_notifier_set if called handling device call.
->> -         *
->> -         * SVQ still needs device notifications, since it needs to keep
->> -         * forwarding used buffers even with the unbind.
->> -         */
->> -        memset(&svq->svq_call, 0, sizeof(svq->svq_call));
->> -    } else {
->> -        event_notifier_init_fd(&svq->svq_call, call_fd);
->> -    }
->> +    /*
->> +     * Fail event_notifier_set if called handling device call.
->> +     *
->> +     * SVQ still needs device notifications, since it needs to keep
->> +     * forwarding used buffers even with the unbind.
->> +     */
->> +    event_notifier_set_or_zero(&svq->svq_call, call_fd);
->>   }
->>   /**
->> @@ -814,14 +819,14 @@ size_t vhost_svq_device_area_size(const 
->> VhostShadowVirtqueue *svq)
->>   void vhost_svq_set_svq_kick_fd(VhostShadowVirtqueue *svq, int 
->> svq_kick_fd)
->>   {
->>       EventNotifier *svq_kick = &svq->svq_kick;
->> -    bool poll_stop = VHOST_FILE_UNBIND != 
->> event_notifier_get_fd(svq_kick);
->> +    bool poll_stop = event_notifier_initialized(svq_kick);
->>       bool poll_start = svq_kick_fd != VHOST_FILE_UNBIND;
->>       if (poll_stop) {
->>           event_notifier_set_handler(svq_kick, NULL);
->>       }
->> -    event_notifier_init_fd(svq_kick, svq_kick_fd);
->> +    event_notifier_set_or_zero(&svq->svq_kick, svq_kick_fd);
->>       /*
->>        * event_notifier_set_handler already checks for guest's 
->> notifications if
->>        * they arrive at the new file descriptor in the switch, so 
->> there is no
->> @@ -928,7 +933,6 @@ VhostShadowVirtqueue *vhost_svq_new(const 
->> VhostShadowVirtqueueOps *ops,
->>   {
->>       VhostShadowVirtqueue *svq = g_new0(VhostShadowVirtqueue, 1);
->> -    event_notifier_init_fd(&svq->svq_kick, VHOST_FILE_UNBIND);
->>       svq->ops = ops;
->>       svq->ops_opaque = ops_opaque;
->>       return svq;
->> diff --git a/util/event_notifier-posix.c b/util/event_notifier-posix.c
->> index 83fdbb96bb..f595945af7 100644
->> --- a/util/event_notifier-posix.c
->> +++ b/util/event_notifier-posix.c
->> @@ -27,6 +27,7 @@
->>    */
->>   void event_notifier_init_fd(EventNotifier *e, int fd)
->>   {
->> +    assert(fd >= 0);
->>       e->rfd = fd;
->>       e->wfd = fd;
->>       e->initialized = true;
->> @@ -96,14 +97,23 @@ void event_notifier_cleanup(EventNotifier *e)
->>   int event_notifier_get_fd(const EventNotifier *e)
->>   {
->> +    assert(e->initialized);
->> +    assert(e->rfd >= 0);
->>       return e->rfd;
->>   }
->>   int event_notifier_get_wfd(const EventNotifier *e)
->>   {
->> +    assert(e->initialized);
->> +    assert(e->wfd >= 0);
->>       return e->wfd;
->>   }
->> +bool event_notifier_initialized(const EventNotifier *e)
->> +{
->> +    return e->initialized;
->> +}
->> +
->>   int event_notifier_set(EventNotifier *e)
->>   {
->>       static const uint64_t value = 1;
-> 
+Signed-off-by: WX Chen <wxchen0913@gmail.com>
+---
+ target/riscv/tcg/insn_trans/trans_rvv.c.inc | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+index a22e2cae6ce8e5a055c106fb76c305c92ac53d3c..b299c82d7a29057433e280b49b5220e6ad71498f 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+@@ -234,8 +234,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
+     gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl(0));
+     gen_set_gpr(s, rd, dst);
+     finalize_rvv_inst(s);
+-    gen_update_pc(s, s->cur_insn_len);
+-    lookup_and_goto_ptr(s);
++    gen_goto_tb(s, 0, s->cur_insn_len);
+     s->base.is_jmp = DISAS_NORETURN;
+ 
+     return true;
+
+---
+base-commit: d73149283205645625bfa9fe029cfb68e4c4a9ae
+change-id: 20261104-research-vsetivli-direct-chain-20261103-69536f07be37
+
+Best regards,
+-- 
+WX Chen <wxchen0913@gmail.com>
 
 
