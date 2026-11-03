@@ -1,66 +1,147 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9E4606A329
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 14:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD49606D820
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 14:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.a=rsa-sha256 header.s=rs20250326 header.b=YFfZ8dBp
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NbMGxAYe
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOF9n-0002ii-Jr; Tue, 03 Nov 2026 09:06:36 -0500
+	id 1xOFLI-0004ct-Vv; Tue, 03 Nov 2026 09:18:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xOF9j-0002iE-Rx; Tue, 03 Nov 2026 09:06:32 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xOF9g-0001VU-Cq; Tue, 03 Nov 2026 09:06:31 -0500
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6A3E62nE028835
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 3 Nov 2026 23:06:03 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=6ZnZpdLjzWID/hFhex7/R/W7RCK7CFbxnr8S7OuxWGU=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1793714763; v=1;
- b=YFfZ8dBpkQnkUQFcRWz5li6aVoHj2DAiD5m0dDWokdxP17P4pAgQQ2BDEIZ2qQDR
- agH068p5x4yQVW+pelVT2H6Nc+uSjQdLQcWGtiB756bSDX6qBR14ByX/573w6bLB
- eNPFIcf1O0oEczo6RsSVi+UqmKLB8Oud2GljJzH0q1EIOVtePKvI6EsB1cDgVVYI
- o05Ss6tzYiBjXGcDQX0owDZ0TupuvI/fONU1SsKhOspOyiF471NQYkGFa5WeWc1S
- bBQExqfUbL30TBYpAgVeugm+pZngP9sedjzGzzFWJzzFnSXXw3UeY7Rtmd6kq4M3
- +jqM/u5WPK4vXLb7ihm+jQ==
-Message-ID: <09566fd1-7eb6-4dc1-a721-f15e4948e143@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 3 Nov 2026 23:06:02 +0900
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xOFL8-0004c8-Rs
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 09:18:19 -0500
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xOFL4-0002ob-W6
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 09:18:18 -0500
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-676804a3a22so3411328d50.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 06:18:07 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793715486; cv=none;
+ d=google.com; s=arc-20260327;
+ b=V9JhQW//qBBdWm0VgB39V5qmSP4y2zzQlAbE2VtujyvxWoPnAvfI/mq2pTLJGOhEd0
+ ogPJxZC96krbfNsKabz3Yi179VGq+U3/LNS76QfVyWIoMW/GReaXpNBKx/3tnPXcq9SO
+ B8qRHFtke9qquodynfYM/AK2SpwlBYY735REDkrsydviN1dazy6mOfLcNSK4BX6H6m8m
+ DysjqZ2JOvv1hQkTwAuauL/V/T+c8AKF59anuuE90zSOARQ87DiYZ4UHdazqGvbXvB7B
+ 9X87pRF758juCsGisozSCgB7QA8dFqsAkEnCoJWfW4YrU6fP3v/k0mOYgO1YvZJH14bG
+ iQQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=DrlFZ8OwnA0TZT2cK4MNtmqKlz1PKYoO5uN1djvDVsg=;
+ fh=9AKim2lswK2vLKa40WbQhJPAT0Lp7VHZAEyazbKtkrg=;
+ b=BXxewc0TOI53gq4+92Du8LrwYa84OWT1JvzQgs0eHCFq8Uy07e7yNzAKtiDrTbsBh6
+ x0YxJsO7AwfLcmPnAnVyz8XfCVhKAvdd7w/Bkc8Ru5p+Lfem0NfEruK6uV6tgKr5eU/k
+ 3AWXFTJqiTjahmE1hqmEUXMh5sX8Ds4Ep1tuZ+8SfdQpr8y4BhjjNkeNW0Mb3bt6tBBB
+ 6nkudYl+5QXf67oDPwTchrRzKAZ/OoVcjmG3SiQF8MhXaowpVwRxW6iNHGci2065KDvS
+ m0aYmD+bCodMr2gfLWyojFugPaYVZ2lhsiDTK7DxgEMdPyQtvwJoNoV0H6MgIvxollDZ
+ 4IGQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1793715486; x=1794320286; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=DrlFZ8OwnA0TZT2cK4MNtmqKlz1PKYoO5uN1djvDVsg=;
+ b=NbMGxAYeMCaJwRaY1d1l2TppHYYZHCzWUAYhtSKX83V6LNT9lfGLfpzgefZtXN2ROJ
+ aT6LDhnnl/TxoPC5HODYfbSrfxYTd3PIsAt1fz+JBuufuvqSTQL4E/Rn3zLdw5wVHmXe
+ yEiG16Z7wexSH2jzpM87zOgPHFfpTfoDhh+zDZ7mc47bmM3Qc9YPNW5KJI994xshBx2k
+ Lu+IyYKS+75iwQOULKUiLQiHr8Wp4VJ+NrSl864v/zfrnnvIKncVqwzm0oNtLAodoTXS
+ zhJHU56hlCsflqGi46vSoQQF/rBWe7cUjKZ7fx6YQ0fBVfNEo6x/iU/FSNJHj/6kqVrF
+ V2rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793715486; x=1794320286;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=DrlFZ8OwnA0TZT2cK4MNtmqKlz1PKYoO5uN1djvDVsg=;
+ b=JqTM+CpVv3M+c+S0xVK7CNO5FBQcDucQrUNh1VhM3FqUnCsj6mfeC6aerGCN4sBy51
+ D9BQug3PfovYUtltOWksAY1etEobm+VYlfMXdVdNN8XGO+7KCbd5uJSgGCw/vwvLIn5P
+ hP47Vf+xGNXi3/VodtxYIEdjxIGfpVB/6y/XlkmhupiVYdEMDLLqhlG36tJnfMgThzsg
+ zGtGe9455YXkv86kdfrNIC1Ih39AydvV5iBaRJdeosDD55u8s6KJf1QbCPu5CfAovvYh
+ 4Cw+pp6F/0HddER8sF9DMyBLpLzdwYr5Nm3q8HPA2nBt8o0E/2UaHXWORlIXwZy1I/Dj
+ foFQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwj0VrRxP4WSI+VPFOJ/vGDAhOZ4yB43t/hHzqya7AAv+wzuYN/ohEfhcSJZo4xIzEWRTfLmhEX++8D@nongnu.org
+X-Gm-Message-State: APuU4Z+auT9ULKahKGyARRc0t7Zl0daEwEqBNqYKBG7e2mQt5n+vYDnb
+ 7ctVkoth3vyR0TlroWfKSFhyGKKIVgCh6THCt2IlFQFI6eSCWJCfEKY8S2x0RNSjLqAFzThQPJf
+ gH0NLboNExvnNjU/HtIbgiA+NcyaE7qA=
+X-Gm-Gg: AYBFou3r/7auMaxSnO05Dt0zkq86bdhsdgallUXHFJKNnMqOHPee0Z5dpJsB38iI+Fq
+ U6QcVxy5ZK5kTcb/sG76QBIoQhox1RRTAGFRah6cQWRcpxTikPqJxD89QPT0oPSNpTZmkix9QH5
+ +wfz7GGjNKn/ac4oXN/u4ifeofFYmXCzhgU/+xAqoDadbNaQmb31fhawR4PazcEIo4ONOTc0Igt
+ bALDGfRJuPkRBtKUwR4cCcgM5vjlnIFlr426qNbcd0GGaov/qKMlRCq3QI09Asg6lrCLAVipZll
+ dFJAVsa6VVp9hmTccnWC5iDHQvd+zVsJgHN/lzoYvpFEUI+5UVGHqJOUe0/FvnfP0Yc3dbt338A
+ yxPd9nCXKLVlkeZqas5kT8eYLMWtnFyZtdVVk
+X-Received: by 2002:a05:690e:1288:b0:67a:2a60:355a with SMTP id
+ 956f58d0204a3-67ba50cf3f3mr9964430d50.94.1793715486001; Tue, 03 Nov 2026
+ 06:18:06 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 08/10] qtest/libqos/pci: Enforce balanced iomap/unmap
-To: uverma@linux.ibm.com, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, jishnuvw@linux.ibm.com, harshpb@linux.ibm.com,
- amachhiw@linux.ibm.com, jsnow@redhat.com, farosas@suse.de,
- lvivier@redhat.com, pbonzini@redhat.com,
- aleksandr.mikhalitsyn@futurfusion.io,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20261102035306.2291147-1-uverma@linux.ibm.com>
- <20261102035306.2291147-9-uverma@linux.ibm.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20261102035306.2291147-9-uverma@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20261030151539.1872-1-luoyonggang@gmail.com>
+ <d1db54c6-b802-676a-7779-0c2c63f5f807@eik.bme.hu>
+ <aa70e94c-d9a8-41c9-850f-7ded87f7f327@oss.qualcomm.com>
+ <aumYOBw-nKQAWdYK@redhat.com>
+ <CAE2XoE8Xwevk523OfB+GgwbRu0iVnyD4VNOx81rj7J7F5aq=OA@mail.gmail.com>
+ <54851326-3627-2b86-57d6-c338ed4e4b50@eik.bme.hu>
+ <CAE2XoE_P2mZAT8wZwzFsTqJTK8nxNSSqJRrOM2T-AJkQjwJHBw@mail.gmail.com>
+ <aunnuwhsx9ZOOXBX@redhat.com>
+In-Reply-To: <aunnuwhsx9ZOOXBX@redhat.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Tue, 3 Nov 2026 22:17:50 +0800
+X-Gm-Features: AclHuK9FwIlA9RQMifRxUKLKMCqA8pdJuRMt5xIisjyLT66i66IA7_a2r-8WMT8
+Message-ID: <CAE2XoE974tDG8fd6A_SGqwwXiAAjWTF37MCGm4Qo2-DbBQxjnw@mail.gmail.com>
+Subject: Re: [PATCH 00/15] hw: expand DEFINE_MACHINE to explicit TypeInfo
+ registration
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org, 
+ Anthony PERARD <anthony@xenproject.org>, Felipe Balbi <balbi@kernel.org>, 
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>, 
+ Antony Pavlov <antonynpavlov@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
+ Max Filippov <jcmvbkbc@gmail.com>, Niek Linnenbank <nieklinnenbank@gmail.com>, 
+ xen-devel@lists.xenproject.org, qemu-riscv@nongnu.org, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-ppc@nongnu.org, 
+ Alexandre Iooss <erdnaxe@crans.org>, Weiwei Li <liwei1518@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Frederic Konrad <konrad.frederic@yahoo.fr>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chao Liu <chao.liu@processmission.com>, 
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>, 
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=luoyonggang@gmail.com; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,200 +153,172 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 2026/11/02 12:53, uverma@linux.ibm.com wrote:
-> From: Nicholas Piggin <npiggin@gmail.com>
-> 
-> Add assertions to ensure a BAR is not mapped twice, and that only
-> previously mapped BARs are unmapped. This can help catch bugs and
-> fragile coding.
-> 
-> Cc: Michael S. Tsirkin <mst@redhat.com>
-> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Jishnu Warrier <jishnuvw@linux.ibm.com>
-> Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
-> ---
->   tests/qtest/libqos/ahci.c |  3 ++-
->   tests/qtest/libqos/pci.c  | 57 +++++++++++++++++++++++++++++++++++----
->   tests/qtest/libqos/pci.h  | 10 +++++++
->   3 files changed, 64 insertions(+), 6 deletions(-)
-> 
-> diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-> index a709558aac..53a98bd6cb 100644
-> --- a/tests/qtest/libqos/ahci.c
-> +++ b/tests/qtest/libqos/ahci.c
-> @@ -225,7 +225,7 @@ void start_ahci_device(AHCIQState *ahci)
->   
->   void stop_ahci_device(AHCIQState *ahci)
->   {
-> -    /* Unmap AHCI's ABAR */
-> +    /* Unmap AHCI's ABAR (no-op if not mapped) */
->       qpci_iounmap(ahci->dev, ahci->hba_bar);
->   }
->   
-> @@ -250,6 +250,7 @@ void ahci_hba_enable(AHCIQState *ahci)
->       uint8_t num_cmd_slots;
->   
->       g_assert(ahci != NULL);
-> +    g_assert(ahci->hba_bar.mapped);
->   
->       /* Set GHC.AE to 1 */
->       ahci_set(ahci, AHCI_GHC, AHCI_GHC_AE);
-> diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-> index e78dd4d4c7..365fde1fb9 100644
-> --- a/tests/qtest/libqos/pci.c
-> +++ b/tests/qtest/libqos/pci.c
-> @@ -79,12 +79,17 @@ QPCIDevice *qpci_device_find(QPCIBus *bus, int devfn)
->   void qpci_device_init(QPCIDevice *dev, QPCIBus *bus, QPCIAddress *addr)
->   {
->       uint16_t vendor_id, device_id;
-> +    int i;
->   
->       qpci_device_set(dev, bus, addr->devfn);
->       vendor_id = qpci_config_readw(dev, PCI_VENDOR_ID);
->       device_id = qpci_config_readw(dev, PCI_DEVICE_ID);
->       g_assert(!addr->vendor_id || vendor_id == addr->vendor_id);
->       g_assert(!addr->device_id || device_id == addr->device_id);
-> +
-> +    for (i = 0; i < QPCI_NUM_REGIONS; i++) {
-> +        g_assert(!dev->bars_mapped[i]);
-> +    }
->   }
->   
->   static uint8_t qpci_find_resource_reserve_capability(QPCIDevice *dev)
-> @@ -554,21 +559,31 @@ void qpci_memwrite(QPCIDevice *dev, QPCIBar token, uint64_t off,
->       dev->bus->memwrite(dev->bus, token.addr + off, buf, len);
->   }
->   
-> -QPCIBar qpci_iomap(QPCIDevice *dev, int barno, uint64_t *sizeptr)
-> +static uint8_t qpci_bar_reg(int barno)
->   {
-> -    QPCIBus *bus = dev->bus;
->       static const int bar_reg_map[] = {
->           PCI_BASE_ADDRESS_0, PCI_BASE_ADDRESS_1, PCI_BASE_ADDRESS_2,
->           PCI_BASE_ADDRESS_3, PCI_BASE_ADDRESS_4, PCI_BASE_ADDRESS_5,
->       };
-> +
-> +    g_assert(barno >= 0 && barno < QPCI_NUM_REGIONS);
-> +
-> +    return bar_reg_map[barno];
-> +}
-> +
-> +QPCIBar qpci_iomap(QPCIDevice *dev, int barno, uint64_t *sizeptr)
-> +{
-> +    QPCIBus *bus = dev->bus;
->       QPCIBar bar;
->       int bar_reg;
->       uint32_t addr, size;
->       uint32_t io_type;
->       uint64_t loc;
->   
-> -    g_assert(barno >= 0 && barno <= 5);
-> -    bar_reg = bar_reg_map[barno];
-> +    g_assert(barno >= 0 && barno < QPCI_NUM_REGIONS);
-> +    g_assert(!dev->bars_mapped[barno]);
-> +
-> +    bar_reg = qpci_bar_reg(barno);
->   
->       qpci_config_writel(dev, bar_reg, 0xFFFFFFFF);
->       addr = qpci_config_readl(dev, bar_reg);
-> @@ -611,12 +626,40 @@ QPCIBar qpci_iomap(QPCIDevice *dev, int barno, uint64_t *sizeptr)
->       }
->   
->       bar.addr = loc;
-> +    bar.mapped = true;
-> +
-> +    dev->bars_mapped[barno] = true;
-> +    dev->bars[barno] = bar;
-> +
->       return bar;
->   }
->   
->   void qpci_iounmap(QPCIDevice *dev, QPCIBar bar)
->   {
-> -    /* FIXME */
-> +    int bar_reg;
-> +    int i;
-> +
-> +    if (!bar.mapped) {
-> +        return; /* bar was never mapped; no-op */
-> +    }
-> +
-> +    for (i = 0; i < QPCI_NUM_REGIONS; i++) {
-> +        if (!dev->bars_mapped[i]) {
-> +            continue;
-> +        }
-> +        if (dev->bars[i].addr == bar.addr) {
-> +            dev->bars_mapped[i] = false;
-> +            dev->bars[i].mapped = false;
-> +            bar_reg = qpci_bar_reg(i);
-> +            qpci_config_writel(dev, bar_reg, 0xFFFFFFFF);
+On Tue, Nov 3, 2026 at 9:55=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Tue, Nov 03, 2026 at 09:48:44PM +0800, Yonggang Luo wrote:
+> > On Tue, Nov 3, 2026 at 9:23=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.=
+hu> wrote:
+> > >
+> > > On Tue, 3 Nov 2026, Yonggang Luo wrote:
+> > > > On Tue, Nov 3, 2026 at 4:16=E2=80=AFPM Daniel P. Berrang=C3=A9 <ber=
+range@redhat.com> wrote:
+> > > >>
+> > > >> On Fri, Oct 30, 2026 at 05:51:44PM -0800, Pierrick Bouvier wrote:
+> > > >>> On 10/30/2026 4:09 PM, BALATON Zoltan wrote:
+> > > >>>> On Fri, 30 Oct 2026, Yonggang Luo wrote:
+> > > >>>>> DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED hide the TypeInfo an=
+d the
+> > > >>>>> type_init
+> > > >>>>> function that calls type_register_static(). A later change need=
+s to
+> > > >>>>> pass a
+> > > >>>>
+> > > >>>> That's the point of the macro to hide the boiler plate code.
+> > > >>>>
+> > > >>>>> target mask into that registration, and the macros have no para=
+meter
+> > > >>>>> for it.
+> > > >>>>
+> > > >>>> Couldn't you just change the macros to take that parameter inste=
+ad of
+> > > >>>> expanding it everywhere?
+> > > >>>>
+> > > >>>
+> > > >>> Problem of macros is that they don't have default parameters, so =
+you
+> > > >>> need variants for everything:
+> > > >>>
+> > > >>> DEFINE_MACHINE
+> > > >>> DEFINE_MACHINE_EXTENDED
+> > > >>> DEFINE_MACHINE_WITH_INTERFACES
+> > > >>> DEFINE_MACHINE_WITH_INTERFACE_ARRAY
+> > > >>> and now would need a new variant, with variant for other existing=
+ ones.
+> > > >>>
+> > > >>> In the end, it's just simpler to remove this and add the boilerpl=
+ate.
+> > > >>> It's written once and never modified, so using a macro just save =
+typing
+> > > >>> those lines once.
+> > > >>
+> > > >> For each machine, it is only written once, but we add machines
+> > > >> over time, and every time a new machine is added the code style
+> > > >> is slightly different. We introduced all the variuos DEFINE_*
+> > > >> macros for QOM to better ensure consistent style and usage as
+> > > >> new code is added over time.
+> > > >
+> > > > I understand that the DEFINE_* macros are bloating because of this.
+> > > > Indeed currently the only two macros used are "DEFINE_MACHINE" and
+> > > > "DEFINE_MACHINE_EXTENDED"
+> > >
+> > > There are a few machines using some others but these are the most use=
+d.
+> > > That suggests maybe we should change the convenience wrappers to matc=
+h
+> > > what machines need but DEFINE_MACHINE_EXTENDED is meant to be the one=
+ that
+> > > allows all parameters which should be rarely needed.
+> > >
+> > > > ; each time people want to add a new attribute, the macros is twice=
+d.
+> > >
+> > > Not necessarily. The SECURE parameter did that to preserve previous
+> > > behaviour but if you add new parameter changing all callers (which is=
+ the
+> > > same as expanding the macro that would also change all callers) then =
+it's
+> > > just a new parameter added not changing the number of DEFINE_MACHINE*
+> > > wrappers. Rearranging the wrappers to make DEFINE_MACHINE_EXTENDED us=
+ed
+> > > less is an independent change.
+> > >
+> > > > And the usage of DEFINE_MACHINE_EXTENDED is rare and can be replace=
+d
+> > > > with DEFINE_TYPES or TypeInfo
+> > > > and be more explicit. When we used as macro parameter, we need thin=
+k
+> > >
+> > > But that defies the purpose of hiding the QOM boiler plate as much as
+> > > possible. New people are confused by QOM and it's easier for them to =
+look
+> > > up documentation on the DEFINE_MACHINE* macros to see what parameter =
+is
+> > > what and not care about how it's stored in QOM TypeInfo or what is th=
+at
+> > > at all.
+> > >
+> > > > what's that parameter means, and for
+> > > > TypeInfo, we can directly know what that member is about(because we
+> > > > are assigned with the member name).
+> > >
+> > > The parameter also has a name and documentation so it's not simpler t=
+o
+> > > look up TypeInfo than look at the macro definition or docs. In fact i=
+t's
+> > > harder to guess from TypeInfo as then you also need to get into QOM.
+> > >
+> > > > That's why I suggest keeping a single DEFINE_MACHINE, just like
+> > > > DEFINE_TYPES; as they are the most
+> > > > used macros(and simple enough), and won't suffer from changes much.
+> > >
+> > > That means exposing all the boiler plate for all machines other than =
+the
+> > > simplest case. I think it would be better to keep DEFINE_MACHINE_EXTE=
+NDED
+> > > but maybe rethink the existing wrappers and drop unused ones and mayb=
+e add
+> > > new ones that reduce the usage of DEFINE_MACHINE_EXTENDED but still k=
+eep
+> > > the boiler plate hidden.
+> >
+> > Thanks, I'll go this way, remove unused macros, and keep DEFINE_MACHINE=
+_EXTENDED
+> > and extend both DEFINE_MACHINE_EXTENDED DEFINE_MACHINE supports
+> > "targets" or "arch_mask" parameter.
+>
+> Given that we don't need to do general per-arch type filtering in
+> QOM, we could just move 'is_available' out of TypeInfo, and into the
 
-I found that this is actually dangerous: the BAR may be 64-bit, and in 
-that case, this won't unmap it. On x86, the BIOS is mapped around that 
-area, and the mapped BAR will shadow it.
+We do need general per-arch type filtering, not only the Machine,
+Device also suffer from
+this. So are the CPU QOM objects. Here the MR needs that
+https://lore.kernel.org/qemu-devel/20261031164009.2048-1-luoyonggang@gmail.=
+com/
 
-Regards,
-Akihiko Odaki
+And the add targets/arch_mask to
+DEFINE_MACHINE_EXTENDED/DEFINE_MACHINE is for removing 'is_available'
+latter, as is_available has restriction that can not works well for
+target_heterogeneous
 
-> +            /* FIXME: the address space is leaked */> +            return;
-> +        }
-> +    }
-> +    /*
-> +     * bar was not iomap()ed; treat as no-op for callers that may
-> +     * call iounmap unconditionally during cleanup paths.
-> +     */
->   }
->   
->   QPCIBar qpci_legacy_iomap(QPCIDevice *dev, uint16_t addr)
-> @@ -627,6 +670,10 @@ QPCIBar qpci_legacy_iomap(QPCIDevice *dev, uint16_t addr)
->   
->   void qpci_migrate_fixup(QPCIDevice *to, QPCIDevice *from)
->   {
-> +    memcpy(to->bars_mapped, from->bars_mapped, sizeof(from->bars_mapped));
-> +    memset(from->bars_mapped, 0, sizeof(from->bars_mapped));
-> +    memcpy(to->bars, from->bars, sizeof(from->bars));
-> +    memset(from->bars, 0, sizeof(from->bars));
->   }
->   
->   void add_qpci_address(QOSGraphEdgeOptions *opts, QPCIAddress *addr)
-> diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
-> index cfb7c17dd3..2f9555ae4e 100644
-> --- a/tests/qtest/libqos/pci.h
-> +++ b/tests/qtest/libqos/pci.h
-> @@ -58,12 +58,22 @@ struct QPCIBus {
->   struct QPCIBar {
->       uint64_t addr;
->       bool is_io;
-> +    bool mapped;
->   };
->   
-> +/*
-> + * hw/pci permits 7 (PCI_NUM_REGIONS) regions, the last for PCI_ROM_SLOT.
-> + * libqos does not implement PCI_ROM_SLOT at the moment, and as such it
-> + * permits 6.
-> + */
-> +#define QPCI_NUM_REGIONS 6
-> +
->   struct QPCIDevice
->   {
->       QPCIBus *bus;
->       int devfn;
-> +    bool bars_mapped[QPCI_NUM_REGIONS];
-> +    QPCIBar bars[QPCI_NUM_REGIONS];
->       bool msix_enabled;
->       QPCIBar msix_table_bar, msix_pba_bar;
->       uint64_t msix_table_off, msix_pba_off;
 
+> MachineClass, so it is a regular class level property, which can be
+> set in the class_init methods, and thus avoid any changes to the
+> DEFINE_MACHINE macros.
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
