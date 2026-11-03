@@ -1,159 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110BA606D834
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 15:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E46606A334
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 15:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=oyu9gzao
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UVgZX3J/;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=O1Xoplli
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOGWl-0005hX-KV; Tue, 03 Nov 2026 10:34:23 -0500
+	id 1xOGZw-0006Vt-6X; Tue, 03 Nov 2026 10:37:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xOGWk-0005hK-7c; Tue, 03 Nov 2026 10:34:22 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xOGZl-0006UW-EU
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 10:37:30 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xOGWi-0003qg-ID; Tue, 03 Nov 2026 10:34:21 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A3EEIxp407329; Tue, 3 Nov 2026 15:34:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=7+5Zih
- 76ximuCrw4U9mgoLN3h3XbAPsImulNyEuwuSY=; b=oyu9gzao41yecA9i7Wrzox
- vvNbzE1RtqiROGaCJ/AeBarp0wfv1ZRtQmluVMwMUJsu6ENaJ/PiNCQ7yU90g2qN
- oR1FbRGGmC+ZTN1FoibbmTUzA+21hgO6KZVCLNop8XRkpffwItuJs+T+TET1u2H2
- z8QzjoLfyacPRNja0aFS5GbLTn+0mQ7IB9KToVYTCBs7RLwimSP7rXOadAA6z/Qc
- hlmPCZOy5DPsBWTOox0CAQWUOq2by2xcNCfOm+rG1PPLo1eSHT+a2vqZBwESPrUL
- 9CVta2GAsFNH9zZr8AZYxdEOHZLJN9f5lllGyoBM5LpL+R2kUgQZHyVKnG4TkTdA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn80spkxu-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 03 Nov 2026 15:34:18 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A3EK25S2695607; Tue, 3 Nov 2026 15:34:17 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnv5gu2uj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Nov 2026 15:34:17 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A3FYGNh28508908
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 3 Nov 2026 15:34:16 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9430658059;
- Tue,  3 Nov 2026 15:34:16 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C7E1C58043;
- Tue,  3 Nov 2026 15:34:15 +0000 (GMT)
-Received: from [9.61.98.239] (unknown [9.61.98.239])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  3 Nov 2026 15:34:15 +0000 (GMT)
-Message-ID: <b129ae41-20a9-455b-9b9b-28d3b39f51db@linux.ibm.com>
-Date: Tue, 3 Nov 2026 10:34:15 -0500
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xOGZj-0004F4-IZ
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 10:37:29 -0500
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A3EA3uq3048676
+ for <qemu-devel@nongnu.org>; Tue, 3 Nov 2026 15:37:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ CTERYEy7pZTf/K+uSEKL3XMniFBneBLzF9mcIQX8HVY=; b=UVgZX3J/xKFwjOo2
+ zshD98sEV0ZalH8P3A5apsCzTafIbI49ClY3yObWzeFMo140g90/XKQD1bFubXbr
+ S+ZCdYo9zJsXMO8ycTXtuV9m8fgq8t1D49ZwNgrbTCW2kq9fXozSvjjLZczW9n4f
+ GpkNZiJPThSRBAc4An+CzIQmHaIL8kLEraegQo/x1tyVdYmJB8o0bAfmoVJqpghc
+ IjX3M8vk+iPHF2VYszMVISfZ9u5JYFrjoO/cxqV8+IhRM6M8AgKoAZHXhCri1SCt
+ xJoAUg/izPxUzTCN0X6Xgt9PfVkeiMZyz6RYBkDb+WIxc4iKWOWUK/VfbGNVaJRq
+ 0BRtPw==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hq4v5kdeg-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 15:37:23 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-7bf3a6cf1c8so3304587137.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 07:37:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793720242; x=1794325042; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=CTERYEy7pZTf/K+uSEKL3XMniFBneBLzF9mcIQX8HVY=;
+ b=O1XopllimhQLBh+lFlLiqwZEK18NEJS0KPoLLd8hCL45J4UKCW1YBQgvutkYVEArKD
+ FPYzmcka1H5COnL+EXvXdpYP1mGGUll3jcFJGhSVuaJ44c2KeFTDHWenSeGqpa4pgEUW
+ udUL04AkIRYsR4D+DZ6JqKOlBznaU1aCgj/gLCKW7fUWk3eOAbva7x88eSND6tj9qqrX
+ mYL66g1enbyYFCF9BH9yB6CjZoB2OnQuUwX3LVw5uQMXxdz11l8atOgAsxqfjKNkOwMm
+ qnXgFrYSy0EiXfdo+pf/ey6ISwui4POrxsabqfxjhLbMv3l7CxRqgS2NXNDVf3fk1yH/
+ rSzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793720242; x=1794325042;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=CTERYEy7pZTf/K+uSEKL3XMniFBneBLzF9mcIQX8HVY=;
+ b=iM6ORcUb+yWX37ukDfNLppjySfODAjTXtUEfWxAhkfjeLGQzwlwrI0K1kcXq2uqEiX
+ xbUWvZQ1UlYaJXbppJAnt0Ohx02GE4ItQlsP06KRte894sdO/ujNYJkRqwMF1fHMs6Ly
+ zTCUylKwsR1yE6D3k6vDw69tW14GwK82Ifzk4RKdnGeA1tdLL2b3oox6+lgpBVqdyzJq
+ Y0WNHxfr21yrqliXpsO5AMVvWScJeiujCcWbUjOwX63UT7ldquUvIQuIAehBUgxl5CK1
+ BTPFK0p2ARnODtOOVNlRCmbtGil/RNyfIneiyD87Mu5B2ef3skubk24nAxvLu2b9FQtK
+ mrbw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByn5ON2q2EVCnjXuge/ptM9Q0S+/EEUMsY5XzzgqvvvVIDddymJJlhIQDiVSGPTS4jHn07DYJymc8K1@nongnu.org
+X-Gm-Message-State: APuU4Z8oF5vUuycOmdS7Nf0mqxfCdOj1PlOxZLXOG9KEKDPs7gla/sNH
+ WWTrWqwV/e0dJWvQrALhdvFSkhkAKSrLQnv9EmdCWEJNIdKmbGopoJxrSm5nUqcamLASOWDCfub
+ KcIwSrM5S3Tz7Yz/GbnUEIvRYsQVwy2XI3bj96unv2wn046PNETJ2haIKbg==
+X-Gm-Gg: AYBFou3lq7riWbRnkmpx5b7izcOJ/a6tKyZq7FruQ7L/91UdiHKPj9Fj7ip/9IBRAn4
+ IgBgkv5SH9QVkQ7I5HuA6YkG1sFr2a7mEoP+BKofJNQLTwxUJLGeRhCdRJXBJXidhagGKW7UC5P
+ kGa2DKXJep5H82Q9AbPuKH6QmtliXZlCT6gu4rLMwEp4Mxjyo1UDWRezpOoQkz9jQr7y92ORfV+
+ TCoU/lAYvtUP9/eMJcM/V6Xemud+bpv/yFgbQSArR7mpwvzX3ZB45aDYIzxC9FFCiuB+yJnPH/V
+ Qvs+MTuUesjxU8qrC6GlBaAg7rlCkuwRc9rxtrMY3hKlmb0gMBt4wRm1IL1fuaMuM/4mjHw/oxn
+ g4RJm7fGG0osX1kQmtX9vtak1pyPw+XDaS2HmlF+F6Uln8Bf88M25I1xYhCWp/aDMXnPlfyDK81
+ p9ihMrEdjoxYLn1JtnD9Xqag==
+X-Received: by 2002:a05:6102:a51:b0:7d0:65f5:2bab with SMTP id
+ ada2fe7eead31-7d072d15aebmr5753160137.29.1793720242059; 
+ Tue, 03 Nov 2026 07:37:22 -0800 (PST)
+X-Received: by 2002:a05:6102:a51:b0:7d0:65f5:2bab with SMTP id
+ ada2fe7eead31-7d072d15aebmr5753142137.29.1793720241551; 
+ Tue, 03 Nov 2026 07:37:21 -0800 (PST)
+Received: from [192.168.69.229] (82-67-153-177.subs.proxad.net.
+ [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e71b78a1dsm24796991f8f.24.2026.11.03.07.37.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Nov 2026 07:37:20 -0800 (PST)
+Message-ID: <1840f65e-c484-4dea-819a-415cd692e08c@oss.qualcomm.com>
+Date: Tue, 3 Nov 2026 16:37:19 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 11.2] vhost: do not get config notifier when one
- doesn't exist
-To: "'Michael S . Tsirkin'" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20261102174916.2301985-1-farman@linux.ibm.com>
+Subject: Re: [PATCH v5 0/8] hw/sd: Improve performance of read/write/erase
 Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20261102174916.2301985-1-farman@linux.ibm.com>
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Christian Speich <c.speich@avm.de>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
+References: <20261006094447.43491-1-shentey@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261006094447.43491-1-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: TLAuSbocsBKM3AcR6gh7Y3KSsUbUF8kb
-X-Proofpoint-ORIG-GUID: TLAuSbocsBKM3AcR6gh7Y3KSsUbUF8kb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDA2MCBTYWx0ZWRfX+QCFBuU1t5gD
- PIZUKMQnVtNQcHgogIzhDZVWujw0wdVE5sIRlmQ5yawNXQy1+qzgiEIfO9TCJsIdHWV+w1cc0HL
- 9QlJXAN+3I0OWsYib9ZOwbCnFJKqj9u3Ec9M6g6DfUIxP2HEjkxwA3kK0wX7s5/dmekrfXuuWHB
- PYuvebxWUBbdy4CM3SXCMy0t8sNkRTLSKHXREHEmu1eP3+2SviYzGYh4rO/Yf3p8mGp0qJJkUws
- rhJx0yWzUMwYNlsNuYci6W2seW60m9+sAnHYpiCppuy/Zl5L/8nH5tXvwzf3bD4lCEI06ID2iSb
- 5tv5kh1f5PUNUdz7dod+s+nVSHlcuiOP1fJ3mAtEb/6IUSVw+MTwe/YFF92+3JAFcQ13Jy1WdF3
- 59gC1dA2Wy/mbEeNh3AD7S3phdSkCQHvxSzOtCpwfQO8ceeUERBwM5BeDapwnCuBAqSN6RPYKmy
- 7ZylCJFnA/aBBGtDVDg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDA2MCBTYWx0ZWRfXyM9MV+xRHRBB
- TATEOO3iVXuaz5kzmki9h83/F7srLc94Y/O+Zlxqg0UGWIjGuMYhYZWgDoQYQvqh0EnsdXQ6pwI
- DkwEApJmnodl+JsuaYOH9niq9CmIUd8=
-X-Authority-Analysis: v=2.4 cv=FIqOVOos c=1 sm=1 tr=0 ts=6ae9fefa cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=xlo9B-6kGIh_nWvDcuQA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: ZTxaeMrEG9rWlimzVHem9NlGmDLFuu9X
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDA2MiBTYWx0ZWRfX194TrJ4+Z/DS
+ 3l2RwNSUy3X49h/zi5yWONOqmlsJPmRdkvCWse0WpdXNdXhhN9BYZzjIYZYq4dltuwspFBz2B9v
+ Q8DfIGY/Q2OOXWm/hZKku2tMLpiYvFLhU8Q6pQBQ7TbUFO8FYrREA6/NfwFbZ8wTbrA7VY9kt/5
+ m8txL+yez5HLSrGMR0Fsz04R/yG0LvEKUr6NmtflvdzqBbzFmlRCzN3fiK3HFXoTsfLikCtApDW
+ gKKZ06sH7uWLGa9ole2DjISrHJQ43Qzc9h5zZnhdRwoWJBFcMKwm62zWtQckMqrr2XG4xWDhbGc
+ GytHVag12iGERFst6cP+bL1vLdB2yL6gsEdl9atIMs8LfAHoJYU+IakXYd2okE1RtaKzn9Eed5X
+ sTQp4x2FE4hmpAhIjh4BaaYrfoZ2hS21hshFIhoakN1g3ys6uhHlzj5xcu2/GmfVg+pso59GeKE
+ HO7shNysXwWYuNgb4YA==
+X-Proofpoint-GUID: ZTxaeMrEG9rWlimzVHem9NlGmDLFuu9X
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDA2MiBTYWx0ZWRfX/+N5MbixWhmm
+ iVgQahZnvzF2hSOQ10Jk0xWXLj3hOBeI46MOZXIE0dgFikOB6eaJTKQHFBjUMkqY5Lk1Y74wtSU
+ 0Z1sskbHYwxg5+GuojqmcjoqWCLgo1Q=
+X-Authority-Analysis: v=2.4 cv=NeZzRGD4 c=1 sm=1 tr=0 ts=6ae9ffb3 cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=FG_UeWTTKokQwsbpFD4A:9 a=QEXdDO2ut3YA:10 a=ODZdjJIeia2B_SHc_B0f:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-03_03,2026-11-03_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
- bulkscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
+ bulkscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ adultscore=0 suspectscore=0 clxscore=1015 spamscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611030060
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611030062
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -166,49 +151,69 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
-
-On 11/2/26 12:49 PM, Eric Farman wrote:
-> Commit e3b12d0c55e4 ("util/event_notifier: more strict API") added an
-> assert for an uninitialized file descriptor in event_notifier_get_fd(),
-> but it presumes that such a thing always exists.
+On 6/10/26 11:44, Bernhard Beschow wrote:
+> This patch series improves the performance of read/write/erase operations
+> on sdcards.
 > 
-> Since it's only vhost_ops->vhost_set_config_call that expects to use
-> this file descriptor, move the retrieval of that fd inside the non-null
-> check to avoid an assertion failure when it does not exist.
+> This is done by increasing the maximum buffer size that is worked on.
+>  From 1 byte (master) to 512 bytes (commit 1-3) to larger than 512
+> (adma commit).
 > 
-> Fixes: e3b12d0c55e4 ("util/event_notifier: more strict API")
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+> Testing on my system with fio I see the following rough performance
+> values in MiB/s.
+> 
+>                read write readwrite
+>         master:   6     6     3/  3
+>   first commit:  51    43    23/ 23
+> second commit: 392   180   144/143
+> 
+> Tested on a 2GiB raw image with:
+>    fio --filename=/dev/mmcblk0 --direct=1 --runtime=60 --time_based --bs=128k --rw={mode}
+> 
+> The adma values are somewhat unstable but always >100MiB/s, I'm not sure
+> why but I guess it has something to do with the host side caching.
+> 
+> The fifth commit fixes the DATA_STAT_AFTER_ERASE bit in SCR and
+> introduces an option to allow to erase blocks to 0x00.
+> 
+> The sixth commit optimizes block erase when erase-blocks-as-zero=true
+> is used, by passing the zeroing request down the to the block device.
+> Erasing 2GiB now takes 0.1s instead of 26s.
+> 
+> Signed-off-by: Christian Speich <c.speich@avm.de>
+> 
+> I'm picking up this series with the changes indicated in v5 below. Please let
+> me know how I could improve attribution to Christian in case I missed something.
+> 
+> The last two patches are new and are small cleanups.
 
-Ah, this is not going to work. VDPA has previously worked on s390x, but 
-as it's the only place that sets vhost_ops->vhost_set_config_call we'll 
-still end up failing the assertion in event_notifier_get_fd for that 
-device type.
+Thanks Bernhard for respinning. I also had a local branch where
+I was working the fixes needed for v4; I'm taking your v5 and
+will respin as v6.
 
+> 
 > ---
->   hw/virtio/vhost.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index b25919c5c7d..998518c3b2e 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -2119,8 +2119,8 @@ static void vhost_start_config_intr(struct vhost_dev *dev)
->           virtio_config_get_guest_notifier(dev->vdev);
->   
->       assert(dev->vhost_ops);
-> -    int fd = event_notifier_get_fd(config_notifier);
->       if (dev->vhost_ops->vhost_set_config_call) {
-> +        int fd = event_notifier_get_fd(config_notifier);
->           r = dev->vhost_ops->vhost_set_config_call(dev, fd);
->           if (!r) {
->               event_notifier_set(config_notifier);
-
+> Changes in v5:
+> - Rebase onto master
+> - Split patch "hw/sd/sd: Use multi-byte/block writes for block path" into three
+>    (first three patches)
+> - Use sd_blk_{read,write} with additional parameter directly rather than having
+>    sd_blk_{read,write}_bounce_buffer
+> - Drive limits and write protect groups are preserved to be checked on block
+>    boundaries only since these checks are redundant in case the SD host
+>    transfers one byte at a time.
+> - WP_VIOLATION is only raised once the first protected block shall be written,
+>    rather than immediately at the beginning of a multiple block write which
+>    starts with allowed blocks.
+> - An off-by-one error has been fixed in the same case where one bye too less
+>    had been written if a write protected block had been detected.
+> - There are only two rather than three code paths each handling the multiple
+>    block optimization.
 
