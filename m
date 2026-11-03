@@ -1,97 +1,151 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C339B606A332
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33554606A32E
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Al3hyllL
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=TTTUDDeG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOIJ9-0001mm-2k; Tue, 03 Nov 2026 12:28:27 -0500
+	id 1xOIN4-0002nA-1z; Tue, 03 Nov 2026 12:32:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xOIIT-0001cO-Ks; Tue, 03 Nov 2026 12:27:47 -0500
+ id 1xOIMz-0002mT-49; Tue, 03 Nov 2026 12:32:26 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xOIIS-0006Uh-3l; Tue, 03 Nov 2026 12:27:45 -0500
+ id 1xOIMw-0006s1-Qw; Tue, 03 Nov 2026 12:32:24 -0500
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A3EE6uv2251362; Tue, 3 Nov 2026 17:27:40 GMT
+ 6A3EEGu02251810; Tue, 3 Nov 2026 17:32:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=0oO+vuLvf7d81YehrCQEVWhSl7ylkDd8aqbBQkp8t
- ic=; b=Al3hyllLFPzq1cbkTPN5Bv9UgQah0a4R/gCAV1jh9SWNb0XMp/RrIbI//
- TGx+M2k3SK6XsguK3+gv8aTnUfg29RrF0xCFF+6G/JvFz6u99qNORSUfimKYCMeN
- rtL0QzH/B8AJrhDaob8mYUfSS7LHLvtP/vbnpqIDrNV+y8oa0GMo0FkYpPkOqbsg
- l1kw+Fdx5g8HV+HzZjAi69fgHNps//cwFlLCW3/VfFRUxnlPipdhgaFnR/IiT2S7
- iDX509WA0haO7H3wOHDByyk26tSj0+LV/KPA5ZLtG8x2ghgSv/m9FRL3UHC/r3Wd
- 5mttGn+6K10rhSCojHvpF2bJ5H5jg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn7u3fbm6-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=R/ju8P
+ RO9wQuLuNyLFS0rNuHqbqkK4BDwyN++THX/fg=; b=TTTUDDeGhUiz7uf8nyDv1V
+ saRrRDPBFahiotSVOfapscqaDE6IxWTwRvY7iVmIQvH+3dJp9edxQfnu/ARweiqZ
+ lrj3wRkd1MALf+q0KWFplLe3x/dq7IPPmn+I8oFTl42lBuNGjdzI0tcgBj8EMqrb
+ 9Q3J+FWOIMd/L9Vh5U1kxDbzCwQ5ZODdzHvwFOZWJkb2UkAvd0//q2sj1Mh8G6kJ
+ 4TbhUILcJn3FTm9r3BjtpFk41juNfVYlxfC5SoE9o31nDZSS2pJpepk/pYQoEr9l
+ 9SGvX6N/4BYotrg8knpgXzE3MF34TrLoc9UssdrKV0xa01jyktcEjCDit0+6KjCA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn7u3fcfe-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 03 Nov 2026 17:27:40 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A3H8cm82695639; Tue, 3 Nov 2026 17:27:39 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnv5gup6c-1
+ Tue, 03 Nov 2026 17:32:19 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A3HElsx2652734; Tue, 3 Nov 2026 17:32:18 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnu1vkuk6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Nov 2026 17:27:39 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A3HRZhN37421392
+ Tue, 03 Nov 2026 17:32:18 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6A3HWHMc28377834
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 3 Nov 2026 17:27:35 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E7A102004B;
- Tue,  3 Nov 2026 17:27:34 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C19DF20043;
- Tue,  3 Nov 2026 17:27:34 +0000 (GMT)
-Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with SMTP;
- Tue,  3 Nov 2026 17:27:34 +0000 (GMT)
-Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id A7E39160DF7; Tue, 03 Nov 2026 18:27:34 +0100 (CET)
-From: Eric Farman <farman@linux.ibm.com>
-To: "'Michael S . Tsirkin'" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Konstantin Shkolnyy <kshk@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH for 11.2 v2] vhost: only use config notifier when
- exists/initialized
-Date: Tue,  3 Nov 2026 18:27:32 +0100
-Message-ID: <20261103172732.837511-1-farman@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
+ Tue, 3 Nov 2026 17:32:17 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62ABF58053;
+ Tue,  3 Nov 2026 17:32:17 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0EC8858043;
+ Tue,  3 Nov 2026 17:32:16 +0000 (GMT)
+Received: from [9.61.98.239] (unknown [9.61.98.239])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  3 Nov 2026 17:32:15 +0000 (GMT)
+Message-ID: <0af8c97e-55bf-421c-8b38-de1f88f44547@linux.ibm.com>
+Date: Tue, 3 Nov 2026 12:32:15 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 49/78] util/event_notifier: more strict API
+From: Eric Farman <farman@linux.ibm.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ qemu-s390x <qemu-s390x@nongnu.org>,
+ Konstantin Shkolnyy <kshk@linux.ibm.com>
+References: <cover.1793207602.git.mst@redhat.com>
+ <05f5ab90ea52b0151958fd2506c15858e3e80442.1793207602.git.mst@redhat.com>
+ <92a5bdce-af21-4e8a-b869-57e903531a77@linux.ibm.com>
+Content-Language: en-US
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <92a5bdce-af21-4e8a-b869-57e903531a77@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Zsp4uN7G c=1 sm=1 tr=0 ts=6aea198c cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=imYxtfgo-3jAVhZrOLEA:9
-X-Proofpoint-ORIG-GUID: HEAG4OSXlKpdCAKDRae5LGHBN8tdbBrA
-X-Proofpoint-GUID: HEAG4OSXlKpdCAKDRae5LGHBN8tdbBrA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDA2OCBTYWx0ZWRfX1JI2tgGJizTg
- 8Nbt9doah0D35PDP/ChZACPgH3llETfnxoVM3eI8UfjzQ6JsXOC3edFrCSQrdcVD/zFJbkWIO4T
- 73AKO1ye0AELqOWtCd7mtkjCK0pQyYAa6hwIrLXKNIIXU/ndoe81hMpm+yHRVl1szGU3xZkMm0p
- GOrrwbi8vJ5TPYfoEvM0JVU3bBHAS7mxEHvbTatez/2Nl3kBrtTWGsAalMgE6odtcgfH3jmv8bT
- Wlhc2AWjVKfkE0ZFTKsEnpPfWx8+I/df20OYyM6Hvf/d6wcUHzfzh1jZz6t7UdBE/3yiF3d2Mc2
- RW2sqih1swCHteZCJGfLLXsoY2KwhoDSMvnNSSg7y1PlAjyIQWKMruo30kzklvUVMEPoTMxm+ns
- VqEIj9sWbj1grGBvTd93B2/x8Run45M1dkJIENzWiPgcCATx+uLWq8K+4fcKsKY9By0mOyH8yP5
- grp+G4wOuR37we52ovA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDA2OCBTYWx0ZWRfXxc1UQ2yW95bS
- u0G4oBVAuLFcRJ06se4zwgM5xI5yyEnBv6Bc+Lmdit0yjgFPnOVyrm5ZVooMSMwxEyJ9mnIjUTs
- e5ZBNdk5SkoZdYGEj9D1JETh/0bAXR8=
+X-Authority-Analysis: v=2.4 cv=Zsp4uN7G c=1 sm=1 tr=0 ts=6aea1aa3 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=6R7veym_AAAA:8 a=20KFwNOVAAAA:8 a=kKIZro9CSXlhRldgMCwA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=ILCOIF4F_8SzUMnO7jNM:22
+X-Proofpoint-ORIG-GUID: gpvA86baq2E6vA1rvkThkMuQluP2d9tQ
+X-Proofpoint-GUID: gpvA86baq2E6vA1rvkThkMuQluP2d9tQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDA2OCBTYWx0ZWRfX9MblNhrub9b9
+ 3V0sd8lG2Lzl5v6E1Wd/qUlnpbqpEmQTPFLxmyFSeptss8SEJOgGAce5giHCK86TNiyKX297QRc
+ YAOKhCNkYGGwBy8WsuSXoRacQDJAbnwA4tSNjdSw4vzb4Bn7OXzRmfviPcXwdn3o/9+8kfkQEPX
+ caOZtDKWP3nhaXrm0y3Uu61tTFGkVbji159UyucCT8bShw2hkPPIXiqhdZB8mZ0xMIlhC4xx7lD
+ aJ3F2zvph8RXe1peYO8SA7OYYgwiRJb9Kmp3vwcVOd/Bxp8HPxgzdmlMmDM1MtVbUuB49sBxJwY
+ Hg0xlvZ9TtF2aOqiJwt/UW5ih2WQbKK5hautXBILR9CubVpsA3SnnzPdyCiFM0TJiYnTQmY3A/b
+ KFG/66LySOquGwi1oW00LDObxMZo83lPRoh5mgxCEXrqu0XPuSj7UG7ABcwktMy/pzYjM5draDl
+ g0I0xIBVQzSb0+rAI9w==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDA2OCBTYWx0ZWRfXwgOGCokvHfrE
+ AOTwGW+vWpuvoAP8nAPkUXBQHxtgZT481qma2a7Ea0xbHTEwXxZ8K3V82mprzzyr7/cKz+seOQ8
+ TvGKz4BeI66uCeeaaJUywY9432hZnl0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-03_03,2026-11-03_03,2025-10-01_01
@@ -120,47 +174,220 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Commit e3b12d0c55e4 ("util/event_notifier: more strict API") added an
-assert for an uninitialized file descriptor in event_notifier_get_fd(),
-but it presumes that such a thing always exists.
 
-On s390x, where a config notifier does not exist, this is a breaking
-change for any vhost-backed device such as virtio-net. To remedy this,
-move the acquisition of the file descriptor within the guard against
-vhost_set_config_call and expand the guard to ensure the notifier is
-initialized before being used.
 
-Fixes: e3b12d0c55e4 ("util/event_notifier: more strict API")
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
----
- hw/virtio/vhost.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+On 11/2/26 10:48 AM, Eric Farman wrote:
+> 
+> 
+> On 10/28/26 1:16 PM, Michael S. Tsirkin wrote:
+>> From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>
+>> We have .initialized in EventNotifier to track was it actually
+>> initialized, and we have a comment that @fd passed to
+>> event_notifier_init_fd() must be an eventfd object.
+>>
+>> Still, there are two specific users, which ignore these things,
+>> and use -1 as specific value storing in notifier, to mark it
+>> "uninitialized".
+>>
+>> Let's make strict API:
+>>
+>> - store only valid FDs in initialized notifier
+>> - _set() asserts that passed fd is valid
+>> - _get() asserts that notifier is initialized (actually, except
+>>    the two specific cases we rework, all other callers are not
+>>    prepared to notifier being uninitialized when _get() is called.
+>>    In this case _get() returns 0 (which is a valid fd), and caller
+>>    will mistakenly use it, which is worse than abort())
+> 
+> Well, there are other cases that would require rework not addressed 
+> here, as this commit breaks (at least) vhost-vsock-ccw and virtio-net- 
+> ccw (for vhost=on) on an s390x host. I'll look into that, but was not 
+> prepared for such a late surprise.
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index b25919c5c7d..189ac541178 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -2119,8 +2119,9 @@ static void vhost_start_config_intr(struct vhost_de=
-v *dev)
-         virtio_config_get_guest_notifier(dev->vdev);
-=20
-     assert(dev->vhost_ops);
--    int fd =3D event_notifier_get_fd(config_notifier);
--    if (dev->vhost_ops->vhost_set_config_call) {
-+    if (dev->vhost_ops->vhost_set_config_call &&
-+        event_notifier_initialized(config_notifier)) {
-+        int fd =3D event_notifier_get_fd(config_notifier);
-         r =3D dev->vhost_ops->vhost_set_config_call(dev, fd);
-         if (!r) {
-             event_notifier_set(config_notifier);
---=20
-2.53.0
+I sent a fix [0] for the assertion that shows up with this particular 
+patch in some of the common configurations, but it still leaves VDPA 
+broken on s390x (which was also working before this commit). So, not a 
+good idea.
+
+I just posted a variation [1] of that which restores VDPA functionality. 
+Would that be doable? Or can we get the assertions here removed until we 
+can adhere to the API restriction?
+
+[0] 
+https://lore.kernel.org/qemu-devel/20261102174916.2301985-1-farman@linux.ibm.com/
+[1] 
+https://lore.kernel.org/qemu-devel/20261103172732.837511-1-farman@linux.ibm.com/
+
+> 
+>> - for two specific cases, implement additional getter for .initialized
+>>    field itself
+>> - zeroed notifier is uninitialized(.initialized is false)
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+>> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>> Message-ID: <20260911185800.134135-1-vsementsov@yandex-team.ru>
+>> ---
+>>   include/qemu/event_notifier.h      |  1 +
+>>   hw/remote/iohub.c                  | 11 +++++-----
+>>   hw/virtio/vhost-shadow-virtqueue.c | 32 +++++++++++++++++-------------
+>>   util/event_notifier-posix.c        | 10 ++++++++++
+>>   4 files changed, 35 insertions(+), 19 deletions(-)
+>>
+>> diff --git a/include/qemu/event_notifier.h b/include/qemu/ 
+>> event_notifier.h
+>> index 8a4ff308e1..820efe7722 100644
+>> --- a/include/qemu/event_notifier.h
+>> +++ b/include/qemu/event_notifier.h
+>> @@ -39,6 +39,7 @@ int event_notifier_test_and_clear(EventNotifier *);
+>>   void event_notifier_init_fd(EventNotifier *, int fd);
+>>   int event_notifier_get_fd(const EventNotifier *);
+>>   int event_notifier_get_wfd(const EventNotifier *);
+>> +bool event_notifier_initialized(const EventNotifier *e);
+>>   #else
+>>   HANDLE event_notifier_get_handle(EventNotifier *);
+>>   #endif
+>> diff --git a/hw/remote/iohub.c b/hw/remote/iohub.c
+>> index 988d3285cc..ab698d9f03 100644
+>> --- a/hw/remote/iohub.c
+>> +++ b/hw/remote/iohub.c
+>> @@ -28,8 +28,6 @@ void remote_iohub_init(RemoteIOHubState *iohub)
+>>       for (pirq = 0; pirq < REMOTE_IOHUB_NB_PIRQS; pirq++) {
+>>           qemu_mutex_init(&iohub->irq_level_lock[pirq]);
+>>           iohub->irq_level[pirq] = 0;
+>> -        event_notifier_init_fd(&iohub->irqfds[pirq], -1);
+>> -        event_notifier_init_fd(&iohub->resamplefds[pirq], -1);
+>>       }
+>>   }
+>> @@ -85,9 +83,12 @@ void process_set_irqfd_msg(PCIDevice *pci_dev, 
+>> MPQemuMsg *msg)
+>>       pirq = remote_iohub_map_irq(pci_dev, intx);
+>> -    if (event_notifier_get_fd(&iohub->irqfds[pirq]) != -1) {
+>> -        qemu_set_fd_handler(event_notifier_get_fd(&iohub- 
+>> >resamplefds[pirq]),
+>> -                            NULL, NULL, NULL);
+>> +    if (event_notifier_initialized(&iohub->irqfds[pirq])) {
+>> +        if (event_notifier_initialized(&iohub->resamplefds[pirq])) {
+>> +            qemu_set_fd_handler(
+>> +                event_notifier_get_fd(&iohub->resamplefds[pirq]),
+>> +                NULL, NULL, NULL);
+>> +        }
+>>           event_notifier_cleanup(&iohub->irqfds[pirq]);
+>>           event_notifier_cleanup(&iohub->resamplefds[pirq]);
+>>           memset(&iohub->token[pirq], 0, sizeof(ResampleToken));
+>> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost- 
+>> shadow-virtqueue.c
+>> index 0fae35ba1a..c97bd9f93f 100644
+>> --- a/hw/virtio/vhost-shadow-virtqueue.c
+>> +++ b/hw/virtio/vhost-shadow-virtqueue.c
+>> @@ -751,6 +751,15 @@ static void vhost_svq_handle_call(EventNotifier *n)
+>>       vhost_svq_flush(svq, true);
+>>   }
+>> +static void event_notifier_set_or_zero(EventNotifier *e, int fd)
+>> +{
+>> +    if (fd == VHOST_FILE_UNBIND) {
+>> +        memset(e, 0, sizeof(*e));
+>> +    } else {
+>> +        event_notifier_init_fd(e, fd);
+>> +    }
+>> +}
+>> +
+>>   /**
+>>    * Set the call notifier for the SVQ to call the guest
+>>    *
+>> @@ -761,17 +770,13 @@ static void vhost_svq_handle_call(EventNotifier *n)
+>>    */
+>>   void vhost_svq_set_svq_call_fd(VhostShadowVirtqueue *svq, int call_fd)
+>>   {
+>> -    if (call_fd == VHOST_FILE_UNBIND) {
+>> -        /*
+>> -         * Fail event_notifier_set if called handling device call.
+>> -         *
+>> -         * SVQ still needs device notifications, since it needs to keep
+>> -         * forwarding used buffers even with the unbind.
+>> -         */
+>> -        memset(&svq->svq_call, 0, sizeof(svq->svq_call));
+>> -    } else {
+>> -        event_notifier_init_fd(&svq->svq_call, call_fd);
+>> -    }
+>> +    /*
+>> +     * Fail event_notifier_set if called handling device call.
+>> +     *
+>> +     * SVQ still needs device notifications, since it needs to keep
+>> +     * forwarding used buffers even with the unbind.
+>> +     */
+>> +    event_notifier_set_or_zero(&svq->svq_call, call_fd);
+>>   }
+>>   /**
+>> @@ -814,14 +819,14 @@ size_t vhost_svq_device_area_size(const 
+>> VhostShadowVirtqueue *svq)
+>>   void vhost_svq_set_svq_kick_fd(VhostShadowVirtqueue *svq, int 
+>> svq_kick_fd)
+>>   {
+>>       EventNotifier *svq_kick = &svq->svq_kick;
+>> -    bool poll_stop = VHOST_FILE_UNBIND != 
+>> event_notifier_get_fd(svq_kick);
+>> +    bool poll_stop = event_notifier_initialized(svq_kick);
+>>       bool poll_start = svq_kick_fd != VHOST_FILE_UNBIND;
+>>       if (poll_stop) {
+>>           event_notifier_set_handler(svq_kick, NULL);
+>>       }
+>> -    event_notifier_init_fd(svq_kick, svq_kick_fd);
+>> +    event_notifier_set_or_zero(&svq->svq_kick, svq_kick_fd);
+>>       /*
+>>        * event_notifier_set_handler already checks for guest's 
+>> notifications if
+>>        * they arrive at the new file descriptor in the switch, so 
+>> there is no
+>> @@ -928,7 +933,6 @@ VhostShadowVirtqueue *vhost_svq_new(const 
+>> VhostShadowVirtqueueOps *ops,
+>>   {
+>>       VhostShadowVirtqueue *svq = g_new0(VhostShadowVirtqueue, 1);
+>> -    event_notifier_init_fd(&svq->svq_kick, VHOST_FILE_UNBIND);
+>>       svq->ops = ops;
+>>       svq->ops_opaque = ops_opaque;
+>>       return svq;
+>> diff --git a/util/event_notifier-posix.c b/util/event_notifier-posix.c
+>> index 83fdbb96bb..f595945af7 100644
+>> --- a/util/event_notifier-posix.c
+>> +++ b/util/event_notifier-posix.c
+>> @@ -27,6 +27,7 @@
+>>    */
+>>   void event_notifier_init_fd(EventNotifier *e, int fd)
+>>   {
+>> +    assert(fd >= 0);
+>>       e->rfd = fd;
+>>       e->wfd = fd;
+>>       e->initialized = true;
+>> @@ -96,14 +97,23 @@ void event_notifier_cleanup(EventNotifier *e)
+>>   int event_notifier_get_fd(const EventNotifier *e)
+>>   {
+>> +    assert(e->initialized);
+>> +    assert(e->rfd >= 0);
+>>       return e->rfd;
+>>   }
+>>   int event_notifier_get_wfd(const EventNotifier *e)
+>>   {
+>> +    assert(e->initialized);
+>> +    assert(e->wfd >= 0);
+>>       return e->wfd;
+>>   }
+>> +bool event_notifier_initialized(const EventNotifier *e)
+>> +{
+>> +    return e->initialized;
+>> +}
+>> +
+>>   int event_notifier_set(EventNotifier *e)
+>>   {
+>>       static const uint64_t value = 1;
+> 
 
 
