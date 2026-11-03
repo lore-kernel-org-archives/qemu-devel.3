@@ -1,97 +1,159 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E37606A334
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 15:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110BA606D834
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 15:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=EWU7cGzO
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=oyu9gzao
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOGO3-0003vY-Tz; Tue, 03 Nov 2026 10:25:23 -0500
+	id 1xOGWl-0005hX-KV; Tue, 03 Nov 2026 10:34:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xOGO2-0003uv-Ck
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 10:25:22 -0500
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xOGO0-0002pO-LM
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 10:25:22 -0500
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-3acdcfa2bd3so3378005a91.3
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 07:25:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793719516; x=1794324316; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=YEWp9mshRSnGoOt1v4CzzkC8siNI0ENtntw6fT6S1ec=;
- b=EWU7cGzOl+jU5dqfM0iy2rf511gj+aTBZuV0mk7Yy3FSUtJtoIsH78q+hRCY2bAMdK
- +L0wxMYGRyDhT9exVZYK3BNnEGxG6mDgWagAGm6T9474cNby/7Fm/WHRW2PbJJncaSrz
- ET1spl5rZPsfzT497COWkvlCqiSRw7nWlgxQzSWhGe2KyslyEeCYsua9bYFhQu8P+4UM
- N5305m2iuSa1Tid+8TM/RGGlukOpIHNMtJdNNcUqfrlnIIblyht43DUaUYeRMGh0gkRr
- QpQ7nP0pT9DLiQ4Dh6Kb3nFWLEUTcvjDWKr7qolD+Bk/HvX2czh+Jildi7Ol/nmYFxEK
- NrZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793719516; x=1794324316;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=YEWp9mshRSnGoOt1v4CzzkC8siNI0ENtntw6fT6S1ec=;
- b=x99PyroiifwPFOYtpRQH3JHy69yVP1Dw4bE3NxUbJPrU269fnDywyQhngmtDGQlnjt
- lBwiG0venJe03K7GYb708bhGe2T0vnR88In6Q+0IBImYklEa/MNFvpUq1CXnK7HeVfqd
- EGmlB3vyXr2ga1MVWJNcXnIsCQDa876Vf4LjO9UVchTC0qA785NBrLJ7omCgGkvqeHyc
- 3De2pj1ViyZk7eGxMIjRqhP8xHfiSu2QEdOuL/RV2/h1Q3bfpK+9ejXLBLwTGbd/t1ru
- fNw9QxPeBHz4hObRs45jC8AZl1LIrIYcWzBi6RpatJMqWr2Ey9TumdJdURXxCxlKN48H
- TDtw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwiheYLWdjj5aIfVez38wsBdUjkoeaeIXswAnctztdq2uh7J/54HhUgff5Xadp80Rt6pLYJDWEAKj7D@nongnu.org
-X-Gm-Message-State: APuU4Z8EHBzhj9epM3JEBHMnrKmWtZKY3gqiLu1cN8Rm4MuDk6KShbTQ
- nLWRyOc5pJGBKA2ImkSVCHPknl6K6GzSseT2I4qx9/B1yEHzaaveo6hNI4bLvzfMaq7PZuB1yoz
- 3EI9f
-X-Gm-Gg: AYBFou0FgSy6JvAUqUAit2IV4779/NcadSUGlp17nseROMRzVfQX7EzXW54gLayueOn
- BdUD/u3HYhtzhMAXhJU9qTXjvRjTdSW5ooPlIHhwySPYSIWPqucIRze/aBvETSCirnhbb6Iwehd
- Vl/jE6AH4t5CNj4/ZiMGcAY+m4oMJHRhBET+vs+2dxYD8G4oRPPtgiXsYhLHUGxUTndZ0xQ5B/M
- 2deusMQThuyhwX5UkPP/8ruWKd7u7RE0vZ9OijES6VEDjDmtOVldupSgooJBYJw/3Eykjq2McW+
- 1eSdxJMHuP2dqIQeWCBaCacc/XXDrtPfjmHjG03e9e+7XkoU/d3t4fJlTAsBuXncVRMEpmRwFGP
- iaSa2+3qN/H4Kt6tUVW/IdzP6WcxVpOydNV2Ds2ybI3ZEQT3un5PR95C+6OLD4yxesBW2uE05tK
- GW4ohD3rlH/G0Lizq999GsBiD40t4USowgGeIq6KWC+8cAqdmzNs4nKy22b/v0Yb/C1uAS14u8R
- WXnz2ptydFt/AdSpAih4vXNvzQCCs4P+0DWZhix65w3ufm81w375zo1BA1tpWP/lVaIiYe24IgH
- o77yTRJ9DceVZo7vKvZWA/FrHmUz3Y2K9w9B7Sb1i6DbZ99/0Yr2Jd7uVfXrMiApc4pUQ/UG6Bs
- K5b33T/IRBlNId84=
-X-Received: by 2002:a17:90b:448c:b0:3ac:a7ee:6766 with SMTP id
- 98e67ed59e1d1-3ae8980ed36mr11053194a91.36.1793719516277; 
- Tue, 03 Nov 2026 07:25:16 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b07c666cdcsm4717075a91.11.2026.11.03.07.25.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Nov 2026 07:25:14 -0800 (PST)
-Message-ID: <ac5523d7-253a-479f-885c-f0e7deb01242@linaro.org>
-Date: Tue, 3 Nov 2026 07:25:13 -0800
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xOGWk-0005hK-7c; Tue, 03 Nov 2026 10:34:22 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xOGWi-0003qg-ID; Tue, 03 Nov 2026 10:34:21 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A3EEIxp407329; Tue, 3 Nov 2026 15:34:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=7+5Zih
+ 76ximuCrw4U9mgoLN3h3XbAPsImulNyEuwuSY=; b=oyu9gzao41yecA9i7Wrzox
+ vvNbzE1RtqiROGaCJ/AeBarp0wfv1ZRtQmluVMwMUJsu6ENaJ/PiNCQ7yU90g2qN
+ oR1FbRGGmC+ZTN1FoibbmTUzA+21hgO6KZVCLNop8XRkpffwItuJs+T+TET1u2H2
+ z8QzjoLfyacPRNja0aFS5GbLTn+0mQ7IB9KToVYTCBs7RLwimSP7rXOadAA6z/Qc
+ hlmPCZOy5DPsBWTOox0CAQWUOq2by2xcNCfOm+rG1PPLo1eSHT+a2vqZBwESPrUL
+ 9CVta2GAsFNH9zZr8AZYxdEOHZLJN9f5lllGyoBM5LpL+R2kUgQZHyVKnG4TkTdA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn80spkxu-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 03 Nov 2026 15:34:18 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A3EK25S2695607; Tue, 3 Nov 2026 15:34:17 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnv5gu2uj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Nov 2026 15:34:17 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6A3FYGNh28508908
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 3 Nov 2026 15:34:16 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9430658059;
+ Tue,  3 Nov 2026 15:34:16 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C7E1C58043;
+ Tue,  3 Nov 2026 15:34:15 +0000 (GMT)
+Received: from [9.61.98.239] (unknown [9.61.98.239])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  3 Nov 2026 15:34:15 +0000 (GMT)
+Message-ID: <b129ae41-20a9-455b-9b9b-28d3b39f51db@linux.ibm.com>
+Date: Tue, 3 Nov 2026 10:34:15 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/12] Misc fixes patches
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-References: <20261102170658.3649401-1-berrange@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH for 11.2] vhost: do not get config notifier when one
+ doesn't exist
+To: "'Michael S . Tsirkin'" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20261102174916.2301985-1-farman@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20261102170658.3649401-1-berrange@redhat.com>
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20261102174916.2301985-1-farman@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: TLAuSbocsBKM3AcR6gh7Y3KSsUbUF8kb
+X-Proofpoint-ORIG-GUID: TLAuSbocsBKM3AcR6gh7Y3KSsUbUF8kb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDA2MCBTYWx0ZWRfX+QCFBuU1t5gD
+ PIZUKMQnVtNQcHgogIzhDZVWujw0wdVE5sIRlmQ5yawNXQy1+qzgiEIfO9TCJsIdHWV+w1cc0HL
+ 9QlJXAN+3I0OWsYib9ZOwbCnFJKqj9u3Ec9M6g6DfUIxP2HEjkxwA3kK0wX7s5/dmekrfXuuWHB
+ PYuvebxWUBbdy4CM3SXCMy0t8sNkRTLSKHXREHEmu1eP3+2SviYzGYh4rO/Yf3p8mGp0qJJkUws
+ rhJx0yWzUMwYNlsNuYci6W2seW60m9+sAnHYpiCppuy/Zl5L/8nH5tXvwzf3bD4lCEI06ID2iSb
+ 5tv5kh1f5PUNUdz7dod+s+nVSHlcuiOP1fJ3mAtEb/6IUSVw+MTwe/YFF92+3JAFcQ13Jy1WdF3
+ 59gC1dA2Wy/mbEeNh3AD7S3phdSkCQHvxSzOtCpwfQO8ceeUERBwM5BeDapwnCuBAqSN6RPYKmy
+ 7ZylCJFnA/aBBGtDVDg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDA2MCBTYWx0ZWRfXyM9MV+xRHRBB
+ TATEOO3iVXuaz5kzmki9h83/F7srLc94Y/O+Zlxqg0UGWIjGuMYhYZWgDoQYQvqh0EnsdXQ6pwI
+ DkwEApJmnodl+JsuaYOH9niq9CmIUd8=
+X-Authority-Analysis: v=2.4 cv=FIqOVOos c=1 sm=1 tr=0 ts=6ae9fefa cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=xlo9B-6kGIh_nWvDcuQA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-03_03,2026-11-03_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
+ bulkscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611030060
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,33 +166,49 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/2/26 09:06, Daniel P. Berrangé wrote:
-> The following changes since commit 56afd82bd4db9688f1c1c9d0e2ea163b8cde3283:
-> 
->    Merge tag 'qemu-sparc-20261101' ofhttps://github.com/mcayland/qemu into staging (2026-11-01 08:37:48 -0800)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
-> 
-> for you to fetch changes up to b95f1036d5f8b35d8d5b4c18d33bb6564fcbf2e5:
-> 
->    accel/nitro: mark 'nitro' accelerator as secure (2026-11-02 17:05:33 +0000)
-> 
-> ----------------------------------------------------------------
-> * Mark virtualization related machine types as secure
-> * Mark KVM, Xen and Nitro accelerators as secure
-> * Use getexecpath on OpenBSD
 
-Applied, thanks.
 
-r~
+On 11/2/26 12:49 PM, Eric Farman wrote:
+> Commit e3b12d0c55e4 ("util/event_notifier: more strict API") added an
+> assert for an uninitialized file descriptor in event_notifier_get_fd(),
+> but it presumes that such a thing always exists.
+> 
+> Since it's only vhost_ops->vhost_set_config_call that expects to use
+> this file descriptor, move the retrieval of that fd inside the non-null
+> check to avoid an assertion failure when it does not exist.
+> 
+> Fixes: e3b12d0c55e4 ("util/event_notifier: more strict API")
+> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+
+Ah, this is not going to work. VDPA has previously worked on s390x, but 
+as it's the only place that sets vhost_ops->vhost_set_config_call we'll 
+still end up failing the assertion in event_notifier_get_fd for that 
+device type.
+
+> ---
+>   hw/virtio/vhost.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index b25919c5c7d..998518c3b2e 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -2119,8 +2119,8 @@ static void vhost_start_config_intr(struct vhost_dev *dev)
+>           virtio_config_get_guest_notifier(dev->vdev);
+>   
+>       assert(dev->vhost_ops);
+> -    int fd = event_notifier_get_fd(config_notifier);
+>       if (dev->vhost_ops->vhost_set_config_call) {
+> +        int fd = event_notifier_get_fd(config_notifier);
+>           r = dev->vhost_ops->vhost_set_config_call(dev, fd);
+>           if (!r) {
+>               event_notifier_set(config_notifier);
+
 
