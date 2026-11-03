@@ -1,75 +1,117 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA709606A324
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 13:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2222C606A327
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 13:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hWhnsC4l
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=E619rlfI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOEtl-0006Ku-IQ; Tue, 03 Nov 2026 08:50:02 -0500
+	id 1xOEw7-0007Vf-A2; Tue, 03 Nov 2026 08:52:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xOEtk-0006KN-1g
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 08:50:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <tasmiya@linux.ibm.com>)
+ id 1xOEw6-0007VR-D7
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 08:52:26 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xOEti-0007nl-2p
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 08:49:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793713797;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zr3y8HLy7C3EqTvO0g/b8DP2GhQD0FzKwimVznsei/0=;
- b=hWhnsC4lYObT0ZTXDoVllWHUfUYXysHVAoeJb/V5qLQuRda0B3mE8LtAreQeYpr1PAwR1A
- 7gCtiNWqD25GQqZYtC22tCzSXFjEvC7lOTOXvcfkDfwpeSwVvuaMi0jl2vs7KohOR49IRE
- 3k930yjUXdx8ASDIIVnclU//BIHxNGo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-O8_C7ksYOz6HhIyO0BCIjA-1; Tue,
- 03 Nov 2026 08:49:54 -0500
-X-MC-Unique: O8_C7ksYOz6HhIyO0BCIjA-1
-X-Mimecast-MFC-AGG-ID: O8_C7ksYOz6HhIyO0BCIjA_1793713793
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0568D195DB98; Tue,  3 Nov 2026 13:49:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.52])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 97F541955F03; Tue,  3 Nov 2026 13:49:48 +0000 (UTC)
-Date: Tue, 3 Nov 2026 14:49:46 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: "Denis V. Lunev" <den@virtuozzo.com>
-Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: Re: [PATCH 00/13] block: fix data loss in the preallocate filter
-Message-ID: <aunmep-qvP2dYxSz@redhat.com>
-References: <20260930165000.303236-1-den@openvz.org>
- <075b5093-afa5-4d4d-a8c5-8a1157fbeb62@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <tasmiya@linux.ibm.com>)
+ id 1xOEw4-0008Eu-Hn
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 08:52:25 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A3DiKZV1894049
+ for <qemu-devel@nongnu.org>; Tue, 3 Nov 2026 13:52:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=w82bV3
+ O4CTnUIOtRe4QKHo0rl8s7//SUTJbVojJ2aQs=; b=E619rlfI/3J9pKIIh5O2TV
+ GRKrfEKv6iuEjWtjFRSy8hC9bqSpoXU9iC7tdixaTVp0whtfETNDYh4u+YKiUUYB
+ FZ240Bnr/0ht7dGqR+AyaeKDNKXxk4AtWzLKqiaBJJCss0L5ZCeCAhrlO3PdVMLo
+ A9stDkfnvwswHz7FZngDPxA4SJvLTiTm5ue5YTmIVJ1tIFUZ9Wf5A4Jf/LZaRuUM
+ ip8V3JSO922Wr96z3G8IDkPnnrXDR6T/z0NW9HS96Z/f67eHrLiC+QafCmi5fsZb
+ Zs2Pcor8j7cAmttRJsyg/oAq1NxhUxyYO/7gLZk07kQ6rO7C8KD6r5e/OiC81jdg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn5rhp18h-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 13:52:21 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A3DZbSc2643603
+ for <qemu-devel@nongnu.org>; Tue, 3 Nov 2026 13:52:21 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnv5gtjft-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 13:52:20 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6A3DqIwA9961734
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <qemu-devel@nongnu.org>; Tue, 3 Nov 2026 13:52:19 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E242F2004F
+ for <qemu-devel@nongnu.org>; Tue,  3 Nov 2026 13:52:18 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 791F420043
+ for <qemu-devel@nongnu.org>; Tue,  3 Nov 2026 13:52:18 +0000 (GMT)
+Received: from [9.124.210.158] (unknown [9.124.210.158])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP
+ for <qemu-devel@nongnu.org>; Tue,  3 Nov 2026 13:52:18 +0000 (GMT)
+Message-ID: <bab0097c-281b-4c7b-81a4-605ccc7cac91@linux.ibm.com>
+Date: Tue, 3 Nov 2026 19:22:17 +0530
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <075b5093-afa5-4d4d-a8c5-8a1157fbeb62@virtuozzo.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/6] ppc/spapr: Add RTAS error injection support for
+ VFIO EEH
+To: qemu-devel@nongnu.org
+References: <20261019162541.68440-1-nnmlinux@linux.ibm.com>
+Content-Language: en-US
+From: tasmiya <tasmiya@linux.ibm.com>
+In-Reply-To: <20261019162541.68440-1-nnmlinux@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: nJq6XhxcUKNQ9HY7CXNx6VyHo9XM1pon
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDA1NCBTYWx0ZWRfX1p6YpGRWIu8v
+ g6goTg9crJkxD4xpwXPju8eiNWyTLH94VqxsFnEjMaZ+hCJGcxyFmlfy0P8bmTqjIrZGklNSZNn
+ x7cAi23HAOJ1kYDOJGIKyi4ePov2FLU=
+X-Authority-Analysis: v=2.4 cv=LokHWXdc c=1 sm=1 tr=0 ts=6ae9e715 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=wt1o8H50IsT6fsVrqxAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDA1NCBTYWx0ZWRfX4PbmvRmq1828
+ Bm0349v+7DMZl2DtUHPcxVpeivoiWkzQqZRE7GH/YXebKL7EyyN/gFsFytCMrGO6r01ceeLujAZ
+ UA6a5ImUiRrZkK45HM+cozfEPzRWBiiHLoNRGGHYrk5v954F0DRTIvln7BH2OTnz23Tp5+KDWUX
+ 8QUDJ4ER6FkcptgQvyMuQzj6Dm+iO7egv9ITM4D52SbMvi97b1xFtcCTLhTbd0naATOuRFzrzWY
+ TyozmgLAKZAVcrh/1PHN0BMVI8wUxmP3aJxI7P2UlWlBldkQKrF6LEgjbyAtG80speBuXQhbCHk
+ LVp6+CgrXk1qMsnfPDcokU0kDdQ69LBvGpqKaRjpjHi7mBV0mL8dRcGiG3uSVmufd7XRB4eLbXk
+ Lh1RX2yHgWSGnYYFx9aiu+ut/OUx9PWF1BvmCzLrowLw8V7g4ZSW2dVUxlgUh+g3NY0tV937R2+
+ 1Jop6/o7p8XhBW+zo7g==
+X-Proofpoint-GUID: nJq6XhxcUKNQ9HY7CXNx6VyHo9XM1pon
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-03_02,2026-11-03_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 clxscore=1011 impostorscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
+ definitions=main-2611030054
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=tasmiya@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,129 +123,24 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Am 30.10.2026 um 12:12 hat Denis V. Lunev geschrieben:
-> On 9/30/26 18:49, Denis V. Lunev wrote:
-> > This email originated from an IP that might not be authorized by the domain it was sent from.
-> > Do not click links or open attachments unless it is an email you expected to receive.
-> > A guest running a container workload came up with 164 files of an image
-> > layer hollowed out, 45 MiB in all, reading back as zeroes where it had
-> > written data and been told the writes were on disk. The damage was
-> > scattered in guest offsets but contiguous in image file offsets: a
-> > qcow2 over something that zeroed a range of the file.
-> >
-> > The storage underneath records every change to the file's length. Over
-> > a tenth of a second the file grew thirteen times in unaligned steps,
-> > one per guest write past its end, then once by 82 MiB. A preallocation
-> > sets the length to the triggering write's end rounded up plus 128 MiB,
-> > so 82 cannot come from the length the file then had; it can only come
-> > from a zeroing that started where the burst began, 49 MiB lower, which
-> > is exactly the range that came back as zeroes. The fallocate ran over
-> > thirteen acknowledged writes.
-> >
-> > So the filter worked from a length the file no longer had. There are
-> > two ways to get there. Neither is proven, the record cannot decide
-> > between them, and both are fixed here.
-> >
-> > The first is that the filter meant to let those writes in. It raises
-> > data_end before issuing the preallocation, so that writes below it
-> > pass straight through into the range the fallocate is about to zero,
-> > trusting the block layer to order them after it. That trust is
-> > misplaced, and it needs no race to go wrong: two things meet. The
-> > file-posix widening that patch 1 removes parks the preallocation
-> > despite BDRV_REQ_NO_WAIT, and bdrv_find_conflicting_request() skips
-> > any overlapping request whose waiting_for is set without looking at
-> > what it points at, so a parked serialising request excludes nothing.
-> >
-> > The second is that the length was simply stale. The filter's lengths
-> > are plain fields, read, decided on and written back with nothing in
-> > between, and the guest that broke was a virtio-blk with its queues on
-> > two iothreads. A lost update on the reserved length gives a start 49
-> > MiB low with no ordering subtlety at all.
-> >
-> > For the first, the straight fix is in bdrv_find_conflicting_request(),
-> > and it regresses iotests/077, whose "Overlapping multiple requests"
-> > case then verifies wrong data. Patch 1 takes away the other half
-> > instead: the XFS bug the workaround guards was fixed by 249bd9087a52
-> > in v5.5, three days before the workaround went in, and predates every
-> > stable series still maintained. Without the widening NO_WAIT works as
-> > designed, so it is the one patch here I would not drop.
-> >
-> > For the second, the same state turns out to lose data three ways:
-> >
-> > - a write into the range the filter records as zero leaves the mark
-> >   behind it, so a later write zeroes over that range is skipped and
-> >   the guest reads the old data back;
-> >
-> > - two writers extending the file both pass the compare on data_end and
-> >   the smaller end lands last, so closing the image truncates the file
-> >   below acknowledged data;
-> >
-> > - two writers both preallocate over the same range, the older
-> >   fallocate lands last, and the first writer's data is zeroed. Fixing
-> >   this also stops the filter leaning on the ordering above.
-> >
-> > Two of the three have tests in iotests/298. The data_end race has
-> > none: there is no hook between the compare and the store to hang one
-> > on.
-> >
-> > Six patches are tooling, because none of this could be tested: every
-> > qemu-io request ran in the main loop, blkdebug could neither wake nor
-> > wait for a request on another AioContext, and nothing could hold a
-> > request before the block layer tracks it, which is the window the
-> > filter opens. None changes the output of an existing command.
-> >
-> > Signed-off-by: Denis V. Lunev <den@openvz.org>
-> > CC: Kevin Wolf <kwolf@redhat.com>
-> > CC: Hanna Reitz <hreitz@redhat.com>
-> > CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> >
-> > Andrey Drobyshev (1):
-> >   iotests/298: add testcase for async writes with preallocation filter
-> >
-> > Denis V. Lunev (12):
-> >   block/file-posix: drop the XFS workaround for post-EOF fallocate
-> >   block/preallocate: keep zero_start above written data
-> >   block/preallocate: collect the state assignments in one place
-> >   block/preallocate: serialise the filter state
-> >   block/preallocate: hold back writes into a preallocation in flight
-> >   tests/unit: prefix the iothread test helper
-> >   qemu-io: accept --object iothread
-> >   qemu-io: add -t to run an aio request in a named iothread
-> >   qemu-io: add -g to write past the end of the image
-> >   block/blkdebug: make a breakpoint work across AioContexts
-> >   block: add blkdebug events for a write before it is tracked
-> >   iotests/298: cover the preallocation races
-> >
-> >  block/blkdebug.c                  |   3 +-
-> >  block/file-posix.c                |  34 --------
-> >  block/io.c                        |   3 +
-> >  block/preallocate.c               | 139 ++++++++++++++++++++++++------
-> >  meson.build                       |   2 +-
-> >  qapi/block-core.json              |  10 ++-
-> >  qemu-io-cmds.c                    | 116 ++++++++++++++++++++++---
-> >  qemu-io.c                         |  41 ++++++++-
-> >  tests/qemu-iotests/298            | 113 ++++++++++++++++++++++++
-> >  tests/qemu-iotests/298.out        |   4 +-
-> >  tests/unit/iothread.c             |  28 +++---
-> >  tests/unit/iothread.h             |   8 +-
-> >  tests/unit/test-aio-multithread.c |   8 +-
-> >  tests/unit/test-bdrv-drain.c      |  32 +++----
-> >  tests/unit/test-block-iothread.c  |  28 +++---
-> >  15 files changed, 435 insertions(+), 134 deletions(-)
-> >
-> ping
+Greetings,
 
-I went through the patches, but please don't forget Andrey's comments
-which he had already made before this ping.
+I have tested this patch on my KVM guest environment. I am able to 
+inject EEH errors from host console as well as on guest console using 
+location code for a VFIO passthrough device.
 
-Kevin
+Tested-by: Tasmiya Nalatwad <tasmiya@linux.ibm.com>
+Reported-by: Tasmiya Nalatwad <tasmiya@linux.ibm.com>
 
+
+
+Thank you
+Tasmiya
 
