@@ -1,68 +1,68 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E43E606A326
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 03:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF5C606A331
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 03:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=QVRKcVSP
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=TNSjKlsa
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO5AJ-0003xl-EY; Mon, 02 Nov 2026 22:26:27 -0500
+	id 1xO5Bb-0004zB-E1; Mon, 02 Nov 2026 22:27:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5AC-0003sL-0u
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:26:23 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5BP-0004ua-GD
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:27:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5AA-0005vZ-K1
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:26:19 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5BN-00061Y-Ux
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:27:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793676377;
+ s=mimecast20190719; t=1793676453;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NU5ngdvUBRSpabAA6T1cDf9tGmVnnBEjUfxiddLSPrA=;
- b=QVRKcVSPVw/eGlJPQtbOuStUgpImfDS4XUvMg3ND+GWybHI1Q4rRtz9WmC5+qmXpgc3oE8
- 2oa8pv2js8rEMAveGApzgdOa2EmOihbrx9YSdQIJJ3rNx0em+DIdrH7W5HSbRKsZwsR5Zi
- ML5VUYx/RPgCk0y8WGiwINrFexCOOM0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=zwgA6kMBcwjCfqtjnHfwaiEa9/mhLo4QXMbA7haZZCI=;
+ b=TNSjKlsa+pShrnJVygsPyGJXXcBg6Eq4eh5EfPt4q/sPIgtX83TbVIt4zT1j1XYgcw/kpP
+ +pcfMxAygZN2HzOhSc7n6qZdAKCkR1h9+gw4WrCvRKzrxiw27u4k0pCAkOu8pfvwVuvkDJ
+ 6ktb3sxIo3DSEoY/+BJy7mdHNVIl4do=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-DP2FFnMZOdKpBOf6hiIITA-1; Mon,
- 02 Nov 2026 22:26:12 -0500
-X-MC-Unique: DP2FFnMZOdKpBOf6hiIITA-1
-X-Mimecast-MFC-AGG-ID: DP2FFnMZOdKpBOf6hiIITA_1793676371
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-215-4G9_7GMsOz2LYy6odtszmw-1; Mon,
+ 02 Nov 2026 22:27:30 -0500
+X-MC-Unique: 4G9_7GMsOz2LYy6odtszmw-1
+X-Mimecast-MFC-AGG-ID: 4G9_7GMsOz2LYy6odtszmw_1793676448
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D68C18001FB; Tue,  3 Nov 2026 03:26:11 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 62BD41800A3F; Tue,  3 Nov 2026 03:27:28 +0000 (UTC)
 Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D40441800446; Tue,  3 Nov 2026 03:26:08 +0000 (UTC)
-Date: Mon, 2 Nov 2026 21:26:06 -0600
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 506DA195608D; Tue,  3 Nov 2026 03:27:26 +0000 (UTC)
+Date: Mon, 2 Nov 2026 21:27:23 -0600
 From: Eric Blake <eblake@redhat.com>
 To: "Denis V. Lunev" <den@openvz.org>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>, 
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: Re: [PATCH v4 09/12] block/block-copy: merge the two backup scan
- steps into block_copy_prescan()
-Message-ID: <aulT1xOoSYFPdsI7@redhat.com>
+Subject: Re: [PATCH v4 10/12] block/block-copy: replace zero_bitmap_valid
+ with scan_done
+Message-ID: <aulUdeoU11SZRKGQ@redhat.com>
 References: <20261030010613.1612771-1-den@openvz.org>
- <20261030010613.1612771-10-den@openvz.org>
+ <20261030010613.1612771-11-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261030010613.1612771-10-den@openvz.org>
+In-Reply-To: <20261030010613.1612771-11-den@openvz.org>
 User-Agent: NeoMutt/20260616
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -91,20 +91,19 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Oct 30, 2026 at 02:06:09AM +0100, Denis V. Lunev wrote:
+On Fri, Oct 30, 2026 at 02:06:10AM +0100, Denis V. Lunev wrote:
 > From: Denis V. Lunev <den@openvz.org>
 > 
-> block_copy_reset_unallocated() and block_copy_calculate_zero_bitmap()
-> are both one step of the same scan and differ only in what they do with
-> the answer. Fold them into block_copy_prescan(), which drops unallocated
-> clusters from copy_bitmap while skip_unallocated is set, so
-> backup_scan_source() loses its per-mode branch.
+> zero_bitmap_valid says more than its name: a task created once it is
+> set skips its own block-status query, the sync=top skipping included,
+> because the scan has already settled what to copy. And the end of the
+> scan was announced twice, clearing skip_unallocated and then publishing
+> zero_bitmap_valid, with an ordering rule in a comment tying the two.
 > 
-> sync=top now walks the dirty areas the way full and bitmap do, so it no
-> longer queries what copy-before-write has already copied during the
-> scan. A failed query still fails sync=top, as nothing else can tell
-> which clusters to skip, and still leaves the area to be copied as data
-> otherwise.
+> Rename the flag to scan_done, and let block_copy_set_scan_done() clear
+> skip_unallocated before publishing it, so backup_scan_source() makes one
+> call and the order is kept in one place. skip_unallocated is left to
+> mean that a sync=top scan is in progress. No behavior change.
 > 
 > Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > Signed-off-by: Denis V. Lunev <den@openvz.org>
@@ -112,10 +111,10 @@ On Fri, Oct 30, 2026 at 02:06:09AM +0100, Denis V. Lunev wrote:
 > CC: John Snow <jsnow@redhat.com>
 > CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > ---
->  block/backup.c             |  7 +----
->  block/block-copy.c         | 63 ++++++++++++++------------------------
->  include/block/block-copy.h |  9 ++----
->  3 files changed, 27 insertions(+), 52 deletions(-)
+>  block/backup.c             |  6 +-----
+>  block/block-copy.c         | 19 ++++++++++++-------
+>  include/block/block-copy.h |  2 +-
+>  3 files changed, 14 insertions(+), 13 deletions(-)
 
 Reviewed-by: Eric Blake <eblake@redhat.com>
 
