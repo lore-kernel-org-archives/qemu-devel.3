@@ -1,87 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE608606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1C9606A32C
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 14:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=lNtpzduO
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=YUWXr84P
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOFbr-0001xP-9q; Tue, 03 Nov 2026 09:35:35 -0500
+	id 1xOFbs-0001y7-3B; Tue, 03 Nov 2026 09:35:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xOFbk-0001vu-Iy
+ id 1xOFbk-0001vw-Js
  for qemu-devel@nongnu.org; Tue, 03 Nov 2026 09:35:30 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xOFbh-0005BY-09
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 09:35:27 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4a4d7ae1ae9so41962185e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 06:35:24 -0800 (PST)
+ id 1xOFbf-0005BH-RL
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 09:35:26 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4a59100fa83so38330565e9.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 06:35:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793716523; x=1794321323; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793716522; x=1794321322; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=sJZZx9O1ukYlt5ZhKz2tX29/squSYwod0or2GxasAu8=;
- b=lNtpzduOt3UGZEH02tQiemLWKQJ6yrY4Msz7ol2Krh5HHIeI3Ah/ipsk6DG9J2aZjU
- 3CygA4NTa2gY6G1iTBSVe8Vv/C7VDAea00rmuwOJ0Vwcyn4zlJ+Hc1KSCmc4tr9z21hG
- mxMptovNczbwtFbadGiUBlQXdAIyZrqWrNCv+9pvN/wzC2/b+d76coJJ+w5FLcqVRxGo
- dGHrPgiUJO4svr9OxxMcOdGEru0HRD3u03x9EZTptvjcmwzlcEPP95QJKRnf3PZ18zhW
- IowE+7KWzcr5ddoTkSTpPiVgF3ZzkvoptN73q3w+xw5pqs+JFkKRz6FPLfnqKw4k1SQ6
- 6pEQ==
+ bh=FgROo/vlM9c4RYnciV7KohHLhoWcV6ohztF8lPwXQck=;
+ b=YUWXr84PJ2jhAH785BPMy/mNi4RlmnAYt+pcc8yBZeEDrjDuV5i/yihXN/4supxiAJ
+ VXtQm6tJGkBEHzRP6jUKWtOJyDcDFGGBrFCzz2gi5qB5T1TZocXoGfTislog3gY/hvBN
+ lVceZNa6vBiqaL126IBvLxYLZUFYbQNCdDfbIy3IIqqCuG0aQ7YbHq/Bx4Liz4OOmfUT
+ kT0h7VvUs7IrUYhZlJzb0z7fHdLMihexgUMskws1PjaLAiGEi24k/SUULXTp4+TSYIXr
+ a3wEEJ+u4UGGfcYLN3VrL/RKcSNDpcgiXyS6YEV3WGvMOsrRXjSZR0SV2P/jekzitCOz
+ jLBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793716523; x=1794321323;
+ d=1e100.net; s=20260707; t=1793716522; x=1794321322;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=sJZZx9O1ukYlt5ZhKz2tX29/squSYwod0or2GxasAu8=;
- b=LSf3qbDLr7Py2O8fOp+6ILWtCkHHbeIj3cz+YI+BsFUBjNqBpyR0oeydZbvi5QIltM
- 2AtMBsa0b675DyYuBQu9agRGxTzdv/GNC4TtFyudM1671RfYrPXctpslY5ANJlUJIq3Z
- 8cHuBa7OGdbUBeVKU6CKbeCgiEDO7+d1xpht+59xjjvUKVstUaE/S9tBK8FpQZ68n4IT
- sMGU0gX5/YNhTX0gUA68kHXhFpMvJvbwF1d07xCTqe1hzl5RilwAEeEdn1hlWRwz1dJC
- O3C1wtGjE0GOBSGAeYM3CV+ldBwmb9wvvyogNYlh+9xwpsBKZFh4pZkZ54sQFjLUXFM9
- 1zjQ==
-X-Gm-Message-State: APuU4Z9MFalNcOmDOZ7CggoYs/i7/LC4RlKBbwirmf1RA5TBBBbsv9e3
- AKKIcSAsMzmlytyRzRrx75iEcSLK7VCVm4oeqQBbmrNizrUsd+JS/Yx6P8GRhmu/dUjj6x9/Lj5
- tnslCcBY=
-X-Gm-Gg: AYBFou2vEmbHPBEcKYO7Qoh+Yazg1S+mqLC+NksxFwh8C1s7FDOfa3Mv7bfvB9kWVQk
- nkc+tIBcBmmvzO7W+ziPQwLAe6qhTPnMCbmjKLg+dJQH+kyAR081/o2/D1vzIIbSuPPvWbWe8au
- eK5dassY6tD8rDWUMk3VPH4TGY/fFmta90sMNeOt1sHe+4eKPnHoiyVWGyXnpf13d1eE/jIkb7H
- wkTwvFiSJ5GtaZvKXZ3rVbE1aujjssEg+iksDTvG8r1wIGQhydPn40GmAhZCAKO/lvz68we3HpH
- V1xaIMqSKaKYHMXFWgsZN3BsRp3JA3hdY+GVzt7TNWdtOiRzsfNTl1qUvwf/HpAQbeCwRMfFU7s
- V234tyczVi5WMHz8Fzeje0UUlf8N4Uwj0Glc1IWLUoW+FY3g3Sdz52L1lwhddjpNDwrp3MFNcDp
- 7ypyBskwFAnKiXbKejbYd4PzOnFt0dYV/P8dSACNXVBcJgPswDEFf43X0+4HBSig8gHu/2n0DAf
- 1+YODD465iTnVDPdiEzBHD0Vzp/sK9O6riDhYt6MgksYl7cHw+E/yrPkDwxnd8Fsf8EXAY6Eujz
- TV0ZJ/6FHdCaBYfX4FGUyllljS7Tsj/cxVU5x7ElbA0G79WrCQjvxWLYZXsP/w4fzrOCTRQ/7Lv
- iZeRauBeBTgchMrxfazESQ9JIY/SJxaXOCK6h2VZgNGJ4m517KaF277Y=
-X-Received: by 2002:a05:600c:524c:b0:4a1:fcfa:2a07 with SMTP id
- 5b1f17b1804b1-4ac1960dd8dmr305416415e9.30.1793716523575; 
- Tue, 03 Nov 2026 06:35:23 -0800 (PST)
+ bh=FgROo/vlM9c4RYnciV7KohHLhoWcV6ohztF8lPwXQck=;
+ b=yV+rCeCV+gLoyX3p1XzKpkqMoccaoeSC69DFhoXJvqGZZd6uzgwTJoGAl/neBUbBST
+ RerveEBVTQiOIyFzHiKaASze7SRxGK+wGoRHfEVYax92lpj8CpJ9k+gyqjKPCPaZnCu1
+ wNvJirwHnePvVKEFC6t42fkkPfteil6m3xIoBz8tOZ33u0nirWrekz1X0p+Fu6kO76VQ
+ WtHMxAgWPE5yENwEd/QdYXHj0jdvp0hRyoNxUHplT40eHHmY16RmvsE4uKcNxWcVJQM4
+ Omw1ibZzR0S9wVPzp29Bcep4+DdDHlKymLjfE1SSxvoFOcPKbqcZGUrKU1lrkNF4jzC7
+ CIiQ==
+X-Gm-Message-State: APuU4Z/s282FONYKwNkomDaHV8apv7QUNCWWOYM49CJfpAj+FLb4qBwS
+ so42hAgwG8V71msa5wEMA2+FVEpFrhsoH950UkCzZE1Un3OY6Cq3cyHf+Z68Zjf75m24EJo01uR
+ uOZTBuEk=
+X-Gm-Gg: AYBFou38DHsTUyACG3ZPbXV/XkEhbK0QB9vOdKwWxUXc2CJ/TItjxjWlkROWFxHGzoo
+ 4z1vLQafgkKTFLERt3enmEarduO1nkoFsHyYkUftvdyJHR3qFxrNDcG+4NojPmip5F47sLiGB/6
+ 9ge6x/CDYxWwdLkg8Le6kXCl6jBzSY3QMZutyCjnsuX7WCxZI2Gye9mk0RoyYJFx11TYHcxUF0N
+ CLL+oJaT9gHjsQvX5IGKREVEdB6dHiGTbuKARYAaYh+JUFxwZQCXNWplY8q+93dXOruicVs1xcv
+ yAOIPswTchG5zmApRrdk+eVJuSprznRWUuC2pxzfJB+2MzzhdKD9sJhvpQHJ/AUA8l3zMdeeFui
+ fYR+sf7APfSL8q8z9WlRIUYxDEtTjQo5fV8bl4rIZANWoC8bqxYL/D581O8RVFr6bICZPFLwue9
+ kXVFBldYvy9Jmnd4i8fogpmGXLIDyN1o//ihUFouOCov3WxgB++xcNrsmwfLvCaSPc8FBPuOBm+
+ WOlot8Zg0kZRxVNRrZw0CrT09XJGr8SjmWyqBfFJCnUTOtWhQEU+jv4111tLMGVnlAVNC+O+wkD
+ OgzV2k8HEWTJO+iJMaGGKEyTlodqQpTpOYAn422Rfry0JkMt1UfzSIxVgz+YnW/XLe7sVcy/buY
+ q0Blbn1u5sLt+sNF4j+/gsn/vVQhH+ibeVQ==
+X-Received: by 2002:a05:600c:a4c:b0:4a2:967:dfb8 with SMTP id
+ 5b1f17b1804b1-4ac1765d7d7mr306178835e9.20.1793716522318; 
+ Tue, 03 Nov 2026 06:35:22 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b2aa953d35sm61100965e9.9.2026.11.03.06.35.22
+ 5b1f17b1804b1-4b2aa953d35sm61100965e9.9.2026.11.03.06.35.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Nov 2026 06:35:22 -0800 (PST)
+ Tue, 03 Nov 2026 06:35:21 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Fam Zheng <fam@euphon.net>
-Subject: [PATCH 4/5] block/vmdk: Reject a zero cluster_sectors parameter
-Date: Tue,  3 Nov 2026 14:35:15 +0000
-Message-ID: <20261103143516.2182626-5-peter.maydell@linaro.org>
+Subject: [PATCH 3/5] block/vmdk: Use larger types for byte counts in
+ vmdk_read_extent()
+Date: Tue,  3 Nov 2026 14:35:14 +0000
+Message-ID: <20261103143516.2182626-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261103143516.2182626-1-peter.maydell@linaro.org>
 References: <20261103143516.2182626-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,43 +109,42 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In vmdk_add_extent() we reject image files with an excessively large
-cluster_sectors parameter, but have no lower bound.  In particular,
-if the cluster_sectors is 0 then we will set l1_entry_sectors also to
-0, and later crash with a SIGFPE for division by zero.
+In vmdk_read_extent() we use 'int' for cluster_bytes and buf_bytes.
+However, cluster_bytes is extent->cluster_sectors * 512 and buf_bytes
+is cluster_bytes * 2.  The maximum value for extent->cluster_sectors
+(enforced in vmdk_add_extent()) is 0x20_0000, and so the worst case
+for buf_bytes is 0x8000_0000, which overflows a signed int.
 
-Reject a zero cluster_sectors value, unless this is a flat extent (in
-which case cluster_sectors isn't relevant and the callsite always
-passes us zero).
+Make the variable types here int64_t, which matches the type used by
+bdrv_co_pread()'s bytes argument and by extent->cluster_sectors.
 
-The worst case here is a self-denial-of-service with a QEMU crash,
-so this is a hardening bug.
+The worst case thing that a malicious VMDK image could do is cause us
+to try to g_malloc() 0xffffffff80000000, which will cause QEMU to
+abort(), so this is a self-denial-of-service only, and so a hardening
+bug rather than a security issue.
 
 Cc: qemu-stable@nongnu.org
-Fixes: b3976d3c8b89 ("VMDK: introduce VmdkExtent")
-Reported-by: Tristan <https://gitlab.com/TristanInSec>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4017
+Fixes: 2b2c8c5dec6ba ("VMDK: read/write compressed extent")
+Reported-by: boy juju <agx1657748706@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3843
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- block/vmdk.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ block/vmdk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/vmdk.c b/block/vmdk.c
-index bd18d32085f..d7e23ae8098 100644
+index 6e4e0423dc9..bd18d32085f 100644
 --- a/block/vmdk.c
 +++ b/block/vmdk.c
-@@ -552,6 +552,11 @@ static int vmdk_add_extent(BlockDriverState *bs,
-     BDRVVmdkState *s = bs->opaque;
-     int64_t nb_sectors;
- 
-+    if (!flat && cluster_sectors == 0) {
-+        error_setg(errp, "Invalid zero granularity, image may be corrupt");
-+        return -EINVAL;
-+    }
-+
-     if (cluster_sectors > 0x200000) {
-         /* 0x200000 * 512Bytes = 1GB for one cluster is unrealistic */
-         error_setg(errp, "Invalid granularity, image may be corrupt");
+@@ -1940,7 +1940,7 @@ vmdk_read_extent(VmdkExtent *extent, int64_t cluster_offset,
+                  int64_t offset_in_cluster, QEMUIOVector *qiov, int bytes)
+ {
+     int ret;
+-    int cluster_bytes, buf_bytes;
++    int64_t cluster_bytes, buf_bytes;
+     uint8_t *cluster_buf, *compressed_data;
+     uint8_t *uncomp_buf;
+     uint32_t data_len;
 -- 
 2.43.0
 
