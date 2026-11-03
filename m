@@ -1,49 +1,49 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620F7606A329
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 00:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401F7606A324
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 00:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cSdcJx1C
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UB10tJ0c
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO1zo-0006YB-Nf; Mon, 02 Nov 2026 19:03:24 -0500
+	id 1xO22M-0007LH-Mm; Mon, 02 Nov 2026 19:06:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1xO1zm-0006XF-7K; Mon, 02 Nov 2026 19:03:22 -0500
+ id 1xO22J-0007KC-Rv; Mon, 02 Nov 2026 19:05:59 -0500
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1xO1zk-0003tQ-Cg; Mon, 02 Nov 2026 19:03:21 -0500
+ id 1xO22I-0004Em-8X; Mon, 02 Nov 2026 19:05:59 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 9B32A43740;
- Tue,  3 Nov 2026 00:03:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DB11F0093A;
- Tue,  3 Nov 2026 00:03:18 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 51CF8415DD;
+ Tue,  3 Nov 2026 00:05:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C5D1F000C1;
+ Tue,  3 Nov 2026 00:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793664198;
- bh=j/39leR5+InevILLUMiPfZbnWUUtFFojtqKlc5h+44o=;
+ s=k20260515; t=1793664356;
+ bh=8sjoZ5vfNPomUpJFjkSYx+iGYzjlVrZr6Y++397FUcs=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=cSdcJx1Cd4eWqkrHGNlNeQ9SJxql/m+Y4ZwC8AhcUHk0x4gKiTpnT7CAY8a/f07yJ
- 4jEkZQAatCKtwKbKopI2YKrbjpv5oJ0EljHSYQkbVtOWbyrW4cJB2kS6NhdKLEdYts
- 3zj/BQRzouCeuvL7hpjAxE108b/kprpHTd+z76Vij11PgUYMKyE7K6bYTXhEhNPC++
- HFT/F4LbKJHGLKNvI6sMGBFd6JR7hx6hIM6xq/vhSLxTEhdSru5SdePHb9VI8SOJqF
- 7Um9ztaDYe44ZPm8xoxAMMOazVmlY1fCwjI5xj/u3cYTOYe06yc5+hzhuXClTtZWbE
- NI9ARQPj14vSQ==
-Date: Tue, 3 Nov 2026 00:03:16 +0000
+ b=UB10tJ0cE1Q4BWnLy0UqiAMYEvInDmteS8/Gn1Zdtck+QXH5QNhf6fE6gm6D8A2ms
+ wpLdxwdgMdgNQypdYWf90bRM42JVDpVB/u9CiLS8E333cCE2XFOuvhXT6eDyuW/OyE
+ zkyWmiSSkMFS31RMykwTYVg7DU3NpOS0NEaXf4ecjDH+J7Vw+OGwfO3Qp0cbICfIpV
+ 189ICWniJrFaO6D373CZpUTFe0p9mVf/vuYe5eKkn/xADmFPzUUIje2bZIWd1ZtAVH
+ GFTctemZXQjyfVjfesJIuE4mfWGcJA9yvbLctIR4d4N5mQau5crmxQk4ISu2QBxnXH
+ vh/hZVBsAEwwA==
+Date: Tue, 3 Nov 2026 00:05:50 +0000
 From: Jonathan Cameron <jic23@kernel.org>
 To: Jinjie Ruan <2118537295@qq.com>
 Cc: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, ruanjinjie@huawei.com
-Subject: Re: [PATCH 01/37] target/arm: Add support for MPAM CPU registers
-Message-ID: <20261103000316.150d658d@jic23-hlaptop>
-In-Reply-To: <tencent_0D8D61C20611EC56598A6F86E7B869052E05@qq.com>
+Subject: Re: [PATCH 03/37] target/arm: Add MPAMSM_EL1 register
+Message-ID: <20261103000550.1c2ae1f0@jic23-hlaptop>
+In-Reply-To: <tencent_83B7D852163320C7882BE1690E1334883308@qq.com>
 References: <20261016094733.1898485-1-2118537295@qq.com>
- <tencent_0D8D61C20611EC56598A6F86E7B869052E05@qq.com>
+ <tencent_83B7D852163320C7882BE1690E1334883308@qq.com>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -77,67 +77,58 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 16 Oct 2026 17:46:55 +0800
+On Fri, 16 Oct 2026 17:46:57 +0800
 Jinjie Ruan <2118537295@qq.com> wrote:
 
-> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> From: Jinjie Ruan <ruanjinjie@huawei.com>
 > 
-> Add the MPAM system registers for TCG: MPAMIDR_EL1 (RO) reporting 64
-> PARTIDs and 4 PMGs, and MPAM0_EL1/MPAM1_EL1 (RW, of which only
-> MPAM1_EL1.MPAMEN is architecturally reset). Advertise FEAT_MPAM via
-> ID_AA64PFR0.MPAM for TCG CPUs.
+> FEAT_MPAM_SMS's MPAMSM_EL1 (S3_0_C10_C5_3) was missing, so a v7.x
+> guest with SME enabled took an UNDEFINED instruction in
+> cpu_enable_mpam(), which writes the register unconditionally when
+> ARM64_SME is present. Register it backed by CPU state like the other
+> MPAM registers, letting linux v7.x boot with -cpu max unmodified.
 > 
-> It is common to support MPAM on CPU cores, but not in the rest of the
-> system, so there is little disadvantage in always enabling these.
-> 
-> Based on an RFC series by Jonathan Cameron, adapted to the current
-> idregs[] storage and access_tid3() naming.
-> 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-Definitely wouldn't trust this guy :)  He took a few naughty short cuts.
-
 > Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-
+> ---
+>  target/arm/cpu.h    | 1 +
+>  target/arm/helper.c | 6 ++++++
+>  2 files changed, 7 insertions(+)
+> 
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 218923a..c60ec62 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -761,6 +761,7 @@ typedef struct CPUArchState {
+>      uint64_t mpam1_el1;
+>      uint64_t mpam2_el2;
+>      uint64_t mpamhcr_el2;
+> +    uint64_t mpamsm_el1;
+>      /* Optional fault info across tlb lookup. */
+>      ARMMMUFaultInfo *tlb_fi;
+>  
 > diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index ff0b766..896ac0e 100644
+> index d5d96d5..a9b1521 100644
 > --- a/target/arm/helper.c
 > +++ b/target/arm/helper.c
-> @@ -6907,6 +6907,23 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+> @@ -6912,6 +6912,12 @@ void register_cp_regs_for_features(ARMCPU *cpu)
 >                .access = PL1_R, .type = ARM_CP_CONST,
 >                .accessfn = access_tid3,
->                .resetvalue = cpu->isar.mvfr0 },
-> +            { .name = "MPAMIDR_EL1", .state = ARM_CP_STATE_AA64,
-> +              .opc0 = 3, .opc1 = 0, .crn = 0xa, .crm = 4, .opc2 = 4,
-> +              .access = PL1_R, .type = ARM_CP_CONST,
-> +              .accessfn = access_tid3,
-> +              .resetvalue = cpu->isar.mpamidr_el1 },
-> +            { .name = "MPAM0_EL1", .state = ARM_CP_STATE_AA64,
-> +              .opc0 = 3, .opc1 = 0, .crn = 0xa, .crm = 5, .opc2 = 1,
-> +              .access = PL1_RW, .type = ARM_CP_ALIAS,
-
-Similar to patch 2 (I reviewed them backwards) not sure why 
-I ever set this to ARM_CP_ALIAS.
-
-> +              .accessfn = access_tid3,
-
-Never trust code I bodged years ago :( Wrong trap. Now you
-have the appropriate EL2 registers in next patch should use a trap
-on the relevant bits being set there.  Will want to swap the patches
-around for that to work I think.  Also possibly needs the EL3 trap
-register defined.
-
-
-> +              .fieldoffset = offsetof(CPUARMState, mpam0_el1),
-> +            },
-> +            { .name = "MPAM1_EL1", .state = ARM_CP_STATE_AA64,
-> +              .opc0 = 3, .opc1 = 0, .crn = 0xa, .crm = 5, .opc2 = 0,
+>                .resetvalue = cpu->isar.mpamidr_el1 },
+> +            { .name = "MPAMSM_EL1", .state = ARM_CP_STATE_AA64,
+> +              .opc0 = 3, .opc1 = 0, .crn = 0xa, .crm = 5, .opc2 = 3,
 > +              .access = PL1_RW, .type = ARM_CP_ALIAS,
 > +              .accessfn = access_tid3,
-> +              .fieldoffset = offsetof(CPUARMState, mpam1_el1),
+Same as previous.  Wrong trap. Also depends on SME being present, otherwise
+this register needs hiding.  
+
+FWIW claude at least is really good at giving at poking holes in these entries.
+Other LLMs might be too.  Bunch of RES0 in this one as well.
+
+
+> +              .fieldoffset = offsetof(CPUARMState, mpamsm_el1),
 > +            },
->              { .name = "MVFR1_EL1", .state = ARM_CP_STATE_AA64,
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 3, .opc2 = 1,
->                .access = PL1_R, .type = ARM_CP_CONST,
+>              { .name = "MPAM0_EL1", .state = ARM_CP_STATE_AA64,
+>                .opc0 = 3, .opc1 = 0, .crn = 0xa, .crm = 5, .opc2 = 1,
+>                .access = PL1_RW, .type = ARM_CP_ALIAS,
 
 
