@@ -1,76 +1,68 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5CD606A326
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 03:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC37606A326
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 03:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VbcGNzuZ
+	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=o3R4uS8k
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO5cN-0006OI-GK; Mon, 02 Nov 2026 22:55:27 -0500
+	id 1xO5fJ-0004Y0-AO; Mon, 02 Nov 2026 22:58:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5cM-0006Nk-0t
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:55:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1xO5fB-0004WJ-RS; Mon, 02 Nov 2026 22:58:22 -0500
+Received: from canpmsgout05.his.huawei.com ([113.46.200.220])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5cK-0000aO-96
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:55:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793678123;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kBSdWXyr2z5Qa5bk8zHw/mmsn+OzV2/YeeQlS+BdwYU=;
- b=VbcGNzuZz3v/w/kQ9wIzlFAy1Soo+8Wxds4tiyNI48DLo1pwPMiD8gEo0tM27KVKaEbsyz
- A8MACrh49U6BrYNpid9UaRKj4UGwwSPJQfCzsO2Y24TDbHOA0PZpCmky4xkOt5Lz6IYEXO
- T9isybzqA2FnsK5g137rvuKEVP+kBJQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-cNg6cYD-PmyaQhZuxSADcQ-1; Mon,
- 02 Nov 2026 22:55:20 -0500
-X-MC-Unique: cNg6cYD-PmyaQhZuxSADcQ-1
-X-Mimecast-MFC-AGG-ID: cNg6cYD-PmyaQhZuxSADcQ_1793678119
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C9D7E1800758; Tue,  3 Nov 2026 03:55:18 +0000 (UTC)
-Received: from eblake.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 96A287E2; Tue,  3 Nov 2026 03:55:17 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Denis V. Lunev" <den@openvz.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PULL 04/16] tests/qemu-iotests/qom-set-drive: replace with a
- differently sized node
-Date: Mon,  2 Nov 2026 21:54:15 -0600
-Message-ID: <20261103035506.2688772-22-eblake@redhat.com>
-In-Reply-To: <20261103035506.2688772-18-eblake@redhat.com>
-References: <20261103035506.2688772-18-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1xO5f7-0000x4-Rd; Mon, 02 Nov 2026 22:58:21 -0500
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+ c=relaxed/relaxed; q=dns/txt; h=From;
+ bh=VMInWRt+tgIZaQ5YTAKFTdHM3rWp8qRAuEOadSnD1TI=;
+ b=o3R4uS8k6fzJyrml1fmHPDiRS6pxEELe/+d2RcYav43hC8d1Ye/u8hOhuuocxG8Hkl8EqGfhD
+ YCYIM/a0kBN00yTM7mZHv6tRiLaTSe/O9k/qfZj8ulPNq6ioCvv05Wiq9goqdXuwLtzHJgzG4Mx
+ TFa+6Hso++WyOhVbp2t0yW0=
+Received: from mail.maildlp.com (unknown [172.19.163.0])
+ by canpmsgout05.his.huawei.com (SkyGuard) with ESMTPS id 4jJZYG0l7Mz12LDF;
+ Tue,  3 Nov 2026 11:58:10 +0800 (CST)
+Received: from kwepemk200008.china.huawei.com (unknown [7.202.194.74])
+ by mail.maildlp.com (Postfix) with ESMTPS id EF78240561;
+ Tue,  3 Nov 2026 11:58:09 +0800 (CST)
+Received: from [10.67.110.68] (10.67.110.68) by kwepemk200008.china.huawei.com
+ (7.202.194.74) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 3 Nov
+ 2026 11:58:09 +0800
+Message-ID: <922f814f-d49d-43a1-b9ea-7694575b8fa5@huawei.com>
+Date: Tue, 3 Nov 2026 11:58:08 +0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/37] hw/arm/mpam: Implement CPOR cache portion
+ partitioning
+To: Jonathan Cameron <jic23@kernel.org>, Jinjie Ruan <2118537295@qq.com>
+CC: <anisinha@redhat.com>, <armbru@redhat.com>, <eblake@redhat.com>,
+ <imammedo@redhat.com>, <michael.roth@amd.com>, <mst@redhat.com>,
+ <pbonzini@redhat.com>, <peter.maydell@linaro.org>, <qemu-devel@nongnu.org>,
+ <qemu-arm@nongnu.org>
+References: <20261016094733.1898485-1-2118537295@qq.com>
+ <tencent_6C7ED336265811796EE3A442668C8E275709@qq.com>
+ <20261103012649.3c68031d@jic23-hlaptop>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+In-Reply-To: <20261103012649.3c68031d@jic23-hlaptop>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
+ kwepemk200008.china.huawei.com (7.202.194.74)
+Received-SPF: pass client-ip=113.46.200.220;
+ envelope-from=ruanjinjie@huawei.com; helo=canpmsgout05.his.huawei.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,81 +74,124 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: "Denis V. Lunev" <den@openvz.org>
 
-All images in this test have the same size, so the test never reaches
-the size change path of bdrv_replace_child_bs(). Add a node of a
-different size and point a device at it.
 
-The notification itself is not visible over QMP, so this only covers the
-block layer side. What the device does with it is checked by
-tests/qtest/virtio-scsi-test.c.
+在 2026/11/3 9:26, Jonathan Cameron 写道:
+> On Fri, 16 Oct 2026 17:47:05 +0800
+> Jinjie Ruan <2118537295@qq.com> wrote:
+> 
+>> From: Jinjie Ruan <ruanjinjie@huawei.com>
+>>
+>> Add the cache-portion controls: MPAMF_CPOR_IDR advertises the
+>> CPBM bitmap width (MPAM_CACHE_PART portions) and the cache
+>> subtype sets HAS_CPOR_PART, and the CPBM array registers become
+>> readable and writable per selected internal PARTID.  Reads and
+>> writes of CPOR_IDR/CPBM on an MSC without CPOR support are
+>> logged and ignored.
+>>
+>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> Comment in here is fix the fixme ;)
+> 
+> Otherwise looks fine to me and I think it is a wise
+> decision to always allocate backing for the max sized bitmap
+> rather than trying to do it dependent on what the width is
+> for a particular instance.
+> 
+>> ---
+>>  hw/arm/mpam.c | 41 +++++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 41 insertions(+)
+>>
+>> diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
+>> index cce9355..2b1401e 100644
+>> --- a/hw/arm/mpam.c
+>> +++ b/hw/arm/mpam.c
+>> @@ -356,6 +356,13 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+>>              return 0;
+>>          }
+>>          return mpamf->impl_idr;
+>> +    case A_MPAMF_CPOR_IDR:
+>> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CPOR_PART)) {
+>> +            qemu_log_mask(LOG_UNIMP,
+>> +                "MPAM: Unexpected read of CPOR_IDR with no CPOR support\n");
+>> +            return 0;
+>> +        }
+>> +        return mpamf->cpor_idr;
+>>      case A_MPAMF_PARTID_NRW_IDR: {
+>>          return mpamf->partid_nrw_idr;
+>>      }
+>> @@ -367,6 +374,19 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+>>          return mpamf->mbwumon_idr;
+>>      case A_MPAMF_CFG_PART_SEL:
+>>          return mpamf->cfg_part_sel;
+>> +    case A_MPAMF_MPAMCFG_CPBM0...
+>> +        (A_MPAMF_MPAMCFG_CPBM0 + ((MPAM_CACHE_PART + 31) / 32 - 1) * 4):
+>> +    {
+>> +        uint32_t array_offset;
+>> +
+>> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CPOR_PART)) {
+>> +            qemu_log_mask(LOG_UNIMP,
+>> +                "MPAM: Unexpected read of CPBM with no CPOR support\n");
+>> +            return 0;
+> 
+> Sanity check for whether the width is large enough would just be informational
+> here but it would I think be nice to have.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Message-ID: <20260812121500.1034178-5-den@openvz.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Eric Blake <eblake@redhat.com>
----
- tests/qemu-iotests/tests/qom-set-drive     | 14 +++++++++++---
- tests/qemu-iotests/tests/qom-set-drive.out |  2 ++
- 2 files changed, 13 insertions(+), 3 deletions(-)
+Will add a Sanity check for the width.
 
-diff --git a/tests/qemu-iotests/tests/qom-set-drive b/tests/qemu-iotests/tests/qom-set-drive
-index ec8ddac4fdd..52d7eb96da8 100755
---- a/tests/qemu-iotests/tests/qom-set-drive
-+++ b/tests/qemu-iotests/tests/qom-set-drive
-@@ -24,12 +24,15 @@ import iotests
- from iotests import imgfmt, log, qemu_img_create, QMPTestCase
+> 
+>> +        }
+>> +        array_offset = (offset - A_MPAMF_MPAMCFG_CPBM0) / sizeof(uint32_t);
+>> +        return mpamf->per_nrw_id[nrw_part_sel].cfg_cpbm[array_offset];
+>> +    }
+>>      default:
+>>          qemu_log_mask(LOG_UNIMP,
+>>                        "MPAM: Unexpected read of %lx\n", offset);
+>> @@ -410,6 +430,21 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+>>          mpamf = &s->mpamf[s->ris];
+>>          mpamf->cfg_part_sel = value;
+>>          return;
+>> +    case A_MPAMF_MPAMCFG_CPBM0...
+>> +        (A_MPAMF_MPAMCFG_CPBM0 + ((MPAM_CACHE_PART + 31) / 32 - 1) * 4):
+>> +    {
+>> +        uint32_t array_offset;
+>> +
+>> +        /* TODO: Figure out write mask to check this stays in write bits */
+> 
+> Ah. Indeed, this is the thing the LLM was complaining about earlier. The
+> width depends on how many partitions there are.
+> Definitely need that enforced (and a log on going over it). 
+> 
+> Roughly speaking n such that (from the spec)
+> When ((n * 32) + x) >= UInt(MPAMF_CPOR_IDR().CPBM_WD)
+> is bad so either register out of range where n is the
+> register offset and x is the bit in it.  So shouldn't be too tricky to
+> fix this.
 
- image_size = 1 * 1024 * 1024
--images = [os.path.join(iotests.test_dir, f'{i}.img') for i in range(0, 4)]
-+images = [os.path.join(iotests.test_dir, f'{i}.img') for i in range(0, 5)]
-+
-+# node4 is deliberately larger, to cover a replacement which changes the size
-+image_sizes = [image_size] * 4 + [2 * image_size]
+Yes, the spec requires this, we should fix it.
 
- class TestQOMSetDrive(QMPTestCase):
-     def setUp(self) -> None:
--        for image in images:
--            qemu_img_create('-f', imgfmt, image, str(image_size))
-+        for image, size in zip(images, image_sizes):
-+            qemu_img_create('-f', imgfmt, image, str(size))
+> 
+> 
+>> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CPOR_PART)) {
+>> +            qemu_log_mask(LOG_UNIMP,
+>> +                          "MPAM: Unexpected write to CPMB when !HAS_CPORT_PART\n");
+>> +            return;
+>> +        }
+>> +        array_offset = (offset - A_MPAMF_MPAMCFG_CPBM0) / sizeof(uint32_t);
+>> +        mpamf->per_nrw_id[nrw_part_sel].cfg_cpbm[array_offset] = value;
+>> +        return;
+>> +    }
+> 
 
-         self.vm = iotests.VM()
-         for i, image in enumerate(images):
-@@ -68,6 +71,11 @@ class TestQOMSetDrive(QMPTestCase):
-         log(self.vm.qmp('qom-get', path='/machine/peripheral/no-iot',
-                         property='drive'))
-
-+        log(self.vm.qmp('qom-set', path='/machine/peripheral/no-iot',
-+                        property='drive', value='node4'))
-+        log(self.vm.qmp('qom-get', path='/machine/peripheral/no-iot',
-+                        property='drive'))
-+
- if __name__ == '__main__':
-     iotests.activate_logging()
-     # LUKS would require special key-secret handling in add_blockdevs()
-diff --git a/tests/qemu-iotests/tests/qom-set-drive.out b/tests/qemu-iotests/tests/qom-set-drive.out
-index 7fc243dca6c..6f6e5e2b31c 100644
---- a/tests/qemu-iotests/tests/qom-set-drive.out
-+++ b/tests/qemu-iotests/tests/qom-set-drive.out
-@@ -4,6 +4,8 @@
- {"return": "node1"}
- {"return": {}}
- {"return": "node3"}
-+{"return": {}}
-+{"return": "node4"}
- .
- ----------------------------------------------------------------------
- Ran 1 tests
 -- 
-2.56.0
+Best regards,
+Jinjie
 
 
