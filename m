@@ -1,73 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B0E606A33D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 07:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9648606A329
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 07:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=theorem-dev.20260707.gappssmtp.com header.i=@theorem-dev.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=ikNgehVX
+	dkim=pass (2048-bit key, unprotected) header.d=theorem-dev.20260707.gappssmtp.com header.i=@theorem-dev.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=OtwnZFqd
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO9AD-000835-UB; Tue, 03 Nov 2026 02:42:37 -0500
+	id 1xO9AJ-00084N-5v; Tue, 03 Nov 2026 02:42:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tewaro@theorem.dev>)
- id 1xO9A9-00081v-MR
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 02:42:33 -0500
-Received: from mail-dy2-x0a.google.com ([2607:f8b0:4864:36::a])
+ id 1xO9AH-00083V-4l
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 02:42:41 -0500
+Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tewaro@theorem.dev>)
- id 1xO9A6-0007C6-UU
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 02:42:33 -0500
-Received: by mail-dy2-x0a.google.com with SMTP id
- 5a478bee46e88-35eaf84cc66so3592562eec.0
- for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 23:42:30 -0800 (PST)
+ id 1xO9AF-0007Cr-B8
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 02:42:40 -0500
+Received: by mail-dy1-x1333.google.com with SMTP id
+ 5a478bee46e88-3514b90bb89so8011334eec.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 23:42:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=theorem-dev.20260707.gappssmtp.com; s=20260707; t=1793691749; x=1794296549;
+ d=theorem-dev.20260707.gappssmtp.com; s=20260707; t=1793691757; x=1794296557;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=hBR3Q8/PVmi6xDuhh2qQoulPZ5gx8KQVVwhpxkXgPVg=;
- b=ikNgehVXpvR1zBSdJobEF9+gAGYL6PIMXy2ZxugP4Dniaxe3IM/lor46sbYWVylDQV
- 5YDMDEbzyLVlxrKQ9HeYVEJGIvrl3V0nzbPprQy//5TQOmiLeFtlFT7XLOPS3Jys9bWv
- /yANZY8/q1RPkIDGSHaoBUE563faKU0TuFljVEjnKAqoLO46DV4bO2BKwUECbWG+G7uL
- XsXXD2SziGsSOTvIoS+stJOYPqdC29czi6vJaocC2DdRcDyGJPGXI11Ibxgub7aJaBtO
- 9N5nmCpknoMf5F/OTo/2wy6QKSN4KA8pIGR6TuG0f+lkKqicrrpF05fmPKPGjm93rbKa
- v9NA==
+ bh=DGbocG2kunxbYH9KyCsY8Tf5Tker7hhep++Euorkfbw=;
+ b=OtwnZFqdqVnFIz6fhStFx78oDnH9HxZCud+gmu3dqR+dG/HEdgOj8bpZNzZggYpU+9
+ 0phSc8NE0KGPKAZaBA26PE816vcPmkXo8iS22Olm2upeW9WnZAgUiGuvlXnf8HYW0nnf
+ aT8hBcM0jHBy5z6N8VHgg6Eh8gMculSIsFCrWgCZxb/6kqqYgb/qvb1+sW0YyrqEx94y
+ Jk72yVIt3QmNaw7xKtP/gr0fhbmeoBespCeGmRpezDa1XpYsElhHQZyfu5f7P1yW+KPW
+ WQASaj7ioE7uRS4Noq7BFrmtyHM1MtEvAgyK9qGaoNXj6m1UD58M+2cjAnsR/6Hg8z23
+ 9ttA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793691749; x=1794296549;
+ d=1e100.net; s=20260707; t=1793691757; x=1794296557;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=hBR3Q8/PVmi6xDuhh2qQoulPZ5gx8KQVVwhpxkXgPVg=;
- b=ywJTxesM+Gdtm7W3JDvenv1cUoS0IXXAhGOOCepEwGx/2x7GcbKVIuOV9R8gdc+jDv
- egtgISgL6TL0Rcqn999faOzoWjB9pCJC7Lso0pp71z5hk2kBzPmgXBoOb3ou/hPu0ATD
- P/yxp2LFeLDXb96d9OFqwXpjJjdZrH2FLgJYQYYAPHA3GataHg3emlNlHJdP8hddn6iF
- Cr8yA5/PVnkKpAZa6dvyqJ4fQbWPcmtkhUBoI4QAgMkDNIfP/ycy0YiUEWHlq4N3wZ76
- 4+cvYSPzqejjnC5dUXbXUaTgmcVnOTEl6iPdT6mtGWDoU3Vmij91Upq1ZKmulnK+0j+P
- u0Yw==
-X-Gm-Message-State: APuU4Z/w2pM6uv8nhgjrY+RXwGFTmdEPM4SARKscBtuShWyCNwiN4ksf
- 0RLvTHslYBg09R3aOwS0ueAxhLqh7Dqg/own5UavD7FjURPyHQBWwVone/cQxy0kezE+0BRg6yD
- ZUDWjZ+8E2RCE
-X-Gm-Gg: AYBFou0WtmVdr1fqKuw21e33+fRPOX51+HR3Ol7vi7mW1qTfxlaqEayNXwcKylovero
- z8LUBqSV1F7mii2bSrHFsR+JkdR5qyEWetQporuLGJcINnvrAKz0167iJDuMdlLUbqrrXlSu/Vn
- ZESyGqN9xco7Wp1VlKfxPSVgjuqz4WYr9jVdWDLWumseqfwpQeApBLA954bd42DnG0VBgCQd6lK
- HSigCpX1SJJrKjIZ3IM3p4JL6XA3GcU6dQ+OrI1UIyBi5u7jInoSzvviDetquVqY3eE8ajjH/M9
- ImwNNojJHhRr/4vsInJq6UwnjabhhyP3q3KRZ9Oo8V0f/Z1rTTazJN2Xpe57b0jpn26S1AgjvBL
- AbG1n92j5R7m2KSXn1todFvRGneHl/MLV8nLOqihHaok5ZIDJlwok0/I9y6qAO1+c3ofciuxTfi
- fOpoe/scqP1bd5L2UmwYR0404B0RwXZMhATgFrO3lhIMSicnayFtB9CsCx/ENnMHOu6SXsQd0k+
- PNLcAZqXFo/OCnjUHfVyqZkwFTuom3gjBhqGoyfu4KOYvP4zcQduWi1nRE5i4lCYMRIFPf7grNu
- fhAQepFHu5uSAHtFEuexZsmrFusAPELeN0z2UXlxSqQgdAHJVQyApjFouNRDwfJuB/Ie+PI=
-X-Received: by 2002:a05:693c:895c:10b0:369:f05d:6c5c with SMTP id
- 5a478bee46e88-36a4240f66emr20018179eec.28.1793691748988; 
- Mon, 02 Nov 2026 23:42:28 -0800 (PST)
+ bh=DGbocG2kunxbYH9KyCsY8Tf5Tker7hhep++Euorkfbw=;
+ b=Esl5jlJ3zZIDJEBC87VFrO3dpbKaVJCJkzj4IbKerdTlj06cfZa40MniAn4d4ASHiS
+ BE4aim4x7MeeNnVyB8XxZO+R1OPN4+9MNv8VL1PR2iaBS3OaqgyhWACcfaaIzQWXscu6
+ aq3BxWWVDF4qXxTct9CuQqGnLChqNUXyJenv8MDR3xUYKkRNtwMK5GIAs8OPgunKVmck
+ P00C9HX3hPLUR7nf+M6KSd+EG2FWnjn2d++Gf95dexmHeQ19NqckMpb4m+bVf45QiWEO
+ 1INK+KcaZCv69VkJLqirNzj44rEIXpstlR/3XcX0FvwQl+0vUgmSGJQ3zrRD416Z6kM9
+ jZFA==
+X-Gm-Message-State: APuU4Z97LdxZ93VUAkmjwqav8bWXZ4zdCc0hT96/Kmoka6OnwbxHvoWW
+ 1m8lFlXmdJA3sUnHfUEl4BuAehvP0WkyZWY5ezu9H+RdJZuGuCysS87dsxWBpIDFgXNh7Hz7G+D
+ e0LQVomulUA==
+X-Gm-Gg: AYBFou1X47k9vzeFz6iMwC0wlsOh99SFV3n4n8zw+3ifnjc5e0ee6GEnXY0F6Ub09/V
+ rxp0X22tZ5UpjC+WVmyS+dUvkCTB6xBICT0ZbmtWk5mxuIHM6fB83FeYgAPmXLh5sA2N81vOqqv
+ bEG6VdCSNeG+qbhV57mZdNmi2HvDYZGXULhHXw4vMLUFpTgrtDaLzsIcr9rUanGg7/OHmSJ9uVG
+ DRJ+Dl/VVu3+5vOTmhmgdaS/s+vHPbY/MZdQlBppmlrTRA95UrWaa34Gg3dctkbZnarxKgD12Az
+ JTQcTnewFCANN0Bl/VJ1LEK7zuR4Abep52Dzy8ShvFuFIevYYkq3zUIjOhYS2YNa1vbb6H7OHzI
+ DAQVHub2L0nPzyNvBjCW3HT5JafXdokUfy1Valli4MS9EIi0V3YpDA1CFj5Oqul/b1BFlvi7B97
+ VkJjp0Cryd9/27wiu/ihqNECOqcZklp61ookiJral6dtuNyi265s9IracLry+KyuzP8pY+T9G9/
+ 8L/PHRvk044a4J3znJr4lQufrpmhXKhrzaqT5V9qSZx0EFyR9b3IIcKDpdh6Q+xobcqfj1Qa0dr
+ 14TAEPF7rm6EMvgem33sf1f9A6GPT6w61e3NP5bs9DWa7I3aEKdUWa5VuIIKem8e/TM/iXgu
+X-Received: by 2002:a05:7301:714:b0:35d:7565:8577 with SMTP id
+ 5a478bee46e88-36a6524b024mr8543370eec.15.1793691756453; 
+ Mon, 02 Nov 2026 23:42:36 -0800 (PST)
 Received: from tewaros-MacBook-Pro.local
  ([2601:647:6300:1230:9da3:3d82:7292:c937])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a42a5fb97sm48742599eec.23.2026.11.02.23.42.27
+ 5a478bee46e88-36a428af1easm38953001eec.5.2026.11.02.23.42.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Nov 2026 23:42:28 -0800 (PST)
+ Mon, 02 Nov 2026 23:42:35 -0800 (PST)
 From: tewaro <tewaro@theorem.dev>
 To: qemu-devel@nongnu.org
 Cc: disclosures@theorem.dev, tewaro <tewaro@tewaro.org>,
@@ -78,23 +78,23 @@ Cc: disclosures@theorem.dev, tewaro <tewaro@tewaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>,
  qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [PATCH 1/2] target/riscv: write mstatus.GVA on every trap into M-mode
-Date: Mon,  2 Nov 2026 23:42:13 -0800
-Message-ID: <9c108816bf40bd4023f23ecc32527a7fc92c1747.1793677944.git.tewaro@theorem.dev>
+Subject: [PATCH 2/2] tests/tcg/riscv64: test mstatus.GVA on traps into M-mode
+Date: Mon,  2 Nov 2026 23:42:14 -0800
+Message-ID: <ca62cad0fd9d3f57f20624e11da8e10cf84028b2.1793677944.git.tewaro@theorem.dev>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <cover.1793677945.git.tewaro@theorem.dev>
 References: <cover.1793677945.git.tewaro@theorem.dev>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::a;
- envelope-from=tewaro@theorem.dev; helo=mail-dy2-x0a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
+ envelope-from=tewaro@theorem.dev; helo=mail-dy1-x1333.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,51 +106,156 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On every trap into M-mode, mstatus.GVA should be set to 1 if mtval
-holds a guest virtual address and to 0 otherwise [1].
-riscv_cpu_do_interrupt() only ever sets it, and only when V = 1 and
-tval is nonzero. That has two effects:
+Every trap into M-mode writes mstatus.GVA. If mtval holds a guest virtual
+address then mstatus.GVA should be 1 otherwise it should be 0.
 
-- GVA is never cleared. After one guest-page fault, every later trap
-  into M-mode, including an ecall, reports GVA = 1.
-- GVA stays 0 when HLV, HLVX or HSV faults, because those run with
-  V = 0. The spec names this case ("SPV=0 but GVA=1").
+test-mstatus-gva checks 4 cases:
 
-The HS-mode path already computes write_gva for hstatus.GVA. Use it
-for mstatus.GVA too.
+  case     access  from
+  -------  ------  ----
+  load     ld      VS
+  load-vu  ld      VU
+  hlv      hlv.d   HS
+  hsv      hsv.d   HS
 
-[1] Privileged ISA v1.12, 8.2.1
-https://github.com/riscv/riscv-isa-manual/releases/tag/Priv-v1.12
+Each case makes a guest-page fault and checks that GVA is 1. It then
+runs an ecall in M-mode, whose trap has no guest address, and checks
+that GVA is 0. Without the previous patch QEMU fails all 4:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4594
+- load and load-vu: GVA stays 1 after the ecall
+- hlv and hsv: GVA is 0 after the fault
+
+Each case is its own test, built with the -D flags listed in
+meson.build, and exits with 0 or the number of the first check that
+failed. It uses hyp-guest.h and hyp-guest.S from the previous series.
+
 Signed-off-by: tewaro <tewaro@theorem.dev>
 ---
- target/riscv/tcg/cpu_helper.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ tests/tcg/riscv64/system/meson.build | 21 ++++++++
+ tests/tcg/riscv64/test-mstatus-gva.S | 75 ++++++++++++++++++++++++++++
+ 2 files changed, 96 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-mstatus-gva.S
 
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 063525cfc5..55b370294a 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -2416,9 +2416,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-             }
-             env->mstatus = set_field(env->mstatus, MSTATUS_MPV,
-                                      env->virt_enabled);
--            if (env->virt_enabled && tval) {
--                env->mstatus = set_field(env->mstatus, MSTATUS_GVA, 1);
--            }
-+            env->mstatus = set_field(env->mstatus, MSTATUS_GVA, write_gva);
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index 05ed8b4c8f..e1c478196b 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -130,6 +130,27 @@ foreach name, flags : gstage_tinst
+   }
+ endforeach
  
-             mtval2 = env->guest_phys_fault_addr;
- 
++# test-mstatus-gva.S: one build per case; the flags are documented there
++mstatus_gva = {
++  'load':      ['-DMODE=VS', '-DACCESS=ld t0, 0(a0)', '-DREG=3',
++                '-DFLAGS=PTE_R', '-DCAUSE=LOAD_GPF'],
++  'load-vu':   ['-DMODE=VU', '-DACCESS=ld t0, 0(a0)', '-DREG=4',
++                '-DFLAGS=(PTE_R|PTE_U)', '-DCAUSE=LOAD_GPF'],
++  'hlv':       ['-DMODE=HS', '-DACCESS=hlv.d t0, (a0)', '-DREG=5',
++                '-DFLAGS=PTE_R', '-DCAUSE=LOAD_GPF'],
++  'hsv':       ['-DMODE=HS', '-DACCESS=hsv.d zero, (a0)', '-DREG=6',
++                '-DFLAGS=(PTE_R|PTE_W|PTE_A)', '-DCAUSE=STORE_GPF'],
++}
++foreach name, flags : mstatus_gva
++  tests += {
++    'test-mstatus-gva.S': {
++      'exe_name': 'test-mstatus-gva-' + name,
++      'cflags': cflags + ['-march=rv64gch', hyp_guest] + flags,
++      'qemu_args': ['-cpu', 'rv64,h=true,svadu=true', qemu_args],
++    }
++  }
++endforeach
++
+ tests += {
+   'test-vle32ff.S': {
+     'cflags': cflags + ['-march=rv64gcv'],
+diff --git a/tests/tcg/riscv64/test-mstatus-gva.S b/tests/tcg/riscv64/test-mstatus-gva.S
+new file mode 100644
+index 0000000000..ec8b6df25a
+--- /dev/null
++++ b/tests/tcg/riscv64/test-mstatus-gva.S
+@@ -0,0 +1,75 @@
++/*
++ * Test that every trap into M-mode writes mstatus.GVA: 1 if mtval holds
++ * a guest virtual address, 0 otherwise.
++ *
++ * Each build is one case, set by -D flags in meson.build:
++ * - MODE: VS, VU or HS (HS runs hlv/hsv on the guest's behalf)
++ * - ACCESS: the instruction run on the start of region REG
++ * - REG: the region accessed
++ * - FLAGS: the guest's page-table entry for REG, with A or D clear, so
++ *   that the walk's A/D write faults on the read-only G-stage
++ * - CAUSE: the fault expected
++ *
++ * The trap handler checks, and the exit status is the first that fails:
++ *   1  mcause is CAUSE
++ *   2  GVA is 1, since mtval holds the guest address
++ *   3  after an ecall from M-mode, whose trap has no guest address, GVA
++ *      is 0
++ *
++ * `trap` makes checks 1 and 2, then runs the ecall, whose trap goes to
++ * `ecall_trap` for check 3.
++ *
++ * Privileged ISA v1.12: 8.2.1.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "hyp-guest.h"
++
++/* exit with status n unless reg == want */
++#define CHECK(n, reg, want) li t6, want; li a0, n; bne reg, t6, exit
++
++/* read mstatus.GVA into t5 */
++#define MSTATUS_GVA_SHIFT 38
++#define GVA csrr t5, mstatus; srli t5, t5, MSTATUS_GVA_SHIFT; andi t5, t5, 1
++
++        .option norvc
++        .text
++        .global test, trap, hs_trap
++test:
++        li      t0, VS_L1 + (REG) * 8   /* the guest's entry for REG */
++        li      t1, leaf(REGION(REG), FLAGS)
++        sd      t1, 0(t0)
++        li      a0, G_RO
++        call    set_tables_perm
++
++        li      a0, REGION(REG)
++        lla     a1, probe
++        li      a2, MODE
++        call    run_guest
++
++probe:
++        ACCESS
++        ecall
++
++        .balign 4
++trap:
++        csrr    t5, mcause
++        CHECK(1, t5, CAUSE)
++        GVA
++        CHECK(2, t5, 1)
++        lla     t0, ecall_trap          /* the ecall below traps there */
++        csrw    mtvec, t0
++        ecall
++
++        .balign 4
++ecall_trap:
++        GVA
++        CHECK(3, t5, 0)
++        li      a0, 0
++        j       exit
++
++/* nothing is delegated to HS-mode, so no trap should come here */
++        .balign 4
++hs_trap:
++        li      a0, 1
++        j       exit
 -- 
 2.54.0 (Apple Git-157)
 
