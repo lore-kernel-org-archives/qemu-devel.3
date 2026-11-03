@@ -1,57 +1,56 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3A4606A338
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 03:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3CE606A324
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 03:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MS1xzk3t
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ic0B7uYT
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO4nJ-0001I3-8f; Mon, 02 Nov 2026 22:02:42 -0500
+	id 1xO4w9-0004Lb-4f; Mon, 02 Nov 2026 22:11:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1xO4nA-0001Fp-0N; Mon, 02 Nov 2026 22:02:34 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1xO4vW-0004E0-NM; Mon, 02 Nov 2026 22:11:14 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1xO4n5-0003Pz-Ny; Mon, 02 Nov 2026 22:02:31 -0500
+ id 1xO4vU-0004Gu-7y; Mon, 02 Nov 2026 22:11:10 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id BE93F41783;
- Tue,  3 Nov 2026 03:02:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067191F000C1;
- Tue,  3 Nov 2026 03:02:22 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 29EEA6022E;
+ Tue,  3 Nov 2026 03:11:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB531F000C1;
+ Tue,  3 Nov 2026 03:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793674945;
- bh=MMvzBhnL7ChzrnuFCyht7rA4veNoaeBB1CGcGKV9bSE=;
+ s=k20260515; t=1793675465;
+ bh=axFIZWLTpJeFenWtyTJyeY+MHdCKoD5p2On51ljHaps=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=MS1xzk3tNaC5tZDr3MQIfBI0UjlIWFBMqE6dA1Cpcl7poQB1kd5l37Tk8NgXjds1u
- BXf5qDR2gutlKx2LGU3ePd9jwkVpo5maVGwEvogVocBPbWzPZsBj90S21DKsexI4KQ
- 9g5EWTSJdlWjaSdmULgCx3vtMLgA0n7oWhKu7NOUY9em5e4HQT3XMw5JnRPJ71UX8p
- 1OwHwLQPn+w53T6nkMsgXcDjQvVh5SiABMA+IV3+FvR/fFSnahayJpZ8ntkSH81j74
- xMWVb9sFYxqwvGGp6gZfOaHVYHSgF2nfeVLVJgTxFmzyhTb7eu2EFV4jTP74lyjW15
- OURqiXad7n6KQ==
-Date: Tue, 3 Nov 2026 03:02:17 +0000
+ b=Ic0B7uYTaQHSnqknDWj/vQLGe7EcK0Y81Pe3ybzyeoSrlJcqt8iH+OekiQvWlzqhj
+ Po6C/OlGZJ4U2AEJSGxfDbZgQeCDB/6HJV9QDYsWTvonrIzesR59W/ueZgvIfadwij
+ SqbJ0UoqE648zCwmdwGmOLonbVZY/g1WmTFjxtJ3OrYYqq9MYllCjtVz48F+MD05cf
+ /rt+UOfGAVrhl912NQ0SLUb7DZ4qHJcsfKnRAccF0QJHPw3iWJiMh8+zC7jXlojHFN
+ pKIMgq4+Qhj36GjF54hz537BPSeeTk/iB3aV5ZMGOMc+lP4ybYySM89c4XCnp8rX17
+ fwOGoqIZG0F6g==
+Date: Tue, 3 Nov 2026 03:10:57 +0000
 From: Jonathan Cameron <jic23@kernel.org>
 To: Jinjie Ruan <2118537295@qq.com>
 Cc: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, ruanjinjie@huawei.com
-Subject: Re: [PATCH 24/37] hw/arm/mpam: Add MSMON monitor selection and
- window configuration
-Message-ID: <20261103030217.19ec8290@jic23-hlaptop>
-In-Reply-To: <tencent_A8F7986545254D664209D1EB165DCA754605@qq.com>
+Subject: Re: [PATCH 25/37] hw/arm/mpam: Emulate MBWU bandwidth monitoring
+Message-ID: <20261103031057.18d57887@jic23-hlaptop>
+In-Reply-To: <tencent_289D63BC15D4B4B4096744A65B7929B41907@qq.com>
 References: <20261016101058.1900808-1-2118537295@qq.com>
- <tencent_A8F7986545254D664209D1EB165DCA754605@qq.com>
+ <tencent_289D63BC15D4B4B4096744A65B7929B41907@qq.com>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=jic23@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -73,188 +72,215 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_2 autolearn=ham autolearn_force=no
+	SPF_PASS,USER_AGENT_SANE_2 autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 16 Oct 2026 18:10:44 +0800
+On Fri, 16 Oct 2026 18:10:45 +0800
 Jinjie Ruan <2118537295@qq.com> wrote:
 
 > From: Jinjie Ruan <ruanjinjie@huawei.com>
 > 
-> Add the monitor-side plumbing shared by the monitor types: the
-> MSMON register definitions (MON_SEL, MBWU_FLT/CTL), the per-RIS
-> monitor instance array with the num-mbwu-mon and bw-nominal-bps
-> properties, and the read/write handling of the selection and
-> window registers (monitor/RIS selection with range clamping,
-> filter and control storage, write-one-to-clear overflow status).
+> Add the MBWU monitor: per monitor a lazily accumulated 64-bit
+> counter (value = base + rate x elapsed), where the rate is the
+> nominal bandwidth scaled by the bandwidth fraction of the filtered
+> PARTID.  The fraction follows whichever control the guest drives:
+> MBW_MAX, or the MBW_PBM bitmap (popcount over its width) that the
+> openEuler MBA resource programs instead, so monitor readings track
+> the configured bandwidth control.  The counter wraps at 48 bits,
+> latching the overflow status, and writing any counter register
+> resets it.
 > 
-> The monitor selection resolves a (RIS, monitor) pair through
-> mpam_mon_ris()/mpam_mbwu_mon(), and mpam_nrw_id_for() maps a
-> filter PARTID onto the internal PARTID whose configuration
-> governs it.  No monitor type is advertised yet; the MBWU counter
-> model arrives with the next patch.
+> MSMON_IDR/MBWUMON_IDR now advertise the feature (num-mbwu-mon
+> monitors, 64-bit counters with read/write bandwidth) and
+> MPAMF_IDR reports HAS_MSMON on both subtypes, which lets resctrl
+> mount the MBM counters.
 > 
 > Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+I like the way you do the scaling to give something that will change
+in approx proportion as you control the allocation. Nice and easy
+to tell if things are more or less working right.
+
+A few small comments below.
+
 > ---
->  hw/arm/mpam.c | 134 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 134 insertions(+)
+>  hw/arm/mpam.c | 129 +++++++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 127 insertions(+), 2 deletions(-)
 > 
 > diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
-> index b484509..77e0277 100644
+> index 77e0277..610ae88 100644
 > --- a/hw/arm/mpam.c
 > +++ b/hw/arm/mpam.c
-> @@ -109,6 +109,36 @@ REG32(MPAMF_MBWUMON_IDR, 0x0090)
->      FIELD(MPAMF_MBWUMON_IDR, HAS_LONG, 30, 1)
->      FIELD(MPAMF_MBWUMON_IDR, HAS_CAPTURE, 31, 1)
->  
-> +REG32(MSMON_CFG_MON_SEL, 0x0800)
-> +    FIELD(MSMON_CFG_MON_SEL, MON_SEL, 0, 8)
-This look wrong (LLM found it) seems to be 16 bits.
-Now narrower than that is fine, but we haven't been modifying these
-masks for other field defines to suit what is implemented so
-should look to be consistent.
-
-> +    FIELD(MSMON_CFG_MON_SEL, RIS, 24, 4)
-> +
-> +REG32(MSMON_CFG_MBWU_FLT, 0x0820)
-> +    FIELD(MSMON_CFG_MBWU_FLT, PARTID, 0, 16)
-> +    FIELD(MSMON_CFG_MBWU_FLT, PMG, 16, 8)
-> +    FIELD(MSMON_CFG_MBWU_FLT, RWBW, 30, 2)
-> +
-> +REG32(MSMON_CFG_MBWU_CTL, 0x0828)
-> +    FIELD(MSMON_CFG_MBWU_CTL, TYPE, 0, 8)
-> +    FIELD(MSMON_CFG_MBWU_CTL, MATCH_PARTID, 16, 1)
-> +    FIELD(MSMON_CFG_MBWU_CTL, MATCH_PMG, 17, 1)
-> +    FIELD(MSMON_CFG_MBWU_CTL, SCLEN, 19, 1)
-> +    FIELD(MSMON_CFG_MBWU_CTL, SUBTYPE, 20, 4)
-
-3 bits. There is another field in the top one.
-(LLM spotted this was different from Linux)
-
-> +    FIELD(MSMON_CFG_MBWU_CTL, OFLOW_FRZ, 24, 1)
-> +    FIELD(MSMON_CFG_MBWU_CTL, OFLOW_INTR, 25, 1)
-> +    FIELD(MSMON_CFG_MBWU_CTL, OFLOW_STATUS, 26, 1)
-> +    FIELD(MSMON_CFG_MBWU_CTL, CAPT_RESET, 27, 1)
-> +    FIELD(MSMON_CFG_MBWU_CTL, CAPT_EVNT, 28, 3)
-> +    FIELD(MSMON_CFG_MBWU_CTL, EN, 31, 1)
-> +
-> +REG32(MSMON_MBWU, 0x0860)           /* 31-bit counter, bit31 NRDY */
-> +REG32(MSMON_MBWU_L, 0x0880)         /* 64-bit counter */
-> +REG32(MSMON_MBWU_CAPTURE, 0x0868)
-> +REG32(MSMON_MBWU_CAPTURE_L, 0x0890)
-> +REG32(MSMON_CAPT_EVNT, 0x0808)
-> +REG32(MSMON_CFG_CSU_FLT, 0x0810)
-> +REG32(MSMON_CFG_CSU_CTL, 0x0818)
-> +
->  REG32(MPAMF_ERR_MSI_MPAM, 0x00dc)
->  REG32(MPAMF_ERR_MSI_ADDR_L, 0x00e0)
->  REG32(MPAMF_ERR_MSI_ADDR_H, 0x00e4)
-> @@ -232,6 +262,21 @@ typedef struct MpamfPerNrwId {
->          uint32_t cfg_mbw_prop;
->  } MpamfPerNrwId;
+> @@ -8,6 +8,9 @@
+>  #include "qemu/osdep.h"
+>  #include "qapi/error.h"
+>  #include "qemu/log.h"
+> +#include "qemu/timer.h"
+> +#include "qemu/host-utils.h"
+> +#include "qemu/bitops.h"
+>  #include "hw/core/irq.h"
+>  #include "hw/core/qdev-properties.h"
+>  #include "hw/core/registerfields.h"
+> @@ -404,6 +407,65 @@ static MpamMbwuMon *mpam_mbwu_mon(MPAMMSCState *s, Mpamf *mf)
+>      return &mf->mbwu_mons[mon];
+>  }
 >  
 > +/*
-> + * One MBWU monitor instance.  The counter is lazily advanced on
-> + * access: value = base + rate x (now - t0), where rate is the
-> + * nominal bandwidth scaled by the MBW_MAX fraction of the filtered
-> + * PARTID.  Monitoring therefore reads back values that track the
-> + * configured bandwidth control.
+> + * Lazily advance the monitor's counter.  While enabled it accumulates
+> + * the nominal bandwidth scaled by the MBW_MAX fraction of the PARTID
+> + * the filter selects, so monitor readings track the configured
+> + * bandwidth control.
 > + */
-> +typedef struct MpamMbwuMon {
-> +    uint32_t flt;
-> +    uint32_t ctl;
-> +    uint64_t base;
-> +    int64_t t0;
-> +    bool oflow;
-> +} MpamMbwuMon;
+> +static uint64_t mpam_mbwu_value(MPAMMSCState *s, Mpamf *mf, MpamMbwuMon *m)
+> +{
+> +    uint64_t v = m->base;
+> +    int64_t now = qemu_clock_get_ns(QEMU_CLOCK_HOST);
+> +    int64_t delta;
 > +
->  typedef struct Mpamf {
->      uint64_t idr;
->      uint32_t iidr;
-> @@ -257,6 +302,8 @@ typedef struct Mpamf {
->  
->      MpamfPerNrwId *per_nrw_id;
-> 
-> +    MpamMbwuMon *mbwu_mons;
+> +    if (m->t0 == 0) {
+> +        m->t0 = now;
+> +    }
+> +    delta = now - m->t0;
 > +
-No blank line here.  Like the one above should have
-been in this patch, this one should be in whatever comes after
-the white space.
+> +    if (FIELD_EX32(m->ctl, MSMON_CFG_MBWU_CTL, EN) && delta > 0) {
+> +        /* bw_nominal_bps is bytes/s; MBWU is modelled in bytes. */
 
->  } Mpamf;
->  
-
+> +        uint64_t rate_mbs = s->bw_nominal_bps / 1000000;
+Not following this. The comment says one is in bytes and the other
+also in bytes, so why 1e6 division?
+> +
+> +        if (FIELD_EX32(m->ctl, MSMON_CFG_MBWU_CTL, MATCH_PARTID)) {
+> +            uint32_t partid = FIELD_EX32(m->flt, MSMON_CFG_MBWU_FLT,
+> +                                         PARTID);
+> +            uint32_t nrw = mpam_nrw_id_for(s, mf, partid);
+> +            MpamfPerNrwId *cfg = &mf->per_nrw_id[nrw];
+> +            uint64_t frac_num, frac_den;
+> +
+> +            /*
+> +             * The kernel drives bandwidth through either MBW_MAX or,
+> +             * on classes that advertise MBW_PBM, the PBM bitmap
+> +             * (popcount of the programmed bits over its width).
+> +             */
+> +            if (cfg->cfg_mbw_pbm[0]) {
+> +                frac_num = __builtin_popcount(cfg->cfg_mbw_pbm[0] &
+> +                                     ((1u << MPAM_MBW_PART) - 1));
+> +                frac_den = MPAM_MBW_PART;
+> +            } else {
+> +                /* MBW_MAX is a 16-bit fraction; 0xffff = full bandwidth. */
+> +                frac_num = cfg->cfg_mbw_max & 0xffff;
+> +                frac_den = 0xffff;
+> +            }
+> +            rate_mbs = muldiv64(rate_mbs, frac_num, frac_den);
+> +        }
+> +
+> +        /* rate_mbs is MB/s; delta is ns, so /1000 yields bytes. */
+> +        v += muldiv64(delta, rate_mbs, 1000);
+> +        /* 48-bit counter wraps (MSMON_MBWU_L is 48 bits of value). */
+> +        if (v > (1ULL << 48)) {
+> +            m->oflow = true;
+> +            v &= (1ULL << 48) - 1;
+> +        }
+> +    }
+> +    m->base = v;
+> +    m->t0 = now;
+> +
+> +    return v;
+> +}
+> +
 >  typedef struct MPAMMSCMemState {
 >      MPAMMSCState parent;
 >  } MPAMMSCMemState;
-> @@ -405,6 +497,20 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
->          return mpamf->csumon_idr;
->      case A_MPAMF_MBWUMON_IDR:
->          return mpamf->mbwumon_idr;
-> +    case A_MSMON_CFG_MON_SEL:
-> +        return s->mon_sel;
-> +    case A_MSMON_CFG_MBWU_FLT:
-> +        return mpam_mbwu_mon(s, mpam_mon_ris(s))->flt;
-> +    case A_MSMON_CFG_MBWU_CTL:
-> +    {
-> +        MpamMbwuMon *m = mpam_mbwu_mon(s, mpam_mon_ris(s));
-> +        uint32_t ctl = m->ctl;
-> +
-> +        if (m->oflow) {
-> +            ctl |= R_MSMON_CFG_MBWU_CTL_OFLOW_STATUS_MASK;
-
-See below. Either the write needs to actually clear the bit or this
-side needs to mask it from m->ctl
-
-> +        }
-> +        return ctl;
-> +    }
->      case A_MPAMF_ERR_MSI_MPAM:
->          return mpamf->err_msi_mpam;
->      case A_MPAMF_ERR_MSI_ADDR_L:
-> @@ -623,6 +729,30 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
->          mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_pbm[array_offset] = value;
->          return;
+> @@ -511,6 +573,34 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+>          }
+>          return ctl;
 >      }
-> +    case A_MSMON_CFG_MON_SEL:
-> +        s->mon_sel = value & (R_MSMON_CFG_MON_SEL_MON_SEL_MASK |
-> +                              R_MSMON_CFG_MON_SEL_RIS_MASK);
-
-Mask on whether HAS_RIS?
-
-> +        return;
-> +    case A_MSMON_CFG_MBWU_FLT:
-> +        mpam_mbwu_mon(s, mpam_mon_ris(s))->flt = value;
-
-I think this wants a write mask and bits of it are conditional
-on HAS_RWBW as well.
-
-> +        return;
-> +    case A_MSMON_CFG_MBWU_CTL:
+> +    case A_MSMON_MBWU ... (A_MSMON_MBWU + 3):
 > +    {
-> +        MpamMbwuMon *m = mpam_mbwu_mon(s, mpam_mon_ris(s));
+> +        uint64_t v = mpam_mbwu_value(s, mpam_mon_ris(s),
+> +                                     mpam_mbwu_mon(s, mpam_mon_ris(s)));
 > +
-> +        m->ctl = value;
-
-Probably wants a write mask as some of this register is read only.
-Given this doesn't mask out the oflow (to match a write one to clear)
-and the read path isn't masking that bit out, how does it ever appear to
-clear?
-
-> +        if (value & R_MSMON_CFG_MBWU_CTL_OFLOW_STATUS_MASK) {
-> +            m->oflow = false;               /* write-one-to-clear */
-> +        }
-> +        return;
+> +        return extract64(v, (offset - A_MSMON_MBWU) * 8, 32);
 > +    }
-> +    case A_MSMON_CAPT_EVNT:
-> +    case A_MSMON_CFG_CSU_FLT:
-> +    case A_MSMON_CFG_CSU_CTL:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "MPAM: cache-usage monitoring not implemented (write %lx)\n",
-> +                      offset);
-> +        return;
+> +    case A_MSMON_MBWU_L ... (A_MSMON_MBWU_L + 7):
+> +    {
+> +        uint64_t v = mpam_mbwu_value(s, mpam_mon_ris(s),
+> +                                     mpam_mbwu_mon(s, mpam_mon_ris(s)));
+> +
+> +        return extract64(v, (offset - A_MSMON_MBWU_L) * 8, 32);
+> +    }
+> +    case A_MSMON_MBWU_CAPTURE ... (A_MSMON_MBWU_CAPTURE + 3):
+> +    {
+> +        uint64_t v = mpam_mbwu_value(s, mpam_mon_ris(s),
+> +                                     mpam_mbwu_mon(s, mpam_mon_ris(s)));
+> +
+> +        return (uint32_t)v;
+> +    }
+> +    case A_MSMON_MBWU_CAPTURE_L ... (A_MSMON_MBWU_CAPTURE_L + 7):
+> +    {
 
+Probably want to check the width for these accesses.
+
+> +        uint64_t v = mpam_mbwu_value(s, mpam_mon_ris(s),
+> +                                     mpam_mbwu_mon(s, mpam_mon_ris(s)));
+> +
+> +        return extract64(v, (offset - A_MSMON_MBWU_CAPTURE_L) * 8, 32);
+> +    }
+
+>      case A_MSMON_CAPT_EVNT:
+>      case A_MSMON_CFG_CSU_FLT:
+>      case A_MSMON_CFG_CSU_CTL:
+> @@ -855,10 +956,22 @@ static void mpam_msc_mem_realize(DeviceState *dev, Error **errp)
+>  
+>          /* We won't implement any implementation specific stuff */
+>          mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, NO_IMPL_PART, 1);
+> -        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, NO_IMPL_MSMON, 1);
+Why?  I thought that only needed to change for non standard Implementation defined
+monitors.
+
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_MSMON, 1);
+>          /* Memory specific bit */
+>          mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_MBW_PART, 1);
+>  
+> +        mpamf->msmon_idr = FIELD_DP32(mpamf->msmon_idr,
+> +                                      MPAMF_MSMON_IDR, MSMON_MBWU, 1);
+> +        mpamf->msmon_idr = FIELD_DP32(mpamf->msmon_idr,
+> +                                      MPAMF_MSMON_IDR, HAS_OFLOW_SR, 1);
+> +        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
+> +                                        MPAMF_MBWUMON_IDR, NUM_MON,
+> +                                        s->num_mbwu_mon);
+> +        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
+> +                                        MPAMF_MBWUMON_IDR, HAS_LONG, 1);
+> +        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
+> +                                        MPAMF_MBWUMON_IDR, HAS_RWBW, 1);
+> +
+>          mpamf->iidr = FIELD_DP64(mpamf->iidr, MPAMF_IIDR, IMPLEMENTER,
+>                                   MPAM_IIDR_IMPLEMENTER);
+>          mpamf->iidr = FIELD_DP64(mpamf->iidr, MPAMF_IIDR, REVISION, 0);
+> @@ -914,11 +1027,23 @@ static void mpam_msc_cache_realize(DeviceState *dev, Error **errp)
+>  
+>          /* We won't implement any implementation specific stuff */
+>          mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, NO_IMPL_PART, 1);
+> -        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, NO_IMPL_MSMON, 1);
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_MSMON, 1);
+>  
+>          /* Need to implement for RME */
+>          mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, SP4, 0);
+>  
+> +        mpamf->msmon_idr = FIELD_DP32(mpamf->msmon_idr,
+> +                                      MPAMF_MSMON_IDR, MSMON_MBWU, 1);
+> +        mpamf->msmon_idr = FIELD_DP32(mpamf->msmon_idr,
+> +                                      MPAMF_MSMON_IDR, HAS_OFLOW_SR, 1);
+> +        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
+> +                                        MPAMF_MBWUMON_IDR, NUM_MON,
+> +                                        s->num_mbwu_mon);
+> +        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
+> +                                        MPAMF_MBWUMON_IDR, HAS_LONG, 1);
+> +        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
+> +                                        MPAMF_MBWUMON_IDR, HAS_RWBW, 1);
+> +
+>          /* Cache specific bit */
+>          mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_CPOR_PART, 1);
+>          mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART, 1);
 
 
