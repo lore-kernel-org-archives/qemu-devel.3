@@ -1,56 +1,56 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC156606A326
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 00:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D352606A324
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 00:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=daiSYPvv
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gJqb0dgf
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO2TV-0003up-0V; Mon, 02 Nov 2026 19:34:05 -0500
+	id 1xO2lM-0007Id-Ap; Mon, 02 Nov 2026 19:52:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1xO2TT-0003uU-Ug; Mon, 02 Nov 2026 19:34:03 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1xO2lK-0007Hk-Cw; Mon, 02 Nov 2026 19:52:30 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1xO2TR-0006aG-U6; Mon, 02 Nov 2026 19:34:03 -0500
+ id 1xO2lI-0008P6-Gp; Mon, 02 Nov 2026 19:52:30 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 61016601EF;
- Tue,  3 Nov 2026 00:34:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754C81F000C1;
- Tue,  3 Nov 2026 00:33:57 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 6B277438B3;
+ Tue,  3 Nov 2026 00:52:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BB31F000C1;
+ Tue,  3 Nov 2026 00:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793666040;
- bh=Z+EHhHyZ6RHjzIc/mJT8DEszW81XI3MpPYFNVlmzgKI=;
+ s=k20260515; t=1793667146;
+ bh=ZD+w7OB/pRfaKOn/8xKvLuFK63LtCoSfptrngXhMfpU=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=daiSYPvvtPNawopq5lBvQhvBbUuqY+nx8+Ir1cSBEJBcjj5JYmniU94VnSgydGCcO
- A+CNU7vhpkZw1Exp/uEX29uR/h6+9pPWRYzNPTlwZiKtjPN0Fdwb3yE1Onwh8XM9DN
- BI0jSYTQH5AAjchuCQyJOZhv2uZlWONbYXhnIS7S3yVnhHQxKp068R40Ze8jpeDU2z
- IYXJRLOMUg2051fUM5HOeKlTv8wRqc9DcmVyd+muOBgHvG4SS0SqpStoErswAT+rNQ
- v83mmzxcCfPztcVyWBXMQojvz+/pkHgsv6IVFiq6SqqOB1Fd4o9Q/HoooOnlrq6qNP
- xmqo+q26Dtxbg==
-Date: Tue, 3 Nov 2026 00:33:52 +0000
+ b=gJqb0dgfOnCxHp3jY767ULpfx8AFoCQX2tZ+RfWGIqIeCmMX3ObHCxdZfT41aEvl6
+ O9EvKHOsRe5RPreQFe75Cw6ibMLMaKmyyPxZlVQ+WGRmnpSMiaN4JWM+oI4kCLehcW
+ EdosrAPpZ2kELA7ss4Wog12ISgSCkEczG4EyHOrXF3dBGc08uhWI2JoVTjx7fUM1tm
+ 3JGOPVpbuBHF9qovc5GUcU5VDrNpsa9pKb8yUZtY0PsbTQfZBGocqlYCctrzy8mrMw
+ qYUy0T8wGEFXqaTZm71Px3fB36f/dKkIcGeB0cYbmpUzNQEmzz4G+igHBva7eb5U0Y
+ /aFA6ODXL/b+Q==
+Date: Tue, 3 Nov 2026 00:52:18 +0000
 From: Jonathan Cameron <jic23@kernel.org>
 To: Jinjie Ruan <2118537295@qq.com>
 Cc: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, ruanjinjie@huawei.com
-Subject: Re: [PATCH 05/37] hw/arm/mpam: Add MPAM MSC register map
-Message-ID: <20261103003352.42e05890@jic23-hlaptop>
-In-Reply-To: <tencent_25A9B619D0E3909582B4CF096744805B6107@qq.com>
+Subject: Re: [PATCH 06/37] hw/arm/mpam: Add MPAM MSC base device
+Message-ID: <20261103005218.7d0a4a06@jic23-hlaptop>
+In-Reply-To: <tencent_8C2C6D66A20C91FD7641EA7206ED18672505@qq.com>
 References: <20261016094733.1898485-1-2118537295@qq.com>
- <tencent_25A9B619D0E3909582B4CF096744805B6107@qq.com>
+ <tencent_8C2C6D66A20C91FD7641EA7206ED18672505@qq.com>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=jic23@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -77,194 +77,178 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 16 Oct 2026 17:46:59 +0800
+On Fri, 16 Oct 2026 17:47:00 +0800
 Jinjie Ruan <2118537295@qq.com> wrote:
 
 > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > 
-> Add the MMIO register map of an MPAM 1.1 Memory System Component
-> (IHI 0099 sections 4-6) as registerfields definitions:
-> - The feature IDRs (MPAMF_IDR, IIDR/AIDR, CPOR/CCAP/MBW/PRI/PARTID_NRW,
->   MSMON family)
-> - The error registers (ERR_MSI block, ECR, ESR)
-> - The configuration registers (PART_SEL, CMAX/CMIN/CASSOC,
->   MBW_MIN/MAX/PBM/PROP, PRI, INTPARTID, CPBM/MBW_PBM arrays) and their
->   write masks
-> - The portion-width constants of this model.
+> Add the mpam-msc sysbus device core:
+> - Per-RIS register storage(Mpamf)
+> - The device state (selector state, num-ris/num-partid/
+>   num-int-partid properties), realize with the per-RIS allocation
+>   and the MMIO region (MPAM_SIZE window).
+> - The MMIO handlers covering the identification registers (MPAMF_IDR
+>   with its 64-bit EXT view IIDR, AIDR, IMPL_IDR, PARTID_NRW_IDR
+>   and the MSMON IDRs that read as zero until monitoring is implemented).
+> 
+> The base type registers no features; the mpam-msc-mem and
+> mpam-msc-cache subtypes assemble their feature IDR fields.
 > 
 > Based on an RFC series by Jonathan Cameron.
-
-Maybe a link tag to that old piece of garbage - might be more useful
-than referring to it like this.
-
-A few typos in here that should be tidied up. I clearly
-didn't check this closely enough at the time. Nothing major
-but need tidying up.
-
-Also, an LLM pointed out that some of the write masks are more
-complex that this implies as depend on other register values.
-Maybe add comments where that is true as enforcement will be
-needed in the writing code - what we have here just acts as
-some sort of worst case masking.  I guess you could define
-some macros to create the masks here.
-
-Thanks,
-
-Jonathan
-
 > 
 > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index bcc068d..42ca75b 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -106,6 +106,7 @@ arm_common_ss.add(when: 'CONFIG_NETDUINO2', if_true: files('netduino2.c'))
->  arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_peripherals.c'))
->  arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2838_peripherals.c'))
->  arm_common_ss.add(when: 'CONFIG_STRONGARM', if_true: files('strongarm.c'))
-> +arm_common_ss.add(when: 'CONFIG_MPAM', if_true: files('mpam.c'))
->  arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
->  arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
->  arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+A few trivial things inline.
+
+> ---
+>  hw/arm/mpam.c | 171 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 171 insertions(+)
+> 
 > diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
-> new file mode 100644
-> index 0000000..772a120
-> --- /dev/null
+> index 772a120..b1d6472 100644
+> --- a/hw/arm/mpam.c
 > +++ b/hw/arm/mpam.c
-> @@ -0,0 +1,223 @@
-> +/*
-> + * ARM MPAM emulation
-> + *
-> + * Copyright (c) 2023 Huawei
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qemu/log.h"
-> +#include "hw/core/irq.h"
-> +#include "hw/core/qdev-properties.h"
-> +#include "hw/core/registerfields.h"
-> +#include "hw/core/sysbus.h"
-> +#include "qom/object.h"
-> +#include "hw/arm/mpam.h"
+> @@ -221,3 +221,174 @@ REG32(MPAMF_MPAMCFG_MBW_PBM0, 0x2000)
+>  #define MPAM_CACHE_PART 32
+>  /* MPAMF_IIDR.IMPLEMENTER: ARM JEP106 code for Huawei (0x736). */
+>  #define MPAM_IIDR_IMPLEMENTER 0x736
 > +
-> +REG64(MPAMF_IDR, 0)
-> +    FIELD(MPAMF_IDR, PART_ID_MAX, 0, 16)
+> +typedef struct Mpamf {
+> +    uint64_t idr;
+> +    uint32_t iidr;
+> +    uint32_t aidr;
+> +    uint32_t impl_idr;
+> +    uint32_t cpor_idr;
+> +    uint32_t ccap_idr;
+> +    uint32_t mbw_idr;
+> +    uint32_t pri_idr;
+> +    uint32_t partid_nrw_idr;
+> +    uint32_t msmon_idr;
+> +    uint32_t csumon_idr;
+> +    uint32_t mbwumon_idr;
+> +    uint32_t err_msi_mpam;
+> +    uint32_t err_msi_addr_l;
+> +    uint32_t err_msi_addr_h;
+> +    uint32_t err_msi_data;
+> +    uint32_t err_msi_attr;
+> +    uint32_t ecr;
+> +    uint32_t esr;
+> +    uint32_t cfg_part_sel;
+> +} Mpamf;
+> +
+> +typedef struct MPAMMSCState {
+> +    SysBusDevice parent_obj;
+> +
+> +    Mpamf *mpamf;
+> +
+> +    uint8_t ris;
+> +    uint16_t part_sel; /* Technically per ris, but in same reg */
+> +    bool internal_part_sel;
+> +    struct MemoryRegion mr;
+> +    uint32_t num_partid;
+> +    uint32_t num_int_partid;
+> +    uint8_t num_ris;
+> +
 
-Maybe call it PARTID_MAX given spec naming.
+Blank line seems pointless. Probably belongs in some later patch.
 
-> +    FIELD(MPAMF_IDR, PMG_MAX, 16, 8)
-> +    FIELD(MPAMF_IDR, HAS_CCAP_PART, 24, 1)
-> +    FIELD(MPAMF_IDR, HAS_CPOR_PART, 25, 1)
-> +    FIELD(MPAMF_IDR, HAS_MBW_PART, 26, 1)
-> +    FIELD(MPAMF_IDR, HAS_PRI_PART, 27, 1)
-> +    FIELD(MPAMF_IDR, EXT, 28, 1)
-> +    FIELD(MPAMF_IDR, HAS_IMPL_IDR, 29, 1)
-> +    FIELD(MPAMF_IDR, HAS_MSMON, 30, 1)
-> +    FIELD(MPAMF_IDR, HAS_PARTID_NRW, 31, 1)
-> +    FIELD(MPAMF_IDR, HAS_RIS, 32, 1)
-> +    FIELD(MPAMF_IDR, NO_IMPL_PART, 36, 1)
-> +    FIELD(MPAMF_IDR, NO_IMPL_MSMON, 37, 1)
-> +    FIELD(MPAMF_IDR, HAS_EXTD_ESR, 38, 1)
-> +    FIELD(MPAMF_IDR, HAS_ESR, 39, 1)
-> +    FIELD(MPAMF_IDR, HAS_ERR_MS, 40, 1)
-> +    FIELD(MPAMF_IDR, SP4, 41, 1)
-> +    FIELD(MPAMF_IDR, HAS_ENDIS, 42, 1)
-> +    FIELD(MPAMF_IDR, HAS_NFU, 43, 1)
-> +    FIELD(MPAMF_IDR, RIS_MAX, 56, 4)
+> +} MPAMMSCState;
+> +
+> +DECLARE_INSTANCE_CHECKER(MPAMMSCState, MPAM_MSC_DEVICE, TYPE_MPAM_MSC);
+> +
+> +static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+> +                                  unsigned size)
+> +{
+> +    MPAMMSCState *s = MPAM_MSC_DEVICE(opaque);
+> +    Mpamf *mpamf = &s->mpamf[s->ris];
+> +
+> +    switch (offset) {
+> +    case A_MPAMF_IDR:
+> +        switch (size) {
+> +        case 4:
+> +            return mpamf->idr & 0xffffffff;
+
+Maybe use MAKE_64BIT_MASK(0, 32) from qemu/bitops.h
 
 
+> +        case 8:
+> +            return mpamf->idr;
+> +        default:
+> +            qemu_log_mask(LOG_UNIMP, "MPAM: Unexpected read size\n");
+> +            return 0;
+> +        }
+> +    case A_MPAMF_IDR + 0x04:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, EXT)) {
+> +            qemu_log_mask(LOG_UNIMP, "MPAM: Unexpected read of top of IDR\n");
+> +            return 0;
+> +        }
+> +        switch (size) {
+> +        case 4:
+> +            return mpamf->idr >> 32;
+> +        default:
+> +            qemu_log_mask(LOG_UNIMP, "MPAM: Unexpected read size\n");
+> +            return 0;
+> +        }
+> +    case A_MPAMF_IIDR:
+
+Not sure why I allowed 1 byte reads. Probably want to check each of
+the read widths for 4 or 8 though as appropriate.
+
+> +        return mpamf->iidr;
+> +    case A_MPAMF_AIDR:
+> +        return mpamf->aidr;
+> +    case A_MPAMF_IMPL_IDR:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_IMPL_IDR)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Accessing IMPL_IDR which isn't suported\n");
+> +            return 0;
+> +        }
+> +        return mpamf->impl_idr;
+> +    case A_MPAMF_PARTID_NRW_IDR: {
+> +        return mpamf->partid_nrw_idr;
+> +    }
+> +    case A_MPAMF_MSMON_IDR:
+> +        return mpamf->msmon_idr;
+> +    case A_MPAMF_CSUMON_IDR:
+> +        return mpamf->csumon_idr;
+> +    case A_MPAMF_MBWUMON_IDR:
+> +        return mpamf->mbwumon_idr;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "MPAM: Unexpected read of %lx\n", offset);
+> +        return 0x0;
+> +    }
+> +}
 
 > +
-> +REG32(MPAMF_MSMON_IDR, 0x080)
-
-An LLM pointed out I was really inconsistent in numbers of
-digits.  0x0080
-Ah the heady days of copying typing specs.
-
-> +    FIELD(MPAMF_MSMON_IDR, MSMON_CSU, 16, 1)
-> +    FIELD(MPAMF_MSMON_IDR, MSMON_MBWU, 17, 1)
-> +    FIELD(MPAMF_MSMON_IDR, HAS_OFLOW_SR, 28, 1)
-> +    FIELD(MPAMF_MSMON_IDR, HAS_OFLW_MS, 29, 1)
-_MSI
-
-> +    FIELD(MPAMF_MSMON_IDR, NO_OFLW_INTR, 30, 1)
-> +    FIELD(MPAMF_MSMON_IDR, HAS_LOCAL_CAPT_EVNT, 31, 1)
-...
-
-> +REG32(MPAMF_MPAMCFG_WINWD, 0x0220)
-> +    FIELD(MPAMF_MPAMCFG_WINWD, US_FRAC, 0, 8)
-> +    FIELD(MPAMF_MPAMCFG_WINWD, US_INT, 8, 16)
-> +#define MPAMF_MPAMCFG_WINWD_WRITE_MASK ( \
-> +    R_MPAMF_MPAMCFG_WINWD_US_FRAC | \
-> +    R_MPAMF_MPAMCFG_WINWD_US_INT)
-
-Those need _MASK suffix.
-
+> +static void mpam_msc_realize(DeviceState *dev, Error **errp)
+> +{
+> +    MPAMMSCState *s = MPAM_MSC_DEVICE(dev);
 > +
-> +REG32(MPAMF_MPAMCFG_EN, 0x0300)
-> +    FIELD(MPAMF_MPAMCFG_EN, PARTID, 0, 16)
-> +#define MPAMF_MPAMCFG_EN_WRITE_MASK ( \
-> +    R_MPAMF_MPAMCFG_EN_PARTID_MASK)
-> +
-> +REG32(MPAMF_MPAMCFG_DIS, 0x0310) /* WHat is this for? */
-> +    FIELD(MPAMF_MPAMCFG_DIS, PARTID, 0, 16)
-> +    FIELD(MPAMF_MPAMCFG_DIS, NFU, 31, 1)
-> +#define MPAMF_MPAMCFG_DIS_WRITE_MASK ( \
-> +    R_MPAMF_MPAMCFG_DIS_PARTID_MASK | \
-> +    R_MPAMF_MPAMCFG_DIS_NFU)
+> +    /* IHI 0099: MPAMF_CFG_PART_SEL.RIS is 4 bits, so at most 16 RIS. */
 
-Needs a _MASK suffic.
+Hmm. I wonder if this changed name.  The spec now has MPAMCFG_PART_SEL.
+Should match that naming I suppose.
 
-> +
-> +REG32(MPAMF_MPAMCFG_EN_FLAGS, 0x320)
 
-Lots of 3 digit addresses scattered through here that
-should all be 4 digits.
+> +    if (s->num_ris > 16) {
+> +        error_setg(errp, "num-ris must be <= 16");
+> +        return;
+> +    }
+> +    if (s->num_partid == 0) {
+> +        error_setg(errp, "num-ris must be <= 16");
+> +        return;
+> +    }
+> +    if (s->num_int_partid == 0) {
+> +        s->num_int_partid = s->num_partid;
+> +    }
+> +
+> +    s->mpamf = g_new0(Mpamf, s->num_ris);
+> +    memory_region_init_io(&s->mr, OBJECT(s), &mpam_msc_ops, s, "mpam_msc",
+> +                          MPAM_SIZE);
+> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
+> +}
 
-> +
-> +#define TYPE_MPAM_MSC "mpam-msc"
-> +/*
-> + * Max number of portions this model exposes for the cache-portion (CPOR)
-> + * bitmap and the memory-bandwidth-portion (MBW_PBM) bitmap.  IHI 0099
-> + * dimensions CPBM_WD/BWPBM_WD by these widths (see MPAMF_CPOR/MBW_IDR).
-> + */
-> +#define MPAM_MBW_PART 4
-> +#define MPAM_CACHE_PART 32
-> +/* MPAMF_IIDR.IMPLEMENTER: ARM JEP106 code for Huawei (0x736). */
-> +#define MPAM_IIDR_IMPLEMENTER 0x736
-> diff --git a/include/hw/arm/mpam.h b/include/hw/arm/mpam.h
-> new file mode 100644
-> index 0000000..e7557a9
-> --- /dev/null
-> +++ b/include/hw/arm/mpam.h
-> @@ -0,0 +1,20 @@
-> +/*
-> + * QEMU MPAM emulation
-Come to think of it, why have QEMU in a QEMU header.
-
-MPAM emulation.
-
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef _MPAM_H_
-> +#define _MPAM_H_
-> +
-> +#include "qom/object.h"
-> +
-> +#define TYPE_MPAM_MSC_MEM "mpam-msc-mem"
-> +#define TYPE_MPAM_MSC_CACHE "mpam-msc-cache"
-> +
-> +/*
-> + * MMIO window of one MSC: IHI 0099 places the register block in a 16 KiB
-> + * region (0x4000).  The virt board reserves a 1 MiB slot for up to 256 MSCs.
-> + */
-> +#define MPAM_SIZE 0x4000
-> +
-> +#endif /* _MPAM_H_ */
 
 
