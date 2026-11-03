@@ -1,95 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E41606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 22:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3791E606D826
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 23:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=dO8CF6NY
+	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=Hr9jSZJg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xONDP-00055S-Tf; Tue, 03 Nov 2026 17:42:52 -0500
+	id 1xOOCL-0002XS-86; Tue, 03 Nov 2026 18:45:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xONDO-000551-0T
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 17:42:50 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xONDM-000322-BA
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 17:42:49 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-8a070781f63so67355b3a.1
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 14:42:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793745766; x=1794350566; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CyIn1hvuV//14ZcizxnbsnDVMkJnnWWmAzbTH+nS8u8=;
- b=dO8CF6NYx5hXZuP8/DhJ2GSNfATJ0vLkuOUjLQoUpIR+GmhFavdI09wiepbuoqsqj5
- iab3Lb2IApqcQq9CyBXnc9vTeusdY8IXnzCmwSVRXpFQFCsezD44gTHIRBupKLf7Lfg+
- Lyvq1S50SJaMuCG4JY9t/HiSNP9DgQehznVQbYkfE8KZhAb1TlNCS9rbR/6XIF1YcCAl
- ip89AivHLVhvqeX+qAyVLW9ugJAxpCC8GTIqfC8+k7NPdcPNL77cM7TdPMJG1LMUiwJS
- ObUASK8Z1AWmLzv/SqhiwLcEzHN7qfSi/JT/ALeW0x8NvLDtRD/FoQMcpxyEo3tGulC3
- Tvyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793745766; x=1794350566;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CyIn1hvuV//14ZcizxnbsnDVMkJnnWWmAzbTH+nS8u8=;
- b=C4zLsD8M73cY1vgz+UoXBDPGBxb49iIEynkkcGXCscY4t8MLq3S0/SYsIIxWe6JUIz
- 82oX2Nae98cxJxH3g+iR+hgg7xeCVlw0PlAmN0DmZJTmw7cwG/Na4KFXzucrytaHAiiW
- VDZvNSkmSvDHj18txHxrAiK4zR8QHkt1FlCPSFnLFeU7UN0Q2rf6Yy2Agt/4TIJqPlt8
- eY2N9zJiI1fH+w501bF4FFWucPL3TmavBRajG51aIf2OshYcoPOm6csjMtzaynQmMSWm
- cKxM0/oaWhemQDtTg9QF6AA4zgR5cz7njs7h6RuMWOuueQH1f2tKD3GDWdObkhm6DSdP
- +xvg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzXjFUg1yzUqmBAdpSBjacczVjx0Q31RrckIKO597dODDkITZPndUYJjAkA9C2hOETpWHwbMmNQWoW1@nongnu.org
-X-Gm-Message-State: APuU4Z+ZhmrOT4bg9m3CLMb59egHD2FrBJOt82OPAjJ8HhDeqC42t7EM
- yJDe5HEDUoM3Oh88GSL7Bw9AAopo2/M1L+vrGQuuqf06+T0E803fPtWdrDjNgjQrsqM=
-X-Gm-Gg: AYBFou2pq3ePnPcA05zyn3+8RzJk9bv5ZqyL7qcIKALHk1MKMFLPEx0Z3ylK2N9WM3G
- HtQBxcvYqZbMlcdb4FqdnhGog9u3U1gEDGIh/8Agbw3p14wtOv9qcFryrth2KpZiL2qN1U1Tphl
- Gm6bJxwnDU1QraUmAadHp/a0riy5dTx5H6c0sP0Lrv+IM9vSIFDQm37w7p+xTHBd0SJ+lQ6KsX7
- 0Vs89tHLD+mQBFakOVQQbahfEKieT40mV+6VpQBwov0FfRohyX19hHFXjoPm0xkOItwIOf696dK
- suemB6Wwc+dn68YBVIGqZR1Ckx/39+vVty2SSbQA3X77jL81CJYUsIMe0SaOrABEBSsMAosfet7
- tbteTXaIfkE5C/FXVCWVswwhicvGnuRtp/FmDCzkPXdwEw9bFy6ShygIgiAoPBiwtK34K+Wx517
- a9/z3d85BK2Ofs6p0T7uH6lxPEQkWvyxbPHRRyF9rrLJQtqBcCAEB/umA28hu2udvXfRXbFA/Fg
- NXvpt8BrompjPxMLEzK7DVQ0zKGa88nM41dDMuYPePmcp7Sa632kdzeEfbdxNfka4uAAoZtJr2f
- uXZbrSXOvmgbDJrQZ5TXjPMfAknD5sbj5IkqnsDiKDuUa2eG7Lzoa4T6n78qfqRIYm8B4w==
-X-Received: by 2002:a05:6a21:3a82:b0:3e1:d99a:8e82 with SMTP id
- adf61e73a8af0-3e928aacaa2mr12185895637.3.1793745766185; 
- Tue, 03 Nov 2026 14:42:46 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8b09bc3d1f2sm138541b3a.50.2026.11.03.14.42.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Nov 2026 14:42:45 -0800 (PST)
-Message-ID: <b1eecf8e-1df8-4195-9bd9-2559d5ef63b8@linaro.org>
-Date: Tue, 3 Nov 2026 14:42:43 -0800
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xOOCI-0002Wt-5E
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 18:45:46 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xOOCG-00009z-6V
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 18:45:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=iFQwzfoVUAoJD63ZZ0Dvh7apjaNskI6Q0kVHzF3CX9Q=; b=Hr9jSZJgTMArxHFwbOqPoVcdXS
+ LkRCY4Wtw5yObx90Qsu2duVatozGOnk2n5mWTqvMGdyyB4Rb6FDw6cZni9w71HMHz5MZLSMEy15sE
+ uPRlQkalsNZGXkU2YdIqbUm4rxR+2gB/Q9jlKWEwME1Rk/0vkaKZlYC4giVf3ErhEyl4z6oxw3/pd
+ 4HnZTowws03DfjgTZ7UWiLcgcIZODS4TSeR1VQ2RZJsuJ7VVdPCSF3T4P5KGEYPPadWr1ckHjCahj
+ eRqeHDDDskFSBhydor8TC7Lhd3TBH3CIVRbL04b68pAS0Y3t0gd2kcuOBGEmY9E1t5Uq7tnhN1dIe
+ ev4stSgz6dLPDznPfQiHkQSNmfiLZBgdFcQL4dX58ttm0vGOTXCurv9PxfG4nUJLg3xhT149Ecevf
+ rgjgSUKCdGsVc80qzbxVCzWyQbxgWrWWQCR1ydPDHEODwjoMFw4jCgxxGZqXuI22cwdRXlqOFaCBw
+ GM7DfeE7KYmQ4HE02+A7n8sZsAZG8OkPriN3tRgrsboritd+NOcbie22DqJyNRW3K6UoYXbl0F1Zt
+ K38wI63C8ahj0nlEmxFHvcBIHgKKkghlb89RPLsfuAJDucxEKfOLEdba7fGGZ8KOlo6nysQPUWOA1
+ H5lNa2GVdFki2/NZBx71zx/ZXBCVvD7WCLE7QPhkI=;
+Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xOOBS-005Ze6-GL; Tue, 03 Nov 2026 23:44:54 +0000
+Message-ID: <3aa138a5-0f50-450f-a46f-a449a754c96b@ilande.co.uk>
+Date: Tue, 3 Nov 2026 23:45:39 +0000
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/17] pci: fixes
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <cover.1793706601.git.mst@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+To: Paul Sheer <paulsheer@gmail.com>, qemu-devel@nongnu.org
+References: <CABxOuY-6JxS1+HcR0t-yteY2+S7saB8ogjxkqa7bedwKu2Xw+Q@mail.gmail.com>
+ <CABxOuY8+YibOXCTTkcAQKHLVsTP_1twb0tNxmRss_Se56=amiw@mail.gmail.com>
 Content-Language: en-US
-In-Reply-To: <cover.1793706601.git.mst@redhat.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <CABxOuY8+YibOXCTTkcAQKHLVsTP_1twb0tNxmRss_Se56=amiw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: Solaris 10 on SPARC 64 running, but not stable
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,36 +100,72 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/3/26 03:50, Michael S. Tsirkin wrote:
-> The following changes since commit 4075aa42daecf701cd3869da8b3271dc3c04a4b1:
-> 
->    Merge tag 'block-pull-request' ofhttps://gitlab.com/stefanha/qemu into staging (2026-10-30 15:26:36 -0500)
-> 
-> are available in the Git repository at:
-> 
->    https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-> 
-> for you to fetch changes up to cc82fad46af62a3f5488538b6261eb7d54837294:
-> 
->    qtest/libqos/pci: Factor msix entry helpers into pci common code (2026-11-02 03:52:53 -0500)
-> 
-> ----------------------------------------------------------------
-> pci: fixes
-> 
-> pcie_sriov: fix for user-creation of VFs replaced by v2
-> pcie sriov: a couple more robustness improvements
-> pci: id docs clarified
-> pci: a bunch of test fixes, robustness
+On 30/10/2026 16:38, Paul Sheer wrote:
 
-Applied, thanks.
+> Update:
+> 
+> I put my changes in these two forked repos:
+> 
+> https://github.com/paulsheer/qemu/ <https://github.com/paulsheer/qemu/>
+> https://github.com/paulsheer/openbios/ <https://github.com/paulsheer/openbios/>
+> 
+> I don't have more time to try get this stable, so I will be unsubscribing.
+> 
+> Happy to answer any questions on my private email.
+> 
+> Paul
+>  
+> On Mon, Oct 26, 2026 at 12:25 AM Paul Sheer <paulsheer@gmail.com 
+> <mailto:paulsheer@gmail.com>> wrote:
+> 
+> 
+>     Hello,
+> 
+>     I dumped the entire disk of a real Solaris 10 V210/V240 box into a qcow2 image on
+>     Linux,
+>     and then tried to boot it with qemu.
+> 
+>     The list of patches/fixes I needed to apply is very long --- beside a bunch of
+>     code changes, there is also changing from SCSI to IDE and from hme0 to e1000,
+>     getting the device mappings to work, and so on.
+> 
+>     It finally boots all the way through and starts its services and I can ssh into it.
+> 
+>     However it doesn't seem to be stable. Within an hour it silently stops.
+> 
+>     Is anyone interested in this kind of work?
+> 
+>     Has anyone got this to run stable and under load?
+> 
+>     [[The only reason I keep this V210 around is to occasionally test some software
+>     big-endian (not that easy these days with big-end boxes disappearing 😂). But I
+>     panicked when I had to replace the motherboard last week "...what if this box
+>     one-day becomes unrepairable?" -- hence my experimenting with qemu.]]
+> 
+>     If anyone is interested then contact me directly on paulsheer@gmail.com
+>     <mailto:paulsheer@gmail.com> and I will share all the changes I made.
+> 
+>     Kind regards,
+> 
+>     Paul
+Hi Paul,
 
-r~
+Thanks for this interesting work! I currently don't have the bandwidth myself to take 
+on a project of this size, however I can see that at the very least this is an 
+excellent reference to have available. And of course, if someone else would like to 
+resolve the outstanding issues and submit the patches on your behalf then that is 
+always an option too :)
+
+
+ATB,
+
+Mark.
+
 
