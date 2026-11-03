@@ -1,111 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29753606A328
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188CE606A32C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=gSqf5yg6
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=R+pF4Y3j
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOITg-0004fl-PU; Tue, 03 Nov 2026 12:39:20 -0500
+	id 1xOIe1-00060N-C0; Tue, 03 Nov 2026 12:50:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xOITX-0004ek-Gm
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:39:12 -0500
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ id 1xOIdz-000604-DJ
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:49:59 -0500
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xOITQ-0007IP-9d
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:39:09 -0500
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-8b2d149b483so20473057b3.0
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 09:39:00 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793727540; cv=none;
+ id 1xOIdx-0008KJ-TA
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:49:59 -0500
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-8b306bbff8eso3075407b3.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 09:49:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793728196; cv=none;
  d=google.com; s=arc-20260327;
- b=fwnh2AiUIe6WJNQu4D7B3kSISIbSSjQGNFFHuFcHjGHrbKE0j/FYj3f0kaoPsWxppO
- TyAegVzfxIEgdovnUs93Cd682H7fumaJbKFsvI8DET+nCkPlhcmPsQxVWg1GgUYypzKc
- YcK/1H+BoEyL0VdS6HOadT8deH82Js9vPJvVV/+x0UyuiBDQkMKo4iximhIgYcZ8a3mi
- WaKnqgak8OvStEqUq99kgjNRHNsMrijYrpucKSfRdbt6TaQUXinFmdODB71YHVNMaxWn
- wu+7gH968Aax0nbO+4DzZpvCds+etsVPQe0N2hCJCDwZwT54kK+RuycCJlglaNx2NflH
- xJzA==
+ b=CJwbtCxGN4E3zOpE+swMRTeyikv2zcwXdjYee/bV1jz9atLO9B+zovMkxGKG9RyLoQ
+ +HRAgUvVT85ybyOMQUioHRKbd7UECjDXa7NnI9q5JzYkea9jvFelvdowHqAxQYz1iXhj
+ qJKqwrNP0bOX5KWKZiELcj9PteBV78hJtsN5zkEVRnL5/0MEziJT4QUCuRAu1tbfKrfx
+ PXC+RKxH/751rmfJT6TXg9CKU4c4CH8BxgOzC5imhWZIDvQOVPM78l60rBQKhIxbhO9I
+ qWYMimYTRW1p5Fe+/LysN5+5lRKhKzXhVrXL0vm61kT2mGSxAtz6XjHY5zYaYEEOrUz0
+ mqqQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=eYJsPy2af8MtLz+Lbc9s1O6GV6rp9tzvQ4qATqX/8aM=;
- fh=HhVnZIVgDvgRQluOQPzGzgOcqIdQcHm0kkiIkgMVLLQ=;
- b=Sz0JzdCeCTWgmwjX/z1z9pZIRyucRIxVl4/536uPEWSO8mnd0DzKakq3CXIybjVRg7
- sabb1NybZNga+bHptniaad0ALt3VipvYgrsTl4VVIUjZ3qgJZKpaA+75dWgJuwkSHdxx
- HyhWCetKOxHwEO8BWtVzyqxIzGujLfdrQXRLb4D6NydUXJgLi21wmALgkGZmKfo7H2E4
- wglT2FG4H6ORx0P0mh+osXcFfFxhDdIpjHP2xrhSHYVbkRDv9lhZs/+0UAfHF8UCMx/s
- v6ijuEaN6QWyhRlRyfcdNrtDZclOYHkun+lFUF8xERCfHT5WsAUb4DIpoUC3vsLG65E6
- n3Lw==; darn=nongnu.org
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=KHD63WxroFQlHpiGxelkPA8Wve5eDaujYnpu/A8vIO0=;
+ fh=dc3ThaQxlIsQIYjAKVWECeraAhMQTsLDtJFd7t+aIGI=;
+ b=egmQw2PJk8RMWku7RMUhkTFOOlc+y2VCyh4G40ZGRZ5FE86bwBGlikK665nnCavt/N
+ ER/1EIghQk9SgfjIYKpUpErZMUf4zRJFb1w1CDnZw4IkkMlt3PzRlW4cYjO02qyDuylq
+ su0rrXK/J9pjQjJZMKOPweLMwL13+aZ8MEIgwH1iUYhdrund/O/H2S8UHh3vpGnMfklJ
+ xAcjsn17vQdMReHbaGZZDi8gtYq6piUIDpa8jFiWoaeef3zr0k48dhNH1QXtCjrV3ddW
+ bdMwqa6gW8Q33HyH+5eA2EopeLjZj+l/Ehp4XLg7Vdt4616Z8oe40CNuweScztja2NPa
+ HMag==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793727540; x=1794332340; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=eYJsPy2af8MtLz+Lbc9s1O6GV6rp9tzvQ4qATqX/8aM=;
- b=gSqf5yg6APN+ePySeegDhxsGi+x/Q1Nrq5rbi1zaiJ7jjaoIa1XRqh2XOal+sJrf2r
- E7rNoUrwbjWgjOM2B1kfSJt1kEYp4INSOy7wgr563HzxOG9jAQvS49k7qV5OsHtqxd3w
- w61FsJjtfVw1P2W5VYFaRWJZAh1Mr9VqQZwjJBoefPvqtk5+PxZzeQH/VAfOmpu74Khm
- h0eV3t/RAhPVLOvGoo4rDuWqayTGESNhe604wC1q/zjLmlS3hepEzVPphgDsf96d6Dpu
- u0h55ycw7cJJnA9CuGkv4Un2KRLCP/hx7ks2DXuweLxrJTQ6IdqDwEGX70ct8H14VqRU
- H03Q==
+ d=linaro.org; s=google; t=1793728196; x=1794332996; darn=nongnu.org;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=KHD63WxroFQlHpiGxelkPA8Wve5eDaujYnpu/A8vIO0=;
+ b=R+pF4Y3jIAhiRBvXK3gKbb4f/6eXko7Y4NlMSfj1bHqo5p7H6M6EvyPDismjC95X89
+ c198cI3zZl2eTylLA+4KA1XfZKs1nXSUA8E84nbDm9Wot5P3HmD8sbUorv+mCKiJKuxA
+ BJ1OIqjAM6P34wkeR8P4sMvO2xjTYAzU+eg/Qkv2DII/5jgXO8RgPVvQjRgwCL9ipzGc
+ N5enBYXofp1C3WdU44DmjHZvW3wZEw2riagZtcdGGRhvlcOeABGSnEmClkNaLTyTbrfc
+ 2C0CIui49sNQsDjd1XHusGbO5gy1+BcTRaa+WrVmFGNhcJUVwGGjbIVesbyrUs64o3Ta
+ kqhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793727540; x=1794332340;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=eYJsPy2af8MtLz+Lbc9s1O6GV6rp9tzvQ4qATqX/8aM=;
- b=ZzkRFFtbRDPZjH83wMmCwfcyu/0ko9273lwamBRaFaHv14917W40ioe0OyIoNasnhL
- eKLacy6LLD8sZyGtcJZM1LG0w3irRp9cKD1/Rv0uReIz6ktY5HWOlW/mpOy0txi4zLVh
- o5Uhjfnyk7melczySrLUTQwq9Gk1gmr9BSiCW9yUYa6rJx/oZGF+cGynsqKOziJ9f29G
- UnsYLxkwUNYG9yIduRfUOqMj3sF5i+kbD+wY8B91fJd8vxXcyND3q3MhQZoi+uPXPyip
- 2YEjC1LtUK4YmedcLbmwyj/DiyB4tdpcyDPfwERBf3VO2BHjzdSbx9YXRklB9z3UlQaB
- YgIg==
+ d=1e100.net; s=20260707; t=1793728196; x=1794332996;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=KHD63WxroFQlHpiGxelkPA8Wve5eDaujYnpu/A8vIO0=;
+ b=zdMb2iDxFGxYlPtRykNlLq33pTtvJe2D5uOnv/o9pGNQv/XpCy+VjwZtIrPDd5wcNx
+ XhSMXzOTZXf7Al5jxfuv5/0YMWg3YwsgTgxBdSXBZN2JJGaidf7tWfnvLLrlEebUIY4f
+ z6+HL3IXfw0lUg3S/mzTzNtnnoi8H8oDZWUu/i/8/F8YgZAoCXxL//bC2Bim1udInScy
+ hcN9V2MeVIeU7rD0W2GlfbBOQx3EbTgxzWPYAbF4RJSbHoqgU1JMS2BRoTN2ERm7yXvb
+ DxC6tRfBsWTTHjj+4HpAIei5C+Pluvx3it3PKzlKZNlxebv3OxhgCaovcixVsAu5VySq
+ l85w==
 X-Forwarded-Encrypted: i=1;
- AKwUvByRmcUwRH8Ryykf+bSHgp0zcACRffD34z4ojYs3wjmlLZAdXyYGEEzIagYJhldc/9CgNkjhI8JRfCXT@nongnu.org
-X-Gm-Message-State: APuU4Z96wYJhCEa8EHtPU3uWswDelSb/mV76ETFV553KJScND/Heqyi7
- SDfH+CjdBxEIi5if0KJmEMmqRZmvfzKmcwLBZK6n0p3fLxu0b8IBj2m/KBvsJEAbAH7B8ujEOaZ
- fLhhxyi3uOoUQQoZBaUkVY6LwZ5w6mCLLKnyX5b645A==
-X-Gm-Gg: AYBFou2BMbkDBZJ7IFs7lyiLO0QFCVwbhuj4dcWAOb2HwR4D0hDRKPZCnXzwMG+rhMA
- W1L1+Bqvqc5hXXbl6aIrMkDLEC6Mf6ouCduIK3iy9dq6uPa86HQs6wHKjAtrJsoLIEqqmnXN4pH
- 2zzOC4v2/S/ilvYw3jD3vmZ+LCUpJhx4UCUfBOph1J8tJuxqMqhj/HMUwMwU6FaGG0E4At0SlSV
- QtRd67OOROLPQxh9rScHitXTszjbLXPHBEmOYbTjx8K5qUVWYE5SbiD3EEgn7BoIhR9QyWPwQ0O
- qZyZMmRQOH5yBKTiRpVePpstYFISYMU5pXWNdrFoSl2afGZRAE+5dweBaIrPX1FzhuZVgbseH/e
- /9WrK0s0EtA5r+u2hVU1ViYaMeIajJqImftq5d7/l7h5j8c6Th/hFKqJtI5PSIn34R/HASfYKFL
- 7qPW7vYYt9HS9cwsShCz19
-X-Received: by 2002:a05:690c:800c:10b0:8b0:a8c1:b203 with SMTP id
- 00721157ae682-8b2b6723069mr67438167b3.29.1793727539613; Tue, 03 Nov 2026
- 09:38:59 -0800 (PST)
+ AKwUvBztL1glAWwZ7DtvouwwKsjsD2HfAcGeMiLJTPxGZAriMz7VNUtsvqnK/SkqgBAGvl1r28x+NNoG3F61@nongnu.org
+X-Gm-Message-State: APuU4Z8rfJou2EDOkZBvP/jKpweWebRN8P+20+W5FpXfPQagNcC9plNf
+ ulAbFS9GAOZGnlZ7s3S8CT/kNlqfF04pSAD0ms/gpTbvqRhkyuC9+AqwCKwGWs3OCpZ+uJ52++3
+ xfc4FAU/Ow92SkjZHZoJsr5vvdlVLTeHTtbiNFnSVxy5VQyCUiuaIMaQ=
+X-Gm-Gg: AYBFou1OAJQoOvHpJjsA1nkgHlW4854na7F/oOw4jvdVKv6pGWrskdUIt2DRqFmxvy7
+ 3MiQAzO9SnarM6A0WwDLqkhel6r9NRNramrI/Pha6/1qxBjP7SyCQYzA0sUsdIdqAoSwy02/tJu
+ eh6NSfLQT3Z7uTbQAYvEOR1cYaBsmjvwPnJ3h+QL/0BbaKKYd9eLxDXN1ihV2LupEsuuTIAcSum
+ TKSqLlFUu7BaO8kP/csHQ/FwZiOtQrbiPwg4UfFkjRA7EFmPXv64d5qqKtWP6Q+cMwhdpRc0w2J
+ TIMuEqLj0bRGDNL84p+MfTkV5HrQ9IZEhRInoJrdKehzldhwA3Xt4ANy/hlVY796GzTjcq4LeZx
+ noh0IdQJmU/F/F2DupzaGH+TSxbNWy9jvH8rFlAcCQwN1+NeThAaGj4cs7g+GLoDFTGtzpsUdbo
+ MVQ+jsuhzLKKzm4bRiqlNy
+X-Received: by 2002:a05:690c:9510:b0:8ae:9448:14e6 with SMTP id
+ 00721157ae682-8b2b67738eemr72264867b3.54.1793728196272; Tue, 03 Nov 2026
+ 09:49:56 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <cover.1793207602.git.mst@redhat.com>
- <05f5ab90ea52b0151958fd2506c15858e3e80442.1793207602.git.mst@redhat.com>
- <92a5bdce-af21-4e8a-b869-57e903531a77@linux.ibm.com>
- <0af8c97e-55bf-421c-8b38-de1f88f44547@linux.ibm.com>
-In-Reply-To: <0af8c97e-55bf-421c-8b38-de1f88f44547@linux.ibm.com>
+References: <20261103172616.2400758-1-peter.maydell@linaro.org>
+ <20261103172616.2400758-5-peter.maydell@linaro.org>
+In-Reply-To: <20261103172616.2400758-5-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Nov 2026 17:38:48 +0000
-X-Gm-Features: AclHuK9CkhCVJe0dxfLGQ9dSYLi3TTLaLivqVZblePfmMDmBXX0_RR2g61VogL0
-Message-ID: <CAFEAcA8+x3Bf0LDyh9hU6J9N-A8Lii6fb8orB2Coucn-fAYtTA@mail.gmail.com>
-Subject: Re: [PULL 49/78] util/event_notifier: more strict API
-To: Eric Farman <farman@linux.ibm.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
- Jagannathan Raman <jag.raman@oracle.com>,
- Stefano Garzarella <sgarzare@redhat.com>, 
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x <qemu-s390x@nongnu.org>, 
- Konstantin Shkolnyy <kshk@linux.ibm.com>
+Date: Tue, 3 Nov 2026 17:49:44 +0000
+X-Gm-Features: AclHuK9r9ZwgyO4vbg3YGCrPW4tA0H-36SOAC0OnSf9gUzh8V9hvKFyjwfOtaSU
+Message-ID: <CAFEAcA8X1ARhpncsz=kE2JxFjALGej4ycw3hus=m5kfcVSJXYw@mail.gmail.com>
+Subject: Re: [PATCH for-11.2 4/4] hw/intc/arm_gicv5: Use correct type for
+ value in lpi_cache_get_hppi()
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,59 +114,50 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, 3 Nov 2026 at 17:32, Eric Farman <farman@linux.ibm.com> wrote:
+On Tue, 3 Nov 2026 at 17:26, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
+> lpi_cache_get_hppi() is a function we pass to g_hash_table_foreach()
+> to iterate over the LPI cache hashtable.  This hash table has keys
+> which are GINT_TO_POINTER(intid) and values which hold the L2 ISTE
+> value, allocated as "hashvalue = g_new(uint32_t, 1)".
 >
+> The function is passed the key and value as type 'gpointer' and has
+> to cast them to the real types itself, but it incorrectly casts the
+> value pointer to a uint64_t*.  This works on little-endian hosts
+> (since we only read specific fields of the L2 ISTE using bitmasking),
+> but won't work on big-endian, and trips the clang sanitizer.
 >
-> On 11/2/26 10:48 AM, Eric Farman wrote:
-> >
-> >
-> > On 10/28/26 1:16 PM, Michael S. Tsirkin wrote:
-> >> From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> >>
-> >> We have .initialized in EventNotifier to track was it actually
-> >> initialized, and we have a comment that @fd passed to
-> >> event_notifier_init_fd() must be an eventfd object.
-> >>
-> >> Still, there are two specific users, which ignore these things,
-> >> and use -1 as specific value storing in notifier, to mark it
-> >> "uninitialized".
-> >>
-> >> Let's make strict API:
-> >>
-> >> - store only valid FDs in initialized notifier
-> >> - _set() asserts that passed fd is valid
-> >> - _get() asserts that notifier is initialized (actually, except
-> >>    the two specific cases we rework, all other callers are not
-> >>    prepared to notifier being uninitialized when _get() is called.
-> >>    In this case _get() returns 0 (which is a valid fd), and caller
-> >>    will mistakenly use it, which is worse than abort())
-> >
-> > Well, there are other cases that would require rework not addressed
-> > here, as this commit breaks (at least) vhost-vsock-ccw and virtio-net-
-> > ccw (for vhost=on) on an s390x host. I'll look into that, but was not
-> > prepared for such a late surprise.
+> Fix the pointer type.
 >
-> I sent a fix [0] for the assertion that shows up with this particular
-> patch in some of the common configurations, but it still leaves VDPA
-> broken on s390x (which was also working before this commit). So, not a
-> good idea.
+> Cc: qemu-stable@nongnu.org
+> Fixes: a0562ada75e ("hw/intc/arm_gicv5: Calculate HPPI in the IRS")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  hw/intc/arm_gicv5.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I just posted a variation [1] of that which restores VDPA functionality.
-> Would that be doable? Or can we get the assertions here removed until we
-> can adhere to the API restriction?
+> diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+> index fd6456cd8aa..a362349e5ed 100644
+> --- a/hw/intc/arm_gicv5.c
+> +++ b/hw/intc/arm_gicv5.c
+> @@ -390,7 +390,7 @@ typedef struct GetHPPIUserData {
+>  static void lpi_cache_get_hppi(gpointer key, gpointer value, gpointer user_data)
+>  {
+>      uint64_t id = GPOINTER_TO_INT(key);
+> -    uint64_t l2_iste = *(uint64_t *)value;
+> +    uint64_t l2_iste = *(uint32_t *)value;
+>      uint32_t prio, iaffid;
+>      GetHPPIUserData *ud = user_data;
 
-If this change regressed something, and we don't have an immediately
-obvious fix for that, we should probably revert this change.
-Can we do that without too much trouble?
+Looking at this again we could also make the local variable
+be uint32_t; but getting the type wrong on that doesn't matter.
 
-thanks
 -- PMM
 
