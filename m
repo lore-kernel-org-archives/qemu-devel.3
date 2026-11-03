@@ -1,77 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF5C606A331
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 03:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AEB606A326
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 03:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=TNSjKlsa
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W80vGmFx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO5Bb-0004zB-E1; Mon, 02 Nov 2026 22:27:47 -0500
+	id 1xO5Cd-0005Gc-S8; Mon, 02 Nov 2026 22:28:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5BP-0004ua-GD
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:27:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1xO5Bv-00058y-Ob; Mon, 02 Nov 2026 22:28:07 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xO5BN-00061Y-Ux
- for qemu-devel@nongnu.org; Mon, 02 Nov 2026 22:27:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793676453;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zwgA6kMBcwjCfqtjnHfwaiEa9/mhLo4QXMbA7haZZCI=;
- b=TNSjKlsa+pShrnJVygsPyGJXXcBg6Eq4eh5EfPt4q/sPIgtX83TbVIt4zT1j1XYgcw/kpP
- +pcfMxAygZN2HzOhSc7n6qZdAKCkR1h9+gw4WrCvRKzrxiw27u4k0pCAkOu8pfvwVuvkDJ
- 6ktb3sxIo3DSEoY/+BJy7mdHNVIl4do=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-215-4G9_7GMsOz2LYy6odtszmw-1; Mon,
- 02 Nov 2026 22:27:30 -0500
-X-MC-Unique: 4G9_7GMsOz2LYy6odtszmw-1
-X-Mimecast-MFC-AGG-ID: 4G9_7GMsOz2LYy6odtszmw_1793676448
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 62BD41800A3F; Tue,  3 Nov 2026 03:27:28 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 506DA195608D; Tue,  3 Nov 2026 03:27:26 +0000 (UTC)
-Date: Mon, 2 Nov 2026 21:27:23 -0600
-From: Eric Blake <eblake@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, 
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: Re: [PATCH v4 10/12] block/block-copy: replace zero_bitmap_valid
- with scan_done
-Message-ID: <aulUdeoU11SZRKGQ@redhat.com>
-References: <20261030010613.1612771-1-den@openvz.org>
- <20261030010613.1612771-11-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1xO5Bu-00063r-7B; Mon, 02 Nov 2026 22:28:07 -0500
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 3781760008;
+ Tue,  3 Nov 2026 03:28:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B26E1F000C1;
+ Tue,  3 Nov 2026 03:28:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1793676484;
+ bh=O1gMFqCHsBGTOTgbWaQxZudW4KmwHNY5Hpdj3l4uwY4=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=W80vGmFxEnAU0RVTozqSKwoG7kK10CPgfk0y5t/NfCbJ70hY90QpwemIiRh4Bpbwc
+ tAK0oNSXobhsF8RUSEdNEf27bBOGAwWtwbPmVxI0gTlpMT4SaL6DNBZvYAZc9V8RzD
+ uUu0tjEt3WtL/s7ja2HvhfI7fgQ2RIjjKs255f/XKZhpTZFJSlhBD+T0mbIYQmQLxc
+ t6z4fVvn0JNPik+/rFviNDjfit6olKJCTgks71e5W7jmKj50CxowKXDQxnbxgSlLSA
+ Kbk9ngewEVwb5x0zlIrNdddfVDo6YWtIZQHsZ0X4MulLciKewVS0QbTeYqZdwYE3Z8
+ JUKahBNW/fJ7Q==
+Date: Tue, 3 Nov 2026 03:27:58 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Jinjie Ruan <2118537295@qq.com>
+Cc: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
+ imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, ruanjinjie@huawei.com
+Subject: Re: [PATCH 33/37] hw/arm/mpam: Record errors and reject invalid
+ configuration writes
+Message-ID: <20261103032758.777c5dc0@jic23-hlaptop>
+In-Reply-To: <tencent_C971CBCA581AEB8403E2D1ED9854FE0CD406@qq.com>
+References: <20261016101058.1900808-1-2118537295@qq.com>
+ <tencent_C971CBCA581AEB8403E2D1ED9854FE0CD406@qq.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261030010613.1612771-11-den@openvz.org>
-User-Agent: NeoMutt/20260616
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=jic23@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,44 +70,31 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_2 autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Oct 30, 2026 at 02:06:10AM +0100, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
-> 
-> zero_bitmap_valid says more than its name: a task created once it is
-> set skips its own block-status query, the sync=top skipping included,
-> because the scan has already settled what to copy. And the end of the
-> scan was announced twice, clearing skip_unallocated and then publishing
-> zero_bitmap_valid, with an ordering rule in a comment tying the two.
-> 
-> Rename the flag to scan_done, and let block_copy_set_scan_done() clear
-> skip_unallocated before publishing it, so backup_scan_source() makes one
-> call and the order is kept in one place. skip_unallocated is left to
-> mean that a sync=top scan is in progress. No behavior change.
-> 
-> Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> CC: John Snow <jsnow@redhat.com>
-> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->  block/backup.c             |  6 +-----
->  block/block-copy.c         | 19 ++++++++++++-------
->  include/block/block-copy.h |  2 +-
->  3 files changed, 14 insertions(+), 13 deletions(-)
+On Fri, 16 Oct 2026 18:10:53 +0800
+Jinjie Ruan <2118537295@qq.com> wrote:
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+> From: Jinjie Ruan <ruanjinjie@huawei.com>
+> 
+> Add MPAMF_ESR error recording with the IHI 0099 Table 7-1
+> encodings this model can raise, injected on the check-and-reject
+> write paths: Undefined_RIS_PART_SEL / Undefined_RIS_MON_SEL on
+> out-of-range selector RIS (the range check also subsumes nonzero
+> RIS on an MSC without RIS support), intPARTID_Range on INTERNAL=0
+> or out-of-range intPARTID, Monitor_Range on MON_SEL beyond every
+> monitor type, and MSMONCFG_ID_RANGE on out-of-range filter PARTID.
+> All are paths the kernel driver never hits; normal boot raises
+> nothing (verified).  A recorded error overwrites PARTID_MON/PMG/RIS
+> and sets OVRWR if a previous error was still latched.
+> 
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 
 
