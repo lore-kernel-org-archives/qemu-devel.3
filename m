@@ -1,66 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49152606A324
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 04:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B07F606A324
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 04:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=jD3q48bW
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=CvNZeZ/g
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO5io-0006HK-CG; Mon, 02 Nov 2026 23:02:06 -0500
+	id 1xO5z7-0001rZ-UQ; Mon, 02 Nov 2026 23:18:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1xO5il-0006GC-Jb; Mon, 02 Nov 2026 23:02:03 -0500
-Received: from canpmsgout03.his.huawei.com ([113.46.200.218])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1xO5ij-0001NZ-1n; Mon, 02 Nov 2026 23:02:03 -0500
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
- c=relaxed/relaxed; q=dns/txt; h=From;
- bh=qx3h4V99Lwk3tUc0U+uW03DKD64uA7Epl9KxdC6e224=;
- b=jD3q48bWwweeaRvQWIUmjeCPMZVbiNcc3VYc79fixGFNHoQM+T508N4GQ5UQaq0ckBGbSeHJ5
- 88sZe4T/Xf+l8k4MRs5ShQeTrVn6Z87vm0JJPE00cbRG9vjAigbdcEJiavavhoYu0s1TJjTOhWG
- NwCJI25WXpc/hPuXnZCt04g=
-Received: from mail.maildlp.com (unknown [172.19.163.0])
- by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4jJZd36yLyzpSt7;
- Tue,  3 Nov 2026 12:01:27 +0800 (CST)
-Received: from kwepemk200008.china.huawei.com (unknown [7.202.194.74])
- by mail.maildlp.com (Postfix) with ESMTPS id C8A4740561;
- Tue,  3 Nov 2026 12:01:50 +0800 (CST)
-Received: from [10.67.110.68] (10.67.110.68) by kwepemk200008.china.huawei.com
- (7.202.194.74) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 3 Nov
- 2026 12:01:50 +0800
-Message-ID: <08cae165-953e-4cb7-b774-ce5ced93163e@huawei.com>
-Date: Tue, 3 Nov 2026 12:01:49 +0800
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xO5z6-0001r4-OX
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 23:18:56 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xO5z5-000388-4E
+ for qemu-devel@nongnu.org; Mon, 02 Nov 2026 23:18:56 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2e98798cbddso17881725ad.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 20:18:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793679533; x=1794284333; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=N4nbK0uHEmstLviHBUk/dBzbts47FL3aRPhrN2feTUE=;
+ b=CvNZeZ/gNI6pNuKMpcRx/uOJjZb1McjWZCHpQgkvIxZphmTNInB+YRyE3Vzcueyv0R
+ nlVuA4E1nLb70S0wkpfi9ODf1NDdh3SUavGrlBHQLn7ICBXNAgL4U0b/w6f0H3jGAJcS
+ H/nxpva5cE6ibuIb0MJCKcsj7wILADuE/sg03DqQAuwbX39xnTGgPNqq+4DhRY/OOmoI
+ jKyqJcTitCZPic8JOyIkBy4IUHEBecwSX3H7FQus2BKQvGBPW8ATQrpQLYPiUb93ruLn
+ fw6iu2igjfWR+R8TnQ8TfdLmZikygZsCpSC6f9tVNwH+lHzn9ETefBDk6h0E1ZVbHLI7
+ lrbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793679533; x=1794284333;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=N4nbK0uHEmstLviHBUk/dBzbts47FL3aRPhrN2feTUE=;
+ b=cNeoC+tiMcakCjyK1tXPRirT/LyiuMr7LXWYZxYzFbhdMHexUVpIo2Bx2veq7VIs8f
+ RN/X1jmxkS+aCUpQitT5fvNPTfZSpDnPFxSAWPrR5b3VzO/8sHsAUCSFN1FhOpkSobeX
+ DcdTvejOw2aEzrpE3kXlIabFQMCZ3EUkoaO1Ys485xSJSc3W/VrJQrI1suhdVMjl26ao
+ BTBMN+lb8O+4ceuiDV3Y9/2y4JUy8H0XBts4OPODKAK284/6wgjilNU7TVRlsdi+PRau
+ f3CB7p7p52XF1z11UncH8OqOM8wbvKSNADjltteU9g5Uj8G/L8eLIKIjL0eiPwkKBIe+
+ BhTg==
+X-Gm-Message-State: APuU4Z8KAIAEAdmmAr/ndq0aNv7dBI69S4g6rZT3WLunBbdWA3NcafZI
+ LHmEE/1DZ318XRWI0kRruATIc5JHTMmarJ2Fkr7hI56T/hUH8H84CeJ4pLVwR8hPtxk=
+X-Gm-Gg: AYBFou2GM4zp6fSEH0hid/IA/PoJesrk6IjqhzUmycP3CrLU7ZLxQC34oRwJ5jg8+iU
+ XbPey8cfp3CVlZgTV3oOyKWTXwndWnBPoyMLqGA9LQmm+WtChPNdJrknoqHctDZA42bq9vTGa9v
+ jO+K2BVOiNRU02+Lb+eUgBtCGoodALn0RwK2YJMe42iZYrwlvwJqdktZ0XdxjBcYdSowGrknOd7
+ NGEI0sbhNZrtUs1SiLzUu7z+pBGa6tOAPTMAZPwgsNUsi1hZr/iXTbe4RELZdBkfQvALJ0uyDVa
+ UAeLqz8pU+1lQBAf1rREA//VyujNMkyD/acFnH8E+dTqIjpZXsdxQ+0X3r0easub2ECTR9k0Stx
+ k5+ZgMJa99Y+Z0891ZC6RaO6N5VbKH8lIF+SmpIyNlmPP1u/HHyu7ObD8DzlCoFHjcbCNqbggIl
+ 3wlP8uO7oCRfH9P8XnmNE4oQrp5bNgGozdBJQFUlJ17oTQL/Xmpn+VY5sIyiwrKQaU4bAtD5vwT
+ 9coEH5d53erPp4ptJ2SAy3y8r5mnOBbmme6JzgPiw4yxGQ4k6t/u5yU/x9OJU3N/Xl9loxPFC0W
+ KJyZyEkdLetcHeYVHdswgzaQq44NjKF/pl57ZSepKUVbzoqiJHHw/OyKC5Z02P5xIWXnyw==
+X-Received: by 2002:a17:903:2407:b0:2df:4dc5:e12e with SMTP id
+ d9443c01a7336-2eb3649f0c2mr106497135ad.27.1793679533295; 
+ Mon, 02 Nov 2026 20:18:53 -0800 (PST)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2eb3927e156sm34550655ad.49.2026.11.02.20.18.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Nov 2026 20:18:51 -0800 (PST)
+Message-ID: <a9cbeb05-7082-48fa-93f5-cd5685332ca9@linaro.org>
+Date: Mon, 2 Nov 2026 20:18:49 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/37] hw/arm/mpam: Implement PRI priority partitioning
-To: Jonathan Cameron <jic23@kernel.org>, Jinjie Ruan <2118537295@qq.com>
-CC: <anisinha@redhat.com>, <armbru@redhat.com>, <eblake@redhat.com>,
- <imammedo@redhat.com>, <michael.roth@amd.com>, <mst@redhat.com>,
- <pbonzini@redhat.com>, <peter.maydell@linaro.org>, <qemu-devel@nongnu.org>,
- <qemu-arm@nongnu.org>
-References: <20261016094733.1898485-1-2118537295@qq.com>
- <tencent_22716EE5A5A467448FFD5664D320278E1109@qq.com>
- <20261103013739.47f3ef39@jic23-hlaptop>
-From: Jinjie Ruan <ruanjinjie@huawei.com>
-In-Reply-To: <20261103013739.47f3ef39@jic23-hlaptop>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- kwepemk200008.china.huawei.com (7.202.194.74)
-Received-SPF: pass client-ip=113.46.200.218;
- envelope-from=ruanjinjie@huawei.com; helo=canpmsgout03.his.huawei.com
+Subject: Re: [PULL 00/17] Block layer patches
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20261102162955.268763-1-kwolf@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261102162955.268763-1-kwolf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,138 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On 11/2/26 08:29, Kevin Wolf wrote:
+> The following changes since commit 56afd82bd4db9688f1c1c9d0e2ea163b8cde3283:
+> 
+>    Merge tag 'qemu-sparc-20261101' ofhttps://github.com/mcayland/qemu into staging (2026-11-01 08:37:48 -0800)
+> 
+> are available in the Git repository at:
+> 
+>    https://repo.or.cz/qemu/kevin.git tags/for-upstream
+> 
+> for you to fetch changes up to 6e641f2440aa637c670b7f0fe512ea3fc2611b99:
+> 
+>    block/vmdk: add eos marker for stream optimized disks (2026-11-02 17:06:37 +0100)
+> 
+> ----------------------------------------------------------------
+> Block layer patches
+> 
+> - mirror: do not require a root block node
+> - file-posix: Add 'accept-read-only-device' option
+> - vmdk: Fixes for converting to streamOptimized
+> - virtio-blk: Add support for FUA write requests
+> - Print simple help text when calling "-blockdev help"
+> - qemu-nbd: Add --all-bitmaps option
+> - coroutine: Fix default idle pool max size on Linux
 
+Applied, thanks.
 
-在 2026/11/3 9:37, Jonathan Cameron 写道:
-> On Fri, 16 Oct 2026 17:47:07 +0800
-> Jinjie Ruan <2118537295@qq.com> wrote:
-> 
->> From: Jinjie Ruan <ruanjinjie@huawei.com>
->>
->> Add the priority controls: MPAMF_PRI_IDR advertises a 2-bit
->> INTPRI (0 = low) with no DSPRI, HAS_PRI_PART is set on the cache
->> subtype, and MPAMCFG_PRI is readable and writable per selected
->> internal PARTID, logging writes of DSPRI/INTPRI fields the IDR
->> does not implement.
->>
->> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> I wonder if it is worth maintaining the flexibility of all the
-> rest of the code not assuming HAS_PRI when it is hard coded to 1?
-> 
-> Maybe it is worth piping through the ability to turn each feature off?
-> Or simplifying the code by removing the checks.
-> 
-> When I wrote that original I was mostly tweaking options and rebuilding
-> to see what bugs I could find in James' kernel code.  I think it
-> would be useful to keep the ability to do that, but I have no idea if
-> anyone wants the rich set of control parameters that needs. Maybe
-> x-has_no_pri or something like that to indicate debug only?
-
-I agree. I think it makes sense to provide users with configurable options
-
-> 
-> BTW not sure how you decided which patches to keep my original SoB and
-> which not. I don't really care given this was ancient code I was
-> probably never getting back to, but maybe do another pass for what
-> was more or less straight out of the RFC vs needing a bigger rewrite.
-
-Ok, I will recheck it.
-
-> 
-> Thanks,
-> 
-> Jonathan
-> 
-> 
->> ---
->>  hw/arm/mpam.c | 36 ++++++++++++++++++++++++++++++++++++
->>  1 file changed, 36 insertions(+)
->>
->> diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
->> index 7c33ec4..94e517b 100644
->> --- a/hw/arm/mpam.c
->> +++ b/hw/arm/mpam.c
->> @@ -365,6 +365,13 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
->>          return mpamf->cpor_idr;
->>      case A_MPAMF_MBW_IDR:
->>          return mpamf->mbw_idr;
->> +    case A_MPAMF_PRI_IDR:
->> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_PRI_PART)) {
->> +            qemu_log_mask(LOG_UNIMP,
->> +                "MPAM: Unexpected read of PRI_IDR with no PRI PART support\n");
->> +            return 0;
->> +        }
->> +        return mpamf->pri_idr;
->>      case A_MPAMF_PARTID_NRW_IDR: {
->>          return mpamf->partid_nrw_idr;
->>      }
->> @@ -380,6 +387,8 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
->>          return mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_min;
->>      case A_MPAMF_MPAMCFG_MBW_MAX:
->>          return mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_max;
->> +    case A_MPAMF_MPAMCFG_PRI:
->> +        return mpamf->per_nrw_id[nrw_part_sel].cfg_pri;
->>      case A_MPAMF_MPAMCFG_MBW_PROP:
->>          return mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_prop;
->>      case A_MPAMF_MPAMCFG_CPBM0...
->> @@ -467,6 +476,24 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
->>          }
->>          mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_max = value;
->>          return;
->> +    case A_MPAMF_MPAMCFG_PRI:
->> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_PRI_PART)) {
->> +            qemu_log_mask(LOG_UNIMP,
->> +                          "MPAM: Unexpected write to CFG_PRI when !HAS_PRI_PART\n");
->> +        } else {
->> +            if (!FIELD_EX32(mpamf->pri_idr, MPAMF_PRI_IDR, HAS_DSPRI) &&
->> +                FIELD_EX32(value, MPAMF_MPAMCFG_PRI, DSPRI)) {
->> +                qemu_log_mask(LOG_UNIMP,
->> +                              "MPAM: Unexpected write to CFGP_PRI DSPRI when !HAS_DSPRI\n");
->> +            }
->> +            if (!FIELD_EX32(mpamf->pri_idr, MPAMF_PRI_IDR, HAS_INTPRI) &&
->> +                FIELD_EX32(value, MPAMF_MPAMCFG_PRI, INTPRI)) {
->> +                qemu_log_mask(LOG_UNIMP,
->> +                              "MPAM: Unexpected write to CFGP_PRI INTPRI when !HAS_INTPRI\n");
->> +            }
->> +        }
->> +        mpamf->per_nrw_id[nrw_part_sel].cfg_pri = value;
->> +        return;
->>      case A_MPAMF_MPAMCFG_MBW_PROP:
->>          if (value & ~MPAMF_MPAMCFG_MBW_PROP_WRITE_MASK) {
->>              qemu_log_mask(LOG_UNIMP,
->> @@ -648,6 +675,7 @@ static void mpam_msc_cache_realize(DeviceState *dev, Error **errp)
->>  
->>          /* Cache specific bit */
->>          mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_CPOR_PART, 1);
->> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_PRI_PART, 1);
->>          mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_PARTID_NRW,
->>                                  s->num_int_partid < s->num_partid);
->>  
->> @@ -665,6 +693,14 @@ static void mpam_msc_cache_realize(DeviceState *dev, Error **errp)
->>          mpamf->cpor_idr = FIELD_DP32(mpamf->cpor_idr, MPAMF_CPOR_IDR, CPBM_WD,
->>                                       MPAM_CACHE_PART);
->>  
->> +        /* Priority */
->> +        mpamf->pri_idr = FIELD_DP32(mpamf->pri_idr, MPAMF_PRI_IDR,
->> +                                    HAS_INTPRI, 1);
->> +        mpamf->pri_idr = FIELD_DP32(mpamf->pri_idr, MPAMF_PRI_IDR,
->> +                                    INTPRI_0_IS_LOW, 1);
->> +        mpamf->pri_idr = FIELD_DP32(mpamf->pri_idr, MPAMF_PRI_IDR,
->> +                                    INTPRI_WD, 2);
->> +
->>          if (s->num_int_partid < s->num_partid) {
->>              mpamf->partid_nrw_idr = FIELD_DP32(mpamf->partid_nrw_idr,
->>                                                 MPAMF_PARTID_NRW_IDR,
-> 
-
--- 
-Best regards,
-Jinjie
-
+r~
 
