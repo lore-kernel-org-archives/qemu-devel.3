@@ -1,73 +1,91 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5526606A324
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 07:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF71606A329
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 07:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=SS5zSMXg
+	dkim=pass (2048-bit key, unprotected) header.d=theorem-dev.20260707.gappssmtp.com header.i=@theorem-dev.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=cWl3TJGO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO91Y-00052t-1x; Tue, 03 Nov 2026 02:33:41 -0500
+	id 1xO9A7-00081Y-3V; Tue, 03 Nov 2026 02:42:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xO91B-0004zI-Su
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 02:33:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xO91A-0006O8-8G
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 02:33:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793691195;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=yG/8hc/z3bMgTRVc+W6037KTC9hvZwiVJKY7HnfB5io=;
- b=SS5zSMXgWqiA/pCV5ERCV4NzhOmcXXlOvdO2aGT6yEShnITk7fYQN4SE0D4to3fDN1jqUg
- Pphg0E3dQA9p4ykBo4LYVyTXYRuN+sd8lI4Q4cLC7GVc9OtZ8gVqtaVFOQ6ioeGqAOWf9z
- 2deXRJuOXIWg4GVWPwNmFvASE3evK7g=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-ke0GMgErOOWNg8uw9n2qlw-1; Tue,
- 03 Nov 2026 02:33:14 -0500
-X-MC-Unique: ke0GMgErOOWNg8uw9n2qlw-1
-X-Mimecast-MFC-AGG-ID: ke0GMgErOOWNg8uw9n2qlw_1793691193
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7A411800674
- for <qemu-devel@nongnu.org>; Tue,  3 Nov 2026 07:33:13 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66DDB18005B7
- for <qemu-devel@nongnu.org>; Tue,  3 Nov 2026 07:33:13 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1B10F21E6A04; Tue, 03 Nov 2026 08:33:11 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <tewaro@theorem.dev>)
+ id 1xO9A2-00080f-Kw
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 02:42:26 -0500
+Received: from mail-dl2-x09.google.com ([2607:f8b0:4864:38::9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tewaro@theorem.dev>)
+ id 1xO9A0-0007BP-18
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 02:42:25 -0500
+Received: by mail-dl2-x09.google.com with SMTP id
+ a92af1059eb24-1397ad3d891so709935c88.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Nov 2026 23:42:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=theorem-dev.20260707.gappssmtp.com; s=20260707; t=1793691742; x=1794296542;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cSV/luiiJAjYjkCeAEirIj16QItwEyOH39RoUcTYuyo=;
+ b=cWl3TJGOHZqVgEm2+QqAzeF4yxFyMX4VFMh1bJYVcA/vjEyZ/C+cEPWXKsN8wefoBr
+ QkPvUR2hOliGMpWNHwJB85yh3bZNfyqZWEDWPFZGeovZMiZfCkotX2SGnUCgEMxbvG09
+ Yt7Azyki6j9GxPKa6dHNs+wlwU4iiSVDaFJTOm99c4awJ/uE4pTsTs8k4qXJ+BPrdUmW
+ mfxT8aFFXbIKJ5097aIysrcqg5ibTzbNWILbH8qYfccF+ZjFUc7r80+l8VsOfWVIZ4GA
+ e+3ak2cuVHF5scxtcVlhyBll3QCI9UCq+c0g0QsPyaiJy0PLqpwlTlbMwfnyeR/vtjQp
+ ReQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793691742; x=1794296542;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cSV/luiiJAjYjkCeAEirIj16QItwEyOH39RoUcTYuyo=;
+ b=1r1sjiN0BCc7SGGxiesKgYK+ApKe+eZYydxXuvMhezE55o+FhK6P9O1gniBemH61Ye
+ Poo4z87ZSugZ2b3LzNbNuKdxXaPYfDqPuv7SkDBLgDGerzvjY64cauzWh/ylSTq13tYd
+ VbuGgI2SatsPeTwctYGx2op0hX6gP7SvN/oAotZXVM0/6ERDOOujjO+WMzjFEezFPiHQ
+ tg9avGgZ91EUsjy8KMTySncLdIbb1Bm/3PkHImAVhpFVtvE4Drkg7Xb3stWHNHHnrhdh
+ oqkuVuISZgN4lJb7kx5ayoEtrMmBF3Pv3RR8IOKFew+9xktjpiUhOhIfq1fUeMLnJYOn
+ zUng==
+X-Gm-Message-State: APuU4Z/1bbepl6C/9DhpcisjARTgjdy1F6pI0apn+B4vCT6gtiOIx+lt
+ x4kn+tef9x0hhifFb7XPUUCb3MA17E7eM8pnQB0PFD4oiEIFl7KkTpnp4fSOh1Jj0mWi+SFB5WP
+ wZP9PuSe24Ciw
+X-Gm-Gg: AYBFou0kh1eGWHVYP1njIyzD06LVZWjn0VPoiP8htrmPP6eTWdSsp5tHHrlFHM1/pKY
+ S0MZr8m/bvNTHkvM7EDsTIOLhdhc0o5pB7FuqVDZSybbRvUiqElND0ex/6TB4B5sJ5T5CwRGg48
+ 0vWH8VsgKD4g89KurW90CwhcmdiwXbqlmPs4LIIrXEn0O9fC29iRXLYBsssLuHFmu8FX4e6SP7z
+ XaaRXfPmIVZHV6+Hv+a8gwHO2EzBB4Mqo/7NdeVTYH/aaVKWVPkwOOojMAPQZ8H13xwWwsqdMej
+ Q9w2xGgq2JzelwJKVCaMDr3p6GGxhzvi9+FYVy+52IMynog8MfoDMBCJZLGEFPkN0Ph8TUvuW+H
+ x2lwrhZ9NMWprE1kp99uW7M6+AlaIKWU8ckrgnFl1uL5eR03GJHHFJw6u9xNXhaBws9Kp0jBW1G
+ 8weCkX3ah+XPNq4kFNrS2iOf23BoinoxbPJTOVilIz/dOYd/rqKI7MFVOubG2iaLxrXD9FaiC8v
+ aJ3d3RiUxT1SYKnUj/e9u4FQNH3+ayrsuJ9CKh4ja9xtiDVToyzLSCBvKxjpAcqoR8RzKO++Q5i
+ iPJfiHwH76tbrRj+8Uzftcsuq50/T9zwCBpYWStQ/2UPB6SgYzReYb/cJFwqEUTYEcxB8dI=
+X-Received: by 2002:a05:7022:7e0c:b0:15c:1679:1cc7 with SMTP id
+ a92af1059eb24-1ac5f181878mr17754499c88.37.1793691741812; 
+ Mon, 02 Nov 2026 23:42:21 -0800 (PST)
+Received: from tewaros-MacBook-Pro.local
+ ([2601:647:6300:1230:9da3:3d82:7292:c937])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1ac192c27cdsm68953076c88.10.2026.11.02.23.42.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Nov 2026 23:42:21 -0800 (PST)
+From: tewaro <tewaro@theorem.dev>
 To: qemu-devel@nongnu.org
-Cc: eblake@redhat.com,
-	jsnow@redhat.com,
-	berrange@redhat.com
-Subject: [PATCH v2] qapi: Consistently use x.y with since
-Date: Tue,  3 Nov 2026 08:33:11 +0100
-Message-ID: <20261103073311.3501327-1-armbru@redhat.com>
+Cc: disclosures@theorem.dev,
+	tewaro <tewaro@tewaro.org>
+Subject: [PATCH 0/2] target/riscv: write mstatus.GVA on every trap into M-mode
+Date: Mon,  2 Nov 2026 23:42:12 -0800
+Message-ID: <cover.1793677945.git.tewaro@theorem.dev>
+X-Mailer: git-send-email 2.54.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:38::9;
+ envelope-from=tewaro@theorem.dev; helo=mail-dl2-x09.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,122 +97,47 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-docs/devel/qapi-code-gen.rst documents "Since: x.y.z" and "(since
-x.y.z)", but we almost always use just x.y.  Makes sense, because .z
-is exclusively for stable branches, where we generally don't mess with
-QAPI schemas.
+Hi,
 
-Adjust the doc and the exceptions to the ruling practice.  Do not
-touch versions prior to 3.0.0, because .z was not for stable branches
-back then.
+Based-on: <cover.1793677944.git.tewaro@theorem.dev>
+("target/riscv: fix mtinst/htinst for G-stage faults on VS-stage A/D
+updates", whose hyp-guest.h and hyp-guest.S this test reuses)
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
-v2: Don't change versions prior to 3.0.0, and improve commit message
-    [Daniel]
+Patch 1 fixes mstatus.GVA. On every trap into M-mode, GVA should be
+set to 1 if mtval holds a guest virtual address and to 0 otherwise [1].
+QEMU does not clear gva or set GVA for particular faults.
 
- docs/devel/qapi-code-gen.rst | 4 ++--
- docs/interop/firmware.json   | 4 ++--
- qapi/accelerator.json        | 6 +++---
- qapi/crypto.json             | 2 +-
- 4 files changed, 8 insertions(+), 8 deletions(-)
+Both date back to 9034e90ad9. The fix sets mstatus.GVA from write_gva,
+the value QEMU already computes for hstatus.GVA.
 
-diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-index b1cc5b5f0d..f276a2bc9b 100644
---- a/docs/devel/qapi-code-gen.rst
-+++ b/docs/devel/qapi-code-gen.rst
-@@ -1001,7 +1001,7 @@ indented like this::
- .. FIXME union branches should be described, too.
- 
- Extensions added after the definition was first released carry a
--"(since x.y.z)" comment.
-+"(since x.y)" comment.
- 
- The feature descriptions must be preceded by a blank line and then a
- line "Features:", like this::
-@@ -1034,7 +1034,7 @@ detailing a relevant error condition.  For example::
-  #     - If @device does not exist, DeviceNotFound
-  #     - Any other error returns a GenericError.
- 
--A "Since: x.y.z" tagged section lists the release that introduced the
-+A "Since: x.y" tagged section lists the release that introduced the
- definition.
- 
- "TODO" sections are not rendered (they are for developers, not users of
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 1efd32c631..c8bf0ef1a1 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -283,7 +283,7 @@
- #     and can be shared between multiple guests.  No NVRAM template
- #     will be specified.
- #
--# Since: 7.0.0
-+# Since: 7.0
- ##
- { 'enum': 'FirmwareFlashMode',
-   'data': [ 'split', 'combined', 'stateless' ] }
-@@ -296,7 +296,7 @@
- #
- # @mode: Describes how the firmware build handles code versus variable
- #     storage.  If not present, it must be treated as if it was
--#     configured with value @split.  Since: 7.0.0
-+#     configured with value @split.  (Since: 7.0)
- #
- # @executable: Identifies the firmware executable.  The @mode
- #     indicates whether there will be an associated NVRAM template
-diff --git a/qapi/accelerator.json b/qapi/accelerator.json
-index efc0fa8141..e422fc7ee6 100644
---- a/qapi/accelerator.json
-+++ b/qapi/accelerator.json
-@@ -78,7 +78,7 @@
- #
- # @xen: Xen
- #
--# Since: 10.2.0
-+# Since: 10.2
- ##
- { 'enum': 'Accelerator', 'data': ['hvf', 'kvm', 'mshv', 'nvmm', 'qtest', 'tcg', 'whpx', 'xen'] }
- 
-@@ -91,7 +91,7 @@
- # @present: the list of accelerators that are built into this
- #     executable
- #
--# Since: 10.2.0
-+# Since: 10.2
- ##
- { 'struct': 'AcceleratorInfo', 'data': {'enabled': 'Accelerator', 'present': ['Accelerator']} }
- 
-@@ -101,7 +101,7 @@
- #
- # Returns: @AcceleratorInfo
- #
--# Since: 10.2.0
-+# Since: 10.2
- #
- # .. qmp-example::
- #
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index a8d753d360..0fd1af1b68 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -57,7 +57,7 @@
- #
- # @ripemd160: RIPEMD-160.  (since 2.7)
- #
--# @sm3: SM3.  (since 9.2.0)
-+# @sm3: SM3.  (since 9.2)
- #
- # Since: 2.6
- ##
+Patch 2 adds a test, all 4 pass on upstream Spike, all fail on master.
+
+This bug was found while examining <cover.1793677944.git.tewaro@theorem.dev>
+and writing a generalized test. Claude was used to diagnose the issue. All
+commits were human written.
+
+[1] Privileged ISA v1.12, 8.2.1, the description of GVA and the note
+    under hstatus.GVA
+https://github.com/riscv/riscv-isa-manual/releases/tag/Priv-v1.12
+
+tewaro (2):
+  target/riscv: write mstatus.GVA on every trap into M-mode
+  tests/tcg/riscv64: test mstatus.GVA on traps into M-mode
+
+ target/riscv/tcg/cpu_helper.c        |  4 +-
+ tests/tcg/riscv64/system/meson.build | 21 ++++++++
+ tests/tcg/riscv64/test-mstatus-gva.S | 75 ++++++++++++++++++++++++++++
+ 3 files changed, 97 insertions(+), 3 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-mstatus-gva.S
+
 -- 
-2.55.0
+2.54.0 (Apple Git-157)
 
 
