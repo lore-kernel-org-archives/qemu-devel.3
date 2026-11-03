@@ -1,144 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEDD606A32D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 09:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8936085099
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 09:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uYKGDzUH
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=VLNfVbvk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOAcZ-0003v2-Dc; Tue, 03 Nov 2026 04:15:59 -0500
+	id 1xOBEf-0000yp-7U; Tue, 03 Nov 2026 04:55:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xOAcV-0003uB-TK
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 04:15:57 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xOAcT-0000EX-QI
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 04:15:55 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-6b413b0a974so5919782a12.2
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 01:15:52 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793697351; cv=none;
- d=google.com; s=arc-20260327;
- b=TSOSFxzqIultoA0IMWk9afnck7iQVZ/8yxbEBI5P0zAR+6EKUJhkbdRdqYKuCkv4Jb
- YHZxbSTqLZDLqnQ8mteBPvPSZA/TOKE7N4nvxb2qxbEP4iHIOe3G5r6UJZymmjCTyI3U
- RQ6fIXIUeTF9ZOKb4bICGBR5C39dKZIW79zO/WS9K28S+SnE3fDWTmlrymFYO0eVZheN
- C7axUYmC/c2BgVQAG5qjlEyUcWk+Hvo/RmvbKxw/sAwySSzkBSEAeyL0aOhSObPQjOui
- ps4F/j8Ge6+Enxx6r5R0urh5U+ttPo9w689MzoLeQvmOJcNRaaHvY0jxb1zX66xUNQWu
- 7C5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=6HpPn4PoYBNIQe4jwAq6RYNc4y0GSA5S0U2wFZLAcN4=;
- fh=Si5sPdu6QaN1MRftWzrU7i8xDSspAZLN+kbMOisCt8o=;
- b=Ve+ASNh3wMsXQVpg6FH3il3m8ADUyJYe+kmO92MOeajcbcF9GBnYH6x8gbu3bfSxBi
- D0BezSpiuFFBBECBIHWMnEM3fAsV7ke6sh6j+vgNi9hoVaUny5rqFO6DQks8nqnHDOYi
- 7RToGqT/7OYSjFPr3J1e5pXMRXKvOMtOCCI78sPQRDWdKPIcrAZSK5+d2sxExw+FyoS7
- BJAveXTNz22U8T3JnY21MMJcc8scVxjqKOsAOJSFo72RTDUtS7azN9NDSfhTMjfPZbbi
- zXwnbbEVw14ID+G/ijZBBB2OQ859FCJVajikJJ2MPI+ydYAv0L8QUnwOX+siQYs9NsZM
- uIYg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793697351; x=1794302151; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=6HpPn4PoYBNIQe4jwAq6RYNc4y0GSA5S0U2wFZLAcN4=;
- b=uYKGDzUHc8CKPW5yTYQeEHzxj0Qhu4KcFYnSD4BGQ+TQ+1G3EmsHGB8Y/ScS+fdsey
- WlM6+Sw+Y494nZWZ2BkjJhHL8t5g5tMpBQ0lL1FtTNDCOCyQVT4C8KYcyQ1Y4aJKweez
- veu1c8BshwSkoH57a71iM0H5MuLTEfBChyowTrE0j1NtyEEMeXTzG5/+2T+28l1pfCpg
- kErc5u3BRJ/3cV6b8TEWZ/fZx5o5XfQvOVZp3oD9kMIHEqKb852/ujEGFqntPzPHp/TI
- BNW2ljLzXZV3fH3YlpQH/DYZPNoKDfJqhRpa8QzjD4AwiLMXrDgVmTSYhZHlMoPjtilu
- gYSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793697351; x=1794302151;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=6HpPn4PoYBNIQe4jwAq6RYNc4y0GSA5S0U2wFZLAcN4=;
- b=a/J7tVgvUfNaX6EV7X+5gwI9s3FsQ3UtP1e4C5akhHwsweXNNKfsIeIiXMP5hFPW4a
- aBlENmLs1f8nhdRGNd91ewmM+Jbds3T8Zjfa+xmDOJoUtXCzCX1Ic2tJE8tS9RNmNhOS
- Ix+53p1LU06eb5qyw0Ev7VqzJcEygsKnjPHdHQkJ98VmoEfuzYfze/vH25rleb2YQfbr
- bgLlHBf6UB6PrlW9IoeRMMSRwrxRlzaVW0Wlj0I0O9xo6El7QKw60K9PhMh4rUlW2qw7
- qoH1xgglaK3dbdzsy3HyyF3Fhkf3s0nGdKhtfGJP9MQcgpT/JBfBc5Y9jVvU14VmNK1m
- HW5w==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwcsAGxQUJ2CWxvukU+FY0IXsYRTCjzfgnMvYnEFaZgO29WCGwcdfWjcpoZ2AWqowPptrLJ6kDmWd+B@nongnu.org
-X-Gm-Message-State: APuU4Z+Lou75U3skDl5UhjLH4bE9Fkxa5QH4QQpNuSNpIyMuX6MBvbew
- /gTj2Ql0XIrOVKYBgoi3ts+3GOlwC2GN5tf/mwgoqRVNEJO1mPkGaZx3+esEixmcBqE3ymAqI1z
- fUu24fXvSW+0exZh+7w8IFuyOY3Bo/4I=
-X-Gm-Gg: AYBFou3ySSSPm4Bd/Kr2ZOWF3Pw5fcI586Q77/1nT5jIG7xIyXUqKoYFePGdXWfZ6wb
- mh0Z6m1+mRrHwXmhXEknylKZq+Ca4F1PxN/DxHz4+a/FmCZGbYOgZF4mpb1yDnBn1Qfd/U2ZgM3
- gZFlRLAMO44neZgRgKZ7eSs2uji7SvgxWrEIt4m2kqGh+5xfReDVgl0avBciGijlJvJKPHe0twa
- lCdvMDO/xL57pv4IuoxDEdCJRg+pMNUvqj9I4ARGXfX0TdG3wp5U55v/8CY952b1h2TzVDd5hu5
- GGtbgrjfXPrcddQnLlY1aZxKgkF7Z3Ujc+Y2xdVzpJ2uupMCVRYnRjvItE+GNhxPpLlYUqZA832
- Hs1JpHrPZRIg3Clo3qkuYFSjO88jtTNq0SemY
-X-Received: by 2002:a05:6402:2355:b0:6b4:20bc:fa3 with SMTP id
- 4fb4d7f45d1cf-6b4d467bb11mr9345520a12.22.1793697351217; Tue, 03 Nov 2026
- 01:15:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1xOBEc-0000yb-QD
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 04:55:18 -0500
+Received: from mgamail.intel.com ([198.175.65.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1xOBEa-0004K8-Ce
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 04:55:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1793699716; x=1825235716;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=x39JTdyv4F07kClYlzgbjDeJfENien04cz3ebIkRkWA=;
+ b=VLNfVbvk6Qy8Jp7LYtMJUIudFgcypJWbOb5zO9TmiNqUvoGRwdIBPWek
+ NOuB/mcA59kj9yj9BsvzDMLKNlAIczYIS/QVzPJsZJZIQ8++05S4tOVDA
+ /e56JZoiSpLkSXOuqCRMfMGOAapgbKD6uL+dAOB5DVFMYZdR/j6f9yS6k
+ i1fSZbPaM6UOL+MoDjNsNsEqHlXXh9jtomv+wg2+qXVjpHQcAgz1RJ9cn
+ CQE+FjrS2eO5cfQTyzzfCjPm86lEPVTDKflya9D2duZPVUKKtMokMC1yO
+ D7ZRaaGbbno8H9UVHpa5KxGmXcBuXnxwyLA4ZAHQImR7aE4Jf0m7RkDGY w==;
+X-CSE-ConnectionGUID: bvRta9QOR06AUfFoMoHJCQ==
+X-CSE-MsgGUID: BltNjXHFQb+nNSV396uhQQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="2429986"
+X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
+   d="scan'208";a="2429986"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Nov 2026 01:55:12 -0800
+X-CSE-ConnectionGUID: k3IAS8RlQRKMY7mbAydBTw==
+X-CSE-MsgGUID: 1Ksd3Oz3TVWopPKhoj1GQQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
+   d="scan'208";a="6283765"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Nov 2026 01:55:10 -0800
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: clement.mathieu--drif@bull.com, mst@redhat.com, jasowangio@gmail.com,
+ yi.l.liu@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH] intel_iommu: Keep PASID cache consistent with PT fast path
+Date: Tue,  3 Nov 2026 17:54:44 +0800
+Message-ID: <20261103095444.1218225-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.52.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261030151539.1872-1-luoyonggang@gmail.com>
- <d1db54c6-b802-676a-7779-0c2c63f5f807@eik.bme.hu>
- <aa70e94c-d9a8-41c9-850f-7ded87f7f327@oss.qualcomm.com>
- <aumYOBw-nKQAWdYK@redhat.com>
-In-Reply-To: <aumYOBw-nKQAWdYK@redhat.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 3 Nov 2026 17:15:38 +0800
-X-Gm-Features: AclHuK9NUtlMJehxCaFT4QHnxh-0yBZ0hPP8kK9uDqXwDHrUyauf19YUe8SC3VE
-Message-ID: <CAE2XoE8Xwevk523OfB+GgwbRu0iVnyD4VNOx81rj7J7F5aq=OA@mail.gmail.com>
-Subject: Re: [PATCH 00/15] hw: expand DEFINE_MACHINE to explicit TypeInfo
- registration
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, 
- qemu-devel@nongnu.org, Anthony PERARD <anthony@xenproject.org>, 
- Felipe Balbi <balbi@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>, 
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Antony Pavlov <antonynpavlov@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Stefano Stabellini <sstabellini@kernel.org>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
- Max Filippov <jcmvbkbc@gmail.com>, Niek Linnenbank <nieklinnenbank@gmail.com>, 
- xen-devel@lists.xenproject.org, qemu-riscv@nongnu.org, 
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-ppc@nongnu.org, 
- Alexandre Iooss <erdnaxe@crans.org>, Weiwei Li <liwei1518@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, 
- Frederic Konrad <konrad.frederic@yahoo.fr>, Palmer Dabbelt <palmer@dabbelt.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chao Liu <chao.liu@processmission.com>, 
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
- Alistair Francis <alistair@alistair23.me>, 
- Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>, 
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.18;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,83 +77,163 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 3, 2026 at 4:16=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Fri, Oct 30, 2026 at 05:51:44PM -0800, Pierrick Bouvier wrote:
-> > On 10/30/2026 4:09 PM, BALATON Zoltan wrote:
-> > > On Fri, 30 Oct 2026, Yonggang Luo wrote:
-> > >> DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED hide the TypeInfo and the
-> > >> type_init
-> > >> function that calls type_register_static(). A later change needs to
-> > >> pass a
-> > >
-> > > That's the point of the macro to hide the boiler plate code.
-> > >
-> > >> target mask into that registration, and the macros have no parameter
-> > >> for it.
-> > >
-> > > Couldn't you just change the macros to take that parameter instead of
-> > > expanding it everywhere?
-> > >
-> >
-> > Problem of macros is that they don't have default parameters, so you
-> > need variants for everything:
-> >
-> > DEFINE_MACHINE
-> > DEFINE_MACHINE_EXTENDED
-> > DEFINE_MACHINE_WITH_INTERFACES
-> > DEFINE_MACHINE_WITH_INTERFACE_ARRAY
-> > and now would need a new variant, with variant for other existing ones.
-> >
-> > In the end, it's just simpler to remove this and add the boilerplate.
-> > It's written once and never modified, so using a macro just save typing
-> > those lines once.
->
-> For each machine, it is only written once, but we add machines
-> over time, and every time a new machine is added the code style
-> is slightly different. We introduced all the variuos DEFINE_*
-> macros for QOM to better ensure consistent style and usage as
-> new code is added over time.
+With caching mode disabled, a guest can install a scalable-mode
+pass-through PASID entry without issuing a PASID-cache invalidation. The
+first DMA enables the PT fast path, but leaves QEMU's PASID cache invalid.
 
-I understand that the DEFINE_* macros are bloating because of this.
-Indeed currently the only two macros used are "DEFINE_MACHINE" and
-"DEFINE_MACHINE_EXTENDED"
-; each time people want to add a new attribute, the macros is twiced.
-And the usage of DEFINE_MACHINE_EXTENDED is rare and can be replaced
-with DEFINE_TYPES or TypeInfo
-and be more explicit. When we used as macro parameter, we need think
-what's that parameter means, and for
-TypeInfo, we can directly know what that member is about(because we
-are assigned with the member name).
-That's why I suggest keeping a single DEFINE_MACHINE, just like
-DEFINE_TYPES; as they are the most
-used macros(and simple enough), and won't suffer from changes much.
+When the guest tears down that entry to switch back to a DMA domain, the
+invalidation handler sees both a non-present guest entry and an invalid
+cached entry and returns without re-enabling the IOMMU memory region.
+Subsequent DMA therefore continues to bypass translation.
 
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
+The issue can be reproduced with an emulated device in scalable mode
+with caching-mode=off:
 
+1. Unbind the guest device driver and change the group's type to
+   identity through /sys/kernel/iommu_groups/<group>/type.
+2. Rebind the driver and issue a DMA write.
+3. Unbind the driver, change the group's type back to DMA-FQ, and
+   rebind the driver.
+4. Issue another DMA write using an IOVA mapped to a different GPA.
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+The second write incorrectly bypasses translation instead of reaching
+the mapped GPA.
+
+Save the PASID entry when enabling the scalable-mode PT fast path so
+teardown invalidation can restore the IOMMU address space. Return after
+handling a non-present entry, and refresh the cached entry when a present
+entry changes.
+
+Opportunistically clarify the invalidation modes in the fast-path comment.
+
+Fixes: c9cf33075a4c ("intel_iommu: Fix DMA failure when guest switches IOMMU domain")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/i386/intel_iommu.c | 32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
+
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index b7da5d086d..ec8d056735 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -1649,7 +1649,7 @@ static int vtd_address_space_sync(VTDAddressSpace *vtd_as)
+  * or second stage translation, it depends on PGTT setting.
+  */
+ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
+-                               uint32_t pasid)
++                               uint32_t pasid, VTDPASIDEntry *pasid_entry)
+ {
+     VTDPASIDEntry pe;
+     int ret;
+@@ -1663,6 +1663,11 @@ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
+              */
+             return false;
+         }
++
++        if (pasid_entry) {
++            *pasid_entry = pe;
++        }
++
+         return vtd_pe_pgtt_is_pt(&pe);
+     }
+ 
+@@ -1689,7 +1694,7 @@ static bool vtd_as_pt_enabled(VTDAddressSpace *as)
+         return false;
+     }
+ 
+-    return vtd_dev_pt_enabled(s, &ce, as->pasid);
++    return vtd_dev_pt_enabled(s, &ce, as->pasid, NULL);
+ }
+ 
+ /* Return whether the device is using IOMMU translation. */
+@@ -1887,7 +1892,8 @@ VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid)
+     return vtd_get_as_by_sid_and_pasid(s, sid, IOMMU_NO_PASID);
+ }
+ 
+-static void vtd_pt_enable_fast_path(IntelIOMMUState *s, uint16_t source_id)
++static void vtd_pt_enable_fast_path(IntelIOMMUState *s, uint16_t source_id,
++                                    VTDPASIDEntry *pe)
+ {
+     VTDAddressSpace *vtd_as;
+     bool success = false;
+@@ -1898,8 +1904,15 @@ static void vtd_pt_enable_fast_path(IntelIOMMUState *s, uint16_t source_id)
+     }
+ 
+     if (vtd_switch_address_space(vtd_as) == false) {
++        VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
++
+         /* We switched off IOMMU region successfully. */
+         success = true;
++
++        if (s->root_scalable) {
++            pc_entry->pasid_entry = *pe;
++            pc_entry->valid = true;
++        }
+     }
+ 
+ out:
+@@ -2091,6 +2104,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+ {
+     IntelIOMMUState *s = vtd_as->iommu_state;
+     VTDContextEntry ce;
++    VTDPASIDEntry pe;
+     uint8_t bus_num = pci_bus_num(bus);
+     VTDContextCacheEntry *cc_entry;
+     uint64_t pte, page_mask;
+@@ -2167,7 +2181,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+      * We don't need to translate for pass-through context entries.
+      * Also, let's ignore IOTLB caching as well for PT devices.
+      */
+-    if (vtd_dev_pt_enabled(s, &ce, pasid)) {
++    if (vtd_dev_pt_enabled(s, &ce, pasid, &pe)) {
+         entry->iova = addr & VTD_PAGE_MASK_4K;
+         entry->translated_addr = entry->iova;
+         entry->addr_mask = ~VTD_PAGE_MASK_4K;
+@@ -2180,10 +2194,11 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+          * the device. Let's enable the fast path for passthrough.
+          *
+          * When passthrough is disabled again for the device, we can
+-         * capture it via the context entry invalidation, then the
+-         * IOMMU region can be swapped back.
++         * capture it via context-cache invalidation in legacy mode or
++         * PASID-cache invalidation in scalable mode, then the IOMMU
++         * region can be swapped back.
+          */
+-        vtd_pt_enable_fast_path(s, source_id);
++        vtd_pt_enable_fast_path(s, source_id, &pe);
+         vtd_iommu_unlock(s);
+         return true;
+     }
+@@ -3133,6 +3148,7 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
+             vtd_address_space_unmap(vtd_as, n);
+         }
+         vtd_switch_address_space(vtd_as);
++        return;
+     }
+ 
+     /*
+@@ -3158,11 +3174,11 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
+     }
+ 
+     if (!pc_entry->valid) {
+-        pc_entry->pasid_entry = pe;
+         pc_entry->valid = true;
+     } else if (!vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
+         return;
+     }
++    pc_entry->pasid_entry = pe;
+ 
+     vtd_switch_address_space(vtd_as);
+     vtd_address_space_sync(vtd_as);
+-- 
+2.52.0
+
 
