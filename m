@@ -1,72 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8936085099
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 09:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC79F606A33D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 10:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=VLNfVbvk
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=My83eZb1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOBEf-0000yp-7U; Tue, 03 Nov 2026 04:55:21 -0500
+	id 1xOBLY-0002H3-HV; Tue, 03 Nov 2026 05:02:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1xOBEc-0000yb-QD
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 04:55:18 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xOBLW-0002Gd-A2
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 05:02:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1xOBEa-0004K8-Ce
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 04:55:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1793699716; x=1825235716;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=x39JTdyv4F07kClYlzgbjDeJfENien04cz3ebIkRkWA=;
- b=VLNfVbvk6Qy8Jp7LYtMJUIudFgcypJWbOb5zO9TmiNqUvoGRwdIBPWek
- NOuB/mcA59kj9yj9BsvzDMLKNlAIczYIS/QVzPJsZJZIQ8++05S4tOVDA
- /e56JZoiSpLkSXOuqCRMfMGOAapgbKD6uL+dAOB5DVFMYZdR/j6f9yS6k
- i1fSZbPaM6UOL+MoDjNsNsEqHlXXh9jtomv+wg2+qXVjpHQcAgz1RJ9cn
- CQE+FjrS2eO5cfQTyzzfCjPm86lEPVTDKflya9D2duZPVUKKtMokMC1yO
- D7ZRaaGbbno8H9UVHpa5KxGmXcBuXnxwyLA4ZAHQImR7aE4Jf0m7RkDGY w==;
-X-CSE-ConnectionGUID: bvRta9QOR06AUfFoMoHJCQ==
-X-CSE-MsgGUID: BltNjXHFQb+nNSV396uhQQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="2429986"
-X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
-   d="scan'208";a="2429986"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Nov 2026 01:55:12 -0800
-X-CSE-ConnectionGUID: k3IAS8RlQRKMY7mbAydBTw==
-X-CSE-MsgGUID: 1Ksd3Oz3TVWopPKhoj1GQQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
-   d="scan'208";a="6283765"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Nov 2026 01:55:10 -0800
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: clement.mathieu--drif@bull.com, mst@redhat.com, jasowangio@gmail.com,
- yi.l.liu@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH] intel_iommu: Keep PASID cache consistent with PT fast path
-Date: Tue,  3 Nov 2026 17:54:44 +0800
-Message-ID: <20261103095444.1218225-1-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xOBLU-000563-Jj
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 05:02:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793700143;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JnW2vvaIDI9r7/GXha8d6tGjVCdRhCcTcetPJE08iwA=;
+ b=My83eZb1XwfMllVtGYHKt2WWwXhqINCB1bgAQ2kDZOHQPrNma/w3jE5hxq2JaA1Z3F2XMN
+ sGGnDn0C/k9K1AeSmG1cWmX9nUM+VKzYMtzzZW3DWSD5sZFWdtyPp4ljgPO60F3ry862ey
+ ngZg9VyQZK37bMVgbQHpAvANrjAJ9RI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-ukBy6l_EP6y2NoApGKPaFg-1; Tue,
+ 03 Nov 2026 05:02:21 -0500
+X-MC-Unique: ukBy6l_EP6y2NoApGKPaFg-1
+X-Mimecast-MFC-AGG-ID: ukBy6l_EP6y2NoApGKPaFg_1793700140
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7D9E91955BDC; Tue,  3 Nov 2026 10:02:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.52])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 49C2B180029C; Tue,  3 Nov 2026 10:02:19 +0000 (UTC)
+Date: Tue, 3 Nov 2026 11:02:16 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH 1/4] block: notify the parent when a replaced child has a
+ different size
+Message-ID: <aumxKEG88eJAAupA@redhat.com>
+References: <20260812121500.1034178-1-den@openvz.org>
+ <20260812121500.1034178-2-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260812121500.1034178-2-den@openvz.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,162 +79,107 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-With caching mode disabled, a guest can install a scalable-mode
-pass-through PASID entry without issuing a PASID-cache invalidation. The
-first DMA enables the PT fast path, but leaves QEMU's PASID cache invalid.
+Am 12.08.2026 um 14:14 hat Denis V. Lunev geschrieben:
+> bdrv_replace_child_bs() swaps the node a BdrvChild points to without
+> telling the parent anything about it, so a parent which tracks the size of
+> its child never learns that it changed. Every other way the size of a node
+> changes goes through bdrv_co_truncate(), which does notify.
+> 
+> The device models which care all register the same BlockDevOps hook:
+> 
+>   virtio-blk  resize_cb = virtio_blk_resize(), ending up in
+>               virtio_notify_config()
+>   ide/ahci    resize_cb = ide_resize_cb(), refreshing the cached size
+>               and the IDENTIFY data
+>   scsi-disk   resize_cb = scsi_disk_resize_cb(), reporting
+>               CAPACITY DATA HAS CHANGED
+>   xen-block   resize_cb = xen_block_resize_cb()
+> 
+> Only scsi-disk is really hurt by the missing notification, because it is
+> the one which validates guest requests against a cached size.
+> virtio_blk_sect_range_ok() and ide_sect_range_ok() both call
+> blk_get_geometry() for every request, so a missing notification leaves
+> those guests with a stale idea of the size but never refuses I/O which the
+> node underneath can serve. check_lba_range() compares against
+> SCSIDevice.max_lba, filled in by scsi_disk_reset() and updated only by the
+> READ CAPACITY(10) and (16) handlers, so with nothing to make the guest
+> re-read the capacity every request past the end of the old node is refused
+> for the whole life of the device.
+> 
+> This is reachable with qom-set of the 'drive' property, which is allowed
+> on a realized device, and it is silent on the host: out-of-range requests
+> are answered by scsi_check_condition() and never reach
+> scsi_handle_rw_error(), so there is no BLOCK_IO_ERROR event and io-status
+> stays 'ok'. The guest sees ILLEGAL REQUEST / LOGICAL BLOCK ADDRESS OUT OF
+> RANGE, which Linux turns into EREMOTEIO for reads as well as writes.
+> 
+> Emit the notification from bdrv_replace_child_bs(), so that every device
+> model gets it through the path it already implements rather than any of
+> them being special cased. Send it only when the size really changed, which
+> keeps the callback out of the common case of a replacement by an equally
+> sized node.
+> 
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> ---
+>  block.c                      | 13 +++++++++++++
+>  include/block/block_int-io.h |  3 +++
+>  2 files changed, 16 insertions(+)
+> 
+> diff --git a/block.c b/block.c
+> index f0a6042e61..1fe66caf8d 100644
+> --- a/block.c
+> +++ b/block.c
+> @@ -5524,9 +5524,12 @@ int bdrv_replace_child_bs(BdrvChild *child, BlockDriverState *new_bs,
+>      Transaction *tran = tran_new();
+>      g_autoptr(GSList) refresh_list = NULL;
+>      BlockDriverState *old_bs = child->bs;
+> +    int64_t old_len;
+>  
+>      GLOBAL_STATE_CODE();
+>  
+> +    old_len = bdrv_getlength(old_bs);
+> +
+>      bdrv_ref(old_bs);
+>      bdrv_drained_begin(old_bs);
+>      bdrv_drained_begin(new_bs);
 
-When the guest tears down that entry to switch back to a DMA domain, the
-invalidation handler sees both a non-present guest entry and an invalid
-cached entry and returns without re-enabling the IOMMU memory region.
-Subsequent DMA therefore continues to bypass translation.
+bdrv_drained_begin() involves nested event loops. Can't old_len become
+stale here? It would feel safer to query it after draining.
 
-The issue can be reproduced with an emulated device in scalable mode
-with caching-mode=off:
+> @@ -5542,6 +5545,16 @@ int bdrv_replace_child_bs(BdrvChild *child, BlockDriverState *new_bs,
+>      tran_finalize(tran, ret);
+>  
+>      bdrv_graph_wrunlock();
+> +
+> +    /* A parent caching the child size has to learn that it changed */
+> +    if (ret == 0) {
+> +        int64_t new_len = bdrv_getlength(new_bs);
+> +
+> +        if (new_len >= 0 && new_len != old_len) {
+> +            bdrv_parent_cb_resize(new_bs);
 
-1. Unbind the guest device driver and change the group's type to
-   identity through /sys/kernel/iommu_groups/<group>/type.
-2. Rebind the driver and issue a DMA write.
-3. Unbind the driver, change the group's type back to DMA-FQ, and
-   rebind the driver.
-4. Issue another DMA write using an IOVA mapped to a different GPA.
+This notifies other parents of the new node as well even though nothing
+changed for them.
 
-The second write incorrectly bypasses translation instead of reaching
-the mapped GPA.
+Especially since you already query old_len/new_len to avoid unnecessary
+notifications, we should probably call only child->klass->resize(child)
+through a coroutine wrapper here to notify only the BdrvChild that we
+actually changed.
 
-Save the PASID entry when enabling the scalable-mode PT fast path so
-teardown invalidation can restore the IOMMU address space. Return after
-handling a non-present entry, and refresh the cached entry when a present
-entry changes.
+> +        }
+> +    }
+> +
+>      bdrv_drained_end(old_bs);
+>      bdrv_drained_end(new_bs);
+>      bdrv_unref(old_bs);
 
-Opportunistically clarify the invalidation modes in the fast-path comment.
-
-Fixes: c9cf33075a4c ("intel_iommu: Fix DMA failure when guest switches IOMMU domain")
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/i386/intel_iommu.c | 32 ++++++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
-
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index b7da5d086d..ec8d056735 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -1649,7 +1649,7 @@ static int vtd_address_space_sync(VTDAddressSpace *vtd_as)
-  * or second stage translation, it depends on PGTT setting.
-  */
- static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
--                               uint32_t pasid)
-+                               uint32_t pasid, VTDPASIDEntry *pasid_entry)
- {
-     VTDPASIDEntry pe;
-     int ret;
-@@ -1663,6 +1663,11 @@ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
-              */
-             return false;
-         }
-+
-+        if (pasid_entry) {
-+            *pasid_entry = pe;
-+        }
-+
-         return vtd_pe_pgtt_is_pt(&pe);
-     }
- 
-@@ -1689,7 +1694,7 @@ static bool vtd_as_pt_enabled(VTDAddressSpace *as)
-         return false;
-     }
- 
--    return vtd_dev_pt_enabled(s, &ce, as->pasid);
-+    return vtd_dev_pt_enabled(s, &ce, as->pasid, NULL);
- }
- 
- /* Return whether the device is using IOMMU translation. */
-@@ -1887,7 +1892,8 @@ VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid)
-     return vtd_get_as_by_sid_and_pasid(s, sid, IOMMU_NO_PASID);
- }
- 
--static void vtd_pt_enable_fast_path(IntelIOMMUState *s, uint16_t source_id)
-+static void vtd_pt_enable_fast_path(IntelIOMMUState *s, uint16_t source_id,
-+                                    VTDPASIDEntry *pe)
- {
-     VTDAddressSpace *vtd_as;
-     bool success = false;
-@@ -1898,8 +1904,15 @@ static void vtd_pt_enable_fast_path(IntelIOMMUState *s, uint16_t source_id)
-     }
- 
-     if (vtd_switch_address_space(vtd_as) == false) {
-+        VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
-+
-         /* We switched off IOMMU region successfully. */
-         success = true;
-+
-+        if (s->root_scalable) {
-+            pc_entry->pasid_entry = *pe;
-+            pc_entry->valid = true;
-+        }
-     }
- 
- out:
-@@ -2091,6 +2104,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
- {
-     IntelIOMMUState *s = vtd_as->iommu_state;
-     VTDContextEntry ce;
-+    VTDPASIDEntry pe;
-     uint8_t bus_num = pci_bus_num(bus);
-     VTDContextCacheEntry *cc_entry;
-     uint64_t pte, page_mask;
-@@ -2167,7 +2181,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-      * We don't need to translate for pass-through context entries.
-      * Also, let's ignore IOTLB caching as well for PT devices.
-      */
--    if (vtd_dev_pt_enabled(s, &ce, pasid)) {
-+    if (vtd_dev_pt_enabled(s, &ce, pasid, &pe)) {
-         entry->iova = addr & VTD_PAGE_MASK_4K;
-         entry->translated_addr = entry->iova;
-         entry->addr_mask = ~VTD_PAGE_MASK_4K;
-@@ -2180,10 +2194,11 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-          * the device. Let's enable the fast path for passthrough.
-          *
-          * When passthrough is disabled again for the device, we can
--         * capture it via the context entry invalidation, then the
--         * IOMMU region can be swapped back.
-+         * capture it via context-cache invalidation in legacy mode or
-+         * PASID-cache invalidation in scalable mode, then the IOMMU
-+         * region can be swapped back.
-          */
--        vtd_pt_enable_fast_path(s, source_id);
-+        vtd_pt_enable_fast_path(s, source_id, &pe);
-         vtd_iommu_unlock(s);
-         return true;
-     }
-@@ -3133,6 +3148,7 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
-             vtd_address_space_unmap(vtd_as, n);
-         }
-         vtd_switch_address_space(vtd_as);
-+        return;
-     }
- 
-     /*
-@@ -3158,11 +3174,11 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
-     }
- 
-     if (!pc_entry->valid) {
--        pc_entry->pasid_entry = pe;
-         pc_entry->valid = true;
-     } else if (!vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
-         return;
-     }
-+    pc_entry->pasid_entry = pe;
- 
-     vtd_switch_address_space(vtd_as);
-     vtd_address_space_sync(vtd_as);
--- 
-2.52.0
+Kevin
 
 
