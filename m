@@ -1,99 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06D8606D819
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 11:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADE4606A324
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 11:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=f/RfjwpW;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=gWe5Bq1Z
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gzGA5yNV;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=jLIpiY8F
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOD30-0005TZ-3l; Tue, 03 Nov 2026 06:51:26 -0500
+	id 1xOD2Q-0003gL-DU; Tue, 03 Nov 2026 06:50:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2x-0005Ld-DQ
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:51:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2K-0003eP-Ti
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:50:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2v-0000Or-6k
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:51:23 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOD2I-0000KQ-6b
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 06:50:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793706680;
+ s=mimecast20190719; t=1793706641;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=R8RjRqZq+zwdRtCWfwySynm5xd1MEW7N/hnP/GKOxA8=;
- b=f/RfjwpWNf8dRTQQb1pgc8vR//mOnpkj9oxSS34jnDArO5EjwYZfVRacvL+XOW3k5tnauP
- Xh/SvSApiTbW6pvkxUocgnSJyHWmXmkf21UHDWsfQCZX36/ShqGcFiVeQ+pVHeDMd5pwCY
- l3TT2UjXOyUwTOrVbWd8aAEkWkYtKr4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=m0qbRXJbDPkLJdjaZclhzEufolZE690wiCirz9W/4hE=;
+ b=gzGA5yNVaeTC/Z1l7Ax4IoH9GMPLyV89pa+YvNaNDoJN39bH6bxpXFyfOd1fSYIn7OkdVI
+ 2mYyPFZ+oqmQz39dKQ0v1adn3FemFXzQy8D0k88mPj618rTXvvW1p1LFhnxPfNhYj9ujQh
+ qk1lRDZx4kIIeqWp9Y57moVzwNjItV8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654--uzPgEnIOoSLDYdNDeMADQ-1; Tue, 03 Nov 2026 06:51:19 -0500
-X-MC-Unique: -uzPgEnIOoSLDYdNDeMADQ-1
-X-Mimecast-MFC-AGG-ID: -uzPgEnIOoSLDYdNDeMADQ_1793706678
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48af4a0bd0fso2274506f8f.2
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 03:51:19 -0800 (PST)
+ us-mta-437-xXh6FCcSM9-j9rpL5IrK9Q-1; Tue, 03 Nov 2026 06:50:37 -0500
+X-MC-Unique: xXh6FCcSM9-j9rpL5IrK9Q-1
+X-Mimecast-MFC-AGG-ID: xXh6FCcSM9-j9rpL5IrK9Q_1793706637
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4a2063be141so37295405e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 03:50:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793706678; x=1794311478; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793706636; x=1794311436; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=R8RjRqZq+zwdRtCWfwySynm5xd1MEW7N/hnP/GKOxA8=;
- b=gWe5Bq1Zi7Su/qV6M/fVUqpia2yfVaQO7M2N+7dJX1nXkuSlDPpI4O9rYPBk9pGXFd
- bQ+vPdUlBxfyYY3q9iXdKKBMJQsC40ay7ylLdHdZIYik4qJSRgpppYqEHgm5ggSn8Lnv
- 5gaxRTq0CfW9pPNh0ZADdOCVKXnZMsZB7lq3dIosFgYoy9/ra0XLE13kCYl8v+v9KDqQ
- o9nwWeUGnkCdroh3Ff2rovmbFae+eeDn4QypBPv/8v1z0VnY751UYoTVcCDx3UJuKQim
- VXQZ6QjtTofns3IPkBIZNlUPlE1FnTdOXXMnYV9p9dBZEhaXe+9PV3uW6AeuL9cGXwd5
- WYwA==
+ bh=m0qbRXJbDPkLJdjaZclhzEufolZE690wiCirz9W/4hE=;
+ b=jLIpiY8FtO0bViiOkAp112b0MddppKH1dkIiTiSB+1rQWy1+ixEEim2L+B7sHCJZ3d
+ IcQnW3NJGkn2d6Ydp3y9f+yEC91fJO8RZ3p2Hq+NXdLSQ9qNDoYJDcwOWBe2eB4jzm6W
+ 5CvI6sboLFuSDxT5eDDCmaeFVon4Lder1O/pjCy0TxJm32UGmturifORLiXWGvPJY4Cn
+ pmUIzBwkhZkrxrvt8Wo3mysdYpcwnt1rBhVfh9CyKowcg7/WHE/qoUVEGxkegFMnauM1
+ i++NF118Xu2CGKTO8dD59zXxn35E0kLpfzpx/noGbzEP66IED/B9NIv/3480NiJVXCbk
+ AKTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793706678; x=1794311478;
+ d=1e100.net; s=20260707; t=1793706636; x=1794311436;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=R8RjRqZq+zwdRtCWfwySynm5xd1MEW7N/hnP/GKOxA8=;
- b=HgeyrMHv2Be5wGZnJqNJ3w9ndtoPV6iZXl9Zx24KzQENXApdThacHbSYiyu7A1lv3w
- 3uur6wrXFBhZDB4DiEisGW6B8S2FTR+aJbf0XHlHW92hQ41esjzKu4d5gXY0OVuuF38h
- 7NB9oqNjTQbaoZwEtCOQW/5TsM89dZMyZNqSR9U7SV1HdCtznVs2DE2pwYWb54l7abmF
- TGNVovqoxwPr0eKLCy0xqd3PItBcw8BWX8Tdsvp6mb1cRP3xIufpgEqhEnEeWHFWGfad
- LnIv6IQsdikd1xKrKAN0neJQn0CBhnL4h/d8dDphTQbumV1YViff1fiuqxKHE5eJaurf
- HWcg==
-X-Gm-Message-State: APuU4Z+/N/FfZ5pKx8soJJl+OYWL9YGFrVDz6gJvBRISIDB4oAFyK2jh
- AWhkWMMZS0dnJ3NeFIsn+KJdjrCBKbMCB3bVJy4nA4Quu7h/E64/OdLpzroMy7WxfNmD1k3kS8D
- 7Tz3awUOFqN8Il0ipNhWyyst//mMpao3TiB9GyHYTCzSGwSHLbkOUnuoKMapv6k297Orh+HhR+j
- BZN0V2b5rBTGQtVlMGU5PgDqL9TPLRRAF/lw==
-X-Gm-Gg: AYBFou1Dv1Kr3w/qRZbtu1L8DB/3659cy54PG3dBHrqWFmhCJKbNr3IDbwQ8EapWjod
- 77bGOfdsKcpFdFWy2grLQqL2TW0CBEqvr0NUSLTCTRBZcFsf1gTK5ZKUq4z5+Vgt9P5TY8kjGKa
- uOciScSmepubq80mGJO/CZThc+kDqJ5ft2bZlPkeq4kIp9tCJJlWGK/WrBOf/F+sU8qlt5NpTG4
- GY2FqxXz9dsBdR/dG4/QneCG1EP8eJHNVGHZqF3/4gLdM1j7xP/YNR3wjW5nhQl8xp27FCiq8Zy
- kmnqq19yA7rJiwufe+9hV1DpOsMRs6MzohVt9OAHj8oGYd0sCMHHZ6EbqlknwnFQxf6kleZZ2+R
- ecXmz4ucJI9QRk4Au2kyhF1Sh4n9zpM2vMhOFu75yXA==
-X-Received: by 2002:a05:6000:1aca:b0:48c:7037:aee9 with SMTP id
- ffacd0b85a97d-48e6e4fcfacmr27885105f8f.50.1793706677989; 
- Tue, 03 Nov 2026 03:51:17 -0800 (PST)
-X-Received: by 2002:a05:6000:1aca:b0:48c:7037:aee9 with SMTP id
- ffacd0b85a97d-48e6e4fcfacmr27885051f8f.50.1793706677399; 
- Tue, 03 Nov 2026 03:51:17 -0800 (PST)
+ bh=m0qbRXJbDPkLJdjaZclhzEufolZE690wiCirz9W/4hE=;
+ b=2ss+zyMkZ1vaGpTeGEvThXI9O3FJ2vk/KbaS3djqlyL/HjhMeXRhtNo/dn5dJ+UPtu
+ 1TlNX4amNNJxISePhGYlhERPRjNe/a4r+MN3Hb9qojfhznTI0x9pAZ6+3Yumo4ERR36N
+ 6VOQ3OG/q8tCFc3nARfNyTiAKCzbW59AUyTtxPLUoEHA9P03OkZAKfw8uNWLIGQixJsL
+ WUc6/ezNFN6h06VmBpHU1XEluo++5RhKf0TzT027tg/tukSVQ56D+RSsltIWUzxsz/T/
+ 9b2HHPuMqs9XbMCAat1DvhYFH+boTigQkYOo7zJjgO81OTVmL6dmJKnd0JB64a8Uyvr0
+ YK8A==
+X-Gm-Message-State: APuU4Z9HJxkFSkRJUeE5srf3NKQ8NTBOR+njERdT4znYi8m5dVr5EbJ9
+ QxWI78TQeHYy6Wf3QHDbIfkXMJLRa6nOeLoSAHY3efOZItb6c+DRcC7Md+o8s0tueMivKFxEv59
+ D+jJVeFoBuuqffVa7bE4kqq38R812zoyKP5iCfDCCdfpseRYxhjUtLJ1TblOxrC6NofRCzTERZz
+ tNM2QDcKDSgkUpNaFZMXphV/pnJNfycHZsMg==
+X-Gm-Gg: AYBFou1h47+5P2R+tCVBApzI0A86rBz1IVxZE37KB+XD1+/jA2vR2xqju9XUWMPGios
+ GNqqRrmB6gGa7Z+4HuYoe3qVAUZslYTZLh44OIATc9OwdBYYF1ZS1I84Jwob8z3Mp6EyBm6csHG
+ OZXbteignHIY9pZVy2EmqHDTGQydORv6npjWjO0IrbXfbv4ylPbtk/9WJD191U/82M0LTpjhEiW
+ VhdOAY1mVnJbXOqUEjgrPPJBXxOvS1cQWk8nAGYXYNgGZcpKpoJOxfWB2lVb/K0XfTbMK2Szd7k
+ bOhV1e4c6XARUOxfgsU1FhD0Z3APyHo8SQnmzULqTZ8HSVTlSRaxlE2ELaMx9PbNQeT06Y+4fhy
+ mkXsJLmQx789tGrIvJsVWgPiOsAfbg5KVat44eBZ/KA==
+X-Received: by 2002:a05:600c:4e13:b0:49c:d019:70c5 with SMTP id
+ 5b1f17b1804b1-4ac1228978cmr270900365e9.0.1793706636590; 
+ Tue, 03 Nov 2026 03:50:36 -0800 (PST)
+X-Received: by 2002:a05:600c:4e13:b0:49c:d019:70c5 with SMTP id
+ 5b1f17b1804b1-4ac1228978cmr270899815e9.0.1793706636077; 
+ Tue, 03 Nov 2026 03:50:36 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc0:1506:fd00:9e19:9994:44b1:e6f2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e71b7815fsm25315109f8f.22.2026.11.03.03.51.15
+ ffacd0b85a97d-48e71bab1a8sm24296457f8f.57.2026.11.03.03.50.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Nov 2026 03:51:16 -0800 (PST)
-Date: Tue, 3 Nov 2026 06:51:14 -0500
+ Tue, 03 Nov 2026 03:50:34 -0800 (PST)
+Date: Tue, 3 Nov 2026 06:50:33 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Fabiano Rosas <farosas@suse.de>,
- Jishnu Warrier <jishnuvw@linux.ibm.com>,
- Utkarsh Verma <uverma@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 16/17] qtest/libqos/pci: Fix qpci_msix_enable sharing bar0
-Message-ID: <3c6c791284c12350266ec7ef8ed0079de39e05cf.1793706601.git.mst@redhat.com>
+ Daniel Paziyski <danielpaziyski@gmail.com>, qemu-stable@nongnu.org
+Subject: [PULL 05/17] pci: fix null pointer dereference on pci device
+ registration failure
+Message-ID: <7ecad9ed2e1c7fc7076cb23186c0e3b3317b6c4e.1793706601.git.mst@redhat.com>
 References: <cover.1793706601.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -102,15 +98,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1793706601.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,116 +125,45 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Daniel Paziyski <danielpaziyski@gmail.com>
 
-Devices where the MSI-X addresses are shared with other MMIO on BAR0
-can not use msi_enable because it unmaps and remaps BAR0, which
-interferes with device MMIO mappings. xhci-nec is one such device we
-would like to test with msix.
+When a PCI device fails to be registered using do_pci_register_device, which
+takes the PCI device as one of its arguments, and returns the PCI device itself
+on success or null on failure, the acpi index is forcefully released using
+pci_unregister_acpi_index.
 
-Use the BAR iomap tracking structure introduced in the previous change
-to have qpci_misx_enable() use existing iomaps if msix bars are
-already mapped.
+However, this causes a null pointer to be passed always on failure to
+pci_unregister_acpi_index. Instead, do not reassign pci_dev from the return
+value of do_pci_register_device, just check it.
 
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Jishnu Warrier <jishnuvw@linux.ibm.com>
-Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
+Cc: qemu-stable@nongnu.org
+Resolves: Coverity CID 1689947
+Fixes: 432ea8cc7d27 ("pcie_sriov: register user created virtual function before realizing it")
+Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261102035306.2291147-10-uverma@linux.ibm.com>
+Message-ID: <20261101162132.147838-2-danielpaziyski@gmail.com>
 ---
- tests/qtest/libqos/pci.h |  1 +
- tests/qtest/libqos/pci.c | 40 ++++++++++++++++++++++++++++++++++------
- 2 files changed, 35 insertions(+), 6 deletions(-)
+ hw/pci/pci.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
-index 2f9555ae4e..2fcddd19a8 100644
---- a/tests/qtest/libqos/pci.h
-+++ b/tests/qtest/libqos/pci.h
-@@ -75,6 +75,7 @@ struct QPCIDevice
-     bool bars_mapped[QPCI_NUM_REGIONS];
-     QPCIBar bars[QPCI_NUM_REGIONS];
-     bool msix_enabled;
-+    bool msix_table_bar_iomap, msix_pba_bar_iomap;
-     QPCIBar msix_table_bar, msix_pba_bar;
-     uint64_t msix_table_off, msix_pba_off;
- };
-diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-index 365fde1fb9..41f9673022 100644
---- a/tests/qtest/libqos/pci.c
-+++ b/tests/qtest/libqos/pci.c
-@@ -274,15 +274,21 @@ void qpci_msix_enable(QPCIDevice *dev)
- 
-     table = qpci_config_readl(dev, addr + PCI_MSIX_TABLE);
-     bir_table = table & PCI_MSIX_FLAGS_BIRMASK;
--    dev->msix_table_bar = qpci_iomap(dev, bir_table, NULL);
-+    if (dev->bars_mapped[bir_table]) {
-+        dev->msix_table_bar = dev->bars[bir_table];
-+    } else {
-+        dev->msix_table_bar_iomap = true;
-+        dev->msix_table_bar = qpci_iomap(dev, bir_table, NULL);
-+    }
-     dev->msix_table_off = table & ~PCI_MSIX_FLAGS_BIRMASK;
- 
-     table = qpci_config_readl(dev, addr + PCI_MSIX_PBA);
-     bir_pba = table & PCI_MSIX_FLAGS_BIRMASK;
--    if (bir_pba != bir_table) {
--        dev->msix_pba_bar = qpci_iomap(dev, bir_pba, NULL);
-+    if (dev->bars_mapped[bir_pba]) {
-+        dev->msix_pba_bar = dev->bars[bir_pba];
-     } else {
--        dev->msix_pba_bar = dev->msix_table_bar;
-+        dev->msix_pba_bar_iomap = true;
-+        dev->msix_pba_bar = qpci_iomap(dev, bir_pba, NULL);
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 2d2fe02c68..1ea388be37 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2327,10 +2327,8 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+         pci_dev->cap_present |= QEMU_PCIE_CAP_CXL;
      }
-     dev->msix_pba_off = table & ~PCI_MSIX_FLAGS_BIRMASK;
  
-@@ -293,6 +299,7 @@ void qpci_msix_disable(QPCIDevice *dev)
- {
-     uint8_t addr;
-     uint16_t val;
-+    uint32_t table;
- 
-     g_assert(dev->msix_enabled);
-     addr = qpci_find_capability(dev, PCI_CAP_ID_MSIX, 0);
-@@ -301,10 +308,31 @@ void qpci_msix_disable(QPCIDevice *dev)
-     qpci_config_writew(dev, addr + PCI_MSIX_FLAGS,
-                                                 val & ~PCI_MSIX_FLAGS_ENABLE);
- 
--    if (dev->msix_pba_bar.addr != dev->msix_table_bar.addr) {
-+    if (dev->msix_pba_bar_iomap) {
-+        dev->msix_pba_bar_iomap = false;
-         qpci_iounmap(dev, dev->msix_pba_bar);
-+    } else {
-+        /*
-+         * If we had reused an existing iomap, ensure it is still mapped
-+         * otherwise it would be a bug if it were unmapped before msix is
-+         * disabled. A refcounting iomap implementation could avoid this
-+         * issue entirely, but let's wait until that's needed.
-+         */
-+        uint8_t bir_pba;
-+        table = qpci_config_readl(dev, addr + PCI_MSIX_PBA);
-+        bir_pba = table & PCI_MSIX_FLAGS_BIRMASK;
-+        g_assert(dev->bars_mapped[bir_pba]);
-+    }
-+
-+    if (dev->msix_table_bar_iomap) {
-+        dev->msix_table_bar_iomap = false;
-+        qpci_iounmap(dev, dev->msix_table_bar);
-+    } else {
-+        uint8_t bir_table;
-+        table = qpci_config_readl(dev, addr + PCI_MSIX_TABLE);
-+        bir_table = table & PCI_MSIX_FLAGS_BIRMASK;
-+        g_assert(dev->bars_mapped[bir_table]);
+-    pci_dev = do_pci_register_device(pci_dev,
+-                                     object_get_typename(OBJECT(qdev)),
+-                                     pci_dev->devfn, errp);
+-    if (pci_dev == NULL) {
++    if (!do_pci_register_device(pci_dev, object_get_typename(OBJECT(qdev)),
++                                pci_dev->devfn, errp)) {
+         pci_unregister_acpi_index(pci_dev);
+         return;
      }
--    qpci_iounmap(dev, dev->msix_table_bar);
- 
-     dev->msix_enabled = 0;
-     dev->msix_table_off = 0;
 -- 
 MST
 
