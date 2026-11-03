@@ -1,104 +1,120 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784AD606A329
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 19:00:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tfKLEzMA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00C0606A326
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 19:14:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOJjb-00063y-8a; Tue, 03 Nov 2026 13:59:51 -0500
+	id 1xOJwj-0008P4-0G; Tue, 03 Nov 2026 14:13:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xOJjZ-00063X-JZ
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 13:59:49 -0500
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1xOJwb-0008Oj-Bo
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 14:13:19 -0500
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xOJjX-0006HF-OU
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 13:59:49 -0500
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-ccca948203aso1815388a12.3
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 10:59:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793732386; x=1794337186; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rjfyQfy5EO6T7cqM1mm/lGkAgE18E4V1yV903QuKr2M=;
- b=tfKLEzMAC7PwZxstzcppcxPFsrqPzjqQsujGbNOGlN7KygBoxr5YUw3yJ0M/uHNWqh
- mnk/76odWZggysDdJiWK2M+iGMcwcM7cGes0ywI6bH5wabdC+t1pU+oEnAi0eR0cf0d3
- co8RKN2z2cLTphfHTgT4YhB7uYxI0z8Fl1pguF1zhTq1AC404mLY1vrTOeS2+1CxtYkF
- DD9ZtG26q8elZf86VkWuZqd3HwD0ucjxbomvUidIutIeX6y/4ReJiwtrEa78wVPg7xVQ
- Lg3X7VF0ZnERio/lzSfi8IR5TQMGjzUYkgd80j3eleOJqzSoixGt9NEdq19ebgE4ZeHb
- XgXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793732386; x=1794337186;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=rjfyQfy5EO6T7cqM1mm/lGkAgE18E4V1yV903QuKr2M=;
- b=mb3t7fZjP4Ihtddrjc2FBO/qapCW1ybIay/KU3UmKkT/kDtX5cWuxcCeRqDXxyuTYt
- KYk/BHhWPf9naqliGiy7uOafJNQ9VFdjRJDX1/ES+L1GUq95a2Av5dMyKloZMdIWPPwJ
- hjYxxEXscn+yxL4jlFHZ/U43sURFAuvybOzVDg8pJBecHhzJKsbTcsw5wK4UHwtEanP1
- SCgaNGxWjuzy86ExQY4BSUabwDb/ZGSz7Hza6iE1j/+UbXQXgXEji0FFhgm6V4egxfwA
- 9yK/YysJm2vM9LjzsjEBRi2AaB0eUQYzdReynw2zmzGPICYlgy2KHC3+1o2Y5bJRft58
- P1hg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBz05EEA5t4fxSF7QoWDBwE1/vlVSNzplcn0u76T6DkJ5Dk/N8+uFf9Tjf1O4+HRQYHJsmVnYjOysZ5l@nongnu.org
-X-Gm-Message-State: APuU4Z+4PoufNUO+0x99keB1qHvLkxFtFTqIHJsZ6Ed5nXOcF5KENaiY
- rRDSVvDOMTl+hqEqJv6zsNn/vhBsG/KCzfHxG0IAXu6N04tBVVzQjRiD9GyhbSP99go=
-X-Gm-Gg: AYBFou2lICzsPBw/WgzBWX8e5Wlow3WmtSPo2Xj8MhydyAos94aEfcUy0XsViZ2SKdP
- hj25haSs0mu2g8RLji4+MtD1fvTXf4JlX8d3IoomDZkcXL5UxwmlCloJy9dTNyKVOov1vA6FG1u
- 1K+ga1OSnK1V3UVsnsyhjJTgRhc80ZPgOXhssWFHO6OYQT8jKO5LtuYGTVP9CEv71Vh///ghC+c
- LhFi8eUouNSMQxERdG2SY67SorYkyhmRnyi5MeJRdR5nAMtqq0786GEpSPzKeF/eJxh9kH12JOX
- ufEldWAFJrVCpkMpn/b9UAKTeHKvFcyiVsYRYRJ541CvgYM9qiqPi3R40XlbPR+GW8uknN/V6BB
- juLW1d8Wg1OH4jaOOX8WluhfRr7sJ/ddiVHY6srP5obDMcb4dhfSlPXF3xaGCm5KDiDWsSq651x
- IUX+O/QxLXJep+A2ofWM8ZF+Mu4TGB0CD98J6XwBL5xNWY3lP3ur2hmkxQPIQM8XBcwVDoCFY9h
- 2vjbQSqiIhWuGREu2eBclsFBtcDSibS3kl0GMIQzChiOVoTHQq835j+LpGWV+YfpsD6VdZHUBhV
- DVbMMS9JyEsTzqTd4W6DSOVIP705fDJDChlZ43SKGHQlg9vJtxBFQ2mc6TTlKJuv+Cx8kA==
-X-Received: by 2002:a17:90b:4483:b0:3ac:9259:1234 with SMTP id
- 98e67ed59e1d1-3ae8979ba8emr11422066a91.39.1793732385957; 
- Tue, 03 Nov 2026 10:59:45 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b09445f7b3sm264830a91.5.2026.11.03.10.59.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Nov 2026 10:59:45 -0800 (PST)
-Message-ID: <102e313c-1193-44b1-9908-a03c01a85e8d@linaro.org>
-Date: Tue, 3 Nov 2026 10:59:43 -0800
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1xOJwV-0007Su-Iw
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 14:13:15 -0500
+Received: from [192.168.178.76] (pd9ec36c0.dip0.t-ipconnect.de
+ [217.236.54.192])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 27F87DA05A7;
+ Tue, 03 Nov 2026 20:13:06 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
+ t=1793733186;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=xEn8oVy9ofMJRgIiYMXjcPm/FNz6zHXt9J+nwgans/I=;
+ b=S7YXoMIAfzCbka3zD4XGT0Vy2MWVcZ0v0iZALDTY7rThcaOYCfYTOHbk4EC1K51Ot+iALF
+ inNOgB9bRI7ij99rzuFywhk7ZvMDnoo1t3B6bqWF+c+W9ser5wGDvnjGtm2zN4Jky2H+UX
+ gTgHagxRt/jXGnYCHB7DYzRWAR77V7M=
+Authentication-Results: ORIGINATING;
+ auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
+Message-ID: <bb582945-7ce8-429a-9aac-a7e7bc24b1b4@weilnetz.de>
+Date: Tue, 3 Nov 2026 20:13:05 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/25] Tracing patches
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Helge Deller <deller@gmx.de>, xen-devel@lists.xenproject.org,
- Anthony PERARD <anthony@xenproject.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Stefano Stabellini <sstabellini@kernel.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Alexey Kardashevskiy <aik@ozlabs.ru>
-References: <20261102185831.1880189-1-stefanha@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261102185831.1880189-1-stefanha@redhat.com>
+Subject: Re: [PATCH] hw/net/eepro100: fix use-after-free on reset after
+ hot-unplug
+To: "Jason Wang <Jason Wang" <jasowangio@gmail.com>
+Cc: qemu-devel@nongnu.org, Hui Peng <benquike@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20261103185659.698079-1-sw@weilnetz.de>
+Autocrypt: addr=sw@weilnetz.de; keydata=
+ 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
+In-Reply-To: <20261103185659.698079-1-sw@weilnetz.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Server: v2201612906741603
+X-Rspamd-Queue-Id: 27F87DA05A7
+X-Spamd-Bar: ---
+X-Spamd-Result: default: False [-3.10 / 10.00]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain];
+ DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; ARC_NA(0.00)[];
+ FREEMAIL_TO(0.00)[gmail.com];
+ FREEMAIL_CC(0.00)[nongnu.org,gmail.com,linaro.org];
+ RCPT_COUNT_THREE(0.00)[4];
+ ASN(0.00)[asn:3320, ipnet:217.224.0.0/11, country:DE];
+ FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_ZERO(0.00)[0];
+ MID_RHS_MATCH_FROM(0.00)[]; TO_DN_SOME(0.00)[]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,49 +125,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via qemu development <qemu-devel@nongnu.org>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.3 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/2/26 10:58, Stefan Hajnoczi wrote:
-> The following changes since commit 56afd82bd4db9688f1c1c9d0e2ea163b8cde3283:
-> 
->    Merge tag 'qemu-sparc-20261101' ofhttps://github.com/mcayland/qemu into staging (2026-11-01 08:37:48 -0800)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
-> 
-> for you to fetch changes up to 3b68720390b98f21e26ffcff8874851b7b49b7b7:
-> 
->    trace: remove 'trace_event_get_state' wrapper (2026-11-02 13:52:14 -0500)
-> 
-> ----------------------------------------------------------------
-> Pull request
-> 
-> Daniel Berrangé's 'disable' property removal and associated cleanups.
+Sorry for using an outdated address for Jason Wang in my previous email, 
+now forwarded to the current address ...
 
-Function signature change in here somewhere that didn't get propagated 
-to rust?
+Am 03.11.26 um 19:56 schrieb Stefan Weil:
 
-https://gitlab.com/qemu-project/qemu/-/jobs/17710633655#L4275
-
-> error[E0308]: mismatched types
->    --> /builds/qemu-project/qemu/build/trace/trace-hw_char.rs:236:14
->     |
-> 236 |       unsafe { (bindings::qemu_loglevel & bindings::LOG_TRACE) != 0 &&
->     |  ______________^
-> 237 | |              trace_event_state_is_enabled(_TRACE_PARALLEL_IOPORT_READ_DSTATE) } ||
->     | |_____________________________________________________________________________^ expected `()`, found `bool`
->     |
-
-etc.
-
-
-r~
+> e100_nic_realize() registers a system reset handler via
+> qemu_register_reset(nic_reset, s), but pci_nic_uninit() never
+> unregisters it. After the device is hot-unplugged, the LegacyReset
+> object stored in the root reset container still holds the raw pointer
+> to the freed EEPRO100State, so the next system reset invokes
+> nic_reset() on freed memory.
+>
+> Instead, define a reset phase on the device itself: assign
+> phases.hold in eepro100_class_init() to a wrapper around nic_reset().
+> The device is already part of the resettable tree via its parent bus
+> (TYPE_DEVICE implements the Resettable interface), so no explicit
+> registration is needed, and the reset state is automatically dropped
+> when the device is unplugged. This follows the approach used by the
+> e1000, e1000e and igb emulations.
+>
+> Reported-by: Hui Peng <benquike@gmail.com>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4058
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4510
+> Signed-off-by: Stefan Weil <sw@weilnetz.de>
+> ---
+>
+> Note that I used AI assistance to create and test the patch.
+> I am not sure whether this is acceptable to small and rather mechanical
+> changes like in this case.
+>
+> The Reported-by for issue 4058 was not added because I did not
+> find the required full name and email of the reporter.
+>
+> Stefan W.
+>
+>
+>   hw/net/eepro100.c | 11 +++++++++--
+>   1 file changed, 9 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/net/eepro100.c b/hw/net/eepro100.c
+> index aaa3eb60f8a..e1cd8346941 100644
+> --- a/hw/net/eepro100.c
+> +++ b/hw/net/eepro100.c
+> @@ -617,6 +617,13 @@ static void nic_reset(void *opaque)
+>       nic_selective_reset(s);
+>   }
+>   
+> +static void eepro100_reset_hold(Object *obj, ResetType type)
+> +{
+> +    EEPRO100State *s = DO_UPCAST(EEPRO100State, dev, PCI_DEVICE(obj));
+> +
+> +    nic_reset(s);
+> +}
+> +
+>   #if defined(DEBUG_EEPRO100)
+>   static const char * const e100_reg[PCI_IO_SIZE / 4] = {
+>       "Command/Status",
+> @@ -1881,8 +1888,6 @@ static void e100_nic_realize(PCIDevice *pci_dev, Error **errp)
+>       qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
+>       TRACE(OTHER, logout("%s\n", qemu_get_queue(s->nic)->info_str));
+>   
+> -    qemu_register_reset(nic_reset, s);
+> -
+>       s->vmstate = g_memdup(&vmstate_eepro100, sizeof(vmstate_eepro100));
+>       s->vmstate->name = qemu_get_queue(s->nic)->model;
+>       vmstate_register_any(VMSTATE_IF(&pci_dev->qdev), s->vmstate, s);
+> @@ -2064,6 +2069,7 @@ static void eepro100_class_init(ObjectClass *klass, const void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
+>       E100PCIDeviceInfo *info;
+>   
+>       info = eepro100_get_class_by_name(object_class_get_name(klass));
+> @@ -2080,6 +2086,7 @@ static void eepro100_class_init(ObjectClass *klass, const void *data)
+>       k->revision = info->revision;
+>       k->subsystem_vendor_id = info->subsystem_vendor_id;
+>       k->subsystem_id = info->subsystem_id;
+> +    rc->phases.hold = eepro100_reset_hold;
+>   }
+>   
+>   static void eepro100_register_types(void)
 
