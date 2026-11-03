@@ -1,56 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D352606A324
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 00:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07894606A326
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 01:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gJqb0dgf
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h2dK9LiV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xO2lM-0007Id-Ap; Mon, 02 Nov 2026 19:52:32 -0500
+	id 1xO2xt-00026Y-Nc; Mon, 02 Nov 2026 20:05:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1xO2lK-0007Hk-Cw; Mon, 02 Nov 2026 19:52:30 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1xO2xm-00025I-Ms; Mon, 02 Nov 2026 20:05:24 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1xO2lI-0008P6-Gp; Mon, 02 Nov 2026 19:52:30 -0500
+ id 1xO2xi-00012H-RV; Mon, 02 Nov 2026 20:05:21 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 6B277438B3;
- Tue,  3 Nov 2026 00:52:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BB31F000C1;
- Tue,  3 Nov 2026 00:52:22 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id F066B6020A;
+ Tue,  3 Nov 2026 01:05:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0921F000C1;
+ Tue,  3 Nov 2026 01:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793667146;
- bh=ZD+w7OB/pRfaKOn/8xKvLuFK63LtCoSfptrngXhMfpU=;
+ s=k20260515; t=1793667916;
+ bh=nId63MjpjoN6RdXfGKmGO6QkKsRTmSWc8SQ2wT3PBds=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=gJqb0dgfOnCxHp3jY767ULpfx8AFoCQX2tZ+RfWGIqIeCmMX3ObHCxdZfT41aEvl6
- O9EvKHOsRe5RPreQFe75Cw6ibMLMaKmyyPxZlVQ+WGRmnpSMiaN4JWM+oI4kCLehcW
- EdosrAPpZ2kELA7ss4Wog12ISgSCkEczG4EyHOrXF3dBGc08uhWI2JoVTjx7fUM1tm
- 3JGOPVpbuBHF9qovc5GUcU5VDrNpsa9pKb8yUZtY0PsbTQfZBGocqlYCctrzy8mrMw
- qYUy0T8wGEFXqaTZm71Px3fB36f/dKkIcGeB0cYbmpUzNQEmzz4G+igHBva7eb5U0Y
- /aFA6ODXL/b+Q==
-Date: Tue, 3 Nov 2026 00:52:18 +0000
+ b=h2dK9LiVVN+SB2ht0KfTA3py2z/wpPfdvTK2sSHl/zRXLCnPQG6fS9JxgiHPLOHSB
+ iX7vR6CpHt50VO6VpXy53pcYD9GioGGjBdcy48xRcErQdKPb3Qd7XPi8aza8R8XCXC
+ CLk4rTbwkZP6F3v5wW5FW8AUUpqaFpEXLaKE0hg3vSw8MXWZN1u+3Jz9l/PrIiKvAb
+ sYpolW4JUo2eZSfFIEPvVlpYMTiKlyRf0FugbNXSgUnm14SMEm/yIvc7hiS4g8zQDj
+ vuaisNgI6VvpDqNXjCLc+PJzRrJwhLOSrUAoaBMtGl9uOEfFoW2krcOwinDDC6Sw3g
+ BPjgr8rnlAY7A==
+Date: Tue, 3 Nov 2026 01:05:08 +0000
 From: Jonathan Cameron <jic23@kernel.org>
 To: Jinjie Ruan <2118537295@qq.com>
 Cc: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, ruanjinjie@huawei.com
-Subject: Re: [PATCH 06/37] hw/arm/mpam: Add MPAM MSC base device
-Message-ID: <20261103005218.7d0a4a06@jic23-hlaptop>
-In-Reply-To: <tencent_8C2C6D66A20C91FD7641EA7206ED18672505@qq.com>
+Subject: Re: [PATCH 07/37] hw/arm/mpam: Add mpam-msc-mem memory-side MSC
+ subtype
+Message-ID: <20261103010508.4e123573@jic23-hlaptop>
+In-Reply-To: <tencent_2A6A4523CD66C21191EC56406A7866E2B805@qq.com>
 References: <20261016094733.1898485-1-2118537295@qq.com>
- <tencent_8C2C6D66A20C91FD7641EA7206ED18672505@qq.com>
+ <tencent_2A6A4523CD66C21191EC56406A7866E2B805@qq.com>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=jic23@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -77,178 +78,124 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 16 Oct 2026 17:47:00 +0800
+On Fri, 16 Oct 2026 17:47:01 +0800
 Jinjie Ruan <2118537295@qq.com> wrote:
 
 > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > 
-> Add the mpam-msc sysbus device core:
-> - Per-RIS register storage(Mpamf)
-> - The device state (selector state, num-ris/num-partid/
->   num-int-partid properties), realize with the per-RIS allocation
->   and the MMIO region (MPAM_SIZE window).
-> - The MMIO handlers covering the identification registers (MPAMF_IDR
->   with its 64-bit EXT view IIDR, AIDR, IMPL_IDR, PARTID_NRW_IDR
->   and the MSMON IDRs that read as zero until monitoring is implemented).
-> 
-> The base type registers no features; the mpam-msc-mem and
-> mpam-msc-cache subtypes assemble their feature IDR fields.
+> Add the mpam-msc-mem subtype for memory-side components.  Its
+> realize assembles the identity view of MPAMF_IDR (PARTID space,
+> optional RIS support, HAS_ESR/HAS_EXTD_ESR, HAS_PARTID_NRW when
+> the internal PARTID space is smaller) plus IIDR/AIDR, and
+> advertises no partitioning features yet: the bandwidth controls
+> come with the MBW patch.
 > 
 > Based on an RFC series by Jonathan Cameron.
 > 
 > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 
-A few trivial things inline.
+Just some minor comments, mostly about comments I left lying around
+that I now don't see any purpose in keeping.
+
 
 > ---
->  hw/arm/mpam.c | 171 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 171 insertions(+)
+>  hw/arm/mpam.c | 68 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 68 insertions(+)
 > 
 > diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
-> index 772a120..b1d6472 100644
+> index b1d6472..8a85c3b 100644
 > --- a/hw/arm/mpam.c
 > +++ b/hw/arm/mpam.c
-> @@ -221,3 +221,174 @@ REG32(MPAMF_MPAMCFG_MBW_PBM0, 0x2000)
->  #define MPAM_CACHE_PART 32
->  /* MPAMF_IIDR.IMPLEMENTER: ARM JEP106 code for Huawei (0x736). */
->  #define MPAM_IIDR_IMPLEMENTER 0x736
+> @@ -260,8 +260,15 @@ typedef struct MPAMMSCState {
+>  
+>  } MPAMMSCState;
+>  
+> +typedef struct MPAMMSCMemState {
+> +    MPAMMSCState parent;
+> +} MPAMMSCMemState;
 > +
-> +typedef struct Mpamf {
-> +    uint64_t idr;
-> +    uint32_t iidr;
-> +    uint32_t aidr;
-> +    uint32_t impl_idr;
-> +    uint32_t cpor_idr;
-> +    uint32_t ccap_idr;
-> +    uint32_t mbw_idr;
-> +    uint32_t pri_idr;
-> +    uint32_t partid_nrw_idr;
-> +    uint32_t msmon_idr;
-> +    uint32_t csumon_idr;
-> +    uint32_t mbwumon_idr;
-> +    uint32_t err_msi_mpam;
-> +    uint32_t err_msi_addr_l;
-> +    uint32_t err_msi_addr_h;
-> +    uint32_t err_msi_data;
-> +    uint32_t err_msi_attr;
-> +    uint32_t ecr;
-> +    uint32_t esr;
-> +    uint32_t cfg_part_sel;
-> +} Mpamf;
+>  DECLARE_INSTANCE_CHECKER(MPAMMSCState, MPAM_MSC_DEVICE, TYPE_MPAM_MSC);
+>  
+> +DECLARE_INSTANCE_CHECKER(MPAMMSCMemState, MPAM_MSC_MEM_DEVICE,
+> +                         TYPE_MPAM_MSC_MEM);
 > +
-> +typedef struct MPAMMSCState {
-> +    SysBusDevice parent_obj;
+>  static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+>                                    unsigned size)
+>  {
+> @@ -367,6 +374,52 @@ static void mpam_msc_realize(DeviceState *dev, Error **errp)
+>      sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
+>  }
+>  
+> +static void mpam_msc_mem_realize(DeviceState *dev, Error **errp)
+> +{    MPAMMSCState *s = MPAM_MSC_DEVICE(dev);
+> +    int i;
 > +
-> +    Mpamf *mpamf;
+> +    mpam_msc_realize(dev, errp);
 > +
-> +    uint8_t ris;
-> +    uint16_t part_sel; /* Technically per ris, but in same reg */
-> +    bool internal_part_sel;
-> +    struct MemoryRegion mr;
-> +    uint32_t num_partid;
-> +    uint32_t num_int_partid;
-> +    uint8_t num_ris;
-> +
+> +    for (i = 0; i < s->num_ris; i++) {
+    for (int i = 0; ..
 
-Blank line seems pointless. Probably belongs in some later patch.
+> +        Mpamf *mpamf = &s->mpamf[i];
+> +
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, PART_ID_MAX,
+> +                                s->num_partid - 1);
+> +        /* No PCMG for now */
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, PMG_MAX, 0);
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, EXT, 1);
 
-> +} MPAMMSCState;
-> +
-> +DECLARE_INSTANCE_CHECKER(MPAMMSCState, MPAM_MSC_DEVICE, TYPE_MPAM_MSC);
-> +
-> +static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
-> +                                  unsigned size)
-> +{
-> +    MPAMMSCState *s = MPAM_MSC_DEVICE(opaque);
-> +    Mpamf *mpamf = &s->mpamf[s->ris];
-> +
-> +    switch (offset) {
-> +    case A_MPAMF_IDR:
-> +        switch (size) {
-> +        case 4:
-> +            return mpamf->idr & 0xffffffff;
+I guess if being flexible this would emulate with and without
+EXT, but meh, not sure it adds much value.
 
-Maybe use MAKE_64BIT_MASK(0, 32) from qemu/bitops.h
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_RIS, s->num_ris > 1);
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, RIS_MAX,
+> +                                  s->num_ris > 1 ? s->num_ris - 1 : 0);
+> +         /* Optional - test with and without */
+
+Should drop that comment, or add the ability to test with and without
+- honestly I'm not sure which field that was even referring too as
+kind of applies to all the HAS_ ones.
 
 
-> +        case 8:
-> +            return mpamf->idr;
-> +        default:
-> +            qemu_log_mask(LOG_UNIMP, "MPAM: Unexpected read size\n");
-> +            return 0;
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_ESR, 1);
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_EXTD_ESR, 1);
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_PARTID_NRW,
+> +                                s->num_int_partid < s->num_partid);
+> +
+> +        /* We won't implement any implementation specific stuff */
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, NO_IMPL_PART, 1);
+> +        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, NO_IMPL_MSMON, 1);
+> +
+> +        mpamf->iidr = FIELD_DP64(mpamf->iidr, MPAMF_IIDR, IMPLEMENTER,
+> +                                 MPAM_IIDR_IMPLEMENTER);
+> +        mpamf->iidr = FIELD_DP64(mpamf->iidr, MPAMF_IIDR, REVISION, 0);
+> +        mpamf->iidr = FIELD_DP64(mpamf->iidr, MPAMF_IIDR, VARIANT, 0);
+> +        /* FIXME get allocation for this emulation */
+
+That still needs fixing before this can be merged. If sticking to Hisilicon
+implementer, need to get one set aside so it is never real hardware - just
+in case we run into problems.
+
+Or... Use implementer 0 which is reserved for software use on CPUs and
+hence I assume is fine here?  Maybe then set the product ID to 'Q' like
+the gicv2m emulation does?
+
+
+> +        mpamf->iidr = FIELD_DP64(mpamf->iidr, MPAMF_IIDR, PRODUCT_ID, 42);
+
+:)  I was clearly having one of those sorts of days.
+
+> +
+> +        mpamf->aidr = FIELD_DP64(mpamf->aidr, MPAMF_AIDR, ARCH_MINOR_REV, 1);
+> +        mpamf->aidr = FIELD_DP64(mpamf->aidr, MPAMF_AIDR, ARCH_MAJOR_REV, 1);
+> +
+> +        if (s->num_int_partid < s->num_partid) {
+> +            mpamf->partid_nrw_idr = FIELD_DP32(mpamf->partid_nrw_idr,
+> +                                               MPAMF_PARTID_NRW_IDR,
+> +                                               INTPARTID_MAX,
+> +                                               s->num_int_partid - 1);
 > +        }
-> +    case A_MPAMF_IDR + 0x04:
-> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, EXT)) {
-> +            qemu_log_mask(LOG_UNIMP, "MPAM: Unexpected read of top of IDR\n");
-> +            return 0;
-> +        }
-> +        switch (size) {
-> +        case 4:
-> +            return mpamf->idr >> 32;
-> +        default:
-> +            qemu_log_mask(LOG_UNIMP, "MPAM: Unexpected read size\n");
-> +            return 0;
-> +        }
-> +    case A_MPAMF_IIDR:
-
-Not sure why I allowed 1 byte reads. Probably want to check each of
-the read widths for 4 or 8 though as appropriate.
-
-> +        return mpamf->iidr;
-> +    case A_MPAMF_AIDR:
-> +        return mpamf->aidr;
-> +    case A_MPAMF_IMPL_IDR:
-> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_IMPL_IDR)) {
-> +            qemu_log_mask(LOG_UNIMP,
-> +                "MPAM: Accessing IMPL_IDR which isn't suported\n");
-> +            return 0;
-> +        }
-> +        return mpamf->impl_idr;
-> +    case A_MPAMF_PARTID_NRW_IDR: {
-> +        return mpamf->partid_nrw_idr;
-> +    }
-> +    case A_MPAMF_MSMON_IDR:
-> +        return mpamf->msmon_idr;
-> +    case A_MPAMF_CSUMON_IDR:
-> +        return mpamf->csumon_idr;
-> +    case A_MPAMF_MBWUMON_IDR:
-> +        return mpamf->mbwumon_idr;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "MPAM: Unexpected read of %lx\n", offset);
-> +        return 0x0;
 > +    }
 > +}
-
-> +
-> +static void mpam_msc_realize(DeviceState *dev, Error **errp)
-> +{
-> +    MPAMMSCState *s = MPAM_MSC_DEVICE(dev);
-> +
-> +    /* IHI 0099: MPAMF_CFG_PART_SEL.RIS is 4 bits, so at most 16 RIS. */
-
-Hmm. I wonder if this changed name.  The spec now has MPAMCFG_PART_SEL.
-Should match that naming I suppose.
-
-
-> +    if (s->num_ris > 16) {
-> +        error_setg(errp, "num-ris must be <= 16");
-> +        return;
-> +    }
-> +    if (s->num_partid == 0) {
-> +        error_setg(errp, "num-ris must be <= 16");
-> +        return;
-> +    }
-> +    if (s->num_int_partid == 0) {
-> +        s->num_int_partid = s->num_partid;
-> +    }
-> +
-> +    s->mpamf = g_new0(Mpamf, s->num_ris);
-> +    memory_region_init_io(&s->mr, OBJECT(s), &mpam_msc_ops, s, "mpam_msc",
-> +                          MPAM_SIZE);
-> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
-> +}
-
 
 
