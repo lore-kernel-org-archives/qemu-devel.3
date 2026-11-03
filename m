@@ -1,96 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695A7606A324
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C339B606A332
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 17:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=kAmRUkyJ
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Al3hyllL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOIHP-0000Bq-Ip; Tue, 03 Nov 2026 12:26:40 -0500
+	id 1xOIJ9-0001mm-2k; Tue, 03 Nov 2026 12:28:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xOIHD-00008B-Aj
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:26:28 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xOIHB-0006Qt-02
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 12:26:27 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4afe2d546f9so29410995e9.3
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 09:26:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793726783; x=1794331583; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=hqqeZR9hh82Ok/85fIviXaUdYKynKCQ8FaCgEa2tPAY=;
- b=kAmRUkyJNzKKXQQJH2PU4t1TI1Bp82Yl9s58odVjx6+KQUTTkPLSuwXpyBTPEHErye
- /iR+sbBD9+gVDyFwQ7hBB62rO7Te78SCIZvXooaFrgEjsVnkGrrPTmXDGGqq6K/Ot3FU
- 9WjRfLUB8IyEirDda4rYmLry+yUnsC4cQGeGr0EBy0TWvDYQm+Tyo+zQ7UszrnrKr3D+
- guSrKpJO1qakKrhTB3kWFYFhJAX/ojMlF60PumFL66DMD/7gqeSIINR98jVwTp4YC+RL
- i4fyAy3ESBHUsQBJ2ezpQ+uojJJqfrVCtMroZzqf41YmC8fn/1h/RXkBNERR6OVp9sLG
- s2oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793726783; x=1794331583;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=hqqeZR9hh82Ok/85fIviXaUdYKynKCQ8FaCgEa2tPAY=;
- b=Ur31wYxNLd5FHfjsmyKW30ZB5jtzdpQ2y0LVpff4qW6Gv76NLFfmhkTCm+nI4Wp6KR
- KudGF50hKVVIOn7RlHzHEPeFNp6VrlmMsVfPwhQt88OVcSExu+sRKTHdeh2so48Wia3D
- gvk87TM3JrcObJHqP4d1fl2jSaBlDeiKk0OQk8zjUK4j24YBIW0hEjqnaHSs23cAbO68
- LUn3J05mzJg35UH3dfaHeKEC7dnYF9daBv3/nUi9sYHzayfkHRD25VMVWUxCqQQLx3cb
- x+1yMsy2VjdhC+H19bxXs58qtnAO9ZgK/Sb/55fgmJGNFjiHaYPC1KTffJi1OOwjr4IJ
- mslQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx4CsV8TGisTcjGijvuBTYYIt8uR0wJKWJdlxHI6sPfyxoz45hKVwmlWGICJGJr865A3N+NJ+/pgjxz@nongnu.org
-X-Gm-Message-State: APuU4Z+iF2QDxpQs86Lec0EIHwzt2tbhqfZRoYCi4Bp/xaMaukfSdaxr
- 1xtf7/E8QMcMXw0dtzdWRv4Rce30ti/NweZ9aRysi+VQV15kaFE6edCDehsCXDHgh9Pmep1AuOT
- coox0RI0=
-X-Gm-Gg: AYBFou2JjSMTxjcPh5uO2GipAZrIqf8XH8E1a1lkOs8X2+FUS4QdeFDeQLFdiaH+Mal
- x+TJb5SCFnJwQpVC5HPa6cUEEbBtNP+tM1D0Cit6+cqXA7gWNZJB5nupkBIIkbVtfVpKja1oZeh
- PZDNv4NWbtQfynazaQ2hipP8f+JprLuoem2C3ZqBSyIt3wCcAwOPjj560PxBqxgAG+ILbBj9JJ8
- 2IJRKVNW7Stc7BFnkDz0wew5zS1Hw2sKmLxXseNuyzt3FnHVyUFXgqYFmant1neF4/K8DmtxWjI
- AVt8/LZVTb7ZRn4hds+/sX7JA/YXo1Mf2iRkoIRTB+IV+aQxbW/aTPQ+USXEKdDjJdAnmwjCv9b
- 857zq28hwsRDU2PHg1BDmB1OjzelvQTRDln8wdYy4Mvbuyc2nn9qfBpq9sDNKnCZwfwBblGoEzl
- TzyQx3VazgMrjdwEJmYbs9mg9R3CNdxgJryALCyHfOwRvpKiYUDni17ZrtusCSbRu6HyB5kXhLf
- laN6Yu0jUT08UTPNMkXTk1X7YXtyLuIC2PBlvykmsafIYqOu/N4ozd2R9zsd/uZjmeNlVFzumKr
- kuAkHlRgIRRz5leth2sc7cciWXLnP9BF5wvD7yk39m/pknnZlvn7jPNCeBpFsHWkcN/veorv+AD
- Om9x3BMejsIkoTQkmWfFbg1Rbv6jJflCL6zWtpkE8vJkft23ffOlJeog=
-X-Received: by 2002:a05:600c:c48e:b0:4a1:f7f4:7cf1 with SMTP id
- 5b1f17b1804b1-4ac16bc47f8mr316953545e9.11.1793726783525; 
- Tue, 03 Nov 2026 09:26:23 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4ac0950d533sm211082605e9.3.2026.11.03.09.26.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Nov 2026 09:26:22 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH for-11.2 4/4] hw/intc/arm_gicv5: Use correct type for value in
- lpi_cache_get_hppi()
-Date: Tue,  3 Nov 2026 17:26:16 +0000
-Message-ID: <20261103172616.2400758-5-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261103172616.2400758-1-peter.maydell@linaro.org>
-References: <20261103172616.2400758-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xOIIT-0001cO-Ks; Tue, 03 Nov 2026 12:27:47 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xOIIS-0006Uh-3l; Tue, 03 Nov 2026 12:27:45 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A3EE6uv2251362; Tue, 3 Nov 2026 17:27:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=0oO+vuLvf7d81YehrCQEVWhSl7ylkDd8aqbBQkp8t
+ ic=; b=Al3hyllLFPzq1cbkTPN5Bv9UgQah0a4R/gCAV1jh9SWNb0XMp/RrIbI//
+ TGx+M2k3SK6XsguK3+gv8aTnUfg29RrF0xCFF+6G/JvFz6u99qNORSUfimKYCMeN
+ rtL0QzH/B8AJrhDaob8mYUfSS7LHLvtP/vbnpqIDrNV+y8oa0GMo0FkYpPkOqbsg
+ l1kw+Fdx5g8HV+HzZjAi69fgHNps//cwFlLCW3/VfFRUxnlPipdhgaFnR/IiT2S7
+ iDX509WA0haO7H3wOHDByyk26tSj0+LV/KPA5ZLtG8x2ghgSv/m9FRL3UHC/r3Wd
+ 5mttGn+6K10rhSCojHvpF2bJ5H5jg==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn7u3fbm6-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 03 Nov 2026 17:27:40 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A3H8cm82695639; Tue, 3 Nov 2026 17:27:39 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hnv5gup6c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Nov 2026 17:27:39 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6A3HRZhN37421392
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 3 Nov 2026 17:27:35 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E7A102004B;
+ Tue,  3 Nov 2026 17:27:34 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C19DF20043;
+ Tue,  3 Nov 2026 17:27:34 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Tue,  3 Nov 2026 17:27:34 +0000 (GMT)
+Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
+ id A7E39160DF7; Tue, 03 Nov 2026 18:27:34 +0100 (CET)
+From: Eric Farman <farman@linux.ibm.com>
+To: "'Michael S . Tsirkin'" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Konstantin Shkolnyy <kshk@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+Subject: [PATCH for 11.2 v2] vhost: only use config notifier when
+ exists/initialized
+Date: Tue,  3 Nov 2026 18:27:32 +0100
+Message-ID: <20261103172732.837511-1-farman@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Zsp4uN7G c=1 sm=1 tr=0 ts=6aea198c cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=imYxtfgo-3jAVhZrOLEA:9
+X-Proofpoint-ORIG-GUID: HEAG4OSXlKpdCAKDRae5LGHBN8tdbBrA
+X-Proofpoint-GUID: HEAG4OSXlKpdCAKDRae5LGHBN8tdbBrA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDA2OCBTYWx0ZWRfX1JI2tgGJizTg
+ 8Nbt9doah0D35PDP/ChZACPgH3llETfnxoVM3eI8UfjzQ6JsXOC3edFrCSQrdcVD/zFJbkWIO4T
+ 73AKO1ye0AELqOWtCd7mtkjCK0pQyYAa6hwIrLXKNIIXU/ndoe81hMpm+yHRVl1szGU3xZkMm0p
+ GOrrwbi8vJ5TPYfoEvM0JVU3bBHAS7mxEHvbTatez/2Nl3kBrtTWGsAalMgE6odtcgfH3jmv8bT
+ Wlhc2AWjVKfkE0ZFTKsEnpPfWx8+I/df20OYyM6Hvf/d6wcUHzfzh1jZz6t7UdBE/3yiF3d2Mc2
+ RW2sqih1swCHteZCJGfLLXsoY2KwhoDSMvnNSSg7y1PlAjyIQWKMruo30kzklvUVMEPoTMxm+ns
+ VqEIj9sWbj1grGBvTd93B2/x8Run45M1dkJIENzWiPgcCATx+uLWq8K+4fcKsKY9By0mOyH8yP5
+ grp+G4wOuR37we52ovA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDA2OCBTYWx0ZWRfXxc1UQ2yW95bS
+ u0G4oBVAuLFcRJ06se4zwgM5xI5yyEnBv6Bc+Lmdit0yjgFPnOVyrm5ZVooMSMwxEyJ9mnIjUTs
+ e5ZBNdk5SkoZdYGEj9D1JETh/0bAXR8=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-03_03,2026-11-03_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
+ impostorscore=0 spamscore=0 malwarescore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611030068
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,48 +120,47 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-lpi_cache_get_hppi() is a function we pass to g_hash_table_foreach()
-to iterate over the LPI cache hashtable.  This hash table has keys
-which are GINT_TO_POINTER(intid) and values which hold the L2 ISTE
-value, allocated as "hashvalue = g_new(uint32_t, 1)".
+Commit e3b12d0c55e4 ("util/event_notifier: more strict API") added an
+assert for an uninitialized file descriptor in event_notifier_get_fd(),
+but it presumes that such a thing always exists.
 
-The function is passed the key and value as type 'gpointer' and has
-to cast them to the real types itself, but it incorrectly casts the
-value pointer to a uint64_t*.  This works on little-endian hosts
-(since we only read specific fields of the L2 ISTE using bitmasking),
-but won't work on big-endian, and trips the clang sanitizer.
+On s390x, where a config notifier does not exist, this is a breaking
+change for any vhost-backed device such as virtio-net. To remedy this,
+move the acquisition of the file descriptor within the guard against
+vhost_set_config_call and expand the guard to ensure the notifier is
+initialized before being used.
 
-Fix the pointer type.
-
-Cc: qemu-stable@nongnu.org
-Fixes: a0562ada75e ("hw/intc/arm_gicv5: Calculate HPPI in the IRS")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: e3b12d0c55e4 ("util/event_notifier: more strict API")
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- hw/intc/arm_gicv5.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/virtio/vhost.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index fd6456cd8aa..a362349e5ed 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -390,7 +390,7 @@ typedef struct GetHPPIUserData {
- static void lpi_cache_get_hppi(gpointer key, gpointer value, gpointer user_data)
- {
-     uint64_t id = GPOINTER_TO_INT(key);
--    uint64_t l2_iste = *(uint64_t *)value;
-+    uint64_t l2_iste = *(uint32_t *)value;
-     uint32_t prio, iaffid;
-     GetHPPIUserData *ud = user_data;
- 
--- 
-2.43.0
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index b25919c5c7d..189ac541178 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -2119,8 +2119,9 @@ static void vhost_start_config_intr(struct vhost_de=
+v *dev)
+         virtio_config_get_guest_notifier(dev->vdev);
+=20
+     assert(dev->vhost_ops);
+-    int fd =3D event_notifier_get_fd(config_notifier);
+-    if (dev->vhost_ops->vhost_set_config_call) {
++    if (dev->vhost_ops->vhost_set_config_call &&
++        event_notifier_initialized(config_notifier)) {
++        int fd =3D event_notifier_get_fd(config_notifier);
+         r =3D dev->vhost_ops->vhost_set_config_call(dev, fd);
+         if (!r) {
+             event_notifier_set(config_notifier);
+--=20
+2.53.0
 
 
