@@ -1,117 +1,56 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BD2606A33E
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 22:17:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=jCyh+4EV;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Fx6shxtT
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A420606E81D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 22:26:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOjHS-000160-Ai; Wed, 04 Nov 2026 17:16:30 -0500
+	id 1xOjQ6-0002su-Gi; Wed, 04 Nov 2026 17:25:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xOjHL-00015A-IY
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 17:16:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xOjQ1-0002s6-9d; Wed, 04 Nov 2026 17:25:21 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xOjHJ-0000RL-F1
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 17:16:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793830577;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type;
- bh=Pe1gl2CV9G9curjbBNlxSRhjKcC2jFWfFqOrZ4w4kWE=;
- b=jCyh+4EVSmE3CNC+D6cCko3pFPvP9zHUxdLhJ6W9JfkxxjsqfsY86JW8jAsh9R+3R5njfs
- B5S1zMBjowbP+Ow6OcYN2fy0BnyVUXSV9DUzQ+UiB1GiO6AmPWr1Im9Wc1FPf1r3tUjSQL
- SmRImb8c1jDnM0dgLWa+2rH9odj1QNA=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-247-sdZJe39rNhSyfh8wuEciqQ-1; Wed, 04 Nov 2026 17:16:16 -0500
-X-MC-Unique: sdZJe39rNhSyfh8wuEciqQ-1
-X-Mimecast-MFC-AGG-ID: sdZJe39rNhSyfh8wuEciqQ_1793830575
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-8b0e878f574so1312447b3.1
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 14:16:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793830575; cv=none;
- d=google.com; s=arc-20260327;
- b=KQoHNGamUuSKpmCHrtvBO9Apooc4l0sx9UI/rKuhuSjcWx94SWhxn3Oc1RwXJM7mxN
- FU3omkDrtlGatRUX5ztvCVJ4R6/ouMxqREnzsLSglDMDCoiT5CshFWrYicmR20iD3wUk
- Wb11q5g7IJNDGbB5xTZfagzpIwCPwS5YBdmroKieuSDU6aMbTI4vwLVb/WCwzFnMZ6XQ
- SyzyoE/BF7CWiamUyfIqQvYe1+mKbU8zgFobH7+2st+U1pdc19Rh+jobCP+sdAVFI0j7
- V8qbhaK8g58e4YWldhPRBXR1vvRhxIIvZEp77poiEVxlmRrDXVd6fPAZUWYCX8IHnl6e
- z4aw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=Pe1gl2CV9G9curjbBNlxSRhjKcC2jFWfFqOrZ4w4kWE=;
- fh=o6WzRHm5E7uRlrofMkzzrgsDI7Ce0Cmybz714kKPa+o=;
- b=a1nlZ2eZA7zkRUV6CaoLqGEXaFJjg2gGwlgv/SgjRSSvgAzZ1hWztDZqZYjZl7t/T+
- Pz4H2Yy6Zx1a/xzv0eF/GB5uTwmISpgypMarIysImPVYr8cRC0dE59K+gJFC0bXbYVn1
- W+GEzGc2+TKaBq1EG0A1wecI9A6p8sECMHQpMZhCkKTJ7pxPUuQNicFZYr93Qpf1LMAb
- 6gGDCPLL1nmfjfr1MHaQSTuNsExE+CwuR9SPIg7PkMHinbGPSa8dzUdI1NsewlQdAzMH
- tqyHmmu55mBfAaIEHaZM02I0rh6jByX6LRljLR5ZXT7d0vsmJ+GNyDHSwVmczpmcC5ux
- 9o3Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793830575; x=1794435375; darn=nongnu.org;
- h=content-type:to:subject:message-id:date:from:mime-version:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=Pe1gl2CV9G9curjbBNlxSRhjKcC2jFWfFqOrZ4w4kWE=;
- b=Fx6shxtTW8F2aCKbj1PRlCXZOORFqbLmUvGhFEr4In6vYBqoofuvYCQxH658T36xuK
- fWx7bIrIa0CbEDjQS+dwbTBqXLCxIXXWsf0KL/I0xSBSVunoqA4szcQMG25WXaS7Fetj
- 4MtVByyGiwZC8WkumksNktEL6HtfjHM6mOnxA++63qYdODbTEdZueUvhkdBOQhLrYimp
- aJBfXyZ/4vneMtZHhpjYjLJ0kOp+l51Kj82yUKW28zgH0V4tfsLnXm+PP49+YOhiwAS8
- gohbGBOoH+gpWSm+XEvIbR914rH16L1exM/GmSRqrlVT+JWQ4bjY4EK/pn8XXR//m9T7
- fRbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793830575; x=1794435375;
- h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Pe1gl2CV9G9curjbBNlxSRhjKcC2jFWfFqOrZ4w4kWE=;
- b=zY4uOrgeP+DU5Izg2x0M6KuBvF3b30SM9OOHD8iLqbh9Vp5yZhvxy7Ozdacg+dJCRq
- ulbdAB1D6R4u+SvSQ0tVmBolEDOdRQjXNWP1w7IRi9XPQrlzfcbwGwCc7K8fjSe3sCiR
- JmkDfZt/fDxBoS8nqGPM7Zy73x144D6DcR69Wk077q5vpR3jMeNLLhnjFNg2IavOOMOo
- xCz3AxpOoL++AVw0Gq5lQ0dfvfeasq904m8qUvIl+UOTLM6HMUkUd5nM7WsbTJ7xPHgu
- +oQFPKtJ2RZVCW/PyJLZMtGYalRNsUP7YNjXnHQU96+yd5g8WzeZt0sTcmpSKTspOLl4
- 1N0w==
-X-Gm-Message-State: APuU4Z/Uq0NhaPjOF0WWyddpc3L0jCc67ry4coQOhSraCLsn7iTzTF8G
- 1ARNEKmrBDD0TaFKJV3azj1SSXTYiubLy0SWJ7eVjw3LDIbgCYkaa3M9QjlUVdmxDOLosTKiXqx
- 8pJDRKecFRhAvuAMAkslzrUDcPNwjwm8tNO6TqicTLo8TLeL9xYpQl7KGOei01W4HD9e8b9GUVf
- 4c8wC0niAo3gmO7txx8sXCSSXRzNTSYjf6l5LElt5O2w==
-X-Gm-Gg: AYBFou1djzqSKJicAnU7rPSq9rf8pDdN2xmJz6CtsDSzL7W1ZhmsapvSBweM+ZJfM39
- aNf9QMDiSrDebFnt9WhIw5zIpFE1tZ2QNyXwVlbQYaYjkZCGXO7VD0/Jttcs2QKQWfUUErdN/9S
- 26RET+/WSxlRMUtrMM7DMGjbe6WR3jQyLRTsO24F5cCGmIHifZaV9I79epiJGPZ25HJ2yfxixc5
- MNFLUUO58O7zgMO
-X-Received: by 2002:a05:690e:a49:b0:679:9310:6581 with SMTP id
- 956f58d0204a3-67c035d441bmr619829d50.23.1793830575366; 
- Wed, 04 Nov 2026 14:16:15 -0800 (PST)
-X-Received: by 2002:a05:690e:a49:b0:679:9310:6581 with SMTP id
- 956f58d0204a3-67c035d441bmr619814d50.23.1793830574807; Wed, 04 Nov 2026
- 14:16:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xOjPz-0001Ot-3u; Wed, 04 Nov 2026 17:25:20 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A0F4660C347;
+ Wed, 04 Nov 2026 23:25:14 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id lR5quDjnFhsn; Wed,  4 Nov 2026 23:25:12 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 3CBE160C0F3; Wed, 04 Nov 2026 23:25:12 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3AC06139920;
+ Wed, 04 Nov 2026 23:25:12 +0100 (CET)
+Date: Wed, 4 Nov 2026 23:25:12 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Bin Meng <bin.meng@processmission.com>
+cc: QEMU <qemu-devel@nongnu.org>, Bernhard Beschow <shentey@gmail.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>, 
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v2 05/17] target/ppc: Complete e500mc and e5500 L1 cache
+ configuration
+In-Reply-To: <20261104173329.706635-6-bin.meng@processmission.com>
+Message-ID: <c8a25962-b452-5f67-9a80-fcabad783e2d@eik.bme.hu>
+References: <20261104173329.706635-1-bin.meng@processmission.com>
+ <20261104173329.706635-6-bin.meng@processmission.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 4 Nov 2026 17:16:03 -0500
-X-Gm-Features: AclHuK9pFrT4_O8OOWrcXshL1x2iM7sn80P0-FgzTzD9lN-ruqtrtyLjCQRA5IA
-Message-ID: <CAFn=p-Z=RGEO-sTgRR549LkQbdfjR-zfnb8GASV8XnQf4TrwAw@mail.gmail.com>
-Subject: input-keymap sizes
-To: qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,52 +62,66 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Heya!
+On Thu, 5 Nov 2026, Bin Meng wrote:
+> The e500mc and e5500 manuals specify pseudo-LRU replacement, cache
+> locking and parity detection for both L1 caches. The reset values
+> describe the block size, associativity and capacity, but leave
+> CREPL/ICREPL, CLA/ICLA and CPA/ICPA clear.
+>
+> Set those fields to their documented values so both L1CFG0 and
+> L1CFG1 reset to 0x00B83820, including the shared eight-way, 32 KiB
+> cache geometry.
+>
+> Reference:
+> - E500MCRM (Rev.3), section 2.14.4 and 2.14.5
+>  https://www.nxp.com/docs/en/reference-manual/E500MCRM.pdf
+> - E5500RM (Rev.4), section 2.14.4 and 2.14.5
+>  https://www.nxp.com/webapp/Download?colCode=E5500RM
 
-I've been looking into producing minimal QEMU configurations for
-sandboxing, and as part of that, I've been auditing "what exactly
-takes up room in our QEMU binary?"
+I'm not sure we want URLs that can go away in commit messages (or 
+comments). I't probably enough to list the manual and section or move this 
+whole reference section below --- to help review but not record it in the 
+commit. But if others think it's good to preserve this in commit message I 
+don't mind.
 
-One of the things that came up was that input-keymap.c burns over 250
-KiB of .rodata all by itself; all of the keymaps we generate for QEMU
-are included statically in one big blob and are linked with every last
-build.
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> ---
+>
+> (no changes since v1)
+>
+> target/ppc/cpu_init.c | 5 +++--
+> 1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index 3be3e44aad..e2182720a3 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -2886,8 +2886,9 @@ static void init_proc_e500(CPUPPCState *env, int version)
+>     case fsl_e5500:
+>         env->dcache_line_size = 64;
+>         env->icache_line_size = 64;
+> -        l1cfg0 |= 0x00800000; /* 64 byte cache block size */
+> -        l1cfg1 |= 0x00800000; /* 64 byte cache block size */
+> +        /* 64 byte blocks, pseudo-LRU replacement, cache locking and parity */
+> +        l1cfg0 |= 0x00B80000;
+> +        l1cfg1 |= 0x00B80000;
 
-There's a few things we could do about this;
+These were changed two patches ago. Do we need that separate patch or if 
+you don't want to squash the two patches maybe move them next to each 
+other without unrelated patch inbetween.
 
-(1) We can split out each keymap into its own object file, which
-allows us to link only the keymaps we need for the features we have
-enabled. Dan Berrange wrote a quite POC for this and the results look
-good at a glance. We need new linker flags to automatically prune
-unused keymaps from the build, or enhanced meson-fu to
-deterministically exclude them. Either way, it's likely a worthwhile
-pursuit. In a microvm-only build configuration I've been testing with,
-this immediately dropped us from 250KiB to 180KiB.
+Regards,
+BALATON Zoltan
 
-(2) The x11 keymap used by ui/input-barrier.c and ui/gtk.c - all by
-itself - consumes 128KIB for its keymap. This is because although the
-x11_to_linux keymap has fewer than 512 total entries, it allocates
-this in a const array with 64K entries in it so it can span keycodes
-0x00 to 0xff and 0xff00 to 0xffff.
-
-It's the second one I am concerned about. At first I thought that I
-might be able to write a "condensed" table that uses 0 - 255 and then
-remaps 65,280 - 65,535 onto 256-511 and then take (index & 0x1ff) on
-lookup table input, but I realize that the entire unmodified table is
-passed off to gd_get_keymap() in ui/gtk.c where I can't inject those
-index transformations.
-
-Does anyone have any suggestions on how to help shave the x11_to_linux
-keymap down to a more reasonable size? I doubt we need 128KB when 1KB
-could theoretically hold everything we need.
-
---js
-
+>         break;
+>     case fsl_e6500:
+>         env->dcache_line_size = 64;
+>
 
