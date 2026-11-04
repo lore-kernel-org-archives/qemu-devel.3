@@ -1,73 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A73360BEF77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E5A607351B
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 19:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=ZKg8gun7
+	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=SNHQ/vCD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOgsp-0002Nw-2L; Wed, 04 Nov 2026 14:42:56 -0500
+	id 1xOgsO-0002BN-PU; Wed, 04 Nov 2026 14:42:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xOgsR-0002CW-0m
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:42:32 -0500
-Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
+ id 1xOgsM-0002Ae-Io
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:42:26 -0500
+Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xOgsO-0002JN-Fs
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:42:30 -0500
-Received: by mail-dy1-x1333.google.com with SMTP id
- 5a478bee46e88-36a0f27c9f4so2005634eec.1
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 11:42:28 -0800 (PST)
+ id 1xOgsI-0002IU-Sy
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:42:26 -0500
+Received: by mail-dy1-x132f.google.com with SMTP id
+ 5a478bee46e88-3645f0f3fcdso1852688eec.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 11:42:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1793821347; x=1794426147; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2NABy6KtqliH5i+c93gTPeFMXkmj/4e6tuIau6Do5Yc=;
- b=ZKg8gun7p0VkFMj+oU6JFtkAvlfjIgIdvhbcSi395lVCIaLjjFIBML2lvPfaW7U3y5
- BYqh7x68FCUy/FURnXdewf69EEbB947xKWhjTlBAri7gKhaKw2D5BvnhDnm94wgDUDpR
- PyhlZV07R6qOetVo2JyRsso/nQ9yZk1vcOupo+fgPsY2EtcsQti7gO6mtgIU7mtjqAc2
- WGZKX5gq7dI4ByWtqpfVc29pMuh7bBoTH8Muy84cUnZdh3CiDNqkLevPe165R1e7VVCg
- qnakGOHWhqBwZOBk6Wy/Vv11zhGzG9miudIImHNfUayV9+jkXaw5SuhXb6m9cyQjssup
- D2DA==
+ d=sifive.com; s=google; t=1793821338; x=1794426138; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=MRf63BKlzN9Q6T6SVbmpGWS97iFmtemTAut14L0mwiU=;
+ b=SNHQ/vCDQyEYJo/kEzZtL9vadsEd/oBehOkN/ABn4Ue6uBlfIM1R581F6q14+aYsZv
+ TbPGeOATZREjp6YIPW87SvTh22aGHQl2P450YfYxUT9V6cq6DHERF8eBn/OablHvKpip
+ 6hnLiddQu82MuQcVLU5IW/yJTIVBQqY6gIfueA7wQajmB5LYL24m5yzr0M41CzlrGBxW
+ A6gmd4PyTKeVvgRhabHy4Wf11wYBp40pgo24vK2+VXYqVj/8V5ZDeHI85kVdH+qS7nQ+
+ F+q3YE+ujuiJM873y5LpqepSpdG55A5DY5XzahkBIp42jCfH/Af2zr7upLmOZ81755IF
+ grGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793821347; x=1794426147;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=2NABy6KtqliH5i+c93gTPeFMXkmj/4e6tuIau6Do5Yc=;
- b=2r6DDqcTPl0Y7zUqIPLqaGAJnIvRrbFbKvCcDtumpSjbkd74Xg6Jn1kqxGMXmpiS0B
- NkAuQpbe8Rn8KtAW9r89dyw8ErbjG9C37gE+dKbqmOke02mQmAjhp7gPZGbRuHAY/AHk
- P8cY/BJ+U2PiPNZK2loQKWwRuCjGpHkbYA+M6SAXjUzhIdOJFT7Mk2XnCtGMMZV8wAWy
- OOgM1AQQaBxz47kvVQaYoE3hhXVeMklu/Ff9X2ZfFBOGO0IWJAuECIG0OdB0xfCkHM9N
- OX89Kk87rbcymdoE0aCdKtOQNq14Fc0KDbQdJ+VzTKerhWKAtCUxxtrKo1J2zwkbaLrG
- EfVA==
-X-Gm-Message-State: APuU4Z8JYYCK8SkNZL8tRQCoW6QB9o0a1n31Qbzy9UYNSQXF1tW7WAPl
- JAWOyItMyvdmIG/Xg3B1CbdhOYmpUnEaY4I0LTugJCGdDG1bymNqE38+3CGxg1XiDGccwcJOdER
- lkVFtkvMSei/MqE4Zbpl9SdOeJlqqU2TyFquF+Pr0QZaDQiS2fwJPy/MhUPGLClZu4pGHN2WqD/
- IJQAag+Vk6yhtGdPrOvlzfSgMduBUWTt97gaW1egmDiw==
-X-Gm-Gg: AYBFou2WL0c/eGlA6l0i/pkVK1wHylGFCiwZJGiZlQcT8Crp7r9095iVRCQt5xAcfN3
- X06yhqWUUJdb6++oKhoa7lOoid+w78eKLftijc73vF1EKX7W4VpllE08nR39XYZSbdxH7CD9W4x
- f9aPz7ckwO1C5V4IbYbXmbKhGS8RJBApnm1bRt7Mc3R59cL0SWXAUiGpoJN+CbGz/YHV5UKw/0A
- REej1DwcfZIKC+0/wLYbmrf85dmOvlZUpQ0DcLDTb6978IQF2rGmMHPc1o1eoidHzFyqmHXIUtD
- rXiU2lHGGIvA+kxm0VhvdFd9QZwjehU5klwOFrQaMqmBsgnlV6tfYrEDHhEHnSuX1KyY4mFQAds
- PkqdyBmgA4Rxv3CVejM2IXNwYJYtnMLIGVyMpkXsBrtVt28/fDUCLYmZNJyVMNYoOk0i4Y51p1m
- GtuNIfvMC7F7j3N5Qdmy4DglTedRx4qlSD8rGw6BbQO0N7bWf5zEBZ06GWP1qOBiDBNaFLzrQVy
- dI5y33Mckm79wqeyOTIMWnTpfXNeukO/VeKYHYS4ZWg7kQ3vKsYCZ2dFvusvKYbW5l/0z6zeDGW
- X2hQydfqZo0sbD6TT5G51OEvMMj1gdOOGc3gqpqN7LO6ijYhH3Dw2BgHNohQkyFvGI/HPf/BvQc
- pKDJiitoGobNYVz02SM4/aaSF+4pp
-X-Received: by 2002:a05:7022:1509:b0:151:f0c5:7a09 with SMTP id
- a92af1059eb24-1ac5e22adbamr28773524c88.43.1793821346443; 
- Wed, 04 Nov 2026 11:42:26 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793821338; x=1794426138;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MRf63BKlzN9Q6T6SVbmpGWS97iFmtemTAut14L0mwiU=;
+ b=zSMCBW/mVsFrG1K95Zz7f5xB6LjxCNkOK6zuvXLbjUm03+upGpKcyxmuZlOGF2N1SS
+ oqFEruF5OHaCg6f9P6FKxqe0HtgOyDKJjvxVxsXQnID9BNJdq0cERsIys7fVyI2rLy/+
+ IDpQy8o+qrFEd/tTl/q9MxzR3q8qb8RPa8ROBGwM3m4BtExHyGoPlzCHHGjbS/7HCCTc
+ PCDCU9TMHdMu0qJPkzuZZrCHknlSBmz6pawCaLkmRNbOYt+EensFoZU57AOtJ5++B3eW
+ csN1PnCMD1XPHhwi6plvw/urojYiKFOWEYk4gMAKxW4nmdmpQQnqieSTF5IOh5p1yStW
+ pC/g==
+X-Gm-Message-State: APuU4Z+8z/LTZCH9AKXECZMHWDQpAMLpu9AsXkqOQkbC597djPT/XLgX
+ GOvgvGJKfIuAhQ0GrxfsnBYoPCH3r2wwjEpD6WacMUrKFdh6olEYRPnw+U5Ujtu6UmyqIlRrQtK
+ 2woasNscdlIBdYO0Bjh6G8+lj2I0z5nkQm7+5FcuDeDlYr6s4c7+OTc/uCodn/hMkPcfVRQaCru
+ qVb5ljiU3a/KEvlbmqtjET0f4bzaRvV+VUviWin4eGTw==
+X-Gm-Gg: AYBFou3qV68ZGXPy7uh0UbODgwkMlv4t7Pnv4vYFNnnLAl8yrOTcISTBUpQSSg64gdq
+ 57CVoR7+DuXduwPZBmPf14eA8Aly3ljsN/f+1G+Cp+HSbDLqUOyljFOXwTZueI+r95yYMNPF7W2
+ p9RTXefX4czwio9/D8ZHovOXcl1OWaizUpj3+Xmigl/iPts84CGWIuhufINOEEoR2GParXfw6wQ
+ ZyYrLnwXaKGe+eeTnI1Nrx95u6gnEq9cZRXh//xOxFmgpWFuaRkPosYnVsSQPBjSx8hPzuaGMxi
+ Hnl5/0jC5lhps8rjatwojsVwZl2j+YPLbRdOx3l4kP3165GjDWkCABgr0OoGNq9BXv3kfjKwb1P
+ E+yHCBU7CFsqopPV2QYo24KErF/na9EtaiGBf+QLn6sC0cyl23I+PvD21hydIn98T0sHXcSCBQt
+ KdR0bQ11APfTXUwsKm8jFU76mRNf0bUI+F2nsgdrcMRIb81P8PIWZ8YksI3FYnPG1Epq7WTXtE+
+ WjQZwl5RJ/i4VOMo53wA8uDgbmKGkT2cExhq6ci1cmdi1L0iL4+3wR4z+bElMe+7e4xYhs3NcQ/
+ NPDKRsStJUV06pvjXdupQ8covsC2YRBmhlNbbrwwXceBMP6sRR9LpKo6r78qyog3cALIszjy9lZ
+ qwDGfsSyBNWMSb5fR5u7L6JewBCEc
+X-Received: by 2002:a05:7300:d0a5:b0:36a:1b23:a1cd with SMTP id
+ 5a478bee46e88-36a4239359bmr23479815eec.9.1793821337810; 
+ Wed, 04 Nov 2026 11:42:17 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36ca38d36a1sm11299527eec.12.2026.11.04.11.42.23
+ 5a478bee46e88-36ca38d36a1sm11299527eec.12.2026.11.04.11.42.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Nov 2026 11:42:26 -0800 (PST)
+ Wed, 04 Nov 2026 11:42:17 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -78,20 +77,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [RFC PATCH 03/38] target/riscv: rvv: Introduce RVBNA algorithm for
- Zvdota/Zvbdota extensions
-Date: Thu,  5 Nov 2026 03:41:18 +0800
-Message-ID: <20261104194155.679241-4-max.chou@sifive.com>
+ Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>
+Subject: [RFC PATCH 00/38] target/riscv: Add Zvdota/Zvbdota families of
+ dot-product extensions
+Date: Thu,  5 Nov 2026 03:41:15 +0800
+Message-ID: <20261104194155.679241-1-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261104194155.679241-1-max.chou@sifive.com>
-References: <20261104194155.679241-1-max.chou@sifive.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
- envelope-from=max.chou@sifive.com; helo=mail-dy1-x1333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
+ envelope-from=max.chou@sifive.com; helo=mail-dy1-x132f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,310 +107,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The RISC-V Bulk Normalization Algorithm (RVBNA) is a scheme employed by
-multiple RISC-V extensions (e.g. Zvdota/Zvbdota family) for efficient
-computation of floating-point dot products.
+This RFC patchset introduces the Zvdota/Zvbdota families of dot-product
+extensions based on the ISA specification
+(https://github.com/riscv/riscv-isa-manual/pull/2618 v1.0 commit: 570e32e)
+- Zvdota: Zvqwdota8i/Zvqwdota16i/Zvfwdota16bf/Zvfqwdota8f
+- Zvbdota: Zvqwbdota8i/Zvqwbdota16i/Zvfwbdota16bf/Zvfqwbdota8f/Zvfbdota32f
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- MAINTAINERS                      |   6 +
- target/riscv/tcg/meson.build     |   2 +-
- target/riscv/tcg/rvbna.c         | 185 +++++++++++++++++++++++++++++++
- target/riscv/tcg/rvbna.h         |  40 +++++++
- target/riscv/tcg/vector_helper.c |   1 +
- 5 files changed, 233 insertions(+), 1 deletion(-)
+This RFC patchset assigns the Zvdota/Zvbdota cpu properties as the
+experimental cpu isa extension properties. These experimental cpu isa
+extension properties will be replaced after the Zvdota/Zvbdota isa
+specification is ratified.
+
+The toolchains support Zvdota/Zvbdota families extensions:
+ - LLVM (after 23.1.0)
+   - Support v0.2 Zvdota/Zvbdota extensions
+     - https://releases.llvm.org/23.1.0/docs/RISCVUsage.html
+   - llvm/llvm-project#196467, commit d25ec4b84487, merged 2026-05-27.
+     - https://github.com/llvm/llvm-project/pull/196467
+ - GCC (reviewing)
+   - Upstream patchset: <20261014093604.829234-3-jiawei@iscas.ac.cn>
+
+References:
+ - riscv-isa-manual PR: https://github.com/riscv/riscv-isa-manual/pull/2618
+
+rnax
+
+Max Chou (38):
+  fpu/softfloat: Support OCP(Open Compute Project) OFP8 checking
+    functions
+  target/riscv: Introduce riscv_init_fp_status
+  target/riscv: rvv: Introduce RVBNA algorithm for Zvdota/Zvbdota
+    extensions
+  target/riscv: Add cfg property for Zvqwdota8i extension
+  target/riscv: Add implied rules for Zvqwdota8i extension
+  target/riscv: rvv: Implement Zvqwdota8i instructions
+  disas/riscv: Support Zvqwdota8i extension
+  target/riscv: Add Zvqwdota16i cpu property
+  target/riscv: Add Zvqwdota16i dependency imply rule
+  target/riscv: rvv: Implement Zvqwdota16i instructions
+  target/riscv: Add cfg property for Zvfwdota16bf extension
+  target/riscv: Add implied rules for Zvfwdota16bf extension
+  target/riscv: rvv: Implement Zvfwdota16bf instruction
+  disas/riscv: Support Zvfwdota16bf extension
+  target/riscv: Add cfg property for Zvfqwdota8f extension
+  target/riscv: Add implied rules for Zvfqwdota8f extension
+  target/riscv: rvv: Implement Zvfqwdota8f instructions
+  disas/riscv: Support Zvfqwdota8f extension
+  target/riscv: Add cfg property for Zvqwbdota8i extension
+  target/riscv: Add implied rules for Zvqwbdota8i extension
+  target/riscv: rvv: Implement Zvqwbdota8i instructions
+  disas/riscv: Support Zvqwbdota8i extension
+  target/riscv: Add cfg property for Zvqwbdota16i extension
+  target/riscv: Add implied rules for Zvqwbdota16i extension
+  target/riscv: rvv: Implement Zvqwbdota16i instructions
+  target/riscv: Add cfg property for Zvfwbdota16bf extension
+  target/riscv: Add implied rules for Zvfwbdota16bf extension
+  target/riscv: rvv: Implement Zvfwbdota16bf instruction
+  disas/riscv: Support Zvfwbdota16bf extension
+  target/riscv: Add cfg property for Zvfqwbdota8f extension
+  target/riscv: Add implied rules for Zvfqwbdota8f extension
+  target/riscv: rvv: Implement Zvfqwbdota8f instructions
+  disas/riscv: Support Zvfqwbdota8f extension
+  target/riscv: Add cfg property for Zvfbdota32f extension
+  target/riscv: Add implied rules for Zvfbdota32f extension
+  target/riscv: rvv: Implement Zvfbdota32f instructions
+  disas/riscv: Support Zvfbdota32f extension
+  tests/tcg/riscv64: Add test for Zvdota/Zvbdota extensions
+
+ MAINTAINERS                                 |   6 +
+ disas/riscv-op.c.inc                        |  12 +
+ disas/riscv.c                               |  26 ++
+ disas/riscv.h                               |   2 +
+ fpu/softfloat-specialize.c.inc              |  55 +++
+ include/fpu/softfloat.h                     |  70 ++++
+ target/riscv/cpu.c                          | 121 +++++-
+ target/riscv/cpu_cfg_fields.h.inc           |   9 +
+ target/riscv/helper.h                       |  28 ++
+ target/riscv/insn32.decode                  |  25 ++
+ target/riscv/tcg/insn_trans/trans_rvv.c.inc | 305 ++++++++++++++
+ target/riscv/tcg/meson.build                |   2 +-
+ target/riscv/tcg/rvbna.c                    | 185 +++++++++
+ target/riscv/tcg/rvbna.h                    |  40 ++
+ target/riscv/tcg/tcg-cpu.c                  |  45 +++
+ target/riscv/tcg/vector_helper.c            | 424 +++++++++++++++++++-
+ tests/tcg/riscv64/system/meson.build        |  12 +
+ tests/tcg/riscv64/test-zvdota.S             | 343 ++++++++++++++++
+ 18 files changed, 1703 insertions(+), 7 deletions(-)
  create mode 100644 target/riscv/tcg/rvbna.c
  create mode 100644 target/riscv/tcg/rvbna.h
+ create mode 100644 tests/tcg/riscv64/test-zvdota.S
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 55463103ff1..b91e5925344 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -416,6 +416,12 @@ F: target/riscv/tcg/xsf_helper.c
- F: disas/riscv-xsf*
- F: tests/tcg/riscv64/test-xsfvqmacc.S
- 
-+RISC-V Bulk Normalization Algorithm (RVBNA)
-+M: Max Chou <max.chou@sifive.com>
-+L: qemu-riscv@nongnu.org
-+S: Supported
-+F: target/riscv/tcg/rvbna.*
-+
- RENESAS RX CPUs
- R: Yoshinori Sato <yoshinori.sato@nifty.com>
- S: Orphan
-diff --git a/target/riscv/tcg/meson.build b/target/riscv/tcg/meson.build
-index 86805b30cbc..3b7821178fc 100644
---- a/target/riscv/tcg/meson.build
-+++ b/target/riscv/tcg/meson.build
-@@ -10,6 +10,7 @@ riscv_ss.add(files(
-   'fpu_helper.c',
-   'm128_helper.c',
-   'op_helper.c',
-+  'rvbna.c',
-   'translate.c',
-   'tcg-cpu.c',
-   'vcrypto_helper.c',
-@@ -27,4 +28,3 @@ riscv_system_ss.add(files(
-   'th_csr.c',
- ))
- 
--
-diff --git a/target/riscv/tcg/rvbna.c b/target/riscv/tcg/rvbna.c
-new file mode 100644
-index 00000000000..f6150e4976d
---- /dev/null
-+++ b/target/riscv/tcg/rvbna.c
-@@ -0,0 +1,185 @@
-+/*
-+ * RISC-V Bulk Normalization Algorithm (RVBNA)
-+ *
-+ * Copyright (c) 2026 SiFive, Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "qemu/host-utils.h"
-+#include "fpu/softfloat.h"
-+#include "fpu/softfloat-macros.h"
-+#include "rvbna.h"
-+
-+static inline int rvbna_guard_bits(uint32_t n_prod)
-+{
-+    g_assert(n_prod > 0);
-+    return 32 - clz32(n_prod - 1);
-+}
-+
-+float32 rvbna_final_f32_add(float32 partial, float32 accumulator,
-+                            float_status *fp_status)
-+{
-+    FloatRoundMode old_rm = get_float_rounding_mode(fp_status);
-+    int old_flags = get_float_exception_flags(fp_status);
-+    int new_flags;
-+    float32 result;
-+
-+    set_float_rounding_mode(float_round_to_odd_inf, fp_status);
-+    set_float_exception_flags(0, fp_status);
-+    result = float32_add(partial, accumulator, fp_status);
-+    new_flags = get_float_exception_flags(fp_status) &
-+                (float_flag_invalid | float_flag_overflow);
-+    set_float_rounding_mode(old_rm, fp_status);
-+    set_float_exception_flags(old_flags | new_flags, fp_status);
-+
-+    return result;
-+}
-+
-+#define RVBNA_STACK_THRESHOLD 8
-+
-+#define GEN_RVBNA(TA, TB, TO, A_E, A_M, B_E, B_M, OUT_E, OUT_M)              \
-+TO rvbna_dot_##TA##_##TB(const TA a[], const TB b[], uint32_t n_prod,        \
-+                         float_status *fp_status)                            \
-+{                                                                            \
-+    int32_t stack_ref_exps[RVBNA_STACK_THRESHOLD];                           \
-+    bool stack_signs[RVBNA_STACK_THRESHOLD];                                 \
-+    uint64_t stack_sigs[RVBNA_STACK_THRESHOLD];                              \
-+    int32_t *prod_ref_exps = stack_ref_exps;                                 \
-+    bool *prod_signs = stack_signs;                                          \
-+    uint64_t *prod_sigs = stack_sigs;                                        \
-+    g_autofree int32_t *heap_ref_exps = NULL;                                \
-+    g_autofree bool *heap_signs = NULL;                                      \
-+    g_autofree uint64_t *heap_sigs = NULL;                                   \
-+    int guard_bits = rvbna_guard_bits(n_prod);                               \
-+    int pad = OUT_M - (A_M + B_M) + guard_bits;                              \
-+    int output_bias = (1 << (OUT_E - 1)) - 1;                                \
-+    int a_exp_bias = (1 << (A_E - 1)) - 1;                                   \
-+    int b_exp_bias = (1 << (B_E - 1)) - 1;                                   \
-+    int ref_bias = output_bias - (a_exp_bias + b_exp_bias);                  \
-+    int max_prod_ref_exp = ref_bias;                                         \
-+    int overflow_exp = (1 << OUT_E) - 1;                                     \
-+    int64_t acc = 0;                                                         \
-+    bool nan_result = false;                                                 \
-+    bool inf_result = false;                                                 \
-+    bool inf_sign = false;                                                   \
-+    bool any_pos_inf = false;                                                \
-+    bool any_neg_inf = false;                                                \
-+    bool any_invalid_prod = false;                                           \
-+    bool any_signan = false;                                                 \
-+    bool op_sign_inf, sign, overflow;                                        \
-+    uint32_t i;                                                              \
-+    uint64_t sig;                                                            \
-+    int lead, exp, sig_bits;                                                 \
-+                                                                             \
-+    g_assert(pad >= 0);                                                      \
-+    if (n_prod > RVBNA_STACK_THRESHOLD) {                                    \
-+        heap_ref_exps = g_new(int32_t, n_prod);                              \
-+        heap_signs = g_new(bool, n_prod);                                    \
-+        heap_sigs = g_new(uint64_t, n_prod);                                 \
-+        prod_ref_exps = heap_ref_exps;                                       \
-+        prod_signs = heap_signs;                                             \
-+        prod_sigs = heap_sigs;                                               \
-+    }                                                                        \
-+                                                                             \
-+    for (i = 0; i < n_prod; i++) {                                           \
-+        bool a_sign = TA##_is_neg(a[i]);                                     \
-+        bool b_sign = TB##_is_neg(b[i]);                                     \
-+        bool a_sub = TA##_is_zero_or_denormal(a[i]);                         \
-+        bool b_sub = TB##_is_zero_or_denormal(b[i]);                         \
-+        bool a_zero = TA##_is_zero(a[i]);                                    \
-+        bool b_zero = TB##_is_zero(b[i]);                                    \
-+        bool a_inf = TA##_is_infinity(a[i]);                                 \
-+        bool b_inf = TB##_is_infinity(b[i]);                                 \
-+        bool a_nan = TA##_is_any_nan(a[i]);                                  \
-+        bool b_nan = TB##_is_any_nan(b[i]);                                  \
-+        bool prod_sign = a_sign ^ b_sign;                                    \
-+        bool invalid_prod = (a_inf && b_zero) || (b_inf && a_zero);          \
-+        bool inf_prod_lhs = a_inf && !b_nan && !b_zero;                      \
-+        bool inf_prod_rhs = b_inf && !a_nan && !a_zero;                      \
-+        bool inf_prod = inf_prod_lhs || inf_prod_rhs;                        \
-+        bool invalid_sum = inf_result && inf_prod &&                         \
-+                           (inf_sign != prod_sign);                          \
-+        uint32_t a_mant = extract32(a[i], 0, A_M);                           \
-+        uint32_t b_mant = extract32(b[i], 0, B_M);                           \
-+        bool a_signan = a_nan && TA##_is_signaling_nan(a[i], fp_status);     \
-+        bool b_signan = b_nan && TB##_is_signaling_nan(b[i], fp_status);     \
-+        uint64_t a_sig = a_mant | (!a_sub << A_M);                           \
-+        uint64_t b_sig = b_mant | (!b_sub << B_M);                           \
-+        bool prod_is_zero = a_zero || b_zero;                                \
-+        bool either_inf = a_inf || b_inf;                                    \
-+        bool either_nan = a_nan || b_nan;                                    \
-+                                                                             \
-+        any_invalid_prod |= invalid_prod;                                    \
-+        nan_result |= a_nan || b_nan || any_invalid_prod || invalid_sum;     \
-+        inf_result |= inf_prod;                                              \
-+        inf_sign = inf_prod ? prod_sign : inf_sign;                          \
-+                                                                             \
-+        prod_signs[i] = prod_sign;                                           \
-+        prod_sigs[i] = (uint64_t)(a_sig * b_sig) << pad;                     \
-+        prod_ref_exps[i] = ref_bias;                                         \
-+        if (!prod_is_zero) {                                                 \
-+            prod_ref_exps[i] += (a_sub ? 1 : extract32(a[i], A_M, A_E)) +    \
-+                                (b_sub ? 1 : extract32(b[i], B_M, B_E));     \
-+        }                                                                    \
-+        max_prod_ref_exp = MAX(prod_ref_exps[i], max_prod_ref_exp);          \
-+                                                                             \
-+        any_pos_inf |= (either_inf && !either_nan && !prod_is_zero &&        \
-+                        (a_sign == b_sign));                                 \
-+        any_neg_inf |= (either_inf && !either_nan && !prod_is_zero &&        \
-+                        (a_sign != b_sign));                                 \
-+        any_signan |= a_signan || b_signan;                                  \
-+    }                                                                        \
-+                                                                             \
-+    op_sign_inf = any_pos_inf && any_neg_inf;                                \
-+                                                                             \
-+    if (nan_result) {                                                        \
-+        if (any_signan || any_invalid_prod || op_sign_inf) {                 \
-+            float_raise(float_flag_invalid, fp_status);                      \
-+        }                                                                    \
-+        return TO##_default_nan(fp_status);                                  \
-+    } else if (inf_result) {                                                 \
-+        return TO##_set_sign(TO##_infinity, inf_sign);                       \
-+    }                                                                        \
-+                                                                             \
-+    for (i = 0; i < n_prod; i++) {                                           \
-+        shift64RightJamming(prod_sigs[i],                                    \
-+                            max_prod_ref_exp - prod_ref_exps[i], &sig);      \
-+        acc += prod_signs[i] ? -(int64_t)sig : (int64_t)sig;                 \
-+    }                                                                        \
-+                                                                             \
-+    sign = acc < 0;                                                          \
-+    sig = sign ? -(uint64_t)acc : acc;                                       \
-+    if (sig == 0) {                                                          \
-+        return 0;                                                            \
-+    }                                                                        \
-+                                                                             \
-+    lead = 63 - clz64(sig);                                                  \
-+    exp = max_prod_ref_exp - OUT_M - guard_bits + lead;                      \
-+    overflow = exp >= overflow_exp;                                          \
-+    if (overflow) {                                                          \
-+        float_raise(float_flag_overflow, fp_status);                         \
-+        sig = 0;                                                             \
-+        exp = overflow_exp;                                                  \
-+    } else {                                                                 \
-+        sig_bits = MAX(0, exp <= 0 ? OUT_M - (1 - exp) : OUT_M);             \
-+        if (lead > sig_bits) {                                               \
-+            shift64RightJamming(sig, lead - sig_bits, &sig);                 \
-+        } else {                                                             \
-+            sig <<= (sig_bits - lead);                                       \
-+        }                                                                    \
-+        exp = MAX(exp, 0);                                                   \
-+    }                                                                        \
-+    return (TO)deposit64(deposit64(sig, OUT_M, OUT_E, exp),                  \
-+                         OUT_M + OUT_E,                                      \
-+                         1, sign);                                           \
-+}
-+
-+GEN_RVBNA(float8_e4m3, float8_e4m3, float32, 4, 3, 4, 3, 8, 23)
-+GEN_RVBNA(float8_e4m3, float8_e5m2, float32, 4, 3, 5, 2, 8, 23)
-+GEN_RVBNA(float8_e5m2, float8_e4m3, float32, 5, 2, 4, 3, 8, 23)
-+GEN_RVBNA(float8_e5m2, float8_e5m2, float32, 5, 2, 5, 2, 8, 23)
-+GEN_RVBNA(float16, float16, float32, 5, 10, 5, 10, 8, 23)
-+GEN_RVBNA(bfloat16, bfloat16, float32, 8, 7, 8, 7, 8, 23)
-diff --git a/target/riscv/tcg/rvbna.h b/target/riscv/tcg/rvbna.h
-new file mode 100644
-index 00000000000..d4d3eced952
---- /dev/null
-+++ b/target/riscv/tcg/rvbna.h
-@@ -0,0 +1,40 @@
-+/*
-+ * RISC-V Bulk Normalization Algorithm (RVBNA)
-+ *
-+ * Copyright (c) 2026 SiFive, Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef TARGET_RISCV_TCG_RVBNA_H
-+#define TARGET_RISCV_TCG_RVBNA_H
-+
-+#include "fpu/softfloat.h"
-+
-+float32 rvbna_final_f32_add(float32 partial, float32 accumulator,
-+                            float_status *fp_status);
-+
-+float32 rvbna_dot_float8_e4m3_float8_e4m3(const float8_e4m3 a[],
-+                                          const float8_e4m3 b[],
-+                                          uint32_t n_prod,
-+                                          float_status *fp_status);
-+float32 rvbna_dot_float8_e4m3_float8_e5m2(const float8_e4m3 a[],
-+                                          const float8_e5m2 b[],
-+                                          uint32_t n_prod,
-+                                          float_status *fp_status);
-+float32 rvbna_dot_float8_e5m2_float8_e4m3(const float8_e5m2 a[],
-+                                          const float8_e4m3 b[],
-+                                          uint32_t n_prod,
-+                                          float_status *fp_status);
-+float32 rvbna_dot_float8_e5m2_float8_e5m2(const float8_e5m2 a[],
-+                                          const float8_e5m2 b[],
-+                                          uint32_t n_prod,
-+                                          float_status *fp_status);
-+float32 rvbna_dot_float16_float16(const float16 a[], const float16 b[],
-+                                  uint32_t n_prod,
-+                                  float_status *fp_status);
-+float32 rvbna_dot_bfloat16_bfloat16(const bfloat16 a[], const bfloat16 b[],
-+                                    uint32_t n_prod,
-+                                    float_status *fp_status);
-+
-+#endif
-diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index 917a48b5106..172ae0f11dc 100644
---- a/target/riscv/tcg/vector_helper.c
-+++ b/target/riscv/tcg/vector_helper.c
-@@ -31,6 +31,7 @@
- #include "tcg/tcg-gvec-desc.h"
- #include "internals.h"
- #include "vector_internals.h"
-+#include "rvbna.h"
- #include <math.h>
- 
- static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
 -- 
 2.56.0
 
