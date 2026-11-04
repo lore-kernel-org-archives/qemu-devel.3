@@ -1,133 +1,127 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFC2606A329
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 14:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14AE606A328
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 14:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gfNLKuUp;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=BPIweerY
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Nt8vBelh;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=QyWIFQ7o
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOcN1-0006PF-Rb; Wed, 04 Nov 2026 09:53:47 -0500
+	id 1xOcMl-0006Hi-Dk; Wed, 04 Nov 2026 09:53:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xOcMz-0006Nn-Fv
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 09:53:45 -0500
+ id 1xOcMi-0006Gy-2M
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 09:53:28 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xOcMx-0003h2-AR
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 09:53:45 -0500
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xOcMg-0003fW-Fn
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 09:53:27 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A4EHpbJ3019233
- for <qemu-devel@nongnu.org>; Wed, 4 Nov 2026 14:53:42 GMT
+ 6A4BZw6v119391
+ for <qemu-devel@nongnu.org>; Wed, 4 Nov 2026 14:53:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- H+2QCOFcKKLITDhHXmYsE/Z4g/ilHrukGMSmQgdwX1k=; b=gfNLKuUpRHFnjf3C
- 20u0CDubYPDIF0ONSQs6M3+USjeCcrkx9H6ryzRCIGTATC2TiPAYfbknkWvgXuLT
- ESG1Mug1DkysZojRtPBsnKzMpa/ARoxZoMQuM2QQv9tYBHonuQvK9VzCA1CMW0jv
- nQJTrO5FKMD2Q3xrX9ZK9mGpYj6gMDj6OLfDesNvjLypFEo6/Ne3ei5y+9tHKLBG
- nrSIAfyo7IPp4cz2DAgUrUz3rZ9vsatHIoHlTk97LXjlYck7GWncF7mIncFo7Asy
- K6sD13UjscdIWy5vVEokUBv/Ogm/a5zGBAFvxO3y+bOixSrR79T5OsdLVXKAzr54
- A/tMEQ==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
- [209.85.217.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hr6bj049a-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=5oC+P1nCpI71y+qROZXo6Q
+ FIQD1GCbW6BQEFgt2qWHQ=; b=Nt8vBelhlKPQstPB4zumkiPe50svwGox0f73Xo
+ U8QpjVQYIaizjvqtjAVSEVUvr2M0Bk+R8a+xTPAxUfGWjsU/W7DXYe1AypWxj6Zi
+ ud9M8erEUnH/YtAcqc5hO8zeUzLGYRJNfGxZle6wrz+RI2PvYngbGrlKcWAKoZvp
+ PgBBZXVvRh6NH9CZtw4vYddmv1jX9pIxZgLNZVER5xqvGuoyKGT0kAIElOMD5Dkk
+ +cCy2KE3gICv/bmB8R6eXhFmtYhExmWSjwFyvG8J/o1TCegpOy34r1qjt+LnY8Cn
+ IgPzqMf7MMujHoRH8WFwVkBLkrfJ5gCt2khU8lJzSvnWuaEw==
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
+ [209.85.222.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hqwb0agt8-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 14:53:41 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id
- ada2fe7eead31-7cc01d48a1bso1689734137.1
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 06:53:41 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 14:53:25 +0000 (GMT)
+Received: by mail-ua1-f71.google.com with SMTP id
+ a1e0cc1a2514c-99064f8c7efso463642241.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 06:53:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793804021; x=1794408821; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=H+2QCOFcKKLITDhHXmYsE/Z4g/ilHrukGMSmQgdwX1k=;
- b=BPIweerYetCoannPna6hCMJjhRZqV9MvlJuDJr3x4dS6gvmEkMqqo08sPPEJn4LQ25
- a6kZPEujleohLbzfkYCqL3NlgXiVD22fJKkktZvFAEWHSOjiJhbGOalahVQ4nrYOpa+6
- F9OYSc6Rqg3o6Sr3cdRjR1jZkiUXiB4MeixSjoycVk1MRRIIfE1G97oi/DBReSzbvtlD
- 6/dxt1vxNWgXwZmIdmcGYm1mH63lllNBlYtRZyzjKSNRifOhxGMZmlzocFzCZ2yVP2CC
- q3mA8cvByQP2wKXGi1+Al9t+M7VqFG4qe36WHuhquBaGqEQ/RuY3Bu3Wu5qvcZa9UoTH
- 6cAA==
+ d=oss.qualcomm.com; s=google; t=1793804004; x=1794408804; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=5oC+P1nCpI71y+qROZXo6QFIQD1GCbW6BQEFgt2qWHQ=;
+ b=QyWIFQ7opztTwVEAyX8ypahnEfJtVz5RJIrkNdam23hpoRW1ye6hbTFwFyfZkliPdg
+ BSpj0Q1reORsPlpR9Zf/hE2uOqJvbNUvZgoLTykGBHRI3075fnhA7xINLxNvEXTs8IJC
+ wWqcL0eieZ1DOMrQTOae7qN18dmYPkHpRhkvQiNxA/FH7zHDN/6bnNuaS3Fz47kWdQnx
+ +LB5+hcTfRzRMopwUmpor3JK2Mi6CJX7tApSymPHAifk7sKKEi/jfaf2FhDzT33IWS84
+ aM4EXbHQ0aDl7+PEYbdlA6B6xjVFhmjI3qyWkImtQhgPl79tH58wHhQrVjc96L1mX/96
+ K04Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793804021; x=1794408821;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=H+2QCOFcKKLITDhHXmYsE/Z4g/ilHrukGMSmQgdwX1k=;
- b=QRkph/uVE0ZxLVL7G8GH8BKOoF5gPA6eVyu/Of4ovkVZ01ngH+/ugy5kQU0hvBM7Te
- kKSGCiywLH7+3R30FuwUz6QAFND335/k4yswd4W+Vt8+k3ygxlUwOuzDPCkjDk0gdyPG
- IrfEf8CoQdFeLl2SmVBf2qgp260FvDP9bfWPwWEh4ZOtLeWwQf6tpxSTGYp9D7DzNbaR
- VfxJE53xw8+m3cDn5fqCftEPSS0WQJ1nH2xl31BkWF/pwGRNeSEkw+Upy3aRFCH3kydc
- UgiMYQo/RAofNOhQra8MqJ9X1tQzw9XMO00KbCalW7rRPLA9jVODTSo/UNeIWZVvQX4V
- Jj/g==
-X-Gm-Message-State: APuU4Z8I1f62n4UhOOUVCtWRjz1jf48VUAqYRgnJPe8zmFwtm5WxCr4A
- WcWDDupqFf6CrilqJyOLVeSLDAuFLGdCc4NGxS/8CGRQvwFdWpoA1bA0HeWvlGdU6eimauFU+9d
- B+XKmgt87uFgbsphMs28SISIS4GgNc5St4CZlmX07VsiIMX1yz+7oKgARbQnrzfcTwQ==
-X-Gm-Gg: AYBFou1lvro6Z5UUakDU/zm/CFY4t6usvrppHYl/i+p/dxKXzvSZ1j1ayj4A2SIfZg+
- WosnMiMQ/y8lFXMEP/FWXZ4MIyC+vEdK9eQNl7SUf1nREMfgsDq+pUSsoI47Dtew4NmqYwlwfXN
- hFoLg8upHqYaKcPusbSKV3gfS/VPhZ+cB/u4+lslBmMqDLJ7feaOac3OKk/d8jHHKNX8XKQnMFq
- mGVEszZP2lqFCqIFLjPV1IEd7BgSBEGJ36YWlC8fYwQ37tCdPgWFAJcDInoXOcvtFkEEIqxZrA5
- ky4SwWv/rzzoFdIxZZQYrywUsDbSg75mggym2+MqfEMY9KrJESeLifxfZukwxCQIC+Qy+2go5Uv
- qML0nFhjTFPMuGyMMsJoNg9OUaZ8JjBfb1uMuAgyQFgoc+KElwza7U+kd+JWjeOoLw6ZJ810/c+
- RfQ/AckoqifhP+0A==
-X-Received: by 2002:a05:6102:3ec9:b0:7cb:91a5:7cb1 with SMTP id
- ada2fe7eead31-7d05439aacamr5671646137.39.1793804020613; 
- Wed, 04 Nov 2026 06:53:40 -0800 (PST)
-X-Received: by 2002:a05:6102:3ec9:b0:7cb:91a5:7cb1 with SMTP id
- ada2fe7eead31-7d05439aacamr5671636137.39.1793804020056; 
- Wed, 04 Nov 2026 06:53:40 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793804004; x=1794408804;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=5oC+P1nCpI71y+qROZXo6QFIQD1GCbW6BQEFgt2qWHQ=;
+ b=qu5Ee8g1TfW7nrHMTMhATXGfPXBz1Q64BuSPfMv1V47XUEDwuUfQewjNgu1c9XJHr4
+ aBiWDEkFqWRSiEBJYCT7rBR2tEbkOcqy2z/xbfPoO/eDXXz0pfawvVzLtCZyelqqnRjH
+ iWskiVv30m92ZUso5agmDpg9gdrXVar9evx0lqlzt/oGCvcyrGknO7jenHGEKt3I/Amg
+ qLjf6vpU0sH70d+3m3Y3Ct2zW/fFRmUQXkcz3xEwMiRBmDQoYMzfzkJr0dYWSBZDDzW4
+ DK3XDywH/YCg/dUBj7xlEHSbgXHKIoYYLT/2p/wh58HAtjL5VX+HPI7lp7o4PWJJLGJf
+ tT7Q==
+X-Gm-Message-State: APuU4Z81tkkYCxw5Kj1SS9L7uK+zeRsdCJ4MCK1EpwZe9XDB9lE4pVVI
+ YKCigfLHyc+jCWJ3zLx4OewnBomGNLvLXjd99u0pfELZAU3H10aIxCHBDHbQJylWl3Ty2xzCr51
+ K9vNgT6GaAjvfu+fVedpxXI9PqjOOMQlygTteUwNkoaC04aEESbhrdny0V8cb/k2WWA==
+X-Gm-Gg: AYBFou0JHd20RTHvC8BXavZSKpn3XcM8nsC/wbLGnZBNfarRJBMvgZnoUcSFudeJYR/
+ C6vLRGR8WvyxYhi8kSp/XutPpNGeJceOGulG5kK4xRZyxGR+KuuYzFwNvWKcAo7Jqai/8CBzkFR
+ 7KqsH4kg0oKsY8lV3eCG/ED7Nay/4BxM0JTyaSaSPiiqSawINffx86tTTbadGU+7rfVkH6u5NRv
+ tek2K/YPWqmGX+uMy4PZONLfIFisSaEzP1CXjb7NLo+k5MjooK+cKuqGF2fFJtA39CH7olV8jLO
+ Jq49rXC2iIN3j6oMI2M+CZTn7kdXL0E9cYQVyno7lOsY4mNAiy6WDl9p/xe63VArtZ0ZGVIuv7E
+ pM6MOUreu/VOewlN1lHBqDpOq8OBo4al3Az2J/3p/BJ2RQ/eqXr2fnmXR+DyeTRBAUr72NmUamu
+ Lm8H7sHyI2KDoDnw==
+X-Received: by 2002:a05:6102:3ec5:b0:7c0:cdd9:31c1 with SMTP id
+ ada2fe7eead31-7d072615564mr7113536137.12.1793804003956; 
+ Wed, 04 Nov 2026 06:53:23 -0800 (PST)
+X-Received: by 2002:a05:6102:3ec5:b0:7c0:cdd9:31c1 with SMTP id
+ ada2fe7eead31-7d072615564mr7113432137.12.1793803998666; 
+ Wed, 04 Nov 2026 06:53:18 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48fed552afcsm4324763f8f.41.2026.11.04.06.53.39
+ ffacd0b85a97d-48fedc09675sm4390363f8f.55.2026.11.04.06.53.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Nov 2026 06:53:39 -0800 (PST)
+ Wed, 04 Nov 2026 06:53:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
-Subject: [PATCH 3/5] tests/unit: Replace deprecated sprintf() with snprintf()
-Date: Wed,  4 Nov 2026 15:53:14 +0100
-Message-ID: <20261104145316.18841-4-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH 0/5] buildsys: Replace some deprecated sprintf()
+Date: Wed,  4 Nov 2026 15:53:11 +0100
+Message-ID: <20261104145316.18841-1-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261104145316.18841-1-philmd@oss.qualcomm.com>
-References: <20261104145316.18841-1-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA0MDA1OSBTYWx0ZWRfX8rfEJ2ZFgCjk
- tybEbNJRSP6OWtzS3OuQDwQ00x9gnaBSmXo89aQpWQCYrC+Qqyq6KTeulilUnXs8eJ9LFuxIZc/
- QhMiIVaXPMZsBXvHoaqrqOqyshgiGON27qzgNUa7AFUA2KQ3D5QvzbgfL8VmPt2LND12zsZEav1
- cjBsEy0SyYwkjqx69s+cd3MwdPBG42ZmcOSq71WkKJhXaGlTUBGE1Z6IRW9NQ+sDalOJ6bcqdn+
- hWW2ASff0BGIPL0eK4aDmnGDaiS0uc0Mf/r5+7RCu7xdGAdf0YIK+/ggtPx2OnNnRjWoNc20s6C
- GGPz18CJxsXiUGQTbjSMAtUfY8Yrc62Gw4hPp6Mmz17EfovACBs+VjEJzXsmeEQaY95GQNVBjK5
- OtMPJmvN24kwDf7414mOJ83OcTduqcyubQDVJwjpVYTitKlvXWRu7j1gAcPApiiWv3M1sId5K/z
- 4ebFlqnslCKmkUAeAUQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA0MDA1OSBTYWx0ZWRfX4LRSPQcntd4R
- 5EKlHnGxfZcnQau0/XrqyD+FVnr2i1Lgo5NQUNNfUYfXXltJy4BMf7irl6VcVAQb1nNUsQMSgRu
- x3kAz5DuQvzXyrnLZyW4tRYTqoGH9zA=
-X-Proofpoint-ORIG-GUID: LYHjRf681eRQd3PpvObk69rmoOk1J6ow
-X-Proofpoint-GUID: LYHjRf681eRQd3PpvObk69rmoOk1J6ow
-X-Authority-Analysis: v=2.4 cv=N/u8hG9B c=1 sm=1 tr=0 ts=6aeb46f5 cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA0MDA1OSBTYWx0ZWRfX9w4gJMnlQ8sj
+ bev5zsDBhUQP+VhMPJEHz3dfxoQkbKZIiWn3BGynTNzwDYFZnXxySDXWU32pUjEcJ88I+FDCl+v
+ jkhNelAutnuwYG5mqebATUcc3fXq328=
+X-Authority-Analysis: v=2.4 cv=OfINnRTY c=1 sm=1 tr=0 ts=6aeb46e5 cx=c_pps
+ a=KB4UBwrhAZV1kjiGHFQexw==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=K5v2QzCvipGKQWMlk_wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=crWF4MFLhNY0qMRaF8an:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=vRnTLshjCre8FNkmUVQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=o1xkdb1NAhiiM49bd1HK:22
+X-Proofpoint-GUID: aqExp9UNyvCwhLXg0bdW1Het1NVRLfKB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA0MDA1OSBTYWx0ZWRfXzx2UFeZwGCW2
+ 6kotoun/pmfed0oOTeRsxgtHpG7vSvSNhLyHcJpA5TchlwhdnBvBYK9RaSeY9iydskACG68ZAx3
+ QmmJ9KQcpN7b2q9f+cpgbSAHCal/gZmi0PJkXzk37OSsOHKQobRWC/D0FNmN0Tpxi4FKeNkrDtQ
+ 7LwynnjdQAnk/H79pjnkaHBWDIunciM6PW/a4guPHJLyyeUvvjX6GlRhoThthbizJXdkNP+PiFc
+ 38u9lbwD2LYJstYY8wdaz2Td5QL/uKujISCoyJ+JRFOvqSB5zYZa7ibdvYy3dS+hGJEUUTp5zsk
+ UxX/m2SHclD2jD4WqPcBudlAIYvptThrOWK0c0Hf/Gh51NmA5j1KC4jebHzQb5L2JycshNiwSkt
+ Ip01jKaNZX2l2XRVqjsTQG9XM+9eauUyL+ryZwJY1yKKu9+gFo5We2HaXITgIqi+lCEiOgYOAWl
+ 8BeKCfxfIt8re3P1rPw==
+X-Proofpoint-ORIG-GUID: aqExp9UNyvCwhLXg0bdW1Het1NVRLfKB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-04_04,2026-11-03_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- malwarescore=0 priorityscore=1501 phishscore=0 spamscore=0 adultscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
+ phishscore=0 impostorscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611040059
 Received-SPF: pass client-ip=205.220.168.131;
@@ -150,115 +144,38 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Replace sprintf() by safer snprintf() to avoid when using
-Apple clang 17.0.0 on macOS ARM64:
+Since some time now we get the build output cluttered with
+many deprecation warnings, it is becoming hard to notice the
+real ones. This series fixes few recurrent use by the
+--disable-tcg --enable-hvf build.
 
-  ../tests/unit/test-qobject-output-visitor.c:598:9: warning: 'sprintf' is deprecated [-Wdeprecated-declarations]
-  ../tests/unit/test-qobject-input-visitor.c:600:9: warning: 'sprintf' is deprecated [-Wdeprecated-declarations]
-  ../tests/unit/test-visitor-serialization.c:1031:5: warning: 'sprintf' is deprecated [-Wdeprecated-declarations]
-  ../tests/unit/test-visitor-serialization.c:1035:13: warning: 'sprintf' is deprecated [-Wdeprecated-declarations]
-  ...
+(Yes, VOF is not used on HVF x86/ARM64, I haven't
+ investigated why it is selected and built).
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
+Philippe Mathieu-Daudé (5):
+  tests/qtest: Use qemu_hexdump_to_buffer() in qtest_memwrite()
+  tests/qtest/npcm7xx: Replace deprecated sprintf() with snprintf()
+  tests/unit: Replace deprecated sprintf() with snprintf()
+  hw/ppc/vof: Replace deprecated sprintf() with snprintf()
+  hw/usb/hcd-ohci: Replace deprecated sprintf() with snprintf()
+
+ hw/ppc/vof.c                             |  2 +-
+ hw/usb/hcd-ohci.c                        |  2 +-
+ tests/qtest/libqtest.c                   |  6 +-----
+ tests/qtest/npcm7xx_adc-test.c           |  5 +++--
+ tests/qtest/npcm7xx_pwm-test.c           |  8 ++++----
  tests/unit/test-qobject-input-visitor.c  |  2 +-
  tests/unit/test-qobject-output-visitor.c |  2 +-
  tests/unit/test-visitor-serialization.c  | 19 +++++++++++--------
- 3 files changed, 13 insertions(+), 10 deletions(-)
+ 8 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/tests/unit/test-qobject-input-visitor.c b/tests/unit/test-qobject-input-visitor.c
-index beee11db4e47..41d3dd983b3c 100644
---- a/tests/unit/test-qobject-input-visitor.c
-+++ b/tests/unit/test-qobject-input-visitor.c
-@@ -597,7 +597,7 @@ static void test_visitor_in_list_struct(TestInputVisitorData *data,
-     for (str_list = arrs->string; str_list; str_list = str_list->next) {
-         char expected[32];
- 
--        sprintf(expected, "%d", i);
-+        snprintf(expected, sizeof(expected), "%d", i);
-         g_assert_cmpstr(str_list->value, ==, expected);
-         i++;
-     }
-diff --git a/tests/unit/test-qobject-output-visitor.c b/tests/unit/test-qobject-output-visitor.c
-index 3c47b28f6638..ff571cd91ed6 100644
---- a/tests/unit/test-qobject-output-visitor.c
-+++ b/tests/unit/test-qobject-output-visitor.c
-@@ -595,7 +595,7 @@ static void test_visitor_out_list_struct(TestOutputVisitorData *data,
-         char expected[32];
- 
-         g_assert(qvalue);
--        sprintf(expected, "%d", i);
-+        snprintf(expected, sizeof(expected), "%d", i);
-         g_assert_cmpstr(qstring_get_str(qvalue), ==, expected);
-         i++;
-     }
-diff --git a/tests/unit/test-visitor-serialization.c b/tests/unit/test-visitor-serialization.c
-index 2d365999fc82..21755d27036b 100644
---- a/tests/unit/test-visitor-serialization.c
-+++ b/tests/unit/test-visitor-serialization.c
-@@ -1028,12 +1028,13 @@ static void add_visitor_type(const SerializeOps *ops)
-     TestArgs *args;
-     int i = 0;
- 
--    sprintf(testname_prefix, "/visitor/serialization/%s", ops->type);
-+    snprintf(testname_prefix, sizeof(testname_prefix),
-+             "/visitor/serialization/%s", ops->type);
- 
-     if (ops->caps & VCAP_PRIMITIVES) {
-         while (pt_values[i].type != PTYPE_EOL) {
--            sprintf(testname, "%s/primitives/%s", testname_prefix,
--                    pt_values[i].description);
-+            snprintf(testname, sizeof(testname), "%s/primitives/%s",
-+                     testname_prefix, pt_values[i].description);
-             args = g_malloc0(sizeof(*args));
-             args->ops = ops;
-             args->test_data = &pt_values[i];
-@@ -1043,13 +1044,14 @@ static void add_visitor_type(const SerializeOps *ops)
-     }
- 
-     if (ops->caps & VCAP_STRUCTURES) {
--        sprintf(testname, "%s/struct", testname_prefix);
-+        snprintf(testname, sizeof(testname), "%s/struct", testname_prefix);
-         args = g_malloc0(sizeof(*args));
-         args->ops = ops;
-         args->test_data = NULL;
-         g_test_add_data_func(testname, args, test_struct);
- 
--        sprintf(testname, "%s/nested_struct", testname_prefix);
-+        snprintf(testname, sizeof(testname),
-+                 "%s/nested_struct", testname_prefix);
-         args = g_malloc0(sizeof(*args));
-         args->ops = ops;
-         args->test_data = NULL;
-@@ -1057,7 +1059,8 @@ static void add_visitor_type(const SerializeOps *ops)
-     }
- 
-     if (ops->caps & VCAP_LISTS) {
--        sprintf(testname, "%s/nested_struct_list", testname_prefix);
-+        snprintf(testname, sizeof(testname),
-+                 "%s/nested_struct_list", testname_prefix);
-         args = g_malloc0(sizeof(*args));
-         args->ops = ops;
-         args->test_data = NULL;
-@@ -1067,8 +1070,8 @@ static void add_visitor_type(const SerializeOps *ops)
-     if (ops->caps & VCAP_PRIMITIVE_LISTS) {
-         i = 0;
-         while (pt_values[i].type != PTYPE_EOL) {
--            sprintf(testname, "%s/primitive_list/%s", testname_prefix,
--                    pt_values[i].description);
-+            snprintf(testname, sizeof(testname), "%s/primitive_list/%s",
-+                     testname_prefix, pt_values[i].description);
-             args = g_malloc0(sizeof(*args));
-             args->ops = ops;
-             args->test_data = &pt_values[i];
 -- 
 2.55.0
 
