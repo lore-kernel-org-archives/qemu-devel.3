@@ -1,87 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CC9606A337
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 11:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A3A606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 11:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=HIvMw3x5
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aD4PFTl9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOZJs-0003YQ-ET; Wed, 04 Nov 2026 06:38:20 -0500
+	id 1xOZLO-0004pl-Ft; Wed, 04 Nov 2026 06:39:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1xOZJq-0003XP-M4
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:38:18 -0500
-Received: from mailout2.samsung.com ([203.254.224.25])
+ (Exim 4.90_1) (envelope-from <kaloz@kernel.org>) id 1xOZLG-0004iL-7H
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:39:47 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1xOZJl-0005CS-OM
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:38:18 -0500
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
- by mailout2.samsung.com (KnoxPortal) with ESMTP id
- 20261104113804epoutp02e4a3b275c6801c058543d915c1fb3a8d~k1JRC-N7C1860918609epoutp02L
- for <qemu-devel@nongnu.org>; Wed,  4 Nov 2026 11:38:04 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com
- 20261104113804epoutp02e4a3b275c6801c058543d915c1fb3a8d~k1JRC-N7C1860918609epoutp02L
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1793792284;
- bh=zMRYwjo0X/qwb12AaABRJljD34IxFgc+zPdctLsCiBA=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=HIvMw3x5U9xA37avuErv7SfMkGVbvAjcv+36GoPDOKU/0aA5eKz2T3kod5Rko4pqz
- thlOxv/eGqW9IApoQMVRwSpcivcefLezOkHJkunkNHtOw06jhEPSywgF70hQ31KAhx
- DQdOtKlfX14lMi4CK3Tk/eyXCzUJGeQB8yry2LZ0=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
- epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
- 20261104113804epcas5p142b60024c39f0f39e61bbdd129782404~k1JQrFsHl0140001400epcas5p1B;
- Wed,  4 Nov 2026 11:38:04 +0000 (GMT)
-Received: from epcpadp2new (unknown [182.195.40.142]) by
- epsnrtp03.localdomain (Postfix) with ESMTP id 4jKNjS2jRgz3hhT3; Wed,  4 Nov
- 2026 11:38:04 +0000 (GMT)
-Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
- 20261104113039epcas5p4cd54cce1d9c2de4f1c1f2101623dd783~k1CyZEvhQ2809328093epcas5p4b;
- Wed,  4 Nov 2026 11:30:39 +0000 (GMT)
-Received: from unvme-SYS-221H-TN24R.samsungds.net (unknown [107.99.40.127])
- by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20261104113037epsmtip114cedcb66d95ce7a3d0fa236e5ec38ac~k1CwC-6dY2364123641epsmtip1a;
- Wed,  4 Nov 2026 11:30:36 +0000 (GMT)
-From: Shrihari E S <shrihari.s@samsung.com>
-To: jic23@kernel.org, junjie.cao@linux.dev, linux-cxl@vger.kernel.org,
- linux-pci@vger.kernel.org, qemu-devel@nongnu.org, anisa.su887@gmail.com,
- mst@redhat.com, marcel.apfelbaum@gmail.com
-Cc: shrihari.s@samsung.com, arun.george@samsung.com, cpgs@samsung.com,
- dave@stgolabs.net, dongjoo.seo1@samsung.com, gost.dev@samsung.com,
- s.neeraj@samsung.com, vikash.k5@samsung.com, anisa.su@samsung.com,
- junjie.cao@intel.com
-Subject: [PATCH qemu v1 6/8] hw/pci: Add PCIe Device3 capability support
-Date: Wed,  4 Nov 2026 17:22:40 +0530
-Message-Id: <932285561.201793792284372.JavaMail.epsvc@epcpadp2new>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261104115242.2035807-1-shrihari.s@samsung.com>
+ (Exim 4.90_1) (envelope-from <kaloz@kernel.org>) id 1xOZLE-0005IO-CR
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:39:45 -0500
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 1D02743CAC;
+ Wed,  4 Nov 2026 11:39:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BDF1F0093A;
+ Wed,  4 Nov 2026 11:39:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1793792383;
+ bh=BHQajK5OJDrjW15Yu7Lh3UraBXxSpGrePeizG+gkqIE=;
+ h=From:To:Cc:Subject:Date;
+ b=aD4PFTl9ogrI0QT0VFkfpI+m1oRWJmCQy8xQJ9OB82bFEtp9JkvyGHA9TtTxWNSlh
+ x1Rth0GLxvNWi1AdTZFZdp53fFhOr4K1u7GGGAM7j/bM6LVXYZr/V0Cq808FRa6Xvp
+ q2GF8+fcxscrfVrH/JKdUNuHll3rXUPmxsEdGIMcG0VyYmBn5oXiTZx4QXeK7VNzos
+ AJbJ/OLbaGqlSq1I0ASwlfB1NEh2C2L5Vp9+XU2KbRRZRjZ8d3VV0tMdHicHBxdzdh
+ caVNUyCZ/r1zrIm5oy78dC9NLeoQDG8CWhczLXlNncm+yDFYvTIqL5C0SrDSieV3EG
+ Wl6JDNpsx/05A==
+From: Imre Kaloz <kaloz@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH] hw/sparc/sun4m: Add an FCode PROM naming the SS-20 DBRI node
+Date: Wed,  4 Nov 2026 12:38:26 +0100
+Message-ID: <20261104113826.12838-1-kaloz@kernel.org>
+X-Mailer: git-send-email 2.47.3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20261104113039epcas5p4cd54cce1d9c2de4f1c1f2101623dd783
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-X-CPGSPASS: Y
-X-Hop-Count: 3
-X-CMS-RootMailID: 20261104113039epcas5p4cd54cce1d9c2de4f1c1f2101623dd783
-References: <20261104115242.2035807-1-shrihari.s@samsung.com>
- <CGME20261104113039epcas5p4cd54cce1d9c2de4f1c1f2101623dd783@epcas5p4.samsung.com>
-Received-SPF: pass client-ip=203.254.224.25;
- envelope-from=shrihari.s@samsung.com; helo=mailout2.samsung.com
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=kaloz@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,324 +70,64 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add the PCIe Device 3 Extended Capability (PCIe 6.4 section 7.7.9),
-with which an endpoint exposes its UIO requester and completer
-support and the related control bits.
+Sun's OBP probes the DBRI slot on the SS-20 and builds a node without
+a name from the all-zero PROM, which guests then trip over. Provide a
+minimal FCode image naming the node SUNW,DBRI with its register range.
 
-The capability tracks the link's flit state: the requester-enable
-bits stay clear while the link is not in flit mode, and the Segment
-Captured status bit follows the flit state.
-
-Signed-off-by: Shrihari E S <shrihari.s@samsung.com>
-Signed-off-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
 ---
- hw/pci/meson.build         |   2 +-
- hw/pci/pci.c               |   2 +
- hw/pci/pcie.c              |  29 ++++++++++
- hw/pci/pcie_dev3.c         | 111 +++++++++++++++++++++++++++++++++++++
- include/hw/pci/pcie.h      |   5 ++
- include/hw/pci/pcie_dev3.h |  26 +++++++++
- include/hw/pci/pcie_regs.h |  26 +++++++++
- 7 files changed, 200 insertions(+), 1 deletion(-)
- create mode 100644 hw/pci/pcie_dev3.c
- create mode 100644 include/hw/pci/pcie_dev3.h
+ hw/sparc/sun4m.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/hw/pci/meson.build b/hw/pci/meson.build
-index d55882a0c9..0a7f3b162a 100644
---- a/hw/pci/meson.build
-+++ b/hw/pci/meson.build
-@@ -14,7 +14,7 @@ pci_ss.add(files(
- # The functions in these modules can be used by devices too.  Since we
- # allow plugging PCIe devices into PCI buses, include them even if
- # CONFIG_PCI_EXPRESS=n.
--pci_ss.add(files('pcie.c', 'pcie_aer.c', 'pcie_svc.c'))
-+pci_ss.add(files('pcie.c', 'pcie_aer.c', 'pcie_svc.c', 'pcie_dev3.c'))
- pci_ss.add(files('pcie_doe.c'))
- system_ss.add(when: 'CONFIG_PCI_EXPRESS', if_true: files('pcie_port.c', 'pcie_host.c'))
- system_ss.add_all(when: 'CONFIG_PCI', if_true: pci_ss)
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 50472cab88..cc5e40ac5c 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -571,6 +571,7 @@ static void pci_do_device_reset(PCIDevice *dev)
-     pcie_sriov_pf_reset(dev);
-     pcie_cap_flit_reset(dev);
-     pcie_svc_cap_reset(dev);
-+    pcie_dev3_cap_reset(dev);
- }
+diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+index 550acdff6d..649087dc12 100644
+--- a/hw/sparc/sun4m.c
++++ b/hw/sparc/sun4m.c
+@@ -557,6 +557,31 @@ static void cg3_init(hwaddr addr, qemu_irq irq, int vram_size, int width,
  
- /*
-@@ -1819,6 +1820,7 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
-     pcie_sriov_config_write(d, addr, val_in, l);
-     pcie_cap_flit_write_config(d, addr, l);
-     pcie_svc_cap_write_config(d, addr, val_in, l);
-+    pcie_dev3_cap_write_config(d, addr, val_in, l);
- }
+ static const uint8_t idreg_data[] = { 0xfe, 0x81, 0x01, 0x03 };
  
- /***********************************************************/
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index b05f70022a..9f16cc8d1b 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -190,6 +190,32 @@ void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
-     pcie_cap_fill_lnk(dev, exp_cap, width, speed, flitmode);
- }
- 
-+bool pcie_link_flit_active(PCIDevice *dev)
-+{
-+    uint8_t *exp_cap;
-+    uint16_t lnksta2;
-+    uint16_t lnkctl;
-+    uint16_t flags;
-+
-+    if (!pci_is_express(dev) || !dev->exp.exp_cap) {
-+        return false;
-+    }
-+
-+    exp_cap = dev->config + dev->exp.exp_cap;
-+    flags = pci_get_word(exp_cap + PCI_EXP_FLAGS);
-+    if (!(flags & PCI_EXP_FLAGS_FLIT)) {
-+        return false;
-+    }
-+    lnkctl = pci_get_word(exp_cap + PCI_EXP_LNKCTL);
-+    lnksta2 = pci_get_word(exp_cap + PCI_EXP_LNKSTA2);
-+
-+    if (lnkctl & PCI_EXP_LNKCTL_FLIT_DIS) {
-+        return false;
-+    }
-+
-+    return lnksta2 & PCI_EXP_LNKSTA2_FLIT;
-+}
-+
- /*
-  * Derive the read-only Flit Status bit of the Link Status 2
-  * register from the Flit Disable bit of the Link Control register.
-@@ -226,6 +252,9 @@ void pcie_cap_flit_write_config(PCIDevice *dev, uint32_t addr, int len)
-     }
- 
-     pcie_cap_flit_update_sta(dev);
-+    if (dev->exp.dev3_cap) {
-+        pcie_dev3_cap_flit_update(dev);
-+    }
- }
- 
- /*
-diff --git a/hw/pci/pcie_dev3.c b/hw/pci/pcie_dev3.c
-new file mode 100644
-index 0000000000..8ca7c74b8c
---- /dev/null
-+++ b/hw/pci/pcie_dev3.c
-@@ -0,0 +1,111 @@
 +/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * PCIe Device3 Extended Capability
-+ *
-+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
++ * toke: fcode-version2 " SUNW,DBRI" device-name my-address h# 10000 +
++ * my-space encode-phys h# 100 encode-int encode+ " reg" property fcode-end
 + */
++static const uint8_t dbri_fcode[] = {
++    0xf1, 0x08, 0x04, 0x9c, 0x00, 0x00, 0x00, 0x32,
++    0x12, 0x09, 0x53, 0x55, 0x4e, 0x57, 0x2c, 0x44,
++    0x42, 0x52, 0x49, 0x02, 0x01, 0x01, 0x02, 0x10,
++    0x00, 0x01, 0x00, 0x00, 0x1e, 0x01, 0x03, 0x01,
++    0x13, 0x10, 0x00, 0x00, 0x01, 0x00, 0x01, 0x11,
++    0x01, 0x12, 0x12, 0x03, 0x72, 0x65, 0x67, 0x01,
++    0x10, 0x00
++};
 +
-+#include "qemu/osdep.h"
-+#include "hw/pci/pci_device.h"
-+#include "hw/pci/pcie.h"
-+#include "hw/pci/pcie_port.h"
-+#include "hw/pci/pcie_dev3.h"
-+
-+int pcie_dev3_cap_init(PCIDevice *dev, uint32_t offset,
-+                       bool uio_req, bool uio_comp, Error **errp)
++static void dbri_prom_init(hwaddr addr)
 +{
-+    uint32_t devcap3 = 0;
-+    uint32_t wmask = 0;
++    MemoryRegion *rom = g_new(MemoryRegion, 1);
 +
-+    if (!pci_is_express(dev)) {
-+        error_setg(errp, "Device 3 ECAP requires PCIe");
-+        return -EINVAL;
-+    }
-+
-+    pcie_add_capability(dev, PCI_EXT_CAP_ID_DEV3, 1, offset, PCI_DEV3_SIZEOF);
-+    dev->exp.dev3_cap = offset;
-+    dev->exp.dev3.uio_req = uio_req;
-+    dev->exp.dev3.uio_comp = uio_comp;
-+
-+    /*
-+     * In this implementation, 14-bit tag support is only advertised
-+     * when UIO is enabled. A real device may support 14-bit tags
-+     * independently of UIO.
-+     */
-+    if (uio_comp) {
-+        devcap3 |= PCI_DEV3_CAP_TAG_COMP | PCI_DEV3_CAP_UIO_COMP;
-+    }
-+    if (uio_req) {
-+        devcap3 |= PCI_DEV3_CAP_TAG_REQ | PCI_DEV3_CAP_UIO_REQ;
-+        wmask |= PCI_DEV3_CTL_TAG_REQ_EN |
-+                 PCI_DEV3_CTL_UIO_REQ_EN |
-+                 PCI_DEV3_CTL_UIO_256B_DIS;
-+    }
-+
-+    pci_set_long(dev->config + offset + PCI_DEV3_CAP_OFFSET, devcap3);
-+    pci_set_long(dev->wmask + offset + PCI_DEV3_CTL_OFFSET, wmask);
-+
-+    return 0;
++    memory_region_init_rom(rom, NULL, "sun-DBRI.prom", 0x40, &error_fatal);
++    memory_region_add_subregion(get_system_memory(), addr, rom);
++    address_space_write_rom(&address_space_memory, addr,
++                            MEMTXATTRS_UNSPECIFIED,
++                            dbri_fcode, sizeof(dbri_fcode));
 +}
 +
-+/*
-+ * Track the link's flit state in the Device 3 capability: the
-+ * requester-enable bits of the Device Control 3 register are cleared
-+ * while the link is not in flit mode, and the Segment Captured
-+ * status bit follows the link's flit state.
-+ */
-+void pcie_dev3_cap_flit_update(PCIDevice *dev)
-+{
-+    uint32_t off = dev->exp.dev3_cap;
-+    uint32_t devctl3;
-+    uint32_t devsta3;
-+    bool flit;
-+
-+    if (!off) {
-+        return;
-+    }
-+
-+    flit = pcie_link_flit_active(dev);
-+    if (!dev->exp.dev3.uio_req || !flit) {
-+        devctl3 = pci_get_long(dev->config + off + PCI_DEV3_CTL_OFFSET);
-+        devctl3 &= ~(PCI_DEV3_CTL_TAG_REQ_EN |
-+                     PCI_DEV3_CTL_UIO_REQ_EN |
-+                     PCI_DEV3_CTL_UIO_256B_DIS);
-+        pci_set_long(dev->config + off + PCI_DEV3_CTL_OFFSET, devctl3);
-+    }
-+
-+    devsta3 = pci_get_long(dev->config + off + PCI_DEV3_STA_OFFSET);
-+    if (flit) {
-+        devsta3 |= PCI_DEV3_STA_SEGMENT_CAP;
-+    } else {
-+        devsta3 &= ~PCI_DEV3_STA_SEGMENT_CAP;
-+    }
-+    pci_set_long(dev->config + off + PCI_DEV3_STA_OFFSET, devsta3);
-+}
-+
-+void pcie_dev3_cap_reset(PCIDevice *dev)
-+{
-+    uint32_t off = dev->exp.dev3_cap;
-+
-+    if (!off) {
-+        return;
-+    }
-+
-+    pci_set_long(dev->config + off + PCI_DEV3_CTL_OFFSET, 0);
-+    pci_set_long(dev->config + off + PCI_DEV3_STA_OFFSET, 0);
-+    pcie_dev3_cap_flit_update(dev);
-+}
-+
-+void pcie_dev3_cap_write_config(PCIDevice *dev,
-+                                uint32_t addr, uint32_t val, int len)
-+{
-+    if (!dev->exp.dev3_cap) {
-+        return;
-+    }
-+
-+    if (ranges_overlap(addr, len,
-+                       dev->exp.dev3_cap + PCI_DEV3_CTL_OFFSET, 4)) {
-+        pcie_dev3_cap_flit_update(dev);
-+    }
-+}
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index 3d092e8871..95f670c830 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -26,6 +26,7 @@
- #include "hw/pci/pcie_aer.h"
- #include "hw/pci/pcie_sriov.h"
- #include "hw/pci/pcie_svc.h"
-+#include "hw/pci/pcie_dev3.h"
- #include "hw/core/hotplug.h"
- 
- typedef struct PCIEPort PCIEPort;
-@@ -86,6 +87,9 @@ struct PCIExpressDevice {
- 
-     /* Streamlined Virtual Channel (SVC) introduced from PCIe 6.1 */
-     uint32_t svc_cap;
-+    /* PCIe Device 3 Capability */
-+    uint32_t dev3_cap;
-+    struct PCIEDev3Cap dev3;
- };
- 
- #define COMPAT_PROP_PCP "power_controller_present"
-@@ -149,6 +153,7 @@ void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
-                                PCIExpLinkSpeed speed, bool flitmode);
- void pcie_cap_flit_write_config(PCIDevice *dev, uint32_t addr, int len);
- void pcie_cap_flit_reset(PCIDevice *dev);
-+bool pcie_link_flit_active(PCIDevice *dev);
- 
- void pcie_cap_slot_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
-                                Error **errp);
-diff --git a/include/hw/pci/pcie_dev3.h b/include/hw/pci/pcie_dev3.h
-new file mode 100644
-index 0000000000..4cfa07fe32
---- /dev/null
-+++ b/include/hw/pci/pcie_dev3.h
-@@ -0,0 +1,26 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * PCIe Device3 Extended Capability
-+ *
-+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
-+ */
-+
-+#ifndef HW_PCIE_DEV3_H
-+#define HW_PCIE_DEV3_H
-+
-+#include "hw/pci/pci.h"
-+
-+typedef struct PCIEDev3Cap {
-+    bool uio_req;
-+    bool uio_comp;
-+} PCIEDev3Cap;
-+
-+int pcie_dev3_cap_init(PCIDevice *dev, uint32_t offset,
-+                       bool uio_req, bool uio_comp, Error **errp);
-+void pcie_dev3_cap_reset(PCIDevice *dev);
-+void pcie_dev3_cap_write_config(PCIDevice *dev,
-+                                uint32_t addr, uint32_t val, int len);
-+void pcie_dev3_cap_flit_update(PCIDevice *dev);
-+
-+#endif /* HW_PCIE_DEV3_H */
-diff --git a/include/hw/pci/pcie_regs.h b/include/hw/pci/pcie_regs.h
-index 044b3caae4..484178adb3 100644
---- a/include/hw/pci/pcie_regs.h
-+++ b/include/hw/pci/pcie_regs.h
-@@ -256,4 +256,30 @@ typedef enum PCIExpLinkWidth {
- #define PCI_SVC_RES_STATUS(n)           (PCI_SVC_RES_STATUS_BASE + ((n) * 0x0c))
- #define PCI_SVC_VC_NEGO                 BIT(1)
- 
-+/* PCIe Device 3 capability structure. PCIe 6.4 Specification Section 7.7.9 */
-+#ifndef PCI_EXT_CAP_ID_DEV3
-+#define PCI_EXT_CAP_ID_DEV3 0x2f
-+#endif
-+
-+#define PCI_DEV3_CAP_OFFSET            0x04
-+#define PCI_DEV3_CTL_OFFSET            0x08
-+#define PCI_DEV3_STA_OFFSET            0x0c
-+#define PCI_DEV3_SIZEOF                0x10
-+
-+/* Section 7.7.9.2 Device Capabilities 3 Register */
-+#define PCI_DMWR_REQ_SUPPORTED         BIT(0)
-+#define PCI_DEV3_CAP_TAG_COMP          BIT(1)
-+#define PCI_DEV3_CAP_TAG_REQ           BIT(2)
-+#define PCI_L0P_SUPPORTED              BIT(3)
-+#define PCI_DEV3_CAP_UIO_COMP          BIT(10)
-+#define PCI_DEV3_CAP_UIO_REQ           BIT(11)
-+
-+/* Section 7.7.9.3 Device Control 3 Register */
-+#define PCI_DEV3_CTL_TAG_REQ_EN        BIT(2)
-+#define PCI_DEV3_CTL_UIO_REQ_EN        BIT(7)
-+#define PCI_DEV3_CTL_UIO_256B_DIS      BIT(8)
-+
-+/* Section 7.7.9.4 Device Status 3 Register */
-+#define PCI_DEV3_STA_SEGMENT_CAP       BIT(3)
-+
- #endif /* QEMU_PCIE_REGS_H */
+ static void idreg_init(hwaddr addr)
+ {
+     DeviceState *dev;
+@@ -1025,8 +1050,7 @@ static void sun4m_hw_init(MachineState *machine)
+     if (hwdef->dbri_base) {
+         /* ISDN chip with attached CS4215 audio codec */
+         /* prom space */
+-        create_unimplemented_device("sun-DBRI.prom",
+-                                    hwdef->dbri_base + 0x1000, 0x30);
++        dbri_prom_init(hwdef->dbri_base + 0x1000);
+         /* reg space */
+         create_unimplemented_device("sun-DBRI",
+                                     hwdef->dbri_base + 0x10000, 0x100);
+
+base-commit: 33eb51c859834f2024090bf843c69814267b6c26
 -- 
-2.34.1
-
+2.47.3
 
 
