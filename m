@@ -1,85 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F53606A33F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 12:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AE6606A32D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 13:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cz8g6Qhe
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=T4G1Wcqb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOaDw-00052p-1Y; Wed, 04 Nov 2026 07:36:16 -0500
+	id 1xOafi-0002hE-P5; Wed, 04 Nov 2026 08:04:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <conti.manuele@gmail.com>)
- id 1xOaDu-00052H-GC
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 07:36:14 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <stian.langvann@gmail.com>)
+ id 1xOZ3d-0000B6-OL
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:21:33 -0500
+Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <conti.manuele@gmail.com>)
- id 1xOaDs-0004mv-H3
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 07:36:14 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4a35db1f202so4743555e9.3
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 04:36:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stian.langvann@gmail.com>)
+ id 1xOZ3b-0003fL-LM
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:21:33 -0500
+Received: by mail-qk1-x735.google.com with SMTP id
+ af79cd13be357-93cb60c9315so11015785a.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 03:21:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793791290; cv=none;
+ d=google.com; s=arc-20260327;
+ b=TTXN4xFFXPfo0TBLd5JLeq8RN+E9/4/UtPt/1nj00R4dOzGc2jNj65Uwnbu2O27/+3
+ HO8oQIxGXX98D3+eI0bwxop/qhR+QGF9jcHZ3I2SLSamr8qFHlrTSTYdqRssoNjd1syn
+ a2A2arTfs0x/iqi8oe9nfHfJPy3uw9PgyxyEee8KGwW2ucx9xM8ZXIyhrwVi6zqS7jAb
+ YsgCl0UwRiQzfrkc63PFrJcY0SdO+KaPHkwO9MnypS0Nx72e6jPUQahBq5Z3b5j8/7bq
+ 1dfhkt98oNESau6U8yLoQy883kXVLrSfHCpFcnHwHcU6MJKQ16DUMe6XOs/b7tR1MCEe
+ CEVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=trU0gLny7J9mx2GU/Jz05fcnMwOdE7ZGnjag57Wi43M=;
+ fh=8U5cq/rGBjmUIFIhdLtrLtob800lbuLRXRyE9VUG/pA=;
+ b=Dhxqy86tOLdZbf11TCuHfhcXlHMuGyrRU6oK2An6Z4Pxj6ij3KoylaPD1fyU4ZhXxD
+ Ay5wm23avS32PFgUb/uIehnekgoocP/rr39omvQicLu97oLX/rmHbiNOs8EKheoJ9dUD
+ Dd8j70fW93zh/AZC07lvcjXWM3v3ItwomP/7BMKUXJ4nOjCAjRQX/ZIaJznNA82sv2jb
+ zonhb+JBYFVrQkuSR+fss5vKUEHV8cN5EctrKxYY14bIQcp4mXxRiuk7MbS5ktizaalG
+ p9Wj0vL1BSh0IMQ++eNHh7tCsFweriybNMAWqdXTFTbC+xFG8y71U7JTU4gPfu7tl4mi
+ ls9w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793795771; x=1794400571; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=OyObsbaRoinsyaD298+5GRQ7fKlPM3BANbHWI67fVUw=;
- b=cz8g6Qhe9i+iymaonLabMKXpNMbQJaUyfVgkohIPkzXfR6JcyNaRlCYNUL+buANyPf
- 7kLC/eB5h6b9bkRPto9g7glqbeCHfJ4uKNphNbZ7prjN7xpE/17QV74Kmvy9Ak5YRYL/
- sfA0o+u1Boe+au6ILUSwVL8HmJB6bBwXNFWCC7/NQXYKX0xUB2gv44RhAC9zlmk0rVm/
- X1qlBvxoFTWFoq3uZoBgvIEwg0Udu6MquoyP6GPkIWktL/6PA0wa4OGcf846ixmGeQkI
- 8Ea1KMq0LF2vajsoq4DCLZC7SUY8PtPCRX36ec9rO3qq5OBml36I5jgAOheBvYDmyxnI
- Ih6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793795771; x=1794400571;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=gmail.com; s=20260707; t=1793791290; x=1794396090; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=OyObsbaRoinsyaD298+5GRQ7fKlPM3BANbHWI67fVUw=;
- b=a2eMvEWgi51u4Jtx9G7OWzuXLS+dAwERAAGb/z9q141eu6oQVsPuYXHgtVA5YUxC3u
- w9s9V+/aYSqYMA9WtDAxjCpjUOivBklSW6zska1C/FrhqkGkIZLD5K/FS5CBbwkJl7KU
- wYEv9+NGdztEPl4mhHN2EeBYHZYS45YuTlOGqdrGaGU/PVSyF7a1KRrpBHSJFDAwJsZM
- ZbxCUugPQhjoQPJrbaz+83M1QQLTPX9AvORA7lvsoCnzF5vLQAXG3izkIMXimHCSYb8f
- Fj5AQjUdIqSLnGX5BgUWFtCRigsbH7zhGY474GMH9f5g/P7iYLehxpHxU/Xd2PPMlOEw
- 84ug==
-X-Gm-Message-State: APuU4Z+/y0ayI22ZD/7BLbJjtLkWEMDNpakPHGpX+bGzUojvtW7PFe0n
- fc2qB9YekQLzoDBp9elhkglu4+SfVu+537kdaf508XoLveEEpN+vOVUHej0TGw==
-X-Gm-Gg: AYBFou33/g8hs7YJ9XIqzH15oh4rGR/FngoumhSGOH9v3BgC4zYGo4FYOZS4Zbgcm4S
- 0Wag0OTY3x9P2LCdAZ0yvuQGKamtjR4uANOLtCutMg/g17rPqDXeP+59WgSJX+ktICfk61tqs2j
- zU1xxJd1b+yEeFIc0RLOBQVpgLsbUJuhsswTI9OPGOteq/Vd6ZnW7anJHLotxPxxi+cx1de+SYj
- xEwuElLitYnyV9P3JoxiKuOOK+I8xeMtWOGZyOdsGTw/wQq6wnpV0R+I122MouWS8CoIxHLsS+D
- OkF/a7ORohj2kKqlYCXqJfVhvFsK15wotq1bG6vqIcgUeg9smnnwfmy2k6Hrq8nBPejpoEwgFMc
- p0wM++iUPu60hjxqt07yf4p4MWm/xEpv57ysD+UmsDcfofvhTqFSE2SnurbBoapB4GfsL/2AMXb
- AbrjlgYCRcEDZwy7nAX0YAuo47Oi3Lksn1wWXxHaVp5u/DA5OdFNMQpomjGPmEzXeAqR9wn3php
- hByot/8+QlLyBxPWd7dzMTJ5J/BNGIiWuvPZ8sYXEKkIu2fp4JjvGiWBS7KesRbBGuwbSAA+MCF
- oxIPNcDmrUm+0Wglnon/sMsBO0HQnFcaglpo3VhUK2cWaR/0P4b7+CnU/Igp/9Dhs9MYKsQ=
-X-Received: by 2002:a05:600c:46d1:b0:4a3:59c9:a754 with SMTP id
- 5b1f17b1804b1-4ac187a72f4mr360555325e9.22.1793795770615; 
- Wed, 04 Nov 2026 04:36:10 -0800 (PST)
-Received: from localhost.localdomain ([2a01:7d0:d208:aa00:9908:ec2a:cbac:ad71])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b2a9faff90sm155844625e9.5.2026.11.04.04.36.09
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Nov 2026 04:36:10 -0800 (PST)
-From: Manuele Conti <conti.manuele@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Manuele Conti <conti.manuele@gmail.com>
-Subject: [PATCH v2] hw/sd/ssi-sd: Handle immediate write start token after R1
-Date: Wed,  4 Nov 2026 13:31:56 +0100
-Message-ID: <20261104123605.37729-1-conti.manuele@gmail.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20261104111619.24479-1-conti.manuele@gmail.com>
-References: <20261104111619.24479-1-conti.manuele@gmail.com>
+ bh=trU0gLny7J9mx2GU/Jz05fcnMwOdE7ZGnjag57Wi43M=;
+ b=T4G1WcqbVLCZ6o8Npe8mOTeAjC/w3dzPYqGZU/l2PhcSrgNMqR+ai+5bjgK3QtSk8C
+ NoxU/KhwPx4QB1synHCtL2kDqd5n0leyr50FAFDTjXnwWH8pWz6XX8LNjVOO99iekYsE
+ 5ADDGvAn0jBkXVn5c91mGX7uvsx7/wpVq3T4VANbsvcZQUPLgO2KFpX7MUTT8c+0pE+J
+ MZTipgxFXt3nZ/BaBYh1/aHrCqUANbJLC2pddctZXSE0CG2tTpqO+UM1HxDqhYcXvwb3
+ h/kf+EPurqI2NHhtCjOC1wXDLJR2g911XwJu5FAZUW1E7hvInhztjwTN/bBk+Le3dBdz
+ 3exw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793791290; x=1794396090;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=trU0gLny7J9mx2GU/Jz05fcnMwOdE7ZGnjag57Wi43M=;
+ b=wwm07B2ukdGcyiH/43SVpPLlFMBQCpz87Zy9OgF8qA50paVWzY1VJF3uGTg5EZO0rJ
+ amTxeoMKQ/GmuR0BT+tzOVSaPXBDX6PsjVwbsHGB8DjcMY4w7RkfPrl1DHHAUx1kF1T2
+ kap42UfRldACveyJ/1THJi2woiAAoIHH/hYzUzGY3dlUQz6R9XtO2GIidY0RdQ067Qfm
+ gmDIo8Z75L2qj8CYd5jZuKvl4meyU6Shy034B75qU19nTmB/mBRqKiDEXgO9A8YtYKim
+ 5D5Bxm6TSFYhbicbS1Xejrr49RDYGJT9udcWZp0JbtFQ0JoXI7Ageog57JHryjVdalGK
+ RXWA==
+X-Gm-Message-State: APuU4Z86to2dEox4UWZyU7IRTg1GTdGRIVlUWLOf6gS9uOprik6bZ+ql
+ 59ZrYQOTTrmb4QgD3qO5WmqXI2DZbY/5+xINF8rPfNN+qSCIi5Pa4fONnofG+gPnS++SAI136ta
+ gbYR7bU+CZkA2A4ENSEd5eQl6zA0THRRkMyQE8qI=
+X-Gm-Gg: AYBFou19rGwEi9XiEnWk4gRdVBT+evnHISO4mo41XsqvDi1SrN5lf7hgOuPGyeORlrU
+ ljlB7FmgigI/KQgqKBwKDsQC5wRPBRYyrNcizHzgpNkfruozjRFFVObiRMSxGPW2SwgoAFTv/r6
+ 9S+/g1cJKdn5XV/eKgrSQp3Aq21sVL5xizW0Redlqw1UOadpCktSwhrrCYbGV/C7ghLxtbrtJ/1
+ GTm/dA9QfO+x+9NRCsZKHux8C4rRZt4OFUhRytQGOD7xaJHe2STc8+hDwk65NRMWARK5EKMxXPJ
+ yZdSy3b5/RuUy/pqsLprpvnwnWj91pzIsKj+Y6ZiqoMkpGBx5cuBpHkOvX/GQikq9NltOovGd9v
+ vMWnUrCOM5MprHVDuFW6al385GpnCa0HPyhh5MjKavPiApwbBQQYlDgvjbxpRxjPQ1Q==
+X-Received: by 2002:a05:620a:72d2:20b0:945:db0d:9cc7 with SMTP id
+ af79cd13be357-945db0d9e7amr91847385a.0.1793791289975; Wed, 04 Nov 2026
+ 03:21:29 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=conti.manuele@gmail.com; helo=mail-wm1-x32a.google.com
+From: Stian Langvann <stian.langvann@gmail.com>
+Date: Wed, 4 Nov 2026 12:21:18 +0100
+X-Gm-Features: AclHuK9ObtxLA7vNOaTfxFkbqUdzAvcxE0-zGN7n2dxTJchbkLmKqCS1I_kZFHc
+Message-ID: <CADm+htGRv+NLDnP-CPQmeJqZU2RkyWPoAGR1Dk8kghhFVUVOew@mail.gmail.com>
+Subject: scsi-block migrate-pr: destination loses its own multipath
+ registrations when the guest holds a reservation
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, pbonzini@redhat.com, fam@euphon.net
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
+ envelope-from=stian.langvann@gmail.com; helo=mail-qk1-x735.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,6 +98,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 04 Nov 2026 08:04:55 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,237 +109,208 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When a write start token immediately follows the R1 response,
-the SPI SD controller may still be in SSI_SD_RESPONSE state
-and discard the token.
+Hi, the below has been written by Opus on request from me.
+After dealing with issues when trying to live migrate a VM that has a
+windows failover cluster (wsfc) with active roles on it, i encountered
+what seems to be a bug. I couldn't decipher it myself, so I had to make
+use of Opus to help me figure it out, and to give me a work-around
+Opus wrote me a pre-hook script that works as a workaround for this
+bug, but it is by no means perfect, and we're missing several
+milliseconds, and get a bunch of reservation conflicts before the
+script can repair after a migration has happened.
 
-Recognize single-block and multi-block write start tokens
-when the SD card is ready to receive data, allowing the
-write operation to proceed without an additional dummy byte.
+The below is a suggestion by opus as a fix to this issue.
 
-Signed-off-by: Manuele Conti <conti.manuele@gmail.com>
----
-Hi Philippe,
+I myself have little to no experience in C, and i hope the below
+can help highlight the issue i'm seeing, to confirm wether or not
+it is a fixable bug or not.
 
-Thanks for your feedback.
+I am sorry if I'm doing this mailing list wrong.
 
-I encountered this issue while running a bare-metal STM32F4 firmware under QEMU, using SPI mode to communicate with an SD card.
+Opus:
 
-The firmware performs a block write (CMD24) and sends the data start token (0xFE) immediately after receiving the R1 response, without an additional dummy byte.
 
-In this case, the SSI SD controller is still in SSI_SD_RESPONSE state and discards the token, causing the subsequent write operation to fail.
+Live migration of SCSI persistent reservations loses registrations on
+the destination when the LUN is a dm-multipath device and the guest
+holds a reservation. The reservation itself transfers correctly, but
+every local initiator port except one ends up unregistered, and the
+guest's writes dispatched down the paths of those initiators return
+RESERVATION CONFLICT for as long as it runs on that host.
 
-I've now added a regression test to reproduce this behavior without requiring the original firmware.
+The fix looks like removing a guard that is already in the tree. Details
+below.
 
-The test exercises the immediate write-token sequence and verifies that the controller correctly transitions to the data-write state.
 
-I'll submit an updated patch including the regression test so the issue can be reproduced and verified independently.
+The mechanism
+-------------
 
-Best regards,
-Manuele
+scsi_generic_pr_state_preempt() in hw/scsi/scsi-generic.c registers the
+guest's key and then self-preempts, with that same key in both the
+RESERVATION KEY and SERVICE ACTION RESERVATION KEY fields.
 
- hw/sd/ssi-sd.c                        |   6 +
- tests/qtest/ssi-sd-token-local-test.c | 165 ++++++++++++++++++++++++++
- 2 files changed, 171 insertions(+)
- create mode 100644 tests/qtest/ssi-sd-token-local-test.c
+That pair is safe for a single I_T nexus, but libmpathpersist treats the
+two service actions asymmetrically. REGISTER goes through
+mpath_prout_reg(), which sends it on every local initiator port.
+PREEMPT goes through mpath_prout_common(), which sends it down a single
+path. SPC then removes every registration holding the preempted key
+except that of the issuing I_T nexus, so the PREEMPT deletes the
+registrations the REGISTER created on the other initiator ports
+microseconds earlier.
 
-diff --git a/hw/sd/ssi-sd.c b/hw/sd/ssi-sd.c
-index a3a9f0c7efd..13c87c49cfb 100644
---- a/hw/sd/ssi-sd.c
-+++ b/hw/sd/ssi-sd.c
-@@ -185,6 +185,12 @@ static uint32_t ssi_sd_transfer(SSIPeripheral *dev, uint32_t val)
-             s->mode = SSI_SD_CMD;
-             return SSI_DUMMY;
-         }
-+        /* The next byte after R1 may already be the write start token. */
-+        if (sdbus_receive_ready(&s->sdbus) &&
-+            (val == SSI_TOKEN_SINGLE || val == SSI_TOKEN_MULTI_WRITE)) {
-+            s->mode = SSI_SD_DATA_WRITE;
-+            return SSI_DUMMY;
-+        }
-         if (sdbus_data_ready(&s->sdbus)) {
-             DPRINTF("Data read\n");
-             s->mode = SSI_SD_DATA_START;
-diff --git a/tests/qtest/ssi-sd-token-local-test.c b/tests/qtest/ssi-sd-token-local-test.c
-new file mode 100644
-index 00000000000..55ac5fec643
---- /dev/null
-+++ b/tests/qtest/ssi-sd-token-local-test.c
-@@ -0,0 +1,165 @@
-+/*
-+ * SD/SPI transfert tests
-+ *
-+ * Copyright (c) 2026 Manuele Conti <manuele.conti@archimede-energia.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest-single.h"
-+
-+#define SSP_BASE 0x40008000
-+#define GPIO_D_DATA0 0x40007004
-+#define GPIO_D_DIR 0x40007400
-+#define BLOCK_SIZE 512
-+
-+typedef struct WriteCase {
-+    const char *name;
-+    bool multi;
-+    unsigned dummy_bytes;
-+} WriteCase;
-+
-+static uint8_t transfer(uint8_t value)
-+{
-+    writel(SSP_BASE + 8, value);
-+    return readl(SSP_BASE + 8) & 0xff;
-+}
-+
-+static uint8_t command(unsigned cmd, uint32_t argument)
-+{
-+    transfer(0xff);
-+    transfer(0x40 | cmd);
-+    transfer(argument >> 24);
-+    transfer(argument >> 16);
-+    transfer(argument >> 8);
-+    transfer(argument);
-+    transfer(cmd == 0 ? 0x95 : cmd == 8 ? 0x87 : 0xff);
-+    for (unsigned i = 0; i < 32; i++) {
-+        uint8_t response = transfer(0xff);
-+        if (!(response & 0x80)) {
-+            return response;
-+        }
-+    }
-+    g_assert_not_reached();
-+}
-+
-+static void initialize_card(void)
-+{
-+    bool ready = false;
-+    bool token = false;
-+
-+    /* Drive D0 high and then low to select SD and deselect the OLED. */
-+    writel(GPIO_D_DIR, 1);
-+    writel(GPIO_D_DATA0, 1);
-+    writel(GPIO_D_DATA0, 0);
-+    writel(SSP_BASE, 7);       /* Eight-bit SPI frames. */
-+    writel(SSP_BASE + 4, 2);   /* Enable PL022. */
-+    for (unsigned i = 0; i < 10; i++) {
-+        transfer(0xff);
-+    }
-+    g_assert_cmphex(command(0, 0), ==, 1);
-+    g_assert_cmphex(command(8, 0x1aa), ==, 1);
-+    for (unsigned i = 0; i < 4; i++) {
-+        transfer(0xff);
-+    }
-+    for (unsigned i = 0; i < 100; i++) {
-+        g_assert_cmphex(command(55, 0), ==, 1);
-+        if (command(41, 0x40000000) == 0) {
-+            ready = true;
-+            break;
-+        }
-+        clock_step(1000000);
-+    }
-+    g_assert_true(ready);
-+
-+    /* Upstream's SPI CMD9 handler switches the card to transfer state. */
-+    g_assert_cmphex(command(9, 0), ==, 0);
-+    for (unsigned i = 0; i < 32; i++) {
-+        if (transfer(0xff) == 0xfe) {
-+            token = true;
-+            break;
-+        }
-+    }
-+    g_assert_true(token);
-+    for (unsigned i = 0; i < 18; i++) {
-+        transfer(0xff);       /* Sixteen CSD bytes and two CRC bytes. */
-+    }
-+    g_assert_cmphex(command(16, BLOCK_SIZE), ==, 0);
-+}
-+
-+static void test_write(const void *opaque)
-+{
-+    const WriteCase *tc = opaque;
-+    unsigned blocks = tc->multi ? 2 : 1;
-+    uint8_t expected[2 * BLOCK_SIZE], actual[2 * BLOCK_SIZE];
-+    uint8_t response[2] = { 0xff, 0xff };
-+    bool accepted = true;
-+    g_autofree char *path = NULL;
-+    g_autofree char *args = NULL;
-+    int fd = g_file_open_tmp("ssi-sd-token-local-XXXXXX", &path, NULL);
-+    ssize_t bytes;
-+
-+    g_assert_cmpint(fd, >=, 0);
-+    g_assert_cmpint(ftruncate(fd, 64 * 1024 * 1024), ==, 0);
-+    args = g_strdup_printf("-M lm3s6965evb -serial none "
-+                           "-drive file=%s,if=sd,format=raw", path);
-+    qtest_start(args);
-+    initialize_card();
-+    g_assert_cmphex(command(tc->multi ? 25 : 24, 0), ==, 0);
-+    for (unsigned i = 0; i < tc->dummy_bytes; i++) {
-+        transfer(0xff);
-+    }
-+    for (unsigned block = 0; block < blocks; block++) {
-+        /* Constant data avoids accidentally supplying a second start token. */
-+        memset(expected + block * BLOCK_SIZE, 0xa5 + block, BLOCK_SIZE);
-+        transfer(tc->multi ? 0xfc : 0xfe);
-+        for (unsigned i = 0; i < BLOCK_SIZE; i++) {
-+            transfer(expected[block * BLOCK_SIZE + i]);
-+        }
-+        transfer(0xff);
-+        transfer(0xff);
-+        response[block] = transfer(0xff);
-+        if ((response[block] & 0x1f) != 0x05) {
-+            accepted = false;
-+            break;
-+        }
-+        /* This experiment isolates the first token after command R1. */
-+        if (tc->multi && block + 1 < blocks) {
-+            transfer(0xff);
-+        }
-+    }
-+    if (tc->multi && accepted) {
-+        transfer(0xff);
-+        transfer(0xfd);
-+        transfer(0xff);
-+    }
-+    qtest_end();
-+    bytes = pread(fd, actual, blocks * BLOCK_SIZE, 0);
-+    close(fd);
-+    unlink(path);
-+
-+    g_test_message("CMD%u dummy=%u response[0]=0x%02x response[1]=0x%02x",
-+                   tc->multi ? 25 : 24, tc->dummy_bytes,
-+                   response[0], response[1]);
-+    g_assert_true(accepted);
-+    g_assert_cmpint(bytes, ==, blocks * BLOCK_SIZE);
-+    g_assert_cmpmem(actual, blocks * BLOCK_SIZE,
-+                   expected, blocks * BLOCK_SIZE);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    static const WriteCase cases[] = {
-+        { "/ssi-sd-local/single/immediate", false, 0 },
-+        { "/ssi-sd-local/single/dummy", false, 1 },
-+        { "/ssi-sd-local/multi/immediate", true, 0 },
-+        { "/ssi-sd-local/multi/dummy", true, 1 },
-+    };
-+
-+    g_test_init(&argc, &argv, NULL);
-+    for (unsigned i = 0; i < G_N_ELEMENTS(cases); i++) {
-+        qtest_add_data_func(cases[i].name, &cases[i], test_write);
-+    }
-+    return g_test_run();
-+}
--- 
-2.41.0
+The destination is left registered on one initiator while device-mapper
+keeps every path in the active path group, so roughly half the guest's
+writes conflict.
 
+
+Evidence
+--------
+
+HPE 3PAR over FC, two initiator ports per host (SCSI hosts 9 and 10),
+dm-multipath with "reservation_key file" and "all_tg_pt yes",
+qemu-pr-helper linked against libmpathpersist. Guest is a two-node
+Windows Server failover cluster holding a shared disk with reservation
+type 0x05 (Write Exclusive, Registrants Only). LUNs attached as:
+
+  -object pr-manager-helper,id=prhelper0,path=/run/pr-helper0.sock
+  -blockdev node-name=cau0,driver=raw,cache.direct=on,\
+    file.driver=host_device,file.filename=/dev/mapper/<map>,\
+    file.pr-manager=prhelper0
+
+ftrace on the destination during one live migration, filtered to PR
+IN/OUT on the shared LUN. Timestamps in seconds, last column is the
+first three CDB bytes:
+
+  361165.665620  host9   lun6  5f 00 00   PR OUT, REGISTER
+  361165.665666  host10  lun6  5f 00 00   PR OUT, REGISTER
+  361165.693479  host9   lun6  5f 04 05   PR OUT, PREEMPT, type 0x05
+
+The two REGISTERs are libmpathpersist fanning out across the local
+initiators. The PREEMPT goes out on host9 only, and host10's
+registration goes away with it:
+
+  before       PR generation=0xc27, 2 registered reservation keys follow:
+                 0x65e98960001734d
+                 0x65e98960001734d
+
+  after        PR generation=0xc2c, 1 registered reservation key follows:
+                 0x65e98960001734d
+
+The guest resumes and dmesg on the destination fills with "reservation
+conflict", on the paths belonging to host10 and host9 in a roughly even
+split, matching the path selector alternating between the two
+initiators. Reissuing REGISTER AND IGNORE EXISTING KEY with the same key
+through mpathpersist restores the second registration and the conflicts
+stop immediately, with no other change.
+
+
+Affected versions
+-----------------
+
+  v11.0.0                 no re-registration after PREEMPT at all
+  v11.1.0                 re-registers, but only when resv_type == 0
+  master (9dbf31c5be13)   same guard, now with REGISTER AND IGNORE
+
+Every version that implements PR migration is affected whenever the
+guest actually holds a reservation.
+
+
+Why the existing re-registration does not cover this
+----------------------------------------------------
+
+b9a3b329d09d ("scsi: register again after PREEMPT without reservation")
+added the re-registration because the Linux LIO target removes the
+calling nexus' own registration when preempting without a reservation.
+That is specific to resv_type == 0, so the guard made sense for it.
+
+The multipath case is not a target quirk and does not depend on
+resv_type. It is plain SPC behaviour applied to a REGISTER that
+libmpathpersist multiplied across initiator ports and a PREEMPT that it
+did not, so it happens on any spec-compliant target for any reservation
+type. A guest that holds a reservation, which is the case PR migration
+exists to serve, always takes the branch that skips the repair.
+
+It is also independent of all_tg_pt. With "all_tg_pt yes"
+libmpathpersist registers once per initiator port, so one registration
+is lost on a two-HBA host; with it off it registers on every path, so
+the PREEMPT destroys correspondingly more. The ATC_C masking in
+scsi_handle_persistent_reserve_in_reply() does not help either, since it
+governs what the guest may ask for rather than what libmpathpersist does
+on the host below QEMU.
+
+The same pattern came up on this list in February 2026 during the
+<linux/pr.h> discussion, from the multipath side: "Preempt the
+reservation to move it to an active path, which wipes the registrations
+off all the other paths. Then reregister all the active paths again."
+
+2d38eb7c741e ("scsi: clean up persistent reservation state after
+migration") handles the mirror image of this on the source host, where
+multipathd keeps re-registering a key the destination has preempted
+away. The destination-side loss described here looks like the remaining
+gap.
+
+
+Suggested fix
+-------------
+
+Make the re-registration unconditional. REGISTER AND IGNORE EXISTING KEY
+removes nothing and is idempotent, so running it when the registration
+survived costs one PR OUT.
+
+--- a/hw/scsi/scsi-generic.c
++++ b/hw/scsi/scsi-generic.c
+@@
+     if (!scsi_generic_pr_preempt(s, key, resv_type, errp)) {
+         return false;
+     }
+
+     /*
+-     * Some SCSI targets, like the Linux LIO target, remove our
+-     * registration when preempting without a reservation (resv_type is 0).
+-     * Try to register again but ignore the error since a RESERVATION
+-     * CONFLICT is expected if our registration remained in place.
++     * Register again after PREEMPT. Two situations require it:
++     *
++     * 1. Some SCSI targets, like the Linux LIO target, remove our
++     *    registration when preempting without a reservation (resv_type
++     *    is 0).
++     *
++     * 2. On a multipath device libmpathpersist sends REGISTER on every
++     *    local initiator port but sends PREEMPT down a single path.
++     *    PREEMPT removes every registration holding the preempted key
++     *    except that of the issuing I_T nexus, so the registrations
++     *    just made on the other initiator ports are removed again. This
++     *    happens for every reservation type, not only when resv_type is
++     *    0.
++     *
++     * REGISTER AND IGNORE EXISTING KEY removes nothing, so this is safe
++     * when the registration survived. The error is ignored for that
++     * case.
+      */
+-    if (resv_type == 0) {
+-        scsi_generic_pr_register_ignore(s, key, NULL);
+-    }
++    scsi_generic_pr_register_ignore(s, key, NULL);
+     return true;
+ }
+
+Fixing it inside post_load matters beyond tidiness: post_load runs
+before the guest is resumed on the destination, so an unconditional
+re-registration closes the hole with no exposure at all. I am currently
+working around it with a hookscript that watches for the signature and
+reissues REGISTER AND IGNORE EXISTING KEY, which lands 30-130 ms after
+the PREEMPT across repeated migrations. That keeps the failover cluster
+healthy, but the guest is running throughout that window and its writes
+on the affected paths do conflict. Only QEMU can do this at a point
+where no guest I/O is in flight.
+
+
+Thanks,
+Stian Langvann
 
