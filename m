@@ -1,81 +1,145 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E60606A328
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 11:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C3C606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 11:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=O3pWX/wn
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=oxl58VEA;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=F+iblLl3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOZSn-000836-3j; Wed, 04 Nov 2026 06:47:33 -0500
+	id 1xOZXV-0001mo-SN; Wed, 04 Nov 2026 06:52:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xOZSk-00080z-9g
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:47:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xOZXU-0001mW-OF
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:52:24 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xOZSh-00062w-7d
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:47:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793792845;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fMkud1RGrzW3a4Vn1L+ucbNUzkjspVE4HrrF00y4wz0=;
- b=O3pWX/wnXtOHV+F3qNo+7Kq/0XsBq5Gn7t/2b9am5r0r5JCeNMSB3S2LhWNdGU+UB8mtAy
- Hd1s8jW77z0lAV2VeMCaoWA3BcyDvba2ycxA2iVyFE2QzO9NCWfW5RI2RxQliz5aQvZsr8
- TaxbokCgRCU7KVgNpMX084ff/vv9jlo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-TajFfVZKMLSxu0yTE7DNXw-1; Wed,
- 04 Nov 2026 06:47:23 -0500
-X-MC-Unique: TajFfVZKMLSxu0yTE7DNXw-1
-X-Mimecast-MFC-AGG-ID: TajFfVZKMLSxu0yTE7DNXw_1793792842
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B39AD195605B; Wed,  4 Nov 2026 11:47:22 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A33AD195608C; Wed,  4 Nov 2026 11:47:20 +0000 (UTC)
-Date: Wed, 4 Nov 2026 11:47:17 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Anatol Belski <anbelski@linux.microsoft.com>, qemu-devel@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH] hw/audio/virtio-sound: Report bytes written in used length
-Message-ID: <ausbRfNzMzIwwMrA@redhat.com>
-References: <20261001224501.1952113-1-anbelski@linux.microsoft.com>
- <003b6c73-91cf-4ef3-8943-6b8068cb2a64@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xOZXS-0006VI-Ur
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:52:24 -0500
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A4Ba7TJ609711
+ for <qemu-devel@nongnu.org>; Wed, 4 Nov 2026 11:52:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ h+OM9sYwGLpZ+1YST1qHKhlATMSJdlnKzoMrlrhO3Jw=; b=oxl58VEAbyKNCNJS
+ oVO58jvjRY99Qhsl3oVpxLBXvTKOSET17bMBoyrq4wirADGfH+T92w0U2zpIJ0Ml
+ 1LMhpBrN+x0S54/wX2d/VvRmUJz8idG+ciQG6coeDH32g2h4cbhZeOdDNtKLdOH9
+ 1UzLIFL/3OS1eIhpDBqifywfxWT1ENL3U2U2DUUAii3SST0UzRAZ3khTjs4HmIos
+ Oa7b6XRTNgsIFnkqdJ/q81AfB6LcmT6vald+g7tI3on8UCkrQHrlCs/tOW3+Qv7d
+ rNy7u0ptTCIKk+X9141nL3nnoFyJ9inYI2euo+tV/0gnjh0O6D7PTwIDnxQi+wi+
+ jjpMOg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hr3r80499-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 11:52:20 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-9441113670dso167317685a.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 03:52:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793793140; x=1794397940; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:cc:from
+ :references:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=h+OM9sYwGLpZ+1YST1qHKhlATMSJdlnKzoMrlrhO3Jw=;
+ b=F+iblLl30kuDr+kFt7QFkp37k6Ck3FwY2/de1RA5HkMCDmIKu+YAGei20maMR490fn
+ Xi1Gn/yJ89YztC1ug1YrFdHLpqXic+mP7B69M9oeHI/ADLK7pQXQvj/cfeJ3A+2Cv57I
+ nv1U871H8CCjHTVQfHLzM6soT9JlOZUAROLYEc6yp+uGtl2qHw3VfD49KhQY0no2AB1e
+ rNnvxOv5ZbH6Xsg9PXXTxKACMhiRklAiTk5iH9oTpTtirfpTaV9+oFnKntzloZ0FzXU2
+ 0+QUZLJ2bcPuNILfLNyBhqBMPnINJgqjwMpozIDpmoNQCyXQuN9W8EIFtqFxBo/K/Qbc
+ qHEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793793140; x=1794397940;
+ h=content-transfer-encoding:content-type:in-reply-to:cc:from
+ :references:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=h+OM9sYwGLpZ+1YST1qHKhlATMSJdlnKzoMrlrhO3Jw=;
+ b=UXuP13OuxgKjdyAZyogxrqseeToU7Iv/q23zgJcf5hfYVAHZn/Asol0IHy1FYUxoey
+ fn6nfay+G+xin0rnA3SIrmqQU5MzSrdyACsWnZcxAdTySNKhcfpXs1X4c10lS2oA8CtE
+ cftuLlms4iv/DEDc18gzN4MPAZXGzIRdKZW+dw0WcQYUpJdguOLVeo4oC+m0H8l2K9x7
+ EFYOpIgxo1QCDZ7ml1jStXCEbvy9WIMqzkEyYhMCx+RNph3LHQ++Znm79oD7bDwQlDyL
+ 3/oK1J2geVWZgcTTWHBpsjQbyL98FMQKAAVdwjm/4zoAKTp55Z6jE26mHF7CCMMHYovF
+ VJiw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzWcB04K6i9nnhWyU3ggyh3wDJmXXGF0stb6qaJElKHBabdVTgz2rZK2z3+ZYcvs5qGge/dTxSDRYVE@nongnu.org
+X-Gm-Message-State: APuU4Z+nQKMiTJAT4KgnTqQkw7quWzbiuh6CTgPXoolP+KegCY5B/ONt
+ jyTrkFfNth7nSbUnbEnqdWPS+Me/U6DFwsExlHcK0P7oYuaQTONvAnZGjiQpJSwG3uEd2N1tyPJ
+ P8CgTJ7PtS2Ux0JhbzFRTRpfmqMd97Vh6TpSfNjfYBBwLI4OKYRswS2FmOQ==
+X-Gm-Gg: AYBFou0fbjxijHw4Az4q+gUrnrZTz+Ma958OPS9oHDu3v+phlxTi/MrGxqJTK0QVfVW
+ FajO8Bp3KuP/fyZyZr38qFbLlqFwUWu+dtPSGIMh3ju2bAZIM7cXV+zYC4PO/HFWl2VhlATlJa8
+ H4SGYuRYsQq8ZvRrIzlnjfM9HJoktbtUhbe5bES5iYlQ0qksq9ZOYfljnMe07gi+Mk0PgmN9OYe
+ kejs778qn+vMAXng6Eau5PaRy6vI+VnoWXJmZ/YVB7py2DPbh1xdew0BjB3D9sq8LTFSwqQ2U6B
+ gw+q/3cSEpGnUW4j+P+WXZYkZuweHpfcvgTktMyPoar66R/5NvdQZhutaiXloCO0jAogeQ73xVD
+ SNiv9L58fGc5NYH/9+wMmCinYK8ouDOho7gfZYty5ihQ0Ml+5CrPKCTH5PL4YBuU/zThg9yhXli
+ WNBFni2g==
+X-Received: by 2002:a05:620a:4586:b0:93f:22ae:f8ff with SMTP id
+ af79cd13be357-9442178cd60mr2550163385a.46.1793793140120; 
+ Wed, 04 Nov 2026 03:52:20 -0800 (PST)
+X-Received: by 2002:a05:620a:4586:b0:93f:22ae:f8ff with SMTP id
+ af79cd13be357-9442178cd60mr2550159785a.46.1793793139681; 
+ Wed, 04 Nov 2026 03:52:19 -0800 (PST)
+Received: from [192.168.69.229] (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4b452cd020csm45015225e9.4.2026.11.04.03.52.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Nov 2026 03:52:18 -0800 (PST)
+Message-ID: <e429414f-a869-4dff-9fe6-fd7315b8e7ca@oss.qualcomm.com>
+Date: Wed, 4 Nov 2026 12:52:18 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <003b6c73-91cf-4ef3-8943-6b8068cb2a64@oss.qualcomm.com>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/sd/ssi-sd: Handle immediate write start token after R1
+Content-Language: en-US
+To: Manuele Conti <conti.manuele@gmail.com>, qemu-devel@nongnu.org
+References: <20261104111619.24479-1-conti.manuele@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Bin Meng <bin.meng@processmission.com>
+In-Reply-To: <20261104111619.24479-1-conti.manuele@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: cND_ZQNAOJNrrQowosLWR6LEzPaakKmG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA0MDA0NyBTYWx0ZWRfX+niiAdXy7ggY
+ 5tzYiqxnQRnlf/QMoEgNxhRPWxOkrUtiaQ+1ic6658Ev/0FidQPXqZJd+OPZF+sPiJraCCHHwWI
+ jtlzoDzPCOlsZAlxkoibJbrlAE41P3GrGZY3gQ+YAOIXKXNPmDK1KDbPlRoZWtq3nLt47Qv5Aeg
+ xrCvIywJSflcHBP6JCCISDcjO1Ycj6AXBDuk57DyxDjWx1y5A1uvx89i8cjby0JkTt31g9v2xf5
+ KloVyf+tH9NidFPwDziM/mmjZaIDL4XxcXrNBjOh2wcGw6n2peRXP1/0vPGAVut0pocPKAsAJNA
+ FuCBdlWo1w7OVRsnjHSZXgaUDBYFZ3WzgD52F7d88dCtFBzhYKhR53pn7n0rn+Q+4vi68WQfx0B
+ 5pzl6Te+C8ISuHkQAfVykMy+J8Xg+i+H6nTh2gKv/PFVN+DcSfLde8VnntcdleKMLIQELEXA25g
+ E8ibn0OPEXJnnYW+x6g==
+X-Proofpoint-GUID: cND_ZQNAOJNrrQowosLWR6LEzPaakKmG
+X-Authority-Analysis: v=2.4 cv=UuP2pOwB c=1 sm=1 tr=0 ts=6aeb1c74 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=pGLkceISAAAA:8 a=qf5Zgl7zJ2BHlWJloCEA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA0MDA0NyBTYWx0ZWRfX4lSspFduPXve
+ CtwIuw88/0Fs3PsJNwVyEex+gU0fYGdpe+m9EgK1EFif7qRwtyOMtGnoLl223qSN6141BK5iDot
+ VDRAj3w2G8VzFvB7Qcl8cuQpWl+oi9M=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-04_04,2026-11-03_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0
+ spamscore=0 impostorscore=0 phishscore=0 malwarescore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611040047
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,211 +150,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Gerd/Manos,
+Hi Manuele,
 
-Any feedback on these bug fixes for virtio-snd spec compliance,
-to fix the virtio-villain test failures  ?
+On 4/11/26 12:16, Manuele Conti wrote:
+> When a write start token immediately follows the R1 response,
+> the SPI SD controller may still be in SSI_SD_RESPONSE state
+> and discard the token.
+> 
+> Recognize single-block and multi-block write start tokens
+> when the SD card is ready to receive data, allowing the
+> write operation to proceed without an additional dummy byte.
 
-On Fri, Oct 02, 2026 at 06:50:37AM +0200, Philippe Mathieu-Daudé wrote:
-> Cc'ing maintainers otherwise your patch won't be reviewed:
-> 
-> $ ./scripts/get_maintainer.pl -f hw/audio/virtio-snd.c
-> "Michael S. Tsirkin" <mst@redhat.com> (supporter:virtio, gitlab:@mstredhat)
-> Gerd Hoffmann <kraxel@redhat.com> (supporter:virtio-snd, gitlab:@kraxel)
-> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> (supporter:virtio-snd,
-> gitlab:@epilys)
-> qemu-devel@nongnu.org (open list:All patches CC here)
-> 
-> On 2/10/26 00:30, Anatol Belski wrote:
-> > The control, invalid PCM, TX and RX completion paths pass fixed response
-> > sizes to virtqueue_push() after copying into the guest's writable iovecs.
-> > iov_from_buf() truncates the copy when those iovecs are undersized, so
-> > the used length can exceed the writable descriptor capacity.
-> > 
-> > Use the byte count returned by iov_from_buf() for every completion.  For
-> > PCM_INFO, retain the actual payload byte count so the control completion
-> > also remains bounded when the requested element size is smaller than the
-> > native structure.
-> > 
-> > Signed-off-by: Anatol Belski <anbelski@linux.microsoft.com>
-> > ---
-> > Tested with the following virtio-villain reproducers:
-> > 
-> > SND0005:
-> > https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0005_info_size_short.c
-> > 
-> > SND0012:
-> > https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0012_pcm_info_size_zero.c
-> > 
-> > SND0015:
-> > https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0015_pcm_info_status_short.c
-> > 
-> > SND0065:
-> > https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0065_tx_missing_status.c
-> > 
-> > SND0066:
-> > https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0066_tx_status_short.c
-> > 
-> > Before this change all five tests fail because the used length exceeds
-> > the writable descriptor capacity. With this change all five pass.
-> > 
-> >   hw/audio/virtio-snd.c | 82 +++++++++++++++++++++----------------------
-> >   1 file changed, 40 insertions(+), 42 deletions(-)
-> > 
-> > diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-> > index 6df7ea0eb0..52e12603dd 100644
-> > --- a/hw/audio/virtio-snd.c
-> > +++ b/hw/audio/virtio-snd.c
-> > @@ -271,13 +271,12 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
-> >           memset(&pcm_info[i].padding, 0, 5);
-> >       }
-> > -    cmd->payload_size = sizeof(virtio_snd_pcm_info) * count;
-> >       cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
-> > -    iov_from_buf(cmd->elem->in_sg,
-> > -                 cmd->elem->in_num,
-> > -                 sizeof(virtio_snd_hdr),
-> > -                 pcm_info,
-> > -                 cmd->payload_size);
-> > +    cmd->payload_size = iov_from_buf(cmd->elem->in_sg,
-> > +                                     cmd->elem->in_num,
-> > +                                     sizeof(virtio_snd_hdr),
-> > +                                     pcm_info,
-> > +                                     sizeof(virtio_snd_pcm_info) * count);
-> >   }
-> >   /*
-> > @@ -774,6 +773,7 @@ static inline void
-> >   process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
-> >   {
-> >       uint32_t code;
-> > +    size_t written;
-> >       size_t msg_sz = iov_to_buf(cmd->elem->out_sg,
-> >                                  cmd->elem->out_num,
-> >                                  0,
-> > @@ -828,13 +828,12 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
-> >           cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-> >       }
-> > -    iov_from_buf(cmd->elem->in_sg,
-> > -                 cmd->elem->in_num,
-> > -                 0,
-> > -                 &cmd->resp,
-> > -                 sizeof(virtio_snd_hdr));
-> > -    virtqueue_push(cmd->vq, cmd->elem,
-> > -                   sizeof(virtio_snd_hdr) + cmd->payload_size);
-> > +    written = iov_from_buf(cmd->elem->in_sg,
-> > +                           cmd->elem->in_num,
-> > +                           0,
-> > +                           &cmd->resp,
-> > +                           sizeof(virtio_snd_hdr));
-> > +    virtqueue_push(cmd->vq, cmd->elem, written + cmd->payload_size);
-> >       g_assert(s->queue_inuse[VIRTIO_SND_VQ_CONTROL] > 0);
-> >       s->queue_inuse[VIRTIO_SND_VQ_CONTROL] -= 1;
-> >       virtio_notify(VIRTIO_DEVICE(s), cmd->vq);
-> > @@ -917,6 +916,7 @@ static inline void empty_invalid_queue(VirtIODevice *vdev, VirtQueue *vq)
-> >       VirtIOSoundPCMBuffer *buffer = NULL;
-> >       virtio_snd_pcm_status resp = { 0 };
-> >       VirtIOSound *vsnd = VIRTIO_SND(vdev);
-> > +    size_t written;
-> >       g_assert(!QSIMPLEQ_EMPTY(&vsnd->invalid));
-> > @@ -926,14 +926,12 @@ static inline void empty_invalid_queue(VirtIODevice *vdev, VirtQueue *vq)
-> >           g_assert(buffer->vq == vq);
-> >           resp.status = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-> > -        iov_from_buf(buffer->elem->in_sg,
-> > -                     buffer->elem->in_num,
-> > -                     0,
-> > -                     &resp,
-> > -                     sizeof(virtio_snd_pcm_status));
-> > -        virtqueue_push(vq,
-> > -                       buffer->elem,
-> > -                       sizeof(virtio_snd_pcm_status));
-> > +        written = iov_from_buf(buffer->elem->in_sg,
-> > +                               buffer->elem->in_num,
-> > +                               0,
-> > +                               &resp,
-> > +                               sizeof(virtio_snd_pcm_status));
-> > +        virtqueue_push(vq, buffer->elem, written);
-> >           QSIMPLEQ_REMOVE_HEAD(&vsnd->invalid, entry);
-> >           virtio_snd_pcm_buffer_free(buffer);
-> >       }
-> > @@ -1216,17 +1214,17 @@ static inline void return_tx_buffer(VirtIOSoundPCMStream *stream,
-> >                                       VirtIOSoundPCMBuffer *buffer)
-> >   {
-> >       virtio_snd_pcm_status resp = { 0 };
-> > +    size_t written;
-> > +
-> >       resp.status = cpu_to_le32(VIRTIO_SND_S_OK);
-> >       update_latency(stream, buffer->size);
-> >       resp.latency_bytes = cpu_to_le32(stream->latency_bytes);
-> > -    iov_from_buf(buffer->elem->in_sg,
-> > -                 buffer->elem->in_num,
-> > -                 0,
-> > -                 &resp,
-> > -                 sizeof(virtio_snd_pcm_status));
-> > -    virtqueue_push(buffer->vq,
-> > -                   buffer->elem,
-> > -                   sizeof(virtio_snd_pcm_status));
-> > +    written = iov_from_buf(buffer->elem->in_sg,
-> > +                           buffer->elem->in_num,
-> > +                           0,
-> > +                           &resp,
-> > +                           sizeof(virtio_snd_pcm_status));
-> > +    virtqueue_push(buffer->vq, buffer->elem, written);
-> >       g_assert(stream->s->queue_inuse[VIRTIO_SND_VQ_TX] > 0);
-> >       stream->s->queue_inuse[VIRTIO_SND_VQ_TX] -= 1;
-> >       virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
-> > @@ -1306,22 +1304,22 @@ static inline void return_rx_buffer(VirtIOSoundPCMStream *stream,
-> >                                       VirtIOSoundPCMBuffer *buffer)
-> >   {
-> >       virtio_snd_pcm_status resp = { 0 };
-> > +    size_t written;
-> > +
-> >       resp.status = cpu_to_le32(VIRTIO_SND_S_OK);
-> >       resp.latency_bytes = 0;
-> >       /* Copy data -if any- to guest */
-> > -    iov_from_buf(buffer->elem->in_sg,
-> > -                 buffer->elem->in_num,
-> > -                 0,
-> > -                 buffer->data,
-> > -                 buffer->size);
-> > -    iov_from_buf(buffer->elem->in_sg,
-> > -                 buffer->elem->in_num,
-> > -                 buffer->size,
-> > -                 &resp,
-> > -                 sizeof(virtio_snd_pcm_status));
-> > -    virtqueue_push(buffer->vq,
-> > -                   buffer->elem,
-> > -                   sizeof(virtio_snd_pcm_status) + buffer->size);
-> > +    written = iov_from_buf(buffer->elem->in_sg,
-> > +                           buffer->elem->in_num,
-> > +                           0,
-> > +                           buffer->data,
-> > +                           buffer->size);
-> > +    written += iov_from_buf(buffer->elem->in_sg,
-> > +                            buffer->elem->in_num,
-> > +                            buffer->size,
-> > +                            &resp,
-> > +                            sizeof(virtio_snd_pcm_status));
-> > +    virtqueue_push(buffer->vq, buffer->elem, written);
-> >       g_assert(stream->s->queue_inuse[VIRTIO_SND_VQ_RX] > 0);
-> >       stream->s->queue_inuse[VIRTIO_SND_VQ_RX] -= 1;
-> >       virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
-> 
-> 
+What guest is being run? Can you share the reproducer?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Unfortunately I only have access to the Simplified Spec and this
+seems to be covered by the Full one.
+
+> 
+> Signed-off-by: Manuele Conti <conti.manuele@gmail.com>
+> ---
+>   hw/sd/ssi-sd.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/hw/sd/ssi-sd.c b/hw/sd/ssi-sd.c
+> index a3a9f0c7efd..13c87c49cfb 100644
+> --- a/hw/sd/ssi-sd.c
+> +++ b/hw/sd/ssi-sd.c
+> @@ -185,6 +185,12 @@ static uint32_t ssi_sd_transfer(SSIPeripheral *dev, uint32_t val)
+>               s->mode = SSI_SD_CMD;
+>               return SSI_DUMMY;
+>           }
+> +        /* The next byte after R1 may already be the write start token. */
+> +        if (sdbus_receive_ready(&s->sdbus) &&
+> +            (val == SSI_TOKEN_SINGLE || val == SSI_TOKEN_MULTI_WRITE)) {
+> +            s->mode = SSI_SD_DATA_WRITE;
+> +            return SSI_DUMMY;
+> +        }
+>           if (sdbus_data_ready(&s->sdbus)) {
+>               DPRINTF("Data read\n");
+>               s->mode = SSI_SD_DATA_START;
 
 
