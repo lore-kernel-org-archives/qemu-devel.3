@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D26606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5726A606A328
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 17:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=cEUTEX3U
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=L9el1IU4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOeMC-0001cp-B6; Wed, 04 Nov 2026 12:01:06 -0500
+	id 1xOeLx-0001R0-TG; Wed, 04 Nov 2026 12:00:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOeL9-0001Aj-U3; Wed, 04 Nov 2026 12:00:01 -0500
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1xOeLA-0001An-EG; Wed, 04 Nov 2026 12:00:01 -0500
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOeL7-0002UX-KE; Wed, 04 Nov 2026 11:59:59 -0500
+ id 1xOeL8-0002Ut-Jx; Wed, 04 Nov 2026 12:00:00 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NkeR4Fhu0uVQicRZ2C6tQxtRot1XD+iXWvKI6XC8e7K7LFETLaMjxHIKX8Mc8jaD0BEFNlb2gT1tZHOexYurHpbOqX5Yl4pOoWHzLplzMCjVP24807G00OwiQgUK9XSUT1d4D790XMZPoaFzz2AmfAcC5UNspyqKGfOrh83rEhP1hoJzTPvxSM4tOSKf+vzI6WGm/4mlXbi6A56a920eGnnepNYofoilw82HbNwyeF19O9NXS01muQNqdYBib1Knmzg77qFRhBc1QuwhtAZZk/6pfkiBssFbucqRXE7DGEt+LdlWnNvwqJlBWe4CBHcud+HjaOE/AeQOCdH0EalH0w==
+ b=oOaLmRTAvCqum3tYz5IQ01U7Fze5jvOjE4bIBeWoZo10FUIzOZK2ecAyvL3ROaIgEUPbHo0GEekVrsxjr04PHoUU3dyCpYaTWWywioXw2dFIprEjfiP5sXeZzyArQQXojo90AyKa9SVpePjx7nbC+rLiL3R7NcH5ApJt7N9NOuCOHfDP88i0llDUnZsbtBxdnrxA0vqbCtQ4+MQ9c7zI6jIzQMXbGxypNNGjd3lYpj5FCsyd21nsAr6ONkISWAqSj66l4D/L0DCFAG1msRP0Xm7Hjl2WyoF+vABuCKYrdWJ29oKt68o/3n2cfiStkp18BbzSoHq/jKLTDoZmIgna6g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7lyTcfo/oSYlzO2K3DuQHP99bRaWHj+oP+PsUvG+yMU=;
- b=pE/01CjI4Wf+9RO2ae+kJChwL9nuYcJ+z9PbJgnFg8DpXUWLevMDFz2MEwwiM8C/JIY2VkYvgEkXAnnnu+bMS0c9Hf71ebJnhTrXw+faxTkjvIbLWutoCegsI7FtUv7YjmEtS1WfhNS3DbP28RNo8vCjzlr2OE6xWpRBNR69cBpt4zlC8i6O+4/X8y+APJh1Wta/TOhlJkNZ53haRttuaw/hnuLYtgihi25LmyBkeQSCM053BwgD5g8/qVT4voXScRP1ACK3VdL9bk2IcHGfAOzwTfCGTAJdBoJq8RSrcfTMBkFjS0ehz9z9UtVzKkFLI+M3PKhFPpIoDVK/L8hAYg==
+ bh=3ZXG9JJPchRBDcPVVXrtJUQaZF3CJ/gZfCRUoL5ygsY=;
+ b=fFTNDduiflJtJ1Ro66XDG08AgoQ+Qk6LcsoRP2cpdUnDzrLz/IDswE0uxTUuexOG+Xc+Poc+RWR0BWd50oH+U89CWxAkaiYVl7Nb7cwGHfmjbJRQ0uJpuwyx1xOPuejclUQC6FIaK46L87uzBz1VaT+hrKqJOLsmZWj4bMTHwrA4uXDEM5ZqCLOFOyafcbssSEeD6jC4f1MrVx2J4FCG5WXcw6PTD+GhiPOQ7bWDRdl5IpGtzUzB6J2+RZB6j/Z/+Uf3r97XN+atN0Uk2FEbAP6VySUNMQMcYtUsx2BLQwc0Gpw6Qx/QfznsMAp2a15rJYffXN8vgAE9Fo4bfyXkjg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,98 +32,109 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7lyTcfo/oSYlzO2K3DuQHP99bRaWHj+oP+PsUvG+yMU=;
- b=cEUTEX3UwmDPRHLg72Zi7CXFwbDJ4hQoFLQpT7FmpG4nnAYP5U+Ax9EJEILISl+pRVpYF0qu/4XACey27uis5+gGvm2R3t7YwJA6t+OlY7PTfD/QmTBtzTTpfCCmnYAu+Ju2rz+f4TvEfUKJxOIw4XDbpEKnqAmii3tzEkyKVXgg+6NUae8dSs0Qb5yUSoasGZLxr1G4S0N2dtbH325ZjHIdXxdh+18nERvPc3VmArD2MciB/nnf8w2HYkkOgXSRjTEtTNSK9PjGNyeDTQJPcdEwVjgffukw/tP72jzye2rGRLaIKJDYgyns7T6WE5qLg3gAjXTbI6aLvBIppNzDEQ==
+ bh=3ZXG9JJPchRBDcPVVXrtJUQaZF3CJ/gZfCRUoL5ygsY=;
+ b=L9el1IU4F7SodVtVoWrtjb/zfwfr4DJXQvTKvUSfhp+lnnCMQO6WAfGaI3eiGMPq7lwOPIMH3IxjAPQd3az+MJWE1OAQHj7qoRXDYfi4h8qluMS7ppnOsCTxFAiB/nnmqhAfvXLpp0HwogSmvDMrz51/WCFGxAvVGZez8Cpss6Av1arZrWuj8gd9VFejX5ad53QFDJEx03/QYpOxf9PbvGlwVlpAeGHIvAjOF3K8n0Z5gX6zn/llOQZHxrUEUPFzIK6pWF4OeVxUh96t/liqjZyXhuBrbpwqTXpShUXFVD2JvxmPJoTsQl72PxZj5OSmtRAmh3efLM+BezkQ4xsDXA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com (2603:1096:405:2c::12)
- by KL1PR02MB6976.apcprd02.prod.outlook.com (2603:1096:820:104::12)
+ by SEYPR02MB7533.apcprd02.prod.outlook.com (2603:1096:101:1d7::13)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Wed, 4 Nov 2026
- 16:59:50 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Wed, 4 Nov
+ 2026 16:59:52 +0000
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10]) by TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10%5]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
- 16:59:48 +0000
+ 16:59:52 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Jean-Christophe Dubois <jcd@tribudubois.net>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Subject: [PATCH v5 03/10] hw/arm: fsl-imx6ul: Map early firmware register
- placeholders
-Date: Thu,  5 Nov 2026 00:59:15 +0800
-Message-ID: <20261104165927.678833-4-bin.meng@processmission.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Bernhard Beschow <shentey@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org
+Subject: [PATCH v5 05/10] hw/sd: sdhci: Use a QEMU-local no-busy IRQ quirk bit
+Date: Thu,  5 Nov 2026 00:59:17 +0800
+Message-ID: <20261104165927.678833-6-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261104165927.678833-1-bin.meng@processmission.com>
 References: <20261104165927.678833-1-bin.meng@processmission.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-ClientProxiedBy: TY4PR01CA0051.jpnprd01.prod.outlook.com
  (2603:1096:405:372::19) To TYZPR02MB7121.apcprd02.prod.outlook.com
  (2603:1096:405:2c::12)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR02MB7121:EE_|KL1PR02MB6976:EE_
-X-MS-Office365-Filtering-Correlation-Id: b213a3c0-51eb-468e-d5c8-08df3a9508de
+X-MS-TrafficTypeDiagnostic: TYZPR02MB7121:EE_|SEYPR02MB7533:EE_
+X-MS-Office365-Filtering-Correlation-Id: e249fd02-19e6-428f-8331-08df3a950a90
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|23010399003|1800799024|261026121527099003|261028144727099003|261026140227099003|261009223027099003|261102123227099003|261021121427099003|261022075727099003|261021123027099003|261022105027099003|56012099006|6133799003|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: YlYWdthBQlQReRZlFx32IK7jXAeQufer5oix4Y22XjMWka/ilBGH6bVCU1iQCPAgtdo7PGu3xnaHgFvr2HPkvJGdy5Kj1XFGFi/9ut8qlhVUHY+BAvro+zV0WmYTdBZ/S/Hmk5f0Pb3eC5j8BfG9zumGlezWsJQAihFOKDEJVA5Y7AOnOqCTHgDlere7fXt/DGy0B5MY5+AuiLd/seDLkbPgUoTVT6ihVcAu1DGE0RqPi1SFs8J+8NreR1QZn8LYNrEohqPMwCayXdnA5O8VpdacHiRY8a5R22yrbwxeDYJiolGTI62JZB5nmqZBcJx3vPemlwCDwvSSZ8U5fqvmlpeRAgA7omiEBasTgVFOjkeaEoNnYg7IdSnDeIRhrdYHiiaVx53/gpEeE7DoZ5O39XUsEbBKQyZE4MAGb9kGyn21R/ubgHt1dzYMx71QZOMqt4UGrT7xzYdZc7lf3YT6FRyUBU9bXVUUxJkLuFfXshw9EVDHwV5J8TPpp5ZQsag/0pHho3oj5U9GEpls/BmWikEQxFVQ2MrBSJw2cCdANWfHJ1u6g7WX5jfRergj46KLuKMRDUgnXXEvIArJecMAcuFq7OWGnDBdFiFKQ6csHB1oGiPP+Bry70bQgC6cNfqmr2gQDG0ieXJXtC7XwFnE9LitLaq8l0Z37jYC7xCY8V4=
+ ARA:13230040|1800799024|366016|23010399003|376014|261021123027099003|56012099006|261028144727099003|261009223027099003|261021121427099003|261026140227099003|261026121527099003|261022105027099003|10067099003|18002099003|261102123227099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 61tiSN05kMrPDVE15EGgJZK8Twm7eCu+rg4W6QKmjU67KsFuc5SvdRn3bzlG298TMupQbn/p3F+jrONC7YCYRXQk2IIA9YI+M/JDlVYeC72oOv4AtG77MmJavynQsRN8ZAWdIMLu+65xc1ikZn0IrrBKcNxyMMnrcF0ofKSgLJLLUnu5v4xzdo8Q8z6gFkwF6sN0WhToSGmFplZv8QOK1zw5Q8Jyy5dp2xCdr04gcpjCmvM8yX05QtKS7JbA7Fva6Ta85wzcsKUoifwQaU4GDXUCeWSz2X5PEOBGCRZD2MM0Ech30DUCgC581AuOVTQpqPGvm59BnuS7ToMLKVvg5VlC5jQFNKWwyUASlbYaNdSMQ1FigBWfiXX6eMOp3qxoR2bKfx3orZ34Ih0e3mYEmWudDvsB2T21L2Qx7XH4KQ6UOGnHwuow+3zfT+Glt5omFKGzk+HK91Vqz0nU3F/B8nGY1zWFCsEEpC3BY3PU5uMGBFjkIeQtlVe0kTPyU0NSmE6oZnrce8LSk9NrAqcRH2QKea3DdU1P2QriZy6aIlO+967U3sgVAAp8fJatacmr2E9BaJXTI0aNJs/pPFYXeH/1AtrYwluO1hY3i6ZQQg94HEkFWiccyhA1Y7xNjDC5PpRpcZ/tEIA9T/UhF9g/KQ==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR02MB7121.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(261026121527099003)(261028144727099003)(261026140227099003)(261009223027099003)(261102123227099003)(261021121427099003)(261022075727099003)(261021123027099003)(261022105027099003)(56012099006)(6133799003)(10067099003)(18002099003)(22082099003);
+ SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(261021123027099003)(56012099006)(261028144727099003)(261009223027099003)(261021121427099003)(261026140227099003)(261026121527099003)(261022105027099003)(10067099003)(18002099003)(261102123227099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?TZqEFbyGp8+1wnGFTZxZiBrK7AIGHdho1IlMgMxY2uZj8lRBQoQGGI3TxHGc?=
- =?us-ascii?Q?wk9ELxlHgfFMwrGKbbNeN38u0skqyOXfSnfjRSxBJQ1yUsiF+ivTr3/UHOTL?=
- =?us-ascii?Q?WvyBT0fJSDl3Y4XL8AgNux7DrImW+9fb03rIqk3/EpVDNFoz7/KtaeZhZaOv?=
- =?us-ascii?Q?JbWEHjWQ2WNombLYr0Q8PjK/h0kmbiUZe/8ht8Iuf6FrEC5ikbMkhIl+hf5r?=
- =?us-ascii?Q?j+1ActiY87O6MqCqFAA1jhIMV1rff3G1yLrqlZUsBv6SB/ifyt4uWVb2iJ4K?=
- =?us-ascii?Q?Gii2ZnsWDT3l1N9zqbQdngpZ6kYCiq4fFPH0TgspHIrNKRZtC26rrQAuG26I?=
- =?us-ascii?Q?hScoYtvV8MfHJwF6VLFhPneNuPkzbMwjE/MTtOmaE7KYib5TfurLtGbuqNIe?=
- =?us-ascii?Q?g1Awjq1PzWZH8GR27KQTOTLxw6bNTo/8Fzghp/rv6aZBKRAefNlU75h0aBfC?=
- =?us-ascii?Q?SV7KEUdifrxVejM62PeBtD2KWkBkWd7infmgD0+B2ayrqm8OaUOGn6Szf7Jg?=
- =?us-ascii?Q?7M0bLIb42UfQTBr8cnU9SBVQV5sRKJ7VVxhzM61h/lpReiLb8H7TLddUjzCS?=
- =?us-ascii?Q?maO87KaALLa4lKmj1fGOziY0+fVWljTAVB8Aqr/An+7mirXBRco3sun5yl+k?=
- =?us-ascii?Q?EfsKp4xLnZVhiTr1YpW2fl51+r6Dx5mW4eT3xcNPofBLPI92Akha875Lt61N?=
- =?us-ascii?Q?fz7cgyKyuMLtDyLVPEuBpbVWVmdHdTkpdyz499pCEeh/WXt/ohDxs6liLYcg?=
- =?us-ascii?Q?e+6XCyh2amJx7DYnDA7/skEsC/bMG0nHJIftcd7idD87gTsbcEB0qwVm+Qqi?=
- =?us-ascii?Q?RRaalR0+yB1SKFfLJ0W2UsaGClph9qCImuntocBd8hc9vosWuG6MdnnVxS2Q?=
- =?us-ascii?Q?1JdDnnTxZldtUI5Z62g4Wv41DiE50N+gqSEIQ4NCzwBf3aRVxsaHY4IHY6SA?=
- =?us-ascii?Q?YR6HvVETTtS+GQ0PZVOKeciMtVJLleKJqQfWJgULVRdHuOf6VeoeksBRFGa6?=
- =?us-ascii?Q?6SeoC3tb3hF/K2aRx3pznA1XEGYq0b4JOulnV8ecrESf5NHpUsubOZTboh7N?=
- =?us-ascii?Q?0YiyySHjdxijJWI3FIzkJuk+m8JudLF1D6vz/gYYIpgNBHZ7sAm4QkTWzhvX?=
- =?us-ascii?Q?GbtMk2nuECri5WMcvn9cOL/DsTYZTVCCoROrfjszZup7jUM4wtp0mcLa+NZN?=
- =?us-ascii?Q?jNRwH/LxMTLQZM9Q1P0wv6mvfuaZxCbvxQAcabduo74EdCiygmUaOi9eZ2WD?=
- =?us-ascii?Q?kPzKcb7ho+0wdY+xo+Qtahgxire9iUqH2RKYEbDp+1QiUm1FhjBL4XCWTbdm?=
- =?us-ascii?Q?28968XI7C2okoWupenYA4nGI6k88cDwtbcqrONgp0o3aUiIOy265dFbK8/JL?=
- =?us-ascii?Q?FlwlZi6DiZhqB/J8nkvDsWx0JQERBUG9HT6xiy2/hraX+2Kw/N3BwekxFBYp?=
- =?us-ascii?Q?Q8jy8hOPiWicmo1GTzERXIokKRBgXZ6O/4zTQ5w2OoBSw0/1OmkJGINBJRrH?=
- =?us-ascii?Q?opoq7DE4UCRGlTK96HpKfsBa/sPUKIHpiUCdhMdF3z717HX+YK2pswt+P0p/?=
- =?us-ascii?Q?gpeuo5yPjUJPGRjM0+3Kc7NOVKvcHjY9Ttfg0Jlh5bfGV/CVfdvrQlvVjD8a?=
- =?us-ascii?Q?ZQkPdmXL0gvthC7GFw5YaV30nse3Qe6WJQKcssxRV6bN9q/XoFyujs4xcmhV?=
- =?us-ascii?Q?otJ0Llftyvj/cM+GDGhxMTE20y9L0rFo33Kptgmtn8JkoQcHWEG7/GjsByrA?=
- =?us-ascii?Q?SpFzAESiBvEMuJ0TiH5On69YZw0XXLU=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YWE2ODB5UkFGYXIvNVdSV3ovQ0JCRzNadWIyTHNvOGtGUFBndzZpZGM0bEdj?=
+ =?utf-8?B?RTlORFREQUhESy9NQTI3anhtdWY0MHZlWU10d1R4ME41bHJNQm1yT2RBSjRr?=
+ =?utf-8?B?UFN1T2FaaFpuUzRqd0E2a01Wd0pSMGNTc3BmSmc1MVdJQTM5VnQ3Q1pRMjJk?=
+ =?utf-8?B?eEp6UlhLcXNUM05wcy8xSVZVVlZNMlZLMTE2S1hkbmNIc212ZGVwME1VUndo?=
+ =?utf-8?B?dDV1SFJ4S1psWk16bHg5T0x1UjFHN3Y0RU12QVA2NnY5S3p5amtUZ2MyR1Yx?=
+ =?utf-8?B?WVFPcXdUQlFaaDVLelIwZERKd0tsaXdOMDVnYzIxNFo1ek0raWwrVE15OEts?=
+ =?utf-8?B?SEVNQklFWHlkckpEdldad1hnbVR0NEVYSDdBby9TTy8yUnNFVm1VakxpdFFP?=
+ =?utf-8?B?NkxDQjJMelErajBrVDhXR25odUdNQUV6SlF1Ty82SGE2K0x2OUE3VjlrS1pr?=
+ =?utf-8?B?WGhCTFFpbUVUdFkxTlFFdk1NMU9vU3lDTGt4RDMzQmRGQitkdVdsNlJOVlly?=
+ =?utf-8?B?clBrajNuYWJsU1o1N0NCcVhINmc5d3dnZVVud3lYWWNqNHV2bk9jY3Z5QzNH?=
+ =?utf-8?B?Q1ZpN1FCTURsMWpnOXBzZElNbzF3N0dPSUVPSXVXWVY2bTJOVVY2RzdScFVv?=
+ =?utf-8?B?cVFWYnoweWt5WVo2UU5EbVc1ajdxOSsyS0FXVzNzVnorclJGNGxqWHFvYVNx?=
+ =?utf-8?B?bzJ5bWp1L2V4YUp2b2FlT1ZrYlc0aDZZVEZaNVdOWWZGeHAwQ3NuUDlFckwv?=
+ =?utf-8?B?OWVHQUhrMFFycjhEOWxnY09rWmV4Mzh6L01yalBlRENpcjFkZEJwZ3JMN28x?=
+ =?utf-8?B?Mnd0NUJIamRGc09POExPRVEwTUYwWmx0Rnhvb1pIVFJPMU9hNExyUlRFWUt3?=
+ =?utf-8?B?bk40SE4zSFJDc1R5aldmQys0a1FKMldJU3ZPZVVaaHROSHNFWWpWN1FvVWpC?=
+ =?utf-8?B?dWQyRGZ0cE82bm93V05XQmdKSXYzSEh1V3kzTkgvVVBPemowc2lrVmJPdHRi?=
+ =?utf-8?B?d3VWWExmRm03cFMvNG5NRXUrSEY3QVZ5SHFzeUkwdlZ4MUpodkZ6bEdmUkVp?=
+ =?utf-8?B?V0FiYUlKdjZKMTVpeFNYNUs5a2pkSkx2QzRvZjNoRzVkSG1tQW1xL1I5bXh0?=
+ =?utf-8?B?VTFNd2hNa3pKZWdaclJ2VXZESVE4bTQ3MFd5aGVFRTBkMGZ1SE1nYXhZZ3hW?=
+ =?utf-8?B?V2ZjWm02bmsreUxSWC9WQ2w5eTZGTDAzYVptOE02MlU3bWxsQjlmaU5TYnpo?=
+ =?utf-8?B?OFhyRm9ZN2U1aVgyVlkxOXQ2ZmZwc2hJS2FWOGFoaGNWZHFhbUZvcmttTSsy?=
+ =?utf-8?B?bXFRSUlBajV6SG1RS0ZhcXIzVG96T3BDWW9CclllTHdKZExJNGxwbjJDc0hW?=
+ =?utf-8?B?WjVoTzIzVjdFa2ZRb3VRR2NmbUJ5RlpFN1g4N2E4RnlIa1U4aDRGM1kxR2Rz?=
+ =?utf-8?B?eHhOU01PVlEyN3g5aVhIWmoyQzVxRXlNNEJCZjRTR2FVZUFwZ1E0dEYyR3oy?=
+ =?utf-8?B?RjN1aHhDZitYSXBaU2RMVG83MmxONVJuQzFaSEJSWGdrMGZmaCtOblE5cEM5?=
+ =?utf-8?B?YUp5bnIvUW1OakhpN1dSekhsUkZNUGY5S2ZxVGZCVTRXTU01NTRqSTdxblZk?=
+ =?utf-8?B?bk9xbVZDalRuZEwxWFhiU1hoUFdOYWhwT0dkc1JSaXh3azFEOFlNRWUzcGY2?=
+ =?utf-8?B?eDZ2dHFDUys0Y0FNcURDME9heDBEd1JpOENhRVpwUlR6YXpFVDA0Y0dwR3dR?=
+ =?utf-8?B?TEs4Si9xYzVaYUlsVUp1dVBzM0xmYWZIenZmamhYeDdmSHh4ZDBTbE1lNzg3?=
+ =?utf-8?B?aGdJNDRndTdpZkVhS0g0Vk5QS1QyNnZyWnk5QjVmZFRMZ2ZIaVQwejZ1S3ZU?=
+ =?utf-8?B?RjlsSmV0Nmw1ejV1WGxGc0dSaFF1WGhXVzJYb1VnVXp2djVIcXhRbldkOERT?=
+ =?utf-8?B?U2FsZlZqbk1ZaWk5Q1docnNpeEcxZ3BCU0t6aFZ5ZDlxTjdiYXREMmJ3V2Zr?=
+ =?utf-8?B?dFltbVJsUkcvcjhNeE5QS2x2djA2Ym1leUo2RXhuMk5YdTR4d3p3RDNNWjFa?=
+ =?utf-8?B?YmpUaWtKQ1NuTEdpOCtZNDZMN0U3NndHNTJtR0tSK2t1bjRvNW1ZaUloMFdS?=
+ =?utf-8?B?RTJzTFowaUs1VDY3QVJtUGdLNW1RTEtrS29UTDlkTWtwNG1ma0tNaFloSXVi?=
+ =?utf-8?B?SzJOVDVIVHNKZHlYZlo0eGkvUUxqUFk3akd3blQwSTllQzhqYTdRZHQxOGpz?=
+ =?utf-8?B?OVhuYS9ULzhyZTZKVUM5U1ZvQkFiU3ZRS0xSUHF6RWg5Zjl3ZWZaaUNZWU9U?=
+ =?utf-8?B?R0pMcDBmQllkVmFZZVorUUNrUUtPRjlDbjVSVXZ0YnJyVEdoTVVPTEtTUTh5?=
+ =?utf-8?Q?ibdBLAl0YokIFwJ8=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b213a3c0-51eb-468e-d5c8-08df3a9508de
+X-MS-Exchange-CrossTenant-Network-Message-Id: e249fd02-19e6-428f-8331-08df3a950a90
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR02MB7121.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 16:59:48.4045 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 16:59:51.2728 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uw7JlYWLl06zRGgYi1IfOzjLvfqxs0lhrUrUP+oMVXbDElrEtotIwKoaZa8Te3yWpL18qegcL0GeLqbD4Prjzi+5myWjTdAtjkyCg63oaOg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6976
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+X-MS-Exchange-CrossTenant-UserPrincipalName: G4YoB/zJb5ds1p6DlZ2aW3cSG5wJmJv7eo7ItAupTFCvkZjWU9j7b8jdzx43FFzC/dJh3mqhpG/sy3bEyXrXSxbvknrJeveEoXeaDmhgB0E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR02MB7533
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,48 +154,45 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-U-Boot configures the AIPS bus access controls and the i.MX6UL SNVS
-low-power registers before its console is available. Its timer setup
-also enables the system counter through the control window on AIPS2.
+SDHCI_QUIRK_NO_BUSY_IRQ was copied from Linux with its bit number
+unchanged. The quirk mask is internal to QEMU: it is neither visible
+to guests nor part of migration state. Mirroring Linux therefore
+provides no compatibility benefit and constrains local allocations.
 
-These blocks are not modeled yet. Map unimplemented regions at their
-documented addresses so early firmware accesses complete without
-falling through to unmapped memory.
+Move it to bit zero so QEMU can allocate SDHCI quirks sequentially in
+its own namespace.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+
 ---
 
-(no changes since v1)
+(no changes since v3)
 
- hw/arm/fsl-imx6ul.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Changes in v3:
+- Align the quirk definition before adding another bit
 
-diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
-index f72121e23d..c7f7e12341 100644
---- a/hw/arm/fsl-imx6ul.c
-+++ b/hw/arm/fsl-imx6ul.c
-@@ -201,6 +201,21 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
-     create_unimplemented_device("a7mpcore-dap", FSL_IMX6UL_A7MPCORE_DAP_ADDR,
-                                 FSL_IMX6UL_A7MPCORE_DAP_SIZE);
+ include/hw/sd/sdhci.h | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index c485277744..c5297310f6 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -111,11 +111,8 @@ typedef struct SDHCIState SDHCIState;
+ /*
+  * Controller does not provide transfer-complete interrupt when not
+  * busy.
+- *
+- * NOTE: This definition is taken out of Linux kernel and so the
+- * original bit number is preserved
+  */
+-#define SDHCI_QUIRK_NO_BUSY_IRQ    BIT(14)
++#define SDHCI_QUIRK_NO_BUSY_IRQ          BIT(0)
  
-+    /* AIPS bus configuration */
-+    create_unimplemented_device("aips1-config", FSL_IMX6UL_AIPS1_CFG_ADDR,
-+                                FSL_IMX6UL_AIPS1_CFG_SIZE);
-+    create_unimplemented_device("aips2-config", FSL_IMX6UL_AIPS2_CFG_ADDR,
-+                                FSL_IMX6UL_AIPS2_CFG_SIZE);
-+
-+    /* SNVS low-power general-purpose registers */
-+    create_unimplemented_device("snvs-lp", FSL_IMX6UL_SNVS_LP_ADDR,
-+                                FSL_IMX6UL_SNVS_LP_SIZE);
-+
-+    /* System counter control */
-+    create_unimplemented_device("sys-counter-control",
-+                                FSL_IMX6UL_SYS_CNT_CTRL_ADDR,
-+                                FSL_IMX6UL_SYS_CNT_CTRL_SIZE);
-+
-     /*
-      * MMDC
-      */
+ #define TYPE_PCI_SDHCI "sdhci-pci"
+ DECLARE_INSTANCE_CHECKER(SDHCIState, PCI_SDHCI,
 -- 
 2.53.0
 
