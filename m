@@ -1,59 +1,174 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C93606A326
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 04:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457DB606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 05:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=Dzi3eFtq
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=wdc.com header.i=@wdc.com header.a=rsa-sha256 header.s=dkim.wdc.com header.b=qL57uNDc;
+	dkim=pass (1024-bit key, unprotected) header.d=sharedspace.onmicrosoft.com header.i=@sharedspace.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-sharedspace-onmicrosoft-com header.b=DbOf211v
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOSiK-0000HQ-1E; Tue, 03 Nov 2026 23:35:09 -0500
+	id 1xOTAU-0003PD-66; Wed, 04 Nov 2026 00:04:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1xOSiG-0000HB-Iq; Tue, 03 Nov 2026 23:35:05 -0500
-Received: from smtp6-g21.free.fr ([2a01:e0c:1:1599::15])
+ (Exim 4.90_1)
+ (envelope-from <prvs=761a35039=Alistair.Francis@wdc.com>)
+ id 1xOTAR-0003Oe-Ia; Wed, 04 Nov 2026 00:04:11 -0500
+Received: from esa4.hgst.iphmx.com ([216.71.154.42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1xOSiD-00081Z-Me; Tue, 03 Nov 2026 23:35:04 -0500
-Received: from [10.1.83.104] (unknown [31.38.191.99])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp6-g21.free.fr (Postfix) with ESMTPSA id 2934A780331;
- Wed,  4 Nov 2026 05:34:45 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1793766897;
- bh=JlReWFN0DKbvdfz+b/E5D5/IqVRZQ4Sz9XAljerclbA=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Dzi3eFtqrKsH94BPzvcNgw37m7dZgvRRUN0KMPUeKerm7CCxiHqqpxz2EptSJxHta
- HE9aKo1xmvinOPOvi4s/4QW21W2ZT84EgUKSpkeQfLTuFOVNDGYTyrPKKUrUfZyCUO
- 34f9nZiQM8F84dqDIRlbLeScgJuO88cmg4DOHC+6T5rYzP4qfzb01ktPVfPAn6Nyra
- beuee4CUTnzUaUyuyix6Vh1tQrfwLLFJoqcugt/5a0uZ26dXTgzHI/IxYlxixwDkCQ
- wx5MBhnIXXNtIYMfUBnJb68WHDulrp1amKARNqxDWHWe1Qf/KuJmOs7ETr5vDqffNM
- OUNHSndjwUmNg==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-To: alexander.hansen@9elements.com
-Cc: qemu-devel@nongnu.org, eblot@meta.com, titusr@google.com, clg@kaod.org,
- Patrick Leis <venture@google.com>, qemu-arm@nongnu.org, eblot.ml@gmail.com
-Subject: Re: [PATCH v8 1/5] hw/i2c: support PCA9544
-Date: Wed, 04 Nov 2026 12:34:42 +0800
-X-Mailer: MailMate (2.0r6272)
-Message-ID: <87D10FD1-D205-466A-A428-8964EE99B142@free.fr>
-In-Reply-To: <20261013124649.194808-2-alexander.hansen@9elements.com>
-References: <20261013124649.194808-1-alexander.hansen@9elements.com>
- <20261013124649.194808-2-alexander.hansen@9elements.com>
+ (Exim 4.90_1)
+ (envelope-from <prvs=761a35039=Alistair.Francis@wdc.com>)
+ id 1xOTAP-0001vz-HX; Wed, 04 Nov 2026 00:04:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1793768649; x=1825304649;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=A0/+Ou+ix9ESAF5rPnC8b5yZhlUrzE2x8miUqWIPxQM=;
+ b=qL57uNDcgb5nDkZE34oUdo1e5DXXBqZUnpTstMPwZmwyQBvC7W+cjayf
+ Kr/EAbmw4zM6j6ADiCnomHWoD+cTcrdTxpmMYv1IBiPFBdhf5V9XxhKfn
+ boElsXBAs6TBw/8pS7hIfT3sGvZDiBQ0dNwTZa7varA6SDvsfwr5hfMXQ
+ bIqWPFbp/niyRdji+lZ8R3aze5JmeRk9hGRIU0Wg52iC1o80fGoD2mLb5
+ zk+fua7cgUdQ1rmLDrleJ7aDn9LrK6EH0d4epUpqQAVpjlWU5WhdmVXZA
+ nDB1CpNu8G81aSlMeTVsC2vQ7AL87d3Lb1B5MUpE9P52BbYuoSZj+yH+o w==;
+X-CSE-ConnectionGUID: hExDzzI1St6m4k9dgqtGuA==
+X-CSE-MsgGUID: jThzT3+qQH60n+iiQ+dLDA==
+X-IronPort-AV: E=Sophos;i="6.27,194,1786982400"; d="scan'208";a="155540205"
+Received: from mail-westus3azon11010066.outbound.protection.outlook.com (HELO
+ PH7PR06CU001.outbound.protection.outlook.com) ([52.101.201.66])
+ by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 04 Nov 2026 13:04:06 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=eoJ4QP3cn6to9qlctP96bBjeHgec0QOwvUcpaT8q2CVe9d67KCYFnCWy1eVNlUzFxhFEiVNQ9r5bmWMSQNj5N7KrEXReg9rauBErIIOMu/IIitfjM7tcn11/+lgrhdTDQpBLuIBitFQVLmZdrrlNw5EPck0P7Y9Pc9mQkvfSS1QzoNm7EqiIIrLtYIIStNXwdFJGqHl9tTtOhCZqGrKFKBwbBUr7AdPLuBoU/qadq5wp+Rldf+f+scxcJ3pT+J4A0+TuLEsK0OCk83iye0NO7e3/F1cXjYlKqGR/cJ0DUwJup8Zh/0Y2PhICnCj667poAr7lcoKJ5LpPdVpB1T4yRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=A0/+Ou+ix9ESAF5rPnC8b5yZhlUrzE2x8miUqWIPxQM=;
+ b=g04bduDC9PvSJ2dKHvMY0NRrjqh1zs2A6ndYr41ed/1BTflfAxNAXDnGrzitF2y3gXOC5LWRYRHo9bVDGgXriYd8c4gsu5uKhMloEcsIgdTSQW+NIcsGhlluhfN0Og+G11CXRQVuqe7TQ+z3KL8gLPIUgcNy4sv2VJBouNMDQL49OtVHH9hf14rmUvWtXORFjj1PcwhkD+U/XPLTdB+/yQYNqya2NvGqID+OUyXWpCLmMNERfFypUL4v0J88Txbe5Kgm49yhH1VwxFJi4h3R2pkb2+xT8ynpG5RlRKNSQRnCmD2M091LP1i/WeFzPwc2iW1+wHim9zCyLcrHvADdlQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=A0/+Ou+ix9ESAF5rPnC8b5yZhlUrzE2x8miUqWIPxQM=;
+ b=DbOf211v3sOnMXiZgMN0y/3FmeKUlZHXHtIx3yjhYCt+mNTLBzVacyZtbUh8IW6pOpF0iWUlgUcsAqRlut6liNYyRPHS58+Vs5F7py6UjHdvWiIhAtqzRihtp5CyMCuFZ1Q7V+xX7ehhS5akIHet1TiXb7JKHNxZNOPp2bPKECI=
+Received: from MN6PR04MB9359.namprd04.prod.outlook.com (2603:10b6:208:4f2::13)
+ by BN0PR04MB7952.namprd04.prod.outlook.com (2603:10b6:408:157::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Wed, 4 Nov 2026
+ 05:04:04 +0000
+Received: from MN6PR04MB9359.namprd04.prod.outlook.com
+ ([fe80::e729:bbef:5a37:2e77]) by MN6PR04MB9359.namprd04.prod.outlook.com
+ ([fe80::e729:bbef:5a37:2e77%4]) with mapi id 15.21.0592.007; Wed, 4 Nov 2026
+ 05:04:04 +0000
+From: Alistair Francis <Alistair.Francis@wdc.com>
+To: "tanchi25@mails.ucas.ac.cn" <tanchi25@mails.ucas.ac.cn>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "chao.liu@processmission.com" <chao.liu@processmission.com>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "daniel.barboza@oss.qualcomm.com"
+ <daniel.barboza@oss.qualcomm.com>, "palmer@dabbelt.com" <palmer@dabbelt.com>, 
+ "liwei1518@gmail.com" <liwei1518@gmail.com>, "zhiwei_liu@linux.alibaba.com"
+ <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH 1/5] hw/riscv: Build AIA glue only with APLIC and IMSIC
+Thread-Topic: [PATCH 1/5] hw/riscv: Build AIA glue only with APLIC and IMSIC
+Thread-Index: AQHdaa9ZvckJTQHYukadmp5QDe6fQLcdYHOA
+Date: Wed, 4 Nov 2026 05:04:04 +0000
+Message-ID: <a369e7930c076d16e5ace32e5bd6fce85db9080b.camel@wdc.com>
+References: <20261101031547.125591-1-tanchi25@mails.ucas.ac.cn>
+ <20261101031547.125591-2-tanchi25@mails.ucas.ac.cn>
+In-Reply-To: <20261101031547.125591-2-tanchi25@mails.ucas.ac.cn>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.62.1 (by Flathub.org) 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: MN6PR04MB9359:EE_|BN0PR04MB7952:EE_
+x-ms-office365-filtering-correlation-id: dc4566eb-a3fc-48cc-dfab-08df3a310c77
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|19092799006|10070799003|1800799024|23010399003|376014|10067099003|22082099003|18002099003|38070700021|56012099006|4143699003|11063799006|261022105027099003|261026121527099003|261028144727099003|261021123027099003|261026140227099003|261021121427099003|261102123227099003;
+x-microsoft-antispam-message-info: g06P6hHixJMppHYcDTS9EgM9iu7klTo7Ej93PNi7iuvjHYc6aPYZ9GTiI/j9gOFAo8kPbI68wBBWS0OAWR7NlxzmI8TmDXc5828QsEPfWp2AIEJLVLlK8PhlAjJmliG1YE+lqg9cAYlb8x7BzWHtxIYm9QVMvNMo+9pgi4YL1OabMh2siw6u3tkTN/CGdp/F8aHNMsAopNMfWN/hnObeKPq+UfEFApNasempn8fiHRE+fD3aTi92DuyIdp9g976fO0hBO6JlfAYrTYOdh+8nGZTNFCudgIVY+mcOpC9elUwg01aC/S6tXfnCy26pOMMynJ259RTzahK4OZL7OE9YNPLHoSpOv0sjz2RBc60oQmbHGp+erhGKDSZlsoVfX019+QfExu67Zzio++KV8P4KJBAmImhtu2q4g5WRMdC2y/kde8iquSulr+uSSWswligOu+t06HyNjXrjEcNoTqTYgUGFRs/yMxl3bjEtoW3bkiI4K7UysKDF3bTLRwnmkvkIC+9PbsdVA0Hjc9BPSaSu5M13gDHR+lYLL98TO5XUfrVkHEBEMjLDU1aVaX2SwyEx897Phel8bSM4iii3Jw/n407vA9krp2RQxEQm/TeTXPmUS5WRUu5OXA6AQUkIqRnJekECLlf8DvRY+/qF20dxkb6UTMMzHZRBjeJu6kcnYQo33OtmkGtoMWAEJlRM4hbGCStOHNqHooTg+TZ8LBEu9Qrps51oHq5HeZWekda3AN8=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MN6PR04MB9359.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(19092799006)(10070799003)(1800799024)(23010399003)(376014)(10067099003)(22082099003)(18002099003)(38070700021)(56012099006)(4143699003)(11063799006)(261022105027099003)(261026121527099003)(261028144727099003)(261021123027099003)(261026140227099003)(261021121427099003)(261102123227099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?T0FRaXNEbWZ3WVV3cnIxZkZzUzF4NUZ3Q25ZQ09NT1BHb1dyK3BDVmF2VjlG?=
+ =?utf-8?B?ZVNwZ1NEZW1PU1hnc3FZUy9sN1pwSy9qWXdWdjBTSVR5QTFFdmlLU1pBY0Np?=
+ =?utf-8?B?WitmcllMeFpTSmxDT1plVGJ4dUU2Z1pMSEt3NFpXelQ2Nnc4WTQ3ekpjNytG?=
+ =?utf-8?B?WkkzME81RjlVUzRaY3lNQVRHVTZzSkxYYkh2eDd4THBOUXRUTjhYZHg2MkQ3?=
+ =?utf-8?B?eWUzYXVGNVBmYndjQUpQTzhyVEQyZUVOVm1VMEhUN0hYeExsRlhEVDgvQVdR?=
+ =?utf-8?B?VGVDYnRKcFFrMlNaejlvN2FZTjVHYTVWeWdpcWFiMVdEVHJpcUFETTlwQkVJ?=
+ =?utf-8?B?eFVTcUd5d0NKcS9PWFpyVk5yYmRWdXJQZjFLbGI4bXBOMWtMMmZEMFpyWEJ6?=
+ =?utf-8?B?VEt3eE15TDVQVXdjTml1SHM1M2pBNmFKTWU2eFFDbnJpMEp5bXAvYWN6N1I3?=
+ =?utf-8?B?THRsMkNMTmtXdndDK3hjMnFqZHg1WE5YdmFJQitZeElnNlhSUWVQcVIrYnEv?=
+ =?utf-8?B?c0JCM2s4Z1A1NFlMNmxyc1RkR0RFZWx1ZElGK1cwcjcxTXNEcTZFc1BDRGNY?=
+ =?utf-8?B?S0ZTS2N0dnFGZFJ6dlM3YmlOYkU4VkVHZzBSTU92cEkwVTNzbVNSbFVxdzN2?=
+ =?utf-8?B?ZnlZdlZDRjRWS3BzZFA4bnFGNTN2bm14WXVLbkJsN2pKM29ZZk5obGFJNTNu?=
+ =?utf-8?B?QWppTW16M1lUT0xtYmJ3SENDenU3SUN6YzZmZnBGTC91UlJoT3RyZ3RrREo4?=
+ =?utf-8?B?Z3R5dlExZkdWY2ltWVFXTDJVM3orWUNuUmRES250ZTNJc3o1NGZSczRrTUVa?=
+ =?utf-8?B?WTQ5c25yNGpEdkpoS3dRK0xPVmNrSldkTHFJcWtBL0ZxSElOZ1BBMkhHOUVI?=
+ =?utf-8?B?TnREMStaUk1HVHVpZEczUTRkOFQrcGFCeldnSjhtRHVxbFlFNHg0OHdCa1cw?=
+ =?utf-8?B?K3dUY1JycWUvNTNhTHFRK3lDc2V0VHB4dm1oL3I5YXZqdFJqbmJxN1czZzVx?=
+ =?utf-8?B?ODIxSm91Yi9iUDArS2hQWHl3aXVTQjVRenUzbjhHZ0tQcHFhN1dlRzNOdFNx?=
+ =?utf-8?B?b0g2cUV0UFBmbmRQTnEyZW84UVJPLzRQWjJPK3RIME5wUFB5ZHJpQU1CckJ0?=
+ =?utf-8?B?ZG92bm9KUlY4MkZQdXptV2JGRm5zUDlKcTIrbm5NdENDQ0l0TGtCdVliSkk0?=
+ =?utf-8?B?WlUrQVlXeWpNNWlJL2gwZXY2dXpSbWZBWHZsMGVRSHZIWVJVZFZxVVp3Uitr?=
+ =?utf-8?B?NEgwMWhrMkNDaWlUMUlvT3lvaXFzUCtkYXdJRlBJUWUydU5xZldtNERxUnZz?=
+ =?utf-8?B?UEdLeWRNYjhqZitHamRpYzJSMDQvQXJXYnhjZHFCcnJsbnZlUUZGY0FuMjZU?=
+ =?utf-8?B?ZXFHOURkTTB0QzRzOWs0U3BqaDFoYXhBRGZYVXBwZUg5NTlIdE9LMWlpK2Z5?=
+ =?utf-8?B?QVZjamIxL0doVGdIKzJKTDNRWE9OT1lFT3AvSEI3bDhwWmJ2bzEwak5kR3BL?=
+ =?utf-8?B?cW9TWmo5ci94Q1kwOTZoQWJiOGJXWE00NmhxSTV3eTA1T1YyMXNRd1V6ekxs?=
+ =?utf-8?B?Wk5EN1JJRksxRGJGNGZMaHVWalR3QVhuK053SlFidW0xdzdsOXd0eFhidWdi?=
+ =?utf-8?B?UFg1c3g2TlBFOXBQcDhVa1BjMUlUYTN1STY0K0o0bDROa0tGQ3h3WVZFZlVQ?=
+ =?utf-8?B?MTBSaEg1YjBNSm82ZFlrTCtmTUV1bTRpeTNCMmFERnNzbzR1VEhHSFRERG9y?=
+ =?utf-8?B?Qk1ORXE2a2hxZjhFY0hwUHp1d2ZaZFVRaHQ2bWdvVWttVWQ5RFNubXV2c3Uw?=
+ =?utf-8?B?OVBtYTlnamNpekVTU1dzYnVDM2FqaTBwOGMrMGgzZDYyRlIxTVBNNERYVm04?=
+ =?utf-8?B?R0hjTG1wLzZFajlJdzJOTU5oMXZ3NEJFUmZJejI5bnBaRnBtWXBhQ1ZPQVdQ?=
+ =?utf-8?B?UnBoZHRjMEJ3UW1kQk1XYzMzS3AyUHlYMVo0M3NNMlZ5TkpxVm1vajgraC9y?=
+ =?utf-8?B?MExLSlZoVUdaY1FoWTlQbHZwSHJaUjNYdlBFMENBWWVnNlJrK3kyUXVWRlhM?=
+ =?utf-8?B?ZXVlbURlc3MrNEc1ZHQyRnZ3NlhOaEN5OS92R3dKMzBQYTRkR0NMRkgzdUJ0?=
+ =?utf-8?B?dHlUZlU4cjhBKzl6aWQ1c3ZwalNQTlZmREsvUkxOK3UwQzlQQ2RENUdhd1Fo?=
+ =?utf-8?B?aCtLZjBObWRZMDVqTTNEUzAvWmxaT0lDVDA2eDU3WEhJYXI4TEQ3Q3pGY1dp?=
+ =?utf-8?B?ZHhqbXVTUUtlamJyZ1c4Qjl3aUNqSTlGcmtGMW5jTGgzRG9LcnBlWUxlL01O?=
+ =?utf-8?B?MVd6Q29HcHdCb005TFNaSWc2NStnQnNWTTVQZXo1Ukw0RzMwRkdpcXpEQjFB?=
+ =?utf-8?Q?7JZEMinHkBuV0Z2dsQZJEU7EJ9m2SBz2exCiaYwmF5aRl?=
+x-ms-exchange-antispam-messagedata-1: nHoGqJrpZ3KvHxefWt8poJ/2RYaUu+opRac=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <0F4D3FFE678E374281FFB39D64318F67@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a01:e0c:1:1599::15;
- envelope-from=emmanuel.blot@free.fr; helo=smtp6-g21.free.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Exchange-RoutingPolicyChecked: kds0j5rIWfZUzy5M/LaotKyyiRoClJdKty8K4LInZ1u81KISegf2+xfkNpbsCUJ19bJEZ4Cqgr8azzHbVz5t92iJOE24xuxX95rxWfvMmcOPRY0TMF6O/Fwkq39wd/Zjoo0Gw01esYklMdudkU2DRpsrv547OA00RKbikg5s3fDHT872MFKbmYdXvIrVWU1sNNoYO+SBjiMGX+9qxJK5f+Wk6a+jTiiX1NakK6XDCABv3KDJYUoo1TMXjvo6qCxz+u30X7z4xVd+OJnBSmY6DuVusFy4tVgP2ChYjKoVNpr5myR3fvHWgShOAJIqmzJdQBnGu04g6qJSlvQT571oTw==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 600yN88yHRxSMLSyO388C2SSMozAR/jJkfo0n+B/ZfYUHw/WoTPktu+ZQLh63F0ifzQHnbTby8ja3lLT/yGJD8eZ1Q5XFU4uvD3T+6epg3HnPnVoQkiArtYiueXwjyOnFtBcTemk80cPPAGn1gw5W8ElFoM5jWtQiy9LJAF2PHm+O6qN/UEqdZzkIXH4P43zp6QqdwlwWdOlgP0iUMQ8tg2CaG5PCkP7LP/kpqZVwl4aIpw/ZUmVDzU4dV0jnWZbEHG58JX8lI9zGGSEmv4svL6CYw4FiUraY3CFnxyk0IE1iXx83gmuw8snMcCwcB/O7X/xj+EL6QIzMNJwhamy85QbIdPDPzoE5BebOrHyh7kMeIiJYfNirOBjxDgBQ82/R23Um7B7hGq+VkFuwU3moxRISdV0gLwNxjpyNk+KD3xLCgP9qU9N55chfQ5qCtp89ItvjcMKJByu5lDzBNhdWW9lk4OQ1uLPhWCBLXhb1rX//Z3GjQHAb2dRU6k85dTnJmoLT5t8rPelHEz5HmG6jse8oAwdNVhzRE3EEJF35JU2v8ZGQSpk0Oy7a3AoDm4qV7YpDRBoymzVEYv6sTANBw+Lr/0xpcHO7QETr/LpJXYMYu02RUVik/NhUyWy6sC4
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MN6PR04MB9359.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: dc4566eb-a3fc-48cc-dfab-08df3a310c77
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Nov 2026 05:04:04.6338 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: stKws66mHcTIGLaaqxopZR3Y7geE2ZCe9oa9WGJ8F6t4F/SJg+2G5Rjs6S+uzWE40yWHdBkez4SswMlsM3j9ZkZCUntaMawmE27nrMl09q8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR04MB7952
+Received-SPF: pass client-ip=216.71.154.42;
+ envelope-from=prvs=761a35039=Alistair.Francis@wdc.com;
+ helo=esa4.hgst.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,327 +181,59 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
-
-On 13 Oct 2026, at 20:46, alexander.hansen@9elements.com wrote:
-
-> From: Alexander Hansen <alexander.hansen@9elements.com>
->
-> Who to explain it better than the manufacturer:
->
-> ```
-> The PCA9544A is a 1-of-4 bidirectional translating multiplexer,
-> controlled via the I2C-bus. The SCL/SDA upstream pair fans out to four
-> SCx/SDx downstream pairs, or channels. Only one SCx/SDx channel is
-> selected at a time, determined by the contents of the programmable
-> control register.
-> ```
-
-Might be worth to add a note on how this device differs from the previous=
-ly supported ones, to spot the channel selection behavior?
-
-> The device updates the selected channel after STOP condition, not on
-> the last byte written [1].
-
-See below: I think this is the case for all supported devices, and that e=
-xisting emulation is not fully valid on this point.
-
-> For this reason the parent event handler has to be hooked to prevent
-> write-read sequence from updating channel selection before STOP
-> condition.
->
-> Reset also had to be modified since a write would not apply the channel=
-
-> selection by itself.
->
-> This emulation is done to support yosemite4 machine emulation.
-
-Maybe part of the cover letter rather than this specific commit?
-
->
-> Interrupt forwarding is currently UNSUPPORTED.
->
-> References:
-> [1] https://www.nxp.com/docs/en/data-sheet/PCA9544A.pdf
->
-> Cc: Patrick Leis <venture@google.com> (maintainer:pca954x)
-> Cc: Emmanuel Blot <eblot@meta.com>
-> Cc: Titus Rwantare <titusr@google.com>
-> Cc: "C=C3=A9dric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-> Cc: qemu-arm@nongnu.org (open list:ASPEED BMCs)
-> Cc: qemu-devel@nongnu.org (open list:All patches CC here)
->
-> Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
-> ---
->  hw/i2c/i2c_mux_pca954x.c         | 88 ++++++++++++++++++++++++++++----=
-
->  include/hw/i2c/i2c_mux_pca954x.h |  1 +
->  2 files changed, 78 insertions(+), 11 deletions(-)
->
-> diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
-> index c603446028..19212dfa34 100644
-> --- a/hw/i2c/i2c_mux_pca954x.c
-> +++ b/hw/i2c/i2c_mux_pca954x.c
-> @@ -30,6 +30,10 @@
->  #define PCA9548_CHANNEL_COUNT 8
->  #define PCA9546_CHANNEL_COUNT 4
-> +#define PCA9544_CHANNEL_COUNT 4
-> +
-> +/* enable bit */
-> +#define PCA9544_ENABLE 0x4
-
-It seems PCA9544_ENABLE is used both as a flag and to compute the channel=
- mask.
-It might be easier to read using a boolean for the flag, and (PCA9544_CHA=
-NNEL_COUNT - 1) or (mc->nchans - 1) for the mask?
-
->  /*
->   * struct Pca954xState - The pca954x state object.
-> @@ -56,6 +60,11 @@ typedef struct Pca954xClass {
->      SMBusDeviceClass parent;
->
->      uint8_t nchans;
-> +
-> +    /* channel enable bit for mux devices, zero for switches */
-> +    uint8_t mux_enable;
-
-Exiting document style (@mux_enable =E2=80=A6) in struct Pca954xClass com=
-ment block should be preferred.
-
-> +
-> +    int (*parent_event)(I2CSlave *s, enum i2c_event event);
->  } Pca954xClass;
->
->  #define TYPE_PCA954X "pca954x"
-> @@ -99,28 +108,43 @@ static bool pca954x_match(I2CSlave *candidate, uin=
-t8_t address,
->      return broadcast;
->  }
->
-> -static void pca954x_enable_channel(Pca954xState *s, uint8_t enable_mas=
-k)
-> +static void pca954x_enable_channel(Pca954xState *s, uint8_t control)
->  {
->      Pca954xClass *mc =3D PCA954X_GET_CLASS(s);
->      int i;
->
-> +    if (mc->mux_enable) {
-> +        uint8_t selected =3D control & (mc->mux_enable - 1);
-> +        bool enabled =3D control & mc->mux_enable;
-> +
-> +        for (i =3D 0; i < mc->nchans; i++) {
-> +            s->enabled[i] =3D enabled && i =3D=3D selected;
-> +        }
-> +        return;
-> +    }
-> +
->      /*
-> -     * For each channel, check if their bit is set in enable_mask and =
-if yes,
-> +     * For each channel, check if their bit is set in control and if y=
-es,
->       * enable it, otherwise disable, hide it.
->       */
->      for (i =3D 0; i < mc->nchans; i++) {
-> -        if (enable_mask & (1 << i)) {
-> -            s->enabled[i] =3D true;
-> -        } else {
-> -            s->enabled[i] =3D false;
-> -        }
-> +        s->enabled[i] =3D control & (1 << i);
->      }
->  }
->
->  static void pca954x_write(Pca954xState *s, uint8_t data)
->  {
-> -    s->control =3D data;
-> -    pca954x_enable_channel(s, data);
-> +    Pca954xClass *mc =3D PCA954X_GET_CLASS(s);
-> +    uint8_t data_writable =3D data;
-> +
-> +    if (mc->mux_enable) {
-> +        data_writable =3D data & 0x0f;
-
-Maybe use a named constant here
-
-> +    }
-> +
-> +    s->control =3D data_writable;
-> +    if (!mc->mux_enable) {
-> +        pca954x_enable_channel(s, data_writable);
-> +    }
-
-Maybe simplify this whole function:
-  - channel enablement occurs on STOP condition for all devices, not only=
- PCA9544; channel enablement should be deferred to this event.
-  - I think pca954x_enable_channel always ignore non-channel bits, whatev=
-er the device
-
-Could be as simple as:
-s->control =3D mc->mux_enable ? data & 0x0f : data;
-
->
->      trace_pca954x_write_bytes(data);
->  }
-> @@ -128,6 +152,7 @@ static void pca954x_write(Pca954xState *s, uint8_t =
-data)
->  static int pca954x_write_data(SMBusDevice *d, uint8_t *buf, uint8_t le=
-n)
->  {
->      Pca954xState *s =3D PCA954X(d);
-> +    Pca954xClass *mc =3D PCA954X_GET_CLASS(s);
->
->      if (len =3D=3D 0) {
->          qemu_log_mask(LOG_GUEST_ERROR, "%s: writing empty data\n", __f=
-unc__);
-> @@ -136,15 +161,17 @@ static int pca954x_write_data(SMBusDevice *d, uin=
-t8_t *buf, uint8_t len)
->
->      /*
->       * len should be 1, because they write one byte to enable/disable =
-channels.
-> +     * In case of PCA9544A, multiple bytes can be written but only the=
- last one
-> +     * will be used.
->       */
-
-I think for all devices, last byte is always considered, there is no spec=
-ial case for PCA9544.
-The error log call / return error could then be removed.
-
-> -    if (len > 1) {
-> +    if (len > 1 && !mc->mux_enable) {
->          qemu_log_mask(LOG_GUEST_ERROR,
->              "%s: extra data after channel selection mask\n",
->              __func__);
->          return -1;
->      }
->
-> -    pca954x_write(s, buf[0]);
-> +    pca954x_write(s, buf[len - 1]);
->      return 0;
->  }
->
-> @@ -156,11 +183,33 @@ static uint8_t pca954x_read_byte(SMBusDevice *d)
->      return data;
->  }
->
-> +static int pca954x_event(I2CSlave *s, enum i2c_event event)
-> +{
-> +    Pca954xState *state =3D PCA954X(s);
-> +    Pca954xClass *mc =3D PCA954X_GET_CLASS(state);
-> +
-> +    int res =3D mc->parent_event(s, event);
-> +
-> +    /*
-> +     * When a channel is selected, it will become active after
-> +     * a STOP condition has been placed on the I2C-bus.
-> +     */
-> +    if (mc->mux_enable && event =3D=3D I2C_FINISH) {
-> +        pca954x_enable_channel(state, state->control);
-> +    }
-> +    return res;
-> +}
-> +
->  static void pca954x_enter_reset(Object *obj, ResetType type)
->  {
->      Pca954xState *s =3D PCA954X(obj);
-> +    Pca954xClass *mc =3D PCA954X_GET_CLASS(s);
->      /* Reset will disable all channels. */
->      pca954x_write(s, 0);
-
-I would favor a call to pca954x_enable_channel rather than pca954x_write =
-here whatever the device kind, it would be cleaner as pca954x_write does =
-masking then call pca954x_enable_channel and it=E2=80=99s not a write cal=
-l per se.
-
-> +
-> +    if (mc->mux_enable) {
-> +        pca954x_enable_channel(s, s->control);
-> +    }
->  }
->
->  I2CBus *pca954x_i2c_get_bus(I2CSlave *mux, uint8_t channel)
-> @@ -172,6 +221,13 @@ I2CBus *pca954x_i2c_get_bus(I2CSlave *mux, uint8_t=
- channel)
->      return pca954x->bus[channel];
->  }
->
-> +static void pca9544_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    Pca954xClass *s =3D PCA954X_CLASS(klass);
-
-Prefer c or k, as s is usually used with *State structures.
-
-> +    s->nchans =3D PCA9544_CHANNEL_COUNT;
-> +    s->mux_enable =3D PCA9544_ENABLE;
-> +}
-> +
->  static void pca9546_class_init(ObjectClass *klass, const void *data)
->  {
->      Pca954xClass *s =3D PCA954X_CLASS(klass);
-> @@ -221,8 +277,13 @@ static void pca954x_class_init(ObjectClass *klass,=
- const void *data)
->      ResettableClass *rc =3D RESETTABLE_CLASS(klass);
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->      SMBusDeviceClass *k =3D SMBUS_DEVICE_CLASS(klass);
-> +    Pca954xClass *s =3D PCA954X_CLASS(klass);
-> +
-> +    /* hook our parent event handler */
-> +    s->parent_event =3D sc->event;
->
->      sc->match_and_add =3D pca954x_match;
-> +    sc->event =3D pca954x_event;
->
->      rc->phases.enter =3D pca954x_enter_reset;
->
-> @@ -245,6 +306,11 @@ static const TypeInfo pca954x_info[] =3D {
->          .class_init    =3D pca954x_class_init,
->          .abstract      =3D true,
->      },
-> +    {
-> +        .name          =3D TYPE_PCA9544,
-> +        .parent        =3D TYPE_PCA954X,
-> +        .class_init    =3D pca9544_class_init,
-> +    },
->      {
->          .name          =3D TYPE_PCA9546,
->          .parent        =3D TYPE_PCA954X,
-> diff --git a/include/hw/i2c/i2c_mux_pca954x.h b/include/hw/i2c/i2c_mux_=
-pca954x.h
-> index 3dd25ec983..6449a6dfae 100644
-> --- a/include/hw/i2c/i2c_mux_pca954x.h
-> +++ b/include/hw/i2c/i2c_mux_pca954x.h
-> @@ -3,6 +3,7 @@
->
->  #include "hw/i2c/i2c.h"
->
-> +#define TYPE_PCA9544 "pca9544"
->  #define TYPE_PCA9546 "pca9546"
->  #define TYPE_PCA9548 "pca9548"
->
-> -- =
-
-> 2.56.0
-
-Note: it might be worth splitting this commit into:
-1. existing PCA954x fixes:
-  - update channel enablement on STOP bit
-  - last-byte-wins
-  - enable_channel loop simplification
-  - reset calls =E2=80=A6enable_channel rather than =E2=80=A6write
-  - header inclusion removal (sys bus.h at least)
-  - =E2=80=A6
-2. adding support for PCA9544
-
-Emmanuel.
-
+T24gU3VuLCAyMDI2LTExLTAxIGF0IDExOjE1ICswODAwLCBUYW4gQ2hpIHdyb3RlOg0KPiBody9y
+aXNjdi9haWEuYyBpcyBidWlsdCB1bmNvbmRpdGlvbmFsbHksIGJ1dCByaXNjdl9jcmVhdGVfYWlh
+KCkNCj4gcmVmZXJlbmNlcyB0aGUgQVBMSUMgYW5kIElNU0lDIGRldmljZSBpbXBsZW1lbnRhdGlv
+bnMsIHdoaWNoIGFyZQ0KPiBvbmx5IGJ1aWx0IHdoZW4gdGhlaXIgcmVzcGVjdGl2ZSBLY29uZmln
+IG9wdGlvbnMgYXJlIGVuYWJsZWQuDQo+IA0KPiBUaGlzIGNhdXNlcyB1bmRlZmluZWQgcmVmZXJl
+bmNlcyB0byByaXNjdl9hcGxpY19jcmVhdGUoKSBpbg0KPiBtaW5pbWFsIFJJU0MtViBidWlsZHMg
+dGhhdCBkbyBub3QgaW5jbHVkZSBBUExJQy4NCj4gDQo+IEJ1aWxkIGFpYS5jIG9ubHkgd2hlbiBi
+b3RoIENPTkZJR19SSVNDVl9BUExJQyBhbmQNCj4gQ09ORklHX1JJU0NWX0lNU0lDIGFyZSBlbmFi
+bGVkLiBNb3ZlIGltc2ljX251bV9iaXRzKCkgdG8gYWlhLmgNCj4gYXMgYSBzdGF0aWMgaW5saW5l
+IGhlbHBlciwgc2luY2UgaXQgaXMgYWxzbyB1c2VkIGJ5IEZEVCBhbmQNCj4gQUNQSSBjb2RlIGlu
+ZGVwZW5kZW50bHkgb2YgdGhlIEFJQSBkZXZpY2UgY3JlYXRpb24gaGVscGVyLg0KPiANCj4gU2ln
+bmVkLW9mZi1ieTogVGFuIENoaSA8dGFuY2hpMjVAbWFpbHMudWNhcy5hYy5jbj4NCg0KUmV2aWV3
+ZWQtYnk6IEFsaXN0YWlyIEZyYW5jaXMgPGFsaXN0YWlyLmZyYW5jaXNAd2RjLmNvbT4NCg0KQWxp
+c3RhaXINCg0KPiAtLS0NCj4gwqBody9yaXNjdi9haWEuY8KgwqDCoMKgwqDCoCB8IDExIC0tLS0t
+LS0tLS0tDQo+IMKgaHcvcmlzY3YvYWlhLmjCoMKgwqDCoMKgwqAgfCAxMiArKysrKysrKysrKy0N
+Cj4gwqBody9yaXNjdi9tZXNvbi5idWlsZCB8wqAgMyArKy0NCj4gwqAzIGZpbGVzIGNoYW5nZWQs
+IDEzIGluc2VydGlvbnMoKyksIDEzIGRlbGV0aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2h3
+L3Jpc2N2L2FpYS5jIGIvaHcvcmlzY3YvYWlhLmMNCj4gaW5kZXggNTZmYzA2NDUzMy4uNDQ2M2Vh
+MmJlOCAxMDA2NDQNCj4gLS0tIGEvaHcvcmlzY3YvYWlhLmMNCj4gKysrIGIvaHcvcmlzY3YvYWlh
+LmMNCj4gQEAgLTEzLDE3ICsxMyw2IEBADQo+IMKgDQo+IMKgI2luY2x1ZGUgImFpYS5oIg0KPiDC
+oA0KPiAtdWludDMyX3QgaW1zaWNfbnVtX2JpdHModWludDMyX3QgY291bnQpDQo+IC17DQo+IC3C
+oMKgwqAgdWludDMyX3QgcmV0ID0gMDsNCj4gLQ0KPiAtwqDCoMKgIHdoaWxlIChCSVQocmV0KSA8
+IGNvdW50KSB7DQo+IC3CoMKgwqDCoMKgwqDCoCByZXQrKzsNCj4gLcKgwqDCoCB9DQo+IC0NCj4g
+LcKgwqDCoCByZXR1cm4gcmV0Ow0KPiAtfQ0KPiAtDQo+IMKgRGV2aWNlU3RhdGUgKnJpc2N2X2Ny
+ZWF0ZV9haWEoTWVtb3J5UmVnaW9uICpjb250YWluZXIsDQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYm9vbCBtc2ltb2RlLCBpbnQg
+YWlhX2d1ZXN0cywNCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCB1aW50MzJfdCBtX2ltc2ljX3N0cmlkZSwNCj4gZGlmZiAtLWdpdCBh
+L2h3L3Jpc2N2L2FpYS5oIGIvaHcvcmlzY3YvYWlhLmgNCj4gaW5kZXggNWRmMzI5MjYxMC4uZTRk
+Y2M1YWFlMCAxMDA2NDQNCj4gLS0tIGEvaHcvcmlzY3YvYWlhLmgNCj4gKysrIGIvaHcvcmlzY3Yv
+YWlhLmgNCj4gQEAgLTEwLDggKzEwLDE4IEBADQo+IMKgI2RlZmluZSBIV19SSVNDVl9BSUFfSA0K
+PiDCoA0KPiDCoCNpbmNsdWRlICJleGVjL2h3YWRkci5oIg0KPiArI2luY2x1ZGUgInFlbXUvYml0
+b3BzLmgiDQo+IMKgDQo+IC11aW50MzJfdCBpbXNpY19udW1fYml0cyh1aW50MzJfdCBjb3VudCk7
+DQo+ICtzdGF0aWMgaW5saW5lIHVpbnQzMl90IGltc2ljX251bV9iaXRzKHVpbnQzMl90IGNvdW50
+KQ0KPiArew0KPiArwqDCoMKgIHVpbnQzMl90IHJldCA9IDA7DQo+ICsNCj4gK8KgwqDCoCB3aGls
+ZSAoQklUKHJldCkgPCBjb3VudCkgew0KPiArwqDCoMKgwqDCoMKgwqAgcmV0Kys7DQo+ICvCoMKg
+wqAgfQ0KPiArDQo+ICvCoMKgwqAgcmV0dXJuIHJldDsNCj4gK30NCj4gwqANCj4gwqBEZXZpY2VT
+dGF0ZSAqcmlzY3ZfY3JlYXRlX2FpYShNZW1vcnlSZWdpb24gKmNvbnRhaW5lciwNCj4gwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBib29s
+IG1zaW1vZGUsIGludCBhaWFfZ3Vlc3RzLA0KPiBkaWZmIC0tZ2l0IGEvaHcvcmlzY3YvbWVzb24u
+YnVpbGQgYi9ody9yaXNjdi9tZXNvbi5idWlsZA0KPiBpbmRleCA2YmRhYmI5NTQ0Li45NTcwMzFj
+MDdkIDEwMDY0NA0KPiAtLS0gYS9ody9yaXNjdi9tZXNvbi5idWlsZA0KPiArKysgYi9ody9yaXNj
+di9tZXNvbi5idWlsZA0KPiBAQCAtMSw1ICsxLDYgQEANCj4gwqByaXNjdl9zcyA9IHNzLnNvdXJj
+ZV9zZXQoKQ0KPiAtcmlzY3Zfc3MuYWRkKGZpbGVzKCdhaWEuYycpKQ0KPiArcmlzY3Zfc3MuYWRk
+KHdoZW46IFsnQ09ORklHX1JJU0NWX0FQTElDJywgJ0NPTkZJR19SSVNDVl9JTVNJQyddLA0KPiAr
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmX3RydWU6IGZpbGVzKCdhaWEuYycpKQ0KPiDCoHJp
+c2N2X3NzLmFkZChmaWxlcygnYm9vdC5jJykpDQo+IMKgcmlzY3Zfc3MuYWRkKGZpbGVzKCdkZXZp
+Y2UtY29tbW9uLmMnKSkNCj4gwqByaXNjdl9zcy5hZGQoZmlsZXMoJ2ZkdC1jb21tb24uYycpKQ0K
 
