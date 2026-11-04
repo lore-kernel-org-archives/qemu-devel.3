@@ -1,53 +1,55 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FFD606EE8F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 19:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C619B6070321
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 19:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=icD+HxN2
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KyU2Drqw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOgXe-000543-FG; Wed, 04 Nov 2026 14:21:02 -0500
+	id 1xOgdp-0006RW-9R; Wed, 04 Nov 2026 14:27:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xOgXc-00053b-Ms
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:21:00 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xOgdh-0006R4-C3
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:27:18 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xOgXa-0000JF-MV
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:21:00 -0500
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xOgdf-0000hv-Mq
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:27:17 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id C2B9B402B8;
- Wed,  4 Nov 2026 19:20:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8FA1F00A15;
- Wed,  4 Nov 2026 19:20:55 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 6730E60A8D;
+ Wed,  4 Nov 2026 19:27:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752691F000C1;
+ Wed,  4 Nov 2026 19:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793820056;
- bh=15TE1HJmTIqQgz1bY0wxN9TqpKz0XLV7CztDGaFfUe0=;
+ s=k20260515; t=1793820434;
+ bh=i26IQQ7a/7/vjk+32gQymBJ9yzh97I38zZWocEDhj18=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=icD+HxN2H43iq8QPYXtali6JgzNhdPlFw+IMCWuyY7CHL2rxHkQ+no1JEQufc2aCd
- prd7yTIy90DEYlCBfE4wSIRCfcquW7Hcpasihh6rrLVDyzh/q0IsOIL57YvVTLGo1W
- bG3/v9vZp7nYKJ2LXNfZ1XKBaEMpLyWJmogoDAC6az1w0XTb5Ir5KZzNY5SGRJh7KY
- xok3vNFxmUWWeFBdR+Pw7YCnmOmKBCfUnUVQwm1BZVZZa1bCUIBQNwQ+9iqhTgBAfv
- /owoLuI7UAluxqmziE2j/oaZxEhZD2utxs9Zw5VoOT6qEIba9kGHJpMpQI7MUAwP5m
- OQAFq7hifRnVw==
-Date: Wed, 4 Nov 2026 19:20:49 +0000
+ b=KyU2DrqwYgKlKKZlnVMSI+zmC98rD0x8jT7k17vjGsK40r5tZKDoW/Jyih+utRsnz
+ gGdREHamuEaZLJ6CJINt3/gVdQm8cFlq+A1/hLbr1F96mHWntJ4YNb5VYhCMy5cm6a
+ s+p3gV+gDoAWfPwiOVdT3XeQCkUc6cZSfuryNozq9p7rWKJ5Nn3Lm4Vlmc6iLyjFhQ
+ MB9L3mVi+Py54ZRizzaThXjnQ9OwPYLjogPgL05pOMDX6Q8OYMz/+cFs9uHd7+9rIo
+ FqqE2kqu1P0rkErEzhW2DkiWBYH2F6+QZL9eqWiMceD/Oz2iKXQm9GHWJANGlcP65/
+ WsnW+fL2IawmA==
+Date: Wed, 4 Nov 2026 19:27:09 +0000
 From: Jonathan Cameron <jic23@kernel.org>
 To: Jim MacArthur <jim.macarthur@linaro.org>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH 1/4] hw/pci-bridge: Add pcie_add_dvsec_capability helper
-Message-ID: <20261104192049.50d38b2f@jic23-hlaptop>
-In-Reply-To: <20261029-jmac-pcie-rme-extensions-v1-1-212d2409563e@linaro.org>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, Jim
+ MacArthur <"Jim MacArthur"@linaro.org>, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH 2/4] hw/pci: add IDE + TEE capability to PCIe root port
+Message-ID: <20261104192709.3b260e06@jic23-hlaptop>
+In-Reply-To: <20261029-jmac-pcie-rme-extensions-v1-2-212d2409563e@linaro.org>
 References: <20261029-jmac-pcie-rme-extensions-v1-0-212d2409563e@linaro.org>
- <20261029-jmac-pcie-rme-extensions-v1-1-212d2409563e@linaro.org>
+ <20261029-jmac-pcie-rme-extensions-v1-2-212d2409563e@linaro.org>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=jic23@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=jic23@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -74,79 +76,98 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 29 Oct 2026 15:05:10 +0000
+On Thu, 29 Oct 2026 15:05:11 +0000
 Jim MacArthur <jim.macarthur@linaro.org> wrote:
-Hi Jim,
 
-Some description is always good. Maybe in this case a spec reference
-would be appropriate.
-
-
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-> ---
->  hw/pci/pcie.c         | 16 ++++++++++++++++
->  include/hw/pci/pcie.h |  4 ++++
->  2 files changed, 20 insertions(+)
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > 
-> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-> index 42bcb9206d..42c4997b42 100644
-> --- a/hw/pci/pcie.c
-> +++ b/hw/pci/pcie.c
-> @@ -1157,6 +1157,22 @@ void pcie_add_capability(PCIDevice *dev,
->      memset(dev->cmask + offset, 0xFF, size);
+> Adds the TEE flag in the legacy config space, and the IDE
+> (Integrity & Data Encryption) extended capability. These
+> will be present when rme-cap=on is specified for the
+> pcie-root-port device.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Jim MacArthur <Jim MacArthur@linaro.org>
+> ---
+>  hw/pci-bridge/gen_pcie_root_port.c | 21 ++++++++++++++++++++-
+>  hw/pci/pcie.c                      | 19 +++++++++++++++++++
+>  include/hw/pci/pcie.h              |  3 +++
+>  include/hw/pci/pcie_regs.h         |  4 ++++
+>  4 files changed, 46 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
+> index 5434d693d9..ab8087da87 100644
+> --- a/hw/pci-bridge/gen_pcie_root_port.c
+> +++ b/hw/pci-bridge/gen_pcie_root_port.c
+> @@ -26,13 +26,16 @@ OBJECT_DECLARE_SIMPLE_TYPE(GenPCIERootPort, GEN_PCIE_ROOT_PORT)
+>  #define GEN_PCIE_ROOT_PORT_AER_OFFSET           0x100
+>  #define GEN_PCIE_ROOT_PORT_ACS_OFFSET \
+>          (GEN_PCIE_ROOT_PORT_AER_OFFSET + PCI_ERR_SIZEOF)
+> -
+> +#define GEN_PCIE_ROOT_PORT_ACS_END \
+> +        (GEN_PCIE_ROOT_PORT_ACS_OFFSET + PCI_ACS_SIZEOF)
+
+Can't you figure this out from root port class acs offset?
+
+Or if you want it in a fixed place follow that pattern and stash it
+in the root class during dev_rp_dev_class_init.
+
+>  #define GEN_PCIE_ROOT_PORT_MSIX_NR_VECTOR       1
+>  #define GEN_PCIE_ROOT_DEFAULT_IO_RANGE          4096
+>  
+>  struct GenPCIERootPort {
+>      /*< private >*/
+>      PCIESlot parent_obj;
+> +    bool     rme_caps;
+> +
+>      /*< public >*/
+>  
+>      /* additional resources to reserve */
+> @@ -71,6 +74,7 @@ static void gen_rp_realize(DeviceState *dev, Error **errp)
+>      GenPCIERootPort *grp = GEN_PCIE_ROOT_PORT(d);
+>      PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(d);
+>      Error *local_err = NULL;
+> +    uint32_t next_cap_offset = GEN_PCIE_ROOT_PORT_ACS_END;
+>  
+>      rpc->parent_realize(dev, &local_err);
+>      if (local_err) {
+> @@ -100,6 +104,19 @@ static void gen_rp_realize(DeviceState *dev, Error **errp)
+>          d->wmask[PCI_IO_BASE] = 0;
+>          d->wmask[PCI_IO_LIMIT] = 0;
+>      }
+> +
+> +    if (grp->rme_caps) {
+Not arm specific. Can't see any harm in using a generic config name
+for this.  Actually I'm not seeing a reason not to always include
+the ide cap. Maybe less so for setting up tee.  Haven't really thought about
+that.
+
+
+> +        pcie_ide_init(d, next_cap_offset);
+> +
+> +        /* Unused value, but may be useful for the next capability */
+> +        next_cap_offset += PCI_IDE_SIZEOF;
+> +
+> +        /*
+> +         * Set up TEE (in the legacy config space, not an extended
+> +         * capability)
+> +         */
+> +        pcie_cap_tee_init(d);
+> +    }
 >  }
 >  
-> +/*
-> + * Add a DVSEC capability. As per pcie_add_capability, the caller must
-> + * ensure (offset, size) does not overlap any other capability or extend
-> + * past the extended configuration space.
-> + */
-> +void pcie_add_dvsec_capability(PCIDevice *device, uint16_t capability_id,
-> +                               uint8_t version, uint32_t offset,
-> +                               uint16_t size_bytes, uint16_t vendor_id,
-> +                               uint8_t dvsec_version, uint16_t dvsec_id)
-> +{
-> +    const uint32_t header1 = size_bytes << 20 | version << 16 | vendor_id;
-
-I was going to suggest you just use the defines in pci_regs.h but
-oddly those were only defined as extraction macros for these fields
-not the other way around that you'd need here (or masks that could be used
-for that). 
-
-I'd add a blank line.
-> +    pcie_add_capability(device, capability_id, version, offset, size_bytes);
-> +    pci_set_long(device->config + offset + 0x4, header1);
-and just pass the header value in here rather that using the local variable.
-
-If you really want the variable declare it at the top then add the assignment
-just before use.  Avoids the two getting separated if additional code gets
-added here in the long run.
-
-> +    pci_set_word(device->config + offset + 0x8, dvsec_id);
-> +}
-
-Always nice to justify a new helper by converting a few existing users.
-Maybe not strictly necessary though..
-
-> +
->  /*
->   * Sync the PCIe Link Status negotiated speed and width of a bridge with the
->   * downstream device.  If downstream device is not present, re-write with the
-> diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-> index ec25e7a7de..86c29f7d8b 100644
-> --- a/include/hw/pci/pcie.h
-> +++ b/include/hw/pci/pcie.h
-> @@ -133,6 +133,10 @@ uint16_t pcie_find_capability(PCIDevice *dev, uint16_t cap_id);
->  void pcie_add_capability(PCIDevice *dev,
->                           uint16_t cap_id, uint8_t cap_ver,
->                           uint16_t offset, uint16_t size);
-> +void pcie_add_dvsec_capability(PCIDevice *device, uint16_t capability_id,
-> +                               uint8_t version, uint32_t offset,
-> +                               uint16_t size_bytes, uint16_t vendor_id,
-> +                               uint8_t dvsec_version, uint16_t dvsec_id);
->  bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8_t cap_ver,
->                              uint16_t offset, uint16_t size);
->  void pcie_sync_bridge_lnk(PCIDevice *dev);
-> 
-
+>  static const VMStateDescription vmstate_rp_dev = {
+> @@ -133,6 +150,8 @@ static const Property gen_rp_props[] = {
+>                                  speed, PCIE_LINK_SPEED_16),
+>      DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
+>                                  width, PCIE_LINK_WIDTH_32),
+> +    DEFINE_PROP_BOOL("rme-caps", GenPCIERootPort,
+> +                     rme_caps, false),
+>  };
+>  
+>  static void gen_rp_dev_class_init(ObjectClass *klass, const void *data)
+> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+> index 42c4997b42..bf2c184cfc 100644
+> --- a/hw/pci/pcie.c
+> +++ b/hw/pci/pcie.c
 
