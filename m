@@ -1,73 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55B1606AB3E
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 19:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14706608F117
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 19:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=F3swSrwV
+	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=bboZDR7l
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOgtH-0002xn-Fd; Wed, 04 Nov 2026 14:43:23 -0500
+	id 1xOgsr-0002SZ-Rk; Wed, 04 Nov 2026 14:42:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xOgt8-0002mX-LH
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:43:15 -0500
-Received: from mail-dy1-x132a.google.com ([2607:f8b0:4864:20::132a])
+ id 1xOgsO-0002Bc-MN
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:42:28 -0500
+Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xOgt6-0002Uc-0I
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:43:14 -0500
-Received: by mail-dy1-x132a.google.com with SMTP id
- 5a478bee46e88-3645f0f3fcdso1854149eec.0
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 11:43:11 -0800 (PST)
+ id 1xOgsI-0002Il-TR
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:42:27 -0500
+Received: by mail-dy1-x1336.google.com with SMTP id
+ 5a478bee46e88-35b2c599f43so285191eec.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 11:42:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1793821390; x=1794426190; darn=nongnu.org;
+ d=sifive.com; s=google; t=1793821341; x=1794426141; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=s2G5pV6bLptE5tDsgdaE0ZHFNAhsh5E18iMfQgtM6s8=;
- b=F3swSrwV92DVq/aDU3UDcPYgbbjfJQJVXpxuFj1r6Upxc5k17NAMp8JFQOS5gA3WVy
- vlsYt9GoO4ykLfjghLVfdvlnueAGpOpVT7oqIssmZgq5ahz+t5zYBtAqcldl/AUFH8bX
- yeDswt9bZAxyEIn7CJ3H1cYPe4wQRlIbHX0SvSu1zQVbVpqwPXRPYhdkHc9tz59Qg4Ln
- DccmZDdDWD9y5R1NeB7xOYCiPJnzCGby0FLL1r2uSpqmv+ruxUg/iLDrU9jDQx4rsYCJ
- fAo8w5QySrIogbFJKubcm+5QuSbBT7l7QSMIIiW9eL1oDM/guhJYHkte7RC0uO4ODn5/
- 4iCQ==
+ bh=MpyIuCg0VMdLOy5cL/nzw0/NviSe0pDX/l8xpeB/uWE=;
+ b=bboZDR7lUeUQarXLR/aw0k48KejKUeNP2mATYcbAT7tSkAH5BZpHVxwTAm5yPDfY/X
+ 4fQrw84BNtVo0/84ljmQa07gfqPjLS2hqTHl9sB8QvmMtEf5F2jxEbdMpJyErd6lTaU/
+ 0PaX20oORQlNKDyW5DKPI6fNRlmMFF4Z2/XZPxoIYnlSVlmbnkuJRt5ZNcaobTJ9H+rn
+ OEIH9dLc5kdhsazW4Mu2H7Bi+Tr0TVlhwmOmzc5uYnF8JAjOFwb8pA4dCF0/ToaIbJ22
+ c4rg54EZGLqVWuUmkujiny+ccKDMCE+d5Ehh1r0CEVoepxYRUhjCH+OsWlHgCEPr15XZ
+ Sklg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793821390; x=1794426190;
+ d=1e100.net; s=20260707; t=1793821341; x=1794426141;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=s2G5pV6bLptE5tDsgdaE0ZHFNAhsh5E18iMfQgtM6s8=;
- b=dPdNfI5uCQtfe9uCvW1ETmLLI9dW1f0quosvlqaqcOB6CyHPgD00nRv98gnvSYbdg4
- NNIv5epM0ixk3Jg7x3ZLRVhtRJI7jqCyGtnrDz9ECj45ra8d75chXOk6oGW8Rl+Drsb3
- 8rOAOwi495a3ERLw0dXdABBaMCvHXePqpIwFge1l+7iKBEtNoXxYYEQZNpV0zW/7uy/Z
- ioZm/BMR3ZXY3pUom59lPBKNlF21/Y7F778jsw8ZC6zaHfgcdJSIIDPPUo/rp9OQqLUq
- Ryf1vcxOyn8eS2wPL82UA9aP2Uu7pDy2Orycs7m8o0gbQvVl4/JERMqYZN/YbUuNg2BB
- rTsA==
-X-Gm-Message-State: APuU4Z96TlrCLEM06JCpnPEgLwZJXKaS7cx0M/5Go+H3rrxlFLwp9Knt
- C9j4hGwIg1pPIoymhZMwBmzPkDWcAwS9nVv+nIZXmrN5iWsFagipuY8aDF6Iby2z0L/dtF097df
- yNxUNArGIAVzr7+gI9KaTVLAKGP9YjXR+N9VMSnegqFLUX5LyK7ZmKJWIVs8Cz/5ZnN090WOhVf
- FnNC7xXNpxE5Dxdwx4RSl5Ty4gOJZjMiamf0pw4KexEg==
-X-Gm-Gg: AYBFou2NUYyQRdbP/SueqTv5aJmoMA4Un7bj/GRmJPKHA794nBwTc8t2iNxA/+IGttK
- CKvsxFLxjlhANvKsAKO26yaMd/rHC04koTF288yvShmAHwcVvsgRfF1WFvtqT/p7rxN9EgBkyX8
- xSvSiC8qJvkSedoesmGiaKtS2UgQPOlzl9lnHU6i7WRoBuWEUO90CQ5FyTlw7xo8UiEo4xQnMD9
- UNce99RC7SqkAZIORU97zlKfPpY9vpbMdsarRIBHSXNm+GN+R6gDe9szOmE3pTrAeUUX4/AD8Nf
- 11v3Vk7IxtJpg20jmq8vOyeZYV0Vm8O7QsjGZlQYXv7Qsgpw0bo1FV2/isBNeuwA4B9v+VCNjwU
- ygjvgZslFVMKDvKVjKw0UoLGXQ4xXmpH0iI3dqOemOIjBoUKDQLwlCE1a4P96jczVWd0gx6wTeL
- KThgfpyNN5QtqZOxGKJ0ExIkbDpzBMHbirvkyIMuhCSqmsil9EkeFwCCI3EYEihOIRwIWGP6HW2
- wGqyhhH5KomUFeeBqKPD37sJL70q/qK/Iq6VDehnVUytjFxm30wfGn6tho8PcyeNl8Rrr/GGn5G
- 86/Wayq/WosFNm5WPKufP3bug4IMMIC5twJssd8AxLBCo6AfX9wXJ4Eb3469o+fpR+wcLYlwOUN
- 5Fwf+V1g40hUfc5rpEPWOHunM/t0o0g==
-X-Received: by 2002:a05:693c:87c6:10b0:367:5e31:ce29 with SMTP id
- 5a478bee46e88-36a42404ab3mr26422168eec.20.1793821389970; 
- Wed, 04 Nov 2026 11:43:09 -0800 (PST)
+ bh=MpyIuCg0VMdLOy5cL/nzw0/NviSe0pDX/l8xpeB/uWE=;
+ b=r/qmtufpzqiy52Wzru40KDO1B0OdFFuh12UeVPFDF8p9+VZ3B8K+gwKc7m4jYvHFyq
+ FEik75solR5+Jzar11pXG7gquSfGDXRkOmj9DNaQ7i3CUzcbCaudr8OnfDwEjBnKj7Hl
+ xQoRG8KKzIQmoXuKlPpBh6AwYx+9QLwGwjMklhfrdKT6FKnEDjHYXdA/skNP5fZfGWqT
+ E6qC3P4X2t1SAXvkOm7LgX+yPz2ooLhnM6Iqhe+Sr4pNDmOjFPazRrpB/016k7XKT783
+ CvRUMuWCqe2FTjQ23QHg2EnNcqhi3Qa33wzxCwqT/imrSjeS/l4yFNBWX33zCv7wy1iQ
+ CrOw==
+X-Gm-Message-State: APuU4Z+xUE/6qOyfRBjFx4MrzCHCVYPiNwFca5H5lgpXYSta4wUMho6n
+ JMwBE1BRTwciHfiTSPyTNW0qBcaxcZlSk7hM/skfwZDqS9mvUU+slAGATdj5d1tDC7NqwUsLy83
+ wKQXxI1FnJCD4cXlMqUihbA2NkkVZ2hffExi7VzbmIjn1IiBprLxCWE4QHVZln+aAz0Xqq7IAaB
+ C7lvK+NnTKhmwrvhtVs/gE8CQrofIBH+GOUKrfPsKGhA==
+X-Gm-Gg: AYBFou0UNMASIh7qf3Wl4Dmik/wU2fb6OkoDwDr7BtQvHyF/EdSZyPUb4AAwHFhW9vU
+ AchOvNFjdWuPuTNINWTZ8FkpltH6sY/MgOHXeMs5G0+Jwvec6OecZf5J2zBJi/uyjkWY2Kva7Qo
+ 61+hzkBUR6AEqBnGgKT2AsjdOinJJZdDHmHSBiBXb5DqL7g2A4t4LBXkCMYzl4XNvyFFYcSYMn8
+ 2TZ5+ABU+lk/T/q7lt7KlnmpJPodA1Hn+9wLpr233dS6ntBMHfCm57eSBvlDWgRBGa5/s/Dqeyy
+ fbtj4bR/hlR6uFWDTTuilPOd62Hhaj9T//+xsCuQsG3A/Dz9+UKvZKHLIYGW1f9dqGg0eR0U4VH
+ v8ZWL2A+tEGhYxLdoT5irJwGjUrkz2jTdS2QuLYoZbcJRQUQQh7TYQbA7reErQTON7YhvE7SKkG
+ BRui+ngfh7EV75BnDfjmtjvza3PdYiayMrwJqa37en+0czrcRsB6mpJlHfUuBKSOQ/+jjM2y769
+ XC+YP2sRr3sft8yrAOXZRyzYCJnLLpNjiowD9jOcroXJFFmMXB160W37fk+zUT7f+LkCIR03QQr
+ yet6fuuON/jzJRPn+JDrrmr3vLXJoeZJ6YSBdfibaAOL/belglvFAXg6GaRCMmLC2RJWAXmIedz
+ ILN+CfnduQYlnmqwxb5Ox8pwGnDd7Bsh5iXh3svvgqvg6P701sw==
+X-Received: by 2002:a05:7300:6016:b0:35d:f7f4:bc1c with SMTP id
+ 5a478bee46e88-36a4235facemr22647048eec.6.1793821340562; 
+ Wed, 04 Nov 2026 11:42:20 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36ca38d36a1sm11299527eec.12.2026.11.04.11.43.07
+ 5a478bee46e88-36ca38d36a1sm11299527eec.12.2026.11.04.11.42.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Nov 2026 11:43:09 -0800 (PST)
+ Wed, 04 Nov 2026 11:42:20 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -79,17 +79,18 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>
-Subject: [RFC PATCH 18/38] disas/riscv: Support Zvfqwdota8f extension
-Date: Thu,  5 Nov 2026 03:41:33 +0800
-Message-ID: <20261104194155.679241-19-max.chou@sifive.com>
+Subject: [RFC PATCH 01/38] fpu/softfloat: Support OCP(Open Compute Project)
+ OFP8 checking functions
+Date: Thu,  5 Nov 2026 03:41:16 +0800
+Message-ID: <20261104194155.679241-2-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261104194155.679241-1-max.chou@sifive.com>
 References: <20261104194155.679241-1-max.chou@sifive.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132a;
- envelope-from=max.chou@sifive.com; helo=mail-dy1-x132a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
+ envelope-from=max.chou@sifive.com; helo=mail-dy1-x1336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,53 +112,175 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Adds support to disassemble Zvfqwdota8f instructions.
-- vfqwdota.vv
-- vfqwdota.alt.vv
+Include following checking functions liked other fp types:
+- *_nan_is_snan
+- *_is_quiet_nan
+- *_is_signaling_nan
+- *_is_any_nan
+- *_is_neg
+- *_is_infinity
+- *_is_zero
+- *_is_zero_or_denormal
+- *_is_normal
 
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- disas/riscv-op.c.inc | 2 ++
- disas/riscv.c        | 9 ++++++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ fpu/softfloat-specialize.c.inc | 55 ++++++++++++++++++++++++++
+ include/fpu/softfloat.h        | 70 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 125 insertions(+)
 
-diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
-index aeb9423f130..5ba29f52976 100644
---- a/disas/riscv-op.c.inc
-+++ b/disas/riscv-op.c.inc
-@@ -583,6 +583,8 @@ OP(vfnmsac_vf, "vfnmsac.vf", rv_codec_v_r, rv_fmt_vd_fs1_vs2_vm)
- OP(vfnmsac_vv, "vfnmsac.vv", rv_codec_v_r, rv_fmt_vd_vs1_vs2_vm)
- OP(vfnmsub_vf, "vfnmsub.vf", rv_codec_v_r, rv_fmt_vd_fs1_vs2_vm)
- OP(vfnmsub_vv, "vfnmsub.vv", rv_codec_v_r, rv_fmt_vd_vs1_vs2_vm)
-+OP(vfqwdota_alt_vv, "vfqwdota.alt.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-+OP(vfqwdota_vv, "vfqwdota.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
- OP(vfrdiv_vf, "vfrdiv.vf", rv_codec_v_r, rv_fmt_vd_vs2_fs1_vm)
- OP(vfrec7_v, "vfrec7.v", rv_codec_v_r, rv_fmt_vd_vs2)
- OP(vfredmax_vs, "vfredmax.vs", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 62feb4c653e..0f609cc06b4 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -2640,9 +2640,12 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                 case 39: return &op_vqwdotas_vv;
-                 }
-             }
--            if (((inst >> 12) & 0b111) == 1 &&
--                ((inst >> 26) & 0b111111) == 36) {
--                return &op_vfwdota_vv;
-+            if (((inst >> 12) & 0b111) == 1) {
-+                switch ((inst >> 26) & 0b111111) {
-+                case 36: return &op_vfwdota_vv;
-+                case 38: return &op_vfqwdota_vv;
-+                case 39: return &op_vfqwdota_alt_vv;
-+                }
-             }
-             if (((inst >> 25) & 1) == 1 && ((inst >> 12) & 0b111) == 2) {
-                 switch ((inst >> 26) & 0b111111) {
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 8b765ef623f..22a3188f99b 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -255,6 +255,61 @@ floatx80 floatx80_default_inf(bool zSign, float_status *status)
+     return packFloatx80(zSign, 0x7fff, z ? 0 : (1ULL << 63));
+ }
+ 
++/*----------------------------------------------------------------------------
++| Determine if a OCP FP8 E4M3 NaN is signaling NaN.
++| E4M3 has only one NaN encoding, so classification is policy-based.
++*----------------------------------------------------------------------------*/
++
++static bool float8_e4m3_nan_is_snan(float8_e4m3 a, float_status *status)
++{
++    return get_float_e4m3_nan_is_snan(status);
++}
++
++/*----------------------------------------------------------------------------
++| Returns 1 if the OCP FP8 E4M3 value `a' is a quiet NaN; otherwise returns 0.
++*----------------------------------------------------------------------------*/
++
++bool float8_e4m3_is_quiet_nan(float8_e4m3 a_, float_status *status)
++{
++    return float8_e4m3_is_any_nan(a_) && !float8_e4m3_nan_is_snan(a_, status);
++}
++
++/*----------------------------------------------------------------------------
++| Returns 1 if the OCP FP8 E4M3 value `a' is a signaling NaN; otherwise 0.
++*----------------------------------------------------------------------------*/
++
++bool float8_e4m3_is_signaling_nan(float8_e4m3 a_, float_status *status)
++{
++    return float8_e4m3_is_any_nan(a_) && float8_e4m3_nan_is_snan(a_, status);
++}
++
++/*----------------------------------------------------------------------------
++| Determine if a OCP FP8 E5M2 NaN is signaling NaN.
++*----------------------------------------------------------------------------*/
++
++static bool float8_e5m2_nan_is_snan(float8_e5m2 a, float_status *status)
++{
++    return frac_msb_is_snan((a >> 1) & 1, status);
++}
++
++/*----------------------------------------------------------------------------
++| Returns 1 if the OCP FP8 E5M2 value `a' is a quiet NaN; otherwise returns 0.
++*----------------------------------------------------------------------------*/
++
++bool float8_e5m2_is_quiet_nan(float8_e5m2 a_, float_status *status)
++{
++    return float8_e5m2_is_any_nan(a_) && !float8_e5m2_nan_is_snan(a_, status);
++}
++
++/*----------------------------------------------------------------------------
++| Returns 1 if the OCP FP8 E5M2 value `a' is a signaling NaN; otherwise 0.
++*----------------------------------------------------------------------------*/
++
++bool float8_e5m2_is_signaling_nan(float8_e5m2 a_, float_status *status)
++{
++    return float8_e5m2_is_any_nan(a_) && float8_e5m2_nan_is_snan(a_, status);
++}
++
+ /*----------------------------------------------------------------------------
+ | Determine if a float16 NaN is signaling NaN.
+ *----------------------------------------------------------------------------*/
+diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
+index d48fc6b0437..4d91599e25d 100644
+--- a/include/fpu/softfloat.h
++++ b/include/fpu/softfloat.h
+@@ -222,6 +222,76 @@ bfloat16 float8_e5m2_to_bfloat16(float8_e5m2, float_status *status);
+ float8_e5m2 bfloat16_to_float8_e5m2(bfloat16, bool sat, float_status *status);
+ float8_e5m2 float32_to_float8_e5m2(float32, bool sat, float_status *status);
+ 
++/*----------------------------------------------------------------------------
++| OCP FP{4,8} classify operations.
++*----------------------------------------------------------------------------*/
++
++bool float8_e4m3_is_quiet_nan(float8_e4m3, float_status *status);
++bool float8_e4m3_is_signaling_nan(float8_e4m3, float_status *status);
++bool float8_e5m2_is_quiet_nan(float8_e5m2, float_status *status);
++bool float8_e5m2_is_signaling_nan(float8_e5m2, float_status *status);
++
++static inline bool float8_e4m3_is_any_nan(float8_e4m3 a)
++{
++    return ((a & ~0x80) == 0x7f);
++}
++
++static inline bool float8_e5m2_is_any_nan(float8_e5m2 a)
++{
++    return ((a & ~0x80) > 0x7c);
++}
++
++static inline bool float8_e4m3_is_neg(float8_e4m3 a)
++{
++    return a >> 7;
++}
++
++static inline bool float8_e5m2_is_neg(float8_e5m2 a)
++{
++    return a >> 7;
++}
++
++static inline bool float8_e4m3_is_infinity(float8_e4m3 a)
++{
++    return false;
++}
++
++static inline bool float8_e5m2_is_infinity(float8_e5m2 a)
++{
++    return (a & 0x7f) == 0x7c;
++}
++
++static inline bool float8_e4m3_is_zero(float8_e4m3 a)
++{
++    return (a & 0x7f) == 0;
++}
++
++static inline bool float8_e5m2_is_zero(float8_e5m2 a)
++{
++    return (a & 0x7f) == 0;
++}
++
++static inline bool float8_e4m3_is_zero_or_denormal(float8_e4m3 a)
++{
++    return (a & 0x78) == 0;
++}
++
++static inline bool float8_e5m2_is_zero_or_denormal(float8_e5m2 a)
++{
++    return (a & 0x7c) == 0;
++}
++
++static inline bool float8_e4m3_is_normal(float8_e4m3 a)
++{
++    uint8_t em = a & 0x7f;
++    return em >= 0x8 && em <= 0x7e;
++}
++
++static inline bool float8_e5m2_is_normal(float8_e5m2 a)
++{
++    return (((a >> 2) + 1) & 0x1f) >= 2;
++}
++
+ /*----------------------------------------------------------------------------
+ | Software half-precision conversion routines.
+ *----------------------------------------------------------------------------*/
 -- 
 2.56.0
 
