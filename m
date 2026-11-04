@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F385606A32F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 11:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C807F606A33F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 11:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=RFMkiY5o
+	dkim=pass (1024-bit key, unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=YykrjfjU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOZLu-0005XZ-V4; Wed, 04 Nov 2026 06:40:27 -0500
+	id 1xOZS3-0007kO-Dv; Wed, 04 Nov 2026 06:46:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1xOZLi-0005Oq-OK
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:40:18 -0500
-Received: from mailout3.samsung.com ([203.254.224.33])
+ id 1xOZS1-0007jq-E9
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:46:45 -0500
+Received: from mailout4.samsung.com ([203.254.224.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1xOZLd-0005Jq-Fp
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:40:14 -0500
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20261104114002epoutp037a9360e281c4ade35427fbebca3b1b1b~k1K-CWk7x1675016750epoutp03a
- for <qemu-devel@nongnu.org>; Wed,  4 Nov 2026 11:40:02 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20261104114002epoutp037a9360e281c4ade35427fbebca3b1b1b~k1K-CWk7x1675016750epoutp03a
+ id 1xOZRx-000616-RQ
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:46:45 -0500
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20261104113804epoutp049e544bc7833668a9fa72e91f2300285d~k1JRGHSPy2603026030epoutp04K
+ for <qemu-devel@nongnu.org>; Wed,  4 Nov 2026 11:38:04 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20261104113804epoutp049e544bc7833668a9fa72e91f2300285d~k1JRGHSPy2603026030epoutp04K
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1793792402;
- bh=CoNTGCBqnm0HhFbxIepmVNdSHPSkoUWvTheSsXhJglE=;
+ s=mail20170921; t=1793792284;
+ bh=NyVcsNz9BaNleVG9D4YiuDu9Ylsm4+TjGS9bJaxP2hE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=RFMkiY5o3/F79yLodyA0IIGDVlrbBDk2OoAwE0TP6azo0Ti/iz+z1D74r8uM4PjE0
- KS7bwHrcx1OlARgKBDJugSCD6c8ez1KmgPxR8bmENE+rI6BHrcAgQK7IK/A4FiHzuU
- Lk7NoElsrEz/zanWCTi5O2cXrEVYRS5fzLPxjrdY=
+ b=YykrjfjUxS2MguhK96wcZjK2ULQfOuMXuEnuC+InTa1VwSW3FSWZos/iKa2DRaq6M
+ Fciyt0DdLGgtmWpz27d+ffEs1BYpNEB81Tpoyg0Vyjhiw7uUodyN+af8P4VudGAuTP
+ tOFPv77UFWwS2JyKQi8W28JpUBN61CLi9Mp711Jg=
 Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
- 20261104114002epcas5p4cb0aee132221310d6c7df94b77aa5afe~k1K_cN0UN3192831928epcas5p45;
- Wed,  4 Nov 2026 11:40:02 +0000 (GMT)
-Received: from epcpadp1new (unknown [182.195.40.141]) by
- epsnrtp04.localdomain (Postfix) with ESMTP id 4jKNlk1vs9z6B9m6; Wed,  4 Nov
- 2026 11:40:02 +0000 (GMT)
+ epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
+ 20261104113804epcas5p3e3b56be9356817670e4492a50ab6a978~k1JQgfzv90585005850epcas5p3M;
+ Wed,  4 Nov 2026 11:38:04 +0000 (GMT)
+Received: from epcpadp2new (unknown [182.195.40.142]) by
+ epsnrtp04.localdomain (Postfix) with ESMTP id 4jKNjS1f38z6B9m6; Wed,  4 Nov
+ 2026 11:38:04 +0000 (GMT)
 Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
- 20261104113035epcas5p41c69e872a13ffe10bd55bdfa00bc699b~k1CufJcXY2809328093epcas5p4M;
- Wed,  4 Nov 2026 11:30:35 +0000 (GMT)
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+ 20261104113048epcas5p2e168c5644f42c7b29fa5995b0ec0aeb4~k1C7GJkIU1645616456epcas5p2Q;
+ Wed,  4 Nov 2026 11:30:48 +0000 (GMT)
 Received: from unvme-SYS-221H-TN24R.samsungds.net (unknown [107.99.40.127])
  by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20261104113032epsmtip10c3c1e252953d844a702544fb823cf0f~k1CsNd_m02358823588epsmtip1U;
- Wed,  4 Nov 2026 11:30:32 +0000 (GMT)
+ 20261104113046epsmtip16d168c9ed39e5d2caa855ba612230a5a~k1C41MbE92318723187epsmtip1E;
+ Wed,  4 Nov 2026 11:30:46 +0000 (GMT)
 From: Shrihari E S <shrihari.s@samsung.com>
 To: jic23@kernel.org, junjie.cao@linux.dev, linux-cxl@vger.kernel.org,
  linux-pci@vger.kernel.org, qemu-devel@nongnu.org, anisa.su887@gmail.com,
@@ -55,27 +55,26 @@ Cc: shrihari.s@samsung.com, arun.george@samsung.com, cpgs@samsung.com,
  dave@stgolabs.net, dongjoo.seo1@samsung.com, gost.dev@samsung.com,
  s.neeraj@samsung.com, vikash.k5@samsung.com, anisa.su@samsung.com,
  junjie.cao@intel.com
-Subject: [PATCH qemu v1 5/8] hw/pci: Wire SVC initialization into port
- realize functions
-Date: Wed,  4 Nov 2026 17:22:39 +0530
-Message-Id: <360067785.01793792402254.JavaMail.epsvc@epcpadp1new>
+Subject: [PATCH qemu v1 8/8] cxl: Add documentation for CXL UIO support
+Date: Wed,  4 Nov 2026 17:22:42 +0530
+Message-Id: <1139700454.181793792284216.JavaMail.epsvc@epcpadp2new>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261104115242.2035807-1-shrihari.s@samsung.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20261104113035epcas5p41c69e872a13ffe10bd55bdfa00bc699b
+X-CMS-MailID: 20261104113048epcas5p2e168c5644f42c7b29fa5995b0ec0aeb4
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 X-CPGSPASS: Y
 X-Hop-Count: 3
-X-CMS-RootMailID: 20261104113035epcas5p41c69e872a13ffe10bd55bdfa00bc699b
+X-CMS-RootMailID: 20261104113048epcas5p2e168c5644f42c7b29fa5995b0ec0aeb4
 References: <20261104115242.2035807-1-shrihari.s@samsung.com>
- <CGME20261104113035epcas5p41c69e872a13ffe10bd55bdfa00bc699b@epcas5p4.samsung.com>
-Received-SPF: pass client-ip=203.254.224.33;
- envelope-from=shrihari.s@samsung.com; helo=mailout3.samsung.com
+ <CGME20261104113048epcas5p2e168c5644f42c7b29fa5995b0ec0aeb4@epcas5p2.samsung.com>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=shrihari.s@samsung.com; helo=mailout4.samsung.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -101,305 +100,98 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-With the x-svc option, a port appends the SVC capability at the end
-of its extended capability chain at realize time.
+Add a section for the UIO related device options, and a
+command-line example demonstrating a topology with three CXL Type-3
+devices connected via a switch, with Unordered I/O (UIO) enabled on
+all ports and endpoints. The example shows the correct usage of
+the x-svc, x-256b-flit and x-uio options, including the x-uio option
+of the pxb-cxl host bridge, which marks all the root ports within
+the host bridge as capable of routing UIO requests.
 
-In the same realize path a CXL root port derives its UIO status: it
-is UIO capable when the parent pxb-cxl host bridge carries x-uio and
-its own SVC and 256-byte flit mode configuration carry it; a root
-port on any other bus does not carry UIO.
-
-PXB PCIe root ports, CXL root ports, CXL switch ports and PCIe
-switch ports accept the x-svc option; the port types without a
-reserved SVC capability offset do not carry it.
+The x-uio option of the CXL type3 device works together with x-svc
+and x-256b-flit: the device carries the UIO capability when all
+three are set.
 
 Signed-off-by: Shrihari E S <shrihari.s@samsung.com>
 Signed-off-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
 ---
- hw/pci-bridge/cxl_downstream.c     | 10 ++++++++++
- hw/pci-bridge/cxl_root_port.c      | 29 +++++++++++++++++++++++++++++
- hw/pci-bridge/cxl_upstream.c       | 14 ++++++++++++++
- hw/pci-bridge/gen_pcie_root_port.c |  3 +++
- hw/pci-bridge/pcie_root_port.c     | 14 ++++++++++++++
- hw/pci-bridge/xio3130_downstream.c |  6 ++++++
- hw/pci-bridge/xio3130_upstream.c   | 19 +++++++++++++++++++
- include/hw/pci/pcie_port.h         |  4 ++++
- 8 files changed, 99 insertions(+)
+ docs/system/devices/cxl.rst | 54 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 51 insertions(+), 3 deletions(-)
 
-diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
-index bc1e65bc89..b710ce4f2c 100644
---- a/hw/pci-bridge/cxl_downstream.c
-+++ b/hw/pci-bridge/cxl_downstream.c
-@@ -229,6 +229,15 @@ static void cxl_dsp_realize(PCIDevice *d, Error **errp)
-                      PCI_BASE_ADDRESS_SPACE_MEMORY |
-                          PCI_BASE_ADDRESS_MEM_TYPE_64,
-                      &dsp->bar);
-+    if (p->svc) {
-+        /*
-+         * SVC is appended after the DVSECs so that the extended
-+         * capability layout is unchanged when the port does not
-+         * carry SVC.
-+         */
-+        pcie_svc_cap_init(d, cxl_cstate->dvsec_offset, p->flitmode,
-+                          errp);
-+    }
+diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
+index 32b1b5d773..e2d66b0e4e 100644
+--- a/docs/system/devices/cxl.rst
++++ b/docs/system/devices/cxl.rst
+@@ -394,12 +394,12 @@ use HDM-DB for coherence, which requires operating in Flit mode::
+   -object memory-backend-ram,id=cxl-mem2,share=on,size=256M \
+   -object memory-backend-ram,id=cxl-mem3,share=on,size=256M \
+   -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
+-  -device cxl-rp,port=0,bus=cxl.1,id=root_port0,chassis=0,slot=0 \
++  -device cxl-rp,port=0,bus=cxl.1,id=root_port0,chassis=0,slot=0,x-256b-flit=on \
+   -device cxl-rp,port=1,bus=cxl.1,id=root_port1,chassis=0,slot=1 \
+   -device cxl-upstream,bus=root_port0,id=us0,x-256b-flit=on \
+-  -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
++  -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4,x-256b-flit=on \
+   -device cxl-type3,bus=swport0,volatile-memdev=cxl-mem0,id=cxl-mem0,sn=0x1,x-256b-flit=on,hdm-db=on \
+-  -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
++  -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5,x-256b-flit=on \
+   -device cxl-type3,bus=swport1,volatile-memdev=cxl-mem1,id=cxl-mem1,sn=0x2,x-256b-flit=on,hdm-db=on \
+   -device cxl-downstream,port=2,bus=us0,id=swport2,chassis=0,slot=6 \
+   -device cxl-type3,bus=swport2,volatile-memdev=cxl-mem2,id=cxl-mem2,sn=0x3 \
+@@ -407,6 +407,54 @@ use HDM-DB for coherence, which requires operating in Flit mode::
+   -device cxl-type3,bus=swport3,volatile-memdev=cxl-mem3,id=cxl-mem3,sn=0x4 \
+   -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
  
-     return;
- 
-@@ -260,6 +269,7 @@ static const Property cxl_dsp_props[] = {
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
-                                 width, PCIE_LINK_WIDTH_16),
-     DEFINE_PROP_BOOL("x-256b-flit", PCIEPort, flitmode, false),
-+    DEFINE_PROP_BOOL("x-svc", PCIEPort, svc, false),
- };
- 
- static void cxl_dsp_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
-index 4be2b400f9..4e7eea9deb 100644
---- a/hw/pci-bridge/cxl_root_port.c
-+++ b/hw/pci-bridge/cxl_root_port.c
-@@ -164,7 +164,9 @@ static void cxl_rp_realize(DeviceState *dev, Error **errp)
- {
-     PCIDevice *pci_dev     = PCI_DEVICE(dev);
-     PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(dev);
-+    PCIEPort *p            = PCIE_PORT(dev);
-     CXLRootPort *crp       = CXL_ROOT_PORT(dev);
-+    PCIDevice *hb_dev;
-     CXLComponentState *cxl_cstate = &crp->cxl_cstate;
-     ComponentRegisters *cregs = &cxl_cstate->crb;
-     MemoryRegion *component_bar = &cregs->component_registers;
-@@ -212,6 +214,33 @@ static void cxl_rp_realize(DeviceState *dev, Error **errp)
-                      PCI_BASE_ADDRESS_SPACE_MEMORY |
-                      PCI_BASE_ADDRESS_MEM_TYPE_64,
-                      &crp->bar);
-+    /*
-+     * The Host Bridge UIO Capable bit marks all the root ports
-+     * within the Host Bridge as capable of routing UIO requests
-+     * (CXL 3.2 8.2.4.20.1): a root port below a pxb-cxl host bridge
-+     * carries the UIO capability when the host bridge carries x-uio
-+     * and its own SVC and 256-byte flit mode configuration carries
-+     * it. A root port on any other bus carries no pxb-cxl host
-+     * bridge above it.
-+     */
-+    hb_dev = pci_get_bus(pci_dev)->parent_dev;
-+    crp->uio_capable = hb_dev && object_dynamic_cast(OBJECT(hb_dev),
-+                                                     TYPE_PXB_CXL_DEV) &&
-+                       PXB_CXL_DEV(hb_dev)->uio_capable &&
-+                       p->svc && p->flitmode;
++Unordered I/O (UIO) Support
++---------------------------
++CXL 3.2 and PCIe 6.1 introduce Unordered I/O (UIO), which allows memory
++transactions to bypass strict ordering requirements, potentially improving
++performance for certain workloads. UIO support builds on three
++coordinated features:
 +
-+    /*
-+     * SVC is appended after the DVSECs so that the extended
-+     * capability layout is unchanged when the port does not carry
-+     * SVC.
-+     */
-+    if (p->svc) {
-+        rc = pcie_svc_cap_init(pci_dev, cxl_cstate->dvsec_offset,
-+                               p->flitmode, errp);
-+        if (rc < 0) {
-+            return;
-+        }
-+    }
- }
- 
- static void cxl_rp_reset_hold(Object *obj, ResetType type)
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index 63d2fd54d4..a16e2e9744 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -414,6 +414,19 @@ static void cxl_usp_realize(PCIDevice *d, Error **errp)
-         goto err_cap;
-     }
- 
-+    if (p->svc) {
-+        /*
-+         * SVC is appended after the DOE capability so that the
-+         * extended capability layout is unchanged when the port
-+         * does not carry SVC.
-+         */
-+        rc = pcie_svc_cap_init(d,
-+                               cxl_cstate->dvsec_offset + PCI_DOE_SIZEOF,
-+                               p->flitmode, errp);
-+        if (p->flitmode && rc >= 0) {
-+            usp->uio_capable = true;
-+        }
-+    }
-     return;
- 
- err_cap:
-@@ -441,6 +454,7 @@ static const Property cxl_upstream_props[] = {
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLUpstreamPort,
-                                 width, PCIE_LINK_WIDTH_16),
-     DEFINE_PROP_BOOL("x-256b-flit", PCIEPort, flitmode, false),
-+    DEFINE_PROP_BOOL("x-svc", PCIEPort, svc, false),
- };
- 
- static void cxl_upstream_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
-index 2f7257d166..d4df4a7c16 100644
---- a/hw/pci-bridge/gen_pcie_root_port.c
-+++ b/hw/pci-bridge/gen_pcie_root_port.c
-@@ -26,6 +26,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(GenPCIERootPort, GEN_PCIE_ROOT_PORT)
- #define GEN_PCIE_ROOT_PORT_AER_OFFSET           0x100
- #define GEN_PCIE_ROOT_PORT_ACS_OFFSET \
-         (GEN_PCIE_ROOT_PORT_AER_OFFSET + PCI_ERR_SIZEOF)
-+#define GEN_PCIE_ROOT_PORT_SVC_OFFSET \
-+        (GEN_PCIE_ROOT_PORT_ACS_OFFSET + PCI_ACS_SIZEOF)
- 
- #define GEN_PCIE_ROOT_PORT_MSIX_NR_VECTOR       1
- #define GEN_PCIE_ROOT_DEFAULT_IO_RANGE          4096
-@@ -166,6 +168,7 @@ static void gen_rp_dev_class_init(ObjectClass *klass, const void *data)
-     rpc->interrupts_uninit = gen_rp_interrupts_uninit;
-     rpc->aer_offset = GEN_PCIE_ROOT_PORT_AER_OFFSET;
-     rpc->acs_offset = GEN_PCIE_ROOT_PORT_ACS_OFFSET;
-+    rpc->svc_offset = GEN_PCIE_ROOT_PORT_SVC_OFFSET;
- }
- 
- static const TypeInfo gen_rp_dev_info = {
-diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
-index bc173dbf30..645394310c 100644
---- a/hw/pci-bridge/pcie_root_port.c
-+++ b/hw/pci-bridge/pcie_root_port.c
-@@ -68,6 +68,15 @@ static void rp_realize(PCIDevice *d, Error **errp)
-     int rc;
- 
-     pci_config_set_interrupt_pin(d->config, 1);
-+    if (!pci_is_cxl(d) && p->svc && !rpc->svc_offset) {
-+        /*
-+         * Only root port types with a reserved offset for the SVC
-+         * capability in their extended capability space support it.
-+         */
-+        error_setg(errp, "%s: SVC is not supported by this port type",
-+                   object_get_typename(OBJECT(d)));
-+        return;
-+    }
-     if (d->cap_present & QEMU_PCIE_CAP_CXL) {
-         pci_bridge_initfn(d, TYPE_CXL_BUS);
-     } else {
-@@ -120,6 +129,10 @@ static void rp_realize(PCIDevice *d, Error **errp)
-     if (rpc->acs_offset && !s->disable_acs) {
-         pcie_acs_init(d, rpc->acs_offset);
-     }
-+    if (!pci_is_cxl(d) && p->svc) {
-+        pcie_svc_cap_init(d, rpc->svc_offset, p->flitmode, errp);
-+    }
++1. **256-byte Flit Mode**: Enabled via ``x-256b-flit=on`` on all ports
++   and devices in the UIO path
++2. **Streamlined Virtual Channel (SVC)**: Enabled via ``x-svc`` on all ports
++   and CXL type3 device. SVC is a PCIe extended capability
++   (PCIe 6.4 section 7.9.29) that provides dedicated virtual channels for
++   UIO traffic.
++3. **Device 3 Extended Capability**: Enabled via ``x-uio`` on the CXL type3
++   device. Device 3 is a PCIe extended capability (PCIe 6.4 section 7.7.9)
++   that advertises a device's UIO requester/completer support. ``x-uio``
++   works together with the ``x-svc`` and ``x-256b-flit`` options: the
++   device carries the UIO capability when all three are set.
 +
-     return;
- 
- err:
-@@ -153,6 +166,7 @@ static const Property rp_props[] = {
-                     QEMU_PCIE_SLTCAP_PCP_BITNR, true),
-     DEFINE_PROP_BOOL("disable-acs", PCIESlot, disable_acs, false),
-     DEFINE_PROP_BOOL("x-256b-flit", PCIEPort, flitmode, false),
-+    DEFINE_PROP_BOOL("x-svc", PCIEPort, svc, false),
- };
- 
- static void rp_instance_post_init(Object *obj)
-diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
-index 0c3fed3053..af4bb5dc83 100644
---- a/hw/pci-bridge/xio3130_downstream.c
-+++ b/hw/pci-bridge/xio3130_downstream.c
-@@ -110,6 +110,10 @@ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
-     if (rc < 0) {
-         goto err;
-     }
-+    if (p->svc) {
-+        pcie_svc_cap_init(d, XIO3130_AER_OFFSET + PCI_ERR_SIZEOF,
-+                          p->flitmode, errp);
-+    }
- 
-     return;
- 
-@@ -137,6 +141,8 @@ static void xio3130_downstream_exitfn(PCIDevice *d)
- static const Property xio3130_downstream_props[] = {
-     DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
-                     QEMU_PCIE_SLTCAP_PCP_BITNR, true),
-+    DEFINE_PROP_BOOL("x-svc", PCIEPort, svc, false),
-+    DEFINE_PROP_BOOL("x-256b-flit", PCIEPort, flitmode, false),
- };
- 
- static const VMStateDescription vmstate_xio3130_downstream = {
-diff --git a/hw/pci-bridge/xio3130_upstream.c b/hw/pci-bridge/xio3130_upstream.c
-index 40057b749b..5ba234bc06 100644
---- a/hw/pci-bridge/xio3130_upstream.c
-+++ b/hw/pci-bridge/xio3130_upstream.c
-@@ -24,6 +24,7 @@
- #include "hw/pci/msi.h"
- #include "hw/pci/pcie.h"
- #include "hw/pci/pcie_port.h"
-+#include "hw/core/qdev-properties.h"
- #include "migration/vmstate.h"
- #include "qemu/module.h"
- 
-@@ -49,9 +50,17 @@ static void xio3130_upstream_write_config(PCIDevice *d, uint32_t address,
- static void xio3130_upstream_reset(DeviceState *qdev)
- {
-     PCIDevice *d = PCI_DEVICE(qdev);
-+    PCIEPort *p = PCIE_PORT(d);
- 
-     pci_bridge_reset(qdev);
-     pcie_cap_deverr_reset(d);
-+    /*
-+     * An upstream port is not a PCIESlot, so the link capability
-+     * and status registers are filled here from the port's
-+     * configuration, the way the CXL upstream port does.
-+     */
-+    pcie_cap_fill_link_ep_usp(d, QEMU_PCI_EXP_LNK_X1,
-+                              QEMU_PCI_EXP_LNK_2_5GT, p->flitmode);
- }
- 
- static void xio3130_upstream_realize(PCIDevice *d, Error **errp)
-@@ -91,6 +100,10 @@ static void xio3130_upstream_realize(PCIDevice *d, Error **errp)
-     if (rc < 0) {
-         goto err;
-     }
-+    if (p->svc) {
-+        pcie_svc_cap_init(d, XIO3130_AER_OFFSET + PCI_ERR_SIZEOF,
-+                          p->flitmode, errp);
-+    }
- 
-     return;
- 
-@@ -123,6 +136,11 @@ static const VMStateDescription vmstate_xio3130_upstream = {
-     }
- };
- 
-+static const Property xio3130_upstream_props[] = {
-+    DEFINE_PROP_BOOL("x-svc", PCIEPort, svc, false),
-+    DEFINE_PROP_BOOL("x-256b-flit", PCIEPort, flitmode, false),
-+};
++``x-uio`` is also accepted by the ``pxb-cxl`` host bridge: it sets the
++UIO Capable bit of the host bridge HDM decoder capability. Each root
++port within the host bridge completes the advertisement, reporting the
++UIO Capable bit of its own HDM decoder capability when the host bridge
++carries ``x-uio`` and its own ``x-svc`` and ``x-256b-flit`` options
++are set.
 +
- static void xio3130_upstream_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -138,6 +156,7 @@ static void xio3130_upstream_class_init(ObjectClass *klass, const void *data)
-     dc->desc = "TI X3130 Upstream Port of PCI Express Switch";
-     device_class_set_legacy_reset(dc, xio3130_upstream_reset);
-     dc->vmsd = &vmstate_xio3130_upstream;
-+    device_class_set_props(dc, xio3130_upstream_props);
- }
- 
- static const TypeInfo xio3130_upstream_info = {
-diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
-index 1bcc734649..492721ba43 100644
---- a/include/hw/pci/pcie_port.h
-+++ b/include/hw/pci/pcie_port.h
-@@ -35,6 +35,9 @@ struct PCIEPort {
-     /*< public >*/
-     bool flitmode;
- 
-+    /* Streamlined Virtual Channel (SVC) capability */
-+    bool svc;
++An example of 3 type3 devices with volatile memory below a switch. All the
++devices and ports support the Unordered IO (UIO) feature, which builds on
++the Streamlined Virtual Channel (SVC) capability, the Device 3 capability
++and 256-byte flit mode::
 +
-     /* pci express switch port */
-     uint8_t     port;
- };
-@@ -94,6 +97,7 @@ struct PCIERootPortClass {
-     int aer_offset;
-     int ssvid_offset;
-     int acs_offset;    /* If nonzero, optional ACS capability offset */
-+    int svc_offset;    /* optional SVC capability */
-     int ssid;
- };
++  qemu-system-x86_64 -M q35,cxl=on -m 4G,maxmem=8G,slots=8 -smp 4 \
++  ...
++  -object memory-backend-ram,id=target-mem1,size=512M \
++  -object memory-backend-ram,id=target-mem2,size=512M \
++  -object memory-backend-ram,id=target-mem3,size=512M \
++  -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,x-uio=on \
++  -device cxl-rp,port=0,bus=cxl.1,id=rp13,chassis=0,slot=0,x-svc=on,x-256b-flit=on,x-speed=64,x-width=16 \
++  -device cxl-rp,port=1,bus=cxl.1,id=root_port1,chassis=0,slot=1,x-svc=on,x-256b-flit=on,x-speed=64,x-width=16 \
++  -device cxl-upstream,port=2,sn=1234,bus=rp13,id=us0,x-svc=on,x-256b-flit=on,x-speed=64,x-width=16 \
++  -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4,x-svc=on,x-256b-flit=on,x-speed=64,x-width=16 \
++  -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5,x-svc=on,x-256b-flit=on,x-speed=64,x-width=16 \
++  -device cxl-downstream,port=2,bus=us0,id=swport2,chassis=0,slot=6,x-svc=on,x-256b-flit=on,x-speed=64,x-width=16 \
++  -device cxl-type3,id=mem1,bus=swport0,volatile-memdev=target-mem1,x-uio=on,x-svc=on,x-256b-flit=on,sn=1233 \
++  -device cxl-type3,id=mem2,bus=swport1,volatile-memdev=target-mem2,x-uio=on,x-svc=on,x-256b-flit=on,sn=1234 \
++  -device cxl-type3,id=mem3,bus=swport2,volatile-memdev=target-mem3,x-uio=on,x-svc=on,x-256b-flit=on,sn=1235 \
++  -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
++
+ A simple arm/virt example featuring a single direct connected CXL Type 3
+ Volatile Memory device::
  
 -- 
 2.34.1
