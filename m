@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862A3606A329
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 15:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013E4606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 15:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=QB0sIGnb
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=nLlJF87V
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOd8S-0001Wt-PS; Wed, 04 Nov 2026 10:42:49 -0500
+	id 1xOd8h-0001lg-8H; Wed, 04 Nov 2026 10:43:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOd8M-0001TQ-Fd; Wed, 04 Nov 2026 10:42:42 -0500
+ id 1xOd8f-0001k9-CQ; Wed, 04 Nov 2026 10:43:01 -0500
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOd8J-0001DQ-To; Wed, 04 Nov 2026 10:42:42 -0500
+ id 1xOd8d-0001Gk-Fs; Wed, 04 Nov 2026 10:43:00 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IikTbvnnDBCduEEF5u2ISCyanrO+MUGT+00z1Mgmd4C5yvG5nqBfIFsmXgJ+PIwXismTbufFcE8HkpoB4h9U7gQwQH/jfkgwdbdyW9gpcShL1FQBPREOvV4A8zNaSnBukoYDtqDejoSnanFr+sMVLQFquBVxtNoOCp/8lGU+T3jHFe6mAvWtQ7QJXKF/hHjRZC0V99LcZpiz9oUxrZU2GmWzAviXHVRic5jvrNmo7N6sfWUsf7zlJgKhzWpIKf1QWlhQBqlAvfnjlnow45zZMerzqzH7jP30UmU7lW4exMeal0TS3fsdnpXYDHduUjGpJIx6fpA8oubXY9I/CoTcFA==
+ b=yfGkPFZmRaN8cCe4qGdWXPV5Wq38YOw35/pZ2pG8jRJGo+FZrVrf/krg+qlwLlbUOyxh2gZr2uYijfFCAPM1wOQ6ZyF5FG2dytYSk98twBR70gkAXHcVa1rKKr0Q8X5EiwGYrKAVOJ0gh3wKp8be2sGGOooI69norepCi4iW7S0ovrztVJZTDzQnwY+cLA9xmKC+ykU4r8XLyrc6qJj0Ygfnux5qDx76wfbsGbTRSB6mkqVjy5I4xv4qV8L3Dt412VtN/M+VojEWftJkTiixCfY8pNffgc9Lf+cnyND2VtGs/RFpSA3/bqa6bAkUYMzyif41iz3+/0Ks2p+a3O4giA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FZcf0Vx30rYLIbNhznbrNOSJq8qXI8aJpgHs2i5GndU=;
- b=tFDfUT2k2G+DXxg87/7owKKAX1aPQbU4SqzLca2cV1XDRy3oy3LoKh/8df3g3F7/sVacKNR67hFh8GPHfqZlK5kLsKz6Zre3gTrDZ9LNYAROqhkatdQHprbQL7o1DSuI5K5gTGzBny/54Whe860B6KnWgZM3g/ZlVqDlSyCONOMqBTi8J+DsoP8FKnRPuxe4JWfMFkcXhq0DJHR/ebhqz+p50gi3HTSc4Si7w7yutbzuQ77HpbMHVoLJYqrnlXa6SwlvTzx8BHhjgfaaQ/ay/E5ZVZJhV/Q3lLfKyqYtBhz2RzkiNBpDnglmiqPbP/NjtBEt6LrNt/biZiPg0o3WtA==
+ bh=636P0fT2Nuwyzb50zoN0p+S5AO/mJmCSBWplAykOw+E=;
+ b=XOeSo7QN02oSEOTUujiSdljArLqpJRhktdJy6ampDh9CzmeF3kM+1ZVBXyw1MtF3nE52GeoOb9oIe+EboKHnKsKrPMS4C4vTuCHHQrL/kLD3zFysI9egrzQM10I2/3BdO0KdpcGQfNOOP+1Fe/aarzKTiWuLs4W52RqklZJvTJ4ni81whbfz6gbSD0eHKNl5NsKgxW2as5H8iuGNwbG11f/VnLcA9Mkz4eSmsyE6y6/3YyekvEaJJe0SR8gEi6AQmr3/PaZbM3EsfxZvDsCy69egsk2rSLWg0yVpJ4W/3jIXDjY/w6hwlOErfxw++NdobG9Ynph8G4WcBcEDavDB2A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,26 +32,33 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FZcf0Vx30rYLIbNhznbrNOSJq8qXI8aJpgHs2i5GndU=;
- b=QB0sIGnbpit1w8GDRCICVqpcqAo3fm7b0to4FDVQTWVopT9lfh/w3Rc2o+7TnG927sPV6U+WJgTZHmaY7Bf5YgTlHp3rOevYvmXqqHXvE8N1rZhLKw/OebiZ+sWdsi3LOX88Ew/IWczYa1AQcocMlXw7TrSzFEl6vuw+lmM19SsAlIE3tdfnuzpWpnfiaQkjDxUQzqhENGRv9PTOtEVSYJKUV0Znp4uACy8PEtpMNFcPDkguj5TNj+wdTgiA5IxbTxfFvdvj8SWLL0cSnec1OaQLY2eR9Dk65Mn0pvexfoOSrijpxw+xtief2BFXD9t+YthDoSdpG1Acjf/zYWUX4Q==
+ bh=636P0fT2Nuwyzb50zoN0p+S5AO/mJmCSBWplAykOw+E=;
+ b=nLlJF87V7AzRe1rq+Vy2i4TdxlUiLTcrTMriKTRe18hUZebbRkne2FKwso6dGeb8+ESG2HMGAlTTvqwQ8imuMVKQRcjbGJBTv30LzIMbx+DRqibPzVyJuwJTA/zZ/TlIPE47A/M3vPCwyd6jhAdVuCY81N8H504RAbNLFoVGlaaE+PhEWhG9hwsUE+tTKH5vPMHMkpKgAKnqM4kql1CUGitlIo9+Ig9SRcOIFdsuIvAa0IubowytJW56WgtP82SNh3C41ZgRlONY6AyVnZHSTw3Cjue71I9KEcfwTbIUSRh558EjhHDVG1w8WdAYxS99p19M4X30oJO+FTW2X/3Opw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com (2603:1096:405:2c::12)
- by SEYPR02MB9159.apcprd02.prod.outlook.com (2603:1096:101:302::15)
+ by SEZPR02MB7162.apcprd02.prod.outlook.com (2603:1096:101:190::6)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Wed, 4 Nov 2026
- 15:42:30 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.9; Wed, 4 Nov 2026
+ 15:42:51 +0000
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10]) by TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10%5]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
- 15:42:30 +0000
+ 15:42:51 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor.dooley@microchip.com>, Conor Dooley <conor@kernel.org>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
-Subject: [PATCH v5 03/26] hw/misc: pfsoc: Support DDR training with newer HSS
-Date: Wed,  4 Nov 2026 23:41:30 +0800
-Message-ID: <20261104154207.641511-4-bin.meng@processmission.com>
+Cc: Chao Liu <chao.liu@processmission.com>,
+ Conor Dooley <conor.dooley@microchip.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Conor Dooley <conor@kernel.org>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
+Subject: [PATCH v5 14/26] hw/riscv: pfsoc: Add PolarFire SoC RTC to Icicle Kit
+Date: Wed,  4 Nov 2026 23:41:41 +0800
+Message-ID: <20261104154207.641511-15-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261104154207.641511-1-bin.meng@processmission.com>
 References: <20261104154207.641511-1-bin.meng@processmission.com>
@@ -63,58 +70,58 @@ X-ClientProxiedBy: TY4P301CA0056.JPNP301.PROD.OUTLOOK.COM
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR02MB7121:EE_|SEYPR02MB9159:EE_
-X-MS-Office365-Filtering-Correlation-Id: 570fb5bb-31a5-4ddf-b16b-08df3a8a3c78
+X-MS-TrafficTypeDiagnostic: TYZPR02MB7121:EE_|SEZPR02MB7162:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8d29f84c-420a-4203-570d-08df3a8a4923
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|23010399003|366016|261022115727099003|5023799004|56012099006|261021123027099003|261022075727099003|261021121427099003|261009223027099003|261102123227099003|261022105027099003|261028144727099003|261026140227099003|261026121527099003|10067099003|22082099003|18002099003|6133799003|3023799007;
-X-Microsoft-Antispam-Message-Info: ZaphWO9wz4pX1pdMD8+lYW858Jd6ickihJQjhPLh/wv5yedOX6BjVMKdx97lZloFHxM8NcikuNULXkIF6sVQSilGxqIk32mpmWKX09ahi/GZ8YJQj6+bUyBriezaCwNOy9uV6L8EaUoTXHR9dIY9DCGHBxsmlijO7WhDFJhENEJ2j7CtDYlrZ1AdVVAQ2BilH7QP2wHIOkbLlG7ucN9k5tc9eK08SXu8jl/8bqA3Ca79Fu4Yg07D6x6CQ7C8oXf2SPPo5T1Uh3ZukHpXrWM7v6fvC6/JiizFwr4utlfP7xCB5b1EKKih21Iz4CIYdp52rQCe+1lKnSRxy+AMKGV995AIOiHvOBkiVXS9sjCRLexR8h05vg5vVqe0KIm+wO85EJmSi5JHzxaJxbDvvWbjHaki1oZhNCjJp/7Y//FDvkWDoa1hI/bxuNJXCe5G395J+2pOUWBxhXQy0zMx/2Cll6QXm3DWOlNHs3YbODF7iZwgjXLc9oBLwLnCuyO/vt1RfPdr8QUHwRMeo2JdkJK2ucJRQSfzSf7Q3BNx1wMFSdC/QCDwdcvEW0LF2z/wIasFGDUKqmdI8/VTp1QrNFfdKACwcmswvozblGjMVQgJKi1G0w8AMH94g4yxAFWKbTpJgWrLTeLYecIYZiPA7trBYUdNwbt43aOgA6AZIsLEJ7c=
+ ARA:13230040|366016|1800799024|7416014|23010399003|376014|5023799004|56012099006|261021121427099003|261009223027099003|261022075727099003|261102123227099003|261026121527099003|10067099003|22082099003|18002099003|3023799007;
+X-Microsoft-Antispam-Message-Info: d7Fm92ccAYjpuh1RRJ7p1n3/Kqsx8DgmKJLH9XJm/uTsOpOHuVSY/yKyIbmgVv8LbJSMQ0Ld4hTD5rw2owGOA9X/r1WC47LHGumYmyRvhqKm3kuxzJGMJex8IjDKy1+g4sf5Zr02V+i8/1sPJFFVS0SjsQzjw76PniScrPaWO8v0pCq0aUR2KgKPeZ4ucqTPp090qpX4TI6sJK2JZApPMdbLIsB5Ln+6xo1VFvwZWNM9qcbxgA4acUY3Fy3kYS0+hZ4I91zH/wUIrw1Lev1KNS37JrCmv5grF742MQmir0jmYpAPif1+4MdaqPLCLv4baXXhcempXEWH8njuyIpmcX+t4SQtLJuDRM7HWeWNKItYUqdakzPAN+/r3DKAknLebZ/JR2tfPRH6KcZHdSsg2W1mgPl/hxSEMYs+K9YM1y2/B6ZuKYjd58dgWaVIRLIFUC8vOweQjZje7lvXROeqj9Uwl1Nq+yIsospTCo4Nv65KKiA21d+t+eEM/HdST+RkNOflRmDTmwLL8J/jq3s8NoXBHBGzc6+8XQb5IFuUtst8fZugHtuSalPG4rjY/WYfr0Izt5TjzRpheWR3zzf42nJa/a99pNjsnvoe6UYTJTp+mRTp+pQu0Bu6kquU8qXgRc7nbPzBeHPEx/XKjsbK7+/ppbfWr8Cpe0K4pjf928k=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR02MB7121.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(261022115727099003)(5023799004)(56012099006)(261021123027099003)(261022075727099003)(261021121427099003)(261009223027099003)(261102123227099003)(261022105027099003)(261028144727099003)(261026140227099003)(261026121527099003)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007);
+ SFS:(13230040)(366016)(1800799024)(7416014)(23010399003)(376014)(5023799004)(56012099006)(261021121427099003)(261009223027099003)(261022075727099003)(261102123227099003)(261026121527099003)(10067099003)(22082099003)(18002099003)(3023799007);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?H+4mA1HzmdKfCRmQ4HGyha9DzHAhm72d2sUXYOJ09GEjTZ46gHvK3/Zi9zl9?=
- =?us-ascii?Q?cncpXcKSYArOmHzUmKUVaS1g5rhoIw8FpTlrlSUZaAO+QsMbZQG5+gl6MMDp?=
- =?us-ascii?Q?V4H+myDxfPKgOGqcCY4rC4beP5JyXRxTwiD121dSpeXoCuVFY5M3omaYNfa9?=
- =?us-ascii?Q?Ri17iJoRGMG5S+QbpzrnsISiiHS+8PzBh3443wyMvePF5qD/u5S/hNyrg34+?=
- =?us-ascii?Q?B+U5hizWds8/vWzE7NAqKRQ8g99T4dkxk9zrBgoXmpgqXRbF86cTgjsXaTYD?=
- =?us-ascii?Q?ArPg7hI/Qfo8bO8jGWYg4NPlhEQLd/57GuB/olmEYs0zB3uUqts8/law7XDO?=
- =?us-ascii?Q?Y57FQWxv8s5mEIs7ohVkiOsBiA8KiWCb1xoiYMwJ0sp4WnFMg5uC3J8dpJLv?=
- =?us-ascii?Q?8/ibSSkbXv5WRKY89FVfL89ybM1w/QoKoz7xlAUt9NNayh0GfjIREyLuQGuF?=
- =?us-ascii?Q?sk6IIpUQwNbl/FHitl+m3HdbZMdkAg/XL0kczyIw69HxZR6bHsP5DkOOX0ih?=
- =?us-ascii?Q?sp/M9LIBmb8gKZvkqM5T/diShvfznXXIPNdFw0Lcn6DdNU6BcrYMoAs3P/6z?=
- =?us-ascii?Q?W3vJ+DXq+cY2L/4whiPi0EibBV2R9IFHsDrdU0L2A4hz/NOYDfW1snUw93w7?=
- =?us-ascii?Q?jqMpivjCwOtAlqIOV7KNTwar17vyODKSznZM5pLRcn1oxJFfk0txxZfgj9/4?=
- =?us-ascii?Q?TCffbYHq1sF2UsrkCf/165V82bYYnulCS36260NrFp5OCqnzAK3aYlV2cJmU?=
- =?us-ascii?Q?7svfsYje6qb8SEiglq1ks50GReB7T5kdTguzz25cNkJtSiVLZ4yPhW45nU6A?=
- =?us-ascii?Q?vp86PTAXEdkHnpMf7ZK0SwBNV81I6NRpIHxKsylDAMaX9N5xqIRlQRM9fLYK?=
- =?us-ascii?Q?dch2TDmcRUA+s2y6+AUaOmojVBSQqLAOVc2rKJtpMstc81vj6MJ1xTD60pm+?=
- =?us-ascii?Q?vEGle/SOEeDY19mvBhWjWieu5mBg+RnXZc3tnhoITl34M6LZ5h2I3AVDuUJi?=
- =?us-ascii?Q?b96NYyDmJkbmo2hNkCcF2D9gHqQrtVG88xGYH1nhuD8HMAseh+E9/QZ1lZNF?=
- =?us-ascii?Q?NuU0joGLdeu7CjuhV3JairpDu1yfd8EGxrGzrRGC2QOXEihoQHFaMBTiHrT3?=
- =?us-ascii?Q?LXQ7kiHGowLnOVaKPu9KyOsnLpK4IP9Zt7iZd826XgBaS/v2a5F3aPWKq0jc?=
- =?us-ascii?Q?+MYtk1NkKpfflGVmCAeF3uHr/FN5CaIukQX8Y+Wqoya/+GSRUMevK8Tk8Pgs?=
- =?us-ascii?Q?hskngsIK4Qga2+8mpqQzgVAmQHn5V2+mU2XdjE6gyepogufNi0iSMN5ZhDPc?=
- =?us-ascii?Q?I7NfsfzPvPcxhL0jW1mgEcVQlUQSkjUPPRzAbVYK1eZe2aDZN7zZ0knKFl31?=
- =?us-ascii?Q?PB7wT1Pt+peslX3bTV8yuY2LIeO6yrBds1LojsVzy9ybWukgf31kYRDFx/gF?=
- =?us-ascii?Q?QVsVexzuMwyHunk7LYGOBJVPWCcq0oqHWJQZv3O5f984EcKuTfdrrLtivFSk?=
- =?us-ascii?Q?osY4BTl/1c/wFtouCWhP7lZXrrQT5pPL0sbx/rviURbePpW9gqlqC550mi0A?=
- =?us-ascii?Q?4k8fvUe+lf9jY0L9PhaT/6LPeKvWTqvQk8BW3pVzZASTDHCTwIGJrCf9L3NJ?=
- =?us-ascii?Q?Dhbmgih1Oh8SoyXIGaAIRMPFP8W6ZIziG26n6HsfHscbPwo8OwaX+BC1KENk?=
- =?us-ascii?Q?FfmyIODFjtWStY29YHW1rvBKzkMvMtb2GJ16B4Oun5ZPMw55P9IGIDMsW/zm?=
- =?us-ascii?Q?MNvHW0HX5aQ6aeJYo5VoJmj2QQ5Lm+U=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?BvDoCf3I8U+gq9X7hjw6Av71rA4Ry0VuM8uth5uKErTjwMQDG8Iopjexea7s?=
+ =?us-ascii?Q?BZmUs8EnV4C7Ydr4iF7OoerY856kOoX+JwXzTi/zHLq027Z0pHo19yHg8zaL?=
+ =?us-ascii?Q?FpoKsgVVq1XK6SSnvaVGjVe+d1BG6IoaU4xpaj7siBhwwl2nxlb/sShHniUG?=
+ =?us-ascii?Q?ib+hfpWqWeA+NLpe/Ogf+b7nCJbVdla1WYy7RTZXC5WF6z3gpNF8YaWqKcaY?=
+ =?us-ascii?Q?kExmWBUOIuCnBtoQ4qjfF1WCm/rEs2nP4OhYqlI6+RA2i3zzRKinWTcbxp0C?=
+ =?us-ascii?Q?U8EF5wF4oLLFTQdoZTWuB8eVjowX5pagOkQlq308tpSWQvytU3DlFdj/iRt9?=
+ =?us-ascii?Q?cd0VcES3n7mLxD+4ZePyUjTZtmmEm+CHXHmvLVHLrlTp6zzUjbQlwUF5zJ0a?=
+ =?us-ascii?Q?36eLBVbtNvlAxqhwQxLjKKbqa6IpJd4JvAyx+LQCAH2wkLLsG7XfNvGFUVfK?=
+ =?us-ascii?Q?8J629qLrYfFHUFTvWoTJztRRFIc/CFhrMqYhhhkSo1FjIFENQ6RgvTcb8hfB?=
+ =?us-ascii?Q?6kDY5OS+52BV/ylu7ujgkpp0CYcKSHBqqIVQkkZDtE+kM2G2n2N/E5p2xnPH?=
+ =?us-ascii?Q?zQKaAstMjywf8jxHXlEYgcATsD3TtCIhVFi3lrPMlRWu26g5J8a6lZhJc9dG?=
+ =?us-ascii?Q?wTGXIjYhyP6AMva0U3lX4QWbWVZgKQPlZSu79yL3aT4HBRyyI2RCshETYee+?=
+ =?us-ascii?Q?KybE148PuhnrNGlg6WyGyGUCmCWUZCtGl0wnmnPMpqgX0U/y/DZRp3HxkHMn?=
+ =?us-ascii?Q?QpvOYdJOAyAKYZ/v503RG/ZIXkfFkTt61P9L9wR+WbX/9PN4YJSE7e2gqVWr?=
+ =?us-ascii?Q?e/TROMgiY2NTyHF573avLIPZFRbseKMMA5I1y9gbJz5nIdyj161gp2b3UMC/?=
+ =?us-ascii?Q?gmbqsLgUN3VuqnQWcl7Rbg2Xs77BsOufo/HpL4eZMaXGsnYAPXVlI2uEdzuo?=
+ =?us-ascii?Q?axgRGpoOg1r3PTtDNBKmBEwG0d/xPhkXZWW//6eKseVEEiEj0slzdjXwbZUO?=
+ =?us-ascii?Q?Ve41MpsfS0phgRvppacd5fAaavrLYh2m6liIG0BscTeNdcCMP82Pl2fe/Qe+?=
+ =?us-ascii?Q?oTxhqUGrrqupByvg9Ia8wrGe7TBlFFZObf8r6J5PJaOnPRKUM4gtLx+8FdGl?=
+ =?us-ascii?Q?cKA1iOJ4t6iHq0FsXQmEeqcLO0gSYLluDxZC62qTPCIk/cN/ZasSfj/WH1ia?=
+ =?us-ascii?Q?72A2TSMmVIQMoPHTyFSp8KS2WoiyDU27KRk0j81sH1iFSncOCoITdr05Xn7S?=
+ =?us-ascii?Q?eFg38aqjpaMzZXtJ+ZkAxG9OcHhDrSgye0LYgPCgLlzUqOEfgeJG2+LFRQic?=
+ =?us-ascii?Q?R3iragTc48EayOEUdvNjVIP53eWK5Va4BK3T7z7gvaiFDq3Xw1+uZ5IVV4Kv?=
+ =?us-ascii?Q?GeqVggSBcwVnDUQYACwwrzxh42HkIQQEj/BdzblAz2n3lyYFDEAZuLNqdUSb?=
+ =?us-ascii?Q?WijU1CUM411/IJ0n/Ox2Tek0DCxQXoSTmdQWJYcrJzYAgd1tDsBIOFAqGtl+?=
+ =?us-ascii?Q?y18ujjWutHH9AOimdiueic3r6MS5QHSMtbphTowjbRcdxbCrSb3D+xY8vX1i?=
+ =?us-ascii?Q?url0uOzVCRtElCwl/mFRWPT/vAoWU2kISsR4ArLFD0uLyCQo5WzCO0eX9xUN?=
+ =?us-ascii?Q?0bIdbafPJOnPxirQar7vLU9QJW64jkpgBDTLIkuzFoUcGONoVfnz8TxElaYF?=
+ =?us-ascii?Q?V73ILMkH5WhUvgOGD8UEwe6LRqnupO6+9bTX80KaJkH7MmZVPlRgch/v/RH7?=
+ =?us-ascii?Q?ZyfjqBlB6eM/zJqc3ZLrAr3JKWJ+cU4=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 570fb5bb-31a5-4ddf-b16b-08df3a8a3c78
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8d29f84c-420a-4203-570d-08df3a8a4923
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR02MB7121.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 15:42:30.5778 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 15:42:51.7772 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YX4Z4zBZAZ35nGuus+ddztiYLD9AYV1/XImM73qlVrunqBBXnvaIo4ws0Qo3/SXBmiQiz99A95Uks612+P5JZZngYwHslN9JQPhQb0/z8AY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR02MB9159
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8UP+yXHZDDZjRRXjuSv+0JorAAURBsG86pR3TzAAwRbpJTe33nyNNY1OE23mwekLR2bHoxN8PYFHBpaLSqd46i878zPzDjIXDJBzHpUe8pk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7162
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
  helo=TYPPR03CU001.outbound.protection.outlook.com
@@ -136,417 +143,102 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-HSS v2024.06 performs DDR and SGMII initialization through the DMC
-register window before it can complete platform startup. The existing
-model, which was validated against older version HSS in the early days,
-exposes only a few fixed training results, so newer version HSS stalls
-while waiting for PVT, PLL, DLL, ADDCMD, and verification status.
+The Icicle Kit memory map advertises the PolarFire RTC, but the
+machine leaves its MMIO range unmapped. Linux faults when it
+programs the RTC prescaler during boot.
 
-Update the DMC model by adding the minimum state and status behavior
-needed by that firmware flow. Model the SGMII control registers,
-main DDR PLL lock, deterministic ADDCMD transitions, and successful
-gate and DQ/DQS verification. Keep training progress and writable
-controls per device and clear them on reset.
-
-These values are compatibility responses for HSS v2024.06 rather than
-a cycle-accurate description of the DDR PHY. Document that limitation
-in the source.
-
-While we are here, update the license text to use the SPDX format.
-
-Note at the time being there is an HSS bug [1] that consistenly blocks
-the DDR traning from succeed when using an HSS image built from certain
-version compiler like GCC 8.3.0. A patch [2] was proposed and verified
-against HSS v2024.06.
-
-[1] https://github.com/polarfire-soc/platform/issues/36
-[2] https://github.com/processmission/qemu-machine-images/blob/main/
-    machine/riscv64/microchip-icicle-kit/
-    0001-mpfs_hal-preserve-DDR-pattern-test-parameters.patch
+Select and instantiate the RTC, map it at the documented address,
+and wire its wakeup and match outputs to PLIC interrupts 80 and 81.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 Tested-by: Conor Dooley <conor.dooley@microchip.com>
-
 ---
 
-(no changes since v2)
+(no changes since v1)
 
-Changes in v2:
-- Use the Resettable API instead of a legacy reset handler
+ include/hw/riscv/microchip_pfsoc.h |  4 ++++
+ hw/riscv/microchip_pfsoc.c         | 11 +++++++++++
+ hw/riscv/Kconfig                   |  1 +
+ 3 files changed, 16 insertions(+)
 
- include/hw/misc/mchp_pfsoc_dmc.h |   6 +
- hw/misc/mchp_pfsoc_dmc.c         | 273 ++++++++++++++++++++++++++++---
- 2 files changed, 255 insertions(+), 24 deletions(-)
-
-diff --git a/include/hw/misc/mchp_pfsoc_dmc.h b/include/hw/misc/mchp_pfsoc_dmc.h
-index 2ed582fb8c..6a1986c2c2 100644
---- a/include/hw/misc/mchp_pfsoc_dmc.h
-+++ b/include/hw/misc/mchp_pfsoc_dmc.h
-@@ -28,10 +28,16 @@
- /* DDR SGMII PHY module */
+diff --git a/include/hw/riscv/microchip_pfsoc.h b/include/hw/riscv/microchip_pfsoc.h
+index 18f5003850..5827d6be2f 100644
+--- a/include/hw/riscv/microchip_pfsoc.h
++++ b/include/hw/riscv/microchip_pfsoc.h
+@@ -31,6 +31,7 @@
+ #include "hw/misc/mchp_pfsoc_ioscb.h"
+ #include "hw/misc/mchp_pfsoc_sysreg.h"
+ #include "hw/net/cadence_gem.h"
++#include "hw/rtc/mchp_pfsoc_rtc.h"
+ #include "hw/sd/cadence_sdhci.h"
+ #include "hw/riscv/riscv_hart.h"
  
- #define MCHP_PFSOC_DDR_SGMII_PHY_REG_SIZE   0x1000
-+#define MCHP_PFSOC_DDR_SGMII_PHY_REG_NUM \
-+    (MCHP_PFSOC_DDR_SGMII_PHY_REG_SIZE / sizeof(uint32_t))
+@@ -53,6 +54,7 @@ typedef struct MicrochipPFSoCState {
+     MchpPfSoCMMUartState *serial2;
+     MchpPfSoCMMUartState *serial3;
+     MchpPfSoCMMUartState *serial4;
++    MchpPfSoCRtcState rtc;
+     MchpPfSoCSysregState sysreg;
+     SiFivePDMAState dma;
+     CadenceGEMState gem0;
+@@ -148,6 +150,8 @@ enum {
+     MICROCHIP_PFSOC_DMA_IRQ7 = 12,
+     MICROCHIP_PFSOC_GEM0_IRQ = 64,
+     MICROCHIP_PFSOC_GEM1_IRQ = 70,
++    MICROCHIP_PFSOC_RTC_WAKEUP_IRQ = 80,
++    MICROCHIP_PFSOC_RTC_MATCH_IRQ = 81,
+     MICROCHIP_PFSOC_EMMC_SD_IRQ = 88,
+     MICROCHIP_PFSOC_MMUART0_IRQ = 90,
+     MICROCHIP_PFSOC_MMUART1_IRQ = 91,
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index 6d943a224b..55ca8a244a 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -184,6 +184,8 @@ static void microchip_pfsoc_soc_instance_init(Object *obj)
+     object_initialize_child(obj, "sysreg", &s->sysreg,
+                             TYPE_MCHP_PFSOC_SYSREG);
  
- typedef struct MchpPfSoCDdrSgmiiPhyState {
-     SysBusDevice parent;
-     MemoryRegion sgmii_phy;
-+    uint32_t regs[MCHP_PFSOC_DDR_SGMII_PHY_REG_NUM];
-+    uint8_t training_status_bit;
-+    uint8_t addcmd_tap;
-+    bool addcmd_move_active;
- } MchpPfSoCDdrSgmiiPhyState;
- 
- #define TYPE_MCHP_PFSOC_DDR_SGMII_PHY "mchp.pfsoc.ddr_sgmii_phy"
-diff --git a/hw/misc/mchp_pfsoc_dmc.c b/hw/misc/mchp_pfsoc_dmc.c
-index 1fe4535464..96440dac62 100644
---- a/hw/misc/mchp_pfsoc_dmc.c
-+++ b/hw/misc/mchp_pfsoc_dmc.c
-@@ -2,22 +2,20 @@
-  * Microchip PolarFire SoC DDR Memory Controller module emulation
-  *
-  * Copyright (c) 2020 Wind River Systems, Inc.
-+ * Copyright (c) 2026 Process Mission
-  *
-  * Author:
-  *   Bin Meng <bin.meng@windriver.com>
-  *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License as
-- * published by the Free Software Foundation; either version 2 or
-- * (at your option) version 3 of the License.
-+ * Updated by Bin Meng <bin.meng@processmission.com> to support DDR
-+ * training emulation for with newer version Hart Software Services,
-+ * aka HSS.
-  *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-+ * The DMC register model is based on HSS v2024.06. Its read/write
-+ * behavior is the minimum needed for DDR training to complete and
-+ * may not reflect actual hardware register behavior.
-  *
-- * You should have received a copy of the GNU General Public License along
-- * with this program; if not, see <http://www.gnu.org/licenses/>.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #include "qemu/osdep.h"
-@@ -29,17 +27,56 @@
- 
- /* DDR SGMII PHY module */
- 
--#define SGMII_PHY_IOC_REG1              0x208
--#define SGMII_PHY_TRAINING_STATUS       0x814
--#define SGMII_PHY_DQ_DQS_ERR_DONE       0x834
--#define SGMII_PHY_DQDQS_STATUS1         0x84c
--#define SGMII_PHY_PVT_STAT              0xc20
-+#define PHY_ADDCMD_CK_TRANSITION_TAP              12
-+#define PHY_ADDCMD_A5_TRANSITION_TAP              20
-+#define PHY_ADDCMD_CK_READBACK                    5
-+#define PHY_ADDCMD_A5_READBACK                    (3 << 8)
-+#define PHY_GT_TXDLY_VALUE                        0x01010101
-+#define PHY_DQDQS_STATUS2_VALUE                   5
++    object_initialize_child(obj, "rtc", &s->rtc, TYPE_MCHP_PFSOC_RTC);
 +
-+#define SGMII_PHY_PLL_CTRL_MAIN                   0x084
-+#define SGMII_PHY_PLL_CTRL_MAIN_CONTROL_LO_MASK   0x0000007f
-+#define SGMII_PHY_PLL_CTRL_MAIN_LP_REQUIRES_LOCK  BIT(24)
-+#define SGMII_PHY_PLL_CTRL_MAIN_LOCK              BIT(25)
-+#define SGMII_PHY_IOC_REG1                        0x208
-+#define SGMII_PHY_TRAINING_STATUS                 0x814
-+#define SGMII_PHY_GT_ERR_COMB                     0x81c
-+#define SGMII_PHY_GT_CLK_SEL                      0x820
-+#define SGMII_PHY_GT_TXDLY                        0x824
-+#define SGMII_PHY_DQ_DQS_ERR_DONE                 0x834
-+#define SGMII_PHY_DQDQS_STATUS1                   0x84c
-+#define SGMII_PHY_DQDQS_STATUS2                   0x850
-+#define SGMII_PHY_EXPERT_DLYCNT_MOVE_REG1         0x880
-+#define SGMII_PHY_EXPERT_DLYCNT_MOVE_CONTROL_MASK 0x001fffff
-+#define SGMII_PHY_EXPERT_DLYCNT_MOVE_ADDCMD_MASK  0x00180000
-+#define SGMII_PHY_EXPERT_DLYCNT_LOAD_REG1         0x890
-+#define SGMII_PHY_EXPERT_DLYCNT_LOAD_CONTROL_MASK 0x001fffff
-+#define SGMII_PHY_EXPERT_DLYCNT_LOAD_ADDCMD_MASK  0x00180000
-+#define SGMII_PHY_EXPERT_ADDCMD_LN_READBACK       0x8ac
-+#define SGMII_PHY_SOFT_RESET_SGMII                0xc00
-+#define SGMII_PHY_SGMII_MODE                      0xc04
-+#define SGMII_PHY_PLL_CNTL                        0xc08
-+#define SGMII_PHY_PLL_CNTL_LOCK                   BIT(7)
-+#define SGMII_PHY_CH0_CNTL                        0xc0c
-+#define SGMII_PHY_CH1_CNTL                        0xc10
-+#define SGMII_PHY_RECAL_CNTL                      0xc14
-+#define SGMII_PHY_RECAL_CNTL_STATUS_MASK          0xffff0000
-+#define SGMII_PHY_RECAL_CNTL_LOCK                 BIT(23)
-+#define SGMII_PHY_CLK_CNTL                        0xc18
-+#define SGMII_PHY_DYN_CNTL                        0xc1c
-+#define SGMII_PHY_PVT_STAT                        0xc20
-+#define SGMII_PHY_PVT_STAT_IO_ENABLE              BIT(6)
-+#define SGMII_PHY_PVT_STAT_CALIBRATED             BIT(14)
-+#define SGMII_PHY_PVT_STAT_GUEST_CTRL_MASK        0xc0000000
-+#define SGMII_PHY_SPARE_CNTL                      0xc24
-+#define SGMII_PHY_SPARE_STAT                      0xc28
+     object_initialize_child(obj, "ddr-sgmii-phy", &s->ddr_sgmii_phy,
+                             TYPE_MCHP_PFSOC_DDR_SGMII_PHY);
+     object_initialize_child(obj, "ddr-cfg", &s->ddr_cfg,
+@@ -294,6 +296,15 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+         memmap[MICROCHIP_PFSOC_PLIC].size);
+     g_free(plic_hart_config);
  
- static uint64_t mchp_pfsoc_ddr_sgmii_phy_read(void *opaque, hwaddr offset,
-                                               unsigned size)
- {
-     uint32_t val = 0;
--    static int training_status_bit;
-+    MchpPfSoCDdrSgmiiPhyState *s = opaque;
-+    uint32_t index = offset / sizeof(uint32_t);
- 
-     switch (offset) {
-     case SGMII_PHY_IOC_REG1:
-@@ -53,8 +90,8 @@ static uint64_t mchp_pfsoc_ddr_sgmii_phy_read(void *opaque, hwaddr offset,
-          *
-          * See ddr_setup() in mss_ddr.c in the HSS source codes.
-          */
--        val = 1 << training_status_bit;
--        training_status_bit = (training_status_bit + 1) % 5;
-+        val = BIT(s->training_status_bit);
-+        s->training_status_bit = (s->training_status_bit + 1) % 5;
-         break;
-     case SGMII_PHY_DQ_DQS_ERR_DONE:
-         /*
-@@ -71,8 +108,106 @@ static uint64_t mchp_pfsoc_ddr_sgmii_phy_read(void *opaque, hwaddr offset,
-         val = 0xff;
-         break;
-     case SGMII_PHY_PVT_STAT:
--        /* See sgmii_channel_setup() in HSS */
--        val = BIT(14) | BIT(6);
-+        /*
-+         * HSS polls IO enable and calibration status, then writes the
-+         * calibration lock. The HSS register definitions mark bits 31:30
-+         * as writable controls.
-+         *
-+         * See sgmii_channel_setup() in mss_sgmii.c in HSS.
-+         */
-+        val = s->regs[index] | SGMII_PHY_PVT_STAT_IO_ENABLE |
-+              SGMII_PHY_PVT_STAT_CALIBRATED;
-+        break;
-+    case SGMII_PHY_PLL_CTRL_MAIN:
-+        /*
-+         * HSS programs the main DDR PLL controls and polls LOCK after
-+         * changing the PLL dividers during LPDDR4 manual training. The
-+         * HSS register definitions mark bits 6:0 and 24 as writable.
-+         *
-+         * See ddr_pll_config() in mss_pll.c and
-+         * lpddr4_manual_training() in mss_ddr.c in HSS.
-+         */
-+        val = s->regs[index] | SGMII_PHY_PLL_CTRL_MAIN_LOCK;
-+        break;
-+    case SGMII_PHY_PLL_CNTL:
-+        /*
-+         * HSS programs the SGMII PLL controls and polls aro_pll0_lock.
-+         *
-+         * See setup_sgmii_rpc_per_config() and sgmii_channel_setup()
-+         * in mss_sgmii.c in HSS.
-+         */
-+        val = s->regs[index] | SGMII_PHY_PLL_CNTL_LOCK;
-+        break;
-+    case SGMII_PHY_RECAL_CNTL:
-+        /*
-+         * HSS programs the low control half, polls sro_dll_lock, and
-+         * reads sro_dll_90_code from the read-only status half.
-+         *
-+         * See setup_sgmii_rpc_per_config() and sgmii_channel_setup()
-+         * in mss_sgmii.c in HSS.
-+         */
-+        val = s->regs[index] | SGMII_PHY_RECAL_CNTL_LOCK;
-+        break;
-+    case SGMII_PHY_EXPERT_ADDCMD_LN_READBACK:
-+        /*
-+         * HSS pulses the ADDCMD move controls while sampling CK from
-+         * bits 3:0 and A5 from bits 9:8. The transition tap positions
-+         * below are deterministic QEMU model choices.
-+         *
-+         * See lpddr4_manual_training() in mss_ddr.c in HSS.
-+         */
-+        if (s->addcmd_tap >= PHY_ADDCMD_CK_TRANSITION_TAP) {
-+            val |= PHY_ADDCMD_CK_READBACK;
-+        }
-+        if (s->addcmd_tap >= PHY_ADDCMD_A5_TRANSITION_TAP) {
-+            val |= PHY_ADDCMD_A5_READBACK;
-+        }
-+        break;
-+    case SGMII_PHY_GT_ERR_COMB:
-+    case SGMII_PHY_GT_CLK_SEL:
-+        /*
-+         * HSS fails DDR verification on any gate error, a zero delay
-+         * selected by gt_clk_sel, or more than one zero delay byte.
-+         * Model no gate errors; the all-nonzero delay below makes the
-+         * deterministic clock selection immaterial.
-+         *
-+         * See DDR_TRAINING_IP_SM_VERIFY in ddr_setup() in mss_ddr.c
-+         * in HSS.
-+         */
-+        val = 0;
-+        break;
-+    case SGMII_PHY_GT_TXDLY:
-+        val = PHY_GT_TXDLY_VALUE;
-+        break;
-+    case SGMII_PHY_DQDQS_STATUS2:
-+        /*
-+         * HSS requires the calculated DQ/DQS window to be at least
-+         * DQ_DQS_NUM_TAPS, which is 5. Return the minimum pass value.
-+         *
-+         * See DDR_TRAINING_IP_SM_VERIFY in ddr_setup() and the
-+         * DQ_DQS_NUM_TAPS definition in mss_ddr.h in HSS.
-+         */
-+        val = PHY_DQDQS_STATUS2_VALUE;
-+        break;
-+    case SGMII_PHY_EXPERT_DLYCNT_MOVE_REG1:
-+    case SGMII_PHY_EXPERT_DLYCNT_LOAD_REG1:
-+    case SGMII_PHY_SOFT_RESET_SGMII:
-+    case SGMII_PHY_SGMII_MODE:
-+    case SGMII_PHY_CH0_CNTL:
-+    case SGMII_PHY_CH1_CNTL:
-+    case SGMII_PHY_CLK_CNTL:
-+    case SGMII_PHY_DYN_CNTL:
-+    case SGMII_PHY_SPARE_CNTL:
-+    case SGMII_PHY_SPARE_STAT:
-+        /*
-+         * HSS programs the ADDCMD and SGMII controls and reads
-+         * SPARE_STAT to classify the silicon and select eye-width
-+         * thresholds.
-+         *
-+         * See lpddr4_manual_training() in mss_ddr.c and the SGMII setup
-+         * functions in mss_sgmii.c in HSS.
-+         */
-+        val = s->regs[index];
-         break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: unimplemented device read "
-@@ -87,10 +222,88 @@ static uint64_t mchp_pfsoc_ddr_sgmii_phy_read(void *opaque, hwaddr offset,
- static void mchp_pfsoc_ddr_sgmii_phy_write(void *opaque, hwaddr offset,
-                                            uint64_t value, unsigned size)
- {
--    qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
--                  "(size %d, value 0x%" PRIx64
--                  ", offset 0x%" HWADDR_PRIx ")\n",
--                  __func__, size, value, offset);
-+    MchpPfSoCDdrSgmiiPhyState *s = opaque;
-+    uint32_t index = offset / sizeof(uint32_t);
++    /* RTC */
++    sysbus_realize(SYS_BUS_DEVICE(&s->rtc), errp);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->rtc), 0,
++                    memmap[MICROCHIP_PFSOC_RTC].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->rtc), 0,
++        qdev_get_gpio_in(DEVICE(s->plic), MICROCHIP_PFSOC_RTC_WAKEUP_IRQ));
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->rtc), 1,
++        qdev_get_gpio_in(DEVICE(s->plic), MICROCHIP_PFSOC_RTC_MATCH_IRQ));
 +
-+    switch (offset) {
-+    case SGMII_PHY_IOC_REG1:
-+    case SGMII_PHY_TRAINING_STATUS:
-+    case SGMII_PHY_GT_ERR_COMB:
-+    case SGMII_PHY_GT_CLK_SEL:
-+    case SGMII_PHY_GT_TXDLY:
-+    case SGMII_PHY_DQ_DQS_ERR_DONE:
-+    case SGMII_PHY_DQDQS_STATUS1:
-+    case SGMII_PHY_DQDQS_STATUS2:
-+    case SGMII_PHY_EXPERT_ADDCMD_LN_READBACK:
-+    case SGMII_PHY_SPARE_STAT:
-+        /*
-+         * The HSS register definitions declare these status and
-+         * readback registers read-only.
-+         *
-+         * See mss_ddr_sgmii_phy_defs.h in HSS.
-+         */
-+        return;
-+    case SGMII_PHY_PLL_CTRL_MAIN:
-+        value &= SGMII_PHY_PLL_CTRL_MAIN_CONTROL_LO_MASK |
-+                 SGMII_PHY_PLL_CTRL_MAIN_LP_REQUIRES_LOCK;
-+        break;
-+    case SGMII_PHY_PLL_CNTL:
-+        value &= ~SGMII_PHY_PLL_CNTL_LOCK;
-+        break;
-+    case SGMII_PHY_RECAL_CNTL:
-+        value &= ~SGMII_PHY_RECAL_CNTL_STATUS_MASK;
-+        break;
-+    case SGMII_PHY_PVT_STAT:
-+        value &= SGMII_PHY_PVT_STAT_GUEST_CTRL_MASK;
-+        break;
-+    case SGMII_PHY_EXPERT_DLYCNT_MOVE_REG1: {
-+        bool active;
-+
-+        /*
-+         * HSS pulses 0 -> 0x180000 -> 0 while scanning the ADDCMD eye.
-+         * Count each rising pulse as one abstract delay tap.
-+         *
-+         * See lpddr4_manual_training() in mss_ddr.c in HSS.
-+         */
-+        value &= SGMII_PHY_EXPERT_DLYCNT_MOVE_CONTROL_MASK;
-+        active = value & SGMII_PHY_EXPERT_DLYCNT_MOVE_ADDCMD_MASK;
-+        if (active && !s->addcmd_move_active &&
-+            s->addcmd_tap != UINT8_MAX) {
-+            s->addcmd_tap++;
-+        }
-+        s->addcmd_move_active = active;
-+        break;
-+    }
-+    case SGMII_PHY_EXPERT_DLYCNT_LOAD_REG1:
-+        /*
-+         * HSS pulses 0x180000 before each ADDCMD scan. Restart the
-+         * abstract QEMU tap position when that load pulse is asserted.
-+         *
-+         * See lpddr4_manual_training() in mss_ddr.c in HSS.
-+         */
-+        value &= SGMII_PHY_EXPERT_DLYCNT_LOAD_CONTROL_MASK;
-+        if (value & SGMII_PHY_EXPERT_DLYCNT_LOAD_ADDCMD_MASK) {
-+            s->addcmd_tap = 0;
-+            s->addcmd_move_active = false;
-+        }
-+        break;
-+    case SGMII_PHY_SOFT_RESET_SGMII:
-+    case SGMII_PHY_SGMII_MODE:
-+    case SGMII_PHY_CH0_CNTL:
-+    case SGMII_PHY_CH1_CNTL:
-+    case SGMII_PHY_CLK_CNTL:
-+    case SGMII_PHY_DYN_CNTL:
-+    case SGMII_PHY_SPARE_CNTL:
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
-+                      "(size %d, value 0x%" PRIx64
-+                      ", offset 0x%" HWADDR_PRIx ")\n",
-+                      __func__, size, value, offset);
-+        return;
-+    }
-+
-+    s->regs[index] = value;
- }
- 
- static const MemoryRegionOps mchp_pfsoc_ddr_sgmii_phy_ops = {
-@@ -99,6 +312,16 @@ static const MemoryRegionOps mchp_pfsoc_ddr_sgmii_phy_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
-+static void mchp_pfsoc_ddr_sgmii_phy_reset_hold(Object *obj, ResetType type)
-+{
-+    MchpPfSoCDdrSgmiiPhyState *s = MCHP_PFSOC_DDR_SGMII_PHY(obj);
-+
-+    memset(s->regs, 0, sizeof(s->regs));
-+    s->training_status_bit = 0;
-+    s->addcmd_tap = 0;
-+    s->addcmd_move_active = false;
-+}
-+
- static void mchp_pfsoc_ddr_sgmii_phy_realize(DeviceState *dev, Error **errp)
- {
-     MchpPfSoCDdrSgmiiPhyState *s = MCHP_PFSOC_DDR_SGMII_PHY(dev);
-@@ -114,9 +337,11 @@ static void mchp_pfsoc_ddr_sgmii_phy_class_init(ObjectClass *klass,
-                                                 const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     dc->desc = "Microchip PolarFire SoC DDR SGMII PHY module";
-     dc->realize = mchp_pfsoc_ddr_sgmii_phy_realize;
-+    rc->phases.hold = mchp_pfsoc_ddr_sgmii_phy_reset_hold;
- }
- 
- static const TypeInfo mchp_pfsoc_ddr_sgmii_phy_info = {
+     /* DMA */
+     sysbus_realize(SYS_BUS_DEVICE(&s->dma), errp);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->dma), 0,
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 19c6667ed6..147a02a49f 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -19,6 +19,7 @@ config MICROCHIP_PFSOC
+     select MCHP_PFSOC_DMC
+     select MCHP_PFSOC_IOSCB
+     select MCHP_PFSOC_MMUART
++    select MCHP_PFSOC_RTC
+     select MCHP_PFSOC_SYSREG
+     select RISCV_ACLINT
+     select SIFIVE_L2CC
 -- 
 2.53.0
 
