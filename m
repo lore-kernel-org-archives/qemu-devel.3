@@ -1,114 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C9B606D801
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A4D606D802
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 11:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=A7U7l6XE
+	dkim=pass (1024-bit key, unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=OAPrPy3U
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOZRs-0007ir-S0; Wed, 04 Nov 2026 06:46:37 -0500
+	id 1xOZSD-0007lf-8O; Wed, 04 Nov 2026 06:46:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xOZRq-0007iM-8Q
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:46:34 -0500
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xOZRn-00060U-W3
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:46:34 -0500
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-8b30cbfa628so7540467b3.0
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 03:46:31 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793792790; cv=none;
- d=google.com; s=arc-20260327;
- b=PaaQmHIOMM7Dpi4q+t8pJLMCDsWPaMzr/R0usS1KO0WtQ9Z7RthA8r89cHwkyPo1UP
- QwtpYOwzddmc6rt+iTIiMe0jkyW8eHVHMIb5jKXNCJuiT4Jjt8Mjk2YoN3ZoKoeA8Yr0
- ezYW/3dcQJl7Adf7w+w69Io2R5yalleU2TGcnpSR8wPLDfOk3EyJko0Hc4w/VzDKp5en
- ccsDxPLZFitVMMEI8TANMqI4Y6QlFGUNbr060CaMR+hxO0GOUX96rBML0gC9YFpyPWWG
- MQmkar5jSI1vQJGuyi4ZdSNDA5moV4QWxjITfVD6RTuPykUzbCmSTkQR9U5vPQmNAwPp
- Pc/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=P4eIlVuBHovOSrLBo7rT9t0h4KV+Iz9yeUZVpQ1InEk=;
- fh=UGEyHwbgtx9wI7iyRsbmM29CIUHb5CctSz+Iw/tGsmk=;
- b=mVQ6h1+iYWZM0Tm/wb4S4cSMluT27fyrZsHIRYSJPb1/gvnYiKqUzL2ZOjFmDZLOf6
- WdbpGqr71AgKj6lVeIbuSpcXsvxi24j593RDRSBcXOKzwNlDgc/BCkmN9+awvWYGvdiq
- 4kMj3groD3ngGRRhqCjqiBg6Lx40vYY6FGoZWUqQb8IAtuD9QsxHTIxs2x+zov+GdUz3
- dm88/+SqtbCT4sVYhu9pGpdQiHy4mp7L84RZvpOX/AJY4ItR+TgAtpkWbiXc6wFk6Q86
- g5xG4ybU09WgY97h6ajIEYxvhcwOmQR16+uxAY3uG4+QQnM9s9zOjrES6X/G6rCElSQy
- 0s1A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793792790; x=1794397590; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=P4eIlVuBHovOSrLBo7rT9t0h4KV+Iz9yeUZVpQ1InEk=;
- b=A7U7l6XEr/s5QBTs76XaVPpGjEkj5+KfGAwZ/2WvsVKMV/hP5sGSoC4Fchebm6kPps
- TiRpGk49o9xa+0OWkUYJWLJMPO1CzqM6YKSgxSYTnmnLVbfM4BIUDscdZTdmB0imlvYZ
- S3vMx6Jjx6JdHG+T1km1xnO9Lr5X9vQWHTKcFQEAeUdkz7h+hzPNVPXawiL0p+HaRkde
- rs4Df5Dw/rGqMwaLTUI7AExkR6Rtqu8yalIq0LQsOiVKzHnErsRe0TVMzevWS5h0x98W
- sCNS2TsVVmkmDoVapU00oPLCQrIATg+UEVc9Q2ZXtnh2kT9hsTjWF0MX0XnOKELWPOb1
- iBKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793792790; x=1794397590;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=P4eIlVuBHovOSrLBo7rT9t0h4KV+Iz9yeUZVpQ1InEk=;
- b=HuB4kYa6VN8WgZHaj3xa4avzj9VfZN6Tli2+Kp1I3euxQazdoMChjXTF5/HadFKbkp
- n0prvA5jt7xihd4/g2wTDExSHeNO8w+ZJTKhr37qEIlxzyVxMoT6i9sOVWM5YOmshZ8v
- WusOZCs8idQ9n6Pvca7oW9k2xselF+dMaPKsE2yWmbpkABK7KwLHWtt9Es8xT+39XhKF
- R/e44eAFbxOcuiRQu4ZHwWTy4ZRm5vq8aBuBmfOlDWtEYlxVfec0NY/sbB/K44LQaTD0
- ykDS+oJdvJ4Lbacx3gzhpqnNfX4UQs+W7jmjumaBvFTVbE7cAjvUjDn4zEzUxjj6sUKM
- 4xag==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwslGwWGYGvl1K69Ax23t2kjSzdScubxtvN5laeJSYxFSPmDh0DOQEvHDUgiMeSqN2V+KHp8eaDWsXO@nongnu.org
-X-Gm-Message-State: APuU4Z+F32IZPqUDH2U0b8IV2zZ0NcbwA+dR3RZ0sUg4hpYX/cfEAROm
- 3ddrp3qHBxhVfG0ezvanVGQR/8E+6VWzksUTiC2Y8dHVApYxPlzLPUBlx5L3FDxJogN6r7RG4vn
- HFqUFLxhD0CK3OrcWQnOp3E/jcTI5Vmx+5mT5IZwPpQ==
-X-Gm-Gg: AYBFou1lEvfJExdGz1krkmUWip+FyFaK4LNcH6ZNnCSWoiHhMqXvNTvoYaHt45zfzsY
- Cl3JgEjLWTXoBX562ZgXnmrV/ngAxvj3hwBOfryh5q4uMZxmXp+8nPUvkidN1EO0ZvZ/td+2FcJ
- OtEp56qMxVMueTEAfWP69owuqVosffdgKREMoygG4wjmIcmnD53M+QHzHYd981GPSgDJ1EyT28O
- CLDjm9plgMnzuXVO5vBVCGqJomTcLGFq0jU06ahAAxIvVu0Ro6IiEFmDnoKCKJaP4/L9x7/q/qB
- HlLkKLImRFzRB7DmduPVYq9FP9uPbkHjbiI9NWr8lLbvProo7RVA3Isac2wepQsHjb3l22+M3M9
- 2P8BJWGd3lgH+yws3WaNmwHAjYdRdgW0O6pzhZ8jPDYrBLPFp8fSD94jCMIK2Cjij58Hcu8HI5c
- 0gLhXdxNc/B4NO9yTYOMCt
-X-Received: by 2002:a05:690c:c504:b0:8b3:416:b198 with SMTP id
- 00721157ae682-8b30416bbd2mr23959677b3.21.1793792790310; Wed, 04 Nov 2026
- 03:46:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
+ id 1xOZS3-0007kS-70
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:46:47 -0500
+Received: from mailout1.samsung.com ([203.254.224.24])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
+ id 1xOZRy-000617-E1
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:46:46 -0500
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20261104113804epoutp01da75b331863b115d991bd8558fa99fb4~k1JQTix8F3027130271epoutp01G
+ for <qemu-devel@nongnu.org>; Wed,  4 Nov 2026 11:38:04 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20261104113804epoutp01da75b331863b115d991bd8558fa99fb4~k1JQTix8F3027130271epoutp01G
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1793792284;
+ bh=zmRKQpwya0WeDnkSLxH41WMnOGAOdo1z/9sxMtTqa8s=;
+ h=From:To:Cc:Subject:Date:References:From;
+ b=OAPrPy3U9DD/q4Zmn4QgcYU0ya99z9eegJ3uA442BIQaMIf1yIvyr/cnMFz2Lseho
+ 7ioRjNf5FeUerelLsFgO8uLm0+jzoO5Jy9on0tnUcgGFnljuNQT9vQs3dN9nfnZU5+
+ n53yUJrbSHtGenjYqLcfxgrxk4Q4xP6YX7SARNh8=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+ 20261104113803epcas5p2341017fcd80d69eead253b606b64cbb0~k1JPqDB111368413684epcas5p2e;
+ Wed,  4 Nov 2026 11:38:03 +0000 (GMT)
+Received: from epcpadp2new (unknown [182.195.40.142]) by
+ epsnrtp03.localdomain (Postfix) with ESMTP id 4jKNjR2Ftdz3hhT3; Wed,  4 Nov
+ 2026 11:38:03 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+ epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+ 20261104113003epcas5p43fd57f95a6f4b1a0c6ee2a8b1ab8cad5~k1CQXdYBE1209212092epcas5p4P;
+ Wed,  4 Nov 2026 11:30:03 +0000 (GMT)
+Received: from unvme-SYS-221H-TN24R.samsungds.net (unknown [107.99.40.127])
+ by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20261104113000epsmtip1897ed5d551fbd717aefacc52fc6e28b6~k1CODHj-72358823588epsmtip14;
+ Wed,  4 Nov 2026 11:30:00 +0000 (GMT)
+From: Shrihari E S <shrihari.s@samsung.com>
+To: jic23@kernel.org, junjie.cao@linux.dev, linux-cxl@vger.kernel.org,
+ linux-pci@vger.kernel.org, qemu-devel@nongnu.org, anisa.su887@gmail.com,
+ mst@redhat.com, marcel.apfelbaum@gmail.com
+Cc: shrihari.s@samsung.com, arun.george@samsung.com, cpgs@samsung.com,
+ dave@stgolabs.net, dongjoo.seo1@samsung.com, gost.dev@samsung.com,
+ s.neeraj@samsung.com, vikash.k5@samsung.com, anisa.su@samsung.com,
+ junjie.cao@intel.com
+Subject: [PATCH qemu v1 0/8] hw/pci: hw/cxl: Add UIO support in CXL and PCIe
+ stack.
+Date: Wed,  4 Nov 2026 17:22:34 +0530
+Message-Id: <1582071873.61793792283310.JavaMail.epsvc@epcpadp2new>
+X-Mailer: git-send-email 2.34.1
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261103172616.2400758-1-peter.maydell@linaro.org>
- <20261103172616.2400758-5-peter.maydell@linaro.org>
- <CAFEAcA8X1ARhpncsz=kE2JxFjALGej4ycw3hus=m5kfcVSJXYw@mail.gmail.com>
- <50dcaa06-1f02-4662-8c4f-9ce2ab5e923a@oss.qualcomm.com>
-In-Reply-To: <50dcaa06-1f02-4662-8c4f-9ce2ab5e923a@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 4 Nov 2026 11:46:18 +0000
-X-Gm-Features: AclHuK8qJ9UJJ0mrVCsU77qe1QRotl2CAl-ovmdTmEhHs0EbTGEYZUBgem4bwEs
-Message-ID: <CAFEAcA823iF+bJGd64VJ8oJYsWf1tTthrifWea3ECRS4tx9cGg@mail.gmail.com>
-Subject: Re: [PATCH for-11.2 4/4] hw/intc/arm_gicv5: Use correct type for
- value in lpi_cache_get_hppi()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20261104113003epcas5p43fd57f95a6f4b1a0c6ee2a8b1ab8cad5
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+X-Hop-Count: 3
+X-CMS-RootMailID: 20261104113003epcas5p43fd57f95a6f4b1a0c6ee2a8b1ab8cad5
+References: <CGME20261104113003epcas5p43fd57f95a6f4b1a0c6ee2a8b1ab8cad5@epcas5p4.samsung.com>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=shrihari.s@samsung.com; helo=mailout1.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,89 +92,193 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, 4 Nov 2026 at 11:24, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 3/11/26 18:49, Peter Maydell wrote:
-> > On Tue, 3 Nov 2026 at 17:26, Peter Maydell <peter.maydell@linaro.org> w=
-rote:
-> >>
-> >> lpi_cache_get_hppi() is a function we pass to g_hash_table_foreach()
-> >> to iterate over the LPI cache hashtable.  This hash table has keys
-> >> which are GINT_TO_POINTER(intid) and values which hold the L2 ISTE
-> >> value, allocated as "hashvalue =3D g_new(uint32_t, 1)".
-> >>
-> >> The function is passed the key and value as type 'gpointer' and has
-> >> to cast them to the real types itself, but it incorrectly casts the
-> >> value pointer to a uint64_t*.  This works on little-endian hosts
-> >> (since we only read specific fields of the L2 ISTE using bitmasking),
-> >> but won't work on big-endian, and trips the clang sanitizer.
-> >>
-> >> Fix the pointer type.
-> >>
-> >> Cc: qemu-stable@nongnu.org
-> >> Fixes: a0562ada75e ("hw/intc/arm_gicv5: Calculate HPPI in the IRS")
-> >> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> >> ---
-> >>   hw/intc/arm_gicv5.c | 2 +-
-> >>   1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-> >> index fd6456cd8aa..a362349e5ed 100644
-> >> --- a/hw/intc/arm_gicv5.c
-> >> +++ b/hw/intc/arm_gicv5.c
-> >> @@ -390,7 +390,7 @@ typedef struct GetHPPIUserData {
-> >>   static void lpi_cache_get_hppi(gpointer key, gpointer value, gpointe=
-r user_data)
-> >>   {
-> >>       uint64_t id =3D GPOINTER_TO_INT(key);
-> >> -    uint64_t l2_iste =3D *(uint64_t *)value;
-> >> +    uint64_t l2_iste =3D *(uint32_t *)value;
-> >>       uint32_t prio, iaffid;
-> >>       GetHPPIUserData *ud =3D user_data;
-> >
-> > Looking at this again we could also make the local variable
-> > be uint32_t; but getting the type wrong on that doesn't matter.
->
-> Should we use GUINT_TO_POINTER() when inserting in put_l2_iste()
-> and recover here with GPOINTER_TO_UINT()?
+Hi All,
 
-You mean change the type of the hashtable value from "it's a pointer
-to a uint32_t that was allocated" to "it's actually the value" ?
-We could do that; we'd need to update L2_ISTE_Handle to always have
-the actual l2_iste word and not the "maybe we have a pointer to it",
-and put_l2_iste() would need to update the hashtable entry always
-rather than only when the pending bit changes and we add/remove
-an entry. But it would save us that allocate and free of a uint32_t.
+This is the v1 of the "UIO feature enablement in Qemu" series, a
+follow up of RFC V2 [1] with the review comments addressed. The
+series adds enumeration and configuration support
+for the PCIe Unordered I/O (UIO) feature across the standard PCIe
+and the CXL stack of QEMU, and establishes the foundation for the
+OS to discover, negotiate and configure UIO capabilities on CXL
+ports and devices.
 
-The potential downside is that if we ever decided we wanted to use
-the architectural IMPDEF option to put implementation-specific
-metadata into the L2 ISTE we'd have to reverse that. (See spec
-section 4.7.4 -- the ISTE is 4 bytes with no impdef metadata, but
-if we wanted metadata then it would get bigger and no longer fit
-as a GUINT_TO_POINTER().) But I don't really think it likely we'll
-want to go down that route -- in the virtualization parts of the
-spec there's scope and intention that the implementation puts metadata
-into various in-guest-memory data structures, but for QEMU it's much
-easier to put those in host memory instead,  and that's what I did.
+UIO is a transaction layer enhancement that relaxes the strict
+transaction ordering rules of PCIe and moves the ordering control
+from the fabric to the requester. UIO, introduced from PCIe 6.1,
+in CXL follows the CXL.io protocol, where a device sends read and
+write requests directly to the HDM decoder of a peer .mem device
+at the switch level and the host is bypassed in the data path. For
+that, the requester, the completer and the intermediate ports of
+the topology carry the UIO dependent capabilities:
 
-I have a feeling that when I wrote this code I was partly under the
-incorrect impression that L2_ISTE words were 64 bits (e.g. there's a
-comment in get_l2_iste that mentions "the uint64_t pointed to"), and
-while I fixed most of that confusion before eventually posting the
-original GICv5 patchset, I left the "we have to allocate memory for
-the value" part in, not noticing it wasn't really necessary any more.
+    - 256-byte flit mode
+    - Streamlined Virtual Channel (SVC) Extended Capability
+    - PCIe Device 3 Extended Capability
 
-For 11.2 I think we should stick with the simple fixup of the
-type mixup here, though.
+In the example topology below, Dev A is the requester, Dev B and
+Dev C are the completers, and the root port and the switch ports
+sit in the data path as the intermediate ports:
 
-thanks
--- PMM
+      __________________________________________
+     |                                          |
+     |              CXL Host Bridge             |
+     |              (Root Port/RC)              |
+     |__________________________________________|
+                         |
+      ___________________|______________________
+     |                                          |
+     |               CXL Switch                 |
+     |__________________________________________|
+        |                  |                 |
+     ___|____           ___|_____         ___|____
+    |        |         |         |       |        |
+    | Dev A  |         | Dev B   |       | Dev C  |
+    | (Req)  |         |(Target) |       |(Target)|
+    |________|         |_________|       |________|
+
+With all the dependent capabilities enabled on Dev A and Dev B and
+on the ports of the path between them, Dev A issues its CXL.io
+read and write requests to the HDM decoder of Dev B on the UIO
+virtual channel: the switch routes the requests from the
+downstream port of Dev A to the downstream port of Dev B, and the
+root port and the host bridge are bypassed in the data path.
+
+V1:
+
+    - x-256b-flit defaults to off on all port types, keeping the
+      config space and migration state compatible.
+    - x-uio is moved to the pxb-cxl host bridge; the CXL type 3
+      device warns and leaves UIO disabled at realize time when
+      x-uio is set without x-svc and x-256b-flit.
+    - SVC validates the Protocol Selected field of a guest's
+      Resource Control writes against the resource capability.
+    - The Flit Status bit of the Link Status 2 register is derived
+      again after a device reset, so it stays consistent with the
+      Flit Disable bit of the Link Control register.
+    - Series reduced from 10 to 8 patches; properties are defined
+       in the patches that use them.
+
+RFC V2:
+
+    - The Device 3 capability is added to the PCIe stack and wired
+      to the CXL type 3 device.
+    - The UIO related DVSEC registers are added to the CXL stack.
+    - UIO becomes a generic capability instead of being tied to the
+      type 3 device.
+    - The SVC capability is extended to the CXL type 3 device, and
+      the x-svc and x-uio properties are added.
+
+Contents
+--------
+
+New properties:
+
+    - x-256b-flit: enables 256-byte flit mode signaling (Flit
+                   Mode Supported, Flit Status), as an extension
+                   of the implementation from Davidlohr Bueso's
+                   patch series [2]. Accepted by all the ports
+                   derived from PCIEPort and by the CXL type 3
+                   device. Defaults to off.
+    - x-svc: adds the SVC capability to a port or to the CXL
+             type 3 device.
+    - x-uio: carries the UIO capability. On the pxb-cxl host
+             bridge it marks the root ports within the host
+             bridge as UIO capable; a CXL root port advertises
+             UIO when its parent host bridge carries x-uio and
+             its own x-svc and x-256b-flit are set; the CXL
+             type 3 device carries the UIO capability, with the
+             Device 3 capability, when x-uio, x-svc and
+             x-256b-flit are all set.
+
+Patches:
+
+1) Refactor the flitmode field from PCIESlot to PCIEPort and
+   default the x-256b-flit property to off.
+2) Move the x-256b-flit property from cxl_root_port to
+   pcie_root_port.
+3) Wire the UIO capability into the HDM decoder and DVSEC
+   registers, and add the x-uio property to the pxb-cxl host
+   bridge.
+4) Add the PCIe Streamlined Virtual Channel (SVC) extended
+   capability.
+5) Wire the SVC initialization into the port realize functions.
+6) Add the PCIe Device 3 extended capability.
+7) Wire the SVC and Device 3 capabilities to the CXL Type 3
+   device.
+8) Add documentation for the UIO options with an example
+   topology.
+
+Testing:
+
+Linux kernel enumeration on a q35 topology with a CXL switch and
+three type 3 devices: SVC and Dev3 capability discovery, HDM
+decoder UIO bits, flit mode status and the per-VC state of the
+UIO enablement path.
+
+Linux kernel series for this work is maintained separately and
+follows later.
+
+This series has been written on top of:
+
+Base commit: 3c99db7705c1a885c795b7c14f751c7a3ba29ed8
+Repository: https://gitlab.com/jic23/qemu
+Branch: cxl-2026-01-09-draft
+
+Future work:
+
+Provide UIO requester capability to the CXL Type 2 device for E2E testing.
+
+Thanks!
+
+References
+[1] https://lore.kernel.org/qemu-devel/1212772528.01787732102473.JavaMail.epsvc@epcpadp1new/
+[2] https://lore.kernel.org/all/20251103195209.1319917-2-dave@stgolabs.net/
+
+Shrihari E S and Dongjoo Seo (8):
+      hw/pci: Refactor flitmode from PCIESlot to PCIEPort
+      hw/pci: Move 'x-256b-flit' property from cxl_root_port to pcie_root_port
+      hw/cxl: Wire UIO capability into HDM decoder and DVSEC registers
+      hw/pci: Add PCIe Streamlined Virtual Channel (SVC) capability
+      hw/pci: Wire SVC initialization into port realize functions
+      hw/pci: Add PCIe Device3 capability support
+      hw/cxl: Wire SVC and Dev3 capabilities to CXL Type 3 device
+      cxl: Add documentation for CXL UIO support
+
+
+ docs/system/devices/cxl.rst               |  54 +++++++-
+ hw/cxl/cxl-component-utils.c              |  55 ++++++++-
+ hw/mem/cxl_type3.c                        |  36 +++++-
+ hw/pci-bridge/cxl_downstream.c            |  18 ++-
+ hw/pci-bridge/cxl_root_port.c             |  37 +++++-
+ hw/pci-bridge/cxl_upstream.c              |  26 ++++-
+ hw/pci-bridge/gen_pcie_root_port.c        |   3 +
+ hw/pci-bridge/pci_expander_bridge.c       |  17 ++-
+ hw/pci-bridge/pcie_root_port.c            |  15 +++
+ hw/pci-bridge/xio3130_downstream.c        |   6 +
+ hw/pci-bridge/xio3130_upstream.c          |  19 +++
+ hw/pci/meson.build                        |   2 +-
+ hw/pci/pci.c                              |   7 ++
+ hw/pci/pcie.c                             | 105 ++++++++++++++++-
+ hw/pci/pcie_dev3.c                        | 111 ++++++++++++++++++
+ hw/pci/pcie_svc.c                         | 185 ++++++++++++++++++++++++++++++
+ include/hw/cxl/cxl_component.h            |   2 +-
+ include/hw/cxl/cxl_device.h               |   2 +
+ include/hw/pci-bridge/cxl_upstream_port.h |   2 +-
+ include/hw/pci/pci_bridge.h               |   1 +
+ include/hw/pci/pcie.h                     |  11 ++
+ include/hw/pci/pcie_dev3.h                |  26 +++++
+ include/hw/pci/pcie_port.h                |   6 +-
+ include/hw/pci/pcie_regs.h                | 100 ++++++++++++++++
+ include/hw/pci/pcie_svc.h                 |  20 ++++
+ 25 files changed, 832 insertions(+), 34 deletions(-)
+-- 
+2.34.1
+
 
