@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9D9606A32C
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 17:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0B2606A329
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 17:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=u6I2c1q7
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=Q6oWtqVK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOesy-0003J3-Qn; Wed, 04 Nov 2026 12:35:00 -0500
+	id 1xOet9-0003P3-DQ; Wed, 04 Nov 2026 12:35:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOesE-00035j-0B; Wed, 04 Nov 2026 12:34:13 -0500
+ id 1xOes6-00034y-Ee; Wed, 04 Nov 2026 12:34:09 -0500
 Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
  ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOes9-0006Er-13; Wed, 04 Nov 2026 12:34:08 -0500
+ id 1xOes4-0006Dv-LQ; Wed, 04 Nov 2026 12:34:01 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TiNb3GB9CQQ1/nusTeVxV1ZRxSUEr74TXjYQuFzfQz0wXvacMgh5BIEY+7TZe/fBo5TgOdqFzLngmDzmycTTOJjpVV3TY47HQTeYu+AHOXsIkW98RuMxyQEJiswKxCv6FUH0mxSAJuwsb2hXPIrwzZ6kqC1SnLJ8VDjezKgA7PiSV8WL2rOCMTIKoVXhJjvtD54PwjJfDdW0ilDZ/cj8rzDhUNkGM41BJEDURmc//bVrA/78H80tGHd3PZXOrJz7L0GiJWXVlBSnJ6roQLgCj78LDrpc1wtT79tH4EbBu3TOa8LoTjqlqrgcB0El+uH0pQrqlgofBvBba9m7gMb1ZA==
+ b=b+G74AGNS+oji6Q4IsYphkWjhn/Kam5zy0whuIJJAmofY3/bIeHVGUBdn1WQAUZ0FypxwK81Djyy66dS3tEuRFjmuJigHOXevXtKLPW3FeMh2/FYSkFDs1DwgZHRYiFMzWQd5nR5dxozROV1gRd7x3A8MCJRcEqrCYvYQ13JGNDWxNXzZvicIW6jd3RCXVMAH7YULNZWApmY7m5vTozqhQ2WwiKz/6SPa/55BSOr+2QDOa0RuHcsq3ziPQXJSNasllQ0N0Tr2MyWW5yYRam71G0/5zVEX/aAnIiTNh7OTjdCQP/tjUPZlciLdv0F4C08YqWAnYVbFTCwvYpxwZqlHA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oG/gX2E3aG4iCZbJEbGmI/SnMg85lTNOomRXKFdrmwI=;
- b=AEqroSiNBeQ8JD6MOLF4/UDfHxfZVJdPK3Eq/kqCDY3tNW6pMMnrgJ6UnOCnOUhhhMwNU/Gdju7OmliGTmlLuyh4EC0v1jWVuti8gDYxxi4khvBjnGlY4lzc5pz0hufps822Yz7H2YKwebzw3oX6asKwv4IX1yfoj2bouFg7txnSFpYsXMfnPgqau2+TMyHFkXUCD2xOBjNQ7cA7OuWTd15SNimCgYMEniNPrhmO7arUcdqFs5HvOZ40xsqXnPiN2vQ1O95ERDZjFKfywyt7az2LIfHrA+32RaFoQ7eSWjIQweRpUvw9F5z02buLteNzCgfvlCdKqi9NhTYI7ptrXw==
+ bh=VM/vztAZpMHfEnBVA0QfBd+qYQ4/DHcngSSUR4tWSKI=;
+ b=p9iiTXAyKUIms+yRjeky4vDwKGg3rcijePG6Z+sWcbbauX2JMRJHg43Q22ptryu35UAPqWsM8d3I/kk+QuH79Q1Xam3kt0ZutkFW5V7QodxjJIOVl1f9AA+2Mcdqh8zfaViTL0DT7Y+7ifKLi/qqOrqnmlH0Z4aS8fDhrw0I5IFjyYxSfk6A4dlcr004ptBVoBjcosPCTbhlrPGXtc5G8E3RNBCmFMTdFS9E/fSun7MoOjGc5A/CGnY3Th2cvGSb1p+buHAQIWRmc/8GPZ94CmKmKNZDYGBehtL2kTGrTcd6Jfd5vXsRVTH83Wr1cmRg+OfIlps5BbO265HGWT6NRw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,19 +32,19 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oG/gX2E3aG4iCZbJEbGmI/SnMg85lTNOomRXKFdrmwI=;
- b=u6I2c1q7IwXLkvMwy8QJ77ueg8/tvGXOeUM/IthYXPzZUy3d1ZOxdcJvge79iza0LQvyMfyxA/eHOP1D2hmqzxFRI74Poqzhcccqq/Ity87tEEKDfEUrh2zfBYGmfBspUK4edsf8YpvBmWen6PzLqRX9fhf6Rr8rJRcW4bIGH9lxxGfv9zoBTfYDuLcorA+lXkkI22GIpqB0gvcM6TdqCI5W6pBaudyA1s1OhPM/PJzrv6GghpheGwK3JFt8mqv6wxxLJmlr0n3QWqxnoS0MUpJcXX7XKIDDoNFXtre0RYgWrGRHfIOuAyqyoXQWRj+SDbx8SV+YcUoGfMf1okjMAQ==
+ bh=VM/vztAZpMHfEnBVA0QfBd+qYQ4/DHcngSSUR4tWSKI=;
+ b=Q6oWtqVK6ewooX45pFEwO87KTZ4MWJLcyKIyKI2z+a63ZMwmJKWM8ZbTpVYegOPzdqYIMXsLFrD/Q3WEwGtRt0n7VXzWCvHAbyQGPMvQnCWURRK9LV7Qb5p+K+dEg4CBrcWsqG2jyA5g1qn/zb76mLbVe5XQJEmm0uZeus/M2jvFRTEm2yiuM28VaR8e55yORflLZZO1Ih4XfGnnDxBu21uVFXwFOuoTz0OjUux91nqY0hGiAfqVInHKTVN6yG+XVM2VVRMdfoEmxJOw884+zfgMW2T3gFP9Ly4sO0oaOG7nEUwfkwHTZ5OZQiTeDk7sDVvsWHHVCukIUjT+j3IDGQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com (2603:1096:405:2c::12)
  by KUXPR02MB8801.apcprd02.prod.outlook.com (2603:1096:d10:4c::12)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.10; Wed, 4 Nov
- 2026 17:33:51 +0000
+ 2026 17:33:49 +0000
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10]) by TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10%5]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
- 17:33:51 +0000
+ 17:33:49 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
 Cc: Bernhard Beschow <shentey@gmail.com>,
@@ -53,10 +53,9 @@ Cc: Bernhard Beschow <shentey@gmail.com>,
  Glenn Miles <milesg@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Subject: [PATCH v2 03/17] target/ppc: Correct the e500mc and e5500 cache block
- size fields
-Date: Thu,  5 Nov 2026 01:33:06 +0800
-Message-ID: <20261104173329.706635-4-bin.meng@processmission.com>
+Subject: [PATCH v2 02/17] target/ppc: Correct the MAS5 SPR number
+Date: Thu,  5 Nov 2026 01:33:05 +0800
+Message-ID: <20261104173329.706635-3-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261104173329.706635-1-bin.meng@processmission.com>
 References: <20261104173329.706635-1-bin.meng@processmission.com>
@@ -69,56 +68,56 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TYZPR02MB7121:EE_|KUXPR02MB8801:EE_
-X-MS-Office365-Filtering-Correlation-Id: 71c6b273-2795-4d64-d6d5-08df3a99ca61
+X-MS-Office365-Filtering-Correlation-Id: 6553f060-97b6-4092-4ae9-08df3a99c93a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|23010399003|1800799024|6133799003|10067099003|18002099003|22082099003|56012099006|261026121527099003|261022075727099003|261021123027099003|261021121427099003|261009223027099003|261102123227099003;
-X-Microsoft-Antispam-Message-Info: WJ7oFu4p779610Ej0v+ngSQnBhS9HdvJlQE7wruhD0/shXlgpCfUMXjdigcWbAIy4LK1PbrFx/AH3Nuc2QWNsYMho2WyFubZ3Ki7Aiyq6uevOjSJ7dITmrw+V72RZYvLz0zrw2sW+nVSMiNAACkamOQyCbVMxWwfQkqw1AZstJ9N/M9jU4ifoFB9/jtJ18ApFZO3OD1XjtrJVfECECKCEruGmNDldIdZYd6l3pHt79TALiWN46R3eG2B2YXGP8gPNml+iRBlup1GPsr6V++i+CHsCQBj75JM3WImZqAEgqm++QMK1DEbKm4hbRl/lc9kX/rBzQjyDfe5OvoSWnFAtk+A69wQxnU7+OZXOu/Fy9xxHka3lptGq1H/9fjW/kh9pYhPmRtDiSjy6gZY1tElCYkCRRyJzhblWWfwSA5vjizNp6HXPTiHAiJXxjoZHO9pkJ5gL9Fy2RXGvTGhkdRrCMR0VBQFh5kmzntlqa1RKUf+3e0yqJ29QnyCkN4QBuyHgEl9dUvR113aoJAlBXqA+2kYts+u+mtvZbqZfgjF9f5kYg3OTzIvUW0d7euXJMnYNZc2r1mhI6GOaGDbQMs/Bwx7T9yQORw1YlKNZ9eqnduwfcFeZTqa81LOhll3cCOlmc85h72+sbZTmAoWN3+uLWE+fbtslkvOBxSMAheLlPA=
+ ARA:13230040|366016|376014|23010399003|1800799024|10067099003|18002099003|22082099003|56012099006|261026121527099003|261021123027099003|261021121427099003|261102123227099003;
+X-Microsoft-Antispam-Message-Info: mSHNXxKdUf1xxegXolGQ2xK0ss0kMErXqXaKA+dBQ+0rZEfHqOZYg929qSj61xxCfXis8Bqe+olUfRI7B0g+KwW04GNuSWEMk/4kH4/RqP3au+CjZdjcM5tg5fhORz1h5a7S3hIC/cMBDPDtbzE06ZuNsyWtPWpFJUUodvw6SnuN+V9utzgvXksARluPtMajw0NUS4TUN5xsPibbJY2TYllPQZCfu7mShZLhdRZEdRxLCjfOyNDWDkK77jaTtwGSlqPkDvn9zTdh3Mx6RZNC+Suo4MgsWJYLmMjjnH0hd52Mb+cc5w3px75pEBWbR4GZub9hR1J63fMKZZQc1cPM2wqD8g9RtiOtUbFZ5L49rYP6BtB2m/nvs3CHb55B3B898gXNrWVyNbNQMgvjRnMY/0wX8Ieo/IpxnfnKsfdkQFATZdgTKKsxD8L0xqHt9Z5kRartN09ZaKFm8H4eU91HCMcFiBqxdB6sf5ozHwq95uktsC5jeWNVjibh3dwHnB7VzHOKJA+XrFEGY1khK3TEVY9GYP78yxV+oGE3H64m8JyTWLuzP/imRxyZvZpeixWfL8xi61jCdTXOcIkllCDcJma6dHt2Rvd8sqR4f4DmHvORRkcWvhVCLdjiCkbUCiNj5rxLCMzVfqgDhxJmqtk0PU/tIGGnMOeLMxvDeRV0Rno=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR02MB7121.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(6133799003)(10067099003)(18002099003)(22082099003)(56012099006)(261026121527099003)(261022075727099003)(261021123027099003)(261021121427099003)(261009223027099003)(261102123227099003);
+ SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(10067099003)(18002099003)(22082099003)(56012099006)(261026121527099003)(261021123027099003)(261021121427099003)(261102123227099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?J8InmNXk2IJ3R7PIwN1P6XQo9n7+FO1bc1TVTlhikStTLYk4ISgjvYlGVO+B?=
- =?us-ascii?Q?W4j4udraj0kXOTjNMVUqzNPnAxVES+TInpw07+IKzuELx3b1rmOiBxmFwl6R?=
- =?us-ascii?Q?k2UnW2OVGxTwj98cCY0A9pmX92niw3eEPFXYQZiQ3fWF0IuxW3J5esbrG8MS?=
- =?us-ascii?Q?520KfAS2eiwZWEA67B5mCH2I9mOcOb6BzKNN0i4A2y5OXNIznGV/oqC1hwaf?=
- =?us-ascii?Q?T5wXwEkceG+z9yVXsblzOSjwXlsVnBGMWtbdVCcoQ44dCq6H5PR628ee78Cg?=
- =?us-ascii?Q?tLVmlSH8DGFhRmJNPceuy6bBtTRq/BsuvY2ckwMAvvx7ywQ78+XlZcByxHPW?=
- =?us-ascii?Q?6CbRtcyglzTgpmkPISi3uT+zXcJQcyoej3NgZNASRp23BZfE43aqrAM92uOo?=
- =?us-ascii?Q?8eVjli5nvsp4Z7MLdysmqnj8bSMFy5h3m32Bmryo2frXq6KTZah2qu5l3haB?=
- =?us-ascii?Q?OQo+6iqbuxvZNzUxXShCPjkzrTScuVvAJ9pgKuAAEK6vfGjy0kgnFWkXOhoa?=
- =?us-ascii?Q?1rqRIFDsKCbg9Jx2kMBejtS88cWXU9Q8CKnLoe7O/9xXFK6+dCILvOYKpTnx?=
- =?us-ascii?Q?NHh9D7RTs3i41YVRS4kc0W6AePcZnn5y8h433wbA9ZsjYGivAbI++u2X/35F?=
- =?us-ascii?Q?yFeTr4vgYOqxwQxfQvXoyVyUlqUmUtH4cCYG1xOyipFCmPgLGcE7EvncZ1N3?=
- =?us-ascii?Q?8jPQwD0Vl/3TpvWaZIGxQvWCw/FBYUyAP51bcOq4RclpohWAVABrkHXMURAD?=
- =?us-ascii?Q?JKgL6tSRE2wMAsaelqcKpCMXzaqUhpLUNV+jOdUe1fUTpscwvZgjVWr1EUPU?=
- =?us-ascii?Q?kNxIrdLh+Wcu2l/Hgm3deY/81NJvZxIBGKM7iThKpfN0Cp8vNKADyX19xkNA?=
- =?us-ascii?Q?gDpXA/jIAos+cMmvXxz9XHHzrUwRNeUTDe9HfgXkJ4Ju2YGDaRTAXeu4DawO?=
- =?us-ascii?Q?BXf9oIl62TUfk2e0pTM9b3LSarjFazrQKCSt6vY3frC/rwqcHzZHBExdGORd?=
- =?us-ascii?Q?/94Yias4aL60ddleY52KPzIK5rNhblDMpdw5541EluOVZKEN7vNQ3GbRu53q?=
- =?us-ascii?Q?s0BATaSkMN9Pqzt5g6NFyifzTzoZt8ThcuMW4I30CWmK47TMGT1bZxNdZF8G?=
- =?us-ascii?Q?P6/slIFrdu4T2lJZdoSptv7iwkeWsy3ChsmZtcoRpyId0qMpOh0PU9KJsuz2?=
- =?us-ascii?Q?2pKSSb68C+mVK3r+qib5S6MnfW7K1c5qTL2dcyII74S8hnTc1V5HMknI8p6F?=
- =?us-ascii?Q?ouhAS2x6HBAZDzDBZu/rJcRBpQDmdpmTEI3IK419aBIDHarCByy7LPYECRUt?=
- =?us-ascii?Q?OsulO2mutgX+mFzW0WF/HJjc0U6XABPnLBWiaC+KmmPmsPGy+sZSrvJBMH0M?=
- =?us-ascii?Q?nN2V2sGoVpRd/IDrqXxq1HS+IeItLwGOZRktSGFSHaK8PixwCg7bgcU1vWe7?=
- =?us-ascii?Q?vPWE7/mCjiXNPjG0p2iPzB9NPQerPm8mrRhz6ptDNY9ptUMfG8RKZL8v/Zuk?=
- =?us-ascii?Q?hSZbsQ+viVEgCK8fHMbAL/hmSngIpGymshTtIN6ePh33GPSBGih0hMKqqkGd?=
- =?us-ascii?Q?MeHN7WjnbwK2mFevz7VoRwQIyT93Xf/Tl6KMrRo4jbOoo9cJbMo1Xc3fUwOH?=
- =?us-ascii?Q?ARkd7CBWs9d4u+VxGqpphdjTuYmY9OQMXA/dXcNIANQLVgavucFrpjxni1lB?=
- =?us-ascii?Q?Smj0xjWTpCMhCu1ccILN1+wa9bE3y/7DG/yZuHc3jm92coMBbaGhSHE3osu9?=
- =?us-ascii?Q?OY9AR1P0a/42qPEaveahwEbobKi8O9U=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Wej35a8Bh1qWAT9FUyonHnXQnzcRB59k+dBJxdOya1k6z1Q8c37y1MQBQff2?=
+ =?us-ascii?Q?6kOqELrWRKFC7QaSiY38OcJJvKIKdNdn12aiqrIyAv2y6gAOZXABR4fCggQS?=
+ =?us-ascii?Q?/yuQbuIFTBncKlAeFNQgnnZXxnYRBNmzzY/qNoUZyDTbkziEeuuFSHrPVsHk?=
+ =?us-ascii?Q?o3KzW3v9qXFkKtqMXJF4I+HZHy5Ut/+QgW2VIS6Rwp3Iku2oNvy1b9UTcNL/?=
+ =?us-ascii?Q?KRUDQFtoywcYePI2avbAeEaAG/LBqFxu9e3kzLYqyNw7nPxemzfaqT+zOvav?=
+ =?us-ascii?Q?eAsptcYEo86yFIaD3awiumlydiEp1atCwDrjNhUoM2cizgjrav6vqAiJ5fk3?=
+ =?us-ascii?Q?J9qWoz03wePt7ff4eEnH+Kjxvw8hQeorudM3ju+dmx47Md/S7gln8pHXZ/VQ?=
+ =?us-ascii?Q?3za1DNIzkEHOfyIDcQy3hESxc2EQ5cKmpldQFz9d9Gjuhs62zQL2KO97V1qv?=
+ =?us-ascii?Q?tvlXL5sbmPp4PW5StB4kiVsLLfRxRGrsGNAAT75KBJ2a4Zl7V0V3g1W6bqXR?=
+ =?us-ascii?Q?wjw1hzwLaQtSXsZWNVmqB5KEsn2i0hs0pLi3J4cXgndLigBS+c6XDp1wiF4V?=
+ =?us-ascii?Q?FsAaOje/Pc2ys/v6cnPRbPCLGC5WAhvc7DZecxn4gj9ry/TO8WgSrCX8uo0E?=
+ =?us-ascii?Q?NaGzxp9KdyDNycifCAJJuq4odmLIHOagZBQFY/MO+pZHJClfKnsL5Xzlbnjb?=
+ =?us-ascii?Q?DfWQtdR5hu8hp+En0fkqhd8U++IyQTDUD5TD09/7SnEZSNUmbehws+ZBApp1?=
+ =?us-ascii?Q?Dxq7fbNbCvyGPdx/MddSZVOwqEJWVUOKhCnT83ZimHMnNo1tpg+aVzc68LFK?=
+ =?us-ascii?Q?7K+OyHd+MCctx2BTcs3H4yo1ndBflYRf/Tvon8/RFdYp+UndRah3YpBQ7jPd?=
+ =?us-ascii?Q?b60hrxKPyCbrkrJ71RhWwx17rPuqP4ti3WUkaOb5JdbNMd0xjVZN8kC4lpdg?=
+ =?us-ascii?Q?YCeAIJXdwlLIU7iAfH4kAC7roGBtd0h4zOQmTZ1cAb+XqYMOaNkIWHiq6W6J?=
+ =?us-ascii?Q?RfJrqFkXR0s4TYBdkWi/s2M8wLpPVMsOTLTGu9uurY6joejfkjOQFJR4mBsp?=
+ =?us-ascii?Q?gB7PueM42dd9+oEEwgzDxQQ2UPm9pa3IT+N8MejqxssoKbFUqxC+ztgruiha?=
+ =?us-ascii?Q?v0yDuBb0i+ZNksR4Jfamkh7mUhvhj/wo0Wm+MNJgAQUkDYlcVO79beXecxk3?=
+ =?us-ascii?Q?X16QjlXUIriKfavnzO5XIdaHPBLMelw9RvkzA/jwJdPrTX9PxOkoYyRIMCHp?=
+ =?us-ascii?Q?8xYkr/mzlzA9nqnRsJ3FX8Kuyzv9WG+UUu3Ym2k9upcc9UrXnZeFjtj/Jgpi?=
+ =?us-ascii?Q?KX6UA9AZ1LzMeEa7bp77U+t0eA+zMual6Lm38N3V6rB3Sv8MBhkg/R5tPVDo?=
+ =?us-ascii?Q?FdZtDaYrwXGY6H/QaY9XxTp5nWBsMFJpWuCdZBvV40+4WNmz+0tCQTy8lSVi?=
+ =?us-ascii?Q?YLm7GmmkZq5TPsAgAW8yIqvITqabQRoxDqeXL+pac33j8oSTuAI0yjpPJgJn?=
+ =?us-ascii?Q?IrjbAUy0HPKz6XoJIAxns8WUSqNlqlHrPdWuRMCCDnhvSTM1Mo6onV2j90TU?=
+ =?us-ascii?Q?wgT/gLkG7pH8zUUyvyYW6jRxPe2aM1Wv7tpixpqtm4jjp53guc5PkwxGu09u?=
+ =?us-ascii?Q?X7mvaO3yZwq8FDajfhvgxVxEDuMZ8C2dSCw7wFFylyvPcYt3kUQ06QgjpBK4?=
+ =?us-ascii?Q?23FnTtg6AlxwzyRWQ2+hivFC8gf0O2fiZb9iog2eOf8unGUeoxS22EGzCePT?=
+ =?us-ascii?Q?0f+7z0z6heBhwnUj8XutZdfBa5Axeh8=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 71c6b273-2795-4d64-d6d5-08df3a99ca61
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6553f060-97b6-4092-4ae9-08df3a99c93a
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR02MB7121.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 17:33:51.0468 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 17:33:49.1137 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 69m6KV8t8dXm40Y0JAD62rYqfi/ICYWoQykY04swX/xf/0MZVLVU3nXh9xoPddqPFNGgjsjgyg9PM4yHHJW7HnfbLyiF5ehlpyblysvSDMA=
+X-MS-Exchange-CrossTenant-UserPrincipalName: kk2993H3rg/oXQV8c0NNJF5vZr5hmSSvcEen5BysToxpJqdB+G+ax8yCbNNTguizCMhGm0iqVQhcU5Bv2Xdbu0FiL8JZ64rOUdYhUSjTmI0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR02MB8801
 Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=bin.meng@processmission.com;
@@ -147,44 +146,49 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The L1 configuration registers encode a 64-byte cache block with
-CBSIZE=1. The models instead set CBSIZE=2, advertising 128 bytes
-despite using 64 bytes for cache operations.
+The e500mc, e5500 and e6500 core manuals define MAS5 as SPR 339
+(0x153), but the existing definition assigns it number 629 (0x275).
+Correct the number and place the definition in its numeric group.
 
-Use the correct field value for both caches.
+While we are here, adjust the order of SPR_HEIR so that it is
+inserted in ascending order.
 
-Reference:
-- E500MCRM (Rev.3), sections 2.14.4 and 2.14.5
-  https://www.nxp.com/docs/en/reference-manual/E500MCRM.pdf
-- E5500RM (Rev.4), sections 2.14.4 and 2.14.5
-  https://www.nxp.com/webapp/Download?colCode=E5500RM
+Reference: EREF_RM (Rev.1), section 4.2.2 and 4.12.10.6
+https://www.nxp.com/webapp/Download?colCode=EREF_RM
 
-Fixes: a496e8eeba51 ("PPC: E500: Populate L1CFG0 SPR")
-Fixes: d2ea2bf740c5 ("PPC: Add L1CFG1 SPR emulation")
+Fixes: 80d11f4467c4 ("Add definitions for Freescale PowerPC implementations")
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
 (no changes since v1)
 
- target/ppc/cpu_init.c | 4 ++--
+ target/ppc/cpu.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 9731bc0bfa..2de2684c69 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2886,8 +2886,8 @@ static void init_proc_e500(CPUPPCState *env, int version)
-     case fsl_e5500:
-         env->dcache_line_size = 64;
-         env->icache_line_size = 64;
--        l1cfg0 |= 0x1000000; /* 64 byte cache block size */
--        l1cfg1 |= 0x1000000; /* 64 byte cache block size */
-+        l1cfg0 |= 0x00800000; /* 64 byte cache block size */
-+        l1cfg1 |= 0x00800000; /* 64 byte cache block size */
-         break;
-     case fsl_e6500:
-         env->dcache_line_size = 32;
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 0f44096bad..0cbc55c470 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1928,8 +1928,9 @@ void ppc_compat_add_property(Object *obj, const char *name,
+ #define SPR_HMER              (0x150)
+ #define SPR_HMEER             (0x151)
+ #define SPR_PCR               (0x152)
+-#define SPR_HEIR              (0x153)
+ #define SPR_BOOKE_LPIDR       (0x152)
++#define SPR_HEIR              (0x153)
++#define SPR_BOOKE_MAS5        (0x153)
+ #define SPR_BOOKE_TCR         (0x154)
+ #define SPR_PPE42_TCR         (0x154)
+ #define SPR_BOOKE_TLB0PS      (0x158)
+@@ -2044,7 +2045,6 @@ void ppc_compat_add_property(Object *obj, const char *name,
+ #define SPR_BOOKE_MAS2        (0x272)
+ #define SPR_BOOKE_MAS3        (0x273)
+ #define SPR_BOOKE_MAS4        (0x274)
+-#define SPR_BOOKE_MAS5        (0x275)
+ #define SPR_BOOKE_MAS6        (0x276)
+ #define SPR_BOOKE_PID1        (0x279)
+ #define SPR_BOOKE_PID2        (0x27A)
 -- 
 2.53.0
 
