@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2DC606A31B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 11:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CC9606A337
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 11:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=lNOiN9kv
+	dkim=pass (1024-bit key, unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=HIvMw3x5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOZJs-0003YF-3f; Wed, 04 Nov 2026 06:38:20 -0500
+	id 1xOZJs-0003YQ-ET; Wed, 04 Nov 2026 06:38:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1xOZJq-0003X0-95
+ id 1xOZJq-0003XP-M4
  for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:38:18 -0500
-Received: from mailout1.samsung.com ([203.254.224.24])
+Received: from mailout2.samsung.com ([203.254.224.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1xOZJm-0005CR-03
+ id 1xOZJl-0005CS-OM
  for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:38:18 -0500
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20261104113804epoutp01578115b4b79df5dbd6a1501cc2e394e7~k1JQ2ZoFN3066930669epoutp01C
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+ by mailout2.samsung.com (KnoxPortal) with ESMTP id
+ 20261104113804epoutp02e4a3b275c6801c058543d915c1fb3a8d~k1JRC-N7C1860918609epoutp02L
  for <qemu-devel@nongnu.org>; Wed,  4 Nov 2026 11:38:04 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20261104113804epoutp01578115b4b79df5dbd6a1501cc2e394e7~k1JQ2ZoFN3066930669epoutp01C
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com
+ 20261104113804epoutp02e4a3b275c6801c058543d915c1fb3a8d~k1JRC-N7C1860918609epoutp02L
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
  s=mail20170921; t=1793792284;
- bh=Y0cXYnQbjOYdGcbACGdlf2bwol3eJbmmbFa1s2CZHWU=;
+ bh=zMRYwjo0X/qwb12AaABRJljD34IxFgc+zPdctLsCiBA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=lNOiN9kvaaD5FvIdMohf6CIeRLQ/ao6+Qpp5GUsVaJdr+JkihFT9QLoFx0516j4Ry
- HkiADbw+G9qQzw6Tc8nTRS/TWyTugBbUQPN6AInl8OP8YzrFrCw+uk8xVu+0rZNiW9
- G5AGQvmbhDlJ/PMWenRaEST459xVA/CIl4ttAC9I=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+ b=HIvMw3x5U9xA37avuErv7SfMkGVbvAjcv+36GoPDOKU/0aA5eKz2T3kod5Rko4pqz
+ thlOxv/eGqW9IApoQMVRwSpcivcefLezOkHJkunkNHtOw06jhEPSywgF70hQ31KAhx
+ DQdOtKlfX14lMi4CK3Tk/eyXCzUJGeQB8yry2LZ0=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
  epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
- 20261104113803epcas5p1f6449e8059362c272ce0b9d6d450b881~k1JQGbKgu2444724447epcas5p1t;
- Wed,  4 Nov 2026 11:38:03 +0000 (GMT)
+ 20261104113804epcas5p142b60024c39f0f39e61bbdd129782404~k1JQrFsHl0140001400epcas5p1B;
+ Wed,  4 Nov 2026 11:38:04 +0000 (GMT)
 Received: from epcpadp2new (unknown [182.195.40.142]) by
- epsnrtp02.localdomain (Postfix) with ESMTP id 4jKNjR5dkkz2SSKX; Wed,  4 Nov
- 2026 11:38:03 +0000 (GMT)
+ epsnrtp03.localdomain (Postfix) with ESMTP id 4jKNjS2jRgz3hhT3; Wed,  4 Nov
+ 2026 11:38:04 +0000 (GMT)
 Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
- epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
- 20261104113014epcas5p1dbf4b09e2849d28b46eb39db7990a54f~k1Ca--Rd50210802108epcas5p1A;
- Wed,  4 Nov 2026 11:30:14 +0000 (GMT)
+ epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+ 20261104113039epcas5p4cd54cce1d9c2de4f1c1f2101623dd783~k1CyZEvhQ2809328093epcas5p4b;
+ Wed,  4 Nov 2026 11:30:39 +0000 (GMT)
 Received: from unvme-SYS-221H-TN24R.samsungds.net (unknown [107.99.40.127])
  by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20261104113012epsmtip1ca93aed51b3be29c21f0b709647aa5c8~k1CYtrxjj2364123641epsmtip1L;
- Wed,  4 Nov 2026 11:30:11 +0000 (GMT)
+ 20261104113037epsmtip114cedcb66d95ce7a3d0fa236e5ec38ac~k1CwC-6dY2364123641epsmtip1a;
+ Wed,  4 Nov 2026 11:30:36 +0000 (GMT)
 From: Shrihari E S <shrihari.s@samsung.com>
 To: jic23@kernel.org, junjie.cao@linux.dev, linux-cxl@vger.kernel.org,
  linux-pci@vger.kernel.org, qemu-devel@nongnu.org, anisa.su887@gmail.com,
@@ -55,33 +55,32 @@ Cc: shrihari.s@samsung.com, arun.george@samsung.com, cpgs@samsung.com,
  dave@stgolabs.net, dongjoo.seo1@samsung.com, gost.dev@samsung.com,
  s.neeraj@samsung.com, vikash.k5@samsung.com, anisa.su@samsung.com,
  junjie.cao@intel.com
-Subject: [PATCH qemu v1 1/8] hw/pci: Refactor flitmode from PCIESlot to
- PCIEPort
-Date: Wed,  4 Nov 2026 17:22:35 +0530
-Message-Id: <282821294.121793792283779.JavaMail.epsvc@epcpadp2new>
+Subject: [PATCH qemu v1 6/8] hw/pci: Add PCIe Device3 capability support
+Date: Wed,  4 Nov 2026 17:22:40 +0530
+Message-Id: <932285561.201793792284372.JavaMail.epsvc@epcpadp2new>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261104115242.2035807-1-shrihari.s@samsung.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20261104113014epcas5p1dbf4b09e2849d28b46eb39db7990a54f
+X-CMS-MailID: 20261104113039epcas5p4cd54cce1d9c2de4f1c1f2101623dd783
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 X-CPGSPASS: Y
 X-Hop-Count: 3
-X-CMS-RootMailID: 20261104113014epcas5p1dbf4b09e2849d28b46eb39db7990a54f
+X-CMS-RootMailID: 20261104113039epcas5p4cd54cce1d9c2de4f1c1f2101623dd783
 References: <20261104115242.2035807-1-shrihari.s@samsung.com>
- <CGME20261104113014epcas5p1dbf4b09e2849d28b46eb39db7990a54f@epcas5p1.samsung.com>
-Received-SPF: pass client-ip=203.254.224.24;
- envelope-from=shrihari.s@samsung.com; helo=mailout1.samsung.com
+ <CGME20261104113039epcas5p4cd54cce1d9c2de4f1c1f2101623dd783@epcas5p4.samsung.com>
+Received-SPF: pass client-ip=203.254.224.25;
+ envelope-from=shrihari.s@samsung.com; helo=mailout2.samsung.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,176 +100,322 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Move the 'flitmode' field from PCIESlot to its parent PCIEPort so
-that all the derived port types carry the 256-byte flit mode state
-in a single field. The 'x-256b-flit' property defaults to off on
-all the port types.
+Add the PCIe Device 3 Extended Capability (PCIe 6.4 section 7.7.9),
+with which an endpoint exposes its UIO requester and completer
+support and the related control bits.
 
-The x-256b-flit property is based on a patch series from Davidlohr
-Bueso that adds flit mode signaling for CXL ports[1].
-
-[1]: https://lore.kernel.org/all/20251103195209.1319917-2-dave@stgolabs.net/
+The capability tracks the link's flit state: the requester-enable
+bits stay clear while the link is not in flit mode, and the Segment
+Captured status bit follows the flit state.
 
 Signed-off-by: Shrihari E S <shrihari.s@samsung.com>
+Signed-off-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
 ---
- hw/pci-bridge/cxl_downstream.c            |  6 +++---
- hw/pci-bridge/cxl_root_port.c             |  6 +++---
- hw/pci-bridge/cxl_upstream.c              | 11 +++++++----
- hw/pci/pcie.c                             |  2 +-
- include/hw/pci-bridge/cxl_upstream_port.h |  1 -
- include/hw/pci/pcie_port.h                |  2 +-
- 6 files changed, 15 insertions(+), 13 deletions(-)
+ hw/pci/meson.build         |   2 +-
+ hw/pci/pci.c               |   2 +
+ hw/pci/pcie.c              |  29 ++++++++++
+ hw/pci/pcie_dev3.c         | 111 +++++++++++++++++++++++++++++++++++++
+ include/hw/pci/pcie.h      |   5 ++
+ include/hw/pci/pcie_dev3.h |  26 +++++++++
+ include/hw/pci/pcie_regs.h |  26 +++++++++
+ 7 files changed, 200 insertions(+), 1 deletion(-)
+ create mode 100644 hw/pci/pcie_dev3.c
+ create mode 100644 include/hw/pci/pcie_dev3.h
 
-diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
-index d1e27994a3..134b91220a 100644
---- a/hw/pci-bridge/cxl_downstream.c
-+++ b/hw/pci-bridge/cxl_downstream.c
-@@ -118,7 +118,7 @@ static void cxl_dsp_reset(DeviceState *qdev)
- 
- static void build_dvsecs(PCIDevice *d, CXLComponentState *cxl)
- {
--    PCIESlot *s = PCIE_SLOT(d);
-+    PCIEPort *p = PCIE_PORT(d);
-     CXLDVSECRegisterLocator *regloc_dvsec;
-     uint8_t *dvsec;
-     int i;
-@@ -132,7 +132,7 @@ static void build_dvsecs(PCIDevice *d, CXLComponentState *cxl)
-     dvsec = (uint8_t *)&(CXLDVSECPortFlexBus){
-         .cap                     = 0x27, /* Cache, IO, Mem, non-MLD */
-         .ctrl                    = 0x02, /* IO always enabled */
--        .status                  = s->flitmode ? 0x6 : 0x26, /* lack of 68B */
-+        .status                  = p->flitmode ? 0x6 : 0x26, /* lack of 68B */
-         .rcvd_mod_ts_data_phase1 = 0xef, /* WTF? */
-     };
-     cxl_component_create_dvsec(cxl, CXL2_DOWNSTREAM_PORT,
-@@ -259,7 +259,7 @@ static const Property cxl_dsp_props[] = {
-                                 speed, PCIE_LINK_SPEED_64),
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
-                                 width, PCIE_LINK_WIDTH_16),
--    DEFINE_PROP_BOOL("x-256b-flit", PCIESlot, flitmode, true),
-+    DEFINE_PROP_BOOL("x-256b-flit", PCIEPort, flitmode, false),
- };
- 
- static void cxl_dsp_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
-index 0ee18ef5c3..01463dbb07 100644
---- a/hw/pci-bridge/cxl_root_port.c
-+++ b/hw/pci-bridge/cxl_root_port.c
-@@ -112,7 +112,7 @@ static void latch_registers(CXLRootPort *crp)
- 
- static void build_dvsecs(PCIDevice *d, CXLComponentState *cxl)
- {
--    PCIESlot *s = PCIE_SLOT(d);
-+    PCIEPort *p = PCIE_PORT(d);
-     CXLDVSECRegisterLocator *regloc_dvsec;
-     uint8_t *dvsec;
-     int i;
-@@ -135,7 +135,7 @@ static void build_dvsecs(PCIDevice *d, CXLComponentState *cxl)
-     dvsec = (uint8_t *)&(CXLDVSECPortFlexBus){
-         .cap                     = 0x26, /* IO, Mem, non-MLD */
-         .ctrl                    = 0x2,
--        .status                  = s->flitmode ? 0x6 : 0x26, /* lack of 68B */
-+        .status                  = p->flitmode ? 0x6 : 0x26, /* lack of 68B */
-         .rcvd_mod_ts_data_phase1 = 0xef,
-     };
-     cxl_component_create_dvsec(cxl, CXL2_ROOT_PORT,
-@@ -237,7 +237,7 @@ static const Property gen_rp_props[] = {
-                                 speed, PCIE_LINK_SPEED_64),
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
-                                 width, PCIE_LINK_WIDTH_32),
--    DEFINE_PROP_BOOL("x-256b-flit", PCIESlot, flitmode, true),
-+    DEFINE_PROP_BOOL("x-256b-flit", PCIEPort, flitmode, false),
- };
- 
- static void cxl_rp_dvsec_write_config(PCIDevice *dev, uint32_t addr,
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index ef5480b116..0b1fa9594b 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -136,7 +136,8 @@ static void latch_registers(CXLUpstreamPort *usp)
-     uint32_t *write_msk = usp->cxl_cstate.crb.cache_mem_regs_write_mask;
- 
-     cxl_component_register_init_common(reg_state, write_msk,
--                                       CXL2_UPSTREAM_PORT, usp->flitmode);
-+                                       CXL2_UPSTREAM_PORT,
-+                                       PCIE_PORT(usp)->flitmode);
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, TARGET_COUNT, 8);
+diff --git a/hw/pci/meson.build b/hw/pci/meson.build
+index d55882a0c9..0a7f3b162a 100644
+--- a/hw/pci/meson.build
++++ b/hw/pci/meson.build
+@@ -14,7 +14,7 @@ pci_ss.add(files(
+ # The functions in these modules can be used by devices too.  Since we
+ # allow plugging PCIe devices into PCI buses, include them even if
+ # CONFIG_PCI_EXPRESS=n.
+-pci_ss.add(files('pcie.c', 'pcie_aer.c', 'pcie_svc.c'))
++pci_ss.add(files('pcie.c', 'pcie_aer.c', 'pcie_svc.c', 'pcie_dev3.c'))
+ pci_ss.add(files('pcie_doe.c'))
+ system_ss.add(when: 'CONFIG_PCI_EXPRESS', if_true: files('pcie_port.c', 'pcie_host.c'))
+ system_ss.add_all(when: 'CONFIG_PCI', if_true: pci_ss)
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 50472cab88..cc5e40ac5c 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -571,6 +571,7 @@ static void pci_do_device_reset(PCIDevice *dev)
+     pcie_sriov_pf_reset(dev);
+     pcie_cap_flit_reset(dev);
+     pcie_svc_cap_reset(dev);
++    pcie_dev3_cap_reset(dev);
  }
  
-@@ -147,7 +148,8 @@ static void cxl_usp_reset(DeviceState *qdev)
- 
-     pci_bridge_reset(qdev);
-     pcie_cap_deverr_reset(d);
--    pcie_cap_fill_link_ep_usp(d, usp->width, usp->speed, usp->flitmode);
-+    pcie_cap_fill_link_ep_usp(d, usp->width, usp->speed,
-+                              PCIE_PORT(usp)->flitmode);
-     latch_registers(usp);
+ /*
+@@ -1819,6 +1820,7 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
+     pcie_sriov_config_write(d, addr, val_in, l);
+     pcie_cap_flit_write_config(d, addr, l);
+     pcie_svc_cap_write_config(d, addr, val_in, l);
++    pcie_dev3_cap_write_config(d, addr, val_in, l);
  }
  
-@@ -168,7 +170,8 @@ static void build_dvsecs(CXLUpstreamPort *usp)
-     dvsec = (uint8_t *)&(CXLDVSECPortFlexBus){
-         .cap                     = 0x27, /* Cache, IO, Mem, non-MLD */
-         .ctrl                    = 0x27, /* Cache, IO, Mem */
--        .status                  = usp->flitmode ? 0x6 : 0x26, /* lack of 68B */
-+        .status                  = PCIE_PORT(usp)->flitmode ?
-+                                  0x6 : 0x26, /* lack of 68B */
-         .rcvd_mod_ts_data_phase1 = 0xef, /* WTF? */
-     };
-     cxl_component_create_dvsec(cxl_cstate, CXL2_UPSTREAM_PORT,
-@@ -436,7 +439,7 @@ static const Property cxl_upstream_props[] = {
-                                 speed, PCIE_LINK_SPEED_32),
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLUpstreamPort,
-                                 width, PCIE_LINK_WIDTH_16),
--    DEFINE_PROP_BOOL("x-256b-flit", CXLUpstreamPort, flitmode, false),
-+    DEFINE_PROP_BOOL("x-256b-flit", PCIEPort, flitmode, false),
- };
- 
- static void cxl_upstream_class_init(ObjectClass *oc, const void *data)
+ /***********************************************************/
 diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 1de0b1e4fd..4f6fc9db61 100644
+index b05f70022a..9f16cc8d1b 100644
 --- a/hw/pci/pcie.c
 +++ b/hw/pci/pcie.c
-@@ -217,7 +217,7 @@ static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
-         /* the PCI_EXP_LNKSTA_DLLLA will be set in the hotplug function */
-     }
- 
--    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, s->flitmode);
-+    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, PCIE_PORT(s)->flitmode);
+@@ -190,6 +190,32 @@ void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
+     pcie_cap_fill_lnk(dev, exp_cap, width, speed, flitmode);
  }
  
- int pcie_cap_init(PCIDevice *dev, uint8_t offset,
-diff --git a/include/hw/pci-bridge/cxl_upstream_port.h b/include/hw/pci-bridge/cxl_upstream_port.h
-index d4186234c8..e8f5e43faf 100644
---- a/include/hw/pci-bridge/cxl_upstream_port.h
-+++ b/include/hw/pci-bridge/cxl_upstream_port.h
-@@ -21,7 +21,6 @@ typedef struct CXLUpstreamPort {
++bool pcie_link_flit_active(PCIDevice *dev)
++{
++    uint8_t *exp_cap;
++    uint16_t lnksta2;
++    uint16_t lnkctl;
++    uint16_t flags;
++
++    if (!pci_is_express(dev) || !dev->exp.exp_cap) {
++        return false;
++    }
++
++    exp_cap = dev->config + dev->exp.exp_cap;
++    flags = pci_get_word(exp_cap + PCI_EXP_FLAGS);
++    if (!(flags & PCI_EXP_FLAGS_FLIT)) {
++        return false;
++    }
++    lnkctl = pci_get_word(exp_cap + PCI_EXP_LNKCTL);
++    lnksta2 = pci_get_word(exp_cap + PCI_EXP_LNKSTA2);
++
++    if (lnkctl & PCI_EXP_LNKCTL_FLIT_DIS) {
++        return false;
++    }
++
++    return lnksta2 & PCI_EXP_LNKSTA2_FLIT;
++}
++
+ /*
+  * Derive the read-only Flit Status bit of the Link Status 2
+  * register from the Flit Disable bit of the Link Control register.
+@@ -226,6 +252,9 @@ void pcie_cap_flit_write_config(PCIDevice *dev, uint32_t addr, int len)
+     }
  
-     PCIExpLinkSpeed speed;
-     PCIExpLinkWidth width;
--    bool flitmode;
+     pcie_cap_flit_update_sta(dev);
++    if (dev->exp.dev3_cap) {
++        pcie_dev3_cap_flit_update(dev);
++    }
+ }
  
-     DOECap doe_cdat;
-     uint64_t sn;
-diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
-index 53cd64c5ed..1bcc734649 100644
---- a/include/hw/pci/pcie_port.h
-+++ b/include/hw/pci/pcie_port.h
-@@ -33,6 +33,7 @@ struct PCIEPort {
-     /*< private >*/
-     PCIBridge   parent_obj;
-     /*< public >*/
-+    bool flitmode;
+ /*
+diff --git a/hw/pci/pcie_dev3.c b/hw/pci/pcie_dev3.c
+new file mode 100644
+index 0000000000..8ca7c74b8c
+--- /dev/null
++++ b/hw/pci/pcie_dev3.c
+@@ -0,0 +1,111 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * PCIe Device3 Extended Capability
++ *
++ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
++ */
++
++#include "qemu/osdep.h"
++#include "hw/pci/pci_device.h"
++#include "hw/pci/pcie.h"
++#include "hw/pci/pcie_port.h"
++#include "hw/pci/pcie_dev3.h"
++
++int pcie_dev3_cap_init(PCIDevice *dev, uint32_t offset,
++                       bool uio_req, bool uio_comp, Error **errp)
++{
++    uint32_t devcap3 = 0;
++    uint32_t wmask = 0;
++
++    if (!pci_is_express(dev)) {
++        error_setg(errp, "Device 3 ECAP requires PCIe");
++        return -EINVAL;
++    }
++
++    pcie_add_capability(dev, PCI_EXT_CAP_ID_DEV3, 1, offset, PCI_DEV3_SIZEOF);
++    dev->exp.dev3_cap = offset;
++    dev->exp.dev3.uio_req = uio_req;
++    dev->exp.dev3.uio_comp = uio_comp;
++
++    /*
++     * In this implementation, 14-bit tag support is only advertised
++     * when UIO is enabled. A real device may support 14-bit tags
++     * independently of UIO.
++     */
++    if (uio_comp) {
++        devcap3 |= PCI_DEV3_CAP_TAG_COMP | PCI_DEV3_CAP_UIO_COMP;
++    }
++    if (uio_req) {
++        devcap3 |= PCI_DEV3_CAP_TAG_REQ | PCI_DEV3_CAP_UIO_REQ;
++        wmask |= PCI_DEV3_CTL_TAG_REQ_EN |
++                 PCI_DEV3_CTL_UIO_REQ_EN |
++                 PCI_DEV3_CTL_UIO_256B_DIS;
++    }
++
++    pci_set_long(dev->config + offset + PCI_DEV3_CAP_OFFSET, devcap3);
++    pci_set_long(dev->wmask + offset + PCI_DEV3_CTL_OFFSET, wmask);
++
++    return 0;
++}
++
++/*
++ * Track the link's flit state in the Device 3 capability: the
++ * requester-enable bits of the Device Control 3 register are cleared
++ * while the link is not in flit mode, and the Segment Captured
++ * status bit follows the link's flit state.
++ */
++void pcie_dev3_cap_flit_update(PCIDevice *dev)
++{
++    uint32_t off = dev->exp.dev3_cap;
++    uint32_t devctl3;
++    uint32_t devsta3;
++    bool flit;
++
++    if (!off) {
++        return;
++    }
++
++    flit = pcie_link_flit_active(dev);
++    if (!dev->exp.dev3.uio_req || !flit) {
++        devctl3 = pci_get_long(dev->config + off + PCI_DEV3_CTL_OFFSET);
++        devctl3 &= ~(PCI_DEV3_CTL_TAG_REQ_EN |
++                     PCI_DEV3_CTL_UIO_REQ_EN |
++                     PCI_DEV3_CTL_UIO_256B_DIS);
++        pci_set_long(dev->config + off + PCI_DEV3_CTL_OFFSET, devctl3);
++    }
++
++    devsta3 = pci_get_long(dev->config + off + PCI_DEV3_STA_OFFSET);
++    if (flit) {
++        devsta3 |= PCI_DEV3_STA_SEGMENT_CAP;
++    } else {
++        devsta3 &= ~PCI_DEV3_STA_SEGMENT_CAP;
++    }
++    pci_set_long(dev->config + off + PCI_DEV3_STA_OFFSET, devsta3);
++}
++
++void pcie_dev3_cap_reset(PCIDevice *dev)
++{
++    uint32_t off = dev->exp.dev3_cap;
++
++    if (!off) {
++        return;
++    }
++
++    pci_set_long(dev->config + off + PCI_DEV3_CTL_OFFSET, 0);
++    pci_set_long(dev->config + off + PCI_DEV3_STA_OFFSET, 0);
++    pcie_dev3_cap_flit_update(dev);
++}
++
++void pcie_dev3_cap_write_config(PCIDevice *dev,
++                                uint32_t addr, uint32_t val, int len)
++{
++    if (!dev->exp.dev3_cap) {
++        return;
++    }
++
++    if (ranges_overlap(addr, len,
++                       dev->exp.dev3_cap + PCI_DEV3_CTL_OFFSET, 4)) {
++        pcie_dev3_cap_flit_update(dev);
++    }
++}
+diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
+index 3d092e8871..95f670c830 100644
+--- a/include/hw/pci/pcie.h
++++ b/include/hw/pci/pcie.h
+@@ -26,6 +26,7 @@
+ #include "hw/pci/pcie_aer.h"
+ #include "hw/pci/pcie_sriov.h"
+ #include "hw/pci/pcie_svc.h"
++#include "hw/pci/pcie_dev3.h"
+ #include "hw/core/hotplug.h"
  
-     /* pci express switch port */
-     uint8_t     port;
-@@ -58,7 +59,6 @@ struct PCIESlot {
+ typedef struct PCIEPort PCIEPort;
+@@ -86,6 +87,9 @@ struct PCIExpressDevice {
  
-     PCIExpLinkSpeed speed;
-     PCIExpLinkWidth width;
--    bool flitmode;
+     /* Streamlined Virtual Channel (SVC) introduced from PCIe 6.1 */
+     uint32_t svc_cap;
++    /* PCIe Device 3 Capability */
++    uint32_t dev3_cap;
++    struct PCIEDev3Cap dev3;
+ };
  
-     /* Disable ACS (really for a pcie_root_port) */
-     bool        disable_acs;
+ #define COMPAT_PROP_PCP "power_controller_present"
+@@ -149,6 +153,7 @@ void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
+                                PCIExpLinkSpeed speed, bool flitmode);
+ void pcie_cap_flit_write_config(PCIDevice *dev, uint32_t addr, int len);
+ void pcie_cap_flit_reset(PCIDevice *dev);
++bool pcie_link_flit_active(PCIDevice *dev);
+ 
+ void pcie_cap_slot_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
+                                Error **errp);
+diff --git a/include/hw/pci/pcie_dev3.h b/include/hw/pci/pcie_dev3.h
+new file mode 100644
+index 0000000000..4cfa07fe32
+--- /dev/null
++++ b/include/hw/pci/pcie_dev3.h
+@@ -0,0 +1,26 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * PCIe Device3 Extended Capability
++ *
++ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
++ */
++
++#ifndef HW_PCIE_DEV3_H
++#define HW_PCIE_DEV3_H
++
++#include "hw/pci/pci.h"
++
++typedef struct PCIEDev3Cap {
++    bool uio_req;
++    bool uio_comp;
++} PCIEDev3Cap;
++
++int pcie_dev3_cap_init(PCIDevice *dev, uint32_t offset,
++                       bool uio_req, bool uio_comp, Error **errp);
++void pcie_dev3_cap_reset(PCIDevice *dev);
++void pcie_dev3_cap_write_config(PCIDevice *dev,
++                                uint32_t addr, uint32_t val, int len);
++void pcie_dev3_cap_flit_update(PCIDevice *dev);
++
++#endif /* HW_PCIE_DEV3_H */
+diff --git a/include/hw/pci/pcie_regs.h b/include/hw/pci/pcie_regs.h
+index 044b3caae4..484178adb3 100644
+--- a/include/hw/pci/pcie_regs.h
++++ b/include/hw/pci/pcie_regs.h
+@@ -256,4 +256,30 @@ typedef enum PCIExpLinkWidth {
+ #define PCI_SVC_RES_STATUS(n)           (PCI_SVC_RES_STATUS_BASE + ((n) * 0x0c))
+ #define PCI_SVC_VC_NEGO                 BIT(1)
+ 
++/* PCIe Device 3 capability structure. PCIe 6.4 Specification Section 7.7.9 */
++#ifndef PCI_EXT_CAP_ID_DEV3
++#define PCI_EXT_CAP_ID_DEV3 0x2f
++#endif
++
++#define PCI_DEV3_CAP_OFFSET            0x04
++#define PCI_DEV3_CTL_OFFSET            0x08
++#define PCI_DEV3_STA_OFFSET            0x0c
++#define PCI_DEV3_SIZEOF                0x10
++
++/* Section 7.7.9.2 Device Capabilities 3 Register */
++#define PCI_DMWR_REQ_SUPPORTED         BIT(0)
++#define PCI_DEV3_CAP_TAG_COMP          BIT(1)
++#define PCI_DEV3_CAP_TAG_REQ           BIT(2)
++#define PCI_L0P_SUPPORTED              BIT(3)
++#define PCI_DEV3_CAP_UIO_COMP          BIT(10)
++#define PCI_DEV3_CAP_UIO_REQ           BIT(11)
++
++/* Section 7.7.9.3 Device Control 3 Register */
++#define PCI_DEV3_CTL_TAG_REQ_EN        BIT(2)
++#define PCI_DEV3_CTL_UIO_REQ_EN        BIT(7)
++#define PCI_DEV3_CTL_UIO_256B_DIS      BIT(8)
++
++/* Section 7.7.9.4 Device Status 3 Register */
++#define PCI_DEV3_STA_SEGMENT_CAP       BIT(3)
++
+ #endif /* QEMU_PCIE_REGS_H */
 -- 
 2.34.1
 
