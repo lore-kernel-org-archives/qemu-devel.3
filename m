@@ -1,105 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3527B606A326
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 00:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F38606A326
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 01:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PWVblEOo
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=D0h86zM7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOP91-0008OB-6o; Tue, 03 Nov 2026 19:46:27 -0500
+	id 1xOPqK-0004Mp-Ks; Tue, 03 Nov 2026 20:31:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1xOP8z-0008NH-Rj
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 19:46:26 -0500
-Received: from mail-lr2-x07.google.com ([2a00:1450:4864:38::7])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xOPqH-0004MM-Cd
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 20:31:10 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1xOP8x-0005fo-5z
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 19:46:24 -0500
-Received: by mail-lr2-x07.google.com with SMTP id
- 38308e7fff4ca-3ab1b11ca0bso1293621fa.1
- for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 16:46:22 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793753179; cv=none;
- d=google.com; s=arc-20260327;
- b=LylTS/mdAACxbnINI5UHdeEZEFLcbN+euqE492W9MoTpSM6TlyHJchsxKX497MSAoZ
- p48mRA9VKvyTpVIOw8W+PqavRQRE2++jmKh/nMWDsHUZvsmtM+0/9eKNMYwg6uVTvSXi
- O3w2v3PrnQ4S3F5sULmCUlCMQFqFTyzIKxUKkpwbNDTTVJV0uAveWWPdo+d1fbfaMGiK
- vGo+31t9FdN40FthQdhJs3U7fj2Ct5nFtIwCwQyBlZzLy2oLWxoo5wMF2eoNNDVLVPpM
- WPoxB48uYwiBCboWGDwiS1m9B4xlp9skD0SYGz4SXiyFIvROOsaVmR7muXxzbVaci2gh
- RLQw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=3x5U6U5sP+d8TBdF09UQxwnOAy7Em8w8k6z+rZytcvY=;
- fh=C610jvcrafpJpv+nhwL3d0G0iCieofbR34w/Da3d5Hw=;
- b=XhzaeKxzUL0Fej/KAtEYKdl/6gjy1UPtmDEM1y7qGg19qeQS4yFrtNB0p2iOtqEImO
- 9g9FMye6iK3dReaIkFf+wHpPo++JL7Ht+5k8rSwj7GsMMAYNaKlaNUbLXrXK7kYKVt4r
- ZIhqQP0SO5reQCqadauGy7g2u+6wdJGsLglLIpsFtZtrEAo6EePenz895Maqqikz1D9Q
- hB2CY3fVJ1SlFZlLJlqPyJerZwkP17/Hb8ANRBhXf7c4Yn+09xGehLhORkJw0o8C/WGl
- orcKblIre7S5vZrhcOr4jEPIR9P3CAVPwLTZaLunDLUHW4WklH6QbmIM/3WGpZcneOTi
- gS0A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xOPqF-0001FW-HI
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 20:31:08 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-886e61fa30fso110942b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 17:31:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793753179; x=1794357979; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=3x5U6U5sP+d8TBdF09UQxwnOAy7Em8w8k6z+rZytcvY=;
- b=PWVblEOoejPcLiXtuUddJLCzJD5vbS5rDXYtrtpG8l2mc4cEzOKnRYDyXMdotHCV3r
- 4cwN8trLGaQ8bp7rRaRgOw7SgrtfwZEr3xTlT1LhUR0PnZJUcWshCIksRPBsKf+SIrln
- dEIvE5lTmvboqc0vK9C2Q4NeYkPJ4ashwICAv5AC46tI6NgUFeEkhz7H/6YJhDK9szrx
- Pwtx7uezhamHOmnFMBK1u7olSWH87folP1/W2hOsH5c5uwgRQgrsSLva6+0wMtazmFPX
- a69w1Icv8dcuTzXYLjmneIX9ZpeHNvBwjwvkEKYISSi2cCjhs/Bz76iIhmrdCmGpGPIn
- Mv3Q==
+ d=linaro.org; s=google; t=1793755866; x=1794360666; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ctu5CuVupMBkVayQeHr4FJFzLIikrK48zTOdxSSYw1A=;
+ b=D0h86zM7cINY7jLq38AXISfxEww88prFd0jmllhvaQv/op8pQ7cf94zjmDF2lisaO6
+ ZiAZEW+cXiucxIp91yX7DwaKhOyl+xpVDNddvfmKRFLTljVMAUew6/VLO145OGdZPiw/
+ Bh8MpdniM947Cf+L6IoPLG+KV8paHby8Bi9lqF1otaeyvZLFbLPrkKD8QGq6wNyRcSEh
+ CHawemX8ctMHaQrCb+dmCSIVhvaUNaw6+QADd7edBheNeSCNjtCR0VqbM56bSj46GxjO
+ owR7yqIhP4TXSgv4iGmauuOpLo7dQUMwLP/qaRGL/mTRJxzrPqsNGk9rRSSy8UqK50+V
+ S1XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793753179; x=1794357979;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=3x5U6U5sP+d8TBdF09UQxwnOAy7Em8w8k6z+rZytcvY=;
- b=PcHx5Z5fWsWg5p1PbZ4yULrz3+xSYYSPdveGkAImuKF1uuENH90ZZARBsKxyPF1S9o
- Owey2uwOxrrC36dZJ5bX7whWKmQW7kTzeqThzkitVHSMQdclVrcba6vT48SRUyX0eU9k
- S2H9acs1Id5Si3PjTWr9hsdZx8n9IeWg0pyso7AheSDhwbAQmvMwByaL+NOXw+8JwLfw
- rE09c7U/yaf61/egfjUWupvE8C1dFJCcbQtCfUb9d+L4YUVrdaViFgDeXXYgHJoBr8GB
- 87W0rRnoPEsCj+vTUCT77ZodrUa2tSgd6M2ca43SExJ75w5PLzJ4+SxkYwnb/NZb2Hqu
- i2Hw==
-X-Gm-Message-State: APuU4Z+FEDEoxl5fbCcj/hdRSlR3wy4Dnlv9nY0YLexDgGedpRj+eeiP
- J7Qug7Thx8ek4Dl76DeFa52IHey4bmUV+6NqPAOh8iWvS8woNy3utVVcjtBHQFmClK7uV4/aCnr
- FoliaMHKB/arEagVZ+A629cIieKVOviU=
-X-Gm-Gg: AYBFou0FmCiIAnKCWL8K6eNtz2JvQiBBuULDN9aWW/caKQxt+e7cd99xLoDY0lPExPS
- TQf+/lWiIUyAgmqy28dXmu904+Q/vTWJpVepkzyn6Q+7ggvK6beP9p2uNyEpxk7eW6JFmhpBHe9
- o5wvw3FwcZv1lJTNBBIDjP6zFZyqgs5s3rRXc+G1shtDnDoOGZzhru1uep9EJ+uZwG31zXv2hhe
- mYn1et5MUj5ZurYO0kIjiK/4CPR/+cnI+mSwiK5540RMxBebtcgEA+zoaHjGpAvqa++aTgZE9Ut
- 9MwMHAeoQNhCAjURypdFXK132a5tYP+NUSjsD+sbnTd+c3tFb3cGSV3qRQaO0O7zbwJ+kljXKGn
- PQp9LLFQoNcCzoJFXtG1ADjS5Ac7qSsQGaQ80dmieSiDqtL9flW6qYRLGO7AA
-X-Received: by 2002:a05:6512:3090:b0:5bf:b7d1:6466 with SMTP id
- 2adb3069b0e04-5bfd9571f34mr4712399e87.36.1793753178109; Tue, 03 Nov 2026
- 16:46:18 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793755866; x=1794360666;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=ctu5CuVupMBkVayQeHr4FJFzLIikrK48zTOdxSSYw1A=;
+ b=lHnpZlY0I7dpXVMDQL9h6DV5fdzsQT5jMl1xnICuZvO0syM2CpHy3qT9UUyDM2j5AB
+ Tq5gOdviZvas9x94cJEmV1CZap49pa9XMUR9TuIyYy8L3EPGxRbEQIMRUUV6DJe4Ad8n
+ L8wzlvA4a0r/lp1hLsnj4j4+G9DuR2fqa2JWOY4cXY+hN4UzTX4WCrTZ14UOhc6qU1R9
+ j3TA3r99goK1TYM0W6Xnzwy3AkykQ49WGCsCsK3roZIMyIw6BrJNhjRZys9XfaOilj4W
+ w2gaLGratpVYDnC2Q05yppjXIzwYI+tf4cEm7eMvsby2+yuWx4jSkRXpKa8BEgQ4Lcdf
+ Dh5A==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxqmGwuu6T1wrSJiDYb08T2ObCUjKYzFETnv4zE9LfZhNB1YMRQ2hFC9kXoIJzoUYopMYzbjQ2nHfiX@nongnu.org
+X-Gm-Message-State: APuU4Z+pWIP4dR8bOVw9yAKHg22C4DwzHQn5AdKJbEazv5t4qZv5k5g4
+ dgC87BXfieMMw8ANEtCdI7XjLSCyPmRzzXGAw4TNwfTU3Itj58neMqBcAZJJ/UYBR60=
+X-Gm-Gg: AYBFou38k9CWYay9kn2RA+6fSvB1IQPdmFDvC9eWlDMIFrSX/IlWlkC+xcTwu/vCM1B
+ 0MfUVtvsrdL2iZg8wvfZVSpgtGKtBK+c+vD9s8BlXmUYS2IsWDOuDtVgLnYsqcjO5WeIc2Rm3oY
+ 3dKD0ibEjZPyiCD9RjE5ByjgK4ZPtPtbZzJMobluB/8aAHjm5cuRWsBmQK1f4jo9oHUbJnHKG3P
+ LIrsX+SgEq1fnUbGWrtZEUGhHH30YVeYTieU3zKQ8A20SZk9KFM2hqDwDAm7+BXapCojZetLqLI
+ 3PwxqzHfWd3yw10GJGbfuXFSYX4vV839AqhbvIT8aWYlS30W7tISGyGC4bIFbg/m8dfOsKM8ies
+ el/TQZ/7arn3mndnCNNn97sDmznoOP+UPNAKG8HT81xZpzW1Eoq46Wa8cgr+a1tjtH24XAxJSMX
+ v1kVLnZLXEVD3M1wZl8dh8hrzvHviwUiqheRh/YjUQDpBj2R9B/QbBrIxeK7m20I8LWVSiSI1+l
+ d8G0tXO1LRLpSMqbaw1EqPVEeDi1IIqD2LswhI/BeBY1kzfT+XgATDVKSjH+znmGzH//7NU+/GE
+ 2dPh8LZU2psmtewP4tVfKSMRTO07c4flY+TE74QGI4ZHP5ml0MLLb9gbs5lq9dseknVLdQ==
+X-Received: by 2002:a05:6a21:6191:b0:3e1:885f:b4ab with SMTP id
+ adf61e73a8af0-3e928751caamr10050221637.8.1793755865507; 
+ Tue, 03 Nov 2026 17:31:05 -0800 (PST)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8b09bc40bbcsm206076b3a.51.2026.11.03.17.31.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Nov 2026 17:31:04 -0800 (PST)
+Message-ID: <54b50d70-0f9e-4e37-b973-0ae838e8e0ca@linaro.org>
+Date: Tue, 3 Nov 2026 17:31:03 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261016010237.1102834-1-alistair.francis@wdc.com>
- <20261102095049.31551-1-fritchleybohrer@gmail.com>
- <170bc1e13e7abe45c34b0ddab66841bc85a79ef9.camel@wdc.com>
-In-Reply-To: <170bc1e13e7abe45c34b0ddab66841bc85a79ef9.camel@wdc.com>
-From: Zephyr Li <fritchleybohrer@gmail.com>
-Date: Wed, 4 Nov 2026 08:46:06 +0800
-X-Gm-Features: AclHuK8F6Y1XQ00hqARD3gTCcH7PLYL4XWjnVaWzY7ab1a6geeZEtShzpXvo1f0
-Message-ID: <CAN4PorW4_OcscCXAVL5edWt2Z7D-Q03R==iz+m99JhwnELp_qA@mail.gmail.com>
-Subject: Re: [PULL v2 00/50] riscv-to-apply queue
-To: Alistair Francis <Alistair.Francis@wdc.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000fefa89065f68b4f5"
-Received-SPF: pass client-ip=2a00:1450:4864:38::7;
- envelope-from=fritchleybohrer@gmail.com; helo=mail-lr2-x07.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/10] i386, AGENTS.md, meson changes for QEMU 11.2 soft
+ freeze
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20261103133500.2295582-1-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261103133500.2295582-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,97 +102,33 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000fefa89065f68b4f5
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 11/3/26 05:34, Paolo Bonzini wrote:
+> The following changes since commit 74f7bf4c59e6b6d50dbc6e124d93440be8be4386:
+> 
+>    Merge tag 'pull-target-arm-20261102-1' ofhttps://gitlab.com/pm215/qemu into staging (2026-11-02 20:19:27 -0800)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/bonzini/qemu.git tags/for-upstream
+> 
+> for you to fetch changes up to ab78ac76f44a1241e76fd32d248df62d83f1ea58:
+> 
+>    meson: rewrite scripts/qemu-version.sh directly in meson.build (2026-11-03 14:31:24 +0100)
+> 
+> ----------------------------------------------------------------
+> * target/i386/tcg: bugfixes and cleanups
+> * AGENTS.md: add final instructions
+> * meson: rewrite scripts/qemu-version.sh directly in meson.build
 
-Hi Alistair,
+Applied, thanks.
 
-Thanks for the clarification!
-
-I'll rework both patches based on the latest QEMU master, verify the
-builds, and send updated versions.
-
-Thanks,
-Zephyr
-
-On Wed, Nov 4, 2026 at 8:18=E2=80=AFAM Alistair Francis <Alistair.Francis@w=
-dc.com>
-wrote:
-
-> On Mon, 2026-11-02 at 17:50 +0800, fritchleybohrer@gmail.com wrote:
-> > From: Zephyr Li <fritchleybohrer@gmail.com>
-> >
-> > Hi Alistair,
-> >
-> > I noticed that my following two patches were included in the
-> > original RISC-V pull request but dropped from v2:
-> >
-> > - target/riscv: report WRS.NTO opcode in tval on illegal instruction
-> > - target/riscv: save ELP in MPELP for NMIE=3D0 exceptions
-> >
-> > Were these patches deferred to a later pull request, or is there
-> > anything I need to address?
->
-> Hmm.... I thought I would have replied to the patches with the issue.
->
-> From memory I think they caused build failures so they got removed from
-> the patch series
->
-> Alistair
->
-> >
-> > Thanks,
-> > Zephyr
->
-
---000000000000fefa89065f68b4f5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><p>Hi Alistair,</p><p>Thanks for the clarification!</p><p>=
-I&#39;ll rework both patches based on the latest QEMU master, verify the bu=
-ilds, and send updated versions.</p><p>Thanks,<br>Zephyr</p></div><br><div =
-class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail=
-_attr">On Wed, Nov 4, 2026 at 8:18=E2=80=AFAM Alistair Francis &lt;<a href=
-=3D"mailto:Alistair.Francis@wdc.com">Alistair.Francis@wdc.com</a>&gt; wrote=
-:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
-8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Mon, 2026-1=
-1-02 at 17:50 +0800, <a href=3D"mailto:fritchleybohrer@gmail.com" target=3D=
-"_blank">fritchleybohrer@gmail.com</a> wrote:<br>
-&gt; From: Zephyr Li &lt;<a href=3D"mailto:fritchleybohrer@gmail.com" targe=
-t=3D"_blank">fritchleybohrer@gmail.com</a>&gt;<br>
-&gt; <br>
-&gt; Hi Alistair,<br>
-&gt; <br>
-&gt; I noticed that my following two patches were included in the<br>
-&gt; original RISC-V pull request but dropped from v2:<br>
-&gt; <br>
-&gt; - target/riscv: report WRS.NTO opcode in tval on illegal instruction<b=
-r>
-&gt; - target/riscv: save ELP in MPELP for NMIE=3D0 exceptions<br>
-&gt; <br>
-&gt; Were these patches deferred to a later pull request, or is there<br>
-&gt; anything I need to address?<br>
-<br>
-Hmm.... I thought I would have replied to the patches with the issue.<br>
-<br>
-From memory I think they caused build failures so they got removed from<br>
-the patch series<br>
-<br>
-Alistair<br>
-<br>
-&gt; <br>
-&gt; Thanks,<br>
-&gt; Zephyr<br>
-</blockquote></div>
-
---000000000000fefa89065f68b4f5--
+r~
 
