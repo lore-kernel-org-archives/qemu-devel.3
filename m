@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CC76070311
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 20:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C8B6070311
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 20:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Mgle1CxI
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JfS7rzFE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOhRa-00074P-LO; Wed, 04 Nov 2026 15:18:51 -0500
+	id 1xOhRg-0007C5-GK; Wed, 04 Nov 2026 15:18:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xOhRG-0006ww-D9
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 15:18:30 -0500
+ id 1xOhRV-00072z-L5
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 15:18:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xOhRE-00065W-LV
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 15:18:30 -0500
+ id 1xOhRT-00069L-V7
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 15:18:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793823508;
+ s=mimecast20190719; t=1793823523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sNaYu08RePiA3/TOJj7oi5LlAFNAX4bokf8QMENnVcY=;
- b=Mgle1CxIO3L/k4aXuhS2eHv9zA38tu1XIDGrnM2z3txIV8zuBp8Y32537461i15eBR5jp6
- VVTNQ6rq37YbGAYl7fM/wwKXCH/NzvhSSbAqo87ftG/Tn+tgBrss7+NcApvawXyip9g7uh
- 059+tKLX649z+ZC52PXA1Zjc8o191Bk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=bzIJc3V05DowmcLi7i1y5B9HyXtVMAI3zmPBHgeliGU=;
+ b=JfS7rzFEidDE7sGUf46aM5JV4Pax2Dt6c0alZPkhaBSHzJhEHJmbnZASIzajhOCtzXgISO
+ ZA3YmDRymJV6MNbKXIfnzvJioHfT2/Ne60Tqf4eQzKM2Cr8kb+gW/WgrWjQLOAy3hO9mFP
+ tVRllSq1k62uk2byqOP4es4Jea1KY3U=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-nGipy6pWP5CWYJDVjEyCHA-1; Wed,
- 04 Nov 2026 15:18:25 -0500
-X-MC-Unique: nGipy6pWP5CWYJDVjEyCHA-1
-X-Mimecast-MFC-AGG-ID: nGipy6pWP5CWYJDVjEyCHA_1793823503
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-357-nseSXMS8MA6KZW1lD6Z7mg-1; Wed,
+ 04 Nov 2026 15:18:42 -0500
+X-MC-Unique: nseSXMS8MA6KZW1lD6Z7mg-1
+X-Mimecast-MFC-AGG-ID: nseSXMS8MA6KZW1lD6Z7mg_1793823520
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9082C1955DBE; Wed,  4 Nov 2026 20:18:23 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22555195606F; Wed,  4 Nov 2026 20:18:40 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 93ECE1829C21; Wed,  4 Nov 2026 20:18:22 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C59C7301D91B; Wed,  4 Nov 2026 20:18:39 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -61,17 +61,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>, Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL v2 11/25] trace: don't emit TraceEvent structs when 'nop'
- backend is used
-Date: Wed,  4 Nov 2026 15:17:47 -0500
-Message-ID: <20261104201802.11556-12-stefanha@redhat.com>
+Subject: [PULL v2 22/25] trace: remove "disable" property from trace files
+Date: Wed,  4 Nov 2026 15:17:58 -0500
+Message-ID: <20261104201802.11556-23-stefanha@redhat.com>
 In-Reply-To: <20261104201802.11556-1-stefanha@redhat.com>
 References: <20261104201802.11556-1-stefanha@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
@@ -102,183 +101,68 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The 'nop' backend is a short-hand for no trace probe usage
-at all. The emitted functions become a no-op, and as such
-there is no need to emit the TraceEvent structs, nor the
-DSTATE variables they reference.
+The scenarios are not significant enough to justify its use
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-id: 20261102142844.3464712-12-berrange@redhat.com
+Message-id: 20261102142844.3464712-23-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- tests/tracetool/nop.h         |  6 +--
- tests/tracetool/nop.c         | 29 ---------------
- scripts/tracetool/format/c.py | 69 ++++++++++++++++++-----------------
- scripts/tracetool/format/h.py | 14 ++++---
- 4 files changed, 46 insertions(+), 72 deletions(-)
+ hw/display/trace-events  |  2 +-
+ target/hppa/trace-events | 28 ++++++++++++++--------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/tests/tracetool/nop.h b/tests/tracetool/nop.h
-index 443f5e0cf6e..64b6b005684 100644
---- a/tests/tracetool/nop.h
-+++ b/tests/tracetool/nop.h
-@@ -6,10 +6,8 @@
+diff --git a/hw/display/trace-events b/hw/display/trace-events
+index c5e7e42af23..223a085922b 100644
+--- a/hw/display/trace-events
++++ b/hw/display/trace-events
+@@ -60,7 +60,7 @@ virtio_gpu_dec_inflight_fences(uint32_t inflight) "in-flight- %u"
+ virtio_gpu_cmd_suspended(uint32_t cmd) "cmd 0x%x"
  
- #include "trace/control.h"
+ # qxl.c
+-disable qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
++qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
+ qxl_create_guest_primary(int qid, uint32_t width, uint32_t height, uint64_t mem, uint32_t format, uint32_t position) "%d %ux%u mem=0x%" PRIx64 " %u,%u"
+ qxl_create_guest_primary_rest(int qid, int32_t stride, uint32_t type, uint32_t flags) "%d %d,%d,%d"
+ qxl_destroy_primary(int qid) "%d"
+diff --git a/target/hppa/trace-events b/target/hppa/trace-events
+index 9514f039f2d..9fd37b1e2cb 100644
+--- a/target/hppa/trace-events
++++ b/target/hppa/trace-events
+@@ -1,19 +1,19 @@
+ # See docs/devel/tracing.rst for syntax documentation.
  
--extern TraceEvent _TRACE_TEST_BLAH_EVENT;
--extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
--extern uint8_t _TRACE_TEST_BLAH_DSTATE;
--extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
-+#define _TRACE_TEST_BLAH_DSTATE 0
-+#define _TRACE_TEST_WIBBLE_DSTATE 0
- #define TRACE_TEST_BLAH_ENABLED 1
- #define TRACE_TEST_WIBBLE_ENABLED 1
+ # mem_helper.c
+-disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
+-disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
+-disable hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=0x%" PRIx64
+-disable hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%" PRIx64 " phys=0x%" PRIx64 ""
+-disable hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%" PRIx64 " size=%d type=%d mmu_idx=%d"
+-disable hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%" PRIx64 " phys=0x%" PRIx64 " size=%d type=%d mmu_idx=%d"
+-disable hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
+-disable hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=0x%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
+-disable hppa_tlb_ptlb(void *env) "env=%p"
+-disable hppa_tlb_ptlb_local(void *env) "env=%p"
+-disable hppa_tlb_ptlbe(void *env) "env=%p"
+-disable hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%" PRIx64 " phys=0x%" PRIx64 ""
+-disable hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%" PRIx64 ""
++hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
++hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
++hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=0x%" PRIx64
++hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%" PRIx64 " phys=0x%" PRIx64 ""
++hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%" PRIx64 " size=%d type=%d mmu_idx=%d"
++hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%" PRIx64 " phys=0x%" PRIx64 " size=%d type=%d mmu_idx=%d"
++hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%" PRIx64 " va_e=0x%" PRIx64 " pa=0x%" PRIx64
++hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=0x%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
++hppa_tlb_ptlb(void *env) "env=%p"
++hppa_tlb_ptlb_local(void *env) "env=%p"
++hppa_tlb_ptlbe(void *env) "env=%p"
++hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%" PRIx64 " phys=0x%" PRIx64 ""
++hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%" PRIx64 ""
  
-diff --git a/tests/tracetool/nop.c b/tests/tracetool/nop.c
-index f83d06252ea..d34cc0ca742 100644
---- a/tests/tracetool/nop.c
-+++ b/tests/tracetool/nop.c
-@@ -5,32 +5,3 @@
- #include "qemu/module.h"
- #include "trace-testsuite.h"
- 
--uint8_t _TRACE_TEST_BLAH_DSTATE;
--uint8_t _TRACE_TEST_WIBBLE_DSTATE;
--TraceEvent _TRACE_TEST_BLAH_EVENT = {
--#ifdef CONFIG_TRACE_SIMPLE
--    .id = 0,
--#endif
--    .name = "test_blah",
--    .sstate = TRACE_TEST_BLAH_ENABLED,
--    .dstate = &_TRACE_TEST_BLAH_DSTATE
--};
--TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
--#ifdef CONFIG_TRACE_SIMPLE
--    .id = 0,
--#endif
--    .name = "test_wibble",
--    .sstate = TRACE_TEST_WIBBLE_ENABLED,
--    .dstate = &_TRACE_TEST_WIBBLE_DSTATE
--};
--TraceEvent *testsuite_trace_events[] = {
--    &_TRACE_TEST_BLAH_EVENT,
--    &_TRACE_TEST_WIBBLE_EVENT,
--  NULL,
--};
--
--static void trace_testsuite_register_events(void)
--{
--    trace_event_register_group(testsuite_trace_events);
--}
--trace_init(trace_testsuite_register_events)
-diff --git a/scripts/tracetool/format/c.py b/scripts/tracetool/format/c.py
-index de1c154a881..5f6669c917c 100644
---- a/scripts/tracetool/format/c.py
-+++ b/scripts/tracetool/format/c.py
-@@ -29,41 +29,42 @@ def generate(events, backend, group):
-         '#include "%s"' % header,
-         '')
- 
--    for e in events:
--        out('uint8_t %s;' % e.api(e.QEMU_DSTATE))
-+    if len(list(backend.backend_modules())):
-+        for e in events:
-+            out('uint8_t %s;' % e.api(e.QEMU_DSTATE))
- 
--    for e in events:
--        out('TraceEvent %(event)s = {',
--            '#ifdef CONFIG_TRACE_SIMPLE',
--            '    .id = 0,',
--            '#endif',
--            '    .name = \"%(name)s\",',
--            '    .sstate = %(sstate)s,',
--            '    .dstate = &%(dstate)s',
-+        for e in events:
-+            out('TraceEvent %(event)s = {',
-+                '#ifdef CONFIG_TRACE_SIMPLE',
-+                '    .id = 0,',
-+                '#endif',
-+                '    .name = \"%(name)s\",',
-+                '    .sstate = %(sstate)s,',
-+                '    .dstate = &%(dstate)s',
-+                '};',
-+                event = e.api(e.QEMU_EVENT),
-+                name = e.name,
-+                sstate = "TRACE_%s_ENABLED" % e.name.upper(),
-+                dstate = e.api(e.QEMU_DSTATE))
-+
-+        out('TraceEvent *%(group)s_trace_events[] = {',
-+            group = group.lower())
-+
-+        for e in events:
-+            out('    &%(event)s,', event = e.api(e.QEMU_EVENT))
-+
-+        out('  NULL,',
-             '};',
--            event = e.api(e.QEMU_EVENT),
--            name = e.name,
--            sstate = "TRACE_%s_ENABLED" % e.name.upper(),
--            dstate = e.api(e.QEMU_DSTATE))
-+            '')
- 
--    out('TraceEvent *%(group)s_trace_events[] = {',
--        group = group.lower())
-+        out('static void trace_%(group)s_register_events(void)',
-+            '{',
-+            '    trace_event_register_group(%(group)s_trace_events);',
-+            '}',
-+            'trace_init(trace_%(group)s_register_events)',
-+            group = group.lower())
- 
--    for e in events:
--        out('    &%(event)s,', event = e.api(e.QEMU_EVENT))
--
--    out('  NULL,',
--        '};',
--        '')
--
--    out('static void trace_%(group)s_register_events(void)',
--        '{',
--        '    trace_event_register_group(%(group)s_trace_events);',
--        '}',
--        'trace_init(trace_%(group)s_register_events)',
--        group = group.lower())
--
--    backend.generate_begin(active_events, group)
--    for event in active_events:
--        backend.generate(event, group)
--    backend.generate_end(active_events, group)
-+        backend.generate_begin(active_events, group)
-+        for event in active_events:
-+            backend.generate(event, group)
-+        backend.generate_end(active_events, group)
-diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-index 4dc1ad7eb15..6ffb7256e31 100644
---- a/scripts/tracetool/format/h.py
-+++ b/scripts/tracetool/format/h.py
-@@ -27,12 +27,16 @@ def generate(events, backend, group):
-         '#include "%s"' % header,
-         '')
- 
--    for e in events:
--        out('extern TraceEvent %(event)s;',
--            event = e.api(e.QEMU_EVENT))
-+    if len(list(backend.backend_modules())):
-+        for e in events:
-+            out('extern TraceEvent %(event)s;',
-+                event = e.api(e.QEMU_EVENT))
- 
--    for e in events:
--        out('extern uint8_t %s;' % e.api(e.QEMU_DSTATE))
-+        for e in events:
-+            out('extern uint8_t %s;' % e.api(e.QEMU_DSTATE))
-+    else:
-+        for e in events:
-+            out('#define %s 0' % e.api(e.QEMU_DSTATE))
- 
-     # static state
-     for e in events:
+ # op_helper.c
+-disable hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%" PRIx64 " level=%d want=%d"
++hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%" PRIx64 " level=%d want=%d"
 -- 
 2.56.0
 
