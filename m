@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FA66070419
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 20:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBDE6070418
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 20:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=M+BTIXjm
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=aneILDNg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOhRA-0006um-Nu; Wed, 04 Nov 2026 15:18:24 -0500
+	id 1xOhRh-0007Cn-Ep; Wed, 04 Nov 2026 15:18:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xOhR7-0006sG-MQ
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 15:18:21 -0500
+ id 1xOhRQ-00070Q-Ex
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 15:18:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xOhR6-000637-3E
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 15:18:21 -0500
+ id 1xOhRN-00067T-Ab
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 15:18:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793823499;
+ s=mimecast20190719; t=1793823516;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TqkKXu2f79+4gbliMkvun6ZA/q+B5xT3gEohpgAcSnM=;
- b=M+BTIXjmFCKYbfi4/cUOI0p3p5YdORd8tOlUy9cNVMdxVf1mXPCvb3ZvJ8dgDsDWxUeQqa
- +BYi3j+TcKboSoYEMDe1hD/501+YBdmXyt69DiPp0od8R9zL7QPMp38ihgdnb7YAkJPVri
- CwiWfEzz4sL/0nLH53g1ydTx5vHbeMo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=j3nROunoF4CikVbyQLt/Mk8W5QtQdfAuIa85rpQ5scA=;
+ b=aneILDNgLbBH/0I8i2AoHMe+TN0I9dV2rHngNRVnHTLlKkemsour+adBORMid5Ri3zqQba
+ f4t3D0V3ieBTMBTe8LVBZ57aJL51JWPFfBEQkG/aRzM9B0VIOwXshLTgR/NoDwFtXzWUsy
+ tq1EZJeBsMbodqkcHaKMefNHSy5/TbQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-444-Saaa4D5FPI6OohZgO6qhLQ-1; Wed,
- 04 Nov 2026 15:18:16 -0500
-X-MC-Unique: Saaa4D5FPI6OohZgO6qhLQ-1
-X-Mimecast-MFC-AGG-ID: Saaa4D5FPI6OohZgO6qhLQ_1793823487
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-542-XnmutKvYO4KxXFQRP6T0vA-1; Wed,
+ 04 Nov 2026 15:18:33 -0500
+X-MC-Unique: XnmutKvYO4KxXFQRP6T0vA-1
+X-Mimecast-MFC-AGG-ID: XnmutKvYO4KxXFQRP6T0vA_1793823511
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07399180059D; Wed,  4 Nov 2026 20:18:07 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5AABD1800610; Wed,  4 Nov 2026 20:18:31 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1D6A5195604E; Wed,  4 Nov 2026 20:18:05 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 106D51848D44; Wed,  4 Nov 2026 20:18:30 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -61,16 +61,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>, Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL v2 01/25] osdep: add 'ignore_value(x)' macro
-Date: Wed,  4 Nov 2026 15:17:37 -0500
-Message-ID: <20261104201802.11556-2-stefanha@redhat.com>
+Subject: [PULL v2 16/25] trace: eliminate dupe
+ trace_event_get_state_dynamic_by_id() calls
+Date: Wed,  4 Nov 2026 15:17:52 -0500
+Message-ID: <20261104201802.11556-17-stefanha@redhat.com>
 In-Reply-To: <20261104201802.11556-1-stefanha@redhat.com>
 References: <20261104201802.11556-1-stefanha@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -91,58 +92,206 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-Functions annotated with 'warn_unused_result' cannot be cast
-to (void) to silence the compiler. Add the ignore_value()
-macro which tricks the compiler into thinking the result is
-genuinely used, avoiding the need for manual workarounds where
-the return value is intentionally ignored.
+Each backend generates the same trace_event_get_state_dynamic_by_id()
+call for the TRACE....DSTATE() macro body, so when multiple backends
+are enabled, the same check is repeated:
 
-This clever macro is derived from one originating with the
-GNULIB project:
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     QEMU_TEST_WIBBLE_ENABLED() || \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     tracepoint_enabled(qemu, test_wibble) || \
+     false)
 
-  https://gitweb.git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob;f=lib/ignore-value.h;hb=HEAD
-
-but simplified since we don't need compat with old GCC and
-optimizing on clang is overkill.
+Expanding the use of the 'backend.check_trace_event_get_state'
+attr in the C header generator removes the duplication, in the
+same way that the Rust generator already does.
 
 Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-id: 20261102142844.3464712-2-berrange@redhat.com
+Message-id: 20261102142844.3464712-17-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- include/qemu/osdep.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tests/tracetool/all.h                 | 22 ++++++++--------------
+ scripts/tracetool/backend/__init__.py |  4 ++--
+ scripts/tracetool/backend/ftrace.py   |  4 ----
+ scripts/tracetool/backend/log.py      |  4 ----
+ scripts/tracetool/backend/simple.py   |  5 -----
+ scripts/tracetool/backend/syslog.py   |  4 ----
+ scripts/tracetool/format/h.py         |  8 +++++++-
+ 7 files changed, 17 insertions(+), 34 deletions(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 50c7ce33b6a..b27d159d5bb 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -251,6 +251,14 @@ extern "C" {
- #endif
+diff --git a/tests/tracetool/all.h b/tests/tracetool/all.h
+index 41fa4d0e8a2..5627c1d8930 100644
+--- a/tests/tracetool/all.h
++++ b/tests/tracetool/all.h
+@@ -44,11 +44,8 @@ void _simple_trace_test_wibble(void *context, int value);
+ 
+ #define TRACE_TEST_BLAH_BACKEND_DSTATE() ( \
+     QEMU_TEST_BLAH_ENABLED() || \
+-    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+-    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+-    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+-    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+     tracepoint_enabled(qemu, test_blah) || \
++    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+     false)
+ 
+ static inline void trace_test_blah(void *context, const char *filename)
+@@ -58,26 +55,23 @@ static inline void trace_test_blah(void *context, const char *filename)
+     if (trace_event_get_state(TRACE_TEST_BLAH)) {
+ #line 4 "trace-events"
+         ftrace_write("test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
+-#line 62 "all.h"
++#line 59 "all.h"
+         if (qemu_loglevel_mask(LOG_TRACE)) {
+ #line 4 "trace-events"
+             qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
+-#line 66 "all.h"
++#line 63 "all.h"
+         }
+         _simple_trace_test_blah(context, filename);
+ #line 4 "trace-events"
+         syslog(LOG_INFO, "test_blah " "Blah context=%p filename=%s" , context, filename);
+-#line 71 "all.h"
++#line 68 "all.h"
+     }
+ }
+ 
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     QEMU_TEST_WIBBLE_ENABLED() || \
+-    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+-    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+-    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+-    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     tracepoint_enabled(qemu, test_wibble) || \
++    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     false)
+ 
+ static inline void trace_test_wibble(void *context, int value)
+@@ -87,16 +81,16 @@ static inline void trace_test_wibble(void *context, int value)
+     if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
+ #line 5 "trace-events"
+         ftrace_write("test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
+-#line 91 "all.h"
++#line 85 "all.h"
+         if (qemu_loglevel_mask(LOG_TRACE)) {
+ #line 5 "trace-events"
+             qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
+-#line 95 "all.h"
++#line 89 "all.h"
+         }
+         _simple_trace_test_wibble(context, value);
+ #line 5 "trace-events"
+         syslog(LOG_INFO, "test_wibble " "Wibble context=%p value=%d" , context, value);
+-#line 100 "all.h"
++#line 94 "all.h"
+     }
+ }
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/backend/__init__.py
+index 9109a783c72..72f549c77c4 100644
+--- a/scripts/tracetool/backend/__init__.py
++++ b/scripts/tracetool/backend/__init__.py
+@@ -133,8 +133,8 @@ def generate_begin(self, events, group):
+     def generate(self, event, group, check_trace_event_get_state=None):
+         self._run_function("generate_%s", event, group, check_trace_event_get_state=check_trace_event_get_state)
+ 
+-    def generate_backend_dstate(self, event, group):
+-        self._run_function("generate_%s_backend_dstate", event, group)
++    def generate_backend_dstate(self, event, group, check_trace_event_get_state=None):
++        self._run_function("generate_%s_backend_dstate", event, group, check_trace_event_get_state=check_trace_event_get_state)
+ 
+     def generate_end(self, events, group):
+         self._run_function("generate_%s_end", events, group)
+diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
+index e304ef21999..94cffc45a9d 100644
+--- a/scripts/tracetool/backend/ftrace.py
++++ b/scripts/tracetool/backend/ftrace.py
+@@ -40,10 +40,6 @@ def generate_h(event, group):
+         argnames=argnames)
  
  
-+/*
-+ * Merely casting to (void) is not sufficient for functions
-+ * annotated with the "warn_unused_result" attribute
-+ */
-+#define ignore_value(x) \
-+    (__extension__ ({ __typeof__(x) __x = (x); (void) __x; }))
+-def generate_h_backend_dstate(event, group):
+-    out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+-        event_id="TRACE_" + event.name.upper())
+-
+ def generate_rs(event, group):
+     out('        let format_string = c"%(fmt)s\\n";',
+         '        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, %(args)s);}',
+diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
+index 9e3e5046f5f..577ee158584 100644
+--- a/scripts/tracetool/backend/log.py
++++ b/scripts/tracetool/backend/log.py
+@@ -41,10 +41,6 @@ def generate_h(event, group):
+         argnames=argnames)
+ 
+ 
+-def generate_h_backend_dstate(event, group):
+-    out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+-        event_id="TRACE_" + event.name.upper())
+-
+ def generate_rs(event, group):
+     out('        let format_string = c"%(fmt)s\\n";',
+         '        if (unsafe { bindings::qemu_loglevel } & bindings::LOG_TRACE) != 0 {',
+diff --git a/scripts/tracetool/backend/simple.py b/scripts/tracetool/backend/simple.py
+index e22683c7d2a..15f27e26bd5 100644
+--- a/scripts/tracetool/backend/simple.py
++++ b/scripts/tracetool/backend/simple.py
+@@ -42,11 +42,6 @@ def generate_h(event, group):
+         args=", ".join(event.args.names()))
+ 
+ 
+-def generate_h_backend_dstate(event, group):
+-    out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+-        event_id="TRACE_" + event.name.upper())
+-
+-
+ def generate_c_begin(events, group):
+     out('#include "trace/simple.h"',
+         '')
+diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/backend/syslog.py
+index 746efd35fb9..ba269cb6a33 100644
+--- a/scripts/tracetool/backend/syslog.py
++++ b/scripts/tracetool/backend/syslog.py
+@@ -43,7 +43,3 @@ def generate_rs(event, group):
+         '        unsafe {::trace::syslog(::trace::LOG_INFO, format_string.as_ptr() as *const c_char, %(args)s);}',
+         fmt=expand_format_string(event.fmt, event.name + " "),
+         args=event.args.rust_call_varargs())
+-
+-def generate_h_backend_dstate(event, group):
+-    out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+-        event_id="TRACE_" + event.name.upper())
+diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
+index 6ffb7256e31..5ad3a419f82 100644
+--- a/scripts/tracetool/format/h.py
++++ b/scripts/tracetool/format/h.py
+@@ -55,7 +55,13 @@ def generate(events, backend, group):
+             api=e.api(e.QEMU_BACKEND_DSTATE))
+ 
+         if "disable" not in e.properties:
+-            backend.generate_backend_dstate(e, group)
++            backend.generate_backend_dstate(e, group, check_trace_event_get_state=False)
 +
-+
- /*
-  * For mingw, as of v6.0.0, the function implementing the assert macro is
-  * not marked as noreturn, so the compiler cannot delete code following an
++            if backend.check_trace_event_get_state:
++                event_id = 'TRACE_' + e.name.upper()
++                out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
++                    event_id=event_id)
++                backend.generate_backend_dstate(e, group, check_trace_event_get_state=True)
+ 
+         out('    false)')
+ 
 -- 
 2.56.0
 
