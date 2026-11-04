@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638DB606A31B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 15:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D78606A334
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 15:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=IatsdtdX
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=N0ceGsdV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOd9Q-0002GX-H8; Wed, 04 Nov 2026 10:43:48 -0500
+	id 1xOd8o-0001ns-2w; Wed, 04 Nov 2026 10:43:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOd9F-000261-IH; Wed, 04 Nov 2026 10:43:39 -0500
+ id 1xOd8l-0001na-Tf; Wed, 04 Nov 2026 10:43:08 -0500
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOd9C-0001Gk-C9; Wed, 04 Nov 2026 10:43:36 -0500
+ id 1xOd8j-0001Gk-MV; Wed, 04 Nov 2026 10:43:07 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NW9EsPfN+PtKzvEhSWpZSYK5GJts6m3PsCEln3Vfi7zfn+unkTepg3h0JXzYQn+pbFsDHX9PlhQLBzFdKf7E/4khyDVWbIprHhREkcLfLC4oShnXkvnwgpWN1u2L74ZQwnSqLKIpEfDujvVpRRDZgBBHV/9deBlpcDJ3XDBCGA2ArhA6erqgLn8wKGVWlIBpvvV6zKygVi8T6uL1vX5AplICk8ahQvZIoA0BX4WEbA694y4nJ4QsGIZ8zpgMpQA3ojnNT08UX+eTSZo57nmfIm/VNnv+xLZtuk9RZbK9cHZGjXXSTuMZUbJDExcwkLAEpKm+LsesjlIaqOzr+ga9Ig==
+ b=sId+/2AhUncRkmWiUPJCAT4MKbBF7Yef5Sf24GZEiww4uV5AP+7SfYtAY9kLZ0fBwxIGUER6C598w4qg3uS7DRXJ9cvSr++7N5GI9mKPTtJh36GJ6olNWEhcFROgfZ8DYQKAi2+5isQAZhZxdggNFyUf3NOi2G+5KUSlgL+sHzWvv2aetZ2wxsYKL1LwtNKmk/9eReGiS9oWpys2RlQa2+BpKUUln4WKwRJpmL0xjYrTwlPtYoWsf0amxF0enZQDPYFRnvhtU7ZX9oTe4eX7d/J88+kAeNkLit4XzWncwn1/Qf+unxM4rRnx/9/DydID8AXnXttaE1kCOkWN6roQcQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=x7GWXsB6jvzXGz7iz3uLNWGXzo31Keh47ap8FyPil08=;
- b=CqdVTOvN2xhCVc9bhw4I4jberUMlRQdjMMFghnEloisS4U5AGB1ZotJoURsFKBOMV00vQDUBN0qLnZ0+s6k6IZ4UasNokCvDenGMOuYpTRjYkX+dOzs829F3EwPS8RqhBvn+nvE2X4ShqWvm/AULtxlYDenUiFbtmF8bf0HGWasQxfeE6M4O6tYZoPV2+D5aq3JZs5tdyIJECrF0U4hfWcrd8/zHGLbcIE/SNej+QMXErt3Z92i5Aic4aYMGJTc3Nrm02S5QJ3+/hjHNeRdUdWMGPihOGP0cWomXRGucmKKxL28NiofwgdNQG+JilJePQ5DnrhAhSQDKWGmJY4CT4g==
+ bh=/fX15NyMg2FUWXvrzeSgk7xRqMUxSwpaCZcX/lV7Uv8=;
+ b=xv+AgrbHZGSFbdnulNOy2twhAAwg5firXdz2f2/uxpyakOwjaSZKq2bkiWb0l6J4WooIWaZTzeIEYJrhKU+i74185i8D6eaQpz4+No1HZMOIN/IlEK46MWBXP34qDZAyQGgKLDTdEyDLTuHVQjoP4uSEXAbtIkIViQQ8ILDT3z8SIEKZnQcJs7O+mnJKUUCkxKruAkCw/5vvjK+FsGZKvxlucFI3tv17ZL3MCZ8BQ2zGODUbRov8czOW5UpRSd6iXCWa1F2ErFNmRsDJI2ktHfgmC4XsMSa0+on8sCJ3IILPc95VPUEqWcxndQZuhoDvI3P2/7ceAnT5DzE1QNlZLQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,39 +32,32 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=x7GWXsB6jvzXGz7iz3uLNWGXzo31Keh47ap8FyPil08=;
- b=IatsdtdXp9HRxf7mSd/HFp1Qu4HzXaPANy+pbQ/A7tq+3cE3NYb1w90NwHiD9E9Kd+h9gN1m4DnIxZenyPFSvXgoXRmYz14Di0ynuAHnF8uWUvbcMbRk62K+uzECfXEkS5kG7CsdKu5DNT0MUbl6rmBEzne1ShmXorZvWHFKOtHJkMp9iJ0lrEz34ZkVRkBK3cKVG5/IBf8l5BhKRDAqf0xlySCKWAMnTyXSKzldbZloTw4H8+uwuq4pwc1VZTowhSrYJQ9FJLdMXxgQeE74EFpyctaL2mlZ9jYe+TYc1haItMW9nJHkF2XKjS+9ShiGVfCCdJIELx9C/lP7QkbQSA==
+ bh=/fX15NyMg2FUWXvrzeSgk7xRqMUxSwpaCZcX/lV7Uv8=;
+ b=N0ceGsdVR7HeqO28QW3J/ROaY6G9KXD5mzQKZw92DTDkkPSHzceZkncyt5Wuug2Xkt0VumX679nFS0XWdgOhNl+xPV0LJFRgep+TRE9GCblNsNuXGDYuGIkSyWVn8oP5L4dPVOGH5qqs2JzVXUDru7e2Xn1CIEkDcInyt21iCtjyL2Jecu+D+tytAFlhetv6bsaLfj5SD2vMapGl/cxBN1Nn8YW0852afuTCXJw84CkgscTGVM9qktzgEpOY5fjwq6aQl2Nm8+LqHsFXw5k6UnQcPUq9bqEogNhSxQHhuX41HhfTvPA1lZAnejFCerC+XOxT6qGZ7DD50N/R0R8fPQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com (2603:1096:405:2c::12)
  by SEZPR02MB7162.apcprd02.prod.outlook.com (2603:1096:101:190::6)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.9; Wed, 4 Nov 2026
- 15:43:03 +0000
+ 15:42:55 +0000
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10]) by TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10%5]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
- 15:43:03 +0000
+ 15:42:55 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Chao Liu <chao.liu@processmission.com>,
- Conor Dooley <conor.dooley@microchip.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Conor Dooley <conor@kernel.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v5 20/26] hw/riscv: pfsoc: Fix Icicle Kit RAM size at 2 GiB
-Date: Wed,  4 Nov 2026 23:41:47 +0800
-Message-ID: <20261104154207.641511-21-bin.meng@processmission.com>
+Cc: Conor Dooley <conor.dooley@microchip.com>, Conor Dooley <conor@kernel.org>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
+Subject: [PATCH v5 16/26] hw/misc: pfsoc: Model PolarFire SoC serial number
+ service
+Date: Wed,  4 Nov 2026 23:41:43 +0800
+Message-ID: <20261104154207.641511-17-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261104154207.641511-1-bin.meng@processmission.com>
 References: <20261104154207.641511-1-bin.meng@processmission.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-ClientProxiedBy: TY4P301CA0056.JPNP301.PROD.OUTLOOK.COM
  (2603:1096:405:36b::16) To TYZPR02MB7121.apcprd02.prod.outlook.com
  (2603:1096:405:2c::12)
@@ -72,56 +65,66 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TYZPR02MB7121:EE_|SEZPR02MB7162:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8660fdcd-dc3a-4fd9-82b3-08df3a8a4ff4
+X-MS-Office365-Filtering-Correlation-Id: fcf9ad11-a41b-43e4-3251-08df3a8a4b13
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|7416014|23010399003|376014|56012099006|261022105027099003|261009221227099003|261021121427099003|261009220027099003|261009221727099003|261009223027099003|261009223327099003|261021123027099003|261022075727099003|261102123227099003|261026121527099003|261026140227099003|261028144727099003|10067099003|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info: t/OYwk7YYAeNhBYRapYKgbM+myyj5jIOIlvB6nY/Z0jUvKqEd+qlG9MRQlU/Slo7vC5Q2uDyX4xpPQMl68eXPRzk5mxaSqB25LisKpff4CTmO/k7Rvf+rnVAKgr2jnJe6+ZCfIKgXrdk4+VwpvOnvYkYFGvEyvYRwbetfcIttBN1TDdUcejCA+E2vcTakQT9HXnalONTEmrGLSOpMNOa4pCb4JTBsBL9MxIzUELp4IjRk2EZRjwXqqC0YHTzWkcqP1QMo87BoeJnxHkVZyvJk1B4G43yDjyTWvRZMt6GaY0jAZ4dUOsxO4aAd6d6ocnK9ymVxq/c10eGnqC0hVJ6cRmpbFVx7/w7IVcLoF3U0gARRLx1vFQW3jjioz8ldcscyR1k4237IbMOE3ooj5yATZkTxbWJPXuz122hf9jyiSBeyGLj2xRwX0/o2XzyXS066aHwN6Fi/g22A5xB9Qia5TlN82IX0v46Z9p/9MGeetiEk2pZOk2uGAAniTW0Sg+hvUBky8/lFvsGgISZOJgPYh1G6Vd9FVA1Z2NFXdhQ2kiaW48gG0RGhif+7o9/pqSrXAezQQQnFn1lXNJcEwVW9vLdmCuNUCaQA3PNx/Yt0ZqAKoZ2krr2aYv5SMVnjHkm7F/W1B59HePc/gkyN4NLWcoEZi8R794yVRTD4IBL0cQ=
+ ARA:13230040|366016|1800799024|23010399003|376014|260925021311599003|260925021911599003|260925022911599003|56012099006|261022105027099003|261021121427099003|261009223027099003|261021130227099003|261021123027099003|261022075727099003|261021135927099003|261022115727099003|261102123227099003|261026130827099003|261021133027099003|261022113327099003|261026121527099003|261026140227099003|261026135527099003|261028144727099003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info: pzR8y7PzLOpe/MCR0oSQrl/ezsqNNs1M/l/MRDbjrq15vME1+WVQV/UqhMCgDjUSRWOBTsXXuDntO0hzHpMnk5+7Jlh7ojhuPYs9sYHr1H7fMC/I3yH5nISlBbP5txp/nedBfbGUq5TflxqVwoDtS3wSZ7Q1wnxyriZJm7Jk7hYXKC6tT+ZgQK2Mt69XvmBr5MwgY+oWzxyloyj1fhtMe3QubGX3Xk0FOV/zcrEL3lwlivkQkHaqoipYyDYkoTM4FsWCsKwqKwGeyuvsmY2YYFm9yAIC864VQccCcAon5svKrLy2eJ99u1kUWG5vqt+gw8K8JuxLx+Y+NKCvMRu4SYiVP5iUTusKBBsxipKLc4IeQCXpaetXK+u0OpjPF9ETLg0olbanP/2VNavEAC0mKNdx8T4sk355tvRRiaYphXyWbBfeX6wuatKyj7lAXCoEizn4mm1a/wkxjqqvDpfr98oaOy3uhBzV4rHK276CNTKVi4xAtPKMyTtQZLWELpttZSLSnlYXjDREJML1Xax1SDynSDkpJPtMbLIlsg25jN48J/Us0WK/6IC/HIFNk4UVLEs1RB/raO1+0wi5gMShsea3gPvhqO2lExha2RvTeRnCQv7bDT9dl0lDgIJ0JNHqjtlTzL7t2ANEiA1ACIv7vRiprtnIWL7g1tNJ2i5qXGY=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR02MB7121.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(23010399003)(376014)(56012099006)(261022105027099003)(261009221227099003)(261021121427099003)(261009220027099003)(261009221727099003)(261009223027099003)(261009223327099003)(261021123027099003)(261022075727099003)(261102123227099003)(261026121527099003)(261026140227099003)(261028144727099003)(10067099003)(22082099003)(18002099003)(6133799003);
+ SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(260925021311599003)(260925021911599003)(260925022911599003)(56012099006)(261022105027099003)(261021121427099003)(261009223027099003)(261021130227099003)(261021123027099003)(261022075727099003)(261021135927099003)(261022115727099003)(261102123227099003)(261026130827099003)(261021133027099003)(261022113327099003)(261026121527099003)(261026140227099003)(261026135527099003)(261028144727099003)(10067099003)(22082099003)(18002099003)(6133799003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?hnoWjyksBBU3xXiPyApmkQzqdj6DzD7WwbDnwN+V1pKa0r4sqGK4wRgvA0xW?=
- =?us-ascii?Q?ZtEEbU2m3Y0Pse0cq7wavFLsdwyhvuFduutOyLBZtlRjrK6CtenMoNzrKaMD?=
- =?us-ascii?Q?YuOzEha9CvXK0h0m6javrwGCtJpQRLuDh8LOUw4Bc3c1MhSnlxqniV9zKJUg?=
- =?us-ascii?Q?a/AtuDCVU7apiUm1hs/yHCj+dBOiSGRw+lg8EXedjRJmAXv/rBgj3zU6RMdK?=
- =?us-ascii?Q?v4rXj5MPDGsiRmTkXTWDGatlytnm/5ablXtvHQ4GMk4hGRkSdbIFaZ2gtULJ?=
- =?us-ascii?Q?sNK/zgpzm0JPMiv7ZzZh7fyQvPhWumn5y2O3QLJ8brbDukn7QHPSBylY4D8M?=
- =?us-ascii?Q?UydNtf18cR7gCSERbV4m0fdt6Y1KGClSpcxnm03paNEUBRoFYXseTVjDm1WS?=
- =?us-ascii?Q?XmC9NvxKmv3kkDW3mDgxkx2plH50E8/ME7sauUZfGK4NrPI5WSERm/d6x8SJ?=
- =?us-ascii?Q?+OUQ1QbsfI44WVfcMQ7sOHNXOL0sz/InPCCLbOhGnuWNWmwwIEFiSFmfwu6b?=
- =?us-ascii?Q?iDTM4x2/FD1CD3ZU16Idokj+de+2FWb1Q8iZhpVh1enTTgJySzlYVh2P8pta?=
- =?us-ascii?Q?L0lQR0kQxOkmw/pdK0TzNvVc+tYe50m/+cd0YUpG6+Uyp2nKBrNNVIA/EDmS?=
- =?us-ascii?Q?6nM5pfqWKeVzdVoGM7ybG7NPPATodRd/fthsthyYuLxDE130qivbS66nfHSR?=
- =?us-ascii?Q?otuYRpPefw0x8XpPWVo7Oh2pdHriBAt2ZFbqSl3jO9XSNDaOOO0i6vgKtRjg?=
- =?us-ascii?Q?V2f5EQq0LRsqkRwqbLx6tZb/Z5PH4VRtZ70oC6lQtciQWcOO/r6TfEP8AoX9?=
- =?us-ascii?Q?NPvJeoXVHQVrYYn4QjbH0e15SyWzaJgPTJUgZsBp1LbZHahDJ1RA9SeKkoe3?=
- =?us-ascii?Q?1fQMkijNprgLRDAF7Yo/uY+c1a1EuQwhRhrkOHnTSe6JpJsVRI/++mI6+cXj?=
- =?us-ascii?Q?4ixUUfjHAxSbETgXGWdbLVBrAmZxNH33th1E6CehtBwUbtJ4S1hdtxdMqMoX?=
- =?us-ascii?Q?tdkPN0I5WhZqRkQFg6IIBDFi+5dSIiH9hmr1zJxZsDt4WsfFnkxO5znGl97j?=
- =?us-ascii?Q?U6GYbntRDFbVSIyyEqa21ped3S2NGt4DIgtnXznEalfW2JQMuFfJu7OyulMa?=
- =?us-ascii?Q?XU9PyhPia2PJApf8FAgRQOn502Ee0kRee1uD74gcwFlNqhaopzu2D7P0Cxo5?=
- =?us-ascii?Q?OvJwDMuGa+D/lzPlhHIW5b/tXseaH5Ph17LiOv2rZSnCqGHxjJf2XBwq0nL+?=
- =?us-ascii?Q?HdTY1StGLtMR6cViooxBsE7xYRiWmAlGLtxxYgg2fqKBSpT4zKVcYiBHlFp5?=
- =?us-ascii?Q?xN9dw2p+nnzZouwuUJk7HQokyiZz7+QlyM0fU72IZ0xFsOaS/EgD2yuSLGmb?=
- =?us-ascii?Q?DWCRUvkEmpPbW5gbs9/m+/EfdpXRGdcsLACEpiXZ2UsA5cmBWg3sSfdkfKFM?=
- =?us-ascii?Q?srrsHkzrbRUB/4BtGDZyhm02VonhqmYqYWKaniGcASVMli+LqanhHy3Tetc2?=
- =?us-ascii?Q?m54foxwIsSDhjoLpVcHqMCbh5qDKavYqYz81drBp6gchEJTgy11/P2Ub5L6i?=
- =?us-ascii?Q?sb7M8NA/MrBxJ3SA572uxJu165Engbth/cOjkTLKwq+FgxI6grU99ggkaLe9?=
- =?us-ascii?Q?bpjxqHW2TbcHunVeeEXcxmgIfVFAb1gFEP1SLjCCBHkSuwoJSm9t7n3Pm1/1?=
- =?us-ascii?Q?TVB1ngpDbpKOvVLbLSxaKIrrdgi/LNjmS5zvaZ23GICEDsrGW5eLUihW5pAu?=
- =?us-ascii?Q?/n/hMDubHDJSPUa5W9dNAnPK4J/16v4=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Tk5oMlptY2g1YThqT1ZwM1FCYW9rcVNiSEp4VEVMdE0zUm9wTTJaRkdDaldt?=
+ =?utf-8?B?ZXVFQmJqMU55VStaaWdjWmVjV29mdCt4TmhNbXdObnVnT0xWWjR6UWxFUDdU?=
+ =?utf-8?B?ZEE3WWE2a3BIWXZmenJ4L0hEazRDRVQ0UWdiWHN0MHdYeEV0bGZTdnk2dFZs?=
+ =?utf-8?B?T2p6ZkJ5NHNUWGh4blY2ZVRkK1o0eEdNUHBRWjBCa2ZlRmZjUE9hSkQ3dHpY?=
+ =?utf-8?B?YUZwVGVMM1VmekJhZVBRclNTanNXZmhGTHZPOUJaaUk5TUlsN3UrZTY3aHdD?=
+ =?utf-8?B?QWFXY2RUa3lPZjJZMzhYZUpRSUtuUXRDdnd3K0tSWWQyTlE2a1QzWEIyNlQ3?=
+ =?utf-8?B?YndUZ3kxSU1YWnhXMVlKRmE2OTVGWXAxelR3aWdDRm82ZFc3WnkwUnVpcWlR?=
+ =?utf-8?B?VXBqZUc5RmoycndJZDNNZnBOaW1QMWpXUHo4YmE3bnJRSDVyK0NhTEEva2No?=
+ =?utf-8?B?Wm54WUZLMjR6NmZvTk1KM2RZK2hTcVZCZWRxYWlkd3dFYU1SVlNuaUJBMmJS?=
+ =?utf-8?B?VUFrZlgzQThPOGViVUZoTGIxT3ZOMXY3WVFIazA1S2RCMysyaHU5T3BGc2xj?=
+ =?utf-8?B?RkZBZjVEN2NhaWtPUVdGb2xVV1BmTmNRQitFenZqWERmNVZ4aFU3RjdHN0hw?=
+ =?utf-8?B?cWEwWnc2Zk1aNDdZQ1pCN2RBajNTM2pJMlQ3eGhCcG1XQ3hnRU0zcXJUNUNo?=
+ =?utf-8?B?QjN5S3h6K1pQWTNINE4vUWY0bnZsM0YrdVI3cUlScWw1V0NhZ1d6QStFN2lO?=
+ =?utf-8?B?WkN1RXlsTThFWi92TjBNQllkUVkvME83Y2FMM1NLYzc3dTVadFhOdkxadWlW?=
+ =?utf-8?B?aHduRDRBNW1iNDFRWVhoTFhoRTJTbGxWcnp2NnFkK0c0ODdBNXFqTlgzK0FQ?=
+ =?utf-8?B?Z2RTOGJOSlV4UVQvODZMelk3UktvUG81d0lOeXFIMmdSUzUxUHV3MERIcUJR?=
+ =?utf-8?B?TmMyV2FzNnpmSGk1VmFNbmJqMkdwd2dCYk9wNEFER3FjZlgxVlBGTUw5TnVq?=
+ =?utf-8?B?WUxIQUdYLzhiSmloR2pmTkplQ3N1V2NNWURlTitlbm1Db3lYRXY2Q3VWdDhJ?=
+ =?utf-8?B?S2pySnhCd0JkRFFTeG1jNWZqZ2FOTkF0MWlsNjI4aWtBZGRhTmRMdTU2TVF4?=
+ =?utf-8?B?R2xLdU9XNVZqaFVMaUg2dERtenlidURMQU5sSTAvMzZZZ2hORTd0WUI5Syth?=
+ =?utf-8?B?a1lYVktJaGQycEdKT0NMY2VtM1h4dDJIK3hUTU9pKysrWVY3bk1xQ3k4TnU3?=
+ =?utf-8?B?ZW9sV3JjVXR6VllrQ2xiaGNiNStWUDJRSXIyYVQydjNEeWgzMGNwaFZmdzhI?=
+ =?utf-8?B?NkYwVnFpaXFYN2g5bEdQNk85TWc2d1kxRTlPSDVLM2hBUW5nY2hkUDZxdmxa?=
+ =?utf-8?B?QVZ0NTBtWjNSSXYrSmcwZDBWUUtkVTZKWlFqK2sxUnJQcndLd0FTdmdINnps?=
+ =?utf-8?B?T24yaDNPSUppNzlXYTg1V1dDQlJFWk8zdm16WE9XWnZQc1cxQ2ZRSElDRUor?=
+ =?utf-8?B?TTVOR0xiZlFNVldIMXg1eWd3c213RWxUaVU0SWt6ZzZCd3J1QnJkbEZsNEtO?=
+ =?utf-8?B?amdKeklEN2l1dDdidy9aZUxwc3htNURqWGxwNmxmQ0dHZ3ByakVUM0hzQnNE?=
+ =?utf-8?B?OEMrR1BsRy9aeDNBVEsxb1BlQmNkd3REV0hhUis3Z29tU3R1WFZMUmxQWGJa?=
+ =?utf-8?B?LzdyTzBXbHhYcnQrRkFmV1RrNFJmOVo5VS9vRG9Ra2Q4bVZQdHErOFV3L1FI?=
+ =?utf-8?B?QXJwbzFYcVZXNnA2aC9jaUU5T1ROUWFLQXRJczZTNEFqL1puOXpNVkx4Qys0?=
+ =?utf-8?B?eHArVnJxRDJjRGtQakNCcWRyVEhUa2xFdlBBM3dxY3FKTlpiNCtYZFg3NUVT?=
+ =?utf-8?B?cm95em9YS244cWp1Z0VLM3ljc0pXdUVLems1czIzUnYxa0hjUEJGTjBPaHFj?=
+ =?utf-8?B?SEJ3VGhBMXByYmRHb0xpUEttc1NkcDMwa01jYVdaeVh5L3h3TU5OQ1FYNjcz?=
+ =?utf-8?B?UWh0RE90QUNPVHo1OEw3UG5tczBzTXd6MTAwMXdVcStmemJKL2VoMm5ZN2pY?=
+ =?utf-8?B?VVc4Tk50WEk5VExHTFpqbG82ekUvc2xsVDBaM21rQlJ2c0xQcVF2TTBQaUJQ?=
+ =?utf-8?B?YVhubmVsOExQdTJGRlorYUlBUkR2MW54NUJ6SitCakpqbGlFWTMyTmJwV3kv?=
+ =?utf-8?B?WU4rUTRTMHpaZlkyQ0N2a3AyWEVqWm1hOTU0RlFkaFM4bjdNNUMrYS9TVzFx?=
+ =?utf-8?B?RnBTNW1TTjkxTkxrbk8zdFdoVGM3NE94dUp3N0lLNFZXMjgzVSsvV2hxOVZH?=
+ =?utf-8?B?eFdaSUZHejlmREtWZkt2VDRYMXN0MjF6bVU3QzFRWlkvQVlwU2J2eUdzT3F4?=
+ =?utf-8?Q?9VpKf8DeeFX2fHwY=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8660fdcd-dc3a-4fd9-82b3-08df3a8a4ff4
+X-MS-Exchange-CrossTenant-Network-Message-Id: fcf9ad11-a41b-43e4-3251-08df3a8a4b13
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR02MB7121.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 15:43:03.2346 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 15:42:55.0441 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PSEY3M0vnbGvKbg30bHrhP92vnPLgchqHpwn3G4so2LpQRMvDEfspB6aOklSAgFcEQWc7KvVG4ZNFJ1OVepK9a/q+Y1zFC5Glk8kZdLPKh0=
+X-MS-Exchange-CrossTenant-UserPrincipalName: wEQQtRok7T2fgnIrDlo27cqXaDzsjSICIEVZ9EKVBcF8ovmkIyl7QaJd5FRQB7Cz1LPUBLxZC2JCFxCZWxAEV+3zqlQkhQf+RwnMTdIfxPc=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7162
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
@@ -152,75 +155,291 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The Icicle Kit has 2 GiB of RAM, and its firmware device tree
-describes that fixed capacity. The model currently defaults to
-1537 MiB and accepts any larger size, allowing configurations
-that do not match the board.
+U-Boot requests the PolarFire SoC device serial number during board
+late initialization. The IOSCB previously rejected every request, so
+board setup could not complete.
 
-Set the default to 2 GiB and reject every other size. Update the
-documentation and L2CC qtest command line accordingly.
+Model the System Services control registers and byte-addressable
+mailbox. Obtain the 128-bit serial number from an optional device
+property, using a deterministic value when it is not configured.
+Return an explicit failure for unsupported services and reset the
+new runtime state with the rest of the device.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
 Tested-by: Conor Dooley <conor.dooley@microchip.com>
+
 ---
 
-(no changes since v1)
+(no changes since v3)
 
- docs/system/riscv/microchip-icicle-kit.rst |  4 +---
- hw/riscv/microchip_pfsoc.c                 | 15 ++++-----------
- 2 files changed, 5 insertions(+), 14 deletions(-)
+Changes in v3:
+- Decode the seven-bit opcode and nine-bit mailbox word offset
+- Bound serial-number responses to the documented 2 KiB mailbox
+- Mirror the current control flags in the status register
+- Use default access sizing for the control and mailbox windows
 
-diff --git a/docs/system/riscv/microchip-icicle-kit.rst b/docs/system/riscv/microchip-icicle-kit.rst
-index 7fdb96601a..b0ad24f174 100644
---- a/docs/system/riscv/microchip-icicle-kit.rst
-+++ b/docs/system/riscv/microchip-icicle-kit.rst
-@@ -26,9 +26,7 @@ The ``microchip-icicle-kit`` machine supports the following devices:
- * 2 GEM Ethernet controllers
- * 1 SDHC storage controller
+ include/hw/misc/mchp_pfsoc_ioscb.h |   6 ++
+ hw/misc/mchp_pfsoc_ioscb.c         | 156 +++++++++++++++++++++++++----
+ 2 files changed, 144 insertions(+), 18 deletions(-)
+
+diff --git a/include/hw/misc/mchp_pfsoc_ioscb.h b/include/hw/misc/mchp_pfsoc_ioscb.h
+index 9687ea25b1..aa108d2d88 100644
+--- a/include/hw/misc/mchp_pfsoc_ioscb.h
++++ b/include/hw/misc/mchp_pfsoc_ioscb.h
+@@ -25,6 +25,8 @@
  
--The memory is set to 1537 MiB by default.  A sanity check on RAM size is
--performed in the machine init routine to prompt user to increase the RAM size
--to > 1537 MiB when less than 1537 MiB RAM is detected.
-+The machine has a fixed 2 GiB of RAM. Other memory sizes are rejected.
+ #include "hw/core/sysbus.h"
  
- Boot options
- ------------
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 55ce1ac7da..f2a838be13 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -542,10 +542,10 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
-     DriveInfo *dinfo = drive_get(IF_SD, 0, 0);
-     RISCVBootInfo boot_info;
++#define MCHP_PFSOC_IOSCB_MAILBOX_SIZE 0x800
++
+ typedef struct MchpPfSoCIoscbState {
+     SysBusDevice parent;
+     MemoryRegion container;
+@@ -47,6 +49,10 @@ typedef struct MchpPfSoCIoscbState {
+     MemoryRegion cfm_sgmii;
+     MemoryRegion bc_sgmii;
+     MemoryRegion io_calib_sgmii;
++    uint32_t services_cr;
++    uint32_t services_sr;
++    uint8_t mailbox_data[MCHP_PFSOC_IOSCB_MAILBOX_SIZE];
++    char *serial_number;
+     qemu_irq irq;
+ } MchpPfSoCIoscbState;
  
--    /* Sanity check on RAM size */
--    if (machine->ram_size < mc->default_ram_size) {
-+    /* The board has a fixed RAM size */
-+    if (machine->ram_size != mc->default_ram_size) {
-         char *sz = size_to_str(mc->default_ram_size);
--        error_report("Invalid RAM size, should be bigger than %s", sz);
-+        error_report("Invalid RAM size, should be %s", sz);
-         g_free(sz);
-         exit(EXIT_FAILURE);
+diff --git a/hw/misc/mchp_pfsoc_ioscb.c b/hw/misc/mchp_pfsoc_ioscb.c
+index 09b702e520..850125c8b4 100644
+--- a/hw/misc/mchp_pfsoc_ioscb.c
++++ b/hw/misc/mchp_pfsoc_ioscb.c
+@@ -25,6 +25,7 @@
+ #include "qemu/log.h"
+ #include "qapi/error.h"
+ #include "hw/core/irq.h"
++#include "hw/core/qdev-properties.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/misc/mchp_pfsoc_ioscb.h"
+ 
+@@ -37,6 +38,9 @@
+ #define IOSCB_CCC_REG_SIZE          0x2000000
+ #define IOSCB_CTRL_REG_SIZE         0x800
+ #define IOSCB_QSPIXIP_REG_SIZE      0x200
++#define IOSCB_SERIAL_NUMBER_SIZE    16U
++#define IOSCB_DEFAULT_SERIAL_NUMBER "0123456789abcdef"
++#define IOSCB_PROP_SERIAL_NUMBER    "serial-number"
+ 
+ 
+ /*
+@@ -186,33 +190,88 @@ static const MemoryRegionOps mchp_pfsoc_io_calib_ddr_ops = {
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+-#define SERVICES_CR             0x50
+-#define SERVICES_SR             0x54
+-#define SERVICES_STATUS_SHIFT   16
++#define SERVICES_CR                         0x50
++#define SERVICES_CR_REQUEST                 BIT(0)
++#define SERVICES_CR_NOTIFY                  BIT(3)
++#define SERVICES_CR_COMMAND_SHIFT           16
++#define SERVICES_CR_COMMAND_WIDTH           16
++#define SERVICES_CR_COMMAND_MASK            \
++        MAKE_64BIT_MASK(SERVICES_CR_COMMAND_SHIFT, SERVICES_CR_COMMAND_WIDTH)
++#define SERVICES_CR_MASK                    \
++        (SERVICES_CR_REQUEST | SERVICES_CR_NOTIFY | SERVICES_CR_COMMAND_MASK)
++#define SERVICES_SR                         0x54
++#define SERVICES_SR_CONTROL_MASK            0xf
++#define SERVICES_SR_STATUS_SHIFT            16
++#define SERVICES_COMMAND_SERIAL_NUMBER      0
++#define SERVICES_COMMAND_OPCODE_MASK        0x7f
++#define SERVICES_COMMAND_MAILBOX_SHIFT      7
++#define SERVICES_COMMAND_MAILBOX_MASK       0x1ff
++#define SERVICES_STATUS_SUCCESS             0
++#define SERVICES_STATUS_FAILED              1
++
++static void services_cr_write(MchpPfSoCIoscbState *s, uint32_t value)
++{
++    uint32_t command;
++    uint32_t opcode;
++    uint32_t response_offset;
++    uint32_t status = SERVICES_STATUS_FAILED;
++
++    if (device_is_in_reset(DEVICE(s)) ||
++        !(value & SERVICES_CR_REQUEST)) {
++        return;
++    }
++
++    /*
++     * System services complete synchronously in this model, so clear the
++     * request bit before exposing the response to the guest.
++     */
++    s->services_cr &= ~SERVICES_CR_REQUEST;
++
++    command = (value & SERVICES_CR_COMMAND_MASK) >>
++              SERVICES_CR_COMMAND_SHIFT;
++    opcode = command & SERVICES_COMMAND_OPCODE_MASK;
++    response_offset = ((command >> SERVICES_COMMAND_MAILBOX_SHIFT) &
++                       SERVICES_COMMAND_MAILBOX_MASK) * sizeof(uint32_t);
++    if (opcode == SERVICES_COMMAND_SERIAL_NUMBER &&
++        response_offset <= sizeof(s->mailbox_data) - IOSCB_SERIAL_NUMBER_SIZE) {
++        /*
++         * The descriptor contains a seven-bit opcode and a nine-bit mailbox
++         * word offset. Return the 128-bit serial number at that address.
++         * See section 3 of the PolarFire System Services User Guide.
++         */
++        memset(&s->mailbox_data[response_offset], 0,
++               IOSCB_SERIAL_NUMBER_SIZE);
++        memcpy(&s->mailbox_data[response_offset],
++               s->serial_number, strlen(s->serial_number));
++        status = SERVICES_STATUS_SUCCESS;
++    }
++
++    s->services_sr = status << SERVICES_SR_STATUS_SHIFT;
++    qemu_irq_raise(s->irq);
++}
+ 
+ static uint64_t mchp_pfsoc_ctrl_read(void *opaque, hwaddr offset,
+                                      unsigned size)
+ {
+-    uint32_t val = 0;
++    MchpPfSoCIoscbState *s = opaque;
++    uint32_t value;
+ 
+-    switch (offset) {
++    switch (offset & ~3ULL) {
++    case SERVICES_CR:
++        value = s->services_cr;
++        break;
+     case SERVICES_SR:
+-        /*
+-         * Although some services have no error codes, most do. All services
+-         * that do implement errors, begin their error codes at 1. Treat all
+-         * service requests as failures & return 1.
+-         * See the "PolarFire® FPGA and PolarFire SoC FPGA System Services"
+-         * user guide for more information on service error codes.
+-         */
+-        val = 1u << SERVICES_STATUS_SHIFT;
++        value = s->services_sr |
++                (s->services_cr & SERVICES_SR_CONTROL_MASK);
+         break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimplemented device read "
+                       "(size %d, offset 0x%" HWADDR_PRIx ")\n",
+                       __func__, size, offset);
++        return 0;
      }
-@@ -757,14 +757,7 @@ static void microchip_icicle_kit_machine_class_init(ObjectClass *oc,
-     mc->default_ram_id = "microchip.icicle.kit.ram";
-     mc->auto_create_sdcard = true;
  
--    /*
--     * Map 513 MiB high memory, the minimum required high memory size, because
--     * HSS will do memory test against the high memory address range regardless
--     * of physical memory installed.
--     *
--     * See memory_tests() in mss_ddr.c in the HSS source code.
--     */
--    mc->default_ram_size = 1537 * MiB;
-+    mc->default_ram_size = 2 * GiB;
+-    return val;
++    return extract32(value, (offset & 3) * 8, size * 8);
+ }
  
-     object_class_property_add(oc, "clint-timebase-frequency", "uint32_t",
-                               &uint32_type_info,
+ static void mchp_pfsoc_ctrl_write(void *opaque, hwaddr offset,
+@@ -220,15 +279,22 @@ static void mchp_pfsoc_ctrl_write(void *opaque, hwaddr offset,
+ {
+     MchpPfSoCIoscbState *s = opaque;
+ 
+-    switch (offset) {
++    switch (offset & ~3ULL) {
+     case SERVICES_CR:
+-        qemu_irq_raise(s->irq);
++        s->services_cr = deposit32(s->services_cr, (offset & 3) * 8,
++                                   size * 8, value) & SERVICES_CR_MASK;
++        if (offset == SERVICES_CR) {
++            services_cr_write(s, s->services_cr);
++        }
++        break;
++    case SERVICES_SR:
+         break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
+                       "(size %d, value 0x%" PRIx64
+                       ", offset 0x%" HWADDR_PRIx ")\n",
+                       __func__, size, value, offset);
++        break;
+     }
+ }
+ 
+@@ -238,11 +304,62 @@ static const MemoryRegionOps mchp_pfsoc_ctrl_ops = {
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
++/*
++ * The System Controller uses the mailbox as a byte-addressable shared buffer
++ * for service command payloads and responses.
++ */
++static uint64_t mchp_pfsoc_mailbox_read(void *opaque, hwaddr offset,
++                                        unsigned size)
++{
++    MchpPfSoCIoscbState *s = opaque;
++
++    return ldn_le_p(&s->mailbox_data[offset], size);
++}
++
++static void mchp_pfsoc_mailbox_write(void *opaque, hwaddr offset,
++                                     uint64_t value, unsigned size)
++{
++    MchpPfSoCIoscbState *s = opaque;
++
++    stn_le_p(&s->mailbox_data[offset], size, value);
++}
++
++static const MemoryRegionOps mchp_pfsoc_mailbox_ops = {
++    .read = mchp_pfsoc_mailbox_read,
++    .write = mchp_pfsoc_mailbox_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
++static void mchp_pfsoc_ioscb_reset(DeviceState *dev)
++{
++    MchpPfSoCIoscbState *s = MCHP_PFSOC_IOSCB(dev);
++
++    s->services_cr = 0;
++    s->services_sr = 0;
++    memset(s->mailbox_data, 0, sizeof(s->mailbox_data));
++    qemu_irq_lower(s->irq);
++}
++
++static const Property mchp_pfsoc_ioscb_properties[] = {
++    DEFINE_PROP_STRING(IOSCB_PROP_SERIAL_NUMBER,
++                       MchpPfSoCIoscbState, serial_number),
++};
++
+ static void mchp_pfsoc_ioscb_realize(DeviceState *dev, Error **errp)
+ {
+     MchpPfSoCIoscbState *s = MCHP_PFSOC_IOSCB(dev);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+ 
++    /* Use a deterministic identity when no serial number is configured */
++    if (!s->serial_number) {
++        s->serial_number = g_strdup(IOSCB_DEFAULT_SERIAL_NUMBER);
++    }
++    if (strlen(s->serial_number) > IOSCB_SERIAL_NUMBER_SIZE) {
++        error_setg(errp, "The serial number can't be longer than %u bytes",
++                   IOSCB_SERIAL_NUMBER_SIZE);
++        return;
++    }
++
+     memory_region_init(&s->container, OBJECT(s),
+                        "mchp.pfsoc.ioscb", IOSCB_WHOLE_REG_SIZE);
+     sysbus_init_mmio(sbd, &s->container);
+@@ -265,8 +382,9 @@ static void mchp_pfsoc_ioscb_realize(DeviceState *dev, Error **errp)
+                           "mchp.pfsoc.ioscb.qspixip", IOSCB_QSPIXIP_REG_SIZE);
+     memory_region_add_subregion(&s->container, IOSCB_QSPIXIP_BASE, &s->qspixip);
+ 
+-    memory_region_init_io(&s->mailbox, OBJECT(s), &mchp_pfsoc_dummy_ops, s,
+-                          "mchp.pfsoc.ioscb.mailbox", IOSCB_SUBMOD_REG_SIZE);
++    memory_region_init_io(&s->mailbox, OBJECT(s), &mchp_pfsoc_mailbox_ops, s,
++                          "mchp.pfsoc.ioscb.mailbox",
++                          MCHP_PFSOC_IOSCB_MAILBOX_SIZE);
+     memory_region_add_subregion(&s->container, IOSCB_MAILBOX_BASE, &s->mailbox);
+ 
+     memory_region_init_io(&s->cfg, OBJECT(s), &mchp_pfsoc_dummy_ops, s,
+@@ -343,6 +461,8 @@ static void mchp_pfsoc_ioscb_class_init(ObjectClass *klass, const void *data)
+ 
+     dc->desc = "Microchip PolarFire SoC IOSCB modules";
+     dc->realize = mchp_pfsoc_ioscb_realize;
++    device_class_set_legacy_reset(dc, mchp_pfsoc_ioscb_reset);
++    device_class_set_props(dc, mchp_pfsoc_ioscb_properties);
+ }
+ 
+ static const TypeInfo mchp_pfsoc_ioscb_info = {
 -- 
 2.53.0
 
