@@ -1,30 +1,32 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A144C606A328
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8466606A329
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 15:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=MTk5cK6y
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=Vbko6Xsc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOd9O-0002ET-TS; Wed, 04 Nov 2026 10:43:47 -0500
+	id 1xOd9u-0002rl-82; Wed, 04 Nov 2026 10:44:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOd9B-000249-EA; Wed, 04 Nov 2026 10:43:34 -0500
+ id 1xOd9h-0002fO-58
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 10:44:06 -0500
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOd99-0001Gk-Fd; Wed, 04 Nov 2026 10:43:33 -0500
+ id 1xOd9e-0001J5-GF
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 10:44:04 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=j1S3CnG+QVgen+Xmvy/LN7tFPUGC8TZXLIROr2ydnkEc0AF+/rczQZqznBJnNfayN3qLg942TdDqGTYNLkLtvgzsg5BjcAIPvodyCoHIcevK98QqqgJJWWI0xXRHulmzAPcJkP9lpKu/6ZJ/3k23KYTBQI69Wh6MwaZ5vzPzNBxyPzq6ycSFmNuJi+t+tLH8MJjjpM+knp2s5mHTV6IIRJZhtkscah6QuJbrtrXpfTg462Wi4sHADE5DABX68Lns/aipfJ9iO6fPopV8UqKCkI8uAODERM5XFUA8AQcND/XcWX3PHDcpVAaQbVTxuVU06XF6gXRz7XXqtn0Sd6mMFA==
+ b=xpQFysM/RjgEpfY3CN/gxHQdbd2I71jCtr06yAaZqqog3n1QUFLzi+TZxbVzX9onKgb3QbDs44NKPql+3duwP8toLZK7lCUy0mnr0+/ngJz8OpY+0yKOMzRKqU/PSKBDbYXIuG+2ke3aNYq/iMiNfwd4LwFOd6bMfucKonw0rgrQYv/diGs+2CFyMIric1/XmTqUY9SR/4cMfAqWx9fBW0kuSm99pgyaBPjOk0DAEsYW1sDe3AF6aPTfSIC/VQ1wxQ/jd0fszAKUuOvguCdPmNPdSuD/0j8dVc9Vwfv8vsXmDtDoLl6pWheWr+XHiltWo6F8/dScIAfxZ/pWX6q5mw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6/oddsVJj3jRJdDROEk9A8ibmvg1jLZ9AgFD7A0ZAho=;
- b=nWSTPGbZNdCl3InllWhce/5LtSHaEeF0jHZeYyFI8QRy4Kl1wn09pWSMdgNLFVeAsGLGabMQqyoAj3MeGIpuE9mvJHWtOsUgLisl6/BJg/IhWxE0pQyDQH1T/kAJ9auPAYS0I3O/hlZKkhGrZpDCRDvuiCPrHm84TIgTO9XSD2lCgtfEe1qCPCdZwCYVGY9nnlTqJ1mmrXaBgoicZXCdySiF1eByBsoLHhhAv7BkdmgAhNF4nPqH/eV7IKIhN/z+z9bb0Cx4uQS5HRIWFuTMfUUIbBA5xlPdUdVlm+d44guXx14zyzyYNiG0Wu0IpLxi5HI3CbZkTdKxpZrHxYAlrw==
+ bh=J7Lr/EegCLy4TAGWgBwX53xakB785wpZ+FfUldNv5b0=;
+ b=cw1C80w6fJdgSs/8T8Xd/1+EyYD6oRANUeY5xwv9Z59Z671QeO5MdfDSc6aG8+kjSiaSMD/p3C0jssrVWEGPHGqEZlmlI/glQVUYQMQ3Pjm8spAbmwykaCaFJUccBP6f8IbVNNY5PweEb606znrFnRXmLmFPh+OTBwppAnTR0YLpyf+uW8RLNwCkvcFRQN+o7ZvBzpAZhRKCe6WGRxxgmPt0alFjyWt32X043+UawFELnym4lPXb85ZMV6ZXCsKh1W6casFbGxFeJBpOS3LUFEFE4vs3NSMo3EYPl9dx60RreE84DFQrAoHU6l07AV3L0/uNhzFE5gDhy2XW4BwSeg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,33 +34,29 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6/oddsVJj3jRJdDROEk9A8ibmvg1jLZ9AgFD7A0ZAho=;
- b=MTk5cK6yV8xaH056kYezrH3dYWfqEnNuNmogBUX5H+ynFmos9olzOcvsqPGKUpqF7u2StthabRKhTiHuiLKuCFfsopm0zj3wucES4RXzjOGWyD6oh2N3vh1xOV5dYCSgWIfi8LtDKTZNvUfo3zUCspWoKZS9+1CEeQ2FACCxf1tOxVzeQT/pw5738GOKKT87DKAFprvCy4j7aZfJe05JLMjucVnfW6fwZrr3i1JUBDSX1mIOayIzZo8Zpm9Yl6lG1dEtLrDRpkZhGHQBrJPsN0maYFNMnLqf9Ge5tY1GX6EkQvgefUVhiNDKflFygYK/LobFcAFTeqfH1aaPcMHd4A==
+ bh=J7Lr/EegCLy4TAGWgBwX53xakB785wpZ+FfUldNv5b0=;
+ b=Vbko6XscXQNAabFKwKnRJLySH4jfzGeurbfzNhaS7BQg6/t2C9t7DuX8STKoiYNljYrLOe2n7mB6nTLvWDcpD+BRZRkqazN20Y2N9BL1BDj3vU/N57/UKJ1gIckaBR6LD0IcRiM+uOQZYjJE9J9ENToWGSkGiQ3En0kExR9GwqauTfwPVlV/nn3Lw5605c/y6T21VNh2mVsjCEs/NGgDJF2W6n5MFoqLwh0A00ZbegYYp2vdhwwlJg+wVHi2traPkUbvA3qhaA6hBe5ONN7Sq/5HndLRx4kUzzwrT40u75kExDOgjwrhmb6B1E2nEiAFnuxOXEdljQH7WXttwbfJhA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com (2603:1096:405:2c::12)
  by SEZPR02MB7162.apcprd02.prod.outlook.com (2603:1096:101:190::6)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.9; Wed, 4 Nov 2026
- 15:43:01 +0000
+ 15:43:12 +0000
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10]) by TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10%5]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
- 15:43:00 +0000
+ 15:43:12 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Chao Liu <chao.liu@processmission.com>,
- Conor Dooley <conor.dooley@microchip.com>,
+Cc: Conor Dooley <conor@kernel.org>, Markus Armbruster <armbru@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Conor Dooley <conor@kernel.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v5 19/26] hw/riscv: pfsoc: Correct PolarFire SoC DDR aliases
-Date: Wed,  4 Nov 2026 23:41:46 +0800
-Message-ID: <20261104154207.641511-20-bin.meng@processmission.com>
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v5 25/26] MAINTAINERS: Add PolarFire SoC Icicle Kit maintainer
+Date: Wed,  4 Nov 2026 23:41:52 +0800
+Message-ID: <20261104154207.641511-26-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261104154207.641511-1-bin.meng@processmission.com>
 References: <20261104154207.641511-1-bin.meng@processmission.com>
@@ -71,56 +69,56 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TYZPR02MB7121:EE_|SEZPR02MB7162:EE_
-X-MS-Office365-Filtering-Correlation-Id: e53445e6-7da0-4797-cb91-08df3a8a4e89
+X-MS-Office365-Filtering-Correlation-Id: ef208601-ff0a-463f-d932-08df3a8a556f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|7416014|23010399003|376014|260925021311599003|260925021911599003|260925022911599003|56012099006|261021121427099003|261009223027099003|261021123027099003|261022075727099003|261022115727099003|261102123227099003|261026121527099003|10067099003|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info: sdilEJeQAQZ3iXXskU1JilC3ebdigjrDg+sKg5vBEokaqV6B8H0ZZIsvShGQ5+lF13X++bk5e23FUiSHBGMPQQPJlUafZQRU0qm2fVlhdKgcfuYMms4vWoxQkrqz6oHJ6IXaCAxd/UIFoIBhn05QqwissAbleKa32OM772ZxkMLzDf9M6P9uzfCR3pJzFr0SyPRti/5dJOdMaCXrpTCjiOMQaOxVlHObRTem69cWEQVI9JRxS0JeVdg3h2HfQtUWBx/5Qr5hjzbLrA34mnmGfbu50sirz7hPBAQvNz4F5ij8DPYA0mlzaUWHjNANu9gwFbaWhxfFcJ8jpuxo77Nc9sDx1aWu6aSRA6LGNzdRtgeYVFT6OFneB8i5n4e707qDJ9s+e1Pnu6L92hG2FIb6A5TF/F20FJ9OdpqMidQt1X36brZ3m0GUJu8vsT34AnEI7ihCxSUX1ANh9R/hJWY8sETm4vS7qxXw0fev/Yi5YYWcsGxGTMWEDnMsB/u+kb59OYMGLsG8OYuwTleL0dxUluukNMfDGfzbxObhEaanKsnDYoQbyLCC/q3ZfVzDwJSIRY4zBKevgGWaVWYV+Ud0hzUj/HVIiwTy+eMYu+pkQMlfuCo+FETWCVajV4mjHP/wErFC/cIji4+h6MbypQaqEFvC5mz3gO6e+3iM3Z3VnGE=
+ ARA:13230040|366016|1800799024|23010399003|376014|56012099006|261022105027099003|261021121427099003|261009223027099003|261021123027099003|261102123227099003|261026121527099003|261026140227099003|261028144727099003|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: RGTD1Fz3RoF/SYmx1fareW1tppBL3juxfgHaUbQeCZOnR5a06Zgnxi2+MX7ETrEYRd8phAHqkFLR0KZ1J8LvVlmka2OhrhqENBNYixpWlQISSqm7cRu0flz4I6+aOML0Cdx6pS+Sjma53Sy2WBhDtmQwwiRjtrOh42IU2+Z4CGV1bTJl2/+BFFUXSWMv0pWI/xiw3W+EKPnxhUZImoqBoqPhK15jm0rAWWaQvWMy6EFMgEVRvERlvK/hSt+GFE4ALO5L4TeW1eiiMz2Bh8xlcRYMZae7j/7aoWSL6g8tmD5VG5Gap/gc13Ow7Sflk1v5OHUoRsN4piR65D7sfY6b+7R3I/ZWK9FW/Xng31K/CBmEeAv8r+OQ/zvqsDOmKNvxkP0FbxH444PJUISaFgAUKRf9XhDKSPoDgvsuqYBdliV1jIHJHlDz56IlL2PdTOdMu+S+xawneu39GnyT2bRn2bWGjGBE12aePXuTZiuSeCZ6r0WX9Mrwokeaw4KEKwHagmBOrIsDJs4P/dQgUGGS8T6gje2acNXVwzheVSbdyhacR3cGOoRNxtwX0hypOGUBMXKjOPaS59VONPX3CxJtFvOgzo1xuVXaEJbOd0CFadRanSVs98zuJWGJL3n7P3bS6+YML9XxmDTkHmyjzs/y3eOZHZKQ+w+6iXVclTRshcQ=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR02MB7121.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(23010399003)(376014)(260925021311599003)(260925021911599003)(260925022911599003)(56012099006)(261021121427099003)(261009223027099003)(261021123027099003)(261022075727099003)(261022115727099003)(261102123227099003)(261026121527099003)(10067099003)(22082099003)(18002099003)(6133799003);
+ SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(56012099006)(261022105027099003)(261021121427099003)(261009223027099003)(261021123027099003)(261102123227099003)(261026121527099003)(261026140227099003)(261028144727099003)(10067099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ItARgZbtJB4+fqjGhC2xL0v5GPrsgdeUGKC4LYibYQdTCElpUzdoVsT2mqoA?=
- =?us-ascii?Q?PSMbousbeLHaiQPQYiO3LViQMLx893V8uJkJxYCkiuuABeIZww14mVpHBIAd?=
- =?us-ascii?Q?aBS+dMoC9DrW698XDA0Kr1jbVjE/hOSUIjNFrbDuy7UiUTj5V1kYM7y0hQHp?=
- =?us-ascii?Q?ccBPL/h30ildXFVmnJSZhJjT7quj1FT+s80sLIL5zWGnOXv4J/IJRWDccgMp?=
- =?us-ascii?Q?6qQH6me8sdaloQzYVBjXfOjbBtnqEc35aRz/b0imU4wccWLGjURX5e44SxC8?=
- =?us-ascii?Q?WsTrDxl+tJh7U+2LWLLq0LlcED1ejgv1U51kf8GSlwgcLWPxErlO7gyMXfSe?=
- =?us-ascii?Q?98ZQxZs4lF+oCG5FA1aWGlneCyWXmBHlS5W7+6iFb7vdvr6szSW454sodf8K?=
- =?us-ascii?Q?c5d07yXi/16F7tFb51COiaveLzNODziXcDrkrYs0OtKggLsLi48rmoAC7NPy?=
- =?us-ascii?Q?lGhVLI+5pWL9haxii4OH+C3JHtEBjeIL+gdYx0t/Xz+tSAV4Ncql+YGHW0hQ?=
- =?us-ascii?Q?a4wyH0FtwY0iDOglII/12AegZss9BDF5SsxAa+vIfpwda/d1dGuH6NqvTK8L?=
- =?us-ascii?Q?kwZjwEbZUGh+su6zwGidETB5kjQpMjVVn/BnsbS0S6PxnfdNMXjvVj2cjEUj?=
- =?us-ascii?Q?RFv55N9ZmeMa83P8NmFvYzejPCxYjjwW3U+4HlI/azs6m9XoHmirzn1OFhsN?=
- =?us-ascii?Q?xNXt0qEVb/gOm5BacMijOvceCrvfy3QAj5gfzJsscXNhjzcFddpuSgtSxy/+?=
- =?us-ascii?Q?FbiktSVnUuGG/JaS4EzMtPxJHtKH04dAvbp220EyPPCka5e5Qs7stKfQDMPf?=
- =?us-ascii?Q?HJVmUMSRnCV81z3dMJ5hy4wBj64AYRK/9QUE+p8LYsQMtVzyZdGXNOLNXsLN?=
- =?us-ascii?Q?4x0MoOYMcBb2wkY1Q1t7PQAPMgloiSwQsEed5UqD4RTnAG83VA46sunjgHQK?=
- =?us-ascii?Q?uqEAaJgaGimBEe4UrsuS7bg/gczAKYOtpuwysYrWYgk+0FNmYdVR8ec4ZSRO?=
- =?us-ascii?Q?2HyGc8XILag8lZagM7Npab3wRQfdNrdb6nlfzDOz3weqaugHF7Gj/JwAS9OS?=
- =?us-ascii?Q?BqtoM/TBagjCF/x6UGaS86U5cRar3IMNmAJMB8drvCl3lny5Lj1nGmrsnwjA?=
- =?us-ascii?Q?sJCCRXdu4hTN2GLwihkkeJDhbqU95Sn7mP3gHm/pZ3GFCKI1AJZMMY1F4wdH?=
- =?us-ascii?Q?7YRQj9/cIc6tvEoRxW+HQR6O4GKT2lWkPn2ufbWaX5z76oM4uXoZF/3bEHTc?=
- =?us-ascii?Q?B2toAcj7nKj9MNjLMRDmyR8pZ23ESC/zN8e2/dNJgXrA+CHjeIYjUkloaJ1S?=
- =?us-ascii?Q?8sXr/nig1qCuKZH3zWlD1hX6UdICI19mA41xcLOrwNNh4CuZy1Pi++zW7Hs+?=
- =?us-ascii?Q?rYLeKkY6QjBx9oyzeUpmWaaZ7VjweQCRa+ZDL1kgdYiqVnZehybPl3N/WFqz?=
- =?us-ascii?Q?G1lVIoPXNeSbgOhViOTQteDaCAc1Eo7C+iOQ+a98Kbx4sGvCs7xRxS655yPp?=
- =?us-ascii?Q?ehJUsIpdsQPP8Ddmp0nBokKQ4h1RHTnws9iRvWzWHufkVNV3sSMFgoGQ9CO2?=
- =?us-ascii?Q?KdLKW6nrX+jN1Fk0SlK7S//pBBVcK4E8vfGbRaoOBHF6+W29PIbCbdwI0rDi?=
- =?us-ascii?Q?fgSXcqmayA2ylRL/0mKj9UIpWMsy/ZC2O14cYkeRlpD1F9SfZ46dV5vAXVRN?=
- =?us-ascii?Q?uJRDZf+vyPNM0QVNcY0yoweyqExkymJmcfwBHL6gvm2mJx20c8tCKV1FlHbX?=
- =?us-ascii?Q?wQZr0R/17k49zXuZvk9fsbTeuc5cdRs=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ePu8yTf9aSMQzlHef2OfLAZ4EE3ywLVE7DhFyZ/1GJa5CJnmMCrdq5PfTLC8?=
+ =?us-ascii?Q?xsqKQwdla37KIxoftsXWFnZix/KdksHXpyNs74JRmJRXoSsnl+fwTHSc5Hqj?=
+ =?us-ascii?Q?1jgFwHrBPNKVWTYzHdcXWJl1xZg1jI3En2Fbkz8QlDBOXUSM0xTC20bXXODH?=
+ =?us-ascii?Q?2JTJJcrJTgPdoLJfIQ5ocgRknatZJUchqYjk9apiiTGvFvzUD6OzeGv0Oj7Z?=
+ =?us-ascii?Q?6iD80bDX/dmmzkYlMtmYlHHDb3NKJeDmwCKVtDD8Sr5241NYy/WMk41Y/fLZ?=
+ =?us-ascii?Q?5tOpsE73HRwTDEaJAGvYTgOPV08VnzeDOO19d9mBsnLjUIlJEi0owNdf6Vfu?=
+ =?us-ascii?Q?oKILOuM4dm6iGwnb64VlP0dqsjO9g0ykeAY8H+X2mbZfuoc89mOPbVMclpZu?=
+ =?us-ascii?Q?frqgBlK3VMEhpZR5m6D8Hi2kwIgCwPi9NcqCM81momcuLiyiOKj77yLtW8nD?=
+ =?us-ascii?Q?mpBTw2aUbMlQ7tI/3MdRPgTbEeHGns5iqPBF+VFF93NOWf9aAF6nYI3HZZMU?=
+ =?us-ascii?Q?DHdjogtWaHjYI6D/BoxaztRCnO7MzaigtZ04/nwP74oNMdUhFpx9JWCnvJA1?=
+ =?us-ascii?Q?iotxB7wTj15J71BuzoHqu6gh5iwCG5SGrhiqldWRq2uJpVAlhiy7hrzd+A9W?=
+ =?us-ascii?Q?1dTPs7f9wUkMIBA5Gp6+8hXEOZY2TyihP+P7aoxCtOMw7dw9wWyjnnaxsptk?=
+ =?us-ascii?Q?uQzw01x2xms4gTjlHKemrWiknGQJou2n+BUHpDNSu1Q36w1O3vc78aBki5JV?=
+ =?us-ascii?Q?iDBEAOnRdOVrQU0kP2g91eRTIS59hkco0ryiA2AVcWr6ZDriT19fEqKAFSUk?=
+ =?us-ascii?Q?NgYKY7OJjsLXiJoM3FU5oueEK2FQ2X6i3ywbrtApzqtGQODiFYqAgFP73Q0Y?=
+ =?us-ascii?Q?96ZMj3nZ6FQ2wRHHyZvgWUSGIS+G3Jr/nyxAlf3f7FllLxjOIpeXyiZGlzMO?=
+ =?us-ascii?Q?9Di1Pqh5KS8DhXrGKHvfkndUX5moNvSie1sWSRTgCTO5hsQfw6qRRCDZo35P?=
+ =?us-ascii?Q?2Wd9ufCQ13klCdQ+7yOkvwPNMlnqhtI9dAnEBAjLdNHosXxzde+X1D2nCrYk?=
+ =?us-ascii?Q?crtj9uI0ZYHKEMxD2bVCeVzgCMAqbK36/aV6WFCwKiuow84aXAPoYgkFqkRs?=
+ =?us-ascii?Q?/uhWYO+xhe1ScgTUr8UbBxgmoogKETsMrOQH2QMpqBVhJyDicOMJEAtRKpoU?=
+ =?us-ascii?Q?nzv/99/k8W3fhNuGYHY6rX/QojgiwREXz/pYXVLS47JPbgKUl5ZEEDPu0F0M?=
+ =?us-ascii?Q?ijbq/RCXRTxumeXLCabYc40mAr/hfniG0BH1wseqiRwDVVeKVKPIro9daCz1?=
+ =?us-ascii?Q?I4C2kjq40fa3tnd2EjCMQbYp8zpBuhaq2fnkrq1CNl3udwGWBDk4yEHE6l7C?=
+ =?us-ascii?Q?U1Qh/cS6ZJGcf1Vu89Q8VmMrCqlGcW32uDRX1bXIVdkJkPg3DBIDNxUXvKQP?=
+ =?us-ascii?Q?1zOJP4ve3eWCQhMiBrI5PJYP7yOdpiPlg4GpxQ+w+8zgjzsg1fu95Znecym2?=
+ =?us-ascii?Q?w/YfNILwZ3Y9uvL2hC1NTfZgq/edA+8M9Xz2ijlp16Rr5qFGzGZlrkFIplYm?=
+ =?us-ascii?Q?N/KsJfdKM09lcFDdyGXVYzVuvgTdRwuFwgdqJkirPM4z8ni73zFpb3xWzC7Y?=
+ =?us-ascii?Q?4WIeVDjcV5ldJ5fldJG00Jh1dQfyhga6xxPK14MCXEg7KkLczXHjgoa2Rmrw?=
+ =?us-ascii?Q?uBkEo/alIB/N4vopMAr8bbKdrsvDuIiXv4OQ/W5WiDqWCwYJuOeM/sqUsO90?=
+ =?us-ascii?Q?838AyBWptAAQL+gX0yRQ2dwRW7ArUxA=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e53445e6-7da0-4797-cb91-08df3a8a4e89
+X-MS-Exchange-CrossTenant-Network-Message-Id: ef208601-ff0a-463f-d932-08df3a8a556f
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR02MB7121.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 15:43:00.8956 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 15:43:12.4172 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hBqTpDFby64vGDMsUFH773hGNAf++/4FDI7buwuRqeLUrGm8cyS1xb0eh6CN2p0+kBQ+HzIFKkgPCS+nKU4Wq3CrrSI2jsvZNTTT+4CXlw4=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3eLVqDMrcoz+N+K/dWAAqmyFdjx+KW1CvgJtvstD54Mxvoxh+ynnywCBRu6hIvZsv9J/8ga9Rlklr3jysI1tuZKmV2IiHhfWLU7bgF3VLY4=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7162
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
@@ -146,75 +144,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The Icicle Kit reference design maps the 32-bit cached and non-cached
-windows and both 64-bit windows to the same physical DDR from offset
-zero. The MSS Configurator User Guide describes configurable physical
-DDR offsets, so other FPGA designs can instead arrange these regions
-sequentially when their device trees describe that layout.
+The preceding Icicle Kit updates restore HSS, U-Boot, and Linux
+boot. Functional test coverage is also added.
 
-QEMU models the reference design used by the tested HSS and Linux
-images. Treating the high windows as only the portion above 1 GiB
-leaves their valid memory nodes unbacked with the board's 2 GiB of DDR.
-Map both high windows over the full machine RAM and qualify the source
-comment to describe this reference-design configuration.
+Restore myself as a maintainer and mark the machine as 'Supported'
+to reflect its active maintenance.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-
+Acked-by: Conor Dooley <conor@kernel.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
 
-(no changes since v3)
+(no changes since v1)
 
-Changes in v3:
-- Update commit message to mention the DDR aliases is modeled following
-  the Icicle Kit reference design
+ MAINTAINERS | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- hw/riscv/microchip_pfsoc.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
-
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 63cec48f43..55ce1ac7da 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -555,15 +555,29 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
-                             TYPE_MICROCHIP_PFSOC);
-     qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6c7437f8a5..e50ebbe5d2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1817,10 +1817,11 @@ F: target/riscv/xlrbr.decode
+ F: tests/tcg/riscv64/test-crc32.S
  
--    /* Split RAM into low and high regions using aliases to machine->ram */
-+    /*
-+     * Model the Icicle Kit reference design, whose four CPU-visible windows
-+     * alias the same physical DDR from offset zero. With 2 GiB of DDR, they
-+     * map as follows:
-+     *
-+     * CPU address     Attribute           Visible size   DDR range
-+     * 0x0080000000    32-bit cached       1 GiB          [0, 1 GiB)
-+     * 0x00c0000000    32-bit non-cached   1 GiB          [0, 1 GiB)
-+     * 0x1000000000    64-bit cached       2 GiB          [0, 2 GiB)
-+     * 0x1400000000    64-bit non-cached   2 GiB          [0, 2 GiB)
-+     *
-+     * "Low" and "high" describe the CPU address windows, not the lower and
-+     * upper portions of physical DDR. Other FPGA designs can configure
-+     * different physical offsets through the MSS segmentation registers.
-+     */
-     mem_low_size = memmap[MICROCHIP_PFSOC_DRAM_LO].size;
--    mem_high_size = machine->ram_size - mem_low_size;
-+    mem_high_size = machine->ram_size;
-     memory_region_init_alias(mem_low, NULL,
-                              "microchip.icicle.kit.ram_low", machine->ram,
-                              0, mem_low_size);
-     memory_region_init_alias(mem_high, NULL,
-                              "microchip.icicle.kit.ram_high", machine->ram,
--                             mem_low_size, mem_high_size);
-+                             0, mem_high_size);
- 
-     /* Register RAM */
-     memory_region_add_subregion(system_memory,
+ Microchip PolarFire SoC Icicle Kit
++M: Bin Meng <bin.meng@processmission.com>
+ M: Conor Dooley <conor@kernel.org>
+ M: Sebastian Huber <sebastian.huber@embedded-brains.de>
+ L: qemu-riscv@nongnu.org
+-S: Odd Fixes
++S: Supported
+ F: docs/system/riscv/microchip-icicle-kit.rst
+ F: hw/riscv/microchip_pfsoc.c
+ F: hw/char/mchp_pfsoc_mmuart.c
 -- 
 2.53.0
 
