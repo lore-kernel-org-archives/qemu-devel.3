@@ -1,119 +1,105 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19950606A31B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 00:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3527B606A326
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 00:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=alistair23.me header.i=@alistair23.me header.a=rsa-sha256 header.s=fm3 header.b=DfbV/qdW;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=UrLlql/g
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PWVblEOo
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOOm8-000673-IQ; Tue, 03 Nov 2026 19:22:48 -0500
+	id 1xOP91-0008OB-6o; Tue, 03 Nov 2026 19:46:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xOOm7-00066o-1i
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 19:22:47 -0500
-Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xOOm4-0003Ie-Rb
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 19:22:46 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.phl.internal (Postfix) with ESMTP id EBC93140011E
- for <qemu-devel@nongnu.org>; Tue,  3 Nov 2026 19:22:42 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Tue, 03 Nov 2026 19:22:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1793751762; x=1793838162; bh=QIRWLhhWb3iYxQfcmBc4wuukxhCxvqGz
- F4GlKuDwH/0=; b=DfbV/qdW7l3DxkjALexkcyWOquE/BCBMoU1KtxET9kUnGKs5
- cIxNaK/o5hgXz3d/hTxC2uUdN1pjlsaLhbWE768sQRti1kLWmfgPYEYKJk4ZOQLq
- qyD21w0dF/YfLxBEb1Ue8AKidOvUaLWTTtgYbTveA/30Atch7+zsB4zMzxAUb8bZ
- UiXMfVvxDTrldYyFrt/ikFbqjyQVdr4oNohqokm6m9k5JYXLNcGoHkjWB03bsM9R
- XR/V2V4lCwFv0jGSq/n/fTIGh8wcphDq9e/o9YLVeijnYy0i5lQ9WdidGfzxWOGH
- RMDoz+2NcLW9AfO3QLi2LPkzpNKKWoUyV5zpKw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793751762; x=
- 1793838162; bh=QIRWLhhWb3iYxQfcmBc4wuukxhCxvqGzF4GlKuDwH/0=; b=U
- rLlql/gSxFahyyM951lluTwudF/1U5+f7ZPg3pLUBClro8L1OKRdeqvO3XQLBVaC
- kViyAhhwKvfzdKyAa+vTM9XVZDfvpXNCFwheLbdWmgGDZP7y31aVkspzGCyuZyP6
- CmKyOUNxRmL2hxEYK284QfVgU5vm3jLCnoMTPSQIKu+W04UsSRiK1Q0jCkxvNCKv
- wQDYfY6nNwcqOiWkc0cXZLKBrTSdEHuxl8AXCfx/1Q7gLLdXqx6/ZydIWAmppBqb
- ZUMQWWlxME+1EK1ZJ3V6jcejSjUqMeoqqOe2kvJ7KmBJPji2k9gv6bI8X8/lb69I
- WgWw50mo8xBXKkJZqSmrA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
- repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793751762; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm3:rsa-sha256:kOM4gUUK0iN4C42/JWWBh/XODMWD2GYgXJOkS3qdP1bvGjk
- v4QzeRMxCLXFhYlqAwONPWCY2WERwKny7SxEiYjDmVMWR/4PSAnNLujVRTb9zJDj
- 6R7z7uxFIQIRQcd/B42vlOAQdhnbp1krypnMoJffyDiNIs2nRXFZY39pA25sTCAA
- ocUN+y2pAAOy4KHLABTdDC3RhyCjFliQq45gPvGwrjM2xmlFayJrs9JoY2PCvjsj
- tzwah5MJGhZ2naGQ1udjIx2ml3ZjkjYEkAFCuHusBspPwEAnyTycCCdXLPu0NrVv
- BN9/6ZyrpCg0lwBAIkHDfza3H4paBmURkpZLlcg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-08;
- repo=github.com/dkim2wg/interop; date=2026-10-28; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:C0z8m/DPRo9AMXLXr7bOs0zY46nf3GApaVRtvCsEeAo=:BVkFxZGlHd82jkKJqvgRf2Ie0mbfSkxjdZ3oOQ1TZ+8=;
-X-ME-Sender: <xms:0nrqagb3VU3yVesnKhN09Z5c_cCsEyUgYmrt9dyGkg9kQ8i9sNlJUA>
- <xme:0nrqam3fp2VQXxkuSAhzhMhamMZYW15PUd7F7fHzhyt4LJ3hMufinMc3Nb0UpxgA8
- r_0Li79GdDxFTYjsHRnClfwCRypQfu5H4kKAwysuYzZdFqWfOgebN-T>
-X-ME-Received: <xmr:0nrqaucinSEWVmYQ4aQtcrN8KNbeUoYpmw6OKcKC8AlMJNYVidH4EbveWaKkBvcNw28_NlD4A1Yx0I6Fq4WFqn7O0ws>
-X-ME-Proxy-Cause: dmFkZTEEf/yQQ6QUh9FMQ+yxPWwsiSPzJueB90psY1qd+cdT+C+5Dt6+5d3TbK5YySLd7G
- dUmAIt4xW+6szeIv6bcigBkVkrPiYjJwEJ4W4S+EyM4ZmM5uh8aZPl05mr6uJsRdBASf/8
- ZNl8Au1wwbJ/fvUUJut7X0Gybkvi8ebIEQ5G+CCzU65Oj66VP1Wb7ngkGBulTci/Q74ZlN
- tm11KOUM5tOK1z+iOI75x/RmJm86KLpbcC8HwTLVDOWVMmgVR3NwdoINYyELpyjxNxmohm
- NPibAaJO1YOC5cc1RFQk4RTNo8x9+QvpaW5h+B8b+ZgtnVFyIHjcwYpJIR0Fx4Mvu/CDWH
- ZtkVdyusz9XyL7U1C3NT9QWV2wJm2DXV7PsUfIRPlZOXlgFUGUFwka6ZAgKXA7WGSuj4/M
- 28Tz8RKeR/LYmMYeBQyvrQ44uhYiPvvyAZJM0HrbYkwPysQVkhqZvq0OD+wTws6AtSeFt7
- kmB/sChfQi2t4oT9TCaYJ272bGBR2SQJxD7pXhkkXf19tIp1v54APSuNW9mGFMlt+sy2Tc
- +GPtPQSYxKHoD/imnOIJ/7C+1p1fBPooBWBpW9j9juPHXAKu7Xy5lG3CNztSHM7ZVt12f2
- Xdyzg61LSFiAUQjXn0ZLMerB9PrNHdplFffwHKaQfC9eLNUbkWj6YKfbjnJg
-X-ME-Proxy: <xmx:0nrqavFMZBdqE0m9GE4lCvOnB6UKLhGu_VHFiJklZNtJqEJtkvEs2A>
- <xmx:0nrqan3bE6LmIjSmnaw82V1YIaqNj7CxGI59jp8wDdYGzEeO1Yqh8Q>
- <xmx:0nrqannsgxz6iJd_guo_yR-urM_kBoxKtUxZ3vnTTtp9R0pzm2Xr4w>
- <xmx:0nrqan8iQs3l0B-5JrZ6ngtl9xq3nSLXX8zZNnT0t6h_6LAOh-SXTw>
- <xmx:0nrqat6za8B8eEublmDXsZncX9aY8zqi1yjQeSrtBg36KNi7uTKVfLRm>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Nov 2026 19:22:40 -0500 (EST)
-Message-ID: <bda2ee49d8c37860b0665c7ef4b8bfa4b5272750.camel@alistair23.me>
-Subject: Re: [PATCH 0/2] target/riscv: fix mtinst/htinst for G-stage faults
- on VS-stage A/D updates
-From: Alistair <alistair@alistair23.me>
-To: tewaro <tewaro@theorem.dev>, qemu-devel@nongnu.org
-Cc: disclosures@theorem.dev, tewaro <tewaro@tewaro.org>, imaginos32@gmail.com
-Date: Wed, 04 Nov 2026 10:22:38 +1000
-In-Reply-To: <cover.1793677944.git.tewaro@theorem.dev>
-References: <20260705140508.17692-1-imaginos32@gmail.com>
- <cover.1793677944.git.tewaro@theorem.dev>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.62.1 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1xOP8z-0008NH-Rj
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 19:46:26 -0500
+Received: from mail-lr2-x07.google.com ([2a00:1450:4864:38::7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1xOP8x-0005fo-5z
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 19:46:24 -0500
+Received: by mail-lr2-x07.google.com with SMTP id
+ 38308e7fff4ca-3ab1b11ca0bso1293621fa.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Nov 2026 16:46:22 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793753179; cv=none;
+ d=google.com; s=arc-20260327;
+ b=LylTS/mdAACxbnINI5UHdeEZEFLcbN+euqE492W9MoTpSM6TlyHJchsxKX497MSAoZ
+ p48mRA9VKvyTpVIOw8W+PqavRQRE2++jmKh/nMWDsHUZvsmtM+0/9eKNMYwg6uVTvSXi
+ O3w2v3PrnQ4S3F5sULmCUlCMQFqFTyzIKxUKkpwbNDTTVJV0uAveWWPdo+d1fbfaMGiK
+ vGo+31t9FdN40FthQdhJs3U7fj2Ct5nFtIwCwQyBlZzLy2oLWxoo5wMF2eoNNDVLVPpM
+ WPoxB48uYwiBCboWGDwiS1m9B4xlp9skD0SYGz4SXiyFIvROOsaVmR7muXxzbVaci2gh
+ RLQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=3x5U6U5sP+d8TBdF09UQxwnOAy7Em8w8k6z+rZytcvY=;
+ fh=C610jvcrafpJpv+nhwL3d0G0iCieofbR34w/Da3d5Hw=;
+ b=XhzaeKxzUL0Fej/KAtEYKdl/6gjy1UPtmDEM1y7qGg19qeQS4yFrtNB0p2iOtqEImO
+ 9g9FMye6iK3dReaIkFf+wHpPo++JL7Ht+5k8rSwj7GsMMAYNaKlaNUbLXrXK7kYKVt4r
+ ZIhqQP0SO5reQCqadauGy7g2u+6wdJGsLglLIpsFtZtrEAo6EePenz895Maqqikz1D9Q
+ hB2CY3fVJ1SlFZlLJlqPyJerZwkP17/Hb8ANRBhXf7c4Yn+09xGehLhORkJw0o8C/WGl
+ orcKblIre7S5vZrhcOr4jEPIR9P3CAVPwLTZaLunDLUHW4WklH6QbmIM/3WGpZcneOTi
+ gS0A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1793753179; x=1794357979; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=3x5U6U5sP+d8TBdF09UQxwnOAy7Em8w8k6z+rZytcvY=;
+ b=PWVblEOoejPcLiXtuUddJLCzJD5vbS5rDXYtrtpG8l2mc4cEzOKnRYDyXMdotHCV3r
+ 4cwN8trLGaQ8bp7rRaRgOw7SgrtfwZEr3xTlT1LhUR0PnZJUcWshCIksRPBsKf+SIrln
+ dEIvE5lTmvboqc0vK9C2Q4NeYkPJ4ashwICAv5AC46tI6NgUFeEkhz7H/6YJhDK9szrx
+ Pwtx7uezhamHOmnFMBK1u7olSWH87folP1/W2hOsH5c5uwgRQgrsSLva6+0wMtazmFPX
+ a69w1Icv8dcuTzXYLjmneIX9ZpeHNvBwjwvkEKYISSi2cCjhs/Bz76iIhmrdCmGpGPIn
+ Mv3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793753179; x=1794357979;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=3x5U6U5sP+d8TBdF09UQxwnOAy7Em8w8k6z+rZytcvY=;
+ b=PcHx5Z5fWsWg5p1PbZ4yULrz3+xSYYSPdveGkAImuKF1uuENH90ZZARBsKxyPF1S9o
+ Owey2uwOxrrC36dZJ5bX7whWKmQW7kTzeqThzkitVHSMQdclVrcba6vT48SRUyX0eU9k
+ S2H9acs1Id5Si3PjTWr9hsdZx8n9IeWg0pyso7AheSDhwbAQmvMwByaL+NOXw+8JwLfw
+ rE09c7U/yaf61/egfjUWupvE8C1dFJCcbQtCfUb9d+L4YUVrdaViFgDeXXYgHJoBr8GB
+ 87W0rRnoPEsCj+vTUCT77ZodrUa2tSgd6M2ca43SExJ75w5PLzJ4+SxkYwnb/NZb2Hqu
+ i2Hw==
+X-Gm-Message-State: APuU4Z+FEDEoxl5fbCcj/hdRSlR3wy4Dnlv9nY0YLexDgGedpRj+eeiP
+ J7Qug7Thx8ek4Dl76DeFa52IHey4bmUV+6NqPAOh8iWvS8woNy3utVVcjtBHQFmClK7uV4/aCnr
+ FoliaMHKB/arEagVZ+A629cIieKVOviU=
+X-Gm-Gg: AYBFou0FmCiIAnKCWL8K6eNtz2JvQiBBuULDN9aWW/caKQxt+e7cd99xLoDY0lPExPS
+ TQf+/lWiIUyAgmqy28dXmu904+Q/vTWJpVepkzyn6Q+7ggvK6beP9p2uNyEpxk7eW6JFmhpBHe9
+ o5wvw3FwcZv1lJTNBBIDjP6zFZyqgs5s3rRXc+G1shtDnDoOGZzhru1uep9EJ+uZwG31zXv2hhe
+ mYn1et5MUj5ZurYO0kIjiK/4CPR/+cnI+mSwiK5540RMxBebtcgEA+zoaHjGpAvqa++aTgZE9Ut
+ 9MwMHAeoQNhCAjURypdFXK132a5tYP+NUSjsD+sbnTd+c3tFb3cGSV3qRQaO0O7zbwJ+kljXKGn
+ PQp9LLFQoNcCzoJFXtG1ADjS5Ac7qSsQGaQ80dmieSiDqtL9flW6qYRLGO7AA
+X-Received: by 2002:a05:6512:3090:b0:5bf:b7d1:6466 with SMTP id
+ 2adb3069b0e04-5bfd9571f34mr4712399e87.36.1793753178109; Tue, 03 Nov 2026
+ 16:46:18 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.157;
- envelope-from=alistair@alistair23.me; helo=fhigh-a6-smtp.messagingengine.com
+References: <20261016010237.1102834-1-alistair.francis@wdc.com>
+ <20261102095049.31551-1-fritchleybohrer@gmail.com>
+ <170bc1e13e7abe45c34b0ddab66841bc85a79ef9.camel@wdc.com>
+In-Reply-To: <170bc1e13e7abe45c34b0ddab66841bc85a79ef9.camel@wdc.com>
+From: Zephyr Li <fritchleybohrer@gmail.com>
+Date: Wed, 4 Nov 2026 08:46:06 +0800
+X-Gm-Features: AclHuK8F6Y1XQ00hqARD3gTCcH7PLYL4XWjnVaWzY7ab1a6geeZEtShzpXvo1f0
+Message-ID: <CAN4PorW4_OcscCXAVL5edWt2Z7D-Q03R==iz+m99JhwnELp_qA@mail.gmail.com>
+Subject: Re: [PULL v2 00/50] riscv-to-apply queue
+To: Alistair Francis <Alistair.Francis@wdc.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000fefa89065f68b4f5"
+Received-SPF: pass client-ip=2a00:1450:4864:38::7;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-lr2-x07.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,104 +112,97 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 2026-11-02 at 23:29 -0800, tewaro wrote:
-> Hi,
->=20
-> This series is about the traps taken when the G-stage refuses one of
-> the
-> implicit accesses that VS-stage address translation makes. It follows
-> up on
-> commit 366b4fba0fae ("target/riscv: check G-stage write permission
-> for
-> VS-stage A/D updates"), which made the A/D write respect G-stage
-> permission,
-> and fixes what is still reported wrong on such a trap.
->=20
-> Patch 2 adds a test, test-gstage-tinst (19 cases), master fails 8.
-> Built for
-> Spike's HTIF console instead of semihosting, all 19 cases pass on
-> upstream
-> Spike.
->=20
-> Patch 1 fixes the read/write pseudoinstruction in mtinst/htinst
-> (0x3000 or
-> 0x3020) [1]. 366b4fba0fae sets the write bit when the trap cause is a
-> store
-> guest-page fault, but the cause is the original access type [2],
-> while the
-> pseudoinstruction describes the implicit access that failed:
->=20
-> =C2=A0 original access, what failed=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 S=
-pike=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 master
-> =C2=A0 load or fetch, A/D write=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 0x3020=C2=A0=C2=A0=C2=A0=C2=A0 0x3000
-> =C2=A0 store, A/D write=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x3020=C2=A0=
-=C2=A0=C2=A0=C2=A0 0x3020
-> =C2=A0 store, read of a non-leaf PTE=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x3000=
-=C2=A0=C2=A0=C2=A0=C2=A0 0x3020
->=20
-> The commit was checked against Spike for the store case, where both
-> agree.
-> Patch 1 fixes all 8 failures of test-gstage-tinst.
->=20
-> Results on master (1c1f512972), with make check-tcg for riscv64-
-> softmmu:
->=20
-> =C2=A0 applied=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 test-gstage-tins=
-t=C2=A0=C2=A0 check-tcg
-> =C2=A0 patch 2 only=C2=A0=C2=A0 8 of 19 fail=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 29/37
-> =C2=A0 patches 1-2=C2=A0=C2=A0=C2=A0 all pass=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 37/37
->=20
-> The test is last so that every commit passes check-tcg.
->=20
-> This bug was found during formal verification of a sandbox on top of
-> the xv6
-> OS where tests passed on qemu but verification against Sail failed.
-> Claude
-> was used to diagnose the issue. All commits were human written.
->=20
-> [1] Privileged ISA v1.12, 8.6.3, Table 8.12
-> [2] Privileged ISA v1.12, 8.5.1 "Guest Physical Address Translation"
-> https://github.com/riscv/riscv-isa-manual/releases/tag/Priv-v1.12
->=20
-> tewaro (2):
-> =C2=A0 target/riscv: report the write pseudoinstruction for a failed VS-
-> stage
-> =C2=A0=C2=A0=C2=A0 A/D update
-> =C2=A0 tests/tcg/riscv64: test faults on implicit VS-stage page-table
-> =C2=A0=C2=A0=C2=A0 accesses
+--000000000000fefa89065f68b4f5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Can you please use the `./scripts/get_maintainer.pl` script on your
-patches to find the  complete list of email addresses to send this to
+Hi Alistair,
 
-Alistair
+Thanks for the clarification!
 
->=20
-> =C2=A0target/riscv/cpu.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=
-=C2=A0 1 +
-> =C2=A0target/riscv/tcg/cpu_helper.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0=C2=A0 8 +-
-> =C2=A0tests/tcg/riscv64/hyp-guest.S=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 | 110 +++++++++++++++++++++
-> =C2=A0tests/tcg/riscv64/hyp-guest.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0 71 ++++++++++++++
-> =C2=A0tests/tcg/riscv64/system/meson.build=C2=A0 |=C2=A0 77 +++++++++++++=
-++
-> =C2=A0tests/tcg/riscv64/test-gstage-tinst.S | 135
-> ++++++++++++++++++++++++++
-> =C2=A06 files changed, 401 insertions(+), 1 deletion(-)
-> =C2=A0create mode 100644 tests/tcg/riscv64/hyp-guest.S
-> =C2=A0create mode 100644 tests/tcg/riscv64/hyp-guest.h
-> =C2=A0create mode 100644 tests/tcg/riscv64/test-gstage-tinst.S
+I'll rework both patches based on the latest QEMU master, verify the
+builds, and send updated versions.
+
+Thanks,
+Zephyr
+
+On Wed, Nov 4, 2026 at 8:18=E2=80=AFAM Alistair Francis <Alistair.Francis@w=
+dc.com>
+wrote:
+
+> On Mon, 2026-11-02 at 17:50 +0800, fritchleybohrer@gmail.com wrote:
+> > From: Zephyr Li <fritchleybohrer@gmail.com>
+> >
+> > Hi Alistair,
+> >
+> > I noticed that my following two patches were included in the
+> > original RISC-V pull request but dropped from v2:
+> >
+> > - target/riscv: report WRS.NTO opcode in tval on illegal instruction
+> > - target/riscv: save ELP in MPELP for NMIE=3D0 exceptions
+> >
+> > Were these patches deferred to a later pull request, or is there
+> > anything I need to address?
+>
+> Hmm.... I thought I would have replied to the patches with the issue.
+>
+> From memory I think they caused build failures so they got removed from
+> the patch series
+>
+> Alistair
+>
+> >
+> > Thanks,
+> > Zephyr
+>
+
+--000000000000fefa89065f68b4f5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p>Hi Alistair,</p><p>Thanks for the clarification!</p><p>=
+I&#39;ll rework both patches based on the latest QEMU master, verify the bu=
+ilds, and send updated versions.</p><p>Thanks,<br>Zephyr</p></div><br><div =
+class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail=
+_attr">On Wed, Nov 4, 2026 at 8:18=E2=80=AFAM Alistair Francis &lt;<a href=
+=3D"mailto:Alistair.Francis@wdc.com">Alistair.Francis@wdc.com</a>&gt; wrote=
+:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
+8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Mon, 2026-1=
+1-02 at 17:50 +0800, <a href=3D"mailto:fritchleybohrer@gmail.com" target=3D=
+"_blank">fritchleybohrer@gmail.com</a> wrote:<br>
+&gt; From: Zephyr Li &lt;<a href=3D"mailto:fritchleybohrer@gmail.com" targe=
+t=3D"_blank">fritchleybohrer@gmail.com</a>&gt;<br>
+&gt; <br>
+&gt; Hi Alistair,<br>
+&gt; <br>
+&gt; I noticed that my following two patches were included in the<br>
+&gt; original RISC-V pull request but dropped from v2:<br>
+&gt; <br>
+&gt; - target/riscv: report WRS.NTO opcode in tval on illegal instruction<b=
+r>
+&gt; - target/riscv: save ELP in MPELP for NMIE=3D0 exceptions<br>
+&gt; <br>
+&gt; Were these patches deferred to a later pull request, or is there<br>
+&gt; anything I need to address?<br>
+<br>
+Hmm.... I thought I would have replied to the patches with the issue.<br>
+<br>
+From memory I think they caused build failures so they got removed from<br>
+the patch series<br>
+<br>
+Alistair<br>
+<br>
+&gt; <br>
+&gt; Thanks,<br>
+&gt; Zephyr<br>
+</blockquote></div>
+
+--000000000000fefa89065f68b4f5--
 
