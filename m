@@ -1,175 +1,152 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BD2606A326
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 05:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075F8606A32D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 05:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=wdc.com header.i=@wdc.com header.a=rsa-sha256 header.s=dkim.wdc.com header.b=daMqJ8PV;
-	dkim=pass (1024-bit key, unprotected) header.d=sharedspace.onmicrosoft.com header.i=@sharedspace.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-sharedspace-onmicrosoft-com header.b=BaJtCFWN
+	dkim=pass (2048-bit key, unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=QKepSD/L
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOTG0-0001y4-8A; Wed, 04 Nov 2026 00:09:58 -0500
+	id 1xOTnj-00069u-T4; Wed, 04 Nov 2026 00:44:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=761a35039=Alistair.Francis@wdc.com>)
- id 1xOTFd-0001ch-Ie; Wed, 04 Nov 2026 00:09:35 -0500
-Received: from esa1.hgst.iphmx.com ([68.232.141.245])
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1xOTnh-00069L-UM; Wed, 04 Nov 2026 00:44:45 -0500
+Received: from mail-japaneastazolkn190130003.outbound.protection.outlook.com
+ ([2a01:111:f403:d405::3] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=761a35039=Alistair.Francis@wdc.com>)
- id 1xOTFb-0002Vt-Ne; Wed, 04 Nov 2026 00:09:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1793768971; x=1825304971;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=lkFSTVE0+I8+26JtEcYd8VO/N+u9AwBIRa5yfQpD1IE=;
- b=daMqJ8PVQJ9qsQl38/d7gKwnzayE94Nkpu8YSLsTXe894m7+Ib7lP8o0
- KqF9ER6QDbMLZc5HKzyy2UtVdqsGiKr1EEUJDR5oTR4mufbBsXKgMF7EI
- jvfp3j+TKfXaA+683kr6CFFYoSQojA7D9M8+3D54RTvE+uTlU1ZSG5ubz
- J6Ae2iJR598DuqYujLUN/ZOKtZXNQAsyLxxSE/FRe1UmrQxj+4+TWVy0k
- GUc2b0Pc2d5gSMPInfoQiv6Ia1Fkv8ZtgDV4TBI9iQlkC4iaFoWKB92OO
- A5PRxRJ4mGI0SSUN8BabgDGvePln6jkg859RAoYBjXsSV4TntprTNiyso A==;
-X-CSE-ConnectionGUID: cE9qJqv7TjecgQTdkwAUOg==
-X-CSE-MsgGUID: hk1uLLCBQqGcITFFfWG56A==
-X-IronPort-AV: E=Sophos;i="6.27,194,1786982400"; d="scan'208";a="159680493"
-Received: from mail-westusazon11012036.outbound.protection.outlook.com (HELO
- SJ2PR03CU001.outbound.protection.outlook.com) ([52.101.43.36])
- by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 04 Nov 2026 13:09:29 +0800
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1xOTnf-0005TN-Q3; Wed, 04 Nov 2026 00:44:45 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=svlizalIB70Z5h1SATRSudcWthFegaXH9Pj1UAT88SQN0qoa2PV7wTzFCQqTpZ9rqm8PrhkVgpboIbSNRIseyJJQGGSuZvek4vEf5cN7Xm0zBjBSBrQGQ1AkrkCaHM8+rk8KFWx93wzV9UdBy1/JtHmjvK5FEyUt996++QxaNxw6il8yHVvsc+Wf2ck7Lbfbob84L8OZTcB7refBNSO1SoEtq9ixuCfVJ+JcPaLEiFnxZP9WqUU/5oKLUicszfvcxssjYPNLawWjobtNheAeC5DLu3tOXakUo84sjiPjqx2cdgmG7+BmQy/27yqKB2eUu8+3dKN4v/JVoOo25726DA==
+ b=NmqmZi7UO55xnLaeqmRRk3+fM7UlJEPtxSupGNHkdOC8jrJl6VCoHybToF3La05AdI7vbcdE/h8eFjStey1w3H+nGfAv6EIG6ZDc6l1N9TXt02kQ9ZF8SdeK50lcA/ajOyrKSVudFt8wtd9nTA1rGrrm3y3qvff7Iip2RtYTM35sCZhcfMcXb0XZQ+04WnT4IPro+R8vikP5cd9H7t4E8kf9kTfNULnT901q3zzj1weasgecLgY58irkDB1Rh5pFAtcL5h1vZtJMd9Doa0OJtEjxbQyq7dcgQp1udRKK9TD8AN1Qp2DsoIBOvjpig0THNytJj/5h3TBYHN17u9oMxg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lkFSTVE0+I8+26JtEcYd8VO/N+u9AwBIRa5yfQpD1IE=;
- b=ckhMCW2Fhno+eFWpe+vCmYb+kO04ZMfFYTv8Lt9zPbq8fzlDRprb8RWK8UCqV65KT/Q3ZLkx9ob8TEOxfyXxhUs4d+PoRCkQ37oi8PSEU0jN/sfFB5Fzig/sJsif4bOUiSS7MQWrFZQH25+uz5K3yhaoCrqZYzw/XsDG807JrcSKHaPPuDU4aNaoHqT0gKWPaWQU+Y2fXcxx2aD3Zcij30/PYyX+JFwUZsTcaB+SXs7ZPl5B1Z6ggGcSqkzBW5yWG9pAULgfIvltV+32JsVjzWd3labzBka2kgqAyhb1equBBymDArRd8A+Ukm/86X5XOw/UjU2mbd6neooeJJamhA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ bh=DTfm/v95D9RIMttn9qTniDq6XbZm6AcSlQdSTe5NRMk=;
+ b=kn3Xx184zhtKo4bVWPufB/LXL5xprfwAxSm4qZuzAIz/dir6MoPnnbk+E5DZfw38MVvKu0UWsaCMoOA3XNZ+pd2oseSozc5W6UeudSKqVWZKSNVnohQYarR1CWaehzZ0jHMJKqBy0bGR79ikBx71eTvhI00ZVUQ5afzXyIIWA4esTt+NSvUCjMNVhfyxLhrUCRjeRRs+FEkIH8Yyq2gGBTvjCZz7aHUFq2gkxB251nxmCm6i9kWsPBBBWilnyEa5525M0x2Ta5zdaxAoi6jRYyIKYCck/ktnA4SFs3j+/nULZnfhzY3JO5QfpvmVXlEYWgt8HJyQfq9z6AldTHCYMA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lkFSTVE0+I8+26JtEcYd8VO/N+u9AwBIRa5yfQpD1IE=;
- b=BaJtCFWNVV7Flg1AHYZUq4t5akDjV3RQ8znAg/McXQaLXwyutiE3O6vb1IOMZ6ozgi/qaCJRnvUn/JCHFr5LviaFt9C3Vc8LQ3y9sHUPq/RX+ouzJnlCRoYFXBKD/OLvVM/gb3xgVNKDwBPW4Rgc+JxiA3HVGVvLWdYpKwQyYWo=
-Received: from MN6PR04MB9359.namprd04.prod.outlook.com (2603:10b6:208:4f2::13)
- by DM8PR04MB8005.namprd04.prod.outlook.com (2603:10b6:8:f::24) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.569.12; Wed, 4 Nov 2026 05:09:27 +0000
-Received: from MN6PR04MB9359.namprd04.prod.outlook.com
- ([fe80::e729:bbef:5a37:2e77]) by MN6PR04MB9359.namprd04.prod.outlook.com
- ([fe80::e729:bbef:5a37:2e77%4]) with mapi id 15.21.0592.007; Wed, 4 Nov 2026
- 05:09:27 +0000
-From: Alistair Francis <Alistair.Francis@wdc.com>
-To: "tanchi25@mails.ucas.ac.cn" <tanchi25@mails.ucas.ac.cn>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "chao.liu@processmission.com" <chao.liu@processmission.com>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "daniel.barboza@oss.qualcomm.com"
- <daniel.barboza@oss.qualcomm.com>, "palmer@dabbelt.com" <palmer@dabbelt.com>, 
- "liwei1518@gmail.com" <liwei1518@gmail.com>, "zhiwei_liu@linux.alibaba.com"
- <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH 5/5] hw/riscv: Select SSI for IBEX
-Thread-Topic: [PATCH 5/5] hw/riscv: Select SSI for IBEX
-Thread-Index: AQHdaa9cpMb6ihAAGU6dCk0X6STIkLcdYfQA
-Date: Wed, 4 Nov 2026 05:09:27 +0000
-Message-ID: <fd7d1ecfa0f4e1f539e29a8f47a49a9db20cca86.camel@wdc.com>
+ bh=DTfm/v95D9RIMttn9qTniDq6XbZm6AcSlQdSTe5NRMk=;
+ b=QKepSD/LJdyGKeQGLuXbucm9a777R9wmGXqdgdi2wx6aODqDrQzhujPX8I4zGpPx7QtwtQrJjxqgzuELRf39gF+jgOm2o2qwqERiTRO8cTfmnhRoYyz2/VaEf8k+K1VgtzwCiP5iHpbApr+t22BnP3kCPcP7VDOdlOuLfcz//J7MbNDezn1tvAyXT8w6EbNoDUnHuIHoSd4dMjw/05O3QttB347J7Ff3ONP1Ha72rROslGEXGnmv48OcrIxHY5PYvbQdTK+KdQMfqeJICkYu+Jwi0GBpzuS3oQ8sCkzp/dAc3iKjGS3OEHNCAfEIMtM9mkj1C57mNReGDY5tkTQaDQ==
+Received: from TYZPR04MB7491.apcprd04.prod.outlook.com (2603:1096:405:40::7)
+ by OSQPR04MB7780.apcprd04.prod.outlook.com (2603:1096:604:27a::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Wed, 4 Nov 2026
+ 05:44:35 +0000
+Received: from TYZPR04MB7491.apcprd04.prod.outlook.com
+ ([fe80::a450:2576:3b21:6230]) by TYZPR04MB7491.apcprd04.prod.outlook.com
+ ([fe80::a450:2576:3b21:6230%3]) with mapi id 15.21.0592.007; Wed, 4 Nov 2026
+ 05:44:35 +0000
+Message-ID: <TYZPR04MB74913F97510C0B1B70A3221FF3682@TYZPR04MB7491.apcprd04.prod.outlook.com>
+Date: Wed, 4 Nov 2026 13:44:28 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] hw/riscv: Move platform bus FDT creation to machine
+ code
+To: Tan Chi <tanchi25@mails.ucas.ac.cn>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com
 References: <20261101031547.125591-1-tanchi25@mails.ucas.ac.cn>
- <20261101031547.125591-6-tanchi25@mails.ucas.ac.cn>
-In-Reply-To: <20261101031547.125591-6-tanchi25@mails.ucas.ac.cn>
-Accept-Language: en-US
+ <20261101031547.125591-4-tanchi25@mails.ucas.ac.cn>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.62.1 (by Flathub.org) 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wdc.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MN6PR04MB9359:EE_|DM8PR04MB8005:EE_
-x-ms-office365-filtering-correlation-id: 82271076-2a98-4094-faa4-08df3a31cce4
-wdcipoutbound: EOP-TRUE
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|23010399003|1800799024|10070799003|366016|19092799006|261026140227099003|38070700021|4143699003|56012099006|11063799006|261028144727099003|261026121527099003|261022105027099003|261021121427099003|10067099003|18002099003|261102123227099003|22082099003|6133799003;
-x-microsoft-antispam-message-info: HMsc1CBtoZi23fk24K78B2H6FG078jUgbFn6VLJ9caXGRTYCJFEsu1mUCjrPUKNzwa7JEf7KunktYamK1wDO1kM+S42DISpPYWIlxsAoyju7BV0vwtPTU6uKBdsn2NN+o4q97Go0EloVpGZDnWAsiaWIVYdePOZyKcDvx7DqkzSMkL9tkSZ2hSYtIgWKUSFFdp3X/8ZeNeOGB68mNU334iJCPurRFS2rjqSQ1o2QjOwyeDBK4Klm3TbkGWmcwkJX3r1rhGqG0KcjVAIDXVunf6l47guO0kqSnntkMrPRzJGyilHtBfIGMTgvyJ3P/02LgnDhVzPnthcuBQQW6AOOTYeEUIWzcgs/IhxCqcynRGou6ILmQhFSFiNdcUvPsJB642jOXbcsrq7A0ihYLaSUSCrLyUvU9oMXLADpYysXjsKflYYX7L8zLv9SkhsKxWplh6Bb47SwKNt93Wntif2wqZdXWlgoOcSF0gGKf21hIfQrRnTzZ67arXLV+u8ZG1aWujK6hyTz4HeyocSYgYTWldaOiH+WVPcxeQmrroxCwyGX3QeEcoOp6L7FjqnYs0E/1cGKJadjSOGzQWsSQSVNzK+80QB8Yt+G67DkTCSZ+DIgC29jl7p7fwIi0p9VwDM27UAokBa5BcdJxK5djOqXn0e7n6RUN8M3iON6UTMRiyQTTox2Cw2X/3H4nX1NoLo3ZsUWxOiWaV/xe/7wEF8aGXPOw4BCQPrjExFS8YWWmEw=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MN6PR04MB9359.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(1800799024)(10070799003)(366016)(19092799006)(261026140227099003)(38070700021)(4143699003)(56012099006)(11063799006)(261028144727099003)(261026121527099003)(261022105027099003)(261021121427099003)(10067099003)(18002099003)(261102123227099003)(22082099003)(6133799003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?OEhzMy9CTmZ2Y2ZvUU5KejNsOWNUTlVDeHBLNXFhbTRMY2EzcmpSZElQaXlo?=
- =?utf-8?B?TFN2amF0VUV4a0txTmhMcHpjSUc2bm1mOEVtQXBVQjc1ek1YQk05M0ttZGJC?=
- =?utf-8?B?blVIbldKNFFUamJIdTA1azdpbW9wbnBRUmZZMVhuQ1JrcDdhWXdKbi9xd2NR?=
- =?utf-8?B?a1l2VndsVGZjQjdrcmNSRWRYL0JZMUtIc2tPbTlEZ2pzdERFb2tuRy9vWDVP?=
- =?utf-8?B?dGVJVEdySFJDVkFVQkkwOFdaWWdwWm4rcW53bnllMDhQREhmWlExdTh4eGJl?=
- =?utf-8?B?eHhxa2IyVDAxMzRHYUxkNWlxWXk5QS93Q3pSYXF5WStvZStTK0ZXNnA5L21T?=
- =?utf-8?B?VDJyWTJlY3hXV3p2cVdLU09FTHR5T0Qxbm9TbmlXdVhYeXd5NVNrbU5tR2lj?=
- =?utf-8?B?V2xPcFZIRkcrU0pCa1ErNVMwMzNHMHVxVjVBQ2xWWitHOWFDUmlsVHNsV3E3?=
- =?utf-8?B?bWs5bUsvRFFQdlNIU0luRjVKb1NFdklUQU1yemRJdWZhR29OamkxZ3JMNFdR?=
- =?utf-8?B?VzkxM1lkU0hpa1p1VkdVS0JWWlUrdnh5MjR3SnRJaFcyQmhhY1dOVkFHc2dD?=
- =?utf-8?B?VENWYXdOZFFEY04rRWRQQUt3ZWYrUzdWZW5uZUpaa2JHZWw0SUtndW5ORGo0?=
- =?utf-8?B?QzNsUjllbkJ1d2dnMG5vclIwK1NBRmNyWEhOTkdtTFU5M2hjSVdZWXY3aTV5?=
- =?utf-8?B?SyszSEtDTW5LN3VnTWVscFNqTUdSTmNOdFlORUF5Uys4bkk2cUFJbHo5L1N5?=
- =?utf-8?B?MW1IZFhmd0Joak5kcTljNE8vZThId2NsY3VkZkRiYTBVUHUxM0ZKUTJRNS85?=
- =?utf-8?B?ZGNyUHhrNHhtcms0Z3MyZ1lUbUZXaHFDT1lQQkE0RUFLa25hSm96empGSWsy?=
- =?utf-8?B?QmpCUnh5MXU5R2xDNnA0bmVONFM5WC9CQVVyajFYWlJPTzFsSjhLM1ZVUFNh?=
- =?utf-8?B?anB4MDZ1aVhaOHFVQmk5WldaeEtIc05FckpoUGFreDVyaldkODhwcWE5djdm?=
- =?utf-8?B?b3p2S3V5T2h6NW1sMDMxNWtYUitMVUdPaTd3WDc5OE0rbUg3L2F3SzFEUVlw?=
- =?utf-8?B?MlZBYkRUZ1BZQUordVI0aXNGbVByNjlhUWQrb1J2TVFYV1M3bU1KcnQxdG1H?=
- =?utf-8?B?OHpqUnJrMTdabW1hcDd6a2RMbWhuL3RnL0U3Mk4zV1pSRzdkS3RKQVozSjQz?=
- =?utf-8?B?a2FpZXZONVZiRk5KT1VRTUpkUW1Eb2J1UC82cnp3MDJUOU9lWEljS25aRW80?=
- =?utf-8?B?bGNqTnE0SFFuWUVLRGE3MENYaE40SmxuVVh6M1huRGh3bE5waGJEemNlVkR6?=
- =?utf-8?B?aW9wR1RrY2Zhb3dIbDc1MDNZRnpDa3Uwcll3SnBJN0ZYei96U3lrWGdMMnhy?=
- =?utf-8?B?LzRhMWkyRHlYVUVFRFRTajdxczJLd1k2cFBZMlZ4emtHM2Vzei91RmVDZFJN?=
- =?utf-8?B?RHJuVWFaZTd4MjZKOGU5aWw3bU45Um1pOUpxNCtIS1NDOU41VmdMOStlb2ds?=
- =?utf-8?B?RjJ3WG9yMlluRGw2OE12QzNyZEdFcFJtMThNaUVDd0F3U082L3ltM21nSEFC?=
- =?utf-8?B?a0ZQenBwR2RNeFdjRm1UU3ZjcFR4U1ozZEZKVVlpYlcrT1ZxL0hteDVlcEVS?=
- =?utf-8?B?STUrTE8vQ2VEVm96Z3dPRUVjZGlMU3JJWFZoWFVvaWhvVUZYUitHVytuQVEx?=
- =?utf-8?B?Rm54ZWhDVkw3TkVNdFBUb1hUM2xUUjlJQlBxYjVYR0tGUUQ2dUpveWNKYm5H?=
- =?utf-8?B?cDczNzJVUjl1Umkya0JiTUxJMVZHUFZKYk43L2FpQll4UXJvNjY5NE9JVldy?=
- =?utf-8?B?RnVIcEtjemFZZkNmQWlUTmJOQ0tTc3pPVjMrbHZhekx2aTRkY1JYS2hMUUc1?=
- =?utf-8?B?SXIyWG52L1p0emQrcjc5S28xNmVaSGU2SVFlUnJUNHFKLzNMQzZzNHlvUm1u?=
- =?utf-8?B?MUMvWjdQY1ljZzlmTmpFUVM4emRDTHZDdDhJMFZJTklDUkpKcU1MVkF3R2Rm?=
- =?utf-8?B?dUhjdVg2YTdKZXVSU1FDbjJrQUZmMGhSU0k1cU1abFVTQnByelZRb0pEeTNp?=
- =?utf-8?B?ZVdXTTlFai9ROG1yWWpSSmNVVndPNnAvS3gvbEJiVGxldEJqY3BGS04xdlBr?=
- =?utf-8?B?SmdsL0VnZ3VPNjdob2IyMGpURHpudXc2eHhsKzNDcUpBanI5cjN1VWo5Yzh3?=
- =?utf-8?B?RVpDZU9nNVJPOFg4cHFMdTZ6djVXZDAyMDhxa05VSWd6eVRNb0pYQVI0dmE3?=
- =?utf-8?B?NXZKdUN0MHFsNnR4WE5pTnJQWUxXNStQaVMrWmY4YmZaYTZuWm9PTjFhcjJC?=
- =?utf-8?B?WDlPeG91SWxTUTlrNFV1UElQOUxncVZQWDEzRDRiSVlSc3VvRmxEUVM2VlZH?=
- =?utf-8?Q?cy+mE7JojCjGa10R6cuCXSgoMIN+VU9bQ92CpRIcD7wGC?=
-x-ms-exchange-antispam-messagedata-1: 7A+XltSSyCmUEB+sYEZ7k+nUC8keZO+WVxM=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <8E4BC6D8BFADC24D91B841EE5D369399@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: base64
+From: "Nutty.Liu" <nutty.liu@hotmail.com>
+In-Reply-To: <20261101031547.125591-4-tanchi25@mails.ucas.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: TY6P301CA0002.JPNP301.PROD.OUTLOOK.COM
+ (2603:1096:405:3be::18) To TYZPR04MB7491.apcprd04.prod.outlook.com
+ (2603:1096:405:40::7)
+X-Microsoft-Original-Message-ID: <3680928c-2282-4512-9093-8baf745ce10c@hotmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: HGdrG3qoW/iWy6pKyyMHYXprAji411bpk0WHtQpQ5uGyApgYMSluPCp+zHxwqBi8daNO5DsgTB/xCEvZ4JyNBuCrmVV/Ugc/9GzSVy8tuKkubK18B3GFyAj+Wy0DZoP7fBqVTqHwso2PA9qJrVqqXYAFfqU9BsCR+QFx6/1zB98dZ0WQwOhtYTJZD12nf68Qt9c9nBKupnwhbZZgPnFgl7+7sT0cBHHq8UR/qkRzOsF9A6HI1xnyrVYoxLx2t0mp3s/13b840rRUU5YgMF5/0FEJqdnmpN5uMFjwDS5gjv0nspSrMg+5cQ1xhrRmWU4fihrd2+4AUMMy/DKo/SCx/g==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: rcFINubyZ5bpYcFMF7G2y7oa7VSXVY62bI7SZv0F5v6YoJGrAP0M4U0/ebSq4FBnNys0p4KVe6Y8S8zFlf/A+06xrGgat34YGy+uaqwzjasGG4fWfMiD2HgbE7Or28QzH/+GMHUV1ArfosfSb0dRttyx/cWhCakoBcp2GYnd8kyVEIZcaPzerFSckuC1Nz4p8gHHvSIPbqPf/LscvEwwsLPWRtNMjXf8okMj69l2azmX6b3HB51WctTsE6yDqpzp4FWe4BZFiErIfXPg82lmVo427FURhgjWskQ4zDuTy3bONR/7sqjQjhQfP0KWw3FZv85dZkjjaSKN2c/m1ZMF3+QdKcL38ubfcgCWJ8IB1Y5JnwguK+6GPerv9pWwlWpTtMnZlpMNjGfAdF9wmAu43S3Jh4ljC7AXsQAPg47+43EI8lV1sErVaNzgkN/XTm5F6wYmPkg5qOtNnDQn1WRfl9Oedwu4HlywolYSSa5iFexSCv7MnnSHGul/qnTFSYkrxqddUiDjiQ69qQK3eo75V/GXF8S7fUYEh0glS4Qze+A3aIbRgu0UEnCN8gHiFy3IYBJ8XSM13ypUX1b58JrRH5Ifo5HcGKqJfoGyFLl8jvEV7VnizRw/bSWrI1jtphXS
-X-OriginatorOrg: wdc.com
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR04MB7491:EE_|OSQPR04MB7780:EE_
+X-MS-Office365-Filtering-Correlation-Id: f4794d42-e7dc-4eb6-8a2e-08df3a36b49d
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|19101099003|6090799003|15080799012|23021999003|22091999003|5072599009|24121999003|51005399006|41001999006|55001999006|8060799015|25010399006|19110799012|4140399003|3412199025|440099028|12091999003|40105399003;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?WmErWjVGa29FeDZHaENNZUEyZnhPenFRdjFpYWxmMmR0MkJQdnFMTzRqc3lh?=
+ =?utf-8?B?bUw1WC9TaFo0bW9hVEtIZC8vWjhQQWdPV2Z6b1J6cXV2NzcreTh3bFBIaWdZ?=
+ =?utf-8?B?ZGZFTFl2eHdVTklURVp2SmNzOGtwdis2RERJY2J5VmpFbXJlN3RkYy80MWlQ?=
+ =?utf-8?B?akZ4WHBmTEJ3TGkxQ1NqOCtjeUJxQkF3UlNKNksxUXB1Z0RLMEo4bXpnQ1E5?=
+ =?utf-8?B?NkNHUmk0UnljT0lEc3dMcEpUeEJzdU92ck1FNS9SOVQvcE1FRTNIWWU1Sk9o?=
+ =?utf-8?B?dVNxby9jRjJVUVRSemxqbjh0Wms5MzZwTWQ1c3B0ZVFlT2Z3b015aElPWVVE?=
+ =?utf-8?B?ejdib1EvbUZlVUFnK2k0aWNVKzMxb3RiR2Z5bGNpSnpZNmhxQmNBQUd6V1FV?=
+ =?utf-8?B?ajZJUjRKQjlvdXE3M20wVi92c0xOK3BrMWNQT2VSZTloMTBUa0JJOUo3dmx3?=
+ =?utf-8?B?eStXYlQxbVpYckNZdEVTemwzRE5hVnA0UGg1aksreGJUdW5FbjZtOVFQalVw?=
+ =?utf-8?B?QUpMQlNuWGJvVlVEMjlQTXZzMG1ZdXgrU3IwQmFUajFyTWRZVVRCRGtPcmdm?=
+ =?utf-8?B?UEtIS2FqbmtreG5FUGp0RDJnRmNVL0w4d1k0Y3FWL0FtMk5jOFJjLyt5dUhW?=
+ =?utf-8?B?MkNUbnpNaktRdjI0S1A1VUo4VUZrQ1Q4M2VxTXJ3YzVaaE80NWhJRlprSHpZ?=
+ =?utf-8?B?RlBScGl4NzhIVWQxZ3NUMTFPY3IzK1hLbDdDZ0ZhQUNLNk44Ynp6WnpRdUNv?=
+ =?utf-8?B?dm9iaU1BNVkwVFduSGhkbVJHeU5icSsvZVlkWkxLdjZVUGZLZjd5SmFZS05z?=
+ =?utf-8?B?bmk3eFVlVzVmcEVsNThNUjROY1hYd0NyQStKMFJOZkdEbkF3VXR6eVpVcTha?=
+ =?utf-8?B?Nnp6TDU1N2lVSjh0MFI5UGtxb3NDT0czbU5Rd1NNSDUzVWRLUXJVQ2c0NUY0?=
+ =?utf-8?B?ODJaa1NZSVYvV1FSc3BzajZaUGNTVVlycCtEdlBnS3lDNi9sNS9VQ2lpeStv?=
+ =?utf-8?B?Vzc4Q29sNmtlUEQzNTAxdVJFelVLVllZbmJKVGgyd3ZnOVQxSzNzWVZKVm1B?=
+ =?utf-8?B?aVk0dExzL3UwWEdLU0N6U25saWxWbzRyQzNTTEhaRzFadk5kOU1uVkRxdnRn?=
+ =?utf-8?B?b2RkdTJ6VTZIaUF4aC8rRDJhejk4a3pQVGlxeWVQWm5iVkJCUHJxOVFrODlj?=
+ =?utf-8?B?a3hwcDhrNHUyelZnemtJclljMHIwSDJmUnZ5d3FHb1JwQ21JdmQ2SXExSmZj?=
+ =?utf-8?B?Z0Rjemx1TGRlUk9MWkRTQ3lVS05WTk5uZTdXWThNZXJPRFlhRFkyZWdSSGU1?=
+ =?utf-8?B?cllTVDQvTndKbW9JMnJVcEpleWNmb1VRNE9HNVB1Q2kweXRTdEtkN2lHNjlZ?=
+ =?utf-8?B?R0xadXRNVTluZ3FvaUVsTTJOUGVuSHRSS2tKdFoxZHo0cHh4MDRkdlh2d1cx?=
+ =?utf-8?B?YTBxeTAxNUxPOTFDVUc5bUhyVnppNXMvMHNOZzBoMEo4RmVXdklmZUdIL3JM?=
+ =?utf-8?Q?RAKhtXw6hf4TRwk4Is34Qr9zh9O?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y051aVE5L1VKM1F5S0xtVnd4NkhsYzR5ZmhBQTM0aGhjQWlWRkFHczQxZXYv?=
+ =?utf-8?B?b2JTemh1V0FkZ21sMUxiVnZoYVZMT0h2M3JtRGlGTjg5cWFlYXV0NEpYZmM1?=
+ =?utf-8?B?bFpWMGZQaFBzL1VXRm9NdTdZK1VjY0x2WGRqQjE4RHRYYndNczY3dE5qSnlY?=
+ =?utf-8?B?YUZxL1pFQkJ5eFB1ZTN1aDFPcXFpT1p3aWpQUjUvWVorajJ6TSs1K3h5OVVG?=
+ =?utf-8?B?MzVNMmJxQ3U5aHQ1KzY2ZkdTNWFWbGQ1ZTd1ZkFMdVlocEZVL3I1REVNU3Zx?=
+ =?utf-8?B?eFgxVWtBOG9LcWIvdnZ5NTFjRTErakFnU1RmdWpJalVnMjdoV1BxUDc5c3JF?=
+ =?utf-8?B?TnpUVEEydERZanpLeU1BN285YjJWYVVHL3RYbENPbS9MazVGTnFFNUN1SnVV?=
+ =?utf-8?B?QUlqYkwwc2d4V1NmQjdNa1NHTm4wY1JZa0xDQTBGUlpvSGh5dmdoSGQvUzZT?=
+ =?utf-8?B?VXVoVFJ3SFNPdkZPYy9rOTFKK1JJd2JIWnh2Y1NGQzczZ1ZNR3BSalVldDBi?=
+ =?utf-8?B?cTBBdHBTbUk4eWpTdkQwbW1YdCt4N1FscEwwb3NTeU9talV3UWFnS2pOdnlU?=
+ =?utf-8?B?UVBYa3djT2VQQnNmbjFyQmMvbkFrTEdtb0NxZE5rdlUwbDMvNWNjYjV6M1pT?=
+ =?utf-8?B?NmEvd3dXcnY3S25Lait1Y2RPOS9RSEV5QVo2N1dsbUNmRDUxelRVVE5oY2NJ?=
+ =?utf-8?B?d2FoMTFkR1h2WDhrOThES0cwaENzb01Ed2VJaEw5cEUzbHVjZDRYWUhES2RM?=
+ =?utf-8?B?SXJSRXkrcy95UDQvTmZ1cUdlMVVSSTlWTzVFdi9XSWRMSVI2NWR2Y01OMm01?=
+ =?utf-8?B?Y1Q1UG10Y01LR1l6RVNPK0FHTmJHYzZjdW51bFhBc1lPcjN4VlZ1MG9GU1po?=
+ =?utf-8?B?QWtxdk1lTUpxazNwUWN6WGkzWUF1YkpWcWJUVHZqVXdzd2hzZDVtcHJiUjNl?=
+ =?utf-8?B?R0piVzdqeWYyVjlHSG16OE5vVGwzNVlNaW81N2J0N3NNRzVXcCtqUkhPdzh6?=
+ =?utf-8?B?MnFFKzNLc0tNZWJsT0pySW04eXJvWnpDRGJvZSttdmw3YytJbm8zWXF2bll6?=
+ =?utf-8?B?RWdCYlJSTHN1bnNWNHk5UTd3TGJ3MDhSSDQ1ZDQ2SVk1ZWlubko4NCtMV0R0?=
+ =?utf-8?B?ZG92MlVGOXZBZ2EzWVkwQUtSU0ZiYTU1OUordk84ZUl0d0RDSUVkM01zR1RV?=
+ =?utf-8?B?c0ZyS2FUNFVxazE4L0plSFEyK0FLTmJ6MTJVdTJwT29iZlI0bGRpbitGU1Zl?=
+ =?utf-8?B?Y2MrdVQ4RU1xSTlLQ0tLcFBvNUp6cFBBbmFzcENZbUNmNG5EalM3MWdkTGti?=
+ =?utf-8?B?Q1JMNURpOXc5aVR4TUpUSTVaVEJkL2EzdE1mVkgwM0dFUGZRUGlIV28ycGdG?=
+ =?utf-8?B?VXp4MUtBOFNpMHV0VGxQTmhZd0pieEE2bVp1Rk1iVCtxQWhiUlVqdHBwVldm?=
+ =?utf-8?B?WjlkeXVlSmhMazllcFByNnJDRzc2eDNkZUFMRmhXbUhoNDBKTnVIa1RNR3Ji?=
+ =?utf-8?B?TWdIZGsvb014Z3hlbjhicXNMTC9FR3BUcGp4NmhWbThTYWdoNzZMaVBQZFZl?=
+ =?utf-8?B?VlEyYU5OZHVoNEpmRTdIMGtIbEZwMXJQaTI2bHBlV1M4OUxyM1BUZU9VdDk3?=
+ =?utf-8?B?SjRzb01UN3QzMnp4dTRadUdQcUVIb1o3VWwzaFdVTVJyOXJ3MVVQTkUxdUdu?=
+ =?utf-8?B?REQ1YllQaTdITGtZN29GUDRFTjJpdjFVd1VTc3VhZUo3cHNtWjhKTXBienc0?=
+ =?utf-8?B?K051NmFpM0pXeXdtUXRya0Q3NUNNUy9ZYTVQWHJqSENhT01jN0NzOW1uUEVV?=
+ =?utf-8?B?QkIxV1IwdEc4Q2h3eTR0K1Zic2Y2Mk9rWC9TRlFNVHJWYm5aSG9YMSs5OFYz?=
+ =?utf-8?Q?hNkDOxsrF+fkF?=
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: f4794d42-e7dc-4eb6-8a2e-08df3a36b49d
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR04MB7491.apcprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MN6PR04MB9359.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 82271076-2a98-4094-faa4-08df3a31cce4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Nov 2026 05:09:27.4860 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: gWdmnnIgRiWQIWyzWcOm65mZXswcRnUYr1mVpgCy1CNwGsJkWd2DbfwMf82foDlstIAn48GT7vfCSrsxdkwVXOIw4dLDd+tEwG1B1tLvhz0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR04MB8005
-Received-SPF: pass client-ip=68.232.141.245;
- envelope-from=prvs=761a35039=Alistair.Francis@wdc.com;
- helo=esa1.hgst.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 05:44:34.9462 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSQPR04MB7780
+Received-SPF: pass client-ip=2a01:111:f403:d405::3;
+ envelope-from=nutty.liu@hotmail.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -181,28 +158,170 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-T24gU3VuLCAyMDI2LTExLTAxIGF0IDExOjE1ICswODAwLCBUYW4gQ2hpIHdyb3RlOg0KPiBUaGUg
-SWJleCBTUEkgaG9zdCBjb250cm9sbGVyIHVzZXMgdGhlIFNTSSBidXMgaW5mcmFzdHJ1Y3R1cmUs
-DQo+IGJ1dCBDT05GSUdfSUJFWCBkb2VzIG5vdCBzZWxlY3QgQ09ORklHX1NTSS4NCj4gDQo+IFRo
-aXMgY2F1c2VzIHVuZGVmaW5lZCByZWZlcmVuY2VzIHRvIFNTSSBmdW5jdGlvbnMsIGluY2x1ZGlu
-Zw0KPiBzc2lfdHJhbnNmZXIoKSwgd2hlbiBidWlsZGluZyBhIG1pbmltYWwgUlYzMiBPcGVuVGl0
-YW4gdGFyZ2V0DQo+IHdpdGhvdXQgZGVmYXVsdCBkZXZpY2VzLg0KPiANCj4gU2VsZWN0IFNTSSBm
-cm9tIElCRVggdG8gZW5zdXJlIHRoYXQgdGhlIHJlcXVpcmVkIGJ1cw0KPiBpbXBsZW1lbnRhdGlv
-biBpcyBidWlsdC4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IFRhbiBDaGkgPHRhbmNoaTI1QG1haWxz
-LnVjYXMuYWMuY24+DQoNClJldmlld2VkLWJ5OiBBbGlzdGFpciBGcmFuY2lzIDxhbGlzdGFpci5m
-cmFuY2lzQHdkYy5jb20+DQoNCkFsaXN0YWlyDQoNCj4gLS0tDQo+IMKgaHcvcmlzY3YvS2NvbmZp
-ZyB8IDEgKw0KPiDCoDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKQ0KPiANCj4gZGlmZiAt
-LWdpdCBhL2h3L3Jpc2N2L0tjb25maWcgYi9ody9yaXNjdi9LY29uZmlnDQo+IGluZGV4IDI3ZjAz
-YjY4N2MuLmQ5OWZlZTBmZDcgMTAwNjQ0DQo+IC0tLSBhL2h3L3Jpc2N2L0tjb25maWcNCj4gKysr
-IGIvaHcvcmlzY3YvS2NvbmZpZw0KPiBAQCAtNiw2ICs2LDcgQEAgY29uZmlnIFJJU0NWX05VTUEN
-Cj4gwqANCj4gwqBjb25maWcgSUJFWA0KPiDCoMKgwqDCoCBib29sDQo+ICvCoMKgwqAgc2VsZWN0
-IFNTSQ0KPiDCoA0KPiDCoGNvbmZpZyBSSVNDVl9ERVZJQ0VfQ09NTU9ODQo+IMKgwqDCoMKgIGJv
-b2wNCg==
+
+On 11/1/2026 11:15 AM, Tan Chi wrote:
+> riscv_create_fdt_socket_aplic() contains a direct reference to
+> platform_bus_add_all_fdt_nodes(), even though fdt-common.c is
+> built unconditionally and CONFIG_PLATFORM_BUS may be disabled.
+>
+> This causes an undefined reference in minimal RISC-V builds
+> without platform bus support.
+>
+> Move platform bus FDT creation to the virt and server reference
+> machines, which both select CONFIG_PLATFORM_BUS. Export a helper
+> to obtain the APLIC node name and remove the platform bus fields
+> from APLICFdtProps.
+>
+> This removes the dependency from the common APLIC FDT helper
+> while preserving the platform bus interrupt-parent configuration.
+>
+> Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+
+Thanks,
+Nutty
+> ---
+>   hw/riscv/fdt-common.c          | 13 ++-----------
+>   hw/riscv/server_platform_ref.c |  9 +++++++--
+>   hw/riscv/virt.c                | 11 +++++++++--
+>   include/hw/riscv/fdt-common.h  |  3 +--
+>   4 files changed, 19 insertions(+), 17 deletions(-)
+>
+> diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+> index ce2dcb43b4..e90502b1bc 100644
+> --- a/hw/riscv/fdt-common.c
+> +++ b/hw/riscv/fdt-common.c
+> @@ -11,7 +11,6 @@
+>   #include "qemu/error-report.h"
+>   #include "system/device_tree.h"
+>   #include "hw/core/boards.h"
+> -#include "hw/core/sysbus-fdt.h"
+>   #include "hw/riscv/fdt-common.h"
+>   #include "target/riscv/cpu_bits.h"
+>   #include "hw/riscv/riscv-iommu-bits.h"
+> @@ -599,7 +598,7 @@ void riscv_create_fdt_imsic(void *fdt, IMSICFdtProps *props,
+>   }
+>   
+>   /* Caller must free string after use */
+> -static char *fdt_get_aplic_nodename(hwaddr aplic_addr)
+> +char *riscv_fdt_get_aplic_nodename(hwaddr aplic_addr)
+>   {
+>       return g_strdup_printf("/soc/interrupt-controller@%"HWADDR_PRIx,
+>                              aplic_addr);
+> @@ -613,7 +612,7 @@ static void create_fdt_one_aplic(void *fdt, APLICFdtProps *props,
+>                                    uint32_t aplic_child_phandle,
+>                                    bool m_mode)
+>   {
+> -    g_autofree char *aplic_name = fdt_get_aplic_nodename(aplic_addr);
+> +    g_autofree char *aplic_name = riscv_fdt_get_aplic_nodename(aplic_addr);
+>       g_autofree uint32_t *aplic_cells = g_new0(uint32_t, props->num_harts * 2);
+>       static const char * const aplic_compat[2] = {
+>           "qemu,aplic", "riscv,aplic"
+> @@ -695,14 +694,6 @@ void riscv_create_fdt_socket_aplic(void *fdt, APLICFdtProps *props,
+>                            aplic_s_phandle, 0,
+>                            false);
+>   
+> -    if (!props->socket && props->platform_bus_irq) {
+> -        g_autofree char *aplic_name = fdt_get_aplic_nodename(aplic_addr);
+> -        platform_bus_add_all_fdt_nodes(fdt, aplic_name,
+> -                                       props->platform_bus->base,
+> -                                       props->platform_bus->size,
+> -                                       props->platform_bus_irq);
+> -    }
+> -
+>       aplic_phandles[props->socket] = aplic_s_phandle;
+>   }
+>   
+> diff --git a/hw/riscv/server_platform_ref.c b/hw/riscv/server_platform_ref.c
+> index 5f485b1c79..3526c80d79 100644
+> --- a/hw/riscv/server_platform_ref.c
+> +++ b/hw/riscv/server_platform_ref.c
+> @@ -192,6 +192,7 @@ static void create_fdt_sockets(RISCVServerRefMachineState *s,
+>   {
+>       int socket, phandle_pos;
+>       MachineState *ms = MACHINE(s);
+> +    g_autofree char *aplic_name = NULL;
+>       uint32_t msi_m_phandle = 0, msi_s_phandle = 0;
+>       uint32_t xplic_phandles[MAX_NODES];
+>       g_autofree uint32_t *intc_phandles = NULL;
+> @@ -251,8 +252,6 @@ static void create_fdt_sockets(RISCVServerRefMachineState *s,
+>       aplic_fdt_props.aplic_m = !kvm_enabled()
+>                                 ? &memmap[RVSERVER_APLIC_M] : NULL;
+>       aplic_fdt_props.aplic_s = &memmap[RVSERVER_APLIC_S];
+> -    aplic_fdt_props.platform_bus = &memmap[RVSERVER_PLATFORM_BUS];
+> -    aplic_fdt_props.platform_bus_irq = RVSERVER_PLATFORM_BUS_IRQ;
+>       aplic_fdt_props.num_harts = ms->smp.cpus;
+>       aplic_fdt_props.numa_enabled = numa_enabled;
+>       aplic_fdt_props.irqchip_num_sources = RVSERVER_IRQCHIP_NUM_SOURCES;
+> @@ -270,6 +269,12 @@ static void create_fdt_sockets(RISCVServerRefMachineState *s,
+>                                         xplic_phandles);
+>       }
+>   
+> +    aplic_name = riscv_fdt_get_aplic_nodename(memmap[RVSERVER_APLIC_S].base);
+> +    platform_bus_add_all_fdt_nodes(ms->fdt, aplic_name,
+> +                                   memmap[RVSERVER_PLATFORM_BUS].base,
+> +                                   memmap[RVSERVER_PLATFORM_BUS].size,
+> +                                   RVSERVER_PLATFORM_BUS_IRQ);
+> +
+>       for (socket = 0; socket < socket_count; socket++) {
+>           if (socket == 0) {
+>               *irq_mmio_phandle = xplic_phandles[socket];
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index d4b501802f..7ec7596b24 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -290,8 +290,6 @@ static void create_fdt_sockets(RISCVVirtState *s,
+>       if (s->aia_type != VIRT_AIA_TYPE_NONE) {
+>           aplic_props.aplic_m = !kvm_enabled() ? &s->memmap[VIRT_APLIC_M] : NULL;
+>           aplic_props.aplic_s = &s->memmap[VIRT_APLIC_S];
+> -        aplic_props.platform_bus = &s->memmap[VIRT_PLATFORM_BUS];
+> -        aplic_props.platform_bus_irq = VIRT_PLATFORM_BUS_IRQ;
+>           aplic_props.socket = 0;
+>           aplic_props.num_harts = ms->smp.cpus;
+>           aplic_props.numa_enabled = numa_enabled;
+> @@ -347,6 +345,15 @@ static void create_fdt_sockets(RISCVVirtState *s,
+>           }
+>       }
+>   
+> +    if (s->aia_type != VIRT_AIA_TYPE_NONE) {
+> +        g_autofree char *aplic_name =
+> +            riscv_fdt_get_aplic_nodename(s->memmap[VIRT_APLIC_S].base);
+> +        platform_bus_add_all_fdt_nodes(ms->fdt, aplic_name,
+> +                                       s->memmap[VIRT_PLATFORM_BUS].base,
+> +                                       s->memmap[VIRT_PLATFORM_BUS].size,
+> +                                       VIRT_PLATFORM_BUS_IRQ);
+> +    }
+> +
+>       riscv_socket_fdt_write_distance_matrix(ms);
+>   }
+>   
+> diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+> index eb9db8278d..b3b14ada0a 100644
+> --- a/include/hw/riscv/fdt-common.h
+> +++ b/include/hw/riscv/fdt-common.h
+> @@ -54,8 +54,6 @@ typedef struct IMSICFdtProps {
+>   typedef struct APLICFdtProps {
+>       const MemMapEntry *aplic_m;
+>       const MemMapEntry *aplic_s;
+> -    const MemMapEntry *platform_bus;
+> -    int platform_bus_irq;
+>       int socket;
+>       int num_harts;
+>       bool numa_enabled;
+> @@ -129,6 +127,7 @@ void riscv_create_fdt_socket_aplic(void *fdt, APLICFdtProps *props,
+>   void riscv_create_fdt_socket_aclint(void *fdt, ACLINTFdtProps *props,
+>                                       uint32_t *intc_phandles);
+>   /* Caller must free the returned string.  */
+> +char *riscv_fdt_get_aplic_nodename(hwaddr addr);
+>   char *riscv_fdt_get_uart_nodename(hwaddr addr);
+>   void riscv_create_fdt_uart(void *fdt, const MemMapEntry *uart_mem,
+>                              int uart_irq, int aia_type,
 
