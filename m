@@ -1,93 +1,170 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3791E606D826
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Nov 2026 23:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42273606A324
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 00:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=Hr9jSZJg
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=wdc.com header.i=@wdc.com header.a=rsa-sha256 header.s=dkim.wdc.com header.b=f4KhFtLu;
+	dkim=pass (1024-bit key, unprotected) header.d=sharedspace.onmicrosoft.com header.i=@sharedspace.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-sharedspace-onmicrosoft-com header.b=YtRi/88S
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOOCL-0002XS-86; Tue, 03 Nov 2026 18:45:49 -0500
+	id 1xOOi5-0005WF-4X; Tue, 03 Nov 2026 19:18:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xOOCI-0002Wt-5E
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 18:45:46 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1)
+ (envelope-from <prvs=761a35039=Alistair.Francis@wdc.com>)
+ id 1xOOi1-0005Vz-5n
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 19:18:33 -0500
+Received: from esa2.hgst.iphmx.com ([68.232.143.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xOOCG-00009z-6V
- for qemu-devel@nongnu.org; Tue, 03 Nov 2026 18:45:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=iFQwzfoVUAoJD63ZZ0Dvh7apjaNskI6Q0kVHzF3CX9Q=; b=Hr9jSZJgTMArxHFwbOqPoVcdXS
- LkRCY4Wtw5yObx90Qsu2duVatozGOnk2n5mWTqvMGdyyB4Rb6FDw6cZni9w71HMHz5MZLSMEy15sE
- uPRlQkalsNZGXkU2YdIqbUm4rxR+2gB/Q9jlKWEwME1Rk/0vkaKZlYC4giVf3ErhEyl4z6oxw3/pd
- 4HnZTowws03DfjgTZ7UWiLcgcIZODS4TSeR1VQ2RZJsuJ7VVdPCSF3T4P5KGEYPPadWr1ckHjCahj
- eRqeHDDDskFSBhydor8TC7Lhd3TBH3CIVRbL04b68pAS0Y3t0gd2kcuOBGEmY9E1t5Uq7tnhN1dIe
- ev4stSgz6dLPDznPfQiHkQSNmfiLZBgdFcQL4dX58ttm0vGOTXCurv9PxfG4nUJLg3xhT149Ecevf
- rgjgSUKCdGsVc80qzbxVCzWyQbxgWrWWQCR1ydPDHEODwjoMFw4jCgxxGZqXuI22cwdRXlqOFaCBw
- GM7DfeE7KYmQ4HE02+A7n8sZsAZG8OkPriN3tRgrsboritd+NOcbie22DqJyNRW3K6UoYXbl0F1Zt
- K38wI63C8ahj0nlEmxFHvcBIHgKKkghlb89RPLsfuAJDucxEKfOLEdba7fGGZ8KOlo6nysQPUWOA1
- H5lNa2GVdFki2/NZBx71zx/ZXBCVvD7WCLE7QPhkI=;
-Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xOOBS-005Ze6-GL; Tue, 03 Nov 2026 23:44:54 +0000
-Message-ID: <3aa138a5-0f50-450f-a46f-a449a754c96b@ilande.co.uk>
-Date: Tue, 3 Nov 2026 23:45:39 +0000
+ (Exim 4.90_1)
+ (envelope-from <prvs=761a35039=Alistair.Francis@wdc.com>)
+ id 1xOOhz-0002qC-Bu
+ for qemu-devel@nongnu.org; Tue, 03 Nov 2026 19:18:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1793751511; x=1825287511;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=4gHFybrt2IoldAhszlb5ny3ac+XiAGFumlDZ2YRf1sk=;
+ b=f4KhFtLuravIcM6DzYLHdCnJeCbrXK3Z56V2PM6Z/l4Agirdg+rduZUf
+ OO2bAWp6xHMQOPfWo+lqqUwkhMnoMaD/NgPX4syt8vOW1mQupyl0roPUt
+ uK8optMrdlydIImnUHJJs7V0BcRaugmMj6vzFzTPq8WMzmsfuWJbfsv6H
+ On6cV0gCQHp1OzrICu8nU4xKM9oAV+znZ/SEb8n7cP5Km3t4XHyHQsD+r
+ 474MYV9uw458YJhsd+puN3vYfCgCEgfnS5wu0ihHMKpeTD3nIh55WXBKM
+ VcvAcTBqoZVcHyJG2v6SNvnDBp6e2+9XMm9/wq2vir3OyyhfIUvzdBPeu w==;
+X-CSE-ConnectionGUID: rQ3DqO2eRqurvmmmjipq3A==
+X-CSE-MsgGUID: h/n/eZRJSTuK3/xsm9tHag==
+X-IronPort-AV: E=Sophos;i="6.27,194,1786982400"; d="scan'208";a="160717340"
+Received: from mail-southcentralusazon11012026.outbound.protection.outlook.com
+ (HELO SN4PR2101CU001.outbound.protection.outlook.com) ([40.93.195.26])
+ by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 04 Nov 2026 08:18:27 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=K2UA3/ShNmqhX1pIKDPDUXhMZ6u+ed4+gadz5o+yVyHYhRc2JMev/dX95CCG0A+o/DJA9I2SWPY4UY0ok9r/nBpUj12Pzg38XJV2V3ImObcA6K6Euxo4OcT/4gKkwAylGNHpe0CcnAXFdApyqxS43FX9nmQ0/kVZxYtFGa1VpAk9+e+GaDCBFXvPnQmQ8j/+y6xUW+1nIKts4Yv1ySUtUAjswusB1tAI5V/g/3MeHjClp3sP8pUaT/FB7iTUE0gNhmx3EXOk9VDtrpSi5c2+KOJ73IZYdJQcqi8UX9iE7L/R845tmGYKcdC8XbAFA9B10cVawUnNCq3H6DWOhuvVqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4gHFybrt2IoldAhszlb5ny3ac+XiAGFumlDZ2YRf1sk=;
+ b=KrzwNsByoHPRMnoRDXHmPOF1gZ8G3zAmSza01LOaAw2zEkZiRJfrKZbB8SL4RLLG/X2IQ7o7pDxugcTyFo0low/i4EZS1zDF8yj7JYXWqRvxnsnXL4Ut7UPK6XnjnnD4lWnkM//+4TBGyphzgEgVVVs/9l98VQC8ijJc7QwFT2XDxmlvSm8oJUZuH2GUjKf7YeUNnhHPO1a40Pho4vRg8y4DY+xqPVRK+OFcgit/maPjupDwfu6fC+Tu+2dxfi/ac5RLyxc/etihStT/qSQAoRCVjsBgfuBQbR8VHGrWOXK6X2PT61ccIcmcvM+ZQSWSFmoJml9vy0cToHzAdln0Rw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4gHFybrt2IoldAhszlb5ny3ac+XiAGFumlDZ2YRf1sk=;
+ b=YtRi/88SWpTcWU8bl2MLbPxrN/v9ZEIoaVtf3qzLiO3nsf5/0rnA+kGbCg5yKTxb/IgLjtLvviBySz1n6BoC2dxN2xS7A6OHRhyMJmigQTJqtPR181gWvKKkVuopcL1Xb+sWaQQxUQPG5bD6RuoblxawYzcf/mlkcFvJo1oWCb4=
+Received: from MN6PR04MB9359.namprd04.prod.outlook.com (2603:10b6:208:4f2::13)
+ by CY5PR04MB994116.namprd04.prod.outlook.com (2603:10b6:930:128::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Wed, 4 Nov 2026
+ 00:18:26 +0000
+Received: from MN6PR04MB9359.namprd04.prod.outlook.com
+ ([fe80::e729:bbef:5a37:2e77]) by MN6PR04MB9359.namprd04.prod.outlook.com
+ ([fe80::e729:bbef:5a37:2e77%4]) with mapi id 15.21.0592.007; Wed, 4 Nov 2026
+ 00:18:26 +0000
+From: Alistair Francis <Alistair.Francis@wdc.com>
+To: "fritchleybohrer@gmail.com" <fritchleybohrer@gmail.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PULL v2 00/50] riscv-to-apply queue
+Thread-Topic: [PULL v2 00/50] riscv-to-apply queue
+Thread-Index: AQHdXQoR4LFvw70qNkuPbugMpHMJGLcapTOAgAKEvIA=
+Date: Wed, 4 Nov 2026 00:18:26 +0000
+Message-ID: <170bc1e13e7abe45c34b0ddab66841bc85a79ef9.camel@wdc.com>
+References: <20261016010237.1102834-1-alistair.francis@wdc.com>
+ <20261102095049.31551-1-fritchleybohrer@gmail.com>
+In-Reply-To: <20261102095049.31551-1-fritchleybohrer@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.62.1 (by Flathub.org) 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: MN6PR04MB9359:EE_|CY5PR04MB994116:EE_
+x-ms-office365-filtering-correlation-id: 18c3df1b-0afd-4c7e-840c-08df3a09251d
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|23010399003|10070799003|19092799006|1800799024|261028144727099003|261026140227099003|261102123227099003|261021121427099003|261022105027099003|261022075727099003|11063799006|4143699003|56012099006|3023799007|10067099003|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info: JDrGoAhARhoYmICwRv/i8GM73uFIom2mM4e6MbGgi9sKlldF443NMcoEs5JAZ0CKIErRJt/h+xlLLUZdPhOoCAXppll73wgWq00JS9i9THQOSWuTS23YG180fzk0ukHq0j8ej0SOSBvA63bBuYDFprSEi7SYRw9Gr1Wn5ScHmJwyKqvq83og9GTkoL/V/VbKKZz+t6IcHGU/bG/lduncwxuJNcH0XOX2k1abx1ES2cXpW0tpqy8zpVYXtU+w1iIULHgo6JrZMAuFF/dBOQH9oPibBE8bn3xRPP+RXrckYPav1PnvJKT2MjlyMC0tU5xIZnSQxxfhhC2AOTr/IsdnUf/p8bi5IRGXYYrL+3URpBKsp7ID1/0sGIglWD0n15r+N35QUdfjooowftzJULO0iXDUYTBzHXLlVI7dXZq9wWc7UNjkUvbpgZnP/gmdQatOFOCPFimxUlm2mTKUemiJoP195BWofVpjOIFI2Uz27NZkH76q817UJPEWfgdk5blGTJi9n66vufNX7CcQnRU2TcHo0olKqyOjh26uYxz4PaE8g67wCLE9jPNRU+xdlTJUeDjfWHX+aGyDhGsDauqiWj77oHurYxJiI+s0z30QPprStmJqsgPaPmfiQ0vfflHA5Ydtmjy61sfUBUvSQrwapBn+iJrFj5sch9UeVDkSLqJilCU9J7ZfkL43k61tW9uIyeIQ0Gidh0tTtpNoeP9PuxIMC23IRL8v/xfCwlBOrjs=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MN6PR04MB9359.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(23010399003)(10070799003)(19092799006)(1800799024)(261028144727099003)(261026140227099003)(261102123227099003)(261021121427099003)(261022105027099003)(261022075727099003)(11063799006)(4143699003)(56012099006)(3023799007)(10067099003)(18002099003)(22082099003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?M1NwTURMRm9MY01ZVC9jUFhBT2NPTVprWXB3d0hDZXRsSU5iZnhRd2poc1c3?=
+ =?utf-8?B?S0dnQUtiMEtQWk9RQmJVTXN1UmJUK1U0UUJpSHFJSFFCbUF2NVcxTFgyK1BP?=
+ =?utf-8?B?Rm5lZU1RK1RpRWpmOG92TkM2QksrZGw3Z3BwV2IyeTVsakFkbXBrTlRJNFVu?=
+ =?utf-8?B?ci9KK240SStJUDAxVFFpQjI4RmVwdlRLS3g1dEQ5Mkx1dUxZdHFiOXRwMFUx?=
+ =?utf-8?B?V2xlaVZLUkpMNHNTbFBxWGJkUTB5MGtLdnVVaU53Y1lxd0xoK0xsMUlZblFp?=
+ =?utf-8?B?UlAvbXhQUkdvMXAyL0huUVY5aVUwMEw0cEFURk12bWpka245OUgxZHBNU2RN?=
+ =?utf-8?B?dzhYTzBabjdBdzliakZ3SE96bndaUHZQMkdXVHVETytWNnM0aXVWSHBVajVG?=
+ =?utf-8?B?cDYyWUVSNHBmODloRXEzZU5HV1JiTUJqclFQd1RtRjRHbGVOclFKYUJqTDFE?=
+ =?utf-8?B?elZhVmZFT1hPMzBIK2RXREpBNDNGTXhuTzZ2eDUycGlHMUxKT25GNWFLb243?=
+ =?utf-8?B?bG9zN2FOd3hkejc1QlNLelV2MWJjZUxTOHpHVENQd2dNZDRpT3ZVN1RDbmRV?=
+ =?utf-8?B?REwxVjRTQjA1aUdSbDJsNFJsN2JvTTU4cnF3QzJJdmVSM2hyZjk5cHRTOUxH?=
+ =?utf-8?B?R1FRVGJienRLaHk5aktQeGpwdlFBWWZGY202RzdhZGxraXFKUlFZdmdFUDhl?=
+ =?utf-8?B?RlY5eWc3V05yRE5kd1g4c1J6ZGNJeTZJK3E4RzNlTTNPc0U3UlV4OE55UGw4?=
+ =?utf-8?B?SDFMajFIOTYxN1NxdzdDZ0RwZGRzeDlsVzdxMVhaTW5UQlVDenR2QmI1QTJx?=
+ =?utf-8?B?amd2eitvRWdXK1VWWFV5ZnlTRlVnNjljVFE2Qk9HTENvZ3pDQnBQTnlxclhY?=
+ =?utf-8?B?dEc4QXBYMmEwcndMeVhrU2pWZWxad2N2cjdrTFVqajQrak1xRkd2WFFGY0l0?=
+ =?utf-8?B?M0wxd3RIL1dmRDEreUV0SkhUejA3eW10SlBVeEIrQ1lzWVVnWVhqS25ZZU5t?=
+ =?utf-8?B?VGZKQmM2WGI1c0g5cVh5SGoxK0I5VmpIZEE0RDJWVSs3QldITXhGdWlRUDJ5?=
+ =?utf-8?B?UllFWGswaUxRQWFZbE5oTkZvT0MvWWJwSitoRUdHd3JtQU5qM2xGOHRwdk5N?=
+ =?utf-8?B?NGFqazF3Qk9NQVdKSFRwaXhaTmkvRm43bFk4ZTdwa3FNSy9saUJJZUxURHNm?=
+ =?utf-8?B?NEUwMWN0SU1KbEdFNFU0cDNGVDYxVzJmZ2ZkODRsR0Z0R1NwN1VDdUE5MEQ3?=
+ =?utf-8?B?MVNpUUZrN1pVbGJKTnNzUm9kb29TZ290UGwwSE9IRFRyN0Qybnp4QVRvWE5x?=
+ =?utf-8?B?SHFlcXNJRjBHNVBkYkxXeGV6enROaUhXbnUxYkhTZnNJMW16Z0pITUQ3Z2l4?=
+ =?utf-8?B?Q3p3WTBPQmxTMnJoM3RjNEVsYnlXYjlWaFdlaEdtclpkazNkaVBWVnluRkJl?=
+ =?utf-8?B?ZUpveUZkRFIvY3kyU0s0TlJpSlRHSVB5RmRsQWNyK2VSL3VYVGFraTdwa1U2?=
+ =?utf-8?B?ZTI0YlBaTURoMVFRTTI0SzRBMGgzcjRacDk5TEt6Rk9INFhzOHBXYWxLbnk4?=
+ =?utf-8?B?b2l0aDhDSFBEYjB4UFhoQmRPL0kzQVVYeWQ1Q1FCaUxNWTlkR09DZUpRME5V?=
+ =?utf-8?B?K08yYWlabEFOWllYc0d0VkRsZEJBUDQ0UHhqNEN0d1czUUlnallnYzFPQmpl?=
+ =?utf-8?B?cVdCSWF1UC85L1lwZlp4Z1lUR1JZUDR3SEpaM3Bva05Hc3JwUWZWVm1JYVlF?=
+ =?utf-8?B?UTl0ZEp3R2w4RFJWdkE0Z214ZzJQaG9kWHprcGd4VWY1NWNhTnErMnlkRUp4?=
+ =?utf-8?B?Wm1WeDdpbEhEZ2Voa25rbkY3VHZ3NnkzcDBMajRxbnN0T012K2tLVmRqUGYw?=
+ =?utf-8?B?UlJYOWMxbU5vZXcybTJIbElTR0lsVUFUUitvUE1tRExjUEJwbDJSQTNyQ2FC?=
+ =?utf-8?B?VGl6dkFyMmV4Ull5bXlEa2E5dlJBdDVKVUhkV3dwVEVvMWZNNGpic24vWnpF?=
+ =?utf-8?B?UWFnbExJU1VKOEpxbTRpZ2F4VE13UHdIMTJvUy81YUFzWVJmVzBoU2V5ZXpY?=
+ =?utf-8?B?dXZTZmpRUTd0YTJTbU10eHZqK1JSaS9MQUVLK1hmdHNjRlI4dFEyczNVQy9y?=
+ =?utf-8?B?NTBZV0o2bXZ0UmZneWhjaXVreXBseXNBb1pWRlFBZGFQRkVFYUhsRGl3Znhv?=
+ =?utf-8?B?a21QZDhxNDJoYVBwSnJnSzl3WGRWVU1xK2FMN1pSRjhDQ29xY3Z5aWxRMW1S?=
+ =?utf-8?B?WUp4TlJGSHR1MlVta3VXVHdRZVVCa3NxdWRRSXd2MzZ3OHoxMysvRTR0aVND?=
+ =?utf-8?B?RWxxZW5qVnEzQW9iK3ovQkR6a05KRUtkWTZKUXJyTlBkL2F4TnRPMXQrNW40?=
+ =?utf-8?Q?d1PxZfuPPD3nbT+EbTidyBBJLvOfL8CU5aQpbj7mkTCE4?=
+x-ms-exchange-antispam-messagedata-1: zYWl6R3CRbOGBuZLrECNc59B1wWcVZH0JyQ=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <4493F6F92F8EC24999DDECB4FE3ABB20@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Paul Sheer <paulsheer@gmail.com>, qemu-devel@nongnu.org
-References: <CABxOuY-6JxS1+HcR0t-yteY2+S7saB8ogjxkqa7bedwKu2Xw+Q@mail.gmail.com>
- <CABxOuY8+YibOXCTTkcAQKHLVsTP_1twb0tNxmRss_Se56=amiw@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CABxOuY8+YibOXCTTkcAQKHLVsTP_1twb0tNxmRss_Se56=amiw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: Solaris 10 on SPARC 64 running, but not stable
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Exchange-RoutingPolicyChecked: 0ku0IrMWBETaYcDc/nwG7gxdcRsVI8x6G3emjQF8q92i4gSq1qg+pB5HCAugLmXDa/7sbqtkchHI4FYC0iHOjZ9G04Hz16R8yB19ZRk1rR1snSCU7OGKnBZMKzsQLUs/TTv38d+kXLfmWtM2CARunbTF/leBkmGS1QSCQ8xeLw+0bnSi7tiP6RmvY5/Q6I2yHrx6P1vOw7px7tdDeUcS9VfObDCCABxA7xhRK8FGndDB5tCrO8nEQiMaXjr+QdLwLFGYdLnWK/gsJ6WM9yLJFlVC5iwdMvPVtUaHzoEzh9SoxxcS3+2+AxharkoEn9j9NjavCUFlftWpBaVDPAX5UA==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: eq9x5wrGyTZwKjIRK0HwVZkZvTIl9rIFTfgngEMAlwzylicQadMHNeDHrZbSB7hkdawUIKfxj1aJ2BRUosusn9w6s7B94HhSOFDMtOS0ydNsYM0a0kQqiFznxJfBDHvZWldTttBcA7z+TVjH5iPerZt4ux7yHsc7rk7eUbWOHcZo2k5ETtg0149DoE/955LQLUO/nAlLoqbDofTMWyBvjGAjEdvoS2QK8X4lfDV9khmjP1SXh3KoB8BV53Lb4J7dqA55mUEFD1qREmpMVTI1Aow06EgFO5QYoi2zRTIaL8sp+Ir364LI9d7OOw4ZzrQRj+YJ2qLjxTMxj7d3j1Pv9soz3yLLDoprHEgQwBiQq+q0qOfYpu/mkASpvWQlzV84XSP0s5wL9S3+oedpSrOVfcWp0y8NETG174pbdqNPl59p6AquMGzeNgXW0TIwSU702s26uFwgpL+7N3F56yCyg5csfKtGQoaIQlnOYSx/Ecy8RdKxROQPRY2sjQg2pTOuzjqJpNJEsZ96ph5CGJ0/C8CsmL7gBYTmRW4SfTX0XKmEM6yyKvRrd2/7f2rVopglA6+i8FPaoE2RyetFKpjuHXkiiXXzD0gBCYj6JEE/vTgZyURoe5rgxLNIGuchlUh9
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MN6PR04MB9359.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 18c3df1b-0afd-4c7e-840c-08df3a09251d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Nov 2026 00:18:26.1397 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: lmD9Kc2h38dG/S6LipmiKBbc5Pe7kzUKbNEi78i0rwC8xr0bBu30s6XwoGG3pRIN/DtMdpXVT0879vzOz0Era7gHdoWK6T152E7h2fUkLb4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR04MB994116
+Received-SPF: pass client-ip=68.232.143.124;
+ envelope-from=prvs=761a35039=Alistair.Francis@wdc.com;
+ helo=esa2.hgst.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,72 +177,23 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 30/10/2026 16:38, Paul Sheer wrote:
-
-> Update:
-> 
-> I put my changes in these two forked repos:
-> 
-> https://github.com/paulsheer/qemu/ <https://github.com/paulsheer/qemu/>
-> https://github.com/paulsheer/openbios/ <https://github.com/paulsheer/openbios/>
-> 
-> I don't have more time to try get this stable, so I will be unsubscribing.
-> 
-> Happy to answer any questions on my private email.
-> 
-> Paul
->  
-> On Mon, Oct 26, 2026 at 12:25 AM Paul Sheer <paulsheer@gmail.com 
-> <mailto:paulsheer@gmail.com>> wrote:
-> 
-> 
->     Hello,
-> 
->     I dumped the entire disk of a real Solaris 10 V210/V240 box into a qcow2 image on
->     Linux,
->     and then tried to boot it with qemu.
-> 
->     The list of patches/fixes I needed to apply is very long --- beside a bunch of
->     code changes, there is also changing from SCSI to IDE and from hme0 to e1000,
->     getting the device mappings to work, and so on.
-> 
->     It finally boots all the way through and starts its services and I can ssh into it.
-> 
->     However it doesn't seem to be stable. Within an hour it silently stops.
-> 
->     Is anyone interested in this kind of work?
-> 
->     Has anyone got this to run stable and under load?
-> 
->     [[The only reason I keep this V210 around is to occasionally test some software
->     big-endian (not that easy these days with big-end boxes disappearing 😂). But I
->     panicked when I had to replace the motherboard last week "...what if this box
->     one-day becomes unrepairable?" -- hence my experimenting with qemu.]]
-> 
->     If anyone is interested then contact me directly on paulsheer@gmail.com
->     <mailto:paulsheer@gmail.com> and I will share all the changes I made.
-> 
->     Kind regards,
-> 
->     Paul
-Hi Paul,
-
-Thanks for this interesting work! I currently don't have the bandwidth myself to take 
-on a project of this size, however I can see that at the very least this is an 
-excellent reference to have available. And of course, if someone else would like to 
-resolve the outstanding issues and submit the patches on your behalf then that is 
-always an option too :)
-
-
-ATB,
-
-Mark.
-
+T24gTW9uLCAyMDI2LTExLTAyIGF0IDE3OjUwICswODAwLCBmcml0Y2hsZXlib2hyZXJAZ21haWwu
+Y29tIHdyb3RlOg0KPiBGcm9tOiBaZXBoeXIgTGkgPGZyaXRjaGxleWJvaHJlckBnbWFpbC5jb20+
+DQo+IA0KPiBIaSBBbGlzdGFpciwNCj4gDQo+IEkgbm90aWNlZCB0aGF0IG15IGZvbGxvd2luZyB0
+d28gcGF0Y2hlcyB3ZXJlIGluY2x1ZGVkIGluIHRoZQ0KPiBvcmlnaW5hbCBSSVNDLVYgcHVsbCBy
+ZXF1ZXN0IGJ1dCBkcm9wcGVkIGZyb20gdjI6DQo+IA0KPiAtIHRhcmdldC9yaXNjdjogcmVwb3J0
+IFdSUy5OVE8gb3Bjb2RlIGluIHR2YWwgb24gaWxsZWdhbCBpbnN0cnVjdGlvbg0KPiAtIHRhcmdl
+dC9yaXNjdjogc2F2ZSBFTFAgaW4gTVBFTFAgZm9yIE5NSUU9MCBleGNlcHRpb25zDQo+IA0KPiBX
+ZXJlIHRoZXNlIHBhdGNoZXMgZGVmZXJyZWQgdG8gYSBsYXRlciBwdWxsIHJlcXVlc3QsIG9yIGlz
+IHRoZXJlDQo+IGFueXRoaW5nIEkgbmVlZCB0byBhZGRyZXNzPw0KDQpIbW0uLi4uIEkgdGhvdWdo
+dCBJIHdvdWxkIGhhdmUgcmVwbGllZCB0byB0aGUgcGF0Y2hlcyB3aXRoIHRoZSBpc3N1ZS4NCg0K
+RnJvbSBtZW1vcnkgSSB0aGluayB0aGV5IGNhdXNlZCBidWlsZCBmYWlsdXJlcyBzbyB0aGV5IGdv
+dCByZW1vdmVkIGZyb20NCnRoZSBwYXRjaCBzZXJpZXMNCg0KQWxpc3RhaXINCg0KPiANCj4gVGhh
+bmtzLA0KPiBaZXBoeXINCg==
 
