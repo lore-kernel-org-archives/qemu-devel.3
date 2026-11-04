@@ -1,30 +1,32 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19936606EEAC
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 17:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37245606ECC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 17:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=C7+harqk
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=Lj5WBv7+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOete-0004BI-W3; Wed, 04 Nov 2026 12:35:39 -0500
+	id 1xOetn-0004Xq-SO; Wed, 04 Nov 2026 12:35:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOesL-00037T-Dz; Wed, 04 Nov 2026 12:34:21 -0500
+ id 1xOet5-0003Ot-IL
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 12:35:03 -0500
 Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
  ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOesI-0006Dv-2i; Wed, 04 Nov 2026 12:34:16 -0500
+ id 1xOet1-0006Dv-4q
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 12:35:03 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pbCsL0WsyxIEsIzMGnPGROVbuyzO9tFJVgASFkhfFZUUd0LCNKaa7qAPdeslfnG634Y0ipF8l5gx59Q5l8riyw3qzog1g+Tj+7kuIzJRLZLF6DdHXYO8HHQlWWnRB/pjGpb3SKhUeKU5Au+XFZdywyyNpiITFQvm9Cl2sVCnpAqqFFTVKjGgi+OFpnR7zFFOg/ylMvi6eTW+8rAcvNbhPIs9N9qc58XMu74b6YCzbpgWHQGP0Q1ep608xkmnT2tlPDJz6GDcdXr8+WqRp4WYef4VzPXpMqSqe+v1THt8AbWSkit6ijgdLPWChYRU/EyAy3WVeb5bIOQhhQyLhKyp8A==
+ b=l19AotH92stg+4eiLeS0DU22yhS0RZuOUpwNDdPU0MZBmaKNa5CM4Of7OPfsSwJfel0LZofT0uNRP+D2oA1VoFsKIxN/4Eb9VmF2f+KU9XDOtx2xLD6J5vg9PRD5jI3Zm960rKMCtRWR7IeHh5A8JWIuWc525taycTSFXKmcMyvkcFVSnYiGynqu55eN54oCngebDgh8eQt+M1AePHQB9TGlsbPwZb+oehP/JKCNwlrkicltKdBM3aeLmfrvojG6RBqOKtZzMf4sbl1OWwADMcIjj6M+4aHb/H6uOIsc34a9sUT8G7O0PSVUAd5bgJCVjWUFiB4sIQ9UstFf3UaSsA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bYcH1Vcuvnvh8ZF2kxGpPDcD9usNmCdQruMzUOcFXcY=;
- b=uax2xsIVH15qZWGZGdLXVqD7mMJV1Rd2cfoKTXdkQ4c7HQh/j3U/3K45PpWx9wn+lWIV2hgoTF4eKnfhWdSSnSPhZWSGHVvMmIpzW5EN9kI72veBldlz/rmInxdY+YpvoXKbAdRoSzx/A6gWcQ3jgnQGS24l4X71lf1/ARurBySDvZ3yX7SUyg9Pc5e4l5kdgQoUb/x6+ljHF95wMMJJSCYFxhkzb1S3oM285dF67n2S8WANz0Gl9zF7fhHb0mAIdwkyBDthEUrfoO2K+Aye+ojWzHEd3lP/Bq0OELCzMUJHZqONJcxGJ9KMxu4R6O6RC/mPC1uM9X+wkT98UqLJIA==
+ bh=Vh1oekmywseXWoVEsx4HFgqSFqMOjzQj1AW84xw54Xo=;
+ b=QPq5FI1X5vhyW/RFW+P48qb2BPi76yjJjpx9moDkacBg+dC/95zdmkg/GPZnvUOPglLkGEK8ARHsE0yWnC9wrlB94+xcVcH9G8vEascKHfaiE2sBPvbYvGMf1sSRLfMFnYvdPBMo6GOwi6FZHT5Sz5lHWbf6h+CxnfCVUXcW22NraMURriEjpSyWWuQ2TOQfgIXaUT4mv1Y7fjOPbR9KPOwTtgU8F3YrRMalSO6K4moBFtFDxb6ZQ3wOyTEAIhfT0ZJgLRCKet7Y2mKWh0NhLPgfEMt88+36q2Beqdj16a4+3NKK9x1mkgB+4n3EpkEvTzr+nU/j37mNMMMn/U6tYg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,30 +34,27 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bYcH1Vcuvnvh8ZF2kxGpPDcD9usNmCdQruMzUOcFXcY=;
- b=C7+harqkvWaCoqAKAIaFwY0ct/ybr94TVtQ5DQgpfLLmqUEj7iejOKucAmAUYtcYTt9G1sFT5ZI8ScdXVXxJs076FY7n2ZSWCM/LIqNvCGOHU9HRVVGPhV/uWwiNGUwnXBhIGoJHwmZpPoMCwmoLX3l891PBsya87E8YNS2oeDzuY6wjFLW4LLbHMwsXP5oZ8rSePXJz2XhTJAZPsMVB/e1JbVxP6fSXyy+2qBYi1TKBSi3ijayX/j7gC4zuU4r2iTxW2D392WMwEFf4h5S+pC4fQUQrDxDNxS+HJZzf44vvsKBJdDvxN5+QaQV4VuFnOcV+SDfebDFrCcW8lhkWtA==
+ bh=Vh1oekmywseXWoVEsx4HFgqSFqMOjzQj1AW84xw54Xo=;
+ b=Lj5WBv7+TEskGd5HHgYXMqh0g3DEX3J7TFKp+nAwd9DKLR7fy67qywqAeVUybbdSnpfr10A6WxxwPLffBB84DeG32ZDbSJGD81CCBW7eFI/+9/XEunBwXCSh7MGtxcfwVb8QA7+iNK1VekNone3gTrlAf1+1u7FjaENN5lj97uoZ5t9mRRVYpAWuLJjOjj1/loQlcDghMqL64QqoAjrF/YwQetP97L85htWNMkAIt5ejybKOltejESon0fDLD6ociGk5C3TT9tSoYy83dfUCAUuLAfyOlgQB3UsGikGOJm4AROjZxglrCtDmuQVJThGTjNDRhMApQujvWPb6mgkxFw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com (2603:1096:405:2c::12)
  by KUXPR02MB8801.apcprd02.prod.outlook.com (2603:1096:d10:4c::12)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.10; Wed, 4 Nov
- 2026 17:34:00 +0000
+ 2026 17:34:15 +0000
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10]) by TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10%5]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
- 17:34:00 +0000
+ 17:34:15 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
 Cc: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Subject: [PATCH v2 08/17] target/ppc: Register L2CFG0 and L2CSR1 on e500mc and
- e5500
-Date: Thu,  5 Nov 2026 01:33:11 +0800
-Message-ID: <20261104173329.706635-9-bin.meng@processmission.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v2 16/17] tests/tcg/ppc: Test byte comparison and parity on
+ e5500/e6500
+Date: Thu,  5 Nov 2026 01:33:19 +0800
+Message-ID: <20261104173329.706635-17-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261104173329.706635-1-bin.meng@processmission.com>
 References: <20261104173329.706635-1-bin.meng@processmission.com>
@@ -68,56 +67,56 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TYZPR02MB7121:EE_|KUXPR02MB8801:EE_
-X-MS-Office365-Filtering-Correlation-Id: d2afd393-569c-4d06-6fb6-08df3a99cffb
+X-MS-Office365-Filtering-Correlation-Id: 04a9f52e-713e-436e-6546-08df3a99d8ee
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|23010399003|1800799024|6133799003|10067099003|18002099003|22082099003|3023799007|56012099006|261026121527099003|261021123027099003|261021121427099003|261009223027099003|261102123227099003;
-X-Microsoft-Antispam-Message-Info: aiZY+TAnZW2K3XvuTVVKyAi34Ql63rxsie7u/rZfhTSshoS4oRHC8eFar0wt91rzK+R9xPSc3AuQ57JLbEq2ByPjXiQ77JIH7yDcUntU2biPjjHyudbnfGKehT6YylhYIFvGXLVg4rZp3pbwEJwUVsdvuIVQSW1UJqd5v4oRzO2RsoD3OiAa24ng9FTAZgPb92ByCsabRlC3j1bquzhNDiKlH+aIb9yA4u+AZDqkB0cd3tInbLWRzSGmoGjMp2CAnNXT4J/UaAkyXKV0hJPpxUs6WZ5y7Jg9MjCBvToS71K/rNETy2deDAa9TvUTRkIRQCdjrsM2EFH19BOZe8KdJHvnfNQyy/5bZ9b3KlFHpJCxgzKHoHgglV2vtL1gpgIjVLMvbVTTJlDdNxzrbrfVP4lCaTcdUsB41gtPj6y5Rez80HOAOwEPXtpXaP9OntKkH3dkFn/kv4Vo5N6x/3LUc26eSNtOKe3/4gnnLPhYzM4jUCpxFY4v57vpn6cg1V+nHZWUGeS3MJZ+REc1OC2r69jUjrfAFUjXeK7THHilBdICiiRu+IraOpl5VPn5jPpqEtwmtkq8xPBTQ40gJifHfJBh/B9gc55OKrdQBfndLxszqeVvVJmZUzkvyfG5nO1LBCGL7UKp0v8K4inA28NhsQE2NWjfkqEju7sI20Ky4jo=
+ ARA:13230040|366016|376014|23010399003|1800799024|10067099003|18002099003|22082099003|56012099006|261026140227099003|261026121527099003|261028144727099003|261022105027099003|261021121427099003|261009223027099003|261102123227099003|260925021311599003|260925022911599003|260925021911599003;
+X-Microsoft-Antispam-Message-Info: gF8KH2+IORGpRYv8vQwayNCYF/XBYcSBc41F+q4XF1eK4Oh9S0U7JStYSBXic7ZarPPZhX8puvENwXiwBqOs/FYjB8UixHRN/oDxkUcJeMdirJSwpgbJ/pGHU0h6zruVaQ5MlRzD77UTWT4CXHybA8xHI8rieK6cntAwOzN3rTai9y0lRnPbuRbecowPJV9/UfGWjQF6XWpd9VFM5RAQ7GgbX4612rgxj+ReGg0TEfefK0CE7YbV0K9BeUjbfkUWfwGSpRWmOCIa9bDU6Pi269mtRFIgwdD/Ato6f7kACLyedf8iAxhvZY6NN8xCjmLjuUfMwRrrdow00YlI0HGzbuvT/+BRy2UrcrDIiiQFqnAjaX97+kuP7keD4Vo3FdLCNc4qa/JydVG5te22gbRq8GfdUI4U1ZQDjEYC2c2IZs0t3RDg4aunKw5Tho1JpWuqeEzFNmx9iGLIXsAyiyJbV71NBXHXJ3aTpyokUEeGot3TRH7VLz7csKal/FBEbcabRxDTQ/cXRJK/p4x3GylzpDeslt+j6zuEW8O/5s/3g+ZCq2/GE4TmxuEixlp9NDBGeugUisdnd0+zs02CVsmP0k/NTnxtlS7ZCVCDEgR5kUowv2PQwW2g3Jgwmi0pzou30xItYiidthQufVVMpCz+YFnL/L0ca++FAz2+x0+70co=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR02MB7121.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(6133799003)(10067099003)(18002099003)(22082099003)(3023799007)(56012099006)(261026121527099003)(261021123027099003)(261021121427099003)(261009223027099003)(261102123227099003);
+ SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(10067099003)(18002099003)(22082099003)(56012099006)(261026140227099003)(261026121527099003)(261028144727099003)(261022105027099003)(261021121427099003)(261009223027099003)(261102123227099003)(260925021311599003)(260925022911599003)(260925021911599003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ehrAIefTGy5FYlqcu8n9atJOxsPzB2LANSPbSpwibHdt9WXQLv2e6saIL57r?=
- =?us-ascii?Q?SghScI9gL/tCEQm0RSPkh8fpBVdYc0BZTeusZv2SLxsk2sGjk4wpm8wuVLTh?=
- =?us-ascii?Q?YP5JRo1IrSkVOLlibQL+S3dW04uYpGzynjrmrW00zS/QIict1mz8KZGlgber?=
- =?us-ascii?Q?xnSAkhycIsCx0JfcWYvBEobTwcmIZGWgfZC5WOL3pCGUz4jFks9Mk2Fj5WwI?=
- =?us-ascii?Q?7wNFjIO7qLA1KGgM7+LRA/nLpDyhnNzBchUyawwG5M1A4rJHoTniRkvRQ7pt?=
- =?us-ascii?Q?/rRBP0BR6f2d7Ff+bK7Wphyw2R/ffeIlw85PJJtYcr4YmFiMwO6wZI3L+ebT?=
- =?us-ascii?Q?hHFW9w0Ewh/SJY/4q3PaYhaLdRYqkNOGHxpzbrZPMsvp3EnYKPGHxbjH3Jez?=
- =?us-ascii?Q?/LLTFcbb1cmgfOEl8QLwKtrvYkl3Ku1Dl7GtsCHRyj1lWj6VlAQNNEeCKCaQ?=
- =?us-ascii?Q?VlDYU77G8VtUo//f7tDaB/LFlvWy12BxTr63lNrr9v5tafWcNYgInaeIUyWt?=
- =?us-ascii?Q?bnaiKAAkNqiHmLgnkh3JjglJpehaGmdH0yFAT//zg3s2l+n9xwWXtyWFbAyR?=
- =?us-ascii?Q?zULqkjUCHjKfamYr5wteFfR54uQ37S6w9/zsJoyVX+STyvnCGm1txbXBg9Cj?=
- =?us-ascii?Q?8j1rFRsDC16m/YHxebi4eZTzGQSmlMpJ0vmww6P5VeMAGADB0kkwss4xkPO2?=
- =?us-ascii?Q?V2DYQnGwvOsVI1osIkCU7tnOwhtMqR2g5Zp/Bwk//votUExpnTEdaSsxNwPk?=
- =?us-ascii?Q?vmvW6RLY5HCGS6H60jrVHHKDaAb5Yut1Ht79HcQNvcvW/rL9SvPj20orZRVX?=
- =?us-ascii?Q?tz73ezVKiE3MOh7RBkOKSYmfgHOHUnHG6E1AjmTVvResOFUZs/CrOo4AifGa?=
- =?us-ascii?Q?PQGfWXvkaBKIGJmSw5i6F6Sz5DhovCci2mSCGHdj5ogQr7GBhZbNJ7aDw2dK?=
- =?us-ascii?Q?THJy9Wm11PHUmEthNMbKrCKbkIqiTtd/JWKISJbS3+OBX6p3YdoYFW6EcdUo?=
- =?us-ascii?Q?JUHky3n/TE/AyZmZYYvgErrEODQIYUD/M/wqGFxHTWSz1xux2ueFCd5/tYh8?=
- =?us-ascii?Q?HuATW/S4lBkei0lphLYMv0fjRPXvXOHtnaWoqznk8NADRSrQk7eHkKo9Ywy0?=
- =?us-ascii?Q?B8zP9QnSYsY0/32yw4B7fy/KkHHc9N/ePDUKICh7gf1g3L00ZQPavp6gRMge?=
- =?us-ascii?Q?tYsijBEzsp04sQemiKFXElYrzmBu4MuLNaTM6cpqYeAgoe/yLCqrxwM0Bvof?=
- =?us-ascii?Q?zcEIiOikRdz9IfeZm5HTgSLG577aFDTYpcOnn0HltNc96ZI1DzgBoa8hQgLm?=
- =?us-ascii?Q?3jakj6wm6nxf3bYIXki0l6RPLQxUxLTHoyVY8c1Y0NXNDFNAytl2FdDx3Tic?=
- =?us-ascii?Q?U92IRFA7BqTvEjKgF1Qpy7KTo+ciVEQyFdTO+m8+nfYDdG9j5DDYz7IrERzV?=
- =?us-ascii?Q?1UznRqj4dJbVqx5nS/1/Qb42Ct3fPerMgtfjWBKZzHdQ8LzfXvXAe5qe5k+/?=
- =?us-ascii?Q?FUgF3Ta2IKEqMk8WyM9X8rpZ3btaT/i8O0qorcjMVl7gxPBEoMp6vT5k6Wd0?=
- =?us-ascii?Q?LKElHGoNmsG1MeADLMXNAAcfCqXOyl//EHHxfbHn3fmQ9c/CfWig75Mnm1Rn?=
- =?us-ascii?Q?xOOPKjyBErHuKr4cXdfvwHHEF2xp9giaaeoXDXG62mcpNayYv//i8tHH7pBm?=
- =?us-ascii?Q?fPewg1diDwsgJ91vWjCooSDss3hwoFkqdCTiaZt2vEmeO1oj8Pr9aX+ni1bR?=
- =?us-ascii?Q?68HEAv9Z5oBICbV2SxhLHO9wBP3tScI=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?LG2tJCWlWw98WM9aE0L3Btu85dUFNzW45Eq4AUxx9e/w30gwH2ty6sKp4A1u?=
+ =?us-ascii?Q?TJo4R4yTPziEt5IKx+4OcWf8uUYzKdqYMsj+9F0fnPnOn3uRO6g2XcesY0Wu?=
+ =?us-ascii?Q?+9nW4W6W+iOeiYYz0OdmLBv4GnSaDKoDd3ZbJJaM3vW2SpleU70EbFeH5R2d?=
+ =?us-ascii?Q?luny4D+OtvA+NORj0aczGy4p3ZoB2UeVWwdOO0LaBLRK2W118yvBIBzz4Irb?=
+ =?us-ascii?Q?pqk11hXVs21YA+mQSUoWGqtdP7r7/9/0liM6qWP0bsyDMGT9i7SQ6FMQHQKM?=
+ =?us-ascii?Q?1e47qYFYWFtqOm9CwtG9FJDzXltRiYUDWBnES/65qq+AcsMJfkJ/xnk5U+YV?=
+ =?us-ascii?Q?IIQyONj9kb/KhUz5FViD86OR/amHBjSZudkzHqpUr0mKT0mMLj8UDGlZt5+K?=
+ =?us-ascii?Q?UHMbSSuzCR5Jqgut5hJl4PYjfUoOiPYBGEm89SxOVFar6I8vnB0VzI/aMDnw?=
+ =?us-ascii?Q?WGvr0uq1Bhnq81Jgkg/t5lgFnqRi/O+6aqSdYD1U4yBW2bza8deqEIfMM9JR?=
+ =?us-ascii?Q?H/6ThhZaJVSOYzrhKHVYkXx9jHl5oPNur88H/8ZFoEztTG9jUHo0N2X14atp?=
+ =?us-ascii?Q?bzTP/wrfvCziJyKB7N0SttCwQbzO7UapC8tPObaHsPIN5Snskf57RDfwOPPB?=
+ =?us-ascii?Q?u1897xP9fGoXh4Yc29d6QNnuhZkSVs6lDCR61v7MjhIvPOsXZAXkhZL4h2GX?=
+ =?us-ascii?Q?sx51Oe4M59HUtW3jfE0NnSLNMkSzXGxMYcA7iytLtYDHw4NCJdFTtLiYrcor?=
+ =?us-ascii?Q?Sk65BSpRhZoHQoTo9pZ64scmJ5YEDOHD9KNKl/Kdh35rESOi89mIvmAO11KE?=
+ =?us-ascii?Q?F+TQ4EZv0Rj44dq96mPHnmXm2GX2vY6YtImvM6UqJJLeC4OTPlXIQ+VvEGfM?=
+ =?us-ascii?Q?LmRL9N7mKICDOCQOGBX5VCfviwlxHtYN6L3pKMCnnvzhgBnzY7/ZEqeZQN8P?=
+ =?us-ascii?Q?VZimD6RikOLGwAd/6a7K1eNZYlHSLfSGuA+tMzDR+HbBUt4xRqHQ8dKw6tIk?=
+ =?us-ascii?Q?Z2PzhEmxbd7haI8IegpdAdOH2JSC7CEWVLgGcH06cyJ0VpyLSqGYlBGBDyfV?=
+ =?us-ascii?Q?ftoWqx7gyNWyvPgdYO2CArgb4bD7o0QuyaFtcm9WVf67l+yGwMb1hdx/c+A9?=
+ =?us-ascii?Q?5ON8o3HY/9KJEGZKQGy988fq0BcN+j6A7LzwLeU8ftW6z1l4A20ysqqLHNz7?=
+ =?us-ascii?Q?Bpzwgp5aBjh4a3I4pu0NuQZl/wj3cLMY819rilCM8OboQjU3eSfhQYGlMvU6?=
+ =?us-ascii?Q?ONXdH8XH7R7z4WtBhrqqptUS0AmcjGHp3+UHqyeknLlEfw3LMODFqRDtpLEC?=
+ =?us-ascii?Q?dYRN6ewDUEE3ZRa5NQL3bus6hrFsAFTJC939edzoXtvsPPlbfwhnHzTMwmlx?=
+ =?us-ascii?Q?tMjGXt508dqzGCLsoQxDM5ucguGRx0434H5E2zvofn4cxQZ1xYdS8DPmo5YC?=
+ =?us-ascii?Q?ihzOhVbcranb8Kbh6T+JrgXg/rUCHBp1IZLq08YCMOjGk7PoXinOyOA8b5DY?=
+ =?us-ascii?Q?7RcM3TXJ2iMvC0ZaqGbht2Uh1OnzO5uH5TWeDpJJ9dbifRuBrRIs6Y7kU7ww?=
+ =?us-ascii?Q?Xsks/yIZccA6bau8IlcntRjUgEYArZTeEi8DZVWgm8e7po2G0dZp4NLfGtsg?=
+ =?us-ascii?Q?cPNW1oRErlS1bJ45gmUbNLWZnz7ERMUGg+i51Yszhb1tOzU+Ax+kLYtq0R7m?=
+ =?us-ascii?Q?zKv47kqE+btao0x+xuR9ZY+ZlmwRvVVJZpE+sMELC6imwAOJQm/PvQw/tFud?=
+ =?us-ascii?Q?HSUjo7RqXyZ4+ssZ6/AHszlZsg8Bfzc=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d2afd393-569c-4d06-6fb6-08df3a99cffb
+X-MS-Exchange-CrossTenant-Network-Message-Id: 04a9f52e-713e-436e-6546-08df3a99d8ee
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR02MB7121.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 17:34:00.4391 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 17:34:15.4577 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HV4v60K2VOb1PX9e2ggpx/fryP+WCH8uePLmLXcXRBgh+eE411tzs4rEraTy/txVGCavKbYGKF4BKjDDBFDSb5BkYO+5Dz/ZKyCMUWq+DWo=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9RlU+No4oGHVBY0mryjwRhNgMYFKMJi5dGMDJLX9Jpeju+olQV1MH87MaExe3k6UYYuCEdiGf42Lpy9fVItk5UaWugjmCKAdMVsMqqWNA8k=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR02MB8801
 Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=bin.meng@processmission.com;
@@ -146,81 +145,77 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The e500mc and e5500 core manuals define L2CFG0 as read-only SPR 519
-(0x207) and L2CSR1 as writable SPR 1018 (0x3fa). U-Boot reads the
-former to discover the private L2 cache and programs the latter to
-select its stash ID. Missing registrations leave cache discovery
-and stash setup incomplete.
+The e5500 and e6500 implement cmpb, prtyw and prtyd. Check matching-byte
+masks and parity results, including the separate word results in a
+64-bit register and parity based on the low bit of each byte.
 
-Expose both registers on e500mc and e5500. Use the 128 KiB L2 geometry
-specified by the e500mc manual and a 256 KiB default for e5500,
-matching T1040/T1024. Other SoC integrations can override the capacity.
+Use inputs with odd parity in bits above each byte's low bit to reject
+implementations that compute parity over all bits.
 
-Note the e6500 shared L2 uses memory-mapped registers, hence we do not
-add these SPRs to that core.
-
-Reference:
-- E500MCRM (Rev.3), section 2.15.1 and 2.15.3
-  https://www.nxp.com/docs/en/reference-manual/E500MCRM.pdf
-- E5500RM (Rev.4), section 2.15.1 and 2.15.3
-  https://www.nxp.com/webapp/Download?colCode=E5500RM
-- E6500RM (Rev.0), section 2.12.1 and 2.12.3
-  https://www.nxp.com/docs/en/reference-manual/E6500RM.pdf
+Add the test to the existing Book E matrix for e5500 and e6500 in
+64-bit mode.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
 (no changes since v1)
 
- target/ppc/cpu.h      |  2 ++
- target/ppc/cpu_init.c | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
+ tests/tcg/ppc/system/byte-parity.S | 33 ++++++++++++++++++++++++++++++
+ tests/tcg/ppc64/system/meson.build |  1 +
+ 2 files changed, 34 insertions(+)
+ create mode 100644 tests/tcg/ppc/system/byte-parity.S
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 0dea3a9d2b..3d76b8a082 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1978,6 +1978,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_Exxx_L1CFG0       (0x203)
- #define SPR_Exxx_L1CFG1       (0x204)
- #define SPR_Exxx_NPIDR        (0x205)
-+#define SPR_Exxx_L2CFG0       (0x207)
- #define SPR_ATBL              (0x20E)
- #define SPR_ATBU              (0x20F)
- #define SPR_IBAT0U            (0x210)
-@@ -2343,6 +2344,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_750_TDCH          (0x3FA)
- #define SPR_IABR2             (0x3FA)
- #define SPR_40x_DCCR          (0x3FA)
-+#define SPR_Exxx_L2CSR1       (0x3FA)
- #define SPR_ICTC              (0x3FB)
- #define SPR_40x_ICCR          (0x3FB)
- #define SPR_THRM1             (0x3FC)
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 5db9ea8b70..bf535d3081 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2974,6 +2974,20 @@ static void init_proc_e500(CPUPPCState *env, int version)
-                      &spr_read_generic, &spr_write_e500_l2csr0,
-                      0x00000000);
-     }
-+    if (version == fsl_e500mc || version == fsl_e5500) {
-+        /*
-+         * L2CSIZE is in 64 KiB units. Use 128 KiB for e500mc and a
-+         * 256 KiB default for e5500, matching the T1040/T1024 SoCs.
-+         * Other SoC models can override the e5500 capacity.
-+         */
-+        spr_register(env, SPR_Exxx_L2CFG0, "L2CFG0",
-+                     &spr_read_generic, SPR_NOACCESS,
-+                     &spr_read_generic, SPR_NOACCESS,
-+                     version == fsl_e500mc ? 0x3cb1c002 : 0x3cb1c004);
-+        spr_register(env, SPR_Exxx_L2CSR1, "L2CSR1",
-+                     SPR_NOACCESS, SPR_NOACCESS,
-+                     &spr_read_generic, &spr_write_generic32, 0);
-+    }
-     spr_register(env, SPR_BOOKE_MCSRR0, "MCSRR0",
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
+diff --git a/tests/tcg/ppc/system/byte-parity.S b/tests/tcg/ppc/system/byte-parity.S
+new file mode 100644
+index 0000000000..f4d434c881
+--- /dev/null
++++ b/tests/tcg/ppc/system/byte-parity.S
+@@ -0,0 +1,33 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Copyright (c) 2026 Process Mission
++ */
++
++#include "macros.inc"
++
++    .text
++    .globl test_main
++test_main:
++    load_value r9, 0x1122334455667788
++    load_value r10, 0x1122994455660088
++    cmpb r11, r9, r10
++    check_value r11, 0xffff00ffffff00ff
++
++    .macro parity value, word, doubleword
++    load_value r9, \value
++    prtyw r11, r9
++    check_value r11, \word
++#ifdef _LP64
++    prtyd r11, r9
++    check_value r11, \doubleword
++#endif
++    .endm
++
++    /* Parity uses the least significant bit of each byte */
++    parity 0x0101010100010000, 1, 1
++    parity 0x0001010100010000, 0x100000001, 0
++    parity 0x8080808002020202, 0, 0
++    parity 0x0000000000000080, 0, 0
++    parity 0x8000000000000000, 0, 0
++    b pass
+diff --git a/tests/tcg/ppc64/system/meson.build b/tests/tcg/ppc64/system/meson.build
+index ca398860e3..ffa3060f05 100644
+--- a/tests/tcg/ppc64/system/meson.build
++++ b/tests/tcg/ppc64/system/meson.build
+@@ -6,6 +6,7 @@ ppc64_system_cflags = ppc_system_cflags + ['-m64']
+ tests = []
+ foreach cpu: ['e5500', 'e6500']
+   sources = ppc_system_sources
++  sources += ['byte-parity.S']
+   foreach src: sources
+     tests += {
+       '../ppc/system/' + src: {
 -- 
 2.53.0
 
