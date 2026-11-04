@@ -1,147 +1,142 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1033E606A326
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 14:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF20E606A328
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 14:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=TX3+fWPm;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=MaSTkU5X
+	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=selector2 header.b=Lbs72ZhJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xObvd-0000tt-Ii; Wed, 04 Nov 2026 09:25:29 -0500
+	id 1xOc6E-0002HQ-GA; Wed, 04 Nov 2026 09:36:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xObvb-0000tf-JC
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 09:25:27 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1xOc6C-0002H9-CH; Wed, 04 Nov 2026 09:36:24 -0500
+Received: from mail-swedencentralazon11023121.outbound.protection.outlook.com
+ ([52.101.83.121] helo=GVXPR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xObvZ-0000yJ-Ly
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 09:25:27 -0500
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A4EI1XQ3079442
- for <qemu-devel@nongnu.org>; Wed, 4 Nov 2026 14:25:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- CUR0vUKMZAOsON6Q/xzi9wjN3J/PrcDZDfGX5jo5XeI=; b=TX3+fWPmq/tDvoZX
- 1U6/ni7QR3rUqzZEy7Y1yEjfXkjnnITXUn44YlMh5FbCVGyfOPlk2rBuISDPeqYS
- e/NIrpz10fteI1uCyjn6UqX+tZetZM8yBuLA36EFFYuuIK+WeILBwnuxyPc+tIF9
- d2dm++kdI5h77xDfRYEirHRf0YTDh8vNGus0/BL7O1l2EVqy/JlCHvDxTYhiv2JY
- V5oYAoyrG5lBbCE+YxS6LIwF0ncfNr7xHIaIR1+NNevKWf8XwqOiVlf0l9g7tTx6
- W6pz0+DH+2Uw5OtlJstu9/h4KPCFqqJFNa9Xtqc5aYFuDIJVqXo+bsNOw66qnClZ
- IKpg+w==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hr6bng0u6-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 14:25:22 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-36d2d353a5aso482313eec.1
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 06:25:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793802322; x=1794407122; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CUR0vUKMZAOsON6Q/xzi9wjN3J/PrcDZDfGX5jo5XeI=;
- b=MaSTkU5XrGMj/n3IuLWmLPLh/cZ5UzZ/4rQTm+zNY8MmVBmLhfsZrL0o06hmb6QelP
- 92yS/c+2uWZnKankNa98Y6VHT3FUgL1sk71Ig4JF8jJMIycWmbHT3z+MnAb7TKeztfP9
- emF9Rf8hnurQ0HyVMhUThX0gkVvLNttmjK/trW9UCU8tDGhYqAMCju4Gtq/bnKHyl27o
- X962+2ErlMc4OFxH8WVJDJ+PyvSpj2iYBDyUKkfqngocn6wnQUQ4ssjX7yDWZzo45s+O
- xhnBacqDVFPiyL80zKBZImNtcecfup0sxt854YdTjDlfBaSc2mHL93E7bngaRLaldiYQ
- KYrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793802322; x=1794407122;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CUR0vUKMZAOsON6Q/xzi9wjN3J/PrcDZDfGX5jo5XeI=;
- b=IOj63uRt5YzcdP6F2p61c9E0EpxTvxBpOw5eR4LWdqaX8ZYxqJ5wPBVP5L1SJqzIHw
- x2f+E4++hGmkmHDM/sP2DChlc1gS7dEjG5cDHyRPdClqAdF+lZ3GsM3nhk1eQNZlA1ej
- APVacAu+dnQm/PhG4SB+IBQi9tYHpA0FBAINzgBZYHJMttPH0+FdUrs+scACxXWjrmnk
- donYbT2Tdc1SD+oIoqtnLH9cgKM/BYGYDg/WrninxT8gE14YtFOkjC4LFXtLA1rnz96u
- neQ3P5TmKBHa4rDJetI9Uvvu4nbJL/pgStLLr8kkLQG6LAs3gIPRBk+YqlU4YLvCedP2
- RW2g==
-X-Gm-Message-State: APuU4Z+cLdRULxhQU/MXsnZMfmjGDj7gy2bwzYBtYWtlZq11HOFK2Q6H
- 3Ccjg3Fw00ZAspN3x7wNND+7/p8UgGUS4eFCsdkKrmuXQ0xi5qgcr+W8Yf9hftpRiiZ1jsyBxu7
- oxHoE1eskpWxEGDdKJCjfckNARUpLcASahn3FIc0ElpdYT4SMQU1SKh9RxL89+SDDVA==
-X-Gm-Gg: AYBFou0mwGNhEfwNBAIaxZVVd5VfKNqSWzvVx+eGNz9C26OLiFf02Je5yHaoqHa1RjT
- 9evuoDxtlmDNO1tuLY3Vh/yG/8ZF+zDgJ1++/f5bVAhuAxsD7Fg5GllAhgiEd4U+Ox8ltZq7fMu
- reZJMDHDu451KnPiZiVpIh+2Zr3myVYXUl24wcbknmCe1mPqN/sZ6jiCRe0blMZsTVLFyTr69+e
- +W/YGkC7kMZBNid2veJeX7q2+yQ9JkxliXpGMGPKkeC+A9CNLNL/efNiAypfTvmubJ7S5DTbed8
- 357PmwC5zB7m8oY6lK4Mptf3HXoy7R9rajE1mEUkhWHxipALKKmMacE12ChA1u5vKIBSxWHJqgj
- VOn/Qm5j6g9bF/AjPhPsZG5CCMTm68ulnQTfB9OU0dtGKhQSWCELXOL1ztdh94mHJAWYmt26Idx
- mzhcnXm7gw
-X-Received: by 2002:a05:7301:92a:b0:36d:158c:e31d with SMTP id
- 5a478bee46e88-36d158ce72bmr1869975eec.18.1793802321358; 
- Wed, 04 Nov 2026 06:25:21 -0800 (PST)
-X-Received: by 2002:a05:7301:92a:b0:36d:158c:e31d with SMTP id
- 5a478bee46e88-36d158ce72bmr1869805eec.18.1793802318670; 
- Wed, 04 Nov 2026 06:25:18 -0800 (PST)
-Received: from [172.20.2.143] ([192.210.17.203])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36ca39b8eb3sm10565315eec.27.2026.11.04.06.25.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Nov 2026 06:25:17 -0800 (PST)
-Message-ID: <77c5a6a9-a92b-4653-82ae-05815ec0af83@oss.qualcomm.com>
-Date: Wed, 4 Nov 2026 06:25:15 -0800
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1xOc6A-00024R-Ik; Wed, 04 Nov 2026 09:36:24 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tnkxc28zrjzy/+NwDJFCEBeJ0CqlGbNDQzv+N8UUVxIaK0VRe/zq8yo3J/+C8hxyjTZDA0Ry8Mc2LlBLaVuhntOSD+JexCKfPnKRSYctDDb35VKMkzlGQCvv27PklSpX49BLNCY0GN72l6tJT8Ow0wt+1V2VxCYDM9rD3cpTbZfXK/gNOc98kVTzPpZ4mQNOA7010ZIvh1FrHPcJsTsQSV1d79/j5Uxq3UxE7ZsL7XokET9f1TIkvCLe1LM4tiWoh8FShSc2UsFyT9ALTubuRJU8WegO0xuhIhb+fi95UrXBNGOqlBKCYYxHw1ud6gSyVp2V9gLU8dyUEBjnh6jKcQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LnLgWNQY4BnXm4zdLDtxn4s3JowsSI1ogWD8k29YOPs=;
+ b=b9jopB0IMlrsDU1y2Zgz+PhmhF/2VCj7cGclrqhJUzCbp6nFoYqdU7tQosn3x6M3OdrPgGBzO0J23i0ETGVcgBlDzkgRSTFkjabIZJ5bVRsOSysbrrHwkSKZp/iRc0xJb010t4IcF8O3iQhwVPBJKRB3sJBXtZClkNAwvPPG2soKhfxtpPhw91KG+xsOZE81hkmDN8I7s+8g6FDoCgfT0mLELDhAfuPO/O3zJmttbSw1ATK8WVSVtCUraaogUWmuVB3lmVIwYbyWa0gJ/7lPoSB/azaeMoAJEP2qY7Zn3wX9sg/xxxXZH7Ydz1h2KXbcDCitgNy3nl7rtbjo/iv42g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LnLgWNQY4BnXm4zdLDtxn4s3JowsSI1ogWD8k29YOPs=;
+ b=Lbs72ZhJuCrjxZY+34iPZSQAvk9taqlmaNStkAyNQOBo4oVvlIxUmCstW6QbhO+ql8mNLMORoeHHQxmP4iRPT1OS9DpbFNDGq1hHApHdMJHZWW6/Js/gRQ3wWW+oyOt8gTPCHA6YCxbdvy2nWM5WJKkMhA2zzVGsRNXO3SCiecWtucdzw6fL2u+JJZ11RmCxXZuryuaXMCihvytRsQxscYKaNsACDSPYW3wU5Q3vaMpWbqO0FahCTZsHAOQWESNANpcRjSlTCxm4ZKf/3tfR2lxzCdIeTKkaV8ZjHs1CAYCdlHOPl6sBkkMs2fTNPqA2SGeLnrORhyf1s/h67R7RUg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by AMBPR08MB388037.eurprd08.prod.outlook.com (2603:10a6:20b:78d::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Wed, 4 Nov 2026
+ 14:31:11 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%5]) with mapi id 15.21.0569.011; Wed, 4 Nov 2026
+ 14:31:10 +0000
+Message-ID: <524d2fd5-a63c-4205-bacd-24915b211a4b@virtuozzo.com>
+Date: Wed, 4 Nov 2026 15:31:09 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] scsi-disk: fix UNMAP and WRITE SAME racing with
+ inactivation
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-stable@nongnu.org
+References: <20261026174220.674460-1-den@openvz.org>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20261026174220.674460-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VIYP296CA0001.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:29d::17) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gdbstub: reset supported features on Supported request
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- brian.cain@oss.qualcomm.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,
- marco.liebel@oss.qualcomm.com, Justin Sapp <jsapp@qti.qualcomm.com>
-References: <20261030222146.558366-1-pierrick.bouvier@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261030222146.558366-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA0MDA1NiBTYWx0ZWRfXxXk+Ugyft4oP
- M+dma3Ug1AaREUM14EQZ966B1DBwI3vkcp+RU8egYVi6DuKjCB2NO2J6F/+7bo6SoiE836R0yJ1
- Rtam+kvSNsfeF0oqriW4uKuQLfrs357KhuxklJWBcLRDXdOyfbEYAdJozMcjIWRZ1goNrmFsaX7
- O9Vz20Rejn3pJjXMCXwGsWZPx06Efn+F6l5YdM53185GeR6z8M5KiXCiTvN/Gg9rruIPWdWLdRr
- dheo0JgxwYsYQMMy4ldVDFEpNIM5HYZarGNAsW18gfULC/lfLfQVxzrPlE5X+bKC/848KimRd4X
- cP18BOeE3XwKeXWtfxzfd+DYI1a/Qomc/5mVoe0ECkqyObkuwl90KB1yqpiD6sXS9kP/GAtvUCE
- BCrRaWnr7DyKnNJId05y4PypAl1N7SY13HkTLqWbYi0DKKx6YwKjaJ9CG3LMkTt8/uxfPpTKvg9
- zrlw56zDZBqIOKvzVOQ==
-X-Authority-Analysis: v=2.4 cv=KLLPn1Fo c=1 sm=1 tr=0 ts=6aeb4052 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=3CSVYe8HblTQFsWiJzwA3g==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=CCpqsmhAAAAA:8 a=EUspDBNiAAAA:8 a=p8_FKq9acrWjzv0kNlIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=ul9cdbp4aOFLsgKbc677:22
-X-Proofpoint-ORIG-GUID: mOhWskNBV9Oq0_AFDbwzDhJxwv4ugoaJ
-X-Proofpoint-GUID: mOhWskNBV9Oq0_AFDbwzDhJxwv4ugoaJ
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA0MDA1NiBTYWx0ZWRfX4wLlyucT5hMo
- Ab/cR/qq6L0wjX1pFMVNc8JlGzZWtP+mIXuKhoZpusuahAXtxbUumJuNqKLD9xQOtGKmWDE4RK4
- 9slyViEgi2kwYf2U6QI/l84i/FNy6do=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-04_04,2026-11-03_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 clxscore=1015 phishscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
- definitions=main-2611040056
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AMBPR08MB388037:EE_
+X-MS-Office365-Filtering-Correlation-Id: fea37137-9ebb-4e2a-cc87-08df3a80458e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|23010399003|10070799003|376014|261022075727099003|56012099006|261022105027099003|261009223027099003|261028144727099003|261026121527099003|261102123227099003|261021123027099003|261021121427099003|261026140227099003|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: d0mtK4BveqNjIkZRpquoSjg+nrh27F5w1qj9hVs2AAzFJk4jns6HINu8CG0BmE42OIpZo+7Mv2F8uUI6t7KBs4hlhxQ48vTatTM1+xPcYatZ8gBl1ChEEPiKfUiXcsTo/2rKtti/qtJMS4ioiSI5goXFhvJAEniaCPjKStZZUpQo1Tk58snRHcIHwnRbMr78ae5C5ilNDTypFQG3U0nwu7Bh+k6mMBwdLWRFOLHtuQMxWuo7PqiqISlfq0K0/FLnl7hZSIWRRazvOkDhTBBnsqnDDuzhwL0uUQJGhklDMxnVO21xOWsq2WFrTiD8ecnEq19whep3IPxjVhVWZPLjKOPTJHMpGUk9uMOYkDMmoUPjVHibAzJ3hZc4TPwIVSlgLSd0VVHftBBRZp1SxRGkaSeVT/DvHKS8i7WfZMjpR76sUBaU7v0CX5ihDsT/5XD23MKV8QGt83dw4ube/IBGYm7Qs2ULSmDhrA2oj+73vlIy80Gs1WIYyaRowPp1hcBs/ucN1lC4PDg4Nk3jR1Tdv+V8ZyUfRcS6eyFYeCqBef3IovgRC5duhdPigKdC7jiRSma0WhGZZSYqcxPbFIBdSborbT4FJI0b3guezvuWy1m0HskiroNWAPi5T9N6Jo62
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(23010399003)(10070799003)(376014)(261022075727099003)(56012099006)(261022105027099003)(261009223027099003)(261028144727099003)(261026121527099003)(261102123227099003)(261021123027099003)(261021121427099003)(261026140227099003)(10067099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z0plTnVnb0o3anRQRVlmaVBuUmlrZUczNVZVQUZVS1JkMFdVWExBaGJOZSsv?=
+ =?utf-8?B?aEUvaEdNYXhpM1ZWSEdDYVA1ZXVRZThwUUZyeUZnQkJzYnphdnVkcFFITENM?=
+ =?utf-8?B?dzhjRVpLOXlmMlBOcWljWjBDZi9maUtOb1RkS0d4WGtoUTFaeCtpMTRiUzdX?=
+ =?utf-8?B?MGpoT0YvdXFXRFUweWY5RTliNXp3dEJVWlZNSEVQcElUR25VNG81WGNSN2w0?=
+ =?utf-8?B?TmFZdm85dGxzdmd1cTlOMnVtR3FaSnFXbHpLVWlGUlhjSFNwajNQbDZCa2R4?=
+ =?utf-8?B?Y29ZbE9TTzZrUmI3bzRmQ1NhazdJc2EzSVJhanBWYkxMRVFoMFFucmU3QXdj?=
+ =?utf-8?B?NjJYY0NMWDZhMG1IdE16UEVSWUhVZmQxT2YxbjhiYWxKY3dtSjdJelZsNjNI?=
+ =?utf-8?B?WjdTZ1VjQTJsZWpSOGQ2WE5nRTlOL2lDMFNwWEpkN05yRXFma0lZKyt0d1J4?=
+ =?utf-8?B?SWx1ajZRWVk3aDR5cG9GdDExamo1YWRMZldwZHBjdHZVUis1NGRWSWxQZms2?=
+ =?utf-8?B?c1RSMmpNbkxOSC82ZE9UR3N4TjVBZEY0QUlRQUpKaXR6VERqa29sTHlhWlQz?=
+ =?utf-8?B?ajFnVWJDNlhGaGJNeVdSQ2FUVkFoZkRZdVVWRkZMejd5d2NBa2QvZ3V6dkFt?=
+ =?utf-8?B?aytTZTI1WW53MVlScW5HdDBhRzdmTEJOY2dnakxFcTJYZ21hdWZJK2hjb1N4?=
+ =?utf-8?B?RTNyaFdRczBLRm5aVUpyUlpIVkpxSzFUWE1FZi9mUEFXSzNnckxKV2dzbnRZ?=
+ =?utf-8?B?S3JrK0dqY1k1b1VlTUowcklxK3ZXYjJMeUw0OFg1NG5xNjNlbGlqUkxqVXVM?=
+ =?utf-8?B?Q1VNL0Y5b3BVZFJrdnBTMDBKeC9wcVV1Uk5TR3gxZFU4TXN4emVITzcxVzdw?=
+ =?utf-8?B?b1JuRkVwU3A3Vy9LcmsxU1dTbUdyUlUvUHFNYW9zbEJINi9GdmJDVDVuYnVq?=
+ =?utf-8?B?SVV4b2pNZ01CTlJsY2diQlg1azJEWER4K24rZER6QXFCRkEyYkNxREI3WUxG?=
+ =?utf-8?B?dmhldmtxdElhS0Iyd0pHWW44cDREcGNkVG1lM1FxbWI3R1BvaHYxYWJ1eDQ1?=
+ =?utf-8?B?eksxS0ZBN2NKbUJoVnhlc3BFOEVvc2pqU1dEeXBQdWhlTkwrdzRiQXJSekQ0?=
+ =?utf-8?B?K0N3MXVVMGZIcEtJck5FZitKRUdWTHFvQm5Sc00zcmhQci9IdUZFbURFV1R4?=
+ =?utf-8?B?UUVpWHI4RXQ3bEUyNExaaDQweUJYb2lyQlM5b0lrQ2U5a00xd1QzYUpDN0sz?=
+ =?utf-8?B?TGkvUDZTUmE5WkI4ZjVWbCttK0d2WXJaM3VCa0lQR1lqUzhCTUN3U09mSmo1?=
+ =?utf-8?B?WVFTS0hJbUM3UU0vVVpjdlNQTlZEQStwd3BNemlCVFJRZzdPTW9QaTROTHFX?=
+ =?utf-8?B?MStudzY2dXBDemRoTWMwWVpwbFB1bTE3UytQSDExMlBlS1AyNndHaHo1a2xx?=
+ =?utf-8?B?cmFvU3hRWFhDOEd0UjNDb3RMOURsMlY1K3ZrU1NpbjFwZGNPSmdpOUtCNlNZ?=
+ =?utf-8?B?S0pMTjZoeDlNbVpuSkIxSEt3bjZKSDJjWGRUdjU2dmVuLzF3RkFvNk5nWmlE?=
+ =?utf-8?B?ZGtDTGVUNHltN2F5Q0dUM1I4WEFjcU9pOG55cGZ2ZTFmaVArV200VVd3Q3pW?=
+ =?utf-8?B?Q242WU9Kb3k4aC80UmZOTFljTkh3THB5T25wNG03ZTJBcml0aE01TEM0SkNL?=
+ =?utf-8?B?M0Y1VXZwa2VZcDQyMzJleU55UHhJdVhHckt3QnlMbFZQb3UvVlZsNGZNaHpE?=
+ =?utf-8?B?K3VhM2FONEQvTEt4WndIYnJtMjBaVmM2RE5iUmRqTXJjeDF0MFZmU3lNYnMr?=
+ =?utf-8?B?RnJ4UEJ1aVN2dUx2SmRuR0FzdGx5ZU1Wb0dYN3I4UE9sR001TzBqbzdyRXVG?=
+ =?utf-8?B?ZjRsOTROSnl2cHFBV2N0eThqdWp4Mm1VbEwxeUtEek4zTGJDUzg1MTJGNTFQ?=
+ =?utf-8?B?K0NTaUhuT0VNcmczUEVqd0E3SkRaMmRtWXh2QjU0UmhoZXZhYmRUbTFIdzNU?=
+ =?utf-8?B?dGtUSUUvaS9TWkdvVE4wVWZlclZ3bG1GL281UW1jU3pOQmU3cWRqUGlxVUxV?=
+ =?utf-8?B?SFlTZHhJaXRpaVhHbDdsQ053NWtEenpkUUozOEdKcEFPQTl6YktNL0hkMHdk?=
+ =?utf-8?B?eDBIUnRKUjJtelErcHRuOVdMOWRMSWYxN2xmc3dhbjFiU3ZBTy90OXRmRit2?=
+ =?utf-8?B?TEpHZW9RbHFpZHhVdDc0QzJYSzVHZzJJUys0OWhyYk00aHgxaklkZEZYc1ZR?=
+ =?utf-8?B?OXR1Q3pzbXNhaStNNU1lRmJmdnMrOTdhdXJZT2Z1RExyeldoS0lLWktwUFFh?=
+ =?utf-8?B?SVptdzNsT29FUTIzRFJqK0pCeXQ4dENTMmUxWkllN2VqMThtU040U2RoeVV5?=
+ =?utf-8?Q?5Bhrofu5PsoiQGfMW1NqFg4TgZ7Ok1Z1le8tJM3tKFSiS?=
+X-MS-Exchange-AntiSpam-MessageData-1: 4StA2Mq/Awt+Hg==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fea37137-9ebb-4e2a-cc87-08df3a80458e
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 14:31:10.8456 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: r92DO5P1FZHXOs5D6n6plk+lsTsMab4JmNTQfZmwmZDpU5KjRcTOGwYUl0vtrpFLJX7VbuGDTZURIaA5Q4K85g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR08MB388037
+Received-SPF: pass client-ip=52.101.83.121; envelope-from=den@virtuozzo.com;
+ helo=GVXPR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -162,63 +157,45 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/30/2026 3:21 PM, Pierrick Bouvier wrote:
-> From: Justin Sapp <jsapp@qti.qualcomm.com>
-> 
-> https://sourceware.org/gdb/current/onlinedocs/gdb.html/General-Query-Packets.html#qSupported
-> ```
-> Whenever the stub receives a ‘qSupported’ request, the supplied set
-> of GDB features should override any previous request. This allows GDB to
-> put the stub in a known state, even if the stub had previously been
-> communicating with a different version of GDB.
-> ```
-> 
-> We exposed this by connecting to gdbstub using a gdb client first, and
-> then WinDbg (EXDI) for windows kernel debugging. Since they both
-> differ in their multiprocess support, this was confusing EXDI.
-> 
-> While we are here, fix the same for fork_events in user mode.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  gdbstub/gdbstub.c | 6 ++++++
->  gdbstub/user.c    | 1 +
->  2 files changed, 7 insertions(+)
-> 
-> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-> index 0a328b0dd48..dbb2000c817 100644
-> --- a/gdbstub/gdbstub.c
-> +++ b/gdbstub/gdbstub.c
-> @@ -1679,6 +1679,12 @@ void gdb_extend_qsupported_features(char *qflags)
->  
->  static void handle_query_supported(GArray *params, void *user_ctx)
->  {
-> +    /*
-> +     * Reset multiprocess support as a new gdb client may have different support
-> +     * than a previous one.
-> +     */
-> +    gdbserver_state.multiprocess = false;
-> +
->      g_string_printf(gdbserver_state.str_buf, "PacketSize=%x", MAX_PACKET_LENGTH);
->      if (gdb_get_core_xml_file(first_cpu)) {
->          g_string_append(gdbserver_state.str_buf, ";qXfer:features:read+");
-> diff --git a/gdbstub/user.c b/gdbstub/user.c
-> index d810f0f38c3..9b6d42d210a 100644
-> --- a/gdbstub/user.c
-> +++ b/gdbstub/user.c
-> @@ -701,6 +701,7 @@ fail:
->  
->  void gdb_handle_query_supported_user(const char *gdb_supported)
->  {
-> +    gdbserver_user_state.fork_events = false;
->      if (strstr(gdb_supported, "fork-events+")) {
->          gdbserver_user_state.fork_events = true;
->      }
-
-Ping on this patch.
-@Alex: I noticed you have an 11.2 series going on, this could be nice if
-we had a chance to add this patch there also.
-
-Regards,
-Pierrick
+On 10/26/26 18:42, Denis V. Lunev wrote:
+> This email originated from an IP that might not be authorized by the domain it was sent from.
+> Do not click links or open attachments unless it is an email you expected to receive.
+> scsi-disk splits UNMAP into one discard per descriptor and a non-zero
+> WRITE SAME into 512 KiB writes, submitting each step from the
+> completion callback of the previous one. A drain in between only waits
+> for the step in flight; the next one is queued by
+> blk_wait_while_drained() and resumed by drain_end. When the drain is
+> the one in bdrv_inactivate_all() (end of live migration,
+> blockdev-set-active), the resumed request hits an inactive node:
+>
+>   bdrv_co_write_req_prepare: Assertion
+>   `!(bs->open_flags & BDRV_O_INACTIVE)' failed.
+>
+> We hit this in production on a guest UNMAP with 38 descriptors.
+>
+> The fix follows the one Kevin did for IDE TRIM:
+> https://lore.kernel.org/qemu-devel/20260421161132.99878-1-kwolf@redhat.com/
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Hanna Reitz <hreitz@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Laurent Vivier <lvivier@redhat.com>
+> Cc: qemu-stable@nongnu.org
+>
+> Denis V. Lunev (5):
+>   scsi-disk: check all UNMAP descriptors before discarding any
+>   scsi-disk: fix UNMAP racing with inactivation of block nodes
+>   scsi-disk: fix WRITE SAME racing with inactivation of block nodes
+>   virtio-scsi-test: split virtio_scsi_do_command() into submit and wait
+>   virtio-scsi-test: test UNMAP and WRITE SAME during inactivation
+>
+>  hw/scsi/scsi-disk.c            | 277 +++++++++++++++++++--------------
+>  tests/qtest/virtio-scsi-test.c | 173 ++++++++++++++++----
+>  2 files changed, 308 insertions(+), 142 deletions(-)
+>
+> base-commit: d73149283205645625bfa9fe029cfb68e4c4a9ae
+>
+ping
 
