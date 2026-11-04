@@ -1,151 +1,118 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8084B606A332
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 12:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7841D606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 12:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ZjowOQOY;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IwPv9hQk
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=g7kcpY5T;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=XaltCk8a
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOZeK-0003Fs-VR; Wed, 04 Nov 2026 06:59:29 -0500
+	id 1xOZqj-0006SW-2L; Wed, 04 Nov 2026 07:12:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xOZeI-0003Bd-Fb
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:59:26 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOZqd-0006SD-BN
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 07:12:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xOZeF-0007Ls-Sb
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 06:59:26 -0500
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A4BZtjJ1667531
- for <qemu-devel@nongnu.org>; Wed, 4 Nov 2026 11:59:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 8aX7FSyrSVUBULNEkewaXvKE/6wVPdeTnuuupaou7fg=; b=ZjowOQOYBBSR263D
- hm4HHXMsmGKFou/UCU3UdIjVBJkGWK/dLjPhOOfTIsOi2Fs7iqmSFnQX4mztOGm2
- QJemMcneNqmyL5B7cb6NDJuekODzvuIOIamW2uwS3zlxojwJSDpgSpcYTRqOh8Be
- Nf0McVoGXFsv4RJD6cG/lXr6E83QjNBXL8YuyXA5Ra0/OYpPObWeJ5NOHUa4U3KL
- Q26B/LQf/jgNT5fYtn+PjtnI4nP0G6/Co2D8xBl+9pDJ26QhCcXWbuGWHdFFOhFd
- cUTOxLOfYWSVDNS6BoSFPO11Q0M3HJZjAIZNzjeB1UBveE5aZPby0chqw1Q2zTYg
- n77xZQ==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hqn8nkpdp-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 11:59:21 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id
- a1e0cc1a2514c-980b637ed69so173468241.1
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 03:59:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xOZqZ-0000u1-Sf
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 07:12:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793794325;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TaFd8yqxjDoiVx1rqBbqQIMCjGs2uGkKNMrp/2HoNyU=;
+ b=g7kcpY5ThX2OyruOQt2vBzt9NCowHZPDsnME/rWfL2YImXuanYh7gl332NSVgBEYX17GNI
+ 5gD5NXgY591P90FtSirjp0zVQHc8RgQhWGWuUSQvw8QFkCLQElZTMrxeY/OC1xtosagg5+
+ e6w6UHugB3/HWcBok2lDFWVnvSbUlyI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-2O6uAAbuP-ivCexN6ga2dw-1; Wed, 04 Nov 2026 07:12:04 -0500
+X-MC-Unique: 2O6uAAbuP-ivCexN6ga2dw-1
+X-Mimecast-MFC-AGG-ID: 2O6uAAbuP-ivCexN6ga2dw_1793794323
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a70b42bab0so9711415e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 04:12:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793793561; x=1794398361; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=8aX7FSyrSVUBULNEkewaXvKE/6wVPdeTnuuupaou7fg=;
- b=IwPv9hQka54T9QTBSwG6yslEcxai3jwAvQFuYmnATLLku7xsCxppgxjlE+ZvMLs9ov
- ziaRHzSkkkkUwz6Wo10l4uau8i7YUtdhQztZjDJs86h8dSLLgbbPdngaoGUsffCm9nkk
- JptQqrx8GC59vzdeuFeVfujIAwM5fw9zfqSCUTxzRxht9u4sUxLuh24DZxcSluglwGaT
- u5PwfOMY1FnVQG1fWk94Qcl8sWbkrSEeOBEnU9Ji/xBoPpnVop+iHUDHQYVKqX3YYLX5
- jecwt+u2hsrNpPMLKsE7eGh55qdfkJ/PcAZQcKwj05rkw09BkBp39BvRAYtnOG2QmtqK
- sKJw==
+ d=redhat.com; s=google; t=1793794323; x=1794399123; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=TaFd8yqxjDoiVx1rqBbqQIMCjGs2uGkKNMrp/2HoNyU=;
+ b=XaltCk8atx9dIY63QO4XeitEpe24cBDCwBJUjFrSfKBMsSiFlVIKOw0IzUbDjTIu0w
+ t3/qgX6jFFjFdmAwM6UsTegJuHaqHDLPLlXuiFVSVovoFV3vRHzbkKhPVqKuKUHztviW
+ IeSua2ErG0ZtoWsIySYICAFnslzELKh51h6JvPGKxrHW0cV4Xw6jZ6xE//mJNcnnYEoU
+ f370xBU8OLJoATx6xBayQDUgggbtYY/Q5iUjycsCPURwDZd9Nspu/XTb/3qeWhHKiYmF
+ BSxHitYecN5+m3Rtec6LybMqTqogRsvB3+75w9me049hROhr0vJxyNUc/gNcTjtgbRz6
+ kfDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793793561; x=1794398361;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=8aX7FSyrSVUBULNEkewaXvKE/6wVPdeTnuuupaou7fg=;
- b=dzzRHzhrgiOSmHIRBu5vvzU0ZfcFYcADv9NMa4IDz+K3Q3tZr8Yze4c7Opq9jJewhr
- 05oYkw6WpbTFD/tikj8HaZkaNj3KpHetamp4yr3sVCGvQ5tC5U6jnivTHryMAT3BX4BO
- UIs60cMYMB3KItbG4dAgeUTewOgZiwSFTHwyVtu0CgWOXxkMjdLBTCyL/enPas9fFtQ+
- Je8YjZvIbvO9IX2oDA8nPX2KSfuYGZ+2VoHi5uYWAmDzaAFV3M4c7fRfXBWwtCc41uMU
- wdEtBb22zzUl6CUqvvyT4PHLt0DHNxs6L78ibumDsADQudOh8doa+r3MTGWhsNbg4kB7
- GG2A==
+ d=1e100.net; s=20260707; t=1793794323; x=1794399123;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=TaFd8yqxjDoiVx1rqBbqQIMCjGs2uGkKNMrp/2HoNyU=;
+ b=WTFXDPK8xRfv3WP8oQ1ngaGPmyQCCaA6yiM2pbvN8pR/f1+PhndthjjuGGHQlutYSx
+ cOA+q+PL5delLzyHnVGPijmo+fgINovADKIUQrJ0xmSdP60HV2U5WT6DrFZkH9Hb6Ysl
+ mFniA0+65am3DqYSbjkGm+xlU0hotDWP2Mguy+tlMNS/Pb5STHyeuU7YmcESNHY9Py/1
+ wHSwlEB5oBviszHOfQ+qrItAGNqTG8qbLjPTM9/9xWPTlVYJT+bdDFY2esHnwrBuxKAs
+ 5vDljTMBmNZIpprDrWw5DyP+5T/NR4u4wF3RmBNIfBtArttXoSwDbDkow/BJZ+sdEaTu
+ 9BBg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxo58QhY8C5EloHIL7vp5419vqoqJWIOjlhIwvmXK3qscMt/ORixErMmUrzIWMfJBeF7STu1V1Pyj+a@nongnu.org
-X-Gm-Message-State: APuU4Z8mkyc9Q09lR1G/+cRV5PD4/CljU9PPuCc6RQyNuu/Tm9qd5a61
- P/HQ5lFPjlWwADo7iq+IDAzwI+2GyrXLCL7HYtr9eDtHa8tsoIP4pFbrbWFzvh4Ft/yvlHo+oWH
- 52mZMhKWmXBipmKN/HqU+KBZANJ2SxapVEw25Zrl0L2j4VvJFNAWvPJvXM1qTR4eAng==
-X-Gm-Gg: AYBFou1UJQOkq5cNazSpVhmLSExZdobdKHn6mNwoSccMq8qgV+tYxZLC1SKxOo1KDDL
- YeU8EqMKC62ASr01BDS9pPr5RUxczPaogDKYTFWmEJ4gM6mIEvcz3MAtR3ihQWVR93nh/t+o6ET
- j7JJ3nf3MPAxmq4RMb2HoPR4liHpSLPB+XzJuAcluzO27j4bxTirbJ23IZCVKSPhFi/5vvMDNYE
- czNkNFOX5D8GXWbz5Cg9JyS+ptr33B4WV0GSSqHdTnYiy8iMw0/99Qkdho8wPbEMOgA6gv9XthN
- ooWoEBmwr0c+Mr+1u2zpXtc/YjcuUbGA8Mrg0IQrGg0R/QF+YZoG5j/i/K/jVtsbqq54nO8scq4
- R0Y1fJhFlODtXK1pJ9OfsQudkJ1rK1hyG2cvrXX/Lb+U9WJEoH2qyOukJrqKIKCX7SLeFBX4jBn
- fmCW3xoA==
-X-Received: by 2002:a05:6102:5126:b0:7cc:56a:58e0 with SMTP id
- ada2fe7eead31-7d0725e16d4mr4836946137.21.1793793560537; 
- Wed, 04 Nov 2026 03:59:20 -0800 (PST)
-X-Received: by 2002:a05:6102:5126:b0:7cc:56a:58e0 with SMTP id
- ada2fe7eead31-7d0725e16d4mr4836941137.21.1793793559882; 
- Wed, 04 Nov 2026 03:59:19 -0800 (PST)
-Received: from [192.168.69.229] (pmd666.hd.free.fr. [82.67.153.177])
+ AKwUvBwIDXpZPi/Ic8omGmS6LRi16DC8NvJzgjU3TM1IHWChx3+O4TJP1zPdMzOBTCZRKkTZL5whUlQgBOg7@nongnu.org
+X-Gm-Message-State: APuU4Z+RkxaXZFKzbTiy90iKlzmrQktuLnNeHxJqroLZqkcJqEdybX9+
+ mJByyIHDCS/PGowoYhRL3PFhg3rEbhJiD7Uu9NpgY+4DufosLC7KiDVwoHXqKQ52HVty6u3I4/C
+ TQVcGDEpdNq7lFfTgHWfLVgJl/S+gkMeRhNgvOh+q2nZscn/7MfYQld/w
+X-Gm-Gg: AYBFou1c1Z62oW0lmkxDUDzK6zaOsJ6oa7x5wXs3SLbsBF3Zp4PsHWN/+PnnQP/NeRp
+ Ga8e2seyrys/x6T7PV8I7M/+r7TCzl9gNDzfxAA5r5HOaU9zHXBoeksE9f4Sc2j9mDZChRl5jLM
+ JNzly8Ytvi10E45WrpAMJyjTz8Uxfl6ost/w9+DzLTRQqnxJp1ZuuzVc43AOqes+YEkd7k4RebG
+ sDTPoWuso2UIlbci2X0PMsP0Do1drESmCu/Y04NOyLqNe9l0UzqA0cyaCqjwXVIt3YYtuJwdAqI
+ rCeIj5P7bsEZgrqZ9Z9741rBHh/7YpeqMdhWzjXndisFKF3XbJWuiOtechkcBcOte4JPaZ06ooV
+ niDRnsACvtwhneVcYn9ZMK6k7dhKLfW3h5kdWPQWXEw==
+X-Received: by 2002:a7b:c8c2:0:b0:4a2:1104:7ca7 with SMTP id
+ 5b1f17b1804b1-4aa8ac7dab1mr347004245e9.11.1793794323128; 
+ Wed, 04 Nov 2026 04:12:03 -0800 (PST)
+X-Received: by 2002:a7b:c8c2:0:b0:4a2:1104:7ca7 with SMTP id
+ 5b1f17b1804b1-4aa8ac7dab1mr347003785e9.11.1793794322667; 
+ Wed, 04 Nov 2026 04:12:02 -0800 (PST)
+Received: from redhat.com ([2a0d:6fc0:1506:fd00:9e19:9994:44b1:e6f2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48fed552aaesm3695920f8f.40.2026.11.04.03.59.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Nov 2026 03:59:19 -0800 (PST)
-Message-ID: <30ef7862-98ba-49aa-822a-677fb2258d9d@oss.qualcomm.com>
-Date: Wed, 4 Nov 2026 12:59:18 +0100
+ ffacd0b85a97d-48fed0844c8sm3821494f8f.26.2026.11.04.04.12.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Nov 2026 04:12:01 -0800 (PST)
+Date: Wed, 4 Nov 2026 07:11:59 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Ard Biesheuvel <ardb@kernel.org>
+Cc: Tushar Dave <tdave@nvidia.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, marcel@redhat.com,
+ "devel@edk2.groups.io" <devel@edk2.groups.io>,
+ alwilliamson@nvidia.com, Jason Gunthorpe <jgg@nvidia.com>,
+ Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH v2 3/5] hw/pci: add fixed BAR fw_cfg blob export
+Message-ID: <20261104071037-mutt-send-email-mst@kernel.org>
+References: <20261102181241.3077981-1-tdave@nvidia.com>
+ <20261102181241.3077981-4-tdave@nvidia.com>
+ <f46e21c2-a0f3-460a-a7a3-eabf19b7d9cb@app.fastmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.2 4/4] hw/intc/arm_gicv5: Use correct type for
- value in lpi_cache_get_hppi()
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20261103172616.2400758-1-peter.maydell@linaro.org>
- <20261103172616.2400758-5-peter.maydell@linaro.org>
- <CAFEAcA8X1ARhpncsz=kE2JxFjALGej4ycw3hus=m5kfcVSJXYw@mail.gmail.com>
- <50dcaa06-1f02-4662-8c4f-9ce2ab5e923a@oss.qualcomm.com>
- <CAFEAcA823iF+bJGd64VJ8oJYsWf1tTthrifWea3ECRS4tx9cGg@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAFEAcA823iF+bJGd64VJ8oJYsWf1tTthrifWea3ECRS4tx9cGg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA0MDA0NyBTYWx0ZWRfXwkeiQn3XvtaX
- 1rIzOwd4/okKdgY/SP6zk++u4+4x0CBYSMUpjFfnxPxuQCOei5fNruDQXlzViGukDB9wdZcIbjL
- Yk75UmyUKhvYvxO30aHTmb39BbqzqcyvqYMLv+DftC9FDjgM2kvKPvg2+NfULwFCuojGXOyCYeA
- qof+8PVJMsi9JJABb+KBVkuDxr9ege5lAhInNKe8TWuHU3uAKCW/WdlcQufgE0BKSoPQtaaf/qD
- C+SyR1Tw2vcg/qEpFHHgVIBfj9laoV/nMjVfESMhiO0UOEv2pfr/9cUZ2j4luNTTdn68S6AE+wP
- BN1FxbNGSdSu8Ws0MlIlSN8o446BGlk7Tz4+JtckKPzsw1NSNopiSi/WG1jWFu502R68uojs3f+
- KtdLGOpNmmuQ1nkpIbCl75yFe9Io20Liyw5yrE6KNyxpgx7Ntt6OX50MHyYOOxEatjuKBftZk1Y
- mP8itQT1HHRBUt2/XEA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA0MDA0NyBTYWx0ZWRfX1twLVhPa/erk
- 8fk5G8eJxF33v/ewCzE9gQtEWVfTIDx3FbLm03yjOKqKB2ixDMLafD2UMBZlPIgRpEW2MLvSQt6
- z6OC9LSbxjYriDWpqHp4A1nNyUVnGwQ=
-X-Proofpoint-GUID: Yf-gyUwzFHIy_rCkTLTSjTYnJA1OsmmW
-X-Proofpoint-ORIG-GUID: Yf-gyUwzFHIy_rCkTLTSjTYnJA1OsmmW
-X-Authority-Analysis: v=2.4 cv=As17T+9P c=1 sm=1 tr=0 ts=6aeb1e19 cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=69wJf7TsAAAA:8 a=6aJsMt4MTb09bz_f13sA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=o1xkdb1NAhiiM49bd1HK:22
- a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-04_04,2026-11-03_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- malwarescore=0 adultscore=0 clxscore=1015 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611040047
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+In-Reply-To: <f46e21c2-a0f3-460a-a7a3-eabf19b7d9cb@app.fastmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,90 +124,63 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 4/11/26 12:46, Peter Maydell wrote:
-> On Wed, 4 Nov 2026 at 11:24, Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
->>
->> On 3/11/26 18:49, Peter Maydell wrote:
->>> On Tue, 3 Nov 2026 at 17:26, Peter Maydell <peter.maydell@linaro.org> wrote:
->>>>
->>>> lpi_cache_get_hppi() is a function we pass to g_hash_table_foreach()
->>>> to iterate over the LPI cache hashtable.  This hash table has keys
->>>> which are GINT_TO_POINTER(intid) and values which hold the L2 ISTE
->>>> value, allocated as "hashvalue = g_new(uint32_t, 1)".
->>>>
->>>> The function is passed the key and value as type 'gpointer' and has
->>>> to cast them to the real types itself, but it incorrectly casts the
->>>> value pointer to a uint64_t*.  This works on little-endian hosts
->>>> (since we only read specific fields of the L2 ISTE using bitmasking),
->>>> but won't work on big-endian, and trips the clang sanitizer.
->>>>
->>>> Fix the pointer type.
->>>>
->>>> Cc: qemu-stable@nongnu.org
->>>> Fixes: a0562ada75e ("hw/intc/arm_gicv5: Calculate HPPI in the IRS")
->>>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>>> ---
->>>>    hw/intc/arm_gicv5.c | 2 +-
->>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
->>>> index fd6456cd8aa..a362349e5ed 100644
->>>> --- a/hw/intc/arm_gicv5.c
->>>> +++ b/hw/intc/arm_gicv5.c
->>>> @@ -390,7 +390,7 @@ typedef struct GetHPPIUserData {
->>>>    static void lpi_cache_get_hppi(gpointer key, gpointer value, gpointer user_data)
->>>>    {
->>>>        uint64_t id = GPOINTER_TO_INT(key);
->>>> -    uint64_t l2_iste = *(uint64_t *)value;
->>>> +    uint64_t l2_iste = *(uint32_t *)value;
->>>>        uint32_t prio, iaffid;
->>>>        GetHPPIUserData *ud = user_data;
->>>
->>> Looking at this again we could also make the local variable
->>> be uint32_t; but getting the type wrong on that doesn't matter.
->>
->> Should we use GUINT_TO_POINTER() when inserting in put_l2_iste()
->> and recover here with GPOINTER_TO_UINT()?
+On Wed, Nov 04, 2026 at 10:59:47AM +0100, Ard Biesheuvel wrote:
 > 
-> You mean change the type of the hashtable value from "it's a pointer
-> to a uint32_t that was allocated" to "it's actually the value" ?
-> We could do that; we'd need to update L2_ISTE_Handle to always have
-> the actual l2_iste word and not the "maybe we have a pointer to it",
-> and put_l2_iste() would need to update the hashtable entry always
-> rather than only when the pending bit changes and we add/remove
-> an entry. But it would save us that allocate and free of a uint32_t.
 > 
-> The potential downside is that if we ever decided we wanted to use
-> the architectural IMPDEF option to put implementation-specific
-> metadata into the L2 ISTE we'd have to reverse that. (See spec
-> section 4.7.4 -- the ISTE is 4 bytes with no impdef metadata, but
-> if we wanted metadata then it would get bigger and no longer fit
-> as a GUINT_TO_POINTER().) But I don't really think it likely we'll
-> want to go down that route -- in the virtualization parts of the
-> spec there's scope and intention that the implementation puts metadata
-> into various in-guest-memory data structures, but for QEMU it's much
-> easier to put those in host memory instead,  and that's what I did.
+> On Mon, 2 Nov 2026, at 19:12, Tushar Dave wrote:
+> > Introduce a fixed BAR fw_cfg blob exporter that serializes PCI
+> > device and BAR information into the "etc/fixed-bars" fw_cfg file.
+> >
+> > The blob contains an entry for every PCI function with memory BARs.
+> > Each entry carries the device's vendor and device ID, whether it
+> > has a fixed BAR configuration, and its firmware device path. Fixed
+> > BAR entries also include the configured BAR address, size, and type
+> > information for each BAR.
+> >
+> > Document the format in docs/specs/pci-fixed-bars.rst.
+> >
+> > Signed-off-by: Tushar Dave <tdave@nvidia.com>
+> > ---
+> >  docs/specs/index.rst           |   1 +
+> >  docs/specs/pci-fixed-bars.rst  |  75 ++++++++
+> >  hw/pci/meson.build             |   1 +
+> >  hw/pci/pci-fixed-bar-blob.c    | 308 +++++++++++++++++++++++++++++++++
+> >  include/hw/pci/pci-fixed-bar.h |  63 +++++++
+> >  5 files changed, 448 insertions(+)
+> >  create mode 100644 docs/specs/pci-fixed-bars.rst
+> >  create mode 100644 hw/pci/pci-fixed-bar-blob.c
+> >  create mode 100644 include/hw/pci/pci-fixed-bar.h
+> >
+> ...
+> > diff --git a/hw/pci/pci-fixed-bar-blob.c b/hw/pci/pci-fixed-bar-blob.c
+> > new file mode 100644
+> > index 0000000000..dc94debfad
+> > --- /dev/null
+> > +++ b/hw/pci/pci-fixed-bar-blob.c
+> ...
+> > +/*
+> > + * EFI_INCOMPATIBLE_PCI_DEVICE_SUPPORT_PROTOCOL's CheckDevice interface
+> > + * (UEFI PI Spec 1.2 Vol 5) only passes VendorId/DeviceId/RevisionId/
+> > + * SubsystemVendorId/SubsystemDeviceId, no BDF — so in EDK2 we can't
+> > + * match a blob entry to a specific device directly using BDF. To work
+> > + * around that, we prepare the blob entries in the same order PciBusDxe
+> > + * discovers devices, so matching by VID:DID inherently works.
 > 
-> I have a feeling that when I wrote this code I was partly under the
-> incorrect impression that L2_ISTE words were 64 bits (e.g. there's a
-> comment in get_l2_iste that mentions "the uint64_t pointed to"), and
-> while I fixed most of that confusion before eventually posting the
-> original GICv5 patchset, I left the "we have to allocate memory for
-> the value" part in, not noticing it wasn't really necessary any more.
+> This sounds rather fragile.
 > 
-> For 11.2 I think we should stick with the simple fixup of the
-> type mixup here, though.
+> Could you elaborate on what order this is, and why it is reasonable to
+> rely on that approach being stable?
+> 
+> 
 
-OK. Preferably declaring the variable as uint32_t (local fixup):
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Also, bus numbers can be changed by guest, and I don't get why
+would you want to report devices without a fixed bar.
 
 
