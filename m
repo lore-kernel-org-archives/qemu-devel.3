@@ -1,73 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2666070329
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 19:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F567606D820
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 19:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=FGrRUMUF
+	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=eNlNaFwN
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOguF-0006t5-Hz; Wed, 04 Nov 2026 14:44:23 -0500
+	id 1xOgtZ-0003pn-1j; Wed, 04 Nov 2026 14:43:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xOgu6-0006Gt-1a
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:44:14 -0500
-Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
+ id 1xOgtW-0003mU-Tc
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:43:38 -0500
+Received: from mail-dy1-x1331.google.com ([2607:f8b0:4864:20::1331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xOgu4-0002hg-Hz
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:44:13 -0500
-Received: by mail-dy1-x1332.google.com with SMTP id
- 5a478bee46e88-3550c917fd3so1610848eec.0
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 11:44:12 -0800 (PST)
+ id 1xOgtV-0002am-5e
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:43:38 -0500
+Received: by mail-dy1-x1331.google.com with SMTP id
+ 5a478bee46e88-36d6e342f98so1156421eec.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 11:43:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1793821451; x=1794426251; darn=nongnu.org;
+ d=sifive.com; s=google; t=1793821416; x=1794426216; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SNutt+qYtfpwfxPL8boOG9dw1u9CAIyu7M5FLo74O0o=;
- b=FGrRUMUFWa1OGyt7LVGAXWzF3vvCJRCIi6qPAL2iVoJEvW7VjCT+NxYkZMBuMToMTH
- aaBoRiWZ2MJJjFva6j4U67bzHTiQPSFjyezcR6cBbjJIJPV1F6wW9zp0ScZF35MFVQGI
- fgKyFjmPIvo/HvADzOGraZTzTwm4Wmr4v9Q57qShOFowi+sm0mUJM3RbkrJ3s9WjUhb2
- uJzoZn0nRrbi8qzhJ/TAgYEaf1rMa19xXcfHZ5jKKFWCLfdpT+hv+9AjxyWbbG86i8EG
- aRpnHAejUDqDjnYe6Z3XtBfHZaF1UJ4MdQQ9ODNQyvnDsR43p2E10JF4d0x1iCp2xCLz
- Q8Hw==
+ bh=5AX5eJ/pPbJ7vuc/TMSU+a639LFRMm0l50hu5KtjQYU=;
+ b=eNlNaFwN6HdTGkHwkLIkD5F2gd2FWz13J5ZOeNhTCBpedvjBQlX77Ugxyix0v5W0rR
+ Z4wYjJhoLHVc5xN6eJU7ZDoylW9GZjWb90isRg+pGJ3OzugY9iCfj7ez/7G8A/xsxdT2
+ JxwpIHqQrKTLoq0tXgDE9k3H/rLSqBKhYcxk7Sb0eamsaOZC3YzlO+PS5M5G9mlyqsPG
+ xJ2Ex09Dpjelnk+WxoekKSSbq5UxEwzoyXyBmnG56P2md3QWz20Inixvq06Imf31vBIc
+ NwSX8W14eq4CqsIsAnR6c8wY46ouEdyyB/Az/tZ5wX3HIqUz1wPaSZX9TVeOfJU7HUSY
+ Dk7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793821451; x=1794426251;
+ d=1e100.net; s=20260707; t=1793821416; x=1794426216;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=SNutt+qYtfpwfxPL8boOG9dw1u9CAIyu7M5FLo74O0o=;
- b=G23KWmiT6FQCYZNewsM3UhI1iSTACxgD2abRsJDncmNc6OMHhB4Q6fqkjQIeZA03Nx
- wosTCSmspOzRL8tfI7fL9+7o13K8O4A5RBLxTN9Qd/IQABwHX6jo/iNkFZrZTAUFd+62
- 8i4Ow9UerJiPTph6t5ZyWYcx5lEHP0KuhFLnUIJeRkk8I0JJdd+U4nvoVEbaYNVPqIqI
- WDS5K8nnKtbpNJGh9QmrvwPIZsZQ45+cQxKQwQb3tfWdNAl/0Rat4lKWi+xxEG1RzMIR
- Q3UBQ35gTW2QJY7O8/ZglgS88uZyueawktbNgasGJBH5M0xielfbvRTHnRCNFJM7rknb
- d3Sg==
-X-Gm-Message-State: APuU4Z9pOcjZNRp+hvsDm+58qXzf6bV9hvhMCzMtDo1VFRnKHj00XYRS
- 2eXbR1hPnDvVyhEmVLcp8IOCOddv4PhFRZSzzVSfuLTE4QPmkx03K2Lkxe3sSvZO7Sq8ZT2+HTJ
- TPNl/PEdWcg5cIOMz+5V8+REKVgqQOvxsWU9TWPaW9OF+yxmfT9lJtzndjQjPLOmOGqEDb6oZhR
- zs1U6vQx5tGR7waJUPlCUPkzJ/EvJoQyezafP9H7IoUQ==
-X-Gm-Gg: AYBFou2n3lwLoMde5HvkB//K1XIKqoh8rmJEu8YP//IFo68X1NXcuPvYWm2WRN2FFbk
- VMER249ysWIzVllehy7JG/AmCFaFuEg1EptkrLU7fsMqDmWnUAnEKYCBaMY9zhtM9QdIZYbFTEX
- K5cOcAsABuVQaTPbbfPNz33Lk/4fcMgs3CbMg5wa91pl6aVFS9+y2aHQ3CQmp4zh77QJbzdW0HB
- lj6UBXWsFZpb8HN91kvtI+IVYoPhMTjWt8ZJ2hXSUQCPMc64oVfJMcp6LIzrdpKBHLyVwRPyp2N
- ARVdsUS2BDcVV89hZv8RBWvx4aAMuGI+WJ2c8TOrio6JYpmrMt+wW1gPX1ORZWliHDLwOwVG8hF
- c1yYtACthj4M8s7dcp2pyPh/Fv700XZTqgm9a3p3ISRV9bHXwvA3OkmvqTgI+59JYI/yv83EPz7
- ryJ6lfW5bf7h9RwZGUxT1ahi1BYa/4CqFl4u8o0Ipv17bRk24W6sQjYJTa9+z5UtTTvdt36tntB
- feD5mAebI27aOXMiMOFkHMh/bZ77jmDLDSu7hf4wUdVPEI+822k0Iok3ZzFZ80FEfwl1FV9On8f
- dXwiJYyzV5pSmVvqdF0RJT6uO/2OJjYAN+iYQsly5ePeqtp4i0MINLqtSQjHZSAv9njLSBzFcdS
- bdOi2PxQneMVBVfrKq21X9W7GlX7d
-X-Received: by 2002:a05:7300:fe41:b0:36a:158e:f917 with SMTP id
- 5a478bee46e88-36a42401999mr24584054eec.6.1793821450714; 
- Wed, 04 Nov 2026 11:44:10 -0800 (PST)
+ bh=5AX5eJ/pPbJ7vuc/TMSU+a639LFRMm0l50hu5KtjQYU=;
+ b=k6DboG5ALp4d1fZcXQPyp5X0uijoogl8/9OLW2D2FKqRDuCb37QJBI6QFGYaj2IszY
+ UKbJdGvzseF/b2lUm7YNk6qkWy5TeqbDoO5vG7pgWTQ7VACLRGjr5ekvRRbOjXwJRkFD
+ ApeH0aAYqCtaJSySMoYhKr9Q2ja/QQLQ7qplC5zpeBM9QOcyU9QW9LlARcCFj1q2PVal
+ zYhQlG6sP0lJGKcESEPJfpmMPhfLOTNt3W2i8PaWSnza7XnIHJXe37vWf81ucrLMM2lm
+ /L0zxZg0D5TRvgfjwuTCNrZk6ntzVeBRtszTIE4aKz3CQ62vC2jhnQtmbzAjzfbD6Br0
+ gU6g==
+X-Gm-Message-State: APuU4Z96/+fGsWpEFyxszX13ay6HFEvao/2YoshUea7vlnDomEesLkef
+ 8mLVq7hYWgCSZWKcgq+uGERXdFmCTdryEWf5QCmOuQnSSigXz0MXHVSAErZ8MsnChpGc5/lTP4G
+ XvYAejftqzv8QYAtqhkD+ex7z9H3LY1PUeB6p4j4BtUl5NvGVCrcBWch1rojN53ItjK41XJq5rI
+ SWcqus0/HjgY1pyl6Dck9j4qWHM6xPfsPsh5/0c9ROEQ==
+X-Gm-Gg: AYBFou1kDHt/JiH9v6s8xzYmy8hW4znky9isBnEeAlyEnheZBWYn2ymnNpGo2dYyUiY
+ o62hpvHaCZVCupNhYqewlTzReJE/xq0cz0rPK4nGr54fu9tcyEaqHPl6sjr2pyl/d6jkoiuBbTm
+ JVZ/iNHmMdnHIK3M+42UxyFys7Do1OUBnnvdj2g5rBJ/h34qRq4CLn8pTkGjcoofo1X9W4smFAz
+ m719snYPrpHCOnUDv1UUJIRM3cQqfCbee1Y9s6LWJxDU8TGyH125j32JxhI9sh+59AfOcDea2S+
+ HMmcVXfXBhCEs0cx58kI2F7TCrrwHWd/vOsBa1ogE2in5QluU21zgjohTnE+UuakIR0QSlzHFlf
+ d81l4Hk9zXVGoFjlJDo037nmauc1qrh1hUIVq9W7L2b0VbMTTdyWu8AQS7N5o0JLL4/FISlSQbz
+ 3hjPiK28sBQth+fQLv3CvVeXU8h2372KqxBsQYNZm50fro/VnanB1PBu8ctGLrdVjf85KfLC05m
+ 8nDuztpsh8RMUMFQV/40IIV/vB5ggX1CeedPvEHLCuWNvvX5KkHOEcIyWBRFqLyA8W9HSGsp5QO
+ z6hWwhtL/vI9qhZMq6jrnPsOhaRhKl7lVuqZYMS7KiuocinqbzvFd/qzl9t6vqZO0pDOmOTtDhH
+ ubxLvYA6BLO4tUMUwpPpvc6QqAPuTkQ==
+X-Received: by 2002:a05:7301:2a24:b0:36d:48e:82de with SMTP id
+ 5a478bee46e88-36d049e0895mr5101557eec.12.1793821415401; 
+ Wed, 04 Nov 2026 11:43:35 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36ca38d36a1sm11299527eec.12.2026.11.04.11.44.08
+ 5a478bee46e88-36ca38d36a1sm11299527eec.12.2026.11.04.11.43.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Nov 2026 11:44:10 -0800 (PST)
+ Wed, 04 Nov 2026 11:43:35 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -78,25 +78,27 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>
-Subject: [RFC PATCH 37/38] disas/riscv: Support Zvfbdota32f extension
-Date: Thu,  5 Nov 2026 03:41:52 +0800
-Message-ID: <20261104194155.679241-38-max.chou@sifive.com>
+ Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [RFC PATCH 25/38] target/riscv: rvv: Implement Zvqwbdota16i
+ instructions
+Date: Thu,  5 Nov 2026 03:41:40 +0800
+Message-ID: <20261104194155.679241-26-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261104194155.679241-1-max.chou@sifive.com>
 References: <20261104194155.679241-1-max.chou@sifive.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
- envelope-from=max.chou@sifive.com; helo=mail-dy1-x1332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1331;
+ envelope-from=max.chou@sifive.com; helo=mail-dy1-x1331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,43 +113,85 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Adds support to disassemble Zvfbdota32f instructions.
-- vfbdota.vv
+Extend the vqwbdotau.vv and vqwbdotas.vv instructions to support
+both 8-bit (Zvqwbdota8i) and 16-bit (Zvqwbdota16i) batched
+dot-product operations.
 
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- disas/riscv-op.c.inc | 1 +
- disas/riscv.c        | 1 +
- 2 files changed, 2 insertions(+)
+ target/riscv/helper.h                       | 4 +++-
+ target/riscv/insn32.decode                  | 2 +-
+ target/riscv/tcg/insn_trans/trans_rvv.c.inc | 5 +++--
+ target/riscv/tcg/vector_helper.c            | 2 ++
+ 4 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
-index 58f6ddac35a..779fc26a27c 100644
---- a/disas/riscv-op.c.inc
-+++ b/disas/riscv-op.c.inc
-@@ -538,6 +538,7 @@ OP(vdivu_vv, "vdivu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
- OP(vdivu_vx, "vdivu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
- OP(vfadd_vf, "vfadd.vf", rv_codec_v_r, rv_fmt_vd_vs2_fs1_vm)
- OP(vfadd_vv, "vfadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-+OP(vfbdota_vv, "vfbdota.vv", rv_codec_v_r_ci, rv_fmt_vd_vs2_vs1_ci_vm)
- OP(vfclass_v, "vfclass.v", rv_codec_v_r, rv_fmt_vd_vs2_vm)
- OP(vfcvt_f_x_v, "vfcvt.f.x.v", rv_codec_v_r, rv_fmt_vd_vs2_vm)
- OP(vfcvt_f_xu_v, "vfcvt.f.xu.v", rv_codec_v_r, rv_fmt_vd_vs2_vm)
-diff --git a/disas/riscv.c b/disas/riscv.c
-index a124cbb4bbe..8330ba34a30 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -2647,6 +2647,7 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                 case 36: return &op_vfwdota_vv;
-                 case 38: return &op_vfqwdota_vv;
-                 case 39: return &op_vfqwdota_alt_vv;
-+                case 43: return &op_vfbdota_vv;
-                 case 44: return &op_vfwbdota_vv;
-                 case 46: return &op_vfqwbdota_vv;
-                 case 47: return &op_vfqwbdota_alt_vv;
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index e48b9b4edec..84571a999f4 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1400,9 +1400,11 @@ DEF_HELPER_6(vfwdota_vv, void, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_6(vfqwdota_vv, void, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_6(vfqwdota_alt_vv, void, ptr, ptr, ptr, ptr, env, i32)
+ 
+-/* Zvqwbdota8i - 8-bit Integer Batched Dot Product */
++/* Zvqwbdota8i/Zvqwbdota16i - 8/16-bit Integer Batched Dot Product */
+ DEF_HELPER_7(vqwbdotau_vv_b, void, ptr, ptr, ptr, ptr, i32, env, i32)
+ DEF_HELPER_7(vqwbdotas_vv_b, void, ptr, ptr, ptr, ptr, i32, env, i32)
++DEF_HELPER_7(vqwbdotau_vv_h, void, ptr, ptr, ptr, ptr, i32, env, i32)
++DEF_HELPER_7(vqwbdotas_vv_h, void, ptr, ptr, ptr, ptr, i32, env, i32)
+ 
+ /* SiFive Custom int8 Matrix-Multiply */
+ DEF_HELPER_5(sf_vqmaccu_4x8x4, void, ptr, ptr, ptr, env, i32)
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index bf325229100..8a06547a570 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -1109,6 +1109,6 @@ vfwdota_vv  100100 . ..... ..... 001 ..... 1110111 @r_vm
+ vfqwdota_vv     100110 . ..... ..... 001 ..... 1110111 @r_vm
+ vfqwdota_alt_vv 100111 . ..... ..... 001 ..... 1110111 @r_vm
+ 
+-# *** Zvqwbdota8i 8-bit Integer Batched Dot-Product Extension ***
++# *** Zvqwbdota8i/Zvqwbdota16i Integer Batched Dot-Product Extension ***
+ vqwbdotau_vv  101110 . ..... ..... 000 ..... 1110111 @r_vm
+ vqwbdotas_vv  101111 . ..... ..... 000 ..... 1110111 @r_vm
+diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+index bc12bcb9b72..650affc045b 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+@@ -4315,7 +4315,8 @@ static bool vext_vqwbdota_check(DisasContext *s, arg_rmrr *a)
+     int32_t sew = s->sew;
+     int32_t vd_eew = sew + 2;
+     return vext_zvbdota_base_check(s, a, vd_eew) &&
+-           (s->cfg_ptr->ext_zvqwbdota8i && sew == MO_8);
++           ((s->cfg_ptr->ext_zvqwbdota8i && sew == MO_8) ||
++            (s->cfg_ptr->ext_zvqwbdota16i && s->sew == MO_16));
+ }
+ 
+ typedef void gen_helper_zvbdota_int(TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr,
+@@ -4325,7 +4326,7 @@ typedef void gen_helper_zvbdota_int(TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr,
+ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                   \
+ {                                                                        \
+     static gen_helper_zvbdota_int * const fns[2] = {                     \
+-        gen_helper_##NAME##_b, NULL,                                     \
++        gen_helper_##NAME##_b, gen_helper_##NAME##_h,                    \
+     };                                                                   \
+     if (CHECK(s, a)) {                                                   \
+         TCGv_ptr dest, src1, src2, mask;                                 \
+diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
+index 5ea073b6d76..683b14f28f3 100644
+--- a/target/riscv/tcg/vector_helper.c
++++ b/target/riscv/tcg/vector_helper.c
+@@ -6197,3 +6197,5 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,                  \
+ 
+ GEN_VEXT_ZVBDOTA_INT(vqwbdotau_vv_b, 32, 8, uint8_t, H4, H1)
+ GEN_VEXT_ZVBDOTA_INT(vqwbdotas_vv_b, 32, 8, int8_t, H4, H1)
++GEN_VEXT_ZVBDOTA_INT(vqwbdotau_vv_h, 64, 16, uint16_t, H8, H2)
++GEN_VEXT_ZVBDOTA_INT(vqwbdotas_vv_h, 64, 16, int16_t, H8, H2)
 -- 
 2.56.0
 
