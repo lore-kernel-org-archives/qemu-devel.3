@@ -1,73 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6F46076086
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 19:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9341607608A
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 19:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=UciwVdIx
+	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=byCqgnMg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOgtV-0003g0-S9; Wed, 04 Nov 2026 14:43:37 -0500
+	id 1xOgtN-0003ON-Ab; Wed, 04 Nov 2026 14:43:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xOgtT-0003ew-PZ
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:43:35 -0500
-Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
+ id 1xOgsy-0002cw-Kd
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:43:05 -0500
+Received: from mail-dy1-x1334.google.com ([2607:f8b0:4864:20::1334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xOgtS-0002aJ-5w
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:43:35 -0500
-Received: by mail-dy1-x132f.google.com with SMTP id
- 5a478bee46e88-33bf40b0c8bso2447277eec.0
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 11:43:33 -0800 (PST)
+ id 1xOgsw-0002T3-Tz
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 14:43:04 -0500
+Received: by mail-dy1-x1334.google.com with SMTP id
+ 5a478bee46e88-36cad25b8b0so1632624eec.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 11:43:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1793821413; x=1794426213; darn=nongnu.org;
+ d=sifive.com; s=google; t=1793821381; x=1794426181; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SXahEjEZ59pFRWeQJKGqQMg/M7dhg8DontEO/dam/Uo=;
- b=UciwVdIximOQFTATbJTY8wImNcoT80d99cuwvMwwnVb+XUVz93kaGFS2h+TEJcbUv4
- rzQdmj95P1zOtaVXCEIuuCNw7KFFLmvTPjZ3OPtzlyryU+uUa87+EM8RW4BK+DpWxqTH
- OB0Pi3XV5yEfj3NcCWs+dKKfEzjzmYf7EPLQPisuUB5h2/3v9ZtGB5Xx3ezCFwoQIKjk
- oomf3wUSPY8Mu+F4AGFrDbs9vJAj1EYyBw9WogJrE28NATy6WEk1LNZkgAA58+zBkE4D
- ndLB2UzeC7n6MrozZLzTTvpIZcca79esj/PTySYK9gs7ayl2gk/jT4M4DUWYD44RkboP
- j2zw==
+ bh=VcipHD82YYpdBKcuGqRax5Q8+YhSB7kojogC1bDxThs=;
+ b=byCqgnMgShdm9Uja7mOtUTUhXQ6UNqg+jn6Y2phJp7IIT11922cVhznHE5DmB1KfgV
+ kXOklf3UmecVn9IXOyfbbJVuaHOVTuYHQGBPi1pH6JRcrlMIU1hbtP6TCeYhshsg5ccK
+ TA+Wy5zgRWM/TyMwP/JwLlydxfkPkW4WIEUs1e2t+hwX4+DpHpHYIMniIFPBNT25eGoi
+ VTXM7vXyJhZEMzji4EfkQ9cJYtctbJ0WZnt36gJpC2EBpIAkpws22Yrc27qp6d7GR5tD
+ vWUSpw0KshLbvICCwWsiiJ1nGdQRCUrD0S8+1fh1grXlUZqfGMly+bB++4eSClal0ijC
+ 2gZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793821413; x=1794426213;
+ d=1e100.net; s=20260707; t=1793821381; x=1794426181;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=SXahEjEZ59pFRWeQJKGqQMg/M7dhg8DontEO/dam/Uo=;
- b=RYAU2tmmdncMjNDbfTp4MtyqLbwz4r/idipS8ae1Qy9Ttkj6v1ZmdgL8ANYcCQxN8W
- JuC0PiOzCNKWrbhaAyDElWBXx6uzgbEpsL812u52r68sm6u0dGwWd7amkQZux80L+LCh
- GcggyJBQAOatxcTYFMoQACJnAqHA4qC5AeXQmJk2Ch80KasRC/F//hnI0MtBzzJeLQiu
- Nii30Yy7YNcuXCNg/TGdIjJFEnnWKKUBMPQhDd/pdS+rHPFphGPxv6lJIZVW19Qs30Fp
- wjCqtJEMzUoEwmWX7q9wKiXYtUp2IH2yePPDJ71OtUUdtoE60yL9Cv9r4d/E2YrkWNF+
- y0Pw==
-X-Gm-Message-State: APuU4Z97CLVdT8Uo0slafoTGcU+2Cd/YQIZsDA8oHhN5NbFjlohJgXOb
- CmQkYsHvGza8qCyCF5ZivJIXN33EZzG3XRZxVBnuaiR2RZ7AlOE4i/5GCmFgji8wzKOwcTKJEWL
- DVK3oIa895NZyg1ro2LofOtHCcND0CRxkwY4EBgiDy8DAKPSmeHo2XgVemXW2sbfaiGyFVVJpl2
- ogkW0yiy9kq3VEW94Vfi6aHzXxuQLkATl2QRAKOrV0Bg==
-X-Gm-Gg: AYBFou1WH3jKC2AcI05/5c+Va3yQa2MieklKv3nMwxdoKDdKNucBNgh1JBJzggfLzg6
- qFJZInL3EYJrRVC1aIa+6ELwZihO0sa0RYms//mF+kFELC9w9giXczeFw4Tlr8EzpAIEC0j4GqD
- Q0JmmYx1PiHsQJgB5bVrVqcYf8laBkRDSxDQXlG9WYuX46zmrgM5p4WCa/l68r/KWz5KEuP4fpZ
- tlW/8jx2yUzX8Rt1J5E0uWU/wQX5/jVi05etCXHQld04KZdnq/t2SAqy8LgcbUwR13OcSONhlhp
- LuDw3KMotnLwcl+9Pxs7OtsnW50+xsmLQ2FTcvuBLWZfmM92MUQLp11gB4SvlMOYH2itJ9w93eQ
- tX/z0//51Wa5zinBhWhT2mNl6VCXaDtUh1a+/WJ0kFcxuPVH1KZY8yMhP9eFMd5HnIu0xKlptX6
- fYJkvgsCfmeKklKMKYByYrvRcQp/3yxNfmuYRoAMUjXMhXfHR1OuX3I3vOXLA6cE4+zI/y18I2g
- a1M9wmWwfdem4Qgdwf/5BwO7NbLGxjSOCEGmgxnxJO5PXxeT/wru+YczXsViomRwW5P9bdJRElc
- Yqc72xgMVkiRy64tHkH6VF1NMg0xxwe+BD2Dfkrx6FeR5T7KNocl84nEnqHD4uodBwGMnfp1xRE
- 4fXXdeAbCh96FRx7uqVDcKTgB35tZ
-X-Received: by 2002:a05:7300:471a:b0:36a:2382:7dab with SMTP id
- 5a478bee46e88-36a4232cda7mr23774790eec.6.1793821412509; 
- Wed, 04 Nov 2026 11:43:32 -0800 (PST)
+ bh=VcipHD82YYpdBKcuGqRax5Q8+YhSB7kojogC1bDxThs=;
+ b=GF0F5fXMHys2ZwBGenBj3NEWx/F3LdP7jKf9YkxOx8e7//sXsKU32B3g1Lqpr3/pVw
+ MFqxsYjTIirjBNAp6yM2CBhvs8YDEvjz61LprEf7d5d0hvNR7ftf5JlzZC5ezxEMOwdO
+ Njogc8oQql1+nrG8U8gzspbTeBx3POd9nwGTCOR7yFXm7MDEG1hVaVxwWSQtNm6mVnxj
+ tdP9lGZ5Pi718RxQm+L7AGy8n8/RtvTzmzITiRXPrpaJpUZu9xHLJMpZa1uhURKT7gh3
+ 8nKivP1K9ziTPBQ5dwAQiJUXkGy9tu+6irj2DxXczpFoYwAbtfQEAPT//D1lJVk4qO9k
+ 90cQ==
+X-Gm-Message-State: APuU4Z8T2clt4EzdJaB7ossgeEa+OUpIfKioUScVPdApZVaOLbHsfAck
+ 8xHb3Ko3KCYPYRhFJDRUZs9svVg4CPAtFKCeZt5gd7elP7Zw1k0nnXyqAO0p41KOTRQOkab5btU
+ BvMJdk/7Jr/r/P0IWjYbJ7V4Tl3vZOmXgrItwISZVZXU+HrU/ryS/mSKr6qMQcZ/LB2eNiTtenn
+ XeXvi6kFbIu7sDbriCYalg/Jr7ncI7Elu1/LX2TBpbjA==
+X-Gm-Gg: AYBFou0sM6n2/uTuGreHwLHUaDeMino2YzNqapjIy0XxlG+pMrab5BSqSk9jSjgxToH
+ IMOIGQlwmRwzlJBL8J5J3tOSrgWieXLB0EQ4hbgKEmCa3HbYzSx2k8SY6zj2a7j0qfa2QOKhBB3
+ yCBypt5XGEbVxfkZ6BQpYWfIuoMcRVSnVnoU5NkWc//xDpAhUFwRehVstYSuvTRCaxiux2uDubp
+ qnCW/5a7DlXpgiJWjTapkJfzq54JMbmVfPYBoQzoizmBTmT2JRWJf39KtTTQJbyZxurpr2uoVWv
+ lxOiNdhTgNumfO3jRXciZDk9LJl1l0hpVM5eCl3zwGHdr682kSPmQQzZFkkEKel7zC9BXb5v7sp
+ Nn7HRNBHxdEY5If3ZibWgSMQz3cbZKXBKU3Vc5PN+QnaiBL8EJ5uw87i8Pzo4hFyA559VPPRubF
+ FJ6dQm4DsE5MIPwsypdW5T2S0OVUT2TMCrQ8A8ysRk5Tar1y1VG7NUHT2HkjITin8U6qP4GdKR+
+ kY0r1WLvjnLkOS7KIvK0eCby6ov6uH0RnGjb8cYM8QwzRq7uZDS+/LjSpA8b/DoK1d0GJMl7yDl
+ CQ0e4tGIpqsylHPhILfG5GsGXwn7O7XPul1JsWyl7I8W87zp/TAQIcUyephqDbSutl/Ym56GWib
+ +F97ZIxtciKBbBlK7eZdMD4ncGHVhnkrVuLUPoOwKd3/12DqjxA==
+X-Received: by 2002:a05:7300:5626:b0:36d:3c0f:cc85 with SMTP id
+ 5a478bee46e88-36d3c0fd4ddmr2282716eec.5.1793821381204; 
+ Wed, 04 Nov 2026 11:43:01 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36ca38d36a1sm11299527eec.12.2026.11.04.11.43.30
+ 5a478bee46e88-36ca38d36a1sm11299527eec.12.2026.11.04.11.42.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Nov 2026 11:43:32 -0800 (PST)
+ Wed, 04 Nov 2026 11:43:00 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -80,18 +80,18 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [RFC PATCH 24/38] target/riscv: Add implied rules for Zvqwbdota16i
+Subject: [RFC PATCH 15/38] target/riscv: Add cfg property for Zvfqwdota8f
  extension
-Date: Thu,  5 Nov 2026 03:41:39 +0800
-Message-ID: <20261104194155.679241-25-max.chou@sifive.com>
+Date: Thu,  5 Nov 2026 03:41:30 +0800
+Message-ID: <20261104194155.679241-16-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261104194155.679241-1-max.chou@sifive.com>
 References: <20261104194155.679241-1-max.chou@sifive.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
- envelope-from=max.chou@sifive.com; helo=mail-dy1-x132f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1334;
+ envelope-from=max.chou@sifive.com; helo=mail-dy1-x1334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,42 +118,78 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add implied rules to enable the implied extensions of Zvqwbdota16i
-extension recursively.
+Add CPU configuration property of Zvfqwdota8f extension which depends on
+the Zve32f extension per the specification.
 
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/cpu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ target/riscv/cpu.c                | 2 ++
+ target/riscv/cpu_cfg_fields.h.inc | 1 +
+ target/riscv/tcg/tcg-cpu.c        | 5 +++++
+ target/riscv/tcg/vector_helper.c  | 2 ++
+ 4 files changed, 10 insertions(+)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 99c82b898f0..95bba330e06 100644
+index 2d905a99d68..4f2e7a8faa9 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -2906,6 +2906,15 @@ static RISCVCPUImpliedExtsRule ZVQWBDOTA8I_IMPLIED = {
-     },
- };
+@@ -236,6 +236,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zvfbfwma, PRIV_VERSION_1_12_0, ext_zvfbfwma),
+     ISA_EXT_DATA_ENTRY(zvfh, PRIV_VERSION_1_12_0, ext_zvfh),
+     ISA_EXT_DATA_ENTRY(zvfhmin, PRIV_VERSION_1_12_0, ext_zvfhmin),
++    ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvfqwdota8f, PRIV_VERSION_1_13_0,
++                                    ext_zvfqwdota8f),
+     ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvfwdota16bf, PRIV_VERSION_1_13_0,
+                                     ext_zvfwdota16bf),
+     ISA_EXT_DATA_ENTRY(zvkb, PRIV_VERSION_1_12_0, ext_zvkb),
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 30c404863c8..b18abdd8b9b 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -106,6 +106,7 @@ BOOL_FIELD(ext_zvfbfmin)
+ BOOL_FIELD(ext_zvfbfwma)
+ BOOL_FIELD(ext_zvfh)
+ BOOL_FIELD(ext_zvfhmin)
++BOOL_FIELD(ext_zvfqwdota8f)
+ BOOL_FIELD(ext_zvfwdota16bf)
+ BOOL_FIELD(ext_zvqwdota16i)
+ BOOL_FIELD(ext_zvqwdota8i)
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 91e009072e6..72ce0b4fbd0 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -706,6 +706,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+         return;
+     }
  
-+static RISCVCPUImpliedExtsRule ZVQWBDOTA16I_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_zvqwbdota16i),
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_zve64x),
++    if (cpu->cfg.ext_zvfqwdota8f && !cpu->cfg.ext_zve32f) {
++        error_setg(errp, "Zvfqwdota8f extension depends on Zve32f extension");
++        return;
++    }
 +
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
- static RISCVCPUImpliedExtsRule ZVKN_IMPLIED = {
-     .ext = CPU_CFG_OFFSET(ext_zvkn),
-     .implied_multi_exts = {
-@@ -3112,6 +3121,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-     &ZVKS_IMPLIED,
-     &ZVKSC_IMPLIED,
-     &ZVKSG_IMPLIED,
-+    &ZVQWBDOTA16I_IMPLIED,
-     &ZVQWBDOTA8I_IMPLIED,
-     &ZVQWDOTA16I_IMPLIED,
-     &ZVQWDOTA8I_IMPLIED,
+     if ((cpu->cfg.ext_zdinx || cpu->cfg.ext_zhinxmin) && !cpu->cfg.ext_zfinx) {
+         error_setg(errp, "Zdinx/Zhinx/Zhinxmin extensions require Zfinx");
+         return;
+diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
+index 5947427b6b4..a4c52ed296a 100644
+--- a/target/riscv/tcg/vector_helper.c
++++ b/target/riscv/tcg/vector_helper.c
+@@ -40,6 +40,7 @@ static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
+     target_ulong reserved = 0;
+ 
+     if (riscv_cpu_cfg(env)->ext_zvfbfa ||
++        riscv_cpu_cfg(env)->ext_zvfqwdota8f ||
+         riscv_cpu_cfg(env)->ext_zvfwdota16bf ||
+         riscv_cpu_cfg(env)->ext_zvqwdota16i ||
+         riscv_cpu_cfg(env)->ext_zvqwdota8i) {
+@@ -92,6 +93,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+     switch (vsew) {
+     case MO_8:
+         ill_altfmt &= !(cpu->cfg.ext_zvfbfa ||
++                        cpu->cfg.ext_zvfqwdota8f ||
+                         cpu->cfg.ext_zvqwdota8i);
+         break;
+     case MO_16:
 -- 
 2.56.0
 
