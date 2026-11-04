@@ -1,66 +1,75 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7016606D809
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 08:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A78606A331
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 09:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=f/nWzUKU
+	dkim=pass (2048-bit key, unprotected) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.a=rsa-sha256 header.s=rs20250326 header.b=Y8B0bcdC
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOWgf-0004Zq-GE; Wed, 04 Nov 2026 03:49:41 -0500
+	id 1xOX4n-0007pR-DX; Wed, 04 Nov 2026 04:14:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1xOWgd-0004ZE-64; Wed, 04 Nov 2026 03:49:39 -0500
-Received: from canpmsgout04.his.huawei.com ([113.46.200.219])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xOX4h-0007oL-OT
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 04:14:32 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1xOWga-00055B-7g; Wed, 04 Nov 2026 03:49:38 -0500
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
- c=relaxed/relaxed; q=dns/txt; h=From;
- bh=bn64/az0sa8YBc3qSn5zUZYbRR4n8GiJeEtOfsCCx1Y=;
- b=f/nWzUKUdUe5yBpleuCn3Hi9AYGXoG3Embd5R9ASE92iV1ifYHPSF5XTvBmET5bk+4aL3TPjd
- /RE+PoCcXaWAV08+fT+7YAE3NMN7npsr2l6byZOSwXPCCvr7VfPgOb4z4h6V9Rvucn/aGpMq0tC
- VOdJeXLHvtD4TPe+/i0xtx8=
-Received: from mail.maildlp.com (unknown [172.19.162.140])
- by canpmsgout04.his.huawei.com (SkyGuard) with ESMTPS id 4jKJyc0DB3z1prnC;
- Wed,  4 Nov 2026 16:49:12 +0800 (CST)
-Received: from kwepemk200008.china.huawei.com (unknown [7.202.194.74])
- by mail.maildlp.com (Postfix) with ESMTPS id 99A732011D;
- Wed,  4 Nov 2026 16:49:16 +0800 (CST)
-Received: from [10.67.110.68] (10.67.110.68) by kwepemk200008.china.huawei.com
- (7.202.194.74) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Wed, 4 Nov
- 2026 16:49:15 +0800
-Message-ID: <f015a1ca-af03-489e-b967-a36536673415@huawei.com>
-Date: Wed, 4 Nov 2026 16:49:15 +0800
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xOX4d-0007UJ-Rj
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 04:14:30 -0500
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6A49E6vb061635
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 4 Nov 2026 18:14:07 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=1ynPUAEKBzSg7Eo2IEbdhioT/Pt1CFxuYgqrXGnB5iI=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1793783647; v=1;
+ b=Y8B0bcdCw207vOt29anePRQm4mo6npgLnj8xRej+bgIdA/gXIyj5l7VrbVVvmWii
+ Cc9kIcOsXHKGaopfriVWxbpxGdC31YM2wOJ3GRnQBVLNoe+JRMS40n58PLkhNd5+
+ 18sl6GqcPRfWWr/wAWKVHUyd6iHK4dN1wUQq24BxoS0qzJ+PxAF0N/4UCbZqZeD1
+ E0F66zxdz3T01E0TZ5xxjihYLB/F/HMLN+EU0OljTICFMLPLNFtr8LKkBBU3Fu1i
+ m1Bw8CxGvqPSFgqhODlIDe1u1dnfWSUXuPvip4yPpU7mkxJmUJavDoRpGfFvaunO
+ jvIKlWazml2T2bw6Jwfphg==
+Message-ID: <10c48a35-82c7-439c-be8f-15b9dd89501b@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 4 Nov 2026 18:14:06 +0900
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/37] hw/arm/virt: Add mpam and mpam-min-msc machine
- properties
-To: Jonathan Cameron <jic23@kernel.org>, Jinjie Ruan <2118537295@qq.com>
-CC: <anisinha@redhat.com>, <armbru@redhat.com>, <eblake@redhat.com>,
- <imammedo@redhat.com>, <michael.roth@amd.com>, <mst@redhat.com>,
- <pbonzini@redhat.com>, <peter.maydell@linaro.org>, <qemu-devel@nongnu.org>,
- <qemu-arm@nongnu.org>
-References: <tencent_4A73E52B4D6BC21D11E7564A8A6EA6EF5805@qq.com>
- <20261103015138.2191fa9b@jic23-hlaptop>
-From: Jinjie Ruan <ruanjinjie@huawei.com>
-In-Reply-To: <20261103015138.2191fa9b@jic23-hlaptop>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v3 0/6] hw: Add Cnuas virtual devices
+To: Weqaar Janjua <weqaar.janjua@packetfive.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com, peter.maydell@linaro.org,
+ pierrick.bouvier@oss.qualcomm.com, jasowangio@gmail.com,
+ pbonzini@redhat.com, farosas@suse.de, lvivier@redhat.com,
+ marcel.apfelbaum@gmail.com, peterx@redhat.com, lizhijian@fujitsu.com
+References: <20260929202358.725310-1-weqaar.janjua@packetfive.com>
+ <20261016153247.1815153-1-weqaar.janjua@packetfive.com>
+ <20261027080746.2468700-1-weqaar.janjua@packetfive.com>
+ <20261027063724-mutt-send-email-mst@kernel.org>
+ <20261029115735.2716219-1-weqaar.janjua@packetfive.com>
+ <20261029134859-mutt-send-email-mst@kernel.org>
+ <20261029194227.2735464-1-weqaar.janjua@packetfive.com>
+ <20261030191556-mutt-send-email-mst@kernel.org>
+ <20261031120516.2846639-1-weqaar.janjua@packetfive.com>
+ <20261031135234-mutt-send-email-mst@kernel.org>
+ <20261031185807.2866788-1-weqaar.janjua@packetfive.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20261031185807.2866788-1-weqaar.janjua@packetfive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
- kwepemk200008.china.huawei.com (7.202.194.74)
-Received-SPF: pass client-ip=113.46.200.219;
- envelope-from=ruanjinjie@huawei.com; helo=canpmsgout04.his.huawei.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,42 +82,60 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
-
-在 2026/11/3 9:51, Jonathan Cameron 写道:
-> On Fri, 16 Oct 2026 18:10:35 +0800
-> Jinjie Ruan <2118537295@qq.com> wrote:
-> 
->> From: Jinjie Ruan <ruanjinjie@huawei.com>
+On 2026/11/01 3:58, Weqaar Janjua wrote:
+> On Sat, Oct 31, 2026 at 01:54:08PM -0400, Michael S. Tsirkin wrote:
+>>> My concern with
+>>> virtio device is that it would hide the layer we want people to work with.
 >>
->> Add the two MPAM machine properties: mpam=on enables MSC emulation
->> for the virt board, and mpam-min-msc=on collapses the per-node
->> memory MSCs into a single MSC with one RIS per node.  The state
->> fields and the property accessors only; MSC creation arrives with
->> the later patches.
->>
->> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+>> People being the students?
 > 
-> I'm curious to get more viewpoints on the somewhat weird mpam-min-msc
-> though.  It is kind of handy for testing IIRC but not sure it is realistic.
+> Students in the context of training and skill building, and researchers
+> from academia and industry working on rack-scale systems. It is also intended
+> for upskilling and onboarding staff, and for developing and validating
+> user-space and kernel-space code on a complete software-defined rack-scale
+> ORV3 system. With virtio the transport and the driver are already defined, so
+> there would be no device-specific PCIe driver for them to write, whether
+> as a training exercise or as custom kernel-space PCIe code that industry
+> and academic researchers develop and want to validate.
 
-Hi Jonathan,
+I have reviewed the series, and it looks interesting.
 
-I think the code is already in fairly good shape now. Perhaps we can
-drop this option in the official submission?
+I am wondering if vfio-user might be better suited for your use case. 
+While the code is clean and would serve well as teaching and research 
+material, upstreaming it to QEMU requires integrating with QEMU's common 
+infrastructure and meeting its architectural requirements, which is 
+currently missing.
 
+Specifically, the implementation bypasses QEMU's network stack, and 
+migration is not fully implemented.
 
--- 
-Best regards,
-Jinjie
+Fixing these issues is certainly possible, but it would require a 
+significant effort from both you and the reviewers. Unfortunately, there 
+is currently very little bandwidth for reviewing network patches; I only 
+work on this in my spare time, and I haven't seen much activity from 
+Jason recently either (unless I missed something).
 
+Furthermore, fixing this might actually conflict with your goals. 
+Tighter integration with QEMU internals would couple your device 
+implementation more closely to QEMU, making it harder to keep pace with 
+upstream development and increasing the codebase size. This extra burden 
+may be undesirable if your primary focus is teaching and research.
+
+Using vfio-user would save you the effort of upstreaming and keeping up 
+with QEMU internal changes. One downside is that it does not support 
+migration—though I suspect that isn't a requirement for your use case 
+(though QEMU RDMA migration developers might be disappointed).
+
+Regardless of the approach, you will still need to reserve the device ID 
+by updating the documentation.
+
+Regards,
+Akihiko Odaki
 
