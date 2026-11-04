@@ -1,147 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2E5606A326
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 12:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F53606A33F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 12:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=U73ctGfv;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=T6xfsl2F
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cz8g6Qhe
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOZrN-0006aP-5k; Wed, 04 Nov 2026 07:12:57 -0500
+	id 1xOaDw-00052p-1Y; Wed, 04 Nov 2026 07:36:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xOZrF-0006Wh-C3
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 07:12:51 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xOZrC-0000wY-O6
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 07:12:49 -0500
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A4BaCSX2728969
- for <qemu-devel@nongnu.org>; Wed, 4 Nov 2026 12:12:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- +/gzBL355anQUTmmAMu+D1buk5BwDr6MMeYXZjrvads=; b=U73ctGfvc4K8fBQv
- KSwnTRvpGVn53SSRFee+3n/RA1p/dq9VGkIs7YmadmelUW4F7yN1IEeuwD0CW5KA
- WBfasPmdrFvUNPNrSZqnw3Frcant8zWLO/YNb30Kk/tfr9xqe82bvtbMhUrhjsk9
- 2NrDhxJ2VDx8JyOFzzoq1TbIqL+E/tE/MMCNTqWOSUO4KAhmHfDFnUutk5NLUSal
- L/maz6FIzcsAslkmyCrh+bVjPvD50V/YwFvlkQrIffB2cOxexqJ2mmmUwF3gLwtF
- kjqTsfkMrzZj00FutXoUr4Wp8a7jYhlu/YmPD7EgrlXldT+DAHykus9L7qnWYzcs
- et5cOQ==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hqpuvb9t4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 12:12:43 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-7cc06b9ca9eso155935137.0
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 04:12:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <conti.manuele@gmail.com>)
+ id 1xOaDu-00052H-GC
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 07:36:14 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <conti.manuele@gmail.com>)
+ id 1xOaDs-0004mv-H3
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 07:36:14 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4a35db1f202so4743555e9.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 04:36:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793794363; x=1794399163; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=+/gzBL355anQUTmmAMu+D1buk5BwDr6MMeYXZjrvads=;
- b=T6xfsl2F21pIxvGkDlVtYSzF4ceOdrOAkJzoMbb1z756x2/k7YmmRDtrzDs6zzmjpC
- POURU1fLzRzmsHCTJJzNkdhR3Iwo/YRXzxR18nL4x3irMliuI1BymCa+e/Ej366yZMd4
- wf60Sv8k9vaCAbYJQ59HKHL6WhukYL95fASc3eLavbzYM4D4vxF46C+XGRIKZ2B/8vWR
- oKUKm/1PQQxfkeZt+iZsp1IKlFHtly323QHM/bBNXf+H/jqGc26X1FYsUUzWvJYKvuhc
- KGf/9TL9wExbUJJm8cKcaqfmElL0v4GEA0M9cqyr3uCPGQPxZ2ofLbS8E8pLc00RJifH
- owFw==
+ d=gmail.com; s=20260707; t=1793795771; x=1794400571; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=OyObsbaRoinsyaD298+5GRQ7fKlPM3BANbHWI67fVUw=;
+ b=cz8g6Qhe9i+iymaonLabMKXpNMbQJaUyfVgkohIPkzXfR6JcyNaRlCYNUL+buANyPf
+ 7kLC/eB5h6b9bkRPto9g7glqbeCHfJ4uKNphNbZ7prjN7xpE/17QV74Kmvy9Ak5YRYL/
+ sfA0o+u1Boe+au6ILUSwVL8HmJB6bBwXNFWCC7/NQXYKX0xUB2gv44RhAC9zlmk0rVm/
+ X1qlBvxoFTWFoq3uZoBgvIEwg0Udu6MquoyP6GPkIWktL/6PA0wa4OGcf846ixmGeQkI
+ 8Ea1KMq0LF2vajsoq4DCLZC7SUY8PtPCRX36ec9rO3qq5OBml36I5jgAOheBvYDmyxnI
+ Ih6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793794363; x=1794399163;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=+/gzBL355anQUTmmAMu+D1buk5BwDr6MMeYXZjrvads=;
- b=EM8FjMa7y/DgQYj5PFpjm2hxYaCz8GJQLVnww+kF2wfgVSFK+nH/oEuKGLrlyxu3Me
- boU+2dYRe6yVsgMyi73bgJTM/dMDHtpcYuMWgsM4ym52eWfKAReuMe+8nTd4j4ltvjtu
- ZdXfW5znKuxSr8cZj6xchJftrI/jsT/LVzD12NMKe6ZPq9mx8NfFwjnm6KJLNIsm5Uqx
- YID/zEJPbYHgeP+y6uEVUxWl1DtwG61osq3zeZCuwVQi5cuqMVz4P60sTVYKT5I6fu8d
- Jm735Lp3amI34MukzyVof4ZZ+x8JSfyx15iu/sQQ9dJXZ/1VwJZiuUwg1LtLdP/YPy+5
- h6vQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy6XlZh8MstmCq/woGCLtETavRkDTpqR4CCYidN0aaUV9rNucKxbqwyhf/fEes0mOii4FF6eq8PytZa@nongnu.org
-X-Gm-Message-State: APuU4Z9Mh9Za2RrWABTnE5lgOfGunvQUH1L4plmG701NEDqZe+oN0ZiE
- UHuMF4SkmqhsJAMyiCgfjvZT0m1yRBf1aVO/nWnMVjAfz81NpS6/DT2mR90tcdq1Mgg7sDCTGVW
- otTzEsHn0jKyKLZKs2Hppzn9TpUbSTN0CgzKVTwxXmYYsjEQeo156PUbB0g==
-X-Gm-Gg: AYBFou2+7AZpPT62U40kQEl+dlmM0pWvH3oL1H+gBqwDko6fss5LhdvnVB++5TQi2Uv
- 6CnXMA6WPRAAjfXLC8UMhtAdmAwAFTHsx5ylz/MLaEsNHuWkfOwYSePuPSjE+BIerhODFzreHOL
- Ls7PSZin70wvLzgJWrsL8GJH9bBcbW4TgjiOCShAoMUIhkkjAQHgDWIS9Z+MJsAcGj0g7uB4vtv
- Vx4gAWoJvx8XfwDmTc/J93AaSosOkZh/l+q6uC4dTpbDknwmNTVBQd/zS/mwEaBJ1+mp6qmQPej
- dGqjoWYg1WHct3egKbKi+Yhy8BQtWZ/68gsLnBFPb6yaO/YqzZCd0DU8Hf6+3TowaOLri7elvNe
- 4PdkmHfdtUysUR/cnO/ZqP2frCQ9IDgtWqUeMo9xSMsbdfWgmPgWMbL/fK8F1UYCZ9Fc/6tkWFV
- 9t7R9XQA==
-X-Received: by 2002:a05:6102:418d:b0:7cc:c104:6dc6 with SMTP id
- ada2fe7eead31-7d07261f9b2mr5162674137.14.1793794362782; 
- Wed, 04 Nov 2026 04:12:42 -0800 (PST)
-X-Received: by 2002:a05:6102:418d:b0:7cc:c104:6dc6 with SMTP id
- ada2fe7eead31-7d07261f9b2mr5162671137.14.1793794362310; 
- Wed, 04 Nov 2026 04:12:42 -0800 (PST)
-Received: from [192.168.69.229] (pmd666.hd.free.fr. [82.67.153.177])
+ d=1e100.net; s=20260707; t=1793795771; x=1794400571;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=OyObsbaRoinsyaD298+5GRQ7fKlPM3BANbHWI67fVUw=;
+ b=a2eMvEWgi51u4Jtx9G7OWzuXLS+dAwERAAGb/z9q141eu6oQVsPuYXHgtVA5YUxC3u
+ w9s9V+/aYSqYMA9WtDAxjCpjUOivBklSW6zska1C/FrhqkGkIZLD5K/FS5CBbwkJl7KU
+ wYEv9+NGdztEPl4mhHN2EeBYHZYS45YuTlOGqdrGaGU/PVSyF7a1KRrpBHSJFDAwJsZM
+ ZbxCUugPQhjoQPJrbaz+83M1QQLTPX9AvORA7lvsoCnzF5vLQAXG3izkIMXimHCSYb8f
+ Fj5AQjUdIqSLnGX5BgUWFtCRigsbH7zhGY474GMH9f5g/P7iYLehxpHxU/Xd2PPMlOEw
+ 84ug==
+X-Gm-Message-State: APuU4Z+/y0ayI22ZD/7BLbJjtLkWEMDNpakPHGpX+bGzUojvtW7PFe0n
+ fc2qB9YekQLzoDBp9elhkglu4+SfVu+537kdaf508XoLveEEpN+vOVUHej0TGw==
+X-Gm-Gg: AYBFou33/g8hs7YJ9XIqzH15oh4rGR/FngoumhSGOH9v3BgC4zYGo4FYOZS4Zbgcm4S
+ 0Wag0OTY3x9P2LCdAZ0yvuQGKamtjR4uANOLtCutMg/g17rPqDXeP+59WgSJX+ktICfk61tqs2j
+ zU1xxJd1b+yEeFIc0RLOBQVpgLsbUJuhsswTI9OPGOteq/Vd6ZnW7anJHLotxPxxi+cx1de+SYj
+ xEwuElLitYnyV9P3JoxiKuOOK+I8xeMtWOGZyOdsGTw/wQq6wnpV0R+I122MouWS8CoIxHLsS+D
+ OkF/a7ORohj2kKqlYCXqJfVhvFsK15wotq1bG6vqIcgUeg9smnnwfmy2k6Hrq8nBPejpoEwgFMc
+ p0wM++iUPu60hjxqt07yf4p4MWm/xEpv57ysD+UmsDcfofvhTqFSE2SnurbBoapB4GfsL/2AMXb
+ AbrjlgYCRcEDZwy7nAX0YAuo47Oi3Lksn1wWXxHaVp5u/DA5OdFNMQpomjGPmEzXeAqR9wn3php
+ hByot/8+QlLyBxPWd7dzMTJ5J/BNGIiWuvPZ8sYXEKkIu2fp4JjvGiWBS7KesRbBGuwbSAA+MCF
+ oxIPNcDmrUm+0Wglnon/sMsBO0HQnFcaglpo3VhUK2cWaR/0P4b7+CnU/Igp/9Dhs9MYKsQ=
+X-Received: by 2002:a05:600c:46d1:b0:4a3:59c9:a754 with SMTP id
+ 5b1f17b1804b1-4ac187a72f4mr360555325e9.22.1793795770615; 
+ Wed, 04 Nov 2026 04:36:10 -0800 (PST)
+Received: from localhost.localdomain ([2a01:7d0:d208:aa00:9908:ec2a:cbac:ad71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48fec9cd43bsm3760201f8f.14.2026.11.04.04.12.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Nov 2026 04:12:41 -0800 (PST)
-Message-ID: <105d0d14-f3ec-4a83-aa82-96365f91c736@oss.qualcomm.com>
-Date: Wed, 4 Nov 2026 13:12:40 +0100
+ 5b1f17b1804b1-4b2a9faff90sm155844625e9.5.2026.11.04.04.36.09
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 04 Nov 2026 04:36:10 -0800 (PST)
+From: Manuele Conti <conti.manuele@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Manuele Conti <conti.manuele@gmail.com>
+Subject: [PATCH v2] hw/sd/ssi-sd: Handle immediate write start token after R1
+Date: Wed,  4 Nov 2026 13:31:56 +0100
+Message-ID: <20261104123605.37729-1-conti.manuele@gmail.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20261104111619.24479-1-conti.manuele@gmail.com>
+References: <20261104111619.24479-1-conti.manuele@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.2 3/4] target/arm: Only allow GICv5 on CPUs without
- AArch32 at EL1..3
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20261103172616.2400758-1-peter.maydell@linaro.org>
- <20261103172616.2400758-4-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261103172616.2400758-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=O6SsLx9W c=1 sm=1 tr=0 ts=6aeb213b cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=2OPPvVUHo6XKvPPvzmcA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: dX_Y8jg_7OuFw0GkhZhcodDBQl1nHAoI
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA0MDA0OCBTYWx0ZWRfXxJ0N7ih6BwwZ
- fztlfDgCS5lDgL9DHtzjkQ2m9NA661N8vHyVwF3E3hVXb2TvbdwHjxv4yJQDipM/UZZbjQtN9Ng
- W6NzZtg2HsyeHKw/iBsflFZvG7t/MaE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA0MDA0OCBTYWx0ZWRfX4XlSvCyreHom
- JQz+nzqfYNIwJnICcf9ZJxIdhg+3/RVytKIvNCvuFxPbsQGU4IHrhaia8Ny35QfTjwkhRwlXo/B
- ZcNvnTpFJpyfeHF4nNZhaik3wA8MiT9kCPQ1Vg1eT/Nwv3sUh73g7wdDA6ms5r8TBGB5Qxl9kwI
- cGTVtVwgDMWeLTpkB4LlOd8zujnH/pMtzVv5O4aZ6NWpbwGEYN/FYcmfmqe2b2FuooxL5BqwFU+
- Fh8wwqLnBUrDI9E/vtTUlMufRtWTwUcLxgw+oMugNlyxNnPCpLCLIM0Ff60wVMEMgFb1aJqtxm3
- AmFiHfqxEPezkWDXoewYAhOiZqok78Z7sRsEe2D0FCQSoAXuklRm3MhfHf7AMwpfgdAnSOfe02y
- o5Zc+37u5QhJq4YnsilAw2SidEU4O3SjmZFr0r/6O6Hzb49Tr7xfy/VbXzb+GUViL11yDMoIDHf
- Hfe4fiN0pFKXn1VDioQ==
-X-Proofpoint-GUID: dX_Y8jg_7OuFw0GkhZhcodDBQl1nHAoI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-04_04,2026-11-03_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 clxscore=1015 spamscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611040048
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=conti.manuele@gmail.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,39 +98,237 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 3/11/26 18:26, Peter Maydell wrote:
-> We previously allowed the GICv5 on any 64-bit CPU, with a hack where
-> enabling the GICv5 silently disabled AArch32 for EL1..3.
-> 
-> Now that we have a separate 'max-v8' and 'max-v9' where max-v9
-> correctly doesn't implement AArch32 at EL1..3, we can fix the "when
-> do we expose the has_gcie property" condition so that we only allow
-> the GICv5 when AArch32 doesn't exist above EL0, and remove the hack
-> disabling AArch32.
-> 
-> We could instead have defined a new ARM_FEATURE_V9, but "allow the
-> feature to be present on CPUs where it doesn't actively break
-> anything" fits the way we've generally handled things in QEMU, and it
-> avoids having a new V9 feature bit that we only use for this one
-> thing and where it's not clear when we should be setting it for KVM,
-> hvf, etc accelerators.
-> 
-> In practice the only CPUs which will allow GICv5 now are max, max-v9
-> and a64fx.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/cpu-features.h |  8 ++++++++
->   target/arm/cpu.c          | 37 +++++++------------------------------
->   2 files changed, 15 insertions(+), 30 deletions(-)
+When a write start token immediately follows the R1 response,
+the SPI SD controller may still be in SSI_SD_RESPONSE state
+and discard the token.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Recognize single-block and multi-block write start tokens
+when the SD card is ready to receive data, allowing the
+write operation to proceed without an additional dummy byte.
+
+Signed-off-by: Manuele Conti <conti.manuele@gmail.com>
+---
+Hi Philippe,
+
+Thanks for your feedback.
+
+I encountered this issue while running a bare-metal STM32F4 firmware under QEMU, using SPI mode to communicate with an SD card.
+
+The firmware performs a block write (CMD24) and sends the data start token (0xFE) immediately after receiving the R1 response, without an additional dummy byte.
+
+In this case, the SSI SD controller is still in SSI_SD_RESPONSE state and discards the token, causing the subsequent write operation to fail.
+
+I've now added a regression test to reproduce this behavior without requiring the original firmware.
+
+The test exercises the immediate write-token sequence and verifies that the controller correctly transitions to the data-write state.
+
+I'll submit an updated patch including the regression test so the issue can be reproduced and verified independently.
+
+Best regards,
+Manuele
+
+ hw/sd/ssi-sd.c                        |   6 +
+ tests/qtest/ssi-sd-token-local-test.c | 165 ++++++++++++++++++++++++++
+ 2 files changed, 171 insertions(+)
+ create mode 100644 tests/qtest/ssi-sd-token-local-test.c
+
+diff --git a/hw/sd/ssi-sd.c b/hw/sd/ssi-sd.c
+index a3a9f0c7efd..13c87c49cfb 100644
+--- a/hw/sd/ssi-sd.c
++++ b/hw/sd/ssi-sd.c
+@@ -185,6 +185,12 @@ static uint32_t ssi_sd_transfer(SSIPeripheral *dev, uint32_t val)
+             s->mode = SSI_SD_CMD;
+             return SSI_DUMMY;
+         }
++        /* The next byte after R1 may already be the write start token. */
++        if (sdbus_receive_ready(&s->sdbus) &&
++            (val == SSI_TOKEN_SINGLE || val == SSI_TOKEN_MULTI_WRITE)) {
++            s->mode = SSI_SD_DATA_WRITE;
++            return SSI_DUMMY;
++        }
+         if (sdbus_data_ready(&s->sdbus)) {
+             DPRINTF("Data read\n");
+             s->mode = SSI_SD_DATA_START;
+diff --git a/tests/qtest/ssi-sd-token-local-test.c b/tests/qtest/ssi-sd-token-local-test.c
+new file mode 100644
+index 00000000000..55ac5fec643
+--- /dev/null
++++ b/tests/qtest/ssi-sd-token-local-test.c
+@@ -0,0 +1,165 @@
++/*
++ * SD/SPI transfert tests
++ *
++ * Copyright (c) 2026 Manuele Conti <manuele.conti@archimede-energia.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest-single.h"
++
++#define SSP_BASE 0x40008000
++#define GPIO_D_DATA0 0x40007004
++#define GPIO_D_DIR 0x40007400
++#define BLOCK_SIZE 512
++
++typedef struct WriteCase {
++    const char *name;
++    bool multi;
++    unsigned dummy_bytes;
++} WriteCase;
++
++static uint8_t transfer(uint8_t value)
++{
++    writel(SSP_BASE + 8, value);
++    return readl(SSP_BASE + 8) & 0xff;
++}
++
++static uint8_t command(unsigned cmd, uint32_t argument)
++{
++    transfer(0xff);
++    transfer(0x40 | cmd);
++    transfer(argument >> 24);
++    transfer(argument >> 16);
++    transfer(argument >> 8);
++    transfer(argument);
++    transfer(cmd == 0 ? 0x95 : cmd == 8 ? 0x87 : 0xff);
++    for (unsigned i = 0; i < 32; i++) {
++        uint8_t response = transfer(0xff);
++        if (!(response & 0x80)) {
++            return response;
++        }
++    }
++    g_assert_not_reached();
++}
++
++static void initialize_card(void)
++{
++    bool ready = false;
++    bool token = false;
++
++    /* Drive D0 high and then low to select SD and deselect the OLED. */
++    writel(GPIO_D_DIR, 1);
++    writel(GPIO_D_DATA0, 1);
++    writel(GPIO_D_DATA0, 0);
++    writel(SSP_BASE, 7);       /* Eight-bit SPI frames. */
++    writel(SSP_BASE + 4, 2);   /* Enable PL022. */
++    for (unsigned i = 0; i < 10; i++) {
++        transfer(0xff);
++    }
++    g_assert_cmphex(command(0, 0), ==, 1);
++    g_assert_cmphex(command(8, 0x1aa), ==, 1);
++    for (unsigned i = 0; i < 4; i++) {
++        transfer(0xff);
++    }
++    for (unsigned i = 0; i < 100; i++) {
++        g_assert_cmphex(command(55, 0), ==, 1);
++        if (command(41, 0x40000000) == 0) {
++            ready = true;
++            break;
++        }
++        clock_step(1000000);
++    }
++    g_assert_true(ready);
++
++    /* Upstream's SPI CMD9 handler switches the card to transfer state. */
++    g_assert_cmphex(command(9, 0), ==, 0);
++    for (unsigned i = 0; i < 32; i++) {
++        if (transfer(0xff) == 0xfe) {
++            token = true;
++            break;
++        }
++    }
++    g_assert_true(token);
++    for (unsigned i = 0; i < 18; i++) {
++        transfer(0xff);       /* Sixteen CSD bytes and two CRC bytes. */
++    }
++    g_assert_cmphex(command(16, BLOCK_SIZE), ==, 0);
++}
++
++static void test_write(const void *opaque)
++{
++    const WriteCase *tc = opaque;
++    unsigned blocks = tc->multi ? 2 : 1;
++    uint8_t expected[2 * BLOCK_SIZE], actual[2 * BLOCK_SIZE];
++    uint8_t response[2] = { 0xff, 0xff };
++    bool accepted = true;
++    g_autofree char *path = NULL;
++    g_autofree char *args = NULL;
++    int fd = g_file_open_tmp("ssi-sd-token-local-XXXXXX", &path, NULL);
++    ssize_t bytes;
++
++    g_assert_cmpint(fd, >=, 0);
++    g_assert_cmpint(ftruncate(fd, 64 * 1024 * 1024), ==, 0);
++    args = g_strdup_printf("-M lm3s6965evb -serial none "
++                           "-drive file=%s,if=sd,format=raw", path);
++    qtest_start(args);
++    initialize_card();
++    g_assert_cmphex(command(tc->multi ? 25 : 24, 0), ==, 0);
++    for (unsigned i = 0; i < tc->dummy_bytes; i++) {
++        transfer(0xff);
++    }
++    for (unsigned block = 0; block < blocks; block++) {
++        /* Constant data avoids accidentally supplying a second start token. */
++        memset(expected + block * BLOCK_SIZE, 0xa5 + block, BLOCK_SIZE);
++        transfer(tc->multi ? 0xfc : 0xfe);
++        for (unsigned i = 0; i < BLOCK_SIZE; i++) {
++            transfer(expected[block * BLOCK_SIZE + i]);
++        }
++        transfer(0xff);
++        transfer(0xff);
++        response[block] = transfer(0xff);
++        if ((response[block] & 0x1f) != 0x05) {
++            accepted = false;
++            break;
++        }
++        /* This experiment isolates the first token after command R1. */
++        if (tc->multi && block + 1 < blocks) {
++            transfer(0xff);
++        }
++    }
++    if (tc->multi && accepted) {
++        transfer(0xff);
++        transfer(0xfd);
++        transfer(0xff);
++    }
++    qtest_end();
++    bytes = pread(fd, actual, blocks * BLOCK_SIZE, 0);
++    close(fd);
++    unlink(path);
++
++    g_test_message("CMD%u dummy=%u response[0]=0x%02x response[1]=0x%02x",
++                   tc->multi ? 25 : 24, tc->dummy_bytes,
++                   response[0], response[1]);
++    g_assert_true(accepted);
++    g_assert_cmpint(bytes, ==, blocks * BLOCK_SIZE);
++    g_assert_cmpmem(actual, blocks * BLOCK_SIZE,
++                   expected, blocks * BLOCK_SIZE);
++}
++
++int main(int argc, char **argv)
++{
++    static const WriteCase cases[] = {
++        { "/ssi-sd-local/single/immediate", false, 0 },
++        { "/ssi-sd-local/single/dummy", false, 1 },
++        { "/ssi-sd-local/multi/immediate", true, 0 },
++        { "/ssi-sd-local/multi/dummy", true, 1 },
++    };
++
++    g_test_init(&argc, &argv, NULL);
++    for (unsigned i = 0; i < G_N_ELEMENTS(cases); i++) {
++        qtest_add_data_func(cases[i].name, &cases[i], test_write);
++    }
++    return g_test_run();
++}
+-- 
+2.41.0
+
 
