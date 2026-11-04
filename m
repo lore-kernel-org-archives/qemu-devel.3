@@ -1,36 +1,37 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA7C606A331
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 17:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A521606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 17:26:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=wsGa/rsO
+	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=S0l21P3y
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOekE-0000wB-QT; Wed, 04 Nov 2026 12:25:54 -0500
+	id 1xOekD-0000vN-1d; Wed, 04 Nov 2026 12:25:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
- id 1xOekB-0000vO-BZ
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 12:25:52 -0500
-Received: from out-152.mta1.migadu.com ([95.215.58.152] helo=mta1.migadu.com)
+ id 1xOek4-0000uT-91
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 12:25:45 -0500
+Received: from out-47.mta0.migadu.com ([2001:41d0:1004:224b::2f]
+ helo=mta0.migadu.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
- id 1xOek8-0005bF-MU
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 12:25:49 -0500
+ id 1xOek2-0005aj-R2
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 12:25:44 -0500
 X-Envelope-To: qemu-devel@nongnu.org
-DKIM-Signature: a=rsa-sha256; bh=MxR3c48AzklxPRyTJpjhZAtl2/Qg2f+G50G0qs7v1Wg=; 
+DKIM-Signature: a=rsa-sha256; bh=KvcV0c4jRWUZ56qd0nf0GVpOhs3x5p+gMgincRqh3Ic=; 
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793813146; v=1; x=1794417946;
- b=wsGa/rsO78jClay5d3sxcOBtHBBN7fBmbamLWxfNz/pDSw19IMIKaInaViyCVPHdH/m+QTSI
- J/PJQpPdlQAnuBe2LYF+MOFeG3KwuGMoSHDvAnowVNyWhGn0u59PF0GtB2I5Hp5aolMBM92naHc
- DySQ7WwtxOYvO5Zj1JNblSYo=
+ t=1793813141; v=1; x=1794417941;
+ b=S0l21P3yf/EePM9E9LVhImMS+NLGodZraKUntXJ5bfrGOm+j8hDq8LYrITNGVc5POFBrwkgL
+ II7V0CZCApoELbfDW2dddTvPJiZOjcSHmRPgmfzRO9zz1+vB68taSpBAlPZhh8e3+gMdQ6MGwY6
+ CFsrYE3xjvLHmwlM+ztltrHI=
 X-Envelope-To: qemu-devel@nongnu.org
-Received: by smtp.migadu.com with ESMTPS id 9815f4b0805190e0;
- Wed, 04 Nov 2026 17:25:46 +0000
-X-Mizu-Trace-ID: 9815f4b0805190e0
+Received: by smtp.migadu.com with ESMTPS id 4064cf3a45f60569;
+ Wed, 04 Nov 2026 17:25:40 +0000
+X-Mizu-Trace-ID: 4064cf3a45f60569
 X-Migadu-Flow: FLOW_OUT
 From: Junjie Cao <junjie.cao@linux.dev>
 To: shrihari.s@samsung.com
@@ -40,19 +41,19 @@ Cc: jic23@kernel.org, linux-cxl@vger.kernel.org, linux-pci@vger.kernel.org,
  dave@stgolabs.net, dongjoo.seo1@samsung.com, gost.dev@samsung.com,
  s.neeraj@samsung.com, vikash.k5@samsung.com, anisa.su@samsung.com,
  junjie.cao@linux.dev
-Subject: Re: [PATCH qemu v1 5/8] hw/pci: Wire SVC initialization into port
- realize functions
-Date: Wed,  4 Nov 2026 11:25:26 -0600
-Message-ID: <20261104172527.2172366-3-junjie.cao@linux.dev>
+Subject: Re: [PATCH qemu v1 4/8] hw/pci: Add PCIe Streamlined Virtual Channel
+ (SVC) capability
+Date: Wed,  4 Nov 2026 11:25:25 -0600
+Message-ID: <20261104172527.2172366-2-junjie.cao@linux.dev>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <360067785.01793792402254.JavaMail.epsvc@epcpadp1new>
+In-Reply-To: <603443293.161793792284076.JavaMail.epsvc@epcpadp2new>
 References: <20261104115242.2035807-1-shrihari.s@samsung.com>
- <360067785.01793792402254.JavaMail.epsvc@epcpadp1new>
+ <603443293.161793792284076.JavaMail.epsvc@epcpadp2new>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=95.215.58.152; envelope-from=junjie.cao@linux.dev;
- helo=mta1.migadu.com
+Received-SPF: pass client-ip=2001:41d0:1004:224b::2f;
+ envelope-from=junjie.cao@linux.dev; helo=mta0.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,20 +71,32 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Tested port capability enumeration and CXL RP/USP UIO gating on q35
-at cold boot and after system reset, with the full series on
-3c99db7705c1. The ioh3420,x-svc=on case reports an error instead of
-aborting.
+Hi Shrihari,
 
-Also checked the CXL capability chains and USP HDM UIO advertisement
-on aarch64 virt using qtest.
+The protocol-selection checks now reject the bad writes from my previous
+review. The TC/VC map defaults need another change, though.
 
-Tested-by: Junjie Cao <junjie.cao@linux.dev>
+On 3c99db7705c1 plus this series, Resource Control sets 1 and 2 read
+zero at cold boot and after a system reset on the tested CXL root,
+upstream and downstream ports and Type-3 devices. PCIe 6.2 section
+7.9.29.7 requires the TC/VC Map default to match Table 2-46:
+TC3 to VC3 and TC4 to VC4.
+
+Software that keeps the default map and only selects UIO and sets VC
+Enable writes 0x80000200, which reads back 0x200. Restoring defaults
+of 0x08 and 0x10 makes that read-modify-write produce 0x80000208 and
+0x80000210; both then retain VC Enable.
+
+Could init and reset restore those map bits while leaving VC Enable
+clear?
+
+Many thanks,
+Junjie
 
