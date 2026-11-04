@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE39606A31B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 15:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638DB606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Nov 2026 15:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=KLBdPA+V
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=IatsdtdX
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOd8g-0001kK-28; Wed, 04 Nov 2026 10:43:02 -0500
+	id 1xOd9Q-0002GX-H8; Wed, 04 Nov 2026 10:43:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOd8c-0001it-NU; Wed, 04 Nov 2026 10:42:59 -0500
+ id 1xOd9F-000261-IH; Wed, 04 Nov 2026 10:43:39 -0500
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xOd8Z-0001Gk-Jj; Wed, 04 Nov 2026 10:42:58 -0500
+ id 1xOd9C-0001Gk-C9; Wed, 04 Nov 2026 10:43:36 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iaHUqqlbJbX9GSCFpsP+rs6BwJGgaB2WLl5WW6oJxu6itP3qRvklU+qQs4F9ODGw5QsJ8nmWEvwF+INLtc46jyzikxOO+Dh4zEWu14GDM2CN+/xjOSCP8Ay2RuKKSfGq/J+/yWRhUin2k60p+IajPFgAbl3zHaabXl1//GYrzhSPat+LhGCcwZx1hW+Ub0Z43c5tjPvtc0eu5gV+5HvpbJqBsy+1RtwpL06WWZpWn92EwAmLEf+oygCB25K5BUYQ6b7aayzUMUkLP/wxaSK6czNkduBWUztMeb8MJVvhUkxLcoqp07lEkrqgsM1KlUu1Jwahpz0jDesJBVT7ZnfGUQ==
+ b=NW9EsPfN+PtKzvEhSWpZSYK5GJts6m3PsCEln3Vfi7zfn+unkTepg3h0JXzYQn+pbFsDHX9PlhQLBzFdKf7E/4khyDVWbIprHhREkcLfLC4oShnXkvnwgpWN1u2L74ZQwnSqLKIpEfDujvVpRRDZgBBHV/9deBlpcDJ3XDBCGA2ArhA6erqgLn8wKGVWlIBpvvV6zKygVi8T6uL1vX5AplICk8ahQvZIoA0BX4WEbA694y4nJ4QsGIZ8zpgMpQA3ojnNT08UX+eTSZo57nmfIm/VNnv+xLZtuk9RZbK9cHZGjXXSTuMZUbJDExcwkLAEpKm+LsesjlIaqOzr+ga9Ig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U+xSailkeQQWcAojrTIjhZyx2WdMKq0nx/fD8MA/Shk=;
- b=qDJuWueTX7TUw7YrN1rO5Xn1YBJQvoisQ1H2sle9nt3eeBQz92Dn49veqPD+j2XCkzz9472YO2gwF2SQnQ13vF6lVJ79HwFahmE7cmWAAfxlmO6lHwhHojjqZdz0FFkwD1dMBnp5o08JiiaPdwchxU/XxfmRr+Wzj9Gxq0MDAmlhJGGa0rl2lsxmfZ9URn74kPzMuwXBdgyAAapFD6zcwpOI1WTV9NJS0NeqLAtQFdJ5F3Ao3jfbn9X0n6tz+rJeOrg5f/AFWleqXML8upyV/qiX4ORvtoK5g5reMWZqNtTgPOqrN4v6pLK4dB4TQVd0nXUycJWGYStatoooEwxVTg==
+ bh=x7GWXsB6jvzXGz7iz3uLNWGXzo31Keh47ap8FyPil08=;
+ b=CqdVTOvN2xhCVc9bhw4I4jberUMlRQdjMMFghnEloisS4U5AGB1ZotJoURsFKBOMV00vQDUBN0qLnZ0+s6k6IZ4UasNokCvDenGMOuYpTRjYkX+dOzs829F3EwPS8RqhBvn+nvE2X4ShqWvm/AULtxlYDenUiFbtmF8bf0HGWasQxfeE6M4O6tYZoPV2+D5aq3JZs5tdyIJECrF0U4hfWcrd8/zHGLbcIE/SNej+QMXErt3Z92i5Aic4aYMGJTc3Nrm02S5QJ3+/hjHNeRdUdWMGPihOGP0cWomXRGucmKKxL28NiofwgdNQG+JilJePQ5DnrhAhSQDKWGmJY4CT4g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,27 +32,34 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U+xSailkeQQWcAojrTIjhZyx2WdMKq0nx/fD8MA/Shk=;
- b=KLBdPA+VqOvhcntM3bs+tHv0rrrBJcYMVyW0z3XvcF9WsLuaBsN0kcpen9MTqV8xWQ7B1Urro1OqkGghuMlnXdA+++7yk0px/vpqRgbJsvc8bcTwj+EKeTFpSR6rVsGGRFbCsuf1ldjUpGDS5JXIXFX/wAvMHYvQmaNMSyLC7SmtWt5KD8jhGS2cRKalhQusckEYlQZTyBRrut7o0hzZKfFm5hr4R7VzekpbG2UCE0aVTm7CbPKSc4LzUboOgyQsFQ5lCjH2YFzIEzk0J7hUqh8XOZaty4unTli8DQltVOBsL2eWQAi0IflQYxuAL7mUrwhxDjs8o9t5b+82NbpgJQ==
+ bh=x7GWXsB6jvzXGz7iz3uLNWGXzo31Keh47ap8FyPil08=;
+ b=IatsdtdXp9HRxf7mSd/HFp1Qu4HzXaPANy+pbQ/A7tq+3cE3NYb1w90NwHiD9E9Kd+h9gN1m4DnIxZenyPFSvXgoXRmYz14Di0ynuAHnF8uWUvbcMbRk62K+uzECfXEkS5kG7CsdKu5DNT0MUbl6rmBEzne1ShmXorZvWHFKOtHJkMp9iJ0lrEz34ZkVRkBK3cKVG5/IBf8l5BhKRDAqf0xlySCKWAMnTyXSKzldbZloTw4H8+uwuq4pwc1VZTowhSrYJQ9FJLdMXxgQeE74EFpyctaL2mlZ9jYe+TYc1haItMW9nJHkF2XKjS+9ShiGVfCCdJIELx9C/lP7QkbQSA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com (2603:1096:405:2c::12)
  by SEZPR02MB7162.apcprd02.prod.outlook.com (2603:1096:101:190::6)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.9; Wed, 4 Nov 2026
- 15:42:50 +0000
+ 15:43:03 +0000
 Received: from TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10]) by TYZPR02MB7121.apcprd02.prod.outlook.com
  ([fe80::5d81:393:2e5b:6e10%5]) with mapi id 15.21.0592.009; Wed, 4 Nov 2026
- 15:42:49 +0000
+ 15:43:03 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor.dooley@microchip.com>, Conor Dooley <conor@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
-Subject: [PATCH v5 13/26] hw/rtc: Add PolarFire SoC RTC model
-Date: Wed,  4 Nov 2026 23:41:40 +0800
-Message-ID: <20261104154207.641511-14-bin.meng@processmission.com>
+Cc: Chao Liu <chao.liu@processmission.com>,
+ Conor Dooley <conor.dooley@microchip.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Conor Dooley <conor@kernel.org>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
+Subject: [PATCH v5 20/26] hw/riscv: pfsoc: Fix Icicle Kit RAM size at 2 GiB
+Date: Wed,  4 Nov 2026 23:41:47 +0800
+Message-ID: <20261104154207.641511-21-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261104154207.641511-1-bin.meng@processmission.com>
 References: <20261104154207.641511-1-bin.meng@processmission.com>
@@ -65,56 +72,56 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TYZPR02MB7121:EE_|SEZPR02MB7162:EE_
-X-MS-Office365-Filtering-Correlation-Id: 79c86d9d-fda2-44cd-e6b6-08df3a8a47bd
+X-MS-Office365-Filtering-Correlation-Id: 8660fdcd-dc3a-4fd9-82b3-08df3a8a4ff4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|23010399003|376014|260925021311599003|260925021911599003|260925022911599003|56012099006|261022105027099003|261021121427099003|261009223027099003|261021123027099003|261022075727099003|261102123227099003|261022113327099003|261026121527099003|261026140227099003|261028144727099003|10067099003|22082099003|18002099003|6133799003|3023799007;
-X-Microsoft-Antispam-Message-Info: P+jM1ssxIdJAUBifRjyX7c90Tbocr0KDZst1Y7BcvgTbtpjkqEI/pklv7ygONUBnaTHqv12Mvo1CvdzueZ8m0MnJ+80T1j8Jxgn7R1Q8eKh3MJpT2U5SmU+8NAZJTe0M9VhbGmRWZI11/yAqtMplLS+FicAVa9j+3nRlzAaeAc0PGuKv7zeh6JlRamR96/Wj5CITFDjsgb3GRDoc2g1V2rHjWQvJvhn6NM28j+mltqQNcXLg7Jh0dV98I5fppFU5G4W5Rs9ExEZySWURd7qntAJ/qY+fFx9WoEDBe9FxpOFacHYFY1rzJ64Jr0TXlSptk/Z4SydZzeLTVwhZYqS2LUbkSp/FoQmpx4Hrxfw8P34bKbKCjIDL3qLTlQ2z31lkAZ4pDIjYa8NO/0EzcLjylgWJ+FP3ORHPAicq6F4YPEoJkJt8I5WL9ImwqHoJuHHVN9nzSBCb2fbHyyYoy9lL0JQ+nNheT2VykyUuXjzXcoAqK1DdIZxadJZ6ehCZUuF4fbKh34IbdXpc5YML1snVj8Vq/jW9r3BRtrpjj/w0EwJZbcblL/S0oLTvWaSwNk/Iod9EQzVae9HyTFoR4GHubtv7BI9fuHRr2+OATAe2HhBYcR1Txea4F+TFa6dpnowcxsyuyd48GDfImmvOFImwOofwwjquwMOaweuiUQWOb3w=
+ ARA:13230040|366016|1800799024|7416014|23010399003|376014|56012099006|261022105027099003|261009221227099003|261021121427099003|261009220027099003|261009221727099003|261009223027099003|261009223327099003|261021123027099003|261022075727099003|261102123227099003|261026121527099003|261026140227099003|261028144727099003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info: t/OYwk7YYAeNhBYRapYKgbM+myyj5jIOIlvB6nY/Z0jUvKqEd+qlG9MRQlU/Slo7vC5Q2uDyX4xpPQMl68eXPRzk5mxaSqB25LisKpff4CTmO/k7Rvf+rnVAKgr2jnJe6+ZCfIKgXrdk4+VwpvOnvYkYFGvEyvYRwbetfcIttBN1TDdUcejCA+E2vcTakQT9HXnalONTEmrGLSOpMNOa4pCb4JTBsBL9MxIzUELp4IjRk2EZRjwXqqC0YHTzWkcqP1QMo87BoeJnxHkVZyvJk1B4G43yDjyTWvRZMt6GaY0jAZ4dUOsxO4aAd6d6ocnK9ymVxq/c10eGnqC0hVJ6cRmpbFVx7/w7IVcLoF3U0gARRLx1vFQW3jjioz8ldcscyR1k4237IbMOE3ooj5yATZkTxbWJPXuz122hf9jyiSBeyGLj2xRwX0/o2XzyXS066aHwN6Fi/g22A5xB9Qia5TlN82IX0v46Z9p/9MGeetiEk2pZOk2uGAAniTW0Sg+hvUBky8/lFvsGgISZOJgPYh1G6Vd9FVA1Z2NFXdhQ2kiaW48gG0RGhif+7o9/pqSrXAezQQQnFn1lXNJcEwVW9vLdmCuNUCaQA3PNx/Yt0ZqAKoZ2krr2aYv5SMVnjHkm7F/W1B59HePc/gkyN4NLWcoEZi8R794yVRTD4IBL0cQ=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR02MB7121.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(260925021311599003)(260925021911599003)(260925022911599003)(56012099006)(261022105027099003)(261021121427099003)(261009223027099003)(261021123027099003)(261022075727099003)(261102123227099003)(261022113327099003)(261026121527099003)(261026140227099003)(261028144727099003)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007);
+ SFS:(13230040)(366016)(1800799024)(7416014)(23010399003)(376014)(56012099006)(261022105027099003)(261009221227099003)(261021121427099003)(261009220027099003)(261009221727099003)(261009223027099003)(261009223327099003)(261021123027099003)(261022075727099003)(261102123227099003)(261026121527099003)(261026140227099003)(261028144727099003)(10067099003)(22082099003)(18002099003)(6133799003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?SeU7u555nEhN+qXIE2gX698Yj9gCa2yqCg1oWKpF0HQkUZ/KQYf7UImYpy63?=
- =?us-ascii?Q?BcpZ8v4D8Zl0E3VEm/m1ItJRowsc1MKq2RyGkMRLR9+Ohv1aTcVOO3b6pq/y?=
- =?us-ascii?Q?1ajF8U9Zif5IeB1BmqQs9DgktfjQMC1N7kFu1GYHlpCkVaGnzrJRw+Supa8q?=
- =?us-ascii?Q?Ojksbr7sPpP4ZdYci9RaGXd3zdRq27HcvMTddmBK+rpRZE3Qon1/FQdLKyhv?=
- =?us-ascii?Q?xT8B5+q9l0fv5AIn3KeqqtfoXFeUnr9hEiNipdLfS/6oI4qnuIq0Ggpu7wE8?=
- =?us-ascii?Q?TXf3PxKHxHvxQCIi3nglwgTEytkUTOj77MWjzI6NhiJt4cMuRvXx7I0EJLyK?=
- =?us-ascii?Q?HUu4HBWOIHnnMmSV5o5mlLzeLymQ8H5Wl4xvDTUkAnJwyGhKaQwywCN2Dwvz?=
- =?us-ascii?Q?fAzhnbNS7UgnvpRiQO6XKJn5r0tkNfwRlnBE6QoVJZpUIaZvdePQX5kPR5d+?=
- =?us-ascii?Q?/NQwh2OFahCy6eNIc5je9+i+rulclAN4wWZndx8EKJEMOzrYG6dwb9RBimSc?=
- =?us-ascii?Q?jBkDAEhEM/86+MZjjOROPSi2Gl4oNpMScTugYIWDLmiieHEsWPCDpVLEWuxh?=
- =?us-ascii?Q?0Lkl68Pc21wUR5NtfZ2g+agkS/Nlez3c6InNiokd6LBQqV5Y2cFTw43O27yw?=
- =?us-ascii?Q?zYpW+47bb35RqHC0AE1U7Zwehd46baFTlWcxkJXFl5wVBDaASU4+jmHmhNXA?=
- =?us-ascii?Q?a+ezKzDJ2cnbNF2LSesw+uggI7UklaqTRG0VNeRtAH8/ut281dfVyFGirsYu?=
- =?us-ascii?Q?vBjRICGk88yisZ+zngwsbhNtO9YmMPeIxVyrPASWJEaA+r3yM+7iMS8uJV8P?=
- =?us-ascii?Q?XgWmq9HYuVPXocWehxbx21xYfwuwP1N7f6iFqEJOggTK+USOamHhTwPh7qAB?=
- =?us-ascii?Q?SsBqJdLRXYbOcbirJ9wP27j5NugCCpSEiFhy2yzXF52mO7ugaLOhhKDGHPbJ?=
- =?us-ascii?Q?fVgp/5cEDrpM9vlJuFKEyd+Gr/GoMab+2DEzQDCiQtEShtA9+GILIGWqO1o7?=
- =?us-ascii?Q?9aH+z7CE/Cc94miIvozWfU/BZRPTcxoFz7UiQ8JCM1fdeAxLnz5xr34TLKTt?=
- =?us-ascii?Q?eXUHaT5NFPOTTfhx0TmUHiEtVP5f20pCo49KmhyPK8lpbD/5Z8ziSBg9j9ZN?=
- =?us-ascii?Q?vrfgK2lRiPBth9D3786MG7Ov6SC04YRik+xfWaAw1MrFRJBrvNho8tXj8HM5?=
- =?us-ascii?Q?nmc16yX66UiG2c36GnvoqdEP1l74mmIsHyi5uvyhR30ktYNEIyRWvNjrJJKt?=
- =?us-ascii?Q?3mdVQAp9VC3yoZGBxLpy5UpNHiuQOY2aohNZ6ZJg301PA3XU5hbH6IQsDp8n?=
- =?us-ascii?Q?1wHbipQl4WjXgyvOy2Y5g1cXUgfsDUkeZlGyuZK+T1NuBr8EaC8R8ns7Ida6?=
- =?us-ascii?Q?tf80d98BxGiy2gIH2+M72T/rvA+fl8ifZfF7jr1WqJFyDVvODNmUaI/LjFd/?=
- =?us-ascii?Q?YMtyCB8q2bgOIcupPYkaP032aOOFIKEk6O2MC7C4VB91zw/MUTwTTDHVvaU2?=
- =?us-ascii?Q?MxTVaYX3CFCCSIGTg/S6jv2MnqfrXrBtwh1OQEREqo2ly/0V/+O4wWO7R37u?=
- =?us-ascii?Q?fyRkNEzAenk+4YDkUO1HFrg0EhbzAv+bsqJfJrLe43l5xkY7Co6STSYU2Y2/?=
- =?us-ascii?Q?dAu9krGgUlvd3f+wnOVy2oTJtR00tM68fKyWzDWPvvp03q5JSo3b59kh3c8c?=
- =?us-ascii?Q?PYo2EkRVCv8bOLNjNqChNrKaYiBUFgCsxiKV7SMsovWFIPNi2PpHQlc1yWRH?=
- =?us-ascii?Q?/f5w7ey+txpVzKMtz5lmkFKP1C58zaw=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?hnoWjyksBBU3xXiPyApmkQzqdj6DzD7WwbDnwN+V1pKa0r4sqGK4wRgvA0xW?=
+ =?us-ascii?Q?ZtEEbU2m3Y0Pse0cq7wavFLsdwyhvuFduutOyLBZtlRjrK6CtenMoNzrKaMD?=
+ =?us-ascii?Q?YuOzEha9CvXK0h0m6javrwGCtJpQRLuDh8LOUw4Bc3c1MhSnlxqniV9zKJUg?=
+ =?us-ascii?Q?a/AtuDCVU7apiUm1hs/yHCj+dBOiSGRw+lg8EXedjRJmAXv/rBgj3zU6RMdK?=
+ =?us-ascii?Q?v4rXj5MPDGsiRmTkXTWDGatlytnm/5ablXtvHQ4GMk4hGRkSdbIFaZ2gtULJ?=
+ =?us-ascii?Q?sNK/zgpzm0JPMiv7ZzZh7fyQvPhWumn5y2O3QLJ8brbDukn7QHPSBylY4D8M?=
+ =?us-ascii?Q?UydNtf18cR7gCSERbV4m0fdt6Y1KGClSpcxnm03paNEUBRoFYXseTVjDm1WS?=
+ =?us-ascii?Q?XmC9NvxKmv3kkDW3mDgxkx2plH50E8/ME7sauUZfGK4NrPI5WSERm/d6x8SJ?=
+ =?us-ascii?Q?+OUQ1QbsfI44WVfcMQ7sOHNXOL0sz/InPCCLbOhGnuWNWmwwIEFiSFmfwu6b?=
+ =?us-ascii?Q?iDTM4x2/FD1CD3ZU16Idokj+de+2FWb1Q8iZhpVh1enTTgJySzlYVh2P8pta?=
+ =?us-ascii?Q?L0lQR0kQxOkmw/pdK0TzNvVc+tYe50m/+cd0YUpG6+Uyp2nKBrNNVIA/EDmS?=
+ =?us-ascii?Q?6nM5pfqWKeVzdVoGM7ybG7NPPATodRd/fthsthyYuLxDE130qivbS66nfHSR?=
+ =?us-ascii?Q?otuYRpPefw0x8XpPWVo7Oh2pdHriBAt2ZFbqSl3jO9XSNDaOOO0i6vgKtRjg?=
+ =?us-ascii?Q?V2f5EQq0LRsqkRwqbLx6tZb/Z5PH4VRtZ70oC6lQtciQWcOO/r6TfEP8AoX9?=
+ =?us-ascii?Q?NPvJeoXVHQVrYYn4QjbH0e15SyWzaJgPTJUgZsBp1LbZHahDJ1RA9SeKkoe3?=
+ =?us-ascii?Q?1fQMkijNprgLRDAF7Yo/uY+c1a1EuQwhRhrkOHnTSe6JpJsVRI/++mI6+cXj?=
+ =?us-ascii?Q?4ixUUfjHAxSbETgXGWdbLVBrAmZxNH33th1E6CehtBwUbtJ4S1hdtxdMqMoX?=
+ =?us-ascii?Q?tdkPN0I5WhZqRkQFg6IIBDFi+5dSIiH9hmr1zJxZsDt4WsfFnkxO5znGl97j?=
+ =?us-ascii?Q?U6GYbntRDFbVSIyyEqa21ped3S2NGt4DIgtnXznEalfW2JQMuFfJu7OyulMa?=
+ =?us-ascii?Q?XU9PyhPia2PJApf8FAgRQOn502Ee0kRee1uD74gcwFlNqhaopzu2D7P0Cxo5?=
+ =?us-ascii?Q?OvJwDMuGa+D/lzPlhHIW5b/tXseaH5Ph17LiOv2rZSnCqGHxjJf2XBwq0nL+?=
+ =?us-ascii?Q?HdTY1StGLtMR6cViooxBsE7xYRiWmAlGLtxxYgg2fqKBSpT4zKVcYiBHlFp5?=
+ =?us-ascii?Q?xN9dw2p+nnzZouwuUJk7HQokyiZz7+QlyM0fU72IZ0xFsOaS/EgD2yuSLGmb?=
+ =?us-ascii?Q?DWCRUvkEmpPbW5gbs9/m+/EfdpXRGdcsLACEpiXZ2UsA5cmBWg3sSfdkfKFM?=
+ =?us-ascii?Q?srrsHkzrbRUB/4BtGDZyhm02VonhqmYqYWKaniGcASVMli+LqanhHy3Tetc2?=
+ =?us-ascii?Q?m54foxwIsSDhjoLpVcHqMCbh5qDKavYqYz81drBp6gchEJTgy11/P2Ub5L6i?=
+ =?us-ascii?Q?sb7M8NA/MrBxJ3SA572uxJu165Engbth/cOjkTLKwq+FgxI6grU99ggkaLe9?=
+ =?us-ascii?Q?bpjxqHW2TbcHunVeeEXcxmgIfVFAb1gFEP1SLjCCBHkSuwoJSm9t7n3Pm1/1?=
+ =?us-ascii?Q?TVB1ngpDbpKOvVLbLSxaKIrrdgi/LNjmS5zvaZ23GICEDsrGW5eLUihW5pAu?=
+ =?us-ascii?Q?/n/hMDubHDJSPUa5W9dNAnPK4J/16v4=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 79c86d9d-fda2-44cd-e6b6-08df3a8a47bd
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8660fdcd-dc3a-4fd9-82b3-08df3a8a4ff4
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR02MB7121.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 15:42:49.5152 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 15:43:03.2346 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GKGrP9aQpIizGj1DThE3xr458YMyZAGlYDhczM/ap0btkg7fR6vYaTZjCcNte96WdmfjwqGkQUVi2hC1isKqE7ZRRo1q4ztvOhvcC/9Zb4Y=
+X-MS-Exchange-CrossTenant-UserPrincipalName: PSEY3M0vnbGvKbg30bHrhP92vnPLgchqHpwn3G4so2LpQRMvDEfspB6aOklSAgFcEQWc7KvVG4ZNFJ1OVepK9a/q+Y1zFC5Glk8kZdLPKh0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7162
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
@@ -145,616 +152,75 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The PolarFire SoC exposes an RTC with binary and calendar modes,
-programmable prescaling, alarms, and wakeup and match interrupts.
+The Icicle Kit has 2 GiB of RAM, and its firmware device tree
+describes that fixed capacity. The model currently defaults to
+1537 MiB and accepts any larger size, allowing configurations
+that do not match the board.
 
-Add a standalone device model with explicit MMIO handling for time,
-commands, alarms, interrupt state, reset, and migration. Add its
-Kconfig and Meson entries and list it under the PolarFire SoC
-maintainer section.
-
-Reset the device to its documented hardware values, with the binary
-counter stopped at zero.
+Set the default to 2 GiB and reject every other size. Update the
+documentation and L2CC qtest command line accordingly.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
 Tested-by: Conor Dooley <conor.dooley@microchip.com>
-
 ---
 
-(no changes since v2)
+(no changes since v1)
 
-Changes in v2:
-- Reset the RTC to the documented hardware values
-- Use the Resettable API instead of a legacy reset handler
+ docs/system/riscv/microchip-icicle-kit.rst |  4 +---
+ hw/riscv/microchip_pfsoc.c                 | 15 ++++-----------
+ 2 files changed, 5 insertions(+), 14 deletions(-)
 
- MAINTAINERS                     |   2 +
- include/hw/rtc/mchp_pfsoc_rtc.h |  46 +++
- hw/rtc/mchp_pfsoc_rtc.c         | 477 ++++++++++++++++++++++++++++++++
- hw/rtc/Kconfig                  |   3 +
- hw/rtc/meson.build              |   1 +
- 5 files changed, 529 insertions(+)
- create mode 100644 include/hw/rtc/mchp_pfsoc_rtc.h
- create mode 100644 hw/rtc/mchp_pfsoc_rtc.c
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3c305d570f..a4e33654ef 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1827,11 +1827,13 @@ F: hw/char/mchp_pfsoc_mmuart.c
- F: hw/misc/mchp_pfsoc_dmc.c
- F: hw/misc/mchp_pfsoc_ioscb.c
- F: hw/misc/mchp_pfsoc_sysreg.c
-+F: hw/rtc/mchp_pfsoc_rtc.c
- F: include/hw/riscv/microchip_pfsoc.h
- F: include/hw/char/mchp_pfsoc_mmuart.h
- F: include/hw/misc/mchp_pfsoc_dmc.h
- F: include/hw/misc/mchp_pfsoc_ioscb.h
- F: include/hw/misc/mchp_pfsoc_sysreg.h
-+F: include/hw/rtc/mchp_pfsoc_rtc.h
+diff --git a/docs/system/riscv/microchip-icicle-kit.rst b/docs/system/riscv/microchip-icicle-kit.rst
+index 7fdb96601a..b0ad24f174 100644
+--- a/docs/system/riscv/microchip-icicle-kit.rst
++++ b/docs/system/riscv/microchip-icicle-kit.rst
+@@ -26,9 +26,7 @@ The ``microchip-icicle-kit`` machine supports the following devices:
+ * 2 GEM Ethernet controllers
+ * 1 SDHC storage controller
  
- Shakti C class SoC
- L: qemu-riscv@nongnu.org
-diff --git a/include/hw/rtc/mchp_pfsoc_rtc.h b/include/hw/rtc/mchp_pfsoc_rtc.h
-new file mode 100644
-index 0000000000..17bc6ddcdc
---- /dev/null
-+++ b/include/hw/rtc/mchp_pfsoc_rtc.h
-@@ -0,0 +1,46 @@
-+/*
-+ * Microchip PolarFire SoC RTC
-+ *
-+ * Copyright (c) 2026 Process Mission
-+ *
-+ * Author:
-+ *   Bin Meng <bin.meng@processmission.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_RTC_MCHP_PFSOC_RTC_H
-+#define HW_RTC_MCHP_PFSOC_RTC_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qemu/timer.h"
-+#include "qom/object.h"
-+
-+#define TYPE_MCHP_PFSOC_RTC "mchp.pfsoc.rtc"
-+OBJECT_DECLARE_SIMPLE_TYPE(MchpPfSoCRtcState, MCHP_PFSOC_RTC)
-+
-+#define MCHP_PFSOC_RTC_REGS 28
-+
-+struct MchpPfSoCRtcState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+    qemu_irq irq_wakeup;
-+    qemu_irq irq_match;
-+    QEMUTimer *alarm_timer;
-+
-+    int64_t tick_offset;
-+    int64_t tick_offset_vmstate;
-+    uint64_t frozen_count;
-+    uint64_t read_latch;
-+    bool running;
-+    bool alarm_enabled;
-+    bool wakeup_pending;
-+    bool match_pending;
-+    bool updated;
-+    bool read_latch_valid;
-+
-+    uint32_t regs[MCHP_PFSOC_RTC_REGS];
-+};
-+
-+#endif /* HW_RTC_MCHP_PFSOC_RTC_H */
-diff --git a/hw/rtc/mchp_pfsoc_rtc.c b/hw/rtc/mchp_pfsoc_rtc.c
-new file mode 100644
-index 0000000000..f5068b15ef
---- /dev/null
-+++ b/hw/rtc/mchp_pfsoc_rtc.c
-@@ -0,0 +1,477 @@
-+/*
-+ * Microchip PolarFire SoC RTC
-+ *
-+ * Copyright (c) 2026 Process Mission
-+ *
-+ * Author:
-+ *   Bin Meng <bin.meng@processmission.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/rtc/mchp_pfsoc_rtc.h"
-+#include "hw/core/irq.h"
-+#include "migration/vmstate.h"
-+#include "qemu/cutils.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "system/rtc.h"
-+#include "system/system.h"
-+
-+#define RTC_MMIO_SIZE               0x1000
-+#define RTC_CONTROL_MASK            0x000007ff
-+#define RTC_MODE_MASK               0x0000000f
-+#define RTC_PRESCALER_MASK          0x03ffffff
-+#define RTC_ALARM_UPPER_MASK        0x000007ff
-+#define RTC_UPPER_MASK              0x3fffffff
-+#define RTC_CALENDAR_MASK           0x000000ff
-+
-+#define RTC_CONTROL                 0x00
-+#define RTC_CONTROL_START_RUNNING   BIT(0)
-+#define RTC_CONTROL_STOP            BIT(1)
-+#define RTC_CONTROL_ALARM_ON        BIT(2)
-+#define RTC_CONTROL_ALARM_OFF       BIT(3)
-+#define RTC_CONTROL_RESET           BIT(4)
-+#define RTC_CONTROL_UPLOAD          BIT(5)
-+#define RTC_CONTROL_DOWNLOAD        BIT(6)
-+#define RTC_CONTROL_MATCH           BIT(7)
-+#define RTC_CONTROL_WAKEUP_CLEAR    BIT(8)
-+#define RTC_CONTROL_WAKEUP_SET      BIT(9)
-+#define RTC_CONTROL_UPDATED         BIT(10)
-+
-+#define RTC_MODE                    0x04
-+#define RTC_MODE_CLOCK_CALENDAR     BIT(0)
-+#define RTC_MODE_WAKEUP_ENABLE      BIT(1)
-+#define RTC_MODE_WAKEUP_RESET       BIT(2)
-+#define RTC_MODE_WAKEUP_CONTINUE    BIT(3)
-+
-+#define RTC_PRESCALER               0x08
-+#define RTC_ALARM_LOWER             0x0c
-+#define RTC_ALARM_UPPER             0x10
-+#define RTC_COMPARE_LOWER           0x14
-+#define RTC_COMPARE_UPPER           0x18
-+#define RTC_DATETIME_LOWER          0x20
-+#define RTC_DATETIME_UPPER          0x24
-+#define RTC_SECONDS                 0x30
-+#define RTC_MINUTES                 0x34
-+#define RTC_HOURS                   0x38
-+#define RTC_DAY                     0x3c
-+#define RTC_MONTH                   0x40
-+#define RTC_YEAR                    0x44
-+#define RTC_WEEKDAY                 0x48
-+#define RTC_WEEK                    0x4c
-+#define RTC_SECONDS_COUNT           0x50
-+#define RTC_MINUTES_COUNT           0x54
-+#define RTC_HOURS_COUNT             0x58
-+#define RTC_DAY_COUNT               0x5c
-+#define RTC_MONTH_COUNT             0x60
-+#define RTC_YEAR_COUNT              0x64
-+#define RTC_WEEKDAY_COUNT           0x68
-+#define RTC_WEEK_COUNT              0x6c
-+
-+#define RTC_REG(offset) ((offset) / sizeof(uint32_t))
-+
-+static uint64_t mchp_pfsoc_rtc_get_count(MchpPfSoCRtcState *s)
-+{
-+    if (!s->running) {
-+        return s->frozen_count;
-+    }
-+
-+    return s->tick_offset +
-+           qemu_clock_get_ns(rtc_clock) / NANOSECONDS_PER_SECOND;
-+}
-+
-+static void mchp_pfsoc_rtc_set_count(MchpPfSoCRtcState *s, uint64_t count)
-+{
-+    if (s->running) {
-+        s->tick_offset = (int64_t)count -
-+            qemu_clock_get_ns(rtc_clock) / NANOSECONDS_PER_SECOND;
-+    } else {
-+        s->frozen_count = count;
-+    }
-+}
-+
-+static void mchp_pfsoc_rtc_update_irq(MchpPfSoCRtcState *s)
-+{
-+    qemu_set_irq(s->irq_wakeup, s->wakeup_pending);
-+    qemu_set_irq(s->irq_match, s->match_pending);
-+}
-+
-+static void mchp_pfsoc_rtc_schedule_alarm(MchpPfSoCRtcState *s);
-+
-+static void mchp_pfsoc_rtc_alarm(void *opaque)
-+{
-+    MchpPfSoCRtcState *s = opaque;
-+    bool periodic = s->regs[RTC_REG(RTC_MODE)] & RTC_MODE_WAKEUP_RESET;
-+
-+    s->alarm_enabled = periodic;
-+    s->match_pending = true;
-+    if (s->regs[RTC_REG(RTC_MODE)] & RTC_MODE_WAKEUP_ENABLE) {
-+        s->wakeup_pending = true;
-+    }
-+    if (s->regs[RTC_REG(RTC_MODE)] & RTC_MODE_WAKEUP_RESET) {
-+        mchp_pfsoc_rtc_set_count(s, 0);
-+    }
-+    if (!(s->regs[RTC_REG(RTC_MODE)] & RTC_MODE_WAKEUP_CONTINUE)) {
-+        s->frozen_count = mchp_pfsoc_rtc_get_count(s);
-+        s->running = false;
-+    }
-+    mchp_pfsoc_rtc_update_irq(s);
-+    if (periodic) {
-+        mchp_pfsoc_rtc_schedule_alarm(s);
-+    }
-+}
-+
-+static void mchp_pfsoc_rtc_schedule_alarm(MchpPfSoCRtcState *s)
-+{
-+    uint64_t compare_mask;
-+    uint64_t target;
-+    uint64_t now;
-+    uint64_t delta;
-+
-+    timer_del(s->alarm_timer);
-+    if (!s->alarm_enabled || !s->running ||
-+        (s->regs[RTC_REG(RTC_MODE)] & RTC_MODE_CLOCK_CALENDAR)) {
-+        return;
-+    }
-+
-+    compare_mask = s->regs[RTC_REG(RTC_COMPARE_LOWER)] |
-+        ((uint64_t)(s->regs[RTC_REG(RTC_COMPARE_UPPER)] &
-+                    RTC_UPPER_MASK) << 32);
-+    if (compare_mask != MAKE_64BIT_MASK(0, 62)) {
-+        return;
-+    }
-+
-+    target = s->regs[RTC_REG(RTC_ALARM_LOWER)] |
-+        ((uint64_t)(s->regs[RTC_REG(RTC_ALARM_UPPER)] &
-+                    RTC_ALARM_UPPER_MASK) << 32);
-+    now = mchp_pfsoc_rtc_get_count(s);
-+    if (target <= now) {
-+        mchp_pfsoc_rtc_alarm(s);
-+        return;
-+    }
-+
-+    delta = target - now;
-+    if (delta > INT64_MAX / NANOSECONDS_PER_SECOND) {
-+        return;
-+    }
-+    timer_mod(s->alarm_timer,
-+              qemu_clock_get_ns(rtc_clock) + delta * NANOSECONDS_PER_SECOND);
-+}
-+
-+static void mchp_pfsoc_rtc_control_write(MchpPfSoCRtcState *s,
-+                                         uint32_t value)
-+{
-+    uint64_t count;
-+
-+    value &= RTC_CONTROL_MASK;
-+    if (value & RTC_CONTROL_UPDATED) {
-+        s->updated = false;
-+    }
-+    if (value & RTC_CONTROL_RESET) {
-+        mchp_pfsoc_rtc_set_count(s, 0);
-+        s->updated = true;
-+    }
-+    if (value & RTC_CONTROL_UPLOAD) {
-+        count = s->regs[RTC_REG(RTC_DATETIME_LOWER)] |
-+            ((uint64_t)(s->regs[RTC_REG(RTC_DATETIME_UPPER)] &
-+                        RTC_UPPER_MASK) << 32);
-+        mchp_pfsoc_rtc_set_count(s, count);
-+        s->updated = true;
-+    }
-+    if (value & RTC_CONTROL_DOWNLOAD) {
-+        count = mchp_pfsoc_rtc_get_count(s);
-+        s->regs[RTC_REG(RTC_DATETIME_LOWER)] = count;
-+        s->regs[RTC_REG(RTC_DATETIME_UPPER)] = count >> 32;
-+    }
-+    if ((value & RTC_CONTROL_START_RUNNING) && !s->running) {
-+        s->tick_offset = (int64_t)s->frozen_count -
-+            qemu_clock_get_ns(rtc_clock) / NANOSECONDS_PER_SECOND;
-+        s->running = true;
-+    }
-+    if ((value & RTC_CONTROL_STOP) && s->running) {
-+        s->frozen_count = mchp_pfsoc_rtc_get_count(s);
-+        s->running = false;
-+    }
-+    if (value & RTC_CONTROL_ALARM_OFF) {
-+        s->alarm_enabled = false;
-+        s->wakeup_pending = false;
-+        s->match_pending = false;
-+        timer_del(s->alarm_timer);
-+    } else if (value & RTC_CONTROL_ALARM_ON) {
-+        s->alarm_enabled = true;
-+    }
-+    if (value & RTC_CONTROL_WAKEUP_CLEAR) {
-+        s->wakeup_pending = false;
-+        s->match_pending = false;
-+    }
-+    if (value & RTC_CONTROL_WAKEUP_SET) {
-+        s->wakeup_pending = true;
-+    }
-+
-+    mchp_pfsoc_rtc_update_irq(s);
-+    mchp_pfsoc_rtc_schedule_alarm(s);
-+}
-+
-+static uint32_t mchp_pfsoc_rtc_control_read(MchpPfSoCRtcState *s)
-+{
-+    uint32_t value;
-+
-+    value = s->running ? RTC_CONTROL_START_RUNNING : 0;
-+    if (s->alarm_enabled) {
-+        value |= RTC_CONTROL_ALARM_ON;
-+    }
-+    if (s->match_pending) {
-+        value |= RTC_CONTROL_MATCH;
-+    }
-+    if (s->updated) {
-+        value |= RTC_CONTROL_UPDATED;
-+    }
-+    return value;
-+}
-+
-+static uint32_t mchp_pfsoc_rtc_datetime_lower_read(MchpPfSoCRtcState *s)
-+{
-+    s->read_latch = mchp_pfsoc_rtc_get_count(s);
-+    s->read_latch_valid = true;
-+    return (uint32_t)s->read_latch;
-+}
-+
-+static uint32_t mchp_pfsoc_rtc_datetime_upper_read(MchpPfSoCRtcState *s)
-+{
-+    uint64_t count = s->read_latch_valid ? s->read_latch :
-+                     mchp_pfsoc_rtc_get_count(s);
-+
-+    s->read_latch_valid = false;
-+    return (count >> 32) & RTC_UPPER_MASK;
-+}
-+
-+static uint64_t mchp_pfsoc_rtc_read(void *opaque, hwaddr offset,
-+                                    unsigned size)
-+{
-+    MchpPfSoCRtcState *s = opaque;
-+
-+    switch (offset) {
-+    case RTC_CONTROL:
-+        return mchp_pfsoc_rtc_control_read(s);
-+    case RTC_DATETIME_LOWER:
-+        return mchp_pfsoc_rtc_datetime_lower_read(s);
-+    case RTC_DATETIME_UPPER:
-+        return mchp_pfsoc_rtc_datetime_upper_read(s);
-+    case RTC_MODE:
-+    case RTC_PRESCALER:
-+    case RTC_ALARM_LOWER:
-+    case RTC_ALARM_UPPER:
-+    case RTC_COMPARE_LOWER:
-+    case RTC_COMPARE_UPPER:
-+    case RTC_SECONDS:
-+    case RTC_MINUTES:
-+    case RTC_HOURS:
-+    case RTC_DAY:
-+    case RTC_MONTH:
-+    case RTC_YEAR:
-+    case RTC_WEEKDAY:
-+    case RTC_WEEK:
-+    case RTC_SECONDS_COUNT:
-+    case RTC_MINUTES_COUNT:
-+    case RTC_HOURS_COUNT:
-+    case RTC_DAY_COUNT:
-+    case RTC_MONTH_COUNT:
-+    case RTC_YEAR_COUNT:
-+    case RTC_WEEKDAY_COUNT:
-+    case RTC_WEEK_COUNT:
-+        return s->regs[RTC_REG(offset)];
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "%s: unimplemented device read "
-+                      "(size %d, offset 0x%" HWADDR_PRIx ")\n",
-+                      __func__, size, offset);
-+        return 0;
-+    }
-+}
-+
-+static void mchp_pfsoc_rtc_write(void *opaque, hwaddr offset,
-+                                 uint64_t value, unsigned size)
-+{
-+    MchpPfSoCRtcState *s = opaque;
-+    bool update_alarm = false;
-+
-+    switch (offset) {
-+    case RTC_CONTROL:
-+        mchp_pfsoc_rtc_control_write(s, value);
-+        return;
-+    case RTC_MODE:
-+        s->regs[RTC_REG(offset)] = value & RTC_MODE_MASK;
-+        update_alarm = true;
-+        break;
-+    case RTC_PRESCALER:
-+        s->regs[RTC_REG(offset)] = value & RTC_PRESCALER_MASK;
-+        break;
-+    case RTC_ALARM_LOWER:
-+    case RTC_COMPARE_LOWER:
-+        s->regs[RTC_REG(offset)] = value;
-+        update_alarm = true;
-+        break;
-+    case RTC_ALARM_UPPER:
-+        s->regs[RTC_REG(offset)] = value & RTC_ALARM_UPPER_MASK;
-+        update_alarm = true;
-+        break;
-+    case RTC_COMPARE_UPPER:
-+        s->regs[RTC_REG(offset)] = value & RTC_UPPER_MASK;
-+        update_alarm = true;
-+        break;
-+    case RTC_DATETIME_LOWER:
-+        s->regs[RTC_REG(offset)] = value;
-+        break;
-+    case RTC_DATETIME_UPPER:
-+        s->regs[RTC_REG(offset)] = value & RTC_UPPER_MASK;
-+        break;
-+    case RTC_SECONDS:
-+    case RTC_MINUTES:
-+    case RTC_HOURS:
-+    case RTC_DAY:
-+    case RTC_MONTH:
-+    case RTC_YEAR:
-+    case RTC_WEEKDAY:
-+    case RTC_WEEK:
-+        s->regs[RTC_REG(offset)] = value & RTC_CALENDAR_MASK;
-+        break;
-+    case RTC_SECONDS_COUNT:
-+    case RTC_MINUTES_COUNT:
-+    case RTC_HOURS_COUNT:
-+    case RTC_DAY_COUNT:
-+    case RTC_MONTH_COUNT:
-+    case RTC_YEAR_COUNT:
-+    case RTC_WEEKDAY_COUNT:
-+    case RTC_WEEK_COUNT:
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
-+                      "(size %d, value 0x%" PRIx64
-+                      ", offset 0x%" HWADDR_PRIx ")\n",
-+                      __func__, size, value, offset);
-+        return;
-+    }
-+
-+    if (update_alarm) {
-+        mchp_pfsoc_rtc_schedule_alarm(s);
-+    }
-+}
-+
-+static const MemoryRegionOps mchp_pfsoc_rtc_ops = {
-+    .read = mchp_pfsoc_rtc_read,
-+    .write = mchp_pfsoc_rtc_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = { .min_access_size = 4, .max_access_size = 4 },
-+};
-+
-+static void mchp_pfsoc_rtc_reset_hold(Object *obj, ResetType type)
-+{
-+    MchpPfSoCRtcState *s = MCHP_PFSOC_RTC(obj);
-+
-+    timer_del(s->alarm_timer);
-+    s->running = false;
-+    s->alarm_enabled = false;
-+    s->wakeup_pending = false;
-+    s->match_pending = false;
-+    s->updated = false;
-+    s->read_latch_valid = false;
-+    memset(s->regs, 0, sizeof(s->regs));
-+
-+    s->tick_offset = 0;
-+    s->frozen_count = 0;
-+    s->read_latch = 0;
-+    mchp_pfsoc_rtc_update_irq(s);
-+}
-+
-+static int mchp_pfsoc_rtc_pre_save(void *opaque)
-+{
-+    MchpPfSoCRtcState *s = opaque;
-+    int64_t delta = qemu_clock_get_ns(rtc_clock) /
-+                    NANOSECONDS_PER_SECOND -
-+                    qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) /
-+                    NANOSECONDS_PER_SECOND;
-+
-+    s->tick_offset_vmstate = s->tick_offset + delta;
-+    return 0;
-+}
-+
-+static int mchp_pfsoc_rtc_post_load(void *opaque, int version_id)
-+{
-+    MchpPfSoCRtcState *s = opaque;
-+    int64_t delta = qemu_clock_get_ns(rtc_clock) /
-+                    NANOSECONDS_PER_SECOND -
-+                    qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) /
-+                    NANOSECONDS_PER_SECOND;
-+
-+    s->tick_offset = s->tick_offset_vmstate - delta;
-+    s->read_latch_valid = false;
-+    mchp_pfsoc_rtc_update_irq(s);
-+    mchp_pfsoc_rtc_schedule_alarm(s);
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_mchp_pfsoc_rtc = {
-+    .name = TYPE_MCHP_PFSOC_RTC,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .pre_save = mchp_pfsoc_rtc_pre_save,
-+    .post_load = mchp_pfsoc_rtc_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(regs, MchpPfSoCRtcState,
-+                             MCHP_PFSOC_RTC_REGS),
-+        VMSTATE_INT64(tick_offset_vmstate, MchpPfSoCRtcState),
-+        VMSTATE_UINT64(frozen_count, MchpPfSoCRtcState),
-+        VMSTATE_BOOL(running, MchpPfSoCRtcState),
-+        VMSTATE_BOOL(alarm_enabled, MchpPfSoCRtcState),
-+        VMSTATE_BOOL(wakeup_pending, MchpPfSoCRtcState),
-+        VMSTATE_BOOL(match_pending, MchpPfSoCRtcState),
-+        VMSTATE_BOOL(updated, MchpPfSoCRtcState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static void mchp_pfsoc_rtc_init(Object *obj)
-+{
-+    MchpPfSoCRtcState *s = MCHP_PFSOC_RTC(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &mchp_pfsoc_rtc_ops, s,
-+                          TYPE_MCHP_PFSOC_RTC, RTC_MMIO_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+    sysbus_init_irq(sbd, &s->irq_wakeup);
-+    sysbus_init_irq(sbd, &s->irq_match);
-+    s->alarm_timer = timer_new_ns(rtc_clock, mchp_pfsoc_rtc_alarm, s);
-+}
-+
-+static void mchp_pfsoc_rtc_finalize(Object *obj)
-+{
-+    MchpPfSoCRtcState *s = MCHP_PFSOC_RTC(obj);
-+
-+    timer_free(s->alarm_timer);
-+}
-+
-+static void mchp_pfsoc_rtc_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    rc->phases.hold = mchp_pfsoc_rtc_reset_hold;
-+    dc->vmsd = &vmstate_mchp_pfsoc_rtc;
-+}
-+
-+static const TypeInfo mchp_pfsoc_rtc_info = {
-+    .name = TYPE_MCHP_PFSOC_RTC,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(MchpPfSoCRtcState),
-+    .instance_init = mchp_pfsoc_rtc_init,
-+    .instance_finalize = mchp_pfsoc_rtc_finalize,
-+    .class_init = mchp_pfsoc_rtc_class_init,
-+};
-+
-+static void mchp_pfsoc_rtc_register_types(void)
-+{
-+    type_register_static(&mchp_pfsoc_rtc_info);
-+}
-+
-+type_init(mchp_pfsoc_rtc_register_types)
-diff --git a/hw/rtc/Kconfig b/hw/rtc/Kconfig
-index 315b0e4ecc..0d53546adc 100644
---- a/hw/rtc/Kconfig
-+++ b/hw/rtc/Kconfig
-@@ -14,6 +14,9 @@ config M48T59
- config PL031
-     bool
+-The memory is set to 1537 MiB by default.  A sanity check on RAM size is
+-performed in the machine init routine to prompt user to increase the RAM size
+-to > 1537 MiB when less than 1537 MiB RAM is detected.
++The machine has a fixed 2 GiB of RAM. Other memory sizes are rejected.
  
-+config MCHP_PFSOC_RTC
-+    bool
-+
- config MC146818RTC
-     depends on ISA_BUS
-     bool
-diff --git a/hw/rtc/meson.build b/hw/rtc/meson.build
-index 6c87864dc0..4a666bfc94 100644
---- a/hw/rtc/meson.build
-+++ b/hw/rtc/meson.build
-@@ -3,6 +3,7 @@ system_ss.add(when: 'CONFIG_DS1338', if_true: files('ds1338.c'))
- system_ss.add(when: 'CONFIG_M41T80', if_true: files('m41t80.c'))
- system_ss.add(when: 'CONFIG_M48T59', if_true: files('m48t59.c'))
- system_ss.add(when: 'CONFIG_PL031', if_true: files('pl031.c'))
-+system_ss.add(when: 'CONFIG_MCHP_PFSOC_RTC', if_true: files('mchp_pfsoc_rtc.c'))
- system_ss.add(when: ['CONFIG_ISA_BUS', 'CONFIG_M48T59'], if_true: files('m48t59-isa.c'))
- system_ss.add(when: 'CONFIG_XLNX_ZYNQMP', if_true: files('xlnx-zynqmp-rtc.c'))
+ Boot options
+ ------------
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index 55ce1ac7da..f2a838be13 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -542,10 +542,10 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
+     DriveInfo *dinfo = drive_get(IF_SD, 0, 0);
+     RISCVBootInfo boot_info;
  
+-    /* Sanity check on RAM size */
+-    if (machine->ram_size < mc->default_ram_size) {
++    /* The board has a fixed RAM size */
++    if (machine->ram_size != mc->default_ram_size) {
+         char *sz = size_to_str(mc->default_ram_size);
+-        error_report("Invalid RAM size, should be bigger than %s", sz);
++        error_report("Invalid RAM size, should be %s", sz);
+         g_free(sz);
+         exit(EXIT_FAILURE);
+     }
+@@ -757,14 +757,7 @@ static void microchip_icicle_kit_machine_class_init(ObjectClass *oc,
+     mc->default_ram_id = "microchip.icicle.kit.ram";
+     mc->auto_create_sdcard = true;
+ 
+-    /*
+-     * Map 513 MiB high memory, the minimum required high memory size, because
+-     * HSS will do memory test against the high memory address range regardless
+-     * of physical memory installed.
+-     *
+-     * See memory_tests() in mss_ddr.c in the HSS source code.
+-     */
+-    mc->default_ram_size = 1537 * MiB;
++    mc->default_ram_size = 2 * GiB;
+ 
+     object_class_property_add(oc, "clint-timebase-frequency", "uint32_t",
+                               &uint32_type_info,
 -- 
 2.53.0
 
