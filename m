@@ -1,103 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60979606AA42
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 10:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA927606D810
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 10:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=z1Ej490I
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=FpaQnohU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOuOn-0007Mk-V5; Thu, 05 Nov 2026 05:08:49 -0500
+	id 1xOua4-00013D-QQ; Thu, 05 Nov 2026 05:20:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xOuOQ-0007La-Fh
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 05:08:29 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xOuZz-00012k-Pr
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 05:20:25 -0500
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xOuOG-0002Et-DX
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 05:08:17 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-48df54150dfso1144106f8f.0
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 02:08:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xOuZx-0003Yu-Qf
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 05:20:23 -0500
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-8b335eeb340so1402797b3.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 02:20:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793874020; cv=none;
+ d=google.com; s=arc-20260327;
+ b=dlpdK80H4tJ4Lggm2nq84roDoGOl5/XNEvYH+TfdcPQC1ezcbGK0y4FH8QvLvrvibD
+ /JYvgJsZxdfe4d+kzeHBe3ryWGl7nfxudfEmfS5CYe6hW0B6lQhbQ8Uw2rsprJ++vg8A
+ 6cK96ZxwT+feOT0dlDjJPryY2KHJ++K0ySEj/fa1zkqLoNNlmkm6dX93avvJUHFdJVfI
+ YnQOIACOdPtXE8xMLzyYUxekssjFy9FLOstOJj3QXjCQFWHn06IjMe6cwA/v7FT8ku7D
+ NNprTOnQwqgpcOZDyNqAQ7XFjCtvfzDqqymS54wWKN68n+Ue3bEbDdwBo3ED1OLTTK+v
+ LeEw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=jF8U3JcGmua40V48ZCI6ITSLEMNDiudmmQ/FmNdPEqc=;
+ fh=BzHdNsOPPcCl4XPvJYOKFKNG0gFGObKY1vm0AULjzRo=;
+ b=qr4DXi/4ctl382WPNdYwXJNHXxN8GE0xBb3gNqTs9Fi8cANhvSK8y3HFRd7Va7PUyk
+ xpHlc9KfMjewNsWANjd4FclnWpJIj8F/I4J86kr1d5Z2iJsMOWYbRkpoYRnlhtMAKLpy
+ 2n9OoRe9hygCgWZA170L14gFgQZoyxwXLZrqzCOyU/PDEMcWNSjjkI5YSZiyX5Vvz0qD
+ Fzen6y9L5BNFsAZtqsv4++UVqdk6oUq8sArOkz5btqlBH1oGPCNlrIVI9AJzRWpGVk+p
+ ziCVq5qo34kT3Wyn+s+pflFoUKN1u07RIo/mQsxZiA51vOML8E/OPoaZ57dXj5DsOxTK
+ Z4ew==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793873294; x=1794478094; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ErmNKf4j2LvVJ8SmsDq8jcDpx4L+lNZx2tgIVrNporM=;
- b=z1Ej490IEAuwOB65SAzHY3OeE/GbQ2RHHIM0UPZpK/k1i3P7ClCRN873t0PsRzDYiX
- dvsMyhJl5tlmwxXDpcB7vUH7/F1N5QiiWpNC+lR1cyZEv65lwdfZhS1Li2U1cwFrx7s4
- ie0tcCkWeruKVXhhRRtgTBvGreOr8gyWGorx7nF/COZF5+e1Cjbr/CQ5dOVQgTSS3Us7
- lU3kBfPrGjxNWwRtMHvOMShXqY0NrR2djkz8WKKIvHSiA+RPx0eI2/OessrkmF8zxlHO
- HCfFgeE2vIBZYPBnxCaeR+hum6QF9tkvv5mF04P15E5Gekc+hmjZlNbbmt42vIDH6nu1
- CZRg==
+ d=linaro.org; s=google; t=1793874020; x=1794478820; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=jF8U3JcGmua40V48ZCI6ITSLEMNDiudmmQ/FmNdPEqc=;
+ b=FpaQnohUf9CjZCikjPLqA18iSfCrb9WWRG3i4xc+bJrUo2VPFldCMGPt0yLfzJBDQz
+ CO0GY1+ZcZrsNyqqrm7hLo8kQb8DcHdcAoQfEdQGP4ophbRKY+Iy+mbWw3wGkDE1Zpno
+ XnBX50vBv036FORNBuXABdlTr/a9Xbl42NZqWH0UG3wPAeYgnfFc5ccZFxjUVXGQytMr
+ HMq5Rhi1H1D0NDCuNIINSyODEKAMX6s9c6A224DhETScQ/LyEYDMU4x/Zo7SV7dB4xag
+ Q+yjDMtT1OWYCf70o7D61BO2JWaBt1iKLppsFp18oHv3VAsHx6CJcS3NMr46k2p8u9MZ
+ Vb7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793873294; x=1794478094;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=ErmNKf4j2LvVJ8SmsDq8jcDpx4L+lNZx2tgIVrNporM=;
- b=2x2DuKKBWeUh+HnwTqxaCE4uknk5Yi8xN5UgrTZSd0OJNV96W/X+DqgfHaJ9WVMmfE
- rXgNXDafFa+hcBAR1/fnTfZscF9inLRBJNJhKWPpMXkLKOdJKp6lcoXrrdRh1QruyW6M
- A2abbjhViNkMMBfpYc31tBuiYDKBMH91KURac5mnZ/okbz2d/+S9L8UryyKpV4T7ctJt
- QrLqft2yJ9Ba7vCEDxrsqe7ZKiATvhot6Mbn3iuPTCUModr3sjOUBuwrkMIYse/LBoFQ
- 8aWvzwz0/Qmm0DTcya2OpOaZ29zBm9DFIQ0yZ5Gy/s9MeOd7q2Y0uiTxn2jVoJZQYjXt
- k7eA==
-X-Gm-Message-State: APuU4Z+lmc3iE4Gy+NgzEs3DrQwF9n2C1HdrWOl3MoM+jSg1X9Nr4lqf
- hsw4dqW9e9R3pS9kUNRaxgQQyM0vjdqyjAz/I7jhk5NAW6DhtwWMJliLF0Y8h2khYx4=
-X-Gm-Gg: AYBFou075hUKEPaQz7dP5Odii/q6AlwEkiZD6FTp10ksDg/t6t7m0zaXerWq4T40AwT
- g+0kwCuje8chfTN2ptVAgaOMm9n8yXAbaMIvDb9pFa+NKrftacYqBNcmMi23EeTCIXhPwYrIWGN
- KValqrL38HQYTh+IDhNeNtNCfBudGuBehO0mgRUj0I8qoifyVtNQ+z1Hkpj7VgSeD+aKsM+SsK+
- ENJQR5Zd6GuhONsVlGGrurfgUCuGMVyu2Tc5V/NnoEKs+nIhlObP2atKn9mAjkhCl2Y1P+QCe4I
- ib0d9bfxkROGZe54s6OwTb8jqJ2DrOOSiQZWM6GYVY75bF9uJwZ/phsY1mR105xZWsIgNatE1k6
- EX3uvtf4ZOrT9LDdeesRQyAjyFDtbbHAW/Kzsw17gZFixfSgRkjrhYZXp9VtNYZpOi+rl0704Uh
- RRqTYlWABteBu+cRO6LZSt8SxkQvfxHXgCaEa5xTD6aZmWMTKQHOsLqYkE8QUWXnTowVPUKS6Fk
- sLcSz7cNTpRP0dHYOxTD2aWAL7eLPtYaE7lfVj/KlwN2H3qV/qNmctK4MCENkMfRbdBGmK2RApQ
- 5nVWAVyo40i0Hgeqt9GD/CeI4Zga6g==
-X-Received: by 2002:a05:6000:4814:b0:491:96fc:9f0 with SMTP id
- ffacd0b85a97d-49196fc0d44mr1829775f8f.15.1793873294370; 
- Thu, 05 Nov 2026 02:08:14 -0800 (PST)
-Received: from linaro.org ([2a10:d582:31e:0:2acb:1209:e24:c9ce])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48fed45d2bbsm9489645f8f.33.2026.11.05.02.08.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 02:08:13 -0800 (PST)
-Date: Thu, 5 Nov 2026 10:08:12 +0000
-From: Jim MacArthur <jim.macarthur@linaro.org>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
- qemu-block@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- Jagannathan Raman <jag.raman@oracle.com>
-Subject: Re: [PATCH 2/2] hw/ide: add SPDM + IDE + TEE pci support to ICH9
- SATA driver
-Message-ID: <auxVjETdY1OekFOA@linaro.org>
-References: <20261104-ich-driver-spdm-v1-0-60d361bc0417@linaro.org>
- <20261104-ich-driver-spdm-v1-2-60d361bc0417@linaro.org>
- <82fe2840-2775-47b3-b077-180fbd811b03@oss.qualcomm.com>
+ d=1e100.net; s=20260707; t=1793874020; x=1794478820;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=jF8U3JcGmua40V48ZCI6ITSLEMNDiudmmQ/FmNdPEqc=;
+ b=U6c54X7tz3B1UZcGB/U0iq6kczKCQYtuzlU7eByiyoFdNNGBrrmgNf63VazzQxoyN1
+ GtUtSICppnpGQKkY6x8kdRtkec/4PC9VlxoPJcTJQZxzSfdLp94dVGbojVD00cmeXXBk
+ 40IYPNb9I5HwJl+72zUluB6EXxEOxijQbICvvZWBE9Az8g7szr24c0W1P+gjpyagikJZ
+ lsFIaMA8IGBxBgWAt0pybyw5OzEThNJixEcz5eDHlrpWJXtsevrhfNivWewRm98b3PLn
+ YUeuXbMMChv8VxApd47lBHlmlgh59AbSjQHSGpiKkCFm4QrY/JPWEjQzwqifc4gqKpz8
+ dASA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzaX99oTX31eBCdm2o1wEI13lecBhfQwDhw+Hnng8OhILKbShE6XF1NzSGciGwRo3gsImh2n/RyTibD@nongnu.org
+X-Gm-Message-State: APuU4Z+y5zTKTvjjM2+O1IDiyIcrMPkyR8FZt4g6YCRbzTCVcSbUChC4
+ HPk1nOiedyA2SuSe9zeMUPjSA5suze2GZzOWX4HMNJXIrECT4iPmhC3LbFKslB8P3kNxRwFcq0S
+ 2q4WPcYsJolFZYJAJZCU80bwO9MZT6x+6fcoOyHeBLA==
+X-Gm-Gg: AYBFou2H4RKvjcnS/Z1BFxUEU/I2am0vudSFK/0cOZ8SFyPvy7xtKrYhw1OtY7egENA
+ EiijbtYBbzzDajxJMeY7oxio8DEpIu/52P5h8P+cGjPOiMoKT+SVK27dPxeLr0hdOS6PAS9RX+H
+ CUAcF1uJqkIZL8cqJ240h7GUqpM4HfrdPD/ztrIsfJ2Jh7W7CTU2a0l33Y8fAcsdZ4za1Don1jd
+ twh8F7IcTO7X5L7jVa64PhEWVkYWebPiWnsxJPORkTiR30wyx5jJBlK0KpaEh0eLiqDHvPOCCy2
+ IBpxEh5I27PfM71fVsZ5Rs7vNg+h+0SPUfgSYfMDOMXCTKTHraCEdOKmsYBwKXaPEOU+eyjwz/W
+ yI+JXwUyS61sZ0R7sVhiFwZZT48moBU5EdEtOuQJP8M1ewVUn32FXeDxd2+fWEaeqDAK9Cc8gtP
+ mNmq+w7/UYFVxUal9MOCTG
+X-Received: by 2002:a05:690c:3481:b0:8b0:d9ff:4f4d with SMTP id
+ 00721157ae682-8b2b65aebd4mr115874567b3.10.1793874019932; Thu, 05 Nov 2026
+ 02:20:19 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <82fe2840-2775-47b3-b077-180fbd811b03@oss.qualcomm.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x436.google.com
+References: <20261103110805.2010679-1-peter.maydell@linaro.org>
+ <87o6c685ph.fsf@draig.linaro.org> <auxNqQU1SePuiQuq@redhat.com>
+In-Reply-To: <auxNqQU1SePuiQuq@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Nov 2026 10:20:07 +0000
+X-Gm-Features: AclHuK-q39QpoHJ-Yl3uCDnBQw7Axk435dAS28ydCI0aGxmdZd3xB0OxWub_dbg
+Message-ID: <CAFEAcA-PXjPiCqE1qUkt4QFHwTYpATMAm-C-a641kdOMaPgcEQ@mail.gmail.com>
+Subject: Re: [PATCH] docs/devel/testing: iotests check script should be run
+ via 'run'
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,37 +119,74 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 05, 2026 at 08:12:38AM +0100, Philippe Mathieu-Daudé wrote:
-> On 4/11/26 17:34, Jim MacArthur wrote:
-> > From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> 
-> Rationale?
+On Thu, 5 Nov 2026 at 09:34, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+wrote:
+>
+> On Tue, Nov 03, 2026 at 12:22:50PM +0000, Alex Benn=C3=A9e wrote:
+> > Peter Maydell <peter.maydell@linaro.org> writes:
+> >
+> > > The iotests section of the testing documentation suggests directly
+> > > running the "./check" script.  However if you do this then the
+> > > script complains:
+> > >
+> > > WARNING: iotests is being run from outside of the configure-time pyth=
+on virtual environment
+> > > [...]
+> > > Please use the meson run script:
+> > >         /home/pm215/qemu/build/x86-tgt-san-dbg/run ./check
+> > >
+> > > Update the documentation to match this.
+> > >
+> > > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > > ---
+> > >  docs/devel/testing/main.rst | 14 +++++++++-----
+> > >  1 file changed, 9 insertions(+), 5 deletions(-)
+> > >
+> > > diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rs=
+t
+> > > index b0ca37fe2ba..e26b8af0c79 100644
+> > > --- a/docs/devel/testing/main.rst
+> > > +++ b/docs/devel/testing/main.rst
+> > > @@ -272,8 +272,12 @@ scripts.  The testing success criteria is golden=
+ output comparison, and the
+> > >  test files are named with numbers.
+> > >
+> > >  To run iotests, make sure QEMU is built successfully, then switch to=
+ the
+> > > -``tests/qemu-iotests`` directory under the build directory, and run =
+``./check``
+> > > -with desired arguments from there.
+> > > +``tests/qemu-iotests`` directory under the build directory, and run
+> > > +the ``check`` script via the ``run`` wrapper which sets up the envir=
+onment:
+> > > +
+> > > +.. code::
+> > > +
+> > > +   ../../run ./check [args]
+> > >
+> >
+> > This is possibly a personal preference thing but is there actually a
+> > reason for cwd to be tests/qemu-iotests or should we frame it as:
+> >
+> >   $BLD/run tests/qemu-iotests/check
+> >
+> > which is how the functional tests are listed?
+>
+> For the sake of docs it is probably a good idea to be run consistent
+> and illustrate use of 'run' from the root of the build  dir ie
+>
+>   ./run tests/qemu-iotests/check
 
-I'm not sure where the From: line came from here; b4 may have added for
-some reason. This was originally Pierrick's commit, hence the old email
-address - I'm unsure whether to update this to Pierrick's new address.
+Agreed if it works for all cases. Does it? I assumed the existing docs
+were saying that it should be run from the qemu-iotests subdirectory
+for a reason.
 
-<snip>
-
-> Which section of the ICH9 spec describes that? AFAICT ICH9 predates
-> DOE / IDE. Is there some amendment? Otherwise this might not be the
-> correct place to add that capability. Either use a Frankenstein ICH9
-> with a distinct model name, or add at the SATA layer, possibly like
-> a class interface (we only need the SATA_CAP_OFFSET IIUC).
-> 
-> Michael, Tao, what are your view on this?
-
-I agree it's not great to add features like this which weren't in the ICH9
-spec. We could certainly add a new device with these additions, but I think
-we'd end up duplicating a lot of code from this file. An option at the SATA
-layer might work; I'll look into that.
-
-Jim
+-- PMM
 
