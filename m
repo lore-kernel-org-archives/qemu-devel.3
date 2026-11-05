@@ -1,151 +1,178 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B29606A326
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 08:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D794606A326
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 08:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=alTtl2v5;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=NS2s/b4c
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=fiiXmDmo;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=KcXSKfoN
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOsiO-0004Si-6J; Thu, 05 Nov 2026 03:20:57 -0500
+	id 1xOsoy-0006Yp-Ks; Thu, 05 Nov 2026 03:27:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xOsiK-0004S5-Be
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:20:53 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xOsos-0006X7-MI
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:27:38 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xOsiI-0008GV-9A
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:20:52 -0500
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xOsog-0000a5-Jh
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:27:31 -0500
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A56UGPA4179293
- for <qemu-devel@nongnu.org>; Thu, 5 Nov 2026 08:20:48 GMT
+ 6A56ULx81018101
+ for <qemu-devel@nongnu.org>; Thu, 5 Nov 2026 08:27:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- dQpZo/Sw+/Z0us8Tb25lhC6Emwkgu6P7hGLlm09+01w=; b=alTtl2v5G5/Hqcu5
- 9uDUeOs6uQMl9z15BNBectwDTU9Mr9BSQQMyVHk1vblUIVyyKbCdcXQdxyO4TuTc
- mwMJI2/HPXI9QEbnn0crSnlwP13Vc5/+QFId3DN+6QXe6gAOE4CP9jrbTBdBJx/Q
- kH73mWg0SLMR5eY9jcG3Sam8NHcaH8mo9tLyE+S+vyeqf9ZJGeTHZioJ6Q5F0qEg
- GJPA7+bRv8SANi/IobcExT90K5Rzs2tNS9EpISM7sQrSQWM89jx5XjKJ3cSejUaX
- 9vgOws4M0VSYbpuntFL16SLXGEYu7+6z0/sqQvuhZ8Ol6ntckIMF08flOYQTa4sQ
- aeT3Yg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hr4bn4mg9-1
+ AGN8kwgakg5OiXRUbfKCSwJgdB2YehlHkW5tpwLRG6c=; b=fiiXmDmoIyy24Bni
+ sMCaR5DgQufd1AUeMVRlvmqfRCx8usfGB/QhBBG5YCSJI+amrKGxMYhG6O0Lfbrm
+ Fji8kOAzlF+ZdqUe/A/kQ2VdNM+ZO22eEgzSvneoa38hqfAuj6+4ckBwOB3NdJQm
+ tFAe4IDNJO13LKqvQTEJ8rQOfDD0I/KRu26xcG/k4tQDrM9mFlXQCo2zM6kLWD+K
+ xzMK54S8Lm3BUwfg2aL5lk48KFDcUlmD8/TnJhUVBuRDJnca0LzP+89ndGyA8IZm
+ vvkjGPKEifcaYAJFz+yndkyYVxyH/6NsDQEY1ltb0UsVv4Kar4dwiojBS+ST9qqh
+ iR7seg==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hr6bnm241-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 08:20:47 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93e92aad34aso372019785a.0
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 00:20:47 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 08:27:24 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-1acbaf81bebso2230785c88.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 00:27:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793866847; x=1794471647; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1793867244; x=1794472044; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=dQpZo/Sw+/Z0us8Tb25lhC6Emwkgu6P7hGLlm09+01w=;
- b=NS2s/b4cvTCQNtz1H3WNuh9YYrNdtX1CnDh1mmPzqelbb3OLt1qFQ6nsACyrXkilNN
- zVn+NnqUSrmuLOCNPmQYpQf80wt0PT8lqLaoKWN3cXvjNmMXIgTzuNERk5VKrxWigdH9
- 5XlBDCbL2w2L0/yYagsRvX6usoPALQYXfDFGEfFp8zX1fyCN+j+pp/7hCvfsJesayRDh
- ogl2Ns5vgtJoDSvUAtu7lgzfeXZ+0NnLOcegOvAi2umGsuYCFF+i4nWlnlVP9XHitujw
- o084LfWus5BqN7OaBqM7J8kuEFQUKVcr7rSKbzwRag3bRCjm2vytCWQSsWLL98m4p7yI
- I4PA==
+ bh=AGN8kwgakg5OiXRUbfKCSwJgdB2YehlHkW5tpwLRG6c=;
+ b=KcXSKfoNAIxUQk01dWvsQEjF7Mm8L9KFjqVckjPyKBXKmI2HTDdbIl7XlWsGcgX6Vs
+ HZ6vc0q4N1lR/zyepFW3oFJTw/4hOAD0kTfjfsPNYozweOfRCq5ne0syJvlC/ctR4Jy8
+ oPVO1xfQD8/lp4iKUdJGgE5qtEVI3/Xdq8gvHpJVCojzS6t0k25zPlF7AfM6X3UjZ9hP
+ zCc9NvgfRUhQlz2oa7YxtCUpXuTewE04kpuK7OrLYQS/HFYkDzfpIPiQiRsHBq3Q1VSf
+ V35V0+NN/OH32F9ADb9Wba/I+9LqUq+XWf4FlETeV/macVLitdvMhp8tCqZCeL3a2FUE
+ af/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793866847; x=1794471647;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
+ d=1e100.net; s=20260707; t=1793867244; x=1794472044;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=dQpZo/Sw+/Z0us8Tb25lhC6Emwkgu6P7hGLlm09+01w=;
- b=j0ivQ5/SYXioFPmccs8epdidfKkuF79KtrDY3Iv0ikskxmMs3EEvEjbIXut0y+ZiHc
- 2YqfFIWvNxcFWYTXGZiJS761nkEVu1jdyryPHSHBSTCS4FvY42Oz2TECyDFwCT9tBQCz
- xkl+WzVoJq+AKz6hi6nuZcSxDjgejFu+KXn8ydC7yPQ1YWXYaQbVsPEi5/DwfUjQhnRN
- 0DQFgvjpSJjUVCxXT7nBI75lPs09JqB00LavtN3x7G38fRwd88ZFdkTvPD+Pio/gNVPI
- CvsaHT0/o6uHYCnzcWfSZ8uon5j66O+abXVHE+Ehy2uUQRnvlWLb5wuPu9dly+L6qYeA
- Ul2A==
+ bh=AGN8kwgakg5OiXRUbfKCSwJgdB2YehlHkW5tpwLRG6c=;
+ b=Skuyf3oYb/BcQzT//JpgkuW/WRbuJz9/LMk5hKAt77J8LZp1BkB86D0cecXGX3giTY
+ t3SM73Ayn0foxWoIiviiTk5vCPCkuZasVcTzsqxHGcpvN/LRXfTGS8VKl7zKpeo6PqMD
+ nBciQpepYl6z6vrHsiVfr1O/HD2bikK+61VW4gjJPYe/Z6JAmkqZ75xkvtu7X9hLSjtO
+ xRkTjCxxpi5DjRMbXaWYkH1jHdVrUnxU1dPGAoR+QtNlZZp6iOdCSR9/0QURAjr1jlpb
+ b3zcxId3Wq97BItm0ImjpNOPK/jA+SSJtbxKCHD6vql7m4APZwD/dH36gGsiUqOtOUm7
+ 4AJw==
 X-Forwarded-Encrypted: i=1;
- AKwUvByVJwsh62e9BQwMtHI12PsxpDiFaVU7iea3tq6kVoEDXcgqfl8orIfQnytxC4qevkH5Q9lwCCMLZ04J@nongnu.org
-X-Gm-Message-State: APuU4Z8SGclQLVhCHrCQbPDjEqz7K3KcfIe4NWshmmDqARNYcp1rxVfx
- 0lr5yTnzJG1jGF/1ud+jUyQBjoCUwKD0aVrkDfvDDKudYV3ypXXFB2jssSAJh0Q8hMUbItbVaG1
- DdlTi+sxHsKAPwKYjLXOyR+My2KanNGPkfwvPx4l4XOlYLpdTnxjDykXrDQ==
-X-Gm-Gg: AYBFou2J0Blt7UDVic8ygIOgdeXNOUrpGkxcB/8mIb/shWtwLXqj5g/n/lFP+EtzsH1
- xQmkvct7+5VbGz3PMuQnluH6OM+f61hYOrzaf++5Wb7pPQrXsfIYffiCq01puNaXojjh10kndLv
- qanpV8SVBd0F0oe62Z5G8NjCP9uNigGG835e778n12YINmyORGDcchxBnb8Ed4aKEa/5+wP3JC+
- K76SadoledUGr5uXKhyh+r0oAZNYFYPwKQL9NktfNYdVFN2JXHwZqCPMrvH0s30qI4XmDDwGV3X
- xouj8XJ28g74VdwctS86iC8UzvnVtogAsbtKbqmezhUJ0914ntoyW6z9RFHL3FH5TN8ey1kfvB4
- lfNvHJ2WL+J958n3QsApxgRv/E0PisVG4uMoHLVJLD6oDj/sJ5IDFVzgIShGJxHZr1DSAOYoLZS
- 9M9Gazvg==
-X-Received: by 2002:a05:620a:29c3:b0:93e:5016:e3a6 with SMTP id
- af79cd13be357-94421617463mr3237187085a.26.1793866847028; 
- Thu, 05 Nov 2026 00:20:47 -0800 (PST)
-X-Received: by 2002:a05:620a:29c3:b0:93e:5016:e3a6 with SMTP id
- af79cd13be357-94421617463mr3237183585a.26.1793866846449; 
- Thu, 05 Nov 2026 00:20:46 -0800 (PST)
-Received: from [192.168.69.229] (pmd666.hd.free.fr. [82.67.153.177])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b56f02386bsm44121795e9.7.2026.11.05.00.20.44
+ AKwUvBxFEXRKuanbCUEtf/7haf0065diSBbc1Ta8Ibrifd1ymjpfVdvQ13vO5LMLBApSoUu5uHEl9F9Bvsvl@nongnu.org
+X-Gm-Message-State: APuU4Z8Lzpj8A40Nc3c+sLnaMP7yfqNuv9f0T0/V1LcciXzMw/kxBeP7
+ Hteqqu1ENIPQgrkIQQ+fB4BkfJIU/hCi5s+W4ahLpzFoK5567JP7MvTiIgee3JcPn+bk4auHck8
+ s+rECaSmviru4Bcppmncqyc0/vhXSJMfwYDNlx1MfJNPH2YRGswevhDudGg==
+X-Gm-Gg: AYBFou1t3sQHT8cgpSLygzbaJWpN+NqLrGOGu9IrXeoaz6KhnUVLVlIjOuRc4gm1ejN
+ tzCD4cBP432pZ3DJN7HmJ7nsE3fbWuIa6GRSWnH9qVybGKKf0K1bh9wdmCu9B3fn1sRu0CVowwq
+ igmnQMZXbLklsiqJbk+jQ3CDl3BllQ9+SYDQndMNWBvp1f+2XCEDQIft/FWvowSzMgsFgXXYTN3
+ U5bjTQ60gimEYRwgOVXFvM2LwzrqOOwa11MwFHDlARj/Dr8Smrn4z8EeNpJVtaZJwnOsLq2dydj
+ Qqud7spiM+SNKdqC+ArGS+0L6eq/OQ/yAZpZKNUOnRdhkKekCtDpOH0Bu/s6hZPOTcqY3sfzI3U
+ 98tB3TcXVsCxzqj0UcPgCrWUhlD7Dr9SiFnguGHVhFgSW6blC+frAGmn/OfQcyi5kmWvDpC4JR7
+ gc9li6lJ2Vh1TA4p5CBr+uHM2PO8T/bQq/2jtjrBTgOw==
+X-Received: by 2002:a05:7022:92b:b0:144:fb42:52 with SMTP id
+ a92af1059eb24-1ac5de4e892mr32994001c88.28.1793867243550; 
+ Thu, 05 Nov 2026 00:27:23 -0800 (PST)
+X-Received: by 2002:a05:7022:92b:b0:144:fb42:52 with SMTP id
+ a92af1059eb24-1ac5de4e892mr32993931c88.28.1793867242680; 
+ Thu, 05 Nov 2026 00:27:22 -0800 (PST)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1b245c1c127sm14154206c88.6.2026.11.05.00.27.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Nov 2026 00:20:45 -0800 (PST)
-Message-ID: <cd20258b-160d-4913-a67b-ed2b4d351ff8@oss.qualcomm.com>
-Date: Thu, 5 Nov 2026 09:20:43 +0100
+ Thu, 05 Nov 2026 00:27:21 -0800 (PST)
+Message-ID: <45433754-3cea-41fc-9f45-65a328d0efca@oss.qualcomm.com>
+Date: Thu, 5 Nov 2026 00:27:18 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/ide: add SPDM + IDE + TEE pci support to ICH9 SATA
- driver
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>,
+Subject: Re: [PATCH 00/15] hw: expand DEFINE_MACHINE to explicit TypeInfo
+ registration
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Yonggang Luo <luoyonggang@gmail.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ Anthony PERARD <anthony@xenproject.org>,
+ Felipe Balbi <balbi@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Antony Pavlov <antonynpavlov@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Max Filippov <jcmvbkbc@gmail.com>, Niek Linnenbank
+ <nieklinnenbank@gmail.com>,
+ xen-devel@lists.xenproject.org, qemu-riscv@nongnu.org,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-ppc@nongnu.org,
+ Alexandre Iooss <erdnaxe@crans.org>, Weiwei Li <liwei1518@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
+ <chigot@adacore.com>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Chao Liu <chao.liu@processmission.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20261104-ich-driver-spdm-v1-0-60d361bc0417@linaro.org>
- <20261104-ich-driver-spdm-v1-2-60d361bc0417@linaro.org>
- <82fe2840-2775-47b3-b077-180fbd811b03@oss.qualcomm.com>
- <3c7816f3-b8ad-4ab2-8057-9cbac6805fba@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <3c7816f3-b8ad-4ab2-8057-9cbac6805fba@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
+References: <20261030151539.1872-1-luoyonggang@gmail.com>
+ <d1db54c6-b802-676a-7779-0c2c63f5f807@eik.bme.hu>
+ <aa70e94c-d9a8-41c9-850f-7ded87f7f327@oss.qualcomm.com>
+ <aumYOBw-nKQAWdYK@redhat.com>
+ <CAE2XoE8Xwevk523OfB+GgwbRu0iVnyD4VNOx81rj7J7F5aq=OA@mail.gmail.com>
+ <54851326-3627-2b86-57d6-c338ed4e4b50@eik.bme.hu>
+ <CAE2XoE_P2mZAT8wZwzFsTqJTK8nxNSSqJRrOM2T-AJkQjwJHBw@mail.gmail.com>
+ <aunnuwhsx9ZOOXBX@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <aunnuwhsx9ZOOXBX@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDAzMyBTYWx0ZWRfX3BElDBl78pIn
- F9KOOSLU9r/zseQc33/H5u9IPcb9DUWyxp4jHnVXd0NtghziqdnysCWHdDdtKueb2nkxZXeEr8n
- aQwF0ivjy2m8odc9zBaOcs2jL5jGqluZZszNPDm8W/CpLDUITYf2lpnFeIBkcm/Q1D5v1n2brJj
- BtvDTz9lt/1h+1Z/M7bxp21g7UCN2lQ3FLDEAqdWcdxUQJghQyQNAgDhYI8hv3mQncUmV/YKv4/
- 0CU1f7lSEyLW5ETedi22jfqqohIUHj8WXKyDPmEUziV78w1NafeXFVOP6MtQ+jP/geiHERIiVgI
- w1NtIOyjg9X4GrGJvQ85Z0AxWTi7EKRenvr7GPueOempVaQgyivZ6BI9afVDPlVb25SKv1KdJwv
- YQy8TVpXqIfH9h5iP2yZxsiOpqWfngyHW/pJskyq4mpSGuhDOflWFR7ZZw30JWLNR8zQMz9RsB4
- uU3JsnKQk9I7EjuFmQw==
-X-Proofpoint-GUID: UUoK_XAEzQ2ZfERcKFcotQCekSsE4L4p
-X-Authority-Analysis: v=2.4 cv=IcUSymqa c=1 sm=1 tr=0 ts=6aec3c5f cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=KKAkSRfTAAAA:8 a=DmfTwSA7pyjtfIhDM7QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDAzMyBTYWx0ZWRfX+ixh3xnffn96
- HGfIq5goA9wzZvsXgZ2JeKY+S6oTGSM+wfkqRb8BlDPcpamhQBqswPu7/QFjVLbBrxDXGFLnlxd
- 1BduGf9+cQ2OOAXCoJ+y6pUEy288VZY=
-X-Proofpoint-ORIG-GUID: UUoK_XAEzQ2ZfERcKFcotQCekSsE4L4p
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDAzMyBTYWx0ZWRfXxmzaJcUa5vYg
+ 4y9zwRB67MEALtW7pPa5WVdzsj0dKuBNGoBnKVG2k7z50U+2wah2MCxDuoVnoKWyZe9Kow7cVby
+ h0xp/aZVqQVIPgnp98HW+10TasGkYlT3LAmYtcmwPRyKGu1T8db/wJqBMBGWO3YR2K/8KXpQBT7
+ 7ktN2kI4IQzRhXFcMrodc7zQD4QW+iDLnsMolO7AxLSqabJ/8LpH7YVM/k80J2yOsmfldJwQbyQ
+ TVhoZhckBuyWdolbNly5cDB4AAnadS2mqU/u0vd6k8UvE9Q6mGmE2Hl72sThGa5zOifGnjEMUdS
+ U6LTAXSR2EISSIDJfFIzdvoKA/d1fQ3tXg2RnhWFWHP5A/nFgExUJS6QepbhMOnHtj0Ggx88yee
+ Z7VGzqekIw3wXR1Ieu6vVagTuN3D2w++MFmMZb21RxkVUAfCX1ScaRREuDxD0CKCA8HB2hiwDS+
+ t2yvDN4uV1s+vxK1Elg==
+X-Authority-Analysis: v=2.4 cv=KLLPn1Fo c=1 sm=1 tr=0 ts=6aec3dec cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=20KFwNOVAAAA:8 a=sYqyBgSLRBUY3L6MHRUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=vr4QvYf-bLy2KjpDp97w:22
+X-Proofpoint-ORIG-GUID: _s6n7pH61rdBLsCDXQIQQ-LRYpisDrbD
+X-Proofpoint-GUID: _s6n7pH61rdBLsCDXQIQQ-LRYpisDrbD
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDAzMyBTYWx0ZWRfXz2DtUiHPRG3M
+ qicVaitVIcuY25iaFE+a1VeRxulRyGmRBjJ+YdMNZjhpn2yO7qBHLtgYTXViAPavqNFBagUUIo3
+ yjWXGC6G8Aw1p7bAjHwYJnqAm6lMz0A=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-05_02,2026-11-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 lowpriorityscore=0 impostorscore=0
- adultscore=0 clxscore=1015 suspectscore=0 phishscore=0 malwarescore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
+ malwarescore=0 adultscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
  definitions=main-2611050033
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -164,165 +191,119 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 5/11/26 09:11, Pierrick Bouvier wrote:
-> On 11/4/2026 11:12 PM, Philippe Mathieu-Daudé wrote:
->> On 4/11/26 17:34, Jim MacArthur wrote:
->>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>
->> Rationale?
->>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
->>> ---
->>>    hw/ide/ich.c | 82 ++++++++++++++++++++++++++++++++++++++++++++++++++
->>> ++++++++--
->>>    1 file changed, 80 insertions(+), 2 deletions(-)
+On 11/3/2026 5:55 AM, Daniel P. Berrangé wrote:
+> On Tue, Nov 03, 2026 at 09:48:44PM +0800, Yonggang Luo wrote:
+>> On Tue, Nov 3, 2026 at 9:23 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
 >>>
->>> diff --git a/hw/ide/ich.c b/hw/ide/ich.c
->>> index b00987f08d..58e2d3b998 100644
->>> --- a/hw/ide/ich.c
->>> +++ b/hw/ide/ich.c
->>> @@ -70,6 +70,7 @@
->>>    #include "hw/ide/pci.h"
->>>    #include "hw/ide/ahci-pci.h"
->>>    #include "ahci-internal.h"
->>> +#include "system/spdm-socket.h"
->>>      #define ICH9_MSI_CAP_OFFSET     0x80
->>>    #define ICH9_SATA_CAP_OFFSET    0xA8
->>> @@ -90,6 +91,10 @@ static const VMStateDescription vmstate_ich9_ahci = {
->>>        },
->>>    };
->>>    +static const Property ich_props[] = {
->>> +    DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
->>> +};
->>> +
->>>    static void pci_ich9_ahci_update_irq(void *opaque, int irq_num, int
->>> level)
->>>    {
->>>        PCIDevice *pci_dev = opaque;
->>> @@ -120,13 +125,39 @@ static void pci_ich9_ahci_init(Object *obj)
->>>        d->ahci.irq = &d->irq;
->>>    }
->>>    +/* Sends an SPDM message and receives the response */
->>> +static bool pcie_doe_spdm_rsp(DOECap *doe_cap)
->>> +{
->>> +    void *req = pcie_doe_get_write_mbox_ptr(doe_cap);
->>> +    uint32_t req_len = pcie_doe_get_obj_len(req) * 4;
->>> +    void *rsp = doe_cap->read_mbox;
->>> +    uint32_t rsp_len = SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE;
->>> +
->>> +    uint32_t recvd = spdm_socket_rsp(doe_cap->spdm_socket,
->>> +                             SPDM_TRANSPORT_TYPE_DOE,
->>> +                             req, req_len, rsp, rsp_len);
->>> +    doe_cap->read_mbox_len += DIV_ROUND_UP(recvd, 4);
->>> +
->>> +    return recvd != 0;
->>> +}
->>> +
->>> +/* SPDM protocols: plain and secured SPDM messages */
->>> +static DOEProtocol doe_spdm_prot[] = {
->>> +    { PCI_VENDOR_ID_PCI_SIG, PCI_SIG_DOE_CMA, pcie_doe_spdm_rsp },
->>> +    { PCI_VENDOR_ID_PCI_SIG, PCI_SIG_DOE_SECURED_CMA,
->>> pcie_doe_spdm_rsp },
->>> +    { }
->>> +};
->>> +
->>>    static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
->>>    {
->>>        AHCIPCIState *d;
->>>        int sata_cap_offset;
->>>        uint8_t *sata_cap;
->>> -    d = ICH9_AHCI(dev);
->>>        int ret;
->>> +    uint16_t cap_offset; /* Next offset for extended capabilities */
->>> +
->>> +    cap_offset = PCI_CONFIG_SPACE_SIZE;
->>> +    d = ICH9_AHCI(dev);
->>>          d->ahci.ports = 6;
->>>        ahci_realize(&d->ahci, DEVICE(dev), pci_get_address_space(dev));
->>> @@ -145,6 +176,7 @@ static void pci_ich9_ahci_realize(PCIDevice *dev,
->>> Error **errp)
->>>        pci_register_bar(dev, ICH9_MEM_BAR, PCI_BASE_ADDRESS_SPACE_MEMORY,
->>>                         &d->ahci.mem);
->>>    +    /* Legacy capability for ICH9_SATA_CAP */
->>>        sata_cap_offset = pci_add_capability(dev, PCI_CAP_ID_SATA,
->>>                                              ICH9_SATA_CAP_OFFSET,
->>> SATA_CAP_SIZE,
->>>                                              errp);
->>> @@ -165,6 +197,29 @@ static void pci_ich9_ahci_realize(PCIDevice *dev,
->>> Error **errp)
->>>        /* Any error other than -ENOTSUP(board's MSI support is broken)
->>>         * is a programming error.  Fall back to INTx silently on -
->>> ENOTSUP */
->>>        assert(!ret || ret == -ENOTSUP);
->>> +
->>> +    /*
->>> +     * Initialise a capability in the legacy space after the
->>> ICH9_SATA_CAP.
->>> +     */
->>> +    pcie_endpoint_cap_init(dev, ICH9_SATA_CAP_OFFSET + SATA_CAP_SIZE);
->>> +
->>> +    if (dev->spdm_port) {
->>> +        /* Set up the DOE extended capability, mailboxes etc */
->>> +        pcie_doe_init(dev, &dev->doe_spdm, cap_offset,
->>> +                      doe_spdm_prot, true, 0);
->>> +        cap_offset += PCI_DOE_SIZEOF;
->>> +
->>> +        dev->doe_spdm.spdm_socket = spdm_socket_connect(dev->spdm_port,
->>> +                                                            errp);
->>> +        assert(dev->doe_spdm.spdm_socket > 0);
->>> +    }
->>> +
->>> +    /* IDE extended capability */
->>> +    pcie_ide_init(dev, cap_offset);
->>> +    cap_offset += PCI_IDE_SIZEOF;
->>> +
->>> +    /* TEE capability bit in legacy space*/
->>> +    pcie_cap_tee_init(dev);
+>>> On Tue, 3 Nov 2026, Yonggang Luo wrote:
+>>>> On Tue, Nov 3, 2026 at 4:16 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+>>>>>
+>>>>> On Fri, Oct 30, 2026 at 05:51:44PM -0800, Pierrick Bouvier wrote:
+>>>>>> On 10/30/2026 4:09 PM, BALATON Zoltan wrote:
+>>>>>>> On Fri, 30 Oct 2026, Yonggang Luo wrote:
+>>>>>>>> DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED hide the TypeInfo and the
+>>>>>>>> type_init
+>>>>>>>> function that calls type_register_static(). A later change needs to
+>>>>>>>> pass a
+>>>>>>>
+>>>>>>> That's the point of the macro to hide the boiler plate code.
+>>>>>>>
+>>>>>>>> target mask into that registration, and the macros have no parameter
+>>>>>>>> for it.
+>>>>>>>
+>>>>>>> Couldn't you just change the macros to take that parameter instead of
+>>>>>>> expanding it everywhere?
+>>>>>>>
+>>>>>>
+>>>>>> Problem of macros is that they don't have default parameters, so you
+>>>>>> need variants for everything:
+>>>>>>
+>>>>>> DEFINE_MACHINE
+>>>>>> DEFINE_MACHINE_EXTENDED
+>>>>>> DEFINE_MACHINE_WITH_INTERFACES
+>>>>>> DEFINE_MACHINE_WITH_INTERFACE_ARRAY
+>>>>>> and now would need a new variant, with variant for other existing ones.
+>>>>>>
+>>>>>> In the end, it's just simpler to remove this and add the boilerplate.
+>>>>>> It's written once and never modified, so using a macro just save typing
+>>>>>> those lines once.
+>>>>>
+>>>>> For each machine, it is only written once, but we add machines
+>>>>> over time, and every time a new machine is added the code style
+>>>>> is slightly different. We introduced all the variuos DEFINE_*
+>>>>> macros for QOM to better ensure consistent style and usage as
+>>>>> new code is added over time.
+>>>>
+>>>> I understand that the DEFINE_* macros are bloating because of this.
+>>>> Indeed currently the only two macros used are "DEFINE_MACHINE" and
+>>>> "DEFINE_MACHINE_EXTENDED"
+>>>
+>>> There are a few machines using some others but these are the most used.
+>>> That suggests maybe we should change the convenience wrappers to match
+>>> what machines need but DEFINE_MACHINE_EXTENDED is meant to be the one that
+>>> allows all parameters which should be rarely needed.
+>>>
+>>>> ; each time people want to add a new attribute, the macros is twiced.
+>>>
+>>> Not necessarily. The SECURE parameter did that to preserve previous
+>>> behaviour but if you add new parameter changing all callers (which is the
+>>> same as expanding the macro that would also change all callers) then it's
+>>> just a new parameter added not changing the number of DEFINE_MACHINE*
+>>> wrappers. Rearranging the wrappers to make DEFINE_MACHINE_EXTENDED used
+>>> less is an independent change.
+>>>
+>>>> And the usage of DEFINE_MACHINE_EXTENDED is rare and can be replaced
+>>>> with DEFINE_TYPES or TypeInfo
+>>>> and be more explicit. When we used as macro parameter, we need think
+>>>
+>>> But that defies the purpose of hiding the QOM boiler plate as much as
+>>> possible. New people are confused by QOM and it's easier for them to look
+>>> up documentation on the DEFINE_MACHINE* macros to see what parameter is
+>>> what and not care about how it's stored in QOM TypeInfo or what is that
+>>> at all.
+>>>
+>>>> what's that parameter means, and for
+>>>> TypeInfo, we can directly know what that member is about(because we
+>>>> are assigned with the member name).
+>>>
+>>> The parameter also has a name and documentation so it's not simpler to
+>>> look up TypeInfo than look at the macro definition or docs. In fact it's
+>>> harder to guess from TypeInfo as then you also need to get into QOM.
+>>>
+>>>> That's why I suggest keeping a single DEFINE_MACHINE, just like
+>>>> DEFINE_TYPES; as they are the most
+>>>> used macros(and simple enough), and won't suffer from changes much.
+>>>
+>>> That means exposing all the boiler plate for all machines other than the
+>>> simplest case. I think it would be better to keep DEFINE_MACHINE_EXTENDED
+>>> but maybe rethink the existing wrappers and drop unused ones and maybe add
+>>> new ones that reduce the usage of DEFINE_MACHINE_EXTENDED but still keep
+>>> the boiler plate hidden.
 >>
->> Which section of the ICH9 spec describes that? AFAICT ICH9 predates
->> DOE / IDE. Is there some amendment? Otherwise this might not be the
->> correct place to add that capability. Either use a Frankenstein ICH9
->> with a distinct model name, or add at the SATA layer, possibly like
->> a class interface (we only need the SATA_CAP_OFFSET IIUC).
->>
+>> Thanks, I'll go this way, remove unused macros, and keep DEFINE_MACHINE_EXTENDED
+>> and extend both DEFINE_MACHINE_EXTENDED DEFINE_MACHINE supports
+>> "targets" or "arch_mask" parameter.
 > 
-> It's an ad hoc addition, reproducing what Arm has been doing on fvp for
-> device assignment. It does not really model a real device, and nvme was
-> (is?) not supported due to other limitations.
-> 
-> IIRC, we found that in the tf-rmm branch supporting device assignment.
-> 
-> While it does not hurt, that's why I never sent patches before because
-> that's indeed a custom thing, that works for a custom software stack
-> that was (is?) not yet finalized.
-> 
-> That said, it should not hurt to add it, since it's just an extra
-> capability.
+> Given that we don't need to do general per-arch type filtering in
+> QOM, we could just move 'is_available' out of TypeInfo, and into the
+> MachineClass, so it is a regular class level property, which can be
+> set in the class_init methods, and thus avoid any changes to the
+> DEFINE_MACHINE macros.
+>
 
-Well I'm maintaining MIPS board that use the ICH9 and am not keen
-on having the model diverge from the spec; we already suffered from
-that in the past with PIIX. That said I'm not against contributing
-and committing experiments as long as they don't clutter / hinder
-our existing specified models.
+Some cpus need it also, and it's used for filtering purpose at this time
+(to avoid duplication at registration). We already depend on this behavior.
 
-> @Jim: Feel free to complete my answer with links to the code and a spec,
-> if there is one to share now. I'm sure Mathieu Poirier has all this info
-> also.
-> 
->> Michael, Tao, what are your view on this?
->>
-> 
-> Regards,
-> Pierrick
-> 
+> With regards,
+> Daniel
 
+Regards,
+Pierrick
 
