@@ -1,99 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33AF606D825
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 14:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988E7606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 14:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=dHxbncz1
+	dkim=pass (2048-bit key, unprotected) header.d=me.com header.i=@me.com header.a=rsa-sha256 header.s=1a1hai header.b=aUAzLyxK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOyHC-0006NH-GK; Thu, 05 Nov 2026 09:17:14 -0500
+	id 1xOyKe-0007DO-0K; Thu, 05 Nov 2026 09:20:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xOyHA-0006Ms-0v
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 09:17:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thorpej@me.com>) id 1xOyFG-00067S-8Y
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 09:15:14 -0500
+Received: from ci-2003f-snip6-11.eps.apple.com ([2a01:b747:3005:200::3f]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xOyH7-0000U6-Q4
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 09:17:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793888228;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GrqWzpPjyJ6PZ6gZamSRjn7ip6+7D8dRD3QkA915OIw=;
- b=dHxbncz1SD+AJFURbXOmnjj171B2j7wAD3AlAG/d9HcGdJ5sFpxex0wHeF9ZMN0O1QLDOn
- vrYTdI4pxPOjaQDkQtXjOrK8rQAjviRX6+rSG/qH0pIm14GxT5cGOHv9fYjNVCX9Z1qhcA
- X3BM3v/mbsv5JakNVE/cfwR4B81rDCE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-8m1r0mEgMMSnK_pYdZUtxA-1; Thu,
- 05 Nov 2026 09:17:02 -0500
-X-MC-Unique: 8m1r0mEgMMSnK_pYdZUtxA-1
-X-Mimecast-MFC-AGG-ID: 8m1r0mEgMMSnK_pYdZUtxA_1793888220
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6AF91955F6D; Thu,  5 Nov 2026 14:16:58 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 177EF39204; Thu,  5 Nov 2026 14:16:53 +0000 (UTC)
-Date: Thu, 5 Nov 2026 14:16:51 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Yonggang Luo <luoyonggang@gmail.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- Song Gao <17746591750@163.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- David Hildenbrand <david@kernel.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Fam Zheng <fam@euphon.net>, Max Filippov <jcmvbkbc@gmail.com>,
- "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eric Farman <farman@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH v2 06/12] target/arm: register separate max-v8 CPU types
- for arm and aarch64
-Message-ID: <auyP09mbwuefulBL@redhat.com>
-References: <20261031164009.2048-1-luoyonggang@gmail.com>
- <20261031164009.2048-7-luoyonggang@gmail.com>
- <auxgsFyzv-5UiyNk@redhat.com>
- <CAE2XoE9J++-BHL5BDx4_jxuto+xwVmvFS3F-hE9gLbgfUmaFdA@mail.gmail.com>
- <aux5vwTnbV3cXcFX@redhat.com>
- <CAE2XoE-fTKqUB0TZh0-HW6RuMyWJhMGDijarhGSmwsYVTWAcPQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <thorpej@me.com>) id 1xOyFE-0000Ba-JI
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 09:15:14 -0500
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-11 (Postfix) with ESMTPS id
+ 6BA38180125D; Thu, 05 Nov 2026 14:15:06 +0000 (UTC)
+X-ICL-RepId: 01a1ac10-3765-7167-85d6-1f7bce327462
+X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQhPHVwGRQNFC1YCWRcOVk1NEFwfRw5YMFQdHQ5YBhIWXUVeCBkIXR0ZClBQAktaFVUXDgJCH1AfTBZXQ1QCHBlaFFwYU0VRH1RYQxlFVmlBC08dXRlbHEJkWFcJCgZXXloXXk1aAlZNBU91WAQucEJ4VQQoAS8fRApLdUB2LQRGFDx2WHQuC0UJPAModStfFRcbXAAJS0YJSR0OBFQHXQVd
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+ t=1793888108; x=1825424108; bh=T4ypooSis23nmXw2oOpM+nl5ctWhpobWCsPjHXKF0cM=;
+ h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
+ b=aUAzLyxKXBVYe/ehUa/V6cx3Zmv7loiY58fOdJWH4GVXy0QkG0W2kZcgNAoeqcO/+Dl6LvJtTZFCClR7P8IV6JgkaqEiimTXItegQWiPKUIFtctV22kCVpgrMshCxyKBGeN72grG45aBYwvbvRCB38r4Qev8VgNFDyARwhA5KBkvnr0hUbMGpdLUoEUNYKaHxsYJb7ZRbHqSy5tgNi2kPrftloBw2ps7kpp6e6Rgit7dKAf/OBfzDc9Midhu1JRNpnZ7duWQggu8VVieHlF7PFe7wqYFnkVWqwkLn8ikHCwI6+XnXZzsQD5L6lLf4cDUCAEdwGfq+SrKI6Z5cK6dog==
+Received: from smtpclient.apple (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-11 (Postfix) with ESMTPSA id
+ DB47018000DB; Thu, 05 Nov 2026 14:15:04 +0000 (UTC)
+From: Jason Thorpe <thorpej@me.com>
+Message-Id: <7F53EB2A-7E6D-433F-AF66-DE5CE950D0EB@me.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_3E350882-1D28-473F-BD3D-B19CB5972F68"
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAE2XoE-fTKqUB0TZh0-HW6RuMyWJhMGDijarhGSmwsYVTWAcPQ@mail.gmail.com>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH v2] mc146818rtc: Make PF independent of PIE
+Date: Thu, 5 Nov 2026 06:14:53 -0800
+In-Reply-To: <b9960b3a-590b-442f-a95f-e21a24ee00ed@oss.qualcomm.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, mst@redhat.com,
+ richard.henderson@linaro.org, qemu-devel@nongnu.org
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20210619193849.27889-1-thorpej@me.com>
+ <b9e20dbc-fa5f-1e37-ad8a-5d433d77c4b0@redhat.com>
+ <00FB4F43-698C-4888-91E7-45FE80CCFC67@me.com>
+ <bf3645bf-6a47-75f8-862a-7ea8c467f007@redhat.com>
+ <b9960b3a-590b-442f-a95f-e21a24ee00ed@oss.qualcomm.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-GUID: 11AueTfaCqfPl0ygRuABS4ZxTWcl6D60
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDA1NiBTYWx0ZWRfX+3gEaRYpJs6C
+ wY3EIaJHjVxOQLFdhTTtURODsx35hSkbUv7mQyGTHEKajfcKPTSn9CN3OAy6D8+ITVM0wtOfoSi
+ Hm+HuPP7ro3KqfnVXXKLmprnKMdohtSz373ZZhjExHVA8JHA8Msdhp3YCzULFf0ortPrWIlHLh6
+ DBOFxagRe7h5uutaU7YiHKj0KKms+eUl4elWbckk6D81W7NRa+R3ZxAgbbaZH0U47o48RvIRxy1
+ RnzewbYLRtFEw1qnlC9GGdKZgAhD2bk5KB39uBOPGwEh1nd9D/8kE97zINV6k+nSqBlhOVIxy4r
+ jr8kasxA9p4fbLVCQZvE6x+eiJjMWXHirUGcjTsOm/JbyH9IN10fatfKQACjgY=
+X-Authority-Info-Out: v=2.4 cv=U+qfzOru c=1 sm=1 tr=0 ts=6aec8f6b
+ cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=zJRp6_cAMcgA:10 a=x7bEGLp0ZPQA:10
+ a=hNn9FkxD5tsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=fcMS4clZAQu0tQEkvZ0A:9 a=QEXdDO2ut3YA:10 a=ZGgYWE-smxwho2_n9wwA:9
+ a=YMBgh0loWKcPU2U1:21 a=_W_S_7VecoQA:10
+X-Proofpoint-ORIG-GUID: 11AueTfaCqfPl0ygRuABS4ZxTWcl6D60
+X-JNJ: AAAAAAAB5lVq9dqfq6W6+eLqR8NMAWfsZp05xzNTA+ljYxU4A2O7ce4uaxSFcwYHko4E49
+ 7MMylsIhhy5BHhaYymWUaaD33pM+IdwwKmS1MRR7pnQI66gjF3jNr4Uyp0U0Achi5m1acS
+ gSZ8sJdZBVgMhelaJ69AwpekiTQIcvDOwhsmy7CZ8EkLTNzU1T5E3Yds9jWtNI29A3fexl
+ PN/MWDuWdu7WgKLWtQ57QLg65oB5o5G04Wgc9XWHqMkWtob1WeHm/jGFOPzghdLzahtxCM
+ A9tYNufry8UP2saEPqXNiKjIiWYVjJzF4lIhikqK7Q8z05/JrTmuT7OV+eDFl0KvTUtn6i
+ 7bHqOSB6yjsgQg6ELtwjIcxJdIjvKZoGZpy2V6YBPgXVq19HURF3WylT7pPak4CPNqZokW
+ vyidcoFRxflxmyf/J9zSn+T3BK9XxBveyq6kFLdlbY1qY8RHcd19n1328Utf2NErTo22ss
+ oxZnFvMMcczV7gLjhA2zVs4f2Rn31qagDUFTxCdKkxT9NDAVIm/2Y4gCKJvPRDYD8quzrA
+ 25fWbafJBC3cIto1s3K6Orx0rAqbiHwlXfCG9ORnM2HBwZqlbjUd2B4doginZ0LTL3txTs
+ vt4LIKn2yu5f0+O3q7wJ6+R3cb7A5b5rjjqgUjZFuYODnJGnfS2Q5eXdTaEYqC2Tha9BRk
+ Is5bOPiBXuCwJatXcIgtIVcuNrcpf9buMFwtUHpf2yIE/HsQ86ujBNHU5vOdqqVXH8eEZ8
+ U15FY+olTn0FxInmwr5hes4mUVUI8hSwMcKKYcfIcMrRhnDG1k4eJN/2tp0uohWGfnMFRf
+ YzYK2cS3io9J3VyOBPU4mG0ALe+KH9h2kW0jebGrdxt91iRjn4+yRkEo2AUWTcbdE4I8jg
+ FChBKnXGhsARTjra/LS9MNdWQocLAZTBNsD+uYl6LhfgTCKE5wemeskn+3HuUvzo5D+Xcg
+ rbb9ohkcd1wa3n4whYQXulnPKKVxNF6fet1CcYAzTvWgbt/6nBGsQ5KlFnUs00ncgU4dDv
+ Jc38mdVOS5a99SGG0ejDUBBa1NkUNVxgFNTBWiInHuTBiofrRKvWzNwZbRgWeEom6c4+sC
+ EW+b8TTht2TBec2m+1WFp8lz+GbVbAsVboKkT9PxHsU0LVLuvAItc1aa6cAuXI1snreYEs
+ 4QwK/6q7f2/YWhMAqNIYq/tXekWTB0I2x1BPUTiZe4/H0a6bGJtnCfDAZrdwrNCSP5qSBL
+ 6CzGre3FN9Veae3zFuRjoYh++VSVR7UDAIoYXrZnUKKCSTSk6wAzGKzEUUV838iIneZ20c
+ ap/kJphTrLGt3Xfr5l
+Received-SPF: pass client-ip=2a01:b747:3005:200::3f;
+ envelope-from=thorpej@me.com; helo=outbound.ci.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 05 Nov 2026 09:20:42 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,168 +102,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 05, 2026 at 09:25:39PM +0800, Yonggang Luo wrote:
-> On Thursday, November 5, 2026, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Thu, Nov 05, 2026 at 07:14:35PM +0800, Yonggang Luo wrote:
-> > > On Thu, Nov 5, 2026 at 6:55 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > >
-> > > > On Sun, Nov 01, 2026 at 12:40:01AM +0800, Yonggang Luo wrote:
-> > > > > max-v8 was one TypeInfo whose instance initializer was chosen from the
-> > > > > selected target at registration. Register both initializers, and let
-> > > > > target_arm() and target_aarch64() select which type is available.
-> > > > >
-> > > > > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> > > > > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > > > > ---
-> > > > >  target/arm/cpu.c            |  1 +
-> > > > >  target/arm/cpu.h            |  1 +
-> > > > >  target/arm/tcg/cpu-max-v8.c | 16 ++++++++++++----
-> > > > >  3 files changed, 14 insertions(+), 4 deletions(-)
-> > > > >
-> > > > > diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> > > > > index 510fc9eeb3b..6eb55242980 100644
-> > > > > --- a/target/arm/cpu.c
-> > > > > +++ b/target/arm/cpu.c
-> > > > > @@ -2695,6 +2695,7 @@ void arm_cpu_register(const ARMCPUInfo *info)
-> > > > >          .instance_init = arm_cpu_instance_init,
-> > > > >          .class_init = info->class_init ?: cpu_register_class_init,
-> > > > >          .class_data = info,
-> > > > > +        .is_available = info->is_available,
-> > > > >      };
-> > > > >
-> > > > >      type_info.name = g_strdup_printf("%s-" TYPE_ARM_CPU, info->name);
-> > > > > diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> > > > > index add993ef101..3240a8633ee 100644
-> > > > > --- a/target/arm/cpu.h
-> > > > > +++ b/target/arm/cpu.h
-> > > > > @@ -1203,6 +1203,7 @@ typedef struct ARMCPUInfo {
-> > > > >      const char *deprecation_note;
-> > > > >      void (*initfn)(Object *obj);
-> > > > >      void (*class_init)(ObjectClass *oc, const void *data);
-> > > > > +    bool (*is_available)(void);
-> > > > >  } ARMCPUInfo;
-> > > > >
-> > > > >  /**
-> > > > > diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v8.c
-> > > > > index 65f851f2006..e819d07e6ce 100644
-> > > > > --- a/target/arm/tcg/cpu-max-v8.c
-> > > > > +++ b/target/arm/tcg/cpu-max-v8.c
-> > > > > @@ -121,10 +121,18 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
-> > > > >
-> > > > >  static void cpu_max_v8_register_type(void)
-> > > > >  {
-> > > > > -    static const ARMCPUInfo max_v8[2] = {
-> > > > > -        { .name = "max-v8", .initfn = aarch32_max_v8_tcg_initfn },
-> > > > > -        { .name = "max-v8", .initfn = aarch64_max_v8_tcg_initfn },
-> > > > > +    static const ARMCPUInfo max_v8_aarch32 = {
-> > > > > +        .name = "max-v8",
-> > > > > +        .initfn = aarch32_max_v8_tcg_initfn,
-> > > > > +        .is_available = target_arm,
-> > > > >      };
-> > > > > -    arm_cpu_register(&max_v8[target_aarch64()]);
-> > > > > +    static const ARMCPUInfo max_v8_aarch64 = {
-> > > > > +        .name = "max-v8",
-> > > > > +        .initfn = aarch64_max_v8_tcg_initfn,
-> > > > > +        .is_available = target_aarch64,
-> > > > > +    };
-> > > > > +
-> > > > > +    arm_cpu_register(&max_v8_aarch32);
-> > > > > +    arm_cpu_register(&max_v8_aarch64);
-> > > > >  }
-> > > > >  type_init(cpu_max_v8_register_type)
-> > > >
-> > > > Conceptually these are two separate CPUs one 32-bit featureset
-> > > > and one 64-bit featureset, but both given the same name. The
-> > > > current code registers them only in the respective arm and aarch64
-> > > > target binaries, but this CPU is an oddity overall.
-> > >
-> > > This is the one I did before
-> > > https://lore.kernel.org/qemu-devel/20261013195606.152-1-luoyonggang@gmail.com/
-> > >
-> > > target/arm: defer max-v8 initializer selection until CPU creation
-> > > but rejected, and I think it's fine.
-> >
-> > So that essentially matches the historical semantics where one
-> > CPU class magically changes its behaviour based on what target
-> > is running.  So in that sense, it works, and is no worse than
-> > the semantics we've had for 'max' models forever.
-> >
-> > Splitting into 2 distinct types is worthwhile if we want to
-> > make it possible for the aarch64 emulator to support a runtime
-> > choice of both 32-bit and 64-bit "max" models.
-> >
-> > This patch doesn't allow that though, as it is creating two
-> > classes with the same name and filtering which is registered.
-> > If we don't intend to allow 64-bit target to ever use a 32-bit
-> > 'max' CPU, then your original patch is better IMHO.
-> 
-> 
-> Hi Daniel, this is a prepare to allow creating two classes with
-> the same name, the is_available will be removed later.
 
-Sending patches to implement an approach which is already planned
-to be removed is rather making life hard on reviewers.
-
-> 
-> Maybe I should directly replace is_available with TypeBucket to get
-> things be clear to review,
-> but that is explicitly rejected by Pierrick
-> 
-> >
-> >
-> > > > More generally the aarch64 emulator includes all the 32-bit CPUs
-> > > > that the arm emulator includes, and just adds extra 64-bit CPUs.
-> > > > IOW, excluding the 32-bit max-v8 CPU is a special case - if it
-> > > > were not for the clashing name, it would be included like all the
-> > > > other 32-bit CPUs.
-> > > >
-> > > > Thus rather than using is_available to continue to exclude it,
-> > > > we must instead resolve the naming problem, such that both
-> > > > models can be included concurrently.
-> > >
-> > > I have already implemented the TypeBucket over targets/arch_mask that works
-> > > properly. That same QOM name will have multiple TypeImpl.
-> >
-> > I'm not sure what you mean by TypeBucket, but my general thought is that
-> > at the QOM class/type naming level everything must always be unique,
-> > such that we have a single object modelk across QEMU.
-> >
-> > Any ambiguitity & its resolution (if needed) should live outside core
-> > QOM typework, such as with aliases in machines/CPUs.
-> 
-> Yeap, it's a design choice, both renaming the QOM type with
-> MachineClass::targets;
-> or using TypeBucket in object.c(so all QOM types do not need rename
-> including "virt" machines)
-> is implemented by me, it's just finally what we want to do.
-
-I don't know what you mean with this TypeBucket concept, can you
-share more info ?
-
-IMHO, renaming the non-unique QOM types is inescapable. From a POV of
-introspecting a binary, we need to get to a single uniform type
-hierarchy across QEMU where the classes are all statically defined
-and unique.  This complements the work to replace instance properties
-with class properties, to also give us unambiguously introspectable
-types.
+--Apple-Mail=_3E350882-1D28-473F-BD3D-B19CB5972F68
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> On Nov 5, 2026, at 5:44=E2=80=AFAM, Philippe Mathieu-Daud=C3=A9 =
+<philmd@oss.qualcomm.com> wrote:
+>=20
+> Jason, do you happen to still have your setup to test it?
 
+
+I can do so later this week, sure.
+
+-- thorpej
+
+
+--Apple-Mail=_3E350882-1D28-473F-BD3D-B19CB5972F68
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br><div><blockquote type=3D"cite"><div>On=
+ Nov 5, 2026, at 5:44=E2=80=AFAM, Philippe Mathieu-Daud=C3=A9 =
+&lt;philmd@oss.qualcomm.com&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><span style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">Jason, do you happen to still have your =
+setup to test it?</span></div></blockquote></div><div><br></div><div>I =
+can do so later this week, sure.</div><br><div>
+<span class=3D"Apple-style-span" style=3D"border-collapse: separate; =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant: normal; font-weight: normal; =
+letter-spacing: normal; line-height: normal; orphans: 2; text-align: =
+auto; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: 2; word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; =
+-webkit-border-vertical-spacing: 0px; =
+-webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: =
+auto; -webkit-text-stroke-width: 0px; "><div style=3D"word-wrap: =
+break-word; -webkit-nbsp-mode: space; -webkit-line-break: =
+after-white-space; ">-- thorpej</div></span>
+
+</div>
+<br></body></html>=
+
+--Apple-Mail=_3E350882-1D28-473F-BD3D-B19CB5972F68--
 
