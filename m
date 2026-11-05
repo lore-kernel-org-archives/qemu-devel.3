@@ -1,59 +1,59 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8015606A32C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 06:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFA7606A326
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 06:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOrEY-0005Ai-9C; Thu, 05 Nov 2026 01:46:02 -0500
+	id 1xOrFR-0005WI-5f; Thu, 05 Nov 2026 01:46:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1xOrEW-0005AP-Kk
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 01:46:00 -0500
+ id 1xOrFK-0005Tv-Lj
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 01:46:52 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1xOrEU-000050-Hl
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 01:46:00 -0500
+ (envelope-from <lixianglai@loongson.cn>) id 1xOrFI-000098-PY
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 01:46:50 -0500
 Received: from loongson.cn (unknown [10.20.42.166])
- by gateway (Coremail) with SMTP id _____8DxytEjJuxq9I4cAA--.16794S3;
- Thu, 05 Nov 2026 14:45:55 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxfdJXJuxq_o4cAA--.17240S3;
+ Thu, 05 Nov 2026 14:46:47 +0800 (CST)
 Received: from [127.0.0.1] (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJAxX88jJuxquoEyAA--.38062S2;
- Thu, 05 Nov 2026 14:45:55 +0800 (CST)
-Subject: Re: [PATCH 2/2] target/loongarch: Check CPU msgint feature with
- cpu_has_msgint()
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <17746591750@163.com>
+ by front1 (Coremail) with SMTP id qMiowJDxxMxWJuxqwIEyAA--.11137S2;
+ Thu, 05 Nov 2026 14:46:46 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: Support unaligned access for atomic
+ instructions
+To: Bibo Mao <maobibo@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
+ <philmd@mailo.com>, Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
-References: <20261029085654.78806-1-maobibo@loongson.cn>
- <20261029085654.78806-3-maobibo@loongson.cn>
+References: <20261030031655.226617-1-maobibo@loongson.cn>
 From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <396ae863-8d0a-708d-f84f-127013f33fb1@loongson.cn>
-Date: Thu, 5 Nov 2026 14:44:15 +0800
+Message-ID: <e4319294-08c4-bca8-be9f-089b8715f35a@loongson.cn>
+Date: Thu, 5 Nov 2026 14:45:06 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20261029085654.78806-3-maobibo@loongson.cn>
+In-Reply-To: <20261030031655.226617-1-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: qMiowJAxX88jJuxquoEyAA--.38062S2
+X-CM-TRANSID: qMiowJDxxMxWJuxqwIEyAA--.11137S2
 X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW7ZFyUXrW7CF4UCr4UCFW5CFX_yoW8Kryxpr
- W7AFWj9FyUKFZIvanIqas0qryDGr17GF429a98Ary8CF43Jr1rXw1xA34DKF1qk348JrWx
- XF1ruF15ZF4UJacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoWxWFW7Gr45CrW5WrWDCF4rWFX_yoW5Cr13pr
+ y7u345KrW8trZrA3saq34YqFn8ur1kGw42qa1ftrySkF4Yqrn7Xr1kt39FqFy8G3W8Ww1j
+ qFnYyr1UXFyUWacCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
  6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
  Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE
  14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
  AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
  CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r4j6ryUMIIF0xvE2Ix0cI8IcVCY1x02
  67AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
  0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU84x
@@ -84,62 +84,83 @@ X-Spam-Status: No, score=-17.0 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-  Reviewed-by:  Xianglai Li <lixianglai@loongson.cn>
+Reviewed-by:  Xianglai Li <lixianglai@loongson.cn>
 
-> There are two ways to check the CPU msgint feature. One is to call
-> cpu_has_msgint(); the other is to check CPULoongArchState::msgint, which
-> has type OnOffAuto. A problem arises if msgint is set to ON_OFF_AUTO_AUTO
-> in KVM mode: QEMU checks the host feature and sets its actual value in
-> cpucfg1, which is read by cpu_has_msgint(). However, the msgint field
-> remains ON_OFF_AUTO_AUTO.
+> For atomic instructions and LL/SC instruction pairs, the accessed
+> address must be aligned to the access size. Otherwise, an EXCCODE_ALE
+> exception is raised.
 >
-> Therefore, in KVM mode cpu_has_msgint() is more accurate than checking
-> the OnOffAuto-typed msgint field.
->
-> A problem occurs when booting a VM with the max CPU type on an LA464 host
-> that does not support msgint. cpu_has_msgint() returns false, but the
-> msgint field remains ON_OFF_AUTO_AUTO, so the expression
-> cpu->msgint != ON_OFF_AUTO_OFF evaluates to true.
+> Add support for unaligned address accesses for these instructions.
 >
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   hw/loongarch/virt.c    | 4 ++--
->   target/loongarch/cpu.c | 4 +++-
->   2 files changed, 5 insertions(+), 3 deletions(-)
+>   target/loongarch/tcg/tcg_cpu.c       |  2 ++
+>   target/loongarch/tcg/tcg_loongarch.h |  4 ++++
+>   target/loongarch/tcg/tlb_helper.c    | 16 ++++++++++++++++
+>   3 files changed, 22 insertions(+)
 >
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 9c5371af9d..1aa9e5dbd5 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -910,12 +910,12 @@ static void virt_check_dmsi(MachineState *machine)
+> diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+> index cbf0e12c81..0549506035 100644
+> --- a/target/loongarch/tcg/tcg_cpu.c
+> +++ b/target/loongarch/tcg/tcg_cpu.c
+> @@ -92,6 +92,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>       case EXCCODE_PME:
+>       case EXCCODE_PNR:
+>       case EXCCODE_PPI:
+> +    case EXCCODE_ALE:
+>           cause = cs->exception_index;
+>           break;
+>       default:
+> @@ -289,5 +290,6 @@ const TCGCPUOps loongarch_tcg_ops = {
+>       .cpu_exec_reset = cpu_reset,
+>       .do_interrupt = loongarch_cpu_do_interrupt,
+>       .do_transaction_failed = loongarch_cpu_do_transaction_failed,
+> +    .do_unaligned_access = loongarch_cpu_do_unaligned_access,
+>   #endif
+>   };
+> diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
+> index 7fb627f2d6..9c8627972f 100644
+> --- a/target/loongarch/tcg/tcg_loongarch.h
+> +++ b/target/loongarch/tcg/tcg_loongarch.h
+> @@ -15,6 +15,10 @@ void loongarch_csr_translate_init(void);
+>   bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>                               MMUAccessType access_type, int mmu_idx,
+>                               bool probe, uintptr_t retaddr);
+> +G_NORETURN void loongarch_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
+> +                                                  MMUAccessType access_type,
+> +                                                  int mmu_idx,
+> +                                                  uintptr_t retaddr);
 >   
->       cpu = LOONGARCH_CPU(first_cpu);
->       if (lvms->dmsi == ON_OFF_AUTO_AUTO) {
-> -        if (cpu->msgint != ON_OFF_AUTO_OFF) {
-> +        if (cpu_has_msgint(&cpu->env)) {
->               lvms->misc_feature = BIT(IOCSRF_DMSI);
->           }
->       }
->   
-> -    if (lvms->dmsi == ON_OFF_AUTO_ON && cpu->msgint == ON_OFF_AUTO_OFF) {
-> +    if (lvms->dmsi == ON_OFF_AUTO_ON && !cpu_has_msgint(&cpu->env)) {
->           error_report("Fail to enable dmsi , cpu msgint is off "
->                        "pleass add cpu feature mesgint=on.");
->           exit(EXIT_FAILURE);
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index dd70beca18..1f3022265a 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -232,7 +232,9 @@ static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
->   
->   static bool loongarch_get_msgint(Object *obj, Error **errp)
->   {
-> -    return LOONGARCH_CPU(obj)->msgint != ON_OFF_AUTO_OFF;
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-> +
-> +    return cpu_has_msgint(&cpu->env);
+>   TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env,
+>                                      MMUContext *context,
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index a707de9876..5662b2c49a 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -706,6 +706,22 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>       cpu_loop_exit_restore(cs, retaddr);
 >   }
 >   
->   static void loongarch_set_msgint(Object *obj, bool value, Error **errp)
+> +G_NORETURN void loongarch_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
+> +                                                  MMUAccessType access_type,
+> +                                                  int mmu_idx,
+> +                                                  uintptr_t retaddr)
+> +{
+> +    CPULoongArchState *env = cpu_env(cs);
+> +    CPUSysState *sys = env_sys(env);
+> +
+> +    /*
+> +     * Unaligned accesses are currently triggered by atomic instructions
+> +     * that impose alignment requirements on memory operands.
+> +     */
+> +    sys->CSR_BADV = vaddr;
+> +    do_raise_exception(env, EXCCODE_ALE, retaddr);
+> +}
+> +
+>   static inline uint64_t loongarch_sanitize_hw_pte(CPULoongArchState *env,
+>                                                    uint64_t pte)
+>   {
+>
+> base-commit: 73294d096cc591e122fde9e63db4739de6d84f2b
 
 
