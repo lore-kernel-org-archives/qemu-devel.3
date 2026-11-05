@@ -1,94 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6146606A328
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 15:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD91606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 15:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=bXFXEKx9
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=jUYkd8El
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOzMq-0004Sx-OV; Thu, 05 Nov 2026 10:27:08 -0500
+	id 1xOzNQ-0004dX-75; Thu, 05 Nov 2026 10:27:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xOzMl-0004SH-Eo
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:27:05 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xOzNP-0004dI-2o
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:27:43 -0500
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xOzMj-0000wH-5x
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:27:02 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-4918c2d727fso497753f8f.3
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 07:26:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xOzNN-0000xk-6T
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:27:42 -0500
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-8ac9d666d4eso24553987b3.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 07:27:40 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793892460; cv=none;
+ d=google.com; s=arc-20260327;
+ b=FjRLgcUv88jEIj4bCdRLj+tJpJTJ1QdWUbg1n0vi2/RJZk+Kx1o0fyYdVdUwjVgB4I
+ Ucje5Kq27vFfnn2ejKDKbSzi8WDXEsnhoc220iKjEpuvnYdolIECAdvvQPXMdJuuVKUg
+ Pn9ood6cbeAmsNnvfENTJrAVN/9I/98MoO7bf/IJdqnAyoqZLhfrBGk8sIY8ZS41Al5u
+ UuQmRcCUVL0gOJ7RfgKEpho9lJrV4F0ABYGQPTSTquq7gcy2FBIAxZVyRG+Lqxhaqo4z
+ WFZo95KIukpWzfub9Esqn1y5v1/VQQpdXsOAdTVP2Yewa1uOpY2CH3rseujRn1semNMx
+ 2Uzg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=bNwkb7k63z15JBl/f9Uv9ma3XXo9yMBoFn+Mn/5Q9kc=;
+ fh=iv2jK++0YJXreQz/PU0IVCxjx4MTink+nIUszu+RGkA=;
+ b=UOqwtjL8L1s8S9KbU0/1E6Lc9c0GIhY1K0PtCDYu2wrUkFmYtcREHCqeodnyZIw9Jd
+ v5h9PTJcwjLWBQ1zdlrDF3RB8kJn1rM70GsVqOAM35VPOO9+1xRS/xYrmBp2xEVFpOiX
+ ip9F1d0F97iMdtgtbMomifiuCnbwWUfPzAUEYnvEdkX1z8cDQGES7/y28RLw+18nU7SI
+ 4uYIgqetPqxeKGuydSLNMmpvJHeXPEEV0hrKfQmfdzM/FIhx7JMwWnaUMRBMr0B8+AOF
+ ybqRQrGP4XOB9qZERbkVpiwTkdVkumo1R8RGw7Mq6tDlw1PuLB0M+E1Q6fZ1HjacBG9l
+ v02w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793892417; x=1794497217; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=boIE/CvpxAW++uDAFl070rHVEYkZYfB/D0jeTT0yYnw=;
- b=bXFXEKx9bVKi6XkJnGg5oZLn5cyEKom6QnIKQkz6j5ye4uUS3+5zVCcdTqvkqqs9Ro
- 5FdWt8nVHHfUMa73AYTRoAi4GN08CB8y/b1fPD0g1eZYDc9mE7p//IL9cFJrftycFpbm
- 8jf/DdK8CTf7RSxWlHaO8jk7LkvIhtWn2rBjIFf6Pl2SC2OjxopXSWBVPVGsG/clVJrY
- 6mOy0Ey45vc4W+Mw0MhenPWQS7Y7InJ+e+oyWd6CJ6uMirdPbNbPrs8RZb8j/YP6ltKK
- yKr8Mu6Dp+VOv9+6vVVBXPXXVY49GvWb1f1sbfO0eeMF3+NEgUsEjXpoVvnvjT7nv0ea
- w3eg==
+ d=linaro.org; s=google; t=1793892460; x=1794497260; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=bNwkb7k63z15JBl/f9Uv9ma3XXo9yMBoFn+Mn/5Q9kc=;
+ b=jUYkd8ElzUdmIgEXowHiwtNOf9TMhqkD5V/hahn+vY+inZBRjN1Fj0GW3cGzsmJDvb
+ CUJHBb4lOS6B6RjGlM1ojj7gFx6Sd8eDVeQU+XnM4dDFQQQ3pXeHF2bvTtuNw4Smj7Yu
+ QqOY8mNE0QOIzvWSSvi3KVV4+C7y2edVBMd0lqwJDKQWfCVK0efdDOWtAd78xqeUKaO4
+ eggLXjUK73F/YXcSDowrBq2v1BfTzIpT9pHxsscGq3mGAr3ZlR+iaqRZT0g8+QZUdlcM
+ pTuxO4kc14UTausXJzmv1lwwkHfpXz7KNTmQkTeJOYdTqtGuiNDXn4XAVU5tntQm9IEg
+ lcyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793892417; x=1794497217;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=boIE/CvpxAW++uDAFl070rHVEYkZYfB/D0jeTT0yYnw=;
- b=2ga0wIk+kfiXJkoxDNGKbGeIGVsGZ7vXuti8Tf//TodNWP6adiAaFKidmI420I77Aw
- 3hn46tlMsjrhylBbq20oi3tS1ziDO3EoSIri4kOJU4GA3JvB8dSHT73jjJkrSsH7DMed
- RCQxTIXkrblsHFcUjBlvwO7U/xUC+onOxbkjK6JyXIkuAQcHfStgEXOV8tQpsDvC+xC7
- dWtzSxe2TYP+RjKZ+uA2aPK5V3sy+4NGeOyHNEV85QNsk6O8e2TrwgSAiMRk52BD+f23
- Vg2SigEVgzxBkxZll+HyB5xwxhiqfyh2KerVsv5g3aAjDc9UZCLOmxEHXOYECijClg8z
- GBcw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzSok548QGtzkT6//wdgU2pdd3wELGcF67MflCse5XlVYgbeL/nE7e5nkyhcab0OvFhz61GVfT+setM@nongnu.org
-X-Gm-Message-State: APuU4Z9dGTwcmkLm2ONA7Hjy3m/n9sjJar6Bvgy/qsZC8EVuhlWkEH4h
- M3+7R4iI2uy3sNcktpWTsH8h3m83Y5PaKzkBoHhbxkt1hqYgSTrNLdR0xko7uHbPLJg=
-X-Gm-Gg: AYBFou24rgP17avdY9Wr/znabRPphev7t/HKqSf6IC57F1AqcOH5mwrTITfp7uqfTb0
- siMxcEycSPWHLGPDptLCj4KS5sG/etVPoTwh46hI4lkDNVur7qlq1ff/yDnvXVoRYvYoT0p8yLe
- i+4obPrpzcUC/0FuJTPh6Pp5ki+fKxvzjwRxBpCP/QM5xkPg4Lamf/+ey24/oy0InR1ZltcTTwx
- IHaZr3iHeXglzlveCOCs7DXKebMqOzNlGXgyhRl38K6C0LsBCwxJmjc6EBF3GS2aTcPZCLYYIAv
- asYkciIgML9FmuoV2+YXOwm2Qvbpj+yal561nBJ+3y3kbFzRIg7rP6i2PVD3kAbe2mU7H2MiKyY
- 3jLOlgrrtIEHdRurAwCqjLmiDlzxtDpfn7ZWDKZ0pyNXITjLVjiBFy30t5vpqhKSwdpr99uzraM
- rT7+UqqeUuxscc1GOts7Chezrwn2EBtuaI7nRAsbZQsMAF1gjjJhe5HliCW0s3H32GhF5CAM/4P
- 3u+FVlL6e8QwsWpqzYJOTzilaQdCHWC+q2yDP1tDAshaa+fKV1MIVx3YDGIjdGN/+tqT4xHCJyC
- g9qEeToXNT0r4NF/9nh+GqaBswNmSA==
-X-Received: by 2002:a05:600c:4e08:b0:4a1:ce33:1536 with SMTP id
- 5b1f17b1804b1-4ac1719112emr416260595e9.9.1793892416537; 
- Thu, 05 Nov 2026 07:26:56 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b56fca2a4fsm77974715e9.15.2026.11.05.07.26.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 07:26:55 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 99D285F8AF;
- Thu, 05 Nov 2026 15:26:54 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-trivial@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH] MAINTAINERS: fix typo in Gerd's name
-Date: Thu,  5 Nov 2026 15:26:46 +0000
-Message-ID: <20261105152647.2458298-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ d=1e100.net; s=20260707; t=1793892460; x=1794497260;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=bNwkb7k63z15JBl/f9Uv9ma3XXo9yMBoFn+Mn/5Q9kc=;
+ b=Q28aCrijnDpHqehi5BtozBzaW8s11WRhFMRBNuWLPbGC0g8AgC3kXpFt1wYHO5fwj9
+ OFHkmh+pMD2dHgIT/QKgL5UOGNPftJJM574EP6uapCjcVcJYLWhtmxj0B8y7n2+ZQcV8
+ 3Yy+Nr0fsdzAlOYIPzN5L1jFRdj30HIECZToiFbrnlnIen39/6SgF83U2TO66IZ722Fm
+ 4pn0zHCadfQGHAxcW9bAP7HuIns4VnZsj1ulaO7Aoy7AfPH3JR1/TPhLiNcT+0+dTWcY
+ Jo4IsFpjklrmeks7iVi7jiQYzL31GKL9g9SSdEqE++19KwVq5WJL58w2Kfy+2+mIwsdi
+ iVmw==
+X-Gm-Message-State: APuU4Z+s5+gI3k/Mq2xKnW+mIpy7AfX9e/pg3C/hkFZ/Wzse8RXCBELr
+ ZqKpvuPzfUeYOW0y0D26rBpIRx0HRnDeiMLPTZSWLHTvHHDa37kfw5ZrfMB2pBJUenzY66jkkZV
+ fuNKmTqEW3+S1GaesXvMeRw9yNLZ4JXfoHqzLiR4RBg==
+X-Gm-Gg: AYBFou0rpFVIBOKEyf7aQkIpFS00bIDN2HAwVVXjtJZaX6P/YjiopYiE5OAw+kDURdH
+ tfTG1bnAG5MIR2CbRGDtEjQD3JqzWW4n4EMsX3qg0byVWNeZrm/XZtSnGNb0wnZJaJLBN7aQnf2
+ W8BQTuEX+SO+P0oFH8DMNDmo/awBByByMHDPQhvq0uKdkjFQWHquJLh8uaK2aEl1Tk0ZrfwQWWO
+ MuVlSIgap8iVm5cC3D1nfgoSIEPLDtiqZXV5KfmAiO0cwSnBF+4EeflFvYUC79RadmrgyOlLynO
+ pZcoi03hMUSQPfpUk/NhkPKseKJkGcs0CWLE9IojtWwrGHGsSSGKtPXXRPK23YK1Jd1Vz93S6+H
+ iqePw7BLG6BoP8nStZt3vOJvxXWqgAJ9FgyG5gJX+WwcyjgNt7/0j7b+xz5JRTglznZZs/TkVZl
+ aRm1jeSVliPQ/aFpVcYL7p
+X-Received: by 2002:a05:690c:6d81:b0:8b2:f9dd:933f with SMTP id
+ 00721157ae682-8b2f9dd9decmr51473697b3.103.1793892459489; Thu, 05 Nov 2026
+ 07:27:39 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+References: <20261028052024.38377-1-harshpb@linux.ibm.com>
+ <20261028052024.38377-7-harshpb@linux.ibm.com>
+In-Reply-To: <20261028052024.38377-7-harshpb@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Nov 2026 15:27:27 +0000
+X-Gm-Features: AclHuK_iOJlWA2bIJLqO-l5_D19_z1Zl-r1_vwkbXpxAd-WYAKBf-q9KHL_Vtd8
+Message-ID: <CAFEAcA-CML7CFxn7WC0d2uuE6cHJbM2-p2Lv-wcAXWU9kpsRWw@mail.gmail.com>
+Subject: Re: [PULL 6/6] spapr-vscsi: clamp adapter info DMA write length to
+ struct size
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>, 
+ Guthrie McAfee Armstrong <git@gmarmstrong.dev>,
+ Gautam Menghani <gautam@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,33 +115,43 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, 28 Oct 2026 at 05:21, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
+>
+> From: Chinmay Rath <rathc@linux.ibm.com>
+>
+> vscsi_send_adapter_info() used the guest-supplied common.length
+> field directly as the size argument to spapr_vio_dma_write().
+> Since common.length is controlled by the guest, a value larger
+> than sizeof(struct mad_adapter_info_data) (148 bytes) caused
+> dma_memory_write() to read past the end of the stack-allocated info
+> struct, leaking arbitrary host stack contents into guest memory.
+>
+> Fix this by clamping the write length to sizeof(info), then using
+> spapr_vio_dma_set() to zero-fill any remaining bytes the guest
+> requested beyond that size. This mirrors the existing pattern in
+> vscsi_send_capabilities().
+>
+> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4626
+> Reported-by: Guthrie McAfee Armstrong <git@gmarmstrong.dev>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
+> Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+> Link: https://lore.kernel.org/qemu-devel/20261007144434.374749-1-rathc@linux.ibm.com
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 198ed583650..3fac3e0f99e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2945,7 +2945,7 @@ F: tests/qtest/vmgenid-test.c
- 
- VM Launch Update
- M: Ani Sinha <anisinha@redhat.com>
--M: Gerd Hoffman <kraxel@redhat.com>
-+M: Gerd Hoffmann <kraxel@redhat.com>
- S: Maintained
- F: hw/misc/vmlaunchupdate.c
- F: include/hw/misc/vmlaunchupdate.h
--- 
-2.47.3
+Shouldn't this be Cc: qemu-stable@nongnu.org ?
 
+Given that spapr-vscsi is supposed to be covered by the "virtualization
+use case", have we deliberately decided we didn't want to give this
+a CVE, or did that step in the process get missed ?
+
+thanks
+-- PMM
 
