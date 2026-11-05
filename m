@@ -1,148 +1,121 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6F2606A33C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 19:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6469606E43A
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 19:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=APLG4Kcl;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IPZmSlK6
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NDLZRh4x
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP3UN-0007J7-6G; Thu, 05 Nov 2026 14:51:11 -0500
+	id 1xP3YB-0001ZA-5g; Thu, 05 Nov 2026 14:55:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xP3U4-0007FM-UD
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:50:55 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xP3U3-0002CK-2e
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:50:52 -0500
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A5HeKKT1485061
- for <qemu-devel@nongnu.org>; Thu, 5 Nov 2026 19:50:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- pBQfbvEdhu+LR/+Ddvyb9Bc2QIGXITXiztssGg71sss=; b=APLG4Kclz2+i5l3l
- o6G3y7TMwR4NWFG0fY29l+mFjuL7BzfGxXomtNTrE3aeItxomdr80/RrowhRM27K
- +85RLa+/7InhwEkUoE8BtnoCVnPOfKcd2TZg62R4x5m5otrNTqrZ2tBs/nMmBIzC
- cjJCWGqtn4ovppblOUMiW7sWZ6AE2ZqDqGKk+WNNt9vA6DG+ypum+7UMB0oYx7Om
- I9Ex+ryylTwd2UNxw1MUHd085PCyEjZU05npuspEUa2lWKV72q3iet+kfiHKJXmN
- jeOv6VZ/gO3gald7lkIpWy9fvT/G+QC0SWRhkvBciY0C3ZxxMPSFdHmU87uRZQl3
- 4R832w==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hrpaak0rk-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 19:50:49 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-341eff9e381so4265878eec.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 11:50:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xP3Y8-0001YH-Ir
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:55:05 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xP3Y4-0002up-Of
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:55:03 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-6b587538a37so1020703a12.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 11:55:00 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793908499; cv=none;
+ d=google.com; s=arc-20260327;
+ b=WKj+yc3fopkBw6i1REoKNWW+/NUesSFeltuVUI88DDxpG0OYeMmzoOnSpsotN/qBV0
+ mtwJhGJCSzRpvURjaeVRjjrkxkyxPk+PZlc4u7Lj2fc+n/4mkIWsK1/iQXMcNBpaqbAR
+ r1aB5EG+Xdw0RCE+jY40CRrjCq7k8WWfHvnXNEya6FUWfNTTAOB8rveAlyzerFh/ttDR
+ Q5aQbeAxjtfEOkjPi9RPDwILZdZiVDlBYdUB2tlyusEnihqlRMniwdCOeTEotDlk70E2
+ j6lLItBo0nNwGkj36WG5cLM0maYJhtQZs15Hg3E2iKJ3Z0OUgXLye0kjVoegrCGey0mH
+ nkbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=DUQ/OhW23DadLrLQG6cnt0jAQnuavW/fvwkL6ALX/24=;
+ fh=oaulwX9BDJhtrojSZ0w8jnMXbt0XsqFEcV4Tk1CILqw=;
+ b=El3urKjT2NUvtb4qKWONvxQf6rpIqAyXUNJb/T0oLJ/poairtAZIAPm/J46qo+3P2F
+ rcCF7raXLalRUOvVOVi/B34p4tNpmKF/vfOjQEDU6WQ7exrrtZm0NN7b5zqZEslkgzPL
+ y1QjUKFT38l5vJ5I22rl0P26twDNU1eqqhgnba7CJMYaLb3EHfzq2doXscdVEUTIAwMF
+ Bugi9G54CKXG8RM1mqJw0EIUvOpyt/EWAbSP9uUW11/6Gs02/ZA2tWhHct53qedfpPDY
+ FVUwoHpl94xoLplX1F2X1SUFhV8acP1R5QYMG5CjZTrBN9NB2L6slWUoCRHna7lVD+WY
+ B4fw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793908248; x=1794513048; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=pBQfbvEdhu+LR/+Ddvyb9Bc2QIGXITXiztssGg71sss=;
- b=IPZmSlK66JK0yhF8D6RE3Gu9kOFTlCXNNCXsQ/BtPpwPjNXGn4jQ8wNxsUBLeu89it
- 2GcD4jNCVdgJQ+2jC4hbKAMUMZ0gkZLHmHXZ9rfcTqpVXk7dqJ216VOr8wEaDgoEWSuB
- w8kp7idi/PX1WmLuu1x49H+vQICdul2OsiiYB2xBzxmMbSofHha9klQWIZY238PplzAv
- WHPJTuqz+JFVQnkxhwFYxdcFIJ/EHSs8KtaS+A2UtSVos/ew8fFOpYPiqOdnIo4Ft70c
- s1fo73FZN04GC3FX80gsQEyZZ0a0+CeYjwj+adTEkbe81jETs2Im9kCzCQ8rVivGeUp9
- NDRw==
+ d=gmail.com; s=20260707; t=1793908499; x=1794513299; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=DUQ/OhW23DadLrLQG6cnt0jAQnuavW/fvwkL6ALX/24=;
+ b=NDLZRh4xJ6s6hmTXXZPuDryd9l9nwQL1U1GO9YbCuStfLNminqrx/jUhL89lG+Mkjw
+ QDNbn/Q/k9LzrzL2Vqi1tyIhfPe3++OY1duOi6aav3dxWCyM2XTYtOY39xlopB9N8CkI
+ vfabcjd9IXbjCinIGNmgj4bnv0PNPfPkqU3XsKBSXb4U3mw05jzCyIgpWLDvXWKjsefI
+ /OJMNaTTtcu/+67qZWJmypMPLdXLPaoNTLvtSHbCNcyDLpQn3+ws8QINA00Rcb0IeT5y
+ emiIxzCrurIoVd5kFupf2dfro8Ezee5INWFGHlJd79/7rqVn6e6Mi1Zgf2xgWzrykhPd
+ G1JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793908248; x=1794513048;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=pBQfbvEdhu+LR/+Ddvyb9Bc2QIGXITXiztssGg71sss=;
- b=uselFalzgry48CNlKLNfIpKzZW/+SMUB4UBl3ET/yrXpgbVEFxCJfzbgRtRod7echj
- ulhElByVNfWNPfU7gnZqf7fUr323kPVj6moLuzpTg8IsC+d2EHX1eh+md/A0ASpk3J/l
- d+2T1IChIEZ1YumLY/HwYgjhjzHRO0GgYIar+ETznoG8OlASmE18YghmYx0Oen/MN+Na
- x4olPu7CrGHhw+i7b7h9ey23LyMS6Wt/eid6+/r4lXPW2MWORJiKXd2pRBSBC3jK4f44
- gDy0GySR3CEWdW2o9K5L3h7UUv6JfgIjYzhRc55ZKDzQmhpVZZOhEgEg6y65OoCWYvyH
- 0l6w==
-X-Gm-Message-State: APuU4Z+uQ+kKOPOAZARcZmb6ly3Xoa5hRsUHp3b4toyHfl6fCmoma0GG
- TYAM7h5qbo0/5mROmpqV85V2DS9cbf6f+BBOqX/c0a2s2zrPe83loQ74+ea48Oelp1y6a4uP4Q7
- iMrbP/Mdtln+r1ZOO8e9V3ubC4wCL0iIhcsOsa/cP8Sek45U4Kqeb16qfEA==
-X-Gm-Gg: AYBFou0+AYIyKC5u/Vx578WMI68m5PYPFf0jqce2KPHtJGLeZ3l2e1PgcOtMUrhXMrb
- jEhn1+wk6XkXlQguOcy0E/jo5lx0G17uEYp3U8C8XwVqBhWqrZ3lPM2s9wwGEaV2VDT11wK124t
- QcEqfbIu9NTUyd2eFw4v49YVl71LSF099akR2zvx/jFJFFlErRwiMxt8rARqod2EzE/ZeAbV4rh
- 8dLmasqaPtku5mfYtzg9BwaIn7BXdtAvyWwBziLx8IoQjL4+dDnLg5v1rRhFU+4J8SYFFzC63gW
- d7XzJmDUw526DQjkYzgGFvhACHisDDvZNOMzzMDwzJdiqkhfV7DRxOPDBwUs/ZyFOHSuP8hZgai
- pUyPSMmDAQ9oIXSb3u3Bd05fcFz2Of1fFn/uShxpcwRsfajsk2j+LiD1381AVNnUMxB14RHiavz
- CqO/mg0K6WpYMzfheHkjXnY1gBxyFCb9VVTb/Igh8zdA==
-X-Received: by 2002:a05:7300:dd49:b0:36e:aa5c:7851 with SMTP id
- 5a478bee46e88-36f7651e63fmr185328eec.27.1793908248016; 
- Thu, 05 Nov 2026 11:50:48 -0800 (PST)
-X-Received: by 2002:a05:7300:dd49:b0:36e:aa5c:7851 with SMTP id
- 5a478bee46e88-36f7651e63fmr185296eec.27.1793908247304; 
- Thu, 05 Nov 2026 11:50:47 -0800 (PST)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36f736a1da4sm332142eec.7.2026.11.05.11.50.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Nov 2026 11:50:46 -0800 (PST)
-Message-ID: <5de7e4a0-70dc-4a0a-936d-d66b1eefcc09@oss.qualcomm.com>
-Date: Thu, 5 Nov 2026 11:50:45 -0800
+ d=1e100.net; s=20260707; t=1793908499; x=1794513299;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=DUQ/OhW23DadLrLQG6cnt0jAQnuavW/fvwkL6ALX/24=;
+ b=aCpRq5vzi3/SduRDQLUODBo4I+KcqDgPN4+lvpMLe3zu+zcubua1scnAPkY1htNRbv
+ Ev9HNchKgNfbUf65k1MA8rDjEQU/oSIrZlCnYOqMMegnCr+7JRkrKdE3Nc35OTn2BQgb
+ XCa67IRgDL7/wzWf4xwqwVC5ZLa9UP5vlf4B5bMQU3UVe0Rqba5aQY4rxpZqRN80DhtM
+ pQZDuRiHuKN+dA8YiKbQJrmcj/CihRYbq94OWI/AfBOqtF4eD76qSsHa2Ov61UVOqXOU
+ Rh6lFXBIieA8+Na78iSJkvqio0fsth3CKEqU0C5PRSRQVk0AajVbZJ07ixAAFUNnEHnF
+ qk4g==
+X-Gm-Message-State: APuU4Z9MYYYuDDxAi2CoB7fuAJYtyBs7XTMB2ts1xYp2dL6R5kF8Tvdd
+ j/K13CmTeaH6ioY6KpWa9Trwhqlqg62sQeZ1Z1m0fMCUQwy3It7px3BhirQSBjlEad6qs8PpM2B
+ G2b2tGTbsRmm3T2yCv8q2BKrbn8Sre3Y=
+X-Gm-Gg: AYBFou1AqY11BMOHf0h2sCKb1qv47pRa3HU60THUluPOFTqTL9vaWehBeqQ6g0ZEaxi
+ tEYaDdSBJQj/HBNi0iMvr3Dijj9S1t8xONbelFd16o9hrm8e9Qpa+tmpcvCc8i/HZMDvb2UWRzi
+ CEcvqW40QFQyrHOwXOoDyeiS1fMhC06IRq+giPncL1OLLkpJzKYWVHIaa+wy+lWmCMvHjxoF/l5
+ IyVgVGxflPK8GJJUHns6T+DH5fH5jOOLfHRdvdX0UPTI0nJsEKVJqTQUybB+LtX/ipeVtnhyBnh
+ cpLE24mtm5n8KuJ7RmzQTooh2qm5yoX6TkfkF/ocMAJG19vMTkZG5HVITcZjA+8dzcMSdZnS8zD
+ VPFMZTJavr9EdNNzqNM/muT/jIu+1bh21uZsSoJDyssxP+hXNmlXM7MvZVw==
+X-Received: by 2002:a05:6402:440b:b0:6b5:64b3:82d7 with SMTP id
+ 4fb4d7f45d1cf-6b59753c6fbmr232220a12.2.1793908498809; Thu, 05 Nov 2026
+ 11:54:58 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/10] i386, AGENTS.md, meson changes for QEMU 11.2 soft
- freeze
-To: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20261103133500.2295582-1-pbonzini@redhat.com>
- <CAFEAcA_=L36WixkY-KMXOhwRZ26_pEFXmicVOYMueKH=WYv7uw@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA_=L36WixkY-KMXOhwRZ26_pEFXmicVOYMueKH=WYv7uw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDA3OSBTYWx0ZWRfX8p8GyqKeU4PA
- aEBsaNKKOiFwBIMVKdDxgoLMk5BqhB1ef6LWrZouGMtGrqCK0nTvIBSwgrBxHoHBOuCIekpJNjO
- 3AODxL0cz17y7QFvrwXAUaW7ouhQUlO7LtNr6M2pVCAEXYf0kyxaiILAcd4Tj06bxyn2z9TN3GN
- GuFVaUK4tpyk31/fthS4t5YRQ+y+L9Fazi29OauRqBQPaL5xFe0twE6xwd44i6w3HJagW4NzFaB
- zkPmsyytL9x6xb5Nbvb32Pe6aTpVcpzzXrQ6w5js7USixIVINb1j9+mUBVUl7Vn8R/N2AUo6HZb
- +IHrbIuILudlcyxNLi6ai/LmI6ATYwQJXkKYfTgch++2EviqkSeQDxSd+08Kve9CdW6gmz1Dh6U
- vg3E4AljHvzeT6aPXyVlHaKwaAy+3KWsVs7xl49TEI6ZjHxsJY6F5Zy/yLlvepbn+znrc6fQfC6
- sjq/Twk9LwU8S2SkgRA==
-X-Proofpoint-GUID: ZaJ-QY9gRQEyuqH62Zhlqnf51BswMf-s
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDA3OSBTYWx0ZWRfX+xvxZk0KRerr
- dSpHOgMtRsWoSN7VpPPHN2TsAciWrKJN9X+D/QHEflTsJ9WmM+hU+xIv2YyeuU0cyO+qENQf8OB
- 22P3J6q7MIX5iCaxzYh4gLi6SaNEM/c=
-X-Proofpoint-ORIG-GUID: ZaJ-QY9gRQEyuqH62Zhlqnf51BswMf-s
-X-Authority-Analysis: v=2.4 cv=WOXqzXsR c=1 sm=1 tr=0 ts=6aecde19 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=mqAZ-kGaMtYP5kKsifEA:9 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-05_05,2026-11-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 spamscore=0 phishscore=0 suspectscore=0
- impostorscore=0 adultscore=0 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
- definitions=main-2611050079
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261105183310.1614-1-luoyonggang@gmail.com>
+ <20261105183310.1614-2-luoyonggang@gmail.com>
+ <b9474466-d91a-413c-bedd-a976b8cfa31c@oss.qualcomm.com>
+In-Reply-To: <b9474466-d91a-413c-bedd-a976b8cfa31c@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Fri, 6 Nov 2026 03:54:46 +0800
+X-Gm-Features: AclHuK9MWRTpDRj-khNWrUXphmeIk7y6Z9Kj-oMyYwMkWuDmnNkC5Hjco2o3BAY
+Message-ID: <CAE2XoE9KGLcegO5fONsnNd5ct-2V=AiuxGocrJ1XCMmymw4tOg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/3] accel: register CPU parent only for AccelCPU
+ subclasses
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Weiwei Li <liwei1518@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, qemu-arm@nongnu.org,
+ qemu-riscv@nongnu.org, Glenn Miles <milesg@linux.ibm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ qemu-ppc@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,60 +126,238 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/5/2026 2:27 AM, Peter Maydell wrote:
-> On Tue, 3 Nov 2026 at 13:35, Paolo Bonzini <pbonzini@redhat.com> wrote:
->>
->> The following changes since commit 74f7bf4c59e6b6d50dbc6e124d93440be8be4386:
->>
->>   Merge tag 'pull-target-arm-20261102-1' of https://gitlab.com/pm215/qemu into staging (2026-11-02 20:19:27 -0800)
->>
->> are available in the Git repository at:
->>
->>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
->>
->> for you to fetch changes up to ab78ac76f44a1241e76fd32d248df62d83f1ea58:
->>
->>   meson: rewrite scripts/qemu-version.sh directly in meson.build (2026-11-03 14:31:24 +0100)
->>
->> ----------------------------------------------------------------
->> * target/i386/tcg: bugfixes and cleanups
->> * AGENTS.md: add final instructions
->> * meson: rewrite scripts/qemu-version.sh directly in meson.build
->>
->> ----------------------------------------------------------------
-> 
-> The qemu-version.h changes here seem to have broken incremental builds:
-> 
-> In file included from ../../monitor/qmp-cmds-control.c:28:
-> /home/pm215/qemu/include/qemu/version.h:11:10: fatal error:
-> qemu-version.h: No such file or directory
->    11 | #include "qemu-version.h"
->       |          ^~~~~~~~~~~~~~~~
-> compilation terminated.
-> 
-> This happens even though the incremental rebuild decided it had
-> to re-run configure.
-> 
-> Blowing away the build tree and doing a complete rebuild avoids the
-> error, but it would be nice for incremental builds to work.
+On Fri, Nov 6, 2026 at 3:42=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
 >
+> On 11/5/2026 10:33 AM, Yonggang Luo wrote:
+> > accel_cpu_register_type() creates the abstract parent
+> > accel-<cpu type>. A subclass names that parent, and
+> > type_initialize() aborts when the parent is missing. The old
+> > type_init registered only target_cpu_type(), which is one name
+> > in a multi-target process. Call the helper from the CPU type
+> > init of each target that has an AccelCPU subclass.
+> >
+> > ARM calls it because whpx-common.c parents accel-arm-cpu on
+> > aarch64-softmmu. i386 calls it for TCG, KVM, HVF, NVMM, and
+> > MSHV. i386-softmmu and x86_64-softmmu each pass their own
+> > CPU_RESOLVING_TYPE, so WHPX on x86_64-softmmu finds
+> > accel-x86_64-cpu. RISC-V calls it for TCG and KVM. PowerPC
+> > calls it for KVM.
+> >
+> > Other targets have no AccelCPU subclass. Machine init looks up
+> > tcg-accel-<cpu type> or kvm-accel-<cpu type> and skips a missing
+> > class, so those targets do not need the parent.
+> > test-multi-target checks the parent only for the CPU types that
+> > register it.
+> >
+> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> > ---
+> >  accel/accel-common.c           |  6 ++----
+> >  include/accel/accel-cpu.h      |  2 ++
+> >  target/arm/cpu.c               |  2 ++
+> >  target/i386/cpu.c              |  2 ++
+> >  target/ppc/cpu_init.c          |  2 ++
+> >  target/riscv/cpu.c             |  8 ++++++++
+> >  tests/unit/test-multi-target.c | 25 +++++++++++++++++++++++++
+> >  7 files changed, 43 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/accel/accel-common.c b/accel/accel-common.c
+> > index 00a400243f..441d1b77fa 100644
+> > --- a/accel/accel-common.c
+> > +++ b/accel/accel-common.c
+> > @@ -130,9 +130,9 @@ static const TypeInfo accel_types[] =3D {
+> >
+> >  DEFINE_TYPES(accel_types)
+> >
+> > -static void register_accel_target_type(void)
+> > +void accel_cpu_register_type(const char *cpu_type)
+> >  {
+> > -    g_autofree char *name =3D g_strconcat("accel-", target_cpu_type(),=
+ NULL);
+> > +    g_autofree char *name =3D g_strconcat("accel-", cpu_type, NULL);
+> >      const TypeInfo accel_cpu_type =3D {
+> >          .name =3D name,
+> >          .parent =3D TYPE_OBJECT,
+> > @@ -142,5 +142,3 @@ static void register_accel_target_type(void)
+> >
+> >      type_register_static(&accel_cpu_type);
+> >  }
+> > -
+> > -type_init(register_accel_target_type);
+> > diff --git a/include/accel/accel-cpu.h b/include/accel/accel-cpu.h
+> > index 9e7eede7c3..2fdb64d2ae 100644
+> > --- a/include/accel/accel-cpu.h
+> > +++ b/include/accel/accel-cpu.h
+> > @@ -20,4 +20,6 @@ typedef struct AccelCPUClass {
+> >      bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
+> >  } AccelCPUClass;
+> >
+> > +void accel_cpu_register_type(const char *cpu_type);
+> > +
+> >  #endif /* ACCEL_CPU_H */
+> > diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> > index 71681447b2..725f1f3a5f 100644
+> > --- a/target/arm/cpu.c
+> > +++ b/target/arm/cpu.c
+> > @@ -28,6 +28,7 @@
+> >  #include "qemu/module.h"
+> >  #include "qapi/error.h"
+> >  #include "cpu.h"
+> > +#include "accel/accel-cpu.h"
+> >  #ifdef CONFIG_TCG
+> >  #include "exec/translation-block.h"
+> >  #include "accel/tcg/cpu-ops.h"
+> > @@ -2753,6 +2754,7 @@ static const TypeInfo arm_cpu_type_info =3D {
+> >
+> >  static void arm_cpu_register_types(void)
+> >  {
+> > +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
+> >      type_register_static(&arm_cpu_type_info);
+> >  }
+> >
+> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> > index eab0d5a4d4..31b09e6f8e 100644
+> > --- a/target/i386/cpu.c
+> > +++ b/target/i386/cpu.c
+> > @@ -23,6 +23,7 @@
+> >  #include "qemu/qemu-print.h"
+> >  #include "qemu/hw-version.h"
+> >  #include "cpu.h"
+> > +#include "accel/accel-cpu.h"
+> >  #include "tcg/helper-tcg.h"
+> >  #include "exec/translation-block.h"
+> >  #include "system/hvf.h"
+> > @@ -11093,6 +11094,7 @@ static void x86_cpu_register_types(void)
+> >  {
+> >      int i;
+> >
+> > +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
+> >      type_register_static(&x86_cpu_type_info);
+> >      for (i =3D 0; i < ARRAY_SIZE(builtin_x86_defs); i++) {
+> >          x86_register_cpudef_types(&builtin_x86_defs[i]);
+> > diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> > index 7f3036d903..fe3f2549b7 100644
+> > --- a/target/ppc/cpu_init.c
+> > +++ b/target/ppc/cpu_init.c
+> > @@ -43,6 +43,7 @@
+> >  #include "exec/page-protection.h"
+> >  #include "exec/watchpoint.h"
+> >  #include "helper_regs.h"
+> > +#include "accel/accel-cpu.h"
+> >  #include "internal.h"
+> >  #include "spr_common.h"
+> >  #include "power8-pmu.h"
+> > @@ -7589,6 +7590,7 @@ static const TypeInfo ppc_vhyp_type_info =3D {
+> >
+> >  static void ppc_cpu_register_types(void)
+> >  {
+> > +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
+> >      type_register_static(&ppc_cpu_type_info);
+> >  #ifndef CONFIG_USER_ONLY
+> >      type_register_static(&ppc_vhyp_type_info);
+> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> > index 362e561809..10e24f20e8 100644
+> > --- a/target/riscv/cpu.c
+> > +++ b/target/riscv/cpu.c
+> > @@ -25,6 +25,7 @@
+> >  #include "qemu/guest-random.h"
+> >  #include "qemu/atomic.h"
+> >  #include "cpu.h"
+> > +#include "accel/accel-cpu.h"
+> >  #include "cpu_vendorid.h"
+> >  #include "target/riscv/tcg/csr.h"
+> >  #include "internals.h"
+> > @@ -3931,3 +3932,10 @@ static const TypeInfo riscv_cpu_type_infos[] =3D=
+ {
+> >  };
+> >
+> >  DEFINE_TYPES(riscv_cpu_type_infos)
+> > +
+> > +static void riscv_accel_cpu_register_type(void)
+> > +{
+> > +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
+> > +}
+> > +
+>
+> This looks good to me.
+>
+> > +type_init(riscv_accel_cpu_register_type)
+> > diff --git a/tests/unit/test-multi-target.c b/tests/unit/test-multi-tar=
+get.c
+> > index c7559827a0..fd44cf74ca 100644
+> > --- a/tests/unit/test-multi-target.c
+> > +++ b/tests/unit/test-multi-target.c
+> > @@ -30,6 +30,28 @@
+> >  /* stub for system/main.c */
+> >  int (*qemu_main)(void);
+> >
+> > +static void test_accel_cpu_parent(const TargetInfo *ti)
+> > +{
+> > +    static const char * const needed[] =3D {
+> > +        "arm-cpu",
+> > +        "i386-cpu",
+> > +        "powerpc-cpu",
+> > +        "powerpc64-cpu",
+> > +        "riscv-cpu",
+> > +        "x86_64-cpu",
+> > +    };
+> > +    size_t i;
+> > +    g_autofree char *name =3D NULL;
+> > +
+> > +    for (i =3D 0; i < ARRAY_SIZE(needed); i++) {
+> > +        if (g_str_equal(ti->cpu_type, needed[i])) {
+> > +            name =3D g_strconcat("accel-", ti->cpu_type, NULL);
+> > +            g_assert_nonnull(object_class_by_name(name));
+> > +            return;
+> > +        }
+> > +    }
+> > +}
+> > +
+> >  static void test_qom_types_are_unique(const void *data)
+> >  {
+> >      const TargetInfo *ti =3D data;
+> > @@ -49,6 +71,9 @@ static void test_qom_types_are_unique(const void *dat=
+a)
+> >      module_call_init(MODULE_INIT_QOM);
+> >      /* trigger type_initialize for all types */
+> >      object_class_get_list("", false);
+> > +
+> > +    /* Accel parent lookup depends on the QOM types above being unique=
+. */
+> > +    test_accel_cpu_parent(ti);
+> >  }
+> >
+> >  int main(int argc, char **argv)
+>
+> This is not needed. When those targets will be added, it will already be
+> tested by the existing logic instantiating all QOM types.
+> That's fine to not cover that for i386/ppc until they are not part of
+> multi target.
 
-It works fine on my side, with both ninja and make. qemu-version.h is
-correctly regenerated as the first target being executed.
+So we have no need to add tests for it, I'll drop it in the new version?
 
-Can you reproduce this with a clean build folder?
 
-> thanks
-> -- PMM
-> 
+>
+> Thanks,
+> Pierrick
 
+
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
