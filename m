@@ -1,85 +1,83 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4E2606A326
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BDC606A335
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:31:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOtmZ-0007t3-Pq; Thu, 05 Nov 2026 04:29:20 -0500
+	id 1xOtoM-00055C-4X; Thu, 05 Nov 2026 04:31:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtmX-0007o5-1J
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:29:17 -0500
-Received: from mail-pg1-f174.google.com ([209.85.215.174])
+ id 1xOtoK-00051J-2U
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:31:08 -0500
+Received: from mail-pj1-f43.google.com ([209.85.216.43])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtmU-0006zY-7c
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:29:16 -0500
-Received: by mail-pg1-f174.google.com with SMTP id
- 41be03b00d2f7-cdab6ae1ee9so752899a12.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:29:13 -0800 (PST)
+ id 1xOtoI-0007OR-Ex
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:31:07 -0500
+Received: by mail-pj1-f43.google.com with SMTP id
+ 98e67ed59e1d1-3ac91ac8924so1136645a91.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:31:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793870953; x=1794475753;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=h4Ea09lpKBE0ZuFBlZjAhUPH2YdoO9oGD+k3joTrPS8=;
- b=bODKfHbEjPcnld/TyIcTIydAu1n7X1kbtiCm18++KHi69debHPYb431sWU2BBu30wY
- 1lq5dXpfv2y8HZZ/678d4gSF+qsC5+KKW+zvU+JUa1ZUCl+PVMHnFt19PkLz5TxNNnHn
- FqUN+He1DHcD6QVMdsNjstM6UPV7M4GY86M3Dh+Yzb1jLI7w4fdvjoga/m5r0wOi5cdA
- o8+KzlEhy4V8Zd0hBG1lBNOCBtjh+OuEBdiJNUdVpy81FjJ4AMrLAUq0ldXxn5LTaEK/
- f2jA6E3Uw/w+8wcQXCTQZLHoJ7Qn+JpkcHJd4OFBYBM/CwZYoLgMYtbhMiOU5aTFp38D
- ULyw==
-X-Gm-Message-State: APuU4Z/hRGSoFN/7zfNYLKv02qtsYUFQhJlHafG1dnekHbtaB0bHZ1PB
- 98WnaYOvJTEfZGMjiMAIZHS4+1eVoIVKCt/ILJKcVBa8/D1kXJOpdMRek8apJ993Q10=
-X-Gm-Gg: AYBFou0YfJYIkmt6GC3L/FAowwPQDxwYuyjWIE62Gqnydkbaf3BCMw2FgAd5rhohV7R
- WYr/SMTleWmMH/J3JciMVH/Rz/Nn7ln3iURdMXKZf2C9aENgBl1TATYfrMGKeTI8xT6QccPd4j9
- KUDXHNpEvjuwv4CgXmtycGu6Dmpw0k61YaSMZSEFBP3rgEOw2v3nw7yN4AXCoPSmBqX2BgKGhBo
- BX61RXqT4zC6DjeV0ZckgPLpPyXVxFRV5fee5UC3xwz1Vt01bmbj/qVRkuqCucpxBExrNotmawm
- f/GYdZmvyJnIQWKD9pTaWIJAA7dAb6A2Vv23sKkseeKmvDR9LPaFGSIJZrZIpMg7fzDjBF2mj2a
- STszVkv9rPb8SAjk8wt58wU47PagEm4Ob41ZQTwFpXhHTusfv86187zZpewgjm7tZyNLkhgRWaE
- OogRoNb0h/1csbivADqIdvJa3ehz3Wb7U2BENACm4G6NfULbEk5Ti4EmMlixFrpqTsPXGTWQWWe
- u5gW+Iz6w1ChNBZuoMzEbriQu2+lcsiSojHmYORJqpQI/ETy/6DljJHMme64n56wNaPcSlaa6Uf
- Sg3Bd0inCoozhVtBYXpCAZa+EtA6gnQEq2lfEP8wZDnZci752d6kY73mur48oIJBWidh1+5MUgM
- D
-X-Received: by 2002:a17:90b:5487:b0:3ac:adce:60ad with SMTP id
- 98e67ed59e1d1-3ae89775250mr13176599a91.22.1793870952592; 
- Thu, 05 Nov 2026 01:29:12 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793871065; x=1794475865;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=fz3AwyDwDLGgj59/0W5LxrO61Dz9+aqIkiPGR2ZoG4M=;
+ b=wOeNmojNTcac6449eKuX07wy6Ji2At9pwhGrnSSymFzOKM8nLocf7oYtMV8YctbKPG
+ 9DsPsb5B3dfB7IV2VYBxzl8Ne54W3E0P1auf/gLGqPG6VoPPwH2ioMHn7lUQTfLffrxc
+ pQeFWcFe3xsQgdHZtR0zUcpy63zBBOUm7ci7LWVW6mmwUiBTd0f1cpOpemmKVg+PIEXg
+ vtd4Gy7zjTwCgbjpES21cekU6MELtN8ubhTjnPGx2r61eb+WRxrBfb5z15kocNr2AwDg
+ J/AbXPjmRvShzkYaxDHntQXj/DKB5MGatYCR6Gc7RiLzT72GdxI1WaKIvBKLqSpUJiHN
+ dxfA==
+X-Gm-Message-State: APuU4Z9iaWaXxBOC9Uhzu1GahjqXDNvgVX3Hu2OOKplO9ybyxGuHrpxT
+ bCAX51IoLAz40ssyv70RxRiy18w1wBaML/9dk2oOjZidP+63lX/mBy6zSTyNEExvkRQ=
+X-Gm-Gg: AYBFou1e/2rfNPCxdjf8bL8RjA7HBzqIiznxHTKntUsw8k+lcltQTqddS5pcGvu2KjG
+ zWepq5iZmNJRr+KM98Xy9tFKOjrBLU5K5AlBnpjYf3B+vF8AjT8tBHHjcy3fBhbfcL7YBG9I/dp
+ cBTI+HF1dJ3p2KLG+T+sb0WMoMy7iOBw/OkEyYoaIL9jotjo6EhE95lYvBcMtGpGY5j20M088W9
+ ocWF1Lkj8pe5slTtVOkDtIS4YJEFljfXv2abX7VEwC1kKAtroKqcwiNqccqJpmEYqqRYSkL39IJ
+ yUMWTUN02g3Pc7WSCHSUQKmN12MIgDCLs/boYL/erxhcL7eRls0alY/bN5rx1chf68gMVTSzlID
+ p9Qtd867T9WlwFRioFWtQE9QNzrzdPmQLR62kVURuXCavFzWYFuqkshhEWF8zAkasQNRmLIGibo
+ BJZSH1rU/si/RZJQCQEmpNk5jgGpz931bHKuFTzS/KccKWFeEGAMNX9W0MACOxmtTeB2wZAwqc9
+ yAJE+bAnkG46aYP4D0sWxBk+G/1Xof07jPhC8Bva7NNyh7Y8RqfXtmlJNl4gfZXBcHRA2U1dUx7
+ Mpva0R76MfeT+IEXIE1T5070sb5mRI7kUVIli5riIdI57WIDiGc/QRHz9yqSnaIo+0ackKb1tsH
+ 9
+X-Received: by 2002:a17:90b:574e:b0:3aa:ff61:9504 with SMTP id
+ 98e67ed59e1d1-3ae897c94f6mr14560008a91.20.1793871065065; 
+ Thu, 05 Nov 2026 01:31:05 -0800 (PST)
 Received: from localhost (118-163-122-149.hinet-ip.hinet.net.
  [118.163.122.149]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b0b31f8804sm3046335a91.17.2026.11.05.01.29.12
+ 98e67ed59e1d1-3b0b2cf80c9sm3158612a91.0.2026.11.05.01.31.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 01:29:12 -0800 (PST)
-Date: Thu, 05 Nov 2026 17:25:50 +0800
-Subject: [PATCH 11/16] hw/arm/aspeed: use the TMP421 type-name macros
+ Thu, 05 Nov 2026 01:31:03 -0800 (PST)
+Subject: [PATCH 0/4] hw/sensor: add the TMP1075 temperature sensor
+Date: Thu, 05 Nov 2026 17:25:52 +0800
+Message-Id: <20261105-sensor-tmp1075-v1-0-d2ee5da0b880@free.fr>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261105-sensor-tmp421-v1-11-c46853f5e1f0@free.fr>
-References: <20261105-sensor-tmp421-v1-0-c46853f5e1f0@free.fr>
-In-Reply-To: <20261105-sensor-tmp421-v1-0-c46853f5e1f0@free.fr>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5AMBBA0avIrDVpq0hcRSxaBiNR0kEk4u6K5
+ Vv8fwFjIGSokgsCHsS0+AiVJtCO1g8oqIsGLXWhlMwFo+cliG1elSxzYWxptC4y6ZyBGK0Bezq
+ /Yd385t1N2G7vBe77ARZmCZdyAAAA
+X-Change-ID: 20261105-sensor-tmp1075-4a7422630bb4
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, eblot@meta.com, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Emmanuel Blot <emmanuel.blot@free.fr>, Jamin Lin <jaminlin1207@gmail.com>
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793870743; l=11926;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793870754; l=1007;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=4oZwEz5iz9ajkWq5VlThdY36odDZrC08EIwReCORXA8=;
- b=aUbpPtP64o7T7w80ldbS8eQ4uR960h1yWAe0UwO9dz3xQ3dezY9CJXZSlpFarbNuPsAuzjEy8
- qR5MU5vpIuDATOqwwN6nI0m8fgkYjMsTrgJY2xR/oqADJ8Q/GkSXwYx
+ bh=Hx9Q5VCHYaNGSbcANjrkwl2qZijEGGKlzzmP5LeL8c4=;
+ b=snym7kV679LVLmuQjjB8PtX6bN3OjUner72Y2f1q7iTfCbX6nU1R1EBWUddJx59+9zX653T9t
+ umV9lDuv4VTCh5eDrmTesfQsvaT4QZ+DonBh2AvS82gBSYCJkxqyFkL
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.215.174; envelope-from=eblot.ml@gmail.com;
- helo=mail-pg1-f174.google.com
+Received-SPF: pass client-ip=209.85.216.43; envelope-from=eblot.ml@gmail.com;
+ helo=mail-pj1-f43.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -103,275 +101,38 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.0 required=3.0 tests=BAYES_00,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Include the new tmp421.h and refer to the sensor variants through
-TYPE_TMP421/TYPE_TMP422/TYPE_TMP423 instead of open-coded string
-literals and per-board local defines.
+Based on master, at:
+  f29ccc287a
 
-Reviewed-by: Jamin Lin <jaminlin1207@gmail.com>
+The TMP1075 is a TMP105 with a 16-bit Config register and a read-only
+device ID.
+
+New TMP105 qtest cases for the TMP1075, checking a migration round
+trip.
+
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/arm/aspeed_ast2400_palmetto.c          |  3 ++-
- hw/arm/aspeed_ast2400_supermicrox11.c     |  3 ++-
- hw/arm/aspeed_ast2500_supermicro-x11spi.c |  3 ++-
- hw/arm/aspeed_ast2500_tiogapass.c         | 10 +++++++---
- hw/arm/aspeed_ast2500_witherspoon.c       |  7 +++++--
- hw/arm/aspeed_ast2500_yosemitev2.c        | 10 +++++++---
- hw/arm/aspeed_ast2600_bletchley.c         |  3 +--
- hw/arm/aspeed_ast2600_catalina.c          |  3 +--
- hw/arm/aspeed_ast2600_fby35.c             |  2 +-
- hw/arm/aspeed_ast2600_fuji.c              |  3 +--
- hw/arm/aspeed_ast2600_rainier.c           | 13 +++++++++----
- 11 files changed, 38 insertions(+), 22 deletions(-)
+Emmanuel Blot (4):
+      hw/sensor: tmp105: add the TMP1075 variant
+      tests/qtest: tmp105: cover the TMP1075 device ID and reset defaults
+      tests/qtest: tmp105: cover the TMP1075 config register width
+      tests/qtest: tmp105: cover the Config low byte across a migration
 
-diff --git a/hw/arm/aspeed_ast2400_palmetto.c b/hw/arm/aspeed_ast2400_palmetto.c
-index 185185f0bb..7b165394c2 100644
---- a/hw/arm/aspeed_ast2400_palmetto.c
-+++ b/hw/arm/aspeed_ast2400_palmetto.c
-@@ -12,6 +12,7 @@
- #include "hw/arm/aspeed_soc.h"
- #include "hw/i2c/smbus_eeprom.h"
- #include "hw/rtc/ds1338.h"
-+#include "hw/sensor/tmp421.h"
- 
- /* Palmetto hardware value: 0x120CE416 */
- #define PALMETTO_BMC_HW_STRAP1 (                                        \
-@@ -45,7 +46,7 @@ static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* add a TMP423 temperature sensor */
-     dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
--                                         "tmp423", 0x4c));
-+                                         TYPE_TMP423, 0x4c));
-     object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
-     object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
-     object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
-diff --git a/hw/arm/aspeed_ast2400_supermicrox11.c b/hw/arm/aspeed_ast2400_supermicrox11.c
-index 051e072c5a..fd2fda9290 100644
---- a/hw/arm/aspeed_ast2400_supermicrox11.c
-+++ b/hw/arm/aspeed_ast2400_supermicrox11.c
-@@ -12,6 +12,7 @@
- #include "hw/arm/aspeed_soc.h"
- #include "hw/i2c/smbus_eeprom.h"
- #include "hw/rtc/ds1338.h"
-+#include "hw/sensor/tmp421.h"
- 
- /* TODO: Find the actual hardware value */
- #define SUPERMICROX11_BMC_HW_STRAP1 (                                   \
-@@ -45,7 +46,7 @@ static void supermicrox11_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* add a TMP423 temperature sensor */
-     dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
--                                         "tmp423", 0x4c));
-+                                         TYPE_TMP423, 0x4c));
-     object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
-     object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
-     object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
-diff --git a/hw/arm/aspeed_ast2500_supermicro-x11spi.c b/hw/arm/aspeed_ast2500_supermicro-x11spi.c
-index dc0248422d..1ea61348f6 100644
---- a/hw/arm/aspeed_ast2500_supermicro-x11spi.c
-+++ b/hw/arm/aspeed_ast2500_supermicro-x11spi.c
-@@ -12,6 +12,7 @@
- #include "hw/arm/aspeed_soc.h"
- #include "hw/i2c/smbus_eeprom.h"
- #include "hw/rtc/ds1338.h"
-+#include "hw/sensor/tmp421.h"
- 
- /* TODO: Find the actual hardware value */
- #define SUPERMICRO_X11SPI_BMC_HW_STRAP1 (                               \
-@@ -41,7 +42,7 @@ static void supermicro_x11spi_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* add a TMP423 temperature sensor */
-     dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
--                                         "tmp423", 0x4c));
-+                                         TYPE_TMP423, 0x4c));
-     object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
-     object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
-     object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
-diff --git a/hw/arm/aspeed_ast2500_tiogapass.c b/hw/arm/aspeed_ast2500_tiogapass.c
-index 6cb567526c..5433198abd 100644
---- a/hw/arm/aspeed_ast2500_tiogapass.c
-+++ b/hw/arm/aspeed_ast2500_tiogapass.c
-@@ -11,6 +11,7 @@
- #include "hw/arm/aspeed.h"
- #include "hw/arm/aspeed_soc.h"
- #include "hw/nvram/eeprom_at24c.h"
-+#include "hw/sensor/tmp421.h"
- 
- /* value: 0xF100C2E6 */
- #define TIOGAPASS_BMC_HW_STRAP1 ((                                        \
-@@ -54,9 +55,12 @@ static void tiogapass_bmc_i2c_init(AspeedMachineState *bmc)
-     at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 6), 0x54, 128 * KiB,
-                           tiogapass_bmc_fruid, tiogapass_bmc_fruid_len);
-     /* TMP421 */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8), "tmp421", 0x1f);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4f);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4e);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
-+                            TYPE_TMP421, 0x1f);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6),
-+                            TYPE_TMP421, 0x4f);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6),
-+                            TYPE_TMP421, 0x4e);
- }
- 
- static void aspeed_machine_tiogapass_class_init(ObjectClass *oc,
-diff --git a/hw/arm/aspeed_ast2500_witherspoon.c b/hw/arm/aspeed_ast2500_witherspoon.c
-index c69065846c..385deb2154 100644
---- a/hw/arm/aspeed_ast2500_witherspoon.c
-+++ b/hw/arm/aspeed_ast2500_witherspoon.c
-@@ -12,6 +12,7 @@
- #include "hw/arm/aspeed_soc.h"
- #include "hw/misc/led.h"
- #include "hw/sensor/tmp105.h"
-+#include "hw/sensor/tmp421.h"
- #include "hw/i2c/smbus_eeprom.h"
- #include "hw/gpio/pca9552.h"
- #include "hw/rtc/ds1338.h"
-@@ -60,8 +61,10 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
-     }
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3), "dps310", 0x76);
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3), "max31785", 0x52);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "tmp423", 0x4c);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), "tmp423", 0x4c);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4),
-+                            TYPE_TMP423, 0x4c);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
-+                            TYPE_TMP423, 0x4c);
- 
-     /* The Witherspoon expects a TMP275 but a TMP105 is compatible */
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), TYPE_TMP105,
-diff --git a/hw/arm/aspeed_ast2500_yosemitev2.c b/hw/arm/aspeed_ast2500_yosemitev2.c
-index 3ba1ed5f6f..3dd0d37175 100644
---- a/hw/arm/aspeed_ast2500_yosemitev2.c
-+++ b/hw/arm/aspeed_ast2500_yosemitev2.c
-@@ -11,6 +11,7 @@
- #include "hw/arm/aspeed.h"
- #include "hw/arm/aspeed_soc.h"
- #include "hw/nvram/eeprom_at24c.h"
-+#include "hw/sensor/tmp421.h"
- 
- /* value: 0xF100C2E6 */
- #define YOSEMITEV2_BMC_HW_STRAP1 ((                                        \
-@@ -54,9 +55,12 @@ static void yosemitev2_bmc_i2c_init(AspeedMachineState *bmc)
-     at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51, 128 * KiB,
-                           yosemitev2_bmc_fruid, yosemitev2_bmc_fruid_len);
-     /* TMP421 */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "tmp421", 0x1f);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4e);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4f);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11),
-+                            TYPE_TMP421, 0x1f);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                            TYPE_TMP421, 0x4e);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                            TYPE_TMP421, 0x4f);
- 
- }
- 
-diff --git a/hw/arm/aspeed_ast2600_bletchley.c b/hw/arm/aspeed_ast2600_bletchley.c
-index 0e746055a2..536e910229 100644
---- a/hw/arm/aspeed_ast2600_bletchley.c
-+++ b/hw/arm/aspeed_ast2600_bletchley.c
-@@ -13,8 +13,7 @@
- #include "hw/gpio/pca9552.h"
- #include "hw/nvram/eeprom_at24c.h"
- #include "hw/rtc/ds1338.h"
--
--#define TYPE_TMP421 "tmp421"
-+#include "hw/sensor/tmp421.h"
- /* Bletchley hardware value */
- #define BLETCHLEY_BMC_HW_STRAP1 0x00002000
- #define BLETCHLEY_BMC_HW_STRAP2 0x00000801
-diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
-index b15d932086..13dca7a846 100644
---- a/hw/arm/aspeed_ast2600_catalina.c
-+++ b/hw/arm/aspeed_ast2600_catalina.c
-@@ -16,14 +16,13 @@
- #include "hw/nvram/eeprom_at24c.h"
- #include "hw/rtc/ds1338.h"
- #include "hw/sensor/tmp105.h"
-+#include "hw/sensor/tmp421.h"
- 
- /* Catalina hardware value */
- #define CATALINA_BMC_HW_STRAP1 0x00002002
- #define CATALINA_BMC_HW_STRAP2 0x00000800
- #define CATALINA_BMC_RAM_SIZE (2 * GiB)
- 
--#define TYPE_TMP421 "tmp421"
--
- /*
-  * "BMC Storage Module" FRU data.  Generated with frugen.
-  *
-diff --git a/hw/arm/aspeed_ast2600_fby35.c b/hw/arm/aspeed_ast2600_fby35.c
-index 28c9c143d8..25f39d5135 100644
---- a/hw/arm/aspeed_ast2600_fby35.c
-+++ b/hw/arm/aspeed_ast2600_fby35.c
-@@ -12,10 +12,10 @@
- #include "hw/arm/aspeed_soc.h"
- #include "hw/nvram/eeprom_at24c.h"
- #include "hw/sensor/tmp105.h"
-+#include "hw/sensor/tmp421.h"
- #include "system/reset.h"
- 
- #define TYPE_LM75 TYPE_TMP105
--#define TYPE_TMP421 "tmp421"
- #define FBY35_BMC_RAM_SIZE (2 * GiB)
- 
- static const uint8_t fby35_nic_fruid[] = {
-diff --git a/hw/arm/aspeed_ast2600_fuji.c b/hw/arm/aspeed_ast2600_fuji.c
-index 08d809b2fd..526494ecfe 100644
---- a/hw/arm/aspeed_ast2600_fuji.c
-+++ b/hw/arm/aspeed_ast2600_fuji.c
-@@ -12,10 +12,9 @@
- #include "hw/arm/aspeed_soc.h"
- #include "hw/i2c/i2c_mux_pca954x.h"
- #include "hw/sensor/tmp105.h"
-+#include "hw/sensor/tmp421.h"
- #include "hw/nvram/eeprom_at24c.h"
- 
--#define TYPE_TMP422 "tmp422"
--
- /* Fuji hardware value */
- #define FUJI_BMC_HW_STRAP1    0x00000000
- #define FUJI_BMC_HW_STRAP2    0x00000000
-diff --git a/hw/arm/aspeed_ast2600_rainier.c b/hw/arm/aspeed_ast2600_rainier.c
-index 43a8f01a9e..bdbc78aee7 100644
---- a/hw/arm/aspeed_ast2600_rainier.c
-+++ b/hw/arm/aspeed_ast2600_rainier.c
-@@ -13,6 +13,7 @@
- #include "hw/nvram/eeprom_at24c.h"
- #include "hw/i2c/i2c_mux_pca954x.h"
- #include "hw/sensor/tmp105.h"
-+#include "hw/sensor/tmp421.h"
- 
- /* Rainier hardware value: (QEMU prototype) */
- #define RAINIER_BMC_HW_STRAP1 (0x00422016 | SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC)
-@@ -137,12 +138,16 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
-     /* Bus 8: ucd90320@b */
-     /* Bus 8: ucd90320@c */
- 
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4c);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4d);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                            TYPE_TMP423, 0x4c);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                            TYPE_TMP423, 0x4d);
-     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 9), 0x50, 128 * KiB);
- 
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 10), "tmp423", 0x4c);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 10), "tmp423", 0x4d);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 10),
-+                            TYPE_TMP423, 0x4c);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 10),
-+                            TYPE_TMP423, 0x4d);
-     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 10), 0x50, 128 * KiB);
- 
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), TYPE_TMP105,
+ hw/sensor/tmp105.c              |  85 +++++++++++++++++++++++++++++-
+ include/hw/sensor/tmp105.h      |   2 +
+ include/hw/sensor/tmp105_regs.h |   5 ++
+ tests/qtest/tmp105-test.c       | 111 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 202 insertions(+), 1 deletion(-)
+---
+base-commit: f29ccc287a6cfdd51d3a4fd17fbe9af3310a0ac5
+change-id: 20261105-sensor-tmp1075-4a7422630bb4
 
--- 
-2.53.0-Meta
+Best regards,
+--  
+Emmanuel Blot <emmanuel.blot@free.fr>
 
 
