@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AB3606A329
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 10:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0B1606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 10:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VVrFX5uE
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AmcDeEkI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOueE-0001ty-No; Thu, 05 Nov 2026 05:24:46 -0500
+	id 1xOueI-0001w6-Vi; Thu, 05 Nov 2026 05:24:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xOueD-0001tg-LL
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 05:24:45 -0500
+ id 1xOueH-0001vD-Ot
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 05:24:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xOueB-0003rA-NO
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 05:24:45 -0500
+ id 1xOueF-0003ra-7w
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 05:24:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793874282;
+ s=mimecast20190719; t=1793874286;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sR+wXFPR6i+NwMqhpcdylfpyBY8NGxv9YC8FJiIdC30=;
- b=VVrFX5uEtNi2z/rpPmmTqvSL+Q7wr+Hm0f0RfQ285/MlahGZTN47xSlmcMXDn13QKd5iUW
- gTD32U8V7se0QIGNWL+5q2KMtLj4VlCJvY6LZcLxwU/W8wC/3gnlmoKwP9TMPpqYNVaYuL
- Z1Di9ZV82uyq+qoLR/6NdLr8+gZk34A=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=uxkG8FdSnx716mHQej0cEaVVUjxJkreNf5QXvAI+7pM=;
+ b=AmcDeEkIDh3OPyn8L6g4FYopJQicz5GiPHxcKC3k5182ZLwEIZ9SxQ/2Pp/q1vz/TFismv
+ y1F9Ek+cgsIxLFqUeFjW+SZuHHr4BxVMoNijaSh5qMYIoX+5cYZ+Zgg+TdwGBSjncEo3MN
+ vwOnlR5JtUkXcLCe4Fsvz/PvmGXEYZY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-l13fXoxQObWXO7qPTO7r5A-1; Thu,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-240-1HUtS2iZOnOf1vLjPUdQtw-1; Thu,
  05 Nov 2026 05:24:39 -0500
-X-MC-Unique: l13fXoxQObWXO7qPTO7r5A-1
-X-Mimecast-MFC-AGG-ID: l13fXoxQObWXO7qPTO7r5A_1793874277
+X-MC-Unique: 1HUtS2iZOnOf1vLjPUdQtw-1
+X-Mimecast-MFC-AGG-ID: 1HUtS2iZOnOf1vLjPUdQtw_1793874278
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F40621955E8F; Thu,  5 Nov 2026 10:24:36 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8E5D41801214; Thu,  5 Nov 2026 10:24:38 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B970B187C36B; Thu,  5 Nov 2026 10:24:35 +0000 (UTC)
+ id 5053D187C36B; Thu,  5 Nov 2026 10:24:37 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 1/4] hw/core: record permitted targets against MachineClass
-Date: Thu,  5 Nov 2026 10:24:29 +0000
-Message-ID: <20261105102432.1131493-2-berrange@redhat.com>
+Subject: [PATCH 2/4] hw: replace 'is_available' with 'targets' in machines
+Date: Thu,  5 Nov 2026 10:24:30 +0000
+Message-ID: <20261105102432.1131493-3-berrange@redhat.com>
 In-Reply-To: <20261105102432.1131493-1-berrange@redhat.com>
 References: <20261105102432.1131493-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -65,14 +65,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,198 +90,368 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Record a bitmask of QEMU_ARCH_nnnn in the 'targets' field
-of MachineClass.
-
-When a request is made to create a machine, it will be
-validated against machine_class_is_available(MachineClass),
-which checks target_arch() against the 'targets' field.
-
-This prevents realization of, for example, an aarch64-only
-machine linked into the arm emulator binary.
+For every machine which currently has an 'is_available'
+callback set on the TypeInfo, set the 'targets' field
+on the MachineClass to the equivalent arch list, and
+remove 'is_available'.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/core/machine-qmp-cmds.c | 18 ++++++++++++++++++
- hw/core/machine.c          | 13 +++++++++++++
- include/hw/core/boards.h   |  3 +++
- qapi/machine.json          | 12 +++++++++++-
- system/vl.c                |  9 +++++++++
- 5 files changed, 54 insertions(+), 1 deletion(-)
+ hw/arm/aspeed_ast27x0-fc.c  |  3 ++-
+ hw/arm/aspeed_ast27x0_evb.c |  5 +++--
+ hw/arm/raspi.c              | 21 +++++++++++++--------
+ hw/arm/raspi4b.c            |  3 ++-
+ hw/arm/virt.c               |  5 +++--
+ hw/hexagon/virt.c           |  3 ++-
+ hw/m68k/virt.c              |  4 ++--
+ hw/or1k/virt.c              |  3 ++-
+ hw/riscv/virt.c             |  4 +++-
+ 9 files changed, 32 insertions(+), 19 deletions(-)
 
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 0558d6d703c..3a33a046622 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -33,6 +33,7 @@
- #include "system/runstate.h"
- #include "system/system.h"
- #include "hw/s390x/storage-keys.h"
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index 73362b60d2a..ea340c6f1cf 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -22,6 +22,7 @@
+ #include "hw/arm/boot.h"
+ #include "hw/block/flash.h"
+ #include "hw/arm/aspeed_coprocessor.h"
++#include "qemu/base-arch-defs.h"
+ 
+ #define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
+ OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
+@@ -226,6 +227,7 @@ static void ast2700fc_class_init(ObjectClass *oc, const void *data)
+     mc->no_floppy = 1;
+     mc->no_cdrom = 1;
+     mc->min_cpus = mc->max_cpus = mc->default_cpus = 6;
++    mc->targets = QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64);
+ }
+ 
+ static const TypeInfo ast2700fc_types[] = {
+@@ -234,7 +236,6 @@ static const TypeInfo ast2700fc_types[] = {
+         .parent         = TYPE_MACHINE,
+         .class_init     = ast2700fc_class_init,
+         .instance_size  = sizeof(Ast2700FCState),
+-        .is_available   = target_aarch64,
+     },
+ };
+ 
+diff --git a/hw/arm/aspeed_ast27x0_evb.c b/hw/arm/aspeed_ast27x0_evb.c
+index 460c9ff0d2e..b252edc5103 100644
+--- a/hw/arm/aspeed_ast27x0_evb.c
++++ b/hw/arm/aspeed_ast27x0_evb.c
+@@ -11,6 +11,7 @@
+ #include "hw/arm/aspeed.h"
+ #include "hw/arm/aspeed_soc.h"
+ #include "hw/sensor/tmp105.h"
++#include "qemu/base-arch-defs.h"
+ 
+ /* AST2700 evb hardware value */
+ /* SCU HW Strap1 */
+@@ -45,6 +46,7 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
+     amc->i2c_init  = ast2700_evb_i2c_init;
+     amc->vbootrom = true;
+     mc->default_ram_size = 1 * GiB;
++    mc->targets = QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64);
+     aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
+@@ -67,6 +69,7 @@ static void aspeed_machine_ast2700a2_evb_class_init(ObjectClass *oc,
+     amc->i2c_init  = ast2700_evb_i2c_init;
+     amc->vbootrom = true;
+     mc->default_ram_size = 2 * GiB;
++    mc->targets = QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64);
+     aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
+@@ -75,13 +78,11 @@ static const TypeInfo aspeed_ast27x0_evb_types[] = {
+         .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_ast2700a1_evb_class_init,
+-        .is_available  = target_aarch64,
+     },
+     {
+         .name          = MACHINE_TYPE_NAME("ast2700a2-evb"),
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_ast2700a2_evb_class_init,
+-        .is_available  = target_aarch64,
+     }
+ };
+ 
+diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+index fadbacb2534..b1d2eece2c0 100644
+--- a/hw/arm/raspi.c
++++ b/hw/arm/raspi.c
+@@ -25,6 +25,8 @@
+ #include "hw/core/boards.h"
+ #include "hw/core/loader.h"
+ #include "qom/object.h"
++#include "qemu/base-arch-defs.h"
++
+ 
+ #define TYPE_RASPI_MACHINE  MACHINE_TYPE_NAME("raspi-common")
+ OBJECT_DECLARE_SIMPLE_TYPE(RaspiMachineState, RASPI_MACHINE)
+@@ -330,10 +332,15 @@ void raspi_machine_class_common_init(MachineClass *mc,
+ };
+ 
+ static void raspi_machine_class_init(MachineClass *mc,
+-                                     uint32_t board_rev)
++                                     uint32_t board_rev,
++                                     bool arch64bitonly)
+ {
+     raspi_machine_class_common_init(mc, board_rev);
+     mc->init = raspi_machine_init;
++    mc->targets = QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64);
++    if (!arch64bitonly) {
++        mc->targets |= QEMU_ARCH_BIT(SYS_EMU_TARGET_ARM);
++    }
+ };
+ 
+ static void raspi0_machine_class_init(ObjectClass *oc, const void *data)
+@@ -343,7 +350,7 @@ static void raspi0_machine_class_init(ObjectClass *oc, const void *data)
+ 
+     mc->auto_create_sdcard = true;
+     rmc->board_rev = 0x920092; /* Revision 1.2 */
+-    raspi_machine_class_init(mc, rmc->board_rev);
++    raspi_machine_class_init(mc, rmc->board_rev, false);
+ };
+ 
+ static void raspi1ap_machine_class_init(ObjectClass *oc, const void *data)
+@@ -353,7 +360,7 @@ static void raspi1ap_machine_class_init(ObjectClass *oc, const void *data)
+ 
+     mc->auto_create_sdcard = true;
+     rmc->board_rev = 0x900021; /* Revision 1.1 */
+-    raspi_machine_class_init(mc, rmc->board_rev);
++    raspi_machine_class_init(mc, rmc->board_rev, false);
+ };
+ 
+ static void raspi2b_machine_class_init(ObjectClass *oc, const void *data)
+@@ -363,7 +370,7 @@ static void raspi2b_machine_class_init(ObjectClass *oc, const void *data)
+ 
+     mc->auto_create_sdcard = true;
+     rmc->board_rev = 0xa21041;
+-    raspi_machine_class_init(mc, rmc->board_rev);
++    raspi_machine_class_init(mc, rmc->board_rev, false);
+ };
+ 
+ static void raspi3ap_machine_class_init(ObjectClass *oc, const void *data)
+@@ -373,7 +380,7 @@ static void raspi3ap_machine_class_init(ObjectClass *oc, const void *data)
+ 
+     mc->auto_create_sdcard = true;
+     rmc->board_rev = 0x9020e0; /* Revision 1.0 */
+-    raspi_machine_class_init(mc, rmc->board_rev);
++    raspi_machine_class_init(mc, rmc->board_rev, true);
+ };
+ 
+ static void raspi3b_machine_class_init(ObjectClass *oc, const void *data)
+@@ -383,7 +390,7 @@ static void raspi3b_machine_class_init(ObjectClass *oc, const void *data)
+ 
+     mc->auto_create_sdcard = true;
+     rmc->board_rev = 0xa02082;
+-    raspi_machine_class_init(mc, rmc->board_rev);
++    raspi_machine_class_init(mc, rmc->board_rev, true);
+ };
+ 
+ static const TypeInfo raspi_machine_types[] = {
+@@ -403,12 +410,10 @@ static const TypeInfo raspi_machine_types[] = {
+         .name           = MACHINE_TYPE_NAME("raspi3ap"),
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi3ap_machine_class_init,
+-        .is_available   = target_aarch64,
+     }, {
+         .name           = MACHINE_TYPE_NAME("raspi3b"),
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi3b_machine_class_init,
+-        .is_available   = target_aarch64,
+     }, {
+         .name           = TYPE_RASPI_MACHINE,
+         .parent         = TYPE_RASPI_BASE_MACHINE,
+diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+index 600dfe686f2..92c3f580f96 100644
+--- a/hw/arm/raspi4b.c
++++ b/hw/arm/raspi4b.c
+@@ -21,6 +21,7 @@
+ #include "hw/arm/boot.h"
+ #include "qom/object.h"
+ #include "hw/arm/bcm2838.h"
++#include "qemu/base-arch-defs.h"
+ #include <libfdt.h>
+ 
+ #define TYPE_RASPI4B_MACHINE MACHINE_TYPE_NAME("raspi4b")
+@@ -93,6 +94,7 @@ static void raspi4b_machine_class_init(ObjectClass *oc, const void *data)
+     raspi_machine_class_common_init(mc, rmc->board_rev);
+     mc->auto_create_sdcard = true;
+     mc->init = raspi4b_machine_init;
++    mc->targets = QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64);
+ }
+ 
+ static const TypeInfo raspi4b_machine_type = {
+@@ -100,7 +102,6 @@ static const TypeInfo raspi4b_machine_type = {
+     .parent         = TYPE_RASPI_BASE_MACHINE,
+     .instance_size  = sizeof(Raspi4bMachineState),
+     .class_init     = raspi4b_machine_class_init,
+-    .is_available   = target_aarch64,
+ };
+ 
+ static void raspi4b_machine_register_type(void)
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 0b11f7e328c..bd38e3262a4 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -94,6 +94,7 @@
+ #include "hw/cxl/cxl_host.h"
+ #include "qemu/guest-random.h"
+ #include "hw/watchdog/sbsa_gwdt.h"
++#include "qemu/base-arch-defs.h"
+ 
+ static GlobalProperty arm_virt_compat_defaults[] = {
+     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+@@ -131,7 +132,6 @@ static void arm_virt_compat_default_set(MachineClass *mc)
+         .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
+         .parent = TYPE_VIRT_MACHINE, \
+         .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
+-        .is_available = target_base_arm, \
+         .secure = true, \
+     }; \
+     static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
+@@ -4204,6 +4204,8 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     hc->unplug = virt_machine_device_unplug_cb;
+     mc->nvdimm_supported = true;
+     mc->smp_props.clusters_supported = true;
++    mc->targets = QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64) |
++        QEMU_ARCH_BIT(SYS_EMU_TARGET_ARM);
+ 
+     /* Supported caches */
+     mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L1D] = true;
+@@ -4444,7 +4446,6 @@ static const TypeInfo virt_machine_info = {
+          { TYPE_HOTPLUG_HANDLER },
+          { }
+     },
+-    .is_available = target_base_arm,
+ };
+ 
+ static void machvirt_machine_init(void)
+diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
+index d8e91770595..57ef8b5e736 100644
+--- a/hw/hexagon/virt.c
++++ b/hw/hexagon/virt.c
+@@ -17,6 +17,7 @@
+ #include "qemu/units.h"
+ #include "machine_cfg_v68n_1024.h.inc"
+ #include "system/device_tree.h"
++#include "qemu/base-arch-defs.h"
+ 
+ enum {
+     VIRT_UART0,
+@@ -115,6 +116,7 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+     mc->no_cdrom = 1;
+     mc->numa_mem_supported = false;
+     mc->default_nic = "virtio-mmio-bus";
++    mc->targets = QEMU_ARCH_BIT(SYS_EMU_TARGET_HEXAGON);
+ }
+ 
+ 
+@@ -123,7 +125,6 @@ static const TypeInfo virt_machine_types[] = { {
+     .parent = TYPE_HEXAGON_COMMON_MACHINE,
+     .instance_size = sizeof(HexagonVirtMachineState),
+     .class_init = virt_class_init,
+-    .is_available = target_hexagon,
+ } };
+ 
+ DEFINE_TYPES(virt_machine_types)
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index e52546e4fab..f35eac74147 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -36,6 +36,7 @@
+ #include "hw/intc/goldfish_pic.h"
+ #include "hw/virtio/virtio-mmio.h"
+ #include "hw/virtio/virtio-blk.h"
 +#include "qemu/base-arch-defs.h"
  
  /*
-  * QMP query for enabled and present accelerators
-@@ -153,6 +154,7 @@ qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+  * 6 goldfish-pic for CPU IRQ #1 to IRQ #6
+@@ -320,6 +321,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     mc->no_floppy = 1;
+     mc->no_parallel = 1;
+     mc->default_ram_id = "m68k_virt.ram";
++    mc->targets = QEMU_ARCH_BIT(SYS_EMU_TARGET_M68K);
  }
  
- MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-+                                    bool has_all_targets, bool all_targets,
-                                     Error **errp)
- {
-     GSList *el, *machines;
-@@ -164,6 +166,10 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-         const char *default_cpu_type = machine_class_default_cpu_type(mc);
-         MachineInfo *info;
+ static const TypeInfo virt_machine_info = {
+@@ -327,7 +329,6 @@ static const TypeInfo virt_machine_info = {
+     .parent       = TYPE_MACHINE,
+     .abstract     = true,
+     .class_init   = virt_machine_class_init,
+-    .is_available = target_m68k,
+ };
  
-+        if (!all_targets && !machine_class_is_available(mc)) {
-+            continue;
-+        }
-+
-         info = g_malloc0(sizeof(*info));
-         if (mc->is_default) {
-             info->has_is_default = true;
-@@ -188,6 +194,18 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-         }
-         info->secure = object_class_is_secure(OBJECT_CLASS(mc));
- 
-+        if (all_targets) {
-+            SysEmuTargetList **targets;
-+            size_t i;
-+            info->has_targets = true;
-+            targets = &info->targets;
-+            for (i = 0; i < SYS_EMU_TARGET__MAX; i++) {
-+                if (mc->targets & QEMU_ARCH_BIT(i)) {
-+                    QAPI_LIST_APPEND(targets, i);
-+                }
-+            }
-+        }
-+
-         if (compat_props && mc->compat_props) {
-             int i;
-             info->compat_props = NULL;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index ed9bf8f5008..9743754fc7f 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -40,6 +40,8 @@
- #include "hw/acpi/generic_event_device.h"
- #include "qemu/audio.h"
- #include "hw/arm/smmuv3.h"
+ static void virt_machine_register_types(void)
+@@ -355,7 +356,6 @@ type_init(virt_machine_register_types)
+         .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
+         .parent = MACHINE_TYPE_NAME("virt"), \
+         .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
+-        .is_available = target_m68k, \
+     }; \
+     static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
+     { \
+diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
+index a3ff903839b..f5580f3c3da 100644
+--- a/hw/or1k/virt.c
++++ b/hw/or1k/virt.c
+@@ -28,6 +28,7 @@
+ #include "system/system.h"
+ #include "system/qtest.h"
+ #include "system/reset.h"
 +#include "qemu/base-arch-defs.h"
-+#include "qemu/target-info-qapi.h"
  
- GlobalProperty hw_compat_11_1[] = {
-     { "sysbus-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
-@@ -711,6 +713,17 @@ bool device_type_is_dynamic_sysbus(MachineClass *mc, const char *type)
-     return allowed;
+ #include <libfdt.h>
+ 
+@@ -552,6 +553,7 @@ static void openrisc_virt_machine_init(ObjectClass *oc, const void *data)
+     mc->max_cpus = VIRT_CPUS_MAX;
+     mc->is_default = false;
+     mc->default_cpu_type = OPENRISC_CPU_TYPE_NAME("or1200");
++    mc->targets = QEMU_ARCH_BIT(SYS_EMU_TARGET_OR1K);
  }
  
-+bool machine_class_is_available(MachineClass *mc)
-+{
-+    /*
-+     * XXX: Once all machines have 'targets' set, we
-+     * can remove the 'mc->targets == 0' check
-+     */
-+    return mc->targets == 0 ||
-+        QEMU_ARCH_BIT(target_arch()) & mc->targets;
-+}
-+
-+
- static char *machine_get_audiodev(Object *obj, Error **errp)
- {
-     MachineState *ms = MACHINE(obj);
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index d0e4ad98201..cb493397b13 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -37,6 +37,8 @@ const char *machine_default_cpu_type(const MachineState *ms);
-  */
- const char *machine_class_default_cpu_type(MachineClass *mc);
+ static const TypeInfo or1ksim_machine_typeinfo = {
+@@ -559,7 +561,6 @@ static const TypeInfo or1ksim_machine_typeinfo = {
+     .parent     = TYPE_MACHINE,
+     .class_init = openrisc_virt_machine_init,
+     .instance_size = sizeof(OR1KVirtState),
+-    .is_available = target_or1k,
+ };
  
-+bool machine_class_is_available(MachineClass *mc);
-+
- void machine_add_audiodev_property(MachineClass *mc);
- void machine_run_board_init(MachineState *machine, const char *mem_path, Error **errp);
- bool machine_usb(MachineState *machine);
-@@ -282,6 +284,7 @@ struct MachineClass {
-         int default_ipa_size, int max_ipa_size);
-     bool (*get_kernel_irqchip_default) (const MachineState *machine);
+ static void or1ksim_machine_init_register_types(void)
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 8bc5a7b0728..6b3d6a764f3 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -61,6 +61,7 @@
+ #include "qapi/qapi-type-infos-common.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/uefi/var-service-api.h"
++#include "qemu/base-arch-defs.h"
  
-+    int targets; /* QEMU_ARCH_xxx bitmask */
-     BlockInterfaceType block_default_type;
-     int units_per_default_bus;
-     int max_cpus;
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 18d9dce849b..95b02043768 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -194,6 +194,10 @@
- #     not providing a security boundary, or its status is undefined.
- #     (since 11.2)
- #
-+# @targets: list of targets that the machine can be used with.  Only
-+#     present when `query-machines` argument @all-targets is true.
-+#     (since 12.0)
-+#
- # Features:
- #
- # @unstable: Member @compat-props is experimental.
-@@ -205,6 +209,7 @@
-             '*is-default': 'bool', 'cpu-max': 'int',
-             'hotpluggable-cpus': 'bool',  'numa-mem-supported': 'bool',
-             'deprecated': 'bool', '*default-cpu-type': 'str',
-+            '*targets': ['SysEmuTarget'],
-             '*default-ram-id': 'str', 'acpi': 'bool',
-             '*compat-props': { 'type': ['CompatProperty'],
-                                'features': ['unstable'] },
-@@ -217,6 +222,10 @@
- # @compat-props: if true, also return compatibility properties.
- #     (default: false) (since 9.1)
- #
-+# @all-targets: if true, return info about all machines present
-+#     instead of only those available with the current active
-+#     target (since 12.0)
-+#
- # Features:
- #
- # @unstable: Argument @compat-props is experimental.
-@@ -248,7 +257,8 @@
- ##
- { 'command': 'query-machines',
-   'data': { '*compat-props': { 'type': 'bool',
--                               'features': [ 'unstable' ] } },
-+                               'features': [ 'unstable' ] },
-+            '*all-targets': 'bool' },
-   'returns': ['MachineInfo'] }
+ #include "aia.h"
  
- ##
-diff --git a/system/vl.c b/system/vl.c
-index e7b759d5442..ace64284ae4 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1583,6 +1583,9 @@ static void machine_help_func(const QDict *qdict)
-     machines = g_slist_sort_with_data(machines, machine_class_cmp, NULL);
-     for (el = machines; el; el = el->next) {
-         MachineClass *mc = el->data;
-+        if (!machine_class_is_available(mc)) {
-+            continue;
-+        }
-         if (mc->alias) {
-             printf("%-20s %s (alias of %s)\n", mc->alias, mc->desc, mc->name);
-         }
-@@ -2208,6 +2211,12 @@ static bool qemu_create_machine(QDict *qdict)
-     MachineClass *machine_class = select_machine(qdict, &error_fatal);
-     object_set_machine_compat_props(machine_class->compat_props);
+@@ -1140,6 +1141,8 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     mc->default_ram_id = "riscv_virt_board.ram";
+     assert(!mc->get_hotplug_handler);
+     mc->get_hotplug_handler = virt_machine_get_hotplug_handler;
++    mc->targets = QEMU_ARCH_BIT(SYS_EMU_TARGET_RISCV64) |
++        QEMU_ARCH_BIT(SYS_EMU_TARGET_RISCV32);
  
-+    if (!machine_class_is_available(machine_class)) {
-+        error_report("Machine '%s' is not available with this target",
-+                     machine_class->name);
-+        return false;
-+    }
-+
-     if (!object_class_check_security(OBJECT_CLASS(machine_class),
-                                      &local_err)) {
-         error_report_err(local_err);
+     hc->plug = virt_machine_device_plug_cb;
+ 
+@@ -1195,7 +1198,6 @@ static const TypeInfo virt_machine_typeinfo = {
+     .instance_init = virt_machine_instance_init,
+     .instance_finalize = virt_machine_instance_finalize,
+     .instance_size = sizeof(RISCVVirtState),
+-    .is_available = target_base_riscv,
+     .interfaces = (const InterfaceInfo[]) {
+          { TYPE_HOTPLUG_HANDLER },
+          { }
 -- 
 2.56.0
 
