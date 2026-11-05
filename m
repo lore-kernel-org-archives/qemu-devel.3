@@ -1,94 +1,165 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1062606D81D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 13:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12234606A326
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 13:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EDUXTZQw
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NyO4aLH1;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=XYcBrB4d
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOxRZ-0001wu-4b; Thu, 05 Nov 2026 08:23:53 -0500
+	id 1xOxSv-00030R-PA; Thu, 05 Nov 2026 08:25:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fizikiukas@gmail.com>)
- id 1xOvs1-0003v5-3u
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:43:05 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fizikiukas@gmail.com>)
- id 1xOvrz-0005X6-4R
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:43:04 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-c434376dbebso130609966b.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 03:43:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xOxSs-0002zk-OO
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 08:25:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xOxSp-0002sE-NH
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 08:25:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793885106;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qoCjT2ZjZgRh4U31vgefv94Mf66dAjGhbOd9UDoULYI=;
+ b=NyO4aLH1zfHKc9S6+n17SxlBLxePsWaD5t1DuQLkJtEJ5m2hWL2l/C2WDZt5z1fv5S4Ac+
+ 9F6fG8HuhSQBBITFgpbSSvrgYAuX0sdjbOg0WRX4G6uLAFWhrwjjE+aAW85TIflH4DDLZe
+ vKZyVlifK0sRXC+AxHFofKO2MP7t0PM=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-130-30m-HpeNNxOGWWEl_vILnQ-1; Thu, 05 Nov 2026 08:25:05 -0500
+X-MC-Unique: 30m-HpeNNxOGWWEl_vILnQ-1
+X-Mimecast-MFC-AGG-ID: 30m-HpeNNxOGWWEl_vILnQ_1793885104
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a80bd45e1cso10568665e9.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 05:25:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793878981; x=1794483781; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=3gok3RHX0hdU8OwhiFU7ML1Z2ViviNh+l7K4BQ51h44=;
- b=EDUXTZQwbqN97fgZZfm6A5lwy7+N+UtvK0XhcdXL+mKA4lKodl261yFOjEHoWjJsnn
- sP+QyCt8lp/H89iHqYT9xTnJhbrCw7GYZ212mVp/t7dhVsP82cwBTC3iyD2SO9gGBiDx
- wohRVJJ96l0T8dVZ1ho1cbDkmiq2OvnRSuwUIq9GCkEMq6Ue7NGbLksSyF8ugC8/VMn8
- HJGtkJN1tRfDdhda180r4QOt8xIlAXB0+8IX+Cqa4GouRk4xBnirQ1hF/kOXLXLZc+L5
- zhl5v/WChXCyH/pfdThYDe2yrRSC1CfY74RNFroyMM1WZ90xAJEBhoonjL0UMn2lIpST
- RDBQ==
+ d=redhat.com; s=google; t=1793885104; x=1794489904; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=qoCjT2ZjZgRh4U31vgefv94Mf66dAjGhbOd9UDoULYI=;
+ b=XYcBrB4d3flho5/yJAKE9iLP2DE9Hc09uRmR94XoBZ7buaLsB4uByNhkqB7Lp9soOT
+ W2u6cxwGM5oiNmRNXoj6PcfF4gJD9d4nK3/uE7KRWeUgbB40Wgq2cSBq1IoYV5+bbAGG
+ 67AtmNKhteTBDvhGWCMG3c7AUmqQm42meTcNlk+IMnFDCT2vbM6tdFG/tQLhITum0grr
+ /MN3JusTksVjVzolT8E0v72/jjTU/l+qwRDykU7wzIr3K8sSL3ctl9vJgMhJdR4GEpOH
+ 1AnPsAO/9sjn3i/rCwrn37zRZt0rWdEjdVG1MT5n+uYti3Fk/O799nVf6Bc12gCSm31M
+ bRVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793878981; x=1794483781;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=3gok3RHX0hdU8OwhiFU7ML1Z2ViviNh+l7K4BQ51h44=;
- b=2Bk7trBiCVq5H/Wv1f1IQ8EkXAnf7QilfuSZ/6wLP89G5QgwIsnABKmzFSPhouj3JH
- vPBy2bvMp5zZHs3h3Cq8Yjw6b8eTQOvgUcU9lS+d7Rzw+o+QvkzGe+2115Q9RQmG6lWu
- 2niyoFCQZMl5BU+fp5jtDi5fppe0yQ23lAw87duTYJVIuHrJ3X18sfBkiCcuvbDieTDb
- M5GgwqR43A0pA9ZkiRzPnCcl1+USAzmBtfc3No/Aw2zKCR6lnxjx2cGrEJW5NB1a+A5L
- 3F+uJr9KYc2H9V4XPyg4SfEqjU8NVWpCe+NYjTpca/rAu954zbtWte7ANDUsmf5/j4oZ
- livA==
-X-Gm-Message-State: APuU4Z945zdX+9bQKM1pN+8V8HqWPv3vPgndytDr8X7LEGhDjCB8GgxH
- hjJhHCOg9REZ1ObnUUut2dGmovjyt9F6nwMV+10Txm0gVrjuGjDrmWu5HrilwAmZ
-X-Gm-Gg: AYBFou1vZ5N/PsEFHJmTcEl9nITO9cqQNe6n59pACaOVtoZT2XZRChvG9uVdrpNl2Dd
- gU8762bLIoTifPHAhT4pv8ZbKpnYZbNIOfW6VJ7yKZ0GUuXB3Anw6fLVGlMgFCqg0/gd4P4Q14k
- tHWKnIVvS/qVlKPTvv0GdHm9Ax/hYoG/3oBH3/+fYRPm/T09v4wLI4IE+hcf6KVf5JifEN4/eOg
- x+4bTeH9c5upCWa7C0DaHadGWT5+ZerBeDLAqz0JhRacPkPKthZquCUrIBhMDI3AHdms0XuU7Cl
- Rl5S5naHPNqGTkou9LTUdOlFvcse8DYKgRribalepe8VlF7lVmbFjbei0Q9A+jYtzJ/pNJYHrel
- iaXDiMki7IP+OgfFHF8PlaY63uzRrzQpRyS6clzPxhJFQI0k9WZsRdTxvGgWtXJC7fruC/w+CRs
- zk5Qx6bb2EkO8I5H90VBDLAOpjJnVijoozR2077IET1evOAOrJsL67h3J9jEM8u9yXCQOg8RTCI
- 20gs53GID2xxWO+O0HxskIPfAgNILNyq7MrclD/zoMa8GvzrSFQZfNc5DF35SjXkr3+ArSsXboU
- 1E46dYqKDFFH8Ts0hJoxooLHOWQu7SuVKNHl/MBq8mFzd3iiMuYALKYa7Vdx4VTjrC1fyHTQcIS
- 0Vf0PLLG1o+ArBASn0aJoz2xmQDmG44h5Mq5CDz4/3oh0F/JyJr27+sxRod1b/HuIWA==
-X-Received: by 2002:a17:907:3d94:b0:c2e:902e:5208 with SMTP id
- a640c23a62f3a-c4d204bdf35mr204555466b.5.1793878980814; 
- Thu, 05 Nov 2026 03:43:00 -0800 (PST)
-Received: from Mac-FVFFP2HZQ05N ([86.106.20.24])
+ d=1e100.net; s=20260707; t=1793885104; x=1794489904;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=qoCjT2ZjZgRh4U31vgefv94Mf66dAjGhbOd9UDoULYI=;
+ b=kL2MN2+5G9kfEK0esI3XHjUchh5RIVvjU4oNwFHaGRRh2KkxZOvZsPO8FJvPuv4X3L
+ 4QqHIwOoJ4hu5Qgyiz9tccyGQvos3Ytu1wtnZcM5U8QRn2EdV8Afrtpx5ZQ6g5aPnF+Y
+ gstJdBRuCOl6mgHRHqMB909wnkJ4G+Sr7AMWeTMUkB3e0Wg2o/XEv8hUt6liJppIUJIc
+ sqXx+7JthL9v7dkozFnfPHP5Cd+0lFU6+7FOxrErfYv8g8Omy0KT+8YTTt4LY//iXTXZ
+ 9N5+kxCF/1ILF8pJzS14HQoT1eEms62eNiydawo1gWBdt+wiCUe6iiaFZ1tw5N5tcr65
+ 2X+g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByhwhjAA10mML1kzbYx4fyGsSZUI+3g+zMhuqRXCzYxcA9vNlbpMJyn9Q41olxCPHyPGcjjxoC+0NFC@nongnu.org
+X-Gm-Message-State: APuU4Z9sFq3PKhxKfApcW1rcgxbCS9h5klv/HlKeofUUkEjuKs9ybxNg
+ 97/nAsoNxFYAWAcwVZhvqubDTk3+KlxO8J1qVgj6HCk2WY1dCDO7wyPALxStKlRKtasNWbtgKeU
+ rj0GxtUKCas45Vh5540u/CqyMGg0yzQctqrHmVPIYw63TnveraTE4ONFd
+X-Gm-Gg: AYBFou11VvdimveXEDT0sPJRE2bldiG3ZiDSg++Xy7u+2ckFQay5/hhl1mwAae7H4Ui
+ 0SzeNQjo2HwNyFauNeOhKYFrBy0m8OSgTip+4Xw/DbMxjQOh35+6fstMiF0I0uYi5luY5YCO3cM
+ W5ZV4NzKjjRBdiBfhjmiQbOyIVM3u6iAgyofKfzwac3/IEcn43dvsswD4gOLr7zMBKf0lzQCODZ
+ UQZqz+c68mxQAOpKWxHQQeugzGpfWG/pkSoCKrrSP8BVGRhJgFkHEwrKcqQLMWl9T7heT+ghZJj
+ Q8iEOkm17x8555RbRI+7IekbtuqWQKJE/ZAj2vT5LkW01bOsRgVsoBdYcN/BjMcQ0KO/qR+cB74
+ uXlxe6xqA4Mg3fKNGgnTUqB5ThwQukTDjGh50MiDTqSUnbb9S+Y2cUeRQNv8RQ54GxxbyiWSpH8
+ KEahjAPokDqw==
+X-Received: by 2002:a05:600c:a4e:b0:4a7:76fa:87e9 with SMTP id
+ 5b1f17b1804b1-4ac187a766bmr416873965e9.21.1793885103809; 
+ Thu, 05 Nov 2026 05:25:03 -0800 (PST)
+X-Received: by 2002:a05:600c:a4e:b0:4a7:76fa:87e9 with SMTP id
+ 5b1f17b1804b1-4ac187a766bmr416873365e9.21.1793885103234; 
+ Thu, 05 Nov 2026 05:25:03 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:1292:d530:6448:8ad:27f1:8b49?
+ ([2a01:e0a:1292:d530:6448:8ad:27f1:8b49])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c4d0e4a7797sm161770866b.87.2026.11.05.03.42.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 05 Nov 2026 03:42:59 -0800 (PST)
-From: =?UTF-8?q?Valentinas=20=C4=8Cirba?= <fizikiukas@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-stable@nongnu.org,
- =?UTF-8?q?Valentinas=20=C4=8Cirba?= <valentinas.cirba@hostinger.com>
-Subject: [PATCH] qga: keep a trailing newline in authorized_keys
-Date: Thu,  5 Nov 2026 13:41:50 +0200
-Message-ID: <20261105114242.35394-1-fizikiukas@gmail.com>
-X-Mailer: git-send-email 2.54.0
+ 5b1f17b1804b1-4b571f46538sm62497105e9.5.2026.11.05.05.25.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Nov 2026 05:25:02 -0800 (PST)
+Message-ID: <23c28380-a70b-4b8a-bef6-78582af02139@redhat.com>
+Date: Thu, 5 Nov 2026 14:25:01 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] tests/functional/ppc64: add pseries virtio-blk
+ hotplug test
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>
+Cc: Thomas Huth <thuth@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>, Miles Glenn <milesg@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>
+References: <20261103141938.41147-1-anushree.mathur@linux.ibm.com>
+ <de7816aa-98c6-4c9a-8420-b937f94cd8a1@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <de7816aa-98c6-4c9a-8420-b937f94cd8a1@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=fizikiukas@gmail.com; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 05 Nov 2026 08:23:50 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,182 +170,69 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Valentinas Čirba <valentinas.cirba@hostinger.com>
+On 11/5/26 12:14, Chinmay Rath wrote:
+> 
+> On 11/3/26 19:49, Anushree Mathur wrote:
+>> Add a functional test that hot-plugs and hot-unplugs a virtio-blk-pci
+>> disk on the pseries machine.  It runs with TCG, and also with KVM if
+>> KVM is enabled.
+>>
+>> On pseries a PCI device added through QMP is only enumerated by the
+>> guest once rtas_errd (ppc64-diag) handles the RTAS hotplug event and
+>>
+>> runs drmgr (powerpc-utils).  Neither is in the buildroot image used by
+>> the other pseries tests, so the test uses rootfs-hotplug.ext2: the same
+>> image with those two tools added.
+>>
+>> The test boots with a second PHB (phb1) present so that the guest
+>> registers its slots, adds a null-co backend, hot-plugs virtio-blk-pci
+>> into phb1.0 and waits for /dev/vda, then unplugs it and waits for both
+>> the QMP DEVICE_DELETED event and /dev/vda to go away.  The root drive is
+>> used with snapshot=on so the cached asset is not modified by the guest.
+>>
+>> Signed-off-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+>> ---
+>> Hi all,
+>>
+>> This adds a functional test for virtio-blk hotplug on the pseries
+>> machine, with a TCG and a KVM variant.
+>>
+>> The test boots pseries with a second PCI host bridge (phb1) present at
+>> boot, hot-plugs a virtio-blk-pci device into it over QMP, and waits for
+>> /dev/vda to show up in the guest.  It then unplugs the device and waits
+>> for the DEVICE_DELETED event and for /dev/vda to disappear again.
+>>
+>> On pseries the guest does not enumerate a hot-plugged PCI device by
+>> itself: rtas_errd (ppc64-diag) has to handle the RTAS hotplug event and
+>> run drmgr (powerpc-utils).  The buildroot image the other pseries tests
+>> use has neither, so the test needs a rootfs that includes them.
+>>
+>> I am sending this as an RFC because that rootfs is not available yet.
+>> It is a new file, rootfs-hotplug.ext2, which I proposed for the
+>> qemu-ppc-boot repository next to the existing pseries images:
+>>
+>>    https://github.com/legoater/qemu-ppc-boot/pull/5
+> 
+> Hi Cedric,
+> 
+> I heard from Anushree that you do not plan to accept PRs in the above repository going forward.
+> 
+> If you're okay with it, I'd like to fork your repository and maintain 
 
-After guest-ssh-add-authorized-keys the file has an empty line before the
-new key and no final newline, so a key appended later with ">>" is
-merged into the previous line.
+Sure. please do !
 
-read_authkeys() / g_strsplit leaves a trailing empty element;
-write_authkeys() / g_strjoinv adds no final newline.
+> it for future PPC test development and usage.
+> Please let me know if that works for you.
+Thanks,
 
-Both write_authkeys() functions, in qga/commands-posix-ssh.c
-and qga/commands-windows-ssh.c, now end non-empty contents
-with \n. An empty key list is still written as "".
-
-Also also changes read_authkeys() in qga/commands-common-ssh.c,
-so it drops the trailing empty element.
-
-Fixes: 8d769ec777dc ("qga: add ssh-{add,remove}-authorized-keys")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4803
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Valentinas Čirba <valentinas.cirba@hostinger.com>
----
- qga/commands-common-ssh.c  | 12 ++++++++++-
- qga/commands-posix-ssh.c   | 41 +++++++++++++++++++++++++++++++++-----
- qga/commands-windows-ssh.c |  7 ++++++-
- 3 files changed, 53 insertions(+), 7 deletions(-)
-
-diff --git a/qga/commands-common-ssh.c b/qga/commands-common-ssh.c
-index 537869fb98..5f5b631689 100644
---- a/qga/commands-common-ssh.c
-+++ b/qga/commands-common-ssh.c
-@@ -11,13 +11,23 @@ GStrv read_authkeys(const char *path, Error **errp)
- {
-     g_autoptr(GError) err = NULL;
-     g_autofree char *contents = NULL;
-+    GStrv lines;
-+    guint len;
- 
-     if (!g_file_get_contents(path, &contents, NULL, &err)) {
-         error_setg(errp, "failed to read '%s': %s", path, err->message);
-         return NULL;
-     }
- 
--    return g_strsplit(contents, "\n", -1);
-+    lines = g_strsplit(contents, "\n", -1);
-+
-+    len = g_strv_length(lines);
-+    if (len > 0 && lines[len - 1][0] == '\0') {
-+        g_free(lines[len - 1]);
-+        lines[len - 1] = NULL;
-+    }
-+
-+    return lines;
- }
- 
- bool check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp)
-diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
-index aa3411049f..924c5bdeb0 100644
---- a/qga/commands-posix-ssh.c
-+++ b/qga/commands-posix-ssh.c
-@@ -113,7 +113,12 @@ write_authkeys(const char *path, const GStrv keys,
-     g_autofree char *contents = NULL;
-     g_autoptr(GError) err = NULL;
- 
--    contents = g_strjoinv("\n", keys);
-+    if (keys[0] != NULL) {
-+        g_autofree char *joined = g_strjoinv("\n", keys);
-+        contents = g_strconcat(joined, "\n", NULL);
-+    } else {
-+        contents = g_strdup("");
-+    }
-     if (!g_file_set_contents(path, contents, -1, &err)) {
-         error_setg(errp, "failed to write to '%s': %s", path, err->message);
-         return false;
-@@ -402,7 +407,7 @@ test_add_keys(void)
-                                       &err);
-     g_assert(err == NULL);
- 
--    test_authorized_keys_equal("algo key2 comments");
-+    test_authorized_keys_equal("algo key2 comments\n");
- 
-     qmp_guest_ssh_add_authorized_keys(g_get_user_name(),
-                                       (strList *)&test_key1_2,
-@@ -412,7 +417,7 @@ test_add_keys(void)
- 
-     /*  key2 came first, and shouldn't be duplicated */
-     test_authorized_keys_equal("algo key2 comments\n"
--                               "algo key1 comments");
-+                               "algo key1 comments\n");
- }
- 
- static void
-@@ -428,7 +433,7 @@ test_add_reset_keys(void)
- 
-     /* reset with key2 only */
-     test_authorized_keys_equal("algo key1 comments\n"
--                               "algo key2 comments");
-+                               "algo key2 comments\n");
- 
-     qmp_guest_ssh_add_authorized_keys(g_get_user_name(),
-                                       (strList *)&test_key2,
-@@ -436,7 +441,7 @@ test_add_reset_keys(void)
-                                       &err);
-     g_assert(err == NULL);
- 
--    test_authorized_keys_equal("algo key2 comments");
-+    test_authorized_keys_equal("algo key2 comments\n");
- 
-     /* empty should clear file */
-     qmp_guest_ssh_add_authorized_keys(g_get_user_name(),
-@@ -448,6 +453,30 @@ test_add_reset_keys(void)
-     test_authorized_keys_equal("");
- }
- 
-+static void
-+test_add_keys_trailing_newline(void)
-+{
-+    Error *err = NULL;
-+
-+    test_authorized_keys_set("algo key1 comments\n");
-+    qmp_guest_ssh_add_authorized_keys(g_get_user_name(),
-+                                      (strList *)&test_key2,
-+                                      FALSE, FALSE,
-+                                      &err);
-+    g_assert(err == NULL);
-+    test_authorized_keys_equal("algo key1 comments\n"
-+                               "algo key2 comments\n");
-+
-+    test_authorized_keys_set("algo key1 comments");
-+    qmp_guest_ssh_add_authorized_keys(g_get_user_name(),
-+                                      (strList *)&test_key2,
-+                                      FALSE, FALSE,
-+                                      &err);
-+    g_assert(err == NULL);
-+    test_authorized_keys_equal("algo key1 comments\n"
-+                               "algo key2 comments\n");
-+}
-+
- static void
- test_remove_keys(void)
- {
-@@ -507,6 +536,8 @@ int main(int argc, char *argv[])
-     g_test_add_func("/qga/ssh/invalid_key", test_invalid_key);
-     g_test_add_func("/qga/ssh/add_keys", test_add_keys);
-     g_test_add_func("/qga/ssh/add_reset_keys", test_add_reset_keys);
-+    g_test_add_func("/qga/ssh/add_keys_trailing_newline",
-+                    test_add_keys_trailing_newline);
-     g_test_add_func("/qga/ssh/remove_keys", test_remove_keys);
-     g_test_add_func("/qga/ssh/get_keys", test_get_keys);
- 
-diff --git a/qga/commands-windows-ssh.c b/qga/commands-windows-ssh.c
-index df45c17b75..f5cf30cc88 100644
---- a/qga/commands-windows-ssh.c
-+++ b/qga/commands-windows-ssh.c
-@@ -431,7 +431,12 @@ static bool write_authkeys(WindowsUserInfo *userInfo, GStrv authkeys,
-     g_autofree char *contents = NULL;
-     g_autoptr(GError) err = NULL;
- 
--    contents = g_strjoinv("\n", authkeys);
-+    if (authkeys[0] != NULL) {
-+        g_autofree char *joined = g_strjoinv("\n", authkeys);
-+        contents = g_strconcat(joined, "\n", NULL);
-+    } else {
-+        contents = g_strdup("");
-+    }
- 
-     if (!g_file_set_contents(userInfo->authorizedKeyFile, contents, -1, &err)) {
-         error_setg(errp, "failed to write to '%s': %s",
--- 
-2.54.0 (Apple Git-157)
+C.
 
 
