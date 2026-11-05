@@ -1,53 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B0F606A328
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 22:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3484606A329
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 22:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bYqga01n
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hUGUiN1r
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP5zz-0004AS-ED; Thu, 05 Nov 2026 17:32:00 -0500
+	id 1xP5zz-0004AX-G7; Thu, 05 Nov 2026 17:32:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5ze-00047Y-NQ
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 17:31:42 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5zg-00047j-St
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 17:31:44 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5zZ-0002KE-Ve
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 17:31:37 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5ze-0002Kv-Mv
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 17:31:40 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id D3D6C41690;
- Thu,  5 Nov 2026 22:31:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0F91F0089F;
- Thu,  5 Nov 2026 22:31:30 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 0CB6860147;
+ Thu,  5 Nov 2026 22:31:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA651F0089F;
+ Thu,  5 Nov 2026 22:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793917891;
- bh=kudm29ukDRr5tqYLUfyp7kUt1vJjYaALNoSOdjnYewU=;
+ s=k20260515; t=1793917897;
+ bh=ugpCripawDnPW7/5LyS4u61J+bLvNUU4B1Gn4/eLTVQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bYqga01nnz9LH8NqCfK5ygYPyiq2gpUDX90pFxwwAobhxqkMXW6Nd4KIpWD6eikvx
- y2NXE2Ac4oqNQScLzfX/m4iZIrPNsiRKhyp7YBkK9NG9ayTHdUknAPTP3t8TgVgMHU
- Czf11/NxLN0EU/jSlEncWHgkrXRsH8ngtaTt8gAMQKiVPLGdi9/0Xlzw2YUnpnEzE1
- IzOvzz5sds+86mmoTkdjhP5boccOqTSBTmtt0WU82IP7NeyCcy7zg0iHkdguXsiF6g
- loduxT3PPxsQobkh/V+rF+d1pDbZr1IRQIM2D8f6WSuo/y3ZVZXKU3AOhzxEjZsZjP
- u1y/CUpjNuAHQ==
+ b=hUGUiN1rC6UTNHv30hNKpFx3J2QBhiXQ3GCpNSKvcFrhRI72hb+zK9zBmJgxkLJZl
+ 36XOIHILhXltYdwRzlEQcdgV/ZFrRWvlZ3SgNxOtPIHLWRXbX9QjdbLh2C/WoABTIG
+ YTePGzvf54OOEtjWpUwXPjL7eQA0xuFuYZe6hBWiQfY4f0WrU37q5zaEl19R/ZjHRZ
+ 1rsUxm8Yd6XiORVX52LWi1z9BTLX4hdN/coh3GHUaTjHMgVFibhK/YV9+BtLxaGtXL
+ 5YFWkN3hPg28BAKJQBejM49mdMRwPJeXLPwxIrMYrSNokMgDLKeKFcg0Sw3VM0h4NC
+ zPjJmAHxI0J1Q==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Keith Monahan <keith@techtravels.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL v2 4/8] i82596: Implement 82596CA big-endian mode (SYSBUS bit 7)
-Date: Thu,  5 Nov 2026 23:31:18 +0100
-Message-ID: <20261105223122.8729-5-deller@kernel.org>
+Subject: [PULL v2 8/8] i82596: Various send- and transmit fixes for 715
+Date: Thu,  5 Nov 2026 23:31:22 +0100
+Message-ID: <20261105223122.8729-9-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261105223122.8729-1-deller@kernel.org>
 References: <20261105223122.8729-1-deller@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -75,326 +75,356 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Helge Deller <deller@gmx.de>
 
-NetBSD runs the 82596CA chip in big-endian mode, which means the SYSBUS bit #7
-is set, and pointers need to be read as big-endian 32-bit pointer values.
-Increment the error counters at offsets 12-32 of the SCB live in memory.
+When transmitting, send the TCB data that precedes the TBDs in flexible mode,
+and interrupt when the CU leaves the active state.  When receiving, keep the
+RBD and RFD pointers in the chip (loaded at RU start; the SCB RFA field is
+never written back), report only the RFD's own bytes in its actual count and
+report every completed frame.  In the SCB, do not update the RU status with the
+link state, as it's not part of it.
+This fixes networking with HP-UX 9.05, HP-UX 10.20, Debian and NetBSD 9.4/10.1
+on the 715 machine.
 
 Noticed-by: Keith Monahan <keith@techtravels.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/net/i82596.c | 118 +++++++++++++++++++++++++++++-------------------
- hw/net/i82596.h |   3 ++
- 2 files changed, 74 insertions(+), 47 deletions(-)
+ hw/net/i82596.c | 190 +++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 154 insertions(+), 36 deletions(-)
 
 diff --git a/hw/net/i82596.c b/hw/net/i82596.c
-index 37ce20efb1..a518aa7696 100644
+index 19e1bf47db..cd7bd0f7fe 100644
 --- a/hw/net/i82596.c
 +++ b/hw/net/i82596.c
-@@ -221,39 +221,78 @@ static void set_uint32(uint32_t addr, uint32_t val)
-     set_uint16(addr + 2, val >> 16);
+@@ -589,6 +589,17 @@ static int i82596_tx_copy_buffers(I82596State *s, hwaddr tfd_addr,
+         total_len = frame_len;
+ 
+     } else {
++        uint16_t tcb_len = desc->tcb_count & SIZE_MASK;
++
++        if (tcb_len > sizeof(s->tx_buffer)) {
++            return -1;
++        }
++        if (tcb_len) {
++            address_space_read(&address_space_memory, tfd_addr + 16,
++                              MEMTXATTRS_UNSPECIFIED, s->tx_buffer, tcb_len);
++            total_len = tcb_len;
++        }
++
+         tbd_addr = desc->tbd_addr;
+         while (tbd_addr != I596_NULL && tbd_addr != 0) {
+             uint16_t buf_size;
+@@ -756,6 +767,91 @@ tx_complete:
+     }
  }
  
 +/*
-+ * Address fields of the SCB, command blocks and RX/TX descriptors.  In
-+ * big-endian mode (SYSBUS BE, 82596CA) the chip reads them as 32-bit
-+ * big-endian words; otherwise as two 16-bit halves, low half first.  The
-+ * ISCP and SCB addresses and the SCB counters are always two halves.
++ * The RBD the RU fills next, or I596_NULL if none is free.  An RBD with EL
++ * set is the driver's last free buffer: leave it until the driver hands
++ * another one back, which moves EL on.  The chip would fill it and stop
++ * with no resources, which at QEMU speed keeps drivers in their overrun
++ * recovery (NetBSD iee marks every RBD EL there).
 + */
-+#define I596_SYSBUS_BE  0x80
-+
-+static uint32_t get_addr(I82596State *s, uint32_t addr)
++static uint32_t i82596_next_rbd(I82596State *s)
 +{
-+    if (s->sysbus & I596_SYSBUS_BE) {
-+        return ldl_be_phys(&address_space_memory, addr);
++    uint32_t rbd = s->rbd_p;
++
++    if (rbd == I596_NULL || rbd == 0) {
++        return I596_NULL;
 +    }
-+    return get_uint32(addr);
++    if (!s->rx_take_el && (get_uint16(rbd + 0xC) & CMD_EOL)) {
++        return I596_NULL;
++    }
++    return rbd;
 +}
 +
-+static void set_addr(I82596State *s, uint32_t addr, uint32_t val)
++/* The next RFD (and, unless the RFD holds a whole frame, an RBD) is free. */
++static bool i82596_rx_ring_free(I82596State *s)
 +{
-+    if (s->sysbus & I596_SYSBUS_BE) {
-+        stl_be_phys(&address_space_memory, addr, val);
++    uint32_t rbd;
++
++    if (s->rfd_p == I596_NULL || s->rfd_p == 0) {
++        return false;
++    }
++    if (get_uint16(s->rfd_p) & (STAT_C | STAT_B)) {
++        return false;           /* the driver has not handed it back yet */
++    }
++    if (!(get_uint16(s->rfd_p + 2) & CMD_FLEX) ||
++        (get_uint16(s->rfd_p + 0xE) & SIZE_MASK) >= PKT_BUF_SZ) {
++        return true;
++    }
++    rbd = i82596_next_rbd(s);
++    return rbd != I596_NULL && rbd != 0;
++}
++
++static bool i82596_rx_buffers_free(I82596State *s)
++{
++    if (i82596_rx_ring_free(s)) {
++        s->rx_hold_start = 0;
++        return true;
++    }
++    return false;
++}
++
++static void i82596_update_rx_state(I82596State *s, int new_state);
++
++/* Hold incoming frames while the ring is full; retry every 500 us. */
++static void i82596_rx_hold(I82596State *s)
++{
++    int64_t now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++
++    if (!s->rx_hold_start) {
++        s->rx_hold_start = now;
++    }
++    timer_mod(s->rx_retry_timer, now + 500 * SCALE_US);
++}
++
++static void i82596_rx_retry(void *opaque)
++{
++    I82596State *s = opaque;
++
++    /*
++     * The driver has not handed a buffer back within 20 ms: behave like the
++     * chip.  Fill the last (EL) RBD if that is all that is left, otherwise
++     * report RU out of resources so the driver can rebuild its ring.
++     */
++    if (s->rx_hold_start && s->rx_status == RX_READY &&
++        !i82596_rx_buffers_free(s) &&
++        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - s->rx_hold_start >
++            20 * SCALE_MS) {
++        s->rx_hold_start = 0;
++        s->rx_take_el = true;
++        if (!i82596_rx_buffers_free(s)) {
++            s->rx_take_el = false;
++            i82596_update_rx_state(s, RX_NO_RESOURCES);
++            i82596_update_scb_irq(s, true);
++        }
++    }
++    qemu_flush_queued_packets(qemu_get_queue(s->nic));
++}
++
+ bool i82596_can_receive(NetClientState *nc)
+ {
+     I82596State *s = qemu_get_nic_opaque(nc);
+@@ -769,6 +865,15 @@ bool i82596_can_receive(NetClientState *nc)
+         return true;
+     }
+ 
++    /*
++     * A real 82596 cannot be overrun this fast at 10 Mbit/s; hold frames in
++     * the net queue while the driver catches up instead of dropping them.
++     */
++    if (s->rx_status == RX_READY && !i82596_rx_buffers_free(s)) {
++        i82596_rx_hold(s);
++        return false;
++    }
++
+     if (!s->throttle_state && !I596_FULL_DUPLEX) {
+         return (s->queue_count < PACKET_QUEUE_SIZE);
+     }
+@@ -1038,6 +1143,8 @@ static ssize_t i82596_receive_packet(I82596State *s, const uint8_t *buf,
+     size_t bytes_copied = 0;
+     const uint8_t *packet_data = buf;
+     bool out_of_resources = false;
++    bool rbds_exhausted = false;
++    size_t rfd_data_len = 0;
+     size_t crc_size = i82596_get_crc_size(s);
+ 
+     trace_i82596_receive_packet(buf, size);
+@@ -1127,16 +1234,18 @@ static ssize_t i82596_receive_packet(I82596State *s, const uint8_t *buf,
+                                     packet_data + bytes_copied,
+                                     rfd_frame_size);
+                 bytes_copied += rfd_frame_size;
++                rfd_data_len += rfd_frame_size;
+             }
+ 
+             if (bytes_copied < payload_size) {
+                 size_t remaining = payload_size - bytes_copied;
+-                rbd_addr = i82596_translate_address(s, rfd.rbd_addr, false);
++                rbd_addr = i82596_next_rbd(s);
+ 
+                 if (rbd_addr == I596_NULL || rbd_addr == 0) {
+                     rx_status |= RFD_STATUS_TRUNC | RFD_STATUS_NOBUFS;
+                     i82596_record_error(s, RFD_STATUS_NOBUFS, false);
+                     packet_completed = true;
++                    rbds_exhausted = true;
+                     break;
+                 } else {
+                     hwaddr remaining_rbd = I596_NULL;
+@@ -1148,22 +1257,18 @@ static ssize_t i82596_receive_packet(I82596State *s, const uint8_t *buf,
+                                             &remaining_rbd);
+                     bytes_copied += rbd_bytes;
+ 
+-                    uint32_t next_rfd = i82596_translate_address(s, rfd.link,
+-                                                                  false);
+-                    if (next_rfd != I596_NULL && next_rfd != 0) {
+-                        if (remaining_rbd != I596_NULL && remaining_rbd != 0) {
+-                            trace_i82596_rx_rfd_update(next_rfd, remaining_rbd);
+-                            set_uint32(next_rfd + 8, remaining_rbd);
+-                        } else {
+-                            set_uint32(next_rfd + 8, I596_NULL);
+-                        }
+-                    }
++                    /* the RFD points at the first RBD holding its data */
++                    trace_i82596_rx_rfd_update(rfd_addr, rbd_addr);
++                    set_addr(s, rfd_addr + 8, rbd_addr);
++                    s->rbd_p = remaining_rbd;
++                    s->rx_take_el = false;
+ 
+                     if (out_of_resources) {
+                         trace_i82596_rx_out_of_rbds();
+                         i82596_record_error(s, RFD_STATUS_NOBUFS, false);
+                         rx_status |= RFD_STATUS_TRUNC | RFD_STATUS_NOBUFS;
+                         packet_completed = true;
++                        rbds_exhausted = true;
+                         break;
+                     }
+ 
+@@ -1211,30 +1316,31 @@ rx_complete:
+     }
+ 
+     rfd.status_bits = rx_status & ~STAT_B;
+-    rfd.actual_count = (bytes_copied & 0x3FFF) | 0x4000;
+-    if (packet_completed) {
+-        rfd.actual_count |= I596_EOF;
++    if (simplified_mode) {
++        rfd.actual_count = (bytes_copied & 0x3FFF) | 0x4000;
++        if (packet_completed) {
++            rfd.actual_count |= I596_EOF;
++        }
 +    } else {
-+        set_uint32(addr, val);
-+    }
-+}
-+
-+/* SCB error counters (linear mode), counted in memory like the chip does */
-+#define SCB_CRC_ERRS        12
-+#define SCB_ALIGN_ERRS      16
-+#define SCB_RESOURCE_ERRS   20
-+#define SCB_OVERRUN_ERRS    24
-+#define SCB_RCVCDT_ERRS     28
-+#define SCB_SHORT_ERRS      32
-+
-+static void i82596_count_error(I82596State *s, int offset)
-+{
-+    if (s->scb) {
-+        set_uint32(s->scb + offset, get_uint32(s->scb + offset) + 1);
-+    }
-+}
-+
- /* Centralized error detection and update mechanism */
- static void i82596_record_error(I82596State *s, uint16_t error_type, bool is_tx)
- {
-     if (is_tx) {
-         if (error_type & TX_ABORTED_ERRORS) {
-             s->tx_aborted_errors++;
--            set_uint32(s->scb + 28, s->tx_aborted_errors);
-         }
-     } else {
-         if (error_type & RX_CRC_ERRORS) {
-             s->crc_err++;
--            set_uint32(s->scb + 16, s->crc_err);
-+            i82596_count_error(s, SCB_CRC_ERRS);
-         }
++        /* the RBDs carry their own counts and the EOF of a split frame */
++        rfd.actual_count = (rfd_data_len & 0x3FFF) | 0x4000;
++        if (packet_completed && rfd_data_len == bytes_copied) {
++            rfd.actual_count |= I596_EOF;
++        }
+     }
  
-         if (error_type & (RX_LENGTH_ERRORS | RX_LENGTH_ERRORS_ALT |
-                           RX_FRAME_ERRORS)) {
-             s->align_err++;
--            set_uint32(s->scb + 18, s->align_err);
-+            i82596_count_error(s, SCB_ALIGN_ERRS);
-         }
+     i82596_rx_desc_write(s, rfd_addr, &rfd, (simplified_mode || I596_LOOPBACK));
  
-         if (error_type & RFD_STATUS_NOBUFS) {
-             s->resource_err++;
--            set_uint32(s->scb + 20, s->resource_err);
-+            i82596_count_error(s, SCB_RESOURCE_ERRS);
-         }
- 
-         if (error_type & (RX_OVER_ERRORS | RX_FIFO_ERRORS)) {
-             s->over_err++;
+-    if (rfd.command & CMD_SUSP) {
+-        i82596_update_rx_state(s, RX_SUSPENDED);
+-        return size;
++    if (packet_completed) {
++        s->rfd_p = i82596_translate_address(s, rfd.link, false);
++        s->scb_status |= SCB_STATUS_FR;
+     }
+-
+-    if (rfd.command & CMD_EOL) {
++    if (rfd.command & (CMD_SUSP | CMD_EOL)) {
+         i82596_update_rx_state(s, RX_SUSPENDED);
+-        return size;
++    } else if (rbds_exhausted) {
++        i82596_update_rx_state(s, RX_NO_RESOURCES);
+     }
+-
+-    if (packet_completed && s->rx_status == RX_READY) {
+-        uint32_t next_rfd_addr = i82596_translate_address(s, rfd.link, false);
+-        if (next_rfd_addr != 0 && next_rfd_addr != I596_NULL) {
+-            set_uint32(s->scb + 8, next_rfd_addr);
+-        }
+-
+-        s->scb_status |= SCB_STATUS_FR;
++    if (packet_completed || rbds_exhausted) {
+         i82596_update_scb_irq(s, true);
+     }
+     trace_i82596_rx_complete(s->crc_err, s->align_err, s->resource_err);
+@@ -1256,8 +1362,6 @@ ssize_t i82596_receive(NetClientState *nc, const uint8_t *buf, size_t size)
+     if (s->rx_status != RX_READY) {
+         if (s->queue_count >= PACKET_QUEUE_SIZE) {
+             trace_i82596_receive_queue_full();
+-            s->over_err++;
 -            set_uint32(s->scb + 22, s->over_err);
-+            i82596_count_error(s, SCB_OVERRUN_ERRS);
+             i82596_record_error(s, RX_OVER_ERRORS, false);
+             return size;
          }
- 
-         if (error_type & RFD_STATUS_TRUNC) {
-             s->short_fr_error++;
--            set_uint32(s->scb + 26, s->short_fr_error);
-+            i82596_count_error(s, SCB_SHORT_ERRS);
-         }
-     }
- }
-@@ -439,8 +478,8 @@ static void i82596_tx_tfd_read(I82596State *s, hwaddr addr,
- {
-     desc->status_bits = get_uint16(addr + 0);
-     desc->command = get_uint16(addr + 2);
--    desc->link_addr = get_uint32(addr + 4);
--    desc->tbd_addr = get_uint32(addr + 8);
-+    desc->link_addr = get_addr(s, addr + 4);
-+    desc->tbd_addr = get_addr(s, addr + 8);
-     desc->tcb_count = get_uint16(addr + 12);
-     address_space_read(&address_space_memory, addr + 14,
-                       MEMTXATTRS_UNSPECIFIED, desc->dest_addr, 6);
-@@ -452,8 +491,8 @@ static void i82596_tx_tfd_write(I82596State *s, hwaddr addr,
- {
-     set_uint16(addr + 0, desc->status_bits);
-     set_uint16(addr + 2, desc->command);
--    set_uint32(addr + 4, desc->link_addr);
--    set_uint32(addr + 8, desc->tbd_addr);
-+    set_addr(s, addr + 4, desc->link_addr);
-+    set_addr(s, addr + 8, desc->tbd_addr);
-     set_uint16(addr + 12, desc->tcb_count);
-     address_space_write(&address_space_memory, addr + 14,
-                        MEMTXATTRS_UNSPECIFIED, desc->dest_addr, 6);
-@@ -464,8 +503,8 @@ static void i82596_tbd_read(I82596State *s, hwaddr addr,
-                             struct i82596_tx_buffer_desc *tbd)
- {
-     tbd->size = get_uint16(addr + 0);
--    tbd->link = get_uint32(addr + 4);
--    tbd->buffer = get_uint32(addr + 8);
-+    tbd->link = get_addr(s, addr + 4);
-+    tbd->buffer = get_addr(s, addr + 8);
- }
- 
- static void i82596_rx_rfd_read(I82596State *s, hwaddr addr,
-@@ -473,8 +512,8 @@ static void i82596_rx_rfd_read(I82596State *s, hwaddr addr,
- {
-     desc->status_bits = get_uint16(addr + 0x0);
-     desc->command = get_uint16(addr + 0x2);
--    desc->link = get_uint32(addr + 0x4);
--    desc->rbd_addr = get_uint32(addr + 0x8);
-+    desc->link = get_addr(s, addr + 0x4);
-+    desc->rbd_addr = get_addr(s, addr + 0x8);
-     desc->actual_count = get_uint16(addr + 0xC);
-     desc->size = get_uint16(addr + 0xE);
- 
-@@ -494,8 +533,8 @@ static void i82596_rx_desc_write(I82596State *s, hwaddr addr,
- 
-     if (write_full) {
-         set_uint16(addr + 0x2, desc->command);
--        set_uint32(addr + 0x4, desc->link);
--        set_uint32(addr + 0x8, desc->rbd_addr);
-+        set_addr(s, addr + 0x4, desc->link);
-+        set_addr(s, addr + 0x8, desc->rbd_addr);
-         set_uint16(addr + 0xE, desc->size);
- 
-         address_space_write(&address_space_memory, addr + 0x10,
-@@ -510,8 +549,8 @@ static void i82596_rbd_read(I82596State *s, hwaddr addr,
-                             struct i82596_rx_buffer_desc *rbd)
- {
-     rbd->actual_count = get_uint16(addr + 0x0);
--    rbd->next_rbd_addr = get_uint32(addr + 0x4);
--    rbd->buffer_addr = get_uint32(addr + 0x8);
-+    rbd->next_rbd_addr = get_addr(s, addr + 0x4);
-+    rbd->buffer_addr = get_addr(s, addr + 0x8);
-     rbd->size = get_uint16(addr + 0xC);
- }
- 
-@@ -519,8 +558,8 @@ static void i82596_rbd_write(I82596State *s, hwaddr addr,
-                              struct i82596_rx_buffer_desc *rbd)
- {
-     set_uint16(addr + 0x0, rbd->actual_count);
--    set_uint32(addr + 0x4, rbd->next_rbd_addr);
--    set_uint32(addr + 0x8, rbd->buffer_addr);
-+    set_addr(s, addr + 0x4, rbd->next_rbd_addr);
-+    set_addr(s, addr + 0x8, rbd->buffer_addr);
-     set_uint16(addr + 0xC, rbd->size);
- }
- 
-@@ -1008,7 +1047,7 @@ static ssize_t i82596_receive_packet(I82596State *s, const uint8_t *buf,
+@@ -1271,6 +1375,11 @@ queue_packet:
+         return size;
      }
  
- 
--    rfd_addr = get_uint32(s->scb + 8);
-+    rfd_addr = s->rfd_p;
- 
-     if (rfd_addr == 0 || rfd_addr == I596_NULL) {
-         i82596_update_rx_state(s, RX_NO_RESOURCES);
-@@ -1383,23 +1422,19 @@ static void i82596_update_statistics(I82596State *s, bool is_tx,
-             s->tx_collisions += collision_count;
-             s->collision_events++;
-             s->total_collisions += collision_count;
--            set_uint32(s->scb + 32, s->tx_collisions);
-         }
-         if (error_flags) {
-             i82596_record_error(s, error_flags, true);
-         }
-         if (!(error_flags & (TX_ABORTED_ERRORS | TX_CARRIER_ERRORS))) {
-             s->tx_good_frames++;
--            set_uint32(s->scb + 36, s->tx_good_frames);
-         }
-     } else {
-         s->total_frames++;
--        set_uint32(s->scb + 40, s->total_frames);
-         if (error_flags) {
-             i82596_record_error(s, error_flags, false);
-         } else {
-             s->total_good_frames++;
--            set_uint32(s->scb + 44, s->total_good_frames);
-         }
-     }
++    if (!i82596_rx_buffers_free(s)) {
++        i82596_rx_hold(s);
++        return 0;
++    }
++
+     return i82596_receive_packet(s, buf, size, false);
  }
-@@ -1557,7 +1592,7 @@ static void i82596_command_dump(I82596State *s, uint32_t cmd_addr)
-     uint16_t cmd = get_uint16(cmd_addr + 2);
-     uint16_t status;
  
--    dump_addr = get_uint32(cmd_addr + 8);
-+    dump_addr = get_addr(s, cmd_addr + 8);
+@@ -1363,11 +1472,6 @@ static bool i82596_check_medium_status(I82596State *s)
+         return false;
+     }
  
-     i82596_init_dump_area(s, dump_buffer);
-     address_space_write(&address_space_memory, dump_addr,
-@@ -1648,19 +1683,8 @@ static void i82596_update_cu_status(I82596State *s, uint16_t cmd_status,
- static void update_scb_status(I82596State *s)
- {
-     s->scb_status = (s->scb_status & 0xf000)
--        | (s->cu_status << 8) | (s->rx_status << 4) | (s->lnkst >> 8);
-+        | (s->cu_status << 8) | (s->rx_status << 4);
-     set_uint16(s->scb, s->scb_status);
+-    if (!I596_LOOPBACK && (qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) % 100 < 5)) {
+-        s->collision_events++;
+-        return false;
+-    }
 -
--    set_uint32(s->scb + 28, s->tx_aborted_errors);
--    set_uint32(s->scb + 32, s->tx_collisions);
--    set_uint32(s->scb + 36, s->tx_good_frames);
--
--    set_uint32(s->scb + 16, s->crc_err);
--    set_uint32(s->scb + 18, s->align_err);
--    set_uint32(s->scb + 20, s->resource_err);
--    set_uint32(s->scb + 22, s->over_err);
--    set_uint32(s->scb + 24, s->rcvdt_err);
--    set_uint32(s->scb + 26, s->short_fr_error);
+     return true;
  }
  
- static void command_loop(I82596State *s)
-@@ -1669,11 +1693,12 @@ static void command_loop(I82596State *s)
-            s->cmd_p != 0) {
-         uint16_t status = get_uint16(s->cmd_p);
-         if (status & (STAT_C | STAT_B)) {
--            uint32_t next = get_uint32(s->cmd_p + 4);
-+            uint32_t next = get_addr(s, s->cmd_p + 4);
-             if (next == 0 || next == s->cmd_p) {
+@@ -1740,6 +1844,7 @@ skip_status_update:
+         if (cmd & CMD_SUSP) {
+             s->cu_status = CU_SUSPENDED;
+             s->scb_status |= SCB_STATUS_CNA;
++            s->send_irq = 1;
+             stop = true;
+         }
+ 
+@@ -1747,6 +1852,7 @@ skip_status_update:
+             s->cmd_p = I596_NULL;
+             s->cu_status = CU_IDLE;
+             s->scb_status |= SCB_STATUS_CNA;
++            s->send_irq = 1;
+             stop = true;
+         } else if (!stop) {
+             if (next_addr == 0 || next_addr == I596_NULL ||
+@@ -1754,6 +1860,7 @@ skip_status_update:
                  s->cmd_p = I596_NULL;
                  s->cu_status = CU_IDLE;
                  s->scb_status |= SCB_STATUS_CNA;
 +                s->send_irq = 1;
-                 break;
-             }
-             s->cmd_p = i82596_translate_address(s, next, false);
-@@ -1681,7 +1706,7 @@ static void command_loop(I82596State *s)
-         }
-         set_uint16(s->cmd_p, STAT_B);
-         uint16_t cmd = get_uint16(s->cmd_p + 2);
--        uint32_t next_addr = get_uint32(s->cmd_p + 4);
-+        uint32_t next_addr = get_addr(s, s->cmd_p + 4);
-         next_addr = (next_addr == 0) ? I596_NULL :
-                     i82596_translate_address(s, next_addr, false);
-         switch (cmd & CMD_MASK) {
-@@ -1784,7 +1809,7 @@ static void examine_scb(I82596State *s)
-         break;
+                 stop = true;
+             } else {
+                 s->cmd_p = next_addr;
+@@ -2061,7 +2168,7 @@ void i82596_poll(NetClientState *nc, bool enable)
  
-     case SCB_CUC_START: {
--        uint32_t cmd_ptr = get_uint32(s->scb + 4);
-+        uint32_t cmd_ptr = get_addr(s, s->scb + 4);
-         s->cmd_p = i82596_translate_address(s, cmd_ptr, false);
-         s->cu_status = CU_ACTIVE;
-         break;
-@@ -1823,7 +1848,7 @@ static void examine_scb(I82596State *s)
-         break;
+ const VMStateDescription vmstate_i82596 = {
+     .name = "i82596",
+-    .version_id = 1,
++    .version_id = 2,
+     .minimum_version_id = 1,
+     .fields = (VMStateField[]) {
+         VMSTATE_UINT8(mode, I82596State),
+@@ -2101,6 +2208,8 @@ const VMStateDescription vmstate_i82596 = {
+         VMSTATE_UINT32(total_good_frames, I82596State),
+         VMSTATE_BUFFER(rx_buffer, I82596State),
+         VMSTATE_UINT16(tx_frame_len, I82596State),
++        VMSTATE_UINT32_V(rbd_p, I82596State, 2),
++        VMSTATE_UINT32_V(rfd_p, I82596State, 2),
+         VMSTATE_UINT16(rx_frame_len, I82596State),
+         VMSTATE_UINT64(current_tx_desc, I82596State),
+         VMSTATE_UINT64(current_rx_desc, I82596State),
+@@ -2127,6 +2236,13 @@ static int i82596_flush_packet_queue(I82596State *s)
+         int tail = s->queue_tail;
+         size_t len = s->packet_queue_len[tail];
  
-     case SCB_RUC_START: {
--        uint32_t rfd_log = get_uint32(s->scb + 8);
-+        uint32_t rfd_log = get_addr(s, s->scb + 8);
-         hwaddr rfd = i82596_translate_address(s, rfd_log, false);
++        if (s->rx_status == RX_READY && !i82596_rx_buffers_free(s)) {
++            i82596_rx_hold(s);
++            timer_mod(s->flush_queue_timer,
++                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 500 * SCALE_US);
++            break;
++        }
++
+         ssize_t ret = i82596_receive_packet(s, s->packet_queue[tail], len,
+                                              true);
  
-         if (rfd == 0 || rfd == I596_NULL) {
-@@ -1862,12 +1887,11 @@ static void examine_scb(I82596State *s)
-         if (found) {
-             s->current_rx_desc = first_usable_rfd;
-             s->last_good_rfa = first_usable_rfd_log;
-+            s->rbd_p = i82596_translate_address(s, test_rfd.rbd_addr, false);
-+            s->rx_take_el = false;
-+            s->rfd_p = first_usable_rfd;
-             i82596_update_rx_state(s, RX_READY);
+@@ -2174,6 +2290,8 @@ void i82596_common_init(DeviceState *dev, I82596State *s, NetClientInfo *info)
+                 dev->id, &dev->mem_reentrancy_guard, s);
+     qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
  
--            if (first_usable_rfd != rfd) {
--                set_uint32(s->scb + 8, first_usable_rfd_log);
--            }
--
-             if (s->queue_count > 0) {
-                 trace_i82596_flush_queue(s->queue_count);
-                 i82596_flush_packet_queue(s);
-@@ -1909,7 +1933,7 @@ static void examine_scb(I82596State *s)
-     }
-     if (s->cu_status == CU_ACTIVE) {
-         if (s->cmd_p == I596_NULL) {
--            s->cmd_p = get_uint32(s->scb + 4);
-+            s->cmd_p = get_addr(s, s->scb + 4);
-         }
-         update_scb_status(s);
-         command_loop(s);
-diff --git a/hw/net/i82596.h b/hw/net/i82596.h
-index 67b18f957a..ec0b6a75ba 100644
---- a/hw/net/i82596.h
-+++ b/hw/net/i82596.h
-@@ -75,6 +75,9 @@ struct I82596State_st {
-     hwaddr current_tx_desc;
-     hwaddr current_rx_desc;
-     uint32_t last_good_rfa;
-+    uint32_t rbd_p;         /* next free RBD, loaded from the first RFD at RU start */
-+    bool rx_take_el;        /* hold timed out: fill the EL RBD like the chip does */
-+    uint32_t rfd_p;         /* next RFD, loaded from the SCB at RU start */
-     uint8_t packet_queue[PACKET_QUEUE_SIZE][PKT_BUF_SZ];
-     size_t packet_queue_len[PACKET_QUEUE_SIZE];
-     int queue_head;
++    s->rx_retry_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, i82596_rx_retry, s);
++
+     if (USE_TIMER) {
+         if (!s->flush_queue_timer) {
+             s->flush_queue_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
 -- 
 2.54.0
 
