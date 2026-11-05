@@ -1,88 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FCA606A332
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 17:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AF5606A337
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 17:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=ea7423Vh
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=r1fL042i
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP1Ax-00073Q-R4; Thu, 05 Nov 2026 12:22:59 -0500
+	id 1xP1Av-00072P-3Z; Thu, 05 Nov 2026 12:22:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1Av-00072h-B6
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:57 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1At-00071w-33
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:55 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1At-0007fm-8G
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:57 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4a35a60499eso17476315e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 09:22:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1Aq-0007fQ-Fl
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:54 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4a5087a5348so16672845e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 09:22:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793899374; x=1794504174; darn=nongnu.org;
+ d=openvz.org; s=google; t=1793899371; x=1794504171; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=eI9HPtQC+pcKKIYpVEiubZEEEhj4+2GZLfw7sUEK1YA=;
- b=ea7423VhXpCPKKrLf6Bv/EdkQmCXRb7k7M/2dEOYHBIKkwxHs7zN99uRzDoqapVHdO
- 7jzHs/GXjj0CQzslAZY+O52LgAVI4qiEJTi57rCYBt1w0ApADPEFYraS7hnwlyhhk5Hp
- whqflITN48bk2WnOjhe27QDdHDcCy0dse6UTk1Bou+vcLaLe7NwLbZ34TxQ/tyHsMC3j
- nupGJUEzknEvIyyQHhwVxXUMTCHwgPHduSJ1Phe3+HfJHC/RLECabmQLGTeFQZhEbpar
- MQU0uoq1vMVwyEs7qZgigKfDSuuU/xSuniglwsX+DBkj4LraJ10s/qJ+WoFyENHCfWEs
- 7MZw==
+ bh=uehzfmfzduQGno49/ozsjuBIXoQFr96ddf/zS6pyLoc=;
+ b=r1fL042iHMAwdGM24JE65WEO2hLdK+JXjcTDqsFuGToyMm+xoORqBiW68OtdReNaBO
+ uuS0cOrC5EPHHgdOEA2nJ4hHMkJXw86808jZrxgQ2DIMexGtfbwi6EKwA4E/CxkO6P6O
+ MDxkL7LzmvSrGKMkuVXr558iXMwFwWiPQX1Jiz7MMlLHd1tRDA+GQmdY2YIN97owhJ/O
+ PIvd7eqL0aXBVS0MByEwwfYYfzHuHewZrubuHkaToYYlYsUW0zowEkwQo6m/x4O6C2SP
+ G9wPXnyp/79i6qegu1JmawB5SpAbsYm8uJiab/2/ivz9baNZRGcOvi3uXt9dbJMaiqDg
+ smeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793899374; x=1794504174;
+ d=1e100.net; s=20260707; t=1793899371; x=1794504171;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=eI9HPtQC+pcKKIYpVEiubZEEEhj4+2GZLfw7sUEK1YA=;
- b=1lq8qsoxWHrQAGNZt9EzUw+zMj2VlvEXXj37QjHarFuRMIOV4bIPqB0bdCrCAgnrSF
- ixHnCzXBTB1+adhf6PEF+7AvjHdKm1drgonZt3Lq/pkhCPLUrAQ+GF/GuKmv5Eld5xhP
- lKyfEcgiCYwneKvDrPyqL4IQmmVnxAHFSb2lWllk4ZwxLUxfedkN8qoFdG58n0Pvt/ld
- OZ7Ltfqj3qkso7Rn4jtMQn5GQgJiRL7ajKukDAm8yJLdk8VfUXerop8fAtiy8fKV7Sa4
- FsGN7qXjTAIzrSkYDk+He3ufzhtsrVR5MnyeMdGcNpDnrgkV70ARfUexd9iOQvPSiHdR
- Azdw==
-X-Gm-Message-State: APuU4Z/KyEv2MvmDMqlsUXv/E0EnZGARraecSO2Bs5P8p/EfWjbT3FDt
- /5N89muF82i56pmpb1B4e82rqaNobcmGakkOltD3IM4me35gnWqNfJ5Vflcs9ec3QWN4vp4QkJe
- th/kS
-X-Gm-Gg: AYBFou0WLlkIgrih2P4SAZpy+NqSQMMY+t/LVsfKZuoyseStEgBDGCgD082cEL1pgnp
- nsZnENePbcvewzKyhwNAuEMtsY5SaSCBiytVdN1jcDTezTAXmo5CF6JYfC5yxyeZHiE3qhpSnci
- 7a4qgVWw2zZwoGpbQjqhJH0kgWizk5EOT9m/i8dyhH3AngjAqmLf7Gv1ojKZ9ou8o+gHKaO5jib
- nv7KdZLDRnuo9NYo6exPoMCSmSBNgajFqXswXoPh9tQ/W05FZZpRJVGPwBKbV5zsF5hHyI7Rrhi
- VhVxyT0py+SlLZpaLzwoaLIDvf/ZoB4os5Yu6DISbAtjTU/9kdun508uygxX94WwdW/0aHMQhad
- 5rv+OJaP0Qhhz188UBi1v5O4gw6/DzhYZ42HatpHVi3Kj81uTSddsoF0F8/nQ3Vbey120q8gn5V
- 6cTpgx5cCM2br/QhZED7E5oTEOtGgkmt1mH3hw0pUEUZgPP4ho8QCedgD9lzAk9Tu3P5MC3afhI
- 1bSO8GuebIjWb6sn0zHT6shLa6ibdeZrDXKFwhoMdSlUKsdW2RG/KHNUVSCWfZTiwZBkgRV5eph
- WRIrv/f+Kqf6d8EzoNi6ndr8rMA=
-X-Received: by 2002:a05:600d:84ca:10b0:4b4:49d7:bc25 with SMTP id
- 5b1f17b1804b1-4b449d7be7fmr68546075e9.21.1793899373779; 
- Thu, 05 Nov 2026 09:22:53 -0800 (PST)
+ bh=uehzfmfzduQGno49/ozsjuBIXoQFr96ddf/zS6pyLoc=;
+ b=0gfmmsANSXUrzp+p8Eae+acz4Wksbfhx6WLiD5V8/h5VsJ9+oxNjDUxoZpBFnufufo
+ 1VvRa26aRcU5U/0N6ktQgxI0FL6Ip5lwIcJ4SqmyGEMPUljKLSaysNCx07DuhT4odxdG
+ GlBbTXbtr6BpMb/MNiwwR1/LoGwsZiCpjdGS5Q2IeGbgwe7EPIFM0f+Iyx/vgocSxCeI
+ P864kru61mpBDOIcMVg2QyVs8egBH0RsjOpETm8QO0LhlWov4Ir9cVjy8Gnfa3QxdAF5
+ kn7Fy+X06NHgg3jjvjUzb+amlfbUccBcKRw+37CtMCBrJepcN5WOpt5AAJmNa11KYu2h
+ /jsQ==
+X-Gm-Message-State: APuU4Z9D9iP4nLasNtmM4FX8oDjyT0EGdX7o8LmUlkaPonKurePQaatj
+ aSH56Vx2SidjcOMyOwL9AGhe+bnaKYr3e008PMlqdj2EzOH8Hfx96H51zkY0fNBxDP6Z0dKilPd
+ HAj1z
+X-Gm-Gg: AYBFou2iKYdOPF4bP4W7iU3QHSl9YpyyAQRzyb6lebRP0SUh/z9I2BaQZYGp12LVVoo
+ +M+X6uMkDbYFDj+oyGoIfePOgujLMGe5Bg+VkXiTCs3hv5mW7OgHsXszPl80TyJIGytFuFKRhzr
+ P3vgi4/2IVCEs/gWCTINBGvTWhcYXfBsor/ew6SczqDsL88nQd15++4Bt5LJg9hBoXvduiTQcdM
+ sUw/hUuI8QtnIBwfielYJbQ5Q0ihn5R3Jtf593DpR3/B+1zbORDDJmjHK6LnoIrLW3IxsBoNRgz
+ hI4cvUrlp9bc6R/E7Lt1Iua64J9fxfsowDhGTziNeFI7YSbTWdrDcy+YhnMlDPXcEuTJR95SEpX
+ 3R0zD4uwGYxyeoWdVfPa3qBDM7J+85RwbwYsJvIyGmrs9ppBQ1pn0KMVbSlWAQbcpHS1pKcqCvz
+ 8fGfbt1hrGVG9+AX5t/kXZW0CH+i1CHyyx0hfxXxajYcHFqaPFvoNV8YdIKmYB11bWsY7VqUmKo
+ hz93/XJufGrOeI55RrmhMssEoI7QS/Pi1ihL1nOnP0XoFjP9tM+wIeK1vvq2kCwmmM4mzURZBHe
+ 0FTSvPsMYvPgOL1jGjFW5aMPqA==
+X-Received: by 2002:a05:600c:5249:b0:4a7:7f3f:6f8e with SMTP id
+ 5b1f17b1804b1-4ac1228b5bfmr438277005e9.0.1793899370968; 
+ Thu, 05 Nov 2026 09:22:50 -0800 (PST)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:3848:9c8a:8cf7:6236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b56e2ae72dsm130632255e9.3.2026.11.05.09.22.52
+ 5b1f17b1804b1-4b56e2ae72dsm130632255e9.3.2026.11.05.09.22.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 09:22:53 -0800 (PST)
+ Thu, 05 Nov 2026 09:22:50 -0800 (PST)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Zhao Liu <zhao1.liu@intel.com>, "Denis V. Lunev" <den@virtuozzo.com>
-Subject: [PATCH v2 5/6] hw/hyperv: split the SynIC page mapping from its state
- update
-Date: Thu,  5 Nov 2026 18:22:43 +0100
-Message-ID: <20261105172244.2804598-6-den@openvz.org>
+ Peter Xu <peterx@redhat.com>,
+ Philippe Mathieu-Daude <philmd@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, "Denis V. Lunev" <den@virtuozzo.com>
+Subject: [PATCH v2 3/6] memory: stop building dispatch trees before the
+ machine runs
+Date: Thu,  5 Nov 2026 18:22:41 +0100
+Message-ID: <20261105172244.2804598-4-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260911142345.3999518-1-den@openvz.org>
 References: <20260911142345.3999518-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=den@openvz.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,202 +109,375 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Denis V. Lunev <den@openvz.org>
 
-synic_update() records the SynIC control bit and page addresses and maps
-the message and event pages at those addresses in one go. Loading the
-SynIC wants the two apart: VMBus creates its SINT routes from the
-control bit in its own post_load, so the state must be restored with
-the CPU section, while the mapping can wait.
+Regenerating a flatview spends most of its time building the radix tree
+used to translate addresses through it, not rendering the view. Nothing
+translates through a tree until a vCPU runs, and by then the topology has
+been rebuilt hundreds of times: once per device that claims a region
+while the machine is created, and once more per device that moves a BAR
+or a window while an incoming vmstate stream is read. Nearly all of those
+trees are discarded unbuilt upon.
 
-Add hyperv_synic_update_state() and hyperv_synic_update_mr(), with x86
-wrappers. hyperv_synic_update() keeps doing both. The mapping now
-compares where the page is mapped with the recorded address, rather
-than the old recorded address with the new one, which is the same
-thing while both are updated together.
+Do not build them until a vCPU can run. A view rendered before that keeps
+a flat array of the sections the render already produced, and a lookup
+binary searches it. vm_prepare_start() builds a tree for every view still
+in use, which is the last point at which nothing has run yet.
 
-No functional change.
+The array answers the question the tree does except for one caller: a
+lookup which asks for the page a subpage container stands for, rather
+than the range covering the address, still needs the tree and builds it.
+That is the softmmu TLB fill and the iotlb entry lookup.
+
+Building asserts the BQL, because two builders racing on one view would
+leak a tree. That holds every caller which can reach a view without one
+to running while the guest does, and by then no view an address space
+still publishes is missing its tree: a reader which picked one up during
+the window keeps it afterwards, and a view superseded meanwhile never
+gets a tree at all. Before a vCPU runs, the paths which translate without
+the BQL either do not run or ask for a range rather than a page.
+
+A load which follows a run reopens the window, so a snapshot restore gets
+the same treatment as an incoming migration; vm_prepare_start() closes it
+again. Postcopy needs no exception, because it starts the guest through
+the same path.
+
+A tree is now published once it is complete rather than while it is being
+filled, so a reader finds the tree or the array, never a half-built tree.
+io_mem_unassigned loses its static so the array can carry the same
+unassigned section the tree does.
 
 CC: Paolo Bonzini <pbonzini@redhat.com>
-CC: Marcelo Tosatti <mtosatti@redhat.com>
-CC: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 CC: Peter Xu <peterx@redhat.com>
+CC: Philippe Mathieu-Daude <philmd@oss.qualcomm.com>
 CC: Fabiano Rosas <farosas@suse.de>
-CC: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
 ---
- hw/hyperv/hyperv.c            | 70 ++++++++++++++++++++++++-----------
- include/hw/hyperv/hyperv.h    |  3 ++
- target/i386/kvm/hyperv-stub.c |  8 ++++
- target/i386/kvm/hyperv.c      | 16 +++++++-
- target/i386/kvm/hyperv.h      |  2 +
- 5 files changed, 76 insertions(+), 23 deletions(-)
+ include/system/memory.h  | 19 ++++++++
+ migration/savevm.c       | 10 +++++
+ system/memory-internal.h |  2 +
+ system/memory.c          | 96 +++++++++++++++++++++++++++++++++++++++-
+ system/physmem.c         | 41 +++++++++++++++--
+ system/runstate.c        |  3 ++
+ system/trace-events      |  1 +
+ 7 files changed, 167 insertions(+), 5 deletions(-)
 
-diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-index 900ff80213..307e7a40ad 100644
---- a/hw/hyperv/hyperv.c
-+++ b/hw/hyperv/hyperv.c
-@@ -65,33 +65,61 @@ bool hyperv_is_synic_present(CPUState *cs)
-     return get_synic(cs);
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 027ca81bd2..d620bee90e 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -940,6 +940,13 @@ struct FlatView {
+     unsigned nr;
+     unsigned nr_allocated;
+     struct AddressSpaceDispatch *dispatch;
++    /*
++     * Stands in for @dispatch, one entry per range plus an unassigned entry
++     * at index 0. Built instead of the tree while dispatch building is
++     * deferred, and then kept for the life of the view, because a reader may
++     * still hold a pointer into it.
++     */
++    MemoryRegionSection *sections;
+     MemoryRegion *root;
+ };
+ 
+@@ -2334,6 +2341,18 @@ void memory_region_transaction_begin(void);
+  */
+ void memory_region_transaction_commit(void);
+ 
++/**
++ * flatview_dispatch_defer_begin: Stop building dispatch trees
++ *
++ * For a window in which the topology is rebuilt repeatedly and translated
++ * through rarely, such as loading a migration stream. A view rendered in
++ * the window answers lookups from its range array instead, and gets its
++ * tree once the window closes. Must be closed with
++ * flatview_dispatch_defer_end() before the guest runs again.
++ */
++void flatview_dispatch_defer_begin(void);
++void flatview_dispatch_defer_end(void);
++
+ /**
+  * memory_listener_register: register callbacks to be called when memory
+  *                           sections are mapped or unmapped into an address
+diff --git a/migration/savevm.c b/migration/savevm.c
+index fe94ba96e4..ac48db7754 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -3147,7 +3147,17 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
+ 
+     cpu_synchronize_all_pre_loadvm();
+ 
++    /*
++     * A load which follows a run, such as a snapshot, starts with the window
++     * already closed. Reopen it: the guest is stopped for the whole load, and
++     * vm_prepare_start() closes it again before anything runs.
++     */
++    flatview_dispatch_defer_begin();
++
+     ret = qemu_loadvm_state_main(f, mis, errp);
++
++    flatview_dispatch_defer_end();
++
+     qemu_event_set(&mis->main_thread_load_event);
+ 
+     trace_qemu_loadvm_state_post_main(ret);
+diff --git a/system/memory-internal.h b/system/memory-internal.h
+index d81881ba54..3d9f92185d 100644
+--- a/system/memory-internal.h
++++ b/system/memory-internal.h
+@@ -20,8 +20,10 @@ FlatView *address_space_get_flatview(const AddressSpace *as);
+ void flatview_unref(FlatView *view);
+ 
+ extern const MemoryRegionOps unassigned_mem_ops;
++extern MemoryRegion io_mem_unassigned;
+ 
+ void flatview_build_dispatch(FlatView *fv);
++MemoryRegionSection *flatview_lookup_section(FlatView *fv, hwaddr addr);
+ void flatview_add_to_dispatch(FlatView *fv, AddressSpaceDispatch *d,
+                               MemoryRegionSection *section);
+ AddressSpaceDispatch *address_space_dispatch_new(FlatView *fv);
+diff --git a/system/memory.c b/system/memory.c
+index 33bd97c9a3..d04130f695 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -301,6 +301,7 @@ static void flatview_destroy(FlatView *view)
+     for (i = 0; i < view->nr; i++) {
+         memory_region_unref(view->ranges[i].mr);
+     }
++    g_free(view->sections);
+     g_free(view->ranges);
+     memory_region_unref(view->root);
+     g_free(view);
+@@ -745,11 +746,54 @@ static MemoryRegion *memory_region_get_flatview_root(MemoryRegion *mr)
+     return NULL;
  }
  
-+static void synic_map_page(MemoryRegion *mr, hwaddr addr)
++static bool flatview_dispatch_deferred = true;
++
++static void flatview_build_sections(FlatView *view)
 +{
-+    if (memory_region_is_mapped(mr)) {
-+        if (mr->addr == addr) {
-+            return;
++    unsigned i;
++    MemoryRegionSection *sections;
++
++    assert(!view->sections);
++
++    sections = g_new(MemoryRegionSection, view->nr + 1);
++    sections[0] = (MemoryRegionSection) {
++        .fv = view,
++        .mr = &io_mem_unassigned,
++        .size = int128_2_64(),
++    };
++    for (i = 0; i < view->nr; i++) {
++        sections[i + 1] = section_from_flat_range(&view->ranges[i], view);
++    }
++
++    qatomic_rcu_set(&view->sections, sections);
++}
++
++static FlatRange *flatview_lookup(FlatView *view, AddrRange addr);
++
++/* Called from RCU critical section */
++MemoryRegionSection *flatview_lookup_section(FlatView *view, hwaddr addr)
++{
++    MemoryRegionSection *sections = qatomic_rcu_read(&view->sections);
++    FlatRange *fr;
++
++    fr = flatview_lookup(view, addrrange_make(int128_make64(addr),
++                                              int128_one()));
++
++    return fr ? &sections[fr - view->ranges + 1] : &sections[0];
++}
++
+ void flatview_build_dispatch(FlatView *view)
+ {
+     AddressSpaceDispatch *d;
+     int i;
+ 
++    /*
++     * Two builders racing on one view would leak a tree, and the BQL is
++     * what keeps them apart. Every caller which can reach a view without
++     * one runs only while the guest does, by which point no view an
++     * address space still publishes is missing its tree.
++     */
++    assert(bql_locked());
+     assert(!view->dispatch);
+ 
+     d = address_space_dispatch_new(view);
+@@ -777,12 +821,60 @@ static FlatView *generate_memory_topology(MemoryRegion *mr)
+     }
+     flatview_simplify(view);
+ 
+-    flatview_build_dispatch(view);
++    if (flatview_dispatch_deferred) {
++        flatview_build_sections(view);
++    } else {
++        flatview_build_dispatch(view);
++    }
+     g_hash_table_replace(flat_views, mr, view);
+ 
+     return view;
+ }
+ 
++/*
++ * Machine creation and a vmstate load both rebuild the same views many times
++ * over and translate through almost none of them, so the dispatch tree waits
++ * until a vCPU can run. A view rendered meanwhile answers from its range
++ * array, which the render already produced. Idempotent, because the windows
++ * nest: an incoming migration loads a stream inside the one creation opened.
++ */
++void flatview_dispatch_defer_begin(void)
++{
++    assert(bql_locked());
++    flatview_dispatch_deferred = true;
++}
++
++void flatview_dispatch_defer_end(void)
++{
++    unsigned n_views = 0, n_ranges = 0;
++    GHashTableIter iter;
++    gpointer value;
++
++    assert(bql_locked());
++
++    if (!flatview_dispatch_deferred) {
++        return;
++    }
++    flatview_dispatch_deferred = false;
++
++    if (!flat_views) {
++        return;
++    }
++
++    g_hash_table_iter_init(&iter, flat_views);
++    while (g_hash_table_iter_next(&iter, NULL, &value)) {
++        FlatView *view = value;
++
++        if (!view->dispatch) {
++            flatview_build_dispatch(view);
++            n_views++;
++            n_ranges += view->nr;
 +        }
-+        memory_region_del_subregion(get_system_memory(), mr);
 +    }
-+    if (addr) {
-+        memory_region_add_subregion(get_system_memory(), addr, mr);
++
++    trace_flatview_dispatch_drain(n_views, n_ranges);
++}
++
+ static void address_space_add_del_ioeventfds(AddressSpace *as,
+                                              MemoryRegionIoeventfd *fds_new,
+                                              unsigned fds_new_nb,
+@@ -3426,7 +3518,7 @@ static void mtree_print_flatview(gpointer key, gpointer value,
+     }
+ 
+ #if !defined(CONFIG_USER_ONLY)
+-    if (fvi->dispatch_tree && view->root) {
++    if (fvi->dispatch_tree && view->root && view->dispatch) {
+         mtree_print_dispatch(view->dispatch, view->root);
+     }
+ #endif
+diff --git a/system/physmem.c b/system/physmem.c
+index 6f11e31799..6611327213 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -101,7 +101,7 @@ static MemoryRegion *system_io;
+ AddressSpace address_space_io;
+ AddressSpace address_space_memory;
+ 
+-static MemoryRegion io_mem_unassigned;
++MemoryRegion io_mem_unassigned;
+ 
+ typedef struct PhysPageEntry PhysPageEntry;
+ 
+@@ -359,6 +359,41 @@ static MemoryRegionSection *address_space_lookup_region(AddressSpaceDispatch *d,
+     return section;
+ }
+ 
++static AddressSpaceDispatch *flatview_dispatch(FlatView *fv)
++{
++    AddressSpaceDispatch *d = qatomic_rcu_read(&fv->dispatch);
++
++    if (unlikely(!d)) {
++        flatview_build_dispatch(fv);
++        d = fv->dispatch;
 +    }
++
++    return d;
 +}
 +
-+static void synic_update_mr(SynICState *synic)
++/*
++ * Called from RCU critical section.
++ *
++ * A view rendered while dispatch building is deferred has no tree yet, and
++ * its range array answers the same question directly. Only a caller which
++ * wants the page a subpage container stands for, rather than the range
++ * covering the address, has to pay for the tree.
++ */
++static MemoryRegionSection *flatview_lookup_region(FlatView *fv, hwaddr addr,
++                                                   bool resolve_subpage)
 +{
-+    synic_map_page(&synic->msg_page_mr, synic->msg_page_addr);
-+    synic_map_page(&synic->event_page_mr, synic->event_page_addr);
++    AddressSpaceDispatch *d = qatomic_rcu_read(&fv->dispatch);
++
++    if (unlikely(!d)) {
++        if (resolve_subpage) {
++            return flatview_lookup_section(fv, addr);
++        }
++        d = flatview_dispatch(fv);
++    }
++
++    return address_space_lookup_region(d, addr, resolve_subpage);
 +}
 +
-+static void synic_set_state(SynICState *synic, bool sctl_enable,
-+                            hwaddr msg_page_addr, hwaddr event_page_addr)
-+{
-+    synic->sctl_enabled = sctl_enable;
-+    synic->msg_page_addr = msg_page_addr;
-+    synic->event_page_addr = event_page_addr;
-+}
-+
- static void synic_update(SynICState *synic, bool sctl_enable,
-                          hwaddr msg_page_addr, hwaddr event_page_addr)
- {
-+    synic_set_state(synic, sctl_enable, msg_page_addr, event_page_addr);
-+    synic_update_mr(synic);
-+}
+ /* Called from RCU critical section */
+ static MemoryRegionSection *
+ address_space_translate_internal(FlatView *fv, hwaddr addr, hwaddr *xlat,
+@@ -368,7 +403,7 @@ address_space_translate_internal(FlatView *fv, hwaddr addr, hwaddr *xlat,
+     MemoryRegion *mr;
+     Int128 diff;
  
--    synic->sctl_enabled = sctl_enable;
--    if (synic->msg_page_addr != msg_page_addr) {
--        if (synic->msg_page_addr) {
--            memory_region_del_subregion(get_system_memory(),
--                                        &synic->msg_page_mr);
--        }
--        if (msg_page_addr) {
--            memory_region_add_subregion(get_system_memory(), msg_page_addr,
--                                        &synic->msg_page_mr);
--        }
--        synic->msg_page_addr = msg_page_addr;
-+void hyperv_synic_update_state(CPUState *cs, bool sctl_enable,
-+                               hwaddr msg_page_addr, hwaddr event_page_addr)
-+{
-+    SynICState *synic = get_synic(cs);
-+
-+    if (!synic) {
-+        return;
+-    section = address_space_lookup_region(fv->dispatch, addr, resolve_subpage);
++    section = flatview_lookup_region(fv, addr, resolve_subpage);
+     /* Compute offset within MemoryRegionSection */
+     addr -= section->offset_within_address_space;
+ 
+@@ -744,7 +779,7 @@ translate_fail:
+      */
+     assert((orig_addr & ~TARGET_PAGE_MASK) == 0);
+     *xlat = orig_addr;
+-    return &fv->dispatch->map.sections[PHYS_SECTION_UNASSIGNED];
++    return &flatview_dispatch(fv)->map.sections[PHYS_SECTION_UNASSIGNED];
+ }
+ 
+ #endif /* CONFIG_TCG */
+diff --git a/system/runstate.c b/system/runstate.c
+index 56bfc5b07d..bae8ce9a96 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -59,6 +59,7 @@
+ #include "system/replay.h"
+ #include "system/reset.h"
+ #include "system/runstate.h"
++#include "system/memory.h"
+ #include "system/runstate-action.h"
+ #include "system/confidential-guest-support.h"
+ #include "system/system.h"
+@@ -508,6 +509,8 @@ int vm_prepare_start(bool step_pending)
+         return -1;
      }
--    if (synic->event_page_addr != event_page_addr) {
--        if (synic->event_page_addr) {
--            memory_region_del_subregion(get_system_memory(),
--                                        &synic->event_page_mr);
--        }
--        if (event_page_addr) {
--            memory_region_add_subregion(get_system_memory(), event_page_addr,
--                                        &synic->event_page_mr);
--        }
--        synic->event_page_addr = event_page_addr;
-+
-+    synic_set_state(synic, sctl_enable, msg_page_addr, event_page_addr);
-+}
-+
-+void hyperv_synic_update_mr(CPUState *cs)
-+{
-+    SynICState *synic = get_synic(cs);
-+
-+    if (!synic) {
-+        return;
-     }
-+
-+    synic_update_mr(synic);
- }
  
- void hyperv_synic_update(CPUState *cs, bool sctl_enable,
-diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
-index 23091301d0..fcad9efb5b 100644
---- a/include/hw/hyperv/hyperv.h
-+++ b/include/hw/hyperv/hyperv.h
-@@ -80,6 +80,9 @@ void hyperv_synic_add(CPUState *cs);
- void hyperv_synic_reset(CPUState *cs);
- void hyperv_synic_update(CPUState *cs, bool enable,
-                          hwaddr msg_page_addr, hwaddr event_page_addr);
-+void hyperv_synic_update_state(CPUState *cs, bool enable,
-+                               hwaddr msg_page_addr, hwaddr event_page_addr);
-+void hyperv_synic_update_mr(CPUState *cs);
- bool hyperv_is_synic_enabled(void);
- bool hyperv_is_synic_present(CPUState *cs);
- 
-diff --git a/target/i386/kvm/hyperv-stub.c b/target/i386/kvm/hyperv-stub.c
-index 767a4c7e1a..c4d18f2cf5 100644
---- a/target/i386/kvm/hyperv-stub.c
-+++ b/target/i386/kvm/hyperv-stub.c
-@@ -53,6 +53,14 @@ void hyperv_x86_synic_update(X86CPU *cpu)
- {
- }
- 
-+void hyperv_x86_synic_update_state(X86CPU *cpu)
-+{
-+}
++    flatview_dispatch_defer_end();
 +
-+void hyperv_x86_synic_update_mr(X86CPU *cpu)
-+{
-+}
-+
- void hyperv_x86_set_vmbus_recommended_features_enabled(void)
- {
- }
-diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
-index 420c76b5ff..08001b26c5 100644
---- a/target/i386/kvm/hyperv.c
-+++ b/target/i386/kvm/hyperv.c
-@@ -42,7 +42,7 @@ void hyperv_x86_synic_reset(X86CPU *cpu)
-     hyperv_synic_reset(CPU(cpu));
- }
+     /*
+      * WHPX accelerator needs to know whether we are going to step
+      * any CPUs, before starting the first one.
+diff --git a/system/trace-events b/system/trace-events
+index 38ad0be8a9..3542b6b2c4 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -26,6 +26,7 @@ flatview_destroy(void *view, void *root) "%p (root %p)"
+ flatview_destroy_rcu(void *view, void *root) "%p (root %p)"
+ global_dirty_changed(unsigned int bitmask) "bitmask 0x%"PRIx32
+ memory_region_finalize(const char* name) "mr %s"
++flatview_dispatch_drain(unsigned n_fv, unsigned n_ranges) "flatviews %u ranges %u"
  
--void hyperv_x86_synic_update(X86CPU *cpu)
-+void hyperv_x86_synic_update_state(X86CPU *cpu)
- {
-     CPUX86State *env = &cpu->env;
-     bool enable = env->msr_hv_synic_control & HV_SYNIC_ENABLE;
-@@ -50,7 +50,19 @@ void hyperv_x86_synic_update(X86CPU *cpu)
-         (env->msr_hv_synic_msg_page & TARGET_PAGE_MASK) : 0;
-     hwaddr event_page_addr = (env->msr_hv_synic_evt_page & HV_SIEFP_ENABLE) ?
-         (env->msr_hv_synic_evt_page & TARGET_PAGE_MASK) : 0;
--    hyperv_synic_update(CPU(cpu), enable, msg_page_addr, event_page_addr);
-+    hyperv_synic_update_state(CPU(cpu), enable, msg_page_addr,
-+                              event_page_addr);
-+}
-+
-+void hyperv_x86_synic_update_mr(X86CPU *cpu)
-+{
-+    hyperv_synic_update_mr(CPU(cpu));
-+}
-+
-+void hyperv_x86_synic_update(X86CPU *cpu)
-+{
-+    hyperv_x86_synic_update_state(cpu);
-+    hyperv_x86_synic_update_mr(cpu);
- }
- 
- static void async_synic_update(CPUState *cs, run_on_cpu_data data)
-diff --git a/target/i386/kvm/hyperv.h b/target/i386/kvm/hyperv.h
-index a393a5d428..a0aee0cff3 100644
---- a/target/i386/kvm/hyperv.h
-+++ b/target/i386/kvm/hyperv.h
-@@ -26,6 +26,8 @@ int hyperv_x86_synic_add(X86CPU *cpu);
- int hyperv_enable_synic(X86CPU *cpu);
- void hyperv_x86_synic_reset(X86CPU *cpu);
- void hyperv_x86_synic_update(X86CPU *cpu);
-+void hyperv_x86_synic_update_state(X86CPU *cpu);
-+void hyperv_x86_synic_update_mr(X86CPU *cpu);
- 
- void hyperv_x86_set_vmbus_recommended_features_enabled(void);
- 
+ # physmem.c
+ address_space_map(void *as, uint64_t addr, uint64_t len, bool is_write, uint32_t attrs) "as:%p addr 0x%"PRIx64":%"PRIx64" write:%d attrs:0x%x"
 -- 
 2.53.0
 
