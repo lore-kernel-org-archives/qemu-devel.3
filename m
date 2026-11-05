@@ -1,66 +1,65 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07689606A32D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 08:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7177D606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 08:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOtHY-0003G1-DR; Thu, 05 Nov 2026 03:57:16 -0500
+	id 1xOtI2-0003TV-6q; Thu, 05 Nov 2026 03:57:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtHW-0003FU-Aa
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:57:14 -0500
-Received: from mail-pg1-f178.google.com ([209.85.215.178])
+ id 1xOtI0-0003Re-F9
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:57:44 -0500
+Received: from mail-pl1-f180.google.com ([209.85.214.180])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtHU-0003dR-CN
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:57:13 -0500
-Received: by mail-pg1-f178.google.com with SMTP id
- 41be03b00d2f7-cc4aa0246b7so790806a12.3
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 00:57:12 -0800 (PST)
+ id 1xOtHy-0003jN-Ks
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:57:44 -0500
+Received: by mail-pl1-f180.google.com with SMTP id
+ d9443c01a7336-2e96502e447so13903215ad.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 00:57:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793869031; x=1794473831;
+ d=1e100.net; s=20260707; t=1793869061; x=1794473861;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=4c8supkKneQ6KSPUU96myXPMZvz+cStDQRdD8Fg6fTw=;
- b=K6lVmD13AcuDV4tzOsg5yiDxt1Z+j3dsKGTyIAkWX6w1bA0Asd8lrT3Nnesldl3Q3V
- cTx3JDPpvlIRpClH+U5MAx9AI75B10E+lE3SyeiZlB13+ZM84IFfl6EEdfiBRfMho1ms
- b3pOx4+FGIqiVcjT+saHIgDh4umlEH5oXuqOa/gWg2gPOqiXdacg58B22E07RkVqbJL+
- XXEfKfATwH2YlmLiW1Cbs1HPp+XRrGSNflGKRpIS+6qumSaP4WeowxjoRokst4dV/97+
- LCZyuCGUIhJzGYowLu2xj3qALMhk9cS0mWHr9BeYv6tKWpc2P4f6YA5A20+mm2JxHOEl
- gaMA==
-X-Gm-Message-State: APuU4Z93SisZE3SDPMBJCAkYqd2aSufqrwjqgIOt/VoC+D+JtDT2RtIe
- hDR1OjMudsd+btvs2VyjOIRgcHRIjTgZLcRWwMJY1hujUQcIv5rk/1U6t1wVmxl6NCs=
-X-Gm-Gg: AYBFou319eLc3edzX3V1OMFQ7YL48z5+6gqh6+MEZF39GPWxANCMdHtZ9eyrIUcqJTY
- JERUkyKEl0TrJfB3zOSAczXmYAhVpguPDalqNULbaaeiMrszjAnx/QKwEVn1HglUpD3hDOIkN+P
- H2NKzqwnmEUKWOJqaN3w3ECvInt5W8xSTJFbRRvpz3GEzueRY7MA2e3YcPFNtsM9AcBQAAjX128
- ZeOZ+eC6o0+wvo4rqcHarrDQ1QcIxMtS0+k+2iC2mPb5zRfB/rQJoLUb4nSN4KB5BjsSAt4S4Vi
- dqX0VShHyZgzb/fLLNRTdI2wlDzlIbpVwhasjU5lsroRvMDHIjIr/dDuRnlneDyPEwO0Czz+EtT
- nrwjmiss9+70sCYwgZMz73mUb3uYcexP9vRLQ9fyDmcivaAI0b+bZ0gppsoMj2A+z9Cgi3zp9dh
- falG1ej7VSKRT9u4unhdlGf1wbWPeyKbp/Q9jdF9yeLw3wXWgmn5djZqFOFlwTLyWgAlHMDPqL0
- i58vIT8KKSVI7km0VCq+0w3XaJZWagbbIe14JOvSmuYtDDWT0KKn+ZcqJ5fvst3MTeiL7a8RBTh
- pwVkclkUD/Y8tzxUbG8iBvtAwF/wV9zcsgjRO8o6IXuqmwXPkVIfrA3wsellYV9CC/hEgPB34jn
- NmQxxEw==
-X-Received: by 2002:a17:903:3904:b0:2e3:1d30:8658 with SMTP id
- d9443c01a7336-2eb36396775mr166669095ad.10.1793869030724; 
- Thu, 05 Nov 2026 00:57:10 -0800 (PST)
+ bh=QSX7oFL3j7413Q4nQT+SGQuVL91uJZdU8V0ijp2OEps=;
+ b=CQz9jjT+Kd73bDYu8LQdyTnh6YlaFa/ECcLKg5k1AyLUnGqMlpyVNbdqofD360pkRa
+ XYMf7+yc1q4K3ZdwlGUbEqvKUC3p3gx2jqQ2Hz7W78Z2iYRBj3bqWppyNiLToR6V+oXO
+ ZGEKEdmCrSLkdZt5jdmcr01Yy5rA6Vc6EWPvJ6RYDhOICk8N4BMZnYaoZXqYRUrbdjMm
+ LcE3J/qPeXaHYqMMtNoWKnxmeL+TyYdKsDySvAxVWTOnr0e2d+yOv5hTyVupZbvaCN+Z
+ RJiKICEq5GnzFUhyaGEDEOHT+lc5T23SmZaXIBBzZcP/v4Xgiwat5lfnkFM5dHoRlGbF
+ Cxmw==
+X-Gm-Message-State: APuU4Z9bLlmetJiZkzrE+5/JFgr57OJNu7HYRRflmpcPN5j37Iab9dJk
+ lHp9qCchhN+leUnP1JESHqXU97eNtQFqEFj2VDfzV2zGspFi1y0OXfSuxk2uAOtAAJ4=
+X-Gm-Gg: AYBFou1u/KBGCWAo1RFvtmSsczvv/M9rQYHLe2BSgtkPX9KUdbYoPb/QxYkYub9e37v
+ UGe2oP5FRzmpm26IJVTTaqvrLdZC+Ly2+U2OZIBwQb/ObrOx645Xr7Ffr07uxFKEAmZOjBKicxg
+ JmJu3NbgHfnG197C3j7xl2gt1LUXJFEZGZjmrjVb7dvwOPR4usm4xv9B7JZKy4zwKzRu58/SUJE
+ NvLClqBXeErvN7mG0iDFIijUvONCo5PNunguPP1Xqb9Uvpjqv1ml7bPSepD3isIDPppaCnvPtJQ
+ jjNgRKlRGv2EXfxNBABLq6MhvnySuPlWyTju1etwwislMUz3d9uWXrYIONSePZH0Dd5gxU/XE3v
+ fKFZQOjE6RLTD+B6hrbREifyPyFW01Fo6Z8Z2tzYt8hL1Rxf4XA3ZCHl2RLZGF/PAp9jg8DbCcN
+ 27Wn4LG2C3/KiDRDO0LLgZQQmmxPRT8yZKniUZd4n7BUvdRSauYLjR9ooQU6DBGYUPsO3cx+Sju
+ xEcKxBOolWP6zgGg4VaRu1OGswLiga6fq2H3eOTcoMpquPqs1wYjwIox1PnKalzj6k06H+kvhMS
+ f2q3tAv3lvkeLJ47HGiAhajrhXu3MzFEq1W7Ro5V9USMYIQ9DvQ8b3XMmgwwGKwGiqVyzFAroOn
+ nIzj72A==
+X-Received: by 2002:a17:902:ec90:b0:2e8:1910:e398 with SMTP id
+ d9443c01a7336-2eb3649bf6amr187321315ad.9.1793869060817; 
+ Thu, 05 Nov 2026 00:57:40 -0800 (PST)
 Received: from localhost (118-163-122-149.hinet-ip.hinet.net.
  [118.163.122.149]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ed08bd5ab2sm15236955ad.5.2026.11.05.00.57.10
+ d9443c01a7336-2ed0906175bsm15699265ad.27.2026.11.05.00.57.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 00:57:10 -0800 (PST)
-Date: Thu, 05 Nov 2026 16:50:39 +0800
-Subject: [PATCH 03/19] hw/rtc: ds1338: refresh the user registers on a read
- rollover only
+ Thu, 05 Nov 2026 00:57:40 -0800 (PST)
+Date: Thu, 05 Nov 2026 16:50:43 +0800
+Subject: [PATCH 07/19] tests/qtest: ds1338: cover the clock-halt bit
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261105-rtc-ds1339-v1-3-50a8dc463ee8@free.fr>
+Message-Id: <20261105-rtc-ds1339-v1-7-50a8dc463ee8@free.fr>
 References: <20261105-rtc-ds1339-v1-0-50a8dc463ee8@free.fr>
 In-Reply-To: <20261105-rtc-ds1339-v1-0-50a8dc463ee8@free.fr>
 To: qemu-devel@nongnu.org
@@ -69,15 +68,15 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  Paolo Bonzini <pbonzini@redhat.com>, eblot@meta.com, 
  Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793868639; l=1985;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793868640; l=2998;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=Mt2M8RCp3ALFgPQLrMqox8ji8iLmVD233jOdYO4LkMo=;
- b=lN13VPE6DX0epbA3j4KxbegyhKY6dMenqIR1VTwgrFGRXnx9wvo+/WCn4Bnrd+/GlxRupOIrh
- qw3edfLAWaBDbSvwwGPxwab0U8D9qIPgO9aX+h7AXEmpua0f16aLAVf
+ bh=ZuX+spACHMjQ3cHCqU6XOjJREiGhA+BBWl2nnVGddEk=;
+ b=iB0UPmJGsAbiIGYduo3YMEceUwkNmXgz5aYh98m6vjvwTeFiV2iTlRfj+XH7ZpM5MayC9LLbU
+ eLpkqAV2nH3A2fCG+fJJTqiolQENZTRjDmxCVuPr15FHDuB0+ST7otO
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.215.178; envelope-from=eblot.ml@gmail.com;
- helo=mail-pg1-f178.google.com
+Received-SPF: pass client-ip=209.85.214.180; envelope-from=eblot.ml@gmail.com;
+ helo=mail-pl1-f180.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -105,59 +104,77 @@ X-Spam-Status: No, score=-17.0 required=3.0 tests=BAYES_00,INCLUDES_CR_TRAILER,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Synchronising the user buffers when the register pointer rolls over to
-zero is a property of reading them; hardware routes a write to the
-counters themselves. Doing it from the shared pointer increment meant a
-write transfer long enough to wrap overwrote the bytes the guest had
-just sent with the current time.
-
-Move the refresh to the read path.
+The clock-halt bit had no coverage, nor did its effect on the
+oscillator-stop flag.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/rtc/ds1338.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ tests/qtest/ds1338-test.c | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
-index 79bcff4599..c5fc74e6ca 100644
---- a/hw/rtc/ds1338.c
-+++ b/hw/rtc/ds1338.c
-@@ -12,6 +12,8 @@
-  * Limitations:
-  * - Writing the seconds register does not reset the internal countdown chain,
-  *   so the sub-second phase of the clock is not modelled.
-+ * - The user registers are refreshed on a START and on a read that wraps the
-+ *   register pointer, but not on a STOP.
-  * - Leap years follow the Gregorian rule, where the parts stop at 2100: they
-  *   derive the leap year from the two-digit year alone.
-  * - The model comes up with the clock running; real hardware comes up halted.
-@@ -157,15 +159,7 @@ static void ds1338_inc_regptr(DS1338State *s)
- {
-     DS1338Class *k = DS1338_GET_CLASS(s);
+diff --git a/tests/qtest/ds1338-test.c b/tests/qtest/ds1338-test.c
+index fad0ca53d4..1b73dca98d 100644
+--- a/tests/qtest/ds1338-test.c
++++ b/tests/qtest/ds1338-test.c
+@@ -32,6 +32,7 @@
  
--    /*
--     * The register pointer wraps around after the last register; wraparound
--     * causes the current time/date to be retransferred into the secondary
--     * registers.
--     */
-     s->ptr = (s->ptr + 1) % k->num_regs;
--    if (!s->ptr) {
--        ds1338_capture_current_time(s);
--    }
+ #define DS1338_CTRL_OSF  0x20
+ #define DS1338_CTRL_POR  0xb3
++#define DS1338_SEC_CH    0x80
+ 
+ /* The clock and calendar come up on the host time. */
+ static void send_and_receive(void *obj, void *data, QGuestAllocator *alloc)
+@@ -85,6 +86,42 @@ static void test_osf_write_protect(void *obj, void *data,
+     g_assert_cmphex(i2c_get8(i2cdev, DS1338_CONTROL) & DS1338_CTRL_OSF, ==, 0);
  }
  
- static int ds1338_event(I2CSlave *i2c, enum i2c_event event)
-@@ -201,6 +195,10 @@ static uint8_t ds1338_recv(I2CSlave *i2c)
-     trace_ds1338_recv(s->ptr, res);
- 
-     ds1338_inc_regptr(s);
-+    if (!s->ptr) {
-+        /* Read-only: a wrapping write must keep the bytes it just sent. */
-+        ds1338_capture_current_time(s);
++/* Halting the clock freezes the counters; clearing the halt resumes them. */
++static void test_clock_halt(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *i2cdev = (QI2CDevice *)obj;
++    uint8_t frozen[7], again[7];
++    unsigned idx;
++
++    /* Clear OSF first, so that halting the clock is what sets it again. */
++    i2c_set8(i2cdev, DS1338_CONTROL, 0x00);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1338_CONTROL) & DS1338_CTRL_OSF, ==, 0);
++
++    i2c_set8(i2cdev, DS1338_SECONDS, DS1338_SEC_CH | 0x30);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1338_SECONDS), ==,
++                    DS1338_SEC_CH | 0x30);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1338_CONTROL) & DS1338_CTRL_OSF,
++                    ==, DS1338_CTRL_OSF);
++
++    i2c_read_block(i2cdev, DS1338_SECONDS, frozen, sizeof(frozen));
++    g_usleep(1200 * 1000);
++    i2c_read_block(i2cdev, DS1338_SECONDS, again, sizeof(again));
++    g_assert_cmpmem(frozen, sizeof(frozen), again, sizeof(again));
++
++    i2c_set8(i2cdev, DS1338_SECONDS, 0x30);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1338_SECONDS) & DS1338_SEC_CH, ==, 0);
++    for (idx = 0; idx < 50; idx++) {
++        if (i2c_get8(i2cdev, DS1338_SECONDS) != 0x30) {
++            break;
++        }
++        g_usleep(100 * 1000);
 +    }
-     return res;
++    g_assert_cmpuint(from_bcd(i2c_get8(i2cdev, DS1338_SECONDS)), >, 30);
++
++    g_assert_cmphex(i2c_get8(i2cdev, DS1338_CONTROL) & DS1338_CTRL_OSF,
++                    ==, DS1338_CTRL_OSF);
++}
++
+ /* The user RAM returns what the guest wrote to it. */
+ static void test_nvram(void *obj, void *data, QGuestAllocator *alloc)
+ {
+@@ -122,6 +159,7 @@ static void ds1338_register_nodes(void)
+     qos_add_test("reset-defaults", "ds1338", test_reset_defaults, NULL);
+     qos_add_test("control-register", "ds1338", test_control_register, NULL);
+     qos_add_test("osf-write-protect", "ds1338", test_osf_write_protect, NULL);
++    qos_add_test("clock-halt", "ds1338", test_clock_halt, NULL);
+     qos_add_test("nvram", "ds1338", test_nvram, NULL);
+     qos_add_test("address-wrap", "ds1338", test_address_wrap, NULL);
  }
- 
 
 -- 
 2.53.0-Meta
