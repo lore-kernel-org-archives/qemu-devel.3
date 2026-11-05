@@ -1,65 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978E5606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAC4606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOtmJ-0007AL-Nu; Thu, 05 Nov 2026 04:29:03 -0500
+	id 1xOtmH-00077z-KH; Thu, 05 Nov 2026 04:29:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtmH-00076N-1j
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:29:01 -0500
-Received: from mail-pg1-f182.google.com ([209.85.215.182])
+ id 1xOtmB-00072L-35
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:28:56 -0500
+Received: from mail-pf1-f180.google.com ([209.85.210.180])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtmF-0006yI-47
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:29:00 -0500
-Received: by mail-pg1-f182.google.com with SMTP id
- 41be03b00d2f7-cdb628232d2so24633a12.0
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:28:58 -0800 (PST)
+ id 1xOtm7-0006xr-C4
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:28:53 -0500
+Received: by mail-pf1-f180.google.com with SMTP id
+ d2e1a72fcca58-8a39e5161c1so1371113b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:28:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793870937; x=1794475737;
+ d=1e100.net; s=20260707; t=1793870930; x=1794475730;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=m9zQSOewUBeGGhmPONHFHebxBVsiYOdk+rPiNV2Yw/M=;
- b=VQ5/DgDRN7XmaiIe51HpdrNfajwqqf6A4l6zIoR1TAh31jQnSDppdpoe3hfA7RonQk
- sie7hggo9LNw2jbRfuAW/kAD3/NTTwIn8mT/nT2UTVdMIauXg/xz8x5A/s8ExtAmQcOk
- VddPOWp7rGccn5SbGdJQJ/+vW9Jmq0gbWXKdjBE3KThhiqwUItiTM24z7vPDEUPwCK+K
- Rfk8PoxXaHbA3vyv4M1g4U9hBGMqcRhzolmXsVnzIdZgx2qKcuV7DdWu4NUyUsjQ67Ai
- E7Bf8fhg8/G9hXqDDgIDZ+9TkktEkvhVqE5H2MHT93D9WCIBG5rZxSlfVLrvjIMZE6bH
- P5ug==
-X-Gm-Message-State: APuU4Z8TcXbmXpN46m1gP899hv9iP7IGoWu8YgGdqOq1yMQQNNc+7WG7
- l3CcrSdgqVlpd2OPAYpafaKjgzS9NZpxVCaUvCxri4UZB4pjrxXD80uys6gGemipCV8=
-X-Gm-Gg: AYBFou34aHtemDXWh55HKhMYUnwBRxV0Za1WB5IqlI1k3aUbMSwPuFnTaHl73y+G7Gz
- w2shGq/73cUA6wLCW7aed4XCBicbdM1tmyPPwnbvSJ9eWxgmxxBSti4PWu7W5qcp03x5+n1gmq5
- gIzcsZ5gfsHjnUkTAw+dvNoccUClJbVe3Z+O5e4qZizY2QcIId58zLTezQdhqIyMEx7W+Jw7rI2
- asUGl2wd3yhI3zYNNNoNI57fwIMn7tjbQ3C4mGrEgO14DzhiMxqiKW12YEyqHtIuo/BJlghQjzo
- iPaLS6ggqH8lizvEaclY+UNK0K41XRSA50Hy1p1ZAWqKnog7zASXpCk+Bd8pkAIdEpGCo1uNSC0
- 0R5twYVMkPGzqzUW2EHr9V4Lh0YrroBa+ravWzicqpuVbe+p7cgV6wtk6Hp/Db+59qtbs/9QEX7
- 4FJbR+6GQUaKsuhlT2knKLpB2gCCVAv/+ysvzHbNOydYq+cMEnNWjNFvGKIsrEXIuOUiFeq4Tag
- yo2kQ/lkJ4NzBZr9ZZOyzpjkeDMMifDr5q013JFX20tDiHlZN6ySW0lY0DdNAKKyFhF0jxpZp3q
- UdDiUcYe9XSnAXFxR5YlXoE7oaGKFriV0NFmQrCvSSm+9ujGl56UESx7jGRL9U14JTjASAxXqTn
- r
-X-Received: by 2002:a17:90b:2ecc:b0:3ac:6fcf:91d2 with SMTP id
- 98e67ed59e1d1-3ae897c64fbmr16442723a91.19.1793870937365; 
- Thu, 05 Nov 2026 01:28:57 -0800 (PST)
+ bh=mKxKyo4fCuncIjIg3ptOGVyWIQnIG439vq+7oNa+8Mg=;
+ b=W/Yc1PSoAO/URUcntBKsJNbvVKyaEzlLjRjlEwT+Q31qwYacFUePHR/f4nRWbmDTgh
+ NbRgGteofLZSPisrASFQVi7ky5yOkDOrqSd2phEnE2N/qOalwj2I99p/9TqyS03w9RUj
+ +/qiJRVRc5TX2l/F0Y8iEFXYWWWvqL2ENjBk3+xnfBp3Bwv5sxLjAz1UVEdKj7xWeHC1
+ IZ4WJvwTfVvTtXFMACGxoeGadt/+SLiNN+4wJaDJZjHpAJ2RWEfsh7jjDL52IWOVqanR
+ ykOZYKMVyZbPJNIHp3Ve1devBD4c/W3xej+16dugsPGBySLNgpzuizpRJEuzW1LD0q/X
+ WbGg==
+X-Gm-Message-State: APuU4Z+VsGd0pGLtpoXQtV7Hmi31h1VZOPfp+biG3eOUFVcWqn/I9Oy1
+ KflLIW6AGXN2pns/o7YD34yhW+af+ySflcboPkwE1Vs+QG2bvkDkZPnBAs5OVyfPxbc=
+X-Gm-Gg: AYBFou1y0ByUxnUD6uwg89Jt/4QJ3yHsnpyUTQudbt2vSV6VTamAGoqh08uOzKZxeGF
+ A+c2WaTw2yk5Xl1DjIB0ahxLbCXfQrez4IelUEegnyAm/Y53X0EE6+N7g9N6O+ia6EM28pHlCV1
+ MPFJf8c5J6DEQOD7QdHl4yCFiGIsbhA4BtMJZuH214AhXzX29qz2/VBDD304gU/jWQE0NEFQowT
+ YX4DPoG6KS5meAMR9G2PdwEhFPKD7+0O2EBP9+6bswI1fqYcW3gVhp0ibRfLHz9/ERVIMznW9A7
+ 7Ae6t15R+G4sdgQfFR/9yzmdM1Tvc6vyMYV+ltc8MHrat5R6ZEfwEBydvmRO/wPty/QjQZ+KCP/
+ kE5AY/EmPjrcy5+vGmsWIIZl9PO+iVVf71DylNmDlo1D5aMGoht0FWLpX9OlhxQ6boea5E4XoSE
+ 7UT7wLScyAmNjuELi4V9Bc2h3G9Twt26MFigbsGZZRNfsCDfePsSDYqMMQllK0wuGHuizGT484X
+ k8F3v7C0/zOMw/NejnvomCtTq8qGa0ZSMWCLAIQUlrLKzSkYsv6wLU40Q+KvPjAgKTc61nkWQ8t
+ TdbQAgD2hkheznVK/b6DGcOhTk/vwUR+DUYgkte45nbt71WhJab9KYCFk+lqiSEXy4v2poHySFC
+ d
+X-Received: by 2002:a05:6a00:2e8f:b0:8a0:1c79:b442 with SMTP id
+ d2e1a72fcca58-8a9b69872fbmr16762945b3a.0.1793870929824; 
+ Thu, 05 Nov 2026 01:28:49 -0800 (PST)
 Received: from localhost (118-163-122-149.hinet-ip.hinet.net.
  [118.163.122.149]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b094dec0e3sm3395847a91.1.2026.11.05.01.28.56
+ d2e1a72fcca58-8b09a8c303dsm1720886b3a.20.2026.11.05.01.28.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 01:28:57 -0800 (PST)
-Date: Thu, 05 Nov 2026 17:25:48 +0800
-Subject: [PATCH 09/16] hw/sensor: tmp421: migrate the exact measurement
+ Thu, 05 Nov 2026 01:28:49 -0800 (PST)
+Date: Thu, 05 Nov 2026 17:25:47 +0800
+Subject: [PATCH 08/16] hw/sensor: tmp421: keep the measurement across a
+ range change
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261105-sensor-tmp421-v1-9-c46853f5e1f0@free.fr>
+Message-Id: <20261105-sensor-tmp421-v1-8-c46853f5e1f0@free.fr>
 References: <20261105-sensor-tmp421-v1-0-c46853f5e1f0@free.fr>
 In-Reply-To: <20261105-sensor-tmp421-v1-0-c46853f5e1f0@free.fr>
 To: qemu-devel@nongnu.org
@@ -71,15 +72,15 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, eblot@meta.com,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793870743; l=3784;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793870743; l=6919;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=s1Fn+bQ71xnXmSCzvqiaHUL+siL1Ys4lowpPQMHLKzs=;
- b=3FvekpxYMe4VR/ANlwP5iRX3fI30QPDBLKgXmyV5rAG/xkCUSnh0H5gT6X1Rb5xI8NUJ7Bvy9
- Un2c0ll6GKLDc3CsXoorIotp6ru0WgS/2lOlGtfwmrq7DwVSrQEHkxO
+ bh=qoPYlE2KGeqUXqEXuY48ROoEFeJ8AsOvINnq4nphwJk=;
+ b=qq0WB1SHrobf5sZ5jZDqQ2ARcuPd9ctGUgou38hVw2o322Q8stvB+Vob7RxELr6f1L6jHnzHX
+ NmfOje17jK4BBF++TGqTkpfGUdmj/G9dXk5WVYZR2+luzJIn627FHgB
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.215.182; envelope-from=eblot.ml@gmail.com;
- helo=mail-pg1-f182.google.com
+Received-SPF: pass client-ip=209.85.210.180; envelope-from=eblot.ml@gmail.com;
+ helo=mail-pf1-f180.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -103,117 +104,197 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.0 required=3.0 tests=BAYES_00,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The register form the stream carries only resolves a sixteenth of a
-degree, so a temperature set through the property does not survive a
-round trip unless it happens to fall on that grid.
+The model stored temperatures in their register form, which carries
+the extended-range offset. Leaving that range therefore reinterpreted
+the stored value and shifted the reported temperature by 64 degrees,
+whether the range bit was cleared by a configuration write or by a
+reset. The encoding was wrong at both ends too: the extended range is
+offset binary, so it does not fit a signed register above +64 C, and
+neither range saturated where the datasheet says it should.
 
-Add a subsection holding the measurement itself, sent only when the
-register form cannot reproduce it. A stream from a sensor holding an
-expressible value -- the usual case, boards preset whole degrees --
-therefore stays loadable by a QEMU that knows nothing of it.
+Hold the measurement in millidegrees and derive the register from it
+on each read, which is what the range bit selects: an encoding, not a
+new measurement.
+
+The stream keeps carrying the register form, which is what a released
+QEMU writes and expects, so it stays loadable both ways; the
+measurement is converted to and from it on save and load.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/sensor/tmp421.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 58 insertions(+), 2 deletions(-)
+ hw/sensor/tmp421.c | 96 +++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 81 insertions(+), 15 deletions(-)
 
 diff --git a/hw/sensor/tmp421.c b/hw/sensor/tmp421.c
-index 943295240d..1966301d7a 100644
+index 87cbd9dd4b..943295240d 100644
 --- a/hw/sensor/tmp421.c
 +++ b/hw/sensor/tmp421.c
-@@ -60,6 +60,7 @@ struct TMP421State {
+@@ -54,9 +54,13 @@ struct TMP421State {
+     I2CSlave parent_obj;
+     /*< public >*/
  
-     /* migration only: the register form the stream carries */
-     int16_t temperature[4];
-+    bool temp_mc_loaded;
+-    int16_t temperature[4];
++    /* Measured temperature, millidegrees Celsius */
++    int32_t temp_mc[4];
+     uint8_t n_correct[3];   /* remote channels only */
  
++    /* migration only: the register form the stream carries */
++    int16_t temperature[4];
++
      uint8_t status;
      uint8_t config[2];
-@@ -380,6 +381,56 @@ static const VMStateDescription vmstate_tmp421_n_correct = {
+     uint8_t rate;
+@@ -115,12 +119,51 @@ OBJECT_DECLARE_TYPE(TMP421State, TMP421Class, TMP421)
+ static const int32_t mins[2] = { -40000, -55000 };
+ static const int32_t maxs[2] = { 127000, 150000 };
+ 
++/*
++ * Register form of a measurement (datasheet Table 1): whole degrees in the
++ * high byte, the fraction in the upper nibble of the low byte. The standard
++ * range is two's complement and saturates at -64 C (C0h) and +127 C (7Fh);
++ * the extended range is unsigned with a -64 C offset, spanning -64 C (00h) to
++ * +191 C (FFh). The range only selects an encoding: the measurement itself is
++ * held apart, so switching range re-reads the same temperature.
++ */
++#define TMP421_EXT_OFFSET   (64 * 256)
++#define TMP421_STD_REG_MIN  (-64 * 256)          /* C0h, -64 C */
++#define TMP421_STD_REG_MAX  (127 * 256 + 0xf0)   /* 7Fh, +127 C */
++#define TMP421_EXT_REG_MAX  (255 * 256 + 0xf0)   /* FFh, +191 C offset */
++
++static uint16_t tmp421_encode(const TMP421State *s, unsigned channel)
++{
++    bool ext_range = s->config[0] & TMP421_CONFIG_RANGE;
++    int raw = s->temp_mc[channel] * 256 / 1000;
++
++    if (ext_range) {
++        raw = MAX(0, MIN(TMP421_EXT_REG_MAX, raw + TMP421_EXT_OFFSET));
++    } else {
++        raw = MAX(TMP421_STD_REG_MIN, MIN(TMP421_STD_REG_MAX, raw));
++    }
++
++    return raw;
++}
++
++/*
++ * The inverse of tmp421_encode(). Only the standard range is signed: the
++ * extended one spans the whole byte, so its top bit is a temperature, not a
++ * sign. Rounding follows the sign so that every register value the encoder
++ * can produce decodes back to the measurement it came from.
++ */
++static int32_t tmp421_decode(const TMP421State *s, int16_t reg)
++{
++    bool ext_range = s->config[0] & TMP421_CONFIG_RANGE;
++    int32_t raw = ext_range ? (uint16_t)reg - TMP421_EXT_OFFSET : reg;
++
++    return (raw * 1000 + (raw < 0 ? -128 : 128)) / 256;
++}
++
+ static void tmp421_get_temperature(Object *obj, Visitor *v, const char *name,
+                                    void *opaque, Error **errp)
+ {
+     TMP421State *s = TMP421(obj);
+-    bool ext_range = (s->config[0] & TMP421_CONFIG_RANGE);
+-    int offset = ext_range * 64 * 256;
+     int64_t value;
+     int tempid;
+ 
+@@ -134,21 +177,18 @@ static void tmp421_get_temperature(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    value = ((s->temperature[tempid] - offset) * 1000 + 128) / 256;
++    value = s->temp_mc[tempid];
+ 
+     visit_type_int(v, name, &value, errp);
+ }
+ 
+-/* Units are 0.001 centigrades relative to 0 C.  s->temperature is 8.8
+- * fixed point, so units are 1/256 centigrades.  A simple ratio will do.
+- */
++/* Units are 0.001 centigrades relative to 0 C. */
+ static void tmp421_set_temperature(Object *obj, Visitor *v, const char *name,
+                                    void *opaque, Error **errp)
+ {
+     TMP421State *s = TMP421(obj);
+     int64_t temp;
+     bool ext_range = (s->config[0] & TMP421_CONFIG_RANGE);
+-    int offset = ext_range * 64 * 256;
+     int tempid;
+ 
+     if (!visit_type_int(v, name, &temp, errp)) {
+@@ -171,7 +211,7 @@ static void tmp421_set_temperature(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    s->temperature[tempid] = (int16_t) ((temp * 256 - 128) / 1000) + offset;
++    s->temp_mc[tempid] = temp;
+ }
+ 
+ static bool tmp421_channel_enabled(TMP421State *s, unsigned channel)
+@@ -188,16 +228,14 @@ static bool tmp421_channel_enabled(TMP421State *s, unsigned channel)
+  */
+ static uint8_t tmp421_temp_high(TMP421State *s, unsigned channel)
+ {
+-    uint16_t reg = s->temperature[channel];
+-
+-    return tmp421_channel_enabled(s, channel) ? reg >> 8 : 0;
++    return tmp421_channel_enabled(s, channel) ?
++           tmp421_encode(s, channel) >> 8 : 0;
+ }
+ 
+ static uint8_t tmp421_temp_low(TMP421State *s, unsigned channel)
+ {
+-    uint16_t reg = s->temperature[channel];
+-
+-    return tmp421_channel_enabled(s, channel) ? reg & 0xf0 : 0;
++    return tmp421_channel_enabled(s, channel) ?
++           tmp421_encode(s, channel) & 0xf0 : 0;
+ }
+ 
+ static void tmp421_read(TMP421State *s)
+@@ -342,10 +380,38 @@ static const VMStateDescription vmstate_tmp421_n_correct = {
      }
  };
  
 +/*
-+ * That form only resolves a sixteenth of a degree, so the measurement itself
-+ * travels in a subsection -- sent only when the register form cannot
-+ * reproduce it, which leaves the usual stream loadable by a QEMU that does
-+ * not know the subsection.
++ * The stream carries the register form of the measurement: that is what a
++ * QEMU predating the millidegree state writes, and what it expects back.
 + */
-+static bool tmp421_temp_mc_needed(void *opaque)
++static int tmp421_pre_save(void *opaque)
 +{
 +    TMP421State *s = opaque;
-+    bool ext_range = s->config[0] & TMP421_CONFIG_RANGE;
-+    int32_t offset = ext_range ? TMP421_EXT_OFFSET : 0;
 +
-+    /*
-+     * The register form reproduces a measurement when the conversion divides
-+     * exactly and the encoder had nothing to clamp. Asking the decoder
-+     * instead would settle the question with the function whose result the
-+     * subsection exists to protect, and hide any error it has.
-+     */
 +    for (unsigned channel = 0; channel < ARRAY_SIZE(s->temp_mc); channel++) {
-+        int32_t scaled = s->temp_mc[channel] * 256;
-+
-+        if (scaled % 1000 ||
-+            (uint16_t)(scaled / 1000 + offset) != tmp421_encode(s, channel)) {
-+            return true;
-+        }
++        s->temperature[channel] = tmp421_encode(s, channel);
 +    }
 +
-+    return false;
-+}
-+
-+static int tmp421_temp_mc_post_load(void *opaque, int version_id)
-+{
-+    TMP421State *s = opaque;
-+
-+    s->temp_mc_loaded = true;
 +    return 0;
 +}
 +
-+static const VMStateDescription vmstate_tmp421_temp_mc = {
-+    .name = "TMP421/temperature-mc",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = tmp421_temp_mc_needed,
-+    .post_load = tmp421_temp_mc_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_INT32_ARRAY(temp_mc, TMP421State, 4),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
++static int tmp421_post_load(void *opaque, int version_id)
++{
++    TMP421State *s = opaque;
 +
- /*
-  * The stream carries the register form of the measurement: that is what a
-  * QEMU predating the millidegree state writes, and what it expects back.
-@@ -399,9 +450,13 @@ static int tmp421_post_load(void *opaque, int version_id)
- {
-     TMP421State *s = opaque;
- 
--    for (unsigned channel = 0; channel < ARRAY_SIZE(s->temp_mc); channel++) {
--        s->temp_mc[channel] = tmp421_decode(s, s->temperature[channel]);
-+    if (!s->temp_mc_loaded) {
-+        for (unsigned channel = 0; channel < ARRAY_SIZE(s->temp_mc);
-+             channel++) {
-+            s->temp_mc[channel] = tmp421_decode(s, s->temperature[channel]);
-+        }
-     }
-+    s->temp_mc_loaded = false;
- 
-     return 0;
- }
-@@ -424,6 +479,7 @@ static const VMStateDescription vmstate_tmp421 = {
-         VMSTATE_END_OF_LIST()
-     },
-     .subsections = (const VMStateDescription * const []) {
-+        &vmstate_tmp421_temp_mc,
-         &vmstate_tmp421_n_correct,
-         NULL
-     }
++    for (unsigned channel = 0; channel < ARRAY_SIZE(s->temp_mc); channel++) {
++        s->temp_mc[channel] = tmp421_decode(s, s->temperature[channel]);
++    }
++
++    return 0;
++}
++
+ static const VMStateDescription vmstate_tmp421 = {
+     .name = "TMP421",
+     .version_id = 0,
+     .minimum_version_id = 0,
++    .pre_save = tmp421_pre_save,
++    .post_load = tmp421_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT8(len, TMP421State),
+         VMSTATE_UINT8_ARRAY(buf, TMP421State, 2),
 
 -- 
 2.53.0-Meta
