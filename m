@@ -1,65 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E61606A326
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F96606A326
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOtZF-0006wK-SD; Thu, 05 Nov 2026 04:15:34 -0500
+	id 1xOtZF-0006vb-AL; Thu, 05 Nov 2026 04:15:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtY1-00059m-9X
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:14:18 -0500
-Received: from mail-pg1-f179.google.com ([209.85.215.179])
+ id 1xOtYO-0005et-5Y
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:14:41 -0500
+Received: from mail-pj1-f53.google.com ([209.85.216.53])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtXz-0005Rj-AL
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:14:17 -0500
-Received: by mail-pg1-f179.google.com with SMTP id
- 41be03b00d2f7-cc4aa0246b7so798571a12.3
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:14:14 -0800 (PST)
+ id 1xOtYM-0005V0-C6
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:14:39 -0500
+Received: by mail-pj1-f53.google.com with SMTP id
+ 98e67ed59e1d1-3b09a83d12aso861726a91.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:14:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793870053; x=1794474853;
+ d=1e100.net; s=20260707; t=1793870077; x=1794474877;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=AHne2JcHx+O7G4KfyAccP7ggw7u1GmKaKZ5l2ViY6Cs=;
- b=qDqR42YAELBg4oQAqBVmungSDGrZ4ix7yppMHEENx3OwNEy4zmEnA2TXm5EB0AfQWD
- ZkQE724+rzVakF8gKiClBJJ2/vx5/66jBjK8n56wHRVOp6qMCTvO9+sAciavW4XFJrYA
- MDu1XONVyZScIhsjqV4VKzyigR1pxTiNpsuwRBdbNQvWTzMbUtVAz8oCsccWUFMVxxFW
- Q66PoyzkNbOq7qZNYyS7Te+ot+EaoOYxAg3hzeYQV5pHxQ61xpkMi1tWtAJyDa67rGlz
- h2EN4NR66H2gIzdHPJ6ibpUqfjqdjEGKAHkvqBDQKm5Ysd9Nmvum0xyDdkobVw7AESA1
- 37EA==
-X-Gm-Message-State: APuU4Z/ntLg+TtqOQuufwntebTm96MwBvZW72PpyfuP3TcbZz6O84y4H
- 328qA3IvIWzG77RrgRq6guZUfctf7gFfqU0rplywhJfd2MalhX2sLUcd95LGqaxO2hY=
-X-Gm-Gg: AYBFou1HzN72vuTgwhn1/juNbqIvrSu2YsPId/WMqYlOr881o0jYMK5om/pdjZQbDaQ
- oh7xMrUtvxIQ1/klAbuxDua9IEEg5p6L5OkS4XAte6iRqSHRsK5blVuUXfB/H3fq1pBamChqc+t
- YGd4s6iWcsD9FRnuLRjD+ckdEVHobCf2Rl4qkhR8Y+7kh7QuoRr+hIIi5uldz4gtXbppRXun1Fg
- pzvzOGyZRETMgyeRKfAGyfZ/6lcn2XqsTRINXORZ1gNicKo3KthI44ZzzPIVccF+QPM/ACPBpaZ
- vPp1LJrcAUB54X9J/fLBoXu0UVZS+QakhlgdyAMH+cGqAR30eZr993Pi5Lm5XDrQ0tyNU8f4ZY0
- 8txfL7uLRdYQupR6U2RsE10/fMPJ3popvYXDMXBOS6VaEZf5TrI63FRc55fdn1MmpczXWz/RXdB
- M4M/XMioLQrxZ49dd/b2lgoOW6T+0yL709eDZ8iLp047UXJFIyB/0jk+dRDxqAvYaXbzh1Id/Ve
- 3yCSdGU2HY5kYOSnilbGZUtcuCYaDOJB9nVIiqeLRxFRfvIyqze0Terws83YMmqDT9gj0OzUj5L
- XH1njLwrW3qCETaLifugkiFVNzkbSOYKHNp8DAk9RtwGHy2bw0mWtYs8KECkwiOIVHZuV83aa/0
- tLJJHzw==
-X-Received: by 2002:a17:90b:2fd0:b0:3ac:af8b:6f3 with SMTP id
- 98e67ed59e1d1-3ae898149e2mr13957413a91.52.1793870053310; 
- Thu, 05 Nov 2026 01:14:13 -0800 (PST)
+ bh=eT68nxMn01vW7O3JJprDmDkWOIfn9yjPcnQ/rqWRCTw=;
+ b=a+vzQrywuF75aDLUdpWZ4zzV4iuf9+n9kBaKltefi6oFVc5BYQ/jFl8DhJiu5KFmHP
+ w4GScl1ZL599dAPt0i7Gl82mdIjveCeQOrfFsQ8lD2kYo/q1IkqdBNoZVBofj3voVKax
+ FwitjRlMi5N1zx7g51tcOIjepFWiERUd5unZyLmADSgBToVVQXV0nFDoZfzBPxnjkccN
+ CyBjPXaNR6K1VkdoI7o0TnjVkZhgWFeaf2KZRNq49A9MFhuQMvRyKDtc4Q+rmIWlZvQj
+ /F5LqI7OIAAJ9YmSzoZ7oLm6Dv2Uis9S7nctvSUfDfQn3zC52V+8aqK1/orjZUb8oeRN
+ Fu/w==
+X-Gm-Message-State: APuU4Z+WJ2O/xD25JGr6hDtfkeWNl6JzlIlzu/EkqrEeaZn/juCgDR+B
+ 5nL8VwIf+8DbhkMv18zMu57xBJRLIo5rxr44ms2R2pxuBR9Jro35RZstVZ09CsvNojI=
+X-Gm-Gg: AYBFou3f5DYEP0SQ7FFd/KZQME3CJwoMuGz9hgAvfrDn2qLqF9OPLk9p0IRP4FcjmyW
+ by7jzFb7lrrM0Pv00/xO9sT43LMwwE/VfJSqWEdeTgndRJlUoVomuKvdLgY4K44E5CjkxlGMbIM
+ DWzeBiSMezKs+/7N41tS86tu4G69fYbmDvQTWRt8MzMnC/gC4H8XMc1uqcD5by1CQUy1r4isS+4
+ DCWCXue7Ky3OrQhNDf8dgSdP4+gHdbClGZ8W3a+I79IVut0fP3HWtK5DZGipYlqTVQwOIJmVG5h
+ ECDplRDe7hImupVtBWbHjvNET+WNrr6B0hXB9KZRRBOtdvIPke+Xx4cnXmJnwxCi8VhyFNy7yZC
+ 826q3v+TnLLjuFYDCXvn50db3pNM8pf46tuoe+jFvQd/lAVfG/PYcXOtrbDGTI4Whqpkoj1t+vF
+ TX0iv3CH0XbX6keOvO1ji/LlPB2mIODk4WkC/epdZAjiNPYoUM78G/Hq3bL2/xZh6S12X1/o50H
+ Py+cbiUfTuD6GCfSER+V4+AX2IdsHA51xVWbCn78Fg/ELF9k6nNcK7o2JKwEpPiKDtJh7/l6d7N
+ 8l1a0iyPhsWt2QioqeJSXmhh+NCGs8iBkJ4JldlCYFgwqRA3seJguqbQBQqCEWzi8XnLVpC34hP
+ FbFsLSUI=
+X-Received: by 2002:a17:90b:3142:b0:3ab:4f1:4f7e with SMTP id
+ 98e67ed59e1d1-3ae897f3919mr16515486a91.28.1793870076726; 
+ Thu, 05 Nov 2026 01:14:36 -0800 (PST)
 Received: from localhost (118-163-122-149.hinet-ip.hinet.net.
  [118.163.122.149]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b0991c13dcsm3789814a91.3.2026.11.05.01.14.12
+ 98e67ed59e1d1-3b0b312ccf1sm3041917a91.4.2026.11.05.01.14.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 01:14:12 -0800 (PST)
-Date: Thu, 05 Nov 2026 17:12:57 +0800
-Subject: [PATCH 05/16] tests/qtest: ina230: cover the injection-property limits
+ Thu, 05 Nov 2026 01:14:36 -0800 (PST)
+Date: Thu, 05 Nov 2026 17:13:00 +0800
+Subject: [PATCH 08/16] tests/qtest: ina230: cover a cleared calibration per
+ channel
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261105-sensor-ina23x-v1-5-5433ed104990@free.fr>
+Message-Id: <20261105-sensor-ina23x-v1-8-5433ed104990@free.fr>
 References: <20261105-sensor-ina23x-v1-0-5433ed104990@free.fr>
 In-Reply-To: <20261105-sensor-ina23x-v1-0-5433ed104990@free.fr>
 To: qemu-devel@nongnu.org
@@ -71,15 +72,15 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, eblot@meta.com,
  Laurent Vivier <lvivier@redhat.com>, Emmanuel Blot <emmanuel.blot@free.fr>, 
  Glenn Miles <milesg@linux.ibm.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793869975; l=4069;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793869976; l=2313;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=3UD9l/AEvavR8S7pGFg9evzwIlCmssJcXuU0S21eH1k=;
- b=vR+gD93r/yoe2J8+z6SuJuPnXXYk+GoOx9si90ZxklZZz/X3rkosbw4/iVcmbUUjNFcKjoEBL
- ZXyniqx/zsiDLX5yxTorBhHkZEhp6ReIvo6DW4gdEd3Gh9yHv2YXPiu
+ bh=PzxGOCXpiAe3gOLqCnGKqAPPjR61GoJKj4uRIt53Dm4=;
+ b=dw+HLS3qQ8EcVN16hejxQOg25AAbwHowtHtJdk5TUCGrqpys9CvMfiepCRDWk2BUrL1THRFLZ
+ kNJXxJBtpRPCnAvSGbjKzosx2aLgOey6GH0Q1Fj+ZEXYjgRnjirGv7y
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.215.179; envelope-from=eblot.ml@gmail.com;
- helo=mail-pg1-f179.google.com
+Received-SPF: pass client-ip=209.85.216.53; envelope-from=eblot.ml@gmail.com;
+ helo=mail-pj1-f53.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -107,107 +108,58 @@ X-Spam-Status: No, score=-17.0 required=3.0 tests=BAYES_00,INCLUDES_CR_TRAILER,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Verify that the extremes of the shunt- and bus-voltage injection ranges
-round-trip through the QOM property without truncation or wraparound,
-and that values just outside are rejected rather than silently wrapped.
+Verify that without a calibration value the current and power
+registers read zero, whichever channels the mode converts.
 
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/qtest/ina230-test.c | 59 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ tests/qtest/ina230-test.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
 diff --git a/tests/qtest/ina230-test.c b/tests/qtest/ina230-test.c
-index 1c55028fcb..36c899efee 100644
+index cda52bb815..f9e8d3ab9f 100644
 --- a/tests/qtest/ina230-test.c
 +++ b/tests/qtest/ina230-test.c
-@@ -47,6 +47,11 @@
- #define SHUNT_LSB_NV        2500
- #define BUS_LSB_UV          1250
- 
-+/* Injection-property limits (see ina230.c) */
-+#define SHUNT_MIN_NV        (-81920000)
-+#define SHUNT_MAX_NV        81917500
-+#define BUS_MAX_UV          36000000
-+
- #define DIE_ID_VAL          0x2310
- 
- /* QMP helpers for injecting the physical inputs */
-@@ -76,6 +81,18 @@ static int qmp_ina230_get(const char *property)
-     return ret;
+@@ -301,6 +301,30 @@ static void test_zero_cal(void *obj, void *data, QGuestAllocator *alloc)
+     g_assert_cmphex(i2c_get16(dev, REG_POWER), ==, 0x0000);
  }
  
-+/* A qom-set expected to be rejected (value outside the supported range) */
-+static void qmp_ina230_set_fail(const char *property, int64_t value)
-+{
-+    QDict *resp;
-+
-+    resp = qmp("{ 'execute': 'qom-set', 'arguments':"
-+               " { 'path': %s, 'property': %s, 'value': %lld } }",
-+               INA230_TEST_ID, property, (long long)value);
-+    g_assert(qdict_haskey(resp, "error"));
-+    qobject_unref(resp);
-+}
-+
- /* Power-on-reset default values and the Die ID */
- static void test_defaults(void *obj, void *data, QGuestAllocator *alloc)
- {
-@@ -307,6 +324,46 @@ static void test_cvrf(void *obj, void *data, QGuestAllocator *alloc)
-     g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_CVRF, ==, 0);
- }
- 
-+/* Shunt-voltage injection limits */
-+static void test_shunt_limits(void *obj, void *data, QGuestAllocator *alloc)
++/* Clearing the Calibration zeroes both derived registers in any mode */
++static void test_zero_cal_channels(void *obj, void *data,
++                                   QGuestAllocator *alloc)
 +{
 +    QI2CDevice *dev = (QI2CDevice *)obj;
++    static const uint8_t modes[] = { 0x5, 0x6, 0x7 };
++    size_t idx;
 +
-+    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
++    for (idx = 0; idx < ARRAY_SIZE(modes); idx++) {
++        i2c_set16(dev, REG_CONFIG, CONFIG_RST);
++        i2c_set16(dev, REG_CALIBRATION, 0x0A00);
++        qmp_ina230_set("shunt-voltage", 20000000);
++        qmp_ina230_set("bus-voltage", 11980000);
++        g_assert_cmphex(i2c_get16(dev, REG_CURRENT), !=, 0x0000);
++        g_assert_cmphex(i2c_get16(dev, REG_POWER), !=, 0x0000);
 +
-+    qmp_ina230_set("shunt-voltage", SHUNT_MAX_NV);
-+    g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, 0x7FFF);
-+    g_assert_cmpint(qmp_ina230_get("shunt-voltage"), ==, SHUNT_MAX_NV);
++        i2c_set16(dev, REG_CONFIG, modes[idx]);
++        i2c_set16(dev, REG_CALIBRATION, 0x0000);
 +
-+    qmp_ina230_set("shunt-voltage", SHUNT_MIN_NV);
-+    g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, 0x8000);
-+    g_assert_cmpint(qmp_ina230_get("shunt-voltage"), ==, SHUNT_MIN_NV);
-+
-+    qmp_ina230_set_fail("shunt-voltage", (int64_t)SHUNT_MAX_NV + 1);
-+    qmp_ina230_set_fail("shunt-voltage", (int64_t)SHUNT_MIN_NV - 1);
-+    g_assert_cmpint(qmp_ina230_get("shunt-voltage"), ==, SHUNT_MIN_NV);
-+    g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, 0x8000);
++        g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x0000);
++        g_assert_cmphex(i2c_get16(dev, REG_POWER), ==, 0x0000);
++    }
 +}
 +
-+/* Bus-voltage injection limits. */
-+static void test_bus_limits(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
-+
-+    qmp_ina230_set("bus-voltage", 0);
-+    g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, 0x0000);
-+
-+    qmp_ina230_set("bus-voltage", BUS_MAX_UV);
-+    g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, 0x7080);
-+    g_assert_cmpint(qmp_ina230_get("bus-voltage"), ==, BUS_MAX_UV);
-+
-+    qmp_ina230_set_fail("bus-voltage", (int64_t)BUS_MAX_UV + 1);
-+    qmp_ina230_set_fail("bus-voltage", -1);
-+    g_assert_cmpint(qmp_ina230_get("bus-voltage"), ==, BUS_MAX_UV);
-+}
-+
- static void ina230_register_nodes(void)
+ /* Clamping at full scale and the OVF (math overflow) flag */
+ static void test_edges_overflow(void *obj, void *data, QGuestAllocator *alloc)
  {
-     QOSGraphEdgeOptions opts = {
-@@ -322,6 +379,8 @@ static void ina230_register_nodes(void)
-     qos_add_test("config-wmask", "ina230", test_config_wmask, NULL);
-     qos_add_test("shunt-injection", "ina230", test_shunt_injection, NULL);
-     qos_add_test("bus-injection", "ina230", test_bus_injection, NULL);
-+    qos_add_test("shunt-limits", "ina230", test_shunt_limits, NULL);
-+    qos_add_test("bus-limits", "ina230", test_bus_limits, NULL);
-     qos_add_test("calibration-current", "ina230", test_calibration_current,
+@@ -560,6 +584,7 @@ static void ina230_register_nodes(void)
                   NULL);
      qos_add_test("power", "ina230", test_power, NULL);
+     qos_add_test("zero-cal", "ina230", test_zero_cal, NULL);
++    qos_add_test("zero-cal-channels", "ina230", test_zero_cal_channels, NULL);
+     qos_add_test("edges-overflow", "ina230", test_edges_overflow, NULL);
+     qos_add_test("alert-shunt-over", "ina230", test_alert_shunt_over, NULL);
+     qos_add_test("alert-latch", "ina230", test_alert_latch, NULL);
 
 -- 
 2.53.0-Meta
