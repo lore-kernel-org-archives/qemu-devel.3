@@ -1,112 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D90E606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 16:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3566606A328
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 16:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JH4/AJvc;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=r6AvRwXm
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=UKxB08O5;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=VKRS5hM9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP0Ei-0003j8-Gg; Thu, 05 Nov 2026 11:22:48 -0500
+	id 1xP0Gl-00048G-4O; Thu, 05 Nov 2026 11:24:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1xP0Eg-0003iy-M4
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 11:22:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xP0Gk-000485-2c
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 11:24:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1xP0Ee-000091-W2
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 11:22:46 -0500
+ id 1xP0Gi-0000GA-HT
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 11:24:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793895762;
+ s=mimecast20190719; t=1793895890;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yp4b6kyGEJPqZint46r2vh9Z9N2SkjAHusHEqtZNfKo=;
- b=JH4/AJvc/mR+S5X44wHz5LbleJlgMed4Iwl4yd0RXWBsQ4FmX/2nAqfJFxJHt4MreFoyG9
- NWtB22WjZKY5A6bZvwlB6Xe+f2C+VP6KwC6daP+qAtJs5OuXWmVtMOSLsUMf6LbRLdLc61
- x8H6j7HddMkp+/4JtZ2jWtzuTQacgwg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=CoVikxobLQhL7AYHyfGbcULeCbfoUu2OCPXJLr/SHEI=;
+ b=UKxB08O5DfYKRq5L0Qk2Fy6kAmgHDmjK/ZWhsqkBrfJ5Ann7B4ztSpkWIjO5+jxyFaL7U9
+ +SiuNeHsb9Wy/BFKFHBVf3RdN9qsG/6qqPQci332wUYO4jVW5j08sKMvMQYiDJu+egRWtd
+ fWpX4EwzsI6NbOkvCdWJXYDrrMZGlT0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-492-2KvdnaIkPtiFKZvLadCBIw-1; Thu, 05 Nov 2026 11:22:40 -0500
-X-MC-Unique: 2KvdnaIkPtiFKZvLadCBIw-1
-X-Mimecast-MFC-AGG-ID: 2KvdnaIkPtiFKZvLadCBIw_1793895759
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4a80bd45e1cso11677995e9.3
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 08:22:40 -0800 (PST)
+ us-mta-115-aL3cAUmDMXGr2nQNnElelg-1; Thu, 05 Nov 2026 11:24:47 -0500
+X-MC-Unique: aL3cAUmDMXGr2nQNnElelg-1
+X-Mimecast-MFC-AGG-ID: aL3cAUmDMXGr2nQNnElelg_1793895886
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-48fbcf023dcso1215130f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 08:24:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793895759; x=1794500559; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=yp4b6kyGEJPqZint46r2vh9Z9N2SkjAHusHEqtZNfKo=;
- b=r6AvRwXmkH729xA2+tEN0KzM6xQPe+fxx5LRHRtkbUZBKVfsyKaRZU2TKa3PFa1N2A
- nv9zHe4eQvNY88PvIMf3PNezVKJzgbyklaxjBMP7Vh+IE8I8axUsiwIVKZ3f6zrCYy/r
- t5l9pf53j+JR13Qjx7+2VYFd/xvq3fI9Dq5/aUQULWAX5Cwh67sXbdtOVswO4Td7d1y2
- vV5sN0SeW44zG3SKDDHG8qZhNpFjeoQweHsMCNI1HgxZcp6/dYZo3FU2ghMwmlqxRnAa
- ld31n/htu/NhGF0CncodddhGJBh2GewCHMk8FFg9HdrACGGAUJafFrHkctoN9ANoe8rf
- 34Mw==
+ d=redhat.com; s=google; t=1793895886; x=1794500686; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=CoVikxobLQhL7AYHyfGbcULeCbfoUu2OCPXJLr/SHEI=;
+ b=VKRS5hM9aR3c0Q75oZ17HCvaJcKuwNXB6incgKnXr450gy2P34+ESLxw3OqXt7JRUI
+ 3pxsp3ik/FNbgIahnAmrwbcZeCcWyIApxuSjaJzxxPEz3tye6FGYvxceN7DAfqx9rVfq
+ 0+53Ji05wDQnAe8EBdYun79eQ4Eb61b1VdvnmiWrch9PQ2BAIA+y6LICgSgAnvtEp2sj
+ uVRiMOJBTEjyIEcxOpoqYu51W5F2Q9Rm1mV2+rfIqLTn4dPz1WBl2OP31JyhtTmAdqgP
+ PVy62kmc/BWEGk7oWWq1fv1c6xt6WORgvVoPEhN76orWl4V4BMb4RJI/nhQDEMCtsQB0
+ FnxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793895759; x=1794500559;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=yp4b6kyGEJPqZint46r2vh9Z9N2SkjAHusHEqtZNfKo=;
- b=c9GenTlN4IBvZwvJ3rbIioUogieyv7PyNoaF/4Q/I3V1RvRouVmR8RuPt6nOv+6REp
- t5gyDVrX3gQeh+fEhJXEnNZP+JPa3+i8IAQTMkgsUzBpirfSays6SF493YHQG7tOTkb1
- /6/tKwxxRB55QINOgsmbk0TDWJDUyyMXQTDijTMIV++kVl0kgegV085e6OJtXRn0qxVR
- t6UIZhwP6tOujeyUtWiQ2rrmMxBaPSrwbnxYNQxXZ+0+1hGnyLsPjkY4p1VZ/d9HStZU
- Ei1L13aRmVcAKj94ilckRhvwCQl7wrR7Npk5bxzYyc8xtKgk4XUIKATFmJYyoJyJ/3Ie
- WWPQ==
-X-Gm-Message-State: APuU4Z/jd/0X9ERnfniX/GGpCB0IBdnk2Rp9XVhFcIrbuWtRdZip+tfl
- eSuU5g4othQEWv83tHcSPvXZp+FKvLfDCebuS4ewZqd8DRO3AGtWTS23ek4e+W9wFRxlQ0oulof
- vRFNaxzHIV5U2t59rp8DJgyBxCL849tf6ieML0cJPOCmXuUbk3TNHhDY8
-X-Gm-Gg: AYBFou0x8iJ2ad12J4ohFhNGRUSb1kR6j9L7DR7zw+pAwRp/e3d6Q2H2RQKzC3jjCCC
- KsA2RoRaLNxsM+zfKfjq9wd7vo3nWO2472SwDKj3m4o7Z2j7DOAk+0D6bAM3e4pIP3/3MMwLEQ/
- T4bCMWWS9lCIZxQdMOgwxU/FmeR7eMydbTVs8DC2BbpU2CYoRiA58oEODnRcCS1nVQvpU0INLfZ
- /YJXWm7GTCIfHV1ZGVaFM5Y/jl+jPPRSzN46cNTgeE0e1FcxpdxtusvfNllHCvAv9VPwyjvsVru
- 15IhitaqwxKFzkrlEOE6RQYwW8e4bqC8aUV+AhL1Q2TiJG2o0Gl0Iz7UU/VOcBV+YIgaQnvyvty
- +X163Jh/JD0GIJBPaDpcn7MORCrjYG9/jmEgJUqrYSI5AkGnOYA==
-X-Received: by 2002:a05:600c:37cc:b0:4a2:1cc:6551 with SMTP id
- 5b1f17b1804b1-4ac1980143dmr389437585e9.35.1793895759223; 
- Thu, 05 Nov 2026 08:22:39 -0800 (PST)
-X-Received: by 2002:a05:600c:37cc:b0:4a2:1cc:6551 with SMTP id
- 5b1f17b1804b1-4ac1980143dmr389437015e9.35.1793895758684; 
- Thu, 05 Nov 2026 08:22:38 -0800 (PST)
-Received: from sgarzare-redhat ([5.77.70.210])
+ d=1e100.net; s=20260707; t=1793895886; x=1794500686;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=CoVikxobLQhL7AYHyfGbcULeCbfoUu2OCPXJLr/SHEI=;
+ b=1J4WnyfdMJ1lnQh4bCOYWuvT1z17gj/N5kG+n6fFtHbYmZjpKZOydmaPGI+semJxiQ
+ KrnW2/lJxt6JRo1uIaP6ESnN3659KrvGlVSUh7dDfUbW+7nIVDJsAtjsOTZGFQGjqMiA
+ 5xTg75dGinYb6e/SPf0MTdrHpu3PAg59UdlaLnLFh4615tPCryRSrWs838T0U/V6MnEJ
+ e1Rb6J7iVdzVaE3yxGCxmgs/fHBCkBqkU/opgsfiwf7A3KZ7ezN3Ugl1539pFRLTLyAs
+ Rmf/iiArNSJZdrraEwjHSXkQxQQTEwDDhC47MNugV3ovLVVzYGmAvnC9DO4S5vA6WbLR
+ np4Q==
+X-Gm-Message-State: APuU4Z9KI/hWL2GtJBORLuicx/QtT9RBgHZZWj3R7QiBr2diErwr4aga
+ DoPrdizOa81xxp4Z52h9frULMPbFuZngZ3VrbtIuCo8TZ72AA9V8n4FRGTk9lUR3g4+cJL/sLtq
+ Q4dRo6YZN6Lwt3EutYz8HVI0Gfy5r5ZBSL7r3OjPiiIWhsqig5VCVWHFYbIK94mvEmZ4Xo9mbEd
+ BQSIHAOo34n40LWhaZsafQ856IJM/1dSl9ewc7yjb8
+X-Gm-Gg: AYBFou3f7+ubZHbi06k7k/uYlJfEGDMdFdROAuBY3qgC6oy8VGcrkFiM7EfDYVICqj4
+ +aR7AHssgEunMrUSMrrgs3pqsPYQ1A0OGrq34xZZT4W8H1lcrzdMGc25cHYXAowV8AX3yBD3r/R
+ dpyCoe/kmyhLv6P7+0Wi3AVdP0mMnLDBqmq+8Q158BDh7MU+zT6FlD/zyZeoNF/GK+dzi1wjy1Y
+ 0HdoNMZQYQ3IXmvamawh6+E0WCaav2QfsBYjdEY5keZX8yqmvNiD6ug25UL8z5t1uSWA5BH66xa
+ BvYYX5p5vnfPX1m2BEilZJIAAHVJG3FlTMbMowM/jL35iaW6pZi+HJKyLWqjBvJjDMMMyg47nz1
+ HldK6xjNYhysTixcTzDpVrZ0N+jKRz6BDc6kIOky8s7MLAzC03CDT
+X-Received: by 2002:a05:600c:524c:b0:4a1:e6c5:e44c with SMTP id
+ 5b1f17b1804b1-4ac17470f97mr439427335e9.10.1793895885915; 
+ Thu, 05 Nov 2026 08:24:45 -0800 (PST)
+X-Received: by 2002:a05:600c:524c:b0:4a1:e6c5:e44c with SMTP id
+ 5b1f17b1804b1-4ac17470f97mr439426645e9.10.1793895885229; 
+ Thu, 05 Nov 2026 08:24:45 -0800 (PST)
+Received: from stex1.redhat.corp ([5.77.70.210])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48fed08343dsm10816165f8f.30.2026.11.05.08.22.37
+ 5b1f17b1804b1-4b4532916f2sm154736435e9.5.2026.11.05.08.24.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 08:22:38 -0800 (PST)
-Date: Thu, 5 Nov 2026 17:22:35 +0100
+ Thu, 05 Nov 2026 08:24:44 -0800 (PST)
 From: Stefano Garzarella <sgarzare@redhat.com>
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, virtio-fs@lists.linux.dev
-Subject: Re: [PATCH] vhost-user-fs: fix virtqueue array leak on realize failure
-Message-ID: <CAGxU2F78TcwwEhudRsgDP15JszMEr3CY50omS+13qmh-jqASgA@mail.gmail.com>
-References: <20261104080939.439160-1-dtalexundeer@yandex-team.ru>
- <auyR97ogGdws_udv@sgarzare-redhat>
+To: qemu-devel@nongnu.org
+Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] backends/vhost-user: fix memory leak when vhost_dev_init()
+ fails
+Date: Thu,  5 Nov 2026 17:24:43 +0100
+Message-ID: <20261105162443.232929-1-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.56.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <auyR97ogGdws_udv@sgarzare-redhat>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,78 +116,60 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 5 Nov 2026 at 15:29, Stefano Garzarella <sgarzare@redhat.com> 
-wrote:
->
-> On Wed, Nov 04, 2026 at 01:09:39PM +0500, Alexandr Moshkov wrote:
-> >On failure, vhost_dev_init() clears vhost_dev, so the error path frees
-> >NULL instead of the virtqueue array. Save the pointer locally and use
-> >it to free the array on failure.
-> >
-> >Fixes: 98fc1ada4cf7 ("virtio: add vhost-user-fs base device")
-> >Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> >---
-> > hw/virtio/vhost-user-fs.c | 6 ++++--
-> > 1 file changed, 4 insertions(+), 2 deletions(-)
-> >
-> >diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
-> >index 0d8842817a..9b33fe13bb 100644
-> >--- a/hw/virtio/vhost-user-fs.c
-> >+++ b/hw/virtio/vhost-user-fs.c
-> >@@ -198,6 +198,7 @@ static void vuf_device_realize(DeviceState *dev, Error **errp)
-> > {
-> >     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-> >     VHostUserFS *fs = VHOST_USER_FS(dev);
-> >+    struct vhost_virtqueue *vhost_vqs;
-> >     unsigned int i;
-> >     size_t len;
-> >     int ret;
-> >@@ -255,7 +256,8 @@ static void vuf_device_realize(DeviceState *dev, Error **errp)
-> >
-> >     /* 1 high prio queue, plus the number configured */
-> >     fs->vhost_dev.nvqs = 1 + fs->conf.num_request_queues;
-> >-    fs->vhost_dev.vqs = g_new0(struct vhost_virtqueue, fs->vhost_dev.nvqs);
-> >+    vhost_vqs = g_new0(struct vhost_virtqueue, fs->vhost_dev.nvqs);
->
-> While checking if others users of vhost_dev_init() have the same issues,
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-FYI backends/vhost-user.c has the same issue. I'll send a patch to fix 
-it.
+vhost_dev_init() clears the struct vhost_dev in the error path calling
+vhost_dev_cleanup(). So, to prevent memory leaks, we need to keep a
+local reference to the vhost_virtqueue array and deallocate it in case
+of failure, just as most other callers of vhost_dev_init() do.
 
-Thanks,
-Stefano
+Discovered while reviewing a patch by Alexandr Moshkov fixing the
+same issue in vhost-user-fs.
 
-> I discovered that most of them store it in the parent structure (the
-> equivalent of VHostUserFS). Then looking at VHostUserFS I discovered
-> that we already have the vhost_vqs field there since the beginning, but
-> we never used it, so what about using that one here and in
-> vuf_device_unrealize() ?
->
-> Thanks,
-> Stefano
->
-> >+    fs->vhost_dev.vqs = vhost_vqs;
-> >     ret = vhost_dev_init(&fs->vhost_dev, &fs->vhost_user,
-> >                          VHOST_BACKEND_TYPE_USER, 0, errp);
-> >     if (ret < 0) {
-> >@@ -272,7 +274,7 @@ err_virtio:
-> >     }
-> >     g_free(fs->req_vqs);
-> >     virtio_cleanup(vdev);
-> >-    g_free(fs->vhost_dev.vqs);
-> >+    g_free(vhost_vqs);
-> > }
-> >
-> > static void vuf_device_unrealize(DeviceState *dev)
-> >--
-> >2.34.1
-> >
+Fixes: f24bb7287ddb ("Add vhost-user-backend")
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+---
+ backends/vhost-user.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/backends/vhost-user.c b/backends/vhost-user.c
+index de6b1ba267..a3cd15a57e 100644
+--- a/backends/vhost-user.c
++++ b/backends/vhost-user.c
+@@ -24,6 +24,7 @@ int
+ vhost_user_backend_dev_init(VhostUserBackend *b, VirtIODevice *vdev,
+                             unsigned nvqs, Error **errp)
+ {
++    struct vhost_virtqueue *vqs;
+     int ret;
+ 
+     assert(!b->vdev && vdev);
+@@ -32,13 +33,16 @@ vhost_user_backend_dev_init(VhostUserBackend *b, VirtIODevice *vdev,
+         return -1;
+     }
+ 
++    vqs = g_new0(struct vhost_virtqueue, nvqs);
++
+     b->vdev = vdev;
+     b->dev.nvqs = nvqs;
+-    b->dev.vqs = g_new0(struct vhost_virtqueue, nvqs);
++    b->dev.vqs = vqs;
+ 
+     ret = vhost_dev_init(&b->dev, &b->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
+                          errp);
+     if (ret < 0) {
++        g_free(vqs);
+         return -1;
+     }
+ 
+-- 
+2.56.0
 
 
