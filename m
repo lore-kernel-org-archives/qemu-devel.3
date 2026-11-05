@@ -1,104 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C7F606A326
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 18:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D60606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 18:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IKGJCJV8
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=xuIpK6Io
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP2He-0005Cp-PZ; Thu, 05 Nov 2026 13:34:02 -0500
+	id 1xP2JH-0005xc-5q; Thu, 05 Nov 2026 13:35:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xP2HM-000588-AB
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 13:33:43 -0500
-Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xP2IZ-0005Qv-4O
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 13:35:00 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xP2HG-0007fD-Mi
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 13:33:37 -0500
-Received: by mail-dy1-x132c.google.com with SMTP id
- 5a478bee46e88-36a0f27c9f4so4147278eec.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 10:33:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xP2IP-0007rb-K6
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 13:34:52 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-8b312be5de8so25396307b3.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 10:34:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793903683; cv=none;
+ d=google.com; s=arc-20260327;
+ b=LCmNBkPjkB71O6mtNtgO5O1jRD6rh+BE0RkKmctIRGFrGMQh4TmkhuhvBdRA5oWgdx
+ x8doVLhNs5zYgFSstjGeNzDEzTxcezox20j7NID+siJ5haVeZ5cxQRb9BFCf0F8lpte3
+ R4xWNldF4dQQqKwqD1zghgrZqUMfyV5i43VB7+6govf7qiYYMOl1K4oU7Dz6cI8up4E3
+ 0fpPqx7y/fSJWy1Ev5AuuEKOk9hvNW4ZjfeUU+sPtjGiVlj4GDRcDO/uNBGWk+xSwRIo
+ IFwSM61gu7dtRf8UaToFUU5uh5cPdGLbmcWLcKoy7ICj6l+7l5Sg65zZkgBk333uSWCn
+ G9Zg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=zvJbCuwDgYUzMH/v/KDioPknR7Q1UrgfZjY8sViiJfg=;
+ fh=hf7xvq549nl/Ao+C8AoHmvYW5A/t718p1LZ7Zs6bdtM=;
+ b=POnFyU2G3fBP6VO4W5c8VfNM3dgcnOJtalHAhHjPbn1rGSJiacimaX+ZQz58xsxnT5
+ 9SA1CimL8q0HG7jWxW4oW+U/A18il5djie0Nto1vvlP7MvBcs6biXhqgS2hpgNxWpMMd
+ Wo2wZKa3Ww6c5hSaetNPG+ALYBgbFFHlEyshBvwool6tWbGn3MPxrUaXcG+ENXANvGh2
+ Xwx1S91SkzCyM8OT8qkJCG7TO8eWHCNEUFEJpQ6pYbwtyFcq9B+HK5IG4Q/W4JYM4SmQ
+ lbg+CLu0X50JWCGyEs8wMXy0yg0MFH2sc0HselPRlgbLqb56oCzlSv6pOwS8pAwRgegN
+ 4Lnw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793903613; x=1794508413; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=oy5DoHzhJBLmB2vbo8S3/BszoXn1nmgmNWYhTGzcVGU=;
- b=IKGJCJV8zd+BOmOCz69DYR+QHYWdddqGkCMgBr/Nx6i9wwcBml1vTplPqtZuVE40lJ
- qdfTx5R5uW/G2fLo4Nbo6tq0Xbd4iqy/fU581IbmkxLye06wReA4Ab/f8KEJQDXiscb7
- pIe4ygS4D7VfeSc6saBN7sfpDrnGF2az+4HTN4BCV4j4YU5ZgJTRldIE4+CrCYYF5Lm1
- mudTrbeySyguBr/Rv89aelo20y9fA/YzDKamzmZMLRFnyk04VBl+1uyawuQPMfzqbzL0
- 1DRDbrGw1Bcebhsu07184N3GF+2LR8/OJr5k/YPQYqsuFzXyYZR9ZyvQ4zA50yUd3S64
- aNKw==
+ d=linaro.org; s=google; t=1793903683; x=1794508483; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=zvJbCuwDgYUzMH/v/KDioPknR7Q1UrgfZjY8sViiJfg=;
+ b=xuIpK6IoVgoaprf1s3SdmBstYNEm0J1Ojsorc9VBmLwj6dGXeXra9/l+wFmNxrwA1F
+ 5k9csv4KOqQM7fyk95tmQ3Adz9U0gLA8twNNoLcpYmYwQi5wiYuY7dpYFAF/XPrcMoCq
+ qACorv/BU5RBxfyxOUWYudNRSfH9uzDh6n+Tzw71p3wPXkVBO0HN05wskdX9gres5P6K
+ gZciT1lDDc28ldK9pBcbtmSXJHVIxAfJwWkPeEXEGpXL61egFR7iZ6dpTcr6oh42OMU2
+ DWNgukYJnGDSvKUiA3VsBovvAc07dHmkhnd+GVcjtY3G7Fu+S9qcdMzVTAyVIwBadv7O
+ wrTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793903613; x=1794508413;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=oy5DoHzhJBLmB2vbo8S3/BszoXn1nmgmNWYhTGzcVGU=;
- b=eIp6vPbXZe0er3xm37KGLwWZe5Hess6osWn15HvS33UKzl9isT3X7UPDII7QKe8tPp
- Ml2aa/3mI2MSYHRZX7wSkwMW1Eh4DF2RSReUNSV5RTVnD1w2f9xnPYfFPSH1Nh+hy5yI
- 7FLfiO27dlUI1lVNRtx5100GRaAovI/xktKG1ZeTeTYJiTXeshr5Fxzh2HtQuA0FAD6m
- +KjZ06j1ilbVjpHRmRCHfxW/2C7vQVk03Ewd+b+/daBrHzT6Jq3vMcAa5ljLL+PG4rTD
- cAoufgDpzGDdwhY+eGvBQC993cC58IBhuI8EDzO2GvljCKokld+0qd7aNUtAoZuA1BR5
- 9M9A==
-X-Gm-Message-State: APuU4Z9P81vO2ZGnCMdUNheo21q5/SuWWiyqlPU5JBx4RZSQkeBC7TFy
- JbdW1iBgLYVbl0z0nYwSnis9cB7t0sRtO1CMQl7ZGjHP1C3a7RxyJ30tgzrRV2LqZD8=
-X-Gm-Gg: AYBFou204LDipl58jaRHGvCTJ4VLbOIQvrsi0lMWh5B8q77+7Wyq1lMf5HYeaKHA+jr
- UB+qp8p/hGOXhNNdICev4PATZYBdoQ+dBUlFQQbjRwj8TYzPZvSClerTpqO5ktPL9xvzmYT1W9x
- XZrMnB2MAbkG6yBr89CZ5ctHSHM5SsxXuY8UBnuojfprzKm3GeQH11TQm1I1BNmBjt5QKTAVH43
- ZwImv9SIKe79PMoNTkhXHItUGvEfN9svLbgj72HUMU/ng/8c0BrEwNBXQ/Csg/Hzak90nB/PyfU
- +zMo0ewderyzdQcXlv+u/HF9XQvHQIDvg7vO84dd0MdcufQOve6xtsEZ0kPtuVWQc5nKk7F4aU9
- 2CxWyN4U1yAygymPiulqnZuWP8Iqwzy4NK/rtD+poksYE1qE7z4nv5KANm94TmMNFRPDi7mznBf
- bN361+42UJ0e1/Dp7tTAkf5CaCh/IfDDV9HDJjlN4rVx1C8IkK8ivwIdJaRenYj2aMsjCTIakqp
- mykn/baD2R/tCjx7AP1KxgEhcXDQ18JU04Xz2RP2YiS8AbpXGYOd/9ZKe32r7tv+rhchs2Ll0xT
- fDbhgoavi9QkdZDXMOXYFXkpuDHas7XtAlUGlfN4Pb6tp/vVoPXYjlanrNZyrAz0fXXDtQ==
-X-Received: by 2002:a05:693c:69cf:b0:369:daea:812a with SMTP id
- 5a478bee46e88-36a423fae73mr27075385eec.30.1793903613090; 
- Thu, 05 Nov 2026 10:33:33 -0800 (PST)
-Received: from DESKTOP-Q716RM7 ([103.94.185.75])
- by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-36f66086a4asm277795eec.0.2026.11.05.10.33.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 10:33:31 -0800 (PST)
-From: Yonggang Luo <luoyonggang@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu@processmission.com>,
- Peter Maydell <peter.maydell@linaro.org>, Weiwei Li <liwei1518@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Glenn Miles <milesg@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-ppc@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: [PATCH v4 2/3] Revert "target/riscv/kvm: restrict kvm-accel-riscv-cpu
- to riscv targets"
-Date: Fri,  6 Nov 2026 02:33:08 +0800
-Message-ID: <20261105183310.1614-3-luoyonggang@gmail.com>
-X-Mailer: git-send-email 2.55.0.windows.3
-In-Reply-To: <20261105183310.1614-1-luoyonggang@gmail.com>
-References: <20261105183310.1614-1-luoyonggang@gmail.com>
+ d=1e100.net; s=20260707; t=1793903683; x=1794508483;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=zvJbCuwDgYUzMH/v/KDioPknR7Q1UrgfZjY8sViiJfg=;
+ b=18kUKq3Vs1ZISoGlckK3aD4Tb1HLDra0jKwoLEwskhaPNQ++HmlGcaH0a08+WfAfDE
+ 8LZtidniV3OfZbKWJCOxrpHjP9t9r0y74Hu8OWY4js+R8tx22matMfFCJyp/uLonm+y5
+ nXRRxpTLNiAwPhWNwE+tJDNVu2C5snsg27sZPuNET3+0669HeqEr7/uM+geKYbXxUtKd
+ nlyVnyf+OfHBEYEcifMsPN3beq7Rf1FY4ln9TufYvD1ZKYuS2eomicw9g+BrMM6QCO88
+ Olou0HMz22lLxrQ41wdxIJdg8su8aeYMn1MPVLXNRb4I7BPx6IzvgWXPKlLTvR0/IIJl
+ TmOQ==
+X-Gm-Message-State: APuU4Z+rgJ2R0tG83TMeTj2rzh+NYehlkkL7c1ru7XUQ64jVKK/Sy5o0
+ Khvb8BMR5eyTDfODsD/v894Jxzt6YVHFHivAoI3EYvDcjN2XMVgyyLB3i6OKzNdsdvyCzGfp+8Q
+ miVueR+ZyVvLkaVTHk50+EGnmyvL/NT3hPv1Int0VmQ==
+X-Gm-Gg: AYBFou1LT2qRa+nOOkCFU+NQEiX3Y7dEkgv9zWZHRFh/PMyx+pBxOKzpeGKHh5zhQhI
+ q0pTNEqG4jzRj862fv3eio69b4R5/mm2jK9TrOviWRUNX+KzKCHAbFyV808i/t7Z+yW5lgKnY0X
+ 4I93GSQMJbgmqXwTyUuh2ENokpiDZzkzJQwA25S5s2frpW8Yx9eVJLLJu+kKWB0zxLdKQSpkEqH
+ wH/T2Midala1ZNlbXtJYAi8lBEWF1jnfULCmuf96YrTVbC+Qc9brdeylMAw8q9gxKJtHYL/mYkr
+ lYZhMSjipnfzTg7dsd7Yx3MQrVebMhhWMoMJSz1TvAnsSbx8u8xaQT0GC6zzJLqCCYpqXMRyWnF
+ sTkzVNdQqs3zatFrb3FpSgMlSc4agb5XYpIXV9b2XVSvaSuAakZdcSRE8lMgOuZPz4nmUeawfKU
+ j1LXOz7nc3YzHgyCvrccWQ+SHHj469XD2MVCY9/DnMcg==
+X-Received: by 2002:a05:690c:e3eb:b0:8ae:9448:14c2 with SMTP id
+ 00721157ae682-8b2b67dad22mr120712967b3.99.1793903682677; Thu, 05 Nov 2026
+ 10:34:42 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x132c.google.com
+References: <20261105181449.1691-1-luoyonggang@gmail.com>
+In-Reply-To: <20261105181449.1691-1-luoyonggang@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Nov 2026 18:34:31 +0000
+X-Gm-Features: AclHuK_XQ_JguxQx1WUDTd_yPmpVU52B5smDfQpG7xyD15skZKtcOOejdkjYjuQ
+Message-ID: <CAFEAcA8ScuuOgjaYNpQOZS37yx=WBzZaKLcVGQs8Tj3JYB3jOw@mail.gmail.com>
+Subject: Re: [PATCH] meson: generate qemu-version.h with a custom target
+To: Yonggang Luo <luoyonggang@gmail.com>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ John Snow <jsnow@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,44 +117,31 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This is redundant now as all accel-$cpu_type parent is already registered.
+On Thu, 5 Nov 2026 at 18:15, Yonggang Luo <luoyonggang@gmail.com> wrote:
+>
+> configure_file() writes qemu-version.h at setup time. That result is
+> not a ninja edge, so a missing header is never rebuilt and compiles
+> that include it do not order on it. Generate the header with
+> custom_target and list it in genh. scripts/qemu-version.py reads
+> scripts/qemu-version.h.in and substitutes -version. An empty
+> pkgversion drops the QEMU_PKGVERSION line.
+>
+> Link: https://lore.kernel.org/qemu-devel/CAFEAcA8bGODxRfRzrimhGN1v2HtcWvApRsyucemZbMUUBVkYwA@mail.gmail.com/
+>
+> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 
-This reverts commit 2d3e6b4003d5380c245ce8ffac4b8866f6d10a33.
+If we're going back to having an external script, the other
+way to fix this would be to just revert ab78ac76f44a12 and
+maybe fc35f2438770, since their commit messages suggest the
+main aim was to not have an external script.
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
----
- target/riscv/kvm/kvm-cpu.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 5beb602338..aa28098e10 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -27,7 +27,6 @@
- #include "qapi/qapi-builtin-type-infos.h"
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
--#include "qemu/target-info.h"
- #include "qapi/visitor.h"
- #include "system/system.h"
- #include "system/kvm.h"
-@@ -2241,7 +2240,6 @@ static const TypeInfo kvm_cpu_accel_type_info = {
- 
-     .parent = TYPE_ACCEL_CPU,
-     .class_init = kvm_cpu_accel_class_init,
--    .is_available = target_base_riscv,
-     .abstract = true,
- };
- static void kvm_cpu_accel_register_types(void)
--- 
-2.55.0.windows.3
-
+thanks
+-- PMM
 
