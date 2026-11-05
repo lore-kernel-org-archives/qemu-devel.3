@@ -1,92 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320B1606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 19:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB40E606A32D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 19:19:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YQV1RZNp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP2pS-0007Hn-Oz; Thu, 05 Nov 2026 14:08:54 -0500
+	id 1xP2ys-0000UD-O1; Thu, 05 Nov 2026 14:18:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xP2pN-0007Ft-20
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:08:50 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xP2pJ-0004Bc-63
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:08:47 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.100.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xP1vB-00000000Jnc-186D; Thu, 05 Nov 2026 19:10:45 +0100
-Message-ID: <3180b810-4ae2-45b8-b354-2b71f47e45fa@maciej.szmigiero.name>
-Date: Thu, 5 Nov 2026 19:10:40 +0100
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xP2yo-0000Tv-Vl
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:18:35 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xP2ym-0005FA-SB
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:18:34 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-6b56bbf8330so17546a12.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 11:18:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793906310; cv=none;
+ d=google.com; s=arc-20260327;
+ b=OYqNOI86N9AVZZPuxh0asawCAkkCEVFzVO4QfHGeIZfivs0DqSMSkYmPVX1DbeG0j1
+ AfJ3dUHjbbTf0D6mEDAEJnZ5l1QrPKBHYbQTn0RgNJvFS3RFshw/1tASFj9MRFWWJJm+
+ x9eK9eisI9DG5R1tQ3B3QkItnvfG4UFHb5YaujcOVzTftV7HkFqGTaoQa0Z7Pn/mRfQr
+ eKc09d0cVr3umFMvSlyQ+jqzEpXpSBkDkscQqke8PlIhx8iL+DLdkaTaBO7j1wwBB2gq
+ rKApXaL7YfWqrOkaIvjcFnWpmMST8d8Y7PF1+vwrYfY+i/Kw19eB8iZzy+QTURnurMiC
+ W5aw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=jU/iJY8kTPV/T1iMro7XT5GZDwIc5XurvGqFi+v/ZWg=;
+ fh=qNcwErX+pvm4tIF9yW+eftyFY9eLhq31DvMxiEYAQZg=;
+ b=q9Fn0OyYZDtWaUYAUHm6LN3eWZ7Oo+Nfx5uUtHStX3Q3nkpGQP6lUjGMPd/fEGYt9J
+ tm4H0UDF+/xJT/UMsjsA1j/IMVzagHwzhQzTCRQ4NNS5dLtwN1KXSGPQ1SrRVWewKuQL
+ HWWXvzbGl1Hoj/y79VVeFXtTalc/Rg2XONpZfiIFwvMqxFjnVIhig324i2puaZDGLFDf
+ Jwtw1jyrf2uYD48jlctEOfB7ggNnN0+k7Ss/aBABTK9M/qrm5yr+4v6SNVvpB4l7x9vL
+ rqe9eFvlLcAf2rhabzB6vDhiGsBHCc43y+u0IsF211g1f6+p08P35zJlzmszbf0RUjYO
+ w/Mg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1793906310; x=1794511110; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=jU/iJY8kTPV/T1iMro7XT5GZDwIc5XurvGqFi+v/ZWg=;
+ b=YQV1RZNpk4v8/mdOcPvOhNUK/yVVnjgz40Pjo8WIllzCDoWuszkXoTEXQgM/a8ebwA
+ ycRy/lr9BkSpUYl6mFZukn2GCni6wosTcE4C5Lno1Or6XsHOhMq/JqtA1rvADkQZuNGv
+ JaWYnUD2Okr391RPUjniXsbgFWLVebAfHVJEglPItwBKvM/gV9WpBs2qPvG1lVEdXVSO
+ wxGguhIv5k70d9w+ocpe5i5GeAD4dn3jXzbxowRWXbmos/y2QDGTfaWTlm7XeykBl5W4
+ xSrJ11fbv3+nGkbcOoBkwBCPppjXX0p/FjKbpfOUq/Qyh9ouOWt2mqP5aBRvEcqXDnxc
+ 04Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793906310; x=1794511110;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=jU/iJY8kTPV/T1iMro7XT5GZDwIc5XurvGqFi+v/ZWg=;
+ b=MMGR9yhWEkPmREjZ+/8F3VwVvBaQTVSeeHNSjrjaN78s57peWGTEHrgvP8ts8o0Ije
+ 9tqkGNt3CJ2mjKAqti8AHUBp8hzdnOECncBul1u6T9V9YIhUC1RJtmM/t2KwnsLLulqX
+ z2nZuHj3IivdnVxN3+x+hd4M+FPkfKWYVanymLOWzI86ND7Q5EHZxkKpCSSvmeWc+fJd
+ s+bhiJrfhHGSz2P86SPJ13ffVGkiTGQPOqeM3K+L5sFc+UoGI3aC5xYZcn0WzARIPmVs
+ SgZaLcEgM4h37AWA435aPLTeX5uxZ5UCqHuhdDrMei6M7BYC1L9c6w3DSFjggc3rLN3g
+ +N8A==
+X-Gm-Message-State: APuU4Z/qb0N9WLf3T2P40MsDexlPHucnKBTDfYqF8+jK4kR24MsbFZXv
+ jaNSRXYyXSrKnO7KqAGMAmV4JuWXb0IU4qLvVclaD1Sp/u2T0p9pLDPKUsVXgbBLmd+yleHV9fi
+ vxv95CQpr5SBU9iwmJGyG5ERfW+1QGMQ=
+X-Gm-Gg: AYBFou0XF4jQUVXUiEKoccsG3D1K1HDyOAlUeyqX+uuWRpfuw3yJ/7MkBge6mf7nFxr
+ XhsSqkOtUUpkfMWqh4E6Amk+9hkxktN9qyIartn5q2SZ4rHxKS8m0fVdunQWzNRMTiuKi6dekTI
+ LMv8DbDh0JymN39We0DxpyV2XMMcggTLMu1AseGzW0dchj7M84Byy4CiioC1iRc+I+muV7LX642
+ d3qFl7puJi7KMqXhwi9yhxHRrcdDbfMd7Dj3j3Sw7jzA8X6I2e76iUmW0Sf0c6AId3JxeMZ67gR
+ eetOeB6e4tCdTOOd6T0jdPQOr3wiVLMmtnUmTtvzfkcX6tUyqW0Xz8sCDeprdN3wxl3AqyMyazI
+ fWrgg6q53qF6PNnj41KxXNkRdM0rF3sKtA8An
+X-Received: by 2002:a05:6402:2743:b0:6b5:76b9:5040 with SMTP id
+ 4fb4d7f45d1cf-6b5978280cfmr150764a12.41.1793906309837; Thu, 05 Nov 2026
+ 11:18:29 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] migration/cpr: document the BQL as the cpr fd table
- lock
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>, Steve Sistare <steven.sistare@oracle.com>
-References: <20261105111749.2361913-1-den@openvz.org>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <20261105111749.2361913-1-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261105102432.1131493-1-berrange@redhat.com>
+In-Reply-To: <20261105102432.1131493-1-berrange@redhat.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Fri, 6 Nov 2026 03:18:15 +0800
+X-Gm-Features: AclHuK9eKRzZswe4j-lehn6go7PUK0y6AO5O9G58l_o9FKuOEQ-ZGqNXDd5p4eg
+Message-ID: <CAE2XoE8xNP=kwSROoHQEdRBLjmPGnY61mkQd=_t1oRHpD1QiXw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] hw: support machine filtering without is_available
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,64 +114,147 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 5.11.2026 12:17, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
-> 
-> Every user of the cpr fd table runs under the BQL: device realize and
-> unrealize, backend creation, RAM block allocation and freeing (the
-> latter also from RCU callbacks, which take the BQL), vfio MSI-X vector
-> setup from vCPU threads, and the cpr state save, load and cpr-exec walk
-> on the main thread. The table has no lock of its own and depends on
-> that, but nothing says so.
-> 
-> Say it at the declarations. The obvious way to break it is a socket
-> chardev preserved across CPR: its connection hooks run in the chardev's
-> GMainContext, which for the monitor is the QMP iothread, and that thread
-> must not take the BQL or out-of-band commands stop working. Such a user
-> needs the table to grow a lock of its own, and has to keep the saved
-> table and the preserved fds in agreement when a connection comes or goes
-> during cpr-exec. Both belong with the series that adds it.
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Mark Kanda <mark.kanda@oracle.com>
-> Cc: Ben Chaney <bchaney@akamai.com>
-> Cc: Steve Sistare <steven.sistare@oracle.com>
-> ---
-> v2: replace the lock with a comment, as discussed on v1:
-> https://lore.kernel.org/qemu-devel/20260916132428.1628553-1-den@openvz.org/
-> 
->   include/migration/cpr.h | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> index 3ad084d5ba..5ac46b6207 100644
-> --- a/include/migration/cpr.h
-> +++ b/include/migration/cpr.h
-> @@ -28,6 +28,7 @@ typedef struct CprState {
->   
->   extern CprState cpr_state;
->   
-> +/* The cpr fd table, including cpr_walk_fd(), is protected by the BQL. */
->   bool cpr_save_fd(const char *name, int id, int fd, Error **errp);
->   void cpr_delete_fd(const char *name, int id);
->   int cpr_find_fd(const char *name, int id);
-> 
-> base-commit: f29ccc287a6cfdd51d3a4fd17fbe9af3310a0ac5
+On Thu, Nov 5, 2026 at 6:24=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> The 'is_available' callback on TypeInfo is based on a mistaken
 
-Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Thanks, we realized the limitation of 'is_available', and discussed
+with Pierrick a lot
+about this, I implemented both ways to remove 'is_available' in my local br=
+anch.
 
-Thanks,
-Maciej
+One is this idea(these patches), add targets in MachineClass::targets,
+but we have to rename "virt-machine" that
+in conflict.
 
+The other one also achieves the same effect, except no need to rename
+"virt-machine" QOM type names, by introducing a private
+TypeBucket in object.c I post a small series to answer you question,
+in my local branch, "is_avaiable" is removed.
+https://lore.kernel.org/qemu-devel/20261105190346.1539-1-luoyonggang@gmail.=
+com/T/#t
+
+
+In both local branches, there is no more QOM name conflict, and target
+is selected till the machine selection. so that
+have no target_info() access in class_init or type_init.
+object_class_get_list(NULL, true); can be called without target
+selection, the current question which direction is better.
+Both ways works fine, and both ways have their advantages and disadvantages=
+.
+
+
+
+> notion that we should filter out classes at registration time
+> based on architecture.
+>
+> This creates new problems however, some already present and
+> some which will impact a future multi-target binary
+>
+>  * For introspection of the binaries' features, we have
+>    a dependancy on selecting a target before we can
+>    introspect features. It would require re-launching
+>    QEMU for each target, leading to lots of redundant
+>    introspection and a big time sink. It would also not
+>    be possible to introspect targets
+>
+>  * It creates a circular dependancy on QOM initialization
+>    inside the QOM initialization code, since 'target_info()'
+>    itself uses QOM. This then requires further work to break
+>    by initializing QOM target info before the rest of QOM.
+>
+>  * We have no means to introspect what targets a machine
+>    type can be used with, as this information is expressed
+>    as code (in target_XXXX() methods), instead of as data.
+>
+>  * New fields in TypeInfo requires more changes to macros
+>    used for initializing machines.
+>
+> There is no inherant conceptual reason why we must filter out
+> classes at type registration time. This is just a shortcut to
+> workaround historical technical debt where certain classes
+> have clashing names. This is an undesirable approach, as it
+> is trading one set of problems for a new set of problems.
+>
+> This series proposes removal of the 'is_available' concept
+> from QOM, and illustrates handling machines with full introspection
+> support available from the MachineClass.
+>
+> This implies fixing the root cause, of clashing class names,
+> but does not include patches since various series have already
+> been posted for machine class name fixes.
+>
+> The machine changes are fairly simple
+>
+>  * MachineClass gains a 'targets' field which is a bit mask
+>    of SysEmuTarget
+>  * machine_class_is_available() matches 'targets' against
+>    'target_info()'
+>  * -machine CLI enforces machine_class_is_available()
+>  * query-machines filters on machine_class_is_available
+>    by default
+>  * query-machines gains 'all-targets': 'bool' to opt-in
+>    to returning the unfiltered list, with a 'targets'
+>    list present
+>
+> NB, this removes filtering from riscv CPUs with no
+> alternative proposed. I'm unclear what this was trying
+> to address to begin with, but utlimately it should be
+> possible to address it with runtime filtering/matching
+> of classes, instead of hiding TypeInfo registration.
+> If someone gives me info on the CPUs problem I can a
+> make a design suggestion.
+
+
+
+>
+> Daniel P. Berrang=C3=A9 (4):
+>   hw/core: record permitted targets against MachineClass
+>   hw: replace 'is_available' with 'targets' in machines
+>   target/riscv: remove 'is_available' from riscv CPUs
+>   qom: drop the 'is_available' callback from TypeInfo
+>
+>  hw/arm/aspeed_ast27x0-fc.c  |  3 ++-
+>  hw/arm/aspeed_ast27x0_evb.c |  5 +++--
+>  hw/arm/raspi.c              | 21 +++++++++++++--------
+>  hw/arm/raspi4b.c            |  3 ++-
+>  hw/arm/virt.c               |  5 +++--
+>  hw/core/machine-qmp-cmds.c  | 18 ++++++++++++++++++
+>  hw/core/machine.c           | 13 +++++++++++++
+>  hw/hexagon/virt.c           |  3 ++-
+>  hw/m68k/virt.c              |  4 ++--
+>  hw/or1k/virt.c              |  3 ++-
+>  hw/riscv/virt.c             |  4 +++-
+>  include/hw/core/boards.h    |  3 +++
+>  include/qom/object.h        |  3 ---
+>  qapi/machine.json           | 12 +++++++++++-
+>  qom/object.c                |  4 ----
+>  rust/qom/src/qom.rs         |  1 -
+>  system/vl.c                 |  9 +++++++++
+>  target/riscv/kvm/kvm-cpu.c  |  1 -
+>  target/riscv/tcg/tcg-cpu.c  |  1 -
+>  19 files changed, 86 insertions(+), 30 deletions(-)
+>
+> --
+> 2.56.0
+>
+
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
