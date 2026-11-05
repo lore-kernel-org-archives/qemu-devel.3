@@ -1,101 +1,151 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF24606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 02:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DE6606A328
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 02:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vSB5SM3A
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xcExxi5K
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOnLC-0007Bo-97; Wed, 04 Nov 2026 21:36:38 -0500
+	id 1xOng3-0002qk-W6; Wed, 04 Nov 2026 21:58:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1xOnLA-0007BY-C5
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 21:36:36 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <demiobenour@gmail.com>)
+ id 1xOng2-0002qD-1v
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 21:58:10 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1xOnL7-00011g-RS
- for qemu-devel@nongnu.org; Wed, 04 Nov 2026 21:36:36 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2e8f2c3ad6bso7802425ad.1
- for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 18:36:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <demiobenour@gmail.com>)
+ id 1xOnfz-0008OD-Pu
+ for qemu-devel@nongnu.org; Wed, 04 Nov 2026 21:58:09 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-8b0d126f631so15399477b3.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Nov 2026 18:58:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793846192; x=1794450992; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:date
- :from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=nViQXEXb8FJgMvus18RjRAnfJrMbGBdJOVdrFbyGTMQ=;
- b=vSB5SM3Ax7nU77tx8/N8KsIh6Ji6Y3bMthh15xHmi7OWkyMlBWkh9z5XHBAtbsmdIo
- 0SVJUP476JHA9moPhzs9dH82J0uefTTIE2LXBieAxgVBE/5Ue22cxLciOe9YPxNqwyOV
- MI5uf5rdTKfqhJrnB5Qu84ThtVC4kvqLz8iTTcuKpjurjYDIxEC9zclQYh3FNuWhqxv3
- 0sxfM1sFHYYAEYMJLxIrZhSFmTsLIG7k/0kI0tT+DtGNee9fH4D6n5VRhVoqHEjoBfSG
- fiex6lIu9k0a0xDFOboaRwLzPPmkdTYXDKtltZ8VY5laCmCVAT1mA7yMCrnelRNtpMKS
- 7MIQ==
+ d=gmail.com; s=20260707; t=1793847486; x=1794452286; darn=nongnu.org;
+ h=content-type:autocrypt:in-reply-to:content-language:references:cc
+ :to:subject:from:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=LARMm2VxR8Z99i9OuglCbBJUmT/nOy63dZ48j8aSALU=;
+ b=xcExxi5KLbSbZopT7oUvai1IuPm16Rwp8ue1WPS6Lnm0xdJqZq1w/Yi0JX/4YQklf9
+ upcTyR8LnAomhVgq9rVBC7AtCIOiR3pTUrBWyMRG9vuvMTfHimdhsHlkip5M3tB6cviW
+ iuNFkG3lIuhLuvCZcJJZsF5/sss+P/b2SqLB46peUtAsKMKl93UOeqdopjb53r8GHQTE
+ eFFQKb1opCIz5U3RirfILnkF7U0NJ70juIhlZbXjk90b70LdszYS9k2n5BdM+91+p0qc
+ sd6cfwCpbIkMs6gs3JPd6KPezzsPH0gQFwe5npcJO/3Jv+elnuycHaRXHskPj3Wli6+5
+ yCRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793846192; x=1794450992;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:date
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=nViQXEXb8FJgMvus18RjRAnfJrMbGBdJOVdrFbyGTMQ=;
- b=LyxLrwttVMPBzm6reR2JUDgFIrQ8MchhfKfxlDlXsrnZITi2tL9etRQsX7a4izyhg9
- +ZAFOM5dqd8DofYyT8PjNMRFNmVnPROSrIvCyvg8MJNiojCIF9KPoaXiJL27+o2DH0Cp
- tr9ekjMHeBiBgm75Xwy3x/+LG3jIY2qS9NPqGHWCgA9t4NQMxSTSXSOPORABZgXj1/BN
- mZqcw9wT2MgZ/9sGxFbIGpt8JBWg1s3Sl9hhO+s4KutfjIaJLCnWqFFAHjsFQ3AlTSpr
- +uNYvhuL5nQ2oTgXkW93jeGchS2H6YNccsJJnK/7RwG5CIC0CmQ8GDZYIyEhUu5Ocyr4
- O3GA==
-X-Gm-Message-State: APuU4Z/zbHG+5tQSUkyuOoh7Js0/nVLgS63s10LsENUXFJ5pvKDKxewL
- M7jrs282kMnzxQONzkXWs9rJjVSJzbjGikay+Bj39hY3+AzOCCv3Mp2i
-X-Gm-Gg: AYBFou3pGMVpBRRn3RDEu5xfClUXF+/qmxLPXzzl3H5PlxJ/hjsoMjHlz9gA7FrTU4X
- k3TpJPbg/9SoKWrZaFPGYfyVHAkUuYzcknFV+5fHdDEuaOn6kZ1E5/fVGQDmYjZyZd5PHejehn/
- ot6GaTAVOAuAtDR4GyL1gO0rPPdOq5Oc814PB1xbITPxR0U/liBZWdiYishlAuR7mWlhuDIAnCK
- HiwRo92gzM2w5WNLR5mWkZbqHX5bxX9PFW99BZiZZZRLBqq0wia2/urQEX4LeDeImZxIhcjlyp/
- QQHXRtoSWnjHgmR3Fmm2x1TOb3aCHE7J/A8R1hhVFt2l3njeELM0bgqi1/e2zZi2Z938l29Jt39
- 9ipiE8lZFsuxTISUlcqFLFbnKM2pa7eB9IoRCW0O19rSir7AJI5yoo9ReY5m4bN1t2SUB0uB8NU
- N0CTkVPfy2JVdSkQjke72jFsx1nD75gCxOwVMSwS4Z2BMI7zg+lxE7nMm0tgrcrR/6FlyUhSz/f
- OsbjZ1L2JeF4AM04EQVBDCKoZ/Nk1UUHQbcY0NtnlzL1XYN18+DC5tguqXlfAg9ssbf53Qv3UUy
- cf508pNaAS/81V0DwSBNrmPD8A==
-X-Received: by 2002:a17:903:1844:b0:2e9:8bd4:577d with SMTP id
- d9443c01a7336-2eb364de4d8mr173672565ad.37.1793846191761; 
- Wed, 04 Nov 2026 18:36:31 -0800 (PST)
-Received: from cxlqual ([220.120.90.131]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ed0921c78fsm12134315ad.74.2026.11.04.18.36.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Nov 2026 18:36:30 -0800 (PST)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Thu, 5 Nov 2026 11:38:48 +0900
-To: Yukiya Takaki <fj2110jc@fujitsu.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Jonathan Cameron <jic23@kernel.org>, Junjie Cao <junjie.cao@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- linux-cxl@vger.kernel.org, qemu-arm@nongnu.org,
- "Wolski, Tomasz" <tomasz.wolski@fujitsu.com>, lizhijian@fujitsu.com,
- y-goto@fujitsu.com, yukiya.takaki@gmail.com
-Subject: Re: [PATCH RFC 0/7] QEMU/hw/cxl: Allow CXL Type 3 memory regions to
- be initialized at guest boot
-Message-ID: <auvsOE3OlS5I9ueG@cxlqual>
-References: <cover.1793003983.git.fj2110jc@fujitsu.com>
+ d=1e100.net; s=20260707; t=1793847486; x=1794452286;
+ h=content-type:autocrypt:in-reply-to:content-language:references:cc
+ :to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=LARMm2VxR8Z99i9OuglCbBJUmT/nOy63dZ48j8aSALU=;
+ b=OWwHcqY53zkzyQX8+lmwJ+/lKZv50I1Rq+Iqf4HvPHTaPKr9J3fmTa4pgYUJc4L8Iu
+ VANc8p3K7DLE1pYT2zTiZH9Omm9F3tiJc9TUqduv+zYNVIoPae/h71zXEjKw72ljFeS8
+ dUpufr7swYAna98RDdQ/++fac5rDgOFRd0nFd31KEWQ90ZI51B4aFdQBi4lnPXQjkjww
+ SUKYhi03ZbDi+azZE0EYomnsLq/35GRYHhKSc/35DIgmCDtg7Dhu7Pv8SpL9luJtIkT9
+ POIkG5LnbetNbxK4lV6r0HySNoAiUrsqpLLFXS9gmVce1+6CN6MarK6QrvPfLyRPK8lj
+ hzsA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzOsjPy8TA1FzNJa1tGSLC/zDxsciu5tFs/Sa1oRP6o/ikGT0Dugurk+GSeAO/bvtNLbV3QVhm+rBCL@nongnu.org
+X-Gm-Message-State: APuU4Z9c+ilPb6Sf9uLTF9zypM9D6kthp6EEkhRbuCSAVqcqCtCl7ns1
+ RZoM6OBUK+hBPFvkHBbKAOAUu+clBPqGkPGmfZSeBMxnYDsv0b0lwalh
+X-Gm-Gg: AYBFou2UCUJ4ZGA1f+UakB5DHGFvMSo/wLC2B5xSFiu48zO3DsA/Nvb1AT5Kchon8UC
+ nyeyExmYqMUdZl1D3LFZStwwV1abpzhiV3P+fDBalupCMcTPhMgbRCPVLZ4LGAJSHxXjFWEVisx
+ JK8ZJT55J1cGSdRdbxWube737a7v2NZE1tc3LqsXaMMBzc+gCu0sv9VHicFCg3ubMM0cNdOHTTh
+ mtPcYkMPGA6e34BGUwN27Zxe4iWxRdMf0ot1bcpqhzfXaNk7aPi/q5cDnr4rYHc5gyeUom3fq2J
+ VpKGQxJ498HBKKOhdYtrYvJKybxZ83ggVXx00CrkNWYV8peK8SiGD/mdLA69P/kcLKDQu/Wc+Dn
+ WXKTEHjr9AUg46edm8SXF92Qj/OyUyQmNyYhxwXeZsLmGl6S+2qF8AwGQNw/xyZhwk/qTCsgjf/
+ Og/ZKERSL8DOTppDM6ViU0aY868fcA1HKaFkLYEtK607qyalpasMoBxJunpgnLFheG5ZaRJoL1R
+ ZURCpbfcs7dCDAXvXO0xBxCEpifkC06Q2Y/Zmm47i+FH2F65D+j220cfVGK+5qBQUg6RbZ4QJVm
+ kj/UTAFhCDIbaaY6Lj2p//aHdT4Ya4RI
+X-Received: by 2002:a05:690c:6e83:b0:8b3:2a74:e0c9 with SMTP id
+ 00721157ae682-8b32a74e8efmr7007857b3.63.1793847485931; 
+ Wed, 04 Nov 2026 18:58:05 -0800 (PST)
+Received: from [10.138.10.6] ([149.102.242.31])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-8b309710cb8sm31590737b3.5.2026.11.04.18.58.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Nov 2026 18:58:04 -0800 (PST)
+Message-ID: <3bf659db-a058-4bf2-b0e5-86ca443575ad@gmail.com>
+Date: Wed, 4 Nov 2026 21:57:59 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1793003983.git.fj2110jc@fujitsu.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=anisa.su887@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+User-Agent: Mozilla Thunderbird
+From: Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Re: iommu recovery follow-up (was Re: KVM/QEMU Community Call 13/10
+ agenda items?)
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
+ <zhenzhong.duan@intel.com>, Tao Tang <tangtao1634@phytium.com.cn>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+References: <87fqyh79ty.fsf@draig.linaro.org>
+ <39ed350d-7324-4bf1-9433-54a0d74855c3@gmail.com>
+ <87wlrc1mie.fsf@draig.linaro.org>
+ <B7610B3C-5A0E-4429-B8ED-BD3EBE53BB23@unpredictable.fr>
+ <32c01083-732f-4a45-95d3-6cffccb7c791@gmail.com>
+ <B12BD0AD-64D4-4C64-AE68-D3FBE6EE4662@unpredictable.fr>
+Content-Language: en-US
+In-Reply-To: <B12BD0AD-64D4-4C64-AE68-D3FBE6EE4662@unpredictable.fr>
+Autocrypt: addr=demiobenour@gmail.com; keydata=
+ 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
+ +MYSfkEjBz0E8CLOcAw7JIwAaeBT
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------wL35HqvRr3VWrxJHbEuQzfA4"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=demiobenour@gmail.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,301 +159,316 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, Oct 26, 2026 at 07:03:21PM +0900, Yukiya Takaki wrote:
-> Hello everyone,
-> 
-> I’m a student intern, and this is my first time sending patches to an open source mailing list.
-> 
-> This patch series configures QEMU’s CXL Type 3 devices so that guest operating systems can automatically discover
-> and create CXL regions during boot, aligning QEMU’s behavior with real hardware.
-> 
-> Background and motivation
->   Currently, during guest boot QEMU does not provide the information or register programming needed for the guest OS
->   to initialize CXL Type 3 memory, so using it still requires an explicit action in the guest (for example, running the cxl create-region command).
->   By contrast, on some physical systems the firmware automatically allocates CXL memory ranges and exposes them to the OS,
->    allowing the Linux CXL driver to discover and create regions during boot.
->   This patch series is a first, experimental attempt to reproduce that behavior in QEMU.
-> 
->   Some parts of this implementation are based on Li, Zhijian’s work in:
->   https://github.com/zhijianli88/qemu/tree/program-decoder-v2
-> 
->   I would like to ask for feedback on whether this approach makes sense and whether I should continue to enhance it.
-> 
-> Approach
->   This patch first adds a program_hdm_decoder option to cxl-type3.
->   When program-hdm-decoder is enabled on cxl-type3, QEMU will:
->     1) program endpoint/host-bridge HDM decoder state,
->     2) expose Type 3 ranges as E820_SOFT_RESERVED on x86,
->     3) create memory-only NUMA nodes for those ranges,
->     4) emit SRAT memory-affinity entries mapping each Type 3 HPA range to its node ID
-> 
->   On real hardware, HDM decoder programming and memory layout are typically handled by firmware, so they would ideally be managed by SeaBIOS.
->   However, in the current QEMU/SeaBIOS model, E820 and SRAT are built on the QEMU side, and pushing HDM decoder programming
->   into SeaBIOS would introduce additional complexity and risk inconsistencies.
-> 
-Hi again,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------wL35HqvRr3VWrxJHbEuQzfA4
+Content-Type: multipart/mixed; boundary="------------N3LkNPYuFp2kBF903USP1UmG";
+ protected-headers="v1"; hp="clear"
+Message-ID: <3bf659db-a058-4bf2-b0e5-86ca443575ad@gmail.com>
+Date: Wed, 4 Nov 2026 21:57:59 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Re: iommu recovery follow-up (was Re: KVM/QEMU Community Call 13/10
+ agenda items?)
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
+ <zhenzhong.duan@intel.com>, Tao Tang <tangtao1634@phytium.com.cn>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+References: <87fqyh79ty.fsf@draig.linaro.org>
+ <39ed350d-7324-4bf1-9433-54a0d74855c3@gmail.com>
+ <87wlrc1mie.fsf@draig.linaro.org>
+ <B7610B3C-5A0E-4429-B8ED-BD3EBE53BB23@unpredictable.fr>
+ <32c01083-732f-4a45-95d3-6cffccb7c791@gmail.com>
+ <B12BD0AD-64D4-4C64-AE68-D3FBE6EE4662@unpredictable.fr>
+Content-Language: en-US
+In-Reply-To: <B12BD0AD-64D4-4C64-AE68-D3FBE6EE4662@unpredictable.fr>
+Autocrypt: addr=demiobenour@gmail.com; keydata=
+ xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49yB+l2nipd
+ aq+4Gk6FZfqC825TKl7eRpUjMriwle4r3R0ydSIGcy4M6eb0IcxmuPYfbWpr/si88QKgyGSV
+ Z7GeNW1UnzTdhYHuFlk8dBSmB1fzhEYEk0RcJqg4AKoq6/3/UorR+FaSuVwT7rqzGrTlscnT
+ DlPWgRzrQ3jssesI7sZLm82E3pJSgaUoCdCOlL7MMPCJwI8JpPlBedRpe9tfVyfu3euTPLPx
+ wcV3L/cfWPGSL4PofBtB8NUU6QwYiQ9Hzx4xOyn67zW73/G0Q2vPPRst8LBDqlxLjbtx/WLR
+ 6h3nBc3eyuZ+q62HS1pJ5EvUT1vjyJ1ySrqtUXWQ4XlZyoEFUfpJxJoN0A9HCxmHGVckzTRl
+ 5FMWo8TCniHynNXsBtDQbabt7aNEOaAJdE7to0AH3T/Bvwzcp0ZJtBk0EM6YeMLtotUut7h2
+ Bkg1b//r6bTBswMBXVJ5H44Qf0+eKeUg7whSC9qpYOzzrm7+0r9F5u3qF8ZTx55TJc2g656C
+ 9a1P1MYVysLvkLvS4H+crmxA/i08Tc1h+x9RRvqba4lSzZ6/Tmt60DPM5Sc4R0nSm9BBff0N
+ m0bSNRS8InXdO1Aq3362QKX2NOwcL5YaStwODNyZUqF7izjK4QARAQABzTxEZW1pIE1hcmll
+ IE9iZW5vdXIgKGxvdmVyIG9mIGNvZGluZykgPGRlbWlvYmVub3VyQGdtYWlsLmNvbT7CwXgE
+ EwECACIFAlp+A0oCGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJELKItV//nCLBhr8Q
+ AK/xrb4wyi71xII2hkFBpT59ObLN+32FQT7R3lbZRjVFjc6yMUjOb1H/hJVxx+yo5gsSj5LS
+ 9AwggioUSrcUKldfA/PKKai2mzTlUDxTcF3vKx6iMXKA6AqwAw4B57ZEJoMM6egm57TV19kz
+ PMc879NV2nc6+elaKl+/kbVeD3qvBuEwsTe2Do3HAAdrfUG/j9erwIk6gha/Hp9yZlCnPTX+
+ VK+xifQqt8RtMqS5R/S8z0msJMI/ajNU03kFjOpqrYziv6OZLJ5cuKb3bZU5aoaRQRDzkFIR
+ 6aqtFLTohTo20QywXwRa39uFaOT/0YMpNyel0kdOszFOykTEGI2u+kja35g9TkH90kkBTG+a
+ EWttIht0Hy6YFmwjcAxisSakBuHnHuMSOiyRQLu43ej2+mDWgItLZ48Mu0C3IG1seeQDjEYP
+ tqvyZ6bGkf2Vj+L6wLoLLIhRZxQOedqArIk/Sb2SzQYuxN44IDRt+3ZcDqsPppoKcxSyd1Ny
+ 2tpvjYJXlfKmOYLhTWs8nwlAlSHX/c/jz/ywwf7eSvGknToo1Y0VpRtoxMaKW1nvH0OeCSVJ
+ itfRP7YbiRVc2aNqWPCSgtqHAuVraBRbAFLKh9d2rKFB3BmynTUpc1BQLJP8+D5oNyb8Ts4x
+ Xd3iV/uD8JLGJfYZIR7oGWFLP4uZ3tkneDfYzsFNBFp+A0oBEAC9ynZI9LU+uJkMeEJeJyQ/
+ 8VFkCJQPQZEsIGzOTlPnwvVna0AS86n2Z+rK7R/usYs5iJCZ55/JISWd8xD57ue0eB47bcJv
+ VqGlObI2DEG8TwaW0O0duRhDgzMEL4t1KdRAepIESBEA/iPpI4gfUbVEIEQuqdqQyO4GAe+M
+ kD0Hy5JH/0qgFmbaSegNTdQg5iqYjRZ3ttiswalql1/iSyv1WYeC1OAs+2BLOAT2NEggSiVO
+ txEfgewsQtCWi8H1SoirakIfo45Hz0tk/Ad9ZWh2PvOGt97Ka85o4TLJxgJJqGEnqcFUZnJJ
+ riwoaRIS8N2C8/nEM53jb1sH0gYddMU3QxY7dYNLIUrRKQeNkF30dK7V6JRH7pleRlf+wQcN
+ fRAIUrNlatj9TxwivQrKnC9aIFFHEy/0mAgtrQShcMRmMgVlRoOA5B8RTulRLCmkafvwuhs6
+ dCxN0GNAORIVVFxjx9Vn7OqYPgwiofZ6SbEl0hgPyWBQvE85klFLZLoj7p+joDY1XNQztmfA
+ rnJ9x+YV4igjWImINAZSlmEcYtd+xy3Li/8oeYDAqrsnrOjb+WvGhCykJk4urBog2LNtcyCj
+ kTs7F+WeXGUo0NDhbd3Z6AyFfqeF7uJ3D5hlpX2nI9no/ugPrrTVoVZAgrrnNz0iZG2DVx46
+ x913pVKHl5mlYQARAQABwsFfBBgBAgAJBQJafgNKAhsMAAoJELKItV//nCLBwNIP/AiIHE8b
+ oIqReFQyaMzxq6lE4YZCZNj65B/nkDOvodSiwfwjjVVE2V3iEzxMHbgyTCGA67+Bo/d5aQGj
+ gn0TPtsGzelyQHipaUzEyrsceUGWYoKXYyVWKEfyh0cDfnd9diAm3VeNqchtcMpoehETH8fr
+ RHnJdBcjf112PzQSdKC6kqU0Q196c4Vp5HDOQfNiDnTf7gZSj0BraHOByy9LEDCLhQiCmr+2
+ E0rW4tBtDAn2HkT9uf32ZGqJCn1O+2uVfFhGu6vPE5qkqrbSE8TG+03H8ecU2q50zgHWPdHM
+ OBvy3EhzfAh2VmOSTcRK+tSUe/u3wdLRDPwv/DTzGI36Kgky9MsDC5gpIwNbOJP2G/q1wT1o
+ Gkw4IXfWv2ufWiXqJ+k7HEi2N1sree7Dy9KBCqb+ca1vFhYPDJfhP75I/VnzHVssZ/rYZ9+5
+ 1yDoUABoNdJNSGUYl+Yh9Pw9pE3Kt4EFzUlFZWbE4xKL/NPno+z4J9aWemLLszcYz/u3XnbO
+ vUSQHSrmfOzX3cV4yfmjM5lewgSstoxGyTx2M8enslgdXhPthZlDnTnOT+C+OTsh8+m5tos8
+ HQjaPM01MKBiAqdPgksm1wu2DrrwUi6ChRVTUBcj6+/9IJ81H2P2gJk3Ls3AVIxIffLoY34E
+ +MYSfkEjBz0E8CLOcAw7JIwAaeBT
 
-Thank you for your contribution. I think this series can be valuable for
-helping test autodiscovery in the kernel driver. I spent more time looking over this
-patchset and in my view, the main blockers for making this ready for upstream are:
+--------------N3LkNPYuFp2kBF903USP1UmG
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-1.The HPA state is kept in the wrong place.
-Patch 2 adds hpa_offset, idx and node to CXLType3Dev but and endpoint should
-not track host state.
+On 10/20/26 17:09, Mohamed Mediouni wrote:
+>=20
+>=20
+>> On 20. Oct 2026, at 22:35, Demi Marie Obenour <demiobenour@gmail.com> =
+wrote:
+>>
+>> On 10/20/26 11:06, Mohamed Mediouni wrote:
+>>>
+>>>> On 20. Oct 2026, at 16:20, Alex Benn=C3=A9e <alex.bennee@linaro.org>=
+ wrote:
+>>>>
+>>>> Demi Marie Obenour <demiobenour@gmail.com> writes:
+>>>>
+>>>>> On 10/7/26 12:29, Alex Benn=C3=A9e wrote:
+>>>>
+>>>> (CC trimmed, IOMMU relevant maintainers added)
+>>>>
+>>>>>>
+>>>>>> Hi,
+>>>>>>
+>>>>>> The KVM/QEMU community call is at:
+>>>>>>
+>>>> <snip>
+>>>>>
+>>>>> Is this also for topics related to KVM but not necessarily QEMU?
+>>>>> If so, and if there will be people who are familiar with device
+>>>>> passthrough, I'd like to discuss whether IOMMU faults and KVM MMU
+>>>>> faults are recoverable.  There is a virtio device I am working on
+>>>>> which requires this to avoid either crashing the guest or allowing
+>>>>> the guest to hog host memory.
+>>>>
+>>>> We didn't get to this at the last community call. Is this something =
+that
+>>>> can be discussed on list first?
+>>>
+>>> It should be I think.
+>>>
+>>> Hi,
+>>>
+>>> For such a virtio device (and granularly exposing it to user contexts=
+ too), is ATS + PRI
+>>> a good choice? Perhaps even using the host page tables directly, with=
+ a per-process
+>>> abstraction as the security boundary.> > On physical hardware as inte=
+nded, outside of the ATS + PRI case, IOMMU faults
+>>> are expected to be something requiring a device/driver reset. On Arm =
+however,
+>>> there=E2=80=99s an exception for the stall model, which pre-dates ATS=
+ + PRI.
+>>>
+>>> A PRI PPR reply of not present isn=E2=80=99t equivalent to an IOMMU f=
+ault and isn=E2=80=99t expected to
+>>> result in a crash resulting in a device reset.
+>>
+>> I have two concerns with ATS + PRI:
+>>
+>> 1. ATS allows a device to bypass the IOMMU, and my project relies on
+>>   the IOMMU to isolate a compromised device.
+>=20
+> Hi,
+>=20
+> For the hw side:
+>=20
+> There are hardware mitigations for these in the sense of only allowing
+> pages to be addressed if they were supposed to be accessible (Arm DPT, =
+tied
+> as part of the RME story)
+>=20
+> Or what is also out there and often preferred is relying on PCIe IDE + =
+attestation instead=E2=80=A6
 
-I also think it makes more sense to make program-dhm-decoder a machine
-option (-M program-hdm-decoder...) instead of having it on cxl-type3
-endpoint
+I need to support consumer hardware as well.
 
-2. Host bridge register init moved from reset to realize.
-As you mentioned below, "The current implementation prevents the host
-bridge HDM decoder configuration from being overwritten later in the same reset
-by moving the common initialization of the host bridge component registers from
-the reset path to the realization path."
+>> 2. I need to support both consumer and enterprise hardware.  I suspect=
 
-To more accurately emulate what firmware does, maybe you can try
-something like the following?
+>>   that ATS support is very limited in the consumer space.
+>=20
+> PCIe ATS (at least in-SoC) is how AMD NPUs are deployed today, and the =
+Intel
+> in-SoC accelerators rely on it too (via SVA): https://www.kernel.org/do=
+c/html/next/x86/sva.html
 
-1. Add program-hdm option to machine (hw/cxl/cxl-host.c, include/hw/cxl/cxl.h)
+Sadly, those are very much a special case.  AMD NPUs don't support
+passthrough at all, and Intel in-SoC accelerators aren't available
+on the platforms I'm targeting.  The main devices this is intended
+for are NICs, storage devices, USB controllers, and Wi-Fi controllers.
 
-typedef struct CXLState {
-    bool is_enabled;
-+   bool program_hdm_decoders;
-    ...
-} CXLState;
+> But for a synthetic device implemented in the hypervisor stack for the =
+guest that=E2=80=99s not going
+> to be an issue.
+>=20
+>>
+>> For more context, I'm working on a device that allows a backend VM
+>> to provide virtio devices to other (frontend) VMs.  The backend VM
+>> will often have an assigned PCIe device,
+>=20
+> Hm, and you want that backend VM to not be able to access to all guest =
+memory?
 
-+static void machine_set_hdm_auto(Object *obj, Visitor *v, const char *name,
-+                                 void *opaque, Error **errp)
-+{
-+    CXLState *cxl_state = opaque;
-+    bool value;
-+
-+    if (!visit_type_bool(v, name, &value, errp)) {
-+        return;
-+    }
-+    cxl_state->program_hdm_decoders = value;
-+}
+The data flow is:
 
- void cxl_machine_init(Object *obj, CXLState *state)
- {
-     ...
-+    object_property_add(obj, "cxl-hdm-auto", "bool", machine_get_hdm_auto,
-+                        machine_set_hdm_auto, NULL, state);
-+    object_property_set_description(obj, "cxl-hdm-auto",
-+                                    "Set on/off to have HDM decoders "
-+                                    "programmed at reset as firmware would");
+  PCIe device
+     |
+     | PCIe passthrough
+     |
+  Backend VM
+     |
+     | Virtio PCI transport
+     |
+  Virtio Vhost-Guest Device/Vhost-User Server (in backend VMM)
+     |
+     | AF_UNIX socket
+     |
+  Vhost-User Client
+     |
+     | Virtio PCI transport
+     |
+  Frontend VM
 
-2. Add cxl_fmws_program_decoders() to pxb_cxl reset exit.
-Every device has 3 reset phase: enter, hold, and exit. Currently,
-pxb-cxl has:
-- enter = none
-- hold = pxb_cxL-dev_reset(), which zeroes registers
-- exit = none
+Threat model:
 
-Register cxl_fmws_program_decoders() to pxb-cxl reset exit.
+- The host is fully trusted, and does not trust the PCIe device, backend
+  VM, frontend VM, or device emulators.
 
-cxl-host.c:
-+void cxl_fmws_for_each_auto_range(PXBCXLDev *pxb)
-{
+- All device emulators consider all VMs (including, but not limited
+  to, their own) to be untrusted.
 
-+ /* use existing helper cxl_fmws_get_all_sorted to iterate */
-+ GSList *fws = cxl_fmws_get_all_sorted(), *it;
-+
-+for (it = fws; it; it = it->next) {
-+    CXLFixedWindow *fw = CXL_FMW(it->data);
-	/* program decoders here */
+- The backend VM trusts the PCI device, the host, and its device
+  emulator.  It does not trust the frontend VM or the frontend VM's
+  device emulator.
 
-+    }
-}
- ...
+- The frontend VM trusts the host and the frontend VM's device emulator.
+  For the purpose of this discussion, one can assume that it also
+  trusts the backend VM.
 
-+/* Call from the pxb-cxl reset exit phase, see pxb_cxl_dev_reset_exit() */
-+void cxl_fmws_program_decoders(PXBCXLDev *pxb)
-+{
-+    cxl_fmws_for_each_auto_range(pxb);
-+}
+>> and there are applications>> where zero-copy I/O would be very helpful=
+ for performance.
+>>
+>> However, when the frontend VM exits or unmaps memory, the memory
+>> also needs to be unmapped from the backend.  If this is cooperative,
+>> the backend may simply refuse to cooperate, causing a host-side
+>> memory leak.
+>=20
+> So =E2=80=9Cstealing=E2=80=9D memory from the frontend VM to be a share=
+d region with the backend? With=20
+> an aim that all other guest memory remains inaccessible?
 
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
- #include "hw/cxl/cxl.h"
-+#include "hw/cxl/cxl_host.h"
+Stealing some or all of the frontend memory, yes.
 
-+static void pxb_cxl_dev_reset_exit(Object *obj, ResetType type)
-+{
-+    PXBCXLDev *pxb = PXB_CXL_DEV(obj);
-+    PXBCXLDevClass *pc = PXB_CXL_DEV_GET_CLASS(obj);
-+
-+    if (pc->parent_phases.exit) {
-+        pc->parent_phases.exit(obj, type);
-+    }
-+    if (pxb->cxl_state && pxb->cxl_state->program_hdm_decoders) {
-+        cxl_fmws_program_decoders(pxb);
-+    }
-+}
-+
-static void pxb_cxl_dev_class_init(ObjectClass *klass, const void *data)
- {
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-     ...
-     device_class_set_legacy_reset(dc, pxb_cxl_dev_reset);
-+    rc->phases.exit = pxb_cxl_dev_reset_exit;
- }
+>> If it is preemptive, the backend will take faults when
+>> it tries to access the memory that has been unmapped from it.
+>>
+>> One can avoid both problems by only letting the backend access a small=
 
-This way, we shouldn't need to store the extra state (hpa_offset,etc.)
-in the cxl-type3 endpoints.
+>> buffer, but this requires a copy in either the frontend or the device.=
 
-I'm also not that familiar with the machine initialization and reset
-stages, so maybe this approach doesn't work, but this is my best guess.
+>=20
+> In practice, bounce buffering here can end up meaning both=E2=80=A6
 
-Thanks,
-Anisa
+I think the copy could happen in two possible places:
 
-> Testing
->   We ran tests in the following environment and confirmed that CXL regions were created at boot, NUMA nodes were set up,
->   and E820_SOFT_RESERVED entries appeared in the E820 table:
-> 
->   - BIOS: SeaBIOS c2a33ad9ad1452e23b41c4ac44a3bc6be8ebc4cf
->   - CXL memory: 4 GB
->   - CFMWS: 4 GB
->   - Host bridge: 1
-> 
->   The following is the startup script.
-> 
->   sudo /path/to/qemu/build/qemu-system-x86_64 \
->     -name guest=cxl \
->     -nographic \
->     -machine q35,accel=tcg,nvdimm=on,cxl=on \
->     -cpu max -smp 4,sockets=4,cores=1,threads=1 \
->     -m size=4G,slots=10,maxmem=20G \
->     -drive file=/path/to/image.qcow2,format=qcow2,index=0,media=disk,id=hd \
->     -bios /path/to/seabios/out/bios.bin \
->     -nic bridge,br=virbr0,model=e1000e,mac=52:54:00:b5:4e:7c \
->     -object memory-backend-ram,size=2G,id=m0 \
->     -object memory-backend-ram,size=2G,id=m1 \
->     -numa node,nodeid=0,cpus=0-1,memdev=m0 \
->     -numa node,nodeid=1,cpus=2-3,memdev=m1 \
->     -device pcie-root-port,id=pci-root,slot=4,bus=pcie.0,chassis=0 \
->     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
->     -device cxl-rp,port=0,id=root_port13,bus=cxl.1,chassis=0,slot=2 \
->     -object memory-backend-ram,size=4G,share=on,id=vmem0 \
->     -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,program-hdm-decoder=true \
->     -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
->   
->   Furthermore, we conducted the experiment in which we added two CXL Type3.
-> 
->   - CXL memory: 4 GB × 2
->   - CFMWS: 4 GB × 2
-> 
->   The following is the startup script.
->     
->   sudo /path/to/qemu/build/qemu-system-x86_64 \
->     -name guest=cxl \
->     -nographic \
->     -machine q35,accel=tcg,nvdimm=on,cxl=on,hmat=on \
->     -cpu max -smp 4,sockets=4,cores=1,threads=1 \
->     -m size=4G,slots=10,maxmem=20G \
->     -drive file=/path/to/image.qcow2,format=qcow2,index=0,media=disk,id=hd \
->     -bios /path/to/seabios/out/bios.bin \
->     -nic bridge,br=virbr0,model=e1000e,mac=52:54:00:b5:4e:7c \
->     -object memory-backend-ram,size=2G,id=m0 \
->     -object memory-backend-ram,size=2G,id=m1 \
->     -numa node,nodeid=0,cpus=0-1,memdev=m0 \
->     -numa node,nodeid=1,cpus=2-3,memdev=m1 \
->     -device pcie-root-port,id=pci-root,slot=4,bus=pcie.0,chassis=0 \
->     -device pcie-root-port,id=pci-root-net,chassis=5,slot=5,bus=pcie.0 \
->     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
->     -device cxl-rp,port=0,id=root_port13,bus=cxl.1,chassis=0,slot=2 \
->     -device cxl-rp,port=3,id=root_port14,bus=cxl.1,chassis=2,slot=4 \
->     -object memory-backend-ram,size=4G,share=on,id=vmem0 \
->     -object memory-backend-ram,size=4G,share=on,id=vmem1 \
->     -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,program-hdm-decoder=true \
->     -device cxl-type3,bus=root_port14,volatile-memdev=vmem1,id=cxl-vmem1,program-hdm-decoder=true \
->     -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k,cxl-fmw.1.targets.0=cxl.1,cxl-fmw.1.size=4G,cxl-fmw.1.interleave-granularity=4k
-> 
-> 
-> How to use
->   Specify the following parameters when starting QEMU:
-> 
->   - bios <SeaBIOS binary that includes commit c2a33ad9ad1452e23b41c4ac44a3bc6be8ebc4cf> to ensure that E820_SOFT_RESERVED entries are exposed
->   - Add hmat=on to the -machine option [1]
->   - Add program-hdm-decoder=true to each -device cxl-type3 option
->     [1] On Linux, the kernel first checks E820_SOFT_RESERVED ranges. When multiple CXL Type 3 devices share a contiguous HPA range,
->         these ranges tend to be merged into a single region, so the CXL driver cannot reliably initialize per‑device regions based on E820 alone.
->         SRAT entries for CXL memory are therefore needed, and the guest seems to discard SRAT when `hmat=on` is not specified,
->         so HMAT must be enabled.
-> 
-> QEMU base commit: bddb785e791e415db38884848d068457e226f5e3
-> 
-> TODO
->   With the current implementation of this patch, the following configurations are either not supported or have not been sufficiently tested.
->   As a result, automatic creation of CXL regions in the guest OS may fail:
-> 
->   - A CXL persistent memory device is included
->   - Interleaved configurations
->   - Cases where the memory size specified by CFMWS does not match the size of the CXL Type 3 backend memory
->   - Configurations where CXL memory is attached via a switch
->   - Multi-target CFMWS environments
->   - ARM environments
->   - HMAT does not yet include information about CXL memory devices
-> 
->   The following behaviors are also provisional implementations and may need further refinement:
->    - A new NUMA node ID is assigned to each CXL memory device. This should be improved either to reflect more accurate NUMA distances for CXL memory,
->      or to allow the NUMA node IDs to be specified by the user.
->    - Assignment of CXL Type 3 devices to CFMWS address ranges. On physical systems, platform firmware typically generates CFMWS entries
->      based on the detected CXL topology and its address-space allocation. In QEMU, however, CFMWS entries are configured explicitly
->      through machine options. The current implementation therefore has to infer which CFMWS range should be used for each Type 3 device.
->      This selection logic may need further refinement. Possible approaches include improving the selection and validation logic,
->      adding an explicit option to associate each Type 3 device with a CFMWS entry,
->      or generating CFMWS entries automatically from the configured CXL topology and devices.
->    - HDM decoder reset sequencing and state reconstruction.
->      The current implementation prevents the host bridge HDM decoder configuration from being overwritten later in the same reset
->      by moving the common initialization of the host bridge component registers from the reset path to the realization path.
->      However, ideally, after the registers have been restored to their reset values, the host bridge HDM decoder configuration
->      automatically programmed by QEMU should be reconstructed as part of reset processing.
-> 
-> Thanks,
-> 
-> ------
-> 
-> Yukiya Takaki (7):
->   QEMU/hw/cxl: add program-hdm-decoder option for CXL Type 3 devices
->   QEMU/hw/cxl:add HPA offset tracking for CXL Type 3 devices
->   QEMU: hw/cxl: add helper to get HPA range for CXL Type 3
->   QEMU/hw/cxl: auto‑program HDM decoders for CXL Type 3
->   QEMU/hw/cxl: expose CXL Type 3 ranges as E820_SOFT_RESERVED on x86
->   QEMU/hw/cxl: Create NUMA nodes for CXL Type 3 memory
->   add CXL Type 3 memory ranges to SRAT
-> 
->  hw/acpi/cxl_type3.c                 |  30 +++++
->  hw/acpi/meson.build                 |   1 +
->  hw/arm/cxl.c                        |  10 ++
->  hw/arm/meson.build                  |   2 +
->  hw/cxl/cxl-host.c                   |  63 ++++++++++
->  hw/i386/acpi-build.c                |   7 ++
->  hw/i386/cxl.c                       |  11 ++
->  hw/i386/meson.build                 |   1 +
->  hw/i386/pc.c                        |   2 +
->  hw/mem/cxl_type3.c                  | 177 ++++++++++++++++++++++++++++
->  hw/pci-bridge/pci_expander_bridge.c |  13 +-
->  include/hw/cxl/cxl.h                |   2 +
->  include/hw/cxl/cxl_device.h         |   6 +
->  include/hw/cxl/cxl_host.h           |   3 +
->  include/hw/mem/cxl_type3.h          |   8 ++
->  15 files changed, 334 insertions(+), 2 deletions(-)
->  create mode 100644 hw/acpi/cxl_type3.c
->  create mode 100644 hw/arm/cxl.c
->  create mode 100644 hw/i386/cxl.c
->  create mode 100644 include/hw/mem/cxl_type3.h
-> 
-> -- 
-> 2.52.0
-> 
+- The backend VM could be given memory that doesn't support P2PDMA,
+  forcing it to fall back to memcpy().  I don't know how well the
+  guest would handle that situation.
+
+- The frontend VM could use Device Memory Buffer, meaning that only
+  a small amount of memory needs to be accessed by the backend (and
+  so possibly leaked).
+
+> Given your use case, I=E2=80=99m not sure if emulating ATS + PRI is the=
+ right thing to do,> but it=E2=80=99s the only on-demand memory mapping s=
+upport in the PCIe specification today.
+>=20
+> In your case it might mean having the IOMMU implementation as part of y=
+our TCB so that
+> the device emulator is only able to map guest pages through the IOMMU i=
+mplementation
+> in your VMM...
+
+Given my threat model, I can't use ATS + PRI.  There's also no way
+to emulate it that I am aware of.  While I could emulate it to the
+VMs, I can't make the PCIe device use it.
+
+>> This might make the system uncompetitive with host-side vhost-user
+>> devices in high-performance applications.
+>>
+>> Is there a way around this tradeoff, or is zero copy incompatible
+>> with protecting both the backend and the host?
+>=20
+> I don=E2=80=99t have much visibility on something else that=E2=80=99d b=
+e portable across
+> platforms unfortunately. In the CoCo cases what I=E2=80=99ve seen being=
+ deployed
+> ends up being either bounce buffering for passed through devices or PCI=
+e
+> IDE with attestation and the NIC being trusted...
+
+That makes sense.
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+
+
+--------------N3LkNPYuFp2kBF903USP1UmG--
+
+--------------wL35HqvRr3VWrxJHbEuQzfA4
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmrr8LgACgkQszaHOrMp
+8lMgcA//YCxOGFfN9fiVfmwqx7TM1bGrCjzVHWx58vyaQOGhpbG/jpf78BxBtmbl
+wrs1KutoCuW03Up5HxnYRW4fA7/anoEgqCCGvzEmPttehiEkMrXRW1sIE/BUiMXk
+xp3ys+azObq21wGhmrZF4pJ9Mdd1kO9pJYcqeGobbpu05WXOSEhOqWoK9gCDtpSe
+v6XARp/YDnzyHNzwla3gcKDDL0p9u7gXp4MTbz7rGWhFZLa30PhKgxO0sQw5S45R
+dNGu0f2E0ILI5zBsC5RGw6McEAkKfgSndN7xqAdxGOjH+1XFurX0t7PMEfCiCrCo
+CXAjPgRtNz4LCtGP6fgCPe3shSj4VDxq1Yfl1CG29BtVbjTOivlQj3w/yt/PiMiU
+tkHELD7iS9de22+0MSQCSe5495IE3NAIniv4qScdwa9MJjXHODbNO+UB9xdU4m/k
+sf8dL0YBYEteGqhVMZ1XN20kOR6LeQhd3ArsPaJYaYqMJVeNtjSLGswLeDmT2bCn
+kw67KPwtWhkQebQPyW2sWN6WGI1STVSznWmlXKfQ1zqDGPX1q8CXGBTAC+nzs0vD
+ZjQ/gQPT23CrQqaTeH4IAIW3HBXNKr2Ra/eEcNaJklI0BTFQbJB0DHlqMv4Gfrij
+N2H6+N1GlF/Mw5IZce0YvIQjVzuK/JZHD2taUbs4KB1EDD7QC+I=
+=CuZb
+-----END PGP SIGNATURE-----
+
+--------------wL35HqvRr3VWrxJHbEuQzfA4--
 
