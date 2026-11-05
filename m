@@ -1,98 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988E7606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 14:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1B2606A326
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 14:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=me.com header.i=@me.com header.a=rsa-sha256 header.s=1a1hai header.b=aUAzLyxK
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YVZpLrb/;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=mmPcCeEm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOyKe-0007DO-0K; Thu, 05 Nov 2026 09:20:48 -0500
+	id 1xOyTW-0000NU-1n; Thu, 05 Nov 2026 09:29:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thorpej@me.com>) id 1xOyFG-00067S-8Y
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 09:15:14 -0500
-Received: from ci-2003f-snip6-11.eps.apple.com ([2a01:b747:3005:200::3f]
- helo=outbound.ci.icloud.com)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xOyTR-0000Mg-Aa
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 09:29:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thorpej@me.com>) id 1xOyFE-0000Ba-JI
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 09:15:14 -0500
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-100-percent-11 (Postfix) with ESMTPS id
- 6BA38180125D; Thu, 05 Nov 2026 14:15:06 +0000 (UTC)
-X-ICL-RepId: 01a1ac10-3765-7167-85d6-1f7bce327462
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQhPHVwGRQNFC1YCWRcOVk1NEFwfRw5YMFQdHQ5YBhIWXUVeCBkIXR0ZClBQAktaFVUXDgJCH1AfTBZXQ1QCHBlaFFwYU0VRH1RYQxlFVmlBC08dXRlbHEJkWFcJCgZXXloXXk1aAlZNBU91WAQucEJ4VQQoAS8fRApLdUB2LQRGFDx2WHQuC0UJPAModStfFRcbXAAJS0YJSR0OBFQHXQVd
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
- t=1793888108; x=1825424108; bh=T4ypooSis23nmXw2oOpM+nl5ctWhpobWCsPjHXKF0cM=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=aUAzLyxKXBVYe/ehUa/V6cx3Zmv7loiY58fOdJWH4GVXy0QkG0W2kZcgNAoeqcO/+Dl6LvJtTZFCClR7P8IV6JgkaqEiimTXItegQWiPKUIFtctV22kCVpgrMshCxyKBGeN72grG45aBYwvbvRCB38r4Qev8VgNFDyARwhA5KBkvnr0hUbMGpdLUoEUNYKaHxsYJb7ZRbHqSy5tgNi2kPrftloBw2ps7kpp6e6Rgit7dKAf/OBfzDc9Midhu1JRNpnZ7duWQggu8VVieHlF7PFe7wqYFnkVWqwkLn8ikHCwI6+XnXZzsQD5L6lLf4cDUCAEdwGfq+SrKI6Z5cK6dog==
-Received: from smtpclient.apple (unknown [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-100-percent-11 (Postfix) with ESMTPSA id
- DB47018000DB; Thu, 05 Nov 2026 14:15:04 +0000 (UTC)
-From: Jason Thorpe <thorpej@me.com>
-Message-Id: <7F53EB2A-7E6D-433F-AF66-DE5CE950D0EB@me.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_3E350882-1D28-473F-BD3D-B19CB5972F68"
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xOyTO-0001nU-Ap
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 09:29:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793888986;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pjtj63fo+s61GN+f9LF+Yf7YLV6I3/P5rwrY4Pl9Izk=;
+ b=YVZpLrb/+O6/zI42namBWUFvTX3b+4kUSUNXcjur7BubjWooFANBKxqB3/QI5EJJQPqpDT
+ 3zfDBzVPbVxSJphkW6w1vtgHqYvTzxwDhDFxiKGEhQZvgPO3lN9AFrb8HoZQXdvT2rmO0Q
+ XRACltEzJQvJ2FD1iMJrUl8eJyQqd4M=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-281-xYqGeb-jNgisAYPNwRrQBA-1; Thu, 05 Nov 2026 09:29:44 -0500
+X-MC-Unique: xYqGeb-jNgisAYPNwRrQBA-1
+X-Mimecast-MFC-AGG-ID: xYqGeb-jNgisAYPNwRrQBA_1793888983
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4a359c7f47bso19836865e9.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 06:29:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1793888983; x=1794493783; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=pjtj63fo+s61GN+f9LF+Yf7YLV6I3/P5rwrY4Pl9Izk=;
+ b=mmPcCeEmYNMIsSHUOOJemGSojDg0Vd2lsx86UXeDArP1bshaCbrw+EXxFXDFP1MC25
+ KXwa6xZb2hEHjsga6qyBh+WiXjBGFuoYKqwn7whzY//G+95O7d6MCELs/Uzvg5nDaygz
+ xGAm75TNT11vlLkfFLQDLqGnmYfeC5AQ60ZyKZFXdSjujn0j9wEIv0S03hPS43ch75cl
+ LYdWFlX/Bvn+JoAbUDK0Xad77D2fpToZB6Yh0qDZnZe2QDOnavboX3omBkWGgEZcJzgv
+ W9XmLw2I6aPJx/6+JsKbo8Zb9glTenkIOGPN1Vsv5vjtM6EpGt78JqtnoXR6Xo6o9Dk+
+ gQzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793888983; x=1794493783;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pjtj63fo+s61GN+f9LF+Yf7YLV6I3/P5rwrY4Pl9Izk=;
+ b=qYAqcKMOAC5o44EGRM/o4EolfsaK29tXbD2rMlpFS+A2QTtqDmjxgoY7ensllNQ4ZO
+ 9X88jRZTx8DbO4W6nsRRZNSfNhtrgZNK70WDJzKtNmNxJWAZuJd5xhKEPtULKAETuivS
+ OcA6mZuUrsThX97ejYsBWV+MIkawuIJ5NVKgwm3yQBKF8QMeoIkVTpd+nahG3HvPG4JC
+ amgzGPegV9qrJMPwu7AjW1DfYSpIjkYONU61RA0zeJwR82df86n7GNGblHVoFErBzSEj
+ YiqbO834Yr+zLRWm0MmVsrKPYcv3qlhoSbRuPpHLUC1VOalfhn1OLW05CZB1UcrPZbcZ
+ kWYw==
+X-Gm-Message-State: APuU4Z+mowGzpkxD15nBrvtmpwlE7NDd1NkBrI9zwQTmk/hlzl8Tdn7d
+ DsFufSLe398wV/sp3c2nBxI4DcALCd3b5cAgdWWul9Ibe8Wd4RCUKe/ficjxzRBzmGY+HlJFTUM
+ x1VGwRGfddTG193R0xxW48qSmjIBIB3D8lV/prYaajApUb3L/nLVOkQwo
+X-Gm-Gg: AYBFou2nxnSwM54hrguk3qaGahZhYBm71fo9TBJxVwU6c8sFHU1b6r7kNnnqRQywTya
+ 8JyMHpAs7A62YmUITA3XbjAuLVS77OD8DfL8jWBYG77HpIvMk4Iu1JGAUe43Q+kCkeEjf10bg0i
+ YXSLNaTXI5tGk6fGZHozPM6wcubiu9Tyh9AQcD9xIbTP9fOA+vxQLVzaGB+j/QI+4L3YwVe5G2l
+ PJ5rLHuM7vngIQVBuqbh7kHPkmQfaWgJVvYpyYK9YG4Klpr7akTJ2mk8tNaYXdOWlpzvg/hJ/5F
+ DAFjqypA6lfW2xvRgd9cj8MuqZ+lWi0b2NfZJaUV11dDA3cMnZBSyCCrGScQKVcTB2M+SOkQEfc
+ pQ44BRmPDySqi98qFNeArdGtVkx56njzjNVnE4gP4kDdhBKH/
+X-Received: by 2002:a05:600c:4454:b0:4a3:5a7b:6002 with SMTP id
+ 5b1f17b1804b1-4ac17d19777mr413960925e9.28.1793888982794; 
+ Thu, 05 Nov 2026 06:29:42 -0800 (PST)
+X-Received: by 2002:a05:600c:4454:b0:4a3:5a7b:6002 with SMTP id
+ 5b1f17b1804b1-4ac17d19777mr413960505e9.28.1793888982262; 
+ Thu, 05 Nov 2026 06:29:42 -0800 (PST)
+Received: from sgarzare-redhat ([94.32.51.69])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4b56e2ae72dsm118795875e9.3.2026.11.05.06.29.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Nov 2026 06:29:41 -0800 (PST)
+Date: Thu, 5 Nov 2026 15:29:27 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, virtio-fs@lists.linux.dev
+Subject: Re: [PATCH] vhost-user-fs: fix virtqueue array leak on realize failure
+Message-ID: <auyR97ogGdws_udv@sgarzare-redhat>
+References: <20261104080939.439160-1-dtalexundeer@yandex-team.ru>
 X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH v2] mc146818rtc: Make PF independent of PIE
-Date: Thu, 5 Nov 2026 06:14:53 -0800
-In-Reply-To: <b9960b3a-590b-442f-a95f-e21a24ee00ed@oss.qualcomm.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, mst@redhat.com,
- richard.henderson@linaro.org, qemu-devel@nongnu.org
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20210619193849.27889-1-thorpej@me.com>
- <b9e20dbc-fa5f-1e37-ad8a-5d433d77c4b0@redhat.com>
- <00FB4F43-698C-4888-91E7-45FE80CCFC67@me.com>
- <bf3645bf-6a47-75f8-862a-7ea8c467f007@redhat.com>
- <b9960b3a-590b-442f-a95f-e21a24ee00ed@oss.qualcomm.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-GUID: 11AueTfaCqfPl0ygRuABS4ZxTWcl6D60
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDA1NiBTYWx0ZWRfX+3gEaRYpJs6C
- wY3EIaJHjVxOQLFdhTTtURODsx35hSkbUv7mQyGTHEKajfcKPTSn9CN3OAy6D8+ITVM0wtOfoSi
- Hm+HuPP7ro3KqfnVXXKLmprnKMdohtSz373ZZhjExHVA8JHA8Msdhp3YCzULFf0ortPrWIlHLh6
- DBOFxagRe7h5uutaU7YiHKj0KKms+eUl4elWbckk6D81W7NRa+R3ZxAgbbaZH0U47o48RvIRxy1
- RnzewbYLRtFEw1qnlC9GGdKZgAhD2bk5KB39uBOPGwEh1nd9D/8kE97zINV6k+nSqBlhOVIxy4r
- jr8kasxA9p4fbLVCQZvE6x+eiJjMWXHirUGcjTsOm/JbyH9IN10fatfKQACjgY=
-X-Authority-Info-Out: v=2.4 cv=U+qfzOru c=1 sm=1 tr=0 ts=6aec8f6b
- cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=zJRp6_cAMcgA:10 a=x7bEGLp0ZPQA:10
- a=hNn9FkxD5tsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=fcMS4clZAQu0tQEkvZ0A:9 a=QEXdDO2ut3YA:10 a=ZGgYWE-smxwho2_n9wwA:9
- a=YMBgh0loWKcPU2U1:21 a=_W_S_7VecoQA:10
-X-Proofpoint-ORIG-GUID: 11AueTfaCqfPl0ygRuABS4ZxTWcl6D60
-X-JNJ: AAAAAAAB5lVq9dqfq6W6+eLqR8NMAWfsZp05xzNTA+ljYxU4A2O7ce4uaxSFcwYHko4E49
- 7MMylsIhhy5BHhaYymWUaaD33pM+IdwwKmS1MRR7pnQI66gjF3jNr4Uyp0U0Achi5m1acS
- gSZ8sJdZBVgMhelaJ69AwpekiTQIcvDOwhsmy7CZ8EkLTNzU1T5E3Yds9jWtNI29A3fexl
- PN/MWDuWdu7WgKLWtQ57QLg65oB5o5G04Wgc9XWHqMkWtob1WeHm/jGFOPzghdLzahtxCM
- A9tYNufry8UP2saEPqXNiKjIiWYVjJzF4lIhikqK7Q8z05/JrTmuT7OV+eDFl0KvTUtn6i
- 7bHqOSB6yjsgQg6ELtwjIcxJdIjvKZoGZpy2V6YBPgXVq19HURF3WylT7pPak4CPNqZokW
- vyidcoFRxflxmyf/J9zSn+T3BK9XxBveyq6kFLdlbY1qY8RHcd19n1328Utf2NErTo22ss
- oxZnFvMMcczV7gLjhA2zVs4f2Rn31qagDUFTxCdKkxT9NDAVIm/2Y4gCKJvPRDYD8quzrA
- 25fWbafJBC3cIto1s3K6Orx0rAqbiHwlXfCG9ORnM2HBwZqlbjUd2B4doginZ0LTL3txTs
- vt4LIKn2yu5f0+O3q7wJ6+R3cb7A5b5rjjqgUjZFuYODnJGnfS2Q5eXdTaEYqC2Tha9BRk
- Is5bOPiBXuCwJatXcIgtIVcuNrcpf9buMFwtUHpf2yIE/HsQ86ujBNHU5vOdqqVXH8eEZ8
- U15FY+olTn0FxInmwr5hes4mUVUI8hSwMcKKYcfIcMrRhnDG1k4eJN/2tp0uohWGfnMFRf
- YzYK2cS3io9J3VyOBPU4mG0ALe+KH9h2kW0jebGrdxt91iRjn4+yRkEo2AUWTcbdE4I8jg
- FChBKnXGhsARTjra/LS9MNdWQocLAZTBNsD+uYl6LhfgTCKE5wemeskn+3HuUvzo5D+Xcg
- rbb9ohkcd1wa3n4whYQXulnPKKVxNF6fet1CcYAzTvWgbt/6nBGsQ5KlFnUs00ncgU4dDv
- Jc38mdVOS5a99SGG0ejDUBBa1NkUNVxgFNTBWiInHuTBiofrRKvWzNwZbRgWeEom6c4+sC
- EW+b8TTht2TBec2m+1WFp8lz+GbVbAsVboKkT9PxHsU0LVLuvAItc1aa6cAuXI1snreYEs
- 4QwK/6q7f2/YWhMAqNIYq/tXekWTB0I2x1BPUTiZe4/H0a6bGJtnCfDAZrdwrNCSP5qSBL
- 6CzGre3FN9Veae3zFuRjoYh++VSVR7UDAIoYXrZnUKKCSTSk6wAzGKzEUUV838iIneZ20c
- ap/kJphTrLGt3Xfr5l
-Received-SPF: pass client-ip=2a01:b747:3005:200::3f;
- envelope-from=thorpej@me.com; helo=outbound.ci.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20261104080939.439160-1-dtalexundeer@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 05 Nov 2026 09:20:42 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,65 +118,68 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On Wed, Nov 04, 2026 at 01:09:39PM +0500, Alexandr Moshkov wrote:
+>On failure, vhost_dev_init() clears vhost_dev, so the error path frees
+>NULL instead of the virtqueue array. Save the pointer locally and use
+>it to free the array on failure.
+>
+>Fixes: 98fc1ada4cf7 ("virtio: add vhost-user-fs base device")
+>Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+>---
+> hw/virtio/vhost-user-fs.c | 6 ++++--
+> 1 file changed, 4 insertions(+), 2 deletions(-)
+>
+>diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
+>index 0d8842817a..9b33fe13bb 100644
+>--- a/hw/virtio/vhost-user-fs.c
+>+++ b/hw/virtio/vhost-user-fs.c
+>@@ -198,6 +198,7 @@ static void vuf_device_realize(DeviceState *dev, Error **errp)
+> {
+>     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>     VHostUserFS *fs = VHOST_USER_FS(dev);
+>+    struct vhost_virtqueue *vhost_vqs;
+>     unsigned int i;
+>     size_t len;
+>     int ret;
+>@@ -255,7 +256,8 @@ static void vuf_device_realize(DeviceState *dev, Error **errp)
+>
+>     /* 1 high prio queue, plus the number configured */
+>     fs->vhost_dev.nvqs = 1 + fs->conf.num_request_queues;
+>-    fs->vhost_dev.vqs = g_new0(struct vhost_virtqueue, fs->vhost_dev.nvqs);
+>+    vhost_vqs = g_new0(struct vhost_virtqueue, fs->vhost_dev.nvqs);
 
---Apple-Mail=_3E350882-1D28-473F-BD3D-B19CB5972F68
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+While checking if others users of vhost_dev_init() have the same issues, 
+I discovered that most of them store it in the parent structure (the 
+equivalent of VHostUserFS). Then looking at VHostUserFS I discovered 
+that we already have the vhost_vqs field there since the beginning, but 
+we never used it, so what about using that one here and in 
+vuf_device_unrealize() ?
 
+Thanks,
+Stefano
 
-> On Nov 5, 2026, at 5:44=E2=80=AFAM, Philippe Mathieu-Daud=C3=A9 =
-<philmd@oss.qualcomm.com> wrote:
->=20
-> Jason, do you happen to still have your setup to test it?
+>+    fs->vhost_dev.vqs = vhost_vqs;
+>     ret = vhost_dev_init(&fs->vhost_dev, &fs->vhost_user,
+>                          VHOST_BACKEND_TYPE_USER, 0, errp);
+>     if (ret < 0) {
+>@@ -272,7 +274,7 @@ err_virtio:
+>     }
+>     g_free(fs->req_vqs);
+>     virtio_cleanup(vdev);
+>-    g_free(fs->vhost_dev.vqs);
+>+    g_free(vhost_vqs);
+> }
+>
+> static void vuf_device_unrealize(DeviceState *dev)
+>-- 
+>2.34.1
+>
 
-
-I can do so later this week, sure.
-
--- thorpej
-
-
---Apple-Mail=_3E350882-1D28-473F-BD3D-B19CB5972F68
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br><div><blockquote type=3D"cite"><div>On=
- Nov 5, 2026, at 5:44=E2=80=AFAM, Philippe Mathieu-Daud=C3=A9 =
-&lt;philmd@oss.qualcomm.com&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><span style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Jason, do you happen to still have your =
-setup to test it?</span></div></blockquote></div><div><br></div><div>I =
-can do so later this week, sure.</div><br><div>
-<span class=3D"Apple-style-span" style=3D"border-collapse: separate; =
-color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
-font-style: normal; font-variant: normal; font-weight: normal; =
-letter-spacing: normal; line-height: normal; orphans: 2; text-align: =
-auto; text-indent: 0px; text-transform: none; white-space: normal; =
-widows: 2; word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; =
--webkit-border-vertical-spacing: 0px; =
--webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: =
-auto; -webkit-text-stroke-width: 0px; "><div style=3D"word-wrap: =
-break-word; -webkit-nbsp-mode: space; -webkit-line-break: =
-after-white-space; ">-- thorpej</div></span>
-
-</div>
-<br></body></html>=
-
---Apple-Mail=_3E350882-1D28-473F-BD3D-B19CB5972F68--
 
