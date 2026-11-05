@@ -1,69 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE3F606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D24606A31B
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 19:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nUGVX3Bj
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LlCwEuDI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP2km-0004qQ-VO; Thu, 05 Nov 2026 14:04:06 -0500
+	id 1xP2l5-0004rM-OS; Thu, 05 Nov 2026 14:04:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xP2kg-0004qA-ML
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:04:00 -0500
-Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
+ id 1xP2km-0004qW-1v
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:04:04 -0500
+Received: from mail-dl1-x122f.google.com ([2607:f8b0:4864:20::122f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xP2ke-0003kI-Gg
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:03:57 -0500
-Received: by mail-dy1-x132c.google.com with SMTP id
- 5a478bee46e88-36cad25b8b0so3327305eec.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 11:03:56 -0800 (PST)
+ id 1xP2kh-0003kb-QF
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:04:03 -0500
+Received: by mail-dl1-x122f.google.com with SMTP id
+ a92af1059eb24-1ae18eb9b69so2347856c88.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 11:03:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793905435; x=1794510235; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=rvXH/mY0k5x15Ps4VL487FrGx/knJKjiaXJT4zsxitk=;
- b=nUGVX3BjlekOVaDVMjR9nfIvHafT3DAj0kYSmkafg4/07mr2o5V4n9UlACXKLK5ItT
- 3pVGhOo4O/2sCsP1WUwJBMi0SrtNPSV17DVxQOnXcK8qX5N6HWvbXDLOMNr6SEvCfFwl
- zKYvkUCTMcNnc2qIfqBaGa+pA/wL7bAj9IT54UyviSkI3EWTqEujp5qdz7Xx88jd9yJ4
- KUxZ+6dHWFmUYhbGPd8ubKckd8IWQCezfMOeorLdpI34P0QV9MUa3HN08wL3lrORPytq
- L9ZblISO5oKwnTGoGpt1a45SRIBwoFlBNZEw5YqEIFwf3ErRvGPhoYwr4/W/irJkhtmK
- UAEQ==
+ d=gmail.com; s=20260707; t=1793905438; x=1794510238; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=am9rKxkmJI56O/AW/S6W/T2yFW6Ysjk6dcvPsZuNnUg=;
+ b=LlCwEuDIjLBgEPFe2EA+SVwgTtVN1rwto/sa/KbYBOxS3yccZCVpD+Difp7HXnBl93
+ wjeF0n5WKVZssmfmY8Vou+GPk6EPfDwHZyFBBD67RQiQlVzr3TnrsC2j7c3LH8zQPQCt
+ KU2agXnJ9UdKS0ic/38Z7hay5diuddgXyQhOwQoC7WEzKgo111VmFfyn8LEyyFu0W2Qf
+ wQ/WyptqiJdSf6hXwxOjpADNFxVaYsocW9/uPXEjgHIqiDOXn57h6781c9DznXXyNMa6
+ 4QxL0jpbQ8aC89cmhMVxxVbezAY+HizamFAR+wUyN67NXsjNv/2tWaOQU65OZY9RpYwx
+ oTJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793905435; x=1794510235;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=rvXH/mY0k5x15Ps4VL487FrGx/knJKjiaXJT4zsxitk=;
- b=zDHOSfemJX8t4rLN7ax8f0P8hUQN1T0J2NANm9IzqXDojG2TOZT9YwEJQpC/PKOcUt
- sbw+bapjFlxn7G8wv2aGvbYcjxXRBw1Eb8a/0vCSKgTAeUbSLXuDSxtUkNI05vHHPfk1
- joB7j6huAbNVUIwyHvxZEf7AsjmH/Ralzl7/Es3BF41P76O4vjMThpO7E4vUB1PctXyh
- QXV8UPBg9QpDfkLrPaiI8F/l9ZkRI4Fm29R7v533La5LiDcGRBRSz9CcH5NlmOfpnC3M
- K+wtV9mNepzHo17Nex2chQaw9qMwjTmVmH4NurGng9PhU4t9fFJUdqCgg5Zel+i5wsPm
- Bw7A==
-X-Gm-Message-State: APuU4Z+rw3dbhQvlz8b8dwjrXIf4B6AbR3e/3EwLyhlXYAB9ReXWAx4L
- zxCvv9rF7iYOzLoYkmyAikd4ij88DRzqm4R4TNUR6/fkJ1p5idNmNKVhtvvFNDgwHkM=
-X-Gm-Gg: AYBFou2tlH4+vNY0Rg3wh6c9EJkrqjBJGQMFA3ir/mZHv2Xx2MyY+2Qkrh3lsLe+nUy
- khSAKBtEyPm0qSV3PYzrtKUet0GiUC/YIf13tzwjCnjh/2ETAEEvQWyUjVUuCG/QbUyXg5Wd+xx
- 8ByY1X6gTW/kb1PrR/zdlfQTZtNvMR1kyFRlrn2Zh8dSTtXQLXC8AUgfTPmg8s7xsYr93uFAQVN
- WLvpdVs49sDYAPVgIidrbYEpg7qMlfeHg7XU/2OLUSqDwbXV2NRAPdUhtQ8U2P4u+8kZwtoeCA1
- mPlZe4V6ZUSx8aLQxp6jxVuy3EDaXRs+EAaOowgStCxF+UuJgf54asLIfxCdZLrcgQO1f4bWe72
- xc85KYsDN9/y0TRetI3V0+aXSRU5wyZCEfaGXu62f1UZlKhiU8ve66VHt7ukWSNe88Wi9EuBAA4
- 5ts2B/C2lZQQ6qW3rp3dqylWUFd5BvWsuCmMb/TClA/cqMt4RLzfoDSzhiDtSGLp6jm09trR3ig
- LPfboRMQNaunbdNT774Dmc/NKyaxnN6DgI4s6EudXT12mp7LFGj00j2JsPk2KTF6r4HgeNC3Y7n
- Amn8F0rcOm4whekX4Olsk7JT2ZtWDyY2r43ltnx3ZbB8La68iy6wvMn/Mss/aD6Uc5TW6A==
-X-Received: by 2002:a05:7022:f513:b0:185:8c9f:de82 with SMTP id
- a92af1059eb24-1ac5e8deb47mr24053164c88.33.1793905434325; 
- Thu, 05 Nov 2026 11:03:54 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793905438; x=1794510238;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=am9rKxkmJI56O/AW/S6W/T2yFW6Ysjk6dcvPsZuNnUg=;
+ b=vFwGOpx7AaW0WYP1plsTtHb1s62yZ5S9mF7h+dyP3rSahfpFx+3JkkJ/zU30p3UT+h
+ DZ5JcPo04E9VJUoci1wVT7BmHaz3hJdl8GusFvOZ6C4Rn9wLuaqxG8yDID6r8J6+gL5b
+ FRkqNIvfCjK2pe1+Bi+gU/3051uMcJoQmUnKpvI03oez1Guti/YGWMSygqcMHvTxcuyu
+ ZW1YsmPY04eIbCtYfrsqmOGjXwZ9UK6nCv2RV64BeXY+jZXlFz9qowjZYMU10+mN6Bac
+ bTn4GxaENQE2ug3nydFnmi6D+cI8XtzQ2dKW4UzrrWg5eLhbpuwFB/48yklKpFH1dSgb
+ baNg==
+X-Gm-Message-State: APuU4Z9SAwuDVExOks/hsetV/0cYBwkkAg0gciJGaV5iBjCTakirMeHa
+ zyt6n0rrxbrfX/3yCXWChfMbxuudGRoNFXjfnfF6r1iKCM2qc7n3NrU2n79WtNmiXZY=
+X-Gm-Gg: AYBFou0PVf5fpyRJYC+rv10Nl1IKlJruqvvNbyQqUEESO6gzZiLlA0p3OyU/0FugaPw
+ FhFxrXUnjVxAN5xonCpKkuPvXyUKOhOjGZF0QU3SQ0GqDy/acjLpTBhSnGBxAFa+QbaiyLDg6Y6
+ ZXwRRJxchF6iYvyfmwYIVCAmdhCo9j2LYrG5DjaOveWz7Z+Teb7Kp59HhujMHMOOyg133rMYGKB
+ yK0O2nPkItwES7GWdYEdWW0A5CyuGr0xKleBRWuqTxEIdcDIxBcWYnV8E+Bi5qxw8CzRf0tTNzS
+ GvGZwsUrLh7Sd5MDie89leO0TmvCZfjb99F5S9oaE3RmQ9EZobD/QQip+gOdXOJu1ggOxKfsEAl
+ fPo1ohobU3TIIGCO0oTfARVEV+PBSHEH/5wKHZ3wAjO0TeKwVdV7fLEDmUMy+yP+/Dl360s3usZ
+ YpUAHHh0CYEfAcxwe65v2c4lpmXsqeYgUXG+z+I6+HsarLYs+N7Ah92fmeSa3dQlzs8E24eco45
+ OMViNo/+Vd32BVZgwQc/tDGOAeYVHF2n/Hrsgh0uqZgwX80d9qSENcbcC6Ck0zIvmRtlPkqQICg
+ GbccrAOmFPOQJbYdTjBQKt8fjbt1TO05TRaLyw3OD7hCVcmf
+X-Received: by 2002:a05:701b:4283:10b0:166:f097:6f12 with SMTP id
+ a92af1059eb24-1ac5cb1a303mr30062890c88.15.1793905437781; 
+ Thu, 05 Nov 2026 11:03:57 -0800 (PST)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1b245c4706bsm22924284c88.15.2026.11.05.11.03.51
+ a92af1059eb24-1b245c4706bsm22924284c88.15.2026.11.05.11.03.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 11:03:53 -0800 (PST)
+ Thu, 05 Nov 2026 11:03:56 -0800 (PST)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -71,16 +72,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Philippe Mathieu-Daude <philmd@mailo.com>
-Subject: [PATCH 0/5] qom: prepare a TypeBucket for same-name target variants
-Date: Fri,  6 Nov 2026 03:03:41 +0800
-Message-ID: <20261105190346.1539-1-luoyonggang@gmail.com>
+Subject: [PATCH 1/5] qom: store registration targets on TypeImpl
+Date: Fri,  6 Nov 2026 03:03:42 +0800
+Message-ID: <20261105190346.1539-2-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20261105190346.1539-1-luoyonggang@gmail.com>
+References: <20261105190346.1539-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x132c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x122f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,57 +101,99 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This series prepares QOM to hold more than one TypeImpl under the same name, one
-per target, so a multi-target binary can register same-name types without
-renaming them. Nothing uses it yet.
+type_new() and type_register_internal() take a QEMU_ARCH_* mask and
+save it on the new TypeImpl. type_register_static() and the built-in
+object and interface types pass QEMU_ARCH_ALL. An interface type
+copies the mask from the concrete type that implements it.
 
-type_table maps each name to a TypeBucket, which holds the variants and the
-union of their QEMU_ARCH_* masks. Registration still aborts when masks overlap,
-and a name lookup returns the one variant left for the selected target.
-type_register_targets() registers a variant for a target mask.
-type_register_static() is unchanged, so binaries keep one TypeImpl per name.
+Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+---
+ qom/object.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-The change stays in qom and target-info and does not conflict with the virt QOM
-name or is_available series.
-
-Daniel asked what a TypeBucket means. This is that prototype, based on the
-bucket idea from Pierrick.
-
-Daniel: what a TypeBucket means:
-Link: https://lore.kernel.org/qemu-devel/auyP09mbwuefulBL@redhat.com/
-
-Pierrick: register types per target bucket:
-Link: https://lore.kernel.org/qemu-devel/d754acaa-0811-4185-a78f-1a352ec8bbab@oss.qualcomm.com/
-
-Pierrick: the bucket work can proceed in parallel:
-Link: https://lore.kernel.org/qemu-devel/CAE2XoE-iOCdGxPtg7MqydmahpnOTFM_15dR0eJKGMrQKxrgeQQ@mail.gmail.com/
-
-Yonggang Luo (5):
-  qom: store registration targets on TypeImpl
-  target-info: add target_mask_selected()
-  qom: add target_mask_filter()
-  qom: filter type lookup with TypeBucket
-  qom: add type_register_targets()
-
- include/qemu/target-info-init.h |  15 ++-
- include/qemu/target-info.h      |   9 ++
- include/qom/object.h            |  12 +++
- qom/object.c                    | 168 ++++++++++++++++++++++++++------
- stubs/meson.build               |   1 +
- stubs/target-mask-selected.c    |  13 +++
- target-info-def.c               |   3 +
- target-info-qom.c               |  10 ++
- 8 files changed, 197 insertions(+), 34 deletions(-)
- create mode 100644 stubs/target-mask-selected.c
-
+diff --git a/qom/object.c b/qom/object.c
+index cd0590c3fd..b7e1924e81 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -71,6 +71,8 @@ struct TypeImpl
+     bool abstract;
+     bool secure;
+ 
++    uint64_t targets;
++
+     const char *parent;
+     TypeImpl *parent_type;
+ 
+@@ -97,7 +99,7 @@ static TypeImpl *type_table_lookup(const char *name)
+     return g_hash_table_lookup(type_table, name);
+ }
+ 
+-static TypeImpl *type_new(const TypeInfo *info)
++static TypeImpl *type_new(const TypeInfo *info, uint64_t targets)
+ {
+     TypeImpl *ti = g_malloc0(sizeof(*ti));
+     int i;
+@@ -126,6 +128,7 @@ static TypeImpl *type_new(const TypeInfo *info)
+ 
+     ti->abstract = info->abstract;
+     ti->secure = info->secure;
++    ti->targets = targets;
+ 
+     for (i = 0; info->interfaces && info->interfaces[i].type; i++) {
+         ti->interfaces[i].typename = g_strdup(info->interfaces[i].type);
+@@ -158,7 +161,7 @@ static bool type_name_is_valid(const char *name)
+     return plen == slen;
+ }
+ 
+-static TypeImpl *type_register_internal(const TypeInfo *info)
++static TypeImpl *type_register_internal(const TypeInfo *info, uint64_t targets)
+ {
+     TypeImpl *ti;
+ 
+@@ -171,7 +174,7 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
+         return NULL;
+     }
+ 
+-    ti = type_new(info);
++    ti = type_new(info, targets);
+ 
+     type_table_add(ti);
+     return ti;
+@@ -180,7 +183,7 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
+ TypeImpl *type_register_static(const TypeInfo *info)
+ {
+     assert(info->parent);
+-    return type_register_internal(info);
++    return type_register_internal(info, QEMU_ARCH_ALL);
+ }
+ 
+ void type_register_static_array(const TypeInfo *infos, int nr_infos)
+@@ -310,7 +313,7 @@ static void type_initialize_interface(TypeImpl *ti, TypeImpl *interface_type,
+     info.name = g_strdup_printf("%s::%s", ti->name, interface_type->name);
+     info.abstract = true;
+ 
+-    iface_impl = type_new(&info);
++    iface_impl = type_new(&info, ti->targets);
+     iface_impl->parent_type = parent_type;
+     type_initialize(iface_impl);
+     g_free((char *)info.name);
+@@ -3239,6 +3242,6 @@ static void __attribute__((constructor)) register_types(void)
+     };
+ 
+     type_table = g_hash_table_new(g_str_hash, g_str_equal);
+-    type_interface = type_register_internal(&interface_info);
+-    type_register_internal(&object_info);
++    type_interface = type_register_internal(&interface_info, QEMU_ARCH_ALL);
++    type_register_internal(&object_info, QEMU_ARCH_ALL);
+ }
 -- 
 2.55.0.windows.3
 
