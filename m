@@ -1,50 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E4E606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 07:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44784606A339
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 07:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=H5k3coTG
+	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=UuPZRUKj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOrW0-0004H1-GB; Thu, 05 Nov 2026 02:04:04 -0500
+	id 1xOrb1-0005Nh-N7; Thu, 05 Nov 2026 02:09:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xOrVx-0004GO-Pn
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 02:04:02 -0500
-Received: from smtpout8.mo536.mail-out.ovh.net ([51.210.91.17])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1xOraw-0005Mz-Az; Thu, 05 Nov 2026 02:09:10 -0500
+Received: from smtpout1.mo2.mail-out.ovh.net ([79.137.123.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xOrVu-0001zM-Nf
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 02:04:01 -0500
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [79.137.60.225])
- by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4jKtZV3s9rz8Bqj;
- Thu,  5 Nov 2026 07:03:46 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alexander.hansen@9elements.com>; Thu,  5 Nov 2026 07:03:46 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.0.135])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4jKtZV2rKlz6MbC;
- Thu,  5 Nov 2026 07:03:46 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.7])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1xOrau-0002aT-Ls; Thu, 05 Nov 2026 02:09:10 -0500
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [79.137.60.221])
+ by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4jKthS1Jt4z41qW;
+ Thu,  5 Nov 2026 07:08:55 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu,  5 Nov 2026 07:08:55 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.96.187])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4jKthR2cCMz6NCm; Thu,  5 Nov 2026 07:08:55 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.6])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id C3E77203BFF; 
- Thu,  5 Nov 2026 07:03:45 +0000 (UTC)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 710011B43BFE;
+ Thu,  5 Nov 2026 07:08:52 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-109S003bca7d49c-fd1b-43ce-8eb0-e3ceecba0e1b,
+ (GARM-112S00680b72f4a-3594-49bb-814c-083d2effd0ee,
  55F4AE82A352CC4A4912F42944C0BD1B07566F15) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <b0b7b17a-65d7-413e-98bd-3beb76ec1636@kaod.org>
-Date: Thu, 5 Nov 2026 08:03:45 +0100
+Message-ID: <d9865aab-7e92-48f9-a628-3c1d63cf3b16@kaod.org>
+Date: Thu, 5 Nov 2026 08:08:51 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/5] initial support for yosemite 4
-To: alexander.hansen@9elements.com, qemu-devel@nongnu.org
-Cc: eblot@meta.com, titusr@google.com
-References: <20261013124649.194808-1-alexander.hansen@9elements.com>
+Subject: Re: [PATCH v3 00/50] Aspeed: I2C device models and the Minerva BMC
+ machine
+To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
+ Patrick Leis <venture@google.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Jamin Lin <jaminlin1207@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Bernhard Beschow <sgentey@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>
+References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,30 +101,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20261013124649.194808-1-alexander.hansen@9elements.com>
+In-Reply-To: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 3049499899778083851
+x-ovh-tracer-id: 3136475665727728685
 X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: dmFkZTESU0XKYpk21o4PFFiTkJKHe0U7+qbi7E3m8b1nR1DDjo7X55kMmOQRVBKX96WE7JSfgeV0VYvKfqFMItvEsJ6VBH02kkNtT5SSxFvCzN59PJL6qCVCMqknXa4Pp1zG+zjSbcyF7Le7LK94dtDFGwQdFcu7s5eNW3+RFCWEpy/8uX5FzIk/hgP8zg2HzWvo54K63zH3aYjLoQ49HYyfjbFkAJMQwWonxT9xRiIinCz1TEFi/FKVD7usOWOOkP3XfI/d6cTZusgNkXyOv7W8ia/9jR0ySSi0H3AtrVC6oxhrCD+DxtmW78NhbKvZix9j5FbLEuJnyi4Z4hw32ybTFsc8cRPo/bPTRAoFqg7FLkpw47N2POmmGIoGpUxTtaASpqdl9IV3Sb3wbTI/XYPhKyGmsWglZ3Pe9jgbmSGs86WvTRNaMk4erSCqVnARpWvLsrqBg0HUSXD0n7QZ7dPs04jHDRjsOiDVHw0iPatf0IYked9lj7YwRVqM57h4J2RJNPjkjvOTOkYTxX1eJMqSxIcFdDVdoCR1/jKt1aCfjDnAFNktJWpe+H4+endlL4tkbYJlyeVsGeql1lpDyCMNuzcDZL9oa82xXkqPqd0rYe9vDHa3VBX7PxhdIKwhBh6KlHrK+Em3ZRZia1sJSXmvMfDPEgt2ArZb2+vCLL7rx5HvaQ
-DKIM-Signature: a=rsa-sha256; bh=Dzzw236H6ODgbFMnflD5MgKd8Xe8XMX/DPmpsoMFn+M=; 
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEdTYUAP8KEUvCi930cdxMIhoZaXpe+NULV0y2JocmafdcfvTMiF/01r5Jd7zFZJYeIW3BdcfhioKuxVNn8h9/hXtpa4Av+vceDfFOOFLRrJbMmGdC755VtB3L4ug6dXaGDMrb5zG/ItyCnqhwtiSyMmBAeGqzo7ZMiw5isiHG3lpv80iNF/SIm1+SUPRZLMc5lRqUa6qWc3Pydz9mlrk1R5ABdya9Sv6RyHWaSw7s2egL3xhobm+XLyi7Cl4Ox1LxNmUn7EGiNMuT9Ea3wnZeF8qswZ9mcMxqiQVPrjMNG6tE+fgoom+6VxiClYiFarmpJSdXekj6HQDiSfcgPJWdxaenMQdqgt3RP0PEZvkB5FqGsOOjYuqIYJoQdZAuyVUixP82rX86rv0C05brrSBhMqhHYMyt/b04U69dL1s+LI2lljrHQ/ZCJNYDvx732/r+s+msqtpm+TvI+To5FAiCcnA8dU+dOFEF/2AufXTcnPsczwu++au7IfR4U8zqVPBy0RJpQJ4p076AkdCnYCe+jm6A0D/PKvug2GA9zh6nUXvH/+kLa+xOh2ZWpxCKPsQ+aaiPQoIztMcbqV6RtJaRJCjeEfVB/IJl/SRRR6OxdGn7/19bZCczGdzSifj802ccf6bD1bdEA6MZgb0ByEOvm8qXYSzGhMgm5gGueaBjscA
+DKIM-Signature: a=rsa-sha256; bh=jrv2EicpyiaSUQuBol8nAUD8dSXvYSHsk3kF4O1QjIA=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1793862226; v=1;
- b=H5k3coTGf0I2p7cSpLH/NikWxUhq/GRW85PQkl0CE02OFtPjfg9QtskcJz/PkvZZJy7Regff
- H8LMKZMKuN/vhZ7jDsjrxI2y0gglLM9GnnhcAY73keTeszsL2jfY2B+sDFhGPYQ1rH2Kf48Rvt7
- eukalEF8v/5OqJ2tnQbg5giAqf7x3LDrMlqFIpdW09QpA10sBz2Unat0Y+LzawJMyTTZsbYivFB
- ssgZDsnFGyHmuXol9w2DhX9a/QV2Fsp3Qsk/r9m8D5oVtGDzWw0cCdVmpT2T4KWIaeJFqUXAget
- OtJ39ge96zzlylXjywYI3W0stH3lhKbCbMeqEqac7MlKA==
-Received-SPF: pass client-ip=51.210.91.17; envelope-from=clg@kaod.org;
- helo=smtpout8.mo536.mail-out.ovh.net
+ t=1793862538; v=1;
+ b=UuPZRUKj5L9BSLcbMUu2UATryp/F6XXXQdHa1TFQDCXXX6Qi2/rUlgVgow3x8MmznSj/rJTU
+ 9dj3L8uI+9oznnHqr1EpCYkZe3QFgX06NeouhSjQl6GEfpINItuqP+tDd5w8MFmE7w9sUBTH1ow
+ /nJMPxcszXfQkeEI7InUFbEANgKprXqC+q/MeAx5Wd5HMq7dfycQ+wYEj+hEngnvJ0KyQ2h/2d6
+ ReXHkedltzN5wsC2q3lU/Bf8H9uZ/zg1CFqRk7+3KBQh98oM71+qdTOS7EYr4oNVqrYc4Vb7+Dz
+ ov3Jftrxl/xVhnxRasLsTCjUWrbwmR3IT4LABGlb5uCBQ==
+Received-SPF: pass client-ip=79.137.123.219; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo2.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,76 +136,46 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Alexander,
+Hello Emmanuel,
 
-On 10/13/26 14:46, alexander.hansen@9elements.com wrote:
-> From: Alexander Hansen <alexander.hansen@9elements.com>
+On 10/15/26 11:27, Emmanuel Blot wrote:
+> Add the minerva-bmc machine and the I2C device models it needs.
 > 
-> compared to v7, there is now also partial support for PCA9544, which was
-> needed since it's apparently in front of the FRU eeproms [1]. Previous
-> versions of this series did not account for that because testing was
-> done with a downstream image which had patches still applied [2].
+> Based on master, at:
+>    615ece3c40 ("Merge tag 'for-upstream' of
+>    https://gitlab.com/bonzini/qemu into staging")
 > 
-> This updated version should line up with the dts [1] and work with an
-> unmodified yv4 image.
+> New models:
 > 
-> References:
-> [1] https://github.com/torvalds/linux/blob/24a19b953e2a3d0ea5a8c4951a0ab8f32720c907/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts#L597
-> [2] https://discordapp.com/channels/775381525260664832/867820390406422538/1541811213988528128
-> 
-> Alexander Hansen (5):
->    hw/i2c: support PCA9544
->    ast2600: yosemite4 initial support
->    ast2600: yosemite4 functional test
->    hw/sensor: MAX31790 support
->    hw/sensor: support MAX11615
-> 
->   MAINTAINERS                              |   2 +
->   docs/system/arm/aspeed.rst               |   5 +-
->   hw/arm/Kconfig                           |   2 +
->   hw/arm/aspeed_ast2600_fby4.c             | 292 +++++++++++++
->   hw/arm/meson.build                       |   1 +
->   hw/i2c/i2c_mux_pca954x.c                 |  88 +++-
->   hw/sensor/Kconfig                        |   8 +
->   hw/sensor/max1161x.c                     | 314 ++++++++++++++
->   hw/sensor/max31790.c                     | 508 +++++++++++++++++++++++
->   hw/sensor/meson.build                    |   2 +
->   hw/sensor/trace-events                   |  22 +
->   include/hw/i2c/i2c_mux_pca954x.h         |   1 +
->   include/hw/sensor/max1161x.h             |   7 +
->   include/hw/sensor/max31790.h             |   7 +
->   tests/functional/arm/meson.build         |   2 +
->   tests/functional/arm/test_aspeed_fby4.py | 101 +++++
->   16 files changed, 1349 insertions(+), 13 deletions(-)
->   create mode 100644 hw/arm/aspeed_ast2600_fby4.c
->   create mode 100644 hw/sensor/max1161x.c
->   create mode 100644 hw/sensor/max31790.c
->   create mode 100644 include/hw/sensor/max1161x.h
->   create mode 100644 include/hw/sensor/max31790.h
->   create mode 100755 tests/functional/arm/test_aspeed_fby4.py
-> 
+>    INA230   TI 36V current-shunt and power monitor
+>    INA238   TI 85V current-shunt, power and temperature monitor
 
-Since the device modelsare rather complex, please separate the changes
-in two (or more) series for the reviews :
+The series has been broken by recent changes. Need a resend. You
+can keep the Reviewed-by.
 
-  1 - sensors
-  2 - machines
+>    DS1339   RTC, a DS1338 variant
 
-There is not much point in adding new machines types (we have tons
-already) without the sensors and tests. So sensor should be reviewed
-first.
+Please send in a separate series.
+
+>    PCA9545  4-channel I2C mux with per-channel interrupt inputs
+
+That's merged now.
+
+As said to Alexander, there is not much point in adding new machines
+types (we have tons already) without the sensors and tests. So sensor
+should be reviewed first.
+
 
 Thanks,
 
 C.
-
-
 
 
