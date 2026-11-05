@@ -1,146 +1,65 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C2C606A328
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 21:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616B4606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 21:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=I1QKDI2f;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=SqEI6iZn
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ok+z+nHh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP4nC-0004g8-J8; Thu, 05 Nov 2026 16:14:42 -0500
+	id 1xP5Pp-00081v-Uq; Thu, 05 Nov 2026 16:54:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xP4n3-0004fe-Tc
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 16:14:34 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1xP5Pk-00081Y-RT; Thu, 05 Nov 2026 16:54:34 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xP4n1-0003gN-Ai
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 16:14:33 -0500
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A5L6Omw2529113
- for <qemu-devel@nongnu.org>; Thu, 5 Nov 2026 21:14:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- U89MapWW2reAEG32VxupmTwR3OlW8uSj6LB1sAv+08o=; b=I1QKDI2fDLp4Cgk/
- J9M7CQvEC2hBcgjKPz0mFWu7xb/QlhxvE5mwoMThm/SiLo7WA9FQ7ZHHbqxpTcdY
- bxbFE3mY2xoH4bS/kv0YSLAEXzXprXDoQDyTesT8ziyyFgKx+tOkXjgioE8NGFwr
- ZZ0eDjomoID71F+lVHAc/mJU5i+psVsS2CE40hhji+NODpCsmZUeGpRKVTVeoHWz
- O8Py1bGE8165Wb3zDfQZ77TzEkaQx1xC3iSKVkrxfMHk7trUivCJxu/hAAXOzypE
- 300/0yuZbq3Xx0I2+gOsNewsZDOfEUwocVx1dGpGIEQcSsYmd0GokS629XwnDHE9
- 1hGhvw==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hryw18fuc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 21:14:29 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-36d1353fdcdso1515085eec.0
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 13:14:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793913269; x=1794518069; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=U89MapWW2reAEG32VxupmTwR3OlW8uSj6LB1sAv+08o=;
- b=SqEI6iZncVHkSxLvY6JN9NE/XwFXBwT6ccKMPhCpHlypwYkk4xzvR5ao+8MO+Rao9P
- kzrQ8p4Ki+9h8DR39yuGOhGdQDdEPH3fPDD/BmHbI5Y+y0QhJhuPrKpQOKcq41adKSzT
- +CkuJR+tcPslf+QQw+3rlJCRwfqZUBpTYRReeEZ+wxw/9Q3mriy7Z8co5aNIz3hbF0yV
- 0mpF/F4T4tzZKY3lL1NUTWf2+86gvyXeBcpid/RJciyDi1dGjsUdD8bLGfFZJd+icN3w
- VwCxWf1w6Na/QrvXTFL7wF+HXLHOALlRvPA6T4ib8sHATnFmtiY5QI+miCb8alv9kxFS
- uGTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793913269; x=1794518069;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=U89MapWW2reAEG32VxupmTwR3OlW8uSj6LB1sAv+08o=;
- b=XqwLFFGejOCNJqzrU++c/80cMQ77OP04Ji79XZ+bx9iIs4sgHUapChx0j4BRqSTger
- MXxtsOz+De1EB370IYXl1mvvwoq1mGWvBOFZ/g93hLr1g8TaoZYeNzYfPdI9auxS1Sgl
- A0R62PUfgzjzlw65c7rA/PUmcmnfDrtgAGNKtRIcsjHLZ0NbTFP+h3YH9NgH8WxIL/qf
- PEgN4NkdR6ft64WcQqes/+09p3oZzo2FgkkLwj0r3E1qM1EIqbzqwizg0hrL/QQLw0Z4
- 5bTvbickDZnXmRwDvpnznMYqnvmD2XEIxpAEr6+cPJh1MMBTzKlq4wf4rJaWsEPPO5Br
- 5rfA==
-X-Forwarded-Encrypted: i=1;
- AKwUvByzDFbTDqXn5NgWZGkHoQhJCQ6BM+T/oZ8M0R/wlw01rC4OMesbfoXtn52DuG2Ib+Nf8n+3Zo6DsJi9@nongnu.org
-X-Gm-Message-State: APuU4Z87z+2wwJ+U1mMHLF22jbb/oIwEmEIV6A9yQff+iG7e5WHjrmO9
- 9e1FCIOuzDZjNVUUM6/c+TmmP416e7ROcljrZ1xDyiy8GO0HTP66EUeoN22gRAbq77p1cTYCIGq
- YzJwvYfRe9xZM0LJIfXx6b27JvafyYeEOksfDsLrB0T90ZC1jX6LhHSL+Bg==
-X-Gm-Gg: AYBFou3U2dpSHI58xhiQK2afZlQGXoE61nC4USOjt+O/IGjxB2IYFY8SaNv35BQIYDN
- X7FNxkFSlNCW9Q4dW1KqXBzwWtf3REBs9dp4bounOUwzfv3WebRGlT9Dqic6qDCoLSn2M26MG0h
- OBLouXBrgUnvZ79wjB43EMqzwZL4B5wMVKopCzUc976rHmAo4eASnDjQPIMv0bhJ42aopKzPXiy
- SwKqjTpBMGbOvkiqcs0nUbEznzlbM6fcX0SM8mCGpKFga/PwnsO4JmCPoZqRZHIZOq/xjRGp5n4
- hQnaQHy5RmUV3czfvxgqNVGCXuAVj8hqWyg+i4+Hb8/Sxv9l3W/qwQfqqEHDMeObjI+cJTQWSKf
- 72Q2Re0izM5O0+/s98ujqdogeEYe1BnoSOn/j/mvEJxKpty+LI8cJTviuzpy3idOiSe6iqDHTWV
- rVmNHQQzkuI6sFMkO/O2SP3k1+vCc5pxmjIV3q/iK1aQ==
-X-Received: by 2002:a05:7300:8281:b0:369:f2f4:b227 with SMTP id
- 5a478bee46e88-36f75b1ffd2mr466443eec.18.1793913268453; 
- Thu, 05 Nov 2026 13:14:28 -0800 (PST)
-X-Received: by 2002:a05:7300:8281:b0:369:f2f4:b227 with SMTP id
- 5a478bee46e88-36f75b1ffd2mr466364eec.18.1793913267178; 
- Thu, 05 Nov 2026 13:14:27 -0800 (PST)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36f71a25c1asm1665480eec.27.2026.11.05.13.14.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Nov 2026 13:14:26 -0800 (PST)
-Message-ID: <511c5849-5493-4a38-a710-f4f4f6e18137@oss.qualcomm.com>
-Date: Thu, 5 Nov 2026 13:14:25 -0800
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1xP5Pi-000728-BD; Thu, 05 Nov 2026 16:54:32 -0500
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id D479660147;
+ Thu,  5 Nov 2026 21:54:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866191F0089F;
+ Thu,  5 Nov 2026 21:54:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1793915661;
+ bh=f0BXtlO5isR7BWmVVog+NbaRGTqva+7c+4SZBVTPkl8=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=ok+z+nHhRF5vWIv9pcrdntNwrEBoYsNUIa2XugRuNNbRkLX+QrgaK8nMzUZs8i3Bf
+ Hqcq/1rof+ToQNuzmPNBeCzYU8+N2Ixts0RxE3V0AYVodg0gVwgYAzMDOF5kKRJIOh
+ VeiXlBU1ZzFMXz6VXmSxR/CEV8RZlZNft/HjaDUKdj/wncbwSoY/ZvXFkMeFnROH3x
+ YpfNaPQEDtLl1tuFkKK8SGrpOskkwGPMORiuJUALFOAtdNzQiT9kOxK0EYWbhcmn0t
+ YmHxPJOKCrYqxZopcul/7qOvtwS5Xs/qg5l7cRdKWtzSKRg8o8GWWcvsnbullXpjOb
+ v7rOrn1qKauRg==
+Date: Thu, 5 Nov 2026 21:54:11 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Yukiya Takaki <fj2110jc@fujitsu.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, Anisa Su <anisa.su@samsung.com>, Igor Mammedov
+ <imammedo@redhat.com>, Junjie Cao <junjie.cao@intel.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Richard
+ Henderson <richard.henderson@linaro.org>, linux-cxl@vger.kernel.org,
+ qemu-arm@nongnu.org, "Wolski, Tomasz" <tomasz.wolski@fujitsu.com>,
+ lizhijian@fujitsu.com, y-goto@fujitsu.com, yukiya.takaki@gmail.com
+Subject: Re: [PATCH RFC 0/7] QEMU/hw/cxl: Allow CXL Type 3 memory regions to
+ be initialized at guest boot
+Message-ID: <20261105215411.33262db7@jic23-hlaptop>
+In-Reply-To: <cover.1793003983.git.fj2110jc@fujitsu.com>
+References: <cover.1793003983.git.fj2110jc@fujitsu.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Pierrick is maintaining the AWS GitLab runners
-To: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <CAJSP0QXzingvqA1F2q-QH9GvtMz7YpxDK9RsDEF5JMCE6vA+Hg@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <CAJSP0QXzingvqA1F2q-QH9GvtMz7YpxDK9RsDEF5JMCE6vA+Hg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: eME1pGBNCc6PB1hSqC4a7LTGV3Tvdl9K
-X-Proofpoint-GUID: eME1pGBNCc6PB1hSqC4a7LTGV3Tvdl9K
-X-Authority-Analysis: v=2.4 cv=RdYFmFtv c=1 sm=1 tr=0 ts=6aecf1b5 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=ID6ng7r3AAAA:8 a=2FVsxPHEEXSffYjUPhIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=zZCYzV9kfG8A:10 a=scEy_gLbYbu1JhEsrz4S:22 a=AkheI1RvQwOzcTXhi5f4:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDA4NCBTYWx0ZWRfXwrdlSD5bl0S0
- o3eWyCw88jfY6FJ+VnzkfSVOfvPR5yJEXFmbxYElneTV+7CwqOROxcrZvmm2KZQ7m20NiBD57mk
- u19SCCaInLUBY+293Wd6JvVKJuDOjt8ANntxgmixWW6FNHkQjrPiqh9ARq9PLFtTMeg/n30aeI3
- EYk/YzfpdUyAwK21alj3PCteGfxy70Zs6fLg+fohEaDgQh9WPstCH9XxO6QkbXMoQSbbEXsPRzp
- CN1is+/OC4zdNPVZYun5xk4xmj9ZgBQwJ3f2JCqzjMkzQjPTQv4+aUxnEJH4NbP02O2JLA3zElG
- DZhkEbr6+43ZnXq6vQrKXOHYEBhHOkMtDGCeIfwLt4Xmtmxwd4pdI8RLfBjD1Cg2GhFzkps9/vo
- sicS7mDX2KvT50TX0L5mfHiwLo1Xliwhjb+OWaQogCK4p7/QJdghWKKBimoyDfz36tIVZqrJcfX
- rLlJj5soo8fZYPVN8Sw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDA4NCBTYWx0ZWRfXydL/Hh0WS6E7
- bNWo2Bs7v5IA2yatwY2Q4zjs0GSTHnPx+b7a0ALeOZWBrNX8Ng+l/yafb3ylpROecYmsZLjOzsB
- dNYg7qC+omBdvKLz1f2CS2a617/LbuQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-05_06,2026-11-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- bulkscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611050084
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=jic23@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,30 +72,298 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_2 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/5/2026 1:04 PM, Stefan Hajnoczi wrote:
-> Hi,
-> Pierrick has volunteered to maintain the AWS GitLab runners that
-> QEMU's CI depends on for x86_64 jobs. I have given him access and
-> updated https://wiki.qemu.org/AdminContacts to reflect this.
-> 
-> Thanks, Pierrick, for helping with this!
->
+On Mon, 26 Oct 2026 19:03:21 +0900
+Yukiya Takaki <fj2110jc@fujitsu.com> wrote:
 
-Thanks for the trust, I'll do my best to help with this right after
-upcoming KVM Forum.
+> Hello everyone,
+>=20
+> I=E2=80=99m a student intern, and this is my first time sending patches t=
+o an open source mailing list.
+>=20
+> This patch series configures QEMU=E2=80=99s CXL Type 3 devices so that gu=
+est operating systems can automatically discover
+> and create CXL regions during boot, aligning QEMU=E2=80=99s behavior with=
+ real hardware.
 
-> I'll continue to handle the yearly Amazon sponsorship applications.
->
+Hi Yukiya,
 
-Great👍!
+Interesting project.
 
-Regards,
-Pierrick
+>=20
+> Background and motivation
+>   Currently, during guest boot QEMU does not provide the information or r=
+egister programming needed for the guest OS
+>   to initialize CXL Type 3 memory, so using it still requires an explicit=
+ action in the guest (for example, running the cxl create-region command).
+>   By contrast, on some physical systems the firmware automatically alloca=
+tes CXL memory ranges and exposes them to the OS,
+>    allowing the Linux CXL driver to discover and create regions during bo=
+ot.
+>   This patch series is a first, experimental attempt to reproduce that be=
+havior in QEMU.
+>=20
+>   Some parts of this implementation are based on Li, Zhijian=E2=80=99s wo=
+rk in:
+>   https://github.com/zhijianli88/qemu/tree/program-decoder-v2
+>=20
+>   I would like to ask for feedback on whether this approach makes sense a=
+nd whether I should continue to enhance it.
+>=20
+> Approach
+>   This patch first adds a program_hdm_decoder option to cxl-type3.
+>   When program-hdm-decoder is enabled on cxl-type3, QEMU will:
+>     1) program endpoint/host-bridge HDM decoder state,
+>     2) expose Type 3 ranges as E820_SOFT_RESERVED on x86,
+>     3) create memory-only NUMA nodes for those ranges,
+>     4) emit SRAT memory-affinity entries mapping each Type 3 HPA range to=
+ its node ID
+>=20
+>   On real hardware, HDM decoder programming and memory layout are typical=
+ly handled by firmware, so they would ideally be managed by SeaBIOS.
+>   However, in the current QEMU/SeaBIOS model, E820 and SRAT are built on =
+the QEMU side, and pushing HDM decoder programming
+>   into SeaBIOS would introduce additional complexity and risk inconsisten=
+cies.
+
+So, did you explore doing this in a similar fashion to PCI enumeration?
+
+That's done the bios and is very similar in that there is a mix of
+policy and rules in how it is configured that we really don't want
+in qemu.  With that ACPI tables are then built in QEMU that contain
+values read back from what was setup. The main thing I'm thinking of
+here is the PXB handling that relies on the bios having done the
+PCI enumeration first rather than doing it in qemu.
+The arm code is here
+https://elixir.bootlin.com/qemu/v11.1.3/source/hw/pci-host/gpex-acpi.c#L103
+x86 probably this:
+https://elixir.bootlin.com/qemu/v11.1.3/source/hw/i386/acpi-build.c#L1038
+
+My immediate instinct is that would look more like a conventional bios
+flow.  It would also have the significant benefit of putting the enumerating
+and configuration code into an open source bios, something I hoped would co=
+me out
+early ARM work on this (see linux plumbers - I think this is right session)
+https://lpc.events/event/16/contributions/1254/attachments/1113/2136/CXL%20=
+Type-3%20device%20discovery,%20configuration%20in%20firmware%20and%20prepar=
+e%20ACPI%20tables%20for%20kernel%20usage.pdf
+
+Then we'd regenerate the SRAT, HMAT etc before handling to the OS.
+(I'm not sure this works for e820 having never touched that flow).
+
+There is a lot of policy involved in CXL configuration and I'd not
+want to replicate that part in QEMU. At best we'd want to pass
+some hints to the bios.
+
+Flow wise that would mean adding to acpi_build_update() some code
+to do the necessary srat and other table updates.  That would
+definitely work for the actual ACPI tables, but I gather e820 is
+rather different...  However, e820 real table is I think
+actually constructed by seabios so can that just make the
+necessary updates after programming the CXL decoders etc?
+
+Now if you did this on SBSA-ref and arm you'd have to do it
+all in the bios (as that generates everything) and the whole
+problem would be much more standard.
+
+Given we have that option on arm/sbsa-ref I don't currently
+see a reason to explore the bios flows on arm/virt.
+
+I also gather (from asking an LLM so might be wrong) that there
+are options that boot qemu on x86 with tables generated
+by the bios, not qemu.  Legacy path in seabios, coreboot and
+and ovmf path used with xen.  Maybe working with them avoids
+the extra complexity of bounce backwards and forwards between
+qemu and the firmware (though I think I'd probably avoid these).
+
+Anyhow, interested to see where you go with this.
+Definitely useful for those of us working with platforms that
+never do the bios programmed flow but have to test it when
+making changes!
+
+Jonathan
+
+>=20
+> Testing
+>   We ran tests in the following environment and confirmed that CXL region=
+s were created at boot, NUMA nodes were set up,
+>   and E820_SOFT_RESERVED entries appeared in the E820 table:
+>=20
+>   - BIOS: SeaBIOS c2a33ad9ad1452e23b41c4ac44a3bc6be8ebc4cf
+>   - CXL memory: 4 GB
+>   - CFMWS: 4 GB
+>   - Host bridge: 1
+>=20
+>   The following is the startup script.
+>=20
+>   sudo /path/to/qemu/build/qemu-system-x86_64 \
+>     -name guest=3Dcxl \
+>     -nographic \
+>     -machine q35,accel=3Dtcg,nvdimm=3Don,cxl=3Don \
+>     -cpu max -smp 4,sockets=3D4,cores=3D1,threads=3D1 \
+>     -m size=3D4G,slots=3D10,maxmem=3D20G \
+>     -drive file=3D/path/to/image.qcow2,format=3Dqcow2,index=3D0,media=3Dd=
+isk,id=3Dhd \
+>     -bios /path/to/seabios/out/bios.bin \
+>     -nic bridge,br=3Dvirbr0,model=3De1000e,mac=3D52:54:00:b5:4e:7c \
+>     -object memory-backend-ram,size=3D2G,id=3Dm0 \
+>     -object memory-backend-ram,size=3D2G,id=3Dm1 \
+>     -numa node,nodeid=3D0,cpus=3D0-1,memdev=3Dm0 \
+>     -numa node,nodeid=3D1,cpus=3D2-3,memdev=3Dm1 \
+>     -device pcie-root-port,id=3Dpci-root,slot=3D4,bus=3Dpcie.0,chassis=3D=
+0 \
+>     -device pxb-cxl,bus_nr=3D12,bus=3Dpcie.0,id=3Dcxl.1,hdm_for_passthrou=
+gh=3Dtrue \
+>     -device cxl-rp,port=3D0,id=3Droot_port13,bus=3Dcxl.1,chassis=3D0,slot=
+=3D2 \
+>     -object memory-backend-ram,size=3D4G,share=3Don,id=3Dvmem0 \
+>     -device cxl-type3,bus=3Droot_port13,volatile-memdev=3Dvmem0,id=3Dcxl-=
+vmem0,program-hdm-decoder=3Dtrue \
+>     -M cxl-fmw.0.targets.0=3Dcxl.1,cxl-fmw.0.size=3D4G,cxl-fmw.0.interlea=
+ve-granularity=3D4k
+>  =20
+>   Furthermore, we conducted the experiment in which we added two CXL Type=
+3.
+>=20
+>   - CXL memory: 4 GB =C3=97 2
+>   - CFMWS: 4 GB =C3=97 2
+>=20
+>   The following is the startup script.
+>    =20
+>   sudo /path/to/qemu/build/qemu-system-x86_64 \
+>     -name guest=3Dcxl \
+>     -nographic \
+>     -machine q35,accel=3Dtcg,nvdimm=3Don,cxl=3Don,hmat=3Don \
+>     -cpu max -smp 4,sockets=3D4,cores=3D1,threads=3D1 \
+>     -m size=3D4G,slots=3D10,maxmem=3D20G \
+>     -drive file=3D/path/to/image.qcow2,format=3Dqcow2,index=3D0,media=3Dd=
+isk,id=3Dhd \
+>     -bios /path/to/seabios/out/bios.bin \
+>     -nic bridge,br=3Dvirbr0,model=3De1000e,mac=3D52:54:00:b5:4e:7c \
+>     -object memory-backend-ram,size=3D2G,id=3Dm0 \
+>     -object memory-backend-ram,size=3D2G,id=3Dm1 \
+>     -numa node,nodeid=3D0,cpus=3D0-1,memdev=3Dm0 \
+>     -numa node,nodeid=3D1,cpus=3D2-3,memdev=3Dm1 \
+>     -device pcie-root-port,id=3Dpci-root,slot=3D4,bus=3Dpcie.0,chassis=3D=
+0 \
+>     -device pcie-root-port,id=3Dpci-root-net,chassis=3D5,slot=3D5,bus=3Dp=
+cie.0 \
+>     -device pxb-cxl,bus_nr=3D12,bus=3Dpcie.0,id=3Dcxl.1,hdm_for_passthrou=
+gh=3Dtrue \
+>     -device cxl-rp,port=3D0,id=3Droot_port13,bus=3Dcxl.1,chassis=3D0,slot=
+=3D2 \
+>     -device cxl-rp,port=3D3,id=3Droot_port14,bus=3Dcxl.1,chassis=3D2,slot=
+=3D4 \
+>     -object memory-backend-ram,size=3D4G,share=3Don,id=3Dvmem0 \
+>     -object memory-backend-ram,size=3D4G,share=3Don,id=3Dvmem1 \
+>     -device cxl-type3,bus=3Droot_port13,volatile-memdev=3Dvmem0,id=3Dcxl-=
+vmem0,program-hdm-decoder=3Dtrue \
+>     -device cxl-type3,bus=3Droot_port14,volatile-memdev=3Dvmem1,id=3Dcxl-=
+vmem1,program-hdm-decoder=3Dtrue \
+>     -M cxl-fmw.0.targets.0=3Dcxl.1,cxl-fmw.0.size=3D4G,cxl-fmw.0.interlea=
+ve-granularity=3D4k,cxl-fmw.1.targets.0=3Dcxl.1,cxl-fmw.1.size=3D4G,cxl-fmw=
+.1.interleave-granularity=3D4k
+>=20
+>=20
+> How to use
+>   Specify the following parameters when starting QEMU:
+>=20
+>   - bios <SeaBIOS binary that includes commit c2a33ad9ad1452e23b41c4ac44a=
+3bc6be8ebc4cf> to ensure that E820_SOFT_RESERVED entries are exposed
+>   - Add hmat=3Don to the -machine option [1]
+>   - Add program-hdm-decoder=3Dtrue to each -device cxl-type3 option
+>     [1] On Linux, the kernel first checks E820_SOFT_RESERVED ranges. When=
+ multiple CXL Type 3 devices share a contiguous HPA range,
+>         these ranges tend to be merged into a single region, so the CXL d=
+river cannot reliably initialize per=E2=80=91device regions based on E820 a=
+lone.
+>         SRAT entries for CXL memory are therefore needed, and the guest s=
+eems to discard SRAT when `hmat=3Don` is not specified,
+>         so HMAT must be enabled.
+>=20
+> QEMU base commit: bddb785e791e415db38884848d068457e226f5e3
+>=20
+> TODO
+>   With the current implementation of this patch, the following configurat=
+ions are either not supported or have not been sufficiently tested.
+>   As a result, automatic creation of CXL regions in the guest OS may fail:
+>=20
+>   - A CXL persistent memory device is included
+>   - Interleaved configurations
+>   - Cases where the memory size specified by CFMWS does not match the siz=
+e of the CXL Type 3 backend memory
+>   - Configurations where CXL memory is attached via a switch
+>   - Multi-target CFMWS environments
+>   - ARM environments
+>   - HMAT does not yet include information about CXL memory devices
+>=20
+>   The following behaviors are also provisional implementations and may ne=
+ed further refinement:
+>    - A new NUMA node ID is assigned to each CXL memory device. This shoul=
+d be improved either to reflect more accurate NUMA distances for CXL memory,
+>      or to allow the NUMA node IDs to be specified by the user.
+>    - Assignment of CXL Type 3 devices to CFMWS address ranges. On physica=
+l systems, platform firmware typically generates CFMWS entries
+>      based on the detected CXL topology and its address-space allocation.=
+ In QEMU, however, CFMWS entries are configured explicitly
+>      through machine options. The current implementation therefore has to=
+ infer which CFMWS range should be used for each Type 3 device.
+>      This selection logic may need further refinement. Possible approache=
+s include improving the selection and validation logic,
+>      adding an explicit option to associate each Type 3 device with a CFM=
+WS entry,
+>      or generating CFMWS entries automatically from the configured CXL to=
+pology and devices.
+>    - HDM decoder reset sequencing and state reconstruction.
+>      The current implementation prevents the host bridge HDM decoder conf=
+iguration from being overwritten later in the same reset
+>      by moving the common initialization of the host bridge component reg=
+isters from the reset path to the realization path.
+>      However, ideally, after the registers have been restored to their re=
+set values, the host bridge HDM decoder configuration
+>      automatically programmed by QEMU should be reconstructed as part of =
+reset processing.
+>=20
+> Thanks,
+>=20
+> ------
+>=20
+> Yukiya Takaki (7):
+>   QEMU/hw/cxl: add program-hdm-decoder option for CXL Type 3 devices
+>   QEMU/hw/cxl:add HPA offset tracking for CXL Type 3 devices
+>   QEMU: hw/cxl: add helper to get HPA range for CXL Type 3
+>   QEMU/hw/cxl: auto=E2=80=91program HDM decoders for CXL Type 3
+>   QEMU/hw/cxl: expose CXL Type 3 ranges as E820_SOFT_RESERVED on x86
+>   QEMU/hw/cxl: Create NUMA nodes for CXL Type 3 memory
+>   add CXL Type 3 memory ranges to SRAT
+>=20
+>  hw/acpi/cxl_type3.c                 |  30 +++++
+>  hw/acpi/meson.build                 |   1 +
+>  hw/arm/cxl.c                        |  10 ++
+>  hw/arm/meson.build                  |   2 +
+>  hw/cxl/cxl-host.c                   |  63 ++++++++++
+>  hw/i386/acpi-build.c                |   7 ++
+>  hw/i386/cxl.c                       |  11 ++
+>  hw/i386/meson.build                 |   1 +
+>  hw/i386/pc.c                        |   2 +
+>  hw/mem/cxl_type3.c                  | 177 ++++++++++++++++++++++++++++
+>  hw/pci-bridge/pci_expander_bridge.c |  13 +-
+>  include/hw/cxl/cxl.h                |   2 +
+>  include/hw/cxl/cxl_device.h         |   6 +
+>  include/hw/cxl/cxl_host.h           |   3 +
+>  include/hw/mem/cxl_type3.h          |   8 ++
+>  15 files changed, 334 insertions(+), 2 deletions(-)
+>  create mode 100644 hw/acpi/cxl_type3.c
+>  create mode 100644 hw/arm/cxl.c
+>  create mode 100644 hw/i386/cxl.c
+>  create mode 100644 include/hw/mem/cxl_type3.h
+>=20
+
 
