@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AF7606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 11:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A46606A328
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 11:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ePRrIQjN
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cZZ8Og9U
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOvG7-00064G-Kn; Thu, 05 Nov 2026 06:03:55 -0500
+	id 1xOvK1-00077v-V0; Thu, 05 Nov 2026 06:07:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xOvFy-00060T-GT
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:03:47 -0500
+ id 1xOvJz-00077e-OI
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:07:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xOvFv-0000Qk-Lv
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:03:46 -0500
+ id 1xOvJx-0001TQ-LY
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:07:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793876623;
+ s=mimecast20190719; t=1793876873;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Fn6tl/YYeO1mb8JqiCmU5l6k1DX2kMyJU6DQdy4pZjM=;
- b=ePRrIQjNgdWHuFQje67yrAuJMn/eadp+5zus++ZPBDpL9SxnCHbYKH/7jzTJgkS+jnsjnh
- FXh595s/eF8CUlQbhBXm6gVkdx6UcUEukq7USWI+Zj28x47M6P2txZ3sOX+vdWQ2xJXmtG
- S/WK9x7TyOy51zOkCQlWiLKpfVqeoCA=
+ bh=0d08p9GuGfhuCctsBUdpSTjaH731P9alS/QFsAP7+SA=;
+ b=cZZ8Og9UXOsxpodzAvlIKalfdo4/QVxrcL++pjdwSz15snNWytdgUERxfLFOA7Wfh9TG5C
+ k2yAOA7eU/40eBNqoRdtefRHYpcPVUGlnupPkD+FvPIQN3NW3Ask9SJ3MVzZ8Iu1g87Vhc
+ nZlIWbIyJZB/erJNUBrqNJNBbhNlWm4=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-zbnkrud5OF6OyRRTSrtcTA-1; Thu,
- 05 Nov 2026 06:03:37 -0500
-X-MC-Unique: zbnkrud5OF6OyRRTSrtcTA-1
-X-Mimecast-MFC-AGG-ID: zbnkrud5OF6OyRRTSrtcTA_1793876615
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-78-Hj5rPtwkOHWuy65T6YO15A-1; Thu,
+ 05 Nov 2026 06:07:47 -0500
+X-MC-Unique: Hj5rPtwkOHWuy65T6YO15A-1
+X-Mimecast-MFC-AGG-ID: Hj5rPtwkOHWuy65T6YO15A_1793876865
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7964418002E6; Thu,  5 Nov 2026 11:03:35 +0000 (UTC)
+ id D6F3618002FB; Thu,  5 Nov 2026 11:07:44 +0000 (UTC)
 Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D679B3001DA0; Thu,  5 Nov 2026 11:03:30 +0000 (UTC)
-Date: Thu, 5 Nov 2026 11:03:28 +0000
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9B35C1956044; Thu,  5 Nov 2026 11:07:40 +0000 (UTC)
+Date: Thu, 5 Nov 2026 11:07:37 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Yonggang Luo <luoyonggang@gmail.com>
 Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -62,18 +62,18 @@ Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Cornelia Huck <cohuck@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH v2 09/12] hw/virtio: register s390x virtio-blk-pci and
- virtio-net-pci variants
-Message-ID: <auxigHswmymEQogo@redhat.com>
+Subject: Re: [PATCH v2 11/12] hw/virtio/virtio-mem: register legacy-guest
+ variant with is_available
+Message-ID: <auxjeTD9e3H2dHlj@redhat.com>
 References: <20261031164009.2048-1-luoyonggang@gmail.com>
- <20261031164009.2048-10-luoyonggang@gmail.com>
+ <20261031164009.2048-12-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261031164009.2048-10-luoyonggang@gmail.com>
+In-Reply-To: <20261031164009.2048-12-luoyonggang@gmail.com>
 User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -103,48 +103,78 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sun, Nov 01, 2026 at 12:40:04AM +0800, Yonggang Luo wrote:
-> virtio-blk-pci and virtio-net-pci added the s390x loadparm property
-> from class_init when target_s390x() was true. Register each
-> VirtioPCIDeviceTypeInfo twice. The s390x variant calls
-> pci_qdev_property_add_specifics(), which now always adds loadparm,
-> and the other variant does not. target_s390x() and target_not_s390x() select
-> the two.
+On Sun, Nov 01, 2026 at 12:40:06AM +0800, Yonggang Luo wrote:
+> virtio-mem decided in class_init and realize whether x86 guests can
+> leave unplugged memory accessible. Register a second virtio-mem type
+> that adds virtio_mem_legacy_guests_properties and sets
+> VirtIOMEMClass.has_legacy_guests. Select the two with
+> target_base_i386() and target_not_base_i386().
 > 
 > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 > ---
->  hw/pci/pci.c               | 13 +++++--------
->  hw/virtio/virtio-blk-pci.c | 27 ++++++++++++++++++++++++++-
->  hw/virtio/virtio-net-pci.c | 27 ++++++++++++++++++++++++++-
->  3 files changed, 57 insertions(+), 10 deletions(-)
+>  hw/virtio/virtio-mem.c         | 52 +++++++++++++++++++++-------------
+>  include/hw/virtio/virtio-mem.h |  2 ++
+>  2 files changed, 34 insertions(+), 20 deletions(-)
 > 
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 2d2fe02c68e..b5ea0b049aa 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -2901,14 +2901,11 @@ void pci_qdev_property_add_specifics(DeviceClass *dc)
->  {
->      ObjectClass *oc = OBJECT_CLASS(dc);
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index ee6a0c206af..ab2864d18c3 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -15,6 +15,7 @@
+>  #include "qemu/cutils.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/units.h"
+> +#include "qemu/target-info.h"
+>  #include "qemu/target-info-qapi.h"
+>  #include "system/memory.h"
+>  #include "system/numa.h"
+> @@ -35,22 +36,6 @@
 >  
-> -    /* The loadparm property is only supported on s390x */
-> -    if (target_s390x()) {
-> -        object_class_property_add_str(oc, "loadparm",
-> -                                      pci_qdev_property_get_loadparm,
-> -                                      pci_qdev_property_set_loadparm);
-> -        object_class_property_set_description(oc, "loadparm",
-> -                                              "load parameter (s390x only)");
+>  static const VMStateDescription vmstate_virtio_mem_device_early;
+>  
+> -static bool virtio_mem_has_legacy_guests(void)
+> -{
+> -    /*
+> -     * We only had legacy x86 guests that did not support
+> -     * VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE. Other targets don't have
+> -     * legacy guests.
+> -     */
+> -    switch (target_arch()) {
+> -    case SYS_EMU_TARGET_I386:
+> -    case SYS_EMU_TARGET_X86_64:
+> -        return true;
+> -    default:
+> -        return false;
 > -    }
-> +    object_class_property_add_str(oc, "loadparm",
-> +                                  pci_qdev_property_get_loadparm,
-> +                                  pci_qdev_property_set_loadparm);
-> +    object_class_property_set_description(oc, "loadparm",
-> +                                          "load parameter (s390x only)");
->  }
+> -}
+> -
+>  /*
+>   * Let's not allow blocks smaller than 1 MiB, for example, to keep the tracking
+>   * bitmap small.
+> @@ -859,7 +844,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+>      rb = vmem->memdev->mr.ram_block;
+>      page_size = qemu_ram_pagesize(rb);
 >  
->  MemoryRegion *pci_address_space(PCIDevice *dev)
+> -    if (virtio_mem_has_legacy_guests()) {
+> +    if (VIRTIO_MEM_GET_CLASS(vmem)->has_legacy_guests) {
+>          switch (vmem->unplugged_inaccessible) {
+>          case ON_OFF_AUTO_AUTO:
+>              if (virtio_mem_has_shared_zeropage(rb)) {
+> @@ -1635,9 +1620,6 @@ static void virtio_mem_class_init(ObjectClass *klass, const void *data)
+>      RamDiscardSourceClass *rdsc = RAM_DISCARD_SOURCE_CLASS(klass);
+>  
+>      device_class_set_props(dc, virtio_mem_properties);
+> -    if (virtio_mem_has_legacy_guests()) {
+> -        device_class_set_props(dc, virtio_mem_legacy_guests_properties);
+> -    }
 
-Again this is the only bit that we need IMHO, as it is harmless to
-register these properties unconditionally.
+Again IMHO the conditional property registration is an
+unneccessary step. Just fold virtio_mem_legacy_guests_properties
+into virtio_mem_properties.
+
+In the realize() method, check virtio_mem_has_legacy_guests()
+and reject values that are invalid for the non-x86 targets.
+
 
 With regards,
 Daniel
