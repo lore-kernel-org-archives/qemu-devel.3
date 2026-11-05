@@ -1,118 +1,121 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B31606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 11:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F160606A335
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 11:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ndyXtw+P
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gpPlDCxZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOvQp-0000fd-A1; Thu, 05 Nov 2026 06:14:59 -0500
+	id 1xOvR2-0000rf-0F; Thu, 05 Nov 2026 06:15:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xOvQb-0000fB-49; Thu, 05 Nov 2026 06:14:45 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xOvQY-0002Sj-It; Thu, 05 Nov 2026 06:14:44 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A5AEAFJ3449886; Thu, 5 Nov 2026 11:14:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=5WlR/G
- /xVry19zKv+dMSQDwoTlorWSDSUBuzy7XJanI=; b=ndyXtw+Pt2MQaDCb4+oy3k
- gQ0jB8AyRw1ctERSyEJAWTZF16oNtQoVlYFi1+Uf+h5gvYLlVXPQIk49V0nYUkPm
- 56rgs8AFqMmhWvK/xqB2gocmrBtaS+9rF3Oe37JvsCb7M5sjaKluWVy41oVlObxW
- xqFxoYkTvVb1KsKlGui7jPnTOGWrIg52rsVBSiWHcTEUj+tyKo2VYjxhKEEGhoLZ
- IEEWioQifnmCTtKJCc/DmmpT8/ju1tu8EOV8Z/s32KYAVpevtwRfdHTNH8IuMm9H
- WgBngwxgdXaQ2TDdy3bK0rI+hbpTs7YTcrJRcavctCB8a58S50ksckb54WnZHLEA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hn7u3su1w-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 05 Nov 2026 11:14:38 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A5A4xmD271775; Thu, 5 Nov 2026 11:14:37 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hqsf5g47g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Nov 2026 11:14:37 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A5BDk1Q21299814
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Nov 2026 11:13:46 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A6C5958054;
- Thu,  5 Nov 2026 11:14:35 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 45CAD58045;
- Thu,  5 Nov 2026 11:14:32 +0000 (GMT)
-Received: from [9.123.8.229] (unknown [9.123.8.229])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Nov 2026 11:14:31 +0000 (GMT)
-Message-ID: <de7816aa-98c6-4c9a-8420-b937f94cd8a1@linux.ibm.com>
-Date: Thu, 5 Nov 2026 16:44:30 +0530
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xOvQl-0000gC-I4
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:14:57 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xOvQj-0002T4-BX
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:14:55 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-6acb9c018ffso910118a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 03:14:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793877289; cv=none;
+ d=google.com; s=arc-20260327;
+ b=CbIRbSk2FwFgI9MLcO6UnD973Bcq3c8lp5rrZfoQ+IBgRqJav2YEKXJCT7/JWkwIcH
+ aikrNVJalqXK8opAjHBsSsoPO/TgNcjQCY4LhpRHIlVY/ZrkT83Fv8vY23/x85GPzZUk
+ oFdlEdCjyBU0hB/t3akoS//c6s+xNpdKwI8Sa2w0Gk5tIZTmlriTWqUo9RzmLNGf/7t5
+ t6HIu/msC2R7vGq7EWQErnsZBRS8Zp3itJvRECjEfncZGf6wsKcKnA3qaw/HDefuycw1
+ iyuS7lRZl4/1uquXQUlcilg2wLJ6nlz/ywyRpJSB4CynQ8QtoANIgLVcdcy8DSB39QrZ
+ tGNw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=cVbkdDuKyZ8y+K1SLT1x92HxA91Y6BCx8q4u5K2TpeU=;
+ fh=Opyu6zz72KvkUOOBDEfhVcLqIpwIfdca/LhqIasCHqI=;
+ b=AwDVnXw5KPyg6turzKqgF0TqGDXaV25UytYAcG8PmMs49Z/ZSphMzp8R+VGj62Vw/I
+ Rziv5iPXPigFHTsnP5ZC42hzqpX84A2aHY7D82G5sjuDH+qDf7VX4QWJ5DRlMOpvl4G8
+ vraApwuAh70/1m8su6I+NFK9aOdUc9HlXbUf6LHOl8qQMTym6iNol6gP08ss9Z48FiIY
+ 9AL28uB502PkI+Dzpjbcs4RupB/kI9N8fBW/hu5em/JcJ0TqwsgrezV/IpCDm6fCi3mN
+ tUhBj7tqLnAEixL+dnrH3iCl6iSU8iwC2r1q8xV7K/64+Mo1p8Qs+hlUytaflZ8XeGJG
+ 7IZg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1793877289; x=1794482089; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=cVbkdDuKyZ8y+K1SLT1x92HxA91Y6BCx8q4u5K2TpeU=;
+ b=gpPlDCxZy4Tf7EUfU6QwGxza/mE8egnOShY/DOuzepyO4qgsZaW2Dk5Vbt3oIXWtIs
+ 3RnmCMd19bNvWn7bhG7mT1W5C3yGc0ItpM+hm35k/DQ5a7K5xW5IwhMNjdL6/Sb9Pdj9
+ JF17LVsioGL6vLD2IRiuOe5DPWO/RF9gl/tnRvR8ZFm5JxFqe1cBVA8/5Zeq3GN72qt5
+ 9lqGUmaK1kmV/6LmtIxmUkmzjjf+iNbOfts8FjMtr/qSzHfkBLnYnZQbrY/eMVgsNBxp
+ DECV3XLk2amVcH4rq0g2Pg7bZvpqlFldRoz3SyE6ceRQQfNJCOriq2cI32iu0GItIJMY
+ 1Fcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793877289; x=1794482089;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=cVbkdDuKyZ8y+K1SLT1x92HxA91Y6BCx8q4u5K2TpeU=;
+ b=mEKMty77+cs2YGOuFogr2DSuUZQOxkgGj1uJvG/qEO64lmgc/ZsUw7Yyes6QvZUVjY
+ SxEYXKTtTDnWp6W4nAB8KebR9d+vtN0K9+ut/kxe4wPwPaflpbWftt66YDiA8jRampCd
+ lUlQ0ogKIhV8EFWb/GhFbt0wkWzWTPxUzU0JSPqkLVWblrTBy2X4BA9WLLzuyGVvxUTi
+ F6f4ZFEfmgrowVKBFizvr2HKymejgQsus2JKKs31HVLkNgZw2r1IU2EM8K0VDgZbM+13
+ i448o/3hxEkS9qcZ9G3xJWwPZE94WJRZ9sMuaJA/6ZTOFd3PgVjyCnxOTdGCWEdEWYbm
+ I79A==
+X-Gm-Message-State: APuU4Z/8REEMLUP4GEUb6asoBm/z5y3Qul+aYuMhTF4mogHU3ntauwbM
+ lcFurCNnjm07ZeQJipr9cnnXGSXhwQb/x0dfPXAS5C2rpRPu8odJ6V/sarmy5uW8su3ljgTpXwI
+ WdeLJVoVAXq2bLIvRy8ahhsHcrt8FgBc=
+X-Gm-Gg: AYBFou1OZjEB7x56X6YvLDHCgX8HPpuesCqEjxkwlBnHb0Ga+hU+0eOoGGfKp4G/Di3
+ QA48cc6dReiQAwl3fIh92HvYQA8jC7DdLVHtnzcU2cFVIsjN1rtTiC+3e7R+Z/eYXdjIlb8SQTL
+ KTOb7bIAsXahoj188rks+JcpZTS5DclyqZwrLPcsNIw3ADCloZQK8s+mrwaejhUhffQFfGJ6T+i
+ QylBCWRy1f93lbf0SV/6EEJoEoWPgo0HJi3H0HZ8ncJy8QKWgDQZgrg8UcUOk/b++ypnA0PVD2M
+ c52ftRzxDE9ofwL0r+fMzno/ZQplM/eodIPOH0W2iK3vf+q4q6x5PNL5zLe6+3uGx0p9Nls+tYP
+ r3xanBPrWoUimdjbqFqGRY6Ed8+RjP/I/uGwR
+X-Received: by 2002:a05:6402:b21:b0:6b1:c285:f8d8 with SMTP id
+ 4fb4d7f45d1cf-6b5777252eemr1132165a12.11.1793877288489; Thu, 05 Nov 2026
+ 03:14:48 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tests/functional/ppc64: add pseries virtio-blk
- hotplug test
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
- qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>
-Cc: Thomas Huth <thuth@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>,
- Miles Glenn <milesg@linux.ibm.com>, Aditya Gupta <adityag@linux.ibm.com>
-References: <20261103141938.41147-1-anushree.mathur@linux.ibm.com>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20261103141938.41147-1-anushree.mathur@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=Zsp4uN7G c=1 sm=1 tr=0 ts=6aec651e cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=NEAV23lmAAAA:8
- a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=x_wH3vj0ZUpRxYuHfwgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: tpIMDCQssRfv3W9elk2u4WSmmv6v2K39
-X-Proofpoint-GUID: DL2qtvAs6af05d7HzwojkjMh5reqjPFc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDA0NCBTYWx0ZWRfX/vvKffVWoqYZ
- i4qbm7gghO0u8l13xj+Dv2FW+Rjo4nNt0fnHFEa4C1GJJzOXVFGWRXjWyPw/qURUhI+2hczYzoP
- heLiuXh7Gg00WsKljmYH/WsGe4hJkF/lN8QRm5+1SvVFKJuOm/cKbNJYQLJHRLBBvwiIZ9vvj6U
- 8GJupwaGNLFdWZQZkE8RvYBfe4flhBC49HxZogly0L7muyPRf9JHyJlwO7MMrX2jV+wbi0RGB/m
- yyZ3TawVp/4GlONR4LC1OITkrc21zR1DN7D88+4CyYza0zzTljJK64raTEQCCCUwLWchS3xSRs1
- VS1FsMoFtzhfqjuWGJLvESBw2Auzm7amJRwItxHQMDgbPo1cMoOxcHQ+ClcbakpZb+2YWDRd5ZH
- 6nP+zTtj+tblO0oTXyaTMo3wbXtTwGjtDarKcp20mQfwNpK1PR5JUmPsWuJJBF2tWtU+FwRixGK
- U27pw5x9nCVWBVDYaSA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDA0NCBTYWx0ZWRfX3beLzFOL6hRb
- CZAkSXL1iONjjx/45SlyuU2/MZjpfy/RYzxPY6p2HGm442aKDzecRz9P7lTBok8BjjJ9/JmMWSB
- jt4z2WbkITLutwhmTVLZQryaNR3dH5M=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-05_03,2026-11-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
- impostorscore=0 spamscore=0 malwarescore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611050044
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20261031164009.2048-1-luoyonggang@gmail.com>
+ <20261031164009.2048-7-luoyonggang@gmail.com>
+ <auxgsFyzv-5UiyNk@redhat.com>
+In-Reply-To: <auxgsFyzv-5UiyNk@redhat.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Thu, 5 Nov 2026 19:14:35 +0800
+X-Gm-Features: AclHuK8tJYW8q4QG64JvjzWiMabcPoIg_CKQ5B4EQj0WH1J30aCIg40XxtKDWWE
+Message-ID: <CAE2XoE9J++-BHL5BDx4_jxuto+xwVmvFS3F-hE9gLbgfUmaFdA@mail.gmail.com>
+Subject: Re: [PATCH v2 06/12] target/arm: register separate max-v8 CPU types
+ for arm and aarch64
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Song Gao <17746591750@163.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>, 
+ David Hildenbrand <david@kernel.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Fam Zheng <fam@euphon.net>, Max Filippov <jcmvbkbc@gmail.com>,
+ qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Eric Farman <farman@linux.ibm.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Cornelia Huck <cohuck@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,308 +126,136 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On Thu, Nov 5, 2026 at 6:55=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Sun, Nov 01, 2026 at 12:40:01AM +0800, Yonggang Luo wrote:
+> > max-v8 was one TypeInfo whose instance initializer was chosen from the
+> > selected target at registration. Register both initializers, and let
+> > target_arm() and target_aarch64() select which type is available.
+> >
+> > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> > ---
+> >  target/arm/cpu.c            |  1 +
+> >  target/arm/cpu.h            |  1 +
+> >  target/arm/tcg/cpu-max-v8.c | 16 ++++++++++++----
+> >  3 files changed, 14 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> > index 510fc9eeb3b..6eb55242980 100644
+> > --- a/target/arm/cpu.c
+> > +++ b/target/arm/cpu.c
+> > @@ -2695,6 +2695,7 @@ void arm_cpu_register(const ARMCPUInfo *info)
+> >          .instance_init =3D arm_cpu_instance_init,
+> >          .class_init =3D info->class_init ?: cpu_register_class_init,
+> >          .class_data =3D info,
+> > +        .is_available =3D info->is_available,
+> >      };
+> >
+> >      type_info.name =3D g_strdup_printf("%s-" TYPE_ARM_CPU, info->name)=
+;
+> > diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> > index add993ef101..3240a8633ee 100644
+> > --- a/target/arm/cpu.h
+> > +++ b/target/arm/cpu.h
+> > @@ -1203,6 +1203,7 @@ typedef struct ARMCPUInfo {
+> >      const char *deprecation_note;
+> >      void (*initfn)(Object *obj);
+> >      void (*class_init)(ObjectClass *oc, const void *data);
+> > +    bool (*is_available)(void);
+> >  } ARMCPUInfo;
+> >
+> >  /**
+> > diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v8.c
+> > index 65f851f2006..e819d07e6ce 100644
+> > --- a/target/arm/tcg/cpu-max-v8.c
+> > +++ b/target/arm/tcg/cpu-max-v8.c
+> > @@ -121,10 +121,18 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
+> >
+> >  static void cpu_max_v8_register_type(void)
+> >  {
+> > -    static const ARMCPUInfo max_v8[2] =3D {
+> > -        { .name =3D "max-v8", .initfn =3D aarch32_max_v8_tcg_initfn },
+> > -        { .name =3D "max-v8", .initfn =3D aarch64_max_v8_tcg_initfn },
+> > +    static const ARMCPUInfo max_v8_aarch32 =3D {
+> > +        .name =3D "max-v8",
+> > +        .initfn =3D aarch32_max_v8_tcg_initfn,
+> > +        .is_available =3D target_arm,
+> >      };
+> > -    arm_cpu_register(&max_v8[target_aarch64()]);
+> > +    static const ARMCPUInfo max_v8_aarch64 =3D {
+> > +        .name =3D "max-v8",
+> > +        .initfn =3D aarch64_max_v8_tcg_initfn,
+> > +        .is_available =3D target_aarch64,
+> > +    };
+> > +
+> > +    arm_cpu_register(&max_v8_aarch32);
+> > +    arm_cpu_register(&max_v8_aarch64);
+> >  }
+> >  type_init(cpu_max_v8_register_type)
+>
+> Conceptually these are two separate CPUs one 32-bit featureset
+> and one 64-bit featureset, but both given the same name. The
+> current code registers them only in the respective arm and aarch64
+> target binaries, but this CPU is an oddity overall.
 
-On 11/3/26 19:49, Anushree Mathur wrote:
-> Add a functional test that hot-plugs and hot-unplugs a virtio-blk-pci
-> disk on the pseries machine.  It runs with TCG, and also with KVM if
-> KVM is enabled.
->
-> On pseries a PCI device added through QMP is only enumerated by the
-> guest once rtas_errd (ppc64-diag) handles the RTAS hotplug event and
->
-> runs drmgr (powerpc-utils).  Neither is in the buildroot image used by
-> the other pseries tests, so the test uses rootfs-hotplug.ext2: the same
-> image with those two tools added.
->
-> The test boots with a second PHB (phb1) present so that the guest
-> registers its slots, adds a null-co backend, hot-plugs virtio-blk-pci
-> into phb1.0 and waits for /dev/vda, then unplugs it and waits for both
-> the QMP DEVICE_DELETED event and /dev/vda to go away.  The root drive is
-> used with snapshot=on so the cached asset is not modified by the guest.
->
-> Signed-off-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-> ---
-> Hi all,
->
-> This adds a functional test for virtio-blk hotplug on the pseries
-> machine, with a TCG and a KVM variant.
->
-> The test boots pseries with a second PCI host bridge (phb1) present at
-> boot, hot-plugs a virtio-blk-pci device into it over QMP, and waits for
-> /dev/vda to show up in the guest.  It then unplugs the device and waits
-> for the DEVICE_DELETED event and for /dev/vda to disappear again.
->
-> On pseries the guest does not enumerate a hot-plugged PCI device by
-> itself: rtas_errd (ppc64-diag) has to handle the RTAS hotplug event and
-> run drmgr (powerpc-utils).  The buildroot image the other pseries tests
-> use has neither, so the test needs a rootfs that includes them.
->
-> I am sending this as an RFC because that rootfs is not available yet.
-> It is a new file, rootfs-hotplug.ext2, which I proposed for the
-> qemu-ppc-boot repository next to the existing pseries images:
->
->    https://github.com/legoater/qemu-ppc-boot/pull/5
+This is the one I did before
+https://lore.kernel.org/qemu-devel/20261013195606.152-1-luoyonggang@gmail.c=
+om/
 
-Hi Cedric,
-
-I heard from Anushree that you do not plan to accept PRs in the above 
-repository going forward.
-
-If you're okay with it, I'd like to fork your repository and maintain it 
-for future PPC test development and usage.
-Please let me know if that works for you.
-
-Thanks,
-Chinmay
+target/arm: defer max-v8 initializer selection until CPU creation
+but rejected, and I think it's fine.
 
 >
-> Until that is merged, the Asset URL in the test returns 404.  The sha256
-> in the test matches the image in that pull request.  The image is the
-> existing 2023.11 ppc64le pseries rootfs with rtas_errd, drmgr and their
-> libraries added, built with the legoater/buildroot qemu-ppc toolchain.
+> More generally the aarch64 emulator includes all the 32-bit CPUs
+> that the arm emulator includes, and just adds extra 64-bit CPUs.
+> IOW, excluding the 32-bit max-v8 CPU is a special case - if it
+> were not for the clashing name, it would be included like all the
+> other 32-bit CPUs.
 >
-> Tested on a ppc64le POWER host with both TCG and KVM; checkpatch.pl and
-> pylint are clean.
+> Thus rather than using is_available to continue to exclude it,
+> we must instead resolve the naming problem, such that both
+> models can be included concurrently.
+
+I have already implemented the TypeBucket over targets/arch_mask that works
+properly. That same QOM name will have multiple TypeImpl.
+
+If you allow me, I'd like to post them all with TypeBucket implemented
+so we have
+a clean discussion basepoint.
+
 >
->   MAINTAINERS                                |   1 +
->   tests/functional/ppc64/meson.build         |   2 +
->   tests/functional/ppc64/test_hotplug_blk.py | 188 +++++++++++++++++++++
->   3 files changed, 191 insertions(+)
->   create mode 100644 tests/functional/ppc64/test_hotplug_blk.py
+> One approach to this is to consider  the generic 'max-v8' name
+> to be an alias, that is resolved to the underlying real CPU
+> name 'max-v8-64' vs 'max-v8-32'. Allow the aliases to be
+> ambiguous, and either the selected target_info() disambiguates
+> aliases, or apps can use the canonical name instead of the alias.
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 3b12ba90f2..806d8e6ce6 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1704,6 +1704,7 @@ F: tests/qtest/libqos/rtas*
->   F: tests/functional/ppc64/test_pseries.py
->   F: tests/functional/ppc64/test_hv.py
->   F: tests/functional/ppc64/test_tuxrun.py
-> +F: tests/functional/ppc64/test_hotplug_blk.py
->   
->   PowerNV (Non-Virtualized)
->   M: Nicholas Piggin <npiggin@gmail.com>
-> diff --git a/tests/functional/ppc64/meson.build b/tests/functional/ppc64/meson.build
-> index cb3c745624..e1e8211dcb 100644
-> --- a/tests/functional/ppc64/meson.build
-> +++ b/tests/functional/ppc64/meson.build
-> @@ -2,6 +2,7 @@
->   
->   test_ppc64_timeouts = {
->     'fadump' : 480,
-> +  'hotplug_blk' : 600,
->     'hv' : 1000,
->     'mac99' : 120,
->     'openbsd' : 240,
-> @@ -19,6 +20,7 @@ tests_ppc64_system_quick = [
->   tests_ppc64_system_thorough = [
->     'e500',
->     'fadump',
-> +  'hotplug_blk',
->     'hv',
->     'mac99',
->     'openbsd',
-> diff --git a/tests/functional/ppc64/test_hotplug_blk.py b/tests/functional/ppc64/test_hotplug_blk.py
-> new file mode 100644
-> index 0000000000..2737e4b486
-> --- /dev/null
-> +++ b/tests/functional/ppc64/test_hotplug_blk.py
-> @@ -0,0 +1,188 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that hot-plugs and hot-unplugs a virtio-blk-pci disk
-> +# on the pseries machine type.
-> +#
-> +# Copyright (c) 2025 IBM Corporation
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +import platform
-> +
-> +from qemu_test import LinuxKernelTest, Asset
-> +from qemu_test import exec_command_and_wait_for_pattern
-> +
-> +
-> +class PseriesHotplugBlk(LinuxKernelTest):
-> +    """
-> +    Test virtio-blk-pci hotplug/unplug on the pseries machine type.
-> +
-> +    A pre-built rootfs image (based on the buildroot image used by
-> +    test_hotplug_cpu.py) is used as the guest OS.  The image includes
-> +    rtas_errd from ppc64-diag, which is required on pseries to call the
-> +    ibm,configure-connector RTAS function that makes a QMP-hotplugged
-> +    PCI device visible to the kernel.
-> +
-> +    ppc64-diag is not packaged in Alpine Linux, so the Alpine+apk
-> +    approach used by test_hv.py cannot be used here.  Instead a
-> +    self-contained rootfs with rtas_errd and drmgr (from powerpc-utils)
-> +    already installed is referenced as an Asset, following the same
-> +    pattern as test_hotplug_cpu.py.
-> +
-> +    The test is run with both TCG and KVM; the KVM variant needs a
-> +    ppc64 host with kvm-hv loaded and is skipped automatically otherwise.
-> +
-> +    A second spapr-pci-host-bridge (phb1, index=1) is present at VM
-> +    launch so the guest kernel registers its PCI slots with rpaphp
-> +    during boot-time PCI probe.  Runtime DLPAR hotplug of
-> +    virtio-blk-pci into phb1.0 then works via the rtas_errd path.
-> +    """
-> +
-> +    timeout = 600
-> +
-> +    ASSET_KERNEL = Asset(
-> +        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
-> +         'buildroot/qemu_ppc64le_pseries-2023.11-8-gdcd9f0f6eb-20240104/'
-> +         'vmlinux'),
-> +        'fc20d5820ad83ed514ac5f88af7e2692d47ab7f36dab290cdb137d05b98502f5')
-> +
-> +    # Pre-built rootfs based on the buildroot pseries image above, with
-> +    # rtas_errd (from ppc64-diag) and drmgr (from powerpc-utils) added.
-> +    # rtas_errd is required to process RTAS hotplug events on pseries and
-> +    # it execs drmgr to configure the device; without them rpaphp
-> +    # registers the slots but the device is never enumerated by the kernel.
-> +    ASSET_ROOTFS = Asset(
-> +        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
-> +         'buildroot/qemu_ppc64le_pseries-2023.11-8-gdcd9f0f6eb-20240104/'
-> +         'rootfs-hotplug.ext2'),
-> +        '01ab3421d313e7765176eb27193fdb5837281dc3c8484eed140de8a3e65908eb')
-> +
-> +    def _boot_pseries(self, accel):
-> +        """Boot pseries with phb1 present and rtas_errd running.
-> +
-> +        accel must be 'tcg' or 'kvm'.
-> +        """
-> +        kernel_path = self.ASSET_KERNEL.fetch()
-> +        rootfs_path = self.ASSET_ROOTFS.fetch()
-> +
-> +        self.set_machine('pseries')
-> +        if accel == 'tcg':
-> +            self.vm.add_args('-accel', 'tcg,thread=multi')
-> +        else:
-> +            self.vm.add_args('-accel', 'kvm')
-> +        self.vm.add_args('-smp', '2', '-m', '512M')
-> +        # Second PHB present at boot so the guest kernel registers its
-> +        # slots with rpaphp.  Required for runtime DLPAR hotplug of
-> +        # virtio-blk-pci into phb1.0.
-> +        self.vm.add_args('-device', 'spapr-pci-host-bridge,id=phb1,index=1')
-> +        # snapshot=on keeps the cached rootfs asset unmodified
-> +        self.vm.add_args(
-> +            '-drive',
-> +            f'file={rootfs_path},if=scsi,index=0,format=raw,snapshot=on')
-> +        self.vm.add_args(
-> +            '-kernel', kernel_path,
-> +            '-append', 'root=/dev/sda console=hvc0 rootwait printk.time=0',
-> +        )
-> +        self.vm.set_console()
-> +        self.vm.launch()
-> +
-> +        self.wait_for_console_pattern('buildroot login:')
-> +        exec_command_and_wait_for_pattern(self, 'root', '#')
-> +
-> +        # Start rtas_errd so that RTAS hotplug events are processed.
-> +        # rtas_errd daemonizes by default (no -d flag).  Run mkdir and
-> +        # rtas_errd unconditionally then echo a sentinel so the pattern
-> +        # match never depends on their exit codes.
-> +        exec_command_and_wait_for_pattern(
-> +            self,
-> +            'touch /var/log/platform; mkdir -p /var/log/dump;'
-> +            ' /usr/sbin/rtas_errd;'
-> +            ' echo rtas_errd_started',
-> +            'rtas_errd_started',
-> +        )
-> +
-> +    def _do_blk_hotplug(self):
-> +
-> +        # Confirm /dev/vda does not exist before hotplug.
-> +        exec_command_and_wait_for_pattern(
-> +            self,
-> +            'test -b /dev/vda && echo present || echo absent',
-> +            'absent',
-> +        )
-> +
-> +        # Add a null-co block backend (no image file needed).
-> +        self.vm.cmd(
-> +            'blockdev-add',
-> +            **{
-> +                'driver': 'null-co',
-> +                'size': 1073741824,
-> +                'node-name': 'testdisk',
-> +            },
-> +        )
-> +
-> +        # Hotplug virtio-blk-pci into phb1.0.  The RTAS hotplug event
-> +        # (type 229) is delivered to the guest; rtas_errd calls
-> +        # ibm,configure-connector, the kernel enumerates the device and
-> +        # udev creates /dev/vda.
-> +        self.vm.cmd(
-> +            'device_add',
-> +            driver='virtio-blk-pci',
-> +            drive='testdisk',
-> +            id='hotblk0',
-> +            bus='phb1.0',
-> +            addr='0x0',
-> +        )
-> +
-> +        # Poll until /dev/vda appears.  Use a shell variable sentinel so
-> +        # the string 'vda_present' never appears in the typed command,
-> +        # avoiding a false match on the echoed command text.
-> +        exec_command_and_wait_for_pattern(
-> +            self,
-> +            'until test -b /dev/vda; do sleep 0.2; done'
-> +            '; R=present; echo vda_$R',
-> +            'vda_present',
-> +        )
-> +
-> +        # Unplug the device and wait for the QMP deletion event.
-> +        self.vm.cmd('device_del', id='hotblk0')
-> +        self.vm.event_wait(
-> +            'DEVICE_DELETED',
-> +            match={'data': {'device': 'hotblk0'}},
-> +        )
-> +
-> +        # Poll until /dev/vda disappears.
-> +        exec_command_and_wait_for_pattern(
-> +            self,
-> +            'while test -b /dev/vda; do sleep 0.2; done'
-> +            '; R=absent; echo vda_$R',
-> +            'vda_absent',
-> +        )
-> +
-> +    def test_pseries_hotplug_blk_tcg(self):
-> +        """Hotplug then unplug a virtio-blk-pci device on pseries (TCG)."""
-> +        self.require_accelerator('tcg')
-> +        self._boot_pseries('tcg')
-> +        self._do_blk_hotplug()
-> +
-> +    def test_pseries_hotplug_blk_kvm(self):
-> +        """Hotplug then unplug a virtio-blk-pci device on pseries (KVM).
-> +
-> +        Requires a ppc64 host with kvm-hv loaded; skipped automatically
-> +        on other hosts.
-> +        """
-> +        self.require_accelerator('kvm')
-> +        # On ppc64 the base kvm module can be loaded (and /dev/kvm created)
-> +        # without kvm-hv, so checking /dev/kvm alone is not sufficient.
-> +        if platform.machine() in ('ppc64le', 'ppc64'):
-> +            try:
-> +                with open('/proc/modules', encoding='utf-8') as f:
-> +                    if not any(line.split()[0] == 'kvm_hv' for line in f):
-> +                        self.skipTest('kvm-hv module is not loaded')
-> +            except OSError:
-> +                pass
-> +        self._boot_pseries('kvm')
-> +        self._do_blk_hotplug()
-> +
-> +
-> +if __name__ == '__main__':
-> +    PseriesHotplugBlk.main()
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
