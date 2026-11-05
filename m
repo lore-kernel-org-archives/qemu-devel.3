@@ -1,125 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968406082BC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 15:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7083606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 15:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XvbKB+Uo;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Kql32Fx6
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=f+R9a8sn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOzPP-0005De-An; Thu, 05 Nov 2026 10:29:47 -0500
+	id 1xOzPV-0005FT-Ge; Thu, 05 Nov 2026 10:29:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xOzPN-0005DC-T2
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:29:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xOzPM-00012h-0n
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:29:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793892581;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WnyEFMD5bKu5clECubxywcLnBEDqdA+HPkHOPDgjFAM=;
- b=XvbKB+Uoe4zyiuUFHrLBqq0lG1Muhv6ZWY0vky84Zv+ZKUkDP8niVfw+h0/8N8DgzKvmmM
- UQcj2kr6CrYRJpIfqnBSoc7qDteqX7SzGkXiJr3PXM7yXmoFsiOrLXAq02I8Dn3YYqPeVQ
- D6x7omG53jDhgdVE7UTIPESsDfFmir8=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-MkSE181UPZ6wFODz8fwLSQ-1; Thu, 05 Nov 2026 10:29:40 -0500
-X-MC-Unique: MkSE181UPZ6wFODz8fwLSQ-1
-X-Mimecast-MFC-AGG-ID: MkSE181UPZ6wFODz8fwLSQ_1793892580
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-91c7a0f8250so41317596d6.2
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 07:29:40 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793892580; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xOzPT-0005F9-Rr
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:29:51 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xOzPS-00013h-9m
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:29:51 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-8b0cf2c0785so17588287b3.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 07:29:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793892589; cv=none;
  d=google.com; s=arc-20260327;
- b=V0ho/peGP1Vj4fXx1VDdazILNrCfkV7MqqucwPTmHmhgF5Yl7ENkGu+4uqpOV9V0km
- jlnTEe6r3bTdC7LI75pgTB5pG8YXte3jiDxnElFLs4GbM8V+n92eesNu+kgRuwxPj8Rb
- WIyfJGqlXbKzJ4qMoPErsFxns4DxcdaXGGAg4DGxkoTZRC7bGj64QUWNlNk9Cwv3CELE
- kzA5kHDkpPb4LZwo0vYvNx2teHHQSfRuP74i2EJjp4dPZN65JryjMyLysJWwd8LZE0Ab
- WBs1T77Q1z3IkHW2N9aScDWsO0UnpScwoJJgq+Eaw7ATjwqpPHJNrcUAdMOcyO4IXT4A
- NMOw==
+ b=ZP/MTiZJzPlH01FGIB5KMy1SBn1forfRneIkpcqvozO5J0vjxYbDByAg3tbPk8h6xI
+ BSLB5tSpYUwglt6MZ+Yj0LRS3KFj2hwbkwoFn7jMjBJoe4hSnvuf+Uw8q/AxY7G4qizy
+ lENcH3Kz516Xpn7Y0ssMBnB87QqVy7ugREKye42+/ddxOE3HEFprIx4t/0nBd2aP/A5N
+ rZeyXvYxG8xbquct5YTpH2iMA9VZ7ZDnfXR0X0O1sFWqUchyZ7xx1uM1/ZFfqkaKgNlc
+ 1zHqspKayXGnoNTNqYukmlGpN6M51y80Krm9aWuk0ZyyDt3nDpaQB5qhQvZTAWw9cJR5
+ 4uYg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=WnyEFMD5bKu5clECubxywcLnBEDqdA+HPkHOPDgjFAM=;
- fh=wyYqx0NQxutiiU4yuzFtJ2RwrEKnodrcwdNDUBqGECI=;
- b=TUgNPKdfuDkoOFEKjcFiL5iy4WgABCc8/Ery4iwRYTZH1gzDrdmSSyTz5e2AcmvWC5
- gbo/vXtRJFW7KRVkvIY26j1AExdq/gmAUeAbdQMmQvC7I0sO8snxONRNLNlpIJwQcd+O
- vO2wxh/uTq8L9kZTTkdA/HuValVJZRtYzp+9bjU3+M7SjXgTwM26u7KdoABSQzdI+Dak
- d8v42+z8VDFhwiquLcjCXksQ+TY8aymno+xJqRnbdtVOGioHKvl/SwHEDLlm9uerV973
- yxgKcueBA1u99BXGGlVniMi4Vx3t1Xjw6SUVI686gN3wBqWhX4JdBnMv4pabVGNoqfXn
- XU/w==; darn=nongnu.org
+ bh=Fvc41J5rrKOURLR4lvPkC9ba8pu/HNCoimZdpA7OITE=;
+ fh=H7StoTss7GfgTn3/MHIAQb6OmrYj58EM9z9EYIdKXOo=;
+ b=K+roPNfA9Cna+4SZhHk2yeQMmkUN97GGeAMUxYW4RwySYPQrUHw/afUdOCoMJdFhHz
+ 0B8g3vXkHyJnzsXGdM4CqAqb+smnaDlmrx1ptWnGf3GDn1fNUVIpeWUsmC4NxFSMK1A/
+ I+E2yKNr3SKATcDRInUNQdInRipXx6vTbyn6EvDYB4n3fydh6T4hbmqGTbTuKkV05HPQ
+ IUJ9DU3X2jRjnTiWCARqvcR3ejhJetfMOc2cPKTydQ+QoLiyRJVOVht2V8O/85i+fwB4
+ mcBm2SmEUmwU2Li8jl3uFu0QMLYfT88ZJFXQOGrIU7GZRBL/v9UbvPNigdCT9i9dO5EI
+ HBdQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793892580; x=1794497380; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793892589; x=1794497389; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=WnyEFMD5bKu5clECubxywcLnBEDqdA+HPkHOPDgjFAM=;
- b=Kql32Fx6Wa7bibBtg+l00s2kd55rZC7AHXQ9ei3e62zVonIsJKpuVUPLJHgeHAsTqN
- bm31W5AJm9fM/g1ZuNHCEHhtxlHCwUjUEQ1nfa5sgxkIPcjt2oFQeu+9URXw4DLDENUH
- lTkZzEtqGnhHHlPjHyDz2OYGnmQDV+zV6PAwxT7NS9Eg7t021pNS3ce0H/0xSDbCQdnT
- qPycReWl9ig1259cRmcgr7LiUmNKVsqkw1QUDRUSOm1X1318/yogOu2+Bkc5p33BxKXl
- yZrFBebovVuMJtJwILqR3OfOdpmTJ2PxcecD/qj2V1H2Fy+TSaFc2ZPD4MSuYARj9+nh
- 56QQ==
+ :content-type; bh=Fvc41J5rrKOURLR4lvPkC9ba8pu/HNCoimZdpA7OITE=;
+ b=f+R9a8sndV9yFtYlX038Y47BubQwkoKYyntHi1vcKMFIl9bzcu8eq1U8hhiR6BOkVj
+ OSPhSbAD5q65kQYJdtTm/krAGExqsZ26NNCWW27D1oFwyvfIMFFFlRLOtzbtCIB5CJNx
+ jAahMQChn1GiWVIDXmpq4MH+ewgnTR7HbYaDrNRGbC0bV90rq489ZWI7k0NDHFyonTp4
+ iwdSDDWGWRDazyY5PQ9M8VLto1MAEVmiB2Opvv8tkKJN+rBohNhYo4cHanCTT9Dum6Gm
+ bkQDpcnRviPkPqG/6PXxKUFJnHIkQCtAA/yfBJuAdc1sqPweo6cD5QAINS+67jiSN2vG
+ p05g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793892580; x=1794497380;
+ d=1e100.net; s=20260707; t=1793892589; x=1794497389;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=WnyEFMD5bKu5clECubxywcLnBEDqdA+HPkHOPDgjFAM=;
- b=UgFTqqkwleW070ftPMTgSD28h4PcTkSfT7e0u8cccLe06pNFuAij5Hdgb/rbW+/j+k
- cknrOia3E8xdwMUFAx9l7ptsI6od9cjIhZQSbFm+V8bXj1jWmfJAnqY0HPxZBFTFb8JQ
- bVxFOjwEQ0GB9dfqppcfQPQlaHX+XdQ3ZWZCo4pqAbvuQ4I9RtJ0iKUCQ4lW/+reorQn
- BJ7KO4RbSSAZ2uT1TqrqZBRkkM8+0CStXHirsiKWPlr3RwrCAxCvC7dlu2XM7joIKebX
- P7acAXVSn9B3LdHLaLnwUEwysj+m6K7W5gnq3XxFB/mjXnosJsh6zGSjHbwhazObB9XX
- tQiQ==
-X-Gm-Message-State: APuU4Z8es9knIwKxwMGtCARHey6n44HwsB1DBDkUpeGJVX+pMFUqKTzM
- 28WdUH5X8rzprsm42xeFIMlYv8K2rv6vSEiMfxmFIiAThGBhgjx86/o5mKbQOyaHu2OelLZa7hk
- z3TrbtuaNapmWmsCw9nCvIDiNSbtL19OID82ro5Lr7lilcfuMlXWCdoCoYbCi+Ryh+HWugJdjru
- b7g7pbP6LpNV7soFOxdRWbnlLs0d9VYao=
-X-Gm-Gg: AYBFou2ra2a1+sss0VVW+ZCNhog8SEHGC/n80Yz4RUezW6Qv9OmVLjEfNgs54Bm/+9d
- rjOQSpgD/gQqWllO+bJIUBS3Wzw406dwlv/OBdj3WYs1JeWbfBUbDvIfWKegC+xfhLL8d4+I4VI
- fXVxDK3ZZ9t6ZxWLW0JvGej018I5bGGALlGoxmUmnWTyTfF1jNIP5wwNFQIeRDb9NlMNBlsHCcs
- 0NqQW4Ka+m929Fg1diJHQtgPjhJ7n0xHBRhJAnzOySpe9MYnLLxU3Rzo1QJyOUDGRLL7/T4VA==
-X-Received: by 2002:ad4:4eaa:0:b0:91c:6d30:7c2c with SMTP id
- 6a1803df08f44-91ca4ba3932mr328995756d6.52.1793892579606; 
- Thu, 05 Nov 2026 07:29:39 -0800 (PST)
-X-Received: by 2002:ad4:4eaa:0:b0:91c:6d30:7c2c with SMTP id
- 6a1803df08f44-91ca4ba3932mr328995466d6.52.1793892579079; Thu, 05 Nov 2026
- 07:29:39 -0800 (PST)
+ bh=Fvc41J5rrKOURLR4lvPkC9ba8pu/HNCoimZdpA7OITE=;
+ b=MrHNQCNGypvmnhkz8lWBFKwjKn4KkHpdMCkrTXlZ9pS1QDNpoQ1tTbi6EXo7J02VCP
+ uYdstOhoRGWyOm4/gwgtnc+wH91BLvUfk18wrG0V/RRe4jcoGl1hbZUnp3g3uP/+AIOv
+ DFUo1uU1X8+BR34WS3hGq3ofkhvGiLiReAVJ7EX1DVm886f0APcPqOVuy7ivx4f9seGX
+ POoNfTWU9TKEgwyN30b1OWixTlKwwP/g2mUK4+JrJ8H0yKOQF+s1KamHEVT2/rqmnAI3
+ /dH1AxNPAdDjSVIjQ2XybBZbzsz1lO7pWpatCGcKyFW0mMD9vRjm2dtcGfd2ybBa+Z5B
+ IJdA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwx/2oSP/GECgXkC1jDbc5FTPjFa3vxr16u0gN+RvlSyqsYyyaVz6Kyre+NbvyF7+oPJkmaHlHi3yT1@nongnu.org
+X-Gm-Message-State: APuU4Z8wAaogoIhMUeBCpWLGungJ6FkvaBkb8KEXkHTy/nh9IQlSYypn
+ 0wxvLrdzaQnqXBRl8l7fwcgFHpTzhYUFXIsgUkalNjVMhHXXM9+G7xflCR4SrjJcqjhW2GO4evn
+ pwY/YYI7UHMVLnqAAHpcrFP9enp6i8QHPU6ZIPRMeGg==
+X-Gm-Gg: AYBFou21LfgF3LgwJVrYxRtRbOQghg3B+xS+KgRKQr5xut0J9GbUu7cX6EwekS/mKEr
+ nszf/mVDHdCBywcxYjLEAw3NUOaoQR7fenjyUiYJnWL5dIJnudJkoelMwvU4juoYrtQX+L8WW/B
+ Xy/GhWgJrsLOr6AXqOy1TFw1eMfFjnrtIJsdyfeFSwNhH46cOwuQqVC8odfhIwMlt3TqpWHqLZf
+ OOIXS6yu3BnSwfajEands1YgVZnL/W9ExHJ6OWAlr7RAsMW5jr3gRjyqhDYZDL5KiUTqW75aXxQ
+ WOpNP93yInVHV9rWTPjRnNPBbd7Q9PWHWvEvMCkNJGM2LdYjU/392U3fsoI3Cf0W6CO9uklCkxR
+ 4XrswWQUBCltRGQj0B81ZJZv0us/OzjcF3G68cgvXQ2OWaxYlwlps27g8K3GDuZHZhICnD5NaSZ
+ c/psF38mfAZv5es4t4/ol4
+X-Received: by 2002:a05:690c:4992:b0:8ac:46ff:d360 with SMTP id
+ 00721157ae682-8b2b6426d6dmr112591067b3.0.1793892588594; Thu, 05 Nov 2026
+ 07:29:48 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261105125203.40320-1-philmd@oss.qualcomm.com>
- <20261105125203.40320-18-philmd@oss.qualcomm.com>
-In-Reply-To: <20261105125203.40320-18-philmd@oss.qualcomm.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Thu, 5 Nov 2026 17:29:28 +0200
-X-Gm-Features: AclHuK9F8ds1NUnep_sO2MDvEwiSehpgOjMaN3-jEOZwX-8jeVoCgePKPh3_RVQ
-Message-ID: <CAPMcbCrrqrBf_7ofh1S=c=2DFTpZf1SjaqEYnVM=miKbSCk-FA@mail.gmail.com>
-Subject: Re: [PATCH v2 17/17] qga/vss-win32: Replace deprecated sprintf() by
- StrCatBuffA()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org, 
- qemu-ppc@nongnu.org, Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="000000000000f11ab3065f892969"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260819095855.115823-1-rathc@linux.ibm.com>
+In-Reply-To: <20260819095855.115823-1-rathc@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Nov 2026 15:29:37 +0000
+X-Gm-Features: AclHuK-oc1OsjYX-cLEvlg-T2uMjhkP3895Wq8ahiBzv5vI2RE2ww30FIukBpfw
+Message-ID: <CAFEAcA_BGS73EcunV7=kedi4t6p93bcmNSABRFLsJA5fORqTYw@mail.gmail.com>
+Subject: Re: [PATCH] hw/scsi: validate IU buffer bounds in
+ vscsi_preprocess_desc()
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com, 
+ harshpb@linux.ibm.com, fam@euphon.net, pbonzini@redhat.com, 
+ amachhiw@linux.ibm.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,184 +116,36 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000f11ab3065f892969
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Wed, 19 Aug 2026 at 11:00, Chinmay Rath <rathc@linux.ibm.com> wrote:
+>
+> cdb_offset and local_desc values are dependent on the guest. If the value
+> is large enough, it can lead to an out-of-bounds read in vscsi_fetch_desc().
+>
+> Add an 'avail' constant in vscsi_preprocess_desc() representing the number of
+> bytes available in srp_cmd.add_data[] and use it to prevent out-of-bound reads.
+>
+> Make all callers of vscsi_preprocess_desc() check its return value and
+> handle failure accordingly.
+>
+> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4162
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 
-On Thu, Nov 5, 2026 at 2:54=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <
-philmd@oss.qualcomm.com> wrote:
+Shouldn't this be Cc: qemu-stable@nongnu.org ?
 
-> Formatting is not necessary, replace the deprecated
-> sprintf() by StrCpyNA() and StrCatBuffA() calls.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> ---
->  qga/vss-win32/install.cpp | 17 ++++++++++++-----
->  1 file changed, 12 insertions(+), 5 deletions(-)
->
-> diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-> index df00588c923a..1a3d5cbf75d5 100644
-> --- a/qga/vss-win32/install.cpp
-> +++ b/qga/vss-win32/install.cpp
-> @@ -562,7 +562,8 @@ STDAPI DllRegisterServer(void)
->
->      /* Add this module to registry */
->
-> -    sprintf(key, "CLSID\\%s", g_szClsid);
-> +    StrCpyNA(key, "CLSID\\", sizeof(key));
-> +    StrCatBuffA(key, g_szClsid, sizeof(key));
->
+Did we deliberately decide this wasn't CVE-worthy, or did that
+step in the process get skipped?
 
-MSFT does not recommend to use StrCatBuffA due to security warning.
-What about using StringCchCatA instead of snprintf, even in this case?
+Ideally bug fix commits, especially ones we might want to backport,
+should include a "Fixes:" tag giving the commit hash and subject
+of the commit that introduced the bug they're fixing.
 
-
->      if (!CreateRegistryKey(key, NULL, g_szClsid)) {
->          goto out;
->      }
-> @@ -572,7 +573,9 @@ STDAPI DllRegisterServer(void)
->          goto out;
->      }
->
-> -    sprintf(key, "CLSID\\%s\\InprocServer32", g_szClsid);
-> +    StrCpyNA(key, "CLSID\\", sizeof(key));
-> +    StrCatBuffA(key, g_szClsid, sizeof(key));
-> +    StrCatBuffA(key, "\\InprocServer32", sizeof(key));
->      if (!CreateRegistryKey(key, NULL, dllPath)) {
->          goto out;
->      }
-> @@ -581,7 +584,9 @@ STDAPI DllRegisterServer(void)
->          goto out;
->      }
->
-> -    sprintf(key, "CLSID\\%s\\ProgID", g_szClsid);
-> +    StrCpyNA(key, "CLSID\\", sizeof(key));
-> +    StrCatBuffA(key, g_szClsid, sizeof(key));
-> +    StrCatBuffA(key, "\\ProgID", sizeof(key));
->      if (!CreateRegistryKey(key, NULL, g_szProgid)) {
->          goto out;
->      }
-> @@ -590,7 +595,8 @@ STDAPI DllRegisterServer(void)
->          goto out;
->      }
->
-> -    sprintf(key, "%s\\CLSID", g_szProgid);
-> +    StrCpyNA(key, g_szProgid, sizeof(key));
-> +    StrCatBuffA(key, "\\CLSID", sizeof(key));
->      if (!CreateRegistryKey(key, NULL, g_szClsid)) {
->          goto out;
->      }
-> @@ -651,7 +657,8 @@ STDAPI DllUnregisterServer(void)
->          errmsg(hr, "CoCreateInstance(VSSCoordinator) failed");
->      }
->
-> -    sprintf(key, "CLSID\\%s", g_szClsid);
-> +    StrCpyNA(key, "CLSID\\", sizeof(key));
-> +    StrCatBuffA(key, g_szClsid, sizeof(key));
->      SHDeleteKey(HKEY_CLASSES_ROOT, key);
->      SHDeleteKey(HKEY_CLASSES_ROOT, g_szProgid);
->
-> --
-> 2.55.0
->
->
-
---000000000000f11ab3065f892969
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Nov 5, =
-2026 at 2:54=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:p=
-hilmd@oss.qualcomm.com">philmd@oss.qualcomm.com</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">Formatting is not necessary,=
- replace the deprecated<br>
-sprintf() by StrCpyNA() and StrCatBuffA() calls.<br>
-<br>
-Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@oss=
-.qualcomm.com" target=3D"_blank">philmd@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0qga/vss-win32/install.cpp | 17 ++++++++++++-----<br>
-=C2=A01 file changed, 12 insertions(+), 5 deletions(-)<br>
-<br>
-diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp<br>
-index df00588c923a..1a3d5cbf75d5 100644<br>
---- a/qga/vss-win32/install.cpp<br>
-+++ b/qga/vss-win32/install.cpp<br>
-@@ -562,7 +562,8 @@ STDAPI DllRegisterServer(void)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0/* Add this module to registry */<br>
-<br>
--=C2=A0 =C2=A0 sprintf(key, &quot;CLSID\\%s&quot;, g_szClsid);<br>
-+=C2=A0 =C2=A0 StrCpyNA(key, &quot;CLSID\\&quot;, sizeof(key));<br>
-+=C2=A0 =C2=A0 StrCatBuffA(key, g_szClsid, sizeof(key));<br></blockquote><d=
-iv><br></div><div>MSFT does not recommend=C2=A0to use=C2=A0StrCatBuffA due =
-to security warning.</div><div>What about using=C2=A0StringCchCatA instead =
-of snprintf, even in this case?</div><div>=C2=A0</div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
-4,204,204);padding-left:1ex">
-=C2=A0 =C2=A0 =C2=A0if (!CreateRegistryKey(key, NULL, g_szClsid)) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-@@ -572,7 +573,9 @@ STDAPI DllRegisterServer(void)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--=C2=A0 =C2=A0 sprintf(key, &quot;CLSID\\%s\\InprocServer32&quot;, g_szClsi=
-d);<br>
-+=C2=A0 =C2=A0 StrCpyNA(key, &quot;CLSID\\&quot;, sizeof(key));<br>
-+=C2=A0 =C2=A0 StrCatBuffA(key, g_szClsid, sizeof(key));<br>
-+=C2=A0 =C2=A0 StrCatBuffA(key, &quot;\\InprocServer32&quot;, sizeof(key));=
-<br>
-=C2=A0 =C2=A0 =C2=A0if (!CreateRegistryKey(key, NULL, dllPath)) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-@@ -581,7 +584,9 @@ STDAPI DllRegisterServer(void)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--=C2=A0 =C2=A0 sprintf(key, &quot;CLSID\\%s\\ProgID&quot;, g_szClsid);<br>
-+=C2=A0 =C2=A0 StrCpyNA(key, &quot;CLSID\\&quot;, sizeof(key));<br>
-+=C2=A0 =C2=A0 StrCatBuffA(key, g_szClsid, sizeof(key));<br>
-+=C2=A0 =C2=A0 StrCatBuffA(key, &quot;\\ProgID&quot;, sizeof(key));<br>
-=C2=A0 =C2=A0 =C2=A0if (!CreateRegistryKey(key, NULL, g_szProgid)) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-@@ -590,7 +595,8 @@ STDAPI DllRegisterServer(void)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--=C2=A0 =C2=A0 sprintf(key, &quot;%s\\CLSID&quot;, g_szProgid);<br>
-+=C2=A0 =C2=A0 StrCpyNA(key, g_szProgid, sizeof(key));<br>
-+=C2=A0 =C2=A0 StrCatBuffA(key, &quot;\\CLSID&quot;, sizeof(key));<br>
-=C2=A0 =C2=A0 =C2=A0if (!CreateRegistryKey(key, NULL, g_szClsid)) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-@@ -651,7 +657,8 @@ STDAPI DllUnregisterServer(void)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0errmsg(hr, &quot;CoCreateInstance(VSSCoor=
-dinator) failed&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--=C2=A0 =C2=A0 sprintf(key, &quot;CLSID\\%s&quot;, g_szClsid);<br>
-+=C2=A0 =C2=A0 StrCpyNA(key, &quot;CLSID\\&quot;, sizeof(key));<br>
-+=C2=A0 =C2=A0 StrCatBuffA(key, g_szClsid, sizeof(key));<br>
-=C2=A0 =C2=A0 =C2=A0SHDeleteKey(HKEY_CLASSES_ROOT, key);<br>
-=C2=A0 =C2=A0 =C2=A0SHDeleteKey(HKEY_CLASSES_ROOT, g_szProgid);<br>
-<br>
--- <br>
-2.55.0<br>
-<br>
-</blockquote></div></div>
-
---000000000000f11ab3065f892969--
-
+thanks
+-- PMM
 
