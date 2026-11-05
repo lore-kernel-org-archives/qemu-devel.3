@@ -1,148 +1,141 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA938606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 08:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED411606A335
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 08:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=W6TWX4yj;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IuBr7XfL
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Pr40bPWj;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=P73cXC/u
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOsa5-0002ga-OG; Thu, 05 Nov 2026 03:12:21 -0500
+	id 1xOseN-0003bW-WC; Thu, 05 Nov 2026 03:16:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xOsa3-0002fj-LT
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:12:19 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xOse8-0003aF-9G
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:16:38 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xOsa1-0007CT-Oz
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:12:19 -0500
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1xOse6-0007nc-3u
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:16:31 -0500
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A56U4XG3073642
- for <qemu-devel@nongnu.org>; Thu, 5 Nov 2026 08:12:15 GMT
+ 6A56ULuY1018101
+ for <qemu-devel@nongnu.org>; Thu, 5 Nov 2026 08:16:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Q3xdU1s65N044DqLVYZOU0ShsZknbB+9fK+x06gPOeY=; b=W6TWX4yj7r+m0w9i
- /JQHPzCRn24+wRospM7JdBO6q2RjM03+gQ2uieUPllplXO4o8sk9P5TAWCvQhv0p
- /6xQ+jkPiOK9FQeB4CdqeQa/lXLOXaJEGIE8OOJiIAF+YhHXtmrEtsFHjo7wV1X0
- 3NrxK6ozmuMnmal2LK3bv1p65XC054p8D8AfryI8OzDQ4KLrvFRhM4OlYVfWsGoK
- s5wtJKs1VwfJiR5ckfh6UfvcX+S2wvMfOkpKuEkEwVktH97xXIUEyMEcMulHT7u7
- RHTqkQ7WE5qmbzO1sfRgMyPJeJAG4tpjyXNvkOjx4yur9MgQYUZm57bIwxYKocXm
- IO7nEw==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hrksq8k8v-1
+ L5CYWS+NbxiemEtQv75+52bbpvTURJZfZRF82lC7GUQ=; b=Pr40bPWjHSCANoIw
+ 5UQORPqXULqymOdM/vE3lq7MOle/hEYsQs5XJQbjZ4bTN1nUI5iXsIbJeA5i3j8U
+ VJfoKjjyRLgyUJ1I27Q+sypP/lnSWHpuc6rRGnDor+nQov3xhLDAdR+SUHr20fN+
+ 7NE4WCgccJhT8SvgPseuo6NDKmKH3cktb1tIeDRtBL3zpZBTZqVA3u90PDqKkiZR
+ RyGwEeKo3ZNVQWR3bpilr4iOVjp9uLrbZIRjCiW+aFCcaGVCPEJ5Ffpf6gPNk/Om
+ bRoFiivuKr99kpsxmfvzDLjc0+iAiDAnf1oJ0a+1ytnJ1fqwFqN1eYpmRBjVUUDr
+ vyRfxw==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hr6bnm0b3-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 08:12:15 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-33713e5e6daso1902475eec.0
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 00:12:15 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 08:16:18 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-36d69ab3c2bso1584774eec.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 00:16:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793866335; x=1794471135; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793866578; x=1794471378; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Q3xdU1s65N044DqLVYZOU0ShsZknbB+9fK+x06gPOeY=;
- b=IuBr7XfLVwMFJKleCm12bxRzGPAZPdL9SPn5iNDaO0r3b45pudb0k7tq9vhzaR6Umy
- 5H6ad7X7Ftj+LKPFJDwxADQpUncz5joIFZGyWOeeQz1Bmd3FB91Ro0lsWWgPOyLs63tm
- JMAwMS3LQW07oNP8lK5OTgpg4P+izCDmIya4VbM6X+PU4uUeRQb/NW0IEu7SIC+OqUiD
- 0XQwi8dKOyOMSocptCbiK3XyDl4M/Wro+A0/ld2ptwxVqmE3MQHnkUUNRWl1mMYsmGNz
- Zj7zs/WUM57U6B+N+8lZ2lL3qvatuptA5eZ2v1y+DzM32QvTsrDVQlPuialWGqWcingE
- us8g==
+ bh=L5CYWS+NbxiemEtQv75+52bbpvTURJZfZRF82lC7GUQ=;
+ b=P73cXC/u+nm+uHw5RU0jy8LJMN4906Sh6bYFUcDW9r9XSUDd0zY11aVTx3tLyIfh6P
+ RTbuk18KKT8enyTFbgpYkDtDP9OoC9nramqkFMAmYuJkyPnjrtMx/EjhEc+04seIIcru
+ /h+j9V54cFnDKGaQadkgAkgNn4Z/ShNVD1g+UDa0WKPjCEn9xvkk+Z5gaGo7pDEeLANH
+ CEtiVcReznYC5lTksqjv+zFXoSHzgpkVdq0P9AxQCNJOjTvbnactdZH+BtxZtd14RNr1
+ 3nmP/WKWs29DahmDgjO0tdeMSEe8LUGLAUGGQDW+MuxjQJt9m74QCye5N1ckt8rdxqBu
+ ycjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793866335; x=1794471135;
+ d=1e100.net; s=20260707; t=1793866578; x=1794471378;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Q3xdU1s65N044DqLVYZOU0ShsZknbB+9fK+x06gPOeY=;
- b=AfTIcPO6u5ZYMje9emY2uCX/EmTLvvY0e8ky9SFLhYDoA6obFnTOAKFX3VE0iIzaQQ
- 54rp8GOEsROsjjGisfTc/LDSyGlBRmn3wXpXdLU14WVkFwy6Fot424QrIQrzMsO0vpwB
- WV/xg4JkQa7/KECScSuv2vZqN4T0UmXiel869UI+Ax71nQoLMMn9a5aLnQ/84XrNV9ZK
- RzOZqhxguTXF7eZYqHt2aiqTULewHaaNu3Z37Rihbbzb4s7Y2x5zgCp/21O4tYe01zSG
- Sryn1TJwB8/IbueHCJkpRPd4xL4DGPZrKO1PNY0YhJZgCb8L5Uax2WpNmgP8p5L4+W7x
- XZIQ==
+ bh=L5CYWS+NbxiemEtQv75+52bbpvTURJZfZRF82lC7GUQ=;
+ b=rSQku84dKNxluGxQ/+UNlfCXWFDKGfvCi3g7SiFArymwUE9Qhx9fYI8im7iHwAFi5u
+ faDmyb0BYVCSh3uF7AzJkaO//6d3u56IJiNmtsE1gWhdbxY/T1T5wZl3PypICTqDRSj6
+ JFqtQSMEFvr/KNegenSXPd/FgH4Jlq7YwgLe+LFdQZgSfa9hqTnimmSTokcDIjkq0fT7
+ Xt79SVd572D/WKK1qAXYF5t6CEFOoJ28yGBV+J60kgKldSkH3CJtIbvw91FeiQ2wQ9/L
+ pXvyTQTACN2WUQRRtQ9329raRP00cKM/YuIDI9TucsYEj8mTQi6cG1ffzWpvcX6Z89Sf
+ 24QA==
 X-Forwarded-Encrypted: i=1;
- AKwUvByVhgUi3ccWqxxAIWylIVaMdAxcZDqXGQNZ8cVgy8+BjzzGOm+DcK+PATuGfo4p7WbCbrNBSKoYRSWi@nongnu.org
-X-Gm-Message-State: APuU4Z9nOO7MDp/P3MWF5kScCwMXITxCm2dluABFgfnkXPVtCSrn5neB
- ItN61lIvgSeriAQ6r58JZ682sBiPnO1Rerr04ND4ce15flIbA9VAwuYHAJeRzzaEmnCoVJqTOBF
- ifa9buSwzKxX6gI5D20yXYuTQJSzD8vjNS3dNyKJoCvtIw40YxzRxZI7DlQ==
-X-Gm-Gg: AYBFou2xXsY8NIsJ/JhiwZLaRh3zC/Fexb4+SbZAGCNebtjXbgrY+GDl7Fea5vx2Zta
- uII8r2GJF+Vs+mllb7fqVRCBxw6IFayt1PDqyJLGOiGRl/rRV7bQ6PUQLyhTqhyCWAOVyKdVwao
- J1qdA9jvLGGifOgWDfOnPVMaWaFZsNsCKEyJ35R3h2Sdua7Bj4KOWlz9cDprfabk6LfSf77mXqO
- 8NZPwK/Jx4nWU3xml7R4eE0AhXL2DRRaG3eRACMLN4tvtG3Jf983G5wsl6Yce3K2HlMI5SMkmjJ
- rvFSVmzBaxeiTerTq3EqtMH+HVY+L21gJpjV63RbGs8lqex78KvnnZSYiUEEApMv+PXo9A1Y2lC
- V9o7ZFvoaqxYbMrvuP9emPan8avPzVyB5bk1A2eGQ2G2kK+Du0Uz3FF3SIyXQca6oXL3sHzNAy0
- 5t8yHtiVpNuxiA7dHTiQ6WElUtId2fTbqad+ThJgA8AQ==
-X-Received: by 2002:a05:7300:148f:b0:36e:16d6:f45 with SMTP id
- 5a478bee46e88-36e16d614d0mr2895755eec.23.1793866334658; 
- Thu, 05 Nov 2026 00:12:14 -0800 (PST)
-X-Received: by 2002:a05:7300:148f:b0:36e:16d6:f45 with SMTP id
- 5a478bee46e88-36e16d614d0mr2894436eec.23.1793866315799; 
- Thu, 05 Nov 2026 00:11:55 -0800 (PST)
+ AKwUvByMS1BAWbK/zT2zg8DUCmBCu411D/io+Y437SAfv0waDHyuW6xtk5QNQ816Hcre3jGLEKsc2ej7g75q@nongnu.org
+X-Gm-Message-State: APuU4Z/l6GM6FfOEd7ZLDfPF983Fj6cKxjWCxP/jeZPHoRaPS2i+z0Vb
+ 27AeudourysVMwEfavL4hILu/4aYv0EHYT8tzhZVYCXAU7lSwmiHMRlKB9SrJ9o42x/2cbaEdMm
+ sGoCw3wyKZ9kGcJ3XLDtOlBXy3f4ULj1g0ScJdMj0s7mKPHXnBDgWp4eqqg==
+X-Gm-Gg: AYBFou37EywojRzPQgdIKeObVLlaOxOMOc+SaGbxMsp0NyaFLo30f3/39qhYra2wm+0
+ WNSSoOM01ne7U8AHIA8kERpmO3ez5zgubpaimb3sE44760h+IErm2sq+SSACYAx32mv4V6KYo1s
+ qpLhQiKvtri3VD5BSy7sxUs+nUVWygcWX6AZ8Det1eWyXL3vJ/Aa7O3b4R1VABBB19WefO4sfmK
+ n1Bx0WgSThOPqD2KcEMKoUvg6acD03dECuoHz7r9ckupYzX2nEj+xZ47sn5JHMYyDMOIdbfPZca
+ FOz/OG2tQxwsNFsFYQKQMMQlcO36nqFWNLXeSLXuFVhbYhcpbp2Lqqh7TV2wk+6hghSZNDll+p0
+ bPRh3H3z/mrDw+xIYvmIyDY10uUhU5c2YOaWoe52n/vwSym9K0aBVetTmb/5NllSkkUmW0jj9SD
+ CUlmpUWLkG89v7qpKPof9UbOSGlWhRa4owKXBC3KBQNw==
+X-Received: by 2002:a05:693c:65c6:b0:36c:a44c:1763 with SMTP id
+ 5a478bee46e88-36ca44c1938mr6722299eec.32.1793866577693; 
+ Thu, 05 Nov 2026 00:16:17 -0800 (PST)
+X-Received: by 2002:a05:693c:65c6:b0:36c:a44c:1763 with SMTP id
+ 5a478bee46e88-36ca44c1938mr6722270eec.32.1793866577077; 
+ Thu, 05 Nov 2026 00:16:17 -0800 (PST)
 Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36ca3966daasm18519113eec.23.2026.11.05.00.11.54
+ 5a478bee46e88-36ca38a6d3dsm17327960eec.7.2026.11.05.00.16.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Nov 2026 00:11:55 -0800 (PST)
-Message-ID: <3c7816f3-b8ad-4ab2-8057-9cbac6805fba@oss.qualcomm.com>
-Date: Thu, 5 Nov 2026 00:11:53 -0800
+ Thu, 05 Nov 2026 00:16:16 -0800 (PST)
+Message-ID: <66a0a4e7-3e3c-462f-9a1e-bed93e9bc3bd@oss.qualcomm.com>
+Date: Thu, 5 Nov 2026 00:16:14 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/ide: add SPDM + IDE + TEE pci support to ICH9 SATA
- driver
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- Jagannathan Raman <jag.raman@oracle.com>
-References: <20261104-ich-driver-spdm-v1-0-60d361bc0417@linaro.org>
- <20261104-ich-driver-spdm-v1-2-60d361bc0417@linaro.org>
- <82fe2840-2775-47b3-b077-180fbd811b03@oss.qualcomm.com>
+Subject: Re: [PATCH] docs/devel/testing: iotests check script should be run
+ via 'run'
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20261103110805.2010679-1-peter.maydell@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <82fe2840-2775-47b3-b077-180fbd811b03@oss.qualcomm.com>
+In-Reply-To: <20261103110805.2010679-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDAzMiBTYWx0ZWRfXwmwU9fb88iTS
- bor/irsmGJKQDcJyB0B66Dm8GQi88IP3qTo82iEjZyjpe1APDo5EHGwyQxOhRRH1psRR+rpSxch
- 9vnED/28utwXJzQGKwWOphPqNH4tm3OWaQ56l7oGzxs04kxPPI4L4GTqLJqegD0QpaZ3REqUgBz
- VYLzVngcrCmRls5fzzzfkP+oojv4QauoIUlaUREmZZyZjI7/hP9KuF7BLPa00zYNEgjtF1PCF96
- WG2D2UGQMpJWZ0x1mSG/znuwvWBXM6I3EhIJQq/C6+1y72ypIZo1BpT8WL+5OL9zU/eokjh6RAW
- DiaT2YLOqmXzHRDj0CfILIXHj5bFvJ6AKPlkjGoS5GUQuvI5F43JY4lyN0Z07fRdlfV+JTLhroq
- qdXW6gp9b53VZD7kN+lynp+jexYAgXvR9ZEgCub8GdVXcMpk8S3YMLYa6vOnmv6p6+MpVeFfGk1
- Xdf0Pg8HAJ16bV2oDLA==
-X-Proofpoint-ORIG-GUID: nSFTTKPLkhZhAmF837JyCzk3Rr1ehEgH
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDAzMiBTYWx0ZWRfX260lxcerQrZ9
- +RdWku4yhwz/ikW4d+EQSLaPUnTPnUZv3SE0aKfXo5vvR98VRWoJc22s59ASWVHf3xt+AYY1xXt
- to0cYpHbuY+fYwYtAwhmFEC6ifylRyQ=
-X-Authority-Analysis: v=2.4 cv=CIe/zhrD c=1 sm=1 tr=0 ts=6aec3a5f cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDAzMiBTYWx0ZWRfX7vv1xRn8GaGf
+ o6KzfFWkDpBBWGgRt2ixLBaONXK22Dnigc61Cee7SnvzmGiAMkarn9AZ0/LVqLMnUXRIePYROET
+ kk9FB54xNIKqA3YAEtNtgx08/QbG2zvrHyEXCfjnhZ4SSniG9AEb8BkHZ8om6dZgKDM6MLi1P3t
+ VkIGjRUbz9mnAZkGeCQ4mu6WrY3nOSMOwyEv4IgGlkWOZEfWVYfyogr8Z5kFiGT4+ss20GbgN42
+ 1s94RkRGHUcukuyejR6YNL4fs8UbrcaTAWN+VGnqqIu8uehD01x9oeeC/DopSWTpb7oaPZEAh5b
+ K5dJcGJTXUqT2Cc5ejp3eUzGgoHqLP+Dfg9vtp7wbidBifV0YuL/mTWvhX+d50EXzvvC8etOKHt
+ MZyogRKfKyUbPJHEA2CrX1oaMpQtmbEey1ysmBxBaD8p+LOhFwsmnQg2zA7ivi1rw9EKuRibbKv
+ sOlrAy3rRcymVgJu3Qg==
+X-Authority-Analysis: v=2.4 cv=KLLPn1Fo c=1 sm=1 tr=0 ts=6aec3b52 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=KKAkSRfTAAAA:8 a=5BzGauNo-O7mRAc17TAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: nSFTTKPLkhZhAmF837JyCzk3Rr1ehEgH
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=KKAkSRfTAAAA:8 a=XJM29XU31OyHbsU3JpoA:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: CfWq0cZTpv3HaP18vD03IAPDKcxfsaeL
+X-Proofpoint-GUID: CfWq0cZTpv3HaP18vD03IAPDKcxfsaeL
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDAzMiBTYWx0ZWRfXwC676Y3/fofi
+ CJ9UAAMMfAnM5yaM+zGfaPsaZFUxVzNeb7qorIf4AHYDe2CzBAZLDsz5zNoAqKcdl2998Cu/UIY
+ p0NxzTDkDWQKX/VHH2ICIkthoGDwn9Y=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-05_02,2026-11-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0 adultscore=0
- lowpriorityscore=0 phishscore=0 impostorscore=0 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611050032
-Received-SPF: pass client-ip=205.220.180.131;
+ malwarescore=0 adultscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
+ definitions=main-2611050032
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -169,148 +162,71 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/4/2026 11:12 PM, Philippe Mathieu-Daudé wrote:
-> On 4/11/26 17:34, Jim MacArthur wrote:
->> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 11/3/2026 3:08 AM, Peter Maydell wrote:
+> The iotests section of the testing documentation suggests directly
+> running the "./check" script.  However if you do this then the
+> script complains:
 > 
-> Rationale?
-> 
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
->> ---
->>   hw/ide/ich.c | 82 ++++++++++++++++++++++++++++++++++++++++++++++++++
->> ++++++++--
->>   1 file changed, 80 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/ide/ich.c b/hw/ide/ich.c
->> index b00987f08d..58e2d3b998 100644
->> --- a/hw/ide/ich.c
->> +++ b/hw/ide/ich.c
->> @@ -70,6 +70,7 @@
->>   #include "hw/ide/pci.h"
->>   #include "hw/ide/ahci-pci.h"
->>   #include "ahci-internal.h"
->> +#include "system/spdm-socket.h"
->>     #define ICH9_MSI_CAP_OFFSET     0x80
->>   #define ICH9_SATA_CAP_OFFSET    0xA8
->> @@ -90,6 +91,10 @@ static const VMStateDescription vmstate_ich9_ahci = {
->>       },
->>   };
->>   +static const Property ich_props[] = {
->> +    DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
->> +};
->> +
->>   static void pci_ich9_ahci_update_irq(void *opaque, int irq_num, int
->> level)
->>   {
->>       PCIDevice *pci_dev = opaque;
->> @@ -120,13 +125,39 @@ static void pci_ich9_ahci_init(Object *obj)
->>       d->ahci.irq = &d->irq;
->>   }
->>   +/* Sends an SPDM message and receives the response */
->> +static bool pcie_doe_spdm_rsp(DOECap *doe_cap)
->> +{
->> +    void *req = pcie_doe_get_write_mbox_ptr(doe_cap);
->> +    uint32_t req_len = pcie_doe_get_obj_len(req) * 4;
->> +    void *rsp = doe_cap->read_mbox;
->> +    uint32_t rsp_len = SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE;
->> +
->> +    uint32_t recvd = spdm_socket_rsp(doe_cap->spdm_socket,
->> +                             SPDM_TRANSPORT_TYPE_DOE,
->> +                             req, req_len, rsp, rsp_len);
->> +    doe_cap->read_mbox_len += DIV_ROUND_UP(recvd, 4);
->> +
->> +    return recvd != 0;
->> +}
->> +
->> +/* SPDM protocols: plain and secured SPDM messages */
->> +static DOEProtocol doe_spdm_prot[] = {
->> +    { PCI_VENDOR_ID_PCI_SIG, PCI_SIG_DOE_CMA, pcie_doe_spdm_rsp },
->> +    { PCI_VENDOR_ID_PCI_SIG, PCI_SIG_DOE_SECURED_CMA,
->> pcie_doe_spdm_rsp },
->> +    { }
->> +};
->> +
->>   static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
->>   {
->>       AHCIPCIState *d;
->>       int sata_cap_offset;
->>       uint8_t *sata_cap;
->> -    d = ICH9_AHCI(dev);
->>       int ret;
->> +    uint16_t cap_offset; /* Next offset for extended capabilities */
->> +
->> +    cap_offset = PCI_CONFIG_SPACE_SIZE;
->> +    d = ICH9_AHCI(dev);
->>         d->ahci.ports = 6;
->>       ahci_realize(&d->ahci, DEVICE(dev), pci_get_address_space(dev));
->> @@ -145,6 +176,7 @@ static void pci_ich9_ahci_realize(PCIDevice *dev,
->> Error **errp)
->>       pci_register_bar(dev, ICH9_MEM_BAR, PCI_BASE_ADDRESS_SPACE_MEMORY,
->>                        &d->ahci.mem);
->>   +    /* Legacy capability for ICH9_SATA_CAP */
->>       sata_cap_offset = pci_add_capability(dev, PCI_CAP_ID_SATA,
->>                                             ICH9_SATA_CAP_OFFSET,
->> SATA_CAP_SIZE,
->>                                             errp);
->> @@ -165,6 +197,29 @@ static void pci_ich9_ahci_realize(PCIDevice *dev,
->> Error **errp)
->>       /* Any error other than -ENOTSUP(board's MSI support is broken)
->>        * is a programming error.  Fall back to INTx silently on -
->> ENOTSUP */
->>       assert(!ret || ret == -ENOTSUP);
->> +
->> +    /*
->> +     * Initialise a capability in the legacy space after the
->> ICH9_SATA_CAP.
->> +     */
->> +    pcie_endpoint_cap_init(dev, ICH9_SATA_CAP_OFFSET + SATA_CAP_SIZE);
->> +
->> +    if (dev->spdm_port) {
->> +        /* Set up the DOE extended capability, mailboxes etc */
->> +        pcie_doe_init(dev, &dev->doe_spdm, cap_offset,
->> +                      doe_spdm_prot, true, 0);
->> +        cap_offset += PCI_DOE_SIZEOF;
->> +
->> +        dev->doe_spdm.spdm_socket = spdm_socket_connect(dev->spdm_port,
->> +                                                            errp);
->> +        assert(dev->doe_spdm.spdm_socket > 0);
->> +    }
->> +
->> +    /* IDE extended capability */
->> +    pcie_ide_init(dev, cap_offset);
->> +    cap_offset += PCI_IDE_SIZEOF;
->> +
->> +    /* TEE capability bit in legacy space*/
->> +    pcie_cap_tee_init(dev);
-> 
-> Which section of the ICH9 spec describes that? AFAICT ICH9 predates
-> DOE / IDE. Is there some amendment? Otherwise this might not be the
-> correct place to add that capability. Either use a Frankenstein ICH9
-> with a distinct model name, or add at the SATA layer, possibly like
-> a class interface (we only need the SATA_CAP_OFFSET IIUC).
+> WARNING: iotests is being run from outside of the configure-time python virtual environment
+> [...]
+> Please use the meson run script:
+>         /home/pm215/qemu/build/x86-tgt-san-dbg/run ./check
 >
 
-It's an ad hoc addition, reproducing what Arm has been doing on fvp for
-device assignment. It does not really model a real device, and nvme was
-(is?) not supported due to other limitations.
+A bit a side question,
 
-IIRC, we found that in the tf-rmm branch supporting device assignment.
+Does it bring anything useful compared to:
+./build/run meson test <this_test or suite>?
+If not, maybe we can remove all this, including the extra doc.
 
-While it does not hurt, that's why I never sent patches before because
-that's indeed a custom thing, that works for a custom software stack
-that was (is?) not yet finalized.
+We can also add test suites if that's the missing piece to run a
+specific group of tests.
 
-That said, it should not hurt to add it, since it's just an extra
-capability.
+> Update the documentation to match this.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  docs/devel/testing/main.rst | 14 +++++++++-----
+>  1 file changed, 9 insertions(+), 5 deletions(-)
+> 
+> diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+> index b0ca37fe2ba..e26b8af0c79 100644
+> --- a/docs/devel/testing/main.rst
+> +++ b/docs/devel/testing/main.rst
+> @@ -272,8 +272,12 @@ scripts.  The testing success criteria is golden output comparison, and the
+>  test files are named with numbers.
+>  
+>  To run iotests, make sure QEMU is built successfully, then switch to the
+> -``tests/qemu-iotests`` directory under the build directory, and run ``./check``
+> -with desired arguments from there.
+> +``tests/qemu-iotests`` directory under the build directory, and run
+> +the ``check`` script via the ``run`` wrapper which sets up the environment:
+> +
+> +.. code::
+> +
+> +   ../../run ./check [args]
+>  
+>  By default, "raw" format and "file" protocol is used; all tests will be
+>  executed, except the unsupported ones. You can override the format and protocol
+> @@ -282,16 +286,16 @@ with arguments:
+>  .. code::
+>  
+>    # test with qcow2 format
+> -  ./check -qcow2
+> +  ../../run ./check -qcow2
+>    # or test a different protocol
+> -  ./check -nbd
+> +  ../../run ./check -nbd
+>  
+>  It's also possible to list test numbers explicitly:
+>  
+>  .. code::
+>  
+>    # run selected cases with qcow2 format
+> -  ./check -qcow2 001 030 153
+> +  ../../run ./check -qcow2 001 030 153
+>  
+>  Cache mode can be selected with the "-c" option, which may help reveal bugs
+>  that are specific to certain cache mode.
 
-@Jim: Feel free to complete my answer with links to the code and a spec,
-if there is one to share now. I'm sure Mathieu Poirier has all this info
-also.
-
-> Michael, Tao, what are your view on this?
->
-
-Regards,
-Pierrick
 
