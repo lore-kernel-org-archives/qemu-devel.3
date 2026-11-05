@@ -1,87 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4C4606A335
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 11:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E32D606A338
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 11:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=WdmhKr8I
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=By+uVYuL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOvvY-0004MK-6X; Thu, 05 Nov 2026 06:46:44 -0500
+	id 1xOvxt-0004pj-9X; Thu, 05 Nov 2026 06:49:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xOvvU-0004Lt-NQ
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:46:40 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xOvxn-0004pA-PM
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:49:04 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xOvvS-0005zy-U1
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:46:40 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-48e20edd106so1226536f8f.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 03:46:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xOvxm-00068m-63
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 06:49:03 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4b4571ff080so18932235e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 03:48:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793879197; x=1794483997; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CJB6qusbJ8tyksMbVVI6J6ynrp4ykLCnIeVaWrqmqOU=;
- b=WdmhKr8IZICu0DCeywwpU6IvQ5K8brWJG4jjXzlKj5eEcIxI6j4kHcCuLOiRKSMhFl
- y1sErbsCFShmtsa4LH2RIpaA7adBGvRUsLI1rOmbIAc8sKxrNb2xFjSPE4C6V9211tqH
- mRn+c20S26c70/aDlvORVI/fKijm6r0i/P0jE0ncieUHC74xHSLA7lbv5yZd1NBpiewC
- FJZK1FUk2QY2WNY7NAvboxPhnbprcziGH8vtmK0lIdPp0TjZ5Rn/tL3m8igt9S2Jg0cf
- crjyMKw47eZ7X37Yvq01UUnP4ckEmJnGqiKmnE57w9ZoqMlRFM1swbxaHxosAMy7aNuw
- QFOw==
+ d=linaro.org; s=google; t=1793879333; x=1794484133; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=fXtCvXzXzAqybf7x/EyP6bJ4wn6IoZqlFm4KJNYCUpI=;
+ b=By+uVYuLRjkmRMiLqoQMRLtDnzD+DBuhhz5VJatdFgRV/FvNo5G4D59+ExuHPw9V/o
+ mUBvaVWuAy0FSmLbctBKtVgqhygmRUUYnDvsTMdjT5VHJMgQ3guwB2jS865GdGnDmyum
+ rYpwZJNDkWMvrvg4TacME+xnMWJlkvdKjct3uTequWjvdAatIg0DXUdkOJKf2GOclSVV
+ wb8VgNEG4KKAQnbzy8WkHp+SqgRXmVxMCNIEx/+7gkM/Kfd5tIFQiLzfTNGij9vVg75s
+ AbPayljPbsmkDPx5aBI4QZJfuclU81GLBNtjNiKzMRKcqN7QDLs3AZt2G6whnCOZ+9fv
+ SKuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793879197; x=1794483997;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CJB6qusbJ8tyksMbVVI6J6ynrp4ykLCnIeVaWrqmqOU=;
- b=JNdTmzBO/hjMiXTP+T3V9Zdgt/aSfM/wKTHynRUS1IFNh4raHGKOTH6lBu3lfoplE3
- rC2jlk/oJ7uNArtk6hRJW5Awuq/4SPloXn+H8auyRpombpolIu4XyNe92B5BQSd5LFYB
- kxeYIQ3vN1Dgf9vF12iD3D00k0yMTsDlJCK6aU52QiajbV2m7frm0xZuMDbHjHn4jun/
- 3D8nucxad1xC4il3dLMYmmtU+UlNND3E5LSEX68oaiVF6Zat5YqR3+d6l2cQ9ha7490I
- copvyWWlvp45ttmnfrGSfpVVO6i06OkolvgiXIkQ8N3NTnLeRCsf6ModwY+kt+MZfba8
- p4xA==
-X-Gm-Message-State: APuU4Z9Lxpmoj49jVMA+gNZTEB62mwm//bKbqGtY0+1gxzH0XX8wEK7o
- iPtJZ7o/pdAQnozc95KknlcQL7NXJ/DUVOLTgZUIUwxrlMLJInJdhi5OwdCOrddKfhnyVb0C7WB
- OxD39U5I=
-X-Gm-Gg: AYBFou3XzWlBrdlBCYgbGP0OoAJSoPpoKB2VTwjX2K2GpyVmWkDgnzvE3Ld3fDm9RCo
- szHjoZKUjjwCfds0u8OTzoqJS0HMXHJ+feXLTVIvh/47xuNAby1drz376j3kKgkwHqmCdjRQwIZ
- JD4nXinUpRXeRiK6lxWu/g9+LhQteQkpzglG6E2GzCesO4zd8AMWu1/rOtS8mQgndL4+FRDgUR1
- OCM7Dcy02Rk1nhh6GSd8pjx1rb/0vKSzo6kmNfoGIBCKME/JwjbetiEY4MIsRJ1TUVfgrGMRTUk
- MaT6kbcCkyE4iQL8L69C4BZKzefTbd2WYo1b5wDLQNerXVeDjh14zLgzQvUCvQqdaEvqWGeBc15
- etCb1Gyook9V4zn3nb3GXubaADMuG9qLJPprlirXxtMiw051uOm0+2AKWU7xu3Z1mIAyiNdmSUJ
- Bz+SHpaa25xRcSwkIYF1Q38ZwCJqkBsSV9D6ZcHxs1CPfK99NAlDG3FH1IJhVzvDp0yVOEtItIg
- J0LuSUb8N/fsgkS7yqa1aPWo2s9qWMbeDhor/dUdyUUUnEPcm4uzwEOmrtxUEAnxFLrmrBG98Rz
- 1y/YV7IjlUaGVqlawmHh0oJlrWvVUTmncwfPXrN/qJK0YEeaYFdr8K+m6B2ch/xImP3w/FZZBof
- ntQ7NCNapTIJJfaQ+/W19gdfnKUb5JoEBz0SxA0uqDcTx8S5mKM6cjMY=
-X-Received: by 2002:a5d:5886:0:b0:48e:d27:bee4 with SMTP id
- ffacd0b85a97d-48e6e2b9e63mr39719757f8f.2.1793879196958; 
- Thu, 05 Nov 2026 03:46:36 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ d=1e100.net; s=20260707; t=1793879333; x=1794484133;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=fXtCvXzXzAqybf7x/EyP6bJ4wn6IoZqlFm4KJNYCUpI=;
+ b=XwzWLAXX/cqnfLlP4zSimNuBPyVI6GKWtngz0RjSLcFhsGGgtqm+OVcTYXMJLmjpoD
+ CDqIfD3YEvrLyyt0UJfOiOCohjrDUwO2scHZiwh3UsAENTP15BpOcqbhNDFdydqsXicJ
+ miUq5Bxhg11tl4PT3vnB5P/NU3NGI5gQmTDKExuLhqq2FOnARwkLULtiHkfzmwZatzg1
+ JUDS0LU0qFodVGL3bHA/1bxmsxk2v0BVO8JIY1fQuyn+irt1hfzv1y3BwWahykSOUicW
+ 5Vd63dr+h1bMPzDzs6/qy2/35wh0ueYp2HL/FJonqb+dAFTrBW3NE63tUTvN2mDs+OOP
+ rAxw==
+X-Gm-Message-State: APuU4Z9iWHoAQalGtMbixH5HrcDrZkGiCifT0r6vyuQOmS4MVIqrwPNg
+ 8UY0oD9Rz9ynnCPLDuWfqkka0nVZqafhHQU6v7koDvVFhxMD+hqsEYK6f4JqvIuDciM=
+X-Gm-Gg: AYBFou1265KCKB+aOEO3cFgL20EZbDW5csOkzsTmJ723v/Ma/T/iNEWvNUBCqYXOscH
+ e4rgcIHCxAAxdRGJYqVzYnIlXztD7g8kG8eIuXiupOJkk2dWNbszs8ffWcqBhLnlq8tKlpwJqC7
+ 5a9Qs5yQzwI+n7CqALWu4nJ49JywBJzZVC9C26w4AhXejY/kb5pCY7vuZGvJekJZP48FcNWDGYM
+ dIRUOoUeZOrVyWzPk2uEnmDdt6FwryfxgDnNyRb/pVk6K1KxCBA1oXPXg/FBo6MftrbVgdxmHrS
+ XpPh7ZipO1nv1uHkRzJa8OPpcJK2dixGXEK9IUuH0rbyoFnTtfey+Zhz3F0qnH0M2ibVsbPqDyB
+ J8yT/mD4qFni7JZexmWOELkrQxfg/Y2q6bQc07QAEWB9O1hy7hfB2zQJTEpltMyxc7Akk/eqUMj
+ gJsTtRKnYBtoZBOWwHbUctqnpizj+WyJSJejFcDrgXeOjg/368mEMDnNd0t6rbEcl6mhKUy+29o
+ CzzGXRnpwCDsgE5NeB4Eyl59j/v/RddOD395gZp2CoQkLmi/+X8s3UVd3D+koETrpiEtbsVYSWX
+ Sy1Pb0smy/r8VPpp6OnolojWZRbodu0=
+X-Received: by 2002:a05:600c:1c0f:b0:4a2:150f:1601 with SMTP id
+ 5b1f17b1804b1-4ac1709a7bdmr433883885e9.12.1793879333334; 
+ Thu, 05 Nov 2026 03:48:53 -0800 (PST)
+Received: from linaro.org ([2a10:d582:31e:0:2acb:1209:e24:c9ce])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48fec9cd40csm9546985f8f.13.2026.11.05.03.46.35
+ 5b1f17b1804b1-4b452cd020csm133853235e9.4.2026.11.05.03.48.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 03:46:36 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- "Denis V . Lunev" <den@openvz.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH] hw/core/qdev-properties-system.c: Don't leak str in
- set_drive_helper()
-Date: Thu,  5 Nov 2026 11:46:35 +0000
-Message-ID: <20261105114635.3286252-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ Thu, 05 Nov 2026 03:48:52 -0800 (PST)
+Date: Thu, 5 Nov 2026 11:48:51 +0000
+From: Jim MacArthur <jim.macarthur@linaro.org>
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH 2/4] hw/pci: add IDE + TEE capability to PCIe root port
+Message-ID: <auxtI9xz2y3tWfl8@linaro.org>
+References: <20261029-jmac-pcie-rme-extensions-v1-0-212d2409563e@linaro.org>
+ <20261029-jmac-pcie-rme-extensions-v1-2-212d2409563e@linaro.org>
+ <20261104192709.3b260e06@jic23-hlaptop>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261104192709.3b260e06@jic23-hlaptop>
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,82 +101,72 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In set_drive_helper(), we call visit_type_str() to get the value
-being set as a string.  This is an allocated string, and we're
-supposed to free it, but not all paths out of this function do so.
-In particular, the "block backend already exists, change the attached
-node" code path does not free the string. This shows up as a memory
-leak under the newly added virtio-scsi-tests/replaced-node-size
-qtest:
+On Wed, Nov 04, 2026 at 07:27:09PM +0000, Jonathan Cameron wrote:
+> On Thu, 29 Oct 2026 15:05:11 +0000
+> Jim MacArthur <jim.macarthur@linaro.org> wrote:
+> 
+> > From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > 
+> > Adds the TEE flag in the legacy config space, and the IDE
+> > (Integrity & Data Encryption) extended capability. These
+> > will be present when rme-cap=on is specified for the
+> > pcie-root-port device.
+> > 
+> > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > Signed-off-by: Jim MacArthur <Jim MacArthur@linaro.org>
+> > ---
+> >  hw/pci-bridge/gen_pcie_root_port.c | 21 ++++++++++++++++++++-
+> >  hw/pci/pcie.c                      | 19 +++++++++++++++++++
+> >  include/hw/pci/pcie.h              |  3 +++
+> >  include/hw/pci/pcie_regs.h         |  4 ++++
+> >  4 files changed, 46 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
+> > index 5434d693d9..ab8087da87 100644
+> > --- a/hw/pci-bridge/gen_pcie_root_port.c
+> > +++ b/hw/pci-bridge/gen_pcie_root_port.c
+> > @@ -26,13 +26,16 @@ OBJECT_DECLARE_SIMPLE_TYPE(GenPCIERootPort, GEN_PCIE_ROOT_PORT)
+> >  #define GEN_PCIE_ROOT_PORT_AER_OFFSET           0x100
+> >  #define GEN_PCIE_ROOT_PORT_ACS_OFFSET \
+> >          (GEN_PCIE_ROOT_PORT_AER_OFFSET + PCI_ERR_SIZEOF)
+> > -
+> > +#define GEN_PCIE_ROOT_PORT_ACS_END \
+> > +        (GEN_PCIE_ROOT_PORT_ACS_OFFSET + PCI_ACS_SIZEOF)
+> 
+> Can't you figure this out from root port class acs offset?
+> 
+> Or if you want it in a fixed place follow that pattern and stash it
+> in the root class during dev_rp_dev_class_init.
+> 
 
-$ UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 \
-  QTEST_QEMU_BINARY=./qemu-system-i386 \
-  ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 \
-  ./tests/qtest/qos-test --tap -k \
-  -p /i386/pc/i440FX-pcihost/pci-bus-pc/pci-bus/virtio-scsi-pci/virtio-scsi/virtio-scsi-tests/replaced-node-size
-[...]
-Direct leak of 4 byte(s) in 1 object(s) allocated from:
-    #0 0x55f7744155e3 in malloc (/home/pm215/qemu/build/x86-tgt-san-dbg/qemu-system-i386+0x20115e3) (BuildId: 271ffb42d2e322de7813813d8c6cc85351e48a4f)
-    #1 0x713dbd345b79 in g_malloc /usr/src/glib2.0-2.80.0-6ubuntu3.10/debian/build/deb/../../../glib/gmem.c:100:13
-    #2 0x713dbd35b988 in g_strdup /usr/src/glib2.0-2.80.0-6ubuntu3.10/debian/build/deb/../../../glib/gstrfuncs.c:323:17
-    #3 0x55f777208021 in g_strdup_inline /usr/include/glib-2.0/glib/gstrfuncs.h:321:10
-    #4 0x55f777208021 in qobject_input_type_str /home/pm215/qemu/build/x86-tgt-san-dbg/../../qapi/qobject-input-visitor.c:542:12
-    #5 0x55f777204d1c in visit_type_str /home/pm215/qemu/build/x86-tgt-san-dbg/../../qapi/qapi-visit-core.c:349:10
-    #6 0x55f774df80d1 in set_drive_helper /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties-system.c:129:10
-    #7 0x55f774dee9fa in set_drive_iothread /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties-system.c:224:5
-    #8 0x55f7767cc5c8 in field_prop_set /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties.c:89:12
-    #9 0x55f7767ec12b in object_property_set /home/pm215/qemu/build/x86-tgt-san-dbg/../../qom/object.c:1562:5
+There seems to be quite a lot of cases where we're arranging capabilities in
+sequential order in memory, but hard-coding the locations. I would rather all
+of this be replaced with a dynamic pointer which records the next capability
+offset, and it looks like there are attempts to do this with, e.g.
+pcie_insert_capability, but that has a lot of caveats and only gets used once.
 
-Switch to using g_autofree so that the string is properly freed
-all all exit paths.
+I'll have another think about this, and in the meantime if anyone knows a good
+reason why we do hardcode this, that would be useful.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d1a58c176a11b ("qdev: allow setting drive property for realized device")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-Sorry for forgetting qemu-devel on first send...
+> > +
+> > +    if (grp->rme_caps) {
+> Not arm specific. Can't see any harm in using a generic config name
+> for this.  Actually I'm not seeing a reason not to always include
+> the ide cap. Maybe less so for setting up tee.  Haven't really thought about
+> that.
+> 
 
- hw/core/qdev-properties-system.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+Good point, IDE/TEE could be separate named options quite easily. There might
+be more Arm RME things included later, but that can be a third option.
 
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 4d605c20561..d5b227dbecb 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -120,7 +120,7 @@ static void set_drive_helper(Object *obj, Visitor *v, const char *name,
-     DeviceState *dev = DEVICE(obj);
-     const Property *prop = opaque;
-     void **ptr = object_field_prop_ptr(obj, prop);
--    char *str;
-+    g_autofree char *str = NULL;
-     BlockBackend *blk;
-     bool blk_created = false;
-     int ret;
-@@ -155,7 +155,6 @@ static void set_drive_helper(Object *obj, Visitor *v, const char *name,
-     }
- 
-     if (!*str) {
--        g_free(str);
-         *ptr = NULL;
-         return;
-     }
-@@ -209,8 +208,6 @@ fail:
-         /* If we need to keep a reference, blk_attach_dev() took it */
-         blk_unref(blk);
-     }
--
--    g_free(str);
- }
- 
- static void set_drive(Object *obj, Visitor *v, const char *name, void *opaque,
--- 
-2.43.0
+Thanks for the review,
 
+Jim
 
