@@ -1,113 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AED606A328
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 12:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B421606A328
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 12:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=muTrMRbQ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YosxI4uY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOwYN-0005t0-Ck; Thu, 05 Nov 2026 07:26:51 -0500
+	id 1xOwnz-0000I7-UA; Thu, 05 Nov 2026 07:42:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1xOwYK-0005sS-RL
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 07:26:48 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1xOwYI-0002nD-OE
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 07:26:48 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4a9a8d6cea8so6483385e9.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 04:26:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793881605; x=1794486405; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=xswJ7hiLDj169UhibfP965Sph8AslAZxMY/7J102bac=;
- b=muTrMRbQb+EKk3mGPK8NPLs+12NKp0LhnAYywJ2PvPnWEIkcCufQhV6AgBApzznV9b
- pxD/N+Kfk59UcVY4KTWEZsrVPZLAtj+QCn8WfYBFYKQyMysEYs7JpexvZwqeAY6YXma+
- JVftU8y76H8vkzsLGky3+fKelsGP0sVfkaTZkL3cyU44aqLQntjnodhDRyL18IAZBh5v
- KSIgyAgfr1IwZm8+iTd3HSewl14YhawbtXflQqjdhRtXKxFp2wGtWBULUjacpJmX0kLX
- fF94SsoBfnAP9OWOjLMzQL4TxaahRHmZdVMY+xHX/evjXhYz0MomFxYVEr99sTZP3w59
- /hxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793881605; x=1794486405;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=xswJ7hiLDj169UhibfP965Sph8AslAZxMY/7J102bac=;
- b=WiOealX3JhpEhPbo9qJrihFTPnxz48JXcTVO/aE5tXcKNoGk8WjPEAT0SxLat8qo1Q
- JjqFhYS5g0ji9Ex4qK6wnKH4uPSq21eWB3YqONX7kWXPszccaO0/cr2pwBfmmUUyoJQg
- C6j0arrH7bEfrvUBZCgnMY26ofmXwRrq2oJK2W/FeRPhz6Ya7A+X3XdRA/exfHy8hqQR
- CvZVMZ066Nq0M9soPiVouWVJtUF1BjqaDuj3TZUSTlUNl0Q99aXHtahEAg60XM1RMxVh
- LdEJ0y4S1aZJI4t51NGxjpGjl/vyYuK0JB9GXz3nMIfVFSisFMlsmMG87f/eStqB/ghm
- 38KQ==
-X-Gm-Message-State: APuU4Z8Fe4+H6eLnxTvcUfjl9uObC6B4V/6G1Tt6oY40DOh0c1Oi79FW
- QYhPLBA84Zb3Bhlr2b6236txyvIACg34+Rhe88TPRvXJbzn8acVKa0M2TRZBEH8T7rg=
-X-Gm-Gg: AYBFou099sw3dmL/ZzcDpNgtqiqLzbUhq2/qbwJXgf0icLsIs2gQdQ9XsK1+7wakMGQ
- 0zfvSCil1pTI3XNszUeovVtTwCgjbtAvrcmisbWrSE592MUrimSmj8TzwQKjWehPEw5EAnpfFaH
- OsJnryYX7/v521c3FnQGZehVYUZz7MjPr0cjH/DDOx3u6b3thYJyTz2rACE59CLUU+TZEwaeRD8
- SiXAtDdTlkyBpVEFU15w2joJmnrKc8zRd1xqKR6LMCbSSw4qyA8xJ0Ol/e61UwEDngfnSZWjhmx
- bMBRwD6kutA3TKJHNDkPP/dlVHYSQb0fjDy7LYAtWZJ1lUcq6OKJw9I+dnddZ9/gMJTsDH4uUNC
- CWqEj3Qb9R//WAyIUFw/TNCVUkt7HN3Kkh7EJkkme0mzehMEPa60vxxFe4ekJzmA/wO3f33SyZf
- MbVSdp9OCc98CZJ+Nm9IzdLEfGwswDhVN9gFb1mKMbOstHmckyMD8kO8vld1RsG9ujGNrliNGHh
- tnYSPFysDINyS0gfUKxR7e8aBDsRwg1xRy2r205+VQy8/8OgymnHBFhB7U5evDv0ZWcKYL1b0FC
- CV94ewJwEiUi9JvZoGyGf3gL+vxC2r8Brc77x/7Ob/j9VU6KY1/yfhOOn9BThmAg7Yn4p+DkKTc
- Dy+m/qc2WwqQ9/VZFr5JM2RSKZENKIpzQDeSDmngIFk+0GzrE9oYJzoxKAMIdCT6kV/n6r5fCfD
- cVYnqMvcb0Yo0WYqnzNdk8WEWkgG8=
-X-Received: by 2002:a05:600c:1989:b0:4a1:88df:8a2a with SMTP id
- 5b1f17b1804b1-4b55dbb09dfmr45001955e9.13.1793881604714; 
- Thu, 05 Nov 2026 04:26:44 -0800 (PST)
-Received: from satan.lan ([94.66.192.55]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b4532916f2sm140636435e9.5.2026.11.05.04.26.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 04:26:44 -0800 (PST)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 05 Nov 2026 14:26:40 +0200
-Subject: [PATCH] gicv2: do not hardcode minimum binary point
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xOwny-0000HZ-DQ
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 07:42:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xOwnv-0004Z3-Rk
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 07:42:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793882574;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MHwGtuZGSoSmZ44KiRLicjxswY71YMk8SxPY/4EOfwE=;
+ b=YosxI4uYPDMK2i6ekWsXcRY5XUvoCVJHlxZq56VjjzZPXxh4srgiz72WqPlvqbwfpenmiS
+ VPxTlkU54ir8rdkT9RDn+aTRaqRskAbdoHJrw+r/URsfH+Gu5hDsCIhYgHO09AnuPsvxwm
+ sAxm1QABckl7m9UbF+PB7JOMmxwd53k=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-V12lDsDtPFG-llF3X8AsuA-1; Thu,
+ 05 Nov 2026 07:42:51 -0500
+X-MC-Unique: V12lDsDtPFG-llF3X8AsuA-1
+X-Mimecast-MFC-AGG-ID: V12lDsDtPFG-llF3X8AsuA_1793882568
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BDC61195607C; Thu,  5 Nov 2026 12:42:47 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BA2EF1848D40; Thu,  5 Nov 2026 12:42:42 +0000 (UTC)
+Date: Thu, 5 Nov 2026 12:42:39 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Yonggang Luo <luoyonggang@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Song Gao <17746591750@163.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ David Hildenbrand <david@kernel.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Fam Zheng <fam@euphon.net>, Max Filippov <jcmvbkbc@gmail.com>,
+ qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v2 06/12] target/arm: register separate max-v8 CPU types
+ for arm and aarch64
+Message-ID: <aux5vwTnbV3cXcFX@redhat.com>
+References: <20261031164009.2048-1-luoyonggang@gmail.com>
+ <20261031164009.2048-7-luoyonggang@gmail.com>
+ <auxgsFyzv-5UiyNk@redhat.com>
+ <CAE2XoE9J++-BHL5BDx4_jxuto+xwVmvFS3F-hE9gLbgfUmaFdA@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261105-gic_read_bpr_from_property-v1-1-7e7392bfd321@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAAB27GoC/x3MQQqAIBAAwK/EnhPUKKKvRIjlWnsoZY0opL8nH
- ecyGRIyYYKhysB4UaJwFKi6gmWzx4qCXDFoqTulZCtWWgyjdWaObDyH3UQOEfl8hOx7bb2bO+k
- bKEFk9HT/+Ti97wfL1HpUbAAAAA==
-X-Change-ID: 20261105-gic_read_bpr_from_property-0882afdb60f3
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-arm@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7011;
- i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=p/lVaAyK4vxognNhSMF5UmN/5lgKqSrWqKx1ydWd3yM=;
- b=owEBbQKS/ZANAwAKAXcpx3B/fgnQAcsmYgBq7HYD8z9TZC7Ae8xkGlS9NC1qSjKEo3L6iGs72
- KPuXK3oGJOJAjMEAAEKAB0WIQTMXBtORKBW84dwHRB3Kcdwf34J0AUCaux2AwAKCRB3Kcdwf34J
- 0MCgD/9mgeiCfVcqhgqOiUsADnA6/UzSY3Gs1LTd5gVqydhUy3mcInDjVCDXO2vqA7wge8Ikz8L
- C6A+bN+5mwXVKRvOftU/IYmn9q3ggnZruibVTRMiCMvu6tALDfzW51TA5mohsjIHDf5IxGSj/NS
- wVgyPJ0NeCp9wgMRQIw/u5sfluDkLDd9b5nFrSfa8GWTGzPrV1vdc0Oso6Agb+DCoPbMUuR+VbK
- 2T+NZZtqm1tfTn9QWhGKnadxkGFB0AC9RWy4d0j2rGiM/E5qqp7kPMokADhRWJVecwW733PfG/q
- 0wf4hK3tFMMuDbqNCHhGXfDeEtDW3QwI1/uiLUh81P30WoWSn+ogqJ/ek7/G5BDS25w3TBWd9k5
- OkxKVzUzVvjIOE1mOu7WyjJlm/kJoS7WqOwabR8RUIPgSTsps960wAnhEtOCP6jomBJjN3PgwBo
- evyDyTq+WSWvB4li60NTvtbgYahDaKt7TJO+gUzJn8lid6IlnQ2C/RrcxhLIviyoQykepBXmV7e
- lZKi9hohX2dfZeq53/RwjOzOaWsjL7Udda4xXNTfgHtRSDuxo5GkdiUNyGm07qOhccBxHz50/pZ
- JNGR4b7NuES1/8jPRXT83dzbD8XH7l58UUJm3ury8m+SHi2FqnXrZ2ulkZZbjfabFZhn8Nnb7qq
- 7ftzDHUFUBD9H/A==
-X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
- fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE2XoE9J++-BHL5BDx4_jxuto+xwVmvFS3F-hE9gLbgfUmaFdA@mail.gmail.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,185 +99,138 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The number of priority bits is implementation defined, and indeed
-machines such as a9mpcore and arm11mpcore define it in the
-num-priority-bits property. However we still hardcoded GIC_MIN_BPR.
+On Thu, Nov 05, 2026 at 07:14:35PM +0800, Yonggang Luo wrote:
+> On Thu, Nov 5, 2026 at 6:55 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Sun, Nov 01, 2026 at 12:40:01AM +0800, Yonggang Luo wrote:
+> > > max-v8 was one TypeInfo whose instance initializer was chosen from the
+> > > selected target at registration. Register both initializers, and let
+> > > target_arm() and target_aarch64() select which type is available.
+> > >
+> > > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> > > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> > > ---
+> > >  target/arm/cpu.c            |  1 +
+> > >  target/arm/cpu.h            |  1 +
+> > >  target/arm/tcg/cpu-max-v8.c | 16 ++++++++++++----
+> > >  3 files changed, 14 insertions(+), 4 deletions(-)
+> > >
+> > > diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> > > index 510fc9eeb3b..6eb55242980 100644
+> > > --- a/target/arm/cpu.c
+> > > +++ b/target/arm/cpu.c
+> > > @@ -2695,6 +2695,7 @@ void arm_cpu_register(const ARMCPUInfo *info)
+> > >          .instance_init = arm_cpu_instance_init,
+> > >          .class_init = info->class_init ?: cpu_register_class_init,
+> > >          .class_data = info,
+> > > +        .is_available = info->is_available,
+> > >      };
+> > >
+> > >      type_info.name = g_strdup_printf("%s-" TYPE_ARM_CPU, info->name);
+> > > diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> > > index add993ef101..3240a8633ee 100644
+> > > --- a/target/arm/cpu.h
+> > > +++ b/target/arm/cpu.h
+> > > @@ -1203,6 +1203,7 @@ typedef struct ARMCPUInfo {
+> > >      const char *deprecation_note;
+> > >      void (*initfn)(Object *obj);
+> > >      void (*class_init)(ObjectClass *oc, const void *data);
+> > > +    bool (*is_available)(void);
+> > >  } ARMCPUInfo;
+> > >
+> > >  /**
+> > > diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v8.c
+> > > index 65f851f2006..e819d07e6ce 100644
+> > > --- a/target/arm/tcg/cpu-max-v8.c
+> > > +++ b/target/arm/tcg/cpu-max-v8.c
+> > > @@ -121,10 +121,18 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
+> > >
+> > >  static void cpu_max_v8_register_type(void)
+> > >  {
+> > > -    static const ARMCPUInfo max_v8[2] = {
+> > > -        { .name = "max-v8", .initfn = aarch32_max_v8_tcg_initfn },
+> > > -        { .name = "max-v8", .initfn = aarch64_max_v8_tcg_initfn },
+> > > +    static const ARMCPUInfo max_v8_aarch32 = {
+> > > +        .name = "max-v8",
+> > > +        .initfn = aarch32_max_v8_tcg_initfn,
+> > > +        .is_available = target_arm,
+> > >      };
+> > > -    arm_cpu_register(&max_v8[target_aarch64()]);
+> > > +    static const ARMCPUInfo max_v8_aarch64 = {
+> > > +        .name = "max-v8",
+> > > +        .initfn = aarch64_max_v8_tcg_initfn,
+> > > +        .is_available = target_aarch64,
+> > > +    };
+> > > +
+> > > +    arm_cpu_register(&max_v8_aarch32);
+> > > +    arm_cpu_register(&max_v8_aarch64);
+> > >  }
+> > >  type_init(cpu_max_v8_register_type)
+> >
+> > Conceptually these are two separate CPUs one 32-bit featureset
+> > and one 64-bit featureset, but both given the same name. The
+> > current code registers them only in the respective arm and aarch64
+> > target binaries, but this CPU is an oddity overall.
+> 
+> This is the one I did before
+> https://lore.kernel.org/qemu-devel/20261013195606.152-1-luoyonggang@gmail.com/
+>
+> target/arm: defer max-v8 initializer selection until CPU creation
+> but rejected, and I think it's fine.
 
-This commit replaces the GIC_MIN_BPR and GIC_MIN_ABPR defs with macros
-that read the property.
+So that essentially matches the historical semantics where one
+CPU class magically changes its behaviour based on what target
+is running.  So in that sense, it works, and is no worse than
+the semantics we've had for 'max' models forever.
 
-The calculation is based on "Table 4-47 Active Priorities register
-implementation" in the GICv2 spec (page 4-150 of ARM IHI 0048B.b
-ID072613):
+Splitting into 2 distinct types is worthwhile if we want to
+make it possible for the aarch64 emulator to support a runtime
+choice of both 32-bit and 64-bit "max" models.
 
-+---------------+---------------+---------------+
-|               |               |    Maximum    |
-| Minimum value | Minimum value |    number of  |
-|   of Secure   | of Non-secure |     group     |
-|   GICC_BPR    |   GICC_BPR    | priority bits |
-+===============+===============+===============+
-|             3 |             4 |             4 |
-|             2 |             3 |             5 |
-|             1 |             2 |             6 |
-|             0 |             1 |             7 |
-+---------------+---------------+---------------+
+This patch doesn't allow that though, as it is creating two
+classes with the same name and filtering which is registered.
+If we don't intend to allow 64-bit target to ever use a 32-bit
+'max' CPU, then your original patch is better IMHO.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4375
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- hw/intc/arm_gic.c                | 14 +++++++-------
- hw/intc/arm_gic_common.c         |  4 ++--
- include/hw/intc/arm_gic.h        |  5 -----
- include/hw/intc/arm_gic_common.h | 20 ++++++++++++++++++--
- 4 files changed, 27 insertions(+), 16 deletions(-)
+> > More generally the aarch64 emulator includes all the 32-bit CPUs
+> > that the arm emulator includes, and just adds extra 64-bit CPUs.
+> > IOW, excluding the 32-bit max-v8 CPU is a special case - if it
+> > were not for the clashing name, it would be included like all the
+> > other 32-bit CPUs.
+> >
+> > Thus rather than using is_available to continue to exclude it,
+> > we must instead resolve the naming problem, such that both
+> > models can be included concurrently.
+> 
+> I have already implemented the TypeBucket over targets/arch_mask that works
+> properly. That same QOM name will have multiple TypeImpl.
 
-diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
-index 4d4b79e6f3408c43eae19c222edc75e41987b7ea..79a68a8648467c1f18dab69cf691f8e44ec2f011 100644
---- a/hw/intc/arm_gic.c
-+++ b/hw/intc/arm_gic.c
-@@ -479,7 +479,7 @@ static void gic_activate_irq(GICState *s, int cpu, int irq)
-      * and update the running priority.
-      */
-     int prio = gic_get_group_priority(s, cpu, irq);
--    int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : GIC_MIN_BPR;
-+    int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : gic_min_bpr(s);
-     int preemption_level = prio >> (min_bpr + 1);
-     int regno = preemption_level / 32;
-     int bitno = preemption_level % 32;
-@@ -521,7 +521,7 @@ static int gic_get_prio_from_apr_bits(GICState *s, int cpu)
-         if (!apr) {
-             continue;
-         }
--        return (i * 32 + ctz32(apr)) << (GIC_MIN_BPR + 1);
-+        return (i * 32 + ctz32(apr)) << (gic_min_bpr(s) + 1);
-     }
-     return 0x100;
- }
-@@ -1561,7 +1561,7 @@ static inline uint32_t gic_apr_ns_view(GICState *s, int cpu, int regno)
-     /* Return the Nonsecure view of GICC_APR<regno>. This is the
-      * second half of GICC_NSAPR.
-      */
--    switch (GIC_MIN_BPR) {
-+    switch (gic_min_bpr(s)) {
-     case 0:
-         if (regno < 2) {
-             return s->nsapr[regno + 2][cpu];
-@@ -1592,7 +1592,7 @@ static inline void gic_apr_write_ns_view(GICState *s, int cpu, int regno,
-                                          uint32_t value)
- {
-     /* Write the Nonsecure view of GICC_APR<regno>. */
--    switch (GIC_MIN_BPR) {
-+    switch (gic_min_bpr(s)) {
-     case 0:
-         if (regno < 2) {
-             s->nsapr[regno + 2][cpu] = value;
-@@ -1731,10 +1731,10 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
-                 /* WI when CBPR is 1 */
-                 return MEMTX_OK;
-             } else {
--                s->abpr[cpu] = MAX(value & 0x7, GIC_MIN_ABPR);
-+                s->abpr[cpu] = MAX(value & 0x7, gic_min_abpr(s));
-             }
-         } else {
--            int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : GIC_MIN_BPR;
-+            int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : gic_min_bpr(s);
-             s->bpr[cpu] = MAX(value & 0x7, min_bpr);
-         }
-         break;
-@@ -1746,7 +1746,7 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
-             /* unimplemented, or NS access: RAZ/WI */
-             return MEMTX_OK;
-         } else {
--            s->abpr[cpu] = MAX(value & 0x7, GIC_MIN_ABPR);
-+            s->abpr[cpu] = MAX(value & 0x7, gic_min_abpr(s));
-         }
-         break;
-     case 0xd0: case 0xd4: case 0xd8: case 0xdc:
-diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
-index 304d89cf56219bf76eeeb24e55dbfe60be23ba43..7ffd94561202f49d767315893085df57a4f984d8 100644
---- a/hw/intc/arm_gic_common.c
-+++ b/hw/intc/arm_gic_common.c
-@@ -249,8 +249,8 @@ static inline void arm_gic_common_reset_irq_state(GICState *s, int cidx,
-         s->current_pending[i] = 1023;
-         s->running_priority[i] = 0x100;
-         s->cpu_ctlr[i] = 0;
--        s->bpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_BPR : GIC_MIN_BPR;
--        s->abpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_ABPR : GIC_MIN_ABPR;
-+        s->bpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_BPR : gic_min_bpr(s);
-+        s->abpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_ABPR : gic_min_abpr(s);
- 
-         if (!gic_is_vcpu(i)) {
-             for (j = 0; j < GIC_INTERNAL; j++) {
-diff --git a/include/hw/intc/arm_gic.h b/include/hw/intc/arm_gic.h
-index be923f7ed8861620d17fbf3d8569c42ae7c95487..e090bd0b283297d0863e13ef07e5738a549ea59d 100644
---- a/include/hw/intc/arm_gic.h
-+++ b/include/hw/intc/arm_gic.h
-@@ -70,11 +70,6 @@
- #include "arm_gic_common.h"
- #include "qom/object.h"
- 
--/* Number of SGI target-list bits */
--#define GIC_TARGETLIST_BITS 8
--#define GIC_MAX_PRIORITY_BITS 8
--#define GIC_MIN_PRIORITY_BITS 4
--
- #define TYPE_ARM_GIC "arm_gic"
- typedef struct ARMGICClass ARMGICClass;
- /* This is reusing the GICState typedef from TYPE_ARM_GIC_COMMON */
-diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
-index b169394e6ca28d787d70e9c103ebbe5b12202ecc..c89f8a3292dff5460e2baa49c9a55de6866fc33a 100644
---- a/include/hw/intc/arm_gic_common.h
-+++ b/include/hw/intc/arm_gic_common.h
-@@ -37,8 +37,10 @@
- #define MAX_NR_GROUP_PRIO 128
- #define GIC_NR_APRS (MAX_NR_GROUP_PRIO / 32)
- 
--#define GIC_MIN_BPR 0
--#define GIC_MIN_ABPR (GIC_MIN_BPR + 1)
-+/* Number of SGI target-list bits */
-+#define GIC_TARGETLIST_BITS 8
-+#define GIC_MAX_PRIORITY_BITS 8
-+#define GIC_MIN_PRIORITY_BITS 4
- 
- /* Architectural maximum number of list registers in the virtual interface */
- #define GIC_MAX_LR 64
-@@ -151,6 +153,20 @@ struct GICState {
- };
- typedef struct GICState GICState;
- 
-+
-+static inline uint32_t gic_min_bpr(GICState *s)
-+{
-+    uint32_t num_preemption_bits = s->n_prio_bits == 8 ? 7 : s->n_prio_bits;
-+    assert(!(s->n_prio_bits > GIC_MAX_PRIORITY_BITS
-+             || s->n_prio_bits < GIC_MIN_PRIORITY_BITS));
-+    return 7 - num_preemption_bits;
-+}
-+
-+static inline uint32_t gic_min_abpr(GICState *s)
-+{
-+    return gic_min_bpr(s) + 1;
-+}
-+
- #define TYPE_ARM_GIC_COMMON "arm_gic_common"
- typedef struct ARMGICCommonClass ARMGICCommonClass;
- DECLARE_OBJ_CHECKERS(GICState, ARMGICCommonClass,
+I'm not sure what you mean by TypeBucket, but my general thought is that
+at the QOM class/type naming level everything must always be unique,
+such that we have a single object modelk across QEMU.
 
----
-base-commit: f29ccc287a6cfdd51d3a4fd17fbe9af3310a0ac5
-change-id: 20261105-gic_read_bpr_from_property-0882afdb60f3
+Any ambiguitity & its resolution (if needed) should live outside core
+QOM typework, such as with aliases in machines/CPUs.
 
-Best regards,
+If we have a common pattern for aliases, perhaps we could create a
+standard QOM Interface for resolving aliases.
+
+
+With regards,
+Daniel
 -- 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
