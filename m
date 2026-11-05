@@ -1,66 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AD4606A32E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAED3606A332
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOtol-0005cB-Sh; Thu, 05 Nov 2026 04:31:35 -0500
+	id 1xOtp5-0005y9-M0; Thu, 05 Nov 2026 04:31:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtog-0005Wa-VD
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:31:33 -0500
-Received: from mail-pl1-f179.google.com ([209.85.214.179])
+ id 1xOtoo-0005lQ-Vu
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:31:39 -0500
+Received: from mail-pj1-f50.google.com ([209.85.216.50])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtof-0007Pn-8v
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:31:30 -0500
-Received: by mail-pl1-f179.google.com with SMTP id
- d9443c01a7336-2e8f2c3ad6bso9292895ad.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:31:28 -0800 (PST)
+ id 1xOton-0007QH-8g
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:31:38 -0500
+Received: by mail-pj1-f50.google.com with SMTP id
+ 98e67ed59e1d1-3b0bbdeae06so214455a91.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:31:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793871088; x=1794475888;
+ d=1e100.net; s=20260707; t=1793871096; x=1794475896;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=TAKWq5OaS0dmrW3Pgr9SxuBdpwdzx7tYDqztdgweZoA=;
- b=v4qZpVGGePWQz2GgVM/UIN6qiNRESXSoUOn6k5Y6lp1tYXg4iK+K2SNwrAWYLAPnH1
- OgYXCkqMq0pKHImetOy1Sw0FFcbOFHfqcGFpfNr53trotLRXAZ78MJJ8yDGSX0rNE4Or
- 9P6pYXdARhDrxecP9H8OY7vxMXCY9mMQI+EKo5fMuH2WMu7MceCP0IVqDk6K+xmK7+wP
- XJBjj/GOaL9O7rzViE04SnykWMq+IOhRs7uqiXYDyC0AOhbfbI6HSIb9vJgxCUc0nr8l
- y6WRSL8QkHBJPVt/I4TbeU7kZzOE6mbLvYOwxEVDrLC1npEQ3rIi6pncF9iwAHT1h9yP
- XghA==
-X-Gm-Message-State: APuU4Z8bbRZW64V3+WJM7sY2NWHJoJ2dUwKVJ/BS2utLHq6OvUj6T7C7
- winf9Of3rCEEZrqjK7XNc1LpXw8bbFtWiapG39j/ifIMLG78tH4StHD6uUCh0tBHPzY=
-X-Gm-Gg: AYBFou1ag/NiqJ/eSp8HfCQ/r1INDZoSyvDCnVJJPMau0G+xsBqkKDX+awqAhyahqCA
- KrYV6Fl9My4Cg0DProfdQForIO3C1cAtnXQuXK9OBQMd8INbsrY2j1OQSCUGcM2HqxuGGfVDhh7
- NexCh1cmlzvciyIklJqss6Dp11UabHuCEG4fl7QcAsEHJOKlKbkagyNbCGwWttt4Cy5+SI2efN5
- 9tI2nkbnr0E4ycMl2jdZqcbm4g+jGh+Ksz864shZqgea/BlatbNQhAMZ/MkMW9FIomyu7ZiHbl4
- C6R7IAEMDeSOFOjkPgkjt6ACenNh0tqoZ4LzWKxj/WKfrQ3XanCwksQbxpnXV9LTacvaS2q+EQD
- U/gwmPq8+3qc56zaDckcaA4vJQfFIE/4evQbGaeYbvY6EgIYLvVwWDuaAVAXdO7YlsLrOVjDaL1
- 6FZFGjFI505DwerXxZkkr/8dvcQwH4dM3V4CxTiFdHyulYUrUTmLqHHtWhnLV5LIT5Uet1UMoXI
- ScFIylEE++dkFNWaWf3b7umpggfHDHLhW46Vxz39h76EIakwJ+vLCT/SEbNQAw398CH2K2WS5Yx
- OW95IvxNgcuQrLQwuD4b2tyOOGh6O5iA6pfhNnJ8o38gHiUqrdXwFOuKNYbMd8WomQSdV2qQN8m
- 2
-X-Received: by 2002:a17:903:948:b0:2e9:9522:ed3a with SMTP id
- d9443c01a7336-2eb364b8b8dmr178185975ad.22.1793871087773; 
- Thu, 05 Nov 2026 01:31:27 -0800 (PST)
+ bh=6k06hv6TlsIcMhbYVsrL8kcfuMSG0eFTZp4YScCwOos=;
+ b=XiR9IBuWWfY7jdbJHYl9iyVHN9TN6gdiDWy4d5tVpMUIzp6XVbk9xeviu96SbJYKA3
+ hC0vyK01+uiahGmqKFlHKbWQCerzs/agYekw/zgrQ7YDmLjEHFsOGGUgWevL7V20fkYI
+ q3Ls1eelSNmtujnBSafEsKRhVmLaCyzGoTyDtQheq9BqLCmOzRm4g3nJJf/ZzDznf9zd
+ DXnuViO+nd3nEwu+jQjl0Y9FqW6AWr+XGjZMeN9Avd3FFQWeCSrwNDghMzLahDgSoZM2
+ WvJWG3doyYlM1QifWdeIpzsjjuvQl/4HMSQTTdcevolv96JQge5Zdbgkuk+7hKDFcxLi
+ +AwA==
+X-Gm-Message-State: APuU4Z+xcxKtVFaeoLtluiZermxA9PbBuuEr4YqhkcY5hkBl66JWlUY7
+ s62Nr45gFIaBs6Tt8oCJPW3BL5jhxrUJZU170LLfde5US2iW54S80VFAIs1JlQ==
+X-Gm-Gg: AYBFou2luTZHd1wMcoC70u7qyf/knFYpvxqHy+G9ZZF95YxgBI2V6jnp6m56QhkQ6dk
+ JSnEakvLVaTrpw6ocaXld3d83zINI0fEmwF2ur+WbYTGeaai+wo9TH+++yU7Ectwzu+SYf326Zx
+ Y+XkHWTDAyXuFpkoP2rCFT6vwu7fxOHEXqyTtLyEwl8xWgYLebzmKJwm/W/9HHAEiM/lj9qA8ut
+ nBTN+RBGlQlPngrUMTSzF/+4Ar9UUs6C90oS9I+T0vFWp/HIZy9NhdeczPBsxxdEDPOTmagzPPT
+ Qp1FXmlgLy4pmb1m+//JJeWtQ8qVEg2awRX+zmjqt6EaTGxvV3bt00gXcTpllSzDNRjVTM/+eHw
+ hSrf/ia41eA2oPCznkcuDogbAml+J9dwYuLPdN7CsZkvAAF4EJmUtTHiJtdx1oya8ruSKUgqHRW
+ wEpa7rjsdoAnPFxgELV2I3efUZon2edplVkutzD3b4Cg1SYU7PZZ2YZdnYF5TBz/BOnZoM9XtaG
+ 1lP00VZjgz0u462NV/vjNm+39Fmp5RSJThcrpIP5tVfT09/hD2Q4wLPIHxZwoECChnVY3nyyaD4
+ YBpI5A0auSO7mY1LJLKo4ojmqunhPUt9zpP46JnZlmynAVr9aTRS7JLBtzoTH9O7JZbf1TbTHwP
+ /
+X-Received: by 2002:a17:90b:3b51:b0:3ac:d19e:85f1 with SMTP id
+ 98e67ed59e1d1-3ae897dc967mr15460486a91.53.1793871095779; 
+ Thu, 05 Nov 2026 01:31:35 -0800 (PST)
 Received: from localhost (118-163-122-149.hinet-ip.hinet.net.
  [118.163.122.149]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ed08fe55c8sm15655765ad.14.2026.11.05.01.31.27
+ 98e67ed59e1d1-3b0b32b6507sm3379586a91.16.2026.11.05.01.31.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 01:31:27 -0800 (PST)
-Date: Thu, 05 Nov 2026 17:25:55 +0800
-Subject: [PATCH 3/4] tests/qtest: tmp105: cover the TMP1075 config register
- width
+ Thu, 05 Nov 2026 01:31:35 -0800 (PST)
+Date: Thu, 05 Nov 2026 17:25:56 +0800
+Subject: [PATCH 4/4] tests/qtest: tmp105: cover the Config low byte across
+ a migration
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261105-sensor-tmp1075-v1-3-d2ee5da0b880@free.fr>
+Message-Id: <20261105-sensor-tmp1075-v1-4-d2ee5da0b880@free.fr>
 References: <20261105-sensor-tmp1075-v1-0-d2ee5da0b880@free.fr>
 In-Reply-To: <20261105-sensor-tmp1075-v1-0-d2ee5da0b880@free.fr>
 To: qemu-devel@nongnu.org
@@ -69,15 +69,15 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, eblot@meta.com,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793870754; l=2217;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793870754; l=2836;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=eKNsPNpZHCrr7lt5jUn9ATmHMoMqISDae/0HeUQWVVY=;
- b=dR8imfEXmtt8+y59f3Y23lAukuaxECAb0Vutfo+CUybp6R5jOAk14AX2vDMIHCG8h74Mtahw1
- U4Puadoe6W+AdnX21pSP55MmknXkmqYYo2PeUpKx2MJE6vz47X4/8wi
+ bh=/7gRDZ/TdLiUJ6z39Z25ycHPu6U7M4Ou+l3WbL5867o=;
+ b=IETrN1sTGvhuYagfjsUO99jc1TbJd+8JfuCPkKmTXcc3op7xubi7uccNuaMM46tEdgUDMW3yh
+ NpIWMdXhPICBF1XyUq3AC0ugB8BScf29d03rrRcQoSmSXr5UjCHL3mM
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.214.179; envelope-from=eblot.ml@gmail.com;
- helo=mail-pl1-f179.google.com
+Received-SPF: pass client-ip=209.85.216.50; envelope-from=eblot.ml@gmail.com;
+ helo=mail-pj1-f50.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -105,58 +105,86 @@ X-Spam-Status: No, score=-17.0 required=3.0 tests=BAYES_00,INCLUDES_CR_TRAILER,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Nothing pinned the 16-bit Config register: neither its single-byte
-compatibility nor the low byte, which drives nothing but keeps what it
-is given.
+The byte rides in an optional subsection, so a dropped field or a wrong
+needed() gate would have gone unnoticed.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/qtest/tmp105-test.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ tests/qtest/tmp105-test.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
 diff --git a/tests/qtest/tmp105-test.c b/tests/qtest/tmp105-test.c
-index 426c4f9ae7..b21deb1128 100644
+index b21deb1128..1bb7dcc265 100644
 --- a/tests/qtest/tmp105-test.c
 +++ b/tests/qtest/tmp105-test.c
-@@ -441,6 +441,33 @@ static void test_tmp1075_device_id(void *obj, void *data,
-                     TMP1075_DEVICE_ID);
+@@ -9,6 +9,9 @@
+ 
+ #include "qemu/osdep.h"
+ 
++#include <glib/gstdio.h>
++
++#include "libqtest.h"
+ #include "libqtest-single.h"
+ #include "libqos/qgraph.h"
+ #include "libqos/i2c.h"
+@@ -468,6 +471,52 @@ static void test_tmp1075_config_width(void *obj, void *data,
+     g_assert_cmphex(i2c_get8(i2cdev, TMP105_REG_CONFIG), ==, 0x00);
  }
  
-+/*
-+ * The Config register is 16 bits wide but stays compatible with 8-bit access:
-+ * the control bits are the upper byte, the lower byte drives nothing.
-+ */
-+static void test_tmp1075_config_width(void *obj, void *data,
-+                                      QGuestAllocator *alloc)
++/* The low byte of the Config register rides in an optional subsection. */
++static void test_tmp1075_migration(void *obj, void *data,
++                                   QGuestAllocator *alloc)
 +{
 +    QI2CDevice *i2cdev = (QI2CDevice *)obj;
++    g_autofree char *tmpfs = NULL;
++    g_autofree char *mig_path = NULL;
++    g_autofree char *uri = NULL;
++    GString *dest_cmdline;
++    GError *err = NULL;
++    QTestState *from, *to;
++    QDict *rsp;
 +
-+    /* A single-byte write reaches the control byte and leaves the rest. */
-+    i2c_set8(i2cdev, TMP105_REG_CONFIG, 0x60);
-+    g_assert_cmphex(i2c_get8(i2cdev, TMP105_REG_CONFIG), ==, 0x60);
-+    g_assert_cmphex(i2c_get16(i2cdev, TMP105_REG_CONFIG), ==, 0x60ff);
++    tmpfs = g_dir_make_tmp("tmp1075-test-XXXXXX", &err);
++    g_assert_no_error(err);
++    g_assert(tmpfs);
 +
-+    /* A word write keeps both bytes. */
-+    i2c_set16(i2cdev, TMP105_REG_CONFIG, 0x6200);
-+    g_assert_cmphex(i2c_get16(i2cdev, TMP105_REG_CONFIG), ==, 0x6200);
++    mig_path = g_strdup_printf("%s/socket.mig", tmpfs);
++    uri = g_strdup_printf("unix:%s", mig_path);
 +
-+    /* The low byte survives a single-byte write to the control byte. */
-+    i2c_set8(i2cdev, TMP105_REG_CONFIG, 0x60);
-+    g_assert_cmphex(i2c_get16(i2cdev, TMP105_REG_CONFIG), ==, 0x6000);
++    /* A low byte away from its reset value, so the subsection is emitted. */
++    i2c_set16(i2cdev, TMP105_REG_CONFIG, 0x605a);
++    g_assert_cmphex(i2c_get16(i2cdev, TMP105_REG_CONFIG), ==, 0x605a);
 +
-+    /* The one-shot bit always reads back as zero. */
-+    i2c_set8(i2cdev, TMP105_REG_CONFIG, TMP105_CONFIG_OS);
-+    g_assert_cmphex(i2c_get8(i2cdev, TMP105_REG_CONFIG), ==, 0x00);
++    dest_cmdline = g_string_new(qos_get_current_command_line());
++    g_string_append_printf(dest_cmdline, " -incoming %s", uri);
++    to = qtest_init(dest_cmdline->str);
++
++    rsp = qmp("{ 'execute': 'migrate', 'arguments': { 'uri': %s } }", uri);
++    g_assert(qdict_haskey(rsp, "return"));
++    qobject_unref(rsp);
++
++    qmp_eventwait("STOP");
++    qtest_qmp_eventwait(to, "RESUME");
++
++    from = i2cdev->bus->qts;
++    i2cdev->bus->qts = to;
++    g_assert_cmphex(i2c_get16(i2cdev, TMP105_REG_CONFIG), ==, 0x605a);
++    i2cdev->bus->qts = from;
++
++    qtest_quit(to);
++    g_unlink(mig_path);
++    g_rmdir(tmpfs);
++    g_string_free(dest_cmdline, true);
 +}
 +
  static void tmp105_register_nodes(void)
  {
      QOSGraphEdgeOptions opts = {
-@@ -508,5 +535,6 @@ static void tmp105_register_nodes(void)
-     qos_node_consumes("tmp1075", "i2c-bus", &tmp1075_opts);
+@@ -536,5 +585,6 @@ static void tmp105_register_nodes(void)
  
      qos_add_test("device-id", "tmp1075", test_tmp1075_device_id, NULL);
-+    qos_add_test("config-width", "tmp1075", test_tmp1075_config_width, NULL);
+     qos_add_test("config-width", "tmp1075", test_tmp1075_config_width, NULL);
++    qos_add_test("migration", "tmp1075", test_tmp1075_migration, NULL);
  }
  libqos_init(tmp105_register_nodes);
 
