@@ -1,105 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A63606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 18:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE3F606A32C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 19:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=RAXFu5AF
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nUGVX3Bj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP2bF-00030z-34; Thu, 05 Nov 2026 13:54:17 -0500
+	id 1xP2km-0004qQ-VO; Thu, 05 Nov 2026 14:04:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xP2aw-0002zo-GJ
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 13:53:57 -0500
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xP2kg-0004qA-ML
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:04:00 -0500
+Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xP2at-0002nM-Dk
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 13:53:54 -0500
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-8b0cf2c0785so20066707b3.3
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 10:53:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793904829; cv=none;
- d=google.com; s=arc-20260327;
- b=CpOnEs4uODFtMCqGS7bjKqDRpTjDdjqbh00vNjKWERQ46UOa/Q370nIssGEoh3LBw6
- 7apZetPNkuZKIG0/BvBq7+RlK1Mk90pkuSNcc+lOu+UgbRVin3flgt+BRSw2a1W79Yxy
- bovKYNqe6936bzgP1YzHUEzfOAO0hs3hG9PlpuEw0T15FuM+KXQ2ntdLOK0Bgo0FNc3u
- PjVv8bFyJPUv/uWM4U6y4kzNbGG/+F3tgfjDHRI5tVLzI7qf/NR5pbd1cFntMmM8odE8
- c+vMPPGZ1jqGoXEELJyY2QkRp2I/e0KCvzZoYG34VGO/Ib8TNrN+VKjORJdPmCYNnQr8
- Dugg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=YW6xkjCNkShheMexpg6Mgbg4Mj+93DQrHPO+NjitZoU=;
- fh=VRcZPmT6Amq8CJg6YQ9jtV39fafV0LyayVlqP5p8az0=;
- b=YZLAItsPlQkdkgQpGRqRVDgBN6U+bDE0Fmbk67YXn8pq+lMTkEG5/30PyqCDoERa+g
- fdcMIZII9IZd0HnwK4NxFEaaLIbMTctpTMFe2J81wKp2N7X25yA6O5lLB2EIqa9xTvMA
- Kt30qkPZs9ui6Vi0z2HhSFm1b0S5r2aomTx74AmuqX2mBvVXg5ewiAzVSbsSsQ5ZLlWK
- ZmtLYMI/VKjJU/WUAzhJW6fbbNR0SLt4jVgInsO+bTdh7mG053xstmfWW4uOC0ZFXi6M
- 9KIthWqqIgghnYurclSA3oMJ3SLOhLd1SGJQ9vw1NgI8A7J9cYftUtkOOc6+kCUOIETZ
- 8cww==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xP2ke-0003kI-Gg
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 14:03:57 -0500
+Received: by mail-dy1-x132c.google.com with SMTP id
+ 5a478bee46e88-36cad25b8b0so3327305eec.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 11:03:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793904829; x=1794509629; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=YW6xkjCNkShheMexpg6Mgbg4Mj+93DQrHPO+NjitZoU=;
- b=RAXFu5AFjgDQHNHeY+kycT7wSV2dP0Cl1gcwzZKKa0QuvZiARuVsabITVgkVcEG2dY
- C87QgdbrrjI79Pi/8HLWb1yEv4pVt+Gd8r4JNaCa3aqjokwJkR2/S0hMj0FW4HdxcPey
- nZ6obmkZnF/fPY30W43QCHDZfb/CDQUv9fhfkGojd8ayac35st/5lmC9Doc065F8UCmg
- hsljMcGzce74QUV2S3Do6257IlEjlft8FdJdvgvY4d9vRf9FrxbTabXRX+PkJpxGPe0y
- wAiwzFRiia8dAO0NTurPPR9/zDoEYxiFYza/yiytlEEARn5B4mni1Yi7gqmylCzCH44m
- DQsg==
+ d=gmail.com; s=20260707; t=1793905435; x=1794510235; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=rvXH/mY0k5x15Ps4VL487FrGx/knJKjiaXJT4zsxitk=;
+ b=nUGVX3BjlekOVaDVMjR9nfIvHafT3DAj0kYSmkafg4/07mr2o5V4n9UlACXKLK5ItT
+ 3pVGhOo4O/2sCsP1WUwJBMi0SrtNPSV17DVxQOnXcK8qX5N6HWvbXDLOMNr6SEvCfFwl
+ zKYvkUCTMcNnc2qIfqBaGa+pA/wL7bAj9IT54UyviSkI3EWTqEujp5qdz7Xx88jd9yJ4
+ KUxZ+6dHWFmUYhbGPd8ubKckd8IWQCezfMOeorLdpI34P0QV9MUa3HN08wL3lrORPytq
+ L9ZblISO5oKwnTGoGpt1a45SRIBwoFlBNZEw5YqEIFwf3ErRvGPhoYwr4/W/irJkhtmK
+ UAEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793904829; x=1794509629;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=YW6xkjCNkShheMexpg6Mgbg4Mj+93DQrHPO+NjitZoU=;
- b=W+FQU1eGWQWOsM2yyikkf6e1Yt3smEC+O5Gn4GUh67jAngu9XLAqb5WkvSTYy5LASh
- R5XSK0V385PFZ6hHLztlgK0tkB787Viw2zza/g+c2kymoM+QGtzTfZEC13zTdZfFtR8B
- y+i9eBRK0AMl0m6Nxx0Xp1vd3z4aurwvgUhyzzSLaEL1YviYNWg+PnUZQuTbsMyghAp2
- NillyRD3rntGF2aa9zGZKG+EcFDQTINxNk1YzWqEz+Q9YcYaHPFE6fNnCnZj6p0lZhdK
- QAXQSZvS7Bg47Q+SR0tUOIYZIjv37FPmHDNZm6iULK2pMyn8CLEfyF4R49bZbkt3+ayY
- DQ2Q==
-X-Gm-Message-State: APuU4Z8owWl8tHm3O4vME//xmkrEkjoCpH55TLGQCW7FJxirw8eWdW2r
- wQ7UaQDqQUnGjh0nAeOtbPYkez8CCHfux7chsvhYBJEmvNi+QslMG0eAUkhoph9xfkMZJAuR/dQ
- DvpGrkHi0vCrPHOqYjRleDtAre7wQsu8n+rwfpcwWSA==
-X-Gm-Gg: AYBFou0j6pTJfCEduTLu4I62dk9N10fHUBfne8E7RJHIKO+dj7z2R8A1O23K4Yii5ri
- h3wlKkdhfv4akM9YxXxu/LZsGkOQa4FATRTwHwQyU7EXLi3sxY7oz1Fc5k47AlcWw3JcA1Dx4jb
- dGD/o8Jv5eHCFrBpkRxyOfT2Qiy2whCNVc+G9dEx2eYCjbmD1W/MPOfFi59bk80NuG3Az0C+1tH
- LiXE7N3xItbfZ6/Kk9Onj6WqP+wxW0O91H8UWlBzOo+271jjEe4mIuQeOo9oVawL/qOnPxpnRY5
- KnjLDSkeIdH27gVZYbRI168apY+4FaNesi3wN74SHsc31MN9ZveRDJKhfzMbfITsu5MRqZUQAaK
- bag87KrCAh2jOcVuDZk+h2w8aJGPaOAV3qlaYj8Z+tpRlbQ1YKPbvUqWpbJo3SaaW3KYEssBg7O
- p76E8mYb/KXvW3aM5gkqURRc7fZkOw9IF1hW0harEnFw==
-X-Received: by 2002:a05:690c:6d81:b0:8b1:c7fc:2b96 with SMTP id
- 00721157ae682-8b2b67c5898mr117617877b3.105.1793904828868; Thu, 05 Nov 2026
- 10:53:48 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793905435; x=1794510235;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=rvXH/mY0k5x15Ps4VL487FrGx/knJKjiaXJT4zsxitk=;
+ b=zDHOSfemJX8t4rLN7ax8f0P8hUQN1T0J2NANm9IzqXDojG2TOZT9YwEJQpC/PKOcUt
+ sbw+bapjFlxn7G8wv2aGvbYcjxXRBw1Eb8a/0vCSKgTAeUbSLXuDSxtUkNI05vHHPfk1
+ joB7j6huAbNVUIwyHvxZEf7AsjmH/Ralzl7/Es3BF41P76O4vjMThpO7E4vUB1PctXyh
+ QXV8UPBg9QpDfkLrPaiI8F/l9ZkRI4Fm29R7v533La5LiDcGRBRSz9CcH5NlmOfpnC3M
+ K+wtV9mNepzHo17Nex2chQaw9qMwjTmVmH4NurGng9PhU4t9fFJUdqCgg5Zel+i5wsPm
+ Bw7A==
+X-Gm-Message-State: APuU4Z+rw3dbhQvlz8b8dwjrXIf4B6AbR3e/3EwLyhlXYAB9ReXWAx4L
+ zxCvv9rF7iYOzLoYkmyAikd4ij88DRzqm4R4TNUR6/fkJ1p5idNmNKVhtvvFNDgwHkM=
+X-Gm-Gg: AYBFou2tlH4+vNY0Rg3wh6c9EJkrqjBJGQMFA3ir/mZHv2Xx2MyY+2Qkrh3lsLe+nUy
+ khSAKBtEyPm0qSV3PYzrtKUet0GiUC/YIf13tzwjCnjh/2ETAEEvQWyUjVUuCG/QbUyXg5Wd+xx
+ 8ByY1X6gTW/kb1PrR/zdlfQTZtNvMR1kyFRlrn2Zh8dSTtXQLXC8AUgfTPmg8s7xsYr93uFAQVN
+ WLvpdVs49sDYAPVgIidrbYEpg7qMlfeHg7XU/2OLUSqDwbXV2NRAPdUhtQ8U2P4u+8kZwtoeCA1
+ mPlZe4V6ZUSx8aLQxp6jxVuy3EDaXRs+EAaOowgStCxF+UuJgf54asLIfxCdZLrcgQO1f4bWe72
+ xc85KYsDN9/y0TRetI3V0+aXSRU5wyZCEfaGXu62f1UZlKhiU8ve66VHt7ukWSNe88Wi9EuBAA4
+ 5ts2B/C2lZQQ6qW3rp3dqylWUFd5BvWsuCmMb/TClA/cqMt4RLzfoDSzhiDtSGLp6jm09trR3ig
+ LPfboRMQNaunbdNT774Dmc/NKyaxnN6DgI4s6EudXT12mp7LFGj00j2JsPk2KTF6r4HgeNC3Y7n
+ Amn8F0rcOm4whekX4Olsk7JT2ZtWDyY2r43ltnx3ZbB8La68iy6wvMn/Mss/aD6Uc5TW6A==
+X-Received: by 2002:a05:7022:f513:b0:185:8c9f:de82 with SMTP id
+ a92af1059eb24-1ac5e8deb47mr24053164c88.33.1793905434325; 
+ Thu, 05 Nov 2026 11:03:54 -0800 (PST)
+Received: from DESKTOP-Q716RM7 ([103.94.185.75])
+ by smtp.googlemail.com with ESMTPSA id
+ a92af1059eb24-1b245c4706bsm22924284c88.15.2026.11.05.11.03.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Nov 2026 11:03:53 -0800 (PST)
+From: Yonggang Luo <luoyonggang@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>
+Subject: [PATCH 0/5] qom: prepare a TypeBucket for same-name target variants
+Date: Fri,  6 Nov 2026 03:03:41 +0800
+Message-ID: <20261105190346.1539-1-luoyonggang@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.3
+Content-Type: text/plain; charset="utf-8"
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261105-armv6-xn-check-v1-1-fbeff926e692@linaro.org>
-In-Reply-To: <20261105-armv6-xn-check-v1-1-fbeff926e692@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Nov 2026 18:53:36 +0000
-X-Gm-Features: AclHuK_KxyVpqOLh0Yi0USJVhvzRf33-34KWKel0EqdjeRvx112nQRWKikiTpeg
-Message-ID: <CAFEAcA_qmyR0E3+n8GByA6=kDwDQomCpk399DEc8pOPr=sqEaQ@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/ptw: check XN for ARMv6 in get_S1prot()
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x132c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,68 +99,58 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 5 Nov 2026 at 09:44, Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
->
-> For the ARM_FEATURE_V6 case, it seems like we retrieve AP and XN bits in
-> get_phys_addr_v6() but we don't check the XN bit in get_S1prot().
->
-> Change the `if (arm_feature(env, ARM_FEATURE_V7))` check in get_S1prot()
-> to `if (arm_feature(env, ARM_FEATURE_V6))` since v7 implies v6.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4367
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+This series prepares QOM to hold more than one TypeImpl under the same name, one
+per target, so a multi-target binary can register same-name types without
+renaming them. Nothing uses it yet.
 
-I think this is worth backporting, so:
+type_table maps each name to a TypeBucket, which holds the variants and the
+union of their QEMU_ARCH_* masks. Registration still aborts when masks overlap,
+and a name lookup returns the one variant left for the selected target.
+type_register_targets() registers a variant for a target mask.
+type_register_static() is unchanged, so binaries keep one TypeImpl per name.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d8e052b3876356 ("target-arm: get_phys_addr_lpae: more xn control")
+The change stays in qom and target-info and does not conflict with the virt QOM
+name or is_available series.
 
-> ---
->  target/arm/ptw.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> index 2e67d02493bd463cfd2d31ecf1316272ac3f1d99..b8b22b014e0574340a85abe73f3d9611d2360219 100644
-> --- a/target/arm/ptw.c
-> +++ b/target/arm/ptw.c
-> @@ -1595,7 +1595,7 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
->          if (regime_has_2_ranges(mmu_idx) && !is_user) {
->              xn = pxn || (user_rw & PAGE_WRITE);
->          }
-> -    } else if (arm_feature(env, ARM_FEATURE_V7)) {
-> +    } else if (arm_feature(env, ARM_FEATURE_V6)) {
->          switch (regime_el(mmu_idx)) {
->          case 1:
->          case 3:
+Daniel asked what a TypeBucket means. This is that prototype, based on the
+bucket idea from Pierrick.
 
-Digging into the various versions of the Arm ARM and looking
-at QEMU's code, I think that "allow this for v6" is correct,
-but  I think that ARM_FEATURE_V6 will always be true here
-so we don't need to explicitly check it. The two callers of
-get_S1prot() are get_phys_addr_v6() and get_phys_addr_lpae().
-If the CPU isn't v6 then it doesn't get those page table formats.
-(get_phys_addr_v5() is simpler and just figures out its prot
-bits directly rather than calling this.)
+Daniel: what a TypeBucket means:
+Link: https://lore.kernel.org/qemu-devel/auyP09mbwuefulBL@redhat.com/
 
-So I think we can make this a plain "else", and delete the
-existing "else" clause that sets xn and wxn to 0.
+Pierrick: register types per target bucket:
+Link: https://lore.kernel.org/qemu-devel/d754acaa-0811-4185-a78f-1a352ec8bbab@oss.qualcomm.com/
 
-(Strictly speaking it is possible to get here without V6, because
-we don't enforce that a guest on a v5 CPU can't write to the
-SCTLR.XP bit which should be RAZ there, and we don't ignore it in
-get_phys_addr_nogpc(). But if the guest does do that then they're
-in UNPREDICTABLE territory and whether we give them v6 VMSA with
-XP or v6 VMSA without XP doesn't matter.)
+Pierrick: the bucket work can proceed in parallel:
+Link: https://lore.kernel.org/qemu-devel/CAE2XoE-iOCdGxPtg7MqydmahpnOTFM_15dR0eJKGMrQKxrgeQQ@mail.gmail.com/
 
-thanks
--- PMM
+Yonggang Luo (5):
+  qom: store registration targets on TypeImpl
+  target-info: add target_mask_selected()
+  qom: add target_mask_filter()
+  qom: filter type lookup with TypeBucket
+  qom: add type_register_targets()
+
+ include/qemu/target-info-init.h |  15 ++-
+ include/qemu/target-info.h      |   9 ++
+ include/qom/object.h            |  12 +++
+ qom/object.c                    | 168 ++++++++++++++++++++++++++------
+ stubs/meson.build               |   1 +
+ stubs/target-mask-selected.c    |  13 +++
+ target-info-def.c               |   3 +
+ target-info-qom.c               |  10 ++
+ 8 files changed, 197 insertions(+), 34 deletions(-)
+ create mode 100644 stubs/target-mask-selected.c
+
+-- 
+2.55.0.windows.3
+
 
