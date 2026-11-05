@@ -1,54 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B2D606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 22:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F18A606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 22:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IowhkI+J
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hWFlSdyM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP5zt-00049e-Jt; Thu, 05 Nov 2026 17:31:53 -0500
+	id 1xP5zv-00049l-SU; Thu, 05 Nov 2026 17:31:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5zX-00046p-CE
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 17:31:32 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5ze-00047Z-O5
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 17:31:42 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5zV-0002Je-3E
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 17:31:31 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5zb-0002KY-SX
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 17:31:37 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 817E760147;
- Thu,  5 Nov 2026 22:31:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308AC1F0089F;
- Thu,  5 Nov 2026 22:31:26 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id D662243C4E;
+ Thu,  5 Nov 2026 22:31:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB781F0089F;
+ Thu,  5 Nov 2026 22:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793917887;
- bh=g3Hag8cGCRsLw0/Y9R5udLcPKuWKIk/bEEUSIPT868M=;
+ s=k20260515; t=1793917894;
+ bh=9YKYa16OlW6gff7bbNGW6ouixzpoLveDS0YSKd7LLdo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=IowhkI+J8Yj+YgdkVS75xfjjFzqPvEjMD2CCBQ2F45gOiCOWDV8JGWAdYddYCcxOF
- 6wT5F7QaPV/6wznQ5Z12afE027Mn0Y4h6dev19XU4dMBISEJBK7w3xzR1FqUNzGkAU
- DBbQ9SAIFaCyWj1PGLd4i6/O9RWKyl51vGFACWZcRaFjdzHOG8hfhbYhqRrN0ZmXym
- j2P4gQO0eoFm2Yqbth64n1daWeeYkbWc13QG6D7k+vKyh4UEIOcxteSGC9yklS+3nP
- jZxkM7VUuv8xiB1Fb2nGqXG7sPV6JANMPlRGNKDY1j9Y/x4B5TGzjhDDjH90LXV+Ff
- MwEg4EQuq1mZw==
+ b=hWFlSdyMdpkejZrAVuWI4T/tThlIqNYh9jd7MfFRxkLeTs+g13gab/0LxM8Jz8HOg
+ 18qZ3mX7BgJlZnm/jzQ/egm/XoULw3/NiR7/jQx8FXsxMRfhu1zHKDXxnqWa7qV8Za
+ tc2ae+maUwa2M5g6d/12bfPTsigNlVI7Y7TxwRWd8oZcgC2PhU/InLbL9hY3L19HeV
+ zPF2/pCZrJCMK0vagQSk142Z3u+e0bEfw3I6uD/DAy5uWKxRj2SFpMRqhed8K2brDx
+ 3RG72m+P1/woK+WuWOMWSoETYblfH4863NJkgvXuM80k2RxCqusX8Zo/KNKuIbhz8H
+ ZJc/WpMUp0gkg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Keith Monahan <keith@techtravels.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL v2 1/8] target/hppa: Move emulated power button into CPU I/O
- region
-Date: Thu,  5 Nov 2026 23:31:15 +0100
-Message-ID: <20261105223122.8729-2-deller@kernel.org>
+Subject: [PULL v2 6/8] i82596: Drop crc calculation
+Date: Thu,  5 Nov 2026 23:31:20 +0100
+Message-ID: <20261105223122.8729-7-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261105223122.8729-1-deller@kernel.org>
 References: <20261105223122.8729-1-deller@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -76,100 +75,98 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Helge Deller <deller@gmx.de>
 
-HP-UX 9.05 crashes when trying to access the emulated power button, which
-currently is located by default at the end of the ROM area. It was hackish to
-put the button there, so move the virtual power button into the I/O of the
-monarch CPU instead.
+No need to calculate and add additional CRCs here.
 
 Noticed-by: Keith Monahan <keith@techtravels.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/hppa/machine.c | 13 +++++++++----
- target/hppa/cpu.h |  2 ++
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ hw/net/i82596.c | 32 +++-----------------------------
+ 1 file changed, 3 insertions(+), 29 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index f23936fc5b..8a3f673daf 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -50,7 +50,6 @@ struct HppaMachineState {
- 
- #define MIN_SEABIOS_HPPA_VERSION 26 /* require at least this fw version */
- 
--#define HPA_POWER_BUTTON        (FIRMWARE_END - 0x10)
- static hwaddr soft_power_reg;
- 
- static void hppa_powerdown_req(Notifier *n, void *opaque)
-@@ -123,6 +122,7 @@ static time_t rtc_ref;
- 
- static uint64_t io_cpu_read(void *opaque, hwaddr addr, unsigned size)
- {
-+    HPPACPU *cpu = opaque;
-     uint64_t val = 0;
- 
-     switch (addr) {
-@@ -132,6 +132,8 @@ static uint64_t io_cpu_read(void *opaque, hwaddr addr, unsigned size)
-         break;
-     case 8:             /* DebugOutputPort */
-         return 0xe9;    /* readback */
-+    case 16:            /* Power switch button */
-+        return cpu->env.power_btn;
-     }
-     return val;
- }
-@@ -139,6 +141,7 @@ static uint64_t io_cpu_read(void *opaque, hwaddr addr, unsigned size)
- static void io_cpu_write(void *opaque, hwaddr addr,
-                          uint64_t val, unsigned size)
- {
-+    HPPACPU *cpu = opaque;
-     unsigned char ch;
-     Chardev *debugout;
- 
-@@ -155,6 +158,9 @@ static void io_cpu_write(void *opaque, hwaddr addr,
-             fprintf(stderr, "%c", ch);
-         }
-         break;
-+    case 16:
-+        cpu->env.power_btn = val;
-+        break;
-     }
+diff --git a/hw/net/i82596.c b/hw/net/i82596.c
+index 35e0b58330..6bcae73815 100644
+--- a/hw/net/i82596.c
++++ b/hw/net/i82596.c
+@@ -180,7 +180,6 @@ static void examine_scb(I82596State *s);
+ static bool i82596_check_medium_status(I82596State *s);
+ static int i82596_csma_backoff(I82596State *s, int retry_count);
+ static uint16_t i82596_calculate_crc16(const uint8_t *data, size_t len);
+-static size_t i82596_append_crc(I82596State *s, uint8_t *buffer, size_t len);
+ static void i82596_bus_throttle_timer(void *opaque);
+ static void i82596_flush_queue_timer(void *opaque);
+ static int i82596_flush_packet_queue(I82596State *s);
+@@ -624,7 +623,7 @@ static int i82596_tx_copy_buffers(I82596State *s, hwaddr tfd_addr,
+     return total_len;
  }
  
-@@ -312,8 +318,6 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine,
-         ram_max = FIRMWARE_START;  /* 3.75 GB (32-bit CPU) */
+-static int i82596_tx_process_frame(I82596State *s, bool insert_crc)
++static int i82596_tx_process_frame(I82596State *s)
+ {
+     uint32_t total_len = s->tx_frame_len;
+ 
+@@ -642,10 +641,6 @@ static int i82596_tx_process_frame(I82596State *s, bool insert_crc)
+         total_len = I596_MIN_FRAME_LEN;
      }
  
--    soft_power_reg = translate(NULL, HPA_POWER_BUTTON);
+-    if (insert_crc) {
+-        total_len = i82596_append_crc(s, s->tx_buffer, total_len);
+-    }
 -
-     for (unsigned int i = 0; i < smp_cpus; i++) {
-         g_autofree char *name = g_strdup_printf("cpu%u-io-eir", i);
-         g_autofree char *cflush_name = NULL;
-@@ -348,10 +352,11 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine,
-     /* RTC and DebugOutputPort on CPU #0 */
-     cpu_region = g_new(MemoryRegion, 1);
-     memory_region_init_io(cpu_region, OBJECT(cpu[0]), &hppa_io_helper_ops,
--                          cpu[0], "cpu0-io-rtc", 2 * sizeof(uint64_t));
-+                          cpu[0], "cpu0-io-rtc", 3 * sizeof(uint64_t));
-     memory_region_add_subregion(addr_space,
-                                 translate(NULL, cpu[0]->env.cpu_hpa + 16),
-                                 cpu_region);
-+    soft_power_reg = translate(NULL, cpu[0]->env.cpu_hpa + 16 + 16);
+     s->tx_frame_len = total_len;
+     return total_len;
+ }
+@@ -710,15 +705,12 @@ static void i82596_transmit(I82596State *s, uint32_t addr)
+     int collision_count = 0;
+     int frame_len;
+     bool success = true;
+-    bool insert_crc;
  
-     /* Main memory region. */
-     if (machine->ram_size > ram_max) {
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 7b708a564b..22f8a1727d 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -269,6 +269,8 @@ typedef struct CPUArchState {
+     i82596_tx_tfd_read(s, tfd_addr, &tfd);
+     trace_i82596_tx_tfd(tfd_addr, tfd.status_bits, tfd.command,
+                         tfd.link_addr, tfd.tbd_addr);
  
-     HPPATLBEntry tlb[HPPA_TLB_ENTRIES];
+     s->current_tx_desc = tfd_addr;
+-    insert_crc = (I596_NOCRC_INS == 0) && ((tfd.command & 0x10) == 0) &&
+-                 !I596_LOOPBACK;
+     collision_count = i82596_tx_csma_cd(s, &tx_status);
+     if (collision_count < 0) {
+         success = false;
+@@ -730,7 +722,8 @@ static void i82596_transmit(I82596State *s, uint32_t addr)
+         success = false;
+         goto tx_complete;
+     }
+-    frame_len = i82596_tx_process_frame(s, insert_crc);
++    /* QEMU net clients exchange frames without the FCS */
++    frame_len = i82596_tx_process_frame(s);
+     if (frame_len <= 0) {
+         tx_status |= TX_ABORTED_ERRORS;
+         success = false;
+@@ -1401,25 +1394,6 @@ static uint16_t i82596_calculate_crc16(const uint8_t *data, size_t len)
+     return crc;
+ }
  
-+    target_ulong power_btn;    /* virtual power button (0 = reboot) */
-+
-     /* Fields up to this point are cleared by a CPU reset */
-     struct {} end_reset_fields;
- 
+-static size_t i82596_append_crc(I82596State *s, uint8_t *buffer, size_t len)
+-{
+-    if (len + 4 > PKT_BUF_SZ) {
+-        return len;
+-    }
+-
+-    if (I596_CRC16_32) {
+-        uint32_t crc = crc32(~0, buffer, len);
+-        crc = cpu_to_be32(crc);
+-        memcpy(&buffer[len], &crc, sizeof(crc));
+-        return len + sizeof(crc);
+-    } else {
+-        uint16_t crc = i82596_calculate_crc16(buffer, len);
+-        crc = cpu_to_be16(crc);
+-        memcpy(&buffer[len], &crc, sizeof(crc));
+-        return len + sizeof(crc);
+-    }
+-}
+-
+ static void i82596_update_statistics(I82596State *s, bool is_tx,
+                                       uint16_t error_flags,
+                                       uint16_t collision_count)
 -- 
 2.54.0
 
