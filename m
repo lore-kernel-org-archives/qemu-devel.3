@@ -1,129 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E48B606A326
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 12:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AED606A328
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 12:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=KEnDwVZn;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=BMafNn7g
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=muTrMRbQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOwSA-0004pO-1e; Thu, 05 Nov 2026 07:20:26 -0500
+	id 1xOwYN-0005t0-Ck; Thu, 05 Nov 2026 07:26:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xOwS6-0004kp-8s
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 07:20:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xOwS4-0001lI-FK
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 07:20:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793881218;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HztNanC93EM3i8KGjlwUT4V4OnMNyHu5/gKf7giJuF0=;
- b=KEnDwVZnn+Wdz+pHKiJs3mxaOL/QWASu07GP/bgZ9+9xTeAaxVNLsXsf8S8Z587mnZqHMY
- mH+nU43jB2nwwFzSBmnrt1vFyBmNKBj+K/84CkOJO2WRPG7ob3TEUJje1QQdAM3FvrVlWG
- kTkiuvqQIBiOEA1dFhq+h8qg0XtyVws=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-261-MOXkiJJ9O6SsmLhFrW6SwA-1; Thu, 05 Nov 2026 07:20:17 -0500
-X-MC-Unique: MOXkiJJ9O6SsmLhFrW6SwA-1
-X-Mimecast-MFC-AGG-ID: MOXkiJJ9O6SsmLhFrW6SwA_1793881216
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2ed216ed20dso5592085ad.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 04:20:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793881216; cv=none;
- d=google.com; s=arc-20260327;
- b=nh0AZ/pO/xRAf57z2xb0QCQ6Nt1AaGtMs3ltjfapgIYmAbLjAnRWNfldQE1EB4vLTM
- 1K2o26S8pS73nQa+FIPeSebu/d0hERw+ndQMiWPCV73QBSPE1Qo88KWkmIew6Ts63WxD
- k9WR0e+YzKuqViieTwHdBlF/6RQ80KE7bh9lKpdISujGhrSql6lJCsePMTlrNuf+GijY
- vyza+X4X/Xg9c/EoHNh5lCP1XCXaz82YFqS2zTlQLeBnNcGYME1wMWNzQTnmteQ/qe6H
- rI2O3oJJNvgQMZJWEGWzKOQrD9Oy2+QIasPQWCYvFQYglhsPax38kB1D/WjKtbY6/pXn
- 80xw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=HztNanC93EM3i8KGjlwUT4V4OnMNyHu5/gKf7giJuF0=;
- fh=ouvYxzE8zeNcUhxOzySM2B4B2JfIaNKS3rgo8mZw+iY=;
- b=kczOmnqa4a4HLvKD9f0BZWtrabkyt2RLJwlsBu/hruHGOz0jJ9ZSS6f9SM25aCs9Do
- H8Kp1i2MS4q9J9Vj6VDqjdYHlMMhdYd9puWJMDKZGFnLYFn1aCjG0ZiTuYBoGaKiT3IP
- NPOd7FZpqxOj2XruQgRSV6VBMW2DotqcCtg0cQaVsejZojgTBxkXpcZbVETS97aR0UHu
- 7pXq0LzlWraTKleRTmNclDyz1IftZ6zwUYR6hBJj+81PHAX5+446FZmk1A1TTUhIyEoP
- o28GuXqaCJSarRAJ8ujOtTHlzxEuJHXqhJLhPiPUcjtbq2X6VdhzbeNsWXbVXFz+g1SM
- UY+g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1xOwYK-0005sS-RL
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 07:26:48 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1xOwYI-0002nD-OE
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 07:26:48 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4a9a8d6cea8so6483385e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 04:26:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793881216; x=1794486016; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=HztNanC93EM3i8KGjlwUT4V4OnMNyHu5/gKf7giJuF0=;
- b=BMafNn7gK8lccwjwGXijoUWIW+GBnCXVQQFVPDvu/NZQYk+5jEDt7P1NZ+qjHHtm1M
- L/rTyT+O8FkLowXCUzdmod76CY2NXafECyK/IrDYK233OlGg0oOSGBNq2wyMbejA1/Pn
- rSUNzc1MIfnbOr2cCBATfZ7/UiOa902DoAT4lijIQrLDwFcgvhI8jmuZGG8jqIMzMLaA
- Ih3SnB0mfKwdzocPF3iBsuFA2DDi3H/xZCereRtxzm8Tqf4tnZYApYR8dVZUnKLL6o1r
- HLK6V8VCRng5XCpc23v6MEl/ZTLnBErsUGUImBKQCP0ykoL+DdIUmadANvgwsjWFI41t
- 4fMg==
+ d=linaro.org; s=google; t=1793881605; x=1794486405; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=xswJ7hiLDj169UhibfP965Sph8AslAZxMY/7J102bac=;
+ b=muTrMRbQb+EKk3mGPK8NPLs+12NKp0LhnAYywJ2PvPnWEIkcCufQhV6AgBApzznV9b
+ pxD/N+Kfk59UcVY4KTWEZsrVPZLAtj+QCn8WfYBFYKQyMysEYs7JpexvZwqeAY6YXma+
+ JVftU8y76H8vkzsLGky3+fKelsGP0sVfkaTZkL3cyU44aqLQntjnodhDRyL18IAZBh5v
+ KSIgyAgfr1IwZm8+iTd3HSewl14YhawbtXflQqjdhRtXKxFp2wGtWBULUjacpJmX0kLX
+ fF94SsoBfnAP9OWOjLMzQL4TxaahRHmZdVMY+xHX/evjXhYz0MomFxYVEr99sTZP3w59
+ /hxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793881216; x=1794486016;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=HztNanC93EM3i8KGjlwUT4V4OnMNyHu5/gKf7giJuF0=;
- b=n5yS5rJ7T3d7ut+X7Bo2GEZUY9DWMV25CGA43GVwTK6qvrIodnWuPJaRNMJuExM7cz
- x1wZS3XYIH/mlSWwiQamC74A96AkeO7YzkMIz/GCaCqjZIvMcv6EoVpxQ73gug+bA1SH
- nSJQoVmoKCaErWS31Oy8LSASgAbf95WLnPSmAWXEct7VX6c0ArGvnswMI6v21eqXdzRZ
- ldVLToXz223/WNA9+2i/7pvfBPOVYhoXPk/q2iIfsBtNP+4A9JWVnZLniGPgmZGS6sRe
- UhjTI7KX7+giyWP/jMHD5eg54E1CNT2vL1Zdy7jTZTWwixJYrflT0P/N4+jDZ5q3gD0n
- vrZA==
-X-Gm-Message-State: APuU4Z8ySsBtghG+SQ2lRTpts8ua2MmVVF3TWe5qaFcWrADdIGJS6Dnm
- tGy1gKTXPycsW8Ir1TCDug7YnvCpwfZneEKi+TfHb7vkmNBeWwGnycq5UZyejh8u4jC777EsPPU
- kj5i+rK/xIDm0lUOWugQW1nrKUuj3iQ2pZK0Qjn9BGbbAdUF3cYM//ONnX+/ynFOrjE33TaZNBi
- S0h2vCTo0LrZZY7ftJr7L4+SYnxxS1rAg=
-X-Gm-Gg: AYBFou305ynxjm6cU4s9rWqBuRDsokj2cJ01Se6Xo2mXhNxLR54IafDWDOn0cIBn+Dl
- dydbcOELvbk1DhICOyg9eUVpv7Uhco9nscF/ODe4EKnpmgbFESZa7brxreHnXLiH4aWNTsNmRoE
- cQmdj71oJdqgw4zNezlU3hSO7DlOAzPVzxDs0bwunTno6B8mJKko0080lpmHDpY9HH6WaEWYY2c
- EUUMKyWvFTMs6HuGePeIJpdUJRWdmOZqN2/wrbkw4bBK058vvIxAIit+3zvQ//X5fdiza9TxCth
- Gg==
-X-Received: by 2002:a17:903:f8d:b0:2e5:cd0f:518f with SMTP id
- d9443c01a7336-2ed23a5382amr16951575ad.0.1793881215890; 
- Thu, 05 Nov 2026 04:20:15 -0800 (PST)
-X-Received: by 2002:a17:903:f8d:b0:2e5:cd0f:518f with SMTP id
- d9443c01a7336-2ed23a5382amr16951385ad.0.1793881215444; Thu, 05 Nov 2026
- 04:20:15 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793881605; x=1794486405;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=xswJ7hiLDj169UhibfP965Sph8AslAZxMY/7J102bac=;
+ b=WiOealX3JhpEhPbo9qJrihFTPnxz48JXcTVO/aE5tXcKNoGk8WjPEAT0SxLat8qo1Q
+ JjqFhYS5g0ji9Ex4qK6wnKH4uPSq21eWB3YqONX7kWXPszccaO0/cr2pwBfmmUUyoJQg
+ C6j0arrH7bEfrvUBZCgnMY26ofmXwRrq2oJK2W/FeRPhz6Ya7A+X3XdRA/exfHy8hqQR
+ CvZVMZ066Nq0M9soPiVouWVJtUF1BjqaDuj3TZUSTlUNl0Q99aXHtahEAg60XM1RMxVh
+ LdEJ0y4S1aZJI4t51NGxjpGjl/vyYuK0JB9GXz3nMIfVFSisFMlsmMG87f/eStqB/ghm
+ 38KQ==
+X-Gm-Message-State: APuU4Z8Fe4+H6eLnxTvcUfjl9uObC6B4V/6G1Tt6oY40DOh0c1Oi79FW
+ QYhPLBA84Zb3Bhlr2b6236txyvIACg34+Rhe88TPRvXJbzn8acVKa0M2TRZBEH8T7rg=
+X-Gm-Gg: AYBFou099sw3dmL/ZzcDpNgtqiqLzbUhq2/qbwJXgf0icLsIs2gQdQ9XsK1+7wakMGQ
+ 0zfvSCil1pTI3XNszUeovVtTwCgjbtAvrcmisbWrSE592MUrimSmj8TzwQKjWehPEw5EAnpfFaH
+ OsJnryYX7/v521c3FnQGZehVYUZz7MjPr0cjH/DDOx3u6b3thYJyTz2rACE59CLUU+TZEwaeRD8
+ SiXAtDdTlkyBpVEFU15w2joJmnrKc8zRd1xqKR6LMCbSSw4qyA8xJ0Ol/e61UwEDngfnSZWjhmx
+ bMBRwD6kutA3TKJHNDkPP/dlVHYSQb0fjDy7LYAtWZJ1lUcq6OKJw9I+dnddZ9/gMJTsDH4uUNC
+ CWqEj3Qb9R//WAyIUFw/TNCVUkt7HN3Kkh7EJkkme0mzehMEPa60vxxFe4ekJzmA/wO3f33SyZf
+ MbVSdp9OCc98CZJ+Nm9IzdLEfGwswDhVN9gFb1mKMbOstHmckyMD8kO8vld1RsG9ujGNrliNGHh
+ tnYSPFysDINyS0gfUKxR7e8aBDsRwg1xRy2r205+VQy8/8OgymnHBFhB7U5evDv0ZWcKYL1b0FC
+ CV94ewJwEiUi9JvZoGyGf3gL+vxC2r8Brc77x/7Ob/j9VU6KY1/yfhOOn9BThmAg7Yn4p+DkKTc
+ Dy+m/qc2WwqQ9/VZFr5JM2RSKZENKIpzQDeSDmngIFk+0GzrE9oYJzoxKAMIdCT6kV/n6r5fCfD
+ cVYnqMvcb0Yo0WYqnzNdk8WEWkgG8=
+X-Received: by 2002:a05:600c:1989:b0:4a1:88df:8a2a with SMTP id
+ 5b1f17b1804b1-4b55dbb09dfmr45001955e9.13.1793881604714; 
+ Thu, 05 Nov 2026 04:26:44 -0800 (PST)
+Received: from satan.lan ([94.66.192.55]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4b4532916f2sm140636435e9.5.2026.11.05.04.26.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Nov 2026 04:26:44 -0800 (PST)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 05 Nov 2026 14:26:40 +0200
+Subject: [PATCH] gicv2: do not hardcode minimum binary point
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261105080310.1656968-1-armbru@redhat.com>
- <20261105080310.1656968-6-armbru@redhat.com>
-In-Reply-To: <20261105080310.1656968-6-armbru@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 5 Nov 2026 16:20:02 +0400
-X-Gm-Features: AclHuK_FbN5j8XjYKPQYkGw7LR3JGaA0gpap4lF8z7IowzX3mCSt8c0YF4mN9-o
-Message-ID: <CAMxuvaxD5Ku-CZevoUUCko=vnyyx=vKe8C_YzD1QF+gvhV8rDg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] qom: Convert child and link properties to
- QAPI-aware registration
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, berrange@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261105-gic_read_bpr_from_property-v1-1-7e7392bfd321@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAAB27GoC/x3MQQqAIBAAwK/EnhPUKKKvRIjlWnsoZY0opL8nH
+ ecyGRIyYYKhysB4UaJwFKi6gmWzx4qCXDFoqTulZCtWWgyjdWaObDyH3UQOEfl8hOx7bb2bO+k
+ bKEFk9HT/+Ti97wfL1HpUbAAAAA==
+X-Change-ID: 20261105-gic_read_bpr_from_property-0882afdb60f3
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ qemu-arm@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7011;
+ i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
+ bh=p/lVaAyK4vxognNhSMF5UmN/5lgKqSrWqKx1ydWd3yM=;
+ b=owEBbQKS/ZANAwAKAXcpx3B/fgnQAcsmYgBq7HYD8z9TZC7Ae8xkGlS9NC1qSjKEo3L6iGs72
+ KPuXK3oGJOJAjMEAAEKAB0WIQTMXBtORKBW84dwHRB3Kcdwf34J0AUCaux2AwAKCRB3Kcdwf34J
+ 0MCgD/9mgeiCfVcqhgqOiUsADnA6/UzSY3Gs1LTd5gVqydhUy3mcInDjVCDXO2vqA7wge8Ikz8L
+ C6A+bN+5mwXVKRvOftU/IYmn9q3ggnZruibVTRMiCMvu6tALDfzW51TA5mohsjIHDf5IxGSj/NS
+ wVgyPJ0NeCp9wgMRQIw/u5sfluDkLDd9b5nFrSfa8GWTGzPrV1vdc0Oso6Agb+DCoPbMUuR+VbK
+ 2T+NZZtqm1tfTn9QWhGKnadxkGFB0AC9RWy4d0j2rGiM/E5qqp7kPMokADhRWJVecwW733PfG/q
+ 0wf4hK3tFMMuDbqNCHhGXfDeEtDW3QwI1/uiLUh81P30WoWSn+ogqJ/ek7/G5BDS25w3TBWd9k5
+ OkxKVzUzVvjIOE1mOu7WyjJlm/kJoS7WqOwabR8RUIPgSTsps960wAnhEtOCP6jomBJjN3PgwBo
+ evyDyTq+WSWvB4li60NTvtbgYahDaKt7TJO+gUzJn8lid6IlnQ2C/RrcxhLIviyoQykepBXmV7e
+ lZKi9hohX2dfZeq53/RwjOzOaWsjL7Udda4xXNTfgHtRSDuxo5GkdiUNyGm07qOhccBxHz50/pZ
+ JNGR4b7NuES1/8jPRXT83dzbD8XH7l58UUJm3ury8m+SHi2FqnXrZ2ulkZZbjfabFZhn8Nnb7qq
+ 7ftzDHUFUBD9H/A==
+X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
+ fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,63 +119,184 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 5, 2026 at 12:03=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Child and link properties get serialized as QOM paths, i.e. as
-> strings.  Use &str_type_info for them.
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+The number of priority bits is implementation defined, and indeed
+machines such as a9mpcore and arm11mpcore define it in the
+num-priority-bits property. However we still hardcoded GIC_MIN_BPR.
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+This commit replaces the GIC_MIN_BPR and GIC_MIN_ABPR defs with macros
+that read the property.
 
-> ---
->  qom/object.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/qom/object.c b/qom/object.c
-> index 774a976c8b..9276b7a435 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -1914,7 +1914,7 @@ object_property_try_add_child(Object *obj, const ch=
-ar *name,
->
->      type =3D g_strdup_printf("child<%s>", object_get_typename(child));
->
-> -    op =3D object_property_try_add(obj, name, type, NULL,
-> +    op =3D object_property_try_add(obj, name, type, &str_type_info,
->                                   object_get_child_property,
->                                   NULL, object_finalize_child_property,
->                                   child, errp);
-> @@ -2109,7 +2109,7 @@ object_add_link_prop(Object *obj, const char *name,
->
->      full_type =3D g_strdup_printf("link<%s>", type);
->
-> -    op =3D object_property_add(obj, name, full_type, NULL,
-> +    op =3D object_property_add(obj, name, full_type, &str_type_info,
->                               object_get_link_property,
->                               check ? object_set_link_property : NULL,
->                               object_release_link_property,
-> @@ -2146,7 +2146,7 @@ object_class_property_add_link(ObjectClass *oc,
->
->      full_type =3D g_strdup_printf("link<%s>", type);
->
-> -    op =3D object_class_property_add(oc, name, full_type, NULL,
-> +    op =3D object_class_property_add(oc, name, full_type, &str_type_info=
-,
->                                     object_get_link_property,
->                                     check ? object_set_link_property : NU=
-LL,
->                                     object_release_link_property,
-> --
-> 2.55.0
->
+The calculation is based on "Table 4-47 Active Priorities register
+implementation" in the GICv2 spec (page 4-150 of ARM IHI 0048B.b
+ID072613):
+
++---------------+---------------+---------------+
+|               |               |    Maximum    |
+| Minimum value | Minimum value |    number of  |
+|   of Secure   | of Non-secure |     group     |
+|   GICC_BPR    |   GICC_BPR    | priority bits |
++===============+===============+===============+
+|             3 |             4 |             4 |
+|             2 |             3 |             5 |
+|             1 |             2 |             6 |
+|             0 |             1 |             7 |
++---------------+---------------+---------------+
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4375
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+ hw/intc/arm_gic.c                | 14 +++++++-------
+ hw/intc/arm_gic_common.c         |  4 ++--
+ include/hw/intc/arm_gic.h        |  5 -----
+ include/hw/intc/arm_gic_common.h | 20 ++++++++++++++++++--
+ 4 files changed, 27 insertions(+), 16 deletions(-)
+
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index 4d4b79e6f3408c43eae19c222edc75e41987b7ea..79a68a8648467c1f18dab69cf691f8e44ec2f011 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -479,7 +479,7 @@ static void gic_activate_irq(GICState *s, int cpu, int irq)
+      * and update the running priority.
+      */
+     int prio = gic_get_group_priority(s, cpu, irq);
+-    int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : GIC_MIN_BPR;
++    int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : gic_min_bpr(s);
+     int preemption_level = prio >> (min_bpr + 1);
+     int regno = preemption_level / 32;
+     int bitno = preemption_level % 32;
+@@ -521,7 +521,7 @@ static int gic_get_prio_from_apr_bits(GICState *s, int cpu)
+         if (!apr) {
+             continue;
+         }
+-        return (i * 32 + ctz32(apr)) << (GIC_MIN_BPR + 1);
++        return (i * 32 + ctz32(apr)) << (gic_min_bpr(s) + 1);
+     }
+     return 0x100;
+ }
+@@ -1561,7 +1561,7 @@ static inline uint32_t gic_apr_ns_view(GICState *s, int cpu, int regno)
+     /* Return the Nonsecure view of GICC_APR<regno>. This is the
+      * second half of GICC_NSAPR.
+      */
+-    switch (GIC_MIN_BPR) {
++    switch (gic_min_bpr(s)) {
+     case 0:
+         if (regno < 2) {
+             return s->nsapr[regno + 2][cpu];
+@@ -1592,7 +1592,7 @@ static inline void gic_apr_write_ns_view(GICState *s, int cpu, int regno,
+                                          uint32_t value)
+ {
+     /* Write the Nonsecure view of GICC_APR<regno>. */
+-    switch (GIC_MIN_BPR) {
++    switch (gic_min_bpr(s)) {
+     case 0:
+         if (regno < 2) {
+             s->nsapr[regno + 2][cpu] = value;
+@@ -1731,10 +1731,10 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
+                 /* WI when CBPR is 1 */
+                 return MEMTX_OK;
+             } else {
+-                s->abpr[cpu] = MAX(value & 0x7, GIC_MIN_ABPR);
++                s->abpr[cpu] = MAX(value & 0x7, gic_min_abpr(s));
+             }
+         } else {
+-            int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : GIC_MIN_BPR;
++            int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : gic_min_bpr(s);
+             s->bpr[cpu] = MAX(value & 0x7, min_bpr);
+         }
+         break;
+@@ -1746,7 +1746,7 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
+             /* unimplemented, or NS access: RAZ/WI */
+             return MEMTX_OK;
+         } else {
+-            s->abpr[cpu] = MAX(value & 0x7, GIC_MIN_ABPR);
++            s->abpr[cpu] = MAX(value & 0x7, gic_min_abpr(s));
+         }
+         break;
+     case 0xd0: case 0xd4: case 0xd8: case 0xdc:
+diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
+index 304d89cf56219bf76eeeb24e55dbfe60be23ba43..7ffd94561202f49d767315893085df57a4f984d8 100644
+--- a/hw/intc/arm_gic_common.c
++++ b/hw/intc/arm_gic_common.c
+@@ -249,8 +249,8 @@ static inline void arm_gic_common_reset_irq_state(GICState *s, int cidx,
+         s->current_pending[i] = 1023;
+         s->running_priority[i] = 0x100;
+         s->cpu_ctlr[i] = 0;
+-        s->bpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_BPR : GIC_MIN_BPR;
+-        s->abpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_ABPR : GIC_MIN_ABPR;
++        s->bpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_BPR : gic_min_bpr(s);
++        s->abpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_ABPR : gic_min_abpr(s);
+ 
+         if (!gic_is_vcpu(i)) {
+             for (j = 0; j < GIC_INTERNAL; j++) {
+diff --git a/include/hw/intc/arm_gic.h b/include/hw/intc/arm_gic.h
+index be923f7ed8861620d17fbf3d8569c42ae7c95487..e090bd0b283297d0863e13ef07e5738a549ea59d 100644
+--- a/include/hw/intc/arm_gic.h
++++ b/include/hw/intc/arm_gic.h
+@@ -70,11 +70,6 @@
+ #include "arm_gic_common.h"
+ #include "qom/object.h"
+ 
+-/* Number of SGI target-list bits */
+-#define GIC_TARGETLIST_BITS 8
+-#define GIC_MAX_PRIORITY_BITS 8
+-#define GIC_MIN_PRIORITY_BITS 4
+-
+ #define TYPE_ARM_GIC "arm_gic"
+ typedef struct ARMGICClass ARMGICClass;
+ /* This is reusing the GICState typedef from TYPE_ARM_GIC_COMMON */
+diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
+index b169394e6ca28d787d70e9c103ebbe5b12202ecc..c89f8a3292dff5460e2baa49c9a55de6866fc33a 100644
+--- a/include/hw/intc/arm_gic_common.h
++++ b/include/hw/intc/arm_gic_common.h
+@@ -37,8 +37,10 @@
+ #define MAX_NR_GROUP_PRIO 128
+ #define GIC_NR_APRS (MAX_NR_GROUP_PRIO / 32)
+ 
+-#define GIC_MIN_BPR 0
+-#define GIC_MIN_ABPR (GIC_MIN_BPR + 1)
++/* Number of SGI target-list bits */
++#define GIC_TARGETLIST_BITS 8
++#define GIC_MAX_PRIORITY_BITS 8
++#define GIC_MIN_PRIORITY_BITS 4
+ 
+ /* Architectural maximum number of list registers in the virtual interface */
+ #define GIC_MAX_LR 64
+@@ -151,6 +153,20 @@ struct GICState {
+ };
+ typedef struct GICState GICState;
+ 
++
++static inline uint32_t gic_min_bpr(GICState *s)
++{
++    uint32_t num_preemption_bits = s->n_prio_bits == 8 ? 7 : s->n_prio_bits;
++    assert(!(s->n_prio_bits > GIC_MAX_PRIORITY_BITS
++             || s->n_prio_bits < GIC_MIN_PRIORITY_BITS));
++    return 7 - num_preemption_bits;
++}
++
++static inline uint32_t gic_min_abpr(GICState *s)
++{
++    return gic_min_bpr(s) + 1;
++}
++
+ #define TYPE_ARM_GIC_COMMON "arm_gic_common"
+ typedef struct ARMGICCommonClass ARMGICCommonClass;
+ DECLARE_OBJ_CHECKERS(GICState, ARMGICCommonClass,
+
+---
+base-commit: f29ccc287a6cfdd51d3a4fd17fbe9af3310a0ac5
+change-id: 20261105-gic_read_bpr_from_property-0882afdb60f3
+
+Best regards,
+-- 
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
 
