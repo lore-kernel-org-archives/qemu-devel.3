@@ -1,178 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D794606A326
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 08:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738EB606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 08:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=fiiXmDmo;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=KcXSKfoN
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=L6p5+31i;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=NEYCESXN
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOsoy-0006Yp-Ks; Thu, 05 Nov 2026 03:27:44 -0500
+	id 1xOt9c-0001JI-Su; Thu, 05 Nov 2026 03:49:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xOsos-0006X7-MI
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:27:38 -0500
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xOt9a-0001IZ-MX
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:49:03 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xOsog-0000a5-Jh
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:27:31 -0500
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xOt9X-0002fx-RJ
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 03:49:02 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A56ULx81018101
- for <qemu-devel@nongnu.org>; Thu, 5 Nov 2026 08:27:24 GMT
+ 6A56V2iO2588239
+ for <qemu-devel@nongnu.org>; Thu, 5 Nov 2026 08:48:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- AGN8kwgakg5OiXRUbfKCSwJgdB2YehlHkW5tpwLRG6c=; b=fiiXmDmoIyy24Bni
- sMCaR5DgQufd1AUeMVRlvmqfRCx8usfGB/QhBBG5YCSJI+amrKGxMYhG6O0Lfbrm
- Fji8kOAzlF+ZdqUe/A/kQ2VdNM+ZO22eEgzSvneoa38hqfAuj6+4ckBwOB3NdJQm
- tFAe4IDNJO13LKqvQTEJ8rQOfDD0I/KRu26xcG/k4tQDrM9mFlXQCo2zM6kLWD+K
- xzMK54S8Lm3BUwfg2aL5lk48KFDcUlmD8/TnJhUVBuRDJnca0LzP+89ndGyA8IZm
- vvkjGPKEifcaYAJFz+yndkyYVxyH/6NsDQEY1ltb0UsVv4Kar4dwiojBS+ST9qqh
- iR7seg==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hr6bnm241-1
+ wjJ85LgyeqsJ8KDinz12ucUbYjwUnfQ/a7Y/maLZRrU=; b=L6p5+31iWBYxlSZV
+ Exybqhv+aeWjwGyRcwrgz1BDveXUmTJS9sU4L1CH0DZ653lLj5y4/wOQISVCu0V6
+ kSXEOgeVV7dsSDzRAUEkaK55JEjn5GZ7crIgonxIICEFCw0JCX5mBRq3X7t7hKno
+ 0xEtrkv8rsq7fMrS+Dz07bIEgpDmIsx+qX8nszJm+zLms+2/L8GdNpmJqBj22pkz
+ 6tHaUQEEKs3lur9bfqSyjiRy0kde9hglKShFjWpVpBRZ59xKWQILd9S1tjiiEp56
+ v2lYos4juVRnHpBSVhBcBY/wLld9sy+Q9h/8Wqtgy3+/9d/+BW1dWO0XmhyocYaT
+ Jahslg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hr89sukj4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 08:27:24 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-1acbaf81bebso2230785c88.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 00:27:24 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 08:48:55 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-542fc61841eso32788151cf.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 00:48:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793867244; x=1794472044; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793868534; x=1794473334; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=AGN8kwgakg5OiXRUbfKCSwJgdB2YehlHkW5tpwLRG6c=;
- b=KcXSKfoNAIxUQk01dWvsQEjF7Mm8L9KFjqVckjPyKBXKmI2HTDdbIl7XlWsGcgX6Vs
- HZ6vc0q4N1lR/zyepFW3oFJTw/4hOAD0kTfjfsPNYozweOfRCq5ne0syJvlC/ctR4Jy8
- oPVO1xfQD8/lp4iKUdJGgE5qtEVI3/Xdq8gvHpJVCojzS6t0k25zPlF7AfM6X3UjZ9hP
- zCc9NvgfRUhQlz2oa7YxtCUpXuTewE04kpuK7OrLYQS/HFYkDzfpIPiQiRsHBq3Q1VSf
- V35V0+NN/OH32F9ADb9Wba/I+9LqUq+XWf4FlETeV/macVLitdvMhp8tCqZCeL3a2FUE
- af/w==
+ bh=wjJ85LgyeqsJ8KDinz12ucUbYjwUnfQ/a7Y/maLZRrU=;
+ b=NEYCESXNRNBq2N8tIyJYBcuseO0qc78dPK20ihdF5h7r8pWY2nFpgbgSVoQ+FdUAX0
+ Nh2lMgCrVzghWmCYBnPDovTY7HJ0Y4204bGa4W6wD9clSb7T4XhgEWp0wpn7T8yrV+4M
+ sAUOdO2qaZpnSlGQzIEC3qydlSU4nk7a0vRVtSXP8JUnNFOUAUp9bne+WWcQq1/DBy/m
+ 4e37PDvTeVvAmDrN0ixzengpInMbjHCxXRxeKyl6W5EvvpvJGOhPf4iH/0JQJiITevsi
+ nvnxQapjdvwCsDOheYjueGCIVu8o26ERcRDXkHfoFyTlHyqCdEWOgkibvF89ownxYFSQ
+ TZQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793867244; x=1794472044;
+ d=1e100.net; s=20260707; t=1793868534; x=1794473334;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=AGN8kwgakg5OiXRUbfKCSwJgdB2YehlHkW5tpwLRG6c=;
- b=Skuyf3oYb/BcQzT//JpgkuW/WRbuJz9/LMk5hKAt77J8LZp1BkB86D0cecXGX3giTY
- t3SM73Ayn0foxWoIiviiTk5vCPCkuZasVcTzsqxHGcpvN/LRXfTGS8VKl7zKpeo6PqMD
- nBciQpepYl6z6vrHsiVfr1O/HD2bikK+61VW4gjJPYe/Z6JAmkqZ75xkvtu7X9hLSjtO
- xRkTjCxxpi5DjRMbXaWYkH1jHdVrUnxU1dPGAoR+QtNlZZp6iOdCSR9/0QURAjr1jlpb
- b3zcxId3Wq97BItm0ImjpNOPK/jA+SSJtbxKCHD6vql7m4APZwD/dH36gGsiUqOtOUm7
- 4AJw==
+ bh=wjJ85LgyeqsJ8KDinz12ucUbYjwUnfQ/a7Y/maLZRrU=;
+ b=AMJXqWilLngFuaWIQ0Zjc5+BGLUG1SnbtZebFquJ9ie1v6gmtXb5OVXsjfc3YO7YMa
+ LFvUm0BQ/qp1oruz8Jy7xmrN1M1MIJiCU7YzdTcDp4/+iIForFCGnErF1hOiddxmC4Kd
+ ECBZPNT0kBGoX8aTyg6xRp5qcGMoO8SJN3Imvhde50kK8O/mGNjsNM4Yz4YXcB3Elits
+ KBVGQnP1V8Wet2iM4yXY/HPbG2R8XRY1tjVnNZfYANKZM9Q6gOxs83GYpnPuYhMJwu4R
+ KMylHT1ufS001FxeEwPpaOXwqsFR/2UZ5Z95ZNduo3O2gQQ1UAxEbSd6xfiR4Q1FXurr
+ iznA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxFEXRKuanbCUEtf/7haf0065diSBbc1Ta8Ibrifd1ymjpfVdvQ13vO5LMLBApSoUu5uHEl9F9Bvsvl@nongnu.org
-X-Gm-Message-State: APuU4Z8Lzpj8A40Nc3c+sLnaMP7yfqNuv9f0T0/V1LcciXzMw/kxBeP7
- Hteqqu1ENIPQgrkIQQ+fB4BkfJIU/hCi5s+W4ahLpzFoK5567JP7MvTiIgee3JcPn+bk4auHck8
- s+rECaSmviru4Bcppmncqyc0/vhXSJMfwYDNlx1MfJNPH2YRGswevhDudGg==
-X-Gm-Gg: AYBFou1t3sQHT8cgpSLygzbaJWpN+NqLrGOGu9IrXeoaz6KhnUVLVlIjOuRc4gm1ejN
- tzCD4cBP432pZ3DJN7HmJ7nsE3fbWuIa6GRSWnH9qVybGKKf0K1bh9wdmCu9B3fn1sRu0CVowwq
- igmnQMZXbLklsiqJbk+jQ3CDl3BllQ9+SYDQndMNWBvp1f+2XCEDQIft/FWvowSzMgsFgXXYTN3
- U5bjTQ60gimEYRwgOVXFvM2LwzrqOOwa11MwFHDlARj/Dr8Smrn4z8EeNpJVtaZJwnOsLq2dydj
- Qqud7spiM+SNKdqC+ArGS+0L6eq/OQ/yAZpZKNUOnRdhkKekCtDpOH0Bu/s6hZPOTcqY3sfzI3U
- 98tB3TcXVsCxzqj0UcPgCrWUhlD7Dr9SiFnguGHVhFgSW6blC+frAGmn/OfQcyi5kmWvDpC4JR7
- gc9li6lJ2Vh1TA4p5CBr+uHM2PO8T/bQq/2jtjrBTgOw==
-X-Received: by 2002:a05:7022:92b:b0:144:fb42:52 with SMTP id
- a92af1059eb24-1ac5de4e892mr32994001c88.28.1793867243550; 
- Thu, 05 Nov 2026 00:27:23 -0800 (PST)
-X-Received: by 2002:a05:7022:92b:b0:144:fb42:52 with SMTP id
- a92af1059eb24-1ac5de4e892mr32993931c88.28.1793867242680; 
- Thu, 05 Nov 2026 00:27:22 -0800 (PST)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1b245c1c127sm14154206c88.6.2026.11.05.00.27.19
+ AKwUvBwnm06DWr3/Jsif8v0XaRkY0gH7O+MLK3Ir9DeK3yFSINPXMIkC1HERbSWGQIb0LmR0gVDDC0ebBenc@nongnu.org
+X-Gm-Message-State: APuU4Z/YLYzt1JC422dJTgh5doV9PTzawcTfTAlJWgAAqm0Id/WWbpPk
+ HxTPHvLolkEY4QiX1SlJkLzcKhkYmilsn68kYpEniEHCDfQ4lpRlWngGTqaZKiDdp622avfCyj+
+ e7pwTisOU+tGnxG4pdKmgu3RX1T7CwszikiPUsu4An6j3Xszo3/41N2PxMw==
+X-Gm-Gg: AYBFou1f0hQHHZbW3XuOd3wvOSsj84dWVS1n9ADhvN0nyNKx/A4sREnGnlS3AhJA2xc
+ yGsvUwrrLCpxCUbB/UG2YCPqvVFMU8m7eBGMsEuwWDv3FrrpKhZXi1G+LdATsaUNo2ilJMj7yTK
+ DOOFlpjP7Ng1EOdlvIfD/HY0woRnD3C3GMuFV5vXLSmMtkZj/oxsyWPpUdpee0iu7t2uKdmnjMw
+ FMRdj9XOIXI/U1kmkdjE4qEBXfI+4SepVPfWSSkf85w6iOeztU3vXxP9EcbwYX5AQ5XdzjAoQxe
+ yB/+dbxSZ0ewf9C8JsrEUc4hEqiewGBOLB6Gc9N+JtpEgRr3zsJ0JhDwy49tChs5R5rw/xsDsDY
+ wLqMZqjJJkQr7EbFewZDmADqQcR43VUgCwmNwvftk4u7K9uFcVIU0VTfSwa45Zl0U38MN6R6YTA
+ 5/rK6ENsv6
+X-Received: by 2002:ac8:5d46:0:b0:537:5488:a6ea with SMTP id
+ d75a77b69052e-542b7334c27mr330106461cf.46.1793868534282; 
+ Thu, 05 Nov 2026 00:48:54 -0800 (PST)
+X-Received: by 2002:ac8:5d46:0:b0:537:5488:a6ea with SMTP id
+ d75a77b69052e-542b7334c27mr330106241cf.46.1793868533643; 
+ Thu, 05 Nov 2026 00:48:53 -0800 (PST)
+Received: from [192.168.68.102] ([152.234.122.253])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-54b10a6ca24sm47434901cf.14.2026.11.05.00.48.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Nov 2026 00:27:21 -0800 (PST)
-Message-ID: <45433754-3cea-41fc-9f45-65a328d0efca@oss.qualcomm.com>
-Date: Thu, 5 Nov 2026 00:27:18 -0800
+ Thu, 05 Nov 2026 00:48:52 -0800 (PST)
+Message-ID: <c5eb34c2-dfd4-49aa-96d0-9ac162d13204@oss.qualcomm.com>
+Date: Thu, 5 Nov 2026 05:48:48 -0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/15] hw: expand DEFINE_MACHINE to explicit TypeInfo
- registration
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Yonggang Luo <luoyonggang@gmail.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- Anthony PERARD <anthony@xenproject.org>,
- Felipe Balbi <balbi@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Antony Pavlov <antonynpavlov@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Max Filippov <jcmvbkbc@gmail.com>, Niek Linnenbank
- <nieklinnenbank@gmail.com>,
- xen-devel@lists.xenproject.org, qemu-riscv@nongnu.org,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-ppc@nongnu.org,
- Alexandre Iooss <erdnaxe@crans.org>, Weiwei Li <liwei1518@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
- <chigot@adacore.com>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Frederic Konrad <konrad.frederic@yahoo.fr>,
- Palmer Dabbelt <palmer@dabbelt.com>, Peter Maydell
- <peter.maydell@linaro.org>, Chao Liu <chao.liu@processmission.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>, qemu-arm@nongnu.org
-References: <20261030151539.1872-1-luoyonggang@gmail.com>
- <d1db54c6-b802-676a-7779-0c2c63f5f807@eik.bme.hu>
- <aa70e94c-d9a8-41c9-850f-7ded87f7f327@oss.qualcomm.com>
- <aumYOBw-nKQAWdYK@redhat.com>
- <CAE2XoE8Xwevk523OfB+GgwbRu0iVnyD4VNOx81rj7J7F5aq=OA@mail.gmail.com>
- <54851326-3627-2b86-57d6-c338ed4e4b50@eik.bme.hu>
- <CAE2XoE_P2mZAT8wZwzFsTqJTK8nxNSSqJRrOM2T-AJkQjwJHBw@mail.gmail.com>
- <aunnuwhsx9ZOOXBX@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH 1/6] hw/riscv: do not realize the device in
+ riscv_create_iommu_sys()
+To: Alistair Francis <Alistair.Francis@wdc.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>,
+ "chao.liu@processmission.com" <chao.liu@processmission.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
+References: <20261023160913.24992-1-daniel.barboza@oss.qualcomm.com>
+ <20261023160913.24992-2-daniel.barboza@oss.qualcomm.com>
+ <3bdd1bbf2a30ce25c4019b0ac4f3f6ab95058715.camel@wdc.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <aunnuwhsx9ZOOXBX@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <3bdd1bbf2a30ce25c4019b0ac4f3f6ab95058715.camel@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDAzMyBTYWx0ZWRfXxmzaJcUa5vYg
- 4y9zwRB67MEALtW7pPa5WVdzsj0dKuBNGoBnKVG2k7z50U+2wah2MCxDuoVnoKWyZe9Kow7cVby
- h0xp/aZVqQVIPgnp98HW+10TasGkYlT3LAmYtcmwPRyKGu1T8db/wJqBMBGWO3YR2K/8KXpQBT7
- 7ktN2kI4IQzRhXFcMrodc7zQD4QW+iDLnsMolO7AxLSqabJ/8LpH7YVM/k80J2yOsmfldJwQbyQ
- TVhoZhckBuyWdolbNly5cDB4AAnadS2mqU/u0vd6k8UvE9Q6mGmE2Hl72sThGa5zOifGnjEMUdS
- U6LTAXSR2EISSIDJfFIzdvoKA/d1fQ3tXg2RnhWFWHP5A/nFgExUJS6QepbhMOnHtj0Ggx88yee
- Z7VGzqekIw3wXR1Ieu6vVagTuN3D2w++MFmMZb21RxkVUAfCX1ScaRREuDxD0CKCA8HB2hiwDS+
- t2yvDN4uV1s+vxK1Elg==
-X-Authority-Analysis: v=2.4 cv=KLLPn1Fo c=1 sm=1 tr=0 ts=6aec3dec cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-ORIG-GUID: R84d6xvWJZa1rqPmdgfg1VyiSltvw5-3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDAzNCBTYWx0ZWRfX6A1rvcqXa4OE
+ MGIc0rXVQMXv0QAMavFzTJS5mQsi3PwiEQeWLhvFktnGsv3pV/v/5eabOma5y7YRemWL5BlJYAq
+ x3mqvD0u9+aopRP5qc6CDLD9pJL6a+kkql8u3oA4zhVgwZ8agco44dffDVBudRPXV+6OfyTHNkd
+ n7hQtG/ol8XgjRLo7P2hD25Hv7vExlFevtqJeDfMl0vEufrjiavuSEr8t3ifAOYTyuG2o0E2TLa
+ NOckgp/7alimtLvAu9N7PMMrdZ0RGs3EZrDt+HgAEEmjrOCb7WGsKiRJrAuqVvzZZ4c7Brw/p6F
+ Xo/piZnyTEBOWR0iav5sTqC2rx0kuNt8ZAUA4MinZCbo/+S0c8WbVaGUYzfy6B0rvYprXMoOt/K
+ yTvDVOYoyTATPPFQUSBaujDP2yF5Ncy6lDczp9A1ux0DQ3O9SehqZG0TpQH0B02HpJZZxWxPhf5
+ hqrpzV9Oc90oerWQdgw==
+X-Authority-Analysis: v=2.4 cv=N628hG9B c=1 sm=1 tr=0 ts=6aec42f7 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=LQvE5zGBNe+6ot3hfEwogQ==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=20KFwNOVAAAA:8 a=sYqyBgSLRBUY3L6MHRUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=vr4QvYf-bLy2KjpDp97w:22
-X-Proofpoint-ORIG-GUID: _s6n7pH61rdBLsCDXQIQQ-LRYpisDrbD
-X-Proofpoint-GUID: _s6n7pH61rdBLsCDXQIQQ-LRYpisDrbD
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDAzMyBTYWx0ZWRfXz2DtUiHPRG3M
- qicVaitVIcuY25iaFE+a1VeRxulRyGmRBjJ+YdMNZjhpn2yO7qBHLtgYTXViAPavqNFBagUUIo3
- yjWXGC6G8Aw1p7bAjHwYJnqAm6lMz0A=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=hPZfh_vYXEPJFLOR3nUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: R84d6xvWJZa1rqPmdgfg1VyiSltvw5-3
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDAzNCBTYWx0ZWRfX3OB0UQAzn9i1
+ a3P+iz7IId5IIE23cgeGh/PrZNHMpjen6eLkjMk3Bgx2i84RhuTPehydfpYfboLRly1esFOAMDc
+ vBbMWs6Qjamrh0gOpmZQM8fFePvvKPw=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-05_02,2026-11-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 clxscore=1015 phishscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
- definitions=main-2611050033
+ priorityscore=1501 malwarescore=0 bulkscore=0 adultscore=0 clxscore=1015
+ impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611050034
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -191,119 +159,140 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/3/2026 5:55 AM, Daniel P. Berrangé wrote:
-> On Tue, Nov 03, 2026 at 09:48:44PM +0800, Yonggang Luo wrote:
->> On Tue, Nov 3, 2026 at 9:23 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>>
->>> On Tue, 3 Nov 2026, Yonggang Luo wrote:
->>>> On Tue, Nov 3, 2026 at 4:16 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
->>>>>
->>>>> On Fri, Oct 30, 2026 at 05:51:44PM -0800, Pierrick Bouvier wrote:
->>>>>> On 10/30/2026 4:09 PM, BALATON Zoltan wrote:
->>>>>>> On Fri, 30 Oct 2026, Yonggang Luo wrote:
->>>>>>>> DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED hide the TypeInfo and the
->>>>>>>> type_init
->>>>>>>> function that calls type_register_static(). A later change needs to
->>>>>>>> pass a
->>>>>>>
->>>>>>> That's the point of the macro to hide the boiler plate code.
->>>>>>>
->>>>>>>> target mask into that registration, and the macros have no parameter
->>>>>>>> for it.
->>>>>>>
->>>>>>> Couldn't you just change the macros to take that parameter instead of
->>>>>>> expanding it everywhere?
->>>>>>>
->>>>>>
->>>>>> Problem of macros is that they don't have default parameters, so you
->>>>>> need variants for everything:
->>>>>>
->>>>>> DEFINE_MACHINE
->>>>>> DEFINE_MACHINE_EXTENDED
->>>>>> DEFINE_MACHINE_WITH_INTERFACES
->>>>>> DEFINE_MACHINE_WITH_INTERFACE_ARRAY
->>>>>> and now would need a new variant, with variant for other existing ones.
->>>>>>
->>>>>> In the end, it's just simpler to remove this and add the boilerplate.
->>>>>> It's written once and never modified, so using a macro just save typing
->>>>>> those lines once.
->>>>>
->>>>> For each machine, it is only written once, but we add machines
->>>>> over time, and every time a new machine is added the code style
->>>>> is slightly different. We introduced all the variuos DEFINE_*
->>>>> macros for QOM to better ensure consistent style and usage as
->>>>> new code is added over time.
->>>>
->>>> I understand that the DEFINE_* macros are bloating because of this.
->>>> Indeed currently the only two macros used are "DEFINE_MACHINE" and
->>>> "DEFINE_MACHINE_EXTENDED"
->>>
->>> There are a few machines using some others but these are the most used.
->>> That suggests maybe we should change the convenience wrappers to match
->>> what machines need but DEFINE_MACHINE_EXTENDED is meant to be the one that
->>> allows all parameters which should be rarely needed.
->>>
->>>> ; each time people want to add a new attribute, the macros is twiced.
->>>
->>> Not necessarily. The SECURE parameter did that to preserve previous
->>> behaviour but if you add new parameter changing all callers (which is the
->>> same as expanding the macro that would also change all callers) then it's
->>> just a new parameter added not changing the number of DEFINE_MACHINE*
->>> wrappers. Rearranging the wrappers to make DEFINE_MACHINE_EXTENDED used
->>> less is an independent change.
->>>
->>>> And the usage of DEFINE_MACHINE_EXTENDED is rare and can be replaced
->>>> with DEFINE_TYPES or TypeInfo
->>>> and be more explicit. When we used as macro parameter, we need think
->>>
->>> But that defies the purpose of hiding the QOM boiler plate as much as
->>> possible. New people are confused by QOM and it's easier for them to look
->>> up documentation on the DEFINE_MACHINE* macros to see what parameter is
->>> what and not care about how it's stored in QOM TypeInfo or what is that
->>> at all.
->>>
->>>> what's that parameter means, and for
->>>> TypeInfo, we can directly know what that member is about(because we
->>>> are assigned with the member name).
->>>
->>> The parameter also has a name and documentation so it's not simpler to
->>> look up TypeInfo than look at the macro definition or docs. In fact it's
->>> harder to guess from TypeInfo as then you also need to get into QOM.
->>>
->>>> That's why I suggest keeping a single DEFINE_MACHINE, just like
->>>> DEFINE_TYPES; as they are the most
->>>> used macros(and simple enough), and won't suffer from changes much.
->>>
->>> That means exposing all the boiler plate for all machines other than the
->>> simplest case. I think it would be better to keep DEFINE_MACHINE_EXTENDED
->>> but maybe rethink the existing wrappers and drop unused ones and maybe add
->>> new ones that reduce the usage of DEFINE_MACHINE_EXTENDED but still keep
->>> the boiler plate hidden.
+
+
+On 11/5/2026 1:58 AM, Alistair Francis wrote:
+> On Fri, 2026-10-23 at 13:09 -0300, Daniel Henrique Barboza wrote:
+>> The riscv-iommu-sys device inherits all properties from its
+>> associated
+>> riscv-iommu device via qdev_alias_all_properties() during sys_init().
 >>
->> Thanks, I'll go this way, remove unused macros, and keep DEFINE_MACHINE_EXTENDED
->> and extend both DEFINE_MACHINE_EXTENDED DEFINE_MACHINE supports
->> "targets" or "arch_mask" parameter.
+>> We're also providing riscv_create_iommu_sys(), a helper to
+>> instantiate
+>> the device and avoid duplicating code between boards.  In its current
+>> state the helper is realizing the device before returning it to the
+>> caller, prevents any additional setup of the device (we can't change
+>> device props after realize).
+>>
+>> Split the realization code from the helper and make the boards
+>> realize
+>> the device manually.  It's a small inconvenience to pay to be able to
+>> config the iommu-sys device.
+>>
+>> Signed-off-by: Daniel Henrique Barboza
+>> <daniel.barboza@oss.qualcomm.com>
+>> ---
+>>   hw/riscv/riscv-iommu-sys.c     | 3 +--
+>>   hw/riscv/server_platform_ref.c | 7 +++++--
+>>   hw/riscv/virt.c                | 9 +++++++--
+>>   3 files changed, 13 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
+>> index 258c171efd..190ab0b646 100644
+>> --- a/hw/riscv/riscv-iommu-sys.c
+>> +++ b/hw/riscv/riscv-iommu-sys.c
+>> @@ -217,6 +217,7 @@ static void riscv_iommu_sys_init(Object *obj)
+>>       riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_BOTH);
+>>   }
+>>   
+>> +/* Note: the returned iommu_sys device needs to be realized.  */
 > 
-> Given that we don't need to do general per-arch type filtering in
-> QOM, we could just move 'is_available' out of TypeInfo, and into the
-> MachineClass, so it is a regular class level property, which can be
-> set in the class_init methods, and thus avoid any changes to the
-> DEFINE_MACHINE macros.
->
+> Is this really necessary just to set hpm-counters?
+> 
+> It seems like this is a bit brittle for one property
 
-Some cpus need it also, and it's used for filtering purpose at this time
-(to avoid duplication at registration). We already depend on this behavior.
+If we want to just set 'hpm_counters' we can add a parameter in riscv_create_iommu_sys()
+and be done with it.  In case we have the need to set other things in the future we can
+add additional parameters, even an 'IOMMUProps' struct like we do with the FDT stuff.
 
-> With regards,
-> Daniel
+Or we can do what we're doing here and let the board set whatever they want by splitting
+init() and realize() of the device.  Both are fine to me.
 
-Regards,
-Pierrick
+
+Thanks,
+Daniel
+
+> 
+> Alistair
+> 
+>>   DeviceState *riscv_create_iommu_sys(DeviceState *mmio_irqchip,
+>>                                       hwaddr addr, int base_irq,
+>>                                       bool is_32_bit)
+>> @@ -237,8 +238,6 @@ DeviceState *riscv_create_iommu_sys(DeviceState
+>> *mmio_irqchip,
+>>                                is_32_bit ? 34 : 56,
+>>                                &error_fatal);
+>>   
+>> -    sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys),
+>> &error_fatal);
+>> -
+>>       return iommu_sys;
+>>   }
+>>   
+>> diff --git a/hw/riscv/server_platform_ref.c
+>> b/hw/riscv/server_platform_ref.c
+>> index 5f485b1c79..e9536515da 100644
+>> --- a/hw/riscv/server_platform_ref.c
+>> +++ b/hw/riscv/server_platform_ref.c
+>> @@ -481,6 +481,7 @@ static void
+>> rvserver_ref_machine_init(MachineState *machine)
+>>       MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
+>>       MemoryRegion *reset_syscon_io = g_new(MemoryRegion, 1);
+>>       DeviceState *mmio_irqchip, *pcie_irqchip;
+>> +    DeviceState *iommu_sys;
+>>       int i, base_hartid, hart_count;
+>>       int socket_count = riscv_socket_count(machine);
+>>       int imsic_bits;
+>> @@ -635,8 +636,10 @@ static void
+>> rvserver_ref_machine_init(MachineState *machine)
+>>           create_fdt(s, memmap);
+>>       }
+>>   
+>> -    riscv_create_iommu_sys(mmio_irqchip, s-
+>>> memmap[RVSERVER_IOMMU_SYS].base,
+>> -                           IOMMU_SYS_IRQ, false);
+>> +    iommu_sys = riscv_create_iommu_sys(mmio_irqchip,
+>> +                                       s-
+>>> memmap[RVSERVER_IOMMU_SYS].base,
+>> +                                       IOMMU_SYS_IRQ, false);
+>> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys),
+>> &error_fatal);
+>>   
+>>       s->machine_done.notify = rvserver_ref_machine_done;
+>>       qemu_add_machine_init_done_notifier(&s->machine_done);
+>> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+>> index d4b501802f..39381cb21d 100644
+>> --- a/hw/riscv/virt.c
+>> +++ b/hw/riscv/virt.c
+>> @@ -940,8 +940,13 @@ static void virt_machine_init(MachineState
+>> *machine)
+>>       }
+>>   
+>>       if (virt_is_iommu_sys_enabled(s)) {
+>> -        riscv_create_iommu_sys(mmio_irqchip, s-
+>>> memmap[VIRT_IOMMU_SYS].base,
+>> -                               IOMMU_SYS_IRQ, riscv_is_32bit(&s-
+>>> soc[0]));
+>> +        DeviceState *iommu_sys;
+>> +
+>> +        iommu_sys = riscv_create_iommu_sys(mmio_irqchip,
+>> +                                           s-
+>>> memmap[VIRT_IOMMU_SYS].base,
+>> +                                           IOMMU_SYS_IRQ,
+>> +                                           riscv_is_32bit(&s-
+>>> soc[0]));
+>> +        sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys),
+>> &error_fatal);
+>>       }
+>>   
+>>       s->machine_done.notify = virt_machine_done;
+
 
