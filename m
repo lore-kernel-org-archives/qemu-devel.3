@@ -1,88 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79A260703C1
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 17:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FCA606A332
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 17:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=QRvJP9EJ
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=ea7423Vh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP1Ay-00073c-4O; Thu, 05 Nov 2026 12:23:00 -0500
+	id 1xP1Ax-00073Q-R4; Thu, 05 Nov 2026 12:22:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1Aw-00072z-9O
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:58 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1Av-00072h-B6
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:57 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1Au-0007g3-OH
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:58 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4a1fbd52ab6so15705695e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 09:22:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1At-0007fm-8G
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:57 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4a35a60499eso17476315e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 09:22:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793899375; x=1794504175; darn=nongnu.org;
+ d=openvz.org; s=google; t=1793899374; x=1794504174; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=rUHBBG2Y2pP08Lhunqks2CGSbRSyJYpgkO1393TgZeY=;
- b=QRvJP9EJ+qvhdw8KbuWn/a9w+K2UIKmea0nLXNupm2ANVm7FHAzhIkGgHTVzZeptSZ
- q6/RQ6Tqqr8eJ3v7VCl578Is0O4vq2rULT1Fox0oe2cBt/YZxzWr3FBkAriyN4UL+fQD
- k5iZlsUU1/D6G7ucsR18RUBxHb4dgmsHiyLe/l0xwj4tFrsxZo+1CZSXupmOexkMJolB
- QOT481D4zU07Wtuq50Z//oGgq/HOQ89b6Wlc4yNRCFFUVqkqQbZHAe+px3oPg4xZeZZA
- J658xdZ2bgSZIRpW4cKRKmdFmYjMc3xRoqv8Ktv55wH36+Oda/sPnbZMaBfOGVpyxHbR
- OHNA==
+ bh=eI9HPtQC+pcKKIYpVEiubZEEEhj4+2GZLfw7sUEK1YA=;
+ b=ea7423VhXpCPKKrLf6Bv/EdkQmCXRb7k7M/2dEOYHBIKkwxHs7zN99uRzDoqapVHdO
+ 7jzHs/GXjj0CQzslAZY+O52LgAVI4qiEJTi57rCYBt1w0ApADPEFYraS7hnwlyhhk5Hp
+ whqflITN48bk2WnOjhe27QDdHDcCy0dse6UTk1Bou+vcLaLe7NwLbZ34TxQ/tyHsMC3j
+ nupGJUEzknEvIyyQHhwVxXUMTCHwgPHduSJ1Phe3+HfJHC/RLECabmQLGTeFQZhEbpar
+ MQU0uoq1vMVwyEs7qZgigKfDSuuU/xSuniglwsX+DBkj4LraJ10s/qJ+WoFyENHCfWEs
+ 7MZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793899375; x=1794504175;
+ d=1e100.net; s=20260707; t=1793899374; x=1794504174;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=rUHBBG2Y2pP08Lhunqks2CGSbRSyJYpgkO1393TgZeY=;
- b=LXuRd3MZOs7LVnQPrrpE6KaR4cIuUy8kZqromme8ylAjpmigYkVoJyWt95QmjCdqvA
- JwsFwdlNdPAMFH3D8uqDyt+v9UNnZ9CT/48JNcJts8DGsRigMUdvOOqmPbEMm9ZjeP31
- d9jgClen1526YJXyS9oHZM+UNoEkvSQwwMiKiITE0xev1yOFe5kwCCGNulu/0WDhz47H
- 5ESVy/TY64uOlTz6PTwgIln6go+jladEui4YJC7KgP1RPocd1vlmQ0FYC3Al63Tnr9c8
- ZZUJNQ+9WlKPA1SAKErG4UK9vtWnR7OM3LzhibkE/MoEvUdamdJk1/X9je82XcQOwuZY
- NJIQ==
-X-Gm-Message-State: APuU4Z9aQpjmnV+AzQVuJFovND7rGT74R+XPNNf6ZYUuFV/27h1TwMFH
- F3LdDu/6LQkHdGFkS2sAK7CYcS5YrSYfGF2ar3IfAn7lrwXOC6vGBUWVpz/Q8+2wU0zg2MbTVKz
- yWMCb
-X-Gm-Gg: AYBFou04Ik4xMNgbxaYzdqvVAP9TcMOkKBs2a8Ll9yW0L7QyZ7OsTmuw0W8PxYWGfer
- m40E00Rg3u4uzPJCAkUew7sk9UyaCrmOLpOef5KHMyy+5UXgERgb9KryVpXyRjQwLFbStnjb2Rr
- 6VO1jbFnQRGkcazi91lbDIJNpjHCt3+sLK5xlDe7QQAmypkAmSiXmN0JBwjk0TPZjiOVGHqf/9f
- uf5ha3+hK+IOGA112lG0pikBZdZyRg6MF44Fla+5UVWuLKHj1zyWzXqDxmUQOtfNmQMFg1Ku8aT
- rE3Mg62A4tJ1VAkboHvz0BYcI4Hb8hVGMEO5Psy1DMIPpB6E6VF12yJmZP8wVdsx3iV19cl9CA/
- tG0sDXisfYMpj1anRQBN+eGadNGlLVb5PGZx5PPpCaEuw+EaAkhq4gfh294/ARGCaC/3FaM61Q8
- Ts3vgUjG8VV/F0dnqc+p0u08S1s6W/a7624bWLl3SlWxR0oYmnrnOkmjhHx6rQJDsWHl0S37DbK
- S43mPQkF5YaNSgE3fz24tfgScFJpMmXW9TtcCN0kq830NkeOoI2ec3kCdq6kWykPKpIxuaU9t+c
- HhRW77u9DJH55llalr4WJh1JXQ==
-X-Received: by 2002:a05:600c:a118:b0:4b6:b2cf:3088 with SMTP id
- 5b1f17b1804b1-4b6b2cf3423mr4975835e9.14.1793899375347; 
- Thu, 05 Nov 2026 09:22:55 -0800 (PST)
+ bh=eI9HPtQC+pcKKIYpVEiubZEEEhj4+2GZLfw7sUEK1YA=;
+ b=1lq8qsoxWHrQAGNZt9EzUw+zMj2VlvEXXj37QjHarFuRMIOV4bIPqB0bdCrCAgnrSF
+ ixHnCzXBTB1+adhf6PEF+7AvjHdKm1drgonZt3Lq/pkhCPLUrAQ+GF/GuKmv5Eld5xhP
+ lKyfEcgiCYwneKvDrPyqL4IQmmVnxAHFSb2lWllk4ZwxLUxfedkN8qoFdG58n0Pvt/ld
+ OZ7Ltfqj3qkso7Rn4jtMQn5GQgJiRL7ajKukDAm8yJLdk8VfUXerop8fAtiy8fKV7Sa4
+ FsGN7qXjTAIzrSkYDk+He3ufzhtsrVR5MnyeMdGcNpDnrgkV70ARfUexd9iOQvPSiHdR
+ Azdw==
+X-Gm-Message-State: APuU4Z/KyEv2MvmDMqlsUXv/E0EnZGARraecSO2Bs5P8p/EfWjbT3FDt
+ /5N89muF82i56pmpb1B4e82rqaNobcmGakkOltD3IM4me35gnWqNfJ5Vflcs9ec3QWN4vp4QkJe
+ th/kS
+X-Gm-Gg: AYBFou0WLlkIgrih2P4SAZpy+NqSQMMY+t/LVsfKZuoyseStEgBDGCgD082cEL1pgnp
+ nsZnENePbcvewzKyhwNAuEMtsY5SaSCBiytVdN1jcDTezTAXmo5CF6JYfC5yxyeZHiE3qhpSnci
+ 7a4qgVWw2zZwoGpbQjqhJH0kgWizk5EOT9m/i8dyhH3AngjAqmLf7Gv1ojKZ9ou8o+gHKaO5jib
+ nv7KdZLDRnuo9NYo6exPoMCSmSBNgajFqXswXoPh9tQ/W05FZZpRJVGPwBKbV5zsF5hHyI7Rrhi
+ VhVxyT0py+SlLZpaLzwoaLIDvf/ZoB4os5Yu6DISbAtjTU/9kdun508uygxX94WwdW/0aHMQhad
+ 5rv+OJaP0Qhhz188UBi1v5O4gw6/DzhYZ42HatpHVi3Kj81uTSddsoF0F8/nQ3Vbey120q8gn5V
+ 6cTpgx5cCM2br/QhZED7E5oTEOtGgkmt1mH3hw0pUEUZgPP4ho8QCedgD9lzAk9Tu3P5MC3afhI
+ 1bSO8GuebIjWb6sn0zHT6shLa6ibdeZrDXKFwhoMdSlUKsdW2RG/KHNUVSCWfZTiwZBkgRV5eph
+ WRIrv/f+Kqf6d8EzoNi6ndr8rMA=
+X-Received: by 2002:a05:600d:84ca:10b0:4b4:49d7:bc25 with SMTP id
+ 5b1f17b1804b1-4b449d7be7fmr68546075e9.21.1793899373779; 
+ Thu, 05 Nov 2026 09:22:53 -0800 (PST)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:3848:9c8a:8cf7:6236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b56e2ae72dsm130632255e9.3.2026.11.05.09.22.53
+ 5b1f17b1804b1-4b56e2ae72dsm130632255e9.3.2026.11.05.09.22.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 09:22:54 -0800 (PST)
+ Thu, 05 Nov 2026 09:22:53 -0800 (PST)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: den@openvz.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>,
  "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Zhao Liu <zhao1.liu@intel.com>, "Denis V. Lunev" <den@virtuozzo.com>
-Subject: [PATCH v2 6/6] target/i386: batch the Hyper-V SynIC page remaps on
- load
-Date: Thu,  5 Nov 2026 18:22:44 +0100
-Message-ID: <20261105172244.2804598-7-den@openvz.org>
+Subject: [PATCH v2 5/6] hw/hyperv: split the SynIC page mapping from its state
+ update
+Date: Thu,  5 Nov 2026 18:22:43 +0100
+Message-ID: <20261105172244.2804598-6-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260911142345.3999518-1-den@openvz.org>
 References: <20260911142345.3999518-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=den@openvz.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,56 +110,202 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Denis V. Lunev <den@openvz.org>
 
-Restoring a guest which has programmed the SynIC maps its message and
-event pages once per vCPU, and each map rebuilds the flatview, so the
-cpu sections cost vCPU count times the number of regions in the
-machine.
+synic_update() records the SynIC control bit and page addresses and maps
+the message and event pages at those addresses in one go. Loading the
+SynIC wants the two apart: VMBus creates its SINT routes from the
+control bit in its own post_load, so the state must be restored with
+the CPU section, while the mapping can wait.
 
-Keep restoring the control bit and page addresses in post_load, and
-move only the mapping to post_load_mr_update. VMBus still finds the
-control bit set when its post_load creates SINT routes, and nothing in
-the load reaches the pages through the address space. The saving
-scales with vCPU count.
+Add hyperv_synic_update_state() and hyperv_synic_update_mr(), with x86
+wrappers. hyperv_synic_update() keeps doing both. The mapping now
+compares where the page is mapped with the recorded address, rather
+than the old recorded address with the new one, which is the same
+thing while both are updated together.
 
-CC: Peter Xu <peterx@redhat.com>
-CC: Fabiano Rosas <farosas@suse.de>
+No functional change.
+
 CC: Paolo Bonzini <pbonzini@redhat.com>
 CC: Marcelo Tosatti <mtosatti@redhat.com>
 CC: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+CC: Peter Xu <peterx@redhat.com>
+CC: Fabiano Rosas <farosas@suse.de>
 CC: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
 ---
- target/i386/machine.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ hw/hyperv/hyperv.c            | 70 ++++++++++++++++++++++++-----------
+ include/hw/hyperv/hyperv.h    |  3 ++
+ target/i386/kvm/hyperv-stub.c |  8 ++++
+ target/i386/kvm/hyperv.c      | 16 +++++++-
+ target/i386/kvm/hyperv.h      |  2 +
+ 5 files changed, 76 insertions(+), 23 deletions(-)
 
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index b5c6b127c9..ebfba102f8 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -863,16 +863,22 @@ static bool hyperv_synic_enable_needed(void *opaque)
- static int hyperv_synic_post_load(void *opaque, int version_id)
- {
-     X86CPU *cpu = opaque;
--    hyperv_x86_synic_update(cpu);
-+    hyperv_x86_synic_update_state(cpu);
-     return 0;
+diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
+index 900ff80213..307e7a40ad 100644
+--- a/hw/hyperv/hyperv.c
++++ b/hw/hyperv/hyperv.c
+@@ -65,33 +65,61 @@ bool hyperv_is_synic_present(CPUState *cs)
+     return get_synic(cs);
  }
  
-+static void hyperv_synic_post_load_mr_update(void *opaque)
++static void synic_map_page(MemoryRegion *mr, hwaddr addr)
 +{
-+    hyperv_x86_synic_update_mr(opaque);
++    if (memory_region_is_mapped(mr)) {
++        if (mr->addr == addr) {
++            return;
++        }
++        memory_region_del_subregion(get_system_memory(), mr);
++    }
++    if (addr) {
++        memory_region_add_subregion(get_system_memory(), addr, mr);
++    }
 +}
 +
- static const VMStateDescription vmstate_msr_hyperv_synic = {
-     .name = "cpu/msr_hyperv_synic",
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .needed = hyperv_synic_enable_needed,
-     .post_load = hyperv_synic_post_load,
-+    .post_load_mr_update = hyperv_synic_post_load_mr_update,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT64(env.msr_hv_synic_control, X86CPU),
-         VMSTATE_UINT64(env.msr_hv_synic_evt_page, X86CPU),
++static void synic_update_mr(SynICState *synic)
++{
++    synic_map_page(&synic->msg_page_mr, synic->msg_page_addr);
++    synic_map_page(&synic->event_page_mr, synic->event_page_addr);
++}
++
++static void synic_set_state(SynICState *synic, bool sctl_enable,
++                            hwaddr msg_page_addr, hwaddr event_page_addr)
++{
++    synic->sctl_enabled = sctl_enable;
++    synic->msg_page_addr = msg_page_addr;
++    synic->event_page_addr = event_page_addr;
++}
++
+ static void synic_update(SynICState *synic, bool sctl_enable,
+                          hwaddr msg_page_addr, hwaddr event_page_addr)
+ {
++    synic_set_state(synic, sctl_enable, msg_page_addr, event_page_addr);
++    synic_update_mr(synic);
++}
+ 
+-    synic->sctl_enabled = sctl_enable;
+-    if (synic->msg_page_addr != msg_page_addr) {
+-        if (synic->msg_page_addr) {
+-            memory_region_del_subregion(get_system_memory(),
+-                                        &synic->msg_page_mr);
+-        }
+-        if (msg_page_addr) {
+-            memory_region_add_subregion(get_system_memory(), msg_page_addr,
+-                                        &synic->msg_page_mr);
+-        }
+-        synic->msg_page_addr = msg_page_addr;
++void hyperv_synic_update_state(CPUState *cs, bool sctl_enable,
++                               hwaddr msg_page_addr, hwaddr event_page_addr)
++{
++    SynICState *synic = get_synic(cs);
++
++    if (!synic) {
++        return;
+     }
+-    if (synic->event_page_addr != event_page_addr) {
+-        if (synic->event_page_addr) {
+-            memory_region_del_subregion(get_system_memory(),
+-                                        &synic->event_page_mr);
+-        }
+-        if (event_page_addr) {
+-            memory_region_add_subregion(get_system_memory(), event_page_addr,
+-                                        &synic->event_page_mr);
+-        }
+-        synic->event_page_addr = event_page_addr;
++
++    synic_set_state(synic, sctl_enable, msg_page_addr, event_page_addr);
++}
++
++void hyperv_synic_update_mr(CPUState *cs)
++{
++    SynICState *synic = get_synic(cs);
++
++    if (!synic) {
++        return;
+     }
++
++    synic_update_mr(synic);
+ }
+ 
+ void hyperv_synic_update(CPUState *cs, bool sctl_enable,
+diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
+index 23091301d0..fcad9efb5b 100644
+--- a/include/hw/hyperv/hyperv.h
++++ b/include/hw/hyperv/hyperv.h
+@@ -80,6 +80,9 @@ void hyperv_synic_add(CPUState *cs);
+ void hyperv_synic_reset(CPUState *cs);
+ void hyperv_synic_update(CPUState *cs, bool enable,
+                          hwaddr msg_page_addr, hwaddr event_page_addr);
++void hyperv_synic_update_state(CPUState *cs, bool enable,
++                               hwaddr msg_page_addr, hwaddr event_page_addr);
++void hyperv_synic_update_mr(CPUState *cs);
+ bool hyperv_is_synic_enabled(void);
+ bool hyperv_is_synic_present(CPUState *cs);
+ 
+diff --git a/target/i386/kvm/hyperv-stub.c b/target/i386/kvm/hyperv-stub.c
+index 767a4c7e1a..c4d18f2cf5 100644
+--- a/target/i386/kvm/hyperv-stub.c
++++ b/target/i386/kvm/hyperv-stub.c
+@@ -53,6 +53,14 @@ void hyperv_x86_synic_update(X86CPU *cpu)
+ {
+ }
+ 
++void hyperv_x86_synic_update_state(X86CPU *cpu)
++{
++}
++
++void hyperv_x86_synic_update_mr(X86CPU *cpu)
++{
++}
++
+ void hyperv_x86_set_vmbus_recommended_features_enabled(void)
+ {
+ }
+diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
+index 420c76b5ff..08001b26c5 100644
+--- a/target/i386/kvm/hyperv.c
++++ b/target/i386/kvm/hyperv.c
+@@ -42,7 +42,7 @@ void hyperv_x86_synic_reset(X86CPU *cpu)
+     hyperv_synic_reset(CPU(cpu));
+ }
+ 
+-void hyperv_x86_synic_update(X86CPU *cpu)
++void hyperv_x86_synic_update_state(X86CPU *cpu)
+ {
+     CPUX86State *env = &cpu->env;
+     bool enable = env->msr_hv_synic_control & HV_SYNIC_ENABLE;
+@@ -50,7 +50,19 @@ void hyperv_x86_synic_update(X86CPU *cpu)
+         (env->msr_hv_synic_msg_page & TARGET_PAGE_MASK) : 0;
+     hwaddr event_page_addr = (env->msr_hv_synic_evt_page & HV_SIEFP_ENABLE) ?
+         (env->msr_hv_synic_evt_page & TARGET_PAGE_MASK) : 0;
+-    hyperv_synic_update(CPU(cpu), enable, msg_page_addr, event_page_addr);
++    hyperv_synic_update_state(CPU(cpu), enable, msg_page_addr,
++                              event_page_addr);
++}
++
++void hyperv_x86_synic_update_mr(X86CPU *cpu)
++{
++    hyperv_synic_update_mr(CPU(cpu));
++}
++
++void hyperv_x86_synic_update(X86CPU *cpu)
++{
++    hyperv_x86_synic_update_state(cpu);
++    hyperv_x86_synic_update_mr(cpu);
+ }
+ 
+ static void async_synic_update(CPUState *cs, run_on_cpu_data data)
+diff --git a/target/i386/kvm/hyperv.h b/target/i386/kvm/hyperv.h
+index a393a5d428..a0aee0cff3 100644
+--- a/target/i386/kvm/hyperv.h
++++ b/target/i386/kvm/hyperv.h
+@@ -26,6 +26,8 @@ int hyperv_x86_synic_add(X86CPU *cpu);
+ int hyperv_enable_synic(X86CPU *cpu);
+ void hyperv_x86_synic_reset(X86CPU *cpu);
+ void hyperv_x86_synic_update(X86CPU *cpu);
++void hyperv_x86_synic_update_state(X86CPU *cpu);
++void hyperv_x86_synic_update_mr(X86CPU *cpu);
+ 
+ void hyperv_x86_set_vmbus_recommended_features_enabled(void);
+ 
 -- 
 2.53.0
 
