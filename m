@@ -1,66 +1,65 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F038606A32E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54BC606A32E
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:16:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOtZZ-00006f-PV; Thu, 05 Nov 2026 04:15:53 -0500
+	id 1xOtZK-0007Cr-Ij; Thu, 05 Nov 2026 04:15:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtYe-00066A-Md
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:14:58 -0500
-Received: from mail-pf1-f170.google.com ([209.85.210.170])
+ id 1xOtYX-000635-Og
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:14:55 -0500
+Received: from mail-pj1-f43.google.com ([209.85.216.43])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtYc-0005WC-JO
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:14:56 -0500
-Received: by mail-pf1-f170.google.com with SMTP id
- d2e1a72fcca58-8a064fac8cbso1292427b3a.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:14:54 -0800 (PST)
+ id 1xOtYT-0005Vg-MZ
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:14:49 -0500
+Received: by mail-pj1-f43.google.com with SMTP id
+ 98e67ed59e1d1-3b0b3438540so413735a91.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:14:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793870093; x=1794474893;
+ d=1e100.net; s=20260707; t=1793870084; x=1794474884;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=WqbZUjEcz/I/D1nVZz+I6I8/ReCtwIeQack+dKdCEoE=;
- b=plYLVOgvIYDPf9hl2MC5WXPVEqoq1zpj1R48k6Anko1724G3P3s1Byq9Y7S2XaSaoV
- j1W0VEpT/17dpC/dEVdRvjoBYMujbyRR7ssuc8JmwkZCwGQTkW0IHb0D1emUhjYU0Nl3
- /KPxY4pOk1mIZR3bVddROchHh01zkxYlP2vQSjMAaLH9v1uGbL2tc+tnm/+j0rkdESXL
- 9KH3EV2HyBBg8wzy6wumA0LGsmSSLlZ3wzEfCvre/J65CBpABwiHoeKOz4BBiIigc2zv
- z1dmI2J/RJCU7P54qhx/85XPtG2kF+NsCiUoV55TYT4Qq9h/rMPx+Z3DNKewHbMrEF9C
- uMtA==
-X-Gm-Message-State: APuU4Z+MGVetF7Vnv5Jumak8Vx9sKnvMEzFtslkhu1WNgpCNIhl67TOX
- wktVRa8QBtbaN6OUPL/CtzTnzw01Ffv+a9/BTpqDiJ9mfW+WXx/QOdrnBuY9RgOL21Q=
-X-Gm-Gg: AYBFou2uGKwZ5Deu8C3mQ8TmFPna+26JEFrmxclsbwBy2wp0zmD12QNYgPJ9Ajswggu
- BpGhcUOFvD9nO1zstUnAVzlbySCNUcq3S6YuCMOzoXczwONia/D6z0T6fQgwpEoyIUmlJHlgbgc
- T95isQryeTV8AKp208o7pHqlXdQ5zNB8Q4ZhZWRTVwYyStAPl+9kXdgtJQK+WQYHkgWYvmv4jiH
- Ps32vPCqhtiQrVqfbLX7sxxA0f80GNIC2Fp20rLfdEKqI/3QS0dqixtH5Z/gDE2cmmyv89A13Uw
- D886vCPslJJSNuoqeCivBdLamdBBSyIZTp1XzHlORbd3NEDIKftGf9U4rEZm62a/28krUWOb+ZP
- K9gjDraf93sC5YMcuB01qBAYOSREL+IbBhVp3eSCSGPVh3p+w9+mHXSqRv4PmmR9Ca+4jVKkdyE
- UH9WpqEjLVaGd2Xll3KGV2JNhSGA8BFIT0Oy09Y33AJSFBgQgCnjZfUMh5qWMDIs0t8gCTySRS4
- PnV2GPJsOykAg42ECMEI/mEcC5YPxVopn+g9xIf1QN3Qj+zOTdfkF+SSedXRXEYbHsbBDxTW7fu
- CKNNx/8FLoaOM+yze9zMmw7JVp4aK23C41QqLID5UxX6qTdSC5OTMktG7df7lUa8m3R0po3/tCM
- JJVp6gS/oUtPUeLGm3RWSx/3bEX8=
-X-Received: by 2002:a05:6a21:150c:b0:3de:557e:5ea6 with SMTP id
- adf61e73a8af0-3e9289859d6mr15607994637.27.1793870093106; 
- Thu, 05 Nov 2026 01:14:53 -0800 (PST)
+ bh=CXR+/KAAps9Z3XarCtKZG/TlbEwKd0ihMMlC+D78HX8=;
+ b=VT2VhuXTgA6DtyCqiGDufSIqnmteJpelrv5DrGxLF0jxxm+BLYCLFszvZmPzq5F3k3
+ QE1e3TUdlNUg3UtfJ+Qbb0p14XJi3CHhDJSvYEBsAxeduT7P7EWEFdQoAg84QsI6Emls
+ XA38iynKNQDu1t06l6Siek+H6XFsg2PAjhpfW3DEm5NX02HJ1F7UQYbxQz16NfuxoRDN
+ vYDIYrGCdQFe1Pyt/n3RsUxHhrXLhYZw4dltNvG6dsmGcp/bIkS6WJ5ROaJDiOmy412k
+ 0+cx73X+Mglq0HrScqvfFd4XbVyBZ55BYH+9PfqiQNazYVqMhxUE/yL78BaJRdBJZ/53
+ tcmw==
+X-Gm-Message-State: APuU4Z88oihJyW9nL5s3mH+Zfz8JjUZe/Ur7AlQuQyaKcLDcMbXWtYsL
+ VWXml3njI78dKv5F1zAv4+0Y43A23KHeNLXEYWS8jnYlBloMFJCX8fFVSOzU44i23DM=
+X-Gm-Gg: AYBFou12R2zQdACBhBmWv711LDMKu/31Ur2vVkxBDkAA5kIqM/2SwKHAVjR1oen4Qdy
+ 56FQp4kR/ZYEzDBloRaYsvEeVg2uYKViOHx752dWLoPcwFvT8msnyOrEVR1b7TDm4Z2y7gkB5en
+ L3LwPxf2UacieFo6qPAOFG5GjdoGEg/JHrFPDzvM/G4wgfioQS0GzFoUaeWTuohZALa9RKWFQDu
+ TMUV6A/6voT/8S051d+8DaE0p6hQLpo2DcnXSLWTGBGDAwdDyYSLkXBi731Q4tJ+TvSgtPtztIL
+ L6/QucXDxadzZ0Y0Puh5rQrcQwdvMoRXpqPtwoOER+eSHCMl/rvFn7LFndruQ7n+pIJWz3FwBy4
+ PfSWwo/4tfF60mU4vHiuyfTlwKbS5JoVwjhpVi161cwswXLkur+3Wkbp8Xxu/LzZv1xYWuM358w
+ 0u3Csvsh4tdRU/7GmdOBJCS5A2l8SRQCwFZh8aSOBaSBwCzqlQlBLhFR6C6UmEIlVlEOsKgmEuA
+ AXoXKRc5/GwEx37GS9V5O+E6t5BfuWAwCCLnwcui5sG9z8fg/x2T20xOvb9YhK1cCIkmxBM5uGj
+ oMQsEAFWCVMayovYApttKaE0zu+GIwpFWwa9VpO2zx2S/dGT0xXWej4PDfJpaQFQlMnrL9TCq8H
+ z4cVDjDxK0DlonRrKj2pm0+qyef8=
+X-Received: by 2002:a17:90a:eb03:b0:3b0:92b2:2e74 with SMTP id
+ 98e67ed59e1d1-3b092b2333dmr3254207a91.62.1793870084104; 
+ Thu, 05 Nov 2026 01:14:44 -0800 (PST)
 Received: from localhost (118-163-122-149.hinet-ip.hinet.net.
  [118.163.122.149]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cdb46972143sm1863673a12.22.2026.11.05.01.14.50
+ 98e67ed59e1d1-3b0b31cd6c0sm2915351a91.13.2026.11.05.01.14.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 01:14:51 -0800 (PST)
-Date: Thu, 05 Nov 2026 17:13:02 +0800
-Subject: [PATCH 10/16] tests/qtest: ina238: add current/voltage/power
- monitor test
+ Thu, 05 Nov 2026 01:14:43 -0800 (PST)
+Date: Thu, 05 Nov 2026 17:13:01 +0800
+Subject: [PATCH 09/16] hw/sensor: ina238: add current/voltage/power monitor
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261105-sensor-ina23x-v1-10-5433ed104990@free.fr>
+Message-Id: <20261105-sensor-ina23x-v1-9-5433ed104990@free.fr>
 References: <20261105-sensor-ina23x-v1-0-5433ed104990@free.fr>
 In-Reply-To: <20261105-sensor-ina23x-v1-0-5433ed104990@free.fr>
 To: qemu-devel@nongnu.org
@@ -72,15 +71,15 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, eblot@meta.com,
  Laurent Vivier <lvivier@redhat.com>, Emmanuel Blot <emmanuel.blot@free.fr>, 
  Glenn Miles <milesg@linux.ibm.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793869976; l=7751;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793869976; l=32872;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=rF9YxoN8ES1gaJVSzaclqYjGbIV9qLP30Q9j6d+MnNc=;
- b=5r4TWHTWowFiz+3zBq4OpO6zgxzG4YzMfl2xXD1P94CTTfbfOmc+LYy0dk0m8/DC2SonSnRFX
- A7hM2MjcT4wAf80gC4101HO+QZrfc7a4YVFx20UM976ubTyogPiZe/+
+ bh=Qe/fjpUqvzX8eLWqIkypb57dSJT+r1k5PfSeezFNzpo=;
+ b=1CWij5me2pCkQx6ImeiAIZeN9IVTLyxDmBuApX9us3ABr8Xbel80qY4FavpNnA+OMR9dimZ0/
+ Eij/z2CZp+hBSHPJaXcNphSUDxIgaisysSWKm5x2xMxUoqfXezoHRzu
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.210.170; envelope-from=eblot.ml@gmail.com;
- helo=mail-pf1-f170.google.com
+Received-SPF: pass client-ip=209.85.216.43; envelope-from=eblot.ml@gmail.com;
+ helo=mail-pj1-f43.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -108,212 +107,916 @@ X-Spam-Status: No, score=-17.0 required=3.0 tests=BAYES_00,INCLUDES_CR_TRAILER,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Introduce the INA238 qtest: the qgraph node, the QMP injection helpers
-and the register map. Cover the reset defaults, the software reset, and
-the Configuration register write mask.
+Add a model for the Texas Instruments INA238, an 85V, 16-bit I2C
+current-shunt, power and temperature monitor.
+
+The device measures a differential shunt voltage, a bus voltage and its
+own die temperature; the current and power registers are not measured
+directly but derived by the device from the shunt voltage and the
+guest-programmed Shunt Calibration register. The alert is modelled.
+
+Shunt and bus voltages and the die temperature can be injected through
+the "shunt-voltage", "bus-voltage" and "die-temperature" QOM properties.
+
+Note: Conversion is instantaneous: the averaging and conversion-time
+fields are stored but have no timing effect.
 
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/qtest/ina238-test.c | 177 ++++++++++++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build   |   1 +
- 2 files changed, 178 insertions(+)
+ hw/arm/Kconfig             |   1 +
+ hw/sensor/Kconfig          |   4 +
+ hw/sensor/ina238.c         | 803 +++++++++++++++++++++++++++++++++++++++++++++
+ hw/sensor/meson.build      |   1 +
+ hw/sensor/trace-events     |   7 +
+ include/hw/sensor/ina238.h |  14 +
+ 6 files changed, 830 insertions(+)
 
-diff --git a/tests/qtest/ina238-test.c b/tests/qtest/ina238-test.c
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 876acc0e43..bef5f65727 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -558,6 +558,7 @@ config ASPEED_SOC
+     select TMP421
+     select EMC141X
+     select INA230
++    select INA238
+     select OR_IRQ
+     select UNIMP
+     select LED
+diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
+index da519159ac..9b7c76fcf5 100644
+--- a/hw/sensor/Kconfig
++++ b/hw/sensor/Kconfig
+@@ -6,6 +6,10 @@ config INA230
+     bool
+     depends on I2C
+ 
++config INA238
++    bool
++    depends on I2C
++
+ config TMP105
+     bool
+     depends on I2C
+diff --git a/hw/sensor/ina238.c b/hw/sensor/ina238.c
 new file mode 100644
-index 0000000000..6e59ed30b5
+index 0000000000..57734e7935
 --- /dev/null
-+++ b/tests/qtest/ina238-test.c
-@@ -0,0 +1,177 @@
++++ b/hw/sensor/ina238.c
+@@ -0,0 +1,803 @@
 +/*
-+ * QTest testcase for the INA238 current/voltage/power monitor
++ * Texas Instruments INA238 85V, 16-bit current/voltage/power monitor
++ * with an I2C interface.
++ *
++ * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * The INA238 measures a differential shunt voltage, a bus voltage and its own
++ * die temperature. Current and power are not measured directly: they are
++ * derived by the device from the measured shunt voltage and the programmable
++ * Shunt Calibration register. The INA238 exposes six independent limit
++ * registers, all monitored simultaneously (multi-alert), a die-temperature
++ * sensor, a 24-bit power register and an ADCRANGE-dependent shunt LSB.
++ *
++ * Limitations (not modelled):
++ * - Conversion timing is instantaneous. Conversions run synchronously when an
++ *   input, the calibration, the ADC range or the ADC configuration changes; the
++ *   ADC conversion times (VBUSCT/VSHCT/VTCT), the averaging count (AVG) and the
++ *   CONVDLY start delay are not modelled, and continuous mode does not
++ *   re-convert on a timer. A read always returns the value derived from the
++ *   current inputs and CNVRF is set once a conversion has run.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "qapi/qapi-builtin-type-infos.h"
++#include "qapi/visitor.h"
++#include "qom/object.h"
++#include "hw/sensor/ina238.h"
++#include "hw/core/irq.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/core/registerfields.h"
++#include "hw/i2c/i2c.h"
++#include "migration/vmstate.h"
++#include "trace.h"
++
++#define INA238_REG_CONFIG          0x00
++#define INA238_REG_ADC_CONFIG      0x01
++#define INA238_REG_SHUNT_CAL       0x02
++#define INA238_REG_VSHUNT          0x04
++#define INA238_REG_VBUS            0x05
++#define INA238_REG_DIETEMP         0x06
++#define INA238_REG_CURRENT         0x07
++#define INA238_REG_POWER           0x08
++#define INA238_REG_DIAG_ALRT       0x0B
++#define INA238_REG_SOVL            0x0C
++#define INA238_REG_SUVL            0x0D
++#define INA238_REG_BOVL            0x0E
++#define INA238_REG_BUVL            0x0F
++#define INA238_REG_TEMP_LIMIT      0x10
++#define INA238_REG_PWR_LIMIT       0x11
++#define INA238_REG_MANUFACTURER_ID 0x3E
++#define INA238_REG_DEVICE_ID       0x3F
++
++FIELD(INA238_CONFIG, ADCRANGE, 4, 1)
++FIELD(INA238_CONFIG, CONVDLY,  6, 8)
++FIELD(INA238_CONFIG, RST,     15, 1)
++
++#define INA238_CONFIG_POR       0x0000
++#define INA238_CONFIG_WMASK     (R_INA238_CONFIG_ADCRANGE_MASK | \
++                                 R_INA238_CONFIG_CONVDLY_MASK)
++
++FIELD(INA238_ADC_CONFIG, AVG,     0, 3)
++FIELD(INA238_ADC_CONFIG, VTCT,    3, 3)
++FIELD(INA238_ADC_CONFIG, VSHCT,   6, 3)
++FIELD(INA238_ADC_CONFIG, VBUSCT,  9, 3)
++FIELD(INA238_ADC_CONFIG, MODE,   12, 4)
++
++#define INA238_ADC_CONFIG_POR   0xFB68
++
++#define INA238_SHUNT_CAL_POR    0x1000
++#define INA238_SHUNT_CAL_MASK   0x7FFF   /* bit 15 reserved */
++
++FIELD(INA238_DIAG_ALRT, MEMSTAT,   0, 1)  /* memory checksum ok (always 1) */
++FIELD(INA238_DIAG_ALRT, CNVRF,     1, 1)  /* conversion ready flag */
++FIELD(INA238_DIAG_ALRT, POL,       2, 1)  /* power over-limit */
++FIELD(INA238_DIAG_ALRT, BUSUL,     3, 1)  /* bus under-limit */
++FIELD(INA238_DIAG_ALRT, BUSOL,     4, 1)  /* bus over-limit */
++FIELD(INA238_DIAG_ALRT, SHNTUL,    5, 1)  /* shunt under-limit */
++FIELD(INA238_DIAG_ALRT, SHNTOL,    6, 1)  /* shunt over-limit */
++FIELD(INA238_DIAG_ALRT, TMPOL,     7, 1)  /* over temperature */
++FIELD(INA238_DIAG_ALRT, MATHOF,    9, 1)  /* arithmetic overflow */
++FIELD(INA238_DIAG_ALRT, APOL,     12, 1)  /* alert polarity */
++FIELD(INA238_DIAG_ALRT, SLOWALERT, 13, 1)  /* alert on averaged value */
++FIELD(INA238_DIAG_ALRT, CNVR,     14, 1)  /* conversion-ready on ALERT pin */
++FIELD(INA238_DIAG_ALRT, ALATCH,   15, 1)  /* alert latch enable */
++
++#define INA238_DIAG_ALRT_POR    0x0001    /* MEMSTAT = 1 */
++
++/* Control (writable) bits */
++#define INA238_DIAG_CTRL_MASK   (R_INA238_DIAG_ALRT_ALATCH_MASK | \
++                                 R_INA238_DIAG_ALRT_CNVR_MASK | \
++                                 R_INA238_DIAG_ALRT_SLOWALERT_MASK | \
++                                 R_INA238_DIAG_ALRT_APOL_MASK)
++/* Read-only status bits (preserved across a control-bit write) */
++#define INA238_DIAG_STATUS_MASK (R_INA238_DIAG_ALRT_MATHOF_MASK | \
++                                 R_INA238_DIAG_ALRT_TMPOL_MASK | \
++                                 R_INA238_DIAG_ALRT_SHNTOL_MASK | \
++                                 R_INA238_DIAG_ALRT_SHNTUL_MASK | \
++                                 R_INA238_DIAG_ALRT_BUSOL_MASK | \
++                                 R_INA238_DIAG_ALRT_BUSUL_MASK | \
++                                 R_INA238_DIAG_ALRT_POL_MASK | \
++                                 R_INA238_DIAG_ALRT_CNVRF_MASK | \
++                                 R_INA238_DIAG_ALRT_MEMSTAT_MASK)
++/* Threshold flags cleared when the DIAG_ALRT register is read */
++#define INA238_DIAG_LATCH_MASK  (R_INA238_DIAG_ALRT_TMPOL_MASK | \
++                                 R_INA238_DIAG_ALRT_SHNTOL_MASK | \
++                                 R_INA238_DIAG_ALRT_SHNTUL_MASK | \
++                                 R_INA238_DIAG_ALRT_BUSOL_MASK | \
++                                 R_INA238_DIAG_ALRT_BUSUL_MASK | \
++                                 R_INA238_DIAG_ALRT_POL_MASK)
++
++#define INA238_SOVL_POR         0x7FFF
++#define INA238_SUVL_POR         0x8000
++#define INA238_BOVL_POR         0x7FFF
++#define INA238_BUVL_POR         0x0000
++/*
++ * The datasheet is self-inconsistent on the TEMP_LIMIT reset value.
++ * Writes mask with INA238_TEMP_LIMIT_MASK and the alert comparison shifts both
++ * operands >>4.
++ */
++#define INA238_TEMP_LIMIT_POR   0x7FF0
++#define INA238_PWR_LIMIT_POR    0xFFFF
++
++#define INA238_BUS_LIMIT_MASK   0x7FFF    /* BOVL/BUVL are 15-bit, positive */
++#define INA238_TEMP_LIMIT_MASK  0xFFF0    /* TOL occupies bits [15:4] */
++
++#define INA238_MANUFACTURER_ID_VAL 0x5449 /* "TI" */
++#define INA238_DEVICE_ID_VAL       0x2381 /* DIEID 0x238, REV 0x1 */
++
++/* Shunt voltage LSB depends on ADCRANGE; bus and temperature are fixed */
++#define INA238_SHUNT_LSB_NV_R0  5000     /* 5 uV per LSB (ADCRANGE = 0) */
++#define INA238_SHUNT_LSB_NV_R1  1250     /* 1.25 uV per LSB (ADCRANGE = 1) */
++#define INA238_BUS_LSB_UV       3125     /* 3.125 mV per LSB */
++#define INA238_TEMP_LSB_MC      125      /* 125 m-degC per LSB */
++
++/*
++ * current = shunt_reg * K / SHUNT_CAL. K derives from the fixed 819.2e6
++ * internal constant and the ADCRANGE=0 shunt LSB: 5e-6 * 819.2e6 = 4096.
++ * power = current * bus / 64 (0.2 / 3.125mV expressed in the register domain).
++ */
++#define INA238_CURRENT_K        4096
++#define INA238_POWER_DIV        64
++#define INA238_POWER_MAX        0xFFFFFF /* POWER is a 24-bit register */
++
++/* Injection property ranges */
++#define INA238_SHUNT_MIN_NV     (-163840000)  /* -32768 * 5 uV */
++#define INA238_SHUNT_MAX_NV     163835000      /*  32767 * 5 uV */
++#define INA238_BUS_MAX_UV       85000000       /* 85 V full common-mode range */
++#define INA238_TEMP_MIN_MC      (-40000)       /* package limited */
++#define INA238_TEMP_MAX_MC      125000
++
++OBJECT_DECLARE_SIMPLE_TYPE(INA238State, INA238)
++
++struct INA238State {
++    I2CSlave parent_obj;
++
++    qemu_irq alert; /* ALERT open-drain output */
++
++    /* I2C transfer state */
++    uint8_t ptr;      /* register pointer */
++    uint8_t len;      /* bytes received in current transfer */
++    uint8_t wr_hi;    /* pending write MSB */
++    uint8_t rx_byte;  /* index of the next byte to return within rx_val */
++    uint8_t rx_width; /* width in bytes of the register being read (2 or 3) */
++    uint32_t rx_val;  /* value latched at the start of a read */
++
++    /* Register file */
++    uint16_t config;
++    uint16_t adc_config;
++    uint16_t shunt_cal;
++    uint16_t diag_alrt;
++    uint16_t sovl;
++    uint16_t suvl;
++    uint16_t bovl;
++    uint16_t buvl;
++    uint16_t temp_limit;
++    uint16_t pwr_limit;
++
++    /* Derived measurement registers */
++    uint16_t shunt_reg;
++    uint16_t bus_reg;
++    uint16_t dietemp_reg;
++    uint16_t current_reg;
++    uint32_t power_reg;   /* 24-bit */
++
++    /* Injected physical inputs */
++    int32_t shunt_nv;  /* shunt voltage, nanovolts (signed: bidirectional) */
++    uint32_t bus_uv;   /* bus voltage, microvolts (never negative) */
++    int32_t temp_mc;   /* die temperature, millidegrees Celsius (signed) */
++
++    char *description;
++};
++
++/*
++ * Update the _field_ limit flag in _diag_ from the current comparison _cond_.
++ * In latch mode (_latch_) a flag that is already set stays set until the
++ * register is read; in transparent mode it tracks _cond_ directly. A flag
++ * whose measurement register was not refreshed (_fresh_) keeps its value.
++ */
++#define INA238_UPD_FLAG(_diag_, _latch_, _fresh_, _field_, _cond_)            \
++    do {                                                                      \
++        if (_fresh_) {                                                        \
++            uint16_t _old_ = FIELD_EX16(_diag_, INA238_DIAG_ALRT, _field_);   \
++            uint16_t _new_ = (uint16_t)((_cond_) || ((_latch_) && _old_));    \
++            (_diag_) = FIELD_DP16(_diag_, INA238_DIAG_ALRT, _field_, _new_);  \
++        }                                                                     \
++    } while (0)
++
++static void ina238_refresh_alert(INA238State *s)
++{
++    uint16_t diag = s->diag_alrt;
++    bool active;
++    bool cnvr;
++    int level;
++
++    /* MATHOF is a diagnostic; it does not drive the ALERT pin. */
++    active = FIELD_EX16(diag, INA238_DIAG_ALRT, SHNTOL) ||
++             FIELD_EX16(diag, INA238_DIAG_ALRT, SHNTUL) ||
++             FIELD_EX16(diag, INA238_DIAG_ALRT, BUSOL) ||
++             FIELD_EX16(diag, INA238_DIAG_ALRT, BUSUL) ||
++             FIELD_EX16(diag, INA238_DIAG_ALRT, TMPOL) ||
++             FIELD_EX16(diag, INA238_DIAG_ALRT, POL);
++
++    cnvr = FIELD_EX16(diag, INA238_DIAG_ALRT, CNVR) &&
++           FIELD_EX16(diag, INA238_DIAG_ALRT, CNVRF);
++
++    active = active || cnvr;
++    /* APOL: 0 = active-low (default), 1 = active-high */
++    level = FIELD_EX16(diag, INA238_DIAG_ALRT, APOL) ? active : !active;
++
++    trace_ina238_alert(s->description, level);
++    qemu_set_irq(s->alert, level);
++}
++
++/*
++ * @shunt_fresh, @bus_fresh and @temp_fresh tell which measurement registers
++ * hold a fresh value: after a partial conversion the flags fed by the other
++ * channels must not be re-evaluated against their stale registers.
++ */
++static void ina238_update_alert(INA238State *s, bool shunt_fresh,
++                                bool bus_fresh, bool temp_fresh,
++                                bool power_fresh)
++{
++    bool latch = FIELD_EX16(s->diag_alrt, INA238_DIAG_ALRT, ALATCH);
++    int16_t shunt = (int16_t)s->shunt_reg;
++    int16_t temp = (int16_t)s->dietemp_reg >> 4;      /* sign-extend [15:4] */
++    int16_t temp_lim = (int16_t)s->temp_limit >> 4;
++    uint16_t diag = s->diag_alrt;
++
++    INA238_UPD_FLAG(diag, latch, shunt_fresh, SHNTOL, shunt > (int16_t)s->sovl);
++    INA238_UPD_FLAG(diag, latch, shunt_fresh, SHNTUL, shunt < (int16_t)s->suvl);
++    INA238_UPD_FLAG(diag, latch, bus_fresh, BUSOL,
++                    s->bus_reg > (s->bovl & INA238_BUS_LIMIT_MASK));
++    INA238_UPD_FLAG(diag, latch, bus_fresh, BUSUL,
++                    s->bus_reg < (s->buvl & INA238_BUS_LIMIT_MASK));
++    INA238_UPD_FLAG(diag, latch, temp_fresh, TMPOL, temp > temp_lim);
++    INA238_UPD_FLAG(diag, latch, power_fresh, POL,
++                    s->power_reg > ((uint32_t)s->pwr_limit << 8));
++
++    s->diag_alrt = diag;
++
++    ina238_refresh_alert(s);
++}
++
++static void ina238_convert(INA238State *s)
++{
++    uint8_t mode = FIELD_EX16(s->adc_config, INA238_ADC_CONFIG, MODE);
++    bool bus_en = mode & 0x1;
++    bool shunt_en = mode & 0x2;
++    bool temp_en = mode & 0x4;
++    bool adcrange = FIELD_EX16(s->config, INA238_CONFIG, ADCRANGE);
++    int shunt_lsb = adcrange ? INA238_SHUNT_LSB_NV_R1 : INA238_SHUNT_LSB_NV_R0;
++    int64_t sr, br, tr, cur, pwr;
++    uint16_t mathof = 0;
++    bool power_fresh = bus_en;
++
++    if (!bus_en && !shunt_en && !temp_en) {
++        return;
++    }
++
++    if (shunt_en) {
++        sr = s->shunt_nv / shunt_lsb;
++        sr = MAX(INT16_MIN, MIN(INT16_MAX, sr));
++        s->shunt_reg = (uint16_t)(int16_t)sr;
++
++        if (s->shunt_cal == 0) {
++            cur = 0;
++        } else {
++            cur = (int64_t)(int16_t)s->shunt_reg * INA238_CURRENT_K /
++                  s->shunt_cal;
++        }
++        if (cur > INT16_MAX || cur < INT16_MIN) {
++            mathof = 1;
++            cur = MAX(INT16_MIN, MIN(INT16_MAX, cur));
++        }
++        s->current_reg = (uint16_t)(int16_t)cur;
++    }
++
++    if (bus_en) {
++        br = s->bus_uv / INA238_BUS_LSB_UV;
++        br = MAX(0, MIN(INT16_MAX, br));
++        s->bus_reg = (uint16_t)br;
++    }
++
++    if (temp_en) {
++        /* Die temperature: 12-bit signed value stored in bits [15:4] */
++        tr = s->temp_mc / INA238_TEMP_LSB_MC;
++        tr = MAX(-2048, MIN(2047, tr));
++        s->dietemp_reg = ((uint16_t)(int16_t)tr << 4) & INA238_TEMP_LIMIT_MASK;
++    }
++
++    /*
++     * In bus-only mode the current register is retained from the last shunt
++     * conversion rather than measured anew, but the power register is still
++     * refreshed.
++     */
++    if (bus_en) {
++        cur = (int16_t)s->current_reg;
++        if (cur < 0) {
++            cur = -cur;
++        }
++        pwr = cur * (int64_t)s->bus_reg / INA238_POWER_DIV;
++        if (pwr > INA238_POWER_MAX) {
++            mathof = 1;
++            pwr = INA238_POWER_MAX;
++        }
++        s->power_reg = (uint32_t)pwr;
++    }
++
++    /* Without a calibration the device reports neither current nor power. */
++    if (s->shunt_cal == 0) {
++        s->current_reg = 0;
++        s->power_reg = 0;
++        power_fresh = true;
++    }
++
++    s->diag_alrt = FIELD_DP16(s->diag_alrt, INA238_DIAG_ALRT, MATHOF, mathof);
++    s->diag_alrt = FIELD_DP16(s->diag_alrt, INA238_DIAG_ALRT, CNVRF, 1);
++
++    trace_ina238_convert(s->description, s->shunt_reg, s->bus_reg,
++                         s->dietemp_reg, s->current_reg, s->power_reg);
++
++    ina238_update_alert(s, shunt_en, bus_en, temp_en, power_fresh);
++}
++
++/*
++ * A physical input, the calibration or the ADC range changed.
++ * - in continuous mode the device keeps converting and immediately tracks
++ *   the new value
++ * - in a triggered mode it performs exactly one conversion per trigger
++ */
++static void ina238_input_update(INA238State *s)
++{
++    if (FIELD_EX16(s->adc_config, INA238_ADC_CONFIG, MODE) & 0x8) {
++        ina238_convert(s);
++    }
++}
++
++static void ina238_reset_regs(INA238State *s)
++{
++    s->config = INA238_CONFIG_POR;
++    s->adc_config = INA238_ADC_CONFIG_POR;
++    s->shunt_cal = INA238_SHUNT_CAL_POR;
++    s->diag_alrt = INA238_DIAG_ALRT_POR;
++    s->sovl = INA238_SOVL_POR;
++    s->suvl = INA238_SUVL_POR;
++    s->bovl = INA238_BOVL_POR;
++    s->buvl = INA238_BUVL_POR;
++    s->temp_limit = INA238_TEMP_LIMIT_POR;
++    s->pwr_limit = INA238_PWR_LIMIT_POR;
++
++    s->ptr = 0;
++    s->len = 0;
++    s->wr_hi = 0;
++    s->rx_byte = 0;
++    s->rx_width = 0;
++    s->rx_val = 0;
++
++    /*
++     * The measurement registers power up at zero and stay zero until the next
++     * conversion. The injected physical inputs are retained, but no conversion
++     * is performed here, so a software reset does not resurrect a previous
++     * measurement.
++     */
++    s->shunt_reg = 0;
++    s->bus_reg = 0;
++    s->dietemp_reg = 0;
++    s->current_reg = 0;
++    s->power_reg = 0;
++
++    ina238_update_alert(s, true, true, true, true);
++}
++
++static uint32_t ina238_read_reg(INA238State *s, uint8_t reg)
++{
++    uint32_t val;
++
++    switch (reg) {
++    case INA238_REG_CONFIG:
++        val = s->config;
++        break;
++    case INA238_REG_ADC_CONFIG:
++        val = s->adc_config;
++        break;
++    case INA238_REG_SHUNT_CAL:
++        val = s->shunt_cal;
++        break;
++    case INA238_REG_VSHUNT:
++        val = s->shunt_reg;
++        break;
++    case INA238_REG_VBUS:
++        val = s->bus_reg;
++        break;
++    case INA238_REG_DIETEMP:
++        val = s->dietemp_reg;
++        break;
++    case INA238_REG_CURRENT:
++        val = s->current_reg;
++        break;
++    case INA238_REG_POWER:
++        val = s->power_reg;
++        break;
++    case INA238_REG_DIAG_ALRT:
++        val = s->diag_alrt;
++        /*
++         * A read always clears CNVRF; the latched limit flags clear too, but
++         * only in latch mode.
++         */
++        s->diag_alrt &= ~R_INA238_DIAG_ALRT_CNVRF_MASK;
++        if (FIELD_EX16(s->diag_alrt, INA238_DIAG_ALRT, ALATCH)) {
++            s->diag_alrt &= ~INA238_DIAG_LATCH_MASK;
++        }
++        ina238_refresh_alert(s);
++        break;
++    case INA238_REG_SOVL:
++        val = s->sovl;
++        break;
++    case INA238_REG_SUVL:
++        val = s->suvl;
++        break;
++    case INA238_REG_BOVL:
++        val = s->bovl;
++        break;
++    case INA238_REG_BUVL:
++        val = s->buvl;
++        break;
++    case INA238_REG_TEMP_LIMIT:
++        val = s->temp_limit;
++        break;
++    case INA238_REG_PWR_LIMIT:
++        val = s->pwr_limit;
++        break;
++    case INA238_REG_MANUFACTURER_ID:
++        val = INA238_MANUFACTURER_ID_VAL;
++        break;
++    case INA238_REG_DEVICE_ID:
++        val = INA238_DEVICE_ID_VAL;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: %s: read from undefined register 0x%02x\n",
++                      __func__, s->description, reg);
++        val = 0;
++        break;
++    }
++
++    trace_ina238_read(s->description, reg, val);
++    return val;
++}
++
++static void ina238_write_reg(INA238State *s, uint8_t reg, uint16_t val)
++{
++    trace_ina238_write(s->description, reg, val);
++
++    switch (reg) {
++    case INA238_REG_CONFIG:
++        if (val & R_INA238_CONFIG_RST_MASK) {
++            trace_ina238_reset(s->description, "reg");
++            ina238_reset_regs(s);
++            break;
++        }
++        s->config = val & INA238_CONFIG_WMASK;
++        ina238_input_update(s);
++        break;
++    case INA238_REG_ADC_CONFIG:
++        s->adc_config = val;
++        /* Writing the MODE bits (re)starts a conversion: it is the trigger. */
++        ina238_convert(s);
++        break;
++    case INA238_REG_SHUNT_CAL:
++        s->shunt_cal = val & INA238_SHUNT_CAL_MASK;
++        ina238_input_update(s);
++        break;
++    case INA238_REG_DIAG_ALRT: {
++        uint16_t status = s->diag_alrt & INA238_DIAG_STATUS_MASK;
++        /*
++         * In latch mode a write clears the latched limit flags and the
++         * conversion-ready flag. In transparent mode the flags track the live
++         * condition and are preserved. The pin is only refreshed, so a cleared
++         * flag re-asserts on the next conversion rather than immediately.
++         */
++        if (FIELD_EX16(s->diag_alrt, INA238_DIAG_ALRT, ALATCH)) {
++            status &= ~(R_INA238_DIAG_ALRT_CNVRF_MASK | INA238_DIAG_LATCH_MASK);
++        }
++        s->diag_alrt = (val & INA238_DIAG_CTRL_MASK) | status;
++        ina238_refresh_alert(s);
++        break;
++    }
++    case INA238_REG_SOVL:
++        s->sovl = val;
++        ina238_update_alert(s, true, true, true, true);
++        break;
++    case INA238_REG_SUVL:
++        s->suvl = val;
++        ina238_update_alert(s, true, true, true, true);
++        break;
++    case INA238_REG_BOVL:
++        s->bovl = val & INA238_BUS_LIMIT_MASK;
++        ina238_update_alert(s, true, true, true, true);
++        break;
++    case INA238_REG_BUVL:
++        s->buvl = val & INA238_BUS_LIMIT_MASK;
++        ina238_update_alert(s, true, true, true, true);
++        break;
++    case INA238_REG_TEMP_LIMIT:
++        s->temp_limit = val & INA238_TEMP_LIMIT_MASK;
++        ina238_update_alert(s, true, true, true, true);
++        break;
++    case INA238_REG_PWR_LIMIT:
++        s->pwr_limit = val;
++        ina238_update_alert(s, true, true, true, true);
++        break;
++    case INA238_REG_VSHUNT:
++    case INA238_REG_VBUS:
++    case INA238_REG_DIETEMP:
++    case INA238_REG_CURRENT:
++    case INA238_REG_POWER:
++    case INA238_REG_MANUFACTURER_ID:
++    case INA238_REG_DEVICE_ID:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: %s: write to read-only register 0x%02x\n",
++                      __func__, s->description, reg);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: %s: write to undefined register 0x%02x\n",
++                      __func__, s->description, reg);
++        break;
++    }
++}
++
++static uint8_t ina238_recv(I2CSlave *i2c)
++{
++    INA238State *s = INA238(i2c);
++    uint8_t byte;
++
++    if (s->rx_byte == 0) {
++        s->rx_val = ina238_read_reg(s, s->ptr);
++        s->rx_width = (s->ptr == INA238_REG_POWER) ? 3 : 2;
++    }
++
++    byte = (s->rx_val >> (8 * (s->rx_width - 1 - s->rx_byte))) & 0xff;
++    s->rx_byte++;
++    if (s->rx_byte >= s->rx_width) {
++        s->rx_byte = 0;
++    }
++
++    return byte;
++}
++
++static int ina238_send(I2CSlave *i2c, uint8_t data)
++{
++    INA238State *s = INA238(i2c);
++
++    if (s->len == 0) {
++        s->ptr = data;
++    } else if ((s->len & 1) == 1) {
++        s->wr_hi = data;
++    } else {
++        ina238_write_reg(s, s->ptr, ((uint16_t)s->wr_hi << 8) | data);
++    }
++    s->len++;
++
++    return 0;
++}
++
++static int ina238_event(I2CSlave *i2c, enum i2c_event event)
++{
++    INA238State *s = INA238(i2c);
++
++    s->len = 0;
++    s->rx_byte = 0;
++
++    return 0;
++}
++
++static void ina238_get_shunt(Object *obj, Visitor *v, const char *name,
++                             void *opaque, Error **errp)
++{
++    INA238State *s = INA238(obj);
++    int64_t value = s->shunt_nv;
++
++    visit_type_int(v, name, &value, errp);
++}
++
++static void ina238_set_shunt(Object *obj, Visitor *v, const char *name,
++                             void *opaque, Error **errp)
++{
++    INA238State *s = INA238(obj);
++    int64_t value;
++
++    if (!visit_type_int(v, name, &value, errp)) {
++        return;
++    }
++
++    if (value < INA238_SHUNT_MIN_NV || value > INA238_SHUNT_MAX_NV) {
++        error_setg(errp,
++                   "%s: shunt-voltage %" PRId64 " out of range (%d..%d nV)",
++                   s->description, value,
++                   INA238_SHUNT_MIN_NV, INA238_SHUNT_MAX_NV);
++        return;
++    }
++
++    s->shunt_nv = (int32_t)value;
++    ina238_input_update(s);
++}
++
++static void ina238_get_bus(Object *obj, Visitor *v, const char *name,
++                           void *opaque, Error **errp)
++{
++    INA238State *s = INA238(obj);
++    int64_t value = s->bus_uv;
++
++    visit_type_int(v, name, &value, errp);
++}
++
++static void ina238_set_bus(Object *obj, Visitor *v, const char *name,
++                           void *opaque, Error **errp)
++{
++    INA238State *s = INA238(obj);
++    int64_t value;
++
++    if (!visit_type_int(v, name, &value, errp)) {
++        return;
++    }
++
++    if (value < 0 || value > INA238_BUS_MAX_UV) {
++        error_setg(errp,
++                   "%s: bus-voltage %" PRId64 " out of range (0..%d uV)",
++                   s->description, value, INA238_BUS_MAX_UV);
++        return;
++    }
++
++    s->bus_uv = (uint32_t)value;
++    ina238_input_update(s);
++}
++
++static void ina238_get_temp(Object *obj, Visitor *v, const char *name,
++                            void *opaque, Error **errp)
++{
++    INA238State *s = INA238(obj);
++    int64_t value = s->temp_mc;
++
++    visit_type_int(v, name, &value, errp);
++}
++
++static void ina238_set_temp(Object *obj, Visitor *v, const char *name,
++                            void *opaque, Error **errp)
++{
++    INA238State *s = INA238(obj);
++    int64_t value;
++
++    if (!visit_type_int(v, name, &value, errp)) {
++        return;
++    }
++
++    if (value < INA238_TEMP_MIN_MC || value > INA238_TEMP_MAX_MC) {
++        error_setg(errp,
++                   "%s: die-temperature %" PRId64
++                   " out of range (%d..%d m-degC)",
++                   s->description, value,
++                   INA238_TEMP_MIN_MC, INA238_TEMP_MAX_MC);
++        return;
++    }
++
++    s->temp_mc = (int32_t)value;
++    ina238_input_update(s);
++}
++
++static void ina238_reset_hold(Object *obj, ResetType type)
++{
++    INA238State *s = INA238(obj);
++
++    trace_ina238_reset(s->description, "hw");
++    ina238_reset_regs(s);
++}
++
++static int ina238_post_load(void *opaque, int version_id)
++{
++    INA238State *s = opaque;
++
++    ina238_refresh_alert(s);
++
++    return 0;
++}
++
++static const VMStateDescription ina238_vmstate = {
++    .name = "INA238",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load = ina238_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT8(ptr, INA238State),
++        VMSTATE_UINT8(len, INA238State),
++        VMSTATE_UINT8(wr_hi, INA238State),
++        VMSTATE_UINT8(rx_byte, INA238State),
++        VMSTATE_UINT8(rx_width, INA238State),
++        VMSTATE_UINT32(rx_val, INA238State),
++        VMSTATE_UINT16(config, INA238State),
++        VMSTATE_UINT16(adc_config, INA238State),
++        VMSTATE_UINT16(shunt_cal, INA238State),
++        VMSTATE_UINT16(diag_alrt, INA238State),
++        VMSTATE_UINT16(sovl, INA238State),
++        VMSTATE_UINT16(suvl, INA238State),
++        VMSTATE_UINT16(bovl, INA238State),
++        VMSTATE_UINT16(buvl, INA238State),
++        VMSTATE_UINT16(temp_limit, INA238State),
++        VMSTATE_UINT16(pwr_limit, INA238State),
++        VMSTATE_UINT16(shunt_reg, INA238State),
++        VMSTATE_UINT16(bus_reg, INA238State),
++        VMSTATE_UINT16(dietemp_reg, INA238State),
++        VMSTATE_UINT16(current_reg, INA238State),
++        VMSTATE_UINT32(power_reg, INA238State),
++        VMSTATE_INT32(shunt_nv, INA238State),
++        VMSTATE_UINT32(bus_uv, INA238State),
++        VMSTATE_INT32(temp_mc, INA238State),
++        VMSTATE_I2C_SLAVE(parent_obj, INA238State),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void ina238_initfn(Object *obj)
++{
++    object_property_add(obj, "shunt-voltage", "int", &int_type_info,
++                        ina238_get_shunt, ina238_set_shunt, NULL, NULL);
++    object_property_set_description(obj, "shunt-voltage",
++                                    "Injected shunt (differential) voltage, "
++                                    "in nanovolts");
++    object_property_add(obj, "bus-voltage", "int", &int_type_info,
++                        ina238_get_bus, ina238_set_bus, NULL, NULL);
++    object_property_set_description(obj, "bus-voltage",
++                                    "Injected bus voltage, in microvolts");
++    object_property_add(obj, "die-temperature", "int", &int_type_info,
++                        ina238_get_temp, ina238_set_temp, NULL, NULL);
++    object_property_set_description(obj, "die-temperature",
++                                    "Injected die temperature, "
++                                    "in millidegrees Celsius");
++}
++
++static void ina238_realize(DeviceState *dev, Error **errp)
++{
++    INA238State *s = INA238(dev);
++
++    if (!s->description) {
++        s->description = g_strdup(object_get_typename(OBJECT(dev)));
++    }
++
++    qdev_init_gpio_out(dev, &s->alert, 1);
++}
++
++static const Property ina238_properties[] = {
++    DEFINE_PROP_STRING("description", INA238State, description),
++};
++
++static void ina238_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    I2CSlaveClass *ic = I2C_SLAVE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    ic->event = ina238_event;
++    ic->recv = ina238_recv;
++    ic->send = ina238_send;
++    dc->realize = ina238_realize;
++    rc->phases.hold = ina238_reset_hold;
++    dc->vmsd = &ina238_vmstate;
++    device_class_set_props(dc, ina238_properties);
++}
++
++static const TypeInfo ina238_types[] = {
++    {
++        .name          = TYPE_INA238,
++        .parent        = TYPE_I2C_SLAVE,
++        .instance_init = ina238_initfn,
++        .instance_size = sizeof(INA238State),
++        .class_init    = ina238_class_init,
++    },
++};
++
++DEFINE_TYPES(ina238_types)
+diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
+index b81f001fdf..7e6fd64488 100644
+--- a/hw/sensor/meson.build
++++ b/hw/sensor/meson.build
+@@ -1,5 +1,6 @@
+ system_ss.add(when: 'CONFIG_ADC128D818', if_true: files('adc128d818.c'))
+ system_ss.add(when: 'CONFIG_INA230', if_true: files('ina230.c'))
++system_ss.add(when: 'CONFIG_INA238', if_true: files('ina238.c'))
+ system_ss.add(when: 'CONFIG_TMP105', if_true: files('tmp105.c'))
+ system_ss.add(when: 'CONFIG_TMP421', if_true: files('tmp421.c'))
+ system_ss.add(when: 'CONFIG_DPS310', if_true: files('dps310.c'))
+diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
+index f809b6b506..98158e37c6 100644
+--- a/hw/sensor/trace-events
++++ b/hw/sensor/trace-events
+@@ -15,6 +15,13 @@ ina230_convert(const char *id, uint16_t shunt, uint16_t bus, uint16_t current, u
+ ina230_alert(const char *id, bool level) "%s level %u"
+ ina230_reset(const char *id, const char *source) "%s %s"
+ 
++# ina238.c
++ina238_read(const char *id, uint8_t reg, uint32_t value) "%s reg 0x%02x val 0x%06x"
++ina238_write(const char *id, uint8_t reg, uint16_t value) "%s reg 0x%02x val 0x%04x"
++ina238_convert(const char *id, uint16_t shunt, uint16_t bus, uint16_t dietemp, uint16_t current, uint32_t power) "%s shunt 0x%04x bus 0x%04x dietemp 0x%04x current 0x%04x power 0x%06x"
++ina238_alert(const char *id, bool level) "%s level %u"
++ina238_reset(const char *id, const char *source) "%s %s"
++
+ # tmp105.c
+ tmp105_read(uint8_t dev, uint8_t addr) "device: 0x%02x, addr: 0x%02x"
+ tmp105_write(uint8_t dev, uint8_t addr) "device: 0x%02x, addr 0x%02x"
+diff --git a/include/hw/sensor/ina238.h b/include/hw/sensor/ina238.h
+new file mode 100644
+index 0000000000..3bc3c02073
+--- /dev/null
++++ b/include/hw/sensor/ina238.h
+@@ -0,0 +1,14 @@
++/*
++ * Texas Instruments INA238 current/voltage/power monitor with I2C interface
 + *
 + * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#include "qemu/osdep.h"
-+#include "libqos/i2c.h"
-+#include "libqos/qgraph.h"
-+#include "libqtest-single.h"
-+#include "qobject/qdict.h"
++#ifndef HW_SENSOR_INA238_H
++#define HW_SENSOR_INA238_H
 +
-+#define INA238_TEST_ID      "ina238-test"
-+#define INA238_TEST_ADDR    0x40
++#define TYPE_INA238 "ina238"
 +
-+/* Register pointer addresses */
-+#define REG_CONFIG          0x00
-+#define REG_ADC_CONFIG      0x01
-+#define REG_SHUNT_CAL       0x02
-+#define REG_VSHUNT          0x04
-+#define REG_VBUS            0x05
-+#define REG_DIETEMP         0x06
-+#define REG_CURRENT         0x07
-+#define REG_POWER           0x08
-+#define REG_DIAG_ALRT       0x0B
-+#define REG_SOVL            0x0C
-+#define REG_SUVL            0x0D
-+#define REG_BOVL            0x0E
-+#define REG_BUVL            0x0F
-+#define REG_TEMP_LIMIT      0x10
-+#define REG_PWR_LIMIT       0x11
-+#define REG_MANUFACTURER_ID 0x3E
-+#define REG_DEVICE_ID       0x3F
-+
-+/* Configuration register bits */
-+#define CONFIG_RST          0x8000
-+#define CONFIG_ADCRANGE     0x0010
-+
-+/* DIAG_ALRT register bits */
-+#define DIAG_MEMSTAT        0x0001
-+#define DIAG_CNVRF          0x0002
-+#define DIAG_POL            0x0004
-+#define DIAG_BUSUL          0x0008
-+#define DIAG_BUSOL          0x0010
-+#define DIAG_SHNTUL         0x0020
-+#define DIAG_SHNTOL         0x0040
-+#define DIAG_TMPOL          0x0080
-+#define DIAG_MATHOF         0x0200
-+#define DIAG_APOL           0x1000
-+#define DIAG_SLOWALERT      0x2000
-+#define DIAG_CNVR           0x4000
-+#define DIAG_ALATCH         0x8000
-+
-+/* Reset values */
-+#define CONFIG_POR          0x0000
-+#define ADC_CONFIG_POR      0xFB68
-+#define SHUNT_CAL_POR       0x1000
-+#define DIAG_ALRT_POR       0x0001
-+#define SOVL_POR            0x7FFF
-+#define SUVL_POR            0x8000
-+#define BOVL_POR            0x7FFF
-+#define BUVL_POR            0x0000
-+#define TEMP_LIMIT_POR      0x7FF0
-+#define PWR_LIMIT_POR       0xFFFF
-+#define MANUFACTURER_ID_VAL 0x5449
-+#define DEVICE_ID_VAL       0x2381
-+
-+/* Read the 24-bit POWER register (MSB first) */
-+static uint32_t i2c_get24(QI2CDevice *dev, uint8_t reg)
-+{
-+    uint8_t resp[3];
-+
-+    i2c_read_block(dev, reg, resp, sizeof(resp));
-+    return (resp[0] << 16) | (resp[1] << 8) | resp[2];
-+}
-+
-+/* QMP helpers for injecting the physical inputs */
-+
-+static void qmp_ina238_set(const char *property, int value)
-+{
-+    QDict *resp;
-+
-+    resp = qmp("{ 'execute': 'qom-set', 'arguments':"
-+               " { 'path': %s, 'property': %s, 'value': %d } }",
-+               INA238_TEST_ID, property, value);
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
-+}
-+
-+/* Power-on-reset default values and the ID registers */
-+static void test_defaults(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    g_assert_cmphex(i2c_get16(dev, REG_CONFIG), ==, CONFIG_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_ADC_CONFIG), ==, ADC_CONFIG_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_SHUNT_CAL), ==, SHUNT_CAL_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x0000);
-+    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x0000);
-+    g_assert_cmphex(i2c_get16(dev, REG_DIETEMP), ==, 0x0000);
-+    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x0000);
-+    g_assert_cmphex(i2c_get24(dev, REG_POWER), ==, 0x000000);
-+    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT), ==, DIAG_ALRT_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_SOVL), ==, SOVL_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_SUVL), ==, SUVL_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_BOVL), ==, BOVL_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_BUVL), ==, BUVL_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_TEMP_LIMIT), ==, TEMP_LIMIT_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_PWR_LIMIT), ==, PWR_LIMIT_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_MANUFACTURER_ID), ==,
-+                    MANUFACTURER_ID_VAL);
-+    g_assert_cmphex(i2c_get16(dev, REG_DEVICE_ID), ==, DEVICE_ID_VAL);
-+}
-+
-+/* Software reset via the Configuration RST bit */
-+static void test_soft_reset(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    i2c_set16(dev, REG_SHUNT_CAL, 0x1234);
-+    i2c_set16(dev, REG_SOVL, 0x0500);
-+    i2c_set16(dev, REG_TEMP_LIMIT, 0x0A00);
-+    i2c_set16(dev, REG_DIAG_ALRT, DIAG_ALATCH);
-+
-+    qmp_ina238_set("shunt-voltage", 97200000);
-+    qmp_ina238_set("bus-voltage", 48000000);
-+    qmp_ina238_set("die-temperature", 25000);
-+
-+    g_assert_cmphex(i2c_get16(dev, REG_SHUNT_CAL), ==, 0x1234);
-+    g_assert_cmphex(i2c_get16(dev, REG_SOVL), ==, 0x0500);
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x4BF0);
-+    g_assert_cmpuint(i2c_get16(dev, REG_CURRENT), !=, 0);
-+
-+    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
-+
-+    g_assert_cmphex(i2c_get16(dev, REG_CONFIG), ==, CONFIG_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_SHUNT_CAL), ==, SHUNT_CAL_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_SOVL), ==, SOVL_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_TEMP_LIMIT), ==, TEMP_LIMIT_POR);
-+    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT), ==, DIAG_ALRT_POR);
-+
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x0000);
-+    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x0000);
-+    g_assert_cmphex(i2c_get16(dev, REG_DIETEMP), ==, 0x0000);
-+    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x0000);
-+    g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
-+}
-+
-+/* CONFIG keeps only the writable ADCRANGE/CONVDLY bits and self-clears RST */
-+static void test_config_wmask(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    i2c_set16(dev, REG_CONFIG, CONFIG_ADCRANGE | 0x0040);
-+    g_assert_cmphex(i2c_get16(dev, REG_CONFIG), ==, CONFIG_ADCRANGE | 0x0040);
-+
-+    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
-+    g_assert_cmphex(i2c_get16(dev, REG_CONFIG), ==, CONFIG_POR);
-+}
-+
-+static void ina238_register_nodes(void)
-+{
-+    QOSGraphEdgeOptions opts = {
-+        .extra_device_opts = "id=" INA238_TEST_ID ",address=0x40"
-+    };
-+    add_qi2c_address(&opts, &(QI2CAddress) { INA238_TEST_ADDR });
-+
-+    qos_node_create_driver("ina238", i2c_device_create);
-+    qos_node_consumes("ina238", "i2c-bus", &opts);
-+
-+    qos_add_test("defaults", "ina238", test_defaults, NULL);
-+    qos_add_test("soft-reset", "ina238", test_soft_reset, NULL);
-+    qos_add_test("config-wmask", "ina238", test_config_wmask, NULL);
-+}
-+libqos_init(ina238_register_nodes);
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index bfebe136ef..9b8e2521bf 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -339,6 +339,7 @@ qos_test_ss.add(
-   'eepro100-test.c',
-   'es1370-test.c',
-   'ina230-test.c',
-+  'ina238-test.c',
-   'lsm303dlhc-mag-test.c',
-   'isl_pmbus_vr-test.c',
-   'max34451-test.c',
++#endif
 
 -- 
 2.53.0-Meta
