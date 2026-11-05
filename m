@@ -1,125 +1,149 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087D2606A326
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 13:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101BA606A32C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 13:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xI6dwnZr
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=TpYUIqdW;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IpdlWZNi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOxTd-0003lh-1n; Thu, 05 Nov 2026 08:26:01 -0500
+	id 1xOxgr-0006C4-Bw; Thu, 05 Nov 2026 08:39:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xOxTa-0003f2-KW
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 08:25:58 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xOxTW-0002vY-EP
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 08:25:58 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-6acb9c018ffso1089348a12.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 05:25:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793885152; cv=none;
- d=google.com; s=arc-20260327;
- b=LUCG1DT4sIV23M9gB2qcraxlCt+yfc1Be0ky60KgzyhJpwI0+aHGdsvgs2Uync7XUg
- orb+85VQ8B/zGG0TcIO52ZWRZM4xPHFbQc9L7Xt0Md7sLww6gI1oOaBX1UvPtcOMIMQs
- L2Zm1Scgwei7HoHDSXhMQcU4QROCXFvlOr40bWkNwQ5dHyzVaWn7dIIaaYHXpdL5CwHa
- F6dJSQFpjgdLNhgp9vSVmpBit4Ka4ouv0Fdb4Rg9LFpUpniaUfNA33Wi/GZTCQ2yR8At
- S4xpV3cqMbpQ+pOJlJXS4qIFZxnZ/vjeJzh32teH5mEmnm3WfZnzVV6/8cMizWVK/+G0
- sAPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=6UZ5gR1xV5mL+paG9/KMhE8nTbKcPZDCYjb0LfUzpDg=;
- fh=5wnEN+1PBErBuqm697CiM0ygFndTj3bRhEw9XWifuiM=;
- b=D/LX32QEPvcVL1dj/rtE4Zxqd5zZ8g/4ZCdZ4o1MwVCO4/wZAhtqHo5nsmP649uPrW
- XFq4cJ8/OduEJVv94QV886onlMF6bD+HecgfCTcmiaa38UheiCnUwI0ROcWWn72z3lqH
- JcRVSwVuYUsAgeYnwYAp7nUucL+KPY92RiVL95lEARjo642qtzZwE0zOmyORMZLT5yLW
- M7+i6OBJNmHZNaPD2Ix0h9g+vOrvm4fFMJ4cXoRGx+7EnYk+h2sQtpnWWmnFAMvcwNqo
- W8764mhOcxoGbkS5tJrtsW1LgheQdIuKQjiXbleTmSGiPbIkRm5TthGevGHjm2bXkjIy
- PtjA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xOxgp-0006Bp-Ul
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 08:39:39 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xOxgn-0004He-KY
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 08:39:39 -0500
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A59tMhZ4084489
+ for <qemu-devel@nongnu.org>; Thu, 5 Nov 2026 13:39:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 7we1YJqvKG5/1uA1dYSyDRD8oLi92BjG2pcW2Tmejq0=; b=TpYUIqdWtAD5zjRa
+ qp8jIf6DHtz8avMbiLyfWD/1TRoBI6/HbWNykOIkOJKDes0T2emhluBGAaC8foN/
+ YNf7+S563N3mLa0wzu7z5630ieHG2JlFhsTbawTIqR2J9A5cDIVSGsZSEBEww2AG
+ YaDXmA2PNTQXHLqbBrY801EGRFfcHV+sJs4iqwsOnoc7piH/sxAx5/C88dqxfEji
+ My6Pw2B7Wwry4VorxbTuNzKyjWrgIgvxVN39Vd6ODBOqUJh8E/HxxI9KflXKA2et
+ HWJb59eqfx42KsBNmxLXhDl7DVUjePPkY0scWrO7mz/McERm0KO67GY78VtaBsAV
+ a2Fa5A==
+Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com
+ [209.85.221.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hrqhkrwft-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 13:39:35 +0000 (GMT)
+Received: by mail-vk1-f199.google.com with SMTP id
+ 71dfb90a1353d-5eac74b0596so1825660e0c.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 05:39:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793885152; x=1794489952; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=6UZ5gR1xV5mL+paG9/KMhE8nTbKcPZDCYjb0LfUzpDg=;
- b=xI6dwnZrjh+JRNiFRplBHQxCHHBSOYb2cbAnvpOcZqiWUMvkLMeKXS3VQa7dT2FkiO
- tVr1a4M3SBj/pn1eOmeKGH1xmW4/pn77r4yayypM4ptOIgDrFNB3w/fN/7RgC8T8n8id
- IhKud6qDb2ythkhupEsGoXyHCbf2NWat4YVNwJMTUCk/2k7bwn7wC0bwXrCEeS6msSWP
- ZRnX0LsK4rvSI2uuMdjcs20WchYxFLFS6GxHmF+q3pUnT+pQbBLQ206w9VC5wW/qEcfk
- 3nz2fD662LJAmbnQStJGb2yMbTMMRhk2O2dOQXuuIYOWElh5M1RcMyPHzUL3NI758Rhd
- eL9g==
+ d=oss.qualcomm.com; s=google; t=1793885974; x=1794490774; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7we1YJqvKG5/1uA1dYSyDRD8oLi92BjG2pcW2Tmejq0=;
+ b=IpdlWZNilQuWN5+PlF+QDgn1BlCzOPiKI+Xdsv3Rum7vupBcw9drWs9HPAdIImrbNi
+ BQPAV9lQUu5fj2UvJCjzechv9B0x+E/1cZU6ve4iUj68SHdrdzT1P5MiAiVDMitjSe8i
+ cSo33hfXENejE4JN/apu2m0f3sAZFYEh2tdeYb56EqbBAKDokZH8VNtK9t4wcE5uu8/D
+ 4EjgyzQ6r15VB3GqyGXM63kRKhW2AClrnSAA2JWFaAxq7NPlOqma/7V2onJn7QKwFzui
+ 2FfD7kLn/xoaEO4eSXkGw4A9LHSDyBCK8diNPSv7AOPYBZ6Hqh8UaL8/d0vG3CRD+M5j
+ naTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793885152; x=1794489952;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=6UZ5gR1xV5mL+paG9/KMhE8nTbKcPZDCYjb0LfUzpDg=;
- b=O0FuDQT9aHlGbzCf/9XCQCYFfTVjKTayNfwY+VzHP7/Ib5c5AwKVB5CCHMPN3BxmeQ
- 2YEKRLI0QseHkgq9KBaMjbsAHB3a4Z8Zoz10MtZLa3WlgK2Uy9m6wEz0GRcOz5HoMNLq
- wGV30np4K0nzo6f11br4Hn5HyKlJCozLmqCG0voWr06+T5pwjLglENubjeYzzhMKqwxI
- tPB/E7gjDRf3uxDCofpTed3q8va4ezNtFr21aXCUimf1u6Tyi4qlbh0UphwgNwzghMwZ
- 2XRv5bYaS+NQrmoxDjKnGZ5l9I29JuFVjK6wSRjui6IeB7NF2R4SkduKna/qn0jQWOK3
- 5AGg==
-X-Gm-Message-State: APuU4Z/1bsDOSuCgeIFmYDwHHOn4jqtHh1A/7iyFYqazcw8ZYsCnsn8z
- rW0uHLf4BTskBEuWHi0mNJlrWy9FilKrbXo9cM52ffZBFGRP5ik2Ogolsirg6/wkPQ5Ohoy7x5v
- +il1eviYuIkzYa+lXmszEqcdZDEpldfI=
-X-Gm-Gg: AYBFou2Es0h0xuFVjs0AlZ5q/ftoUOViqxvY5I4Mshes4DKZ/Wl8dfVykRni7o2iYX0
- sC+N3yiZoh9wgwamsRietoyy8PUgt09EdJlJ0ZS/cQdo1TRz075WA0QkC8nxRa6ikZTQ+N1AXCW
- FLv3yyGvE6CZMKMro9EKaC1zYuNhC0s8fBkwTLqw4798WmbeKUy61Op26MkjXjjX1N5u7DC5pxP
- WNfjvDdfYWI2N7VCoVc9tA0J3z+u9jHI9QQpgxv87ilRAhVamzm50r/vq66H7JZx+vVEul+lP4+
- Am7eDy0mMsO1AMiEQ0PmaDAdIegKTmwqysdGLnzQfRnlSx3A3R5B7x63H7OLRHtA7Hm9r+hU2MV
- 7QArSqYubq9V/yjpRx2JxaUoJu0cS7yXjlrcaS0bJsWDYUYl2cA7ZifybVA==
-X-Received: by 2002:a05:6402:540d:b0:6b4:dcab:bf9f with SMTP id
- 4fb4d7f45d1cf-6b5771fc038mr2078001a12.16.1793885152327; Thu, 05 Nov 2026
- 05:25:52 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793885974; x=1794490774;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7we1YJqvKG5/1uA1dYSyDRD8oLi92BjG2pcW2Tmejq0=;
+ b=xqHXc9ofyigGj3M+CiRmorOArycDjZggUEeMFuZLZdfeZjNMWgd0J7NN1yfdLGpJTf
+ hZHdlZRX56h+Sshi09/ZnuCALay9mh8gUIn3Q99grWeTgBa2q4PyXQZVpjEbD0B3ZHGg
+ 6gkm63IUR1IoujjRZko2NIQAE1x6RCunpwFCu9a17CY1f97eIZqDmlhay/pdRnI+tKuM
+ Vi7kx+GpFneTCCJhisTYB00Cmjl8SqEyR2KunNbYBMl23QvF2bZpyhnF3SfmF5f7fs3M
+ Qz9Ks40ejKH7z1j2L3v6EI6seo4hqgYvK7vKVbMXgrpDHn6dTG0RskP1boX0f5lMkn/K
+ OKmQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByfIzy/lUGg35yAsgkojS+QEVAE1yWbQku/dBqa4fLUp17sFXmpmJPcpCh6AkT+U9Bp1c7KDZJrbGqd@nongnu.org
+X-Gm-Message-State: APuU4Z+eRe6lCQQMTHNAnhCYTCJvusaHYVdFl5QwcFC0RVLSl+aruE0q
+ EfCtLrX+XDhYBFaq/nWE4Di6/IDgp/D/D80+4AFmEkaptABHc4CJAUkK+xaAQzuQJKjXB0ePn1w
+ j5jj5CCQ016EtZjPVhMmLEitDeSkGWplvfdnjdnsRbVv+qGsxZ0jUk2Rp1A==
+X-Gm-Gg: AYBFou2SvqGENJ3IWkQCIUqXB+J1UJ4aWNaJE+THvREK5Y1EOAGWGI+Xai7db8cHcrv
+ GbiVgbAx1dF11vfkUGVNsAw9VONiYm8wRDfv//LwRlcDfM7p8xyfrSVSWeeakQaXsS3/T/Kgg9S
+ I4bOkaWHtPx/XWmJU22gRxycZzgersmmph5U/K5II8MXsCGPfmXm/qfOi6LT5Tcvvsf0cyeIbYj
+ HIJOlaP2TZozI4SYYGFzHXjT/EJkPa7EqhXZC7ALFJxtlx5UDQ17WrcDuKskwuWjEsFHjsoWYn0
+ PIQjXhRmXxhlK/nf/emtOMsdb45J7e2XnRvyFo+e4j8zB4/EWJ85mWPqpY/eM/19uuSKRh6nFy9
+ Cc4riSBU36OS0k9bCjmJjfaeN/qH3rLmDepCZV8BjS1XioV93bPPJWptjtrdHpW4H+3DN9lGZZU
+ pfqxg/bSzx
+X-Received: by 2002:a05:6122:f89:b0:5ea:d03c:f0cb with SMTP id
+ 71dfb90a1353d-5ec68293375mr10520802e0c.0.1793885974073; 
+ Thu, 05 Nov 2026 05:39:34 -0800 (PST)
+X-Received: by 2002:a05:6122:f89:b0:5ea:d03c:f0cb with SMTP id
+ 71dfb90a1353d-5ec68293375mr10520771e0c.0.1793885973418; 
+ Thu, 05 Nov 2026 05:39:33 -0800 (PST)
+Received: from [192.168.68.102] ([152.234.122.253])
+ by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-5eca8d9fe6dsm4183537e0c.9.2026.11.05.05.39.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Nov 2026 05:39:32 -0800 (PST)
+Message-ID: <c40c1116-c1bd-42d3-86fc-c056b0fab558@oss.qualcomm.com>
+Date: Thu, 5 Nov 2026 10:39:29 -0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261031164009.2048-1-luoyonggang@gmail.com>
- <20261031164009.2048-7-luoyonggang@gmail.com>
- <auxgsFyzv-5UiyNk@redhat.com>
- <CAE2XoE9J++-BHL5BDx4_jxuto+xwVmvFS3F-hE9gLbgfUmaFdA@mail.gmail.com>
- <aux5vwTnbV3cXcFX@redhat.com>
-In-Reply-To: <aux5vwTnbV3cXcFX@redhat.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Thu, 5 Nov 2026 21:25:39 +0800
-X-Gm-Features: AclHuK_9QSm8YCgsb7dwql8aPYKqsrUIPCNRhBLCQRzD3bPkMMPJRu01tqhmlSQ
-Message-ID: <CAE2XoE-fTKqUB0TZh0-HW6RuMyWJhMGDijarhGSmwsYVTWAcPQ@mail.gmail.com>
-Subject: Re: [PATCH v2 06/12] target/arm: register separate max-v8 CPU types
- for arm and aarch64
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
- Song Gao <17746591750@163.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
- Philippe Mathieu-Daude <philmd@mailo.com>, David Hildenbrand <david@kernel.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Fam Zheng <fam@euphon.net>, Max Filippov <jcmvbkbc@gmail.com>, 
- "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eric Farman <farman@linux.ibm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Cornelia Huck <cohuck@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 11/11] target/riscv: Add system test for Smmpt34
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, chao.liu.zevorn@gmail.com,
+ liwei1518@gmail.com, qemu-riscv@nongnu.org, rahul@summations.net,
+ xiangyi.zeng@linux.alibaba.com, cxx194832@alibaba-inc.com
+References: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
+ <20260723200325.24969-12-zhiwei_liu@linux.alibaba.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260723200325.24969-12-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA1MDA1NCBTYWx0ZWRfX9l6Q9ge/bb9s
+ nrX9tb5yuRxGSPQwg8QEp/8MGVfOW5s0e0Izh4NH+J5MBsW//9gdflc/rbIPUPLKkTElzUKgwd6
+ RrkJ1GFjeh9NxngRHXj4jsi64bIxOSq2H4/t2iL73RUEqjhBCSQDvl7z3P9rL8yQdhVgrzRB8yu
+ 8gYrBXnd1/lG7u8Uv1S1hcZedYmLkMzPLgiTZps/05t++u1xGFuOpUcsh8zkGUJQZXS5u432Usn
+ 0Q5PKUnVBToAqcIoQCYcKDZZOoZa9lC7JTpG3SVVibGwMDihZdidTpANMzx+j2KhoyXqSC6Q0Kw
+ pxpt20axou6J9SGv3NzlzO42X6YPLfTrHPpnL7bQFroAi8uuLsYUzsRutm+V1qxD17MfqF8j1bA
+ Rf7MYTuVydZtpAbI8XVjMw2uTiFi3kyUaMVkXY4Q9aRO/gQEmL2lLsrCUvNtMBbLjETmm9CL8di
+ FeIWliyFtn/x+qYsnFg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA1MDA1NCBTYWx0ZWRfX1J6xYTZv2ziC
+ e7InU56KK7xD5zU0GF0MWBuwnbth7kYYJ3e5vWalp2zSrt6JgyINt8cI7lVj5WLbNrcRJloc2W8
+ TPSLsDkp00TMxkrm2BYDTJ0mWs/Rvb0=
+X-Proofpoint-ORIG-GUID: l9BdXUFIGkfUFNNX-3NeDkIdKh9gw4KU
+X-Authority-Analysis: v=2.4 cv=a4+lZkSF c=1 sm=1 tr=0 ts=6aec8717 cx=c_pps
+ a=+D9SDfe9YZWTjADjLiQY5g==:117 a=LQvE5zGBNe+6ot3hfEwogQ==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=SRrdq9N9AAAA:8 a=FMjj5NILGuuyTn5Zm2EA:9 a=QEXdDO2ut3YA:10
+ a=vmgOmaN-Xu0dpDh8OwbV:22
+X-Proofpoint-GUID: l9BdXUFIGkfUFNNX-3NeDkIdKh9gw4KU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-05_03,2026-11-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 impostorscore=0
+ phishscore=0 spamscore=0 suspectscore=0 adultscore=0 clxscore=1015
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
+ definitions=main-2611050054
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,169 +154,205 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thursday, November 5, 2026, Daniel P. Berrang=C3=A9 <berrange@redhat.com=
-> wrote:
->
-> On Thu, Nov 05, 2026 at 07:14:35PM +0800, Yonggang Luo wrote:
-> > On Thu, Nov 5, 2026 at 6:55=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrang=
-e@redhat.com> wrote:
-> > >
-> > > On Sun, Nov 01, 2026 at 12:40:01AM +0800, Yonggang Luo wrote:
-> > > > max-v8 was one TypeInfo whose instance initializer was chosen from =
-the
-> > > > selected target at registration. Register both initializers, and le=
-t
-> > > > target_arm() and target_aarch64() select which type is available.
-> > > >
-> > > > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> > > > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > > > ---
-> > > >  target/arm/cpu.c            |  1 +
-> > > >  target/arm/cpu.h            |  1 +
-> > > >  target/arm/tcg/cpu-max-v8.c | 16 ++++++++++++----
-> > > >  3 files changed, 14 insertions(+), 4 deletions(-)
-> > > >
-> > > > diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> > > > index 510fc9eeb3b..6eb55242980 100644
-> > > > --- a/target/arm/cpu.c
-> > > > +++ b/target/arm/cpu.c
-> > > > @@ -2695,6 +2695,7 @@ void arm_cpu_register(const ARMCPUInfo *info)
-> > > >          .instance_init =3D arm_cpu_instance_init,
-> > > >          .class_init =3D info->class_init ?: cpu_register_class_ini=
-t,
-> > > >          .class_data =3D info,
-> > > > +        .is_available =3D info->is_available,
-> > > >      };
-> > > >
-> > > >      type_info.name =3D g_strdup_printf("%s-" TYPE_ARM_CPU, info->n=
-ame);
-> > > > diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> > > > index add993ef101..3240a8633ee 100644
-> > > > --- a/target/arm/cpu.h
-> > > > +++ b/target/arm/cpu.h
-> > > > @@ -1203,6 +1203,7 @@ typedef struct ARMCPUInfo {
-> > > >      const char *deprecation_note;
-> > > >      void (*initfn)(Object *obj);
-> > > >      void (*class_init)(ObjectClass *oc, const void *data);
-> > > > +    bool (*is_available)(void);
-> > > >  } ARMCPUInfo;
-> > > >
-> > > >  /**
-> > > > diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v=
-8.c
-> > > > index 65f851f2006..e819d07e6ce 100644
-> > > > --- a/target/arm/tcg/cpu-max-v8.c
-> > > > +++ b/target/arm/tcg/cpu-max-v8.c
-> > > > @@ -121,10 +121,18 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
-> > > >
-> > > >  static void cpu_max_v8_register_type(void)
-> > > >  {
-> > > > -    static const ARMCPUInfo max_v8[2] =3D {
-> > > > -        { .name =3D "max-v8", .initfn =3D aarch32_max_v8_tcg_initf=
-n },
-> > > > -        { .name =3D "max-v8", .initfn =3D aarch64_max_v8_tcg_initf=
-n },
-> > > > +    static const ARMCPUInfo max_v8_aarch32 =3D {
-> > > > +        .name =3D "max-v8",
-> > > > +        .initfn =3D aarch32_max_v8_tcg_initfn,
-> > > > +        .is_available =3D target_arm,
-> > > >      };
-> > > > -    arm_cpu_register(&max_v8[target_aarch64()]);
-> > > > +    static const ARMCPUInfo max_v8_aarch64 =3D {
-> > > > +        .name =3D "max-v8",
-> > > > +        .initfn =3D aarch64_max_v8_tcg_initfn,
-> > > > +        .is_available =3D target_aarch64,
-> > > > +    };
-> > > > +
-> > > > +    arm_cpu_register(&max_v8_aarch32);
-> > > > +    arm_cpu_register(&max_v8_aarch64);
-> > > >  }
-> > > >  type_init(cpu_max_v8_register_type)
-> > >
-> > > Conceptually these are two separate CPUs one 32-bit featureset
-> > > and one 64-bit featureset, but both given the same name. The
-> > > current code registers them only in the respective arm and aarch64
-> > > target binaries, but this CPU is an oddity overall.
-> >
-> > This is the one I did before
-> > https://lore.kernel.org/qemu-devel/20261013195606.152-1-luoyonggang@gma=
-il.com/
-> >
-> > target/arm: defer max-v8 initializer selection until CPU creation
-> > but rejected, and I think it's fine.
->
-> So that essentially matches the historical semantics where one
-> CPU class magically changes its behaviour based on what target
-> is running.  So in that sense, it works, and is no worse than
-> the semantics we've had for 'max' models forever.
->
-> Splitting into 2 distinct types is worthwhile if we want to
-> make it possible for the aarch64 emulator to support a runtime
-> choice of both 32-bit and 64-bit "max" models.
->
-> This patch doesn't allow that though, as it is creating two
-> classes with the same name and filtering which is registered.
-> If we don't intend to allow 64-bit target to ever use a 32-bit
-> 'max' CPU, then your original patch is better IMHO.
 
 
-Hi Daniel, this is a prepare to allow creating two classes with the same na=
-me,
-the is_available will be removed later.
+On 7/23/2026 5:03 PM, LIU Zhiwei wrote:
+> Add SMMPT system-test coverage for Smmpt34, the RV32-only memory
+> protection scheme (2-level MPT with 4-byte entries).
+> 
+> Smmpt34 requires a 32-bit CPU, but qemu-system-riscv64 can run a 32-bit
+> CPU (-cpu rv32), so the test lives in tests/tcg/riscv64 alongside the
+> RV64 Smmpt tests and shares the same harness (smmpt-common.S). It only
+> differs in the table geometry: 4-byte MPTEs, two radix levels, a 10-bit
+> level-0 index and the RV32 mmpt CSR layout (MODE in bits[31:30]). It
+> exercises the same permission and structural checks as the RV64 tests
+> (all XWR encodings for load and store, V=0 and reserved-bit leaves, and
+> NAPOT leaves with a valid and a reserved G field), using the same access
+> addresses. It is built for RV32 and run on qemu-system-riscv64 with
+> -cpu rv32.
+> 
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> ---
+>   tests/tcg/riscv64/test-smmpt34.S | 97 ++++++++++++++++++++++++++++++++
 
-Maybe I should directly replace is_available with TypeBucket to get
-things be clear to review,
-but that is explicitly rejected by Pierrick
+I believe we're missing the meson/Makefile entry for this test.
 
->
->
-> > > More generally the aarch64 emulator includes all the 32-bit CPUs
-> > > that the arm emulator includes, and just adds extra 64-bit CPUs.
-> > > IOW, excluding the 32-bit max-v8 CPU is a special case - if it
-> > > were not for the clashing name, it would be included like all the
-> > > other 32-bit CPUs.
-> > >
-> > > Thus rather than using is_available to continue to exclude it,
-> > > we must instead resolve the naming problem, such that both
-> > > models can be included concurrently.
-> >
-> > I have already implemented the TypeBucket over targets/arch_mask that w=
-orks
-> > properly. That same QOM name will have multiple TypeImpl.
->
-> I'm not sure what you mean by TypeBucket, but my general thought is that
-> at the QOM class/type naming level everything must always be unique,
-> such that we have a single object modelk across QEMU.
->
-> Any ambiguitity & its resolution (if needed) should live outside core
-> QOM typework, such as with aliases in machines/CPUs.
+Since it's a 32-bit test only we want it in the tests/tcg/riscv32/ dir.
 
-Yeap, it's a design choice, both renaming the QOM type with
-MachineClass::targets;
-or using TypeBucket in object.c(so all QOM types do not need rename
-including "virt" machines)
-is implemented by me, it's just finally what we want to do.
+Moving the file, and adding the following tests/tcg/riscv32/system/meson.build
+entry:
 
->
-> If we have a common pattern for aliases, perhaps we could create a
-> standard QOM Interface for resolving aliases.
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
+
+tests += {
+   'test-smmpt34.S': {
+     'exe_name': 'test-smmpt34',
+     'cflags': cflags + ['-march=rv32gcv'],
+     'qemu_args': ['-cpu', 'rv32,x-smmpt=true', qemu_args],
+   }
+}
+
+
+We'll have the following error:
+
+FAILED: tests/tcg/riscv32-softmmu-test-smmpt34.test
+/usr/bin/riscv64-linux-gnu-gcc ../tests/tcg/riscv32/test-smmpt34.S -o tests/tcg/riscv32-softmmu-test-smmpt34.test -static -MMD -MF tests/tcg/riscv32-softmmu-test-smmpt34.d -Wall -Werror -O0 -g -fno-strict-aliasing -fno-stack-protector -march=rv32im_zicsr -mabi=ilp32 -nostdlib -ffreestanding -Wa,--noexecstack -Wl,-T ../tests/tcg/riscv32/system/../semihost.ld -march=rv32gcv
+../tests/tcg/riscv32/test-smmpt34.S:43:10: fatal error: smmpt-common.S: No such file or directory
+    43 | #include "smmpt-common.S"
+
+
+To fix that you'll need a tests/tcg/riscv32/smmpt-common.S symlink to the
+original tests/tcg/riscv64/smmpt-common.S file.
+
+
+Doing all that will make the test run successfully with 'make check-tcg'.
+
+
+
+Also, for the other riscv64 test files from patches 09 and 10, adding this
+entry in tests/tcg/riscv64/system/meson.build will enable all of them:
+
+tests += {
+   'test-smmpt.S': {
+     'exe_name': 'test-smmpt',
+     'cflags': cflags + ['-march=rv64gcv'],
+     'qemu_args': ['-cpu', 'rv64,x-smmpt=true', qemu_args],
+   },
+
+   'test-smmpt52.S': {
+     'exe_name': 'test-smmpt52',
+     'cflags': cflags + ['-march=rv64gcv'],
+     'qemu_args': ['-cpu', 'rv64,x-smmpt=true', qemu_args],
+   },
+
+   'test-smmpt64.S': {
+     'exe_name': 'test-smmpt64',
+     'cflags': cflags + ['-march=rv64gcv'],
+     'qemu_args': ['-cpu', 'rv64,x-smmpt=true', qemu_args],
+   }
+}
+
+
+
+
+Thanks,
+Daniel
+
+
+
+>   1 file changed, 97 insertions(+)
+>   create mode 100644 tests/tcg/riscv64/test-smmpt34.S
+> 
+> diff --git a/tests/tcg/riscv64/test-smmpt34.S b/tests/tcg/riscv64/test-smmpt34.S
+> new file mode 100644
+> index 0000000000..92c8320999
+> --- /dev/null
+> +++ b/tests/tcg/riscv64/test-smmpt34.S
+> @@ -0,0 +1,97 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * Test for the Smmpt34 (Supervisor Memory Protection Table) extension,
+> + * per SMMTT specification v0.4.9.  Smmpt34 is the RV32-only scheme.
+> + *
+> + * Although Smmpt34 requires a 32-bit CPU, the program is run on
+> + * qemu-system-riscv64 with a 32-bit CPU (-cpu rv32), which lives in the
+> + * same target as the RV64 Smmpt tests.  It is therefore kept here in
+> + * tests/tcg/riscv64 alongside the other Smmpt tests and shares the same
+> + * harness (smmpt-common.S).  Build it for RV32 and run it as:
+> + *
+> + *   $CC -march=rv32ima_zicsr -mabi=ilp32 -I tests/tcg/riscv64 \
+> + *       tests/tcg/riscv64/test-smmpt34.S -Wa,--noexecstack -c -o smmpt34.o
+> + *   $LD -m elf32lriscv -T tests/tcg/riscv64/semihost.ld smmpt34.o -o smmpt34
+> + *   qemu-system-riscv64 -cpu rv32,x-smmpt=true -M virt -display none \
+> + *       -semihosting -device loader,file=smmpt34
+> + *
+> + * Smmpt34 uses a 2-level MPT with 4-byte entries (8 pages per leaf,
+> + * pi = SPA[14:12]).  The supervisor physical address is partitioned as
+> + * pn[1] = SPA[33:25] (9-bit root index), pn[0] = SPA[24:15] (10-bit level-0
+> + * index) and range offset SPA[14:0].  For the RAM addresses used here
+> + * (0x8xxx_xxxx, < 4 GiB) pn[1] resolves to 64.  See smmpt-common.S for the
+> + * MPRV trick, the shared address layout and the exit-code convention.
+> + *
+> + * This test reuses the same shared harness and the same access addresses as
+> + * the RV64 tests; only the table geometry (4-byte entries, 2 levels, 10-bit
+> + * level-0 index) and the RV32 mmpt layout differ.
+> + *
+> + * MPT layout (Smmpt34, 2 levels, 4-byte entries):
+> + *
+> + *   L1 (root) @ 0x8040_0000 : entry[64]  -> non-leaf, PPN(L0)=0x80410
+> + *   L0        @ 0x8041_0000 :
+> + *     entry[160] -> non-NAPOT leaf (LEAF_ALL_XWR)  covering 0x8050_0000+
+> + *     entry[162] -> V=0 (invalid)                  covering 0x8051_0000
+> + *     entry[164] -> leaf with a reserved bit set    covering 0x8052_0000
+> + *     entry[192] -> NAPOT leaf, G=6, XWR=RW         covering 0x8060_0000
+> + *     entry[256] -> NAPOT leaf, reserved G=0        covering 0x8080_0000
+> + *
+> + *   mmpt = MODE(1=Smmpt34)<<30 | PPN(0x80400)
+> + */
+> +
+> +#include "smmpt-common.S"
+> +
+> +	.option	norvc
+> +
+> +	.text
+> +	.global	_start
+> +_start:
+> +	/* Install the M-mode trap handler */
+> +	lla	t0, mtrap
+> +	csrw	mtvec, t0
+> +	csrw	medeleg, zero
+> +
+> +	/* PMP entry 0: NAPOT covering the whole space, RWX. */
+> +	li	t0, -1
+> +	csrw	pmpaddr0, t0
+> +	li	t0, 0x1f
+> +	csrw	pmpcfg0, t0
+> +
+> +	/* Build the MPT tables (M-mode stores bypass the MPT). */
+> +	/* L1[64] = non-leaf -> L0 (PPN 0x80410): (0x80410 << 10) | V */
+> +	li	t0, 0x80400000
+> +	li	t1, 0x20104001
+> +	sw	t1, 0x100(t0)		/* 64 * 4 = 0x100 */
+> +
+> +	li	t0, 0x80410000
+> +	/* L0[160] = non-NAPOT leaf carrying all XWR encodings (pi0..pi7) */
+> +	li	t1, LEAF_ALL_XWR
+> +	sw	t1, 0x280(t0)		/* 160 * 4 = 0x280 */
+> +	/* L0[162] = 0: invalid entry (V=0) */
+> +	sw	x0, 0x288(t0)		/* 162 * 4 = 0x288 */
+> +	/* L0[164] = leaf with reserved bit 3 set (V|L|rsv|XWR[pi0]=RW) */
+> +	li	t1, 0x30B
+> +	sw	t1, 0x290(t0)		/* 164 * 4 = 0x290 */
+> +	/* L0[192] = NAPOT leaf: V|L|N | XWR=RW(0x300) | G=6(0x6000) */
+> +	li	t1, 0x6307
+> +	sw	t1, 0x300(t0)		/* 192 * 4 = 0x300 */
+> +	/* L0[256] = NAPOT leaf with reserved G=0: V|L|N | XWR=RW | G=0 */
+> +	li	t1, 0x307
+> +	sw	t1, 0x400(t0)		/* 256 * 4 = 0x400 */
+> +
+> +	/* Program mmpt: MODE=1 (Smmpt34) at bits[31:30], PPN = 0x80400 */
+> +	li	t0, 0x40080400
+> +	csrw	0x382, t0		/* CSR_MMPT */
+> +
+> +	/* mfence.pa must not fault in M-mode */
+> +	TEST_MFENCE_PA 1
+> +
+> +	/* Run the shared permission and structural checks */
+> +	RUN_LEAF_CHECKS
+> +
+> +	/* All tests passed */
+> +	li	a0, 0
+> +	j	_exit
+> +
+> +	SMMPT_HARNESS
+
 
