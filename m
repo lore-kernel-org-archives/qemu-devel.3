@@ -1,87 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AF5606A337
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 17:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860D0606A33A
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 17:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=r1fL042i
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=gJK4BrEi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP1Av-00072P-3Z; Thu, 05 Nov 2026 12:22:57 -0500
+	id 1xP1As-00071N-2j; Thu, 05 Nov 2026 12:22:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1At-00071w-33
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:55 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1Ap-00070q-ER
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:51 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1Aq-0007fQ-Fl
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:54 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4a5087a5348so16672845e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 09:22:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xP1An-0007f1-BV
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 12:22:51 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4a35a60499eso17475415e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 09:22:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793899371; x=1794504171; darn=nongnu.org;
+ d=openvz.org; s=google; t=1793899367; x=1794504167; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=uehzfmfzduQGno49/ozsjuBIXoQFr96ddf/zS6pyLoc=;
- b=r1fL042iHMAwdGM24JE65WEO2hLdK+JXjcTDqsFuGToyMm+xoORqBiW68OtdReNaBO
- uuS0cOrC5EPHHgdOEA2nJ4hHMkJXw86808jZrxgQ2DIMexGtfbwi6EKwA4E/CxkO6P6O
- MDxkL7LzmvSrGKMkuVXr558iXMwFwWiPQX1Jiz7MMlLHd1tRDA+GQmdY2YIN97owhJ/O
- PIvd7eqL0aXBVS0MByEwwfYYfzHuHewZrubuHkaToYYlYsUW0zowEkwQo6m/x4O6C2SP
- G9wPXnyp/79i6qegu1JmawB5SpAbsYm8uJiab/2/ivz9baNZRGcOvi3uXt9dbJMaiqDg
- smeQ==
+ bh=xsIvYpsSHc/l/pCQsHSKYawUUdT/uLOsS9sEu5gjWD4=;
+ b=gJK4BrEi77DUguAvCvPGtPCeWvZboFoh5ClTlXqPMnvx0wMDBp3FmlZiSdq7hfr+3Y
+ hJE6frk5avBeBNjzbp7E9Ib9k4T15KhgqvLEBjpr0jqvDPo1NU7JCjhO7CbqLs1cZ/uJ
+ VkheAYHlZ9VSmUr9LyDULb/mliRX89R4I5MIav1sUZ8lHbgA3pLeyJJ+6bsY08C6gkDg
+ 92ZUYyWB776xVYSI0sxKj/Foy+w6MJ/+gB0WTLIRL4blNBmF/vFd2pAHAnVRau46Uf2P
+ Upjm44agkv5y3FjfBBjvkD+VAGZjwEMw75JDT69hC9CLycmuk3CrVAcck7bximqr5F28
+ ljNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793899371; x=1794504171;
+ d=1e100.net; s=20260707; t=1793899367; x=1794504167;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=uehzfmfzduQGno49/ozsjuBIXoQFr96ddf/zS6pyLoc=;
- b=0gfmmsANSXUrzp+p8Eae+acz4Wksbfhx6WLiD5V8/h5VsJ9+oxNjDUxoZpBFnufufo
- 1VvRa26aRcU5U/0N6ktQgxI0FL6Ip5lwIcJ4SqmyGEMPUljKLSaysNCx07DuhT4odxdG
- GlBbTXbtr6BpMb/MNiwwR1/LoGwsZiCpjdGS5Q2IeGbgwe7EPIFM0f+Iyx/vgocSxCeI
- P864kru61mpBDOIcMVg2QyVs8egBH0RsjOpETm8QO0LhlWov4Ir9cVjy8Gnfa3QxdAF5
- kn7Fy+X06NHgg3jjvjUzb+amlfbUccBcKRw+37CtMCBrJepcN5WOpt5AAJmNa11KYu2h
- /jsQ==
-X-Gm-Message-State: APuU4Z9D9iP4nLasNtmM4FX8oDjyT0EGdX7o8LmUlkaPonKurePQaatj
- aSH56Vx2SidjcOMyOwL9AGhe+bnaKYr3e008PMlqdj2EzOH8Hfx96H51zkY0fNBxDP6Z0dKilPd
- HAj1z
-X-Gm-Gg: AYBFou2iKYdOPF4bP4W7iU3QHSl9YpyyAQRzyb6lebRP0SUh/z9I2BaQZYGp12LVVoo
- +M+X6uMkDbYFDj+oyGoIfePOgujLMGe5Bg+VkXiTCs3hv5mW7OgHsXszPl80TyJIGytFuFKRhzr
- P3vgi4/2IVCEs/gWCTINBGvTWhcYXfBsor/ew6SczqDsL88nQd15++4Bt5LJg9hBoXvduiTQcdM
- sUw/hUuI8QtnIBwfielYJbQ5Q0ihn5R3Jtf593DpR3/B+1zbORDDJmjHK6LnoIrLW3IxsBoNRgz
- hI4cvUrlp9bc6R/E7Lt1Iua64J9fxfsowDhGTziNeFI7YSbTWdrDcy+YhnMlDPXcEuTJR95SEpX
- 3R0zD4uwGYxyeoWdVfPa3qBDM7J+85RwbwYsJvIyGmrs9ppBQ1pn0KMVbSlWAQbcpHS1pKcqCvz
- 8fGfbt1hrGVG9+AX5t/kXZW0CH+i1CHyyx0hfxXxajYcHFqaPFvoNV8YdIKmYB11bWsY7VqUmKo
- hz93/XJufGrOeI55RrmhMssEoI7QS/Pi1ihL1nOnP0XoFjP9tM+wIeK1vvq2kCwmmM4mzURZBHe
- 0FTSvPsMYvPgOL1jGjFW5aMPqA==
-X-Received: by 2002:a05:600c:5249:b0:4a7:7f3f:6f8e with SMTP id
- 5b1f17b1804b1-4ac1228b5bfmr438277005e9.0.1793899370968; 
- Thu, 05 Nov 2026 09:22:50 -0800 (PST)
+ bh=xsIvYpsSHc/l/pCQsHSKYawUUdT/uLOsS9sEu5gjWD4=;
+ b=oyhPRlTWqCn74iaeuGcdUkzSOrN3jHDdMJrF7JA1qjK99BU6GdqEn0jwcqIwZvXtW3
+ I7n51Ybi1QZgvOTV2KmmTpJxxeyB7dlR5yaPypJb6TDXBTQJiVZeTOh7TgdXgY5ar95W
+ KipSsUySFfC9eoTs8CwOvvHemB57sKsCsCNANd75yGmRkSPK5wLOyNLxZmR/9FkWrkMu
+ ixnQGxrKo1LLyzTabanJyTcFYHt9AT7oAHQs6AwAr5U42QwBvpvOx3eu8gykFpoqulp2
+ my5hVsLMh5/VOI2XH8gRR6f/phnKq7VvEaKUZO2uniOK662IntM0FcdOQUCF3del6wFD
+ o/Kg==
+X-Gm-Message-State: APuU4Z9W99r7Wqomlale/LWJ7Y6xYK2prB50uaZBEKEM5pvhT47HLrsN
+ 1QE+1+tKf+YW7RWt/zCnUH97KlRIRuqWWalR7PlCADOULhe7D7U0aGyWc3RO55mrjiLG/XSKkQs
+ 74Tkb
+X-Gm-Gg: AYBFou0olwrEGKwAw4/JDoiYj2frtKx7ceRBS3lds275i0za7dXEdfu+7sSkFbKor6O
+ E7Pherjb+ZV29zIS8yCQ2DN1HXZVnOxa8P50g3sJHYY5E3lG6Q5TLEBXLIXqYFlvNlTvj3WfS4+
+ lAb7IMPbDS9TpnJUYD7ua8mdAmQDwjvcEVSYzmmeLqdXXLpRncKFI6aXe/tPSXHXAx9UMBIsd1A
+ Y2beaAIPcHcIdD1CIDFFlj5HfSEA/dqmXKcpuTIcJ/aehCk92qwuJGwiNuTdr9y9h6EH8I/SHJ2
+ 2qMJrMfSXrcmkjYRLAyQEalUANJWIxtno0UFcBslqgUi6hTExA9Bbn50NdNPQwSlKKOEpQS2Wh4
+ xCTSkQ47qyGpNEXBlfYuftnNTEPPrsbtNlhTAudD8iH6/LZuxp8MloFHyUG72LP+iBQWpIMty8m
+ 3gH/neBbXDK2ez99ggO3wO2VtVhWTogC2ckmWu9F1qhV6WyHC+dJ4iHmbZq5KKEznTpYn43kV53
+ 3Tpjo/bjSfa2t62fpSjmv+Ypb+4+6fokgZ2RKzKcaBHxggiKA9s6qLEM4kAPc1MyS0+wC3AuGlm
+ +kpETIIGYqfCilJc+weyt9y/edA=
+X-Received: by 2002:a05:600c:354c:b0:4a1:9663:7639 with SMTP id
+ 5b1f17b1804b1-4ac18c7389amr447705155e9.34.1793899367449; 
+ Thu, 05 Nov 2026 09:22:47 -0800 (PST)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:3848:9c8a:8cf7:6236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b56e2ae72dsm130632255e9.3.2026.11.05.09.22.49
+ 5b1f17b1804b1-4b56e2ae72dsm130632255e9.3.2026.11.05.09.22.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 09:22:50 -0800 (PST)
+ Thu, 05 Nov 2026 09:22:47 -0800 (PST)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>,
+Cc: den@openvz.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Philippe Mathieu-Daude <philmd@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, "Denis V. Lunev" <den@virtuozzo.com>
-Subject: [PATCH v2 3/6] memory: stop building dispatch trees before the
- machine runs
-Date: Thu,  5 Nov 2026 18:22:41 +0100
-Message-ID: <20261105172244.2804598-4-den@openvz.org>
+ Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ "Denis V. Lunev" <den@virtuozzo.com>
+Subject: [PATCH v2 0/6] migration: cut destination-side downtime on a big guest
+Date: Thu,  5 Nov 2026 18:22:38 +0100
+Message-ID: <20261105172244.2804598-1-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260911142345.3999518-1-den@openvz.org>
 References: <20260911142345.3999518-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=den@openvz.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,377 +108,113 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Denis V. Lunev <den@openvz.org>
+v1 deferred the Hyper-V SynIC post_load so that it stopped forcing a
+flatview rebuild per vCPU. Measuring it showed the rebuild itself was
+the larger target: most of it is building the dispatch tree, which
+nothing translates through until a vCPU runs. Patches 1 to 3 stop
+building trees until the machine is about to run, for machine creation
+and an incoming stream alike. Patches 4 to 6 are v1 reworked after
+Peter's review: a device gets a separate post_load_mr_update callback
+which only maps or unmaps its regions, and a load batches those calls
+into one memory transaction after the device state has been read and
+before the guest can start.
 
-Regenerating a flatview spends most of its time building the radix tree
-used to translate addresses through it, not rendering the view. Nothing
-translates through a tree until a vCPU runs, and by then the topology has
-been rebuilt hundreds of times: once per device that claims a region
-while the machine is created, and once more per device that moves a BAR
-or a window while an incoming vmstate stream is read. Nearly all of those
-trees are discarded unbuilt upon.
+The split is a correctness fix, not only an API change. v1 deferred the
+whole SynIC post_load, including the control bit VMBus reads in its own
+post_load to decide whether a SINT route gets a GSI. With a vmbus-bridge
+the destination would create the route without one, and the guest would
+get no further VMBus interrupts. Patch 5 separates state from mapping,
+patch 6 batches only the mapping.
 
-Do not build them until a vCPU can run. A view rendered before that keeps
-a flat array of the sections the render already produced, and a lookup
-binary searches it. vm_prepare_start() builds a tree for every view still
-in use, which is the last point at which nothing has run yet.
+The batch spans the whole load rather than one device, the alternative
+Chuang's series and the ToDo item point towards: a remap which repeats
+per vCPU sits in a per-vCPU section, so per-device batching would still
+rebuild once per vCPU. Unlike that series, the stream is not loaded
+inside the transaction: only callbacks which by contract resolve nothing
+share it, so no loader sees a stale view.
 
-The array answers the question the tree does except for one caller: a
-lookup which asks for the page a subpage container stands for, rather
-than the range covering the address, still needs the tree and builds it.
-That is the softmmu TLB fill and the iotlb entry lookup.
+Measured on a 24-core EPYC 7443P restoring a captured stream of a
+Windows Server 2022 guest, median of three interleaved rounds. The
+metric is the sum of vmstate_downtime_load over the non-iterable
+sections plus everything deferred past the last section, so work moved
+to the end is not mistaken for work removed:
 
-Building asserts the BQL, because two builders racing on one view would
-leak a tree. That holds every caller which can reach a view without one
-to running while the guest does, and by then no view an address space
-still publishes is missing its tree: a reader which picked one up during
-the window keeps it afterwards, and a view superseded meanwhile never
-gets a tree at all. Before a vCPU runs, the paths which translate without
-the BQL either do not run or ask for a range rather than a page.
+                        64 vCPU, 65 ports    4 vCPU, 16 ports
+  upstream                    175 ms              25 ms
+  after patch 3                50 ms              10 ms
+  after patch 6                29 ms               9 ms
 
-A load which follows a run reopens the window, so a snapshot restore gets
-the same treatment as an incoming migration; vm_prepare_start() closes it
-again. Postcopy needs no exception, because it starts the guest through
-the same path.
+Patch 3 helps every guest; its saving tracks device count. Patch 6
+scales with vCPUs: 21 ms on the large guest, 1 ms on the small one.
+Both guests map only the SynIC message page; one which also maps the
+event page saves about twice as much.
 
-A tree is now published once it is complete rather than while it is being
-filled, so a reader finds the tree or the array, never a half-built tree.
-io_mem_unassigned loses its static so the array can carry the same
-unassigned section the tree does.
+Patches 1 to 3 rest on no vCPU having run, so only the thread creating
+the machine or loading the stream, under the BQL, can reach a view
+without a tree; building one asserts the BQL. Postcopy starts the guest
+through vm_prepare_start() like any other start.
 
-CC: Paolo Bonzini <pbonzini@redhat.com>
+Tested on x86_64 with make check-unit, check-qtest-x86_64 and
+migration-test --full under KVM and forced onto TCG, where the subpage
+path runs; both include the postcopy cases. A guest which programs the
+SynIC from its boot sector comes back from save and restore with both
+pages mapped where they were.
+
+v1: https://lore.kernel.org/qemu-devel/20260911142345.3999518-1-den@openvz.org/
+Chuang Xu: https://lore.kernel.org/r/20230317081904.24389-1-xuchuangxclwt@bytedance.com
+ToDo: https://wiki.qemu.org/ToDo/LiveMigration#Optimize_memory_updates_for_non-iterative_vmstates
+
+Changes in v2:
+ - added patches 1 to 3, the dispatch-tree work; the batch runs inside
+   the window patch 3 opens
+ - post_load_deferrable replaced by post_load_mr_update, a callback for
+   region updates only (Peter)
+ - SynIC post_load split, patch 5, so VMBus still sees the SynIC state
+ - postcopy covered: the batch is made in the POSTCOPY_RUN handler
+   before the bottom half which starts the guest is scheduled (Peter);
+   the listen thread is not batched
+ - snapshot and xen loads batched the same way, COLO checkpoints not
+   (Peter)
+ - the callback cannot fail; the abort on a failing hook is gone (Peter)
+ - documentation says the batch is one transaction and a lookup during
+   it sees the old topology (Peter)
+ - APIC example dropped; the new callback cannot carry cross-thread work
+
 CC: Peter Xu <peterx@redhat.com>
-CC: Philippe Mathieu-Daude <philmd@oss.qualcomm.com>
 CC: Fabiano Rosas <farosas@suse.de>
+CC: Paolo Bonzini <pbonzini@redhat.com>
+CC: Philippe Mathieu-Daude <philmd@oss.qualcomm.com>
+CC: Zhao Liu <zhao1.liu@intel.com>
+CC: Marcelo Tosatti <mtosatti@redhat.com>
+CC: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
----
- include/system/memory.h  | 19 ++++++++
- migration/savevm.c       | 10 +++++
- system/memory-internal.h |  2 +
- system/memory.c          | 96 +++++++++++++++++++++++++++++++++++++++-
- system/physmem.c         | 41 +++++++++++++++--
- system/runstate.c        |  3 ++
- system/trace-events      |  1 +
- 7 files changed, 167 insertions(+), 5 deletions(-)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 027ca81bd2..d620bee90e 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -940,6 +940,13 @@ struct FlatView {
-     unsigned nr;
-     unsigned nr_allocated;
-     struct AddressSpaceDispatch *dispatch;
-+    /*
-+     * Stands in for @dispatch, one entry per range plus an unassigned entry
-+     * at index 0. Built instead of the tree while dispatch building is
-+     * deferred, and then kept for the life of the view, because a reader may
-+     * still hold a pointer into it.
-+     */
-+    MemoryRegionSection *sections;
-     MemoryRegion *root;
- };
- 
-@@ -2334,6 +2341,18 @@ void memory_region_transaction_begin(void);
-  */
- void memory_region_transaction_commit(void);
- 
-+/**
-+ * flatview_dispatch_defer_begin: Stop building dispatch trees
-+ *
-+ * For a window in which the topology is rebuilt repeatedly and translated
-+ * through rarely, such as loading a migration stream. A view rendered in
-+ * the window answers lookups from its range array instead, and gets its
-+ * tree once the window closes. Must be closed with
-+ * flatview_dispatch_defer_end() before the guest runs again.
-+ */
-+void flatview_dispatch_defer_begin(void);
-+void flatview_dispatch_defer_end(void);
-+
- /**
-  * memory_listener_register: register callbacks to be called when memory
-  *                           sections are mapped or unmapped into an address
-diff --git a/migration/savevm.c b/migration/savevm.c
-index fe94ba96e4..ac48db7754 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -3147,7 +3147,17 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
- 
-     cpu_synchronize_all_pre_loadvm();
- 
-+    /*
-+     * A load which follows a run, such as a snapshot, starts with the window
-+     * already closed. Reopen it: the guest is stopped for the whole load, and
-+     * vm_prepare_start() closes it again before anything runs.
-+     */
-+    flatview_dispatch_defer_begin();
-+
-     ret = qemu_loadvm_state_main(f, mis, errp);
-+
-+    flatview_dispatch_defer_end();
-+
-     qemu_event_set(&mis->main_thread_load_event);
- 
-     trace_qemu_loadvm_state_post_main(ret);
-diff --git a/system/memory-internal.h b/system/memory-internal.h
-index d81881ba54..3d9f92185d 100644
---- a/system/memory-internal.h
-+++ b/system/memory-internal.h
-@@ -20,8 +20,10 @@ FlatView *address_space_get_flatview(const AddressSpace *as);
- void flatview_unref(FlatView *view);
- 
- extern const MemoryRegionOps unassigned_mem_ops;
-+extern MemoryRegion io_mem_unassigned;
- 
- void flatview_build_dispatch(FlatView *fv);
-+MemoryRegionSection *flatview_lookup_section(FlatView *fv, hwaddr addr);
- void flatview_add_to_dispatch(FlatView *fv, AddressSpaceDispatch *d,
-                               MemoryRegionSection *section);
- AddressSpaceDispatch *address_space_dispatch_new(FlatView *fv);
-diff --git a/system/memory.c b/system/memory.c
-index 33bd97c9a3..d04130f695 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -301,6 +301,7 @@ static void flatview_destroy(FlatView *view)
-     for (i = 0; i < view->nr; i++) {
-         memory_region_unref(view->ranges[i].mr);
-     }
-+    g_free(view->sections);
-     g_free(view->ranges);
-     memory_region_unref(view->root);
-     g_free(view);
-@@ -745,11 +746,54 @@ static MemoryRegion *memory_region_get_flatview_root(MemoryRegion *mr)
-     return NULL;
- }
- 
-+static bool flatview_dispatch_deferred = true;
-+
-+static void flatview_build_sections(FlatView *view)
-+{
-+    unsigned i;
-+    MemoryRegionSection *sections;
-+
-+    assert(!view->sections);
-+
-+    sections = g_new(MemoryRegionSection, view->nr + 1);
-+    sections[0] = (MemoryRegionSection) {
-+        .fv = view,
-+        .mr = &io_mem_unassigned,
-+        .size = int128_2_64(),
-+    };
-+    for (i = 0; i < view->nr; i++) {
-+        sections[i + 1] = section_from_flat_range(&view->ranges[i], view);
-+    }
-+
-+    qatomic_rcu_set(&view->sections, sections);
-+}
-+
-+static FlatRange *flatview_lookup(FlatView *view, AddrRange addr);
-+
-+/* Called from RCU critical section */
-+MemoryRegionSection *flatview_lookup_section(FlatView *view, hwaddr addr)
-+{
-+    MemoryRegionSection *sections = qatomic_rcu_read(&view->sections);
-+    FlatRange *fr;
-+
-+    fr = flatview_lookup(view, addrrange_make(int128_make64(addr),
-+                                              int128_one()));
-+
-+    return fr ? &sections[fr - view->ranges + 1] : &sections[0];
-+}
-+
- void flatview_build_dispatch(FlatView *view)
- {
-     AddressSpaceDispatch *d;
-     int i;
- 
-+    /*
-+     * Two builders racing on one view would leak a tree, and the BQL is
-+     * what keeps them apart. Every caller which can reach a view without
-+     * one runs only while the guest does, by which point no view an
-+     * address space still publishes is missing its tree.
-+     */
-+    assert(bql_locked());
-     assert(!view->dispatch);
- 
-     d = address_space_dispatch_new(view);
-@@ -777,12 +821,60 @@ static FlatView *generate_memory_topology(MemoryRegion *mr)
-     }
-     flatview_simplify(view);
- 
--    flatview_build_dispatch(view);
-+    if (flatview_dispatch_deferred) {
-+        flatview_build_sections(view);
-+    } else {
-+        flatview_build_dispatch(view);
-+    }
-     g_hash_table_replace(flat_views, mr, view);
- 
-     return view;
- }
- 
-+/*
-+ * Machine creation and a vmstate load both rebuild the same views many times
-+ * over and translate through almost none of them, so the dispatch tree waits
-+ * until a vCPU can run. A view rendered meanwhile answers from its range
-+ * array, which the render already produced. Idempotent, because the windows
-+ * nest: an incoming migration loads a stream inside the one creation opened.
-+ */
-+void flatview_dispatch_defer_begin(void)
-+{
-+    assert(bql_locked());
-+    flatview_dispatch_deferred = true;
-+}
-+
-+void flatview_dispatch_defer_end(void)
-+{
-+    unsigned n_views = 0, n_ranges = 0;
-+    GHashTableIter iter;
-+    gpointer value;
-+
-+    assert(bql_locked());
-+
-+    if (!flatview_dispatch_deferred) {
-+        return;
-+    }
-+    flatview_dispatch_deferred = false;
-+
-+    if (!flat_views) {
-+        return;
-+    }
-+
-+    g_hash_table_iter_init(&iter, flat_views);
-+    while (g_hash_table_iter_next(&iter, NULL, &value)) {
-+        FlatView *view = value;
-+
-+        if (!view->dispatch) {
-+            flatview_build_dispatch(view);
-+            n_views++;
-+            n_ranges += view->nr;
-+        }
-+    }
-+
-+    trace_flatview_dispatch_drain(n_views, n_ranges);
-+}
-+
- static void address_space_add_del_ioeventfds(AddressSpace *as,
-                                              MemoryRegionIoeventfd *fds_new,
-                                              unsigned fds_new_nb,
-@@ -3426,7 +3518,7 @@ static void mtree_print_flatview(gpointer key, gpointer value,
-     }
- 
- #if !defined(CONFIG_USER_ONLY)
--    if (fvi->dispatch_tree && view->root) {
-+    if (fvi->dispatch_tree && view->root && view->dispatch) {
-         mtree_print_dispatch(view->dispatch, view->root);
-     }
- #endif
-diff --git a/system/physmem.c b/system/physmem.c
-index 6f11e31799..6611327213 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -101,7 +101,7 @@ static MemoryRegion *system_io;
- AddressSpace address_space_io;
- AddressSpace address_space_memory;
- 
--static MemoryRegion io_mem_unassigned;
-+MemoryRegion io_mem_unassigned;
- 
- typedef struct PhysPageEntry PhysPageEntry;
- 
-@@ -359,6 +359,41 @@ static MemoryRegionSection *address_space_lookup_region(AddressSpaceDispatch *d,
-     return section;
- }
- 
-+static AddressSpaceDispatch *flatview_dispatch(FlatView *fv)
-+{
-+    AddressSpaceDispatch *d = qatomic_rcu_read(&fv->dispatch);
-+
-+    if (unlikely(!d)) {
-+        flatview_build_dispatch(fv);
-+        d = fv->dispatch;
-+    }
-+
-+    return d;
-+}
-+
-+/*
-+ * Called from RCU critical section.
-+ *
-+ * A view rendered while dispatch building is deferred has no tree yet, and
-+ * its range array answers the same question directly. Only a caller which
-+ * wants the page a subpage container stands for, rather than the range
-+ * covering the address, has to pay for the tree.
-+ */
-+static MemoryRegionSection *flatview_lookup_region(FlatView *fv, hwaddr addr,
-+                                                   bool resolve_subpage)
-+{
-+    AddressSpaceDispatch *d = qatomic_rcu_read(&fv->dispatch);
-+
-+    if (unlikely(!d)) {
-+        if (resolve_subpage) {
-+            return flatview_lookup_section(fv, addr);
-+        }
-+        d = flatview_dispatch(fv);
-+    }
-+
-+    return address_space_lookup_region(d, addr, resolve_subpage);
-+}
-+
- /* Called from RCU critical section */
- static MemoryRegionSection *
- address_space_translate_internal(FlatView *fv, hwaddr addr, hwaddr *xlat,
-@@ -368,7 +403,7 @@ address_space_translate_internal(FlatView *fv, hwaddr addr, hwaddr *xlat,
-     MemoryRegion *mr;
-     Int128 diff;
- 
--    section = address_space_lookup_region(fv->dispatch, addr, resolve_subpage);
-+    section = flatview_lookup_region(fv, addr, resolve_subpage);
-     /* Compute offset within MemoryRegionSection */
-     addr -= section->offset_within_address_space;
- 
-@@ -744,7 +779,7 @@ translate_fail:
-      */
-     assert((orig_addr & ~TARGET_PAGE_MASK) == 0);
-     *xlat = orig_addr;
--    return &fv->dispatch->map.sections[PHYS_SECTION_UNASSIGNED];
-+    return &flatview_dispatch(fv)->map.sections[PHYS_SECTION_UNASSIGNED];
- }
- 
- #endif /* CONFIG_TCG */
-diff --git a/system/runstate.c b/system/runstate.c
-index 56bfc5b07d..bae8ce9a96 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -59,6 +59,7 @@
- #include "system/replay.h"
- #include "system/reset.h"
- #include "system/runstate.h"
-+#include "system/memory.h"
- #include "system/runstate-action.h"
- #include "system/confidential-guest-support.h"
- #include "system/system.h"
-@@ -508,6 +509,8 @@ int vm_prepare_start(bool step_pending)
-         return -1;
-     }
- 
-+    flatview_dispatch_defer_end();
-+
-     /*
-      * WHPX accelerator needs to know whether we are going to step
-      * any CPUs, before starting the first one.
-diff --git a/system/trace-events b/system/trace-events
-index 38ad0be8a9..3542b6b2c4 100644
---- a/system/trace-events
-+++ b/system/trace-events
-@@ -26,6 +26,7 @@ flatview_destroy(void *view, void *root) "%p (root %p)"
- flatview_destroy_rcu(void *view, void *root) "%p (root %p)"
- global_dirty_changed(unsigned int bitmask) "bitmask 0x%"PRIx32
- memory_region_finalize(const char* name) "mr %s"
-+flatview_dispatch_drain(unsigned n_fv, unsigned n_ranges) "flatviews %u ranges %u"
- 
- # physmem.c
- address_space_map(void *as, uint64_t addr, uint64_t len, bool is_write, uint32_t attrs) "as:%p addr 0x%"PRIx64":%"PRIx64" write:%d attrs:0x%x"
+Denis V. Lunev (6):
+  memory: publish a dispatch tree only once it is complete
+  physmem: pass the FlatView to address_space_translate_internal
+  memory: stop building dispatch trees before the machine runs
+  migration: add post_load_mr_update to batch region remaps on load
+  hw/hyperv: split the SynIC page mapping from its state update
+  target/i386: batch the Hyper-V SynIC page remaps on load
+
+ hw/hyperv/hyperv.c            |  70 ++++++++++++++------
+ include/hw/hyperv/hyperv.h    |   3 +
+ include/migration/vmstate.h   |  30 +++++++++
+ include/system/memory.h       |  19 ++++++
+ migration/savevm.c            |  22 +++++++
+ migration/vmstate.c           |  50 ++++++++++++++
+ system/memory-internal.h      |  17 ++---
+ system/memory.c               | 119 +++++++++++++++++++++++++++++++---
+ system/physmem.c              |  78 +++++++++++++++-------
+ system/runstate.c             |   3 +
+ system/trace-events           |   1 +
+ target/i386/kvm/hyperv-stub.c |   8 +++
+ target/i386/kvm/hyperv.c      |  16 ++++-
+ target/i386/kvm/hyperv.h      |   2 +
+ target/i386/machine.c         |   8 ++-
+ tests/unit/test-vmstate.c     | 109 +++++++++++++++++++++++++++++++
+ 16 files changed, 489 insertions(+), 66 deletions(-)
+
 -- 
 2.53.0
 
