@@ -1,52 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1398F606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12620606A32C
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 22:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YOnFQwU3
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HgkiY9Ni
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP5zq-00047w-PJ; Thu, 05 Nov 2026 17:31:51 -0500
+	id 1xP5zx-0004AA-Gs; Thu, 05 Nov 2026 17:31:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5zW-00046h-Kn
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5zX-00046j-3v
  for qemu-devel@nongnu.org; Thu, 05 Nov 2026 17:31:32 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5zV-0002Ja-2S
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xP5zV-0002Jk-Kz
  for qemu-devel@nongnu.org; Thu, 05 Nov 2026 17:31:30 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 07971600C8;
- Thu,  5 Nov 2026 22:31:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2251F0089F;
- Thu,  5 Nov 2026 22:31:24 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 0774C601BF;
+ Thu,  5 Nov 2026 22:31:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3261F0089F;
+ Thu,  5 Nov 2026 22:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793917885;
- bh=uofusSfXzjqN73N3MbZyd7Z6HgC+JN7YKmtley5S/B0=;
- h=From:To:Cc:Subject:Date;
- b=YOnFQwU31p66xVQMjoCZiKold8ub7I1lGkzWGwInftFJ1yeNQSdoUcFELLwTKT3KJ
- hK9P/ZowiTlsladSZQlHTZgsoG3kf7aEZomAlkI5Yhk6u/T0V5STm24k2tM6oN8x1t
- kModKH3gQ2bVZX6wYUx/4wzQcZeuRPWVlqXrApBOdTRz0BPLFbzuwsloxd6SWAw/Jo
- bPyuy93hS18Zl/lgcNW89QQRNqBpflnRtLkKBXuWHWoBHqvSpDSRcCkSVQzg7SDyLX
- 2+Yr4Ds9h6rJnhLc8S/W+hhIZKywqO6ufo+uKRy5OetPB6PlirmlcMcyHHq6FJAuzU
- GBglgO3hp0bUA==
+ s=k20260515; t=1793917888;
+ bh=Lwvle8kftyMyVUaATfFKVfk9F/eF+2p2rQi5EtyLBX4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=HgkiY9NiyLB/MgAJ86rY4SjgZJMY3Q3Cg3x6zTfS38XpnwgW6XiPCi4S1ROBBNEWb
+ /jYKiPChab4Cns3oo55hXQLC4TbhlBFriZQo6sf9g/fkGHl/w2jNFQ2V1u84DIAnBC
+ FsmtnjiXlcBg74E3RyloxAno9qc9vZwuv+TCwyXxo6QQNnPhxF37C1ID8M0//vjqM+
+ 2EIYAAeAxoB8BzYTJ4qwpaYgx7XbYD5wR6OjWp19RHulJXZxykahGUAV4NsAth3e4f
+ xD+wxpvBgx7iv7Qph0wS7jMYdUvgrEyg/pUD6a6UPIKlZwlvhJtxvbooBP6bEMZm9/
+ d02Vbi3sgIBNg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Keith Monahan <keith@techtravels.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL v2 0/8] Hppa 715 cpu nic patches
-Date: Thu,  5 Nov 2026 23:31:14 +0100
-Message-ID: <20261105223122.8729-1-deller@kernel.org>
+Subject: [PULL v2 2/8] target/hppa: Add special blr instruction for HP-UX 9.05
+Date: Thu,  5 Nov 2026 23:31:16 +0100
+Message-ID: <20261105223122.8729-3-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20261105223122.8729-1-deller@kernel.org>
+References: <20261105223122.8729-1-deller@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -65,58 +66,38 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Helge Deller <deller@gmx.de>
 
-The following changes since commit 99e6fa0053ba1b1454b8c4446f857c430547a702:
+The HP-UX 9.05 installer's update executable use a branch instruction with
+reserved bits set.  Real hardware ignores those bits, but QEMU treated the
+instruction as illegal and killed the program.  Add an entry to handle this
+specific blr instruction (code 0xe81a4018) to avoid this crash.
 
-  Merge tag 'pull-nbd-2026-11-02' of https://gitlab.com/ebblake/qemu into staging (2026-11-03 10:54:31 -0800)
+Noticed-by: Keith Monahan <keith@techtravels.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ target/hppa/insns.decode | 1 +
+ 1 file changed, 1 insertion(+)
 
-are available in the Git repository at:
-
-  https://github.com/hdeller/qemu-hppa.git tags/hppa-715-cpu-nic-pull-request
-
-for you to fetch changes up to 58952e4a5a2ddc0e450bef0770959b1147c98f2e:
-
-  i82596: Various send- and transmit fixes for 715 (2026-11-05 23:29:19 +0100)
-
-----------------------------------------------------------------
-qemu-hppa-715
-
-A last bunch of fixes to allow HP-UX 9.05 to run on the 715 machine.
-This includes a fix to handle an invalid use of the blr instruction, a fix
-which puts the power button address outside of the ROM, and various fixes for
-the i82596 NIC.
-
-Tests were run on HP-UX 9.05, HP-UX 10.20, NetBSD and Linux.
-
-----------------------------------------------------------------
-
-Helge Deller (8):
-  target/hppa: Move emulated power button into CPU I/O region
-  target/hppa: Add special blr instruction for HP-UX 9.05
-  lasi_i82596: Decode the PORT command from bits 3:0, not 7:0.
-  i82596: Implement 82596CA big-endian mode (SYSBUS bit 7)
-  i82596: Initialize variables at chip reset
-  i82596: Drop crc calculation
-  i82596: Fix source address inserting
-  i82596: Various send- and transmit fixes for 715
-
- hw/hppa/machine.c        |  13 +-
- hw/net/i82596.c          | 355 ++++++++++++++++++++++++++-------------
- hw/net/i82596.h          |   5 +
- hw/net/lasi_i82596.c     |   4 +-
- target/hppa/cpu.h        |   2 +
- target/hppa/insns.decode |   1 +
- 6 files changed, 261 insertions(+), 119 deletions(-)
-
+diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+index f700fe472e..135f563c88 100644
+--- a/target/hppa/insns.decode
++++ b/target/hppa/insns.decode
+@@ -451,6 +451,7 @@ bl              111010 ..... ..... 101 ........... n:1 .        &BL l=2 \
+                 disp=%assemble_22
+ b_gate          111010 ..... ..... 001 ........... .   .        @bl
+ blr             111010 l:5   x:5   010 00000000000 n:1 0
++blr             111010 l:5   x:5   010 00000000110 n:1 0    # invalid BLR used in HP-UX 9.05 installer (0xe81a4018)
+ nopbts          111010 00000 00000 010 0---------1   0 1    # clrbts/popbts
+ nopbts          111010 00000 ----- 010 00000000000   0 1    # pushbts/pushnom
+ bv              111010 b:5   x:5   110 00000000000 n:1 0
 -- 
 2.54.0
 
