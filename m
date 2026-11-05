@@ -1,65 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4629C606A328
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D75F606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 09:30:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOtll-0006jQ-6n; Thu, 05 Nov 2026 04:28:29 -0500
+	id 1xOtmu-0000Zs-RZ; Thu, 05 Nov 2026 04:29:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtlX-0006eM-CG
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:28:16 -0500
-Received: from mail-pl1-f174.google.com ([209.85.214.174])
+ id 1xOtmt-0000Wq-FZ
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:29:39 -0500
+Received: from mail-pl1-f171.google.com ([209.85.214.171])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xOtlV-0006vK-Fe
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:28:15 -0500
-Received: by mail-pl1-f174.google.com with SMTP id
- d9443c01a7336-2eb18f4da15so5676895ad.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:28:13 -0800 (PST)
+ id 1xOtmr-00072u-69
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 04:29:39 -0500
+Received: by mail-pl1-f171.google.com with SMTP id
+ d9443c01a7336-2e9995ce866so13341965ad.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 01:29:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793870892; x=1794475692;
+ d=1e100.net; s=20260707; t=1793870975; x=1794475775;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=retw+hCi5vVKjipTQvsUltaajOcauTJ+Xp/W71jLDVc=;
- b=Uu/BjLbCPWoieQVgAtWPCvLG06xLvvRLV07qxalmUD8xAzskfelsnZVl28Gt1cCpRy
- 2Ci/jAnotsgTSzb/56dz9ZiQ+N+MYdWtxjpJ4kyo5Ufi9xOSOzyIMmOKfeoZfFteCVrb
- tvLDIR+YvCHTN0VmBxOjJ9L5qBlDXGc+HnIyyPZdo5S9CHCLgI1YZ9GPlvLcSdu3oaGa
- WXbXgmoFN9CLSBJeRO0CJV/r801xATas+gYkZfmV35nfYLRIROozNHMkF9yTEayVKdJf
- hm8Bn9sMi2YwnMVahVsNXhbD8EPhuJtrMVGZQ1R29bBClr1QF8P01wq47RetJ2kDWhXt
- DOVg==
-X-Gm-Message-State: APuU4Z/SfwCLyEpZGZVEEAa5cmziZFWTysVVzq5snbIzxeM2bj2AC/kL
- bN6esZf5jamsRQaMknbs9P0RUe9IUBERb3/Qj457IYy4f/Kpt6B7jSFHhehyXyxhdYY=
-X-Gm-Gg: AYBFou3WDQD9gBf1RxeMc7MHZulhHEtXvsIgw/weXcX7C/3ClcsBA4gjhpWoQktqcyE
- uzI/Rnau/hpLN9xdO4dZ7BioVeaakNlBP2wdLidPdl0WSftEqKBka5QrH3JxXCmBB68JwJDkimk
- gZ+t+Xoh20br5WxkDfLIAE4CRI3MCoon2xMrHjnIqJX1oNXQ5T48Q8to9TQnImYrulfir7zCnJn
- R+h4Pc0g0c2JNBBnRwQ4V15AUJ3hMijM28zYVd0GURCjxqJxNvgz7cAPRmYBLqFaCNlJJuARP6c
- ClWMXshBUmdF9fzK/Ow9HNsHozgBNz5udw8kQq64uvlLoG8+1neue1jBvtNPe4pibTw49iyc/3F
- ELebew8B8My0nDGkUuNfZi1TvUR9/5ud2vFLvQQr7ECx1/X//XCINw+ozYUMMH0gJnX/W89rgWF
- kgyExFgZiAU9tMlrn5aukohdQkkxVLgQCC6j2HXu0fFc4DNseOYgDdq45q4953t7xfXR3KR5Xyr
- /vwQJailN1JoXrqe6TPWkOgfpPHbBEc/vGqDuEgqYqjyyxM5W7sQ0wFJsnNfnE93xzesN3IInk6
- 3Bc+hZeOfxVnUZlQSetTFk5QC6XrPmAy9fpdnQtrqfVcD8PI95af3pGFhe70mPR/QzmeHwObKPy
- U
-X-Received: by 2002:a17:902:ce05:b0:2dd:ad73:5b6f with SMTP id
- d9443c01a7336-2eb364b55camr171857535ad.31.1793870891693; 
- Thu, 05 Nov 2026 01:28:11 -0800 (PST)
+ bh=tMqRetAxiQAIvpDJW998EtamxiidvOknZM6HJPGhQpw=;
+ b=EPl2DaTPEQim3nZ5KKCodl6pFEssnzTJhql6u0u+VI4zq9PaUdQtH17MRfZsfLVNND
+ ARHE4iITHT8BTWmpqAUlmtKJaIrH8TGGNdDzf1kB8I48lzsJOzvXYA6MbRK+D098qS0T
+ gxpd1X3SBdyRH50krmrmU85/CenRRYcbK9Z9hMmhNkpq7+KNluLoDlNunFHySrAg22yj
+ 2G4qvI8ldTfmCWgNEh4+IihmXyv3yBMrVLQF/YPr11kEAWDZCzcWm3LbhjV55l4iHHPZ
+ cHMmGtAiOxh1/WKLITG84U6/a8eHyzJhAJmwwD2hUGzGuCBu9TIwj3U3k+iQMOxnv9sh
+ fnHQ==
+X-Gm-Message-State: APuU4Z+sXZeprQJ1rk8kcHQ9eYEgL4BX1hrn5o+KSDWKfiI14l1gJ+xS
+ YkeL498EN9VZg2PyicrXbMKo+nIiWuAGqWTSPyBf91KjCNWRRezh+6gOZ4etKQ6EeG4=
+X-Gm-Gg: AYBFou2JP8jIvAm1cpGSMOPAM6+2tf4wL+V04jwdjccqWRVz4+OWP27M23+vEaRPnPS
+ bllyt/IEJHNUfcxIbhufmE5w6QPWFOnF184NVNMKGNoGxyXJNSe7L4ERY89bwjnru+CYPmCQmlO
+ 8BAAaUfPxQTVbhIHOgDHqdIchbA95k5vJgXMBNHVX4yTY+wCmAMMLR8apCZc4IRc5RzYQ61JKaz
+ UnbX082UrVmYtcN98JhSsgEdJfV+MSeBcRSZYn9RRk1LrnTJfEMWnM2v1AjjqvfGuPOOsXznyNG
+ QSWyaaIaMVHmeuTYky55NF1H9oRh6zZXpSlF26lWdVOEqeGIFZCd5Klfe+oChop2W2Syskz7fnv
+ erV4UbdCZLwQTBfGpa/t5lrOq7Tc+M15yZJiBQom1TVmIMo5iQ7o2ztiPbtTJcblTJlQ9c9CGf9
+ PcdrP+aLjmjtgLl/2FgHXuXEoI9tmnEAC/zlIcJUIKb79u+i4OrfPwp9vzZUEiuq8PwTcmrt2Ce
+ wwTmJQzhTi5kiJ0SWdI92wP9Nf3qfDmaFeJpo2ATGbMcNvOJKoNaM8RyPg4qyYsIPJdVacY3xxO
+ m9VAlIMIHS70fM3k7hKhOeZ26/67Xfd/C9lrvhy/smQjZMxhR40CN8SW+2Jom8IhjXu0UKQ6fcp
+ s
+X-Received: by 2002:a17:902:f712:b0:2ed:acb:aa96 with SMTP id
+ d9443c01a7336-2ed0acbd23fmr42094725ad.24.1793870975358; 
+ Thu, 05 Nov 2026 01:29:35 -0800 (PST)
 Received: from localhost (118-163-122-149.hinet-ip.hinet.net.
  [118.163.122.149]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ed2c79ea15sm3709255ad.63.2026.11.05.01.28.11
+ d9443c01a7336-2ed0906ebedsm15925785ad.31.2026.11.05.01.29.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 01:28:11 -0800 (PST)
-Date: Thu, 05 Nov 2026 17:25:42 +0800
-Subject: [PATCH 03/16] hw/sensor: tmp421: implement Resettable reset
+ Thu, 05 Nov 2026 01:29:34 -0800 (PST)
+Date: Thu, 05 Nov 2026 17:25:53 +0800
+Subject: [PATCH 14/16] tests/qtest: tmp421: cover per-variant channels and
+ enablement
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261105-sensor-tmp421-v1-3-c46853f5e1f0@free.fr>
+Message-Id: <20261105-sensor-tmp421-v1-14-c46853f5e1f0@free.fr>
 References: <20261105-sensor-tmp421-v1-0-c46853f5e1f0@free.fr>
 In-Reply-To: <20261105-sensor-tmp421-v1-0-c46853f5e1f0@free.fr>
 To: qemu-devel@nongnu.org
@@ -71,22 +72,22 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, eblot@meta.com,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793870742; l=2741;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793870743; l=3174;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=jjLzkdYMOkO0VP5ki4S9XNixanshbfj1QWCH+5pzHwI=;
- b=0d1GjFHyw0hNWxqlmXuYkjR853Y2s95/pA0FYQQP9fymiJtvfp71ubFKf5/uLSIfbaaQ2imIj
- jbN+OcGdoIIBDWtuKclwNKFtNDTXCNRilAmcI0/g6sHdpLk/99BGruL
+ bh=6nvwu9Ryau4lnUGBjjuEHQaAZ8bpboeH30ZpsRWrAg8=;
+ b=m3LRqZgamggLJweBwY5it6HAEKh0lGseXbug+AaA1/30DIjcGGwmO+gZrjz2kH51GX/F+nwWA
+ Ox5YWsIsjqgBzsc5SXFL9ISASuMvnkVFfmd8EK763+RRWOzRua27DhK
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.214.174; envelope-from=eblot.ml@gmail.com;
- helo=mail-pl1-f174.google.com
+Received-SPF: pass client-ip=209.85.214.171; envelope-from=eblot.ml@gmail.com;
+ helo=mail-pl1-f171.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
 X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
  FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,92 +108,84 @@ X-Spam-Status: No, score=-17.0 required=3.0 tests=BAYES_00,INCLUDES_CR_TRAILER,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Wire the reset through the Resettable hold phase instead of only
-calling it from realize, so bus and system resets re-initialise the
-device. The measured temperatures are no longer cleared on reset: they
-represent the physical input the ADC re-samples, and boards may preset
-them before the machine-wide power-on reset.
+Check that each variant exposes only its own temperature properties,
+that writing an absent channel's enable bit is ignored, and that
+disabling a present channel makes it read back as zero.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/sensor/tmp421.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ tests/qtest/tmp421-test.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/hw/sensor/tmp421.c b/hw/sensor/tmp421.c
-index 55e261a090..4b93d42b14 100644
---- a/hw/sensor/tmp421.c
-+++ b/hw/sensor/tmp421.c
-@@ -225,7 +225,7 @@ static void tmp421_read(TMP421State *s)
-     }
+diff --git a/tests/qtest/tmp421-test.c b/tests/qtest/tmp421-test.c
+index 390f17b6b2..04f9252188 100644
+--- a/tests/qtest/tmp421-test.c
++++ b/tests/qtest/tmp421-test.c
+@@ -22,6 +22,7 @@
+ #define TMP421_CONFIG_REG_1             0x09
+ #define    TMP421_CONFIG_RANGE            (1 << 2)
+ #define TMP421_CONFIG_REG_2             0x0A
++#define    TMP421_CONFIG_REN              (1 << 4)
+ #define TMP421_CONVERSION_RATE_REG      0x0B
+ #define TMP421_TEMP_LSB0                0x10
+ #define TMP421_RESET                    0xFC
+@@ -78,6 +79,15 @@ static void set_temperature(const char *id, unsigned channel, int value)
+     qobject_unref(response);
  }
  
--static void tmp421_reset(I2CSlave *i2c);
-+static void tmp421_reset(TMP421State *s);
- 
- static void tmp421_write(TMP421State *s)
++static bool has_temperature(const char *id, unsigned channel)
++{
++    QDict *response = qmp_get_temperature(id, channel);
++    bool present = qdict_haskey(response, "return");
++
++    qobject_unref(response);
++    return present;
++}
++
+ static void test_ids(void *obj, void *data, QGuestAllocator *alloc)
  {
-@@ -240,7 +240,7 @@ static void tmp421_write(TMP421State *s)
-         s->config[1] = s->buf[0];
-         break;
-     case TMP421_RESET:
--        tmp421_reset(I2C_SLAVE(s));
-+        tmp421_reset(s);
-         break;
-     }
- }
-@@ -304,17 +304,18 @@ static const VMStateDescription vmstate_tmp421 = {
-     }
- };
- 
--static void tmp421_reset(I2CSlave *i2c)
-+static void tmp421_reset(TMP421State *s)
- {
--    TMP421State *s = TMP421(i2c);
-     TMP421Class *sc = TMP421_GET_CLASS(s);
- 
--    memset(s->temperature, 0, sizeof(s->temperature));
-+    /*
-+     * The measured temperatures are not cleared: they model the physical
-+     * input the ADC re-samples after reset, and boards may preset them.
-+     */
-     s->pointer = 0;
-+    s->config[0] = 0;
- 
--    s->config[0] = 0; /* TMP421_CONFIG_RANGE */
--
--     /* resistance correction and channel enablement */
-+    /* resistance correction and channel enablement */
-     switch (sc->dev->model) {
-     case TMP421_DEVICE_ID:
-         s->config[1] = 0x1c;
-@@ -331,23 +332,22 @@ static void tmp421_reset(I2CSlave *i2c)
-     s->status = 0;
+     const TMP421Variant *var = data;
+@@ -156,6 +166,31 @@ static void test_range_saturation(void *obj, void *data,
+     g_assert_cmphex(i2c_get16(i2cdev, TMP421_TEMP_MSB0), ==, 0xD5F0);
  }
  
--static void tmp421_realize(DeviceState *dev, Error **errp)
-+static void tmp421_reset_hold(Object *obj, ResetType type)
++static void test_channels(void *obj, void *data, QGuestAllocator *alloc)
++{
++    const TMP421Variant *var = data;
++    QI2CDevice *i2cdev = obj;
++
++    /* Only the variant's own channels expose a temperature property. */
++    for (unsigned ch = 0; ch < 4; ch++) {
++        g_assert_true(has_temperature(var->id, ch) == (ch < var->nchannels));
++    }
++
++    /* Absent channel enables and reserved bits are dropped on write. */
++    i2c_set8(i2cdev, TMP421_CONFIG_REG_2, 0xff);
++    g_assert_cmphex(i2c_get8(i2cdev, TMP421_CONFIG_REG_2), ==,
++                    var->config2_reset);
++
++    /* Disabling remote channel 1 makes it read back as zero. */
++    set_temperature(var->id, 1, 25001);
++    g_assert_cmphex(i2c_get16(i2cdev, TMP421_TEMP_MSB0 + 1), ==, 0x1900);
++    i2c_set8(i2cdev, TMP421_CONFIG_REG_2,
++             var->config2_reset & ~TMP421_CONFIG_REN);
++    g_assert_cmphex(i2c_get16(i2cdev, TMP421_TEMP_MSB0 + 1), ==, 0);
++    i2c_set8(i2cdev, TMP421_CONFIG_REG_2, var->config2_reset);
++    g_assert_cmphex(i2c_get16(i2cdev, TMP421_TEMP_MSB0 + 1), ==, 0x1900);
++}
++
+ static void tmp421_register_node(const TMP421Variant *var, const char *type,
+                                  uint8_t addr)
  {
--    TMP421State *s = TMP421(dev);
--
--    tmp421_reset(&s->parent_obj);
-+    tmp421_reset(TMP421(obj));
+@@ -170,6 +205,8 @@ static void tmp421_register_node(const TMP421Variant *var, const char *type,
+ 
+     qos_add_test("ids", type, test_ids,
+                  &(QOSGraphTestOptions) { .arg = (void *)var });
++    qos_add_test("channels", type, test_channels,
++                 &(QOSGraphTestOptions) { .arg = (void *)var });
  }
  
- static void tmp421_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-     TMP421Class *sc = TMP421_CLASS(klass);
- 
--    dc->realize = tmp421_realize;
-     k->event = tmp421_event;
-     k->recv = tmp421_rx;
-     k->send = tmp421_tx;
-+    rc->phases.hold = tmp421_reset_hold;
-     dc->vmsd = &vmstate_tmp421;
-     sc->dev = (DeviceInfo *) data;
- 
+ static void tmp421_register_nodes(void)
 
 -- 
 2.53.0-Meta
