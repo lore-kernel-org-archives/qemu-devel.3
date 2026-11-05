@@ -1,165 +1,125 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DFB606EE99
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 15:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D86606D80E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Nov 2026 15:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=akfrsQO0;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=tWagIYWT
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JGyyLUuT;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=AxL335W9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xOzCg-0001lb-Da; Thu, 05 Nov 2026 10:16:38 -0500
+	id 1xOzDN-00025w-9K; Thu, 05 Nov 2026 10:17:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xOzCZ-0001kd-6f
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:16:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <gromero@redhat.com>)
+ id 1xOzDL-00021C-LF
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:17:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xOzCT-00088P-MZ
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:16:28 -0500
+ (Exim 4.90_1) (envelope-from <gromero@redhat.com>)
+ id 1xOzDJ-0008ED-CC
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 10:17:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793891784;
+ s=mimecast20190719; t=1793891835;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=O4F9Wfq5la36+9krYFJO2wttsxdtoPqpGJVjyYMXlsk=;
- b=akfrsQO0xsMD24XSKx4eFfYCm2xZJztin2faogUazSpfLcCjbqgQVImfZWjjWfn5Pxxt5F
- XxneZyQZckOFZ5u4PSLI3zhPAKdYMvsNfWDuHSA8HH2yLxuRhKM7OTO8PbWMOpdM6VAI1m
- I0lePmdRUeZ1dlHouLZGctJq75aHp3w=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=PWStlxpRqjRahsWYuORDQCtt6o/ULCst5bg5rrotfio=;
+ b=JGyyLUuTpjqLi29huEV0dvvguA5HYBh5S3hq0QVtz6iQq667yt0p/QEqk4IS+U0VfxqOZx
+ 84d5e8UnAU7+IA0eCOOc60202rflPQTsBUM+EexT7qEoKwE7bPBXpvBRn9+Z4iC5k7mCZK
+ stufX99QoYnXt9wsEAun02VDrqwHwvI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-88-u5i5zx65PNuOduYWYFMLZQ-1; Thu, 05 Nov 2026 10:16:16 -0500
-X-MC-Unique: u5i5zx65PNuOduYWYFMLZQ-1
-X-Mimecast-MFC-AGG-ID: u5i5zx65PNuOduYWYFMLZQ_1793891775
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-490ab0a20ebso1268245f8f.1
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 07:16:16 -0800 (PST)
+ us-mta-91-cMXyLEyqMpaWc1yx4UKyRA-1; Thu, 05 Nov 2026 10:17:14 -0500
+X-MC-Unique: cMXyLEyqMpaWc1yx4UKyRA-1
+X-Mimecast-MFC-AGG-ID: cMXyLEyqMpaWc1yx4UKyRA_1793891833
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4a70b42bab0so11364405e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 07:17:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793891775; x=1794496575; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=O4F9Wfq5la36+9krYFJO2wttsxdtoPqpGJVjyYMXlsk=;
- b=tWagIYWTUajuqBoIa94foNHY2uxgCFJkf+RKT0n6V/w1oLBK1TiYi/mrmeKawmYXRw
- I4t92lOHvoSJBG3pVvn6ypBMvNc107C2UcD3oseeLvpamRHK11g/oWnygMTpLjV/riIR
- +r8Y25wWcMw3NnFmmHI5grxT6XuY++Bh5UPICBGkqiO+x2dBa8sPh+Pn9vaw+IdM7OGw
- amB2VIbrT/YEkZpsL+78V2uc4vLWriDnf3NdOyVIWKMzv7ZtkQPccmmgNvweVmjxDOHH
- HtSawR8Ao24Jw3vdWMI5RrA5QHW2Kw3WXA/lDbOqiopkqS4iAzV8WPQAWUoyIgfOYE5+
- +Ypw==
+ d=redhat.com; s=google; t=1793891833; x=1794496633; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PWStlxpRqjRahsWYuORDQCtt6o/ULCst5bg5rrotfio=;
+ b=AxL335W9WuvvjgnPT/a0vB21NBam4nTmI/Wc1MPePLuUmm/SW3JiTsrrmarZrw19Qn
+ mZOXzy/tZw4fpC2Gw2LtYPU6F3+M3CSX01J6SfGVBcyQnlk5WHhFvkZ0eZ6cf7lc/hX2
+ wEOudKQCfe/tIa7g5wyPbdslsT3LLfGBJxLdiQxxI43fSHY/zYY9xqQBkmkH5ZywM33H
+ TpNgGkv6d1/10g/ge3Dl9d9FMt+YO4JokWlYbumvk9/1BIUFYfhjd3z71zZdt7oegkGp
+ uqc0P9o64GuEeDJIeADnISP+nnXE69VxqE98rLaL1x3Hkla7zZSCcEa4oXsx4aTi5L+6
+ rb6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793891775; x=1794496575;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=O4F9Wfq5la36+9krYFJO2wttsxdtoPqpGJVjyYMXlsk=;
- b=1LCCwkB0DM4P+ht9UeSc59FndOvqHYh43nL/y2Zgodqd+cyVMnpF5cakX1t7DGwwJG
- 266ZO9TCgAaJMWwi/XSYVNmBHTmO/SlR4EwTmXZCM2aqOTgYEuyCU/O+hcMm6hMrAw5I
- 8gyu8cbftchGWYoCjH02dAOX/TzpL9CpB3kgY0JrEEivDDSsvuxKS/I9B8xgS+pz8jrT
- Ncu81QwlfRYwoK7pCmYLWcDCTq7lyLm29W5WxzmI83YXIy0jDu6lNyt18a0y7a8LzOVe
- cnzSJjNH6Lp4c/76LG1ZVNlIGt7bCXa881wUpuZ0KZMfDM8PfRMNjuAHyJMm/lw41s44
- 8Jsg==
-X-Gm-Message-State: APuU4Z9qw1aOsoogsUt/XpVC7h0kiWTaJvJ6EoYexxy8s2W6aR3uAXwF
- 1Sx8Ai86m+TS5vfCzpk8PDSoVOO9zuGHbDhxbsooth4Z6mPXj5c/t7Io8JKtZB4dkUeUoLWxVc+
- CRNtqMVHjyzoyVVnPOHTLCPm6eOHiNYPqRfKGEOnwskdLNKvmiXptO64W
-X-Gm-Gg: AYBFou31Mrx4Aps14Vto00JfkRBjbuEWkGYia67+lxwNClB8FEvkBlRDb+2TIjrESIi
- i6Naw/E+lN/sBSeUK7F1tSU8D8piqJ3OH+tm2iGSo+N8LpaOecVaJJN1tQVas0maDjYjVRtu+fd
- DSiyKnwG62pUFLRJWYzY0XPBae03EuEgUpqW9zbcQRFjWhSTvxb7/fJhQoUaopAZQCFwTY/dq3H
- +PwE1qzZyXDvtJHfa8+iMCr9xbQP9q66Zo3E6zLyzfyYhuThrsE6VBj/fQCkv9myuDK2TwFvPDz
- FU43W3McWmcP+ygYlKrUhz3sq89S+ShpshnxoELqrHZxeDs44DTguhmuMZahwWNmM9wiOkDOlr8
- QZPczN5Vn6061NpJwLdLA+QWKjF59hfRI8mOpLtZvt66uidmxlj2fKdeT9fsGpk3XOaSSmEHbj3
- cC/JrC1oKlUg==
-X-Received: by 2002:a5d:5e8d:0:b0:491:286f:8e6d with SMTP id
- ffacd0b85a97d-491286f90aamr4766807f8f.30.1793891774985; 
- Thu, 05 Nov 2026 07:16:14 -0800 (PST)
-X-Received: by 2002:a5d:5e8d:0:b0:491:286f:8e6d with SMTP id
- ffacd0b85a97d-491286f90aamr4766760f8f.30.1793891774565; 
- Thu, 05 Nov 2026 07:16:14 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:1292:d530:6448:8ad:27f1:8b49?
- ([2a01:e0a:1292:d530:6448:8ad:27f1:8b49])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48fed45d71dsm10463861f8f.36.2026.11.05.07.16.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Nov 2026 07:16:13 -0800 (PST)
-Message-ID: <20ac1135-044f-4fe0-bddc-abe1c6f53c64@redhat.com>
-Date: Thu, 5 Nov 2026 16:16:12 +0100
+ d=1e100.net; s=20260707; t=1793891833; x=1794496633;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=PWStlxpRqjRahsWYuORDQCtt6o/ULCst5bg5rrotfio=;
+ b=y3zPXWFmFJi8Gw0ffPmw/Xizkom9QSgyKLKxovdXOc9UltlSkxo+AUYLA7G5se1+uU
+ 1xaFxbUOZwwosA81pVLoVHdu6M3TbmllNaMJHI1M/Ha+dkibiJ/fkD3OkeQ4w7+gBLds
+ c156kiWYG1BcFpR25eMb7EgIUL8Ro3bTNzev1Hc9zGfDIIQfVOF4H91F85QqnMcWFYga
+ G6cS7QfvmAHEsxHMeIUd6gv9w9QKDrnhyFA2mfQ0vbeK4OmNLZ1kd+UJnDGYbBnyO3JV
+ pVLiF5lqoRhdxcKDWy/hM+fcKCi9C4i8A1F8+vBP+pZol1B3XExfgNr3Uls2+MMqifTF
+ v0mA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzWxP4Eb8TyTGDSnU98X7ioqIkpH8Tyhv5s1KL5Kq+DzOERUqGy2fPDgAyKWl1J+tvdnnfVVXdsbHj8@nongnu.org
+X-Gm-Message-State: APuU4Z8HplyRQTV2IWllFfLaO71uXFqGLCZ5V/nwkYbv74piVZn4lEAH
+ SEFcDonq0rCk5U6LpHhYN7M8bsDxuyKoc+5DkLbC8+peqZefmSxkTb0Wl+ZPiX8Xub4YI0XZ6R7
+ YyvQr+3Xaq2OpVRL1y/P3fB/cd1YDljKM9/nxRGXDtUwbBT8xf0C0oGA5
+X-Gm-Gg: AYBFou3NuYLPZAyTv+gtSyL64cHwK3nEK41lgh9I8t/7IFa3fbaivG3YvGu2AEbaISA
+ FuDsiSfOpotcKSehmNtLeLKk5HVyaslUvhdUyOzba/XSHZPoIdt8DtP/gObzE1JkY6Vf0eg5RoH
+ WHtIGCpgu8/f2OeOxDKBDPEuMP+kGLsNddM7ni655VMEFhGhsQWaXMJSmIukOkNbrR/F+JGPztg
+ CnhPprUcK3gKyYdk96TGgpBebEXIlJHXdhMh/Qc45h5aaGdublomYK1DPktMTo65Ie9MEQdH31b
+ mmFEhQX7NPWW4TfgmpYnINYzQV7v6yvsdj1vb1l9SJfzboq6ZznKh5YgnRGywMvr/e337wI9jes
+ y45whqA1ZyvR7cs7leDr/n2xVWA43Q6lM
+X-Received: by 2002:a05:600c:1989:b0:4a1:88df:8a2a with SMTP id
+ 5b1f17b1804b1-4b55dbb09dfmr55752945e9.13.1793891833023; 
+ Thu, 05 Nov 2026 07:17:13 -0800 (PST)
+X-Received: by 2002:a05:600c:1989:b0:4a1:88df:8a2a with SMTP id
+ 5b1f17b1804b1-4b55dbb09dfmr55752465e9.13.1793891832642; 
+ Thu, 05 Nov 2026 07:17:12 -0800 (PST)
+Received: from x1 ([151.41.153.165]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4b56f02386bsm68634305e9.7.2026.11.05.07.17.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Nov 2026 07:17:11 -0800 (PST)
+Date: Thu, 5 Nov 2026 16:17:09 +0100
+From: Gustavo Romero <gromero@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ qemu-block@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Tao Tang <tangtao1634@phytium.com.cn>, Jagannathan Raman <jag.raman@oracle.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH 2/2] hw/ide: add SPDM + IDE + TEE pci support to ICH9
+ SATA driver
+Message-ID: <tngpdnrroq4lregd733ivej2qhsgb2uyaugki5dzpfkj572nso@jsvx3pwxzj6u>
+References: <20261104-ich-driver-spdm-v1-0-60d361bc0417@linaro.org>
+ <20261104-ich-driver-spdm-v1-2-60d361bc0417@linaro.org>
+ <82fe2840-2775-47b3-b077-180fbd811b03@oss.qualcomm.com>
+ <3c7816f3-b8ad-4ab2-8057-9cbac6805fba@oss.qualcomm.com>
+ <cd20258b-160d-4913-a67b-ed2b4d351ff8@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tests/functional/ppc64: add pseries virtio-blk
- hotplug test
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>, Miles Glenn <milesg@linux.ibm.com>,
- Aditya Gupta <adityag@linux.ibm.com>
-References: <20261103141938.41147-1-anushree.mathur@linux.ibm.com>
- <de7816aa-98c6-4c9a-8420-b937f94cd8a1@linux.ibm.com>
- <87pkwj73he.fsf@draig.linaro.org>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <87pkwj73he.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+In-Reply-To: <cd20258b-160d-4913-a67b-ed2b4d351ff8@oss.qualcomm.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gromero@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,69 +131,189 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/5/26 15:33, Alex BennÃ©e wrote:
-> Chinmay Rath <rathc@linux.ibm.com> writes:
+Hi folks,
+
+On Thu, Nov 05, 2026 at 09:20:43AM +0100, Philippe Mathieu-Daudé wrote:
+> On 5/11/26 09:11, Pierrick Bouvier wrote:
+> > On 11/4/2026 11:12 PM, Philippe Mathieu-Daudé wrote:
+> > > On 4/11/26 17:34, Jim MacArthur wrote:
+> > > > From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > > 
+> > > Rationale?
+> > > 
+> > > > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > > > Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+> > > > ---
+> > > >    hw/ide/ich.c | 82 ++++++++++++++++++++++++++++++++++++++++++++++++++
+> > > > ++++++++--
+> > > >    1 file changed, 80 insertions(+), 2 deletions(-)
+> > > > 
+> > > > diff --git a/hw/ide/ich.c b/hw/ide/ich.c
+> > > > index b00987f08d..58e2d3b998 100644
+> > > > --- a/hw/ide/ich.c
+> > > > +++ b/hw/ide/ich.c
+> > > > @@ -70,6 +70,7 @@
+> > > >    #include "hw/ide/pci.h"
+> > > >    #include "hw/ide/ahci-pci.h"
+> > > >    #include "ahci-internal.h"
+> > > > +#include "system/spdm-socket.h"
+> > > >      #define ICH9_MSI_CAP_OFFSET     0x80
+> > > >    #define ICH9_SATA_CAP_OFFSET    0xA8
+> > > > @@ -90,6 +91,10 @@ static const VMStateDescription vmstate_ich9_ahci = {
+> > > >        },
+> > > >    };
+> > > >    +static const Property ich_props[] = {
+> > > > +    DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
+> > > > +};
+> > > > +
+> > > >    static void pci_ich9_ahci_update_irq(void *opaque, int irq_num, int
+> > > > level)
+> > > >    {
+> > > >        PCIDevice *pci_dev = opaque;
+> > > > @@ -120,13 +125,39 @@ static void pci_ich9_ahci_init(Object *obj)
+> > > >        d->ahci.irq = &d->irq;
+> > > >    }
+> > > >    +/* Sends an SPDM message and receives the response */
+> > > > +static bool pcie_doe_spdm_rsp(DOECap *doe_cap)
+> > > > +{
+> > > > +    void *req = pcie_doe_get_write_mbox_ptr(doe_cap);
+> > > > +    uint32_t req_len = pcie_doe_get_obj_len(req) * 4;
+> > > > +    void *rsp = doe_cap->read_mbox;
+> > > > +    uint32_t rsp_len = SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE;
+> > > > +
+> > > > +    uint32_t recvd = spdm_socket_rsp(doe_cap->spdm_socket,
+> > > > +                             SPDM_TRANSPORT_TYPE_DOE,
+> > > > +                             req, req_len, rsp, rsp_len);
+> > > > +    doe_cap->read_mbox_len += DIV_ROUND_UP(recvd, 4);
+> > > > +
+> > > > +    return recvd != 0;
+> > > > +}
+> > > > +
+> > > > +/* SPDM protocols: plain and secured SPDM messages */
+> > > > +static DOEProtocol doe_spdm_prot[] = {
+> > > > +    { PCI_VENDOR_ID_PCI_SIG, PCI_SIG_DOE_CMA, pcie_doe_spdm_rsp },
+> > > > +    { PCI_VENDOR_ID_PCI_SIG, PCI_SIG_DOE_SECURED_CMA,
+> > > > pcie_doe_spdm_rsp },
+> > > > +    { }
+> > > > +};
+> > > > +
+> > > >    static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
+> > > >    {
+> > > >        AHCIPCIState *d;
+> > > >        int sata_cap_offset;
+> > > >        uint8_t *sata_cap;
+> > > > -    d = ICH9_AHCI(dev);
+> > > >        int ret;
+> > > > +    uint16_t cap_offset; /* Next offset for extended capabilities */
+> > > > +
+> > > > +    cap_offset = PCI_CONFIG_SPACE_SIZE;
+> > > > +    d = ICH9_AHCI(dev);
+> > > >          d->ahci.ports = 6;
+> > > >        ahci_realize(&d->ahci, DEVICE(dev), pci_get_address_space(dev));
+> > > > @@ -145,6 +176,7 @@ static void pci_ich9_ahci_realize(PCIDevice *dev,
+> > > > Error **errp)
+> > > >        pci_register_bar(dev, ICH9_MEM_BAR, PCI_BASE_ADDRESS_SPACE_MEMORY,
+> > > >                         &d->ahci.mem);
+> > > >    +    /* Legacy capability for ICH9_SATA_CAP */
+> > > >        sata_cap_offset = pci_add_capability(dev, PCI_CAP_ID_SATA,
+> > > >                                              ICH9_SATA_CAP_OFFSET,
+> > > > SATA_CAP_SIZE,
+> > > >                                              errp);
+> > > > @@ -165,6 +197,29 @@ static void pci_ich9_ahci_realize(PCIDevice *dev,
+> > > > Error **errp)
+> > > >        /* Any error other than -ENOTSUP(board's MSI support is broken)
+> > > >         * is a programming error.  Fall back to INTx silently on -
+> > > > ENOTSUP */
+> > > >        assert(!ret || ret == -ENOTSUP);
+> > > > +
+> > > > +    /*
+> > > > +     * Initialise a capability in the legacy space after the
+> > > > ICH9_SATA_CAP.
+> > > > +     */
+> > > > +    pcie_endpoint_cap_init(dev, ICH9_SATA_CAP_OFFSET + SATA_CAP_SIZE);
+> > > > +
+> > > > +    if (dev->spdm_port) {
+> > > > +        /* Set up the DOE extended capability, mailboxes etc */
+> > > > +        pcie_doe_init(dev, &dev->doe_spdm, cap_offset,
+> > > > +                      doe_spdm_prot, true, 0);
+> > > > +        cap_offset += PCI_DOE_SIZEOF;
+> > > > +
+> > > > +        dev->doe_spdm.spdm_socket = spdm_socket_connect(dev->spdm_port,
+> > > > +                                                            errp);
+> > > > +        assert(dev->doe_spdm.spdm_socket > 0);
+> > > > +    }
+> > > > +
+> > > > +    /* IDE extended capability */
+> > > > +    pcie_ide_init(dev, cap_offset);
+> > > > +    cap_offset += PCI_IDE_SIZEOF;
+> > > > +
+> > > > +    /* TEE capability bit in legacy space*/
+> > > > +    pcie_cap_tee_init(dev);
+> > > 
+> > > Which section of the ICH9 spec describes that? AFAICT ICH9 predates
+> > > DOE / IDE. Is there some amendment? Otherwise this might not be the
+> > > correct place to add that capability. Either use a Frankenstein ICH9
+> > > with a distinct model name, or add at the SATA layer, possibly like
+> > > a class interface (we only need the SATA_CAP_OFFSET IIUC).
+> > > 
+> > 
+> > It's an ad hoc addition, reproducing what Arm has been doing on fvp for
+> > device assignment. It does not really model a real device, and nvme was
+> > (is?) not supported due to other limitations.
+> > 
+> > IIRC, we found that in the tf-rmm branch supporting device assignment.
+> > 
+> > While it does not hurt, that's why I never sent patches before because
+> > that's indeed a custom thing, that works for a custom software stack
+> > that was (is?) not yet finalized.
+> > 
+> > That said, it should not hurt to add it, since it's just an extra
+> > capability.
 > 
->> On 11/3/26 19:49, Anushree Mathur wrote:
->>> Add a functional test that hot-plugs and hot-unplugs a virtio-blk-pci
->>> disk on the pseries machine.  It runs with TCG, and also with KVM if
->>> KVM is enabled.
->>>
->>> On pseries a PCI device added through QMP is only enumerated by the
->>> guest once rtas_errd (ppc64-diag) handles the RTAS hotplug event and
->>>
->>> runs drmgr (powerpc-utils).  Neither is in the buildroot image used by
->>> the other pseries tests, so the test uses rootfs-hotplug.ext2: the same
->>> image with those two tools added.
->>>
->>> The test boots with a second PHB (phb1) present so that the guest
->>> registers its slots, adds a null-co backend, hot-plugs virtio-blk-pci
->>> into phb1.0 and waits for /dev/vda, then unplugs it and waits for both
->>> the QMP DEVICE_DELETED event and /dev/vda to go away.  The root drive is
->>> used with snapshot=on so the cached asset is not modified by the guest.
->>>
->>> Signed-off-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
->>> ---
->>> Hi all,
->>>
->>> This adds a functional test for virtio-blk hotplug on the pseries
->>> machine, with a TCG and a KVM variant.
->>>
->>> The test boots pseries with a second PCI host bridge (phb1) present at
->>> boot, hot-plugs a virtio-blk-pci device into it over QMP, and waits for
->>> /dev/vda to show up in the guest.  It then unplugs the device and waits
->>> for the DEVICE_DELETED event and for /dev/vda to disappear again.
->>>
->>> On pseries the guest does not enumerate a hot-plugged PCI device by
->>> itself: rtas_errd (ppc64-diag) has to handle the RTAS hotplug event and
->>> run drmgr (powerpc-utils).  The buildroot image the other pseries tests
->>> use has neither, so the test needs a rootfs that includes them.
->>>
->>> I am sending this as an RFC because that rootfs is not available yet.
->>> It is a new file, rootfs-hotplug.ext2, which I proposed for the
->>> qemu-ppc-boot repository next to the existing pseries images:
->>>
->>>     https://github.com/legoater/qemu-ppc-boot/pull/5
+> Well I'm maintaining MIPS board that use the ICH9 and am not keen
+> on having the model diverge from the spec; we already suffered from
+> that in the past with PIIX. That said I'm not against contributing
+> and committing experiments as long as they don't clutter / hinder
+> our existing specified models.
+
+I totally agree with Phil here. I really think we shouldn't touch the current
+ICH9 device (ich.c).
+
+I discussed it with Phil just before he left Linaro and the solution that he
+suggested at that time, which I agree, is to add an experimental device derived
+from ich.c. He provided me with an example, which I share below with my personal
+notes about it:
+
+"Another thing I discussed with Phil that I just recalled was about
+ having an ICH controller with DOE. Since DOE is for PCIe and ICH is
+ pretty old and PCI-only, he said it's ok to add an experimental ICH
+ with DOE for experimental purposes. He gave me this as an example:"
+
+https://gitlab.com/philmd/qemu/-/commit/213ae5c5f71f2aabd0d05d8522fe9f53f5aae060
+
+
+Cheers,
+Gustavo
+ 
+> > @Jim: Feel free to complete my answer with links to the code and a spec,
+> > if there is one to share now. I'm sure Mathieu Poirier has all this info
+> > also.
+> > 
+> > > Michael, Tao, what are your view on this?
+> > > 
+> > 
+> > Regards,
+> > Pierrick
+> > 
 > 
-> I can't see the contents of this PR 
-
-I closed it.
-
-> but I was wondering to the tuxrun kernels have what you need?
-I was using buildroot at the time :
-
-	https://github.com/legoater/buildroot/commits/qemu-ppc/
-
-The QEMU support is great, PPC included. Latest should be 7.2.
-
-C.
+> 
 
 
