@@ -1,79 +1,159 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C32A606D830
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 15:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35515606A32C
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 15:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AF0TwYB9
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=h2+Nq18m;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ZvPRSONs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPLyk-0006bO-4e; Fri, 06 Nov 2026 10:35:46 -0500
+	id 1xPLzK-0006hk-JM; Fri, 06 Nov 2026 10:36:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xPLyg-0006YU-Gl
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 10:35:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1xPLzH-0006hJ-OH
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 10:36:19 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xPLyd-0007gb-IU
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 10:35:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793979338;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EbG2kGCimWpRShIlCLLdfHGA/wRynQvlP0SY2ceSn+Y=;
- b=AF0TwYB97UDf0Qb56pv478ZcaNul8d4l7NFde/KS5QtdogMSr0JIcqB9KmiFOKKTgVj6Mb
- Z+/GE071Fz8KvHiGTCh4T4Zw1VvQrXNW2G3m8yjSLnp+wedRpEQiaS14Kg3YV0ulxc86Dd
- eXPPLejo+XDgSdkM3pSCSzLDtQD8KWQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-45XZXIz2MyWeIPQ_sxrhYA-1; Fri,
- 06 Nov 2026 10:35:36 -0500
-X-MC-Unique: 45XZXIz2MyWeIPQ_sxrhYA-1
-X-Mimecast-MFC-AGG-ID: 45XZXIz2MyWeIPQ_sxrhYA_1793979335
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FFA41800670; Fri,  6 Nov 2026 15:35:35 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C9FE44D; Fri,  6 Nov 2026 15:35:33 +0000 (UTC)
-Date: Fri, 6 Nov 2026 15:35:31 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Yonggang Luo <luoyonggang@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH 0/4] hw: support machine filtering without is_available
-Message-ID: <au3zw-IBajJYhiWN@redhat.com>
-References: <20261105102432.1131493-1-berrange@redhat.com>
- <e0afc971-a070-4853-b690-b6c523c5b65a@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1xPLzF-0007hS-UG
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 10:36:19 -0500
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A6ExwsJ1039344
+ for <qemu-devel@nongnu.org>; Fri, 6 Nov 2026 15:36:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ e/9Q6bOhiEORhKN8WEfNVRmZ/SJNBksgqy1FUFZpckc=; b=h2+Nq18mSHxCGf98
+ TYUQJ28DW5z3+I8J232EC16hLZTQa9ixgX5SkFz22Gf6CN9wmF+UsIy0BGYNl4VA
+ chZG9Be18PQxLgiFvXZvOyuuGLqRPFsFDPDTr9wmQ9qHczUH1yWgt2ASciu/s2fF
+ Kq8L6YEUs58Txsp1eBobxH9fBw/ZSlC6ykW5EdMyPPIhxIiC2zTQkQPq3vY3XS3P
+ FJYoiNs15hdEyrRfs10pvgoQp+jHLOxMHsYHuZ8JcneJfbVDv2+wTlbVJRmMDUBL
+ HEJ6/hqHyXViWdqs7X1ie/Y/2ooVx99oyI6rXSFVDl4E5LI3+B8R0ULuflr8CWI4
+ sRnklA==
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hs3p9uew3-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 15:36:13 +0000 (GMT)
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-4ab260600easo2562788b6e.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 07:36:13 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793979373; cv=none;
+ d=google.com; s=arc-20260327;
+ b=dPnUvl2OGCXTHJO+vNGyzyseH4iTnEjvXaREEMlkndfzLXRL31fxdvVsvXevDlFXLp
+ DvhIOQ3/MroE6aG6zUMSWc4PgriWVEQoXHz9JpP8DN9jAEK+/kODlK58xH8iRPipX+im
+ x9UJMgkgj16/pIFtOoW3GjjO4IV3YsX2wbOHqBp+6hsdQEi8GeqwKTh/WKrqMHrGjwZK
+ PYf2/BpnlKG4hmB09Y3jDm9hf+c0qCGi2dbWAv7ZgEfp5ByklH6ltECCEKkaB0aKzRGo
+ W/h7bJ04MfCaATvk+2W/soqfRvhfNUSWZC8H1hQ7BRlHilzjdTOAg9gW1bu/MOEBZC/+
+ DPcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=e/9Q6bOhiEORhKN8WEfNVRmZ/SJNBksgqy1FUFZpckc=;
+ fh=7/GdYppiTsB0NXa6pDpzFXflm5pjJHAnKN9qAtaUz8M=;
+ b=gz203Y0Fvu3lOhmnG6jBklOeOIMxtvztzzT8YsKlnnImHaYWjwjZflxhIehtilHwIc
+ eZpTU47PKvzUmkD6RmujqYTZ0i6NZbL298Ili4ly9hb70Dm6k6VpB0L4xR5mNqHTMg0N
+ rOqBMJLJT4uNr/1jFawVjD/FoICguGuuVRfAJf+SsttxEtGhTlXYqkgahZtnSlPGUY0O
+ rnffydCI91BgUf+qtClZ0ArsYDJiJ/QIEeaYkJ42NDUHWsuDDjTEi++O5NVfez9oDaUk
+ OJU2ImRgZ+M6iIRnQaS53EATyxw5Md88E5d8OroMWUpMGur3kinqKJrMx7otsX65i+z+
+ RQ1A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793979373; x=1794584173; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=e/9Q6bOhiEORhKN8WEfNVRmZ/SJNBksgqy1FUFZpckc=;
+ b=ZvPRSONsFhYJltEpj8T/nkANG5WPjyhFJHV7q0L72Ue7k3hRYnx0lPBF8zLWS45KDb
+ KwhXH4efJhwIZm0sJldIjLvbq6aSyBHqlip4Haqmudp4ZBgALvzeij6s95P9hPWNCDiC
+ F+sw6C9YflQT1RIZSYpZnEOdsswpCq9IRL6bKCChd/MIgNAXM1wWh6psLWYCIeHauqHT
+ mpkQW014/5i5stwEZGbsYQL1cL9fKfZMWlK1LeZzyvdyzbfTlxRP/F4zzxz/fveTGjqX
+ c0i/DgxLRkCiIKCwcB57xPw/Qoo6SmFMkckDpjcvtTVvmEwGAgOE9fppH1ilqt/7y7OL
+ 6x5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793979373; x=1794584173;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=e/9Q6bOhiEORhKN8WEfNVRmZ/SJNBksgqy1FUFZpckc=;
+ b=z/WMDzjfTICl72ogNiRw7AIquVCbgvX2NfUsPjHc7gup297dO9IHTfpb+igAHo1PvH
+ ZhlZBheLIvmmwyIlPlgkfq8KHr4QRvq8nB2gDasLJl5B6QoiZ1sD9w6K9N/9sp8Vq2wM
+ FuXzHZz7LQ/0CbxMyRQipGdlt5FbniXzFtlLrok89k220ZvuhKJxBxpw4ZltiBiwHwBT
+ OohGqm2PXBKvs/xjp6irABdNf0p/rkLRqvc1b0mJddb4U/tLUw4ylYQ0ctcU+Mej1grP
+ d9K4jcnW+aQKp//TlQ6nWwePGUk5HeDSH5LDjIv4Dr3URwxw0i2cb04o+wzl/VOnHJno
+ 4R8g==
+X-Gm-Message-State: APuU4Z8vUJsHkBhGq8W0ztxdQdwD4lmyENcUJUejYVNoaQvTlN+KQ1fx
+ 2QEq2dWsaxQ4jnG4yhzRnYeMK2RsqMgNCvzqdNYTNdye4kHts3IzO80RnEcTCllFL/BT/V0Saqu
+ gPDCos6O6Y+cA9WUQMNecNVze/y1wagPtGiL2557UEwAHkf3gr+PlQNnUoRBP0S7vA+0UwQJxyl
+ V5m9ly6CD9U/6ynaX7fdIGoYvo71wXkofe
+X-Gm-Gg: AYBFou0G7tQH3fM+Rx0DBfoRkYiquHZNa4CsWBsa3RwE/TQkIe/HCY4GfhjTHmSyrxY
+ tyCfU/XC4kl94iPWD1RfOzYnOwXVpQio6M4u+e8A8npeLD2kUurQK74M2F/xh2BYNNJxzRl83xE
+ jJPSGx/B0ZDmB6LKYNoH6HzCHXdPCQGkZA2HmmRAXVOEGlNSygr1CURx6o8edxXUyZE74IDb8uy
+ K6FR5Q+tps7pqWXQg==
+X-Received: by 2002:a05:6808:6411:b0:55b:f88d:6e84 with SMTP id
+ 5614622812f47-567be6d06fcmr3433687b6e.37.1793979369921; 
+ Fri, 06 Nov 2026 07:36:09 -0800 (PST)
+X-Received: by 2002:a05:6808:6411:b0:55b:f88d:6e84 with SMTP id
+ 5614622812f47-567be6d06fcmr3433677b6e.37.1793979369419; Fri, 06 Nov 2026
+ 07:36:09 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e0afc971-a070-4853-b690-b6c523c5b65a@oss.qualcomm.com>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20261105075346.52926-1-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20261105075346.52926-1-pierrick.bouvier@oss.qualcomm.com>
+From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Date: Fri, 6 Nov 2026 09:35:57 -0600
+X-Gm-Features: AclHuK83KfFN6z7vO99HdsVQNG_XewxbNJGIq3cXH_lnoc51195lJ39yvOvPwqE
+Message-ID: <CAJ+KCYNBsro2NFM33aJ--SYHHsmFB=adMJ1tosq3ehQutgTPQg@mail.gmail.com>
+Subject: Re: [PATCH v2] gdbstub: reset supported features on Supported request
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
+ brian.cain@oss.qualcomm.com, Justin Sapp <jsapp@qti.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA2MiBTYWx0ZWRfX7RmsyIb/9IMm
+ Gisb0GyGQ/SYN9qRt3EXdfUmiSTpifuq9j7VwLGdSOa7GqRl7OZH8OpLiWAmuEJla5AygwTP65H
+ kfROr7U8Z5V3hnA1bNtFA8Mb15XOWA0=
+X-Proofpoint-GUID: IX7jvoGGxCyHMsJwYCCKWQPbRmNlJqH2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA2MiBTYWx0ZWRfX5hZBVI+xuDpS
+ 36qro4+k/aPexADIJ2Gg9wWgLyW4SzBlc517rM+M27pckeeqyAh/C1Y9c0GCuM721XllsJj2XsZ
+ 1GgMkocqn9pqUSjk+LGRzBOT+/2gAH0eYMka8QDrjBDwPLtfF8QT55/7v+5W8aFTxglDkm4a7qv
+ De6FeKIYZHsdq3Tz3m4Esf/+x65poCYWyOBh0udxKzgsbKlR0K73ntU7B/Rgfp0UvD2iNmMYcQA
+ tyC0xt96pb3gjRrvH4NGHkL5DVTRSQ8oTifRWKdZzr+6AysL2ine5FKlQmbw0yozdfpDIGozF3u
+ 5Rug08sXwY/Iw0JOF1uvA7Dex6Uha3fU7TkpplEQUj7bNcKIUtLErKl3j3evgX9biGqrCpiXWI0
+ sY1Qq8Kqr85OpbGW5vHvkBZ1HmI7bvaiNx0uYuUQ3GW577GPEd1BB6Xdu3cHDxv+eL1f1YtAs+W
+ xO/6lg4BvZAJKGrnYtw==
+X-Proofpoint-ORIG-GUID: IX7jvoGGxCyHMsJwYCCKWQPbRmNlJqH2
+X-Authority-Analysis: v=2.4 cv=ZIZCCn7b c=1 sm=1 tr=0 ts=6aedf3ed cx=c_pps
+ a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=eoimf2acIAo5FJnRuUoq:22 a=CCpqsmhAAAAA:8 a=EUspDBNiAAAA:8
+ a=lDtavSEJtHVKaDUYZlkA:9 a=QEXdDO2ut3YA:10 a=pF_qn-MSjDawc0seGVz6:22
+ a=ul9cdbp4aOFLsgKbc677:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-06_05,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 suspectscore=0 bulkscore=0 impostorscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611060062
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,154 +164,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 05, 2026 at 09:25:28AM -0800, Pierrick Bouvier wrote:
-> On 11/5/2026 2:24 AM, Daniel P. Berrangé wrote:
-> > The 'is_available' callback on TypeInfo is based on a mistaken
-> > notion that we should filter out classes at registration time
-> > based on architecture.
-> > 
-> > This creates new problems however, some already present and
-> > some which will impact a future multi-target binary
-> > 
-> >  * For introspection of the binaries' features, we have
-> >    a dependancy on selecting a target before we can
-> >    introspect features. It would require re-launching
-> >    QEMU for each target, leading to lots of redundant
-> >    introspection and a big time sink. It would also not
-> >    be possible to introspect targets
-> > 
-> >  * It creates a circular dependancy on QOM initialization
-> >    inside the QOM initialization code, since 'target_info()'
-> >    itself uses QOM. This then requires further work to break
-> >    by initializing QOM target info before the rest of QOM.
-> > 
-> >  * We have no means to introspect what targets a machine
-> >    type can be used with, as this information is expressed
-> >    as code (in target_XXXX() methods), instead of as data.
-> > 
-> >  * New fields in TypeInfo requires more changes to macros
-> >    used for initializing machines.
-> > 
-> > There is no inherant conceptual reason why we must filter out
-> > classes at type registration time. This is just a shortcut to
-> > workaround historical technical debt where certain classes
-> > have clashing names. This is an undesirable approach, as it
-> > is trading one set of problems for a new set of problems.
-> > 
-> > This series proposes removal of the 'is_available' concept
-> > from QOM, and illustrates handling machines with full introspection
-> > support available from the MachineClass.
-> > 
-> > This implies fixing the root cause, of clashing class names,
-> > but does not include patches since various series have already
-> > been posted for machine class name fixes.
-> > 
-> > The machine changes are fairly simple
-> > 
-> >  * MachineClass gains a 'targets' field which is a bit mask
-> >    of SysEmuTarget
-> >  * machine_class_is_available() matches 'targets' against
-> >    'target_info()'
-> >  * -machine CLI enforces machine_class_is_available()
-> >  * query-machines filters on machine_class_is_available
-> >    by default
-> >  * query-machines gains 'all-targets': 'bool' to opt-in
-> >    to returning the unfiltered list, with a 'targets'
-> >    list present
-> > 
-> > NB, this removes filtering from riscv CPUs with no
-> > alternative proposed. I'm unclear what this was trying
-> > to address to begin with, but utlimately it should be
-> > possible to address it with runtime filtering/matching
-> > of classes, instead of hiding TypeInfo registration.
-> > If someone gives me info on the CPUs problem I can a
-> > make a design suggestion.
-> > 
-> > Daniel P. Berrangé (4):
-> >   hw/core: record permitted targets against MachineClass
-> >   hw: replace 'is_available' with 'targets' in machines
-> >   target/riscv: remove 'is_available' from riscv CPUs
-> >   qom: drop the 'is_available' callback from TypeInfo
-> > 
-> >  hw/arm/aspeed_ast27x0-fc.c  |  3 ++-
-> >  hw/arm/aspeed_ast27x0_evb.c |  5 +++--
-> >  hw/arm/raspi.c              | 21 +++++++++++++--------
-> >  hw/arm/raspi4b.c            |  3 ++-
-> >  hw/arm/virt.c               |  5 +++--
-> >  hw/core/machine-qmp-cmds.c  | 18 ++++++++++++++++++
-> >  hw/core/machine.c           | 13 +++++++++++++
-> >  hw/hexagon/virt.c           |  3 ++-
-> >  hw/m68k/virt.c              |  4 ++--
-> >  hw/or1k/virt.c              |  3 ++-
-> >  hw/riscv/virt.c             |  4 +++-
-> >  include/hw/core/boards.h    |  3 +++
-> >  include/qom/object.h        |  3 ---
-> >  qapi/machine.json           | 12 +++++++++++-
-> >  qom/object.c                |  4 ----
-> >  rust/qom/src/qom.rs         |  1 -
-> >  system/vl.c                 |  9 +++++++++
-> >  target/riscv/kvm/kvm-cpu.c  |  1 -
-> >  target/riscv/tcg/tcg-cpu.c  |  1 -
-> >  19 files changed, 86 insertions(+), 30 deletions(-)
-> > 
-> 
-> Thanks for posting the series.
-> 
-> Would that be possible to complete it so that beyond compilation, test
-> ./build/tests/unit/test-multi-target passes also? At the moment it fails
-> with duplicated types being registered.
+On Thu, Nov 5, 2026 at 1:54=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> From: Justin Sapp <jsapp@qti.qualcomm.com>
+>
+> https://sourceware.org/gdb/current/onlinedocs/gdb.html/General-Query-Pack=
+ets.html#qSupported
+> ```
+> Whenever the stub receives a =E2=80=98qSupported=E2=80=99 request, the su=
+pplied set
+> of GDB features should override any previous request. This allows GDB to
+> put the stub in a known state, even if the stub had previously been
+> communicating with a different version of GDB.
+> ```
+>
+> We exposed this by connecting to gdbstub using a gdb client first, and
+> then WinDbg (EXDI) for windows kernel debugging. Since they both
+> differ in their multiprocess support, this was confusing EXDI.
+>
+> While we are here, fix the same for fork_events in user mode.
+> Simplify control flow to always call gdb_handle_query_supported_user.
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  gdbstub/gdbstub.c | 15 +++++++--------
+>  gdbstub/user.c    |  4 +---
+>  2 files changed, 8 insertions(+), 11 deletions(-)
+>
 
-Oh I see, it didn't failure because I only enabled
-the two arm/aarch64 targets, once i add in more
-targets we get a clash on the virt-machine class.
-
-FYI, it also fails without my patch series present
-in some scenarios:
-
-# child process (/multi-targets/qom-types-are-unique/aarch64 [1950288]) stderr: "Registering `vm-launch-update' which already exists\n"
-**
-ERROR:../tests/unit/test-multi-target.c:41:test_qom_types_are_unique: child process (/multi-targets/qom-types-are-unique/aarch64 [1950288]) failed unexpectedly
-not ok /multi-targets/qom-types-are-unique/aarch64 - ERROR:../tests/unit/test-multi-target.c:41:test_qom_types_are_unique: child process (/multi-targets/qom-types-are-unique/aarch64 [1950288]) failed unexpectedly
-Bail out!
-Aborted                    (core dumped) tests/unit/test-multi-target
-
-This is caused by presence of 'igvm-devel' at build time on
-one of my machines (Fedora), which enables this device type,
-if you have both arm and aarch64 targets enabled.
-
-We need to add igvm to our Fedora dockerfile to catch this
-in CI.
-
-Moving it from specific_ss to system_ss make the test pass,
-but I'm unclear if it is sufficient to rely on lack of
-compiler and test complaints ? Or it needs manual code
-inspection to make sure the device is safe in this
-scenario ?
-
-> That's why this is_available was introduced in the first place. It was
-> just a way to move forward and provide the multi-target test to prevent
-> regression while work on single-binary is continued by Yonggang.
-
-Right, so with my series, we would first need the class
-renames to fix the multi-target test.
-
-I should have labelled this posting "POC" as it was not
-tested thoroughly.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
 
