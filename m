@@ -1,77 +1,156 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C772E606A339
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 11:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78868606A329
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 11:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DpRS3S1F
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hRMWeFwc;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=niO9JFDs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPIWO-0008IS-At; Fri, 06 Nov 2026 06:54:16 -0500
+	id 1xPIWv-0000Wf-Df; Fri, 06 Nov 2026 06:54:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xPIWD-00089r-WE
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:54:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIWs-0000U6-3V
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:54:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xPIWC-0003tz-6E
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:54:05 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIWq-0003yo-P2
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:54:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793966043;
+ s=mimecast20190719; t=1793966084;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dtcnqn5Vp4SI2TKCVXbBACsHaWe15AWoldwSHbLQpXI=;
- b=DpRS3S1FfxK2HxWWkukDBpv0srlxmVyAks5LFKvhDKJYa1za6yL2/I6Altl/U34TL/eZJ3
- Z0d0DOE9hcvqjynRX2QzA2HB/Mhm/Hp0M84Dl4rQrEXYXnDy0LNps7kckWhuk+fiGhiNL5
- imrSRCVAFC99R6qfVKuISN/86JoW2b4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-YFptxQWZPqOcoLwxFxBMyQ-1; Fri,
- 06 Nov 2026 06:54:00 -0500
-X-MC-Unique: YFptxQWZPqOcoLwxFxBMyQ-1
-X-Mimecast-MFC-AGG-ID: YFptxQWZPqOcoLwxFxBMyQ_1793966038
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E3D66180057A; Fri,  6 Nov 2026 11:53:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EEEF139200; Fri,  6 Nov 2026 11:53:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9841921E6A04; Fri, 06 Nov 2026 12:53:54 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Gerd Hoffmann <kraxel@redhat.com>,
- xen-devel@lists.xenproject.org,  qemu-ppc@nongnu.org,  "Edgar E.
- Iglesias" <edgar.iglesias@gmail.com>,  Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Anthony PERARD <anthony@xenproject.org>,
- Paolo Bonzini <pbonzini@redhat.com>,  Stefano Stabellini
- <sstabellini@kernel.org>,  Alexey Kardashevskiy <aik@ozlabs.ru>,  Richard
- Henderson <richard.henderson@linaro.org>,  Helge Deller <deller@gmx.de>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PULL v2 23/25] trace: stop tracking static disabled state
-In-Reply-To: <20261104201802.11556-24-stefanha@redhat.com> (Stefan Hajnoczi's
- message of "Wed, 4 Nov 2026 15:17:59 -0500")
-References: <20261104201802.11556-1-stefanha@redhat.com>
- <20261104201802.11556-24-stefanha@redhat.com>
-Date: Fri, 06 Nov 2026 12:53:54 +0100
-Message-ID: <87se1efa5p.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=pCWrOsll9rhMUXNdZZ4HrLLREVQKIVTpUlNruUg8tLc=;
+ b=hRMWeFwcxgql/J10+7GapgfSpg30afdjMwF1HNCAuVVU3Q0n8jRzTJDPVacV4R7vvaFJht
+ P1sBIZ7RaZYQVB7J/XHwHZTHzdAmUnIXmze+lFyOdr1YCBjghdcHcMyY2PWukbixQm8hpE
+ pqITuoZguG4dbiZBPe1efSj3B8jgHSk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-325-8nUebAWjOMCQaJxBygx0nw-1; Fri, 06 Nov 2026 06:54:40 -0500
+X-MC-Unique: 8nUebAWjOMCQaJxBygx0nw-1
+X-Mimecast-MFC-AGG-ID: 8nUebAWjOMCQaJxBygx0nw_1793966080
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4a16dc2323cso5294485e9.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 03:54:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1793966079; x=1794570879; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=pCWrOsll9rhMUXNdZZ4HrLLREVQKIVTpUlNruUg8tLc=;
+ b=niO9JFDsbiYvfZsf2K/byA/iO26mZvCfG8fk23Mh2rtPuVURvn2iUNpuFIbqW2ppDK
+ 908Un42S4WnaKSr0Cs2CBh4Iu74agIkQXaveLvzIUGDAjvrm6zDYn87mPvjb4KMy7kdR
+ 5IWUDV7/ZzC02NNkCVvdLMF8qk2M32KEto7W0EkZo/fB327RO+DjbLefgLFdvtnP4oTp
+ KNGnRdbdt0JPlWrVTmkDhkQj3H8bUeZqpoTGzPSkorlAFdEFuNUHhNF/GYkUb8B2qQmY
+ Pf7gN0y+ipvWzl3J24BCASOaQTx4ctJBWRQgfuiWrqHmFwpZ+Xeo2xKY972hzlQnQ65k
+ CqcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793966079; x=1794570879;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=pCWrOsll9rhMUXNdZZ4HrLLREVQKIVTpUlNruUg8tLc=;
+ b=QPg73td4BX36+PevMuU5HB8yVBKyDADCimIKneSY/ro0vE3ocNE/n51QslaXonupq5
+ 4GTMTfookyxZK9DE+ITZW46N664CMN1LPJxG7FOayy1L5lPrBaBbx/rLQUw9SYl0ysP9
+ PKHKFb1LYIIW+oPMFXVO7TMkpmL/PQl2lQRubUltzJnllGhaGk9HxHfnmjLLncFPj91j
+ xChFHVbRTINgc6ZMeEQZAJbYg/O9TsJyXBx9QoPLMpCp8Ga5tPf4A6CoUyQgo3KH5Gr9
+ UjE0l3DwqdJTBfCap1yn3pexIGcwyMYIci7oB3WkbeYGrYXXIPjf4H4N5sCflO2Qq9wO
+ 2V2A==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw99K1NbRTki7fsXyxKRn66Ex9HBQ3J4vzJK0gIWkFAB8AyFtdIbBmvyg01GfCZc88nvGXOP/J93rTV@nongnu.org
+X-Gm-Message-State: APuU4Z/8UJG5Of2sKPZLZJaEKRfigP1vOUC7PzjLAanqjvQF+JtzvGTG
+ A11EB4XwH5ic1TtlpWL6zo8sL8+REzlpydGxx3Ns/eOGoFfEmx3RPtoS+ErfSEPJjiipNHTcW3j
+ RrG99FCM7Xtejrb8scbgk/HmOcpSIB8ZIP62w9kEnbVgMqgSWJj9BsoTd
+X-Gm-Gg: AYBFou1VA7zI/Tp96t0Q3YrWHIsbJcuzSPEl6iW4gsvPQ7FscvhIwsapoeEN0+a0CbJ
+ FxU3jyqkDLmK6zt0suP78DiUqvJkrn092MxH9BrnNgjSoRspSWglaqEaxd6RtyE2JFb7IYLgm/Q
+ 5lGjI3ZWeCvXlrgYZ4o9etJzU7c0OwY6EgTe5hgEPYC+hIJaJjAdHcm++P1xhatgUbwSzMUJl8F
+ eZFyV60y34jgpY0ky31C6MBGqTq/FMHD3NmE6efsUInEzkAUPonsHRo6+jEnARVZIngn9ToglZD
+ DY9rBUEdUW7FSbMqLPX9dHkuppmL6YIhOVkA/uxmV7vXXGyVJpI2KyZIN1riTtJGr4KjI5fFxt7
+ oISV3XXYNfJ+L3bux8uj8DIxYiG1FUX56pLMv7oVmzfTZkMJgrlLr3TiNs9Au59UMxV/UjNAESC
+ xyx9P/xkQdKg==
+X-Received: by 2002:a05:600c:3e0b:b0:4a2:d7e:5ccb with SMTP id
+ 5b1f17b1804b1-4b6df21220amr32885375e9.15.1793966079668; 
+ Fri, 06 Nov 2026 03:54:39 -0800 (PST)
+X-Received: by 2002:a05:600c:3e0b:b0:4a2:d7e:5ccb with SMTP id
+ 5b1f17b1804b1-4b6df21220amr32885175e9.15.1793966079367; 
+ Fri, 06 Nov 2026 03:54:39 -0800 (PST)
+Received: from ?IPV6:2a01:599:b03:7322:436f:1f3:b26e:91b8?
+ ([2a01:599:b03:7322:436f:1f3:b26e:91b8])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4b73b97d62bsm29569575e9.0.2026.11.06.03.54.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Nov 2026 03:54:38 -0800 (PST)
+Message-ID: <488e416f-0b37-4357-8e13-2fdd1cd643b0@redhat.com>
+Date: Fri, 6 Nov 2026 12:54:37 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/28] hw/vfio: mark all VFIO object classes as secure
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org, Cornelia Huck <cohuck@redhat.com>
+References: <20261029131241.2275706-1-berrange@redhat.com>
+ <20261029131241.2275706-6-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20261029131241.2275706-6-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -79,7 +158,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,119 +170,23 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-I missed this, because I wasn't cc'ed.
-
-Stefan Hajnoczi <stefanha@redhat.com> writes:
-
-> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
-> The TraceEvent struct contains a "bool sstate" field which track whether
-> a trace event was disabled statically. i.e. at build time via the
-> "disable" property annotation in trace-events.
->
-> The only runtime use of this field is to let "trace-event-get-state"
-> report that an event is "unavailable" instead of reporting an error for
-> an unknown trace event.
->
-> Trace events are not ABI so their names can change and the event can
-> come and go at any time. Thus there is little utility in reporting the
-> existence of a disabled event that cannot ever be used at runtime.
->
-> Removing the "bool sstate" field from TraceEvent saves 8 bytes of
-> space in the struct, adding up to approx 64 KB across all current
-> events.
->
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Message-id: 20261102142844.3464712-24-berrange@redhat.com
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-
-[...]
-
-> diff --git a/qapi/trace.json b/qapi/trace.json
-> index 29c76256055..8533e378977 100644
-> --- a/qapi/trace.json
-> +++ b/qapi/trace.json
-> @@ -16,8 +16,6 @@
->  # @TraceEventState:
->  #     State of a tracing event.
->  #
-> -# @unavailable: The event is statically disabled.
-> -#
->  # @disabled: The event is dynamically disabled.
->  #
->  # @enabled: The event is dynamically enabled.
-> @@ -25,7 +23,7 @@
->  # Since: 2.2
->  ##
->  { 'enum': 'TraceEventState',
-> -  'data': ['unavailable', 'disabled', 'enabled'] }
-> +  'data': ['disabled', 'enabled'] }
-
-No note in docs/about/removed-features.rst needed?
-
->=20=20
->  ##
->  # @TraceEventInfo:
-> @@ -69,6 +67,7 @@
-   ##
-   # @trace-event-set-state:
-   #     Set the dynamic tracing state of events.
-   #
-   # @name: Event name pattern (case-sensitive glob).
-   #
->  # @enable: Whether to enable tracing.
->  #
->  # @ignore-unavailable: Do not match unavailable events with @name.
-> +#      Deprecated: since 11.2
->  #
->  # Since: 2.2
->  #
-
-Are you trying to deprecate use of argument @ignore-unavailable?
-
-If no, what are you trying to do?
-
-If yes, this isn't how we do that.  Instead:
-
-   ##
-   # @trace-event-set-state:
-   #     Set the dynamic tracing state of events.
-   #
-   # @name: Event name pattern (case-sensitive glob).
-   #
-   # @enable: Whether to enable tracing.
-   #
-   # @ignore-unavailable: Do not match unavailable events with @name.
-   #
-   # Features:
-   #
-   # @deprecated: Argument @ignore-unavailable is deperecated and does
-   #     nothing.
-   #
-   # Since: 2.2
-   #
-   # .. qmp-example::
-   #
-   #     -> { "execute": "trace-event-set-state",
-   #          "arguments": { "name": "qemu_memalign", "enable": true } }
-   #     <- { "return": {} }
-   ##
-   { 'command': 'trace-event-set-state',
-     'data': {'name': 'str', 'enable': 'bool',
-              '*ignore-unavailable': { 'type': 'bool',
-                                       'features': [ 'deprecated' ] } } }
-
-with a matching update to docs/about/deprecated.rst.
-
-[...]
+On 29/10/2026 14.12, Daniel P. Berrangé wrote:
+> The VFIO subsystem is about securely passing host PCI devices
+> to a guest, so all the classes should be presumed to be offering
+> a security boundary.
+> 
+> Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Acked-by: Cornelia Huck <cohuck@redhat.com> #s390 types
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
