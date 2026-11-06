@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AB6606A31B
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 04:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E968606A31B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 04:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=jrn/aKK3
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=TWblsBES
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPBAb-0005Du-1u; Thu, 05 Nov 2026 23:03:17 -0500
+	id 1xPBAi-0005vG-Ks; Thu, 05 Nov 2026 23:03:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB8K-0002wy-P0
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:00:57 -0500
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB9D-0003HO-PT
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:02:02 -0500
+Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB8I-0004Nh-9X
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:00:56 -0500
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB9B-0004Pl-Lj
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:01:51 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sLha8A1Tc8UlzgeHRVMUMvsRb7n98IcGRJB7DYjFgh6iqjIHWbCsPtLrdECGBymYzIU5F2M72+GuH3C1LZTei0LTXm18WTIcIoGFUvHg2sT5IG5L+/pZC8nSmhl7FXjGcUamVqWsjT22iX1mMj0sDgVFqsf4fOgm4E/SZAyMFw8gNYLmZXw1a6Jg/+bwS7jOLcRavqt9QJvuJjj8bpIlzORfJja7daiok2q0mfx+LPRmyKjr5XB5L7c7yd/1j2dPS0plGklF8nLVOGhIgdMUjW5nIS294jX+TgVXrGN/xsI/Q6GU2r98kmizJfaIZlvrsj2tm+NAA/4PTuvmmFCa9A==
+ b=hCGOuqn6fbGdhSz4jlIAsj3/hs0q+10t1qwXMlnqXMeOBKg4BDfz5ysnXpU4Edow5MGDZZFIp8QIWDL68cxqJwNOm1/JNL/nNcgat7zp6ogDePmK0zEiw//DBjnijUsSK20Ev06EIzDD/rbvtHK13rm65GBjQ75aLeuON5DT+QoCef+gHqU3+LLp0WOllHP3CKM4Uh8MVzvBESC0Kvn/4WKYysTBAiqexVbIJHbHyiHGP8KTrqgfq+4SS/fTxLb4Wn2tzt+QWzesEtunfAxrVdCse1sK/r0l/zNkLEOvocEbRxjZ97M1Q7fAiPKDcxfZNHKcoU5SJLoxohzx6JynxA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=t9HEYgG1xSDigxoKpeZ4Cik9UTKklZs9bqevmIavTU0=;
- b=ItFxia/S5RwoRb34RuA/y9+SpeBlk07zYDVa/ioMll8RIFLatrhI/5cby79JjGCg/UKuuDgLHONR8lFaFwHe2W1eQkWE98AQ+s7CFW1CN6vRk1U4Qf0ZnD/N9FwM+cxRIYatsMwXXmH1W9BzOFiOZiA0uy5/ltP9cwHA9EoKXkrnmtR7h5IDK/kpKsW9/b92LxT9ED9OuYXvf0bLA50DDDxB6KiGHumq2gwbiShwvWzfwWaGCf6cf0dVXQlbpAbbcmygD8CHPxydkdoZGGKb/m2nedK+dHlMXf+ToFqr0gFJpcBS3o6bgypzm5i48gH4S/OTD+jTK4eV/yGM7gqwtQ==
+ bh=R3QY/2ANHtc4CyhbWrL6c53DplsZ8DBJ/FY4exSFt54=;
+ b=Kab+tuT3NXQiIyd3T9LRDFTv8mNqZVyPCd/PaG2TsYii9fNHqOcrCLESA7iROAh3V/wr8yloDWDcnGP42GfVcXx04Ic63RF+gASBwNjnF4xzhjzjJMPN1u4tj8xrrzA4PnsQPH690Oi2kLrZOrx91KY1XvKy+0GhfrMyHPPPL/RC+UPBV7CtHr3rqnR5bAuu7Qmf06E4p6AvAjUM048d/EqBzVrAtx1V10eHVOZNBWCJsuFU4gaNUyt1GXLGnyRbyexoZYBYxh9EdA0UARn+danO7zfuamQSxcD5aZ0beAJHWXwQG9MmFredj3NKJzDLtly44m+MmAkuKVdw8WQh8g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.117.160) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -32,18 +32,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=t9HEYgG1xSDigxoKpeZ4Cik9UTKklZs9bqevmIavTU0=;
- b=jrn/aKK3vUaz7GHBkMjty4ToeoB4m+akGR7G148WFw5Hq9RT9HANCzJ/FSX2vASRIYPUXgSv5K8QLtYSKeHBCffM0yPSQE0ohWpfkTp4gBRAFub9pla7J9gZQLEHQ5vD5UYJ56ppiucbcw/gJXxE4LUn311YWf8irov8oIzBd4ZuLe2+LKMn+A8t6+/JTPgVoxi64zX+CyAxf2/wxlQScv4ElGbKlYVIXfQu85BCCQ9DvHqAnolUaMHCzAQBkUwFXZFwACrSQjkAiSATcW8JYt18TOikKh+l3ovImxAFFPWwQX3DcNM3QMFqvhu2SN/b296LNJN5BEsyiq1EsmyKmw==
-Received: from SJ0PR03CA0068.namprd03.prod.outlook.com (2603:10b6:a03:331::13)
- by PH7PR12MB6420.namprd12.prod.outlook.com (2603:10b6:510:1fc::18)
+ bh=R3QY/2ANHtc4CyhbWrL6c53DplsZ8DBJ/FY4exSFt54=;
+ b=TWblsBES/J4Rzz9hOby7MUxuA49+nRgqhJ9RmDxuKWUb9MtUiESQKRfuPLnTL4MOvFkkf510DUwtE4MvY683ofJ9fgHYT7SZ3EekLrIkooMXoK9tiRn4MciPIcElFF+HxBNXX5Lf5tBbNH8Xe7LRYO6FE+8Fyva8EkKivHO7930ucgfumgpXHGNINmxYWcOASWTgw/idnrjJmTQlp5eD3kcyxcd6848FKtU2xGm4qyii6WwrBe/6VFC59r+J6hEf3GKpVCl+/YFCRVSRJD/pyicGvaUmHiknwTfGukaGxaXfEuxTf03oVOifAnOGZTbjMXZDNfdEr9RbP5WlDDONyg==
+Received: from BY3PR04CA0016.namprd04.prod.outlook.com (2603:10b6:a03:217::21)
+ by MW4PR12MB6826.namprd12.prod.outlook.com (2603:10b6:303:20c::8)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.10; Fri, 6 Nov
- 2026 04:00:38 +0000
-Received: from MWH0EPF000C6184.namprd02.prod.outlook.com
- (2603:10b6:a03:331:cafe::ac) by SJ0PR03CA0068.outlook.office365.com
- (2603:10b6:a03:331::13) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.569.10 via Frontend Transport; Fri, 6
- Nov 2026 04:00:38 +0000
+ 2026 04:01:00 +0000
+Received: from MWH0EPF000C6185.namprd02.prod.outlook.com
+ (2603:10b6:a03:217:cafe::87) by BY3PR04CA0016.outlook.office365.com
+ (2603:10b6:a03:217::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.10 via Frontend Transport; Fri, 6
+ Nov 2026 04:01:00 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 216.228.117.160)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
@@ -52,17 +52,17 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
  216.228.117.160 as permitted sender) receiver=protection.outlook.com;
  client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
 Received: from mail.nvidia.com (216.228.117.160) by
- MWH0EPF000C6184.mail.protection.outlook.com (10.167.249.116) with Microsoft
+ MWH0EPF000C6185.mail.protection.outlook.com (10.167.249.117) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Fri, 6 Nov 2026 04:00:38 +0000
+ 15.21.615.4 via Frontend Transport; Fri, 6 Nov 2026 04:01:00 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
  (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
- 2026 20:00:16 -0800
+ 2026 20:00:39 -0800
 Received: from cxlgalaxy.nvidia.com (10.126.230.37) by rnnvmail201.nvidia.com
  (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
- 2026 20:00:11 -0800
+ 2026 20:00:33 -0800
 From: <mhonap@nvidia.com>
 To: <jic23@kernel.org>, <alwilliamson@nvidia.com>, <clg@redhat.com>,
  <xueshuai@linux.alibaba.com>, <ira.weiny@intel.com>, <zhiw@nvidia.com>,
@@ -71,48 +71,47 @@ To: <jic23@kernel.org>, <alwilliamson@nvidia.com>, <clg@redhat.com>,
  <ankita@nvidia.com>, <vsethi@nvidia.com>, <skolothumtho@nvidia.com>,
  <mochs@nvidia.com>
 CC: <cjia@nvidia.com>, <mhonap@nvidia.com>, <kjaju@nvidia.com>,
- <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Zhi Wang
- <zhiwang@kernel.org>
-Subject: [RFC 08/18] hw/cxl: Introduce CXL type-2 device emulation
-Date: Fri, 6 Nov 2026 09:29:01 +0530
-Message-ID: <20261106035911.1280066-9-mhonap@nvidia.com>
+ <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>
+Subject: [RFC 12/18] hw/pci-bridge: Add firmware HDM decoder state to pxb-cxl
+Date: Fri, 6 Nov 2026 09:29:05 +0530
+Message-ID: <20261106035911.1280066-13-mhonap@nvidia.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261106035911.1280066-1-mhonap@nvidia.com>
 References: <20261106035911.1280066-1-mhonap@nvidia.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000C6184:EE_|PH7PR12MB6420:EE_
-X-MS-Office365-Filtering-Correlation-Id: a589f8cd-cb97-4017-4086-08df3bba848c
+X-MS-TrafficTypeDiagnostic: MWH0EPF000C6185:EE_|MW4PR12MB6826:EE_
+X-MS-Office365-Filtering-Correlation-Id: 51a0c226-8896-483b-9bd0-08df3bba91ab
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|82310400026|7416014|376014|1800799024|23010399003|22082099003|18002099003|921020|56012099006|261028144727099003|5023799004|261022113327099003|261022105027099003|10067099003|261021135927099003|261009223027099003|261026121527099003|261102123227099003|11063799006|261021121427099003|261026140227099003|260925021311599003|260925021911599003|260925022911599003;
-X-Microsoft-Antispam-Message-Info: IXbtNh8luV+jLYH1VInmskKkq1N17X7Jj6ufhB35lhRp19L/Kc4PgCKQCZaytU15mRUzdQVAvBZ/6NFzbAJIlyrvTyQO5XK7DpBv2GfvcQjhIWid4K3eKgzI1D2PEbVvHi3F6Ei30xUsnu+3uYDU3VlvPZhSKkCTBJwbJ7zl424cPBKsYEaOhh+QtyWIAd2N8e1xXihh3kE/MBsNPZ8rDizyczzmjW56MY02Fniikr15yCk2c2JwgVFF4CqZWDwCkDPQm7Xr2Trz/qTro7tGY2iy+KGBD6n9Q4LrouyBzU8nkUNeREpb9Cdnj+qTStfooVGl9iQhwlf0hz3TenttaeywYFxiJvAha8btOBcLJp6uFu08NCvJqoc6p/MHSiq+91Ivz1grHGiGxl5HE2O94vYvByP5+RU+vPIamR2KH5T6pDSV5D81z9vD6p9DVJcjuZcnSbUR9mHCR6dPytotSK/+2tWT/LKeCXYz84lZby3i1C1VA1XtdOEcdcYF8zvJEYymtz8eULaQ/X25YQ9SDH+1hOEvsD2xFkEw0ZW2G9ngqGJO6O/LNyWeOyHL1vqo0u5H6WrUxQf+TXF6ko19m2ydspo6BL5fkIoqvy1MTQamWfE4aLNsdjMzQ8OYmU01hkYN/2C6oNfNlAtjnBIzm+MC7FvQ8iU8B9M5p7nKxiUcAacBP4sloBopGiey71V/gAk4PzvNKZOHhVsbqYsLL01wy3j/9AGrUED6kVBL0avEjmL+n8dNQSfMgyft9AWO
+ ARA:13230040|82310400026|36860700016|376014|23010399003|7416014|1800799024|18002099003|22082099003|10067099003|921020|11063799006|261102123227099003|261026140227099003|261028144727099003|261021123027099003|261021121427099003|261022105027099003|56012099006|261009223027099003;
+X-Microsoft-Antispam-Message-Info: VK4zDLGq2SPIgowMGqe5R9wSECJL4J28uiTRq5DHmZ99HGap1MdPYs+4OM64GdVasfZba4yQFoG4dB333e1rm4P9PkzjcUa0EFYJ1fX/tsQXhRpQ/zCp2fhMjzcDd24kG/Jw4I3kEGcHtvbyqJmhkppzg1ndyf92VzM3Uelhfdd3jj13jPZmu7aDThl+6hkH+wRymvKfmSOBENFyKsHFmBJCq76zClxjL8kOkzLEIOAEs53ETUXUlivtv0/2ryqhpSPc17ShQ4gR5PIYgdJiQPBlib/6uEbUfPABfOJJoi5u9s8CpICm1n00vHF99pV3HwktV5eOvwM23mVUTWSafNmJ526Fc562CxDCfjwkhs7BNO1OZwsllTAnaM8bKUeyijOkEZWpJTnawa0KSm+J4Sl/BCmBqINTuQlS2hFqtobnQKpTHrjbmZEfkNxzrwsxUE8Khdy2QXy50MunUJdYiQfFmzUiJBGOomez1RWgv55houCpqXueLUIJ+L5c1QcIcX5guvKdVxK8VAOoW4xcvzyY5lKP7ZhNmLAVeIIwrqhdu9tXlK1erHdjFZKL33dGFe2nsDqrkWXRoo2LxtRgmyZaK04G5stMDNyvnHyvZmjDEbRE4YBXY1El4fhj34RX4D57u18ufaH1+ahymPdBw2hRdT+v+SddySlHt5ZTrFceAMsTkxVHdlyoRsdRBl5fn2PxmuFRNNPmZhIDdy27HlFpijlc5M/Ww+mI1o17kXlCiSW9DTI2dwMt7+AM7+yD
 X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700016)(82310400026)(7416014)(376014)(1800799024)(23010399003)(22082099003)(18002099003)(921020)(56012099006)(261028144727099003)(5023799004)(261022113327099003)(261022105027099003)(10067099003)(261021135927099003)(261009223027099003)(261026121527099003)(261102123227099003)(11063799006)(261021121427099003)(261026140227099003)(260925021311599003)(260925021911599003)(260925022911599003);
+ SFS:(13230040)(82310400026)(36860700016)(376014)(23010399003)(7416014)(1800799024)(18002099003)(22082099003)(10067099003)(921020)(11063799006)(261102123227099003)(261026140227099003)(261028144727099003)(261021123027099003)(261021121427099003)(261022105027099003)(56012099006)(261009223027099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: tPGFFLmeY+7neaTKmpZUJ4rJc1KO64F4kcnb04c5e9wm6Te9EFUvVu5tbrfbRYMSlCWmRzJAeBokgSIptWD19/E8031Kpoy/VMswZm+4amqrE/lwibnchv8jAUqKAEnuSCt6kpyGaS9d2cQEduxJLJ+RV+7E/Q+CI5LMaGOXi+zt6P/huq3TUkR4eATOp1kOIG9x9+9eeyBnq7VUm18mYkCkQ0eqqdGxeU6U36qL82gt6kil+jZNkjPOUTDgk2/y6/CK/5hQ/9soQGcllGuSvmqGI7BP7xHY2Tm0d0+JpB7PHkc8HPx6g2NUC9WWj3w5CPgBWeYDv1Ud9QtjHFKCSIIxCJIlUjAi8KoxiFJqStT0X2lsrUwcRntldPlFNLoBNdkyicBawSYcKgvN6Jg0gVkggqNfJGiAkIZd3x3+IfUbkAZIGTjdWNXbo1fzu/bc
+X-MS-Exchange-AntiSpam-MessageData-0: 6umPq8UbsvmULVB7ksAUS9iSmUzPxpikK3qeJ+FoM0lmtW4qfpcpVf8PAxrnzMD5RZZIrkJ+5JKE9FwyJar6KOBEEEmhN/DrmiqbH4pnYYDo+9VCniy/b5+AZSYUOj4D09nUUoZYZhSTRt0TPjuYWny7oo9kQQjjw3wo5AYwf+sJiakE7dEkfcL1IZaxIr0qzzez8qYKzoRImN/ez/6MtCoaz8sIhkBJf39jIKYut5H1SXNvtFirVZKo+JFJ0SBcrfWyscy+y+Vj22ZWAO6nx7HdA6vtmaI7TVPuHEpF9rXW7p3reuJaxNJnTxPb2bg9cjS5ryWxGjsWHM0GnaNK7cKDLWUiv5elvViLAEs8BzM99oTSH+UEJJv6XlkpzVzAhLG1+fQturCUpmpShV6uZlzCaGWGzy9UrRbXA9haCeB4odZaXIs0xtBAflhaQTts
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2026 04:00:38.2723 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a589f8cd-cb97-4017-4086-08df3bba848c
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2026 04:01:00.2803 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 51a0c226-8896-483b-9bd0-08df3bba91ab
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000C6184.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000C6185.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6420
-Received-SPF: pass client-ip=2a01:111:f403:c105::7;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6826
+Received-SPF: pass client-ip=2a01:111:f403:c111::9;
  envelope-from=mhonap@nvidia.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
+ helo=DM5PR21CU001.outbound.protection.outlook.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -138,226 +137,191 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Zhi Wang <zhiwang@kernel.org>
+From: Manish Honap <mhonap@nvidia.com>
 
-Add cxl-type2, a minimal CXL Type-2 device for testing the Linux CXL
-core Type-2 support and CXL Type-2 passthrough. It does not reuse
-cxl-type3, as most Type-3 features do not apply to a Type-2 device.
+QEMU has no firmware that commits the HDM decoders of a CXL route at
+boot, so a guest finds no committed region.
 
-This patch adds the device and its volatile memory backend. The next
-two add the component registers and guest access to the memory through
-the fixed memory windows.
+Let a cold-plugged device register one range with its pxb-cxl, which
+then commits HDM decoder 0 for it at every reset. A host bridge with a
+registered range keeps its decoder instead of passing accesses through.
+If the device resets first, pxb-cxl retries the direct mapping after
+the commit.
 
-Co-developed-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Zhi Wang <zhiwang@kernel.org>
-[ clg: - use PCI_CLASS_MEMORY_CXL instead of PCI_CLASS_CXL_QEMU_ACCEL
-         to match cxl_pci driver expectations
-       - rebased on upstream ]
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-[ mhonap: - split the original patch in three patches
-          - rename cxl-accel to cxl-type2
-          - use the Red Hat ID 1b36:0017 and the processing accelerator
-            class 0x1200, so that cxl_pci does not bind to the device
-          - require volatile-memdev
-          - release the memory backend on exit
-          - refuse migration, the device state is not migrated yet
-          - drop MSI-X, nothing uses it yet
-          - license GPL-2.0-or-later
-          - reword the commit message ]
+The CXL Type-2 device registers a range later in this series.
+
 AI-used-for: code (prototype)
 Signed-off-by: Manish Honap <mhonap@nvidia.com>
 ---
- MAINTAINERS                 |   1 +
- hw/mem/Kconfig              |   5 ++
- hw/mem/cxl_type2.c          | 111 ++++++++++++++++++++++++++++++++++++
- hw/mem/meson.build          |   1 +
- include/hw/cxl/cxl_device.h |  14 +++++
- 5 files changed, 132 insertions(+)
- create mode 100644 hw/mem/cxl_type2.c
+ hw/cxl/cxl-component-utils.c            | 47 +++++++++++++++++++++++++
+ hw/pci-bridge/pci_expander_bridge_cxl.c | 22 ++++++++++--
+ include/hw/cxl/cxl_component.h          | 13 +++++++
+ include/hw/pci/pci_bridge.h             |  5 +++
+ 4 files changed, 85 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 55463103ff..57a78bc6a9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3399,6 +3399,7 @@ R: Anisa Su <anisa.su@samsung.com>
- L: linux-cxl@vger.kernel.org
- S: Supported
- F: hw/cxl/
-+F: hw/mem/cxl_type2.c
- F: hw/mem/cxl_type3.c
- F: include/hw/cxl/
- F: qapi/cxl.json
-diff --git a/hw/mem/Kconfig b/hw/mem/Kconfig
-index 39ddb36710..6a5cd2be61 100644
---- a/hw/mem/Kconfig
-+++ b/hw/mem/Kconfig
-@@ -17,6 +17,11 @@ config CXL_MEM_DEVICE
-     default y if CXL
-     select MEM_DEVICE
+diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+index f9bb1684fa..c61966b202 100644
+--- a/hw/cxl/cxl-component-utils.c
++++ b/hw/cxl/cxl-component-utils.c
+@@ -9,6 +9,7 @@
  
-+config CXL_TYPE2_DEVICE
-+    bool
-+    default y if CXL
-+    select MEM_DEVICE
-+
- config SP_MEM
-     bool
-     select MEM_DEVICE
-diff --git a/hw/mem/cxl_type2.c b/hw/mem/cxl_type2.c
-new file mode 100644
-index 0000000000..4769793e06
---- /dev/null
-+++ b/hw/mem/cxl_type2.c
-@@ -0,0 +1,111 @@
-+/*
-+ * CXL Type-2 device
-+ *
-+ * Copyright(C) 2024 NVIDIA Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/cxl/cxl.h"
-+#include "hw/pci/pci.h"
-+#include "migration/vmstate.h"
-+#include "system/hostmem.h"
-+
-+static void clean_memory(PCIDevice *pci_dev)
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
++#include "qemu/units.h"
+ #include "qapi/error.h"
+ #include "hw/pci/pci.h"
+ #include "hw/cxl/cxl.h"
+@@ -500,6 +501,52 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+                                       CXL_HDM_DECODER_COUNT);
+ }
+ 
++/* One range per host bridge; registering the same range again succeeds */
++bool cxl_firmware_hdm_set(CXLFirmwareHDM *fw, const char *owner,
++                          uint64_t base, uint64_t size, uint8_t target,
++                          Error **errp)
 +{
-+    CXLType2Dev *ct2d = CXL_TYPE2(pci_dev);
-+
-+    address_space_destroy(&ct2d->hostvmem_as);
-+    host_memory_backend_set_mapped(ct2d->hostvmem, false);
-+}
-+
-+static bool setup_memory(PCIDevice *pci_dev, Error **errp)
-+{
-+    CXLType2Dev *ct2d = CXL_TYPE2(pci_dev);
-+    MemoryRegion *vmr;
-+
-+    if (!ct2d->hostvmem) {
-+        error_setg(errp, "volatile-memdev property must be set");
++    if (!size || !QEMU_IS_ALIGNED(base, 256 * MiB) ||
++        !QEMU_IS_ALIGNED(size, 256 * MiB)) {
++        error_setg(errp, "firmware HDM range must be 256 MiB aligned");
 +        return false;
 +    }
-+    vmr = host_memory_backend_get_memory(ct2d->hostvmem);
-+    if (!vmr) {
-+        error_setg(errp, "volatile memdev must have backing device");
++
++    if (fw->valid) {
++        if (fw->base == base && fw->size == size && fw->target == target) {
++            return true;
++        }
++        error_setg(errp, "%s supports one firmware HDM range", owner);
 +        return false;
 +    }
-+    if (host_memory_backend_is_mapped(ct2d->hostvmem)) {
-+        error_setg(errp, "memory backend %s can't be used multiple times.",
-+                   object_get_canonical_path_component(OBJECT(ct2d->hostvmem)));
-+        return false;
-+    }
-+    memory_region_set_nonvolatile(vmr, false);
-+    memory_region_set_enabled(vmr, true);
-+    host_memory_backend_set_mapped(ct2d->hostvmem, true);
-+    address_space_init(&ct2d->hostvmem_as, vmr, "cxl-type2-dpa-vmem-space");
++
++    *fw = (CXLFirmwareHDM) {
++        .valid = true,
++        .base = base,
++        .size = size,
++        .target = target,
++    };
 +    return true;
 +}
 +
-+static void cxl_type2_realize(PCIDevice *pci_dev, Error **errp)
++/*
++ * The caller sets HDM Decoder Enable where it applies. It reads as 0 on host
++ * bridges (CXL r4.0 Section 8.2.4.20.2).
++ */
++void cxl_firmware_hdm_program(const CXLFirmwareHDM *fw, uint32_t *cache_mem)
 +{
-+    if (!setup_memory(pci_dev, errp)) {
-+        return;
-+    }
++    uint32_t ctrl = 0;
 +
-+    pcie_endpoint_cap_init(pci_dev, 0x80);
++    stl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_LO, fw->base & 0xf0000000);
++    stl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_HI, fw->base >> 32);
++    stl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_LO, fw->size & 0xf0000000);
++    stl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_HI, fw->size >> 32);
++    stl_le_p(cache_mem + R_CXL_HDM_DECODER0_TARGET_LIST_LO, fw->target);
++    ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMIT, 1);
++    ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED, 1);
++    stl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL, ctrl);
 +}
 +
-+static void cxl_type2_exit(PCIDevice *pci_dev)
-+{
-+    clean_memory(pci_dev);
-+}
-+
-+static const Property cxl_type2_props[] = {
-+    DEFINE_PROP_LINK("volatile-memdev", CXLType2Dev, hostvmem,
-+                     TYPE_MEMORY_BACKEND, HostMemoryBackend *),
-+};
-+
-+static const VMStateDescription cxl_type2_vmsd = {
-+    .name = TYPE_CXL_TYPE2,
-+    .unmigratable = 1,
-+};
-+
-+static void cxl_type2_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    PCIDeviceClass *pc = PCI_DEVICE_CLASS(oc);
-+
-+    pc->realize = cxl_type2_realize;
-+    pc->exit = cxl_type2_exit;
-+
-+    pc->class_id = PCI_CLASS_ACCELERATOR_PROCESSING;
-+    pc->vendor_id = PCI_VENDOR_ID_REDHAT;
-+    pc->device_id = PCI_DEVICE_ID_REDHAT_CXL_TYPE2;
-+    pc->revision = 1;
-+
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    dc->desc = "CXL Type-2 device";
-+    dc->vmsd = &cxl_type2_vmsd;
-+    device_class_set_props(dc, cxl_type2_props);
-+}
-+
-+static const TypeInfo cxl_type2_dev_info = {
-+    .name = TYPE_CXL_TYPE2,
-+    .parent = TYPE_PCI_DEVICE,
-+    .class_init = cxl_type2_class_init,
-+    .instance_size = sizeof(CXLType2Dev),
-+    .interfaces = (const InterfaceInfo[]) {
-+        { INTERFACE_CXL_DEVICE },
-+        { INTERFACE_PCIE_DEVICE },
-+        {}
-+    },
-+};
-+
-+static void cxl_type2_dev_registers(void)
-+{
-+    type_register_static(&cxl_type2_dev_info);
-+}
-+
-+type_init(cxl_type2_dev_registers);
-diff --git a/hw/mem/meson.build b/hw/mem/meson.build
-index f410d75475..0b2c193a78 100644
---- a/hw/mem/meson.build
-+++ b/hw/mem/meson.build
-@@ -4,6 +4,7 @@ mem_ss.add(when: 'CONFIG_DIMM', if_true: files('pc-dimm.c'))
- mem_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_mc.c'))
- mem_ss.add(when: 'CONFIG_NVDIMM', if_true: files('nvdimm.c'))
- mem_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_true: files('cxl_type3.c'))
-+mem_ss.add(when: 'CONFIG_CXL_TYPE2_DEVICE', if_true: files('cxl_type2.c'))
- mem_ss.add(when: 'CONFIG_SP_MEM', if_true: files('sp-mem.c'))
- stub_ss.add(files('cxl_type3_stubs.c'))
+ /*
+  * Helper to creates a DVSEC header for a CXL entity. The caller is responsible
+  * for tracking the valid offset.
+diff --git a/hw/pci-bridge/pci_expander_bridge_cxl.c b/hw/pci-bridge/pci_expander_bridge_cxl.c
+index ceb8928f8f..01fd479a9e 100644
+--- a/hw/pci-bridge/pci_expander_bridge_cxl.c
++++ b/hw/pci-bridge/pci_expander_bridge_cxl.c
+@@ -111,9 +111,18 @@ static const TypeInfo cxl_host_info = {
+     .class_init    = pxb_cxl_host_class_init,
+ };
  
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 608d05165a..aeccf42855 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -830,6 +830,20 @@ struct CSWMBCCIDev {
- #define TYPE_CXL_SWITCH_MAILBOX_CCI "cxl-switch-mailbox-cci"
- OBJECT_DECLARE_TYPE(CSWMBCCIDev, CSWMBCCIClass, CXL_SWITCH_MAILBOX_CCI)
++bool pxb_cxl_register_firmware_hdm(PXBCXLDev *pxb, uint64_t base,
++                                   uint64_t size, uint8_t target,
++                                   Error **errp)
++{
++    return cxl_firmware_hdm_set(&pxb->firmware_hdm, "pxb-cxl", base, size,
++                                target, errp);
++}
++
+ static void pxb_cxl_dev_reset(DeviceState *dev)
+ {
+-    CXLHost *cxl = PXB_CXL_DEV(dev)->cxl_host_bridge;
++    PXBCXLDev *pxb = PXB_CXL_DEV(dev);
++    CXLHost *cxl = pxb->cxl_host_bridge;
+     CXLComponentState *cxl_cstate = &cxl->cxl_cstate;
+     PCIHostState *hb = PCI_HOST_BRIDGE(cxl);
+     uint32_t *reg_state = cxl_cstate->crb.cache_mem_registers;
+@@ -121,11 +130,12 @@ static void pxb_cxl_dev_reset(DeviceState *dev)
+     int dsp_count = 0;
  
-+struct CXLType2Dev {
-+    /* Private */
-+    PCIDevice parent_obj;
+     cxl_component_register_init_common(reg_state, write_msk, CXL2_RC, false);
++    cxl->passthrough = false;
+     /*
+      * The CXL specification allows for host bridges with no HDM decoders
+      * if they only have a single root port.
+      */
+-    if (!PXB_CXL_DEV(dev)->hdm_for_passthrough) {
++    if (!pxb->hdm_for_passthrough && !pxb->firmware_hdm.valid) {
+         dsp_count = pcie_count_ds_ports(hb->bus);
+     }
+     /* Initial reset will have 0 dsp so wait until > 0 */
+@@ -136,6 +146,14 @@ static void pxb_cxl_dev_reset(DeviceState *dev)
+     } else {
+         ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, TARGET_COUNT,
+                          8);
++        if (pxb->firmware_hdm.valid) {
++            cxl_firmware_hdm_program(&pxb->firmware_hdm, reg_state);
++            /*
++             * An endpoint that committed before this reset could not map
++             * its memory directly, as this decoder was not committed yet.
++             */
++            cfmws_update_non_interleaved(true);
++        }
+     }
+ }
+ 
+diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+index b38e81d129..eb71f1c80a 100644
+--- a/include/hw/cxl/cxl_component.h
++++ b/include/hw/cxl/cxl_component.h
+@@ -328,6 +328,19 @@ void cxl_component_create_dvsec(CXLComponentState *cxl_cstate,
+ void cxl_component_update_dvsec(CXLComponentState *cxl, uint16_t length,
+                                 uint16_t type, uint8_t *body);
+ 
++/* The range that firmware routes through HDM decoder 0 to one port */
++typedef struct CXLFirmwareHDM {
++    bool valid;
++    uint64_t base;
++    uint64_t size;
++    uint8_t target;
++} CXLFirmwareHDM;
 +
-+    /* Properties */
-+    HostMemoryBackend *hostvmem;
++bool cxl_firmware_hdm_set(CXLFirmwareHDM *fw, const char *owner,
++                          uint64_t base, uint64_t size, uint8_t target,
++                          Error **errp);
++void cxl_firmware_hdm_program(const CXLFirmwareHDM *fw, uint32_t *cache_mem);
 +
-+    /* State */
-+    AddressSpace hostvmem_as;
-+};
+ int cxl_decoder_count_enc(int count);
+ int cxl_decoder_count_dec(int enc_cnt);
+ 
+diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
+index f114f0a651..d0227a4c38 100644
+--- a/include/hw/pci/pci_bridge.h
++++ b/include/hw/pci/pci_bridge.h
+@@ -117,11 +117,16 @@ typedef struct PXBCXLDev {
+ 
+     bool hdm_for_passthrough;
+     CXLHost *cxl_host_bridge; /* Pointer to a CXLHost */
++    CXLFirmwareHDM firmware_hdm;
+ } PXBCXLDev;
+ 
+ #define TYPE_PXB_CXL_DEV "pxb-cxl"
+ OBJECT_DECLARE_SIMPLE_TYPE(PXBCXLDev, PXB_CXL_DEV)
+ 
++bool pxb_cxl_register_firmware_hdm(PXBCXLDev *pxb, uint64_t base,
++                                   uint64_t size, uint8_t target,
++                                   Error **errp);
 +
-+#define TYPE_CXL_TYPE2 "cxl-type2"
-+OBJECT_DECLARE_SIMPLE_TYPE(CXLType2Dev, CXL_TYPE2)
-+
- MemTxResult cxl_type3_read(PCIDevice *d, hwaddr host_addr, uint64_t *data,
-                            unsigned size, MemTxAttrs attrs);
- MemTxResult cxl_type3_write(PCIDevice *d, hwaddr host_addr, uint64_t data,
+ int pci_bridge_ssvid_init(PCIDevice *dev, uint8_t offset,
+                           uint16_t svid, uint16_t ssid,
+                           Error **errp);
 -- 
 2.53.0
 
