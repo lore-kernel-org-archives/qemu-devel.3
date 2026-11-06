@@ -1,105 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0705606A32D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 15:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C32A606D830
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 15:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=t3ITy+ZP
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AF0TwYB9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPLua-0004jN-SR; Fri, 06 Nov 2026 10:31:29 -0500
+	id 1xPLyk-0006bO-4e; Fri, 06 Nov 2026 10:35:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xPLuY-0004iF-1h
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 10:31:26 -0500
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xPLuV-0007AU-UP
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 10:31:25 -0500
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-8b315dd057bso4764517b3.1
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 07:31:23 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793979082; cv=none;
- d=google.com; s=arc-20260327;
- b=p9Og8TbWxTAHXRQrCJhEUJW6pSBmlcnNvOmSuarEfGfprGJhkfThDI/2WQqh9IyNoe
- bC92QwDLGyRpC2YNaltlLXbSl0B061iMml7Ab+6bLPmuFXksquPy/eWMylItTcQzBieE
- O39jmlWLrz1nuQimM0UZ7Aov+ags3VsYZH6JZldDiH6ovN+HFRr8UH/oJrSDohAKLfvl
- oLpCace902ftGuEni8JOwf6/DmqLJemXgxS+PBEP0DIZo6FdCrTiONuF2GLnXU4IdlJX
- fV9iTqEPDxkMTGGKm15xVMn7llFS+G7rErAiOVRqlHAlnw/QXDGLPwB7uB3wBI3jTDEb
- fKgg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=nbMewXiO61ml5gFWEqWb2NSo5jAl7EVEeUa88Ab1Zoo=;
- fh=VVG17rxBEiDHMN+NdIa2FUIrBoknqfQRtCU5ktI6kW0=;
- b=HJC4jG0LgDXKydcPJtAlr9x7TUUD8/iliVlnWMbUWN1NoWAFGfamiN3tS26Moyb7w9
- nqgOcA98nwz2EtgIAojRO5osJqZCe/iz1xK/GcOEdrJWF5pnsZATslYufmZqSxJDMBpM
- bj9KUbRjRAQ+YbiYaDaH/qhxqweingj7/BDAv41GvvafxTBSeREwSD4lgvmazPNf5lmM
- Wqo+gses1/xkGYaYqOQ3tNUlhP3ciYl+YSGaYngWhN0PM43lbhCXGI3Usq3+v/zgOsym
- 2aoguK73mGimbfI4xYhbn2Z391mOCQ89orQzFewlEB3eAb37+1reuTgKwX3MYGeB9nS6
- XyJw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793979082; x=1794583882; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=nbMewXiO61ml5gFWEqWb2NSo5jAl7EVEeUa88Ab1Zoo=;
- b=t3ITy+ZPxCReM5EZVRejQ7MPPW8ygjm4Z6eIeqzFfjlgypUJ1fTyW2okSpMNXhRwMp
- Q06lme7ygGeQ34yuJh8YyazG2biCyBDIyXxojtvnTkqWQ8p4URXsgBkwOqKyal+alXlM
- nWm2x0LP9TedSmWWIkcMm278HzLidLdPQ/dw4a1Ad/quOK5K/LedQ+cEFx3yPphgaAId
- K/ZkMWJlHlnYECoTWUs7mSMWIJv5kl+arRO7tkvLEQ+/FoI1uor+DzEY9q/XYL4EddZj
- SHOvGF8X6s0cvuCP8K9NSET+lpKgUUZmJz4yEmtGWlscov7UWte48vNIc1fEDV9wfroP
- 0Cww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793979082; x=1794583882;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=nbMewXiO61ml5gFWEqWb2NSo5jAl7EVEeUa88Ab1Zoo=;
- b=UPEmC/XRYe4V20pSy1LyWstFFauHYOaXL9oy3AI1IpS7JV9Gn+XV3jUb+vpZTy+ML3
- DYNrIzsbXay0bmMYXlegmlx8945QAyBnRWDTa1UTOUO7ubcfFR/iwZ/qDI1Ts7ceG0GD
- FDHNOAWWF+PlWSWkIlbzePtrEYm/J4e1dB9JqBJ6RZhtUYSOgJ1vczfcDHTKRyPnLxqe
- 3qjxc5kHDyBTiVI3+Ut4WM1X8t7cIBlpRkzQ7qDRC6C78S0PeWEYTDQhqFnYLE2exjra
- HCUFW7o0KpXG6gzSPIULEF1768ZyjgcIYBxd/nGh0PU0gI9ejc4zVACG86JeQ8ScvcEW
- joOQ==
-X-Gm-Message-State: APuU4Z8FT5qE0Qet5W+rgbpPBla9ylMmIImRG0En9Surkjmj4mJKYp1b
- cLQ9+YHhKNBI+/fLPyfrM0DWY55qJ1iaC7idKDTkuFPhgtM+lqYcpLqFZaYHfy2+c6cU2hENtW5
- +1ykyqulo71TFnraqWRTDkYy3mBhJs/rE9gZgZvqd+A==
-X-Gm-Gg: AYBFou0xuZrOE2pXF1cCP4PKmWxHWOUIT+F+L37xlWuPrfbkuXMp2BqCXjpfLeWiyth
- lpei5OYTT6JVBqCkjWUfMsFF56vNbX7uyOPJqKwcYD75sTZWOJ67mbtKxk3xWZ9EHUwdemBblaB
- 7a/GgNsia0ACwShpoV+XKUnVwY/DRgsuVlyAHfEmRLW8K45g3YiB6wZUwyn0I49Zueq87br3tju
- 4pfgwueksV4pNQOn/KmmNKwd5Px1v0L/mTbsAjL0yE/C1mI8hCQyBDozo/CU3rv7gexAh5t2Iq8
- ze8Oz6fOcpqIZgERUu04X5WuCFEk/yzHkJABjdvYEJ2axtWmsIqeUelzmIVWdQTVSwt+BmeuUcm
- 7AnxGDYfRJKiGBneZvwSInET0uffoP9YlhlG1MWcNBzP+R/lujpd9M1wnr6zysEuf4Eds/NNp0q
- AC/7cscvp9RL3kV8/Izh+r
-X-Received: by 2002:a05:690c:386:b0:8a8:6fac:1525 with SMTP id
- 00721157ae682-8b341ac9315mr17573587b3.46.1793979082406; Fri, 06 Nov 2026
- 07:31:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xPLyg-0006YU-Gl
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 10:35:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xPLyd-0007gb-IU
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 10:35:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793979338;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EbG2kGCimWpRShIlCLLdfHGA/wRynQvlP0SY2ceSn+Y=;
+ b=AF0TwYB97UDf0Qb56pv478ZcaNul8d4l7NFde/KS5QtdogMSr0JIcqB9KmiFOKKTgVj6Mb
+ Z+/GE071Fz8KvHiGTCh4T4Zw1VvQrXNW2G3m8yjSLnp+wedRpEQiaS14Kg3YV0ulxc86Dd
+ eXPPLejo+XDgSdkM3pSCSzLDtQD8KWQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-45XZXIz2MyWeIPQ_sxrhYA-1; Fri,
+ 06 Nov 2026 10:35:36 -0500
+X-MC-Unique: 45XZXIz2MyWeIPQ_sxrhYA-1
+X-Mimecast-MFC-AGG-ID: 45XZXIz2MyWeIPQ_sxrhYA_1793979335
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3FFA41800670; Fri,  6 Nov 2026 15:35:35 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C9FE44D; Fri,  6 Nov 2026 15:35:33 +0000 (UTC)
+Date: Fri, 6 Nov 2026 15:35:31 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Yonggang Luo <luoyonggang@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH 0/4] hw: support machine filtering without is_available
+Message-ID: <au3zw-IBajJYhiWN@redhat.com>
+References: <20261105102432.1131493-1-berrange@redhat.com>
+ <e0afc971-a070-4853-b690-b6c523c5b65a@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261103145254.1543907-1-schober@cs.fau.de>
-In-Reply-To: <20261103145254.1543907-1-schober@cs.fau.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Nov 2026 15:31:10 +0000
-X-Gm-Features: AclHuK_PqW5yJQV_oGL2ZaCo-OYw1AiZLNTCGnuB22N_QxsgOtEK92_RQijFRqs
-Message-ID: <CAFEAcA-wA_qKKXUaOBqqmb8M0QteUG3HcigC27pcupGbCmZzgA@mail.gmail.com>
-Subject: Re: [PATCH] arm/cpu: fix GIC v3 flag for a64fx
-To: Ferdinand Schober <schober@cs.fau.de>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e0afc971-a070-4853-b690-b6c523c5b65a@oss.qualcomm.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,37 +84,154 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, 3 Nov 2026 at 14:54, Ferdinand Schober <schober@cs.fau.de> wrote:
->
-> The a64fx CPU model wrongfully set GIC bits in the
-> processor feature register (ID_AA64PFR0).
->
-> I traced this back to e31c70ac04001df5e540b79843834277e283fa71,
-> where A64FX got added.
->
-> This bit is supposed to get set conditionally in id_aa64pfr0_read,
-> depending on whether or not a gicv3 is present, from what I can tell.
-> Qemu picks gic-version=2 by default, while v3 gets advertised due to this flag.
-> Recent EDK2 firmware accesses ICC_SRE_EL2 in this case and crashes.
->
-> Clear the GIC field, as the other CPU models do.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: e31c70ac0400 ("target-arm: Add support for Fujitsu A64FX")
-> Signed-off-by: Ferdinand Schober <schober@cs.fau.de>
-> ---
+On Thu, Nov 05, 2026 at 09:25:28AM -0800, Pierrick Bouvier wrote:
+> On 11/5/2026 2:24 AM, Daniel P. Berrangé wrote:
+> > The 'is_available' callback on TypeInfo is based on a mistaken
+> > notion that we should filter out classes at registration time
+> > based on architecture.
+> > 
+> > This creates new problems however, some already present and
+> > some which will impact a future multi-target binary
+> > 
+> >  * For introspection of the binaries' features, we have
+> >    a dependancy on selecting a target before we can
+> >    introspect features. It would require re-launching
+> >    QEMU for each target, leading to lots of redundant
+> >    introspection and a big time sink. It would also not
+> >    be possible to introspect targets
+> > 
+> >  * It creates a circular dependancy on QOM initialization
+> >    inside the QOM initialization code, since 'target_info()'
+> >    itself uses QOM. This then requires further work to break
+> >    by initializing QOM target info before the rest of QOM.
+> > 
+> >  * We have no means to introspect what targets a machine
+> >    type can be used with, as this information is expressed
+> >    as code (in target_XXXX() methods), instead of as data.
+> > 
+> >  * New fields in TypeInfo requires more changes to macros
+> >    used for initializing machines.
+> > 
+> > There is no inherant conceptual reason why we must filter out
+> > classes at type registration time. This is just a shortcut to
+> > workaround historical technical debt where certain classes
+> > have clashing names. This is an undesirable approach, as it
+> > is trading one set of problems for a new set of problems.
+> > 
+> > This series proposes removal of the 'is_available' concept
+> > from QOM, and illustrates handling machines with full introspection
+> > support available from the MachineClass.
+> > 
+> > This implies fixing the root cause, of clashing class names,
+> > but does not include patches since various series have already
+> > been posted for machine class name fixes.
+> > 
+> > The machine changes are fairly simple
+> > 
+> >  * MachineClass gains a 'targets' field which is a bit mask
+> >    of SysEmuTarget
+> >  * machine_class_is_available() matches 'targets' against
+> >    'target_info()'
+> >  * -machine CLI enforces machine_class_is_available()
+> >  * query-machines filters on machine_class_is_available
+> >    by default
+> >  * query-machines gains 'all-targets': 'bool' to opt-in
+> >    to returning the unfiltered list, with a 'targets'
+> >    list present
+> > 
+> > NB, this removes filtering from riscv CPUs with no
+> > alternative proposed. I'm unclear what this was trying
+> > to address to begin with, but utlimately it should be
+> > possible to address it with runtime filtering/matching
+> > of classes, instead of hiding TypeInfo registration.
+> > If someone gives me info on the CPUs problem I can a
+> > make a design suggestion.
+> > 
+> > Daniel P. Berrangé (4):
+> >   hw/core: record permitted targets against MachineClass
+> >   hw: replace 'is_available' with 'targets' in machines
+> >   target/riscv: remove 'is_available' from riscv CPUs
+> >   qom: drop the 'is_available' callback from TypeInfo
+> > 
+> >  hw/arm/aspeed_ast27x0-fc.c  |  3 ++-
+> >  hw/arm/aspeed_ast27x0_evb.c |  5 +++--
+> >  hw/arm/raspi.c              | 21 +++++++++++++--------
+> >  hw/arm/raspi4b.c            |  3 ++-
+> >  hw/arm/virt.c               |  5 +++--
+> >  hw/core/machine-qmp-cmds.c  | 18 ++++++++++++++++++
+> >  hw/core/machine.c           | 13 +++++++++++++
+> >  hw/hexagon/virt.c           |  3 ++-
+> >  hw/m68k/virt.c              |  4 ++--
+> >  hw/or1k/virt.c              |  3 ++-
+> >  hw/riscv/virt.c             |  4 +++-
+> >  include/hw/core/boards.h    |  3 +++
+> >  include/qom/object.h        |  3 ---
+> >  qapi/machine.json           | 12 +++++++++++-
+> >  qom/object.c                |  4 ----
+> >  rust/qom/src/qom.rs         |  1 -
+> >  system/vl.c                 |  9 +++++++++
+> >  target/riscv/kvm/kvm-cpu.c  |  1 -
+> >  target/riscv/tcg/tcg-cpu.c  |  1 -
+> >  19 files changed, 86 insertions(+), 30 deletions(-)
+> > 
+> 
+> Thanks for posting the series.
+> 
+> Would that be possible to complete it so that beyond compilation, test
+> ./build/tests/unit/test-multi-target passes also? At the moment it fails
+> with duplicated types being registered.
 
+Oh I see, it didn't failure because I only enabled
+the two arm/aarch64 targets, once i add in more
+targets we get a clash on the virt-machine class.
 
+FYI, it also fails without my patch series present
+in some scenarios:
 
-Applied to target-arm.next, thanks.
+# child process (/multi-targets/qom-types-are-unique/aarch64 [1950288]) stderr: "Registering `vm-launch-update' which already exists\n"
+**
+ERROR:../tests/unit/test-multi-target.c:41:test_qom_types_are_unique: child process (/multi-targets/qom-types-are-unique/aarch64 [1950288]) failed unexpectedly
+not ok /multi-targets/qom-types-are-unique/aarch64 - ERROR:../tests/unit/test-multi-target.c:41:test_qom_types_are_unique: child process (/multi-targets/qom-types-are-unique/aarch64 [1950288]) failed unexpectedly
+Bail out!
+Aborted                    (core dumped) tests/unit/test-multi-target
 
--- PMM
+This is caused by presence of 'igvm-devel' at build time on
+one of my machines (Fedora), which enables this device type,
+if you have both arm and aarch64 targets enabled.
+
+We need to add igvm to our Fedora dockerfile to catch this
+in CI.
+
+Moving it from specific_ss to system_ss make the test pass,
+but I'm unclear if it is sufficient to rely on lack of
+compiler and test complaints ? Or it needs manual code
+inspection to make sure the device is safe in this
+scenario ?
+
+> That's why this is_available was introduced in the first place. It was
+> just a way to move forward and provide the multi-target test to prevent
+> regression while work on single-binary is continued by Yonggang.
+
+Right, so with my series, we would first need the class
+renames to fix the multi-target test.
+
+I should have labelled this posting "POC" as it was not
+tested thoroughly.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
