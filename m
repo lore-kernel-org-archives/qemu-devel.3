@@ -1,61 +1,78 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432DC606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 08:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874FB606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 09:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=HlYgJDsl
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Yoyd7g3U
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPFjX-0007Ms-PZ; Fri, 06 Nov 2026 03:55:40 -0500
+	id 1xPFrR-0008S9-B3; Fri, 06 Nov 2026 04:03:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xPFjR-0007LW-TO; Fri, 06 Nov 2026 03:55:35 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xPFrQ-0008Rx-2I
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 04:03:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xPFjN-00022a-58; Fri, 06 Nov 2026 03:55:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793955323; bh=PUtj3wOivg04jg4kaPJh3JGuCpVLUgFzNn5gL7Po7Tw=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=HlYgJDslgjASUL7/8DT6fY3Iyz/vI7GhwvW46ktmASuG1mKuKrFpA488qUxuSpni7
- tscdiZ49jwKmXtWn7tErhOP0LYp8qE/f4VN9BKYsPkEPC1p4zlX5E8XpcYnixokY9f
- YqBCjEb9fMnm++Yq9TFZ+ciQC4RNS33PbbyKhVJaX+WRXK1THK1EhyOcTsHhb2evqW
- 8PGEX7YOwotjRPyQWsl1TtNwPt0sQy5wmXsztn7pk9naTV9z2SWjh+vott+PFN57tP
- Ne50M75lca26K1NmdQJ6cdOgktzx8z/Jpr+22zoJMlxWvg7h2P0Lr6Ne/A8rCh5boQ
- rgBlbQ9xYQEQA==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8DF251E441F;
- Fri, 06 Nov 2026 11:55:23 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 79B7E45533D;
- Fri, 06 Nov 2026 11:55:23 +0300 (MSK)
-Message-ID: <5493e42d-72ca-4522-9839-102036e488f6@tls.msk.ru>
-Date: Fri, 6 Nov 2026 11:55:23 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xPFrO-0002fo-6w
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 04:03:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793955823;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=IMavohR1Wuu5KOd87XzSdDRJyqEXGvPwjWov+LoHhlg=;
+ b=Yoyd7g3UVwNN8B9Rz3259ybwpySXarZbvZPWQh+OLdbSGNKRLq2fQU36FtAcPOVdgC/m1L
+ n/lTytXVlt+v4mr1IeSpqBMdqV/7T4HY6STEiLlYeUN9wwU8E5YVA08Q3/XLXdxB5tNbD8
+ +zPjhv74ohTBoAGqVvIawCEkUyN8EbI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-cO7JA83xPBqTJrjfZXvyKA-1; Fri,
+ 06 Nov 2026 04:03:39 -0500
+X-MC-Unique: cO7JA83xPBqTJrjfZXvyKA-1
+X-Mimecast-MFC-AGG-ID: cO7JA83xPBqTJrjfZXvyKA_1793955818
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 813541954B16; Fri,  6 Nov 2026 09:03:38 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F1987195608A; Fri,  6 Nov 2026 09:03:36 +0000 (UTC)
+Date: Fri, 6 Nov 2026 09:03:34 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: Pierrick is maintaining the AWS GitLab runners
+Message-ID: <au2X5ky4RKMe1gPw@redhat.com>
+References: <CAJSP0QXzingvqA1F2q-QH9GvtMz7YpxDK9RsDEF5JMCE6vA+Hg@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/5] hw/loogarch: Fix UART ACPI properties and FDT
-To: pillow <waysorrypub@gmail.com>, qemu-devel@nongnu.org
-Cc: 17746591750@163.com, maobibo@loongson.cn, lixianglai@loongson.cn,
- jiaxun.yang@flygoat.com, mst@redhat.com, imammedo@redhat.com,
- anisinha@redhat.com, QEMU Stable <qemu-stable@nongnu.org>
-References: <20261025135559.236356-1-waysorrypub@gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20261025135559.236356-1-waysorrypub@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJSP0QXzingvqA1F2q-QH9GvtMz7YpxDK9RsDEF5JMCE6vA+Hg@mail.gmail.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,52 +83,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/25/26 16:55, pillow wrote:
-> This series fixes the UART description for LoongArch virt.
+On Thu, Nov 05, 2026 at 04:04:14PM -0500, Stefan Hajnoczi wrote:
+> Hi,
+> Pierrick has volunteered to maintain the AWS GitLab runners that
+> QEMU's CI depends on for x86_64 jobs. I have given him access and
+> updated https://wiki.qemu.org/AdminContacts to reflect this.
 > 
-> The ACPI _DSD property built for the UART has three problems: the
-> property name is misspelled, the key and value order is reversed, and
-> it describes a 100 MHz clock that does not match the device model.
-> The property can be dropped directly because the UART model's input
-> clock matches the Linux 8250 PnP driver default of 1,843,200 Hz, so no
-> _DSD override is needed.
+> Thanks, Pierrick, for helping with this!
 > 
-> The _CCA property is also unnecessary.  _CCA describes a device's DMA
-> cache coherency attribute, and this UART does not support DMA, so there
-> is no reason to declare it.
-> 
-> The UART clock frequency in the FDT is corrected to 1,843,200 Hz, and
-> the expected ACPI tables are updated accordingly.
-> 
-> pillow (5):
->    bios-tables-test-allowed-diff.h: Allow LoongArch DSDT.*
->    hw/loongarch/virt-acpi-build: Drop invalid _DSD UART clock property
->    hw/loongarch/virt-acpi-build: Drop UART _CCA declaration
->    hw/loongarch/virt: Fix UART clock frequency in FDT
->    tests/data/acpi/loongarch64: Update expected DSDT.*
-> 
->   hw/loongarch/virt-acpi-build.c                |  11 -----------
->   hw/loongarch/virt-fdt-build.c                 |   2 +-
->   tests/data/acpi/loongarch64/virt/DSDT         | Bin 4603 -> 4351 bytes
->   tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 5824 -> 5572 bytes
->   tests/data/acpi/loongarch64/virt/DSDT.numamem | Bin 4609 -> 4357 bytes
->   .../data/acpi/loongarch64/virt/DSDT.topology  | Bin 4905 -> 4653 bytes
->   6 files changed, 1 insertion(+), 12 deletions(-)
-> 
+> I'll continue to handle the yearly Amazon sponsorship applications.
 
-Hi!
+Do we have a fixed quota cap for our AWS usage, and if so, are we
+at all close to that level with our current CI workload ? 
 
-Should this change be picked up fr current qemu stable releases?
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-Thanks,
-
-/mjt
 
