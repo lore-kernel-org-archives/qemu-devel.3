@@ -1,98 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CEF606A902
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 11:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A39D606D80C
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 11:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FaHJXOWT;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Vf04mzZJ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=S/rfBFbh;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Ehtzbu8y
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPIHy-0005uy-Tc; Fri, 06 Nov 2026 06:39:22 -0500
+	id 1xPIVV-0007wA-LL; Fri, 06 Nov 2026 06:53:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIHx-0005t9-6X
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:39:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIVI-0007v8-7o
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:53:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIHu-0002gV-Ly
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:39:20 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIVF-0003q3-HX
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:53:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793965158;
+ s=mimecast20190719; t=1793965984;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
  bh=jMfKGNZpmF05jF3tvaPQH8aRSow/ou3OFsHhPpxpTfU=;
- b=FaHJXOWT2M5YOk408SSBhNCWKvx34eQA/egiM9upIUJ5lnPI9I9+0IPXLfFJBBsC+Xo+p3
- T7mTbNNHxEb1SPuPf4u3wHOTtglK12vW+0uEsv4sFnUmh+t1sO6omp7QpXReEcl8K2Cxvm
- hJl5TZrUW5nQ6YX96LCsWgImcWQw/uc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ b=S/rfBFbhF4Bl8L+K3PEck8X8zqE86pg6qXmuJzmc1f9S0IpBdpNKTBsHk/2Y9kL2kiQH+Z
+ 4l/zos9zopCBcBNTJsFOonix3LDvy5FHxRtr+/YJXKWpswvNMchSGC5goDoyZwcD4bgjxU
+ VvV0o9Dv7dTYYb7tJoKhtwFfG+CeUXo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-304-DCD6gPOaMca2juIHOodTfg-1; Fri, 06 Nov 2026 06:39:16 -0500
-X-MC-Unique: DCD6gPOaMca2juIHOodTfg-1
-X-Mimecast-MFC-AGG-ID: DCD6gPOaMca2juIHOodTfg_1793965155
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-48fbcf023dcso315163f8f.2
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 03:39:16 -0800 (PST)
+ us-mta-299-ncJjfzcMOaSMVQQoshOgrw-1; Fri, 06 Nov 2026 06:53:02 -0500
+X-MC-Unique: ncJjfzcMOaSMVQQoshOgrw-1
+X-Mimecast-MFC-AGG-ID: ncJjfzcMOaSMVQQoshOgrw_1793965982
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4b64722b5e6so6083845e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 03:53:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793965155; x=1794569955; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793965981; x=1794570781; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
  bh=jMfKGNZpmF05jF3tvaPQH8aRSow/ou3OFsHhPpxpTfU=;
- b=Vf04mzZJ/DiGqp41fUWpeosGhEnHokfM3Y+fZq5WbBAf7O2gnKF6tu23VWSVsnF4D0
- uU6hEnoxVC68q8g43erEhH1wKi9617sCYKovU1hxHdv5UiibNzfQkxFjaBY53kiOpO9j
- phsJ3CvR7E44w1Z7gayU/VeHZIraLGqkPjpScLkOVyqDv33RGjeOb9/6HlmEezKlxYkr
- 3XNvd+quGpeB0yI5uZ7ngAUl48+X6cW6k5EyKYBP0aHgHWa8m58OXh/RpeV1U3xs6buu
- 2ngEwkUEFRYsV9a8FbN1vWVx/lajQMwzaKiJvuwsJmCNXLtIoaxdD8WkOZj5nKg7RJ9k
- Rn5g==
+ b=Ehtzbu8yYHYLXMxavS/BePiCw6WlHxQuqStZZcf+vffoey1Mx57v8PqZvXMhueNKlT
+ kI3gT5D19vvYBCZyE2k1FoibzwseLaQi8oNB712btKh0l0PyN7Pe31ylcnjFGbnnMFHv
+ Hdn6qbNzC7oYEevuNcqTo9PGWg9bJsuelfN+AEEg04zP3z0vmZMIDhhj4R9I06cp/TqN
+ AotHhqWAQqAFhvP6D7tzVhHTacSkaJQWCEE/Pkov2XHegMnt6rqkwfeyXeiEjKxn4v05
+ a+XJEHxXYKMP8m6z1HpY3wlwRDx5lST4fobxVxN3gtFFbi5iUiSLgKD8EWPAXiVqpjje
+ O71Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793965155; x=1794569955;
+ d=1e100.net; s=20260707; t=1793965981; x=1794570781;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
  bh=jMfKGNZpmF05jF3tvaPQH8aRSow/ou3OFsHhPpxpTfU=;
- b=WF266GNRjoY/aqPdAHVGqE4Fn2Ey5/QZNcDi+VVeSeIPTpwa1OrhZl6acX0y7YZKV3
- mWPLbWVs3vj0ouZ5YZmVv3Vi8VDpDiPTVaRkm8lOWMvuWj52rMZ/zE4r9edB1IlT7rpT
- mbrwrIarRST2ejxx9sI2O/h+W4fbcIp1ofTcf/L1QN00MoQHfzHbcRG8WUQbkj8BlIsD
- oTjmXFM23NgFhutZulZ1w5FSr09thrbJdDJOOX6GkqCNp4tY6VYjpaAo3mveiCXKRqrw
- YXHZIBOlwK/LPHPsm9lzg4D+Uzw1WnL0DcucSUqYopwE1gkcsWLvcn0lIN85czYBysY9
- gb+Q==
+ b=T94WUFGo6sY5dpUbYWq+U7nDv8WSrrTeJDpRPzKGFs+2uBxxjh7/+8+WUQdainC652
+ buZSd0yTlR/L5hUuPKsZ5UduHbtuWZaYHJhLGPGcBLB7YY+yDTcXrnI7HPNechYRKDsd
+ MHAnhe1b1UxyetfT6KvTusoRGUfcVv6T8PR8AxVgqqU+ttki3zTdOKPNyGQ4bt17YZu6
+ GeHGYKPXRZ7h/hq7CNXWuIuwJmfgCYHhzf7k2S2J04hpvMRnUO92CbkvoUfOPY5byCDZ
+ dmcCuJCy37qlyqLfbNcYGnUSmURiTxxqkzWD6T246NAOE2chfq4pf6bhVN23y8Xv8C33
+ JsGA==
 X-Forwarded-Encrypted: i=1;
- AL+hErHzYVdDKf5aVlnnes2u38trTRXp8XaVb0yiFGSxwwoagRhLfOAmo/klvvpstFJHvMi2LfDh66GOA0Ry@nongnu.org
-X-Gm-Message-State: APuU4Z94Tsi+d4xpDO6z78dSRVept9u5JmSlKC6wNWrrs7VmvqosBKM9
- g693egPF327DNK/Zt7rHaIA8Kg6woO7p8Ze8UWK4GwRFktvGXCd9LUG972UIboATPmd+3e1+IDY
- PNQ00ANboxATZ3ZoYTW7BftfWK2ylseuD/Jqhh77FiyynBXBZNtzOKmbd
-X-Gm-Gg: AYBFou0TgnD389CVcbTKz8R32gGhz9g0NlIpNV03S9Y5KGFT5ckDIIinFM3N1OnQBnI
- qE6HJwBgwj7YmLmBGRF6nJd/Ff7ktWybBl6J6uHT1s0SVDG260FAaAq3fAvptZmrAlh2JyJPNBM
- HDKAGMdRsTD58FOl74k+8y/cWpxtATQ8oDsPk3/gdiPBUhdKQrAJdxzKtTQdq8kKeAMG2V+wKtM
- LFXcxiOV4fKsT+9LSneVuTgL9HxIr4Kw7mplEEQFl42BRPK6iMpKfHXmarj2vp/Ns6lqkNOIwIN
- xjw0ShN2xt1zQ+cdQDsX9TBYDwX4/KCXRI6vKSO2M9Q6x3m/iWXZqcG0WOYpBglDHoLuzo5sUU+
- a1f9OYJhL5NT9586zZrCsVOiozJZPpmzyVXmR9FlX7ybTroRNqAtzIdLCTsgPvU/nTYfE37kzcs
- z2nI3NpnZiwg==
-X-Received: by 2002:adf:e001:0:10b0:486:f42f:6860 with SMTP id
- ffacd0b85a97d-49278cfcfdfmr3238900f8f.56.1793965155533; 
- Fri, 06 Nov 2026 03:39:15 -0800 (PST)
-X-Received: by 2002:adf:e001:0:10b0:486:f42f:6860 with SMTP id
- ffacd0b85a97d-49278cfcfdfmr3238880f8f.56.1793965155238; 
- Fri, 06 Nov 2026 03:39:15 -0800 (PST)
+ AKwUvBzRJ07cnrzS7GDTEjYbiYzYnZeUfhoFccSXv2RVSrKjwPaeLtFGpfjAS0YrqQzYPVSs5dcDuchqEzmN@nongnu.org
+X-Gm-Message-State: APuU4Z+9UJmD+FTaF/krTcihjChx6ydcfgNCatwYEljD+iq74CuHsCkQ
+ iAqPE5NoaSqDEFwO5Liv+jWGEVGsAraNF1eFdfDreApfR7/0BhF5Ie6vVKQTs6DenFeKKjQoClp
+ sMpacZXsULLb/SzhP7eaPe6u4xGocsCo9o/q/y7Hh6espc+vGRnIip/tw
+X-Gm-Gg: AYBFou37mzfsN2gdY5zVYPCWz1fYu3tLGQ4otBrpayrC83ibAgp+X0xkk4lfIgdpXCA
+ sTPcVMlGxyI7pm3yPLOp/E0gVCkcKSwEeyqYXyONqtXAjeUBTBZfvFD6yxxUmCxF5JUS9NYXFZw
+ QdhiowL1U+NiJ/9Lm7wj33tWFvX32zbCUDxBLTmuMNnjttpz7u15KEXizLBo124OpgSznFkp87Q
+ YDkRWLmmEboiA0h1LwAbApXR2vKO23YT6co5aAOhw2dgo/5E1aO7cF5Euevq/M0RbVipt8L4qXP
+ Fe/rcbpBs5HmLFNIKWE9NypZvQ/bf77fnwDgx+On6aQMO0S0elR4JofCxu78tpsNXwu09C1CkZZ
+ gcLD6V9UszlQ9tZI2u5z2s88d0Yk458kGkYL3bR3vpT6TL6Y/xoC57K/sERu8b5856k7qTONnUK
+ BJ6TYk5R5eww==
+X-Received: by 2002:a05:600c:5295:b0:4a3:59c9:a756 with SMTP id
+ 5b1f17b1804b1-4b6de973c5fmr36487555e9.6.1793965981743; 
+ Fri, 06 Nov 2026 03:53:01 -0800 (PST)
+X-Received: by 2002:a05:600c:5295:b0:4a3:59c9:a756 with SMTP id
+ 5b1f17b1804b1-4b6de973c5fmr36487215e9.6.1793965981338; 
+ Fri, 06 Nov 2026 03:53:01 -0800 (PST)
 Received: from ?IPV6:2a01:599:b03:7322:436f:1f3:b26e:91b8?
  ([2a01:599:b03:7322:436f:1f3:b26e:91b8])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-492d3d6085asm4641051f8f.3.2026.11.06.03.39.13
+ 5b1f17b1804b1-4b6e2028d9bsm105807565e9.9.2026.11.06.03.53.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Nov 2026 03:39:14 -0800 (PST)
-Message-ID: <e03f96a2-204e-4ef1-b9b1-68cb5a571394@redhat.com>
-Date: Fri, 6 Nov 2026 12:39:13 +0100
+ Fri, 06 Nov 2026 03:53:00 -0800 (PST)
+Message-ID: <fe7f7d29-8ca3-4ced-afcc-c768b84c4888@redhat.com>
+Date: Fri, 6 Nov 2026 12:52:59 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/28] hw: mark all vhost devices a secure
+Subject: Re: [PATCH v2 04/28] hw: mark all remaining virtio object types as
+ secure
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -102,7 +103,7 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org
 References: <20261029131241.2275706-1-berrange@redhat.com>
- <20261029131241.2275706-4-berrange@redhat.com>
+ <20261029131241.2275706-5-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -147,17 +148,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20261029131241.2275706-4-berrange@redhat.com>
+In-Reply-To: <20261029131241.2275706-5-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -173,7 +174,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
