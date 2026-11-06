@@ -1,94 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD11606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 12:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492E5606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 12:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=T7z94SHu;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=b/4aO8ST
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=d64mgL7L;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=tTEU2CDX
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPIt2-0002F3-TA; Fri, 06 Nov 2026 07:17:40 -0500
+	id 1xPIv4-00032F-I8; Fri, 06 Nov 2026 07:19:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIsW-0001zp-Da
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:17:11 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIv1-00030R-VF
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:19:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIsT-0007CJ-TL
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:17:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIuz-0007QN-Cn
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:19:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793967424;
+ s=mimecast20190719; t=1793967580;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
  bh=E66+2hYgpzZKUNNeBE2CQr7cNiXnuVWs/cIg8tZQJpU=;
- b=T7z94SHuegx86PjYP7n6FvXHLEN3TP6gED4LnCmJqcfsrmQH905EswWWk+Yrrq+I4HCr1w
- Xkso5LTJfjd1dKvw074eU/1/h5BEOmT9yLCyK3cYpFuF8cRvztIgFCU4ry92q5P5FhVXrt
- wF05J6Kn2kZaOk+SZsKcw+u2rtwNjE8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ b=d64mgL7LXNGQQ/L+bFerjDP5YDW+qe3UtCCcjid9e7VYlpmKxlpqyqNR8zyEIroJ5/9g4k
+ Bh3ONjELkEuc9BfYd2Twb8pstZ3Xm2o+cMF+8csYQsVkNDgKMoo4W3ilEKk9+0yQp3awIJ
+ WO5hHwt9y7xRuNI5KUn4JeI/zuAM+Cs=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-s3vgCNeTPzK2n56Q5aqvLw-1; Fri, 06 Nov 2026 07:17:03 -0500
-X-MC-Unique: s3vgCNeTPzK2n56Q5aqvLw-1
-X-Mimecast-MFC-AGG-ID: s3vgCNeTPzK2n56Q5aqvLw_1793967422
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4a214a5f8a1so6733565e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 04:17:03 -0800 (PST)
+ us-mta-335-8zb2HHh_MAqCEFWGt6ThwA-1; Fri, 06 Nov 2026 07:19:39 -0500
+X-MC-Unique: 8zb2HHh_MAqCEFWGt6ThwA-1
+X-Mimecast-MFC-AGG-ID: 8zb2HHh_MAqCEFWGt6ThwA_1793967578
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-492e3189fc9so534558f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 04:19:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793967422; x=1794572222; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793967578; x=1794572378; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
  bh=E66+2hYgpzZKUNNeBE2CQr7cNiXnuVWs/cIg8tZQJpU=;
- b=b/4aO8STvnf1UHdJ7vHu38CNh8TMdm0B8SRAZk9l2jkeLEISu61tHZcNdf7pEWnpuf
- yS0g/ZqpW/bfw7z6ebaBiAzs9DG+ggmkwaZdCQH9NIvBe7nubWKbZGdjSmUdVZMgDfc0
- wta/4XCyBoCQMUFLE4wQTqwjwVppxv5ZlO42vcOQNHJoxLOhzJRND+AUt2HObnrxp00m
- +SMMiZTQDsucIINZmLHTJuN8BCx3ZFrWjRhf9Ec8RwFimt3mjZT2qfAWUtiHC/EVbwxm
- tK4GYPQDxAqsi/2rR4jOcEr2iVm/tks843f5ZHqnqdvGiYCQfeGxKDKzwlhpSRMyC9yn
- RX5w==
+ b=tTEU2CDXKof5Er/EUVFfJchtcK4tgem+Y7OF2Iq/sWcd3wLYM7CK5zgAMfQnn79ihW
+ Tp9fC2GK5ymMhos1nQubfOhw1cXt9LCUumolx4JgmG4Dm360tPx1GUaYQFYrbAlKdEmX
+ SeSrWXEXaKcGfTvqKg7qGBHrtHswDYZ9xDZ4BqITFgo58CY6IbYrQ/qxWuYlGg0Uuq3X
+ VFVLmk5Qx8juWeWAveKb6lf4aQkiP3iPACj3m88e6ieT8+A9rB3HKlQp70uFtL1FKb5f
+ Spx1HW4UlAshvP8E7VDNjqItNqWFwJRpu29YsAeIeG+s1/yOZwEA7BpXog1BceoL5Bs+
+ Oo7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793967422; x=1794572222;
+ d=1e100.net; s=20260707; t=1793967578; x=1794572378;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
  bh=E66+2hYgpzZKUNNeBE2CQr7cNiXnuVWs/cIg8tZQJpU=;
- b=vEKXAmhql/Fd8DkrB7CCeltPh8lJ88Vqu+seYjceP3Yc+F3WFrSwzt1B4qYcu9zFRq
- Y6crAfxtImcCHM6MFtzoTJsf1xK+zAX91JSE0+IlTKHl2SMazfOt6e24a9GI3Q3B8a29
- kXTgJ5bJDaN44an9TVB1qHkS0DmGEqFY0TqqS7A3bZ8i+lICCDHHVin0IQst2fQKJvG2
- ALLgL839UzVC0IgKEab8IrkD6cOvW+OKQRpaNXt08k2qWCoMTBteSRUSJiU8eMr3wuYC
- 7f2gkLQh+0jz4TQzIPqKrUy4/nc4rMqXgzd528bOdxwGSZeXfOky/Af+cipEQrb2UOqC
- iSrw==
+ b=oUfpOegV8OskSkuCC4Bj80ogPiH8g+nuRNr6Tp4v1J15R8qdc+tJFeSVoEwLXH2nV6
+ 2uXmpuUVc5Ech4XpzK/YhfkkTuhjFBRaRdIsqJyupxswKg4vDUqBE6CG6J9mCXNgi860
+ iBZI3fpEutiJh9Z5CQMHZTJ8mr6EXVmW5yc886KZzOEnDwrWvOtBHidg/ks0z/nuzteD
+ PBWNcBN8sMBIGCGa5rsbsFutNzTEeVg1bS5cAp+N4akyeJ4+p+DsnqzOQAxDBZkZNqdi
+ Le9Si5DKPeI3QpH7IRGSLLiXK9X2je3fGEy5j+13+GjWTNs1Ol7igo8G4TfEx96OqU/t
+ +jTA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBy4gHN9Hk7QEIbujk/pHftSYILI9t0THOqTgiw0dJ7gFm0EyUMaV8wFP6NxnujMAzKKJJFAVobiXhdD@nongnu.org
-X-Gm-Message-State: APuU4Z8rYFZhE/xfJYBCgl3bs9kKB89ONWxliLtFtsrycQOyGqtzuOcU
- A1y71bexBgxQanmk7AUrAnega2Tc1zAF9DvfB/HQJvFZks+Rx+ECntDen0veuTRohqY68dVqf20
- rjK46C9BGgKqoUw/czMoscyvgGf8QsMAIC0MS9UR/jnvlBUA5QwacE4TP
-X-Gm-Gg: AYBFou2jOKixxcQxT+ewC6eZHMGVFIMo0FrYD5gz84qj2fMF/RZ23ROrPp5iZJRaYWr
- T0Kwxp30fKl/Bv5+MeH3LzP0OZ0jMby0wCBXYwu3nDXbQOEwOubsaFxwbvezLl/+Mlq+U5IFMl8
- VgOz1ZwGlcVWz0u+q2FD1v7noZ5GaWBwDDhga1hvluk549h8y5VR9RGudOdHxSI6fMh89sDCw17
- ppxeP4lk2aVHhbfSwOFgbKVNGtMEBJhn8S9/v+MtPjSD0423hUQ2WZ+0lbX0FJCHO8MRrz+S0KX
- IMSfePJ/79LFAkeG/4kZ6YisSm2NzRd7AiHnPa9lImtt7untY4PMAWCzRU3A37MOHupQRyOtAul
- 69eRzMpoiLdY3/YTpMZNpIjFN9p+BBCe14mRCSucU9j+6E/4G8z7KR+hTuNhPV2gFIQah1upYf0
- cxuIKSvlhjiA==
-X-Received: by 2002:a05:600c:8114:b0:4a3:5991:719 with SMTP id
- 5b1f17b1804b1-4b6e0267f25mr35405895e9.31.1793967422121; 
- Fri, 06 Nov 2026 04:17:02 -0800 (PST)
-X-Received: by 2002:a05:600c:8114:b0:4a3:5991:719 with SMTP id
- 5b1f17b1804b1-4b6e0267f25mr35405495e9.31.1793967421752; 
- Fri, 06 Nov 2026 04:17:01 -0800 (PST)
+ AL+hErGDo9moZN7EIJZMtnHUeJoaIVbEw++xeR/omipoTuENosS6gx9+rZszIUAPzw4g2pxJppUFQRWQKL/p@nongnu.org
+X-Gm-Message-State: APuU4Z/V8EGr1zp2X0NBH+hzUv0iNUqSRs7eSptUKP4+xIr3SB4I5VTu
+ 5DEA52xcIHsbtuGKUlUyzHnNFFO2jYp1ED+eHsQSwGs6A/Nq/ZMZkecTzLgBAMGyTl+dQPhBkoI
+ obd0C2us8lBLATJBt4Xw2umRl9TV4taaJ6n507C1P9heU+opbELEV5WLY
+X-Gm-Gg: AYBFou13BxFF3BhULmfwQ9/mULT1mO8Zqk/uRA7ZZ+Jkp63G0iIYvM/t90zSOTgsJsv
+ BTB6o2HQCxmuo5GH2rR5Ya3QmrW2XmSg2fsYvBmp7zLmIAjdIfqOURZK60DSUsgO7UOC+zBioU9
+ J6OSYwuqwdho3uc59cNqwcTIEwV3u+mbNJ3A5CCCvGRIE3pmDqYr4C0ysNVLN8m1jdF2PAscrFv
+ r2Qr/1hTLUlJf1J54POVreOix5b1O9SHqDK6bkRYJ12TApkrpO756FxAd2Z5NvmoaBr4mvRGN1B
+ Of5ftBH9g8tQbjA8dsd4z3V0UqmvonLlCVgQ7TERJuh1J4plw6YQl6cT942JYnPT9LeuA9Kvuqn
+ WWzYLD4WotjvZNz593iNYlQ0Dw2lcaDa5E0b4UCfr7tL4Q835J/DgV++EF9zrct/H9ci0qxnEZI
+ VeNuCS+UxD0w==
+X-Received: by 2002:a05:6000:460c:b0:48f:bb92:c5a7 with SMTP id
+ ffacd0b85a97d-49275373a03mr4476554f8f.9.1793967578261; 
+ Fri, 06 Nov 2026 04:19:38 -0800 (PST)
+X-Received: by 2002:a05:6000:460c:b0:48f:bb92:c5a7 with SMTP id
+ ffacd0b85a97d-49275373a03mr4476515f8f.9.1793967577892; 
+ Fri, 06 Nov 2026 04:19:37 -0800 (PST)
 Received: from ?IPV6:2a01:599:b03:7322:436f:1f3:b26e:91b8?
  ([2a01:599:b03:7322:436f:1f3:b26e:91b8])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b6e2028d9bsm108763355e9.9.2026.11.06.04.17.00
+ ffacd0b85a97d-492d7cc5e23sm3657084f8f.45.2026.11.06.04.19.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Nov 2026 04:17:01 -0800 (PST)
-Message-ID: <596e45ec-2a5d-4cc3-8c35-741ff8ee64b6@redhat.com>
-Date: Fri, 6 Nov 2026 13:16:59 +0100
+ Fri, 06 Nov 2026 04:19:37 -0800 (PST)
+Message-ID: <6d17cbb0-6518-4dba-9118-eff838590e2d@redhat.com>
+Date: Fri, 6 Nov 2026 13:19:36 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
