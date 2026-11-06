@@ -1,73 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D2C606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 20:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B23F606A32E
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 20:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=B25csijb
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=jMe9WB1r
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPQNh-0006eU-Ne; Fri, 06 Nov 2026 15:17:49 -0500
+	id 1xPQOQ-00079K-OS; Fri, 06 Nov 2026 15:18:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xPQNg-0006c6-0e; Fri, 06 Nov 2026 15:17:48 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1xPQOP-00078W-6d; Fri, 06 Nov 2026 15:18:33 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xPQNe-0006GV-Bx; Fri, 06 Nov 2026 15:17:47 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1xPQON-0006JN-Ef; Fri, 06 Nov 2026 15:18:32 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A6IEMaI3180583; Fri, 6 Nov 2026 20:17:43 GMT
+ 6A6IE5m51545873; Fri, 6 Nov 2026 20:18:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=m6Uojz4JZDbKVb6e4F5Ke6wecXtWkQnGjGvC/VJM33M=; b=B25csijbFU+8
- 6/YmYpDj5YJ3YWOKO3AAnk6ULSm2+YQEPAHxzqf2YPT+t7W1A1Q/mfopq7P7mXr/
- /ulGdNFS/YJrVKjGJS1qPPZtS5EsY7DqfZQ+YAEucAyB4YJ/ZksvjsYx/5JaTDud
- Cu3P7Rvy61mQDqCmL+wTHkAbH/qiELHJF49DeGfgm1uar7QMArMbo/oyDi4rp8id
- JLIHYJqJt8tkaPxrjIcm4D7j9e+gbEVJpxlT1hlcgvz1CFYx3Lvs71+J2++FuGHW
- nEDQv6sKsFkaghHs2w+J6OpshWhmdt3B8+gkLHvxXBpnXvgcwpxfxoWDxSzXAIQz
- SxfXD5j3Ng==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hs3r9fvf6-1
+ bh=PNgMVurBtGCkCl5DAi3n9fiQSAmMNWdEHcrZ3xRPNe4=; b=jMe9WB1ro6FI
+ q2TXWscnHPfnen/Wgjv3vGEXlnTMHWCCGpmvgz9njKZU43UamZC5caOk/FoeDfaH
+ +kXe+liCrK6jTOB14wvn/HzeIAx40D0ggDzQVQAKrzWpfNEYT6DjvzTUcD4Wlu9r
+ oY41veXJUXr3zy/AfJngVGNwAHujdabiA5Z412crZYFVGmE9YZaCQkUyUG0fysuY
+ oamp0yGhtm0FtVIufjaxoPOMaue7axeBRZIJNg/HfhV/nRCyQ8/A75zxaLLQaoaX
+ yY1DHhMX1znXN4N7sRzymrYMY71OWjW8c56mwtTrFxygaGiQUEMXpg0cEikwmZQK
+ KyzubOl9gw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hs3rayy06-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 06 Nov 2026 20:17:43 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A6K5dar3838964; Fri, 6 Nov 2026 20:17:42 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hsk809g5p-1
+ Fri, 06 Nov 2026 20:18:29 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A6JpYKp3846090; Fri, 6 Nov 2026 20:18:28 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hrka74bp9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Nov 2026 20:17:42 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A6KHgrb18481886
+ Fri, 06 Nov 2026 20:18:28 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6A6KIRor4719198
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Nov 2026 20:17:42 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 657025803F;
- Fri,  6 Nov 2026 20:17:42 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D4C8058056;
- Fri,  6 Nov 2026 20:17:41 +0000 (GMT)
+ Fri, 6 Nov 2026 20:18:27 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 698FF58056;
+ Fri,  6 Nov 2026 20:18:27 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 129DC58052;
+ Fri,  6 Nov 2026 20:18:27 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Nov 2026 20:17:41 +0000 (GMT)
-Message-ID: <c6fcfb91f1afe9b2f3dde478567e25fa74ebc99e.camel@linux.ibm.com>
-Subject: Re: [PATCH 1/8] hw/gpio/pca9552: Convert pin and led properties to
- class properties
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Nov 2026 20:18:26 +0000 (GMT)
+Message-ID: <478f5bc59e949621d3d357a7aa1f7339f9d5d1f7.camel@linux.ibm.com>
+Subject: Re: [PATCH 2/8] hw/gpio/pca9554: Move most code from .h to .c
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  mark.caveayland@nutanix.com
-Date: Fri, 06 Nov 2026 14:17:41 -0600
-In-Reply-To: <20261106110440.3552588-2-armbru@redhat.com>
+Date: Fri, 06 Nov 2026 14:18:26 -0600
+In-Reply-To: <20261106110440.3552588-3-armbru@redhat.com>
 References: <20261106110440.3552588-1-armbru@redhat.com>
- <20261106110440.3552588-2-armbru@redhat.com>
+ <20261106110440.3552588-3-armbru@redhat.com>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
@@ -75,40 +74,40 @@ X-Archived-By: <archiver.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=LKHz05W9 c=1 sm=1 tr=0 ts=6aee35e7 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=QYDzLcbv c=1 sm=1 tr=0 ts=6aee3615 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
  a=20KFwNOVAAAA:8 a=sWN3zfszUj_efFXM9Y4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: tiAzQ_vYTBIENNpvVbpacFzoT9_yaLzy
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA4MCBTYWx0ZWRfX1p+RENPZ4xko
- Gt/sGFTKGmEEGtKLpLtAiDpMtpDdRlanNF1Tl9/Uxqv88DhZZWcpOhb8wh3rH0kyOe4DN6Po7I5
- /J/W02sOsFAHHYeUDlSZjilftNOeRqc=
-X-Proofpoint-ORIG-GUID: tiAzQ_vYTBIENNpvVbpacFzoT9_yaLzy
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA4MCBTYWx0ZWRfX3y30zpfWzB76
- qVMc7fnk4cxVfzbCK8aabfY7FHF1Lr29hK9MZUC9IQyO30eXLGi0U3KQpx7TVEvtETO3wXGG0zg
- SbEA0qORI7BOQIX22LKhiQMLHUuXAQVntfXrXIKkquTl4qDqSpc9RU6etr5YbBkxwbJO0x1o58i
- M04ccPUYgeCVavY1MW1u0l9yp74Io9GsheSDB0nNwpUx3PTKRniOW6/dbispbz4AMOBFW+8UxZF
- ICWSeyd6g7hbuWw2SAcihRfqDZrKADoYxWvMnojzv8seHzsxLDTBmcJhAsjumNXP7AQ247IlPa7
- zXkp5Of+F/f3W5x4CpRtFIeojyoGAAokzz4oB8N1IW18uct/RIGhkpT3ADL8G19bud3BQyxJ1xh
- jZxwSM5ZnpA8mMNm2OMVgyI44aB4jJrZneEep5JG/fBWnVzy2Drco8AdP7up6b1cNfoZeR2/u3l
- fdyiFcoek0wQAXab6QA==
+X-Proofpoint-GUID: ahcI7npfMc1SuLJb8X5lMPGmlH04rBAO
+X-Proofpoint-ORIG-GUID: ahcI7npfMc1SuLJb8X5lMPGmlH04rBAO
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA4MCBTYWx0ZWRfX7OSP0+Mu05/H
+ qCkYz5nxEae7mA9/GgyAG0s9JPQc7YOtg09QywkQmugwYvtXPi4hBiKiwRCpEZti3CWUtvjX+de
+ 9pMWPGzyjT1pJrtiac7Li6oJRM5ExUU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA4MCBTYWx0ZWRfXxgz8Mfvx2YHS
+ njkZ6n0aXCzZIKfAduWqW0/JsJakfOynl0b+q3avH0130uSjz0qlRcSP2aVV53z6cUuqKnSFBDn
+ jJ5YpIrNzBiJggQ31qul8wP9SB9YHfzOdSVieO/RXG6npfM9dYhA86OcTvHmQ62Irid6Y0nBRUg
+ eSvSQ3rbL8kt/v5q8K8Z5+cADxi+nIDwZsGV1buVMvoIxHVILM/XbiZ8gDG3hkxDld15AEFPn+u
+ jxqa06Aee4KuQD4Sk5z++CfWRs0aDMo/OxEGoH87IiZ9yk7/9yLlz6tG2mmn0LStquc8xtGUixK
+ 0lY1MglAtZTXF8BS/pg9XFGyNhrDAoPxmSOksx3UzbUSoHzA6UcM46oPt2hU0npt/p7jeNO76uz
+ RP2PBUMhmZEGwitK36+TXUNdlgKZV42HJ8WSDutv0lkeS2sDAhfPYl1xXwX97xDg6v7TrSXnaYf
+ EEuPX4XJsyC3BA4dJsA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-06_06,2026-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 bulkscore=0 clxscore=1011 malwarescore=0 adultscore=0
+ spamscore=0 adultscore=0 clxscore=1011 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 malwarescore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611060080
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -139,69 +138,88 @@ Glenn
 On Fri, 2026-11-06 at 12:04 +0100, Markus Armbruster wrote:
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  hw/gpio/pca9552.c | 19 +++++++++++--------
->  1 file changed, 11 insertions(+), 8 deletions(-)
+>  include/hw/gpio/pca9554.h | 25 -------------------------
+>  hw/gpio/pca9554.c         | 24 ++++++++++++++++++++++++
+>  2 files changed, 24 insertions(+), 25 deletions(-)
 > 
-> diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-> index 90ccf5170e..65a718ef31 100644
-> --- a/hw/gpio/pca9552.c
-> +++ b/hw/gpio/pca9552.c
-> @@ -557,10 +557,8 @@ static void pca9535_reset_hold(Object *obj, ResetType type)
->      s->len = 0;
->  }
+> diff --git a/include/hw/gpio/pca9554.h b/include/hw/gpio/pca9554.h
+> index ac835371aa..1b33a8a752 100644
+> --- a/include/hw/gpio/pca9554.h
+> +++ b/include/hw/gpio/pca9554.h
+> @@ -8,32 +8,7 @@
+>  #ifndef PCA9554_H
+>  #define PCA9554_H
 >  
-> -static void pca955x_initfn(Object *obj)
-> +static void pca955x_pin_init(PCA955xClass *k)
->  {
-> -    PCA955xClass *k = PCA955X_GET_CLASS(obj);
+> -#include "hw/i2c/i2c.h"
+> -#include "qom/object.h"
 > -
->      assert(k->pin_count <= PCA955X_PIN_COUNT_MAX);
->      for (int ix = 0; ix < k->pin_count; ix++) {
->          char *name;
-> @@ -568,13 +566,17 @@ static void pca955x_initfn(Object *obj)
->          if (k->has_led_support) {
->              /* LED variant: expose the LED selector state as led%d. */
->              name = g_strdup_printf("led%d", ix);
-> -            object_property_add(obj, name, "str", &str_type_info,
-> -                                pca955x_get_led, pca955x_set_led, NULL, NULL);
-> +            object_class_property_add(OBJECT_CLASS(k), name,
-> +                                      "str", &str_type_info,
-> +                                      pca955x_get_led, pca955x_set_led,
-> +                                      NULL, NULL);
->          } else {
->              /* GPIO variant: expose the pin logic level as pin%d. */
->              name = g_strdup_printf("pin%d", ix);
-> -            object_property_add(obj, name, "str", &str_type_info,
-> -                                pca955x_get_pin, pca955x_set_pin, NULL, NULL);
-> +            object_class_property_add(OBJECT_CLASS(k), name,
-> +                                      "str", &str_type_info,
-> +                                      pca955x_get_pin, pca955x_set_pin,
-> +                                      NULL, NULL);
->          }
->          g_free(name);
->      }
-> @@ -640,6 +642,7 @@ static void pca9552_class_init(ObjectClass *oc, const void *data)
->      pc->max_reg = PCA9552_LS3;
->      pc->pin_count = 16;
->      pc->has_led_support = true;
-> +    pca955x_pin_init(pc);
->  }
+>  #define TYPE_PCA9554 "pca9554"
+>  #define TYPE_PCA9536 "pca9536"
+> -typedef struct PCA9554State PCA9554State;
+> -DECLARE_INSTANCE_CHECKER(PCA9554State, PCA9554,
+> -                         TYPE_PCA9554)
+> -
+> -#define PCA9554_NR_REGS 4
+> -#define PCA9554_PIN_COUNT 8
+> -#define PCA9536_PIN_COUNT 4
+> -
+> -struct PCA9554State {
+> -    /*< private >*/
+> -    I2CSlave i2c;
+> -    /*< public >*/
+> -
+> -    uint8_t len;
+> -    uint8_t pointer;
+> -
+> -    uint8_t regs[PCA9554_NR_REGS];
+> -    qemu_irq gpio_out[PCA9554_PIN_COUNT];
+> -    uint8_t ext_state[PCA9554_PIN_COUNT];
+> -    char *description; /* For debugging purpose only */
+> -    bool hw_dir; /* Honor pin direction */
+> -};
 >  
->  static void pca95x5_class_init(ObjectClass *oc, const void *data)
-> @@ -653,13 +656,13 @@ static void pca95x5_class_init(ObjectClass *oc, const void *data)
->      pc->max_reg = PCA9535_CONFIG1;
->      pc->pin_count = 16;
->      pc->has_led_support = false;
-> +    pca955x_pin_init(pc);
->  }
+>  #endif
+> diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
+> index 07bb00babf..e5a1932c89 100644
+> --- a/hw/gpio/pca9554.c
+> +++ b/hw/gpio/pca9554.c
+> @@ -13,6 +13,7 @@
+>  #include "hw/core/qdev-properties.h"
+>  #include "hw/gpio/pca9554.h"
+>  #include "hw/gpio/pca9554_regs.h"
+> +#include "hw/i2c/i2c.h"
+>  #include "hw/core/irq.h"
+>  #include "migration/vmstate.h"
+>  #include "qapi/error.h"
+> @@ -21,6 +22,29 @@
+>  #include "trace.h"
+>  #include "qom/object.h"
 >  
->  static const TypeInfo pca955x_types[] = {
->      {
->          .name          = TYPE_PCA955X,
->          .parent        = TYPE_I2C_SLAVE,
-> -        .instance_init = pca955x_initfn,
->          .instance_size = sizeof(PCA955xState),
->          .class_init    = pca955x_class_init,
->          .class_size    = sizeof(PCA955xClass),
+> +typedef struct PCA9554State PCA9554State;
+> +DECLARE_INSTANCE_CHECKER(PCA9554State, PCA9554,
+> +                         TYPE_PCA9554)
+> +
+> +#define PCA9554_NR_REGS 4
+> +#define PCA9554_PIN_COUNT 8
+> +#define PCA9536_PIN_COUNT 4
+> +
+> +struct PCA9554State {
+> +    /*< private >*/
+> +    I2CSlave i2c;
+> +    /*< public >*/
+> +
+> +    uint8_t len;
+> +    uint8_t pointer;
+> +
+> +    uint8_t regs[PCA9554_NR_REGS];
+> +    qemu_irq gpio_out[PCA9554_PIN_COUNT];
+> +    uint8_t ext_state[PCA9554_PIN_COUNT];
+> +    char *description; /* For debugging purpose only */
+> +    bool hw_dir; /* Honor pin direction */
+> +};
+> +
+>  struct PCA9554Class {
+>      /*< private >*/
+>      I2CSlaveClass parent_class;
 
 
