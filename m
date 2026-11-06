@@ -1,59 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC10606D809
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 14:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E55606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 14:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=ST6vaeuV
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=J/nVodph
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPL6c-0000HD-Co; Fri, 06 Nov 2026 09:39:50 -0500
+	id 1xPL7Q-0000ot-7v; Fri, 06 Nov 2026 09:40:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xPL6T-0000DN-Ui
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 09:39:43 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xPL6R-0000hD-Tp
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 09:39:41 -0500
-Received: from DESKTOP-TUU1E5L.fritz.box (p50892c72.dip0.t-ipconnect.de
- [80.137.44.114])
- by linux.microsoft.com (Postfix) with ESMTPSA id A3E9D20B7167;
- Fri,  6 Nov 2026 06:39:32 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A3E9D20B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1793975974;
- bh=oeQeQeXUQsNpZytmLKma9+O/3mVMklEdjRC9NGx0OYI=;
- h=From:To:Cc:Subject:Date:From;
- b=ST6vaeuVzxLJOGgpZcsuUTaNIB4PB2v4oB34cl9DgbBF27AfAnr4aXPCzBBWoM1Do
- 5STi4bd+thCbrV/gG6X/wFNIC1Hn/NxyIKBs+l66NW2fezvFwMjWb6O6krD5bwi+Xd
- pxPKSHBtaZWdiXl4zTSMn2zcmHh5JDS6iPBYzBwQ=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Wei Liu <liuwe@microsoft.com>,
- Feng Liang <feng.liang@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <doru.blanzeanu@microsoft.com>
-Subject: [PATCH] accel/mshv: freeze time during TSC MSR write
-Date: Fri,  6 Nov 2026 15:39:28 +0100
-Message-Id: <20261106143928.443144-1-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xPL75-0000Vu-67
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 09:40:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xPL72-0000x3-ST
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 09:40:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793976016;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e6q9H0dXikw0971/jYe5CJRTJzhkje9QEBXZ9FEn4/c=;
+ b=J/nVodphmois3W5LhkVxxFfGPLOc/bsZ9gycZYlsKo+0+/nnTzY5oOKv4TVHvTq1EfjSOX
+ m7Nh1xQvQNAwZ8yLXOoKiD0y2s1o1ixfwryxjulLFS6ZhXj9qw3LMI/fCEgvDapMueqRCu
+ biS9ZDITs88GeJoCrKaH8KW+lheromI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-222-YUxgZLwzPVy0inJW6nxf4Q-1; Fri,
+ 06 Nov 2026 09:40:09 -0500
+X-MC-Unique: YUxgZLwzPVy0inJW6nxf4Q-1
+X-Mimecast-MFC-AGG-ID: YUxgZLwzPVy0inJW6nxf4Q_1793976007
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C2CFC1800622; Fri,  6 Nov 2026 14:40:06 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D3AD4187C368; Fri,  6 Nov 2026 14:40:03 +0000 (UTC)
+Date: Fri, 6 Nov 2026 14:40:00 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
+ qemu-block@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org
+Subject: Re: [PATCH v2 04/28] hw: mark all remaining virtio object types as
+ secure
+Message-ID: <au3mwO32b0-PSXKu@redhat.com>
+References: <20261029131241.2275706-1-berrange@redhat.com>
+ <20261029131241.2275706-5-berrange@redhat.com>
+ <fe7f7d29-8ca3-4ced-afcc-c768b84c4888@redhat.com>
+ <CAMxuvazfhfGSZCiSi+viwJ7f7XDWAZfjmW39n3a7a-qQyw-YSA@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <CAMxuvazfhfGSZCiSi+viwJ7f7XDWAZfjmW39n3a7a-qQyw-YSA@mail.gmail.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,266 +90,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-A regression was introduced when the HV_X64_REGISTER_TSC MSR state is
-being written to the hypervisor as part of the migration framework. If
-the MSR is written without the time being frozen, the tsc_page (a
-hyper-v enlightenment) is zeroed out and cannot be used by a guest,
-which results in a performance regression, because the guest falls back
-to costly reads of HV_X64_MSR_TIME_REF_COUNT.
+On Fri, Nov 06, 2026 at 06:35:29PM +0400, Marc-André Lureau wrote:
+> Hi
+> 
+> On Fri, Nov 6, 2026 at 3:53 PM Thomas Huth <thuth@redhat.com> wrote:
+> >
+> > On 29/10/2026 14.12, Daniel P. Berrangé wrote:
+> > > These are all intended for use in a virtualization scenario and must
+> > > provide a security boundary.
+> > >
+> > > Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > > ---
+> > Reviewed-by: Thomas Huth <thuth@redhat.com>
+> >
+> 
+> I have a second thought about this, I'd like to exclude all
+> gpu-accelerated paths for now. virgl/mesa/rutabaga expose a very large
+> attack surface, so I'd like to drop them from the secure boundary
 
-An implementation of pre_resume_vm hook was added to handle the clock
-lifecycle, relying on the dirty_vcpu state to avoid redundant state
-writes.
+Rather than repost, please see my response for patch 2:
 
-Fixes: d540dcc5e28c (target/i386/mshv: migrate MSRs)
+  https://lists.gnu.org/archive/html/qemu-devel/2026-11/msg01530.html
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- accel/mshv/mshv-all.c |  33 ++++++++++++-
- hw/i386/mshv/clock.c  | 111 +++++++++++++++++++++++++++++-------------
- include/system/mshv.h |   4 +-
- 3 files changed, 113 insertions(+), 35 deletions(-)
+TL;DR: we have already promised anything virtio related is in scope
+for security handling for a long time, as they are all unambiguously
+"virtualization use case".
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index d820a67b95..ae7577d407 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -34,6 +34,7 @@
- #include "accel/accel-cpu-ops.h"
- #include "exec/cpu-common.h"
- #include "system/cpus.h"
-+#include "system/hw_accel.h"
- #include "system/runstate.h"
- #include "system/accel-blocker.h"
- #include "system/address-spaces.h"
-@@ -578,7 +579,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
- 
-     register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
- 
--    mshv_clock_init();
-+    ret = mshv_clock_init(vm_fd);
-+    if (ret < 0) {
-+        return -1;
-+    }
- 
-     return 0;
- }
-@@ -927,6 +931,32 @@ static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
-     run_on_cpu(cpu, do_mshv_cpu_synchronize_pre_loadvm, RUN_ON_CPU_NULL);
- }
- 
-+static void mshv_pre_resume_vm(AccelState *as, bool step_pending)
-+{
-+    MshvState *s = MSHV_STATE(as);
-+    CPUState *cpu;
-+    int ret, vm_fd = s->vm;
-+
-+    ret = mshv_clock_prepare_resume(vm_fd);
-+    if (ret < 0) {
-+        error_report("Failed to prepare clock for resume");
-+        abort();
-+    }
-+
-+    CPU_FOREACH(cpu) {
-+        if (!cpu->vcpu_dirty) {
-+            continue;
-+        }
-+        cpu_synchronize_post_init(cpu);
-+    }
-+
-+    ret = mshv_clock_finish_resume(vm_fd);
-+    if (ret < 0) {
-+        error_report("Failed to finish clock for resume");
-+        abort();
-+    }
-+}
-+
- static void do_mshv_cpu_synchronize(CPUState *cpu, run_on_cpu_data arg)
- {
-     if (!cpu->vcpu_dirty) {
-@@ -962,6 +992,7 @@ static void mshv_accel_class_init(ObjectClass *oc, const void *data)
-     ac->name = "MSHV";
-     ac->init_machine = mshv_init;
-     ac->allowed = &mshv_allowed;
-+    ac->pre_resume_vm = mshv_pre_resume_vm;
- }
- 
- static void mshv_accel_instance_init(Object *obj)
-diff --git a/hw/i386/mshv/clock.c b/hw/i386/mshv/clock.c
-index 02c586503a..2a03d3cef9 100644
---- a/hw/i386/mshv/clock.c
-+++ b/hw/i386/mshv/clock.c
-@@ -29,6 +29,7 @@
- typedef struct MshvClockState {
-     uint64_t ref_time;
-     bool ref_time_pending;
-+    bool time_frozen;
- } MshvClockState;
- 
- static MshvClockState mshv_clock;
-@@ -110,52 +111,85 @@ static int mshv_set_time_freeze(int vm_fd, int freeze)
-     return 0;
- }
- 
--static void mshv_clock_vm_state_change(void *opaque, bool running,
--                                       RunState state)
--{
--    MshvClockState *s = opaque;
--    int vm_fd = mshv_state->vm;
-+static int ensure_time_frozen(int vm_fd) {
-     int ret;
- 
--    if (running) {
--        /* Skip if we have nothing to restore, e.g. on initial boot. */
--        if (!s->ref_time_pending) {
--            return;
--        }
-+    /* Ensure time is frozen */
-+    if (mshv_clock.time_frozen) {
-+        return 0;
-+    }
- 
--        ret = mshv_set_time_freeze(vm_fd, 1);
--        if (ret < 0) {
--            error_report("Failed to freeze partition time on resume");
--            abort();
--        }
-+    ret = mshv_set_time_freeze(vm_fd, 1);
-+    if (ret < 0) {
-+        error_report("Failed to freeze partition");
-+        return -1;
-+    }
-+    mshv_clock.time_frozen = true;
- 
-+    return 0;
-+}
-+
-+int mshv_clock_prepare_resume(int vm_fd) {
-+    return ensure_time_frozen(vm_fd);
-+}
-+
-+int mshv_clock_finish_resume(int vm_fd) {
-+    int ret;
-+    MshvClockState *s = &mshv_clock;
-+
-+    assert(mshv_clock.time_frozen);
-+
-+    /* Skip if we have nothing to restore, e.g. on initial boot. */
-+    if (s->ref_time_pending) {
-         /* INVARIANT: reference time can only be written if time is frozen. */
-         ret = mshv_set_reference_time(vm_fd, s->ref_time);
-         if (ret < 0) {
-             error_report("Failed to restore reference time on resume");
--            abort();
-+            return -1;
-         }
-+        s->ref_time_pending = false;
-+    }
- 
--        if (mshv_set_time_freeze(vm_fd, 0) < 0) {
--            error_report("Failed to unfreeze partition time on resume");
--            abort();
--        }
-+    ret = mshv_set_time_freeze(vm_fd, 0);
-+    if (ret < 0) {
-+        error_report("Failed to thaw partition");
-+        return -1;
-+    }
-+    mshv_clock.time_frozen = false;
- 
--        s->ref_time_pending = false;
--    } else {
--        /* Skip if we already have a to-be-set ref time */
--        if (s->ref_time_pending) {
--            return;
--        }
-+    return 0;
-+}
- 
--        ret = mshv_get_reference_time(vm_fd, &s->ref_time);
--        if (ret < 0) {
--            error_report("Failed to capture reference time on stop");
--            abort();
--        }
-+static void mshv_clock_vm_state_change(void *opaque, bool running,
-+                                       RunState state)
-+{
-+    MshvClockState *s = opaque;
-+    int vm_fd = mshv_state->vm;
-+    int ret;
- 
--        s->ref_time_pending = true;
-+    if (running) {
-+        return;
-     }
-+
-+    /* Ensure the time if frozen before we capture the reference time. */
-+    ret = ensure_time_frozen(vm_fd);
-+    if (ret < 0) {
-+        error_report("Failed to freeze partition time on stop");
-+        abort();
-+    }
-+
-+    /* Skip if we already have a to-be-set ref time */
-+    if (s->ref_time_pending) {
-+        return;
-+    }
-+
-+    ret = mshv_get_reference_time(vm_fd, &s->ref_time);
-+    if (ret < 0) {
-+        error_report("Failed to capture reference time on stop");
-+        abort();
-+    }
-+
-+    s->ref_time_pending = true;
- }
- 
- /*
-@@ -182,8 +216,19 @@ static const VMStateDescription vmstate_mshv_clock = {
-     },
- };
- 
--void mshv_clock_init(void)
-+int mshv_clock_init(int vm_fd)
- {
-+    int ret;
-+
-+    ret = mshv_set_time_freeze(vm_fd, 1);
-+    if (ret < 0) {
-+        error_report("Failed to freeze partition time on init");
-+        return -1;
-+    }
-+    mshv_clock.time_frozen = true;
-+
-     vmstate_register(NULL, 0, &vmstate_mshv_clock, &mshv_clock);
-     qemu_add_vm_change_state_handler(mshv_clock_vm_state_change, &mshv_clock);
-+
-+    return 0;
- }
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index f98ddff9b5..864f2aa34d 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -58,7 +58,9 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
- extern MshvState *mshv_state;
- 
- /* clock (partition reference time) */
--void mshv_clock_init(void);
-+int mshv_clock_init(int vm_fd);
-+int mshv_clock_prepare_resume(int vm_fd);
-+int mshv_clock_finish_resume(int vm_fd);
- 
- /* interrupt */
- int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
+With regards,
+Daniel
 -- 
-2.34.1
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
