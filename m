@@ -1,138 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25AF606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 14:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896FE606A329
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 14:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YoSqLCR8;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=jIOxv1OB
+	dkim=temperror header.d=defmacro.it header.i=@defmacro.it header.a=rsa-sha256 header.s=fm3 header.b=EeBCNxMZ;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=pMKNUzL5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPLJB-0003Pl-1W; Fri, 06 Nov 2026 09:52:49 -0500
+	id 1xPLMF-0004Lc-Ep; Fri, 06 Nov 2026 09:56:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xPLJ9-0003OL-Kj
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 09:52:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xPLM7-0004Kk-PZ
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 09:55:52 -0500
+Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xPLJ7-0002GG-Td
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 09:52:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793976765;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+hAG1lMR6EpyUF8Mo/bczfeHpe//nmcoFZfecTgTJ8Q=;
- b=YoSqLCR87VRyOpF22H/oirtcVTqBpgkcG0RUceamFUQrBS6pufIf/fhO/qB/nGm56XGHpw
- rBFVzwNidfBblJiNCUhyYg/pTZjDT+wZmgjln5GQ2mnPlGA2Suwo1StKTfMs5ntV68X+Qm
- g//9ztiPrXfaxTRaRWu85N19d3gOb00=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-282-gbIxBAphM_WPE9CzdgVN8Q-1; Fri, 06 Nov 2026 09:52:40 -0500
-X-MC-Unique: gbIxBAphM_WPE9CzdgVN8Q-1
-X-Mimecast-MFC-AGG-ID: gbIxBAphM_WPE9CzdgVN8Q_1793976760
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-3ade5b3ae97so681753a91.1
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 06:52:40 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793976760; cv=none;
- d=google.com; s=arc-20260327;
- b=JgrPeQBPYAml6b+CmEPfbeZ2hxw2XEm2+r0NXCMADWt67Ld4pgltLmyXJeMXt85zp8
- zJvCG1NU6YJzm+FASk4iuO8GNgZ8ChGbV39Vd+vYOie/ZCc6jFwquaaGxnCdMvoWZamF
- EV09ViaIuqul2evQ4GQoAezFb0pw+iLg+Sn5OVSHVsIIxShuYuylb8jK06EDYlQafZG0
- iGnqwwlJdXm5YaPYPaz9bencRF9r1l17L+damI3ZWCspZmQ30vUCFINlGp32x34wcn83
- X37pMcKel+lLxUqI4UXsZok/7qmFZNLm4MreDhVb9FMWEa8xYz1inlStde4PHLiVWp3w
- TbMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=+hAG1lMR6EpyUF8Mo/bczfeHpe//nmcoFZfecTgTJ8Q=;
- fh=1AbWADtWmakKEyv9HcG4MidgvJ6nC/INvIYgcdzfmcQ=;
- b=itGub0PE+gjPuqQMxsl6j8HM1V5Xb4GIE6+S6ViwS+Y9K29RIqVsPVdVw1Ax5LZIGM
- RqHNA4ihHe2TiJO4VpC7c9g+Jp8hcxho50GdciTK8SNyb1S1A0PTm3ZFm5Z56V0BbsxZ
- Qe93Qz9QEYfjlI2eTfjZHkiImzgIr9CF8DA83B3W6UVkItR/etY01Kk2ojW5koa9rwvp
- W2bmhJcY3ha3isWsSjmB38ncEu6lAzu13psD4GZQu8l43u/LeWgb1mN8j2mjOeyGRIzH
- w0LNG4ak9CZIJZkJH6ajf/bGtaYQ1qnIGqr8C6Ui1nKtm/6pMoV60fZdusZwFDI/8P3q
- ZG3w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793976760; x=1794581560; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=+hAG1lMR6EpyUF8Mo/bczfeHpe//nmcoFZfecTgTJ8Q=;
- b=jIOxv1OB0/KK8vaGsjlAOXlv+jsx6V+WdO28Wemfs/qWAg3wiExG7DSEU2X8Xfyebr
- edmwXcAZduzTtHkmQ6Kqd51w43N6jbcG1w8J/N8Pk2klCo2UD04hYLzbJwpM6gcVUxYh
- ov+XTUj0k4QsNVLgfpXKMkqCT/dGBh826/1U8TGFw8FN8g3wOqV0LYebg1QSVP2a/nAh
- mHkMGhmR1WiLJsRKrKoibU4Wlz5Qc3q295kovM5e9ddz6/VdhSIM7qEn3rnfw8/kY8wg
- 66btQARTvmy5mX9sC5dECDv7hHb0CIsO8sZwVmJx5rNEZqjagpPvE2LqXNV9ZIXwDolI
- CyXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793976760; x=1794581560;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+hAG1lMR6EpyUF8Mo/bczfeHpe//nmcoFZfecTgTJ8Q=;
- b=InH6kuOqtHb6potAH26GbYbSg+AxQIkdwWbvMLVS6JPzE3JVwby+36se6gD7VsFMO1
- Lj50UY7XUlWoaxUZCawN8ke4epUbkWGM/+pvY2xDZyxgwH/TtHOwYUI2E7S17BQjjCzS
- QTj6YHCoLpC0GDLO78s5pbc8CwhJhDYrbsZJt2uavOGmLxlW7AXFC+GTWh7FCIBVWDRa
- 2FWcX7eB647w5EBRVmWe450EfYz+bogrpKzTB1SFKYH1DQg9Mg8BIRGaN0t0DE+FMQm6
- y23AhQJOqLkR2dWHWI+66F9LRR0nrWOWF3V+3ooc2cZsCrAk27mlaJ5LAwd2J5a/WZ7d
- dbWQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErErAjtEyRsIZnd3H09cEFhduFsyKdAaHuNHy9qtd92HvezITnYeU+qvytzOHQf05WhJas5qnx0o3uyX@nongnu.org
-X-Gm-Message-State: APuU4Z/yAM8Xnoh4Tw7wNfLHy/Dc77795Hyg8nUjSZi/sHyioJAolDxk
- dzSeu1lRL8UqZQCXkiillCbghTNnp0gz5QfI89UtcTiMCSfz6j1iCu4gTcKoVCp1cJsE2oRqmT2
- 8ikl7C13CBk5JaU/NyXEynQS2Z4/1/ifsqYBMefISEieOx9h0Q/IDXfgvHb+OdQKufpcbf2NNu1
- Rac1vtnifNqxF0SIG/qNgDpy9oga5WZC4=
-X-Gm-Gg: AYBFou1eVfCpSoHJ/QbzMBhYdWblSDV/evJKVI9mjoKvBG42w4ZeSPC0DqD39RAmH4q
- pt6mkPDbLsS2QT9Hj0Ynv1LFZ4HnvTHKSov0kzQRfb0/XSYsNVMDjaQreWI44f09YmI92FV8Ze0
- 3I1Xh9loinity2JRX00GbNEm/8RzPnBZaW0si/fl3zcwEU5g3AmgR9aHNAx0z9nllfdN09+rRqx
- izsnxqulLqsj0GNUOalkZujM/9S/8FQ4sb8K8UX0G+vZ4punhhHsICRYX/ZEpOOQikXHgR1u8Qw
- Ng==
-X-Received: by 2002:a17:90b:35c5:b0:3ad:677f:567f with SMTP id
- 98e67ed59e1d1-3b0db70daffmr1759559a91.40.1793976759691; 
- Fri, 06 Nov 2026 06:52:39 -0800 (PST)
-X-Received: by 2002:a17:90b:35c5:b0:3ad:677f:567f with SMTP id
- 98e67ed59e1d1-3b0db70daffmr1759539a91.40.1793976759161; Fri, 06 Nov 2026
- 06:52:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xPLM5-0002fL-KW
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 09:55:51 -0500
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.phl.internal (Postfix) with ESMTP id 0AE2DEC01C3
+ for <qemu-devel@nongnu.org>; Fri,  6 Nov 2026 09:55:47 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Fri, 06 Nov 2026 09:55:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
+ cc:cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm3; t=1793976947; x=1794063347; bh=NCeSe9AFXM
+ LBatbjBpQLmJla39RALTonc6fB7Vot9rA=; b=EeBCNxMZ8qzavkpW5E4G063StW
+ r0oG49g0dQaLJgwfganKJSaZsSDc9u0iLxn4h1QvFGbAAZEBXN21zGXl6egPWugB
+ U+rvI2PNuqUQGWBXlGPtfJoYS9MYzQqaDzppbin8lYg4QpeG93xqtjt9Asip0MCz
+ 8thK+Fld1vJIBAt1FxkXYHnwdXpniFpFWwEpAjcEKYF4bP9IetZHmsrEpj6X+CqA
+ hu5YPtFQY0TnM7I7v3aFTbL/Z8vSGg+UZFiCVxwiIAK3wSEHIgqR+Z7gSHe8aF+s
+ 9emLbNgqvnN12YJpNUSdbJV+phs4jcQf+bxwcZxPQdidBb9Pt0JkozTCMNjg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1793976947; x=1794063347; bh=NCeSe9AFXMLBatbjBpQLmJla39RALTonc6f
+ B7Vot9rA=; b=pMKNUzL5mWO7FczbdS8nKFSfUL2r45pm5JwybGml7lIJ8Yxo6lM
+ So1CYgGhnRcSFT0nS11aYoBh8N3xIqoJVup+CvLsKcpCNEkbxHJbqX0Vz04ZflJe
+ V6dPejn9Qnf+XBXfvnjteaAKIxte95YEWn7AXq8sNx6CvdPuC8LgnUQ6MR+NqdEs
+ vJ4Wfib30Fhjzq5xJi/KipyRE5C1UX0EFcrDjQuMpD2JmX9HJ/3lQO3+P/FIM7RZ
+ r5DwjlZOXTjrt5GZMqVSO5it5+QlzsYRDOAZy2bHACuOgaa33qKO3106EFplyky/
+ a4QWLt1e4knsbYepWgdc7MuaChXOoeQdzYg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+ repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+ action=sign d=defmacro.it a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793976947; d=defmacro.it;
+ mf=PGZvc3NAZGVmbWFjcm8uaXQ+;
+ rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
+ s=fm3:rsa-sha256:XHPXIwH9R6wbTJZtGFoZbvFW6Q2vq5++w8PaklwABK0NKXO
+ co+d8UHFl2x+j/Pv0ZRj6vfX0kkSnahGheDJ0p6jMXodtp+fyib13I34rMydlNBo
+ XhEDyjmMQNosvgFtPKX8w45ALG9ZJvxTQloGP09yLeSzQvXOnYULquM++IkSFkQv
+ GEU/8qNedXZP7WVbbSzhXDIixhLCoDvpYP1zwNmoAJ02Td03LXQdOgs/jm2skici
+ 46GthJl47iDtIe8zQf/fs8z+xuXN49Ne3t19aOC9+504SYTTI7dEMlUrp2OLuCq1
+ pmMQFbb3pjITTbrgT+Io9CPzaMrzAsSdKSO9mSg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+ repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+ action=mi-m=1; hc=11;
+ hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+ mime-version,references,subject,to;
+Message-Instance: m=1;
+ h=sha256:vJFh57hmPaIkMLdMEOCa9pp6R8Une+doW4q6kfDDnKc=:WDbm9sM3miTMf9rsVs/kZ5+ZxZ1IOte2ltpZlhW+cWA=;
+X-ME-Sender: <xms:curtau3pSnmm0aiD-UZsL7TQv1fheKmjqJW9T9Zg4qg7Xybv0VYsYg>
+ <xme:curtaqDhiCNAv8xCdhSeLhk_1ss4FOcoVLPaKSBC3pJhMGd7ZfnEWVgLWHLRaJLdW
+ PtljtSEb76zvrgZLgmwr6kWKcw6KVaXJHiKYWKsIAIpuvUKdjscBdtB>
+X-ME-Received: <xmr:curtaicZtzFz-UZD1-hDy48THJPUr4UHFSAIkSr6JFeQyLKAPoTR6BJOgD8EZNUkkmObBswcV2zc4y44uK8x>
+X-ME-Proxy-Cause: dmFkZTFg6iSI3bSOzPWPglMVAOtrgOrENwAYQW9rHYgZTv3ZQ+Rze6dZ6GogwYiHpZlxfz
+ o4z30t/UyileYCOKjjbDuvfv721E/x9NChQTYwp8L20QmI5YGybgPY/g33H6F6zd+OW+9m
+ swhQ1M8AM5DCulGaalw0chGqXx2yxvR3OrXfPQQHQaVcjsqa/04gOsqRvNzKbWhGPrrCnR
+ TqKaWmUIEsiAmMv5RMQJ4QV0e8figl6d6Sb2i6GW+eFJxyEWmgTezCjj8oyzbrhih1lwZR
+ Nyz8vgIvw/zYBFQ4AwG2KnHkAaigBEEr+UJqIAcV6k2JJUU/RRDVocp5OLvKlomOHSnYeN
+ noqb57c8iF5NkmTuCdbCuQZtNOCFTYIUQTObz4mKgt7o06N487Ci2AiZySPIhlG2nN490L
+ SdIfRR4MsBzUdj6EUWnDelz/gL+L1APx89TrVyKEFOBzrFE5oi+IbBFrOtf/j7kS6GHKFm
+ 9dhx5rk1d0BYYhFX0oxVimB8wXlS7dIhVJm2ZACvdI4FvQxmLvir5XoYhxt8jwrhh2APDF
+ X2Vkn43ql07ats/9ApOt6+Puq1L2WxF7haNwE1Cev0bJLvCUZxlB8TjAvfLdyKoOQziT/M
+ Kkv+/fF8TVib+jV28Bl7MIsb7xvZsA3IlzEPi0PbUO7aNOPcyq0p+IrA0LRg
+X-ME-Proxy: <xmx:curtav4A9KSPR-pqfe-vJH4a8Cx_ZzcHezb23QjZcDuPyijup0sseA>
+ <xmx:curtatX6s-ts-6L3ug8eVTawY4e9ZtO4zcIy972nXqFjkmjPkI4hPw>
+ <xmx:curtam6aRuW74-5Muy3XI9oX65yXJ7KjndzTlCgugO_i3mbpbrhjXg>
+ <xmx:curtagpkrDWnhB7c7GXX54vvpz2-mYZIlhQO7HOc4dh1epJmx_LdWw>
+ <xmx:c-rtak7uZxYqtirs7IpCdnDwpe1aZs1lRTc7doRikWbQ-p4Hmwc3VA1i>
+Feedback-ID: ic0014905:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Nov 2026 09:55:45 -0500 (EST)
+Date: Fri, 6 Nov 2026 15:55:41 +0100
+From: Jesper Wendel Devantier <foss@defmacro.it>
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ qemu-block@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH] hw/nvme: verify source and destination lba size for copy
+Message-ID: <20261106154416.0-foss@defmacro.it>
+In-Reply-To: <20261021-fix-4173-v1-1-e8045545f954@samsung.com>
+References: <20261021-fix-4173-v1-1-e8045545f954@samsung.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261029131241.2275706-1-berrange@redhat.com>
- <20261029131241.2275706-5-berrange@redhat.com>
- <fe7f7d29-8ca3-4ced-afcc-c768b84c4888@redhat.com>
- <CAMxuvazfhfGSZCiSi+viwJ7f7XDWAZfjmW39n3a7a-qQyw-YSA@mail.gmail.com>
- <au3mwO32b0-PSXKu@redhat.com>
-In-Reply-To: <au3mwO32b0-PSXKu@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 6 Nov 2026 18:52:27 +0400
-X-Gm-Features: AclHuK8PkA73Zsh95_t7Twce7oOByDLrT6UMHFSQfVJqhUHCjhh81u-PlI46tLQ
-Message-ID: <CAMxuvayhYcOvH2QPptrKUQGFHoRxQcM1USF5OwuZYR_g2c4zgw@mail.gmail.com>
-Subject: Re: [PATCH v2 04/28] hw: mark all remaining virtio object types as
- secure
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
- qemu-riscv@nongnu.org, qemu-s390x@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+X-Mailer: lorebird
+Received-SPF: pass client-ip=103.168.172.149; envelope-from=foss@defmacro.it;
+ helo=fout-a6-smtp.messagingengine.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,57 +120,65 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi
 
-On Fri, Nov 6, 2026 at 6:40=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
+
+On 2026-10-21T15:37:46+02:00, Klaus Jensen <its@irrelevant.dk> wrote:
+> From: Klaus Jensen <k.jensen@samsung.com>
 >
-> On Fri, Nov 06, 2026 at 06:35:29PM +0400, Marc-Andr=C3=A9 Lureau wrote:
-> > Hi
-> >
-> > On Fri, Nov 6, 2026 at 3:53=E2=80=AFPM Thomas Huth <thuth@redhat.com> w=
-rote:
-> > >
-> > > On 29/10/2026 14.12, Daniel P. Berrang=C3=A9 wrote:
-> > > > These are all intended for use in a virtualization scenario and mus=
-t
-> > > > provide a security boundary.
-> > > >
-> > > > Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > > > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> > > > ---
-> > > Reviewed-by: Thomas Huth <thuth@redhat.com>
-> > >
-> >
-> > I have a second thought about this, I'd like to exclude all
-> > gpu-accelerated paths for now. virgl/mesa/rutabaga expose a very large
-> > attack surface, so I'd like to drop them from the secure boundary
+> Cross-namespace copy requires the source and destination namespace to
+> have the same logical block size. This is not verified, causing a heap
+> out-of-bounds write.
 >
-> Rather than repost, please see my response for patch 2:
+> Fix by correctly identifying the invalid operation.
 >
->   https://lists.gnu.org/archive/html/qemu-devel/2026-11/msg01530.html
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Feng Xue and XGPT of ThreatBook
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4173
+> Fixes: d522aef88d42 ("hw/nvme: add cross namespace copy support")
+> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+> ---
+>  hw/nvme/ctrl.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> TL;DR: we have already promised anything virtio related is in scope
-> for security handling for a long time, as they are all unambiguously
-> "virtualization use case".
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 578421c21761..b48bf599b5d6 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -3277,6 +3277,11 @@ static void nvme_do_copy(NvmeCopyAIOCB *iocb)
+>          status = NVME_INVALID_FIELD | NVME_DNR;
+>          goto invalid;
+>      } else if (snsid != dnsid) {
+> +        if (sns->lbaf.ds != dns->lbaf.ds) {
+> +            status = NVME_CMD_INCOMP_NS_OR_FMT | NVME_DNR;
+> +            goto invalid;
+> +        }
+> +
+>          if (!NVME_ID_NS_DPS_TYPE(sns->id_ns.dps) &&
+>              !NVME_ID_NS_DPS_TYPE(dns->id_ns.dps)) {
+>              if (!nvme_copy_matching_ns_format(sns, dns, false)) {
+>
+> ---
+> base-commit: 8967b2fe1b2aaae3c29e207d85fab901d580a2dc
+> change-id: 20261021-fix-4173-d188c1a2ffdf
+>
+> Best regards,
+> --  
+> Klaus Jensen <k.jensen@samsung.com>
+>
+>
 >
 
-the value of a secure policy enforcement is low if we know those
-devices are unsecure and don't have the resources to make them secure.
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
 
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
+
+
 
 
