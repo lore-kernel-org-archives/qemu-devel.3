@@ -1,97 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DA960A5BDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 11:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BF9606D81F
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 11:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PXqHEfmD;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=ma+YvLhl
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hVQAPgW1;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=jerYm3xD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPIEc-0004RK-S6; Fri, 06 Nov 2026 06:35:54 -0500
+	id 1xPIH3-0005Ld-5x; Fri, 06 Nov 2026 06:38:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIEZ-0004Pe-ET
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:35:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIGz-0005Je-6l
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:38:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIEX-0002Rs-3m
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:35:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIGt-0002eF-Fi
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 06:38:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793964948;
+ s=mimecast20190719; t=1793965094;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XTajrIAyKDOfB2dwO4EMUMbtjLgSZZ0pwZiKHhcN05A=;
- b=PXqHEfmDeGMDUIcgYBoWFZdzJaRPxtir++tXiaq+pr8noeDwVW9hs+xwXrkLNe6+0sTR1E
- ZZ8d74ILpFgYXrtVD4U4Shh5R1dRMiySaynAIvqgePhf9D2juifNSORIoGuj4uGGszveSY
- LZeIHh8cycembx79B6UzYYbXKoJ8mvY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vxedVB9T0G83yMeRDfIDyzcOuTFvsBZ3LW5A8WJJi1c=;
+ b=hVQAPgW1ZGs3zVkgJbnC5j7xPQIqb6VK/ZDMFghM2szH/1TQGgEKvyH9lUzi/OQ/O0A3ga
+ v3bRk+0MnucR+isP13/ZrittJ89itjOKpfvuH3kxg7Cx4W0Samsjx1dbFiqkNlTZ0Id6bu
+ 1eCed9+xZH9ppOztW0EasXcVkWY08co=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-676-ZK2lY6_xMF-YC1DBVGyhRw-1; Fri, 06 Nov 2026 06:35:45 -0500
-X-MC-Unique: ZK2lY6_xMF-YC1DBVGyhRw-1
-X-Mimecast-MFC-AGG-ID: ZK2lY6_xMF-YC1DBVGyhRw_1793964944
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4a214a5f8a1so6250565e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 03:35:45 -0800 (PST)
+ us-mta-458-SfGUlY7MPwmHd2bLP4hWTw-1; Fri, 06 Nov 2026 06:38:12 -0500
+X-MC-Unique: SfGUlY7MPwmHd2bLP4hWTw-1
+X-Mimecast-MFC-AGG-ID: SfGUlY7MPwmHd2bLP4hWTw_1793965092
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-49034831bb3so386914f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 03:38:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793964944; x=1794569744; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=XTajrIAyKDOfB2dwO4EMUMbtjLgSZZ0pwZiKHhcN05A=;
- b=ma+YvLhli6jB0xD7CT2eCRxMWS1Ct5O4xLvLv3lUCdyip6i8ETP5da1Qq/anAWv+Oz
- ZN18T6U95sbOCOyZHd8XCQZTcQkTkfG2qllRL+sbweufYv+KG7hY+oT/+NJg45sFOoX1
- TbUVahM9dr+iovuBtb4c3lN5cuMUseLaT1DlN217D3hX51pwCVfCQMKYkEpiZhbKc1qv
- oibIsAQOapKj2x/kVdE269EXGhA+L6EJ9oQa8IeEd+Vlhr1Gd0pdEMbH2D3MS/K0hOXd
- lbpOqYDgA8xt5DEPrATXiA2NzYGouW+dtxIm1nVBEieddpo2g//uuT5W8K1JGUJPAGd7
- iVYw==
+ d=redhat.com; s=google; t=1793965091; x=1794569891; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=vxedVB9T0G83yMeRDfIDyzcOuTFvsBZ3LW5A8WJJi1c=;
+ b=jerYm3xDF4ETMmeRXWCTRWRO+3uSUL/7WBNBI4mcemKQPodCyN14Jj5Vw1C50CvoZu
+ gjYntoAknIXt6iQZBUUYD4vewRKpQNRvc77AgzW/ZkTCWKcM141DxUg80/00jjHMTRKw
+ H0hn8csWi3pg2vE47QXvL7qmJ8ejHrMl0PcmPa4IKldIRulEstKD/p3qwUu3QuK0b9jR
+ ki68W82DYwMy72u8GAGabfvWVJXVkt8FkmC1PZqabsVqOaFNW4iwothb53Mw5hzqVTak
+ V5gOdrNJe0zo7K/hVBoFIJa1IFrEUMUhkdGWIaC1Avrip58/782Jr/CmO8YMOX4Bzwl0
+ Wnpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793964944; x=1794569744;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=XTajrIAyKDOfB2dwO4EMUMbtjLgSZZ0pwZiKHhcN05A=;
- b=UdqXXjgFpibYNymz2qKx3x3HOPkdJCb2V63HCJKBhs4R7h0erXOK+KDCXyQICIpnuU
- aUFpkJaITG0sdd1WbdrncqT4+YDgOTmF/jA+ITZOYCAZkg4GXp5fWt+hJ/uZoUz0xOQJ
- I5UXXr3Wx8VlMjlSqm0SKinOW65w2Fwv3yjXNsxiNHF2A1l8fzkc+xrgiqGheZK8hZnQ
- N1wLHj3h0tkquPl/VCFasSmzCxmnynsYi5lC2EGBI4REBp7y8rieh+f1ETzdCP+BsxRn
- Shj64PyoTIQeR1LtR+ULk5bZzJLbggJ/pq4Z9xJdC/cHvg3a00BT+56178KxAQRlr89G
- xWSA==
+ d=1e100.net; s=20260707; t=1793965091; x=1794569891;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=vxedVB9T0G83yMeRDfIDyzcOuTFvsBZ3LW5A8WJJi1c=;
+ b=Jh5VWIsxY2uzxuYE+Ht9EJmbdZyXxioYQyXbxCOvjfdr2+44t9q6IRoGzlCEpRr0AW
+ xrVWVzcBaeIlZ6akN4tLASPl0USLbJZecxiBELDhicYBxMjsoQ520Lr3V6vVdjK9pOTv
+ thaorq+SW1aLH4SjEEsMBJusSn0p5pNgOvOOR9vQwOQ+BKkkOrxJ8v1L5LP6JUsDRDmh
+ 2TdGdCL3iTUytg813urJitaYbibyleVIF5srREC6L1S18M3j6Zy9X1RvOuuKQ+tRSKAQ
+ zQLt6bYUVlEKV71Yp9r5Psii+q8c8BmMwB2h41FV89T8nJA29Ku5gIwj7utG1TjXG4uJ
+ kx+Q==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzDKU27KGoKGzpLT2ZKAPf4ScC3RfhvXJVWMC8BLpo+BlGRKx48H2KWePswBDzuCnmldpQ6/VvgeO4w@nongnu.org
-X-Gm-Message-State: APuU4Z+4Ujs0QjagZQ1Gg5NFTE4wWfgWwvIomSLZQNW3J6Pxw07XfkDS
- J62Cz7eBows35r+ovE6iwBPjV64dsB73F8JXoMi2bqz3IANcmCZQf331RVmcOSIbhd3X7cROuzW
- dABXYbSgLJwnrdcBT19riuNF+GQYC/NG2Vu3oqTDc3KueLR+ytB2MzpFK
-X-Gm-Gg: AYBFou0DEI8P/6iHYkqx9zqkwr3XiJaqhacM0ZkMxqivYZrWKhmeU7Xd+Bgtv6AOvra
- pu0AQk/JCTDuCdknpkEemXzy7jl9JN5v7dXXEuo32ZXY7n6rJsvfuTccD6UFNlFL9PhZyWfIDs1
- +6NM5Lwkgrnkz//39V9eJl//b7BEgjw9I6toUEm/ofI6w2+tktM/xsdyBePsBA8nyf69tcOeZRW
- QXuKzLOT7hAEiyK5rr1nRJWGAZ6RuS9Y9r0mryIuSswK6+u8l7FevV/Fj5vAgAO4VpgAUV7+bSl
- 5SI2haIZBmVimKVvlu4NkBYMKclRfLlY7KLme4YTx4tHrJpb5mWopk53I6bkdMNBva606RqBgWr
- MagqA+ExoEkYZlhzqRqFhBo6QFy7jOcamg9GMk1Fg6s7iQfi+M5rIJ/HP0gJm5FQhtcqFSTGRYX
- dxbQboe0Hozw==
-X-Received: by 2002:a05:600c:4ecb:b0:49f:e772:6ddf with SMTP id
- 5b1f17b1804b1-4b6e0454e9amr35153305e9.32.1793964944182; 
- Fri, 06 Nov 2026 03:35:44 -0800 (PST)
-X-Received: by 2002:a05:600c:4ecb:b0:49f:e772:6ddf with SMTP id
- 5b1f17b1804b1-4b6e0454e9amr35152715e9.32.1793964943791; 
- Fri, 06 Nov 2026 03:35:43 -0800 (PST)
+ AKwUvBzA4obB+ZNm9a9u2P9UUE1FbMNcjndNTbrhIHe9PvjiNRVy7KIOdgxA2CkXQIIlCbFnAx6Bee/l0hAm@nongnu.org
+X-Gm-Message-State: APuU4Z+DP+JE/MTU7HCkhhdoySAU5aw7yKS4j4+Kdkk6jqjdKidjPX+T
+ 4mviOynlh/kCG8olrZnrJ42qhQ7GJrtComHUnhokdlQGRd4aj2gNPQIuNpZtbZRBVTeKnh+r2sJ
+ l0OfRM5cMYxdGGHOSW+koERgxT1+fE6zeyAWWbe+uE3q+2nLbKNUhBEZ6
+X-Gm-Gg: AYBFou3oXoY86j7SvLrTCpwjab5INFJdVFfIkuMkYMSD6BWpcgiLaWKc2fu6bjDII8r
+ S1Aho7DWlvf+dh1Uh/e1qQMSUxCi8BHMytzG+4w6AlT5lwoRmemrJz0qKDwnJdBKLDa2rvrzZ4t
+ 5yUV9Z1Qeb8X17Bf2gdrHhOIMdd3y0I98btwH0rFS71ye+cHlHOIgppHcy0IHdIvK2EfUArFf8A
+ 36l/e6+55xkdS00q/ZucRdCGicwDOxiSH9tIQsgguNJbQKBqq/F89DyErSumb4fSKMlrlK52EB+
+ +WTsmc4K6A5NWr0enC37qDK2f3hDWOkEs9gOclZIG5FOX5/Oqn6pNlZzdF8HODx8Ddvxp+kD5Jk
+ UywKkz8Xqz+X4/vSdzTAM2y10Pbz2p7ZXC7WN83Nm+lmLmvP8Lk+h7fp8zC6LK6gqyfW/2ZAIRJ
+ pAfPpmF3rqqA==
+X-Received: by 2002:a05:600c:630c:b0:4a1:e0db:8cf8 with SMTP id
+ 5b1f17b1804b1-4b6db1c5edcmr35283165e9.3.1793965091634; 
+ Fri, 06 Nov 2026 03:38:11 -0800 (PST)
+X-Received: by 2002:a05:600c:630c:b0:4a1:e0db:8cf8 with SMTP id
+ 5b1f17b1804b1-4b6db1c5edcmr35282835e9.3.1793965091308; 
+ Fri, 06 Nov 2026 03:38:11 -0800 (PST)
 Received: from ?IPV6:2a01:599:b03:7322:436f:1f3:b26e:91b8?
  ([2a01:599:b03:7322:436f:1f3:b26e:91b8])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b573366ea6sm138412255e9.14.2026.11.06.03.35.42
+ 5b1f17b1804b1-4b6df5eab6esm65073015e9.1.2026.11.06.03.38.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Nov 2026 03:35:43 -0800 (PST)
-Message-ID: <7332fb34-656a-4690-92eb-0159f223228f@redhat.com>
-Date: Fri, 6 Nov 2026 12:35:41 +0100
+ Fri, 06 Nov 2026 03:38:10 -0800 (PST)
+Message-ID: <b3820b45-7d26-4b4a-aec7-cfcd5aaf5d96@redhat.com>
+Date: Fri, 6 Nov 2026 12:38:09 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/28] hw: mark all virtio PCI devices as secure
+Subject: Re: [PATCH v2 02/28] hw: mark all virtio CCW devices as secure
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -99,11 +100,12 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
- qemu-s390x@nongnu.org
+ qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>
 References: <20261029131241.2275706-1-berrange@redhat.com>
- <20261029131241.2275706-2-berrange@redhat.com>
-Content-Language: en-US
+ <20261029131241.2275706-3-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -146,7 +148,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20261029131241.2275706-2-berrange@redhat.com>
+In-Reply-To: <20261029131241.2275706-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -179,17 +181,27 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 On 29/10/2026 14.12, Daniel P. Berrangé wrote:
 > These are all intended for use in a virtualization scenario and must
-> provide a security boundary. This can be done for almost all virtio
-> PCI devices by modifying the common type register helper.
+> provide a security boundary.
 > 
-> The virtio-gpu-pci-rutabaga device is unusual in not using the common
-> virtio_pci_types_register() method, so needs marking directly.
-> 
+> Acked-by: Eric Farman <farman@linux.ibm.com>
+> Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Acked-by: Cornelia Huck <cohuck@redhat.com>
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/display/virtio-gpu-pci-rutabaga.c | 1 +
->   hw/virtio/virtio-pci.c               | 3 +++
->   2 files changed, 4 insertions(+)
+...
+> diff --git a/hw/s390x/virtio-ccw-9p.c b/hw/s390x/virtio-ccw-9p.c
+> index d8612f7cd13..08d3ee577b4 100644
+> --- a/hw/s390x/virtio-ccw-9p.c
+> +++ b/hw/s390x/virtio-ccw-9p.c
+> @@ -64,6 +64,7 @@ static const TypeInfo virtio_ccw_9p_info = {
+>       .instance_size = sizeof(V9fsCCWState),
+>       .instance_init = virtio_ccw_9p_instance_init,
+>       .class_init    = virtio_ccw_9p_class_init,
+> +    .secure        = true,
+>   };
+I wonder whether we really want to include virtio-9p in the list of secure 
+devices ... but in case we reconsider, I guess that can be refined later, so:
+
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
