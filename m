@@ -1,141 +1,143 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38A6606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 20:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808EF606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 21:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=PRlNcz9P;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=J9UBjCrg
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=fJXSWF4A;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RUf2X3U4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPQyr-0000mo-23; Fri, 06 Nov 2026 15:56:13 -0500
+	id 1xPR4C-0001UB-W6; Fri, 06 Nov 2026 16:01:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xPQyk-0000lr-Ud
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 15:56:07 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xPR4B-0001Tz-Ro
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 16:01:43 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xPQyi-0001xb-Vq
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 15:56:06 -0500
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xPR47-0002T5-Rk
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 16:01:43 -0500
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A6JN5BU1292156
- for <qemu-devel@nongnu.org>; Fri, 6 Nov 2026 20:56:03 GMT
+ 6A6JKqvV3899134
+ for <qemu-devel@nongnu.org>; Fri, 6 Nov 2026 21:01:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- eNodzx5ivHIvstWtIie+8wRwD24gij93W4EhdknFzBg=; b=PRlNcz9PkX5MWITh
- XLpKpp/LIFS7ICsPIl7PxSt9kf98t4XJkPB4htyBFoJnAlp8ekItgzhV4xeOPfng
- ZYfEQwqYVTbtedeb5OVpVMru5bB81jXihjpNy/A0xmrQO+xK6g3cOujme/crfYaS
- g9lmojXlJn+34I0msGyYmGP2boSBSrc+e3FlMwZZPxm3a6hyP4Kk/BSbVOiin7ev
- vz0kbH1H74oo4R12gqMCvz8ZxH6iswwUO0WjZxOiv9Y/uW11HPgswsahfWQIkFO/
- LI5QLjRllEfTSCIZO2MMUXUgDVbX+q+w8VUiSRB+QdJI3WOubNo/gduh/VpRT4Cx
- 3tiQQg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hsn0e0a65-1
+ t+oeOoYRU6AUSq321Zu3GMaLPy3AOQQKytY2/lBdGvQ=; b=fJXSWF4A2isMJ3uZ
+ DvQ24rIPS5LVIGlSUWaeptf+J5DBHvxE7ormSWkdkTYjKSgQ6n1rkt1ZTH+eFvKc
+ 97al1IQqWGNScvxLT1MnVd9tcaI4peB8mcxXLJo3glTVOAv3/O0qi2S240FE+LEO
+ eXeRRDHeprwXEmfwP3svM/suRafYcbujt9xlDD3044rX3K4Ai7TCZNTQSSGH+9i0
+ bd7OmjvLaNyuQkQ2V6i5jVdITS9Mw2hutHq0o3Zv+ITBqtWsy+TeYBPFDBVFUalo
+ 7YFNf7qcrUiUPTOxQxpQfd5NZpaBx8IQrIeJdarIEg02L+jJfFlYbX/gjURPuFFv
+ vtuAYg==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hsmyk0b92-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 20:56:02 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-53661e036a2so20921561cf.1
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 12:56:02 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 21:01:37 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-1b20a4b5f2bso1517673c88.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 13:01:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793998562; x=1794603362; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793998897; x=1794603697; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=eNodzx5ivHIvstWtIie+8wRwD24gij93W4EhdknFzBg=;
- b=J9UBjCrgV8ejelBBMyslkMjtr+3NcvGEfyqJd5oL3pQE1nMlE2hifzQIZXHKh4tATm
- bmdScbQP9179cMh9ERtCXeR7hSxqLXFA4MiQdpwTjBXuogzivKIwMr1aNW/usWuPbb08
- /wheH5MrggQYt55RMkaZb3uj1PkBxjFhNZuNW6M/o59Z5VKkAzfcEG+JOCjIGWYFxEBj
- CJthCmfv94kwuCrDRY6xxUPq/IgPUcItAQ9f4WCOI2GPN4gf9JTfp5sUz4EkZf+z183s
- QFXJ69PsB0oxOtAyf8AoR1Oy20Ac6N1alw8r70RLYSvj8+5T4zDN0tbQf2nO4j+LrElz
- 7w+Q==
+ bh=t+oeOoYRU6AUSq321Zu3GMaLPy3AOQQKytY2/lBdGvQ=;
+ b=RUf2X3U4oc5ixlIq0u7STx4SQtJNxd5pfGWLpVq3umMECKW/Y0a3PEDjGLFK/HFRwt
+ gD2zI2CFCT9orjkmIO5NPDG2L9NcNKdUk3vGv1jrLPyds/tZer9caVDT/xTxBK5L1GLU
+ VICtMdUQoaEvZtVztmZi6Er5eNgUbCLDmiTSmGJGcQpi7WWfu0i4h5Sgyz0gbn0WbonA
+ ZnH5bHILU8gm8VPHPhR4cgiImNlIKIItpJUe2rgEArnAnA1zSLyudT5vLuWvWI3aUD64
+ 4AmRsTsyxaw9tuuLx6lL4TTfdDjoFbVNHY7QDP25wCI+FuHc3/CeuN00YyNw8g8X5p+G
+ lJ1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793998562; x=1794603362;
+ d=1e100.net; s=20260707; t=1793998897; x=1794603697;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=eNodzx5ivHIvstWtIie+8wRwD24gij93W4EhdknFzBg=;
- b=bxtUN5M28iGOi0W5NhQiGq8hmtRh8PUXfb/2TNmQCu2qHreMwE4RL05ATVvH4Qi8+5
- pE/SB89c1M66R7cA+S+sy/7s8yDtOYXVjxso+Qgxwo6Jy8pH/c8lb5lhT7uRPy2y10rN
- StInUrNWUFG5kMfizzS5OToFTWHbM/wMZI7Fp8t10uxjMsRxoY+tnJn7FdbRxEpKmhCq
- pfnkpYzXGvKzs7IDc3XAPRaL7fHIxMqLBgSpc9ftuPlz2J9oKWZG6sRd6t++IjWQVpFN
- WDD2RBZ0nxriO5HLFjc3fETi3dmhsI8gGzHSCjY86ckKJJxeDh917ydeZQuClQAiRU3L
- KW8A==
-X-Gm-Message-State: APuU4Z9xS4eboAAiLKlnAL39MMYdx7lhR2qCG2NEUc3fF4FrEmvURtlt
- bRuZKX5BM4yi6W9fDglS4zHjAhqCXgF8Uv8aqjec2OSUS+/J3xJesEQafkkqVtnfi8WYP4LFWkC
- 7n2Wok9hqyqIHQrPihepVOOGmgC7rGtC1kW3q90raN+1HwnEBM7tCEUa9kA==
-X-Gm-Gg: AYBFou2HH4OZG6458MKn+vUasnJ5Ks/2OUyHTdbYu7Ac/kM15rbthoeBYFD2lI/0edF
- QJMIKNySBsWbwVZTjms3+QViqfx76mE1C/R/ncV9qkqtSd2Hh2BCbsLQ+n3AQM7W8wsjzKn/5Uj
- aoJ9m5jPC7197E2k6idHyTYgEZkv687mYIXbAgvUPFotfK5E1m86jdAUu13p8Pw8bc7N0eh0ru4
- eLLXZuc3MRzeN1xse6qIL15f2Z+JtcTn+QyU2QbvBTU6KK7sLMfzu+8I1AIYf/NyDgJzso+X37i
- vRz2JoyZWvwsCvLWymAO0bf8tBVWF1/gI8je453oVv3NAyzPMqxOQ1Vqv06ipDDyIQSa7XhgT27
- T07ekM7wA03ST/UZShjVp46WC6MBj4FqHUGp5CtJ9LKvQDsxvSIzKe4+PUvNgg2RgdrUM2ea8P5
- QECLpFN2LN
-X-Received: by 2002:a05:622a:5447:b0:545:de78:a6f0 with SMTP id
- d75a77b69052e-54e1426ad0emr61057051cf.41.1793998562083; 
- Fri, 06 Nov 2026 12:56:02 -0800 (PST)
-X-Received: by 2002:a05:622a:5447:b0:545:de78:a6f0 with SMTP id
- d75a77b69052e-54e1426ad0emr61056761cf.41.1793998561579; 
- Fri, 06 Nov 2026 12:56:01 -0800 (PST)
-Received: from [192.168.68.100] ([152.234.124.231])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91ea6ac8d02sm28503986d6.42.2026.11.06.12.55.55
+ bh=t+oeOoYRU6AUSq321Zu3GMaLPy3AOQQKytY2/lBdGvQ=;
+ b=mogvjp3G/KB9C2rIynQB05ABUZ0cYisZLYIp53Us2GUltqg+5nJ/5vdvmBD0V2VYmN
+ WS552LZEpyOlTreULaeu2imNy2AJm/mYAp3watP8jt4RiCa2Sd1uXEqW/quKT8kqIzZP
+ 4EPY38O6KP1htM8f93MZZ2pnnjFhqpeQyxo74RcEz1IeO1gVXvuk0UGKb25gQYvpu/io
+ lgunEjP2oYCx3PVTgyVLgSwOG86hY8IGMp6GtchIMZisjwNtjRB13qODnMB+rrlXzRN/
+ p4Bwaa9qa/D8tC7LFABiEtAxnIDz6PA6Em6zmldYfpas0IxgWP541xAgs3YRpL49BWu7
+ LP6Q==
+X-Gm-Message-State: APuU4Z+PgBgB6bOoS825AJdtRjv4N9TLQ9PvJFRVb38/mI2z9GYyqZCp
+ omAfBmSYGEcD51cccTwlDpRPtZ0/FThzrOqrwbYypLzKlW/bgBPrchAzzNNfDHkIM2XiTxYBt2s
+ MnfUDPeF6LvoyIVctaU0e//XHtJ0rwiraRW9HztTlgqNLRw+F3YOsy7mO5Q==
+X-Gm-Gg: AYBFou1JXEh88AxLhLJIAtKhIUDHGmLfijI2kfqPvqSx8eHNkyLD+aX1dalisb7dx9i
+ /VrifXKz3qvJu97NME4atSvLNZStC9fGRZ1JtxmCtsJgndSTD42PPkHxaBjtVocuv/L+4ntOMPN
+ ZJq2uWYpy+mTjflqxYpOZA4vablqMYvg6fHHpYM8nIi8vbBx3ZP7xgW6Q066vXRCXaUR9PUrWyL
+ FkmCdCLGUQFnJu4NOzE/A94ofUbxESDbBvaY5CNy3Ha5hU/3zsG3zfIUChTWLu5rMTKhyP1D402
+ yiKn9dff5jvmrHr0FmHRa1x4Av40Stst3FWHUwCZcjKLssiGYcjwUc7OTHebS33f4bqcnMrigkc
+ d+ZwPOELXuPqyIpavSmiiNxYfSMnu0PJf7gIW0XDrgMqLH24JIlRA0kAx0hDbu7y99NnY8+Ev9/
+ +TrmNuLTKYknl5hglaKN4jrRv8iaLAoys54/7U9VBHLQ==
+X-Received: by 2002:a05:7023:a44:b0:1b2:471f:c4c with SMTP id
+ a92af1059eb24-1b25d32ad10mr4270525c88.19.1793998896630; 
+ Fri, 06 Nov 2026 13:01:36 -0800 (PST)
+X-Received: by 2002:a05:7023:a44:b0:1b2:471f:c4c with SMTP id
+ a92af1059eb24-1b25d32ad10mr4270471c88.19.1793998895644; 
+ Fri, 06 Nov 2026 13:01:35 -0800 (PST)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-36fa651eccdsm9260964eec.1.2026.11.06.13.01.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Nov 2026 12:55:59 -0800 (PST)
-Message-ID: <3dcd33f2-41c5-4dce-b6e2-a50934a7829d@oss.qualcomm.com>
-Date: Fri, 6 Nov 2026 17:55:53 -0300
+ Fri, 06 Nov 2026 13:01:34 -0800 (PST)
+Message-ID: <b6a6e0bc-90b0-4162-8ec9-098d1ced1069@oss.qualcomm.com>
+Date: Fri, 6 Nov 2026 13:01:33 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 1/2] target/riscv: Add Sspesa extension and sample
- CSRs
-To: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>, qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>
-References: <20261029131011.3715081-1-mayuresh.chitale@oss.qualcomm.com>
- <20261029131011.3715081-2-mayuresh.chitale@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [RFC PATCH] docs: add a diagram of the development process
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+References: <20261106122111.3005638-1-alex.bennee@linaro.org>
+ <dfc31d65-d309-461d-a47e-3df3c658d56e@oss.qualcomm.com>
+ <87ld7566jz.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261029131011.3715081-2-mayuresh.chitale@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 2CPs4Nx80AxpB7Og60RmwKFUVpMUGm5k
-X-Authority-Analysis: v=2.4 cv=ffA4WEQF c=1 sm=1 tr=0 ts=6aee3ee2 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=8elE1k/PHQNyZ14TNTodlQ==:17
+In-Reply-To: <87ld7566jz.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 6VpO6EOf-7EL5xudg7Hg_1805Gzjj1bX
+X-Proofpoint-ORIG-GUID: 6VpO6EOf-7EL5xudg7Hg_1805Gzjj1bX
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA4MyBTYWx0ZWRfXyMglnG24myFY
+ Bd0tHz/UJzHlwvsk14I6lpz5KL3SYcBAabJa2hYMmQ6q4dUYWRJ2RwoN17vJ2CydX75dJmzFHR7
+ eoG9AWQ562tjjyc8/XcNh8Z8wEYuRHU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA4MyBTYWx0ZWRfXw2bdsG9biSJy
+ p1kCuC8iFJbbRgPHzuLGavNjsDypS8u/h2sBs8r+GDYsvHgliEs7WT1vrJ53Wjy3vq9AFDSTJi8
+ pkpsfNkIMVQLN3NAl8rF1c5OzOirpI2YID30psYN/dIjPcGIj5wl/stagJUaogGEHc3nZQyPiFm
+ /YANgZ27El7Hsxf8oa7Ys647nil3/o3H99OWTtklmF74hsf+9A6ezIrgFAWgwWkOBfOiHT/aViN
+ g3Vd22nd3ph9irMaxAOZ0U16T8biD0hnL13RRrt7F0kM6MM3FVSmPnvyMOmVhLkMLrcN6N+BNZ5
+ hy/j3JEyZkcXpfchvEWKT8jNOwBUsd3IRrIMkT1jLyQZCUhoQpuq6uUb38tZ4N8RdxMl/zzpMp+
+ oU7YB8WsAbAOcSvqH2P0G7NvVI+F6B9Q4drdwDcEiV1p8ufRt/+SQc4YOkzCsSBVVw2Gbg9bTnX
+ GIHpB3Ij84QUJ0COdIA==
+X-Authority-Analysis: v=2.4 cv=I5Tw19gg c=1 sm=1 tr=0 ts=6aee4031 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=OZFbZ_V87LrXgIFjrWgA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA4MyBTYWx0ZWRfX2Pla+DJvcuM6
- SkLH/9829uqEDhEzifxQXmxvgJBj9OXWZQlSVioVg0Qa+UTVib0lG5pCHkpowIwO7f8rqaabvA6
- m0zC6v5atDNBkoG0HA+Jr7LCrgt2SKFyXAIvmMoA1A9xepxmp9Nd9uwQVaWAsCKFiERcm+CaN2n
- NifbK4+vcJp0iLbYznkz7N5Vz3XVndmfeKgAa9qSqnJGkeur1oiejocw5cW6DR4L7Csl0F6bnuN
- F/NbmuRObNXf2GVkzfgJ2V6DAGettx+kHJYzleAV3gm8TaAbSAaLJil7ESsupzfILcDkt9JfnnM
- ZY0l73ZRtzGIrmxkHa/vG6JUDzdplUXvSWroylCvOMn4iPc5rmkxpB84V1TvxYf079ie9ijlNg8
- gPOynwqK6nXspjsCnNYfBBln/C7G3zOFxHi/gxdo8wOyLUluWFoHjdIIfUGUOMU6ufCzvtcxS3B
- EMztw56E3p1yCvs/Atg==
-X-Proofpoint-ORIG-GUID: 2CPs4Nx80AxpB7Og60RmwKFUVpMUGm5k
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA4MyBTYWx0ZWRfXy3uXz6xnz/oT
- xwu1TnSvezNW0GPAvLT04T1IHBBA1q5mIJJ7R3TGIMGA+zJjMSD6eXeeaxFp6H34fnEieTg9Gd8
- uvjeFFXQCKq3y56BHM5xFslteUT8Blg=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=NEAV23lmAAAA:8 a=kne_o7KXAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
+ a=xIAX1rflKf4-liiSGw8A:9 a=qcg49hLlgF0N60+LroqrWnV/Vu4=:19 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22 a=c4Qo8gn-6q4hmEPFHG3F:22
+ a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-06_06,2026-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 spamscore=0 phishscore=0 priorityscore=1501
- adultscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611060083
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ impostorscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611060083
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -154,260 +156,340 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
-
-On 10/29/2026 10:10 AM, Mayuresh Chitale wrote:
-> Add initial support for the Sspesa (Precise Event Sample Attribution)
-> extension from the RISC-V Performance Event Sampling specification.
+On 11/6/2026 12:36 PM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 > 
-> Added the 'sspesa' and ssplcofi CPU properties, and the shpmspc and
-> shpmsdata CSRs.
+>> On 11/6/2026 4:21 AM, Alex Bennée wrote:
+>>> We've had various versions of this diagram for a while so I thought it
+>>> would be worth adding to the developer docs. I chose plantuml as it
+>>> has a plugin for sphinx that we can use and supports sequence diagrams
+>>> which could be useful for documenting other features in the code base.
+>>>
+>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>>
+>>> ---
+>>> vRFC
+>>>   - I've bundled all the plumbing together in this commit but it can
+>>>   be split up if we want to go forward.
+>>> ---
+>>>  docs/conf.py                    | 22 +++++++++++++++
+>>>  docs/devel/index-process.rst    | 47 +++++++++++++++++++++++++++++++++
+>>>  docs/meson.build                |  3 ++-
+>>>  docs/requirements.txt           |  1 +
+>>>  configure                       |  6 +++++
+>>>  pythondeps.toml                 |  1 +
+>>>  tests/lcitool/mappings.yml      |  3 +++
+>>>  tests/lcitool/projects/qemu.yml |  1 +
+>>>  8 files changed, 83 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/docs/conf.py b/docs/conf.py
+>>> index 914bae67d9c..9fc7be362ba 100644
+>>> --- a/docs/conf.py
+>>> +++ b/docs/conf.py
+>>> @@ -66,8 +66,11 @@
+>>>      'qapi_domain',
+>>>      'qapidoc',
+>>>      'qmp_lexer',
+>>> +    'sphinxcontrib.plantuml',
+>>>  ]
+>>>  
+>>> +plantuml_output_format = 'svg'
+>>> +
+>>>  # Add any paths that contain templates here, relative to this directory.
+>>>  templates_path = [os.path.join(qemu_docdir, '_templates')]
+>>>  
+>>> @@ -345,3 +348,22 @@
+>>>  qapidoc_srctree = os.path.join(qemu_docdir, '..')
+>>>  dbusdoc_srctree = os.path.join(qemu_docdir, '..')
+>>>  dbus_index_common_prefix = ["org.qemu."]
+>>> +
+>>> +
+>>> +def setup(app):
+>>> +    import docutils.nodes
+>>> +    import sphinxcontrib.plantuml
+>>> +
+>>> +    # We manually setup the plantuml extension so we can skip nodes with
+>>> +    # diagrams when generating the text based output.
+>>> +
+>>> +    def skip_node(self, node):
+>>> +        raise docutils.nodes.SkipNode
+>>> +
+>>> +    app.setup_extension('sphinxcontrib.plantuml')
+>>> +    app.add_node(
+>>> +        sphinxcontrib.plantuml.plantuml,
+>>> +        override=True,
+>>> +        man=(skip_node, None),
+>>> +        text=(skip_node, None),
+>>> +    )
+>>> diff --git a/docs/devel/index-process.rst b/docs/devel/index-process.rst
+>>> index ce0f4e73197..1c13dd3f7b5 100644
+>>> --- a/docs/devel/index-process.rst
+>>> +++ b/docs/devel/index-process.rst
+>>> @@ -5,6 +5,53 @@ QEMU Community Processes
+>>>  
+>>>  Notes about how to interact with the community and how and where to submit patches.
+>>>  
+>>> +.. uml::
+>>> +   :caption: QEMU Patch Review and Acceptance Flow
+>>> +
+>>> +   @startuml
+>>> +   skinparam roundCorner 8
+>>> +   skinparam shadowing false
+>>> +   skinparam defaultFontName monospace
+>>> +   skinparam sequenceMessageAlign center
+>>> +
+>>> +   actor "Developer" as dev
+>>> +   participant "QEMU Community\n(qemu-devel)" as list
+>>> +   actor "Subsystem\nMaintainer" as sub
+>>> +   actor "QEMU\nMaintainer" as top
+>>> +
+>>> +   dev -> dev: Develop & test feature
+>>> +
+>>> +   loop Needs revision (v1, v2, ... vn)
+>>> +       dev -> list: Post patch series to list
+>>> +       note over list: Code review on list
+>>> +
+>>> +       opt Review comments
+>>> +           list -> dev: Feedback & change requests
+>>> +           dev -> dev: Incorporate feedback
+>>> +       end
+>>> +       opt Review tags
+>>> +           list -> dev: Tags (Reviewed-by, Acked-by, ...)
+>>> +           dev -> dev: Apply tags
+>>> +       end
+>>> +
+>>> +       dev -> dev: Prepare n+1
+>>> +   end
+>>> +
+>>> +   group Patch acceptance & release
+>>> +       list -> sub: Maintainer accepts some or all patches
+>>> +       note over sub: Incorporates patches\nfrom other developers
+>>> +       sub -> sub: Add Maintainer Sign-off
+>>> +       sub -> sub: GIT branch foo/next
+>>> +       sub -> list: Sign & Submit Pull Request
+>>> +       list -> top: Pull Request delivered to list
+>>> +       note over top: Pull Requests from\nother maintainers
+>>> +       top -> top: Test and Merge Pull Reqs
+>>> +       top -> top: qemu.git master
+>>> +       top -> top: Tag Release
+>>> +       top -> list: QEMU Release
+>>> +   end
+>>> +   @enduml
+>>> +
+>>>  .. toctree::
+>>>     :maxdepth: 2
+>>>  
+>>> diff --git a/docs/meson.build b/docs/meson.build
+>>> index 4d8cc545fcc..600d3283299 100644
+>>> --- a/docs/meson.build
+>>> +++ b/docs/meson.build
+>>> @@ -1,9 +1,10 @@
+>>>  sphinx_build = find_program(fs.parent(python.full_path()) / 'sphinx-build',
+>>>                              required: get_option('docs'))
+>>> +plantuml = find_program('plantuml', required: get_option('docs'))
+>>>  
+>>>  # Check if tools are available to build documentation.
+>>>  build_docs = false
+>>> -if sphinx_build.found()
+>>> +if sphinx_build.found() and plantuml.found()
+>>>    SPHINX_ARGS = ['env', 'CONFDIR=' + qemu_confdir, sphinx_build, '-q']
+>>>    # If we're making warnings fatal, apply this to Sphinx runs as well
+>>>    if get_option('werror')
+>>> diff --git a/docs/requirements.txt b/docs/requirements.txt
+>>> index 509d56bd1e8..1cafcbaa38f 100644
+>>> --- a/docs/requirements.txt
+>>> +++ b/docs/requirements.txt
+>>> @@ -3,3 +3,4 @@
+>>>  
+>>>  sphinx==7.2.6
+>>>  sphinx_rtd_theme==2.0.0
+>>> +sphinxcontrib-plantuml==0.30
+>>> diff --git a/configure b/configure
+>>> index 42dffed28f0..b0dedde65dd 100755
+>>> --- a/configure
+>>> +++ b/configure
+>>> @@ -1020,6 +1020,12 @@ if test "$docs" != "disabled" ; then
+>>>          fi
+>>>          echo "Sphinx not found/usable, disabling docs."
+>>>          docs=disabled
+>>> +    elif ! has plantuml; then
+>>> +        if test "$docs" = "enabled" ; then
+>>> +            error_exit "plantuml not found"
+>>> +        fi
+>>> +        echo "plantuml not found, disabling docs."
+>>> +        docs=disabled
+>>>      else
+>>>          docs=enabled
+>>>      fi
+>>> diff --git a/pythondeps.toml b/pythondeps.toml
+>>> index c9a697046c6..c21d127ec93 100644
+>>> --- a/pythondeps.toml
+>>> +++ b/pythondeps.toml
+>>> @@ -30,6 +30,7 @@ meson = { accepted = ">=1.12.0", installed = "1.12.0", canary = "meson" }
+>>>  # Please keep the installed versions in sync with docs/requirements.txt
+>>>  sphinx = { accepted = ">=7.2.6", installed = "7.2.6", canary = "sphinx-build" }
+>>>  sphinx_rtd_theme = { accepted = ">=1.2.2", installed = "2.0.0" }
+>>> +sphinxcontrib-plantuml = { accepted = ">=0.5", installed = "0.30" }
+>>>  
+>>>  # This test group is for dependencies required to run various tooling
+>>>  # and tests that should always be installed at configure time. It should
+>>> diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+>>> index c99f007798e..eca6748ac09 100644
+>>> --- a/tests/lcitool/mappings.yml
+>>> +++ b/tests/lcitool/mappings.yml
+>>> @@ -3,6 +3,9 @@ mappings:
+>>>    bindgen:
+>>>      Ubuntu2204:
+>>>  
+>>> +  plantuml:
+>>> +    default: plantuml
+>>> +
+>>>    python3:
+>>>      CentOSStream9: python3.12
+>>>  
+>>> diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
+>>> index abbd3e3f0b8..de4395cd3c7 100644
+>>> --- a/tests/lcitool/projects/qemu.yml
+>>> +++ b/tests/lcitool/projects/qemu.yml
+>>> @@ -89,6 +89,7 @@ packages:
+>>>   - pcre-static
+>>>   - pixman
+>>>   - pkg-config
+>>> + - plantuml
+>>>   - pulseaudio
+>>>   - python3
+>>>   - python3-numpy
+>>
+>> It will silently disable doc by default for most of the people
+>> unfortunately, not sure it's the best move we can do.
 > 
-> Signed-off-by: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   target/riscv/cpu.c                | 24 ++++++++++++++
->   target/riscv/cpu.h                |  4 +++
->   target/riscv/cpu_bits.h           | 12 +++++++
->   target/riscv/cpu_cfg_fields.h.inc |  2 ++
->   target/riscv/machine.c            | 20 +++++++++++
->   target/riscv/tcg/csr.c            | 55 +++++++++++++++++++++++++++++++
->   6 files changed, 117 insertions(+)
+> plantuml seems to be pretty widely packaged so in this sense its just
+> another dependency.
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index ae750f85c6..99a01ac412 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -282,6 +282,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(ssctr, PRIV_VERSION_1_12_0, ext_ssctr),
->       ISA_EXT_DATA_ENTRY(ssdbltrp, PRIV_VERSION_1_13_0, ext_ssdbltrp),
->       ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
-> +    ISA_EXT_DATA_ENTRY(sspesa, PRIV_VERSION_1_13_0, ext_sspesa),
-> +    ISA_EXT_DATA_ENTRY(ssplcofi, PRIV_VERSION_1_13_0, ext_ssplcofi),
->       ISA_EXT_DATA_ENTRY(sspm, PRIV_VERSION_1_13_0, ext_sspm),
->       ISA_INTERNAL_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
->       ISA_INTERNAL_EXT_DATA_ENTRY(ssstrict, PRIV_VERSION_1_12_0, has_priv_1_12),
-> @@ -1070,6 +1072,8 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->       }
->   
->       pmp_unlock_entries(env);
-> +    env->shpmspc = 0;
-> +    env->shpmsdata = 0;
->   #endif /* ifdef CONFIG_TCG */
->   #else
->       env->priv = PRV_U;
-> @@ -2933,6 +2937,24 @@ static RISCVCPUImpliedExtsRule SSSTATEEN_IMPLIED = {
->       },
->   };
->   
-> +static RISCVCPUImpliedExtsRule SSPLCOFI_IMPLIED = {
-> +    .ext = CPU_CFG_OFFSET(ext_ssplcofi),
-> +    .implied_multi_exts = {
-> +        CPU_CFG_OFFSET(ext_sspesa),
-> +
-> +        RISCV_IMPLIED_EXTS_RULE_END
-> +    },
-> +};
-> +
-> +static RISCVCPUImpliedExtsRule SSPESA_IMPLIED = {
-> +    .ext = CPU_CFG_OFFSET(ext_sspesa),
-> +    .implied_multi_exts = {
-> +        CPU_CFG_OFFSET(ext_sscofpmf),
-> +
-> +        RISCV_IMPLIED_EXTS_RULE_END
-> +    },
-> +};
-> +
->   static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
->       .ext = CPU_CFG_OFFSET(ext_zvfbfa),
->       .implied_multi_exts = {
-> @@ -3013,6 +3035,8 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
->       &SSSTATEEN_IMPLIED,
->       &XSFVQMACCDOD_IMPLIED,
->       &XSFVQMACCQOQ_IMPLIED,
-> +    &SSPESA_IMPLIED,
-> +    &SSPLCOFI_IMPLIED,
->       NULL
->   };
->   
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 49a1186bdb..afd893e3a8 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -470,6 +470,10 @@ struct CPUArchState {
->       uint64_t sscratch;
->       uint64_t mscratch;
->   
-> +    /* Sspesa CSRs */
-> +    target_ulong shpmspc;
-> +    target_ulong shpmsdata;
-> +
->       /* Sstc CSRs */
->       uint64_t stimecmp;
->   
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index 3579789a1f..61258ce6e1 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -634,6 +634,18 @@
->   
->   #define CSR_SCOUNTOVF       0xda0
->   
-> + /* Temporary addresses for Sspesa (Precise Event Sample Attribution) CSRs. */
-> +#define CSR_SHPMSPC         0x5d0
-> +#define CSR_SHPMSDATA       0x5d1
-> +
-> +/* shpmsdata fields */
-> +#define SHPMSDATA_CNTRID    0x1f
-> +#define SHPMSDATA_MODE      0x60
-> +#define SHPMSDATA_V         0x80
-> +#define SHPMSDATA_MODE_U    0x00
-> +#define SHPMSDATA_MODE_S    0x20
-> +#define SHPMSDATA_VALID_MASK (SHPMSDATA_CNTRID | SHPMSDATA_MODE | SHPMSDATA_V)
-> +
->   /* Crypto Extension */
->   #define CSR_SEED            0x015
->   
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index bcff8f55f1..6e67c6f739 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -112,6 +112,8 @@ BOOL_FIELD(ext_ssaia)
->   BOOL_FIELD(ext_smctr)
->   BOOL_FIELD(ext_ssctr)
->   BOOL_FIELD(ext_sscofpmf)
-> +BOOL_FIELD(ext_sspesa)
-> +BOOL_FIELD(ext_ssplcofi)
->   BOOL_FIELD(ext_smepmp)
->   BOOL_FIELD(ext_smrnmi)
->   BOOL_FIELD(ext_ssnpm)
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 0de06e9588..6e20ad0591 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -475,6 +475,25 @@ static const VMStateDescription vmstate_pmu_ctr_state = {
->       }
->   };
->   
-> +static bool sspesa_needed(void *opaque)
-> +{
-> +    RISCVCPU *cpu = opaque;
-> +
-> +    return cpu->cfg.ext_sspesa;
-> +}
-> +
-> +static const VMStateDescription vmstate_sspesa = {
-> +    .name = "cpu/sspesa",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = sspesa_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINTTL(env.shpmspc, RISCVCPU),
-> +        VMSTATE_UINTTL(env.shpmsdata, RISCVCPU),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->   static bool jvt_needed(void *opaque)
->   {
->       RISCVCPU *cpu = opaque;
-> @@ -653,6 +672,7 @@ const VMStateDescription vmstate_riscv_cpu = {
->           &vmstate_elp,
->           &vmstate_ssp,
->           &vmstate_ctr,
-> +        &vmstate_sspesa,
->           &vmstate_sstc,
->           &vmstate_mseccfg,
->           &vmstate_sdext,
-> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-> index 063590f56a..c9b5b54c97 100644
-> --- a/target/riscv/tcg/csr.c
-> +++ b/target/riscv/tcg/csr.c
-> @@ -279,6 +279,28 @@ static RISCVException smcntrpmf(CPURISCVState *env, int csrno)
->       return RISCV_EXCP_NONE;
->   }
->   
-> +static RISCVException sspesa(CPURISCVState *env, int csrno)
-> +{
-> +    bool menvcfg_cde;
-> +
-> +    if (!riscv_cpu_cfg(env)->ext_sspesa) {
-> +        return RISCV_EXCP_ILLEGAL_INST;
-> +    }
-> +
-> +    if (env->priv == PRV_M) {
-> +        return RISCV_EXCP_NONE;
-> +    }
-> +
-> +    menvcfg_cde = get_field(env->menvcfg, MENVCFG_CDE);
-> +    /* Access to shpmspc/shpmsdata from VS-mode always causes a fault */
-> +    if (env->virt_enabled) {
-> +        return menvcfg_cde ? RISCV_EXCP_VIRT_INSTRUCTION_FAULT :
-> +                             RISCV_EXCP_ILLEGAL_INST;
-> +    }
-> +
-> +    return menvcfg_cde ? RISCV_EXCP_NONE : RISCV_EXCP_ILLEGAL_INST;
-> +}
-> +
->   static RISCVException smcntrpmf_32(CPURISCVState *env, int csrno)
->   {
->       if (riscv_cpu_mxl(env) != MXL_RV32) {
-> @@ -1677,6 +1699,34 @@ static RISCVException read_scountovf(CPURISCVState *env, int csrno,
->       return RISCV_EXCP_NONE;
->   }
->   
-> +static RISCVException read_shpmspc(CPURISCVState *env, int csrno,
-> +                                   target_ulong *val)
-> +{
-> +    *val = env->shpmspc;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException write_shpmspc(CPURISCVState *env, int csrno,
-> +                                    target_ulong val, uintptr_t ra)
-> +{
-> +    env->shpmspc = val;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException read_shpmsdata(CPURISCVState *env, int csrno,
-> +                                     target_ulong *val)
-> +{
-> +    *val = env->shpmsdata;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException write_shpmsdata(CPURISCVState *env, int csrno,
-> +                                      target_ulong val, uintptr_t ra)
-> +{
-> +    env->shpmsdata = val & SHPMSDATA_VALID_MASK;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
->   static RISCVException read_time(CPURISCVState *env, int csrno,
->                                   target_ulong *val)
->   {
-> @@ -6978,6 +7028,11 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
->                                write_mhpmcounterh                         },
->       [CSR_SCOUNTOVF]      = { "scountovf", sscofpmf,  read_scountovf,
->                                .min_priv_ver = PRIV_VERSION_1_12_0 },
-> +    [CSR_SHPMSPC]        = { "shpmspc",   sspesa, read_shpmspc, write_shpmspc,
-> +                             .min_priv_ver = PRIV_VERSION_1_13_0 },
-> +    [CSR_SHPMSDATA]      = { "shpmsdata", sspesa, read_shpmsdata,
-> +                             write_shpmsdata,
-> +                             .min_priv_ver = PRIV_VERSION_1_13_0 },
->   
->   #endif /* !CONFIG_USER_ONLY */
->   };
+>> Maybe a simpler solution could be to generate diagrams out of sphinx,
+>> add them as a dependency, and generate a blank image (or an image with
+>> diagram source and a message - please install plantuml) if not
+>> available. What does plantuml brings compares to graphviz builtin
+>> extension?
+> 
+> Ohh I didn't realize there was graphviz - I'll see if I can recreate
+> with that.
+>
+
+If graphviz is not installed, a warning is emitted, which stops the
+build since we turn warnings into error.
+
+The warning emitted has no type, so it can't be filtered with
+suppress_warning setting from sphinx-build.
+
+However, since sphinx uses standard logging framework, you can silence
+it this way: https://github.com/sphinx-doc/sphinx/issues/10219
+
+```
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -24,6 +24,7 @@
++import logging
+ import os
+ import sys
+ import sphinx
+@@ -66,8 +67,20 @@
+     'qapi_domain',
+     'qapidoc',
+     'qmp_lexer',
++    'sphinx.ext.graphviz',
+ ]
+
++# Render graphviz diagrams as SVG so they scale cleanly in HTML output.
++graphviz_output_format = 'svg'
++
++# Silence the warning emitted by sphinx.ext.graphviz when 'dot' is not
++# installed. Diagrams are then rendered as their raw source instead.
++class _NoDotWarning(logging.Filter):
++    def filter(self, record):
++        return 'cannot be run (needed for graphviz output)' not in
+record.getMessage()
++
++logging.getLogger('sphinx.sphinx.ext.graphviz').addFilter(_NoDotWarning())
+```
+
+The advantage is that graphviz is not a required dependency, so doc is
+still built for anyone having sphinx installed. That's a nice end result
+I think.
+
+>> Also, text diagrams (https://asciidraw.github.io/) with raw formatting
+>> have the advantage to not require any external tool.
+> 
+> I have the ascii original although ditaa seemed more of a stretch:
+> 
+> --8<---------------cut here---------------start------------->8---
+> #+name: QEMU Development Process
+> #+begin_src ditaa :cmdline -T -o :file images/qemu-dev-process.png
+>            Developer                                   QEMU Community                           Subsystem Maintainer
+>   +-=--------------------------+   +-=---------------------------------------------------+   +-=----------------------+
+>   |                            |   |                                                     |   |                        |
+>   |    +-------------------+   |   |  +-----------------------------------------------+  |   |   +----------------+   |
+>   |    |{io}               |   |   |  |{io}                                           |  |   |   |{io}            |   |
+>   |    |  Develop and      |   | +--->|              Code Review on List              |  | +---->| Add Maintainer |   |
+>   |    |   Test feature    |   | | |  |                                               |  | | |   |    Sign-off    |   |
+>   |    |                   |   | | |  +------+----------------+----------------+------+  | | |   |                |   |
+>   |    +--------+----------+   | | |         |                |                |         | | |   +-------+--------+   |
+>   |             |              | | |         V                V                V         | | |           |            |
+>   |             V              | | :  +-------------+  +-------------+  +-------------+  | | |           v            |
+>   |    +-------------------+   | | |  |{d}          |  |{d}          |  |{io}         |  | | |   +----------------+   |
+>   |    |{io}               |   | | |  |  Review     |  |  Review     |  | Maintainer  |  | | |   |{s}             |   |
+>   | +->|  Post to List     +-----+ |  |    Comments |  |    Tags     |  |  accepts    |  | | |   |   GIT Branch   |   |
+>   | |  |                   |   |   |  |             |  |             |  | some or all |  | | |   |    foo/next    |   |
+>   | |  +-------------------+   |   |  |             |  |             |  |  patches    |  | | |   |                |   |
+>   | |                          :   |  +------+------+  +------+------+  +------+------+  | | :   |                |   |
+>   | |  +-------------------+   |   |         |                |                |         | | |   |                |   |
+>   | |  |{io}               |<----------------+                |                +-----------+ |   |                |   |
+>   | |  |    Incorporate    |                                  |                          |   |   |                |   |
+>   | |  |     Feedback      |<---------------------------------+                          |   |   |                |   |
+>   | |  +--------+----------+   |   |                                                     :   |   +-------+--------+   |
+>   | |           |              :   +-----------------------------------------------------+   |           |            |
+>   | |           v              |                                                             |           V            |
+>   | |  +-------------------+   |                       QEMU Maintainer                       |   +----------------+   |
+>   | |  |{io}               |   |  +-=-----------------------------------------------------+  |   |{io}            |   |
+>   | |  |    Prepare n+1    |   |  | +-------------+  +--------------+  +----------------+ |  |   |  Sign & Submit |   |
+>   | |  |                   |   |  | |{io}         |  |{s}           |  |{io}            | |  |   |      Pull      |   |
+>   | |  +--------+----------+   |  | | Tag Release |<-+   qemu.git   |<-+ Test and Merge |<-------+     Request    |   |
+>   | |           |              |  | |             |  |    master    |  |    Pull Reqs   |<-+ |   |                |   |
+>   | +-----------+              |  | |             |  |              |  |                | || |   +----------------+   |
+>   |                            |  | +------+------+  +--------------+  +----------------+ || |                        |
+>   +----------------------------+  +--------+----------------------------------------------+| +------------------------+
+>                                            +----------------+                              |
+>                                                             |                              |
+>                                                             V                              |       Pull Requests
+>                                                      +--------------+                      +----       from
+>                                                      |{d}           |                            Other Maintainers
+>                                                      |     QEMU     |
+>                                                      |    Release   |
+>                                                      |              |
+>                                                      |              |
+>                                                      +--------------+
+> 
+> #+end_src
+> --8<---------------cut here---------------end--------------->8---
+>
+
+Nice diagram!
+Better in picture indeed.
+
+> 
+>>
+>> What do you think?
+>>
+>> Regards,
+>> Pierrick
+> 
 
 
