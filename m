@@ -1,40 +1,40 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D7B606A326
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Nov 2026 00:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925C7606A326
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Nov 2026 00:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=nebius.com header.i=@nebius.com header.a=rsa-sha256 header.s=selector1 header.b=co7NC0f6
+	dkim=pass (2048-bit key, unprotected) header.d=nebius.com header.i=@nebius.com header.a=rsa-sha256 header.s=selector1 header.b=MD5PIkY+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPTru-00068B-0j; Fri, 06 Nov 2026 19:01:14 -0500
+	id 1xPTw4-0006wu-AC; Fri, 06 Nov 2026 19:05:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <antonkuchin@nebius.com>)
- id 1xPTre-00067F-Sx
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 19:01:00 -0500
-Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ id 1xPTw0-0006vm-1Y
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 19:05:28 -0500
+Received: from mail-westeuropeazon11020123.outbound.protection.outlook.com
+ ([52.101.69.123] helo=AM0PR83CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <antonkuchin@nebius.com>)
- id 1xPTrd-00022l-2q
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 19:00:58 -0500
+ id 1xPTvy-0002VK-6v
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 19:05:27 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=a89+WdHgnSG2x4YIKtcrs7SBOYmfpzOxCyTCiKoBnB9oeCajt+dlPHsr9DAY57H1UVOiL8+FRP9KUuBO/Xn9Bbof59nxNw6RyBcqB6EPkmkkVPG1qeRzj7a3r5vY9Q12SvgXkFJNcJVoiyIpyG9SOf09OWw+DUm4ErhDZp2u93ts+f3sGgYiVLQn7vIhwD+gxKICCerV47iPFffa+KJ0/ve9bSwA4Hji9HoT27wYP2bcbE82F8rxxC6ED9CNoouinPWxGO0Pq6rd6lN8YMRJ56qAD59LJQouXI0Z3xulBN/KeBqABjmXj8vHvQCfAJVwdoEDR9XD1sxiJMer6djHmQ==
+ b=RYE+WlH6xIagFJLwVEmj/FaK7ww6xgRbHv9GucOBDGX46Fg4bUAaVw1oJAnzywFE7zsUT8h+pJKkW0hgtoANmTId93baSsXr7LtxrjAxt+zsH1f7CFbLLrzW7ivvtaBTH0gYhxmfqZefRX70CeFUjKSClIFbKuMAg7oNpUKH3P627Xwe6z3dewFNYTdxBlBs71qI3gUXOWe+Yok4IN1BSc0LUA0ynAX1v3v1zKVF0w/8iRfH5IPBzykOt0yLT+fn6OpLwWEQVYYPLUtV0gHlkvNKqz+N1N/nOWXcJQi73EgVKYgKz/+dIkYXjyxJm4g1ZiGMeOSzYQyGHGpQ3Jdhvg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+4zuOa5/BYM9GMTXnQLT9Ieapd5JzVt9iaNipPttBhE=;
- b=s185HBiS5Cx+MhDg52+7BDE7+9AUUxjVC2A5j+sUzyIeERZZfWmbLd4JrmcjFUL0GroQGPncsdHJYQaYuhq1dyIFjzrXaHdEvn1N+ylJlk7AHDj7UOIZh6P4ibyfovHOK7vHO8tEhOrSNo8T+NucWpTQkjVL3uDolbz9lSFflBisYyKQj/ioCSFU3fO8PiDaTpCy3hQJu4+ckPDOvGxG49FDmEijlcI7p91r/vafMiphS8CQHh0ct8cdfjY6hh2M+l7EutsMPpbdBCG29sayvEDMo0w52ypsSCbFCaHHMx9jbgFXxSjr5VcrLSmUubLT0/hyPzJWrj+sUTaajx7wGQ==
+ bh=vDont1VeRzGq/MF2R/lEGwATAp2+GALlkGzBgwCtODs=;
+ b=rw5mdDd5novFM+Ekhf9vb4NLSsUlA50MiUDDfPJ0BP0onzyaCMKhhK/kqJGVzOlbq0s24Oi5nS941/5h5KfaOdiv963yMPuOPj4RCinhFInev72K0al9XyjZByF12W6Wtcx9Qz+CNb1PoHKmyma+G3X8jtm/gkmv/bBApZigEHi3kpLAEuXvUx8hSDOMYI08iN8oQ6B34PGnsphEkA2I6kl9jKd8FZt3oKETJn6h2R+Qc7tmgJDtKY0M7dRyGhpZENd8mRz8lJ7WJesN+VfNEtNmenUa58zHd3IVQ2p1oH4+E6PINUboxEfPtOoGcaO9eKcKaaZs4MavvnmesU0yWw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nebius.com; dmarc=pass action=none header.from=nebius.com;
  dkim=pass header.d=nebius.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nebius.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+4zuOa5/BYM9GMTXnQLT9Ieapd5JzVt9iaNipPttBhE=;
- b=co7NC0f6R7f/9RglMcdpkQ532+GVs1mRRzFW7Fd5G+/jrcegMLZCw6tSkWnrqJP9kfH5dm154sWAHfBjMaRCq6hmpzlMkJkF0QiMkjo/hQBL8C2YrVDXd6Ex8GVIMtEH6/504qonh3X5sX1G4U1dx4E3U8yCIA1ObUHT7gjoF5pqobgpnxrp8NIO5PGyIKstLk0+HPOrRxVe24S65oZt9iqx88oo4z19pXO0KvwE6hENXwg3vO6rTHbcgGX2GfmuFc8qzjXNBWvEmVNFq3rwOPzQ8O88LKdHMSmKe01FBsdY4tEfWyIC7RR+vlxMJqwQybJcZK8+1atLz/F5JWEIhA==
+ bh=vDont1VeRzGq/MF2R/lEGwATAp2+GALlkGzBgwCtODs=;
+ b=MD5PIkY+uuB4OUCBzxWSm/QPU5pRgK5PrXHxiuIzPaX4Mu7M5oxQaeW2risjRI3fX77XCMjgtTxIoN2lb5InpBoNFU4vdMJzbbItUyFoFdI6g94Kk++Asp9o8IPn0MeqLkyd+QRGJqRcUIwcZD4loyAuKyKaW7HD2U19Dr+UAtUBDfdHC1508jWpoNyBsufeXU+St6ZZ+oe+b/Zxt6OEGdvp+W14PhSuZWTn5rWL2Qsn19npE9NyqUPptkl/4OzYhnXqfS2YS0qtDC3lOc5/BBsNyns9ivHR1WwwCAMuG4UBOr9aPnpZHzXfJVOsnWUVNh+vtv8+RDoCuKCxRePBhA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nebius.com;
 Received: from FRWP190MB2486.EURP190.PROD.OUTLOOK.COM (2603:10a6:d10:17c::7)
@@ -47,12 +47,12 @@ Received: from FRWP190MB2486.EURP190.PROD.OUTLOOK.COM
  ([fe80::78f:90cb:c40b:7db%5]) with mapi id 15.21.0592.009; Sat, 7 Nov 2026
  00:00:20 +0000
 From: Anton Kuchin <antonkuchin@nebius.com>
-Date: Sat, 07 Nov 2026 00:59:49 +0100
-Subject: [PATCH 2/2] hw/acpi/aml-build: Avoid overflow when advancing the
- free_base cursor
+Date: Sat, 07 Nov 2026 00:59:48 +0100
+Subject: [PATCH 1/2] hw/acpi/aml-build: Ignore used ranges outside the
+ requested window
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261107-users-antonkuchin-to-send-fix-crs-replace-with-free-ranges-v1-2-0cede42456c4@nebius.com>
+Message-Id: <20261107-users-antonkuchin-to-send-fix-crs-replace-with-free-ranges-v1-1-0cede42456c4@nebius.com>
 References: <20261107-users-antonkuchin-to-send-fix-crs-replace-with-free-ranges-v1-0-0cede42456c4@nebius.com>
 In-Reply-To: <20261107-users-antonkuchin-to-send-fix-crs-replace-with-free-ranges-v1-0-0cede42456c4@nebius.com>
 To: qemu-devel@nongnu.org
@@ -60,11 +60,11 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
  Anton Kuchin <antonkuchin@nebius.com>, NB-CoreTeam@nebius.com
 X-Mailer: b4 0.17-dev-ce4c1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794009618; l=1110;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794009618; l=1853;
  i=antonkuchin@nebius.com; s=20261107; h=from:subject:message-id;
- bh=/r1QNUpRS1pAD4reHaV2lyLhrWut/E4oI81GiahjEno=;
- b=1BYbO75sOFtlyXQa/g/kuC3iG4aESPYc1uFE7NUVVUil6V+sg1TjVWR1ucy8AyhapNreRzIKN
- fK4lL40STXTDFprfNpXr98HdN/eUl1UujTmJsIaSsn5LsaD6ixQEZGm
+ bh=lPP62xJTwOjWLJ7lhqw1AQa4Wzg1XyMY47LRmaXcqwk=;
+ b=R3OeRf+mba9+zUElGcTtpQLtsUrepiKeT7o0UvWeZ9VIZm08hQbF1IRBQUmHKfsTngp6E0HL6
+ GlEO+tswnmmBrlKcJVo2xO6CyA3ByI5VKp9JVR09jC6zdXmCi1O/QuA
 X-Developer-Key: i=antonkuchin@nebius.com; a=ed25519;
  pk=WQsZ99gv454EEZuGZAy0F4nnukJHB0u8dHHKMSJUBws=
 X-ClientProxiedBy: AS4P195CA0050.EURP195.PROD.OUTLOOK.COM
@@ -74,77 +74,77 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: FRWP190MB2486:EE_|DU0P190MB1980:EE_
-X-MS-Office365-Filtering-Correlation-Id: f29dd3e7-25ff-47f7-e8dd-08df3c621d54
+X-MS-Office365-Filtering-Correlation-Id: 933e6bc7-2aed-4309-68b0-08df3c621d2d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|10070799003|1800799024|23010399003|376014|18002099003|22082099003|10067099003|11063799006|261026121527099003|261102123227099003|261021121427099003|56012099006|261022075727099003|261009223027099003;
-X-Microsoft-Antispam-Message-Info: g2rphzoyljjwrGt8uUvpfdxBSgji9m+dJK8xkf/7EPMpJ2J0EOOoMO6B+QiQiwL5Tf3yjYjDSeM1CT3PcPTT6UzfKx1QGQi6NlsbLC03dxuGD0NODKd4XQWjPyLyd8YYrGyRfbUuJW/RESwDfBf+vcekYehmmxmNfBtj9T55MPriyCLkS/dGTPc1filc0zZEIh4h8Pkrq08TRrB+ZYC5BpQ62h4DD5bNP9TDwMDAIU3rHSDzA3KV7O5eEduu1cTC1cmxo1NiQ9moTEVPmbrXZzk5VqG/SyCQzTUWQNPhdTVvPmvG1N4kTIoXO+Ht1kvBHO2ujB1GJNC8ExBiYeHzPDvLvIphyIcOV4h36MT3NBy5DMRDOiV8kqccbJ4KR/6fwGYkdBKvEK9omB/3FsvTyuFflKcLU1MGgsK7q7iFd+OYcyGbW1/tKDpQPNNmfoW1IORRZNdaaWLl15AE1XgOIV2POO9fEKKeFN9MjfIOxnpR2G8h5v/pfu97TUIfcRO3jptuRCly5BQjHjVzlni598Ao35ZBMFZXtimYNKJxZtNkUIxrJfg4Lb1xnygzf4Y38eUL9Nsr31r4DMjdckv8FV4QlHrF50srbCFuEa5DJdUlumbb1K6e8aq0O+4wvgs7m7L/FZuFOlG8vQOX2ls0dwtmyN6QbeqGIjgoPcBUqGQ=
+ ARA:13230040|366016|10070799003|1800799024|23010399003|376014|18002099003|22082099003|10067099003|11063799006|5023799004|261026121527099003|261102123227099003|261021121427099003|56012099006|261021123027099003|261022075727099003|261009223027099003;
+X-Microsoft-Antispam-Message-Info: 6e7av4KBOV4tUH5vGlYVZQUdUzlj1ulGw01Eupfzqaeb9PXPsHUUNh48XxCOheiDAYglccrhdT//YgZkFikyNNuypqA/uY+2BlNsCFuSol31MUbm7VyPpnFE2CQscNMD3E5BQ799uj4aMSkBqc/JXimLk+3hSMqprUJtQ6OEciLCf4ixve2vN62vzfchU6aS4lAP7WtdZfZgurD1WV0MeaMHPfBOclDQL3ww3sQ+GMRIlqYLuYDFCNtZbODSI3lGTOhHi1LeQjGsA1dT2VeIPRl4YZDzKpe6mh98d6uqQNP7UhpU54MASZPoq+0+FXzCitf2VryzPQXTZE8Qo4jcympR4XL5GBcn7BRad5xb/niVzskT9kyQ+drrarykty1DymeSmq1IRaHgtWBQEcS17ULyIZLilDalan0dPiFTvuMQMnaR6FiA59EH8CzDjxkeOTACjYmpRCWMRWIftpiM/bd8/xhPbJpQCpVs7dlAYhPkyWigByXKrHJTAiyMjBUAdvBQz4SKSGaDoeTiengeI71oxF/MiL5Ptk5yZzQ5PZARqZjBgk9slqFsjQroVmZTsPTXNxw7mf101C3SixiKuGfeduWzTDU2PZY75TKWOnnjykEFSK5LJmAYte+StvrYNl0+byyCd8adQx39i/W18A==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:FRWP190MB2486.EURP190.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(10070799003)(1800799024)(23010399003)(376014)(18002099003)(22082099003)(10067099003)(11063799006)(261026121527099003)(261102123227099003)(261021121427099003)(56012099006)(261022075727099003)(261009223027099003);
+ SFS:(13230040)(366016)(10070799003)(1800799024)(23010399003)(376014)(18002099003)(22082099003)(10067099003)(11063799006)(5023799004)(261026121527099003)(261102123227099003)(261021121427099003)(56012099006)(261021123027099003)(261022075727099003)(261009223027099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?M1FpSnVaMEtZa0FJWW5nNHBPYVgybU83dGdOcDVnNm5GRWU1L0xmQUlkWnZr?=
- =?utf-8?B?c3dubmFDb1VzTHpYWloyakhoVkxLWUFieUpWZGNMeXRvODErNENmQjZKT0hz?=
- =?utf-8?B?c1pTT0MzVHVlZmpwcGRLQWVnb2lrUFZtejlBNzFHaldYUlE4VlVXeHJpSUpU?=
- =?utf-8?B?T3NSNXMzWVBVL2tVZy9qcEVPdnVyR2VKQisyNFcvbk5BcDJxSHUxb3l5MmRD?=
- =?utf-8?B?cXVUdGRVK1NQUklUbkpMR3U1MHZpd09kNDBvSFR5cEtwZmpCeVVmMEtJRjRn?=
- =?utf-8?B?YzRKZGtFL3VOWVJnT2pZTFpLN0xFRHJxaDNMNlYyV0VkUERXQUt4VVVCYm55?=
- =?utf-8?B?Z0Raa2xjRTVLOFZwNFlsa3hyYThHTGpTZWl1K3JVejFPZ0ZlUTZ4RmxjRkF3?=
- =?utf-8?B?NFFTZzZhQXoxQ3cwaUF6QnFvRWVkd09oY3RhblByZEtMK3gwWWpWVktEOVM5?=
- =?utf-8?B?RlkvNm53UnA0TDNvbFJVZHlvZC91ZVZUZWc1VzhOOFFBRFNnY2FQVCtRQ0tt?=
- =?utf-8?B?M0RkS3ZxZG9ydFZtVmhaK0JuL3kxUXRZTjFlYWU3Z1VqdFVGWnBTc240SHRT?=
- =?utf-8?B?K3B5TDBzWjZYMXlGU2d2MzkrR1FEZFBaWjF5c0U3YTFZandjNUNudFYrNU81?=
- =?utf-8?B?U0c1VkE0V3UzZk1IWFJSM1hKSTJzcnhRaVc0Myt6ZWdLK05EeWYyZU1lRFRY?=
- =?utf-8?B?OGpXb1BkRmdzTUtvTlFuejMybStOWGlCS1o3bWtOY0FkbHhyU29heUNnaTEr?=
- =?utf-8?B?MCtWYnBKL2ttbmViWTY5NlVubUVpVTloSVBoVkEvWnFBV3UrVHpJQlFVemI5?=
- =?utf-8?B?OXhYNkJWT2YvRG9NV1dVOGFycWNBclVwOXNTS1k5SFpvSUJoblRPVzVkR3Zy?=
- =?utf-8?B?TmpiTW1OUSt2OVBkaFlrenMwa0pUdXFUS1Z5ZUV3ODZTZUNWWGZVbG45SmhX?=
- =?utf-8?B?MTg0U0ZKay84OHdTUEdqcHN1aHJkWXRaNGpndS82MXh6V3FvMi9nNmgzd2RF?=
- =?utf-8?B?bmVTU1ptOTl4Y3NnS0p3SFBNWXNuOE1LVWRGTTBGNWFLOVlwcXE5T2E5WmVG?=
- =?utf-8?B?WjZKOWN2WkFTbGxTa3BJQTJUTk1ndmNmR1RZRzJWaXorKzRxbGx2TjBIMWtG?=
- =?utf-8?B?ZnVSbjhad2ZGOVdBd2oyVzhOVnZ1S3BRemF2U1htUjJHQlBkVWxvV200Zktx?=
- =?utf-8?B?WS9jTVBBK3IyaUtrdWFxTUlscTNmSXJjbUQ5VWh1TUFRUUhiVmlWSElqa05h?=
- =?utf-8?B?VTNkc2kxMDJWblVDQXlFSW03dVRUT0d4UXVIOGgzZ1RKOHorRy9PWThyN3ZP?=
- =?utf-8?B?MlEwZUF5eXVmeVpRRlhjK1BvcGJoOVNPdEI2N3lHUUNGSjJlSHZ6TnJTU01H?=
- =?utf-8?B?RjlNQ1F5UnNvMk1pUHVVTncwYUE2cTk0bk9pV1l2MVB2bmNzd3dIQ3dRYzhY?=
- =?utf-8?B?TFV1blFuK2Vpeld0emMwaCthUmxDOEM2TzdiVXJBVDBXdmFLcFlhK1N4Qk1V?=
- =?utf-8?B?M0JtNHZTRWpnWmI1a05ZMHhJK004bFhwNndVM3ZieWQ1anJYK3drd240c0VF?=
- =?utf-8?B?VFBQZlAxTWdmeVd3VGhzQk13SVhnRGFKYmFxbWJKcUw3ZHJyMTFYalhSeEpa?=
- =?utf-8?B?NElvcXZXT0VTY21qem5qWVIrazlqUERxTGNwWmNOVjlxWnF0RC9xTHc0TGZX?=
- =?utf-8?B?OG9zeUs1YXhNSWFVT3ZHNXkxaVBsR3BtMjJURWo0T3ZMb0FjVGI1SGR3SjBr?=
- =?utf-8?B?NC9NaTRBSWFsTTkvOS9xUWJDc2pCeFdZMjJtRFVVcHhnZi9ZWHdwOENsUGRH?=
- =?utf-8?B?cjFlNm5hYkNQa055cXN2RkpvRWxVZ096RTVvYU5iVzFPbDNZbTYrOXdncmly?=
- =?utf-8?B?SmpsNWlXbVlLSzJTUnRuclgxR2l6VmZGSWxLUnJPTXZFTkNjaG1pZ1RHbHlE?=
- =?utf-8?B?REdVc1BGaXF2RVNNQ3crRnFVSytMV1FYMUdTVXpla28yQnJhQTltYnpBSlFh?=
- =?utf-8?B?STEvZ242UGx6WXEvV1ZBZFNWOVgrbEVIOVlIU2VPaFFiTzFnZnh4eTNkb0Ur?=
- =?utf-8?B?RHJxSGo4c09kT0VDdGlUV09hWmdoU1p1V0xFQXRYNmJxSHF6Q3NmZUFLTFUw?=
- =?utf-8?B?LzZ6dndzMURCeDIyT0hnYk03Uk9vRjF6c0FzZnQ3Q2tWaU5BbDhBYVZ5WFRS?=
- =?utf-8?B?ZlExK00xL253YWN2b202SC9CbzVtWGpjUnk2ekVKRDh3bU5MUVJ0eURucVB0?=
- =?utf-8?B?UWxWUzk0dXZ1aDNvV1NwdWIwWWp2YisxNE1SQXByYWpTY0diMVlLZWxhakFS?=
- =?utf-8?B?R0FodjM5dmtlV1lGZUpreHdKalNjT0dMekg4U2dZaDB0aFpNRjUvTkdIUmhH?=
- =?utf-8?Q?RC5q6+FDAjwii+rsUVDOiH/vr1dNTxp0VCUm5iq/dxytl?=
-X-MS-Exchange-AntiSpam-MessageData-1: QBfCSvWDGHkmbg==
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RzB0S1QvRm5CdHN5Qk85K3A3SzFab2FHeHJXWllhYkNxVHRYUVgvci9JdDJJ?=
+ =?utf-8?B?TFNRMVNuTk9XaE00aVpzZUcrTjNmdS84UjhQdDRLMWFiVC80MzRvZnZFRWU5?=
+ =?utf-8?B?dm1IbXYwalVEdXVhalVDeG84QTRFWXVFQjNPTUlJTEZmbUxGeWN5blVVS3Bh?=
+ =?utf-8?B?R3VNekRFSFErd20ySDlrMUovMmpFTFBmNlR2ci9SaWpQdjBaRm5xZjlrMldZ?=
+ =?utf-8?B?Rks0K0U2dDBWdHEwNXlPaUYxWWdjQi9GeFlhR2NlazhKOFJHMlpWdmpHdjVI?=
+ =?utf-8?B?cjF5WllqT1hOSGNDVVc5Zk1jYXZtZHVZUmxlUnFwaEtYOGJHMHVvMlFhYTQw?=
+ =?utf-8?B?ZU8wbTNNbEIrc1RXc0RQT2E1RHJhL0MxR29wQk9CbXhMS3BjVlhuRU1CN04r?=
+ =?utf-8?B?L2F1c1l5aTAzWVVNVFlLU3dGaVgxZXBhQ1JkTDJDRG04SVQ0dEhHK0RvcWFn?=
+ =?utf-8?B?SW9KTmlDMkpKUk41NEYvczBFUXU5YnRpYUpYT1VDTmxnL3dHL0lZWC9EM0R1?=
+ =?utf-8?B?NW5KS2pGTDlWQXB6eEJvS1ovV3JGTHRyVnZvcTZJOHFyNnMxeUt0bEtrNnBq?=
+ =?utf-8?B?b05OU2JldFZwdTZ0QkhjbnBtOHVkK3gzOFBWaDJ5Ymh6STV4WnN1Q2t6QURl?=
+ =?utf-8?B?a01qT0lBR2R2VjF6OWY5L1RhK1FpUGxDYVhrTlFpRFF6elBiL2Ryd0xuMUl4?=
+ =?utf-8?B?YjNhZjBqQytvMWdRTUFmR2FIRzMrTG15WUF3WDRpUjc2bEltZ2dyVXlRU0gr?=
+ =?utf-8?B?NHNLaFJaSWJiNm81UWc4dm9jSk1XOUhmY2t0dWpWK1ZiaVNqMXYrMDczbUxF?=
+ =?utf-8?B?YzN0YmlVb2o5U1JKNG0zMmRTM09GQjhQUjBIdmZCMVZJK0g0K3VWRThtSTRQ?=
+ =?utf-8?B?djUrYW9wSEdCN3NBN2ljS2JyKzFXd1Z1N1pvem5CYTVxM0QwbFFTcHRQeEJ2?=
+ =?utf-8?B?QWNWSVo2ZVhtUzZ3U1ExTXFuVXl2akR6RHBWdVZCOHNybGhIbU13MXdxd21K?=
+ =?utf-8?B?T3dIVmEzWVc1NTlQckROcXV5d09GNnJBZWpxcGtySzhObGxWNXBwYy9kS3Zh?=
+ =?utf-8?B?VDlOOGZaNUhqMDE0YmFvZSt0M2NNLytBUVZobnB2blE2RCtNbk4rNi9iU0g2?=
+ =?utf-8?B?czdMUWM5Y21BYVBRb2VFMmhlTk4wbUNLbkhIb3ZBZXZpSGFZY0NzbzhoVm4r?=
+ =?utf-8?B?RUlRYWlQSXR1Z0hEekVZMEJ0WEc5amRzMXhLSVRYdU5hcmdiMjkwbkpyb21t?=
+ =?utf-8?B?SVJDalhlMHVjcDVxb3lIT2pyWGZoUjQ4REVTcm5FSDk1OGo3TmdYVVd3YTFU?=
+ =?utf-8?B?VVFqSWhUUG8rdzlKRlVOMGpqdkJmUkJ2NHpSdW9SbUJsclNUT2Fwd3g3RitL?=
+ =?utf-8?B?bHhvMnJycjdMVUF5eEhyT25HQ3Y0L1BpN3gvUDZQMDF6THlOcXdMVHdpK1A3?=
+ =?utf-8?B?UFlTZWNneTU0a3FDNkRPY0RZb0V3S0FQNTZndEVtbVg2cW4yN1hLWGVjdWNW?=
+ =?utf-8?B?eTQ0Wjhqalk3VFVTK1k2dWFmUlNTNTdvY3I0Wkc5b0ZXdHV4YlhTTndGNDd6?=
+ =?utf-8?B?NzZJNGlqZGt5eUVmdUVjcndBVUVFYjYxckVSVkhnVjFXTUZaMzZkaEU4eFVV?=
+ =?utf-8?B?cFNRSjJxS2x0VEN4QWFEUHZXTmx3TnJFOEJWOFY2MFU2RlF1NXNua1h6S0E1?=
+ =?utf-8?B?VVZBcHh4dk9wYWEvak5oSjFOMndtVVNpdWxxOTJsN1M2UGx5eHdIZTc3dHNK?=
+ =?utf-8?B?Wm5WQ21IUWNXMStNUGd2aFZnOEpHaTFnU0k0clRBdUNXM2I1bU1nM2dSRkNV?=
+ =?utf-8?B?ZFJNYkRWUWNvL3V0LzFSQzBTZmUzRzlRZHcvaC9LSlhUd1RoWGYxZE54K1Zm?=
+ =?utf-8?B?dGNjZ3crdDM3L29oVDZwN0lrcUsxTE0xQTY1WHRvczNORmZKRjZTcVdwVGRL?=
+ =?utf-8?B?SmtWWGZKZldLaXdkZDBvdlk0Q3FRakNxTm83cGRwb0RrZWxTdlFoK0ZOMVpF?=
+ =?utf-8?B?dk91c0ZCdG1VM2RWb0ZoeGkvaHllSld3akR6ZURnV1JXNi9RalliSXIyOG9r?=
+ =?utf-8?B?bU9LcnV3MUJCN0FnWndmRGdveWpTR1djSjV5dHFaaFZFandYOFNzN3hRaFln?=
+ =?utf-8?B?SFJqeFNxUFMwZGhIWFBEUUhJR3gzU3R4eWNJb2VtYlVOL2NidndWcjhHWStm?=
+ =?utf-8?B?b2VxdlQ2b2p0ekVXM2tGQUhNc0Z6dlVkaWpodFg0dEpGZlBWZFRTVFV5YWM4?=
+ =?utf-8?B?d2ZId1ZRMkRIVzBZL2p1YU1nSlRpMkluTkhkZDdKUExTVHlqaVhqLzNIV2hu?=
+ =?utf-8?B?dGNrWG9BWnZpVjJUSFp0R2dtUW5xck9RdXkvTWYzQVovMDI5dm5idEJvQ3Va?=
+ =?utf-8?Q?6PGIwhGfkj48w/VIDiNrQv4KdWTaKxAtFvDMI1XJSyLsN?=
+X-MS-Exchange-AntiSpam-MessageData-1: IOfxfGeJYpD0GA==
 X-OriginatorOrg: nebius.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f29dd3e7-25ff-47f7-e8dd-08df3c621d54
+X-MS-Exchange-CrossTenant-Network-Message-Id: 933e6bc7-2aed-4309-68b0-08df3c621d2d
 X-MS-Exchange-CrossTenant-AuthSource: FRWP190MB2486.EURP190.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2026 00:00:20.7724 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2026 00:00:20.5122 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4eb23c52-f3a5-49bc-b555-0b061267a984
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fof2Ukf6UYNxQcu6wUI09wNcmTlV4mX/rMpwFdAVcpUJLkMunS+MMPhTqJOV6WqIUhVjt56VyKTCiSvZtRmKtQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: FkEnixm9lG0amu+nP5lSY12hKITKVA6aXo6U1JSX+HR+desLc3oHOVrGSPfJEPRrusCtuyhcugKlneNxC1nu6A==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0P190MB1980
-Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
+Received-SPF: pass client-ip=52.101.69.123;
  envelope-from=antonkuchin@nebius.com;
- helo=PA4PR04CU001.outbound.protection.outlook.com
+ helo=AM0PR83CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,37 +164,53 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-crs_replace_with_free_ranges() advances its cursor past each used
-range by adding one to the range's limit. If the limit is
-UINT64_MAX, the cursor wraps to zero, potentially producing free
-ranges outside the requested window or overlapping used resources.
+build_crs() collects used resources without any information about
+valid address windows. These resources can therefore lie outside
+the interval passed to crs_replace_with_free_ranges().
 
-Adjust free_base and stop processing when a used range reaches or
-exceeds the interval's upper bound to avoid cursor wrapping and
-final free range insertion.
+crs_replace_with_free_ranges() assumed all used ranges lie within
+the interval. Ranges outside it could therefore produce free ranges
+extending below or above its bounds. As a result, the guest kernel
+may assign a device an invalid address range.
+
+Skip ranges with limit below the interval start or with base above
+the interval's end.
 
 Signed-off-by: Anton Kuchin <antonkuchin@nebius.com>
 ---
- hw/acpi/aml-build.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/acpi/aml-build.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 90837b513e69..b71d82b5e8a9 100644
+index 990abc64cd8b..90837b513e69 100644
 --- a/hw/acpi/aml-build.c
 +++ b/hw/acpi/aml-build.c
-@@ -154,6 +154,12 @@ void crs_replace_with_free_ranges(GPtrArray *ranges,
-             crs_range_insert(free_ranges, free_base, used->base - 1);
-         }
+@@ -124,7 +124,7 @@ static gint crs_range_compare(gconstpointer a, gconstpointer b)
+ }
  
-+        /* avoid free_base overflow when used->limit equals UINT64_MAX */
-+        if (used->limit >= end) {
-+            free_base = end;
+ /*
+- * crs_replace_with_free_ranges - given the 'used' ranges within [start - end]
++ * crs_replace_with_free_ranges - given the 'used' ranges and [start - end]
+  * interval, computes the 'free' ranges from the same interval.
+  * Example: If the input array is { [a1 - a2],[b1 - b2] }, the function
+  * will return { [base - a1], [a2 - b1], [b2 - limit] }.
+@@ -140,6 +140,16 @@ void crs_replace_with_free_ranges(GPtrArray *ranges,
+     for (i = 0; i < ranges->len; i++) {
+         CrsRangeEntry *used = g_ptr_array_index(ranges, i);
+ 
++        /* skip ranges below the window */
++        if (used->limit < free_base) {
++            continue;
++        }
++
++        /* skip ranges above the window */
++        if (used->base > end) {
 +            break;
 +        }
 +
-         free_base = used->limit + 1;
-     }
- 
+         if (free_base < used->base) {
+             crs_range_insert(free_ranges, free_base, used->base - 1);
+         }
 
 -- 
 2.43.0
