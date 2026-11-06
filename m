@@ -1,104 +1,149 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86374606D802
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 02:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F791606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 03:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yHZqTA/w
+	dkim=pass (2048-bit key, unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=a2LLl7SO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP9sR-0006Oq-9s; Thu, 05 Nov 2026 21:40:27 -0500
+	id 1xPAeB-0005oJ-Qb; Thu, 05 Nov 2026 22:29:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xP9s5-00066k-Ug
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 21:40:08 -0500
-Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xP9rw-0005xs-DI
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 21:40:02 -0500
-Received: by mail-dl1-x1231.google.com with SMTP id
- a92af1059eb24-1ae18eb9b69so297853c88.0
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 18:39:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793932794; x=1794537594; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LAgFtZI3pjCQTGA6+IKL/nBbms5kZLlBrfMfKvaI13I=;
- b=yHZqTA/w3iCEb3Ey7Nxjnv+f9bo/ZWfL2eM0EIG13r+eRWOJX2Oe4EnQH/daa4rPov
- nCnu5sGouX5nBQqCovtWXazyE+8UDNtNS1Lh27t0gPtJRHZD3oOx6pTOo0CEb9Iavbv2
- zGk4byVZiwFluI9MlNRSrm4u8ejAEvrpPfed6/UDA4q2b+OKEhASGYv1JrZEHznl9POL
- jzJPu7RyGvuwqxZ9P//IojbWiupidU1EXNqj1G6LKGA9jbXmn4XMWUkYbGs6FP4s5jtb
- 2hC4ytawiDlRjTT3oXb3wz7raA8gHf+xvIlQFnnoxI2pdH9SQGEtUj8UvmYxy1QLo1ok
- kUzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793932794; x=1794537594;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=LAgFtZI3pjCQTGA6+IKL/nBbms5kZLlBrfMfKvaI13I=;
- b=fZ4hhx4z0U9XxMr5XI7IzEcvdSVeTlHa4Wr6U2494za5EJwo7XRJVyGvHcdAeb+Dq3
- 86bIMGdXcCMIBosLrMkCc+w2CCkXA+K5QVDGlOWzoJr9vJHC7z8sc8U3LQTsU+wdI0Xj
- WK8iJhxFVW2e5ESvNVtWvWop01EYecGL7SiZXkfc6RbgXuZBM3dfsqphQGJ1TnwRekXe
- STYQ/tZv4Q6bIMom7gCTIjbIbMubjlxViLw9cnypPQWFcmkUR2rSjME/gz3229fs7QUb
- iss6HzMn8NH/VJCU6f2Whzy2Ydn+XUHeuMuaSj/D/BZtKsabEapyTxEuHjAmzKpQLzTP
- /uWg==
-X-Gm-Message-State: APuU4Z9cy23C0NDEyS7v71ibS7+UsJfEnyTMXS6ZHimPBaPacLRJglPL
- aVur+GDJwQLZ/mhGcADEhh+ZPVQL0gEgcT9pnDlgVaY6JZ043VN1lLds/O1mLukc
-X-Gm-Gg: AYBFou3vCAMyfH0yhQ6+hJgrh4luNqkpzCIpGHfJkICdWYXsW3CLDMxc1LJBapf6/s+
- MR033m5zUNK3Dy7kysYp82p7hwVOtd23vSoIOQ0MQh7W13QBEjlqspbCtwwAqEvPh9SxmzENLV2
- gQFpbCaK2Udx0nQB7PsxhZlzt9M1q8YEqcgu1dpRLMyj+YAFoVcR+DALlKJrqubLqQl1EAHUCQu
- k5x1G4ZFZ76ToByJXmXXEuIaR/t7K6ikfJ2WRDC0EyQct2DNfa3PvJOcIZlG2fsfdP/eeS59RQD
- Q+1iJjiWfg/SKcFamBTUHvlGKQQgjwG5DErfDCrPn/Tn56gUmztRGoO6gKobbu2l1bsm7nqf8Do
- q6kjT3i5/LNZA1vUlARfZdQjGdRmwTSl8NQhBRnpP4ACA88+XeDB5E3e4VmSOQV2PmZbt7a0VNS
- 4bT/tXM+rZMlSSwGH34tBMkh4JRWFhXSfM7vVhZKPGMt+xKZC/RNaGd3ajxf+JlZuURrM/5sRl5
- x8Df/Za7wCV4CsJPTzy9c04HFv2F7q4sF7czgMv/dprv0wm/VtwKbuSU8W70LOesXQ8/u7Ry6ic
- Y6c6Yu7vaAh/YBoQVxQu1vh/BH+Fp7nQY8WmnhTM7/hzwlYS
-X-Received: by 2002:a05:701b:4346:b0:18d:9eec:e0be with SMTP id
- a92af1059eb24-1b25d286bafmr1250066c88.2.1793932793411; 
- Thu, 05 Nov 2026 18:39:53 -0800 (PST)
-Received: from DESKTOP-Q716RM7 ([103.94.185.75])
- by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1b25e4efa6fsm1108318c88.20.2026.11.05.18.39.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Nov 2026 18:39:52 -0800 (PST)
-From: Yonggang Luo <luoyonggang@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Chao Liu <chao.liu@processmission.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Weiwei Li <liwei1518@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v5 1/3] accel: register CPU parent only for AccelCPU subclasses
-Date: Fri,  6 Nov 2026 10:39:33 +0800
-Message-ID: <20261106023936.772-2-luoyonggang@gmail.com>
-X-Mailer: git-send-email 2.55.0.windows.3
-In-Reply-To: <20261106023936.772-1-luoyonggang@gmail.com>
-References: <20261106023936.772-1-luoyonggang@gmail.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xPAe9-0005nv-1O; Thu, 05 Nov 2026 22:29:45 -0500
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xPAe5-0001cE-4Q; Thu, 05 Nov 2026 22:29:44 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=F+swJkAI4g9oFVIKF0u2bex4mRk5WKt9u2teZGIEmJG9sazBYlev46u2qdbTrf3opi+RI/zslKVjvurOrmFNwyLskKCsQ94KTkaXg82gJpSxnCLHliVPTvFeko+xSOARNK+0lUT6qKd0VcPD2rBCGjtXxF0SLC2jNSFtd36+u3zwj8Vvw1oIb3S8yjXIh4aDwjtjZwaMAtMBNn73bZ44Smsv/pzY8oAMl/SEWWRhanHSdwJJrGjmRP0mWTTYNcdaaj2i79G3t1b9XcP+zmfcdPZelnuGww2IcW3oTxivG/sylx6EL4v+YwC+1ZiHbmYUWk1TcatgbjuZpjpzRkFfYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tXmZP/o22YPY7Nw2kfylYO7CV8zovobJxt4LFUh8yAw=;
+ b=TVHKPPG/Zl5WBvSREpa8ZzgVyw+BMvxUab8i4P3qb9PvbALXdIXng65BYr0tVU0CWsKVE92pXquatCkKsRbmbJmwgW+oCyOShYYzGzeQXPzWWyVr9f3zb9OMm0vlumWSKet2VwB/yuHtyLJNP2a0Rx+Kh5f4EFbjOv4jK8IkFWawbf48/JDVY+T8GkwTMrE9QL5ol0TMPPETY8iIW4hoDSZi89RF9XgjKbdUlO0X46Wd9bpxJvAkQY+gjEAyBwPwEF+PB5ZaIQkSrBXkQFAMiTL5CBY/SbzZf2x6NEBTSYoay89yZQGi3cESbisB79i9KAqnTfMsQQjKWosZsD3XIA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tXmZP/o22YPY7Nw2kfylYO7CV8zovobJxt4LFUh8yAw=;
+ b=a2LLl7SOctTz90SW7kN4IUPkbD2KT7vqQrryeJtwJzqXu7qJYCWGZrwjjaZxrheTCj2R0RLHm7Qei5Q/K760vRAOvS7whpLtPHcszhrmdhUt0mT/Epu70G9RhwCKidorZN+KitvLvYnEE9Nj83nn225W7htFsIvWLQ9qHj6Mw4dy4bbMDVeVVN5nuz2ICqCVPTXd2uvkB3qAkN7/3PHETPkPBTcHTD/zbu6J8iez1zlwV8kHwvQeVatlZBhnRKIbgb4vV6SgNgGj40Htlstl8Jis25IwAmQTFMvbMSc88lK4ESMQocWtFY1YXixmvnp2k2xt7KOMjE6BXV+kR8bXbg==
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
+ by TYZPR06MB5073.apcprd06.prod.outlook.com (2603:1096:400:1c7::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Fri, 6 Nov 2026
+ 03:29:29 +0000
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0592.009; Fri, 6 Nov 2026
+ 03:29:29 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Junjie Cao <junjie.cao@linux.dev>
+CC: "kraxel@redhat.com" <kraxel@redhat.com>, "marcandre.lureau@redhat.com"
+ <marcandre.lureau@redhat.com>, "clg@kaod.org" <clg@kaod.org>,
+ "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Kane Chen
+ <kane_chen@aspeedtech.com>, "philmd@oss.qualcomm.com"
+ <philmd@oss.qualcomm.com>, "kfting@nuvoton.com" <kfting@nuvoton.com>,
+ "wuhaotsh@google.com" <wuhaotsh@google.com>, "zhao1.liu@intel.com"
+ <zhao1.liu@intel.com>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "deller@gmx.de" <deller@gmx.de>,
+ "sstabellini@kernel.org" <sstabellini@kernel.org>, "anthony@xenproject.org"
+ <anthony@xenproject.org>, "edgar.iglesias@gmail.com"
+ <edgar.iglesias@gmail.com>, Troy Lee <troy_lee@aspeedtech.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "xen-devel@lists.xenproject.org"
+ <xen-devel@lists.xenproject.org>
+Subject: RE: [PATCH v8 02/18] hw/usb/hcd-xhci: Add an auto-hub property and
+ leave it off
+Thread-Topic: [PATCH v8 02/18] hw/usb/hcd-xhci: Add an auto-hub property and
+ leave it off
+Thread-Index: AQHdaqugzonZbCOsyEq5GblPuZWDarccaGeAgAP/C2A=
+Date: Fri, 6 Nov 2026 03:29:28 +0000
+Message-ID: <SEZPR06MB73626D50E685F83DFB006D8DFC762@SEZPR06MB7362.apcprd06.prod.outlook.com>
+References: <20261102092201.1729245-1-jamin_lin@aspeedtech.com>
+ <20261102092201.1729245-3-jamin_lin@aspeedtech.com>
+ <20261103142327.1348025-1-junjie.cao@linux.dev>
+In-Reply-To: <20261103142327.1348025-1-junjie.cao@linux.dev>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|TYZPR06MB5073:EE_
+x-ms-office365-filtering-correlation-id: adc2b7a6-6df8-4910-ed68-08df3bb62a50
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|23010399003|376014|7416014|38070700021|56012099006|4143699003|261022075727099003|261028144727099003|261026121527099003|261022105027099003|261026140227099003|10067099003|18002099003|22082099003|3023799007;
+x-microsoft-antispam-message-info: 45qwcQA67U0vfxjjUKdXractJDBts2WaA41Dw9+d1JtW5DHEL7sdUd3CmwJej7PomFm6/UEf/M8WVXnlq7mL0zdF8IegiCc03oY3UIlwKtRAaYSiMsb6oXBGND+maGs/eQYbSr+ulcXTzY7KggeU2rG5VSDiuACwDqECq3Zu3yvV9ZXkcSt6M6KtleQCREVYW6/CbSG/cMmMMmcWPCjUlfCDXZqVpzMO8CaVQl4qNyBoTGDEOJ1d4HGaTUaqa2SLgOfwZQqA13+bLgdEa92YNQDgtR6ymKuEwZNvv7GpeEr5BaQSTFvaKlPqoLtTQ3LqxJ3YCFi7yAqa7QM1f3PrgEFcZ0GaIdPg5Nw+zwRWtGKjthZNQQI9eMhBjRNq+AAlBz/rd3gZyeDzTxlF1pOrt8SHMy9fMkt2uwNZPV/7hsY7fUqEgSVLqgAD6+zga+2WtfaEV5YYrO9t/VgwbZMv92hNcZoTYoFwxJOsL+DMUaUKKHds87zyq/a+obCFjvckeWxQOMWlxMvQaQX7g+DjpX7xJVNh3WAxX6tDt2FXZutKzszBSQe/P++o5OOhtOAsBvqxFGQf1FLgzcWQcoggtkCpEtfHnnx6tmWNDlC0VilMC1zYikBj8mokfp7raeZnpg5zoGhCS6kxvmbRfzt8kFunKgOjkeFPFGdC3aESDbtLb1J5ekUbYX15CPkd06vAW5SC/a4TF4cHhD1q/de0lkm5abSxZ0qpe34AKfN1IbE=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(7416014)(38070700021)(56012099006)(4143699003)(261022075727099003)(261028144727099003)(261026121527099003)(261022105027099003)(261026140227099003)(10067099003)(18002099003)(22082099003)(3023799007);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Jrlo2CTL1Mghgn6/fSOQtCXsPoNUuIJ/U5YhD2g3+WJIKW2nwKThxYGnkJ?=
+ =?iso-8859-1?Q?Cb2reUGK6tfRgDr5NSKnfmsfaoEcDK5GtNe0iRwmttcBazzx7PM4y7kWem?=
+ =?iso-8859-1?Q?HWTBcTu3I2kAWoYLhNWMyX6XVw9M/7/CHL/TkuUHL/gsIaf45rKI0U16Gg?=
+ =?iso-8859-1?Q?J+gQcBj6UiMhB1qx/+i3LoPYj6v5LeNm+cW9kBc/Q6zQXR8rhQARR/P0JP?=
+ =?iso-8859-1?Q?FnKN73ZQjBCFRSaiGpoI3Ebc98HWMPCfKt2++ZnOYi/lgJSCvvZ739qvuW?=
+ =?iso-8859-1?Q?7P5ez+GnZbHae7uXi+aMwP5Uljke/sdnfx+sbo4+XcWf6Qnoor87iF4XNH?=
+ =?iso-8859-1?Q?g+b8WUcv3obxrCStspfHex9qMngolSxO2oI1b2vbRIfEDoBgXnvtqyRxHr?=
+ =?iso-8859-1?Q?MxmvNbu/Lhh/MsESBORaE9ftc3nAE0/gn6fBT8bm8WtE/4mQ5pxmPw21Yt?=
+ =?iso-8859-1?Q?rswUww+CO9ZR5SxcoGejAkiAsciV/W7uFTJYasAAZKXu2gZKX8mVBP7lng?=
+ =?iso-8859-1?Q?UfYNufcxLBru7kF1nQDYlipIremQBQT/krBNdKrrEmTKdbudQYfdxFjlIA?=
+ =?iso-8859-1?Q?+IsqvXPwT60KbZJ4XZ5V2s+W+BwcHrVIa7P+Q/XyrBFDYwI/10HILIPn5p?=
+ =?iso-8859-1?Q?SOWW3yhuleeNyH63BGgNytUg3ndat1GCb+UD9xCgFAgkvydR3UtqqDc5ji?=
+ =?iso-8859-1?Q?yrmlOlDbGFZ+g1+otrZ5uyCQyqgpJ+KDB+j0rfDNdCHXqepCrpnSePuTep?=
+ =?iso-8859-1?Q?oJw9MDam347MmyNlBSM1e3/viyK0oNv0U84T5efulqnOpAJs6yVWNmGLYs?=
+ =?iso-8859-1?Q?nkVJgRREVi5Rz22TBjaCCsnqL5eJ0DqhGDq3fc0tVZJ6ml6NwP9sG0U9Tf?=
+ =?iso-8859-1?Q?lISp10VnHipWlOo3sS8gY6v1zMdWBZ/etHiOIdlG0bdJCzdsoZFHSyxaUA?=
+ =?iso-8859-1?Q?1I+8dhrcGhlQbtVOdiaT55J1PJYaqR5I7sXDLrw7OitVl07da3px2r2+oJ?=
+ =?iso-8859-1?Q?yz/zceDbf0q+eRYAsZDN3wSwgkyQoETJHiOZcxRtxSKZw8Q1fpdiQhXEkT?=
+ =?iso-8859-1?Q?8u8u1jS5yComq3gHURvMf1PcZbeq9BaUrk9EiMCY+1maD5pAofkffuSZQP?=
+ =?iso-8859-1?Q?pTxFgQcxyJ/rhie38Q+X3dLSxWSD5zRLNWNT1Olj4md+zojj24P0caWkKG?=
+ =?iso-8859-1?Q?xYbpKlwkmIYcR8sY/msBPp5zHIOilcpa65OZmxNhOUwGSoUs6PNzBgre0K?=
+ =?iso-8859-1?Q?ftvNXLKZ/I3dy/yHL0rcuXLGmyVvWu7fg3LaCQ1mtPodudagP/gC2/W4vw?=
+ =?iso-8859-1?Q?gQrPRNiN8sIwoCm7HsbqreQ3sMeG4NUb0ljgZcpHrxo9f3EtA1yNDeTR3S?=
+ =?iso-8859-1?Q?rehgIO3//HbmaC0bUB9k06k/Qxre5Ns0e0MQHv8f7bX6xh7AB1XMS4tk6R?=
+ =?iso-8859-1?Q?unA1ShmIbeHkQkx2ngAnLqw1FPelnApYUgs0RFnzhhr0yNzdyeyTYXuuu4?=
+ =?iso-8859-1?Q?DI3+O4K8cLdEtyWHHGhXwwoiqybzLMmntGWDJ70lRQaygslUjlGnRGuWWU?=
+ =?iso-8859-1?Q?mA7rGdxoI1iBfqTossR2rWPjW5xEHJXoAWIa7J+9mrcEqEgueBEd7EVb6e?=
+ =?iso-8859-1?Q?hT7/KETvXx7zz2cip9C1SCiDcwOm2IYUcrZ/PrL8Cz9AXHwe/KSjGKt3nX?=
+ =?iso-8859-1?Q?HB4MimVdQBEQBbqQlPxmeaLthEV6f50OYoLe/dcZKDvvabPheTLSwb9CDm?=
+ =?iso-8859-1?Q?ZjExpLg74Gb9B2smmPH6TakwH8I2OOBgMSQa5p2fRR/g/fPwgqThjEwr3/?=
+ =?iso-8859-1?Q?SeVl4dlWaQ=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1231.google.com
+X-Exchange-RoutingPolicyChecked: My3snRlK/oAdBrai07ZIYa7i4s5Kvr3j9wpw6El7kjCiTs+jwRh7IT269GuowgNWKLLva5DzVeDBOfmd0Nx3HUIDu+myT7Gc0FP9oKCkbICTl20Z+8Qkxul+zEcZAabPz35sY1Cb8j+wIyfdK6rAh01Qpd0NlZdx6LK63VwyN6T8gB/ycO2141Oa2/sdll7I7/IvCMhb7oVN8oQeCa6WiAClpg36EG0gVtWDkSVE3Kno+c9m77f3viGpgMeZl8MdeOCjlIomliHNzyst5Mh5BEKjCER0gPdy0Zsnhd4wiAHTWPUNNM+2NwfTwWjRoYRXpykkPytoLOAnaSAN+oRSKw==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: adc2b7a6-6df8-4910-ed68-08df3bb62a50
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Nov 2026 03:29:28.9642 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ol4Dne8WrX+OfeKl8iuCny14E3u85y/At/JROl+F7dky0LMXV6jc/KktVQ7cxW/s/Cns4M/POpfjhOmwHJnpiITNAfu8uaIBqkGMK7BPILM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB5073
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,162 +156,67 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-accel_cpu_register_type() creates the abstract parent
-accel-<cpu type>. A subclass names that parent, and
-type_initialize() aborts when the parent is missing. The old
-type_init registered only target_cpu_type(), which is one name
-in a multi-target process. Call the helper from the CPU type
-init of each target that has an AccelCPU subclass.
+> Subject: Re: [PATCH v8 02/18] hw/usb/hcd-xhci: Add an auto-hub property a=
+nd
+> leave it off
+>=20
+> Hi Jamin,
+>=20
+> On Mon, Nov 02, 2026 at 09:22:05AM +0000, Jamin Lin wrote:
+> > Add auto-hub and leave it off. hw_compat_11_1 turns it on, so an older
+> > machine type keeps the hub it has today and a guest saved by an older
+> > QEMU still loads.
+>=20
+> Reran the migration check from v7: with pc-q35-11.1, a guest saved withou=
+t
+> the series loads on v8 with the hub in place, for qemu-xhci with four HID
+> devices and for q35 -usb with six.
+>=20
+> But this missed the 11.2 soft freeze, so in 12.0 pc-q35-11.2 is an old ma=
+chine
+> type too, and hw_compat_11_1 (my suggestion on v7) doesn't cover it. Save=
+d
+> with pc-q35-11.2 on master, both cases fail on v8:
+>=20
+>   Unknown section or instance '0000:00:01.0/4/usb-hub' 0
+>   Unknown section or instance '0000:00:1d.7/6/usb-hub' 0
+>=20
+> The entries from 02-05 want hw_compat_11_2 once the 12.0 machine types
+> are in.
+>=20
+> Junjie
 
-ARM calls it because whpx-common.c parents accel-arm-cpu on
-aarch64-softmmu. i386 calls it for TCG, KVM, HVF, NVMM, and
-MSHV. i386-softmmu and x86_64-softmmu each pass their own
-CPU_RESOLVING_TYPE, so WHPX on x86_64-softmmu finds
-accel-x86_64-cpu. RISC-V calls it for TCG and KVM. PowerPC
-calls it for KVM.
+Hi Junjie, Marc-Andr=E9, and Gerd,
 
-Other targets have no AccelCPU subclass. Machine init looks up
-tcg-accel-<cpu type> or kvm-accel-<cpu type> and skips a missing
-class, so those targets do not need the parent.
+Due to the QEMU code freeze and the planned 11.2 release in December, disab=
+ling automatic hub creation while keeping migration compatibility with olde=
+r QEMU versions requires adding the property to hw_compat_11_2.
+We need to wait until after the QEMU 11.2 release for the maintainers to ad=
+d hw_compat_11_2 to each machine type.
 
-No extra tests is needed, as these QOM types already be
-tested by the existing logic instantiating all QOM types.
+The USB redirection server is my original upstream goal, and I think this t=
+ask is independent of the automatic hub task.
+So, I want to split the auto-hub changes into a separate prerequisite patch=
+ series and send v9 after the QEMU 11.2 release.
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
----
- accel/accel-common.c      | 6 ++----
- include/accel/accel-cpu.h | 2 ++
- target/arm/cpu.c          | 2 ++
- target/i386/cpu.c         | 2 ++
- target/ppc/cpu_init.c     | 2 ++
- target/riscv/cpu.c        | 8 ++++++++
- 6 files changed, 18 insertions(+), 4 deletions(-)
+The USB redirection server common protocol series still needs rework on the=
+ device announcement and control transfer patches.=20
+I will send v9 next week and mention that it requires the patch series that=
+ disables automatic hub creation.
 
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index 00a400243f..441d1b77fa 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -130,9 +130,9 @@ static const TypeInfo accel_types[] = {
- 
- DEFINE_TYPES(accel_types)
- 
--static void register_accel_target_type(void)
-+void accel_cpu_register_type(const char *cpu_type)
- {
--    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
-+    g_autofree char *name = g_strconcat("accel-", cpu_type, NULL);
-     const TypeInfo accel_cpu_type = {
-         .name = name,
-         .parent = TYPE_OBJECT,
-@@ -142,5 +142,3 @@ static void register_accel_target_type(void)
- 
-     type_register_static(&accel_cpu_type);
- }
--
--type_init(register_accel_target_type);
-diff --git a/include/accel/accel-cpu.h b/include/accel/accel-cpu.h
-index 9e7eede7c3..2fdb64d2ae 100644
---- a/include/accel/accel-cpu.h
-+++ b/include/accel/accel-cpu.h
-@@ -20,4 +20,6 @@ typedef struct AccelCPUClass {
-     bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
- } AccelCPUClass;
- 
-+void accel_cpu_register_type(const char *cpu_type);
-+
- #endif /* ACCEL_CPU_H */
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 71681447b2..725f1f3a5f 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -28,6 +28,7 @@
- #include "qemu/module.h"
- #include "qapi/error.h"
- #include "cpu.h"
-+#include "accel/accel-cpu.h"
- #ifdef CONFIG_TCG
- #include "exec/translation-block.h"
- #include "accel/tcg/cpu-ops.h"
-@@ -2753,6 +2754,7 @@ static const TypeInfo arm_cpu_type_info = {
- 
- static void arm_cpu_register_types(void)
- {
-+    accel_cpu_register_type(CPU_RESOLVING_TYPE);
-     type_register_static(&arm_cpu_type_info);
- }
- 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index eab0d5a4d4..31b09e6f8e 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -23,6 +23,7 @@
- #include "qemu/qemu-print.h"
- #include "qemu/hw-version.h"
- #include "cpu.h"
-+#include "accel/accel-cpu.h"
- #include "tcg/helper-tcg.h"
- #include "exec/translation-block.h"
- #include "system/hvf.h"
-@@ -11093,6 +11094,7 @@ static void x86_cpu_register_types(void)
- {
-     int i;
- 
-+    accel_cpu_register_type(CPU_RESOLVING_TYPE);
-     type_register_static(&x86_cpu_type_info);
-     for (i = 0; i < ARRAY_SIZE(builtin_x86_defs); i++) {
-         x86_register_cpudef_types(&builtin_x86_defs[i]);
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 7f3036d903..fe3f2549b7 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -43,6 +43,7 @@
- #include "exec/page-protection.h"
- #include "exec/watchpoint.h"
- #include "helper_regs.h"
-+#include "accel/accel-cpu.h"
- #include "internal.h"
- #include "spr_common.h"
- #include "power8-pmu.h"
-@@ -7589,6 +7590,7 @@ static const TypeInfo ppc_vhyp_type_info = {
- 
- static void ppc_cpu_register_types(void)
- {
-+    accel_cpu_register_type(CPU_RESOLVING_TYPE);
-     type_register_static(&ppc_cpu_type_info);
- #ifndef CONFIG_USER_ONLY
-     type_register_static(&ppc_vhyp_type_info);
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 362e561809..10e24f20e8 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -25,6 +25,7 @@
- #include "qemu/guest-random.h"
- #include "qemu/atomic.h"
- #include "cpu.h"
-+#include "accel/accel-cpu.h"
- #include "cpu_vendorid.h"
- #include "target/riscv/tcg/csr.h"
- #include "internals.h"
-@@ -3931,3 +3932,10 @@ static const TypeInfo riscv_cpu_type_infos[] = {
- };
- 
- DEFINE_TYPES(riscv_cpu_type_infos)
-+
-+static void riscv_accel_cpu_register_type(void)
-+{
-+    accel_cpu_register_type(CPU_RESOLVING_TYPE);
-+}
-+
-+type_init(riscv_accel_cpu_register_type)
--- 
-2.55.0.windows.3
+This way, we can continue testing and reviewing the USB redirection server =
+common protocol this month.(November)
 
+"If you agree, I will send v9 next week. Otherwise, I will wait until after=
+ the QEMU 11.2 release and then resend the full patch series as v9."
+
+Thanks,
+Jamin
 
