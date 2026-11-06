@@ -1,98 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4B8606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 12:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D832606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 12:16:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=QSZ5h4s0;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=qXQC5th5
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YIsTo0am;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=uKhLtQIU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPIqh-000085-Rp; Fri, 06 Nov 2026 07:15:16 -0500
+	id 1xPIrL-0001IG-IO; Fri, 06 Nov 2026 07:15:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIqf-0008Vx-1M
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:15:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIrF-0001A4-Br
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:15:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIqc-000700-RB
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:15:12 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIrC-00078B-2i
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:15:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793967310;
+ s=mimecast20190719; t=1793967345;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gj8hMmQ2qGvr894SxcRYilzXBAxKdqiiz7fhFvhquQg=;
- b=QSZ5h4s0YfIoEeF9CP6ZLQg6n8XT+rv7Zjx9nUCKGE5S/W7s8aO9CRW1Pr3pUk19a6HowK
- GFEZu41PD1tLwS4AHHxm6sEc7ebMMYs4RnoYQlajw6uDr8tLdH5HVVKNMHHpkZIvKXlf0C
- YOJRtkqhJmAm+l1inZXz19xKF0pyWNE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Pzycm3aNfxwS1gjPn7Z/6A3umsdgBFIp9MjvYzpAWk8=;
+ b=YIsTo0amGmIi12YpYUtY+ert4rI7Yk/NXXujoppHb4HOXGea4qvJ7RbcA0H2ErqyzhOZve
+ Ngjpre0idF68wrUgbm5T/nOAqUyWaLlnyKEu1QdZs43X0+64vYjElguEBjBbrY0KMiwPqq
+ 7wMoSlXztee97oLVUNppuXG7fByI06Q=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-235-YdlxxQhDOf6pOBjahioAaA-1; Fri, 06 Nov 2026 07:15:08 -0500
-X-MC-Unique: YdlxxQhDOf6pOBjahioAaA-1
-X-Mimecast-MFC-AGG-ID: YdlxxQhDOf6pOBjahioAaA_1793967308
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4a77c1cbd15so5944925e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 04:15:08 -0800 (PST)
+ us-mta-198-YVnhM1aYOmKpEyeU8V598A-1; Fri, 06 Nov 2026 07:15:44 -0500
+X-MC-Unique: YVnhM1aYOmKpEyeU8V598A-1
+X-Mimecast-MFC-AGG-ID: YVnhM1aYOmKpEyeU8V598A_1793967343
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4b64722b5e6so6323355e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 04:15:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793967307; x=1794572107; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793967343; x=1794572143; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=gj8hMmQ2qGvr894SxcRYilzXBAxKdqiiz7fhFvhquQg=;
- b=qXQC5th5axpSvnTnTRrFACHHFQ7x1gqkBVrEsE3fWVb0lWPLuFzJs5YO46FLYB8pRG
- wvuF9w3rUZLqGKkB7G8xY8My8IGKxiSmkxtUMKgV3L0txD3FaSUSSPZ1pIPRSxBjH8fT
- vO/yYBsxVbLvUhqhHk0cxIU/sT+dolPNhWM7ixYByiey6fhfC65Z93BX5MvKPRJEv8yz
- trTR3ps3DZaWa2dcTj6K/CJ3A5sqmt4GzU20EiEfvCdKdIwHb4KKFRZn6HpRkWFO0yhj
- wmFLPNfs7GLPQdJu2VSNOLAtxQjng/4kOQB9kQsm8FJLEcOcy78mgY2ltfdhBhAAbsDO
- OkJQ==
+ bh=Pzycm3aNfxwS1gjPn7Z/6A3umsdgBFIp9MjvYzpAWk8=;
+ b=uKhLtQIUi+WR9WQfabNrkI387X/LLsZsZoywt044b6Ynp3jPzCP54dOoFGhLpFaS43
+ AUuxckVDZ5S3NFeSazbLR8s4fyUeFNyFsr1Zw4iuvOaHwspRJyyngqQwq5NLYkpcchjm
+ FMPvXVCp/dLQsizDYkqJb/SIhxcahP8dfIgN7TV/E9MEA6Z+m4YUk7Jelt00DaTesXsf
+ m9yXbCohqU9677g+dVvPfeZrho/KXJqz1awi+W+hWt/hMIyStChJN1mjuzByl703nbbg
+ 3OD3jjPotbJCeGriISV/8HHXV+488ZEnVCeeed9RYp7YWhbFD/RFfqIwIu2CwWSpUBx8
+ KWEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793967307; x=1794572107;
+ d=1e100.net; s=20260707; t=1793967343; x=1794572143;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=gj8hMmQ2qGvr894SxcRYilzXBAxKdqiiz7fhFvhquQg=;
- b=yxoFJJ+RhxpkFv55c1x6EfBH1NUFUD36OMAdbbEp3bfWu9ks8Eyy4cWu+8LOUoDzKu
- N4FA/NGYoLOE6kl5O36A6J4mTwEY2oI66zaA+zhpT/RLtYYIe/kxUPMTPyV+jqMDu2tS
- HXfK16Lb8jEn9aK+fgJDwPZTBUNXh4mEU48kjCGTyuIszVGOeClHnAA46sUBpW6wlfjC
- ivU0hU4Vvkwj+LpaARz90a7sNyc+ygWUImR39n7bHW3QP9qAPFgg/brSZScdU77T15VI
- BblgX4xa1gyF4HwdQ4pedjwXW/49vMNCs7fIwHwuXJyBJnBhyYCT/vFaiIGzwAkvgmDq
- hxGQ==
+ bh=Pzycm3aNfxwS1gjPn7Z/6A3umsdgBFIp9MjvYzpAWk8=;
+ b=QmM5NwO2qzrFdkpXAPcCEeekoLT1eceeeXIagxsSzRU/JPXZNY4PmNI1qBQTn1dstm
+ 9AfR354MDfRVsSvJueRidKECTxsvyZPP0zzgYHiSBMIWMacjyZ1GAoCAUBq6EeUcd25H
+ 6Vt7HQ9YP6kRip9XqCg4siKrYRjyNDLfhy+uuuimwhsgkNv+sQWEJ6PC+Xe1rA6+hFhC
+ ggie9NA3YKIvaLiWu9nLUj3oxfa2JhNiGo40VuKd9PWZT9Nb4TysezkUQaQsUJ5BK56O
+ pc1iX/D82JrccC1N9NwHNFA7s+/jYbscZgXgxI8LfldY7D3QGxlnSE2e6opgZOdSvoeE
+ uO4A==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzz869Jc7TLK3gfpaS7JUo8vdqthQi7bSnf/4znR/j+Y1l2h5TmPkFV7x9/AmKhTu2IAVz5BkMief6B@nongnu.org
-X-Gm-Message-State: APuU4Z/tOiOtRgGeAvhe3qDdp2qd6hZr3Au+Qn//Tzb0NEfuZrYXix8S
- DF4MPQfmCJzI+UbjjMQU9bH7PRSSLEUHx4apz4zbGQUd+p2uMpaW5qM3dpN+li1Vb/PxMQyXCY2
- jDvMixBI4PIeaKHgmRYWlfMhf7lehblg+rDCgf3vbhk5hi3lIDzN+1St9
-X-Gm-Gg: AYBFou2dDygaeqnBesjt/MYE6UAwJ/zQ1EQJ6t8ZaoJqFBNpr+AYI7VJWyTFaiG89mT
- 0/9E+jN8+PR4Hk1XcnA0vGsYDIjVw4j/Rht96ipQx4PNt7Y7MsSlsyM/y/H8s7AxRkbTbHS/TcV
- KSfZB8nC/pKIi15NTv28H7cT1ENz3d0M08KBwhVfJ+hXMqUKfy/fqsL16hItw1nL0hGqg36pKUE
- 5BsMvMNrMS8dHjZADnqQoGBMtSkB+Kmj2MKzmOm6ZRKoHCsNR3qEvrtm4XXYFl4URmB5OsTDBSf
- 0qz18+uQvOBH0EgMY5TZXTAXzTGQeoYo35E7PgmaxKoRX5nPukMlWmKjsx2Y2WaWkkx2vwjhuaY
- 1ZrVGmwvRr7Lb+ShnK4daa3PSIHrxy04umP3Q0BB5B18huD3he7s9Csa2aVuUadzC3VIktqh6n9
- UjTs6MlxrJpA==
-X-Received: by 2002:a05:600c:8b45:b0:4b3:ad9d:e21 with SMTP id
- 5b1f17b1804b1-4b6df11dd57mr37875345e9.12.1793967307708; 
- Fri, 06 Nov 2026 04:15:07 -0800 (PST)
-X-Received: by 2002:a05:600c:8b45:b0:4b3:ad9d:e21 with SMTP id
- 5b1f17b1804b1-4b6df11dd57mr37874945e9.12.1793967307255; 
- Fri, 06 Nov 2026 04:15:07 -0800 (PST)
+ AKwUvBw+eLs6xcVLMxVy/Sx1zQk4PL9sB0/DLKSurCNfRjK07ULabSzaMEjaHNn3ipn5TyP+C9C62A7TGMwf@nongnu.org
+X-Gm-Message-State: APuU4Z9EpfFmJdm+rqDLSA7hxbJK3HQCM1eOcm9dJc7/NmJDgUt758TZ
+ UGVxuQnanMxT6+PKbcf3Pre2Askr/AvMwLPJ9+X5QpNgygy+6Y3aFb7NjeJ+FuvO6kCcncYZaL5
+ J5aDsRv1pPhdFZL2MKTyZeoVm+FgDNDjnomHNFPgO8862fbQ9YtZeJ91e
+X-Gm-Gg: AYBFou1RrsNOKaMfgAvwbgmch9/q6xCyxWPJH7Y7U5eDxgN42K0ScRGUYx6r/iC2y+t
+ ncifTt85LhwtgTus6OPzp7DhQA2+NCq8SeJc7MIw96YhSwg6Gj+CFmePHx4P6pupGRFwaR1PH3g
+ Eh14xerhQV08ubeUMEFRzwnF1/QrBu7QIeHHb9lkPj+OQCO9GGe3+tSUAIRzJITAM6pqk7XlV4R
+ g60krrWanIBt6zVHFuJS5CoyZUczvZCQLQSwQY5RyxRr+yKlRb1wgsCoAEygHBb7c0GKi7rgFyd
+ gyVG0aVc/CxYlzQ43ejWFdR/8gwCbYv7DyY6POQSUDpA77KIIf2hBw0H3Gw7AcsElPdxPdtC6GU
+ 5kXeRjqOjBwZPnwCzP8xMCrV8vfbCjO0hwPOaeSdCmKKTG5OWFlywfd7kUL+2wDdijblCJSEBk4
+ C+Gsujnqnd3A==
+X-Received: by 2002:a05:600c:a013:b0:4a1:c6fd:4db0 with SMTP id
+ 5b1f17b1804b1-4b6df5eabebmr35523965e9.19.1793967342834; 
+ Fri, 06 Nov 2026 04:15:42 -0800 (PST)
+X-Received: by 2002:a05:600c:a013:b0:4a1:c6fd:4db0 with SMTP id
+ 5b1f17b1804b1-4b6df5eabebmr35522365e9.19.1793967341560; 
+ Fri, 06 Nov 2026 04:15:41 -0800 (PST)
 Received: from ?IPV6:2a01:599:b03:7322:436f:1f3:b26e:91b8?
  ([2a01:599:b03:7322:436f:1f3:b26e:91b8])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b6e168f73fsm57802835e9.5.2026.11.06.04.15.05
+ 5b1f17b1804b1-4b740f6d21fsm18188545e9.1.2026.11.06.04.15.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Nov 2026 04:15:06 -0800 (PST)
-Message-ID: <87375890-eb39-42b7-aa17-40a9416ea279@redhat.com>
-Date: Fri, 6 Nov 2026 13:15:05 +0100
+ Fri, 06 Nov 2026 04:15:40 -0800 (PST)
+Message-ID: <7e5d0194-6b20-470e-be5d-e0bf4157062d@redhat.com>
+Date: Fri, 6 Nov 2026 13:15:39 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/28] hw/scsi: mark spapr SCSI controller as secure
+Subject: Re: [PATCH v2 11/28] hw/scsi: mark SCSI disk endpoint devices as
+ secure
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -102,7 +103,7 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org
 References: <20261029131241.2275706-1-berrange@redhat.com>
- <20261029131241.2275706-11-berrange@redhat.com>
+ <20261029131241.2275706-12-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -147,17 +148,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20261029131241.2275706-11-berrange@redhat.com>
+In-Reply-To: <20261029131241.2275706-12-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -179,28 +180,15 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 29/10/2026 14.12, Daniel P. Berrangé wrote:
-> The spapr vscsi controller is used by default with spapr machines
-> in a virtualization use case.
+> All these devices can be used together with supported SCSI controllers
+> in a virtualization use case, so must be treated as secure.
 > 
 > Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/scsi/spapr_vscsi.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
-> index 7ec780da79e..eedae00273e 100644
-> --- a/hw/scsi/spapr_vscsi.c
-> +++ b/hw/scsi/spapr_vscsi.c
-> @@ -1312,6 +1312,7 @@ static const TypeInfo spapr_vscsi_info = {
->       .parent        = TYPE_VIO_SPAPR_DEVICE,
->       .instance_size = sizeof(VSCSIState),
->       .class_init    = spapr_vscsi_class_init,
-> +    .secure        = true,
->   };
->   
->   static void spapr_vscsi_register_types(void)
-
+>   hw/scsi/scsi-disk.c    | 3 +++
+>   hw/scsi/scsi-generic.c | 1 +
+>   2 files changed, 4 insertions(+)
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
