@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F5C606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 04:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E363D606A31B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 04:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=UISQqjSM
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=HL0b7OHa
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPB9D-0003F6-En; Thu, 05 Nov 2026 23:02:02 -0500
+	id 1xPB95-00037g-VT; Thu, 05 Nov 2026 23:01:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB8Q-0002xt-Ci
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:01:02 -0500
-Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB7x-0002uK-Hq
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:00:40 -0500
+Received: from mail-westusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::5] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB8O-0004OB-O2
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:01:02 -0500
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB7v-0004N3-Hw
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:00:33 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WgY87R9+WpY/N5o1b/7WNXgf1MZvbO3Gk29IqM21ck3vCfYV1PAxNVtVYW2quNia8S+toa7aSsQuaKkUHCXsI61tO54oZVH07Kixj1kZR90HrByBfsMDyc0Fj5xeLSxIAIHHyTwOPjoNuUw5cJvgp8USgPCzpAeWDIVMIHYh+5T21We+njra2qfeMmsFAjgvGrL554fwJY7T7/h3qkyHVD+PyIYwAYZaiFXLMWyPXD7O6ucs+GyOVMd3mAmMoWV/GKj82ZMoLPjB0+PdUv5On+eWubOCoHC8hpZCJGoczFtIK471n19d7dchi6Y77GvnqLDo093YrV/qj9QAWQYQjg==
+ b=M+NQ+b4qFTNTzL22oAIHE9F/m1n1/KevreZs1rPE+hFuBAnykpgJh0jEJBZxOnk4TdC8YOloLSqPpPoanBTrc+e80CbImtfmuQN4zmL0GBdxRfguQMVrIpdDhLvwmgCD4lvDQZu3yEEhkHDNmvlyl2Iph+TeQCrDkMwx/PIcbYgQW39wVqdkeegjjewrXsXzz9KWfxSrpTGxVgR9eGq55MLHT4vvZtyprNrMFgs8WbMT+cGcqBcCti4A4tII204+Y21ei9GAhvk7RBTpzZ0kp2HVL4TwUt6lxvMiLBfPZJPjnAhr7cyZq2w5kmV7Nktce1tmGxBCaVYzdU9rTc3B5Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AiiN1V/PdRBUWVhP6R0qpADqjlY+Wt6F4iEMfMsruEE=;
- b=FrKn1m7ol1pdAL0DCZna/8SCRrykfXELSqjH2L/jteCzWfI9f8kgyx/p6QkJhUxook7hRc6wBPHIhhgKdnG9OKjfRX1MDS88bDNpCNDEeBFCQlVEosW6CrzWjPQijuxzWA6nUXJMV2njzbYwDum12xEo5jCBYQY63VtZ0iBMKh5Un0BeOtsrpDjE7lxk2ARO4WrHIalo0E/kTELtZVPy7VbQ/g6F60yrIyi+6gR7K7dREKsTMMij/UfddQifn6K1gBPU/bMRcj9z60rDmg/PQDFwF9qoksH1BM7+3ydNZm1b9LKxwxrYUDhWaHGRcOd2qxpl7eSIh8UkeuyzDJuEIw==
+ bh=kHGAlwsNGzDvnFkZXyvjcpkt5MztooolAjgH4JdEIo8=;
+ b=VCNy/zcYiGdloGswOIdTW62IqqYLLtAzkNAOs5pxCK8YA12UA2ZGUQYuSTA9lZw7Nk/Wv+PTcULVXP+ATrX4BKWf0/e1HRyVhZdvKHA/1ZoBFN7KDbts8DVzDI6OwoAbYZZc/63W5JbymA3WAAcuLfLwaIymdmzkBEcdgjhUoW+utAfbScb/rideNPnPDWe8FOlarE8GC20ai2+DjNJxTtjOdGYF7V+ChOJgWQ1WQNiPLAYAIgnggM/uuucSzQ6xqI9we2Qwj79fQinDkNzeA40bFL3Sj+4up4LnMWJMdJyxFQm2LhhXAfhjDgFHWRf9mpC5Sdawf6CyyuT4hPLhbw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.117.161) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -32,18 +32,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AiiN1V/PdRBUWVhP6R0qpADqjlY+Wt6F4iEMfMsruEE=;
- b=UISQqjSMeyY91sR636j6OqP8ned/IO0kDK95QVA6MSAD3rlpVYLcCHCTJ+aUfJeAUTsXrIzW3NoHQNshlo7e/m5fRlSvT3JHK0R3rKzJsKBiZ+eAA6+IgP0kkx2fuuWGNgBGGsAYrT6udmKxOwC+gNZtef/oX+kUoWZ0Odatt2nLCZFhoPappytND8FhQMeTcmPcBO8dDU/ijZgxfsdVAi0Pv7vshN9b/OeR5iYh/gUKGoRBeRSu8aebbVTex6ohpKq+vFWrPeS7g+2V5vUnLooJwkZMMCmKi7A5Kict9/1p5HY9QtwdHCXmjxlQui+Z/A/vUpqWx6IgcKStB4a4Gw==
-Received: from BN9PR03CA0313.namprd03.prod.outlook.com (2603:10b6:408:112::18)
- by CC6PR12MB388577.namprd12.prod.outlook.com (2603:10b6:170:20b::19)
- with Microsoft SMTP Server (version=TLS1_2,
+ bh=kHGAlwsNGzDvnFkZXyvjcpkt5MztooolAjgH4JdEIo8=;
+ b=HL0b7OHaDvWSsoqzpZVivKHt9ulcbrcGTMfhUUFxMD6vtkwrh4QUhlnXcGWGLCzbBQL8oDc3E6TzCCh5ceojCHy4erLwCMMQKyflj0ZScAHg8AdVTK4jmlXfDusooks/g7cFSXkaXMf+M9z6U79OXBS2QvrY4DlqjlSfl0Enhvw3ZB168qIDwBRhVZTqBXLU17jyz9wfSViHjrsXza/dqhFJqyh/0kCgdNQCHw8cQjGKm3j9y4rLWnQS+g4OZJRgGizZv4h3BeoBnW50IzNEevurRYhHCeT7ZWhpSTzACiHvJ3xjWy6GcKN3ooTghlxHFc4OMmRSslERUAMA3ym74A==
+Received: from CH2PR10CA0027.namprd10.prod.outlook.com (2603:10b6:610:4c::37)
+ by DM6PR12MB4329.namprd12.prod.outlook.com (2603:10b6:5:211::9) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.10; Fri, 6 Nov
- 2026 04:00:53 +0000
-Received: from BN1PEPF00005FFD.namprd05.prod.outlook.com
- (2603:10b6:408:112:cafe::9b) by BN9PR03CA0313.outlook.office365.com
- (2603:10b6:408:112::18) with Microsoft SMTP Server (version=TLS1_3,
+ 2026 04:00:21 +0000
+Received: from BN1PEPF00005FFF.namprd05.prod.outlook.com
+ (2603:10b6:610:4c:cafe::c) by CH2PR10CA0027.outlook.office365.com
+ (2603:10b6:610:4c::37) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.10 via Frontend Transport; Fri, 6
- Nov 2026 04:00:53 +0000
+ Nov 2026 04:00:21 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 216.228.117.161)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
@@ -52,17 +52,17 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
  216.228.117.161 as permitted sender) receiver=protection.outlook.com;
  client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
 Received: from mail.nvidia.com (216.228.117.161) by
- BN1PEPF00005FFD.mail.protection.outlook.com (10.167.243.229) with Microsoft
+ BN1PEPF00005FFF.mail.protection.outlook.com (10.167.243.231) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Fri, 6 Nov 2026 04:00:53 +0000
+ 15.21.615.4 via Frontend Transport; Fri, 6 Nov 2026 04:00:21 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
  (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
- 2026 20:00:33 -0800
+ 2026 20:00:05 -0800
 Received: from cxlgalaxy.nvidia.com (10.126.230.37) by rnnvmail201.nvidia.com
  (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
- 2026 20:00:28 -0800
+ 2026 20:00:00 -0800
 From: <mhonap@nvidia.com>
 To: <jic23@kernel.org>, <alwilliamson@nvidia.com>, <clg@redhat.com>,
  <xueshuai@linux.alibaba.com>, <ira.weiny@intel.com>, <zhiw@nvidia.com>,
@@ -72,9 +72,9 @@ To: <jic23@kernel.org>, <alwilliamson@nvidia.com>, <clg@redhat.com>,
  <mochs@nvidia.com>
 CC: <cjia@nvidia.com>, <mhonap@nvidia.com>, <kjaju@nvidia.com>,
  <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>
-Subject: [RFC 11/18] hw/mem: Require a CXL root port of a pxb-cxl for cxl-type2
-Date: Fri, 6 Nov 2026 09:29:04 +0530
-Message-ID: <20261106035911.1280066-12-mhonap@nvidia.com>
+Subject: [RFC 06/18] hw/cxl: Find the memory of a CXL device through one helper
+Date: Fri, 6 Nov 2026 09:28:59 +0530
+Message-ID: <20261106035911.1280066-7-mhonap@nvidia.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261106035911.1280066-1-mhonap@nvidia.com>
 References: <20261106035911.1280066-1-mhonap@nvidia.com>
@@ -86,38 +86,38 @@ X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00005FFD:EE_|CC6PR12MB388577:EE_
-X-MS-Office365-Filtering-Correlation-Id: 418f99ee-8c5e-47a0-b974-08df3bba8d75
+X-MS-TrafficTypeDiagnostic: BN1PEPF00005FFF:EE_|DM6PR12MB4329:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0e7747ac-0149-484a-e1d4-08df3bba7a8e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|82310400026|7416014|376014|23010399003|1800799024|22082099003|18002099003|10067099003|921020|11063799006|56012099006|261028144727099003|261021121427099003|261022105027099003|261009223027099003|261021123027099003|261102123227099003|261026140227099003;
-X-Microsoft-Antispam-Message-Info: L9rP2W2nCh6RsDCuuhor+NIXFGBPwdIwbuCRQQV3BPj3AMYyFSy/pE/3+DUyQ1hRtcpXmcbHix2o6K85LvmVvppRIsLC+qCpMLfttwCAKCEGOPEBy50OvdiNYqSxIkqkQvOK7l6D/hFH43UE2uU6nvj4liYmYCIjF+IMIBZm6+3t2xWZ0ZtR0N4kNTF5GRPIRRAEv2FVJNPYLK/fu9NEEtARN7L8Wzgo3BbUNAXY7R2hHPqE2dem6OdrFtv1C/siivxTaSEAgtl+kwOWCs8DSm6OJG+LaBqUIVCf5Km10k4ybgLt58tCYzvKnkaz1HTZoFebuFPe0tUFzfjycAao9MdOyEEmzFGP2v6nn6VXD9PexNqAkTqfl6aJbi7jDayLyO/uJQgHHSndbM7F/nJudw/dAaVZ8PLnkadd8wpHxhZ//APolhsQ/cUJUTBY2EmRVJTy2VujjALazWzSJD3U87Hre4u/V31qhfnaMo5Vw9ujEN8fi4/l13/f9AIOsYMrpzXGZle2ZatQsspFsAB+27xOXzWlPlGToCM6dPsiP1nPSWqvOzYCiMbPI1S7NXPha5FiBQri05HikoWtrAUqbon64y+j0Hkdk5yn3/mYnmdskPW58km1DEYtNRHxQmUBZhdH0+7CDjIdRuT07zjvP5KE1hBPKRy98tLTPWXIloWWzrIz2CHvsGrKupNUTfZTFg5P0RJh8NNqwadWKBpcC6PTsYiMj23k0tvD58zrZrLLY2Mr9QRkIEqRWq2vw+VD
+ ARA:13230040|36860700016|82310400026|1800799024|376014|23010399003|7416014|22082099003|18002099003|10067099003|921020|56012099006|11063799006|261026121527099003|261028144727099003|261009223027099003|261022075727099003|261102123227099003|261022105027099003|261021121427099003|261021123027099003|261026140227099003;
+X-Microsoft-Antispam-Message-Info: XtVsGuKtqAQjeYM65u84DOmKs83LHl8coET7r9Mv39ZJlZr+ZuF+/vGzOCSaDs8nq9XA4eZtxMT9Ccx/LTEr5mE9s6TQA3umqnFvppLj20FPIAIEm7T1oyovjU6305sPYf8E8XNykppKOtnG3i4FqtsorEee/GfKuAvVeghtXjuzPbBIdQAc2jx7d0UCv0LxkwJxe3sT3ZFkQM+/b03qMS9y1yv7/aKfLEAB8wrwFyYjUJxLHjNv5eZYb/Ivey5gttqVmtAPwLceqG1uv4+VwaAMMMREItitRgW5UTS6DegiUD1ifn1CHFNmPBDWF4bbCMDhZhtq4+G1u3uZ83WcMOc+1DD/3zcclF9ifFjuDtjKgmfkXpmTdu/pj9KPBxQtCtbBPx5C3OAukUhB/jGT/ZcT+3sop36V9ip5pFecVvSQwogpMGNXiG+5Mo0xq3tCTzY7BDueICvvQIThW/WTHfA23X10ehx4Ihoq11sEM06Ksgoae4js0+0iKxUThFLSIYdHKdfvOM7D0lTXgNuq2SxhpVDm3UbwghFJq8g4nbsOKNokGwaAM5HElIHGW+zbzJPbWc0uGB7kwT2Z8oM8RGucAYndwm4hu8iXgYgbdOmRFJYcRGEyDgjMerWpOhOpB9YMjqzjYSSSATTZrv0AAV8wU0i1BNdApQGymShzYA6ghex5+v1popVjBFnfdxkW+h+er+1KWG1It4lPL0qjfAslrFD+1Y9Hj2Sqoze8WHQJEGbt8c+11g9D+fGcmoeo
 X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700016)(82310400026)(7416014)(376014)(23010399003)(1800799024)(22082099003)(18002099003)(10067099003)(921020)(11063799006)(56012099006)(261028144727099003)(261021121427099003)(261022105027099003)(261009223027099003)(261021123027099003)(261102123227099003)(261026140227099003);
+ SFS:(13230040)(36860700016)(82310400026)(1800799024)(376014)(23010399003)(7416014)(22082099003)(18002099003)(10067099003)(921020)(56012099006)(11063799006)(261026121527099003)(261028144727099003)(261009223027099003)(261022075727099003)(261102123227099003)(261022105027099003)(261021121427099003)(261021123027099003)(261026140227099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: z8Lf9JDs9uItUP/wsphwE0Wa5zGQ1pO7JGyCXHPeimEcFQ+3GkRc1mTJhmxBnuXW/5DGi6POafDoXEpk5u63B3086E65fSOlcDE/em2TFyOFGGD8iG4RwsJ0B9kJOkE4Wcj6UoLTGknAkRMRExo5VKQ5owKGeOejU93lln/FZlF6tBs+J7IqvIwtkeLTlCKyzjzHBcGTMcm5ciBYIUR3NLZBLYVzNmz781wxKlzsitIrHrtlrt2KshBeopnK0yZ+/BOlguhgds476TMaOEGUXKsaaIlu97/8qHlW1RyfHBbf1X5JKvlDPcFbZpgEzt4HzoF2zdwhApwq6i6aXa4wmLsTjWk0IHvXjfFkgUmMT9TojLvEgFoK0H3vNRdS0EVraxj82X+KHQB4bWPG/SjFF6Gjm78GgwyrgCmxi4GqsW7hUWsYnAtzHt+lfms4XgWH
+X-MS-Exchange-AntiSpam-MessageData-0: 5pd3IsQAx7BCCPqHnbNMqlnnpgBXQ0oe2Y0aaaN/8hH3ZZ2FQRlFLWWKL0gWHevTM3xAwT4nQagKKttEQMfdazRygWZRoHEKXQiiSNntAFB0zpX2lvHEAqrcarltBqA696ztG7Zm2a5srp5wUQZqMTnndr+3sL7jB+V5kT208Bs768sJrk5aMSE0g8q+wb4TNSW5dP+9FJl2uvJy5d1O1ZR1gOFZ3ePEpR13DUaIkoigJmqQtmLNFYYsIoIqsEsVU8ENvHGTYlorM1vEN18sSEkE4RmBtSkfVZIlz/R1Vcjn6T8IlIX8njEJnt1el1s0lTGOxNgEUz/Mt1E4mUBGdF1AMYby5lGBna9ZKFKxjdAWqCroIkPER9pl1Wfu0dza55qNckE6gDKAFlobXYc2WO/Lwp1u/8Cc2NJjazp9mX0g4jh4Sh3wR+rV51068yoN
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2026 04:00:53.1408 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 418f99ee-8c5e-47a0-b974-08df3bba8d75
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2026 04:00:21.4370 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0e7747ac-0149-484a-e1d4-08df3bba7a8e
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00005FFD.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00005FFF.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CC6PR12MB388577
-Received-SPF: pass client-ip=2a01:111:f403:c005::5;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4329
+Received-SPF: pass client-ip=2a01:111:f403:c001::5;
  envelope-from=mhonap@nvidia.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
+ helo=BYAPR05CU005.outbound.protection.outlook.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -139,69 +139,262 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Manish Honap <mhonap@nvidia.com>
 
-The firmware decoder setup added later in this series commits only the
-pxb-cxl and device decoders, and cxl_cfmws_find_device() routes only to
-devfn 0 below a port. Refuse any other placement.
+The direct mapping code takes the memory backends, component registers
+and mapping slots from CXLType3Dev. Collect them in a CXLMemDevice
+filled by cxl_mem_device(), and add
+cxl_fmws_direct_passthrough_remove_all() to drop every mapping of a
+device. The CXL Type-2 device added later in this series uses both.
+
+No functional change for cxl-type3.
 
 AI-used-for: code (prototype)
 Signed-off-by: Manish Honap <mhonap@nvidia.com>
 ---
- hw/mem/cxl_type2.c | 28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ hw/cxl/cxl-host.c    | 110 +++++++++++++++++++++++++++++++------------
+ include/hw/cxl/cxl.h |   1 +
+ 2 files changed, 82 insertions(+), 29 deletions(-)
 
-diff --git a/hw/mem/cxl_type2.c b/hw/mem/cxl_type2.c
-index 60f3f04679..ab89d332dc 100644
---- a/hw/mem/cxl_type2.c
-+++ b/hw/mem/cxl_type2.c
-@@ -11,6 +11,8 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/cxl/cxl.h"
- #include "hw/pci/pci.h"
-+#include "hw/pci/pci_bridge.h"
-+#include "hw/pci/pcie_port.h"
- #include "migration/vmstate.h"
- #include "system/hostmem.h"
- 
-@@ -22,6 +24,29 @@ static void clean_memory(PCIDevice *pci_dev)
-     host_memory_backend_set_mapped(ct2d->hostvmem, false);
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index 754f708cce..d9c7599679 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -209,6 +209,37 @@ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+     return found;
  }
  
-+/*
-+ * The firmware decoder setup covers only the host bridge and the device, and
-+ * cxl_cfmws_find_device() routes only to devfn 0 below a port.
-+ */
-+static bool cxl_type2_check_topology(PCIDevice *pci_dev, Error **errp)
-+{
-+    PCIDevice *rp = pci_get_bus(pci_dev)->parent_dev;
-+    PCIDevice *host = rp ? pci_get_bus(rp)->parent_dev : NULL;
++/* A CXL device with memory that a fixed memory window can map directly */
++typedef struct CXLMemDevice {
++    PCIDevice *pdev;
++    CXLComponentState *cstate;
++    HostMemoryBackend *hostvmem;
++    HostMemoryBackend *hostpmem;
++    MemoryRegion *direct_mr;
++    CXLFixedWindow **direct_mr_fw;
++} CXLMemDevice;
 +
-+    if (!rp || !pci_is_cxl(rp) ||
-+        !object_dynamic_cast(OBJECT(rp), TYPE_PCIE_ROOT_PORT) || !host ||
-+        !object_dynamic_cast(OBJECT(host), TYPE_PXB_CXL_DEV)) {
-+        error_setg(errp, "cxl-type2 must be directly below a CXL root port "
-+                   "of a pxb-cxl");
++static bool cxl_mem_device(Object *obj, CXLMemDevice *md)
++{
++    CXLType3Dev *ct3d;
++
++    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
 +        return false;
 +    }
-+    if (pci_dev->devfn != 0) {
-+        error_setg(errp, "cxl-type2 must be at slot 0, function 0");
-+        return false;
++    ct3d = CXL_TYPE3(obj);
++    if (md) {
++        *md = (CXLMemDevice) {
++            .pdev = PCI_DEVICE(ct3d),
++            .cstate = &ct3d->cxl_cstate,
++            .hostvmem = ct3d->hostvmem,
++            .hostpmem = ct3d->hostpmem,
++            .direct_mr = ct3d->direct_mr,
++            .direct_mr_fw = ct3d->direct_mr_fw,
++        };
 +    }
 +    return true;
 +}
 +
- static bool setup_memory(PCIDevice *pci_dev, Error **errp)
+ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr,
+                                         bool allow_interleave)
  {
-     CXLType2Dev *ct2d = CXL_TYPE2(pci_dev);
-@@ -190,7 +215,8 @@ static void setup_cxl_regs(PCIDevice *pci_dev)
+@@ -265,7 +296,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr,
+         return NULL;
+     }
  
- static void cxl_type2_realize(PCIDevice *pci_dev, Error **errp)
+-    if (object_dynamic_cast(OBJECT(d), TYPE_CXL_TYPE3)) {
++    if (cxl_mem_device(OBJECT(d), NULL)) {
+         return d;
+     }
+ 
+@@ -304,7 +335,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr,
+         return NULL;
+     }
+ 
+-    if (!object_dynamic_cast(OBJECT(d), TYPE_CXL_TYPE3)) {
++    if (!cxl_mem_device(OBJECT(d), NULL)) {
+         return NULL;
+     }
+ 
+@@ -312,7 +343,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr,
+ }
+ 
+ typedef struct CXLDirectPTState {
+-    CXLType3Dev *ct3d;
++    CXLMemDevice md;
+     hwaddr decoder_base;
+     hwaddr decoder_size;
+     hwaddr dpa_base;
+@@ -322,15 +353,15 @@ typedef struct CXLDirectPTState {
+ static void cxl_fmws_direct_passthrough_setup(CXLDirectPTState *state,
+                                               CXLFixedWindow *fw)
  {
--    if (!setup_memory(pci_dev, errp)) {
-+    if (!cxl_type2_check_topology(pci_dev, errp) ||
-+        !setup_memory(pci_dev, errp)) {
+-    CXLType3Dev *ct3d = state->ct3d;
++    CXLMemDevice *md = &state->md;
+     MemoryRegion *mr = NULL;
+     uint64_t vmr_size = 0, pmr_size = 0, offset = 0;
+     MemoryRegion *direct_mr;
+     g_autofree char *direct_mr_name = NULL;
+     unsigned int idx = state->hdm_decoder_idx;
+ 
+-    if (ct3d->hostvmem) {
+-        MemoryRegion *vmr = host_memory_backend_get_memory(ct3d->hostvmem);
++    if (md->hostvmem) {
++        MemoryRegion *vmr = host_memory_backend_get_memory(md->hostvmem);
+ 
+         vmr_size = memory_region_size(vmr);
+         if (state->dpa_base < vmr_size) {
+@@ -338,8 +369,8 @@ static void cxl_fmws_direct_passthrough_setup(CXLDirectPTState *state,
+             offset = state->dpa_base;
+         }
+     }
+-    if (!mr && ct3d->hostpmem) {
+-        MemoryRegion *pmr = host_memory_backend_get_memory(ct3d->hostpmem);
++    if (!mr && md->hostpmem) {
++        MemoryRegion *pmr = host_memory_backend_get_memory(md->hostpmem);
+ 
+         pmr_size = memory_region_size(pmr);
+         if (state->dpa_base - vmr_size < pmr_size) {
+@@ -351,37 +382,49 @@ static void cxl_fmws_direct_passthrough_setup(CXLDirectPTState *state,
          return;
      }
  
+-    if (ct3d->direct_mr_fw[idx]) {
++    if (md->direct_mr_fw[idx]) {
+         return;
+     }
+ 
+-    direct_mr = &ct3d->direct_mr[idx];
++    direct_mr = &md->direct_mr[idx];
+     direct_mr_name = g_strdup_printf("cxl-direct-mapping-alias-%u", idx);
+     if (!direct_mr_name) {
+         return;
+     }
+ 
+-    memory_region_init_alias(direct_mr, OBJECT(ct3d), direct_mr_name, mr,
++    memory_region_init_alias(direct_mr, OBJECT(md->pdev), direct_mr_name, mr,
+                              offset, state->decoder_size);
+     memory_region_transaction_begin();
+     memory_region_add_subregion(&fw->mr,
+                                 state->decoder_base - fw->base, direct_mr);
+     memory_region_transaction_commit();
+-    ct3d->direct_mr_fw[idx] = fw;
++    md->direct_mr_fw[idx] = fw;
++}
++
++static void cxl_fmws_direct_passthrough_unmap(CXLMemDevice *md,
++                                              unsigned int idx)
++{
++    CXLFixedWindow *owner_fw = md->direct_mr_fw[idx];
++    MemoryRegion *direct_mr = &md->direct_mr[idx];
++
++    memory_region_transaction_begin();
++    memory_region_del_subregion(&owner_fw->mr, direct_mr);
++    object_unparent(OBJECT(direct_mr));
++    memory_region_transaction_commit();
++    md->direct_mr_fw[idx] = NULL;
+ }
+ 
+-static void cxl_fmws_direct_passthrough_remove(CXLType3Dev *ct3d,
++static void cxl_fmws_direct_passthrough_remove(CXLMemDevice *md,
+                                                uint64_t decoder_base,
+                                                unsigned int idx)
+ {
+-    CXLFixedWindow *owner_fw = ct3d->direct_mr_fw[idx];
+-    MemoryRegion *direct_mr = &ct3d->direct_mr[idx];
++    CXLFixedWindow *owner_fw = md->direct_mr_fw[idx];
+ 
+     if (!owner_fw) {
+         return;
+     }
+ 
+-    if (!memory_region_is_mapped(direct_mr)) {
++    if (!memory_region_is_mapped(&md->direct_mr[idx])) {
+         return;
+     }
+ 
+@@ -389,11 +432,21 @@ static void cxl_fmws_direct_passthrough_remove(CXLType3Dev *ct3d,
+         return;
+     }
+ 
+-    memory_region_transaction_begin();
+-    memory_region_del_subregion(&owner_fw->mr, direct_mr);
+-    object_unparent(OBJECT(direct_mr));
+-    memory_region_transaction_commit();
+-    ct3d->direct_mr_fw[idx] = NULL;
++    cxl_fmws_direct_passthrough_unmap(md, idx);
++}
++
++void cxl_fmws_direct_passthrough_remove_all(PCIDevice *dev)
++{
++    CXLMemDevice md;
++
++    if (!cxl_mem_device(OBJECT(dev), &md)) {
++        return;
++    }
++    for (unsigned int i = 0; i < CXL_HDM_DECODER_COUNT; i++) {
++        if (md.direct_mr_fw[i]) {
++            cxl_fmws_direct_passthrough_unmap(&md, i);
++        }
++    }
+ }
+ 
+ static int cxl_fmws_direct_passthrough(Object *obj, void *opaque)
+@@ -421,19 +474,18 @@ static int update_non_interleaved(Object *obj, void *opaque)
+ {
+     const int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
+     bool commit = *(bool *)opaque;
+-    CXLType3Dev *ct3d;
++    CXLMemDevice md;
+     uint32_t *cache_mem;
+     unsigned int hdm_count, i;
+     int interleave_ways_dec;
+     uint32_t cap;
+     uint64_t dpa_base = 0;
+ 
+-    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
++    if (!cxl_mem_device(obj, &md)) {
+         return 0;
+     }
+ 
+-    ct3d = CXL_TYPE3(obj);
+-    cache_mem = ct3d->cxl_cstate.crb.cache_mem_registers;
++    cache_mem = md.cstate->crb.cache_mem_registers;
+     cap = ldl_le_p(cache_mem + R_CXL_HDM_DECODER_CAPABILITY);
+     hdm_count = cxl_decoder_count_dec(FIELD_EX32(cap,
+                                                  CXL_HDM_DECODER_CAPABILITY,
+@@ -447,8 +499,8 @@ static int update_non_interleaved(Object *obj, void *opaque)
+         committed = FIELD_EX32(hdm_ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED);
+ 
+         /*
+-         * Optimization: Looking for a fully committed path; if the type 3 HDM
+-         * decoder is not commmitted, it cannot lie on such a path.
++         * Optimization: Looking for a fully committed path; if the endpoint
++         * HDM decoder is not committed, it cannot lie on such a path.
+          */
+         if (commit && !committed) {
+             return 0;
+@@ -473,10 +525,10 @@ static int update_non_interleaved(Object *obj, void *opaque)
+ 
+         if (iw == 0) {
+             if (!commit) {
+-                cxl_fmws_direct_passthrough_remove(ct3d, decoder_base, i);
++                cxl_fmws_direct_passthrough_remove(&md, decoder_base, i);
+             } else {
+                 CXLDirectPTState state = {
+-                    .ct3d = ct3d,
++                    .md = md,
+                     .decoder_base = decoder_base,
+                     .decoder_size = decoder_size,
+                     .dpa_base = dpa_base,
+diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
+index 7cf3dc622c..e3a3a43236 100644
+--- a/include/hw/cxl/cxl.h
++++ b/include/hw/cxl/cxl.h
+@@ -84,4 +84,5 @@ typedef struct CXLDownstreamPort CXLDownstreamPort;
+ DECLARE_INSTANCE_CHECKER(CXLDownstreamPort, CXL_DSP, TYPE_CXL_DSP)
+ 
+ void cfmws_update_non_interleaved(bool commit);
++void cxl_fmws_direct_passthrough_remove_all(PCIDevice *dev);
+ #endif
 -- 
 2.53.0
 
