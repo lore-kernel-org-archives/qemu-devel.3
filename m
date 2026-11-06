@@ -1,108 +1,143 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAEB6606A32D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 19:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFAE606A331
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 19:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ctJ/8qHS
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=frWzMU6a;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=CAtPM1Se
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPPFN-0008TK-CM; Fri, 06 Nov 2026 14:05:10 -0500
+	id 1xPPEy-0008HV-6C; Fri, 06 Nov 2026 14:04:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xPPFI-0008SI-HU
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 14:05:05 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xPPFG-0007IV-Eu
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 14:05:04 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-6b65d69f5c2so1197794a12.3
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 11:05:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793991900; cv=none;
- d=google.com; s=arc-20260327;
- b=D5c5qXBkbj8Kkpjk2y72Ww8uxuRdCIMC8V9fxV3z/qfYkMEodPYMqpIu8d+hwecaFf
- kBkap0DdLjDqcPV13h7i+6uEEad9HaS0QzGv7P8c79LvpNQsw6dfIrmRDMgqMk7F1GHP
- bn2MIvjsh4yFpT+G4B/RKqE1VkEtF6gYmcIfTXQ6zqdFEHbOsHVcxMgOC9SnnSlnaL7D
- iRgUe7jzSepapVmHfztFcAEBaHYVk5Mfb1IS9sQkcbXrtTUy+RdFtiuaEzR/ROlPQYg0
- dlLiStOHpyGE3D5qYrS7u3VPC7p/pt3wlDZeNZvWFek6H5dNBwqjJzaKNumM5fFcLANB
- 6AIQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=RRu/ESU2BT5Ip9ThCIokgkCfDknwYZ0+Lfprs+20sVQ=;
- fh=3cPWwIXhiQ0xxSmv1Q3njkrhS14Dx8pNCV6A7StAyfA=;
- b=NZntbvEqbkbk2dvEna1r51X22IE/245lBaadqx4y8NhElbf1xsjW6joCdNIpN/Ti7w
- qNsvuwrO/BTgUYsx8CbjMMVC6ntsHb0/J0QJw2YZUeP5P64A6UoRGj3ypLVGTe4yZWVa
- GBGQY0634zjhEqtI4+ykTkmplgUK9Kmzb/NFgpYFJaeu+XJpsyAYg3rWWUZOM8MPrCnI
- F7NrcPHv+rSDj8Oh0dos6ehY5jpsNwmj5/6bJZ/lqnf3HQh9a65sMs7VSkiIQgZslajD
- MWiT+llrEArCKPnRKbfw742w6MHnNWONyLqwUwvmQ0Jz8lGUYx+WXaGJJJ4ff1cq1D5Q
- 62ig==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xPPEO-0008Dq-DI
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 14:04:10 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xPPEM-0007FJ-3F
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 14:04:07 -0500
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A6Ht2EM125943
+ for <qemu-devel@nongnu.org>; Fri, 6 Nov 2026 19:04:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ eSwKYtWEjjb0DvriCPVVPGzgDCr00kCMByr8/Y3M7Bo=; b=frWzMU6a5utqAps1
+ Jo0EFTg6wUG38BP4f2+L31F9gdnMsjS+/K1ZPs+ovTFdKWNB7Py0YAiroQAqKPOT
+ norEQFdzge7bnb07LW5hADDWMxdT7vLiMYTehLXR6Aywgoes4nlhemSeuseIpyz1
+ 1+gq4vP/yVdcpY41mivw8yhCssBn8hFeu1TBBfy262hGlIaKBhp0VMjLLItEmbXB
+ P8wRrAC39p67/crGrZwJRTa8Dya9SvkzAzmaeBoCYcL5NE0wzr5NwsJYe15tbC7h
+ SLU5Op4MouKdivClEjM65EKMFLMqnQhyaY1x+0rC6tGvRVEuutWvbfnxHYZ3NFJT
+ MxuPIw==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hsk48rf62-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 19:04:04 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-cdb4c49e52fso942294a12.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 11:04:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793991900; x=1794596700; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=RRu/ESU2BT5Ip9ThCIokgkCfDknwYZ0+Lfprs+20sVQ=;
- b=ctJ/8qHSIrfVugtNcBZCpUv333abaM5yJL43UMMifokkEW9cx53ytUMbizbwoTa3uM
- UxuMljXlwJIqC/EiLVy/pjMYVCWIIXXzxmwrUv2nNHJldxfg2bk5464mAzwngpKJi9Pi
- FG2o5xety3OxEMKCiorln7vO6T1Xe6e1AaOncwnrBqg9wqr5ul6CaS7wD7ZQAZSkF+ml
- Af7xAvKU5UOIZX5rqGzVEPs9zK+DPRjrXdfIWBU4J5AnZlaxMeaMm+J0vA3dco9cBEVf
- KwHYQRB9r77FP4QbfmSHz5m08bWkpN1LtPUibkDCObuiJw1X1/p8GECQUUrRGwcKdFlp
- kqFw==
+ d=oss.qualcomm.com; s=google; t=1793991844; x=1794596644; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=eSwKYtWEjjb0DvriCPVVPGzgDCr00kCMByr8/Y3M7Bo=;
+ b=CAtPM1SeMqxWoyrADNw3isj1BEMVDPW7aGHggDEP0PitEzKkgtnFFx8xmplXH0V66D
+ YQAO2+yRP0IXzYqUE+Qdy19MXKSrVAcnQ+hI5Vd0XYM7Ublh2/I380otnBynqvU3uRg6
+ EW9SkDVbwtKGEfMGTKcWGUIdTSOqAVwV596vnAktU7rLs8XmwYIytyE6ijrdl570FreV
+ 9KjXhnVAXJ1qB8afgh8xgjdygYmPJbEsR7mPyPzQhRZA56D7HdqnFxK0Gt1J8Tc/gxjL
+ 6qPbR5GYmFgbQrbhLI+dVSYMuZbEaKOq8HwIoW0od9Nfuaa0KEe1OTz2g5vFbkWGk34U
+ 17zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793991900; x=1794596700;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20260707; t=1793991844; x=1794596644;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=RRu/ESU2BT5Ip9ThCIokgkCfDknwYZ0+Lfprs+20sVQ=;
- b=xJ+ICPuh8GcGPrSMBSxPMHVhqXUTgy+k5qZKiAFNmRUCRz9rMPk89nePtpJ01BJhH9
- Zk72/R39LGck1vfdEaVR0tZF84NMX/LE2Hhb6eQMgjWUgI+AigVS5wyu/1HjDJwATQIL
- 9ousCWV6m+dUrmBFm05OT5QO2DY94HfIxBlTlzPHQAPAqQqPnIOzolvl9eJ3qIB36v8g
- J8yLAUNqcXWE4r18uXktSzTJLLd9ZP8XynIkbQ7jNhEQEC58COXh2HNfbYabX4+iHrjX
- MSZQlzOGsv5lu5ELfT/aH4W7SQnzAODpLMP4arywtU2Oxzw1ERJP0It+9ES6vDQuNZOD
- Gojw==
-X-Gm-Message-State: APuU4Z/MF+KD1OH3yo/OukB2OGT6MROLyMZVPo5xMmQ1a0xGQTGDLf2q
- cODjVGdgyvjca7BtZ3qdFcKjW+HVVhzkHRy7RzpNgrILkvFkOSfeT/WQKaoXCi/YYZtZnElqh3S
- plLQQU55S5vcnKuG7p7JFims4/IlWWcg=
-X-Gm-Gg: AYBFou0BVyFDGoHfA5nYaUKlyAx/Z2vSGFQs2KDsZYBpCBVkcVTY4VPAlSPORwXvTa4
- HIKpep/u6iJl9s5Iy5q/kEGQmTYKDRGGVQhkDF3S3WxSxTNEiF9elsFjZY/9lOrB5q93GRs3+Ui
- gOCIIPRfip7WlvEWeAKbccBCY3gbp/P00LXobOEn1GwzNU0xe14IfD1Id6d0xlfLcvW0MiK1jWB
- n2ZdtAzQqEHxAluoIVjS4uf7iUbHaMg8ErdR9pKGk1FrntvGVlloy/HFQwKfTUAYgVvKxRGyf1y
- WeCOLx+K/HzBYeuRLkJ3dQET8oATJahXrUvE1gTK8X/N2JrBoL1izK8vbn6zpcvNCWTT9eI/lat
- jvIqedlLdi2LwZqJX5mTzLc7T4r+S1T4bvhG1
-X-Received: by 2002:a05:6402:3811:b0:6b5:8719:6d51 with SMTP id
- 4fb4d7f45d1cf-6b5977e704fmr2459928a12.32.1793991900257; Fri, 06 Nov 2026
- 11:05:00 -0800 (PST)
+ bh=eSwKYtWEjjb0DvriCPVVPGzgDCr00kCMByr8/Y3M7Bo=;
+ b=TOF7wFMijAPE2PxEU2rg++qK9+ZN9OQXjEPvyIL3Mi/Y8szrT64OdyczFaJOO0Cqt1
+ FZzzsR6X5nXeBTQJXeBqXYlRgb6s20TPqgTUvfw+Tx2B4KKpjROF5rjSaUfJGVP3CZHB
+ 02f25TJBMHhXOyiczBeQ34Yp8yLiG8P0DlWvoihktPJ2AusBzCJvVTMlB3Av96Qake97
+ cCZPJFaDStxdlVh11kVEAZC+dtjluZAZzaoKvP7KXatycRJGRB/g9cLjG4+YIE/o7eja
+ dQMF8RPaR/ExPP4JjZCWOmvA0w5lRg774FWYhKV3cW7sECFKw868Fs91RRYrlajawaRU
+ veBg==
+X-Gm-Message-State: APuU4Z/AWbvdpLUfrkfpVArx2FweJchp6J78T7NkR3xcu4rvCHRodIpt
+ q0tOGBaS8lISS6/s9neLElvrKQve/SxxWPw4+jCR7KkviaCkjbRLsxsCSwsj5WcFSLpgHewMU8m
+ Z9tbDGqyOBdbTXSjfZpF0WQeiflbcn9upzqQyxM2PLuqk1T9Y82mvhRii3CKkCE3qmA==
+X-Gm-Gg: AYBFou3+CwYZdk6V8quVjD2pvReVyJ5qWvWPFcGrKvY0KJOVzS1wYz6GRygM4r4EuCd
+ G1B8jc4fs2rfstfwHqo2qc+40n6A8BWQA5fXkm1aHTfkKh4U0DRBSeMke/7XyNWzyPz5ObZ3Kvk
+ hiQIuYeLQ5jzeeEzY62+bTcCNqqpc7yiNyeo9Dnp3xis7xHnOb+D2z0+LQU7K4tv5tEenfkEzcF
+ JTGKFK0B+oZPPP/HwNdNH8yq7JYf7SNIoRnGWKy7fXgJCN8TBCOiNCKTiAf1b5IjsuLbYuF7bsR
+ 10rvGy5F29MjlPY4PFzQm4yToeewj7E3bJ2TyXtCFTsgGbe5uKIDByVsNl+bEza4EdmTf/r2II3
+ yXrq49BF3ORMeeX960cRGyOebXN6el6UIYEydiy+pipnXC/Rphdd9rahOaFWmGeDM08v0bpEHh6
+ yi/vpIfrdbErE7/bdNVJWu+6rM37RpCJdgKiCB
+X-Received: by 2002:a17:903:234b:b0:2e9:4d9f:a65b with SMTP id
+ d9443c01a7336-2ed41c0aba0mr43202275ad.53.1793991843842; 
+ Fri, 06 Nov 2026 11:04:03 -0800 (PST)
+X-Received: by 2002:a17:903:234b:b0:2e9:4d9f:a65b with SMTP id
+ d9443c01a7336-2ed41c0aba0mr43202005ad.53.1793991843361; 
+ Fri, 06 Nov 2026 11:04:03 -0800 (PST)
+Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ed47d40d19sm8283735ad.32.2026.11.06.11.04.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Nov 2026 11:04:02 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@oss.qualcomm.com
+Subject: [PULL 3/5] tests/docker: add igvm to Fedora container images
+Date: Fri,  6 Nov 2026 12:03:50 -0700
+Message-ID: <20261106190352.1665081-4-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261106190352.1665081-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20261106190352.1665081-1-pierrick.bouvier@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261106175326.22629-1-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20261106175326.22629-1-pierrick.bouvier@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Sat, 7 Nov 2026 03:04:46 +0800
-X-Gm-Features: AclHuK_d2fZta-XyNdduS4bLzTs7INtKI4-y_szcgUBI1pZNS7zT3hCWKwcH-RM
-Message-ID: <CAE2XoE8_Cg5Arv8SnA2yXP_5RAENhw2N-iysUP2Tc1E170VxNg@mail.gmail.com>
-Subject: Re: [PATCH v2] multi-target: restrict whpx-accel-*-cpu to matching
- target
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA3NSBTYWx0ZWRfXxWMgYIf9Heqw
+ m51dswGC/MCJFjuaDAHd2njaxXlL0pRH6HvCcRQpEgyZuEkc0V7r88B2uFjrV6kJ6cHocVWxy4J
+ z0Xo8TcoSBsKDwJBNvD7J5oOeZpZ++xMn49xyjU6meXSw0MGprZujN8DmiqwVUHVYZ4uSGbm9AY
+ TsiwcOcBa577HPLWNmTPCHKHMVUSSa44bgTEw89mujdcwDRtdFdZyWxi4kgYgQwBBz+gTn4/jJY
+ TNZVUjymqmu81mNE8RtXM3+eKHVc9vKJLiySi0JyVhyBPk7pW30Z3P0dpGjc818RhvRWFpQmwDh
+ jjNwRRq6g7JsaPVGPs5zt1YDOAiS5a/jjHNh8O2hrICiOEcMGzP4D7WcAx6HgodzZvaETcPQjGi
+ bDQeBCH26Vq0wolm9OZj4no1Um22pvTvXJxCjORe3vv8q9tSpCh+S3syiI5ZmSkRww9pgG66R1E
+ mZxpRc22go2NWVcPfYA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA3NSBTYWx0ZWRfX81AfKijlhbBp
+ S0tHYKWMWqegtv6Rq5+QZ/tsSToYPNDwErr56Mrg9wLaGU98oHEKoq1e8znKzUp1i7EzIhAbN3D
+ SskmDlqhvw5+lNDg61BcD05IxR2CHmI=
+X-Proofpoint-ORIG-GUID: H2VsukJ63xJO3guSAdu5JOyRf5ZO89a8
+X-Authority-Analysis: v=2.4 cv=Gr3XaU1C c=1 sm=1 tr=0 ts=6aee24a4 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=FHBqb38XBGssrAiPUdsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-GUID: H2VsukJ63xJO3guSAdu5JOyRf5ZO89a8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-06_06,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ suspectscore=0 phishscore=0 bulkscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611060075
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,86 +149,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sat, Nov 7, 2026 at 1:54=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On windows x64 host:
-> $ ./build/tests/unit/test-multi-target
-> Type 'whpx-accel-x86_64-cpu' is missing its parent 'accel-x86_64-cpu'
-> (same for windows-arm64 hosts and whpx-accel-aarch64-cpu)
->
-> Parent type is conditionally registered from current target:
-> register_accel_target_type uses '"accel-" + target_cpu_type()' as type
-> name. Since whpx-common.c is shared between arm and x86_64 targets,
-> only register whpx accelerator cpu type when current target cpu type
-> matches the one it was compiled for.
->
-> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  accel/whpx/whpx-common.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-> index 78d2827809b..20c684638b0 100644
-> --- a/accel/whpx/whpx-common.c
-> +++ b/accel/whpx/whpx-common.c
-> @@ -20,6 +20,7 @@
->  #include "hw/core/boards.h"
->  #include "hw/intc/ioapic.h"
->  #include "qemu/error-report.h"
-> +#include "qemu/target-info.h"
->  #include "qapi/error.h"
->  #include "qapi/qapi-types-common.h"
->  #include "qapi/qapi-type-infos-common.h"
-> @@ -492,11 +493,18 @@ static void whpx_cpu_accel_class_init(ObjectClass *=
-oc, const void *data)
->      acc->cpu_instance_init =3D whpx_cpu_instance_init;
->  }
->
-> +/* TYPE_ACCEL_CPU is only registered for current target cpu type */
-> +static bool whpx_cpu_accel_is_available(void)
-> +{
-> +    return !strcmp(target_cpu_type(), CPU_RESOLVING_TYPE);
-> +}
-> +
->  static const TypeInfo whpx_cpu_accel_type =3D {
->      .name =3D ACCEL_CPU_NAME("whpx"),
->
->      .parent =3D TYPE_ACCEL_CPU,
->      .class_init =3D whpx_cpu_accel_class_init,
-> +    .is_available =3D whpx_cpu_accel_is_available,
->      .abstract =3D true,
->  };
->
-> --
-> 2.43.0
->
->
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Hi, I think
+The igvm-devel RPM is used for certain features on the
+x86 and arm platforms, so should be included to give
+build and test coverage in CI.
 
-[PATCH v5 0/3] Register accel-$cpu_type for all targets
-https://lore.kernel.org/qemu-devel/20261106023936.772-1-luoyonggang@gmail.c=
-om/
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20261106171836.2020151-4-berrange@redhat.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ tests/docker/dockerfiles/fedora-rust-nightly.docker | 1 +
+ tests/docker/dockerfiles/fedora.docker              | 1 +
+ tests/lcitool/projects/qemu.yml                     | 1 +
+ 3 files changed, 3 insertions(+)
 
-should also handled this. so this is_available do not need anymore.
+diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+index 144325ae1e7..7eae32f126a 100644
+--- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
++++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+@@ -54,6 +54,7 @@ exec "$@"\n' > /usr/bin/nosync && \
+                        gtk-vnc2-devel \
+                        gtk3-devel \
+                        hostname \
++                       igvm-devel \
+                        jemalloc-devel \
+                        json-c-devel \
+                        libaio-devel \
+diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
+index 8f7e9efc899..871b1ba3f20 100644
+--- a/tests/docker/dockerfiles/fedora.docker
++++ b/tests/docker/dockerfiles/fedora.docker
+@@ -54,6 +54,7 @@ exec "$@"\n' > /usr/bin/nosync && \
+                        gtk-vnc2-devel \
+                        gtk3-devel \
+                        hostname \
++                       igvm-devel \
+                        jemalloc-devel \
+                        json-c-devel \
+                        libaio-devel \
+diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
+index abbd3e3f0b8..37a0c931fb2 100644
+--- a/tests/lcitool/projects/qemu.yml
++++ b/tests/lcitool/projects/qemu.yml
+@@ -35,6 +35,7 @@ packages:
+  - gtk3
+  - gtk-vnc
+  - hostname
++ - igvm
+  - json-c
+  - libaio
+  - libasan
+-- 
+2.47.3
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
 
