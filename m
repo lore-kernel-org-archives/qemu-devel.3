@@ -1,64 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1848C606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 13:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979F5606A32C
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 13:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linuxhacker.ru header.i=@linuxhacker.ru header.a=rsa-sha256 header.s=mail header.b=mNkq8gP1
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=dFxQT19j;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=XQCYTDHQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPK6r-0003Mt-Nq; Fri, 06 Nov 2026 08:36:01 -0500
+	id 1xPKET-0006Lf-2x; Fri, 06 Nov 2026 08:43:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <green@linuxhacker.ru>)
- id 1xPFhj-00075V-ML; Fri, 06 Nov 2026 03:53:47 -0500
-Received: from linuxhacker.ru ([159.69.87.85] helo=eagle.linuxhacker.ru)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1xPKEP-0006II-5M
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 08:43:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <green@linuxhacker.ru>)
- id 1xPFhh-0001dV-DN; Fri, 06 Nov 2026 03:53:47 -0500
-Received: from [10.137.0.31] (unknown [162.81.204.199])
- by eagle.linuxhacker.ru (Postfix) with ESMTPSA id 396B7BEE42;
- Fri,  6 Nov 2026 08:53:40 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 eagle.linuxhacker.ru 396B7BEE42
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxhacker.ru;
- s=mail; t=1793955221;
- bh=DbZmSbe5eCHlOvifV0yV+NJhv1O4MctEiP47EHD96Xw=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
- b=mNkq8gP1i+3sfVN/aGouE7ha/Ij77WblM5QwDvtZrLZr2C+2fCGMhPmRAyk15sZdj
- TqWayQQQ61chPq+C3LOBM9VzaC4BoiKyUIPnlFaAXcqGrKh2REZkeYr48Hd26ZhaO6
- BvLgrkD/J18jLJguK3ym5pK+osNlgI9tXf/VJp2ZLtmPtgNaYYdBTgsT47ukPK8Pwi
- OanWQhFgcaKRt+3slYQs+/PBNLCCoMuy1DjScJ7Ki2gM0F+jztxPL7kRMJxKiZX5Ii
- o4mFT3qBS/kcY///CximBVMCE9b5/spNi0lKCpcOW5eboUyfWSz7I59Jnbt9Uab0Lt
- vr6unUI7NhvrA==
-Message-ID: <4365e62de77171ab81ade60344453ee67d73c74c.camel@linuxhacker.ru>
-Subject: Re: [PATCH v7 00/22] vhost refactoring and fixes
-From: Oleg Drokin <green@linuxhacker.ru>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- mst@redhat.com, 	sgarzare@redhat.com, raphael@enfabrica.net,
- qemu-devel@nongnu.org, 	yc-core@yandex-team.ru, d-tatianin@yandex-team.ru,
- QEMU Stable	 <qemu-stable@nongnu.org>, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@oss.qualcomm.com>
-Date: Fri, 06 Nov 2026 03:53:38 -0500
-In-Reply-To: <56f5cf1d-e221-465f-8993-866d744241ca@tls.msk.ru>
-References: <20260527061625.11167-1-vsementsov@yandex-team.ru>
- <56f5cf1d-e221-465f-8993-866d744241ca@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1xPKEN-0002L0-KH
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 08:43:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793972625;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=h/yhkFy/HZO/OM6W03NxKw6qdi5JN0/Dlgok27o6BYo=;
+ b=dFxQT19jpqFEQzt4WFfYGHL7TmyQeAG5a2gWgKTvZitzIqFjDTOQgiJXxRU8E2krhkCiVS
+ RPBbA51PrZ4UtjZJeVsGkKxdN43H+cpXOz+4JBho3TyfW869CGFIdWbFzcJlRnAaO9d907
+ T4u+Zmab2NkZ8Tm1hiyI9xKNbPMAHY4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-134-ws8rSB-xO4ebQLdoVNz5mA-1; Fri, 06 Nov 2026 08:43:43 -0500
+X-MC-Unique: ws8rSB-xO4ebQLdoVNz5mA-1
+X-Mimecast-MFC-AGG-ID: ws8rSB-xO4ebQLdoVNz5mA_1793972622
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4a35db2d6b3so6129775e9.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 05:43:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1793972622; x=1794577422; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=h/yhkFy/HZO/OM6W03NxKw6qdi5JN0/Dlgok27o6BYo=;
+ b=XQCYTDHQUNs8NbRSaf6VU8y0dTA6yv0cGsAbaYXgAjIO/DCkdmkGvuT16bt0nMmj3X
+ jSQmimPJg0yMOkjpcMegVAPGHh97uEWqN43nWLM2E8iqHZN8jvKQPoRZYrzghkuny/Zi
+ XQy1PRfxoMbJMFVHNanL07m0Kn4Jt9gXjhIqg16L3O4VyROgtaBOZuRSzB0kikhFtNDH
+ RTUQCdKAC25qH3CASEEriO7EksjHSKdEuVkzp9oKKLxFfQOw7NcPCunVSfmO0Ko7AJ3T
+ wTi701vdJrwzxRNo9QHxbIw69NsuwhzulC6W5F1kM5EI1pXAxcwvBDpz7nzErx/dUvJr
+ YIJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793972622; x=1794577422;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=h/yhkFy/HZO/OM6W03NxKw6qdi5JN0/Dlgok27o6BYo=;
+ b=GCv4W680GZBZqDa2UCEA0V0Zd3XNpryOp7gtesrjpfLnXPQnehpD9+03RS8SL7+k26
+ YxlN6JqcsvhGkn4QCpIZZFfEDzHm3qMqFQ9AJ6gabG/9K8PZ9dTysvxbgnBM9EeKqcbw
+ rPfw1C0FFM3RtEF2/6yJIJo0NISiewlq4mVCNIMnb+eR4doNj3vkQsxEElat33NeIurv
+ Ez7/RwCTXa1s9a2lO1v+Cwr8jqJ79wG4jvLZU7vJc1GPyifqoe7Iv2VvIGPK7aDOTPGU
+ 5AZvd7t0UwbQm2rxrJ/PmrFeY2RFPjdSgNq5FCUVdtCZ8cfzXIfxqcgEaqsw87y0FidP
+ 1yTw==
+X-Gm-Message-State: APuU4Z/WSplkjyXUoBA76BlPvlREDPgQmTgvyytgjzd9qj2XRL/TAC86
+ ESkPnl1sjZsZu1ss3YVadrL92uzC6c1+851K/au/Yq+v38rRR1ZnxcWLLzBbhgBPMtIJgijdLv2
+ 0aJe3YbzxZSeHoYKE7hATu4A3mUMoGBOmT1UGARFC+l5fTeo5ncxuM5S3
+X-Gm-Gg: AYBFou1aZte9/S5ioO4VRpkqnWAoCDZAf5u6ZUjGpuLkYvgMp44z33w27ZWQYTgxwRN
+ wQ/ZbxeLuV8NhWX09NAHv32qXALyt8LMo1QzaOjRijUT3SddzIAlRR/So2xcwDygdyZF3p+aRgR
+ q6Z2i5+u5aZpZ6bpjpjOmLUtvZ01lRDwW9oHHQA3xlrWzSLRtYyaEdPZX6K05TVWcvIrsKM14IK
+ t5oZDggyOQJbcY5QbstBqC0oI5PvxzxFDDb4XEyhZPSipAZMFzxUW00AxBRsMxicNyTIrpl55Ca
+ Bp7S3ua3ph10eEh1pklKMkuMzzOiL+cqu3iAB9z+odZj9uGssblnHmWF+khFKeh6zRmkj8gMpAY
+ ThzlVRdd/lOuqIZ3HEl/6PcCzxzOds9N7z/PWeH4P9sotynSKeAwLSWawCt5hcXNNUQOQGesY3l
+ sxdLlZM+hz
+X-Received: by 2002:a05:600c:608a:b0:4a1:e6a9:4086 with SMTP id
+ 5b1f17b1804b1-4b6d82b2c9cmr45633305e9.0.1793972622392; 
+ Fri, 06 Nov 2026 05:43:42 -0800 (PST)
+X-Received: by 2002:a05:600c:608a:b0:4a1:e6a9:4086 with SMTP id
+ 5b1f17b1804b1-4b6d82b2c9cmr45632865e9.0.1793972621997; 
+ Fri, 06 Nov 2026 05:43:41 -0800 (PST)
+Received: from leonardi-redhat ([176.206.36.131])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-492d72333f9sm3829569f8f.29.2026.11.06.05.43.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Nov 2026 05:43:41 -0800 (PST)
+Date: Fri, 6 Nov 2026 14:43:39 +0100
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, Alexandr Moshkov <dtalexundeer@yandex-team.ru>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] backends/vhost-user: fix memory leak when
+ vhost_dev_init() fails
+Message-ID: <au3Zc6oyL4td-qf3@leonardi-redhat>
+References: <20261105162443.232929-1-sgarzare@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=159.69.87.85; envelope-from=green@linuxhacker.ru;
- helo=eagle.linuxhacker.ru
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20261105162443.232929-1-sgarzare@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 06 Nov 2026 08:35:57 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,142 +119,32 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
 	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Michael,
+On Thu, Nov 05, 2026 at 05:24:43PM +0100, Stefano Garzarella wrote:
+>From: Stefano Garzarella <sgarzare@redhat.com>
+>
+>vhost_dev_init() clears the struct vhost_dev in the error path calling
+>vhost_dev_cleanup(). So, to prevent memory leaks, we need to keep a
+>local reference to the vhost_virtqueue array and deallocate it in case
+>of failure, just as most other callers of vhost_dev_init() do.
+>
+>Discovered while reviewing a patch by Alexandr Moshkov fixing the
+>same issue in vhost-user-fs.
+>
+>Fixes: f24bb7287ddb ("Add vhost-user-backend")
+>Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>---
+>
 
-these master commits fix bugs that are also present in 10.0.x and are
-not in staging-10.0 yet.
-Group A cherry-picks cleanly onto staging-10.0 at 1607144131, in this
-order, and builds. Group B does not apply as is.
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
 
-## A. Clean cherry-picks
+Thanks,
+Luigi
 
-Guest-triggerable:
-
-- 62976e8a2e virtio-pci: reject Q_ENABLE write on already-enabled queue
-  (re-enabling a live queue keeps stale progress indices; virtio-iommu
-can be driven to OOM)
-- fa9e186ab6 virtio-net: validate IHL in virtio_net_rsc_extract_unit4
-before use (OOB read, work item #4166; needs guest_rsc_ext)
-- a2fbf1785b hw/ide/ahci: clear cur_cmd when the command list is
-unmapped
-- d7f16bad8f hw/ide/ahci: refuse a PIO transfer with no command header
-- 2713717148 hw/ide/ahci: treat a failed PRDT walk as a PIO transfer
-failure
-- 795af987ce hw/ide/ahci: reject a command header with an invalid FIS
-length
-- 402fd5a756 vfio/pci: Fix information leak in vfio_rom_read()
-- aca4967567 hw/usb/hcd-xhci: Unmap canceled packet (DMA mapping leak
-on Stop Endpoint with async packets)
-
-Host-side robustness:
-
-- c31a445749 aio-posix: fix fdmon-io_uring.c timeout stack variable
-lifetime
-- dbf70f0a03 aio-posix: fix race between io_uring CQE and AioHandler
-deletion (10.0 uses fdmon-io_uring for every AioContext when built with
-liburing; random hangs and a use-after-free)
-- 1423c170b9 chardev: Fix QIOChannel refcount (use-after-free)
-- 3f0170505e chardev: Don't attempt to unregister yank function more
-than once (abort)
-- a1708203b5 net/tap-linux.c: avoid abort when setting invalid fd (the
-abort became reachable on reset through "virtio: Call set_features
-during reset", which 10.0.x carries)
-- 4733cb0833 block/io: skip head/tail requests on EINVAL (misaligned
-guest discard pauses a werror=3Dstop guest)
-- 1fec1f337a ahci: Fix leak of IRQState (minor)
-
-## B. Need a context backport
-
-- 9daa7347ff vfio/pci: Reject invalid MSI-X Table and PBA BIR values
-  (conflicts only with the vfio_device_get_irq_info() conversion)
-- 5bdc12fed5 hw/ide/ahci: drain the ports on teardown (use-after-free
-on surprise removal of a hot-plugged AHCI controller)
-- a35c5755d9 intel_iommu: fix guest-triggerable abort on oversized MMIO
-access
-- 24b9ebd5f1 hpet: fix bounds check for s->timer[] (no security impact
-per the commit message; included for completeness)
-
-On Fri, 2026-11-06 at 05:35 +0300, Michael Tokarev wrote:
-> On 5/27/26 09:16, Vladimir Sementsov-Ogievskiy wrote:
-> > Hi all. That's a preparation for vhost-user-blk backend-transfer
-> > feature.
-> >=20
-> > 07: rebase on master,
-> > 04: drop extra occurence of system_virtio_ss.add(files('vhost-user-
-> > stub.c'))
-> >=20
-> > Vladimir Sementsov-Ogievskiy (22):
-> > =C2=A0=C2=A0 vhost-user: rework enabling vrings
-> > =C2=A0=C2=A0 vhost: drop backend_features field
-> > =C2=A0=C2=A0 vhost-user: introduce vhost_user_has_protocol_feature() he=
-lper
-> > =C2=A0=C2=A0 vhost: move protocol_features to vhost_user
-> > =C2=A0=C2=A0 vhost-user-gpu: drop code duplication
-> > =C2=A0=C2=A0 vhost: make vhost_dev.features private
-> > =C2=A0=C2=A0 virtio: move common part of _set_guest_notifier to generic=
- code
-> > =C2=A0=C2=A0 virtio: drop *_set_guest_notifier_fd_handler() helpers
-> > =C2=A0=C2=A0 vhost-user: keep QIOChannelSocket for backend channel
-> > =C2=A0=C2=A0 vhost: vhost_virtqueue_start(): fix failure path
-> > =C2=A0=C2=A0 vhost: make vhost_memory_unmap() null-safe
-> > =C2=A0=C2=A0 vhost: simplify calls to vhost_memory_unmap()
-> > =C2=A0=C2=A0 vhost: move vrings mapping to the top of vhost_virtqueue_s=
-tart()
-> > =C2=A0=C2=A0 vhost: vhost_virtqueue_start(): drop extra local variables
-> > =C2=A0=C2=A0 vhost: final refactoring of vhost vrings map/unmap
-> > =C2=A0=C2=A0 vhost: simplify vhost_dev_init() error-path
-> > =C2=A0=C2=A0 vhost: move busyloop timeout initialization to
-> > vhost_virtqueue_init()
-> > =C2=A0=C2=A0 vhost: vhost_dev_init(): simplify features initialization
-> > =C2=A0=C2=A0 hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifie=
-r()
-> > =C2=A0=C2=A0 vhost-user: make trace events more readable
-> > =C2=A0=C2=A0 vhost-user-blk: add some useful trace-points
-> > =C2=A0=C2=A0 vhost: add some useful trace-points
-> =C2=A0From this pullreq, I'm picking the following changes for 10.0.x
-> stable series
-> (with small adjustments to apply to 10.0.x):
->=20
-> =C2=A0 4e61c89262a vhost: final refactoring of vhost vrings map/unmap
-> =C2=A0 4801e50cf1a vhost: vhost_virtqueue_start(): drop extra local
-> variables
-> =C2=A0 60abdf60d50 vhost: move vrings mapping to the top of
-> vhost_virtqueue_start()
-> =C2=A0 060ef8cac11 vhost: simplify calls to vhost_memory_unmap()
-> =C2=A0 558084367e9 vhost: make vhost_memory_unmap() null-safe
-> =C2=A0 c85f42703df vhost: vhost_virtqueue_start(): fix failure path
->=20
-> Additionally, I'm picking
->=20
-> =C2=A0 41d5e37e0e2 hw/virtio/vhost: Replace legacy
-> cpu_physical_memory_*map() calls
->=20
-> to 10.0.x too - this is basically a no-op change, but it makes
-> subsequent changes to apply cleanly and makes older code closer
-> to current, simplifying back-porting and making this back-
-> porting easily verifiable.
->=20
-> Please take a look at the 6 top commits starting
->=20
-> =C2=A0
-> https://gitlab.com/mjt0k/qemu/-/commits/16071441316f92915dccf08dabdddc722=
-674e38c
->=20
-> -- it should be very similar to the changes in this pull request, but
-> a quick look is appreciated anyway.
->=20
-> Is there anything else in this area which should be picked up too?=C2=A0
-> Maybe
-> some subsequent fixes?
->=20
-> Thanks,
->=20
-> /mjt
 
