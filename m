@@ -1,107 +1,76 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31C3606D802
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 10:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFD9606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 10:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=nK5JYvw1
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YgCu2iZR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPH2e-0004xx-Uf; Fri, 06 Nov 2026 05:19:28 -0500
+	id 1xPH6B-0005ie-EW; Fri, 06 Nov 2026 05:23:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xPH2c-0004xZ-Gg
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 05:19:26 -0500
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xPH2X-0002bL-CW
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 05:19:26 -0500
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-8b315dd057bso2360577b3.1
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 02:19:20 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793960359; cv=none;
- d=google.com; s=arc-20260327;
- b=AzgwHi7k2zGrid/lNsfJOOuZGnNanG+cQ/dh6m8WmJGBn+SNfJBFMkMgCLzedJVt0X
- ButS8rkZ6pgzrLqzsq1w8Lgdk9Mlk1pWUs6+MekEEzvnS4Pbo/9idTJVS0PqR9EDZpDn
- zo/kqOuhImIuM43Usre+ha5rxZ1igZPWYTyeFTsupzY8ge6dVmzCTt0X97DmIxUCrHty
- 3Ic7iFnw1SOqFwuKa7CUTquc80uLqvtgVJeMacHNt4aTRtViN5asfUo23OL+KEEgVm6E
- RZHIMCxQqhmxHTAhhWR4X35qrrr/bV4yIvnzXm1IsXl5wzmxGUb53Bypip7o9wnsxxsZ
- ngdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=nlu2dWdwzrxdba2QJHZKr8Paeql3bqrS8ARrcb0p8vA=;
- fh=VRcZPmT6Amq8CJg6YQ9jtV39fafV0LyayVlqP5p8az0=;
- b=BmRDGkSQn8nggg38alaNbKIUVPZo0PtHx/fiPZKn7mJ4GoKmNQCW79sUnYWaPh8AJu
- vQlAOG/clpR54iwJacG1He2h/AUkyRmR+guYBrI4+9OB3/QI0fYnVnPXOqNm12gzygTH
- m7NcysipZhjdZ9I9oPvADYE3tADhOlifujpHmEN/+d7SweD6ape1ZkGOMw/Ng1CCXyEb
- /6lnhAc3K4EupOwDiEXp8VOe/WVVnKPhpFoI57Tnk2OKAYKKo2DifZrRmyPMCR3gnX+9
- 84goOG15JAoY7ez5NCqoY0uzRSvBMf49ozzmXex3EpsEf0PWBQhpngQIm2BWWaqbVkoI
- dyWA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793960359; x=1794565159; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=nlu2dWdwzrxdba2QJHZKr8Paeql3bqrS8ARrcb0p8vA=;
- b=nK5JYvw1FMlfPydWKiNiod3Fp+pHa9EU/Z7DV2WOIMl+3KroUOfrp4nZ19f+OTIDZe
- iweIX41Ej+GvbftQNrcxoiyecBW0GMTysVx2Nu/qPJhb4EOYo4nhBD81PYiWGDhR67cy
- i3ZONdpPVvP9nj7Jg1WA59GamKp94SAD9gg7UpYfuyXFP197a5nMeRUTWEup3pAzupY3
- Z8LVexPoE//87SLCLaB/wbUakkQtjroQLA8d2Wyr5Wp1TfpWFNTQ9K8fbVw7IrwvL0LR
- J+Pzi3hsZj9BqjyZaUZKyjVOqqlEbRAZTNtz4vyzlGnfPCWRVTL3TZ/iTjJ2Z/9bnTfq
- C6aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793960359; x=1794565159;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=nlu2dWdwzrxdba2QJHZKr8Paeql3bqrS8ARrcb0p8vA=;
- b=YiI0FsPfrS0Fpwi2VSgTP2M4e5/6pVmzJ01dI+VVKTNf3MXGnaIQssVkRqyJ6c1Q7p
- jHIbT/YSVamebUMCXVqspPWEow0GcllsEDLNo+Jke0a6JKUmkUU4gpRdqjFv2una75oa
- cTSSuAIIFx4T2YnbO1zWrS765LcgvNY2jREkNLypF8h2LeUZk8V9ykGz/GAqE63Vzm6j
- NgXWDuGJmGCdwkG0BvjvS7zLbenT4B4ZFsc4nbFMuu1+uAz3S+EVvF3tCbV0MNtKsYDm
- rgzIxQXaXtM/QPGW7p1I+lsi6fu0/yktbu0MO56L+CmPwbZMtZZ8VRIvTZu/1AnpLKF9
- IfAA==
-X-Gm-Message-State: APuU4Z+Jq2EYa8nQCR3GrmgMctCTNKhJtzA+OD8BNsBJgELJucDqz4+k
- eV7y0B0KR1ufHV9t36jninHf+mucObAZWxgDvmYOEHMk26PzUtRTFbuGwpLl8Kc+sl3VujC+llA
- mOGtQoPWtxIgyVG0nN8K6kv+aAZwmZ3eaiDtK6TKTRA==
-X-Gm-Gg: AYBFou1wFsb8G+UZqfV7cOyPi+6alPbCJlid2jNRDZ5BxNrOXB7wCnB5upnS2pC7EpW
- 7PfZgx9xx63SIVDbF2IoAu9SSKbTJt5DPZUzck5WdDko+Kf/5jHl0AqmEATWT/R/Wxa7lqmgR9t
- zJFD0M0sJ2rKFJPfIQN1db9aqzbeuh8kBbgPXbP1LLtdfDpnwXf6jRoe8YG7VXKLl7p31qvkmny
- rcoukAMV8ahC2hwPcPYZFMQr5JuBKox9yFEQnl8D7aTcoYWCofqQjLAGg+ZQmlIt6CBbGAyxib3
- RUwImvMj5/5HByR84qpuHh/VmXTClRj2O2qTS/QvzZGODzDPavMi9iUpYLZBTbDvTvDQMoP0Lnf
- rTZZgyv5lTciTMvAQm/x7rdRdM9wrChZtEgrlXyW35hSt2QN+8Ul9zQAWHX5bXK4CwhgbGfg3dw
- YEH3M9jRT+pP4SC+ouOuyn
-X-Received: by 2002:a05:690c:f90:b0:8b3:25ea:62b9 with SMTP id
- 00721157ae682-8b341b38e4amr13104007b3.61.1793960359238; Fri, 06 Nov 2026
- 02:19:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1xPH6A-0005iG-B4
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 05:23:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1xPH67-0002yu-BZ
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 05:23:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793960582;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LdDqL0678Co2GL54+VLBSeCh8dVUhbQYjNTbsWgPi1Q=;
+ b=YgCu2iZR8pvsiJmZiCFJcd8i2OKGvzsAVpEduaVTso/L4p0W3pgKS2clzom5MiKnFTmUSX
+ bHG7orLInQqbbX4jANgpHsP3lcbZBQRbysBFTaA67e9NLUvlS/LS7nu4HAlAGeQ0/IYHRr
+ Bncr1k0eyzGR0aBN5Ybi97gOi0VPwBM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-440-RSIBfW0mM7C9uXr54sJTbg-1; Fri,
+ 06 Nov 2026 05:21:32 -0500
+X-MC-Unique: RSIBfW0mM7C9uXr54sJTbg-1
+X-Mimecast-MFC-AGG-ID: RSIBfW0mM7C9uXr54sJTbg_1793960491
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 60E9719560BB; Fri,  6 Nov 2026 10:21:31 +0000 (UTC)
+Received: from angien.pipo.sk (unknown [10.44.22.7])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 300A118002B7; Fri,  6 Nov 2026 10:21:27 +0000 (UTC)
+Date: Fri, 6 Nov 2026 11:21:25 +0100
+From: Peter Krempa <pkrempa@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, stefanha@redhat.com, afaria@redhat.com,
+ eblake@redhat.com, qemu-devel@nongnu.org, armbru@redhat.com
+Subject: Re: [PATCH v2 1/2] file-posix: Add 'accept-read-only-device' option
+Message-ID: <au2qCGy-CttBaXoI@angien.pipo.sk>
+References: <20261029164522.103918-1-kwolf@redhat.com>
+ <20261029164522.103918-2-kwolf@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261105-armv6-xn-check-v1-1-fbeff926e692@linaro.org>
- <CAFEAcA_qmyR0E3+n8GByA6=kDwDQomCpk399DEc8pOPr=sqEaQ@mail.gmail.com>
- <to2jr0.1wqw0hsi7q7wn@linaro.org>
-In-Reply-To: <to2jr0.1wqw0hsi7q7wn@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Nov 2026 10:19:07 +0000
-X-Gm-Features: AclHuK__yclTGdRd-7fCZS5tj0iTK2TB7fmT1yydcFu4KaSm7q2djVA5cFLHdFc
-Message-ID: <CAFEAcA93X=dQJx786hfENjXcwXVieRxEsv+eMA5_P1N62rQ78g@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/ptw: check XN for ARMv6 in get_S1prot()
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261029164522.103918-2-kwolf@redhat.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,76 +82,106 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 6 Nov 2026 at 07:06, Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
->
-> On Thu, 05 Nov 2026 20:53, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >On Thu, 5 Nov 2026 at 09:44, Manos Pitsidianakis
-> ><manos.pitsidianakis@linaro.org> wrote:
-> >>
-> >> For the ARM_FEATURE_V6 case, it seems like we retrieve AP and XN bits in
-> >> get_phys_addr_v6() but we don't check the XN bit in get_S1prot().
-> >>
-> >> Change the `if (arm_feature(env, ARM_FEATURE_V7))` check in get_S1prot()
-> >> to `if (arm_feature(env, ARM_FEATURE_V6))` since v7 implies v6.
-> >>
-> >> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4367
-> >> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> >
-> >I think this is worth backporting, so:
-> >
-> >Cc: qemu-stable@nongnu.org
-> >Fixes: d8e052b3876356 ("target-arm: get_phys_addr_lpae: more xn control")
-> >
-> >> ---
-> >>  target/arm/ptw.c | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> >> index 2e67d02493bd463cfd2d31ecf1316272ac3f1d99..b8b22b014e0574340a85abe73f3d9611d2360219 100644
-> >> --- a/target/arm/ptw.c
-> >> +++ b/target/arm/ptw.c
-> >> @@ -1595,7 +1595,7 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
-> >>          if (regime_has_2_ranges(mmu_idx) && !is_user) {
-> >>              xn = pxn || (user_rw & PAGE_WRITE);
-> >>          }
-> >> -    } else if (arm_feature(env, ARM_FEATURE_V7)) {
-> >> +    } else if (arm_feature(env, ARM_FEATURE_V6)) {
-> >>          switch (regime_el(mmu_idx)) {
-> >>          case 1:
-> >>          case 3:
-> >
-> >Digging into the various versions of the Arm ARM and looking
-> >at QEMU's code, I think that "allow this for v6" is correct,
-> >but  I think that ARM_FEATURE_V6 will always be true here
-> >so we don't need to explicitly check it. The two callers of
-> >get_S1prot() are get_phys_addr_v6() and get_phys_addr_lpae().
-> >If the CPU isn't v6 then it doesn't get those page table formats.
-> >(get_phys_addr_v5() is simpler and just figures out its prot
-> >bits directly rather than calling this.)
-> >
-> >So I think we can make this a plain "else", and delete the
-> >existing "else" clause that sets xn and wxn to 0.
-> >
-> >(Strictly speaking it is possible to get here without V6, because
-> >we don't enforce that a guest on a v5 CPU can't write to the
-> >SCTLR.XP bit which should be RAZ there, and we don't ignore it in
-> >get_phys_addr_nogpc(). But if the guest does do that then they're
-> >in UNPREDICTABLE territory and whether we give them v6 VMSA with
-> >XP or v6 VMSA without XP doesn't matter.)
->
-> It sounds like this is equivalent to this patch. Do you want me to send
-> a v2?
+CC'd Markus for QAPI generator input.
 
-Yes, please, have v2 use a simple "else {...}".
+On Thu, Oct 29, 2026 at 17:45:21 +0100, Kevin Wolf wrote:
+> The host_device block driver refuses to open a block device read-write
+> if the BLKROGET ioctl tells it that it's actually read-only. For such
+> devices it's possible to open a read-write file descriptor, but any
+> writes to the device would fail.
+> 
+> There are valid use cases for which this check gets in the way, as
+> explained in the bug report:
+> 
+>     However, this behavior prevents a legitimate enterprise use case:
+>     running VMs against storage replication target LUNs in a disaster
+>     recovery configuration. Enterprise storage arrays (Dell Powermax,
+>     Pure Storage) set the SCSI Write Protect bit on replication target
+>     LUNs, causing the Linux kernel to mark them read-only via BLKROGET.
+>     The VMs on the passive DR site need to start with these LUNs
+>     attached - writes are expected to fail (the application middleware
+>     knows it's on the passive side), and after a DR role swap the LUN
+>     becomes writable and writes should succeed immediately without any
+>     VM restart.
+> 
+> In order to allow such use cases in which a currently read-only device
+> is deliberately opened read-write, add a new option to the host_device
+> driver that allows the user to skip the check.
+> 
+> Buglink: https://redhat.atlassian.net/browse/RHEL-186136
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> Reviewed-by: Eric Blake <eblake@redhat.com>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  qapi/block-core.json | 19 ++++++++++++++++++-
+>  block/file-posix.c   | 23 ++++++++++++++++++++---
+>  2 files changed, 38 insertions(+), 4 deletions(-)
+> 
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index 741c8165c06..80272b878c5 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -3390,6 +3390,23 @@
+>    'features': [ { 'name': 'dynamic-auto-read-only',
+>                    'if': 'CONFIG_POSIX' } ] }
+>  
+> +##
+> +# @BlockdevOptionsHostDevice:
+> +#     Driver specific block device options for the host_device
+> +#     backend.
+> +#
+> +# @accept-read-only-device: allow opening a read-only device as
+> +#     read-write.  If this is false, opening a host device read-write
+> +#     requires on Linux that the BLKROGET ioctl considers the device
+> +#     writable.  If it is true, this check is skipped.  (since: 11.2,
+> +#     default: false)
+> +#
+> +# Since: 11.2
+> +##
+> +{ 'struct': 'BlockdevOptionsHostDevice',
+> +  'base': 'BlockdevOptionsFile',
+> +  'data': { '*accept-read-only-device': 'bool' } }
+> +
+>  ##
+>  # @BlockdevOptionsNull:
+>  #     Driver specific block device options for the null backend.
+> @@ -4777,7 +4794,7 @@
+>        'ftps':       'BlockdevOptionsCurlFtps',
+>        'host_cdrom':  { 'type': 'BlockdevOptionsFile',
+>                         'if': 'HAVE_HOST_BLOCK_DEVICE' },
+> -      'host_device': { 'type': 'BlockdevOptionsFile',
+> +      'host_device': { 'type': 'BlockdevOptionsHostDevice',
+>                         'if': 'HAVE_HOST_BLOCK_DEVICE' },
+>        'http':       'BlockdevOptionsCurlHttp',
+>        'https':      'BlockdevOptionsCurlHttps',
 
--- PMM
+After the two hunks above the 'host_device' type in the resulting QMP
+schema will no longer have the 'dynamic-auto-read-only' feature which it
+had when it used 'BlockdevOptionsFile' directly rather than the
+'BlockdevOptionsHostDevice' type which 'inherits' from
+'BlockdevOptionsFile'.
+
+Markus, after chatting with Kevin, we're not sure if it's intention that
+features are not inherited in the above case, and thus the
+'dynamic-auto-read-only' feature would need to be propagated also to
+'BlockdevOptionsHostDevice' or it's a mistake in the generator.
+
+Note that I've noticed this when checking what changed between two qemu
+versions by using the 'qemu-replies-tool.py --dump-all' script from the
+libvirt repo which converts the QMP schema into all possible query
+strings the "language" libvirt uses to describe capabilities in qemu to
+probe for, so it turned up in a 'diff' of the two.
+
+It's not a problem at all for libvirt because the use of
+'dynamic-auto-read-only' feature was now removed when libvirt removed
+support for the pre-blockdev -drive code.
+
 
