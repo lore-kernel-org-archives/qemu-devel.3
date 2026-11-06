@@ -1,72 +1,76 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883E7606A328
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 09:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE852606A333
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 09:22:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XMj7NtQP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPG2h-0003DV-HB; Fri, 06 Nov 2026 04:15:27 -0500
+	id 1xPG8q-00056N-RG; Fri, 06 Nov 2026 04:21:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xPG2e-0003CQ-Hs; Fri, 06 Nov 2026 04:15:24 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1xPG2c-0003sy-5t; Fri, 06 Nov 2026 04:15:24 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bx79Kdmu1q4AQdAA--.18861S3;
- Fri, 06 Nov 2026 17:15:10 +0800 (CST)
-Received: from [127.0.0.1] (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJAx3c6Vmu1qdcAyAA--.38512S2;
- Fri, 06 Nov 2026 17:15:03 +0800 (CST)
-Subject: Re: [PATCH v5 0/5] hw/loogarch: Fix UART ACPI properties and FDT
-To: Michael Tokarev <mjt@tls.msk.ru>, pillow <waysorrypub@gmail.com>,
- qemu-devel@nongnu.org
-Cc: 17746591750@163.com, lixianglai@loongson.cn, jiaxun.yang@flygoat.com,
- mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xPG8p-00055x-Ba
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 04:21:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xPG8n-0004YZ-LG
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 04:21:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793956904;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=O/TdazM9p37pcwtRbKjLbShsrIeXr2NmA7Ax+YssGes=;
+ b=XMj7NtQPsJOBF0VkH37PcO4l1kG/zqecQCiL9ZCEPZwsJM+753lSHCnIs7C7PJL5cgaO+1
+ KFZzz3tnJfsF/PWqZUa7urUHjQlugOCIGebbdsXNCOf0cP+V2J8dgGcmsHLkPMpzexmj6a
+ VA2uztesFsxTNtj8pibT+oiix4ZKALs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-3bFfw7j3P4W-H_hOOz5jPg-1; Fri,
+ 06 Nov 2026 04:21:38 -0500
+X-MC-Unique: 3bFfw7j3P4W-H_hOOz5jPg-1
+X-Mimecast-MFC-AGG-ID: 3bFfw7j3P4W-H_hOOz5jPg_1793956897
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 63E5C1955F78; Fri,  6 Nov 2026 09:21:36 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB8871800347; Fri,  6 Nov 2026 09:21:33 +0000 (UTC)
+Date: Fri, 6 Nov 2026 09:21:30 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Oleg Drokin <green@linuxhacker.ru>, qemu-devel <qemu-devel@nongnu.org>,
  QEMU Stable <qemu-stable@nongnu.org>
-References: <20261025135559.236356-1-waysorrypub@gmail.com>
- <5493e42d-72ca-4522-9839-102036e488f6@tls.msk.ru>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <b97ab162-f2da-76d1-e9b4-9b0353c13969@loongson.cn>
-Date: Fri, 6 Nov 2026 17:16:17 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Subject: Re: fixes for stable qemu series
+Message-ID: <au2cGqMNssHcxCXd@redhat.com>
+References: <cfcac305-df2d-4b95-b27a-21518cb73841@tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <5493e42d-72ca-4522-9839-102036e488f6@tls.msk.ru>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAx3c6Vmu1qdcAyAA--.38512S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7uFWxGr1fKr4fZrWDGrW5XFc_yoW8uF1fpr
- WfCFZxJrW3Cr93Gryjq3WDX34kAwsrAw12gF1YqFyxGa1UCr4jvr43ZrZ2ga47A3y0yw4S
- vw1UWry8ZFy5uFcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsG
- vfC2KfnxnUUI43ZEXa7IU8r9N3UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.724,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cfcac305-df2d-4b95-b27a-21518cb73841@tls.msk.ru>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,64 +81,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
-
-On 2026/11/6 下午4:55, Michael Tokarev wrote:
-> On 10/25/26 16:55, pillow wrote:
->> This series fixes the UART description for LoongArch virt.
->>
->> The ACPI _DSD property built for the UART has three problems: the
->> property name is misspelled, the key and value order is reversed, and
->> it describes a 100 MHz clock that does not match the device model.
->> The property can be dropped directly because the UART model's input
->> clock matches the Linux 8250 PnP driver default of 1,843,200 Hz, so no
->> _DSD override is needed.
->>
->> The _CCA property is also unnecessary.  _CCA describes a device's DMA
->> cache coherency attribute, and this UART does not support DMA, so there
->> is no reason to declare it.
->>
->> The UART clock frequency in the FDT is corrected to 1,843,200 Hz, and
->> the expected ACPI tables are updated accordingly.
->>
->> pillow (5):
->>    bios-tables-test-allowed-diff.h: Allow LoongArch DSDT.*
->>    hw/loongarch/virt-acpi-build: Drop invalid _DSD UART clock property
->>    hw/loongarch/virt-acpi-build: Drop UART _CCA declaration
->>    hw/loongarch/virt: Fix UART clock frequency in FDT
->>    tests/data/acpi/loongarch64: Update expected DSDT.*
->>
->>   hw/loongarch/virt-acpi-build.c                |  11 -----------
->>   hw/loongarch/virt-fdt-build.c                 |   2 +-
->>   tests/data/acpi/loongarch64/virt/DSDT         | Bin 4603 -> 4351 bytes
->>   tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 5824 -> 5572 bytes
->>   tests/data/acpi/loongarch64/virt/DSDT.numamem | Bin 4609 -> 4357 bytes
->>   .../data/acpi/loongarch64/virt/DSDT.topology  | Bin 4905 -> 4653 bytes
->>   6 files changed, 1 insertion(+), 12 deletions(-)
->>
-> 
+On Fri, Nov 06, 2026 at 12:15:06PM +0300, Michael Tokarev wrote:
 > Hi!
 > 
-> Should this change be picked up fr current qemu stable releases?
-The _DSD property name of UART is misspelled, OS will use the default 
-clock and continue to execute.
-
-It is a problem however not urgent, so I think it is not necessary to 
-pickup for qemu stable releases.
-
-Regards
-Bibo Mao
+> What's the way you use to find these patches, with security impact or not?
 > 
-> Thanks,
+> I usually quickly screen all new commits in the master branch, and often
+> catch things which aren't marked for-stable, - not everything of interest
+> is marked as such.  I also tend to remind the maintainers about these
+> markings.  But my resources here are limited, I can't try to understand
+> every patch, even description of it.
 > 
-> /mjt
+> How do you perform a security review?
+
+FWIW, with our new security triage process, we should be fairly
+reliably getting issues in gitlab tagged with CVE::Assigned, if
+they have been accepted as an in-scope security issue and had a
+CVE assigned.
+
+Those issues should include a link to the mailing list with posted
+patches, and also get auto-linked to a merged commit by gitlab.
+
+So if you want to sanity check stable branch content for missing
+security fixes, I'd sugest following the CVE::Assigned labels.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
