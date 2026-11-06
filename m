@@ -1,73 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7718606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 13:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1848C606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 13:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AWDF3M9v
+	dkim=pass (2048-bit key, unprotected) header.d=linuxhacker.ru header.i=@linuxhacker.ru header.a=rsa-sha256 header.s=mail header.b=mNkq8gP1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPK3v-0001lf-1N; Fri, 06 Nov 2026 08:32:59 -0500
+	id 1xPK6r-0003Mt-Nq; Fri, 06 Nov 2026 08:36:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xPK3p-0001kw-SM
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 08:32:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <green@linuxhacker.ru>)
+ id 1xPFhj-00075V-ML; Fri, 06 Nov 2026 03:53:47 -0500
+Received: from linuxhacker.ru ([159.69.87.85] helo=eagle.linuxhacker.ru)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xPK3n-0001AY-UN
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 08:32:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793971969;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=Yg5qxT50mFvQuB+7RqERgQTZwLWvw2ZTIKXoVg9Adcw=;
- b=AWDF3M9vc6tXnRxxosKM6BSr8eJ0tLmIK96EmtAhC9SCWYqMuX2IYeGRT4L7U2gbqWnZ7D
- uDrNJx6d6yGjawpMA69dltQxbVRK0cZuMI8UooM7+Ik4LBBAPYrrSuQZV7AnQ/f+E9yt7Q
- T3d1pbbeRoZaoJu1cft+z/Dentixl7k=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-RmxBu9htN8CQOjw7ZCeBvg-1; Fri,
- 06 Nov 2026 08:32:47 -0500
-X-MC-Unique: RmxBu9htN8CQOjw7ZCeBvg-1
-X-Mimecast-MFC-AGG-ID: RmxBu9htN8CQOjw7ZCeBvg_1793971966
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB2F6180048E; Fri,  6 Nov 2026 13:32:46 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 23BF2195608C; Fri,  6 Nov 2026 13:32:45 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5FEDD21E6A04; Fri, 06 Nov 2026 14:32:43 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Alexander Graf <alex@csgraf.de>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Property names of certain bus children vary
-Date: Fri, 06 Nov 2026 14:32:43 +0100
-Message-ID: <87tsludr0k.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <green@linuxhacker.ru>)
+ id 1xPFhh-0001dV-DN; Fri, 06 Nov 2026 03:53:47 -0500
+Received: from [10.137.0.31] (unknown [162.81.204.199])
+ by eagle.linuxhacker.ru (Postfix) with ESMTPSA id 396B7BEE42;
+ Fri,  6 Nov 2026 08:53:40 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 eagle.linuxhacker.ru 396B7BEE42
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxhacker.ru;
+ s=mail; t=1793955221;
+ bh=DbZmSbe5eCHlOvifV0yV+NJhv1O4MctEiP47EHD96Xw=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+ b=mNkq8gP1i+3sfVN/aGouE7ha/Ij77WblM5QwDvtZrLZr2C+2fCGMhPmRAyk15sZdj
+ TqWayQQQ61chPq+C3LOBM9VzaC4BoiKyUIPnlFaAXcqGrKh2REZkeYr48Hd26ZhaO6
+ BvLgrkD/J18jLJguK3ym5pK+osNlgI9tXf/VJp2ZLtmPtgNaYYdBTgsT47ukPK8Pwi
+ OanWQhFgcaKRt+3slYQs+/PBNLCCoMuy1DjScJ7Ki2gM0F+jztxPL7kRMJxKiZX5Ii
+ o4mFT3qBS/kcY///CximBVMCE9b5/spNi0lKCpcOW5eboUyfWSz7I59Jnbt9Uab0Lt
+ vr6unUI7NhvrA==
+Message-ID: <4365e62de77171ab81ade60344453ee67d73c74c.camel@linuxhacker.ru>
+Subject: Re: [PATCH v7 00/22] vhost refactoring and fixes
+From: Oleg Drokin <green@linuxhacker.ru>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ mst@redhat.com, 	sgarzare@redhat.com, raphael@enfabrica.net,
+ qemu-devel@nongnu.org, 	yc-core@yandex-team.ru, d-tatianin@yandex-team.ru,
+ QEMU Stable	 <qemu-stable@nongnu.org>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@oss.qualcomm.com>
+Date: Fri, 06 Nov 2026 03:53:38 -0500
+In-Reply-To: <56f5cf1d-e221-465f-8993-866d744241ca@tls.msk.ru>
+References: <20260527061625.11167-1-vsementsov@yandex-team.ru>
+ <56f5cf1d-e221-465f-8993-866d744241ca@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=159.69.87.85; envelope-from=green@linuxhacker.ru;
+ helo=eagle.linuxhacker.ru
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 06 Nov 2026 08:35:57 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,279 +69,142 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Due to the dynamic nature of QOM, an object's properties can vary:
-additional properties can show up if I create it in a certain way.
+Hi Michael,
 
-Nevertheless, I expect property names to be stable, i.e. a certain kind
-of object's property gets the same name no matter how (and how often) I
-create the object.  Reasonable, isn't it?
+these master commits fix bugs that are also present in 10.0.x and are
+not in staging-10.0 yet.
+Group A cherry-picks cleanly onto staging-10.0 at 1607144131, in this
+order, and builds. Group B does not apply as is.
 
-It's not true.  I can see certain property names change every time I
-create an object.  Even introspecting the object *type* suffices to
-change them.
+## A. Clean cherry-picks
 
-Reproducer:
+Guest-triggerable:
 
-    $ ../qemu/bld/qemu-system-ppc64 -S -nodefaults -display none -qmp-pretty stdio
-    [...]
-    {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
-    {
-        "return": {
-        }
-    }
-    {"execute": "qom-list-properties", "arguments": {"typename": "macio-ide"}}
-    {
-        "return": [
-            [...]
-            {
-                "name": "ide.0",
-                "type": "child<IDE>",
-                "qapi-type": "str"
-            },
-            [...]
-        ]
-    }
-    {"execute": "qom-list-properties", "arguments": {"typename": "macio-ide"}}
-    {
-        "return": [
-            [...]
-            {
-                "name": "ide.1",
-                "type": "child<IDE>",
-                "qapi-type": "str"
-            },
-            [...]
-        ]
-    }
-    {"execute": "qom-list-properties", "arguments": {"typename": "macio-ide"}}
-    {
-        "return": [
-            [...]
-            {
-                "name": "ide.2",
-                "type": "child<IDE>",
-                "qapi-type": "str"
-            },
-            [...]
-        ]
-    }
+- 62976e8a2e virtio-pci: reject Q_ENABLE write on already-enabled queue
+  (re-enabling a live queue keeps stale progress indices; virtio-iommu
+can be driven to OOM)
+- fa9e186ab6 virtio-net: validate IHL in virtio_net_rsc_extract_unit4
+before use (OOB read, work item #4166; needs guest_rsc_ext)
+- a2fbf1785b hw/ide/ahci: clear cur_cmd when the command list is
+unmapped
+- d7f16bad8f hw/ide/ahci: refuse a PIO transfer with no command header
+- 2713717148 hw/ide/ahci: treat a failed PRDT walk as a PIO transfer
+failure
+- 795af987ce hw/ide/ahci: reject a command header with an invalid FIS
+length
+- 402fd5a756 vfio/pci: Fix information leak in vfio_rom_read()
+- aca4967567 hw/usb/hcd-xhci: Unmap canceled packet (DMA mapping leak
+on Stop Endpoint with async packets)
 
-I elided all properties but the "IDE" child.  The elided properties are
-the same each time.
+Host-side robustness:
 
-The "IDE" child has a different name each time: "ide.0", "ide.1",
-"ide.2".  WTF?
+- c31a445749 aio-posix: fix fdmon-io_uring.c timeout stack variable
+lifetime
+- dbf70f0a03 aio-posix: fix race between io_uring CQE and AioHandler
+deletion (10.0 uses fdmon-io_uring for every AioContext when built with
+liburing; random hangs and a use-after-free)
+- 1423c170b9 chardev: Fix QIOChannel refcount (use-after-free)
+- 3f0170505e chardev: Don't attempt to unregister yank function more
+than once (abort)
+- a1708203b5 net/tap-linux.c: avoid abort when setting invalid fd (the
+abort became reachable on reset through "virtio: Call set_features
+during reset", which 10.0.x carries)
+- 4733cb0833 block/io: skip head/tail requests on EINVAL (misaligned
+guest discard pauses a werror=3Dstop guest)
+- 1fec1f337a ahci: Fix leak of IRQState (minor)
 
-Due to the way QOM is designed, qom-list-properties creates a throwaway
-object for concrete types:
+## B. Need a context backport
 
-    ObjectPropertyInfoList *qmp_qom_list_properties(const char *typename,
-                                                 Error **errp)
-    {
-        ObjectClass *klass;
-        Object *obj = NULL;
-        ObjectProperty *prop;
-        ObjectPropertyIterator iter;
-        ObjectPropertyInfoList *prop_list = NULL;
+- 9daa7347ff vfio/pci: Reject invalid MSI-X Table and PBA BIR values
+  (conflicts only with the vfio_device_get_irq_info() conversion)
+- 5bdc12fed5 hw/ide/ahci: drain the ports on teardown (use-after-free
+on surprise removal of a hot-plugged AHCI controller)
+- a35c5755d9 intel_iommu: fix guest-triggerable abort on oversized MMIO
+access
+- 24b9ebd5f1 hpet: fix bounds check for s->timer[] (no security impact
+per the commit message; included for completeness)
 
-        klass = module_object_class_by_name(typename);
-        if (klass == NULL) {
-            error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
-                      "Class '%s' not found", typename);
-            return NULL;
-        }
-
-        if (!object_class_dynamic_cast(klass, TYPE_OBJECT)) {
-            error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "typename",
-                       "a QOM type");
-            return NULL;
-        }
-
-        if (object_class_is_abstract(klass)) {
-            object_class_property_iter_init(&iter, klass);
-        } else {
---->        obj = object_new(typename);
-            object_property_iter_init(&iter, obj);
-        }
-        while ((prop = object_property_iter_next(&iter))) {
-            QAPI_LIST_PREPEND(prop_list, qom_property_info(prop));
-        }
-
-        object_unref(obj);
-
-        return prop_list;
-    }
-
-The chameleon property then gets created here:
-
-    static void qbus_init_internal(BusState *bus, DeviceState *parent,
-                                   const char *name)
-    {
-        const char *typename = object_get_typename(OBJECT(bus));
-        BusClass *bc;
-        int i, bus_id;
-
-        bus->parent = parent;
-
-        if (name) {
-            bus->name = g_strdup(name);
-        } else if (bus->parent && bus->parent->id) {
-            /* parent device has id -> use it plus parent-bus-id for bus name */
-            bus_id = bus->parent->num_child_bus;
-            bus->name = g_strdup_printf("%s.%d", bus->parent->id, bus_id);
-        } else {
-            /* no id -> use lowercase bus type plus global bus-id for bus name */
-            bc = BUS_GET_CLASS(bus);
---->        bus_id = bc->automatic_ids++;
---->        bus->name = g_strdup_printf("%s.%d", typename, bus_id);
-            for (i = 0; bus->name[i]; i++) {
-                bus->name[i] = qemu_tolower(bus->name[i]);
-            }
-        }
-
-        if (bus->parent) {
-            QLIST_INSERT_HEAD(&bus->parent->child_bus, bus, sibling);
-            bus->parent->num_child_bus++;
---->        object_property_add_child(OBJECT(bus->parent), bus->name, OBJECT(bus));
-            object_unref(OBJECT(bus));
-        } else {
-            /* The only bus without a parent is the main system bus */
-            assert(bus == sysbus_get_default());
-        }
-    }
-
-Called like this:
-
-    #0  qbus_init_internal (bus=0x555557525340, parent=0x555557524ef0, name=0x0)
-        at ../hw/core/bus.c:105
-    #1  0x0000555555af35ac in qbus_init
-        (bus=0x555557525340, size=<optimized out>, typename=<optimized out>, parent=<optimized out>, name=<optimized out>) at ../hw/core/bus.c:162
-    #2  0x0000555555768cbf in ide_bus_init
-        (idebus=idebus@entry=0x555557525340, idebus_size=idebus_size@entry=2304, dev=<optimized out>, bus_id=bus_id@entry=0, max_units=max_units@entry=2)
-        at ../hw/ide/ide-bus.c:59
-    #3  0x0000555555773ae2 in macio_ide_initfn (obj=0x555557524ef0)
-        at ../hw/ide/macio.c:448
-    #4  0x0000555555afcdb4 in object_init_with_type
-        (obj=0x555557524ef0, ti=0x555556abb620) at ../qom/object.c:430
-    #5  object_initialize_with_type
-        (obj=0x555557524ef0, size=<optimized out>, type=0x555556abb620)
-        at ../qom/object.c:512
-    #6  0x0000555555afd14f in object_new_with_type (type=0x555556abb620)
-        at ../qom/object.c:710
-    #7  0x0000555555bffd86 in qmp_qom_list_properties
-        (typename=0x5555573bb650 "macio-ide", errp=0x555557524ef0, 
-        errp@entry=0x7fffffffd8e0) at ../qom/qom-qmp-cmds.c:290
-
-So, every time we create a "macio" object, its TYPE_IDE_BUS child gets
-another name.  This is... undesirable.
-
-I've seen it for other bus types as well.  It happens when we call
-qbus_init() or qbus_new() with a null @name argument.
-
-BusClass member @automatic_ids goes back to
-
-commit 61de36761b565a4138d8ad7ec75489ab28fe84b6
-Author: Alexander Graf <agraf@csgraf.de>
-Date:   Thu Feb 6 16:08:15 2014 +0100
-
-    qdev: Keep global allocation counter per bus
-    
-    When we have 2 separate qdev devices that both create a qbus of the
-    same type without specifying a bus name or device name, we end up
-    with two buses of the same name, such as ide.0 on the Mac machines:
-    
-      dev: macio-ide, id ""
-        bus: ide.0
-          type IDE
-      dev: macio-ide, id ""
-        bus: ide.0
-          type IDE
-    
-    If we now spawn a device that connects to a ide.0 the last created
-    bus gets the device, with the first created bus inaccessible to the
-    command line.
-    
-    After some discussion on IRC we concluded that the best quick fix way
-    forward for this is to make automated bus-class type based allocation
-    count a global counter. That's what this patch implements. With this
-    we instead get
-    
-      dev: macio-ide, id ""
-        bus: ide.1
-          type IDE
-      dev: macio-ide, id ""
-        bus: ide.0
-          type IDE
-    
-    on the example mentioned above.
-    
-    This also means that if you did -device ...,bus=ide.0 you got a device
-    on the first bus (the last created one) before this patch and get that
-    device on the second one (the first created one) now.  Breaks
-    migration unless you change bus=ide.0 to bus=ide.1 on the destination.
-    
-    This is intended and makes the bus enumeration work as expected.
-    
-    As per review request follows a list of otherwise affected boards and
-    the reasoning for the conclusion that they are ok:
-    
-       target      machine         bus id              times
-       ------      -------         ------              -----
-    
-       aarch64     n800            i2c-bus.0           2
-       aarch64     n810            i2c-bus.0           2
-       arm         n800            i2c-bus.0           2
-       arm         n810            i2c-bus.0           2
-    
-    -> Devices are only created explicitly on one of the two buses, using
-       s->mpu->i2c[0], so no change to the guest.
-    
-       aarch64     vexpress-a15    virtio-mmio-bus.0   4
-       aarch64     vexpress-a9     virtio-mmio-bus.0   4
-       aarch64     virt            virtio-mmio-bus.0   32
-       arm         vexpress-a15    virtio-mmio-bus.0   4
-       arm         vexpress-a9     virtio-mmio-bus.0   4
-       arm         virt            virtio-mmio-bus.0   32
-    
-    -> Makes -device bus= work for all virtio-mmio buses.  Breaks
-       migration.  Workaround for migration from old to new: specify
-       virtio-mmio-bus.4 or .32 respectively rather than .0 on the
-       destination.
-    
-       aarch64     xilinx-zynq-a9  usb-bus.0           2
-       arm         xilinx-zynq-a9  usb-bus.0           2
-       mips64el    fulong2e        usb-bus.0           2
-    
-    -> Normal USB operation not affected. Migration driver needs command
-       line to use the other bus.
-    
-       i386        isapc           ide.0               2
-       x86_64      isapc           ide.0               2
-       mips        mips            ide.0               2
-       mips64      mips            ide.0               2
-       mips64el    mips            ide.0               2
-       mipsel      mips            ide.0               2
-       ppc         g3beige         ide.0               2
-       ppc         mac99           ide.0               2
-       ppc         prep            ide.0               2
-       ppc64       g3beige         ide.0               2
-       ppc64       mac99           ide.0               2
-       ppc64       prep            ide.0               2
-    
-    -> Makes -device bus= work for all IDE buses.  Breaks migration.
-       Workaround for migration from old to new: specify ide.1 rather than
-       ide.0 on the destination.
-    
-    Signed-off-by: Alexander Graf <agraf@suse.de>
-    Signed-off-by: Markus Armbruster <armbru@redhat.com>
-    Reviewed-by: Andreas Faerber <afaerber@suse.de>
-    Signed-off-by: Alexander Graf <agraf@suse.de>
-
+On Fri, 2026-11-06 at 05:35 +0300, Michael Tokarev wrote:
+> On 5/27/26 09:16, Vladimir Sementsov-Ogievskiy wrote:
+> > Hi all. That's a preparation for vhost-user-blk backend-transfer
+> > feature.
+> >=20
+> > 07: rebase on master,
+> > 04: drop extra occurence of system_virtio_ss.add(files('vhost-user-
+> > stub.c'))
+> >=20
+> > Vladimir Sementsov-Ogievskiy (22):
+> > =C2=A0=C2=A0 vhost-user: rework enabling vrings
+> > =C2=A0=C2=A0 vhost: drop backend_features field
+> > =C2=A0=C2=A0 vhost-user: introduce vhost_user_has_protocol_feature() he=
+lper
+> > =C2=A0=C2=A0 vhost: move protocol_features to vhost_user
+> > =C2=A0=C2=A0 vhost-user-gpu: drop code duplication
+> > =C2=A0=C2=A0 vhost: make vhost_dev.features private
+> > =C2=A0=C2=A0 virtio: move common part of _set_guest_notifier to generic=
+ code
+> > =C2=A0=C2=A0 virtio: drop *_set_guest_notifier_fd_handler() helpers
+> > =C2=A0=C2=A0 vhost-user: keep QIOChannelSocket for backend channel
+> > =C2=A0=C2=A0 vhost: vhost_virtqueue_start(): fix failure path
+> > =C2=A0=C2=A0 vhost: make vhost_memory_unmap() null-safe
+> > =C2=A0=C2=A0 vhost: simplify calls to vhost_memory_unmap()
+> > =C2=A0=C2=A0 vhost: move vrings mapping to the top of vhost_virtqueue_s=
+tart()
+> > =C2=A0=C2=A0 vhost: vhost_virtqueue_start(): drop extra local variables
+> > =C2=A0=C2=A0 vhost: final refactoring of vhost vrings map/unmap
+> > =C2=A0=C2=A0 vhost: simplify vhost_dev_init() error-path
+> > =C2=A0=C2=A0 vhost: move busyloop timeout initialization to
+> > vhost_virtqueue_init()
+> > =C2=A0=C2=A0 vhost: vhost_dev_init(): simplify features initialization
+> > =C2=A0=C2=A0 hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifie=
+r()
+> > =C2=A0=C2=A0 vhost-user: make trace events more readable
+> > =C2=A0=C2=A0 vhost-user-blk: add some useful trace-points
+> > =C2=A0=C2=A0 vhost: add some useful trace-points
+> =C2=A0From this pullreq, I'm picking the following changes for 10.0.x
+> stable series
+> (with small adjustments to apply to 10.0.x):
+>=20
+> =C2=A0 4e61c89262a vhost: final refactoring of vhost vrings map/unmap
+> =C2=A0 4801e50cf1a vhost: vhost_virtqueue_start(): drop extra local
+> variables
+> =C2=A0 60abdf60d50 vhost: move vrings mapping to the top of
+> vhost_virtqueue_start()
+> =C2=A0 060ef8cac11 vhost: simplify calls to vhost_memory_unmap()
+> =C2=A0 558084367e9 vhost: make vhost_memory_unmap() null-safe
+> =C2=A0 c85f42703df vhost: vhost_virtqueue_start(): fix failure path
+>=20
+> Additionally, I'm picking
+>=20
+> =C2=A0 41d5e37e0e2 hw/virtio/vhost: Replace legacy
+> cpu_physical_memory_*map() calls
+>=20
+> to 10.0.x too - this is basically a no-op change, but it makes
+> subsequent changes to apply cleanly and makes older code closer
+> to current, simplifying back-porting and making this back-
+> porting easily verifiable.
+>=20
+> Please take a look at the 6 top commits starting
+>=20
+> =C2=A0
+> https://gitlab.com/mjt0k/qemu/-/commits/16071441316f92915dccf08dabdddc722=
+674e38c
+>=20
+> -- it should be very similar to the changes in this pull request, but
+> a quick look is appreciated anyway.
+>=20
+> Is there anything else in this area which should be picked up too?=C2=A0
+> Maybe
+> some subsequent fixes?
+>=20
+> Thanks,
+>=20
+> /mjt
 
