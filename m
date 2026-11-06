@@ -1,95 +1,150 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F18606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 16:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12939606A32F
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 17:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=DO/xKcY0
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OBodOkdS;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LNNyCJBU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPN5h-0000nQ-6R; Fri, 06 Nov 2026 11:47:01 -0500
+	id 1xPNHw-0002dX-4i; Fri, 06 Nov 2026 11:59:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xPN5d-0000lA-5C
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 11:46:57 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xPN5b-0007Yg-GJ
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 11:46:56 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-cd6a7b62ce8so330703a12.0
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 08:46:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xPNHr-0002dF-FU
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 11:59:36 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xPNHp-0000ab-Fx
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 11:59:35 -0500
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A6ExwIO1039347
+ for <qemu-devel@nongnu.org>; Fri, 6 Nov 2026 16:59:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ iSt5FyktCdFBdyxbMh1Wec0jmo7nloyP8x5cCCeYyns=; b=OBodOkdSqeCdnB2n
+ qrZ/HJp18BbzJiRBdat70KXYCn45rXKBzDmfnrvJq3q+fCDgNuMDjJsu53r8xNd3
+ jAD8PvupSZQ5UY3ULV23GWlFOfstiFTvxenziBB/iHbqRBGkzZfiBmTdU6P7y54z
+ DvsFVwA28oAEq0xZC/myQ1myebJ0Tkn0WQ/r0U7anGV7fezPyk9J80z/yXuDUlMN
+ 7Bz8qvi3Dx7J040HpTmnWqzP2PEzHxhL7KSjARzcCgPIXtlbf+CpU7dOIwmwZGxO
+ xGVdN6egzd59QQhFcuVSwQaol3YAjL7LfUJ8xfkfD6+NtkPAkn2alkpzQ5XTsiS0
+ pQaXrA==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hs3p9usua-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 16:59:30 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-1aa0fb7f157so1646059c88.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 08:59:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793983610; x=1794588410; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793984370; x=1794589170; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=OT8Ln1NpEQIvM2HEke4buGqdV+mGmQmMKjlsuCr368A=;
- b=DO/xKcY0gU+MxWPvygDDf/cGbNF/33x7kYb46YepRV5hJkIjhGTWPCGNChqGj+DQIG
- /DklnOOgxVzFsW2vQezlLP1WeK8aHBaRH1zdgTFc7EDSJIDyMGJRs45n2A2V1DlpnGMb
- Aq0YBPiX1jeQbucQk8D2BtjuSUsdPFuVDZutsKIUPmxMQFLXurlLFH1bXZKNpDzzf+py
- SrCvYdZZIYgW48bZL68f1s3Qe5bIoYC5/dlWENpiCGf+k/abOWELmzomG1UrYW7XClzd
- /+WIV3MI9K20Wb5L7dvrsKTVLyXGgsnnR+xDsTxLcNZeQoAvRaHJ9ApLQKKnsrpMVpm3
- ovxQ==
+ bh=iSt5FyktCdFBdyxbMh1Wec0jmo7nloyP8x5cCCeYyns=;
+ b=LNNyCJBU1A1/+5o2LJeXONqeVFJ+sVydb+KmCYnLxycBqkJcRzBsXqY0xzVRQ3mQfp
+ +7oJ+Qa1W9Kgq+9Spfmu6k43yzNBUiD5ChA+edi4Z1HKN3pcDl48DDGJ8e30OT4DqCWe
+ Hbc2LfkzANDBoCZAEdtMVp/RVU99d82wlsBhvzHtSOOtLHcbP2k0NEVcsokIYii+5WmI
+ n+iFkZZJ7yxQz59Xn0i+03qroKJSblHo5t53NhFtxNWyG4qG2OzGXJb+RI94UvwpxhOm
+ x2O+CpU7I88fDVE3Ucnhr9Jwclxj9WtfSR3BvFlDym8H960g7OiN1YZwm6irkdA5m2MA
+ oy6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793983610; x=1794588410;
+ d=1e100.net; s=20260707; t=1793984370; x=1794589170;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=OT8Ln1NpEQIvM2HEke4buGqdV+mGmQmMKjlsuCr368A=;
- b=ZF8A9NXe7nMJGpNXcXgjeq0BnhJhvmIZCT/+BCYfbFHF8xFLYjwuFyuA6mQIiuIB1n
- nCv6JxQ8Y8i8Qx+pOpL3plhPH8ud+mYx2Mq/GUOYoCfJYl4/uVqERMlXGI86Le7nI/Gi
- s8VXc5E++DOdaGRRDWiRbWx2x/kEvrRm700dAXo2ZcETKlwtkf6yrVg+O9oaMPpXBfvC
- SXPPWf7ZBfBWhAmco2zHP3OJAjABuFwycaoA+4C/zIV/B3LbbSNx3s+k2wyRiT3xZWsc
- KtB8Vk7luJI9MLCxMGZH2WUNfy3tNdP33pKtFdwSLnVuRUNzpJ6ALEL+y+LG66F+RHsY
- x0lA==
+ bh=iSt5FyktCdFBdyxbMh1Wec0jmo7nloyP8x5cCCeYyns=;
+ b=1VPhr9qTvyah9g4IyhNVX5ybhEmiU0xl8lwKd5AOW5BAZCiXPXAjxM/qIgmogA6EXs
+ 8HLzwRZkLmuCpkA6+Bvs+MNW2qBJnlw/YyEK5J7htuTr+HUevQCTrAQP3bBiCiQH6TMM
+ lhT9a8xgS1EtkOEaSYA/pa3MyXE21c0B5W7Cdz8CPPPCaaTzevWZ6AfTNh/FSNfzqOd1
+ haUSSaHrfKX7ygAD6Sj2xq+YPXHqcxB3LDkMx2t+jU4BB79z4yasKS6vQtYDksfUbQ/h
+ BaQmWACaPZtmkGMcS5uaJl+LZyLf40+Fl1aivR+dC5lWi6YgpgRVwYJ0R+20cEg3qJhh
+ Jq3Q==
 X-Forwarded-Encrypted: i=1;
- AL+hErE/Sy5qhFanBoyg/ze6pVx+/f/Dn8M2mbXttg4CAk63Xq0SIIR+CTvcVYAYxOfwVAH3BLK09LMqKJdg@nongnu.org
-X-Gm-Message-State: APuU4Z9fD2+cjHBzYzV2uTxvdeq/iu8T/dHuvIYO3HSZDy/g27RheWXN
- Wk3hqjFU/udXs5/dufcRBYRkDr7ZDN3A7UedGek0bERkmwuY/m1XPWCx9qaAzh+qBAs=
-X-Gm-Gg: AYBFou1qU4JIeg8Cfy5Fcp/Hb7TDHwNw4bSbiJpOnmvQVYqurnawf9IAMDhN/fRwz8r
- RClkHow3y2tTAPIprzPak90IY4OVCUw4okeiATnIrn1iHodLv1S/pAGVSt+sudEbPiPwKjhUXOq
- d3u5W9gG5bQWo1kDz26L0X10fgt0H60HEyrS8C9BLVdJWIvG6PtM4H/ueXjrRn2b6uoNMbKd4gv
- 6aTfT5jtTrU+TMeQp27gz1a6DHXGlLTqxHjpEyVhrqMLmKMU+VFYdfzf+l9T0LX9a5wBR2OUhb/
- 44Nwl8393bP7/lhLcIh34ddZwScrVrNjz+BibL7IZpnwu+EffYMz23nWESqnlrEr23qWP9EvHzS
- DdR1XmNUjYhd0mzaDvEdwn+asu88w70qf+29LOfLCDcP30HlxGGZZln63C/RL0pZjwXlfI9oa2x
- oKgofOCTSvB2L60DEo0moEJfe4IfesUGwBvx4IEkGiizTZv0vhvO98K3KjDQ1svn3WPugQ6LjT2
- 1dkIIWa60qV8t58C+Zq3VkK1lFYF+eDANb9FGe2QfooxodI/wA1zHQvfSYeimtbPUsAVJ5GwkIW
- l0QrYxGxfooFsD8f7MHaaQBj3AeHGqnN5qz99Esuo3Io
-X-Received: by 2002:a17:90a:d88f:b0:3b0:a37a:230a with SMTP id
- 98e67ed59e1d1-3b0db6f1006mr2905204a91.25.1793983610179; 
- Fri, 06 Nov 2026 08:46:50 -0800 (PST)
-Received: from [192.168.79.85] ([50.239.128.225])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b0fc1bc1e6sm312253a91.0.2026.11.06.08.46.49
+ AKwUvBxfM3a0Nxc7nJI8O1ujKk2I2KDV4+ZB4MbLR1Hir74mOksFe38Yg9E3ciARXhi2J75bwOu/sNqZi+Gt@nongnu.org
+X-Gm-Message-State: APuU4Z9CkKE/v7OnVqVWjHdfrnE7u9TBLEem85XIeYLx8lc0uOJTCmxF
+ a/P9ZmGiVSGx1oqUKwR9Z2NdYdaLrVvjRnqJrsaIQvwzPPaWq3mTP6V8xmIwYJDt2dJyto6XXBR
+ zc+KLTSmq4AO5bq9j8295wNnULwVln8Umw6q+fip5/bqHRtna+bp+fBJg5g==
+X-Gm-Gg: AYBFou1YWlSSVilUCKf8SrEoLXDnEXFmLxxRay2yMkYpp1vRVKMbhmwHX5j0TLAe+0S
+ ZEAcl6wm/9y2xonAeX30oUXra7xJxiDUDK6ZdLYmDPO/0MCdbXFH+MaslRm+GFbLb2xDb8LzOYF
+ ybHWbyPOOCVgtgL16lFLGNqmBpGu1gi3HLoTkX/FVLlmuW61ncJRZUbmvk5ZAmIZqxjqvYJJ5jT
+ 5Al8+zMuZiugo1hE+P7rmlPF55+M+xyJl7gmvBVThVOJbFwmUhs+DGFUkW8Oji9OifliS/fsyyE
+ utMzlHDRuJRPBWWafJttmx3HOf8YqQFQROeRIK8dXbJAOnitEAOdj0hx/oCqiY4kgoR89rKcq+/
+ OBZ2JYeKLsSXHUR22AW15iErkYlqpB/v10+K45YFSkfCYnWJGwmdi3g82qUnTiMK+JKuUrh7bTa
+ qKRb3bOaqv+fUsJzb0CqACy0iJkZCXgK3Qloh9V5cJbQ==
+X-Received: by 2002:a05:7022:5f07:b0:1af:16c4:d06b with SMTP id
+ a92af1059eb24-1b25d31e658mr3267681c88.10.1793984369684; 
+ Fri, 06 Nov 2026 08:59:29 -0800 (PST)
+X-Received: by 2002:a05:7022:5f07:b0:1af:16c4:d06b with SMTP id
+ a92af1059eb24-1b25d31e658mr3267637c88.10.1793984368961; 
+ Fri, 06 Nov 2026 08:59:28 -0800 (PST)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1b25e4b1449sm6491472c88.12.2026.11.06.08.59.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Nov 2026 08:46:49 -0800 (PST)
-Message-ID: <f947e447-88a8-44ec-957d-6acadbe9e8b1@linaro.org>
-Date: Fri, 6 Nov 2026 08:46:48 -0800
+ Fri, 06 Nov 2026 08:59:28 -0800 (PST)
+Message-ID: <a66e5489-7898-43b6-a7c3-8a7a3deedbb7@oss.qualcomm.com>
+Date: Fri, 6 Nov 2026 08:59:25 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 0/8] Hppa 715 cpu nic patches
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Keith Monahan <keith@techtravels.org>, Helge Deller <deller@gmx.de>
-References: <20261105223122.8729-1-deller@kernel.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 1/2] Revert "meson: rewrite scripts/qemu-version.sh
+ directly in meson.build"
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Yonggang Luo <luoyonggang@gmail.com>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>
+References: <20261106155858.3779237-1-peter.maydell@linaro.org>
+ <20261106155858.3779237-2-peter.maydell@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261105223122.8729-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20261106155858.3779237-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA2NyBTYWx0ZWRfX3h2s1upduGbt
+ 68FhXAUG/YnvN1X8IN1gTnR2sYqI0umCyj/BwVm+Brq8xCmZoQRL7G55j80hu75fvHKqZ6omRCn
+ nb60rq0veALRPRKmivZbcAaQkurhU+g=
+X-Proofpoint-GUID: B8ZQt9vYu9RAwSdPkx0_FTISX-5mCxRg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA2NyBTYWx0ZWRfXx9nv00wgzf10
+ Xri4JgYaDQAv/NAP3af2TCxym+WCaYiyMSRy4HOF4DQb7p/xoPGFaaRHDnthgOCtuW31ZZFv9rh
+ VqXiU3ItDgkE+lUnDXim68cPblbwW4f7HijbYFiumtSVHq1vAoQ4uVdAbmaTJUXguoZsdT49QZv
+ Tk+2LkzaZnUPsgQddIwvhI80l00tHDfaxHvrcaE+O7wXoLsdpk/2s7VuYywJgiD86uKIvMIh5oy
+ dAEHPepHFR2yjXmv3FCi9hVP2CujuNGaqvn0nopfRr2p3HxZrqha5sSeR0rxjtyWboDebzPf8s9
+ V3uDWYBKL5kpYON1FG9O6RJ+hgPlEH103PF6JGZLpEaZ8hgY6del8nNveVGo7SNazg7a8hcFzjx
+ F/tK6HsuPcKv93baxU2hOlj3PUd/x/MY4vxT9HVZSWmM/7wKIzOYV3xm5z6VsyGGUelYQiqNaIo
+ 23+zRtuRoJcmbR9lufA==
+X-Proofpoint-ORIG-GUID: B8ZQt9vYu9RAwSdPkx0_FTISX-5mCxRg
+X-Authority-Analysis: v=2.4 cv=ZIZCCn7b c=1 sm=1 tr=0 ts=6aee0772 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=KKAkSRfTAAAA:8 a=MKyoWAqrCm3wuAtb96wA:9 a=QEXdDO2ut3YA:10
+ a=vBUdepa8ALXHeOFLBtFW:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-06_05,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 suspectscore=0 bulkscore=0 impostorscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611060067
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,38 +159,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/5/26 14:31, Helge Deller wrote:
-> From: Helge Deller<deller@gmx.de>
+On 11/6/2026 7:58 AM, Peter Maydell wrote:
+> This reverts commit ab78ac76f44a1241e76fd32d248df62d83f1ea58.
 > 
-> The following changes since commit 99e6fa0053ba1b1454b8c4446f857c430547a702:
+> The change to create the version header in meson.build loses
+> the dependency needed for the header file to be built when
+> it doesn't exist. This means that:
 > 
->    Merge tag 'pull-nbd-2026-11-02' ofhttps://gitlab.com/ebblake/qemu into staging (2026-11-03 10:54:31 -0800)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/hdeller/qemu-hppa.git tags/hppa-715-cpu-nic-pull-request
-> 
-> for you to fetch changes up to 58952e4a5a2ddc0e450bef0770959b1147c98f2e:
-> 
->    i82596: Various send- and transmit fixes for 715 (2026-11-05 23:29:19 +0100)
-> 
-> ----------------------------------------------------------------
-> qemu-hppa-715
-> 
-> A last bunch of fixes to allow HP-UX 9.05 to run on the 715 machine.
-> This includes a fix to handle an invalid use of the blr instruction, a fix
-> which puts the power button address outside of the ROM, and various fixes for
-> the i82596 NIC.
-> 
-> Tests were run on HP-UX 9.05, HP-UX 10.20, NetBSD and Linux.
+>  * if you delete the build/qemu-version.h file, an incremental
+>    rebuild fails, rather than recreating it
 
-Applied, thanks.
+That's not what I observe. From current master, file is correctly
+recreated. Do you still observe a problem with a clean build folder?
 
-r~
+>  * if you do an incremental rebuild from a build tree that
+>    pre-dates ab78ac76f44a, it doesn't have qemu-version.h,
+>    and the rebuild fails
+>
+
+The problem seems to be crossing this commit, which we can't do anything
+about since it's there.
+
+> Revert the commit so we can think about how we want to address this.
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  meson.build               | 29 +++++++++--------------------
+>  include/qemu/version.h    |  8 --------
+>  scripts/qemu-version.h.in |  1 -
+>  scripts/qemu-version.sh   | 25 +++++++++++++++++++++++++
+>  4 files changed, 34 insertions(+), 29 deletions(-)
+>  delete mode 100644 scripts/qemu-version.h.in
+>  create mode 100755 scripts/qemu-version.sh
+> 
+> diff --git a/meson.build b/meson.build
+> index d7bcb581c18..93da3e6f2bd 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -78,7 +78,6 @@ have_user = have_linux_user or have_bsd_user
+>  ############
+>  
+>  sh = find_program('sh')
+> -git = find_program('git', required: false)
+>  python = import('python').find_installation()
+>  
+>  cc = meson.get_compiler('c')
+> @@ -3561,25 +3560,15 @@ tracetool_depends = files(
+>    'scripts/tracetool/__init__.py',
+>  )
+>  
+> -qemu_pkgversion = get_option('pkgversion')
+> -git_describe_version = [git, 'describe', '--match', 'v*', '--dirty']
+> -if qemu_pkgversion == '' and git.found() and fs.exists('.git') and \
+> -    run_command(git_describe_version, check: false).returncode() == 0
+> -  # Refresh the version at build time, so that "make" after a commit updates it.
+> -  qemu_version = vcs_tag(input: 'scripts/qemu-version.h.in',
+> -                         output: 'qemu-version.h',
+> -                         command: git_describe_version,
+> -                         fallback: '')
+> -else
+> -  # Unlike vcs_tag(), which always defines QEMU_PKGVERSION, leave it out if
+> -  # empty.  include/qemu/version.h then omits the parentheses from
+> -  # QEMU_FULL_VERSION.
+> -  qemu_version_data = configuration_data()
+> -  if qemu_pkgversion != ''
+> -    qemu_version_data.set_quoted('QEMU_PKGVERSION', qemu_pkgversion)
+> -  endif
+> -  qemu_version = configure_file(output: 'qemu-version.h', configuration: qemu_version_data)
+> -endif
+> +qemu_version_cmd = [find_program('scripts/qemu-version.sh'),
+> +                    meson.current_source_dir(),
+> +                    get_option('pkgversion'), meson.project_version()]
+> +qemu_version = custom_target('qemu-version.h',
+> +                             output: 'qemu-version.h',
+> +                             command: qemu_version_cmd,
+> +                             capture: true,
+> +                             build_by_default: true,
+> +                             build_always_stale: true)
+>  genh += qemu_version
+>  
+>  hxdep = []
+> diff --git a/include/qemu/version.h b/include/qemu/version.h
+> index dd0f937f30c..38405495c0e 100644
+> --- a/include/qemu/version.h
+> +++ b/include/qemu/version.h
+> @@ -7,14 +7,6 @@
+>  #ifndef QEMU_VERSION_H
+>  #define QEMU_VERSION_H
+>  
+> -/* qemu-version.h defines QEMU_PKGVERSION only if it is not empty.  */
+>  #include "qemu-version.h"
+>  
+> -#ifdef QEMU_PKGVERSION
+> -#define QEMU_FULL_VERSION QEMU_VERSION " (" QEMU_PKGVERSION ")"
+> -#else
+> -#define QEMU_PKGVERSION ""
+> -#define QEMU_FULL_VERSION QEMU_VERSION
+> -#endif
+> -
+>  #endif
+> diff --git a/scripts/qemu-version.h.in b/scripts/qemu-version.h.in
+> deleted file mode 100644
+> index b62d4c22652..00000000000
+> --- a/scripts/qemu-version.h.in
+> +++ /dev/null
+> @@ -1 +0,0 @@
+> -#define QEMU_PKGVERSION "@VCS_TAG@"
+> diff --git a/scripts/qemu-version.sh b/scripts/qemu-version.sh
+> new file mode 100755
+> index 00000000000..3f6e7e6d41d
+> --- /dev/null
+> +++ b/scripts/qemu-version.sh
+> @@ -0,0 +1,25 @@
+> +#!/bin/sh
+> +
+> +set -eu
+> +
+> +dir="$1"
+> +pkgversion="$2"
+> +version="$3"
+> +
+> +if [ -z "$pkgversion" ]; then
+> +    cd "$dir"
+> +    if [ -e .git ]; then
+> +        pkgversion=$(git describe --match 'v*' --dirty) || :
+> +    fi
+> +fi
+> +
+> +if [ -n "$pkgversion" ]; then
+> +    fullversion="$version ($pkgversion)"
+> +else
+> +    fullversion="$version"
+> +fi
+> +
+> +cat <<EOF
+> +#define QEMU_PKGVERSION "$pkgversion"
+> +#define QEMU_FULL_VERSION "$fullversion"
+> +EOF
+
 
