@@ -1,56 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72A5606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883E7606A328
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 09:16:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=EjBCDPeF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPG2W-0003BQ-Bh; Fri, 06 Nov 2026 04:15:16 -0500
+	id 1xPG2h-0003DV-HB; Fri, 06 Nov 2026 04:15:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xPG2U-0003BA-71; Fri, 06 Nov 2026 04:15:14 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xPG2R-0003s7-PI; Fri, 06 Nov 2026 04:15:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793956506; bh=jPh9+1fND+aPHG6qJKIpKZKjxJeT/bu4w+giv2qFt7s=;
- h=Date:To:Cc:From:Subject;
- b=EjBCDPeFQYvFaaJU2u9BaBUo4nhxGEoQrmOBGm1Ieh4E9A55KXb1HGT1mNTOi3JZk
- dWT90zMz+QApsqxFV7kV4C5J88FKQ1MaydG3WJr6KzEEp4s7Ba+MDYmQsQH1b4dRGW
- XK9RM4nKXTefg61ZLaU6kcIQ7npUpJg7gOmkyVawFM7+4TVuCl8cEAEdZuiPfOX7wy
- t1tB5wlHRyqy+wYxHrY/GAn0gFuPFSPzZNdsUq97knYKBJ7fLT14ba0ZjJqr/HVqK3
- kSM6WqXRXjUAZ8gpxImnHMV2uXUYltI2ee+jyqwsxxO8OiVleDA4HMPvBIEFta5Kor
- HJRmLHyjpWkZQ==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 713FB1E4437;
- Fri, 06 Nov 2026 12:15:06 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 66E474553C3;
- Fri, 06 Nov 2026 12:15:06 +0300 (MSK)
-Message-ID: <cfcac305-df2d-4b95-b27a-21518cb73841@tls.msk.ru>
-Date: Fri, 6 Nov 2026 12:15:06 +0300
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xPG2e-0003CQ-Hs; Fri, 06 Nov 2026 04:15:24 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>)
+ id 1xPG2c-0003sy-5t; Fri, 06 Nov 2026 04:15:24 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx79Kdmu1q4AQdAA--.18861S3;
+ Fri, 06 Nov 2026 17:15:10 +0800 (CST)
+Received: from [127.0.0.1] (unknown [127.0.0.1])
+ by front1 (Coremail) with SMTP id qMiowJAx3c6Vmu1qdcAyAA--.38512S2;
+ Fri, 06 Nov 2026 17:15:03 +0800 (CST)
+Subject: Re: [PATCH v5 0/5] hw/loogarch: Fix UART ACPI properties and FDT
+To: Michael Tokarev <mjt@tls.msk.ru>, pillow <waysorrypub@gmail.com>,
+ qemu-devel@nongnu.org
+Cc: 17746591750@163.com, lixianglai@loongson.cn, jiaxun.yang@flygoat.com,
+ mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20261025135559.236356-1-waysorrypub@gmail.com>
+ <5493e42d-72ca-4522-9839-102036e488f6@tls.msk.ru>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <b97ab162-f2da-76d1-e9b4-9b0353c13969@loongson.cn>
+Date: Fri, 6 Nov 2026 17:16:17 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Oleg Drokin <green@linuxhacker.ru>
-Content-Language: en-US, ru-RU
-Cc: qemu-devel <qemu-devel@nongnu.org>, QEMU Stable <qemu-stable@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: fixes for stable qemu series
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+In-Reply-To: <5493e42d-72ca-4522-9839-102036e488f6@tls.msk.ru>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAx3c6Vmu1qdcAyAA--.38512S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7uFWxGr1fKr4fZrWDGrW5XFc_yoW8uF1fpr
+ WfCFZxJrW3Cr93Gryjq3WDX34kAwsrAw12gF1YqFyxGa1UCr4jvr43ZrZ2ga47A3y0yw4S
+ vw1UWry8ZFy5uFcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
+ 67AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
+ 8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
+ CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+ 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsG
+ vfC2KfnxnUUI43ZEXa7IU8r9N3UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.724,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -63,26 +78,63 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi!
 
-What's the way you use to find these patches, with security impact or not?
 
-I usually quickly screen all new commits in the master branch, and often
-catch things which aren't marked for-stable, - not everything of interest
-is marked as such.  I also tend to remind the maintainers about these
-markings.  But my resources here are limited, I can't try to understand
-every patch, even description of it.
+On 2026/11/6 下午4:55, Michael Tokarev wrote:
+> On 10/25/26 16:55, pillow wrote:
+>> This series fixes the UART description for LoongArch virt.
+>>
+>> The ACPI _DSD property built for the UART has three problems: the
+>> property name is misspelled, the key and value order is reversed, and
+>> it describes a 100 MHz clock that does not match the device model.
+>> The property can be dropped directly because the UART model's input
+>> clock matches the Linux 8250 PnP driver default of 1,843,200 Hz, so no
+>> _DSD override is needed.
+>>
+>> The _CCA property is also unnecessary.  _CCA describes a device's DMA
+>> cache coherency attribute, and this UART does not support DMA, so there
+>> is no reason to declare it.
+>>
+>> The UART clock frequency in the FDT is corrected to 1,843,200 Hz, and
+>> the expected ACPI tables are updated accordingly.
+>>
+>> pillow (5):
+>>    bios-tables-test-allowed-diff.h: Allow LoongArch DSDT.*
+>>    hw/loongarch/virt-acpi-build: Drop invalid _DSD UART clock property
+>>    hw/loongarch/virt-acpi-build: Drop UART _CCA declaration
+>>    hw/loongarch/virt: Fix UART clock frequency in FDT
+>>    tests/data/acpi/loongarch64: Update expected DSDT.*
+>>
+>>   hw/loongarch/virt-acpi-build.c                |  11 -----------
+>>   hw/loongarch/virt-fdt-build.c                 |   2 +-
+>>   tests/data/acpi/loongarch64/virt/DSDT         | Bin 4603 -> 4351 bytes
+>>   tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 5824 -> 5572 bytes
+>>   tests/data/acpi/loongarch64/virt/DSDT.numamem | Bin 4609 -> 4357 bytes
+>>   .../data/acpi/loongarch64/virt/DSDT.topology  | Bin 4905 -> 4653 bytes
+>>   6 files changed, 1 insertion(+), 12 deletions(-)
+>>
+> 
+> Hi!
+> 
+> Should this change be picked up fr current qemu stable releases?
+The _DSD property name of UART is misspelled, OS will use the default 
+clock and continue to execute.
 
-How do you perform a security review?
+It is a problem however not urgent, so I think it is not necessary to 
+pickup for qemu stable releases.
 
-Thanks,
+Regards
+Bibo Mao
+> 
+> Thanks,
+> 
+> /mjt
 
-/mjt
 
