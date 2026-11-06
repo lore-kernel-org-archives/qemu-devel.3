@@ -1,115 +1,150 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA5F606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 20:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24D4606A329
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 20:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=mWQ+kM4S
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=RECQqRwv;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=XGzVxrqj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPQQp-0000XV-E8; Fri, 06 Nov 2026 15:21:03 -0500
+	id 1xPQQq-0000dE-VX; Fri, 06 Nov 2026 15:21:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xPQQh-0000RF-Jl; Fri, 06 Nov 2026 15:20:57 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xPQQj-0000TX-TN
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 15:20:58 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xPQQd-0006ey-R9; Fri, 06 Nov 2026 15:20:54 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A6IE3Me3163556; Fri, 6 Nov 2026 20:20:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=FEISDRryYb8TeaGPVAArTDQfdqP26bb6k+dAVwYE0Jk=; b=mWQ+kM4SBto3
- G/1x2cfI39e1jrtuFGtKhQoa09T113sj+kMRRfH2W2TTPKfONJcNZ3AZeps9F48t
- YADTuhiGyJLfkFbFaZsK3cdpzcU6zTzp5GWassPcu3HINy/YEhccqCWNQvgDVjOj
- D20iXtHaZVjetApoGD9+ErDbBhzj5VM0CWYtyIZNmXdyZ4rIYNANsQ558oZBGPm+
- tiS8u1O1bBZPGOV1dkuAdSUkAl7jP/YZSBpussxFwHP7LPOqLESzo+mvs5s9Zrh2
- SG6OySLKeglSwP675QT/4AipCL32yxIxuqwl/Qt2Tl8ZCn5w+JSsxqQ2aYYBpL+/
- 4uV6vHZIcA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hs3r97xvh-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 06 Nov 2026 20:20:49 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A6Jtgjk3846094; Fri, 6 Nov 2026 20:20:49 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hrka74c8h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Nov 2026 20:20:49 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6A6KKmFj25887234
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Nov 2026 20:20:48 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4D2F858052;
- Fri,  6 Nov 2026 20:20:48 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B642658050;
- Fri,  6 Nov 2026 20:20:47 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Nov 2026 20:20:47 +0000 (GMT)
-Message-ID: <fc3a07e4cb5c3ca3cb9b938a12d6f3d090d17c70.camel@linux.ibm.com>
-Subject: Re: [PATCH 6/8] hw/gpio/pca955x: use QAPI enums for led and pin
- properties
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- mark.caveayland@nutanix.com
-Date: Fri, 06 Nov 2026 14:20:47 -0600
-In-Reply-To: <20261106110440.3552588-7-armbru@redhat.com>
-References: <20261106110440.3552588-1-armbru@redhat.com>
- <20261106110440.3552588-7-armbru@redhat.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xPQQh-0006eY-Av
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 15:20:57 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A6JLIo63254857
+ for <qemu-devel@nongnu.org>; Fri, 6 Nov 2026 20:20:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ aXBni1gmfYSsAQGyl8W0hOLEjjM986k5Se03Y+5HAE0=; b=RECQqRwvUuzBUt/e
+ XpsFH3RYwbO5JDwNufhMNrBfm+FGy0v7Y8s4jcZ52RBFG1CnrUkWrYWSUzCVlObC
+ eri3EU5C2VU9OqHs6UrC6CeSlw0U2RitX3Ri9NW1Jb8l94SVZ8vrL0fIMKln2mUN
+ 5sojOhD8zJHH3Xa9i9KbqK5rKyr5XNdrycGc8cRzwjsiUVKLazETGy+UyR4n84yT
+ jg7KrXo1wJ/owmtGsGLM0uuWdD2Ni63/9jYeZ3QPRw+ifnnRogY5kM/FB9KvOuUw
+ I3EPhcBAFSCAIRPcmRd6P7PtPZUMKGemGaYPUhgyQxj19qQk7oJb2ivJ+WG+mAIt
+ +xSx2w==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hsmyqr6x3-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 20:20:47 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-542fc619afaso12934351cf.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 12:20:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793996447; x=1794601247; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=aXBni1gmfYSsAQGyl8W0hOLEjjM986k5Se03Y+5HAE0=;
+ b=XGzVxrqjf13cgcRX6NJhUYPtT571tbVRrt96ffb7A+r+fYXJ3k4fZh0QPATjJiNjcb
+ aaD+kKHR0QtpkCu3kZaMtwmm2nio5rIZ+WkfyHmeXDIuF+QmlBP6vX60WyTJWZsQkX1Z
+ b1KeDlFXf32EhzbNoLSRjexx2WRa9x01z0ZHrlSudLuagJ2gUIK0yKqfNHMg9KFDcG/7
+ lV6NSpaC8L+gEPOWxV0ZzSNHHh3UwS0wpNiDohylWrkg3YppQ18IKWwFVa4sLG4DcXKi
+ hB2R5Jtqa9rCK54USprdBz6UgG2WMozD+nlSJb53522CRb8AO9JtXl8zAG32GMgSaBi6
+ vAmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793996447; x=1794601247;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=aXBni1gmfYSsAQGyl8W0hOLEjjM986k5Se03Y+5HAE0=;
+ b=Ks6vtqBbXTPIIdBqIhSw+FCat3J/AbhCqr9xrL83iv+sR+tfvtdTnLEbdvP7Jz8bRy
+ dh7RkwqLhce20O+fVuyDs4acXsZU0cnh2G2VLjKvxC09PsZv3up754xPv6xbm5HqN5dI
+ Emq7t2AH3lUAU6gn/BCOYShkZOpkvTir2JfxozLS+AUuwCcxIZT8VGkQwgZE/x3Uh2H9
+ +1U8UBHHjrBjhXywrUXmUN5/Pmes4DQ9beHIN/+fKEdkMyQlKDEbeZ5Pcy7S3bIw+osW
+ RO6THgnusy9RaiqN2vjcsJOPY8KGbzGy5N4WPY9sHTZhQ0OcfjJBv01zJYfRdHFJ3pwq
+ Cnnw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzeaDwpDGlbOfGkczOCFi48sgQzjpcgX/86gAGCyjxouzA13kwOY+knXPil+NJhSkF4W8QmpBJe09hE@nongnu.org
+X-Gm-Message-State: APuU4Z/H/Ulqo6OwaknPn2zRGWgdENO3aa0xHNzM4jIbQ8r7kp5XhfIL
+ rGdKea7bCeWh4kjTnNj77Z5fwcoLi9hwsDmIRNbCWURoUyzVPnWvJXGQjrj80kIxSvCvBJttMvK
+ 8fYyld13ClVF8s7GxfvyzjzJhxjmGYNF7bQakx92mmk3O7YKSYnjjIUOW7Bfj4TFoJg==
+X-Gm-Gg: AYBFou35b5w44d5wuNlEVkFdI/0ogFbzDzj/j4hTAK2qqnmXv9tne9dm8Ya0OgWRah9
+ ChHmyE9r9iWvxOWRxr1O5l4e+nDZFQnfCUembNpWNMrTL7Vmp6gLeYYyfW41n2orTjHcyR3IvvK
+ sIMZcuvGwoZwNnX1LltEaRcq8ntSignsywEHge7PPzCnutooUfdC6HVVYbdwjqd7IZB211k+JHu
+ losWGPTqT9YcQmYPd524zjZSWc+Om6d0ZF+L96MHf5keQqqkaIdHO8bTnGu9Wgmo1GC9nq82eq5
+ htHi5WKe6nEjGekPaz7/7h0JqWExJImyZFsEJcYZXipGLrWDsTvEIiRDh7N7nAKsXEM8IBK5GjU
+ u3PWHl4YWPXC+o1qcKBLXVbIqf9Upq/EnFytcLjm58II4wTOTc9XO09nbfANaB/QKuoe+rTxfhW
+ i6dUf9/GgR
+X-Received: by 2002:a05:622a:1920:b0:533:8a63:1c52 with SMTP id
+ d75a77b69052e-54e15267f5cmr57896891cf.49.1793996446585; 
+ Fri, 06 Nov 2026 12:20:46 -0800 (PST)
+X-Received: by 2002:a05:622a:1920:b0:533:8a63:1c52 with SMTP id
+ d75a77b69052e-54e15267f5cmr57896451cf.49.1793996445806; 
+ Fri, 06 Nov 2026 12:20:45 -0800 (PST)
+Received: from [192.168.68.100] ([152.234.124.231])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-54f86ce2b24sm2978751cf.3.2026.11.06.12.20.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Nov 2026 12:20:45 -0800 (PST)
+Message-ID: <e80b7ca5-39b4-424d-be45-44ade42af3da@oss.qualcomm.com>
+Date: Fri, 6 Nov 2026 17:20:41 -0300
 X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/19] target/riscv: Add support for RISC-V P extension
+To: MOLLY CHEN <xiaoou@iscas.ac.cn>, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
+Cc: nutty.liu@hotmail.com, max.chou@sifive.com, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, Yin Zhang <zhangyin2018@iscas.ac.cn>,
+ Dajun Huang <djhuang_1@std.uestc.edu.cn>,
+ Zhiyuan Yang <zhiyuan.plct@isrc.iscas.ac.cn>
+References: <20260916070721.3279229-1-xiaoou@iscas.ac.cn>
+ <28033024-7e39-4a29-8e59-82150130954e@iscas.ac.cn>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <28033024-7e39-4a29-8e59-82150130954e@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=O86sLx9W c=1 sm=1 tr=0 ts=6aee36a1 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=Raa5M48fUtmArTz79JIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 3p6t_DI9OjuprH8icP52HCluiLwsPxbE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA4MCBTYWx0ZWRfXxV/Y5aI2UH1j
- 3FzKadMRJ9zJ4Hnj+2JK1kjmCyrTMGWeQiCiqzX90fZdNw2rLJ6ksoxFTPfFivAtaH1q/F8aEDi
- JhCPn1e52s795O7hc89Ud9+LxE5IruB7UPseT8pu+HtQXr6D1cCJY+OTFcdG1cY6rp5ADBVrEk9
- zNtDok9LO5+jLrCo2M5obGmtnP074M7QzWcMr34AVsckTHsrKxzthHHuynUKu80bQL2z4rCc3OT
- XPQlBRsNRuvk1lvalyu+U64h7sBUfGEpdJos/mwovf16CYPo4/EBOoZwyoZ67zrezZikOOggWBa
- PU10GEl7LqvreC0K5PwaRhxYWanlPTdZXZlTxOeTtPrlV1VwPLDfCRTPyNf4RBRI369HIyS6NyR
- qAhqP+EOtkOUf/ciy1/39G9onI6Ap1nOhEz8/sDMR/HZLnFA/WYCkjIK/ZAkA7LHNHuZywLMlnt
- IyKReB/WZcZ/hxXy+Hg==
-X-Proofpoint-GUID: 3p6t_DI9OjuprH8icP52HCluiLwsPxbE
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA4MCBTYWx0ZWRfXxE5PCRfm34Kp
- ltzkdjcfYAoau0ixmr9qSxotGGXqIpMSeg2TzRRrqdTLe3fMk8twFwwq5e7zSAYmc6e5Ja4w2Jz
- sd93Wb9IWwnKrU/ub1AUQgbXh2wJIRI=
+X-Proofpoint-ORIG-GUID: 1lSs4rM4O-JhC--Keu5Kj8QceyRSyMY-
+X-Authority-Analysis: v=2.4 cv=aNZlOr9m c=1 sm=1 tr=0 ts=6aee36a0 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=8elE1k/PHQNyZ14TNTodlQ==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=69wJf7TsAAAA:8 a=NEAV23lmAAAA:8 a=H5BWENXdsabB2_aDcNsA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA4MSBTYWx0ZWRfX/MwaNIjCujyj
+ bZvpahga43ybgh4s3tfERDAOhn/b1L21AagCfhFwCZocTF+kM9eV1AONl+kOvVSstqzXuySINuF
+ TSCgT/edlfwL8chk42ot9yC3HhJt+L0=
+X-Proofpoint-GUID: 1lSs4rM4O-JhC--Keu5Kj8QceyRSyMY-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA4MSBTYWx0ZWRfX/VTupgsUElNG
+ cDL0DucmL7DRSRBP07Pnnr06u4VhHdnsCTHBOZUwgQ54NJhZshHExZ4jJ8jcilPFY+Dmrqc4ald
+ 2Q7UJoMYJWMIRgdyKfCgK4dLjD5zJlWHznnRpcNwO6GA/+ei40+1iLKEGSeIv5IPmW5GDofzHNN
+ dnacbAa1zWOIZqzbTGiLqFbANYQpzgAG2pPDbN3T/jyR7A8zsr3uVVqeb3BGnZk9HxXSR3Scq3U
+ Mo5ge6HdhhEvnxtyEld9nDWdcMRhWi7aHm3TNQCTHSsFGGV4F3Gj5GP/+O55E1tnI025gvCf7o6
+ 3F6NuKx7upRRnr1eBNwnMkCpl6zAIS4vbrugGhifHAY+BW7iRXF5SsRV0imfI7YfYKYAmxRwpHz
+ sCED/cZWdO1zz73aTq+9Go0VNaJFl7/AFbotNjnUcHXxXfK4XMu+iM/e2/LeC+hJ4VgaYMIQFEC
+ ln7izn+k1fmmjb79Mog==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-06_06,2026-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 malwarescore=0 adultscore=0 suspectscore=0 spamscore=0
- bulkscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611060080
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ malwarescore=0 adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015
+ impostorscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611060081
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,387 +156,220 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_2 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Hi Molly,
+
+Can you please re-send the patches based with current master?  In particular
+due to changes in the meson framework for tcg tests.  Basically you'll need
+to change tests/tcg/riscv32/meson.build and tests/tcg/riscv64/meson.build
+instead of Makefile files.
+
+You can then incorporate any changes to update the patches to the latest spec
+version available.
 
 Thanks,
+Daniel
 
-Glenn
-
-On Fri, 2026-11-06 at 12:04 +0100, Markus Armbruster wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 10/23/2026 6:10 AM, MOLLY CHEN wrote:
+> Hi all,
 > 
-> Replace hand-rolled string lookup tables with QAPI enums
-> Pca9552LedState and GpioPinState for the led%d and pin%d QOM
-> properties. This lets QAPI handle string-to-enum conversion in the
-> visitor, removing the manual string matching in the setters.
+> Gentle ping on the v3 series. Any review or feedback would be much
+> appreciated.
 > 
-> Add QEMU_BUILD_BUG_ON guards to ensure the QAPI-generated enum values
-> stay in sync with the hardware register encoding.
+> A quick update on the P extension: the Task Group approved the
+> Development Milestone on September 28, 2026, and the specification
+> version has been updated to v0.6. This version includes a minor change
+> to the semantics of psshlr.*, which I will incorporate into the next
+> revision of this series.
 > 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  qapi/machine.json | 29 ++++++++++++++++++
->  hw/gpio/pca9552.c | 76 +++++++++++++++++------------------------------
->  hw/gpio/pca9554.c | 35 ++++++++--------------
->  3 files changed, 69 insertions(+), 71 deletions(-)
+> In the meantime, feedback on the current v3 would be very helpful.
 > 
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 18d9dce849..c4c8720909 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -416,6 +416,35 @@
->  { 'enum': 'LostTickPolicy',
->    'data': ['discard', 'delay', 'slew' ] }
->  
-> +##
-> +# @GpioPinState:
-> +#
-> +# @low: Pin low
-> +#
-> +# @high: Pin high
-> +#
-> +# Since: 12.0
-> +##
-> +{ 'enum': 'GpioPinState',
-> +  'data': ['low', 'high'] }
-> +
-> +##
-> +# @Pca9552LedState:
-> +#     LED state for PCA9552.
-> +#
-> +# @on: LED on
-> +#
-> +# @off: LED off
-> +#
-> +# @pwm0: LED controlled by PWM0
-> +#
-> +# @pwm1: LED controlled by PWM1
-> +#
-> +# Since: 12.0
-> +##
-> +{ 'enum': 'Pca9552LedState',
-> +  'data': ['on', 'off', 'pwm0', 'pwm1'] }
-> +
->  ##
->  # @PCSouthBridgeOption:
->  #     South bridge chipset option for PC i440FX machines.
-> diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-> index 65a718ef31..99c4e0c0e2 100644
-> --- a/hw/gpio/pca9552.c
-> +++ b/hw/gpio/pca9552.c
-> @@ -24,6 +24,7 @@
->  #include "migration/vmstate.h"
->  #include "qapi/error.h"
->  #include "qapi/qapi-builtin-type-infos.h"
-> +#include "qapi/qapi-visit-machine.h"
->  #include "qapi/visitor.h"
->  #include "trace.h"
->  #include "qom/object.h"
-> @@ -60,16 +61,15 @@ struct PCA955xClass {
->  /*
->   * Note:  The LED_ON and LED_OFF configuration values for the PCA955X
->   *        chips are the reverse of the PCA953X family of chips.
-> + *
-> + * The QAPI enums must match the hardware register values.
->   */
-> -#define PCA9552_LED_ON   0x0
-> -#define PCA9552_LED_OFF  0x1
-> -#define PCA9552_LED_PWM0 0x2
-> -#define PCA9552_LED_PWM1 0x3
-> -#define PCA9552_PIN_LOW  0x0
-> -#define PCA9552_PIN_HIZ  0x1
-> -
-> -static const char *led_state[] = {"on", "off", "pwm0", "pwm1"};
-> -static const char *pin_state[] = {"low", "high"};
-> +QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_ON != 0x0);
-> +QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_OFF != 0x1);
-> +QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_PWM0 != 0x2);
-> +QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_PWM1 != 0x3);
-> +QEMU_BUILD_BUG_ON(GPIO_PIN_STATE_LOW != 0x0);
-> +QEMU_BUILD_BUG_ON(GPIO_PIN_STATE_HIGH != 0x1);
->  
->  static uint8_t pca955x_pin_get_config(PCA955xState *s, int pin)
->  {
-> @@ -143,24 +143,24 @@ static void pca955x_update_pin_input(PCA955xState *s)
->              uint8_t config = pca955x_pin_get_config(s, i);
->  
->              switch (config) {
-> -            case PCA9552_LED_ON:
-> +            case PCA9552_LED_STATE_ON:
->                  /* Pin is set to 0V to turn on LED */
->                  s->regs[input_reg] &= ~bit_mask;
->                  break;
-> -            case PCA9552_LED_OFF:
-> +            case PCA9552_LED_STATE_OFF:
->                  /*
->                   * Pin is set to Hi-Z to turn off LED and
->                   * pullup sets it to a logical 1 unless
->                   * external device drives it low.
->                   */
-> -                if (s->ext_state[i] == PCA9552_PIN_LOW) {
-> +                if (s->ext_state[i] == GPIO_PIN_STATE_LOW) {
->                      s->regs[input_reg] &= ~bit_mask;
->                  } else {
->                      s->regs[input_reg] |=  bit_mask;
->                  }
->                  break;
-> -            case PCA9552_LED_PWM0:
-> -            case PCA9552_LED_PWM1:
-> +            case PCA9552_LED_STATE_PWM0:
-> +            case PCA9552_LED_STATE_PWM1:
->                  /* TODO */
->              default:
->                  break;
-> @@ -177,7 +177,7 @@ static void pca955x_update_pin_input(PCA955xState *s)
->               */
->              if (s->regs[config_reg] & bit_mask) {
->                  /* Input mode - reflect external state */
-> -                if (s->ext_state[i] == PCA9552_PIN_LOW) {
-> +                if (s->ext_state[i] == GPIO_PIN_STATE_LOW) {
->                      s->regs[input_reg] &= ~bit_mask;
->                  } else {
->                      s->regs[input_reg] |= bit_mask;
-> @@ -361,7 +361,7 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
->      PCA955xClass *k = PCA955X_GET_CLASS(obj);
->      PCA955xState *s = PCA955X(obj);
->      int led, rc, reg;
-> -    uint8_t state;
-> +    Pca9552LedState state;
->  
->      rc = sscanf(name, "led%2d", &led);
->      if (rc != 1) {
-> @@ -379,7 +379,7 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
->       */
->      reg = PCA9552_LS0 + led / 4;
->      state = (pca955x_read(s, reg) >> ((led % 4) * 2)) & 0x3;
-> -    visit_type_str(v, name, (char **)&led_state[state], errp);
-> +    visit_type_Pca9552LedState(v, name, &state, errp);
->  }
->  
->  /*
-> @@ -398,10 +398,9 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
->      PCA955xClass *k = PCA955X_GET_CLASS(obj);
->      PCA955xState *s = PCA955X(obj);
->      int led, rc, reg, val;
-> -    uint8_t state;
-> -    g_autofree char *state_str = NULL;
-> +    Pca9552LedState state;
->  
-> -    if (!visit_type_str(v, name, &state_str, errp)) {
-> +    if (!visit_type_Pca9552LedState(v, name, &state, errp)) {
->          return;
->      }
->      rc = sscanf(name, "led%2d", &led);
-> @@ -414,16 +413,6 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
->          return;
->      }
->  
-> -    for (state = 0; state < ARRAY_SIZE(led_state); state++) {
-> -        if (!strcmp(state_str, led_state[state])) {
-> -            break;
-> -        }
-> -    }
-> -    if (state >= ARRAY_SIZE(led_state)) {
-> -        error_setg(errp, "%s invalid led state %s", __func__, state_str);
-> -        return;
-> -    }
-> -
->      reg = PCA9552_LS0 + led / 4;
->      val = pca955x_read(s, reg);
->      val = pca955x_ledsel(val, led % 4, state);
-> @@ -438,7 +427,8 @@ static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
->      PCA955xClass *k = PCA955X_GET_CLASS(obj);
->      PCA955xState *s = PCA955X(obj);
->      int pin, rc;
-> -    uint8_t input_reg, state;
-> +    uint8_t input_reg;
-> +    GpioPinState state;
->  
->      rc = sscanf(name, "pin%2d", &pin);
->      if (rc != 1) {
-> @@ -456,7 +446,7 @@ static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
->       */
->      input_reg = PCA9535_INPUT0 + (pin / 8);
->      state = (s->regs[input_reg] >> (pin % 8)) & 0x1;
-> -    visit_type_str(v, name, (char **)&pin_state[state], errp);
-> +    visit_type_GpioPinState(v, name, &state, errp);
->  }
->  
->  static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
-> @@ -465,10 +455,10 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
->      PCA955xClass *k = PCA955X_GET_CLASS(obj);
->      PCA955xState *s = PCA955X(obj);
->      int pin, rc;
-> -    uint8_t state, config_reg;
-> -    g_autofree char *state_str = NULL;
-> +    GpioPinState state;
-> +    uint8_t config_reg;
->  
-> -    if (!visit_type_str(v, name, &state_str, errp)) {
-> +    if (!visit_type_GpioPinState(v, name, &state, errp)) {
->          return;
->      }
->      rc = sscanf(name, "pin%2d", &pin);
-> @@ -481,16 +471,6 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
->          return;
->      }
->  
-> -    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
-> -        if (!strcmp(state_str, pin_state[state])) {
-> -            break;
-> -        }
-> -    }
-> -    if (state >= ARRAY_SIZE(pin_state)) {
-> -        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
-> -        return;
-> -    }
-> -
->      /* Only input-configured pins can be driven by an external device. */
->      config_reg = PCA9535_CONFIG0 + (pin / 8);
->      if (!((s->regs[config_reg] >> (pin % 8)) & 0x1)) {
-> @@ -500,7 +480,7 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
->          return;
->      }
->  
-> -    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_LOW);
-> +    pca955x_set_ext_state(s, pin, state != GPIO_PIN_STATE_LOW);
->  }
->  
->  static const VMStateDescription pca9552_vmstate = {
-> @@ -530,7 +510,7 @@ static void pca9552_reset_hold(Object *obj, ResetType type)
->      s->regs[PCA9552_LS2] = 0x55;
->      s->regs[PCA9552_LS3] = 0x55;
->  
-> -    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
-> +    memset(s->ext_state, GPIO_PIN_STATE_HIGH, PCA955X_PIN_COUNT_MAX);
->      pca955x_update_pin_input(s);
->  
->      s->pointer = 0xFF;
-> @@ -550,7 +530,7 @@ static void pca9535_reset_hold(Object *obj, ResetType type)
->      s->regs[PCA9535_CONFIG0] = 0xFF;  /* All pins as inputs */
->      s->regs[PCA9535_CONFIG1] = 0xFF;  /* All pins as inputs */
->  
-> -    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
-> +    memset(s->ext_state, GPIO_PIN_STATE_HIGH, PCA955X_PIN_COUNT_MAX);
->      pca955x_update_pin_input(s);
->  
->      s->pointer = 0xFF;
-> diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
-> index ed304e4639..7bbfd5ed5f 100644
-> --- a/hw/gpio/pca9554.c
-> +++ b/hw/gpio/pca9554.c
-> @@ -18,6 +18,7 @@
->  #include "migration/vmstate.h"
->  #include "qapi/error.h"
->  #include "qapi/qapi-builtin-type-infos.h"
-> +#include "qapi/qapi-visit-machine.h"
->  #include "qapi/visitor.h"
->  #include "trace.h"
->  #include "qom/object.h"
-> @@ -51,10 +52,8 @@ struct PCA9554Class {
->      uint8_t pin_count;
->  };
->  
-> -#define PCA9554_PIN_LOW  0x0
-> -#define PCA9554_PIN_HIZ  0x1
-> -
-> -static const char *pin_state[] = {"low", "high"};
-> +QEMU_BUILD_BUG_ON(GPIO_PIN_STATE_LOW != 0x0);
-> +QEMU_BUILD_BUG_ON(GPIO_PIN_STATE_HIGH != 0x1);
->  
->  static void pca9554_update_pin_input(PCA9554State *s)
->  {
-> @@ -73,7 +72,7 @@ static void pca9554_update_pin_input(PCA9554State *s)
->               * Input: the pin is Hi-Z with a pull-up, so it reads high
->               * unless an external device drives it low.
->               */
-> -            if (s->ext_state[i] == PCA9554_PIN_LOW) {
-> +            if (s->ext_state[i] == GPIO_PIN_STATE_LOW) {
->                  s->regs[PCA9554_INPUT] &= ~bit_mask;
->              } else {
->                  s->regs[PCA9554_INPUT] |= bit_mask;
-> @@ -175,7 +174,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
->  {
->      PCA9554State *s = PCA9554_BASE(obj);
->      int pin, rc;
-> -    uint8_t state;
-> +    GpioPinState state;
->  
->      rc = sscanf(name, "pin%2d", &pin);
->      if (rc != 1) {
-> @@ -194,7 +193,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
->       * holds the wire level regardless of the configured direction.
->       */
->      state = (s->regs[PCA9554_INPUT] >> pin) & 0x1;
-> -    visit_type_str(v, name, (char **)&pin_state[state], errp);
-> +    visit_type_GpioPinState(v, name, &state, errp);
->  }
->  
->  static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
-> @@ -202,10 +201,10 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
->  {
->      PCA9554State *s = PCA9554_BASE(obj);
->      int pin, rc, val;
-> -    uint8_t state, mask;
-> -    g_autofree char *state_str = NULL;
-> +    uint8_t mask;
-> +    GpioPinState state;
->  
-> -    if (!visit_type_str(v, name, &state_str, errp)) {
-> +    if (!visit_type_GpioPinState(v, name, &state, errp)) {
->          return;
->      }
->      rc = sscanf(name, "pin%2d", &pin);
-> @@ -218,16 +217,6 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
->          return;
->      }
->  
-> -    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
-> -        if (!strcmp(state_str, pin_state[state])) {
-> -            break;
-> -        }
-> -    }
-> -    if (state >= ARRAY_SIZE(pin_state)) {
-> -        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
-> -        return;
-> -    }
-> -
->      if (s->hw_dir) {
->          /* Warn and ignore if the guest has configured this pin as output */
->          if (!((s->regs[PCA9554_CONFIG] >> pin) & 0x1)) {
-> @@ -238,13 +227,13 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
->              return;
->          }
->          /* Drive the external input level */
-> -        pca9554_set_ext_state(s, pin, state != PCA9554_PIN_LOW);
-> +        pca9554_set_ext_state(s, pin, state != GPIO_PIN_STATE_LOW);
->      } else {
->          /* Legacy behavior: force output mode and drive */
->          /* First, modify the output register bit */
->          val = pca9554_read(s, PCA9554_OUTPUT);
->          mask = 0x1 << pin;
-> -        if (state == PCA9554_PIN_LOW) {
-> +        if (state == GPIO_PIN_STATE_LOW) {
->              val &= ~(mask);
->          } else {
->              val |= mask;
-> @@ -283,7 +272,7 @@ static void pca9554_reset(DeviceState *dev)
->      s->regs[PCA9554_POLARITY] = 0x0; /* No pins are inverted */
->      s->regs[PCA9554_CONFIG] = pin_mask; /* All pins are inputs */
->  
-> -    memset(s->ext_state, PCA9554_PIN_HIZ, pc->pin_count);
-> +    memset(s->ext_state, GPIO_PIN_STATE_HIGH, pc->pin_count);
->      pca9554_update_pin_input(s);
->  
->      s->pointer = 0x0;
+> v3: https://lists.nongnu.org/archive/html/qemu-riscv/2026-09/msg00523.html
+> 
+> Thanks!
+> 
+> On 2026/9/16 15:07, Molly Chen wrote:
+>> This series adds support for the RISC-V Packed SIMD (P) extension for
+>> RV32 and RV64.
+>>
+>> The P extension defines packed-SIMD fixed-point operations intended for
+>> DSP workloads such as multimedia and signal processing. These
+>> instructions operate on packed subword elements in general-purpose
+>> registers, with register-pair forms for wider operands on RV32.
+>>
+>> The implementation targets the V0.21 development draft of the RISC-V P
+>> extension specification:
+>>
+>>    https://github.com/riscv/riscv-p-spec
+>>
+>> The local riscv-p-spec reference checkout is at commit:
+>>
+>>    71b78d2c8d1d41cc01a036d75dc001920b8ac22e
+>>
+>> P support is enabled with the experimental x-p CPU property. The series
+>> includes instruction decoding and translation, helpers, extension-state
+>> handling, and the specification-defined control of vxsat. The focus
+>> remains functional correctness and instruction coverage; performance
+>> optimization is left for future work.
+>>
+>> This revision adds in-tree TCG tests for RV32 and RV64 and addresses the
+>> review feedback on helper reuse, register overlap, shift semantics, and
+>> code readability. It also fixes additional issues found while testing,
+>> including zero register-pair handling and RV64 SHLR rounding.
+>>
+>> Thanks to Daniel Henrique Barboza, Nutty Liu, Chao Liu, and Max Chou for
+>> their reviews and suggestions.
+>>
+>> Changes in v3:
+>>
+>>    - Add descriptive commit messages explaining the purpose and behavior
+>>      of the patches, and document helper macro definitions, including
+>>      their interfaces and arithmetic semantics.
+>>
+>>    - Add RV32 and RV64 assembly tests under tests/tcg/riscv, with shared
+>>      test macros and integration into the TCG test Makefiles. Cover
+>>      arithmetic, shifts, multiplication, narrowing, saturation, register
+>>      overlap, and zero register-pair operands. The tests are freestanding
+>>      Linux-user programs and do not require a target libc. Set PSIMD_CC
+>>      to a P-capable Clang to build them; the assembler options use
+>>      rv32gp0p21 and rv64gp0p21. Enable previously disabled tests using the
+>>      P v0.21 mnemonics and update signed saturation immediate operands.
+>>
+>>    - Correct register-controlled packed byte and halfword shifts to use
+>>      the low five bits of rs2. Share the signed saturating/rounding shift
+>>      implementation between scalar and packed forms: psshar_hs,
+>>      psshar_ws, and sshar are all generated by GEN_PSIMD_VAR_SSHAR.
+>>      Return zero for oversized SSHAR/SHAR right shifts, and widen
+>>      rounding arithmetic before adding the rounding bit.
+>>
+>>    - Clamp unsigned rounding right shifts to the element width so that
+>>      the source MSB still participates in rounding for oversized shifts.
+>>      Apply this to PSSHLR/SSHLR and RV64 SHLR. Use a wider intermediate
+>>      for SHLR to preserve the carry when rounding UINT64_MAX right by
+>>      one bit, and add regression tests for these cases.
+>>
+>>    - Fix RV32 register-pair operations when the destination overlaps
+>>      the scalar source by completing both results before writeback.
+>>      Treat a zero register-pair selector as {x0, x0}, suppress both
+>>      destination writes for a zero pair, and preserve vxsat side effects.
+>>      Use tcg_gen_movi_i64() to initialize a zero source in narrowing
+>>      translations, with a dedicated regression test.
+>>
+>>    - Avoid undefined behavior in helper arithmetic by using unsigned
+>>      operations where wraparound is intended and wider intermediates
+>>      where needed. Handle oversized left shifts explicitly and handle
+>>      zero shifts in SLX/SRX without shifting by the operand width.
+>>
+>>    - Correct the RV32 REV encoding, reject unavailable translations
+>>      instead of accepting them without an operation, and fix lane
+>>      selection in PMQWACC.H and PMQRWACC.H.
+>>
+>>    - Reuse qemu/bitops.h extract64() for lane extraction, correct
+>>      misleading helper comments, and align macro continuation characters.
+>>
+>> Testing:
+>>
+>>    The P extension TCG tests were built with LLVM/Clang 24.0.0git
+>>    (/opt/llvm/bin/clang), llvm-project commit:
+>>
+>>      96295a1412f9afbee9d4a3c2701e83f5a529a9cc
+>>
+>>    Built qemu-riscv32, qemu-riscv64, qemu-system-riscv32, and
+>>    qemu-system-riscv64 successfully. Both P extension TCG suites pass
+>>    with the new regression cases:
+>>
+>>      make -C build/tests/tcg/riscv32-linux-user \
+>>          PSIMD_CC=/opt/llvm/bin/clang run-psimd-rv32
+>>      make -C build/tests/tcg/riscv64-linux-user \
+>>          PSIMD_CC=/opt/llvm/bin/clang run-psimd-rv64
+>>
+>>    The test targets enable x-p, zmmul, zba, and zbb on the corresponding
+>>    rv32 or rv64 CPU. The P-aware compiler path is configurable through
+>>    PSIMD_CC.
+>>
+>> Changes in v2:
+>>
+>>    - Refactored translation and helper code using macros for common
+>>      implementation patterns.
+>>    - Consolidated P extension prerequisite checks in
+>>      riscv_cpu_validate_p().
+>>    - Removed the Zbkb dependency to match the specification.
+>>    - Added the specification-defined vxsat control mechanism.
+>>
+>> Previous versions:
+>>
+>>    v2: https://lists.nongnu.org/archive/html/qemu-riscv/2026-07/msg00697.html
+>>    v1: https://lists.nongnu.org/archive/html/qemu-riscv/2026-04/msg00301.html
+>>
+>> Feedback on the implementation and tests would be appreciated.
+>>
+>> Co-authored-by: Yin Zhang <zhangyin2018@iscas.ac.cn>
+>> Co-authored-by: Dajun Huang <djhuang_1@std.uestc.edu.cn>
+>> Co-authored-by: Zhiyuan Yang <zhiyuan.plct@isrc.iscas.ac.cn>
+>>
+>> Molly Chen (19):
+>>    target/riscv: Add packed SIMD extension state
+>>    target/riscv: Add packed SIMD helper framework
+>>    target/riscv: Add packed SIMD arithmetic instructions
+>>    target/riscv: Add packed SIMD averaging and rounding instructions
+>>    target/riscv: Add packed SIMD absolute, difference, compare and mask
+>>      instructions
+>>    target/riscv: Add packed SIMD shift instructions
+>>    target/riscv: Add packed SIMD exchange instructions
+>>    target/riscv: Add packed SIMD horizontal reduction instructions
+>>    target/riscv: Add packed SIMD pack, merge and count-leading
+>>      instructions
+>>    target/riscv: Add packed SIMD pure multiplication instructions
+>>    target/riscv: Add packed SIMD multiply-accumulate instructions
+>>    target/riscv: Add packed SIMD Q-format multiplication instructions
+>>    target/riscv: Add packed SIMD Q-format MAC instructions
+>>    target/riscv: Add packed SIMD two-way multiply-add/subtract
+>>      instructions
+>>    target/riscv: Add packed SIMD four-way multiply-add instructions
+>>    target/riscv: Add packed SIMD load-replicate instructions
+>>    target/riscv: Add packed SIMD RV32 only instructions
+>>    target/riscv: Remove Zbkb dependency from P extension to align with
+>>      the spec
+>>    tests/tcg/riscv: Add tests for the P extension
+>>
+>>   target/riscv/cpu.c                          |    5 +-
+>>   target/riscv/cpu.h                          |    8 +
+>>   target/riscv/cpu_bits.h                     |    2 +
+>>   target/riscv/helper.h                       |  529 +++
+>>   target/riscv/insn32.decode                  |  830 +++++
+>>   target/riscv/machine.c                      |   19 +
+>>   target/riscv/tcg/csr.c                      |   39 +-
+>>   target/riscv/tcg/insn_trans/trans_rvb.c.inc |    4 +-
+>>   target/riscv/tcg/insn_trans/trans_rvp.c.inc | 1439 ++++++++
+>>   target/riscv/tcg/meson.build                |    3 +-
+>>   target/riscv/tcg/psimd_helper.c             | 3536 +++++++++++++++++++
+>>   target/riscv/tcg/tcg-cpu.c                  |   46 +
+>>   target/riscv/tcg/translate.c                |    6 +
+>>   tests/tcg/riscv/psimd-common.S              | 1105 ++++++
+>>   tests/tcg/riscv/psimd-rv32.S                | 1256 +++++++
+>>   tests/tcg/riscv/psimd-rv64.S                |  578 +++
+>>   tests/tcg/riscv/psimd-test-macros.inc       |  952 +++++
+>>   tests/tcg/riscv32/Makefile.target           |   30 +
+>>   tests/tcg/riscv64/Makefile.target           |   25 +
+>>   19 files changed, 10406 insertions(+), 6 deletions(-)
+>>   create mode 100644 target/riscv/tcg/insn_trans/trans_rvp.c.inc
+>>   create mode 100644 target/riscv/tcg/psimd_helper.c
+>>   create mode 100644 tests/tcg/riscv/psimd-common.S
+>>   create mode 100644 tests/tcg/riscv/psimd-rv32.S
+>>   create mode 100644 tests/tcg/riscv/psimd-rv64.S
+>>   create mode 100644 tests/tcg/riscv/psimd-test-macros.inc
+>>   create mode 100644 tests/tcg/riscv32/Makefile.target
+>>
+>>
+>> base-commit: b23a62773a7856299cbb3782e64968b6a92c792f
+> 
 
 
