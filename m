@@ -1,112 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A24606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 02:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E006606A33A
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 02:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d1hWlfSi
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=WLS1Z5gC
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xP9eP-0003ns-6x; Thu, 05 Nov 2026 21:25:57 -0500
+	id 1xP9oG-0005RG-Ue; Thu, 05 Nov 2026 21:36:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1xP9eF-0003lt-N0
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 21:25:49 -0500
-Received: from mail-qk1-x72d.google.com ([2607:f8b0:4864:20::72d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1xP9eB-0004xQ-HP
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 21:25:44 -0500
-Received: by mail-qk1-x72d.google.com with SMTP id
- af79cd13be357-945ae2daa3eso22811885a.0
- for <qemu-devel@nongnu.org>; Thu, 05 Nov 2026 18:25:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793931937; cv=none;
- d=google.com; s=arc-20260327;
- b=IQ71/gtqBjwGbzCwwsEdJT8Hiuubi4vVyAxVZu4xhckDtt5gcQG6hpYtLSqqqSvXhG
- rPek7//ce7LuXA5+Ofjl8/XQ07o7NiGs/tE0C1dv8Ug9c0JIqQ22CMdu6EZrNGTURQzf
- Rlx1VtYJ2IsWPbUnnYQZ5abxHpi/nK/Rbmihzl0+ABl8KHQylMs8Bl1DoQU/Em5TYpFO
- afygEQ4ceppofZjaAPppatipC/Ztzwxcr+v6dYX6KI5aoqANJGfQ7vkdgw2IChWlzFZr
- sB/DQ9NtP/aG7RbLZ//BQCnRGnyzy36L7RVLjym5omhXRJAmg+LLkUM0AQTYZUeieuS4
- LoXQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=pgG1/WFURbop1Inpu5WXlNwvEEqh4m1m8ew99capOjc=;
- fh=H6kgUSE5ymZ+ymaEjrJOkevr5RAZxAKcxOrkoSwLBi4=;
- b=qDnVObQLLI2nnkHr941gYhZ1O9sBWNYaYTWsrmxjgNonHF0i7hB4MWNe9mOwkOT9IU
- O+IrUsL2olDOT53qM1gkHt3aNBh7uhFhn0odsE0z2gScFm344OLCsDJ4EXsql+v1PtxO
- P+jPMdipGppUpHUuC6zKjqwTwT5jVx3O8I5GN4wr0FBB4xnMnHJK+p45J138ii9vRnBF
- gRRal19uj+SwjTyqJyjaYW+EJnpfmSvpziG2lQsdVq8ZtX6rzuuDhjXfeMxJ5rM/CsZu
- RaG00o0YuvbyJ0cKZl1+uLoPn4aqQ/MCpZtcYmGYK2PzSnXpxf1VGZewc6XSpmatI0RB
- 2pWQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793931937; x=1794536737; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=pgG1/WFURbop1Inpu5WXlNwvEEqh4m1m8ew99capOjc=;
- b=d1hWlfSidRLJ6MKCXPbu8BhPXDG3N/ufjWYiQ7yseNpYlqn8R4mOvk9WoZr3wEEsSv
- ujEkpIRmwFGccpNQrFFQ9jz3xVkKINoqIGE9PDEZNV/yENAmIkdp86FsnWHGJH/+eTRf
- 7aAnotdWGCpjboB0gQv2EcK7VaZBugvp4hxqRtwUU66V9PK/1VB0FiiQY7MWMdyVXUVk
- GhUxXRdLzJD6Ge6VxCqv2sdytMs36YVTBjTzTM7x4yE3Dw4w6YgGKiawsMjSPMEOHaoo
- Y1CfprQsPtb7WvvRSITZ7DnZQ68qTmXsKRwqnkixIdS40Ceuvh/1OAothDco9xN8IVMn
- W5+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793931937; x=1794536737;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=pgG1/WFURbop1Inpu5WXlNwvEEqh4m1m8ew99capOjc=;
- b=uw/lo5wHoYo/9W+Ctn/0yKkqhviZCnDQEnO+G1JU+CgmGqqwsawbq17u+VQXWmoqp7
- lG1a1kCyNn2K3dvBuqlzCHly5+MLGqFjvaydtsdiLlrxXuhEoWEi5KCrPTQZHZpjgVb1
- LiSUI+/h7SKu7J6hlm2t5wCov4xQ8xdPrnx/hzvD5sUIEpC6jlRNkrGXTcZz3se6/zCT
- 9jzPEsyT8YGxPWxPeYVBResXJqE1UESaAlgqlFX1/q0MiIal50ZzN0sodNZMvqohnjQI
- husPjeBOu1MJ3lBg0GBtiOSYrTyFa4SHTnHG5mUVMukF+3Kv3PzM7rwvqciCZwSqlC+U
- qbYQ==
-X-Gm-Message-State: APuU4Z9nuTSqzvxjhezgt8AmgrktMYgkktUV868AraW+6jFbHEDi5lbh
- TSjHvl/0Q51NOOQO9ynlLXS9pdohChF0Yu03IWu6Yb8tEM1Kt4H7LIt60HDG21+nvDxjyg8SPov
- XRF82tKESLDiQGE3xv3JFZAQVbpOMgXk=
-X-Gm-Gg: AYBFou3QQiSHzD5BYcpTg18Zdl2WHq1K3XV8D+itoI5L7K6rbH1hbd7W6ClkPmsPBDB
- N3SKoCvBSeaFeXcI6kpyrUKk8dKvc/GtdYS87XNGSTzd5E6pfzgTQSXlPz9nNA30LAacxHWrWz+
- Cm85NKnUGCuumg8P/pio3K0Po8JxDNPgI+3BfsG7jXMrQOUOQykJ6DfQ5FE8xwvXL3RiO8lynCD
- /EChxG5hOtSORup/CHDWAm9bZDeKN8Td4lbjN2jgclJ2Mh78YyrQP49c8e2ugfVY0+PMS2J0VBI
- iIW7BPpqU04fj90/5RUrk2y+04yftnSFK8wpEYzt91Mtlf3ecfiAHxWCro2feFUgOR4xFpEep/j
- WL4S9yJWDpzc77lSuXPs0ZKAhreup2nMs0lJex9x9BcMXO5iACh5t76ZEWk9/gMK22mmlqEoHpf
- ZHWPYOjzO1MTi+UECfL0CSRH8TOQcyD2qIcSTVG3fJYdRo2cYl6dg35B8=
-X-Received: by 2002:a05:620a:84c9:b0:93e:c12c:f142 with SMTP id
- af79cd13be357-945f356285fmr159770085a.76.1793931937256; Thu, 05 Nov 2026
- 18:25:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xP9nx-0005Q3-Pe; Thu, 05 Nov 2026 21:35:53 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xP9ns-0005jG-Pl; Thu, 05 Nov 2026 21:35:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1793932538; bh=MtAWZHCAyQBUegViX3TGrp9QBnsdJdgns39VOFtCfOQ=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=WLS1Z5gC5T4ghOfl2kKi2m3yOmXSpuVLf/D9dbgzshDcZNV05qp3InxQeZ6mHUdgC
+ fHGud/Ps+Ppedz3DoRcQrR/dzapvsl6KlG3H53o5Bjs9gaZ5u1Vztefe1yBGhhpsjj
+ lAa/fqFvwWbIGAxIopBihfxFb71oThmJyLbFBa4tS2dYrvla6R9ThEIPuxy/fqwFLY
+ BU7gn1F9jA+GSvcA9C9Pz8YBoRB3bABjyuxPUWGcngAcY04cNSwajRBBsjw3kuwGG6
+ jMb5Y1K15V9DTf/SagciSFGsR3AQcJKE93+Kivi1DFrFgL+m+uLRZH/lAaFlGu1qx6
+ fXFBpTGoNETQw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D504A1E42E0;
+ Fri, 06 Nov 2026 05:35:38 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B49B84550EA;
+ Fri, 06 Nov 2026 05:35:38 +0300 (MSK)
+Message-ID: <56f5cf1d-e221-465f-8993-866d744241ca@tls.msk.ru>
+Date: Fri, 6 Nov 2026 05:35:38 +0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261105125203.40320-1-philmd@oss.qualcomm.com>
- <20261105125203.40320-14-philmd@oss.qualcomm.com>
-In-Reply-To: <20261105125203.40320-14-philmd@oss.qualcomm.com>
-From: Max Filippov <jcmvbkbc@gmail.com>
-Date: Thu, 5 Nov 2026 18:25:26 -0800
-X-Gm-Features: AclHuK_IrN3GhLnbigIJYmu1h8-wxESrCor66rb-AwgS7YcweErE8fkX0fydS1I
-Message-ID: <CAMo8BfLMaWO=7t9uL_eS=L-KvUpOtj3S7J_htZ8jYVKps-bjPQ@mail.gmail.com>
-Subject: Re: [PATCH v2 13/17] target/xtensa: Replace deprecated sprintf() with
- snprintf()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org, 
- qemu-ppc@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72d;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-qk1-x72d.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.993, HK_RANDOM_FROM=1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 00/22] vhost refactoring and fixes
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, mst@redhat.com
+Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru,
+ QEMU Stable <qemu-stable@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Oleg Drokin <green@linuxhacker.ru>
+References: <20260527061625.11167-1-vsementsov@yandex-team.ru>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+In-Reply-To: <20260527061625.11167-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,29 +69,73 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_LOCAL_NOVOWEL,HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 5, 2026 at 4:54=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Replace sprintf() by safer snprintf() to format ISA error
-> message, silencing -Wdeprecated-declarations produced by
-> Apple clang 17.0.0.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> ---
->  target/xtensa/xtensa-isa.c | 50 +++++++++++++++++++++++---------------
->  1 file changed, 31 insertions(+), 19 deletions(-)
+On 5/27/26 09:16, Vladimir Sementsov-Ogievskiy wrote:
+> Hi all. That's a preparation for vhost-user-blk backend-transfer
+> feature.
+> 
+> 07: rebase on master,
+> 04: drop extra occurence of system_virtio_ss.add(files('vhost-user-stub.c'))
+> 
+> Vladimir Sementsov-Ogievskiy (22):
+>    vhost-user: rework enabling vrings
+>    vhost: drop backend_features field
+>    vhost-user: introduce vhost_user_has_protocol_feature() helper
+>    vhost: move protocol_features to vhost_user
+>    vhost-user-gpu: drop code duplication
+>    vhost: make vhost_dev.features private
+>    virtio: move common part of _set_guest_notifier to generic code
+>    virtio: drop *_set_guest_notifier_fd_handler() helpers
+>    vhost-user: keep QIOChannelSocket for backend channel
+>    vhost: vhost_virtqueue_start(): fix failure path
+>    vhost: make vhost_memory_unmap() null-safe
+>    vhost: simplify calls to vhost_memory_unmap()
+>    vhost: move vrings mapping to the top of vhost_virtqueue_start()
+>    vhost: vhost_virtqueue_start(): drop extra local variables
+>    vhost: final refactoring of vhost vrings map/unmap
+>    vhost: simplify vhost_dev_init() error-path
+>    vhost: move busyloop timeout initialization to vhost_virtqueue_init()
+>    vhost: vhost_dev_init(): simplify features initialization
+>    hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
+>    vhost-user: make trace events more readable
+>    vhost-user-blk: add some useful trace-points
+>    vhost: add some useful trace-points
+ From this pullreq, I'm picking the following changes for 10.0.x stable series
+(with small adjustments to apply to 10.0.x):
 
-Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
+  4e61c89262a vhost: final refactoring of vhost vrings map/unmap
+  4801e50cf1a vhost: vhost_virtqueue_start(): drop extra local variables
+  60abdf60d50 vhost: move vrings mapping to the top of vhost_virtqueue_start()
+  060ef8cac11 vhost: simplify calls to vhost_memory_unmap()
+  558084367e9 vhost: make vhost_memory_unmap() null-safe
+  c85f42703df vhost: vhost_virtqueue_start(): fix failure path
 
---=20
-Thanks.
--- Max
+Additionally, I'm picking
+
+  41d5e37e0e2 hw/virtio/vhost: Replace legacy cpu_physical_memory_*map() calls
+
+to 10.0.x too - this is basically a no-op change, but it makes
+subsequent changes to apply cleanly and makes older code closer
+to current, simplifying back-porting and making this back-
+porting easily verifiable.
+
+Please take a look at the 6 top commits starting
+
+  https://gitlab.com/mjt0k/qemu/-/commits/16071441316f92915dccf08dabdddc722674e38c
+
+-- it should be very similar to the changes in this pull request, but
+a quick look is appreciated anyway.
+
+Is there anything else in this area which should be picked up too?  Maybe
+some subsequent fixes?
+
+Thanks,
+
+/mjt
 
