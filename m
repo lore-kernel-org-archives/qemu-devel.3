@@ -1,91 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911CF606A32F
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 20:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D2C606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 20:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=mqCNkEsv
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=B25csijb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPQ9g-0003BE-Am; Fri, 06 Nov 2026 15:03:20 -0500
+	id 1xPQNh-0006eU-Ne; Fri, 06 Nov 2026 15:17:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xPQ9d-0003Aa-D5
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 15:03:17 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xPQ9b-0004mW-Qy
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 15:03:17 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4a59100fa83so9141105e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 12:03:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793995393; x=1794600193; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Y8lB8Rw56JelFMjh6Mt5SXKKPBHVE/JUAhN1fFX12Sg=;
- b=mqCNkEsvtoO9PjFeLKZlBrwwTh9btqDJfZMq+D3UP690BU0O/rsktYdDpxu+3x5hEa
- EYqtJRGEx7TXsgmjEpvzVwWa4dX+TASZxosEeVGz522KRXoHY8jQSBuga9bXln6xNZC8
- 9UPOjblstjAFQ6EvdEeM3PMOM5zrlarcPr5nuHMlN4YaLxlzSVxfG1C7hVH4UQc7ULFv
- UlWF4vsXGMbg7fqjLSrPKmejcP8gMHYH+4Ih6ZHMX/sCn8QffuR72sn5H3lF91aXxw9T
- RL6ZBRnJ3jO2sL8Jlv/TURsEsCfVNm1X8RR98wRLLnMD4yNWbPlHRANsCj03vbSWF8wr
- LlKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793995393; x=1794600193;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Y8lB8Rw56JelFMjh6Mt5SXKKPBHVE/JUAhN1fFX12Sg=;
- b=RexXrjMkxTloqc5V11BctSVpxw9b1A54G4ILNlVnOTmt/9ydtmsNSSQvgHcSgXB2rL
- VYnKbsmZQjHZx0glwNpCD5tL2JA+GhAQsvZqG+kxQhZpTdhjJ0sxtCdbEpFdlZen7RXR
- 1F8G0g+ukItLB8LKn6Kg8CQvadngsmaT6Mk4QLPZf3iLJ1ym8PCJmXQrj+JobN33y0p6
- wME5pu0P+CUwEBExscoIRYLmGdhBSAkUXRTZTPqcaUzn8LvbJORnqBC0HapaVClLykZV
- EW+QyuQsGMlpMMgn8RVHNnzl98KlWyfPsiZyWVs96ByA7kvQMbKyW/kZue5SNYEPndRO
- UrRA==
-X-Gm-Message-State: APuU4Z8p+CpfIW4xxvMcyGNNJ6Q7YcwQZ+ybihGwDRNnRdRdJkwxCWa1
- nd8PG9g/jnSDaPTHyZunsbBSe+ofa6XO8VhmMozCsRx20u7uIc+EHdAYtR/T2kO5qP9WBUbaDQY
- 5xwLW
-X-Gm-Gg: AYBFou1jGdWotBa2R9JleETS9dq3mjbJjJmEzzuFOC5Yz9gw9KPs/t1ZzAd5m4SYMyS
- X5zYC/YpF3G+e8mo1JUIbsJEbTyVtsqvgjJD8iTjqrIkIjD8gO4u7hGsLM3cmlUYxJIy8hew31O
- PZqUXZD6D4Sfc1oWRP8sdavbFWbw21I6Nx3yWc85NmfgCyysqTmHJm6d6iOrulAL8EdtIYOlC84
- juRpXh6Kh66bOyO2tNETYgxVk6VeDFL3tZ9f5OHkB4weNkB+fy8ixoU3Y2kxlJDK51ngdFdWU6f
- btnzpPlBN2qF0tu3eXg6MOnA8tP6Udxom7H3AYe13YPO3loLmrTQ4tfPOKIwNqHWtQU5WSW+NjE
- brN+PBdV8HqSoRohndiaNveQ8I2t/sMOEBuflrS9WnXkhJjdz4aL9JpA7isyeePvY/lxszaDjac
- acLLKjWpQTdKkrKf3akRfei3p9mVCSbj9t1q1+5Q7LZJzYnSvhfMz+3uBo1zfQgE/H3ANkSiuK0
- 2TXyle9Ukzj9sAKfy+L+Nmh8bfA6y87Dvm5v6Hbo8dv0WUq6ToDxCa0JnKBGKgdUTDRRZBmZTz8
- u88uITpvMDpYWrB+XDCzTgbFlg==
-X-Received: by 2002:a05:600c:310f:b0:4a4:7a8d:c736 with SMTP id
- 5b1f17b1804b1-4b6de78917cmr58554665e9.9.1793995393213; 
- Fri, 06 Nov 2026 12:03:13 -0800 (PST)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:1983:68c3:80e8:4ae2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b7e3271867sm4660995e9.6.2026.11.06.12.03.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Nov 2026 12:03:11 -0800 (PST)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-devel@nongnu.org
-Cc: den@openvz.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowangio@gmail.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 0/2] net: fix abort and busy loop when the tap device is
- deleted
-Date: Fri,  6 Nov 2026 21:03:07 +0100
-Message-ID: <20261106200309.122830-1-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1xPQNg-0006c6-0e; Fri, 06 Nov 2026 15:17:48 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1xPQNe-0006GV-Bx; Fri, 06 Nov 2026 15:17:47 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A6IEMaI3180583; Fri, 6 Nov 2026 20:17:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=m6Uojz4JZDbKVb6e4F5Ke6wecXtWkQnGjGvC/VJM33M=; b=B25csijbFU+8
+ 6/YmYpDj5YJ3YWOKO3AAnk6ULSm2+YQEPAHxzqf2YPT+t7W1A1Q/mfopq7P7mXr/
+ /ulGdNFS/YJrVKjGJS1qPPZtS5EsY7DqfZQ+YAEucAyB4YJ/ZksvjsYx/5JaTDud
+ Cu3P7Rvy61mQDqCmL+wTHkAbH/qiELHJF49DeGfgm1uar7QMArMbo/oyDi4rp8id
+ JLIHYJqJt8tkaPxrjIcm4D7j9e+gbEVJpxlT1hlcgvz1CFYx3Lvs71+J2++FuGHW
+ nEDQv6sKsFkaghHs2w+J6OpshWhmdt3B8+gkLHvxXBpnXvgcwpxfxoWDxSzXAIQz
+ SxfXD5j3Ng==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hs3r9fvf6-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 06 Nov 2026 20:17:43 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A6K5dar3838964; Fri, 6 Nov 2026 20:17:42 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hsk809g5p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Nov 2026 20:17:42 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6A6KHgrb18481886
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 6 Nov 2026 20:17:42 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 657025803F;
+ Fri,  6 Nov 2026 20:17:42 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D4C8058056;
+ Fri,  6 Nov 2026 20:17:41 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Nov 2026 20:17:41 +0000 (GMT)
+Message-ID: <c6fcfb91f1afe9b2f3dde478567e25fa74ebc99e.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/8] hw/gpio/pca9552: Convert pin and led properties to
+ class properties
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ mark.caveayland@nutanix.com
+Date: Fri, 06 Nov 2026 14:17:41 -0600
+In-Reply-To: <20261106110440.3552588-2-armbru@redhat.com>
+References: <20261106110440.3552588-1-armbru@redhat.com>
+ <20261106110440.3552588-2-armbru@redhat.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=den@openvz.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=LKHz05W9 c=1 sm=1 tr=0 ts=6aee35e7 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=20KFwNOVAAAA:8 a=sWN3zfszUj_efFXM9Y4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: tiAzQ_vYTBIENNpvVbpacFzoT9_yaLzy
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA4MCBTYWx0ZWRfX1p+RENPZ4xko
+ Gt/sGFTKGmEEGtKLpLtAiDpMtpDdRlanNF1Tl9/Uxqv88DhZZWcpOhb8wh3rH0kyOe4DN6Po7I5
+ /J/W02sOsFAHHYeUDlSZjilftNOeRqc=
+X-Proofpoint-ORIG-GUID: tiAzQ_vYTBIENNpvVbpacFzoT9_yaLzy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA4MCBTYWx0ZWRfX3y30zpfWzB76
+ qVMc7fnk4cxVfzbCK8aabfY7FHF1Lr29hK9MZUC9IQyO30eXLGi0U3KQpx7TVEvtETO3wXGG0zg
+ SbEA0qORI7BOQIX22LKhiQMLHUuXAQVntfXrXIKkquTl4qDqSpc9RU6etr5YbBkxwbJO0x1o58i
+ M04ccPUYgeCVavY1MW1u0l9yp74Io9GsheSDB0nNwpUx3PTKRniOW6/dbispbz4AMOBFW+8UxZF
+ ICWSeyd6g7hbuWw2SAcihRfqDZrKADoYxWvMnojzv8seHzsxLDTBmcJhAsjumNXP7AQ247IlPa7
+ zXkp5Of+F/f3W5x4CpRtFIeojyoGAAokzz4oB8N1IW18uct/RIGhkpT3ADL8G19bud3BQyxJ1xh
+ jZxwSM5ZnpA8mMNm2OMVgyI44aB4jJrZneEep5JG/fBWnVzy2Drco8AdP7up6b1cNfoZeR2/u3l
+ fdyiFcoek0wQAXab6QA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-06_06,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1011 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611060080
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,48 +120,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_2 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Management can delete the host tap device of a running VM while QEMU
-still holds its fds, e.g. OpenStack unplugs the VIF of an instance it is
-deleting before the domain is gone. QEMU should carry on with a dead
-link. Instead:
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-- a multiqueue virtio-net NIC aborts on an assert as soon as the guest
-  changes the number of queue pairs or resets the device (patch 1);
-- every tap netdev makes the main loop spin at full CPU in tap_send()
-  (patch 2).
+Thanks,
 
-The two patches are independent. Each adds a case to
-tests/qtest/virtio-net-test.c that fails without its fix. Creating the
-tap needs CAP_NET_ADMIN, so both cases are skipped when not run as root.
+Glenn
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowangio@gmail.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Laurent Vivier <lvivier@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-
-Denis V. Lunev (2):
-  virtio-net: fix abort in virtio_net_set_queue_pairs() on a deleted tap
-  net/tap: fix busy loop in tap_send() after the tap device is deleted
-
- hw/net/virtio-net.c           |  25 +++--
- net/tap.c                     |   8 ++
- tests/qtest/virtio-net-test.c | 174 ++++++++++++++++++++++++++++++++++
- 3 files changed, 200 insertions(+), 7 deletions(-)
-
-
-base-commit: 76fdb3373c9a27b3f50ecc9e012cbdeb90af7151
--- 
-2.53.0
+On Fri, 2026-11-06 at 12:04 +0100, Markus Armbruster wrote:
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  hw/gpio/pca9552.c | 19 +++++++++++--------
+>  1 file changed, 11 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
+> index 90ccf5170e..65a718ef31 100644
+> --- a/hw/gpio/pca9552.c
+> +++ b/hw/gpio/pca9552.c
+> @@ -557,10 +557,8 @@ static void pca9535_reset_hold(Object *obj, ResetType type)
+>      s->len = 0;
+>  }
+>  
+> -static void pca955x_initfn(Object *obj)
+> +static void pca955x_pin_init(PCA955xClass *k)
+>  {
+> -    PCA955xClass *k = PCA955X_GET_CLASS(obj);
+> -
+>      assert(k->pin_count <= PCA955X_PIN_COUNT_MAX);
+>      for (int ix = 0; ix < k->pin_count; ix++) {
+>          char *name;
+> @@ -568,13 +566,17 @@ static void pca955x_initfn(Object *obj)
+>          if (k->has_led_support) {
+>              /* LED variant: expose the LED selector state as led%d. */
+>              name = g_strdup_printf("led%d", ix);
+> -            object_property_add(obj, name, "str", &str_type_info,
+> -                                pca955x_get_led, pca955x_set_led, NULL, NULL);
+> +            object_class_property_add(OBJECT_CLASS(k), name,
+> +                                      "str", &str_type_info,
+> +                                      pca955x_get_led, pca955x_set_led,
+> +                                      NULL, NULL);
+>          } else {
+>              /* GPIO variant: expose the pin logic level as pin%d. */
+>              name = g_strdup_printf("pin%d", ix);
+> -            object_property_add(obj, name, "str", &str_type_info,
+> -                                pca955x_get_pin, pca955x_set_pin, NULL, NULL);
+> +            object_class_property_add(OBJECT_CLASS(k), name,
+> +                                      "str", &str_type_info,
+> +                                      pca955x_get_pin, pca955x_set_pin,
+> +                                      NULL, NULL);
+>          }
+>          g_free(name);
+>      }
+> @@ -640,6 +642,7 @@ static void pca9552_class_init(ObjectClass *oc, const void *data)
+>      pc->max_reg = PCA9552_LS3;
+>      pc->pin_count = 16;
+>      pc->has_led_support = true;
+> +    pca955x_pin_init(pc);
+>  }
+>  
+>  static void pca95x5_class_init(ObjectClass *oc, const void *data)
+> @@ -653,13 +656,13 @@ static void pca95x5_class_init(ObjectClass *oc, const void *data)
+>      pc->max_reg = PCA9535_CONFIG1;
+>      pc->pin_count = 16;
+>      pc->has_led_support = false;
+> +    pca955x_pin_init(pc);
+>  }
+>  
+>  static const TypeInfo pca955x_types[] = {
+>      {
+>          .name          = TYPE_PCA955X,
+>          .parent        = TYPE_I2C_SLAVE,
+> -        .instance_init = pca955x_initfn,
+>          .instance_size = sizeof(PCA955xState),
+>          .class_init    = pca955x_class_init,
+>          .class_size    = sizeof(PCA955xClass),
 
 
