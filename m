@@ -1,99 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2A7606A335
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 15:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C34606A32D
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 16:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=OJAqUN3R
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=E+z0Wq5h
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPMLT-0002Y9-6c; Fri, 06 Nov 2026 10:59:15 -0500
+	id 1xPMOt-0003w2-6a; Fri, 06 Nov 2026 11:02:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xPMLL-0002X9-Ly
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 10:59:07 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1xPMOd-0003v1-C8
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 11:02:34 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xPMLJ-0001X3-O6
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 10:59:07 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4afe2d546f9so10034525e9.3
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 07:59:05 -0800 (PST)
+ id 1xPMOa-00023b-S0
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 11:02:31 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-8b0dba37a7fso6772937b3.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 08:02:25 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793980944; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lZd2uzRhZl2myNF+2FE1VrCBT6gga4BzKWp9b5iNpeARAWS0CljrKqNv6xGBKX28Qi
+ L0pgaW4pclOpp3R2uIPKAm2klYnFBJOugcaTk+x6H0n5BJDLFB4TIzC/hXEjBl6xsxbH
+ fJxtmqjCmHOK+D9P7wKLbZ4xFRxzRYklO/eWJhLnTDZWPgdCy7Vb4+GfmckKPBhsNUzD
+ EXiWjEKHSbsHK5iNMaZtrqIWCW9+ii3010VHxWA3jH7GcbAEzpO1OHZjTPjlkAhPBzQR
+ Qb1Z+1xSDTdtSHCaCtPtqe7DfMWLFz1g+JknWtti+iT0TFaS9PMvI9DCqApiTBrcjo4p
+ Dq8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=kZCBSloje9XqtTEpv7EcNMvQtBKDJh6EPwCU600igOY=;
+ fh=6uH3Ez3JRYvyspmRPRc6mDbAwCB5RenVYV5gYi8/nJ8=;
+ b=PxFPgB+DcPowMoPJP+CxrbOP3NIib+SlTvrK4jWkk9U9Kw7+t01ZMS5jXxXvJi8unF
+ AF4sdRqoArbrX4tg92Q8taDxDWCYXiW85a5+pHemV1muXwUakkwZw/VZxf/0/X3AFMqg
+ O5gmykdmCfJXqxHQEw+XjSPN/7Xsi/lhYOd1s3Ly9YNE87C0hlnKJN75sGGSY9ljKCKj
+ BP77em7e1gqXW3N7/8rBen3+SwgoDy6FQakUY1r+2+mPH3yhJarXmMwa1TgYPnhUU9hL
+ gBhIsWcgBl+u0gc/a1a5Mv7G7UlPEvjUX9vaeFVxpBkr8tIrKlw5YxIVy9qeKNWjalyo
+ hX9g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793980744; x=1794585544; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=bmRpJc+sUqEirozP4w7gxhkziun6otiMY2jWu675R5k=;
- b=OJAqUN3RUeuVPLE38dFPrhw5ADO8sbqA5w4mj5+pshfOAgM5xRLMPMlV97mFujzFWR
- Z2gpucNRZZGL8gkniPd/8TP1f6NqvHOfk7v8f2gy6v+5oDFYFgOQkKikA0le2Nl/k+V/
- FjetkRF4FIKaKWPrd7DKuMDyw54XbgTF1wMoabsRQhq/PZ6Lnl9cY20oXkQjvDSgywAa
- itpiaEDZmoru7ETVhpWzS2XK8kE82UlXJynmVn/Xo/L3ICpDwolrru+cRr5Kh1E+Khz+
- FMJ44nwopL+5hXrjzIe+6I8cjBo8wcz96edj6W6TQ/QX9WIw7+SOt6YCM/A9ISvrI05o
- AAPg==
+ d=linaro.org; s=google; t=1793980944; x=1794585744; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=kZCBSloje9XqtTEpv7EcNMvQtBKDJh6EPwCU600igOY=;
+ b=E+z0Wq5hYM2dwqThCFuhhet7H0P2HbDdUsa8R1vkISm/vBdaWtoG8NZGn9T8/etvni
+ aCBzlsDLSh1sCDATb3DwpSAFKoLu5bDaA0RjE6O5mTZFt96a2EfT1gkmXy62UXAhn295
+ j7duoypqi0Ij4Oe70adLpXL0EpMggSshElEAb2uDWZQnSDKEqtynMhGNLlpg/kW1Uxkp
+ iSMVmlhNOQ9f3Vtc1rnbD2rZf59UYql0IKpP+mDRI5d1FiRlYFEPbnv0Li6ulsTBMGoc
+ XpBLL3v3dx1fU1iocbLXe4W+Lq015e5dSraRty6vGY/gADfTLikaM//bDawMYIRQJXBH
+ lEkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793980744; x=1794585544;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=bmRpJc+sUqEirozP4w7gxhkziun6otiMY2jWu675R5k=;
- b=CikTOu146RUczxYKyFyJGUFNrmISagoe5z8HURmytvx2CDIjMA05soRzqYCh2A2jD/
- xowa9ZE6gdejN0fgMn7EE5ICPr42KXbEcjxZbiUXkKSWMmAIm7LhISbXL9uiaQudaZLA
- BmQU+QmleC8K7UFjkDxG35GX2kq6Gd3y7JBBVbYFIk5iAnsH3lTdQgr3vw2AhVlL63GG
- IVnUdgbtV1kJ4ICsaaEjALEpng0sCamDMyI3LqfWJOUyE5AbD7duPNg5grOIYcYzh9N6
- JeiKFsODt8o2b0WR1vXryz0gNiG+lZb+gfrOI8vO4yU/ToMDUX2EVojiUrwjGvEIRjI3
- /Tiw==
-X-Gm-Message-State: APuU4Z9UMWZpzZAb7Cg3MKlMVj/4Xa5C3v1epxhdidamnCI5pYjzCPDc
- GOU7jYyCPpw8HgoUuGUhqHC50hPE2KoymI2A7tH5Hejacrj57ATDjXmFBL0HYu2DOqXceffYccC
- Avc7XkPY=
-X-Gm-Gg: AYBFou1kBASs1EqHbYP25J5lDxAVacF28CbsbUZ8h5JkPsk6F3dEX1RZpxvZS/H7fdy
- lIbIdoYrA/rSA9kvZgOMvlkF9quFckYycF/g6TRCRAKQzb0kH0911p6MlvfmDm5qaAwQ1rdJy45
- 1Qf4Tc11ENOhphiua1x1Eu23SOURSnVJFtKgIonFAR3alIiU9YKwA6LKZnj+5EXd7acfV8QcVEn
- vcht7v9XEwu8emqHojiHmkqvU27+fCraS1XVwpwMGrNrlowD3mrXNm78/OD5c0qQDgErnfw4lrp
- GCQ+ShQS865hz8Wdm30FxS5tKHKnqneAl6a1fKJqMxMrWbXz/87JifjLbYS5RqF4bmrQrsVAp3y
- kzu66T95oRv0kHSTmDmbTyq1CZBcmu4tyefKOACC2RIkL7FKl1p3FOxoRCF1ms8jRNc2rBL7w42
- P/xqlEldYUyFaHdyVNgj9vPV1Uu4TbsenHw1+3Z9ZjUQZ/LIKM40B9CaLziGcH90q5HIPi3stna
- pWddWrDrHEHpJ0UJUJ3Qt6pDRh+vUFWbRMPxQUnHR01Kev8YQLl7vDEFVmKCpYeUYibRu3fhDZC
- ylpJ7bSVBnE1PtyVjCTVHwZu98YAx0M296tH+p3lehWlt2K8SZYia9wci/CbPAo0pZ8HgVr18Lw
- E/grb8pH9f+TkCa8F0+5ItJPyJj9t7sFdZg==
-X-Received: by 2002:a05:600c:1c10:b0:4a2:150f:1601 with SMTP id
- 5b1f17b1804b1-4b6dea68fdcmr54164725e9.12.1793980744047; 
- Fri, 06 Nov 2026 07:59:04 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b6e168f331sm80661395e9.3.2026.11.06.07.59.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Nov 2026 07:59:03 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Yonggang Luo <luoyonggang@gmail.com>,
- "Pierrick Bouvier" <pierrick.bouvier@oss.qualcomm.com>,
- "John Snow" <jsnow@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Philippe Mathieu-Daude" <philmd@mailo.com>
-Subject: [PATCH 2/2] Revert "include: introduce qemu/version.h"
-Date: Fri,  6 Nov 2026 15:58:58 +0000
-Message-ID: <20261106155858.3779237-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261106155858.3779237-1-peter.maydell@linaro.org>
-References: <20261106155858.3779237-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20260707; t=1793980944; x=1794585744;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=kZCBSloje9XqtTEpv7EcNMvQtBKDJh6EPwCU600igOY=;
+ b=M02zev3KvFEHqwhJhmp2fjEL4CMDUGJefCWl+RlKWho0xrFPv1QDX9+MGKtglhml3Y
+ WdApWOqJInY8JrzWzrh6olIHNh94fNZZI//0c4RQ3W/xdirUj5RC8FSjGEBL/Uc7MRBC
+ h8UNkIfc54J6tMMDipi/5BQLDHnSbRmPPavVA18cmV12ohB/W/54ZHL0yyEQSYPevW0g
+ JQJV2D3cr+/2AY183pqD33BYP33yBKC9bnkJo5JTpeIWcaWJ5vKcdIlRbq7mKIkkoamC
+ Hm+6MQrBCizongoCsTTnt9lZSbr2WYJMxceo3Luj8ek45btgnRCE3iBMl8/0n0jO/0C4
+ 1tjw==
+X-Gm-Message-State: APuU4Z83UEs/wB9Ks2xWPEJ8rwHqcOLKTyVOj32UNlpWcxzAop1+z5gj
+ r3qvohiosxQn35DpepQc+jtOdXwB9TKxaj0M7zpfyckm53A7bJUqila3OJkztIkdPESRYCf/CNV
+ u7hz0S5ZLgoS6bNSdRghsChzYlkmZ/TIAOB9SZbxTyw==
+X-Gm-Gg: AYBFou0vQ7nEjPplHQ+nCFQs/22b/QuuMQ/K29/GaXmvrnI3++pYpJ3sglNXJQtXLV6
+ m2tjveyBIEhQozF+QzATKnbFYuAI/PQR8OckOK+MmaQyE2RQ+H6MKfrmDWrzlAt+gRiOkoamPJ3
+ UWeaCzXm9nRLMa0xgCU2aiVlOI26jYwWVbAvN2PABVpxWuZtG2vftwB5RxfvnseYbmLsO+p1qDj
+ kapSW7p0qygU0kkTs3dsM+qywOUX63YwKk0wGzYW6E6tS7P+/rpmIgyNvjfiiyLApuFj/IFFT+1
+ TiOmPupFif7cjAJVI9u7N7BsU1OMfLtXCkarh7mKGXzFlDMxLw0uTtfjP2IYvwW375TmSl4fsKy
+ NHvV6WJ9DborJIYnCRfH2QApytSSZqrIuLKZBSWS8QkvmvXn30FcCKLBoG1fdqJzMDy93t4tfxE
+ HIa8ZjSuFi49IKv00DxIXe
+X-Received: by 2002:a05:690c:6605:b0:8b1:a3f3:7085 with SMTP id
+ 00721157ae682-8b3419c287dmr11732157b3.60.1793980944149; Fri, 06 Nov 2026
+ 08:02:24 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+References: <20261105125203.40320-1-philmd@oss.qualcomm.com>
+ <20261105125203.40320-2-philmd@oss.qualcomm.com>
+In-Reply-To: <20261105125203.40320-2-philmd@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Nov 2026 16:02:12 +0000
+X-Gm-Features: AclHuK8uvR8xxkXdSiK1iaQiEfbrGMfyI7ASL-Ch-aBtNpd1c9eXgL8t4kEBjpQ
+Message-ID: <CAFEAcA_kzBBUcyPEG3Cn8TnGqvqfOaq4_skEG+r1FXO0Q-n51g@mail.gmail.com>
+Subject: Re: [PATCH v2 01/17] tests/qtest: Use qemu_hexdump_to_buffer() in
+ qtest_memwrite()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org, 
+ qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,248 +118,29 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This reverts commit fc35f24387703da027c242ff17382b89ed5a269f.
+On Thu, 5 Nov 2026 at 12:53, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> Replace sprintf("%02x) by equivalent qemu_hexdump_to_buffer()
+> helper and silent when using Apple clang 17.0.0:
+>
+>   ../tests/qtest/libqtest.c:1522:9: warning: 'sprintf' is deprecated:
+>     This function is provided for compatibility reasons only.
+>     Due to security concerns inherent in the design of sprintf(3),
+>     it is highly recommended that you use snprintf(3) instead.
+>     [-Wdeprecated-declarations]
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 
-This commit was made as a pre-requisite for ab78ac76f44a124; now
-we've reverted that, revert this one as well so we return to the
-previous version header setup.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- include/qemu/version.h               | 12 ------------
- bsd-user/main.c                      |  2 +-
- linux-user/main.c                    |  2 +-
- monitor/qmp-cmds-control.c           |  2 +-
- qemu-img.c                           |  2 +-
- qemu-io.c                            |  2 +-
- qemu-nbd.c                           |  2 +-
- qga/main.c                           |  2 +-
- scsi/qemu-pr-helper.c                |  2 +-
- storage-daemon/qemu-storage-daemon.c |  2 +-
- system/vl.c                          |  2 +-
- tools/i386/qemu-vmsr-helper.c        |  3 ++-
- tools/qemu-vnc/qemu-vnc.c            |  2 +-
- util/module.c                        |  2 +-
- ui/cocoa.m                           |  2 +-
- 15 files changed, 15 insertions(+), 26 deletions(-)
- delete mode 100644 include/qemu/version.h
-
-diff --git a/include/qemu/version.h b/include/qemu/version.h
-deleted file mode 100644
-index 38405495c0e..00000000000
---- a/include/qemu/version.h
-+++ /dev/null
-@@ -1,12 +0,0 @@
--/*
-- * QEMU version strings
-- *
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- */
--
--#ifndef QEMU_VERSION_H
--#define QEMU_VERSION_H
--
--#include "qemu-version.h"
--
--#endif
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 6720dbde6f8..29ee59de2cf 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -25,7 +25,7 @@
- #include "qemu/help-texts.h"
- #include "qemu/units.h"
- #include "qemu/accel.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #include <machine/trap.h>
- 
- #include "qapi/error.h"
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 2f0c0a50c8a..60a695b7ca3 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -21,7 +21,7 @@
- #include "qemu/help-texts.h"
- #include "qemu/units.h"
- #include "qemu/accel.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #include <sys/syscall.h>
- #include <sys/resource.h>
- #include <sys/shm.h>
-diff --git a/monitor/qmp-cmds-control.c b/monitor/qmp-cmds-control.c
-index bc938712f3d..8fe0876a3da 100644
---- a/monitor/qmp-cmds-control.c
-+++ b/monitor/qmp-cmds-control.c
-@@ -25,7 +25,7 @@
- #include "qemu/osdep.h"
- 
- #include "monitor-internal.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #include "qapi/compat-policy.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-control.h"
-diff --git a/qemu-img.c b/qemu-img.c
-index 766d8540bfe..edf75e43aba 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -27,7 +27,7 @@
- 
- #include "qemu/help-texts.h"
- #include "qemu/qemu-progress.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-block-core.h"
- #include "qapi/qapi-visit-block-core.h"
-diff --git a/qemu-io.c b/qemu-io.c
-index b5f2ae631a4..598d5b1c9ca 100644
---- a/qemu-io.c
-+++ b/qemu-io.c
-@@ -34,7 +34,7 @@
- #include "block/block_int.h"
- #include "trace/control.h"
- #include "crypto/init.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- 
- #define CMD_NOFILE_OK   0x01
- 
-diff --git a/qemu-nbd.c b/qemu-nbd.c
-index 4f7e965edba..fa28609d7dc 100644
---- a/qemu-nbd.c
-+++ b/qemu-nbd.c
-@@ -46,7 +46,7 @@
- #include "crypto/init.h"
- #include "crypto/tlscreds.h"
- #include "trace/control.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- 
- #ifdef CONFIG_SELINUX
- #include <selinux/selinux.h>
-diff --git a/qga/main.c b/qga/main.c
-index 06358cb213c..fd19c7037db 100644
---- a/qga/main.c
-+++ b/qga/main.c
-@@ -30,7 +30,7 @@
- #include "qemu/help_option.h"
- #include "qemu/sockets.h"
- #include "qemu/systemd.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #ifdef _WIN32
- #include <windows.h>
- #include <objbase.h>
-diff --git a/scsi/qemu-pr-helper.c b/scsi/qemu-pr-helper.c
-index 7629f364045..1f97a5c4bfe 100644
---- a/scsi/qemu-pr-helper.c
-+++ b/scsi/qemu-pr-helper.c
-@@ -50,7 +50,7 @@
- #include "qobject/qstring.h"
- #include "io/channel-socket.h"
- #include "trace/control.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- 
- #include "block/thread-pool.h"
- 
-diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-storage-daemon.c
-index b2e29f00054..50dbfbd97ae 100644
---- a/storage-daemon/qemu-storage-daemon.c
-+++ b/storage-daemon/qemu-storage-daemon.c
-@@ -43,7 +43,7 @@
- #include "qapi/qobject-input-visitor.h"
- 
- #include "qemu/help-texts.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #include "qemu/cutils.h"
- #include "qemu/config-file.h"
- #include "qemu/error-report.h"
-diff --git a/system/vl.c b/system/vl.c
-index e7b759d5442..7ae6a8298fc 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -37,7 +37,7 @@
- #include "qobject/qdict.h"
- #include "qobject/qstring.h"
- #include "qobject/qjson.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #include "qemu/cutils.h"
- #include "qemu/help_option.h"
- #include "qemu/hw-version.h"
-diff --git a/tools/i386/qemu-vmsr-helper.c b/tools/i386/qemu-vmsr-helper.c
-index fac7fbe6b61..f12fd3c3e81 100644
---- a/tools/i386/qemu-vmsr-helper.c
-+++ b/tools/i386/qemu-vmsr-helper.c
-@@ -34,7 +34,7 @@
- #include "qemu/module.h"
- #include "qemu/error-report.h"
- #include "qemu/config-file.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/log.h"
-@@ -42,6 +42,7 @@
- #include "io/channel.h"
- #include "io/channel-socket.h"
- #include "trace/control.h"
-+#include "qemu-version.h"
- #include "rapl-msr-index.h"
- 
- #define MSR_PATH_TEMPLATE "/dev/cpu/%u/msr"
-diff --git a/tools/qemu-vnc/qemu-vnc.c b/tools/qemu-vnc/qemu-vnc.c
-index a668f3f734d..c915589ca7e 100644
---- a/tools/qemu-vnc/qemu-vnc.c
-+++ b/tools/qemu-vnc/qemu-vnc.c
-@@ -15,7 +15,7 @@
- #include "qemu/option.h"
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #include "ui/vnc.h"
- #include "crypto/secret.h"
- #include "crypto/tlscredsx509.h"
-diff --git a/util/module.c b/util/module.c
-index 6de9ff2e411..8f8e6994f11 100644
---- a/util/module.c
-+++ b/util/module.c
-@@ -23,7 +23,7 @@
- #include "qemu/config-file.h"
- #include "qapi/error.h"
- #ifdef CONFIG_MODULE_UPGRADES
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #endif
- #include "trace.h"
- 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 36a72d36238..4587547c98c 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -44,7 +44,7 @@
- #include "qapi/qapi-commands-machine.h"
- #include "qapi/qapi-commands-misc.h"
- #include "system/blockdev.h"
--#include "qemu/version.h"
-+#include "qemu-version.h"
- #include "qemu/cutils.h"
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
--- 
-2.43.0
-
+thanks
+-- PMM
 
