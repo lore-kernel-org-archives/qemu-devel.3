@@ -1,98 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492E5606A326
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 12:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F25606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 12:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=d64mgL7L;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=tTEU2CDX
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Ma+qXJuV;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=tbjrTQBV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPIv4-00032F-I8; Fri, 06 Nov 2026 07:19:46 -0500
+	id 1xPIw6-0003yl-GD; Fri, 06 Nov 2026 07:20:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIv1-00030R-VF
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:19:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIvm-0003kL-ID
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:20:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIuz-0007QN-Cn
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:19:43 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xPIvj-0007pk-Ke
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 07:20:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793967580;
+ s=mimecast20190719; t=1793967626;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=E66+2hYgpzZKUNNeBE2CQr7cNiXnuVWs/cIg8tZQJpU=;
- b=d64mgL7LXNGQQ/L+bFerjDP5YDW+qe3UtCCcjid9e7VYlpmKxlpqyqNR8zyEIroJ5/9g4k
- Bh3ONjELkEuc9BfYd2Twb8pstZ3Xm2o+cMF+8csYQsVkNDgKMoo4W3ilEKk9+0yQp3awIJ
- WO5hHwt9y7xRuNI5KUn4JeI/zuAM+Cs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cqcg8FflfFk0KsQkfU1sHiREKKapMM9PlLOcj/lVGFQ=;
+ b=Ma+qXJuV31GTgueFrpYklA9dYyhtLAPRyYuKzI8S6GMFML3niayhTIZM+002aZSzGcoNVS
+ ztaTInX0E72tuSLC+cmZUDNy1LBsJ1bTYKv5P/RheViKJL+IJJUNXX49Q5sdCVgA6y/mgw
+ bd7mZ9sW08FugHXDv6Nw0R8AQ+7UfJs=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-335-8zb2HHh_MAqCEFWGt6ThwA-1; Fri, 06 Nov 2026 07:19:39 -0500
-X-MC-Unique: 8zb2HHh_MAqCEFWGt6ThwA-1
-X-Mimecast-MFC-AGG-ID: 8zb2HHh_MAqCEFWGt6ThwA_1793967578
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-492e3189fc9so534558f8f.1
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 04:19:39 -0800 (PST)
+ us-mta-48-MEhMmvS6Og2iJVsxip3Pkg-1; Fri, 06 Nov 2026 07:20:25 -0500
+X-MC-Unique: MEhMmvS6Og2iJVsxip3Pkg-1
+X-Mimecast-MFC-AGG-ID: MEhMmvS6Og2iJVsxip3Pkg_1793967624
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48c6a1d4034so622946f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 04:20:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793967578; x=1794572378; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793967624; x=1794572424; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=E66+2hYgpzZKUNNeBE2CQr7cNiXnuVWs/cIg8tZQJpU=;
- b=tTEU2CDXKof5Er/EUVFfJchtcK4tgem+Y7OF2Iq/sWcd3wLYM7CK5zgAMfQnn79ihW
- Tp9fC2GK5ymMhos1nQubfOhw1cXt9LCUumolx4JgmG4Dm360tPx1GUaYQFYrbAlKdEmX
- SeSrWXEXaKcGfTvqKg7qGBHrtHswDYZ9xDZ4BqITFgo58CY6IbYrQ/qxWuYlGg0Uuq3X
- VFVLmk5Qx8juWeWAveKb6lf4aQkiP3iPACj3m88e6ieT8+A9rB3HKlQp70uFtL1FKb5f
- Spx1HW4UlAshvP8E7VDNjqItNqWFwJRpu29YsAeIeG+s1/yOZwEA7BpXog1BceoL5Bs+
- Oo7A==
+ bh=cqcg8FflfFk0KsQkfU1sHiREKKapMM9PlLOcj/lVGFQ=;
+ b=tbjrTQBVQ2C29ns/8QHlYihvoK9qR2G2GuOMo9AbQtTjfMImGg+6NT1im9qEbJJQ0J
+ FLRox2XjBll2Reixh/Wnjc0pqlfDZ4izO/fwBIstqwlQ/rRCGlSPJWssRdPMFpRk0F+f
+ UKp4QkSN4it5EtbzCw2yFWZz1geOfNDolc35ysHx28tMHM06R7zeNuYFleeXnn5ZkiVl
+ S2+JG65ltZtJuzrxUW+wCYcpLhCveajRPW3Al1c+GE6dO9E/QTuoutk0OMzNOFqr8/fV
+ fTRXtNgZ4I03FmIwFQBodPs55CBTWRcOWqCYMD0v19eqeMhWpwvjid5ZzE4AJrmNtw2B
+ tVEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793967578; x=1794572378;
+ d=1e100.net; s=20260707; t=1793967624; x=1794572424;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=E66+2hYgpzZKUNNeBE2CQr7cNiXnuVWs/cIg8tZQJpU=;
- b=oUfpOegV8OskSkuCC4Bj80ogPiH8g+nuRNr6Tp4v1J15R8qdc+tJFeSVoEwLXH2nV6
- 2uXmpuUVc5Ech4XpzK/YhfkkTuhjFBRaRdIsqJyupxswKg4vDUqBE6CG6J9mCXNgi860
- iBZI3fpEutiJh9Z5CQMHZTJ8mr6EXVmW5yc886KZzOEnDwrWvOtBHidg/ks0z/nuzteD
- PBWNcBN8sMBIGCGa5rsbsFutNzTEeVg1bS5cAp+N4akyeJ4+p+DsnqzOQAxDBZkZNqdi
- Le9Si5DKPeI3QpH7IRGSLLiXK9X2je3fGEy5j+13+GjWTNs1Ol7igo8G4TfEx96OqU/t
- +jTA==
+ bh=cqcg8FflfFk0KsQkfU1sHiREKKapMM9PlLOcj/lVGFQ=;
+ b=viOV3xzdS5Y4KdoEEleLuFetE9P6SZOo5FfHMEKGVaLe+vv56OPxIysTi9VdaLRZz6
+ VJSVu+jiAOhV7TFIsW63PecwmpsIPaWXR4q6rRVAlHZZ0JvlLq0iqvxJSs4+193js/vs
+ ZWloWUaH4U/0VqBEsswgEIAnIxhBhV2Y1CEghsiTVf0PsJM2a28ZQQen+gLQ9GbDEmA/
+ Og+iiSsL9ob1Lm4vg9aY9cvahIHc87VUtKn0GrVf7SP+JnHmXbMY+F1Ha2sPPDQHW1QN
+ G/vQQZC6MalB03doUnPTgCUM9Gml6nllLfUp+AdOXqe/KNVhtcJeWqwYcYcdyUUP3Fv/
+ D5Rg==
 X-Forwarded-Encrypted: i=1;
- AL+hErGDo9moZN7EIJZMtnHUeJoaIVbEw++xeR/omipoTuENosS6gx9+rZszIUAPzw4g2pxJppUFQRWQKL/p@nongnu.org
-X-Gm-Message-State: APuU4Z/V8EGr1zp2X0NBH+hzUv0iNUqSRs7eSptUKP4+xIr3SB4I5VTu
- 5DEA52xcIHsbtuGKUlUyzHnNFFO2jYp1ED+eHsQSwGs6A/Nq/ZMZkecTzLgBAMGyTl+dQPhBkoI
- obd0C2us8lBLATJBt4Xw2umRl9TV4taaJ6n507C1P9heU+opbELEV5WLY
-X-Gm-Gg: AYBFou13BxFF3BhULmfwQ9/mULT1mO8Zqk/uRA7ZZ+Jkp63G0iIYvM/t90zSOTgsJsv
- BTB6o2HQCxmuo5GH2rR5Ya3QmrW2XmSg2fsYvBmp7zLmIAjdIfqOURZK60DSUsgO7UOC+zBioU9
- J6OSYwuqwdho3uc59cNqwcTIEwV3u+mbNJ3A5CCCvGRIE3pmDqYr4C0ysNVLN8m1jdF2PAscrFv
- r2Qr/1hTLUlJf1J54POVreOix5b1O9SHqDK6bkRYJ12TApkrpO756FxAd2Z5NvmoaBr4mvRGN1B
- Of5ftBH9g8tQbjA8dsd4z3V0UqmvonLlCVgQ7TERJuh1J4plw6YQl6cT942JYnPT9LeuA9Kvuqn
- WWzYLD4WotjvZNz593iNYlQ0Dw2lcaDa5E0b4UCfr7tL4Q835J/DgV++EF9zrct/H9ci0qxnEZI
- VeNuCS+UxD0w==
-X-Received: by 2002:a05:6000:460c:b0:48f:bb92:c5a7 with SMTP id
- ffacd0b85a97d-49275373a03mr4476554f8f.9.1793967578261; 
- Fri, 06 Nov 2026 04:19:38 -0800 (PST)
-X-Received: by 2002:a05:6000:460c:b0:48f:bb92:c5a7 with SMTP id
- ffacd0b85a97d-49275373a03mr4476515f8f.9.1793967577892; 
- Fri, 06 Nov 2026 04:19:37 -0800 (PST)
+ AL+hErHUXG9k5zPzkzYFHy+A5LEVQNA4/LWP5l6fL3prEwMKn0zEHw3uJDixnjwQWYTEyJ/KmDbznnh6lAu0@nongnu.org
+X-Gm-Message-State: APuU4Z/QKKuYaIc8KT/FOuWab76Ach0g5o59B91c1YO0dFLQPzyHJn9B
+ 9flizGc4sPDo6d88bvxBM3RBY7xBQfZXWS9wLkTLleMehGHdWPBvkE/dDGi1YypgLFuXbsicIcO
+ NAS3mWvpuvhSgNYjSS8Zw83k860ivrvwW8vohN0Vr5+bd6F7H3MVkJZA+
+X-Gm-Gg: AYBFou0g4sgO1lz5TBZDPWsFyxLOCYiJJuL/umGKFr9wzo0sRAWpM4NtkF+H0xMJbiE
+ yyFfcoqDATjCQ1utzLW3fhjGhtkoHSQM+v9EeJalSdiGue0/YqoRAkew88eYCj/C+wn6rh7Jlrn
+ Ak2efpFKbVtKGSWac86y/HOmph4fPfTKpCd6kF0ayFo7MIWYlMiQqZRLRBN1zl76y14us2EScz+
+ WfknOYuC8D1pti5fgK451747028GdO9uU2WZ8b47OrPrYJikEVkFyMtmy8rWeVzD50b0w5xSm7c
+ R9Lk/zWMeBTQYFQ+nLdqpLE/wq+rCAreY5RaR4yAfRnzdpGoCzkUQd2YpC/ykiTo0LbANJplKrF
+ Mmq1jzDz9dMjyfiLvGzs+qy4KhllpxOtQyGq0ckUdE5OSUUgKQDzVgcazBOqK97C3qfBBcNrabb
+ 4fMNQH7+3Whg==
+X-Received: by 2002:a05:6000:470e:b0:492:20e0:f666 with SMTP id
+ ffacd0b85a97d-492707c3b8cmr4880606f8f.0.1793967624412; 
+ Fri, 06 Nov 2026 04:20:24 -0800 (PST)
+X-Received: by 2002:a05:6000:470e:b0:492:20e0:f666 with SMTP id
+ ffacd0b85a97d-492707c3b8cmr4880558f8f.0.1793967623904; 
+ Fri, 06 Nov 2026 04:20:23 -0800 (PST)
 Received: from ?IPV6:2a01:599:b03:7322:436f:1f3:b26e:91b8?
  ([2a01:599:b03:7322:436f:1f3:b26e:91b8])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-492d7cc5e23sm3657084f8f.45.2026.11.06.04.19.36
+ ffacd0b85a97d-492d809dae9sm3290194f8f.52.2026.11.06.04.20.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Nov 2026 04:19:37 -0800 (PST)
-Message-ID: <6d17cbb0-6518-4dba-9118-eff838590e2d@redhat.com>
-Date: Fri, 6 Nov 2026 13:19:36 +0100
+ Fri, 06 Nov 2026 04:20:23 -0800 (PST)
+Message-ID: <e81da370-9301-4d9c-9037-4961ddd896b9@redhat.com>
+Date: Fri, 6 Nov 2026 13:20:22 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/28] hw: define most common PCI types as secure
+Subject: Re: [PATCH v2 15/28] hw/display: mark bochs, ramfb and VGA as secure
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -102,7 +102,7 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org
 References: <20261029131241.2275706-1-berrange@redhat.com>
- <20261029131241.2275706-14-berrange@redhat.com>
+ <20261029131241.2275706-16-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -147,17 +147,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20261029131241.2275706-14-berrange@redhat.com>
+In-Reply-To: <20261029131241.2275706-16-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -179,21 +179,18 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 29/10/2026 14.12, Daniel P. Berrangé wrote:
-> Essentially all PCI infrastructure is in scope for the virtualization
-> use case, aside from the niche simba bridge and the CXL related pieces.
+> Most of the display adapters are emulating old hardware which is not
+> relevant to virtualization use cases.
+> 
+> The clear exceptions are the generic, simple devices that should be
+> considered secure: Bochs, RAMFB, VGA (PCI, not MMIO / ISA).
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/pci-bridge/gen_pcie_root_port.c  | 1 +
->   hw/pci-bridge/i82801b11.c           | 1 +
->   hw/pci-bridge/ioh3420.c             | 1 +
->   hw/pci-bridge/pci_bridge_dev.c      | 2 ++
->   hw/pci-bridge/pci_expander_bridge.c | 5 +++++
->   hw/pci-bridge/pcie_pci_bridge.c     | 1 +
->   hw/pci-bridge/xio3130_downstream.c  | 1 +
->   hw/pci-bridge/xio3130_upstream.c    | 1 +
->   hw/pci/pci.c                        | 4 ++++
->   9 files changed, 17 insertions(+)
+>   hw/display/bochs-display.c    | 1 +
+>   hw/display/ramfb-standalone.c | 1 +
+>   hw/display/vga-pci.c          | 2 ++
+>   3 files changed, 4 insertions(+)
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
