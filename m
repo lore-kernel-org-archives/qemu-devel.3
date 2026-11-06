@@ -1,112 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28179606A329
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 17:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CA1606A326
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 17:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=DxyMNB8K
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Eo3KF+el;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=AKfubkHu
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPNQr-000798-Uc; Fri, 06 Nov 2026 12:08:53 -0500
+	id 1xPNVS-00081Q-KK; Fri, 06 Nov 2026 12:13:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xPNQm-00078W-Nc
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 12:08:48 -0500
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xPNQk-00021G-QM
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 12:08:48 -0500
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-8b0db268bd8so6144537b3.1
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 09:08:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793984925; cv=none;
- d=google.com; s=arc-20260327;
- b=bANamFgm9tqLhI9pYwGqnB9st/I/IvabXnIaf0C0s2RaWQbLVriuF83kxoqCv64tPp
- b22F7qA6h2mJKn5bbaW9DaNsH767LnQBldSv3sV9d1MGqzytNDyPzWVfHQhxMZxTarMR
- iqdcrx7qZSiaw+5PzwugLThXpIbu+qzAyH6ky+eqaXK97w6I6XEyy9W5hjF8B7pAE42G
- 2eKZSAv8VBrxuPBM2do/POx5kboIQpKe9l+oLXTTDh/7wfSfx6O6r0ViuxqGQD7kiV2q
- Cm5skPfAp8wH5bCM52LQGKWFmgfOfp0QegsciegrAXezdsl6w5/qHy7vP5Bjfe3xxDBp
- XLXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=OO8Ac8DJWpsrwJd268MEQU23+7uGcwRK+DZ60CP1NWE=;
- fh=evYu65HJqNwMd16sFKkvgyTnNtakHsnIGR2/vsBd+ww=;
- b=IKMh6Pj6/8B5bW0zh3PGFLdQF5/L9o3sB+w5cTmW+NtxVaZVxCjnewuC8skoEayXkR
- lrU/XaYoOSd3Hryddz3YEupKudn4ttOjnz+pC1eKmad/TrpCoppBOQeg6fxTi5xQNogP
- SsGMA54yFwNue5HUCOgnOOjNtU3ZrlYwBBeTV/8ndeIIAmZUJvthIlUyZfsspHqV/hhn
- Nsyawewv5TwLyotwiJagmQsLKIHJ55UgEENLfryj6ljAiu9EAw2piBvWkjxfJAtkTjp0
- JJqKG4mb5sp9tsVEYlB+LRm4kt/4S1uwzBZoi3R0jey1B1+DeUFfZS3Xz+7EhNTA95Rl
- IRAA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xPNVQ-000813-BW
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 12:13:36 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xPNVO-0002dc-8I
+ for qemu-devel@nongnu.org; Fri, 06 Nov 2026 12:13:36 -0500
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A6F0Kx53927577
+ for <qemu-devel@nongnu.org>; Fri, 6 Nov 2026 17:13:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ o4uCPdTsjfNFr2CgrnePKOX49zplFp40/6+78EdzjZI=; b=Eo3KF+elj/m3viNX
+ 1KTBd1BBMLND5YKj1STPiFMcxSdflGA9t751edB3RbfqROHqyqiCK2wwYwtNXmn4
+ Gd8Dqyu9tGSaK0PKn10VOk2/wEeaGVKxNb1z5yhuYqcQsQ5gkUiwisTyBROvjXeI
+ spwha/+N8s6ZX0zIXqr9H/6hM5jpEZYRYeICwQu8phu9CAdajwglt6FjaB3skKok
+ 1wNf+Ew25LO8dk4jbfNsllTob+Y29Q2Sj7rKLRQeE55rdhn23fN+bvbYDvLwkrRc
+ dhyxzP6yxpwi2897KH+DlUhMQmXMGrdx0PPgXwE3LFhRl19C/CT7vyB5mbX8Zdnh
+ B5zTgA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hs3pa3ty3-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 17:13:28 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-33c35f5ca6cso1569751eec.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 09:13:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793984925; x=1794589725; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=OO8Ac8DJWpsrwJd268MEQU23+7uGcwRK+DZ60CP1NWE=;
- b=DxyMNB8K96fHJB2Pmv6ZQ7Zc11YGAybaqrTxgvEuxcMZuykocvzAV8gh0OMFSlb6f8
- vYm8Kl7nGo2BaMGUf5pEElB3jyBbUZGGw6TxyLYZnp4R7xzes/wZtTdl+bY0LSFZDjpG
- Y0nI/tEyXmTAZn/VlWSDaeQGowjKBNie84SsWSaEoYBi+MPvB2jq+imnFTc84qCinn0w
- HBqQvCZ4tgV1jYqCPKJq4rtA2Q+Hs/0aRcAEZyhWjqkJZY7TTtz7KWf/pJTjkfEUAJUT
- Drn8KxYEtm3WH5I1I65SwCTNvdcLHHknVjfrDAV9UPtFU7l5ezI8AuHxGcx89q5bQd48
- darw==
+ d=oss.qualcomm.com; s=google; t=1793985202; x=1794590002; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=o4uCPdTsjfNFr2CgrnePKOX49zplFp40/6+78EdzjZI=;
+ b=AKfubkHu3g4CD6VKCYFX39ed4dWR5Eb+Cfm4sTuWy+xMlOpF8DfsVcGb03g/d1srWN
+ ILOiVnGGAh0WlJAwCY/uoXewjtrAQQiJtuhv6jdMofzUxov0/o5H4zSaR8e95C/hJ0At
+ y+q+AFYjw+jMkEk4ij3FOB7xUAcZhwI5GOe2dRm/EuZ6TV6c0zYZZCCbLkjRODVVWUNB
+ vl7idRgtiZXWhg/0leqKvK/SMJTsG1E+5eFeEBDVyrmI/+weszj0NPtFbpoyqZ3nhxLt
+ 9cPs9HiX2cBbvF5whDTz3U+JhL2rQZk4OcLvp0f1uF9GV8plbbESD5PLO0vUzAMgyXL9
+ e70A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793984925; x=1794589725;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=OO8Ac8DJWpsrwJd268MEQU23+7uGcwRK+DZ60CP1NWE=;
- b=XgFxG9inJ7Ygor97n8GdkhM4qO+25OA6hsFlfuomxyMJZ6+bUIGQ0b3EPszEeg8lLE
- TqZVWGgWPsfbueJSz9IdyQFvVrGteevNNhP/k/6tQkpN3bCskwH7VMs1MMLCJLE+8Sqy
- KH3c8ORG8lzX2IUalQ+nFO61WSGjXMuRdB2PGO1XT3aCNtbC7Vl5L7BptMPmzPm6O4TY
- DgqlYTIl7VIhJOCpoVtwttUZ+r7H/dwgZJRkyA/cU9oMcciTVTzCIyrub11drZ5A2M/8
- BHJWrb38gBaCM80efcUUXTxaHztuBOta4J+b1oysnTfgbyPvWFnjJb1s04VIB8jQSTPC
- t7AQ==
-X-Gm-Message-State: APuU4Z/aL7aRg8ddJ5seCpb0IOlcrr2inwjT+3u2j+CiWPVlGAVNjUaU
- ywCAlWG/rw5b4JQiKgY6swScD3HElJHuHwzcqrb7WKbJPFATebB+rN9zTwejbjvWIv5UhPzB9F2
- hjdQxrIw6ZPqdttnBHJ+tRFQsTdZb13/QR0b/CRV1eg==
-X-Gm-Gg: AYBFou1nYAtjzz+GKVFEAA1yY/gWtLyt4ZbWP009pZCI+KkiEAeV2cQSHLpcwirSWAA
- n82dGRf0gp/QYDMJznw9R5iy9tgSVD9M3omxOQxmvFA/1aIbi0jCVRyhbkxPt5Ew1Kji63u9MT9
- mkgJ3TCjljuC8ciaZjFmGgcoFfesZdzGjkDxXM0+cQ97l5ZnhnOC0quT9/a59zTiGrbOxO45Pag
- rKGddMCTHOmy0172XoJVtccvvSWqp/ebXjb9ZofXPCKAAhuhWR5bjNSZga8I7i2tSqmsn9UnKVr
- rlmW2PsVllsc2na+RbNnaFInRsRO/795WNowqidJhc8yc2PCdAqswCkKGJTpenukYUNsTPOBNp7
- awyltEGlVUD7vS1L8REUvrXxZYBstrhxpg0PqRQ/FlEU9rLm/NWnHcqupyCOHAEOi6m7AHDf4wZ
- fMc/ZK7ERFeIR9A6C/crT/ew==
-X-Received: by 2002:a05:690c:6602:b0:8b1:6740:6e7b with SMTP id
- 00721157ae682-8b34192bec0mr16183457b3.27.1793984925158; Fri, 06 Nov 2026
- 09:08:45 -0800 (PST)
+ d=1e100.net; s=20260707; t=1793985202; x=1794590002;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=o4uCPdTsjfNFr2CgrnePKOX49zplFp40/6+78EdzjZI=;
+ b=Or2x5fru9+gfWiq1Rm+cMkfqb+p1VG/8ssFMB5uahC/2Jg2E8pkxPWc1RGZxLV+n1p
+ WuP3zfjOu55+jur52jaMjfrxB/niK057vA7DH7jRmkmlB2xOD5fwxhF3IoeNggg4K9tp
+ AqsEAMzu8osdp1tpnJBOwcWpOd7ac+jljoAOXB/8H3mrDL09MPR+X9Mdl796owHguSWL
+ x2wM2LHDJrNQApEgdHenDvn9c5vn0JE89BpJ1FzDgKyczFz9Jq1JOc+SXS2BNXJJGoer
+ rEY2qk59LCJzJveQF1Zm7Qohr95bq4q0cKd1rRdCv29RGsfZOxxWv5B41pA5AOyay+LD
+ EPZQ==
+X-Gm-Message-State: APuU4Z+M5nGprG1KabMCo6mPodjl9JOywKI0zSCp45SIdpM/6ySPnR3n
+ P+h6dPc/a6Ayp7yBUdXWmzPJ7cm7wk2HkETT/AgpvzGAuwmteOymNzMVOhx5kq/fr4JOni2GxVX
+ DG2Jgk86ZMx3cT1hgtsSCK/MgVBeSyMKMwCY5g7CWW+OSbrGhxefCKidp9g==
+X-Gm-Gg: AYBFou3myz3Td1l73JrEOBGkw3Qg/HH+tuPt8aSm3oPwtZkVXEoCwRf/zg1fBrGa9kx
+ xX8OA1YsNlzmORSIPkjKvdqYl1iKwCGtJwc+8tqc9FXBFX7R3zEcA4Z3wDiVQ7b3UilRZLt8oM4
+ XIEnY1GFHLCT+kf1jJvZ1dLhifRVckccEm75wtsxigDHOxl1KcHNGbgGEJs8becygA4xwf50wib
+ dR9u5oo79R7fQx3surjbU0l6D6M2zlHkBij0mJfYgEDlpULEngR+e4PtwJ70C+3YFiayqwBSNdD
+ XvIX+FJg7LfMdVCDXcYuG5tElv3P/b4+PYSWf93Hll9jdDR0ONd0lUlMnKi9ftKeK+ikT2VgR3q
+ 6oeArTgUBrmiaqa/P6SA5DE7kBB91DK0A7+P/PaBCzuHynHp4Kd2IkS95zPfa6PLDcrVF7D5url
+ 33rxOl/I2tk0Ctoa6ydQvuAQlZbqlb7qJMko+s4LKaPw==
+X-Received: by 2002:a05:7300:6006:b0:36d:f004:ae6e with SMTP id
+ 5a478bee46e88-36f76b15b33mr4470983eec.34.1793985201984; 
+ Fri, 06 Nov 2026 09:13:21 -0800 (PST)
+X-Received: by 2002:a05:7300:6006:b0:36d:f004:ae6e with SMTP id
+ 5a478bee46e88-36f76b15b33mr4470946eec.34.1793985201288; 
+ Fri, 06 Nov 2026 09:13:21 -0800 (PST)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-36fa8e3a47esm10321768eec.6.2026.11.06.09.13.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Nov 2026 09:13:20 -0800 (PST)
+Message-ID: <db4879c7-e5ef-48ea-98ae-44f14a5e840e@oss.qualcomm.com>
+Date: Fri, 6 Nov 2026 09:13:18 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261106155858.3779237-1-peter.maydell@linaro.org>
- <20261106155858.3779237-2-peter.maydell@linaro.org>
- <a66e5489-7898-43b6-a7c3-8a7a3deedbb7@oss.qualcomm.com>
- <CAFEAcA8jLh_5B563-Y-JmhFoimssDB71Lncq8vy4cf9RdqVm6A@mail.gmail.com>
-In-Reply-To: <CAFEAcA8jLh_5B563-Y-JmhFoimssDB71Lncq8vy4cf9RdqVm6A@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Nov 2026 17:08:33 +0000
-X-Gm-Features: AclHuK9DlsuZjb8K1IGjRxKRgP6Eg2hk2LgN057BOWvKa0rh20ZL2PXY6BBAJks
-Message-ID: <CAFEAcA88de=0uh1yYNvRsJH3hsqH5Ecqju5FcdRReL_z2UB_sQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] Revert "meson: rewrite scripts/qemu-version.sh
- directly in meson.build"
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Yonggang Luo <luoyonggang@gmail.com>, John Snow <jsnow@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Philippe Mathieu-Daude <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] hw: support machine filtering without is_available
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Yonggang Luo <luoyonggang@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20261105102432.1131493-1-berrange@redhat.com>
+ <e0afc971-a070-4853-b690-b6c523c5b65a@oss.qualcomm.com>
+ <au3zw-IBajJYhiWN@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <au3zw-IBajJYhiWN@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: BKsx5Ve0qPGXnhIeW-VGqBa3ySnggQm6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA2MDA2OCBTYWx0ZWRfX9TlZOLn+q8FY
+ htFKL43K02/ghmU/SzoUKk8XC/op4fwSyFlf0UEBr4QcvngQhzGSD20xo6FqkGhOkKX0dt4iWVu
+ DSKNNl9rKqRvQgrXrBydgh81cW5aQjSSCBXXzqNA8UrKWccQjDLQykmc3k8sSna125KmHk+2yKE
+ 9Aawk2mErFb37+6LqisYc74TGiDLjg2jP+RXq7qDA6hIS4t4zs0lEebH9+rsuItbvHVmP4MPdfR
+ RdYRV+xGlBsav+TYOzbpSaLnB4kC3bgfAP5xd/HZl00aZ+TR6wRttnmbM2Mxlh2UOeAMT3vKviB
+ 1eBThXzLTQAEYKe8Ewf0w6dWbGfiwCcO3ZKGmlc7fPqqZHz6htA30on5wdvmCzJGaf0FmVj91sD
+ jF86vfrH7L02pU+YAV0y1pCJoSdwF+WtL8PfIt+hvo2AdtJO3LrKim4pyYhiy8tea6sc6BoCfg8
+ WaXkrwAXxzdOgokAk5Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA2MDA2OCBTYWx0ZWRfX2I68HLzXPbBC
+ 8ztPXo/hnrJvXMA6Os6bMd/Nh5seYVDI7bj7/CIqFjFC41rt5vuhsW3Q/wXo1qCaxN11/fTy2re
+ RrZxLBeYNJjKUSuLbm1+GYqMm61FRsA=
+X-Proofpoint-ORIG-GUID: BKsx5Ve0qPGXnhIeW-VGqBa3ySnggQm6
+X-Authority-Analysis: v=2.4 cv=CaKdd7rl c=1 sm=1 tr=0 ts=6aee0ab8 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=5ODKxfEBBgD_3g-98KwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-06_05,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 adultscore=0 malwarescore=0 spamscore=0
+ bulkscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611060068
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,64 +153,83 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 6 Nov 2026 at 17:06, Peter Maydell <peter.maydell@linaro.org> wrote:
-> $ git log --oneline -1
-> f71afb409a8 Merge tag 'pull-loongarch-20261105' of
-> https://github.com/bibo-mao/qemu into staging
-> $ rm -rf build/arm && mkdir build/arm && (cd build/arm &&
-> '../../configure'
-> '--target-list=arm-softmmu,aarch64-softmmu,arm-linux-user,aarch64-linux-user,aarch64_be-linux-user'
-> '--cc=ccache gcc' '--with-pkgversion=pm215' '--enable-debug'
-> '--enable-docs') && make -C build/arm -j20
-> [...]
-> $ make -C build/arm -j20
-> make: Entering directory '/home/pm215/qemu/build/arm'
-> [1/35] Generating tests/include/QAPI test (include) with a custom command
-> make: Leaving directory '/home/pm215/qemu/build/arm'
+On 11/6/2026 7:35 AM, Daniel P. Berrangé wrote:
+>>
+>> Thanks for posting the series.
+>>
+>> Would that be possible to complete it so that beyond compilation, test
+>> ./build/tests/unit/test-multi-target passes also? At the moment it fails
+>> with duplicated types being registered.
+> 
+> Oh I see, it didn't failure because I only enabled
+> the two arm/aarch64 targets, once i add in more
+> targets we get a clash on the virt-machine class.
+> 
+> FYI, it also fails without my patch series present
+> in some scenarios:
+> 
+> # child process (/multi-targets/qom-types-are-unique/aarch64 [1950288]) stderr: "Registering `vm-launch-update' which already exists\n"
+> **
+> ERROR:../tests/unit/test-multi-target.c:41:test_qom_types_are_unique: child process (/multi-targets/qom-types-are-unique/aarch64 [1950288]) failed unexpectedly
+> not ok /multi-targets/qom-types-are-unique/aarch64 - ERROR:../tests/unit/test-multi-target.c:41:test_qom_types_are_unique: child process (/multi-targets/qom-types-are-unique/aarch64 [1950288]) failed unexpectedly
+> Bail out!
+> Aborted                    (core dumped) tests/unit/test-multi-target
+> 
+> This is caused by presence of 'igvm-devel' at build time on
+> one of my machines (Fedora), which enables this device type,
+> if you have both arm and aarch64 targets enabled.
+> 
+> We need to add igvm to our Fedora dockerfile to catch this
+> in CI.
+> 
+> Moving it from specific_ss to system_ss make the test pass,
+> but I'm unclear if it is sufficient to rely on lack of
+> compiler and test complaints ? Or it needs manual code
+> inspection to make sure the device is safe in this
+> scenario ?
+>
 
-Whoops, there's a missing step here:
+We are guaranteed a "common" file works because config poisoning ensures
+the whole compilation unit, including headers, does not use any target
+specific code (#ifdef).
 
-$ rm build/arm/qemu-version.h
+So if it compiles, it's a safe change.
 
-> $ make -C build/arm -j20
-> make: Entering directory '/home/pm215/qemu/build/arm'
-> [1/27] Compiling C object qga/qemu-ga.p/main.c.o
-> FAILED: qga/qemu-ga.p/main.c.o
-> /usr/bin/ccache gcc -m64 -Iqga/qemu-ga.p -Iqga -I../../qga -I. -Iqapi
-> -Itrace -Iui -Iui/shader -I/usr/include/glib-2.0
-> -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -fdiagnostics-color=auto
-> -Wall -Winvalid-pch -Werror -std=gnu11 -O0 -g -mcx16 -msse2
-> -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
-> -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=zero
-> -fzero-call-used-regs=used-gpr -fstack-protector-strong -Wempty-body
-> -Wendif-labels -Wexpansion-to-defined -Wformat-overflow=2
-> -Wformat-security -Wformat-y2k -Wignored-qualifiers
-> -Wimplicit-fallthrough=2 -Winit-self -Wmissing-format-attribute
-> -Wmissing-prototypes -Wnested-externs -Wold-style-declaration
-> -Wold-style-definition -Wredundant-decls -Wshadow=local
-> -Wstrict-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings
-> -Wno-missing-include-dirs -Wno-psabi -Wno-shift-negative-value
-> -isystem /home/pm215/qemu/linux-headers -isystem linux-headers -iquote
-> . -iquote /home/pm215/qemu -iquote /home/pm215/qemu/include -iquote
-> /home/pm215/qemu/host/include/x86_64 -iquote
-> /home/pm215/qemu/host/include/generic -iquote
-> /home/pm215/qemu/tcg/x86_64 -pthread -fPIE -MD -MQ
-> qga/qemu-ga.p/main.c.o -MF qga/qemu-ga.p/main.c.o.d -o
-> qga/qemu-ga.p/main.c.o -c ../../qga/main.c
-> In file included from ../../qga/main.c:33:
-> /home/pm215/qemu/include/qemu/version.h:11:10: fatal error:
-> qemu-version.h: No such file or directory
->    11 | #include "qemu-version.h"
->       |          ^~~~~~~~~~~~~~~~
-> compilation terminated.
-> [etc]
+>> That's why this is_available was introduced in the first place. It was
+>> just a way to move forward and provide the multi-target test to prevent
+>> regression while work on single-binary is continued by Yonggang.
+> 
+> Right, so with my series, we would first need the class
+> renames to fix the multi-target test.
+>
 
--- PMM
+Correct. That's why is_available was used to do selective registration
+for virt and max cpu, because I don't see how a rename can work without
+breaking existing binaries.
+
+Introducing .targets does not solve the problem by itself, since name
+conflict is still there. That's why I suggested to use buckets per
+target, which is what Yonggang implemented.
+
+I have no strong attachment to any approach and would be happy to follow
+any end-to-end solution you recommend. I'll let you lead on this.
+
+> I should have labelled this posting "POC" as it was not
+> tested thoroughly.
+>
+
+No worries, it would have been caught in CI anyway, so we are safe here.
+
+> With regards,
+> Daniel
+
+Regards,
+Pierrick
 
