@@ -1,111 +1,75 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251BF606EE91
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 16:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456D360A2601
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 16:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lDM2dpb0
+	dkim=pass (2048-bit key, unprotected) header.d=univ-grenoble-alpes.fr header.i=@univ-grenoble-alpes.fr header.a=rsa-sha256 header.s=2020 header.b=4IqrdMfa
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPMdT-0006fz-7F; Fri, 06 Nov 2026 11:17:51 -0500
+	id 1xPMej-0007Kv-HW; Fri, 06 Nov 2026 11:19:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xPMdR-0006fp-NF
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 11:17:49 -0500
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xPMdO-00045e-MJ
- for qemu-devel@nongnu.org; Fri, 06 Nov 2026 11:17:49 -0500
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-67c0ffaae1dso1603363d50.1
- for <qemu-devel@nongnu.org>; Fri, 06 Nov 2026 08:17:40 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793981860; cv=none;
- d=google.com; s=arc-20260327;
- b=Vx4YsvGHtvhQZY4/KUr0sHRE/W9BcYOmo0PHYXpFL5JwK9rxCe015HAdMIZsIskh2j
- ScnRJfRiMpnDyNtHDDh9+PpB7fZzatQFvjTFswzhwZEWu+y8LcY67da5izNd8+17TP+Z
- Q6WtYwjpAtGMG+Qusp3GzyppAqM+unAmpSTeAw6l+ZGqh7JMNmmkJ/9bhTqqq4b7khsx
- urA0hJSK+p8IuTsVqCCM9ptgO5G0aLq05DOmaG0aG+mf+yQPdOJPy7VmG+RqXc1SDsix
- EFXE40Za4+0eUlvz+nKkGMc+vopbAzDaOP4HSHuXS3RWce5boZLoTNKjAJYJbSYOhue7
- X73Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=jl2ZjLFIQu/gMEu9w1BX2wi26nihMl9VYyUnvXuHXwo=;
- fh=5U2TeAM6w3E/qMVmPCCTsXGpXFFIzaEpZ50I9OgsRTg=;
- b=Fkb/wLhbBXAUMzglge3y77jOnRtSeF9ddeu1Hzci1Axpqe3vn5kE/IF531qxpmMmRk
- hx062VMjR/wQiSQJ5htmsj+gOC1uEKtKAnXl1nZ3HCIrXi3Y9Ma+BmpEvn5EfUsGzBYP
- 1GfytLYb3pYNDpfM9rhrOLZCIMmHYOSMsWH5EW+tWEqwEgRQRv6MJ9kxLfDxkAh2MbQ6
- xwsRI75qr64Abv66DnwCWWmWz8WWW2XF0fBGM9DdVu2g/MEEZaBOZFMgOmnQifCJvz5R
- PUZTvEQELaHaeCttLo1cek9b4V92il4yKWGasNhW+Sjr0ydMwpHtEXLg6bI8gfaH1CCh
- 2DTQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793981860; x=1794586660; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=jl2ZjLFIQu/gMEu9w1BX2wi26nihMl9VYyUnvXuHXwo=;
- b=lDM2dpb0kF/Ccr5yYyLlwj5iFHDX06urPLeOoc9uYfVyKTfQV/uLHyspT3U2u8iyGa
- Jl3WzGGc9IsnxW9qc0W5VjljrbpUmGaA/ZqPCMBd1y5F8zG/kCr8vKVwisW3nOwFAgTt
- ACk/t+5bDdnFlePf0z4AD/NtsptMgoeTvvg9YYkaR3ygC1VeDYXKBig4MTKfZVUMmf/a
- 4L7/4cGBlD3cSbECZWRBSHycgNeea6lEWX2xhsdw2ZOZU+eCT2A2zvHcOYDSiI0PCHsF
- sV/a8eJBjmhnjD33DBzbEaeXY+ikaRYyirqfmfAoOyifZpgLkR8riEUJ807oKgwdM75w
- DbsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793981860; x=1794586660;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=jl2ZjLFIQu/gMEu9w1BX2wi26nihMl9VYyUnvXuHXwo=;
- b=oKYgwQdha67q3g6gyRLp8zHmgkOmgKdgHlwo/7JFm0g1hw/nLFvwb5kHNwa5APlaud
- mmzezr7NIUgv28yEjBieyu+p4//m7TF1AxZTceBK4/1vEkaWfT8C+DZUhJvm3cJLVy6u
- Jp8LnwJUfvPXaonM5/ynhPy+P5EO6c68j+AibdBEiZ11BSDEMw0IVFJ1llgqXeIxTgsA
- Rc9tzxTG5MfNIWWVt/jUF8NHuF9FPKSENgL/hoeNIaUfDGyuwACu8y9oI86OIP9YaEaS
- 0iKShtXGae8k32yRejbxfUPx407o+qjM9ty3hpKnoKQpadE+COtL9gZ/D0knxBPFwDWR
- 5AYA==
-X-Gm-Message-State: APuU4Z9UvqsRLArDWxJDiOlef4iNVmzgIXzONnC7cbafG1ZFZoGHruBn
- j77kMNhocBVX3uwy8kRcbDT1jirlFk5DHMz3AWkCNj+PMiGmZz8giJ56v/ctl/QQt+mky3CLBzk
- lWz/zficWoM33bVptHdFi7qimRQZFYbU=
-X-Gm-Gg: AYBFou2fdSqfcZwiqVAqAE5m3PGyoqJQ0J5er3Vz9BKp5TpafzquPtFHMCp54ZU1d/N
- EQsnBqUmBeYjRhhWu4mDz9Z2+7m35M8fJ2T7FgCIjxbZVhPuPPOx/n07UEzJRNfisTNdI3yUjC/
- bWXnceEghenup4QgZs3891bfwfv2lONsEo0R4VaMc0a9xa5iP5J/2JRiaYLYn1JvRFbtIsxd3ty
- SSxOIvVOEa0D+GDgFOZ0YLP6BKcyPauUGbm9Bwrdy6KkUzJ79Vw70wsbRQz/3cUBHDEx9509xiu
- fXGztlOFhvJpPZq9WFN5pb9Iu7xb/Q2B/iDI57Wv9sNkXoYUNAPPPN+ImbFeqZy/9RbR7vHhWRK
- dloFRU0DevUXQnmaps0JPewyCfheFRPKVvWne
-X-Received: by 2002:a05:690e:a49:b0:679:9310:6581 with SMTP id
- 956f58d0204a3-67c035d441bmr3865366d50.23.1793981859576; Fri, 06 Nov 2026
- 08:17:39 -0800 (PST)
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1xPMeZ-0007EK-HI; Fri, 06 Nov 2026 11:18:59 -0500
+Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1xPMeV-0004E8-Kq; Fri, 06 Nov 2026 11:18:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=univ-grenoble-alpes.fr; s=2020; t=1793981932;
+ bh=DSo6OEZ9+BpqyQqB9FFmN9tmeE9uqLngPmCiP7X0dxI=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=4IqrdMfadJVLEZ3mmH/QW8JegUJKU+5rrv/xmkJPu40TLajy3eehVkb/F2v/Bola2
+ hM0nRFjVvIHuhKOlY3vTNX3mpRW/vYdom3tWVtWcO1zjG9uFYycydmDhjrywZKxnLX
+ 1qZbHyZ8a0yfcVnP6S0bW5UwKr637qtuifhBoyuGW0AcG5IYcHoFJeIqA+iHpWJAN4
+ bEcprzxnuctDDkTMIBADu1k7iRXo7geNVxDmvVc+bD66euzOx9x7c7LuCHc9KxMTSx
+ llrO7hlhZmdvEWNGASFCsfGp2UB57IpFjSFaH3PI8DZJ37qqmFXTFMoWni/FsaMjYU
+ TvgDrqcjzCQFQ==
+Received: from mailhub-2.u-ga.fr (mailhub-2.u-ga.fr [129.88.178.102])
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 6DC80402B5;
+ Fri,  6 Nov 2026 17:18:52 +0100 (CET)
+Received: from smtps.univ-grenoble-alpes.fr (smtps3.u-ga.fr [195.83.24.62])
+ by mailhub-2.u-ga.fr (Postfix) with ESMTP id 69D86FF855;
+ Fri,  6 Nov 2026 17:18:52 +0100 (CET)
+Received: from naga.tima.u-ga.fr (naga.tima.u-ga.fr [147.171.132.150])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 383CC40056;
+ Fri, 06 Nov 2026 17:18:52 +0100 (CET)
+From: frederic.petrot@univ-grenoble-alpes.fr
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, daniel.barboza@oss.qualcomm.com,
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ qemu-riscv@nongnu.org, =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH v3 4/4] target/riscv: [ms]cause tcg tests for x-rv128
+Date: Fri,  6 Nov 2026 17:18:43 +0100
+Message-ID: <20261106161843.2075117-5-frederic.petrot@univ-grenoble-alpes.fr>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261106161843.2075117-1-frederic.petrot@univ-grenoble-alpes.fr>
+References: <20261106161843.2075117-1-frederic.petrot@univ-grenoble-alpes.fr>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261105190346.1539-1-luoyonggang@gmail.com>
- <20261105190346.1539-3-luoyonggang@gmail.com>
- <au31_UZnVUErwhKi@redhat.com>
-In-Reply-To: <au31_UZnVUErwhKi@redhat.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Sat, 7 Nov 2026 00:17:23 +0800
-X-Gm-Features: AclHuK_uVfF1zKJl1bSUKNOpG42lm0mjUhy20LfdEvXcPz4mjp99baDz2BkxI2I
-Message-ID: <CAE2XoE8Mrvcv3Nhwyq1XHOk36go=H+9ZYBD=HicPW4266-=j=g@mail.gmail.com>
-Subject: Re: [PATCH 2/5] target-info: add target_mask_selected()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Philippe Mathieu-Daude <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=luoyonggang@gmail.com; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
+ via submission-587 ACL (41)
+Received-SPF: pass client-ip=152.77.200.56;
+ envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
+ helo=zm-mta-out-3.u-ga.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,88 +81,263 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Nov 6, 2026 at 11:45=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Fri, Nov 06, 2026 at 03:03:43AM +0800, Yonggang Luo wrote:
-> > Return the QEMU_ARCH_* mask of the selected target. System mode
-> > returns QEMU_ARCH_ALL until a target is selected. User mode returns
-> > that target's bit. Tools return 0.
->
-> I was wondering if it was better to have system mode return
-> 0 or QEMU_ARCH_ALL, when no target is selected.
+From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-Tools return 0, so only an object whose targets are
-QEMU_ARCH_ALL is accepted. Any other mask is filtered out,
-because 0 AND anything is 0.
-System mode returns QEMU_ARCH_ALL until a target is
-selected, so every target mask is accepted.
-User mode always has a target selected, so it returns that
-target's bitmask.
-Tools and system mode need different values so the two
-binaries can be distinguished. 0 is tools. QEMU_ARCH_ALL is
-system mode before a target is selected.
+Add tcg tests for the rv128 mcause and scause registers.
+This mainly checks the behavior of the read and write instructions,
+as other exceptions (at least in s-mode) are catched by the
+semihosting mechanism.
 
->
-> I guess QEMU_ARCH_ALL (or a mask of all arches that are
-> built-in to the bniary) is a better approach, as it expresses
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+---
+ tests/tcg/riscv64/system/meson.build  |  14 ++++
+ tests/tcg/riscv64/test-rv128-mcause.S | 101 ++++++++++++++++++++++++++
+ tests/tcg/riscv64/test-rv128-scause.S |  94 ++++++++++++++++++++++++
+ 3 files changed, 209 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-rv128-mcause.S
+ create mode 100644 tests/tcg/riscv64/test-rv128-scause.S
 
-That "mask" is a subset of QEMU_ARCH_ALL. A user-mode binary
-still contains every bit of QEMU_ARCH_ALL, so the subset
-cannot replace it. TYPE_INTERFACE and TYPE_OBJECT are
-registered with QEMU_ARCH_ALL. If the "mask" is still a
-generated macro, registering them with it filters them out
-for some user target, or object.c has to be compiled twice(user/system),
-or we need a stub variable for the mask. That is far more
-complicated. QEMU_ARCH_ALL has no such restriction.
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index 3c8b018d9e..b462d5f4ab 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -53,6 +53,20 @@ tests += {
+   }
+ }
+ 
++tests += {
++  'test-rv128-mcause.S': {
++    'cflags': cflags,
++    'qemu_args': ['-cpu', 'x-rv128', qemu_args],
++  }
++}
++
++tests += {
++  'test-rv128-scause.S': {
++    'cflags': cflags,
++    'qemu_args': ['-cpu', 'x-rv128', qemu_args],
++  }
++}
++
+ tests += {
+   'test-vle32ff.S': {
+     'cflags': cflags + ['-march=rv64gcv'],
+diff --git a/tests/tcg/riscv64/test-rv128-mcause.S b/tests/tcg/riscv64/test-rv128-mcause.S
+new file mode 100644
+index 0000000000..5dd7b543e1
+--- /dev/null
++++ b/tests/tcg/riscv64/test-rv128-mcause.S
+@@ -0,0 +1,101 @@
++/*
++ * Test rv128 mcause update and access
++ * Author: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#define slli(rd, rs1, imm) .insn i  0b0010011, 0b001, rd, rs1, imm & 0b1111111
++#define srli(rd, rs1, imm) .insn i  0b0010011, 0b101, rd, rs1, imm & 0b1111111
++
++    .option norvc
++
++    .text
++    .globl _start
++_start:
++    csrr    s0, misa
++    srli    (s1, s0, 126)
++    li      s0, 3
++    bne     s1, s0, fail
++
++    # Check UXL and SXL are set to RV128 too
++    csrr    s0, mstatus
++    srli    (s1, s0, 32)
++    andi    s1, s1, 0xf
++    li      s0, 0xf
++    bne     s1, s0, fail
++
++    # Write some values in mcause (wlrl)
++    # 13 is valid for both interruptions and exceptions
++    li      s0, 13
++    csrw    mcause, s0
++    csrr    s1, mcause
++    bne     s1, s0, fail
++
++    li      s1, 1
++    slli    (s1, s1, 127)
++    or      s1, s1, s0
++    csrw    mcause, s1
++    csrr    s0, mcause
++    bne     s1, s0, fail
++
++    # Write an illegal value, but as for the 32/64-bit versions,
++    # we keep it as it is
++    li      s1, -1
++    csrw    mcause, s1
++    csrr    s0, mcause
++    bne     s1, s0, fail
++
++    # Set the trap vector
++    la       s0, tvecall
++    csrw     mtvec, s0
++    # Do an ecall to make sure mcause is properly set
++    ecall
++    # Set the trap vector
++    la       s0, tvbreak
++    csrw     mtvec, s0
++    # Do an ecall to make sure mcause is properly set
++    ebreak
++    li      a0, 0
++    j       _exit
++
++    # mtvec bit 1:0 indicate mode, 00 is Direct, what
++    # we want in this simple test
++    .align 4
++tvecall:
++    csrr    s0, mcause
++    li      s1, 11 # ecall from m-mode
++    bne     s1, s0, fail
++    csrr    s0, mepc
++    addi    s0, s0, 4
++    csrw    mepc, s0
++    mret
++
++    .align 4
++tvbreak:
++    csrr    s0, mcause
++    li      s1, 3 # break
++    bne     s1, s0, fail
++    csrr    s0, mepc
++    addi    s0, s0, 4
++    csrw    mepc, s0
++    mret
++fail:
++    li      a0, 1
++_exit:
++    lla     a1, semiargs
++    li      t0, 0x20026 # ADP_Stopped_ApplicationExit
++    sd      t0, 0(a1)
++    sd      a0, 8(a1)
++    li      a0, 0x20    # TARGET_SYS_EXIT_EXTENDED
++
++    # Semihosting call sequence
++    .balign 16
++    slli   zero, zero, 0x1f
++    ebreak
++    srai   zero, zero, 0x7
++    j      .
++
++    .data
++    .balign 16
++semiargs:
++    .space  16
+diff --git a/tests/tcg/riscv64/test-rv128-scause.S b/tests/tcg/riscv64/test-rv128-scause.S
+new file mode 100644
+index 0000000000..823bdbac81
+--- /dev/null
++++ b/tests/tcg/riscv64/test-rv128-scause.S
+@@ -0,0 +1,94 @@
++/*
++ * Test rv128 mcause update and access
++ * Author: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#define slli(rd, rs1, imm) .insn i  0b0010011, 0b001, rd, rs1, imm & 0b1111111
++#define srli(rd, rs1, imm) .insn i  0b0010011, 0b101, rd, rs1, imm & 0b1111111
++
++    .option norvc
++
++    .text
++    .globl _start
++_start:
++    # Check RV128 is running
++    csrr    s0, misa
++    srli    (s1, s0, 126)
++    li      s0, 3
++    bne     s1, s0, fail
++
++    # Minimal pmp settings
++#define PMP_NAPOT 0x18
++#define PMP_R     0x01
++#define PMP_W     0x02
++#define PMP_X     0x04
++
++    li       s0, -1
++    csrw     pmpaddr0, s0
++    li       s0, PMP_NAPOT | PMP_R | PMP_W | PMP_X
++    csrw     pmpcfg0, s0
++
++    # Set MPP to supervisor
++    csrr    s0, mstatus
++    li      s1, ~0x1800 // mask
++    and     s1, s1, s0
++    li      s0, 0x0800  // supervisor
++    or      s1, s1, s0
++    csrw    mstatus, s1
++    # Change to supervisor mode
++    la      s0, 1f
++    csrw    mepc, s0
++    mret
++1:
++    # Check UXL is set to RV128
++    csrr    s0, sstatus
++    srli    (s1, s0, 32)
++    andi    s1, s1, 0xf
++    li      s0, 0x3
++    bne     s1, s0, fail
++
++    # Write some values in scause (wlrl)
++    # 13 is valid for both interruptions and exceptions
++    li      s0, 13
++    csrw    scause, s0
++    csrr    s1, scause
++    bne     s1, s0, fail
++
++    li      s1, 1
++    slli    (s1, s1, 127)
++    or      s1, s1, s0
++    csrw    scause, s1
++    csrr    s0, scause
++    bne     s1, s0, fail
++
++    # Write an illegal value, but as for the 32/64-bit versions,
++    # we keep it as it is
++    li      s1, -1
++    csrw    scause, s1
++    csrr    s0, scause
++    bne     s1, s0, fail
++
++    li      a0, 0
++    j       _exit
++
++fail:
++    li      a0, 1
++_exit:
++    lla     a1, semiargs
++    li      t0, 0x20026 # ADP_Stopped_ApplicationExit
++    sd      t0, 0(a1)
++    sd      a0, 8(a1)
++    li      a0, 0x20    # TARGET_SYS_EXIT_EXTENDED
++
++    # Semihosting call sequence
++    .balign 16
++    slli   zero, zero, 0x1f
++    ebreak
++    srai   zero, zero, 0x7
++    j      .
++
++    .data
++    .balign 16
++semiargs:
++    .space  16
+-- 
+2.43.0
 
-
-> that the system's current state is capable of targetting
-> any of the include arches, while '0' conceptually represents
-> the "no arch specific features" scenario for tools.
->
-> >
-> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > ---
-> >  include/qemu/target-info-init.h | 15 ++++++++++-----
-> >  include/qemu/target-info.h      |  9 +++++++++
-> >  stubs/meson.build               |  1 +
-> >  stubs/target-mask-selected.c    | 13 +++++++++++++
-> >  target-info-def.c               |  3 +++
-> >  target-info-qom.c               | 10 ++++++++++
-> >  6 files changed, 46 insertions(+), 5 deletions(-)
-> >  create mode 100644 stubs/target-mask-selected.c
->
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
-> this patch looks applicable independently of this
-> series.
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
 
