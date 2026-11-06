@@ -1,68 +1,68 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F52606A31B
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 04:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163F5606A31B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Nov 2026 04:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=oo7b+PMg
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=awYMyIcl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPB90-00032h-4s; Thu, 05 Nov 2026 23:01:39 -0500
+	id 1xPB8s-0002zS-IT; Thu, 05 Nov 2026 23:01:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB7l-0002sz-4u
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:00:25 -0500
-Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB7d-0002rX-UD
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:00:14 -0500
+Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB7j-0004MV-Et
- for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:00:20 -0500
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>) id 1xPB7a-0004LD-KM
+ for qemu-devel@nongnu.org; Thu, 05 Nov 2026 23:00:12 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WQ9JLJdRXBOJ9W+09F91hBWtCoHX5hVUa3G4o5Byl36oD6EOYgfDMfbcNP2PZOzpvaiu3iqgrjEeY9BMTW61njHlzZxbWcVe2ljFvdtOkFXnCRN+kOFUjhwV3bYHdN5l8h6/8DmzFeQ31lBXH9YnH6/G3AHdOBjkU9An8g3+oMilprltGoa1KaA1hb1vooDbsA8efE4590h5yPZyPKDLpN2dYuJ+/uMcwzOvyVRKej0P4LhCwN8X3+h2Fs8DZMEOC1LmlLk2aB1MGo/170TPq4HVAAlcGVQgrGdi3AQxNDcUfw9NQdV+ql4geQ41vXx4Y/f4FLQeHLYvKKJ5gFMp3Q==
+ b=fPfahe/pwY0WicNrQZHLP5vYvMGqlWT31dRkS6NOj9lLd14JB1BWRGbtW0tlOKrR4OfiIG5PscAdl5S2cghz6vsh5j0N77ZNy3xDTw3yFzMDASxSpflVeKvkXnTtfIzkl8GPULA3J+Hzy0R72jZO3MofarBFFTn/zTkrCUbU0k5EvsZizSN0IElAnKeLC4ffBDuY8nOFgMaZZksRhrlKYYmpf92mxWMkh3iGvlH6EMyxAr3tNhMW2++3n6yskbfT+heO5aZEUfL9nEU/XuSnG3RWwOhnyiMtKbm4lftNi9vYuqJuCCY5oT3VGpGTk0gGWizlVHTNC+Omf/ZnMWpuGQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qNkoFABCgU5hd8vLMYUJz4U1Z4ymLQidAGulG8MvTq8=;
- b=G9nqgvHLK04ExhIge4voyBAu+Al9ndeZ7rUCtUt659oZ7Zc7BZR12ewa7CisEj8ixfwyR1jIDxXHAbaOWrTWOCOoW7g0PYsjl32QgyZ6XccXPLnMRbspeR0Q23xezicIVb93PZ/thrOtOiHaT8NiE3fPUmpBRZxNf0hQaNZn7liZ8a9n/n/T6vplEsl3qOzLzJbv5ssBFdOgtE3/iuyvnL4UqAMW6QU0ARoLDzC8o0GbC/yoaZqSCA8hwpvTQjWOqTfiYrYDadGZFQdP1PPefBexEG4nWDN0yZAhaUduM7B6CSHtVvh6hwYZayqj7XyifWmbzlm6Nw91wgChUkax/g==
+ bh=E2oIRhr4+PpV8qL2ztAHDI1I/psYhZIPI965XzwrCJI=;
+ b=bw4JVxm0QQtubsVwX278LOvFliiz36q4azKPd5JzRrEWOt5uRuFpE7U/hY6n9MiHOtJJLvAvvACD0OKF3D+0Pzjy+XwPKbaSsxrufsYDolsufozIXFOmQ7CtP0RgUcVBFqV3/Isjop6xB5HWOpTs7a3SHQZ4R5sCAw28z2vZQPGWZGyuRshHafhjRsHNanP9HAwPICa2JbY16a84OuCAIJWbw22KQW9Rc0yH6U2Rd0ZbQgo7A+Sksbzj32XzwBaJqp8HjferGZHT6wEQMVwK9eoJye5OwawFOAXRJO8fWLkigkALMnFKmyklNL5416C7lEW64HtA4sBrr+sVrwz1MQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
+ 216.228.117.161) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qNkoFABCgU5hd8vLMYUJz4U1Z4ymLQidAGulG8MvTq8=;
- b=oo7b+PMge6ntHPSIBQdG8c6D/Df53x3fsGXMBXGn11rfK2FFjV7WPlKwy2K88IaIcL7f48hrSu4PIQu2KII+svM3gbvZWV+ldioHBN+1rCumGwcESt6SvMf6apmZizO+nKLx+i9OvkqkSV+y15Q5/MgXrbTy16kA/JaaNNhXHB42IBahEGm2Qxnf2YPW7yjHFmX2azTf+gooWmegf3WQ5brcL7DWt361G7nj4fM+/l/vcbL8V+ZnSVxuH8q6bBN0foSHYJLPrvQQi26BGRguMyGMhAF5szR++S/XvommYmwiJJqPlelo1PD1ZPCznm56vk2qoVz83SzTsYWrJO9Daw==
-Received: from MW4PR04CA0176.namprd04.prod.outlook.com (2603:10b6:303:85::31)
- by IA4PR12MB9787.namprd12.prod.outlook.com (2603:10b6:208:54d::6)
+ bh=E2oIRhr4+PpV8qL2ztAHDI1I/psYhZIPI965XzwrCJI=;
+ b=awYMyIclXE5e1hVnKya56GpOxMcB6wsF3agx5dS+bpuPmfk2aRIxdSVYSTUngaXvfcm19aqI5Q6ubkXJGcXNotG3mCG+7BdmdXC7/wjuko2Spx+2avJ3HcveNdOoShA34FHNEkkQTPzmYd3qUH6nxF8U0DIE4PIGCTrbo1dEjEAl2WPDhInSEi/ybPgLydfAPzTFipXPwYhrGYcs8bNq0wuWZy8lgZXLiBx7bz+yTrdM3iLKTyUIpdno15WH7cLKnx5BRSkTUXNh9N8A0PRSLph8lI3/1UWmjbucT1YD1a37jWEvuA1r7p+M5jxGaMa3TFN/DW00nQghhkjKIb2cCw==
+Received: from CH2PR19CA0004.namprd19.prod.outlook.com (2603:10b6:610:4d::14)
+ by CH3PR12MB7643.namprd12.prod.outlook.com (2603:10b6:610:152::19)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.11; Fri, 6 Nov
- 2026 04:00:12 +0000
-Received: from MWH0EPF000C618B.namprd02.prod.outlook.com
- (2603:10b6:303:85:cafe::55) by MW4PR04CA0176.outlook.office365.com
- (2603:10b6:303:85::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Fri, 6 Nov 2026
+ 03:59:54 +0000
+Received: from BN1PEPF00005FFD.namprd05.prod.outlook.com
+ (2603:10b6:610:4d:cafe::6b) by CH2PR19CA0004.outlook.office365.com
+ (2603:10b6:610:4d::14) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.592.10 via Frontend Transport; Fri, 6
- Nov 2026 04:00:12 +0000
+ Nov 2026 03:59:54 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 216.228.117.160)
+ is 216.228.117.161)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- MWH0EPF000C618B.mail.protection.outlook.com (10.167.249.123) with Microsoft
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BN1PEPF00005FFD.mail.protection.outlook.com (10.167.243.229) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Fri, 6 Nov 2026 04:00:11 +0000
+ 15.21.615.4 via Frontend Transport; Fri, 6 Nov 2026 03:59:54 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
- 2026 19:59:54 -0800
+ 2026 19:59:38 -0800
 Received: from cxlgalaxy.nvidia.com (10.126.230.37) by rnnvmail201.nvidia.com
  (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Thu, 5 Nov
- 2026 19:59:49 -0800
+ 2026 19:59:33 -0800
 From: <mhonap@nvidia.com>
 To: <jic23@kernel.org>, <alwilliamson@nvidia.com>, <clg@redhat.com>,
  <xueshuai@linux.alibaba.com>, <ira.weiny@intel.com>, <zhiw@nvidia.com>,
@@ -72,9 +72,10 @@ To: <jic23@kernel.org>, <alwilliamson@nvidia.com>, <clg@redhat.com>,
  <mochs@nvidia.com>
 CC: <cjia@nvidia.com>, <mhonap@nvidia.com>, <kjaju@nvidia.com>,
  <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>
-Subject: [RFC 04/18] hw/cxl: Make HDM decoder initialization count-aware
-Date: Fri, 6 Nov 2026 09:28:57 +0530
-Message-ID: <20261106035911.1280066-5-mhonap@nvidia.com>
+Subject: [RFC 01/18] hw/cxl: Give the component register .io sub-region read-0
+ ops
+Date: Fri, 6 Nov 2026 09:28:54 +0530
+Message-ID: <20261106035911.1280066-2-mhonap@nvidia.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261106035911.1280066-1-mhonap@nvidia.com>
 References: <20261106035911.1280066-1-mhonap@nvidia.com>
@@ -86,38 +87,38 @@ X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000C618B:EE_|IA4PR12MB9787:EE_
-X-MS-Office365-Filtering-Correlation-Id: 57795e60-3448-4993-d3d5-08df3bba74d6
+X-MS-TrafficTypeDiagnostic: BN1PEPF00005FFD:EE_|CH3PR12MB7643:EE_
+X-MS-Office365-Filtering-Correlation-Id: dcea80cf-d668-436e-7c8c-08df3bba6a96
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|7416014|1800799024|376014|36860700016|82310400026|921020|11063799006|56012099006|261022105027099003|261021123027099003|261021121427099003|261009223027099003|261102123227099003|261026121527099003|261026140227099003|261028144727099003|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: 8gfYk8pLrGkkT6+4IKWJuPvm6liEEprXCIDAwRE7HrHkv2OBflbW5w/EJDvgPy/yXHAQL+jtNESt6k3IiHVYKZPyOWSwD5D0SpXBpEugnmzo6Y3UJv3rukSXj+ssxT0byO44Aas4t4s/fYTg/IYTGQUZX7NyePT92PDfyIgotcGejHO65dBDM/K84v8MhFriGaRGzRlVPT2qqsLZkSuC9CGqlbi7+ZITgoVjF2Uz9JlfFjVnjxscpJC2d9HL4FmDuv396oAsWynU7BZjaxjh+SQ++1pSsvASLI3M2YlW6pCRK7dsLkeDQHhRprsM5dnYi0QrxsdktbnL6TxVtCsGbh2SOrSia3eUx7LZwhJ5dAlyUyjCxcmW7LbwbhGThwuixR5haceoI6oF4zR/LC5aa/bT2mFRMIu/hQDuo12wKuiNc0mVia/EuNuaEE8j/fiJFdjyNk2sHFBxz2dqd/9QuzrXHzDTZPCHcgtt7LW7VoW/CHPnvm+ketQj39qLn3bFaNPeXuq4fv/7AlSS/o7ZNDH2kfpWa0YKZNCqpgciFtbmVkbwnWwsXeIBWGCXRNDp2B9E939xzDhic8AwXq7rJQJJ7JttPATFx0x/xawESgKuckG24EpKhGdvIfMf1phUFTJlGkDcWDX8Mg2NjYmamj6iVImwwUxUlCFcTbq40m2sTbj+BfmG0s71loXuBsXj5Pwcig2a0/J0/xD3jwwTpfTps/jkUmm1H3A1DBFE4qpDKCEWmIZCJ6Qq7j6XMYKi
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(23010399003)(7416014)(1800799024)(376014)(36860700016)(82310400026)(921020)(11063799006)(56012099006)(261022105027099003)(261021123027099003)(261021121427099003)(261009223027099003)(261102123227099003)(261026121527099003)(261026140227099003)(261028144727099003)(10067099003)(18002099003)(22082099003);
+ ARA:13230040|36860700016|82310400026|7416014|376014|23010399003|1800799024|10067099003|22082099003|18002099003|261021123027099003|11063799006|261026140227099003|921020|261026121527099003|56012099006|261028144727099003|261009223027099003|261102123227099003|261022105027099003|261021121427099003;
+X-Microsoft-Antispam-Message-Info: 5zEDCr8H4hOmKqeBqTXO99/HujlG9yFBm+hWnyi3/1qMUmOSAD49Aee4X+O0XUEHAsRn4YKep5LqVQ2MlwByBakf3GylV5+YhzfvpKrEDf4y4dBYMftywk9l9F7qOolb/08nRfGOHIwU0y18ZuzYkcHVYQAwNaHSgyEVHv0EZihYg+WW6q+mq+fh8NgVPMSdbQeWO/QG5MSKpCvT+knNcp+59f1BEmRxZS6Lw6eiONaEPXLbrYf7xIFUcQc8oghCwIY33bn/xAUcU/oJhZuiDEtXX2NRbU0tHT30t/ctW9/qQ/XtyR4zC12ZBnLfbpe+xmxnXEhZ468ZjMsGEYiE1WtZVp5d0D9i6hiKYqW8fuk94a0qKU/AH34LzYMbOaQz7mSImlvYguThjJ/AypiJ25lK06hFejVFv9jMmZe5WHBTrrymJWDY6UObxcXfkyR8hRlWlQ8wlPc7K7JDVPQ3hb9nU40B4XBwtyWb6pe1WQ4PNUktN57JGcQukVG+dBYrN3P7y9Xj0YHThNaXqzgoF4kLfNq5H2tc3inTB7/2qoaYj9i8Kbd7aIJM14wOScRVIIOXIruwaFM2jXH/LEPKC4Jk8Q6NohiaDKO2fPL6xNGOAVlQ/snBRC8IVbR0lKBtAdZM5OGUiAC1sZDnzs1ScI/Ec9jBQVE5Gb16GdOtpTI6K1cxGaalpi/fZibiVpdI7DcvuUzUZcpb1kzFpqa6OK6OuHs3CiF0Cxsqy+WSwB51HQBgs9T9P/4nawKqVTwS
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(36860700016)(82310400026)(7416014)(376014)(23010399003)(1800799024)(10067099003)(22082099003)(18002099003)(261021123027099003)(11063799006)(261026140227099003)(921020)(261026121527099003)(56012099006)(261028144727099003)(261009223027099003)(261102123227099003)(261022105027099003)(261021121427099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 3k3ztIUZ/jk3rTgmtenjKFew2vorMMQWDBN+m2QNQWAOViQ7/hX43qoiz4AXhN8nBJ/jOxD61zcbYirhmT/sbVT0uxBk4+gaDEG1hIWwWZ4L5jpvY8BDrhoF5xCSKaMsRrm6xnrk0jIdEfHaDiRQJ0oCtPlbLJEeGpBjfNe/9zITc3pXATFlQHN7HB9s7kPEtv4XoO8R8eINtNLuqc1EbQa8FJp+d6tdrneHQVPU3yJYlGCSmihY3U0vf9mDte7GqLsgspSlXQ7UufaHRqqJbT1J8p+DD3Gh/7r7B9KHDMYxjNjArWkYYbFFZ6KC91OkDT7Gs1/FXe+dBlCh6TdqriZ/8gEPFpc4SL7hRfsfgYMmA8AmVhDudW6PvScfLfIQMvm3KQ8rT1vy2pIOIS/HD/ek+xWXTqxn8PZHfWTZIvUq8Ij6ScbrKXAYT6m25t2O
+X-MS-Exchange-AntiSpam-MessageData-0: EpHCs8TY60Zj7fWBedWG3rlGywqzBaYxx8HZ+wSSEq9A6e1WY6YQ4SEf0tv/4uaHxcvMxhhgrAYAW9xJNGJZXNDNPHNK3kyWWuKhZ/pEzKiJTpFLe8TpDYGT7hMM4aH7lwqtg330dR3l11KBrqG14KtJbQLlZma+492KruUngWLiAV50GbnBCtjauWwThJyd4gCfAV4HgwvsDXHX57Ee4oFB2ptaNXAcIfqwuGiFoaXQv+BZLCuy2Zysk8LPZuGguUvk4Fpv5CZwPQmNweytu4fu5OeMGAUSmHAIRY/fSPwbR6EGz7uJpzAox7LrgvBjZI9MQyd9BfvDDJ/wRdKjQDSqhIp5kYcaMoPlnU0TagpcsiSDObkteEPblm1O75fcYKc3sQQTk4+OZDSrW8ylr/m/WvjnMT8brsAE8yA1rxytRuMqFJYOUBsMua+KKKEu
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2026 04:00:11.9184 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 57795e60-3448-4993-d3d5-08df3bba74d6
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2026 03:59:54.6387 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: dcea80cf-d668-436e-7c8c-08df3bba6a96
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000C618B.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00005FFD.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR12MB9787
-Received-SPF: pass client-ip=2a01:111:f403:c105::1;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7643
+Received-SPF: pass client-ip=2a01:111:f403:c10c::1;
  envelope-from=mhonap@nvidia.com;
- helo=CH1PR05CU001.outbound.protection.outlook.com
+ helo=SA9PR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
  SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -137,100 +138,62 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Manish Honap <mhonap@nvidia.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-cxl_component_register_init_common() always sets up four HDM decoders.
+The .io sub-region of the component register block was created with
+NULL ops, so a read falling into it (e.g. a vfio passthrough pread of
+a non-decoder dword of the component BAR) failed the bus transaction.
+Under TCG this raises a synchronous external abort on Arm guests (ESR
+DFSC=0x10).
 
-Add cxl_component_register_init_count() for devices with fewer HDM
-decoders (The CXL Type-2 device added later in this series has only one)
+CXL r4.0 Table 8-73 reserves the range, and reserved registers read 0,
+so attach read-0/write-ignore ops to .io.
 
-AI-used-for: code (prototype)
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+[ mhonap: drop the comment above the .io region init ]
 Signed-off-by: Manish Honap <mhonap@nvidia.com>
 ---
- hw/cxl/cxl-component-utils.c   | 28 ++++++++++++++++++++--------
- include/hw/cxl/cxl_component.h |  4 ++++
- 2 files changed, 24 insertions(+), 8 deletions(-)
+ hw/cxl/cxl-component-utils.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index bb4c3f541d..f4a7fdb425 100644
+index a624357978..fc32be77a9 100644
 --- a/hw/cxl/cxl-component-utils.c
 +++ b/hw/cxl/cxl-component-utils.c
-@@ -323,11 +323,11 @@ static void ras_init_common(uint32_t *reg_state, uint32_t *write_msk)
- }
+@@ -264,6 +264,23 @@ static const MemoryRegionOps cache_mem_ops = {
+     },
+ };
  
- static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
--                            enum reg_type type, bool bi)
-+                            enum reg_type type, bool bi,
-+                            unsigned int decoder_count)
- {
--    int decoder_count = CXL_HDM_DECODER_COUNT;
-     int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
--    int i;
-+    unsigned int i;
- 
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, DECODER_COUNT,
-                      cxl_decoder_count_enc(decoder_count));
-@@ -406,13 +406,16 @@ static void bi_decoder_init_common(uint32_t *reg_state, uint32_t *write_msk,
-     ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_STATUS, COMMIT_TMO_BASE, 0x2);
- }
- 
--void cxl_component_register_init_common(uint32_t *reg_state,
--                                        uint32_t *write_msk,
--                                        enum reg_type type,
--                                        bool bi)
-+void cxl_component_register_init_count(uint32_t *reg_state,
-+                                       uint32_t *write_msk,
-+                                       enum reg_type type, bool bi,
-+                                       unsigned int decoder_count)
- {
-     int caps = 0;
- 
-+    assert(decoder_count > 0 && decoder_count <= CXL_HDM_DECODER_COUNT);
-+    assert(cxl_decoder_count_dec(cxl_decoder_count_enc(decoder_count)) ==
-+           decoder_count);
-     memset(reg_state, 0, CXL2_COMPONENT_CM_REGION_SIZE);
- 
-     /* CXL Capability Header Register */
-@@ -449,7 +452,7 @@ void cxl_component_register_init_common(uint32_t *reg_state,
-     case CXL2_LOGICAL_DEVICE:
-         /* + HDM */
-         init_cap_reg(HDM, 5, 1);
--        hdm_init_common(reg_state, write_msk, type, bi);
-+        hdm_init_common(reg_state, write_msk, type, bi, decoder_count);
-         /* fallthrough */
-     case CXL2_DOWNSTREAM_PORT:
-     case CXL2_DEVICE:
-@@ -486,6 +489,15 @@ void cxl_component_register_init_common(uint32_t *reg_state,
- #undef init_cap_reg
- }
- 
-+void cxl_component_register_init_common(uint32_t *reg_state,
-+                                        uint32_t *write_msk,
-+                                        enum reg_type type,
-+                                        bool bi)
++/* CXL r4.0 Table 8-73: the CXL.io range is reserved */
++static uint64_t cxl_io_reg_read(void *opaque, hwaddr addr, unsigned size)
 +{
-+    cxl_component_register_init_count(reg_state, write_msk, type, bi,
-+                                      CXL_HDM_DECODER_COUNT);
++    return 0;
 +}
 +
- /*
-  * Helper to creates a DVSEC header for a CXL entity. The caller is responsible
-  * for tracking the valid offset.
-diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
-index d6fdb6c1ab..3ed8dab92e 100644
---- a/include/hw/cxl/cxl_component.h
-+++ b/include/hw/cxl/cxl_component.h
-@@ -312,6 +312,10 @@ typedef struct cxl_component {
++static void cxl_io_reg_write(void *opaque, hwaddr addr, uint64_t val,
++                             unsigned size)
++{
++}
++
++static const MemoryRegionOps cxl_io_reg_ops = {
++    .read = cxl_io_reg_read,
++    .write = cxl_io_reg_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
  void cxl_component_register_block_init(Object *obj,
                                         CXLComponentState *cxl_cstate,
-                                        const char *type);
-+void cxl_component_register_init_count(uint32_t *reg_state,
-+                                       uint32_t *write_msk,
-+                                       enum reg_type type, bool bi,
-+                                       unsigned int decoder_count);
- void cxl_component_register_init_common(uint32_t *reg_state,
-                                         uint32_t *write_msk,
-                                         enum reg_type type, bool bi);
+                                        const char *type)
+@@ -273,8 +290,7 @@ void cxl_component_register_block_init(Object *obj,
+     memory_region_init(&cregs->component_registers, obj, type,
+                        CXL2_COMPONENT_BLOCK_SIZE);
+ 
+-    /* io registers controls link which we don't care about in QEMU */
+-    memory_region_init_io(&cregs->io, obj, NULL, NULL, ".io",
++    memory_region_init_io(&cregs->io, obj, &cxl_io_reg_ops, NULL, ".io",
+                           CXL2_COMPONENT_IO_REGION_SIZE);
+     memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cxl_cstate,
+                           ".cache_mem", CXL2_COMPONENT_CM_REGION_SIZE);
 -- 
 2.53.0
 
