@@ -1,49 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AE8606A32C
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Nov 2026 22:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3158D606A326
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Nov 2026 22:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gnu.org header.i=@gnu.org header.a=rsa-sha256 header.s=fencepost-gnu-org header.b=MrMmWbA6
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Q678r+dy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPoZ3-0001II-64; Sat, 07 Nov 2026 17:07:09 -0500
+	id 1xPpN1-0007jo-1T; Sat, 07 Nov 2026 17:58:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1xPoZ0-0001I5-7F
- for qemu-devel@nongnu.org; Sat, 07 Nov 2026 17:07:06 -0500
-Received: from fencepost.gnu.org ([2001:470:142:3::e])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xPpMz-0007jG-6f
+ for qemu-devel@nongnu.org; Sat, 07 Nov 2026 17:58:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1xPoYy-00065b-O3; Sat, 07 Nov 2026 17:07:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
- s=fencepost-gnu-org; h=In-Reply-To:MIME-Version:References:Subject:To:From:
- Date; bh=WGkmQS7RFv9EYBv8QoSzEx3qLMg6VpAe634WTJC3vm8=; b=MrMmWbA6NfqFgWGIig9u
- XizSRV4owrc33TgAgkvipfa8+532uAUfeUoTS14eEoPbAZz6j7PBu5M2iWWg3OPAlW+QfFyZ+1/ds
- qsZXDnMKroKQkjiJo6I56aPFlpYfOOHDLjydLpObM4ZIDDwh/mtFI6CuRUxm2b/Xjl6/kqRhhZgKe
- yUjU7Kdz13JYwE+/t7RKiV8OtfzMsowzMaDrurDcljTLaUIaW0ml145nLksLhd10X9Ox3TomIUgcK
- 4rh+tmWJug7kaFKKx45g7i049o0J6fSp3K3M1ewyM3qfkH8NOtIrc881HZYHgIljH9+H100PwOjIa
- 3/hr368GUuYDUA==;
-Date: Sat, 7 Nov 2026 23:07:01 +0100
-From: Samuel Thibault <samuel.thibault@gnu.org>
-To: Gavin Li <gavin.li@samsara.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: Re: [PATCH v1] net: add per-connection guestfwd unix support
-Message-ID: <au-hBYP1bA3qxYht@end>
-References: <20261107044225.2786-1-gavin.li@samsara.com>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xPpMx-0002WJ-HR
+ for qemu-devel@nongnu.org; Sat, 07 Nov 2026 17:58:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794092320;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=E/tfmy0/E41CqPzfZuxRFSaQdDdo86ZMcs2PMMnvEIo=;
+ b=Q678r+dyB2juTnT/vmZWa6LyNPnzn+jrp5yngd/DEZQw0oK/hs1Tc9knQwQDT5H9LIst+6
+ lTSivY+62HD26+NtRD0zfBtqjZnfgsj587XnM0+sZv13XzKNORX87rJDaN3WIifLtqg3gz
+ WMguQ/Mb65WRMPOjRFimL5RAnRA3YWk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-9-BJLBF2xHPUOz4Cl64yNhPg-1; Sat,
+ 07 Nov 2026 17:58:37 -0500
+X-MC-Unique: BJLBF2xHPUOz4Cl64yNhPg-1
+X-Mimecast-MFC-AGG-ID: BJLBF2xHPUOz4Cl64yNhPg_1794092316
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 68D551956089; Sat,  7 Nov 2026 22:58:36 +0000 (UTC)
+Received: from eblake.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 60D841956087; Sat,  7 Nov 2026 22:58:35 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	berrange@redhat.com,
+	qemu-block@nongnu.org
+Subject: [PATCH for-11.2 v2 0/3] Avoid low-severity NBD denial-of-service
+ attack
+Date: Sat,  7 Nov 2026 16:54:35 -0600
+Message-ID: <20261107225834.778738-5-eblake@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261107044225.2786-1-gavin.li@samsara.com>
-Organization: I am not organized
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,93 +81,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
 	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Gavin Li, le ven. 06 nov. 2026 23:42:25 -0500, a ecrit:
-> For -netdev user,guestfwd=..., add support for unix-per-connection: in
-> addition to the currently supported tcp: and cmd:. With
-> unix-per-connection:, a new connection is opened to the given unix
-> socket.  This is an improvement over the current unix: support, which
-> does not support 1:1 guest:host connections.
-> 
-> Also update the minimum libslirp version to 4.2.0 (released in 2020) as
-> it adds support for the slirp_add_unix() function.
-> 
-> Signed-off-by: Gavin Li <gavin.li@samsara.com>
+AI found a way to trip an assertion failure by sending a particular
+BLOCK_STATUS command in violation of the NBD protocol, documented at
+https://gitlab.com/qemu-project/qemu/-/work_items/3796 and again at
+https://gitlab.com/qemu-project/qemu/-/work_items/4091. Since the
+attack can be trivially avoided by using TLS + x509 certificates to
+avoid untrusted clients avoiding the protocol non-compliance, I'm
+posting the patch now, rather than waiting for a CVE assignment, per
+https://www.qemu.org/contribute/security-process/
 
-Acked-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+v1: https://lists.nongnu.org/archive/html/qemu-devel/2026-11/msg01615.html
+- since then, adjust wording based on Dan's feedback
+- add the NBD fix and a unit test
 
-Samuel
+Eric Blake (3):
+  docs: Mention security considerations for NBD
+  nbd/server: Reject rather than assert on non-compliant BLOCK_STATUS
+  iotests: Add new nbd-robustness test
 
-> ---
->  meson.build     | 2 +-
->  net/slirp.c     | 6 ++++++
->  qemu-options.hx | 9 +++++++++
->  3 files changed, 16 insertions(+), 1 deletion(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index d7bcb581c1..6567ede5d9 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1289,7 +1289,7 @@ endif
->  slirp = not_found
->  if not get_option('slirp').auto() or have_system
->    slirp = dependency('slirp', required: get_option('slirp'),
-> -                     method: 'pkg-config')
-> +                     method: 'pkg-config', version: '>=4.2.0')
->    # slirp < 4.7 is incompatible with CFI support in QEMU.  This is because
->    # it passes function pointers within libslirp as callbacks for timers.
->    # When using a system-wide shared libslirp, the type information for the
-> diff --git a/net/slirp.c b/net/slirp.c
-> index 451c0fd1ba..b0b03b2bf5 100644
-> --- a/net/slirp.c
-> +++ b/net/slirp.c
-> @@ -1159,6 +1159,12 @@ static int slirp_guestfwd(SlirpState *s, const char *config_str, Error **errp)
->                         "forwarding rule '%s'", config_str);
->              return -1;
->          }
-> +    } else if (g_str_has_prefix(p, "unix-per-connection:")) {
-> +        if (slirp_add_unix(s->slirp, &p[20], &server, port) < 0) {
-> +            error_setg(errp, "Conflicting/invalid host:port in guest "
-> +                       "forwarding rule '%s'", config_str);
-> +            return -1;
-> +        }
->      } else {
->          Error *err = NULL;
->          /*
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 5fe9d73eaa..062cd39aa3 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -3553,6 +3553,15 @@ SRST
->              # and connect the TCP stream to its stdin/stdout
->              |qemu_system| -nic  'user,id=n1,guestfwd=tcp:10.0.2.100:1234-cmd:netcat 10.10.1.1 4321'
->  
-> +    ``guestfwd=[tcp]:server:port-unix-per-connection:path``
-> +        With ``unix-per-connection:``, a new connection is opened to the
-> +        given unix socket per TCP connection made by the guest. The unix socket
-> +        need not exist at startup time.
-> +
-> +        .. parsed-literal::
-> +
-> +            |qemu_system| -nic user,guestfwd=tcp:10.0.2.100:1234-unix-per-connection:/tmp/socket
-> +
->  ``-netdev tap,id=id[,fd=h][,ifname=name][,script=file][,downscript=dfile][,br=bridge][,helper=helper]``
->      Configure a host TAP network backend with ID id.
->  
-> 
-> base-commit: 71f25c75417d31c214ba2cd26b273c114fc99987
-> -- 
-> 2.55.0
-> 
+ docs/system/security.rst                    |  21 +++
+ nbd/server.c                                |   4 +-
+ tests/qemu-iotests/tests/nbd-robustness     | 137 ++++++++++++++++++++
+ tests/qemu-iotests/tests/nbd-robustness.out |   5 +
+ 4 files changed, 165 insertions(+), 2 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/nbd-robustness
+ create mode 100644 tests/qemu-iotests/tests/nbd-robustness.out
 
 -- 
-Samuel
- PS> Salut ! J'ai un sujet de philo à vous soumettre : "Suffit-il
- PS> d'observer pour connaître" Idées + plan Merçi
- Oui, ya qu'a t'observer pour connaître le fait que tu es une feignasse.
- -+- FF in: Guide du Neuneu d'Usenet - Neuneu fait de la philo -+-
+2.56.0
+
 
