@@ -1,64 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086E1606A31A
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 06:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E295F606A322
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 07:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=rispop.dev header.i=@rispop.dev header.a=rsa-sha256 header.s=protonmail header.b=bBvOE58L
+	dkim=pass (2048-bit key, unprotected) header.d=rispop.dev header.i=@rispop.dev header.a=rsa-sha256 header.s=protonmail header.b=FT4tbZQq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPwgl-0002Al-Tp; Sun, 08 Nov 2026 01:47:39 -0500
+	id 1xPwsS-000498-LR; Sun, 08 Nov 2026 01:59:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rishab@rispop.dev>)
- id 1xPwgj-00029Q-Qh; Sun, 08 Nov 2026 01:47:37 -0500
-Received: from mail-08.mail-europe.com ([57.129.93.249])
+ (Exim 4.90_1) (envelope-from <rishab@rispop.dev>) id 1xPwsR-00048l-FN
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 01:59:43 -0500
+Received: from mail-4317.protonmail.ch ([185.70.43.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rishab@rispop.dev>)
- id 1xPwgi-0006ZD-0Z; Sun, 08 Nov 2026 01:47:37 -0500
+ (Exim 4.90_1) (envelope-from <rishab@rispop.dev>) id 1xPwsO-0007h4-JZ
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 01:59:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rispop.dev;
- s=protonmail; t=1794120450; x=1794379650;
- bh=ixbeA60442mQ0Q29fLlJKpd3b2QlpZNzrw5VgkVIKdI=;
- h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:From:To:
- Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=bBvOE58LrQQPT/tVaqhEFSIuRa9qUizGs8ZTEgEQxDMA7sy86xQVm9j+ThrKKa0mS
- o/KAiUvnTYN8phj1Utw7wnpNMKTdQSvupPAPLfyCGmkND6vx0LWGTqZUuTzt1X5yXq
- APBUkkxW0Lh9qujh7Se9qWUlPWnxwwVr2tJ1fqPvKCLNDgWsZeC467f7tXUwHIykLA
- cJIrhavQYjtcezg5V/xmMK17ZM7nFVgAEAyOFqJmUp+YckPaH4v12j3XD/aPGxNsNS
- nU1qNVmKaNJ+rCXjDc0H+euTrPsDRUVhq+KB1FGXWVwWV8q66FKuzwteg0oYoGltsE
- 4UO9rJTPZKwpw==
-X-Pm-Submission-Id: 4jMk4G4kpPz2ScP4
+ s=protonmail; t=1794121177; x=1794380377;
+ bh=2OJsOd3RFIUbDvXx3e061SmNl8O4t3qh0E4QTvRi7Q4=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=FT4tbZQqhTJ4mZmadEx5A6LyvNq+iVsx25kvtSxs55R1H4+e3iaCe14014xPCBTLL
+ CwaD1eiOE62XAcbWA22ob/iVMZFFl+ytuSgIMO+YiLI+SbVm10NuSSnsUqP0g8BX4M
+ oZY8i+Qm7SPbRawLK3mttJvwsv7DdXsHKsfMsSjqyhe3VNCUFAP1Akdp1RGX/3YXNt
+ +yE2SjTfL+dQK/U/lfg0quWElNpihFIidl1tCuyjEAeYS1Hg/endBRRw4P7CJJPm+K
+ uV98ml/CmQSk7Xi42pE+FYzUdHeO0zocl0Z8BkkjMZyYn9UKreOFTxWb5casqmkpGk
+ sP+C9VIHVMQIQ==
+Date: Sun, 08 Nov 2026 06:59:29 +0000
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 From: Rishab Pradeep <rishab@rispop.dev>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>,
  Tarun Patanjali <tarun.patanjali@utexas.edu>,
- Chris Elwood <christopher.elwood2024@gmail.com>,
- Rishab Pradeep <rishab@rispop.dev>
-Subject: [PATCH v2 2/2] target/riscv: Apply pointer masking to SSPUSH/SSPOPCHK
- addresses
-Date: Sun,  8 Nov 2026 00:46:41 -0600
-Message-ID: <20261108064641.179764-3-rishab@rispop.dev>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261108064641.179764-1-rishab@rispop.dev>
-References: <20261108064641.179764-1-rishab@rispop.dev>
+ Chris Elwood <christopher.elwood2024@gmail.com>
+Subject: Re: [PATCH 2/2] target/riscv: Apply pointer masking to
+ SSPUSH/SSPOPCHK addresses
+Message-ID: <uzFNP3i3RAY7q9_C2FeV5E7WjAKCLZhq9ISY1URfmHfarFn8VxwBpvsm4OBGcU1YiMOBmrwfJ8OOzvBP5QDiqqWCE-zZHQ12krln9fcY1fQ=@rispop.dev>
+In-Reply-To: <7862410f-d4a4-4316-a54a-67252cfc9860@oss.qualcomm.com>
+References: <20261029183751.11143-1-rishab@rispop.dev>
+ <20261029183751.11143-3-rishab@rispop.dev>
+ <7862410f-d4a4-4316-a54a-67252cfc9860@oss.qualcomm.com>
+Feedback-ID: 124552507:user:proton
+X-Pm-Message-ID: a4a1d001ef0af686b410095dcd47dff495cb6f4a
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=57.129.93.249; envelope-from=rishab@rispop.dev;
- helo=mail-08.mail-europe.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.70.43.17; envelope-from=rishab@rispop.dev;
+ helo=mail-4317.protonmail.ch
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,84 +72,24 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Rishab Pradeep <rishab@rispop.dev>
+On Saturday, November 7th, 2026 at 1:43 PM, Daniel Henrique Barboza <daniel=
+.barboza@oss.qualcomm.com> wrote:
 
-SSPUSH and SSPOPCHK form their effective address from ssp rather than
-a GPR, so they bypass get_address() and the pointer-masking ignore
-transformation is never applied. With pointer masking enabled, a
-tagged ssp raises a store/AMO page fault, while SSAMOSWAP through the
-same tagged pointer succeeds.
+> Please add a spec reference/citation so it's easier for others to double
+> check if we're in line with the spec wording.
 
-The Privileged Architecture Specification, Section 17.1.2.6 ("Memory
-Accesses Subject to Pointer Masking"), applies the ignore
-transformation to the effective address of explicit memory accesses.
-SSPUSH and SSPOPCHK perform explicit store and load accesses at ssp,
-so that address must be masked.
+Done in v2, citing Section 17.1.2.6 of the Privileged spec:
+https://lore.kernel.org/qemu-devel/20261108064641.179764-1-rishab@rispop.de=
+v/
 
-Apply gen_pm_adjust_addr() to the ssp-derived address. ssp itself is
-still written back unmasked, and the SSPOPCHK comparison of the loaded
-value against rs1 is unchanged.
+Thanks for the review!
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4758
-Co-developed-by: Tarun Patanjali <tarun.patanjali@utexas.edu>
-Signed-off-by: Tarun Patanjali <tarun.patanjali@utexas.edu>
-Co-developed-by: Chris Elwood <christopher.elwood2024@gmail.com>
-Signed-off-by: Chris Elwood <christopher.elwood2024@gmail.com>
-Signed-off-by: Rishab Pradeep <rishab@rispop.dev>
----
- target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-index d47a9f9c7d..c2dddcc8bb 100644
---- a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-@@ -29,6 +29,7 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     }
- 
-     TCGv addr = tcg_temp_new();
-+    TCGv maddr = tcg_temp_new();
-     TCGLabel *skip = gen_new_label();
-     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
-     TCGv data = tcg_temp_new();
-@@ -36,8 +37,9 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     TCGv_i64 wide_addr = tcg_temp_new_i64();
-     tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-     tcg_gen_trunc_i64_tl(addr, wide_addr);
-+    gen_pm_adjust_addr(ctx, maddr, addr);
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
--    tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
-+    tcg_gen_qemu_ld_tl(data, maddr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
-     TCGv rs1 = get_gpr(ctx, a->rs1, EXT_NONE);
-     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
-@@ -60,6 +62,7 @@ static bool trans_sspush(DisasContext *ctx, arg_sspush *a)
-     }
- 
-     TCGv addr = tcg_temp_new();
-+    TCGv maddr = tcg_temp_new();
-     int tmp = (get_xl(ctx) == MXL_RV64) ? -8 : -4;
-     TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
-     TCGv_i64 wide_addr = tcg_temp_new_i64();
-@@ -67,7 +70,8 @@ static bool trans_sspush(DisasContext *ctx, arg_sspush *a)
-     tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-     tcg_gen_trunc_i64_tl(addr, wide_addr);
-     tcg_gen_addi_tl(addr, addr, tmp);
--    tcg_gen_qemu_st_tl(data, addr, SS_MMU_INDEX(ctx),
-+    gen_pm_adjust_addr(ctx, maddr, addr);
-+    tcg_gen_qemu_st_tl(data, maddr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
-     tcg_gen_ext_tl_i64(wide_addr, addr);
-     tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
--- 
-2.56.0
-
+Rishab
 
