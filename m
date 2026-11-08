@@ -1,42 +1,42 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050C0606A31C
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 08:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2091F606A31C
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 08:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=g7GvRNwq
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oobKHG0O
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPyg3-0003FM-4M; Sun, 08 Nov 2026 03:55:05 -0500
+	id 1xPyfx-0003EW-57; Sun, 08 Nov 2026 03:54:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1xPyfh-000391-0a
- for qemu-devel@nongnu.org; Sun, 08 Nov 2026 03:54:41 -0500
+ id 1xPyfq-0003As-Va
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 03:54:52 -0500
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1xPyfe-0000wB-Ms
- for qemu-devel@nongnu.org; Sun, 08 Nov 2026 03:54:40 -0500
+ id 1xPyfg-0000wo-18
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 03:54:42 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 3E061448AF;
+ by sea.source.kernel.org (Postfix) with ESMTP id 5A15744D11;
  Sun,  8 Nov 2026 08:54:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2056B1F00903;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1552E1F008BD;
  Sun,  8 Nov 2026 08:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
  s=k20260515; t=1794128075;
- bh=PlLqV3gCN3xTZr0TCDyKWGjS9L6Nz1CukhnmHEYIOHM=;
+ bh=V+YrM732g6g1+Y72xvbSDsPOwg56CGO+x7ck3PY9PXM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=g7GvRNwqda8GD5J3z9SQIzThBJtI4oyETNAjYGHusJWDi6r3zBtZca0koExvYBv0Z
- tq9QWnZl0pzYgkxtZmgcDrpmJCiS4oYhFkBt8MsiUNECsFNCY9QE3cTDCFMLS8fluw
- oSaKJ3b0IkLD/WtNPanz1gbEZhrX/tp5rMJqyXRFcqsMaLUu4YOm/dE/ztua3QUu/O
- pqC67/jcxuKmUWCN/VYzZw6N9xa7A7A/ZVUU/ugo/Imn0KIKxXuiEIPboTKTsWRWjG
- lFAraeSIi09URPN6bwhgO/e8UF/KsMyb9q//UXg5mqFj8by7V4vapOsPgx0yiThgO+
- 34m0tLns4UgOQ==
+ b=oobKHG0OSZrnx3xlVm0xOHNAwagEAAv3WdBGWwN3czaibxqL9UXu48Vk1tADSijL+
+ Gfz6aoaoSbymyyASh+dYOJVA7RYk4wRaGSeD9H1fkaA+sK7Upq+uKK9od1oKRD1+wr
+ nzmDwnnfbgCCoV093QumcqrPE2G6fA3iJKb8bzLLtLQ8H41kjiwoe+LAKR3Mz32IY+
+ E4D7oTC5RD176G4her+Bvpz9cCFDqM78i6lMIkEiUUUIGrY1dU8PCNbmOWi5FIR6cq
+ Zz+Axc5+6wgnRWcbIn7MqNrMAWxNtecY0AKYOoWuFC8nKGI5Cg/rr2qprQy7kFGKUL
+ wyLBPfbZ7Eiew==
 Received: from mchehab by mail.kernel.org with local (Exim 4.100.1)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1xPyfZ-00000005Uji-20ce; Sun, 08 Nov 2026 09:54:33 +0100
+ id 1xPyfZ-00000005UjV-1gKI; Sun, 08 Nov 2026 09:54:33 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Michael S Tsirkin <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -45,17 +45,15 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  linux-edac@vger.kernel.org, Cleber Rosa <crosa@redhat.com>,
  John Snow <jsnow@redhat.com>,
- Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH 12/13] scripts/ghes_inject: improve help message
-Date: Sun,  8 Nov 2026 09:54:25 +0100
-Message-ID: <a65281722a5587257fdbe35b1d6634c2f6703ebb.1794127710.git.mchehab+huawei@kernel.org>
+ Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 09/13] scripts/ghes_inject: add support for fuzzy logic testing
+Date: Sun,  8 Nov 2026 09:54:22 +0100
+Message-ID: <c1eb390b971ef3868e8afdea5e9b02a846b1c986.1794127710.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <cover.1794127710.git.mchehab+huawei@kernel.org>
 References: <cover.1794127710.git.mchehab+huawei@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
@@ -85,169 +83,272 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a one-liner help message for each type of error inject
-command, and use raw formatter to keep line breaks.
+Add a command to inject random errors for fuzzy logic testing.
 
-While here, use a more uniform language.
+By default, it will generate a single test for a random valid
+GUID with random bytes inside the CPER payload.
 
-With that, "ghes_inject -h" will now show:
-
-  usage: ghes_inject.py [options]
-
-  Handles ACPI GHESv2 error injection via the QEMU QMP interface.
-
-  It uses UEFI BIOS APEI features to generate GHES records, which helps to
-  test CPER and GHES drivers on the guest OS and see how user‑space
-  applications on that guest handle such errors.
-
-  positional arguments:
-    {arm,pci-bus,fuzzy-test,fuzzy,raw-error,raw}
-      arm                 Inject an ARM processor error CPER, compatible with
-                          UEFI 2.9A Errata.
-      pci-bus             Inject a PCI/PCI-X bus error CPER
-      fuzzy-test (fuzzy)  Inject fuzzy test CPER packets
-      raw-error (raw)     Inject CPER records from previously recorded ones.
-
-  options:
-    -h, --help            show this help message and exit
-
-  QEMU QMP socket options:
-    -H, --host HOST       host name (default: localhost)
-    -P, --port PORT       TCP port number (default: 4445)
-    -d, --debug           enable debug output (default: False)
+The command allows specifying:
+- a single type of CPER;
+- a range of minimum/maximum payload size;
+- change its default to fill with zero instead of random;
+- multiple CPERs with an specified count;
+- ensure a delay between them;
+- setup a timeout to retry if an attempt fails (useful when
+  count > 1).
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 ---
- scripts/arm_processor_error.py |  6 ++++--
- scripts/fuzzy_error.py         |  4 +++-
- scripts/ghes_inject.py         | 18 +++++++++---------
- scripts/pci_bus_error.py       |  4 +++-
- scripts/raw_error.py           |  6 +++---
- 5 files changed, 22 insertions(+), 16 deletions(-)
+ MAINTAINERS            |   1 +
+ scripts/fuzzy_error.py | 206 +++++++++++++++++++++++++++++++++++++++++
+ scripts/ghes_inject.py |   2 +
+ 3 files changed, 209 insertions(+)
+ create mode 100644 scripts/fuzzy_error.py
 
-diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
-index d9845adb0c0a..597382031ab8 100644
---- a/scripts/arm_processor_error.py
-+++ b/scripts/arm_processor_error.py
-@@ -122,7 +122,7 @@ class ArmProcessorEinj:
-     """
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 75fbe5967c73..dae90bcc1250 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2386,6 +2386,7 @@ F: qapi/acpi-hest.json
+ F: scripts/ghes_decode.py
+ F: scripts/ghes_inject.py
+ F: scripts/arm_processor_error.py
++F: scripts/fuzzy_error.py
+ F: scripts/pci_bus_error.py
+ F: scripts/qmp_helper.py
  
-     DESC = """
--    Generates an ARM processor error CPER, compatible with
-+    Inject an ARM processor error CPER, compatible with
-     UEFI 2.9A Errata.
-     """
- 
-@@ -169,7 +169,9 @@ def __init__(self, subparsers):
- 
-         self.data = bytearray()
- 
--        parser = subparsers.add_parser("arm", description=self.DESC)
-+        parser = subparsers.add_parser("arm",
-+                                       help=self.DESC,
-+                                       description=self.DESC)
- 
-         arm_valid_bits = ",".join(self.arm_valid_bits.keys())
-         flags = ",".join(self.pei_flags.keys())
 diff --git a/scripts/fuzzy_error.py b/scripts/fuzzy_error.py
-index 9f80abb72319..3ddb90f743a1 100644
---- a/scripts/fuzzy_error.py
+new file mode 100644
+index 000000000000..9f80abb72319
+--- /dev/null
 +++ b/scripts/fuzzy_error.py
-@@ -121,8 +121,10 @@ def __init__(self, subparsers):
-             },
-         }
- 
-+        DESC = "Inject fuzzy test CPER packets"
+@@ -0,0 +1,206 @@
++#!/usr/bin/env python3
++#
++# pylint: disable=C0114,R0903,R0912
++# SPDX-License-Identifier: GPL-2.0
++#
++# Copyright (C) 2024 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 +
-         parser = subparsers.add_parser("fuzzy-test", aliases=['fuzzy'],
--                                       description="Inject a fuzzy test CPER",
-+                                       help=DESC, description=DESC,
-                                        formatter_class=argparse.RawTextHelpFormatter)
-         g_fuzzy = parser.add_argument_group("Fuzz testing error inject")
- 
++import argparse
++import sys
++
++from time import sleep
++from random import randrange
++from qmp_helper import qmp, util, cper_guid
++
++class FuzzyError:
++    """
++    Implements Fuzzy error injection via GHES
++    """
++
++    def __init__(self, subparsers):
++        """Initialize the error injection class and add subparser"""
++
++        # as defined at UEFI spec v2.10, section N.2.2
++        # Sizes here are just hints to have some default
++        self.types = {
++            "proc-generic": {
++                "guid": cper_guid.CPER_PROC_GENERIC,
++                "default_size": 192
++            },
++            "proc-x86": {
++                "guid": cper_guid.CPER_PROC_X86,
++                "default_size": 64
++            },
++            "proc-itanium": {
++                "guid": cper_guid.CPER_PROC_ITANIUM,
++                "default_size": 64
++            },
++            "proc-arm": {
++                "guid": cper_guid.CPER_PROC_ARM,
++                "default_size": 72
++            },
++            "platform-mem": {
++                "guid": cper_guid.CPER_PLATFORM_MEM,
++                "default_size": 80
++            },
++            "platform-mem2": {
++                "guid": cper_guid.CPER_PLATFORM_MEM2,
++                "default_size": 96
++            },
++            "pcie": {
++                "guid": cper_guid.CPER_PCIE,
++                "default_size": 208
++            },
++            "pci-bus": {
++                "guid": cper_guid.CPER_PCI_BUS,
++                "default_size": 72
++            },
++            "pci-dev": {
++                "guid": cper_guid.CPER_PCI_DEV,
++                "default_size": 56
++            },
++            "firmware-error": {
++                "guid": cper_guid.CPER_FW_ERROR,
++                "default_size": 32
++            },
++            "dma-generic": {
++                "guid": cper_guid.CPER_DMA_GENERIC,
++                "default_size": 32
++            },
++            "dma-vt": {
++                "guid": cper_guid.CPER_DMA_VT,
++                "default_size": 144
++            },
++            "dma-iommu": {
++                "guid": cper_guid.CPER_DMA_IOMMU,
++                "default_size": 144
++            },
++            "ccix-per": {
++                "guid": cper_guid.CPER_CCIX_PER,
++                "default_size": 36
++            },
++            "cxl-prot-err": {
++                "guid": cper_guid.CPER_CXL_PROT_ERR,
++                "default_size": 116
++            },
++            "cxl-evt-media": {
++                "guid": cper_guid.CPER_CXL_EVT_GEN_MEDIA,
++                "default_size": 32
++            },
++            "cxl-evt-dram": {
++                "guid": cper_guid.CPER_CXL_EVT_DRAM,
++                "default_size": 64
++            },
++            "cxl-evt-mem-module": {
++                "guid": cper_guid.CPER_CXL_EVT_MEM_MODULE,
++                "default_size": 64
++            },
++            "cxl-evt-mem-sparing": {
++                "guid": cper_guid.CPER_CXL_EVT_MEM_SPARING,
++                "default_size": 64
++            },
++            "cxl-evt-phy-sw": {
++                "guid": cper_guid.CPER_CXL_EVT_PHY_SW,
++                "default_size": 64
++            },
++            "cxl-evt-virt-sw": {
++                "guid": cper_guid.CPER_CXL_EVT_VIRT_SW,
++                "default_size": 64
++            },
++            "cxl-evt-mdl-port": {
++                "guid": cper_guid.CPER_CXL_EVT_MLD_PORT,
++                "default_size": 64
++            },
++            "cxl-evt-dyna-cap": {
++                "guid": cper_guid.CPER_CXL_EVT_DYNA_CAP,
++                "default_size": 64
++            },
++            "fru-mem-poison": {
++                "guid": cper_guid.CPER_FRU_MEM_POISON,
++                "default_size": 72
++            },
++        }
++
++        parser = subparsers.add_parser("fuzzy-test", aliases=['fuzzy'],
++                                       description="Inject a fuzzy test CPER",
++                                       formatter_class=argparse.RawTextHelpFormatter)
++        g_fuzzy = parser.add_argument_group("Fuzz testing error inject")
++
++
++        cper_types = ",".join(self.types.keys())
++
++        g_fuzzy.add_argument("-T", "--type",
++                            help=f"Type of the error: {cper_types}")
++        g_fuzzy.add_argument("--min-size",
++                    type=lambda x: int(x, 0),
++                    help="Minimal size of the CPER")
++        g_fuzzy.add_argument("--max-size",
++                    type=lambda x: int(x, 0),
++                    help="Maximal size of the CPER")
++        g_fuzzy.add_argument("-z", "--zero", action="store_true",
++                            help="Zero all bytes of the CPER payload (default: %(default)s)")
++        g_fuzzy.add_argument("-t", "--timeout", type=float,
++                    default=30.0,
++                    help="Specify timeout for CPER send retries (default: %(default)s seconds)")
++        g_fuzzy.add_argument("-d", "--delay", type=float,
++                    default=0,
++                    help="Specify a delay between multiple CPER (default: %(default)s)")
++        g_fuzzy.add_argument("-c", "--count", type=int,
++                    default=1,
++                    help="Specify the number of CPER records to be sent (default: %(default)s)")
++
++        parser.set_defaults(func=self.send_cper)
++
++    def send_cper(self, args):
++        """Parse subcommand arguments and send a CPER via QMP"""
++
++        qmp_cmd = qmp(args.host, args.port, args.debug)
++
++        args.count = max(args.count, 1)
++
++        for i in range(0, args.count):
++            if i:
++                if args.delay > 0:
++                    sleep(args.delay)
++
++            # Handle global parameters
++            if args.type:
++                if not args.type in self.types:
++                    sys.exit(f"Invalid type: {args.type}")
++
++                inj_type = args.type
++            else:
++                i = randrange(len(self.types))
++                keys = list(self.types.keys())
++                inj_type = keys[i]
++
++            inject = self.types[inj_type]
++
++            guid = inject["guid"]
++            min_size = inject["default_size"]
++            max_size = min_size
++
++            if args.min_size:
++                min_size = args.min_size
++
++            if args.max_size:
++                max_size = args.max_size
++
++            size = min_size
++
++            if min_size < max_size:
++                size += randrange(max_size - min_size)
++
++            data = bytearray()
++
++            if not args.zero:
++                for i in range(size):
++                    util.data_add(data, randrange(256), 1)
++            else:
++                for i in range(size):
++                    util.data_add(data, 0, 1)
++
++            print(f"Injecting {inj_type} with {size} bytes")
++            ret = qmp_cmd.send_cper(guid, data, timeout=args.timeout)
++            if ret and ret != "OK":
++                return ret
 diff --git a/scripts/ghes_inject.py b/scripts/ghes_inject.py
-index dd2b34a64f15..21cdea774f17 100755
+index be2384a59b3e..bcbfffc586e1 100755
 --- a/scripts/ghes_inject.py
 +++ b/scripts/ghes_inject.py
-@@ -17,28 +17,28 @@
- from raw_error import RawError
+@@ -13,6 +13,7 @@
+ 
+ from arm_processor_error import ArmProcessorEinj
+ from pci_bus_error import PciBusError
++from fuzzy_error import FuzzyError
  
  EINJ_DESC = """
--Handle ACPI GHESv2 error injection logic QEMU QMP interface.
-+Handles ACPI GHESv2 error injection via the QEMU QMP interface.
+ Handle ACPI GHESv2 error injection logic QEMU QMP interface.
+@@ -42,6 +43,7 @@ def main():
  
--It allows using UEFI BIOS EINJ features to generate GHES records.
--
--It helps testing CPER and GHES drivers at the guest OS and how
--userspace applications at the guest handle them.
-+It uses UEFI BIOS APEI features to generate GHES records, which helps to
-+test CPER and GHES drivers on the guest OS and see how user‑space
-+applications on that guest handle such errors.
- """
+     ArmProcessorEinj(subparsers)
+     PciBusError(subparsers)
++    FuzzyError(subparsers)
  
- def main():
-     """Main program"""
- 
-     # Main parser - handle generic args like QEMU QMP TCP socket options
--    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                      usage="%(prog)s [options]",
-                                      description=EINJ_DESC)
- 
-     g_options = parser.add_argument_group("QEMU QMP socket options")
-     g_options.add_argument("-H", "--host", default="localhost", type=str,
--                           help="host name")
-+                           help="host name (default: %(default)s)")
-     g_options.add_argument("-P", "--port", default=4445, type=int,
--                           help="TCP port number")
--    g_options.add_argument('-d', '--debug', action='store_true')
-+                           help="TCP port number (default: %(default)s)")
-+    g_options.add_argument('-d', '--debug', action='store_true',
-+                           help="enable debug output (default: %(default)s)")
- 
-     subparsers = parser.add_subparsers()
- 
-diff --git a/scripts/pci_bus_error.py b/scripts/pci_bus_error.py
-index 1d974c54685c..c4a2cb02bbe6 100644
---- a/scripts/pci_bus_error.py
-+++ b/scripts/pci_bus_error.py
-@@ -35,8 +35,10 @@ def __init__(self, subparsers):
- 
-         self.data = bytearray()
- 
-+        DESC = "Inject a PCI/PCI-X bus error CPER"
-+
-         parser = subparsers.add_parser("pci-bus",
--                                       description="Generate PCI/PCI-X bus error CPER")
-+                                       help=DESC, description=DESC)
-         g_pci = parser.add_argument_group("PCI/PCI-X bus error")
- 
-         valid_bits = ",".join(self.valid_bits.keys())
-diff --git a/scripts/raw_error.py b/scripts/raw_error.py
-index f5e77bdfcead..1e9eb1bcf15b 100644
---- a/scripts/raw_error.py
-+++ b/scripts/raw_error.py
-@@ -21,8 +21,8 @@ class RawError:
- 
-     SCRIPT_NAME = sys.argv[0]
- 
--    HELP=f"""
--    Inject a CPER record from a previously recorded one.
-+    HELP="Inject CPER records from previously recorded ones."
-+    DESC=HELP + f"""
- 
-     One or more CPER records can be recorded. The records to be
-     injected are read from an specified file or from stdin and should
-@@ -58,7 +58,7 @@ def __init__(self, subparsers):
-         self.size = 0
- 
-         parser = subparsers.add_parser("raw-error",  aliases=['raw'],
--                                       description=self.HELP,
-+                                       help=self.HELP, description=self.DESC,
-                                        formatter_class=argparse.RawTextHelpFormatter)
- 
-         parser.add_argument("-f", "--file",
+     args = parser.parse_args()
+     if "func" in args:
 -- 
 2.56.0
 
