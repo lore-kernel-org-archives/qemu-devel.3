@@ -1,99 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1EE606A31C
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 19:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366D8606A336
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 20:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=OvDtOZtH
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lZhvNZks
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQ892-0000Uq-0x; Sun, 08 Nov 2026 14:01:36 -0500
+	id 1xQ9fc-0002bz-D7; Sun, 08 Nov 2026 15:39:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xQ88q-0000UK-5E
- for qemu-devel@nongnu.org; Sun, 08 Nov 2026 14:01:24 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <jpaulma23@gmail.com>)
+ id 1xQ8ey-0003nw-5Y
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 14:34:36 -0500
+Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xQ88m-0001VV-Q7
- for qemu-devel@nongnu.org; Sun, 08 Nov 2026 14:01:23 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4afe2d546f9so3098715e9.3
- for <qemu-devel@nongnu.org>; Sun, 08 Nov 2026 11:01:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jpaulma23@gmail.com>)
+ id 1xQ8ew-0004PN-Mi
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 14:34:35 -0500
+Received: by mail-vk1-xa2e.google.com with SMTP id
+ 71dfb90a1353d-5ece3ab2e91so74526e0c.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Nov 2026 11:34:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794164476; x=1794769276; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=zrxaZraQLRUz0ggX6nKwdiuIeJTrW+yHSc6JYz+mXq8=;
- b=OvDtOZtHlfZiV0Z3P9Bb0k+BPI631e/IfqYv85kqHPbnGibBD8cTogdEby2yxRrj2e
- R+zzjiMLRnv0dNB1lXP5Kr5OpE2mD9cVkAfSm7Ic+0uoXkexsobszNWmArEcFEcZlHVD
- zWmrOvCUDNdlFToOY/0R7H4lv2HcOcaRq3rEbDwpQ2uIM8pyN7nNOaWTS+dNaDH0/YBf
- /GubsxXjKKTH3zgo7R+C4iu7x4DtXhojxyzRtIw7sW/VQP92MArnGOtBHS4HCfeY72Fj
- TiCHt4sUqCI6gqQ/PNvDLnl3ek0BOuRZ7H2SGOZ9yNzjiQ48gWhPxcpRU2SHszYNnEdh
- d3bQ==
+ d=gmail.com; s=20260707; t=1794166473; x=1794771273; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Z8t0nNuFXyxz6SmHHB6aORBIYFJJJrRDmmJIfbtuZKg=;
+ b=lZhvNZksJbmUS/LmmZtd3Dyj+UHsKBuSN1r1gtznT3x00gGkBVG+895JjR2dtQ1Blg
+ 5Ip0EkbtW9HS2h63l74BwjzW69MHjMbj/VgLub1JgEp8nmwppFjijOx+GWzo3J7o9L0L
+ hEbRjlk5HCmge9k4WkvrDXvUqKuY1hNHcrdF1ux9yFixweC102++ZVkKjwRT3TPlQ13W
+ KuUC/ePZcqkQGjkjaU2L6SBDteW0PxdQnxEKhdOnUCFN/epHy/0iT6YIqDcdjNflJYv8
+ /ZTnN+BxJSqusAhtg/8KnoNZKlM+XbPmjrXF2y2FOap14ldT73qFulDdqVTUOdaPovml
+ zMUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794164476; x=1794769276;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zrxaZraQLRUz0ggX6nKwdiuIeJTrW+yHSc6JYz+mXq8=;
- b=gMVpiwfzQFAXwrWHNmrgv75sh+ZwPLYekx1CEHZEpNwjuqfd8Yzd2G8yJmxOknGDP2
- ztqLJZacnAWulOKd7eiccGwrmgRxKFc4dQoUz5az2uKvsNdtRAc49BJaxMdYvCcUYGSa
- WcVzJcYnJJ0st+15M5ayy/mjS/Llt68l0SZ4UY0lz6rE9BdqpLm+pZPrpM8XUBqODNJy
- j2p4WRdE58j9VB0tuDMBwUYO7vQOLUpSGG0rn/ro0u/bTefNEwlGb1hrxioqDrQAoZtr
- UcVkSWlc3/CQo9nu5pn9MdY2NtMztctsnkICZss/7nrWMT7M4LLeEK7VwTdaqZffwJn/
- nZGg==
-X-Gm-Message-State: APuU4Z/mS12mKH16L9nDfgAjuVAb4YIzR9RmbMhjsnvOWgCVVor6lMyX
- F8gZInyOPemi9gN2ZHhmipAvxNzeM9Uc3TV2LB8x1Lr/Q6zGxlNpcx3cDRCbY6hFumY=
-X-Gm-Gg: AYBFou0rbYQJOyapfHm4U5RFLQc6HNo7dflVvS9GCr77GtTfalQ6bOBAgxe5vQFa5CF
- WlO9us1X2qzhmiZixPg0kiT4tfmN4u1bXuCXziVB8XtP+up8YqBIlCsaalqkPiZfoF/DVPhvUP7
- /0nnna+6lvp6RrdOQAjuFlJX6kcIBZ9BCTL6QU6GrFvgkEIn67h6tlav/j4Mp9i0iyOUXCwEgXC
- VGiNUaqm5jvLppOeqF2rI0wPeBHiHI9iJI1bplFLv1ZwUrZJwgmSezDiiIMNxhvhY9kncNq6AW8
- O5qsDFua5sGaVAEZR3Nmpay0XZWwl7KE0wgRfx88K2nW3hgjglrn4nKBDZ10UM6Lrj9ukVCy53t
- OncT32aHDT5g1oEfo89ZBzXUXBMkzQKHJPIxppfHkEVi4Aggd8C40xOh35ZM+xgLtDtgcMEYZqy
- k9U1GT0rLAU73WM/ZWErwn3FPZXk84TzwVh/9ePhPYYuMhgk2KZ2wWm50lHmpTRawN7MvI1RiqK
- HimGHD54Npg06u7SXBCmjxaz02HHlXQkPM9mwWYGKFgRTIC7Udg4pL7o28JiSAOUbJA+YB5SE/n
- wXsbRWLL3qHdAmaOycpkU/LwbNHkhMgAPhleIoQOHgAOPmzceQ==
-X-Received: by 2002:a05:600c:8714:b0:4b4:262b:88a2 with SMTP id
- 5b1f17b1804b1-4b94d762f82mr40480255e9.1.1794164476533; 
- Sun, 08 Nov 2026 11:01:16 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4b7c4716170sm72201375e9.1.2026.11.08.11.01.07
+ d=1e100.net; s=20260707; t=1794166473; x=1794771273;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Z8t0nNuFXyxz6SmHHB6aORBIYFJJJrRDmmJIfbtuZKg=;
+ b=WJ6XyOrLBlLUChto+kZ2/WOzZ87qzPUtI3RFWTYOy1Kqs7l0TNZkDSCS6YYElHyil5
+ UtOt4egLrpsdBABi2/zZQCLMZgTlhouTMhIVW2XIP+VLzgKE+LXSpNtX50r8zzHcdJZH
+ znI167pPi7+1HqWtgi/HUDodvVm7dW1nwSmS2q4OMqHoagVU5HATkprrC4o1HRBIrNGI
+ uCdlxEia5tTHWO0G/IIr5dNHw6XtP3qZmckeNsCffVQU0ao/da7zSp6J/+CiTJaRimdp
+ bd4N69lOlzwp6HcIi8q57yw/iCvk+Vbfov+9OciuTY7jNkbmVZqjzLTMFI+v1qHQXgMB
+ jN4g==
+X-Gm-Message-State: APuU4Z/4RyYwvRO+pylNLUc+9jYoX8uylHGZ7/Q1odDjdnKg069pxEG5
+ 2hlSv9msE+Cv26reDiknD/AjDBGVulqpEOkAE9VGu3g23GZLs+ObldoDk4EsZk9a
+X-Gm-Gg: AYBFou2UJudhSx4KicQBdFF9j2mCuNdPr5C1qHEMSAVR/RA/eGB/3bkcO8yZgY3hnT9
+ XmFKTWrfQbGqewwftShiOwK/R7RW3khpqzsup+te9HYaoMNQqpN79wqVyWgxVui5JbUGild/PJy
+ wQaJ7U7jzC+zgXtIPXfhpj4y9T2j3sodE8IaLBC43ag4tx3xG/EY+0QRtG58RKxk8LZcfL9YGhR
+ xUcohE8LRS4Q2QL4yOjxsb4z+WUg3Ibxk6YMW80EfSNCGYptsa5NFvOt7o+bTVUNv21CzUyO5OC
+ Y7PhywldhO6vZLZWeg8G/6ab+i3iR6vef8BStLcGOqnJl16Sg74Otv2XpFTluaSFZpM8zkmf4en
+ 2BMTPJeLR5HRzTJKVAmjDkp34okNZEY0OIl8umtol6NEY6Oy6fnO2ccLD9R2xRxy79HMCVzDWci
+ AW5nAlgNdb4HwIwFjUaO1D2Ad+W3lKUjH6EYe3/3hvjQWlC5r0VdyI4P7ez1oK7qcPukUQ69g8+
+ hmCVNskSfYFVmxV0lFm+BYVJAOHk1u2/ib9rrVjmhHGGyfX+ttgfmsNUphz+qTJsVKCcGUGurBl
+ re66RB9wCOpP3gnw1iHEAWXQFxu0sRyxKkfN
+X-Received: by 2002:a05:6102:dc6:b0:7cc:1a41:20e8 with SMTP id
+ ada2fe7eead31-7d2daaad4eemr477831137.5.1794166473350; 
+ Sun, 08 Nov 2026 11:34:33 -0800 (PST)
+Received: from jiputer-laptop.. ([2605:8d80:6c29:aa12:5c76:8909:6da4:b5f3])
+ by smtp.gmail.com with ESMTPSA id
+ a1e0cc1a2514c-99c029dc1e2sm2237456241.4.2026.11.08.11.34.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Nov 2026 11:01:08 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 00C175F819;
- Sun, 08 Nov 2026 19:01:06 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Pedro Barbuda
- <pbarbuda@microsoft.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PULL 00/13] Whpx fix 0 patches
-In-Reply-To: <20261108095403.70813-1-mohamed@unpredictable.fr> (Mohamed
- Mediouni's message of "Sun, 8 Nov 2026 02:53:50 -0700")
-References: <20261108095403.70813-1-mohamed@unpredictable.fr>
-User-Agent: mu4e 1.14.5-pre1; emacs 30.1
-Date: Sun, 08 Nov 2026 19:01:06 +0000
-Message-ID: <87ik27i1vx.fsf@draig.linaro.org>
+ Sun, 08 Nov 2026 11:34:32 -0800 (PST)
+From: jiputer <jpaulma23@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org,
+	jiputer <jpaulma23@gmail.com>
+Subject: [PATCH] semihosting/uaccess: Convert malloc, free to g_try_malloc,
+ g_free
+Date: Sun,  8 Nov 2026 14:34:23 -0500
+Message-ID: <20261108193423.225720-1-jpaulma23@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
+ envelope-from=jpaulma23@gmail.com; helo=mail-vk1-xa2e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 08 Nov 2026 15:39:15 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,85 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Mohamed Mediouni <mohamed@unpredictable.fr> writes:
+Convert malloc to g_try_malloc and free to g_free in
+uaccess_lock_user.
+Convert free to g_free in uaccess_unlock_user.
 
-> The following changes since commit d73149283205645625bfa9fe029cfb68e4c4a9=
-ae:
->
->   Merge tag 'samuel-thibault' of https://people.debian.org/~sthibault/qem=
-u into staging (2026-10-24 16:09:37 +0200)
->
-> are available in the Git repository at:
->
->   https://github.com/mediouni-m/qemu tags/whpx-fix-0-pull-request
->
-> for you to fetch changes up to 2bf35950b54c1db9a6de6eb47b42cf843c6bd282:
->
->   whpx: i386: also save debug registers (2026-11-08 02:48:18 -0700)
->
-> ----------------------------------------------------------------
-> whpx: QEMU 11.2 pull request
->
-> This is a cut-down version of the "whpx: i386: updates for QEMU 11.2" pat=
-chset
-> with fixes for QEMU 11.2.
->
-> These include:
->
-> - fixing reset
-> - CPUID fixes (leaf 0xd)
-> - handle systems where nested virt is advertised but not working
-> - xsave fixes
+Signed-off-by: jiputer <jpaulma23@gmail.com>
+---
 
-You need to apply your s-o-b to patches you submitting in a PR:
+Something to note, when len == 0 in uaccess_lock_user,
+it will return a NULL pointer, instead of a non-null
+pointer from malloc. Any read or writes on *p will report
+EFAULT since it would be considered a bad address.
 
-  https://www.qemu.org/docs/master/devel/code-provenance.html#subsystem-mai=
-ntainer-requirements
+Patch is for this issue:
+https://gitlab.com/qemu-project/qemu/-/work_items/1798
 
+ semihosting/uaccess.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
->
-> ----------------------------------------------------------------
->
-> Akshey Taneja (2):
->   whpx: i386: do not require ProcessorFeaturesBanks on legacy Windows
->   whpx: i386: fall back to xAPIC when the MSR exit bitmap is unavailable
->
-> Boden Randin (1):
->   whpx: i386: avoid updating hflags for vmexits
->
-> Doug Cook (1):
->   target/i386/whpx: fix VMX capability MSR values
->
-> Doug Cook (WINDOWS) (2):
->   target/i386/whpx: whpx_get_xsave_state error handling
->   target/i386/whpx: handle processor reset
->
-> Kostas Chatzikokolakis (1):
->   whpx: i386: forward the dynamic EBX of CPUID[0xD] sub-leaves 0 and 1,
->     not 1 and 2
->
-> Mohamed Mediouni (6):
->   whpx: i386: get APIC state before VM save
->   whpx: i386: fix TPR encodings for local APIC
->   whpx: i386: save/restore xss
->   whpx: i386: make nested virtualisation init failure non-fatal
->   target/arm/whpx: handle processor reset
->   whpx: i386: also save debug registers
->
->  include/system/whpx-internal.h |   5 +-
->  target/arm/whpx/whpx-all.c     |  10 +-
->  target/i386/whpx/whpx-all.c    | 307 ++++++++++++++++++++++++++-------
->  target/i386/whpx/whpx-apic.c   |  10 +-
->  4 files changed, 266 insertions(+), 66 deletions(-)
+diff --git a/semihosting/uaccess.c b/semihosting/uaccess.c
+index ff944d8c2f..71d7cc9006 100644
+--- a/semihosting/uaccess.c
++++ b/semihosting/uaccess.c
+@@ -17,10 +17,10 @@
+ void *uaccess_lock_user(CPUArchState *env, vaddr addr,
+                         size_t len, bool copy)
+ {
+-    void *p = malloc(len);
++    void *p = g_try_malloc(len);
+     if (p && copy) {
+         if (cpu_memory_rw_debug(env_cpu(env), addr, p, len, 0)) {
+-            free(p);
++            g_free(p);
+             p = NULL;
+         }
+     }
+@@ -90,5 +90,5 @@ void uaccess_unlock_user(CPUArchState *env, void *p,
+     if (len) {
+         cpu_memory_rw_debug(env_cpu(env), addr, p, len, 1);
+     }
+-    free(p);
++    g_free(p);
+ }
+-- 
+2.43.0
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
