@@ -1,42 +1,42 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA213606A31C
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 08:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1884606A31C
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 08:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QCTUwcyS
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b8zXAoOO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xPyft-0003BQ-Pe; Sun, 08 Nov 2026 03:54:56 -0500
+	id 1xPyfp-0003Am-2C; Sun, 08 Nov 2026 03:54:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1xPyff-00038O-Sw
+ id 1xPyfg-00038r-Mn
  for qemu-devel@nongnu.org; Sun, 08 Nov 2026 03:54:40 -0500
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1xPyfc-0000vY-JP
- for qemu-devel@nongnu.org; Sun, 08 Nov 2026 03:54:39 -0500
+ id 1xPyfe-0000wA-LW
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 03:54:40 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 2742443BBE;
+ by sea.source.kernel.org (Postfix) with ESMTP id 3E0434487B;
  Sun,  8 Nov 2026 08:54:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066311F008A3;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BBF1F00904;
  Sun,  8 Nov 2026 08:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
  s=k20260515; t=1794128075;
- bh=dmVa1860X/7ajspCqh1w6fAF4yPYQKt73v9KQI6jTlY=;
+ bh=AofEisHPa71V7e+1AJxK9WPx+5r7ivjgynVnO8nhMr8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QCTUwcySwQV09daQU8gJX6cYhZmL0IkydoYONdv0of+vQT6CJb7RzujtEyi3yrFIr
- gtkC0Smgw6UclXQfO7ksce/e0oBJ/EbKCZKhahLBNopaAImvlC8igpKkFQkZ3xAlkD
- G8fQmucsR+/1PtO6KG2ZQN8tYA7Z8nI82QpCld9zQU9HrbS5X49TbTNFWo9Z5vPffh
- egIoPDL23uMyPjk7Kdrqx6ywfKCsx+L+DxPDOd2M288vZrY6fpxAdE6NVnZz4ixAjA
- cmhMoYM5XW8SbxzXxp6l4t2GtugKq56iZKSW+cwM27aH0ixMikOib6E8bsmR5cbMg/
- uNv3kyaEizXxQ==
+ b=b8zXAoOO6ZjTYRzNtfAXs/j6H9KwCMFJ0rwJLihz+zUqrhxo+MX1tfROLAkqSdeQz
+ k3FPYSK5c1MDpi6PRUnyJNo5oi7pfx8pk3aHczs+zwXPHf6m3FniR8xGUh8lfL+ZMv
+ rSb+N5zGEr89q4LMS22t6Dd8TI1axrsfQUbVqE6gLo6KLVMe69rPfPgaNWEDn4H6B3
+ 4CtVMQlV1K46EsHqSWM+qt7uRhdc0aKaxP+9wJHmxkW4f33tZyNVmWSAxhoZZjmaPP
+ xlbhsdCuMxGaGszkkgUVTBvau2OwFLByciGGnslkMlPmwrZuN+2VvGchutEGabUs7q
+ 3Ji33JNHs500w==
 Received: from mchehab by mail.kernel.org with local (Exim 4.100.1)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1xPyfZ-00000005Uit-19G7; Sun, 08 Nov 2026 09:54:33 +0100
+ id 1xPyfZ-00000005Ujm-27Io; Sun, 08 Nov 2026 09:54:33 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Michael S Tsirkin <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -45,11 +45,10 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  linux-edac@vger.kernel.org, Cleber Rosa <crosa@redhat.com>,
  John Snow <jsnow@redhat.com>,
- Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH 04/13] scripts/qmp_helper: make send_cper() more generic
-Date: Sun,  8 Nov 2026 09:54:17 +0100
-Message-ID: <c7d0bb25fce98f0924b632dd3116c83d55b10408.1794127710.git.mchehab+huawei@kernel.org>
+ Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 13/13] scripts/ghes_inject: improve the retry attempt logic
+Date: Sun,  8 Nov 2026 09:54:26 +0100
+Message-ID: <c63cff02c016f1869ce5065225be3c1f1c1ed8a5.1794127710.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <cover.1794127710.git.mchehab+huawei@kernel.org>
 References: <cover.1794127710.git.mchehab+huawei@kernel.org>
@@ -84,113 +83,93 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Allow the caller to set GEDE, GEBS and raw data. This can be
-useful if one wants to replicate a CPER with the same parameters
-as the original one.
+Only retries if the cause of the error is:
+
+{"error": {
+  "class": "GenericError",
+  "desc": "OSPM does not acknowledge previous error, so can not record CPER for current error anymore"
+  }
+}
+
+As this is a transitory state.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 ---
- scripts/qmp_helper.py | 69 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 55 insertions(+), 14 deletions(-)
+ scripts/qmp_helper.py | 49 +++++++++++++++++++++++--------------------
+ 1 file changed, 26 insertions(+), 23 deletions(-)
 
 diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
-index 7190c988558a..7d9f955bc57f 100755
+index ef3e46ee3fc6..158489e4cee6 100755
 --- a/scripts/qmp_helper.py
 +++ b/scripts/qmp_helper.py
-@@ -546,22 +546,11 @@ def send_cper_raw(self, cper_data):
+@@ -343,41 +343,44 @@ def send_cmd(self, command, args=None, may_open=False, return_error=True,
  
-         return False
- 
--    def send_cper(self, notif_type, payload):
-+    def get_gede(self, notif_type, cper_length):
-         """
--        Send commands to QEMU though QMP TCP socket.
+         # Try up to attempts
+         for i in range(0, attempts):
++            if i > 0:
++                print(f"Error inject attempt {i}/{attempts} failed. Retrying...")
++                sleep(0.1)
++
+             try:
+                 obj = self.qmp_monitor.cmd_obj(msg)
 -
--        Return True on success, False otherwise.
-+        Return a Generic Error Data Entry bytearray
-         """
+-                if obj and "return" in obj and not obj["return"]:
+-                    break
++                if not obj:
++                    print(f"Command: {command}")
++                    print(f"Failed to create a QMP object.")
++                    return None
  
--        # Fill CPER record header
--
--        # NOTE: bits 4 to 13 of block status contain the number of
--        # data entries in the data section. This is currently unsupported.
--
--        cper_length = len(payload)
--        data_length = cper_length + len(self.raw_data) + self.GENERIC_DATA_SIZE
--
--        #  Generic Error Data Entry
-         gede = bytearray()
+             except Exception as e:                     # pylint: disable=W0718
+                 print(f"Command: {command}")
+                 print(f"Failed to inject error: {e}.")
+-                obj = None
++                return None
  
-         gede.extend(notif_type.to_bytes())
-@@ -574,7 +563,13 @@ def send_cper(self, notif_type, payload):
-         gede.extend(self.fru_text)
-         gede.extend(self.timestamp)
+-            if attempts > 1:
+-                print(f"Error inject attempt {i + 1}/{attempts} failed.")
++            error = obj.get("error")
++            if isinstance(error, dict):
++                desc = error.get("desc", "unknown error")
++                if return_error:
++                    print(f"Command: {msg}")
++                    print(f'{error["class"]}: {desc}')
  
--        # Generic Error Status Block
-+        return gede
-+
-+    def get_gebs(self, data_length):
-+        """
-+        Return a Generic Error Status Block bytearray
-+        """
-+
-         gebs = bytearray()
+-            if i + 1 < attempts:
+-                sleep(0.1)
++                if not "acknowledge previous" in desc:
++                    break
  
-         if self.raw_data:
-@@ -588,6 +583,52 @@ def send_cper(self, notif_type, payload):
-         util.data_add(gebs, data_length, 4)
-         util.data_add(gebs, self.error_severity, 4)
+-        if not obj:
+-            return None
++                continue
  
-+        return gebs
-+
-+    def send_cper(self, notif_type, payload,
-+                  gede=None, gebs=None, raw_data=None):
-+        """
-+        Send commands to QEMU though QMP TCP socket.
-+
-+        Return True on success, False otherwise.
-+
-+        Arguments:
-+            notif_type: Notification type (GUID)
-+            payload: bytearray with the payload
-+            gede: Generic Error Data Entry. If None, the code will generate
-+                  one using the defaults and generic error data arguments
-+            gebs: Generic Error Status block. If None, the code will generate
-+                  one using the defaults and generic error data arguments
-+            raw_data: Raw data to be added after GEBS. If not specified,
-+                      the code will generate one if Generic Error Data
-+                      --raw-data parameter is specified.
-+        """
-+
-+        # Fill CPER record header
-+
-+        # NOTE: bits 4 to 13 of block status contain the number of
-+        # data entries in the data section. This is currently unsupported.
-+
-+        if raw_data:
-+            self.raw_data = raw_data
-+
-+        cper_length = len(payload)
-+        data_length = cper_length + len(self.raw_data) + self.GENERIC_DATA_SIZE
-+
-+        if gede and len(gede) != 72:
-+            print(f"Invalid Generic Error Data Entry length: {len(gede)}. Ignoring it")
-+            gede = None
-+
-+        if gebs and len(gebs) != 20:
-+            print(f"Invalid Generic Error Status Block length: {len(gebs)}. Ignoring it")
-+            gebs = None
-+
-+        if not gede:
-+            gede = self.get_gede(notif_type, cper_length)
-+
-+        if not gebs:
-+            gebs = self.get_gebs(data_length)
-+
-         cper_data = bytearray()
-         cper_data.extend(gebs)
-         cper_data.extend(gede)
+-        if "return" in obj:
+-            if isinstance(obj.get("return"), dict):
+-                if obj["return"]:
+-                    return obj["return"]
+-                return "OK"
++            if "return" in obj:
++                if isinstance(obj.get("return"), dict):
++                    if obj["return"]:
++                        return obj["return"]
++                    return "OK"
+ 
+-            return obj["return"]
++                return obj["return"]
+ 
+-        if isinstance(obj.get("error"), dict):
+-            error = obj["error"]
+-            if return_error:
+-                print(f"Command: {msg}")
+-                print(f'{error["class"]}: {error["desc"]}')
+-        else:
+-            print(json.dumps(obj))
++            else:
++                print(json.dumps(obj))
+ 
+         return None
+ 
 -- 
 2.56.0
 
