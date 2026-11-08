@@ -1,64 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27A1606A31C
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 14:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1EE606A31C
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 19:02:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=OvDtOZtH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQ446-0003mm-Ru; Sun, 08 Nov 2026 09:40:14 -0500
+	id 1xQ892-0000Uq-0x; Sun, 08 Nov 2026 14:01:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
- id 1xQ43u-0003jw-G9; Sun, 08 Nov 2026 09:40:03 -0500
-Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
- id 1xQ43q-00038r-WC; Sun, 08 Nov 2026 09:40:02 -0500
-Received: from k3-03 (unknown [159.226.43.8])
- by APP-03 (Coremail) with SMTP id rQCowAAXJpetifBqBgKWAA--.15550S5;
- Sun, 08 Nov 2026 22:39:54 +0800 (CST)
-From: Tan Chi <tanchi25@mails.ucas.ac.cn>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- Tan Chi <tanchi25@mails.ucas.ac.cn>
-Subject: [PATCH 3/3] hw/riscv: iommu: Support automatic PTE A/D updates
-Date: Sun,  8 Nov 2026 22:39:33 +0800
-Message-ID: <20261108143934.129923-4-tanchi25@mails.ucas.ac.cn>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261108143934.129923-1-tanchi25@mails.ucas.ac.cn>
-References: <20261108143934.129923-1-tanchi25@mails.ucas.ac.cn>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xQ88q-0000UK-5E
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 14:01:24 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xQ88m-0001VV-Q7
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 14:01:23 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4afe2d546f9so3098715e9.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Nov 2026 11:01:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794164476; x=1794769276; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=zrxaZraQLRUz0ggX6nKwdiuIeJTrW+yHSc6JYz+mXq8=;
+ b=OvDtOZtHlfZiV0Z3P9Bb0k+BPI631e/IfqYv85kqHPbnGibBD8cTogdEby2yxRrj2e
+ R+zzjiMLRnv0dNB1lXP5Kr5OpE2mD9cVkAfSm7Ic+0uoXkexsobszNWmArEcFEcZlHVD
+ zWmrOvCUDNdlFToOY/0R7H4lv2HcOcaRq3rEbDwpQ2uIM8pyN7nNOaWTS+dNaDH0/YBf
+ /GubsxXjKKTH3zgo7R+C4iu7x4DtXhojxyzRtIw7sW/VQP92MArnGOtBHS4HCfeY72Fj
+ TiCHt4sUqCI6gqQ/PNvDLnl3ek0BOuRZ7H2SGOZ9yNzjiQ48gWhPxcpRU2SHszYNnEdh
+ d3bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794164476; x=1794769276;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=zrxaZraQLRUz0ggX6nKwdiuIeJTrW+yHSc6JYz+mXq8=;
+ b=gMVpiwfzQFAXwrWHNmrgv75sh+ZwPLYekx1CEHZEpNwjuqfd8Yzd2G8yJmxOknGDP2
+ ztqLJZacnAWulOKd7eiccGwrmgRxKFc4dQoUz5az2uKvsNdtRAc49BJaxMdYvCcUYGSa
+ WcVzJcYnJJ0st+15M5ayy/mjS/Llt68l0SZ4UY0lz6rE9BdqpLm+pZPrpM8XUBqODNJy
+ j2p4WRdE58j9VB0tuDMBwUYO7vQOLUpSGG0rn/ro0u/bTefNEwlGb1hrxioqDrQAoZtr
+ UcVkSWlc3/CQo9nu5pn9MdY2NtMztctsnkICZss/7nrWMT7M4LLeEK7VwTdaqZffwJn/
+ nZGg==
+X-Gm-Message-State: APuU4Z/mS12mKH16L9nDfgAjuVAb4YIzR9RmbMhjsnvOWgCVVor6lMyX
+ F8gZInyOPemi9gN2ZHhmipAvxNzeM9Uc3TV2LB8x1Lr/Q6zGxlNpcx3cDRCbY6hFumY=
+X-Gm-Gg: AYBFou0rbYQJOyapfHm4U5RFLQc6HNo7dflVvS9GCr77GtTfalQ6bOBAgxe5vQFa5CF
+ WlO9us1X2qzhmiZixPg0kiT4tfmN4u1bXuCXziVB8XtP+up8YqBIlCsaalqkPiZfoF/DVPhvUP7
+ /0nnna+6lvp6RrdOQAjuFlJX6kcIBZ9BCTL6QU6GrFvgkEIn67h6tlav/j4Mp9i0iyOUXCwEgXC
+ VGiNUaqm5jvLppOeqF2rI0wPeBHiHI9iJI1bplFLv1ZwUrZJwgmSezDiiIMNxhvhY9kncNq6AW8
+ O5qsDFua5sGaVAEZR3Nmpay0XZWwl7KE0wgRfx88K2nW3hgjglrn4nKBDZ10UM6Lrj9ukVCy53t
+ OncT32aHDT5g1oEfo89ZBzXUXBMkzQKHJPIxppfHkEVi4Aggd8C40xOh35ZM+xgLtDtgcMEYZqy
+ k9U1GT0rLAU73WM/ZWErwn3FPZXk84TzwVh/9ePhPYYuMhgk2KZ2wWm50lHmpTRawN7MvI1RiqK
+ HimGHD54Npg06u7SXBCmjxaz02HHlXQkPM9mwWYGKFgRTIC7Udg4pL7o28JiSAOUbJA+YB5SE/n
+ wXsbRWLL3qHdAmaOycpkU/LwbNHkhMgAPhleIoQOHgAOPmzceQ==
+X-Received: by 2002:a05:600c:8714:b0:4b4:262b:88a2 with SMTP id
+ 5b1f17b1804b1-4b94d762f82mr40480255e9.1.1794164476533; 
+ Sun, 08 Nov 2026 11:01:16 -0800 (PST)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4b7c4716170sm72201375e9.1.2026.11.08.11.01.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 08 Nov 2026 11:01:08 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 00C175F819;
+ Sun, 08 Nov 2026 19:01:06 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Pedro Barbuda
+ <pbarbuda@microsoft.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PULL 00/13] Whpx fix 0 patches
+In-Reply-To: <20261108095403.70813-1-mohamed@unpredictable.fr> (Mohamed
+ Mediouni's message of "Sun, 8 Nov 2026 02:53:50 -0700")
+References: <20261108095403.70813-1-mohamed@unpredictable.fr>
+User-Agent: mu4e 1.14.5-pre1; emacs 30.1
+Date: Sun, 08 Nov 2026 19:01:06 +0000
+Message-ID: <87ik27i1vx.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowAAXJpetifBqBgKWAA--.15550S5
-X-Coremail-Antispam: 1UD129KBjvJXoW3ZFyUKFyktr4kXryktr4ruFg_yoWDZr1DpF
- 95GrWagr45tr1fuFsxJw1DGF1ru3Z5G343W390gasYkF4jqrW5Xan0ya45AF4DKryUZ3WF
- qa1rZFsxZr4IvrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUPC14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JrWl82xGYIkIc2
- x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
- Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
- 8EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2vY
- z4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c
- 02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE
- 4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7Mx
- kF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4U
- MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67
- AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0
- cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z2
- 80aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI
- 43ZEXa7VUbBMKJUUUUU==
-X-CM-SenderInfo: pwdquxrlsvqzpdlo2hpxfd2hldfou0/
-Received-SPF: pass client-ip=159.226.251.81;
- envelope-from=tanchi25@mails.ucas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,326 +104,86 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add support for the AMO_HWAD capability to automatically update the
-accessed and dirty bits of leaf PTEs when SADE or GADE is enabled.
+Mohamed Mediouni <mohamed@unpredictable.fr> writes:
 
-Use atomic compare-and-exchange to update PTEs, restarting the
-page-table walk if a concurrent modification is detected.
+> The following changes since commit d73149283205645625bfa9fe029cfb68e4c4a9=
+ae:
+>
+>   Merge tag 'samuel-thibault' of https://people.debian.org/~sthibault/qem=
+u into staging (2026-10-24 16:09:37 +0200)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/mediouni-m/qemu tags/whpx-fix-0-pull-request
+>
+> for you to fetch changes up to 2bf35950b54c1db9a6de6eb47b42cf843c6bd282:
+>
+>   whpx: i386: also save debug registers (2026-11-08 02:48:18 -0700)
+>
+> ----------------------------------------------------------------
+> whpx: QEMU 11.2 pull request
+>
+> This is a cut-down version of the "whpx: i386: updates for QEMU 11.2" pat=
+chset
+> with fixes for QEMU 11.2.
+>
+> These include:
+>
+> - fixing reset
+> - CPUID fixes (leaf 0xd)
+> - handle systems where nested virt is advertised but not working
+> - xsave fixes
 
-For nested translation, check G-stage write permissions before updating
-an S-stage PTE. Restart the walk if the write translation resolves to a
-different physical address.
+You need to apply your s-o-b to patches you submitting in a PR:
 
-Avoid caching write permission when the PTE's dirty bit is clear, so
-subsequent writes can trigger the required update.
+  https://www.qemu.org/docs/master/devel/code-provenance.html#subsystem-mai=
+ntainer-requirements
 
-Expose the capability through the new "amo-hwad" device property,
-disabled by default.
 
-Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
----
- hw/riscv/riscv-iommu.c | 196 ++++++++++++++++++++++++++++++++++++++++-
- hw/riscv/riscv-iommu.h |   1 +
- 2 files changed, 193 insertions(+), 4 deletions(-)
+>
+> ----------------------------------------------------------------
+>
+> Akshey Taneja (2):
+>   whpx: i386: do not require ProcessorFeaturesBanks on legacy Windows
+>   whpx: i386: fall back to xAPIC when the MSR exit bitmap is unavailable
+>
+> Boden Randin (1):
+>   whpx: i386: avoid updating hflags for vmexits
+>
+> Doug Cook (1):
+>   target/i386/whpx: fix VMX capability MSR values
+>
+> Doug Cook (WINDOWS) (2):
+>   target/i386/whpx: whpx_get_xsave_state error handling
+>   target/i386/whpx: handle processor reset
+>
+> Kostas Chatzikokolakis (1):
+>   whpx: i386: forward the dynamic EBX of CPUID[0xD] sub-leaves 0 and 1,
+>     not 1 and 2
+>
+> Mohamed Mediouni (6):
+>   whpx: i386: get APIC state before VM save
+>   whpx: i386: fix TPR encodings for local APIC
+>   whpx: i386: save/restore xss
+>   whpx: i386: make nested virtualisation init failure non-fatal
+>   target/arm/whpx: handle processor reset
+>   whpx: i386: also save debug registers
+>
+>  include/system/whpx-internal.h |   5 +-
+>  target/arm/whpx/whpx-all.c     |  10 +-
+>  target/i386/whpx/whpx-all.c    | 307 ++++++++++++++++++++++++++-------
+>  target/i386/whpx/whpx-apic.c   |  10 +-
+>  4 files changed, 266 insertions(+), 66 deletions(-)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 6760699eb8..04d50cd620 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -265,6 +265,128 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
-     return page_mask;
- }
- 
-+typedef enum RISCVIOMMUADResult {
-+    RISCV_IOMMU_AD_SUCCESS,
-+    RISCV_IOMMU_AD_RETRY,
-+    RISCV_IOMMU_AD_FAULT,
-+} RISCVIOMMUADResult;
-+
-+/*
-+ * Atomically update the A/D bits of a leaf PTE.
-+ * Retry the page-table walk if the PTE has changed.
-+ */
-+static RISCVIOMMUADResult
-+riscv_iommu_ad_update(RISCVIOMMUState *s, hwaddr pte_addr,
-+                      unsigned int pte_size, uint64_t pte, uint64_t updated_pte)
-+{
-+    MemoryRegion *mr;
-+    hwaddr offset, len = pte_size;
-+    uint64_t old_pte;
-+    void *pte_ptr;
-+
-+    if (pte_addr & (pte_size - 1)) {
-+        return RISCV_IOMMU_AD_FAULT;
-+    }
-+
-+    RCU_READ_LOCK_GUARD();
-+
-+    mr = address_space_translate(s->target_as, pte_addr, &offset,
-+                                 &len, true, MEMTXATTRS_UNSPECIFIED);
-+
-+    if (len < pte_size || !memory_region_is_ram(mr)) {
-+        /*
-+         * The entire PTE must be backed by a single RAM region
-+         * for an atomic update.
-+         */
-+        return RISCV_IOMMU_AD_FAULT;
-+    }
-+
-+    pte_ptr = qemu_map_ram_ptr(mr->ram_block, offset);
-+
-+    if (pte_size == 4) {
-+        uint32_t expected = cpu_to_le32((uint32_t)pte);
-+        uint32_t desired = cpu_to_le32((uint32_t)updated_pte);
-+
-+        old_pte = qatomic_cmpxchg((uint32_t *)pte_ptr, expected, desired);
-+        old_pte = le32_to_cpu(old_pte);
-+    } else {
-+        uint64_t expected = cpu_to_le64(pte);
-+        uint64_t desired = cpu_to_le64(updated_pte);
-+
-+        old_pte = qatomic_cmpxchg((uint64_t *)pte_ptr, expected, desired);
-+        old_pte = le64_to_cpu(old_pte);
-+    }
-+
-+    if (old_pte != pte) {
-+        return RISCV_IOMMU_AD_RETRY;
-+    }
-+
-+    return RISCV_IOMMU_AD_SUCCESS;
-+}
-+
-+static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-+    IOMMUTLBEntry *iotlb, bool implicit_write, uint64_t *fault_iotval2);
-+
-+/*
-+ * Updating a first-stage leaf PTE requires an implicit write.
-+ * Translate its GPA through the G-stage, checking write permission
-+ * and updating the G-stage's A/D bits as needed.
-+ */
-+static int riscv_iommu_check_pte_write(RISCVIOMMUState *s,
-+                                       RISCVIOMMUContext *ctx,
-+                                       dma_addr_t pte_gpa,
-+                                       IOMMUAccessFlags req_perm,
-+                                       hwaddr *pte_spa,
-+                                       uint64_t *fault_iotval2)
-+{
-+    RISCVIOMMUContext gctx = *ctx;
-+    uint64_t iotval2 = 0;
-+    int fault;
-+
-+    IOMMUTLBEntry iotlb = {
-+        .iova = pte_gpa,
-+        .target_as = s->target_as,
-+        .addr_mask = ~0ULL,
-+        .perm = IOMMU_WO,
-+    };
-+
-+    gctx.satp = RISCV_IOMMU_DC_FSC_MODE_BARE;
-+
-+    fault = riscv_iommu_spa_fetch(s, &gctx, &iotlb, true, &iotval2);
-+
-+    if (fault) {
-+        *fault_iotval2 = iotval2;
-+
-+        if (fault == RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS ||
-+            fault == RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS) {
-+            /*
-+             * Per the RISC-V IOMMU Fault/Event Queue format, iotval2[0]
-+             * indicates an implicit first-stage access and iotval2[1]
-+             * indicates an implicit write. Report the fault for the
-+             * original DMA access rather than the implicit write.
-+             */
-+            *fault_iotval2 = (pte_gpa & ~3ULL) | 3;
-+
-+            fault = (req_perm & IOMMU_WO) ?
-+                        RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
-+                        RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS;
-+        } else if (fault == RISCV_IOMMU_FQ_CAUSE_RD_FAULT ||
-+                   fault == RISCV_IOMMU_FQ_CAUSE_WR_FAULT) {
-+            /*
-+             * A physical access fault also uses the original
-+             * DMA access type.
-+             */
-+            fault = (req_perm & IOMMU_WO) ?
-+                        RISCV_IOMMU_FQ_CAUSE_WR_FAULT :
-+                        RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
-+        }
-+        return fault;
-+    }
-+
-+    *pte_spa = iotlb.translated_addr;
-+    return 0;
-+}
-+
- /*
-  * RISCV IOMMU Address Translation Lookup - Page Table Walk
-  *
-@@ -277,14 +399,15 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
-  * @ctx             : Translation context for device id and process
-  *                    address space id.
-  * @iotlb           : translation data: physical address and access mode.
-+ * @implicit_write  : Whether this is an implicit write to a first-stage PTE.
-  * @fault_iotval2   : Fault address and implicit-access flags for iotval2.
-  * @return          : success or fault cause code.
-  */
- static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
--    IOMMUTLBEntry *iotlb, uint64_t *fault_iotval2)
-+    IOMMUTLBEntry *iotlb, bool implicit_write, uint64_t *fault_iotval2)
- {
-     IOMMUAccessFlags trans_perm = IOMMU_NONE;
--    dma_addr_t addr, base;
-+    dma_addr_t addr, base, s_base_gpa = 0;
-     uint64_t satp, gatp, pte;
-     bool en_s, en_g;
-     struct {
-@@ -308,6 +431,8 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-      * effective leaf permission for the translation cache.
-      */
-     const IOMMUAccessFlags req_perm = iotlb->perm;
-+    const hwaddr addr_mask = iotlb->addr_mask;
-+    const hwaddr translated_addr = iotlb->translated_addr;
- 
-     satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
-     gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-@@ -326,7 +451,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-      * means we can't do an early MSI check unless we have
-      * strictly !en_s.
-      */
--    if (!en_s && (req_perm & IOMMU_WO) &&
-+    if (!implicit_write && !en_s && (req_perm & IOMMU_WO) &&
-         riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
-         iotlb->target_as = &s->trap_as;
-         iotlb->translated_addr = iotlb->iova;
-@@ -413,6 +538,17 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     /* S/G stages translation tables root pointers */
-     gatp = PPN_PHYS(get_field(ctx->gatp, RISCV_IOMMU_ATP_PPN_FIELD));
-     satp = PPN_PHYS(get_field(ctx->satp, RISCV_IOMMU_ATP_PPN_FIELD));
-+
-+restart:
-+    sc[S_STAGE].step = 0;
-+    sc[G_STAGE].step = 0;
-+    trans_perm = IOMMU_NONE;
-+    iotlb->addr_mask = addr_mask;
-+    iotlb->translated_addr = translated_addr;
-+    iotlb->perm = req_perm;
-+    s_base_gpa = 0;
-+    *fault_iotval2 = 0;
-+
-     addr = (en_s && en_g) ? satp : iotlb->iova;
-     base = en_g ? gatp : satp;
-     pass = en_g ? G_STAGE : S_STAGE;
-@@ -540,8 +676,51 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                 iotlb->addr_mask &= (1ULL << va_skip) - 1;
-             }
- 
-+            /* Automatically update the leaf PTE's A/D bits when enabled. */
-+            uint64_t updated_pte = pte;
-+            if (ade) {
-+                updated_pte |= PTE_A;
-+
-+                if (acc_perm & IOMMU_WO) {
-+                    updated_pte |= PTE_D;
-+                }
-+            }
-+            if (updated_pte != pte) {
-+                if (pass == S_STAGE && en_g) {
-+                    const dma_addr_t s_pte_gpa =
-+                        s_base_gpa + idx * sc[pass].ptesize;
-+                    hwaddr write_spa;
-+
-+                    int fault = riscv_iommu_check_pte_write(
-+                        s, ctx, s_pte_gpa, req_perm, &write_spa,
-+                        fault_iotval2);
-+                    if (fault) {
-+                        return fault;
-+                    }
-+
-+                    if (write_spa != pte_addr) {
-+                        goto restart;
-+                    }
-+                }
-+
-+                RISCVIOMMUADResult result = riscv_iommu_ad_update(
-+                    s, pte_addr, sc[pass].ptesize, pte, updated_pte);
-+
-+                if (result == RISCV_IOMMU_AD_RETRY) {
-+                    goto restart;
-+                }
-+                if (result == RISCV_IOMMU_AD_FAULT) {
-+                    return (req_perm & IOMMU_WO) ?
-+                        RISCV_IOMMU_FQ_CAUSE_WR_FAULT :
-+                        RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
-+                }
-+                pte = updated_pte;
-+            }
-+
-             /* Continue with S-Stage translation? */
-             if (pass && sc[0].step != sc[0].levels) {
-+                /* Save the S-stage page-table GPA for A/D updates. */
-+                s_base_gpa = addr;
-                 pass = S_STAGE;
-                 addr = iotlb->iova;
-                 continue;
-@@ -552,6 +731,11 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                                          ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO) :
-                                          IOMMU_RO;
- 
-+            /* Do not cache write permission until the D bit is set. */
-+            if (!(pte & PTE_D)) {
-+                leaf_perm &= ~IOMMU_WO;
-+            }
-+
-             trans_perm = trans_perm == IOMMU_NONE ?
-                          leaf_perm : trans_perm & leaf_perm;
- 
-@@ -1794,7 +1978,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_TLB_MISS);
- 
-     /* Translate using device directory / page table information. */
--    fault = riscv_iommu_spa_fetch(s, ctx, iotlb, &fault_iotval2);
-+    fault = riscv_iommu_spa_fetch(s, ctx, iotlb, false, &fault_iotval2);
- 
-     if (!fault && iotlb->target_as == &s->trap_as) {
-         /* Do not cache trapped MSI translations */
-@@ -2732,6 +2916,9 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
-     if (s->enable_ats) {
-         s->cap |= RISCV_IOMMU_CAP_ATS;
-     }
-+    if (s->enable_amo_hwad) {
-+        s->cap |= RISCV_IOMMU_CAP_AMO_HWAD;
-+    }
-     if (s->enable_s_stage) {
-         s->cap |= RISCV_IOMMU_CAP_SV32 | RISCV_IOMMU_CAP_SV39 |
-                   RISCV_IOMMU_CAP_SV48 | RISCV_IOMMU_CAP_SV57;
-@@ -2891,6 +3078,7 @@ static const Property riscv_iommu_properties[] = {
-         LIMIT_CACHE_IOT),
-     DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
-     DEFINE_PROP_BOOL("ats", RISCVIOMMUState, enable_ats, TRUE),
-+    DEFINE_PROP_BOOL("amo-hwad", RISCVIOMMUState, enable_amo_hwad, false),
-     DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
-     DEFINE_PROP_BOOL("s-stage", RISCVIOMMUState, enable_s_stage, TRUE),
-     DEFINE_PROP_BOOL("g-stage", RISCVIOMMUState, enable_g_stage, TRUE),
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 403d10b321..8cf228f698 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -44,6 +44,7 @@ struct RISCVIOMMUState {
-     bool enable_off;      /* Enable out-of-reset OFF mode (DMA disabled) */
-     bool enable_msi;      /* Enable MSI remapping */
-     bool enable_ats;      /* Enable ATS support */
-+    bool enable_amo_hwad; /* Enable hardware A/D updates */
-     bool enable_s_stage;  /* Enable S/VS-Stage translation */
-     bool enable_g_stage;  /* Enable G-Stage translation */
- 
--- 
-2.53.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
