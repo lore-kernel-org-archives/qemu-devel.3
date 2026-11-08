@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12A1606A31C
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 12:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B928B606A31C
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 12:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=bz8DGDrF
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=IJ0cCOVR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQ1aL-0006fh-Vd; Sun, 08 Nov 2026 07:01:22 -0500
+	id 1xQ1cj-00010D-Ij; Sun, 08 Nov 2026 07:03:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xQ1aJ-0006fD-DW; Sun, 08 Nov 2026 07:01:20 -0500
+ id 1xQ1av-0006y9-1N; Sun, 08 Nov 2026 07:02:01 -0500
 Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
  ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xQ1aG-0000V3-GJ; Sun, 08 Nov 2026 07:01:19 -0500
+ id 1xQ1an-0000V3-JH; Sun, 08 Nov 2026 07:01:54 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=anzYR5a9ZHrBfCJCuisIoXZqBvzWKYXKWNwcfO0MXclCUS0nMjDiD/cODCzIrVpvZosJ9c0DZ4IY+kXEl0gSvbNNKEMyfxs+3HuVxgeaUSCMhag7Z8eBaxkSB+NX6a7QNT1GuOMgN9udSiALwD1vnTDEVtiDYio7Nr+HtnK8yz84mWfcDvD6C5yOgtm6Nyjy6owECu1bjBIB4+22gbPjY3xy9AhzYbho4AB7EpIYqMbXZOF0hav+HaadIeEffBS47+436vz7PW0KGQmpSZ8+M7uVQHlbVxjyisQeiSggNhiaWUt7EiAkTvf3vxKn1VIvVDkQgyflszeqU+GT004mVA==
+ b=SQG2qyWRj+3jjlfb29IfN6Ei54F869A6u2RwZebAyu70SPm6+UuQ8jrGeNqwAGqgCwv/8/w0zm9MU0HPYzNVqnPCdOKK9YGTr21fbR/PjHGaJ4sq36m3xrXOGeB/II/HGeW+TbfGYb9ivbaFHAQPGw6CKfbD8Aj9iRfyeSQa96u7gYJIoD8aFdWl4Zsfd8fp3/WEwj6BRRsgKT0M2k3kfVPL1tfqAadJL+Cd/lk/9HxLAC0jtUeMDwFcvhRD1lLJOgXfOruJKJ/zimPZULj0c+XK34tnFn2tliX1hRTktkoBHCanWNbLlBJ7DDpvswS+FiXTUvMjzPwq8OkmelGj1g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sUTgfIbUdohWZc7i3EefgWtd26mgIwBYJORXuWfE7ws=;
- b=cDJ983zSzBWFBpaedATz4m+Q7WnKMVLkmAwe/AbZ3KZGgIQKXFRq/8KMK4ApacfhOR2L9UfNKWlg6ZNdck1XqxzMaAv1+xrM0No8n1WMcTiyRlYs5qkZzj99UnKPmpQvzbQK72Aj88GRUvlNCEA0fPCrj/Z/J7DvHZPFtA5Lx76AOFBNpFT2PTm4+VOjJ/Bme4OdXliACCEErO9Z7cCbyp28Ec3doknQ6n+0+Vhx+VhVBkUQFzuPr+tKJGzjY5T90zGMtIVDfD166BXIlykdV6c6Z0h9f9orNCTnuqDJTY3qWxKd650jXdu9xikbW7g9SMSzT0zNQbG5LfD929GvYg==
+ bh=K1r2LV4fqTImfc6ohP7TU99BqUOdHbSXPJLD2z/rcjA=;
+ b=eSQZdYWSp543jAOSprQ1bNlP8ov02aEVVwYF2WaryYn/zPwgxXkq5sMS8zmLBGCwBqmoox0IjkpksfR/up2ImoZEmSqkideooLl9w7eig2WpHA2x59Nidma7QDN6jTdvMHZKcL2S1FU8aHBTAm5wAg4yuGYyHsy3rcTh5RA81u9Q2Tdcrov/WEU870JErFTbEhM1OnJdt/TrQYYC52XwxiXgDouKmSjkjAQKmt8NL/nOj1wjDM7AQT2y3plsQMiUB2CtNgDupJW7a7euZ4X0WQkSJ0p5w2Lu9odx3GbQki3LjjpmX8O9LFoe59jUumqASa1E/xj6jGGkzl2rikxGeg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,19 +32,19 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sUTgfIbUdohWZc7i3EefgWtd26mgIwBYJORXuWfE7ws=;
- b=bz8DGDrFbMHTr+vC7rxbVGAnyBOCVLwsewKKf7VT88kp+jakJcC48r8iXflAf9kHoJ8qMCsPAGhCM/u+RhzvXLKQRsw93LXl4tiZo+CqyGWtLSo5zHS92LCksURWYdaM5pGZL2uBp3OFEOcpKRPDM13rL2I31m7GFlbl1mpzGKjQqoMyzJzNnTTIdqK52rt4sYFEpN1bvCKYrjANK5RocbLQB+ucFIPgdKiVXZ5QkrYgi2ZFVsBTnTR0F6L92QkIe6JxqAcblNy59Shyzecbx7xmx/1oXHJUf5LTuJ5Mn2uZ0jjFlukPB8zRR+keNslwOHHW4w5LHFMtr2lNOUcBjA==
+ bh=K1r2LV4fqTImfc6ohP7TU99BqUOdHbSXPJLD2z/rcjA=;
+ b=IJ0cCOVR7uMqsM5UdG/GsucMZ1l+kovMuYIe2n7iEtcFJPROVJ0+adMlpbV3nLWaOYG9bZMqLUaOnsIo5dwWOA7wxm1M9LItqZMjom6kTcqVxULlnM89MihD/rNUB5F1iQErbKYvU9RYZ4Jr3DsYST8mAvcJd+aK36vpQY5IWtNJ81KemUXtKK4qpHBPNapS2PZFk8FbsP4FRYpuCMt9vgEGbtackhXfMe1iZo03jUpLYMYUfeGj280oiJVfLx6JFg5LY1AfWJsImCcsD0t7yvjrfVMnasOe7O3Jj54ucGxmQt0+V5ZvlfyC9SrJh3x+wGXRD12jBrEXSgkZGyR61Q==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB7144.apcprd02.prod.outlook.com (2603:1096:820:116::10)
  by KUZPR02MB9138.apcprd02.prod.outlook.com (2603:1096:d10:61::13)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.12; Sun, 8 Nov
- 2026 12:01:03 +0000
+ 2026 12:01:39 +0000
 Received: from KL1PR02MB7144.apcprd02.prod.outlook.com
  ([fe80::18f7:ed72:e33:ea5c]) by KL1PR02MB7144.apcprd02.prod.outlook.com
  ([fe80::18f7:ed72:e33:ea5c%6]) with mapi id 15.21.0592.010; Sun, 8 Nov 2026
- 12:01:03 +0000
+ 12:01:39 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
 Cc: Bernhard Beschow <shentey@gmail.com>,
@@ -52,10 +52,10 @@ Cc: Bernhard Beschow <shentey@gmail.com>,
  Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Subject: [PATCH v3 04/23] target/ppc: Complete e500mc and e5500 L1 cache
- configuration
-Date: Sun,  8 Nov 2026 20:00:03 +0800
-Message-ID: <20261108120034.1755008-5-bin.meng@processmission.com>
+Subject: [PATCH v3 17/23] tests/tcg/ppc: Test FPSCR W/L handling on
+ e500mc/e5500/e6500
+Date: Sun,  8 Nov 2026 20:00:16 +0800
+Message-ID: <20261108120034.1755008-18-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261108120034.1755008-1-bin.meng@processmission.com>
 References: <20261108120034.1755008-1-bin.meng@processmission.com>
@@ -68,56 +68,56 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB7144:EE_|KUZPR02MB9138:EE_
-X-MS-Office365-Filtering-Correlation-Id: 14baed55-00d4-4608-9fa8-08df3d8ff692
+X-MS-Office365-Filtering-Correlation-Id: 8dcbaf77-94ad-4551-a62e-08df3d900c0e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|376014|22082099003|18002099003|10067099003|261102123227099003|56012099006|261021123027099003|261021121427099003|261026121527099003|261009223027099003;
-X-Microsoft-Antispam-Message-Info: V57WOWji8rziHACf7/0tBp5i3mnaGH0MGpAdB6Kr0FQ2ZA8RmquYy+eaQLTFIqy5dPJ5Rnlp341+aap2bV0TZaiA1TSv4eU2Tm5fHvgTQhacU8KuI9skdWOYGpAzmNB9fd0qNDfGdYFX0efzG2BgjsLyq5N9aRLB2v6YOJr8GDQrfPANKy1hG1xn1Xfvqzdf6FqztZ0cQHYj4pb/6MPEu0DppyT6dkkLkbUgI4aab5H4oyrVtJQMaGT82pSepsZWNCJGz0gbdlIm+dFHjb+dwW3u/c6MwDPI9L0iYUFp6RfooGr6627rqD4l8IjokTeeGHvTkQSW9ax97ebfgizbK0e8c78qc5HxoyIs3r4czahsUuVqGynjDo1r4+xEOfDLTlhKDjBks4nJRsPtCwFhBgE1+fN+6Zs1WIJqDVxcl/eHmE38Z8wDfPJk0bw2zeu1sV4BR2d5YkCWolk0WKejpm32lJ3WCY2ov/8FYEd593J/fbwHRR2rZW74w82YXyMq49Xg55vK5rcXRriqJQ/MgIQgKLIW4Wo7voBvjJg+Ts9Tp9HYaI5u+kb5xebOJFVAiilA6Gr8+iP1ecTcqT28/ndP3K2NVA+B0rDYo9GwAnHp9o0+NKuod+uurAqomPNC9vLKqQ3DR07JQCHSkfPh5W+P6Z29nE/Nnsb+pPjHXM8=
+ ARA:13230040|1800799024|366016|23010399003|376014|22082099003|18002099003|10067099003|3023799007|261028144727099003|261102123227099003|261022115727099003|261022113327099003|261022105027099003|261022075727099003|56012099006|261021135927099003|261021130227099003|261021123027099003|261021121427099003|261021133027099003|261026130827099003|261026121527099003|261026135527099003|261026140227099003|261009223027099003|260925021311599003|260925021911599003|260925022911599003;
+X-Microsoft-Antispam-Message-Info: 5JANxaFPoejhjdNcOFiWjKvclmzrlVGX/G9C07fWvmUnXcDYFENDQhkv17+c47W/ASrcuTMA0c3F0LIwsCEkxKB2pTw9s7qcRdKvQ9xwt3mj/eKbYIyAmQd9w4XMeyb8OrZtKtrQ1vpbJ16s3llowo/YE837SWLDEg2FUZYr8CxmoKef9W0nvCZQiVKlSpqcnw3w/uJWInwc12KKeI9B1mN5DHW7eVog+pE4RzaWMXFPDwUTr8IJsZLF6cJhsk5z2kwbTqGGJpF4ObwfAMRCctinGQMJ5oe6jFmAnCFXh3qxR7wj9KSdV6tMMk95F4jVuETO/6LOvqetVjStKYwvQ4G06Gi8agI71UmtS3iz+/brKrzKelFYMVJFCsQEiFFL6fNLxbd6NHqMWmDvvbzbw9kw35qOiT6gRIrYdASNjMTw6ZLpPASew9UIcJwUbB1O3ya7QB5kxLGW/FLUPCovoe8UOD7EAZhS4W9fSOP0H+ExcJE294tyQKpC4yfp95kM8UQT7abxZak58Sx6k/ckA8LhhBwACNRDlp0XPUrOvCiy1F03OPOyqIlEyv589SkJHHy/m5Uozh5DujVJgZodUEPIfJ2KQz7sD/330pKTBxIP651n8UoRx7MGQ7vIqHejEguTlut5PUvpk56Na6Mc79AHZyIi3wiAa0VKzuwk2Qg=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB7144.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(22082099003)(18002099003)(10067099003)(261102123227099003)(56012099006)(261021123027099003)(261021121427099003)(261026121527099003)(261009223027099003);
+ SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(22082099003)(18002099003)(10067099003)(3023799007)(261028144727099003)(261102123227099003)(261022115727099003)(261022113327099003)(261022105027099003)(261022075727099003)(56012099006)(261021135927099003)(261021130227099003)(261021123027099003)(261021121427099003)(261021133027099003)(261026130827099003)(261026121527099003)(261026135527099003)(261026140227099003)(261009223027099003)(260925021311599003)(260925021911599003)(260925022911599003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Qdvf2c3O2cCKw8YvVN9Sp1ozejb1TkPGJFnMPmvvzq0g7nBOri2bZ7YMwnLZ?=
- =?us-ascii?Q?mgLS4Kc64/fSDaXVniHG6GvTY+lVKLhAb9ZTrWUaLcL9D+HdujUrj75QwjOW?=
- =?us-ascii?Q?49rNzvtoG0WUE4yxW+ZG4+nxX50Gi6iixRhcOFXjcg4wgjAraK/CEXXKan2U?=
- =?us-ascii?Q?r2h1UY0+in2+JaJMBE/IJRZBchBrOpCUmDO8JPu1CuiQNVk+ZOI3WBVOjogh?=
- =?us-ascii?Q?2dFelYvEQyKIFHoYXo0kCU0K4U1MgIB/AY/jpf+4Bn4xuICzxca3tl/fJop4?=
- =?us-ascii?Q?C3GwwfgP1vtoY5F0s3ln0+8T9w+b16lAbvFHozv+UqXRTEoUZaBjyP4cWvkn?=
- =?us-ascii?Q?Lx1A86mWpD9ycIfswCZw4u5axK0OqxfwsRsCl5/elfrrbsUkJ/uu59Y7B+tl?=
- =?us-ascii?Q?pppWT88QqdsgsLH8l9vBrdZl+tAzCp6hFz4uVWov9N7X8jXzu2oiZrsfT1Zx?=
- =?us-ascii?Q?9rFGiPv+3eptGlhZqihpRq8tCl6woo9pucd/JuCzTd5HzaySkOYUobBbZBsL?=
- =?us-ascii?Q?ioeJ19Z1PbrYZ7DmmT+3jX2cGmBk3XrBIsHseVxiLsRtKj3/cwDe4JJBvXIW?=
- =?us-ascii?Q?2EKdeHMffb7wkxQ4c1Ef6/Nk3S0dF44hY+6ed9acQVMRRtOEZ5frYoqTjoj2?=
- =?us-ascii?Q?tmVD5DKlNKIRSxuke1LWK4FYjJiuFtBnmWkyXQ1jEgkBOxBsI6H9n/tbKnmu?=
- =?us-ascii?Q?1h4+XtE3JUhQO19zaaS5GUCGSGeCIHuW/iscszHOcKl7JTpdGRTFVaB1Lmwl?=
- =?us-ascii?Q?1BkdzJz5FfGZ3J149ty7I8dp/9tBaD0JHr0tQjqG62l9LqviNWgqlMtBiJ0A?=
- =?us-ascii?Q?SHY3EfYyhKrQlCtWyc39VX07WAw1FydgqhfpaADRx6z80+MNACvmuGqagQWl?=
- =?us-ascii?Q?lkDyZtASnVTYZOC14TTCKoYVH0hMtHTn8929e6OxFAgUb0sfAmYcCNpeRQbl?=
- =?us-ascii?Q?b9Oq7ge+w0mmjt8Yzis87L3Mf+WWIcvd7NQLsqCwSGtYxM9Erryr7U1FfxWN?=
- =?us-ascii?Q?gyCSIE/N/zt7qY6i6AYRYt52mMFMqs5eqIeqjH77doW8RudbLexW5cQbvYVM?=
- =?us-ascii?Q?yC+FTg3ENxeXRzjpdjAnxGemUfv4EKSjOiTEEPajqO/ABwKsOKjXlKtbu6UH?=
- =?us-ascii?Q?PPDzn0q8GytJRu+TRYgna7auGDAEY4O6UrxAWPTIgX0uNjvP8GrqzpB1KKPN?=
- =?us-ascii?Q?OgrN0KTqgRfQe1oCtE+YzPG9zrQNJxc+9welyqEZVSI9MRBt0OSOrbR6KZCI?=
- =?us-ascii?Q?DRQequsiBQRBsniVOY2VKWWVW9oR7gcF2AZP3oFG3Fg5QfGJ6/js6Z4YQsuq?=
- =?us-ascii?Q?FeDe+vZY8aM8xPiKUFzOuIOY6RR9bDbDaQz2gQes8ewk2wQKBHYNEPuIlZ+p?=
- =?us-ascii?Q?kJYCqPHbR4oaZpBNcnkeOpx7BUGYrkcu27xZc6conEDx8w9/cqBpDbhyquT7?=
- =?us-ascii?Q?UFASnv0mzMtA7H4dNM5UeFRzDHLHQuh1hVQwsBGsrTg3Hd4KgKx+gU+UWpiW?=
- =?us-ascii?Q?3iQdjUY6tD334ndGSkW/mEVbSMDyKEvnywqaDd4NppyubRdEe27MmABfNJuq?=
- =?us-ascii?Q?hdGAa4aAwfeYZmkFX6MLRcZil+dbjfG4pcnfu0Id0O4XcUpgeXsq8dhj31fO?=
- =?us-ascii?Q?EhrBlmFN4lJ0Xbdji9iSzKlkuKp3juAa9G0L444aJ1lYoPAep2eqcEKOI9bN?=
- =?us-ascii?Q?OTm5IwX8jL3R9AKe+MbZSEOJdHb5wbLRWkSAwNgOW8/fceIs4GJXoO5f6cu3?=
- =?us-ascii?Q?NwRSw7cV61Z8RF4iLyuCNSCDb8E0R2o=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?jtCKocZeq/HNcbvOOJb+bEnp1suYeJ6ozz+nVeMb3u1qaddBIuSArBJZtcee?=
+ =?us-ascii?Q?bG0sne1yKQklv2wetPQmK/hLwdg1KTkkJIKk27YuD1MYUV3YTgnjGQ0NkEiZ?=
+ =?us-ascii?Q?vxsQ9ils+LYpZsWrVXFP3l74g8IVmviNKuEFo/bYiFxFlGNdxIuqQ3Gtu5r3?=
+ =?us-ascii?Q?0zwFPGDpESDNaqLxE6kAls2qiBfxkTarg4zR05V53lGIVwp0vxc+FTmzoUgA?=
+ =?us-ascii?Q?6pvBkXky6SLFej6R495FSaVnaaZqhjaWacEZDpGiLIYDv5cPwke9A4BqKFYQ?=
+ =?us-ascii?Q?HYiaBEP7ubfyJ6UXlJfWUBVSQU+PA6vo788aBDqUg1OpnwSeGLz48kxiMsh1?=
+ =?us-ascii?Q?+G3W0lzDuJskH3bN4a4je61OcM9P67IFAG01RDDlxwc+LCGsLO56V1Fnz1eV?=
+ =?us-ascii?Q?FxfUUM3c4U+RnJ0yjH2VjIQ1oH8FXi9u41AcOe+ByF5lgVsZeDGH1oVr4H13?=
+ =?us-ascii?Q?jP4YyZmkIYGnrUmDEDxUhDRc7kTyj83fdxCUQQKHl/2vRls1lcrlyp2dwMA5?=
+ =?us-ascii?Q?gCymckQAn7S9uN3lobvMBfgSWRHp8by/9YUwqPaLxhDhcTbW03N2yMfGNEHZ?=
+ =?us-ascii?Q?t2mkZfT9D2EWixk3s7MeUR2CyROE6bTp8maBFPqZOzj4YCPvn9cwZXT8jR2T?=
+ =?us-ascii?Q?emL+k274iBtQR6f4daV76d1hY517Y7llyhPtVBE4ORDMa8QNP67vdZ79/Ner?=
+ =?us-ascii?Q?+8hkzquyv0nh25hC8ViwLrGD633BVQHf6Z4pW2/AuqafROpETA7Mac1ottD0?=
+ =?us-ascii?Q?Fk4D6w3ZZ6bdoNqNGalWhIpWgJ/cV3seiKb9senekMHMZDCt1HudGOeFHhbz?=
+ =?us-ascii?Q?C83VEXJvsI6pdjHIhd6pbezhQrIkN88IYwkGYsPWFNeBT+P3QCTIaQYnAGUR?=
+ =?us-ascii?Q?0+vS8M4Lr74hMqm46kTjyteOJ6wEGyLaN329WtZi8O9iMY4Xe9QQ0Rz8twCI?=
+ =?us-ascii?Q?+cVZJQ3SzdkoQGg4SFd4JMAzZFGREWj2bPXUXjgewHUXTlMeznMnyQ3R/FyY?=
+ =?us-ascii?Q?iuhOJHovGQO1FLJAjD+A221QfA1LK07MvGEuDRNwS1uKqjcwRt1Qbr7fFX8u?=
+ =?us-ascii?Q?k+UsaRjfhzs/7lf1SxbUjfuOQXICw1l2ARr4wRFmdrWfz+/TIWzp1QCNHUEF?=
+ =?us-ascii?Q?Z1O4gYJjaKhWKQ3RWpGYFmUxncNvQXbcrS0NASAOOkPkt4n5kxMuO0cWWeln?=
+ =?us-ascii?Q?SvTFjQcJfPlHzO1PyY77gtKCuyvTxqTaYB4QghdV+s6SVFoeMzp9r0OjhMBw?=
+ =?us-ascii?Q?xmK7f2mdCEtA8ZArUCMpe3sLgTDT3WHfAU3fe83PHvME92dVd5GRuatSUJro?=
+ =?us-ascii?Q?KTEXbj/2F0xJhuCdcz32CoJgDExTBkTsX3Dg6IH3nYd67P3jaW8A5Oj+j/Vm?=
+ =?us-ascii?Q?ZnjU7f1/gmI1XfpTPp4JW7PnYyKwsfKKMfrocle3BnLd5GGLhxLcejGaMY/c?=
+ =?us-ascii?Q?dzXMBv29OosonGYsoFsfnR9OPqSjy5foBG1cNKOP5A/eRZVirBrRhtfNabTG?=
+ =?us-ascii?Q?exkgMlbIVVeytGVDX6KR/WmSrcjH/FosMY2FiW6nVdPTcxLsq0jdqRFWGAaB?=
+ =?us-ascii?Q?P21AvhKDxBrcDDCpd+VSGkSIFY8YJIFdGFd5VAvph7kjgGJRIzvdzmlk3Jk4?=
+ =?us-ascii?Q?FVBlbEvsYAnUEpPKDym22quN9M2qwxi6Sv4PlBS/uiskg+bGUpYOTkKiLs4L?=
+ =?us-ascii?Q?OeUEC4+J9OBJJnOP3zqzVpN2AP8kOApLs+b832qI7DotsR5oBCwaCDSUDwIJ?=
+ =?us-ascii?Q?o5qMcOkp6CAp74V1HGFUJ4Bd5yJmO6Q=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 14baed55-00d4-4608-9fa8-08df3d8ff692
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8dcbaf77-94ad-4551-a62e-08df3d900c0e
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB7144.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2026 12:01:03.7584 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2026 12:01:39.8422 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bIEWWZEVqoH2q7N8QIpRejrIBM1jIHImoJCwIKbZljWatXxMOZXzdU08DK4keU8EcDnHXCH4LLeeFX1YaOfuGfjkUOpM/zfvMyGggFKtSUQ=
+X-MS-Exchange-CrossTenant-UserPrincipalName: Dv3O5CARL8vV9jZm9P+btMsE+I/cj40dc1K8P7TeWEq5Q0nuRAGZj1A8iCFtwtZGOmj7FzH1HbrmohpXFpPHm81sqg7PQVcZSfSJbJnWpm8=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUZPR02MB9138
 Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=bin.meng@processmission.com;
@@ -146,45 +146,122 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The e500mc and e5500 manuals specify pseudo-LRU replacement, cache
-locking and parity detection for both L1 caches. The reset values
-describe the block size, associativity and capacity, but leave
-CREPL/ICREPL, CLA/ICLA and CPA/ICPA clear.
+The e500mc, e5500 and e6500 ignore W in mtfsfi and W/L in mtfsf.
+Check that these fields do not select extended FPSCR fields, cause
+illegal instruction exceptions or override the ordinary field mask.
 
-Set those fields to their documented values so both L1CFG0 and
-L1CFG1 reset to 0x00B83820, including the shared eight-way, 32 KiB
-cache geometry.
+Test both W values, all W/L combinations and the Rc variants. Seed ZE
+and RN before each instruction so partial and zero field masks verify
+that unaffected fields remain intact and selected fields receive the
+expected values. Ignore the undefined upper word returned by mffs.
+
+Register the test for e500mc in 32-bit mode and for e5500/e6500 in
+64-bit mode, using the shared Book E startup and result handling.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-
 ---
-Reference:
-- E500MCRM (Rev.3), section 2.14.4 and 2.14.5
-  https://www.nxp.com/docs/en/reference-manual/E500MCRM.pdf
-- E5500RM (Rev.4), section 2.14.4 and 2.14.5
-  https://www.nxp.com/webapp/Download?colCode=E5500RM
 
 (no changes since v1)
 
- target/ppc/cpu_init.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tests/tcg/ppc/system/fpscr.S     | 75 ++++++++++++++++++++++++++++++++
+ tests/tcg/ppc/system/meson.build |  2 +-
+ 2 files changed, 76 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/ppc/system/fpscr.S
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 2de2684c69..5549728ec2 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2886,8 +2886,9 @@ static void init_proc_e500(CPUPPCState *env, int version)
-     case fsl_e5500:
-         env->dcache_line_size = 64;
-         env->icache_line_size = 64;
--        l1cfg0 |= 0x00800000; /* 64 byte cache block size */
--        l1cfg1 |= 0x00800000; /* 64 byte cache block size */
-+        /* 64 byte blocks, pseudo-LRU replacement, cache locking and parity */
-+        l1cfg0 |= 0x00B80000;
-+        l1cfg1 |= 0x00B80000;
-         break;
-     case fsl_e6500:
-         env->dcache_line_size = 32;
+diff --git a/tests/tcg/ppc/system/fpscr.S b/tests/tcg/ppc/system/fpscr.S
+new file mode 100644
+index 0000000000..41e90b1076
+--- /dev/null
++++ b/tests/tcg/ppc/system/fpscr.S
+@@ -0,0 +1,75 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Copyright (c) 2026 Process Mission
++ */
++
++#include "macros.inc"
++
++    .macro seed_fpscr
++    mtfsf 255, f2
++    mtfsfi 6, 1                 /* ZE */
++    mtfsfi 7, 2                 /* RN */
++    .endm
++
++    .macro check_fpscr expected
++    mffs f1
++    stfd f1, 8(r4)
++    lwz r11, 12(r4)
++    load32 r12, \expected
++    cmpw r11, r12
++    bne fail
++    .endm
++
++    .macro test_mtfsfi field, value, w, record, expected
++    seed_fpscr
++    .if \record
++    mtfsfi. \field, \value, \w
++    .else
++    mtfsfi \field, \value, \w
++    .endif
++    check_fpscr \expected
++    .endm
++
++    .macro test_mtfsf mask, w, l, record, expected
++    seed_fpscr
++    .if \record
++    mtfsf. \mask, f0, \l, \w
++    .else
++    mtfsf \mask, f0, \l, \w
++    .endif
++    check_fpscr \expected
++    .endm
++
++    .text
++    .globl test_main
++test_main:
++    load_addr r4, scratch
++    lfd f0, 0(r4)               /* Source: upper word 3, lower word 1 */
++    lfd f2, 16(r4)              /* Zero for a reproducible initial FPSCR */
++
++    .irp w, 0, 1
++    .irp record, 0, 1
++    test_mtfsfi 6, 4, \w, \record, 0x42
++    test_mtfsfi 7, 1, \w, \record, 0x11
++    .endr
++    .endr
++
++    .irp w, 0, 1
++    .irp l, 0, 1
++    .irp record, 0, 1
++    /* L must not override the ordinary field mask, and W is ignored */
++    test_mtfsf 0, \w, \l, \record, 0x12
++    test_mtfsf 1, \w, \l, \record, 0x11
++    test_mtfsf 2, \w, \l, \record, 0x02
++    test_mtfsf 255, \w, \l, \record, 0x01
++    .endr
++    .endr
++    .endr
++    b pass
++
++    .data
++    .balign 8
++scratch:
++    .long 3, 1
++    .space 16
+diff --git a/tests/tcg/ppc/system/meson.build b/tests/tcg/ppc/system/meson.build
+index 1598348656..ad4c257c9a 100644
+--- a/tests/tcg/ppc/system/meson.build
++++ b/tests/tcg/ppc/system/meson.build
+@@ -11,7 +11,7 @@ ppc_system_cflags = ['-nostdlib', '-ffreestanding', '-mcpu=power6',
+                      '-Wl,-T', ppc_system_link_script, ppc_system_boot]
+ ppc_system_qemu_args = ['-M', 'ppce500', '-accel', 'tcg', '-display', 'none',
+                         '-serial', 'stdio', '-monitor', 'none', '-nic', 'none']
+-ppc_system_sources = ['unsupported.S']
++ppc_system_sources = ['unsupported.S', 'fpscr.S']
+ 
+ tests = []
+ foreach src: ppc_system_sources
 -- 
 2.53.0
 
