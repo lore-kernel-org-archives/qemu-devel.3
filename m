@@ -1,71 +1,83 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B802606A320
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 22:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1DF606A31C
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Nov 2026 22:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=mail.ru header.i=@mail.ru header.a=rsa-sha256 header.s=mail4 header.b=r/82RYxl
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=mail.ru header.i=@mail.ru header.a=rsa-sha256 header.s=mail4 header.b=HudzPefL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQAyY-0004Q9-S0; Sun, 08 Nov 2026 17:02:58 -0500
+	id 1xQBGl-0006vZ-HL; Sun, 08 Nov 2026 17:21:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <domestos48@mail.ru>)
- id 1xQAyW-0004PS-6t; Sun, 08 Nov 2026 17:02:56 -0500
-Received: from send80.i.mail.ru ([89.221.237.175])
+ id 1xQBGi-0006vH-Nd; Sun, 08 Nov 2026 17:21:45 -0500
+Received: from send153.i.mail.ru ([89.221.237.248])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <domestos48@mail.ru>)
- id 1xQAyT-0000Wk-RQ; Sun, 08 Nov 2026 17:02:55 -0500
+ id 1xQBGf-0002dF-Mf; Sun, 08 Nov 2026 17:21:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
- s=mail4; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
- To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+ s=mail4; h=References:In-Reply-To:Content-Type:Message-Id:Date:MIME-Version:
+ Subject:Reply-To:Cc:To:From:From:Sender:Subject:To:Cc:Content-Type:
+ Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+ Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
  List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
- X-Cloud-Ids:Disposition-Notification-To;
- bh=YtqfMQ4xXlT0ssdGa6lMwiMjefdmK5ZhNmt4aTovu40=; t=1794175370; x=1794265370; 
- b=r/82RYxli05tUqWf1/L5SJ4nVbgtpo5QzIR10nRVE+tZw3j9m9rz9gJIFoHdPAgvXrqiDYl/HLf
- aiHq211oTDXBmAeWWWNnAa5WNh5Q4yCuDlEeQMKI9kld0U36KRItIWQf/FMo0PD3zhxGumoyTVrOd
- vbbWnWEt1t4TSmbH8plC5s1x8P7zWJ68msU5ynrdaqH5bWPVOP4JV3CDUSGB/TerI3rmPaY5uXy0v
- EEzTbq8Wgd0jD2of/juEPeg9Bkx/16iyYkyjx8qYTDqXNwvzbzigBQuiqBtFis0ksessE8/HENyeA
- weaysEB+aIyKskWvGrJeooS221nrjOWxJl0Q==;
-Received: by exim-smtp-canary-30-75cf684ff8-c6nln with esmtpa (envelope-from
+ X-Cloud-Ids; bh=oVggVy52eR/0WPpVXGpd8dz5Vw6UNo1w9wQOT3Rly1k=; t=1794176499;
+ x=1794266499; b=HudzPefLDSXV6u55lj71g4hANN9JohfJz8OLpxG3FKTSsR37rQEg+7bbM2uK3
+ FKsokEf4qhrDk78PjGa0AMR/Wn7wgOc+tMiIEWporgUn9FQAt8i7NDdmig4REt0RkDcncTjHeI9cg
+ u4eefE2aEt5y8ZD3KCYcgw1Ym4CR1QuJmD2H8U9X7xmxjUhwdGWvDCIDR6BDkzBH44j8gKQWVnozY
+ c/uBvRqh/l2x3LVy9PGdxlBV1lu75mMYUv3wuTOnM6EOms5Y8JXszGoMJ3j+cCReIrM8XViundU46
+ I8rhoJgbGTYr6XtWAGxdfGCG9+wOa/XEc/u0RLCA8vRatqGYWQ==;
+Received: by exim-f-595bc55869-ckdbj with local (envelope-from
  <domestos48@mail.ru>)
- id 1xQAyM-00000000DGT-0NGS; Mon, 09 Nov 2026 01:02:46 +0300
+ id 1xQBGY-000000003ir-3eAX; Mon, 09 Nov 2026 01:21:37 +0300
+Received: by e.mail.ru with HTTP;
+	Mon, 09 Nov 2026 01:21:34 +0300
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- Dmitry Kokorev <domestos48@mail.ru>
-Subject: [PATCH] target/riscv: fix WPRI handling in mhpmevent CSRs
-Date: Mon,  9 Nov 2026 01:02:32 +0300
-Message-ID: <20261108220232.385393-1-domestos48@mail.ru>
-X-Mailer: git-send-email 2.56.0
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
+Subject: =?UTF-8?B?UmU6IFtQQVRDSF0gdGFyZ2V0L3Jpc2N2OiBmaXggV1BSSSBoYW5kbGluZyBp?=
+ =?UTF-8?B?biBtaHBtZXZlbnQgQ1NScw==?=
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: exim-smtp-canary-30-75cf684ff8-c6nln;
+X-Priority: 3 (Normal)
+X-Mailer: Mail.Ru Mailer 1.0
+X-Senderfield-Remsg: 17941753670424025507
+X-Senderfield-Remind: 0
+Date: Mon, 09 Nov 2026 01:21:34 +0300
+Message-Id: <1794176494.8253128@f737.i.mail.ru>
+Content-Type: multipart/alternative;
+ boundary="--ALT--eE6363f9dAf270a2d0685716393bA63d1794176494"
+In-Reply-To: <20261108220232.385393-1-domestos48@mail.ru>
+References: <20261108220232.385393-1-domestos48@mail.ru>
+Authentication-Results: exim-f-595bc55869-ckdbj;
  auth=pass smtp.auth=domestos48@mail.ru
  smtp.mailfrom=domestos48@mail.ru
-X-Mailru-Src: smtp
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD96F2D5E088614A2372B8D188DC4D6F5CA3B42AFF3D8AD6CEA182A05F538085040437C97CF8D67A9D13DE06ABAFEAF67050767ED2490B9B8C2144EB2C858EDA7616EF1D6B1658FE618
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7F1942E6D70B4A2F0EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB553375669BFFA6ABF9D5DBB9E5818E3A3EE3E29BA75488E6AFFB844FC2924EEFEFADD3928EEF46B7454FC60B9742502CCDD46D0DEDCF5861DED71B2F389733CBF5DBD5E9D5E8D9A59859A8B65FF0BFC5AEE34BE6CC7F00164DA146DA6F5DAA56C3B73B237318B6A418E8EAB8090A508E0FED6299176DF2183F8FC7C0D62E3522C432C21CCD04E86FAF290E2DB606B96278B59C421DD303D21008E29813377AFFFEAFD269A417C69337E82CC2E827F84554CEF50127C277FBC8AE2E8BA83251EDC214901ED5E8D9A59859A8B6714D3C157B7FF6D575ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
-X-C1DE0DAB: 0D63561A33F958A58CD48C85B2EC895D5002B1117B3ED6961362BA0DE0B754191E49B01306B5E3AD823CB91A9FED034534781492E4B8EEAD87AC71952E7BCFF3F36E2E0160E5C55395B8A2A0B6518DF68C46860778A80D548E8926FB43031F38
-X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191716CD42B3DD1D34C77DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659C6C05B8361B7F355C3C46D585AE6B4D64199B9454E62A0522AC21F8AD3170CE321CC070B99DBCCA0B8341EE9D5BE9A0ADD1BC67E1A71A7E9D9D1B8B9A1ED52DBF4CEEB9844102CC9546A885F7A58241B4C41F94D744909CEF1DAEBD50C2D18C54FDD1B49881939BFC3981EEBE9DB10F943082AE146A756F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXOcIETfglQORZ0zpDET4ZrlAo0bq3TDyw5v+G6YiroYwPBqSlV6nYp0=
-X-Mailru-Sender: EFA0F3A8419EF216CD76C1B74664C25897F5688144A3F8793DE06ABAFEAF67050767ED2490B9B8C2DDAC019A3742A8B624B5DB0AABE7183291296853BA92DB575DE55D1386FB234BE5A15ED4F09F547D75E7F0E51054F537BA1E8BD3BAFE721543BE086337E13D9AEAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mailru-Src: fe
+X-7564579A: 78E4E2B564C1792B
+X-77F55803: 119C1F4DF6A9251C5D841680C7BB8F69395238F05D0F91E894436F4F2B0C11C68FD872164937FA4CA865BCC549E9FFC83DE06ABAFEAF670530760CA10E267C69CFCC53687498BD90F618F6F9AC73237B
+X-7FA49CB5: 70AAF3C13DB7016878DA827A17800CE761D033F9D5DE9138D82A6BABE6F325AC1CE03F62A64D27DABCF491FFA38154B613377AFFFEAFD269176DF2183F8FC7C0364F8074C6DFACE2C2099A533E45F2D0395957E7521B51C2CFCAF695D4D8E9FCEA1F7E6F0F101C6759CC434672EE6371C2A783ECEC0211ADC4224003CC836476D5A39DEEDB180909611E41BBFE2FEB2B8DB61EC0D79750DE3972F49C7FFD695FFB2635A775A8E92DF957885B7B4DA71D0C819B32DFABC24A725E5C173C3A84C3ED8438A78DFE0A9E117882F44604297287769387670735201E561CDFBCA1751F28451B159A507268D2E47CDBA5A96583BA9C0B312567BB231DD303D21008E29813377AFFFEAFD269A417C69337E82CC2E827F84554CEF50127C277FBC8AE2E8BA83251EDC214901ED5E8D9A59859A8B6AD73F092CEDDEA7D089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
+X-87b9d050: 1
+X-C1DE0DAB: 0D63561A33F958A58E8FBBA5B7B298EB5002B1117B3ED69679639C7D064C7698886DC9BC01168B20823CB91A9FED034534781492E4B8EEADAEB4DDBFD72C8FA1BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191318BB3CFADBE9C2077DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659B44DB7F312C4609E558389FBE4D31EFD5443CD28F7871F23343D566091708811845046C63CFF4E9EB8341EE9D5BE9A0A02149156990DE5F7C71C92D99DC9E96403A3C1E6F1C6E5DE39A4D55D2591C6014C41F94D744909CEF1DAEBD50C2D18C54FDD1B49881939BFC3981EEBE9DB10F943082AE146A756F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+Od3uM/CLT152eL7j4ZacoUSF0MSa0v5VBmEtSutdC50BIKdL3VIRlkt/X9Gr7QWYXnzB8QdCJkB6LM/UMByHIkuslEuU8a7QkqGRTxKaKz6f
+X-Mailru-MI: 20000080010000000000000800
+X-Mailru-Sender: 7016F810D1C97269140FBE044B9D999086DDB086636275EE3DE06ABAFEAF670530760CA10E267C694D3EE4B1C102CB756315E18593E143A5149164E91495D2A83BC2F568E0EB198DB789D176D1322C6CB15D5A005FF75DDC285CF41CB077510D7C82001978DF54392A059828019CD210FEDC2CE99A723BC21458020726E2BC9F67EA787935ED9F1B
 X-Mras: Ok
-Received-SPF: pass client-ip=89.221.237.175; envelope-from=domestos48@mail.ru;
- helo=send80.i.mail.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-Spam: undefined
+Received-SPF: pass client-ip=89.221.237.248; envelope-from=domestos48@mail.ru;
+ helo=send153.i.mail.ru
+X-Spam_score_int: -15
+X-Spam_score: -1.6
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ FREEMAIL_REPLYTO_END_DIGIT=0.25, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,109 +88,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Dmitry Kokorev <domestos48@mail.ru>
-From:  Dmitry Kokorev via qemu development <qemu-devel@nongnu.org>
+Reply-to:  =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0JrQvtC60L7RgNC10LI=?=
+ <domestos48@mail.ru>
+X-ACL-Warn: ,  =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0JrQvtC60L7RgNC10LI=?= <domestos48@mail.ru>
+From:  =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0JrQvtC60L7RgNC10LI=?= via qemu development <qemu-devel@nongnu.org>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,FREEMAIL_REPLYTO_END_DIGIT,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_REPLYTO_END_DIGIT,HTML_MESSAGE,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Writes to the mhpmevent CSRs can currently modify the
-reserved WPRI bits 57:56. Fix this by retaining the
-previous values of these bits when writing to the mhpmevent
-CSRs through both direct and indirect CSR access paths.
 
-Signed-off-by: Dmitry Kokorev <domestos48@mail.ru>
----
- target/riscv/cpu_bits.h |  2 ++
- target/riscv/tcg/csr.c  | 21 ++++++++++++++++-----
- 2 files changed, 18 insertions(+), 5 deletions(-)
+----ALT--eE6363f9dAf270a2d0685716393bA63d1794176494
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index 3579789a1f..3df9ea4ec3 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -1161,6 +1161,8 @@ typedef enum CTRType {
- #define MHPMEVENTH_BIT_VSINH               BIT(27)
- #define MHPMEVENT_BIT_VUINH                BIT_ULL(58)
- #define MHPMEVENTH_BIT_VUINH               BIT(26)
-+#define MHPMEVENT_WPRI                     (BIT_ULL(57) | BIT_ULL(56))
-+#define MHPMEVENTH_WPRI                    (BIT(25) | BIT(24))
- 
- #define MHPMEVENT_FILTER_MASK              (MHPMEVENT_BIT_MINH  | \
-                                             MHPMEVENT_BIT_SINH  | \
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index af444e3e6f..bc422c0014 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -1230,14 +1230,17 @@ static RISCVException write_mhpmevent(CPURISCVState *env, int csrno,
-     if (riscv_cpu_mxl(env) == MXL_RV32) {
-         mhpmevt_val = deposit64(env->mhpmevent_val[evt_index], 0, 32, val);
-     } else {
--        inh_avail_mask = ~MHPMEVENT_FILTER_MASK | MHPMEVENT_BIT_MINH;
-+        inh_avail_mask = (~MHPMEVENT_FILTER_MASK | MHPMEVENT_BIT_MINH) &
-+                         ~MHPMEVENT_WPRI;
-         inh_avail_mask |= riscv_has_ext(env, RVU) ? MHPMEVENT_BIT_UINH : 0;
-         inh_avail_mask |= riscv_has_ext(env, RVS) ? MHPMEVENT_BIT_SINH : 0;
-         inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-                            riscv_has_ext(env, RVU)) ? MHPMEVENT_BIT_VUINH : 0;
-         inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-                            riscv_has_ext(env, RVS)) ? MHPMEVENT_BIT_VSINH : 0;
--        mhpmevt_val = val & inh_avail_mask;
-+
-+        mhpmevt_val = (val & inh_avail_mask) |
-+                      (env->mhpmevent_val[evt_index] & MHPMEVENT_WPRI);
-     }
- 
-     env->mhpmevent_val[evt_index] = mhpmevt_val;
-@@ -1262,7 +1265,10 @@ static RISCVException write_mhpmeventh(CPURISCVState *env, int csrno,
-     int evt_index = csrno - CSR_MHPMEVENT3H + 3;
-     target_ulong inh_avail_mask = (target_ulong)(~MHPMEVENTH_FILTER_MASK |
-                                                   MHPMEVENTH_BIT_MINH);
-+    target_ulong old_wpri_bits;
-+    target_ulong new_high;
- 
-+    inh_avail_mask &= ~MHPMEVENTH_WPRI;
-     inh_avail_mask |= riscv_has_ext(env, RVU) ? MHPMEVENTH_BIT_UINH : 0;
-     inh_avail_mask |= riscv_has_ext(env, RVS) ? MHPMEVENTH_BIT_SINH : 0;
-     inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-@@ -1270,8 +1276,13 @@ static RISCVException write_mhpmeventh(CPURISCVState *env, int csrno,
-     inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-                        riscv_has_ext(env, RVS)) ? MHPMEVENTH_BIT_VSINH : 0;
- 
-+    old_wpri_bits = extract64(env->mhpmevent_val[evt_index], 32, 32) &
-+                    MHPMEVENTH_WPRI;
-+
-+    new_high = (val & inh_avail_mask) | old_wpri_bits;
-+
-     env->mhpmevent_val[evt_index] = deposit64(env->mhpmevent_val[evt_index],
--                                              32, 32, val & inh_avail_mask);
-+                                              32, 32, new_high);
- 
-     riscv_pmu_update_event_map(env, env->mhpmevent_val[evt_index], evt_index);
- 
-@@ -1531,7 +1542,7 @@ static int rmw_cd_mhpmevent(CPURISCVState *env, int evt_index,
-             *val &= ~MHPMEVENT_BIT_MINH;
-         }
-     } else if (wr_mask) {
--        wr_mask &= ~MHPMEVENT_BIT_MINH;
-+        wr_mask &= ~(MHPMEVENT_BIT_MINH | MHPMEVENT_WPRI);
-         /* wr_mask is 64-bit so upper 32 bits of mhpmevt_val are retained */
-         mhpmevt_val = (new_val & wr_mask) | (mhpmevt_val & ~wr_mask);
-         env->mhpmevent_val[evt_index] = mhpmevt_val;
-@@ -1560,7 +1571,7 @@ static int rmw_cd_mhpmeventh(CPURISCVState *env, int evt_index,
-             *val &= ~MHPMEVENTH_BIT_MINH;
-         }
-     } else if (wr_mask) {
--        wr_mask &= ~MHPMEVENTH_BIT_MINH;
-+        wr_mask &= ~(MHPMEVENTH_BIT_MINH | MHPMEVENTH_WPRI);
-         mhpmevth_val = (new_val & wr_mask) | (mhpmevth_val & ~wr_mask);
-         mhpmevt_val = deposit64(mhpmevt_val, 32, 32, mhpmevth_val);
-         env->mhpmevent_val[evt_index] = mhpmevt_val;
--- 
-2.56.0
+SSBmb3Jnb3QgdG8gaW5jbHVkZSB0aGUgUmVzb2x2ZXMgdGFnIGluIHRoZSBjb21taXQgbWVzc2Fn
+ZS4KClRoaXMgcGF0Y2ggZml4ZXM6Cmh0dHBzOi8vZ2l0bGFiLmNvbS9xZW11LXByb2plY3QvcWVt
+dS8tL3dvcmtfaXRlbXMvNDcyMiAoIGh0dHBzOi8vZ2l0bGFiLmNvbS9xZW11LXByb2plY3QvcWVt
+dS8tL3dvcmtfaXRlbXMvNDcyMiApCgpDb3VsZCB5b3UgcGxlYXNlIGFkZCB0aGUgUmVzb2x2ZXMg
+dGFnIHdoZW4gYXBwbHlpbmcgdGhlIHBhdGNoPw==
 
+----ALT--eE6363f9dAf270a2d0685716393bA63d1794176494
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
+
+CjxIVE1MPjxCT0RZPjxkaXYgY2xhc3M9ImNsLXFxeHg2dW9kNWwiPjxwPjxzcGFuPkkgZm9yZ290
+IHRvIGluY2x1ZGUgdGhlIFJlc29sdmVzIHRhZyBpbiB0aGUgY29tbWl0IG1lc3NhZ2UuPC9zcGFu
+PjwvcD48cD48c3Bhbj5UaGlzIHBhdGNoIGZpeGVzOjwvc3Bhbj48YnI+PGEgaHJlZj0iaHR0cHM6
+Ly9naXRsYWIuY29tL3FlbXUtcHJvamVjdC9xZW11Ly0vd29ya19pdGVtcy80NzIyIj48c3Bhbj5o
+dHRwczovL2dpdGxhYi5jb20vcWVtdS1wcm9qZWN0L3FlbXUvLS93b3JrX2l0ZW1zLzQ3MjI8L3Nw
+YW4+PC9hPjwvcD48cD48c3Bhbj5Db3VsZCB5b3UgcGxlYXNlIGFkZCB0aGUgUmVzb2x2ZXMgdGFn
+IHdoZW4gYXBwbHlpbmcgdGhlIHBhdGNoPzwvc3Bhbj48L3A+PC9kaXY+PC9CT0RZPjwvSFRNTD4K
+
+
+----ALT--eE6363f9dAf270a2d0685716393bA63d1794176494--
 
