@@ -1,103 +1,122 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0484D606A331
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 01:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922BA606A322
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 01:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=chrisnc.net header.i=@chrisnc.net header.a=rsa-sha256 header.s=sig1 header.b=WUuLgjRf
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CFixKUdK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQE7e-0000ea-5E; Sun, 08 Nov 2026 20:24:34 -0500
+	id 1xQEQz-0003i3-JP; Sun, 08 Nov 2026 20:44:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chris@chrisnc.net>) id 1xQCpa-00019G-79
- for qemu-devel@nongnu.org; Sun, 08 Nov 2026 19:01:51 -0500
-Received: from mr-2003b-snip6-10.eps.apple.com ([2a01:b747:3000:202::14]
- helo=outbound.mr.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chris@chrisnc.net>) id 1xQCpU-0002j7-GV
- for qemu-devel@nongnu.org; Sun, 08 Nov 2026 19:01:45 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-6 (Postfix) with ESMTPS id
- 172FE1800630; Mon, 09 Nov 2026 00:01:35 +0000 (UTC)
-X-ICL-RepId: 01a1bd9c-3ebd-7df5-a1e4-cc875c50616e
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQBBHVsZXwdeC0gGTVIPDxNRCloedwhaAlALXQ4ZBVcEGR5XUFQDQBlKFlBDWQ5GUEsbDlkXA1ccVkVcGEMJXQVXHB0ARUVbE1UXRgkZCF0dGQhHHwowA0IOVgNDB0UALRkcV1BUA0AZShZQQ1kORlBUEVdQC1kCQg9JAl0PRlMCVA4LQFITURVJDFoCWUZAFU0NQQMaCF4CXAAeGwZGA11cGwJcB1wLEl9OClh3CFoCUAtdDhkFVwQHWEcURw4PE0wLRwJaNFYfVBlaAw==
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chrisnc.net; s=sig1;
- t=1794182498; x=1825718498; bh=PGEl1UCLj9SuICTUP6NIDGZQmdiKHu0OZLX35UyJnM0=;
- h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:x-icloud-hme;
- b=WUuLgjRfz5vzysZ4Ab7oKU5OXlHbIvE6+o10iEzGlPdCl6CgmhmY8qLQEcRE/PAQVYerXjD9RqZcXu4IQMAlFz/pDzJQ+WzPtIHvMq5GnN/vD0CW/zeMjGkn8+h7QjypX1M8OmYinu61MmJhMquEGDTl0z/C3Eel/dr5HX7bU+ylaoRfCpbu641mqzvKFZ+0qcb4TrF4tN2UhMcITe0y+68lG3qhMz4E/Zc/sMRDREpe3Zn9wVZE1XLK9Y+J+/ndV4WqBBnVfVnJ48FAeKcI29TjQ13QJLZxhQUHVBQxcnTdspN2vTdxYHE86Gu7sntCBc/B+I9Mz8BMSih7L6oZ7g==
-mail-alias-created-date: 1633366900000
-Received: from nereus.localdomain (unknown [17.156.200.36])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-6 (Postfix) with ESMTPSA id
- 04C74180027C; Mon, 09 Nov 2026 00:01:35 +0000 (UTC)
-From: Chris Copeland <chris@chrisnc.net>
-Date: Sun, 08 Nov 2026 16:01:15 -0800
-Subject: [PATCH] target/arm: Clear the local monitor on AArch32 (v8)
- exception returns
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1xQEQd-0003hL-RJ
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 20:44:12 -0500
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1xQEQc-00036J-1D
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 20:44:11 -0500
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-8b300713befso2248927b3.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Nov 2026 17:44:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794188648; cv=none;
+ d=google.com; s=arc-20260327;
+ b=UxhlpYGs9Bfyu1ioiva3uYwizX7EcWK7+EI5CFA9yc4modfwZwrrayEvpsQVr1RAvZ
+ Mw/0deILzWRT5IJg3koS7bESAX+Rxsjttt1mt9he1PERRAsmWyow3mmpML6vMEK2Fnjd
+ 4TAZgzJ2PzKh1B9FGEndJ6GfgwhgPgfYZUQlQ/tS1yWjb66qo4ZyD5u1ur2+2cwqSn1Z
+ Y/NpWKOQZ9fB3RWhK7zEK0pkJdPxxDYAlUweN5xmbptBkGK9Y3U9IZMAMQVCNW0y+TPR
+ fwoHGNkXWPpx8R1j8TZ7HEZzG7gzeg6IlvRwuWf7xmdUdOqTCrS8cxvzeIHAad7mZqsD
+ PVqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PEeh2CDsEqZLdR2J8aqfy9cMB1NjNq2FSC7JA1ZKwf4=;
+ fh=3o9PJlMYSmR8LC/b8Q4U0mOUXubo/dkNVI1N3TVQWvA=;
+ b=SI/Cyz/GgPnMFgO6CZSwAx+scoA96vgMZe94tYJ0QyiFyW8a8x2U4qsDryXDQwbFge
+ PB01UL/lPktXjrGQGm8G9hWYJ64e/LRHtq8RkpN7VfpFdWhcZy7RnLB37jQ9cjus8AVU
+ zBTQwTzTefJgiKaAdKXQgiaKmFtWKkWZ6pff7tXBp5Hnm5ThzPrwbRkqTf2peqBfbfaI
+ LK8QJko6ojybl1EOvgdoINCUaCanMMlifApqC9RHcvf70u/CMKLqYyhKhHm68CfrZj6J
+ FAy/ubN+59URf3Y9GN0TOhOARmsfur0mMyjzA0gGp/a2So7T7C0AasF9xDbYSqi+Mi3l
+ lb5w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1794188648; x=1794793448; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=PEeh2CDsEqZLdR2J8aqfy9cMB1NjNq2FSC7JA1ZKwf4=;
+ b=CFixKUdK1afivPxcxk4mnpuUD5pdVIglmAi/D8TfP3JQTE5AoYPuVAB7PNCb9ELmba
+ DjPPZZl5a/bFSWtHb5v4UPbtA4zBq+Uw7XB5DJJ+knVdaEMJnf9riOmbB/ZGv4CXgpuP
+ vYw7ttCq+AdmVJeSuwKVwFPx8YM0/Kyic7iY2aVay9Kju6HA8B44bs5d+wnWdIu1xdcD
+ fBeydXyyO1UFFp+ASwwFpwW7eph7g9F+oP7J166d269aPQgi9N9eCCkHND45YNmFMAsj
+ YIzpx723khx//pXLVts2IezWsOy3L5WOj7gB9BYRDAg2O749yi1QelOXpGjL+NzINp+h
+ ARHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794188648; x=1794793448;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=PEeh2CDsEqZLdR2J8aqfy9cMB1NjNq2FSC7JA1ZKwf4=;
+ b=WUUHIRFAcCNdWmAs02LhCPVHm8u0HXXhwShrtcRihpayXSnSSWOvJBo2Z/w5VUwEOA
+ FPBfiImTGCUSbn9GRcTo50KhipG7xp7djWpADkYjecxOkeRL3rlI1OYe57w+QxPgj8lN
+ xgJ5pn9/yBkmkh6UTGs4RtHavEwzAh8fCQ13b9tNnbd6ZMC+TwOOynTU8joc4g9Roqrj
+ KWCGxMCjIypAo1yRs8jnz7H9wDF/KA1OP0RdkdXx5nQeL6hcQF6s3WDuDdye2NOxIc03
+ BGtcLFW7CM/XHd+OyA7ql9ZttNwYgX2OPvdL7F+hA/G2vfBJSGP1hvUSuwNFsV9kWnCO
+ MzrA==
+X-Gm-Message-State: APuU4Z+9UkVUdfb7oB8hn2aAq126uCUQVYkGXxrzAt+/oRiNkuPdpncw
+ wmkDV9d6Lp4ESK9cp2P+0MhFBHkPIskLPwsS4QYeYJTXCeeUPV2R57cTnvoWK0+dGRg4a8FBO0e
+ LJoUoM8D9KXCxfchRhnmDuSuaqzL43Wg=
+X-Gm-Gg: AYBFou0NxEJ15jziTVRN/VAN88qpEms/+kHy2UrB/gxHLqsLmZRP8VHRWZgb/PZGy9t
+ P/K1o8N27bQUOfofFR1NMfgHiKTpk3SqRQt4tGK9G7oRCESlDwL6FhiJffLq/pYzEJRlJ4zehfh
+ BTLlb+jQ5b7wtr6Wc0J3zrz1+il8GrcKxm+ZJYEYQleWObioRrl9EkFI1F/CJoBEYZazpuIOMk9
+ dhX7++8UQBgT6Ya1+FuvIiOSkbfw2NsB/HHNubrkYPn/67kGj0ZVWWHchn4+1ckq8mN0A+r9zRM
+ jmyOR7qhx9AIczrrFPeMIzDMVjHGMCgOXNYFEueoY9oI0DuSrijCNkDrIzPTqa5e0C7wc+CkRhP
+ hGaTEzgfOfRGuB/IIILw6tyjI5+k66Nc+qVwqn+TocP7l5dsfETlvWUxU+tpfkPluhq+Tt8n19Z
+ /3
+X-Received: by 2002:a05:690c:ec6:b0:8b3:4911:2da6 with SMTP id
+ 00721157ae682-8b36ca6b529mr16623277b3.37.1794188648414; Sun, 08 Nov 2026
+ 17:44:08 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20261108-armv8-exception-return-clrex-v1-1-ec11079bf695@chrisnc.net>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAA/yXMQQrCMBBG4auUWTvQtGCDVxEXcfqnRjSWSVoCp
- Xc32uUHj7dRggYkujQbKdaQwidWmFND8nBxAoexmrq2OxvTWnb6Xi2jCOZcW1bkRSPLS1HYixf
- XD6MZekt1MSt8KP/99XY4LfcnJP+etO9ftF3HLIAAAAA=
-X-Change-ID: 20261108-armv8-exception-return-clrex-fcfca37d1738
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Chris Copeland <chris@chrisnc.net>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1355; i=chris@chrisnc.net;
- h=from:subject:message-id; bh=qgBTTxKieHx6NEKhzuaasmJVYm1QMl0ujxmoZOBc1Fg=;
- b=owGbwMvMwCUmEsq7XKX1vgHjabUkhqyPvHG/oudvqCvzuROwR0Txk+PknMUTmCNTnlc7G/2Zw
- ai6a9PnjoksDGJcDJZiiiwhYvump9bono80UX8CM4eVCWSItEgDAxCwMPDlJuaVGukY6ZlqG+oZ
- GukY6BgzcHEKwFQ/jmb4w60SNPPv1Qtv0tbdjuBgz4tWmMj/8+1xdb9v5df7qlXlXjMyfExbc05
- nvqP0DqudB6fJNInyxfxWecG3VS/+//HW2VOTOAA=
-X-Developer-Key: i=chris@chrisnc.net; a=openpgp;
- fpr=5416BE97657C2DCF593427E414550DA72485DF30
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA4MDA5NSBTYWx0ZWRfXxvJOx2+wUfdH
- ZgCVSCswVedMnPYBXUFAu2NQ0c6hhVOind/Xb5wB6QFuK+nIeDifc8wpPdEf56ljMZryk7ogtXP
- R+aa93848oMFM6KX7fgEpW6VI9Sas9YG5NjO2I9IVUsfGT8velk8Ajb3o8uMt1hMbUcxmJ+tL2e
- IXlFUOETRTTLIqkv0x+Ln/3jaDeD5N7vxQ6cZJnDr3IY1CtywU2zCuSDjtv/blGZ5ZFHwknXTZI
- j+SMcLNkvxKS5GAkZybukj9mhCk6EPBCuABnfzJ30SIXh1OVQxp6toH+JyNX/i8wgSVnl0nsiMo
- UgfgTPu7jLzC/IIacSyT60kTmdD6eTiwiSPP+kw7vI5tqbsTBvjc8OuhHYpUMQ=
-X-Authority-Info-Out: v=2.4 cv=QKZlhwLL c=1 sm=1 tr=0 ts=6af10d60
- cx=c_apl:c_pps:t_out a=9mRn2PO/+PIrVdEbaIuMPg==:117
- a=9mRn2PO/+PIrVdEbaIuMPg==:17 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EJHnG6ylAAAA:8 a=XPmtPy-9wwEGAlcFYbYA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=3Es6Gil5AuxR-dLjfNE0:22
-X-Proofpoint-GUID: 0jnsHEmQD1ynXf-GOCUnySfFqFw3IzPt
-X-Proofpoint-ORIG-GUID: 0jnsHEmQD1ynXf-GOCUnySfFqFw3IzPt
-X-JNJ: AAAAAAABTGlgcjDyd590XxU8X8xIkmWHo6fhnL3pDW8gbCx9TDUUE6RDu7LHfQ7kizphz9
- gaT1dMk6qPoOBJ39+q8oT1iUsnEefx5WzCKFlHBjA/HTT7o2+RnxobuR92FR+tY9d4vL1f
- 9zM3RHkAlIl+65FdTAMi4bHUnwSzo9QiSlQ6f3Be/k4+CreGD2536pIfKfBgJWVCifRQzO
- /KXaQmz2bWv+CAUraTPBEu2aXGhKaADCrQ4eufiZI2FSpcVv9TAikVA5/XuZ1QneecMSk/
- FUV8x63c5NMnTjzbmPuUBI4Manrmy7Ce7vYoLAnVjIoDaqfVRuDWgieKOeoxxxJm4ft4fF
- /ZceCxt9IYfhm0SEainFum9WWP6v2JC8S4srnmKiYtb2Sukkto0Qhj2W0z1Gzs2w13f6gW
- R5gNSvDQ8BM8nKboUJRPkjxAlZNaR6Qe+4UJZ4wF9tbJEyfm2/Nh38F7HWV7JqKvEmPIME
- RwF0Q/GUQvW6EZy3zzjrmqqJvSilsXCV/wVE29Boan76toArpPDUHEnPH1EZiEYG1kr2ae
- tRgdI5ROJOht0mbj7zdy8GhJx9Dq57gxL152FCyj+2Rt8XZF3zNFO7OtiLMcv/2DyAm/qZ
- NQ2y7wNfQ5y06S3YVrlWa2ADIHW6bYCmXWENU2ks9n1NIjCnLZwNKWaLIHyETVJBJVNZwc
- m6j4sXEu0QPJ6tynM6x1sSIO4oALzrn546zoxQUBMnGMvbCH2lpUM7vTwmIs1qRkT2ZNXE
- WcasmgeOq4I6aEeXvDaZAMiY/V0f+11kUhXXLspSbzfD7uTCP6QkrcUQnAwGbXZr6CHGuD
- zp5VmZ8gy2EArcGRuonqmMAT5gdiMWlcCR+tul3hWnJ/EaiR/MQV6M8FYzy2Fw7H5ar9JB
- NIzhV+4UoCvB/fJgOLJijzvUkV7aogP4Q3tGmkJRbqClW/CV5EhDSTR+7PG8Jvylx+YZr1
- DOzBW4j2YMV+JxJ6fX5OGG0f3/rzHPs+M+0vBTxNUU5JXhU9AZLrtgyfdpPIsu9VF2CIbM
- 2r8F+k7UuPedKVZt49pnHVbq7lwBQDmsWrVL9+bQaQC/t4Rcl090V2OVX3nOlrrE3Jw9Tw
- LOw8d/aMLysXMKLC+vsRLfbz9HKLBsKtGbJ1R6haSiaLWGNrGBt4RaSPJX7H6mPf12Gk0l
- htbOT1GZdZdOzsIc6jFxY6dZJzuE280hmwsFvvc5jvT0Jz8Nx5ptSYdN6fKPAwyByhc7ky
- FnMHzRDrmYLYDKJM1ZXIpZLuo2D/45oDK9Evft18Ee/Mnmhqt53rEw==
-Received-SPF: pass client-ip=2a01:b747:3000:202::14;
- envelope-from=chris@chrisnc.net; helo=outbound.mr.icloud.com
+References: <20261104154207.641511-1-bin.meng@processmission.com>
+In-Reply-To: <20261104154207.641511-1-bin.meng@processmission.com>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Mon, 9 Nov 2026 09:43:56 +0800
+X-Gm-Features: AclHuK-cM40wqtr9q-UU1fEM780aUlYFH5uJmxgHzV_fB2Bw4vRNitKkaB_AtyQ
+Message-ID: <CAEUhbmW4u6sjkOtY_+Rm5SVz7Uxxx69=Q-5kSOWsSC=PfFLYfg@mail.gmail.com>
+Subject: Re: [PATCH v5 00/26] hw/riscv: Restore Microchip PolarFire SoC Icicle
+ Kit firmware boot
+To: Bin Meng <bin.meng@processmission.com>
+Cc: QEMU <qemu-devel@nongnu.org>, Alistair Francis <Alistair.Francis@wdc.com>, 
+ Alistair Francis <alistair@alistair23.me>,
+ Chao Liu <chao.liu@processmission.com>, Conor Dooley <conor@kernel.org>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Markus Armbruster <armbru@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Sebastian Huber <sebastian.huber@embedded-brains.de>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 08 Nov 2026 20:24:32 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,48 +127,83 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-A/R-profile exception returns prior to Armv8 do not clear the local
-exclusive monitor, but in Armv8-A/R it is cleared.
+On Wed, Nov 4, 2026 at 11:42=E2=80=AFPM Bin Meng <bin.meng@processmission.c=
+om> wrote:
+>
+> The microchip-icicle-kit machine was originally validated with an older
+> Hart Software Services (HSS) firmware stack. HSS v2026.04.1 cannot boot
+> through U-Boot to Linux because several firmware-visible parts of the
+> PolarFire SoC are missing or incomplete.
+>
+> The first failure occurs before the UART is initialized because the L2
+> zero window is not mapped. HSS then needs additional L2 cache controller
+> and DDR training behavior. Later boot stages exercise system services,
+> the RTC, SDHC version 4 DMA, and high-capacity SD card block sizing,
+> along with the complete DDR aliases. The existing models ither reject
+> these accesses or expose behavior that does not match the hardware
+> specifications.
+>
+> This series restores the complete firmware boot flow. With these
+> changes, QEMU boots the HSS v2026.04.1 eNVM image, loads its U-Boot
+> payload from an SD card, and reaches the Buildroot 2026.05 Linux
+> login prompt.
+>
+> The changes are organized around the firmware boot sequence:
+>
+> * Correct the L2-LIM size, map the L2 zero window, and provide the DMC
+>   status transitions required by HSS DDR initialization.
+> * Model the documented L2CC Config, WayEnable, and WayMask registers,
+>   and resize L2-LIM as cache ways are enabled.
+> * Complete SDHCI version 4 support used by the Cadence controller,
+>   including Host Control 2, SDMA system addressing, 64-bit ADMA2
+>   descriptors, and SDMA boundary continuation.
+> * Run ADMA from a bounded timer-driven engine instead of performing work
+>   from command or unrelated MMIO accesses.  This keeps DMA progress
+>   independent of guest register traffic and avoids consuming a polling
+>   deadline inside the command write.
+> * Advertise the Cadence controller's 64-bit system bus support.
+> * Add the PolarFire SoC serial-number system service and RTC, and honor
+>   the system-service notification control bit.
+> * Correct the DDR aliases and fix the board topology at its physical
+>   configuration of 2 GiB of RAM and five harts.
+> * Document direct and HSS boot, add focused qtests and a full firmware
+>   functional test, and restore the machine's Supported maintainer
+>   status.
+>
+> Testing performed:
+>
+> * Built qemu-system-riscv64 and the documentation.
+> * Passed various newly added qtests.
+> * Booted HSS v2026.04.1, U-Boot, and Buildroot 2026.05 Linux to
+>   the login prompt using the functional-test image.
+>
+> The functional test uses the processmission/qemu-machine-images release
+> v1.1.1 tarball:
+>
+> https://github.com/processmission/qemu-machine-images/releases/download/
+> v1.1.1/riscv64-microchip-icicle-kit-v1.1.1.tar.zst
+>
+> When restoring the HSS boot support, 3 potential bugs were identified in
+> the upstream HSS source codes that either blocks the DDR training from
+> succeed or traps in a multi-core race at the very beginning or after
+> a succesfully DDR training but stuck at OpenSBI/U-Boot hand-off. There
+> are already bug reports filed aginst various upstream projects.
+>
+> Changes in v5:
+> - Select REGISTER to fix riscv32-softmmu link failures
+> - Rebase onto origin/master
+> - Drop the high-capacity SD block-size fix already merged upstream
+>
 
-From the Arm Architecture Reference Manual for A-profile architecture
-(DDI0487 M.d) §E2.10.4 "Context switch support":
+Patch 8/11/15/22/23 still doesn't have any RB/TB tags. Ping for review?
 
-    "An exception return clears the local monitor."
-
-The same language appears in the R-profile manual (DDI111353 A.a)
-§B2.11.4 "Context switch support".
-
-Signed-off-by: Chris Copeland <chris@chrisnc.net>
----
- target/arm/tcg/op_helper.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 4a31ce979c..22f47f7450 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -803,6 +803,10 @@ void HELPER(cpsr_write_eret)(CPUARMState *env, uint32_t val)
-     mask = aarch32_cpsr_valid_mask(env->features, &env_archcpu(env)->isar);
-     cpsr_write(env, val, mask, CPSRWriteExceptionReturn);
- 
-+    if (arm_feature(env, ARM_FEATURE_V8)) {
-+        arm_clear_exclusive(env);
-+    }
-+
-     /* Generated code has already stored the new PC value, but
-      * without masking out its low bits, because which bits need
-      * masking depends on whether we're returning to Thumb or ARM
-
----
-base-commit: 71f25c75417d31c214ba2cd26b273c114fc99987
-change-id: 20261108-armv8-exception-return-clrex-fcfca37d1738
-
+Regards,
+Bin
 
