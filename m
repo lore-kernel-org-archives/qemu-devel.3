@@ -1,83 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F55606D802
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9145606A332
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=PfwwcFOo
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=vJkY3bVB
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQQ0P-0007Ky-QX; Mon, 09 Nov 2026 09:05:54 -0500
+	id 1xQQ0Y-0007QM-By; Mon, 09 Nov 2026 09:06:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQQ0H-0007FF-II
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:47 -0500
+ id 1xQQ0G-0007F6-Vd
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:46 -0500
 Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQQ0B-0008BK-LD
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:45 -0500
+ id 1xQQ08-0008B8-7a
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:38 -0500
 Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4a3517554f7so9743495e9.2
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 06:05:37 -0800 (PST)
+ 5b1f17b1804b1-4a4d7ae1ae9so8123455e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 06:05:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794233136; x=1794837936; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=eLMzCKJK010QwiI+TdClrcXBscIJkeSZJom2hWupRi4=;
- b=PfwwcFOo/KT6yJOwKzfg3fHNhyHpdiDevwfl3mzPmjevqQgQs8YJNa0WJklXwjOvXq
- pNHdwu52aG6wzrKFjIl46jFZH/3KY35xa29tRdv5ZZCIeX013F5rwf3h0XpUh3Mp1r4i
- 5GY1smQI22UfOqQlQBKJyYmlZyKZNOBetmxJ8LTGaX0xAg+3rBPdRqUTS54KxRz7l9ic
- H2pMjq8YYDiyo1ar5+hKKC1PmDXfDYIM3J0CKfr8wo3lpmFe+wWKdGSIN2XG2uKWAoYr
- qZ23iQ+oBd2SH/dcSLELh1L9UXEyDjZLaVDvREwG+ernLFGc/jmB7YTvMpicKimNXWUX
- 1X0w==
+ d=linaro.org; s=google; t=1794233135; x=1794837935; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ufvtlh2otS2NmCc+UOXX75RiNO7l/xL1MQiDIKuY8Ic=;
+ b=vJkY3bVB1sP9U8Kuq1bAIgg0Rl361wm95louGmAdw6wKdgIhyk6Tcr5zaEo7E6A58k
+ HIdn1aVMeAgC7zYc0wjq1FdoYkC5DKKS8prVxPtQpQX5pNrJKtvasRrZ/wf+MJTo2hfc
+ QM2vuPhHR/kl/04Ud9R9UezaPLWaefsfl1JHnV6DYviUZ373gEpmL3AEBB/uRF2Dcxzb
+ 71ZZJIoy26cAl5qwKoVfzXbvJ9hv+8U7T7rqgTocyDvotbmupx/l+rKgg/X2pbk95XjH
+ hDjlL8eiZCQcb8a1B4iROg8k7ezZyLbeAfSIM64MBhGU0lPCxXmy8YKiKNZfYDr1Jt/e
+ 7P3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794233136; x=1794837936;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=eLMzCKJK010QwiI+TdClrcXBscIJkeSZJom2hWupRi4=;
- b=xmxrEj6VWF0UXHRw6VYFaAdplcoSjDrA7O41B6gTOKbfQfOgTfEI+QEBflO69ZLWbF
- fa8F0jKkCd3QbQM2C8bgbcfOrgk0IgxlxmKQmgiDZfVAce3tJ8VWFmrZ72ff0gtCBjb2
- CuaPo+XV8pMyJAkauICvfR6KZCnnY79IMC71rCYAH9E3o8nKUPc+jkHObaXdwuflCAtX
- HvRZvUzGEXNEuhn4JDq3w2Y7skJympBrlkh7PfHzjZ4ZihML3cAHClSwcEv4FjbO6obA
- rVJ5NJpOhBgaihEWdtueXNAHIj+7L+FXrGOdeFjrqgWSVjvOGajRuZWZYRRsmS9aQSs8
- Wp/A==
-X-Gm-Message-State: APuU4Z9NBRdjabhYLB3wlSw7Thew5tD9JljhhwEWFi/wtiOoCrkOP9+s
- EgO2bKNbciIqOUospoPGnJ6LoAOVskM4arMRDV9CmMV/qDMfu8TZGW+CtuDg+rooYaM8WChqNOJ
- kQF0cqGk=
-X-Gm-Gg: AYBFou3eVW1r3fN+fRYXYGgb0Vuq/SgZk9sYCJyBoOw0hdok/yg2zcbqcjpo4QBBcIE
- rbTCFRnxjmtbH3Dt5K9ZSKsI3s/IYS9ySSUSdurCQZnqkLOWOA6Aj4fybMzGIEyhhuBtKFcN5As
- TR6g3s+kTnPZPtYNyCoFsteHGZth5aUDjubIddJSM30sTqX0rE/k/ykXP9FJ1r8RYMHDfV2kqL5
- 3B9F45eJFzON1l7vTnNAtRzlGZkCIB9LoEU6kbyYPCx1oQrSf8JQ5334K5udjHWXEx/agxUwNvO
- yTHhnS3wnLCT0TxiXIzjG+mFjtS3sFfBGV4el89ayA5ie2VING2j40nPGSJgBw+WCm3jRB5utnL
- O0msa08PFzM28NVLJ2eVEmELgZC/sh2WzMjiowHgKX/v2QglfQmMvwwemte96UwXxvCqdGq4dCS
- GYO7Txq1b4FCEb79tqe5ABzcEifXJin0pvOXgHS6MfLeBHj1q8Bhnk/Q39SQUdHhsERE4cNn9TJ
- TnaCw2AO7ZyvhQmh1SqRu1L3QYGoAyIlm8B8N3ljgO5+9NewYR+TvSdig5VZxfwh7rtGuWQK/Nb
- h+pOcaBlXCNXo/f1eiBwILrtKad/RZ7bIMiXyGSOWzm2Gyr1TErsHUQ8qOeoa4/g6eFAD+0MMgk
- XpvCiCrpXT2mkALLllsHhY0mcP71bz/uSAw==
-X-Received: by 2002:a05:600c:4eca:b0:4a2:5267:3cd4 with SMTP id
- 5b1f17b1804b1-4b94d762f4dmr73297255e9.3.1794233136032; 
- Mon, 09 Nov 2026 06:05:36 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794233135; x=1794837935;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ufvtlh2otS2NmCc+UOXX75RiNO7l/xL1MQiDIKuY8Ic=;
+ b=VbRBFEPJ5GKkLsaGmLP6lBvn9Kuxl3B4RgH1EBLwYOVBGmLhR6Rl+P9HDWR0IvgSWe
+ ts7Sxb5UUfXfSms936axU9g91EzYK4bFEwyOvTiPCDSQqVWXnZDWemH8Vob0siM+Fxu+
+ gb1VAnp8sr8iPx+4e8iudtQ6OMlhAwRpllFcMYU+8EAoIrDJf/EHU+ZLUUD/JKZD1kPp
+ nHanRPZSosdVpT25IQy+L+D1KirCfG8Fs9gNqWMhIvqSyDPk7Pvb+3Ps0l9gXSrggJVA
+ 0QtEFcx3hoiZZAmUaR+nAHoKqHYGPqXPTs+tkIL74TTRYB+IVPxMICnMm1iujfnJ1IaG
+ bOJg==
+X-Gm-Message-State: APuU4Z+mI0FY28tIizIXIFWjYNvcLXswFFOfnEyHFKoHWymgakg6wikE
+ YmmdPJu4Fm1vUc83ogFJmFeoHGk1gry/+M5knd6tasGaa0U57HzxjsHjR9uvwa80kG/QvZCwKP1
+ FVJ4SBJw=
+X-Gm-Gg: AYBFou187oBjI6ZPrXQU0V4eBVQ7z9Q1ea6oXID/lABhTHaCON89a/fcUzmkbkE/bLO
+ ugdzS1bb5ap4HrpC1aQovBnXrLfOVzOoEGYOhS2IRfsQ1tI5PZDcmzGHbdBPMMHEGL9BJKC1hz6
+ y7+GH7uGoQFbcckl0IOoRdSNIUqprBc56m8ZoJqmdPfEB7HqT34jUV4ZMBj+/XIGbvtqwYdd21c
+ m1kCft+xYOCGAlcFwFIlhlC6pldvyRZyGnF4jLAkRN2I03+kS175ADg0fqfzCnSbzNMP6VsIJxr
+ GgflGumWomhmN2fcHFeCVph690wbm4iN8Q6L3J3QcoV1wen7BZKcG2Yy0Xv0GEOMyOXmVgn5NG/
+ Ra9plJGRhHg7BKd1Vn2qKtiDwoz6p1/oIU0vGSoisOmkqSADyqQmI4oncEg6z0sat3SRfgAISPs
+ JLzjCBqahqwqWogdJYHiuX1B86/dvFw/v4hYeP50+Hd8l8w3wimaGvS5c2hAgPiPBrhJ754J8qF
+ 8w5/n7gEh/kV7Y60mDcpv8yW1be0SOJ3wnsku/wd7T43IIWlCHIMCidqa0XV+vuRqRwppl67nGy
+ RL5emY9OmKUcmZYIyaFmPVJETzfHUcW5QrfSJz6scX5ENCflKn5xB21n0jCiSBi2zrKV4lIkrbz
+ wwcYoEUs7LXLGubykXt4JXAr+tcvn5Heliw==
+X-Received: by 2002:a05:600c:8b6b:b0:4a1:f90d:6f4c with SMTP id
+ 5b1f17b1804b1-4b960da49c6mr75786085e9.7.1794233134700; 
+ Mon, 09 Nov 2026 06:05:34 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49596ea51cbsm11184750f8f.27.2026.11.09.06.05.34
+ ffacd0b85a97d-49596ea51cbsm11184750f8f.27.2026.11.09.06.05.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2026 06:05:35 -0800 (PST)
+ Mon, 09 Nov 2026 06:05:34 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 9/9] hw/intc/hex-l2vic: avoid shift into sign bit
-Date: Mon,  9 Nov 2026 14:05:23 +0000
-Message-ID: <20261109140523.240161-10-peter.maydell@linaro.org>
+Subject: [PULL 8/9] target/arm: Clear the local monitor on AArch32 (v8)
+ exception returns
+Date: Mon,  9 Nov 2026 14:05:22 +0000
+Message-ID: <20261109140523.240161-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261109140523.240161-1-peter.maydell@linaro.org>
 References: <20261109140523.240161-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::336;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
@@ -106,37 +109,48 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In fastl2vic_write() we do:
-   val = 1 << (irq % 32);
+From: Chris Copeland <chris@chrisnc.net>
 
-Because '1' is a signed integer, this can shift into the sign bit of
-'int'; the cast to uint64_t to assign to 'val' then results in all
-the high bits being set.  This happens to cause no visible problems
-because l2vic_write never looks at those bits, but it's obviously not
-intended.  Use 1ULL so that we do the shift as 64 bits unsigned.
+A/R-profile exception returns prior to Armv8 do not clear the local
+exclusive monitor, but in Armv8-A/R it is cleared.
 
-Resolves: Coverity CID 1685261
+From the Arm Architecture Reference Manual for A-profile architecture
+(DDI0487 M.d) §E2.10.4 "Context switch support":
+
+    "An exception return clears the local monitor."
+
+The same language appears in the R-profile manual (DDI111353 A.a)
+§B2.11.4 "Context switch support".
+
+We correctly clear the monitor for an A64 exception return, but
+in adding v8 support we missed that the A32 exception return path
+needed updating.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Chris Copeland <chris@chrisnc.net>
+Message-id: 20261108-armv8-exception-return-clrex-v1-1-ec11079bf695@chrisnc.net
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: commit message tweak]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Tommaso Califano <tcalifano@redhat.com>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Message-id: 20261023084624.1063258-1-peter.maydell@linaro.org
 ---
- hw/intc/hex-l2vic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/tcg/op_helper.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/intc/hex-l2vic.c b/hw/intc/hex-l2vic.c
-index 2335236f837..93fbb7449e8 100644
---- a/hw/intc/hex-l2vic.c
-+++ b/hw/intc/hex-l2vic.c
-@@ -392,7 +392,7 @@ static void fastl2vic_write(void *opaque, hwaddr offset, uint64_t val,
-         uint32_t cmd = (val >> 16) & 0x3;
-         uint32_t irq = val & 0x3ff;
-         uint32_t slice = (irq / 32) * 4;
--        val = 1 << (irq % 32);
-+        val = 1ULL << (irq % 32);
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 4a31ce979c6..22f47f7450a 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -803,6 +803,10 @@ void HELPER(cpsr_write_eret)(CPUARMState *env, uint32_t val)
+     mask = aarch32_cpsr_valid_mask(env->features, &env_archcpu(env)->isar);
+     cpsr_write(env, val, mask, CPSRWriteExceptionReturn);
  
-         if (cmd == FASTL2VIC_ENABLE) {
-             l2vic_write(opaque, L2VIC_INT_ENABLE_SETn + slice, val, size);
++    if (arm_feature(env, ARM_FEATURE_V8)) {
++        arm_clear_exclusive(env);
++    }
++
+     /* Generated code has already stored the new PC value, but
+      * without masking out its low bits, because which bits need
+      * masking depends on whether we're returning to Thumb or ARM
 -- 
 2.43.0
 
