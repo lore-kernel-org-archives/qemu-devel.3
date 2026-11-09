@@ -1,176 +1,177 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D0D606A321
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 08:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB68D606A322
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 09:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=proofpoint20171006 header.b=LBIEuiXK;
-	dkim=pass (2048-bit key, unprotected) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=selector1 header.b=H0SXEHio
+	dkim=pass (2048-bit key) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=proofpoint20171006 header.b=2ZhUi7RI;
+	dkim=pass (2048-bit key, unprotected) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=selector1 header.b=OwD+lO4L
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQLB8-0007wY-Rb; Mon, 09 Nov 2026 03:56:38 -0500
+	id 1xQLHH-0000xN-DG; Mon, 09 Nov 2026 04:02:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1xQLAz-0007q6-Md; Mon, 09 Nov 2026 03:56:31 -0500
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ id 1xQLHA-0000vg-Jc; Mon, 09 Nov 2026 04:02:52 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1xQLAy-0001cZ-5V; Mon, 09 Nov 2026 03:56:29 -0500
-Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A96A80V653093; Mon, 9 Nov 2026 00:56:24 -0800
+ id 1xQLH8-0002My-5Z; Mon, 09 Nov 2026 04:02:52 -0500
+Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A96BvCA372578; Mon, 9 Nov 2026 01:02:46 -0800
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=iWR3R6U82MieWXN4geR9NFCQCkLz4cxQTdxqz35q7
- I4=; b=LBIEuiXKEC11HnynxfTtA+vxOj9PKtPAxgm7j5+eGQt3sISyybHHPGjVS
- RxeM9rvU49qaYvjX9HUU8I6ZxjyWgoc4pOoP3He8Rdw+D0vd6rjIZf/O/7mVVj7h
- 7f1EqOPBLdQ8G4dMB9iTLp8BjIDlpG2i6Om6HTMJuAyUXy/yq4lP2mzzYYzicr8Z
- vi2brhmaPkjAaUeaqwyq3tUi5sr5Ra8azRxy98sqjPWp00xg+efHFU8ZK1WOoCQz
- MkNe+my942w4fysvWq9ICzTX2n4ZwF2l1InV2uzkicgG2enI1ynj013eM/gp0g8C
- ufp2/tzPKepT5jMEsESgehebfeSpA==
-Received: from ph0pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11021135.outbound.protection.outlook.com [40.107.208.135])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ht2ymtdex-1
+ proofpoint20171006; bh=I/ykK7l4T/0IDFQA0wrdxU5V6dlFvL0v87ItvfLc9
+ uU=; b=2ZhUi7RIRFDqtY2EVakDcNq+8GoIJzxVItgy3CwDduZ5YJ4kWrqAE6Mtr
+ AtltbL09tpvzxdgdRdw6RImxnoD/FN/GAZMLgSXPzeBmhs1y6r5QI/xwDb/1E7aw
+ Ztq6cwPJr24C37i/kOQ0n3OXWGcyMKxkfq1WyvyxrHbks9rDpKwxQbsvOWFMcx8i
+ gteCYL08lbD/3PEOHtpqKVPu8GIPtleT5cJFUn+r2NoSdP162kHprXvDD+faTj5q
+ unqoqANFCg9lQHPJK3utG2co6p2gtTmw9M4oD/sAZl0gOPQ3MvU3lP0HOz9PsdMs
+ OFRSRVZbXlCd1U62LqkxLYJiSO9LA==
+Received: from cy3pr05cu001.outbound.protection.outlook.com
+ (mail-westcentralusazon11023102.outbound.protection.outlook.com
+ [40.93.201.102])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4ht16uth45-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 09 Nov 2026 00:56:24 -0800 (PST)
+ Mon, 09 Nov 2026 01:02:45 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xQL6zOznKkhEBvzV8lSNC2sTCOsn/YUZT0lYxSn1/Lg9f8N1smT+SXGkiDlvbG6wje2HPRPupsv5UOOUH1sIr4ZyFZymM9DaL1sEUDmNW+w3LSccfwhwQWAe07EUvtSt3MxtaQAo694mxiv43E0XVlUQjjCmi8KX/WnvWqiA1w6KMzn1lpEcLlwT/MifVOXhmWKqzR28zJ9gsySaDUA/P351s+HjHs2Ne4QvGsHNeeRZ9WF9/Mx6L0wV8ayEKtJJXx45q4cR+jBClMZW411lWXGugcNxAwQ43c4+kPJieoZcclDX/+t2YLKr+jb3HuELhnfweDqjzNiWfKBGPxXq1g==
+ b=pRVTgX13mUMNcj3DAWjlavlAV5wDAko4h52/zkU6/FfqrDDU1UQIlVfaK90lX01TWF3dtRRDM/V8zbntctRM/MGzm5+XQCJsJ/CbJDnMBYZtaCHAclPD7l0LGR/uZSyGwPnOaUnZfDZiX3/Yk4BVAmIgwF4in5pHObGfH1ma0Et+x0A4zuxcq4v+K+0pNMlIucxWUBgXyyfSrKZ83De+oZFjGLjJflnBrl4biWKVVVyznqKpP/VU2zBx/YjdtCVFegtkMfGT/NUE8dV86RPwCXfISgjD2uLwb9/2jmKfiQPIMAWklBihPA9BsmkUg1l94TwetjL1pzFZ82CQK5ONxQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iWR3R6U82MieWXN4geR9NFCQCkLz4cxQTdxqz35q7I4=;
- b=gz5eYqRNnW20iCj+Wr5Pe9bAHyL8REZiR7S91DlN5FSrz3CRLuMUCsulR6Fh0Avq78jCW+2zWC6Uqyg5/MbXMETHqyN5b5wn+JZK66jz+EL2lFUBvzlVX7t6we+mGxc9utFhaht3H7KwIsYpNzlK4zVOm2koEzHkUTYWJSZWr7M/obsKAX4XcZxbnAGDBO9aDf00SHXz/8kNQvx96p4JWgbJFLQmURIyQdqN10XeqwExuHTDPeQ1bQrSuSid02smHRLNw7zjvG39uvGYZwOzdOa4S+AIEsq5atsaP3eXXiUjuqr7mttdwcLXQOXCAioFo6pbQ+482uLQMacIcZrMuQ==
+ bh=I/ykK7l4T/0IDFQA0wrdxU5V6dlFvL0v87ItvfLc9uU=;
+ b=kroJ43X3lYXk7BO0Ytw4KDYNfMBKc5IOmIEVCL2xdhszAl385Nh67jWw+Ijg+Ri68WUT8ibK8TzjunAwBle/MMySNd9lWyT7QD3Xac2458UuN2xXs3y9v5vtA7WkNq1KOFiaSME03HdM85KmeeNsfd/r7yrtePAIFtpNkHVX1u98Z0gTSUqDxZHV8x5y8hbOM//heUbFkILtnouyfHwl5vE3YI/qxDY9cGnC0ZiIq8Jp3wccYDlb/K2l702pZCp3fs+MschGetWa+BKjBTzs8F582n6hQzHhA1npS6JOPkHHyqk/wtpmysesG05XTLwlal541qlijn5rrWvbBUxosg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iWR3R6U82MieWXN4geR9NFCQCkLz4cxQTdxqz35q7I4=;
- b=H0SXEHioZhyLYOgerZfdeBsZ20SJ+SJozwkM1ZzfahBSPnG3YAILj9X5wtuuddL6kzATOUkwvA4f3pjFT5lp+pdPdTE6LqdYpfQuYrc9XX2kwEf9OQPmawelL0LRRtMuAghZNIRnyeql6zDi1SgeFP3qWnjAOYMZr58Bw4B+BS/A+PAnINM8tnLX+QvCQLTGSl+D4EIZsPUbyNcWL/PUraFhmvZTSiBaPQGA2PyC2EUCmCovJYGMzlH4w+T3Tp1V45+VA0OO4R5oIW2Z/Y6MqSaOuHYkdSedC5SgBdJlqQCc2Q96xowaQGiuvixgqhUww4koGqWpnmA5D8KdbpcZWg==
+ bh=I/ykK7l4T/0IDFQA0wrdxU5V6dlFvL0v87ItvfLc9uU=;
+ b=OwD+lO4L0G2zl1k5owjzHROWp9XE1LxroWZIwug1zjTYwbZ9Hr17RhFbxMyfzfzPRyw+/MF9fRUidmbZ8FAVmXt1ja0mmVbl3ZjE466C0aSIa2aMcjjogRaNaErj2rR3JqP4ra35erLIDHau9AlJ8qp8B74DALaYySxOR09ItbCJkP/3sPIqmgL+hIJEVHO/IzZ57cViYF82JOkCxc71K22gnVZcQd/PI6e0H4mYFFcsjA4GBs9ihtlOeAtwBJpi2DV3zO1rEpNvLnFrFJ48OH8m5mK8RInNt9w6cHqRSZ9FYxRyP+AhQko3O4SF+0k6z2+KpSOA7Z5mIFoTanoXRg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nutanix.com;
 Received: from MW4PR02MB7153.namprd02.prod.outlook.com (2603:10b6:303:65::11)
- by DM6PR02MB6953.namprd02.prod.outlook.com (2603:10b6:5:253::7) with
+ by DM6PR02MB6480.namprd02.prod.outlook.com (2603:10b6:5:208::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.12; Mon, 9 Nov
- 2026 08:56:22 +0000
+ 2026 09:02:44 +0000
 Received: from MW4PR02MB7153.namprd02.prod.outlook.com
  ([fe80::2d8:c73a:b2f9:f1dd]) by MW4PR02MB7153.namprd02.prod.outlook.com
  ([fe80::2d8:c73a:b2f9:f1dd%2]) with mapi id 15.21.0592.012; Mon, 9 Nov 2026
- 08:56:22 +0000
-Message-ID: <f617dcdc-0afe-4e22-8684-b6ece879e7f0@nutanix.com>
-Date: Mon, 9 Nov 2026 08:56:17 +0000
+ 09:02:44 +0000
+Message-ID: <463635be-2321-49e6-852d-080aa00ce40d@nutanix.com>
+Date: Mon, 9 Nov 2026 09:02:38 +0000
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] hw/gpio/pca9554: Simplify QOM type creation
+Subject: Re: [PATCH 4/8] hw/gpio/pca9554: New abstract base "pca9554-base"
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, milesg@linux.ibm.com, qemu-ppc@nongnu.org,
  qemu-arm@nongnu.org
 References: <20261106110440.3552588-1-armbru@redhat.com>
- <20261106110440.3552588-4-armbru@redhat.com>
+ <20261106110440.3552588-5-armbru@redhat.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <20261106110440.3552588-4-armbru@redhat.com>
+In-Reply-To: <20261106110440.3552588-5-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BY1P220CA0023.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:a03:5c3::11) To MW4PR02MB7153.namprd02.prod.outlook.com
+X-ClientProxiedBy: SJ0PR03CA0337.namprd03.prod.outlook.com
+ (2603:10b6:a03:39c::12) To MW4PR02MB7153.namprd02.prod.outlook.com
  (2603:10b6:303:65::11)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW4PR02MB7153:EE_|DM6PR02MB6953:EE_
-X-MS-Office365-Filtering-Correlation-Id: e6a84dfb-e0e4-45bb-e32f-08df3e3f53c9
+X-MS-TrafficTypeDiagnostic: MW4PR02MB7153:EE_|DM6PR02MB6480:EE_
+X-MS-Office365-Filtering-Correlation-Id: c8252d81-4741-4e86-91f0-08df3e40377c
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|23010399003|376014|22082099003|18002099003|10067099003|4143699003|5023799004|261102123227099003|56012099006|261021121427099003|261021123027099003|261009223027099003;
-X-Microsoft-Antispam-Message-Info: mJibkkpnYI988TbCzyOy7O0K6GKA2MxBQIyhaRGvDeVsknyGlsTh/Tu8VMTUem0AibvUQ6eDMp2oMy0aSBnQ7AcYSszJO3AzW2otIT3eUo7qCK/PSeQDniMZsy2W8LWpilhCxvtfs5vQ1wlNQ2BtXD27zVL3u7RQxfGx9QtqdeRjACPHl/Z8ujVvtet3XaaMSjzPtYcHJJ5Tlj7fVR8PgyckewnyvkttBBfLmHM6UPWU6F1uroQDrfgidUbQ4qwrB0SagRnSErBR+p9g2xp0C28XMpiQGDUze4RLCi7m7IyKoKnjPdau00MhISbS8/MZN9vlwN+LmbpdTnNG5vi8fgZN6TbmCugJI8WzP1wCkpTFhfnzyEJzdcbKf/RzGGKt9TSoZGf5DpwaiF849HtMk4JJXVjsNf9tmSU1rzjq4vkUq3M1bjmV518hWAkSXzPNAaHhjIrZLEDCIFpyphuL6EWHMmPXM3GIeC0pVqlQXV02bly7yiOn2nWA/Yh7ED/9db2VswZ7FK0c5iuh5ua2Kzaj+PwgBiezdA40sn4NLYHLAZ/FN5isPj6+L8VG1DRM6j6xsCzCG7Kv80GOK/T0oIFRREsGGIBCd7Z0W2Z7GO9eqK1enyXT5QX4JBsNW7mzkVUy8/I4jMdhLeQKSI4HDpRkhB0lQovy/dPaSUPqotM=
+ ARA:13230040|1800799024|366016|23010399003|376014|22082099003|18002099003|10067099003|3023799007|4143699003|261102123227099003|261022075727099003|56012099006|261021121427099003|261021123027099003|261009223027099003;
+X-Microsoft-Antispam-Message-Info: XsUff8reSFdkf472qTHBWwlx8yvugn0GEv3D/6Bs65HYwS7YMo4RTnKV1I4g0GKJRCAPo7O9BSDFVclv3szPLUptR5AHN6/XGFX/Auo5B5OF+BaVWpSVy3pR+fsb54GwvA6ZjXedVd/HwZVewSOMjwdHXTHbbOFpB8TeekvKflDOD0eiGop8F2az2/BTCey1/S5JSwLxqXaty7L3kPisgXYLkc/w4mu9ILoOyXMe94F7z0vVPXHq5dG9jCOBmUYD3HdM74EKdj93rI6N3MgM2/IdQoeTCmSHC5GDthsjNw/tphx74B1UzLkm0YH0W9MC/5GGwH/jvhuILXENoS5wXN9wXXqqpG8VM/0wQ+68l4Hc12z97xu8MhF1ymSOVTyIqvN8/pOeu3w1s7TwxTTMAxj+2zAPiw96mTeZqLfCI8cux+CHzNEf9ZOWOPmuYC4GogWzy7xWB2D4V8Y75n0HExCxr1R+W+VY2I6jzLdcjQPfWcizHyGE7DezADrmzyjvKMvbPNKC3W7x5lplfZzRq10M5v26EMymPDH3jCMbC0sn0t1AJzJaqRcI0W3g9n/QgbSdWMXU05bkJxjt3sJileiZT4Q+K0VvTfRBdWdXGdgysEH4+IEeXJeCoa2nAPcjmWLbpvnM6sMGEeAE0H/VJVm/npTnAAjni89r1s79Cuw=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:MW4PR02MB7153.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(22082099003)(18002099003)(10067099003)(4143699003)(5023799004)(261102123227099003)(56012099006)(261021121427099003)(261021123027099003)(261009223027099003);
+ SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(22082099003)(18002099003)(10067099003)(3023799007)(4143699003)(261102123227099003)(261022075727099003)(56012099006)(261021121427099003)(261021123027099003)(261009223027099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?blpsQWNOb2lZcHBEYjFRZ2RUR29kOStXeGpuZWRjcGpkYjFoS0dlYUZRWEF1?=
- =?utf-8?B?bFk5dmZXb3BJMXlLU3RaN2ltVWpFNXAvZDYrSlRqWmxjdURkNS9mM3dac20v?=
- =?utf-8?B?cGx1Nm5QaENoK1lDY1lGbTNOK1VSck1KWHlDbE1DdzNNOGw1TDc4VjNwaE5k?=
- =?utf-8?B?VHJLdXhsRUZieUN3bU1BSUo1ZWRJbzR2ZkErN0NzNWJHY09Kb08vMmt3bW03?=
- =?utf-8?B?NzdhNnk0UlZBS0wrV2RYOGNWY29LejNBNUVnYWlNclEzdXRrRXMzYXJHWGdL?=
- =?utf-8?B?UExsZys3MVRLaEF2SjI4bTg1YmtublBWUFZTd3lQcFVSdm1rYlpLMlptVjhp?=
- =?utf-8?B?U21DdFZzSnFPL09CMFhxTHF1emlDdDJubUZBbUIwUU1lNEFrOHpWT1VSVk8y?=
- =?utf-8?B?VmhPVjZqWDVMbG03czF2cFNNMHhEaXBFdzdyQ3JZNHYxYmFSQ2EwM0h6WXV6?=
- =?utf-8?B?ZEduWThucncxdUlYM0l0S0dsclZGZ21aMTJUME5PTWdaMUgzbEFNZHg0bDNy?=
- =?utf-8?B?aXBnM0UyWTZwVHVHY0NjcVQ4TVM4b0dSVGVKbXNwMFlTcmxGZkxhM2phWTNV?=
- =?utf-8?B?ZXlNR2g0ZUdnYTVoWTEzVzVMdHZSZlBMSzl3eCtTMjJkSmUvWUJFWSt5dW1l?=
- =?utf-8?B?Q1BBOTBZSStaR3ZaTnFSMmVUc01SM3lCN2w3TXpqL1hHM2JHakN1MStwWmFn?=
- =?utf-8?B?MUFKK3N6UzNLTVJBZnRuK2M3cDlURHhoaUlKR2sweDhmTHpnMkE5R2JrNXFV?=
- =?utf-8?B?UHBBcng4K3FNWjZrU1EzcVBTb0pKaXI1TU9hcy9TbmNFZm9VdEc1V3VjeHl6?=
- =?utf-8?B?VU9ZLzV6VStqUUQ3R3hPNXA1KytsMCtkUTM4OEsxWno1ZXRQSEc3OURiSDBN?=
- =?utf-8?B?T1pEeElzMXUxakNVVVdjdnU1QlY3d2pWaHlTTU4wVSs0U1puYnM1d3NZWVA3?=
- =?utf-8?B?WWFUc1o0WHRjTkVmb2I1SytWZ1AwWmtDNE1iYU5ZSzQwNWxTTGYrcndEaWRC?=
- =?utf-8?B?SXl1ZXMyUWF2NlBqeERNZGsrSUdudUtLc2JnNit3MUtKN2QwZVBEUnQvbEdt?=
- =?utf-8?B?cnRGWkdTNjdzQUQ3eWN5M1pFdU1VNUFramMyQTVMYVRKeHZQbnc2Y0tFRG9K?=
- =?utf-8?B?Uy95WXFQTERNVDlSNkFYZEc1NUo1Snl2L0JIbDZpdXJvckVmR1pMZGZ0aWVm?=
- =?utf-8?B?VEFtWUYyVWlwZ3ZLNStjMTZaVUowcklCZE93QTJQZWpnNzdyYmJNM01HdzRm?=
- =?utf-8?B?WVF4b2FzQ091RWo1bzJEUWZSVDNLWFp0dWNFcDZRSk1xZjRLOFh3SHhhS2p3?=
- =?utf-8?B?ZUM5V3M1amNZQlRMTlpDc2VEemJ6dWVUTHRpSU12YTZJWDBVWnJqc0U1dlIz?=
- =?utf-8?B?dzBteVllNmY1K3FSTkxoUW8xOXVyY1R2aUZRRFA2aUVEZlRHTTVwOVJlaUhu?=
- =?utf-8?B?QU10M21HYkVlT3hYT3J4VTEzZmhlOWljN0J3NUZxQ3V5UUVRcSt0dlJaWk9Y?=
- =?utf-8?B?cTBXZDFxSzhWNE9YMHlYcERCc3l3MXRGQU5RTng3WjUwbzhRNTRWYVRkbGJ6?=
- =?utf-8?B?U1M2cnBBQUF6a1dhN2tHSENNZUxPY1h0NWdsTXpsbUQzYm5YTE55SFFWV3Jh?=
- =?utf-8?B?OCtJcmJMd3Q1N3FkNUtVM1JzK1QvVkNDK1VJQ1JxVmpjaWYxYm4yK0I4QnI5?=
- =?utf-8?B?TDFzdFVuRDFRUnBqQmtIYnZWYTA2R1U2SWJKZks2LzNGY05PTGh3aEJLSW9E?=
- =?utf-8?B?cGNqOFQ2NWpPN0FiVTd3UFE5dUh3b1ZhVll2a0dQMFg3eHBRaFNWY3hsclU3?=
- =?utf-8?B?T0R4TlJKcStvTkVGQTYyK2FRR2M0UDNodXhpUmFjVjFYMGR6aUxQMDFNU1BJ?=
- =?utf-8?B?K05nemhJU1A5Vk5ocDlta2J4K0FBZG5vcmhDNlkvZ0hBK1llUHZRams1VExm?=
- =?utf-8?B?TDVZK3JWa1ZkSE5ObWxweFozS3E4cXBSVGErbFBVclJNZWF3bjB5V2Q2Y1pa?=
- =?utf-8?B?U3VDTTFoNmpQSHJHa2UzU2ZFU2o0UHRaZ3JSaHp4N0ZoU1ZPN2VGeENxeDJP?=
- =?utf-8?B?cTRsSTRyR3M0bTVJbnRqdVNpa3VyZVVCUjAxUW1JUFVaSVVFOG9nUWxXWGNJ?=
- =?utf-8?B?dDR2c2F0RGZZdlA4cWRCT1JpVHVHQ1VvdGtRUlR6OGh4RGEwbGh4aUtCV1B0?=
- =?utf-8?B?TElFcUswQXg1ckNpNlRDNGFqUlJURURhTGgxUlV6c3ZEMHgvMU5kWUJiQ2dp?=
- =?utf-8?B?dytCVFcyYURtYnY1elRFUGtHVkI5UVhXRWZLeG1KL3ROMk9xRUVkTWV4Kyto?=
- =?utf-8?B?bXZNRlcxU1BmSnk1c3hPQVIzODFxZUxWVVVwTFRCN3F5MDN6RVVaVXFYTytI?=
- =?utf-8?Q?PgmjCILxcCTlYGzI=3D?=
-X-Exchange-RoutingPolicyChecked: SQTBUZaQQ1duJ4KkO/Urjv+aJ8Al0zSDCWYhQ7/8VKSEs7cnFAi+79+ovmeh0R04mpwzWbS5gDPof+ZDyI/UfSQtPP6Y3YY3s/4wR3p9XsGPYZkybGloI0a6u4qQGNHG4FU/1yQLyK3k6in0YgUoFH+dJyt2EFh8UDelww6NPCt6G7oLqYdsbWEBf/xZBPV4W7hNKIcqOrhLcWTj0WHtg1XbdYNdBANNfJz2BhbIM2oneXlj9uBsL+h2b+2hpvRc9ANx+lT/dhy9QR+9T+ZOL1TawZ6vEpD1kni1D7L6YoMhUXeE6GEulGjbI+5DemEDYWo2uISwTzCjdBa+IFa0jQ==
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QXJwSWdHZTZCVG1ONHk3cllRcUJzUDJ6SWJEditWcisrbTBmUnNkT1VremlS?=
+ =?utf-8?B?SStVc3gvQ1AxejFadHZFQkRRMVZkaTJmbHMxR1QyYUpQb3Y1UVRBTlB3dFF6?=
+ =?utf-8?B?bWR1Mlg4VG1CbE5FNk1VeWVoT2VXK2RtL0pvd2V5WU1FUTJPWk9HTU16UFdV?=
+ =?utf-8?B?Um1Pb0ppamlucE5KaGgrNURNWmIraWJiZHdqazZoeWVKWW91VzdiK0lJSDk3?=
+ =?utf-8?B?MzZ3OEgrZkxDSU5IK05CNytpU0JSY3lJT09zT3RUb1F3SzN2bVRhM3ZPdmds?=
+ =?utf-8?B?U0RlSW02b2Y5NWpITnc5c0QzNXRIT1A5SjU4eWFIbnFobEdJdUp0K0NvdzZB?=
+ =?utf-8?B?cTRyei83UllNSUJXN2NvTzNRS0twUXQ3QXMzVkh6S05kb05WaUFlQ0tkVDRz?=
+ =?utf-8?B?c2E0bm9wZUZSQmNtN2I5VTNkWkFFODRrdzg1Um9lUlh4Z2E0UDZTK25BVTc3?=
+ =?utf-8?B?eVNiYnJSZTBiVkZzaDdNVDlCZkVOeG9WVThVd2s5QzluVllTSGIvdzNONnVo?=
+ =?utf-8?B?UnJtR2plaG1ucm9XVnkrMzVvbmRQMWo5Z2krVWd6YytoTXZDMmJoUVNmS1Vu?=
+ =?utf-8?B?Q1VlVHQ4OGdnY2cyWmFwVDl5a0lSallxend1Nm1ENU1hMmlRdThzOEpER0Vt?=
+ =?utf-8?B?S1VGWWg3bTAvY0F0Z05rT1RhcUJCNlBjN2NjRlRreGowQ1pGNnVGODhibXY3?=
+ =?utf-8?B?bEpJZUlodFo0blNHUGNHSG5aSlZ4K3hXNUwveXA0cHdYY05UdTdwc01meXYy?=
+ =?utf-8?B?OC8zS2dLL0tpNU1EOGZUa1pGR0w1K3ZYUDljbTQxbHNNa3RacytSSEJwK0ls?=
+ =?utf-8?B?VE5ncVE2eGhLVzFRRHBDblhFeG9KZW5DOS9ibUlIWVIwN2VjUXZYYTVtZzF6?=
+ =?utf-8?B?U1ZhS0F4a09leVJValZxTDdNN3dCaUJKWjdmTk1xZWNOK29ES1VvbjYraDZv?=
+ =?utf-8?B?ZEJyYW1rRWt4ZGkrSDBQR0RjcFV4cm10b3hnNHBNQjdIMkM2OHNMZWlxWUNu?=
+ =?utf-8?B?bTBTRm12TmZoV3BtN0s5cXhIcFQ2UEJwQUJTSFA3U0VGNEJzYllKdVVjNEFa?=
+ =?utf-8?B?a29kYnBZQkhiM1hXMEIwMmpDNVB0Y0FNUy9rNUNPUDE2c3Mxd1M4Z2xSNG9r?=
+ =?utf-8?B?Zi9Vd3h2L2VWMGJVK3EzTnVNOFp3L2VtRFZ2dG9kZTgrQUVITkFhRFBIbit5?=
+ =?utf-8?B?a3BLeFplak9lb2tHeUZjcTJKZWxJdDA5Y0tCTDg4REdjU0NBWHdOZkFMS2Fm?=
+ =?utf-8?B?bnp4OGo2eXF5K2hzY3ZBWVNLWVk4ZzNkUnluRjZtTWxhaTh0d3A5dk9ZNmR5?=
+ =?utf-8?B?N0tuWHlxaGRuKzNqRUtXUkZ0ZmFTbmx1MlM5azRnQlNvWnZwUE1aU09RdGIz?=
+ =?utf-8?B?VTVBc0FxYkY2WVMwN2NjSitQdlN1emhiUXRLcUVTcFNHVzZMYnByY2ZRTHlv?=
+ =?utf-8?B?V3Y3SERIalFkTCtld2JGZVpSNDRlMHRPL2IyTzJjOVdjLzhsNkRCUDJQc1p2?=
+ =?utf-8?B?WTFKU3VtL2dIcGZVZjdiYm1qakdHd0xIQ1pNc25IcFdIQ1JubkIxVDd1QVJk?=
+ =?utf-8?B?NURGemZwdCt2UnBqQU1zQytoRG02Ym5ZUXBJbjlYT2p5Ymc3M3ROQXFuSE81?=
+ =?utf-8?B?VFdJTFpiai9nbDNNa1FUVTdreDdrTC9PZ1JKbmpKdzlEcHorL0dja2g4QTRF?=
+ =?utf-8?B?dXN4NVdoS2JBT0hOVEZqWDlVYXJLaUdsd3FHNzdWVGNySWx4UXl5ZTNxeHFx?=
+ =?utf-8?B?dFA5RUtCSFVoci9rcWxobUNZMlpYZ2FYYTBWeE9OeUV4ZjVmVlJFRmZiaU5Q?=
+ =?utf-8?B?cXFmWmFsazAwWmlyaEdDS0NkdExoVmF1RVdjVitxbG0zZ2lPdTBCMlY3TFVO?=
+ =?utf-8?B?OGFZc3JJSmJZQkRUbkRjTVV5VURGOUNUL1liUzRDRzNXdnBWU2d5QmtRMVk5?=
+ =?utf-8?B?ZGg5L3JrTndPVm13UUhQc1hOaEwwZnllK09aVGE4Y3Fxa0EzMzMvNnB0Q2NL?=
+ =?utf-8?B?NGpUVS8rUkk2Q3NIOThsK3Fsamp3QmplVS9GZXZVVWNOVzF6ZlFxNklleXFE?=
+ =?utf-8?B?djNRaW5sQSswelBEQnU3MW9DbmlVaCtPVXFlMWJoTGpvalprdU1ZSG0yRTUv?=
+ =?utf-8?B?Z2FoajFNbTFtcmpxUFpaeHdDWFZuSGhCUC94bW1pMjBaWm00bnBZZjIyajRn?=
+ =?utf-8?B?STVuSDhKeHpDbG9KZVN4L0QvcjQ3REVPV2hrL21yUVhUajdlSkZKZmY3UW9z?=
+ =?utf-8?B?S2lSeW5ScjB0LzFLVVpVMmR1VlkwTjlDYXdZeW1ZQzhFK0hRd3crbVFIdWRq?=
+ =?utf-8?B?N0p3VkJpZ05FVWhTVUZOSlAwVWZsVWF6RXo3U3VZejAzZ1VKR0VHUit4dDR6?=
+ =?utf-8?Q?1ND+ycBuawTO8oRE=3D?=
+X-Exchange-RoutingPolicyChecked: CCUMb5IDzOJWsUMW72yWp8/8iHdLe5m9nTjredFRIrJbYeujqZu6q4SKLWBrM6fhs4J0M4i4Z/cYgeZD/KKZJPi3P1VL1c9nbSQjTQ9zKQv0gpCf2goXeRqS459ZbqLl2CtBPCY2jxkLwj5NIBAe2PlgQmIsmn4nSFXuuFhhTvk5p/TTLY6sd2JLkkFxiGAQ0HD3k2CVISz3iql7r938XgQdW0AaCRzEKVCnOKgyvXqOxoIzwTQXqXnKLkxIB2u2NKvpU6AhlpYeqIjewY2DLQLs7LKV4asUFigHTGIJuBbzE0eDeI1Ze20yag9h1VDBwcgieKIRYJhoaXPtn+bCuQ==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e6a84dfb-e0e4-45bb-e32f-08df3e3f53c9
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8252d81-4741-4e86-91f0-08df3e40377c
 X-MS-Exchange-CrossTenant-AuthSource: MW4PR02MB7153.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2026 08:56:22.0603 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2026 09:02:44.0596 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cH01gGnTNEPtsglAmT2f4t7MQJF8e7h5uVDp386TIR6DK+Gjp13w/iHY1xXxMFndo+jy/9eU9GqUAX4JRsG2xZgEduSNPSuQT/6mgvl6mGc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB6953
-X-Authority-Analysis: v=2.4 cv=HORWhYtv c=1 sm=1 tr=0 ts=6af18ab8 cx=c_pps
- a=49tiPNKudA41XY8u0CHlaQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-MS-Exchange-CrossTenant-UserPrincipalName: p0mRFYXC0BT/PzZ0E5EcM6XhrOJJT9vtOg/dTiVUCEGdRB/xJEOats+lvWXd+0OJEiuQySKOY5Vs+EFUt5l2UEloWGetsb0dejqb/3Q2QKw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB6480
+X-Authority-Analysis: v=2.4 cv=YYkodARf c=1 sm=1 tr=0 ts=6af18c35 cx=c_pps
+ a=V5lscarYawUrr6zEozVj7A==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=dEe9Ve2bX-KnNSUMM2s9:22
- a=20KFwNOVAAAA:8 a=64Cc0HZtAAAA:8 a=-7gIxdPHnDxpSC36y9IA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDAzNSBTYWx0ZWRfXwH2W3/lVWlbq
- le6i4DeaI/or1azA+Yke0e2j8nDIrXVy71qopSsJ093O259MfnW/OwYrYXjnwJbmQqR49lF68A9
- 8VGYcx3f1R/TodVsNvx3JgEODM/VS2qwxltNg5k8nifEMP8aIeAW072A/pl4VtLJonF1JzfFIrT
- m6ml7n4g1v+NV5PGwwWjLZ8LO3LGLP3nWA2sHPrxxUX0xp0gxUxmkXRmfLMpex/azlYWIi9m5R7
- fpxG0YaciPDmsySSX5auRohkWu/jROY4yOQBKCySjP4GxIUGJMtQbOInH1B/RBLD+mBVG7wPRB7
- DO8iQ3QE8GM0s0m0oM+XRnkzPphGZaNVS0vurvpydlQFjLEJg/BShvD+Td+1Rm51JJHQjr/5389
- N9QYGQ9zPAh0QYmYy2FcmvWBCJQdiIyjwPi4QfuBJU2TpuwR1CRYox+NfYK32+DJHxsPy2nQ5Qi
- /VcxNDdVanrC8b5lZag==
-X-Proofpoint-ORIG-GUID: nDjgVTdTp66xvl_L4HsF0N8sSfROujc_
-X-Proofpoint-GUID: nDjgVTdTp66xvl_L4HsF0N8sSfROujc_
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDAzNSBTYWx0ZWRfX3N+P4ZGFIKIB
- dB07DNRwMjJHYQOk9ySEJpSQv9JK0Idpth+Ht8Tul7ITgKIp0PuvMCK/6kDYY52ueTvreN0qp/l
- aFYGQ/cK2Xy5GdhhEvXAtQZvUKQ7Xgw=
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=_-M8LpHI31CeLmyZm6wg:22
+ a=20KFwNOVAAAA:8 a=OrYM-6J7qGsYkut1G6oA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDAzNSBTYWx0ZWRfX2n12LZA74BsN
+ oTx2wygYf9NN0ugpeMzp3/ERIWnPPdvrGXlhtlsLwNRdkba8ztXfLe4+3Jrzv5Bj4kVyomBstZ6
+ yps+T1IAAhaG3+u7p8PCjVx2yOCWjzbmSLLB+rrEf4F/qsIwrkBYDHztsNmeA7tI95nA73SH+Hi
+ ta2/wDBKUFBNWcu82g0sujaWyu1xxIE6YGUPS5xLkY7P/R03gOT0rWHt7rJShRKxuFNxl3kAW+J
+ N4VgFiZJcUpz2n0jpA226r1PvJvK6+PXOuiKLI8G9PiC3G8AAuWMQt+G1E4xAYvY6HkDKgSRsex
+ p4Orui+HxKfkxB9C0ghc9x5PGRP9aY/+FeZf2YTTorvFkstqCu06BoJzDOJeeBMKBynwPRO95rR
+ hCEM3X2n1dME7fFOd//zIQVBZkGyjH3iJhqbTXh5sq23I2v5VRnIozyY87HnWXuI25fuMJWQwP4
+ q3GzrQrIqauJBf+MqUQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDAzNSBTYWx0ZWRfX1N4RS2DPxV5b
+ wSnW9rr/QBhmH72F1nbDtkat+Pen8dFKxHIimkp9xCKEaOHeF5UozPPWED8pxcDfynO8+GE7U31
+ E5HkttMb8k14hq2Pk/GWpxELQXYdPXs=
+X-Proofpoint-ORIG-GUID: Zj7ILwfYwytAsmMtw94a_eZQnEzrpvep
+X-Proofpoint-GUID: Zj7ILwfYwytAsmMtw94a_eZQnEzrpvep
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-09_03,2026-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -192,56 +193,233 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 06/11/2026 11:04, Markus Armbruster wrote:
 
-> According to object.h, direct usage of DECLARE_INSTANCE_CHECKERS()
-> should be avoided, and the complete OBJECT_DECLARE_TYPE macro is
-> recommended instead.  So use that.
+> Commit 5eceb48bbe86 (hw/gpio: pca9554: add PCA9536 support) made type
+> "pca9535" a child of concrete type "pca9555".  This is inconvenient
+> for the next commit.  Make them both children of new abstract type
+> "pca9554-base".
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->   hw/gpio/pca9554.c | 10 ++--------
->   1 file changed, 2 insertions(+), 8 deletions(-)
+>   include/hw/gpio/pca9554.h |  1 +
+>   hw/gpio/pca9554.c         | 55 +++++++++++++++++++++++----------------
+>   2 files changed, 33 insertions(+), 23 deletions(-)
 > 
+> diff --git a/include/hw/gpio/pca9554.h b/include/hw/gpio/pca9554.h
+> index 1b33a8a752..0d841ff017 100644
+> --- a/include/hw/gpio/pca9554.h
+> +++ b/include/hw/gpio/pca9554.h
+> @@ -8,6 +8,7 @@
+>   #ifndef PCA9554_H
+>   #define PCA9554_H
+>   
+> +#define TYPE_PCA9554_BASE "pca9554-base"
+>   #define TYPE_PCA9554 "pca9554"
+>   #define TYPE_PCA9536 "pca9536"
+>   
 > diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
-> index e5a1932c89..caa73f63c9 100644
+> index caa73f63c9..1362b605c2 100644
 > --- a/hw/gpio/pca9554.c
 > +++ b/hw/gpio/pca9554.c
-> @@ -22,14 +22,12 @@
->   #include "trace.h"
->   #include "qom/object.h"
->   
-> -typedef struct PCA9554State PCA9554State;
-> -DECLARE_INSTANCE_CHECKER(PCA9554State, PCA9554,
-> -                         TYPE_PCA9554)
-> -
->   #define PCA9554_NR_REGS 4
+> @@ -26,7 +26,7 @@
 >   #define PCA9554_PIN_COUNT 8
 >   #define PCA9536_PIN_COUNT 4
 >   
-> +OBJECT_DECLARE_TYPE(PCA9554State, PCA9554Class, PCA9554)
-> +
+> -OBJECT_DECLARE_TYPE(PCA9554State, PCA9554Class, PCA9554)
+> +OBJECT_DECLARE_TYPE(PCA9554State, PCA9554Class, PCA9554_BASE)
+>   
 >   struct PCA9554State {
 >       /*< private >*/
->       I2CSlave i2c;
-> @@ -52,10 +50,6 @@ struct PCA9554Class {
+> @@ -58,7 +58,7 @@ static const char *pin_state[] = {"low", "high"};
 >   
->       uint8_t pin_count;
+>   static void pca9554_update_pin_input(PCA9554State *s)
+>   {
+> -    PCA9554Class *pc = PCA9554_GET_CLASS(s);
+> +    PCA9554Class *pc = PCA9554_BASE_GET_CLASS(s);
+>       int i;
+>       uint8_t config = s->regs[PCA9554_CONFIG];
+>       uint8_t output = s->regs[PCA9554_OUTPUT];
+> @@ -110,7 +110,7 @@ static uint8_t pca9554_read(PCA9554State *s, uint8_t reg)
+>   
+>   static void pca9554_write(PCA9554State *s, uint8_t reg, uint8_t data)
+>   {
+> -    PCA9554Class *pc = PCA9554_GET_CLASS(s);
+> +    PCA9554Class *pc = PCA9554_BASE_GET_CLASS(s);
+>       uint8_t pin_mask = (1 << pc->pin_count) - 1;
+>   
+>       /* Variants narrower than 8 bits ignore the unimplemented upper pins. */
+> @@ -134,14 +134,14 @@ static void pca9554_write(PCA9554State *s, uint8_t reg, uint8_t data)
+>   
+>   static uint8_t pca9554_recv(I2CSlave *i2c)
+>   {
+> -    PCA9554State *s = PCA9554(i2c);
+> +    PCA9554State *s = PCA9554_BASE(i2c);
+>   
+>       return pca9554_read(s, s->pointer & 0x3);
+>   }
+>   
+>   static int pca9554_send(I2CSlave *i2c, uint8_t data)
+>   {
+> -    PCA9554State *s = PCA9554(i2c);
+> +    PCA9554State *s = PCA9554_BASE(i2c);
+>   
+>       /* First byte sent by is the register address */
+>       if (s->len == 0) {
+> @@ -156,7 +156,7 @@ static int pca9554_send(I2CSlave *i2c, uint8_t data)
+>   
+>   static int pca9554_event(I2CSlave *i2c, enum i2c_event event)
+>   {
+> -    PCA9554State *s = PCA9554(i2c);
+> +    PCA9554State *s = PCA9554_BASE(i2c);
+>   
+>       s->len = 0;
+>       return 0;
+> @@ -173,7 +173,7 @@ static void pca9554_set_ext_state(PCA9554State *s, int pin, int level)
+>   static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
+>                               void *opaque, Error **errp)
+>   {
+> -    PCA9554State *s = PCA9554(obj);
+> +    PCA9554State *s = PCA9554_BASE(obj);
+>       int pin, rc;
+>       uint8_t state;
+>   
+> @@ -182,7 +182,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
+>           error_setg(errp, "%s: error reading %s", __func__, name);
+>           return;
+>       }
+> -    if (pin < 0 || pin >= PCA9554_GET_CLASS(s)->pin_count) {
+> +    if (pin < 0 || pin >= PCA9554_BASE_GET_CLASS(s)->pin_count) {
+>           error_setg(errp, "%s invalid pin %s", __func__, name);
+>           return;
+>       }
+> @@ -200,7 +200,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
+>   static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+>                               void *opaque, Error **errp)
+>   {
+> -    PCA9554State *s = PCA9554(obj);
+> +    PCA9554State *s = PCA9554_BASE(obj);
+>       int pin, rc, val;
+>       uint8_t state, mask;
+>       g_autofree char *state_str = NULL;
+> @@ -213,7 +213,7 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+>           error_setg(errp, "%s: error reading %s", __func__, name);
+>           return;
+>       }
+> -    if (pin < 0 || pin >= PCA9554_GET_CLASS(s)->pin_count) {
+> +    if (pin < 0 || pin >= PCA9554_BASE_GET_CLASS(s)->pin_count) {
+>           error_setg(errp, "%s invalid pin %s", __func__, name);
+>           return;
+>       }
+> @@ -274,8 +274,8 @@ static const VMStateDescription pca9554_vmstate = {
+>   
+>   static void pca9554_reset(DeviceState *dev)
+>   {
+> -    PCA9554State *s = PCA9554(dev);
+> -    PCA9554Class *pc = PCA9554_GET_CLASS(s);
+> +    PCA9554State *s = PCA9554_BASE(dev);
+> +    PCA9554Class *pc = PCA9554_BASE_GET_CLASS(s);
+>       uint8_t pin_mask = (1 << pc->pin_count) - 1;
+>   
+>       s->regs[PCA9554_INPUT] = pin_mask;
+> @@ -292,7 +292,7 @@ static void pca9554_reset(DeviceState *dev)
+>   
+>   static void pca9554_initfn(Object *obj)
+>   {
+> -    PCA9554Class *pc = PCA9554_GET_CLASS(obj);
+> +    PCA9554Class *pc = PCA9554_BASE_GET_CLASS(obj);
+>       int pin;
+>   
+>       for (pin = 0; pin < pc->pin_count; pin++) {
+> @@ -308,8 +308,8 @@ static void pca9554_initfn(Object *obj)
+>   
+>   static void pca9554_gpio_in_handler(void *opaque, int pin, int level)
+>   {
+> -    PCA9554State *s = PCA9554(opaque);
+> -    PCA9554Class *pc = PCA9554_GET_CLASS(s);
+> +    PCA9554State *s = PCA9554_BASE(opaque);
+> +    PCA9554Class *pc = PCA9554_BASE_GET_CLASS(s);
+>   
+>       assert((pin >= 0) && (pin < pc->pin_count));
+>       pca9554_set_ext_state(s, pin, level);
+> @@ -317,8 +317,8 @@ static void pca9554_gpio_in_handler(void *opaque, int pin, int level)
+>   
+>   static void pca9554_realize(DeviceState *dev, Error **errp)
+>   {
+> -    PCA9554State *s = PCA9554(dev);
+> -    PCA9554Class *pc = PCA9554_GET_CLASS(s);
+> +    PCA9554State *s = PCA9554_BASE(dev);
+> +    PCA9554Class *pc = PCA9554_BASE_GET_CLASS(s);
+>   
+>       if (!s->description) {
+>           s->description = g_strdup(object_get_typename(OBJECT(dev)));
+> @@ -333,11 +333,10 @@ static const Property pca9554_properties[] = {
+>       DEFINE_PROP_BOOL("hw-dir", PCA9554State, hw_dir, false),
 >   };
-> -typedef struct PCA9554Class PCA9554Class;
-> -
-> -DECLARE_CLASS_CHECKERS(PCA9554Class, PCA9554,
-> -                       TYPE_PCA9554)
 >   
->   #define PCA9554_PIN_LOW  0x0
->   #define PCA9554_PIN_HIZ  0x1
+> -static void pca9554_class_init(ObjectClass *klass, const void *data)
+> +static void pca9554_base_class_init(ObjectClass *klass, const void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>       I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
+> -    PCA9554Class *pc = PCA9554_CLASS(klass);
+>   
+>       k->event = pca9554_event;
+>       k->recv = pca9554_recv;
+> @@ -346,26 +345,36 @@ static void pca9554_class_init(ObjectClass *klass, const void *data)
+>       device_class_set_legacy_reset(dc, pca9554_reset);
+>       dc->vmsd = &pca9554_vmstate;
+>       device_class_set_props(dc, pca9554_properties);
+> +}
+> +
+> +static void pca9554_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    PCA9554Class *pc = PCA9554_BASE_CLASS(klass);
+>   
+>       pc->pin_count = PCA9554_PIN_COUNT;
+>   }
+>   
+>   static void pca9536_class_init(ObjectClass *klass, const void *data)
+>   {
+> -    PCA9554Class *pc = PCA9554_CLASS(klass);
+> +    PCA9554Class *pc = PCA9554_BASE_CLASS(klass);
+>   
+>       pc->pin_count = PCA9536_PIN_COUNT;
+>   }
+>   
+>   static const TypeInfo pca9554_types[] = {
+>       {
+> -        .name          = TYPE_PCA9554,
+> +        .name          = TYPE_PCA9554_BASE,
+>           .parent        = TYPE_I2C_SLAVE,
+>           .instance_init = pca9554_initfn,
+>           .instance_size = sizeof(PCA9554State),
+> -        .class_init    = pca9554_class_init,
+> +        .class_init    = pca9554_base_class_init,
+>           .class_size    = sizeof(PCA9554Class),
+> -        .abstract      = false,
+> +        .abstract      = true,
+> +    },
+> +    {
+> +        .name          = TYPE_PCA9554,
+> +        .parent        = TYPE_PCA9554_BASE,
+> +        .class_init    = pca9554_class_init,
+>       },
+>       {
+>           .name          = TYPE_PCA9536,
 
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+The basic change looks good to me, however I found it tricky to follow 
+given that PCA9554Class is now related to PCA9554_BASE_CLASS() and 
+PCA9554State is now related to PCA9554_BASE().
+
+Would it make sense to rename PCA9554Class to PCA9554BaseClass and 
+PCA9554State to PCA9554BaseState here? I think it would help make the 
+hierarchy easier to follow.
 
 
 ATB,
