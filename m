@@ -1,70 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7693D606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6C7606A325
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 22:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=CCpy8GlT
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=cWWSyTvL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQXu9-0005Ob-NF; Mon, 09 Nov 2026 17:31:57 -0500
+	id 1xQXu7-0005MV-Ql; Mon, 09 Nov 2026 17:31:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1xQXu5-0005KL-4N
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:31:53 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1xQXtn-0005E9-R6
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:31:41 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1xQXu2-0003xy-CZ
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:31:52 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-8a07078200fso554753b3a.2
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 14:31:49 -0800 (PST)
+ id 1xQXtl-0003tp-TT
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:31:35 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-8a0880a46e7so771347b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 14:31:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794263509; x=1794868309; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794263492; x=1794868292; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wKgrrb+rx7HuVm9Uxl9r0pUFMwYXtZRcBhcO70ngG2o=;
- b=CCpy8GlTbQBCy0n4gTzYNiNza0hHiipNzcqWmoEY8Gn98F7KLyjUR/tP7UNqQs6eA8
- EmfbdWc+uR9G56B8XnJZ05ar6nxuBG0GQlrlqWzm7HVsf3LbJgr01BpPUnDb9fya2Sgx
- iR0TMbkGmM05LOdhoUMFKsvdSPjWffLDO6eEUnCf39fn4hG3bIOPEFptavktY1XSdeBA
- NZzIhPs8Z5XPTTtovUcKhHOiQyE3t0YuH8JiU1od5loebOrOGDxCUy59qpPiSn1mMjYj
- +nE+Q3eHupmnq+0P+LFEUCuZbdSl52+lMLeaaQ7fJOchO8j35Q6yPtkdNKhB8pUbwgOi
- JZjQ==
+ bh=l7cfw0TdjsR+3R0sW/rw9uWVrC9z73bNOgT/MeSJe90=;
+ b=cWWSyTvLF6NS+ik8vgoLNyTxC6YZ0xgxGC65Fvn3Z+C8RgxMNgn4ca1jb9huTAg2ay
+ IZLz4gmFg3soVWqcLrlBfA44Ur+C7DpT46JUCLGNI8v+MhIpMDDda8Emy5fSMovA6Qs0
+ 5OSYZWkkQ6/xTn+HDpjKyxFAncOYpBGMzQnPrWOsSKLbbJFa1g94dTjSBGc5oZP6hNnc
+ bpsYkgUomW8Lmt/5n0QGLhz9H9zIAmhrejVS3AIjp+KnINoUNoAJBTbw68qih+GKiSwZ
+ CbxcxF7TyA3PpbEQh2QtNJRlwt5+4QUT4kkEeNYAd4r+wt3NhEuwzSAIP4ufXsdwejiZ
+ PCxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794263509; x=1794868309;
+ d=1e100.net; s=20260707; t=1794263492; x=1794868292;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=wKgrrb+rx7HuVm9Uxl9r0pUFMwYXtZRcBhcO70ngG2o=;
- b=FevpBGMgfGALrx5LNm7ZUowCyTvZ11mPh4NPij3rWJsa65NSGA1Y2JGoeu6je4zvs/
- HojWkTsw5FLtnXlGDnv5Cq6ebMXAG6n79yyU4Kmv4pmz24KEpiZR7H3GWP6SdUQATfuL
- FGYPxf6n0WnUnKpSdBvcHZCSsJIjKsWSylhmXKToitM4V0+5ygce2zFxiBIYez7qkZvO
- kHH7zp5k2juMJsyk0rrni59HGhPTjivrajzXrUugGerp4f8qbL7msGxfeJgrdybe59Br
- TYAnudhTwL7AoqIZqN08SL7aoN/+XMAi78rx+H1hftIJGhFHGmROv6wQDKPaPDgyDVRP
- wy7A==
-X-Gm-Message-State: APuU4Z/VzA5t5Eu99nCCA3SDMYLyFCR4FVrWbg17oeGXoBWCjcVgE+wR
- HdS5xoaANYZw1qoiUY2pB8NTdbeMaHzupaeoekpLSM67WmHa6oDgLrKnov6//2jgX9c=
-X-Gm-Gg: AYBFou3pG+IQ9NwtMMbYpjERVdpHShk8Re53fI983564PpgLddXVH3mjxtWEbKN2SxD
- GcXvboHROrwNkue3thLTEA7G1fLh9a/h1huy619vMysJDNsIROmnEVDhklGoOc1PROFzTEhKE4w
- 5GbZ+Pw6hDJ1pbByQMyLDOXxfmyKDsTmWy4/MUDg40TUn0oOtFqtWoWYtdhSblUL+6IWjNgy72j
- Fk3SFrKGJ89CGD5WGT748hi2xvJprzI+cARbBkvuoXiMFYrq9Go+A7rLOHAFSplDT49fFyQ5F7k
- PA9bIsFmxPjDgXxg8Bp4xTnSDSWFp2JbuwtG2luwuD31BD6iyaQc5eoaUuXgK9YIHsNn0KyJ38W
- 9PVeFdNSeepb86JcSGF/aR+2S5zlBmk9Z3bZVYF1qBzZt9O+BEaDCBOXZMPngG1NmakY7TMAcnD
- Ww8egUCA8XbOqz2WkuPtG0DkzVRKfToHPQv/0ddZg6AOLonpeOebBL2vWZUnzoHarHmUMLSjiB5
- JkGmE0yxPFov3BtqFZq/ezyptkVycP/Y7Fu476kr+MtCTfVW6Ovp2u0O2nJ5YtqbREylKWflciO
- /kPh7Kbik4IbLciMq3kA4lnn89Iyo0UyC/Bbf94j3lmja0kXX09mjw==
-X-Received: by 2002:a05:6a00:3d0c:b0:89f:9ea6:1de6 with SMTP id
- d2e1a72fcca58-8ba86b8e457mr855357b3a.24.1794263508926; 
- Mon, 09 Nov 2026 14:31:48 -0800 (PST)
+ bh=l7cfw0TdjsR+3R0sW/rw9uWVrC9z73bNOgT/MeSJe90=;
+ b=tuF0XnY4NCBbx4n9xh090jHAo8xVpq1uGXmLdqEVtVN55S7+eXQ3vUBYzdZds19Sy+
+ ikmx4PteIEJvFrhxhRwsfCuSLuqKj+xUOapcTKvVv6t1neRt200oCxl0o8TrQ8gxHzc7
+ vHCJEpsGysXyh2y8yvZL6oJgnTA+2QOfcWoDQEZoDSUDgyiTi0F/h9yH48tuADov4MzF
+ v+/AYFDpqta1JlFrOSrkVyGKnRpSOPFlP+N7wZx1UhqFt9yInuZ6WgnVLC9RLnnpL5rA
+ 7VTK458kRIcjbqiIh4adTzVqM+vvQTHtbl5u7N3ZIMFhbgESFvb5OgcaxKTdkXynu1RQ
+ 4ttg==
+X-Gm-Message-State: APuU4Z8G0hovOsrXehqPpYXiL+g1yhb8oEc24JGr6ETVgP2L3NlAg8iL
+ ZvY17W3bqgN0z4yULdiR9jToWIGuqOJKlJYnpbLdfcur9gywSRvcfjAS85PuzdE3lO7TKN6vC7l
+ nQOZn
+X-Gm-Gg: AYBFou2KHUwWvk4ZYQqkmwUdXGf8gI0JuZL8xH/tPsZbRieRiVisA7hG1pgEF3y7KCD
+ PrDqjGhLpIxm8l39MDm8Bmy2VDWLbd+scUFA0OfH0XFE6WLzhdCFkvRRsyuCoHQoNyPuPfKoj2D
+ nkO2+hI6F0JAWXcrTelkNb+vy/eSkcznAsYRzXiFYnmFVY/GB54vG00DPtCbFse/7abccDpVTS/
+ 6rN8QelX0TngoAIGdL7k0HbuEgg33P9gf0xvB9HArsq17U6oAVcZapCyXHt1tPUiyBiz+ctwxKo
+ ZS9KP6PC3IzI0cgFlctn9mU5GwUAUtAachzG+D+rVVZ3BjT/ilP7ikCnQdr5GMSfvaY73O0ADhu
+ Nmq8E3OLF1bCltA817/eFZ2HwCsMvEUGv+WGMn7QsiqMXVi7Pva8PvU+7MZOwwerrIn0BuELJyu
+ +/3RFD37Xiui/Go/RrBdxy9sbLVrHgvcPvMerJctn/JrxkXfvX6tB/wLW1v7Hy7KMVTVtgIonzY
+ qBjwR//lob/gZ90LvMqLkimfUoz8KviXWAR7439qpv3QU2pVSpbD5CnxtTYyWVBAYhmx4b9isij
+ wnBVhb6fb1Sw3LNydH1aeKBpbRDmRAVMz2By6LpNHgxPrOD1ld/o+g==
+X-Received: by 2002:a05:6a00:b610:b0:881:e266:c3d8 with SMTP id
+ d2e1a72fcca58-8ba98c48edcmr546467b3a.35.1794263492240; 
+ Mon, 09 Nov 2026 14:31:32 -0800 (PST)
 Received: from p14s.cg.shawcable.net ([2604:3d09:148c:c800:54d7:1b5:4356:16fb])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8baa506bca4sm165830b3a.0.2026.11.09.14.31.47
+ d2e1a72fcca58-8baa506bca4sm165830b3a.0.2026.11.09.14.31.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2026 14:31:48 -0800 (PST)
+ Mon, 09 Nov 2026 14:31:31 -0800 (PST)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -74,25 +75,25 @@ To: berrange@redhat.com, kchamart@redhat.com,
 Cc: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	kvm@vger.kernel.org
-Subject: [PATCH v6 20/23] target/arm/kvm-rme: Add DMA remapping for the shared
- memory region
-Date: Mon,  9 Nov 2026 16:31:07 -0600
-Message-ID: <20261109223110.1619504-21-mathieu.poirier@linaro.org>
+Subject: [PATCH v6 09/23] target/arm/kvm-rme: Keep track of images loaded in
+ Realm memory
+Date: Mon,  9 Nov 2026 16:30:56 -0600
+Message-ID: <20261109223110.1619504-10-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261109223110.1619504-1-mathieu.poirier@linaro.org>
 References: <20261109223110.1619504-1-mathieu.poirier@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,222 +108,167 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-In Arm CCA, the guest-physical address space is split in half. The top
-half represents memory shared between guest and host, and the bottom
-half is private to the guest. From QEMU's point of view, the two halves
-are merged into a single region, and pages within this region are either
-shared or private.
-
-Virtual devices implemented by the host are only allowed to access the
-top half. For emulated MMIO, KVM strips the GPA before returning to
-QEMU, so the GPA already belongs to QEMU's merged view of guest memory.
-However DMA addresses cannot be stripped this way and need special
-handling by the VMM.
-
-When emulating DMA the VMM needs to translate the addresses into its
-merged view. Add an IOMMU memory region on the top half, that
-retargets DMA accesses to the merged sysmem.
+Add a Rom notifier to keep track of binary blobs loaded in Realm memory.
+That way we can deterministically calculate the Realm Initial Measurement (RIM).
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@linaro.org>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- hw/arm/virt.c         |   2 +
- target/arm/kvm-rme.c  | 106 ++++++++++++++++++++++++++++++++++++++++++
- target/arm/kvm-stub.c |   4 ++
- target/arm/kvm_arm.h  |  10 ++++
- 4 files changed, 122 insertions(+)
+ hw/core/loader.c         | 24 ++++++++++++++++++++++++
+ include/hw/core/loader.h | 14 ++++++++++++++
+ target/arm/kvm-rme.c     | 30 ++++++++++++++++++++++++++++++
+ 3 files changed, 68 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index dbb5d2d6fc0c..db39d08c8831 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3338,6 +3338,8 @@ static void machvirt_init(MachineState *machine)
-                                vms->fw_cfg, OBJECT(vms));
-     }
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index 5cbfba0a86d2..644d55c9e0ed 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -74,6 +74,8 @@
+ #endif
  
-+    kvm_arm_rme_init_gpa_space(vms->highest_gpa, vms->bus);
+ static int roms_loaded;
++static NotifierList rom_loader_notifier =
++    NOTIFIER_LIST_INITIALIZER(rom_loader_notifier);
+ 
+ /* return the size or -1 if error */
+ int64_t get_image_size(const char *filename, Error **errp)
+@@ -1201,6 +1203,11 @@ MemoryRegion *rom_add_blob(const char *name, const void *blob, size_t len,
+     return mr;
+ }
+ 
++void rom_add_load_notifier(Notifier *notifier)
++{
++    notifier_list_add(&rom_loader_notifier, notifier);
++}
 +
-     vms->bootinfo.ram_size = machine->ram_size;
-     vms->bootinfo.board_id = -1;
-     vms->bootinfo.loader_start = vms->memmap[VIRT_MEM].base;
+ /* This function is specific for elf program because we don't need to allocate
+  * all the rom. We just allocate the first part and the rest is just zeros. This
+  * is why romsize and datasize are different. Also, this function takes its own
+@@ -1242,6 +1249,7 @@ ssize_t rom_add_option(const char *file, int32_t bootindex)
+ static void rom_reset(void *unused)
+ {
+     Rom *rom;
++    RomLoaderNotifyData notify;
+ 
+     QTAILQ_FOREACH(rom, &roms, next) {
+         if (rom->fw_file) {
+@@ -1290,6 +1298,22 @@ static void rom_reset(void *unused)
+         address_space_flush_icache_range(rom->as, rom->addr, rom->datasize);
+ 
+         trace_loader_write_rom(rom->name, rom->addr, rom->datasize, rom->isrom);
++
++        if (rom->addr == -1) {
++            /*
++             * These blobs (ACPI tables) are not loaded into guest RAM at reset.
++             * Instead the firmware will load them via fw_cfg and measure them
++             * itself.
++             */
++            continue;
++        }
++
++        notify = (RomLoaderNotifyData) {
++            .addr = rom->addr,
++            .len = rom->datasize,
++            .data = rom->data,
++        };
++        notifier_list_notify(&rom_loader_notifier, &notify);
+     }
+ }
+ 
+diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
+index d9431e8a8d12..e22f587627f5 100644
+--- a/include/hw/core/loader.h
++++ b/include/hw/core/loader.h
+@@ -342,6 +342,20 @@ void *rom_ptr_for_as(AddressSpace *as, hwaddr addr, size_t size);
+ ssize_t rom_add_vga(const char *file);
+ ssize_t rom_add_option(const char *file, int32_t bootindex);
+ 
++typedef struct RomLoaderNotifyData {
++    hwaddr  addr;   /* Address of the blob in guest memory */
++    size_t  len;    /* Length of the blob */
++    uint8_t *data;  /* Blob data */
++} RomLoaderNotifyData;
++
++/**
++ * rom_add_load_notifier - Add a notifier for loaded images
++ *
++ * Add a notifier that will be invoked with a RomLoaderNotifyData structure for
++ * each blob loaded into guest memory, after the blob is loaded.
++ */
++void rom_add_load_notifier(Notifier *notifier);
++
+ /* This is the usual maximum in uboot, so if a uImage overflows this, it would
+  * overflow on real hardware too. */
+ #define UBOOT_MAX_DECOMPRESSED_BYTES (64 << 20)
 diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-index 0996cddf0849..3676e34c494e 100644
+index b3edfa8e0a95..ca90bf5af890 100644
 --- a/target/arm/kvm-rme.c
 +++ b/target/arm/kvm-rme.c
-@@ -11,11 +11,13 @@
+@@ -10,6 +10,7 @@
+ 
  #include "hw/core/boards.h"
  #include "hw/core/cpu.h"
- #include "hw/core/loader.h"
-+#include "hw/pci/pci.h"
++#include "hw/core/loader.h"
  #include "kvm_arm.h"
  #include "migration/blocker.h"
  #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/memalign.h"
-+#include "qemu/units.h"
- #include "qom/object_interfaces.h"
- #include "system/confidential-guest-support.h"
- #include "system/kvm.h"
-@@ -24,10 +26,31 @@
- #define TYPE_RME_GUEST "rme-guest"
- OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
+@@ -24,6 +25,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
  
-+/*
-+ * Realms have a split guest-physical address space: the bottom half is private
-+ * to the realm, and the top half is shared with the host. Within QEMU, we use a
-+ * merged view of both halves. Most of RAM is private to the guest and not
-+ * accessible to us, but the guest shares some pages with us.
-+ *
-+ * RealmDmaRegion performs remapping of top-half accesses to system memory.
-+ */
-+struct RealmDmaRegion {
-+    IOMMUMemoryRegion parent_obj;
-+};
-+
-+#define TYPE_REALM_DMA_REGION "realm-dma-region"
-+OBJECT_DECLARE_SIMPLE_TYPE(RealmDmaRegion, REALM_DMA_REGION)
-+OBJECT_DEFINE_SIMPLE_TYPE(RealmDmaRegion, realm_dma_region,
-+                          REALM_DMA_REGION, IOMMU_MEMORY_REGION);
-+
  struct RmeGuest {
      ConfidentialGuestSupport parent_obj;
-     Notifier rom_load_notifier;
-     GSList *ram_regions;
-+    uint8_t ipa_bits;
-+
-+    RealmDmaRegion *dma_region;
-+    AddressSpace dma_as;
++    Notifier rom_load_notifier;
++    GSList *ram_regions;
  };
  
- typedef struct RmeAlignedSlab {
-@@ -287,3 +310,86 @@ static void rme_guest_init(Object *obj)
- static void rme_guest_finalize(Object *obj)
- {
+ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+@@ -41,6 +44,30 @@ static void rme_vm_state_change(void *opaque, bool running, RunState state)
+     kvm_mark_guest_state_protected();
  }
-+
-+static AddressSpace *rme_dma_get_address_space(PCIBus *bus, void *opaque,
-+                                               int devfn)
+ 
++static gint rme_compare_ram_regions(gconstpointer a, gconstpointer b)
 +{
-+    return &rme_guest->dma_as;
++    const RomLoaderNotifyData *ra = a;
++    const RomLoaderNotifyData *rb = b;
++
++    g_assert(ra->addr != rb->addr);
++    return ra->addr < rb->addr ? -1 : 1;
 +}
 +
-+static const PCIIOMMUOps rme_dma_ops = {
-+    .get_address_space = rme_dma_get_address_space,
-+};
-+
-+void kvm_arm_rme_init_gpa_space(hwaddr highest_gpa, PCIBus *pci_bus)
++static void rme_rom_load_notify(Notifier *notifier, void *data)
 +{
-+    RealmDmaRegion *dma_region;
-+    const unsigned int ipa_bits = 64 - clz64(highest_gpa) + 1;
-+
-+    if (!rme_guest) {
-+        return;
-+    }
-+
-+    assert(ipa_bits < 64);
++    RomLoaderNotifyData *region = g_memdup2(data,
++                                            sizeof(struct RomLoaderNotifyData));
 +
 +    /*
-+     * Setup a DMA translation from the shared top half of the guest-physical
-+     * address space to our merged view of RAM.
++     * The Realm Initial Measurement (RIM) depends on the order in which we
++     * initialize and populate the RAM regions. To help a verifier
++     * independently calculate the RIM, sort regions by GPA.
 +     */
-+    dma_region = g_new0(RealmDmaRegion, 1);
-+
-+    memory_region_init_iommu(dma_region, sizeof(*dma_region),
-+                             TYPE_REALM_DMA_REGION, OBJECT(rme_guest),
-+                             "realm-dma-region", 1ULL << ipa_bits);
-+    address_space_init(&rme_guest->dma_as, MEMORY_REGION(dma_region),
-+                       TYPE_REALM_DMA_REGION);
-+    rme_guest->dma_region = dma_region;
-+    rme_guest->ipa_bits = ipa_bits;
-+
-+    pci_setup_iommu(pci_bus, &rme_dma_ops, NULL);
++    rme_guest->ram_regions = g_slist_insert_sorted(rme_guest->ram_regions,
++                                                   region,
++                                                   rme_compare_ram_regions);
 +}
 +
-+static void realm_dma_region_init(Object *obj)
-+{
-+}
-+
-+static IOMMUTLBEntry realm_dma_region_translate(IOMMUMemoryRegion *mr,
-+                                                hwaddr addr,
-+                                                IOMMUAccessFlags flag,
-+                                                int iommu_idx)
-+{
-+    const hwaddr address_mask = MAKE_64BIT_MASK(0, rme_guest->ipa_bits - 1);
-+    IOMMUTLBEntry entry = {
-+        .target_as = &address_space_memory,
-+        .iova = addr,
-+        .translated_addr = addr & address_mask,
-+        /*
-+         * Somewhat arbitrary granule for users that need one, such as
-+         * address_space_get_iotlb_entry(). Should be relatively large to
-+         * avoid frequent TLB misses. It can't be larger than memory region
-+         * alignment (eg. address_mask) because that would mask the whole
-+         * address, preventing vhost from finding the correct memory region.
-+         */
-+        .addr_mask = 4 * KiB - 1,
-+        .perm = IOMMU_RW,
-+    };
-+
-+    return entry;
-+}
-+
-+static void realm_dma_region_replay(IOMMUMemoryRegion *mr, IOMMUNotifier *n)
-+{
-+    /* Nothing is shared at boot */
-+}
-+
-+static void realm_dma_region_finalize(Object *obj)
-+{
-+}
-+
-+static void realm_dma_region_class_init(ObjectClass *oc, const void *data)
-+{
-+    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_CLASS(oc);
-+
-+    imrc->translate = realm_dma_region_translate;
-+    imrc->replay = realm_dma_region_replay;
-+}
-diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-index 88cbe8d85c41..d17980cc8043 100644
---- a/target/arm/kvm-stub.c
-+++ b/target/arm/kvm-stub.c
-@@ -42,6 +42,10 @@ bool kvm_arm_el2_supported(void)
-     return false;
- }
+ static int kvm_arm_rme_init(ConfidentialGuestSupport *cgs, Error **errp)
+ {
+     KVMState *s = KVM_STATE(current_accel());
+@@ -58,6 +85,9 @@ static int kvm_arm_rme_init(ConfidentialGuestSupport *cgs, Error **errp)
+     error_setg(&rme_mig_blocker, "RME: migration is not implemented");
+     migrate_add_blocker(&rme_mig_blocker, &error_fatal);
  
-+void kvm_arm_rme_init_gpa_space(hwaddr highest_gpa, PCIBus *pci_bus)
-+{
-+}
++    rme_guest->rom_load_notifier.notify = rme_rom_load_notify;
++    rom_add_load_notifier(&rme_guest->rom_load_notifier);
 +
- /*
-  * These functions should never actually be called without KVM support.
-  */
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 9c7e7f654a0b..4dcb661e4447 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -241,4 +241,14 @@ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3);
-  */
- char *kvm_print_register_name(uint64_t regidx);
- 
-+/**
-+ * kvm_arm_rme_setup_gpa
-+ * @highest_gpa: highest address of the lower half of the guest address space
-+ * @pci_bus: The main PCI bus, for which PCI queries DMA address spaces
-+ *
-+ * Setup the guest-physical address space for a Realm. Install a memory region
-+ * and notifier to manage the shared upper half of the address space.
-+ */
-+void kvm_arm_rme_init_gpa_space(hwaddr highest_gpa, PCIBus *pci_bus);
-+
- #endif
+     /*
+      * The realm activation is done last, when the VM starts, after all images
+      * have been loaded and all vcpus finalized.
 -- 
 2.53.0
 
