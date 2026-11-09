@@ -1,144 +1,139 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B97606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 22:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60A6606A321
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 22:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=fql30wke;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=NUhHzU2O
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=mKChgxMT;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=fU5itpcC
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQXYk-0005CX-AW; Mon, 09 Nov 2026 17:09:50 -0500
+	id 1xQXcm-0006vW-4Z; Mon, 09 Nov 2026 17:14:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xQXYZ-0005BK-Of
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:09:40 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xQXcl-0006uB-91
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:13:59 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xQXYY-0001QK-3E
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:09:39 -0500
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xQXci-0001qU-9W
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:13:59 -0500
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A9LA2CZ2029792
- for <qemu-devel@nongnu.org>; Mon, 9 Nov 2026 22:09:36 GMT
+ 6A9LA2pl2376535
+ for <qemu-devel@nongnu.org>; Mon, 9 Nov 2026 22:13:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 0N6txGuoCy050LjwKuyYPj6KbLN4zM7FrAU+ARIjgnk=; b=fql30wkeierMAq2O
- 0FsTKZM5VG+/aT+DdZVn31gU5LVQ4FlHTcdJID+85gTByyTt1MaX5wdXLzFttyMo
- jt21hhBRNskDUth/QBPvk221lyCdIucD7JV2AE08a5yztzvnIljOQUIa2Fv7CEza
- P6eGjxnkXMkmGJoyZuT6Kji2OxKJEpizKyfSEnhE2A/Ho5YATXzPBkECJZZHQl1w
- 8pVrsszVBPmSCOqr1LnP9zEjIguqucGogTdTcXiuwbSpLEPV00x242ltqKag7ORQ
- tI6pA8eQowfln7w24uEmnkg6YJj/WztQsofkMip9OcbtcrI/FLGb2ezTyP/9FiY/
- Tlf2Rg==
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
- [209.85.217.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hufx81pvt-1
+ GDUerUJMyyyRZNDd9ojhdW8P69NKNWh08hh2ZbTp8yU=; b=mKChgxMTnzplFJ85
+ oxPOC/0PRIPg4P5DB/kFur+PTzbFjw2Pm+tJMs0N+rrbxGBozDH4YZ5w8aemsaMB
+ AH6Gv6qpVOUW5a13oBFpxCDX20Sk0KvS3wsOZdAntLALEVEQqcdiipjXLz+2ZYh4
+ 77K0dhSVWaZI6nBXY8iLppj+o7m8/3qNCtNercyxbzMhUGyuBcgNhk+akDGldemz
+ 9dQfsDD0Bq6A+xUr69FzA/Om4Nld1Ra7AyI11leHwlxDW623s1+oROieWe7q8St+
+ 4V6HV2OICkytcF/pTnC74P2qDvPj99dp1+pTfm3POriYd9A9ymvj0J+7br/qHtod
+ jA3BJA==
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
+ [209.85.217.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hue0qt44n-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 22:09:36 +0000 (GMT)
-Received: by mail-vs1-f69.google.com with SMTP id
- ada2fe7eead31-7d2d60a8bf5so257834137.1
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 14:09:36 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 22:13:48 +0000 (GMT)
+Received: by mail-vs1-f70.google.com with SMTP id
+ ada2fe7eead31-7cc36b97a77so253850137.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 14:13:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794262175; x=1794866975; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1794262427; x=1794867227; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=0N6txGuoCy050LjwKuyYPj6KbLN4zM7FrAU+ARIjgnk=;
- b=NUhHzU2OU0ka9dyy26a84m6Vn2mnaRBmvNxrzT6tzcLgrvrWPCRTxmG6BO+y0o2JN5
- L6gl2vmfvgbHOFUkmUjMR2XlnrsMjGvUhizigmZu1L3+a80/t7YPIfUpdhrh4a7ANajj
- adM9EixLB6xj7pdRcBHc4eMG+W6Cn6DjnMGRsReFMDtX8fLb+7+KrWZU8T+MkNTF/leM
- xangyMF309FpmhosmJcu5o7XklCVlwgfxQhYkjE4To+GEL/uwo3zZxO1tiyJMcDrUuTU
- C/I44MFXMIVUgggMTmKhj48i6jkH0VG6Y+0KCJ4+WuJqjBe7MXPiiKAw3jQU34xbLfen
- eI8g==
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=GDUerUJMyyyRZNDd9ojhdW8P69NKNWh08hh2ZbTp8yU=;
+ b=fU5itpcCJ2wpeCGGVyRR/Sc2d7WGhY2H1XOOsdu4LimFww8LT/0zL+//3z5kWnKQbq
+ iCWrsihqXR/Prt0ccORcZruyg5NCeq9foChOMjaZQAmbHdH5fnF6gorYMV2Q4YvaajFp
+ uiOJdWHBqR02KYCCWg3RzohC+qJztKyU9jFTMVYrH9yY1Hiv/zD1MoapH28hSOQ4roPt
+ gCruMwzpuPZn+ZAwtimj2nLacJCWtkN5Y+HcoXY2eN1ipmr34PXNr+LJe4z0TbBVpGH1
+ SYrQ2ESTYxy+FxvVb9VyU0H9vBxb6p2xosQMfeaQBAyvRbwtDTIfCOeZjLJ+JIU9YLGi
+ 1FYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794262175; x=1794866975;
+ d=1e100.net; s=20260707; t=1794262427; x=1794867227;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=0N6txGuoCy050LjwKuyYPj6KbLN4zM7FrAU+ARIjgnk=;
- b=zYQJQkbG9QE4vvrDNmHfKKoyhJOs6ETk93GRq6wCPrgQD3LBpY4PQ8qJRafPxrTdIi
- HPCBGzaoSJe5l2YNbCT3U4jE2NaNSI/8c6QR8A5dWgd0jKJ2OxfQUKcjiQgcgqY4Ypec
- f05Xi72wcA+M3SZlEVJyz0XD4Vok9gXZCUWx2SZdQ6zakXg0iCXEYfnr64bAowhllsw4
- SENynheZiu7mJGdE6kK5nHtP9/5XZ/RsmYA3boJ50hXzoC1guro0EuwmAZgeBttql3Pz
- D2AmVBxFO0wH7aL6jKvzXg1MbWUWU/6G0l62FsQfqJ557mAZF/ikQdima9IInf5iXM2f
- bfAQ==
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=GDUerUJMyyyRZNDd9ojhdW8P69NKNWh08hh2ZbTp8yU=;
+ b=tOi+VzFMYWpT8cODb7p2EDlwP2MaUb1ZfokGe7hLBjGVijYexUXG7LdGwzMJcVOL6L
+ SzVs2CUs9TBj9AcDY2Vv699x6CZL+DYQreuZz5uh676Kloq0WyC06+zv3Mvd8arFbHWx
+ gWPsHLdgCfr+M1QTM6gsO/D/REVsdYU9oXWMmYxvRb9KsrK+5uxSGH8qJlQF2HTIt1Sg
+ X/M2AXIDJsM/audEHDeakDufEkr61HA+J01jOIPmkjQgqYK/jUvVzLDXttmcA2e9V28P
+ vrWpcx1zrL/hodZ7pRdSjeVUJ9/TpwWyh+5f2y2GK8JgTIP9UPCWIWhrB1/ETf9HJi8M
+ rDfw==
 X-Forwarded-Encrypted: i=1;
- AL+hErHh8ZydN21hWNL2p4nTPw2xsu4mLDacf2tETwSOyPpixjv9SQ5hBNdiuIU5zMwxVcJ4sNQjx7TU7MjR@nongnu.org
-X-Gm-Message-State: APuU4Z+IzjKKXXp0BLgtz7XvvS5SYTMlyzd7RAPLUsmtGOcqeOcEyD10
- DhVp68cWA8v7aMihDkqHtuC3eg8Sd0gZIb52r/HCSTSIzZxtWvuApB6tHtutOQRcTlgpzpGBByv
- 3SjWJTmcaEYzNE4nefWra++ATg675XZP7bAEUVaGJMN68wpw0Qlms1avX3A==
-X-Gm-Gg: AYBFou3UEKIrGoHDGgunltQENEVyvi8OIsC986CJUizkbdqS/TSwgVCcZ0k9Fwk8C5b
- O6P5+TfUABCIwr7uAw8F6T7rVSAqlVC1rsWSVBG7DFzMvucBtczuPdSAygO+4NTi7Ns3dxVLVNG
- p+nmA9GS5T9SZ11yYRYZqRwpw5CBkIH8ZMzejyHx6iZYpAwWEmOS8SPvxKOA2dIgbfG+wtEUiFb
- JbQv/5S3IP3AzywWERCyYrHNagiRFFUb71P4AEGaUPqZ2G3JfWpkipfh6tO9CGWFvz1OYcCrv9z
- 0dX0WXpVbbUvDibfKsG9LPktM5w4FLGx/7Z7spiP1R4mJNX7/ovoPE1IvRFNVdmNCvY08dyoG8m
- JTvL6g7VlqDp9v0PGRYWqzT5KYOsoS8jnQtdUTIhLGx8WUAtlrj1SjyUYVnb/g7UXVRrXEuzA83
- DPzuvHWg==
-X-Received: by 2002:a05:6102:3f8f:b0:7a8:2a34:432e with SMTP id
- ada2fe7eead31-7d301b8d8a1mr245858137.9.1794262174968; 
- Mon, 09 Nov 2026 14:09:34 -0800 (PST)
-X-Received: by 2002:a05:6102:3f8f:b0:7a8:2a34:432e with SMTP id
- ada2fe7eead31-7d301b8d8a1mr245849137.9.1794262174497; 
- Mon, 09 Nov 2026 14:09:34 -0800 (PST)
+ AL+hErGrB0qDIVjhvcfUduu4BltSdshCoK4Mz8k0uSLg4TjhjEbuXr/UgFv4TTzvdJ5o0s8VxA2KrZ8X8PU2@nongnu.org
+X-Gm-Message-State: APuU4Z8BM1LL78I867r9f2873HvzLMAwb8VludURCmoQySBmWJLya511
+ LgagnDX3FNerzGvWjdaqo8gmAVaGV67ynew3G1qK2q2+MMLf9hiCL1ey0Lxlk7Vh2LQCNWc2tMh
+ zT2/cjyaOqlY7o9/Ir4MVH+ARe5hBdLkYVyZwiF8fjVOLIb1Wc7O0nBadxfam97jJzQ==
+X-Gm-Gg: AYBFou3gI82JS5M8R5t2PB883bE5bK8T2r5UOmjgrp1OVnvOdOwsJM9C4QmSE3cz/he
+ Q/nKhbsZM1X1aOwz+tZ3DqfeB+v89/18Hsok5xUJi6R37zMk8splgHop56dDm1X3XuzIDL2OYCg
+ W4/dXNb5gfO+t5GN8qof50VB1EF7wbIDrmmI6uMvHKAGl6fK9J/ivDNMEfJ8Fi4aozaP5TH8gp/
+ mngyQ66SecG13baSo8HtKIGjxTCU68l+Vm1vyLkVRsXSabRj36kO3AHOJbQ3/3o3Vo18JPdSHr/
+ bfIRK6/rQxjjepEpYzhaZByDTMc6PfvKy/0TdRwvbiGaqfkcBGyEzOENIzGyXkVaoiSSs+PN47f
+ gvpzAutWzUTk+7YVJIqBAHDKirm8JhAytvPaHQX4HzcKmXzekJL59gNH6TOBSAszmynKu79V+40
+ DcizAqSg==
+X-Received: by 2002:a05:6102:2922:b0:7cc:2cd0:e73c with SMTP id
+ ada2fe7eead31-7d301c05c86mr242304137.25.1794262427331; 
+ Mon, 09 Nov 2026 14:13:47 -0800 (PST)
+X-Received: by 2002:a05:6102:2922:b0:7cc:2cd0:e73c with SMTP id
+ ada2fe7eead31-7d301c05c86mr242300137.25.1794262426861; 
+ Mon, 09 Nov 2026 14:13:46 -0800 (PST)
 Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4ba0233f95dsm9597055e9.1.2026.11.09.14.09.32
+ 5b1f17b1804b1-4ba01fe61e6sm17991305e9.6.2026.11.09.14.13.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Nov 2026 14:09:32 -0800 (PST)
-Message-ID: <c43c435f-66b7-4a93-9b01-19ed22920869@oss.qualcomm.com>
-Date: Mon, 9 Nov 2026 23:09:31 +0100
+ Mon, 09 Nov 2026 14:13:46 -0800 (PST)
+Message-ID: <14393e41-27eb-4d94-b2aa-8d377cf6a5eb@oss.qualcomm.com>
+Date: Mon, 9 Nov 2026 23:13:45 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Use gen_goto_tb() for vsetivli exits
+Subject: Re: [PATCH 1/2] replay: Explicitly require round-robin TCG
 Content-Language: en-US
-To: WX Chen <wxchen0913@gmail.com>, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
-References: <20261104-research-vsetivli-direct-chain-20261103-v1-1-ace12cf5280a@gmail.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20261105131549.42175-1-philmd@oss.qualcomm.com>
+ <20261105131549.42175-2-philmd@oss.qualcomm.com>
+ <37a58cfc-93a6-41a4-a512-67c7f8bd9054@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261104-research-vsetivli-direct-chain-20261103-v1-1-ace12cf5280a@gmail.com>
+In-Reply-To: <37a58cfc-93a6-41a4-a512-67c7f8bd9054@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=AbYkjHXG c=1 sm=1 tr=0 ts=6af244a0 cx=c_pps
- a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA4OCBTYWx0ZWRfX/S7OHGqLgp1T
+ 3EsJyGQRZ2lHKmwRODle1u47OkQlxKJlfgO/qOtjjYgX1EaUPQKmNOjEFi3vK2eON2R629fpfea
+ 04kdvV+i5tfy1dYjKUdv9cf+Hu6OVYvpOwQMa5z4F4qFTgVHHxA15liSKtqYYE+q1BRAys5W1z3
+ FKOeYAbrykQBu8Hc9nwcG2q+vS+jsQtf0Qkw3CavDt5W14H0IK5KailaEn0sV5vsSmldrLUeqyI
+ 7WUa5l7zPz/MO3JyZ+kNDDzDSrdtkTSbplfuTSJK8DpqhzUUH8cH/gYjAl5gm1DDKCVufPyjy+C
+ YpGqXQ03VRBT+BV5/ncCQ2LDTP6Sd1Y3Ovk3ePuyOMS+He+6lSNsMAHv+HnJJhXaIl7hlGDgcFF
+ dm7WhP9QqWwL94rJgV7VtMGxGrz60KWgEasb73BQtWmQs2WT5GIwyr0fMl0helspaeXOChH4tYP
+ nhnNTN9G4USWpzAdulQ==
+X-Authority-Analysis: v=2.4 cv=DZuCOftW c=1 sm=1 tr=0 ts=6af2459c cx=c_pps
+ a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=jJNwmlt5YcoxQ9T_qy4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gYDTvv6II1OnSo0itH1n:22
-X-Proofpoint-GUID: bDnSIy6SGhwD4OVVAguQws-9eMCTJDgn
-X-Proofpoint-ORIG-GUID: bDnSIy6SGhwD4OVVAguQws-9eMCTJDgn
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA4OCBTYWx0ZWRfX89OT9MuEIguo
- 0Ary7pihOlAbVhczEnbgxRnuJSB5zlDLwioaAdaD8uiHo2UVm+DK8QeVIi1QEAyTkVHXkHnmM8D
- iRIZqDUGF/6MRZnRAlaJZY3cKHSZi5I=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA4OCBTYWx0ZWRfX/5PmUnbRLHvO
- Qgx7qDfVLkWjkiL2Upis5dWZq5Je+dA9tqw1391zSJmXX1YwTtpE5gJ+suqGYTAHgIhuL7Gi7iP
- XiBvwCDHUKxB4beziCGkGn8AA4ZPSb4Ds4eayyNfEzK3+LIrOxtKtRRLYtIDeRMKf8dCWRy+WY2
- eJVs+LQFbdwm5Pn0eim4pAJJ76vDcr7Ui/B/pay8guedYy+9p2HFdgKM+4O2ouT2YHCFQIcxF/g
- iicvojiZnKPTtfZbabYb6NWnfSAsExE9jTAKiOpan1zyMWva3sBKHXFkrTg4myKiZpqyrX4IMgf
- dLDDLd2ylGFfMvK05cQQ8qc8wSyuoLKISzK6DwZaYMU56zJa40txMKs4f2g226lPx1/2HU6DmtA
- kdxAa0VAfVsXO1Hi2qiLmKszcmJpd81rEfg0ZNmtJSdSEn7KQvbqZHEn3X63VAcZwyApWs6PDWX
- E4+R4Gyio3HDtCeb34g==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=aEEsTtAsO1tSP1lrS18A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=crWF4MFLhNY0qMRaF8an:22
+X-Proofpoint-GUID: W4rXRRBy3Ni7QAE4NswGbTz4kwLlNW8d
+X-Proofpoint-ORIG-GUID: W4rXRRBy3Ni7QAE4NswGbTz4kwLlNW8d
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA4OCBTYWx0ZWRfX0fN1sb3rORnR
+ +P8/ppWMhcPas2RsHcImNaj3ZckXM6BeEjLzmGlbvFHCxQKmrTrqYmdlHb5ndq0rVjUEpcduA+1
+ Q6JQHuWrj6oKgP/zoiJ9a5LqAfTOwqo=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-09_07,2026-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 bulkscore=0 spamscore=0 clxscore=1015 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611090088
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ priorityscore=1501 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
+ impostorscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611090088
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -160,47 +155,113 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 3/11/26 18:34, WX Chen wrote:
-> This change adjusts the translation exit of `vsetivli`. While preserving
-> the existing helper, state update flow, and TB boundaries, it uses the
-> generic `gen_goto_tb()` path to reduce the overhead of repeated successor-TB
-> lookups.
+On 9/11/26 17:41, Richard Henderson wrote:
+> On 11/5/26 05:15, Philippe Mathieu-Daudé wrote:
+>> Record/replay needs a single deterministic instruction stream,
+>> which only round-robin TCG provides. This was enforced only
+>> implicitly, through icount being incompatible with MTTCG.
+>>
+>> Reject thread=multi in tcg_set_thread() and tcg_init_machine()
+>> when record/replay is active, with a message mentioning record/replay,
+>> never auto-select MTTCG then, and add a final check in replay_start().
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> ---
+>>   accel/tcg/tcg-all.c | 13 +++++++++++--
+>>   replay/replay.c     |  6 ++++++
+>>   2 files changed, 17 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+>> index bbc733a7070b..6ffe04649072 100644
+>> --- a/accel/tcg/tcg-all.c
+>> +++ b/accel/tcg/tcg-all.c
+>> @@ -125,7 +125,8 @@ static int tcg_init_machine(AccelState *as, 
+>> MachineState *ms)
+>>            * there is one remaining limitation to check:
+>>            *   - The guest can't be oversized (e.g. 64 bit guest on 32 
+>> bit host)
+>>            */
+>> -        if (mttcg_supported && !icount_enabled()) {
+>> +        if (mttcg_supported && !icount_enabled()
+>> +                            && replay_mode == REPLAY_MODE_NONE) {
+>>               s->mttcg_enabled = ON_OFF_AUTO_ON;
+>>               max_threads = ms->smp.max_cpus;
+>>           } else {
+>> @@ -133,6 +134,11 @@ static int tcg_init_machine(AccelState *as, 
+>> MachineState *ms)
+>>           }
+>>           break;
+>>       case ON_OFF_AUTO_ON:
+>> +        if (replay_mode != REPLAY_MODE_NONE) {
+>> +            error_report("MTTCG is not supported with record/replay, "
+>> +                         "use round-robin TCG (thread=single)");
+>> +            return -1;
+>> +        }
+>>           if (!mttcg_supported) {
+>>               warn_report("Guest not yet converted to MTTCG - "
+>>                           "you may get unexpected results");
+>> @@ -195,7 +201,10 @@ static void tcg_set_thread(Object *obj, const 
+>> char *value, Error **errp)
+>>       TCGState *s = TCG_STATE(obj);
+>>       if (strcmp(value, "multi") == 0) {
+>> -        if (icount_enabled()) {
+>> +        if (replay_mode != REPLAY_MODE_NONE) {
+>> +            error_setg(errp, "No MTTCG with record/replay, "
+>> +                             "use round-robin TCG (thread=single)");
+>> +        } else if (icount_enabled()) {
+>>               error_setg(errp, "No MTTCG when icount is enabled");
+>>           } else {
+>>               s->mttcg_enabled = ON_OFF_AUTO_ON;
 > 
-> `vsetivli` is used to set the vector length and type, and both its AVL and
-> vtype encodings are provided by immediates. Given the CPU configuration and
-> the source TB execution context, after this instruction completes normally,
-> the vector state changes relevant to subsequent translation are
-> deterministic. Therefore, this exit is eligible for direct TB linking.
+> This part looks good.
 > 
-> Measured on an AMD Ryzen AI 9 H 365 (x86-64) host, using qemu-riscv64
-> with -cpu rv64,v=true,vlen=128,elen=64. A RISC-V GCC 14.2.0 cc1 built for
-> rv64gcv compiles the packages with -O2 -g0 -march=rv64gcv -mabi=lp64d.
-> Only cc1 runs under emulation; make, the compiler driver, assembler and
-> linker run on the host.
+>> diff --git a/replay/replay.c b/replay/replay.c
+>> index 14437b32566b..d7d5ddc5a326 100644
+>> --- a/replay/replay.c
+>> +++ b/replay/replay.c
+>> @@ -14,6 +14,7 @@
+>>   #include "exec/icount.h"
+>>   #include "system/replay.h"
+>>   #include "system/runstate.h"
+>> +#include "system/tcg.h"
+>>   #include "replay-internal.h"
+>>   #include "qemu/main-loop.h"
+>>   #include "qemu/option.h"
+>> @@ -447,6 +448,11 @@ void replay_start(void)
+>>           error_report("Please enable icount to use record/replay");
+>>           exit(1);
+>>       }
+>> +    if (tcg_enabled() && qemu_tcg_mttcg_enabled()) {
+>> +        error_report("Record/replay requires round-robin TCG, "
+>> +                     "not MTTCG");
+>> +        exit(1);
+>> +    }
+>>       /* Timer for snapshotting will be set up here. */
 > 
-> Each variant is warmed up once, followed by three paired clean builds in
-> AB/BA/AB order, using -j1 and fixed host CPU affinity (CPU 7). Median build
-> wall times are:
+> This part looks redundant.
+> Surely all of replay_start is covered by the accel/tcg bits above.
+> I would expect this to be as simple as
 > 
->                    Before (s)    After (s)    Wall time reduction
->    LZ4 1.10.0         125.017      123.060                  1.57%
->    zlib 1.3.1          71.062       70.310                  1.06%
+> {
+>      if (replay_mode == REPLAY_MODE_NONE) {
+>          return;
+>      }
 > 
-> In a separate untimed test, a loop executes two vsetivli instructions per
-> iteration for 37 iterations. Host-side GDB entry breakpoints show that
-> helper_lookup_tb_ptr() entries at the two successor PCs fall from 74 to 0.
-> The guest still executes 74 vsetivli instructions. Initial TB dispatch and
-> link establishment still occur through the normal dispatcher.
+>      assert(tcg_enabled());
 > 
-> Signed-off-by: WX Chen <wxchen0913@gmail.com>
-> ---
->   target/riscv/tcg/insn_trans/trans_rvv.c.inc | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>      if (replay_blockers) {
+>          error_reportf_err(replay_blockers->data, "Record/replay: ");
+>          exit(1);
+>      }
+> 
+>      /* Timer for snapshotting will be set up here. */
+> 
+>      replay_enable_events();
+> }
+Indeed; I dropped that replay/replay.c change, thanks.
 
