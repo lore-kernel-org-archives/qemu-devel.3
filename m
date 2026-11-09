@@ -1,72 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B29606A331
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 22:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEE0606A333
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 22:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=wXT/BurU
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tZj3LdyU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQXuD-0005T5-Ss; Mon, 09 Nov 2026 17:32:02 -0500
+	id 1xQXuH-0005XE-HQ; Mon, 09 Nov 2026 17:32:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1xQXtr-0005EO-8e
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:31:41 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1xQXu3-0005JO-KI
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:31:52 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1xQXto-0003uZ-Bf
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:31:38 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-8a052aff9e9so1055592b3a.0
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 14:31:35 -0800 (PST)
+ id 1xQXu0-0003xU-VG
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 17:31:51 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-8b3577deeb0so639218b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 14:31:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794263495; x=1794868295; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794263508; x=1794868308; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=CyA3SEtVAYsvKr4mkOVI+9l6CkCv7zCE6lbG/JjjfMo=;
- b=wXT/BurU+AICvMGdoNZSiLyLuQOdPVns3xIfiWKUSVCXlvSxk4Q2cDfv+Gu9f4vOQP
- gKf+crwrV1FpGKZMwbZK7BL6PCKT3cekAPrMFS7Di+QUYmJ66bolzxKeXOax2ZJ+0VJI
- y0aw3AmQol1dk+Dt1E4wbpN+Kp6vZUevGULxCa0CdTNroEzTKA/XeO55emTqqwMmMulh
- AcaWvQbFbVjhaaljHlp75iC4/F0Vt67lco6n41ImqR7GUoAa0NNMh5azSXbiYcyObzb6
- LVLLbUucfnQxgnCj9kkT6qblruZi/Uld7GqVXB0o0W3V7F8qZJ5abMcoUCXHoOhpsLnx
- voSg==
+ bh=h5Uqi6g/D0f15AV2QVQ/dcG50oz8u/1r9m7QJ4cPsVg=;
+ b=tZj3LdyUWO62dWvigsEwpmvn3TQQk1JCKvLxnEUovol1rsi7onGNDENItnkQpjvfms
+ pmfPqx6FT9lMXlA10UP0Thv9ObAbiLlIlJA6VudT6TxQjrfsYS9bhoPkoHzS5sMWxD4C
+ Gt412B2dScLUMmANz7IiaiSRXxslJFp1lOtQPyXjAV0Tvzv2zc5JSFxVPBfm7ovPhoBf
+ 9j1AsdulDp7qi7PxOwZRIQSzFegnXy6ldzZbHtR1c7e6H7DQsdCf1cteu1J97H8ShO03
+ vrKdzjiigx0I/YC1cFx2iZwuIGTvNfOA0nylzoMtW5OSXqM5FFC61vLy2Sbacse7x53j
+ OjyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794263495; x=1794868295;
+ d=1e100.net; s=20260707; t=1794263508; x=1794868308;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=CyA3SEtVAYsvKr4mkOVI+9l6CkCv7zCE6lbG/JjjfMo=;
- b=Mx48SRzzOvnVpWRXIW292HyIFYg+EiLXZ1/FNnOM3bVj3OaQZE+NaORCH8kbSzmieE
- 1+5uBL2OVKy+kmeCNdKOKP5JcNydUygqEEZWpijZ/TYBN4I/uJNgU1+txYUwps8wu6B2
- oYZBwQF0JBryLYS3P44or+/tR19HGvNEOZWZX1+PevkhUq//3QozRPPdP84ZhXo47q4v
- nG6LaipSxi1ualUJ9mmV2xXY3zI0TPf41okC8hGTauRp4ITtGAMtQBbzWY+pR5RuN+1J
- itLR4Vw8b8KwQOATQAaYAvJbY1GuWRBaL5iBtxb6QT0kB28MaGlp3JIWJIFQdeAWBE9R
- KjmA==
-X-Gm-Message-State: APuU4Z8Df68KItxh6139PzlZpZ8WjiwKh0Qfq/PIE5QMa7bXWRsL40NO
- lm2zi4hTg/wr2ckGIaGg1PcvoSgArD4Tk0+P6g+ivkTWHhLW+XG9ZrskRFuctvQYVwthHbGA0YE
- vr7XI
-X-Gm-Gg: AYBFou1S3Wdna1VHatr2ax7ORm6xwgJ0eiiydYju6dE3bdRZ20kinQ5AUZOsXjGgO5Q
- w0WbgeiwjghnC6yhizWAYNvTFw2kAC8EfP8UlDPyD06DmLX1Pjgn96ZcPkNjbjrOsSTRuYtpCyg
- 5JtYtDjiLmson0EK6uvATIv97T7gwyHUUQO7lQl+YjIrsXGaSgJP+c369aIu0Z9dxZX7J2+gV9H
- KGgaToTJsMP199ETIeGqYhQ2ijSqysEZF3diDWxgV2uqqk2zTyAhhCvOv9TF0vgFONf4gBzA8nh
- 2mvkms4syKSZlQJCHvUAzlMVe84jm3NPpkmHrBaQDNNMJblZdU8HB2G2cTNQEYpgx8LFTLygdFi
- z4rsDPYMNbVMtxtvMhtsSO0sHgd1qFV+Par+8uLjQaFyWf8xbdQALfFOaEh2R3islm0SHyRNsUk
- XFG/GGYtuHvicqMAPBpGWVOg2zO3ie3BB7XuO8ntR7k/S7sKs93KzvPwXgcRlxfUupnsCv5PEkw
- 569Xb1Hlwx0pAsXG10ZXgfpaQ9Z9Rd1CpwZeMORlQS2uZ6/EBgEU60KaAo0MTMvGbmXD5jItZIB
- EznNU6k0fjI+7mOZX29s2WrVcJLtlFQkIL8+h+4Mku7WmM7Jixoq1LE7udlTQVECvf82tD2xqL4
- =
-X-Received: by 2002:aa7:9315:0:b0:8b5:9654:d331 with SMTP id
- d2e1a72fcca58-8ba7fab49a4mr1110386b3a.0.1794263494909; 
- Mon, 09 Nov 2026 14:31:34 -0800 (PST)
+ bh=h5Uqi6g/D0f15AV2QVQ/dcG50oz8u/1r9m7QJ4cPsVg=;
+ b=nYB42kGX0xrfU8xmf4GhlEWWUGcsc7mXe841bZEabhkb2AZGxL3uzbL3+J2LppuZ4w
+ JiLY1uTCWesoRiW58o8+3FKMw7WWmXdXrCC5bfzgODfw7MNgWz3NJ0rwGUaVAc24KdZ9
+ eiojCu1/JM97d2HibU091n+iTjNcusydRTT8w6VV1rLB5Y2UJ3AWHytUcSaIxi0lLNad
+ RBWb4zoHMMvRnaxnYztlqNh0IUUovqpjqanCzkpDcSB9W4L7BC99K49lLOOx3M4GIBge
+ yr+k/bH4KGSGJlsMMNuZF+TXTBvvMbrgg7yCJ9SwWMg1WTOJQXy7KV7cGQ3H4v2tYCZW
+ 8KCg==
+X-Gm-Message-State: APuU4Z/tPcI0bOKPqaO4vYBqhuVGMe+lvh4uhZyZVCIJePU+up7KSQuW
+ 9EqRRQmTAw1bFudtomRVq9H+k3P/voOsrZH+zzixIu7cTjX2+fb1Xr/SOiJrAObeMw4=
+X-Gm-Gg: AYBFou1MMGl/qYG2zKZGeWvc/1Y+/byO3tfd9GCluyzJlgbx/vgK0k6NlA1+8AcZLo8
+ qyP5dHFuTXwm/fLAqYs0Wbo2vltPFrPLi5+3ueqemG/OnAe3gDg9goUYJMjuIhiQqxXV3xEdNmD
+ cGxtVE0nKHVDWP29QgIngRj8ECIjG+US0FCEPV6rbdZed3XFw//x4O7PBYL/quDx+77mHUveeHw
+ ZQRFskcOIyFNrrQAGPMlV1ATEI0rZd3MHRQ+CxvMRHGBIk/1c7/iJlrapQddOtobnhFTFqL23Mq
+ FeXDZfISAL3aWaDKkVQkbrNRHOpDFNhhwb0MhRXYvDrJYHBxqd8/iE7WcwwR8ISr+PB/jtuIdlx
+ lavz1W8s7cXwKkD596oWlwOrqBIh2zd2wGHK38FcWAZtf4CsAjIu/6evO/noBprHAFnkh1jozJB
+ Uve7faDXtRj8AoV01Ch1+UNaQWIKaChWhaomf/MnWiPKdNE3a3q0VAFBqeicMcxKfUwpxpvR+4W
+ NBhfFlqGdTUK8hYC9yTLQEwhP67bnv0LoBI+PPW9rlRynTkhVtKF5E+0oQOKi9Im0PTYaO+RwsK
+ wCcCQW6mxD3pNFzkhJ2zF0ylnhRdKzYwnjpOjCzFAzEvcZ89n18KPg==
+X-Received: by 2002:a05:6a20:7351:b0:3de:7add:653f with SMTP id
+ adf61e73a8af0-3f18fd8b4bdmr489637637.44.1794263507627; 
+ Mon, 09 Nov 2026 14:31:47 -0800 (PST)
 Received: from p14s.cg.shawcable.net ([2604:3d09:148c:c800:54d7:1b5:4356:16fb])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8baa506bca4sm165830b3a.0.2026.11.09.14.31.33
+ d2e1a72fcca58-8baa506bca4sm165830b3a.0.2026.11.09.14.31.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2026 14:31:34 -0800 (PST)
+ Mon, 09 Nov 2026 14:31:47 -0800 (PST)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -76,25 +74,25 @@ To: berrange@redhat.com, kchamart@redhat.com,
 Cc: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	kvm@vger.kernel.org
-Subject: [PATCH v6 11/23] target/arm/cpu: Set number of breakpoints and
- watchpoints in KVM
-Date: Mon,  9 Nov 2026 16:30:58 -0600
-Message-ID: <20261109223110.1619504-12-mathieu.poirier@linaro.org>
+Subject: [PATCH v6 19/23] hw/arm/virt: Use RAM instead of flash for
+ confidential guest firmware
+Date: Mon,  9 Nov 2026 16:31:06 -0600
+Message-ID: <20261109223110.1619504-20-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261109223110.1619504-1-mathieu.poirier@linaro.org>
 References: <20261109223110.1619504-1-mathieu.poirier@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,235 +114,207 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Add "num-breakpoints" and "num-watchpoints" CPU parameters to configure
-the debug features that KVM presents to the guest. The KVM vCPU
-configuration is modified by calling SET_ONE_REG on the ID register.
-
-This is needed for Realm VMs, whose parameters include breakpoints and
-watchpoints, and influence the Realm Initial Measurement.
+Use RAM instead of flash to store firmware image and boot information,
+including UEFI variables.  That way the firmware can be measured and
+included in the Realm's initial measurements.  It also prevents
+variable stored in flash and modified as part of the boot process to
+be leaked outside the Realm.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- target/arm/arm-qmp-cmds.c |  1 +
- target/arm/cpu.h          |  4 ++
- target/arm/cpu64.c        | 94 +++++++++++++++++++++++++++++++++++++++
- target/arm/kvm.c          | 49 ++++++++++++++++++++
- 4 files changed, 148 insertions(+)
+ hw/arm/boot.c         | 37 +++++++++++++++++++++++++--
+ hw/arm/virt.c         | 58 +++++++++++++++++++++++++++++++++++++++++++
+ include/hw/arm/boot.h |  9 +++++++
+ 3 files changed, 102 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index 9d3a3d9aa472..1c2f31db0d30 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -77,6 +77,7 @@ static const char *cpu_model_advertised_features[] = {
-     "sve1408", "sve1536", "sve1664", "sve1792", "sve1920", "sve2048",
-     "kvm-no-adjvtime", "kvm-steal-time",
-     "pauth", "pauth-impdef", "pauth-qarma3", "pauth-qarma5",
-+    "num-breakpoints", "num-watchpoints",
-     NULL
- };
- 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index b2f393f50184..dfabcfc5eda1 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1203,6 +1203,10 @@ struct ArchCPU {
- 
-     /* Generic timer counter frequency, in Hz */
-     uint64_t gt_cntfrq_hz;
-+
-+    /* Override the default configuration, only for RME vCPUs */
-+    uint8_t num_bps;
-+    uint8_t num_wps;
- };
- 
- typedef struct ARMCPUInfo {
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 0e5956e5fe6b..a34de3d2947c 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -33,6 +33,7 @@
- #include "system/tcg.h"
- #include "kvm_arm.h"
- #include "hvf_arm.h"
-+#include "hw/core/boards.h"
- #include "whpx_arm.h"
- #include "qapi/visitor.h"
- #include "hw/core/qdev-properties.h"
-@@ -680,6 +681,98 @@ void aarch64_add_pauth_properties(Object *obj)
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index 9b7553dde5e1..1e8efada209f 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -1112,7 +1112,36 @@ static void arm_setup_direct_kernel_boot(ARMCPU *cpu,
      }
  }
  
-+#if defined(CONFIG_KVM)
-+static void arm_cpu_get_num_wps(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
+-static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info)
++static void arm_setup_confidential_firmware_boot(ARMCPU *cpu,
++                                                 struct arm_boot_info *info,
++                                                 const char *firmware_filename)
 +{
-+    uint8_t val;
-+    ARMCPU *cpu = ARM_CPU(obj);
++    ssize_t fw_size;
++    const char *fname;
++    AddressSpace *as = arm_boot_address_space(cpu, info);
 +
-+    val = cpu->num_wps;
-+    if (val == 0) {
-+        val = FIELD_EX64(cpu->isar.idregs[ID_AA64DFR0_EL1_IDX],
-+                         ID_AA64DFR0, WRPS) + 1;
-+    }
-+
-+    visit_type_uint8(v, name, &val, errp);
-+}
-+
-+static void arm_cpu_set_num_wps(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint8_t val;
-+    ARMCPU *cpu = ARM_CPU(obj);
-+    uint8_t max_wps = FIELD_EX64(cpu->isar.idregs[ID_AA64DFR0_EL1_IDX],
-+                                 ID_AA64DFR0, WRPS) + 1;
-+
-+    if (!visit_type_uint8(v, name, &val, errp)) {
-+        return;
-+    }
-+
-+    if (!MACHINE(qdev_get_machine())->cgs) {
-+        error_setg(errp, "num-watchpoints option is only valid with "
-+                   "condifential-guest-support");
-+        return;
-+    }
-+
-+    if (val < 2 || val > max_wps) {
-+        error_setg(errp, "invalid number of watchpoints");
-+        return;
-+   }
-+
-+   cpu->num_wps = val;
-+}
-+
-+static void arm_cpu_get_num_bps(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint8_t val;
-+    ARMCPU *cpu = ARM_CPU(obj);
-+
-+    val = cpu->num_bps;
-+    if (val == 0) {
-+        val = FIELD_EX64(cpu->isar.idregs[ID_AA64DFR0_EL1_IDX],
-+                         ID_AA64DFR0, BRPS) + 1;
-+    }
-+
-+    visit_type_uint8(v, name, &val, errp);
-+}
-+
-+static void arm_cpu_set_num_bps(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint8_t val;
-+    ARMCPU *cpu = ARM_CPU(obj);
-+    uint8_t max_bps = FIELD_EX64(cpu->isar.idregs[ID_AA64DFR0_EL1_IDX],
-+                                 ID_AA64DFR0, BRPS) + 1;
-+
-+    if (!visit_type_uint8(v, name, &val, errp)) {
-+        return;
-+    }
-+
-+    if (!MACHINE(qdev_get_machine())->cgs) {
-+        error_setg(errp, "num-breakpoints option is only valid with "
-+                   "condifential-guest-support");
-+        return;
-+    }
-+
-+    if (val < 2 || val > max_bps) {
-+        error_setg(errp, "invalid number of breakpoints");
-+        return;
-+    }
-+
-+    cpu->num_bps = val;
-+}
-+
-+static void aarch64_add_kvm_writable_properties(Object *obj)
-+{
-+    object_property_add(obj, "num-breakpoints", "uint8", &uint8_type_info,
-+                        arm_cpu_get_num_bps, arm_cpu_set_num_bps, NULL, NULL);
-+    object_property_add(obj, "num-watchpoints", "uint8", &uint8_type_info,
-+                        arm_cpu_get_num_wps, arm_cpu_set_num_wps, NULL, NULL);
-+}
-+#endif /* CONFIG_KVM */
-+
- void aarch64_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
- {
-     uint64_t t;
-@@ -829,6 +922,7 @@ void aarch64_host_initfn(Object *obj)
-     kvm_arm_set_cpreg_mig_tolerances(cpu);
-     kvm_arm_set_cpu_features_from_host(cpu);
-     aarch64_add_sve_properties(obj);
-+    aarch64_add_kvm_writable_properties(obj);
- #elif defined(CONFIG_HVF)
-     hvf_arm_set_cpu_features_from_host(cpu);
- #elif defined(CONFIG_WHPX)
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 80296e0a867c..c8a821d7fab6 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -985,6 +985,51 @@ out:
-     return ret;
- }
- 
-+#define KVM_REG_ARM_ID_AA64DFR0_EL1     ARM64_SYS_REG(3, 0, 0, 5, 0)
-+
-+static void kvm_arm_configure_aa64dfr0(ARMCPU *cpu)
-+{
-+    int ret;
-+    uint64_t val, newval;
-+    CPUState *cs = CPU(cpu);
-+
-+    if (!cpu->num_bps && !cpu->num_wps) {
-+        return;
-+    }
-+
-+    newval = cpu->isar.idregs[ID_AA64DFR0_EL1_IDX];
-+    if (cpu->num_bps) {
-+        uint64_t ctx_cmps = FIELD_EX64(newval, ID_AA64DFR0, CTX_CMPS);
-+
-+        /* CTX_CMPs is never greater than BRPs */
-+        ctx_cmps = MIN(ctx_cmps, cpu->num_bps - 1);
-+        newval = FIELD_DP64(newval, ID_AA64DFR0, BRPS, cpu->num_bps - 1);
-+        newval = FIELD_DP64(newval, ID_AA64DFR0, CTX_CMPS, ctx_cmps);
-+    }
-+    if (cpu->num_wps) {
-+        newval = FIELD_DP64(newval, ID_AA64DFR0, WRPS, cpu->num_wps - 1);
-+    }
-+    ret = kvm_set_one_reg(cs, KVM_REG_ARM_ID_AA64DFR0_EL1, &newval);
-+    if (ret) {
-+        error_report("Failed to set KVM_REG_ARM_ID_AA64DFR0_EL1");
-+        return;
++    fname = qemu_find_file(QEMU_FILE_TYPE_BIOS, firmware_filename);
++    if (!fname) {
++        error_report("Could not find firmware image '%s'", firmware_filename);
++        exit(1);
 +    }
 +
 +    /*
-+     * Check if the write succeeded. KVM does offer the writable mask for this
-+     * register, but this way we also check if the value we wrote was sane.
++     * Load the firmware image in the Realm's address space.  Mapping of the
++     * firmware area in the Realm's address space is done in function
++     * virt_confidential_firmware_init().
 +     */
-+    ret = kvm_get_one_reg(cs, KVM_REG_ARM_ID_AA64DFR0_EL1, &val);
-+    if (ret || val != newval) {
-+        error_report("Failed to update KVM_REG_ARM_ID_AA64DFR0_EL1");
++    fw_size = load_image_targphys_as(firmware_filename,
++                                     info->firmware_base,
++                                     info->firmware_max_size, as, NULL);
++    if (fw_size <= 0) {
++        error_report("could not load firmware '%s'", firmware_filename);
++        exit(1);
 +    }
 +}
 +
-+static void kvm_arm_configure_vcpu_regs(ARMCPU *cpu)
++static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info,
++                                    const char *firmware_filename)
+ {
+     /* Set up for booting firmware (which might load a kernel via fw_cfg) */
+ 
+@@ -1168,6 +1197,10 @@ static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info)
+         }
+     }
+ 
++    if (info->confidential) {
++        arm_setup_confidential_firmware_boot(cpu, info, firmware_filename);
++    }
++
+     /*
+      * We will start from address 0 (typically a boot ROM image) in the
+      * same way as hardware. Leave env->boot_info NULL, so that
+@@ -1212,7 +1245,7 @@ void arm_load_kernel(ARMCPU *cpu, MachineState *ms, struct arm_boot_info *info)
+ 
+     /* Load the kernel.  */
+     if (!info->kernel_filename || info->firmware_loaded) {
+-        arm_setup_firmware_boot(cpu, info);
++        arm_setup_firmware_boot(cpu, info, ms->firmware);
+     } else {
+         arm_setup_direct_kernel_boot(cpu, info);
+     }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index f1ca233a1566..dbb5d2d6fc0c 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1832,6 +1832,16 @@ static PFlashCFI01 *virt_flash_create1(VirtMachineState *vms,
+ 
+ static void virt_flash_create(VirtMachineState *vms)
+ {
++    /*
++     * For Realms, the firmware image is placed directly in the guest's
++     * RAM area.  The association between the final location in the
++     * guest's RAM and the system memory is done in function
++     * virt_confidential_firmware_init().
++     */
++    if (virt_machine_is_confidential(vms)) {
++        return;
++    }
++
+     vms->flash[0] = virt_flash_create1(vms, "virt.flash0", "pflash0");
+     vms->flash[1] = virt_flash_create1(vms, "virt.flash1", "pflash1");
+ }
+@@ -1882,6 +1892,16 @@ static void virt_flash_fdt(VirtMachineState *vms,
+     MachineState *ms = MACHINE(vms);
+     char *nodename;
+ 
++    /*
++     * For Realms the firmware images are stored in the guest's address
++     * space.  As such there is no need for flash configuration in the FDT.
++     * See function virt_confidential_firmware_init() and
++     * arm_setup_confidential_firmware_boot() for details.
++     */
++    if (virt_machine_is_confidential(vms)) {
++        return;
++    }
++
+     if (sysmem == secure_sysmem) {
+         /* Report both flash devices as a single node in the DT */
+         nodename = g_strdup_printf("/flash@%" PRIx64, flashbase);
+@@ -1917,6 +1937,32 @@ static void virt_flash_fdt(VirtMachineState *vms,
+     }
+ }
+ 
++static bool virt_confidential_firmware_init(VirtMachineState *vms,
++                                            MemoryRegion *sysmem)
 +{
-+    kvm_arm_configure_aa64dfr0(cpu);
++    MemoryRegion *fw_ram;
++    hwaddr fw_base = vms->memmap[VIRT_FLASH].base;
++    hwaddr fw_size = vms->memmap[VIRT_FLASH].size;
++
++    if (!MACHINE(vms)->firmware) {
++        return false;
++    }
++
++    assert(machine_require_guest_memfd_private(MACHINE(vms)));
++
++    fw_ram = g_new(MemoryRegion, 1);
++    memory_region_init_ram_guest_memfd_private(fw_ram, NULL, "fw_ram", fw_size,
++                                               &error_fatal);
++    /*
++     * Map the guest's firmware image directly in its address space.
++     * Copying of the firmware image itself is done in function
++     * arm_setup_confidential_firmware_boot().
++     */
++    memory_region_add_subregion(sysmem, fw_base, fw_ram);
++
++    return true;
 +}
 +
+ static bool virt_firmware_init(VirtMachineState *vms,
+                                MemoryRegion *sysmem,
+                                MemoryRegion *secure_sysmem)
+@@ -1925,6 +1971,15 @@ static bool virt_firmware_init(VirtMachineState *vms,
+     const char *bios_name;
+     BlockBackend *pflash_blk0;
+ 
++    /*
++     * For a confidential VM, the firmware image and any boot information,
++     * including EFI variables, are stored in RAM in order to be measurable and
++     * private. Create a RAM region and load the firmware image there.
++     */
++    if (virt_machine_is_confidential(vms)) {
++        return virt_confidential_firmware_init(vms, sysmem);
++    }
++
+     /* Map legacy -drive if=pflash to machine properties */
+     for (i = 0; i < ARRAY_SIZE(vms->flash); i++) {
+         pflash_cfi01_legacy_drive(vms->flash[i],
+@@ -3289,7 +3344,10 @@ static void machvirt_init(MachineState *machine)
+     vms->bootinfo.get_dtb = machvirt_dtb;
+     vms->bootinfo.skip_dtb_autoload = true;
+     vms->bootinfo.firmware_loaded = firmware_loaded;
++    vms->bootinfo.firmware_base = vms->memmap[VIRT_FLASH].base;
++    vms->bootinfo.firmware_max_size = vms->memmap[VIRT_FLASH].size;
+     vms->bootinfo.psci_conduit = vms->psci_conduit;
++    vms->bootinfo.confidential = virt_machine_is_confidential(vms);
+     arm_load_kernel(ARM_CPU(first_cpu), machine, &vms->bootinfo);
+ 
+     vms->machine_done.notify = virt_machine_done;
+diff --git a/include/hw/arm/boot.h b/include/hw/arm/boot.h
+index 94386fdbea6c..fe7e14e94651 100644
+--- a/include/hw/arm/boot.h
++++ b/include/hw/arm/boot.h
+@@ -113,6 +113,10 @@ struct arm_boot_info {
+      */
+     bool firmware_loaded;
+ 
++    /* Used when loading firmware into RAM */
++    hwaddr firmware_base;
++    hwaddr firmware_max_size;
++
+     /* Address at which board specific loader/setup code exists. If enabled,
+      * this code-blob will run before anything else. It must return to the
+      * caller via the link register. There is no stack set up. Enabled by
+@@ -136,6 +140,11 @@ struct arm_boot_info {
+ 
+     /* CPU having load the kernel and that should be the first to boot.  */
+     ARMCPU *primary_cpu;
++
++    /*
++     * Confidential guest boot loads everything into RAM so it can be measured.
++     */
++    bool confidential;
+ };
+ 
  /**
-  * kvm_arm_cpreg_level:
-  * @regidx: KVM register index
-@@ -1201,6 +1246,10 @@ void kvm_arm_reset_vcpu(ARMCPU *cpu)
-         fprintf(stderr, "kvm_arm_vcpu_init failed: %s\n", strerror(-ret));
-         abort();
-     }
-+
-+    /* Update KVM state before it's loaded to CPUState */
-+    kvm_arm_configure_vcpu_regs(cpu);
-+
-     if (!write_kvmstate_to_list(cpu)) {
-         fprintf(stderr, "write_kvmstate_to_list failed\n");
-         abort();
 -- 
 2.53.0
 
