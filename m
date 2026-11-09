@@ -1,82 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10625606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 16:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B16606A321
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 16:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=thRNB6oP
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=iQovPoAN
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQRxP-0000Lm-M6; Mon, 09 Nov 2026 11:10:55 -0500
+	id 1xQS1F-00023f-Ft; Mon, 09 Nov 2026 11:14:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xQRwx-00008D-NC
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 11:10:29 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xQS1D-00023W-NA
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 11:14:51 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xQRws-0005pH-Gk
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 11:10:26 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-8b4c8b51b58so696033b3a.1
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 08:10:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xQS1B-0006DQ-Uv
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 11:14:51 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-49465892f7bso739838f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 08:14:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794240618; x=1794845418; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794240886; x=1794845686; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=YFc5dCRqkcbfzirL8jQAoqTW5yFCVMgCcIvLwP2L3Kc=;
- b=thRNB6oPDFQpi1zn78QMXQw150hkm6zlYbdMQ8GPZo4MQhofyZpGXrbpC+YDQbXArY
- IT8VvhRIVYmBms8U4FKMwYSo1BUIZKZK720a5Rs3Kr6oSIiHMupj9gF0mbj6kYhxpVVm
- yBkQPkicqQTanUdU/mESpcHgIQj9j4qIam/GwcD+n8b5KwH2tNPnXHXsLwOi82AQJYa/
- 9rgnemdHZs9neK3igN/xQ+vtxU5IZL8l7zGmqW943qBlFMkEr5CCQuhELb02z5KL60bD
- PKFCmgwIDa7zacnLMCOJcqomDc7tq/pe5n2m5bQhfMkg9vXQWuYdaKu91ywel3e5ZDGA
- oS5g==
+ bh=oXExxKfjLRsWOerbk10pq7nfRVplRR2QsDyoDpY1MY0=;
+ b=iQovPoANO+q5lwyDblv4ho00yMDhpOKD0iJVITggxMfomMw36litYl4C6qFr6WWx5E
+ VBcaFQmgWzlnNRd1g6I8Upc87gN+YkH4nuAnehTjkaZC7yKNmznOT+4u91zgIpKBqC4n
+ npCvqeKrt4OqdrQLUIkG56pcYUeQhaetE2R9+qdfhZ/joyA1ON+Dpr77K4EFumLleWvs
+ ZLspa1yz4c/vasZOGwUCjHh+aQLKAoWnQgskQ/SdoCSMydPjyFCCasZ8hzIhc8rT59Rj
+ SXNlaaUJ+eSP0yKVB6hcmnhut700SOnRFcuEDEJP++TpcpzuH+JB9pW4/cKCjCN+6sJu
+ NcgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794240618; x=1794845418;
+ d=1e100.net; s=20260707; t=1794240886; x=1794845686;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=YFc5dCRqkcbfzirL8jQAoqTW5yFCVMgCcIvLwP2L3Kc=;
- b=cV3mxXxh1A5R/YlsLR5nT8xuQW51h+WXGxqGZ+zYLH+FOATLGXSxB8NvlL4xRnEloq
- qBdR7FxK/xbKV2FGDWotY/xf79g+gaZ0qgySTMLV4cdaHEYmNi+3n0zCJc8wum4b7vg8
- trbPt15HTKe35z66ZkaanytvdEkataxXqtSUsIQt48L9QonQbRg/NDB3y/CsSdcEodJ0
- hNQdZR9enbc/E207OOAYIrG0L4+qbo3SWmhElS66lFqpyAlJd8Mhi8Eool510g5ApLdp
- jnb0e8AL7NlKVN1/THFpac+BjQW4CFp/gIJ4iVCJFqLuMBXjGp+ZXt5SRp16OltupO7R
- h0sQ==
-X-Gm-Message-State: APuU4Z+8sv82hYfyRtqZ0q2b0Z9jLWYGUnvCr3lsQJI1SefSzBEs0DGG
- fYilGmD1UNp8HGbph0DVDOH/LbOLT1ogOYjK2SxZXmRDGtc2CvgEnGlM5xpFv0W0v8fUHwEbAjr
- UBorB
-X-Gm-Gg: AYBFou2raDBQTBxfCA2y4xeseGVl6EH+g7dPsJbfO9da6263KN62ZnZFespQMc0dyev
- SqwB8jZZ+zzh9YtLzWXd7HWtgycFQrxS+aN3EQ3Xli/CB3LETXFixxbWyiUUwDhDaEzrA6p+ult
- Sof4X0N6SENAq8yOpP9wvwqmVBlqhPex3Wqq8AMRQJLtzVnbNCUOh9qt+yJmdeTbbsqIKxKDruo
- L855t/hFEMi4Y8Ztbtu05xN5R/X931togUMnTfs8cduIPi268F8RPBpamoV9oK/9jBhNx43Sbj1
- dLcQEw0Ast/Fisug/HC6N3c4BkI8YeqKztVwZxqJ0sF/d3nXCTs0oC0EO5gI80DWgDfOxkH3/Fw
- tfTXFVNod3Yfv8fcFHbAx/XY//GNiuZ1enAEij8d1LxhgrOLLmJDI+S9jlJFu1PexUNZrbguUg9
- 5PFTsgUWGSO1A0l0FW3+QP6ZA5ujaa2SFRcS0dySN+F69aLPJdW+JHJ6jAZ8FvWNmL62FkgjVP0
- J7OrPjSNdZVQGSmX00AxcQhb+7FUoW5KahXrywDID71Z4LjOKurZvYbv4BW2d2wNNc+mxO47BAx
- atr0I3ar+Js+GhLKkMjKH6iQItIwEg5ONfVpeu+R8iKPcdsi/dqDI01E9tc7
-X-Received: by 2002:a05:6a00:4290:b0:89f:5bc4:fc95 with SMTP id
- d2e1a72fcca58-8ba8965908dmr44176b3a.23.1794240618004; 
- Mon, 09 Nov 2026 08:10:18 -0800 (PST)
-Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ bh=oXExxKfjLRsWOerbk10pq7nfRVplRR2QsDyoDpY1MY0=;
+ b=uP5+24qfIY/Rx3QdvL2mLHRgSmXrl94DnkYCIPEpiX2UnKKvZ9wxJHRtmM/j5DBmWq
+ /DQVa/l6fegQLWQ40NpFVccLiZ57SRqeMWdE2kH7pIJtOIYnQlgdGk9w8vNS4hXpZUpx
+ oIgmNqotEXupr4m8BmCHHDB02kO9w4FXEPC+lihngmN7npfFa5tY5R1oMYeMvJXFS3u1
+ DcJQKlWGTtNmlLg/7huaPVBLiRmpgQRYCiCrbR2n5qHwJrVzHdxePWYhZT+GNeoV4W4P
+ K7QCGosLhFOElsSopbleIdsqXULuQF8HI6J/4/9ea4OsN15DPuL4IBNsXtasP/GUd3Ts
+ mXhg==
+X-Gm-Message-State: APuU4Z/K2prhQBAtJXeJElcAWrL/kLFubRDg7myOSjp0W46QWmqsKtU1
+ t7BlPcgNYZgFD00yXQGEcN/hunw5bD85CYzCkM0gytgv5ei5FIBfACgWxpZWV2udANJiibLzKXw
+ n5dIi6ss=
+X-Gm-Gg: AYBFou3RMBWwIuD3FRK8Z5lPxyEh6INoG9AvtbK/yYiUShHnJRpEjmm4IeT51K1hDRT
+ LKJ2y2Q9BL5Cz3Iofk2GwhJn4A7pXLDVfl0SC/FPaHjcyHZZDb/I6eBXgORTcJZd6Apb+YJjoVE
+ O11rIi954LoSe5CJ801JjVgPQ4TfxHzmxCEgMNNk2Oi7fg8CGDLtSgKCLy4pOnump5AO+ONB9+2
+ gQVEDBh5TQr99z3GHnlImv1++rSuIUBdE6/NfgHEcHyVbYztvrIbSTnMDpKCZxhz4fKk8qEPliF
+ d+pPa2TmLQB0VedNbEVdtiD/mIY+0udP6O85kA2nrUQ/oZXzRKme71un0trcxwOgYxhnZT5NDvW
+ Mv99goG0g0aaeisBaYy/eJiYJ83KjxaARJxuojeXRX4LCBF3NDB+mZfDOSAiWApM0IkSVTKqj8d
+ 3fp/a/GtfkQTmdOBXREgXNgnLvG6CzBFG297m23e2pxFp2vW5ko4zeuxKFqiXI++Vwg5iUghePm
+ jKBeIULgh9eFSruJG/NUF8lg3fY7V1bMjz4OTwCYUZuVB3Ec/dbRW90aHP8VO67FFnWOPKHV8+A
+ 47rPptn3YVWMWjYZxANodITxFpabSUi8TbiYMprN1E6hBhK9SU9n63WZp/issP6Ea5Flpm1ZJTq
+ YcO2/E7kCSwbBr+hKhXyqnSbdHK7pg3YPgA==
+X-Received: by 2002:a5d:5f87:0:b0:48e:2108:4d28 with SMTP id
+ ffacd0b85a97d-4958a4e09f0mr8040287f8f.13.1794240885965; 
+ Mon, 09 Nov 2026 08:14:45 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8b648e55e85sm1598946b3a.17.2026.11.09.08.10.17
+ ffacd0b85a97d-4959783fc31sm10838679f8f.48.2026.11.09.08.14.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2026 08:10:17 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Mon, 09 Nov 2026 08:14:44 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PATCH 0/2] accel/tcg: Fix #3092
-Date: Mon,  9 Nov 2026 08:10:14 -0800
-Message-ID: <20261109161016.43218-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
+Cc: Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] tests/functional: Allow Asset() to work with non-HTTP URLs
+Date: Mon,  9 Nov 2026 16:14:43 +0000
+Message-ID: <20261109161443.724122-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,27 +98,47 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This isn't urgent, because the assertion is not enabled by default.
+The Asset() implementation only works with HTTP URLs because it
+assumes that the object it gets back from urllib.request.urlopen()
+has a getheader() method.  This is only true for the HTTPResponse
+object that HTTP URLs produce, not for the urllib.request.addinfourl
+object that file, data and FTP URLs produce.
 
+File URLs are obviously not useful for public QEMU tests, but they
+can be helpful for iterating locally on the asset to be used by a
+test before putting the final asset image up somewhere public.
 
-r~
+Get the Content-Length header with resp.headers.get(), which works on
+both object types, and matches how the urllib documentation suggests
+getting headers.
 
+Fixes: 7524e1b33679dc13 ("tests/functional/asset: Verify downloaded size")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/functional/qemu_test/asset.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Richard Henderson (2):
-  accel/tcg: Drop DEBUG_TLB_LOG_GATE
-  accel/tcg: Adjust tlb assertions to allow stopped cpus
-
- accel/tcg/cputlb.c | 80 +++++++++-------------------------------------
- 1 file changed, 15 insertions(+), 65 deletions(-)
-
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index 0abd89e0a38..780b995b703 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -139,7 +139,7 @@ def _try_to_fetch(self, tmp_cache_file):
+                 with tmp_cache_file.open("xb") as dst:
+                     with urllib.request.urlopen(self.url) as resp:
+                         copyfileobj(resp, dst)
+-                        length_hdr = resp.getheader("Content-Length")
++                        length_hdr = resp.headers.get("Content-Length")
+ 
+                 # Verify downloaded file size against length metadata, if
+                 # available.
 -- 
-2.53.0
+2.43.0
 
 
