@@ -1,49 +1,49 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46DB606A321
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 19:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DDD606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 19:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VlQo6VJv
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=dPPCBJh+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQUam-0001RW-5l; Mon, 09 Nov 2026 13:59:44 -0500
+	id 1xQUab-0001F6-M5; Mon, 09 Nov 2026 13:59:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQUaj-0001Mo-Lv
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:59:41 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQUaY-0001EH-IJ
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:59:31 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQUai-0006LL-A2
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:59:41 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQUaX-0006GZ-0m
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:59:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794250779;
+ s=mimecast20190719; t=1794250768;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=R8AIIl3lqxkoUiy2gww46SkIgsFvv8BhihUMvgLblus=;
- b=VlQo6VJvPpSADeHe8pxtvmfP2qL22HIYu/9yqpm0Y1uTF2NsDgx5EMbavsL9ckbTvlU2P4
- Ff1BcSxdUOubwZsr6g2ID5WS700pbWkT2Pdc5YiV5fgZ0PAoH99N6KwQJswfoKFpdLVwLJ
- g9Nnx1XSB9M3dE7Bp+xx/RR9Dm2TPnE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5LNh5reSh+NvyeWrxM7NVu1un75hnLmQqK+4v90MiUo=;
+ b=dPPCBJh+U6sEJ7qmvWtByMpUQvQuyEBHQwYJJv3xZn2hg9jiYQwBW3IehvkA5mkw661w5Y
+ h78xuTDeWeZ2lypYJc2X+1Gjq85RtTPP1y6rDKbqwJZaBUNayF2LD8BH6NaYff6Lt4MOqY
+ diwaT6iVvzaYnLqm9TDf95Wb/jp5vOY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-Z7wKWRe6OneiSd1nS9wdAg-1; Mon,
- 09 Nov 2026 13:59:34 -0500
-X-MC-Unique: Z7wKWRe6OneiSd1nS9wdAg-1
-X-Mimecast-MFC-AGG-ID: Z7wKWRe6OneiSd1nS9wdAg_1794250772
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-4sYdBX3CO0ydzcpUbvpdJg-1; Mon,
+ 09 Nov 2026 13:59:24 -0500
+X-MC-Unique: 4sYdBX3CO0ydzcpUbvpdJg-1
+X-Mimecast-MFC-AGG-ID: 4sYdBX3CO0ydzcpUbvpdJg_1794250762
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45C8B1800654; Mon,  9 Nov 2026 18:59:32 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7064180059D; Mon,  9 Nov 2026 18:59:22 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.81])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 79FB6195608A; Mon,  9 Nov 2026 18:59:26 +0000 (UTC)
+ id 96C7E195608A; Mon,  9 Nov 2026 18:59:19 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -60,9 +60,9 @@ Cc: Peter Xu <peterx@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 5/7] debug/mem: name coroutine stacks
-Date: Mon,  9 Nov 2026 13:59:05 -0500
-Message-ID: <20261109185907.3220584-6-jsnow@redhat.com>
+Subject: [PATCH 3/7] debug/mem: name <reserved> regions in mmap-alloc
+Date: Mon,  9 Nov 2026 13:59:03 -0500
+Message-ID: <20261109185907.3220584-4-jsnow@redhat.com>
 In-Reply-To: <20261109185907.3220584-1-jsnow@redhat.com>
 References: <20261109185907.3220584-1-jsnow@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -96,37 +96,46 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Simple enough.
-
-RFC: Is there a better name we can give these to help tell them apart
-during analysis?
+For mmap memory reserved by QEMU, give it the name "<reserved>". This
+will show up in maps output as "anon: qemu: <reserved>".
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- util/oslib-posix.c | 3 +++
- 1 file changed, 3 insertions(+)
+ util/mmap-alloc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index dc001da66dd..454579c72df 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -60,6 +60,7 @@
- 
- #include "qemu/memalign.h"
- #include "qemu/mmap-alloc.h"
+diff --git a/util/mmap-alloc.c b/util/mmap-alloc.c
+index ed14f9c64de..2133b2c9bda 100644
+--- a/util/mmap-alloc.c
++++ b/util/mmap-alloc.c
+@@ -22,6 +22,7 @@
+ #include "qemu/host-utils.h"
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
 +#include "qemu/mmap-vma.h"
  
- #define MAX_MEM_PREALLOC_THREAD_COUNT 32
+ #define HUGETLBFS_MAGIC       0x958458f6
  
-@@ -742,6 +743,8 @@ void *qemu_alloc_stack(size_t *sz)
-         abort();
-     }
+@@ -152,6 +153,7 @@ static bool map_noreserve_effective(int fd, uint32_t qemu_map_flags)
+ static void *mmap_reserve(size_t size, int fd)
+ {
+     int flags = MAP_PRIVATE;
++    void *ptr;
  
-+    qemu_name_vma(ptr, *sz, "coroutine-stack");
+ #if defined(__powerpc64__) && defined(__linux__)
+     /*
+@@ -174,7 +176,10 @@ static void *mmap_reserve(size_t size, int fd)
+     flags |= MAP_ANONYMOUS;
+ #endif
+ 
+-    return mmap(0, size, PROT_NONE, flags, fd, 0);
++    ptr = mmap(0, size, PROT_NONE, flags, fd, 0);
++    qemu_name_vma(ptr, size, "<reserved>");
 +
-     /* Stack grows down -- guard page at the bottom. */
-     if (mprotect(ptr, pagesz, PROT_NONE) != 0) {
-         perror("failed to set up stack guard page");
++    return ptr;
+ }
+ 
+ /*
 -- 
 2.56.0
 
