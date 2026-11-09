@@ -1,76 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C26606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 13:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBBA606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HtBYRDsK
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=JzUT9sgn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQPtG-0005CH-Hz; Mon, 09 Nov 2026 08:58:30 -0500
+	id 1xQQ0F-0007DY-W0; Mon, 09 Nov 2026 09:05:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQPt6-00052n-Fa
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 08:58:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQPt3-0007IH-Ce
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 08:58:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794232695;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aeormPUN+IE5IR9JK1OrZdmwByJz1Sup5ujeu3UnUpA=;
- b=HtBYRDsKL67pYsMB5FHCmxWs4Bk9zaaOdp6T5U+0nGRqPS9PzvZnQJrzqq550804qXdG2i
- 3pGjHUovBYBrTOWA0JfdLKQ+l5eo0XvQpJE7J0rWw+Ij+uaLGRgZcSz5lIJcZdkLN6jcGG
- ZFmB5dFBtTJfY3H3aVSMda2QIulds6U=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-OOtiTlRtNQaaiiH2IV6ckg-1; Mon,
- 09 Nov 2026 08:58:10 -0500
-X-MC-Unique: OOtiTlRtNQaaiiH2IV6ckg-1
-X-Mimecast-MFC-AGG-ID: OOtiTlRtNQaaiiH2IV6ckg_1794232688
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 09A9F1800637; Mon,  9 Nov 2026 13:57:56 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8112F18004F5; Mon,  9 Nov 2026 13:57:53 +0000 (UTC)
-Date: Mon, 9 Nov 2026 07:57:50 -0600
-From: Eric Blake <eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xQQ01-00078u-Fx
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:31 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xQPzz-00088e-Pv
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:29 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4b467581b98so8574295e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 06:05:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794233126; x=1794837926; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=7yNu8ef/LhlDmPJ3xfJh3ZEtZik4Tro2+mKWpoGfMeU=;
+ b=JzUT9sgnSEEBPPIWEolTCRLmEBf3cv0kxomk7H5MMrbgOIPyuwHX9YBYrCU1rBUYKA
+ CcZFQT6My/LmBCKGR+OS2Ap7FdQDHPEkcx9p6ha0F94/re0u1uGhsZU/e5zEg3VUOTz3
+ Mlue5VFNrYoK31JDciOKVSXXFvNzzsIkb/jX4vpwJKbfXIPyR5vXnh67tWuyz7Mu36ZS
+ XKYTIKEW1u1aTooP7eniRlAXFsRzhxMHfQj1/dHy/JaME/fVlkAbwFOWihuiEoVBXE0V
+ srhT2f6qMfehhg0//l7oXahtK6DUxmKIosO7QcmCvj/DEgVljcC98j1n+8qE0GSyxJ0L
+ fuTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794233126; x=1794837926;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=7yNu8ef/LhlDmPJ3xfJh3ZEtZik4Tro2+mKWpoGfMeU=;
+ b=sA9A89d74j8LncDC6vFAE+hWxIAXpEwEM6JVvpDmZ3VObY0e/i/4hPp4VA/tH/4P/A
+ KVYK/qi3iKQoySfjFIuet8cA2WmLU/YpddjN/aVuPKwC6R7quNZXtaV5+2fp3EqHcVYG
+ qOGODKVEc8NwRaqpzmJm0KvZ9OGvrygU0gsVkcH3/DP+EVapluiWOptROpG6ntK9EaLC
+ g7AoCr1Lbd7SYFG62tokaqpMxyJJbCWVmrzHiNZ161yk0kcGVDxxWX9oCokBFzXtRFzI
+ /T1/c8s9NLjPutLNqRlpP2ZwSZZYwgEK5r5eTRlNUNjpfor1uPx2Af8hxi7+pHCnr4vj
+ 5t0A==
+X-Gm-Message-State: APuU4Z+hyb83FUvh4r3yHcgkuR/2nuZiskqMDo2GtGrIx4ypHrV9Y/mZ
+ AptsRJH2awW3n5HZo7L7mPzH01os3/YslcfjP3+94YXDwSGpfkN6Auqs6V8x/IxgpkzvzKgTpPm
+ WS0S+WmI=
+X-Gm-Gg: AYBFou3H8HT2E0wcDdhPrVb1B2SnZJfpI9F67vxrVLgm0q7q037LYTm1gfTKm8A/BIL
+ 8xpAn5Zrp2RoV919AjYdGthr9NWM2N5EwFjUiWeKmiJdp29O+nDeJmH5Lg3VPddfMrS7A6Ne87+
+ zBK+YLiupFs7HTrHcXDP532LfgD8JqP4LuV9f+jSjtMOWl84qM7DALfxSqOEGFC66CvezZRo4lF
+ lXryYKCyiK5cEjFmzdy2e64XSkozEerA0D8xAyxWBUIzUpyX43vzEdqyAYReKsu6romNN1/AIhb
+ VlvGO1K2cQZsZwdrYfh1GPJonQVFHR3c23W4yAX5d2DFByYjyLxsNI6NJ7lIvRrAO3bowO+XKLi
+ QMNpB4d9Thaw1yH9jBlg09HiRJa0JtP5pigpqtMYbDdRwYl2YSoSISnkKufq3t3WT9urgStWY+1
+ Q5D1uCrjDNJw6wlpgfsqHIizL2iAWt8l/paS7bfnmrekE4H9iHjOiia67R4GalKLKJRWSHW5FAi
+ tlZRRjI+ksRCVwdA031hV9qh0uV5J/6AVej539+U3LJWElp3JmsR2S1PrvoSIhkZJDh5wxUpG3I
+ AkPQxcd7GuW+3SjUySUO7sQ786SNtqrFDHiLn5DS7m3anMm4n59jbgfSk4RTw4Csa0fjJi5OFxD
+ C3GO8QpEhzZMmKWsiWOuTcUjXPcmxQTFbh69CheEQeyKmFHqLlAUgle4=
+X-Received: by 2002:a05:600c:3494:b0:4b2:3c81:d1 with SMTP id
+ 5b1f17b1804b1-4b960d9bbc6mr81259745e9.5.1794233126303; 
+ Mon, 09 Nov 2026 06:05:26 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-49596ea51cbsm11184750f8f.27.2026.11.09.06.05.25
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Nov 2026 06:05:25 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, berrange@redhat.com, qemu-block@nongnu.org, 
- Feifan Qian <bea1e@proton.me>, Haotian Jiang <jianghaotian.sunday@gmail.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH v2 2/3] nbd/server: Reject rather than assert on
- non-compliant BLOCK_STATUS
-Message-ID: <avHRM8Jaoa1Wd01b@redhat.com>
-References: <20261107225834.778738-5-eblake@redhat.com>
- <20261107225834.778738-7-eblake@redhat.com>
+Subject: [PULL 1/9] target/arm/ptw: check XN for ARMv6 in get_S1prot()
+Date: Mon,  9 Nov 2026 14:05:15 +0000
+Message-ID: <20261109140523.240161-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261109140523.240161-1-peter.maydell@linaro.org>
+References: <20261109140523.240161-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261107225834.778738-7-eblake@redhat.com>
-User-Agent: NeoMutt/20260616
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,72 +99,63 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sat, Nov 07, 2026 at 04:54:37PM -0600, Eric Blake wrote:
-> The NBD spec is clear that a client must not send NBD_BLOCK_STATUS
-> requests to a server if it did not negotiate any metacontexts with
-> NBD_OPT_SET_META_CONTEXT.  However, if the non-compliant client uses
-> NBD_OPT_EXTENDED_HEADERS and then passes in the relatively new
-> NBD_CMD_FLAG_PAYLOAD_LEN flag alongside an inappropriate block status
-> request, this was enough to trigger an assertion in qemu.
-> 
-> If you do not use recommended practice to prevent untrusted clients
-> from connecting to QEMU's NBD server, then you are at risk of a denial
-> of service attack from a rogue client.  Per our stated policy on flaws
-> triggered by network connections, this is considered a low-severity
-> security flaw, since it is trivial to avoid by using proper
-> configuration of TLS and x509 certificate authorization to reject
-> rogue clients; therefore, no CVE has been assigned yet.
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-CVE-2026-124559 has been assigned; I'll update the commit message
-accordingly before the pull request, if no other changes in the series
-are requested.
+The XN bits are supported in all ARMv6 and onward VMSA translation
+tables, but we were ignoring them unless the CPU was at least v7.
 
-> 
-> Fixes: 2dcbb11b ("nbd/server: Add FLAG_PAYLOAD support to CMD_BLOCK_STATUS", v8.2.0)
-> Reported-by: Feifan Qian <bea1e@proton.me>
-> Reported-by: https://gitlab.com/qemu-project/qemu/-/work_items/3796
-> CC: Haotian Jiang <jianghaotian.sunday@gmail.com>
-> CC: qemu-stable@nongnu.org
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> ---
->  nbd/server.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/nbd/server.c b/nbd/server.c
-> index e6c47f8c2e3..bc37cbcb338 100644
-> --- a/nbd/server.c
-> +++ b/nbd/server.c
-> @@ -2584,12 +2584,12 @@ nbd_co_block_status_payload_read(NBDClient *client, NBDRequest *request,
->          return -EINVAL;
->      }
-> 
-> -    assert(client->contexts.exp == client->exp);
->      nr_bitmaps = client->exp->nr_export_bitmaps;
->      request->contexts = g_new0(NBDMetaContexts, 1);
->      request->contexts->exp = client->exp;
-> 
-> -    if (payload_len % sizeof(uint32_t) ||
-> +    if (!client->contexts.count ||
-> +        payload_len % sizeof(uint32_t) ||
->          payload_len < sizeof(NBDBlockStatusPayload) ||
->          payload_len > (sizeof(NBDBlockStatusPayload) +
->                         sizeof(id) * client->contexts.count)) {
-> -- 
-> 2.56.0
-> 
-> 
+For the ARM_FEATURE_V6 case, we retrieve the AP and XN bits in
+get_phys_addr_v6() but we don't check the XN bit in get_S1prot().
+Since you can't validly get to get_S1prot() except via
+get_phys_addr_v6() or get_phys_addr_lpae(), we can remove the version
+check entirely and need not explicitly check for "v6 or better"..
 
+Change the `else if (arm_feature(env, ARM_FEATURE_V7))` check in
+get_S1prot() to plain `else`.
+
+Cc: qemu-stable@nongnu.org
+Fixes: d8e052b3876356 ("target-arm: get_phys_addr_lpae: more xn control")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4367
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-id: 20261106-armv6-xn-check-v2-1-1291bb77a6c2@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: tweaked commit message]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/ptw.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 2e67d02493b..e36d2ff9383 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -1595,7 +1595,7 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
+         if (regime_has_2_ranges(mmu_idx) && !is_user) {
+             xn = pxn || (user_rw & PAGE_WRITE);
+         }
+-    } else if (arm_feature(env, ARM_FEATURE_V7)) {
++    } else {
+         switch (regime_el(mmu_idx)) {
+         case 1:
+         case 3:
+@@ -1613,8 +1613,6 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
+         case 2:
+             break;
+         }
+-    } else {
+-        xn = wxn = 0;
+     }
+ 
+     if (xn || (wxn && (prot_rw & PAGE_WRITE))) {
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.43.0
 
 
