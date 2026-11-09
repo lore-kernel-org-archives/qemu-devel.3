@@ -1,116 +1,116 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93681606A322
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B867B606A321
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KkHB9Bpg
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=pfKthc82
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQQTp-00080M-V0; Mon, 09 Nov 2026 09:36:17 -0500
+	id 1xQQbG-0003FA-96; Mon, 09 Nov 2026 09:43:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xQQTm-0007zc-CQ
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:36:14 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xQQTk-0004ve-AM
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:36:14 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4a1b07c3c5fso9248005e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 06:36:11 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794234970; cv=none;
- d=google.com; s=arc-20260327;
- b=obOcZwQhPszzQF7EhIlCJkpb0jnmSyY15YAs7+daZYsJKGh7zPIx6S4+hdtqwAwHXs
- Ze+nn0umiq2+aDrGLKFy3osONOAyNRU08woYrDWNfF8DufZMmbRA+b4T2nX19LBgrZyj
- jBEtA74aAfIb7BdWXz1YWa2Dafnnbm6/T7aR+YtiMlGArq0TgG6X10B3cR/mVig2XfiG
- blnJoGmApZRyuNCvJdOVHOTW/jTilDfgEmWwWXw+pzteGlt3kGGW4d4g/Au6aa9j5Ok4
- bq3Upda5x5i3PdViShYkH7u5+MmlyEr8d2tu8TRCVNctlDzlZnfV/sHxSkSRrKNLBMsa
- rajg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=TVBu8g/B5Kvwm6IESzpiTvkWGu1aiceIrlaNOatg2jY=;
- fh=loEMbKDD5hcr9tXwr/SzxPa+U6G9WdqDQr7s3W5lPHc=;
- b=aelTFbO0xFOCIIXCkSCNeZfZyg1Ck83+cNQAe877e6G2MxQBLvcH+y9Gajw52oXb7N
- kKM61D+6xZYZhzVX9l0P0v/3KAkE7dp/3mRJnFjSxAisgiIvmGxxIxArXi/vVohDgG/W
- YK/OolZQwogPLArAgnjBcDdcxvIl60NsI2UoKjLi9eb3SIYHP30aCX03XSdlIYia4kTL
- Ju2lrTs6y5SgyWslaEjNGzRdfIrraSfPeo0So4P3cIqrWZ8RrCTrP2+vgfYrZTUwrflp
- rFwr6vNcRJzyaBZVs2HpW2RPJvFDfnnhox6SP8Q9L9XOkWsswiIJ3OFbuBj+AY3et0l7
- VfRQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794234970; x=1794839770; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=TVBu8g/B5Kvwm6IESzpiTvkWGu1aiceIrlaNOatg2jY=;
- b=KkHB9Bpgmb47xAMWMtSgJT+cId6K7lT2VzCnNJVzVC85SIylTiRfKDqrCSXtLHRGNs
- JxqdN8y82r5UmlM+2Q6mfVX1kwbV2Tur+QXwJtihy9O774odt+OfjNju3nEcnuNh9b8+
- XdTpRYv3JTvULaYOvk9icR+zmGPwGKaVpV9ly2zA+1oggWYuXMXIZ95kgWXSxo+g5jnH
- kyjE1ShsV/v3ufuu0q/mzWTo+zhDi5cT0rIMBFaHdADYnxCLXcdFvKv6YVEffqva2xJK
- V2mLwc4dTScE2xy0AZ4thDxSxGWWh0mERexxElSsq68H4e9+iqpfPpEY+KNTwiiFTB0M
- 22cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794234970; x=1794839770;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=TVBu8g/B5Kvwm6IESzpiTvkWGu1aiceIrlaNOatg2jY=;
- b=TTf1RmPSRPVqof/FhweVNSRPFptHUIsA5m2rYDTB0PB2fnKfbBA4Qw5wl09yCAcyzB
- kBvdMXu5s59Xr30qWe6jVdrR+/eNkY3Wq+KBPY89is74ZZA8M12uiJ64yiGOM1QcBHoA
- 6GW3INxYxCtuTDTnXRTwzRjpZ4xHAJBvO2fPAbhOxfJzAdw4ZO4gT2aMvmzfl6tlN7rt
- /TCYC7aeD47nGpOGvnmrUj0g43Mbg/2JaVQ6P9fN1zYPE6A6AUXOmCEXY6IkOZZE5lG6
- Dqc8EMUwRcg3KMA91yT/GwQjKEcldwBSc1KrryjiW5u/9CqHlk1eEqgclqOvv3Fg9KVA
- ERiw==
-X-Forwarded-Encrypted: i=1;
- AL+hErGzQKwQpCQc2XyyJSyCaWEDQXy71FKV71Q/MwkDZffcmCGf8Eyd5zzXPdfPTqIwH2taqVCzDzbJeMFL@nongnu.org
-X-Gm-Message-State: APuU4Z+TaEdeO1dKWabg001hcY4qxPay80jffLyCZ4iHxDc1OPFAkwBX
- /6MIw5WFPcuMkuECoaCcZcN82jrQQO0paBIV274OiJuawB0hxg7hGENKvVNjmjkp19WF08vsr6D
- ux1+4XU3QdTGy6kxDGUgDeSULlvk0b0s=
-X-Gm-Gg: AYBFou1zpDk/XrokhLYCQLsbhkE4x1yt5GjV1X7CByQGFDqePNdiOHy7f77yAJ+gXvr
- 7wOyBB6IzOeDCqC6jgQMa93OKDt1U2vsAVNM7LijobpgExg9WadB5SMhovrjnycuBelvHkkz9bg
- FIYx4jM6G/FfflZ6/BE6TM0of/JXuIju76ZPEgzRCqzmvwi4tJcamUZ1lwPRrEGq6QV8hovAnvA
- u7JbSq+Q2YzrjnLkcPxwA0kTMYtK4eZF0/P/hCnBsMgKPQzuVzVXXpSLivlAMnQCmQ+cxxhCDge
- gdDGpBKeIrvkmMclLPoEwy0rCtrLkVfD5qhZSNbz8toWnzhmq6ubNRJmkno2vGXdCvz0y2Y/OXY
- /MnYSkKYk8RoA7PQb5httoBqIJTPoPmlV3EywTKoZjfduhcHROSYumM2EFlOQXzdq9JBuZaJDsw
- vv
-X-Received: by 2002:a05:600c:3b8e:b0:4a7:9006:b176 with SMTP id
- 5b1f17b1804b1-4b9633cf5b0mr99246795e9.7.1794234970303; Mon, 09 Nov 2026
- 06:36:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xQQbD-0003Ch-8x; Mon, 09 Nov 2026 09:43:55 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xQQbB-0005lx-He; Mon, 09 Nov 2026 09:43:55 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A9DEpXv3508105; Mon, 9 Nov 2026 14:43:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=CT92/eBU32027OSYa
+ 2zdHya9JDzOg0e2RGxcBTgyxIU=; b=pfKthc827khUP1oDkprCKwwEbHqXY2DEb
+ 6Q5MmWAPVZTNT2S/z/3UgrNAYO+Odw3uNKUb2A7bh7rJfnvmOtQsMzXdgJ+2mb8v
+ z3zHuVc+tW22tYlW4iXqstnN25K5iiUTvxqcBtDmLlTJoycuNDEkwu+jnC5I+Xs7
+ zfaE/DRRM/8TbBstescsu3jmB6bkRBzZwB+NVSSfGTu8eaXVySQd+Au8BDLKz/rv
+ 379Y3Dtyzey0LEr/FZ70WfXSIgZBECXJ4Aslzz0INp8/uHU5ncJE6eHgttEJkaIT
+ YuLb7LJRMVCovvUTVYgAF2/lX2U5Hc41h6jpnM1xv6Nu9O4LaCrsA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hsumundk3-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 09 Nov 2026 14:43:50 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A9DJxpa037093; Mon, 9 Nov 2026 14:43:50 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4htfak0dkm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Nov 2026 14:43:49 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6A9Ehmen20906702
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Nov 2026 14:43:48 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C408958058;
+ Mon,  9 Nov 2026 14:43:48 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8DC2958017;
+ Mon,  9 Nov 2026 14:43:47 +0000 (GMT)
+Received: from li-4c4c4544-004d-4810-8058-b2c04f424b34.ibm.com.com (unknown
+ [9.61.139.143]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Nov 2026 14:43:47 +0000 (GMT)
+From: Eric Farman <farman@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>,
+ "'Michael S . Tsirkin'" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Konstantin Shkolnyy <kshk@linux.ibm.com>
+Subject: [PULL for v11.2 1/1] vhost: only use config notifier when
+ exists/initialized
+Date: Mon,  9 Nov 2026 09:43:43 -0500
+Message-ID: <20261109144344.847531-2-farman@linux.ibm.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261109144344.847531-1-farman@linux.ibm.com>
+References: <20261109144344.847531-1-farman@linux.ibm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20260927075108.3621107-1-bin.meng@processmission.com>
- <6047095a-2957-4d8d-99aa-055a63d753e8@oss.qualcomm.com>
-In-Reply-To: <6047095a-2957-4d8d-99aa-055a63d753e8@oss.qualcomm.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Mon, 9 Nov 2026 22:35:53 +0800
-X-Gm-Features: AclHuK_73O5XZBJwLrja-nTfhBi1T3yczL4izwOEthIrvrEZtdSUsx5R4gUt_jA
-Message-ID: <CAEUhbmU7McatVYi4ONnsc2hGbiQy1wzbNGPTk2O+CDGDdyyZNQ@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/net: cadence: Honor subword lanes in the GEM
- registers
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Jason Wang <jasowangio@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=bmeng.cn@gmail.com; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA1OCBTYWx0ZWRfX4KW7MJ50OCN+
+ mLtzZ3X4SH6DEM0oL0VuUSYAnNV7sdv9bKIfhGGBD439Z0OwGGiTUyHd66+p3cCu/T8kYiL6B9C
+ +uj7mKZ4+XBdlcOdX/VepJPEZeOji5s=
+X-Authority-Analysis: v=2.4 cv=GISdgeNK c=1 sm=1 tr=0 ts=6af1dc26 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=6R7veym_AAAA:8
+ a=imYxtfgo-3jAVhZrOLEA:9 a=ILCOIF4F_8SzUMnO7jNM:22
+X-Proofpoint-GUID: _UI_1n4A0PgHA_xJoWqVvXr5bqZcLLSf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA1OCBTYWx0ZWRfX/9JbjNUtmb4C
+ Pr0p9QcXNyLez7G2p4f+MSFZ/WEiLBWii0/CNAqi9g+fW6MeZU6/rY5zG9dVQWhM8gpmhituYZg
+ GIEp2mrphAgMpeHBpImPI+zwyaWhpAWvStTfIX6EqIz/0xEqIi15ddQ7n57P/2skWwEwXBJbB+g
+ Q8zDDfAShOun662t2hFSlTIG6sDZB6Qx1ghtwILOWdsK9vJFJYArHmin+IJOojJEd4g8E+O06nh
+ b/SjO0egGhCuojeMWU2KY1f9Ptz+W/VbDBKjWU+PL7wWXwCaM4rCdJA1+Si1LfRkUO5Wu9ZPnrA
+ 2aRpuq/Bh+Boi3eEVnet9WFqaRAiG3h+IXie2ySUbbdcRSvYzhd6u7JyQluCdHp4XcCoOlFe0U9
+ RSKzQULWZODmoEgIb6KXFwJwYbQq8c26UOxVwWwRFPK2F0wkUHH9ftNPJlZNQpuplbrP+frfzED
+ ylZVDrL3U2RXTU7uLtA==
+X-Proofpoint-ORIG-GUID: _UI_1n4A0PgHA_xJoWqVvXr5bqZcLLSf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-09_05,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 impostorscore=0 clxscore=1015 adultscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611090058
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,184 +122,49 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Philippe,
+Commit e3b12d0c55e4 ("util/event_notifier: more strict API") added an
+assert for an uninitialized file descriptor in event_notifier_get_fd(),
+but it presumes that such a thing always exists.
 
-On Mon, Nov 9, 2026 at 9:58=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Hi Bin,
->
-> On 27/9/26 09:51, Bin Meng wrote:
-> > The GEM MMIO callbacks ignored the low address bits and access size.
-> > Byte reads therefore always returned lane zero, causing guest driver
-> > that reads the station address byte by byte to turn four unique MAC
-> > addresses into the same value. Partial writes had the corresponding
-> > lane-selection problem.
-> >
-> > Extract the requested little-endian read lane and merge partial writes
-> > with the current register value. Preserve the existing read-clear,
-> > write-clear, and command side effects, including dynamic queue
-> > pointers.
-> >
-> > Fixes: e9f186e514a7 ("cadence_gem: initial version of device model")
-> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> >
-> > ---
-> >
-> > Changes in v2:
-> > - drop the gem_get_register() helper
-> >
-> >   hw/net/cadence_gem.c | 55 +++++++++++++++++++++++++++----------------=
--
-> >   1 file changed, 34 insertions(+), 21 deletions(-)
->
->
-> > @@ -1636,35 +1639,43 @@ static void gem_write(void *opaque, hwaddr offs=
-et, uint64_t val,
-> >           unsigned size)
-> >   {
-> >       CadenceGEMState *s =3D (CadenceGEMState *)opaque;
-> > -    uint32_t readonly;
-> > +    uint32_t access_mask;
-> > +    uint32_t writable_mask;
-> > +    uint32_t write_val;
-> > +    unsigned shift;
-> >       int i;
-> >
-> >       DB_PRINT("offset: 0x%04x write: 0x%08x ", (unsigned)offset, (unsi=
-gned)val);
-> > +    shift =3D (offset & 3) * 8;
-> > +    access_mask =3D MAKE_64BIT_MASK(shift, size * 8);
-> > +    write_val =3D (uint32_t)val << shift;
-> >       offset >>=3D 2;
-> >
-> >       /* Squash bits which are read only in write value */
-> > -    val &=3D ~(s->regs_ro[offset]);
-> > -    /* Preserve (only) bits which are read only and wtc in register */
-> > -    readonly =3D s->regs[offset] & (s->regs_ro[offset] | s->regs_w1c[o=
-ffset]);
-> > +    write_val &=3D ~(s->regs_ro[offset]);
-> >
-> > -    /* Copy register write to backing store */
-> > -    s->regs[offset] =3D (val & ~s->regs_w1c[offset]) | readonly;
-> > +    /* Copy writable bits in the accessed lanes to the backing store *=
-/
-> > +    writable_mask =3D access_mask &
-> > +                    ~(s->regs_ro[offset] | s->regs_w1c[offset]);
-> > +    s->regs[offset] =3D (s->regs[offset] & ~writable_mask) |
-> > +                      (write_val & writable_mask);
-> >
-> >       /* do w1c */
-> > -    s->regs[offset] &=3D ~(s->regs_w1c[offset] & val);
-> > +    s->regs[offset] &=3D ~(s->regs_w1c[offset] & write_val);
-> >
-> >       /* Handle register write side effects */
-> >       switch (offset) {
-> >       case R_NWCTRL:
-> > -        if (FIELD_EX32(val, NWCTRL, ENABLE_RECEIVE)) {
-> > +        if (FIELD_EX32(write_val, NWCTRL, ENABLE_RECEIVE)) {
-> >               for (i =3D 0; i < s->num_priority_queues; ++i) {
-> >                   gem_get_rx_desc(s, i);
-> >               }
-> >           }
-> > -        if (FIELD_EX32(val, NWCTRL, TRANSMIT_START)) {
-> > +        if (FIELD_EX32(write_val, NWCTRL, TRANSMIT_START)) {
-> >               gem_transmit(s);
-> >           }
-> > -        if (!(FIELD_EX32(val, NWCTRL, ENABLE_TRANSMIT))) {
-> > +        if ((access_mask & R_NWCTRL_ENABLE_TRANSMIT_MASK) &&
->
-> This new TX-enable check should either be in a distinct logical
-> patch, or described in patch description.
->
-> > +            !(FIELD_EX32(s->regs[offset], NWCTRL, ENABLE_TRANSMIT))) {
-> >               /* Reset to start of Q when transmit disabled. */
-> >               for (i =3D 0; i < s->num_priority_queues; i++) {
-> >                   s->tx_desc_addr[i] =3D gem_get_tx_queue_base_addr(s, =
-i);
-> > @@ -1679,37 +1690,37 @@ static void gem_write(void *opaque, hwaddr offs=
-et, uint64_t val,
-> >           gem_update_int_status(s);
-> >           break;
-> >       case R_RXQBASE:
-> > -        s->rx_desc_addr[0] =3D val;
-> > +        s->rx_desc_addr[0] =3D s->regs[offset];
-> >           break;
-> >       case R_RECEIVE_Q1_PTR ... R_RECEIVE_Q7_PTR:
-> > -        s->rx_desc_addr[offset - R_RECEIVE_Q1_PTR + 1] =3D val;
-> > +        s->rx_desc_addr[offset - R_RECEIVE_Q1_PTR + 1] =3D s->regs[off=
-set];
-> >           break;
-> >       case R_TXQBASE:
-> > -        s->tx_desc_addr[0] =3D val;
-> > +        s->tx_desc_addr[0] =3D s->regs[offset];
-> >           break;
-> >       case R_TRANSMIT_Q1_PTR ... R_TRANSMIT_Q7_PTR:
-> > -        s->tx_desc_addr[offset - R_TRANSMIT_Q1_PTR + 1] =3D val;
-> > +        s->tx_desc_addr[offset - R_TRANSMIT_Q1_PTR + 1] =3D s->regs[of=
-fset];
-> >           break;
-> >       case R_RXSTATUS:
-> >           gem_update_int_status(s);
-> >           break;
-> >       case R_IER:
-> > -        s->regs[R_IMR] &=3D ~val;
-> > +        s->regs[R_IMR] &=3D ~write_val;
-> >           gem_update_int_status(s);
-> >           break;
-> >       case R_JUMBO_MAX_LEN:
-> > -        s->regs[R_JUMBO_MAX_LEN] =3D val & MAX_JUMBO_FRAME_SIZE_MASK;
-> > +        s->regs[R_JUMBO_MAX_LEN] &=3D MAX_JUMBO_FRAME_SIZE_MASK;
-> >           break;
-> >       case R_INT_Q1_ENABLE ... R_INT_Q7_ENABLE:
-> > -        s->regs[R_INT_Q1_MASK + offset - R_INT_Q1_ENABLE] &=3D ~val;
-> > +        s->regs[R_INT_Q1_MASK + offset - R_INT_Q1_ENABLE] &=3D ~write_=
-val;
-> >           gem_update_int_status(s);
-> >           break;
-> >       case R_IDR:
-> > -        s->regs[R_IMR] |=3D val;
-> > +        s->regs[R_IMR] |=3D write_val;
-> >           gem_update_int_status(s);
-> >           break;
-> >       case R_INT_Q1_DISABLE ... R_INT_Q7_DISABLE:
-> > -        s->regs[R_INT_Q1_MASK + offset - R_INT_Q1_DISABLE] |=3D val;
-> > +        s->regs[R_INT_Q1_MASK + offset - R_INT_Q1_DISABLE] |=3D write_=
-val;
-> >           gem_update_int_status(s);
-> >           break;
-> >       case R_SPADDR1LO:
-> > @@ -1725,7 +1736,9 @@ static void gem_write(void *opaque, hwaddr offset=
-, uint64_t val,
-> >           s->sar_active[(offset - R_SPADDR1HI) / 2] =3D true;
-> >           break;
-> >       case R_PHYMNTNC:
-> > -        gem_handle_phy_access(s);
-> > +        if (access_mask & (R_PHYMNTNC_OP_MASK | R_PHYMNTNC_ST_MASK)) {
->
-> A byte write to another lane no longer starts a PHY operation;
-> worth mentioning in the description?
->
-> > +            gem_handle_phy_access(s);
-> > +        }
-> >           break;
-> >       }
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
->
+On s390x, where a config notifier does not exist, this is a breaking
+change for any vhost-backed device such as virtio-net. To remedy this,
+move the acquisition of the file descriptor within the guard against
+vhost_set_config_call and expand the guard to ensure the notifier is
+initialized before being used.
 
-Thanks for the review.
+Fixes: e3b12d0c55e4 ("util/event_notifier: more strict API")
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20261103172732.837511-1-farman@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+---
+ hw/virtio/vhost.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-I will add some descriptions in the commit message in v3.
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index b25919c5c7..189ac54117 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -2119,8 +2119,9 @@ static void vhost_start_config_intr(struct vhost_dev *dev)
+         virtio_config_get_guest_notifier(dev->vdev);
+ 
+     assert(dev->vhost_ops);
+-    int fd = event_notifier_get_fd(config_notifier);
+-    if (dev->vhost_ops->vhost_set_config_call) {
++    if (dev->vhost_ops->vhost_set_config_call &&
++        event_notifier_initialized(config_notifier)) {
++        int fd = event_notifier_get_fd(config_notifier);
+         r = dev->vhost_ops->vhost_set_config_call(dev, fd);
+         if (!r) {
+             event_notifier_set(config_notifier);
+-- 
+2.56.0
 
-Regards,
-Bin
 
