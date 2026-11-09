@@ -1,67 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE06B606A321
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 07:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6B4606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 07:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=jNBa1hIr
+	dkim=pass (1024-bit key, unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=zre4xtLt
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQJvC-0004ZX-Jo; Mon, 09 Nov 2026 02:36:06 -0500
+	id 1xQK1w-0005Pn-EX; Mon, 09 Nov 2026 02:43:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1xQJvA-0004ZI-LF; Mon, 09 Nov 2026 02:36:04 -0500
-Received: from [115.124.30.132] (helo=out30-132.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
+ id 1xQK1n-0005Oz-Vw; Mon, 09 Nov 2026 02:42:57 -0500
+Received: from out162-62-57-49.mail.qq.com ([162.62.57.49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1xQJv3-00014x-Ft; Mon, 09 Nov 2026 02:36:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1794209724; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=D+uUsGRuT1paoUbMiiuxN/A4xE8CkH5qkRVmmRNVqsw=;
- b=jNBa1hIrD8EQWDM9dSZyXJlHZVvSjrWSmpUdfIylYxMn8hgLCexJCD2UBdZMji0EVgmZvncrHwJ/BAJcbVqZ1PLR0iIu3uI96UjUV0/WXM53bdEtmItF8RoV9R6Xl49s8iSptMp49rFWrEnATZL1Tefy4tVpkjgvjnivanYhyy8=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
- TI=SMTPD_---0XELaL.z_1794209722; 
-Received: from 30.166.64.195(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0XELaL.z_1794209722 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 09 Nov 2026 15:35:23 +0800
-Message-ID: <f742d921-b9e7-40e3-b70f-9d70804a9bcd@linux.alibaba.com>
-Date: Mon, 9 Nov 2026 15:35:21 +0800
+ (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
+ id 1xQK1j-0001ib-VX; Mon, 09 Nov 2026 02:42:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1794210160; bh=CepK5kvyxbVxZGUf+126+FP7SZPfActg6YYj3/12Q9M=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=zre4xtLtVpjYtV8xWCganFHn4IJvmF51G697BY4Ap3VWf85JMSS3KT5jaM59aVgNn
+ x5OslFUQjcAfe2yDpL47LMFz9MySJqSa5ps+7tFhy5KAB1cHToLOvLjuUQpnVhZOMC
+ ifrOQP6/bwoc2ohB7zA/y3Wf8G2R2azJdGT+Ubwc=
+Received: from [100.125.153.207] ([139.159.170.67])
+ by newxmesmtplogicsvrsza63-0.qq.com (NewEsmtp) with SMTP
+ id AA5A505C; Mon, 09 Nov 2026 15:42:37 +0800
+X-QQ-mid: xmsmtpt1794210157tbu1sb5kc
+Message-ID: <tencent_8809C7F82B4C692913748888B7A752273308@qq.com>
+X-QQ-XMAILINFO: NGZp1yYNf7Y+vQBn5/jO+yhjZVfR/X6XRNh07M2pDU3DV/4gbnQCNobUsBQc3l
+ 89x4yEyQ9zOzDCon03SYmuTFQMiYpn7KhW23sdqOBQb69f2Hx18el0agFLYAR6dUYrZbkDf7un2T
+ Ubufto9QEHsaP4oAvHZ4N14Y/ZyE1vhTSpeosHQIgCc7ODooIgcVOlXGVAZxYFkO2pX5d32MHf2C
+ qA+46OSHjQ9qObk4vGt+od9b6BhLwRQudp2aModqzzWyb3E86P8Kkb0rzVuMBUXdJ2+oZgBibf6h
+ EQEYVay7bjE6bgIzuZGliLz236Y6k1ASYg9wBjob/IjAgdGfdDlhvLIEe77naPR5Y4Sc/9Gic8a+
+ vnZXP+5xfGzmHu9Uoy3k0LF9ta4X4jVA5uSl04z5Cpp2O9S2yLDK27/wiDi7UfLWqhkDATRg2b9S
+ UOEf4Y+iAhG1FkTLa4r198FaQU+Pt88HZMsZAqEIYq9klloaXxlnpl5/egYkQnRSyzVT2YTqm6SE
+ wp6xrLrKAu7pCsRiwAa6fy7P8Ez8N0wVwOddEC7U1fhtdPOoIKuUax62Nlj0jS+qhAWOjW289qmu
+ wnkr3GSS+2qHhL2u3uHAR1gp6ACVWyfTm/HOjRAiT18vlY3TOc/CbKdn/1TMUmtsA8e/rkrBNLHC
+ x9kRC9O/Y22FGhYKjsEkOdmwGpzF4/WneTW7BVl3uBsTmAlpWwPjG0IbfgKNIoRKWBdt7E/mUQiw
+ ti+GrcwwSRSi6Rc0DsYvNF91N83dmful7EqauCF7LG9tawol1jtAHUilL2ZS8x+9tmDtdWwMfca2
+ 1zojpStOuwITtxLJvcDmBT4CDisqexjq6G2dABx8euvhGRBxioNnq4ZV8t4elLJvs3+4GKnn7bhP
+ ce2dVNvzltjvnocG/hbKjvjGiSJNGBfYIV8lsdOKqqY5PK6wohwgufBdEhzT2TOIGobKFBNLAQiF
+ a9UylHFP2gRUC4IzDUTH4zQ8vmEqH3+bkwJ4wkjUeZ+Gq6KS0gaV/HIOy+atd8hSU2QRMoyHkrHZ
+ fLDepAIQsNDII7OaU+K6gGaHD9YxOyaIln6Pu+KgOMyhqcaPI94WZqMQSB9xtmIZa3NL+SRA==
+X-QQ-XMRINFO: NI4Ajvh11aEjwDmElj6Fnga+xfKmi0/jgA==
+X-OQ-MSGID: <b3aace42-b331-4dbe-9b53-115256a47c04@qq.com>
+Date: Mon, 9 Nov 2026 15:42:37 +0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 00/11] target/riscv: Implement Smsdid and Smmpt
- extension
-To: Rahul Pathak <rahul@summations.net>
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- chao.liu.zevorn@gmail.com, liwei1518@gmail.com, qemu-riscv@nongnu.org,
- xiangyi.zeng@linux.alibaba.com, cxx194832@alibaba-inc.com
-References: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
- <73bc69a4-a3e6-47c8-9c7f-92443706b250@oss.qualcomm.com>
- <397f4ece-067b-4714-93f3-082e07fad06d@linux.alibaba.com>
- <CABdD5xku3v1hGGHQA=WNiB-zTYkHdg=Pou5nci7ShUyERLp-CA@mail.gmail.com>
+Subject: Re: [PATCH 00/37] Add Arm MPAM emulation
+To: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+ Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Jonathan Cameron <jic23@kernel.org>,
+ Peter Maydell <peter.maydell@linaro.org>, anisinha@redhat.com,
+ armbru@redhat.com, eblake@redhat.com, imammedo@redhat.com,
+ michael.roth@amd.com, mst@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <tencent_22E95650AA60C6E59860452C0D61A21F1105@qq.com>
+ <CAFEAcA8MyrqWC7=A5Bw0G5G-2J64iTLmfY33dNDLm0jvmRb+Eg@mail.gmail.com>
+ <27040691-e4b6-44f3-b588-cbbbee13cde2@huawei.com>
+ <CAFEAcA_4xb3CBL9TTAdKMOG_ijWpt9wsveCp0R602VoFaWUH1Q@mail.gmail.com>
+ <tencent_82895B2529E419B263EC95C8349389114407@qq.com>
+ <CAFEAcA-amrQOM8+qnaxgWLyGNM=vp-vKV=OqqU7Qp17PRiH_KA@mail.gmail.com>
+ <501bf5cc-cee1-4593-943d-505003541d41@huawei.com>
+ <CAFEAcA8ffgrbh_gUK7wcZW5E8p=ZC+CC=3U23ah+nWHxOGpjrg@mail.gmail.com>
+ <20261020013906.0ee141e5@jic23-hlaptop>
+ <d9e9f9dc-3ac4-4455-b27a-f9a450d319bf@huawei.com>
+ <20261106151424.00000fa2@oss.qualcomm.com>
 Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <CABdD5xku3v1hGGHQA=WNiB-zTYkHdg=Pou5nci7ShUyERLp-CA@mail.gmail.com>
+From: Jinjie Ruan <2118537295@qq.com>
+In-Reply-To: <20261106151424.00000fa2@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.132 (deferred)
-Received-SPF: pass client-ip=115.124.30.132;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-132.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=162.62.57.49; envelope-from=2118537295@qq.com;
+ helo=out162-62-57-49.mail.qq.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_MUA_MOZILLA=2.309,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,209 +94,597 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-24.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	UNPARSEABLE_RELAY,USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FORGED_MUA_MOZILLA,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 
-On 10/30/26 6:45 PM, Rahul Pathak wrote:
-> Hi Zhiwei,
->
-> The SMMPT spec has been updated following the ARC comments
->   and the big change is the merging of both SMSDID and SMMPT
->   sub extensions into one with new name "SMSD" which is much better now.
->
-> https://github.com/riscv/riscv-smmtt/commit/ff5069fa99fc1fdd97c9fb8d96329e13afa82712
->
-> Can you please update this series.
-Hi Rahul and Daniel,
 
-I see the latest specification is v0.9.0 now. Supporting v0.4.9 is not 
-necessary. I will update this patch set to v0.9.0 together with updated 
-test cases.
+在 2026/11/7 07:14, Jonathan Cameron 写道:
+> 
+>>
+>> Hi Jonathan,
+>>
+>>>
+>>> FWIW the much more minimal emulation that I posted years ago and
+>>> which I few crumbs of in here came up at plumbers this year with
+>>
+>> With your foundational patch, it is very convenient to extend
+>> other functionality.
+>>
+>>> an engineer from yet another company asking if I could look at
+>>> rebasing and upstreaming because they also found it very useful.
+>>
+>> Glad to hear that someone else is also interested in QEMU emulation of MPAM.
+>>
+>>> I was trying to work out if I could fit that into my todo list
+>>> or whether to ask a colleague to do it.
+>>>
+>>> As such I'm very pleased to see this surface a few days later!
+>>> Even what I had was very useful for testing so I'm with this
+>>
+>> Feel the same way when developing new features or adapting test cases.
+>>
+>>> much extended feature set I'm not surprised to hear even more
+>>> issues have shaken out.
+>>>
+>>> It might take me a little while to get time to look at this series
+>>> but I definitely plan on doing so!
+>>
+>> Look forward to your review and suggestions.
+> 
+> I perhaps got a little carried away and decided to see how good an LLM
+> was at generating test cases for this... Was a little painful but
+> in the end I think helpful.
+> 
+> I also span a bunch of runtime options up to exercise all the optional
+> properties, field widths etc.  That adds about 600 lines of code and
+> 25 machine properties (assuming just memory controller, l2 and l3 caches
+> + all homogeneous.)  I might clean that up and post at some point but
+> it feels like an optional stage 2 on what you have here!
 
-Thanks,
-Zhiwei
+Hi Jonathan,
 
->
-> Thanks
-> Rahul
->
-> On Sat, Oct 10, 2026 at 12:13 PM LIU Zhiwei
-> <zhiwei_liu@linux.alibaba.com> wrote:
->>
->> On 10/8/26 10:42 AM, Daniel Henrique Barboza wrote:
->>> Hi Zhiwei,
->>>
->>>
->>> Sorry from taking this long to take a look at this work.  I am afraid
->>> I'll
->>> need to ask you to send a v9 due to the following upstream changes, aside
->>> from some review comments I made:
->>>
->>> - upstream changed how tcg tests are invoked (we use meson now), i.e. you
->>> need to add changes in tests/tcg/riscv64/system/meson.build instead of
->>> Makefile.softmmu-target;
->>>
->>> - upstream also changed how we declare things in disas/riscv.c.
->>>
->>>
->>> If you send a v9 I'll prioritize it for review.  We can get this done for
->>> 11.2.
->>>
->> Hi Daniel,
->>
->> Thank you for taking the time to review this! No worries about the delay.
->>
->> I appreciate the heads-up on the upstream changes. I will update the
->> patch accordingly:
->>
->> Switch from Makefile.softmmu-target to
->> tests/tcg/riscv64/system/meson.build for the TCG test invocation;
->> Update the declarations in disas/riscv.c to align with the latest
->> upstream changes.
->> I will send out v9 as soon as possible. Really glad to hear we can
->> target 11.2 for this — I'll make sure to prioritize it on my end as well.
->>
->> Thanks again for the review and for keeping this moving!
->>
->> Best regards,
->> Zhiwei
->>> Cheers,
->>> Daniel
->>>
->>> On 7/23/2026 5:03 PM, LIU Zhiwei wrote:
->>>> This patch set introduces support for the RISC-V Smsdid and Smmpt
->>>> (Supervisor Domain Identifier and Memory Protection Table) extensions
->>>> v0.4.9(https://github.com/riscv/riscv-smmtt/releases/tag/v0.4.9).
->>>> Smmpt provides a hardware mechanism for fine-grained memory protection,
->>>> checked after address translation, which is particularly useful for
->>>> supervisor-level sandboxing and security monitoring.
->>>>
->>>> The rfc patch set:
->>>> https://mail.gnu.org/archive/html/qemu-riscv/2025-09/msg00216.html
->>>>
->>>> Rahul Pathak is working on SMMPT OpenSBI support -
->>>> https://lists.infradead.org/pipermail/opensbi/2026-July/010235.html
->>>>
->>>> based on his QEMU SMMPT branch -
->>>> https://github.com/pathakraul/qemu/tree/rpathak_smmpt_v1
->>>>
->>>> As we all agree -
->>>> https://patchew.org/QEMU/20260715145016.17369-1-zhiwei._5Fliu@linux.alibaba.com/
->>>>
->>>> , we will collaborate on this work and not duplicate efforts. Rahul will
->>>> focus on OpenSBI upstream and I will update the QEMU patch set to v8.
->>>>
->>>> Xiangyi will review the OpenSBI SMMPT patch set and may collaborate to
->>>> upstream the other parts, such as SMSDIA and IOMPT.
->>>>
->>>> v7->v8:
->>>>       1. Update the mfence.pa and minval.pa instruction encodings to
->>>> match the
->>>>          upstream riscv-opcodes definition
->>>>          (https://github.com/riscv/riscv-opcodes/pull/389/): mfence.pa
->>>> now uses
->>>>          funct7=0b0011001 and minval.pa uses funct7=0b0011011. The
->>>> decoder,
->>>>          disassembler and the system test are updated accordingly.
->>>>
->>>> v6->v7:
->>>>       The implementation is updated from the v0.3.4 specification to
->>>>       v0.4.9. The main changes are:
->>>>       1. Update the mmpt CSR number to 0x382 and msdcfg to 0x74E.
->>>>       2. Update the mmpt register layout: the SDID and PPN field
->>>> positions
->>>>          changed and the RV64 PPN is now 44 bits.
->>>>       3. Rework the MPTE format: the N (NAPOT) bit now lives at bit 2,
->>>> the
->>>>          non-leaf NAPOT form is removed, NAPOT leaf entries encode a
->>>> single
->>>>          XWR tuple plus a G granularity field, and non-NAPOT leaf entries
->>>>          hold per-page XWR tuples.
->>>>       4. Treat XWR=000 as "no access" and a non-leaf entry with N=1 as a
->>>>          fault.
->>>>       5. Enforce the Smmpt64 root-table PPN alignment (low 3 bits zero).
->>>>       6. Rename the fence instructions mfence.spa/minval.spa to
->>>>          mfence.pa/minval.pa.
->>>>       7. Drop stale Reviewed-by tags on the substantially reworked
->>>> patches.
->>>>       8. Introduce the configurable "smmpt-sdidlen" CPU property.
->>>>       9. Add disassembly support for the Smmpt.
->>>>       10. Add bare-metal M-mode system tests.
->>>>       11. Rebase to master.
->>>>
->>>> v5->v6:
->>>>       1. Use explicitly bit fields extract instead of mpte_union_t.
->>>>       2. Use the same exception behavior for MPT valiation as PMP
->>>>          valiation.
->>>>       3. Use PAGE_* instead of MPT_ACCESS_* as they have same value.
->>>>       4. Use address_space_*_le instead of address_space_* for SMMPT.
->>>>       5. Only print SMMPT address check log when SMMPT is enabled.
->>>>       6. Add implied rule for SMMPT as it depends on SMSDID.
->>>>       7. Rebase to master.
->>>>
->>>> v4->v5:
->>>>       1. Rebase to master.
->>>> v3->v4:
->>>>       1. Add missing review tags.
->>>> v2->v3:
->>>>       1. Fix build error in patch 2.
->>>>       2. Rebase to master.
->>>>
->>>> rfc->v2:
->>>>       1. When ext_smmpt is false or BARE mode, make other fields in mmpt
->>>>          CSR zero.
->>>>       2. Add patch 5 to fix smrnmi ISA string order.
->>>>       3. Fix patch 6 smmpt and smsdid ISA string order.
->>>>       4. Make smmpt and smsdid experiment extensions.
->>>>       5. Add review tags.
->>>>
->>>> LIU Zhiwei (11):
->>>>     target/riscv: Add basic definitions and CSRs for SMMPT
->>>>     target/riscv: Add smmpt-sdidlen property for the mmpt SDID field
->>>>     target/riscv: Implement core SMMPT lookup logic
->>>>     target/riscv: Integrate SMMPT checks into MMU and TLB fill
->>>>     target/riscv: Implement SMMPT fence instructions
->>>>     target/riscv: Fix smrnmi isa alphabetical order
->>>>     target/riscv: Add disassembly for Smmpt instructions and CSRs
->>>>     target/riscv: Enable SMMPT extension
->>>>     target/riscv: Add system test for SMMPT extension
->>>>     target/riscv: Add system tests for Smmpt52 and Smmpt64
->>>>     target/riscv: Add system test for Smmpt34
->>>>
->>>>    disas/riscv.c                                 |   9 +-
->>>>    target/riscv/cpu.c                            |  60 +++-
->>>>    target/riscv/cpu.h                            |   8 +
->>>>    target/riscv/cpu_bits.h                       |  27 ++
->>>>    target/riscv/cpu_cfg_fields.h.inc             |   3 +
->>>>    target/riscv/insn32.decode                    |   2 +
->>>>    target/riscv/meson.build                      |   1 +
->>>>    target/riscv/riscv_smmpt.c                    | 339 ++++++++++++++++++
->>>>    target/riscv/riscv_smmpt.h                    |  26 ++
->>>>    target/riscv/tcg/cpu_helper.c                 | 119 +++++-
->>>>    target/riscv/tcg/csr.c                        | 106 ++++++
->>>>    .../tcg/insn_trans/trans_privileged.c.inc     |  30 ++
->>>>    target/riscv/tcg/pmp.h                        |   3 +
->>>>    tests/tcg/riscv64/Makefile.softmmu-target     |  12 +
->>>>    tests/tcg/riscv64/smmpt-common.S              | 257 +++++++++++++
->>>>    tests/tcg/riscv64/test-smmpt.S                |  85 +++++
->>>>    tests/tcg/riscv64/test-smmpt34.S              |  97 +++++
->>>>    tests/tcg/riscv64/test-smmpt52.S              |  91 +++++
->>>>    tests/tcg/riscv64/test-smmpt64.S              |  98 +++++
->>>>    19 files changed, 1354 insertions(+), 19 deletions(-)
->>>>    create mode 100644 target/riscv/riscv_smmpt.c
->>>>    create mode 100644 target/riscv/riscv_smmpt.h
->>>>    create mode 100644 tests/tcg/riscv64/smmpt-common.S
->>>>    create mode 100644 tests/tcg/riscv64/test-smmpt.S
->>>>    create mode 100644 tests/tcg/riscv64/test-smmpt34.S
->>>>    create mode 100644 tests/tcg/riscv64/test-smmpt52.S
->>>>    create mode 100644 tests/tcg/riscv64/test-smmpt64.S
->>>>
->>>>
->>>> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+Thanks for doing this.
+
+> 
+> First up, bunch of fixes related to this.  The field access width ones
+> are probably most important and then the various width and HAS_ checks.
+> I haven't checked these all closely but some are obviously fine.
+
+Will add these fix in v2, thank you!
+
+> 
+> Because it might be helpful, the test follows.  I'm not suggesting this be
+> included for now anyway but might help you with v2!
+> 
+> Maybe long term we include a self test, but one that has had more review
+> than I've given this before sharing.
+
+Thank you! have a selftest is good to find these problems.
+
+Best regards,
+Jinjie
+
+> 
+> Easy to run with:
+> 
+>   QTEST_QEMU_BINARY=./qemu-system-aarch64 ./tests/qtest/arm-mpam-test --verbose
+> 
+> diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
+> index f4f40cacf0..15280c44a0 100644
+> --- a/hw/arm/mpam.c
+> +++ b/hw/arm/mpam.c
+> @@ -711,6 +711,37 @@ void mpam_cache_fill_info(Object *obj, MpamCacheInfo *info)
+>   
+>   }
+>   
+> +/*
+> + * IHI0099 9.4: a width-reported fraction field occupies the most
+> + * significant 'wd' bits of its 16-bit field; the remaining low bits are
+> + * RAZ/WI. Returns a mask of the bits software is allowed to set.
+> + */
+> +static uint32_t mpam_fracwd_mask(uint32_t wd)
+> +{
+> +    if (wd >= 16) {
+> +        return 0xffffu;
+> +    }
+> +    return ~((1u << (16 - wd)) - 1) & 0xffffu;
+> +}
+> +
+> +/*
+> + * IHI0099 9.4 (MPAMCFG_CPBM<n>/MPAMCFG_MBW_PBM<n>): bit x of register n is
+> + * writable iff (n*32)+x <= wd. Returns the writable-bit mask for word
+> + * 'array_offset' of such a bitmap, given the overall bitmap width 'wd'.
+> + */
+> +static uint32_t mpam_bitmap_mask(uint32_t wd, uint32_t array_offset)
+> +{
+> +    int64_t remaining = (int64_t)wd + 1 - 32 * (int64_t)array_offset;
+> +
+> +    if (remaining <= 0) {
+> +        return 0;
+> +    }
+> +    if (remaining >= 32) {
+> +        return 0xffffffffu;
+> +    }
+> +    return (1u << remaining) - 1;
+> +}
+> +
+>   static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+>                                     unsigned size)
+>   {
+> @@ -781,14 +812,38 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+>       case A_MPAMF_MSMON_IDR:
+>           return mpamf->msmon_idr;
+>       case A_MPAMF_CSUMON_IDR:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MSMON) ||
+> +            !FIELD_EX32(mpamf->msmon_idr, MPAMF_MSMON_IDR, MSMON_CSU)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Unexpected read of CSUMON_IDR with no CSU monitor support\n");
+> +            return 0;
+> +        }
+>           return mpamf->csumon_idr;
+>       case A_MPAMF_MBWUMON_IDR:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MSMON) ||
+> +            !FIELD_EX32(mpamf->msmon_idr, MPAMF_MSMON_IDR, MSMON_MBWU)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Unexpected read of MBWUMON_IDR with no MBWU monitor support\n");
+> +            return 0;
+> +        }
+>           return mpamf->mbwumon_idr;
+>       case A_MSMON_CFG_MON_SEL:
+>           return s->mon_sel;
+>       case A_MSMON_CFG_CSU_FLT:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MSMON) ||
+> +            !FIELD_EX32(mpamf->msmon_idr, MPAMF_MSMON_IDR, MSMON_CSU)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Unexpected read of CSU_FLT with no CSU monitor support\n");
+> +            return 0;
+> +        }
+>           return mpam_csu_mon(s, mpam_mon_ris(s))->flt;
+>       case A_MSMON_CFG_CSU_CTL:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MSMON) ||
+> +            !FIELD_EX32(mpamf->msmon_idr, MPAMF_MSMON_IDR, MSMON_CSU)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Unexpected read of CSU_CTL with no CSU monitor support\n");
+> +            return 0;
+> +        }
+>           return mpam_csu_mon(s, mpam_mon_ris(s))->ctl;
+>       case A_MSMON_CSU ... (A_MSMON_CSU + 3):
+>       case A_MSMON_CSU_CAPTURE ... (A_MSMON_CSU_CAPTURE + 3):
+> @@ -802,12 +857,26 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+>           return extract32(v, off * 8, 32 - off * 8);
+>       }
+>       case A_MSMON_CFG_MBWU_FLT:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MSMON) ||
+> +            !FIELD_EX32(mpamf->msmon_idr, MPAMF_MSMON_IDR, MSMON_MBWU)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Unexpected read of MBWU_FLT with no MBWU monitor support\n");
+> +            return 0;
+> +        }
+>           return mpam_mbwu_mon(s, mpam_mon_ris(s))->flt;
+>       case A_MSMON_CFG_MBWU_CTL:
+>       {
+> -        MpamMbwuMon *m = mpam_mbwu_mon(s, mpam_mon_ris(s));
+> -        uint32_t ctl = m->ctl;
+> +        MpamMbwuMon *m;
+> +        uint32_t ctl;
+>   
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MSMON) ||
+> +            !FIELD_EX32(mpamf->msmon_idr, MPAMF_MSMON_IDR, MSMON_MBWU)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Unexpected read of MBWU_CTL with no MBWU monitor support\n");
+> +            return 0;
+> +        }
+> +        m = mpam_mbwu_mon(s, mpam_mon_ris(s));
+> +        ctl = m->ctl;
+>           if (m->oflow) {
+>               ctl |= R_MSMON_CFG_MBWU_CTL_OFLOW_STATUS_MASK;
+>           }
+> @@ -852,11 +921,24 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+>       case A_MPAMF_ERR_MSI_ATTR:
+>           return mpamf->err_msi_attr;
+>       case A_MPAMF_ECR:
+> +        if (FIELD_EX64(mpamf->idr, MPAMF_IDR, EXT) &&
+> +            !FIELD_EX64(mpamf->idr, MPAMF_IDR, HAS_ESR)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected read of ECR with no ESR support\n");
+> +            return 0;
+> +        }
+>           return s->ecr;
+>       case A_MPAMF_ESR:
+> +        if (FIELD_EX64(mpamf->idr, MPAMF_IDR, EXT) &&
+> +            !FIELD_EX64(mpamf->idr, MPAMF_IDR, HAS_ESR)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected read of ESR with no ESR support\n");
+> +            return 0;
+> +        }
+>           return s->esr;
+>       case A_MPAMF_ESR + 0x4:
+> -        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, EXT)) {
+> +        if (!FIELD_EX64(mpamf->idr, MPAMF_IDR, EXT) ||
+> +            !FIELD_EX64(mpamf->idr, MPAMF_IDR, HAS_EXTD_ESR)) {
+>               qemu_log_mask(LOG_UNIMP,
+>                             "MPAM: Unexpected read of extended ESR\n");
+>               return 0;
+> @@ -876,33 +958,59 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+>           return mpamf->cfg_intpartid[s->part_sel];
+>       }
+>       case A_MPAMF_MPAMCFG_CMAX:
+> -        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART)) {
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART) ||
+> +            FIELD_EX32(mpamf->ccap_idr, MPAMF_CCAP_IDR, NO_CMAX)) {
+>               qemu_log_mask(LOG_UNIMP,
+> -                "MPAM: Unexpected read of CMAX with no CCAP support\n");
+> +                "MPAM: Unexpected read of CMAX with no CMAX support\n");
+>               return 0;
+>           }
+>           return mpamf->per_nrw_id[nrw_part_sel].cfg_cmax;
+>       case A_MPAMF_MPAMCFG_CMIN:
+> -        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART)) {
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART) ||
+> +            !FIELD_EX32(mpamf->ccap_idr, MPAMF_CCAP_IDR, HAS_CMIN)) {
+>               qemu_log_mask(LOG_UNIMP,
+> -                "MPAM: Unexpected read of CMIN with no CCAP support\n");
+> +                "MPAM: Unexpected read of CMIN with no CMIN support\n");
+>               return 0;
+>           }
+>           return mpamf->per_nrw_id[nrw_part_sel].cfg_cmin;
+>       case A_MPAMF_MPAMCFG_CASSOC:
+> -        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART)) {
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART) ||
+> +            !FIELD_EX32(mpamf->ccap_idr, MPAMF_CCAP_IDR, HAS_CASSOC)) {
+>               qemu_log_mask(LOG_UNIMP,
+> -                "MPAM: Unexpected read of CASSOC with no CCAP support\n");
+> +                "MPAM: Unexpected read of CASSOC with no CASSOC support\n");
+>               return 0;
+>           }
+>           return mpamf->per_nrw_id[nrw_part_sel].cfg_cassoc;
+>       case A_MPAMF_MPAMCFG_MBW_MIN:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MBW_PART) ||
+> +            !FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, HAS_MIN)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Unexpected read of MBW_MIN with no MBW_MIN support\n");
+> +            return 0;
+> +        }
+>           return mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_min;
+>       case A_MPAMF_MPAMCFG_MBW_MAX:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MBW_PART) ||
+> +            !FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, HAS_MAX)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Unexpected read of MBW_MAX with no MBW_MAX support\n");
+> +            return 0;
+> +        }
+>           return mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_max;
+>       case A_MPAMF_MPAMCFG_PRI:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_PRI_PART)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Unexpected read of CFG_PRI with no PRI PART support\n");
+> +            return 0;
+> +        }
+>           return mpamf->per_nrw_id[nrw_part_sel].cfg_pri;
+>       case A_MPAMF_MPAMCFG_MBW_PROP:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MBW_PART) ||
+> +            !FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, HAS_PROP)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "MPAM: Unexpected read of MBW_PROP with no MBW_PROP support\n");
+> +            return 0;
+> +        }
+>           return mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_prop;
+>       case A_MPAMF_MPAMCFG_CPBM0...
+>           (A_MPAMF_MPAMCFG_CPBM0 + ((MPAM_CACHE_PART + 31) / 32 - 1) * 4):
+> @@ -922,9 +1030,10 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+>       {
+>           uint32_t array_offset;
+>   
+> -        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MBW_PART)) {
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MBW_PART) ||
+> +            !FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, HAS_PBM)) {
+>               qemu_log_mask(LOG_UNIMP,
+> -                "MPAM: Unexpected read of MBW_PBM with no MBW_PART support\n");
+> +                "MPAM: Unexpected read of MBW_PBM with no MBW_PBM support\n");
+>               return 0;
+>           }
+>           array_offset = (offset - A_MPAMF_MPAMCFG_MBW_PBM0) / sizeof(uint32_t);
+> @@ -1020,70 +1129,147 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+>               FIELD_EX32(value, MPAMF_MPAMCFG_INTPARTID, INTPARTID);
+>           return;
+>       case A_MPAMF_MPAMCFG_CMAX:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART) ||
+> +            FIELD_EX32(mpamf->ccap_idr, MPAMF_CCAP_IDR, NO_CMAX)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to CMAX when not supported\n");
+> +            return;
+> +        }
+>           if (value & ~MPAMF_MPAMCFG_CMAX_WRITE_MASK) {
+>               qemu_log_mask(LOG_UNIMP,
+>                             "MPAM: Unexpected write to CMAX Mask=%x Value=%lx\n",
+>                             MPAMF_MPAMCFG_CMAX_WRITE_MASK, value);
+>           }
+> -        mpamf->per_nrw_id[nrw_part_sel].cfg_cmax = value;
+> +        {
+> +            uint32_t wd = FIELD_EX32(mpamf->ccap_idr, MPAMF_CCAP_IDR,
+> +                                      CMAX_WD);
+> +            uint32_t valid = mpam_fracwd_mask(wd);
+> +
+> +            if (FIELD_EX32(mpamf->ccap_idr, MPAMF_CCAP_IDR,
+> +                            HAS_CMAX_SOFTLIM)) {
+> +                valid |= R_MPAMF_MPAMCFG_CMAX_SOFTLIM_MASK;
+> +            }
+> +            mpamf->per_nrw_id[nrw_part_sel].cfg_cmax = value & valid;
+> +        }
+>           return;
+>       case A_MPAMF_MPAMCFG_CMIN:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART) ||
+> +            !FIELD_EX32(mpamf->ccap_idr, MPAMF_CCAP_IDR, HAS_CMIN)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to CMIN when not supported\n");
+> +            return;
+> +        }
+>           if (value & ~MPAMF_MPAMCFG_CMIN_WRITE_MASK) {
+>               qemu_log_mask(LOG_UNIMP,
+>                             "MPAM: Unexpected write to CMIN Mask=%x Value=%lx\n",
+>                             MPAMF_MPAMCFG_CMIN_WRITE_MASK, value);
+>           }
+> -        mpamf->per_nrw_id[nrw_part_sel].cfg_cmin = value;
+> +        {
+> +            uint32_t wd = FIELD_EX32(mpamf->ccap_idr, MPAMF_CCAP_IDR,
+> +                                      CMAX_WD);
+> +
+> +            mpamf->per_nrw_id[nrw_part_sel].cfg_cmin =
+> +                value & mpam_fracwd_mask(wd);
+> +        }
+>           return;
+>       case A_MPAMF_MPAMCFG_CASSOC:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART) ||
+> +            !FIELD_EX32(mpamf->ccap_idr, MPAMF_CCAP_IDR, HAS_CASSOC)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to CASSOC when not supported\n");
+> +            return;
+> +        }
+>           if (value & ~MPAMF_MPAMCFG_CASSOC_WRITE_MASK) {
+>               qemu_log_mask(LOG_UNIMP,
+>                             "MPAM: Unexpected write to CASSOC Mask=%x Value=%lx\n",
+>                             MPAMF_MPAMCFG_CASSOC_WRITE_MASK, value);
+>           }
+> -        mpamf->per_nrw_id[nrw_part_sel].cfg_cassoc = value;
+> +        {
+> +            uint32_t wd = FIELD_EX32(mpamf->ccap_idr, MPAMF_CCAP_IDR,
+> +                                      CASSOC_WD);
+> +
+> +            mpamf->per_nrw_id[nrw_part_sel].cfg_cassoc =
+> +                value & mpam_fracwd_mask(wd);
+> +        }
+>           return;
+>       case A_MPAMF_MPAMCFG_MBW_MIN:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MBW_PART) ||
+> +            !FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, HAS_MIN)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to MBW_MIN when not supported\n");
+> +            return;
+> +        }
+>           if (value & ~MPAMF_MPAMCFG_MBW_MIN_WRITE_MASK) {
+>               qemu_log_mask(LOG_UNIMP,
+>                             "MPAM: Unexpected write to MBW_MIN Mask=%x Value=%lx\n",
+>                             MPAMF_MPAMCFG_MBW_MIN_WRITE_MASK, value);
+>           }
+> -        mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_min = value;
+> +        {
+> +            uint32_t wd = FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, BWA_WD);
+> +
+> +            mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_min =
+> +                value & mpam_fracwd_mask(wd);
+> +        }
+>           return;
+>       case A_MPAMF_MPAMCFG_MBW_MAX:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MBW_PART) ||
+> +            !FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, HAS_MAX)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to MBW_MAX when not supported\n");
+> +            return;
+> +        }
+>           if (value & ~MPAMF_MPAMCFG_MBW_MAX_WRITE_MASK) {
+>               qemu_log_mask(LOG_UNIMP,
+>                             "MPAM: Unexpected write to MBW_MAX Mask=%x Value=%lx\n",
+>                             MPAMF_MPAMCFG_MBW_MAX_WRITE_MASK, value);
+>           }
+> -        mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_max = value;
+> +        {
+> +            uint32_t wd = FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, BWA_WD);
+> +            uint32_t valid = mpam_fracwd_mask(wd) |
+> +                              R_MPAMF_MPAMCFG_MBW_MAX_HARDLIM_MASK;
+> +
+> +            mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_max = value & valid;
+> +        }
+>           return;
+>       case A_MPAMF_MPAMCFG_PRI:
+>           if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_PRI_PART)) {
+>               qemu_log_mask(LOG_UNIMP,
+>                             "MPAM: Unexpected write to CFG_PRI when !HAS_PRI_PART\n");
+> -        } else {
+> -            if (!FIELD_EX32(mpamf->pri_idr, MPAMF_PRI_IDR, HAS_DSPRI) &&
+> -                FIELD_EX32(value, MPAMF_MPAMCFG_PRI, DSPRI)) {
+> -                qemu_log_mask(LOG_UNIMP,
+> -                              "MPAM: Unexpected write to CFGP_PRI DSPRI when !HAS_DSPRI\n");
+> -            }
+> -            if (!FIELD_EX32(mpamf->pri_idr, MPAMF_PRI_IDR, HAS_INTPRI) &&
+> -                FIELD_EX32(value, MPAMF_MPAMCFG_PRI, INTPRI)) {
+> -                qemu_log_mask(LOG_UNIMP,
+> -                              "MPAM: Unexpected write to CFGP_PRI INTPRI when !HAS_INTPRI\n");
+> -            }
+> +            return;
+> +        }
+> +        {
+> +            uint32_t intpri_wd = FIELD_EX32(mpamf->pri_idr, MPAMF_PRI_IDR,
+> +                                             INTPRI_WD);
+> +            bool has_dspri = FIELD_EX32(mpamf->pri_idr, MPAMF_PRI_IDR,
+> +                                        HAS_DSPRI);
+> +            uint32_t dspri_wd = FIELD_EX32(mpamf->pri_idr, MPAMF_PRI_IDR,
+> +                                            DSPRI_WD);
+> +            uint32_t valid = mpam_fracwd_mask(intpri_wd) |
+> +                              (has_dspri ?
+> +                               (mpam_fracwd_mask(dspri_wd) << 16) : 0);
+> +
+> +            mpamf->per_nrw_id[nrw_part_sel].cfg_pri = value & valid;
+>           }
+> -        mpamf->per_nrw_id[nrw_part_sel].cfg_pri = value;
+>           return;
+>       case A_MPAMF_MPAMCFG_MBW_PROP:
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MBW_PART) ||
+> +            !FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, HAS_PROP)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to MBW_PROP when not supported\n");
+> +            return;
+> +        }
+>           if (value & ~MPAMF_MPAMCFG_MBW_PROP_WRITE_MASK) {
+>               qemu_log_mask(LOG_UNIMP,
+>                             "MPAM: Unexpected write to MBW_PROP Mask=%x Value=%lx\n",
+>                             MPAMF_MPAMCFG_MBW_MAX_WRITE_MASK, value);
+>           }
+> -        mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_prop = value;
+> +        {
+> +            uint32_t wd = FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, BWA_WD);
+> +            uint32_t valid = mpam_fracwd_mask(wd) |
+> +                              R_MPAMF_MPAMCFG_MBW_PROP_EN_MASK;
+> +
+> +            mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_prop = value & valid;
+> +        }
+>           return;
+>       case A_MPAMF_MPAMCFG_CPBM0...
+>           (A_MPAMF_MPAMCFG_CPBM0 + ((MPAM_CACHE_PART + 31) / 32 - 1) * 4):
+> @@ -1105,15 +1291,21 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+>       {
+>           uint32_t array_offset;
+>   
+> -        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MBW_PART)) {
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MBW_PART) ||
+> +            !FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR, HAS_PBM)) {
+>               qemu_log_mask(LOG_UNIMP,
+> -                          "MPAM: Unexpected write to MBW_PBM when !HAS_MBW_PART\n");
+> +                          "MPAM: Unexpected write to MBW_PBM when not supported\n");
+>               return;
+>           }
+> -        /* TODO: Figure out write mask to check this stays in write bits */
+>           array_offset = (offset - A_MPAMF_MPAMCFG_MBW_PBM0) / sizeof(uint32_t);
+>   
+> -        mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_pbm[array_offset] = value;
+> +        {
+> +            uint32_t wd = FIELD_EX32(mpamf->mbw_idr, MPAMF_MBW_IDR,
+> +                                      BWPBM_WD);
+> +
+> +            mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_pbm[array_offset] =
+> +                value & mpam_bitmap_mask(wd, array_offset);
+> +        }
+>           return;
+>       }
+>       case A_MSMON_CFG_MON_SEL:
+> @@ -1151,6 +1343,12 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+>       {
+>           uint32_t partid = FIELD_EX32(value, MSMON_CFG_MBWU_FLT, PARTID);
+>   
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MSMON) ||
+> +            !FIELD_EX32(mpamf->msmon_idr, MPAMF_MSMON_IDR, MSMON_MBWU)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to MBWU_FLT with no MBWU monitor support\n");
+> +            return;
+> +        }
+>           if (partid >= s->num_partid) {
+>               qemu_log_mask(LOG_GUEST_ERROR,
+>                             "MPAM: MBWU_FLT PARTID %d out of range\n", partid);
+> @@ -1166,9 +1364,16 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+>       }
+>       case A_MSMON_CFG_MBWU_CTL:
+>       {
+> -        MpamMbwuMon *m = mpam_mbwu_mon(s, mpam_mon_ris(s));
+> +        MpamMbwuMon *m;
+>   
+> -        m->ctl = value;
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MSMON) ||
+> +            !FIELD_EX32(mpamf->msmon_idr, MPAMF_MSMON_IDR, MSMON_MBWU)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to MBWU_CTL with no MBWU monitor support\n");
+> +            return;
+> +        }
+> +        m = mpam_mbwu_mon(s, mpam_mon_ris(s));
+> +        m->ctl = value & ~0x00040f00u;
+>           if (value & R_MSMON_CFG_MBWU_CTL_OFLOW_STATUS_MASK) {
+>               m->oflow = false;               /* write-one-to-clear */
+>           }
+> @@ -1190,6 +1395,12 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+>       {
+>           uint32_t partid = FIELD_EX32(value, MSMON_CFG_CSU_FLT, PARTID);
+>   
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MSMON) ||
+> +            !FIELD_EX32(mpamf->msmon_idr, MPAMF_MSMON_IDR, MSMON_CSU)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to CSU_FLT with no CSU monitor support\n");
+> +            return;
+> +        }
+>           if (partid >= s->num_partid) {
+>               qemu_log_mask(LOG_GUEST_ERROR,
+>                             "MPAM: CSU_FLT PARTID %d out of range\n", partid);
+> @@ -1204,7 +1415,13 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+>           return;
+>       }
+>       case A_MSMON_CFG_CSU_CTL:
+> -        mpam_csu_mon(s, mpam_mon_ris(s))->ctl = value;
+> +        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_MSMON) ||
+> +            !FIELD_EX32(mpamf->msmon_idr, MPAMF_MSMON_IDR, MSMON_CSU)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to CSU_CTL with no CSU monitor support\n");
+> +            return;
+> +        }
+> +        mpam_csu_mon(s, mpam_mon_ris(s))->ctl = value & ~0x7ffc0000u;
+>           return;
+>       case A_MSMON_CSU:
+>       case A_MSMON_CSU_CAPTURE:
+> @@ -1220,6 +1437,12 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+>                         offset);
+>           return;
+>       case A_MPAMF_ECR:
+> +        if (FIELD_EX64(mpamf->idr, MPAMF_IDR, EXT) &&
+> +            !FIELD_EX64(mpamf->idr, MPAMF_IDR, HAS_ESR)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to ECR with no ESR support\n");
+> +            return;
+> +        }
+>           if (value & ~MPAMF_ECR_WRITE_MASK) {
+>               qemu_log_mask(LOG_UNIMP,
+>                             "MPAM: Unexpected write to ECR Mask=%x Value=%lx\n",
+> @@ -1230,16 +1453,28 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+>           mpam_msc_update_err_irq(s);
+>           return;
+>       case A_MPAMF_ESR:
+> +        if (FIELD_EX64(mpamf->idr, MPAMF_IDR, EXT) &&
+> +            !FIELD_EX64(mpamf->idr, MPAMF_IDR, HAS_ESR)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to ESR with no ESR support\n");
+> +            return;
+> +        }
+>           /*
+>            * Software clears an error by writing ERRCODE as zero; writing a
+>            * non-zero ERRCODE activates the level error interrupt (8.2).
+>            */
+> -        s->esr = deposit64(s->esr, 0, 32, value);
+> +        s->esr = deposit64(s->esr, 0, 32, value & ~0x70000000u);
+>           mpam_msc_sync_esr_ecr(s);
+>           mpam_msc_update_err_irq(s);
+>           return;
+>       case A_MPAMF_ESR + 0x4:
+> -        s->esr = deposit64(s->esr, 32, 32, value);
+> +        if (!FIELD_EX64(mpamf->idr, MPAMF_IDR, EXT) ||
+> +            !FIELD_EX64(mpamf->idr, MPAMF_IDR, HAS_EXTD_ESR)) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "MPAM: Unexpected write to extended ESR\n");
+> +            return;
+> +        }
+> +        s->esr = deposit64(s->esr, 32, 32, value & ~0xfffffff0u);
+>           mpam_msc_sync_esr_ecr(s);
+>           mpam_msc_update_err_irq(s);
+>           return;
+
 
