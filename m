@@ -1,89 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9A7606A322
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147C3606A323
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 00:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=RtUQ0Fhb
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=Tn3asfRp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQDSC-0005qD-64; Sun, 08 Nov 2026 19:41:45 -0500
+	id 1xQDSU-0005zu-8I; Sun, 08 Nov 2026 19:42:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xQDRy-0005l3-29
- for qemu-devel@nongnu.org; Sun, 08 Nov 2026 19:41:30 -0500
-Received: from ci-2003h-snip6-2.eps.apple.com ([2a01:b747:3005:200::4b]
+ id 1xQDSR-0005zB-Ho
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 19:41:59 -0500
+Received: from ci-2004i-snip6-11.eps.apple.com ([2a01:b747:3005:204::5d]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xQDRt-0006NG-90
- for qemu-devel@nongnu.org; Sun, 08 Nov 2026 19:41:28 -0500
+ id 1xQDSL-0006QO-Jo
+ for qemu-devel@nongnu.org; Sun, 08 Nov 2026 19:41:56 -0500
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-60-percent-2 (Postfix) with ESMTPS id
- 39BE618001EC; Mon, 09 Nov 2026 00:41:20 +0000 (UTC)
-X-ICL-RepId: 01a1bdc0-a043-7aa3-8061-7f5a88cc6e5d
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQtMHVUDRQtBF0AGTVIPDx1WEFIAUg9yBVcIQQhTAlEEWBpfCBkNQFBfHA4YWRtAFV0RUBlWCV4VFx5BTUUID0cZEFYBWFZdBU0aXBhZDxwTUFZaDlsERxQXG1wAFxtGAgQjAl8ARQJeCVYBMBcPVk1MFkMfUg9bE00ZUQFSRVQCGRVaCQpXAEALTgJcB1ICQA1JA1UZUwdICUAeXARGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-4 (Postfix) with ESMTPS id
+ B9E191800135; Mon, 09 Nov 2026 00:41:49 +0000 (UTC)
+X-ICL-RepId: 01a1bdc1-134d-7420-ba6a-72d5d266e3ef
+X-ICL-Out-Info: HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTQtMHVUDRQtBF0AGTVIPDx1WEFIAUg9yBVcIQQhTAlEEWBpfCBkNQFBfHA4YWRtAFV0RUBlWCV4VFx5BTUUID0YZEFYBWFZdBU0aXBhZDxwTUFZaDlsERxQXG1wAFxtGAgQjAl8ARQJeCVYBMBcPVk1MFkMfUg9bE00ZUQFSRVQCGRVaCQpXC0EJPQFadSkfRAtAd0ADL3RGFEB3XwZGczZ/PHdVdS8CNQk6cxhZG0AVXRFQGVYJXhUXHkFTFx9LAFxFUBhEH10dZhxcAFYCXA==
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1794184881; x=1825720881;
- bh=opYY4a7WwdY0NtTgAyFUM3t3WZLewxo/9KRcUSqAG0g=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=RtUQ0FhbCsefbmXSY3G9fVLIR7SYnw/h5TUzlX9/o7Ow83YE37uVhzMwfdW44XN/8radMujw5OTXnfjYzYmZDnHmv6Hs2qawsS7ZiddbTCYC/mw0Q2Flbh6SE2D+/S+6sfIw0tWmJ6rqZv6Ae45oLwWfRjVtCorS3ZS4vRU0V9FNmCnd/+trKjIdPR2vgLi0vXHofk8u8pzMnm3gAr4Avrx0TtxzeyN+/cusuaOFR40oRi7h0WgnoJicvB8kVm6EHsn7JiaX5GzFGM9hcveLe4yQ6fkUP3MCx+B2jNvGY2UCPyymSFLwmBmb9kid0waHLJwc6mfLBgprSm3POQGj+Q==
+ s=sig1; t=1794184911; x=1825720911;
+ bh=JtJX+H/4r4ZGa8WmmEX2cQSecTfEprw7NL+js8/GXkY=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=Tn3asfRp9a3Zayo4Z5yO1zWXuzwiVenjEoteEgjSQ8imbAAKE9UgwCC3BOV1lhOw4smnusxbCoPmbMhFKUYHJYj3SrrnC0b+L2+IlfPKd/eKULoL2wRypG0KGYD9RG7HwqD2tXCGx0/NUPt7Mby8NdGdqHR5oRuB15CL+6wMugvCa+OufzrDqu4ZF7El8WpeSllSG4+OoY3+LcUEX9/EtQcnfO7vrGdtSce3v0o84PAMLFGYLNbq0XEA16xsdvQmUi0Aq8CJ11FSXCDiucTVjNoGgyZ9r28TevQ25X57USmw+WjzXOReClV3K9LVsGoNR86HWwvpK+igA82NsV0P0g==
 mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-60-percent-2 (Postfix) with ESMTPSA id
- 6C8B318007F9; Mon, 09 Nov 2026 00:41:19 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-arm@nongnu.org,
- Akshey Taneja <aksheynew.tanejanew@gmail.com>
-Subject: [PULL 12/13] whpx: i386: fall back to xAPIC when the MSR exit bitmap
- is unavailable
-Date: Sun,  8 Nov 2026 17:41:07 -0700
-Message-ID: <20261109004108.85808-13-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261109004108.85808-1-mohamed@unpredictable.fr>
-References: <20261109004108.85808-1-mohamed@unpredictable.fr>
+Received: from smtpclient.apple (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-4 (Postfix) with ESMTPSA id
+ CCB1A18001EE; Mon, 09 Nov 2026 00:41:48 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDAwMSBTYWx0ZWRfXwsiCgeOtSiHg
- 0J/hmviWrv8irIrAzEgSQ5aCTkKxWMh+Y6ecb7oWCf6/CzFU0hM04USWYzVZXBAE76mPeLAzHxI
- PkrJGLyA8jtTkqqcgORhnIKFXmX0VJJb1lXKCznq6dHRUV7ZV81UIec4cE5gH+uwWmmZEZKIx0i
- I4Q1P/w1ykTUYdJMcqypReW18KG267BeQRlWmZVpheNE502ovR0ACY68aDlOhaFIY6UNkWWbvi6
- /oNn2SNJSaZzEyeGxrfzlxrPUFmb+RFzmOWyS/gCPiKWvhjXAFAeDuRPx1o/Jn8Vi9A5ORjvc8Z
- 1hCEX/GT3RdMA8s5FRNwZqgD+sADEs4BE2vtxlHTmYHplfTCwbNjCNv1+xLiWw=
-X-Proofpoint-GUID: UfoURmnHxwdj60kzB8Gx0FYE0ta-E3qa
-X-Proofpoint-ORIG-GUID: UfoURmnHxwdj60kzB8Gx0FYE0ta-E3qa
-X-Authority-Info-Out: v=2.4 cv=UL7Q3Sfy c=1 sm=1 tr=0 ts=6af116b0
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PULL 00/13] Whpx fix 0 patches
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <87ik27i1vx.fsf@draig.linaro.org>
+Date: Sun, 8 Nov 2026 17:41:37 -0700
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <910E27BB-428D-4DF6-8D21-AFFDD8BD0E0B@unpredictable.fr>
+References: <20261108095403.70813-1-mohamed@unpredictable.fr>
+ <87ik27i1vx.fsf@draig.linaro.org>
+To: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
+X-Proofpoint-GUID: quiGGI8YiaqY_vVmqjROorMIvGF4ZDb5
+X-Proofpoint-ORIG-GUID: quiGGI8YiaqY_vVmqjROorMIvGF4ZDb5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDAwMSBTYWx0ZWRfX/6z0sdmiYUZU
+ 8WJUky0VD+Ac46hGpVdjfOPTWEbJITYE7HLtpMLqMSerd9avAbFQqNULRDGLGjMcuUojsUtaaDR
+ yMRMIf8//tJFB2bBsgMLfTvVbXVDVOOWVxeaPpa6wjg6AHEmxt0ut0NuDlch6+CC8gzax7NO4zw
+ oOJgpzTgdGeCdDJHET4kQDpvDc9aTXZNG76xlqE8QoiMbAFmGFfDGCKYYI6zyrrwdTmkTPG0c3z
+ NVOm1ZrzNx2Lc2D6ogQpRm0hxppZo4JwrBigEm0hw4VZgLx1Npd3sVGSmaZ4APBoFLAm3lEKTQK
+ nYlKHQSHC0Vr5FVEsW+LqZQXt+ULzKnRW8tHM3RrGisI9s9mxkQ4AbSMJwYRUg=
+X-Authority-Info-Out: v=2.4 cv=TLdIilla c=1 sm=1 tr=0 ts=6af116ce
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=pGLkceISAAAA:8 a=LzqnFUZUDoiWbgQmKAQA:9
-X-JNJ: AAAAAAABkYZYzOukb4gCU7Vywt0n1AuWWzENR57CLjneQe3jjFnMd+KKTYoFjsiprDj57J
- 5KlPMF6E5Q0xzGQObfsWUvrwo+fxU1CUtqE3sLuCJ+qHxEPLAWbiwGXvEbqUfaBEkA5/8W
- mdYJHU3FDek6dwTkTtIT0W6RKcJLMSWHxGK2O9La5P9EGlwluk8Iz5+8iPXCr+OVseqk1Y
- mxPhkPP5To3XoTNUsALKs+NjJRCkPSDHohBakNpYDUqw+K579gKWpdrB+w7Ex3zXTh8Evu
- YjZ9/iJvzIzGC+iwfdbieFXuyOrpmh3m+S2XVjUmsEhfdBKfs+fVA46MaJSxnFPJA18f2d
- gDoxiSMEea40Sw2em75HW3uwd+hyZ57jLbugJ3hP5sQbg9167HCT7e2n2tqOLhudnnDBWf
- Xry4Bu8u6G9ZRjv6X6rltcle+MUMRXzXt97Qw2mdBG1Y5R9kBhHRaZn9L+6dvb/Mrdh3oK
- Mow2QZ7hk9Awy0lrP3k633AZ45MQl4iOiBQG4FC4Ks7gMWIGPs7/s2HNqSLs85/YOrlAvg
- kRENZ1nvGPf6e0HV2UF0HT3t+uqa1SkTM4jGQpnIpJjHeIjrdFUSpfI5u7hWy9jl1SgwoP
- PosSfhmfUqW3A+aOcgA61hqWwialounTikbhKQHlvHh+cf+A0lkNoDaE1fy19UKvK3ZlVV
- HK6uGdirT4cJUtcXejL1UY4sgep593ASYwEdcuTBgL44A8Nwmaqb1t528GPSAPWUDNpR7S
- yEOAjB0/LFGwbeipFOA6KgO7VDElTy4xR+fuBJvYfHQ9atytwywlzHf+d9vzPUQyIvE0CI
- Fbkucg1J6iTg7lZoG1PGhh7ApOzl+ie7/WseoH5/TOIy
-Received-SPF: pass client-ip=2a01:b747:3005:200::4b;
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=xNf9USuDAAAA:8 a=NEAV23lmAAAA:8 a=ID6ng7r3AAAA:8
+ a=KKAkSRfTAAAA:8 a=pm2JN4saWKRQQ0Hh5qUA:9 a=QEXdDO2ut3YA:10
+ a=AkheI1RvQwOzcTXhi5f4:22 a=cvBusfyB2V15izCimMoJ:22
+X-JNJ: AAAAAAABixvhjEF2gXhmnzRi1OdkCHjql3mAtG8tib+1KFhoRfGMTDrRMD3aPp7FV8fhtI
+ KnYnke8a4zuolwJ4hyEVEVILshlCwB8P6pzCyorFvU5XxRbdrCkoyBuDMaXD/8jGreDB29
+ VpG5syFTBZHP6D5R87Z70XSyUlYq2MMt20rUTYkI1ddD+xb6w/nhTqy6auCYMGa9i7quum
+ IiistOVYRVntb4TSMM3DBLh+M/SbKBWCjm64vOrh5u74JpKGYX0LAfL82FcAahP1W1wibc
+ GY35w2ady2B76RG6ERoBePIeTY3NnX+3kPzL6fqWMm//yU3oM24dmu/ibyZualge78zwvB
+ heP5tq78ELx/IFMcunhXpQurbUqIywKx1CZJRiV2Xxe7JPgDmmWaTGWz9CX5KORoa0kuHb
+ I7sQ9QXcKgOBMhdRe4TRpB/0DTL10bo9vRSLGqF6OgaKdrh9r/fRdWYohNl8aNxIxDn/b+
+ hqNS/GAPhz3xXbPFmF5pjagl0YJ5k5PjCb1V9XJb7k5VA//2g2qr9iMHw4ehQ3gxkfcjIu
+ LKSWx/rE4F/J+g4dZGgyl+B3Ary3CHfNXqlIBfndx3FHKWZJX8qR59Dv9NICR0W2qBfVAu
+ iOIzZLuNmyGLGBWDFlvCZd/HFFOOXmSNc3AWWWeed/gtlxTcucbpzJh2sHwY5YOzu5b9qp
+ sX4YlUGBdCSvMAZdJOdcPj0+Rfn76faLd6TqgetTDMJUd6Fj0inIAVo5rz/F2D3a1Payzv
+ J56MFQ9n1R1pKwwkghT5EaxkEdbc1t5G8Yi8k9OkiLb2hUpGwXv0B0xOEqYZODFoQ9E0S8
+ 1Gwn5EGuzt8BDQ5TA06MRgUBAPZZQF0ec5xwLmM908h3JWLIa8jUQ1ilY1x/7nrhqHDkhY
+ uwR4904h1FSqsCo38jczQTNVqaxmSVMI5SNf5ILXw9NW6T7CCyKttMcuzilimlhqIbAYm2
+ j5hYIHDp1TwLInQ3Xc1LC2BDNpXLew85C0G9bgfQOqKs8cRSNm7gglIREz2PKKIXohdt96
+ XCU9grwwe2fB3YoTBjS+/BpJRQ+Yc44wTFs3V9S/EgulYTmeCp4ZXPbxjK87cJ5HkKvbel
+ jmqNjRv5rm2fM910wmBQ0uV/XZARisGbf3oNGrcjq6ZsOsYOo0reu4bwCAxst/WoaVC/s1
+ 4+D6ZqoSF5DxIzsO0G7tnEtatQMBThRmyRnuFZkLB+tdi/STxq+HbWYjdgolwOYILRGDE/
+ uiCPbUhRRYTi5rmesx47kafvigWfhv6MPtJc0dEIjS0A+zdvZoiPVtLR9CJziFLfhvzu+B
+ gYV1RVq8Q67+bC5BMcGsMtShYhEcMBFsR5jOLDcGhRuLiErthAw1f6M9EXVrNcM6VZAQT9
+ 2097/Jycea3ome/9WVBfjWB1UJ1v6lRFEkq4wjUB+HQ4BtMEZF+DSGXFy7XquIYnYQikmO
+ n3
+Received-SPF: pass client-ip=2a01:b747:3005:204::5d;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,106 +107,106 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Akshey Taneja <aksheynew.tanejanew@gmail.com>
 
-WHvPartitionPropertyCodeX64MsrExitBitmap is not implemented on Windows
-10 version 1809 and earlier, where WHvSetPartitionProperty() returns
-WHV_E_UNKNOWN_PROPERTY (0x80370302) and whpx_accel_init() aborts with
--EINVAL. QEMU started requesting it in ba1bda25b7 ("whpx: i386: x2apic emulation").
 
-Treating the failure as non-fatal is not sufficient on its own:
-whpx_default_props unconditionally enables x2apic, and x2APIC is reached
-through MSRs, so without MSR exits the userspace LAPIC never observes
-the guest's APIC accesses and the guest hangs immediately after the
-firmware hands over. Observed as a black screen with an Ubuntu 24.04
-guest that otherwise boots in about 40 seconds.
+> On 8. Nov 2026, at 12:01, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
+wrote:
+>=20
+> Mohamed Mediouni <mohamed@unpredictable.fr> writes:
+>=20
+>> The following changes since commit =
+d73149283205645625bfa9fe029cfb68e4c4a9ae:
+>>=20
+>>  Merge tag 'samuel-thibault' of =
+https://people.debian.org/~sthibault/qemu into staging (2026-10-24 =
+16:09:37 +0200)
+>>=20
+>> are available in the Git repository at:
+>>=20
+>>  https://github.com/mediouni-m/qemu tags/whpx-fix-0-pull-request
+>>=20
+>> for you to fetch changes up to =
+2bf35950b54c1db9a6de6eb47b42cf843c6bd282:
+>>=20
+>>  whpx: i386: also save debug registers (2026-11-08 02:48:18 -0700)
+>>=20
+>> ----------------------------------------------------------------
+>> whpx: QEMU 11.2 pull request
+>>=20
+>> This is a cut-down version of the "whpx: i386: updates for QEMU 11.2" =
+patchset
+>> with fixes for QEMU 11.2.
+>>=20
+>> These include:
+>>=20
+>> - fixing reset
+>> - CPUID fixes (leaf 0xd)
+>> - handle systems where nested virt is advertised but not working
+>> - xsave fixes
+>=20
+> You need to apply your s-o-b to patches you submitting in a PR:
+>=20
+>  =
+https://www.qemu.org/docs/master/devel/code-provenance.html#subsystem-main=
+tainer-requirements
 
-Record whether the MSR exit bitmap was accepted and, when it was not,
-apply x2apic=off so the guest uses the MMIO based xAPIC, which is still
-intercepted normally.
+Hi,
 
-Reported on Windows 10 Enterprise LTSC version 1809 (build 17763)
+Sent a new version with that being addressed.
 
-Signed-off-by: Akshey Taneja <aksheynew.tanejanew@gmail.com>
+Thank you,
+-Mohamed
+>=20
+>=20
+>>=20
+>> ----------------------------------------------------------------
+>>=20
+>> Akshey Taneja (2):
+>>  whpx: i386: do not require ProcessorFeaturesBanks on legacy Windows
+>>  whpx: i386: fall back to xAPIC when the MSR exit bitmap is =
+unavailable
+>>=20
+>> Boden Randin (1):
+>>  whpx: i386: avoid updating hflags for vmexits
+>>=20
+>> Doug Cook (1):
+>>  target/i386/whpx: fix VMX capability MSR values
+>>=20
+>> Doug Cook (WINDOWS) (2):
+>>  target/i386/whpx: whpx_get_xsave_state error handling
+>>  target/i386/whpx: handle processor reset
+>>=20
+>> Kostas Chatzikokolakis (1):
+>>  whpx: i386: forward the dynamic EBX of CPUID[0xD] sub-leaves 0 and =
+1,
+>>    not 1 and 2
+>>=20
+>> Mohamed Mediouni (6):
+>>  whpx: i386: get APIC state before VM save
+>>  whpx: i386: fix TPR encodings for local APIC
+>>  whpx: i386: save/restore xss
+>>  whpx: i386: make nested virtualisation init failure non-fatal
+>>  target/arm/whpx: handle processor reset
+>>  whpx: i386: also save debug registers
+>>=20
+>> include/system/whpx-internal.h |   5 +-
+>> target/arm/whpx/whpx-all.c     |  10 +-
+>> target/i386/whpx/whpx-all.c    | 307 =
+++++++++++++++++++++++++++-------
+>> target/i386/whpx/whpx-apic.c   |  10 +-
+>> 4 files changed, 266 insertions(+), 66 deletions(-)
+>=20
+> --=20
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
 
-[Patch edited, version 1903 is the first release of Windows 10 with this API]
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/whpx/whpx-all.c | 30 ++++++++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 4 deletions(-)
-
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 7c2172a7ed..19a552c456 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -57,6 +57,7 @@
- #define HV_X64_MSR_GUEST_IDLE           0x400000f0
- 
- static bool is_modern_os = true;
-+static bool whpx_msr_exits_available = true;
- 
- static const WHV_REGISTER_NAME whpx_register_names[] = {
- 
-@@ -3009,6 +3010,16 @@ static PropValue whpx_default_props[] = {
-     { NULL, NULL },
- };
- 
-+/*
-+ * x2APIC is reached through MSRs, so emulating it in userspace requires the
-+ * MSR exit bitmap. Hosts without that property must fall back to xAPIC,
-+ * which is MMIO based and therefore still intercepted.
-+ */
-+static PropValue whpx_no_msr_exit_props[] = {
-+    { "x2apic", "off" },
-+    { NULL, NULL },
-+};
-+
- 
- void whpx_cpu_instance_init(CPUState *cs)
- {
-@@ -3016,7 +3027,8 @@ void whpx_cpu_instance_init(CPUState *cs)
-     X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
- 
-     host_cpu_instance_init(cpu);
--    x86_cpu_apply_props(cpu, whpx_default_props);
-+    x86_cpu_apply_props(cpu, whpx_msr_exits_available ? whpx_default_props
-+                                                      : whpx_no_msr_exit_props);
- 
-     if (xcc->max_features) {
-         whpx_cpu_max_instance_init(cpu);
-@@ -3420,10 +3432,20 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-             WHvPartitionPropertyCodeX64MsrExitBitmap,
-             &prop,
-             sizeof(WHV_PARTITION_PROPERTY));
-+    /*
-+     * Earlier Windows 10 releases not implement this property.
-+     * It is implemented starting from Windows 10 version 1903 (18362).
-+     */
-     if (FAILED(hr)) {
--        error_report("WHPX: Failed to set MSR exit bitmap, hr=%08lx", hr);
--        ret = -EINVAL;
--        goto error;
-+        if (hr == WHV_E_UNKNOWN_PROPERTY) {
-+            whpx_msr_exits_available = false;
-+            warn_report("WHPX: MSR exit bitmap unsupported on this Windows "
-+                        "version, falling back to xAPIC");
-+        } else {
-+            error_report("WHPX: Failed to set MSR exit bitmap, hr=%08lx", hr);
-+            ret = -EINVAL;
-+            goto error;
-+        }
-     }
- 
-     hr = whp_dispatch.WHvSetPartitionProperty(
--- 
-2.54.0 (Apple Git-157)
 
 
