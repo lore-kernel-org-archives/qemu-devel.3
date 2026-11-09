@@ -1,41 +1,41 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9750606A32A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 15:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DFD606A33C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 15:09:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQQzH-0000ry-V5; Mon, 09 Nov 2026 10:08:47 -0500
+	id 1xQQzI-0000s9-17; Mon, 09 Nov 2026 10:08:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
- id 1xQQzC-0000rH-Bd
+ id 1xQQzC-0000rI-Cn
  for qemu-devel@nongnu.org; Mon, 09 Nov 2026 10:08:42 -0500
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
- id 1xQQzA-0008D8-C2
+ id 1xQQzA-0008D9-Bz
  for qemu-devel@nongnu.org; Mon, 09 Nov 2026 10:08:42 -0500
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 855D844FFF;
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 412DE4787D;
  Mon, 09 Nov 2026 16:08:33 +0100 (CET)
 From: Thomas Lamprecht <t.lamprecht@proxmox.com>
 To: qemu-devel@nongnu.org
 Cc: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH for-11.2 1/2] hw/i386: move PC_FW_DATA to x86.h as X86_FW_DATA
-Date: Mon,  9 Nov 2026 10:33:42 +0100
-Message-ID: <20261109150753.1727674-2-t.lamprecht@proxmox.com>
+Subject: [PATCH for-11.2 0/2] hw/i386/microvm: fix initrd overwriting firmware
+ data with 2 GiB of RAM
+Date: Mon,  9 Nov 2026 10:33:41 +0100
+Message-ID: <20261109150753.1727674-1-t.lamprecht@proxmox.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261109150753.1727674-1-t.lamprecht@proxmox.com>
-References: <20261109150753.1727674-1-t.lamprecht@proxmox.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1794236912759
+X-Bm-Transport-Timestamp: 1794236912696
 Received-SPF: pass client-ip=94.136.29.106;
  envelope-from=t.lamprecht@proxmox.com; helo=proxmox-new.maurer-it.com
 X-Spam_score_int: -25
@@ -55,84 +55,42 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The size of the memory that the firmware uses at the top of RAM is
-passed to x86_load_linux(), which the microvm machine uses as well.
-Move it next to that function, so that microvm, which can be built
-without the PC machines, can use it too. No functional change.
+A microvm guest booted with -kernel and -initrd and exactly 2 GiB of RAM
+can fail to boot, as the initrd ends up on top of the ACPI tables and
+other SeaBIOS data. With PCIe enabled, Linux then reports
+"AE_NO_ACPI_TABLES" and finds no PCI devices, and kernels that probe
+EDD hang. 2047 or 2049 MiB work fine. We hit this with Proxmox VE,
+where 2 GiB is the default memory size. Patch 2 explains how microvm's
+missing firmware data reservation and a heuristic in linuxboot_dma.bin
+combine to cause this.
 
-Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
----
+Patch 1 moves PC_FW_DATA to x86.h so that microvm can use it, patch 2
+uses it.
+
+Tested all combinations of TCG and KVM, the Debian 13 and Proxmox VE
+kernels, Debian's and a minimal initrd, PCIe on and off, and 1024,
+2047, 2048, 2049, 3072 and 4096 MiB of RAM, plus qboot with 2048 MiB.
+Every boot found intact ACPI tables, started the initrd and – if the
+kernel had the driver – found its virtio-blk disk.
+
+Thomas Lamprecht (2):
+  hw/i386: move PC_FW_DATA to x86.h as X86_FW_DATA
+  hw/i386/microvm: reserve the firmware data area when loading Linux
+
+ hw/i386/microvm.c     |  2 +-
  hw/i386/pc.c          | 14 ++------------
  include/hw/i386/x86.h | 10 ++++++++++
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 4737eb471c..09ef6d0783 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -185,16 +185,6 @@ const size_t pc_compat_4_2_len = G_N_ELEMENTS(pc_compat_4_2);
- GlobalProperty pc_compat_4_1[] = {};
- const size_t pc_compat_4_1_len = G_N_ELEMENTS(pc_compat_4_1);
- 
--/*
-- * @PC_FW_DATA:
-- * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
-- * and other BIOS datastructures.
-- *
-- * BIOS ACPI tables: 128K. Other BIOS datastructures: less than 4K
-- * reported to be used at the moment, 32K should be enough for a while.
-- */
--#define PC_FW_DATA (0x20000 + 0x8000)
--
- GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
- {
-     GSIState *s;
-@@ -576,7 +566,7 @@ void xen_load_linux(PCMachineState *pcms)
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
-     rom_set_fw(fw_cfg);
- 
--    x86_load_linux(x86ms, fw_cfg, PC_FW_DATA);
-+    x86_load_linux(x86ms, fw_cfg, X86_FW_DATA);
-     for (i = 0; i < nb_option_roms; i++) {
-         assert(!strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
-                !strcmp(option_rom[i].name, "pvh.bin") ||
-@@ -910,7 +900,7 @@ void pc_memory_init(PCMachineState *pcms,
-     }
- 
-     if (linux_boot) {
--        x86_load_linux(x86ms, fw_cfg, PC_FW_DATA);
-+        x86_load_linux(x86ms, fw_cfg, X86_FW_DATA);
-     }
- 
-     for (i = 0; i < nb_option_roms; i++) {
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index abb073ca47..14251d5bb9 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -127,6 +127,16 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-                        MemoryRegion *rom_memory, bool isapc_ram_fw);
- void x86_bios_rom_reload(X86MachineState *x86ms);
- 
-+/*
-+ * @X86_FW_DATA:
-+ * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
-+ * and other BIOS datastructures.
-+ *
-+ * BIOS ACPI tables: 128K. Other BIOS datastructures: less than 4K
-+ * reported to be used at the moment, 32K should be enough for a while.
-+ */
-+#define X86_FW_DATA (0x20000 + 0x8000)
-+
- void x86_load_linux(X86MachineState *x86ms,
-                     FWCfgState *fw_cfg,
-                     int acpi_data_size);
+
+base-commit: f71afb409a87c4ecd0f9d63a5963eb645dfab780
 -- 
 2.47.3
 
