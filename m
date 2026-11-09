@@ -1,140 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90160606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 18:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCB1606A321
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 18:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=NoaB3JD7;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LGT9ZAOy
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HXb8u9AD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQUR6-0003xj-BL; Mon, 09 Nov 2026 13:49:44 -0500
+	id 1xQUXo-0007Ln-Ew; Mon, 09 Nov 2026 13:56:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xQUQv-0003w8-L9
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:49:39 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xQUXh-0007JJ-VY
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:56:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xQUQt-0005HH-0S
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:49:33 -0500
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A9HH9h3846263
- for <qemu-devel@nongnu.org>; Mon, 9 Nov 2026 18:49:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=tF/GJ4THGZaNjawB95yiOF
- n/GAO0t2untzlyC92TKx8=; b=NoaB3JD7q5pVGT1G+0j8TQX7cZWehoMEODH/+r
- ejpVaja3kRo0NdTSAqxF6GrM2yd9OMKJ0vxj7nAaITULW8pzrB4hL76+0YXpKVxg
- bseua6eF55wgyE46E27NFyGyKVZE7Dh2UCqnH/UCS/9JO7L1d50oXCDFoN14BPL+
- tyYtRWTf3qDJMB0QjgTtGSi84GPLKnAJu5q5qf6padLor4JVkxDkP7wlUDSWIASH
- VJbAvYJnX9E6D9B9zIgLMHOLnPbiOUwidtGvt9Br6QdXgOr9tkRNSJt2Jiid6yA9
- s2WsEAb1vlUmFTOw5/kiYKQ+1DPCZoAsdYz+TycQj6gwP1pA==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hucap9tfx-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 18:49:28 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-370230d93efso531486eec.1
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 10:49:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794250167; x=1794854967; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=tF/GJ4THGZaNjawB95yiOFn/GAO0t2untzlyC92TKx8=;
- b=LGT9ZAOyp+Nix36gsq8NzEFPPOGPDTUpSXkQjXYbNGhXvhQbPJ9lxPOISX8aU+3E0P
- Tey1PSbweJ3aDz+nzzeysLHOoAVYpSLLgVIIpSC22Pw6JhXRAdwwNMk2B8KQrlb1u32B
- EfLYZuZ7i9t/o2EzPU91ry72DYQGYrxC0MiA+OLrjbt4fVgRgN2Qk5/x8qqmtKuRAJhH
- MTd/cx39zrlDpf8IMQR4FAKdA0G37PSfBWiAze2X6QC8aQbUx9oBZ8MIisPjg8J587wh
- 5El7IUtBUbQxJjJLk19KZKEnWcz8U3uFpA3O7LW8K/k1mpWw5O9r5EXFIRmshOxAI7Fn
- KYpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794250167; x=1794854967;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=tF/GJ4THGZaNjawB95yiOFn/GAO0t2untzlyC92TKx8=;
- b=krPw+EGPv/y9vYYvWpbkt4qeKTGeNAmgelHmkZZMR/jIk9Jdi5B//4+agUP58HUG6s
- KbPWzGQvctseGlDfGdSJ9FI3uXvq6roY3RK738Eh56LXM3hMpI7EwaoK6yZmwUaXy3YB
- KddmdZrb79M2iapvp1Rd+SQkfwUnzWZpziGSy4MxlXkoGSTUzu8+BULdZ/BY25GyovG6
- P4YYgmgQPuC/zvi2aYOCa6nY0LlQOhbDsOS/NC6/ANqgDQ4kbXt/V5pIsMX3tLGOioNW
- XnPPU2q/j25g8JQeHid6MZfHIW0/lBke/6/g1lHMvPMJ3bd0NwOUUB52Wm3s3aPbgOtP
- zCnA==
-X-Gm-Message-State: APuU4Z9Qn94DsHQeA7cIvscorsaXrOOjsQptgpdMuZVkrChUJHH1q7+O
- ZDHiTThSHoqPtTaYvMhvqNuTZec8Q15bMFB6wRWQHTYNrql7eDIIIjUgcMvacoL7ZB+9WoZeUee
- gwUQUiib9vGI0hNrvHHBgEKamFVnlx+s051YjTFhlla7D6JVSAtBnuEQoUOd4X2fJhQ==
-X-Gm-Gg: AYBFou2Z50GJ55BLtZsuJaopGNXWHBU0ajlR5hrtwpSI3HBkib8QlKJwI0OZD6U/k8m
- 38k6ewZtTE1YvDMreFwZPypcFOEvCuImSH+GJHBOS366UOWeUGSMtaILgDwY70hjjTquYgT0qNw
- e/MPWHnVH+N59Y14DTe7ZbyIPhf78uChK5oZg4MlO3CQHgHJCMHg6BJwrPzfqsgi1xUKIs9irJ4
- ftjLO/01ouP7rETWHPZeM0NzmfNvWyDuUs5m7zfjBQ68c4hdSs8Lny/JNmg6NOh4rDjSFnEx4pc
- QFD8ZmGTLI8fgCvLjuChorW8egwOpsCgTNG81HGZRZQjRJGXkwvBLA3qWtCu9Pb/ksSnJkt74iO
- t4JPLuanuTTRrsijl9op9K7B//vTQhi98G9qdQvtpcSlITnyqtkEu8eoUthtiZCfX57NVRzpjuX
- heGoD1nhk+4oD6vcLMOpka
-X-Received: by 2002:a05:693c:864e:20b0:373:5ffa:b3a9 with SMTP id
- 5a478bee46e88-3751fb36394mr182538eec.28.1794250167428; 
- Mon, 09 Nov 2026 10:49:27 -0800 (PST)
-X-Received: by 2002:a05:693c:864e:20b0:373:5ffa:b3a9 with SMTP id
- 5a478bee46e88-3751fb36394mr182498eec.28.1794250166876; 
- Mon, 09 Nov 2026 10:49:26 -0800 (PST)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3751fe306e3sm239797eec.7.2026.11.09.10.49.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2026 10:49:25 -0800 (PST)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v2 0/3] Hexagon: Fix virt boot
-Date: Mon,  9 Nov 2026 10:49:21 -0800
-Message-Id: <20261109184924.4149076-1-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xQUXg-00065N-5h
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:56:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794250590;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=kcqInZDURV/z0cgXIZOWNyk+gn5sCOTWWUyn8cLGN0k=;
+ b=HXb8u9ADMmrduyWZ0pxnpBAXfhydlW22HugddZNI5qHa7aMNMpb7prvrv5+MOT9zv8UXSS
+ WE+IWTibi7zNGCQgTVQ4WeCjpY6lMqWfkAJQ/40150k0lrOYSJvcA/p+v+vXlls1Hbz8Dv
+ hRftr7XhngxVmaTjWXGd0leVlq6tkIw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-AchgMrZVPx-v1zncXfyuSg-1; Mon,
+ 09 Nov 2026 13:56:28 -0500
+X-MC-Unique: AchgMrZVPx-v1zncXfyuSg-1
+X-Mimecast-MFC-AGG-ID: AchgMrZVPx-v1zncXfyuSg_1794250587
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C20F1955F6F; Mon,  9 Nov 2026 18:56:27 +0000 (UTC)
+Received: from [100.90.222.41] (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 41BA21956087; Mon,  9 Nov 2026 18:56:26 +0000 (UTC)
+Message-ID: <601fe158-f510-45a0-92d7-6732af1ef023@redhat.com>
+Date: Mon, 9 Nov 2026 19:56:24 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA3NCBTYWx0ZWRfX6SfA8J0qh7+E
- qUoxI4CL6CCQvogFzW4Jd7d3Z3qqBq98cpPAcGjh45uKV0bBf234OszWy5BNc7ITUGIECAWznG3
- H4G3xJ3Zh/o/2KFgM87WHgFkFRb5szKM9tloUZFwX3uT/tq9E4g8LI/nICH/sDD1WaPmkJpmiB5
- 9L6uylP0xbwlufoP4kVh3hRTl8/gbSB/zh0/ONM4ebpcvEZ6BhIcOHDCB7YJRZykq/54ZEmXrDe
- sn6oXQWWOA6Wrv3fDrIfrQEYlqkep+nTdUrhkQCsPIPPiTTuAe2EPIJxLx7X6AmVHH7bVkSDiWF
- CrWk3SCIS2nEAu/0GyjDdoYRhuuxOyO5522PsApMsgzxRdz8hnDtCrKpQtjUvWXUPMlNw0hdDkF
- iin/OFjEXgtPiWPdVNqvjGMaqamRURKqLaPWfVIdpzAPY5+aGDWNsDfgobNqKPd1BvbrMdSqKiR
- 5FF+OuuB3sWfdHwMHWg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA3NCBTYWx0ZWRfX5vGP6qBiKZda
- I7OGg4SRxF92lpfNpP9OEiMMMw4U3RYCpd6agQFQ2yFAtWZglvP3Cl72Une0fT8b1XFPCu0Z8ta
- ekToaCVRMwukb/bGOYMt5xWr0i81e2Q=
-X-Proofpoint-ORIG-GUID: ZGSJxIZW069VGfW2BSyDjN9O1vn1Wozi
-X-Authority-Analysis: v=2.4 cv=TaQDJhQh c=1 sm=1 tr=0 ts=6af215b8 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=23kEkXr_GDp0iaskoDcA:9 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-GUID: ZGSJxIZW069VGfW2BSyDjN9O1vn1Wozi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-09_06,2026-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 impostorscore=0 adultscore=0 lowpriorityscore=0
- malwarescore=0 clxscore=1015 bulkscore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611090074
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/3] target/i386/tcg: Fix 64-bit RSP truncation in far
+ call/return
+To: NickSampanis <nicksampanis@gmail.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org
+References: <20261025231803.870-1-nicksampanis@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20261025231803.870-1-nicksampanis@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,27 +119,61 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-VGhlIHZpcnQgbWFjaGluZSAtYmlvcyBvcHRpb24gZGlkbid0IHdvcmsgZm9yIGgyIGxvYWRsaW51
-eC4gIFJlZmFjdG9yIHZpcnQKdG8gdXNlIHRoZSBsb2dpYyBpbiBoZXgtYm9hcmQgd2hpY2ggd29y
-a3MgZm9yIGxvYWRsaW51eCBib290cyBvbiB0aGUgbWFjaGluZXMKd2hpY2ggdXNlIGhleC1ib2Fy
-ZC4KCkZ1bGx5IHJldmlld2VkIHNlcmllcywgdG8gYmUgaW5jbHVkZWQgaW4gdXBjb21pbmcgUFIu
-CgpDaGFuZ2VzIGluIHYyOgotIHJlbW92ZSB0aGUgMHhhMDAwMDAwMCBzaGlmdCBmb3Iga2VybmVs
-IGxvYWQKCnYxOiBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzIwMjYxMTA5MDQy
-MzA3LjEzMDE0MzgtMS1icmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20vCgpCcmlhbiBDYWluICgz
-KToKICBody9oZXhhZ29uOiBzaGFyZSB0aGUgSGV4YWdvbiBWTSBndWVzdCBib290IGNvZGUKICBo
-dy9oZXhhZ29uL3ZpcnQ6IGZpeCBmaXJtd2FyZSBib290CiAgaHcvaGV4YWdvbjogZml4IEZEVCBh
-ZGRyZXNzIGFuZCBzaXplIGNlbGxzCgogaW5jbHVkZS9ody9oZXhhZ29uL2hleC1ib2FyZC5oIHwg
-IDM2ICsrKysrKysKIGh3L2hleGFnb24vaGV4LWJvYXJkLmMgICAgICAgICB8IDE1MyArKysrKysr
-KysrKysrKysrKysrKysrKysrKy0tCiBody9oZXhhZ29uL3Fjb21fZHNwLmMgICAgICAgICAgfCAx
-NzggKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiBody9oZXhhZ29uL3ZpcnQuYyAg
-ICAgICAgICAgICAgfCAgNjggKysrKysrKysrKy0tLQogdGVzdHMvcXRlc3QvYm9vdC1zZXJpYWwt
-dGVzdC5jIHwgICA1ICstCiA1IGZpbGVzIGNoYW5nZWQsIDI1MyBpbnNlcnRpb25zKCspLCAxODcg
-ZGVsZXRpb25zKC0pCgotLSAKMi4zNC4xCgo=
+On 10/26/26 00:18, NickSampanis wrote:
+> Found the bug while debugging a kernel using qemu-tcg where a retf with
+> a 32-bit operand size executed at an RSP above 4 GiB in long mode, leading
+> to a triple fault. This led me to investigate the retf handler of
+> qemu-tcg, and subsequently find two additional bugs in lcall.
+> 
+> This series fixes three distinct cases where 64-bit stack pointers (RSP)
+> pointing above 4 GiB were incorrectly truncated to 16-bit or 32-bit values
+> during far control-flow instructions in 64-bit/long mode:
+> 
+>      target/i386/tcg: Fix 64-bit RSP truncation on retf in 64-bit mode
+>      target/i386/tcg: Fix 64-bit RSP truncation on far call in 64-bit mode
+>      target/i386/tcg: Fix 64-bit RSP truncation on far call through a call gate
+> 
+> For the first two patches, I used the HF_CS64_MASK flag of env->hflags
+> based on the similar check in the retf handler that sets the sp_mask to -1.
+> https://github.com/qemu/qemu/blob/d73149283205/target/i386/tcg/seg_helper.c#L2207
+> 
+> For the third patch (far call through a call gate), patch 3 checks
+> shift == 2 instead, since the call-gate path increments shift under
+> EFER.LMA, so shift == 2 for any valid 64-bit gate regardless of the
+> caller's mode.
+> https://github.com/qemu/qemu/blob/d73149283205/target/i386/tcg/seg_helper.c#L1834
+> 
+> Proof-of-Concept & Testing:
+> 
+> I wrote a proof of concept for each bug. Each PoC is a 512-byte boot
+> sector that sets up a basic 4-level long mode page table mapping the
+> first 2 MiB of memory 1:1, maps a 2 MiB page at the 4 GiB virtual address,
+> points RSP above 4 GiB, and executes the instruction. The PoC source
+> files are available on GitHub Gist:
+> 
+> 1) 64-bit RSP truncation on retf in 64-bit mode PoC
+> https://gist.github.com/NickSampanis/3d67093b5b99a5e9627912e2f8f4b297
+> 
+> 2) 64-bit RSP truncation on far call in 64-bit mode PoC
+> https://gist.github.com/NickSampanis/d4dea9948a34fbdedeed91d77586ff05
+> 
+> 3) 64-bit RSP truncation on far call through a call gate PoC
+> https://gist.github.com/NickSampanis/7e9c6a9c994ef67a1aea2b13814be441
+
+Interesting.  And really complicated...  The gist is that in 64-bit 
+mode, the operation size only governs how many bytes are popped, not the 
+stack size.  And for far CALL, in addition, your patch only touches the 
+same-stack case.
+
+Is that correct?
+
+Paolo
+
 
