@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0566606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 05:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D51606A321
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 05:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.a=rsa-sha256 header.s=rs20250326 header.b=VWCosyif
+	dkim=pass (2048-bit key) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.a=rsa-sha256 header.s=rs20250326 header.b=DWbNZUrk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQHzU-0006zj-7Z; Mon, 09 Nov 2026 00:32:25 -0500
+	id 1xQHzY-00072C-LU; Mon, 09 Nov 2026 00:32:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xQHz9-0006u7-6m; Mon, 09 Nov 2026 00:32:13 -0500
+ id 1xQHz9-0006u2-42; Mon, 09 Nov 2026 00:32:07 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xQHz4-0006HW-OM; Mon, 09 Nov 2026 00:32:02 -0500
+ id 1xQHz4-0006HQ-EE; Mon, 09 Nov 2026 00:32:00 -0500
 Received: from [10.42.0.1] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6A95VLtY046789
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6A95VLtR046789
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 9 Nov 2026 14:31:36 +0900 (JST)
+ Mon, 9 Nov 2026 14:31:34 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=2wrjUJxpcL5RJmg7LEMDArIoydrX9dZrKNP7QWTBW7I=; 
+DKIM-Signature: a=rsa-sha256; bh=SrGQealLyH3hg42u+EWDOoemyLjrZmzhxYj9oW/6TSU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1794202296; v=1;
- b=VWCosyifjhwSuPLLXK7eeQ3uaxmKJ8/XwKKeRFhuHvNfTj3Y+03CXmDF0eN/4W/v
- yTHCTaY18aTLOofnPaaDY6/VN1lujV9Ic8V8YomxiLtR4kygBF0PswVtNKUlel+x
- q8CdFm6rJXR8h0mpWKymcbFzXSDIXoyazl6sSs1iG9c+6FOFWyNzTv/dCcr71zgu
- qCQ0fwede6hNMWB2fbSPyqSxLKfYybSqwVpGaAamYQGqOJMOPqBZDKkEUWn1Ypb1
- NLNCz5d7r7pepsmYQMRx1quivG1NV7+uW3V4ffwMhZjBs6aZ8gfOlXKBv9GbE+ln
- 4LT2J4qdwLMYENCuOF6O/g==
+ s=rs20250326; t=1794202294; v=1;
+ b=DWbNZUrkVAJdoaW2GYb7bobpHVt3z31IvkfyRdbG7NICY1qghrBvporklc3r3EX9
+ 19JZ7GzLYUnLAL2hxmWVJNSQorvYioQeGUQjscu1YHSnqC1yN1K8FF0xwXeNG/z3
+ Z/2+vc0iZuUULWaEYM6BrDl87ITeP6hb5kgvoVuAAuNvax6lAMTL+xUhRhdzBk+7
+ P6iMrjZHNWchOmHeTuAv19dofF4BNUvJuofdmbsTL6zzKm+gU0CMa/0YaZhRQz6I
+ +IWY3jek3ml4HU2OnepXJiHpRk3goFeraS1tUSfXxlXIRnulPICg7N89IDyTnBuL
+ kFKtXymBFEKPZn4gcRmpKw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 09 Nov 2026 14:23:55 +0900
-Subject: [PATCH v2 10/14] include/net/eth.h: Make
- eth_get_l2_hdr_length_iov() check protocol
+Date: Mon, 09 Nov 2026 14:23:48 +0900
+Subject: [PATCH v2 03/14] net/eth.c: Check for undersized IPv4 headers in
+ eth_get_protocols()
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261109-eth-v2-10-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20261109-eth-v2-3-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
 References: <20261109-eth-v2-0-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20261109-eth-v2-0-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -55,13 +55,13 @@ Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Alex Williamson <alex.williamson@nvidia.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-stable@nongnu.org
 X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1531;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1569;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=NgOMJSmhGYwbcbhB2p9VTHAfuFHKWgyTeaf3LVJWJm4=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9bHqGVyFptPr/6xVCp/1bZY3fPXnEJuFN32u/Lf4+yGJ
- M8CI8cZHaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhnCwMUpABN5n8zwT2fKs/wNd6piso6v
- 4JZdJp0cdH+uulbVpJmGx3zE+Z9EXmL4p3xO2Wy/MyvvfdMz5YxL7CaurPjndTz9zv2ZUZxp96X
- 3swMA
+ bh=yESB8Zab4os/s1R62J8xq9PMyiu3eYpATt16sW8tdWY=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9bHqHnfP94W5DxQyaD1iMGsOu2TB/v9XN0NF018Vsy8M
+ Oe+DlNsRykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwESWbWZkuHCdxTz4YiSf8RGv
+ j7KvxU6v63vJoxDV+HXFjo+n33SsUWNkWOHAFbTgqtX+hbypEaau6zUYFy1qu3FDIYyn/GDLhp9
+ bWQA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -92,41 +92,42 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In eth_get_l2_hdr_length() we return sizeof(eth_header) for
-any protocol other than VLAN or DVLAN. However, in the iov
-version of this function, if the packet is larger than
-the ethernet header but not large enough for both the eth_header
-and the vlan_header we'll end up returning the actual packet
-size rather than the eth_header size. Fix the "not enough
-data" return case.
+In the IPv6 path of eth_get_protocols(), eth_parse_ipv6_hdr() does
+various sanity checks on the packet's IPv6 header, so we won't tell
+the caller we have an IPv6 header when we have a malformed one.
+However for IPv4 we only check the version and that we have at least
+the minimum header size.
 
-This will only cause issues if the caller isn't already checking
-offsets and sizes, so this is defence-in-depth.  It also in theory
-corrects the result for the hypothetical case of an ethernet-level
-protocol that allows a payload of less than 4 bytes.
+Harden this codepath by checking also that the header size declared
+in the packet's own headers is neither smaller than the minimum nor
+larger than the actual packet size.
+
+Missing these checks shouldn't cause problems if the caller is
+validating all offsets and lengths before use, but checking here
+too is defence-in-depth, hence the cc to stable.
 
 Cc: qemu-stable@nongnu.org
-Fixes: eb700029c783 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
+Fixes: 69ff5ef847457555 ("net/eth: Report if headers are actually present")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/net/eth.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/eth.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/eth.h b/include/net/eth.h
-index e10684ed9234..3e83f5d68c03 100644
---- a/include/net/eth.h
-+++ b/include/net/eth.h
-@@ -321,7 +321,7 @@ eth_get_l2_hdr_length_iov(const struct iovec *iov, size_t iovcnt, size_t iovoff)
-     size_t copied = iov_to_buf(iov, iovcnt, iovoff, p, ARRAY_SIZE(p));
+diff --git a/net/eth.c b/net/eth.c
+index 59b278b887c1..038f7d889c33 100644
+--- a/net/eth.c
++++ b/net/eth.c
+@@ -163,6 +163,8 @@ void eth_get_protocols(const struct iovec *iov, size_t iovcnt, size_t iovoff,
  
-     if (copied < ARRAY_SIZE(p)) {
--        return copied;
-+        return MIN(copied, sizeof(struct eth_header));
-     }
- 
-     return eth_get_l2_hdr_length(p);
+         copied = iov_to_buf(iov, iovcnt, *l3hdr_off, iphdr, sizeof(*iphdr));
+         if (copied < sizeof(*iphdr) ||
++            IP_HDR_GET_LEN(iphdr) < sizeof(*iphdr) ||
++            input_size - *l3hdr_off < IP_HDR_GET_LEN(iphdr) ||
+             IP_HEADER_VERSION(iphdr) != IP_HEADER_VERSION_4) {
+             return;
+         }
 
 -- 
 2.56.0
