@@ -1,63 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFCC606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00BA606A321
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 18:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EKSTqKV5
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=UGOfLk1m
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQUE8-0007tl-EU; Mon, 09 Nov 2026 13:36:21 -0500
+	id 1xQUED-0007uB-7C; Mon, 09 Nov 2026 13:36:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQUE6-0007tK-1g
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQUE6-0007tJ-1L
  for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:36:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQUE2-0003ue-V7
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQUE3-0003ui-82
  for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:36:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794249372;
+ s=mimecast20190719; t=1794249373;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PRyPxPto0YBjkLDAA5cEs2d7pxZje4C0XGX9Kd17UO8=;
- b=EKSTqKV51etgbHY7fE4CDCPTSMiCEYLB6t7pw0R+ZWYL+Cv3y70YoB3aaL8UgH+oBima1o
- eJW2W3Dz4uoaKLQ+MgbTs1gCVLt20MxL8uRJwhm0Zxe82qL/piYKGBbSbIIWbHhhK41nvI
- bBlVl82Oz/olcaSsnIMfibCvgAhhdJo=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=M2APYUVinIboaXANZVbMjJnszK15gFijGdBW+TVqwrc=;
+ b=UGOfLk1mPLXARu1BeRAYxKuROuTxXPwj31/Fy+0V41Pbd8MfiZDbzPBUGS0O6/aCfBX9vb
+ puOpeXsXrlrEW2jV3M560aSfrcDQvRuMe+DQagGn6U0lVehpaHExipiMoASB1ZTiMjqIb+
+ FKBizlWrpL0XextBdOIkqDpZ6M2PPD4=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-28-rI0dy2PbMGeJnXz8sGNsDw-1; Mon,
- 09 Nov 2026 13:36:11 -0500
-X-MC-Unique: rI0dy2PbMGeJnXz8sGNsDw-1
-X-Mimecast-MFC-AGG-ID: rI0dy2PbMGeJnXz8sGNsDw_1794249370
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-134-t2iu0qLZOGaXQI0-okGIrw-1; Mon,
+ 09 Nov 2026 13:36:10 -0500
+X-MC-Unique: t2iu0qLZOGaXQI0-okGIrw-1
+X-Mimecast-MFC-AGG-ID: t2iu0qLZOGaXQI0-okGIrw_1794249369
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 468721955DDC; Mon,  9 Nov 2026 18:36:10 +0000 (UTC)
+ id B1E681955F03; Mon,  9 Nov 2026 18:36:08 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.81])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0DBA5195608C; Mon,  9 Nov 2026 18:36:08 +0000 (UTC)
+ id 5A565195608B; Mon,  9 Nov 2026 18:36:06 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <lvivier@redhat.com>,
  Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 1/3] build: remove vestigial CONFIG_SGA
-Date: Mon,  9 Nov 2026 13:36:03 -0500
-Message-ID: <20261109183605.3210043-2-jsnow@redhat.com>
-In-Reply-To: <20261109183605.3210043-1-jsnow@redhat.com>
-References: <20261109183605.3210043-1-jsnow@redhat.com>
+Subject: [PATCH 0/3] build: small build system changes
+Date: Mon,  9 Nov 2026 13:36:02 -0500
+Message-ID: <20261109183605.3210043-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -80,47 +78,27 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This configuration knob no longer exists as CONFIG_SGA was removed
-quite some time ago. Remove it from our sample config files.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- configs/devices/i386-softmmu/default.mak | 1 -
- tests/qtest/meson.build                  | 1 -
- 2 files changed, 2 deletions(-)
-
-diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
-index bc0479a7e0a..b935ee61332 100644
---- a/configs/devices/i386-softmmu/default.mak
-+++ b/configs/devices/i386-softmmu/default.mak
-@@ -17,7 +17,6 @@
- #CONFIG_PVPANIC=n
- #CONFIG_QXL=n
- #CONFIG_SEV=n
--#CONFIG_SGA=n
- #CONFIG_TDX=n
- #CONFIG_TEST_DEVICES=n
- #CONFIG_TPM_CRB=n
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index ff4bf9528a7..3f1b5317fed 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -74,7 +74,6 @@ qtests_i386 = \
-   (config_all_devices.has_key('CONFIG_I440FX') ? ['numa-test'] : []) +                      \
-   (config_all_devices.has_key('CONFIG_I440FX') ? ['test-x86-cpuid-compat'] : []) +          \
-   (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : []) +           \
--  (config_all_devices.has_key('CONFIG_SGA') ? ['boot-serial-test'] : []) +                  \
-   (config_all_devices.has_key('CONFIG_ISA_IPMI_KCS') ? ['ipmi-kcs-test'] : []) +            \
-   (host_os == 'linux' and                                                                  \
-    config_all_devices.has_key('CONFIG_ISA_IPMI_BT') and
--- 
-2.56.0
+=0D
+=0D
+John Snow (3):=0D
+  build: remove vestigial CONFIG_SGA=0D
+  build: update CONFIG_PVPANIC=0D
+  build: Add "-d keeprsp" to Ninja flags=0D
+=0D
+ Makefile                                 | 2 +-=0D
+ configs/devices/i386-softmmu/default.mak | 6 ++++--=0D
+ tests/qtest/meson.build                  | 1 -=0D
+ 3 files changed, 5 insertions(+), 4 deletions(-)=0D
+=0D
+-- =0D
+2.56.0=0D
+=0D
 
 
