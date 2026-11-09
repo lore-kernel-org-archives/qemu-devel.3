@@ -1,52 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD024606A321
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 19:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FB3606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 19:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PfaLLRyA
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=L6mdpF0j
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQV92-0001bz-Bf; Mon, 09 Nov 2026 14:35:10 -0500
+	id 1xQVA0-00024K-5Y; Mon, 09 Nov 2026 14:36:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xQV8w-0001Yi-A8
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:35:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xQV9t-00021P-5O
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:36:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xQV8u-0001ed-KS
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:35:02 -0500
+ id 1xQV9r-0001vk-LG
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:36:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794252899;
+ s=mimecast20190719; t=1794252958;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=m5DQOa03jNTEqGq+HMzcF7pBiVnfF3leM3KBwbxc4uU=;
- b=PfaLLRyAvU5xwFFV5PVAt+NlZXFoL87oDuV+Rvoio7ARVS91f9iacfMzJPwkbz1GDahOKh
- gHSQKs84vNrXcDit8GK3cyCAOlwjwM9Br8IYEyQ8oheoE8yd5yseQ8o0SLN/CYQV8nJB3S
- OhMKJe4CxBA6VmxiC5V29a3myZuxX6A=
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/IUGY57JmXUHFBmsIw0p6PVZHU3BQWZLugsfrHWhKIE=;
+ b=L6mdpF0jZ62+IH2B8e65i726/PzMpoUAuj6PosUrqeMTa4x5aWix7IL3NNqtgXuPbCrZEn
+ Ub+H6gdfjV3NY66wcEwEI4XNm+EXUJWwGqZvEzqYZMXsTftNMEOPpsQfYLbGjfZOS7Jo4h
+ VczMz4aXfjVRzlRIqTtk5rr0qki6vDg=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-enz7dfZCNnawZbY5ANcNAg-1; Mon,
- 09 Nov 2026 14:34:55 -0500
-X-MC-Unique: enz7dfZCNnawZbY5ANcNAg-1
-X-Mimecast-MFC-AGG-ID: enz7dfZCNnawZbY5ANcNAg_1794252894
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-130--u-mp0MpOESJSPVm5eavbg-1; Mon,
+ 09 Nov 2026 14:35:55 -0500
+X-MC-Unique: -u-mp0MpOESJSPVm5eavbg-1
+X-Mimecast-MFC-AGG-ID: -u-mp0MpOESJSPVm5eavbg_1794252953
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A195119560AE; Mon,  9 Nov 2026 19:34:53 +0000 (UTC)
+ id 18E191956050; Mon,  9 Nov 2026 19:35:53 +0000 (UTC)
 Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA36F431; Mon,  9 Nov 2026 19:34:49 +0000 (UTC)
-Date: Mon, 9 Nov 2026 19:34:46 +0000
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2FAC1800480; Mon,  9 Nov 2026 19:35:48 +0000 (UTC)
+Date: Mon, 9 Nov 2026 19:35:45 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
@@ -62,25 +64,27 @@ Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH 5/7] debug/mem: name coroutine stacks
-Message-ID: <avIgVo9ZxngkRUxO@redhat.com>
+Subject: Re: [PATCH 6/7] debug/mem: name qemu_anon_ram_alloc/qemu_ram_mmap
+ pages
+Message-ID: <avIgkZcb8_rDyNdU@redhat.com>
 References: <20261109185907.3220584-1-jsnow@redhat.com>
- <20261109185907.3220584-6-jsnow@redhat.com>
+ <20261109185907.3220584-7-jsnow@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261109185907.3220584-6-jsnow@redhat.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261109185907.3220584-7-jsnow@redhat.com>
 User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
 X-Spam_score: 0.5
 X-Spam_bar: /
 X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -103,47 +107,26 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, Nov 09, 2026 at 01:59:05PM -0500, John Snow wrote:
-> Simple enough.
-> 
-> RFC: Is there a better name we can give these to help tell them apart
-> during analysis?
-
-We would have to give a name to each coroutine, and then pass
-it into qemu_alloc_stack. Would probably be fairly useful thing
-todo as we use coroutines for lots of different things and by
-way of comparison we give threads useful names too.
-
+On Mon, Nov 09, 2026 at 01:59:06PM -0500, John Snow wrote:
+> This patch adds a nickname parameter to qemu_anon_ram_alloc, which
+> passes it to qemu_ram_mmap, which passes it in turn to mmap_activate,
+> where it is used to name the region being allocated.
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->  util/oslib-posix.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-> index dc001da66dd..454579c72df 100644
-> --- a/util/oslib-posix.c
-> +++ b/util/oslib-posix.c
-> @@ -60,6 +60,7 @@
->  
->  #include "qemu/memalign.h"
->  #include "qemu/mmap-alloc.h"
-> +#include "qemu/mmap-vma.h"
->  
->  #define MAX_MEM_PREALLOC_THREAD_COUNT 32
->  
-> @@ -742,6 +743,8 @@ void *qemu_alloc_stack(size_t *sz)
->          abort();
->      }
->  
-> +    qemu_name_vma(ptr, *sz, "coroutine-stack");
-> +
->      /* Stack grows down -- guard page at the bottom. */
->      if (mprotect(ptr, pagesz, PROT_NONE) != 0) {
->          perror("failed to set up stack guard page");
-> -- 
-> 2.56.0
-> 
+>  include/qemu/mmap-alloc.h  |  3 ++-
+>  include/qemu/osdep.h       |  2 +-
+>  hw/display/virtio-gpu-gl.c |  2 +-
+>  migration/ram.c            |  3 ++-
+>  system/physmem.c           |  7 +++++--
+>  target/i386/kvm/tdx.c      |  3 ++-
+>  util/mmap-alloc.c          | 10 +++++++---
+>  util/oslib-posix.c         |  4 ++--
+>  util/oslib-win32.c         |  2 +-
+>  9 files changed, 23 insertions(+), 13 deletions(-)
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
 
 With regards,
 Daniel
