@@ -1,95 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0DD606A326
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 11:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0D6606A321
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 11:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JMIDt8uj
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=KGs0pgwV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQNgR-0005kP-2x; Mon, 09 Nov 2026 06:37:07 -0500
+	id 1xQNz4-0002c4-6s; Mon, 09 Nov 2026 06:56:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dovankhai97@gmail.com>)
- id 1xQNff-0005Oy-4X
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 06:36:29 -0500
-Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dovankhai97@gmail.com>)
- id 1xQNfd-0000HB-Kh
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 06:36:18 -0500
-Received: by mail-dy1-x132c.google.com with SMTP id
- 5a478bee46e88-37071c0f42aso1463924eec.0
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 03:36:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794224176; x=1794828976; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=BalyzpNSLQJj320b3zZNACnQolA+luPcc18MlanzhuQ=;
- b=JMIDt8ujk029/pzuqyi0BqpopCn5f6sj2x5N6AxSGkUGhPwC/ABIXYkG/I34+hF0wx
- oCgi7ZqEwIA2Z6iXFI4EVkK4YK7IAljZ2gr6n0cY8X7lIP57g+S0K5ywnqXkoorEVXvH
- qc31YdZp4opY22sPTjI7Qss3DBazvVtQiWJvyBJx4g9Uf7yrad5M3NYOgANmmtDAl+BY
- wPtkjdD4iX/WpCOJtlU6YR0feJwlstjNCexSavStz8UdtW3jaxL55aFh0tDGntOkdAQV
- asLqJvu5B0ESJdm9Bzk0R9bxd97UZxP238GdWHkQPM9FmPv2HrtRxEMXZvVpUQRXaKRQ
- 8CNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794224176; x=1794828976;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=BalyzpNSLQJj320b3zZNACnQolA+luPcc18MlanzhuQ=;
- b=I6CwQY+Jl2EBLRH5+qpiI/8p5mpoha6LzCAm5k3g2pBxtu6grlWL5ps+Wo/aWO75co
- x4OeAvCKLFfcNEeLg4d/PvqYq3yyTvenwQo53oUeC8IeLI/XJJo5H9y1Ms4cz4cTaGjU
- Le3M5BJnkq1929swHyt1WJBfqi/7zRnLyU1y4jJAv03U9bAKgAc4o8q/kf3YrSMvtGFk
- QdBgfGluNlRR6TifytwSLxC5/DYKj40Pg572WnYvV6Zn15UbthroeywrkNobzhXInQ5X
- rYGkBedT23Y87m1OtdoG+WtKKbhdwFPElPXNWtdSqN9Dgn/qNdJyjfr2JPfLZHe6IMIn
- l5yQ==
-X-Gm-Message-State: APuU4Z+/gfmwZmS+DxutQ/ed9rdEG/Y8Pv9BGDPism//krbabR5v2CN5
- GQv0UIL5hcWTnBzzyeEsBuxLEu4RHIw08osfSW/v8dnB2PhvSbhW7LEJSrsF6dQEwvQ=
-X-Gm-Gg: AYBFou0YD4/aK2gdTfVK3JGwz+CopoAgZvdzGinjRXV2kEN2Z9pmu8Jdc5GJA87tgKn
- Z6myUwpCITxpAIyKoHFNy8f51f/u3VD6jxcLihLNnIrXm2USkocs9h1dnOTIAHAJsOp+AI07e35
- SY/uuortyS6/NYettJoMPupCI7Ni+azUrAcHDWJ7kn1cc483DKyUraLJcW98R2asNMP6X8UtRZc
- 7h2bQ2joSK3VIN1SPcmfZQteUh4Gekz5rX6/LIv3jGR3snjRw0DBCzTPiPfZqtUBM8RbFjS03V5
- MjE+t0u1GTNRHP7lYxVEeLzEWOB4qm2YbBLoeLqBGGbwWSeFO5mE9zbbSL3a3XADAIGr2W+MPzw
- 0gloXigBuBkHgTZrieQlluPZMyzmRohB6DeeDaFkt2S6NKQBWesDW2dh5wrwJV1/fLBwYfV54AR
- lf7brkGhJcaimrhNFeBew0gMsnsAmiJMVxJPyIXKrZ/0qejhVeD3xCDPq9RFP18b3ZvODjpZJiE
- etdhK8wfrkK5m2c46l96ivVU9V15HbWlrL8roBCUFv7YoAgaehdba4c2ZHUwZxkSUqebLC9Twhi
- oy55oY8aJzQ4ZQEIKjuoA6ZDmYAZKlot
-X-Received: by 2002:a05:7300:cf89:b0:36d:4560:dd38 with SMTP id
- 5a478bee46e88-3725e82942emr6391893eec.37.1794224175657; 
- Mon, 09 Nov 2026 03:36:15 -0800 (PST)
-Received: from ubuntu.lan ([2405:4802:913e:86f0:35c7:7294:a0c3:69b2])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-372660f444csm19762941eec.19.2026.11.09.03.36.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2026 03:36:15 -0800 (PST)
-From: Khai Do <dovankhai97@gmail.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: peter.maydell@linaro.org, pbonzini@redhat.com,
- strahinja.p.jankovic@gmail.com, Khai Do <dovankhai97@gmail.com>
-Subject: [PATCH v2 4/8] hw/misc/allwinner-sid: Support configurable eFuse
- capacity up to 512 bytes
-Date: Mon,  9 Nov 2026 18:35:32 +0700
-Message-ID: <20261109113545.18561-5-dovankhai97@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261109113545.18561-1-dovankhai97@gmail.com>
-References: <20261109113545.18561-1-dovankhai97@gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xQNz1-0002bM-NB
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 06:56:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xQNz0-0002H7-2x
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 06:56:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794225377;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kKT5ydUXWkPMuONvThUADkphGTgoUMBtY3xtNddXppE=;
+ b=KGs0pgwVun6e0/d/3YnmAZFpZHBxIhT2c+5wOZaXXga487WDn1sTz0CWmcafv+QTZ3Xo2s
+ 54vNPaOa4lXX29awWQeHuejJCXFODGxyFeZZejDsiLMSBM4cbmNl4E8+lsCrJ8+55CRPz0
+ IFteb+GTR/4aSGB5rA6earQsRAQqA4g=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-F5QIMySMNs6a4IuZnXuJDg-1; Mon,
+ 09 Nov 2026 06:56:12 -0500
+X-MC-Unique: F5QIMySMNs6a4IuZnXuJDg-1
+X-Mimecast-MFC-AGG-ID: F5QIMySMNs6a4IuZnXuJDg_1794225371
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D136A180034E; Mon,  9 Nov 2026 11:56:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 31E541684; Mon,  9 Nov 2026 11:56:10 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E20A221E6A04; Mon, 09 Nov 2026 12:56:07 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: qemu-devel@nongnu.org,  marcandre.lureau@redhat.com,
+ milesg@linux.ibm.com,  qemu-ppc@nongnu.org,  qemu-arm@nongnu.org
+Subject: Re: [PATCH 4/8] hw/gpio/pca9554: New abstract base "pca9554-base"
+In-Reply-To: <aaba798c-591b-4956-be34-e6c9653398c8@nutanix.com> (Mark
+ Cave-Ayland's message of "Mon, 9 Nov 2026 10:17:29 +0000")
+References: <20261106110440.3552588-1-armbru@redhat.com>
+ <20261106110440.3552588-5-armbru@redhat.com>
+ <463635be-2321-49e6-852d-080aa00ce40d@nutanix.com>
+ <aaba798c-591b-4956-be34-e6c9653398c8@nutanix.com>
+Date: Mon, 09 Nov 2026 12:56:07 +0100
+Message-ID: <87qzgu43s8.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
- envelope-from=dovankhai97@gmail.com; helo=mail-dy1-x132c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,96 +85,110 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Allwinner SoCs provide different eFuse capacities: older SoCs have
-16 to 256 bytes, while newer 64-bit SoCs (e.g. H618) provide up to 512
-bytes of eFuse storage.
+Mark Cave-Ayland <mark.caveayland@nutanix.com> writes:
 
-Add a "size" property (defaulting to 16 bytes for backward compatibility)
-and an internal storage buffer up to 512 bytes (AW_SID_SIZE_MAX).
+> On 09/11/2026 09:02, Mark Cave-Ayland wrote:
+>
+>> On 06/11/2026 11:04, Markus Armbruster wrote:
+>>=20
+>>> Commit 5eceb48bbe86 (hw/gpio: pca9554: add PCA9536 support) made type
+>>> "pca9535" a child of concrete type "pca9555".=C2=A0 This is inconvenient
+>>> for the next commit.=C2=A0 Make them both children of new abstract type
+>>> "pca9554-base".
+>>>
+>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>>> ---
+>>>  include/hw/gpio/pca9554.h |  1 +
+>>>  hw/gpio/pca9554.c         | 55 +++++++++++++++++++++++----------------
+>>>  2 files changed, 33 insertions(+), 23 deletions(-)
+>>>=20
+>>> diff --git a/include/hw/gpio/pca9554.h b/include/hw/gpio/pca9554.h
+>>> index 1b33a8a752..0d841ff017 100644
+>>> --- a/include/hw/gpio/pca9554.h
+>>> +++ b/include/hw/gpio/pca9554.h
+>>> @@ -8,6 +8,7 @@
+>>>  #ifndef PCA9554_H
+>>>  #define PCA9554_H
+>>>=20=20
+>>> +#define TYPE_PCA9554_BASE "pca9554-base"
+>>>  #define TYPE_PCA9554 "pca9554"
+>>>  #define TYPE_PCA9536 "pca9536"
+>>>=20=20
+>>> diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
+>>> index caa73f63c9..1362b605c2 100644
+>>> --- a/hw/gpio/pca9554.c
+>>> +++ b/hw/gpio/pca9554.c
+>>> @@ -26,7 +26,7 @@
+>>>  #define PCA9554_PIN_COUNT 8
+>>>  #define PCA9536_PIN_COUNT 4
+>>>=20=20
+>>> -OBJECT_DECLARE_TYPE(PCA9554State, PCA9554Class, PCA9554)
+>>> +OBJECT_DECLARE_TYPE(PCA9554State, PCA9554Class, PCA9554_BASE)
+>>>=20=20
+>>>  struct PCA9554State {
+>>>      /*< private >*/
 
-Signed-off-by: Khai Do <dovankhai97@gmail.com>
----
- hw/misc/allwinner-sid.c         | 12 ++++++++++--
- include/hw/misc/allwinner-sid.h |  8 ++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+[...]
 
-diff --git a/hw/misc/allwinner-sid.c b/hw/misc/allwinner-sid.c
-index b5f827d4bd..afe5132c93 100644
---- a/hw/misc/allwinner-sid.c
-+++ b/hw/misc/allwinner-sid.c
-@@ -79,10 +79,15 @@ static void allwinner_sid_write(void *opaque, hwaddr offset,
- 
-         if ((s->control & REG_PRCTL_OP_LOCK) &&
-             (s->control & REG_PRCTL_WRITE)) {
--            uint32_t id = s->control >> 16;
-+            uint32_t id = extract32(s->control, 16, 9);
- 
-             if (id <= sizeof(QemuUUID) - sizeof(s->rdkey)) {
-                 s->rdkey = ldl_be_p(&s->identifier.data[id]);
-+            } else if (s->size >= sizeof(s->rdkey) &&
-+                       id <= s->size - sizeof(s->rdkey)) {
-+                s->rdkey = ldl_be_p(&s->storage[id]);
-+            } else {
-+                s->rdkey = 0;
-             }
-         }
-         s->control &= ~REG_PRCTL_WRITE;
-@@ -129,16 +134,19 @@ static void allwinner_sid_init(Object *obj)
- 
- static const Property allwinner_sid_properties[] = {
-     DEFINE_PROP_UUID_NODEFAULT("identifier", AwSidState, identifier),
-+    DEFINE_PROP_UINT32("size", AwSidState, size, sizeof(QemuUUID)),
- };
- 
- static const VMStateDescription allwinner_sid_vmstate = {
-     .name = "allwinner-sid",
--    .version_id = 1,
-+    .version_id = 2,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(control, AwSidState),
-         VMSTATE_UINT32(rdkey, AwSidState),
-         VMSTATE_UINT8_ARRAY_V(identifier.data, AwSidState, sizeof(QemuUUID), 1),
-+        VMSTATE_UINT32_V(size, AwSidState, 2),
-+        VMSTATE_UINT8_ARRAY_V(storage, AwSidState, AW_SID_SIZE_MAX, 2),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/include/hw/misc/allwinner-sid.h b/include/hw/misc/allwinner-sid.h
-index cfa22a4d7f..da8c235c5d 100644
---- a/include/hw/misc/allwinner-sid.h
-+++ b/include/hw/misc/allwinner-sid.h
-@@ -24,6 +24,9 @@
- #include "hw/core/sysbus.h"
- #include "qemu/uuid.h"
- 
-+/** Maximum eFuse storage size supported */
-+#define AW_SID_SIZE_MAX (512)
-+
- /**
-  * Object model
-  * @{
-@@ -54,6 +57,11 @@ struct AwSidState {
-     /** Stores the emulated device identifier */
-     QemuUUID identifier;
- 
-+    /** Size of eFuse storage */
-+    uint32_t size;
-+
-+    /** eFuse storage buffer */
-+    uint8_t storage[AW_SID_SIZE_MAX];
- };
- 
- #endif /* HW_MISC_ALLWINNER_SID_H */
--- 
-2.43.0
+>> The basic change looks good to me, however I found it tricky to follow g=
+iven that PCA9554Class is now related to PCA9554_BASE_CLASS() and PCA9554St=
+ate is now related to PCA9554_BASE().
+>> Would it make sense to rename PCA9554Class to PCA9554BaseClass and PCA95=
+54State to PCA9554BaseState here? I think it would help make the hierarchy =
+easier to follow.
+> Another follow-up question: how is PCA9554BaseState related to PCA955xSta=
+te? The naming suggests that the latter is already assuming this role.
+
+There is no PCA9554BaseState.
+
+Have a look at the OBJECT_DECLARE_TYPE(), and its definition in
+qom/object.h.  It does the following:
+
+* typedef struct PCA9554State PCA9554State
+
+* typedef struct PCA9554Class PCA9554Class
+
+* Make g_autoptr(PCA9554State) work
+
+* Define PCA9554_BASE(), PCA9554_BASE_CLASS(), PCA9554_GET_BASE_CLASS()
+
+Or let's approach this from another angle.
+
+Initially, we had just one type ("pca9554").  It had its own class and
+instance struct (PCA9554Class and PCA9554State), which came with the
+usual macros PCI9554(), PCA9554_CLASS(), PCA9554_GET_CLASS().
+
+Then we added a second type ("pca9536") as a subtype of the first.
+Instead of giving it its own class and instance struct, we reused the
+existing ones, and we didn't define any macros.
+
+This patch adds a third type ("pca9554-base").  It is abstract.  It
+again reuses the existing class and instance struct.  However, because
+this third type is the supertype of the existing two, we can't cleanly
+reuse the existing macros.  So we *replace* them by PCA9554_BASE(),
+PCA9554_BASE_CLASS(), PCA9554_BASE_GET_CLASS().  Except this is actually
+a *rename*, because we still use them same class and instance struct.
+
+Summary:
+
+* "pca9536" ceases to be a subtype of "pca9554"
+
+* "pca9554" and "pca9536" become subtypes of "pca9554-base"
+
+* Their class and instance structs remain the same: PCA9554Class and
+  PCA9554State.  There are no new C types.
+
+* Macros PCA9554(), PCA9554_CLASS(), PCA9554_GET_CLASS() are renamed to
+  PCA9554_BASE(), PCA9554_BASE_CLASS(), PCA9554_BASE_GET_CLASS().
+
+Questions?
 
 
