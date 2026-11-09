@@ -1,86 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8319F606A321
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 13:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598F6606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 13:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=YTATMwcd
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=V3FLybKe;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OrKc5l/g
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQPSr-0004eI-Jh; Mon, 09 Nov 2026 08:31:13 -0500
+	id 1xQPeL-0000w0-K8; Mon, 09 Nov 2026 08:43:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xQPSY-0004d1-Ss
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 08:30:58 -0500
-Received: from st-2001b-snip6-3.eps.apple.com ([2a01:b747:3001:206::17]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xQPeK-0000va-MN
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 08:43:04 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xQPST-0004Yq-6l
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 08:30:54 -0500
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-10 (Postfix) with ESMTPS id
- 768CA1801356; Mon, 09 Nov 2026 13:30:42 +0000 (UTC)
-X-ICL-RepId: 01a1c081-014b-76bc-8536-f723b27e3540
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQtIBUMGWgReC0wHQwJZEhVdRV4CXwpfFV04RgNHGVcUUBtHDFUHV15fChMLU1ZHHkkKVgleCEYRWxRWQ1EZEgJaRQdNXw5eHwQXRhlVBEceXVZAGRkCURxWDVdDVARfUEkMQVBsWgBHF0gdXRlZb1BdHA4YWRtAFV0RUBlWCV4VFx5BTVoCVk0FSgNfAVoDQABJAF4HWAdeDkELWBpdHx1WEFIAUg9yBVcIQQhTAlEEWBpfCBkNQE4ZDEodUlZRBUoMXABoD10dWBFd
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1794231044; x=1825767044;
- bh=bTKVivCfk0zPNIlppSC60Pkf3PjbfcopsoBtzEoeVMA=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=YTATMwcdJk0Fz0cqnaIA3eHba0p/Z9oDRcnE8EsmPcnBSWRGSUea6YH5gyzI4/3Y6Mv+c4I+2PLrBwFiHVJpXcaP4WS9RHPKUz7v8B4j0Em61hblaAWQFQspfH3BGZozy50ijTDpz4powzWL3dLFP7PTLA2/W14fVtyFUC85HHdRdmkD2Gt1akrKmFi1MKFpHYYh/HPhh9R78pwL4Xn/b74/GwDUXjKjny0pNge4JDXhemhUVoI5KTLuglAeYP/qfUIz8krIAjFCEVfV0nwUn5EMqVJJ0Yx3lCG6g0jTJPJinX6+KSjyT70p23v4EZ1kb+SRf+5CT5wEFQslQvyY0Q==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.156.216.30])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-10 (Postfix) with ESMTPSA id
- 6B3F2180137F; Mon, 09 Nov 2026 13:30:41 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Kostas Chatzikokolakis <kostas@chatzi.org>
-Subject: [PULL 5/7] whpx: i386: forward the dynamic EBX of CPUID[0xD]
- sub-leaves 0 and 1, not 1 and 2
-Date: Mon,  9 Nov 2026 06:30:33 -0700
-Message-ID: <20261109133035.7985-6-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261109133035.7985-1-mohamed@unpredictable.fr>
-References: <20261109133035.7985-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xQPeI-0005gp-JN
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 08:43:04 -0500
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A9DF1D63460931
+ for <qemu-devel@nongnu.org>; Mon, 9 Nov 2026 13:42:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ BashHvQVKzrPU87i7rHaG3p0Uz/FNFZix/bqZkl6SXk=; b=V3FLybKefECZMnUE
+ WKsjPM+nWxRWBXKoXgJCZhNmoMaQl2WFM6Gd93XrVL0n/tAMQ9qqlRuRnEiHW2vl
+ G//6pPnM37q0z+4RZVUv7DaCp29pImE2b4hp0t7oVA13hrVrup2UTvnbN1ZZTgxX
+ ENtqzOnFpgGZAEun+CMaIgD5VljlqxYr967tF5uvNHClCxFqAkrzmNZFBG3hIjyr
+ Grqh+7TSmK3Cs6nGojtjAbrezPwWM5En6nAwwQvzE9vfKK3WnPukQipSAoI56IUU
+ OQI3IlGpbumQEKQI3jWPy5sEJDB1tDBrzHF9CNTbHaMz4qirGpigiPt3E8Ig9mpZ
+ gH6cAA==
+Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
+ [209.85.222.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hue0rra0k-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 13:42:59 +0000 (GMT)
+Received: by mail-ua1-f72.google.com with SMTP id
+ a1e0cc1a2514c-990ca9607c3so580842241.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 05:42:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1794231779; x=1794836579; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=BashHvQVKzrPU87i7rHaG3p0Uz/FNFZix/bqZkl6SXk=;
+ b=OrKc5l/goXIKEdxRxmK4H/Nimuhn2lw9MMJRMl3LW6V8a0QTvmM7dMVf8OgZRQkkfs
+ E/4OOWFTS3ydAMyW1K0U5vxov+v9VM8zzaFmTxkt1faQ5iMFjnepIZgtGWue6QgTT0E4
+ +HMpSgbmREoFItENuzRkyi+ycONSY4h1g6km+MjupENC7Yu9LjSXlMeR20f52KPZA/r/
+ 7GEXEDRlSeovL5FT/EZ7WakDdghjNzbrHlQPcjf6xxWWIwFsIKFoVf5jRLqAdCe9GbFX
+ T6xSV+nBq1lp6BVmcoZb5XiZuyBEbdld/S6lFNNGjUVKQj8GRLGHLoq7QtaWy9i7mSVa
+ ZkEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794231779; x=1794836579;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=BashHvQVKzrPU87i7rHaG3p0Uz/FNFZix/bqZkl6SXk=;
+ b=HDpjJY+lSB+iukgVZQkhQcy+yScMs3ldToV5tFhWuskvlblXr+MJ1ejjy2PlFelfmj
+ av/GRwx0r/aFK5GncF0GI1aGpSp6OtCYjY+vNzSb+F7xvB0fAmkrzFTOlrS0A70wWbCe
+ n4Gx7eY+B2GTtli7V83Zvnan2PWMNWCmf+PBIHdOQfmOxlBLRaSCxSkCaK1ctCfJqXmy
+ Gy+9mkxFiCWEulFai3S25N+DlSv8FqA5Nwj7NepM3zF7P6WiK4Klr/hTDo36MtEyRylm
+ bGyQJGQrtaZVNchPf956xpfKEG23HhuGDqhDfSBDCeZsm04h1puMSsbaRizxtePz8Abs
+ BjAg==
+X-Forwarded-Encrypted: i=1;
+ AL+hErGb4DYZiJjy8tLugm6FmKDxz5vbtz0/G1Jh1aDjIhaK7rklr8Ytm2GbgHPPwNFvUwn2J9zpkpkZOMvb@nongnu.org
+X-Gm-Message-State: APuU4Z99FICMDyzq7nDBsBa3TQvSz726rseDbAWwuFZUiJ0BU8Tby/I2
+ WVhei21lez+7eLVxv8akcxgDyqt0fKgfzeiubG7UFtvvN5SE1zBl/iMPDmuSMSdQpTILVCxc48K
+ lm2he/tc13JHKzYgRQjnMjpS2X7ylgxO9sbwMX+Ejt8WkJl1eQ6Yt54d4zQ==
+X-Gm-Gg: AYBFou2okTPSpGS8AS3IcyQu4h2EgW1XuSLhv7+0oMu6DgD4b9aKJ+TJF7Tf1uAP6aw
+ OVQQKAq7urpOeDz55RQxJ7u8u6va/lJNiLpcvnAZXczK7rK1jHh7ff3j4WriZ8XZqUfngF9/jy+
+ MeIGFMBAkBDrxijo/gQUUD6g3XTLVhc2Md1EVf7sW/CBIUt/ecVWJ1T2XL2gcIcxWvCOf2uYm/d
+ uy0Ohhxxi+mCbYJxo6lJYotc2XrXB/XmvIkj+hmv2+eTn0p4t79jsRzF42iFg3ZLvdzMuyndKJ+
+ vUNFPHrCA5yl9FR9YmCnzp9EKjd4EG/bI/928MK+4eLobZw9dJC0Plc6+nBD4QIGv94TO1jz2c/
+ FofefwR7pOVxSQ1ja7Y/CT1j4s6TVrIs+bwsfay5hl72uKVr25dzC0KCJfZpnOR+dLEL2VNQnLi
+ MJqWcK4g==
+X-Received: by 2002:a05:6102:418a:b0:7d2:7827:c03 with SMTP id
+ ada2fe7eead31-7d2db227350mr1085481137.25.1794231778774; 
+ Mon, 09 Nov 2026 05:42:58 -0800 (PST)
+X-Received: by 2002:a05:6102:418a:b0:7d2:7827:c03 with SMTP id
+ ada2fe7eead31-7d2db227350mr1085470137.25.1794231778213; 
+ Mon, 09 Nov 2026 05:42:58 -0800 (PST)
+Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4b7da62edb4sm284345455e9.1.2026.11.09.05.42.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Nov 2026 05:42:57 -0800 (PST)
+Message-ID: <4aa852f2-9bb4-4b37-bdaa-56de711d1754@oss.qualcomm.com>
+Date: Mon, 9 Nov 2026 14:42:56 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA1MyBTYWx0ZWRfX/8ZOgpmcqnTz
- cTMvd0/U2m5r5HkqgzKSrxwhe+mJekRz0SeHI+nWiMv8ZV96nfKEDfpS51tIZgFEhvbRcqw0ljK
- FGwHnUt74xPJqziC/34fkFezMrqmlwp51LeRuQHkgYjacUdXzodYuuHuh6O3AEgVyGEfBc+ySzm
- CX4dlUJkC4LBs5e1D1Yydfp0Kisle5BLvGurLzVOkS4g2v8psDru9Zdt4ry0DUBQ20G39QhMuON
- X42PzJGt66TSv6/LRGN3NM9rlB4AEII85ROPJNXfEojmKXt2V0yoHqcgWfitbL9xsk1W3gVqmPV
- bKO2gOvenMJDf/vvM/gZr4gOwHE0fy7vAIk8WtG5Ghi79F9zXIj+3oSPu1ZQ3g=
-X-Authority-Info-Out: v=2.4 cv=Is4Tsb/g c=1 sm=1 tr=0 ts=6af1cb03
- cx=c_apl:c_pps:t_out a=oyWFxbOnq+dmhQrAPgaJYA==:117
- a=oyWFxbOnq+dmhQrAPgaJYA==:17 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=DGLFwGUCAAAA:8 a=RSavJFEQRcchf7d-p6oA:9 a=4cWXuvdlNTBkoNYRywza:22
-X-Proofpoint-GUID: Q6uOTvBMpJ4Sx6unMCk4LB7-z0P_-tl7
-X-Proofpoint-ORIG-GUID: Q6uOTvBMpJ4Sx6unMCk4LB7-z0P_-tl7
-X-JNJ: AAAAAAAB3aN4D7KBIiAmnhgFjN4eo4CK+aJ3XMFREjngm5Emaxt26Hgz/qaa4/cSX4xJMm
- kOF5XCy16a6VAcm0ZcjOaQd+5a/avvKimYp5l7IKcz8iKLnDbdvkvpWxxPpaXoJ4yIX2vL
- KGv2zZccyltiYOJIDe4Nz1YVSHN9XntjJUHFlZqNjvNY3AZYkGcCg5ujWvDxmGGGswTp6F
- XHsczKhZH7dBc3tgM9bfKUP+jZn4o2w2tLrhDAFyR2MRnPamcx3Db4cxO/rrSNkqqo+g1k
- nlpTH1KrERp/wMwTkF3ZK7Fhd333/ow+kFZBMQqoYpjWe/pVtYbko3AHfQemBM5F7/BxOS
- AhJdB3IHYnKNaqAkMH20XC0NN54yDljzeuoDoNG2SQ1m9f43fhEz2gi9PFG7iY3/PXgI+f
- pr2Q5H4XsRpbRsry69fbgl4nYO6RYnWKV9YjV6gHgHz/0h08vD+Axj2q4vbAsgMGxFe6Mr
- r/31b8Z+q9JILhqnRaEJ17L25EcYsSAmiBLXcRd48HRE+JpJUEFzOvaXsadaXxnbBlI69M
- C58LyNb/Zrxr130agAhnjoSHNlRUn55Pjv1lYIB9nDozw72GtAYYiYL7C9NLi3okFnAmig
- xVmbePA0IB/cXs5bC5MjG0pPdHGCMDB5tZhPO8D1axE3Ud2MpL7Zo+I85oXDcXGgmjV2vR
- a28riSyOZFvPBZFV2dqA3yEmldn5IkZaVG4w905IiWSwxhXy6IGV0apIkIIYo7D+/XayR+
- MALTAO8AmHLyJXN8c82oYjQ7mrPj0xi5qvYgW9OWwmQdejog==
-Received-SPF: pass client-ip=2a01:b747:3001:206::17;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] runstate: do not force prelaunch on reset during save-vm
+Content-Language: en-US
+To: Erik Fastermann <e.fastermann@proxmox.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>
+References: <20260916101215.98436-1-e.fastermann@proxmox.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260916101215.98436-1-e.fastermann@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: L1M65_YTmmkt_QubqP2vk_wWb1gU1gvO
+X-Authority-Analysis: v=2.4 cv=MpfHeGae c=1 sm=1 tr=0 ts=6af1cde3 cx=c_pps
+ a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=Qm8iP6mkAAAA:8 a=CqBVmhJUZrEXpEXEO2UA:9 a=QEXdDO2ut3YA:10
+ a=1WsBpfsz9X-RYQiigVTh:22 a=kDhhxE42lZnxL3pOKqYK:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA1NCBTYWx0ZWRfXzisCnWncGzJS
+ Lt9XAiHgcJWa9hPOxprm2MahY0UKpStwebNlnc5a1TGINY2NtoQNOnjMuFrlOYOceBZxj023KKi
+ s1SXYOySN6tE0DN0hQzKfu7qrDvW8/YxpOpnDMqZw4QcFXdUYd1GVGM/HSBAmsHrrejn9gsx/ox
+ 9zPxPn43NN38rTV0OfWzJ3YMZkK44G0sz9aOg+QjrvlJ8y5COCGDxIhmPVorOtEeCE/TGvvtaty
+ pIB7HBZlyn7vHRcNzgjC8Y0ZIZNqqa+Z1F6+KtT6H4DjpzOtZ0Zm4YvLCXMogdxTAeiDQyfU2Te
+ mzcCZWhYvUPyvOXrZkDp6Yg70qUw+2In/jEf2bVH7s3nFs9pdTUPnCYjkwPZ4/zh6AXwCliuxL/
+ 4hY1JOMolCkqSkGiddTuFPGC121b0iulEbMPyNNZHxBxoGI1coITrEiCY9oyRtPg+mNpjS9UtmE
+ wmEiOZmppbqd1Zf1k4A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA1NCBTYWx0ZWRfX+V3JrJH9nNX1
+ uxdlRxVU8wvBurCIkcgsO8bLaEsLqcPqaYX0hVUanXtuhKj9Bx7uFVrm6te9PXR6cXH+Xk4N3W5
+ 11kcqXYeqQUkyLXIstnxjypJg5MBD5Q=
+X-Proofpoint-ORIG-GUID: L1M65_YTmmkt_QubqP2vk_wWb1gU1gvO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-09_05,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ clxscore=1015 impostorscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611090054
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,82 +152,70 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Kostas Chatzikokolakis <kostas@chatzi.org>
+Hi Erik,
 
-CPUID[0xD,0].EBX is the size of the XSAVE area for the guest's current
-XCR0, and CPUID[0xD,1].EBX the size for XCR0 | IA32_XSS: those are the
-two values that depend on guest state. For sub-leaf 2 and up, EBX is the
-component's offset in the standard format, a constant.
+On 16/9/26 12:12, Erik Fastermann wrote:
+> A reset processed while the VM sits in 'save-vm' aborts QEMU:
+> 
+>      invalid runstate transition: 'save-vm' -> 'prelaunch'
+> 
+> The window is reachable over QMP. dump-guest-memory with detach=true
+> stops the VM with vm_stop(RUN_STATE_SAVE_VM) in dump_init() and then
+> returns once dump_thread has been spawned, so the main loop keeps
+> running with the VM in 'save-vm' for the whole duration of the dump.
+> A system_reset in that window kills the guest, as
+> main_loop_should_exit() forces the run state to 'prelaunch'.
 
-whpx_vcpu_run() forwards Hyper-V's DefaultResultRbx for sub-leaves 1 and
-2 instead. Sub-leaf 2 is harmless: QEMU's own offset was read from
-Hyper-V at vCPU init. Sub-leaf 0 is not: QEMU computes it from
-env->xcr0, which WHPX refreshes only in whpx_get_registers(), never on
-a CPUID exit, so after the guest's XSETBV the leaf still reports the
-size for the reset XCR0, 576 bytes.
+Since this is in rebuild_guest() path, Cc'ing Ani in case the dump
+thread could read an unmapped or stale block list on confidential
+guest.
 
-A Linux guest on a host without XSAVES takes that as its kernel XSAVE
-size, fails the consistency check against the size it computed from the
-component offsets, disables XSAVE and panics on the fallback path:
+> 'save-vm' needs the same treatment as 'finish-migrate' in commit
+> 1bd71dce4b ("runstate: ignore exit request in finish migrate state").
+> The reset cannot be applied to a run state whose only exits are back to
+> 'running' or 'suspended',
 
-  XSAVE consistency problem: size 832 != kernel_size 576
-  WARNING: CPU: 0 PID: 0 at arch/x86/kernel/fpu/xstate.c:638 fpu__init_system_xstate
-  x86/fpu: XSAVE disabled
-  BUG: kernel NULL pointer dereference, address: 0000000000000010
-  RIP: 0010:fpstate_reset+0x1a/0x90
-  Kernel panic - not syncing: Attempted to kill the idle task!
+The reset is applied; only the runstate is kept at SAVE_VM.
 
-Every CPU model with XSAVE is affected there (-cpu max, Haswell,
-SandyBridge); models without it (Westmere, Nehalem, qemu64) boot. A host
-with XSAVES boots because Linux takes the compacted size from sub-leaf 1,
-which is forwarded; sub-leaf 0 is stale there too.
+> so leave it alone: dump_cleanup() ends it
+> with vm_start() once the dump thread is done.
 
-Reproduced on an Intel Core i5-4440 (Haswell) under Windows 11 Home
-build 26300 with QEMU 11.1.2 (the code is unchanged on master), guest
-Linux 6.18. With this patch the guest enables xstate 0x7 at 832 bytes
-and boots with -cpu max. An AMD Ryzen 9 7900X under build 26100, not
-affected before, still boots with the patch, enabling 0xe7 (compacted,
-2432 bytes).
+I haven't checked in which state are devices during a detached dump,
+pre- or post-reset, do you happent to know? (could the reset be
+deferred / rejected in that case?)
 
-Fixes: 79b3cb1f0145 ("whpx: i386: introduce proper cpuid support")
-Signed-off-by: Kostas Chatzikokolakis <kostas@chatzi.org>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+The abort fix is reasonable but could you add a qtest?
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/whpx/whpx-all.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+> Signed-off-by: Erik Fastermann <e.fastermann@proxmox.com>
+> ---
+>   system/runstate.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/system/runstate.c b/system/runstate.c
+> index d3e64d2b62..1d65a4d444 100644
+> --- a/system/runstate.c
+> +++ b/system/runstate.c
+> @@ -1075,7 +1075,8 @@ static bool main_loop_should_exit(int *status)
+>            */
+>           if (!runstate_check(RUN_STATE_RUNNING) &&
+>                   !runstate_check(RUN_STATE_INMIGRATE) &&
+> -                !runstate_check(RUN_STATE_FINISH_MIGRATE)) {
+> +                !runstate_check(RUN_STATE_FINISH_MIGRATE) &&
+> +                !runstate_check(RUN_STATE_SAVE_VM)) {
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 366de31273..e14fce74d6 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -2706,10 +2706,14 @@ int whpx_vcpu_run(CPUState *cpu)
-                 }
-             }
- 
--            /* CPUID[0xD,{1,2}].EBX are dynamic depending on guest features. */
-+            /*
-+             * CPUID[0xD,{0,1}].EBX are dynamic: the XSAVE area size for the
-+             * guest's current XCR0, resp. XCR0 | IA32_XSS. For sub-leaf >= 2,
-+             * EBX is the component's fixed offset, which QEMU already reports.
-+             */
-             if (vcpu->exit_ctx.CpuidAccess.Rax == 0xd) {
--                if (vcpu->exit_ctx.CpuidAccess.Rcx == 1
--                    || vcpu->exit_ctx.CpuidAccess.Rcx == 2) {
-+                if (vcpu->exit_ctx.CpuidAccess.Rcx == 0
-+                    || vcpu->exit_ctx.CpuidAccess.Rcx == 1) {
-                     reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
-                 }
-             }
--- 
-2.54.0 (Apple Git-157)
+Side note, it seems we reached the usefulness of runstate_check()
+calls here; adding another local helper would help readability.
+
+>               runstate_set(RUN_STATE_PRELAUNCH);
+>           }
+>       }
 
 
