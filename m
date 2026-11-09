@@ -1,82 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FB3606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 19:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21811606A321
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 19:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=L6mdpF0j
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=P38bQs/6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQVA0-00024K-5Y; Mon, 09 Nov 2026 14:36:08 -0500
+	id 1xQVC1-0003PM-J3; Mon, 09 Nov 2026 14:38:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xQV9t-00021P-5O
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:36:01 -0500
+ id 1xQVBz-0003LP-Qn
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:38:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xQV9r-0001vk-LG
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:36:00 -0500
+ id 1xQVBx-00026Q-Jz
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:38:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794252958;
+ s=mimecast20190719; t=1794253088;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/IUGY57JmXUHFBmsIw0p6PVZHU3BQWZLugsfrHWhKIE=;
- b=L6mdpF0jZ62+IH2B8e65i726/PzMpoUAuj6PosUrqeMTa4x5aWix7IL3NNqtgXuPbCrZEn
- Ub+H6gdfjV3NY66wcEwEI4XNm+EXUJWwGqZvEzqYZMXsTftNMEOPpsQfYLbGjfZOS7Jo4h
- VczMz4aXfjVRzlRIqTtk5rr0qki6vDg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=iieMxgmEZzXhzI+RtTxtVeETqOv8ERXsDpwu7h111x8=;
+ b=P38bQs/66JcWwmVjZpwMq/XKYbfJuVeXK2qFnFxDWZSbsXVg23nqwY2TnsrDjsN5r8cZUH
+ yDGsAXrMFhbMkfzX+a5NkxR75gBrt8zxKmBoAT9QePu5jJKADHUmrLhOx+jGxu9ku4Xq3W
+ yrfK3rvUEzfd6hXUO+gqKw59TLLoMqs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-130--u-mp0MpOESJSPVm5eavbg-1; Mon,
- 09 Nov 2026 14:35:55 -0500
-X-MC-Unique: -u-mp0MpOESJSPVm5eavbg-1
-X-Mimecast-MFC-AGG-ID: -u-mp0MpOESJSPVm5eavbg_1794252953
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-538-BT-rFWk2MCWdYZabU6AYjQ-1; Mon,
+ 09 Nov 2026 14:38:06 -0500
+X-MC-Unique: BT-rFWk2MCWdYZabU6AYjQ-1
+X-Mimecast-MFC-AGG-ID: BT-rFWk2MCWdYZabU6AYjQ_1794253085
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 18E191956050; Mon,  9 Nov 2026 19:35:53 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6DB18195BDF0; Mon,  9 Nov 2026 19:38:05 +0000 (UTC)
 Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B2FAC1800480; Mon,  9 Nov 2026 19:35:48 +0000 (UTC)
-Date: Mon, 9 Nov 2026 19:35:45 +0000
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C21F41800446; Mon,  9 Nov 2026 19:38:03 +0000 (UTC)
+Date: Mon, 9 Nov 2026 19:38:01 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Alistair Francis <alistair.francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH 6/7] debug/mem: name qemu_anon_ram_alloc/qemu_ram_mmap
- pages
-Message-ID: <avIgkZcb8_rDyNdU@redhat.com>
-References: <20261109185907.3220584-1-jsnow@redhat.com>
- <20261109185907.3220584-7-jsnow@redhat.com>
+ Cleber Rosa <crosa@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] Python: add support for Python3.15
+Message-ID: <avIhGfWFEUX7bpX5@redhat.com>
+References: <20261109193145.3557626-1-jsnow@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261109185907.3220584-7-jsnow@redhat.com>
+In-Reply-To: <20261109193145.3557626-1-jsnow@redhat.com>
 User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
@@ -107,23 +96,17 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, Nov 09, 2026 at 01:59:06PM -0500, John Snow wrote:
-> This patch adds a nickname parameter to qemu_anon_ram_alloc, which
-> passes it to qemu_ram_mmap, which passes it in turn to mmap_activate,
-> where it is used to name the region being allocated.
+On Mon, Nov 09, 2026 at 02:31:45PM -0500, John Snow wrote:
+> Update tests, docs and infrastructure to explicitly support and test
+> Python3.15.
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->  include/qemu/mmap-alloc.h  |  3 ++-
->  include/qemu/osdep.h       |  2 +-
->  hw/display/virtio-gpu-gl.c |  2 +-
->  migration/ram.c            |  3 ++-
->  system/physmem.c           |  7 +++++--
->  target/i386/kvm/tdx.c      |  3 ++-
->  util/mmap-alloc.c          | 10 +++++++---
->  util/oslib-posix.c         |  4 ++--
->  util/oslib-win32.c         |  2 +-
->  9 files changed, 23 insertions(+), 13 deletions(-)
+>  configure                              | 2 +-
+>  tests/docker/dockerfiles/python.docker | 5 ++---
+>  python/Makefile                        | 4 ++--
+>  python/setup.cfg                       | 3 ++-
+>  4 files changed, 7 insertions(+), 7 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
