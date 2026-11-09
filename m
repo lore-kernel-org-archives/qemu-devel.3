@@ -1,99 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B18606A332
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 09:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E78E606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 09:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=EwleL8+l
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=pEPkLgKL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQLyH-0005NX-GL; Mon, 09 Nov 2026 04:47:25 -0500
+	id 1xQM1j-0006LE-Ia; Mon, 09 Nov 2026 04:50:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQLyF-0005NP-6Q
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 04:47:23 -0500
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ id 1xQM1a-0006Kl-Ri
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 04:50:51 -0500
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQLyD-0006qn-LG
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 04:47:22 -0500
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-67bfdab8f20so287026d50.2
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 01:47:21 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794217640; cv=none;
+ id 1xQM1Z-0007BS-6T
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 04:50:50 -0500
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-8b37c7d767aso3073427b3.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 01:50:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794217848; cv=none;
  d=google.com; s=arc-20260327;
- b=BsMSZ8iu0aRPUf1oNjMrH6S2bOylMWl9hxSoVfSScUBpjlv/vY4z/RQcczkPJUTrym
- jZxTrv1PF9svNVjUxSNPDMpembeJME6uXlFRkxY/s4+mD+vSNyeZD2GySiGhQ6M9mTsZ
- 5RiuWFfbsIEfV6I38HAeu8sjrdPG6fqGS6zss0mfZcDSJy++WafnFbON+i0Xu3VlEM+B
- lhfLIWzcpUxt1rrBP1lxYbOhTWQOc7aPwW6gCOkaf7138YdGuxcnk09axN15dNilMzDz
- arzEtqKpN7hVvesZyn0FbWhdTOu3lNdt0uVuveexrPcnHE6XVnJFdpZz2rAT4qb5rjsT
- MoZw==
+ b=cf8tQEkS6F1QVKYQJqp/UPd6Lf40h1hwAHoqRjdcrEC5TvFK3a5qGBhbBalYvkAGR5
+ 6S/G9lb4AIe0Tnpp5q4INTh0I1dwOdMCVQAy8KLWfRDyT/SzVVUFy/UuUtN2Zi2KUdDF
+ mCy8OvI6ZNUewV0xKh/R9rlurMKY8HBmef7916boLywBj9399676+nbO/Pg/c6Wot7ZD
+ kyGGitq4x3S9W1ari9xiS/vzDjAe3KsS4/paAgm0q/YR4iRN+HJgbRVVWxUwVkA6Da/t
+ m8lw0/jtuNCx550vogADt8bIt6ffkzLHuyNHCDhQl/NMThgY1I0ylB6WMo3WtN2BHGHh
+ 82mg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=3kMfTQ7C/dhD1+azadgUmL3XUQvh4AQkYCc0Vgs9fOo=;
- fh=fLQ4ZfroYDUa6tLsELkNuTY2VTTXzM1gBnK5CrncjjQ=;
- b=JFWMq4xL4cLOJvuOcxWnUaZu9bzyvzYCg49kR6dk3yZwGV3jp6AVklJdFFEpxW7Sw7
- Xqwba1u0ZHeu4jfHT5Mk/vWOSJczslNgt2ieNZx337PM7mlGbEQYEyu5nl8Oo3jRRqbg
- u4u858Vasdv36u+ZzhkU/zNzbUpUenkEBtS+bWPjWlH4oRrAodYzfGocGn/hOkn5CIcK
- 574ggDI9haZgVldK4JVzQ7H7GVCVgWiqnX/v8/U44jhYBC7nhp+dxxExiZK25O52m+1H
- ccYpSmRc40rz+SCbAWCsfAdixY28IhUDVbOlXackVcqglStTF2DGNtg4/bcx+4uXD4v5
- SIaw==; darn=nongnu.org
+ bh=2HBB+RmTYdFQ7GqbaMeWhxbWwxzeRHcryV3CLbFexwU=;
+ fh=ro6pPoFkuMMcEs00YvdLOAp9F95/m2tn+FF8CzQJnlw=;
+ b=UrBUmvL+UqEEDkC52lzys8AmZiY3DGm2fl+TH4NwOs936KlQDHJC8p2RjKrUiogES3
+ EO1do1uNNxzV5aSiVkfK/AZDp6Zc+qSFQoCHWng5xvxxgtvIOduVR/95QKnb/ERViE33
+ +WVdgScaDA6/LsCvbH0qAycCBe/4SOEPLpg98PkALC170KBdqylARSMS7oF4cHjQjLu7
+ PY0Ckv9BcHDf08rITZ6HUJkhVmHyM0ldCQlq2LhK1BWIYkZPIqonMSY0GZNPAbXZdY4M
+ MV9EsIhTWAl6Wqc6wOwTE8K/Ly/LRWz/qHbel0bWwoi5TB5Fz9qgnqqHjFh+CozZjaCf
+ ze/w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794217640; x=1794822440; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794217848; x=1794822648; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=3kMfTQ7C/dhD1+azadgUmL3XUQvh4AQkYCc0Vgs9fOo=;
- b=EwleL8+l0Pvsq0Yzwlc/2HWUbhabc0h4wT/O+wJf4pdwH+ZfWqLIut1qmWJpG5oXzN
- 2Z26TugibAgmCTi9r2BdtbkgXdZyObWGtulJMloBxsVTFLhfBMaLuQv0Z2Y3Aoc++/ep
- x+KG6GjPJjUSlnMV58p+VDXicumIUvztH0hkAmT4ZvEN3OtsSNvbxURqP0fbI7rtvaK/
- u2fB2lB0XegMCX3cLxzR/tLS0UEnbXpFwfHd2ElLmHkE4x/kPXBK+/+2COZvwr//JEVs
- XA86LFo3xuu/pM2P2J0BvCK4MHch3RCSIB4Wn2o/2sGp5G1s7iw0wRFuCRoKjMYVRNUw
- fHeQ==
+ :content-type; bh=2HBB+RmTYdFQ7GqbaMeWhxbWwxzeRHcryV3CLbFexwU=;
+ b=pEPkLgKLIMZMLdX+f4h7kV2P4aEnyTuTjl7oaJMXNY+bxhdkJZDxfFsLWn0O9t22nr
+ DUdDUOQD7QyIZvPbV64WwDHAnCmBOvIAIRokZLykTtEwlmoB6bOhsiHpFkNcaohh77Kp
+ 4kUyIlJhnjKnRZ/MI/w/BEBbqaBwDWbfhYnrsTulXy8xrfFm3c7enI8NEQMPD6RN7LUl
+ 1owLvv9Pf8+wRTsRy8UAbpG1J2YUqphp4g7R8pk33IWhA6HA7e7/eGBT/Pt7hkpOPY+u
+ kmafk3t+9f0xLk5A3yXb2fsJccKLM3xn4K800sGyHkTRvRnQ75ovSc3PyKAVewkPsGbg
+ yvZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794217640; x=1794822440;
+ d=1e100.net; s=20260707; t=1794217848; x=1794822648;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=3kMfTQ7C/dhD1+azadgUmL3XUQvh4AQkYCc0Vgs9fOo=;
- b=YUMTiQoyMq0Ev5LpD3+NDYqKCBpBvSsKlRgvmyeeY8joCACj7EzriArpf2eU1o9Hg7
- 01vXJaPRnsNOtUdpI89IYgiCCFAW1IMbsoTl4/1tBOe8Ef3/MCQ6MiO9ga4CS29mVWyb
- /IYheZTxkmkC+f7KLCx6VntKkf/cg6Ti9ECoyvA7qRvyIkdydqmilwgQOrsXwwwY7Icv
- 6p6rusPvji+wY1zPmfZlkUgZ12FkKPkqDnx3c59l/jKVU+v90LiRpUSAdEmDH/Pa7zhD
- 9RDOqNBSfWrKJmqTi4GuVPpSebEony/lIdgJrLAOafQzRQFLAPdoBdWIt8iergHge2xk
- WtsA==
-X-Gm-Message-State: APuU4Z/Y4oV34WcwQDqJe1T1ncWlv8ptSHzSE8/6/ePl6IkjiWxeWHui
- hA7OpPsVeUpvYqmUsRLpECd7FJyf/5B4LE2w30DscDved1F5tJzGBPg7q8+8xISMdG3NRkciZ+I
- Utf8LLsleb7YMdO12RBQlO+6b2cdm25PatVr/Ghjz8w==
-X-Gm-Gg: AYBFou1OWVlhJ85eF9ohzy8J2gRgK/nGLiRzbCubMpXzYyYLJkzepuJE6w0RnC9EYOk
- ct2Bkc/pQjVkal0mkxVoFkoT42l+ObQm0u3zvSWeUj4kBjl0mWqtKZDXAbgpKAorC8snqf/JL+Y
- BYNYl356YpTupgpzm65rEIDS9W4Tcn3N3RoUZefIHd94owekBWjQM/w96yicbyH/a7clCbHMdf/
- PUlXqW4dxujJ6v0Pf/gdrM4dFcUREyAk8QxBPDz7OvWx/anp4ME/Z2MvZZSy6hj3dHvYr+sNS5B
- Ra/KnEkL/TgG9wz3z3d0UHF2SJBkM67YRmRE6rPYPsRsanvwA7IbC5sDxyvJQOEriXvV+0SXCO0
- EbCZwR4mTIa85tPQCg91amznuFiRftk9bxBWc4XWwnhd9tIjYciwMJfSFZoNB1Za41Ctvzt9A7D
- Bu5tLqfcxDahIRX7F0/uU6
-X-Received: by 2002:a05:690e:441c:b0:675:690e:e6a1 with SMTP id
- 956f58d0204a3-67c3da43d84mr1246058d50.120.1794217639786; Mon, 09 Nov 2026
- 01:47:19 -0800 (PST)
+ bh=2HBB+RmTYdFQ7GqbaMeWhxbWwxzeRHcryV3CLbFexwU=;
+ b=hcVxQDf4X2u2Qa1WbuPM4v0aVtbGeQzNA9qa2RGWh+PCvI9vrgEDEqhqga/gHwcHGI
+ 7FIzn1RJxB8zwros+AWllGz4chPusvAhL+bi7ODryS9KJKkls9yQwbrDIKYWm2GgQ29k
+ KAwWpt5p3bOohTtfBfroJrvKvrr/mChGzZI0qqUBb4LpD/8ScZ/XCQnPKJBcz+mWtGPl
+ b0TwDPgLvNhZpSDUKRDON6rhusM26+iseOqiXynU1zMZ0Zwq4pxn3M0n+KPNjMdeGSEW
+ rbt8OeuuRRKy5PMNS4bPdk9jwP/bRiAQobMzWD9gD55atJ8Tnr+apc3UDBxVQBXtHp+0
+ XiAA==
+X-Gm-Message-State: APuU4Z/wQAk3nHqKca8mDZiFNq0JqGl6TUCAbT5r/NLI/Fjqj4Nt9v2F
+ AuN82kA8tk2hz4T22IFupLCvqoFXd6/WNxDFJFX2zWX3Frmu1QqrgrYlwmu3xm0jbGNaaUqJtgb
+ 9y0DETa5ZTJqLM9hvVPNZ3O3smgslPKaZWFcvmymTqK3fYjamnV9i1BV+9g==
+X-Gm-Gg: AYBFou0o8bKuq96kYr/xkA41Olrp/Ss1f7onKPH9YQfGSW9HdoavQG6iO4O/Lwbjo6S
+ wOtOvTmyoyxb27hStrqe6bYJu3VBKXSxM7kUtu4FP0nPTnwHE6OIOPBgWFxwT1ia4rr7mp4ztxZ
+ rckmv71v+wib0l67ej/6YVrdhoRFnYuZrdFM3cqpVCmISLx4ZeRS1MTjU6K/EyhrkrLc/irCedM
+ 0C/xLNKIc/A9nIEQlXBJOv23Imr1Juh4D4H+Na+MFspZmlLdZTjCn7LsXemd96Ojp0g+4yTzI9V
+ 4cFydOBrEEh8G8l4Vyo5i/x6R/YOsckXw7dHwNvxR+LVWLj2HMJYMaSnplcv8lIbEID/GULY5Vo
+ ZVcNZmC1wuhC/LqwOxRHPCqy0oJLK8jxgFukUsMFZ7hWrbi8mo3t5QD9Anwsuym2Vjh/6OR05dW
+ V87NfPxqLb04RQnt+CS1d5
+X-Received: by 2002:a05:690e:140a:b0:675:68f6:a6e2 with SMTP id
+ 956f58d0204a3-67c3d96beffmr1782560d50.43.1794217847506; Mon, 09 Nov 2026
+ 01:50:47 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261108193423.225720-1-jpaulma23@gmail.com>
-In-Reply-To: <20261108193423.225720-1-jpaulma23@gmail.com>
+References: <20261108193418.225672-1-jpaulma23@gmail.com>
+In-Reply-To: <20261108193418.225672-1-jpaulma23@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Nov 2026 09:47:08 +0000
-X-Gm-Features: AclHuK-dwV2mPerHrvIob6RcdVYz1rRmiXVIo3kOUy_0Kb58qKVlvwF5xTyFopM
-Message-ID: <CAFEAcA80KwukhQ06QVy7K6nC2GopHV06fNtR+QiRWopvUiDayg@mail.gmail.com>
-Subject: Re: [PATCH] semihosting/uaccess: Convert malloc, free to
- g_try_malloc, g_free
+Date: Mon, 9 Nov 2026 09:50:35 +0000
+X-Gm-Features: AclHuK8SXpHsElsSE2HBzWEJPQY6Y0pqu3gPtouFw-ay0CTITgWX9-MjT-9bwrQ
+Message-ID: <CAFEAcA8MACehEb3FEdpHUAfQ=H-C6E2K0sLecVWYu1m6AybKuQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/audio/fmopl: Convert malloc, free to g_malloc0/g_new
+ and g_free
 To: jiputer <jpaulma23@gmail.com>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,22 +121,22 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 On Sun, 8 Nov 2026 at 20:39, jiputer <jpaulma23@gmail.com> wrote:
 >
-> Convert malloc to g_try_malloc and free to g_free in
-> uaccess_lock_user.
-> Convert free to g_free in uaccess_unlock_user.
+> In the function OPLOpenTable, replaced the usage of malloc with g_new
+> and removed the NULL checks meant for malloc.
+> In OPLCloseTable and OPLDestroy, replaced the usage of free to g_free.
+> In OPLCreate, replaced malloc with g_malloc0 and removed the NULL check
+> for ptr, and the now unnecessary memset.
+> The program will now abort when memory allocation fails instead of
+> checking if the pointer returned is null.
 >
 > Signed-off-by: jiputer <jpaulma23@gmail.com>
-> ---
->
-> Something to note, when len == 0 in uaccess_lock_user,
-> it will return a NULL pointer, instead of a non-null
-> pointer from malloc. Any read or writes on *p will report
-> EFAULT since it would be considered a bad address.
 
-Do you have any concrete examples of where this is a
-behaviour change for callers to this function? I don't
-think we ought to rely on malloc(0) behaviour, but if we
-do somewhere it might be wise to fix that up first...
+There is already a fix for this one on the list, picked up by
+the -trivial patchset; it just hasn't reached git yet.
+
+https://lore.kernel.org/qemu-devel/623429ea-d915-480c-bd76-3052d85bea7d@tls.msk.ru/
+
+(This is why #1798 says "see the on-list discussion first" about that one.)
 
 thanks
 -- PMM
