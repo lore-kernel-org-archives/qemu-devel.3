@@ -1,96 +1,77 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C8B606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 16:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA1F606A321
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 16:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=kUF8ywGc
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=br/DKky4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQSR8-0000Pv-AG; Mon, 09 Nov 2026 11:41:38 -0500
+	id 1xQSRs-00012K-Vz; Mon, 09 Nov 2026 11:42:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xQSR3-0000PR-5h
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 11:41:34 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xQSR1-0000QR-Cp
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 11:41:32 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2e9995ce866so7443865ad.0
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 08:41:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794242490; x=1794847290; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=/xtLUnNZFd1+dz1/zRdk+02LIm72Sp7IcLw4kNPC694=;
- b=kUF8ywGc/KjbSUGbubzurXM+wjp5tDIadK+++05Q41+qtqVxWA7cbC4l+gVQSOpwLo
- BrBe4Hl50p5qYhDLh6DRrau9FjTgdTmrVOFB/s+nxRFlLlxHu1hFrs4fytL5WRx27/By
- Knsf8ReL4osrgqoEV/XeiPjddPawSE6H4ejinjQhf3/Ye1urVbMzV2ItD2qaMvpY1SEW
- kfbxRarTMwXnAamdAN8wbgBuKkprAxw5Ud0f1ZBFtU/MmMVCVto6Db47tpcSVR5XFX4n
- GtjBNTHhblWkXQuGUD4Elu1GMNBFJ8h4G5E09UW0JHlRMEHIW56jMQaNR2NmbFyXaoWg
- RLCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794242490; x=1794847290;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=/xtLUnNZFd1+dz1/zRdk+02LIm72Sp7IcLw4kNPC694=;
- b=Xk66y8NwSRokJwQOH3lE/TkJSGBxjCuKa7+8AKpwJ2p+UzR+poJjnUMjuzZ5zqIAfJ
- TJtdRFp4VxZk9YDqOPm90Atb1ClYwZBrdNqIGi565ei2DH1AbO3vC5qoUJFvycYe624p
- 3HUY3z1ktUD4NsFi/ItA4b6lXqWopxxbctsofDPatIwTvJu0DNqfdKK8swnETL02UyzY
- 11qGuwP0MOLxikkTScJxULxOFpS0aykthUoGtfO5bkUg0w3Qj/Qdyclp85L0/a8HjczT
- EaOpjXlpcrrHk9Jr9PajS+mP4lv5wqMuGB2NiOlW26vocWwuUyOYsKmXbr/HA4ahk8vo
- kAlQ==
-X-Gm-Message-State: APuU4Z+bWMvnY3yhxW06uJqs5Lfbix8OeFf38U+IrIrqDwey+wv5PG/7
- J6uHrn5+91+LW4nGJV2fFNAQLG242wfsNvLkaSCBceN8iBZOjybVpbfKFeAkm62eatuC0xPMjOJ
- F3k4A
-X-Gm-Gg: AYBFou3wI/rE27nxQQ0C98aIDo2R4lEn80ezuBI39x9L+1wuCGAN0Gy5qx/Nf47yI7o
- MbrXCvpHcIZFWF3vjzh5dy5yKPBnNUtI5JNBzQjLJ6neFHZzJl2tPIkOY/AeP+FGsXH0EdBkPO8
- CaunwDqxYMHuSIJclqyMyFRCEaevzWH8HZFC+XQnYY15/lZZeY5xgTkmpYTfEPKGic9W5xeYdiG
- 9EE9n9PJ7EIJFM6UKqozvVB4hFWqdYbDkJmXUeWzdkEU5jHbnJe5FPwcwDul7ipRb0xOmds2vYV
- dA7Ht6QXq3OnTRiUabKAGOpDjO+3ZiHn2xgDk895e5vz0099rDljDJN/tNpIoqoSID8DYtc+Zjl
- S4hB9btjN6GJBo1PRb2OzQynPUOKobgEulyi6zlB7UtxDus2J+qnkXAntOrEftrnNmHDYBodNSX
- s3zbOf9ZElUSJk4kwW8si/bByICWp4V/DypuOGFjzrB33GkN3t0XeHj7KkdiEBtz+y4riQ90eoh
- R8hekVkNLZ9RXtV2k76QASNhY6k0ve4ZGm8k97d4oL7CbQEO4l3CBIuF79iMwf0lsIx2gTFoP+K
- E8HH8Ts5v+oHPsiKs+ISRCmoA6G7tGLuD1Rx94T3ijtOGcAHZaRWeFI/PdyJi6IKo0lGWA==
-X-Received: by 2002:a17:902:ea0c:b0:2e9:5c29:995e with SMTP id
- d9443c01a7336-2ed83ff168bmr44053095ad.41.1794242489784; 
- Mon, 09 Nov 2026 08:41:29 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2edb6a412acsm246405ad.4.2026.11.09.08.41.29
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Nov 2026 08:41:29 -0800 (PST)
-Message-ID: <37a58cfc-93a6-41a4-a512-67c7f8bd9054@linaro.org>
-Date: Mon, 9 Nov 2026 08:41:27 -0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xQSRr-000128-UW
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 11:42:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xQSRq-0000XM-DI
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 11:42:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794242541;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=rehp/lSs6P683LCctNTw1lrfiuZ0Iezse+6F8YwMkMo=;
+ b=br/DKky4F1/hNR5XykNwX+XqHFdGuiCzyoi0OZw5cLLxphk9gvfJ5p7ClqAiH3fM9kcgMI
+ VijLlLtfkAdEZr6YA+7tkZ9t2Qv56bAcU3b7Iy1HC2bFuGG5lU5x1TMfGSFXhPuYbLmDpY
+ LZSzq7D7x3fmiX3KW01SY1vtvEcqyGo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-N1KIG6RzNB6GdchF1eRJsw-1; Mon,
+ 09 Nov 2026 11:42:16 -0500
+X-MC-Unique: N1KIG6RzNB6GdchF1eRJsw-1
+X-Mimecast-MFC-AGG-ID: N1KIG6RzNB6GdchF1eRJsw_1794242533
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8D0821955EA9; Mon,  9 Nov 2026 16:42:13 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CAC5D18004E9; Mon,  9 Nov 2026 16:42:11 +0000 (UTC)
+Date: Mon, 9 Nov 2026 16:42:08 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Kevin Wolf <kwolf@redhat.com>, devel@lists.libvirt.org
+Subject: Re: [PATCH for-12] qed: deprecate the block driver
+Message-ID: <avH34P2rgELLqa4b@redhat.com>
+References: <20261109163431.443983-1-stefanha@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] replay: Explicitly require round-robin TCG
-To: qemu-devel@nongnu.org
-References: <20261105131549.42175-1-philmd@oss.qualcomm.com>
- <20261105131549.42175-2-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261105131549.42175-2-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261109163431.443983-1-stefanha@redhat.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,117 +82,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/5/26 05:15, Philippe Mathieu-Daudé wrote:
-> Record/replay needs a single deterministic instruction stream,
-> which only round-robin TCG provides. This was enforced only
-> implicitly, through icount being incompatible with MTTCG.
+On Mon, Nov 09, 2026 at 09:34:31AM -0700, Stefan Hajnoczi wrote:
+> It has been unofficially deprecated on the wiki for many years:
+> https://wiki.qemu.org/Features/QED
 > 
-> Reject thread=multi in tcg_set_thread() and tcg_init_machine()
-> when record/replay is active, with a message mentioning record/replay,
-> never auto-select MTTCG then, and add a final check in replay_start().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 > ---
->   accel/tcg/tcg-all.c | 13 +++++++++++--
->   replay/replay.c     |  6 ++++++
->   2 files changed, 17 insertions(+), 2 deletions(-)
+>  docs/about/deprecated.rst | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+
+How about bdrv_qed_open also adding
+
+  warn_report_once("QED is deprecated, please switch to qcow2");
+
+for the part of the user population who never reads the docs.
+
 > 
-> diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
-> index bbc733a7070b..6ffe04649072 100644
-> --- a/accel/tcg/tcg-all.c
-> +++ b/accel/tcg/tcg-all.c
-> @@ -125,7 +125,8 @@ static int tcg_init_machine(AccelState *as, MachineState *ms)
->            * there is one remaining limitation to check:
->            *   - The guest can't be oversized (e.g. 64 bit guest on 32 bit host)
->            */
-> -        if (mttcg_supported && !icount_enabled()) {
-> +        if (mttcg_supported && !icount_enabled()
-> +                            && replay_mode == REPLAY_MODE_NONE) {
->               s->mttcg_enabled = ON_OFF_AUTO_ON;
->               max_threads = ms->smp.max_cpus;
->           } else {
-> @@ -133,6 +134,11 @@ static int tcg_init_machine(AccelState *as, MachineState *ms)
->           }
->           break;
->       case ON_OFF_AUTO_ON:
-> +        if (replay_mode != REPLAY_MODE_NONE) {
-> +            error_report("MTTCG is not supported with record/replay, "
-> +                         "use round-robin TCG (thread=single)");
-> +            return -1;
-> +        }
->           if (!mttcg_supported) {
->               warn_report("Guest not yet converted to MTTCG - "
->                           "you may get unexpected results");
-> @@ -195,7 +201,10 @@ static void tcg_set_thread(Object *obj, const char *value, Error **errp)
->       TCGState *s = TCG_STATE(obj);
->   
->       if (strcmp(value, "multi") == 0) {
-> -        if (icount_enabled()) {
-> +        if (replay_mode != REPLAY_MODE_NONE) {
-> +            error_setg(errp, "No MTTCG with record/replay, "
-> +                             "use round-robin TCG (thread=single)");
-> +        } else if (icount_enabled()) {
->               error_setg(errp, "No MTTCG when icount is enabled");
->           } else {
->               s->mttcg_enabled = ON_OFF_AUTO_ON;
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 0891bbc44de..ab83626af0b 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -526,3 +526,16 @@ If the user requests a modern x86 CPU model (i.e. not one of ``486``,
+>  ``athlon``, ``kvm32``, ``pentium``, ``pentium2``, ``pentium3``or ``qemu32``)
+>  a warning will be displayed until a future QEMU version when such CPUs will
+>  be rejected.
+> +
+> +Block drivers
+> +-------------
+> +
+> +QED (since 12.0)
+> +''''''''''''''''
+> +
+> +The QED disk image format is not actively maintained and qcow2 has exceeded its
+> +features and performance for many years. Since QED was never widely deployed,
+> +the format is not required for compatibility reasons. It is unlikely that
+> +qemu-img users still need to convert images to or from QED.
+> +
+> +Use qcow2 instead of QED.
+> -- 
+> 2.56.0
+> 
 
-This part looks good.
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-> diff --git a/replay/replay.c b/replay/replay.c
-> index 14437b32566b..d7d5ddc5a326 100644
-> --- a/replay/replay.c
-> +++ b/replay/replay.c
-> @@ -14,6 +14,7 @@
->   #include "exec/icount.h"
->   #include "system/replay.h"
->   #include "system/runstate.h"
-> +#include "system/tcg.h"
->   #include "replay-internal.h"
->   #include "qemu/main-loop.h"
->   #include "qemu/option.h"
-> @@ -447,6 +448,11 @@ void replay_start(void)
->           error_report("Please enable icount to use record/replay");
->           exit(1);
->       }
-> +    if (tcg_enabled() && qemu_tcg_mttcg_enabled()) {
-> +        error_report("Record/replay requires round-robin TCG, "
-> +                     "not MTTCG");
-> +        exit(1);
-> +    }
->   
->       /* Timer for snapshotting will be set up here. */
->   
-
-This part looks redundant.
-Surely all of replay_start is covered by the accel/tcg bits above.
-I would expect this to be as simple as
-
-{
-     if (replay_mode == REPLAY_MODE_NONE) {
-         return;
-     }
-
-     assert(tcg_enabled());
-
-     if (replay_blockers) {
-         error_reportf_err(replay_blockers->data, "Record/replay: ");
-         exit(1);
-     }
-
-     /* Timer for snapshotting will be set up here. */
-
-     replay_enable_events();
-}
-
-
-r~
 
