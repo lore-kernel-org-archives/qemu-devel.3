@@ -1,86 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD6A606D804
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E0B606D83D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=P3oOnhd+
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=j/MqKl/f
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQQ0N-0007J7-Oc; Mon, 09 Nov 2026 09:05:51 -0500
+	id 1xQQ0Y-0007Q8-BJ; Mon, 09 Nov 2026 09:06:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQQ09-0007AL-3p
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:39 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1xQQ06-0007A5-0U
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:37 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQQ07-0008Ai-F1
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:36 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4a215e64962so10629575e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 06:05:34 -0800 (PST)
+ id 1xQQ04-0008A4-8T
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:33 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-491aaed7565so560677f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 06:05:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794233133; x=1794837933; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794233130; x=1794837930; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=FZAwqCiEl1W88wep/IFipCYSS4NkriudY1WvKjdITM0=;
- b=P3oOnhd+JOcQCO79GO0zeHDdWOXMQSdFYkI/0P49SOQb9bdLDGXidWoROoKcdiNJaB
- Mk23J4/wUMLN8tly5XhEKjZ1I3q6x8QR9sWs7vILSs3XkOFm6JcbrOD8KuTjNRqdqEfO
- 892qrdMqA/bMexqa0VaHnHICP18A8higyZGeY7YmX9DbR5PvWlvA3A/LiZgS34ZAJC9e
- NuNXCuHJauXXbAm61RVzGvcnmW1HsLGUpkYhwu1iScqfd3kR3BOdlwK5NoHq9JQztaEk
- MxFv68O3k98x7vtjTkkWML37sjin90ofzx142UsaZHIzOOKNS866brRE8Pia072Y/0Of
- /d9A==
+ bh=sE8yVpqQAzfmCUET0N5Sgrduw4EonoQvrMHIyBYOkRM=;
+ b=j/MqKl/f3nwltTNoCAtcl2W9fnTcTWxBwPeazgK34PBBcTlwo4BEFEZr5BEWs2aGpA
+ Fyv4PhnAVvJtIxEl93Xxxt7dHz/vfdNkxm0cdkSZhkNWFpyDTfK+7KIC4Voe56/8atRL
+ Exkuq6mM++53r1g37pIP9WAmt33F4+SclPOXSjDzVoLi4s2UFFIfTknTI1rttPFj5Vas
+ udMyrvkBzENaorVNUogKcK7+xDyV7b1QfVYwS9xyZiFQyL4n4yamwRWZ+juhItKO3ZLG
+ rFFX9f9xp9E+wxBqoscGHOjs/l9gPAqb+uZN3+UPeWblrU+tOyRrCam+fs+dZL3QGo9p
+ nS1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794233133; x=1794837933;
+ d=1e100.net; s=20260707; t=1794233130; x=1794837930;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=FZAwqCiEl1W88wep/IFipCYSS4NkriudY1WvKjdITM0=;
- b=uTyCiuRB60DkjaqxnQjz2MrLAAekObx2TGHxzbntGSC8ierzOxdI3lAnEOFWsOb3Zx
- wM2ifQy4YZSQNp+d++0ppHd62qh/E7nh8XLDQWzLr9i6+oM9z00nj+5zfKynPxS6A1j0
- 60jCZ+ZXKUhgqYni01/yArGBd+uEy2mJ5OtAZGoiuc5M+VDkn2Z35qN4vxfOqnD95tvy
- fccLGpjVCtxmP94SUAlFD2LWhZmb4ApOq+0C1HHtsMPz7URcKh4fF5VyDXmp+npjYctm
- Cgpv3kvNmpKs4wuQCg652tAFl3K0I0EcEPx+5zh1fRV2in9aWxhEB5qn5Mu0iRWUX0LK
- Xo2g==
-X-Gm-Message-State: APuU4Z9YNd9qYLA/rgj0wi0deT+Qun30WrVz4OSCHkzGa3rLo5otGEL7
- z32rqBis9v3xCqQZPdKHKyAM4xhin+FnqgjZBZVeu4Pqqm8JsjE2BGIfEETgk4g9+cRhiNE/jgE
- AokMXgEg=
-X-Gm-Gg: AYBFou1LIZCayohpPSZZHsZv6+XcwqVv4VZ3UUq/AnPX7VhiYvs5ewboCS+zXShz8vw
- JALERKqNrgEY5cUmjTLdqAg8rNKWA6Oski/PWOFoQ2qa5IG8Z7xXmEuNmMIaGK2CEj6TCLfFWMW
- RVQK15cqvMfEzWEniSKslk5SemJW+31PuNdovqOIO11pz4BVYDze4OAioDGad+7xuZditONgTqM
- v/FVOOdTXbG+0OsOnqHsP0NfzGNyd+qcgZkonwYWXTvpC6qQR1yuqfjJzZ2Z5nr6/mGkPjH3+VA
- zE5CwgjvkUBcdxpKcalUlYzCIMg6ZOgDEznwvZR+8kEWceAcsIpA+zuwK4GZfSMyJYWQPiC2IYA
- 4dh0QENA8UE/BHwLsx4OaLlNVNBHuTcT2bOJOihkGxYJIT8LHTwj7sExKQA0PBg0k/Qkw9ooOKe
- SQbNBNB0u06y38ufDoeXA7L8bx1WIy8R2LYO2nZ0nUMBYuQgXNYPaw6Q8pKJ/LZlGcvMvhILPtk
- EEkjhvswY3wM5xIBdDSGUEPw0DDp0J3C/gIKEQos5AZ3iH9PaxmEWb0Xcnlp2IG4O+JRlxU/mxj
- 8KcUG72V2jtoc2RmwpZGJk2XQ/MpXU6Fc6O1UHgGnCuUTfe4eN1lA9BJeveaMiZ5M2t14mpwu4k
- Tecx28B3wI99UplnNj/oEDCOkQTYKMGv80uhMjLisgrhHhgdH8dCaQkM=
-X-Received: by 2002:a05:600c:4e45:b0:4a1:e00b:a10b with SMTP id
- 5b1f17b1804b1-4b963c75f1bmr78416325e9.7.1794233132718; 
- Mon, 09 Nov 2026 06:05:32 -0800 (PST)
+ bh=sE8yVpqQAzfmCUET0N5Sgrduw4EonoQvrMHIyBYOkRM=;
+ b=kx6EUNpXs42kTkG7roWt3tRf49755Kqkk0rRVyfqjQfIx4N84TeDuEgyplss/8faPe
+ Hxl+T5fEhVtbztrGRTGCwNPdx4l+qvQsLQmO8CCi0xNDzGQOj+YCn1GVGtNA2WJEyH/S
+ 1o5XUGPoWS4FgF8L+xdnCXLpX0rbsJZD4VjDR4zlv4lmUQfT6sDIsjcGINbrvnOGMQ5Y
+ Ks5ZC7fi7HjCNfo2qSxpmsBr1e5lazBdfqfRToaO/uk5YL+JHUyTqSUkNxe7Qn8WFGPB
+ 5RJ3hiJjZUvlgWYgJ/KIdf/3JZlAVaNkD4k5BpBWFjdlEii4FC9HinkZHYgOEpGwJ2be
+ btMA==
+X-Gm-Message-State: APuU4Z9B53g85u1grOQDW3AmUZUVb0QvnaZj/a7qVdvvoKJ2Ys/aE1LB
+ 6YvX/Hjesuq3H8j4RYoaWZt4lmIvxYunS02qOpPa+zhiMAA5ACp3ID+hbF2NniF6kPKPHPI3MJ6
+ cF2n/BQY=
+X-Gm-Gg: AYBFou3uM8JSqoKunodSr94IVBzWZCcYVS6zlpml4Afz3xeq0jn9yOKAA8POUh28thC
+ 3iU+hDSiz9TBSvtko1gXzd13Tf8yJ3xhVSNl4fGWplBsrjQeDF0Tf7S8YT3Jl75YOlSFbBXNbKu
+ wsAx992osut4IFjLiAULZ/jvEsCuhQIJLDncynogGLawi4ab2TWMnr0bQ4VcPz/YfC7K/ktTAwG
+ DfYasuf8cyBC7Iyfc4pOqfq05uoMCCm0izlDVXCyDieaAAnJwh2IR0I6Wlly0HTuTr4Xe+hq7A3
+ Z0P11NuhsgvCixlHO4g0WywZXkOvJyfZJBbSsj0BZAHwwTe6zenj9qQwD9loHDlZEf3ceVf3Vfw
+ yvi3ZKc8dejl1PAqtbJ6ppRacM6S7UwDED1cMhSx2IZpmstb8+sx6RPfn4SmtAV6fUoDri64GY6
+ iuTQA2oLtD/71MDr0R4uGlpMXqz8TM/FhBGdnGhttkISWDChegLWn72AxcNBxTBEN367npC9uiH
+ kTYEnqfAFEGmiG+pumpB7rkgxJFNu3D0cnHaU1FOBVkJNkc7dIeT24gusPxeHP4QK9xewE57LmF
+ SCm9VSrcFsck/P2GseqVQB+M0t54ryNG4bBOp9QrdsudzCxtb59Ih9jb7OcP2JsySQYFPbt54Oo
+ jEEm4AoJVz2y7RSxwJdYUYNwNNYmXmCZx1vLLI2nZNPqjRPcMlzbI9Ec=
+X-Received: by 2002:a05:6000:2211:b0:493:d5f0:4e4c with SMTP id
+ ffacd0b85a97d-49582e90293mr7688652f8f.23.1794233130170; 
+ Mon, 09 Nov 2026 06:05:30 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49596ea51cbsm11184750f8f.27.2026.11.09.06.05.31
+ ffacd0b85a97d-49596ea51cbsm11184750f8f.27.2026.11.09.06.05.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2026 06:05:31 -0800 (PST)
+ Mon, 09 Nov 2026 06:05:28 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 6/9] hw/intc/arm_gic: move num-priority-bits check
-Date: Mon,  9 Nov 2026 14:05:20 +0000
-Message-ID: <20261109140523.240161-7-peter.maydell@linaro.org>
+Subject: [PULL 4/9] hw/net/bcm2838_genet: fit the RX frame within the guest's
+ buffer
+Date: Mon,  9 Nov 2026 14:05:18 +0000
+Message-ID: <20261109140523.240161-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261109140523.240161-1-peter.maydell@linaro.org>
 References: <20261109140523.240161-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,73 +107,83 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Marcelo Manzo <marcelomanzo@gmail.com>
 
-We check the num-priority-bits property for sane values in
-arm_gic_realize(), but the property is defined on the "common"
-superclass, so it is present also for TYPE_KVM_ARM_GIC.  Currently
-this misplaced check is harmless, beacuse the KVM subclass never
-looks at the property value.  However, we are about to make a change
-that will want to use the property value in code called from the
-common class's reset method.
+The RX path clamped the payload copied into each descriptor only
+against the whole RING_BUF_SIZE register (whose upper half is the ring
+size, not a buffer length) and against the size of the rx_packet
+staging buffer. It did not account for the status block and 2 byte pad
+that precede the payload, nor for the 4 byte CRC that is added to the
+reported BUFLENGTH when CRC forwarding is enabled. The BUFLENGTH
+written to the descriptor could therefore exceed the buffer the guest
+supplied.
 
-Move num-priority-bits property value check to the common class
-realize method, where it belongs.
+Clamp the payload to the guest's buffer size minus the status block,
+pad and CRC. BUFLENGTH is then at most the buffer size, which is at
+most MAX_FRAME_SIZE, so it fits its 12 bit field by construction.
+(It cannot overflow today, because receive() drops frames larger than
+MAX_PACKET_SIZE, but nothing in the descriptor code made that obvious.)
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-id: 20261106-gic_read_bpr_from_property-v2-2-9f096cce4814@linaro.org
-[PMM: rewrote commit message, moved patch before the change that
- it is a prerequisite for]
+This also fixes a hang: with a buffer size of 0 the old code copied
+zero bytes per iteration and never made progress through the frame.
+Treat a buffer too small to hold any payload as a guest error and drop
+the frame.
+
+Resolves: Coverity CID 1690161
+Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
+Message-id: 20261104140058.24068-1-marcelomanzo@gmail.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gic.c        | 10 ----------
- hw/intc/arm_gic_common.c | 10 ++++++++++
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ hw/net/bcm2838_genet.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
-index 4d4b79e6f34..b60f1f630b0 100644
---- a/hw/intc/arm_gic.c
-+++ b/hw/intc/arm_gic.c
-@@ -2117,16 +2117,6 @@ static void arm_gic_realize(DeviceState *dev, Error **errp)
-         return;
-     }
+diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
+index 92d550cb630..0d61980a0cf 100644
+--- a/hw/net/bcm2838_genet.c
++++ b/hw/net/bcm2838_genet.c
+@@ -902,15 +902,24 @@ static ssize_t bcm2838_genet_rdma(BCM2838GenetState *s, uint32_t ring_idx,
+         uint8_t *frame_buf = dma_buf + frame_off;
  
--    if (s->n_prio_bits > GIC_MAX_PRIORITY_BITS ||
--       (s->virt_extn ? s->n_prio_bits < GIC_VIRT_MAX_GROUP_PRIO_BITS :
--        s->n_prio_bits < GIC_MIN_PRIORITY_BITS)) {
--        error_setg(errp, "num-priority-bits cannot be greater than %d"
--                   " or less than %d", GIC_MAX_PRIORITY_BITS,
--                   s->virt_extn ? GIC_VIRT_MAX_GROUP_PRIO_BITS :
--                   GIC_MIN_PRIORITY_BITS);
--        return;
--    }
--
-     /* This creates distributor, main CPU interface (s->cpuiomem[0]) and if
-      * enabled, virtualization extensions related interfaces (main virtual
-      * interface (s->vifaceiomem[0]) and virtual CPU interface).
-diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
-index 304d89cf562..a7c0763ab6a 100644
---- a/hw/intc/arm_gic_common.c
-+++ b/hw/intc/arm_gic_common.c
-@@ -233,6 +233,16 @@ static void arm_gic_common_realize(DeviceState *dev, Error **errp)
-          */
-         s->num_lrs = 4;
-     }
-+
-+    if (s->n_prio_bits > GIC_MAX_PRIORITY_BITS ||
-+       (s->virt_extn ? s->n_prio_bits < GIC_VIRT_MAX_GROUP_PRIO_BITS :
-+        s->n_prio_bits < GIC_MIN_PRIORITY_BITS)) {
-+        error_setg(errp, "num-priority-bits cannot be greater than %d"
-+                   " or less than %d", GIC_MAX_PRIORITY_BITS,
-+                   s->virt_extn ? GIC_VIRT_MAX_GROUP_PRIO_BITS :
-+                   GIC_MIN_PRIORITY_BITS);
-+        return;
-+    }
- }
+         bool crc_fwd = FIELD_EX32(s->regs.umac.cmd, GENET_UMAC_CMD, CRC_FWD);
++        const size_t crc_len = crc_fwd ? 4 : 0;
+         size_t buflength;
+         uint32_t prod_index;
  
- static inline void arm_gic_common_reset_irq_state(GICState *s, int cidx,
+-        if (l > ring->ring_buf_size) {
+-            l = ring->ring_buf_size;
++        /*
++         * The buffer holds the status block, the 2 byte pad, the payload
++         * and (with CRC forwarding) the CRC. buf_size is at most
++         * MAX_FRAME_SIZE, so the BUFLENGTH computed below always fits
++         * its 12 bit field.
++         */
++        if (buf_size <= frame_off + crc_len) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: RX buffer size %zu too small\n",
++                          __func__, buf_size);
++            return -1;
+         }
+-        /* Never copy more than fits in rx_packet after the status block */
+-        if (l > sizeof(s->rx_packet) - frame_off) {
+-            l = sizeof(s->rx_packet) - frame_off;
++        if (l > buf_size - frame_off - crc_len) {
++            l = buf_size - frame_off - crc_len;
+         }
+ 
+         memcpy(frame_buf, buf + len, l);
+@@ -921,10 +930,7 @@ static ssize_t bcm2838_genet_rdma(BCM2838GenetState *s, uint32_t ring_idx,
+                                          GENET_RDMA_LENGTH_STATUS,
+                                          EOP, !!(len >= size));
+ 
+-        buflength = l + sizeof(BCM2838GenetXmitStatus) + 2;
+-        if (crc_fwd) {
+-            buflength += 4;
+-        }
++        buflength = frame_off + l + crc_len;
+ 
+         desc->length_status = FIELD_DP32(desc->length_status,
+                                          GENET_RDMA_LENGTH_STATUS,
 -- 
 2.43.0
 
