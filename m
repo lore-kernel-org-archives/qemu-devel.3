@@ -1,84 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B1F606A322
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 11:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3513A606A322
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 11:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nMbqt8C3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vAocahHe
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQNfZ-0005MW-9F; Mon, 09 Nov 2026 06:36:13 -0500
+	id 1xQNfa-0005Ng-VP; Mon, 09 Nov 2026 06:36:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dovankhai97@gmail.com>)
- id 1xQNfU-0005M8-Uf
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 06:36:08 -0500
-Received: from mail-dy1-x132e.google.com ([2607:f8b0:4864:20::132e])
+ id 1xQNfX-0005MT-HU
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 06:36:12 -0500
+Received: from mail-dy1-x1334.google.com ([2607:f8b0:4864:20::1334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dovankhai97@gmail.com>)
- id 1xQNfT-0000Er-5z
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 06:36:08 -0500
-Received: by mail-dy1-x132e.google.com with SMTP id
- 5a478bee46e88-3645f0f3fcdso1478172eec.0
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 03:36:06 -0800 (PST)
+ id 1xQNfV-0000F1-7s
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 06:36:11 -0500
+Received: by mail-dy1-x1334.google.com with SMTP id
+ 5a478bee46e88-3700ed8dbe3so284719eec.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 03:36:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794224165; x=1794828965; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=B1itbbT6pnBCg3irCBnvOt04nv+VbPGU8ZVSoihBkVQ=;
- b=nMbqt8C3xY9M9a0lPk4zKY0hqldYhFxlPwfCmhE/AR9uByRY46/EOf5IuekhN8SQjR
- CmeCYNeVtMA9AoWtiF7cgHPDUeFecvUQJB5nNCk4Ogc6xZ5LGHEkS7yoeLNLwHZWblhu
- wIYkDgKKxk+D54L6rN01lWpqcZ3fFgzCqqLSqkqKHJDc6XX84EaTff9ls5dRBZeAj5jl
- uSkiAGwAxRrSJJ7RYEzEHoFEBWEo7XXFIL76XZyCTj6k6NprZC8y+N7JZ/z57DQ5aolC
- aHg6xHvZ0tihkR8qUrcGUFamkLggb5Sor+Odqk4EmNjjIQVO/noVhlFYoWhNijoj0h9O
- OHcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794224165; x=1794828965;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20260707; t=1794224168; x=1794828968; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=B1itbbT6pnBCg3irCBnvOt04nv+VbPGU8ZVSoihBkVQ=;
- b=WX6sZ+yj1iacN9ayj1ac+QixPDxgRhIOwqwUBu6J208Sa2a2tOUf/emqm/MPkkDcr+
- krv2SvCln+LN+nkoLvpRlyBlfTI4uXPpwG+8emnz8cuW+U72Dg9zh9Lv3Z5avOfpwOC3
- FDS5Wbc24ppveHpTa42eRtT8sxn0t/QbmQ9FPd++y4TRWg0sTVYfA+DyHktWPFtBrd5o
- 58zuvRnS6Mx92hY2I68xlqqXa5bOH6Z40dtap5++oqlVTwPEMGce0cStctmtuHiOzreb
- 1CC315MFUBb8FEZqHsdU3lBYNbSKC0mj4VrGE6FC197+znvqpvWXG5FOE3HQX7Asd8SE
- aPug==
-X-Gm-Message-State: APuU4Z/sU8JigvJ9RXlUFrrGCTyGskgJMOSnoPgi4hkMxWXYg6FwpNNI
- QW0e0TosG6+KovaOa6Gro6Uf0D2keCooCx53/BxJcA/KaRbdJVwDwVLM5nxnMpyFdrY=
-X-Gm-Gg: AYBFou1twT+AmplKfZycrfC46B8SFvAe+qVrpbYFi1LG38IdYoOJcx3M0XBqgCGnptY
- p8Wr2mtKBGxRLwVnZ7qu/EQY/0QfhyqBiV7R5Eca4KxrgUioPWL4p+hdn2OVM4oVK7JhkIkWe/x
- p8KuIdx064msAjxxwZ3uQ3AkKaUFoi/leySJxJGTMNGX9Y0CzsbSMd4te/sGBN37bl/kMfVZMSu
- ceM3k2WpCHLsNpMqnJHvq1G2bOMcmRQ7Jk1KVqMeNNwGAF8cKWn+ZeVVnNh3q27dVATPQajb5Mt
- 8lpG3SFf+2neZf/uMXu79mSlFzrmQg4GuCpE3zBEZy1zN6ESIs7GU9tRKNIaMpCjaCz/uE1heuO
- gaY77XkOKv3rK4h33a9Jj8e9NLleImQ9eC5YKCq2T7lq1PdF5rMSmH0aHce8Il74dCpjnRT8Nmt
- WrdApb3j33bKpoY4hEX5HKOsY73Dp4pxOaoB9om/a7w/tO3l85rHmq+6zhSEJ5Z7OHsAn5sOnbN
- 4tALtZ8ii/HmRfTBRz6PytLXAKjOVVmaCW70CKTHs5wj95i29uMkYFFxkm6CZsThBfFIwbtCYAr
- cA6005QEkLQPv+T7tSVln577QqfdMrtc
-X-Received: by 2002:a05:693c:87cc:20b0:36f:551:2bd5 with SMTP id
- 5a478bee46e88-372570dcb8bmr7326035eec.32.1794224164732; 
- Mon, 09 Nov 2026 03:36:04 -0800 (PST)
+ bh=o0w7XcUFgWTWzodYVb9xluA3Z7upoFe97lvtKvW/hlI=;
+ b=vAocahHemdlHrG2JihCO1Fhv1hFvj4WRuRFaI4fucvh3fMbGmyjb+lNOvJdSs6m9xG
+ rEOM9D+9u1rmhFeDntKHdBSw+w2AqszUZk5PDFYM+dpI1buBY0LkTA8ki3Nj+kvvHkwE
+ 0EyOLhAFzxrqhOzEXU4PJHMVY2OQ2y/dsoLrEcfmcoOteW5RZKOTwo6nh/pACGAxvWb8
+ SA2kONwuw12ft1OQNSqBJ6U8BTFLVOS1T/J6CwSbhsKOiyAUs6rJ5HRXGGV9IthCgLlm
+ 4GSsyGMNPIQTj7doktgT3wTR6Qe0lDdeghiIO4yy43TR0xR26WxNMnfhyirJlCk1ibsI
+ 7u3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794224168; x=1794828968;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=o0w7XcUFgWTWzodYVb9xluA3Z7upoFe97lvtKvW/hlI=;
+ b=u+IMOQrj0pD47mdQV56EeVnxVnRJA+KzfyRRghZTHmXFEZF9E7a82BLoR9cbPtKjwY
+ NKlzuxfRRuQ3Z9x+taiPmPRTUkQ/3BCWt8TKHA0dByQw9J6xnRFBROT/M6eV6IMJuXDU
+ bxqH7Fs4TjjFc5HZUu6ygHFBJwWoQvHq+++EDiBybcEBylnj9HfndIFeKYSXB4oxjKOG
+ Jo68K+bR+72VIrT/FORqq/HvaO6KoEN7RfaYVjiXYwS68H2V6lmpI87cn2YF7gEk7dfR
+ IzIayUhkVAki0uQ+U1+/YUn33xo7MDjxI/+Wjtv4rYg9AukgLiaZucDJD/U0JPDfI8G1
+ ZuNA==
+X-Gm-Message-State: APuU4Z82xD+lxEBmh3PP1as8qMVGr0WRG0NdxrRnbg0igrnQvQPEP+xo
+ tARdzbpe18/0Gel/mOIcb7LBDkOwfm/i+AoizGkB3viEeNzsBwwK0/+mbmAQAAJR1Og=
+X-Gm-Gg: AYBFou0lrM9+COUaP/Y0iZnCgcTbJh/S8JuwiVFW1WUkQn8cDsYae/VpdTKmwKXndOZ
+ hjvha+p+CIa/6L56NINxl25ForMNEdNNE9mguHH9g+Wo8N0atxY1LbIiNBudwqDJQ5eeJ7/ht6X
+ 9lwY3X347R+SZZdYQvnKsiNINPjxOBz0G9v8O02V3QI/KbXH22VBg7UjKYPu8RJVFFmSB7+or4+
+ U1QtnMdWEr7bPnZg8meLb85YYuHg7oceLXP+d6G2O9QpqElKYplOt9gxJbtn62QXpTVWhYBxf9M
+ yGa0hHLI8Prrm/jKncg+o0yDBh0W/jf4vNAXtz1+JvGXyCkqJy+7YO8LdQvc6Ui06QX5j9HksaR
+ BYh8ZtqYOljJ1cm0B3CwCV/PFeizo1NPNrBrRoeaH6IfO3V9Ls3PTnXCri/QtHeufXqGEY8tX+u
+ 7/rMHqHhg5C16Tfus/a9ApLBhZ+xUl4xcl/0CzCT64ld0060sJIPr/tL/e1FQsNkA5ufOGhdOnB
+ 7NMfOJ24hM8+djmrCl+J5ndaze0rG95fnMgFBCeLLH4+Aadm7UWO73VDLK1HbygdZwsDUQ1upji
+ Lt6nrqaIq03jnwgz0WEOg/GtftVXiYYol0ba4mizZgpFfiJMLySdCeg=
+X-Received: by 2002:a05:7300:6a9c:b0:358:3426:d601 with SMTP id
+ 5a478bee46e88-3725b461998mr6656264eec.2.1794224167429; 
+ Mon, 09 Nov 2026 03:36:07 -0800 (PST)
 Received: from ubuntu.lan ([2405:4802:913e:86f0:35c7:7294:a0c3:69b2])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-372660f444csm19762941eec.19.2026.11.09.03.36.02
+ 5a478bee46e88-372660f444csm19762941eec.19.2026.11.09.03.36.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2026 03:36:04 -0800 (PST)
+ Mon, 09 Nov 2026 03:36:07 -0800 (PST)
 From: Khai Do <dovankhai97@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
 Cc: peter.maydell@linaro.org, pbonzini@redhat.com,
  strahinja.p.jankovic@gmail.com, Khai Do <dovankhai97@gmail.com>
-Subject: [PATCH v2 0/8] hw/arm: Add Allwinner H618 SoC and Orange Pi Zero 2W
- machine
-Date: Mon,  9 Nov 2026 18:35:28 +0700
-Message-ID: <20261109113545.18561-1-dovankhai97@gmail.com>
+Subject: [PATCH v2 1/8] hw/arm/allwinner-h618: Add Allwinner H618 SoC emulation
+Date: Mon,  9 Nov 2026 18:35:29 +0700
+Message-ID: <20261109113545.18561-2-dovankhai97@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261109113545.18561-1-dovankhai97@gmail.com>
+References: <20261109113545.18561-1-dovankhai97@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132e;
- envelope-from=dovankhai97@gmail.com; helo=mail-dy1-x132e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1334;
+ envelope-from=dovankhai97@gmail.com; helo=mail-dy1-x1334.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,82 +100,373 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This patch series adds emulation support for the Allwinner H618 SoC and
-the Xunlong Orange Pi Zero 2W single-board computer (SBC).
+The Allwinner H618 is a 64-bit quad-core Cortex-A53 SoC. This commit
+adds baseline SoC emulation including:
+- 4x Cortex-A53 cores with PSCI conduit for SMP
+- ARM GICv2 interrupt controller and generic timer PPI connections
+- SRAM A1, SRAM A2, and 16550 UART0/1 controllers
+- Unimplemented memory regions for non-critical peripherals
 
-The Allwinner H618 is a quad-core 64-bit ARM Cortex-A53 SoC. This series
-follows the incremental skeleton design established for Allwinner SoCs:
-- Patch 1: Introduces the basic H618 SoC model with 4x Cortex-A53 cores,
-  GICv2, ARM Generic Timer PPIs, UART0/1, SRAM A1/A2, and stubbed unimp MMIO.
-- Patch 2: Adds the Orange Pi Zero 2W machine with 1 GiB SDRAM and kernel loader.
-- Patch 3: Separates the ALLWINNER_SID Kconfig symbol so other SoCs can reuse it.
-- Patch 4: Extends the Allwinner SID eFuse controller to support configurable
-  capacity up to 512 bytes (AW_SID_SIZE_MAX), preserving backward compatibility.
-- Patch 5: Connects the SID controller into the H618 SoC (256 bytes capacity)
-  and sets the default UID.
-- Patch 6: Separates the ALLWINNER_SDHOST Kconfig symbol for independent reuse.
-- Patch 7: Connects Allwinner SD/MMC host controller 0 (sun50i-a64 compatible)
-  at 0x04020000 into the H618 SoC.
-- Patch 8: Wires up the SD card bus to Orange Pi Zero 2W machine and supports
-  loading bootloader firmware via -bios.
-
-Changes since v1:
-- hw/misc/allwinner-sid: Use extract32(s->control, 16, 9) to extract the
-  9-bit PRCTL offset and return 0 on out-of-bounds eFuse reads.
-- hw/arm/allwinner-h618: Set SID size property to 256 bytes (0x100) to
-  match physical H618 eFuse capacity, consistent with Linux and Zephyr DTS.
-- hw/sd/allwinner-sdhost: Separate CONFIG_ALLWINNER_SDHOST symbol from H3.
-- hw/arm/allwinner-h618: Connect SD/MMC host controller 0.
-- hw/arm/orangepi-zero2w: Wire up SD bus and support raw firmware loading
-  via -bios (e.g. for U-Boot SPL).
-
-Verification:
-- The series has been tested using Zephyr RTOS (v4.5) running on the
-  orangepi-zero2w target:
-  * UART0 console & kernel boot: PASS
-  * Multi-threading with ARM Generic Timer PPIs (k_msleep): PASS
-  * HWINFO UID reading from SID eFuse: PASS (16 bytes UID)
-  * SID OTP driver: PASS (Offset 0..15, Offset 240..255, and Offset 256
-    returning -EINVAL out-of-bounds error)
-- Tested raw firmware loading (-bios) with U-Boot SPL.
-- All patches pass ./scripts/checkpatch.pl with 0 errors and 0 warnings.
-
-Khai Do (8):
-  hw/arm/allwinner-h618: Add Allwinner H618 SoC emulation
-  hw/arm/orangepi-zero2w: Add Orange Pi Zero 2W machine
-  hw/misc/allwinner-sid: Separate ALLWINNER_SID config symbol
-  hw/misc/allwinner-sid: Support configurable eFuse capacity up to 512
-    bytes
-  hw/arm/allwinner-h618: Connect Allwinner SID controller
-  hw/sd/allwinner-sdhost: Separate ALLWINNER_SDHOST config symbol
-  hw/arm/allwinner-h618: Connect Allwinner SD/MMC host controller 0
-  hw/arm/orangepi-zero2w: Wire up SD card and support firmware loading
-
- MAINTAINERS                     |   8 ++
- hw/arm/Kconfig                  |  11 ++
- hw/arm/allwinner-h618.c         | 247 ++++++++++++++++++++++++++++++++
+Signed-off-by: Khai Do <dovankhai97@gmail.com>
+---
+ MAINTAINERS                     |   7 +
+ hw/arm/Kconfig                  |   7 +
+ hw/arm/allwinner-h618.c         | 224 ++++++++++++++++++++++++++++++++
  hw/arm/meson.build              |   1 +
- hw/arm/orangepi-zero2w.c        | 114 +++++++++++++++
- hw/misc/Kconfig                 |   3 +
- hw/misc/allwinner-sid.c         |  12 +-
- hw/misc/meson.build             |   2 +-
- hw/sd/Kconfig                   |   4 +
- hw/sd/meson.build               |   2 +-
- include/hw/arm/allwinner-h618.h |  63 ++++++++
- include/hw/misc/allwinner-sid.h |   8 ++
- 12 files changed, 471 insertions(+), 4 deletions(-)
+ include/hw/arm/allwinner-h618.h |  57 ++++++++
+ 5 files changed, 296 insertions(+)
  create mode 100644 hw/arm/allwinner-h618.c
- create mode 100644 hw/arm/orangepi-zero2w.c
  create mode 100644 include/hw/arm/allwinner-h618.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 70e9fed776..68f1c31d60 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -779,6 +779,13 @@ F: hw/arm/orangepi.c
+ F: docs/system/arm/orangepi.rst
+ F: tests/functional/arm/test_orangepi.py
+ 
++Allwinner-h618
++M: Khai Do <dovankhai97@gmail.com>
++L: qemu-arm@nongnu.org
++S: Maintained
++F: hw/*/allwinner-h618*
++F: include/hw/*/allwinner-h618*
++
+ ARM PrimeCell and CMSDK devices
+ M: Peter Maydell <peter.maydell@linaro.org>
+ L: qemu-arm@nongnu.org
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index e9f796f718..616beae7bf 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -333,6 +333,13 @@ config ALLWINNER_R40
+     select USB_EHCI_SYSBUS
+     select SD
+ 
++config ALLWINNER_H618
++    bool
++    default y if TCG && AARCH64
++    select SERIAL_MM
++    select ARM_GIC
++    select UNIMP
++
+ config MAX78000_SOC
+     bool
+     select ARM_V7M
+diff --git a/hw/arm/allwinner-h618.c b/hw/arm/allwinner-h618.c
+new file mode 100644
+index 0000000000..59e0196fc6
+--- /dev/null
++++ b/hw/arm/allwinner-h618.c
+@@ -0,0 +1,224 @@
++/*
++ * Allwinner H618 System on Chip emulation
++ *
++ * Copyright (C) 2026 Khai Do <dovankhai97@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qemu/module.h"
++#include "qemu/units.h"
++#include "hw/core/qdev.h"
++#include "hw/core/sysbus.h"
++#include "hw/char/serial-mm.h"
++#include "hw/misc/unimp.h"
++#include "system/system.h"
++#include "system/address-spaces.h"
++#include "hw/arm/allwinner-h618.h"
++#include "target/arm/cpu-qom.h"
++#include "target/arm/gtimer.h"
++
++/* Memory map */
++const hwaddr allwinner_h618_memmap[] = {
++    [AW_H618_DEV_SRAM_A1]  = 0x00020000,
++    [AW_H618_DEV_SRAM_A2]  = 0x00100000,
++    [AW_H618_DEV_GIC_DIST] = 0x03021000,
++    [AW_H618_DEV_GIC_CPU]  = 0x03022000,
++    [AW_H618_DEV_GIC_HYP]  = 0x03024000,
++    [AW_H618_DEV_GIC_VCPU] = 0x03026000,
++    [AW_H618_DEV_UART0]    = 0x05000000,
++    [AW_H618_DEV_UART1]    = 0x05000400,
++    [AW_H618_DEV_UART2]    = 0x05000800,
++    [AW_H618_DEV_UART3]    = 0x05000c00,
++    [AW_H618_DEV_SDRAM]    = 0x40000000,
++};
++
++/* List of unimplemented devices */
++static const struct AwH618Unimplemented {
++    const char *device_name;
++    hwaddr base;
++    hwaddr size;
++} unimplemented[] = {
++    { "ccu",       0x03001000, 4 * KiB },
++    { "dma",       0x03002000, 4 * KiB },
++    { "sid",       0x03006000, 4 * KiB },
++    { "smc",       0x03007000, 4 * KiB },
++    { "timer",     0x03009000, 4 * KiB },
++    { "pwm",       0x0300a000, 4 * KiB },
++    { "pio",       0x0300b000, 4 * KiB },
++    { "mmc0",      0x04020000, 4 * KiB },
++    { "mmc1",      0x04021000, 4 * KiB },
++    { "mmc2",      0x04022000, 4 * KiB },
++    { "rtc",       0x07000000, 4 * KiB },
++    { "prcm",      0x07010000, 4 * KiB },
++    { "r_pio",     0x07022000, 4 * KiB },
++    { "r_uart",    0x07080000, 4 * KiB },
++};
++
++/* Interrupt mapping */
++enum {
++    AW_H618_GIC_PPI_MAINT     =  9,
++    AW_H618_GIC_PPI_HYPTIMER  = 10,
++    AW_H618_GIC_PPI_VIRTTIMER = 11,
++    AW_H618_GIC_PPI_SECTIMER  = 13,
++    AW_H618_GIC_PPI_PHYSTIMER = 14
++};
++
++enum {
++    AW_H618_GIC_SPI_UART0 = 0,
++    AW_H618_GIC_SPI_UART1 = 1,
++    AW_H618_GIC_SPI_UART2 = 2,
++    AW_H618_GIC_SPI_UART3 = 3,
++};
++
++enum {
++    AW_H618_GIC_NUM_SPI = 128
++};
++
++static void allwinner_h618_init(Object *obj)
++{
++    AwH618State *s = AW_H618(obj);
++    int i;
++
++    s->memmap = allwinner_h618_memmap;
++
++    for (i = 0; i < AW_H618_NUM_CPUS; i++) {
++        object_initialize_child(obj, "cpu[*]", &s->cpus[i],
++                                ARM_CPU_TYPE_NAME("cortex-a53"));
++    }
++
++    object_initialize_child(obj, "gic", &s->gic, TYPE_ARM_GIC);
++}
++
++static void allwinner_h618_realize(DeviceState *dev, Error **errp)
++{
++    AwH618State *s = AW_H618(dev);
++    unsigned int i;
++
++    /* CPUs */
++    for (i = 0; i < AW_H618_NUM_CPUS; i++) {
++        /* Disable secondary CPUs until brought up by firmware/kernel */
++        qdev_prop_set_bit(DEVICE(&s->cpus[i]), "start-powered-off",
++                          i > 0);
++
++        /*
++         * Enable PSCI emulation with SMC calls so secondary CPUs
++         * can be brought up.
++         */
++        qdev_prop_set_uint32(DEVICE(&s->cpus[i]), "psci-conduit",
++                             QEMU_PSCI_CONDUIT_SMC);
++
++        /* Mark realized */
++        qdev_realize(DEVICE(&s->cpus[i]), NULL, &error_fatal);
++    }
++
++    /* Generic Interrupt Controller */
++    qdev_prop_set_uint32(DEVICE(&s->gic), "num-irq", AW_H618_GIC_NUM_SPI +
++                                                     GIC_INTERNAL);
++    qdev_prop_set_uint32(DEVICE(&s->gic), "revision", 2);
++    qdev_prop_set_uint32(DEVICE(&s->gic), "num-cpu", AW_H618_NUM_CPUS);
++    qdev_prop_set_bit(DEVICE(&s->gic), "has-security-extensions", false);
++    qdev_prop_set_bit(DEVICE(&s->gic), "has-virtualization-extensions", true);
++    sysbus_realize(SYS_BUS_DEVICE(&s->gic), &error_fatal);
++
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gic), 0,
++                    s->memmap[AW_H618_DEV_GIC_DIST]);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gic), 1,
++                    s->memmap[AW_H618_DEV_GIC_CPU]);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gic), 2,
++                    s->memmap[AW_H618_DEV_GIC_VCPU]);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gic), 3,
++                    s->memmap[AW_H618_DEV_GIC_HYP]);
++
++    /* Connect GIC outputs to CPU interrupt inputs and CPU timer to GIC PPI */
++    for (i = 0; i < AW_H618_NUM_CPUS; i++) {
++        DeviceState *cpudev = DEVICE(&s->cpus[i]);
++        int ppibase = AW_H618_GIC_NUM_SPI + i * GIC_INTERNAL + GIC_NR_SGIS;
++        int irq;
++        /*
++         * Mapping from the output timer irq lines from the CPU to the
++         * GIC PPI inputs used for this board.
++         */
++        const int timer_irq[] = {
++            [GTIMER_PHYS] = AW_H618_GIC_PPI_PHYSTIMER,
++            [GTIMER_VIRT] = AW_H618_GIC_PPI_VIRTTIMER,
++            [GTIMER_HYP]  = AW_H618_GIC_PPI_HYPTIMER,
++            [GTIMER_SEC]  = AW_H618_GIC_PPI_SECTIMER,
++        };
++
++        /* Connect CPU timer outputs to GIC PPI inputs */
++        for (irq = 0; irq < ARRAY_SIZE(timer_irq); irq++) {
++            qdev_connect_gpio_out(cpudev, irq,
++                                  qdev_get_gpio_in(DEVICE(&s->gic),
++                                                   ppibase + timer_irq[irq]));
++        }
++
++        /* Connect GIC outputs to CPU interrupt inputs */
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gic), i,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gic), i + AW_H618_NUM_CPUS,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gic), i + (2 * AW_H618_NUM_CPUS),
++                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gic), i + (3 * AW_H618_NUM_CPUS),
++                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
++
++        /* GIC maintenance signal */
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gic), i + (4 * AW_H618_NUM_CPUS),
++                           qdev_get_gpio_in(DEVICE(&s->gic),
++                                            ppibase + AW_H618_GIC_PPI_MAINT));
++    }
++
++    /* SRAM */
++    memory_region_init_ram(&s->sram_a1, OBJECT(dev), "sram A1",
++                           64 * KiB, &error_abort);
++    memory_region_init_ram(&s->sram_a2, OBJECT(dev), "sram A2",
++                           48 * KiB, &error_abort);
++    memory_region_add_subregion(get_system_memory(),
++                                s->memmap[AW_H618_DEV_SRAM_A1], &s->sram_a1);
++    memory_region_add_subregion(get_system_memory(),
++                                s->memmap[AW_H618_DEV_SRAM_A2], &s->sram_a2);
++
++    /* UART0 */
++    serial_mm_init(get_system_memory(), s->memmap[AW_H618_DEV_UART0], 2,
++                   qdev_get_gpio_in(DEVICE(&s->gic), AW_H618_GIC_SPI_UART0),
++                   115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
++    /* UART1 */
++    serial_mm_init(get_system_memory(), s->memmap[AW_H618_DEV_UART1], 2,
++                   qdev_get_gpio_in(DEVICE(&s->gic), AW_H618_GIC_SPI_UART1),
++                   115200, serial_hd(1), DEVICE_LITTLE_ENDIAN);
++
++    /* Unimplemented devices */
++    for (i = 0; i < ARRAY_SIZE(unimplemented); i++) {
++        create_unimplemented_device(unimplemented[i].device_name,
++                                    unimplemented[i].base,
++                                    unimplemented[i].size);
++    }
++}
++
++static void allwinner_h618_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++
++    dc->realize = allwinner_h618_realize;
++    /* Reason: uses serial_hd() in realize function */
++    dc->user_creatable = false;
++}
++
++static const TypeInfo allwinner_h618_type_info = {
++    .name = TYPE_AW_H618,
++    .parent = TYPE_DEVICE,
++    .instance_size = sizeof(AwH618State),
++    .instance_init = allwinner_h618_init,
++    .class_init = allwinner_h618_class_init,
++};
++
++static void allwinner_h618_register_types(void)
++{
++    type_register_static(&allwinner_h618_type_info);
++}
++
++type_init(allwinner_h618_register_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index bcc068de04..42ed065b17 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -24,6 +24,7 @@ arm_common_ss.add(when: 'CONFIG_OMAP', if_true: files('omap1.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('allwinner-a10.c', 'cubieboard.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3.c', 'orangepi.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40.c', 'bananapi_m2u.c'))
++arm_common_ss.add(when: 'CONFIG_ALLWINNER_H618', if_true: files('allwinner-h618.c'))
+ arm_common_ss.add(when: 'CONFIG_MAX78000_SOC', if_true: files('max78000_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files(
+   'bcm2836.c',
+diff --git a/include/hw/arm/allwinner-h618.h b/include/hw/arm/allwinner-h618.h
+new file mode 100644
+index 0000000000..e1b7162759
+--- /dev/null
++++ b/include/hw/arm/allwinner-h618.h
+@@ -0,0 +1,57 @@
++/*
++ * Allwinner H618 System on Chip emulation
++ *
++ * Copyright (C) 2026 Khai Do <dovankhai97@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_ARM_ALLWINNER_H618_H
++#define HW_ARM_ALLWINNER_H618_H
++
++#include "qom/object.h"
++#include "hw/intc/arm_gic.h"
++#include "target/arm/cpu.h"
++
++/**
++ * Allwinner H618 device list
++ */
++enum {
++    AW_H618_DEV_SRAM_A1,
++    AW_H618_DEV_SRAM_A2,
++    AW_H618_DEV_GIC_DIST,
++    AW_H618_DEV_GIC_CPU,
++    AW_H618_DEV_GIC_HYP,
++    AW_H618_DEV_GIC_VCPU,
++    AW_H618_DEV_UART0,
++    AW_H618_DEV_UART1,
++    AW_H618_DEV_UART2,
++    AW_H618_DEV_UART3,
++    AW_H618_DEV_SDRAM
++};
++
++/** Total number of CPU cores in the H618 SoC */
++#define AW_H618_NUM_CPUS (4)
++
++/** Object type for the Allwinner H618 SoC */
++#define TYPE_AW_H618 "allwinner-h618"
++
++/** Convert input object to Allwinner H618 state object */
++OBJECT_DECLARE_SIMPLE_TYPE(AwH618State, AW_H618)
++
++/**
++ * Allwinner H618 object
++ */
++struct AwH618State {
++    /*< private >*/
++    DeviceState parent_obj;
++    /*< public >*/
++
++    ARMCPU cpus[AW_H618_NUM_CPUS];
++    const hwaddr *memmap;
++    GICState gic;
++    MemoryRegion sram_a1;
++    MemoryRegion sram_a2;
++};
++
++#endif /* HW_ARM_ALLWINNER_H618_H */
 -- 
 2.43.0
 
