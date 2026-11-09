@@ -1,114 +1,76 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137F4606A326
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 09:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED66B606A325
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 09:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=CUHhnF2l
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Y+DNVldL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQLoQ-0003Gp-MA; Mon, 09 Nov 2026 04:37:14 -0500
+	id 1xQLrm-00047e-JD; Mon, 09 Nov 2026 04:40:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQLoG-0003GA-O3
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 04:37:05 -0500
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQLoF-0005r7-BR
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 04:37:04 -0500
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-677d35fd1d2so744734d50.1
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 01:37:00 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794217019; cv=none;
- d=google.com; s=arc-20260327;
- b=kBTSOQgP+VZ0V/mR9ezQ7iA8dOmy+0kzb2fBfvcdGpUnm5zaCM9wyg3hdyUnLOEFF9
- zuwqyx48vYBbi3qVCwiIMeB4sC2PnJQ7FboS+kAT/iM1KKVIVBac0Hxa43l3zcjtCIWh
- oZ/htYssESUdlydahDWIsZdUYYY4aaZ8UnRGBKVpcNhXnL8jJXUSzMT7sOJ/V3fWvZxX
- OPzIoSnY57ZTdd7FKp41DgC9S/wpR29MvF2/lQNhcZkFJLp4YQH3mJI98Miwbb0CvEL5
- hZ1dToD3zBoxgy4l6/zpN044ivVBpjJTA3zk1vW/fMHszDZlhdKSNy2aSNeOuXMcAWKH
- B+Kw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=0Z2jINLMyr+CSsEONWTzuCKtsNKkTUm2WOuZHPTK97s=;
- fh=evYu65HJqNwMd16sFKkvgyTnNtakHsnIGR2/vsBd+ww=;
- b=h9PFliAXR+EyI/zKOBkKUdZWNY7y77qenliRvBiSeSZkNcjMPMh6vdTeGFcwogKLbM
- q+o73y3fw+Uk8tzKXlnrQZGZysyfbgAuNDt+4XDKkfoVtCEFFFqFl9t2lBlA/yqMGkfr
- NJpUEzjHK/a6RfI6MpFD4h+6T18awAtHMCBfmjP3Kl6uxHfEPsCg8zGQCoWbfuG/Ooek
- 4MasbG55vq0/aOmSh7XYavzN7GnOYDVDnJJeOwee07Y1sKO+1pw/0DK8H/kY9XXKjCY4
- N4jjarA3HdXNN+BEn9upfMLgYD09nVzvmtltUK3Z2idEkOaz1//hBsaw2Yba6O2iJeeB
- eErg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794217019; x=1794821819; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=0Z2jINLMyr+CSsEONWTzuCKtsNKkTUm2WOuZHPTK97s=;
- b=CUHhnF2lyyOVAj/2aneBEy620/2UBypRdvXUEXK8jNYZ80+34NbVWXphv1w3IITY4K
- aeX/U/wQ9NSokXS4PiUaAPaqooPLmdqsfKmv3/olCpa8O7FRla4UrlkYjx11lK6fmkkK
- aRrX6WsfDLbghvsWvFGHV9qWxa06fhTi3J6pvN9fSKvMEsbQbuXud5LDguS59EItCSNV
- bNIm1fXyPqZeCk6h4c4+RpaGM1sAj0qpFHspQZMLFQkq6DB/rDF8ZJdkQ8PRSsb37PeX
- Ta4HT1A63M4K4DDwPKL9EccLa4Ycd+BqgzJCj8S7rhNsqQkGIycBot9b/2/em3YGpNkh
- z86g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794217019; x=1794821819;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=0Z2jINLMyr+CSsEONWTzuCKtsNKkTUm2WOuZHPTK97s=;
- b=13+PgyAt2Dp0sBhddl+nvwCzdtcgo5aPBBqzvSQ7+3R277ExAyPMcyMq8n476r5LwG
- 5Cm5KyPwsRVCYx2DUb+DZuggWi/2qcvFbWgfNH8Uga4L/sjVGbDB4LhvcbYBMFDN273n
- tIL3Grh+3nyyihmdYX6s6zzDV6eLmbdYdkJAN/4/9h679M1AvAwR9l0MsWMrE8HPm0w5
- Aivh2HLwrjruTKmV1iDB9jRDaG30SYTCBRdZ/53qnJEEg2nMGvJy+VpqE7SZwXUn7qwL
- JnlQZVArKg1Qr1DRq5qt9I2sPUKnrVwR6h4sJpZTRAp0sKEpMK5DXKT8leJ7jU4SRX97
- Nrww==
-X-Gm-Message-State: APuU4Z+rJ1zzXvQPv+pZ/2ySTlBnEl/oZTJweJXcDtHgoEZX0boMhfo5
- wj5TZez3t/qM3WsJ2rNVvv2cz0DLjfQXIDE/io34v5ewwhBgBbuQrlg7LAw+ZrnCddaZLggJhwj
- ETYoQOVR26XSV2jo+DURfeOfkr0J7Z95WaYAVTPIHfQ==
-X-Gm-Gg: AYBFou1pqjS+y1do5YLnm4VjzO8oXaxZpuvhwuW6yDU5fiUV6IJTCheZTTqCSA0neCk
- VtXaRMEY1tLrTNDG4qGIy8TPZUlLOiKNMpAhQaf/RBM3gRN8liF3oaMWOH7sbDRLhYMgPhCd32M
- 5lJEWNtKcvyZv/h6LYu2a9u5IhytTOexEq5Qf6/NqdLEvmxJqeX+NsBk8yJibXMAZDWteFp5YQW
- gXyFWPuwsCfYQ+Myzf67IKynGZmbNSxwm5rd5V3E/5ZzIunSvQmQRSsHXlObBLk8Q8FCarIBolx
- alBbqzHXqOsBa7fMPDJ1Vk/sZCoYoblfUwP2H6QXQ/sxvP3Z+7CdkiXvcKTtAKcY/cqjJWUwBlT
- QX6w5mqhUaHDR0zw+ciX6IIkEIxbblJ2byWOnpGl1NlFJAyVHUMWqt9+GQ61SdtY/ygUXVkCPJ1
- PgZtNf4AMCk9kwERiN/3auNa3qrBi8P/4s9ok1s+lVnZY=
-X-Received: by 2002:a05:690e:1241:b0:672:d32d:999 with SMTP id
- 956f58d0204a3-67c3d7e0365mr1790910d50.14.1794217019301; Mon, 09 Nov 2026
- 01:36:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xQLrb-0003zk-Kv
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 04:40:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xQLrY-0006AU-9O
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 04:40:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794217225;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bvkY+oSbzmW/y3ojHMGOwF6g+pk1S9NIAvBlNLL/RMw=;
+ b=Y+DNVldLA26HFUOHvxsioCfwMZ5LnHnlZBI4MpYtDSldU7N/Wt1GyhwILag/xuuTZ0mBN5
+ LB19kJnp/XM3Xb2OWvuc3YuBfe4eurqAIDIMKP6mPU2IWl7GuMUsYZWGQOmVvLNu4ha9oA
+ PBHgcfQzKkmBc54eZaKmqb5UH4QEX54=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-lIcPECdYPdm-z1Br_QZ1vg-1; Mon,
+ 09 Nov 2026 04:40:23 -0500
+X-MC-Unique: lIcPECdYPdm-z1Br_QZ1vg-1
+X-Mimecast-MFC-AGG-ID: lIcPECdYPdm-z1Br_QZ1vg_1794217222
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 100CC180055F; Mon,  9 Nov 2026 09:40:22 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 52AF31800480; Mon,  9 Nov 2026 09:40:21 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1074821E6A04; Mon, 09 Nov 2026 10:40:19 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: qemu-devel@nongnu.org,  marcandre.lureau@redhat.com,
+ milesg@linux.ibm.com,  qemu-ppc@nongnu.org,  qemu-arm@nongnu.org
+Subject: Re: [PATCH 2/8] hw/gpio/pca9554: Move most code from .h to .c
+In-Reply-To: <792a4d16-8318-4a06-b5b6-0122dbf4d19d@nutanix.com> (Mark
+ Cave-Ayland's message of "Mon, 9 Nov 2026 08:55:14 +0000")
+References: <20261106110440.3552588-1-armbru@redhat.com>
+ <20261106110440.3552588-3-armbru@redhat.com>
+ <792a4d16-8318-4a06-b5b6-0122dbf4d19d@nutanix.com>
+Date: Mon, 09 Nov 2026 10:40:19 +0100
+Message-ID: <878q32737g.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261106155858.3779237-1-peter.maydell@linaro.org>
- <20261106155858.3779237-2-peter.maydell@linaro.org>
- <a66e5489-7898-43b6-a7c3-8a7a3deedbb7@oss.qualcomm.com>
- <CAFEAcA8jLh_5B563-Y-JmhFoimssDB71Lncq8vy4cf9RdqVm6A@mail.gmail.com>
- <8b2c47e7-589a-4e5f-b46d-11cf336e9a1c@oss.qualcomm.com>
-In-Reply-To: <8b2c47e7-589a-4e5f-b46d-11cf336e9a1c@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Nov 2026 09:36:47 +0000
-X-Gm-Features: AclHuK8xujD4vkOH0uyrr1ZYZXSkybeK3GnRdlQVTEOUdv9tWgtYk92p3jW6HJ0
-Message-ID: <CAFEAcA_iUDuBbN43BMKtH3V4n3Ab+rXukP1HfMZhtp=7rXVOAQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] Revert "meson: rewrite scripts/qemu-version.sh
- directly in meson.build"
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Yonggang Luo <luoyonggang@gmail.com>, John Snow <jsnow@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Philippe Mathieu-Daude <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,26 +82,70 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 6 Nov 2026 at 17:27, Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
-> I see, the missing bit I didn't use is '--with-pkgversion=pm215'.
-> Without it, it works fine.
+Mark Cave-Ayland <mark.caveayland@nutanix.com> writes:
+
+> On 06/11/2026 11:04, Markus Armbruster wrote:
 >
-> Any reason you use it for dev builds?
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>> ---
+>>   include/hw/gpio/pca9554.h | 25 -------------------------
+>>   hw/gpio/pca9554.c         | 24 ++++++++++++++++++++++++
+>>   2 files changed, 24 insertions(+), 25 deletions(-)
+>> diff --git a/include/hw/gpio/pca9554.h b/include/hw/gpio/pca9554.h
+>> index ac835371aa..1b33a8a752 100644
+>> --- a/include/hw/gpio/pca9554.h
+>> +++ b/include/hw/gpio/pca9554.h
+>> @@ -8,32 +8,7 @@
+>>   #ifndef PCA9554_H
+>>   #define PCA9554_H
+>>   -#include "hw/i2c/i2c.h"
+>> -#include "qom/object.h"
+>> -
+>>   #define TYPE_PCA9554 "pca9554"
+>>   #define TYPE_PCA9536 "pca9536"
+>> -typedef struct PCA9554State PCA9554State;
+>> -DECLARE_INSTANCE_CHECKER(PCA9554State, PCA9554,
+>> -                         TYPE_PCA9554)
+>> -
+>> -#define PCA9554_NR_REGS 4
+>> -#define PCA9554_PIN_COUNT 8
+>> -#define PCA9536_PIN_COUNT 4
+>> -
+>> -struct PCA9554State {
+>> -    /*< private >*/
+>> -    I2CSlave i2c;
+>> -    /*< public >*/
+>> -
+>> -    uint8_t len;
+>> -    uint8_t pointer;
+>> -
+>> -    uint8_t regs[PCA9554_NR_REGS];
+>> -    qemu_irq gpio_out[PCA9554_PIN_COUNT];
+>> -    uint8_t ext_state[PCA9554_PIN_COUNT];
+>> -    char *description; /* For debugging purpose only */
+>> -    bool hw_dir; /* Honor pin direction */
+>> -};
+>>     #endif
+>
+> Is there anything left in pca9554.h at this point?
 
-It's something I picked up ages ago -- I don't want a change
-in the git revision to trigger a rebuild on a local dev
-tree, because that's pretty pointless extra churn. Setting
-the pkgversion explicitly to something else means that it
-doesn't default to the git revision.
+Same as pca9552.h: just the #define TYPE_...  Visible above if you
+squint :)
 
-thanks
--- PMM
+[...]
+
+> Otherwise:
+>
+> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+
+Thank you!
+
 
