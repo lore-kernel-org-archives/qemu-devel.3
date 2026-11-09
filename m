@@ -1,145 +1,116 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55858606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 20:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFA0606A325
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 20:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jHjGnoDF;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=h/a2RFos
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=NxpCWySI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQW1A-0003aB-8V; Mon, 09 Nov 2026 15:31:04 -0500
+	id 1xQW1V-0003n1-7z; Mon, 09 Nov 2026 15:31:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xQW0d-0003OU-GP
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 15:30:33 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <bwalk@linux.ibm.com>)
+ id 1xQSu8-0005Q5-CG
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 12:11:38 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xQW0b-0007IS-19
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 15:30:31 -0500
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A9Jftln1830313
- for <qemu-devel@nongnu.org>; Mon, 9 Nov 2026 20:30:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Id3ds9IJWY+XtMbYAPcj1jaG0pTTJrImc70kxSQla5o=; b=jHjGnoDF6zYwmcGr
- pD5Jmu/mY2+CpaqEhDzc/26NNIC6/AqBvTfKlTg/DjUVtKvDS8jHCLI/LDPN+CBl
- tVAZ5sIkXg4Brkg4I55RnITrzL481ftkkyC5nN6qCdF1a1GH9wQLOZalW4rI8oAK
- ITyI5rsG2cdunCtSvVeHkxAA3fk3oe8BPFWb4V0AINzSQQPdSppfA1XUtEVBeEgZ
- U+li5VX4aTW28jqDvvfWnwlJeFTVjq52HEiRYmA7CHtMrIyCyPwmSaQWxa4bhOrO
- dFTbYJ9zMJcO7CRrXMloHw9MG2Iewmvb+8eo/roRG521XxFxEjDXu4HxI5mOWlKv
- ZolC1w==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4humjg054d-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 20:30:27 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-37390b2989bso2168123eec.0
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 12:30:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794256227; x=1794861027; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Id3ds9IJWY+XtMbYAPcj1jaG0pTTJrImc70kxSQla5o=;
- b=h/a2RFosg20+mZWEDt5i/UfiEQa6n4/aNBp+/r5V5A8fPxfKxwVx6/R7ozbeSkiOim
- 0q4nRZrbEumEesmtMYpj9SRPeF94An+oMl67Ji5Q/A9QVlYwrE0rsYPD195hd2oEJfB5
- Gh6UywZOgl482Qvr9BZ5aEpx7PAnreEeDvFOvgHH+66B4HLzdrkLRPQRu1P2BVAp1xci
- OYgWvS1KG1mGI/XPbECRietd/huqWK23vTN8C3/YU8kII+w2KVx3KRMy9sH7VRv7jnQJ
- 9rDoOTZxWfXLK0jlOzdpMDLTCzCZ+jC++Hjmv6AzGsDF/prUWVxmTs2YEBfEROFYYxYM
- zX8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794256227; x=1794861027;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Id3ds9IJWY+XtMbYAPcj1jaG0pTTJrImc70kxSQla5o=;
- b=C3qvxYAiyDWtiegn+sMn4/pWcYwTdt9+/bFb3IF7QMJU3SAg1mtH74fOfyFwUuMqBM
- 6aYu84kxGMiCRoFj93OYSznKejktobooWop0yGPSl5HWDLXR1xju9WfnNcRs0PZMzNYA
- 5gTd8aU4EEcclSvW9UpSnHuoVJsBkE8EPcMYARXIqRXrAnRClG3/vPz1C1YQ9ZoWBc+5
- h3kal9kXbzF9C+dkVvkjam+7lVAmQQ8ZRZmgC7zEo3vWi5/i6nUi/lxM2WnhO2mLitbT
- CKk3gxE1Hbx2u0WkSwBJ94R/UyNspUh3x8A8UBF5nLiuRitjmH5QGguwc5U5J2s5EkWn
- YIFg==
-X-Gm-Message-State: APuU4Z8IhPavrvVUT111W4NqVWbpHu2ldFIIa9mMR+Twi5FG9qZQXBWT
- d+nQGi/vnOuxuSlmD18PTlN8RGvODp7UYUAZv5FDUsm7Esg2MQyUAo+4mLjlwaIrwRsVutrh7D1
- CvBHN7+KfdWrmi4iZaUjpYIvBsgQsp3WJLvTU3VkysEsRVi/442nx13AzAIRXiAPNpg==
-X-Gm-Gg: AYBFou0X4utCfbMEdzhlnCV4nT95LXA4Mi0rHTz4qA+M+GpKhhAg4aNXgPuY6IFhnl8
- Q/tM+aMF5bBN7WhdEsuqXf6+VJHP1Ig3FxdzbR0uSz9kifk2etpkG8hjq3YToYbjTclIDeBLRVd
- FFSQZX9Fi7JhRXdkf/KIWuQLXLO+D0iqbSTL4QppYFhg1Ot+SFXA7UUnvOipwUukHowZqRyAqgI
- qt6FshTCs8UyorQ+Wr7BS37lzW4vKmD16qgYGcfRl+Bcnbg8dI6rj9mZ45LQNKIpgTXra7ymzJD
- uHgCuecqcSTs9JLDWX1cCMXAb7yqdQhbNYLKUFt+BiKJgR5gHV9IVKllvVXenxl5/BC1vmAykrF
- xkjNPJwaFrVzifL2yPmcptfe1zoqTcuJTzSSJXpHdyZ0F64QjKUzliE8fHAY4oAyb1uMl1fbsyB
- P2x06MtY3RdCOUVwtdEAsv
-X-Received: by 2002:a05:7300:4f1b:b0:36d:25e:1961 with SMTP id
- 5a478bee46e88-3751f36678fmr432022eec.22.1794256225071; 
- Mon, 09 Nov 2026 12:30:25 -0800 (PST)
-X-Received: by 2002:a05:7300:4f1b:b0:36d:25e:1961 with SMTP id
- 5a478bee46e88-3751f36678fmr431961eec.22.1794256224111; 
- Mon, 09 Nov 2026 12:30:24 -0800 (PST)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3752060dc0csm823737eec.14.2026.11.09.12.30.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2026 12:30:22 -0800 (PST)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <bwalk@linux.ibm.com>)
+ id 1xQSu3-0004Be-Aw
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 12:11:35 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A9DEgVu3699559; Mon, 9 Nov 2026 17:11:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=Molzj9KIBFkG9jsFP
+ 42RKm1hz4YK4zayoy08bL2uPo0=; b=NxpCWySIIlrsjLJAN/McXa/lwL/nElble
+ /MHTyhiCnpJOdJWMBP6y2l++63YTyOO4FEIqGSNhEaG0L1QU9qkTfjOE3/0zZ2Eh
+ +sWckJ+8N7uFPDFtaUoJUSMxllVBc6Z/6SRfs4amrFekaZUyCPdJQmtkURgFD4H4
+ 3ogPsjS28m4sd057pDyDdrOfCaGJQ5CdpzhPEaZ3vAFZNCBiorFWcPJc1FX2QZ3F
+ EzFuApbt0QnGASa2uldOgwGSe29lvMDOM0yOPZ4S0Usdr//qGFtvO7ussbnHoFJN
+ nTaR5LRVlRKwKkjmmev92lX2iD5ttwHQ42ixqV3+SJBObuOb4EsXA==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hsug5ykq5-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 09 Nov 2026 17:11:28 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A9Gq4aB079625; Mon, 9 Nov 2026 17:11:27 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hteaq225q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Nov 2026 17:11:27 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6A9HBNUD44564814
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Nov 2026 17:11:24 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E3E4D20040;
+ Mon,  9 Nov 2026 17:11:23 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BF7102004B;
+ Mon,  9 Nov 2026 17:11:23 +0000 (GMT)
+Received: from a46lp03.lnxne.boe (unknown [9.87.84.240])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Nov 2026 17:11:23 +0000 (GMT)
+From: Bjoern Walk <bwalk@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v2 4/5] docs/system/hexagon: document SDK semihosting workloads
-Date: Mon,  9 Nov 2026 12:30:16 -0800
-Message-Id: <20261109203017.262225-5-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261109203017.262225-1-brian.cain@oss.qualcomm.com>
-References: <20261109203017.262225-1-brian.cain@oss.qualcomm.com>
+Cc: Steffen Eiden <seiden@linux.ibm.com>,
+ Andreas Grapentin <gra@linux.ibm.com>,
+ Bjoern Walk <bwalk@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ kvm@vger.kernel.org (open list:Overall KVM CPUs)
+Subject: [RFC Patch 7/8] kvm: Adjust system/kvm.h for updated KVM kernel
+ headers
+Date: Mon,  9 Nov 2026 18:10:33 +0100
+Message-ID: <20261109171036.3806884-8-bwalk@linux.ibm.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261109171036.3806884-1-bwalk@linux.ibm.com>
+References: <20261109171036.3806884-1-bwalk@linux.ibm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA4MSBTYWx0ZWRfXzj8XSNM7gYXt
- CzelPK++1yyfLuVqU3GxCYFzCNEBqxyG3ANEG/Pgz4la7y9tn4iNZ7cZGpsAtft6oPdGP2ryWv5
- wn2/9Y4tosANvNfedp9/Dx4X52VT0+Z/m0huwuXfJndDbbVwNZ6O562R49tfxpGYNuv4OOZbFNl
- ySDKAIk4WKrO770MBO33uJ1bvZFBvr1ajTPTw/iTSx9jQjr5mptCbyqxRjIov2fSnQnNtBBsd6Y
- 65ZXkAJaISWe1pFiUMSs0iSH+yWkajs1NjSvJc53tMw821wqu3op66U+Bt65XLxlOmCyooHfX7w
- VMpEdhrshA2rgvXa8f04Snn2zYuHMkEv7uO4gfcgluIjxP4xpS/yVLw86WLl87OodiWZOO68ULx
- 6t1Yi4NyA70QyCMpMizNChWwKMj8x26r4P1zbJc6YIMJFpUstyLG/CSNmFpjyrEZTB7Xmv2AKJD
- 5aXej8DR7g2pc8IHwBA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA4MSBTYWx0ZWRfX67hPO8yCd2YH
- laYatNzokgxJ3H7lS5N8GZ3nwFCOU/Aq6764/GqWHypyMlzZ1mx9EI4o/LvTf//4rLgoxYvrCAF
- bAxVfTVMhe9N3P0K81kMtfKsD3ZyJsA=
-X-Proofpoint-GUID: 8Hk1vDYrNLsTFPKYoSF_k-LyewKo3D06
-X-Authority-Analysis: v=2.4 cv=B6gsQ+tM c=1 sm=1 tr=0 ts=6af22d63 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=9FDP4kz7Fxl891_oENQA:9 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-ORIG-GUID: 8Hk1vDYrNLsTFPKYoSF_k-LyewKo3D06
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: mP6pKWoY_GauKBsNVWh_nUYzSaIVIDy1
+X-Authority-Analysis: v=2.4 cv=PeVqFShd c=1 sm=1 tr=0 ts=6af1fec0 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=uaUpoLaAEw-MedtIiS0A:9
+X-Proofpoint-GUID: mP6pKWoY_GauKBsNVWh_nUYzSaIVIDy1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA2NiBTYWx0ZWRfX/EV9vu8qJL+W
+ P8wqIJj380+6jq2+A95Li9tPrXs65DdVa4EiTVEGE7p5FnmkfevCQYxOfH1op10dBwET0jIE73K
+ EZu4KRL9AKhSP8jYdGuioPEqfI9g5v6Ss0vn2kk5UXsuUKkGtj7G2TiA0wm+iBuwz6xcIwK7P3s
+ FJFOc1WjlG1+nXgU+ag7AmI7739OjFe35OX6rroJwuLsPUQP44Pi7P+OMNmAtT9RYdKxN3dJrjV
+ rk0Uc4ikeaR0rzTHILJ9MQgqWVPZdQawxGo3FVgM7UqlSvhPB+3qeyf/rm1eQYO9XKcIbcF5M+U
+ zjUDYSmRBOsdX6pkELY3o79OzlEqq71DfKiZIneyAOiaI0NRXo/ufF7AtCHJV+EtTVvBKwAxvaN
+ JsABx5uZwsRlQxbiHy6N40nh3y0uFPGM9CniO/0CI8lSScbklta5VWIE6X0gYy23UzUwHc5Zt58
+ GI2IiH4y/3RsAEF0nwQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA2NiBTYWx0ZWRfX1cjAs5hXW9vO
+ 4ycwtNMUHBstNJNyqcRyeuOpKjFqoGLat5ta0VwZlULn9EDtFZPppveCmw5jWzR0iCv+1tHCkPE
+ ZPO0xU1qxZ0rs4aI3a8Y+jJ7f6QT/zY=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-09_06,2026-11-06_01,2025-10-01_01
+ definitions=2026-11-09_05,2026-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611090081
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ bulkscore=0 phishscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 spamscore=0 malwarescore=0 clxscore=1011 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611090066
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=bwalk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 09 Nov 2026 15:31:04 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -150,130 +121,53 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-U2hvdyBob3cgdG8gcnVuIHN0YW5kYWxvbmUgU0RLIHByb2dyYW1zIGFuZCB0aGUgUXVSVCBsb2Fk
-ZXIgY2hhaW4gd2l0aAphbiBleHBsaWNpdCB2NjggbWFjaGluZS4KClJldmlld2VkLWJ5OiBQaWVy
-cmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQG9zcy5xdWFsY29tbS5jb20+ClNpZ25lZC1v
-ZmYtYnk6IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0tCiBkb2Nz
-L3N5c3RlbS9oZXhhZ29uL3Nkay1wcm9ncmFtcy5yc3QgfCAxNTUgKysrKysrKysrKysrKysrKysr
-KysrKysrKysrCiBkb2NzL3N5c3RlbS90YXJnZXQtaGV4YWdvbi5yc3QgICAgICAgfCAgIDMgKwog
-MiBmaWxlcyBjaGFuZ2VkLCAxNTggaW5zZXJ0aW9ucygrKQogY3JlYXRlIG1vZGUgMTAwNjQ0IGRv
-Y3Mvc3lzdGVtL2hleGFnb24vc2RrLXByb2dyYW1zLnJzdAoKZGlmZiAtLWdpdCBhL2RvY3Mvc3lz
-dGVtL2hleGFnb24vc2RrLXByb2dyYW1zLnJzdCBiL2RvY3Mvc3lzdGVtL2hleGFnb24vc2RrLXBy
-b2dyYW1zLnJzdApuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwMDAwMC4uMmVkZmUy
-OGFkNjYKLS0tIC9kZXYvbnVsbAorKysgYi9kb2NzL3N5c3RlbS9oZXhhZ29uL3Nkay1wcm9ncmFt
-cy5yc3QKQEAgLTAsMCArMSwxNTUgQEAKKy4uIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwt
-Mi4wLW9yLWxhdGVyCisKK1J1bm5pbmcgU0RLIHByb2dyYW1zCis9PT09PT09PT09PT09PT09PT09
-PQorCitgYHFlbXUtc3lzdGVtLWhleGFnb25gYCBjYW4gcnVuIFNESyBwcm9ncmFtcyB0aGF0IG5v
-cm1hbGx5IHJ1biB1bmRlcgorYGBoZXhhZ29uLXNpbWBgLiBUaGUgYm9vdCBpbWFnZSBkZXBlbmRz
-IG9uIHRoZSBydW50aW1lIHRoZSBwcm9ncmFtIGV4cGVjdHM6CisKKy4uIGxpc3QtdGFibGU6Ogor
-ICAgOmhlYWRlci1yb3dzOiAxCisKKyAgICogLSBVc2UgY2FzZQorICAgICAtIEluaXRpYWwgaW1h
-Z2UKKyAgICAgLSBTdWJzZXF1ZW50IHN0YWdlcworICAgKiAtIFNESyBzdGFuZGFsb25lIE9TCisg
-ICAgIC0gYGAta2VybmVsIHByb2cuZWxmYGAKKyAgICAgLSBTdGFydHVwIGNvZGUgY2FsbHMgdGhl
-IHByb2dyYW0ncyBgYG1haW4oKWBgCisgICAqIC0gU0RLIFF1UlQgZHluYW1pYyBwcm9ncmFtCisg
-ICAgIC0gYGAta2VybmVsIHJ1bmVsZi5wYm5gYAorICAgICAtIFF1UlQgbG9hZHMgYGBydW5fbWFp
-bl9vbl9oZXhhZ29uX3NpbWBgLCB3aGljaCBsb2FkcyBgYHVzZXJwcm9nLnNvYGAKKworU0RLIHBy
-b2dyYW1zIGFuZCBzZW1paG9zdGluZworLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQorCitU
-aGUgc2ltdWxhdG9yLWNvbXBhdGlibGUgbWFjaGluZXMsIHN1Y2ggYXMgYGBWNjZHXzEwMjRgYCBh
-bmQKK2BgVjY4Tl8xMDI0YGAsIHByb3ZpZGUgc2VtaWhvc3RpbmcgYnkgZGVmYXVsdC4gVGhlIFNE
-SyBydW50aW1lIHVzZXMKK2BgdHJhcDBgYCBjYWxscyBmb3Igc2VydmljZXMgc3VjaCBhcyBjb25z
-b2xlIEkvTywgaG9zdCBmaWxlIGFjY2VzcywgYW5kCitwcm9ncmFtIHRlcm1pbmF0aW9uLgorCitT
-ZWUgOnJlZjpgaGV4YWdvbi1zZW1paG9zdGluZ2AgZm9yIG1vcmUgaW5mby4KKworVGhlIGV4YW1w
-bGVzIGJlbG93IHVzZSB2NjggU0RLIGFydGlmYWN0cyB3aXRoIGBgLU0gVjY4Tl8xMDI0YGAuCisK
-K1N0YW5kYWxvbmUgT1MgcHJvZ3JhbXMKK35+fn5+fn5+fn5+fn5+fn5+fn5+fn4KKworQnkgZGVm
-YXVsdCwgYGBoZXhhZ29uLWNsYW5nYGAgbGlua3MgYSBiYXJlLW1ldGFsIGV4ZWN1dGFibGUgd2l0
-aCB0aGUgU0RLJ3MKK3N0YW5kYWxvbmUgT1Mgc3RhcnR1cCBjb2RlIGFuZCBDIHJ1bnRpbWUuIFRo
-aXMgc21hbGwgcnVudGltZSBpbml0aWFsaXplcwordGhlIG1hY2hpbmUsIGNhbGxzIGBgbWFpbigp
-YGAsIGFuZCBpbXBsZW1lbnRzIGhvc3RlZCBzZXJ2aWNlcyB0aHJvdWdoCitzZW1paG9zdGluZy4K
-KworRm9yIGV4YW1wbGUsIHNhdmUgdGhlIGZvbGxvd2luZyBhcyBgYHByb2cuY2BgOgorCisuLiBj
-b2RlLWJsb2NrOjogYworCisgICAgI2luY2x1ZGUgPHN0ZGlvLmg+CisKKyAgICBpbnQgbWFpbihp
-bnQgYXJnYywgY2hhciAqKmFyZ3YpCisgICAgeworICAgICAgICBmb3IgKGludCBpID0gMDsgaSA8
-IGFyZ2M7IGkrKykgeworICAgICAgICAgICAgcHJpbnRmKCJhcmd2WyVkXSA9ICVzXG4iLCBpLCBh
-cmd2W2ldKTsKKyAgICAgICAgfQorICAgICAgICByZXR1cm4gMDsKKyAgICB9CisKK1dpdGggdGhl
-IFNESyB0b29scyBvbiBgYFBBVEhgYCwgYnVpbGQgYW5kIHJ1biBpdCB3aXRoOgorCisuLiBjb2Rl
-LWJsb2NrOjogc2gKKworICAgIGhleGFnb24tY2xhbmcgLW12NjggcHJvZy5jIC1vIHByb2cuZWxm
-CisgICAgcWVtdS1zeXN0ZW0taGV4YWdvbiAtTSBWNjhOXzEwMjQgLWRpc3BsYXkgbm9uZSBcCisg
-ICAgICAgIC1rZXJuZWwgLi9wcm9nLmVsZiAtYXBwZW5kICJmb28gYmFyIgorCitUaGUgcHJvZ3Jh
-bSBwcmludHM6CisKKy4uIGNvZGUtYmxvY2s6OiB0ZXh0CisKKyAgICBhcmd2WzBdID0gLi9wcm9n
-LmVsZgorICAgIGFyZ3ZbMV0gPSBmb28KKyAgICBhcmd2WzJdID0gYmFyCisKK0d1ZXN0IGNvbW1h
-bmQtbGluZSBhcmd1bWVudHMKK35+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn4KKworVGhlIGV4
-YW1wbGUgYWJvdmUgcGFzc2VzIHRoZSBhcmd1bWVudHMgd2l0aCBgYC1hcHBlbmRgYC4gUUVNVSB1
-c2VzIHRoZQorYGAta2VybmVsYGAgZmlsZW5hbWUgYXMgdGhlIGZpcnN0IHNlbWlob3N0aW5nIGFy
-Z3VtZW50IGFuZCBzcGxpdHMKK2BgLWFwcGVuZGBgIG9uIHNwYWNlcyB0byBzdXBwbHkgdGhlIHJl
-bWFpbmluZyBhcmd1bWVudHMuIFRoZSBob3N0IHNoZWxsCitxdW90ZXMga2VlcCBgYGZvbyBiYXJg
-YCB0b2dldGhlciBhcyB0aGUgdmFsdWUgb2YgdGhlIFFFTVUgb3B0aW9uOyB0aGUKK2d1ZXN0IHJ1
-bnRpbWUgc3Vic2VxdWVudGx5IHBhcnNlcyB0aGUgc2VtaWhvc3RpbmcgY29tbWFuZCBsaW5lLgor
-CitZb3UgY2FuIGluc3RlYWQgc3BlY2lmeSB0aGUgc2VtaWhvc3RpbmcgY29tbWFuZCBsaW5lIHdp
-dGggYGBhcmc9YGAgb3B0aW9uczoKKworLi4gY29kZS1ibG9jazo6IHNoCisKKyAgICBxZW11LXN5
-c3RlbS1oZXhhZ29uIC1NIFY2OE5fMTAyNCAtZGlzcGxheSBub25lIC1rZXJuZWwgLi9wcm9nLmVs
-ZiBcCisgICAgICAgIC1zZW1paG9zdGluZy1jb25maWcgJ2VuYWJsZT1vbix0YXJnZXQ9bmF0aXZl
-LGFyZz0uL3Byb2cuZWxmLGFyZz1mb28sYXJnPWJhcicKKworSW5jbHVkZSB0aGUgcHJvZ3JhbSBu
-YW1lIGFzIHRoZSBmaXJzdCBgYGFyZz1gYCB2YWx1ZS4KKworYGB0YXJnZXQ9bmF0aXZlYGAgc2Vs
-ZWN0cyBRRU1VJ3MgaW1wbGVtZW50YXRpb24gb2Ygc2VtaWhvc3RpbmcgZXZlbiB3aGVuCithIGRl
-YnVnZ2VyIGlzIGNvbm5lY3RlZC4gVG8gY29ubmVjdCB0aGUgc2VtaWhvc3RpbmcgY29uc29sZSBl
-eHBsaWNpdGx5IHRvCit0aGUgdGVybWluYWwsIGFkZCBhIGNoYXJhY3RlciBkZXZpY2UgYW5kIHNl
-bGVjdCBpdCB3aXRoIGBgY2hhcmRldj1gYDoKKworLi4gY29kZS1ibG9jazo6IHNoCisKKyAgICBx
-ZW11LXN5c3RlbS1oZXhhZ29uIC1NIFY2OE5fMTAyNCAtZGlzcGxheSBub25lIFwKKyAgICAgICAg
-LWNoYXJkZXYgc3RkaW8saWQ9c2VtaSBcCisgICAgICAgIC1zZW1paG9zdGluZy1jb25maWcgZW5h
-YmxlPW9uLHRhcmdldD1uYXRpdmUsY2hhcmRldj1zZW1pIFwKKyAgICAgICAgLWtlcm5lbCAuL3By
-b2cuZWxmIC1hcHBlbmQgImZvbyBiYXIiCisKK1F1UlQgcHJvZ3JhbXMgYW5kIHRoZSBTREsgbG9h
-ZGVyIGNoYWluCit+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fgorCitBbiBT
-REsgUXVSVCBkeW5hbWljIHRlc3QgY29uc2lzdHMgb2YgdGhyZWUgZ3Vlc3QgaW1hZ2VzOgorCisx
-LiBgYHJ1bmVsZi5wYm5gYCBib290cyBRdVJUIGFuZCBsb2FkcyBhIHVzZXIgcHJvY2VzcyBmcm9t
-IGEgaG9zdCBmaWxlLgorMi4gYGBydW5fbWFpbl9vbl9oZXhhZ29uX3NpbWBgIGlzIHRoYXQgcHJv
-Y2Vzcy4gSXQgaW5pdGlhbGl6ZXMgdGhlIGR5bmFtaWMKKyAgIGxvYWRlciBhbmQgbG9hZHMgdGhl
-IGFwcGxpY2F0aW9uJ3Mgc2hhcmVkIG9iamVjdC4KKzMuIGBgdXNlcnByb2cuc29gYCBleHBvcnRz
-IGBgbWFpbihpbnQgYXJnYywgY2hhciAqKmFyZ3YpYGAsIHdoaWNoIHRoZQorICAgcnVubmVyIGlu
-dm9rZXMuCisKK1FFTVUgaW5pdGlhbGx5IGxvYWRzIG9ubHkgYGBydW5lbGYucGJuYGAuIFRoZSBz
-dWJzZXF1ZW50IHN0YWdlcyByZWFkIHRoZQorb3RoZXIgaW1hZ2VzIHRocm91Z2ggc2VtaWhvc3Rp
-bmcuIFVzZSBtYXRjaGluZyBTREsgYXJjaGl0ZWN0dXJlIHZhcmlhbnRzCitmb3IgdGhlIGJvb3Qg
-aW1hZ2UsIHJ1bm5lciwgYW5kIGFwcGxpY2F0aW9uLiBGb3IgZXhhbXBsZSwgd2l0aCBIZXhhZ29u
-CitTREsgNi40IGFuZCBpdHMgdG9vbHYxOSB2NjggYXJ0aWZhY3RzOgorCisuLiBjb2RlLWJsb2Nr
-Ojogc2gKKworICAgIHJ1bmVsZj0iJEhFWEFHT05fU0RLX1JPT1QvcnRvcy9xdXJ0L2NvbXB1dGV2
-Njgvc2Rrc2ltX2Jpbi9ydW5lbGYucGJuIgorICAgIHJ1bm5lcj0iJEhFWEFHT05fU0RLX1JPT1Qv
-bGlicy9ydW5fbWFpbl9vbl9oZXhhZ29uL3NoaXAvaGV4YWdvbl90b29sdjE5X3Y2OC9ydW5fbWFp
-bl9vbl9oZXhhZ29uX3NpbSIKKyAgICBxZW11LXN5c3RlbS1oZXhhZ29uIC1NIFY2OE5fMTAyNCAt
-ZGlzcGxheSBub25lIFwKKyAgICAgICAgLWtlcm5lbCAiJHJ1bmVsZiIgLWFwcGVuZCAiJHJ1bm5l
-ciAtLSAuL3VzZXJwcm9nLnNvIGZvbyBiYXIiCisKK0J1aWxkIGBgdXNlcnByb2cuc29gYCB3aXRo
-IHRoZSBTREsncyBRdVJUIHNoYXJlZC1saWJyYXJ5IGJ1aWxkIHJ1bGVzLAoraW5jbHVkaW5nIGFu
-eSBsaWJyYXJpZXMgbmVlZGVkIGJ5IHRoZSBhcHBsaWNhdGlvbiwgYW5kIHBsYWNlIGl0cyBzaGFy
-ZWQKK2RlcGVuZGVuY2llcyB3aGVyZSB0aGUgU0RLIGR5bmFtaWMgbG9hZGVyIGNhbiBmaW5kIHRo
-ZW0uCisKK1RoZSBjb21tYW5kIGxpbmUgZXhwb3NlZCB0aHJvdWdoIHNlbWlob3N0aW5nIGlzOgor
-CisuLiBjb2RlLWJsb2NrOjogdGV4dAorCisgICAgPHJ1bmVsZi5wYm4gcGF0aD4gPHJ1bm5lciBw
-YXRoPiAtLSAuL3VzZXJwcm9nLnNvIGZvbyBiYXIKKworVGhlIGZpZWxkcyBoYXZlIHRoZSBmb2xs
-b3dpbmcgcm9sZXM6CisKKy4uIGNzdi10YWJsZTo6CisgICA6aGVhZGVyOiAiRmllbGQiLCAiQ29u
-c3VtZXIiLCAiTWVhbmluZyIKKworICAgPHJ1bmVsZi5wYm4gcGF0aD4sIFNESyBzdGFydHVwLCBC
-b290IGltYWdlIG5hbWUKKyAgIDxydW5uZXIgcGF0aD4sIHJ1bmVsZi5wYm4sIFByb2Nlc3MgRUxG
-IHRvIGxvYWQKKyAgIC0tLCBydW5fbWFpbl9vbl9oZXhhZ29uX3NpbSwgRW5kIG9mIHJ1bm5lciBv
-cHRpb25zCisgICAuL3VzZXJwcm9nLnNvLCBEeW5hbWljIGxvYWRlciwgU2hhcmVkIG9iamVjdCBl
-eHBvcnRpbmcgbWFpbigpCisgICBmb28gYmFyLCBBcHBsaWNhdGlvbiwgYXJndlsxXSBhbmQgYXJn
-dlsyXQorCitUaGUgYXBwbGljYXRpb24ncyBgYGFyZ3ZbMF1gYCBpcyBgYC4vdXNlcnByb2cuc29g
-YC4gV2hlbiB0cmFuc2xhdGluZyBhbgorU0RLIHNpbXVsYXRvciBjb21tYW5kIGBgcnVuZWxmLnBi
-biAtLSBydW5uZXIgLS0gdXNlcnByb2cuc29gYCwgb21pdCB0aGUKK3NlcGFyYXRvciBpbW1lZGlh
-dGVseSBhZnRlciBgYHJ1bmVsZi5wYm5gYCBmcm9tIFFFTVUncyBgYC1hcHBlbmRgYCB2YWx1ZS4K
-K1RoZSBzZXBhcmF0b3IgYWZ0ZXIgdGhlIHJ1bm5lciByZW1haW5zIHBhcnQgb2YgdGhlIGd1ZXN0
-IGNvbW1hbmQgbGluZS4KKworVGhlIGVxdWl2YWxlbnQgZXhwbGljaXQgc2VtaWhvc3RpbmcgY29u
-ZmlndXJhdGlvbiBpczoKKworLi4gY29kZS1ibG9jazo6IHNoCisKKyAgICBxZW11LXN5c3RlbS1o
-ZXhhZ29uIC1NIFY2OE5fMTAyNCAtZGlzcGxheSBub25lIC1rZXJuZWwgIiRydW5lbGYiIFwKKyAg
-ICAgICAgLXNlbWlob3N0aW5nLWNvbmZpZyAiZW5hYmxlPW9uLHRhcmdldD1uYXRpdmUsYXJnPSRy
-dW5lbGYsYXJnPSRydW5uZXIsYXJnPS0tLGFyZz0uL3VzZXJwcm9nLnNvLGFyZz1mb28sYXJnPWJh
-ciIKZGlmZiAtLWdpdCBhL2RvY3Mvc3lzdGVtL3RhcmdldC1oZXhhZ29uLnJzdCBiL2RvY3Mvc3lz
-dGVtL3RhcmdldC1oZXhhZ29uLnJzdAppbmRleCBlMDkxYjc1YzdhMy4uZGFjOGI5YjM0ODMgMTAw
-NjQ0Ci0tLSBhL2RvY3Mvc3lzdGVtL3RhcmdldC1oZXhhZ29uLnJzdAorKysgYi9kb2NzL3N5c3Rl
-bS90YXJnZXQtaGV4YWdvbi5yc3QKQEAgLTkzLDYgKzkzLDggQEAgaXRzIGVudHJ5IHBvaW50OjoK
-IAogICAgICQgcWVtdS1zeXN0ZW0taGV4YWdvbiAtTSBWNjhOXzEwMjQgLWtlcm5lbCAuL3Byb2cu
-ZWxmIC1hcHBlbmQgJ2FyZzEgYXJnMicKIAorLi4gX2hleGFnb24tc2VtaWhvc3Rpbmc6CisKIFNl
-bWlob3N0aW5nCiAtLS0tLS0tLS0tLQogSGV4YWdvbiBzdXBwb3J0cyBhIHNlbWlob3N0aW5nIGlu
-dGVyZmFjZSBzaW1pbGFyIHRvIG90aGVyIGFyY2hpdGVjdHVyZXMnLgpAQCAtMTA3LDYgKzEwOSw3
-IEBAIG1hY2hpbmVzLiBUaGlzIGNhbiBiZSBmdXJ0aGVyIGNvbmZpZ3VyZWQgdGhyb3VnaCBgYC1z
-ZW1paG9zdGluZy1jb25maWdgYC4KICAgIDpjYXB0aW9uOiBIZXhhZ29uIGRvY3VtZW50YXRpb24K
-IAogICAgaGV4YWdvbi9tYWNoaW5lcworICAgaGV4YWdvbi9zZGstcHJvZ3JhbXMKICAgIGhleGFn
-b24vYm9vdAogICAgaGV4YWdvbi9lbXVsYXRpb24KICAgIGhleGFnb24vY2RzcAotLSAKMi4zNC4x
-Cgo=
+For the per-target code path which needs architecture-specific
+definitions, include <asm/kvm.h>.
+
+For the common code path, declare structs that <linux/kvm.h> consumes
+from <asm/kvm.h> as empty and poison all identifiers that are size
+dependent. This should allow common files to consume "system/kvm.h" with
+a guarantee that there is no size inconsistency.
+
+Signed-off-by: Andreas Grapentin <gra@linux.ibm.com>
+Signed-off-by: Bjoern Walk <bwalk@linux.ibm.com>
+---
+ include/system/kvm.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index 84c2efe9..51f360cd 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -24,12 +24,20 @@
+ 
+ #ifdef COMPILING_PER_TARGET
+ # ifdef CONFIG_KVM
++#  include <asm/kvm.h>
+ #  include <linux/kvm.h>
+ #  define CONFIG_KVM_IS_POSSIBLE
+ # endif
+ #else
+ # define CONFIG_KVM_IS_POSSIBLE
++  struct kvm_debug_exit_arch {};
++  struct kvm_sync_regs {};
++  struct kvm_guest_debug_arch {};
+ # include <linux/kvm.h>
++# pragma GCC poison kvm_debug_exit_arch
++# pragma GCC poison kvm_sync_regs
++# pragma GCC poison kvm_guest_debug_arch
++# pragma GCC poison kvm_guest_debug
+ #endif
+ 
+ #ifdef CONFIG_KVM_IS_POSSIBLE
+-- 
+2.56.0
+
 
