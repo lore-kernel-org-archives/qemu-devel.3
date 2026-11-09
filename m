@@ -1,84 +1,156 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C15F606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 19:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FD6606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 19:16:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=fZnyGpsR
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HbxOAIbc;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=gWHWxXKN
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQUav-0001dt-6T; Mon, 09 Nov 2026 13:59:53 -0500
+	id 1xQUpm-0006yz-SU; Mon, 09 Nov 2026 14:15:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQUar-0001WR-5b
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:59:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xQUpj-0006yM-Go
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:15:11 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQUap-0006M4-BS
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 13:59:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794250786;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OBhOYGW63+HK7TQ6MenaEpD8gvCGw1S/+JkFwZX0PFI=;
- b=fZnyGpsRVgKDomz4XtO8E7fHHaUZLCi+q2HAimLktX0iGkMd0/go2Ng6bYWRHZ45f3E4dU
- MPPhm3Er4iRjA4t3vxj15+SfHujIbSkcJRdcn+yVvinzK1yfLRPrN7EQwk1yfhCPQz6l9Q
- W2yRzi5pX0o/Y22MnU6Z3hgcO2D6bkQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-vpTCLsTbPRmlaLBpyEUBxQ-1; Mon,
- 09 Nov 2026 13:59:42 -0500
-X-MC-Unique: vpTCLsTbPRmlaLBpyEUBxQ-1
-X-Mimecast-MFC-AGG-ID: vpTCLsTbPRmlaLBpyEUBxQ_1794250780
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F508195BDF0; Mon,  9 Nov 2026 18:59:40 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.81])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 779C61956087; Mon,  9 Nov 2026 18:59:37 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Alistair Francis <alistair.francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 7/7] debug/mem: HACK add qemu_name_buffer
-Date: Mon,  9 Nov 2026 13:59:07 -0500
-Message-ID: <20261109185907.3220584-8-jsnow@redhat.com>
-In-Reply-To: <20261109185907.3220584-1-jsnow@redhat.com>
-References: <20261109185907.3220584-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xQUpg-0008Da-NN
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:15:11 -0500
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A9HGwhL1865704
+ for <qemu-devel@nongnu.org>; Mon, 9 Nov 2026 19:15:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ RJsJw/yTyfg1PMZ/TQYpbU7uysIal7ki9lqSVfzy85s=; b=HbxOAIbcnrrcK6gT
+ UCwvUGMh2uE+rO2bTIIQgH6GRoDGiTTpz3ZFf6g4YNTYu6sOMt00RJLBJcOCP0Du
+ MqrEkVfQ7CuSEAGVljTCFE7mrv1pKUO//eSIzX6R8kdRw1aEco73iJOaefdyo/wA
+ nyvC6uDE9YrXYD5rs7+wOXPEKTIafm0HPD97tYfGLSudNwQHrbRg62rENMiG0mPe
+ lc3a4J6tzwAkV9nx6C69I1vaPG3wKUmTqTr4unp8NH4kh11DdZfq2UaCKWCHK3Pl
+ mTDR2FVsSsyoMOvbiICWDtmuShIV/5ZmHDYN9RTPrYUcUT/A95H4AI3S8phj5MPp
+ tWxIBw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hue0qshqu-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 19:15:05 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-946038e22f5so284927485a.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 11:15:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1794251705; x=1794856505; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=RJsJw/yTyfg1PMZ/TQYpbU7uysIal7ki9lqSVfzy85s=;
+ b=gWHWxXKN77Y6F1gpvfMShnJm5p+GYQrzOmLssFmvk+ypkHZggfa+pxmcIR/OKYhYe5
+ ncyrzCitVb4Jo5GfZNMxEemqXiEs6imAGSPOd2GvjI6i6CHmzYKERTWXkpvReTNtQZzu
+ 7jGXoh5sSAFmISZDn54Lm2Ea9auMoxNLDn15hJ1MveCjABOQyX1aQzaRioQj5ls+3d1U
+ qpZKJlO014PYn0FkQ8hVuX8mM75IABYvf6936aSkxuxyRbMUzYTwJZ0YbUvYxwmr3wKP
+ EpbL90RWVQhs/InFB77iiHY/9F59IvrxOII4YT2MAiBDE+wnTKaZHLFf8/lnCpVwBGkM
+ VhMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794251705; x=1794856505;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=RJsJw/yTyfg1PMZ/TQYpbU7uysIal7ki9lqSVfzy85s=;
+ b=XZsCp8kAv7AgGuQSptu7q4jvVpLyaCPdqzFYA+mfdgjfXW8NbCeme+7TOcF73CEzAM
+ c4WZ9DRhswla6HAchftDjZ6CM/IsIuoVmAghXjoG/eHRGsPWHCktThLs7TPhD+ta4Iq7
+ N9xKyDwSrkBrV4Byoz064jSUaNM5l9kUqFbsRDfJL5pniKsl62bXgOcWkiqSnEiIE+cD
+ AG0gs4NoAfmJs66Z9zl2E2suFOYk301jnNgNCXyPhks8g0Tvq4VA33UsZvhKYKQCouHS
+ x5kzeIzE6z7YbV1oUGH0dNyyIExnclxYXsuQ36ZOtBXmPhV4JSKYZvWVCssPujqCIsVZ
+ 4UlA==
+X-Forwarded-Encrypted: i=1;
+ AL+hErH0VZ8Pg5KqCRKJ3RPR8ktG3UT7UFdkwdW3SXsqgcUum4X40XpCanHTy2o0IfiPGN4cuwxXWy2NbDFv@nongnu.org
+X-Gm-Message-State: APuU4Z8f1knrPoH5YSxJds/yyZdD/cFq99mK1OaQo4yO0D2jvy0+Gcyb
+ k1POsxIxwvc+j5QZWRI/sXIlVjxQorBInPDOCYi1PVWyvIPTxWqZG9lnOBibG3ZXaHPLBPjGmn6
+ Sgtp/8OB35lI23mzy8mHfY5D1+H03NMiljHOWqiaGdVMkwZKPJXU5UaKa5A==
+X-Gm-Gg: AYBFou2+fvJHm+sBFPqoPm7RwqXu3RCNQc4gt1dKFbHRlRfHxNkOKGXkmb6zTRU4hTz
+ rc8RBRx4I5duJ+CwnpQ2rZKpw6aGcE/eATQZldCPe5vLXBbLUWsR8yY/hLt60IU4/GFCrSO1xcz
+ aJvjGEcmg7R9RmVhP3F0QV3b5K75wV1GYN6OE9I/VNGaGqIU0YXx2IPNwlbEt9raSJ3zrwAjxoA
+ aZ/wlqosowxNla4KUeS0j8b4ZNFAZsRNWxLyqQD2fpWg8WOJb/I9nsFPL4hkXC2jR44hfxHwv3x
+ VHc/xrpsn/k5jKL8xSIbYcTjlYXxIGorEPTvrLSOwNGrkgOLI0aLSoCX78pwlA/8pRFpmn0DgPU
+ ZJL9jOVA5cG4UZyZpFRvbS+RY/Kt2yBmbo6KUksnc5P/oj1M+mxl/TK7W67IQaAjE1qrrqqS6yC
+ NORJ8RS0BV
+X-Received: by 2002:a05:620a:640d:b0:93e:942f:b8a5 with SMTP id
+ af79cd13be357-9479f31bdecmr58569185a.14.1794251704598; 
+ Mon, 09 Nov 2026 11:15:04 -0800 (PST)
+X-Received: by 2002:a05:620a:640d:b0:93e:942f:b8a5 with SMTP id
+ af79cd13be357-9479f31bdecmr58565685a.14.1794251704015; 
+ Mon, 09 Nov 2026 11:15:04 -0800 (PST)
+Received: from [192.168.68.100] ([152.234.124.231])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-9479e770d7csm43793485a.17.2026.11.09.11.15.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Nov 2026 11:15:03 -0800 (PST)
+Message-ID: <bbe309da-44d5-4bbb-ac8f-be6bd87b5334@oss.qualcomm.com>
+Date: Mon, 9 Nov 2026 16:14:59 -0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] hw/riscv: add RPMI support for server reference
+ platform
+To: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20261104050650.776580-1-subrahmanya.lingappa@oss.qualcomm.com>
+ <20261104050650.776580-2-subrahmanya.lingappa@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261104050650.776580-2-subrahmanya.lingappa@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA3NiBTYWx0ZWRfX/tRO5xq5Ur7S
+ OfX656Lpe6pZNkiV/oSJxW7mzdfOFvb07UjWLX78+C6ziNwxW4JlP+ZLR2dAqOBYG5rDhuIo5tD
+ C8qq1YhIRTrdGmjh2A7y5hGFsGVIcRFpIesFZDGDQ8ZXl73fVjKJCoUwUJQZX81JLk9uGqwJCZx
+ DwWmMuc4EyPWw53gU1gfNTRWKTuQHGQL5L24Zx+AXfvetyCRhFI2XalbD76A/DSyl5jTbVyTEgg
+ r1NzdOdAo48WPbgDZPH9e4wLACqVVq2o5IVIKOOo1TR43GHNSl/xPqls0DKtR88h1UXhXc0T4dS
+ B19B6Uz92pQlQ/qgZz0I/I+zkGtv8PblRIj0p8+S9sP54qeTy3L1/RQyPDgKy23y4Ys4LUhUFiF
+ hn+ccs6fXcUkM3H4vr3QVpKDqqh40xejicXyuM3iDh4PtS7Uv9k72ahwrEffkgPVLVCQUjSqz/E
+ 3s/AjAIFl2W8T2C5Mlw==
+X-Authority-Analysis: v=2.4 cv=DZuCOftW c=1 sm=1 tr=0 ts=6af21bb9 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=8elE1k/PHQNyZ14TNTodlQ==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=NEAV23lmAAAA:8 a=NLiCwHATAAAA:8 a=V1jnuoLLAAAA:20 a=EUspDBNiAAAA:8
+ a=Toitx6uVrjPLbkQhwn0A:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=F9tHCgz3TLBaZgltkx5D:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-GUID: z5jv-qOmMxP2eyNS1qHZAMhC54SYU1Yw
+X-Proofpoint-ORIG-GUID: z5jv-qOmMxP2eyNS1qHZAMhC54SYU1Yw
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA3NiBTYWx0ZWRfX/uh0GoacJ6O2
+ PRJkGMiWzD6LfFZqodoeRW0PlT7FIhH/R/JosgOg5hicBwOoAr2TY7oNpqEiyS/GN0mKGRkHLwV
+ gIlqyC/eqFsKCXhjP2dmOX2A8mJg7x4=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-09_06,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
+ impostorscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611090076
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,199 +162,379 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This is a hack to allow us to name malloc'd buffers that are backed by
-anonymous mmap allocations.
 
-Quite useful in my debugging, probably not quite appropriate for
-upstream unless we can figure out a more robust method for identifying
-when we get an mmap'd page from malloc and adjusting the pointer
-offset accordingly - I am currently subtracting a fixed 16 bytes
-because that "works on my system", and I have no clue if that's
-appropriate everywhere or not.
 
-At least this way, my trick is published to the list for posterity.
+On 11/4/2026 2:06 AM, Subrahmanya Lingappa wrote:
+> Add opt-in RPMI platform management to the riscv-server-ref machine for
+> firmware clients that use the RPMI transport.
+> 
+> RPMI is disabled by default so the existing board remains migratable and
+> retains its legacy reset and poweroff device-tree nodes. The rpmi=on option
+> realizes the unmigratable RPMI device, advertises the Base, System Reset,
+> HSM, and System Suspend services, and omits those legacy nodes.
+> 
+> Explicit RPMI enablement rejects KVM and builds without librpmi. Document
+> the property, migration restriction, build requirements, and both
+> device-tree layouts.
+> 
+> Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+> ---
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- include/qemu/bitmap.h   |  6 ++++++
- include/qemu/mmap-vma.h |  3 +++
- hw/core/loader.c        |  3 +++
- hw/i386/x86-common.c    |  3 +++
- system/device_tree.c    |  2 ++
- system/physmem.c        |  8 ++++++--
- util/mmap-vma.c         | 23 +++++++++++++++++++++++
- 7 files changed, 46 insertions(+), 2 deletions(-)
 
-diff --git a/include/qemu/bitmap.h b/include/qemu/bitmap.h
-index 0044333cb51..6681c87737f 100644
---- a/include/qemu/bitmap.h
-+++ b/include/qemu/bitmap.h
-@@ -104,6 +104,12 @@ static inline unsigned long *bitmap_try_new(long nbits)
-     return g_try_new0(unsigned long, nelem);
- }
- 
-+static inline size_t bitmap_size(long nbits)
-+{
-+    long nelem = BITS_TO_LONGS(nbits);
-+    return sizeof(unsigned long) * nelem;
-+}
-+
- static inline unsigned long *bitmap_new(long nbits)
- {
-     long nelem = BITS_TO_LONGS(nbits);
-diff --git a/include/qemu/mmap-vma.h b/include/qemu/mmap-vma.h
-index 763ea5a5cab..4646657022c 100644
---- a/include/qemu/mmap-vma.h
-+++ b/include/qemu/mmap-vma.h
-@@ -15,4 +15,7 @@
- int qemu_name_vma(void *ptr, size_t sz, const char *fmt, ...)
-     G_GNUC_PRINTF(3, 4);
- 
-+int qemu_name_buffer(void *ptr, size_t sz, const char *fmt, ...)
-+    G_GNUC_PRINTF(3, 4);
-+
- #endif
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 5cbfba0a86d..cc0e0d6979a 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -45,6 +45,7 @@
- #include "qemu/osdep.h"
- #include "qemu/datadir.h"
- #include "qemu/error-report.h"
-+#include "qemu/mmap-vma.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-machine.h"
- #include "qapi/type-helpers.h"
-@@ -1111,6 +1112,8 @@ ssize_t rom_add_file(const char *file, const char *fw_dir,
-         goto err;
-     }
- 
-+    qemu_name_buffer(rom->data, size, "%s", file);
-+
-     if (fw_dir) {
-         rom->fw_dir  = g_strdup(fw_dir);
-         rom->fw_file = g_strdup(file);
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index dcd4fa8eb79..608c4cf4202 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -25,6 +25,7 @@
- #include "qemu/cutils.h"
- #include "qemu/units.h"
- #include "qemu/datadir.h"
-+#include "qemu/mmap-vma.h"
- #include "qapi/error.h"
- #include "system/numa.h"
- #include "system/system.h"
-@@ -914,6 +915,8 @@ void x86_load_linux(X86MachineState *x86ms,
- 
-     setup  = g_malloc(setup_size);
-     kernel = g_malloc(kernel_size);
-+    qemu_name_buffer(kernel, kernel_size, "%s", kernel_filename);
-+
-     fseek(f, 0, SEEK_SET);
-     if (fread(setup, 1, setup_size, f) != setup_size) {
-         fprintf(stderr, "fread() failed\n");
-diff --git a/system/device_tree.c b/system/device_tree.c
-index 48365435ea0..816874fb299 100644
---- a/system/device_tree.c
-+++ b/system/device_tree.c
-@@ -27,6 +27,7 @@
- #include "hw/core/loader.h"
- #include "hw/core/boards.h"
- #include "qemu/config-file.h"
-+#include "qemu/mmap-vma.h"
- #include "qapi/qapi-commands-machine.h"
- #include "qobject/qdict.h"
- 
-@@ -41,6 +42,7 @@ void *create_device_tree(int *sizep)
- 
-     *sizep = FDT_MAX_SIZE;
-     fdt = g_malloc0(FDT_MAX_SIZE);
-+    qemu_name_buffer(fdt, FDT_MAX_SIZE, "device_tree");
-     ret = fdt_create(fdt, FDT_MAX_SIZE);
-     if (ret < 0) {
-         goto fail;
-diff --git a/system/physmem.c b/system/physmem.c
-index 202e3a5cd00..dc0e9540919 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -26,6 +26,7 @@
- #include "qemu/hbitmap.h"
- #include "qemu/madvise.h"
- #include "qemu/lockable.h"
-+#include "qemu/mmap-vma.h"
- 
- #ifdef CONFIG_TCG
- #include "accel/tcg/cpu-ops.h"
-@@ -2105,7 +2106,7 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length)
- }
- 
- /* Called with ram_list.mutex held */
--static void dirty_memory_extend(ram_addr_t new_ram_size)
-+static void dirty_memory_extend(ram_addr_t new_ram_size, const char *nickname)
- {
-     unsigned int old_num_blocks = ram_list.num_dirty_blocks;
-     unsigned int new_num_blocks = DIV_ROUND_UP(new_ram_size,
-@@ -2133,6 +2134,9 @@ static void dirty_memory_extend(ram_addr_t new_ram_size)
- 
-         for (j = old_num_blocks; j < new_num_blocks; j++) {
-             new_blocks->blocks[j] = bitmap_new(DIRTY_MEMORY_BLOCK_SIZE);
-+            qemu_name_buffer(new_blocks->blocks[j],
-+                             bitmap_size(DIRTY_MEMORY_BLOCK_SIZE),
-+                             "bitmap<%s>", nickname);
-         }
- 
-         qatomic_rcu_set(&ram_list.dirty_memory[i], new_blocks);
-@@ -2254,7 +2258,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-     }
- 
-     ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
--    dirty_memory_extend(ram_size);
-+    dirty_memory_extend(ram_size, new_block->mr->name);
-     /* Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
-      * QLIST (which has an RCU-friendly variant) does not have insertion at
-      * tail, so save the last element in last_block.
-diff --git a/util/mmap-vma.c b/util/mmap-vma.c
-index 93ca7f608d7..9b1309df635 100644
---- a/util/mmap-vma.c
-+++ b/util/mmap-vma.c
-@@ -69,3 +69,26 @@ int qemu_name_vma(void *ptr, size_t sz, const char *fmt, ...)
-     va_start(args, fmt);
-     return qemu_vname_vma(ptr, sz, fmt, args);
- }
-+
-+G_GNUC_PRINTF(3, 4)
-+int qemu_name_buffer(void *ptr, size_t sz, const char *fmt, ...)
-+{
-+    /*
-+     * this is hacky as hell, but ptmalloc will occasionally use
-+     * mmap() for large buffers - when it does so, you get a pointer
-+     * to 16 bytes after the actual mmap. This function compensates
-+     * for that to guess at what the real mmap allocation was.
-+     *
-+     * This can be used unconditionally whether or not the allocation
-+     * was actually mmap'd - if it wasn't, this just fails. Yes, it's
-+     * still very ugly.
-+     */
-+    va_list args;
-+    size_t pagesz = qemu_real_host_page_size();
-+
-+    ptr = ptr - 0x10;
-+    sz = ROUND_UP(sz + 0x10, pagesz);
-+
-+    va_start(args, fmt);
-+    return qemu_vname_vma(ptr, sz, fmt, args);
-+}
--- 
-2.56.0
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+>   docs/system/riscv/riscv-server-ref.rst |  43 +++++++
+>   hw/riscv/Kconfig                       |   1 +
+>   hw/riscv/server_platform_ref.c         | 149 ++++++++++++++++++++++++-
+>   meson.build                            |   4 +
+>   4 files changed, 195 insertions(+), 2 deletions(-)
+> 
+> diff --git a/docs/system/riscv/riscv-server-ref.rst b/docs/system/riscv/riscv-server-ref.rst
+> index da043ed096..32c3201404 100644
+> --- a/docs/system/riscv/riscv-server-ref.rst
+> +++ b/docs/system/riscv/riscv-server-ref.rst
+> @@ -28,6 +28,7 @@ The main features included in the riscv-server-ref board are:
+>   * No fw_cfg device
+>   * No ACPI table
+>   * Minimal device tree nodes
+> +* RISC-V RPMI platform management
+>   
+>   There are multiple ways of using this reference board.  The spec compliant way
+>   is using an EDK2 image and a TPM device.  The board was tested with the TPM
+> @@ -60,6 +61,48 @@ And then start QEMU with:
+>        -netdev user,id=net0 -device e1000e,netdev=net0 \
+>        -nographic
+>   
+> +RPMI support
+> +------------
+> +
+> +The ``riscv-server-ref`` machine exposes RISC-V RPMI platform management when
+> +the ``rpmi=on`` machine option is selected and QEMU is built with librpmi
+> +support.  RPMI is disabled by default.  ``rpmi=off`` preserves the legacy
+> +device tree and keeps the board migratable.  An RPMI-enabled machine contains
+> +an unmigratable RPMI device, so live migration is unavailable while
+> +``rpmi=on`` is selected.  RPMI is unavailable with KVM and requires a build
+> +with librpmi.
+> +
+> +The initial ``riscv-server-ref`` RPMI implementation exposes Base, System
+> +Reset, HSM, and System Suspend service groups.  System Reset handles guest
+> +shutdown and cold reboot requests through RPMI.
+> +HSM uses the machine hart IDs for hart discovery, status, start, stop, and
+> +suspend commands.  System Suspend uses QEMU's suspend and wakeup path.
+> +
+> +When ``rpmi=on`` is selected, the generated device tree advertises reset,
+> +shutdown, HSM, and suspend through RPMI service nodes and omits the legacy
+> +syscon reboot and poweroff nodes.  With the default ``rpmi=off`` setting, the
+> +generated device tree retains the legacy syscon reboot and poweroff nodes.
+> +RPMI is currently described through FDT only; this machine does not emit ACPI
+> +tables for the RPMI transport or service groups.
+> +
+> +RPMI support targets the RISC-V Platform Management Interface (RPMI)
+> +Specification v1.0 Ratified (`server-ref RPMI v1.0 specification`_).  The
+> +build dependency is provided by `server-ref librpmi`_.  After installing
+> +librpmi, configure QEMU with ``--enable-librpmi`` or ``-Dlibrpmi=enabled`` to
+> +make the build fail if librpmi is unavailable.
+> +
+> +.. code-block:: bash
+> +
+> + qemu-system-riscv64 -M riscv-server-ref,rpmi=on \
+> +     -bios fw_dynamic.bin \
+> +     -kernel EDK2.fd \
+> +     -drive file=nvme_disk.ext2,format=raw,id=hd0,if=none \
+> +     -device ahci,id=ahci \
+> +     -device ide-hd,drive=hd0,bus=ahci.0 \
+> +     -nographic
+> +
+>   
+>   .. _spec: https://github.com/riscv-non-isa/riscv-server-platform
+>   .. _tpm: https://qemu-project.gitlab.io/qemu/specs/tpm.html
+> +.. _server-ref RPMI v1.0 specification: https://github.com/riscv-non-isa/riscv-rpmi/releases/download/v1.0/riscv-rpmi.pdf
+> +.. _server-ref librpmi: https://github.com/riscv-software-src/librpmi
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index 28d108faf8..cae3de6993 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -86,6 +86,7 @@ config RISCV_SERVER_PLATFORM_REF
+>       select RISCV_IOMMU
+>       select RISCV_NUMA
+>       select SERIAL_MM
+> +    select RISCV_RPMI if LIBRPMI
+>   
+>   config SHAKTI_C
+>       bool
+> diff --git a/hw/riscv/server_platform_ref.c b/hw/riscv/server_platform_ref.c
+> index d18550b48d..ea580e475f 100644
+> --- a/hw/riscv/server_platform_ref.c
+> +++ b/hw/riscv/server_platform_ref.c
+> @@ -29,18 +29,20 @@
+>   #include "hw/riscv/device-common.h"
+>   #include "hw/riscv/fdt-common.h"
+>   #include "hw/riscv/numa.h"
+> +#include "hw/riscv/rpmi-fdt.h"
+>   #include "hw/riscv/iommu.h"
+>   #include "hw/riscv/riscv-iommu.h"
+>   #include "hw/riscv/riscv-iommu-bits.h"
+> +#include "hw/misc/riscv_rpmi.h"
+>   #include "hw/intc/riscv_aclint.h"
+>   #include "hw/intc/riscv_aplic.h"
+>   #include "hw/intc/riscv_imsic.h"
+>   #include "chardev/char.h"
+>   #include "hw/char/serial-mm.h"
+>   #include "system/device_tree.h"
+> +#include "system/kvm.h"
+>   #include "system/runstate.h"
+>   #include "system/system.h"
+> -#include "system/kvm.h"
+>   #include "system/qtest.h"
+>   #include "system/tcg.h"
+>   #include "kvm/kvm_riscv.h"
+> @@ -68,6 +70,9 @@
+>   
+>   #define RVSERVER_PLATFORM_BUS_NUM_IRQS         8
+>   
+> +#define RVSERVER_RPMI_A2P_REQ_SIZE (16 * RPMI_QUEUE_SLOT_SIZE)
+> +#define RVSERVER_RPMI_P2A_REQ_SIZE 0
+> +
+>   #define TYPE_RISCV_SERVER_REF_MACHINE MACHINE_TYPE_NAME("riscv-server-ref")
+>   OBJECT_DECLARE_SIMPLE_TYPE(RISCVServerRefMachineState, RISCV_SERVER_REF_MACHINE)
+>   
+> @@ -83,6 +88,7 @@ struct RISCVServerRefMachineState {
+>   
+>       int fdt_size;
+>       int aia_guests;
+> +    bool have_rpmi;
+>       const MemMapEntry *memmap;
+>   
+>       DeviceState *platform_bus_dev;
+> @@ -93,6 +99,8 @@ enum {
+>       RVSERVER_RESET_SYSCON,
+>       RVSERVER_RTC,
+>       RVSERVER_IOMMU_SYS,
+> +    RVSERVER_RPMI_SHMEM,
+> +    RVSERVER_RPMI_DOORBELL,
+>       RVSERVER_ACLINT,
+>       RVSERVER_APLIC_M,
+>       RVSERVER_APLIC_S,
+> @@ -143,6 +151,8 @@ static const MemMapEntry rvserver_ref_memmap[] = {
+>       [RVSERVER_RESET_SYSCON] =   {   0x100000,        0x1000 },
+>       [RVSERVER_RTC] =            {   0x101000,        0x1000 },
+>       [RVSERVER_IOMMU_SYS] =      {   0x102000,        0x1000 },
+> +    [RVSERVER_RPMI_SHMEM] =     {   0x110000,       0x20000 },
+> +    [RVSERVER_RPMI_DOORBELL] =  {   0x140000,        0x1000 },
+>       [RVSERVER_ACLINT] =         {  0x2000000,       0x10000 },
+>       [RVSERVER_PCIE_PIO] =       {  0x3000000,       0x10000 },
+>       [RVSERVER_PLATFORM_BUS] =   {  0x4000000,     0x2000000 },
+> @@ -283,6 +293,81 @@ static void create_fdt_sockets(RISCVServerRefMachineState *s,
+>       riscv_socket_fdt_write_distance_matrix(ms);
+>   }
+>   
+> +#ifdef CONFIG_LIBRPMI
+> +static const RiscvRpmiServiceConfig rvserver_ref_rpmi_services[] = {
+> +    {
+> +        .node_name = "sysreset",
+> +        .compatible = "riscv,rpmi-system-reset",
+> +        .service_group = RPMI_SRVGRP_SYSTEM_RESET,
+> +    },
+> +    {
+> +        .node_name = "hsm",
+> +        .compatible = "riscv,rpmi-hsm",
+> +        .service_group = RPMI_SRVGRP_HSM,
+> +    },
+> +    {
+> +        .node_name = "suspend",
+> +        .compatible = "riscv,rpmi-system-suspend",
+> +        .service_group = RPMI_SRVGRP_SYSTEM_SUSPEND,
+> +    },
+> +};
+> +
+> +static void rvserver_ref_rpmi_system_reset(void)
+> +{
+> +    qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+> +}
+> +
+> +static void rvserver_ref_rpmi_system_shutdown(void)
+> +{
+> +    qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+> +}
+> +
+> +static const RiscvRpmiMachineOps rvserver_ref_rpmi_machine_ops = {
+> +    .system_reset = rvserver_ref_rpmi_system_reset,
+> +    .system_shutdown = rvserver_ref_rpmi_system_shutdown,
+> +};
+> +
+> +static RiscvRpmiConfig rvserver_ref_rpmi_config(
+> +    RISCVServerRefMachineState *s, const uint32_t *hart_ids,
+> +    uint32_t hart_count)
+> +{
+> +    return (RiscvRpmiConfig) {
+> +        .doorbell_base = s->memmap[RVSERVER_RPMI_DOORBELL].base,
+> +        .shmem_base = s->memmap[RVSERVER_RPMI_SHMEM].base,
+> +        .shmem_size = s->memmap[RVSERVER_RPMI_SHMEM].size,
+> +        .a2p_req_size = RVSERVER_RPMI_A2P_REQ_SIZE,
+> +        .p2a_req_size = RVSERVER_RPMI_P2A_REQ_SIZE,
+> +        .platform_info = "QEMU RISC-V server-ref RPMI",
+> +        .machine_ops = &rvserver_ref_rpmi_machine_ops,
+> +        .hart_ids = hart_ids,
+> +        .hart_count = hart_count,
+> +        .services = rvserver_ref_rpmi_services,
+> +        .service_count = ARRAY_SIZE(rvserver_ref_rpmi_services),
+> +    };
+> +}
+> +
+> +static void create_fdt_rpmi(RISCVServerRefMachineState *s, uint32_t *phandle)
+> +{
+> +    uint32_t rpmi_mbox_handle;
+> +    RiscvRpmiFdtMboxConfig cfg = {
+> +        .shmem_base = s->memmap[RVSERVER_RPMI_SHMEM].base,
+> +        .doorbell_base = s->memmap[RVSERVER_RPMI_DOORBELL].base,
+> +        .a2p_req_size = RVSERVER_RPMI_A2P_REQ_SIZE,
+> +        .p2a_req_size = RVSERVER_RPMI_P2A_REQ_SIZE,
+> +        .doorbell_size = s->memmap[RVSERVER_RPMI_DOORBELL].size,
+> +    };
+> +
+> +    riscv_rpmi_fdt_add_mbox(MACHINE(s)->fdt, &cfg, phandle,
+> +                            &rpmi_mbox_handle);
+> +
+> +    for (uint32_t i = 0; i < ARRAY_SIZE(rvserver_ref_rpmi_services); i++) {
+> +        riscv_rpmi_fdt_add_service_node(MACHINE(s)->fdt,
+> +                                        &rvserver_ref_rpmi_services[i],
+> +                                        rpmi_mbox_handle);
+> +    }
+> +}
+> +#endif
+> +
+>   static void finalize_fdt(RISCVServerRefMachineState *s)
+>   {
+>       uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
+> @@ -307,10 +392,16 @@ static void finalize_fdt(RISCVServerRefMachineState *s)
+>                             irq_pcie_phandle, msi_pcie_phandle,
+>                             iommu_sys_phandle, RVSERVER_PCIE_IRQ);
+>   
+> +#ifdef CONFIG_LIBRPMI
+> +    if (s->have_rpmi) {
+> +        create_fdt_rpmi(s, &phandle);
+> +    }
+> +#endif
+>       riscv_create_fdt_syscon(ms->fdt, &phandle,
+>                               rvserver_ref_memmap[RVSERVER_RESET_SYSCON].base,
+>                               rvserver_ref_memmap[RVSERVER_RESET_SYSCON].size,
+> -                            SYSCON_RESET, SYSCON_POWEROFF, false, true);
+> +                            SYSCON_RESET, SYSCON_POWEROFF, false,
+> +                            !s->have_rpmi);
+>   
+>       riscv_create_fdt_uart(ms->fdt, &rvserver_ref_memmap[RVSERVER_UART0],
+>                             RVSERVER_UART0_IRQ, AIA_TYPE_APLIC_IMSIC,
+> @@ -516,6 +607,17 @@ static void rvserver_ref_machine_init(MachineState *machine)
+>       }
+>   
+>       imsic_bits = imsic_num_bits(s->aia_guests + 1);
+> +    if (s->have_rpmi) {
+> +#ifndef CONFIG_LIBRPMI
+> +        error_report("RISC-V RPMI support is not compiled in");
+> +        exit(1);
+> +#else
+> +        if (kvm_enabled()) {
+> +            error_report("RISC-V RPMI support is not available with KVM");
+> +            exit(1);
+> +        }
+> +#endif
+> +    }
+>   
+>       /* Initialize sockets */
+>       mmio_irqchip = pcie_irqchip = NULL;
+> @@ -598,6 +700,28 @@ static void rvserver_ref_machine_init(MachineState *machine)
+>                                   memmap[RVSERVER_RESET_SYSCON].base,
+>                                   reset_syscon_io);
+>   
+> +#ifdef CONFIG_LIBRPMI
+> +    if (s->have_rpmi) {
+> +        MachineClass *mc = MACHINE_GET_CLASS(machine);
+> +        const CPUArchIdList *possible_cpus = mc->possible_cpu_arch_ids(machine);
+> +        g_autofree uint32_t *rpmi_hart_ids =
+> +            g_new0(uint32_t, machine->smp.cpus);
+> +        RiscvRpmiConfig rpmi_cfg;
+> +        Error *local_err = NULL;
+> +
+> +        for (i = 0; i < machine->smp.cpus; i++) {
+> +            rpmi_hart_ids[i] = possible_cpus->cpus[i].arch_id;
+> +        }
+> +
+> +        rpmi_cfg = rvserver_ref_rpmi_config(s, rpmi_hart_ids,
+> +                                            machine->smp.cpus);
+> +        if (!riscv_rpmi_create(&rpmi_cfg, &local_err)) {
+> +            error_report_err(local_err);
+> +            exit(1);
+> +        }
+> +    }
+> +#endif
+> +
+>       riscv_gpex_pcie_init(system_memory, pcie_irqchip,
+>                            &rvserver_ref_memmap[RVSERVER_PCIE_ECAM],
+>                            &rvserver_ref_memmap[RVSERVER_PCIE_MMIO],
+> @@ -652,6 +776,7 @@ static void rvserver_ref_machine_instance_init(Object *obj)
+>                                        "pflash1", RVSERVER_FLASH_SECTOR_SIZE);
+>   
+>       s->aia_guests = RVSERVER_IRQCHIP_DEFAULT_AIA_GUESTS;
+> +    s->have_rpmi = false;
+>   }
+>   
+>   static void rvserver_ref_machine_instance_finalize(Object *obj)
+> @@ -687,6 +812,20 @@ static void rvserver_ref_set_aia_guests(Object *obj, const char *val,
+>       }
+>   }
+>   
+> +static bool rvserver_ref_get_rpmi(Object *obj, Error **errp)
+> +{
+> +    RISCVServerRefMachineState *s = RISCV_SERVER_REF_MACHINE(obj);
+> +
+> +    return s->have_rpmi;
+> +}
+> +
+> +static void rvserver_ref_set_rpmi(Object *obj, bool value, Error **errp)
+> +{
+> +    RISCVServerRefMachineState *s = RISCV_SERVER_REF_MACHINE(obj);
+> +
+> +    s->have_rpmi = value;
+> +}
+> +
+>   static const HotplugHandler *
+>   rvserver_machine_get_hotplug_handler(MachineState *ms, DeviceState *dev)
+>   {
+> @@ -747,6 +886,12 @@ static void rvserver_ref_machine_class_init(ObjectClass *oc, const void *data)
+>                    "should be between 0 and %d.", RVSERVER_IRQCHIP_MAX_GUESTS);
+>       object_class_property_set_description(oc, "aia-guests", str);
+>   
+> +    object_class_property_add_bool(oc, "rpmi", rvserver_ref_get_rpmi,
+> +                                   rvserver_ref_set_rpmi);
+> +    object_class_property_set_description(
+> +        oc, "rpmi", "Set on/off to enable/disable RISC-V RPMI devices; "
+> +        "requires librpmi and is unavailable with KVM");
+> +
+>       assert(!mc->get_hotplug_handler);
+>       mc->get_hotplug_handler = rvserver_machine_get_hotplug_handler;
+>       hc->plug = rvserver_machine_device_plug_cb;
+> diff --git a/meson.build b/meson.build
+> index 434a193efe..41f6bcb676 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3444,6 +3444,10 @@ foreach target : target_dirs
+>       foreach k, v: config_devices
+>         config_devices_data.set(k, 1)
+>       endforeach
+> +    if target == 'riscv64-softmmu' and get_option('default_devices') and \
+> +       not librpmi.found()
+> +      warning('riscv-server-ref machine will be built without RPMI support; install librpmi and configure with --enable-librpmi to enable RPMI')
+> +    endif
+>       config_devices_mak_list += config_devices_mak
+>       config_devices_h += {target: configure_file(output: target + '-config-devices.h',
+>                                                   configuration: config_devices_data)}
 
 
