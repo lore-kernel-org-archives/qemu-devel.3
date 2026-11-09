@@ -1,68 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48ECE606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 06:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE71606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 06:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=aYaEtiYQ
+	dkim=pass (2048-bit key) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.a=rsa-sha256 header.s=rs20250326 header.b=Ld1dD7dy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQInk-00023T-7O; Mon, 09 Nov 2026 01:24:23 -0500
+	id 1xQIzw-0003ET-LV; Mon, 09 Nov 2026 01:36:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1xQInf-000233-9u
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 01:24:17 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xQIzu-0003EE-F3
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 01:36:54 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1xQInb-0002h5-04
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 01:24:14 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68
- (mail-nwsmtp-smtp-corp-main-68.yp-c.yandex.net)
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 2D18480844;
- Mon, 09 Nov 2026 09:24:07 +0300 (MSK)
-Received: from dtalexundeer-nx.yandex-team.ru
- by mail-nwsmtp-smtp-corp-main-68 with ESMTPSA id nNKLppCamiE0-HKe8ksFt;
- Mon, 09 Nov 2026 09:24:06 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1794205446;
- bh=54Yt/HRHUf73M1ZeOD79PJvJP775P4DcRNSZq34Dw+o=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=aYaEtiYQPsf0eCxIz0iBy2oElQFaUnCvxxPvXx7oQUJlUT78MGlTayMYn1LVKArVf
- tlKXRzIDiqCD8UKCegw9VACD37zPweQdHVuOfnZcIMmvHnBXm+u7/+9TwA6e7O/uwR
- 5DAFlSt6Wz4yoaGv9ot7BcIGndf1GBeVJnHlGlQc=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68;
- dkim=pass header.i=@yandex-team.ru
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, virtio-fs@lists.linux.dev,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v2] vhost-user-fs: fix virtqueue array leak on realize failure
-Date: Mon,  9 Nov 2026 11:24:01 +0500
-Message-Id: <20261109062401.81161-1-dtalexundeer@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xQIzr-0003sj-VI
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 01:36:54 -0500
+Received: from [10.42.0.1] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6A96ageQ097550
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 9 Nov 2026 15:36:44 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=DEmQt5DKlwriy/PWQF4EedxgO9WHougMI1uL+du4t4o=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1794206204; v=1;
+ b=Ld1dD7dyAQn1x5OC4nK0Ko9pz/EUOsrH8cbgMs3JBp1SPydmBG2OAVryDb0b4u23
+ 4N3qvKNDQqZip+JAzCR17g5qZgOhFalRoJr0L+kZtVxB8JWc3e5lar+qqpO1Sz+h
+ wNx4xLooZJb+jhedDpudgdfW7BjDNypfFk9CfsKyiC97HLu90J8e45mVDLlwlrUF
+ JpgzmI32vynULm0+Ikh2rFZM0WzPPSy5brjrQvABLE8zfkxil2azjNtcAmT/sHqp
+ i2+XbWLdwtvwSQMetayVtTXQka9wrDKjYOg1FUrKX03Ti7HxLB/wcgk3df7LpY4L
+ EP7vjIntrGsCKzrehQDDyA==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 09 Nov 2026 15:36:27 +0900
+Subject: [PATCH] scripts/checkpatch: Drop the author extraction in-header check
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261109-from-v1-1-019dacf55d63@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAA/yXMzQpAQBSG4Vs5fWtTZkLN3IosMAdH+WkGKbl3Y
+ fkunvdC5CAc4ehC4EOiLDMc6YTQDvXcsxIPRzCpKbROrerCMqm8YZNZ7zNrCySENXAn57cpq7/
+ j3ozcbq/FfT/vz6X5aAAAAA==
+X-Change-ID: 20261109-from-5be249dd4996
+To: qemu-devel@nongnu.org
+Cc: Chao Liu <chao.liu@processmission.com>,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=842;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=nui/dyF4NineRwty/7s94nvNM6dY7mSpycyQ5UCm3xA=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9bHzG8Xm6fYmotO2toncenJpBiXS7m16s9Ep359WNUts
+ v1u3+SwjlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgIlkVzAyTNtdtU5j65E1yudu
+ rguJLTL8sL5a+cvv0Hsr7ef6hc1oCGFk+PVRYuJ/P7e7674+X8Sg5bA45Kij14qF6R5XbLxiDmr
+ lsQEA
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Archive: <https://lists.nongnu.org/archive/html/qemu-devel>
 List-Post: <mailto:qemu-devel@nongnu.org>
@@ -73,67 +84,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On failure, vhost_dev_init() clears vhost_dev, so the error path frees
-NULL instead of the virtqueue array. Keep the pointer in the existing
-vhost_vqs field and use it to free the array on failure and unrealize.
+An in-body From: denotes the author when the sender is different.
 
-Fixes: 98fc1ada4cf7 ("virtio: add vhost-user-fs base device")
-Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
-v1 -> v2:
- - use the existing VHostUserFS.vhost_vqs field in realize and unrealize
-   instead of local vars.
+ scripts/checkpatch.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- hw/virtio/vhost-user-fs.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 82f62f602125..2904bd691dc5 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1823,7 +1823,7 @@ sub process {
+ 		}
+ 
+ # Extract author email for trailer checks
+-		if ($in_header_lines && $line =~ /^(?:Author|From):\s*(.*)/) {
++		if ($line =~ /^(?:Author|From):\s*(.*)/) {
+ 			my $author_info = $1;
+ 			if ($author_info =~ /<([^>]+)>/) {
+ 				$author_email = $1;
 
-diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
-index 0d8842817a..f26b5b611a 100644
---- a/hw/virtio/vhost-user-fs.c
-+++ b/hw/virtio/vhost-user-fs.c
-@@ -255,7 +255,8 @@ static void vuf_device_realize(DeviceState *dev, Error **errp)
- 
-     /* 1 high prio queue, plus the number configured */
-     fs->vhost_dev.nvqs = 1 + fs->conf.num_request_queues;
--    fs->vhost_dev.vqs = g_new0(struct vhost_virtqueue, fs->vhost_dev.nvqs);
-+    fs->vhost_vqs = g_new0(struct vhost_virtqueue, fs->vhost_dev.nvqs);
-+    fs->vhost_dev.vqs = fs->vhost_vqs;
-     ret = vhost_dev_init(&fs->vhost_dev, &fs->vhost_user,
-                          VHOST_BACKEND_TYPE_USER, 0, errp);
-     if (ret < 0) {
-@@ -272,14 +273,14 @@ err_virtio:
-     }
-     g_free(fs->req_vqs);
-     virtio_cleanup(vdev);
--    g_free(fs->vhost_dev.vqs);
-+    g_free(fs->vhost_vqs);
-+    fs->vhost_vqs = NULL;
- }
- 
- static void vuf_device_unrealize(DeviceState *dev)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VHostUserFS *fs = VHOST_USER_FS(dev);
--    struct vhost_virtqueue *vhost_vqs = fs->vhost_dev.vqs;
-     int i;
- 
-     /* This will stop vhost backend if appropriate. */
-@@ -295,7 +296,8 @@ static void vuf_device_unrealize(DeviceState *dev)
-     }
-     g_free(fs->req_vqs);
-     virtio_cleanup(vdev);
--    g_free(vhost_vqs);
-+    g_free(fs->vhost_vqs);
-+    fs->vhost_vqs = NULL;
- }
- 
- static struct vhost_dev *vuf_get_vhost(VirtIODevice *vdev)
--- 
-2.34.1
+---
+base-commit: 74f7bf4c59e6b6d50dbc6e124d93440be8be4386
+change-id: 20261109-from-5be249dd4996
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
