@@ -1,151 +1,186 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5280606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848CB6082BF1
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=PKoLBMQ6;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OcyDlAcj
+	dkim=pass (2048-bit key) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=proofpoint20171006 header.b=nGqbvOig;
+	dkim=pass (2048-bit key, unprotected) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=selector1 header.b=hX/pMDnV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQQDy-0001o7-3a; Mon, 09 Nov 2026 09:19:54 -0500
+	id 1xQQFw-00032v-B3; Mon, 09 Nov 2026 09:21:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xQQDZ-0001TG-8u
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:19:35 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1xQQEy-0002r8-7J; Mon, 09 Nov 2026 09:21:00 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xQQDW-0002LT-J7
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:19:29 -0500
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A9DFMIi359447
- for <qemu-devel@nongnu.org>; Mon, 9 Nov 2026 14:19:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1xQQEw-0002kD-12; Mon, 09 Nov 2026 09:20:55 -0500
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6A9DGE0k1770003; Mon, 9 Nov 2026 06:20:50 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Oep3lZ5Z+HiQoInTclSYD+FhmXKAKMUQTFGLIXW+AQQ=; b=PKoLBMQ6WKB2OIy5
- 0Cf8ai82PerUxZQB1lrHWfEu56nfCLQA8ZVcrsbfY23giaqJhOXKeVD+pXalPGK9
- R4OtZ0hFSMggs2MxIM4WMracY9QDFQnGMelRMfQ8iEYwcxWYx37XivSK5mGV4VbW
- lkDDoI2HZHBlrGH1FweAUSG/QVLGaGclRoObUOoOS8WjICFYLWc418maoRguRhlw
- fWFFtUwTABVSb7AjiuOXDaotR0tfIJAP875+KzYZPN5zixOR7VfUVkZKscOFhM0Y
- OvNV2+RSKiwoHHx3ZbiFfFAlln1+4Rq5is8FcHfIKHplkszzkB26lpzRbQfJ3t2l
- TXEjfQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hu6x2j11t-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 14:19:24 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93cb93c874bso206720485a.0
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 06:19:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794233964; x=1794838764; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Oep3lZ5Z+HiQoInTclSYD+FhmXKAKMUQTFGLIXW+AQQ=;
- b=OcyDlAcjhpUugdi+olJ2M5RYtdAiPnp3DnbXbxpkL0skSiiLIuTCMwaW5ErT/HqlCW
- 9kTcof6YOPqmzh02cIwI6mfqTy+oVDpG4PBGkZX2QiVW7oeLndJpXpxYBS6Yv3JI6NK/
- o62zVJ+PKaOOScv08VsMfAkl7Z3bbN1U+imP+x9PR7+uJoOCetK6J766eiNzYbOGORRC
- Wz+ZoJkp0BWmXckhywu2sqJvHSkMsrY/LZp8cYNzkRvByyFJnQwBlRqedtXgKiiRUbi9
- J5vRJGJTJsZydXOC1fLmylZQoi0S2/M4Ale6kLbbSW5cAl7VQk1M1IpdDqZUmuOvmCAI
- V3Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794233964; x=1794838764;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Oep3lZ5Z+HiQoInTclSYD+FhmXKAKMUQTFGLIXW+AQQ=;
- b=N1THDfF3NwZ1MTGM9FcPZzdgg7GdupobIGohZl+VQXlpIIm92L5yCiEbJdNSR9odzj
- tM1wg41l8uP06GOJEwbAYDuzBug9tBUMrUK+CqVMVNvOcYw258CzvBsL2LOy5kbmdOtc
- mMwCRLXdlCVAdMHQ2e6DdkMLF0mpoXCh/RRmXuipHZGyiwYadvQIjrblhWLI9SehO+KZ
- vvxZ17Ai5O9M1B0OI1Ru4yMNCZu0Fn4l78XDIACK6CgFeHrO1bwSd07Q7E+vGA1vvUUl
- eRT+gIu1QKhkgTcO17Na88VGwsMqbv5lMAuA5w8cl/6DffdyzJLu8M+rxKCf4Hx+n7/K
- gmOQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErEOnzp9AjtYKVaSYJPFKqLzKazVhz/e8lwk9NvMgXWdrSIc9VhE3oPCIQivXopaCoTOHIWp6YNuc2eX@nongnu.org
-X-Gm-Message-State: APuU4Z+73pZbvowKECxtYIRGOrLBDElrgLDF8FLrkehoQeFIgcEhBMDk
- TekhlT3N7R2fYv5I+B1xxsx+Y6gKs9rK5KLTZ/NTvW1jRyBB3MN/BD5MBQc0ap17JElOZMiR7lF
- v/7hH17FsziULQh80q+qR98GMr8yToIEvTJ2exzD6oXvyxl12cdnceC9p+w==
-X-Gm-Gg: AYBFou0ybumYMD9r+r8CKMzYfLbJm1PEyjOmuHYWCKrWz0iC4kD+CxZCQa3rNN8r+0J
- puAQrmPlwHhGHTdT9JMwjm2YoEHuhdehctRA10GNgKTH+V1vPvYKb12kbpWzOyCjSmKbYcLfclw
- pgqj4qCNx50eOD2ly8+5B/VdONBdPNHtzk3mIeDkfYrQpJHynp/anCvWidZ7UD1/k0LhrqtyRyJ
- BwHjKYW6XQrhMWTcuySwqa3Wf0920E2ALhJLaP2dgsgbCJ1Aw3+/qj0gKMm6f7SJYjYHq5tKIh7
- tutF0y4xUu8fMVY8knwUd6iLuqhQLWtONOMEvlovYDeQisV+XF/0P/h3ReRdQxnIeQj6oxEVUq9
- kpMXwPzz79DhK8fskMhHH9PjBmZJcCPibuP8T28ia1f1AE4kO6d6+P00D+apstfoTCciwHxZvoN
- bD3ewjYjFB
-X-Received: by 2002:a05:620a:1a1a:b0:944:1e9b:e674 with SMTP id
- af79cd13be357-94604d56beemr1191356285a.17.1794233964018; 
- Mon, 09 Nov 2026 06:19:24 -0800 (PST)
-X-Received: by 2002:a05:620a:1a1a:b0:944:1e9b:e674 with SMTP id
- af79cd13be357-94604d56beemr1191348285a.17.1794233963384; 
- Mon, 09 Nov 2026 06:19:23 -0800 (PST)
-Received: from [192.168.68.100] ([152.234.124.231])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-94782ccaea3sm484662285a.4.2026.11.09.06.19.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Nov 2026 06:19:22 -0800 (PST)
-Message-ID: <b6ce619a-7968-4edd-991d-0a27a374e857@oss.qualcomm.com>
-Date: Mon, 9 Nov 2026 11:19:19 -0300
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=7cjzGndxdMSIVACln2pqL7tb9a3c2n8v6DcE1codn
+ BE=; b=nGqbvOigo2L3gaON/G1sNF+ID+WCXdU1RFuL6+bXmjarmrV0YZPSIAvYw
+ KRW0HHiICyJd3uc+o7k2Od8mO7hThJnlCHE+LF1VrhWtswkhrWthQ0QWmpmS6RUk
+ 1ldzk/YCIPsKovOpR9TwbQZIVcteHt1lt9TNN8bn8v93/aLqWxLEwuCMDioUVIbF
+ BBanXwoSpATFa+nWE6KocBT04yA2RwAPDsEQmLLyXc4yjqvD9F2L96JnPeZQjT5+
+ QF1LThAN+rx0fRbriqxMex3A0pQlyZ6zD/MdcixKcpj/xMm/omZ9g0V4vhakEIxn
+ 65jLgZ9zMSxlXrcNt6esrGyDFg6vw==
+Received: from sn4pr2101cu001.outbound.protection.outlook.com
+ (mail-southcentralusazon11022139.outbound.protection.outlook.com
+ [40.93.195.139])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4ht4e1awq0-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 09 Nov 2026 06:20:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=j5MlpymxiCYZSegJKAAVMPn57aLNxOM4N3JkJNP7gyLETnOxFbWzmSTz30Nw9SToeZGEKX8l2wa+lCYPfVUQaWEY/yU2i+DdtmfojHGEJ7I9080s/BYBGDYi989F7egqAgFtoI3ETZFxKkQwda/z46u20V6h9Blohxi+UnjnXS0rCt/BddgxTFPfxKNAKazsSN88yg7ekdAA0Y1PevdlKa2OF/S2BX1U3f1030+ZpL6NGUVO6igVLF5bccKRRlQHG9t3xYTpeNhfBwv1S3YtRIFvjY7YJcSvEsc5sDmcwhkiPxGzF8pWZ8PTjW3eRFDyipN70B8DPBVgMpfM7Lbq2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7cjzGndxdMSIVACln2pqL7tb9a3c2n8v6DcE1codnBE=;
+ b=tKqulJy8QDOnCWfmY2MUgaLNA6FbqgroRGboBJJmuPQNlzejLirL5cJGAF0RYvZoZtgRiAHiGDgJqQ63kajqtN8+oh0D7owvSP8HyQr7AOAwJ/q/ZOtlq6Nug3hqEz1/G8oEiNty6Iu2gS8Ji+BPmknhB6jGmIfT3DeA6RStFCkY0ExK4h0G03VIGmyTK4N3V+tkbxMv4Vcowxkn3qS4y7M1LzRcM/13tmKmJTkYNJpzberRCUFvG4Orf6kCrYwH8lp2I+MFNA/iypRZJS3IUXvgaD2CFCQQBAFMPA8/8n8DU6i6s69Gg554/eD9GG594W+o3p2swv8KRQoD/k4Rcw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7cjzGndxdMSIVACln2pqL7tb9a3c2n8v6DcE1codnBE=;
+ b=hX/pMDnVsTMupmjlm/3bga8gZRaX8+CAoCSVJwFMI/Z7XXN5Z9k/M1HjMI3OAN1OY1kN26CGw+EUeqPP/z2VJdUE0quvJ4eBJNRlcsFwJe/gcDOJT8oFkebDhAEvWHoKy9o0sm7EqgJepW/QdEcXlUmPIfYyc6Ulex7dkXsB0A6PU9+ymMTBuVbytCG3Hk8HadkjtYuhUwF3sRzT6hQaT5dLGjhOWMl/UKW1IXWhhO8H+LGp0HEU6I7kJ3nQYLMPcqFItL19WjdVMU0wVfgcaQLXcFO2xYYO5PMxSC1jBGWimptLYu6Swt3zw3Q7bOIPac1MsCDLz90Wz445S7nGSg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nutanix.com;
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by BL3PR02MB7858.namprd02.prod.outlook.com (2603:10b6:208:33d::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Mon, 9 Nov 2026
+ 14:20:47 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%5]) with mapi id 15.21.0592.012; Mon, 9 Nov 2026
+ 14:20:47 +0000
+Message-ID: <c686141b-4df3-4aab-9f02-17afabb0be1c@nutanix.com>
+Date: Mon, 9 Nov 2026 14:20:42 +0000
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/8] hw/gpio/pca9554: New abstract base "pca9554-base"
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, milesg@linux.ibm.com, 
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org
+References: <20261106110440.3552588-1-armbru@redhat.com>
+ <20261106110440.3552588-5-armbru@redhat.com>
+ <463635be-2321-49e6-852d-080aa00ce40d@nutanix.com>
+ <aaba798c-591b-4956-be34-e6c9653398c8@nutanix.com>
+ <87qzgu43s8.fsf@pond.sub.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <87qzgu43s8.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR05CA0135.namprd05.prod.outlook.com
+ (2603:10b6:a03:33d::20) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tests/tcg/riscv64: test faults on implicit VS-stage
- page-table accesses
-To: tewaro <tewaro@theorem.dev>, qemu-devel@nongnu.org
-Cc: disclosures@theorem.dev, tewaro <tewaro@tewaro.org>, imaginos32@gmail.com, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
-References: <20260705140508.17692-1-imaginos32@gmail.com>
- <cover.1793677944.git.tewaro@theorem.dev>
- <32390ac8968372d34e299974d20db5fe25bbe2f1.1793677944.git.tewaro@theorem.dev>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <32390ac8968372d34e299974d20db5fe25bbe2f1.1793677944.git.tewaro@theorem.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=TMjQ2Fla c=1 sm=1 tr=0 ts=6af1d66c cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=8elE1k/PHQNyZ14TNTodlQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=5jPfotcHxaXWx8lUfTYA:9 a=OodHsDdFA-Wr_Rxq:21
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA1NiBTYWx0ZWRfX40po/lyV0urq
- Pvu906OKsnruBskSuOSvxFJh5/RvN52axL/UWLTS5OVBonNrg8xt1POdGCA6rQKi1Z32Hcb70rc
- N80FaGcniYIX02WAcIwfuN/WaiZGdtR/tvwm71rCyHFW7RRK+A+X8f9w24xX4PRcJRgrtcW72HB
- 8DgsS1uuNwgNOHPF3MFS2D+VCM804K073hysBaVuK1Hjpve4Nn7jDKB+SB0CCLqx7CxP9mAzI2d
- 0Wlv+cNa/5jr4ZSflAp88Wto8k5Mu/fzBYpXO5aaMqqQjS3G2qAYTZoU5Zqw2somJuzHkHPST8H
- alP/NXZszbuoz+oamVFNWsF3KOsvEWV4FV7FstPIH9uUUnksLsNs+5BXj49JMZLMqV5q+9ozS5g
- BLa+M2eAZcJiGQSwfmiBMDSq4qWaSPbhdj/PDR3Vs431K05PyvtGAp6pChgHM9uzasBM06f9vYy
- q0tGY+MiFO3k6VFDnyA==
-X-Proofpoint-GUID: 0x_pUi9gU0cdG10xPMy7Ri_UCYFp8Dxl
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA1NiBTYWx0ZWRfXxARKmGAZeHP8
- nUrIfv+Vz6nonlTg4UBVLfCdP24N4Ef/mgqtSoru2+0ZVGITKVEjRY65kBtNn0VMUCvFvwJg3K6
- PodT5TszxomtYUtqYK4ym3BqqUamRWM=
-X-Proofpoint-ORIG-GUID: 0x_pUi9gU0cdG10xPMy7Ri_UCYFp8Dxl
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BL3PR02MB7858:EE_
+X-MS-Office365-Filtering-Correlation-Id: 84b6ef09-b07e-463c-55e9-08df3e6ca614
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|23010399003|376014|22082099003|18002099003|10067099003|261102123227099003|56012099006|4143699003|261009223027099003|261022105027099003|261021123027099003|261026121527099003|261026140227099003|261028144727099003|261021121427099003;
+X-Microsoft-Antispam-Message-Info: 3SShUoSIuDdN78zax7Zr0Jm8F3ZqtS79LyZtGbMoAA7eMpm1FOFx/mO3xa1i7C33jGiUrMmLgElTmjBdA0qkQci1xkjEGsqywUUEWcmlF+gvIGmqs+TfrKxAP5nWPdYcWvFTaVVN2Oa5wJV+sGce2CxlO4EaZ5WMPKPMWgjBN4hZNKmoqp15GVhXpGA4yYhkSbYPzJ04YZHx2oD0yaLwFSEINaEfhn+6rgjVKskWKq+906ZKn/X7631opLPQoEb2aZKUD3hFw56P4eqVdxxqRwkxarhZw+p906NQhfSH6hM3YTRbGCfDKVWCocueoMxzjbkX4B5201rvB7rROMvqv0XSjeIQRsPLOCy6K2eujpExC0uHgUsi3MwiG033GnTuQSwHTtg0EK85e0GPs3eoP3hMwsG/aGeA7g5VxZcxM4X8lZ5B60sttn1i5nfeZBOEsa6neY6TxJ7DeHPBaHWZgAEd3R5m0kpajdLxYVdkdNvZrw+i1KTy+wpqqaZOC5L7NKDtiAiuC5IGhSZyTqsoZ3P6Atf5lLK1QEANdOeCFAH/kEgVNewARLYo4Ni/CZWkRzO/kopbJbvnnWG08Fjnc9apWEKMh5UN4GDn2IyZNcIjKNDFVGcn72cPg5NWSSM/9nxNCMwseNUuGAt6/VWTGaUIH6m7b8OE81PYIlujyHM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(22082099003)(18002099003)(10067099003)(261102123227099003)(56012099006)(4143699003)(261009223027099003)(261022105027099003)(261021123027099003)(261026121527099003)(261026140227099003)(261028144727099003)(261021121427099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Wko5ejE1K2g3cXExSzFqVWJsbXRSV1dnblNTQzlzNGFDVk95Kzk1Unh4dHVC?=
+ =?utf-8?B?RWdUaGg3UXJZejVESTY3a0htMU5WR2dneWYxaFk0SU9jcWJoUWx2VFlYQVlp?=
+ =?utf-8?B?TWk2OUxYZHhGbk5BRzFzd2lSVVhIcHVHTFdWMFpabXJMNmM4ejZmNmNiSFFN?=
+ =?utf-8?B?dXpOTXRWa2pNdEV3Unh6UC9WVXE1VUVkZ1RHYTRIQXgzWkQ5blQ3cTdKRWNw?=
+ =?utf-8?B?MC8wak0wM1U3a3dsU0xKeFV4NmFmSmgyc21aR095cnFoV0FSOG90VUNSczM2?=
+ =?utf-8?B?NDl6WnJwVktSN3JONC9CZStkTzgvZ3BmcGlUMjlyM1FtcjkwRGVxMDh3YnBW?=
+ =?utf-8?B?RDhNV3pPeWgwbVYrVTdudjNNNzlGSy8rOHZLWm9keDJNaWloN2pDMW9CTGxR?=
+ =?utf-8?B?SjZvMmJwNkY2eERxWkR4a3Q1TmcvTmxrT0pjTDZBWlJyOEJKeURVcjM2aEtY?=
+ =?utf-8?B?WmFqQ202SnNwYm9zLzh4NGg5UjViWSt2cnQ0d3pybmFQdTJxQWxHaGRMSXhk?=
+ =?utf-8?B?YVB4Y09BWW52aEJZZ2pMSC8vbWhXZWZSTzYvMjhvWjlCU1pNSnlzVmc5NlhJ?=
+ =?utf-8?B?cEhDU1haTkt3NllQMmlCMmlyTTFjWDJHRVprTWZQdVBnSGZoYmdaWG5UVkRB?=
+ =?utf-8?B?STRVZlR3bTk3OGhTdkhqTlJWQ2o4TDJhL3pBMUd0UUJBNWUyTUUyZ05HOUN2?=
+ =?utf-8?B?Z3pXWmM0NjlUWjg2YjJxNEhsSXl1TWRLWFlMOWJBUGJrUWEzbTZnVVBQY3R5?=
+ =?utf-8?B?Y09kMFV5NWxIYndSMTFYTTE4ZGJ6OWFoR3VzRUIrMUk4V28rVlQrUm1Xdi9Y?=
+ =?utf-8?B?WWs2SVJ4VWs1VktQZmtkY2d1VEFpNUoxWGcxMHhSNE9TT2ZpMmFMQjZvcFg0?=
+ =?utf-8?B?VlZCemtPNjFyRmpXR243aHp3dEVuUk5QTlpHbzJ4a3hYMUNiKzc2THkzWDJQ?=
+ =?utf-8?B?dS90dzllTmRaSEl6YkVZU3AyWGlRYk9qaitVRlJ0OExFaWJLVWtoU25scEdJ?=
+ =?utf-8?B?RkRvdkp1OVFBMFZ4aVJPVWp5cnluaTFjMzVOOTdDRTJ4OWRKL3RRWndLWGlX?=
+ =?utf-8?B?ejg3S0VLOFJrS1pjcmN0YzJkL1ZwTWJhWTQrcGQ3RWlGYmU1eTNrTzYyaVJB?=
+ =?utf-8?B?Q3plZmhUODF4ejEzcXJXZE1DUkdxTmczT2N0U0UrQmdxTkZaaXFtRXhSeVFt?=
+ =?utf-8?B?RkE2R25zZmRSTzZPc09VOEVuZlhtZlpINVlDUkZtZi9pc3Noc0NSWFR6V0V2?=
+ =?utf-8?B?ZERXcnBLL3ZVOUVJb0ZSWE96cExkSmpJRnBaTVdjaWhXcnJ0a1F1MEQraUw2?=
+ =?utf-8?B?dmtRbmpnNWRKalB0dzIveXI1Z1FYazhyNVNsZlJCdGlLbHZSTGRSYWhOTkRq?=
+ =?utf-8?B?MitrdjdhWGxkUmFxUHpqRE5ZNGdOMGhROGh3ekFKUXJXRitwTnVVK1AxMkxl?=
+ =?utf-8?B?WjNBbzh6eGJRWEk1ODlQSVc4OEdsemxsT09MaUVKTFBVZlR2aDJjVGdvdEZv?=
+ =?utf-8?B?RzduY1BYMm91YzloV0lpSWtLcFVmYUYrZ0Ezc2xabi9zQ244Mm1WL1dqY0o3?=
+ =?utf-8?B?N0JTc0RQaEd5dW9GT3N1a0JweVFSVnNCM3pxYVFwZDVnM2szTmk4L1ZNazFo?=
+ =?utf-8?B?d3hiWHIweHI4eW4xS1BhODlFRUtCc0t4bmdoUjEyQTMrMTVLdUw5V1NjVWVP?=
+ =?utf-8?B?YkdsT0dXU0FHWFpTbDJIam01bVRRbEt6bml3bm1JMnJ5WUYyL1NEczgxTVZj?=
+ =?utf-8?B?WjhORm8vYUg4YlY1aGg5eGRHMXhUQTlyYS83VWtGeXEyaGpwMndtT29SQVpv?=
+ =?utf-8?B?OUZXSEtDamJ6dVhmWkJqTUdMTHkybk9mTWRYRHo4MEZteWR1c1lkV2dOdmsw?=
+ =?utf-8?B?QktwcDQrWnUzaHYzQ1d2NWh5N1RuWWFuWDE3a0dzNjA0Tk1URzVCVUZBanNi?=
+ =?utf-8?B?eEVER3l2SDZMSktIK0NJWFh6UkMxUnhRM1lwTjg0d2xoT0NPNGNCdm9wMjUw?=
+ =?utf-8?B?L01oUm8yc2FmMlZCaGZ3Smc0TmRHbjF6dFViZ3k1UjRDVkhLZ1dsQ0VVblow?=
+ =?utf-8?B?dVVWUUJSbDIwZUdXR1dncVhsRkpITUcrbk1sUUxTWjNDY3lnYVZWMlh6VXRy?=
+ =?utf-8?B?UnZNRmI1ZnYvajNBNGllKzRqZDhBTy9PMEtRNDEvbEpVV0RrMm45RmdGdzZ0?=
+ =?utf-8?B?NEQ2cHJ3cFpEMTZaK3Y5a3JvbzYvUXZTOXNVSjRzUTRDTzRMVkJKekRTSkwr?=
+ =?utf-8?B?bDllREROUDNmT3d1U3J3a1BVNmlHVE15WVNEYkxCeTl3enY2bGNtODVWUXkr?=
+ =?utf-8?B?UkVLV2hqS3h6NXJjM3ZyRmhDL2hqSDlqK0JsbTdDamh0TVUvd1ZWU3lKZHZQ?=
+ =?utf-8?Q?5ZwDh8hmSZsiorO4=3D?=
+X-Exchange-RoutingPolicyChecked: YNQ1l3xloQBaoCQeE/gNR4ntL99ap2ZMArDcUP+0MBYtbTdK9Sl5aywG03Wds1AJWdoHASWRNYZO9GAzj9LPVPWg40GxMSVBG/Ps27pUAEtZFA7Y+MAyIUAgwPhaBdhzcMQ9TAvE7KHnMl2u8ALITGUdqig9obeHg4pumEsV8n56dzk9P41pTtw57olXMb/iIpv0Lml2XnpBH/IMe9fElNvb2SsQRUdXnYanWMB6cKY1hO9hBx0LZYyiufyddX0vNf02KDr806NfINzSxvdjuf1j4PgQo8Z+2CsY4+dQBOw1nJbBa81XVM9DeWIAZwP95yMdvNEABDc9o3Pwu/bJDQ==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 84b6ef09-b07e-463c-55e9-08df3e6ca614
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2026 14:20:47.5322 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0Wg7iY6KVKZbXVNk8LC0iaW+Ct8SaKZEGuIqMxfDFRa0617SjN5hTmnD9Wr1KKOHUx2WYrvv6MCVjXAiOsZwd1QK8nmqxk/0zgC+lD6vaZE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR02MB7858
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA1NyBTYWx0ZWRfX3lDJqh7oFkd/
+ 6WNa7f4gzl6SLxubDpi0mbEPbrh0v+nwTlnvyJ/ZNI8wFnLynHRaBni9NaoR/LdzYF82JpmhNm2
+ ABWHGWqFdVw6WvVgfpEHJpNsT5NdaIU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA1NyBTYWx0ZWRfX804dz9V+xBDu
+ Kf/O7yfDONvvmCTDgaWrtEyFje4l5mNriNxxpgJvHzbmRj6eYRHyukvXaV5TNJezs/phJal10kB
+ R3B/uS5sRqiQcUMZFvAL2SituHtcm3uhnBHSTCUV5N/sBClHp9INZ5wkUWXZayvNr6N3GhxJOR2
+ UnztJfNbZxJp6w5KP9fEC7MC/TCyOAo/MkihD74wFeDh6e25mtzw2eoMRNHrYXO2OfLSE62sWdw
+ aAi1f9gYCy9vCafSJTw+wfd/7XQLdJCVhr7LE9ej8KQ0mURNPRZ4uFl5ZuaR9dc8M7/qSEmpTBv
+ nfKaHwiK56Iq0vnqjXC/82SPQTtFoduxzALWgACfAKUU4YmdgtkLKiNuKlOUZyXUatW2ofFnE/3
+ krHUbjtF26BbEW8caWu0BkCJC+2QrgKKvX85GAeqSdApV1gnAYYl8vH7S3zuziiUNKLdl5a6s5r
+ 243oxq+322BDR3Hwd7w==
+X-Authority-Analysis: v=2.4 cv=eJ2GH3p1 c=1 sm=1 tr=0 ts=6af1d6c1 cx=c_pps
+ a=2IlhdGxtQGNhbQsvp42KdQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
+ a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=dq4e4f21VRIf9CvKBBoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: YF0O5yIHZ4_D39Og0wRP-TZ74Rtc51O2
+X-Proofpoint-GUID: YF0O5yIHZ4_D39Og0wRP-TZ74Rtc51O2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-09_05,2026-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0
- phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611090056
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -159,503 +194,118 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On 09/11/2026 11:56, Markus Armbruster wrote:
+
+> Mark Cave-Ayland <mark.caveayland@nutanix.com> writes:
+> 
+>> On 09/11/2026 09:02, Mark Cave-Ayland wrote:
+>>
+>>> On 06/11/2026 11:04, Markus Armbruster wrote:
+>>>
+>>>> Commit 5eceb48bbe86 (hw/gpio: pca9554: add PCA9536 support) made type
+>>>> "pca9535" a child of concrete type "pca9555".  This is inconvenient
+>>>> for the next commit.  Make them both children of new abstract type
+>>>> "pca9554-base".
+>>>>
+>>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>>>> ---
+>>>>   include/hw/gpio/pca9554.h |  1 +
+>>>>   hw/gpio/pca9554.c         | 55 +++++++++++++++++++++++----------------
+>>>>   2 files changed, 33 insertions(+), 23 deletions(-)
+>>>>
+>>>> diff --git a/include/hw/gpio/pca9554.h b/include/hw/gpio/pca9554.h
+>>>> index 1b33a8a752..0d841ff017 100644
+>>>> --- a/include/hw/gpio/pca9554.h
+>>>> +++ b/include/hw/gpio/pca9554.h
+>>>> @@ -8,6 +8,7 @@
+>>>>   #ifndef PCA9554_H
+>>>>   #define PCA9554_H
+>>>>   
+>>>> +#define TYPE_PCA9554_BASE "pca9554-base"
+>>>>   #define TYPE_PCA9554 "pca9554"
+>>>>   #define TYPE_PCA9536 "pca9536"
+>>>>   
+>>>> diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
+>>>> index caa73f63c9..1362b605c2 100644
+>>>> --- a/hw/gpio/pca9554.c
+>>>> +++ b/hw/gpio/pca9554.c
+>>>> @@ -26,7 +26,7 @@
+>>>>   #define PCA9554_PIN_COUNT 8
+>>>>   #define PCA9536_PIN_COUNT 4
+>>>>   
+>>>> -OBJECT_DECLARE_TYPE(PCA9554State, PCA9554Class, PCA9554)
+>>>> +OBJECT_DECLARE_TYPE(PCA9554State, PCA9554Class, PCA9554_BASE)
+>>>>   
+>>>>   struct PCA9554State {
+>>>>       /*< private >*/
+> 
+> [...]
+> 
+>>> The basic change looks good to me, however I found it tricky to follow given that PCA9554Class is now related to PCA9554_BASE_CLASS() and PCA9554State is now related to PCA9554_BASE().
+>>> Would it make sense to rename PCA9554Class to PCA9554BaseClass and PCA9554State to PCA9554BaseState here? I think it would help make the hierarchy easier to follow.
+>> Another follow-up question: how is PCA9554BaseState related to PCA955xState? The naming suggests that the latter is already assuming this role.
+> 
+> There is no PCA9554BaseState.
+> 
+> Have a look at the OBJECT_DECLARE_TYPE(), and its definition in
+> qom/object.h.  It does the following:
+> 
+> * typedef struct PCA9554State PCA9554State
+> 
+> * typedef struct PCA9554Class PCA9554Class
+> 
+> * Make g_autoptr(PCA9554State) work
+> 
+> * Define PCA9554_BASE(), PCA9554_BASE_CLASS(), PCA9554_GET_BASE_CLASS()
+> 
+> Or let's approach this from another angle.
+> 
+> Initially, we had just one type ("pca9554").  It had its own class and
+> instance struct (PCA9554Class and PCA9554State), which came with the
+> usual macros PCI9554(), PCA9554_CLASS(), PCA9554_GET_CLASS().
+> 
+> Then we added a second type ("pca9536") as a subtype of the first.
+> Instead of giving it its own class and instance struct, we reused the
+> existing ones, and we didn't define any macros.
+> 
+> This patch adds a third type ("pca9554-base").  It is abstract.  It
+> again reuses the existing class and instance struct.  However, because
+> this third type is the supertype of the existing two, we can't cleanly
+> reuse the existing macros.  So we *replace* them by PCA9554_BASE(),
+> PCA9554_BASE_CLASS(), PCA9554_BASE_GET_CLASS().  Except this is actually
+> a *rename*, because we still use them same class and instance struct.
+> 
+> Summary:
+> 
+> * "pca9536" ceases to be a subtype of "pca9554"
+> 
+> * "pca9554" and "pca9536" become subtypes of "pca9554-base"
+> 
+> * Their class and instance structs remain the same: PCA9554Class and
+>    PCA9554State.  There are no new C types.
+> 
+> * Macros PCA9554(), PCA9554_CLASS(), PCA9554_GET_CLASS() are renamed to
+>    PCA9554_BASE(), PCA9554_BASE_CLASS(), PCA9554_BASE_GET_CLASS().
+> 
+> Questions?
+
+Well just the one :) The point I was making above was really about 
+PCA955xState already existing in hw/gpio/pca9552.c: it seems that the 
+common parent PCA955xState (and also parent class PCA955xClass) already 
+exists for this family of chips, and in fact the real problem is that 
+hw/gpio/pca9554.c doesn't make use of this.
 
 
-On 11/3/2026 4:29 AM, tewaro wrote:
-> When a guest accesses memory, the hardware walks the guest's page tables.
-> The guest reads the entries and, with Svadu, writes the A/D bits. The
-> G-stage checks these reads and writes like any other guest access. If it
-> refuses one, the guest-page fault reports:
-> 
-> - cause: the type of the guest's original access
-> - mtval2/htval: the guest-physical address of the entry, >> 2
-> - mtinst/htinst: 0x3000 if the walk was reading, 0x3020 if writing
-> 
-> test-gstage-tinst checks 19 cases:
-> 
->    case          access  from  G-stage refuses  reports
->    ------------  ------  ----  ---------------  -----------------
->    load          ld      VS    A write          load GPF, 0x3020
->    fetch         jr      VS    A write          fetch GPF, 0x3020
->    store         sd      VS    D write          store GPF, 0x3020
->    store-ad      sd      VS    A/D write        store GPF, 0x3020
->    amo           amoadd  VS    D write          store GPF, 0x3020
->    load-4k       ld      VS    A write          load GPF, 0x3020
->    load-1g       ld      VS    A write          load GPF, 0x3020
->    load-vu       ld      VU    A write          load GPF, 0x3020
->    hlv           hlv.d   HS    A write          load GPF, 0x3020
->    hsv           hsv.d   HS    D write          store GPF, 0x3020
->    load-hs       ld      VS    A write          load GPF, 0x3020
->    store-hs      sd      VS    D write          store GPF, 0x3020
->    hlv-noread    hlv.d   HS    root PTE read    load GPF, 0x3000
->    hsv-noread    hsv.d   HS    root PTE read    store GPF, 0x3000
->    fetch-noread  fetch   VS    root PTE read    fetch GPF, 0x3000
->    noadue-h      ld      VS    -                load PF
->    noadue-m      ld      VS    -                load PF
->    noadue-store  sd      VS    -                store PF
->    control       sd      VS    the store        store GPF
-> 
-> - Leaves are 2 MiB, except in load-4k and load-1g.
-> - Faults trap to M-mode, except in load-hs and store-hs.
-> - The noadue cases turn ADUE off, so nothing is written and the fault
->    is an ordinary page fault.
-> - In control the guest itself stores into its read-only tables. That
->    is not a walk, so tinst must be neither 0x3000 nor 0x3020.
+ATB,
 
-A good test coverage is always appreciated.
-
-> 
-> Booting, the page tables and entering the guest are in hyp-guest.h and
-> hyp-guest.S, for reuse by other hypervisor tests. The trap handlers,
-> which make the checks, are in the test.
-> 
-> Each case is its own test, built with the -D flags listed in
-> meson.build, and exits with 0 or the number of the first check that
-> failed. Happy to test in a different way if that is desired.
-> 
-> Signed-off-by: tewaro <tewaro@theorem.dev>
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   tests/tcg/riscv64/hyp-guest.S         | 110 +++++++++++++++++++++
->   tests/tcg/riscv64/hyp-guest.h         |  71 ++++++++++++++
->   tests/tcg/riscv64/system/meson.build  |  77 +++++++++++++++
->   tests/tcg/riscv64/test-gstage-tinst.S | 135 ++++++++++++++++++++++++++
->   4 files changed, 393 insertions(+)
->   create mode 100644 tests/tcg/riscv64/hyp-guest.S
->   create mode 100644 tests/tcg/riscv64/hyp-guest.h
->   create mode 100644 tests/tcg/riscv64/test-gstage-tinst.S
-> 
-> diff --git a/tests/tcg/riscv64/hyp-guest.S b/tests/tcg/riscv64/hyp-guest.S
-> new file mode 100644
-> index 0000000000..31dc37810c
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/hyp-guest.S
-> @@ -0,0 +1,110 @@
-> +/*
-> + * Routines for the riscv64 hypervisor-extension system tests targeting
-> + * page-table translations between the host and guest.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#include "hyp-guest.h"
-> +
-> +#define FLUSH fence rw, rw; sfence.vma; hfence.vvma; hfence.gvma; fence.i
-> +
-> +        .option norvc
-> +        .text
-> +        .global _start, set_tables_perm, run_guest, exit
-> +_start:
-> +        lla     sp, stack_top
-> +        lla     t0, trap
-> +        csrw    mtvec, t0
-> +        lla     t0, hs_trap
-> +        csrw    stvec, t0
-> +        li      t0, -1                  /* no PMP restrictions */
-> +        csrw    pmpaddr0, t0
-> +        li      t0, 0x1f
-> +        csrw    pmpcfg0, t0
-> +        li      t0, ADUE                /* hardware A/D updating */
-> +        csrw    menvcfg, t0
-> +        csrw    henvcfg, t0
-> +        li      t0, 0x100               /* hstatus.SPVP: hlv/hsv act as VS */
-> +        csrs    hstatus, t0
-> +
-> +        /* G-stage: regions 0-24, 1:1, all accessible */
-> +        li      t0, G_ROOT + 2 * 8
-> +        li      t1, table(G_L1)
-> +        sd      t1, 0(t0)
-> +        li      t0, G_L1
-> +        li      t1, leaf(REGION(0), G_RW)
-> +        li      t2, 0x200000 >> 2
-> +        li      t3, 25
-> +1:      sd      t1, 0(t0)
-> +        add     t1, t1, t2
-> +        addi    t0, t0, 8
-> +        addi    t3, t3, -1
-> +        bnez    t3, 1b
-> +
-> +        /* guest: the code, the code again for VU, the 4 KiB table */
-> +        li      t0, VS_ROOT + 2 * 8
-> +        li      t1, table(VS_L1)
-> +        sd      t1, 0(t0)
-> +        li      t0, VS_L1
-> +        li      t1, leaf(REGION(0), G_RW & ~PTE_U)
-> +        sd      t1, 0(t0)
-> +        li      t1, leaf(REGION(0), G_RO & ~PTE_W)
-> +        sd      t1, 24 * 8(t0)
-> +        li      t1, table(VS_L0)
-> +        sd      t1, 8 * 8(t0)
-> +
-> +        li      t0, (8 << 60) | (G_ROOT >> 12)
-> +        csrw    hgatp, t0
-> +        li      t0, (8 << 60) | (VS_ROOT >> 12)
-> +        csrw    vsatp, t0
-> +        FLUSH
-> +
-> +        call    test
-> +        li      a0, 1                   /* test returned: no trap */
-> +
-> +/* exit through semihosting with status a0 */
-> +exit:
-> +        lla     a1, semiargs
-> +        li      t0, 0x20026             /* ADP_Stopped_ApplicationExit */
-> +        sd      t0, 0(a1)
-> +        sd      a0, 8(a1)
-> +        li      a0, 0x20                /* SYS_EXIT_EXTENDED */
-> +        .balign 16
-> +        slli    zero, zero, 0x1f
-> +        ebreak
-> +        srai    zero, zero, 0x7
-> +1:      j       1b
-> +
-> +set_tables_perm:
-> +        li      t0, leaf(REGION(2), 0)
-> +        or      t1, a0, t0
-> +        li      t0, G_L1 + 2 * 8
-> +        sd      t1, 0(t0)
-> +        FLUSH
-> +        ret
-> +
-> +/* mret into the mode: mstatus.MPV = 1 for a guest, MPP = S or U */
-> +run_guest:
-> +        li      t0, (3 << 11) | (1 << 39)
-> +        csrc    mstatus, t0
-> +        li      t0, HS
-> +        beq     a2, t0, 2f
-> +        li      t0, 1 << 39             /* MPV: a guest mode */
-> +        csrs    mstatus, t0
-> +        li      t0, VU
-> +        bne     a2, t0, 2f
-> +        li      t0, REGION(24) - REGION(0)      /* VU: the user copy */
-> +        add     a1, a1, t0
-> +        j       3f
-> +2:      li      t0, 1 << 11             /* MPP = S */
-> +        csrs    mstatus, t0
-> +3:      csrw    mepc, a1
-> +        mret
-> +
-> +        .data
-> +        .balign 8
-> +semiargs:       .dword 0, 0
-> +        .bss
-> +        .balign 16
-> +        .space  4096
-> +stack_top:
-> diff --git a/tests/tcg/riscv64/hyp-guest.h b/tests/tcg/riscv64/hyp-guest.h
-> new file mode 100644
-> index 0000000000..20ecef70a5
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/hyp-guest.h
-> @@ -0,0 +1,71 @@
-> +/*
-> + * Shared definitions for the riscv64 hypervisor-extension system tests,
-> + * whose routines are in hyp-guest.S. hyp-guest.S:
-> + *
-> + * 1. Boots the machine in M-mode, sets up the stack and tells the CPU
-> + *    which trap handlers to use.
-> + * 2. Builds the guest's page tables and the G-stage (host) page tables.
-> + * 3. Calls `test`, which starts the test.
-> + *
-> + * The test file provides:
-> + * - test: where the test starts, called by _start after setup
-> + * - trap: the M-mode trap handler
-> + * - hs_trap: the HS-mode trap handler
-> + *
-> + * Helpers a test can call:
-> + * - set_tables_perm(a0): set what the G-stage lets the guest do to its
-> + *   own page tables. a0 is G_RW, G_RO or G_NOREAD.
-> + * - run_guest(a0, a1, a2): run the code at address a1 in mode a2 (VS, VU
-> + *   or HS), with a0 passed on to it in a0. It does not return: the
-> + *   code's trap goes to the test's handler.
-> + * - exit(a0): end the test with status a0, 0 for a pass, otherwise the
-> + *   number of the check that failed.
-> + *
-> + * Memory is split into 2 MiB regions; region n starts at
-> + * REGION(n) = 0x80000000 + n * 2 MiB. Both stages map each region to
-> + * itself.
-> + *
-> + *   0     code and the G-stage page tables
-> + *   1     data and the stack
-> + *   2     the guest's page tables
-> + *   3-23  free for the test
-> + *   24    region 0's code again, user-accessible, for VU-mode
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#define PTE_V 0x01
-> +#define PTE_R 0x02
-> +#define PTE_W 0x04
-> +#define PTE_X 0x08
-> +#define PTE_U 0x10
-> +#define PTE_A 0x40
-> +#define PTE_D 0x80
-> +#define leaf(pa, flags) (((pa) >> 2) | PTE_V | (flags))
-> +#define table(pa) (((pa) >> 2) | PTE_V)
-> +
-> +#define REGION(n) (0x80000000 + (n) * 0x200000)
-> +#define G_ROOT  0x80104000
-> +#define G_L1    0x80108000
-> +#define VS_ROOT 0x80400000
-> +#define VS_L1   0x80401000
-> +#define VS_L0   0x80402000      /* 4 KiB table for region 8 */
-> +
-> +/* G-stage permission of the guest's tables */
-> +#define G_RW    (PTE_R | PTE_W | PTE_X | PTE_U | PTE_A | PTE_D)
-> +#define G_RO    (G_RW & ~PTE_W)
-> +#define G_NOREAD (G_RO & ~PTE_R)
-> +
-> +/* run_guest modes */
-> +#define VU 0
-> +#define HS 1
-> +#define VS 2
-> +
-> +#define LOAD_PF 13
-> +#define STORE_PF 15
-> +#define FETCH_GPF 20
-> +#define LOAD_GPF 21
-> +#define STORE_GPF 23
-> +#define TINST_READ 0x3000       /* walk was reading a page-table entry */
-> +#define TINST_WRITE 0x3020      /* walk was writing A/D */
-> +#define ADUE (1 << 61)
-> diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-> index 3c8b018d9e..05ed8b4c8f 100644
-> --- a/tests/tcg/riscv64/system/meson.build
-> +++ b/tests/tcg/riscv64/system/meson.build
-> @@ -53,6 +53,83 @@ tests += {
->     }
->   }
->   
-> +hyp_guest = files('../hyp-guest.S')[0]
-> +
-> +# test-gstage-tinst.S: one build per case; the flags are documented there
-> +gstage_tinst = {
-> +  # the guest's tables are read-only, so the walk's A/D write is refused
-> +  'load':      ['-DMODE=VS', '-DACCESS=ld t0, 0(a0)', '-DREG=3',
-> +                '-DFLAGS=PTE_R', '-DCAUSE=LOAD_GPF'],
-> +  'fetch':     ['-DMODE=VS', '-DACCESS=jr a0', '-DREG=4',
-> +                '-DFLAGS=(PTE_R|PTE_X)', '-DCAUSE=FETCH_GPF'],
-> +  'store':     ['-DMODE=VS', '-DACCESS=sd zero, 0(a0)', '-DREG=5',
-> +                '-DFLAGS=(PTE_R|PTE_W|PTE_A)',
-> +                '-DCAUSE=STORE_GPF'],
-> +  'store-ad':  ['-DMODE=VS', '-DACCESS=sd zero, 0(a0)', '-DREG=6',
-> +                '-DFLAGS=(PTE_R|PTE_W)',
-> +                '-DCAUSE=STORE_GPF'],
-> +  'amo':       ['-DMODE=VS', '-DACCESS=amoadd.d t0, zero, (a0)', '-DREG=7',
-> +                '-DFLAGS=(PTE_R|PTE_W|PTE_A)',
-> +                '-DCAUSE=STORE_GPF'],
-> +  'load-4k':   ['-DMODE=VS', '-DACCESS=ld t0, 0(a0)', '-DREG=8',
-> +                '-DPTE_ADDR=VS_L0', '-DFLAGS=PTE_R',
-> +                '-DCAUSE=LOAD_GPF'],
-> +  'load-1g':   ['-DMODE=VS', '-DACCESS=ld t0, 0(a0)',
-> +                '-DADDR=(0xC0000000+9*0x200000)', '-DPTE_ADDR=(VS_ROOT+3*8)',
-> +                '-DPTE_PA=REGION(0)', '-DFLAGS=PTE_R',
-> +                '-DCAUSE=LOAD_GPF'],
-> +  'load-vu':   ['-DMODE=VU', '-DACCESS=ld t0, 0(a0)', '-DREG=10',
-> +                '-DFLAGS=(PTE_R|PTE_U)', '-DCAUSE=LOAD_GPF'],
-> +  'hlv':       ['-DMODE=HS', '-DACCESS=hlv.d t0, (a0)', '-DREG=11',
-> +                '-DFLAGS=PTE_R', '-DCAUSE=LOAD_GPF'],
-> +  'hsv':       ['-DMODE=HS', '-DACCESS=hsv.d zero, (a0)', '-DREG=12',
-> +                '-DFLAGS=(PTE_R|PTE_W|PTE_A)',
-> +                '-DCAUSE=STORE_GPF'],
-> +  'load-hs':   ['-DMODE=VS', '-DACCESS=ld t0, 0(a0)', '-DREG=13',
-> +                '-DFLAGS=PTE_R', '-DCAUSE=LOAD_GPF',
-> +                '-DTO_HS'],
-> +  'store-hs':  ['-DMODE=VS', '-DACCESS=sd zero, 0(a0)', '-DREG=14',
-> +                '-DFLAGS=(PTE_R|PTE_W|PTE_A)',
-> +                '-DCAUSE=STORE_GPF', '-DTO_HS'],
-> +  # the tables are unreadable, so the walk fails reading root entry 2
-> +  'hsv-noread': ['-DMODE=HS', '-DACCESS=hsv.d zero, (a0)', '-DREG=15',
-> +                 '-DFLAGS=(PTE_R|PTE_W|PTE_A)', '-DPERM=G_NOREAD',
-> +                 '-DENTRY=(VS_ROOT+2*8)', '-DCAUSE=STORE_GPF',
-> +                 '-DTINST=TINST_READ'],
-> +  'hlv-noread': ['-DMODE=HS', '-DACCESS=hlv.d t0, (a0)', '-DREG=16',
-> +                 '-DFLAGS=(PTE_R|PTE_A)', '-DPERM=G_NOREAD',
-> +                 '-DENTRY=(VS_ROOT+2*8)', '-DCAUSE=LOAD_GPF',
-> +                 '-DTINST=TINST_READ'],
-> +  'fetch-noread': ['-DMODE=VS', '-DREG=17', '-DADDR=probe',
-> +                   '-DFLAGS=(PTE_R|PTE_X|PTE_A)', '-DPERM=G_NOREAD',
-> +                   '-DENTRY=(VS_ROOT+2*8)', '-DCAUSE=FETCH_GPF',
-> +                   '-DTINST=TINST_READ'],
-> +  # A/D updating off: an ordinary page fault, nothing written
-> +  'noadue-h':  ['-DMODE=VS', '-DACCESS=ld t0, 0(a0)', '-DREG=21',
-> +                '-DFLAGS=PTE_R', '-DHENVCFG=0', '-DCAUSE=LOAD_PF',
-> +                '-DENTRY=0', '-DTINST_NOT_WALK'],
-> +  'noadue-m':  ['-DMODE=VS', '-DACCESS=ld t0, 0(a0)', '-DREG=22',
-> +                '-DFLAGS=PTE_R', '-DMENVCFG=0', '-DCAUSE=LOAD_PF',
-> +                '-DENTRY=0', '-DTINST_NOT_WALK'],
-> +  'noadue-store': ['-DMODE=VS', '-DACCESS=sd zero, 0(a0)', '-DREG=23',
-> +                   '-DFLAGS=(PTE_R|PTE_W|PTE_A)', '-DHENVCFG=0',
-> +                   '-DCAUSE=STORE_PF', '-DENTRY=0', '-DTINST_NOT_WALK'],
-> +  # control: the guest itself stores into its read-only tables
-> +  'control':   ['-DMODE=VS', '-DACCESS=sd zero, 0(a0)', '-DREG=2',
-> +                '-DFLAGS=(PTE_R|PTE_W|PTE_A|PTE_D)', '-DADDR=(VS_ROOT+0x800)',
-> +                '-DENTRY=(VS_ROOT+0x800)', '-DCAUSE=STORE_GPF',
-> +                '-DTINST_NOT_WALK'],
-> +}
-> +foreach name, flags : gstage_tinst
-> +  tests += {
-> +    'test-gstage-tinst.S': {
-> +      'exe_name': 'test-gstage-tinst-' + name,
-> +      'cflags': cflags + ['-march=rv64gch', hyp_guest] + flags,
-> +      'qemu_args': ['-cpu', 'rv64,h=true,svadu=true', qemu_args],
-> +    }
-> +  }
-> +endforeach
-> +
->   tests += {
->     'test-vle32ff.S': {
->       'cflags': cflags + ['-march=rv64gcv'],
-> diff --git a/tests/tcg/riscv64/test-gstage-tinst.S b/tests/tcg/riscv64/test-gstage-tinst.S
-> new file mode 100644
-> index 0000000000..8c9c7b831f
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/test-gstage-tinst.S
-> @@ -0,0 +1,135 @@
-> +/*
-> + * Test what a fault reports when the G-stage refuses the guest's
-> + * page-table walk: its read of a page-table entry, or its write of the
-> + * A/D bits.
-> + *
-> + * Each build is one case, set by -D flags in meson.build:
-> + * - MODE: VS, VU or HS (HS runs hlv/hsv on the guest's behalf)
-> + * - ACCESS: the instruction run on ADDR
-> + * - REG: the region accessed; ADDR defaults to its start
-> + * - FLAGS: the guest's page-table entry for ADDR
-> + * - PERM: the G-stage permission of the guest's tables (default G_RO)
-> + * - TO_HS: take the fault in HS-mode instead of M-mode
-> + * - MENVCFG, HENVCFG: turn ADUE off
-> + * - PTE_ADDR, PTE_PA: where the entry is and where it points, for the
-> + *   4 KiB and 1 GiB cases
-> + * - CAUSE, ENTRY, TINST, TINST_NOT_WALK: what the fault must report
-> + *
-> + * The trap handler checks, and the exit status is the first that fails:
-> + *   1  cause  CAUSE
-> + *   2  tval   ADDR
-> + *   3  tval2  ENTRY >> 2, the entry the walk failed on (default: the
-> + *             guest's entry for ADDR)
-> + *   4  tinst  TINST: 0x3020 if the walk was writing A/D (default),
-> + *             0x3000 if reading; with TINST_NOT_WALK, neither
-> + *   5  the entry is unchanged, so the refused A/D write did not happen
-> + *
-> + * `trap` checks a fault taken in M-mode. `hs_trap` checks one taken in
-> + * HS-mode, using scause, stval, htval and htinst.
-> + *
-> + * Privileged ISA v1.12: 8.5.1, 8.6.3 Table 8.12.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#include "hyp-guest.h"
-> +
-> +/* exit with status n unless reg == want */
-> +#define CHECK(n, reg, want) li t6, want; li a0, n; bne reg, t6, exit
-> +
-> +#ifdef REG
-> +#ifndef ADDR
-> +#define ADDR REGION(REG)
-> +#endif
-> +#ifndef PTE_ADDR
-> +#define PTE_ADDR (VS_L1 + (REG) * 8)
-> +#endif
-> +#ifndef PTE_PA
-> +#define PTE_PA REGION(REG)
-> +#endif
-> +#endif
-> +#ifndef ENTRY
-> +#define ENTRY PTE_ADDR
-> +#endif
-> +#ifndef PERM
-> +#define PERM G_RO
-> +#endif
-> +#ifndef TINST
-> +#define TINST TINST_WRITE
-> +#endif
-> +
-> +        .option norvc
-> +        .text
-> +        .global test, trap, hs_trap
-> +test:
-> +#ifdef MENVCFG
-> +        li      t0, MENVCFG             /* A/D updating off */
-> +        csrw    menvcfg, t0
-> +#endif
-> +#ifdef HENVCFG
-> +        li      t0, HENVCFG
-> +        csrw    henvcfg, t0
-> +#endif
-> +#ifdef TO_HS
-> +        li      t0, 1 << CAUSE
-> +        csrw    medeleg, t0
-> +#endif
-> +        li      t0, PTE_ADDR            /* the guest's entry for ADDR */
-> +        li      t1, leaf(PTE_PA, FLAGS)
-> +        sd      t1, 0(t0)
-> +#if REG >= 3
-> +        li      t0, REGION(REG)         /* an ecall for a jump to land on */
-> +        li      t1, 0x00000073
-> +        sw      t1, 0(t0)
-> +#endif
-> +        li      a0, PERM
-> +        call    set_tables_perm
-> +
-> +        ld      a0, addr
-> +        lla     a1, probe
-> +        li      a2, MODE
-> +        call    run_guest
-> +
-> +probe:
-> +#ifdef ACCESS
-> +        ACCESS
-> +#endif
-> +        ecall
-> +
-> +/* the fault, as reported by CSRs cause, tval, tval2 and tinst */
-> +.macro check_fault cause, tval, tval2, tinst
-> +        csrr    t5, \cause
-> +        CHECK(1, t5, CAUSE)
-> +        csrr    t5, \tval
-> +        ld      t6, addr
-> +        li      a0, 2
-> +        bne     t5, t6, exit
-> +        csrr    t5, \tval2
-> +        CHECK(3, t5, (ENTRY) >> 2)
-> +        csrr    t5, \tinst
-> +#ifdef TINST_NOT_WALK
-> +        li      a0, 4
-> +        li      t6, TINST_READ
-> +        beq     t5, t6, exit
-> +        li      t6, TINST_WRITE
-> +        beq     t5, t6, exit
-> +#else
-> +        CHECK(4, t5, TINST)
-> +#endif
-> +        li      t0, PTE_ADDR
-> +        ld      t5, 0(t0)
-> +        CHECK(5, t5, leaf(PTE_PA, FLAGS))
-> +        li      a0, 0
-> +        j       exit
-> +.endm
-> +
-> +        .balign 4
-> +trap:
-> +        check_fault mcause, mtval, mtval2, mtinst
-> +
-> +        .balign 4
-> +hs_trap:
-> +        check_fault scause, stval, htval, htinst
-> +
-> +        .data
-> +        .balign 8
-> +addr:   .dword ADDR
+Mark.
 
 
