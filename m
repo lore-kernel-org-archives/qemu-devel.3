@@ -1,140 +1,142 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02AB606A322
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 10:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2213606A326
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 11:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Xby43k6B;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=A0xf26rd
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=pDpJw7tW;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dQpp08Ly
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQN1L-00075r-9E; Mon, 09 Nov 2026 05:54:40 -0500
+	id 1xQN7k-00005u-Kf; Mon, 09 Nov 2026 06:01:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xQN16-00075H-0R
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 05:54:24 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xQN7j-00005d-3u
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 06:01:15 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xQN14-0004Ob-6C
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 05:54:23 -0500
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1xQN7h-000556-AA
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 06:01:14 -0500
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6A99uljg3600451
- for <qemu-devel@nongnu.org>; Mon, 9 Nov 2026 10:54:17 GMT
+ 6A99ug1V4130794
+ for <qemu-devel@nongnu.org>; Mon, 9 Nov 2026 11:01:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Kb1lb1LVcsMnvJbi80nyHJKSjbDlscoiqA5aa895qKc=; b=Xby43k6BBVjCw1KR
- TnW+hICZLmUjTTXuy6iATeGqE7flKFgGRqqIt12sqi3u2aeJ0s5a1xi0vnljFcEA
- gO9U8R9zSapO1l/jh4AhnW38labLN403shh/eeMnlki20Lhkjd+8IdJ3Mh3AtaZY
- XF2Po3UfqjMM0ARC8e11Rfde1AiofPgIvSn1LcWZZIxTnQUrv4yOUji7wDi6/h1P
- QFcI2Zvnhs1i9JcFVTl+GKxXYSvyhFGl9gxE0bwPCZ0z80B/hhhZTZUpfCwN9UPp
- Wge2zmL74LL2tcduaMmxVCea/prcnt5KvsvbD7eC06g2nvzAWOnbQpDtIi2DDmPy
- 6lOqxw==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hua588ngt-1
+ meRY6YSH7nRyYVEBApI1hvAZOoIyeBZyTt+lCYoT/Ig=; b=pDpJw7tW2U18XCNe
+ x7cYNLnWwGWG+e7/e0n57iBH/dYf7+wCa9kuGUdNi4uqI+udmCybku8aWdrYkT2O
+ RB0ljN3zJiuJ8yBL8dwZodZFnkVxYfbEAW5HBW/UMgSd6pj0dQnyZcAWfg2/we37
+ 5NwhdjNP95wT1eSgOwbvoOewjxAZjJiHJMgF+46bCaL3HlkYaA0uhGk2BD9PnirW
+ Q+itLnyzRrEarTucTL8WFanDatbkVqJ7gl1KIIXahR4iN1pMbuomjK9qUfG/x6cD
+ 70+XU71M93J7WlOWSqohB77197E//jK9wgg2diwZI4hVJtOYFe6/Jy7rzCOmi3tZ
+ Eej/vg==
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hu6x2hbjj-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 10:54:17 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-980b637ed69so129691241.1
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 02:54:17 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 11:01:11 +0000 (GMT)
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-99b8fbf29a9so370556241.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 03:01:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794221656; x=1794826456; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1794222071; x=1794826871; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Kb1lb1LVcsMnvJbi80nyHJKSjbDlscoiqA5aa895qKc=;
- b=A0xf26rdrob3g8f0wpVTaa5J2lQythW+mnP7cfSgLmWEDHN7Eo192X5bO9OKaf0vRb
- +s0K1f6HO2WP0wUpal9XYhrcC5otyHO51FrpwjongyGNvMFspqw7Sn3yes1gnq2giM7+
- FkPKg2PBse7B8DkG6G423cdi0f8ZRaBuX98KqCG/of4IVmaj75b3s+6ANSnBpfxCzpZM
- nTRmJtLu3mO/+xpDoOQKEiXmI/7fP0wMM1WXHq1CQqYhPr1CI2u7o8JpPVWsOvX5pWQW
- elHUawRWbhkcnuPNwA9dV4r17LcJxZwz1A0DjUW9xhxaMoymyotSMii+FSAJ8ktVlK3w
- bdCw==
+ bh=meRY6YSH7nRyYVEBApI1hvAZOoIyeBZyTt+lCYoT/Ig=;
+ b=dQpp08LybDEjASJBWAo6H/pEP5JQOmJpeqm3UKUjpY+iWfkD9X9qPhbu6BAwNVsnE0
+ ALmtuXHRDcKyJm2TFpa+YU8I7NbQHVU1PpvGrvt9eHgpC8Z3pW4VsnNmf+B9EenvtrnL
+ q6eBYguJFVMerx1WsQ0cy1H/tUKbIluHE812buxBlxIcG+IPJzm6gDDjgFZ0U15JI2D1
+ /rTFb9Lxb7XXEr9VO7zwi+MThJFr8SPm5laE52SoMJFb5VzHPOkesXmbZ+42IjG7U7tK
+ YbE7K5iBiI/hYTyWamD5kN/hBgMmnxEm9WBNkqQmjwBJirz3aHN+yI7+6fclWTqUl91T
+ KvKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794221656; x=1794826456;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20260707; t=1794222071; x=1794826871;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Kb1lb1LVcsMnvJbi80nyHJKSjbDlscoiqA5aa895qKc=;
- b=eSikPUt1l/wxx7+/urbZKxEPzJjgv6L4FqueZtErjpmQ71iFnVJHQiRjY4miF3fLY/
- CFNZm/PtettTkPryRe2MrsfVa96uTKloclPXAenTLgXVV2lsAD+kQwPVnomlQ9C7neYw
- BkL8xvzx7WDrIfkDm8VBkv8pPCs92junsXYf+Q7nzsw4RWxoD+JQT09GYv+xOSU6tCiJ
- 8QlqadTj7GDfVJoGlyzM/R26NFKnYeCKk0t2/YyJsviMdco7+ybysujdiNmMdlsjUjzl
- A7sQjpXU8ebljj7PJ7JKeoXPVoCgvNMPWzhhgCwwKCnCvd1oxyy17h8BFnQr8GG3sP0g
- sOcQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErEnMhce4IU4UiQAgk05Y/KayHnvJBaV1wfsFQhF8SZ/zdt0yPU3/3wt3UbKyyZLswOXajN8yerKziYv@nongnu.org
-X-Gm-Message-State: APuU4Z/BszucKW53/bN7h4H0LK8H3rptnD0S/xL+X9yMnjt9wmXbTAdi
- 8YVU9QmLVbe8nbnmjOJotb3pEVUiCfHLWtmkDr+umy3TPT/Ac/ksnergjZlb+1oa6FDmmGYDcMa
- d+krFDpgLJWIKgEkhLkQfaaqk64oqt2c7QsF2hTnSTeXOAZL2U/O5MWzNmQ==
-X-Gm-Gg: AYBFou3GIJcI4R9XRlOtW6GQYJRCsIE9Lp9L32Oumn3Y6PhnncbuauuOLzwBD9GSf7T
- YTI3hWVacJqywuRxx6eyf4RkNM6kAY29YlpulIYLAgqNO/RGlxnTVi//rrMWO75IBqHbsQLwjyi
- ihvvK2ECRekG9onBRjZSd2Osm7RTcxk09r3wYTdUj5ininSrmzpTccweVqaru4F/uwyb5zrfh4o
- zBux62IQ0FuhL8WtfcXx25YbAKJ05AjTOWCzH0Vi/o2V5Mc1ztsees2RtjTes3MHunTlNr9J9d7
- dXLH9FFYWmd2PaY983zJNgz8X7meenJssRm8f+rg4oRkzANJB+NY7l4brpOdPdEOSWyFJZdeJH5
- 0uqlCH97y/wuLEnOm8LALS2iV43BZ7CWrfd9u/Vrh+ECB0KELp1w68N+NbRaF+lnMHropg600pt
- Qi4CiV9w==
-X-Received: by 2002:a05:6102:6055:b0:7a8:2a34:432e with SMTP id
- ada2fe7eead31-7d2db0df66amr630874137.9.1794221656567; 
- Mon, 09 Nov 2026 02:54:16 -0800 (PST)
-X-Received: by 2002:a05:6102:6055:b0:7a8:2a34:432e with SMTP id
- ada2fe7eead31-7d2db0df66amr630867137.9.1794221656032; 
- Mon, 09 Nov 2026 02:54:16 -0800 (PST)
+ bh=meRY6YSH7nRyYVEBApI1hvAZOoIyeBZyTt+lCYoT/Ig=;
+ b=xsnu/TY/1T27pVhndQWQzk3ScO5gZ4/RbsK6QZxperNgRWIH1Ttr397pgu12b7pg4K
+ YRQlLFMwMvnW+Zv9Y2ym+glcrc6qtlrm47fZMGKHe5JfVVAxvkY3vx/hRtK+0hyY9ako
+ hrBjHJ3utapoAFPKpDkGZmwZkYDGVs7jYBROY5n2ertEMmXDO8hz9pj8q25anGDEbf5h
+ vltlEXiL5BaHzvVDSAoSDNhm6hissJJu/50w2k4cpplapMaFPI3/miDEd/vDVa+UzQ7C
+ TyOe+skUd5YTjZeS+ob1wfylhk538V8iBrMXSD1zmMHIfCvm7Aedljq2But6i/922Sn8
+ QNnA==
+X-Gm-Message-State: APuU4Z/3+OLrqyp36o27NNAPHQAADG29Fqfh14yCmc9vudhFBmILVeOi
+ i+Ag+G1tVRluj05Aua1JUEhQZAx6htKC66Eo6yLV/nW4zAy2114lJc9rUJOPmbNt3sQJDZnWKdW
+ 1cMp7N68eWz2mexF4BbtdG1JV9lpFB6K6CNLiqCM7VGt9OiQFyVYPLdo6VQ==
+X-Gm-Gg: AYBFou1n6CcB/x+FvaGjx7d23HfcPuVRQwrTYKymIc73abxkTmvCbox6g0/pO2bHd13
+ 1OYgRG2A/sEByJpfF2oxHWZA4Q5Jy9EVKAbOUD4LlFThkpE4TKItnoxIUC5Nm9eLtA/JNKLIhoU
+ WYe6Baaq7Eyql666j4X2YZycSOyr5ESsyTjMvTcWg7QDhfeOWbVyg7H/28LqgsiWWCGUEOrUGZ2
+ QZ/7nK1ccW9j052RXvaaW1OUqDkzXgWNsF868NYKCipDoE4K6dXVfaPCfhA+z7HbZBg+qU6U2G8
+ yQg9gNeEqznXCBgsscanHYnddD1Oksz/MtZzi+kGApdYvF6I1y6vgQiC3lT48wnW1GYgXKPU74m
+ WO05n8qax4FQXGwZALXkRXAdKXyq+pN1TKSaANvYkMfNfy1VQrXxHtjRIWz2eT+lmE0ltezK/24
+ awSOm+8Q==
+X-Received: by 2002:a67:e104:0:b0:7cc:2cd0:e74f with SMTP id
+ ada2fe7eead31-7d2db1bcf74mr684433137.30.1794222070566; 
+ Mon, 09 Nov 2026 03:01:10 -0800 (PST)
+X-Received: by 2002:a67:e104:0:b0:7cc:2cd0:e74f with SMTP id
+ ada2fe7eead31-7d2db1bcf74mr684356137.30.1794222065103; 
+ Mon, 09 Nov 2026 03:01:05 -0800 (PST)
 Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-496150c6e90sm7674615f8f.2.2026.11.09.02.54.14
+ 5b1f17b1804b1-4b79501502asm154215695e9.2.2026.11.09.03.01.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Nov 2026 02:54:15 -0800 (PST)
-Message-ID: <e10dc545-52bf-4418-99b3-e0fdb43de0ba@oss.qualcomm.com>
-Date: Mon, 9 Nov 2026 11:54:14 +0100
+ Mon, 09 Nov 2026 03:01:04 -0800 (PST)
+Message-ID: <a973e342-bf83-457d-8f0a-461ce1bcbbd7@oss.qualcomm.com>
+Date: Mon, 9 Nov 2026 12:01:03 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/i386: move bios functions into x86-bios.c
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20261106191356.1207295-1-jsnow@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [RFC PATCH] docs: add a diagram of the development process
 Content-Language: en-US
-In-Reply-To: <20261106191356.1207295-1-jsnow@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+References: <20261106122111.3005638-1-alex.bennee@linaro.org>
+ <dfc31d65-d309-461d-a47e-3df3c658d56e@oss.qualcomm.com>
+ <87ld7566jz.fsf@draig.linaro.org>
+ <b6a6e0bc-90b0-4162-8ec9-098d1ced1069@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <b6a6e0bc-90b0-4162-8ec9-098d1ced1069@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA0MyBTYWx0ZWRfX04x/NSd0gDdT
- vnNYd6OVnNZ32VK1KbHyek3ZIBYW5SFBQidkffAWVgoKXprDrVGf/tw6Xf60gzBOQwQNfYKuJy/
- 392h1R0R/hVxtbxCG/fB8mAsAS1KgYwDZ5GNeeD9+OEyjyagdaorvT6TokpYo7/ntQbu9fbLFt+
- Ke4CUfo9RTbExxAKyVVtmxKfZlXmDuWYLpZgkMhwmXf70Qv9ySz4GUdGV0EIorNDR2cn3EPoS4i
- UfIc3ckAL33eEQeK8UsMDGbdXxAxoXg25jYh7Qn24JSDmyMfTGdKIB30Ir+c+cxYEEH5j2w3AJs
- INHaFeblsYt7QzqFu9/dUABMxNqvikoJH/8SGaVzckB+Vu1JHB4yoUFbFEM2o9xw2yeehQVqKBM
- yngYrnoE5taRy6eNroYQq19yeNJTLQXFp9cGj/l821qCadLY3sM6G4lM4F9AC/BU+YSFrF7bA6H
- 0nQ/VUk7j3zluTKAMFg==
-X-Proofpoint-ORIG-GUID: CIACzypKTyUAGOB9Za8JfNb5MUZp4duU
-X-Proofpoint-GUID: CIACzypKTyUAGOB9Za8JfNb5MUZp4duU
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA0MyBTYWx0ZWRfXyQuZU9XDsNhg
- w5l6tr3qouQ+9U2f5v2VXcOyPG87vk215ze+5yMGHl91921WYXapvalHvWUGJJBqaLqzoBibCmI
- qZmRm1eESfkORw+uhEhJSGA/jrXh+lg=
-X-Authority-Analysis: v=2.4 cv=C9V8WgP+ c=1 sm=1 tr=0 ts=6af1a659 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=TMjQ2Fla c=1 sm=1 tr=0 ts=6af1a7f7 cx=c_pps
+ a=R6oCqFB+Yf/t2GF8e0/dFg==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=VWpyO1KW-ja7qVc6LdkA:9
- a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=S0jo4cuPHJH6ETGbiJoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TD8TdBvy0hsOASGTdmB-:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDA0MyBTYWx0ZWRfX6MKBNWRNdXRv
+ d7ezXmWZbIuj+OnE8fpkMNHttvK7faWvf2lpIcHn0gy0rx+z2BfvpThFWGb024TKopuoJ2QzCJV
+ AMqkHZ3luQ4Qg2RS6p8VuFtNlOjkJ+P/X9A+Ogle2BvxiV7TZOxDmhjA3MvjItwI080eBUBYTx5
+ DQiuQoXNlwJnjoVMlH5KdX0CuBabDmOOk3HeRO/EGEjoshtizPUqfp3h3+n3xzVis6Zt0HbX54z
+ iqX+plE9oxEuQX4V2WiQuJ7H1DoAvFoJUBlXPS+Dcepz/68g0T4BFM4Nhr5JLk4t8Ddt4KbZ/Wd
+ 6e0fEgZXeZPG8ukVaqz8qFV4SCdOc3YB7LreutLCn4SyVrqoA8XeCRmkJaAq+UMgZxga73xLgGG
+ ZfO1jIvrzHozdo5JcOWZiIwiBqq1b8eULYjVvLubpsSIDUesRRDLgAIAqoH3I+LVsHncTGJU0CK
+ 7AfvPUFY9zNFdUu29Kg==
+X-Proofpoint-GUID: pkplMtxEusZHatPkv4LDW0_wHRAxYYkJ
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDA0MyBTYWx0ZWRfX/JG8C4CX68+O
+ BmkdqEqIpWsgJl3tnuCQ6zxiUieQXYFNv+ISyfdLNNKlV5wmnj0e0Uf8oUwsYj3mDlnmkW/FQGZ
+ jmQJO7+XlZUOyJhi/lLn7ISM+5t9kkw=
+X-Proofpoint-ORIG-GUID: pkplMtxEusZHatPkv4LDW0_wHRAxYYkJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-09_04,2026-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- bulkscore=0 suspectscore=0 adultscore=0 malwarescore=0 priorityscore=1501
+ suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0
+ phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611090043
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -161,26 +163,92 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 6/11/26 20:13, John Snow wrote:
-> Currently, these functions are located in x86-common.c. However, when
-> configuring QEMU with `--without-default-devices`, we encounter a
-> linking error at final assembly time where these functions cannot be
-> located.
-> 
-> Split these functions out into a new x86-bios.c module to allow
-> defaultless compilations of x86_64 to succeed.
-> 
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->   hw/i386/x86-bios.c   | 143 +++++++++++++++++++++++++++++++++++++++++++
->   hw/i386/x86-common.c | 125 -------------------------------------
->   hw/i386/x86.c        |   1 -
->   hw/i386/meson.build  |   1 +
->   4 files changed, 144 insertions(+), 126 deletions(-)
->   create mode 100644 hw/i386/x86-bios.c
+On 6/11/26 22:01, Pierrick Bouvier wrote:
+> On 11/6/2026 12:36 PM, Alex Bennée wrote:
+>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>
+>>> On 11/6/2026 4:21 AM, Alex Bennée wrote:
+>>>> We've had various versions of this diagram for a while so I thought it
+>>>> would be worth adding to the developer docs. I chose plantuml as it
+>>>> has a plugin for sphinx that we can use and supports sequence diagrams
+>>>> which could be useful for documenting other features in the code base.
+>>>>
+>>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>>>
+>>>> ---
+>>>> vRFC
+>>>>    - I've bundled all the plumbing together in this commit but it can
+>>>>    be split up if we want to go forward.
+>>>> ---
+>>>>   docs/conf.py                    | 22 +++++++++++++++
+>>>>   docs/devel/index-process.rst    | 47 +++++++++++++++++++++++++++++++++
+>>>>   docs/meson.build                |  3 ++-
+>>>>   docs/requirements.txt           |  1 +
+>>>>   configure                       |  6 +++++
+>>>>   pythondeps.toml                 |  1 +
+>>>>   tests/lcitool/mappings.yml      |  3 +++
+>>>>   tests/lcitool/projects/qemu.yml |  1 +
+>>>>   8 files changed, 83 insertions(+), 1 deletion(-)
 
-What are the changes since v1, do I need to review again or
-can you keep my R-b tag?
-https://lore.kernel.org/qemu-devel/c76a70ea-f788-47a6-8a0e-229694e6c571@oss.qualcomm.com/
+
+>> I have the ascii original although ditaa seemed more of a stretch:
+>>
+>> --8<---------------cut here---------------start------------->8---
+>> #+name: QEMU Development Process
+>> #+begin_src ditaa :cmdline -T -o :file images/qemu-dev-process.png
+>>             Developer                                   QEMU Community                           Subsystem Maintainer
+>>    +-=--------------------------+   +-=---------------------------------------------------+   +-=----------------------+
+>>    |                            |   |                                                     |   |                        |
+>>    |    +-------------------+   |   |  +-----------------------------------------------+  |   |   +----------------+   |
+>>    |    |{io}               |   |   |  |{io}                                           |  |   |   |{io}            |   |
+>>    |    |  Develop and      |   | +--->|              Code Review on List              |  | +---->| Add Maintainer |   |
+>>    |    |   Test feature    |   | | |  |                                               |  | | |   |    Sign-off    |   |
+>>    |    |                   |   | | |  +------+----------------+----------------+------+  | | |   |                |   |
+>>    |    +--------+----------+   | | |         |                |                |         | | |   +-------+--------+   |
+>>    |             |              | | |         V                V                V         | | |           |            |
+>>    |             V              | | :  +-------------+  +-------------+  +-------------+  | | |           v            |
+>>    |    +-------------------+   | | |  |{d}          |  |{d}          |  |{io}         |  | | |   +----------------+   |
+>>    |    |{io}               |   | | |  |  Review     |  |  Review     |  | Maintainer  |  | | |   |{s}             |   |
+>>    | +->|  Post to List     +-----+ |  |    Comments |  |    Tags     |  |  accepts    |  | | |   |   GIT Branch   |   |
+>>    | |  |                   |   |   |  |             |  |             |  | some or all |  | | |   |    foo/next    |   |
+>>    | |  +-------------------+   |   |  |             |  |             |  |  patches    |  | | |   |                |   |
+>>    | |                          :   |  +------+------+  +------+------+  +------+------+  | | :   |                |   |
+>>    | |  +-------------------+   |   |         |                |                |         | | |   |                |   |
+>>    | |  |{io}               |<----------------+                |                +-----------+ |   |                |   |
+>>    | |  |    Incorporate    |                                  |                          |   |   |                |   |
+>>    | |  |     Feedback      |<---------------------------------+                          |   |   |                |   |
+>>    | |  +--------+----------+   |   |                                                     :   |   +-------+--------+   |
+>>    | |           |              :   +-----------------------------------------------------+   |           |            |
+>>    | |           v              |                                                             |           V            |
+>>    | |  +-------------------+   |                       QEMU Maintainer                       |   +----------------+   |
+>>    | |  |{io}               |   |  +-=-----------------------------------------------------+  |   |{io}            |   |
+>>    | |  |    Prepare n+1    |   |  | +-------------+  +--------------+  +----------------+ |  |   |  Sign & Submit |   |
+>>    | |  |                   |   |  | |{io}         |  |{s}           |  |{io}            | |  |   |      Pull      |   |
+>>    | |  +--------+----------+   |  | | Tag Release |<-+   qemu.git   |<-+ Test and Merge |<-------+     Request    |   |
+>>    | |           |              |  | |             |  |    master    |  |    Pull Reqs   |<-+ |   |                |   |
+>>    | +-----------+              |  | |             |  |              |  |                | || |   +----------------+   |
+>>    |                            |  | +------+------+  +--------------+  +----------------+ || |                        |
+>>    +----------------------------+  +--------+----------------------------------------------+| +------------------------+
+>>                                             +----------------+                              |
+>>                                                              |                              |
+>>                                                              V                              |       Pull Requests
+>>                                                       +--------------+                      +----       from
+>>                                                       |{d}           |                            Other Maintainers
+>>                                                       |     QEMU     |
+>>                                                       |    Release   |
+>>                                                       |              |
+>>                                                       |              |
+>>                                                       +--------------+
+>>
+>> #+end_src
+>> --8<---------------cut here---------------end--------------->8---
+>>
+> 
+> Nice diagram!
+> Better in picture indeed.
+
+In the picture can we express the time dilatation factor in the
+arrows to help contributors understand when they shouldn't worry
+wrt QEMU mailing list pace? Like the wider the arrow the more we
+need to wait.
 
