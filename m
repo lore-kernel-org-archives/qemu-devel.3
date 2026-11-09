@@ -1,87 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E0B606D83D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49680606A33F
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 14:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=j/MqKl/f
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=QD0pdU+2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQQ0Y-0007Q8-BJ; Mon, 09 Nov 2026 09:06:02 -0500
+	id 1xQQ0M-0007Gq-8q; Mon, 09 Nov 2026 09:05:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQQ06-0007A5-0U
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:37 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1xQQ07-0007AJ-Lx
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:38 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQQ04-0008A4-8T
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:33 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-491aaed7565so560677f8f.2
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 06:05:31 -0800 (PST)
+ id 1xQQ05-0008AI-FC
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 09:05:34 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-4919a880834so544886f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 06:05:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794233130; x=1794837930; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794233131; x=1794837931; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=sE8yVpqQAzfmCUET0N5Sgrduw4EonoQvrMHIyBYOkRM=;
- b=j/MqKl/f3nwltTNoCAtcl2W9fnTcTWxBwPeazgK34PBBcTlwo4BEFEZr5BEWs2aGpA
- Fyv4PhnAVvJtIxEl93Xxxt7dHz/vfdNkxm0cdkSZhkNWFpyDTfK+7KIC4Voe56/8atRL
- Exkuq6mM++53r1g37pIP9WAmt33F4+SclPOXSjDzVoLi4s2UFFIfTknTI1rttPFj5Vas
- udMyrvkBzENaorVNUogKcK7+xDyV7b1QfVYwS9xyZiFQyL4n4yamwRWZ+juhItKO3ZLG
- rFFX9f9xp9E+wxBqoscGHOjs/l9gPAqb+uZN3+UPeWblrU+tOyRrCam+fs+dZL3QGo9p
- nS1A==
+ bh=u1p3xLhUQaiHmwfqrKKk2BE2A9rmOTSYS3imI80QnJo=;
+ b=QD0pdU+20hNwJMw4Hjs0UNedNpEAqQQ9C7VseX95rgZ/oRBax1As3CV78Cmffn5Xdt
+ wlYJGOSx9QyyV6e/Z8cy5GgaL8RpvsbkXEKZrcBHtwp3vLaFtq0pMwAuPhEIDEtAlLGJ
+ C2fdqux4bSYtEBC4D+CXOw7bHT9yaxRimrZ9uzRy1CLQx+9uQW67veTJ1Zu0UC+IrHI0
+ +KRQ5awC0XpS6cpNCyHoIyuTZWWYGy3G8XDJVoTK456QB22lOydvQUEu/AkGYeV9PZwI
+ q2uu1myYVucr/YI68kYq1ahklkk7ZkoOQZbExOCG1dJ7l2dlgFFTEaThr6OjvkYUObxL
+ daqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794233130; x=1794837930;
+ d=1e100.net; s=20260707; t=1794233131; x=1794837931;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=sE8yVpqQAzfmCUET0N5Sgrduw4EonoQvrMHIyBYOkRM=;
- b=kx6EUNpXs42kTkG7roWt3tRf49755Kqkk0rRVyfqjQfIx4N84TeDuEgyplss/8faPe
- Hxl+T5fEhVtbztrGRTGCwNPdx4l+qvQsLQmO8CCi0xNDzGQOj+YCn1GVGtNA2WJEyH/S
- 1o5XUGPoWS4FgF8L+xdnCXLpX0rbsJZD4VjDR4zlv4lmUQfT6sDIsjcGINbrvnOGMQ5Y
- Ks5ZC7fi7HjCNfo2qSxpmsBr1e5lazBdfqfRToaO/uk5YL+JHUyTqSUkNxe7Qn8WFGPB
- 5RJ3hiJjZUvlgWYgJ/KIdf/3JZlAVaNkD4k5BpBWFjdlEii4FC9HinkZHYgOEpGwJ2be
- btMA==
-X-Gm-Message-State: APuU4Z9B53g85u1grOQDW3AmUZUVb0QvnaZj/a7qVdvvoKJ2Ys/aE1LB
- 6YvX/Hjesuq3H8j4RYoaWZt4lmIvxYunS02qOpPa+zhiMAA5ACp3ID+hbF2NniF6kPKPHPI3MJ6
- cF2n/BQY=
-X-Gm-Gg: AYBFou3uM8JSqoKunodSr94IVBzWZCcYVS6zlpml4Afz3xeq0jn9yOKAA8POUh28thC
- 3iU+hDSiz9TBSvtko1gXzd13Tf8yJ3xhVSNl4fGWplBsrjQeDF0Tf7S8YT3Jl75YOlSFbBXNbKu
- wsAx992osut4IFjLiAULZ/jvEsCuhQIJLDncynogGLawi4ab2TWMnr0bQ4VcPz/YfC7K/ktTAwG
- DfYasuf8cyBC7Iyfc4pOqfq05uoMCCm0izlDVXCyDieaAAnJwh2IR0I6Wlly0HTuTr4Xe+hq7A3
- Z0P11NuhsgvCixlHO4g0WywZXkOvJyfZJBbSsj0BZAHwwTe6zenj9qQwD9loHDlZEf3ceVf3Vfw
- yvi3ZKc8dejl1PAqtbJ6ppRacM6S7UwDED1cMhSx2IZpmstb8+sx6RPfn4SmtAV6fUoDri64GY6
- iuTQA2oLtD/71MDr0R4uGlpMXqz8TM/FhBGdnGhttkISWDChegLWn72AxcNBxTBEN367npC9uiH
- kTYEnqfAFEGmiG+pumpB7rkgxJFNu3D0cnHaU1FOBVkJNkc7dIeT24gusPxeHP4QK9xewE57LmF
- SCm9VSrcFsck/P2GseqVQB+M0t54ryNG4bBOp9QrdsudzCxtb59Ih9jb7OcP2JsySQYFPbt54Oo
- jEEm4AoJVz2y7RSxwJdYUYNwNNYmXmCZx1vLLI2nZNPqjRPcMlzbI9Ec=
-X-Received: by 2002:a05:6000:2211:b0:493:d5f0:4e4c with SMTP id
- ffacd0b85a97d-49582e90293mr7688652f8f.23.1794233130170; 
- Mon, 09 Nov 2026 06:05:30 -0800 (PST)
+ bh=u1p3xLhUQaiHmwfqrKKk2BE2A9rmOTSYS3imI80QnJo=;
+ b=209M0hxW69wVCwDLAg7XOD36yqyT7gEimxy6e88y0bEgvFl3CDGR7nDY1E8a1S5t35
+ SHlaOq82bKg9I+mcUE9fFuPvwkESBFciUHYrgn8x1EjAtx7EGb02DCUBoyUykDqBMlA/
+ bTMbo0WPNpDf4/Q6XG8G5Sqn2BX18eClXl6my+5+HIIj+cp2nf3MtrI1YTx/ZSL9QwY2
+ nsQJn+3ArVsnPf8oq0jnqPBt4eLvS8e0F76IXUW3ziftJp+VbsJ4lfgNlwHw8zd6Mldb
+ 6t6jzMNhu1N81yieZs4Vy20vo5OzONEOzx9PFpagw4BJUxK1T0yQ7mqWdjGrLJZrQfwS
+ CKNw==
+X-Gm-Message-State: APuU4Z/hurH0VsRZngV3o2LraKna5mYmsR1mGXPYMA1oJDQzLkoLsC+L
+ 2XJm9IWHpVFQV9i+H9zhtM59wFUVpI+7UDnZmXxDte8fhub+U65XPdYrFU3u6P8coxEOeOT/Cfs
+ yG2YlfRY=
+X-Gm-Gg: AYBFou32zy8u+74AaPBGmTtCEMmLcltIf8zxngjkDThTpWAgtSs69tfY/hKQC1RHyQQ
+ QGn71RwfIFvsFPMdRyGXq9cy8j9piYdVqtkFTxfZORUcVRHqUkE0I0vbT5BjQpaFccomF0F6g8B
+ LbWpY3xLJ8sU5WBgTab1D8zckEN0DCK4OVT734NmqxS02whvmQTz0o6dD6VZbjIsEQtjD+c6arZ
+ vLvKJaRjilfs36e+5B32IoGBUeNmy4slEKF6gC1wTi5mEAIshq3969JrW+zxaYE0MQe1ztbut43
+ SInL6C2Tt1I99dYrGoDTvSNn7kC/vaSGMd2k99rrRe2tz2jbGQrULGbDiyv8qgvyfT4PzeBdhl1
+ +eA6sVnhNltvqaTRfhkk1ufE9BtN/txkc6Sz9KdLveMfqIcgJZHw4bCCc+yjbYl/0PYd6p/uDeD
+ KPWam2t+/nznMTcIqAu5IgOrp+BVy9ZH+b+TyCn2iKHs9AD0rZC/HiVwVgI+C/OXx3Nldgsz2F0
+ z3NCBhszCJEvM6ZPRTj3p+gm66iN3x/sygf9lVXmhdxCXeK8MDuhciKswz+riC7mdujEj4knR/W
+ VpYJqcjTduWQaNkChzz3q9tRia8sA8MC+ZejSOUgFauOvVQQS9uZynPG2BvSnC9cxfxnQBfSaAL
+ UExHU15Jshgv6nEHHK1Rn14ZHd2zExdEzEDU=
+X-Received: by 2002:a5d:64c5:0:b0:48e:20ed:d5e7 with SMTP id
+ ffacd0b85a97d-495897722d1mr8870381f8f.34.1794233131416; 
+ Mon, 09 Nov 2026 06:05:31 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49596ea51cbsm11184750f8f.27.2026.11.09.06.05.28
+ ffacd0b85a97d-49596ea51cbsm11184750f8f.27.2026.11.09.06.05.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2026 06:05:28 -0800 (PST)
+ Mon, 09 Nov 2026 06:05:30 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 4/9] hw/net/bcm2838_genet: fit the RX frame within the guest's
- buffer
-Date: Mon,  9 Nov 2026 14:05:18 +0000
-Message-ID: <20261109140523.240161-5-peter.maydell@linaro.org>
+Subject: [PULL 5/9] arm/cpu: fix GIC v3 flag for a64fx
+Date: Mon,  9 Nov 2026 14:05:19 +0000
+Message-ID: <20261109140523.240161-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261109140523.240161-1-peter.maydell@linaro.org>
 References: <20261109140523.240161-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,83 +106,45 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Marcelo Manzo <marcelomanzo@gmail.com>
+From: Ferdinand Schober <schober@cs.fau.de>
 
-The RX path clamped the payload copied into each descriptor only
-against the whole RING_BUF_SIZE register (whose upper half is the ring
-size, not a buffer length) and against the size of the rx_packet
-staging buffer. It did not account for the status block and 2 byte pad
-that precede the payload, nor for the 4 byte CRC that is added to the
-reported BUFLENGTH when CRC forwarding is enabled. The BUFLENGTH
-written to the descriptor could therefore exceed the buffer the guest
-supplied.
+The a64fx CPU model wrongfully set GIC bits in the
+processor feature register (ID_AA64PFR0).
 
-Clamp the payload to the guest's buffer size minus the status block,
-pad and CRC. BUFLENGTH is then at most the buffer size, which is at
-most MAX_FRAME_SIZE, so it fits its 12 bit field by construction.
-(It cannot overflow today, because receive() drops frames larger than
-MAX_PACKET_SIZE, but nothing in the descriptor code made that obvious.)
+I traced this back to e31c70ac04001df5e540b79843834277e283fa71,
+where A64FX got added.
 
-This also fixes a hang: with a buffer size of 0 the old code copied
-zero bytes per iteration and never made progress through the frame.
-Treat a buffer too small to hold any payload as a guest error and drop
-the frame.
+This bit is supposed to get set conditionally in id_aa64pfr0_read,
+depending on whether or not a gicv3 is present, from what I can tell.
+Qemu picks gic-version=2 by default, while v3 gets advertised due to this flag.
+Recent EDK2 firmware accesses ICC_SRE_EL2 in this case and crashes.
 
-Resolves: Coverity CID 1690161
-Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
-Message-id: 20261104140058.24068-1-marcelomanzo@gmail.com
+Clear the GIC field, as the other CPU models do.
+
+Cc: qemu-stable@nongnu.org
+Fixes: e31c70ac0400 ("target-arm: Add support for Fujitsu A64FX")
+Signed-off-by: Ferdinand Schober <schober@cs.fau.de>
+Message-id: 20261103145254.1543907-1-schober@cs.fau.de
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/bcm2838_genet.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ target/arm/tcg/cpu64.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
-index 92d550cb630..0d61980a0cf 100644
---- a/hw/net/bcm2838_genet.c
-+++ b/hw/net/bcm2838_genet.c
-@@ -902,15 +902,24 @@ static ssize_t bcm2838_genet_rdma(BCM2838GenetState *s, uint32_t ring_idx,
-         uint8_t *frame_buf = dma_buf + frame_off;
- 
-         bool crc_fwd = FIELD_EX32(s->regs.umac.cmd, GENET_UMAC_CMD, CRC_FWD);
-+        const size_t crc_len = crc_fwd ? 4 : 0;
-         size_t buflength;
-         uint32_t prod_index;
- 
--        if (l > ring->ring_buf_size) {
--            l = ring->ring_buf_size;
-+        /*
-+         * The buffer holds the status block, the 2 byte pad, the payload
-+         * and (with CRC forwarding) the CRC. buf_size is at most
-+         * MAX_FRAME_SIZE, so the BUFLENGTH computed below always fits
-+         * its 12 bit field.
-+         */
-+        if (buf_size <= frame_off + crc_len) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: RX buffer size %zu too small\n",
-+                          __func__, buf_size);
-+            return -1;
-         }
--        /* Never copy more than fits in rx_packet after the status block */
--        if (l > sizeof(s->rx_packet) - frame_off) {
--            l = sizeof(s->rx_packet) - frame_off;
-+        if (l > buf_size - frame_off - crc_len) {
-+            l = buf_size - frame_off - crc_len;
-         }
- 
-         memcpy(frame_buf, buf + len, l);
-@@ -921,10 +930,7 @@ static ssize_t bcm2838_genet_rdma(BCM2838GenetState *s, uint32_t ring_idx,
-                                          GENET_RDMA_LENGTH_STATUS,
-                                          EOP, !!(len >= size));
- 
--        buflength = l + sizeof(BCM2838GenetXmitStatus) + 2;
--        if (crc_fwd) {
--            buflength += 4;
--        }
-+        buflength = frame_off + l + crc_len;
- 
-         desc->length_status = FIELD_DP32(desc->length_status,
-                                          GENET_RDMA_LENGTH_STATUS,
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index a6352e6307e..e46cdd31676 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -505,7 +505,8 @@ static void aarch64_a64fx_initfn(Object *obj)
+     SET_IDREG(isar, REVIDR, 0);
+     cpu->ctr = 0x86668006;
+     cpu->reset_sctlr = 0x30000180;
+-    SET_IDREG(isar, ID_AA64PFR0, 0x0000000101111111); /* No RAS Extensions */
++    /* No RAS Extensions, GIC filled in later */
++    SET_IDREG(isar, ID_AA64PFR0, 0x0000000100111111);
+     SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000000);
+     SET_IDREG(isar, ID_AA64DFR0, 0x0000000010305408);
+     SET_IDREG(isar, ID_AA64DFR1, 0x0000000000000000);
 -- 
 2.43.0
 
