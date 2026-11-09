@@ -1,91 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF76606A321
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 19:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811D960A2606
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Nov 2026 19:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=CTqK3oQQ
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=LLpfGDrY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQUuw-0000WL-6P; Mon, 09 Nov 2026 14:20:35 -0500
+	id 1xQUup-0000TB-Ha; Mon, 09 Nov 2026 14:20:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xQUuO-0000GF-Qt
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:20:08 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1xQUuH-0000FI-K4
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:19:58 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xQUuM-0008VS-U6
- for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:20:00 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2ed28bac8d7so5104645ad.0
- for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 11:19:58 -0800 (PST)
+ id 1xQUuE-0008VC-QR
+ for qemu-devel@nongnu.org; Mon, 09 Nov 2026 14:19:52 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-8b58d6f67a5so734134b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Nov 2026 11:19:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794251997; x=1794856797; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794251987; x=1794856787; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kBe4vPxeCvnVXcv+Q7ORoiydLa5bbUHfqJ7BziF6P5s=;
- b=CTqK3oQQru1UkY5uPv0FxSHmYmnQnEg/IpefWkkzx4I9U5mv8ZXkDdTKMSxGSbqFvn
- kMObEoyT+4n36y2VX0Q/Ti4oYHODJOW+3JPzTHYwwbBDbMH8KYAk13nCEY/zk0/auBM/
- JnDmPThFHWM3rFTygGoi3qWa6BCDuIxaZ/ytbXmwWIigMZrohn4G1TDaU1QY6EZdNicH
- Q4wH9YWdrUEUEszAsaQXcCQBTE8M2Ph/HgQKO/1w/731k+PiCgZ3YfoOc4EdbDJ5OPoz
- 27yqImfQujbd0OlDL7ztZ2qsXgCIGHAEdigVpNX7Zb2ncdtlJQXxDRialMkNuzcOfNl8
- fGIQ==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=56for/20TF6QZet2WkXyOgbnBmklobWA7PQmqpyyNjU=;
+ b=LLpfGDrYzI1vcetBZA2Ku+f0emBBW7HwSPjIMQZuANEpRLYJqK3S9Lf4t0dYRIGCEX
+ RzXi1aGb4s7kAbVIWa/2yZV3wZFW4rGqlTn8ag0c7QrfAcOEAwd1Asb4VBjhdrFzXvPF
+ 73pmELqXMt4btQfntEczgktBfNHBFl+iT52iFaaDbeX/qt7EmIbVBvha+rKq26J3AsM0
+ NhUpz8KSJaucd4EcYY6VsC+5izyPomlHw4V2zBTsSELX907exWtFBJfsF6Z3KlSYGFzd
+ /CUzBL316VA+vjMX2zeR6CiIEwquaVVegR1CBqpqHwAr51NRScyatCFgUyq9lyXKgf5r
+ lKEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794251997; x=1794856797;
+ d=1e100.net; s=20260707; t=1794251987; x=1794856787;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=kBe4vPxeCvnVXcv+Q7ORoiydLa5bbUHfqJ7BziF6P5s=;
- b=kXT4tigPzaKCSODl33cNaFLk8pOVcChtmf/vJQo2Ho3E53AYDWAIXFsyR5NTMn9jq0
- x6N6GMa1ooDSON0c8pN0cAG+v3/0sUqiAcY8kAK3+C8nF5hpxAEuPf0/jOkhsIRLktKj
- heNIio5tfkMXWkTeOLH4AQqDJQHzMPr/BG2aErhS5hljeYEnLVYdnLMYg1oUOm0BLoYI
- y/QUOHN/LPrZtF5Me0kVJVZWAjzzKmS+UIe0W2bjMXPoHUU2Z8RYowcRW4LU3PVm2a/x
- VkyKPn79tNrvjQEy7oNHgauQwaFsjEClOtHDA1YbHCzjrZ1kB2CJVePKE2ckADZBvJDA
- c9TA==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=56for/20TF6QZet2WkXyOgbnBmklobWA7PQmqpyyNjU=;
+ b=GKeH+yl8m9GeTy0NxfM0WnaBr4hWl4+pKuBZABZMUx3aSh56qKZCAlUg6vOAFCdGZZ
+ OFxR+1oErYGortAbVr7p7mZEZzk3xfgarMyJlEOIFmlfzrCA194M3OX9X22DMOImWnZY
+ IKVaMfmUSEB8cCuuPM+esuqN3jNk7YacT7Cogdaduwg6kMusJm7A78Y52JA8JQkRbWWk
+ 2Cd8BvkAAMFkofqLUax7yqe5TnWwTAVlnSb4n7Zzepq6AoqQr5OHzcPd6sy9EDSZVP8G
+ +5Sluhg6UtRzttrvU/zPSjub0zZILoC03eVj+5fjD9lnE7bW8igcFlnR40NXxCgsI61D
+ xYBA==
 X-Forwarded-Encrypted: i=1;
- AL+hErF4mE7asFGbYK3Nkd4I67Yyts0BA7A50a/oIclpeXUAjqsa3R6bg0b69lSv+74Wjq7mY6G5Q6yJO9pV@nongnu.org
-X-Gm-Message-State: APuU4Z+hBp2HE3sD0R67W6L5/fsg9oK8q4tzGaYeMzaNyTcL61Bl0Cr8
- qTomBLYZvT5JTTHVZOJwEBz9DR93TfVvnnjbMM0a07/9UuHinJuEOBAWUtz//3LM1mY=
-X-Gm-Gg: AYBFou2p4lDyRSRe9FGe6dUdJsA27ll+d9PQAU76umrj0xZi++lY4/bYMc5emKc0toC
- IHt7bHHDZtD1S8NFP2eDjmh4JnLqNdQxJvEPAqUWZWBnSQ7Bi4tIC81V78NmWkLF4SLCCpeiR82
- 1BybcSq1Ag4mEfBTRrQXArQ1slNhw8kkViP1OitncZw6f3lfiEZS4Bk5y1ZP2bVmEG/vSsMwLr5
- fJI6yTaxBY2W4wrcpYJppn1H5KPXlTWiDjVZNhG/glWVGVSz24Kpg+Apu4HDUEP7C1WuR0mNirq
- AxB5TTq4t5j4acAvf9LWaA9J6+VfLdL87Ry/MAkmaCEuIMQiJNu7swypY/N17ocACqjgi1S7EZH
- nxv5VfAy0FK0yKJ4l1gUn5sZtQsLY4hJu1Ha/W6k5xT4h2vlEMG40LFBRkxLD31sH4qgE8tgStO
- 788mYIwURtaJ3E8WXT3PNhfq8abZ1vJkJ58gSOpmvXRk2etD75pk9C607ezKnY9ezyoBoGdnyEc
- YoF707DlFxOvX6diCXMVBGqR3B1tKE1oBiOkvfZiqK6bESuohq4lLwoLj0eQgBAVJ+iP3GgifBc
- PZr5rLDYSvZp9XO12lXmwblvQ+7CnEEN4RCySDvu4QPYQyt2WvL/HzhvlYHkJ1rL1B0nzA==
-X-Received: by 2002:a17:903:3bac:b0:2e8:5857:b5f4 with SMTP id
- d9443c01a7336-2edb909d6eemr691765ad.10.1794251997335; 
- Mon, 09 Nov 2026 11:19:57 -0800 (PST)
+ AL+hErHVScu6iMUzVwDWExUV41ZSQ0fulLbJ3Zeyjv7fMrXxopOIxfqMbHTZ0FHpJOO28oFBpK0XC7s7EYTO@nongnu.org
+X-Gm-Message-State: APuU4Z8Lv4F+9+6yHVra7t3pa7RCUq8no/INtOZl0IiEy8cxlzMs/tVg
+ rKfTL0XJh7J6T85iHBJKvQCQ2xj4qXh317qieV0qnY87FrZp/LQPTBxQ8h/y6Qn28xU=
+X-Gm-Gg: AYBFou3eX26oNiHk+mLfTI0U0OcWDVBFIrecI/dmVcFtA/nkRHPXuFDn9BfFLXvx24R
+ R9i5rK4Bcpdxz3kTOMGwmVoxoIDaU2mhXCJdawxvaC61mmCaSyWQZQYicwdoi3oXH7cin4Y90sf
+ 0Y6zv1uU8uzHRXO4+lm88P4K3thTdE7ZN33aIZOIi5T4RxnkNKuAglWRlQ3h/p4s4m6WPKg27Nt
+ L5GdlJQWdJLZnOIJ7hCrpgJeakVEyL+db8awoHLA3Z57qbouaOF1cldXodQTwpxbVIIkV+lx+vw
+ sLAB85LsQQDNoYh37ymQ6kvK0tVrPZfgJtcX3QNUWbL5YLhVYQg5ojttJUlIinmftkMKCMYwyCE
+ Kdxvm/LnqvUTUOMqoLPm3+15zAOvEFYjyzb2ETYnFqLP9ooQW259Q9UqdnDiiKospKaFMZ7L/gT
+ TyG2p/H81hE2bKPzeWuwN4VjhFY+vKHeaoZArAJ/E3LNU+LURiuCGPMBTXHG9AEvxney9lN6L6S
+ 1ByRcyho3Bh9AXsAq9xAr2qGo+agFp0rQMDKScVOcdVXk0hXDsJ+Xgq1HNGSyf6JKW1ToX4SbI9
+ j5TL22dYHlz1ODdQm0otJNM71ywWbON5rl2aPyNvPZKicXBbBFySdYvO7ceTOv80/YMjpPnDAwk
+ iQdwtnja+RsVijic=
+X-Received: by 2002:a05:6a00:9a7:b0:8b6:12fd:7286 with SMTP id
+ d2e1a72fcca58-8ba886bf28cmr553977b3a.58.1794251983978; 
+ Mon, 09 Nov 2026 11:19:43 -0800 (PST)
 Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2edb6d4b12esm1333065ad.21.2026.11.09.11.19.56
+ d2e1a72fcca58-8baaa96367dsm38612b3a.25.2026.11.09.11.19.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Nov 2026 11:19:56 -0800 (PST)
-Message-ID: <3805110a-0a53-4222-b597-0941bdb558d0@linaro.org>
-Date: Mon, 9 Nov 2026 11:19:55 -0800
+ Mon, 09 Nov 2026 11:19:42 -0800 (PST)
+Message-ID: <2dcc70d2-1e06-43fa-9200-24f8e4cf5df6@linaro.org>
+Date: Mon, 9 Nov 2026 11:19:41 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL for v11.2 0/1] s390/vhost fix
-To: Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, "'Michael S . Tsirkin'" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-References: <20261109144344.847531-1-farman@linux.ibm.com>
+Subject: Re: [PULL 0/9] target-arm queue
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20261109140523.240161-1-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261109144344.847531-1-farman@linux.ibm.com>
+In-Reply-To: <20261109140523.240161-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,21 +110,32 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/9/26 06:43, Eric Farman wrote:
-> The following changes since commit f71afb409a87c4ecd0f9d63a5963eb645dfab780:
+On 11/9/26 06:05, Peter Maydell wrote:
+> Hi; here's an arm pullreq; these are all bug fixes.
 > 
->    Merge tag 'pull-loongarch-20261105' ofhttps://github.com/bibo-mao/qemu into staging (2026-11-05 07:24:53 -0800)
+> thanks
+> -- PMM
+> 
+> The following changes since commit 71f25c75417d31c214ba2cd26b273c114fc99987:
+> 
+>    Merge tag 'pbouvier/pr/multi_target-20261106' ofhttps://gitlab.com/p-b-o/qemu into staging (2026-11-06 12:28:21 -0800)
 > 
 > are available in the Git repository at:
 > 
->    https://efarman@gitlab.com/efarman/qemu.git tags/s390x-20261109
+>    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20261109
 > 
-> for you to fetch changes up to 94289e7960008ceedd16ba366ddca986df739936:
+> for you to fetch changes up to e927ac974c94ce98c36ba3e84563a94ca8237358:
 > 
->    vhost: only use config notifier when exists/initialized (2026-11-09 08:14:45 -0500)
+>    hw/intc/hex-l2vic: avoid shift into sign bit (2026-11-09 13:52:08 +0000)
 > 
 > ----------------------------------------------------------------
-> Fix vhost on s390x
+> target-arm queue:
+>   * target/arm/ptw: check XN for ARMv6 in get_S1prot()
+>   * hw/net/bcm2838_genet: various bugfixes
+>   * arm/cpu: fix GIC v3 flag for a64fx
+>   * hw/intc/arm_gic: do not hardcode GICv2 minimum binary point
+>   * target/arm: Clear the local monitor on AArch32 (v8) exception returns
+>   * hw/intc/hex-l2vic: avoid shift into sign bit
 
 Applied, thanks.
 
