@@ -1,90 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F028606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976EC606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ThpYmLEF
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=BNcF52cJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQobS-0006Q3-PP; Tue, 10 Nov 2026 11:21:48 -0500
+	id 1xQodB-0007NE-Vj; Tue, 10 Nov 2026 11:23:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xQoaw-00068K-K7
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:21:16 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1xQodA-0007MG-0q
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:23:32 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xQoas-00048S-KV
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:21:13 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-6b65d69f5c2so2935993a12.3
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 08:21:09 -0800 (PST)
+ id 1xQod8-0004dW-Ft
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:23:31 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-c49c32650adso144350866b.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 08:23:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794327667; x=1794932467; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794327809; x=1794932609; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=kII7F4ctUkYgoQt59X+qcLkhPHev2NgMkYmPxI5mmz8=;
- b=ThpYmLEFn/LHGJUGse+a+YJYmqNMib3Cdv0ITbC7pbAbvBYon93XuEGzSO384PHn1e
- Ev7+MXAeK3khTTH5PVxW+ZIztVjhSTEVbDLgECGg7HiO+QhZR3q64H+DFUNzGH7L2vF+
- GekL5GxXrSDRVhs0kSwBDR8K4kJ34JWuF/LvVmH5mFsAcrdG/IZ/Wo4MowJ3dZzujSaq
- +WBNS2sITVspNO9ZG3qrARg8sJfXrbO1lR1NR1lrACVeoXfTOd5H47IQhgdCAl0lSYK6
- nWOkSDaGWNuWgZUSYMIASkXf6NghcH/fXVHTeobQHFW1ik+iuFUSaK5o2VDBXGZwt6T6
- g3ZQ==
+ bh=gdJSOqxwGZiY5LbvHFmA8nRsQrtTKVchWkfMISbRfL4=;
+ b=BNcF52cJBvBkG3Cri65OjQBQih3jXNDEmwwGjbPbZX45lq8XvIAaJLC9N8JzeUqbmZ
+ 3efSIVH24lRQh0xzUsCdJwp4N24ABDPjoljzVEuCZQS+N4czUQufOQjZRTaEFilpERvu
+ TDjhqwxomm6xwslcEMvUtvbXGhoxrC11l7mIpco91QLXBfLP91hloB0umrerPHTffNhw
+ c9VahJFYdlPjR5vw670Arza+ABMX5UwVAvZgf/I/nfhSgLAHR2oa4Nc8XhUXBCoih+nN
+ nmVi9tkQbM2rBPMvp85Eat1KA+XTsugJMlkTdMf7OT9NLHCEBCdyVxdg6T21zYYBkLU6
+ leoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794327667; x=1794932467;
+ d=1e100.net; s=20260707; t=1794327809; x=1794932609;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=kII7F4ctUkYgoQt59X+qcLkhPHev2NgMkYmPxI5mmz8=;
- b=uzKF9szUyQ2jEq51nhX9l5Q4Qu8ikSXqNPMVFyydkmb/dmW03Oh8I8XgFmcohgARoo
- DHUHdGBKFEYLl8LpkKmPQULgQTjVit6H4yJIi+8TG4aRl06QydMHtNKH4PK3I84z37hR
- acuFUK0dlG7UbrZOroWD3h3p+32A9Y+3qi61awCgcRlXiGaQunK8ueYQokH28L2GdTDi
- QTsioTQ0OmHuQUmktkP/8gz4WfNrofOLLt9H7Z0TSl8KNxwAsygyNhHiPaM2YZknq6Vz
- qCdA20kp19FS3vqM1XDwRCXTEm9S8yxpfeyt8vbaU4H24xOmQxuRbCB+DWDtUBkq+2oi
- lJiw==
-X-Gm-Message-State: APuU4Z+I74N8sKiocT9AaD1lS+ooMlSFqqWXqvRvkfan3ubMr0YZnJ74
- FAW1M2LH+7eWhWe/qpAQsaDBvujMWd4+aTdpCUNfG2V/D6d91NPiVNLevaslMnBQdto=
-X-Gm-Gg: AYBFou1d/y+XjCMEvixuAQvdHXfi6QDOe/otMkhsaYgUIO562qQOsIuszTnmJNvwdHg
- d1q0KY3L5uBHDAGPg+D5ov8r9Fjq4sc5j98rZewZ3/vmu9Slk5KzDqPa1mbjzHJYqWAoYGi5+aB
- 20YNembleqZagxOm+DPuOB3v9Qw2AwTXISSB/Cz5CRNpDdWnIYNYoZ+SmqT6Y3w6H8hgtZGjZx/
- cUHtJ9Ri18UDwMawb03baVmO8pwcYFkYvtm0RDrR40ki4ch9zwY6rnUDrDthKQd2pgW3s7yYU4h
- WZeoJYK2P0QvWvGljvRFPzMqndBPVT4oYswsyCeeEZze0v5oPTpn+jfJi7tGsuFgrbcCCElEsw+
- gKG4H+6YLW17F46p/W/r2e/7KF0NyJnhqopbJ/gPu0bh8BITeRmwgCQxxWwQVrFlrIC+OLM1vr9
- pWwm3htrMSjKCs5E4o8uDyWvJNdiXOq2VK0CuwR4g1k7chOtXZqVLHdxSP+AfHVIPLD1N/re7e+
- 3EjjyOU0XmPC7IFdeItaqgYfHK/jLW1OJQTj9nHMYMz41Jm7ytl8Xi3El3sT/BduVTyz9MFmPdN
- LIAWrvtQeVJ0s5O4ugaxksLGpY9oB584HzOi8dfB3+r77w4LJ4NKsQ==
-X-Received: by 2002:aa7:d58c:0:b0:6b5:875a:c2a0 with SMTP id
- 4fb4d7f45d1cf-6b756aeabeemr1808887a12.24.1794327667180; 
- Tue, 10 Nov 2026 08:21:07 -0800 (PST)
+ bh=gdJSOqxwGZiY5LbvHFmA8nRsQrtTKVchWkfMISbRfL4=;
+ b=oV4uqBlRSNCosxGLVUuqJriifEJdb1XQ1AEHqwBKIUHX+MQ52Z+nzkA7WIwibL+doD
+ z+++unVusArjfXmajyJKwdiifPxcLXXEJ8JjtaCyNx5s7Bpd1VJ6PoYi1TbWcYHRUi/u
+ ypWqVP88xu6Ws1CHbnxTV9NHQODrfigU05nPbFZK9MkrH6ai5FcxboOk790gontQwQPZ
+ 0jZBhdTkcOJFwoHE5uMDeWCOH57KsPyevjHSqKtcr8c4ZfnM4cC+DwmyS7JNVoobSXpr
+ vfMhCXe39xcBTpaODzqQdaxo57Zo1AfkjO8UO2aibkTfRQ0kObBZix6MMBxVDZDdBRZU
+ LVOQ==
+X-Gm-Message-State: APuU4Z9s5xUZuCGPubGyMwoNqoRBg/ZfkyhPFcmYuwboAFyBlGXxiYQq
+ luM7Af9o5a688GY6dJUKKCQmqIeomsOGZ0Xd9gxB4g8WaCgkL3av856zpb1RIosP6Z7z6pwY9Lm
+ 3/WfUUBk=
+X-Gm-Gg: AYBFou2TWzYDurpMtAQGWHFZ4ItZcLHxkmg3bLIzZ9FfEBcm/ERWVPjGSCsgTUHkMdG
+ pziFEKEE29AcJQvYeHZO2OOfj7me+2PU0eRAx9qqi7dFTvXCKNQmJbemIH2XUYDMWqk67UUI2p0
+ Vp3uEa86y7nfSg/RimtLG216bW0VGBHZ5u7lcdp71NLoHjlTswuH4f8OpaQecNlD3pNMOgkC/8/
+ z16HHxSCtEKID3667g5IlLrBmzee6tLSk69dv140aAJVirgfZL6zlkabcOA0P+KxcJh0D6u5jyO
+ 9NJNd/i/TpLa8U/OoAFGjEssZTqdGkzqvPDds76z/0VAYW5/cznjp9sT1Gy6QWMDUS+1rrVrmdh
+ gzvyY7xVt9vJpeC7SZhilUfwHReTZjQqgTUB+a2Fr8RuJgNOKc43ZDPn8vViLFsR4tghkd7iQpz
+ Ab3xcK/GEWRqIOa3WlMf2MfLJM5NNr8ibsD867oRvZ21usI/nH54yRyjwvLISef08s97Bte25AH
+ 7zycu3tDU8W+oQPLUAvCfTz91Ff0YAbWARdAnwtoxbVl7GPOeE9aoUf+jbFDtj5gBZfUthwRJLK
+ RR4d2Z+GUfWxa/Xbdz0cOsfw3lZg6s2Q
+X-Received: by 2002:a17:907:c1e:b0:c40:dfec:50b6 with SMTP id
+ a640c23a62f3a-c504974fe2dmr275100366b.49.1794327808640; 
+ Tue, 10 Nov 2026 08:23:28 -0800 (PST)
 Received: from linaro.org ([2a10:d582:31e:0:aa96:7f3b:af27:16e8])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6b75790caffsm1283679a12.32.2026.11.10.08.21.05
+ a640c23a62f3a-c504a57085fsm131968566b.22.2026.11.10.08.23.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Nov 2026 08:21:05 -0800 (PST)
-Date: Tue, 10 Nov 2026 16:21:03 +0000
+ Tue, 10 Nov 2026 08:23:27 -0800 (PST)
+Date: Tue, 10 Nov 2026 16:23:25 +0000
 From: Jim MacArthur <jim.macarthur@linaro.org>
-To: Gustavo Romero <gromero@redhat.com>
-Cc: qemu-devel@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH 1/2] hw/arm/smmuv3: define Root registers
-Message-ID: <avNEb_ScXZ-A6uDF@linaro.org>
-References: <20261016-jmac-smmu-root-registers-v1-0-e78e8879d347@linaro.org>
- <20261016-jmac-smmu-root-registers-v1-1-e78e8879d347@linaro.org>
- <isr4ew27ud6xmfrk444mdme2rqdtd5wgpbgjblgaavmzhpyppt@hhmxurpxh766>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: Re: [PATCH for-11.2 1/4] hw/intc/arm_gicv5: Use cached
+ IRS_IST_BASER.VALID state
+Message-ID: <avNE_fHfwLISriHr@linaro.org>
+References: <20261103172616.2400758-1-peter.maydell@linaro.org>
+ <20261103172616.2400758-2-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <isr4ew27ud6xmfrk444mdme2rqdtd5wgpbgjblgaavmzhpyppt@hhmxurpxh766>
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=jim.macarthur@linaro.org; helo=mail-ed1-x533.google.com
+In-Reply-To: <20261103172616.2400758-2-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,153 +101,59 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Nov 06, 2026 at 11:20:56PM +0100, Gustavo Romero wrote:
-> > +/*
-> > + * Check we are from the Root PA space to read from or write to the
-> > + * SMMU Root register area.
-> > + */
-> > +static bool smmu_check_root_access(SMMUv3State *s, MemTxAttrs attrs,
-> > +                                     hwaddr offset, bool is_read)
+On Tue, Nov 03, 2026 at 05:26:13PM +0000, Peter Maydell wrote:
+> When the guest writes to IRS_IST_BASER we effectively cache the value
+> of the VALID bit in the GICv5ISTConfig valid field entry.  In a few
+> places we check whether the IST is valid by doing a bit extract on
+> the register value; switch those to look at cfg->structure instead.
 > 
-> Indentation is off ---------------------^
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  hw/intc/arm_gicv5.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
 > 
-> I think it makes sense also to call this function smmu_root_access(), but no
-> strong preference here.
+> diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+> index 5d0a50ab6aa..d0a8574916b 100644
+> --- a/hw/intc/arm_gicv5.c
+> +++ b/hw/intc/arm_gicv5.c
+> @@ -1222,8 +1222,7 @@ static void irs_map_l2_istr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+>      uint64_t l1_iste;
+>      MemTxResult res;
+>  
+> -    if (!FIELD_EX64(cs->irs_ist_baser[domain], IRS_IST_BASER, VALID) ||
+> -        !cfg->structure) {
+> +    if (!cfg->valid || !cfg->structure) {
+>          /* WI if no IST set up or it is not 2-level */
+>          return;
+>      }
+> @@ -1293,7 +1292,7 @@ static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+>  {
+>      GICv5Common *cs = ARM_GICV5_COMMON(s);
+>  
+> -    if (FIELD_EX64(cs->irs_ist_baser[domain], IRS_IST_BASER, VALID)) {
+> +    if (s->phys_lpi_config[domain].valid) {
+>          /* If VALID is set, ADDR is RO and we can only update VALID */
+>          bool valid = FIELD_EX64(value, IRS_IST_BASER, VALID);
+>          if (valid) {
+> @@ -1604,7 +1603,7 @@ static bool config_writel(GICv5 *s, GICv5Domain domain, hwaddr offset,
+>                              deposit64(cs->irs_ist_baser[domain], 32, 32, data));
+>          return true;
+>      case A_IRS_IST_CFGR:
+> -        if (FIELD_EX64(cs->irs_ist_baser[domain], IRS_IST_BASER, VALID)) {
+> +        if (s->phys_lpi_config[domain].valid) {
+>              qemu_log_mask(LOG_GUEST_ERROR,
+>                            "guest tried to write IRS_IST_CFGR for %s config frame "
+>                            "while IST_BASER.VALID set\n", domain_name[domain]);
 
-Noted indentation fault. I would prefer to have a verb in the function name,
-but similarly have no strong preferences on it.
+That makes sense.
 
-> 
-> 
-> > +{
-> > +    /* Check if the access is from Root PA */
-> > +    if (!(attrs.space == ARMSS_Root)) {
-> 
-> Could we use the comparison operator (!=) instead of the logical one here? I
-> think it's clearer than a negation.
-> 
-Good point, that is clearer.
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 
-> > +    case A_ROOT_GPT_BASE2:
-> > +        *data = s->root.gpt_base2;
-> > +        return MEMTX_OK;
-> > +    case A_ROOT_GPCBW:
-> > +        /* Optional, not implemented. Present if ROOT_IDR0.GPTS == 0 */
-> 
->                                          GPTS == 1 here? -----^
-Correct, thank you.
-
-> > @@ -411,6 +411,28 @@ REG32(EVENTQ_IRQ_CFG2,     0xbc)
-> >  
-> >  #define A_IDREGS           0xfd0
-> >  
-> > +#define SMMU_ROOT_REG_START 0x20000
-> 
-> The base address for the Root Control Page is implementation defined, hence
-> 0x20000 is not always true and depends on the machine/platform. We could add
-> property to set it externaly but it would also complicate unnecessarily the
-> offset math. So I think it's ok to follow what FVP is doing. Please just add a
-> note saying it's impl. defined so it might require a tweak in the
-> future.
-> 
-> I think we can follow TF-A code here and rename this macro. So how about
-> renaming it to:
-> 
-> SMMUV3_ROOT_REG_OFFSET ?
-> 
-I'll add another comment and yes, that name change makes sense.
-
-...
-
-> > +typedef struct SMMUv3RootRegBank {
-> 
-> How about naming this struct simply SMMUv3Root?
-
-I don't mind renaming it to something other than 'Bank' to avoid conflicts
-with another meaning of register bank (e.g. the actually banked registers),
-for example SMMUv3RootControlPage would be fine. If it's just to save space
-on punch cards, I'm less keen, but will happily follow code conventions.
-
-> 
-> 
-> > +    uint32_t idr0;
-> > +    uint32_t iidr;
-> > +    uint32_t cr0;
-> > +    uint32_t cr0ack;
-> > +    uint64_t gpt_base;
-> > +    uint64_t gpt_base_cfg;
-> > +    uint64_t gpf_far;
-> > +    uint64_t gpt_cfg_far;
-> > +    uint64_t gpt_base2;
-> 
-> Looking at ARM IHI 0070 H.a Non-confidential spec I don't see
-> 
-> 0x0068 SMMU_ROOT_GPT_BASE_UPDATE 32-bit, R/W and
-> 0x0070 SMMU_ROOT_GPCBW 64-bit, R/W
-> 
-> as Optional like I see SMMU_ROOT_TLBI and SMMU_ROOT_TLBI_CTRL.
-> 
-> Should they be declared as well?
-
-GPT_BASE_UPDATE is an unusual case; it has side effects when writing hence
-I was reluctant to include it as a normal config register, however, it
-shouldn't do any harm to add it - users will just see the 'update' bit stick
-as 1 forever if they write it.
-
-SMMU_ROOT_GPCBW is RES0 unless ROOT_IDR0.GPTS == 1 as noted above, and we
-don't define that bit at the moment, so making storage for it seemed
-unnecessary.
-
-> 
-> 
-> > +} SMMUv3RootRegBank;
-> > +
-> >  struct SMMUv3State {
-> >      SMMUState     smmu_state;
-> >  
-> > @@ -80,6 +92,7 @@ struct SMMUv3State {
-> >      OnOffAuto cmdqv;
-> >  
-> >      Notifier machine_done;
-> > +    SMMUv3RootRegBank root;
-> >  };
-> >  
-> >  typedef enum {
-> > 
-> > -- 
-> > 2.43.0
-> > 
-> > 
-> 
-> General comments:
-> 
-> smmu_read_mmio_root
-> smmu_write_mmio_root 
-> 
-> I think we can drop the "mmio_" for both functions. It's ok to have "mmio_" in
-> the "trace_smmuv3_write_mmio" trace function because afaics it has a generic use,
-> so its use is not tied to any bank.
-Yep, fine by me.
-
-> 
-> 
-> I think we're missing to reset some registers in smmuv3_reset()? Like:
-> 
-> s->root.cr0 = 0;
-> s->root.cr0ack = 0;
-> s->root.gpf_far = 0;
-> s->root.gpt_cfg_far = 0;
-
-Good point, we are missing those, thanks.
-
-Thanks for the review!
-
-Jim
 
