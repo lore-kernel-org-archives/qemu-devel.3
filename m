@@ -1,138 +1,140 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC9260A262D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AD660A5BDF
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=XSfNgXP9
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=KGiAl0aE;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=mAh089B/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQnOh-0004Pm-Oj; Tue, 10 Nov 2026 10:04:32 -0500
+	id 1xQnPK-000645-Jq; Tue, 10 Nov 2026 10:05:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xQnOQ-0003Y8-D2; Tue, 10 Nov 2026 10:04:14 -0500
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQnP1-0005oX-Bo
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:04:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xQnOO-00006X-ND; Tue, 10 Nov 2026 10:04:14 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W8AHjdG9OztPRNbNqQi+20D+NiUk0XKS/n/sC6xnWgLclhJHEZHotqNCdW5dBc48G/xxo0xN7B1ThI5XfkM8BIiMFV31xbylXV13/Gqalf+ImYHKnigrselh16mZRSs1p/HcBOsKEWQGeFWQ3vHQTpY+ZCbj+VrVNq/UCi/iZP/PcDcB6nYnmcb0GCG42vG6nPrURgEvPHsknQO2RnC5BHxF1u3E0oaj8zunM9WW8BYaFk0aTMxCVRpEUQKkvIAFpYI/F+n+TxsB4xOYuX+W2/65zQCfumYt6AdDjaHJKF5awJqnJmS2CNKX3amux+x/VCTbA1O/O+EL0khnFmUMtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VB3zs9flSthozt1SPNklKeGmidVYeVO6+Pd0bILzUmc=;
- b=b3bojwYeM9ji0oHVdFXUmYX77ljZCeVdy7xUi1P6IkT2BsSUq1irDYchI3LB+PIKDn700gfeHhEpUsX4a2fMUqjDMzelbqeP2kI3QKsyu65p4PwHua59pzLfZATmVjUxdVmnCn/rCdZbOdzxJf7QcxeeyEc2B07Ai+z7CD8qdXHBghugw2qmU2n9l4mtjPHbPPDU3D3oTXBWpbHfYhdHyw6qzH4tdMvAai20tKgvOOEYH7HIw+pvyKTe1l5cfML7D7iYHZM02FnehcrR0pyFOMUweYvLZ3rSbBaRcW3ylmPbLd4ZkdrRJyM+jSVH3MatmMQ/I/Yif82f72stB+Ebsg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VB3zs9flSthozt1SPNklKeGmidVYeVO6+Pd0bILzUmc=;
- b=XSfNgXP9YizmqjjpYzrhSsneSunJ/sa3zdsmkPLvwdFDKff0TfpC84LzxbPZrCmLuZHJHCAAr4DOHAj2LOElfBVZOIN/N7gTMRYCzUN+cAEC9Su6MwCmguKPS1Xph66Coj75FyK3KjMEeWtVV7xt038XCyfs57so9mc1kZQrJSjfGB9VqZSBD2LFz4zuesSr/wstZMuIUrKgi5XYWtsvIwMYMOYQNGAxxtPyT3P6FILfvbNLL2zbGgA7LlE72PGPVzg9yQgdPRNRRuhNYIc/CcyTsEL7yY7n1ZUz/rgr7CCnyK1u5FyluioPycJ8picGbFWpGFzq4G9TpwU6L1kJrQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by TYSPR02MB7369.apcprd02.prod.outlook.com (2603:1096:405:34::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.13; Tue, 10 Nov
- 2026 15:04:04 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0615.007; Tue, 10 Nov 2026
- 15:04:04 +0000
-From: Chao Liu <chao.liu@processmission.com>
-To: Max Chou <max.chou@sifive.com>
-Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [RFC PATCH 05/38] target/riscv: Add implied rules for Zvqwdota8i
- extension
-Date: Tue, 10 Nov 2026 23:03:43 +0800
-Message-ID: <20261110150344.3684-1-chao.liu@processmission.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261104194155.679241-6-max.chou@sifive.com>
-References: 
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR05CA0180.namprd05.prod.outlook.com
- (2603:10b6:a03:339::35) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQnOz-0000AP-6t
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:04:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794323087;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=C3dTQBmQ7Ro/FRBuP6MEDULAZwn/rEe5iVobQPAYtrQ=;
+ b=KGiAl0aESq6DmUs/vJylw/ldGxCY7T9Kczvq10U7goRH5Y3AG03NkkidJzWace6AWDnCyB
+ dtGEm4d/A2Q0foZ25aVXEhn5sg7/xcnRmxZuFjq+caD64XjBJ2z9zoCNhBoB/jMsGipQHz
+ cF8+BEmnAW1EOaiAvrSpX7eL4v0Xkdk=
+Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
+ [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-353-MPrMmfKrNvSLEkhXyIcxqw-1; Tue, 10 Nov 2026 10:04:46 -0500
+X-MC-Unique: MPrMmfKrNvSLEkhXyIcxqw-1
+X-Mimecast-MFC-AGG-ID: MPrMmfKrNvSLEkhXyIcxqw_1794323085
+Received: by mail-yx1-f70.google.com with SMTP id
+ 956f58d0204a3-67906c453b8so3270434d50.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 07:04:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794323085; cv=none;
+ d=google.com; s=arc-20260327;
+ b=c3D5NgMAfkpPQIOS3KEoMRk+GLBdUwVXsrHiyihOn5LU2NkXuXWCMOV/HzBJMAbzu8
+ FNaw+ubrNHefk4vxhUfGEGBlxWO6awTk9e7QnC8eeEuqkk2RvocG2322D0GwD8bZ22M7
+ xK9E4PAwixnB5fkFk9dtyYn4vLzmBvOfOyeDmNNzWvLTPW21SaBhd2pUt+phf/pokW8p
+ 0oTwKikpTiTN8eea5BzM0xlafOhqNU5c3MBtdJCXImlxjsnzxUBxbqusR8woqSz0YhFd
+ c/JU+pbzFoGM+OlnEhGTqztxk7HlNN+lcOs6D3CpLodR+JtxxiFJKWbeRXDG2IMXXelD
+ Jy9w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=C3dTQBmQ7Ro/FRBuP6MEDULAZwn/rEe5iVobQPAYtrQ=;
+ fh=a/2MN2uPyD2iObF5cScXxc/dBl2uEPRVKVdSTje4TOQ=;
+ b=CMOGsmnnhzPDewFTd6nzejaSS1nOwbkl5qzvW/es5gvjKAqSjXGZQP5GigyaTCR6f6
+ h6eksPxUYjADt9WVvCWPCH98iXW5bjPygCGAZo1pzvde+1g5JyWeRdk+LqYsfsZjVJcv
+ aPnFFvJrbDjQKHstxiIMU3q/JFVF2XtAvDVEv+qXsD/5sxu/4LENEQ1IW79ui/2Lgbyx
+ fXOArLZRcIngHauOj0IXYKSB8yFr8S1O3V6Nc1hCIq6Qre1M3Iu0j0YLq2qCVSx8xPHo
+ FOVDjZ3Eu7sNMPGNt4U3C/w51MPmNgE9PCYa+qynn3Pp6XxpDEYxSOD/5wkRMVfdxfqR
+ HZ4w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1794323085; x=1794927885; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=C3dTQBmQ7Ro/FRBuP6MEDULAZwn/rEe5iVobQPAYtrQ=;
+ b=mAh089B/DJBx38o9mSVV2FzIz5NTBVUWnkfXNrkxXOpTBr9ZbbG+4CGovV7QciSF+o
+ kXvRX7VTui5dO89d8DC+kyCV91f6R2zcEE6hBMKyknID7dqSg8nnX/xacBo+iGJn5S4m
+ 4DgLPYJE4cRboYnu1AaJvRlPPMb0SlZHNrJcqC+0iuagUAuxISNSUZY5mBrLzktI0bvL
+ 9NEaxspZsSKrvtHDJTjUJD+Fy8AINQ8ZLltGBcN79pJq77ftCv4D2p1xfRPlrir6P7k8
+ 51IsAZFBuxde7AVZ4Q2lVt3j/xWGnB0L54KxJMj28dPDRJqdAsXm6dd7f1zZK9BTCGts
+ xbCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794323085; x=1794927885;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=C3dTQBmQ7Ro/FRBuP6MEDULAZwn/rEe5iVobQPAYtrQ=;
+ b=XCAmrChikyFLE8/PMaqwacsoiq2zn030oVSlEL6sjnt36j7nZ6Wq+9ibkTeD65iXrE
+ H9+4X0R0g0y8hWM5Nwy0pNtyMuxtPTzwBpeOP2i1lLf6BX57ONt/djon01b68UcLVPq6
+ iEG2M10BVi1a0MJbO/jW7SH1JaArepkizZT5TmzL7qytjiCph6OMNiCX+onda4w9LICi
+ 6Pbbxcgk3KhldakTvIXEUXY+w3N+VDiNOxNKPy9PPB4nG78Z7PstAgz6gDy9a3ekCrI/
+ athn32cSFWGSKW3pUNBq4hMlQ2D4IkzdXq1I5EQQNE/WSbsY2yy/I0Ei8SXbKc06pwGM
+ toHQ==
+X-Gm-Message-State: APuU4Z/a0OWjGPeVap2RwIsHlvT0acvI/zjR4cizq9baSBONGdLaksM1
+ xX7Smana9RRSBlyVToU13YbadbgipfHCi9BLwjBcW+HbokZO3AitIxUasHXERkIBwJqup2dLLwu
+ nvkc8ooX9X5ZQ35V5IwJgtdUILixwdanTmUGEfMqYlsBDE9LUEEEpVgScKGWfXl307ZCdcTIAXc
+ g4maFscmSmN1D5fiFtGMe1w6MeReFW700=
+X-Gm-Gg: AYBFou1ITPdX3IyULyZeQlubJfq72iAbkksthtnT+W1XH0kb1J+q7UxxNRN4kc6zxXH
+ 3YE2xOcoa3O7f+anBe8PJ+EWUm5pOy7P8hWneqaAY/tnLGrvXELA0JLmR/OIAnVDGanus+WSuec
+ CCPDwPtmiVLxGTvVd6JxGECPQ4e2NmGvqbmwYxSsc4kQw1QP+KMB5arnDdgdKhP9ChiNxIt1g4j
+ WrRitPbcUj5zNXZ
+X-Received: by 2002:a05:690e:1445:b0:67c:2ae8:dc65 with SMTP id
+ 956f58d0204a3-67c571f47c4mr1777301d50.46.1794323085190; 
+ Tue, 10 Nov 2026 07:04:45 -0800 (PST)
+X-Received: by 2002:a05:690e:1445:b0:67c:2ae8:dc65 with SMTP id
+ 956f58d0204a3-67c571f47c4mr1777275d50.46.1794323084529; Tue, 10 Nov 2026
+ 07:04:44 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TYSPR02MB7369:EE_
-X-MS-Office365-Filtering-Correlation-Id: ecd1dc76-561a-4644-7da1-08df3f3bdc75
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|376014|1800799024|7416014|18002099003|22082099003|56012099006|10067099003|261028144727099003|261102123227099003|261009223027099003|261102124527099003|261026140227099003|261026121527099003|261022075727099003|261022105027099003|261021121427099003;
-X-Microsoft-Antispam-Message-Info: Ods+rdIFUmEfVyt5eskd1hPKINUiizk8JoIzOpOY8PPHZWgHNL78zaoChGHu7Y3qQHzSKpnDbZcHj+G/H9wCz9KD4shiX6n81BdoG5AVSutKZL9KbJbzgY1j9vjMSAPxXdSc/in9zM4cJc0e30DTbMBfrfI91EapV1wI0+8CQe0AsOX7hKVFqNVLgKSJ+OOofilmwiuFlmdNJ4UeJr1yl4CgJtAHh5V3lJnPj7DUUuULB7vvI2IGT8Ww1h1YQ7sJmMZEI4iWTyYr90MGh3R5KAbbxwkajV7WFfrMFD23gazYCxDnciuli8srI7MLDEwWQzQSYuyMe9mHbokcoZ1wZFW4tbMB+ikaQFM9pEH5KnZPNn2B9Zly/5Vz1Yg6D/8JLC8z2x/jEct6N1/2kVNOtvfZsCs1kdFuqXo6xw9Icnzan1ZoSIuWp+Qq3HkpdRmWZE1lZ7yAQChvX3wQYXl+3i8G4hfmiK8sg7N9ClvUQ7QGGDMblMRwhbaO5iW6BRZY+AWGxXWgSbZ/xxyfcNzcm4SUcEF3EORqgciIOKFJmeCqN82uegCyd3M/gKJ/UY0QR9pw7Pgi7bXMLd8Y21gVlr/fUbdieCB46OhIi7Tl7f/p0X6MexcAeoZiDbz5BxCbGWg6zs2i8HabDQARH38uhFL+fzf6n0G76MGJlAMdyeo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(7416014)(18002099003)(22082099003)(56012099006)(10067099003)(261028144727099003)(261102123227099003)(261009223027099003)(261102124527099003)(261026140227099003)(261026121527099003)(261022075727099003)(261022105027099003)(261021121427099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?D0KGHwib5RcKZ7WhsEsbN/0HTgAmnA3U+oUxymtOrz2nGTHxHHyTHYoVSu4k?=
- =?us-ascii?Q?SLyRXzMPmGVSfpsze9ocNoPFd4o5RKQDQ9/VN9tNQbaxhWvXe4aX2SKNCLMC?=
- =?us-ascii?Q?OTut4sXERcg7g9YwPeDJe1fMH5G15ngu+qriHjDBzOMg249BfA6PxkGgpEWM?=
- =?us-ascii?Q?sjzqsPOFaf4H5gPY/l6/+lJ81lsTwvoPWUY1JrMeAXvSI+VkCmuOBJUAajtu?=
- =?us-ascii?Q?0yKi4tBW4zaeYszarhVIQgo6I/tSZfBFXX4ZlWBJR9xgaQYw8rdwlY+S75sx?=
- =?us-ascii?Q?2U154tUbTuJahTfN8K066P3LbN2XHLbu1IgcHMgiVwIiClkkxGA+T7ZV8TH0?=
- =?us-ascii?Q?c5ezfGVdPgmiIQBHTsARTVqLpXOUmrMdmlFjrrMRigX3718Mv5h1OKFyYWFo?=
- =?us-ascii?Q?LmjOF9lOPspbZt3eCzVebUtNHdsrJC5lp5EAGlsirt6h4Im6D+BnHkWp/CBl?=
- =?us-ascii?Q?mYVNp36+7s03xYCcKXlicIVfeMG94QisBuV3rNA4X7zeOfRuG14rXeL+3DjK?=
- =?us-ascii?Q?YYIoh7I1rtQPoGDNdk8y8OOSFGpAXYbNKaQhahrlNJt3/GFj3LARpGXCTzNb?=
- =?us-ascii?Q?tHXG5fxeXMx4MZJ4WfaXaLfchcbXbXBVe2YyfCGoEJBiPvhn+Ij8xcq99eiE?=
- =?us-ascii?Q?n+78uCjzHwIHsqOsAYBz9iN3rAmW/9WRZvGA351Sm3AsgXEZYdHA1kBgPnSs?=
- =?us-ascii?Q?Y+MUrCipEgevcoz70H7nTOzUcQzzbphAqiZs9SrnyEqaaL5JdvQV0LEM4rj+?=
- =?us-ascii?Q?fLJjdSTotUkA9IT8+7BNMeOypHcuIStaV2aQ6ZLqaZ1KN2/rb+j0mYVxbn0g?=
- =?us-ascii?Q?uV9EXWM/rlvQ7v1HVmzKvps/wDWsaHgEArt7IAcFsCZRsQ53wQ92qhz6dzUS?=
- =?us-ascii?Q?9VCB3H05NAJ/zVuyRmcPJaaIS21YtEDTr+2fY8LsbFG3MZmvJSBLKxoKbY5b?=
- =?us-ascii?Q?HBYG0Ida1KwNSmmuRVdvOxcuKKnOLaLz7cbL+TUoDDuXvRqG0axa+Rnp6vgz?=
- =?us-ascii?Q?W9N9vfU1KHFHJpZTa7NpYnviXr/xaPqYrXw4v2/A/58G5YOmY3aNWDVL5fwU?=
- =?us-ascii?Q?+wVXH0+Uo8h8KHacool+BEwwlna31/qDvvZPCclEwSkxnKxqyZ3RDSDckkSO?=
- =?us-ascii?Q?eIAT2xzAdklXUDISpQizAUjcptNeknRmuCSGJE3Jlp2AkM8TQidXENJUrP7b?=
- =?us-ascii?Q?wzNearmkEUGwbLGKKFdtfirYo2xrOZB6f2PtFDv79zD9j+MsycYSeCRaQZq6?=
- =?us-ascii?Q?wHVkDolC6lDCkom5U59XI9xdAWYiFSGDpvAI4udUY98LORQeZsiTYcngxSLU?=
- =?us-ascii?Q?nrmOvU/28JYHENzjXkugyODQbwV+4J4MT+iDIRS0tUyfVOpMFfhu1qVVK4UD?=
- =?us-ascii?Q?/FfggA/0DkKc+W6BjcBWVlb7t222t+9J8z25J8nyAJrHeDOLY6rgthClNJ08?=
- =?us-ascii?Q?0K+gPaCilFN8npTYzUsR7oqX45mqESuOARmQoOWxUcK9kXGVe403sXiBBSMi?=
- =?us-ascii?Q?yX+mjKzjl4D2WTSbfn/RCOR22Rhx2plquO29AEva6rWSaqpkh6MFk/JNLFiJ?=
- =?us-ascii?Q?/1d3T5RRtnlOCQwgJs8aBk3L2ey5WCo6HbCRnJy8XtHd7iHxJWTyRGQ+5PU0?=
- =?us-ascii?Q?olBfW/2YIvVhArkDoTcltlFLTLGE6qzAV1CH8ae+b4Wh4SEchCr+uS1JPmgq?=
- =?us-ascii?Q?JaYOFIBTTU73qcGzThKM0GhaNd8fveVHqG8gZu7XtPkwBbK/H6nnrr4yvWyZ?=
- =?us-ascii?Q?8eGEIgCljH4zij8kSbylsKCZbzUqsgk=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ecd1dc76-561a-4644-7da1-08df3f3bdc75
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2026 15:04:04.5858 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jG2IX1uHj8RoCx9NC6RjHQNnFeUx+0Qq6BLjcYNU5l+FEyvCybX1/2azttB0MRHLY9GuUbqf4tKFxgFowKni/MRVi9avgeOpzl/dBSjcURg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR02MB7369
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=chao.liu@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20261109185907.3220584-1-jsnow@redhat.com>
+ <20261109185907.3220584-2-jsnow@redhat.com>
+ <avIfJqbcTHFAGvqf@redhat.com>
+In-Reply-To: <avIfJqbcTHFAGvqf@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 10 Nov 2026 10:04:33 -0500
+X-Gm-Features: AclHuK89ddUpEjdZmrDY9p7C0TaBdkuYPC7pwqYL_axC9xBTOSqnLEorhZ8PJuo
+Message-ID: <CAFn=p-b4dE9=5NYuvK-4SXaiiCsDHszCiz_HzEtWREcAzdhaRg@mail.gmail.com>
+Subject: Re: [PATCH 1/7] debug/mem: add utility to name anonymous memory
+ mappings
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ David Gibson <david@gibson.dropbear.id.au>, 
+ Alistair Francis <alistair.francis@wdc.com>, Stefan Weil <sw@weilnetz.de>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ kvm@vger.kernel.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,62 +146,174 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu,  5 Nov 2026 03:41:20 +0800 Max Chou <max.chou@sifive.com> wrote:
+On Mon, Nov 9, 2026 at 2:29=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Mon, Nov 09, 2026 at 01:59:01PM -0500, John Snow wrote:
+> > Add support to name mmap'd memory regions using
+> > PR_SET_VMA_ANON_NAME. On supported platforms, the QEMU utility
+> > functions are no-ops.
+> >
+> > This is useful primarily for debugging and profiling QEMU; beind able
+> > to see and correlate each VMA segment with a specific use within QEMU.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  include/qemu/mmap-vma.h | 18 +++++++++++
+> >  util/mmap-vma.c         | 67 +++++++++++++++++++++++++++++++++++++++++
+> >  util/meson.build        |  1 +
+> >  3 files changed, 86 insertions(+)
+> >  create mode 100644 include/qemu/mmap-vma.h
+> >  create mode 100644 util/mmap-vma.c
+> >
+> > diff --git a/include/qemu/mmap-vma.h b/include/qemu/mmap-vma.h
+> > new file mode 100644
+> > index 00000000000..763ea5a5cab
+> > --- /dev/null
+> > +++ b/include/qemu/mmap-vma.h
+> > @@ -0,0 +1,18 @@
+> > +/*
+> > + * Utility for naming VMA allocations in linux
+> > + *
+> > + * Copyright (c) Red Hat, Inc 2026
+> > + *
+> > + * SPDX-License-Identifier: LGPL-2.1-or-later
+> > + */
+> > +
+> > +#ifndef __QEMU_MMAP_VMA_H
+> > +#define __QEMU_MMAP_VMA_H
+> > +
+> > +#include <stddef.h>
+> > +#include "osdep.h"
+> > +
+> > +int qemu_name_vma(void *ptr, size_t sz, const char *fmt, ...)
+> > +    G_GNUC_PRINTF(3, 4);
+> > +
+> > +#endif
+> > diff --git a/util/mmap-vma.c b/util/mmap-vma.c
+> > new file mode 100644
+> > index 00000000000..7dcef3b7455
+> > --- /dev/null
+> > +++ b/util/mmap-vma.c
+> > @@ -0,0 +1,67 @@
+> > +/*
+> > + * Utility for naming VMA allocations in linux
+> > + *
+> > + * Copyright (c) Red Hat, Inc 2026
+> > + *
+> > + * SPDX-License-Identifier: LGPL-2.1-or-later
+> > + */
+> > +#include "qemu/mmap-vma.h"
+> > +#include "qemu/osdep.h"
+> > +
+> > +#include <errno.h>
+> > +#include <stddef.h>
+> > +#include <stdio.h>
+> > +
+> > +#if defined(__linux__)
+> > +#include <sys/prctl.h>
+> > +#endif
+> > +
+> > +#define VMA_PREFIX " qemu: "
+> > +#define VMA_MAXLEN 80
+> > +
+> > +/*
+> > + * Give a human-readable name to a previously mmap'd memory segment.
+> > + * This feature is only available on Linux >=3D 5.17, and only when th=
+e
+> > + * kernel was configured with CONFIG_ANON_VMA_NAME=3Dy.
+> > + *
+> > + * For systems without this option, prctl() will return -1 and set
+> > + * errno to EINVAL, and can be safely ignored.
+> > + *
+> > + * For systems with this option, these human-readable names will be
+> > + * visible in /proc/$pid/[s]maps, pmap output, etc.
+> > + */
+> > +G_GNUC_PRINTF(3, 0)
+> > +static int qemu_vname_vma(void *ptr, size_t sz, const char *fmt, va_li=
+st args)
+> > +{
+> > +    int rc =3D 0;
+> > +
+> > +#if defined(PR_SET_VMA_ANON_NAME)
+> > +    char strbuf[VMA_MAXLEN];
+> > +
+> > +    assert(sizeof(VMA_PREFIX) < sizeof(strbuf));
+> > +    strncpy(strbuf, VMA_PREFIX, sizeof(strbuf));
+> > +    rc =3D vsnprintf(strbuf + sizeof(VMA_PREFIX),
+> > +                   sizeof(strbuf) - sizeof(VMA_PREFIX), fmt, args);
+> > +    if (rc < 0) {
+> > +        return -errno;
+> > +    } else if (rc >=3D (sizeof(strbuf) - sizeof(VMA_PREFIX))) {
+> > +        sprintf(strbuf + sizeof(strbuf) - 4, "...");
+> > +    }
+> > +
+> > +    rc =3D prctl(PR_SET_VMA, PR_SET_VMA_ANON_NAME, ptr, sz, strbuf);
+> > +    if (rc) {
+> > +        return -errno;
+> > +    }
+> > +#endif
+> > +
+> > +    return rc;
+> > +}
+> > +
+> > +G_GNUC_PRINTF(3, 4)
+> > +int qemu_name_vma(void *ptr, size_t sz, const char *fmt, ...)
+> > +{
+> > +    va_list args;
+> > +
+> > +    va_start(args, fmt);
+> > +    return qemu_vname_vma(ptr, sz, fmt, args);
+>
+> We need a va_end here too.
 
-> Add implied rules to enable the implied extensions of Zvqwdota8i
-> extension.
-> 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Definitely spent too long in the python mines...
 
-Thanks,
-Chao
+Thanks, and thanks for the pre-submission review as well. ... and
+thanks for figuring out that the entire feature needed a configuration
+variable, and thanks for proposing we enable that variable in our
+Fedora debug builds. :)
 
-> ---
->  target/riscv/cpu.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 96a1d76c5a2..08b14782451 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2851,6 +2851,15 @@ static RISCVCPUImpliedExtsRule ZVFHMIN_IMPLIED = {
->      },
->  };
->  
-> +static RISCVCPUImpliedExtsRule ZVQWDOTA8I_IMPLIED = {
-> +    .ext = CPU_CFG_OFFSET(ext_zvqwdota8i),
-> +    .implied_multi_exts = {
-> +        CPU_CFG_OFFSET(ext_zve32x),
-> +
-> +        RISCV_IMPLIED_EXTS_RULE_END
-> +    },
-> +};
-> +
->  static RISCVCPUImpliedExtsRule ZVKN_IMPLIED = {
->      .ext = CPU_CFG_OFFSET(ext_zvkn),
->      .implied_multi_exts = {
-> @@ -3055,6 +3064,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
->      &ZVKS_IMPLIED,
->      &ZVKSC_IMPLIED,
->      &ZVKSG_IMPLIED,
-> +    &ZVQWDOTA8I_IMPLIED,
->      &SHA_IMPLIED,
->      &SSCFG_IMPLIED,
->      &SUPM_IMPLIED,
-> -- 
-> 2.56.0
-> 
-> 
-> 
+It's been a *massive* help, even more than "massif" ;)
 
-Sent using hkml (https://github.com/sjp38/hackermail)
+(Note to international audiences: effusive praise is typical for
+Americans, they are just like this. If you should find yourself the
+subject of overwhelming praise by an American, do not panic, they are
+not likely to propose to you. They may just offer to buy you a drink
+should you meet, or perhaps stand a little less than six feet apart
+should you happen to be waiting for a bus/train together.)
+
+>
+> > +}
+> > diff --git a/util/meson.build b/util/meson.build
+> > index fa174c07a57..861ee228d5b 100644
+> > --- a/util/meson.build
+> > +++ b/util/meson.build
+> > @@ -1,5 +1,6 @@
+> >  util_ss.add(files('osdep.c', 'cutils.c', 'unicode.c', 'qemu-timer-comm=
+on.c'))
+> >  util_ss.add(files('thread-context.c'), numa)
+> > +util_ss.add(files('mmap-vma.c'))
+> >  if host_os !=3D 'windows'
+> >    util_ss.add(files('aio-posix.c'))
+> >    util_ss.add(files('fdmon-poll.c'))
+> > --
+> > 2.56.0
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+
 
