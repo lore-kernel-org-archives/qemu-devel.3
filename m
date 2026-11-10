@@ -1,85 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67A3606A334
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 18:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7DD606A320
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 18:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=XTuu5zJ+
+	dkim=pass (2048-bit key) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=K9aTtn2y
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQqed-0005NI-KA; Tue, 10 Nov 2026 13:33:12 -0500
+	id 1xQqeg-0005OZ-Qp; Tue, 10 Nov 2026 13:33:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xQqea-0005L5-E2
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 13:33:09 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xQqec-0005Mg-9r
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 13:33:10 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xQqeW-0003Mc-Aa
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 13:33:07 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4a1fbd52ab6so16017495e9.0
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 10:33:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xQqeY-0003Mp-JE
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 13:33:09 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-4918c2d727fso1298645f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 10:33:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1794335582; x=1794940382; darn=nongnu.org;
+ d=openvz.org; s=google; t=1794335585; x=1794940385; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=PPzcitYLzdgLdpiyw0A2TaajXXBAe50hLVDnRF1w7+E=;
- b=XTuu5zJ+Cv2Cv+dhkw1ZHgsJpKYCdugPMgPshDLpCt4NMZhMqGz5T3kstRjizbRzba
- guTlyZWlCQzfhZId4misoODcRHqCHTtfYzaD6sgb5B7lrKf+92kH/HBZpcblMFU254VP
- dCYbupTsyCgQBoLpjmDnZhSW7lPvEwsraR7sNUO81RcSSsG9JXnYmPpRLDm0MOI/n5ne
- HHsEJSi6nS+LFl7vVdVrK+PmQiNW9EpA8377qb7fkemA1cRzO/9EBuO9jCF8BnGm0kP0
- +riIiZ+ND3WPjDVFxg5CmzpIFU+ai1vqa/qRv0sn5NVf/JEREmLvZtUHGyNLcKFrs0mW
- JgtQ==
+ bh=wZ5fd90wMmGhR18V4PeDCCYB/ele6ujHSK6hnH2+u28=;
+ b=K9aTtn2ycXb2idX78Z6daLGk3QY2mfxpIvb1U1NoNtmLhxZfMwyGLOpDsW5Z/klIb1
+ KWfG8AjxsZ1KgyLzScQJnLMMhzuE+1ouJElJQsnYTrKffVNdaCeiCnxyf/zf5NwExxC+
+ 4STwqVlv4dL8CBUFVHDj/0W/E3IiBNx1I7oqEH+99HucvodLslhHrg0XF0HrzhHcb0Yb
+ HS1yN3QzTW2NfQJSXug/EzI8rl2eLvAL8dd9zZ/rt85me7Ndnuo058BiVVedkHKiYyNc
+ z5T4fiJ08ulWJdQMpEQ4E5HqPxWh6aDKD6s4bbhfRJ6rUaLDHJvgfWxf1yyd8l44I2t3
+ xHWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794335582; x=1794940382;
+ d=1e100.net; s=20260707; t=1794335585; x=1794940385;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=PPzcitYLzdgLdpiyw0A2TaajXXBAe50hLVDnRF1w7+E=;
- b=bUIcjdJhaLm6PcEZeB+iFHQUxp+ZCVVKICOL988/5vJVVlzBZviCZLhfHnbjiRxms6
- X4XNaYTG4A6NF8bwuRtkb/7Dw4XYC2qeWGPB2BCFdAMFUQVqKn7JucAAyqG8p1dZCvAr
- lvAf1srnaSs6JKhnLNlycKw6YSJ7NDNYnE1Z52Secx3cDTg6eIp6FdbD3ner5+Yg0vqJ
- dCqeSDGiR5TbU9kmOd5cGxSbhfkqhHHD05ot5TEwA2fl+1JW8vsGAwIlkcQzPoTG72VU
- 3JSJVAtklZl3IKYBtY31F2o89t7QXUOvpKidiBLAyPNVxW0+Bqv74fg+dcr8H4VVS4lP
- hecQ==
-X-Gm-Message-State: APuU4Z8m5jQqD31KJA1OfwvQXD/DfR/5/V1+i2td/TTkvM+sU3dG5Oj6
- 3M3nJYMtJ7omCNacDZtZJrx1iG5bZPtEyg1HRvF6ewxrfqQbWWD0bjvuUX6yyuf+6yTzHBsAQpR
- EINtO
-X-Gm-Gg: AYBFou2ckoWhGPyAsRmXvnptYVzlxQkspv8C1Kw36BTtn0RFCnFSM+610xQRAOtuK3d
- IHTdoAH3OqZUgPKW2p7k85M6VvyWYTbp9ykHm1bX//L/OVF0ssYyf7UWebB+nPHQIyXc7XC9RqQ
- 6VQqsaOryBLI6WTKtHEopLzbIJCQm1N+ElsOcCZgEPd5wnCZp3xPF5MXIlZwhBNir6c/dbP9Jh6
- fYki7AXqORjEWMtKoFu4ROPOD2d1qkiwY3KQAXjqq6gxDAQnzYs8UjPUaqtYTPnoP3hU6b7r9eO
- AKvkoiju0WrOB2/OuOYMmIa/EbEZkn9W8wzBjzWAMAMCArK0VL1dEA+qd7kTde/cNHHzjLvemda
- l6Th3PK+f4aEYlK+cRuUhBXtZTox4Ysdav1zxsUmIwBv9W/ZGNwjAVX5CmrGVs8v2C6nmrpDKTq
- olpDx+AnAiuYIpX8ssPno/YjHwUrlDJ0uP174X8DpCF/Y5i+ILrROaH8wrAqpIKyFMM+fI2wnbP
- Am8Fc1waZIEsgepWQISP4eBezoBusxi4X4aD0ryqMRKgRlNQQrGVkxKaeq7qQSHopxApmujp9N3
- Tv+WiQaLBN5muh34QMIm9MMwWQ==
-X-Received: by 2002:a05:600c:b8d:b0:4ba:761:97a1 with SMTP id
- 5b1f17b1804b1-4ba076197d0mr38103975e9.14.1794335582257; 
- Tue, 10 Nov 2026 10:33:02 -0800 (PST)
+ bh=wZ5fd90wMmGhR18V4PeDCCYB/ele6ujHSK6hnH2+u28=;
+ b=WnB7i/mGo1KbS0IFFoCc3oYH5tYG/s1VJPb2Qv+SbgcfsCish1SsW+NhYxa/4c6f6M
+ C4UhbKbcHGlt1MYxPbObarBgdEB8n46mfDI2QsF7SHVaJmRmFIYFiTODA3AOkyrAL2mM
+ Rc9ynSLjt/xi+rSGd1pbsJiYGYVypYJ4gVGQj/LE4uLBShyh9STal++4q4YPq2hnMHCi
+ CojoiDU3feqJGjT+rFaHJqwDbY52F0TcrSCvmrhsN8f1Cd/g/FwPbjLasKvWdGFgAUBu
+ TAuGSXRHVRkCS0qr7ac21AobQniqVNFYiundVnM7QEKw4dfSiYU5Gf3UiUPLblrxIoSf
+ akPQ==
+X-Gm-Message-State: APuU4Z9J9CmXqxugKMiy/dDohhjB857oVv1pPLE0mjrBcK63QxDKrQyh
+ Qiggoydw6Le6xObGCak1aXHuHF3DN0DXykAN+DfM2hvmDogiIAf0nGBi7jTHx4tPbiKr9nNwtfs
+ pSnh/
+X-Gm-Gg: AYBFou2YZH9lsaN7I55Ve3VRZujwXX85XjpISiPYusisu1Ok1Az/7rF1ZJgE67d4dRc
+ cCiLMS+3ycYnjsMzvefMoRP5YmQK3AG9CH6AJWTjIi4nZqU4KTgIdY51AUUTC9IOXaIC00yP+ts
+ nxRor8g5CCEPAdocKmHXgS6hKe5iR8yeDagh8eJ147mE6S8l1b3x5aGNqU9/77ijkqoM24N4O7Y
+ X2tqwZxvyfiJxv7fIX+sacM7xPJOz3N/sp6Jhv1XW5Lomt+u1RRyG3xhFPIxEL1XhzdmaoHFVad
+ BV5Z0atde9QLOFF0zuL7DAcGHvevqtrANpswJOC8o+C1QYMHasaig1R4uYLacNe/xErVkOAQuPy
+ pGWgq92FkRmJ7xubLR21U65Kz0cddjKFqKi0k6tzIJt42pZQrF9oq8ItapltdQuqlNaO1BWp+0k
+ eN+lHBXJmhG5FoAcyTpoS1xNmA3z/diuV99q53VS5reMK2LtewC8/8bUPiltkIQgTxjeskpokdJ
+ 8Q/UKBfvmTH9VOifEiGJJYt+cB8rMOMre8dng6Dw0YCBRp+ZwbiO5o6cJLb5dIP8w0w8MWsafCi
+ LnOfb5a/m7IX8KfOOOgU6WfCGQ==
+X-Received: by 2002:a05:6000:3c5:b0:48e:e98:8b64 with SMTP id
+ ffacd0b85a97d-4982e82c23fmr6266416f8f.19.1794335584874; 
+ Tue, 10 Nov 2026 10:33:04 -0800 (PST)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:4f78:6441:d0f1:22af])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-498363df7a5sm6384827f8f.37.2026.11.10.10.33.00
+ ffacd0b85a97d-498363df7a5sm6384827f8f.37.2026.11.10.10.33.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Nov 2026 10:33:01 -0800 (PST)
+ Tue, 10 Nov 2026 10:33:04 -0800 (PST)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 1/5] migration/postcopy: report COMPLETED only after the
- run BH has run
-Date: Tue, 10 Nov 2026 19:32:53 +0100
-Message-ID: <20261110183257.2930908-2-den@openvz.org>
+Subject: [PATCH v2 3/5] tests/qtest/migration: check the destination run state
+ in postcopy tests
+Date: Tue, 10 Nov 2026 19:32:55 +0100
+Message-ID: <20261110183257.2930908-4-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261110183257.2930908-1-den@openvz.org>
 References: <20261110183257.2930908-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=den@openvz.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=den@openvz.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,75 +107,129 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Denis V. Lunev <den@openvz.org>
 
-The postcopy listen thread waits for main_thread_load_event before it
-reports COMPLETED. That event is set as soon as qemu_loadvm_state_main()
-returns in the main thread, while the run state is changed later, in
-loadvm_postcopy_handle_run_bh(). The listen thread can therefore report
-COMPLETED while the VM is still in RUN_STATE_INMIGRATE, easily so in a
-bitmap-only postcopy where it has little to load.
+The destination must not report postcopy-active or completed while it
+is still in RUN_STATE_INMIGRATE. The destination autostarts in these
+tests, so the run state change emits RESUME and the order is visible in
+the event stream: record a MIGRATION postcopy-active or completed event
+seen before RESUME and fail the postcopy tests on it once the
+destination has completed.
 
-Management reacting to COMPLETED then finds the VM still incoming: a
-blockdev-add creates an inactive node, since bds_tree_init() forces
-BDRV_O_INACTIVE in RUN_STATE_INMIGRATE, and attaching a device to it
-fails with "Block node is read-only". Precopy gets this right:
-process_incoming_migration_bh() changes the run state before it reports
-COMPLETED.
-
-Once CMD_POSTCOPY_RUN has scheduled the run BH, set the event at the
-end of the BH instead. qemu_loadvm_state() keeps setting it in every
-other case, including a load that failed before CMD_POSTCOPY_RUN. The
-postcopy state it checks only becomes RUNNING on the main thread, right
-before the BH is scheduled.
+migrate_postcopy_start() waited for the destination's RESUME with
+qtest_qmp_eventwait(), which reads events past the event callback and
+drops the ones it does not want. Poll query-status instead, so every
+destination event reaches the callback.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Cc: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>
 Cc: Juraj Marcin <jmarcin@redhat.com>
 ---
- migration/migration.h | 2 +-
- migration/savevm.c    | 6 +++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ tests/qtest/migration/framework.c      |  6 ++++--
+ tests/qtest/migration/migration-qmp.c  | 10 ++++++++--
+ tests/qtest/migration/migration-qmp.h  |  3 ++-
+ tests/qtest/migration/migration-util.c |  8 ++++++++
+ tests/qtest/migration/migration-util.h |  2 ++
+ 5 files changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 057c85d611..b223480d28 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -127,7 +127,7 @@ struct MigrationIncomingState {
-     QemuEvent  thread_sync_event;
-     /*
-      * Free at the start of the main state load, set as the main thread finishes
--     * loading state.
-+     * loading state, or in postcopy once the run BH has changed the run state.
-      */
-     QemuEvent main_thread_load_event;
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index b7aef6b21c..1cf18233f7 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -667,6 +667,8 @@ static void migrate_postcopy_complete(QTestState *from, QTestState *to,
+     MigrationTestEnv *env = migration_get_env();
  
-diff --git a/migration/savevm.c b/migration/savevm.c
-index fe94ba96e4..7d0276c1d7 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2263,6 +2263,7 @@ static void loadvm_postcopy_handle_run_bh(void *opaque)
+     wait_for_migration_complete(from);
++    wait_for_migration_complete(to);
++    g_assert(!dst_state.migrated_before_resume);
+ 
+     if (args->start.suspend_me) {
+         /* wakeup succeeds only if guest is suspended */
+@@ -695,7 +697,7 @@ void test_postcopy_common(MigrateCommon *args)
+     if (migrate_postcopy_prepare(&from, &to, &hook_data, args)) {
+         return;
      }
- 
-     trace_vmstate_downtime_checkpoint("dst-postcopy-bh-vm-started");
-+    qemu_event_set(&mis->main_thread_load_event);
+-    migrate_postcopy_start(from, to, &src_state);
++    migrate_postcopy_start(from, to, &src_state, &dst_state);
+     migrate_postcopy_complete(from, to, hook_data, args);
  }
  
- /* After all discards we can start running and asking for pages */
-@@ -3148,7 +3149,10 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
-     cpu_synchronize_all_pre_loadvm();
+@@ -842,7 +844,7 @@ void test_postcopy_recovery_common(MigrateCommon *args,
+     migrate_set_parameter_int(from, "max-postcopy-bandwidth", 4096);
  
-     ret = qemu_loadvm_state_main(f, mis, errp);
--    qemu_event_set(&mis->main_thread_load_event);
-+    /* Otherwise loadvm_postcopy_handle_run_bh() sets it */
-+    if (postcopy_state_get() != POSTCOPY_INCOMING_RUNNING) {
-+        qemu_event_set(&mis->main_thread_load_event);
+     /* Now we start the postcopy */
+-    migrate_postcopy_start(from, to, &src_state);
++    migrate_postcopy_start(from, to, &src_state, &dst_state);
+ 
+     /*
+      * Wait until postcopy is really started; we can only run the
+diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
+index 437b5eaeff..77befe1027 100644
+--- a/tests/qtest/migration/migration-qmp.c
++++ b/tests/qtest/migration/migration-qmp.c
+@@ -549,10 +549,16 @@ void migrate_cancel(QTestState *who)
+ }
+ 
+ void migrate_postcopy_start(QTestState *from, QTestState *to,
+-                            QTestMigrationState *src_state)
++                            QTestMigrationState *src_state,
++                            QTestMigrationState *dst_state)
+ {
+     qtest_qmp_assert_success(from, "{ 'execute': 'migrate-start-postcopy' }");
+ 
+     wait_for_stop(from, src_state);
+-    qtest_qmp_eventwait(to, "RESUME");
++
++    /* Poll so that every destination event passes the event callback */
++    while (!dst_state->resume_seen) {
++        qtest_qmp_assert_success(to, "{ 'execute': 'query-status' }");
++        g_usleep(1000);
 +    }
+ }
+diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
+index 940ffd5950..f275cd7692 100644
+--- a/tests/qtest/migration/migration-qmp.h
++++ b/tests/qtest/migration/migration-qmp.h
+@@ -46,6 +46,7 @@ void migrate_continue(QTestState *who, const char *state);
+ void migrate_recover(QTestState *who, const char *uri);
+ void migrate_cancel(QTestState *who);
+ void migrate_postcopy_start(QTestState *from, QTestState *to,
+-                            QTestMigrationState *src_state);
++                            QTestMigrationState *src_state,
++                            QTestMigrationState *dst_state);
  
-     trace_qemu_loadvm_state_post_main(ret);
+ #endif /* MIGRATION_QMP_H */
+diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
+index db66d8b24f..4b5663c5a6 100644
+--- a/tests/qtest/migration/migration-util.c
++++ b/tests/qtest/migration/migration-util.c
+@@ -178,6 +178,14 @@ bool migrate_watch_for_events(QTestState *who, const char *name,
+     } else if (g_str_equal(name, "RESUME")) {
+         state->resume_seen = true;
+         return true;
++    } else if (g_str_equal(name, "MIGRATION") && !state->resume_seen) {
++        const char *status = qdict_get_str(qdict_get_qdict(event, "data"),
++                                           "status");
++
++        if (g_str_equal(status, "postcopy-active") ||
++            g_str_equal(status, "completed")) {
++            state->migrated_before_resume = true;
++        }
+     }
  
-
-base-commit: 723622bedb0b423de7d1c61ebbe6e7a71934949c
-prerequisite-patch-id: 67b7337e86202ef7509fc53ff8915a814a477e3b
+     return false;
+diff --git a/tests/qtest/migration/migration-util.h b/tests/qtest/migration/migration-util.h
+index 694773e594..f195aeea48 100644
+--- a/tests/qtest/migration/migration-util.h
++++ b/tests/qtest/migration/migration-util.h
+@@ -22,6 +22,8 @@ typedef struct QTestMigrationState {
+     bool resume_seen;
+     bool suspend_seen;
+     bool suspend_me;
++    /* postcopy-active or completed reported before RESUME */
++    bool migrated_before_resume;
+ } QTestMigrationState;
+ 
+ bool migrate_watch_for_events(QTestState *who, const char *name,
 -- 
 2.53.0
 
