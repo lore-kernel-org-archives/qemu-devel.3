@@ -1,95 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A68606A321
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77511606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=j0YdTylU
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=IdEv8zqG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQo6N-0002IK-L7; Tue, 10 Nov 2026 10:49:39 -0500
+	id 1xQo87-0002qi-5o; Tue, 10 Nov 2026 10:51:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQo6I-0002G1-Bh
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:49:34 -0500
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ id 1xQo86-0002qN-4G
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:51:26 -0500
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQo6F-0006sP-5R
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:49:33 -0500
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-67be4f2f4d4so2701202d50.2
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 07:49:29 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794325768; cv=none;
+ id 1xQo84-0007E9-Mu
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:51:25 -0500
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-8b300713befso18350647b3.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 07:51:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794325883; cv=none;
  d=google.com; s=arc-20260327;
- b=oJPn5jDmhTcNbcJVyfhfE8d80gfhyaHPpvBK37xXmU9b3SSlkq3bhBgSJ11lLwlHMq
- 9Q27oUne2q+sVsUvbYsrvI51F7jWj6/LD923aVz9WgQ57LsakbrNHOd+VTZgBRoNgnEe
- FszlLB251UCdi56VuKQmdzGCLhZiga2VHLPrQ37XeD5G4BNbxG+NfZouowzqShK8PuWV
- sB60gTtuLNbqt2a9oT758btcsjfXKa4IlaIsF8iqA+ieZvv/ebe1v1zXw1qSn6IbbD6U
- n8novQsi5JPu8ulCtYoRLn5a/rIuyU9zMtP6o7jN6USOoLoEUfElf4lpeahShfExGZ9L
- Ibig==
+ b=MdhJwtAtFuf1f9AlGlmrCLzNvdcePe+KeZN2FEsAK6PsqOv7LF8EjfQuGuXEt0NGRR
+ 0o9BBsyQH9QQP0IRKE5jk+xgW8s6fjOcH437NM+Xgrd3eyF+Xa4moYJZFwLNrujdmkhM
+ yWqvgn2Ml7acXGC0qbcMcwc3OHVf5XAR/AhsG28x8zDchlSh8dMTo8HVZvnlgs1ln3nn
+ lCTw00f1ISXR3SE7lFtcoYSSsgc/fgD2xFkrLz6OjkE34c/3zuSncAUPJID/nHZt3fUJ
+ UnjMhrdLNUzQAAVeRI0xdvzygrL2SmECrphyJU9WBROVrZmUmqI7nWzF5mFvbSK/x66l
+ ZEbw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=xawrD7DrMpKVi27vlDImDJwD/H2Q8tN5RxEq7Ktu62s=;
- fh=yL5eFPExM7gfBkmL7HwoRPBH+boDPmpHyxvIKNX9pqQ=;
- b=PQdeMPrtO54urUVmpPUSkHFolOzrZoI8HAkSbgIsg9tpvK7xLB+Kyj9wT/w0NvJceV
- fqMsOSE2lyPVDMUJj33DtxhhSGTEiLeyP6WWS7Rifiacw1rHMrtHd1WGmGEIDZ2znU/b
- viVuUCfUJSRjGDkbWommiQoOsFe3pXJPQr34qK2kErwSYiPzwRd/4az/oGj/8YJI5xDH
- q/KQzQ5xwAe07GRfwDxYmzsuHfBZCJeb3tERBeucB2aMOR+3uHcXOoRR6+SlVP64JSu/
- pNYEO3ddzQx1zV6hQnyVDcYzAmowXw61SYr8PiyfLf2GFV7RfCBypFtP5hIpmAJTWfj2
- 5bhA==; darn=nongnu.org
+ bh=t3QS2QBBfRe/21EvaTw4KynHcucGx8rR8a9dawl+hOU=;
+ fh=kcMqnS/hJUwNpfuCppCDf3FNNhF2MmmzGCBFK0eEBhU=;
+ b=POmtdzpGLP5DmgoDIu/76W142P7fH+hrJqLMCF69ukxQoN4T1VD8Uv22CjuPXelPbl
+ V9FjOCmfY8VUAZUFD17Fzh8cTPaNxqeH4MHu/omO+oNPkSqBmjQPbuWKicsdXSvCcT9B
+ tKrk/as0NjebEVLym25wRVbikcYn9l7VHptntKougLOBqv7dEEbOwVmRGsbDjeh+XGqG
+ xs///zYl5zkxWLaFd9IcXOlEcpZGoeJv/TFCPHf5mTVvV7wGZZjXzJmyYYS5d9tluYOh
+ IfmOX4+cY9Dz99puCMrXgPEMN+ZN7VEm/s9VDfkcNdr65mi3Pgmb5EN0uSM4Gf55VO+m
+ dbMA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794325768; x=1794930568; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794325883; x=1794930683; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=xawrD7DrMpKVi27vlDImDJwD/H2Q8tN5RxEq7Ktu62s=;
- b=j0YdTylUuJ+DjNELnC0HrPN0rrx8v058OtQqaOnN/BE1P+av6HJFUZ5tGAZVCZQfxf
- AvNgJKs2uM8rAkDJC2i6K20ArCo03G+AX0TsVAvD078FRiiuV8r8cn1YcpU38BjT9f74
- UCTpdl93LLYJKr1tDDSzY+2QgBOZhYh+kTDRBgnNwlgHt3blVKs3chjavEYb+w2AxoPx
- ggSyuy6EAbtlIc6sotXxOuxygLeIhIQKlOESaqROLD7RuDLL7apfyCGpTqByyPyOgI/8
- C2gyvFphOsToVxhgdS9Ri4BezZxZq501WF8ZRogaWprA8CvQNtteXCvtvmn5UDNiUoRy
- jqvQ==
+ :content-type; bh=t3QS2QBBfRe/21EvaTw4KynHcucGx8rR8a9dawl+hOU=;
+ b=IdEv8zqGPXMT9po78qv7T+yvChghdJn3dv9naR0BkG8v+CFfCbNLO0AVViL1EbP6ag
+ edHWM7RZeu9QRw4aNbB+vMtivNGclTU8pVWyFQC+zcDjBhnEUl05llgzYC/vgvxZLqGI
+ dtuLIGK46bGOxiGNfItvp25Q6xEuxsmwJHCR9E6bU6gnBGxe2bX1//j8lTJ5zkMTTQoe
+ b37CqjwhdoW6WyH7DRb+LuwM/dbDMZrP1LS24ObTWPs+143jAGuSIvvZ6OS54glTfyTE
+ yAsaETct/yqNSlOc3U4MCTmQnTL5nwwaDk17Oh5Wv6s9oNyn2grB+DBpKizQBd3ydGDh
+ F6rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794325768; x=1794930568;
+ d=1e100.net; s=20260707; t=1794325883; x=1794930683;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=xawrD7DrMpKVi27vlDImDJwD/H2Q8tN5RxEq7Ktu62s=;
- b=Krk3tLDZjBcPvt+G1NxPR12w4GR+aJxlDAqD+H921TnskFoYwqcrtzXuWns57DBOp0
- b8H6NYCX/y6nLw6tUtqe6vrEY9oVNdhsXLdrVNBItAMAnOiZYq5FCJPVaoSmKnj8MA2p
- C9V/Fa1awSXpOg77pBUteElAY1CBrCGCIUmoAwj0FR9tBvy/Wpech99m2J6BM0L9qTOm
- A7QphNHQXk7LYYmBXGhLov9+E8siSnvi9eEUuVIIOq9u24pdt6jCT2mIE5WuqZNi3Jda
- /FQJwT37msX2SK4UQ1WpHTQACuAfrgJGWdAYakHd3QKrzTygrWstWl1nsQbD93FO5P+z
- cqxg==
-X-Gm-Message-State: APuU4Z8YxRcFuy4DEJmIm7Z0XOytOJyAMno6ZM/Fe316oF3tcv9SakOs
- tGtCOC9QVmiAwcK/fcABEYhgK9SrfavWBKAG5f3aJ144lhk0MxICboPRDaPUEpN+xchNA8Z1Fn3
- hevPji5jNZAWdCSHQPYJi+0ZYWaCELyA5Gn1JAmSfVQ==
-X-Gm-Gg: AYBFou3foV6iiYuTf8hoQxiuqqqNGQk72lKOfCgw+EN7cJe84jLeZw1KxA2Vh3o96Bt
- Tc5bKOPiMwZR9hwBn5i7m14MookHMbfe5aqf9+AogzF+d4GhVZYFdUiH7GuPCsz+XEz5d69I9D2
- SGHr+2FNDYq5NJW+0CyIW1/kRwh11Ait+QA0Y1GbqlhzGoKWkpvkviW8DfizZeg4vtmNh4zxPE4
- GamMg8lBB7A3yUmmXgSUWvhHMdcmvYRUQgz69LW6+Sio/gqWEVWmWFdRUa8ElZftc2kNf3TW1t2
- Fe456Np8LmYK705Lx5Fj+x7Ll7P0LUamhpinAFDMKHheY/lCTy7I9E9YVlr3q2Y6zU4iQza4tYu
- w/0ptY+F3+cZz4XRn76uuy/e88Vv5c2mFEwkvAjBGhD0GBH/0sf+ENcG7WdHYvxlbc5OrgD3K/q
- XDzjn1s4mnHjaHgOqBQzP4k1okT87VS/nPOI9H7VlrIw==
-X-Received: by 2002:a05:690e:4144:b0:677:c24d:ebdf with SMTP id
- 956f58d0204a3-67c5615fe75mr1466423d50.0.1794325766771; Tue, 10 Nov 2026
- 07:49:26 -0800 (PST)
+ bh=t3QS2QBBfRe/21EvaTw4KynHcucGx8rR8a9dawl+hOU=;
+ b=HfpKPVsZQQMoWT3q9SLWrbvPqjBfJkWoMkI8Hj0nIam4Z8J88X3f9TJrQqGRxDl9ca
+ kRyfuqVD0o2GYBWBpUDKHy1/4i2R4WZw6uFObROKEavzwG15nLHUXPULmefOYK9AmF3x
+ mzetSMLfY67BmUCujr1zSsR/q0nEXunOr37ImaolQodIBKS99YmzNlGqsxaITZ0ZpZgD
+ yNnNDH24iket5hi9yNmgscatIKXFrfqD1p0ok+9fIL7bSickzH15WYPKWOI9JhRx+YDD
+ ILaem2wOlFvMWVBNdb8NQGOeMnCRsWslbrefwHEkq61KoXMgZm6/yszimGPwb5tXEqU7
+ hzRg==
+X-Gm-Message-State: APuU4Z/fVIileJ/xjG3qZPI+AEFDdj5bBJ94zbzRdJLoUvongAwmXpcK
+ npCKTcuJUzcnhyznFnT55Xldbc4R2qKj3xvg+1IJh58DNG8mjwZzgFqgAVU92g4axd6MVNuTZwJ
+ 8lE+UfCOSL5bdbxLVXCFdvN0rPHESdHegcj9ng21MnA==
+X-Gm-Gg: AYBFou0XvjVOfv8P14L7xq0ILOUBG16VqaPrix0ZnKBKEMsuDHhoGazfl89Qn8n2bdx
+ kTVkj8y9zU4SFL0PjYsv+ikKC6dIqInDbS2wqQCeym1cCmhhQQ7L70RG8pe7pnhzJaThifBDaaf
+ P6iniMVgG1CbNB1yePZXAMFFxtB4opRtwJ/H7N5zUHXqUTzQBaI5Px2wkV/zIKNjGyiOrRYpdbk
+ APUUOjzogXGO2QrX3kUdLA5PKYVo6MYYNwCN4eu79FfvlcDP/bZ7WrWDK00DX8tFqKbNoDw/uwC
+ jC7Vp8Eos8LHEw1mOBNnO5OW/aOYA/CxwcqjmAtTC33haUF3VAj5olaIhDZuu+Jn4bkmyXAlZBX
+ N7KemWDAHz+mM1uIADRBfdeq2Kae1gXDHYH9i14jDWjKyHDcuvkw8juXtVwzlMDAH1vnWcUODUQ
+ 65LWMcSovCU6Ezt5PdtzyU
+X-Received: by 2002:a05:690e:4811:b0:67b:d8b7:da1d with SMTP id
+ 956f58d0204a3-67c5687a157mr1511415d50.70.1794325881669; Tue, 10 Nov 2026
+ 07:51:21 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20261109-eth-v2-0-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
- <20261109-eth-v2-7-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20261109-eth-v2-7-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
+ <20261109-eth-v2-6-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20261109-eth-v2-6-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Nov 2026 15:49:15 +0000
-X-Gm-Features: AclHuK_BunDJV2hUrJECDKNoECam1-CBwdFIp3Uny2HN7Tfp7i0vzvKEk2wEgL0
-Message-ID: <CAFEAcA8Or1Y2Y6WMbDUZFiLH_+xNnhjCpu+3_cu6dSkdZf34-A@mail.gmail.com>
-Subject: Re: [PATCH v2 07/14] net/eth.c: Move the Routing Header Hdr Ext Len
- check
+Date: Tue, 10 Nov 2026 15:51:09 +0000
+X-Gm-Features: AclHuK-sBtUbabE-fZrkHE17eY8Y_xGEaaGfLE2Vymzkb5eleg9vYBsGy8gPMm4
+Message-ID: <CAFEAcA9oD+D7L5XJ+=bOWbtRLvOO6XrrvGcBruDmMv82Oqsxeg@mail.gmail.com>
+Subject: Re: [PATCH v2 06/14] net/eth.c: In eth_parse_ipv6_hdr(), fix check of
+ input size
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
  Jason Wang <jasowangio@gmail.com>,
@@ -98,10 +98,11 @@ Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Fabiano Rosas <farosas@suse.de>, 
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>
+ Alex Williamson <alex.williamson@nvidia.com>, qemu-stable@nongnu.org, 
+ Lazymio <mio@lazym.io>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,25 +121,42 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On Mon, 9 Nov 2026 at 05:31, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
 >
-> RFC 8200 - Internet Protocol, Version 6 (IPv6) Specification section
-> 4.4 [1] says the Routing Header length depends on the Routing Type, so
-> place the checks of the Hdr Ext Len and the Routing Type together.
+> We already have some L4/L5 header bound checks. Add the missing
+> coverage for IPv6.
 >
-> [1] https://datatracker.ietf.org/doc/html/rfc8200#section-4.4
->
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->  net/eth.c | 13 ++++++-------
+> The IPv6 header parser incorrectly derives L4 offsets greater than
+> actual values. Adding a bound check without fixing it would reject
+> valid packets while fixing it without adding a bound check can result
+> in an out-of-bounds access, so fix it along with the bound check
+> addition.
 
+> +
+> +            /*
+> +             * Detect a subsequent fragment per RFC 8200.
+> +             *
+> +             * A subsequenet fragment contains no extension headers while the
+
+typo: "subsequent"
+
+> +             * Next Header value identifies the first header after the
+> +             * Per-Fragment headers of the original packet.
+> +             *
+> +             * The subsequent fragment is detected by checking if the Fragment
+> +             * Offset is nonzero.
+> +             */
+> +            subsequent = extract16(be16_to_cpu(buf), 3, 13);
+> +            break;
+
+otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
