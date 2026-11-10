@@ -1,74 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5916E606A331
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B15606A203
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NUmqRBcb
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=F5yfKB+T
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQohc-0002PL-RH; Tue, 10 Nov 2026 11:28:08 -0500
+	id 1xQooG-0003ns-VI; Tue, 10 Nov 2026 11:35:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xQohU-0002Ni-M9
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:28:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xQohT-0005Ae-6b
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:28:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794328078;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4LNkH695sO/PbFBgk+k4zS/+USkU8eaJmrQgBjimSLA=;
- b=NUmqRBcbHpCOZq0ka/vrl4B3T1/1tcdMoigBRpjA3OAIfw9zgM7G0kgZLGcatFTMyfh32n
- EWMafWjqb7mMrigFopXHr2VnwAIKDmpUAAR9PVb2EzZuqKEsnuu3oMxF0iMIa2LHsu9xoi
- cDGESn1KHH915m6OVqERSDwFZnggwjM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-MCb9t0ECNpuLVptFELJuFA-1; Tue,
- 10 Nov 2026 11:27:55 -0500
-X-MC-Unique: MCb9t0ECNpuLVptFELJuFA-1
-X-Mimecast-MFC-AGG-ID: MCb9t0ECNpuLVptFELJuFA_1794328074
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EBF38180025A; Tue, 10 Nov 2026 16:27:53 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5FB281961755; Tue, 10 Nov 2026 16:27:53 +0000 (UTC)
-Date: Tue, 10 Nov 2026 09:27:51 -0700
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-stable@nongnu.org,
- berrange@redhat.com
-Subject: Re: [PATCH for-11.2 v3 0/6] Fix some low-severity NBD CVEs
-Message-ID: <20261110162751.GA548308@shajnocz.csb>
-References: <20261110153121.1516536-8-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xQooF-0003na-2n
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:34:59 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xQooD-0005ti-GW
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:34:58 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4afe2d546f9so29786635e9.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 08:34:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794328495; x=1794933295; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=O4VqeB37CpQ42k1egu7OtnYs9i15ePxXbF8O9zUkyis=;
+ b=F5yfKB+TsKYofrYgPJVsVYZIoedcOFNW8BZ9Y51CAwizlsD1iuz6J8WtiYAmvY/DTZ
+ TEGPwKAatM/dSnP9mTQUXchvqtQYy2LboOQCSU+le6J/0mYah5cV0DprSxFGrCGIuL7D
+ Hl0HHC8AO52qSW1nOwyCZyadiBLqUU20dRZRR03ZGr6hWYilb51/xF+5RPX0TvYYaL7u
+ o6U3TgAIuHgRtnIXmYaK7inBkFJMAMx/RjQsDKIupV6SvHvvolF/xDphLu4DmP92Oln9
+ C8NODOdaULWXEJuuSRY/WKeHvRByEDulL56/x8Pro103X5jV3nqVnaBt6XYyT5tHycZC
+ JjtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794328495; x=1794933295;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=O4VqeB37CpQ42k1egu7OtnYs9i15ePxXbF8O9zUkyis=;
+ b=Ea0jsqNpVszMMlzw1vCPODCkyDdeQbtSJgTnet3JHYbJyGPY9gcBr5OcwG3FuXWPiL
+ 79POkgtvGfoFIlaRfPyS2VAgwlBY+b6xYcXTFFW5QjwhOyjoAAozKpMpqXfDL1Vx7Wkj
+ j3X7gXVxVmUz9w/NjRDuudiAfHpXURGLA5ntAAqlsC7zf4+MILehSa9hwUh/3t6aiDn/
+ W8pBf8tfKSRe34OzQItSKeW8WmUQwmmOlDyzLrL4fWqktjR1MW/5BF3PcBO2p5tEHYzf
+ QQBfhvuap3hyAC81Vv1UfZhRjf9MhIqT7C0+6R2RJFbgf+32c30gbo0EB/4MnWhmOK+o
+ BczQ==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEycjL68vW6TI+SqZe0K0Kq4eSUnaHN38O5ARt+P8EOYB+pMOpvCF+y5/9Lwz1ekPtioaP4otlZyB8P@nongnu.org
+X-Gm-Message-State: APuU4Z/lNq8JGYLQZkDPrjgYG9Y0mc7gfXRHQBNE59nOVGq7GYWH61yQ
+ zambsCTDWHPFFsgkfvLfiwZICaM1/PVWQLsQgpcum+8Z4fiignZuG6DWTSy+YTx8OOY=
+X-Gm-Gg: AYBFou0YNkNHlEeGlrhOCphY3XQ+aHvvdtmhB8IEOnY2QuoF0el01nt9KpyEc5SfhXS
+ xcuFMUKDqDTQhYCcZskuD+v0GlMxaiUKj1vhyTk0xoq2g7vG4675ivaDBWHlCZlWuWLWAHJU78X
+ 3YBeEUOwjR5TcRRnS6qO4vM5ovn5+k3aqMC5dNosEqsvjtrle06YZk7vrswZB/njFMAVpe8eotj
+ nbsXJxZ6VAqYcAKelxYsjLn2cOedA7j+RYuS5j/TjcXBZkYmjunD6GCoSBMLY2pPqdqFeAZa0kk
+ pN1FKTUyiTzCaSF/KlU2N1aEsDhYMeQucMkld4Mj0tV8hQdwGdI5V9Vh2WzR4vR755Q+mxvMg83
+ x8A1Pw5Jq5xvIiqXlqKOXi8bm5ULv/QEJuhc2nB1HLuwJM39i9Z6jNBzYhLPSmHoLoqBiGbuHaU
+ T9fmJO0Or+pUR5g92hqA7XKUr9Jkc2QObjC3wvbeB6WxaxIPKMqgkOQ/blppypaKrUNXmxkHrzK
+ nOqzh6gktT+Qhfj0WURKFmwJS9hPincrrKPu/VQQUouaUOfpP06SV10qpRyrec9OQ0v0axDLSr0
+ T7BVyd9rNZ3o4Ic3ttqsOzR79Tx1qx4C
+X-Received: by 2002:a05:600c:46d2:b0:4a3:5aee:2c25 with SMTP id
+ 5b1f17b1804b1-4ba02355f3emr49365415e9.31.1794328494968; 
+ Tue, 10 Nov 2026 08:34:54 -0800 (PST)
+Received: from linaro.org ([2a10:d582:31e:0:aa96:7f3b:af27:16e8])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-498369a4238sm6141492f8f.54.2026.11.10.08.34.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Nov 2026 08:34:53 -0800 (PST)
+Date: Tue, 10 Nov 2026 16:34:51 +0000
+From: Jim MacArthur <jim.macarthur@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH for-11.2 2/4] hw/intc/arm_gicv5: Free memory in finalize
+Message-ID: <avNHq9ukmSPmqPXW@linaro.org>
+References: <20261103172616.2400758-1-peter.maydell@linaro.org>
+ <20261103172616.2400758-3-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261110153121.1516536-8-eblake@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <20261103172616.2400758-3-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,45 +101,63 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 10, 2026 at 09:30:00AM -0600, Eric Blake wrote:
-> Since v2 (https://lists.nongnu.org/archive/html/qemu-devel/2026-11/msg01673.htm\
-> l):
-> - Tweak the documentation in patch 1 again [Stefan, Dan]
-> - Improve unit tests, and pass pylint iotest 297 (new patch 2, also patch 4, 6)
-> - Retain assertion at safer point for first bug (patch 3)
-> - Second CVE addressed as well (patch 5, 6)
+On Tue, Nov 03, 2026 at 05:26:14PM +0000, Peter Maydell wrote:
+> The GICv5 allocates memory and creates hashtables during realize and
+> as part of its operation.  Free those resources in finalize.
 > 
-> Eric Blake (6):
->   docs: Mention security considerations for NBD
->   iotests: Refactor python NBD server setup
->   nbd/server: Reject rather than assert on non-compliant BLOCK_STATUS
->   iotests: Add new nbd-robustness test
->   nbd/server: Reject rather than assert on non-compliant
->     NBD_OPT_SET_META_CONTEXT
->   iotests: Add another nbd-robustness test
+> Since the GICv5 is created at QEMU startup and remains in existence
+> for the lifetime of the process, this isn't an in-practice leak,
+> only a theoretical one.
 > 
->  docs/system/security.rst                    |  23 +++
->  nbd/server.c                                |  10 +-
->  tests/qemu-iotests/iotests.py               |  30 +++
->  tests/qemu-iotests/tests/nbd-multiconn      |  44 +----
->  tests/qemu-iotests/tests/nbd-robustness     | 205 ++++++++++++++++++++
->  tests/qemu-iotests/tests/nbd-robustness.out |   5 +
->  6 files changed, 279 insertions(+), 38 deletions(-)
->  create mode 100755 tests/qemu-iotests/tests/nbd-robustness
->  create mode 100644 tests/qemu-iotests/tests/nbd-robustness.out
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  hw/intc/arm_gicv5.c        | 11 +++++++++++
+>  hw/intc/arm_gicv5_common.c |  3 +++
+>  2 files changed, 14 insertions(+)
 > 
-> -- 
-> 2.56.0
-> 
-> 
+> diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+> index d0a8574916b..fd6456cd8aa 100644
+> --- a/hw/intc/arm_gicv5.c
+> +++ b/hw/intc/arm_gicv5.c
+> @@ -1970,6 +1970,17 @@ static void gicv5_init(Object *obj)
+>  
+>  static void gicv5_finalize(Object *obj)
+>  {
+> +    GICv5 *s = ARM_GICV5(obj);
+> +
+> +    for (int i = 0; i < NUM_GICV5_DOMAINS; i++) {
+> +        GHashTable *ht = s->phys_lpi_config[i].lpi_cache;
+> +
+> +        if (ht) {
+> +            g_hash_table_destroy(ht);
+> +        }
+> +
+> +        g_free(s->hppi[i]);
+> +    }
+>  }
+>  
+>  static void gicv5_class_init(ObjectClass *oc, const void *data)
+> diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
+> index 2920b11cc39..cfadfee4f05 100644
+> --- a/hw/intc/arm_gicv5_common.c
+> +++ b/hw/intc/arm_gicv5_common.c
+> @@ -112,6 +112,9 @@ static void gicv5_common_init(Object *obj)
+>  
+>  static void gicv5_common_finalize(Object *obj)
+>  {
+> +    GICv5Common *cs = ARM_GICV5_COMMON(obj);
+> +
+> +    g_free(cs->spi);
+>  }
+>  
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 
 
