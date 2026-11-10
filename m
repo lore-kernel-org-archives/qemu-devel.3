@@ -1,122 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE442606A332
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 12:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6642606A321
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 12:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=antispam.mailspamprotection.com header.i=@antispam.mailspamprotection.com header.a=rsa-sha256 header.s=default header.b=tZQXC8bU;
-	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=valla.it header.i=@valla.it header.a=rsa-sha256 header.s=default header.b=A379yrQ+
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=plOdV3IG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQl9o-00055Y-GZ; Tue, 10 Nov 2026 07:41:00 -0500
+	id 1xQlEc-0001kz-Ae; Tue, 10 Nov 2026 07:46:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francesco@valla.it>)
- id 1xQl9L-0004rs-Dv
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 07:40:42 -0500
-Received: from delivery.antispam.mailspamprotection.com ([185.56.87.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francesco@valla.it>)
- id 1xQl9G-0006lE-6z
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 07:40:28 -0500
-ARC-Seal: i=1; cv=none; a=rsa-sha256;
- d=outgoing.instance-europe-west4-ssp3.prod.antispam.mailspamprotection.com;
- s=arckey; t=1794314416; 
- b=W9YtiMuPfRHVOfBpQGf8nmJ/GqFPUqhG2wKSvBwrH8tBU6oi6ZSx84BzUg7qYOvcGUuX7WOUIT
- ReCP2nnry4d5kYHwKyqUaA2q94l9NGZLrZoKoVWKe4dS/870X1wQzE3olCf6y7hQQCpug1l5lq
- aiybRcLbkLklnV1ZLzrgZ3qRficBrqyYIQRalYH3LEZ2oVyZ/iD39fqdYmJ37SPT8g7dDIDjym
- DkaqA0Hrl0kwGsB3G8JX9CfTTyku8AgAUUUnYW+OSzkkt6UVUI4pq7Ve+OizWmUB+YzikGgg/j
- NvNeX6BFzD4n2SwwGUGomZ6uzbxglqCUZC5jwwJNEE+uVg==;
-ARC-Authentication-Results: i=1;
- outgoing.instance-europe-west4-ssp3.prod.antispam.mailspamprotection.com;
- smtp.remote-ip=35.214.173.214; 
- iprev=pass (214.173.214.35.bc.googleusercontent.com)
- smtp.remote-ip=35.214.173.214; 
- auth=pass (LOGIN) smtp.auth=esm19.siteground.biz;
- dkim=pass header.d=valla.it header.s=default header.a=rsa-sha256;
- arc=none
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed;
- d=outgoing.instance-europe-west4-ssp3.prod.antispam.mailspamprotection.com;
- s=arckey; t=1794314416; 
- bh=PlrmZtvhHQH65cK4S19EtA0P7mMM5S3UbBsmkytby94=;
- h=Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:References:
- In-Reply-To:Message-ID:Cc:To:From:Date:DKIM-Signature:DKIM-Signature;
- b=oQFtQaCWpZZclm6TWANYEFGbiAtdlMgM8EbCCyfIw/vta2BMJdOxqTWoAEuilnOD0BlpIvK1aU
- nFYacKe9evrj4CPrj3VjPrppC2k+1ChktpAgYQCRh4bMDr7A3Vga/CA7H1kaVnLOirkeoqhHwr
- QVV2wnjNvnT6EkujbjxGn89JB3ljFNbP8cuVX57eGdKeU3GIhcXR+5TVGcfBJnYNd0KFYrqUSk
- Bv1Rs1JuiTgqoVNoZIP27nuUqemztkQuK6gGMPeZK8pHKqr6bRVfjx+5M7ZjaPKMdy+RCSnXaA
- BqdigUVy/IJ3S7y15Xs36g9PwQsBW+Ti8SAjwLHbecnqvg==;
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=antispam.mailspamprotection.com; s=default; h=CFBL-Feedback-ID:CFBL-Address
- :Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Message-ID:Cc:To
- :From:Date:Reply-To:List-Unsubscribe;
- bh=PlrmZtvhHQH65cK4S19EtA0P7mMM5S3UbBsmkytby94=; b=tZQXC8bUlc7/th0xBcUIx9VnR8
- 1d+9YdPF+DhXM//iHMFrq/GBwKle42esyREt2rkKLnrRDqG5nijfQ2h3w1f84RL3TXvPY6SKKmc7V
- MMb5zl48LjFKtUXgzLfuUouswysDxMdE7b0DnYlTn6yKIX2f2d2j0PR7dZP5PJXYY0GA=;
-Received: from 214.173.214.35.bc.googleusercontent.com ([35.214.173.214]
- helo=esm19.siteground.biz)
- by instance-europe-west4-ssp3.prod.antispam.mailspamprotection.com with
- esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384 (Exim 4.100.1)
- (envelope-from <francesco@valla.it>) id 1xQl93-00000007YKh-2bGv
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 12:40:14 +0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=valla.it;
- s=default; h=Subject:Cc:To:From:Date:list-help:list-unsubscribe:
- list-subscribe:list-post:list-owner:list-archive;
- bh=PlrmZtvhHQH65cK4S19EtA0P7mMM5S3UbBsmkytby94=; b=A379yrQ+Kr/KtvWTzpm+PTpRGB
- /a+SVsbSAf3213orF+NT5BGMe6wmcku8LC8j5oo0x2mMqqtdeh+IwJqCIP1zIzZeGIWZ6yTOWgN7K
- B1s/pNYBUV/BUlMoXudvA2qYQzQFCwDe8H1xBmufLsABd0ya66z/GgH9Pd3W5c1EXy1M=;
-Received: from [79.17.15.196] (port=61165 helo=dummy.faircode.eu)
- by esm19.siteground.biz with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.100.1) (envelope-from <francesco@valla.it>)
- id 1xQl8x-00000000Nbm-2p0K; Tue, 10 Nov 2026 12:40:07 +0000
-Date: Tue, 10 Nov 2026 13:40:04 +0100
-From: Francesco Valla <francesco@valla.it>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Message-ID: <1d0bfca1-3ee2-4fad-b956-e28321161bba@valla.it>
-In-Reply-To: <87mrrhvuzo.fsf@redhat.com>
-References: <20261107175443.29012-1-francesco@valla.it>
- <87mrrhvuzo.fsf@redhat.com>
-Subject: Re: [PATCH] update-linux-headers: strip endianness-aware __counted_by
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1xQlEU-0001jb-26
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 07:45:50 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1xQlER-0007jb-8T
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 07:45:49 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4a20bde60a0so20508715e9.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 04:45:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794314745; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lVUyn5qFbY+xjgGb+zCTfclg88EbgMZJGgSsVWnG6DoHw0wybvBZ+jFSxnxKfdL66K
+ uBg7F6dtzwpkZdACktiF3fqMGijxdEx6uRhVpY78PY6cg4co2iAnVXNx5/YdapjujOLX
+ oSS2KPS4edAWQbjMEEnzxHISKWwJ3TYZRw6h+UPRD3w/HDdbFBsafhFQCSlBJeRhF1pD
+ 0jfAkgUujVaiRa207GbYyof/U1+dNgdIJ9/BQdGWb9kaD9xUV/lhwZqQvCBBVSZVzj3a
+ Rv5BOE1s19j3Q1oINL0AbEl3nYEqVf09YrlIpOznNnXNNJus9e/COUNjDJUHgSgiLnp4
+ jSmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=5s+/k+G1Xcl4RUUlLM+neJOVV7++JiO4RxsU/4bPuaM=;
+ fh=6Ljc6nMZvz6gk11eSifo2Zp/x/qA0SqgpGVCyOs8MbY=;
+ b=QdqZ54bXTOfwUcjgczCiwYNyWs3vBDrCpvVkKBMz8UpjUPNNLnPzaRGH8RUc4brqHj
+ HCsbJyfZa3oD9WHNTPZH5842Yl5ksyYE5+GmDdD9F3SDVvdZuLmIpnnFyztAQqgnUz0a
+ huKs0sZOmDOvGkvabfJmiOzKbcA6aKlnbRX14u1sfh/Axuui6H6V/E2qJVaC4oRqXZ4U
+ IDutxPO7V6Fh/2UZ2fHxAHJ+iSl04mfW1sQmBwvqgkPhNGuWTZgv+VF/yJTzxE2AAjTm
+ p7/N84ANNGgfieOTSeZLEiaztE0t7o/Bc47xFyL7soDpau2zCfiZ0ADTF4bxzdE9YSjt
+ 7yag==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794314745; x=1794919545; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=5s+/k+G1Xcl4RUUlLM+neJOVV7++JiO4RxsU/4bPuaM=;
+ b=plOdV3IGOu1/p22hGuUVKovdpgQY4Lu8wBtWKXGZlZ8q3D+71pVTrLsfIAYP46EfmD
+ K2xHFjkL13kr1CWmId/N5m1xdoi6zOk7eJPRA5iY8+dKjJEUQyT0+YB8RZ7kdLGaZGs8
+ ddrHucYUUpmWFpduO+jSHTXJKU00CKs3R5/f9AQuwiCZi2mdu5SryTR+MBrizkXnZ1VE
+ Nl2QMG2aiDcnZF39Pggg13YfnEhtmmsx8WbuLT81jdtULablNkGH6js/floFWhkOTUkw
+ 4X57l/KeWPYLNzaDQQaVEPuv7hi3McfzcoTybFYFPyBxm1Flsf3b0n/ZLs+IM+Cr51JO
+ uqoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794314745; x=1794919545;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=5s+/k+G1Xcl4RUUlLM+neJOVV7++JiO4RxsU/4bPuaM=;
+ b=DFPnwJLM9QR9frrP/L8TLiGNLbYuBByhThYF+qzah/T3RqAvSVV2udLZ6EydM82FBQ
+ 08G6/pbQoQ6oq1EZ86IWdTtscewkNbiCn4uxdj/8QJwzRPCP+wwZn4hb9Schkm9qYOcH
+ snqtu0l1LmKgXI+8fFJyYJkoz5FMAbIAyBQbKdK1JXKN4fv922FeAr0ZG1I3ajMC9OYg
+ SSbDYba5S2uGT5owl4ZusDJfEXUzSNHLopXlUhBR6L79I6r/ZfCfFCdwioqAO8J0iy+x
+ 6IZxoNulHwcFZkLkHtwF4GVzNX8GG+moHCGNjhCsqNkSgJWhpH8l1a6sBfRRbj8GDukL
+ snkQ==
+X-Gm-Message-State: APuU4Z+X/507JxY2a8plqB+sqkAUuRQXp5PFpxyqUwo7T+vwQmMQX9cP
+ 14J0vb4pBQlp30MOBR6iiBWYy/6C9shYocBzC7KR8tZPPbKPyDS96aNs71RPzVL4MOF2eQ2Zmwu
+ EGGQjucLnH9ADoz9Bh/sw+mbwPygvSCLR128vgj+Sl4DF6InM/i7e67w=
+X-Gm-Gg: AYBFou0hS76zzU1s7hcLVc8D9coSng6SfNUb9oEsK73yHTIDHZBpuyR8cV27UytK/6Q
+ N+6y/p/OhEHuZPWnGDvxd6xpA7xch0DQxrOvJT+T8mvzNO8OdF3zdWjrGMbqM3gauKV09lZVWUK
+ 0OolJLnlWEMjxRcoj6FqfyPDCM8m4rtxbWoQdT44WoYkEF7Le8fYvtt3/tNS55GO6KgqarnEqpP
+ glXT0fwIbrNO/nj6kxntQiZvP+L6KEqLE+nIaX1Uxu1yyMZbc0aaLapmGmhX4yVIK3ZiiplScwc
+ vUvC3P0u1lsO39mnqk2HGWYGunkRyjdUl6Up93tiJMn+QPgPpp9FeZ0/8PXOpT9gNenW25dKRr4
+ gO9qZ6I3f0SfzT9gZSpBC8Doyr0yQemZqFik/d+hzXIoD5S3nbbb2RfLZA7Kf1PcqUXEvi9ucOE
+ vJSdI1dl2ooUmiq4jdGbxK09ipQvOxMFgfFxX5bgy3nMXIcA7pklGeOYQ/UHncy7EVvX5uBOFG2
+ AeqM5A11XAPBW8jsQ==
+X-Received: by 2002:a05:600d:82c9:b0:4ba:a5:b920 with SMTP id
+ 5b1f17b1804b1-4ba0234950bmr52318795e9.16.1794314744560; Tue, 10 Nov 2026
+ 04:45:44 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20261110-virtio-snd-fixes-v1-0-544d6f9eca38@linaro.org>
+ <20261110-virtio-snd-fixes-v1-4-544d6f9eca38@linaro.org>
+In-Reply-To: <20261110-virtio-snd-fixes-v1-4-544d6f9eca38@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 10 Nov 2026 14:45:18 +0200
+X-Gm-Features: AclHuK93q1Lr06zsVzbAqod-WgcRFCdWck3lf924c7uJylJpCddVBe8rjmJsi_Q
+Message-ID: <CAAjaMXZSsuHO61Jis-6+VQO5b71e+jfp3wgmWcydjDeH275f0g@mail.gmail.com>
+Subject: Re: [PATCH 4/6] virtio-snd: don't allocate pcm_info zero-count buf
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Correlation-ID: <1d0bfca1-3ee2-4fad-b956-e28321161bba@valla.it>
-X-AntiAbuse: This header was added to track abuse,
- please include it with any abuse report
-X-AntiAbuse: Primary Hostname - esm19.siteground.biz
-X-AntiAbuse: Original Domain - nongnu.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - valla.it
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-SGantispam-id: d4f6978b080e69eb90d2d1b6ba40b970
-X-AntiAbuse: ID - d4f6978b080e69eb90d2d1b6ba40b970
-AntiSpam-DLS: false
-AntiSpam-DLSP: 
-AntiSpam-DLSRS: 
-AntiSpam-TS: 1.0
-CFBL-Address: feedback@antispam.mailspamprotection.com; report=arf
-CFBL-Feedback-ID: 1xQl93-00000007YKh-2bGv-feedback@antispam.mailspamprotection.com
-Authentication-Results: outgoing.instance-europe-west4-ssp3.prod.antispam.mailspamprotection.com; 
- iprev=pass (214.173.214.35.bc.googleusercontent.com)
- smtp.remote-ip=35.214.173.214; 
- auth=pass (LOGIN) smtp.auth=esm19.siteground.biz;
- dkim=pass header.d=valla.it header.s=default header.a=rsa-sha256;
- arc=none
-Received-SPF: pass client-ip=185.56.87.9; envelope-from=francesco@valla.it;
- helo=delivery.antispam.mailspamprotection.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,61 +116,76 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-10 Nov 2026 11:31:04 Cornelia Huck <cohuck@redhat.com>:
-
-> On Sat, Nov 07 2026, Francesco Valla <francesco@valla.it> wrote:
+On Tue, Nov 10, 2026 at 12:31=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
 >
->> Deal with the endianness-aware __counted_by_be() and __counted_by_le()
->> annotations in Linux headers just like with __counted_by(): stripping
->> them.
->>
->> Signed-off-by: Francesco Valla <francesco@valla.it>
->> ---
->> scripts/update-linux-headers.sh | 2 ++
->> 1 file changed, 2 insertions(+)
+> g_new0() might return NULL, which is UB if passed to a memcpy
+> implementation that does not expect it (not in the usual case).
 >
-> For virtio-can, I guess?
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3778
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>  hw/audio/virtio-snd.c | 24 +++++++++++++++---------
+>  1 file changed, 15 insertions(+), 9 deletions(-)
 >
-
-Correct. That's the usecase that needs this at the moment.
-
->>
->> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-head=
-ers.sh
->> index 3c3a0e9394d2..d3f843356507 100755
->> --- a/scripts/update-linux-headers.sh
->> +++ b/scripts/update-linux-headers.sh
->> @@ -92,6 +92,8 @@ cp_portable() {
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -e "$arch_cmd" \
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -e 's/__bitwise//' \
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -e 's/__counted_by(\w*)=
-//' \
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -e 's/__counted_by_be(\w*)//=
-' \
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -e 's/__counted_by_le(\w*)//=
-' \
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -e 's/__attribute__((pa=
-cked))/QEMU_PACKED/' \
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -e 's/__inline__/inline=
-/' \
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -e 's/__BITS_PER_LONG/H=
-OST_LONG_BITS/' \
+> diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+> index 8695a4651b..a7d749f24f 100644
+> --- a/hw/audio/virtio-snd.c
+> +++ b/hw/audio/virtio-snd.c
+> @@ -267,6 +267,11 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *=
+s,
+>          return;
+>      }
 >
-> Not sure if we would want to kill all the __counted_by* birds with one
-> stone, but let's not overthink this.
+> +    if (count =3D=3D 0) {
+> +        cmd->payload_size =3D 0;
+> +        cmd->resp.code =3D cpu_to_le32(VIRTIO_SND_S_OK);
+> +        return;
+> +    }
+>      pcm_info =3D g_new0(virtio_snd_pcm_info, count);
+>      for (uint32_t i =3D 0; i < count; i++) {
+>          stream_id =3D i + start_id;
+> @@ -352,15 +357,16 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+>          return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+>      }
+>      if ((le32_to_cpu(params->features) & ~(stream->info.features)) > 0) =
+{
+> -         error_report("%s: invalid stream features. "
+> -                 "Stream %d offers 0x%"PRIx32", "
+> -                 "guest requested 0x%"PRIx32
+> -                 " (invalid: 0x%"PRIx32")",
+> -                 VIRTIO_DEVICE(s)->name, stream_id,
+> -                 stream->info.features,
+> -                 le32_to_cpu(params->features),
+> -                 le32_to_cpu(params->features) & ~(stream->info.features=
+));
+> -         return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+> +        error_report("%s: invalid stream features. "
+> +                     "Stream %d offers 0x%"PRIx32", "
+> +                     "guest requested 0x%"PRIx32
+> +                     " (invalid: 0x%"PRIx32")",
+> +                     VIRTIO_DEVICE(s)->name, stream_id,
+> +                     stream->info.features,
+> +                     le32_to_cpu(params->features),
+> +                     le32_to_cpu(params->features)
+> +                     & ~(stream->info.features));
+> +        return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+
+Squashed the fixup to the wrong commit... sent a v2 fixing this.
+
+>      }
 >
-> Acked-by: Cornelia Huck <cohuck@redhat.com>
-
-Thank you
-
-Regards,
-Francesco
-
+>      st_params =3D virtio_snd_pcm_get_params(s, stream_id);
+>
+> --
+> 2.56.0
+>
 
