@@ -1,94 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6061560A260F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1735606A321
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cloud.ionos.com header.i=@cloud.ionos.com header.a=rsa-sha256 header.s=google header.b=aqkZHFCL
+	dkim=pass (1024-bit key, unprotected) header.d=ovhcloud.com header.i=@ovhcloud.com header.a=rsa-sha256 header.s=mailout header.b=H/p+Ylen
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQnOm-0004cw-IQ; Tue, 10 Nov 2026 10:04:36 -0500
+	id 1xQnS3-0003PX-Ue; Tue, 10 Nov 2026 10:08:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xQnOP-0003VL-DP
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:04:13 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xQnON-00006Z-B7
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:04:13 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-490a0e72588so1163872f8f.3
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 07:04:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1794323050; x=1794927850; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=8/fnIwOyMPZFbMQyXhlAspomxQ19P3a4f+ayL8e+Yr0=;
- b=aqkZHFCLkRz7bKUaA9Lv2/XtPgRUQQ6FfX5bdLQ1cgabld1rQjKZF+uukiQ6R1j9Kv
- xuX28sILxSd8Za5cVkt1N4FJCiVYtf+m3g8rn+5CK6vzy/DK4PFG8XiC0BZAOWo+75Zt
- hH2MSCYajikuhM+lCb8zWiKg785Bgh6DYTCkiMvgKIGdqaP1mK5DN3df5RqPHAPVbacK
- ABmzMI0G3OAdpDXTa9jFS5Hf0amtL5vtQeBclyCLi9YkQTgkJwVgl35KrgVNsB6X4xpm
- 801OO5LD+CZkJN7Jl4BugAw79yFakKPVeajbbMLB6bTvtayLR+wXDgCywADUlAfWn49e
- niag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794323050; x=1794927850;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=8/fnIwOyMPZFbMQyXhlAspomxQ19P3a4f+ayL8e+Yr0=;
- b=fEA31uG4kWEXOPUvboKl9rYSqZPG/uoV7yEsK+nSNm1j6mhgipudMXDL958UX+ZB0a
- hiuNE8nrsfmeRQdq1c/WZZJGGqV8iG9ybl5yhn2dxJLJ5wa5Uvfd3txvMOqDjFB6Ff0Y
- uLtskrjISwdXxyYCxrwGGMkFB61/91CaqYQUwNDb6i/82mlF27iWTFg+Vrn968vBHfdf
- mRFNYS70Pqyu8hR/s0b1/00xD9HKzhXqCYiOcIgd4xRCu2E0y9rBPmkigwsqP5zfp9bF
- PwoFRtChi45Aw1D+XBrEEHW8beUqiWDI75B8+Xx7jMq6VrCkx3GToo1WVu9AwnaiYlJe
- 2u+A==
-X-Gm-Message-State: APuU4Z88/a1u1c+hlNxg8ETTrQIP08b+EFy06CR19hJCewth6Fdq6VE9
- XhL7hy3tn9UI1+GPu5sSKCJb80ctsJvaeDaC8suWuiKiBYdDTvTWo7NrNm+ZNWKI3e+tEMqcTke
- xrXg8e4Q=
-X-Gm-Gg: AYBFou0NF79WvMcdcbpwVLojdM4Rqa5MXD0+BkDdwd8W/1w4r+JO83A53gY6oiVU76b
- AEGc9pyTnfA1Ax4KgSP5KZzBR1YGsPavYQv8OBaQ+W5/CyurAYZWV3dmScz+Yk6Sz80lH2k7c3d
- yeR+zU2kbY3m9M609EOhlyZJQZuTZVIH+T28NQRXF9D4e+u2XC27VVAV4NMzhmASAXCadbTs/X/
- Ot56Zk94AY5z9tthkDDWKkrMaqTC2yhcu9FYqLJGX2uoRubBty6vm7OpxVqOGM9mzaxHyEFpvgQ
- my+kYqR/ffC3m6ZxWsPBQOMlQkapvB5/8iGsasX9xWxDEm9GMBueeZNmKzoZVgpmMwoNee0PiE9
- 5E9GdqJE8Z5QeAzMvCOzLnYQJ4LMOPC0aPGjrwPwWR/hqC+zUdA2KYdADF+HmPLFPxOX85WkU+k
- ges/1+aA8e1300DGCIprYusO8DN/yver6ZVbnw+XT2lcHktAipUXWgIaVK9KbQ92wHUgYzAS3/3
- DJxMouGY50aydq1ryRwNrmoghTfhhNrZJIbnSm7gWD0nh0ys7CIv3Jt/B7zHSyyk4LBcYAYD7ZT
- h1ipw8uq4HdxFh9PclD0oThox2OfjHUehmvLVhGWvAVno9LiEtpMLZv4eSq3KeYU3ZZeg2mX
-X-Received: by 2002:a05:6000:15d4:b0:48e:68d5:81a6 with SMTP id
- ffacd0b85a97d-4982f59465bmr4472835f8f.34.1794323049691; 
- Tue, 10 Nov 2026 07:04:09 -0800 (PST)
-Received: from PF-5Z7P7F.fkb.profitbricks.net ([212.227.34.98])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-498366c4e07sm5116931f8f.49.2026.11.10.07.04.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Nov 2026 07:04:09 -0800 (PST)
-From: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, lizhijian@fujitsu.com,
- jinpu.wang@cloud.ionos.com, yanfei.xu@bytedance.com,
- Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-Subject: [RFC PATCH RESEND 13/13] migration/rdma: negotiate batched chunk
- registration
-Date: Tue, 10 Nov 2026 16:02:47 +0100
-Message-ID: <20261110150247.193208-14-dmitrii.omelchenko@cloud.ionos.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261110150247.193208-1-dmitrii.omelchenko@cloud.ionos.com>
-References: <20261110150247.193208-1-dmitrii.omelchenko@cloud.ionos.com>
+ (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
+ id 1xQnRw-0003EX-Tl
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:07:53 -0500
+Received: from 1.mo15.mail-out.ovh.net ([5.135.90.178])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
+ id 1xQnRt-0000dd-9w
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:07:52 -0500
+Received: from DAGFR11EX3.OVH.local (unknown [10.109.254.253])
+ by mo15.mail-out.ovh.net (Postfix) with ESMTPS id 4jP94c6P3jz43c5;
+ Tue, 10 Nov 2026 15:07:44 +0000 (UTC)
+Received: from [10.46.75.159] (109.190.254.5) by DAGFR11EX3.OVH.local
+ (172.16.2.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Tue, 10 Nov
+ 2026 16:07:44 +0100
+Message-ID: <730c1463-8dfb-4040-9c61-330882320d7c@ovhcloud.com>
+Date: Tue, 10 Nov 2026 16:07:35 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:20::429;
- envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] nbd: Add an unstable query for the client state
+To: <armbru@redhat.com>
+CC: <qemu-devel@nongnu.org>, <qemu-block@nongnu.org>, <eblake@redhat.com>,
+ <vsementsov@yandex-team.ru>, <kwolf@redhat.com>, <hreitz@redhat.com>
+References: <20261109160609.1434289-1-guillaume.vincke@ovhcloud.com>
+ <20261109160609.1434289-2-guillaume.vincke@ovhcloud.com>
+ <87v764yhjg.fsf@pond.sub.org>
+Content-Language: en-US
+From: guillaume vincke <guillaume.vincke@ovhcloud.com>
+In-Reply-To: <87v764yhjg.fsf@pond.sub.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CAS2.OVH.local (172.16.1.2) To DAGFR11EX3.OVH.local
+ (172.16.2.113)
+X-OVH-CORPLIMIT-SKIP: true
+x-ovh-tracer-id: 3693233170106302759
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: dmFkZTESHH/DdLfSZ/uN9RX19mRZGwkzQbqeUNfrYBf/XeAy+pzdAupcFKhODUCn3RVTob/4RgVHY8+NetDNkDkc2lD3oVE5ksu9JHEva+6MVLc5PRwXk+mtAqkCs0HmxtBMKTSM5k8DKADhaulZA8Y480kx5FqTFYDItzdOIUuc0Pp0vfX4GWVs7dfByp8aKDgu2DNPSSjw2C9yUpkIMh2BoRIcUbqwUostJCr30oVgrOV8xN9uW1DlMxOttYP7WxsO+fuh+J5D7WSnmUzONa1tjQiXYF88ezzHWN62V5TX0l37+O8LyUrHzdUP1zEZdpL9SvqUPSkOoYM9ZyhGt5VpVhIiqplKoqkLB+WtD4mnbJfTOj89ZQd1YHWEWD36LyV1UBx3i3yAP+SVFHjbHaOlTKQhCaXhC569MdKsquZh3z/nqykhjlSFlzKciDwLZsa+CaDzLTnC85Zwm7D8U/8CX9OLePpKitZVA43/qUgdYy8JiSXnoTzvyah8LznCSO0uXCVkpA5YtABsWrW29Wf5YvbIY9KiennAkzRHgZ/DBF1AHzxT4P1TPEcc/ZtVmDyk5lZYJGkUj1l8PEmH/pZQgMtGtEzB1ZRJMiKk3vdu4F/xfQp7uElTgq1nGY+8EWnkCOqkga9BXUPMxOagCCHaRiAM9MNerEkUGwjv/kbbEWsawA
+DKIM-Signature: a=rsa-sha256; bh=Z/K00ub2JqEq1+AumFQzfjd2uReQk73T3FQuE2ug0gc=; 
+ c=relaxed/relaxed; d=ovhcloud.com; h=From; s=mailout;
+ t=1794323265; v=1; 
+ b=H/p+Ylenz2LTXby/4Dm4pQgFp5PD0cm4VmE6aSsFtW79/u7Vpxy9i9F1FXVFh2CE+X350SRD
+ 3Drn0ips7eNd1cZSBCW/D8+jtDeeBIaPqoT3WgkGuIRc1kb7Bz6ROPBgCrzLO1ZeyT2/Mg2VTuI
+ DAgSG0AfgleFkBwE+wtdZbf8=
+Received-SPF: pass client-ip=5.135.90.178;
+ envelope-from=guillaume.vincke@ovhcloud.com; helo=1.mo15.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,142 +76,126 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Jack Wang <jinpu.wang@cloud.ionos.com>
+On 11/10/26 13:53, Markus Armbruster wrote:
 
-An old peer echoes REGISTER_RESULT.repeat unchanged but only sends one
-result, so a batched source would read stale rkeys for the rest.
-Negotiate RDMA_CAPABILITY_REG_BATCH like PIN_ALL and cap requests at
-one chunk when unsupported; check resp.len instead of resp.repeat.
+Thanks for the review. Let me clarify before posting a v2.
 
-Signed-off-by: Jack Wang <jinpu.wang@cloud.ionos.com>
-Signed-off-by: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
----
- migration/rdma.c       | 37 ++++++++++++++++++++++++++++++++++---
- migration/trace-events |  1 +
- 2 files changed, 35 insertions(+), 3 deletions(-)
+> 
+> Why block-core.json and not block-export.json?
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 863165de26..29a2480448 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -75,12 +75,15 @@ static inline uint64_t rdma_merge_max(void)
-  * Capabilities for negotiation.
-  */
- #define RDMA_CAPABILITY_PIN_ALL 0x01
-+/* Peer replies to a batched REGISTER_REQUEST with one result per chunk. */
-+#define RDMA_CAPABILITY_REG_BATCH 0x02
- 
- /*
-  * Add the other flags above to this list of known capabilities
-  * as they are introduced.
-  */
--static uint32_t known_capabilities = RDMA_CAPABILITY_PIN_ALL;
-+static uint32_t known_capabilities = RDMA_CAPABILITY_PIN_ALL |
-+                                     RDMA_CAPABILITY_REG_BATCH;
- 
- /*
-  * A work request ID is 64-bits and we split up these bits
-@@ -352,6 +355,7 @@ typedef struct RDMAContext {
-     uint64_t pend_length;         /* span length in bytes (within one chunk) */
- 
-     bool pin_all;
-+    bool reg_batch;   /* peer negotiated RDMA_CAPABILITY_REG_BATCH */
- 
-     /*
-      * infiniband-specific variables for opening the device
-@@ -1947,6 +1951,14 @@ static int qemu_rdma_write_register(RDMAContext *rdma, RDMARegister *regs,
-         return -1;
-     }
- 
-+    /* resp.repeat is echoed back unchanged by old peers; resp.len is not. */
-+    if (resp.len != count * sizeof(RDMARegisterResult)) {
-+        error_setg(errp, "rdma: REGISTER_RESULT size mismatch: "
-+                   "requested %u chunks (%zu bytes), peer returned %u bytes",
-+                   count, count * sizeof(RDMARegisterResult), resp.len);
-+        return -1;
-+    }
-+
-     results = (RDMARegisterResult *)rdma->wr_data[reg_result_idx].control_curr;
-     for (i = 0; i < count; i++) {
-         RDMALocalBlock *block =
-@@ -2172,6 +2184,8 @@ static int qemu_rdma_connect(RDMAContext *rdma, bool return_path,
-         cap.flags |= RDMA_CAPABILITY_PIN_ALL;
-     }
- 
-+    cap.flags |= RDMA_CAPABILITY_REG_BATCH;
-+
-     caps_to_network(&cap);
- 
-     ret = qemu_rdma_post_recv_control(rdma, RDMA_WRID_READY, errp);
-@@ -2219,6 +2233,13 @@ static int qemu_rdma_connect(RDMAContext *rdma, bool return_path,
-         rdma->pin_all = false;
-     }
- 
-+    rdma->reg_batch = !!(cap.flags & RDMA_CAPABILITY_REG_BATCH);
-+    if (!rdma->reg_batch) {
-+        warn_report("RDMA: Server does not support batched chunk "
-+                    "registration. Will register one chunk per request.");
-+    }
-+    trace_rdma_connect_reg_batch_outcome(rdma->reg_batch);
-+
-     trace_rdma_connect_pin_all_outcome(rdma->pin_all);
- 
-     rdma_ack_cm_event(cm_event);
-@@ -2952,6 +2973,14 @@ static int qemu_rdma_write_run(RDMAContext *rdma, RDMASendRing *r,
-                 return -1;
-             }
-         } else {
-+            bool new_chunk = (int)cmd->block_index != last_bidx ||
-+                             (int64_t)cmd->chunk_index != last_cidx;
-+
-+            /* Cap at one never-seen chunk per request without REG_BATCH. */
-+            if (new_chunk && nreg == 1 && !rdma->reg_batch) {
-+                break;
-+            }
-+
-             /* Defer: record every span for a post-registration write. */
-             reg_ring_idx[regn++] = pos + n;
-             /*
-@@ -2959,8 +2988,7 @@ static int qemu_rdma_write_run(RDMAContext *rdma, RDMASendRing *r,
-              * non-decreasing within a run, so a repeat chunk is the last one
-              * queued; add each chunk to the REGISTER batch only once.
-              */
--            if ((int)cmd->block_index != last_bidx ||
--                (int64_t)cmd->chunk_index != last_cidx) {
-+            if (new_chunk) {
-                 regs[nreg].current_index = cmd->block_index;
-                 regs[nreg].current_addr = addr;
-                 nreg++;
-@@ -3663,6 +3691,9 @@ static int qemu_rdma_accept(RDMAContext *rdma)
-     if (cap.flags & RDMA_CAPABILITY_PIN_ALL) {
-         rdma->pin_all = true;
-     }
-+    if (cap.flags & RDMA_CAPABILITY_REG_BATCH) {
-+        rdma->reg_batch = true;
-+    }
- 
-     rdma->cm_id = cm_event->id;
-     verbs = cm_event->id->verbs;
-diff --git a/migration/trace-events b/migration/trace-events
-index ea4a1996d3..c55024e24c 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -227,6 +227,7 @@ rdma_cleanup_disconnect(void) ""
- rdma_close(void) ""
- rdma_connect_pin_all_requested(void) ""
- rdma_connect_pin_all_outcome(bool pin) "%d"
-+rdma_connect_reg_batch_outcome(bool reg_batch) "%d"
- rdma_dest_init_trying(const char *host, const char *ip) "%s => %s"
- rdma_dump_id_failed(const char *who) "%s RDMA Device opened, but can't query port information"
- rdma_dump_id(const char *who, const char *name, const char *dev_name, const char *dev_path, const char *ibdev_path, int transport, const char *transport_name) "%s RDMA Device opened: kernel name %s uverbs device name %s, infiniband_verbs class device path %s, infiniband class device path %s, transport: (%d) %s"
--- 
-2.39.5
+If I get this right, block-export.json covers the server part. I
+thought adding this next to BlockdevOptionsNbd was a better fit. I can
+change that in v2 if you think block-export.json is a better match.
 
+> 
+>> +#
+>> +# @connecting-wait: No active connection.  A request waits for the
+>> +#     connection attempt to finish, while reconnect-delay has not
+>> +#     expired.
+>> +#
+>> +# @connecting-nowait: No active connection.  A request fails at once
+>> +#     if no channel is ready.
+>> +#
+>> +# @connected: Client has a valid connection.
+> 
+> Double-checking: when we're in this state, there is a client connected.
+> Correct?
+
+Yes. This is a client state that describes the connection as valid: the
+channel got negotiated and is ready to process requests.
+
+> 
+>> +#
+>> +# @quit: Client will not reconnect.
+> 
+> What does this one mean exactly?
+
+The client stopped for good. Requests fail and it never reconnects.
+This state is reached on fatal error or teardown.
+
+> 
+>> +#
+>> +# Since: 11.2
+> 
+> Making 11.2 seems unlikely.
+
+Sure. Would updating this to 12.0 make more sense ?
+
+>> +#
+>> +# @running: Connection attempt is in progress.
+>> +#
+>> +# @parked: Connection was successful and channel is kept for the next
+>> +#     request.
+>> +#
+>> +# Since: 11.2
+>> +##
+>> +{ 'enum': 'XDbgNbdClientConnectorState',
+>> +  'data': [ 'running', 'parked' ] }
+>> +
+>> +##
+>> +# @XDbgNbdClientConnector:
+>> +#     The NBD connector information.
+>> +#
+>> +# @state: State of the connector.
+>> +#
+>> +# Since: 11.2
+>> +##
+>> +{ 'struct': 'XDbgNbdClientConnector',
+>> +  'data': { 'state': 'XDbgNbdClientConnectorState' } }
+>> +
+>> +##
+>> +# @XDbgNbdClient:
+>> +#     The NBD connection state of the client and its connector.
+>> +#     The two members are read independently and may not reflect a
+>> +#     single point in time.
+> 
+> That's unfortunate.  It'll do for debugging.  Could it create robustness
+> issues in tests?
+
+On the nbd-stale-connection test it is not a problem but I can try to
+take the locks together in v2.
+
+> 
+>> +#
+>> +# @state: The client state.
+>> +#
+>> +# @connector: The connector details.  Only present while a connection
+>> +#     attempt is running or its channel is parked.
+>> +#
+>> +# Since: 11.2
+>> +##
+>> +{ 'struct': 'XDbgNbdClient',
+>> +  'data': { 'state': 'XDbgNbdClientState',
+>> +            '*connector': 'XDbgNbdClientConnector' } }
+> 
+> How the combined state machine works is not clear to me.  Is it
+> documented anywhere?
+
+I did not find a proper documentation. I found the comments on the code
+to be quite explicit though. The connector only runs in a connecting-*
+state. In that state, when processing a request, the client tries to
+get the channel from the connector. When the connector has a valid
+channel but the client did not request it, the connector is in parked
+state. Do you think this command should document that behavior?
+
+> 
+>> +
+>> +##
+>> +# @x-debug-query-nbd-client:
+>> +#     Get the NBD client state.
+>> +#
+>> +# @node-name: node name of the NBD client to query.
+> 
+> How would I find the valid node names?  query-block-exports?
+
+The node-name is listed by query-named-block-nodes or is the one passed
+to blockdev-add. I will add a reference to those commands in the
+docstring to clarify.
 
