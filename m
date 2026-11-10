@@ -1,101 +1,59 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2765E60A2626
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 21:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F70606A32A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 23:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tJU424mk
+	dkim=pass (2048-bit key, unprotected) header.d=proton.me header.i=@proton.me header.a=rsa-sha256 header.s=protonmail2 header.b=cGd/D66r
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQtZF-0003Ca-Jq; Tue, 10 Nov 2026 16:39:51 -0500
+	id 1xQvEl-0006nH-I9; Tue, 10 Nov 2026 18:26:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xQtZ4-000392-Ma
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 16:39:40 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xQtZ2-00035f-VX
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 16:39:38 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-3b0a519049aso1696618a91.1
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 13:39:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794346775; x=1794951575; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=jojP+pOZwI96Xj4Nx/lkjBkOzLCVCkd6TL8DCixUr/g=;
- b=tJU424mkU8CnK3eJXa1QLaTFPzGWHrhLYyW6cztE+K7FFbgNMl+M3Za58kFyd7IYVn
- H2UO81gKYjf0dnaUpKqgBumflWI7g4gjIGxkdos3oI9LeUifKg2rKeAwzeXeTvfV+SRG
- c7xtSrKvvuIk7IQcrkXWQevvJNR+a6PzpkF/t2DPfaSCbhXawn9T6DKnWCe9PuAp7nVL
- ulZQ7KSHepK1RRXzYb5JKNHXMvUkCFO7ayyX7XzoLsIOWHL+pm/a15u8wJQlGeRehdfq
- J5l1py5lQcMHKoDetkz324Z7mwVx9ltDiRIT5/Z67KnYoVS3xqQ2v6w58FfMLTVfR2DS
- Nddg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794346775; x=1794951575;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=jojP+pOZwI96Xj4Nx/lkjBkOzLCVCkd6TL8DCixUr/g=;
- b=znSvRr5JjvpMFHp5HXvmiy41tATa/CZGqKf+xoZo1tPedmgrxJUaCjn9503wSKD0dP
- cL5VqGBXb9ZskzcJC4C+GOHJqHjOBh5pM1MQQ9Z7T8G5/sZOVVT/Oyb16cMcZEWKZh0y
- cM3mwFd1Bl1zZiQkmSMytu+u47rsWbw2sL4LSlYP+MS6D6A7igOEeZLp9N4F5R+Uxc4o
- gKqlvtbDOsq094JjxAzEifvIa2IRBDg6DTJ0kee1ciyGf7nRv9EvUJ+GJAjAk2lVI/Y2
- hpN7HpKAF0P7cGnRHItpWqbz4Dbm48/khFpjkcAUW2uN2+fVbu398r6mqfbuTWC6Odl7
- 9rLA==
-X-Forwarded-Encrypted: i=1;
- AL+hErFJDefYCHSB2Ke77VCPiROPlaHCV2wlG26/fBM8DgBHBiKxZrafnFORYRv+mxUhVCFVWE2sD4pEPU4g@nongnu.org
-X-Gm-Message-State: APuU4Z/ua2T09wVofN83fb3qfO/B82ktd9QLpR1b1xr3ZEqInyNgbJs0
- bzKo6mhzHqZ8zJ+C/sVh/p59DzHWg875gMoxoTps+G5DP1rGDfX2G/3NVc1qKK+5238=
-X-Gm-Gg: AYBFou0VPfNkewDKvLSvE6O8IS+84BWkNUQDBaiPCxHoGUf2vb7dMdcQtMwEoLKFwOH
- NmdK7o8ubnIRI1KlJg5J3t7kwBWjjqeYOE09Ej5T2Zby4+182BtxoEPyF+ef7ibUH0In0bMCmwn
- PezoFbMV3tbW6eDSBeXeQlWlZCXswAnQ75BIwVKUR12jlSUH/5hA9IgAT68fryH60MHiR9XzU4/
- TXxO1e455eRb0VgRZjTH3APkDNlVn+zdMNzeVWfBwhNcrOdPVPyWspx/gqf3DZlxQSZp4gmlWUA
- EnsARFWlPcZ4iWqYb55x8w2SGOwvGOHV/Dif1wVA0q5Cu0xuAHWS/E5OpbtVhWXiwOcTUKa9xdI
- MYXw2rId5RjgNUdmr+V53OMh7mS6TJsSH04p90c1R/Tt7LXMslWq72zbSl+kY5N62cNNblQ3u5p
- DKhsSnOsESbgBC51XEAxXfPCmi0eTTU/5aPKxTb9IZ2r/jex1x0ykH+GCRlHqSt51Xz+96s02Gs
- 2Lle9baU7+o125NLgShXtKfRXWpuNk4o/YNkUhWzjlBDQC4ZnKR8PRvYF0RZuqOVjucW5MiPz7+
- o7gEBRUNN+NMZkjeS4mTdygRt80W7532J4Wk8FIfvNmtpI1cZVfpTKzBlRZy/qmxKPt6TUrL
-X-Received: by 2002:a17:90b:51c8:b0:3a0:ca1d:b40d with SMTP id
- 98e67ed59e1d1-3b182f595d9mr275739a91.55.1794346775047; 
- Tue, 10 Nov 2026 13:39:35 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b17db56c7esm1280672a91.8.2026.11.10.13.39.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Nov 2026 13:39:34 -0800 (PST)
-Message-ID: <c6f33d14-941e-4753-9f78-eefed7b56230@linaro.org>
-Date: Tue, 10 Nov 2026 13:39:32 -0800
+ (Exim 4.90_1) (envelope-from <christianslima@proton.me>)
+ id 1xQvEi-0006n0-FK
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 18:26:44 -0500
+Received: from mail-06.mail-europe.com ([85.9.210.45])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <christianslima@proton.me>)
+ id 1xQvEd-0002Ks-T5
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 18:26:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=protonmail2; t=1794353188; x=1794612388;
+ bh=Yz3noM1RPDUZOGb7ABFp/wgt5+rbrpxqiejpDijhdCc=;
+ h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=cGd/D66rbaOt5AcV936o9XpfI8OZVuOikYn4kK7JRzypTqKg97Hf0ZueOO1+tAXha
+ uDAb5IvwImRxQaB298PrC7EymTjODOd8x6CFa6QEJseMN/pCXWjU3F2nupdFmKdreX
+ gTPZNPJzg4abWdHEeyHUgHijg2IqVppVBwU2ID4LUbq47rUndD1v/Rv0xP1AS3sesB
+ 94zlOIvqiWOxmCYkrI3neh1mA47H1VquCX/Dz7DgctmQGlE3xIjBLRkKyHsZJehkB8
+ h2+v2jJvjpCUQnkVk0bCjgNnG1kned7nRBvM6SQo3jhBdQd/Y5nVQ7XCBzEVj7FGJN
+ nJ5/jN3U1sAgQ==
+Date: Tue, 10 Nov 2026 23:26:20 +0000
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+From: "Christian S. Lima" <christianslima@proton.me>
+Subject: [PATCH v2] target/riscv: change mstatus bits for read-only if S ou U
+ unsupported
+Message-ID: <20261110232614.83050-1-christianslima@proton.me>
+Feedback-ID: 169431447:user:proton
+X-Pm-Message-ID: 343423d13731d85eaf7aa54b3a3640096b8c6bf3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] meson: Revert recent changes to qemu version header
- handling
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Yonggang Luo <luoyonggang@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- John Snow <jsnow@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Philippe Mathieu-Daude <philmd@mailo.com>
-References: <20261106155858.3779237-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261106155858.3779237-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=85.9.210.45;
+ envelope-from=christianslima@proton.me; helo=mail-06.mail-europe.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,31 +66,118 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/6/26 07:58, Peter Maydell wrote:
-> This patchset is two git reverts, to revert ab78ac76f44a124 and
-> fc35f24387703da. Those commits try to move the handling of version.h
-> to entirely within the meson file with no external script, but
-> unfortunately if you do that then there is no dependency information
-> about it passed to ninja, so the file isn't recreated if it's
-> missing. In particular this breaks incremental builds from a build
-> tree that pre-dates those two commits.
-> 
-> There's been some on-list discussion:
-> https://lore.kernel.org/qemu-devel/20261105181449.1691-1-luoyonggang@gmail.com/
-> Since it's not clear how we want to proceed, I'm posting this as
-> the "revert to the situation we had before", so we can discuss
-> what we want to do with a bit more leisure.
+The risc v privileged architecture says that mstatus.SXL, UXL, TSR,
+TVM and MPVR should be read-only when S-mode or U-mode are not
+present.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+changes in v2:
+- Don't change bits in target/riscv/cpu_bits.h
+- Add checks to S-Mode in the mstatus.SXL and U-mode mstatus.UXL in
+the target/riscv/cpu.c file that were suggested by Daniel in the
+review [1]
 
-r~
+Link to v1: https://lore.kernel.org/qemu-riscv/20261104223049.86286-1-chris=
+tianslima@proton.me/
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4456
+
+[1] https://lore.kernel.org/qemu-riscv/20261104223049.86286-1-christianslim=
+a@proton.me/T/#mddbb34a3ea837e3c707131a2e354c63c989ab029
+
+Suugested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Christian S. Lima <christianslima@proton.me>
+---
+ target/riscv/cpu.c     | 12 ++++++++++--
+ target/riscv/tcg/csr.c | 17 ++++++++++++-----
+ 2 files changed, 22 insertions(+), 7 deletions(-)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 15c27f4ce4..50bdfbe025 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -997,8 +997,16 @@ static void riscv_cpu_reset_hold(Object *obj, ResetTyp=
+e type)
+          * The reset status of SXL/UXL is undefined, but mstatus is WARL
+          * and we must ensure that the value after init is valid for read.
+          */
+-        env->mstatus =3D set_field(env->mstatus, MSTATUS64_SXL, env->misa_=
+mxl);
+-        env->mstatus =3D set_field(env->mstatus, MSTATUS64_UXL, env->misa_=
+mxl);
++        if (riscv_has_ext(env, RVS)) {
++            env->mstatus =3D set_field(env->mstatus,
++                                     MSTATUS64_SXL, env->misa_mxl);
++        }
++
++        if (riscv_has_ext(env, RVU)) {
++            env->mstatus =3D set_field(env->mstatus,
++                                     MSTATUS64_UXL, env->misa_mxl);
++        }
++
+         if (riscv_has_ext(env, RVH)) {
+             env->vsstatus =3D set_field(env->vsstatus,
+                                       MSTATUS64_SXL, env->misa_mxl);
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index af444e3e6f..24eda54bac 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -2081,18 +2081,25 @@ static RISCVException write_mstatus(CPURISCVState *=
+env, int csrno,
+         tlb_flush(env_cpu(env));
+     }
+     mask =3D MSTATUS_SIE | MSTATUS_SPIE | MSTATUS_MIE | MSTATUS_MPIE |
+-        MSTATUS_SPP | MSTATUS_MPRV | MSTATUS_SUM |
+-        MSTATUS_MPP | MSTATUS_MXR | MSTATUS_TVM | MSTATUS_TSR |
+-        MSTATUS_TW;
++        MSTATUS_SPP | MSTATUS_SUM | MSTATUS_MPP | MSTATUS_MXR | MSTATUS_TW=
+;
+=20
+     if (riscv_has_ext(env, RVF)) {
+         mask |=3D MSTATUS_FS;
+     }
+=20
++    if (riscv_has_ext(env, RVS) || riscv_has_ext(env, RVU)) {
++        mask |=3D MSTATUS_MPRV;
++    }
++
+     if (riscv_cpu_cfg(env)->ext_zve32x) {
+         mask |=3D MSTATUS_VS;
+     }
+=20
++    if (riscv_has_ext(env, RVS)) {
++        mask |=3D MSTATUS_TSR;
++        mask |=3D MSTATUS_TVM;
++    }
++
+     if (riscv_env_smode_dbltrp_enabled(env, env->virt_enabled)) {
+         mask |=3D MSTATUS_SDT;
+         if ((val & MSTATUS_SDT) !=3D 0) {
+@@ -2111,12 +2118,12 @@ static RISCVException write_mstatus(CPURISCVState *=
+env, int csrno,
+         if (riscv_has_ext(env, RVH)) {
+             mask |=3D MSTATUS_MPV | MSTATUS_GVA;
+         }
+-        if ((val & MSTATUS64_SXL) !=3D 0) {
++        if (riscv_has_ext(env, RVS) && (val & MSTATUS64_SXL) !=3D 0) {
+             mask |=3D MSTATUS64_SXL;
+             val =3D riscv_write_uxl(env, val, MSTATUS64_SXL);
+         }
+=20
+-        if ((val & MSTATUS64_UXL) !=3D 0) {
++        if (riscv_has_ext(env, RVU) && (val & MSTATUS64_UXL) !=3D 0) {
+             mask |=3D MSTATUS64_UXL;
+             val =3D riscv_write_uxl(env, val, MSTATUS64_UXL);
+         }
+--=20
+2.56.0
 
 
 
