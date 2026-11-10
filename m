@@ -1,140 +1,141 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4BC606A320
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C316260A2606
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 18:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gUXbT1Bt;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=UHrw/Lga
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=FWx+sNHI;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DUxVQJlw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQp1w-0006Vr-LZ; Tue, 10 Nov 2026 11:49:08 -0500
+	id 1xQq97-00058F-TY; Tue, 10 Nov 2026 13:00:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xQp1r-0006Uw-T6
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:49:04 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xQq96-00057x-Ju
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 13:00:37 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xQp1q-00088A-2o
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:49:03 -0500
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1xQq94-0007rC-Ba
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 13:00:36 -0500
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AAExqc42748218
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 16:49:00 GMT
+ 6AAH5Sgr2900359
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 18:00:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- EGt2a+6+itQ120AA2JwJpyxVIGSChVKYj1ZsEtvzrvA=; b=gUXbT1BtronY2vUj
- mOwMNNWcwkAQaq0kla8YUV7PXmB+VIZoro2NbdEyo7owdXHCYiLKXbKPGYSKn8/p
- ar7X7NQUlia1r/43AaR4E3w1cInTGMOT0/S8Srbx3yuW60vlYy6GzWebvh+uMACL
- 64/clVE53XFq9Vxx/+nEJYj8arNkL9/h2oB6KUdk/I0VlM2jlEzC/CxcMujUK+wv
- evw6y7A1j6iWQeCp03XRCf+dZ79eG9T89JaT30YqIYxH/XD8neuxohAdqOTGxuCt
- 2PPK6/WT2edq0JTLWAjavK5j8N+ucFh5iVHhBQMtwASEyny7Y9zJRfxHV74mOYWR
- O8WVAg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4huyw49sy7-1
+ ShpN89LBMVVV+LVkQNYEVu0VHsQJJmcxA48myNKptlY=; b=FWx+sNHIOhMCGfII
+ A6fQ5VtbCegeyrxJX7mdLz1GY7jH85WmFJ/YFS6dXR13tSGBadR37OrMjSztDwyR
+ R4U9Z0ZiD/5GpDF1IZV1I361E5DcT7MwrYl/iiogCCn3oQBRE9XjWGozazajXHBT
+ hOrylZgOYdLlp9dEGtfz5QKUXf6pt6Kv+/NphTfMR/GzQT1kEs1IR+mItSpj8jG7
+ d6liWN9rA3gt8T1aYkBNz297RK2LjHyjvVZs2MExJ4isrZCalf9t6QZZSJd1jdPX
+ wB8hFf35JbcP1iAgNx+35LIkJkewULSccTcCZoJipQFYh4Qq30xJGjBpRbowL0zX
+ mfon3w==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hv7c5g7vh-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 16:48:59 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-91c046843f1so54211466d6.1
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 08:48:59 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 18:00:31 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93f2373e9b4so275687685a.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 10:00:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794329339; x=1794934139; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1794333631; x=1794938431; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=EGt2a+6+itQ120AA2JwJpyxVIGSChVKYj1ZsEtvzrvA=;
- b=UHrw/Lgaoqnf1ZHJQWugsLcBi+gxgrCi9w2XG6T/j9uoiW/KV3jFA6X6GRWOA+5YPj
- /v1jfroIM3K7Ziav+Veex4PBjra3RXXFo/7g6cnHG/S1sBR7p/nnyoFMbCELerv+FuDQ
- E1tHZ1U+gV3anZHq/DV9/yTjsM4CNsSSgHNOAQ0sghzVHduopfiR8GRzNZ7+5NvWrMwC
- VZeIG4u/lBohegWta2ff1+7d2iHZUKrdizlhA04wCnXEH1UGewbHmjKJ7NEO48xG7M4n
- cgjPQ8V0sC+dMPVcnV8edN+pQGP57l91XscNyKXGDTYftYgj+9U6QdifWtRjSSyPKqpO
- qNWg==
+ bh=ShpN89LBMVVV+LVkQNYEVu0VHsQJJmcxA48myNKptlY=;
+ b=DUxVQJlwZki1hOJ5/pygtHyPg6+RsBY1YLnzNctQ2u9lgiW/L2DPxqUW0sbRD6MkLy
+ GS/4zMukAViwkmqgAwwYMAN0jSC0hl1M2uuymMU6noVetOCvFv82kFWzkt7CY/YMTB4K
+ 6xbhzZATjk8F9zWyfqyiNU9U1Q7+hOGxLljWyGO8KGCT3Bj7C3yKXWGZfMRr7H7o1amV
+ w8YWxkVkbz1JrKf+raCCLnBuR7FOew58OiNMnuf2U4MoTg6aTbYZZKijJvrHCRUDybb0
+ CPHEM6Im7KA1o+rtPmuA6fIkdOI5LewzrMRg6aNEp4fPy0dXMjqLNReL7uGfEmt2ru2r
+ LbPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794329339; x=1794934139;
+ d=1e100.net; s=20260707; t=1794333631; x=1794938431;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=EGt2a+6+itQ120AA2JwJpyxVIGSChVKYj1ZsEtvzrvA=;
- b=iFQFmFtPauaymrrYROlk0uWQi2HlEovvGL/vQXj4xq/vtWOQlZUqSIqjKtNc0VRV9l
- 30FpBjEQf5pX2W4jnvcDl0mmGWDhtROYa9NP31R1twnTrwJHQ43/dWZ3Q57eJ/w4zqVl
- biSZTJpz4bQBD6nIJ+oW/rF+g9fgPIP4h/9UOsyQZ2MbSD0gD1xL7fM+XZsE/grUYfoy
- gLQ1qAWh/P2RgDalROOus7WquM8eepHWjqq7lEFkzxonwp+K2wjsikyokFVdxpH4kw8+
- 6atOY1ZzyrBIMr9Ac4w/8VrrfBpe5pZSrQ6637n+Vil9Nd54SQJQaMavVx5/szEtVhSW
- 41lg==
+ bh=ShpN89LBMVVV+LVkQNYEVu0VHsQJJmcxA48myNKptlY=;
+ b=EErKtGl7rqKTnFMWuWWkYxty+TRCwHVPBWkdCvT5FJGcnsudleeouXrrrueL3Fvdfh
+ 9Yx9tU2y8kLx+kJW33sC4CiHg9MoC9zBWkKWxeED7qRNu0hK7P38HjskjjQYtrcajGEe
+ rgNvWhfEN76P5B9jh1fQjXPXaIXgOHW18LvkPj35vS7EKvbyPRjZ6CDAuxY5WG1CmDEv
+ ibpmJeYsR1Zy5dRjTG6J6OG/c7WbR7coyujyJleI+QroMRPKORxo0MF2mrargdSbdgk7
+ TofrrBpYbi8ex+jEtc9JFObXSUqjcwMBfzibeR1H1wS1QFc77nDiWpWBW26MXRszY358
+ jIkQ==
 X-Forwarded-Encrypted: i=1;
- AL+hErG3MQIFayyb/jPz+HSvmPcLIqejaES8mBE2KRR8t73UasMLmefvQOsNKzAnVkxsBR1hvE9P0R5E1+9P@nongnu.org
-X-Gm-Message-State: APuU4Z+vLmnNG2M4z89eHzQbnHDZ/PWdOQyUzFC5bfB5zc7TMa8jci4u
- BlLhBzvAdhawHMw+VHzE/f7K8C8HCw1jTNA9WBFF/QDZm4g51MNqdhQzVkZrF933+nlkBypVPP0
- c1cxz5t3l1L+sQya9SdOeHlWkrIRl/fpB32ZA1o02IV0/ZRH6+GOYw4QurQ==
-X-Gm-Gg: AYBFou0CT3ckxNeCKJW84AxRcWPWdYMM/1JobpUXl2YKsg+HvCZnIPfM5yNNhSZfpkZ
- 9h4n4nWeADBFJwy0y8gg38v4pKnXrKe/9UoQMhujj4xgv6hjLzIpaAZOPmqjXtReiDxZzMuXeDT
- QkrObXdYzNn9V35fU3RwcYp7tvE7QlElqCWmY2VxKZCFnJ+HWeQb0XPo4P2u7tl/oaObz8JPT6z
- pb6ONrP1KX5ZFC3jOo0JiGJrYQMK7nGfNrRK/VZDYIhqT3w9Rnghj5FV9PbWMUtG2hBxlsaR1XI
- him52s5chsiCwmwm6INiapuuppqU+8lWp0H4VPQztLT0TZW0U6baALd1CZuqYm7fa/r14XOK3VQ
- wm32cg22v6NnTdnzDRxDFYBBMK8HhCDcZf//M+InmXWjX/rsrXJPBBEqQWvMcgA1MXU+CpaoEOU
- s79sxzQjAppw==
-X-Received: by 2002:a05:620a:2a06:b0:93f:e53:a55c with SMTP id
- af79cd13be357-9479f431b59mr513929085a.78.1794329338669; 
- Tue, 10 Nov 2026 08:48:58 -0800 (PST)
-X-Received: by 2002:a05:620a:2a06:b0:93f:e53:a55c with SMTP id
- af79cd13be357-9479f431b59mr513924085a.78.1794329338169; 
- Tue, 10 Nov 2026 08:48:58 -0800 (PST)
+ AL+hErENXPttlkSwP79PRsQxopPkTKGn+sEXv5qUlvSKhp07KInJvEFO3dIYH307YDZ8cJ+Z+QWHX0qiJy6H@nongnu.org
+X-Gm-Message-State: APuU4Z+2K4ThDZO/qXuPO2roudJ+qlvCL0A8xEdYd1Qngn8C84+WqayW
+ 7TAq6xKGkASFVk81uDLA6k5wmXFbeOQ/D05J2q3kI/Ht0cVS3oAhfhswsEhY+rFgLSZenlHBbUp
+ 9SpJT1mOvSKDh7n4YGDMKCknkfz4Ht4MC/O3hJPS74+3ML2cPYdVRJECphA==
+X-Gm-Gg: AYBFou1FMjY/w4XdoC2Pvd+I5QMy7og+UmC/YvXrorVRRjPCT3ntLaK85++2qy4O4rz
+ WxeXDOR5tobqKXidPoVN5gmFj+J1++uqIfNnzJxE5JoIlEA/PpE/Ne2wa1b5Ux6jUainYUn2Eil
+ DWA245Jx8eFxMQ7lV5QunvxBpDyZrPUnjfApIT6thRbTaLmSCr6ZH9KmxkBKLt6Kwq0AJ2sIFJu
+ rED8tqiizkELsvv3pcuGcOELi/4PISeb0G6xZhF+1DDyWGTlMblT417j/XT9rG9QavV7p7FO68p
+ mvpI48hm+P1nlDV3ef/xmhFQdbuSQnD15LIgWu0hbCPqoJHqQhLdrJk+Eiut+nZV9PwdJUj/r7D
+ TqZWEmeQ52uq2poEfOYW6KaD1cTbxWEg8k/oIlAy8HnH6C+Yacj3A3Qime5xtAO6FIpl72uuml9
+ xhx9blVlodwQ==
+X-Received: by 2002:a05:620a:4588:b0:93e:bbda:dd06 with SMTP id
+ af79cd13be357-9479f093c44mr600355185a.0.1794333630810; 
+ Tue, 10 Nov 2026 10:00:30 -0800 (PST)
+X-Received: by 2002:a05:620a:4588:b0:93e:bbda:dd06 with SMTP id
+ af79cd13be357-9479f093c44mr600336585a.0.1794333629861; 
+ Tue, 10 Nov 2026 10:00:29 -0800 (PST)
 Received: from [192.168.68.105] ([152.234.124.231])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9479e770d7csm264404785a.17.2026.11.10.08.48.56
+ 6a1803df08f44-91ef04ae351sm26469876d6.12.2026.11.10.10.00.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Nov 2026 08:48:57 -0800 (PST)
-Message-ID: <c06f0de3-0db7-4aa5-9c01-04f5155ae3ef@oss.qualcomm.com>
-Date: Tue, 10 Nov 2026 13:48:54 -0300
+ Tue, 10 Nov 2026 10:00:29 -0800 (PST)
+Message-ID: <bf2299c3-0f36-414a-9534-dc18fe380b0e@oss.qualcomm.com>
+Date: Tue, 10 Nov 2026 15:00:26 -0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv: Synchronize IOMMU FCTL state after MMIO writes
+Subject: Re: [PATCH 1/3] hw/riscv: iommu: Fix implicit G-stage page-table
+ accesses
 To: Tan Chi <tanchi25@mails.ucas.ac.cn>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
  chao.liu@processmission.com
-References: <20261107131510.102469-1-tanchi25@mails.ucas.ac.cn>
+References: <20261108143934.129923-1-tanchi25@mails.ucas.ac.cn>
+ <20261108143934.129923-2-tanchi25@mails.ucas.ac.cn>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261107131510.102469-1-tanchi25@mails.ucas.ac.cn>
+In-Reply-To: <20261108143934.129923-2-tanchi25@mails.ucas.ac.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEwMDA2NiBTYWx0ZWRfXzlUUV5oiPPW8
- bjJCNfhCbDqOp5I400zWfq5jwuroJZ7TNXqjZed+Tf8CSy6ntA0zT/jPyAfQpB3tcSIkCiab2Xq
- l4VbHDAP2bFaYu+YJNMRjbDuyejH7L+oYGpfcHu5K+2eqchaxoNlJkdGDPA1eNwFIvsTCqQ1VcJ
- A/8jelyjKe9ZWgZjnPJZSiaK/uZCF9XFvicA/Nr10vDhMjJrpreUlhJ0uLoTmNMzb3LJGHJMr7z
- +oGwknq/wl9PhEe9ITtHgkjooQjQo97rrxXllhAB+9vKKG1cvgUbZqdThxxMJveEXbnJzLEYrQU
- ZpeVXJyjXPoXa5DmPEdEUvRc2s6XRlNB5JibJi4JL/ZKmClgRMaO+Gz6emK3s2+D08pRMCSeSKy
- xR/ysgemdoPgDejmSaPvIuPkx2zMuRvyLiw2XrVpHRcEROqJ1cY8KKomXe88xCEtFTFrnKgk3G7
- B5DpYO58KgLD8zZkpVw==
-X-Authority-Analysis: v=2.4 cv=Ee1d0/mC c=1 sm=1 tr=0 ts=6af34afb cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=8elE1k/PHQNyZ14TNTodlQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEwMDA3MSBTYWx0ZWRfX6tJLmjZrl0XE
+ +z6Am/gFfMMOuN150OYcfGKiD5lmH5wlojStkCdVbkUUp9PchijNMRXQQCxxny42QhYLdP+yhpb
+ 6Scc9XLGG5RJHlkA/xl1/FjdGNRWFoMCGFfC3NKz/8jBboMUuTdPLLeGqEkcrEclSxrAQCzbApj
+ Nf4JvG2SrcBUysY0QplC5XRsX5jLxyS+YFFcbHkdeF2A4DR3vOn/i7JYpCtCf3n9Y3LA1be9Vz2
+ GAnwIl4THYLtPlUcA2umPyv8IZXFJ8cjOBLMpNCyeBQdjfM3whS8KRHKMDXWxXvliNAEWOqYB6E
+ 2g3bmi7Uo5QL9XmEiSAA11rRiFYGuyYimd25umUu3LV/t2HW5vveDDGJ6pmBB4WPDKdmpm0tzYv
+ SisJpthPSiUArcZri3Vy/fRWApOYy+Fr8Jq860vzksh0DY+gVyAM0ouqYOZfLUpoaLOg6OKqPqB
+ Ogex73nGAIVa9Ya4GhQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEwMDA3MSBTYWx0ZWRfX8vil1s/gsiFh
+ usD7REYSxfr0Y2HTrPa/B3hZRnYjEE7e+BGmpXj3XLRWC3Kol+fkfKWdomQtGnX6hpqcKAbrMH+
+ FzCEXvdUMIAUeh6gET4YAa+3Wo7f3qk=
+X-Proofpoint-ORIG-GUID: 9pgg-nBVlmEi8BZxk7wK3kDLrZdS2TXi
+X-Authority-Analysis: v=2.4 cv=eq9KXYpX c=1 sm=1 tr=0 ts=6af35bbf cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=8elE1k/PHQNyZ14TNTodlQ==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=DhXwvBVPlDEisQGbXycA:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEwMDA2NiBTYWx0ZWRfX27j3zuBB9YoD
- yMWCnvuW2/bFh5qGqLl16599Tzq512PYlaCzIj9klcuGmsOE+8/FNBnE/2c8vmbsj9AAT+XCtnQ
- nDnotL/3/Dk6JK7K5l4z4tzrYfmg9Mo=
-X-Proofpoint-GUID: Wgap-J07MNYNxPWRjKW4f0yzStscVeGi
-X-Proofpoint-ORIG-GUID: Wgap-J07MNYNxPWRjKW4f0yzStscVeGi
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=D8qwnNen2OYJ8iRmKIQA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: 9pgg-nBVlmEi8BZxk7wK3kDLrZdS2TXi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-10_05,2026-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
- suspectscore=0 clxscore=1015 adultscore=0 phishscore=0 lowpriorityscore=0
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 clxscore=1015
+ malwarescore=0 spamscore=0 phishscore=0 priorityscore=1501 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611100066
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611100071
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -163,48 +164,185 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 
 
-On 11/7/2026 10:15 AM, Tan Chi wrote:
-> MMIO writes to FCTL only update the register storage, leaving
-> s->fctl unchanged. As a result, setting FCTL.GXL does not enable
-> Sv32x4 translation in the page-table walkers.
+On 11/8/2026 11:39 AM, Tan Chi wrote:
+> When translating a DMA write, G-stage accesses to first-stage page
+> tables are implicit reads. The current implementation checks permissions
+> using the original DMA access type, which may incorrectly require write
+> permission for these reads.
 > 
-> Synchronize s->fctl with the guest-visible FCTL register after
-> MMIO writes, following the existing register processing mechanism.
+> Use read permission for implicit page-table accesses while preserving
+> the original DMA access type for the final translation and fault
+> reporting.
+> 
+> Also track the fault address separately from the translation result and
+> set the implicit-access flag in iotval2 for guest-page faults. Route
+> address-range failures through the common page-fault path to report the
+> correct fault address.
 > 
 > Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
 > ---
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   hw/riscv/riscv-iommu.c | 9 +++++++++
->   1 file changed, 9 insertions(+)
+>   hw/riscv/riscv-iommu.c | 60 ++++++++++++++++++++++++++----------------
+>   1 file changed, 38 insertions(+), 22 deletions(-)
 > 
 > diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 3f999bf292..6ef2e3ae6f 100644
+> index 0e6970773a..2dcc528599 100644
 > --- a/hw/riscv/riscv-iommu.c
 > +++ b/hw/riscv/riscv-iommu.c
-> @@ -2398,6 +2398,11 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState *s)
->   
->   typedef void riscv_iommu_process_fn(RISCVIOMMUState *s);
->   
-> +static void riscv_iommu_process_fctl(RISCVIOMMUState *s)
-> +{
-> +    s->fctl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FCTL);
-> +}
-> +
->   static void riscv_iommu_update_icvec(RISCVIOMMUState *s, uint64_t data)
+> @@ -273,13 +273,15 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
+>    * Keeping them separate for now, as error reporting and flow specifics are
+>    * sufficiently different for separate implementation.
+>    *
+> - * @s        : IOMMU Device State
+> - * @ctx      : Translation context for device id and process address space id.
+> - * @iotlb    : translation data: physical address and access mode.
+> - * @return   : success or fault cause code.
+> + * @s               : IOMMU Device State
+> + * @ctx             : Translation context for device id and process
+> + *                    address space id.
+> + * @iotlb           : translation data: physical address and access mode.
+> + * @fault_iotval2   : Fault address and implicit-access flags for iotval2.
+> + * @return          : success or fault cause code.
+>    */
+>   static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+> -    IOMMUTLBEntry *iotlb)
+> +    IOMMUTLBEntry *iotlb, uint64_t *fault_iotval2)
 >   {
->       uint64_t icvec = 0;
-> @@ -2538,6 +2543,10 @@ static MemTxResult riscv_iommu_mmio_write(void *opaque, hwaddr addr,
+>       IOMMUAccessFlags trans_perm = IOMMU_NONE;
+>       dma_addr_t addr, base;
+> @@ -299,10 +301,10 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>       MemTxResult ret;
+>       bool pv = !!ctx->process_id;
+>       /*
+> -     * Keep the request permission separate from iotlb->perm.  G-stage
+> +     * Keep the request permission separate from iotlb->perm. G-stage
+>        * walks translate S-stage PTE addresses before the real leaf is
+>        * reached, but permission checks and fault types must still use the
+> -     * original request.  A successful walk leaves iotlb->perm with the
+> +     * original request. A successful walk leaves iotlb->perm with the
+>        * effective leaf permission for the translation cache.
+>        */
+>       const IOMMUAccessFlags req_perm = iotlb->perm;
+> @@ -424,6 +426,14 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>           const dma_addr_t pte_addr = base + idx * sc[pass].ptesize;
+>           const bool ade =
+>               ctx->tc & (pass ? RISCV_IOMMU_DC_TC_GADE : RISCV_IOMMU_DC_TC_SADE);
+> +        /*
+> +         * G-stage accesses to S-stage page tables are implicit reads.
+> +         * The original DMA permission is used for the final data access.
+> +         */
+> +        const bool implicit_read =
+> +            pass == G_STAGE && en_s && sc[S_STAGE].step != sc[S_STAGE].levels;
+> +        const IOMMUAccessFlags acc_perm =
+> +            implicit_read ? IOMMU_RO : req_perm;
 >   
->       /* Track actionable MMIO write. */
->       switch (regb) {
-> +    case RISCV_IOMMU_REG_FCTL:
-> +        process_fn = riscv_iommu_process_fctl;
-> +        break;
+>           if (ade && !(s->cap & RISCV_IOMMU_CAP_AMO_HWAD)) {
+>               /* GADE/SADE are reserved bits if AMO_HWAD is cleared.  */
+> @@ -442,15 +452,11 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>                   masked_msbs = (addr >> (va_len - 1)) & mask;
+>   
+>                   if (masked_msbs != 0 && masked_msbs != mask) {
+> -                    return (req_perm & IOMMU_WO) ?
+> -                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S :
+> -                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S;
+> +                    goto page_fault;
+>                   }
+>               } else {
+>                   if ((addr & va_mask) != addr) {
+> -                    return (req_perm & IOMMU_WO) ?
+> -                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
+> -                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS;
+> +                    goto page_fault;
+>                   }
+>               }
+>           }
+> @@ -499,13 +505,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>                * non-user mode leaf PTE and !pv we need to fault.
+>                */
+>               break;
+> -        } else if ((req_perm & IOMMU_RO) && !(pte & PTE_R)) {
+> +        } else if ((acc_perm & IOMMU_RO) && !(pte & PTE_R)) {
+>               break;                /* Read access check failed */
+> -        } else if ((req_perm & IOMMU_WO) && !(pte & PTE_W)) {
+> +        } else if ((acc_perm & IOMMU_WO) && !(pte & PTE_W)) {
+>               break;                /* Write access check failed */
+>           } else if (!ade && !(pte & PTE_A)) {
+>               break;                /* Access bit not set */
+> -        } else if ((req_perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
+> +        } else if ((acc_perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
+>               break;                /* Dirty bit not set */
+>           } else if (pass == G_STAGE && !(pte & PTE_U)) {
+>               /*
+> @@ -587,13 +593,22 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>           }
+>       } while (1);
+>   
+> +page_fault:
+>       /*
+>        * riscv_iommu_translate() will receive a fault and then call
+> -     * riscv_iommu_report_fault() using iotlb->translated_addr
+> -     * as iotval2.  Update translated_addr it with the latest
+> -     * translated addr we have.
+> +     * riscv_iommu_report_fault() using fault_iotval2 as iotval2.
+> +     * Update fault_iotval2 with the latest translated address.
+> +     * For guest-page faults, set the implicit first-stage
+> +     * page-table access flag in the low bit.
+>        */
+> -    iotlb->translated_addr = addr;
+> +    *fault_iotval2 = addr;
+
+The previous logic was added as a failsafe to not leave iotval2 zeroed during
+a fault (Gitlab #3559).  Now that you're adding a logic to calculate fault_iotval2
+based on G_STAGE I think we can change the existing logic to closely match the
+spec, i.e. iotval2 is supposed to be 0 for S_STAGE faults.
+
+You can set:
+
+*fault_iotval2 = 0;
+
+At this point and then we'll calculate the right value if  pass == G_STAGE down
+below.  I tested this change with Gitlab #3559 and it's still a pass.  You'll
+probably want to re-run your own testcases again to be sure but I'm fairly certain
+this is ok to do.
+
+
+All the other changes LGTM.  Thanks,
+Daniel
+
 > +
->       case RISCV_IOMMU_REG_DDTP:
->       case RISCV_IOMMU_REG_DDTP + 4:
->           process_fn = riscv_iommu_process_ddtp;
+> +    if (pass == G_STAGE) {
+> +        bool implicit_read =
+> +            en_s && sc[S_STAGE].step != sc[S_STAGE].levels;
+> +        *fault_iotval2 = (addr & ~3ULL) |
+> +                         (implicit_read ? 1 : 0);
+> +    }
+>   
+>       return (req_perm & IOMMU_WO) ?
+>                   (pass ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
+> @@ -1740,6 +1755,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>       bool enable_pri;
+>       hwaddr phys = 0;
+>       int fault;
+> +    uint64_t fault_iotval2 = 0;
+>   
+>       riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_URQ);
+>   
+> @@ -1776,7 +1792,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>       riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_TLB_MISS);
+>   
+>       /* Translate using device directory / page table information. */
+> -    fault = riscv_iommu_spa_fetch(s, ctx, iotlb);
+> +    fault = riscv_iommu_spa_fetch(s, ctx, iotlb, &fault_iotval2);
+>   
+>       if (!fault && iotlb->target_as == &s->trap_as) {
+>           /* Do not cache trapped MSI translations */
+> @@ -1827,7 +1843,7 @@ done:
+>           }
+>   
+>           riscv_iommu_report_fault(s, ctx, ttype, fault, enable_pid,
+> -                                 iotlb->iova, iotlb->translated_addr);
+> +                                 iotlb->iova, fault_iotval2);
+>           return fault;
+>       }
+>   
 
 
