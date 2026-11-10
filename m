@@ -1,88 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26BE606AA79
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6CF606AA56
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cloud.ionos.com header.i=@cloud.ionos.com header.a=rsa-sha256 header.s=google header.b=BnjBCMgU
+	dkim=pass (2048-bit key) header.d=cloud.ionos.com header.i=@cloud.ionos.com header.a=rsa-sha256 header.s=google header.b=EJrF+hhb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQnOh-0004PK-D5; Tue, 10 Nov 2026 10:04:31 -0500
+	id 1xQnOX-0003u6-0g; Tue, 10 Nov 2026 10:04:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xQnOI-0003Od-70
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:04:11 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1xQnO8-0003BV-D2
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:04:00 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xQnOF-00005J-PS
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:04:05 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-491f34b4e0fso946448f8f.2
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 07:04:03 -0800 (PST)
+ id 1xQnO6-0008V8-82
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:03:55 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-48e1d0e5dafso1410460f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 07:03:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1794323042; x=1794927842; darn=nongnu.org;
+ d=cloud.ionos.com; s=google; t=1794323033; x=1794927833; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=NTTOBszhae6b65tYdYeG+YHSC5v2PqdRKV+Vycg+4ck=;
- b=BnjBCMgUO4t8QxddEU05wGBLxUaYpcZtKKaZAE7kYGbGYiz7ohO9Z1G4ITcmmhKros
- Ow/TeOTfqCzGCK60RntJtXd35vylpIvT0GzlR93wLGpY2toOo7jlkHTCh1FutMAKxsGv
- fZ9gdlr0D5+dysdfBlpzIRi4KBzyNncUdgbO81AzPzLDvD4UF/WhtOXCXSfNzPwm8gMF
- cMigD+F/fHQoYfgFuq1w6dXvRl+T2EnYJM9F9iTJfIxGdQRMZxdUB3cx13H3/dAHHdxv
- HnQbRdEj+D4N917/nx3R5Pyfd176GwqDeq3/fuTCCrrNqowmAQ5DKVbt3WyxUYBZu8d3
- 88Sg==
+ bh=xyCVIEiWAWEWFWWLsQfxm3BQ7wFhpZ59Cs/kPlajGTY=;
+ b=EJrF+hhbfDZ1jr2K1Bn8HHHyxDKWeaN1kDASTCUWuu47a6CY2RRK1ExiyU56MdVkEe
+ ivXpVsTJOtFsCIzOEfSuXW4VlMPjXbLXzc55Tu/iO9Bcn8pr/a/yJZ5vhkqlmvvxXTyb
+ hStFSL+1mcm5NBP5BRf7LOLecXDmbIzxyJICyLaQiOzf6kBG5N+i53TCAMfLTosWBVuM
+ bNif4Vbot/WOvAnZPer+uF2HPw2ZWj5FeFeKLz/pU5uADMdIaiz+BglqUFc9YBW20+FA
+ +HPnCmysfWUkH7xCdO1xIYZH6la8a4/1fLIkpm8yWnmYKkM+uqUS/MlPtspHfTUVrqCS
+ NNsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794323042; x=1794927842;
+ d=1e100.net; s=20260707; t=1794323033; x=1794927833;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=NTTOBszhae6b65tYdYeG+YHSC5v2PqdRKV+Vycg+4ck=;
- b=sOgPgb+aoXuhDX70kaMR6NBXVI7+fmbOxnNBKqFrtL9VU5wPl9wvcarMIsTOBh/0Uy
- aMTc92McfKwp0k1TFW7tW+nt2z/oi0ObYLXPV2+ddfcYSvqTmenQ8R/lJGs+SXdn7ZgV
- 4H0ccvCbzY3BmljfU6xHDwYobCqq0iOrWHJmb6lEaciIpZln0RsjvAy8uRKx5bdNqVfz
- Yo9c2YGl5RY/vFgBnK5S+AWzXvg0P83Q0vVrh/r/rTIy1YK0Ss3c66iBVtFW2CYcfD5M
- j/XG3E6M7/ooRY/gTh+rfdjFjc0PVNhG/w5XFKmzUMCy0tRorlZwwwWdnaWCKp8xZYDi
- rnVA==
-X-Gm-Message-State: APuU4Z/BjRAjglTq05BWlIZ5EDoLplG4dJS8RI+35VA59WV9pLZ7b9sC
- VLEe2c/fgB5u+emUkRInwvrbqyHlzkilZFANwu+0l9IPm0tzTkjrRsIaQwt2UtGnNjinuW8kD77
- iswrlxhc=
-X-Gm-Gg: AYBFou0vy2oSPJDc913Xf26bCyQD/pMUxJLGODV5HamrnNDqWLTrpHhKVQCyJaIVCZk
- Q0zI4F4K/FZ7613sDIM86cn0FWx8dv0AlKDLtp7icqFt6T2valJYl1v00en1X+6GHge3gVncDOo
- 6APV6WuawIYA0rhpB4gm7b41I3UIm4ZoAqIrW12R0Oyv0D6R6VFw0LFQxuZAvT5WdHVvwpjW8vk
- YSPGXTS17kytnA/2b1x5fG4SESaBLTcCgW7ayMI53NJrigK2BnYoV/2LabJ3EDWZkeFUdcpbmTw
- Q3T2dvTYoIlZ6SKtVjtKguRaTTTZikF6rXOoVYLv5T/3Khg4k/CWBklxsNn0tKIFGSiy0RnWEJC
- lJ5ivWRiUuqOsUyShR/4XiZIHlW+VX5mJfTsPPUdrdorAl/7U+XgPokeqoiVXIFZ2JJUaBgTI1h
- SxRMqusHIYctYgBUkxMZEsZc9hQpaV++zMri+LptS9yM9ZCwdYRY1BT3JGCvG+i8JPl92J6MZpm
- D4ix12wszfgQa9RowWeIFdSAYor2K+E84W/uXP6xLkNFCRQSPtaUhUExD6an9y6cprD3Yb/+lSc
- z98Br/4JyLLRz6cNjvtcYhKREI1hDuKGb09Vfk7o1TBIu5ahbFDNjPI59ZTrO8wilNZDMHNY
-X-Received: by 2002:a05:6000:15d4:b0:492:ea10:b073 with SMTP id
- ffacd0b85a97d-4982f2b4abcmr4483348f8f.18.1794323042429; 
- Tue, 10 Nov 2026 07:04:02 -0800 (PST)
+ bh=xyCVIEiWAWEWFWWLsQfxm3BQ7wFhpZ59Cs/kPlajGTY=;
+ b=C70z9c1k+hhF1oc5EFxSb2nT3E1eM2KcuMcLt0raaoLjmZmjY+g0eN5OqYy4icT1/p
+ DaKxWgGyshmYdb0liw8N2LSN7/hgbH1+IXDlXpgBnGhqpHI7+DmSvSE1nWNoIORGLyxW
+ ZJRj8QDj0iDbIpanUP0plrQu1ZS1PNMYOI0HZ5wFo/zQgV1JbJ+m7fQMmikqey0yHcGL
+ twiAsmsx+z3cJt8c59W72d5pzHzGmg5TOkqxGN8A8TT0m8GLqsKzUmXplJ/fOHFwwZ//
+ pXE9pD2ZCloRRhbPFh0vbkGtzmkLIOeJHtnY7bzuHoEnkOTUjuNc6sm5pjVXSIV3/HsI
+ HXXg==
+X-Gm-Message-State: APuU4Z8ehykQi87o7SAu3/burIw+fqMs+AiICO/nT8jDJr1QPhBqi4nC
+ GX3Gj8NqPwTWUfHLpm4y2GW8hRnrMuCHFtizDhbzHhjz2bI9op+4M7YVABKUxwROsK8kmIfA9Z8
+ YAnix2Tc=
+X-Gm-Gg: AYBFou3g6sTk688QEksUqWewWoR01Tak2+CD1wcHVWGz51d06LDwNsLTr9E4Y2pZ3Te
+ /WP5JDLogcMzXFjiVlxPkR78L4tAM7WJ4lYec997Xrt94CMs+1O+YQUzxpYjJ1wOu2xFaGR8Q0f
+ HWsPuHvMD/XUQBM8j4vpKkh4x+NW0mg4yrM9w5mN7ex3C5xWe1vK+etTCsfu7uQZHRu7hzu4kcH
+ ux2cYiLheoQGL0VLtV45CalgCM1gDVVuTaMQlKw+IKz6o6UbfUB3TQ3TosEwePsyacRwuZnluma
+ WjcqpE3p9ZVgBT7/s6gsGfv3B8hu39D5ThiPUkuYhA5J9KNR5bbUuwOZaGrpDxQ+CSq9J5Fl2Xd
+ pE3zgSWYcUkyT0DFrixQQuQmtESdOua/NonftDfQjCpH7p8jVEJuA8IePJuJc87tSAoYk1YxBv8
+ DGL7dwcE7nGFZ7yJfn2RAgEz/qSdMkx4MF3caNdNFPY0S/SuqUNCqY/jk9/PGl4cJrnOubGRj3j
+ kMriKrpjlv3ETh8jusH5F9nU57E4dN0Do4aqAB9ES4FcoW2p9FBo9crQtFKNRFuHzQBrCGUrdNu
+ y4t95CKZ+v9qQd9xG9bWBcitqDtG+oMD6krWq/TlilPN3ChswRbYDnUyocHDJXTX2kLVufJ5
+X-Received: by 2002:a05:6000:4a10:b0:493:72f7:1d5b with SMTP id
+ ffacd0b85a97d-498309aeca3mr5638197f8f.29.1794323032793; 
+ Tue, 10 Nov 2026 07:03:52 -0800 (PST)
 Received: from PF-5Z7P7F.fkb.profitbricks.net ([212.227.34.98])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-498366c4e07sm5116931f8f.49.2026.11.10.07.04.01
+ ffacd0b85a97d-498366c4e07sm5116931f8f.49.2026.11.10.07.03.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Nov 2026 07:04:02 -0800 (PST)
+ Tue, 10 Nov 2026 07:03:52 -0800 (PST)
 From: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, lizhijian@fujitsu.com,
  jinpu.wang@cloud.ionos.com, yanfei.xu@bytedance.com,
  Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-Subject: [RFC PATCH RESEND 10/13] migration/rdma: size reg_resp.len by the
- register request count
-Date: Tue, 10 Nov 2026 16:02:44 +0100
-Message-ID: <20261110150247.193208-11-dmitrii.omelchenko@cloud.ionos.com>
+Subject: [RFC PATCH RESEND 06/13] migration/rdma: Extract
+ qemu_rdma_write_file() and dispatch FILE
+Date: Tue, 10 Nov 2026 16:02:40 +0100
+Message-ID: <20261110150247.193208-7-dmitrii.omelchenko@cloud.ionos.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261110150247.193208-1-dmitrii.omelchenko@cloud.ionos.com>
 References: <20261110150247.193208-1-dmitrii.omelchenko@cloud.ionos.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:20::432;
- envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wr1-x432.google.com
+Received-SPF: permerror client-ip=2a00:1450:4864:20::42b;
+ envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -107,28 +107,114 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The destination assumed repeat=1; set reg_resp.len to one
-RDMARegisterResult per requested chunk so a batched REGISTER_REQUEST is
-answered in full.
+Move the per-iov QEMUFile control-byte send loop out of
+qio_channel_rdma_writev() into a reusable qemu_rdma_write_file() helper,
+and route the consumer's RDMA_CMD_FILE command through the same helper.
+No functional change to writev, which still sends inline.
 
 Signed-off-by: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
 ---
- migration/rdma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ migration/rdma.c | 62 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 36 insertions(+), 26 deletions(-)
 
 diff --git a/migration/rdma.c b/migration/rdma.c
-index db1f1e3fc6..bffc7d33ef 100644
+index d11f6e0da8..5ec6a87819 100644
 --- a/migration/rdma.c
 +++ b/migration/rdma.c
-@@ -3870,6 +3870,8 @@ int rdma_registration_handle(QEMUFile *f)
-             trace_rdma_registration_handle_register(head.repeat);
+@@ -2523,6 +2523,34 @@ static RDMAContext *qemu_rdma_data_init(InetSocketAddress *saddr, Error **errp)
+  * SEND messages for control only.
+  * VM's ram is handled with regular RDMA messages.
+  */
++static ssize_t qemu_rdma_write_file(RDMAContext *rdma, const struct iovec *iov,
++                                    size_t niov, Error **errp)
++{
++    ssize_t done = 0;
++
++    for (size_t i = 0; i < niov; i++) {
++        size_t remaining = iov[i].iov_len;
++        uint8_t *data = iov[i].iov_base;
++
++        while (remaining) {
++            RDMAControlHeader head = {};
++            size_t len = MIN(remaining, RDMA_SEND_INCREMENT);
++
++            remaining -= len;
++            head.len = len;
++            head.type = RDMA_CONTROL_QEMU_FILE;
++
++            if (qemu_rdma_exchange_send(rdma, &head, data,
++                                        NULL, NULL, NULL, errp) < 0) {
++                return -1;
++            }
++            data += len;
++            done += len;
++        }
++    }
++    return done;
++}
++
+ static ssize_t qio_channel_rdma_writev(QIOChannel *ioc,
+                                        const struct iovec *iov,
+                                        size_t niov,
+@@ -2535,7 +2563,6 @@ static ssize_t qio_channel_rdma_writev(QIOChannel *ioc,
+     RDMAContext *rdma;
+     int ret;
+     ssize_t done = 0;
+-    size_t len;
  
-             reg_resp.repeat = head.repeat;
-+            /* one result per requested chunk (source may batch registers) */
-+            reg_resp.len = head.repeat * sizeof(RDMARegisterResult);
-             registers = (RDMARegister *) rdma->wr_data[idx].control_curr;
+     RCU_READ_LOCK_GUARD();
+     rdma = qatomic_rcu_read(&rioc->rdmaout);
+@@ -2561,29 +2588,10 @@ static ssize_t qio_channel_rdma_writev(QIOChannel *ioc,
+         return -1;
+     }
  
-             /* Making sure the register buffers to read are valid */
+-    for (int i = 0; i < niov; i++) {
+-        size_t remaining = iov[i].iov_len;
+-        uint8_t * data = (void *)iov[i].iov_base;
+-        while (remaining) {
+-            RDMAControlHeader head = {};
+-
+-            len = MIN(remaining, RDMA_SEND_INCREMENT);
+-            remaining -= len;
+-
+-            head.len = len;
+-            head.type = RDMA_CONTROL_QEMU_FILE;
+-
+-            ret = qemu_rdma_exchange_send(rdma, &head,
+-                                          data, NULL, NULL, NULL, errp);
+-
+-            if (ret < 0) {
+-                rdma->errored = true;
+-                return -1;
+-            }
+-
+-            data += len;
+-            done += len;
+-        }
++    done = qemu_rdma_write_file(rdma, iov, niov, errp);
++    if (done < 0) {
++        rdma->errored = true;
++        return -1;
+     }
+ 
+     return done;
+@@ -2928,12 +2936,14 @@ static int rdma_consumer_dispatch(RDMAContext *rdma, const RDMACmd *cmd,
+     case RDMA_CMD_REG_STOP:
+         ret = rdma_consumer_reg_stop(rdma, cmd->flags, &err);
+         break;
++    case RDMA_CMD_FILE:
++        ret = qemu_rdma_write_file(rdma, cmd->iov, cmd->niov, &err) < 0 ?
++              -1 : 0;
++        break;
+     case RDMA_CMD_FINISH:
+         ret = qemu_rdma_drain_cq(rdma, &err);
+         *stop = true;
+         break;
+-    default:
+-        break;
+     }
+     if (ret < 0 && err) {
+         error_report_err(err);
 -- 
 2.39.5
 
