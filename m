@@ -1,85 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251C3606A325
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E08606A326
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256 header.s=s2048 header.b=sHmUqfJp
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256 header.s=s2048 header.b=CEa90mGQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQoxz-0003bj-VL; Tue, 10 Nov 2026 11:45:03 -0500
+	id 1xQoy6-0003fl-4S; Tue, 10 Nov 2026 11:45:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric_devolder@yahoo.com>)
- id 1xQoxt-0003bE-TL
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:44:57 -0500
-Received: from sonic315-20.consmr.mail.ne1.yahoo.com ([66.163.190.146])
+ id 1xQoxv-0003bP-1p
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:44:59 -0500
+Received: from sonic304-21.consmr.mail.ne1.yahoo.com ([66.163.191.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eric_devolder@yahoo.com>)
- id 1xQoxr-0007bz-Ug
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:44:57 -0500
+ id 1xQoxs-0007c5-9E
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:44:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1794329092; bh=b7PnRNooROnWbACLMl/4J7cfU7ZEdre+n2TAIqA7hTQ=;
- h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To:Content-Type;
- b=sHmUqfJpWdwbpgLDUtsc32/SFg4/EyFrhLAvgtSBUuaeiNHE0v7KmtFeBtXibJ7V839TeuXntQKn6SrC/uaVIma9Zto31ZDt5eXx6mLeC+8saSsc2Fs3dsPQFrQTuZp9mhf+7gyXtrmDxFP9bdgj6/QaDJlLRH+yeex2gVthBBWmFmtV0JoH6gQrqvP4UFwUFsptGZUQsoysrgtmFeMK1mHCNArXkQqTkKz3ZPei+OObaEZ/FZOvsslNzlvYR0Szhy1STDCxizGL4bV0aXPf73BYX4mkmp+oGDVfaAFpb/UXQL48pgpUKsfJvogmeBLXtISpZE+SiIOhCtoa+UlNpA==
+ t=1794329094; bh=X+FCBtGN4oSuxMPheAllyKnIQZbivuGJWKr+LOI1/Dw=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To:Content-Type;
+ b=CEa90mGQuW4n6tyTWk6UlQwxrBbI8V8z89aahHIEAnAs0y5f0RZVXXNLaavt9SxCtCJ+dHqp7iuibjxSO3qf3rTS1qH7Y7UHJHk0LrLhtBs+b1+8KkWULHklWIBABRleK6CaX5jjJ+1CrbQk+HdAfHvx5p5kca1CO8xvmS+jidqVK45d761Iwdj2Mro+wS6QhJMjvf90+yjlCHRUWp49VtItrpqaZ+xTcFu/LV9PdLlJEIYxLGEXmbaky5ETQuTEWUSxWEYCZo8CQUeuTea4xQWd0+3n4oxZMmpwwX0HFayzw8IwLjtPGAVBjqEgka1o5lktsJNcaDavvXwrR/Prig==
 X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1794329092; bh=I81Gbn1yHwnT9RwncY2aBjAvg3lXuQD3WEyIetN2pnM=;
+ t=1794329094; bh=21lZPvOsL2XGwkN2N5donNJVV9Xepe4kEcVFpFY5VnT=;
  h=X-Sonic-MF:From:To:Subject:Date:From:Subject;
- b=HXC/AZ+Ba4bS6qTN7Uxhf1H3bcsH+YN4qUi1kdMgWq+/teK0vY4VVudVWr6EzR4a7NnB1AQrPxOKJO3+kd67Q0S+AIxETPyWhFOPwdQLU+jR99cWO05SQPpG9fNyf/ozaRliOGhwFfb1+Qt8qOHOR6tXYk32rfZkcPY6zyjlcKTs2t6bHyyUBHKLWNq8tnyeW+fCoK3+9DOfHJP1dCC9wz75hggkWumc5TuSdz8HgaLvn0znB9iirWGvsOVPEtcLNmez5GCS6oaFG0ImFo7zi5QxnEeqCizcfgdj32y3m4Eh4fyJAvQfUVAaFE4nie1+a7rck0t1lG4stGz5xLYdyA==
-X-YMail-OSG: G.LwkZYVM1kF1dKbMjgtAtltDROyOrfiP3tJFmx3Twkho5aKT.ORd.pn4FzdIKE
- G2OJzSiJWu86WkNN.zXfwLfnKELdtsnDbQl5nuEVYgU3YxClB66HZv_RayNgo5gCCHeO78jE4pfy
- MEXb3f.VWuTJ_T.Uy2RUEtkiQRKBGdcB66aYMI7_p_6fm5NJiwBuXLbzjyOP5aIlp0yvPW1y8Sdo
- KPuHbb4y.AFYjxMIt9L7PgxWwSRatPNWWYQrsd69TECSqGJZql_aRwIMioF.g25iIIWIEsJblOls
- soTWsbw3nEQeCvfxNGp19xwhIFbeO56cW6AFz_mCc5Q6QxpI5tGwqaYJ3sUtUa9S_39BHJbWdRKn
- gNn2mt37tvcXneLIUcTiClFFoQA9s.VIp2d1pP5qjuK.X5zo0KliWj1CikXYxaBTyqI_kDdYz58r
- W0B2y.VgQLfFdMu6Y_0uCN676P0AhhneQL2e1PrK.VjSE7GuhxhnsFgEM3GQ8xtGACQggvbSVWWu
- mOM7sOVR436.p0PftMkDzt_ELhtl4mqZgbC2_gCeLiPHd7adNtTDIdvwWFHajG59JYjzbK4r6Ews
- yx8Gp97F3bkQfoMjfOkDoeQ1qdEnYy9dA7maMAPwb.5w0VRM9Rgzh4GOd1Zx4SV2fxJdULt7nW0y
- xWiKipluGvD_7davyXhGafCTU9QE2fgU5xavdU7j7tM8oXp0lBECHQvjXUtX.eKd9RhWVBd0ILBM
- phi1UdGhlvC4h.m9619Wvu3WunurP8zOnxoHHKfOP9gglIJkz7oAwcX96RhLi5I4t3W7HPlml4tE
- 0v8SpiXOuZE7ACPDIrnCahRBRK.p0YuRNvUQubTZY9Hg7IHKRT0YSJDTXjHLALbOS9IJmr2NxXZI
- JrT50GuBnjKf5zFFs.d4gSBo3A.PrMEqj_7mTRcSwTpCfSvPmihF2MxdKMPnyfiHKOE4ZrraZmIS
- 1Gy5fw6XvrHRGPyFJg8nFhosANlmnsh_3sOk883f1GDuOmbNh2Va9QmqjUfTqsnGSIkDvBjPONgZ
- vbdOpu6rgAnJ3gD8vPOGwGWwHUWh1OxjUPS_cAxz9ntYPjstyciGG4Ac6uCXEmbBz.YNAWGOObxp
- FlofrvbGSpJCJG8knIP8VKB1zf0kEkS8hxdml.G8taKVZr7sJMA.2YL344WyXT2oRd.9B8DAcwyl
- SgMzZX0DVtVjIfEf3TPSNKk0_8YBR4035YzvZPJkUXnFSDQ4RhSWFqHs8O7FS2Ax4ZZ3aYhtSsut
- Sdr.HzGbaZPnfyNpoU4YBKc_y3ml4MQYjaevg7UJigM1NK0hZB8JbH9qhgd1W1xAclYGcPU5EnX7
- uvgN59KWC1PPLbxFhqD8qoMCtXhtPkiVmrxdbbatdNsSJ1fy.jNK4X3DpHtWHuOxNZ9u7hD4Jb0o
- 3eb8yUCHIaDXVm38TFHWkhHGTlD4Lo.2FhwFSJKTtQJLw6luUIBZHOPnHhsJjwZp2_CMgoRYBjxy
- sqtWizW0xNa0t4xv2mo99O7JCJMc.O8uzIzyvIDS6CfkDmSQa8T6PUnVdTqh3W4YlakPQ7fMLpc0
- AKt6PM5QrxflLph3cNiObafTH1924iUBJBhOLq.TFhGFntBeWU0btdXHkiMPPVJe_XVXIWS7ZBIi
- 5NpWyb9Ullq6ZpwmtkSM6IXsisKTH1IzJfokGxCaEwmQ98HkgJJRyXa4UOYG1L1hFsNovX1FDBt2
- nUl1IafP5ZPL6Nb0zLxeQS2jfTtS4yDwrujfIYkZGSlzaCuqYdir68hsd73bNTQHdgVLZTorQxFW
- tnqPYM4873NlGkyxFHl7VfH8DfCH1LHWyj0IeL56GtC8OkoMxqb8JDH4ITC9xLnPU5xKHyCBscSy
- T0qZD.y4aXBgXAVvUfOZNuwfOWvDk9C6zFVAb0ElOiuE5hk46WUXp5qYBtn9BhRf17T.QCH0iu0m
- efgBcNjqjkFRPEU49mH60uK3Xyy5K1kEsn1CssxAjN7wWbku.ya276wjsQXPhAltRW1mu0QX.kos
- ZGrEjSSo4ApcLdiI4lHq81LWIX_YCFC0NJkLzLdV9QoesxFkj0A17gaa8iDUSu5TBOPcS3pmY4nV
- tuoY5bWr4q9MQuugzUSqAv3AYiaFvcdg7LYFmtvjjQpm83kvoGOFPwQDKsC1Xezc8e1jKJTziZQN
- sRx10BsgF5A7SI4VbmnRKd6DdoklxRQQvOSnvSYrZ8ksRKs3pFQlA1oYhj6nmddIph_BFvl0swwb
- AIatMtXyTZd3m8tzgzsRnh3UR.sShb.i51Rx9kWZEvl.KOmQXmtm7.g0rBUiithT4xbQOZxkU4Z8
- gVT99dbcSDwY-
+ b=gg6wp/vt2yqMOukjZWUa3AU3qIG7SDtchX3WpaXR7iXepYBQqnE2uRincaoz0uSaLHSlFJ3DuDgar+kd0I0DAnPCbOuaEmYsScrfvc7YqEXoak7JLoPp2Nr3VTkjcFOQrobD/jr4HrrED1eQjE7ctjPda7+Jqb8LDxnDmphP1mSzxXgMzWttlRV14kssZWhEWZRJaUQnfgKIaDzRZkI/2B/0HEcbLYBBX9fH4197+RY3+ntFMgyekQJxx4SC+0WA9k3GVuFydqBzeGm7MwCLLA6Yptb76uTBekaxUL6Lvf9prRCwy0UrLjFo7lRvMIkIwP1TS/GhtA/rz2hsAhObHQ==
+X-YMail-OSG: Ry.kswMVM1lss.qXvo9Eh16.VvdTSl7_zjKsrLObsB_RVY447_bUrrdM98lTpxt
+ .XOSK_XXQNeS8aREm..Z0INVllecHrH5bZEqjNqxSZ6P1taTaIJYQnx3aCfTEBeor3uS_yy067Ok
+ xV0oGjnaZOsf3.0DTnrrWV0KYiCFBu7Q4oml8QzuNK6P_C042.dHryLih9nsMj2aKAtsim8BCpVf
+ M5_314rcOq1BpbUUGsco3W9duPFmCxyNSKfG.nlivR7DcLEvC6EDuC8e9pv74WILb0BFSk7ORoTt
+ tTiO0ohDXLDVmlGicSXI6HEXmuxYP8h6ijx5bZLgXkdb05GtD0aTPH4Jsz095bJRHjfzK_q32l6c
+ sBo05Wjq.XqBjxLXEI_71e.BS0mtZDommQMDBLi9H6lMEYy_Am.OTuZIkR2Z9UzR1ryLmQRAnk1P
+ EZvi.dVcrGz3sCiR7ba9DUI88GJhYMmF2TQyWuKSPXUK8dLYTupgKYCSeb.CdMH_fcnZcEi6zXTS
+ lmw5BJNXP2JEyPAhfeCoSQgbexRoW80PEC.h6btOiXwi.7YsZjUEN59vkiYuBlzLihdzlQ9n2Oee
+ N5iLwPBLfrDCbasHtsCz.k_Gvbh.TdffW4VpMP1bJ1R7T4sXXhuubHAigI8JbS8bH8NyHFDbPbBO
+ QsyEqHSeUx82wkQ3BnKKfjxF5sJED7wLAMDdtIrT7fb3we6RbE7QD7rOSgElz_tyipmZuQtfEwaK
+ 1ms5wD..DzteZmxRr3UxnsD7C3QAhaaczIZulQ40LuZs5Jl_B8ruatN6aUSarFkvZXHK1kMoZu2m
+ hSuudnSQYlxFJM51bF4E_D1VMCYJ3nxQzEWEXAnZapa4isKhXHJtQRU5cnDAyfSpW0XMmjyI0I21
+ 5Bie0ZNC_6UR9WFcoHhrec7boP7d1JqDd5CS.k8MkfsxawQ3XOAV_Mp7TjXVAMqR073N447IwwIu
+ lP9Ole4JZMPNP.rurMR_f9cP1H.Z2aVVjhLgjqi6Nh1Cp09AplobeIpVtw9a.1r9YbMI2Ehouj3L
+ 8XEW8QKPD4TJcMaKb2YQ6ifJbhxDOCN0C9pwMGqgltCLDl1ub.LxnJDvwDy_PpEw_CqzbUsIC7Sm
+ EWgCTa7NK6d_8AnLD_b9lOiPj.fB9a1ZuO5Z4J1YUbEb3T06Sj1Co_b9OVlyUJu4OvVmegCaY2zI
+ czWg9_pvDQ0MQ3ptSVStxrcPY2rlAlTX9ZeKNBD6QCgjp4t_i3LEGt_HEVrisCoRFDRWGoq8KfXl
+ POS7UFoNOPQ0J0wzsF9T.FSnS5UTdH0EPyPuFPRb6iD_TQC6sZiNZ5MKC720R6itE0s8fVIbl8QB
+ HPSk_GQqi5qmzr3YU2G4WFjgk3UxE_1Eifsr_lsOlpgicjPYQrh_xk_wMyDhLQyDOauaPgyTCnGK
+ p8UlJusvhkuLXfyTZ7JG_dQwrxYKIvyu2QeeXIzc_n_nX9xPMkrPbOSjmE4hFdmJM5eWAluP1Hpz
+ JLIeQJXAfIfJfApwEOgYfd2rNFkjh.WBcMdLBw3TdGCZsf0sSRZ0ojZ3XdDFwoKcknWTO.bWOmnV
+ 2d1knB.RFsusbUMsDp5OwDlfgcgnxYgf1n8v8OviS0eWOY08JmvXxFlp4Z3.hBDSr7_4weAQ5oNX
+ dY7KeNZPWtxAEG2xH_eqbzoXW5MQuQh.M.PYtH4v.m48l4JDTcy2YFPj_n37vI7M_SCaULt5FIi_
+ LPFPbKyyK9Gyi4DBxpeNSHqUWtETh9MzgEuON6KID.ttUJsbUDeddU.gYg1._MfpVnnfaYKaqBmI
+ b0RHb.16L9WFa6o7QQSWFuSmvZ2Aj6YySIFNnDCE__3Ur2lpoQD8QyiMtjpn9u.JPXLT9YAf0.wE
+ i8.Lx1kVFDlKn9voSdVpD9Hm6cYg.FYrqRggrGhFPXdGoWRFEcQjtmIvLDcm2DROojFMNe.t487h
+ kuJ93dc7S3oEwSCqYCC6qau3gEZiK76gCVRkhs4YjxOBHVzqQwHNwiQ.Oyh_97UmHETkJokMrnr6
+ MazVf.0VHk_Iz9xS5HGbqOlRotLNVWwiS8Wft69wfNYU0EamW7Px4Sjtr5CRadP_QSRoE05IUw.0
+ cWq88XUK8H68uI0Xi7O_hUFG0EAoSli5Ox4rAYwujLaPEKEptPf7TX6eGenFqu6L6U2k7vaHI64S
+ i4qforAVwNCt6NN03lQ3a11LuCqovPVm4VFz9byGWlliV1srv9EzTT9dgUON4yOHQlyoZGwKNEQl
+ mpjEEnfGxI31KzeriLrl5w_QN1mvezWtUTFpezTOlB7LPdiuPOrPlanIOGK_XSZqo_uY0AALvLYa
+ y7y5qUVW7OQ--
 X-Sonic-MF: <eric_devolder@yahoo.com>
-X-Sonic-ID: feea85b7-3f5c-4aac-be61-1d04b3134ba5
+X-Sonic-ID: f434ff5d-d996-4544-ad12-60bde1417bc5
 Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic315.consmr.mail.ne1.yahoo.com with HTTP; Tue, 10 Nov 2026 16:44:52 +0000
+ sonic304.consmr.mail.ne1.yahoo.com with HTTP; Tue, 10 Nov 2026 16:44:54 +0000
 Received: by hermes--production-bf1-6d6877594b-8262h (Yahoo Inc. Hermes SMTP
  Server) with ESMTPA ID 8eea9870d3f5e817fcc649df52712fd4; 
- Tue, 10 Nov 2026 16:44:51 +0000 (UTC)
+ Tue, 10 Nov 2026 16:44:52 +0000 (UTC)
 From: Eric DeVolder <eric_devolder@yahoo.com>
 To: qemu-devel@nongnu.org
 Cc: Eric DeVolder <eric_devolder@yahoo.com>
-Subject: [PATCH 1/2] target/ppc: Let mtmsr set MSR[ME] on 32-bit PowerPC
-Date: Tue, 10 Nov 2026 10:44:42 -0600
-Message-ID: <20261110164443.488899-1-eric_devolder@yahoo.com>
+Subject: [PATCH 2/2] target/ppc: Raise a machine check on a failed bus access
+ on 6xx
+Date: Tue, 10 Nov 2026 10:44:43 -0600
+Message-ID: <20261110164443.488899-2-eric_devolder@yahoo.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261110164443.488899-1-eric_devolder@yahoo.com>
+References: <20261110164443.488899-1-eric_devolder@yahoo.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-References: <20261110164443.488899-1-eric_devolder.ref@yahoo.com>
-Received-SPF: pass client-ip=66.163.190.146;
+Received-SPF: pass client-ip=66.163.191.147;
  envelope-from=eric_devolder@yahoo.com;
- helo=sonic315-20.consmr.mail.ne1.yahoo.com
+ helo=sonic304-21.consmr.mail.ne1.yahoo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,33 +108,31 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On the 32-bit processors (601, 603, 604, 750, 74xx) mtmsr does set ME,
-and permits machine checks, otherwise machine check ends in a checkstop.
+For 6XX, enable ppc_cpu_do_transaction_failed() to take the machine
+check.
 
 Signed-off-by: Eric DeVolder <eric_devolder@yahoo.com>
 ---
- target/ppc/translate.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ target/ppc/tcg-excp_helper.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 06ed2adf10..808f913aa2 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -4282,8 +4282,12 @@ static void gen_mtmsr(DisasContext *ctx)
-         mask &= (1ULL << MSR_RI) | (1ULL << MSR_EE);
-     } else {
-         if (likely(!(ctx->insns_flags2 & PPC2_PPE42))) {
--            /* mtmsr does not alter S, ME, or LE */
--            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
-+            /* mtmsr does not alter S or LE */
-+            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_S));
-+            /* nor ME, on the 64-bit server processors; the 6xx can */
-+            if (is_book3s_arch2x(ctx)) {
-+                mask &= ~(1ULL << MSR_ME);
-+            }
+diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+index b04f07a637..29fd1d371d 100644
+--- a/target/ppc/tcg-excp_helper.c
++++ b/target/ppc/tcg-excp_helper.c
+@@ -297,6 +297,12 @@ void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
          }
- 
+         break;
+ #endif
++    case POWERPC_EXCP_6xx:
++        /*
++         * A bus error (TEA) takes a machine check, if MSR[ME] is set. The
++         * 603 and 604 have no DAR or DSISR update for it.
++         */
++        break;
+     default:
          /*
+          * TODO: Check behaviour for other CPUs, for now do nothing.
 -- 
 2.53.0
 
