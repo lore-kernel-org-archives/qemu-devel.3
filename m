@@ -1,94 +1,138 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B2D606A323
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC9260A262D
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cloud.ionos.com header.i=@cloud.ionos.com header.a=rsa-sha256 header.s=google header.b=FVMalcxp
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=XSfNgXP9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQnOZ-00047d-Hv; Tue, 10 Nov 2026 10:04:24 -0500
+	id 1xQnOh-0004Pm-Oj; Tue, 10 Nov 2026 10:04:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xQnOF-0003Hc-Dw
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:04:03 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xQnOD-00004y-IM
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:04:03 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4a2167bd087so21379125e9.3
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 07:04:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1794323040; x=1794927840; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=PEbTPI/qyKxqRmY+I5qxg6KvizpRcLX6eTefYNr+pp4=;
- b=FVMalcxp+mcCt5GY21VT91FRUzulwOOYa7IZWEaBrj5PPzJRwLkGxVFnCxobNsnrxs
- 429Uejg4cKTfJX5Tm3tOiqAKLP1/CMwbAd0EK4OXPx5P9A+DUlguoyGh1jY8F3NAJbYr
- HeNzMtGm727H16oJ03CQc0zauWXfJLYxZFkCMdUbenfmNz/BFm7wjaVOri6FGZC0q78L
- 9N2fQrLcBNNgeyXRNNXyRaMJH16oDftW0nQlJzhY55lLhZLSYDvBQzu1WfgHtlOgWugo
- KIrWIRFv+STjMTcFnlkS1ure/RE8s5yMwnRMV7iY+z3srC7WB9njQiK+0bZU0USXPJLO
- SrAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794323040; x=1794927840;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=PEbTPI/qyKxqRmY+I5qxg6KvizpRcLX6eTefYNr+pp4=;
- b=JEpDLECw0oaf1wauJUxgKMU66r0JVjgJMXsEyR9ybS58aCT98PnItv+ruvuimCCcER
- KQeHOgY8dSglmd9XtFcq2/AH2xjtbf9aaJ+7n35RM+vlUD8a8oxtTlbFuxuCPpcTChy/
- ajx7YyHfOF/HCSFwDQtyg6S/kAJAB/akbJe0rNmspgJiUrydw+ax2F9jwwlDfG7wk/QH
- UNNBOvKyjR4U+cCnagj7wSqPd+Gxp7GbJbC8Z6DzZ0xGowV9UJssjX4AvRvbxMYPOXox
- zhGC4AgoqZB0unh8shtSoeOuWT4AAUsjQqEniWMG7buYEACI4G9nEItbXLokM4+umphU
- QYAg==
-X-Gm-Message-State: APuU4Z8w2hMU3YXELqDPTOGVsJP2wONzz5VAY5VNmJLgZuTLgHsTvVZP
- RDpNXf2UXaFvda6W/RyqY+Yb1XE0eAAKXnpak/sREMhXVP5qD+LMtQJjZrg38xAvzxFGy1UsPYa
- l0eJK0lk=
-X-Gm-Gg: AYBFou2Rg4EAkgWoHJkqdPhXJ2kNJQNsm8RlHWGpc25SPR+CU6knGk7oUjaB30A6wNX
- 1g7Lq1HLe7ybQ6eea/rmPxf+0PwCWNwokxK3xC9Zfvl6oil7+xeDEts39vkTFizMeG5Y4wLpQ0h
- 1VVoExBSS3V/vrXitkRK/vg91Y1SY4rnS6EOXqRDzUFSdIrqW9Oa1wZvOT4ZG9QsuohMudFsd+s
- opbnlvBJt787Ctzu/HCPDyt85I9UqUwPIaxHgNT5utfUjPyRHCa+c35zFn7vipsH/CDE3CyZGUX
- Z1vrHGsribhe2olZRUVC3MJ8/vK/oQukz4Ip0algPfwFCldWfQivBR8kW3E6hQ4HCZYOxMjMX9e
- 9JwVGCcXIvuXc63zfofTY5yr0wQ43wFD1WbjVw7IaWYHAiHVHRnNlmREbxpChlTLRSPqjguQLEo
- kUNzu43yTD3sZGQ/aU+7BgPRw7asb9rXlzNK3zpf/3cVW156829EC/p+12CDFQIZG99zyFWyRFr
- diixSY4TNWRxyPrmRbO7H9wcIaHsQ47mHI/rlLaeSQBQenTXluqcSbuNB1lg6yqnndMug1TlOvN
- BMzcW/OAjyHPEYVhlHpE083H9j0gFwNW3h0Ms1sGpf0wF22YO5JKYWFeSfRMbV7HMnBCRrAd
-X-Received: by 2002:a05:600d:82e1:b0:4af:79ee:f660 with SMTP id
- 5b1f17b1804b1-4ba02357df3mr61019855e9.31.1794323040083; 
- Tue, 10 Nov 2026 07:04:00 -0800 (PST)
-Received: from PF-5Z7P7F.fkb.profitbricks.net ([212.227.34.98])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-498366c4e07sm5116931f8f.49.2026.11.10.07.03.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Nov 2026 07:03:59 -0800 (PST)
-From: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, lizhijian@fujitsu.com,
- jinpu.wang@cloud.ionos.com, yanfei.xu@bytedance.com,
- Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-Subject: [RFC PATCH RESEND 09/13] migration/rdma: drain the send ring in
- batches
-Date: Tue, 10 Nov 2026 16:02:43 +0100
-Message-ID: <20261110150247.193208-10-dmitrii.omelchenko@cloud.ionos.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261110150247.193208-1-dmitrii.omelchenko@cloud.ionos.com>
-References: <20261110150247.193208-1-dmitrii.omelchenko@cloud.ionos.com>
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1xQnOQ-0003Y8-D2; Tue, 10 Nov 2026 10:04:14 -0500
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1xQnOO-00006X-ND; Tue, 10 Nov 2026 10:04:14 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=W8AHjdG9OztPRNbNqQi+20D+NiUk0XKS/n/sC6xnWgLclhJHEZHotqNCdW5dBc48G/xxo0xN7B1ThI5XfkM8BIiMFV31xbylXV13/Gqalf+ImYHKnigrselh16mZRSs1p/HcBOsKEWQGeFWQ3vHQTpY+ZCbj+VrVNq/UCi/iZP/PcDcB6nYnmcb0GCG42vG6nPrURgEvPHsknQO2RnC5BHxF1u3E0oaj8zunM9WW8BYaFk0aTMxCVRpEUQKkvIAFpYI/F+n+TxsB4xOYuX+W2/65zQCfumYt6AdDjaHJKF5awJqnJmS2CNKX3amux+x/VCTbA1O/O+EL0khnFmUMtQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VB3zs9flSthozt1SPNklKeGmidVYeVO6+Pd0bILzUmc=;
+ b=b3bojwYeM9ji0oHVdFXUmYX77ljZCeVdy7xUi1P6IkT2BsSUq1irDYchI3LB+PIKDn700gfeHhEpUsX4a2fMUqjDMzelbqeP2kI3QKsyu65p4PwHua59pzLfZATmVjUxdVmnCn/rCdZbOdzxJf7QcxeeyEc2B07Ai+z7CD8qdXHBghugw2qmU2n9l4mtjPHbPPDU3D3oTXBWpbHfYhdHyw6qzH4tdMvAai20tKgvOOEYH7HIw+pvyKTe1l5cfML7D7iYHZM02FnehcrR0pyFOMUweYvLZ3rSbBaRcW3ylmPbLd4ZkdrRJyM+jSVH3MatmMQ/I/Yif82f72stB+Ebsg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VB3zs9flSthozt1SPNklKeGmidVYeVO6+Pd0bILzUmc=;
+ b=XSfNgXP9YizmqjjpYzrhSsneSunJ/sa3zdsmkPLvwdFDKff0TfpC84LzxbPZrCmLuZHJHCAAr4DOHAj2LOElfBVZOIN/N7gTMRYCzUN+cAEC9Su6MwCmguKPS1Xph66Coj75FyK3KjMEeWtVV7xt038XCyfs57so9mc1kZQrJSjfGB9VqZSBD2LFz4zuesSr/wstZMuIUrKgi5XYWtsvIwMYMOYQNGAxxtPyT3P6FILfvbNLL2zbGgA7LlE72PGPVzg9yQgdPRNRRuhNYIc/CcyTsEL7yY7n1ZUz/rgr7CCnyK1u5FyluioPycJ8picGbFWpGFzq4G9TpwU6L1kJrQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
+ by TYSPR02MB7369.apcprd02.prod.outlook.com (2603:1096:405:34::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.13; Tue, 10 Nov
+ 2026 15:04:04 +0000
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0615.007; Tue, 10 Nov 2026
+ 15:04:04 +0000
+From: Chao Liu <chao.liu@processmission.com>
+To: Max Chou <max.chou@sifive.com>
+Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [RFC PATCH 05/38] target/riscv: Add implied rules for Zvqwdota8i
+ extension
+Date: Tue, 10 Nov 2026 23:03:43 +0800
+Message-ID: <20261110150344.3684-1-chao.liu@processmission.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261104194155.679241-6-max.chou@sifive.com>
+References: 
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SJ0PR05CA0180.namprd05.prod.outlook.com
+ (2603:10b6:a03:339::35) To TYNPR02MB9351.apcprd02.prod.outlook.com
+ (2603:1096:405:3d0::15)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:20::32d;
- envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TYSPR02MB7369:EE_
+X-MS-Office365-Filtering-Correlation-Id: ecd1dc76-561a-4644-7da1-08df3f3bdc75
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|366016|376014|1800799024|7416014|18002099003|22082099003|56012099006|10067099003|261028144727099003|261102123227099003|261009223027099003|261102124527099003|261026140227099003|261026121527099003|261022075727099003|261022105027099003|261021121427099003;
+X-Microsoft-Antispam-Message-Info: Ods+rdIFUmEfVyt5eskd1hPKINUiizk8JoIzOpOY8PPHZWgHNL78zaoChGHu7Y3qQHzSKpnDbZcHj+G/H9wCz9KD4shiX6n81BdoG5AVSutKZL9KbJbzgY1j9vjMSAPxXdSc/in9zM4cJc0e30DTbMBfrfI91EapV1wI0+8CQe0AsOX7hKVFqNVLgKSJ+OOofilmwiuFlmdNJ4UeJr1yl4CgJtAHh5V3lJnPj7DUUuULB7vvI2IGT8Ww1h1YQ7sJmMZEI4iWTyYr90MGh3R5KAbbxwkajV7WFfrMFD23gazYCxDnciuli8srI7MLDEwWQzQSYuyMe9mHbokcoZ1wZFW4tbMB+ikaQFM9pEH5KnZPNn2B9Zly/5Vz1Yg6D/8JLC8z2x/jEct6N1/2kVNOtvfZsCs1kdFuqXo6xw9Icnzan1ZoSIuWp+Qq3HkpdRmWZE1lZ7yAQChvX3wQYXl+3i8G4hfmiK8sg7N9ClvUQ7QGGDMblMRwhbaO5iW6BRZY+AWGxXWgSbZ/xxyfcNzcm4SUcEF3EORqgciIOKFJmeCqN82uegCyd3M/gKJ/UY0QR9pw7Pgi7bXMLd8Y21gVlr/fUbdieCB46OhIi7Tl7f/p0X6MexcAeoZiDbz5BxCbGWg6zs2i8HabDQARH38uhFL+fzf6n0G76MGJlAMdyeo=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(7416014)(18002099003)(22082099003)(56012099006)(10067099003)(261028144727099003)(261102123227099003)(261009223027099003)(261102124527099003)(261026140227099003)(261026121527099003)(261022075727099003)(261022105027099003)(261021121427099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?D0KGHwib5RcKZ7WhsEsbN/0HTgAmnA3U+oUxymtOrz2nGTHxHHyTHYoVSu4k?=
+ =?us-ascii?Q?SLyRXzMPmGVSfpsze9ocNoPFd4o5RKQDQ9/VN9tNQbaxhWvXe4aX2SKNCLMC?=
+ =?us-ascii?Q?OTut4sXERcg7g9YwPeDJe1fMH5G15ngu+qriHjDBzOMg249BfA6PxkGgpEWM?=
+ =?us-ascii?Q?sjzqsPOFaf4H5gPY/l6/+lJ81lsTwvoPWUY1JrMeAXvSI+VkCmuOBJUAajtu?=
+ =?us-ascii?Q?0yKi4tBW4zaeYszarhVIQgo6I/tSZfBFXX4ZlWBJR9xgaQYw8rdwlY+S75sx?=
+ =?us-ascii?Q?2U154tUbTuJahTfN8K066P3LbN2XHLbu1IgcHMgiVwIiClkkxGA+T7ZV8TH0?=
+ =?us-ascii?Q?c5ezfGVdPgmiIQBHTsARTVqLpXOUmrMdmlFjrrMRigX3718Mv5h1OKFyYWFo?=
+ =?us-ascii?Q?LmjOF9lOPspbZt3eCzVebUtNHdsrJC5lp5EAGlsirt6h4Im6D+BnHkWp/CBl?=
+ =?us-ascii?Q?mYVNp36+7s03xYCcKXlicIVfeMG94QisBuV3rNA4X7zeOfRuG14rXeL+3DjK?=
+ =?us-ascii?Q?YYIoh7I1rtQPoGDNdk8y8OOSFGpAXYbNKaQhahrlNJt3/GFj3LARpGXCTzNb?=
+ =?us-ascii?Q?tHXG5fxeXMx4MZJ4WfaXaLfchcbXbXBVe2YyfCGoEJBiPvhn+Ij8xcq99eiE?=
+ =?us-ascii?Q?n+78uCjzHwIHsqOsAYBz9iN3rAmW/9WRZvGA351Sm3AsgXEZYdHA1kBgPnSs?=
+ =?us-ascii?Q?Y+MUrCipEgevcoz70H7nTOzUcQzzbphAqiZs9SrnyEqaaL5JdvQV0LEM4rj+?=
+ =?us-ascii?Q?fLJjdSTotUkA9IT8+7BNMeOypHcuIStaV2aQ6ZLqaZ1KN2/rb+j0mYVxbn0g?=
+ =?us-ascii?Q?uV9EXWM/rlvQ7v1HVmzKvps/wDWsaHgEArt7IAcFsCZRsQ53wQ92qhz6dzUS?=
+ =?us-ascii?Q?9VCB3H05NAJ/zVuyRmcPJaaIS21YtEDTr+2fY8LsbFG3MZmvJSBLKxoKbY5b?=
+ =?us-ascii?Q?HBYG0Ida1KwNSmmuRVdvOxcuKKnOLaLz7cbL+TUoDDuXvRqG0axa+Rnp6vgz?=
+ =?us-ascii?Q?W9N9vfU1KHFHJpZTa7NpYnviXr/xaPqYrXw4v2/A/58G5YOmY3aNWDVL5fwU?=
+ =?us-ascii?Q?+wVXH0+Uo8h8KHacool+BEwwlna31/qDvvZPCclEwSkxnKxqyZ3RDSDckkSO?=
+ =?us-ascii?Q?eIAT2xzAdklXUDISpQizAUjcptNeknRmuCSGJE3Jlp2AkM8TQidXENJUrP7b?=
+ =?us-ascii?Q?wzNearmkEUGwbLGKKFdtfirYo2xrOZB6f2PtFDv79zD9j+MsycYSeCRaQZq6?=
+ =?us-ascii?Q?wHVkDolC6lDCkom5U59XI9xdAWYiFSGDpvAI4udUY98LORQeZsiTYcngxSLU?=
+ =?us-ascii?Q?nrmOvU/28JYHENzjXkugyODQbwV+4J4MT+iDIRS0tUyfVOpMFfhu1qVVK4UD?=
+ =?us-ascii?Q?/FfggA/0DkKc+W6BjcBWVlb7t222t+9J8z25J8nyAJrHeDOLY6rgthClNJ08?=
+ =?us-ascii?Q?0K+gPaCilFN8npTYzUsR7oqX45mqESuOARmQoOWxUcK9kXGVe403sXiBBSMi?=
+ =?us-ascii?Q?yX+mjKzjl4D2WTSbfn/RCOR22Rhx2plquO29AEva6rWSaqpkh6MFk/JNLFiJ?=
+ =?us-ascii?Q?/1d3T5RRtnlOCQwgJs8aBk3L2ey5WCo6HbCRnJy8XtHd7iHxJWTyRGQ+5PU0?=
+ =?us-ascii?Q?olBfW/2YIvVhArkDoTcltlFLTLGE6qzAV1CH8ae+b4Wh4SEchCr+uS1JPmgq?=
+ =?us-ascii?Q?JaYOFIBTTU73qcGzThKM0GhaNd8fveVHqG8gZu7XtPkwBbK/H6nnrr4yvWyZ?=
+ =?us-ascii?Q?8eGEIgCljH4zij8kSbylsKCZbzUqsgk=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ecd1dc76-561a-4644-7da1-08df3f3bdc75
+X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2026 15:04:04.5858 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jG2IX1uHj8RoCx9NC6RjHQNnFeUx+0Qq6BLjcYNU5l+FEyvCybX1/2azttB0MRHLY9GuUbqf4tKFxgFowKni/MRVi9avgeOpzl/dBSjcURg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR02MB7369
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=chao.liu@processmission.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,148 +144,62 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The consumer snapshots ring occupancy, processes up to
-RDMA_CONSUMER_BATCH_MAX commands, and advances the tail once per batch
-instead of once per command.
+On Thu,  5 Nov 2026 03:41:20 +0800 Max Chou <max.chou@sifive.com> wrote:
 
-Signed-off-by: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
----
- migration/rdma.c | 81 ++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 58 insertions(+), 23 deletions(-)
+> Add implied rules to enable the implied extensions of Zvqwdota8i
+> extension.
+> 
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 628afaccaf..db1f1e3fc6 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -67,6 +67,9 @@ static inline uint64_t rdma_merge_max(void)
- #define RDMA_CONTROL_MAX_BUFFER (512 * 1024)
- #define RDMA_CONTROL_MAX_COMMANDS_PER_MESSAGE 4096
- 
-+/* Max WRITE commands the consumer drains per pass. */
-+#define RDMA_CONSUMER_BATCH_MAX 128
-+
- #define RDMA_CONTROL_VERSION_CURRENT 1
- /*
-  * Capabilities for negotiation.
-@@ -2688,6 +2691,12 @@ static bool ring_empty(RDMASendRing *r)
-     return (qatomic_load_acquire(&r->head) - r->tail) == 0;
- }
- 
-+/* Consumer-side count of published, unconsumed commands. */
-+static unsigned ring_avail(RDMASendRing *r)
-+{
-+    return qatomic_load_acquire(&r->head) - r->tail;
-+}
-+
- /* Producer-side snapshot of queued-but-unprocessed commands in the ring. */
- static unsigned ring_occupancy(RDMAContext *rdma)
- {
-@@ -2879,18 +2888,10 @@ static int ring_barrier(RDMAContext *rdma, RDMACmdType type, uint64_t flags,
-     return ret;
- }
- 
--static bool ring_pop(RDMASendRing *r, RDMACmd *cmd)
-+/* Consumer: release n drained slots at once, waking a blocked producer once. */
-+static void ring_advance_tail_by(RDMASendRing *r, unsigned n)
- {
--    if (ring_empty(r)) {
--        return false;
--    }
--    *cmd = r->ring[r->tail & RDMA_SEND_RING_MASK];   /* after load_acquire */
--    return true;
--}
--
--static void ring_advance_tail(RDMASendRing *r)
--{
--    qatomic_store_release(&r->tail, r->tail + 1);
-+    qatomic_store_release(&r->tail, r->tail + n);
-     ring_wake_producer(r);
- }
- 
-@@ -2986,29 +2987,63 @@ static void *rdma_consumer_thread(void *opaque)
-     trace_rdma_consumer_thread_start();
- 
-     while (!qatomic_read(&r->abort) && !stop) {
--        RDMACmd cmd;
-+        unsigned avail = ring_avail(r);
-+        unsigned batch, processed = 0;
-+
-+        if (avail == 0) {
-+            /*
-+             * Ring empty: reap ready completions without blocking, then
-+             * sleep until the next push so a new command wakes us at once.
-+             * Round draining is handled by RDMA_CMD_FLUSH.
-+             */
-+            while (rdma->nb_sent > 0) {
-+                uint64_t wr_id;
-+
-+                if (qemu_rdma_poll(rdma, rdma->send_cq, &wr_id, NULL) < 0) {
-+                    ring_set_abort(rdma);
-+                    break;
-+                }
-+                if (wr_id == RDMA_WRID_NONE) {
-+                    break;              /* nothing more ready right now */
-+                }
-+            }
-+            if (qatomic_read(&r->abort)) {
-+                break;
-+            }
-+            ring_idle_wait(r);
-+            continue;
-+        }
-+
-+        /*
-+         * Drain up to RDMA_CONSUMER_BATCH_MAX commands, or fewer if that is
-+         * all that is queued, then publish tail once for the whole batch.
-+         */
-+        batch = avail < RDMA_CONSUMER_BATCH_MAX ? avail
-+                                                : RDMA_CONSUMER_BATCH_MAX;
-+
-+        while (processed < batch) {
-+            unsigned idx = r->tail + processed;
-+            RDMACmd cmd = r->ring[idx & RDMA_SEND_RING_MASK];
- 
--        if (ring_pop(r, &cmd)) {
-             if (rdma_consumer_dispatch(rdma, &cmd, &stop) < 0) {
-                 ring_set_abort(rdma);
-                 break;
-             }
-+            processed++;
-             if (cmd.seq) {
-                 ring_barrier_complete(r, cmd.seq);
-             }
--            ring_advance_tail(r);
--            continue;
--        }
--        if (rdma->nb_sent > 0) {
--            /* Ring empty but writes in flight: reap (bounded, error-aware). */
--            if (qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE,
--                                         NULL) < 0) {
--                ring_set_abort(rdma);
-+            if (stop) {
-                 break;
-             }
--            continue;
-         }
--        ring_idle_wait(r);
-+
-+        if (processed) {
-+            ring_advance_tail_by(r, processed);
-+        }
-+        if (qatomic_read(&r->abort)) {
-+            break;
-+        }
-     }
- 
-     if (qatomic_read(&r->abort)) {
--- 
-2.39.5
+Thanks,
+Chao
 
+> ---
+>  target/riscv/cpu.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 96a1d76c5a2..08b14782451 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2851,6 +2851,15 @@ static RISCVCPUImpliedExtsRule ZVFHMIN_IMPLIED = {
+>      },
+>  };
+>  
+> +static RISCVCPUImpliedExtsRule ZVQWDOTA8I_IMPLIED = {
+> +    .ext = CPU_CFG_OFFSET(ext_zvqwdota8i),
+> +    .implied_multi_exts = {
+> +        CPU_CFG_OFFSET(ext_zve32x),
+> +
+> +        RISCV_IMPLIED_EXTS_RULE_END
+> +    },
+> +};
+> +
+>  static RISCVCPUImpliedExtsRule ZVKN_IMPLIED = {
+>      .ext = CPU_CFG_OFFSET(ext_zvkn),
+>      .implied_multi_exts = {
+> @@ -3055,6 +3064,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+>      &ZVKS_IMPLIED,
+>      &ZVKSC_IMPLIED,
+>      &ZVKSG_IMPLIED,
+> +    &ZVQWDOTA8I_IMPLIED,
+>      &SHA_IMPLIED,
+>      &SSCFG_IMPLIED,
+>      &SUPM_IMPLIED,
+> -- 
+> 2.56.0
+> 
+> 
+> 
+
+Sent using hkml (https://github.com/sjp38/hackermail)
 
