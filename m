@@ -1,129 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A03606A325
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3C6606AA68
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Dbs0GkmQ;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=AhIV6GBT
+	dkim=pass (2048-bit key, unprotected) header.d=cloud.ionos.com header.i=@cloud.ionos.com header.a=rsa-sha256 header.s=google header.b=aaQeff58
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQnLF-0002Hn-1V; Tue, 10 Nov 2026 10:00:58 -0500
+	id 1xQnNz-00034P-16; Tue, 10 Nov 2026 10:03:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQnKJ-0002Ed-EV
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:00:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xQnKG-00084U-Be
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 09:59:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794322795;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=noGgIRsp/LqIFgSdL+GAYetddOTUc+9j5OAtYdXRfzQ=;
- b=Dbs0GkmQHv1qRPRnMWhB2L9Jvp2IELzLktQnNVDvA90CBIba88AcA5DuG5qf1WQjMCR9L8
- EXZhu2fzQjr/QIRbf+UY6p6pVwu8V7Jk5TDwL6KgcKtyNUuX3/yB3vq/6LnvUIqPNWLqML
- JeIdBRWd+OhV8kbo8KnT7RHOd8/Bbq0=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-qB2iKVEMNFecIBk_yP4stA-1; Tue, 10 Nov 2026 09:59:53 -0500
-X-MC-Unique: qB2iKVEMNFecIBk_yP4stA-1
-X-Mimecast-MFC-AGG-ID: qB2iKVEMNFecIBk_yP4stA_1794322793
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-836caf085e0so21416327b3.1
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 06:59:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794322793; cv=none;
- d=google.com; s=arc-20260327;
- b=JPEFLowugr6C+4ge0niZxXRpZffYus5rHvHF8SWEgesXZubLL6Al9L9o7oBg6g0Y9c
- 1lMMRVK7anzFOm4aUOvcL5wfzat8u3FdspdZ+kobg4kjDYzcGW2ygU8RNb7lGZzeYQHT
- 3KHgdBGkC0CNul09UPO3Ghsx4Z2n0wAZFckG1LX5vesnaME9GMAJ+NFb+N4ogulZVJ0N
- VcsbXKFQakHfLDsIal4wKQN8u/z7kt5w1HmylU4uSFh9t1rPgUApjBo0Z3QKLYEt+wes
- DziugQFSniizn8xt+GK7zAV/pt3h8NbgwZOc9AO1DBw4wutVWknf2Ho2oVOQOrs8n359
- PbZw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=noGgIRsp/LqIFgSdL+GAYetddOTUc+9j5OAtYdXRfzQ=;
- fh=LAyx3mfFXbRBPATRx1Fkx31vQAKfLNCUDosgEQ1FNls=;
- b=RT5cux455Wv10J8SHHcIdBh+6og0L0z1yh+mV9WbW9djlIeNYcUYikNiGZUXin9hJ8
- mrQtzhnRmz865SCyMjxkmUrM3F6+Wm7MMgtcOP71RqRLN66NmJxRa80OV7mmYV7KBLn9
- v+Ke1Po9FOPE5fSP11ncAz95o6mU6j0D24fqTNId5jzCdaisxMGaxfGHYOY55wll+XKC
- RriLScN5bBnCXe2sjbZRXufhjCq6COSwEzEbomjgw3IjVmoQMqClO0kgpjegago1kP8t
- pwitymv5khxJO2AO8p7X0fWAAJPGW/JAKaUQ0ctGloZCIKlhzB1X4sN2hJAht1BYbJoP
- VAyg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
+ id 1xQnNp-0002yw-LO
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:03:39 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
+ id 1xQnNn-0008Rg-C5
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:03:37 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-4922dbcee23so1184386f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 07:03:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1794322793; x=1794927593; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=noGgIRsp/LqIFgSdL+GAYetddOTUc+9j5OAtYdXRfzQ=;
- b=AhIV6GBTSYIKYcxh2cmVGtoZPjUJF/BDCo8BZI3Gf3cPfA6KbnPCcpKsuJDsONSbfP
- +bX+DjcAJXkKpgGNL5FrGuAcIdrK+XnL2ArULb3X9O3uimsw3Q/Q6rCG6o5XcOYvTuoN
- UH8VfZWs0uvF/w9gQmYaTZUn1bc0HXd6xyTiMESD27tQXrGBxGSmLmVKGFqJM4LUQZTl
- QZVjyFCpdrsri+FN00x4KRSuPH8QASg7V7izqqSWFgaYnqac/G67EzZrdV7KpktCdC+b
- Yxf8zti6qk8O3E9bB+JT/egSs1KLb0n3zS7VrYmxChbZxl5X4PtU/3neg4vi39DYMt6o
- wSng==
+ d=cloud.ionos.com; s=google; t=1794323012; x=1794927812; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0cnKz6Y/cklnPMd8EG7yJoXLcetG0974eo77SG4TVHc=;
+ b=aaQeff585Yy1DS4wk1s9BhvGkCj5npxtieFGKIGZFIa6cdI3eey9KXTDaFXY56Xro9
+ JCtd3bzi2uNekYaVyAmw638sy7RqcpXPwsR8qx9k4uVlROw/dhKVISkj2Fyk/aFR7aZt
+ B9EHfIIyz0QyF9saf+XgpjtqvnqydhQ/AQqvxm4tJDmQFb8imCChj/fOKrGxgAdqfPmp
+ KnB39q+Kter30scTRijhR5ewTOpQdQUHDprBfyEu4DtqfU9rfIjxde9gX8U1T1Jplb/A
+ mb+f8WP2eQ6dBJoBOpsrZ0cSHad00+sDJjGlMBGiIgbDMx3Dx+rH87pLVwpGgUSy9wGI
+ XFzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794322793; x=1794927593;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=noGgIRsp/LqIFgSdL+GAYetddOTUc+9j5OAtYdXRfzQ=;
- b=zHDVa0LLNqCbo6t8MuyiIr7VIDqZWVVekzmPnFIoEXxmKou/fNHQjeIqkDNlFTRoSD
- unxWXLXVFsbQ/Y5Ciw/Mk37tLPH1xiuLRcyexNpRr2YIhnmckxqJj4E7mSCX6lFnRLO5
- y4g3U2v2QnzMPz41hKKSK+KyOpuKVT1Xa87tlElc7pQvhjUL0/p/afqNzf02VtDqhCGX
- 8UrILm5ySI9GjcKjCBeL6MDWfpld/zw/UnMTeXS+hP1PkxSaEIUhKR6VDNno2Yz14OwS
- +CB8d1nmp9milDpCValfp0UxWKxDbCg+zCrWeojbJv+IuzfdMTqfOFQnF2TDIqwhHFAb
- yDQw==
-X-Gm-Message-State: APuU4Z/ZqHH0ryDKiZiWoO9QOgb5jwJAmg+B6GDdkIJEliVU4pkK1uQ+
- 1+Sb6eR+jn4eM5/cwvkMqd2Gm8qUsg2nyD22c4befw3kDGFxtSwOF0vntVsQ1GIlzzEBkb1MBp5
- VtSwIDqW/Bf6ERcqzwQXh3QR5N2BJG6k7TH0AAos0pk7zzFaJifqir++Nbx6NMMhvxON/wEPcxH
- dFWZKmNanVxU8gPOMsULvtvuo5HXLKIdc=
-X-Gm-Gg: AYBFou28OCVGC6MU/xHMih3oCUn/q6cfJfGu9ygh3GJ5U69DSSlN4N1QoF5L5JEpKGA
- rBZUm2lT7byD1Lkd0Mz16EuIMatTtUnBg7LdGZFqApbC/CesZ8G5PhB5LONUpex4gB+b44n3mc0
- y+V/Ba0LI6+/4xuJY+dL9rNyF0RAU9f9XzU6gleV9jEwX2yVH11ebyCOby4BpNwPGDUbMOBqi/T
- n4BaT5jPVOdyWz2
-X-Received: by 2002:a53:ed04:0:b0:679:b810:6df3 with SMTP id
- 956f58d0204a3-67c568c72d0mr1315890d50.84.1794322792674; 
- Tue, 10 Nov 2026 06:59:52 -0800 (PST)
-X-Received: by 2002:a53:ed04:0:b0:679:b810:6df3 with SMTP id
- 956f58d0204a3-67c568c72d0mr1315871d50.84.1794322792214; Tue, 10 Nov 2026
- 06:59:52 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794323012; x=1794927812;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0cnKz6Y/cklnPMd8EG7yJoXLcetG0974eo77SG4TVHc=;
+ b=CPKKEiM27bhVoux7eYlfV/ITvPt7jKWtnBqDGLW99ZZbBgigo+ImZ+2MJSaj9elLhU
+ Q6BHYYHBS3R24UVPhOWLVEc8JU6WiXdYgSMUT8Pa9PsbvN3GAdnyi7p41IQNW63E4YR3
+ aJiinZ0Xyx832U93Mi8jL7yZUzUTGKogoXtxGIKY2kzW0zZK91j+5RJNiKKzzh3L8Urp
+ kv7xGE+J+ZMHvuqwHI8TTMb3CNAFoRM+7Hr7KG11nIb73Y+L+99Y5KLu5PrttXw3wQiA
+ lF5K5aGogh95WVPmZV5JWWK5SvJfxsYBhCuhpRNvEIbo6J7hVNZOD/bxfQv9VjYE+FdF
+ cPxA==
+X-Gm-Message-State: APuU4Z9JZurf6UvHY+jPEa3NSG5Y/IFWsyUMAx1+bj+pNrBvnbIz26Ss
+ xqNoTTG52IBdS/UX0YdEBigH7cXgq17uF8JqNxrFTxZ78ZNMH6V6nGDXav02xQ8lHryrRkZ6i6r
+ humAnUOQ=
+X-Gm-Gg: AYBFou0Yt7Az0NGoz6XHSuESX2f8skx4xewWHzOjdVQjUQtokXdK97ZqzZfD/V5qKE1
+ lQoMdZZwOFJmB4CZEdC+/jQKdBOODA+dxThqXD5z/4xL4UHkykfEA/K9klcy12sVO6KuTXBMbZS
+ b35MrZjAWkdq4DvJC/UbtWYNYedmJ0z+dRLsHqGJf1p5lwZt2wAGExKvDK+RS5l1X/SHHJuk6B1
+ KSk/grX4/L0MGzsYuRAP3MIDFY39Q/XXvoNoF/x2CCiygb2x/qZxKEkL+FGzG7zfXOYsZEKBY3/
+ PiCA9sdFjNzgEEdLccaj2U70QQSrqHl27TdAD54Lu5OY8aLesPmhowKYn8ywl6rKrKjgRCGkGK6
+ 2stKXOYT5nirG87ozfhnWTTHi9CkaO99igYQhLpChnV4288Ti3oh0Ckij6X0LQtO67d4NHcVT+5
+ JOc+0c0YHAap58yx8p9D3nsGs2hBzCR0/v1Wz11whHfptIzXf983DwS/TBZ4j1Ri8v97RWdkn0z
+ Gwb9FD9yQDYJu/C+3wJc+9LKG5I32Xr0HShMp07heZ4diFyEzAX4te8xkbbnIxnYLG1uriTSa70
+ aS7AxFpd2QvfOQ7WgeVi2pQaRsAy6Ck5fgXVmnamj86Fptld6/Dju0/x0qY1enQTtN+0FPVC
+X-Received: by 2002:adf:e006:0:20b0:493:d5f0:4e4c with SMTP id
+ ffacd0b85a97d-4982fd3e436mr3797705f8f.23.1794323011886; 
+ Tue, 10 Nov 2026 07:03:31 -0800 (PST)
+Received: from PF-5Z7P7F.fkb.profitbricks.net ([212.227.34.98])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-498366c4e07sm5116931f8f.49.2026.11.10.07.03.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Nov 2026 07:03:31 -0800 (PST)
+From: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de, lizhijian@fujitsu.com,
+ jinpu.wang@cloud.ionos.com, yanfei.xu@bytedance.com,
+ Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
+Subject: [RFC PATCH RESEND 00/13] migration/rdma: producer/consumer send path
+Date: Tue, 10 Nov 2026 16:02:34 +0100
+Message-ID: <20261110150247.193208-1-dmitrii.omelchenko@cloud.ionos.com>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261109183605.3210043-1-jsnow@redhat.com>
- <20261109183605.3210043-4-jsnow@redhat.com>
- <avIeunGVydLiZ9O8@redhat.com>
-In-Reply-To: <avIeunGVydLiZ9O8@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 10 Nov 2026 09:59:41 -0500
-X-Gm-Features: AclHuK86s0uwPlB1DcbQgWTnzDZwEbRwFAXuD5iiTciWy1uD6UmU2NQyRVvbuiY
-Message-ID: <CAFn=p-a+4_jg=Bp=Vy94GGaUgSBUOn51fpck76FjdUK5sQ-=TA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] build: Add "-d keeprsp" to Ninja flags
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: permerror client-ip=2a00:1450:4864:20::432;
+ envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,64 +96,86 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, Nov 9, 2026 at 2:28=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Mon, Nov 09, 2026 at 01:36:05PM -0500, John Snow wrote:
-> > When auditing compilation, it is helpful to be able to see all of the
-> > object files passed during the linking step, which ninja can obscure
-> > behind temporary .rsp "response files". Normally, these are deleted
-> > immediately afterwards - but for debugging purposes, it is helpful to
-> > leave them behind to understand what went wrong.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  Makefile | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
+This is a rebase with no code changes; the prerequisites (Yanfei Xu's
+two RDMA series) were merged in migration-20260925-pull-request.
 
-Thanks!
+v1: https://lore.kernel.org/qemu-devel/20260925155149.843870-1-dmitrii.omelchenko@cloud.ionos.com/
 
-> > diff --git a/Makefile b/Makefile
-> > index 54547a37b1a..9dda1b3c89a 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -151,7 +151,7 @@ NINJAFLAGS =3D \
-> >          $(filter-out -j, \
-> >            $(or $(filter -l% -j%, $(MAKEFLAGS)), \
-> >                 $(if $(filter --jobserver-auth=3D%, $(MAKEFLAGS)),, -j1=
-))) \
-> > -        -d keepdepfile
-> > +        -d keepdepfile $(if $(DEBUG),-d keeprsp)
-> >  ninja-cmd-goals +=3D $(or $(MAKECMDGOALS), all)
-> >  ninja-cmd-goals +=3D $(foreach g, $(MAKECMDGOALS), $(.ninja-goals.$g))
->
-> Alternatively we hardcode our makefile to raise meson's
-> annoyingly pessimistic defaults
->
->   export MESON_RSP_THRESHOLD=3D126976
->
-> provided we detect we're not running a build inside Wine, or just
-> blindly assume no one is quite that crazy :-)
+This series splits the RDMA live-migration send path into two threads:
 
-I'll leave this to someone braver than me :')
+  - a producer thread (the migration thread) that scans dirty pages and
+    records which chunks must be migrated, pushing chunk descriptors
+    (block + chunk index + dirty byte span) onto a lock-free SPSC ring;
+    and
+  - a consumer thread that owns the RDMA queue pair: it drains the ring,
+    posts the RDMA writes and control messages, handles chunk
+    registration and barriers, and polls the completion queue.
 
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
+Chunk-granular descriptors on the ring replace the previous per-page
+merge logic on the migration thread.
+
+Patches 1-12 are the producer/consumer split.  Patch 13 (Jack Wang)
+negotiates the batched chunk registration capability so a peer that
+lacks it falls back to one chunk per request.
+
+Results
+-------
+64 GiB guest, single-path RDMA, memload workload (one-time RAM fill,
+fixed dirty set).  "before" is the single-thread send path with
+only the nb_sent-stats patch (patch 1) applied; "after" is the full
+producer/consumer series, so the delta isolates the split itself.
+
+pin_all=off:
+  - total migration time: -16.2% (24 GiB fill), -14.2% (60 GiB fill)
+  - transfer-phase time:  -16.3% (24 GiB fill), -14.2% (60 GiB fill)
+  - RAM throughput:       +17.2% (24 GiB fill), +16.6% (60 GiB fill)
+  - guest downtime:       -55.3% (24 GiB fill), -23.1% (60 GiB fill)
+
+pin_all=on (whole-RAM registration at setup is unchanged and dominates
+total time, so the split shows mainly in the transfer phase):
+  - total migration time: -5.0%
+  - transfer-phase time:  -10.9%
+  - transfer speed:       +12.9%
+  - guest downtime:       -1.5%
+
+QP saturation was measured with the new nb_sent send-queue counter:
+send-queue "drain to zero" events (queue starved empty) fell by ~99% in
+the transfer-bound pin_all=off cases (24 GiB: 26609 -> 276; 60 GiB:
+63771 -> 641), while "full-queue" hits rose.
+
+This is the first step toward RDMA multipath migration.
+
+Dmitrii Omelchenko (12):
+  migration/rdma: Add nb_sent send-queue-depth stats
+  migration/rdma: Add producer/consumer send-ring types
+  migration/rdma: Add send-ring lifecycle (no consumer thread yet)
+  migration/rdma: Add the send consumer thread (drain only)
+  migration/rdma: Handle write/flush/reg-stop on the consumer
+  migration/rdma: Extract qemu_rdma_write_file() and dispatch FILE
+  migration/rdma: Switch the producer onto the send ring
+  migration/rdma: Add producer/consumer tuning instrumentation
+  migration/rdma: drain the send ring in batches
+  migration/rdma: size reg_resp.len by the register request count
+  migration/rdma: batch chunk registration in one round-trip
+  migration/rdma: trace batching and register runs
+
+Jack Wang (1):
+  migration/rdma: negotiate batched chunk registration
+
+ migration/rdma.c       | 1275 +++++++++++++++++++++++++++++-----------
+ migration/trace-events |   18 +
+ 2 files changed, 956 insertions(+), 337 deletions(-)
+
+
+base-commit: 71f25c75417d31c214ba2cd26b273c114fc99987
+-- 
+2.39.5
 
 
