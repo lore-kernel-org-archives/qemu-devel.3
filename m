@@ -1,60 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62C9606A9AE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 08:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0906D606B9C8
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 08:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=U7DwgthP
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=B92TcGlY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQhIS-0005sJ-NR; Tue, 10 Nov 2026 03:33:40 -0500
+	id 1xQhIP-0005ce-3s; Tue, 10 Nov 2026 03:33:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xQhIC-0005Vo-58
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 03:33:28 -0500
+ id 1xQhI5-0005Kw-CM
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 03:33:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xQhIA-0003PT-84
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 03:33:23 -0500
+ id 1xQhI3-0003Ox-Mg
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 03:33:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794299601;
+ s=mimecast20190719; t=1794299595;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dvYLEn6swAp2cYlML3Of34lA0JyEtQfOMP1ccxl+zUk=;
- b=U7DwgthPQ/SLcjXXN5UUbRcQVAM1HpL5ANxgCPBCo/YfmUupsmCJs1ikYmabdYaxLrHr4e
- KvUGu368gEl6rDZ6beOJJK0Jmwo/+H6dKmzGu+C6fOMbBV7/b2D+klGXQkunQ6V2Bxsw9v
- b6FSqbd+1Fm3POHtDtJvNsf9K0f5tns=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=SzxuNv17Zwp7J0czqBKJdXgYVmX5KppsCEe7IfdrFcA=;
+ b=B92TcGlYXZe77LbWGC1TgvGIWWNXPMyYvqcOFFHZT+rGQKpho0R/isFehMG1x7hn941tgJ
+ g5ZVESYKs9Z/Gdkocw56WL7mBZxaHGhlsuQWFwOwDe0grn/EZrzMX4xLlkgoW2VUXhGw3Q
+ gJ5HTsqQlTJ6Z7jcBfiEjUPIMr25SBY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-44--z8GGeGMOhakinWrdhEsvA-1; Tue,
- 10 Nov 2026 03:33:16 -0500
-X-MC-Unique: -z8GGeGMOhakinWrdhEsvA-1
-X-Mimecast-MFC-AGG-ID: -z8GGeGMOhakinWrdhEsvA_1794299595
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-kqAXGZtFMGKg2ObbTuskew-1; Tue,
+ 10 Nov 2026 03:33:09 -0500
+X-MC-Unique: kqAXGZtFMGKg2ObbTuskew-1
+X-Mimecast-MFC-AGG-ID: kqAXGZtFMGKg2ObbTuskew_1794299588
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4435E180055C; Tue, 10 Nov 2026 08:33:15 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 001AF18002FB; Tue, 10 Nov 2026 08:33:08 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 760A018004E9; Tue, 10 Nov 2026 08:33:14 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8C6ED1956086; Tue, 10 Nov 2026 08:33:05 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 10 Nov 2026 12:31:14 +0400
-Subject: [PATCH 4/4] contrib/vhost-user-gpu: reject non-32bpp cursor resources
+Date: Tue, 10 Nov 2026 12:31:12 +0400
+Subject: [PATCH 2/4] virtio-gpu/gl: reject non-32bpp cursor resources
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261110-master-v1-4-7a0505d6c259@redhat.com>
+Message-Id: <20261110-master-v1-2-7a0505d6c259@redhat.com>
 References: <20261110-master-v1-0-7a0505d6c259@redhat.com>
 In-Reply-To: <20261110-master-v1-0-7a0505d6c259@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,24 +65,24 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>, 
  Gurchetan Singh <gurchetan.singh.foss@gmail.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5821;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3512;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Qn0htwnuIGFJEZcglJ8juElzhMKoQ+aGUuk4x1FH/+4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq8ta3/8U7RNo6p8xi0N69oZ7wBUJGn+eMZC+FS
- SaBTz+Ee/iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCavLWtwAKCRDa6OEJdZac
- 5ao9D/9Ojtz40OEUjmunIa6dcsry05SD4ePNuxQ923X220d82IlKdzKAL/XMB4iAyy05pLvhVTZ
- EP/laMNa/tMLaMH8Bg4oOg/YCT5kd7uIv6VOTHofBmyuJcP2eYAO27kgVUQXy0VSGChdtkiETZB
- t67eYDfp/W3QAEsb8xow1f7j+p0GQm8iNTrwcggvI2EhFHpeZD/c2XVUotebaxEihPzSeG8XYz2
- fzmG5L46hBhMnR5RsojjxfSCLCLjFDNRm4+yfU7GsMZPckmwEVsEpcx3nQ2OrdCvSvMeNdkMJua
- XxxsY6Dja2VsbwEZUhdnZMI9KLCr1duprb3+itnrKdVD9j9jPnDrXO+1HMiuF4I1UR59LjiedZU
- p5FE2SGMBLyBe8oWaFIJpNW/YzJzRQrnNkGQSMu4fLZHdVGQ3H+of0MBqlZ5f67mkKjEwYniPhk
- /OKGj7DLI/GMp4mrloSGyj6USkjJpNpnQxPtCPWvdHjoOE83cU/SmRz1nkXBMV9+xVvuNuBxDX3
- iklIqwUUaRHnh3BopN+cm4gcH9OC38K/LzGkYKjjP2AYraSilg/UQ8FX6zQANmXnmoZoM7B4SLo
- d6rs4yDWqbsyib5moZnjwNwAMKJLkT31LemTWlkV7apjeKC/PnpG5Yyxz6s5rxog26iUqtntpkk
- Cy3L3WlzLcwIAwA==
+ bh=T1QIA9gVvv747WfQ9Sv15OLJzjhIMDR/rCKUQyVrVk0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq8ta3lF36q+7XjqKzMY9nhYhZvyY0w87aG08uu
+ 3abx+xdcniJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCavLWtwAKCRDa6OEJdZac
+ 5eNVEAC2sFPdQmN2wlwhCQxIhmrKsYRFly2H6T0QHWTlaN4nzpTPLdYlCcLsFTVS1EydnJkrGwV
+ kWJd0pJcP51jCk2g+UJcOUHE+iremmYDKSdI5Vz+qQq/MZMF348eT7WsUTdHnPsYFQm7ZPoAz1Z
+ 2WRvzFcHdlQCe4/I4j6GaI1HswZdNbIA6+JtLAj0bg0Lfvk2p97DAFV1uhIJGfINdF2zuRbAhph
+ tWaiBYy3FC4WcFlmqjzKkGo42VA3+za0IWqk9+wrMVGBcP4+NUpu79dnyFI1j572oB6yJXXWmTv
+ nZ4uzm2TV2JxvnLMLk5Iv77sZRbJfVA0Uz2J5MFEyyM6624qn7dyZhAFWPYjtqslJsFg1a1okve
+ 0oFVX6B4d3P6vx4T2MQndo0Ccp5IF8JfyXqjF7r4KN7tpW+fjHPnarxQhE3/4BBj+ZcfYQqx+5T
+ 2dLK5FrEd8vIOLjFc4dGimJuflUr7qmvK2zX4lxclDo2Vagi+6NrQLyGxn2pnQaH6iT5MbGRYTa
+ VWZ18NbIoITL+DBpSHlbQEHpPa0kPYtIzb955lg2c7hm/1NAQrjfmKA42o8AhTW25QZjw1+Fgos
+ G6qxAMeuoW2wR+zZU3sg9G8B3WsuniQ9UrXJIjRvHkeuAWgngMvLR5ZsG9u9QecGtxkQTdQ7y9O
+ 99sPxziTYSp0tDw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -114,151 +114,90 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 Cursor pixel data is copied as 32bpp, but the resource format is never
 checked. virgl_renderer_get_cursor_data() sizes its buffer for the
-resource's own format, while vg_virgl_update_cursor_data() copies
-64 * 64 * 4 bytes from it: a 64x64 R8_UNORM resource gives a 4096 byte
-buffer, so 12 KiB past its end is read and handed to the display
-backend as cursor pixels.
+resource's own format, while virtio_gpu_gl_update_cursor_data() copies
+width * height * 4 bytes from it: a 64x64 R8_UNORM resource gives a
+4096 byte buffer and a 16384 byte read, so 12 KiB of host heap past the
+end of the allocation is sent to a connected VNC client as cursor data.
 
 Look up the resource format and refuse anything that is not 32bpp,
-matching the virtio-gpu backends.
-
-While at it, let g_autofree release the buffer: the 64x64 check returned
-before it was freed, letting a guest grow the backend's memory with
-repeated UPDATE_CURSOR.
+matching what the non-virgl paths accept. Querying the renderer covers
+blob resources: a blob carries no format in the virtio command and QEMU
+stores 0 for it. The virgl and virtio format enums have the same values
+for the accepted formats.
 
 Fixes: CVE-2026-122027
-Fixes: d52c454aadcd ("contrib: add vhost-user-gpu")
+Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering support.")
 Reported-by: Fernando Bortotti <https://gitlab.com/fernando.bortotti>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- contrib/vhost-user-gpu/vhost-user-gpu.c | 31 ++++++++++++++++++++-----------
- contrib/vhost-user-gpu/virgl.c          | 25 ++++++++++++++++++-------
- contrib/vhost-user-gpu/virgl.h          |  2 +-
- 3 files changed, 39 insertions(+), 19 deletions(-)
+ hw/display/virtio-gpu-gl.c            | 18 ++++++++++++++++++
+ include/hw/virtio/virtio-gpu-pixman.h | 13 +++++++++++++
+ 2 files changed, 31 insertions(+)
 
-diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-index f70b34c179f3..b34a1e013b8b 100644
---- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-+++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-@@ -949,19 +949,22 @@ vg_handle_ctrl(VuDev *dev, int qidx)
-     }
- }
- 
--static void
-+static bool
- update_cursor_data_simple(VuGpu *g, uint32_t resource_id, gpointer data)
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index 2b7a41c46643..c314631b05f3 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -31,6 +31,7 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOGPU *g,
+                                              uint32_t resource_id)
  {
-     struct virtio_gpu_simple_resource *res;
- 
-     res = virtio_gpu_find_resource(g, resource_id);
--    g_return_if_fail(res != NULL);
--    g_return_if_fail(pixman_image_get_width(res->image) == 64);
--    g_return_if_fail(pixman_image_get_height(res->image) == 64);
--    g_return_if_fail(
--        PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) == 32);
-+    if (!res || !res->image ||
-+        pixman_image_get_width(res->image) != 64 ||
-+        pixman_image_get_height(res->image) != 64 ||
-+        PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) != 32) {
-+        g_debug("%s: invalid cursor resource %u", G_STRFUNC, resource_id);
-+        return false;
-+    }
- 
-     memcpy(data, pixman_image_get_data(res->image), 64 * 64 * sizeof(uint32_t));
-+    return true;
- }
- 
- static void
-@@ -984,6 +987,7 @@ vg_process_cursor_cmd(VuGpu *g, struct virtio_gpu_update_cursor *cursor)
-         break;
-     }
-     case VIRTIO_GPU_CMD_UPDATE_CURSOR: {
-+        bool ok = true;
-         VhostUserGpuMsg msg = {
-             .request = VHOST_USER_GPU_CURSOR_UPDATE,
-             .size = sizeof(VhostUserGpuCursorUpdate),
-@@ -998,12 +1002,17 @@ vg_process_cursor_cmd(VuGpu *g, struct virtio_gpu_update_cursor *cursor)
-             }
-         };
-         g_debug("%s: update", G_STRFUNC);
--        if (g->virgl) {
--            vg_virgl_update_cursor_data(g, cursor->resource_id,
--                                        msg.payload.cursor_update.data);
-+        if (!cursor->resource_id) {
-+            /* no resource: send a transparent cursor */
-+        } else if (g->virgl) {
-+            ok = vg_virgl_update_cursor_data(g, cursor->resource_id,
-+                                             msg.payload.cursor_update.data);
-         } else {
--            update_cursor_data_simple(g, cursor->resource_id,
--                                      msg.payload.cursor_update.data);
-+            ok = update_cursor_data_simple(g, cursor->resource_id,
-+                                           msg.payload.cursor_update.data);
-+        }
-+        if (!ok) {
-+            break;
-         }
-         vg_send_msg(g, &msg, -1);
-         break;
-diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index 0ef4b9d8c903..8af5a456ee5b 100644
---- a/contrib/vhost-user-gpu/virgl.c
-+++ b/contrib/vhost-user-gpu/virgl.c
-@@ -14,24 +14,35 @@
- 
- #include "qemu/osdep.h"
- #include <virglrenderer.h>
-+#include "hw/virtio/virtio-gpu-pixman.h"
- #include "virgl.h"
- 
- #include <epoxy/gl.h>
- 
--void
-+bool
- vg_virgl_update_cursor_data(VuGpu *g, uint32_t resource_id,
-                             gpointer data)
- {
--    uint32_t width, height;
--    uint32_t *cursor;
+     VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
 +    struct virgl_renderer_resource_info info = { 0 };
-+    g_autofree uint32_t *cursor = NULL;
-+    uint32_t width = 0, height = 0;
-+
+     uint32_t width, height;
+     uint32_t pixels, *data;
+ 
+@@ -38,6 +39,20 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOGPU *g,
+         return;
+     }
+ 
 +    virgl_renderer_force_ctx_0();
-+    if (virgl_renderer_resource_get_info(resource_id, &info) != 0 ||
-+        !virtio_gpu_format_is_cursor_capable(info.virgl_format)) {
-+        g_debug("%s: invalid cursor resource %u", G_STRFUNC, resource_id);
-+        return false;
++    if (virgl_renderer_resource_get_info(resource_id, &info) != 0) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: unknown cursor resource %u\n",
++                      __func__, resource_id);
++        return;
 +    }
- 
-     cursor = virgl_renderer_get_cursor_data(resource_id, &width, &height);
--    g_return_if_fail(cursor != NULL);
--    g_return_if_fail(width == 64);
--    g_return_if_fail(height == 64);
-+    if (!cursor || width != 64 || height != 64) {
-+        g_debug("%s: failed to read cursor resource %u (%ux%u)",
-+                G_STRFUNC, resource_id, width, height);
-+        return false;
++
++    if (!virtio_gpu_format_is_cursor_capable(info.virgl_format)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: cursor resource %u has unsupported format %u\n",
++                      __func__, resource_id, info.virgl_format);
++        return;
 +    }
++
+     data = virgl_renderer_get_cursor_data(resource_id, &width, &height);
+     if (!data) {
+         return;
+@@ -45,6 +60,9 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOGPU *g,
  
-     memcpy(data, cursor, 64 * 64 * sizeof(uint32_t));
--    free(cursor);
-+    return true;
+     if (width != s->current_cursor->width ||
+         height != s->current_cursor->height) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: cursor resource %u has unsupported dimension %ux%u\n",
++                      __func__, resource_id, width, height);
+         free(data);
+         return;
+     }
+diff --git a/include/hw/virtio/virtio-gpu-pixman.h b/include/hw/virtio/virtio-gpu-pixman.h
+index 4dba782758dc..d6043d2ca1df 100644
+--- a/include/hw/virtio/virtio-gpu-pixman.h
++++ b/include/hw/virtio/virtio-gpu-pixman.h
+@@ -42,4 +42,17 @@ virtio_gpu_get_pixman_format(uint32_t virtio_gpu_format)
+     }
  }
  
- static void
-diff --git a/contrib/vhost-user-gpu/virgl.h b/contrib/vhost-user-gpu/virgl.h
-index 17078783a50f..40caa766d3fe 100644
---- a/contrib/vhost-user-gpu/virgl.h
-+++ b/contrib/vhost-user-gpu/virgl.h
-@@ -20,7 +20,7 @@
- bool vg_virgl_init(VuGpu *g);
- uint32_t vg_virgl_get_num_capsets(void);
- void vg_virgl_process_cmd(VuGpu *vg, struct virtio_gpu_ctrl_command *cmd);
--void vg_virgl_update_cursor_data(VuGpu *g, uint32_t resource_id,
-+bool vg_virgl_update_cursor_data(VuGpu *g, uint32_t resource_id,
-                                  gpointer data);
- 
++/*
++ * Cursor data is copied as 32bpp; formats without a pixman mapping are
++ * rejected.
++ */
++static inline bool
++virtio_gpu_format_is_cursor_capable(uint32_t format)
++{
++    pixman_format_code_t pformat;
++
++    pformat = virtio_gpu_get_pixman_format(format);
++    return pformat && PIXMAN_FORMAT_BPP(pformat) == 32;
++}
++
  #endif
 
 -- 
