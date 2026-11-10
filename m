@@ -1,77 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00775606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A764606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=SANveJ6z
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=PVho1Y/M
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQo8h-000362-9H; Tue, 10 Nov 2026 10:52:03 -0500
+	id 1xQo90-0003Vv-Tq; Tue, 10 Nov 2026 10:52:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQo8d-000330-AG
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:51:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQo8a-0007HU-TN
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:51:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794325915;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zBx3Te+iXAjh6lQwYL5dSRN7bVIh+k7MD95QfpBz468=;
- b=SANveJ6zI8GaJM8hbP2IPFXhICKfGSOvC6poZWXR/bDKXpIOG3rYQtDH4CTu5fHqdcJKLy
- yIAn1B+SMnTsl4xRT33q/lFEfgcgxCKaD4YxFxczJTvbTE/S2BTJXDln9GOUySnBEMonb8
- Bvi1iS6w/FWBSjtSvs0xgU8fg6kzliQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-2-T_c8aCmYNFeGJSIDlot7ZA-1; Tue,
- 10 Nov 2026 10:51:52 -0500
-X-MC-Unique: T_c8aCmYNFeGJSIDlot7ZA-1
-X-Mimecast-MFC-AGG-ID: T_c8aCmYNFeGJSIDlot7ZA_1794325911
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8CAFC1955F7F; Tue, 10 Nov 2026 15:51:50 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 074691955DB9; Tue, 10 Nov 2026 15:51:47 +0000 (UTC)
-Date: Tue, 10 Nov 2026 09:51:45 -0600
-From: Eric Blake <eblake@redhat.com>
-To: guillaume vincke <guillaume.vincke@ovhcloud.com>
-Cc: armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- vsementsov@yandex-team.ru, kwolf@redhat.com, hreitz@redhat.com
-Subject: Re: [PATCH 1/2] nbd: Add an unstable query for the client state
-Message-ID: <avM8KkT30Eqol7PS@redhat.com>
-References: <20261109160609.1434289-1-guillaume.vincke@ovhcloud.com>
- <20261109160609.1434289-2-guillaume.vincke@ovhcloud.com>
- <87v764yhjg.fsf@pond.sub.org>
- <730c1463-8dfb-4040-9c61-330882320d7c@ovhcloud.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xQo8w-0003Rk-Vo
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:52:19 -0500
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xQo8v-0007Je-AZ
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:52:18 -0500
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-8b30477a320so16783417b3.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 07:52:16 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794325936; cv=none;
+ d=google.com; s=arc-20260327;
+ b=MLWjsmoNQ4RdSX+vC8t7aAOieCNsfWZ2RjRoxAPVz2JlW3N2dP+DTs7L6iUCbLhAAZ
+ X/AFamNi12tm14+E3DHHyufV3qjGZ7NjO4XDlc3OkmClakt/PVwqgyczPalHjzfq1LD8
+ BAHJPgo/U21Z8H0arS6Tfuhyg1URFTCCjSniEbAhAhKmShphQD3CtZXg4LEsTpTWSrT0
+ kCHt6MjcI3vuwmNXu3FwbgiNdcZjLLyVv+5CB7CVsq5jNTUnbT7dscLNJ7EIXdcX5RcG
+ HX1Ye6p1g/AXINBF7SFq927ifVMsCdZZgvwfHiU3fKYTRmDjcHkp+x4+Jd3nWcdZt5lj
+ 7BhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=khyYSLKp+FxDlSwdiNUD+/3iy7rno2m8BCebe2Xy0wo=;
+ fh=SUjHPGGYmDAnB9LsuGgE4tGQaLdLLaUv/MU9OLOvf8k=;
+ b=Swou6IwRBhSM15wR1kAY6RLNGCD67uNWOnweAG6zACtHHyZYF6blMueW7KrvYrM01i
+ Sg1tmousIzoWkquRytvyjXbCLE3+704Rc0ebW1B3xVY4cQgwlPdFH7TvxNYMmbhFQbeh
+ 6aFF81GC49u1OdjGXQ0ECrV7WS9nF0esaHq0kpdiK+Mqmw/rB6Oo0VsrtR0TKGW7aT4n
+ UpsG244iXjzgzTX5/oVeK593a7TnMPqRh0l9s8qct8++VyP7yTj07p9fEXVL4vXRMR2d
+ 8fhrTxlCDX8lD8nMwQ7dEY1U2V1hJmnlQXAqLpESaDws3mpfRHoRXpfLiJmMwDIybiHF
+ 8l4Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794325936; x=1794930736; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=khyYSLKp+FxDlSwdiNUD+/3iy7rno2m8BCebe2Xy0wo=;
+ b=PVho1Y/MNVRPnE7YXwyp9QAfSfauNYSaa92sgcRu8Uox/Kgx00PPtnhWOBvEB5YMw4
+ UV/w3+J47fcwsqpDyDoL/835O77LBxC+t1c8BT0xeYdDHZVBLZwTcXl3oVhi8V4LeVIU
+ 4r2UPksNT/XknUDjYyKb6OPhlftJJg10FQpRL4bW6eJfxTD5n2K143WdZc18H1Cinx9X
+ e3BzMPKdx/78i2mK6T2KhyA0uUu80YsgDIri/LzY8oSAL8w3Mt3rusSpe36Cwr0zRT80
+ TPB5RIaZUPPktV0UcG0PHmoGaerhENyFQeZHOx7LSBpD0i5qvnolft7GMKKgbEBxqmGU
+ N34g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794325936; x=1794930736;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=khyYSLKp+FxDlSwdiNUD+/3iy7rno2m8BCebe2Xy0wo=;
+ b=jTeb0jKVmqbQxGfOB1VfMitpDOn1dnsZbWsPJtTV+dBFYxeIlUs8Ptiym9DVORlktR
+ 3DiRfbRuKno/wKEpSXND0LNWeqkyrKrvDOpze+wTTuupFtIZw/MwLr1uLQyHC4mPncMw
+ IFZmjWmHgQJ0/yLJc7n0khEz9mbFO2HNXvT8e2cIW7ZdIFU+pv0qx1U4CpYJ2K0RpcGk
+ xQuj9s1I8a5MkEsy+ZFocGxaSl1EtoYW8ACIpzMd5h3Sji/pJzRC89Ox/NRPy1Cysx+y
+ +oo8f92eAh+7tVz92ognpqlhmianRwHnq9nc7/P18QPfQR5A3nLBnfj3zPaD1YSvlOjh
+ k/gg==
+X-Gm-Message-State: APuU4Z+3TvN7CcXD1UZpsGEkmcmQgNWxQ9h/SH0WSV+385WpWN6Kk8QS
+ EDz4YUx3X0T0MpQXyNES9XxjrsXG3PeZb1efvrdfpIphnv/ri1c4X5gXhun+1np7LMwFcZ/0wrR
+ k8p7vGG6Njxg2R4AHKNUq1QeoFIfWVbfYQYWym4Vn3A==
+X-Gm-Gg: AYBFou2fKD6VXQ71LGSfbp9a7hQhoVxzM+VhH4Sne9ZkUzBki4pVSurXi2dl2xmXsEb
+ pWtSjRPcwof8O6dn7jW9WamPK3prE/s5rzSj7YMWmnUYhJo90Qw+sbWxaBm3Vg04pbcE/Ze6E+u
+ UMcHgmk7CYmltyGiLMhL4ii7vqo3UqqrLLnOVUgUHajk/KtLJ1C8UkECg7QF3bJDb7qw/G8T5qT
+ 8QtEapwjeLXiMptcR4j6VEzvGL7jX1dYqIa99BdW4dyteuHv7r5HNi8+DpkD/Y/Nmko+u+oaZ+S
+ cAkb/Bx+WNVKzetY6DDhUhJTJ+lWTLtmRrrA1If2wKKlGUrV88nFW63xWHxZJrZJKRIK5JkRv1x
+ 5gnxODHyIvuEu+aYl64NurHW8r16mOdAjha1g6sizvkm9DWzu4f/tYLd3bWobDRVHcBbLJfk11F
+ DSY929k8/jEtPAym/uzauEZ+StWK1wGFzVV3SCaKjmh4Y=
+X-Received: by 2002:a05:690e:144c:b0:677:b426:5072 with SMTP id
+ 956f58d0204a3-67c56736634mr1428218d50.47.1794325934358; Tue, 10 Nov 2026
+ 07:52:14 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <730c1463-8dfb-4040-9c61-330882320d7c@ovhcloud.com>
-User-Agent: NeoMutt/20260616
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261109-eth-v2-0-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
+ <20261109-eth-v2-4-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20261109-eth-v2-4-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Nov 2026 15:52:02 +0000
+X-Gm-Features: AclHuK9vZNjivjPdFOl6W4QSu4qolcv9F3esHXyuP4C-KUV8S6CE40cWTl53kpA
+Message-ID: <CAFEAcA9z_t+8Hufz_iHr3yOp=pc06FcfGPjLLbfSh4Xw-1saFg@mail.gmail.com>
+Subject: Re: [PATCH v2 04/14] net/eth.c: In eth_get_protocols(), don't report
+ TCP data offset off end of packet
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Jason Wang <jasowangio@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,101 +120,29 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 10, 2026 at 04:07:35PM +0100, guillaume vincke wrote:
-> On 11/10/26 13:53, Markus Armbruster wrote:
-> 
-> Thanks for the review. Let me clarify before posting a v2.
-> 
-> > 
-> > Why block-core.json and not block-export.json?
-> 
-> If I get this right, block-export.json covers the server part. I
-> thought adding this next to BlockdevOptionsNbd was a better fit. I can
-> change that in v2 if you think block-export.json is a better match.
+On Mon, 9 Nov 2026 at 05:31, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> eth_get_protocols() already rejects some out-of-bounds offsets found in
+> packets. Add a missing check for TCP data offset.
+>
+> Fixes: eb700029c783 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4155
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>  net/eth.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-I'll trust Markus on this part of the review.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-> > > +#
-> > > +# @quit: Client will not reconnect.
-> > 
-> > What does this one mean exactly?
-> 
-> The client stopped for good. Requests fail and it never reconnects.
-> This state is reached on fatal error or teardown.
-
-So either the server gave up on the client (a protocol error such as
-an incorrect magic number that means the server has lost sync and
-prefers not to further entertain further input from the client), or
-the client gracefully terminated (the NBD_OPT_ABORT during handshake
-or NBD_CMD_DISC during normal operation for the client to tell the
-server it is done). I don't know if we can tell those apart, nor if we
-need to.  For debugging purposes, merely knowing that the connection
-is done (even if the fd is still in the process of being cleaned up)
-is already good enough for most purposes.
-
-> 
-> > 
-> > > +#
-> > > +# Since: 11.2
-> > 
-> > Making 11.2 seems unlikely.
-> 
-> Sure. Would updating this to 12.0 make more sense ?
-
-Agreed - this is too much on the "new feature" side to make soft
-freeze; even if it only exists to make debugging easier and the iotest
-that is now in 11.2 a bit more robust, I think aiming the new QMP
-command for 12.0 is better.
-
-> > > +#
-> > > +# @state: The client state.
-> > > +#
-> > > +# @connector: The connector details.  Only present while a connection
-> > > +#     attempt is running or its channel is parked.
-> > > +#
-> > > +# Since: 11.2
-> > > +##
-> > > +{ 'struct': 'XDbgNbdClient',
-> > > +  'data': { 'state': 'XDbgNbdClientState',
-> > > +            '*connector': 'XDbgNbdClientConnector' } }
-> > 
-> > How the combined state machine works is not clear to me.  Is it
-> > documented anywhere?
-> 
-> I did not find a proper documentation. I found the comments on the code
-> to be quite explicit though. The connector only runs in a connecting-*
-> state. In that state, when processing a request, the client tries to
-> get the channel from the connector. When the connector has a valid
-> channel but the client did not request it, the connector is in parked
-> state. Do you think this command should document that behavior?
-> 
-> > 
-> > > +
-> > > +##
-> > > +# @x-debug-query-nbd-client:
-> > > +#     Get the NBD client state.
-> > > +#
-> > > +# @node-name: node name of the NBD client to query.
-> > 
-> > How would I find the valid node names?  query-block-exports?
-> 
-> The node-name is listed by query-named-block-nodes or is the one passed
-> to blockdev-add. I will add a reference to those commands in the
-> docstring to clarify.
-
-The export name need not match the node name (although it is common
-for management apps to set the export name to copy the node name).
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+thanks
+-- PMM
 
