@@ -1,60 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEE760A5BE6
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 08:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B07606D03B
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 08:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=DmpbyECa
+	dkim=pass (2048-bit key, unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=Ijo3EP9G
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQhFj-0000dv-BX; Tue, 10 Nov 2026 03:30:51 -0500
+	id 1xQhEl-00006f-Qa; Tue, 10 Nov 2026 03:29:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xQhEl-000072-Tf; Tue, 10 Nov 2026 03:29:53 -0500
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ id 1xQhEc-0008WB-Hk; Tue, 10 Nov 2026 03:29:42 -0500
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xQhEi-0002zI-Au; Tue, 10 Nov 2026 03:29:51 -0500
+ id 1xQhEa-0002yp-Fa; Tue, 10 Nov 2026 03:29:41 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=D1ikuhwCBsDU2LHhWBT0sKC01niwPgfCxVeNe4tRMb8uFgjk+OaQtQxfUNYhZG8vXpDmKCh+xGb8erDP+/d9XSZL4HIFWA7bxlQYIcYTneih8QPmck+aLRykiwZ2RvLp38LIbt7lGYWGuPyBwW97jVQi7WrQ0EQKKIDcEUL2MEbgI50YhC4in49bKSiOVQC12iWB9wNKKHUjz3yWm+X8IPMHpd0CpUkuMfMJZjm10JaB0UHx8mM3I4R0mDgRK/hrIgLgmlKAtui8PcAeoqu/nKxr+VIjsFCBF9OPb5ish5f06pbbmPBJFP35ZZbwLKotWDkTYebfAsp79an16MB/sA==
+ b=nlLrc6DsT4YPLvCMkFkSVBCTj84DIw97WRh5hsqJluCglKM0cl+G7qTBudtBzQVcESSeGq78L5DQf/hvWBGxDKF9dAA/Bg3LYC+mREYzdn/nhUGHqb++1qnkkGS8QprAlBxRXB4Po9ERUEFm47LE9wKcadidqCW7j3B0rKiw/a5blWbmSHF57jr/AOWYjJ2fYa9WoQ9aao0x3UH13XG/Pi4Z6ArGGWKhtxHc1AD88AnWOCzKX4vxBtI8HSnDjTeyOYYT0x3vNmM8wBybx5g5LH3lQ4L9zAXoDB4tkSSyiu6GnKx4nb+iFGC9CJWd4ho5z2Bt47HgTsGxs4M15bQEyw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E44/7zC+LYXf3BoUpEZqWVC0ICOU04ouJsUzD+5hKsY=;
- b=ohkM2P0y23LDKH0r84BbLKsrAJa/wY+yMomG1SNNJ9HzeiTTdjRsgF9kFYVGl7kem+QEXh/U4xraVTGuhAIPkoAgoTy1T9y0evAxV57qhZOBCbyCOuulTx4UDXdBeSJUv/P3BmFl8IIH/gjY/L7ZgMqmA+j8/gzAleZiZVIJWRmv794eY9jFars26WcajmGhy7sS2kLUuEQO2xdnEYDLObucRpxHX+lz09hEa49glck7+y7F36OyjXONcN0L5Nw9+S/ujnudFicZrsrdHsVNBrM5mM27xaWbWaN2DGptBvLJVZpsVr6Gz2uW/oPtEs+N+So2fskfcAlGghcec6PKIg==
+ bh=cqTh4mAYo3Xq4wXEnINC8peVw2PNs4Qgk4K4T1FQl38=;
+ b=lgzf0u8SfFuZinj1nIGFGsmzrkM59VO4a84z+YAl/EqvSwDI9sMEcSGbhbHkV5tbG/q4wDUmsrdgO/lGzyVfoFWHFdd7kfrokAzMFH4FfXMuuclQNL61i+EMNhAnJtHYofiJAgrHReKZRoinEYxB69VsgI33hHXteJzS/2ZuSBL70w6Xri2IS715SSWpXT3B+P6wFDS6+0XJNugLvnKNCogUZrjIKEvqilBOYrFW0S+DvMBrde4yOxSLdQNKMqKnnxPxnrJF9tbEyS5Cwfa6WWy2c8DkA2cr7a/Nf74gDyxOksVnTOdoURlo+XAhyEHvinHhh+WJXZhaXPu7joq/WA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E44/7zC+LYXf3BoUpEZqWVC0ICOU04ouJsUzD+5hKsY=;
- b=DmpbyECaSJy+6i8HUuX2kLEgxrqfWF55gpcrcOZwk41CbzAhpcjwojU1HgvaGLp656bamJej3Z9fhhFJHrBVWEcmb7VDeuxJHDoF6DSA60OWRq2ZFBq4aWTjd49/kJLZSJ7yTcqGttBGWFzP27i/e0MBORqZGnqMacW8Jnv8jzxVGtQFncEU31uP4xIVr6sMxYdoSbeW/eMqPChSnBN6XNrHnEzFsO0WB5H7ASiUzbXVby5K8OBix8hi/yoAW5ShWHR0RtLfNsWpDJHCv3sye6RPY6dNPSU6jcL552hqqN/Zu9kBeCLCZnB8X1O6gRi2dIcXccB95bK2fbfsODZ7HQ==
+ bh=cqTh4mAYo3Xq4wXEnINC8peVw2PNs4Qgk4K4T1FQl38=;
+ b=Ijo3EP9GZI3q7uOnBWhEeHtBZO/JCRSUXu7/PXTx3V6R+zzUc2dAJlzZMmuxlCQUoKV7l3DdX8PvzVlDM4pi+w+Rg9K+0h1rDotBRI5VKCRzNLO8ekMlXeeK5BbUNDeZpOeI3NAyjPFAYBk4Cg9kYY4WJFD8SqEknWlTvb1wCfF04uAycpcRW+y5eMAk2ivpyJBEsTDTAYJE2/6pLcsJxTEDZEawhODTxcfUx+DJVQA2LjXIlWZ9SfCUhP4/Rx2HCqcnGEwqi0zOJFvgrfhTEBK3ax7jOr8f2QPy5stlG5l+EPwRymQTOAi3DigpMtPMoww5eq3jZIDIA2ZvCUOvqA==
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
- by TYZPR06MB6047.apcprd06.prod.outlook.com (2603:1096:400:33e::6)
+ by SEYPR06MB5490.apcprd06.prod.outlook.com (2603:1096:101:b6::12)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.7; Tue, 10 Nov
- 2026 08:29:31 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.6; Tue, 10 Nov
+ 2026 08:29:25 +0000
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
  ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
  ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0615.005; Tue, 10 Nov 2026
- 08:29:31 +0000
+ 08:29:25 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Kane Chen <kane_chen@aspeedtech.com>, "open
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 12/12] tests/functional/arm/test_aspeed_ast1030: Test the
- usbredir server transport
-Thread-Topic: [PATCH v3 12/12] tests/functional/arm/test_aspeed_ast1030: Test
- the usbredir server transport
-Thread-Index: AQHdcO2bJJbA7im0MUyDO8x5hTSvTQ==
-Date: Tue, 10 Nov 2026 08:29:31 +0000
-Message-ID: <20261110082917.240329-13-jamin_lin@aspeedtech.com>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
+ =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+Subject: [PATCH v3 03/12] hw/usb/aspeed-udc: Mask the reserved bits on
+ register writes
+Thread-Topic: [PATCH v3 03/12] hw/usb/aspeed-udc: Mask the reserved bits on
+ register writes
+Thread-Index: AQHdcO2VRa30O60gv0SoyAqoQndtGA==
+Date: Tue, 10 Nov 2026 08:29:21 +0000
+Message-ID: <20261110082917.240329-4-jamin_lin@aspeedtech.com>
 References: <20261110082917.240329-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20261110082917.240329-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -64,49 +65,49 @@ X-MS-TNEF-Correlator:
 authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|TYZPR06MB6047:EE_
-x-ms-office365-filtering-correlation-id: fd9da7b4-6fdd-44ec-679f-08df3f04be60
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|SEYPR06MB5490:EE_
+x-ms-office365-filtering-correlation-id: ef1f1f80-f627-4d58-da07-08df3f04ba83
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|366016|376014|1800799024|22082099003|18002099003|38070700021|56012099006|3023799007|261026140227099003|261028144727099003|261009223027099003|261102123227099003|261102130727099003|261021123027099003|261021121427099003|261022075727099003|261022115727099003|261022105027099003|261026121527099003|10067099003;
-x-microsoft-antispam-message-info: 7PXG0wQnaUcWt5FTvs5iUUA4JGlCkABvnwiVXrow1ui3940rgPk7vn1mhbxFHzPu1aSAGu4nVCZNxESTQc04q9szQrTmNWtW85CeX0pi4pMU9/CvVXMSp/BDpT5wvtQf5XizDF22FzneO9tOCnMZC99GyURiNY2gMy2fZztQayLS4JbinNG66yRdGwg/WhBZ7irWZrKrVLrHrfvQFu48YmiDjBmcBtgmYHk4CTZVECM30L7BHF+CtgneWI9RvB1NCPYwYzp0K2iSGBekq6wTWPEef3J8UYW91haVX8lwQg9Aa1jPChVV/2RPyHMEquuQXjObh3gIrOQ0dwWxWb69T72osNwx8UlZZsI6rSLKqk6oO/yuyHOiXCV58cf2ZH22UUJG2A2ysBX/AbjpNfmwgfeeV8bI7rxuddqZzE1vP1XxGkdoPSmMwFYqfmS1TlQGpoOJCnXpO5242izy4EiPMjemf+1qViljUlXUBm0kEtL9XTZ2QDXUw5E7FpYOhQw7v/LiBEeR1QYyt+w4Betjwa58gMf8T4J9Jzi2Ek9gzyF1s9Bq96jVvMEuNeeGNAO1BzWcLMu41z2llhvRX4LW72cu0ggsjmyJe+Qa7qZ5/ACEN4MIBvA+XSBygGn2bxuhNEQnRdCelcG9O1YMHtst+L9pHzwSoOdo2O/dPLeMD3s=
+ ARA:13230040|366016|376014|23010399003|1800799024|18002099003|22082099003|10067099003|38070700021|261102123227099003|56012099006|261021123027099003|261021121427099003;
+x-microsoft-antispam-message-info: 9FQRpV4LQlGYTCnLixmk/gGKwXOWTKAZXE7fflsm6A5v/QCns5EORSWU70XFnnAHv3dYbFFUT/dgv8h5kYd9NWD5HEuLCS6+mHlX/ETQuEg3YnUgR0Tc4/uUpNWEsW/xYlcyvAWPyxEt6yfSGvdlPT7V+mDCdb25etTciyZlICWscEjmC+KHZlfbmzCreZqnguwmNzwdXGkmEQ4yrXsE7yllRVHkntQ2puoNG0sTLDJNeuRb5NjBSjmOJ8kzyMsiTgKM6el/cyCb35qDEeLT4R9NkyRmxzPNtwGDz0A8OgZtRajD4h+FoBmV+/8b2osoyF07O3pX4J2AMOOhntiqlIz//T+UyChl6STugPSIPhK+5PegnkVxQpCFesK5Tk4g/lUGxJw2VkOXZ1N6UW564gqQyY89Z9UfLRxTJuDljOrBdsFl3P4HWGnoGTjUVk78pEKHucYOrGnLr4vNPzOmOtbba6hRsKCYXB37MJzYMi8GUJkTMIyoqgczLqPGtW1FzYitV1AEyjJOQ7cpA5bDc+O2yTQwlyAfZFJs3tBIlPEEYxFOoENpUYLXcqVSNZOEzwNhXNtqqebICVZKmQhyLqo8868O35yzTN64feZQ+vdvNI+4u0WY3hDpMgKMK1JgEHpsLQP4is5o1q/SJuXv9FfdUlJmGJQtwxAOqugpOtmVMr57FyD90Yp5PIzvddgADqe2eCxtdD8XUZJogZ9/FAwQ4D/REX5U9vq40SMRjBs=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(22082099003)(18002099003)(38070700021)(56012099006)(3023799007)(261026140227099003)(261028144727099003)(261009223027099003)(261102123227099003)(261102130727099003)(261021123027099003)(261021121427099003)(261022075727099003)(261022115727099003)(261022105027099003)(261026121527099003)(10067099003);
+ SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(18002099003)(22082099003)(10067099003)(38070700021)(261102123227099003)(56012099006)(261021123027099003)(261021121427099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?CIjCNtNKuPKKWKPc+QXodXiTZa67HaMex4KmziDkcm/hvvsXAtNwTCFAlG?=
- =?iso-8859-1?Q?CZFSNGrX3VWfb9/qJ0Zb9DkxuLmZH470juXCaNxkDQbY2NLFMOyiq6p/ao?=
- =?iso-8859-1?Q?8GwD5S09GAygSJ/R/MkCoyOL3xaVUpoLkJYq9IqolKCnbAqut5KzzAAVLO?=
- =?iso-8859-1?Q?goaPgAvO6ydXOBw1ImBjfV3UoaTCGASKwopYSghI+bb+5aWcIU/8Carcby?=
- =?iso-8859-1?Q?pWKsgZRSrhInvlIDGQdNhHQ7+HksydhVO0atmeL9pkjfikRFCjkvUej7ws?=
- =?iso-8859-1?Q?syHFqd4pmyyAk6UXcl2cd7wrOmBou8upVadibdyy/10EclqaOT2dcNkCZA?=
- =?iso-8859-1?Q?QzsAWofDmhT9uxxJNGO+wNN4v5aCoswXjwCybrzrNJYI0p6diiNDEAIEME?=
- =?iso-8859-1?Q?OTGbp2yt70JDlvW3RQx+uLhTBz95iRTcbynqUQOeaKouILqnKmGjm7Qqil?=
- =?iso-8859-1?Q?/vzQViB7MfqhDmoROmrGCjjWhKdVlYPC6vy1ktpL6OJsGjUdbaV8ebWgQe?=
- =?iso-8859-1?Q?tA66DupqQGzv++IoxQNBPY7vu5AR/ns89VFkTPmY1zn/mVSdQz3cLhXEiF?=
- =?iso-8859-1?Q?RUlZcB9ZmXsxzGNjUocpX+3ekDl2yr2VqjW7TO5vvwvI70KSn+n4ZnyvwD?=
- =?iso-8859-1?Q?bwGewOyZSQ2nTa8Ve8qCSrZv/RGbQwzZyxwCPACudgqyfwaTQ5rWpEC/F8?=
- =?iso-8859-1?Q?vgMZWA7h7EAKHPTzZqXNsR1ZyO/joRI6fvOHU/Elr1u9htwef4Vbi0jMkr?=
- =?iso-8859-1?Q?ulKsoSUPZ+3/OZk1uJqpYNB4LmGjuNGt5RKiA8V22V8WuwgCEHBhU8BQBm?=
- =?iso-8859-1?Q?NxzNNQyQjkIWZpmpCmcRMcTW6/WFWT/4uQlIbFBRJTdNEyOMtdR1cMzTE+?=
- =?iso-8859-1?Q?JW5kr6ZTeI3pbsqr5NzERxJQ/nUkBZjaeggFnBv+ZeiJzh8WCPOmcxzrPK?=
- =?iso-8859-1?Q?rMyhSqu1pghlhKMojB8Nk2mvg3vZ7JPjP4oDMhPLFAwJOAgYPWVtR+rs7H?=
- =?iso-8859-1?Q?YdM8j7z0l73txhAXF3QUZnPhhdgCnGyXsfL7Or1JwkBnIdRcW1bvRECamW?=
- =?iso-8859-1?Q?1lQXmwsj2bulrwkyOmpMd2zfX/V4P8oF0f74fYcEDpic4fHBn/0rySSqWM?=
- =?iso-8859-1?Q?5491MSPGA37dwelaZ5FlJT6XnYR2dOZt1/+LmsDG1k+KwcVDFdk90E5+dy?=
- =?iso-8859-1?Q?raMPxY3Ugn0PcK3LXOfLP220sVXcXH7G9TwwX7/Ymqmf+soB4+GCsD7Mac?=
- =?iso-8859-1?Q?vCtaxQ3jvCR49lanXdCDSjZJVE6RH4RWbaS/3kKHV8Yz4870CxgutgHtob?=
- =?iso-8859-1?Q?llj0PKscSPt2u0FKAJ/kuOOFG+83Wk9boQeaXIJdaAmxnnyny/c3IqBDVN?=
- =?iso-8859-1?Q?2tPzOcc+JaEZUEg5wp1X+fp5fskQu9A9KS0tlWAtl6GNQ71XvDGUHlk5DS?=
- =?iso-8859-1?Q?tFGB39zHlySSIAJdrgyVLF0AaM8L29CTOoZDBK80Mi9jXuRuHP6s9q2LEf?=
- =?iso-8859-1?Q?V5cWnNfuoMj/tywTjW5TP13jaKF6ITLu5fwWJkg/3dIihV/k4efgfX6HCs?=
- =?iso-8859-1?Q?iGGZfW3gmOkZw7RmdeSzU/exemrhP6PQIyv8YS+pv8D4iXWSwQKY2x/Vp/?=
- =?iso-8859-1?Q?SE74ghMeAV0D1BC/iq+uG3QMcJHMMSOOegeklA5wCnn8xKkFWBSV5KTMhI?=
- =?iso-8859-1?Q?rPWTJQdtyVrMGraMK6+M7hy8CFQkJRrwOrkwvBssGp1hNxH6efxFkwOGpo?=
- =?iso-8859-1?Q?aLh/my3i1FEPTOLrxr/zlzMm2F/4ABetR4hxze2lRtWPTc67wL+4bSu9Jq?=
- =?iso-8859-1?Q?eDEkV+FUXA=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?VzwDVQ7j1zi1G1JnPEjGlOulwFqsVYVOmkJuNlVXA1eMmcN6uUbVOE/7m7?=
+ =?iso-8859-1?Q?hI4mS1j9/1Lm8QnfJZfhLscFT0fzNuZX2W2znLFrWoBIE0N4SAVPQafNYF?=
+ =?iso-8859-1?Q?wpEWsLtVVilIxMi2GXX7fAt4pAdNZGrWdjnSi8J1yKwAanA7eLYoDX0LTk?=
+ =?iso-8859-1?Q?hY2ft3tTAOc6x9j5nrN0xAfidruOWVdZ7K6An0pXUXE/VK/buAIdRmfuyE?=
+ =?iso-8859-1?Q?L3PYLGQtT8v3nCd8SBKYPaBQm3c/wCr4viT8gCFSP7dq9ldePCkYWCNcUn?=
+ =?iso-8859-1?Q?/DLBGv/tmP45PP9Zpj1rNpprT5ChGV4SHPoRQFMRqN0xgF0b77K4Eh9CC5?=
+ =?iso-8859-1?Q?OuD3lGlpq4G9TG/gt4G8uO6kUDgI0FYh54gE/oZegHGfJwSEC0rOr8SGI9?=
+ =?iso-8859-1?Q?Z6LbkzbGcka33OmzZfY2YyOOZDTuoYL7z7oGcEJLyzT4dk6CBFveuh4CQg?=
+ =?iso-8859-1?Q?MzER3JJQeJy3TYrmP8ohJ2VUgPB4nChvSz5IWBUI34pjfFDXncuKDVDma+?=
+ =?iso-8859-1?Q?tUQduCaDFBPflO2PmV6KalnDW+pBXgOT0nK1eJ8cwXGMd7gfzF5KSdLzLH?=
+ =?iso-8859-1?Q?17LK14f3GIRd7OAVCnwM280geGRddWC6AhLa7uo7k6kHyw4fJdgMnbkqrb?=
+ =?iso-8859-1?Q?l7mUIF7D/kbnN9nyQtmdDBHJuqh1hWDYwJ5/+OgeW+H9v74FDbq+Ep6gdR?=
+ =?iso-8859-1?Q?dHRYjeP13sFsQ8bI/nZpCGcALNc3/P54XWd6o8XEYFE06+HBf/gNt9mSdZ?=
+ =?iso-8859-1?Q?hgviALFBTE0RlsiM2FFpbn5z3LZu0rs7egvNMPJmiZvDdZBgrTkcd2DK/5?=
+ =?iso-8859-1?Q?NRqKWsD/Ro+/c8DWPqceP7P00VmWWnzNl+A6hnPtPBPOHdcn0TGzkoE2wb?=
+ =?iso-8859-1?Q?h/aIBMnHCGGY4ffNHAi3vRYPkqecaR/LzxvjFkxtylttlza6GAbni/IyWY?=
+ =?iso-8859-1?Q?jioQxvu9jsyUOvrFVqbcRbDWggAs5U4lI7TFfR1PKD2OQ3nNkQk0w0jTBb?=
+ =?iso-8859-1?Q?Th2YTNIzZ2toucQKRE5HoHN554WpfOfcu2gaBU9GWE79cooiHfJiNA6nKe?=
+ =?iso-8859-1?Q?MENKeT59AD0mJe+rz0W/SGd9iyRTwL5tk70KBIHRywHeuybHIqERDyrN+u?=
+ =?iso-8859-1?Q?x9ITNTx1HTCx/u104cQrhXQopkSBifkOqjLwJf1ogHCgxVjfljCRoZ6fgi?=
+ =?iso-8859-1?Q?HE8cf7DPOUSShdOmUF1FH1b44MbCyxBvkKDkwkx+EBP7ZXnPOjIK9CG7nc?=
+ =?iso-8859-1?Q?apS31cnAHFcVE7zJI6SY62LeL7Nz8OdGYVi026VySTpYeoJdLnIyH9ypPs?=
+ =?iso-8859-1?Q?QF+EIS+i0wRGD7zvx/HW9SewFmwZCShKSiR1h+8g+in+YiGNNPfGUUsDm5?=
+ =?iso-8859-1?Q?5HnulJ8hQS9w7LgNfntO5f81c+1fJvyTwpY5uQV4IqZtF0WTxn9w6jxAXs?=
+ =?iso-8859-1?Q?YDU5skW9X944iws+giK+aKF64N01Pvk0vcysj0KD247ca3iVAWVZsIwlAH?=
+ =?iso-8859-1?Q?cSIc5rlQOHq0U4xPnMDR9kgHxtCarTaNavwnmVs8UEreITXLYjrvOfVvR/?=
+ =?iso-8859-1?Q?VvY8zEUi1g16SPsFomKzwl7D8i5d4xMv1FYU83iXAPH5rWml0ih0npEKKL?=
+ =?iso-8859-1?Q?R9f8T4mpDtDNJLP+Ndi7yWbIaeiR/ZqbD65F/14CzBu/AZt7NK2Uh8MsgR?=
+ =?iso-8859-1?Q?RztxJ8Hl8TX9QenIiO1ulXJpOvyoH0iXxB8EoPXf3CeOL85Kc5cEc2dvxO?=
+ =?iso-8859-1?Q?bfJArV1aXQnPUOeypwuLC+nUbGMPycbA7WhYIXpXJgouSPe1LvD1op9iEr?=
+ =?iso-8859-1?Q?cvPnc1hIBw=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 X-Archived-By: <archiver.kernel.org>
@@ -114,22 +115,21 @@ MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fd9da7b4-6fdd-44ec-679f-08df3f04be60
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Nov 2026 08:29:31.6022 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ef1f1f80-f627-4d58-da07-08df3f04ba83
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Nov 2026 08:29:21.5678 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ntJiW7GWX7tolZObXRPJ+z14Zh5tOPQnPTSX7p1n1wGsROMVcWUvxQSieRZmdyAsM2nGcTXFH9avj+JrDOb/OKdHgv11Y0MNjG8BOHqsAeM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6047
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+X-MS-Exchange-CrossTenant-userprincipalname: egjWcvGmmL54cI7RrwlrY2Sgbaee/9eZsXo+QKewrY6Ood1n9yRb4ys7JAXOxC7jVnQmI+zdJVm8dTSaj2gfxg6r58n7cNFZCd7Uwr8ynWc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5490
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -142,113 +142,65 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Export the AST1030 UDC gadget with x-usb-redir-server and import it on an=
+Writes to the interrupt registers were not masked, so a guest could set=0A=
+a reserved bit and read it back. The hardware returns 0 for those.=0A=
 =0A=
-AST2600 with usb-redir, then check that the AST2600 enumerates it. That=0A=
-covers the announce, control and enumeration paths of the transport, and=0A=
-the UDC model behind it.=0A=
+Mask each one to the bits the datasheet marks read/write:=0A=
 =0A=
-The two machines have to come from the same QEMU binary, because a=0A=
-functional test gets only one. ast1030-evb and ast2600-evb are both in=0A=
-qemu-system-arm.=0A=
+  UDC_IER         17, 16, 8:6, 4:0=0A=
+  UDC_ISR         8:6, 4:0=0A=
+  UDC_EP_ACK_IER  3:0=0A=
+  UDC_EP_NAK_IER  3:0=0A=
+  UDC_EP_ACK_ISR  3:0=0A=
+  UDC_EP_NAK_ISR  3:0=0A=
+=0A=
+UDC_ISR bits 17 and 16 summarise the endpoint pool. They are read only,=0A=
+so a write cannot clear them.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+Reviewed-by: C=E9dric Le Goater <clg@redhat.com>=0A=
 ---=0A=
- tests/functional/arm/test_aspeed_ast1030.py | 51 +++++++++++++++++++++=0A=
- 1 file changed, 51 insertions(+)=0A=
+ hw/usb/aspeed-udc.c | 12 +++++++++++-=0A=
+ 1 file changed, 11 insertions(+), 1 deletion(-)=0A=
 =0A=
-diff --git a/tests/functional/arm/test_aspeed_ast1030.py b/tests/functional=
-/arm/test_aspeed_ast1030.py=0A=
-index 83a96ec322..57d1233b6d 100755=0A=
---- a/tests/functional/arm/test_aspeed_ast1030.py=0A=
-+++ b/tests/functional/arm/test_aspeed_ast1030.py=0A=
-@@ -6,6 +6,8 @@=0A=
- #=0A=
- # SPDX-License-Identifier: GPL-2.0-or-later=0A=
- =0A=
-+import os=0A=
-+=0A=
- from aspeed import AspeedTest=0A=
- from qemu_test import Asset, exec_command_and_wait_for_pattern=0A=
- =0A=
-@@ -68,6 +70,55 @@ def test_arm_ast1030_zephyros_1_07(self):=0A=
-                 'kernel uptime',=0A=
-         ]: exec_command_and_wait_for_pattern(self, shell_cmd, "uart:~$")=
-=0A=
- =0A=
-+    ASSET_SDK_V1103_AST2600 =3D Asset(=0A=
-+        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.0=
-3/ast2600-default-image.tar.gz',=0A=
-+        '47e3656a14bf7a4de28d3dfbf48bc2325443bc42d270f3bc82646f92f6dea165'=
-)=0A=
-+=0A=
-+    def test_arm_ast1030_usbredir_to_ast2600(self):=0A=
-+        self.require_device('x-usb-redir-server')=0A=
-+        self.require_device('usb-redir')=0A=
-+        self.set_machine('ast2600-evb')=0A=
-+        self.set_machine('ast1030-evb')=0A=
-+=0A=
-+        ast1030_kernel_file =3D self.archive_extract(=0A=
-+            self.ASSET_ZEPHYR_3_08, member=3D"ast1030-evb-demo/zephyr.elf"=
-)=0A=
-+=0A=
-+        ast2600_image_file =3D self.archive_extract(=0A=
-+            self.ASSET_SDK_V1103_AST2600,=0A=
-+            member=3D"ast2600-default-image/image-bmc")=0A=
-+        sock =3D os.path.join(self.socket_dir().name, 'usbredir.sock')=0A=
-+=0A=
-+        udc =3D self.get_vm(name=3D'udc')=0A=
-+        udc.set_console()=0A=
-+        udc.add_args('-kernel', ast1030_kernel_file, '-nographic',=0A=
-+                     '-chardev',=0A=
-+                     f'socket,id=3Dusbredir0,path=3D{sock},server=3Don,wai=
-t=3Doff',=0A=
-+                     '-device',=0A=
-+                     'x-usb-redir-server,id=3Dudcredir,chardev=3Dusbredir0=
-',=0A=
-+                     '-device', 'aspeed.udc-gadget,bus=3Dudcredir.0,'=0A=
-+                                'udc=3D/machine/soc/udc')=0A=
-+        udc.launch()=0A=
-+        self.wait_for_console_pattern('Booting Zephyr OS', vm=3Dudc)=0A=
-+        exec_command_and_wait_for_pattern(self, 'usb enable', 'cmd_usb_ena=
-ble',=0A=
-+                                          vm=3Dudc)=0A=
-+        self.wait_for_console_pattern('uart:~$', vm=3Dudc)=0A=
-+=0A=
-+        host =3D self.get_vm(name=3D'host')=0A=
-+        host.set_machine('ast2600-evb')=0A=
-+        host.set_console()=0A=
-+        host.add_args('-drive',=0A=
-+                      f'file=3D{ast2600_image_file},if=3Dmtd,format=3Draw'=
-,=0A=
-+                      '-snapshot',=0A=
-+                      '-chardev', f'socket,id=3Dusbredir0,path=3D{sock}',=
-=0A=
-+                      '-device', 'usb-redir,chardev=3Dusbredir0,bus=3Dusb-=
-bus.1')=0A=
-+        host.launch()=0A=
-+        self.wait_for_console_pattern('U-Boot 2019.04', vm=3Dhost)=0A=
-+        self.wait_for_console_pattern('Hit any key to stop autoboot', vm=
-=3Dhost)=0A=
-+        exec_command_and_wait_for_pattern(self, '\012', 'ast#', vm=3Dhost)=
-=0A=
-+        exec_command_and_wait_for_pattern(self, 'usb start', 'ast#', vm=3D=
-host)=0A=
-+        exec_command_and_wait_for_pattern(self, 'usb tree',=0A=
-+                                          'ZEPHYR Zephyr DFU sample', vm=
-=3Dhost)=0A=
-+=0A=
-     def test_arm_ast1030_otp_blockdev_device(self):=0A=
-         self.vm.set_machine("ast1030-evb")=0A=
- =0A=
+diff --git a/hw/usb/aspeed-udc.c b/hw/usb/aspeed-udc.c=0A=
+index 6a5d05ce1f..945940cc99 100644=0A=
+--- a/hw/usb/aspeed-udc.c=0A=
++++ b/hw/usb/aspeed-udc.c=0A=
+@@ -329,14 +329,24 @@ static void aspeed_udc_write(void *opaque, hwaddr off=
+set, uint64_t data,=0A=
+         s->regs[R_UDC_FUNC_CTRL] =3D val;=0A=
+         break;=0A=
+     case R_UDC_IER:=0A=
++        val &=3D 0x000301df;=0A=
++        s->regs[reg] =3D val;=0A=
++        aspeed_udc_update_irq(s);=0A=
++        break;=0A=
++    case R_UDC_ISR:=0A=
++        val &=3D 0x000001df;=0A=
++        s->regs[reg] &=3D ~val;=0A=
++        aspeed_udc_update_irq(s);=0A=
++        break;=0A=
+     case R_UDC_EP_ACK_IER:=0A=
+     case R_UDC_EP_NAK_IER:=0A=
++        val &=3D 0x0000000f;=0A=
+         s->regs[reg] =3D val;=0A=
+         aspeed_udc_update_irq(s);=0A=
+         break;=0A=
+-    case R_UDC_ISR:=0A=
+     case R_UDC_EP_ACK_ISR:=0A=
+     case R_UDC_EP_NAK_ISR:=0A=
++        val &=3D 0x0000000f;=0A=
+         s->regs[reg] &=3D ~val;=0A=
+         aspeed_udc_update_irq(s);=0A=
+         break;=0A=
 -- =0A=
 2.43.0=0A=
 
