@@ -1,62 +1,118 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C164606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 06:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2190606A32A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 06:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=YjUOmJto
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=LUY/yxY7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQf5x-0003BX-MR; Tue, 10 Nov 2026 01:12:37 -0500
+	id 1xQfl7-0005wQ-3d; Tue, 10 Nov 2026 01:55:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1xQf5t-0003Ak-Dv; Tue, 10 Nov 2026 01:12:33 -0500
-Received: from [115.124.30.132] (helo=out30-132.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1xQfkw-0005ry-4K; Tue, 10 Nov 2026 01:54:59 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1xQf5n-0007HW-RI; Tue, 10 Nov 2026 01:12:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1794291126; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=g5bstPdRHkWbNiSlV3mlZUo5ZDpDV1E0HV7Po0QUbmQ=;
- b=YjUOmJtokgKLXmVgTszizMV6QUQD1fspzEBxnq44vxfrViBnw65nlPy3im9+v8fyKuhr5o5Ht0/Ds16iYJDHwD3va1JFGfc+C1w3VoYcbiiM3LV+DgnhStV7L8mwLoC7RWCsrf/kJNnPpFhIw0ojApOjYZhUb2tTbipqYr3gKNo=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R131e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0XEUDESx_1794291125; 
-Received: from 30.166.65.98(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0XEUDESx_1794291125 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 10 Nov 2026 14:12:06 +0800
-Message-ID: <e5793ffb-635e-4e0b-ab85-18fafb942255@linux.alibaba.com>
-Date: Tue, 10 Nov 2026 14:12:04 +0800
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1xQfku-0002N3-EV; Tue, 10 Nov 2026 01:54:57 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AA51pfV219399; Tue, 10 Nov 2026 06:54:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=0V/REK
+ Tqhb8FuImRh08GImQe38OqphsykYriHAoFiqY=; b=LUY/yxY7pTxcSQAYBL/nS+
+ yVgW9c+Re/G+QdTLV6egHQAwVgeqgb3h0mCYNt1poaho7gnx9ozN1d6muR7i6pYF
+ ITusFTW0vS+Tfu906CR0hBeEQSdBOwYcWHdGmB6IBYCRBCEsfetC560tGiq9CU5e
+ 7IeZ5OhYpthde3ifLRZ/7m3tQ2O1PirQZ5UvT5fZjNsp6tL36iDdXbDyi/HQEW44
+ TnYmzPM0lz2ngm5uNUSoQgIJPO5tNkkzwFgH+QXXjeQrqlCYjgLtgf7IfquvvHm3
+ 080ZZfCjhHANytQUCNXPYzZN5q/EpgNLaQ4jFo0767Tyo2LMiDAGmuKOXi2mrzgg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hstdg36j4-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 10 Nov 2026 06:54:49 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AA4Z1AD1270107; Tue, 10 Nov 2026 06:54:48 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4htepvwmmx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Nov 2026 06:54:48 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6AA6slPr16319012
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Nov 2026 06:54:47 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 477E658065;
+ Tue, 10 Nov 2026 06:54:47 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4806C58052;
+ Tue, 10 Nov 2026 06:54:45 +0000 (GMT)
+Received: from [9.123.11.20] (unknown [9.123.11.20])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Nov 2026 06:54:44 +0000 (GMT)
+Message-ID: <e2e9c608-f139-447f-887f-8fb4909470a3@linux.ibm.com>
+Date: Tue, 10 Nov 2026 12:24:43 +0530
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: fix exception PC for WFI
-To: fangyu.yu@linux.alibaba.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, chao.liu@processmission.com
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, guoren@kernel.org
-References: <20261109135633.64867-1-fangyu.yu@linux.alibaba.com>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20261109135633.64867-1-fangyu.yu@linux.alibaba.com>
+Subject: Re: [PULL 6/6] spapr-vscsi: clamp adapter info DMA write length to
+ struct size
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org
+Cc: qemu-devel@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
+ Guthrie McAfee Armstrong <git@gmarmstrong.dev>,
+ Gautam Menghani <gautam@linux.ibm.com>
+References: <20261028052024.38377-1-harshpb@linux.ibm.com>
+ <20261028052024.38377-7-harshpb@linux.ibm.com>
+ <CAFEAcA-CML7CFxn7WC0d2uuE6cHJbM2-p2Lv-wcAXWU9kpsRWw@mail.gmail.com>
+Content-Language: en-GB
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <CAFEAcA-CML7CFxn7WC0d2uuE6cHJbM2-p2Lv-wcAXWU9kpsRWw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.132 (deferred)
-Received-SPF: pass client-ip=115.124.30.132;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-132.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=J+M/fwnS c=1 sm=1 tr=0 ts=6af2bfb9 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
+ a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=miANpqmMrLJ29yjBrAMA:9 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEwMDAyNiBTYWx0ZWRfXw9k1zArW96o6
+ bK76C1EwWdnvqzxyuTzt70WD8a7c1r88hnnFMto1sbYcRyn6N54kO/h5TDhBcyHlQ31bGdBuQ7C
+ PRb+rP6k+Wpywm/PNNniaWVt76j/rYRG+GSXEf7nfFAaWk+PBC6z+oeII9Mws8C8iiKx46vPh2E
+ Ccr+eeg15hY7FLIwd3T1obcj8P8J7M6ZneqR7B4uc1hUOW8UACysqKQ63uKg+k25JWc2X0qucb6
+ RdmTt0dis6SWE0hsE0DaeEgZEcSiFJuJYSays3nX29shVnTf1K0osNM83IkrJIQ1i6ya/Tqbc3s
+ gHJkv1O0+4nEzp441kWBr2W9mAUe0QssfTMM3bNzj54ncCDd/SzYPS0t5HPZAIoMqBfMfSbK65j
+ uW/i04cxRTH0PCnyN4a+kpW0PkU6yH/qkC8updJKeW/vMZM+LlFvmOKOawLr9E+jujbUUmuXavR
+ ZgwwJIFQfYerRvPZvSQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEwMDAyNiBTYWx0ZWRfXyK+HPHjREgpj
+ sPNRroWYr+3ecW0lYlkJ+CUcslUQpPcArj0CTod+sLA7kdMy83BOaChBNntz5rL1RgHtt2JWQRF
+ nLHpPwbXe0lK46AXIzvWBq9p2ZFHhHw=
+X-Proofpoint-GUID: QIUt_NijTB_oMbGi8hDqWSdmuTgNjkKa
+X-Proofpoint-ORIG-GUID: QIUt_NijTB_oMbGi8hDqWSdmuTgNjkKa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-10_02,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 adultscore=0 suspectscore=0
+ malwarescore=0 clxscore=1011 priorityscore=1501 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611100026
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,90 +124,57 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-24.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
++ qemu-stable
 
-On 11/9/26 9:56 PM, fangyu.yu@linux.alibaba.com wrote:
-> From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
->
-> trans_wfi() advances env->pc before calling helper_wfi(), which may
-> raise illegal or virtual-instruction exceptions through GETPC().
-> With CF_PCREL, restoring the instruction PC uses env->pc's page base.
-> If the next instruction is in a different page, the exception PC is
-> restored one page too high. This affects both a WFI ending exactly at
-> a page boundary and one crossing it.
->
-> Keep env->pc pointing at WFI while helper_wfi() can raise an exception,
-> and pass the instruction length to the helper. Advance env->pc only on
-> the normal single-step or halt paths.
->
-> Fixes: 356c13f94dbf ("target/riscv: Enable PC-relative translation")
-> Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Hi Peter,
 
-Zhiwei
-> ---
->   target/riscv/helper.h                              | 2 +-
->   target/riscv/tcg/insn_trans/trans_privileged.c.inc | 4 ++--
->   target/riscv/tcg/op_helper.c                       | 6 +++++-
->   3 files changed, 8 insertions(+), 4 deletions(-)
->
-> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> index 1cffcad580..b36e3532aa 100644
-> --- a/target/riscv/helper.h
-> +++ b/target/riscv/helper.h
-> @@ -135,7 +135,7 @@ DEF_HELPER_1(mret, tl, env)
->   DEF_HELPER_1(dret, tl, env)
->   DEF_HELPER_1(mnret, tl, env)
->   DEF_HELPER_1(ctr_clear, void, env)
-> -DEF_HELPER_1(wfi, void, env)
-> +DEF_HELPER_2(wfi, void, env, i32)
->   DEF_HELPER_1(wrs_nto, void, env)
->   DEF_HELPER_1(tlb_flush, void, env)
->   DEF_HELPER_1(tlb_flush_all, void, env)
-> diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-> index e22df6fbe7..3ca55b9842 100644
-> --- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-> +++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-> @@ -167,8 +167,8 @@ static bool trans_wfi(DisasContext *ctx, arg_wfi *a)
->   {
->   #ifndef CONFIG_USER_ONLY
->       decode_save_opc(ctx, 0);
-> -    gen_update_pc(ctx, ctx->cur_insn_len);
-> -    gen_helper_wfi(tcg_env);
-> +    gen_update_pc(ctx, 0);
-> +    gen_helper_wfi(tcg_env, tcg_constant_i32(ctx->cur_insn_len));
->       ctx->base.is_jmp = DISAS_NORETURN;
->       return true;
->   #else
-> diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-> index f9c79fe6b9..3f71258858 100644
-> --- a/target/riscv/tcg/op_helper.c
-> +++ b/target/riscv/tcg/op_helper.c
-> @@ -625,7 +625,7 @@ void HELPER(ctr_clear)(CPURISCVState *env)
->       riscv_ctr_clear(env);
->   }
->   
-> -void HELPER(wfi)(CPURISCVState *env)
-> +void HELPER(wfi)(CPURISCVState *env, uint32_t insn_len)
->   {
->       CPUState *cs = env_cpu(env);
->       bool rvs = riscv_has_ext(env, RVS);
-> @@ -639,6 +639,10 @@ void HELPER(wfi)(CPURISCVState *env)
->                  (prv_u || (prv_s && get_field(env->hstatus, HSTATUS_VTW)))) {
->           riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
->       } else {
-> +        env->pc += insn_len;
-> +        if (env->xl == MXL_RV32) {
-> +            env->pc = (int32_t)env->pc;
-> +        }
->           if (riscv_cpu_cfg(env)->ext_sdext && !env->debug_mode &&
->               (env->dcsr & DCSR_STEP)) {
->               return;
+On 05/11/26 8:57 pm, Peter Maydell wrote:
+> On Wed, 28 Oct 2026 at 05:21, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
+>>
+>> From: Chinmay Rath <rathc@linux.ibm.com>
+>>
+>> vscsi_send_adapter_info() used the guest-supplied common.length
+>> field directly as the size argument to spapr_vio_dma_write().
+>> Since common.length is controlled by the guest, a value larger
+>> than sizeof(struct mad_adapter_info_data) (148 bytes) caused
+>> dma_memory_write() to read past the end of the stack-allocated info
+>> struct, leaking arbitrary host stack contents into guest memory.
+>>
+>> Fix this by clamping the write length to sizeof(info), then using
+>> spapr_vio_dma_set() to zero-fill any remaining bytes the guest
+>> requested beyond that size. This mirrors the existing pattern in
+>> vscsi_send_capabilities().
+>>
+>> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4626
+>> Reported-by: Guthrie McAfee Armstrong <git@gmarmstrong.dev>
+>> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+>> Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
+>> Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+>> Link: https://lore.kernel.org/qemu-devel/20261007144434.374749-1-rathc@linux.ibm.com
+>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> 
+> Shouldn't this be Cc: qemu-stable@nongnu.org ?
+
+Yes, should have been marked for stable. I have CCed it now though.>
+> Given that spapr-vscsi is supposed to be covered by the "virtualization
+> use case", have we deliberately decided we didn't want to give this
+> a CVE, or did that step in the process get missed ?
+
+I think it got missed, can we still request for a CVE to be assigned on 
+the gitlab issue?
+
+regards,
+Harsh
+
+> 
+> thanks
+> -- PMM
+
 
