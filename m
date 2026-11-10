@@ -1,82 +1,97 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF1C606A320
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F028606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Qs7zuFjr
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ThpYmLEF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQoZD-0004p9-De; Tue, 10 Nov 2026 11:19:27 -0500
+	id 1xQobS-0006Q3-PP; Tue, 10 Nov 2026 11:21:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xQoZ3-0004mi-6Z
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:19:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xQoZ0-0003h5-9P
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:19:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794327553;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ks7Zr45C+Pr3EMP0H9RmrbK3FsBG++sErcDSOcyIEgU=;
- b=Qs7zuFjryWQMe4CsoGAB6QSmf1SXK/fkhc6CTlu36J3VqtTpspD8WSXRtkpGU+MR4mLY0V
- B+RrhQaIrT0FR9aZrUm+ANIZaifoqJ4avU4/IRQC06EzLlMpHtP2s7Sxt37VqzJ9DZjKo+
- ZiS7nD9VZpk9HnSy9ceguDGeSNJuMqU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-328-8B0qAS3uP2KRF8mviIWq1A-1; Tue,
- 10 Nov 2026 11:19:09 -0500
-X-MC-Unique: 8B0qAS3uP2KRF8mviIWq1A-1
-X-Mimecast-MFC-AGG-ID: 8B0qAS3uP2KRF8mviIWq1A_1794327548
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3B6718002FB; Tue, 10 Nov 2026 16:19:07 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 06BE430000E7; Tue, 10 Nov 2026 16:19:05 +0000 (UTC)
-Date: Tue, 10 Nov 2026 16:19:03 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-stable@nongnu.org,
- stefanha@redhat.com,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH v3 5/6] nbd/server: Reject rather than assert on
- non-compliant NBD_OPT_SET_META_CONTEXT
-Message-ID: <avND9_Y5zRVvTWPE@redhat.com>
-References: <20261110153121.1516536-8-eblake@redhat.com>
- <20261110155356.1520433-7-eblake@redhat.com>
- <20261110155356.1520433-11-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xQoaw-00068K-K7
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:21:16 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xQoas-00048S-KV
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:21:13 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-6b65d69f5c2so2935993a12.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 08:21:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794327667; x=1794932467; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=kII7F4ctUkYgoQt59X+qcLkhPHev2NgMkYmPxI5mmz8=;
+ b=ThpYmLEFn/LHGJUGse+a+YJYmqNMib3Cdv0ITbC7pbAbvBYon93XuEGzSO384PHn1e
+ Ev7+MXAeK3khTTH5PVxW+ZIztVjhSTEVbDLgECGg7HiO+QhZR3q64H+DFUNzGH7L2vF+
+ GekL5GxXrSDRVhs0kSwBDR8K4kJ34JWuF/LvVmH5mFsAcrdG/IZ/Wo4MowJ3dZzujSaq
+ +WBNS2sITVspNO9ZG3qrARg8sJfXrbO1lR1NR1lrACVeoXfTOd5H47IQhgdCAl0lSYK6
+ nWOkSDaGWNuWgZUSYMIASkXf6NghcH/fXVHTeobQHFW1ik+iuFUSaK5o2VDBXGZwt6T6
+ g3ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794327667; x=1794932467;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=kII7F4ctUkYgoQt59X+qcLkhPHev2NgMkYmPxI5mmz8=;
+ b=uzKF9szUyQ2jEq51nhX9l5Q4Qu8ikSXqNPMVFyydkmb/dmW03Oh8I8XgFmcohgARoo
+ DHUHdGBKFEYLl8LpkKmPQULgQTjVit6H4yJIi+8TG4aRl06QydMHtNKH4PK3I84z37hR
+ acuFUK0dlG7UbrZOroWD3h3p+32A9Y+3qi61awCgcRlXiGaQunK8ueYQokH28L2GdTDi
+ QTsioTQ0OmHuQUmktkP/8gz4WfNrofOLLt9H7Z0TSl8KNxwAsygyNhHiPaM2YZknq6Vz
+ qCdA20kp19FS3vqM1XDwRCXTEm9S8yxpfeyt8vbaU4H24xOmQxuRbCB+DWDtUBkq+2oi
+ lJiw==
+X-Gm-Message-State: APuU4Z+I74N8sKiocT9AaD1lS+ooMlSFqqWXqvRvkfan3ubMr0YZnJ74
+ FAW1M2LH+7eWhWe/qpAQsaDBvujMWd4+aTdpCUNfG2V/D6d91NPiVNLevaslMnBQdto=
+X-Gm-Gg: AYBFou1d/y+XjCMEvixuAQvdHXfi6QDOe/otMkhsaYgUIO562qQOsIuszTnmJNvwdHg
+ d1q0KY3L5uBHDAGPg+D5ov8r9Fjq4sc5j98rZewZ3/vmu9Slk5KzDqPa1mbjzHJYqWAoYGi5+aB
+ 20YNembleqZagxOm+DPuOB3v9Qw2AwTXISSB/Cz5CRNpDdWnIYNYoZ+SmqT6Y3w6H8hgtZGjZx/
+ cUHtJ9Ri18UDwMawb03baVmO8pwcYFkYvtm0RDrR40ki4ch9zwY6rnUDrDthKQd2pgW3s7yYU4h
+ WZeoJYK2P0QvWvGljvRFPzMqndBPVT4oYswsyCeeEZze0v5oPTpn+jfJi7tGsuFgrbcCCElEsw+
+ gKG4H+6YLW17F46p/W/r2e/7KF0NyJnhqopbJ/gPu0bh8BITeRmwgCQxxWwQVrFlrIC+OLM1vr9
+ pWwm3htrMSjKCs5E4o8uDyWvJNdiXOq2VK0CuwR4g1k7chOtXZqVLHdxSP+AfHVIPLD1N/re7e+
+ 3EjjyOU0XmPC7IFdeItaqgYfHK/jLW1OJQTj9nHMYMz41Jm7ytl8Xi3El3sT/BduVTyz9MFmPdN
+ LIAWrvtQeVJ0s5O4ugaxksLGpY9oB584HzOi8dfB3+r77w4LJ4NKsQ==
+X-Received: by 2002:aa7:d58c:0:b0:6b5:875a:c2a0 with SMTP id
+ 4fb4d7f45d1cf-6b756aeabeemr1808887a12.24.1794327667180; 
+ Tue, 10 Nov 2026 08:21:07 -0800 (PST)
+Received: from linaro.org ([2a10:d582:31e:0:aa96:7f3b:af27:16e8])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6b75790caffsm1283679a12.32.2026.11.10.08.21.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Nov 2026 08:21:05 -0800 (PST)
+Date: Tue, 10 Nov 2026 16:21:03 +0000
+From: Jim MacArthur <jim.macarthur@linaro.org>
+To: Gustavo Romero <gromero@redhat.com>
+Cc: qemu-devel@nongnu.org, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH 1/2] hw/arm/smmuv3: define Root registers
+Message-ID: <avNEb_ScXZ-A6uDF@linaro.org>
+References: <20261016-jmac-smmu-root-registers-v1-0-e78e8879d347@linaro.org>
+ <20261016-jmac-smmu-root-registers-v1-1-e78e8879d347@linaro.org>
+ <isr4ew27ud6xmfrk444mdme2rqdtd5wgpbgjblgaavmzhpyppt@hhmxurpxh766>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261110155356.1520433-11-eblake@redhat.com>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <isr4ew27ud6xmfrk444mdme2rqdtd5wgpbgjblgaavmzhpyppt@hhmxurpxh766>
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,51 +102,154 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 10, 2026 at 09:54:01AM -0600, Eric Blake wrote:
-> The NBD protocol says that NBD_OPT_{LIST,SET}_META_CONTEXT sends
-> several lengths that must be consistent: an overall option reply
-> length, then a series of smaller lengths/data pairs representing the
-> export name and zero or more context names. If the smaller lengths
-> within the payload do not add up to the larger value, the client has
-> sent garbage bytes that will trigger the server's parse of the
-> client's next option to be out of sync.  However, QEMU was dying with
-> an assertion failure rather than diagnosing the issue, which a
-> malicious client can then exploit to mount a denial-of-service attack
-> against QEMU as the NBD server.
+On Fri, Nov 06, 2026 at 11:20:56PM +0100, Gustavo Romero wrote:
+> > +/*
+> > + * Check we are from the Root PA space to read from or write to the
+> > + * SMMU Root register area.
+> > + */
+> > +static bool smmu_check_root_access(SMMUv3State *s, MemTxAttrs attrs,
+> > +                                     hwaddr offset, bool is_read)
 > 
-> As with several other recent NBD protocol violations, the likelihood
-> of this attack can be reduced by using TLS and x509 certs to reject
-> unwanted clients (a "trusted" client can still trigger the problem,
-> but you first have to compromise the trusted client into sending
-> arbitrary traffic).
+> Indentation is off ---------------------^
 > 
-> Fixes: CVE-2026-125683
-> Fixes: e7b1948d51 ("nbd: BLOCK_STATUS for standard get_block_status function: server part", v2.12.0)
-> Reported-by: TonySD via https://gitlab.com/qemu-project/qemu/-/work_items/4843
-> CC: qemu-stable@nongnu.org
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> ---
->  nbd/server.c | 5 +++++
->  1 file changed, 5 insertions(+)
+> I think it makes sense also to call this function smmu_root_access(), but no
+> strong preference here.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Noted indentation fault. I would prefer to have a verb in the function name,
+but similarly have no strong preferences on it.
 
+> 
+> 
+> > +{
+> > +    /* Check if the access is from Root PA */
+> > +    if (!(attrs.space == ARMSS_Root)) {
+> 
+> Could we use the comparison operator (!=) instead of the logical one here? I
+> think it's clearer than a negation.
+> 
+Good point, that is clearer.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> > +    case A_ROOT_GPT_BASE2:
+> > +        *data = s->root.gpt_base2;
+> > +        return MEMTX_OK;
+> > +    case A_ROOT_GPCBW:
+> > +        /* Optional, not implemented. Present if ROOT_IDR0.GPTS == 0 */
+> 
+>                                          GPTS == 1 here? -----^
+Correct, thank you.
 
+> > @@ -411,6 +411,28 @@ REG32(EVENTQ_IRQ_CFG2,     0xbc)
+> >  
+> >  #define A_IDREGS           0xfd0
+> >  
+> > +#define SMMU_ROOT_REG_START 0x20000
+> 
+> The base address for the Root Control Page is implementation defined, hence
+> 0x20000 is not always true and depends on the machine/platform. We could add
+> property to set it externaly but it would also complicate unnecessarily the
+> offset math. So I think it's ok to follow what FVP is doing. Please just add a
+> note saying it's impl. defined so it might require a tweak in the
+> future.
+> 
+> I think we can follow TF-A code here and rename this macro. So how about
+> renaming it to:
+> 
+> SMMUV3_ROOT_REG_OFFSET ?
+> 
+I'll add another comment and yes, that name change makes sense.
+
+...
+
+> > +typedef struct SMMUv3RootRegBank {
+> 
+> How about naming this struct simply SMMUv3Root?
+
+I don't mind renaming it to something other than 'Bank' to avoid conflicts
+with another meaning of register bank (e.g. the actually banked registers),
+for example SMMUv3RootControlPage would be fine. If it's just to save space
+on punch cards, I'm less keen, but will happily follow code conventions.
+
+> 
+> 
+> > +    uint32_t idr0;
+> > +    uint32_t iidr;
+> > +    uint32_t cr0;
+> > +    uint32_t cr0ack;
+> > +    uint64_t gpt_base;
+> > +    uint64_t gpt_base_cfg;
+> > +    uint64_t gpf_far;
+> > +    uint64_t gpt_cfg_far;
+> > +    uint64_t gpt_base2;
+> 
+> Looking at ARM IHI 0070 H.a Non-confidential spec I don't see
+> 
+> 0x0068 SMMU_ROOT_GPT_BASE_UPDATE 32-bit, R/W and
+> 0x0070 SMMU_ROOT_GPCBW 64-bit, R/W
+> 
+> as Optional like I see SMMU_ROOT_TLBI and SMMU_ROOT_TLBI_CTRL.
+> 
+> Should they be declared as well?
+
+GPT_BASE_UPDATE is an unusual case; it has side effects when writing hence
+I was reluctant to include it as a normal config register, however, it
+shouldn't do any harm to add it - users will just see the 'update' bit stick
+as 1 forever if they write it.
+
+SMMU_ROOT_GPCBW is RES0 unless ROOT_IDR0.GPTS == 1 as noted above, and we
+don't define that bit at the moment, so making storage for it seemed
+unnecessary.
+
+> 
+> 
+> > +} SMMUv3RootRegBank;
+> > +
+> >  struct SMMUv3State {
+> >      SMMUState     smmu_state;
+> >  
+> > @@ -80,6 +92,7 @@ struct SMMUv3State {
+> >      OnOffAuto cmdqv;
+> >  
+> >      Notifier machine_done;
+> > +    SMMUv3RootRegBank root;
+> >  };
+> >  
+> >  typedef enum {
+> > 
+> > -- 
+> > 2.43.0
+> > 
+> > 
+> 
+> General comments:
+> 
+> smmu_read_mmio_root
+> smmu_write_mmio_root 
+> 
+> I think we can drop the "mmio_" for both functions. It's ok to have "mmio_" in
+> the "trace_smmuv3_write_mmio" trace function because afaics it has a generic use,
+> so its use is not tied to any bank.
+Yep, fine by me.
+
+> 
+> 
+> I think we're missing to reset some registers in smmuv3_reset()? Like:
+> 
+> s->root.cr0 = 0;
+> s->root.cr0ack = 0;
+> s->root.gpf_far = 0;
+> s->root.gpt_cfg_far = 0;
+
+Good point, we are missing those, thanks.
+
+Thanks for the review!
+
+Jim
 
