@@ -1,147 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A0B606A320
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 19:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5983F606A323
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 19:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=h7IAdyHB;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=SpUF6O6N
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=bpIfYwti
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQrGN-0005Xr-FV; Tue, 10 Nov 2026 14:12:11 -0500
+	id 1xQrIg-00074Y-Ne; Tue, 10 Nov 2026 14:14:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xQrGJ-0005W8-RI
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 14:12:07 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
+ id 1xQrIc-000743-Nq; Tue, 10 Nov 2026 14:14:31 -0500
+Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xQrGG-0007iF-Sr
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 14:12:07 -0500
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AAJC3KP708805
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 19:12:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 266sQg9DwF6EKhuofx+571ODkyk4mp2cecLrNxfP7Us=; b=h7IAdyHBqk9ccu1x
- gAFZPJXXtaJXSBSSonvz3JuswnoZpeIiGMHacNDEKPsUF9wxb99DPs3N0C2rFGNC
- ebz81a9sUz/LnxqJZpZyiln1KDkmcYPKAGIopkWv0xVcdm3gT4ytet83tfxHvwBM
- iOJYnayyy+zcjE9wQ6GUnJWLKhOwpVF0919kDrCzP2dmEBz5qbbhW3kgMBBwG9R3
- kddb3nfD39qwW9U8UYFz6d3n85xfn3gep8nNVYHBzDPBVIL8EPuPe0BQaVjQII5B
- k2QXSUZqSkXtSfXCgxuq0ppLz1L9xgDHFHC6zfo/GEXczu3rOZBZ3mzwMCGBnubb
- bU+IPg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hv97c801b-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 19:12:03 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5363b06bcb2so50576931cf.2
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 11:12:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794337922; x=1794942722; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=266sQg9DwF6EKhuofx+571ODkyk4mp2cecLrNxfP7Us=;
- b=SpUF6O6NRugzt/MCz5UIMPe7Aac2CJuAL8wiVGmP4MMRLllaby6VddfcTvgq6N4OOR
- Gm6jU7+N91y73Ju+NQ6/l04ZM3Rmv/mA3mIZLfJWji62H1UIjYHFj2phTgQ8MqjXAfOu
- BWhOZSPAZKTxpcgryfLrLZ2qvCKBindgmoAjfhMYyaUoOKD+hh2S4invT5iVmJ5Nz+ET
- kml5l36djClZNTtD42EP7l6JGzkFYTwtiGUm+dKV79QaLl3UJYcTmJ3QZb83OkCb6rJk
- 95/EveAj+lqjO4aEOtcZmwttWG+TsIXe1jBC2mt+PMfBrNBFFLVd/9N328rGWHBC3qYn
- evOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794337922; x=1794942722;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=266sQg9DwF6EKhuofx+571ODkyk4mp2cecLrNxfP7Us=;
- b=kv4BvS/vD81le/mdJZHlhTbUKh7icWSY8pkOeuMeAno5wa2RdkZNpzM+FHCM4Otanx
- 8FjhgqszXiRC8UFQetwGxFfJCYWhayY39+PC0HUuiwCf5h6AaPcAT+Y1tPDZRFQT2Jk3
- cvSekT/5LWfOq0ZIxSwXDJyLVu3i2LSVZa4ykOCzeYrksViwbBQtXU+gpLP4yvc1UGeB
- p6Um5h6m9moRKY2PJWHiMxwF+1GruzR5ud7MjZt/Mk7JcOxiqXmUqBTVSoNVFbmLDDF9
- jgUM/T6eRWBNqinUcyPw0KuYKTeoyB72gWmcxCHfZ/V5RR2J38h59RkNwlRVl4rH8PPK
- bGKA==
-X-Forwarded-Encrypted: i=1;
- AL+hErHAQ9c+Th74Mn9fWVFisd5JzdEWNA8fW1CTMEFerktef019Y3d5VIHK9G4Vj3iEVI/eLzVkVXmL3aEH@nongnu.org
-X-Gm-Message-State: APuU4Z/svPkFHjf4l8lc054JbYPLwTSWOqMM7KxfoaxqLCbBagc78TYp
- HNj1aqhCCw5VFeoz1RHnhrmDqfU7ekCrazb7pvGxyyxV82bGyHbVV/gJCMxtDdESwah02Y+o0dJ
- ryU1VmqQVQfNihdsrtCDuH0911/qr7Xz0ngYXRZv5Wlwrr6o0vw8RRCR6xg==
-X-Gm-Gg: AYBFou0F6CHhkJIsuQeU8sw2AdShThDajGGfTm64W+C//yt3R+wWHtpH3XA/8hELZKN
- mK9+ZryLkMlv3p0aVpNn9+2hchEbeKt+qGLi8qZcBZ/HsSwXgMO/i9tw7qnV8ReOx5iHBasAaT0
- XKcp4631ey8RNgEEdAslec/9nzgnRGmfEwCW1cBscIAMZ8vd5Bk5jz+6yZ1lGboV63IOIXK5E5R
- n7LWcUh/2ywUMbveTQ3N5I4ZI3nR4NCgmKc8xe2fTNbi1afCWKEVDq4lDUPJPn0IlHS9PeSbJPI
- ZSy/9HxBuVq0wJnTRsAq11hp8AyaQOvoNnZdE3Whb9Ow+YonwFVyhudB5jRsplGvQae0EUyS9UY
- GPEEjt19h7vgG3f4vvbZT50tN8RtkzQM0e8JW68MYv7Bt5EsxatYf+c8J9n2JAPYXkf8ofCKUqZ
- TU9Ihh2oyCzA==
-X-Received: by 2002:ac8:5e06:0:b0:535:84ec:baaf with SMTP id
- d75a77b69052e-5552a35eebamr54625001cf.43.1794337922365; 
- Tue, 10 Nov 2026 11:12:02 -0800 (PST)
-X-Received: by 2002:ac8:5e06:0:b0:535:84ec:baaf with SMTP id
- d75a77b69052e-5552a35eebamr54624221cf.43.1794337921485; 
- Tue, 10 Nov 2026 11:12:01 -0800 (PST)
-Received: from [192.168.68.105] ([152.234.124.231])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91ef04ab626sm28513346d6.15.2026.11.10.11.11.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Nov 2026 11:12:00 -0800 (PST)
-Message-ID: <d76ec165-fb11-4e63-8e20-a8ee5062701d@oss.qualcomm.com>
-Date: Tue, 10 Nov 2026 16:11:57 -0300
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
+ id 1xQrIa-0007qE-Aj; Tue, 10 Nov 2026 14:14:30 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Pu6yteo4jFH2sdOkbOkqmKT6OBH76Vc0B1jmyjGKueG3EF/yNxySP5YxQmT2wOoe+6TxZ+NIFORX4J7KdPqq9XCZ3aHK8PqCmxGKW4WTS1KXuXOdWe4Z6jW0vbTNsjxKVbkz4vcl2g6PhlGGDTTIliqcW9MpYYFE38X4ZEfk90JavtcdJLkKK92xxj85qtRCOT+ovuReVbw4RN2wFSu69BtoMiyuwkB5CJETYTTZ//25YEHwpYQ9nYFkOj2o4m4U7F8cCGIGHJRkisDu4J4awCUgEvtthIUVTmLrHY0s//Rh0DhcpXlxwNiM7Qy+/kWvO5o5q4jzViL+AN+6yloXpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=MK9icqgmeRzCd8eAzmiUFMw40wuQSjrya36nAkdasco=;
+ b=l/wW1A+OmN67EYYq8z92Yvx8DxPxpgn87bwbasA/AjIYKylhqcZANpdorua/V6AuZsyJl09BwDQPlCZbf1Yf36Bdh7UUOWxk6LMy3QwO+/DeShDv3dITP7IyN7HwMoWS4haUMFAzpy4goZNkjlBW2F8D8p4gWUkOcRcQLZn3+NMMtwtym/9dQNFkTErrtBxVKz5rGg89fUVbWmKHp9ItXcaMrTXjcIf4VFPls+1CK4dm5ZhPoGv5OJ5EDe3iRMGBjQylWEHTCWk2CHnpMK5yrg6NnHtMEOCIoQZioeWSjdC89NBdTeTyzkWhY7cDpLGpWIj8DEbwUIOfsdwxBYGnyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MK9icqgmeRzCd8eAzmiUFMw40wuQSjrya36nAkdasco=;
+ b=bpIfYwti4GlzTKYxHvmvmlHm97FLG7PK/yMaoBtuqXP2dS0HlOUCZH9PaBB304HTsISai+dZYS3zwZKJ3IRnN946EoKM0HKAWn9POKeceIaFagiILr3pUkLmRxKAnmmThG77+8I9sKzz8/3ajJZI+9WQL9tMf2wtlSt1eXqWSXfNLLA3rPVqQzAn1jQMZ6lgRGlSuEiQ2KZ/pDhKCIUvODaNhSUDAkk0rUxMZPDzXb7tsGlQhkJRHy9nPu0uGAUaiblRHL+rYsz8jGTDHekFtGWnlHcYJGoBJtEYpRX7i81S1o3to5df9rKiqGrwb1RtQICrZbxckqDId+vidxnp4w==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS6PR12MB186998.namprd12.prod.outlook.com (2603:10b6:8:52a::8)
+ by MN0PR12MB6001.namprd12.prod.outlook.com (2603:10b6:208:37d::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Tue, 10 Nov
+ 2026 19:14:15 +0000
+Received: from DS6PR12MB186998.namprd12.prod.outlook.com
+ ([fe80::995c:d8bb:2171:d829]) by DS6PR12MB186998.namprd12.prod.outlook.com
+ ([fe80::995c:d8bb:2171:d829%5]) with mapi id 15.21.0615.007; Tue, 10 Nov 2026
+ 19:14:14 +0000
+Message-ID: <c92a3d27-599c-486d-9470-2cf3af6cf6d7@nvidia.com>
+Date: Tue, 10 Nov 2026 13:14:11 -0600
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] hw/pci: add fixed BAR fw_cfg blob export
+To: "Michael S. Tsirkin" <mst@redhat.com>, Ard Biesheuvel <ardb@kernel.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ marcel@redhat.com, "devel@edk2.groups.io" <devel@edk2.groups.io>,
+ alwilliamson@nvidia.com, Jason Gunthorpe <jgg@nvidia.com>,
+ Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <20261102181241.3077981-1-tdave@nvidia.com>
+ <20261102181241.3077981-4-tdave@nvidia.com>
+ <f46e21c2-a0f3-460a-a7a3-eabf19b7d9cb@app.fastmail.com>
+ <20261104071037-mutt-send-email-mst@kernel.org>
+From: Tushar Dave <tdave@nvidia.com>
+Content-Language: en-US
+In-Reply-To: <20261104071037-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR03CA0282.namprd03.prod.outlook.com
+ (2603:10b6:a03:39e::17) To DS6PR12MB186998.namprd12.prod.outlook.com
+ (2603:10b6:8:52a::8)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Fix icount trigger exception PC
-To: Himanshu Chauhan <himanshu.chauhan@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
-References: <20261108110107.1752051-1-himanshu.chauhan@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261108110107.1752051-1-himanshu.chauhan@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEwMDA3NiBTYWx0ZWRfXwuQsXbT98TYX
- S1VhqZwFHf8GVxLIpBjIwvHChaeUQQDcWgSk/d51+73QFGR/twIvM684pDZX19GuFv08v/bYbgZ
- aZtYXzTzy7iMpm5hmFQwRcnweXUb2JCGMK9fhKU2LLjXEwZvNzQobES+YfLtEGcaOG/beSQJIRU
- lhwGQLu1/Gk/gUi1Dmn/JRWjHdX9bcM23CmIxXRiSQ3/B52qRaALOvvUhcU4x12aZ19ixkaRF6N
- AOlTm3HDxf7Wx+3l7n0fGjuqCZ1yO83O77FP15wve6nx4ckfhRCPFswmNC4q+KwheF056OVl5UQ
- O2+BeIGljdZyCYNo8kSIWBVSnM78qWWdmRnENhBo2VnIwpN3K5RGFPPAaQRzhQF1AP45wEUKMw5
- Xbch8M906Byanyg8jgdNLdgqB6sm9Q==
-X-Authority-Analysis: v=2.4 cv=cJl1IVeN c=1 sm=1 tr=0 ts=6af36c83 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=8elE1k/PHQNyZ14TNTodlQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=8OJyc8wFlYHFoqYmSOsA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: 68cXri-1BRrb014Q3ado43LOsPDAmbqa
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEwMDA3NiBTYWx0ZWRfXwlurhgFxUx27
- zbHV1UuFRLxfoYI1eAfxyIyVhXFEd66moLq/QbEz1MhHenVKBV9+cJcYbizaf9DAnGrkFIyCEt7
- qY6hLlY7aAhf/lMMU8g6StBnblbjMPk=
-X-Proofpoint-GUID: 68cXri-1BRrb014Q3ado43LOsPDAmbqa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-10_06,2026-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 phishscore=0 malwarescore=0 spamscore=0
- adultscore=0 lowpriorityscore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2611040001 definitions=main-2611100076
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS6PR12MB186998:EE_|MN0PR12MB6001:EE_
+X-MS-Office365-Filtering-Correlation-Id: 01ed1f74-ecdc-48dc-eca3-08df3f5ecf4a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|23010399003|376014|366016|18002099003|22082099003|6133799003|3023799007|56012099006|4143699003|11063799006|261022105027099003|261026140227099003|261028144727099003|261026121527099003|261022075727099003|261102123227099003|261021135927099003|261021121427099003|261009223027099003|261102130727099003|260925021911599003|260925022911599003|10067099003|260925021311599003;
+X-Microsoft-Antispam-Message-Info: 9ELJKRKhCIZ7SCf0ItabYoVy0pJENDHJObAC87gwpFXHrNmFVArQ3r5ObY2G9VLfeWHiTtm9Bm5zyoNLDIu8TiWTi3sEMoyxfKzvvzKODIXYzjpsu44JiDYJPo0Tiw9av56I+Q0KO5YXEqgefHLMqpqNeL7jEYdKiCa28qwOOLS280ORm7hRxU2kE7CKYOJ0D0smk6fiiILZ7TXlHTDYDPjnMW6OS4QWxZzxXDs4JYM7pBFE8igKA/qB96C0pRXotx/PIpGdFJHutnWBc8Eb7xtpJUdHRZysf9V6pmDA2CqkPFiiXAUmeRl7PUpF5He8cc7PmtctbcsUyOcGxnuj8ci4iYSpfR3CIkFuoJpKeiJe+99iitTNQqunk4WXlyp1nKSXUnk3NNpOwv/kcXb/AU+jwnSvpr5sXVdP7jamiQCl9kKU7vpOWnB23Ti/w8USj/ofosZtK/Aj1v/Y1MGUzV6k0OBAB1ZCSSkuCldRQ04BZ5GgnaWrGOKPO+hfSL9Ek+RJL9OJ0tN/NHYvsc2hdWH/dlFdLY5GoLZFX3Angrk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS6PR12MB186998.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(18002099003)(22082099003)(6133799003)(3023799007)(56012099006)(4143699003)(11063799006)(261022105027099003)(261026140227099003)(261028144727099003)(261026121527099003)(261022075727099003)(261102123227099003)(261021135927099003)(261021121427099003)(261009223027099003)(261102130727099003)(260925021911599003)(260925022911599003)(10067099003)(260925021311599003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y3E5VzlaNkFUVzBuWGFTN3ZSMU1CSnRoVTh6QWwxVTU5Y1ExMC9WQVIwVmw5?=
+ =?utf-8?B?OVAvZ2NzcWpQakY3Zm1RSk92TmNXQ2kyVndOZkJ1L3VIaTJHZElnYmgwbWtu?=
+ =?utf-8?B?eUM0RmZwSFR6N2dmSlBONlJjMFZKOWFBSHpJeXlpSzlLdmg0MDJLbDVBU3Y2?=
+ =?utf-8?B?TWhaOVZLNER5MHptSmZGaTNTSHZBbko5bU1wTkZhblhkUVNrQm1QYzE5RWVv?=
+ =?utf-8?B?TWNZZ0wwdnREN1M2TU1SMUNyM2JBWFo1Ylk1ZjhLK2JqSDUwR1orNWhobURU?=
+ =?utf-8?B?ajhJYkQ5N1pWWWtUVElvU2ZqU2Y3S01LZ3J6SGl3VExYM0FwNlJoYUR1MEcx?=
+ =?utf-8?B?cVdTR0UzdlBQQlhzWnpIWXV2Uk11SjVMeVBQbVFVZitxT0k3VGRpL2crVTA3?=
+ =?utf-8?B?OFVjVFM0ZmVOMW9yN2x5ZWhVY0dJY3VVMUZkeGJQRlBHSTk1WHhKR2UwSk95?=
+ =?utf-8?B?dHZkUUdXSVBuRHJHK2hMYmRZMHR5U1ZyZW0xZFRwcW9jQk1sdDl1UUZJSTA0?=
+ =?utf-8?B?QzZ5UUx3Nld3c3d3NVZYRjVGMFExeTB1Z1BkWTd6UHF6MUlndEJLZ1F4M2Zr?=
+ =?utf-8?B?ZjRjbllUUGFoKzNvYUZ6OUcvUDY0eldFb2xqVU1SWE42TWM0R3VBVk0rUkRP?=
+ =?utf-8?B?MlpreTVHZWs0bk4vemh0M2pjY1NNZTJJNVZRZ2d4eFk2eWNHeG1BczBUcnZk?=
+ =?utf-8?B?L2NNL2N0c04zbEQvR3hGN2g0ckpHWEJQOHRJWDNrZ2NZREF3OUdnNFhSK0gv?=
+ =?utf-8?B?ZEF3aEMwaERpNUtPclRyeWppL21CejluUVVWQzhmU3J0MXQreUpBcFNSY0Nz?=
+ =?utf-8?B?VE83eHdMaGozc1NVMlZmamd5c2dJWlpLQWloQUtqajVXUHBhZjM1SDdremR0?=
+ =?utf-8?B?SCtmSVlhaFVFSzdxcDFGbjRVWHNBWENQS3lXUVpMdkU1Sis4Zm0vYTNBLzg3?=
+ =?utf-8?B?QmhqNUNxRENxaVhwYnRwOElsd3JaZENIczJXOVJWUkxObzEzWDM3YWlGdWpw?=
+ =?utf-8?B?MEp5MWVjY2k4ODFPZ0FZbXVaZ1hDc3M1Vng0Tm5iTEdBMktXM3QxNlZ4QVdS?=
+ =?utf-8?B?cjU4bnJkei9YV2pzVWRWdkJTR3N5TVZwWjhsbXJHMHZXWVpPUE41bi9jTCth?=
+ =?utf-8?B?RzZFcVZZUlB0Nm9qSnpLODlCaGpSSTBpQ2JEMXF6ZkRVSmpTTlExN0wxNWsz?=
+ =?utf-8?B?d2grY1JXNUF3dmx4UTU3LzVxNzhCQmJBTWY4MHdwOVVabkNLbWhXVmk3QzBa?=
+ =?utf-8?B?aWJ6RXltY0pzVXZjdUxoKzRVaGwvS1RJeVdJYVUzOVpoSFZGcER2eTVFMDlv?=
+ =?utf-8?B?a2RmM2RvZm5sZm1DSi9QcWJraFU1K0drR3lRNk5nU01pUDZKK1F0NU5zbnlO?=
+ =?utf-8?B?SXJOMlFyUzhaVzNlRUJWUXR0UytzbEtQWVhqRjBRdDlZaUtHZ29iN2swTHJI?=
+ =?utf-8?B?MXVqV2ExVWFGeC93U1hCb3Y4YmkrNU5TRjQvamk2SndpZy9IR3BSTVhUbGtQ?=
+ =?utf-8?B?WWdjNk9xRXREdTQ3TnJiM3g4a09kRzcvY25BdS9FMms3Y0l6ak9zZVFEL2p6?=
+ =?utf-8?B?YkJyVlhUMmR1OUl2OGZ4c1pvb3J5UWcyUnVLSHU3Z3ZhbC9DTzNaaE05Nkx1?=
+ =?utf-8?B?bWVidW5hczdQV2FCbHpidWFDbHdvbmNBbmV5eXFYQ24zWjJKMUl0L085Slpj?=
+ =?utf-8?B?UlBSTTNON1ppZm41aEhPSFVRUHNmSXExclZHay9pOTZBUm1Xa1pGMkdmS2dl?=
+ =?utf-8?B?VkZ4N2hjTTFtdXVFZk5vOGpRVjdpUUQva3gvenBxNHUzWEVYdExsQmNqNDRq?=
+ =?utf-8?B?QWlqbXgrZnpLK09aMUdLYnJzRGdVVEMwd0hxbXMxNThKczBKSFBET0xSR1Yr?=
+ =?utf-8?B?cWV3d21jZHkydHpudW1aQm5qbFR1SXpXZnVnN3RFZHBXSWtLUkpkejJkdlR0?=
+ =?utf-8?B?L3YzOUNRNXFSUHJoMGxHZ0h6YjZEVlhUTTcxRm9UdTI1Ym5rY0xnbStuSEZ2?=
+ =?utf-8?B?K29HeHp2V1F1cUNhK3FBRjJ3VVJ3dURnNDZZL1ZYUk9QeHBXcUpwR0xFRkdm?=
+ =?utf-8?B?citnb0R1azVHUUlkRkFWM2hFUHFWM1p1Tmp6ZUI2dXN5ajJTNjd2N1lxbEpV?=
+ =?utf-8?B?ZnFmUmlObzBqZ3p4VjJRR0I0Um5KcGdBWXNqSTNMR1lJZGJVRGI0MlNWY1Zs?=
+ =?utf-8?B?THEzZkliamNTRER3U3AxNjhTMUN4SFQwMEFpc2lmT2VHUWpOMzhKYUxDWjJK?=
+ =?utf-8?B?ZmxONURVYUZUOTRpMHFzL205MDE0a0FoVHlGZTlyU3BVNEtBSm1FUW1CTi9v?=
+ =?utf-8?B?NUhHN3J0djRJejM4bUEwd2RDYkh6TnRJVmJFTy81TStxZHNRSDFvdz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01ed1f74-ecdc-48dc-eca3-08df3f5ecf4a
+X-MS-Exchange-CrossTenant-AuthSource: DS6PR12MB186998.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2026 19:14:14.8375 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: wWzwh87d2OnciidCSExIWYpcX8VMPgmKkm4WYrUhzy5q7bD/j/e0q/qbRofbcSK/eN8wEsvPWq5+n6cNZMNsjw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6001
+Received-SPF: pass client-ip=2a01:111:f403:c107::1;
+ envelope-from=tdave@nvidia.com;
+ helo=PH8PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,8 +150,8 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
 	version=4.0.1
@@ -163,435 +160,73 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 
 
-On 11/8/2026 8:01 AM, Himanshu Chauhan wrote:
-> Per the Sdtrig specification, on a breakpoint exception with icount, the
-> xepc must contain the virtual address of the next instruction that must
-> be executed to preserve the program flow.
+On 11/4/2026 6:11 AM, Michael S. Tsirkin wrote:
+> On Wed, Nov 04, 2026 at 10:59:47AM +0100, Ard Biesheuvel wrote:
+>>
+>>
+>> On Mon, 2 Nov 2026, at 19:12, Tushar Dave wrote:
+>>> Introduce a fixed BAR fw_cfg blob exporter that serializes PCI
+>>> device and BAR information into the "etc/fixed-bars" fw_cfg file.
+>>>
+>>> The blob contains an entry for every PCI function with memory BARs.
+>>> Each entry carries the device's vendor and device ID, whether it
+>>> has a fixed BAR configuration, and its firmware device path. Fixed
+>>> BAR entries also include the configured BAR address, size, and type
+>>> information for each BAR.
+>>>
+>>> Document the format in docs/specs/pci-fixed-bars.rst.
+>>>
+>>> Signed-off-by: Tushar Dave <tdave@nvidia.com>
+>>> ---
+>>>  docs/specs/index.rst           |   1 +
+>>>  docs/specs/pci-fixed-bars.rst  |  75 ++++++++
+>>>  hw/pci/meson.build             |   1 +
+>>>  hw/pci/pci-fixed-bar-blob.c    | 308 +++++++++++++++++++++++++++++++++
+>>>  include/hw/pci/pci-fixed-bar.h |  63 +++++++
+>>>  5 files changed, 448 insertions(+)
+>>>  create mode 100644 docs/specs/pci-fixed-bars.rst
+>>>  create mode 100644 hw/pci/pci-fixed-bar-blob.c
+>>>  create mode 100644 include/hw/pci/pci-fixed-bar.h
+>>>
+>> ...
+>>> diff --git a/hw/pci/pci-fixed-bar-blob.c b/hw/pci/pci-fixed-bar-blob.c
+>>> new file mode 100644
+>>> index 0000000000..dc94debfad
+>>> --- /dev/null
+>>> +++ b/hw/pci/pci-fixed-bar-blob.c
+>> ...
+>>> +/*
+>>> + * EFI_INCOMPATIBLE_PCI_DEVICE_SUPPORT_PROTOCOL's CheckDevice interface
+>>> + * (UEFI PI Spec 1.2 Vol 5) only passes VendorId/DeviceId/RevisionId/
+>>> + * SubsystemVendorId/SubsystemDeviceId, no BDF — so in EDK2 we can't
+>>> + * match a blob entry to a specific device directly using BDF. To work
+>>> + * around that, we prepare the blob entries in the same order PciBusDxe
+>>> + * discovers devices, so matching by VID:DID inherently works.
+>>
+>> This sounds rather fragile.
+>>
+>> Could you elaborate on what order this is, and why it is reasonable to
+>> rely on that approach being stable?
+>>
+>>
 > 
-> Since SBI DBTR exposes these trigger encodings to supervisor software, an
-> icount trigger used as a one-instruction step must fire only after the
-> counted instruction retires and the architectural successor PC is known,
-> which for a taken branch is the branch target, not the trigger install
-> address or fallthrough.
-> 
-> QEMU previously disabled the translated-block trigger flag when icount was
-> enabled and relied on timer and privilege-change callbacks to update the
-> count, so the trigger could fire outside instruction retirement before the
-> guest PC advanced, causing Linux to observe the old PC and re-enter the same
-> breakpoint while single-stepping with icount.
-> 
-> Fix this by
->    - publishing the icount trigger flag in translated blocks even with
->      icount enabled
->    - making the helper decrement the trigger count after the
->      instruction has committed its successor PC and raise the trigger
->      action only then
->    - privilege-change callbacks refresh cached enabled state because itriggers
->      tied to privilege mode.
-> 
-> Also make trigger data CSR availability depend on an implemented trigger slot
-> rather than the currently selected trigger type, so software can disable a
-> trigger with type zero and still write the rest of the slot state before
-> selecting another supported type.
-> 
-> itrigger timers are completely removed as they are not required now.
-> 
-> Signed-off-by: Himanshu Chauhan <himanshu.chauhan@oss.qualcomm.com>
-> ---
+> Also, bus numbers can be changed by guest, and I don't get why
+> would you want to report devices without a fixed bar.
 
 
-LGTM.  I took a look at other instances of itrigger_enabled and seems like we're
-missing one instance in this patch:
+The bus number is not needed in the blob. It is included only for
+debugging and is not used for any functionality. The firmware matches
+blob entries by vendor/device ID and discovery order, as described in
+my earlier reply to Ard. I can drop 'rp_bus' from the blob.
 
-target/riscv/machine.c, debug_post_load():
+Devices without fixed BARs are kept in the blob to preserve discovery
+order for matching. For example, if two identical NICs are present and
+only the second has a fixed BAR, including only the second NIC's entry
+would cause its fixed BAR address to be assigned to the first NIC,
+which is discovered first. Including both entries ensures the first
+NIC is skipped (each blob entry carries a flag indicating whether the
+device has fixed BARs) and the second NIC gets its own fixed BAR address.
 
-      RISCVCPU *cpu = opaque;
-      CPURISCVState *env = &cpu->env;
-
-     if (icount_enabled()) {
-         env->itrigger_enabled = riscv_itrigger_enabled(env);
-     }
-
-
-Since itrigger_enabled is no longer reliant on icount_enabled() we need to
-remove the icount_enabled() from machine.c too.
-
-
-Thanks,
-Daniel
-
->   target/riscv/cpu.h            |   5 +-
->   target/riscv/tcg/cpu_helper.c |  10 +-
->   target/riscv/tcg/debug.c      | 169 ++++++++++------------------------
->   target/riscv/tcg/tcg-cpu.c    |   7 +-
->   4 files changed, 59 insertions(+), 132 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 49a1186bdb..3109d71470 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -484,8 +484,7 @@ struct CPUArchState {
->       uint8_t trigger_cur;
->       /*
->        * num_triggers is the length of tdata1, tdata2, tdata3,
-> -     * cpu_breakpoint, cpu_watchpoint and itrigger_timer
-> -     * arrays.
-> +     * cpu_breakpoint and cpu_watchpoint arrays.
->        */
->       uint32_t num_triggers;
->       uint64_t *tdata1;
-> @@ -493,8 +492,6 @@ struct CPUArchState {
->       uint64_t *tdata3;
->       struct CPUBreakpoint **cpu_breakpoint;
->       struct CPUWatchpoint **cpu_watchpoint;
-> -    QEMUTimer **itrigger_timer;
-> -    int64_t last_icount;
->       bool itrigger_enabled;
->   
->       /* machine specific rdtime callback */
-> diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-> index 58e98e975c..0375b930be 100644
-> --- a/target/riscv/tcg/cpu_helper.c
-> +++ b/target/riscv/tcg/cpu_helper.c
-> @@ -940,10 +940,6 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
->       g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
->   
->       if (newpriv != env->priv || env->virt_enabled != virt_en) {
-> -        if (icount_enabled()) {
-> -            riscv_itrigger_update_priv(env);
-> -        }
-> -
->           riscv_pmu_update_fixed_ctrs(env, newpriv, virt_en);
->       }
->   
-> @@ -982,6 +978,12 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
->               riscv_cpu_interrupt(env);
->           }
->       }
-> +
-> +    /*
-> +     * Icount triggers are scoped by U/S/M and VU/VS mode bits.  Refresh the
-> +     * cached translated-block flag after privilege or virtualization changes.
-> +     */
-> +    riscv_itrigger_update_priv(env);
->   }
->   
->   /*
-> diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
-> index 8b58cbd07a..2c9c251643 100644
-> --- a/target/riscv/tcg/debug.c
-> +++ b/target/riscv/tcg/debug.c
-> @@ -32,8 +32,6 @@
->   #include "trace.h"
->   #include "exec/helper-proto.h"
->   #include "exec/watchpoint.h"
-> -#include "system/cpu-timers.h"
-> -#include "exec/icount.h"
->   #include "accel/tcg/cpu-loop.h"
->   
->   /*
-> @@ -53,20 +51,6 @@
->    *     1 |    2 |         tdata1, tdata2 | Address / Data Match
->    */
->   
-> -/* tdata availability of a trigger */
-> -typedef bool tdata_avail[TDATA_NUM];
-> -
-> -static tdata_avail tdata_mapping[TRIGGER_TYPE_NUM] = {
-> -    [TRIGGER_TYPE_NO_EXIST] = { false, false, false },
-> -    [TRIGGER_TYPE_AD_MATCH] = { true, true, true },
-> -    [TRIGGER_TYPE_INST_CNT] = { true, false, true },
-> -    [TRIGGER_TYPE_INT] = { true, true, true },
-> -    [TRIGGER_TYPE_EXCP] = { true, true, true },
-> -    [TRIGGER_TYPE_AD_MATCH6] = { true, true, true },
-> -    [TRIGGER_TYPE_EXT_SRC] = { true, false, false },
-> -    [TRIGGER_TYPE_UNAVAIL] = { true, true, true }
-> -};
-> -
->   /* only breakpoint size 1/2/4/8 supported */
->   static int access_size[SIZE_NUM] = {
->       [SIZE_ANY] = 0,
-> @@ -165,13 +149,17 @@ static inline target_ulong build_tdata1(CPURISCVState *env,
->   
->   bool tdata_available(CPURISCVState *env, int tdata_index)
->   {
-> -    int trigger_type = get_trigger_type(env, env->trigger_cur);
-> -
->       if (unlikely(tdata_index >= TDATA_NUM)) {
->           return false;
->       }
->   
-> -    return tdata_mapping[trigger_type][tdata_index];
-> +    /*
-> +     * tdata CSRs belong to the trigger slot, not to the currently selected
-> +     * trigger type.  A type-zero trigger is disabled, but the slot still
-> +     * exists, so software must still be able to write tdata2/tdata3 before
-> +     * selecting a supported trigger type.
-> +     */
-> +    return env->trigger_cur < env->num_triggers;
->   }
->   
->   target_ulong tselect_csr_read(CPURISCVState *env)
-> @@ -729,6 +717,30 @@ static void type6_reg_write(CPURISCVState *env, target_ulong index,
->       }
->   }
->   
-> +static void no_trigger_reg_write(CPURISCVState *env, target_ulong index,
-> +                                 int tdata_index, target_ulong val)
-> +{
-> +    /*
-> +     * OpenSBI programs DBTR slots by first writing type zero to tdata1, then
-> +     * writing tdata2/tdata3, and finally writing the desired trigger type.
-> +     */
-> +    switch (tdata_index) {
-> +    case TDATA1:
-> +        type2_breakpoint_remove(env, index);
-> +        env->tdata1[index] = 0;
-> +        env->itrigger_enabled = riscv_itrigger_enabled(env);
-> +        break;
-> +    case TDATA2:
-> +        env->tdata2[index] = val;
-> +        break;
-> +    case TDATA3:
-> +        env->tdata3[index] = textra_validate(env, val);
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +}
-> +
->   /* icount trigger type */
->   static inline int
->   itrigger_get_count(CPURISCVState *env, int index)
-> @@ -754,21 +766,6 @@ itrigger_set_pending(CPURISCVState *env, int index, int val)
->                                      ITRIGGER_PENDING, val);
->   }
->   
-> -static bool check_itrigger_priv(CPURISCVState *env, int index)
-> -{
-> -    target_ulong tdata1 = env->tdata1[index];
-> -    if (env->virt_enabled) {
-> -        /* check VU/VS bit against current privilege level */
-> -        return (get_field(tdata1, ITRIGGER_VS) == env->priv) ||
-> -               (get_field(tdata1, ITRIGGER_VU) == env->priv);
-> -    } else {
-> -        /* check U/S/M bit against current privilege level */
-> -        return (get_field(tdata1, ITRIGGER_M) == env->priv) ||
-> -               (get_field(tdata1, ITRIGGER_S) == env->priv) ||
-> -               (get_field(tdata1, ITRIGGER_U) == env->priv);
-> -    }
-> -}
-> -
->   bool riscv_itrigger_enabled(CPURISCVState *env)
->   {
->       int count;
-> @@ -776,7 +773,7 @@ bool riscv_itrigger_enabled(CPURISCVState *env)
->           if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
->               continue;
->           }
-> -        if (check_itrigger_priv(env, i)) {
-> +        if (!trigger_common_match(env, TRIGGER_TYPE_INST_CNT, i)) {
->               continue;
->           }
->           count = itrigger_get_count(env, i);
-> @@ -803,7 +800,12 @@ void HELPER(itrigger_match)(CPURISCVState *env)
->           if (!count) {
->               continue;
->           }
-> -        itrigger_set_count(env, i, count--);
-> +        /*
-> +         * This helper is emitted at TB exit after one guest instruction and
-> +         * after the translator has committed env->pc to the successor PC.
-> +         */
-> +        count--;
-> +        itrigger_set_count(env, i, count);
->           if (!count) {
->               /*
->                * From the 1.0 spec: "When pending is set, the trigger
-> @@ -822,61 +824,21 @@ void HELPER(itrigger_match)(CPURISCVState *env)
->               itrigger_set_pending(env, i, 1);
->   
->               env->itrigger_enabled = riscv_itrigger_enabled(env);
-> -            do_trigger_action(env, i);
->               itrigger_set_pending(env, i, 0);
-> +            do_trigger_action(env, i);
->           }
->       }
->   }
->   
->   static void riscv_itrigger_update_count(CPURISCVState *env)
->   {
-> -    int count, executed;
->       /*
-> -     * Record last icount, so that we can evaluate the executed instructions
-> -     * since last privilege mode change or timer expire.
-> +     * Icount triggers are matched from translated code after an instruction
-> +     * has committed its successor PC.  Timer and privilege-change callbacks
-> +     * therefore must not decrement count or fire the action here; they only
-> +     * refresh the cached TB flag state.
->        */
-> -    int64_t last_icount = env->last_icount, current_icount;
-> -    current_icount = env->last_icount = icount_get_raw();
-> -
-> -    for (int i = 0; i < env->num_triggers; i++) {
-> -        if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-> -            continue;
-> -        }
-> -        count = itrigger_get_count(env, i);
-> -        if (!count) {
-> -            continue;
-> -        }
-> -        /*
-> -         * Only when privilege is changed or itrigger timer expires,
-> -         * the count field in itrigger tdata1 register is updated.
-> -         * And the count field in itrigger only contains remaining value.
-> -         */
-> -        if (check_itrigger_priv(env, i)) {
-> -            /*
-> -             * If itrigger enabled in this privilege mode, the number of
-> -             * executed instructions since last privilege change
-> -             * should be reduced from current itrigger count.
-> -             */
-> -            executed = current_icount - last_icount;
-> -            itrigger_set_count(env, i, count - executed);
-> -            if (count == executed) {
-> -                do_trigger_action(env, i);
-> -            }
-> -        } else {
-> -            /*
-> -             * If itrigger is not enabled in this privilege mode,
-> -             * the number of executed instructions will be discard and
-> -             * the count field in itrigger will not change.
-> -             */
-> -            timer_mod(env->itrigger_timer[i],
-> -                      current_icount + count);
-> -        }
-> -    }
-> -}
-> -
-> -static void riscv_itrigger_timer_cb(void *opaque)
-> -{
-> -    riscv_itrigger_update_count((CPURISCVState *)opaque);
-> +    env->itrigger_enabled = riscv_itrigger_enabled(env);
->   }
->   
->   void riscv_itrigger_update_priv(CPURISCVState *env)
-> @@ -911,18 +873,10 @@ static void itrigger_reg_write(CPURISCVState *env, target_ulong index,
->   
->       switch (tdata_index) {
->       case TDATA1:
-> -        /* set timer for icount */
->           new_val = itrigger_validate(env, val);
->           if (new_val != env->tdata1[index]) {
->               env->tdata1[index] = new_val;
-> -            if (icount_enabled()) {
-> -                env->last_icount = icount_get_raw();
-> -                /* set the count to timer */
-> -                timer_mod(env->itrigger_timer[index],
-> -                          env->last_icount + itrigger_get_count(env, index));
-> -            } else {
-> -                env->itrigger_enabled = riscv_itrigger_enabled(env);
-> -            }
-> +            env->itrigger_enabled = riscv_itrigger_enabled(env);
->           }
->           break;
->       case TDATA2:
-> @@ -937,27 +891,10 @@ static void itrigger_reg_write(CPURISCVState *env, target_ulong index,
->       }
->   }
->   
-> -static int itrigger_get_adjust_count(CPURISCVState *env)
-> -{
-> -    int count = itrigger_get_count(env, env->trigger_cur), executed;
-> -    if ((count != 0) && check_itrigger_priv(env, env->trigger_cur)) {
-> -        executed = icount_get_raw() - env->last_icount;
-> -        count += executed;
-> -    }
-> -    return count;
-> -}
-> -
->   target_ulong tdata_csr_read(CPURISCVState *env, int tdata_index)
->   {
-> -    int trigger_type;
->       switch (tdata_index) {
->       case TDATA1:
-> -        trigger_type = extract_trigger_type(env,
-> -                                            env->tdata1[env->trigger_cur]);
-> -        if ((trigger_type == TRIGGER_TYPE_INST_CNT) && icount_enabled()) {
-> -            return deposit64(env->tdata1[env->trigger_cur], 10, 14,
-> -                             itrigger_get_adjust_count(env));
-> -        }
->           return env->tdata1[env->trigger_cur];
->       case TDATA2:
->           return env->tdata2[env->trigger_cur];
-> @@ -995,6 +932,8 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
->                         trigger_type);
->           break;
->       case TRIGGER_TYPE_NO_EXIST:
-> +        no_trigger_reg_write(env, env->trigger_cur, tdata_index, val);
-> +        break;
->       case TRIGGER_TYPE_UNAVAIL:
->           qemu_log_mask(LOG_GUEST_ERROR, "trigger type: %d does not exit\n",
->                         trigger_type);
-> @@ -1147,8 +1086,6 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
->   
->   void riscv_trigger_realize(CPURISCVState *env)
->   {
-> -    int i;
-> -
->       if (env->num_triggers > RV_MAX_TRIGGERS) {
->           error_report(
->                   "Invalid configuration: 'num-triggers' must be less than %u",
-> @@ -1161,12 +1098,6 @@ void riscv_trigger_realize(CPURISCVState *env)
->       env->tdata3 = g_new0(uint64_t, env->num_triggers);
->       env->cpu_breakpoint = g_new0(struct CPUBreakpoint *, env->num_triggers);
->       env->cpu_watchpoint = g_new0(struct CPUWatchpoint *, env->num_triggers);
-> -    env->itrigger_timer = g_new0(QEMUTimer *, env->num_triggers);
-> -
-> -    for (i = 0; i < env->num_triggers; i++) {
-> -        env->itrigger_timer[i] = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-> -                                              riscv_itrigger_timer_cb, env);
-> -    }
->   }
->   
->   void riscv_trigger_unrealize(CPURISCVState *env)
-> @@ -1177,11 +1108,6 @@ void riscv_trigger_unrealize(CPURISCVState *env)
->   
->       g_free(env->cpu_breakpoint);
->       g_free(env->cpu_watchpoint);
-> -
-> -    for (int i = 0; i < env->num_triggers; i++) {
-> -        timer_free(env->itrigger_timer[i]);
-> -    }
-> -    g_free(env->itrigger_timer);
->   }
->   
->   void riscv_trigger_reset_hold(CPURISCVState *env)
-> @@ -1209,7 +1135,6 @@ void riscv_trigger_reset_hold(CPURISCVState *env)
->           env->tdata3[i] = 0;
->           env->cpu_breakpoint[i] = NULL;
->           env->cpu_watchpoint[i] = NULL;
-> -        timer_del(env->itrigger_timer[i]);
->       }
->   
->       env->mcontext = 0;
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 5834ec1524..027fe5b46a 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -181,8 +181,11 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
->                ? EXT_STATUS_DIRTY : EXT_STATUS_DISABLED;
->       }
->   
-> -    if ((cpu->cfg.debug || cpu->cfg.ext_sdtrig)
-> -        && !icount_enabled()) {
-> +    /*
-> +     * Publish itrigger state even when QEMU icount is enabled.  The helper
-> +     * runs from translated code after committing the guest successor PC.
-> +     */
-> +    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
->           flags = FIELD_DP32(flags, TB_FLAGS, ITRIGGER, env->itrigger_enabled);
->       }
->   #endif
+-Tushar
 
 
