@@ -1,112 +1,91 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36D2606A20A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251C3606A325
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 16:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=XIxzpajA
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256 header.s=s2048 header.b=sHmUqfJp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQovG-0000cu-Pq; Tue, 10 Nov 2026 11:42:14 -0500
+	id 1xQoxz-0003bj-VL; Tue, 10 Nov 2026 11:45:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQovF-0000bv-Rg
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:42:13 -0500
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ (Exim 4.90_1) (envelope-from <eric_devolder@yahoo.com>)
+ id 1xQoxt-0003bE-TL
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:44:57 -0500
+Received: from sonic315-20.consmr.mail.ne1.yahoo.com ([66.163.190.146])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xQovE-00076D-2o
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:42:13 -0500
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-8b3653df740so7896587b3.2
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 08:42:11 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794328931; cv=none;
- d=google.com; s=arc-20260327;
- b=Sk5ZX//orKZI6VJ+ZuIXma4M55aTXRbgearLv+z5JfKa7SSAfnZT6WXqAEhap54NT2
- weDOtSdnqNUIoL9/bTjfM7Av3BLkCumTlj7VSebV26avLie+IknmFZ3tY7ueCDCg8YfO
- wqh5wCTAG9z5YVd/W8iu+aclN4ZE6FjddTT73WRlQlBZuZlT62j+6NMJMTPdAe2BDbMZ
- xGS8cxxbuuXUV6X6D+s7hoReckENXc+CkgVqn1zyA8bijNNCALu4FcD/OYf+FzvA/EpA
- xe8Q1if+m2kwmWesN8I8alFFDGJzCWsC5IUWaPZbc6WCDIiy67RE1ceO2JcO9QRHwtjf
- nr4g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=UVoY7eBSuxBzsUjvxGw7TtOq77RBkTHcDJ6sgY+xg4M=;
- fh=+8jhmTTdS+XJXZvdzRzqYdy50ZSR3rg1UrX8G1Tlp7g=;
- b=G3FnR5Rb1WeCek1Tb2BQ/ulYVrRuVyjmnuriah96Yi9ZM+emzANWjjaNjM1Tx8Cap1
- nTDUtkt1Wgzsawcgm+3hQvdA/H3urZ+Xwtc4P3vTBuEBNT0sX0nTLXMJ2ZNgL5NUfj1d
- FkD/naop1K/aXptIcHHKCArlA13cig6eJM4J0wky+z+1C7gKlvJq5aNNH98WEPyCFvi4
- zsBNx8BLnjXLGzTQbILxsXDWHKlI4dir6xBQZX8zMkFyDv/N5h/+Zb+FRWULAqhN+EaE
- sZy91ShDOQ7+sjuIGpRwbe8A7ohbwEMw3kpVuazEHmmsIqwfCpAJVelv42mKapfwAnid
- ZdBA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794328931; x=1794933731; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=UVoY7eBSuxBzsUjvxGw7TtOq77RBkTHcDJ6sgY+xg4M=;
- b=XIxzpajAgy/MoIqVcx4/ZT1yklU5sF0hYEvRlSLaY8CmcjOneEsnc8rNfGd4CKcCk3
- 5Vw/ECgIjRfUVyFRL4/QTRLFxYJKdP9Auau+teHkpAJvChMritMlyvDk0PqSnsPX7Z9x
- phdj+UdCGt6RjmK+Y1asksvy3SzpIPTCNBPaR6kcsjSxBnmpogSdpmGpJ/nFJtEDgW3C
- YoBafpW3i8Ft+SAquJc6Uy1o+iU+ht55hwIvqqntwzDGD7GGHjLOR4j/BftpyOFF5jcv
- h0zXNAkcfW8BFGMsEUu/7BCDyxETfHxiEMBbyvZMwaradHjU3n431aIpoobLBpbhElhp
- nbXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794328931; x=1794933731;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=UVoY7eBSuxBzsUjvxGw7TtOq77RBkTHcDJ6sgY+xg4M=;
- b=WLlEdvuhnwiFghEImaX1crNLdj5Y0bqpx3teiAPPFjtsYJxOMaKS0VaR4ae28POBIa
- zFdZnKuTdJ6mcOS3KmVJ8lZcKvByYYCF7graItRZeX0Vnj23JZUPM2SQ0b+h4UpACuAj
- 9WvBjknLsS1tS9KWam4aFIKwCoT0sszZutn+QWqxxTuFgJTGEBRQy4HXVSq59SY4M5PU
- 9BDS2pSbtWbM0tbL/0XZWWRYgd5oP4uYKMYUyiXrSz+JwZDd2iuXtA7zXt1tKLbBF9bm
- KT4hjL1Aue/DkBkKnCc1oRDqmgk8XAyDay3MaLtGVN5l57Ws1g8vqwhg1mERm699d7kj
- HaaQ==
-X-Gm-Message-State: APuU4Z+VfmZzFxFa/j6moPCfmUniK6Mxl5hh3V04TsaWdajC+7YlUCgS
- A3aiS7uQ7tKZUko7GYh1FhWbkHf66Vu89h+ixXqosiLxS1BFsecOcaKL77jKjcyvnnYvZ6yccXi
- h0Byp+JZA8bgrk3HDRddF8mYLSOuhT+6A7pnWgIgk+Q==
-X-Gm-Gg: AYBFou1HbzRD/2fDnMyMt2XTEiRhD31b+OqxhrKnVl4/PeawkPjTEwSIK3W5vGvkcQ+
- CWP7adrVSS+334RjCgSfWO+3DqRKR0rIRne7aRi+NJz96nO8CojeyipOKtpmMBZhWLQe7nrJ8yu
- XFJsPa4Y84PnzjIf8M+5MgmcOBexiCZoZn9DZaLHpT0Pd4tEsw9RJa2FlcKjGlNq9S9h4kt/+IM
- jmq96S741W3nAD9AI8Nlaf5YmcF/+w1UkB+etukTnGB3f+g1c42BpAyRSmC5NES3tC3uyzp/dbX
- ko3QF5PzohjP/yUe2AbiYwfIB6PnzLy/dXq5sMggGUoLSIZvm9slt7DjOcBhxQIH/y550yihBkI
- YzNJoXiZuGReez5FeNad/sYZMieoNAu82e43OMLAGzto/gIaaXPPIlctfZt0aFMVfnrPk8+lov/
- fQ0aWefl/Y4TbwB+zr3LVhZA==
-X-Received: by 2002:a05:690e:134b:b0:67c:2a61:ac27 with SMTP id
- 956f58d0204a3-67c66e86a68mr57505d50.41.1794328930617; Tue, 10 Nov 2026
- 08:42:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <eric_devolder@yahoo.com>)
+ id 1xQoxr-0007bz-Ug
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 11:44:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1794329092; bh=b7PnRNooROnWbACLMl/4J7cfU7ZEdre+n2TAIqA7hTQ=;
+ h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To:Content-Type;
+ b=sHmUqfJpWdwbpgLDUtsc32/SFg4/EyFrhLAvgtSBUuaeiNHE0v7KmtFeBtXibJ7V839TeuXntQKn6SrC/uaVIma9Zto31ZDt5eXx6mLeC+8saSsc2Fs3dsPQFrQTuZp9mhf+7gyXtrmDxFP9bdgj6/QaDJlLRH+yeex2gVthBBWmFmtV0JoH6gQrqvP4UFwUFsptGZUQsoysrgtmFeMK1mHCNArXkQqTkKz3ZPei+OObaEZ/FZOvsslNzlvYR0Szhy1STDCxizGL4bV0aXPf73BYX4mkmp+oGDVfaAFpb/UXQL48pgpUKsfJvogmeBLXtISpZE+SiIOhCtoa+UlNpA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1794329092; bh=I81Gbn1yHwnT9RwncY2aBjAvg3lXuQD3WEyIetN2pnM=;
+ h=X-Sonic-MF:From:To:Subject:Date:From:Subject;
+ b=HXC/AZ+Ba4bS6qTN7Uxhf1H3bcsH+YN4qUi1kdMgWq+/teK0vY4VVudVWr6EzR4a7NnB1AQrPxOKJO3+kd67Q0S+AIxETPyWhFOPwdQLU+jR99cWO05SQPpG9fNyf/ozaRliOGhwFfb1+Qt8qOHOR6tXYk32rfZkcPY6zyjlcKTs2t6bHyyUBHKLWNq8tnyeW+fCoK3+9DOfHJP1dCC9wz75hggkWumc5TuSdz8HgaLvn0znB9iirWGvsOVPEtcLNmez5GCS6oaFG0ImFo7zi5QxnEeqCizcfgdj32y3m4Eh4fyJAvQfUVAaFE4nie1+a7rck0t1lG4stGz5xLYdyA==
+X-YMail-OSG: G.LwkZYVM1kF1dKbMjgtAtltDROyOrfiP3tJFmx3Twkho5aKT.ORd.pn4FzdIKE
+ G2OJzSiJWu86WkNN.zXfwLfnKELdtsnDbQl5nuEVYgU3YxClB66HZv_RayNgo5gCCHeO78jE4pfy
+ MEXb3f.VWuTJ_T.Uy2RUEtkiQRKBGdcB66aYMI7_p_6fm5NJiwBuXLbzjyOP5aIlp0yvPW1y8Sdo
+ KPuHbb4y.AFYjxMIt9L7PgxWwSRatPNWWYQrsd69TECSqGJZql_aRwIMioF.g25iIIWIEsJblOls
+ soTWsbw3nEQeCvfxNGp19xwhIFbeO56cW6AFz_mCc5Q6QxpI5tGwqaYJ3sUtUa9S_39BHJbWdRKn
+ gNn2mt37tvcXneLIUcTiClFFoQA9s.VIp2d1pP5qjuK.X5zo0KliWj1CikXYxaBTyqI_kDdYz58r
+ W0B2y.VgQLfFdMu6Y_0uCN676P0AhhneQL2e1PrK.VjSE7GuhxhnsFgEM3GQ8xtGACQggvbSVWWu
+ mOM7sOVR436.p0PftMkDzt_ELhtl4mqZgbC2_gCeLiPHd7adNtTDIdvwWFHajG59JYjzbK4r6Ews
+ yx8Gp97F3bkQfoMjfOkDoeQ1qdEnYy9dA7maMAPwb.5w0VRM9Rgzh4GOd1Zx4SV2fxJdULt7nW0y
+ xWiKipluGvD_7davyXhGafCTU9QE2fgU5xavdU7j7tM8oXp0lBECHQvjXUtX.eKd9RhWVBd0ILBM
+ phi1UdGhlvC4h.m9619Wvu3WunurP8zOnxoHHKfOP9gglIJkz7oAwcX96RhLi5I4t3W7HPlml4tE
+ 0v8SpiXOuZE7ACPDIrnCahRBRK.p0YuRNvUQubTZY9Hg7IHKRT0YSJDTXjHLALbOS9IJmr2NxXZI
+ JrT50GuBnjKf5zFFs.d4gSBo3A.PrMEqj_7mTRcSwTpCfSvPmihF2MxdKMPnyfiHKOE4ZrraZmIS
+ 1Gy5fw6XvrHRGPyFJg8nFhosANlmnsh_3sOk883f1GDuOmbNh2Va9QmqjUfTqsnGSIkDvBjPONgZ
+ vbdOpu6rgAnJ3gD8vPOGwGWwHUWh1OxjUPS_cAxz9ntYPjstyciGG4Ac6uCXEmbBz.YNAWGOObxp
+ FlofrvbGSpJCJG8knIP8VKB1zf0kEkS8hxdml.G8taKVZr7sJMA.2YL344WyXT2oRd.9B8DAcwyl
+ SgMzZX0DVtVjIfEf3TPSNKk0_8YBR4035YzvZPJkUXnFSDQ4RhSWFqHs8O7FS2Ax4ZZ3aYhtSsut
+ Sdr.HzGbaZPnfyNpoU4YBKc_y3ml4MQYjaevg7UJigM1NK0hZB8JbH9qhgd1W1xAclYGcPU5EnX7
+ uvgN59KWC1PPLbxFhqD8qoMCtXhtPkiVmrxdbbatdNsSJ1fy.jNK4X3DpHtWHuOxNZ9u7hD4Jb0o
+ 3eb8yUCHIaDXVm38TFHWkhHGTlD4Lo.2FhwFSJKTtQJLw6luUIBZHOPnHhsJjwZp2_CMgoRYBjxy
+ sqtWizW0xNa0t4xv2mo99O7JCJMc.O8uzIzyvIDS6CfkDmSQa8T6PUnVdTqh3W4YlakPQ7fMLpc0
+ AKt6PM5QrxflLph3cNiObafTH1924iUBJBhOLq.TFhGFntBeWU0btdXHkiMPPVJe_XVXIWS7ZBIi
+ 5NpWyb9Ullq6ZpwmtkSM6IXsisKTH1IzJfokGxCaEwmQ98HkgJJRyXa4UOYG1L1hFsNovX1FDBt2
+ nUl1IafP5ZPL6Nb0zLxeQS2jfTtS4yDwrujfIYkZGSlzaCuqYdir68hsd73bNTQHdgVLZTorQxFW
+ tnqPYM4873NlGkyxFHl7VfH8DfCH1LHWyj0IeL56GtC8OkoMxqb8JDH4ITC9xLnPU5xKHyCBscSy
+ T0qZD.y4aXBgXAVvUfOZNuwfOWvDk9C6zFVAb0ElOiuE5hk46WUXp5qYBtn9BhRf17T.QCH0iu0m
+ efgBcNjqjkFRPEU49mH60uK3Xyy5K1kEsn1CssxAjN7wWbku.ya276wjsQXPhAltRW1mu0QX.kos
+ ZGrEjSSo4ApcLdiI4lHq81LWIX_YCFC0NJkLzLdV9QoesxFkj0A17gaa8iDUSu5TBOPcS3pmY4nV
+ tuoY5bWr4q9MQuugzUSqAv3AYiaFvcdg7LYFmtvjjQpm83kvoGOFPwQDKsC1Xezc8e1jKJTziZQN
+ sRx10BsgF5A7SI4VbmnRKd6DdoklxRQQvOSnvSYrZ8ksRKs3pFQlA1oYhj6nmddIph_BFvl0swwb
+ AIatMtXyTZd3m8tzgzsRnh3UR.sShb.i51Rx9kWZEvl.KOmQXmtm7.g0rBUiithT4xbQOZxkU4Z8
+ gVT99dbcSDwY-
+X-Sonic-MF: <eric_devolder@yahoo.com>
+X-Sonic-ID: feea85b7-3f5c-4aac-be61-1d04b3134ba5
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic315.consmr.mail.ne1.yahoo.com with HTTP; Tue, 10 Nov 2026 16:44:52 +0000
+Received: by hermes--production-bf1-6d6877594b-8262h (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID 8eea9870d3f5e817fcc649df52712fd4; 
+ Tue, 10 Nov 2026 16:44:51 +0000 (UTC)
+From: Eric DeVolder <eric_devolder@yahoo.com>
+To: qemu-devel@nongnu.org
+Cc: Eric DeVolder <eric_devolder@yahoo.com>
+Subject: [PATCH 1/2] target/ppc: Let mtmsr set MSR[ME] on 32-bit PowerPC
+Date: Tue, 10 Nov 2026 10:44:42 -0600
+Message-ID: <20261110164443.488899-1-eric_devolder@yahoo.com>
+X-Mailer: git-send-email 2.53.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261027174625.4025878-1-peter.maydell@linaro.org>
- <20261027174625.4025878-3-peter.maydell@linaro.org>
- <ac5b6410-3f96-40fa-b9d8-99ac25f8648f@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <ac5b6410-3f96-40fa-b9d8-99ac25f8648f@rsg.ci.i.u-tokyo.ac.jp>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Nov 2026 16:41:58 +0000
-X-Gm-Features: AclHuK8WhDi9eS0-aXlKUzCgQJxdRRgzsDhRXkq7ik4VqXW6l30nmdoMNB44cfo
-Message-ID: <CAFEAcA-x6OhjgRL69E2dESFeqf4tUdw3Cu7TUqeev_prc5GzcA@mail.gmail.com>
-Subject: Re: [PATCH 2/4] net: Set do_not_pad for net backends
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Jason Wang <jasowangio@gmail.com>,
- Samuel Thibault <samuel.thibault@ens-lyon.org>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Content-Transfer-Encoding: 8bit
+References: <20261110164443.488899-1-eric_devolder.ref@yahoo.com>
+Received-SPF: pass client-ip=66.163.190.146;
+ envelope-from=eric_devolder@yahoo.com;
+ helo=sonic315-20.consmr.mail.ne1.yahoo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,65 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, 3 Nov 2026 at 04:44, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2026/10/28 2:46, Peter Maydell wrote:
-> > Currently our handling of short network packets (i.e.  those which
-> > are smaller than the minimum ethernet frame size of 60 bytes) is a
-> > little confused.  The intention is that we allow network device
-> > models to transmit short packets, but we protect them from having to
-> > deal with receiving short packets unless they explicitly opt into it.
-> > This means we don't have to have a lot of code in each network device
-> > to try to handle the short packet size -- historically that code was
-> > untested, and often a source of "carefully crafted packet can cause
-> > an out-of-bounds memory access" bugs.
-> >
-> > Our implementation of the padding is currently done when each network
-> > backend feeds a packet into the system via one of the
-> > qemu_send_packet family of functions.  This mostly works, except that
-> > we missed some of the more obscure backends (e.g.  the socket
-> > backend), and it means code duplication in each backend.  We'd like
-> > to switch to making qemu_send_packet do the padding itself.  To do
-> > that, we first need to make sure that all the NetClientState
-> > implementations which do not want padding set the do_not_pad flag.
-> > We do this by setting the flag for NetClientState instances created
-> > by qemu_new_net_client() and qemu_new_net_control_client().  Emulated
-> > network devices use qemu_new_nic(), which does not set the flag.
-> >
-> > Note that this also causes the net/hub client to request no padding.
-> > This is the right behaviour: we want the hub to accept short packets
-> > and forward them on to all destinations.  Each destination then gets
-> > to choose whether it sees a padded packet or the short one.  The
-> > hub.c code is length-agnostic and doesn't look inside the packets it
-> > is passing on, so it has no issues with short packets.
-> >
-> > Cc: qemu-stable@nongnu.org
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+On the 32-bit processors (601, 603, 604, 750, 74xx) mtmsr does set ME,
+and permits machine checks, otherwise machine check ends in a checkstop.
 
-> >
-> > @@ -301,7 +303,7 @@ NetClientState *qemu_new_net_client(NetClientInfo *info,
-> >
-> >       nc = g_malloc0(info->size);
-> >       qemu_net_client_setup(nc, info, peer, model, name,
-> > -                          qemu_net_client_destructor, true);
-> > +                          qemu_net_client_destructor, true, true);
->
-> This changes hub ports, suppressing existing backend padding before
-> patch 3 adds padding to hub forwarding. So a 42-byte frame may reach the
-> NIC as 60 bytes at base, 42 after this patch, and 60 after patch 3.
-> Perhaps this patch and patch 3 may be squashed.
+Signed-off-by: Eric DeVolder <eric_devolder@yahoo.com>
+---
+ target/ppc/translate.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-I missed that wrinkle. I think the simplest thing is probably
-to squash patches 2 and 3 here. That also has the advantage
-that you can't accidentally cherry-pick the patch marked as
-fixing the CVE without also getting this necessary prerequisite.
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 06ed2adf10..808f913aa2 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -4282,8 +4282,12 @@ static void gen_mtmsr(DisasContext *ctx)
+         mask &= (1ULL << MSR_RI) | (1ULL << MSR_EE);
+     } else {
+         if (likely(!(ctx->insns_flags2 & PPC2_PPE42))) {
+-            /* mtmsr does not alter S, ME, or LE */
+-            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
++            /* mtmsr does not alter S or LE */
++            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_S));
++            /* nor ME, on the 64-bit server processors; the 6xx can */
++            if (is_book3s_arch2x(ctx)) {
++                mask &= ~(1ULL << MSR_ME);
++            }
+         }
+ 
+         /*
+-- 
+2.53.0
 
-thanks
--- PMM
 
