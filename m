@@ -1,162 +1,137 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C1F606A320
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F839606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 15:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=LNaiPhoi;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=sQB/A3o6
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=HATDV1HW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQnYf-00017Y-4d; Tue, 10 Nov 2026 10:14:50 -0500
+	id 1xQnaF-0001vb-RA; Tue, 10 Nov 2026 10:16:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xQnYQ-00010X-H3
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:14:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1xQnZM-0001cJ-Cb; Tue, 10 Nov 2026 10:15:37 -0500
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xQnYN-0001Xi-7r
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 10:14:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794323668;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9/iPuFJxlwY+n/Ypo+AfMxO8Im+A6KkQW8J+SFi0m7U=;
- b=LNaiPhoiEXzkP7Ldp5yPN0UhaPEepGlgn91PHDGVGDo1irTDTiHhZMuCg6UbNAHAQhhfoS
- Ev0jbq93sP9ve7hkWD4xnnr8j78hMFrPmES4rhyO1wiAynd05IZof725mrCHjS/y65A7Va
- p8Pcf03EvrAjko7paouOFudAXbD2/8w=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-502-bOgk7e48Pe6PszPb8qpWNg-1; Tue, 10 Nov 2026 10:14:27 -0500
-X-MC-Unique: bOgk7e48Pe6PszPb8qpWNg-1
-X-Mimecast-MFC-AGG-ID: bOgk7e48Pe6PszPb8qpWNg_1794323666
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-492d47f142cso201903f8f.0
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 07:14:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1794323666; x=1794928466; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=9/iPuFJxlwY+n/Ypo+AfMxO8Im+A6KkQW8J+SFi0m7U=;
- b=sQB/A3o65P4mwqFgsXweVeElNnSdf/YxB64LSwV7dg1IDBz6XbSJABAGWrCagVYtwc
- sBbeQ3o0nNd7VYrfRi0ZzRiWiIwrUTomuS07sSKWPWTF9d61jnBdAqyBaD8Eux7UiigK
- WTjdOHpbihoUkm1Xugn5AS88UIN+6XroOhr4KfQA/iXqUWV9E/igumY92NaTTN4DGqzB
- yfQFP1eo0gZ7pTxdnopXAlixWpFYCM+ZzCXhN/TRbRlbzxRn3aYtBmx3SMkowg72YdRW
- LCTIeiFri/OiOinmRYrhlYI+KxUYq9+gryjZlmpWujmxBY1J6AfVr9gRYmGS63DxuL32
- ZDbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794323666; x=1794928466;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=9/iPuFJxlwY+n/Ypo+AfMxO8Im+A6KkQW8J+SFi0m7U=;
- b=E+si5VYVe/CU+yubLKxnnekr+gDyiTKW1QzLCWforme976LOllBI2+LxuAnBRMcDZ5
- YOISKiOJ8YatoRyRpk4It7QkH0HLEgH26o7iNXwxsfd2VP2a/OLUSZOQG1cBFO8ZobpQ
- rEj2VFocZ6fh2NPV7H+QE2W6D/ptjldLNMH3v5FKcxceu2YsrKaj7E09OgtrvGilmT+j
- +/Vou2AnBxsiQztkb0+g/r+dyCHg/rphMHRkniORkmF3LZHStYS5wfXiHDb3vWEEpUZo
- BZ4Cc1i1WpHmRqTxWI1ouwakqxjN+/3sW0piqx9hz3YYrGdMg5iaag4idikzbD3C+qDt
- PFCQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErFSnHYmjCtVq7xIxGcoq4SX5id51OFrFZpDmPMfw3BHFx2bYjNXFKDMUAGfLaYpo2Hwguo00nemT6Pz@nongnu.org
-X-Gm-Message-State: APuU4Z9amh95xZS533qjyz/RSsNSS58UD9GaLVw6sdKDsYgY+Fc2GkKr
- 0OTjHSM60TyVSSYjpRMn+L06WBU6YeT9pCDNVaaV+LkODjYE38ix5vEUmBIHZvXRHDUQp7JUlQi
- QXqWF9m4s1X4N9j4veohw0romZOGDKZ/cVYwc66+JM1HN19d22lh8PAt8TIVjELJS
-X-Gm-Gg: AYBFou2NXLDffcv40cCPNGbGZLYN/kJaG+KsVBtH0rgVHuzcGL1565GYY6nTq6smfAI
- y1Ltu2ksXKnOTst4zy6MV35W6XdhAaelovma/n9ReJHnMwNi0b9cwY5y49HCtRWVZUwFnkMp7fB
- Y+mjB7lHQOi3q9eOP+ELjZadShuPgfYRN6jLNNkbIgQptcXEx55Ts5q4PrxlQY0Cqd/dpWSG1kG
- YOIPd1Wq0Uj0TJMfA+EFLLOjTsRBCpVj8nNpp0uRcxqBtFa7YleieeKRCFJ8X43jHSg211UdR2s
- y0EnmuQzbcv3/+i5KlIqo0VRgmasUjOkOVaHtEtT42xAG17jWF1BssBVh5kJdOybp7HikmDsC1q
- UQHuMPw5QdFMMZbj5KXAxw41LGevla1O7Ib+2GS5JXhXtEwOWwt2QntS1QKpUwU9fOQeIJ5Mw1b
- 0tXMSd1U+SVdc=
-X-Received: by 2002:adf:f04d:0:b0:48e:7833:2e7b with SMTP id
- ffacd0b85a97d-4982c1da22cmr4074677f8f.1.1794323665533; 
- Tue, 10 Nov 2026 07:14:25 -0800 (PST)
-X-Received: by 2002:adf:f04d:0:b0:48e:7833:2e7b with SMTP id
- ffacd0b85a97d-4982c1da22cmr4074633f8f.1.1794323665008; 
- Tue, 10 Nov 2026 07:14:25 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:1292:d530:6448:8ad:27f1:8b49?
- ([2a01:e0a:1292:d530:6448:8ad:27f1:8b49])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4983284c990sm5329189f8f.3.2026.11.10.07.14.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Nov 2026 07:14:24 -0800 (PST)
-Message-ID: <370bf56f-af15-4969-921d-a282b9703865@redhat.com>
-Date: Tue, 10 Nov 2026 16:14:23 +0100
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1xQnZH-0001o1-VG; Tue, 10 Nov 2026 10:15:30 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=j3uXjjjZS7mweSMX0R/My0ZZSE6b2qRlelwmBR7ql8aHbw4Cv+eOKSWuDKHDsgklAViQXAHD/HQuXWHtpykoIELIS24u89oIN4RbwhSV0LecRtvBnH/JdmpJeSdXVTaamlnWFaWF3jXvH1CrMChXXRuR749/wETFPoxWqjCatvoEX/U7bBma2VClHsLWYpAoARCknMwrWbKvlp2RY7z1rQA5KZ3PWEI1dRUtHzKk1+kNFrYvwx7ok+sy+aIpTGzWqvgVnd0sl5XUDoi6GwldX1rcRb1PPfjGQJPX6dFdmpg2QTkGsE1eQF5ADzP/QWfvuevffmfNum+pbZ9ZEf4T+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LoW3UjHoV0rUoIKxQ7eNNcz4weagP1ZVmnZrgE/tJHo=;
+ b=TMWVadUnjTiI0V5UR9UgFbm24RflUhyVjCM0Yr2lRNKRDQjp8sYdALJM98SWSC4mgPHsgic3cFXIwtRSsba6NsgtQfwqqv96rN3lBNiuqNKK4yQCZsVvdWdKMcnMg+vKpjahJF54P6Tp8K4XK0ZU/EX6kwHUuPiJHD/1POvE0waqSUSKksZuiWCAYOJPWHVH/h3kvgrNMLf7Cq1w03ff2hZ4Bvg7G7xQdBFRGCYOOWDNeNghgk40/JAbp2PpkfvtPNPMk9kg/RNVK6zVsci2m/aHV1+Ft7zhLSWQOGHRmgBELsgVmAso3VNC8HxO0QBUoyixcki1dBXZaKnG8roppQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LoW3UjHoV0rUoIKxQ7eNNcz4weagP1ZVmnZrgE/tJHo=;
+ b=HATDV1HWN67kmnajB1ROF5sSF18IvmdfEtYhPFYWVP7dI0DavTHPQxPCuE7pOnPX8t4MXdWuSTd7BXXImOo+Utwxrc6XUl11z8scEgc1dPC1ulXUGLeoiVjrGDJmCbyDvuEaUmsnwIPGV2jv+EMh88likXGzAOyEPFxdUfwHUx3n9+5N/XMnXBRZffxqrh9gxwSK+I34amOvJ6jPaISn+Xj/64plSiQsTsWwgnfxWns+KofJvYio9v52tcLbYHF6TEYOC4TwSnwhdjzW1EdjPQ+1SyezCfAQjq3GvijHGzXRc3oJE0DZ1Wo18ThonKJpmOkKtf4W0sFaesC+t4MCXg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
+ by TYSPR02MB7845.apcprd02.prod.outlook.com (2603:1096:405:61::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Tue, 10 Nov
+ 2026 15:15:20 +0000
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0615.007; Tue, 10 Nov 2026
+ 15:15:19 +0000
+From: Chao Liu <chao.liu@processmission.com>
+To: Max Chou <max.chou@sifive.com>
+Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [RFC PATCH 09/38] target/riscv: Add Zvqwdota16i dependency imply
+ rule
+Date: Tue, 10 Nov 2026 23:15:02 +0800
+Message-ID: <20261110151503.16857-1-chao.liu@processmission.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261104194155.679241-10-max.chou@sifive.com>
+References: 
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PH0P220CA0011.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:d3::16) To TYNPR02MB9351.apcprd02.prod.outlook.com
+ (2603:1096:405:3d0::15)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/28] hw/vfio: mark all VFIO object classes as secure
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: xen-devel@lists.xenproject.org, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-s390x@nongnu.org,
- qemu-arm@nongnu.org
-References: <20260911143627.2743803-1-berrange@redhat.com>
- <20260911143627.2743803-8-berrange@redhat.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260911143627.2743803-8-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TYSPR02MB7845:EE_
+X-MS-Office365-Filtering-Correlation-Id: a06bc55f-e686-4bfd-be3e-08df3f3d6ed4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|23010399003|366016|261009223027099003|10067099003|261026140227099003|261026121527099003|261022105027099003|261028144727099003|261021121427099003|261102123227099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: O2TYUU1kqWbozXiecFBTD8g2+W+XqX4yBCUfd7MJdNPxYkHOHnX4oDUz3hyot4jSVA++4txjvY8lWjcfFavbmRgLlnn0ayrvoZxM36OmwvzU9O3sISP3cXmZS+2M3ymKcN40knrkjX0UF7Oe4E9XrzxoG5MxQbPUM3yNmZHkD2IaMRm+lFVIJeSnmAYPowbkNYADx2giOOo9Vy+zf+x9iDA/v9+XGfozmuvSRQZ3ctLZsxnm/cPax135D6ZBW7b9Nq9jRdg1582aDckhKSjBJNSWIb3FZ+8s4SVIlJXRYKUy6USrLwVbv6m5x3fQHShG30Zq/cSSjDfAnb9AU79aXi6/TF7EPl/N7TCtzcRfWCKjCcHf/mT4a4tH+Y9vNEoGphLuLokDX0ny2vWnyvBkBsN7B3qNa04//Hl+IDd2e97+GBCCaU6Dq7bFkSGgAgVR5whhwsdSBT3355X34NdMkfc1Cn0ZZH7Ot+XXYfLjSpf+kj7UGV9qN/an8CEv2sQuGbxoL06Rc6mIwkxFCiHQsK4kC5tD841ID0j2F1G5k1CeE2pJdM02iv9dfQ14ex1xIyW5LpIfY6pfEssnjIf8nziQqW3utJTBGTbpslfQnkEzhU3K0lP4jsWggRsviWLDzlAtk6xQJKFXzEkKpETu3/Lo+vtDL78uqppz+aPICPg=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(23010399003)(366016)(261009223027099003)(10067099003)(261026140227099003)(261026121527099003)(261022105027099003)(261028144727099003)(261021121427099003)(261102123227099003)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?f2KT/8c6p7rlZdUf80GYxY+cqfQdw4kkhu58Yt57MvIQeIu0MDXII2i2uNnJ?=
+ =?us-ascii?Q?3nh8sLYVMv/LIf3AJlyZvaGQ9tqOS6RZ713EuQeD/VTtJPUGb0xGLetpzNwH?=
+ =?us-ascii?Q?q441LkH8bcsIOeRJiU2L9cxP0ecY5jinfRaVRzaaq5sgynvj7WFUTop31Mzh?=
+ =?us-ascii?Q?fabWV72hOwgfbSw/Lqww8iKVqwjUrDWfTehYgGkIRDr4JDj2OrN72enll0J0?=
+ =?us-ascii?Q?lHzzJ50nZxmZewSCBWU/k8okhaPrnQ13fcOtPeqcQ14YAtTvwo9aSuSitO9C?=
+ =?us-ascii?Q?u1WHvRJjj7Wev+56PekrA5KDSWdkzwdYEWi/eu2VZoe5V9dk1cyanXFVd9Q6?=
+ =?us-ascii?Q?wKDTLvWoYhRsPtZiWRI5lRbcYi2YWNnVvwE13kliug/4+w5fruX5Fkyu4Yqj?=
+ =?us-ascii?Q?/+lZiiCKQM7fDMb9J9PaxWcuE8dpJEdVMOtluTIYEboI+PcsrmzvqQPBsu6W?=
+ =?us-ascii?Q?AyBQTiCmSB73gYB4zI9dxmOuVdJrt38uO2T6NG4luVnrBU4llxlX6njvMdSV?=
+ =?us-ascii?Q?PxEYUsRLrGhDDK/5jF8yryfcTgjPbMl3t9Wxfw5NalaDZeGzPOsTbKlVXvsV?=
+ =?us-ascii?Q?VHzKQOg81quoCnnnzzcSRqSe9ClhQssD0N37Ia64c8cp4CkkM1WA6ukmBMFm?=
+ =?us-ascii?Q?kVEwEddlCTrcn2ZchE+rPU7ZuV9Xwt7Q9IupO6QKy4997o0gn87RPxIJ5FCI?=
+ =?us-ascii?Q?5TlrvDdml8WuNiKblVS+bG/9RPl1yfxmOxwh4mG8Eq/8HfpLBHkK2l5+5M0O?=
+ =?us-ascii?Q?wF5qaJtddtDAZwmaha0x7SrcYnPZy44fKHIyMScWBLluFq9NWtK3fBbB1Sk3?=
+ =?us-ascii?Q?5v5qdbg3T1cPGcgwop/W7vIKGxJ84s4fY9EWqxQ+ZtZkcrIhxCkcXejOcCsD?=
+ =?us-ascii?Q?IZEvKsy0DCKNtOa20kp0kao7BZj1NRbB868TZ2H6goVbeCNmQaHw5b5gXJ8s?=
+ =?us-ascii?Q?ukv4mVntFIonj8XyNo+6ifcq95Q5G0ShQ0xt7AwTWFLPwA5QMpZ9KOfC5317?=
+ =?us-ascii?Q?j17YOeErzjGqw7GfzBMiZI3D17gi+wSZgry4ErZj2x/KBch4bwGtw00luVMM?=
+ =?us-ascii?Q?FE/wOj69ObejHZo0rJ8Vfzh4TO765vyx1B49JOBC8bD3JFLtDT0K2yz24EDd?=
+ =?us-ascii?Q?HJXk7MpAk+acCKCsONPInIvSMyHf6EgMsjfDcFO1rzKPScxFietu0nnQs8n/?=
+ =?us-ascii?Q?DYsPDDTixU6QRINdlGOzgCW2dkiMNK5CLsXvn95417Z3Fq4VQFcA3u73dhlS?=
+ =?us-ascii?Q?NxuEM9RQmGfekU/9izv8vHO60V8FXK0ogSl/XolLxpIvTFwmyElOy8K/pdrw?=
+ =?us-ascii?Q?XJ1A6Q4exkKrKBxSqX4KHZru24NypvFb86e8W+57tEa1PaX4cL5ml+kKwyWR?=
+ =?us-ascii?Q?3LBTANuxrRX4zpm0XBN+9G0iwuq5d5s0sy3j7Rg3gU9QzX+8tQc/FdvwDCQo?=
+ =?us-ascii?Q?m50hn9WcGOzEKjnBHBQ4E4UC5rkNz7UyaN49TaaWRmaF0SOoMI+9q33MXpBD?=
+ =?us-ascii?Q?SQ8Jm3I7LORtL9f0RuoSTo6Cm7UMZ5FNDwf34ZxVnJ2gBFbqx/hSb+BN9lrn?=
+ =?us-ascii?Q?P2qisVQ2r6NCd3zgqAHbd+98F0pdnOCYIhtsd9r5Knb/ZUEOVZggZEk3Ns+E?=
+ =?us-ascii?Q?VunDMD2kqQLxfZYs2/w+hyq7CEq/gGvgsc+KY+tagUdDpWL94L95GdjxghWS?=
+ =?us-ascii?Q?6zY/9NZkzwTYwSrutScAj18yST3kOwKATqMqFhwXh04Be2NRHoDUMpPBVmu6?=
+ =?us-ascii?Q?lWWBGJBtL4j06kuRiSmo8vuxJJazbw0=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a06bc55f-e686-4bfd-be3e-08df3f3d6ed4
+X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2026 15:15:19.7019 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: PWD5MWO0RoqIVbRGKBeKd+acwSxXYCl/INTMoYy062gPumctfn1RabCcRgURmReQ34x+IGX242ntA3da6iiVIalDZO3bzYxQa1uho7zWAcQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR02MB7845
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=chao.liu@processmission.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,159 +143,61 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 9/11/26 16:36, Daniel P. Berrangé wrote:
-> The VFIO subsystem is about securely passing host PCI devices
-> to a guest, so all the classes should be presumed to be offering
-> a security boundary.
+On Thu,  5 Nov 2026 03:41:24 +0800 Max Chou <max.chou@sifive.com> wrote:
+
+> According to the Zvbdota isa spec, Zvqwdota16i requires Zve64x.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   hw/vfio-user/pci.c  | 1 +
-
-vfio-user too ?
-
->   hw/vfio/ap.c        | 1 +
->   hw/vfio/ccw.c       | 1 +
->   hw/vfio/container.c | 1 +
->   hw/vfio/igd.c       | 1 +
->   hw/vfio/iommufd.c   | 2 ++
->   hw/vfio/pci.c       | 3 +++
->   hw/vfio/spapr.c     | 1 +
->   8 files changed, 11 insertions(+)
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 
 Thanks,
+Chao
 
-C.
-
-
+> ---
+>  target/riscv/cpu.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
-> diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-> index e7573d4a9f..ae26160f72 100644
-> --- a/hw/vfio-user/pci.c
-> +++ b/hw/vfio-user/pci.c
-> @@ -482,6 +482,7 @@ static const TypeInfo vfio_user_pci_info = {
->       .class_init = vfio_user_pci_class_init,
->       .instance_init = vfio_user_pci_init,
->       .instance_finalize = vfio_user_pci_finalize,
-> +    .secure = true,
->   };
->   
->   static void register_vfio_user_dev_type(void)
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index 6e2a1223ea..4b9d522f7b 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -352,6 +352,7 @@ static const TypeInfo vfio_ap_info = {
->       .instance_size = sizeof(VFIOAPDevice),
->       .instance_init = vfio_ap_instance_init,
->       .class_init = vfio_ap_class_init,
-> +    .secure = true,
->   };
->   
->   static void vfio_ap_type_init(void)
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index c3dc7c1962..7a241aa02a 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -721,6 +721,7 @@ static const TypeInfo vfio_ccw_info = {
->       .instance_size = sizeof(VFIOCCWDevice),
->       .instance_init = vfio_ccw_instance_init,
->       .class_init = vfio_ccw_class_init,
-> +    .secure = true,
->   };
->   
->   static void register_vfio_ccw_type(void)
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index d09a663732..d4f20c6c81 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -336,6 +336,7 @@ static const TypeInfo types[] = {
->           .instance_size = sizeof(VFIOContainer),
->           .class_size = sizeof(VFIOIOMMUClass),
->           .abstract = true,
-> +        .secure = true,
->       },
->   };
->   
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index 413a49aae9..e9cef355f9 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -311,6 +311,7 @@ static const TypeInfo vfio_pci_igd_lpc_bridge_info = {
->       .name = "vfio-pci-igd-lpc-bridge",
->       .parent = TYPE_PCI_DEVICE,
->       .class_init = vfio_pci_igd_lpc_bridge_class_init,
-> +    .secure = true,
->       .interfaces = (const InterfaceInfo[]) {
->           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
->           { },
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 242644aa00..64e588fe51 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -1051,10 +1051,12 @@ static const TypeInfo types[] = {
->           .parent = TYPE_VFIO_IOMMU,
->           .instance_size = sizeof(VFIOIOMMUFDContainer),
->           .class_init = vfio_iommu_iommufd_class_init,
-> +        .secure = true,
->       }, {
->           .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO,
->           .parent = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
->           .class_init = hiod_iommufd_vfio_class_init,
-> +        .secure = true,
->       }
->   };
->   
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 428ab2f069..b38877a1a8 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3854,6 +3854,7 @@ static const TypeInfo vfio_pci_device_info = {
->       .parent = TYPE_PCI_DEVICE,
->       .instance_size = sizeof(VFIOPCIDevice),
->       .abstract = true,
-> +    .secure = true,
->       .class_init = vfio_pci_device_class_init,
->       .interfaces = (const InterfaceInfo[]) {
->           { INTERFACE_PCIE_DEVICE },
-> @@ -4110,6 +4111,7 @@ static const TypeInfo vfio_pci_info = {
->       .class_init = vfio_pci_class_init,
->       .instance_init = vfio_pci_init,
->       .instance_finalize = vfio_pci_finalize,
-> +    .secure = true,
->   };
->   
->   static const Property vfio_pci_nohotplug_properties[] = {
-> @@ -4146,6 +4148,7 @@ static const TypeInfo vfio_pci_nohotplug_info = {
->       .parent = TYPE_VFIO_PCI,
->       .instance_size = sizeof(VFIOPCIDevice),
->       .class_init = vfio_pci_nohotplug_class_init,
-> +    .secure = true,
->   };
->   
->   static void register_vfio_pci_dev_type(void)
-> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-> index 42690e4323..1027c434c0 100644
-> --- a/hw/vfio/spapr.c
-> +++ b/hw/vfio/spapr.c
-> @@ -544,6 +544,7 @@ static const TypeInfo types[] = {
->           .parent = TYPE_VFIO_IOMMU_LEGACY,
->           .instance_size = sizeof(VFIOSpaprContainer),
->           .class_init = vfio_iommu_spapr_class_init,
-> +        .secure = true,
->       },
->   };
->   
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 7873e67c053..ae859128d30 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2853,6 +2853,15 @@ static RISCVCPUImpliedExtsRule ZVFHMIN_IMPLIED = {
+>      },
+>  };
+>  
+> +static RISCVCPUImpliedExtsRule ZVQWDOTA16I_IMPLIED = {
+> +    .ext = CPU_CFG_OFFSET(ext_zvqwdota16i),
+> +    .implied_multi_exts = {
+> +        CPU_CFG_OFFSET(ext_zve64x),
+> +
+> +        RISCV_IMPLIED_EXTS_RULE_END
+> +    },
+> +};
+> +
+>  static RISCVCPUImpliedExtsRule ZVQWDOTA8I_IMPLIED = {
+>      .ext = CPU_CFG_OFFSET(ext_zvqwdota8i),
+>      .implied_multi_exts = {
+> @@ -3066,6 +3075,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+>      &ZVKS_IMPLIED,
+>      &ZVKSC_IMPLIED,
+>      &ZVKSG_IMPLIED,
+> +    &ZVQWDOTA16I_IMPLIED,
+>      &ZVQWDOTA8I_IMPLIED,
+>      &SHA_IMPLIED,
+>      &SSCFG_IMPLIED,
+> -- 
+> 2.56.0
+> 
+> 
+> 
 
+Sent using hkml (https://github.com/sjp38/hackermail)
 
