@@ -1,92 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7DD606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613CC606A325
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 18:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=K9aTtn2y
+	dkim=pass (2048-bit key) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=Qg/YQwdW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQqeg-0005OZ-Qp; Tue, 10 Nov 2026 13:33:15 -0500
+	id 1xQqei-0005Q6-Po; Tue, 10 Nov 2026 13:33:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xQqec-0005Mg-9r
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 13:33:10 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xQqef-0005O2-3W
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 13:33:13 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xQqeY-0003Mp-JE
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 13:33:09 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-4918c2d727fso1298645f8f.3
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 10:33:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xQqec-0003NP-00
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 13:33:12 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-4918c2d727fso1298666f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 10:33:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1794335585; x=1794940385; darn=nongnu.org;
+ d=openvz.org; s=google; t=1794335588; x=1794940388; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wZ5fd90wMmGhR18V4PeDCCYB/ele6ujHSK6hnH2+u28=;
- b=K9aTtn2ycXb2idX78Z6daLGk3QY2mfxpIvb1U1NoNtmLhxZfMwyGLOpDsW5Z/klIb1
- KWfG8AjxsZ1KgyLzScQJnLMMhzuE+1ouJElJQsnYTrKffVNdaCeiCnxyf/zf5NwExxC+
- 4STwqVlv4dL8CBUFVHDj/0W/E3IiBNx1I7oqEH+99HucvodLslhHrg0XF0HrzhHcb0Yb
- HS1yN3QzTW2NfQJSXug/EzI8rl2eLvAL8dd9zZ/rt85me7Ndnuo058BiVVedkHKiYyNc
- z5T4fiJ08ulWJdQMpEQ4E5HqPxWh6aDKD6s4bbhfRJ6rUaLDHJvgfWxf1yyd8l44I2t3
- xHWg==
+ bh=+E13g80s30L9W/BYkJ3BK+ngM9SB5aSpfwYclbX7M68=;
+ b=Qg/YQwdWfMWNm036hyYQsystU88QPglCK0hCOqAAAqPpY4eC+U0YlZnpmwrkGaJSVV
+ cBO/7O0y3R/hkRD1fbw3W/kmjJNILAP8i5Q9z9zw5xMXdcdQLXgqaVrkMHti/0SpY3d2
+ U8Neb0+0pi2iv2TOIhxsoMlmzWEL7DL3bT+CchVOBhpydt13w8G7oviBkeqlML8zJ5/D
+ Y9uZL7eyYaslB3vlMK39BnDOhbMoi7PyCHXDDBX6z4btsEdfHwrYDeJF6muJznBz9QvW
+ pDopIQTR0lHz+DEPkztvrb9JEMo95ITl6lLkViBZRNaFR05T1wfGXNylYaTCWSAYKfC0
+ 2S7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794335585; x=1794940385;
+ d=1e100.net; s=20260707; t=1794335588; x=1794940388;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=wZ5fd90wMmGhR18V4PeDCCYB/ele6ujHSK6hnH2+u28=;
- b=WnB7i/mGo1KbS0IFFoCc3oYH5tYG/s1VJPb2Qv+SbgcfsCish1SsW+NhYxa/4c6f6M
- C4UhbKbcHGlt1MYxPbObarBgdEB8n46mfDI2QsF7SHVaJmRmFIYFiTODA3AOkyrAL2mM
- Rc9ynSLjt/xi+rSGd1pbsJiYGYVypYJ4gVGQj/LE4uLBShyh9STal++4q4YPq2hnMHCi
- CojoiDU3feqJGjT+rFaHJqwDbY52F0TcrSCvmrhsN8f1Cd/g/FwPbjLasKvWdGFgAUBu
- TAuGSXRHVRkCS0qr7ac21AobQniqVNFYiundVnM7QEKw4dfSiYU5Gf3UiUPLblrxIoSf
- akPQ==
-X-Gm-Message-State: APuU4Z9J9CmXqxugKMiy/dDohhjB857oVv1pPLE0mjrBcK63QxDKrQyh
- Qiggoydw6Le6xObGCak1aXHuHF3DN0DXykAN+DfM2hvmDogiIAf0nGBi7jTHx4tPbiKr9nNwtfs
- pSnh/
-X-Gm-Gg: AYBFou2YZH9lsaN7I55Ve3VRZujwXX85XjpISiPYusisu1Ok1Az/7rF1ZJgE67d4dRc
- cCiLMS+3ycYnjsMzvefMoRP5YmQK3AG9CH6AJWTjIi4nZqU4KTgIdY51AUUTC9IOXaIC00yP+ts
- nxRor8g5CCEPAdocKmHXgS6hKe5iR8yeDagh8eJ147mE6S8l1b3x5aGNqU9/77ijkqoM24N4O7Y
- X2tqwZxvyfiJxv7fIX+sacM7xPJOz3N/sp6Jhv1XW5Lomt+u1RRyG3xhFPIxEL1XhzdmaoHFVad
- BV5Z0atde9QLOFF0zuL7DAcGHvevqtrANpswJOC8o+C1QYMHasaig1R4uYLacNe/xErVkOAQuPy
- pGWgq92FkRmJ7xubLR21U65Kz0cddjKFqKi0k6tzIJt42pZQrF9oq8ItapltdQuqlNaO1BWp+0k
- eN+lHBXJmhG5FoAcyTpoS1xNmA3z/diuV99q53VS5reMK2LtewC8/8bUPiltkIQgTxjeskpokdJ
- 8Q/UKBfvmTH9VOifEiGJJYt+cB8rMOMre8dng6Dw0YCBRp+ZwbiO5o6cJLb5dIP8w0w8MWsafCi
- LnOfb5a/m7IX8KfOOOgU6WfCGQ==
-X-Received: by 2002:a05:6000:3c5:b0:48e:e98:8b64 with SMTP id
- ffacd0b85a97d-4982e82c23fmr6266416f8f.19.1794335584874; 
- Tue, 10 Nov 2026 10:33:04 -0800 (PST)
+ bh=+E13g80s30L9W/BYkJ3BK+ngM9SB5aSpfwYclbX7M68=;
+ b=W1hX4zn7oGz2Njcjw0Sm7wLxyvjlc8/GBkoMes/XBFRdNZkejn2k+j1pUzeOOPBpq6
+ FewoyM8QAzcBDvy4Ceo3AwTKTOeV+dKRmcVHTKmCOuaUrthULPQB+baP+rbbz8Dch8bQ
+ D/qPgly4PubeI4eT73BuFMLWVYZvkvycUPrx+rLxzx4azd2vABuGhTaVqL+ETbei1Qyk
+ cCDMXLVe6K6y11HCi9lBeU48OUAOvTxkW+w7P7waR5t26KjQg4/Y4IGieuRhZCoZPOUb
+ zrdsdkrnPqPzRt/BQ0atLLOZ8k9NKNk5nWdJjAas7JSIzwplOZOWR2QD8G3Ciswasy4Z
+ IloA==
+X-Gm-Message-State: APuU4Z+UR3K/t5PGLliyYfIUuQvCaqMlQ/2yrw5nimLaJVGb3gCGdYp7
+ OzL6ECmrjRmyBaRTyRGY19S2Buc6CND1u9k9pASU7OFIlbZhLPxqT4jXakRVYH9gaiGqycNcrUz
+ +CIW0
+X-Gm-Gg: AYBFou0YObmW9xLxwLIEjRP4MqvklFphWerpS6wjFRrPpnRtrSFU6yPwnYzCzWkLgiY
+ B0W1f4mQgfr5T73ugi58ZIhDleaf3K5WczZ2jtGTE5WMaJQk4rhRopUSvSFPAHRuvcQ8CeXpXuu
+ zef22ZA4N/Px/71M1FprisV5g/AJPVKQTMuOmm+bBIBFXjwVCr+0wQKdC/S+899PCLMEYA9vZdR
+ /FZAJhGuLV7zCzatBYM6gHjjEIHHN/gfOtjt9HvAXlB7y7tRehp8xoMdSle5YcCIvQCRX2kk+fx
+ dv0SXCAztD5KP0kFKTKPMm1hJUpzgoAsDNEwSfTjtHOED76R0WclQ6IbI2qkE0rauj6n/DV92Hl
+ UleUG9vwRYxMjeEIaRwbhOu3sz+e3bG2gm9phrfjovHXXZZSCZCReiECMyTx/33ZgjsdPETd8J2
+ sZ/BnzPyY+XdRREuuIZrXsuepfNX9MgZNNA8Ajpwuwny1Zn8AlnCBToSdYNDe0pDZzo6nrTUCzv
+ Uj2BCpEUVJR9Hy/EK0yL1JpU/GeilZHXrMrtSZVdEpAd1YbHZlFS+d+JetC3K5CQQ8txntorwZx
+ 8TFlC477184IIE05zkM3pl9YKQ==
+X-Received: by 2002:a05:6000:230b:b0:48d:fdd0:6ce8 with SMTP id
+ ffacd0b85a97d-4982b28a797mr7863741f8f.3.1794335588148; 
+ Tue, 10 Nov 2026 10:33:08 -0800 (PST)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:4f78:6441:d0f1:22af])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-498363df7a5sm6384827f8f.37.2026.11.10.10.33.03
+ ffacd0b85a97d-498363df7a5sm6384827f8f.37.2026.11.10.10.33.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Nov 2026 10:33:04 -0800 (PST)
+ Tue, 10 Nov 2026 10:33:07 -0800 (PST)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 3/5] tests/qtest/migration: check the destination run state
- in postcopy tests
-Date: Tue, 10 Nov 2026 19:32:55 +0100
-Message-ID: <20261110183257.2930908-4-den@openvz.org>
+ Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: [PATCH v2 5/5] iotests/migrate-bitmaps-postcopy-test: cover postcopy
+ with a return path
+Date: Tue, 10 Nov 2026 19:32:57 +0100
+Message-ID: <20261110183257.2930908-6-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261110183257.2930908-1-den@openvz.org>
 References: <20261110183257.2930908-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=den@openvz.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,129 +110,104 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Denis V. Lunev <den@openvz.org>
 
-The destination must not report postcopy-active or completed while it
-is still in RUN_STATE_INMIGRATE. The destination autostarts in these
-tests, so the run state change emits RESUME and the order is visible in
-the event stream: record a MIGRATION postcopy-active or completed event
-seen before RESUME and fail the postcopy tests on it once the
-destination has completed.
+The test migrates through an exec: fifo, which has no return path, so
+the source never waits for the destination's package-loaded pong.
+libvirt enables return-path for every migration that is not tunnelled.
 
-migrate_postcopy_start() waited for the destination's RESUME with
-qtest_qmp_eventwait(), which reads events past the event callback and
-drops the ones it does not want. Poll query-status instead, so every
-destination event reaches the callback.
+Add a case that migrates one bitmap over a unix socket with return-path,
+unthrottled, and waits for the source to enter postcopy-active, so that
+the bitmap really goes through postcopy, and then for both sides to
+complete. It times out when the destination answers the pong from the
+run BH while dirty_bitmap_load() holds its lock across stream reads.
+
+The existing cases are not run with a return path instead. They
+throttle the source, which lets the run BH take the lock between
+sections, and with a return path the source notices the destination
+shutdown and resumes the VM, as each VM has its own image.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Cc: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>
 Cc: Juraj Marcin <jmarcin@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org
 ---
- tests/qtest/migration/framework.c      |  6 ++++--
- tests/qtest/migration/migration-qmp.c  | 10 ++++++++--
- tests/qtest/migration/migration-qmp.h  |  3 ++-
- tests/qtest/migration/migration-util.c |  8 ++++++++
- tests/qtest/migration/migration-util.h |  2 ++
- 5 files changed, 24 insertions(+), 5 deletions(-)
+ .../tests/migrate-bitmaps-postcopy-test       | 39 +++++++++++++++++++
+ .../tests/migrate-bitmaps-postcopy-test.out   |  4 +-
+ 2 files changed, 41 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index b7aef6b21c..1cf18233f7 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -667,6 +667,8 @@ static void migrate_postcopy_complete(QTestState *from, QTestState *to,
-     MigrationTestEnv *env = migration_get_env();
+diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
+index 53f7dafc79..a6e21dec0a 100755
+--- a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
++++ b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
+@@ -31,6 +31,7 @@ disk_a1 = os.path.join(iotests.test_dir, 'disk_a1')
+ disk_b1 = os.path.join(iotests.test_dir, 'disk_b1')
+ size = '256G'
+ fifo = os.path.join(iotests.test_dir, 'mig_fifo')
++mig_sock = os.path.join(iotests.sock_dir, 'mig_sock')
  
-     wait_for_migration_complete(from);
-+    wait_for_migration_complete(to);
-+    g_assert(!dst_state.migrated_before_resume);
+ granularity = 512
+ nb_bitmaps = 15
+@@ -299,6 +300,44 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
+         check_bitmaps(self.vm_b, 0)
  
-     if (args->start.suspend_me) {
-         /* wakeup succeeds only if guest is suspended */
-@@ -695,7 +697,7 @@ void test_postcopy_common(MigrateCommon *args)
-     if (migrate_postcopy_prepare(&from, &to, &hook_data, args)) {
-         return;
-     }
--    migrate_postcopy_start(from, to, &src_state);
-+    migrate_postcopy_start(from, to, &src_state, &dst_state);
-     migrate_postcopy_complete(from, to, hook_data, args);
- }
  
-@@ -842,7 +844,7 @@ void test_postcopy_recovery_common(MigrateCommon *args,
-     migrate_set_parameter_int(from, "max-postcopy-bandwidth", 4096);
- 
-     /* Now we start the postcopy */
--    migrate_postcopy_start(from, to, &src_state);
-+    migrate_postcopy_start(from, to, &src_state, &dst_state);
- 
-     /*
-      * Wait until postcopy is really started; we can only run the
-diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-index 437b5eaeff..77befe1027 100644
---- a/tests/qtest/migration/migration-qmp.c
-+++ b/tests/qtest/migration/migration-qmp.c
-@@ -549,10 +549,16 @@ void migrate_cancel(QTestState *who)
- }
- 
- void migrate_postcopy_start(QTestState *from, QTestState *to,
--                            QTestMigrationState *src_state)
-+                            QTestMigrationState *src_state,
-+                            QTestMigrationState *dst_state)
- {
-     qtest_qmp_assert_success(from, "{ 'execute': 'migrate-start-postcopy' }");
- 
-     wait_for_stop(from, src_state);
--    qtest_qmp_eventwait(to, "RESUME");
++# libvirt's configuration: the source waits for the destination's pong
++class TestDirtyBitmapPostcopyReturnPath(iotests.QMPTestCase):
++    def setUp(self):
++        qemu_img('create', '-f', iotests.imgfmt, disk_a, '1G')
++        qemu_img('create', '-f', iotests.imgfmt, disk_b, '1G')
++        self.vm_a = iotests.VM(path_suffix='a').add_drive(disk_a)
++        self.vm_b = iotests.VM(path_suffix='b').add_drive(disk_b)
++        self.vm_b.add_incoming('unix:' + mig_sock)
++        self.vm_a.launch()
++        self.vm_b.launch()
 +
-+    /* Poll so that every destination event passes the event callback */
-+    while (!dst_state->resume_seen) {
-+        qtest_qmp_assert_success(to, "{ 'execute': 'query-status' }");
-+        g_usleep(1000);
-+    }
- }
-diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
-index 940ffd5950..f275cd7692 100644
---- a/tests/qtest/migration/migration-qmp.h
-+++ b/tests/qtest/migration/migration-qmp.h
-@@ -46,6 +46,7 @@ void migrate_continue(QTestState *who, const char *state);
- void migrate_recover(QTestState *who, const char *uri);
- void migrate_cancel(QTestState *who);
- void migrate_postcopy_start(QTestState *from, QTestState *to,
--                            QTestMigrationState *src_state);
-+                            QTestMigrationState *src_state,
-+                            QTestMigrationState *dst_state);
- 
- #endif /* MIGRATION_QMP_H */
-diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
-index db66d8b24f..4b5663c5a6 100644
---- a/tests/qtest/migration/migration-util.c
-+++ b/tests/qtest/migration/migration-util.c
-@@ -178,6 +178,14 @@ bool migrate_watch_for_events(QTestState *who, const char *name,
-     } else if (g_str_equal(name, "RESUME")) {
-         state->resume_seen = true;
-         return true;
-+    } else if (g_str_equal(name, "MIGRATION") && !state->resume_seen) {
-+        const char *status = qdict_get_str(qdict_get_qdict(event, "data"),
-+                                           "status");
++    def tearDown(self):
++        self.vm_a.shutdown()
++        self.vm_b.shutdown()
++        os.remove(disk_a)
++        os.remove(disk_b)
 +
-+        if (g_str_equal(status, "postcopy-active") ||
-+            g_str_equal(status, "completed")) {
-+            state->migrated_before_resume = true;
-+        }
-     }
++    def test_postcopy_success(self):
++        self.vm_a.cmd('block-dirty-bitmap-add', node='drive0',
++                      name='bitmap0', persistent=True)
++
++        caps = [{'capability': 'dirty-bitmaps', 'state': True},
++                {'capability': 'events', 'state': True},
++                {'capability': 'return-path', 'state': True}]
++        self.vm_a.cmd('migrate-set-capabilities', capabilities=caps)
++        self.vm_b.cmd('migrate-set-capabilities', capabilities=caps)
++
++        self.vm_a.cmd('migrate', uri='unix:' + mig_sock)
++        self.vm_a.cmd('migrate-start-postcopy')
++
++        match = {'data': {'status': 'postcopy-active'}}
++        self.vm_a.event_wait('MIGRATION', match=match)
++        match = {'data': {'status': 'completed'}}
++        self.vm_b.event_wait('MIGRATION', match=match)
++        self.vm_a.event_wait('MIGRATION', match=match)
++        check_bitmaps(self.vm_b, 1)
++
++
+ if __name__ == '__main__':
+     iotests.main(supported_fmts=['qcow2'],
+                  unsupported_imgopts=['compat'],
+diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test.out b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test.out
+index 8d7e996700..89968f35d7 100644
+--- a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test.out
++++ b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test.out
+@@ -1,5 +1,5 @@
+-...
++....
+ ----------------------------------------------------------------------
+-Ran 3 tests
++Ran 4 tests
  
-     return false;
-diff --git a/tests/qtest/migration/migration-util.h b/tests/qtest/migration/migration-util.h
-index 694773e594..f195aeea48 100644
---- a/tests/qtest/migration/migration-util.h
-+++ b/tests/qtest/migration/migration-util.h
-@@ -22,6 +22,8 @@ typedef struct QTestMigrationState {
-     bool resume_seen;
-     bool suspend_seen;
-     bool suspend_me;
-+    /* postcopy-active or completed reported before RESUME */
-+    bool migrated_before_resume;
- } QTestMigrationState;
- 
- bool migrate_watch_for_events(QTestState *who, const char *name,
+ OK
 -- 
 2.53.0
 
