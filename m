@@ -1,61 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D3E6072677
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 09:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A9E606A32A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 09:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=CLFJoeGa
+	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=R8qGFG/8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQiO4-0006wa-Lh; Tue, 10 Nov 2026 04:43:32 -0500
+	id 1xQiae-0003k2-UQ; Tue, 10 Nov 2026 04:56:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xQiO2-0006vO-Lw; Tue, 10 Nov 2026 04:43:31 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xQiO0-0003FA-HH; Tue, 10 Nov 2026 04:43:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794303803; bh=PsigdxoagA2gd/IarfS8ZqLG26MD1xjQVzsxT0dtCwo=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=CLFJoeGa+4F6AVyK0fZ3ZGEDgn96Hy7y4Q37CRsK4YetCIbOHVZSJLJtDxp0OSgOY
- 5d8rEr08eJeoKg2Wn6mKSbU7aV3W7Xw4O9SA18xB23gPL+N2sU7+/cRALNnVP3Yq8g
- wlSWRYIa1P+64dMrws4BOtiveKF6Prxq+r5E8fhvlDIOEfmKIcnym/6Z+U8adgk+dg
- eI+MqRUpFU2uWdwtz2WoDq6P5RW9fkta3wzSx8VhWQyLciI3H97FQ8KFB9FrcFJ+Z2
- 0WE1L61LumoKDBccvcTIxcvK65bi0oCXO+Sk9wlawAE50D9qjza+JBVaGUYbxmzVRN
- eC9NuoPAIf4AQ==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6B4B31E50F6;
- Tue, 10 Nov 2026 12:43:23 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 51BF4457E0C;
- Tue, 10 Nov 2026 12:43:23 +0300 (MSK)
-Message-ID: <25ca13a6-0305-40a3-b0d9-4f468aaa682c@tls.msk.ru>
-Date: Tue, 10 Nov 2026 12:43:23 +0300
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1xQiab-0003jD-CG
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 04:56:29 -0500
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1xQiaZ-0004nX-K4
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 04:56:28 -0500
+Received: from laptop.localdomain (unknown [81.196.141.39])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 3BAE320B7169;
+ Tue, 10 Nov 2026 01:56:21 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3BAE320B7169
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1794304583;
+ bh=ntLjdW/MmqC2nG46W/sqXowqt4r14nluTg+4QyLOY9E=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=R8qGFG/81FDZehjs0Ms7Po71YdBbKW/u9oJUzXGHB3tn0SprV+HgRQiWZ6YabZ7Uc
+ s2Hr3mjJ4RGEVHzZ70ZHKK294+FdEsZEVCBLtHn+OsIByGocgH7IShrF7xikjwixdB
+ sEsJAdPPfBaKrkIzX5gAkzFuK2LKujJhpDgNNJ0Q=
+From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Wei Liu <liuwe@microsoft.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Liu <wei.liu@kernel.org>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>
+Subject: [PATCH v2 1/3] i386/cpu.c: Adjust minimum xlevel to 0x8000_001E when
+ TOPOEXT is enabled
+Date: Tue, 10 Nov 2026 11:56:15 +0200
+Message-ID: <20261110095617.50713-2-dblanzeanu@linux.microsoft.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261110095617.50713-1-dblanzeanu@linux.microsoft.com>
+References: <20261110095617.50713-1-dblanzeanu@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH stable-10.0] hw/cxl: free the CCI background timer on
- Type-3 reset and exit
-To: Junjie Cao <junjie.cao@linux.dev>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, jic23@kernel.org, anisa.su@samsung.com,
- mst@redhat.com, philmd@oss.qualcomm.com, linux-cxl@vger.kernel.org
-References: <20261030124417.1066423-1-junjie.cao@linux.dev>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20261030124417.1066423-1-junjie.cao@linux.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,37 +68,38 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/30/26 15:44, Junjie Cao wrote:
-> ct3d_reset() re-runs cxl_init_cci() on all three CCIs, and each run
-> allocates a fresh background timer without freeing the old one, so
-> every reset leaks three QEMUTimers.  ct3_exit() doesn't free them
-> either.
-> 
-> Upstream fixed this in 259b877eac36 ("hw/cxl: fix timer leak in
-> cxl_destroy_cci()") and a004df0be51f ("hw/cxl: destroy primary CCI
-> before re-initialization on reset"), but both rely on
-> cxl_destroy_cci() and the .initialized flag from 98cbac128f1c, which
-> only went in for 10.1.  Add a minimal cxl_destroy_cci() here and call
-> it before each re-init and from ct3_exit().  timer_free() takes NULL,
-> so the first reset needs no guard.
-> 
-> ASan on v10.0.15, 5x system_reset on a paused guest with one
-> cxl-type3: 720 bytes in 15 allocations from cxl_init_cci ->
-> timer_new_ms before, none after.  cxl-test passes.
-> 
-> Fixes: 221d2cfbdb53 ("hw/cxl/mbox: Add support for background operations")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
+This ensures the guests can discover the AMD cache and processor topology leaves
+when TOPOEXT feature is enabled.
 
-Thank you for all yout work and for helping with back-porting this to 10.0.
-I haven't get back to you at the time, correcting now :)
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+---
+ target/i386/cpu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-/mjt
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index eab0d5a4d4..e443132ce9 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9911,6 +9911,11 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+         x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x8000000A);
+     }
+ 
++    /* TOPOEXT requires CPUID[0x8000001D] and CPUID[0x8000001E] */
++    if (env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) {
++        x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x8000001E);
++    }
++
+     /* SEV requires CPUID[0x8000001F] */
+     if (sev_enabled()) {
+         x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x8000001F);
+-- 
+2.54.0
+
 
