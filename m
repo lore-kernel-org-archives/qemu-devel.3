@@ -1,61 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B7A606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 12:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4097606A32E
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Nov 2026 12:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=fFpIXO/T
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=xUnDzCPB
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQkfQ-0002Lb-Gs; Tue, 10 Nov 2026 07:09:36 -0500
+	id 1xQl8s-0004Vj-Ta; Tue, 10 Nov 2026 07:40:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fangyu.yu@linux.alibaba.com>)
- id 1xQkfM-0002HM-Ks; Tue, 10 Nov 2026 07:09:33 -0500
-Received: from [115.124.30.113] (helo=out30-113.freemail.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fangyu.yu@linux.alibaba.com>)
- id 1xQkfH-0003No-R3; Tue, 10 Nov 2026 07:09:32 -0500
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1xQl8f-0004QQ-Tr
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 07:39:50 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1xQl8c-0006bg-N5
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 07:39:49 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4a549cd7fd2so18142235e9.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 04:39:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1794312545; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=CBCnNNw9zHK1dhwxg4v79FZ9oh2ycj04TUBKr/PeV/M=;
- b=fFpIXO/TPyc4rNY58cVQ9xc46lHDU6ToQnT+tcFjfRQeA6mYKQ4OvYSQtbY99B73lZ1LQ13qGpiggpAjnZ64TauvL2zc0FLDmwYknxLZLF2M0YauFfmQIga7snEzqQCP9+tIZkGcaILmisaLUjQduE0wYgNIzLj2wMDPjDYLm44=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R591e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
- MF=fangyu.yu@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
- TI=SMTPD_---0XEVEaw6_1794312542; 
-Received: from localhost.localdomain(mailfrom:fangyu.yu@linux.alibaba.com
- fp:SMTPD_---0XEVEaw6_1794312542 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 10 Nov 2026 20:09:03 +0800
-From: fangyu.yu@linux.alibaba.com
-To: daniel.barboza@oss.qualcomm.com
-Cc: alistair.francis@wdc.com, chao.liu@processmission.com,
- fangyu.yu@linux.alibaba.com, guoren@kernel.org, liwei1518@gmail.com,
- palmer@dabbelt.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH] target/riscv: fix exception PC for WFI 
-Date: Tue, 10 Nov 2026 20:08:58 +0800
-Message-Id: <20261110120858.74302-1-fangyu.yu@linux.alibaba.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <73ad77b3-1583-4b2f-91d5-5ac756b02ce6@oss.qualcomm.com>
-References: <73ad77b3-1583-4b2f-91d5-5ac756b02ce6@oss.qualcomm.com>
+ d=linaro.org; s=google; t=1794314384; x=1794919184; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Y9hs0pjKN6Lzdc4BpIOVcC83ZdGSoWRrJ9jzqC8X4L8=;
+ b=xUnDzCPBAfH/YFJ4d4vDEcxbARjYgz9vxAIvJum6WkRZuOrLEQD+CNAK3JuG/eOhAg
+ fQFIZXJfL2Ufn/LnJnkDsXB512Gv5iiiUfbWiPlYA0lHuCsddyCKA18VVxq/+1ow77Hz
+ +7Hz00YUroSmTi0sCFwXkWh+oAqqYTv0I31negCmd5cDdXxH8I2jU1Cnae56S/YPSyj4
+ vXccovAtwlQxUvK/xKgGHdX2UtgDw/yU0qPUAxvt0mAEbEBIS18TAqEKVVkC5U5xEo9y
+ kEWm8T0lyGnS3HkY4PRpY4iv5LuweYCV20a6WKHdq99WtQBaEzzwtvegKSIxyhe9mgYH
+ 3nKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794314384; x=1794919184;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Y9hs0pjKN6Lzdc4BpIOVcC83ZdGSoWRrJ9jzqC8X4L8=;
+ b=BegmAmASAeldKDm77f6PvRK+aZWlDRq119ptzbBs5E5pEaSRm/W+T/6UaWW4bmCw0e
+ z9hCQEJjmLCipq00AitQsM9g+M5/DGkbQF2XYK6AKcFVGT8MbJJ9X5T85tap18JgxfZL
+ iVHuOO0VpE0J+V+q+gyF2aPTxlLsRaVa8EYaaWYIhjoh9VZb5N/v4w+YoXtp85F/5dxd
+ PY2P6Les1IDUce0tRacSvDHy62KYNOf8KggqgMKHr4VT34uVMsYH1onxQbWk5s3U2EIB
+ cycba/SnlLOgaEGIWj3P2pfmyN0LXS7s5HTB/48UwiZghxIIUe8gq779NkF+pCmt1efg
+ GZCg==
+X-Gm-Message-State: APuU4Z90ym3UjatHUW3ZjGhvrdoOmhSPWJ7kU+kDe8nqv2Ntn4MXb59Y
+ n9z4CaSzC0poAjoo6Yu+9l5q98tJefoyfv6/klf7z0BO8lZ+LGrKcp75kIJNgImmAx4=
+X-Gm-Gg: AYBFou37MxcgklSOt0FIrn6Ls/XDB6U1RWtuqFPTIRpwWcBlcoT7sP+omgrtOzIgMTw
+ sqQPmdqpZDVGqcUdO32VGs/qNK0/FBbiEG+fUZ7Vym6MiSdl5m7tZWv/buNcy0/iQX/sea7o3id
+ 447UxNOTa2QNLs7gKWWnrO0VDRkudYmwqLwAKPLenCbHjdGzxM4eK1WNfu6i1IpENlv7qgMic/O
+ DSqR7e5hWsLF6L3Pb8P7UV/ik65ecMpH4JuYi0MW4OaInBv1mcomV6omhJAQTkR5ObYj9XVWmj/
+ MGFUfr5f8xDZkrMqhNQjeC1RIagNIcL0fu6CEPJxAWD98mIqLv++tRE5RDdBeaRElBJtk/lZy8W
+ hPRa9CghFJ/UnrFIgZRAhYVui2EmVtTXudCb5Ad+lXbfkvVFe8bI+g3csEV3aFRiq2qK3uC4/Qv
+ ENbzYxvw3Ujx68zAh3E6TiTnOGGDIvwRJdr1Nzzv0n/krlo/iBSBFDjRLirmggbRfgwZwY8WuFF
+ DDeq8UcZGUpQeWM5spa4YQvtJg3cZO/HZq/nE+wNyTE5X3q9++V6rhGYVeAydO2/Ca0zlumeD7s
+ JjanvXnJOQNTathM+GWFPazGIDSVbR37Q5RaaYtyra5+mo0S+bFMy08xPnZNifYRVlsEhBKFEiR
+ qQ1HNooi1oyTUORbBkb4Q55XxNkpH2oGUfQcqpUVUuzwlmVjPtQV15evYDDZFFbO/MMhytfGewe
+ MXLz7XokSiFRIaIGiGPJHbniRl6iN2FXVJmj+41JYmZ72FedtNiYeUp+QKCRvUeT8=
+X-Received: by 2002:a05:600c:1d08:b0:49e:6581:7baf with SMTP id
+ 5b1f17b1804b1-4ba023044bemr42280585e9.2.1794314384400; 
+ Tue, 10 Nov 2026 04:39:44 -0800 (PST)
+Received: from satan.lan (ppp-2-86-138-39.home.otenet.gr. [2.86.138.39])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4ba0233e5d7sm47638475e9.1.2026.11.10.04.39.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Nov 2026 04:39:44 -0800 (PST)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH v2 0/6] Various virtio-snd fixes again
+Date: Tue, 10 Nov 2026 14:39:29 +0200
+Message-Id: <20261110-virtio-snd-fixes-v2-0-d5b654217676@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.113 (deferred)
-Received-SPF: pass client-ip=115.124.30.113;
- envelope-from=fangyu.yu@linux.alibaba.com;
- helo=out30-113.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAA/32NwQ6CMBBEf4Xs2TUtIogn/8NwqGWBNaY1W2w0p
+ P9uwbvHl5k3s0AgYQpwLhYQihzYuwzlrgA7GTcScp8ZSlXWWmuFkWVmj8H1OPCbAg5No4zStm1
+ rBVl7Cm1Btq7dj8Prdic7rztrY+Iwe/lsn1GvvT/zUaPCY1X19dCSNYfT5cHOiN97GaFLKX0B5
+ gBZucMAAAA=
+X-Change-ID: 20261110-virtio-snd-fixes-f770a01c9960
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1067;
+ i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
+ bh=+xaXdPqLi/mkv/X298QmjG0is2Y6LQoavXGZwsMwjdE=;
+ b=owEBiQJ2/ZANAwAKAXcpx3B/fgnQAcsmYgBq8xCNTobHR5Z3eAjzBCBMcTDq+z7jUZ3osY5gl
+ DldzfoB01WJAk8EAAEKADkWIQTMXBtORKBW84dwHRB3Kcdwf34J0AUCavMQjRsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwwLDMACgkQdynHcH9+CdArSxAAnVdun4h4S/ob+etaVNfXTGu09s0N1Vr
+ xS1j98S7T0r0OoVaQoBmcY4JGsSkJW75c8fymvb/AWPBk8QIVnPLkH3XUuvZKnzCsY9n4SFEdJy
+ XIfNKXWTF8Z19vN82+xTAytVr8ZaFcdyg6DX9WzCDqXEXgf+JXcO2jMS3PwbsTZEsbR4o/9C/u/
+ KaVzHFFJ4jUtGLcq3CGvcyCsLR0D9OAzOfVpV/2w/uriye3K7lIxUaijobqoAdp35Ps+DpFjDdz
+ 3g860PZz+EqEluZEBjOb7FhP/py5a6L55CYy/HfzDup4NoZAY8s2aFzpNIYneuEWz9AR/2NQvEt
+ YIFHfzECEEsUvT9tf2MlFP4KlEKxfheSKPulp9SVxRh41i+Sn7Bjke9O2u69iP5o+I2ulvx6GCN
+ uXddoT6zbOpI2MGmdadIz+RylB5AY2nwMGBnbnKMAzVyVuaFyyVcCDp3/On36qYoFqGNxm7KwmH
+ 8HKYrL+72rQtExS88P+nvPNsc4NAHzDRMLa/IZ1h6XqbFEk+iGesm4lH0uh2wZFhVKW5l+v4dtj
+ 5PmaE+SIhgwZT2wGc4DBBzh7oxE7NZxu0oJOqd0lVTBlqaj2wn6aljnOJpkqfF3e1mmCXR82Z6a
+ +9NTccMAnWiQgM+hdecybJc3akfMfAXvkYCyxfvQevDo3n3bGkjU=
+X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
+ fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,107 +121,42 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
->On 11/9/2026 10:56 AM, fangyu.yu@linux.alibaba.com wrote:
->> From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
->>
->> trans_wfi() advances env->pc before calling helper_wfi(), which may
->> raise illegal or virtual-instruction exceptions through GETPC().
->> With CF_PCREL, restoring the instruction PC uses env->pc's page base.
->> If the next instruction is in a different page, the exception PC is
->> restored one page too high. This affects both a WFI ending exactly at
->> a page boundary and one crossing it.
->>
->> Keep env->pc pointing at WFI while helper_wfi() can raise an exception,
->> and pass the instruction length to the helper. Advance env->pc only on
->> the normal single-step or halt paths.
->>
->> Fixes: 356c13f94dbf ("target/riscv: Enable PC-relative translation")
->> Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
->> ---
->>   target/riscv/helper.h                              | 2 +-
->>   target/riscv/tcg/insn_trans/trans_privileged.c.inc | 4 ++--
->>   target/riscv/tcg/op_helper.c                       | 6 +++++-
->>   3 files changed, 8 insertions(+), 4 deletions(-)
->>
->> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
->> index 1cffcad580..b36e3532aa 100644
->> --- a/target/riscv/helper.h
->> +++ b/target/riscv/helper.h
->> @@ -135,7 +135,7 @@ DEF_HELPER_1(mret, tl, env)
->>   DEF_HELPER_1(dret, tl, env)
->>   DEF_HELPER_1(mnret, tl, env)
->>   DEF_HELPER_1(ctr_clear, void, env)
->> -DEF_HELPER_1(wfi, void, env)
->> +DEF_HELPER_2(wfi, void, env, i32)
->>   DEF_HELPER_1(wrs_nto, void, env)
->>   DEF_HELPER_1(tlb_flush, void, env)
->>   DEF_HELPER_1(tlb_flush_all, void, env)
->> diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
->> index e22df6fbe7..3ca55b9842 100644
->> --- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
->> +++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
->> @@ -167,8 +167,8 @@ static bool trans_wfi(DisasContext *ctx, arg_wfi *a)
->>   {
->>   #ifndef CONFIG_USER_ONLY
->>       decode_save_opc(ctx, 0);
->> -    gen_update_pc(ctx, ctx->cur_insn_len);
->> -    gen_helper_wfi(tcg_env);
->> +    gen_update_pc(ctx, 0);
->
->Please add a comment before this gen_update_pc() call explaining that env->pc
->is deliberately left on the WFI until the exception checks pass.  I know this is
->explained in the commit msg, but in this case it's way too easy for someone else to
->read this code. assume that this gen_update_pc() isn't intended and then try to
->advance PC back again.
->
+Some various virtio sound fixes.
 
-Good point. I will add a comment above gen_update_pc()
-explaining that env->pc is intentionally left on the WFI,
-and the helper advances it only after all exception checks
-pass.
+---
+Changes in v2:
+- Moved fixup hunk to the patch it was meant to fixup
+- Link to v1: https://lore.kernel.org/qemu-devel/20261110-virtio-snd-fixes-v1-0-544d6f9eca38@linaro.org
 
-Thanks,
-Fangyu
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->
->LGTM otherwise.  Thanks,
->Daniel
->
->> +    gen_helper_wfi(tcg_env, tcg_constant_i32(ctx->cur_insn_len));
->>       ctx->base.is_jmp = DISAS_NORETURN;
->>       return true;
->>   #else
->> diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
->> index f9c79fe6b9..3f71258858 100644
->> --- a/target/riscv/tcg/op_helper.c
->> +++ b/target/riscv/tcg/op_helper.c
->> @@ -625,7 +625,7 @@ void HELPER(ctr_clear)(CPURISCVState *env)
->>       riscv_ctr_clear(env);
->>   }
->>
->> -void HELPER(wfi)(CPURISCVState *env)
->> +void HELPER(wfi)(CPURISCVState *env, uint32_t insn_len)
->>   {
->>       CPUState *cs = env_cpu(env);
->>       bool rvs = riscv_has_ext(env, RVS);
->> @@ -639,6 +639,10 @@ void HELPER(wfi)(CPURISCVState *env)
->>                  (prv_u || (prv_s && get_field(env->hstatus, HSTATUS_VTW)))) {
->>           riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
->>       } else {
->> +        env->pc += insn_len;
->> +        if (env->xl == MXL_RV32) {
->> +            env->pc = (int32_t)env->pc;
->> +        }
->>           if (riscv_cpu_cfg(env)->ext_sdext && !env->debug_mode &&
->>               (env->dcsr & DCSR_STEP)) {
->>               return;
->
+---
+Manos Pitsidianakis (6):
+      virtio-snd: convert virtio_error to error_report
+      virtio-snd: add pcm_state_to_str()
+      virtio-snd: reject invalid feats in set_pcm_params
+      virtio-snd: don't allocate pcm_info zero-count buf
+      virtio-snd: cap maximum buffer_bytes to half a GiB
+      virtio-snd: period_bytes divides buffer_bytes
+
+ hw/audio/virtio-snd.c | 91 ++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 80 insertions(+), 11 deletions(-)
+---
+base-commit: 723622bedb0b423de7d1c61ebbe6e7a71934949c
+change-id: 20261110-virtio-snd-fixes-f770a01c9960
+
+Best regards,
+--  
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+
 
