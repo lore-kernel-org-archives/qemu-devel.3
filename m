@@ -1,98 +1,81 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB23606A321
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 13:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4127D606A327
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 14:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=M/y+3DoN
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ZQBXgcy4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR8ai-0004Xw-Ep; Wed, 11 Nov 2026 08:42:20 -0500
+	id 1xR8ub-0007HL-CL; Wed, 11 Nov 2026 09:02:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xR8ag-0004WC-Ij
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 08:42:18 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xR8ae-0004Kj-V4
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 08:42:18 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-c3f04e0e65fso463292266b.2
- for <qemu-devel@nongnu.org>; Wed, 11 Nov 2026 05:42:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794404534; x=1795009334; darn=nongnu.org;
- h=user-agent:in-reply-to:content-disposition:content-type
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=LWqOPAsDIg2dqwewxVppScvOhia1XLIa75L7KEOkwTk=;
- b=M/y+3DoNcDOMb79TY6g5lmZb2b/C9huG2Kw04AuBDptoIz+RDeZKJ9SpxQRP+GZjaI
- 6aA1F4yjLCfwN6DPfrIAEAbVMYk8gC4OM9ijPHCwSlZ66KZFc+zOGIzTVaRrwKbL3rWi
- 6CDiFrqnMVuwRM401wfUyRRUiFV/cJq8BS7xjRmWagGNez3XfxKpv1vtq5+v1zaHhhqL
- s4v42ev/pGccmMoxrZt7MJJ6jCUS8Bj9S0ceIeUgzRR8BdcmzpivzUilMCpnnbZhKahe
- ANqJY0Hjn72znn/ud5/Y/kB6dEWPu8wDBvqvJQPz9xrCuOD036OjEy2INARUMk/xKgOF
- i0TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794404534; x=1795009334;
- h=user-agent:in-reply-to:content-disposition:content-type
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=LWqOPAsDIg2dqwewxVppScvOhia1XLIa75L7KEOkwTk=;
- b=dfluJKNhgDZXpOTXE10t3Lb3gutQJl3OtLi0lB7my2W4l2VxwP5LkU7IjS83OGXoCg
- VY9SySaoYNDcxJhozDr5nG0Yds0IPjoq85JQkvQ27PS0HjXguaeTpO8pEHr7m+qFMCuT
- gxfI6W7qrz+52v5fKmqXFDarFytlGHl+QNllg9N35cfsvqMV31WHVorWrRXhVZ2hesMK
- LbChulwPeO1CNQnBwCV1+p4q1c4jHdmCCuQT+MuYeU3gZIabjyjOkKAxizAPZShRJpeQ
- 05McAUn24o8a/IZIS5Qzjk0Kjeb9m9pK01/1Yiw0t52h3zusFFSQOOuBt+UtLwYQH0eh
- BhSg==
-X-Gm-Message-State: APuU4Z8nNMzV/5spK7Pq3IEqj4IfMn8qsmJ2Sg+Gi/5w3zJcRMQL1CLs
- qwEdPod32U7rTBaVJsbi8CHYp5zIEbI7yNsIppd3N+mTezCiHxrIDQh9VYMgTpVXHLI=
-X-Gm-Gg: AYBFou28UF6usDpF4VMroC2hwbDRymJMp0vki8ghGBn9UAfPBGwBZMokBBYw7FqGAPK
- gYrMp/jDWDjNuoDH7zOEmw+b25YqMCoRh0rEkZPOr5Ean9lWRiL65QK5wrKQuMWlxsM42Aui7V6
- Zw4R0e/kkRjV9ENkK1zwfbScfExSIeFP0l8Vn/ZwMFm9EZLNygJMzWFE0adrAOosRXtgpcEYOWa
- nND9PfQESmXxEBoWtcIJsHclnbkdE2oeFX/PHmD12W25+Wv87vycp9VMMlEyMymb9rqBp1iABGC
- /xztEztyFgA71fyYf7fExfL0TIM3V9eZ8W0xMGNHrHwUJexVWyhV2wLTXHd7hyWjiDxHCQVhPSd
- Szm7gVTBFQIUTeK2sZkeBQgO3INBYGHDFq2QgKByOeuElhszsF9fDoO6ZWVc8RKfYBnFl4oqrL9
- EXvOlBLZ3KOkjP2s62CKWbj+wmpiY/4anGx2fMKX9Bf4WEjWqFpukAWCREpL+34e/Wc7JLQS0Au
- CWFn4veJdE2mkr7cn2Ou8X956b13Ep6leCWNamxT1IiAgt/BWUqzsBVQN0zNxKNh4naONsE6ptQ
- H43HSycbGCmUNuIrReZ/cB1867As9CuFKDiEFKLS4m33uADOUXlwx1zHfy/jV7eg0wx8IDtkrba
- eDQgV7/k5pSF8gBWAWCWU1g44lQ==
-X-Received: by 2002:a17:907:980b:b0:c50:5426:54ba with SMTP id
- a640c23a62f3a-c5066d3db1emr194413666b.37.1794404533652; 
- Wed, 11 Nov 2026 05:42:13 -0800 (PST)
-Received: from tulp
- (2001-1c02-1a15-3000-25f6-628e-6064-de9b.cable.dynamic.v6.ziggo.nl.
- [2001:1c02:1a15:3000:25f6:628e:6064:de9b])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c504a6723e4sm235209166b.74.2026.11.11.05.42.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Nov 2026 05:42:12 -0800 (PST)
-Date: Wed, 11 Nov 2026 14:41:17 +0100
-From: Roman Bogorodskiy <bogorodskiy@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, michael.roth@amd.com,
- kkostiuk@redhat.com
-Subject: Re: [PATCH 0/2] qga: illumos fixes
-Message-ID: <avRwffwZoHMaN8WU@tulp>
-References: <20261015173250.65942-1-bogorodskiy@gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xR8uY-0007Gy-Gl
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 09:02:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xR8uW-00028F-Ph
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 09:02:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794405765;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LiCC19jLTdGKsepraKUucbwAQdsGgvzlzKUI736EdLM=;
+ b=ZQBXgcy4lWD6LALclGnP+gBF4qQIXeV/3vzo467/O0voXyzQvyKnJ1jxMioaHzHUTBBQLE
+ 30iUqdHCGyC+phIAD2uaXwdOkSE0ejKAXxApe186F01UocgEIfIrQPXfPCnV9aNIEnnSnJ
+ JLgQNeRTMFHCLJazv4wc6wGHWIFkIQY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-KoDcIrDuPTSR76STCQNNpg-1; Wed,
+ 11 Nov 2026 09:02:40 -0500
+X-MC-Unique: KoDcIrDuPTSR76STCQNNpg-1
+X-Mimecast-MFC-AGG-ID: KoDcIrDuPTSR76STCQNNpg_1794405759
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CBFF518004FE; Wed, 11 Nov 2026 14:02:38 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 77071410; Wed, 11 Nov 2026 14:02:38 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1540E21E6A04; Wed, 11 Nov 2026 15:02:36 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,  David Hildenbrand
+ <david@kernel.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Marcelo Tosatti
+ <mtosatti@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>
+Subject: Re: qemu-system-x86_64 appears to have sgx-epc, but not
+ memory-backend-epc
+In-Reply-To: <20261102122336.2f564b26@imammedo> (Igor Mammedov's message of
+ "Mon, 2 Nov 2026 12:23:36 +0100")
+References: <87zew5j3iv.fsf@pond.sub.org> <ats0_RfeVugAofN9@redhat.com>
+ <CAFEAcA_wabjzp0KF69-ay75QoOk=jE-TygrD-T-b60dw1iOs=g@mail.gmail.com>
+ <attACqgQQ-Lxt5Pj@redhat.com> <87ecdbbq93.fsf@pond.sub.org>
+ <20261102122336.2f564b26@imammedo>
+Date: Wed, 11 Nov 2026 15:02:36 +0100
+Message-ID: <87o6bvtqir.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261015173250.65942-1-bogorodskiy@gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,31 +87,25 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-  Roman Bogorodskiy wrote:
+Igor Mammedov <imammedo@redhat.com> writes:
 
-> I was testing my other qga patch [1] on illumos
-> and noticed a couple of issues I addressed to unblock testing.
-> 
-> 1: https://patchew.org/QEMU/20261015142342.50436-1-bogorodskiy@gmail.com/
-> 
-> Roman Bogorodskiy (2):
->   qga: fix build on illumos
->   meson.build: fix getifaddrs() detection on illumos
-> 
->  meson.build          | 2 +-
->  qga/commands-posix.c | 6 +++---
->  2 files changed, 4 insertions(+), 4 deletions(-)
+> On Tue, 27 Oct 2026 07:40:24 +0100
+> Markus Armbruster <armbru@redhat.com> wrote:
+>> David, Igor, can you clean this up?  Or would you like me to try?
+>
+> Please go ahead, I'm not likely to have bandwidth for upstream ATM. 
 
-ping?
+Posted:
 
-It would be nice to get these into 11.2, as the first patch fixes
-a build failure and the second corrects a build system issue.
+    Subject: [PATCH 0/7] backends/hostmem: Make QOM types and properties unconditional
+    Date: Wed, 11 Nov 2026 13:23:35 +0100
+    Message-ID: <20261111122342.634370-1-armbru@redhat.com>
+
 
