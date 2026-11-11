@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB34606A320
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 05:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511D0606A320
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 05:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=UKo0nqbc
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=hUpKYZOT
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR0yM-0005zB-Hf; Wed, 11 Nov 2026 00:34:14 -0500
+	id 1xR11c-0006qZ-JL; Wed, 11 Nov 2026 00:37:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xR0yG-0005yY-K8; Wed, 11 Nov 2026 00:34:10 -0500
+ id 1xR11a-0006pI-6P; Wed, 11 Nov 2026 00:37:34 -0500
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xR0yC-0002sy-Rs; Wed, 11 Nov 2026 00:34:06 -0500
+ id 1xR11X-00043h-NA; Wed, 11 Nov 2026 00:37:33 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TvQrfCKOa9CzclXOGE09kWYElGKoyMLrTPx3Upt8XAyvqr1FMc0DODndQRaB8hwFFHqQ9w+cw8yNq3IWxSEoihaOLoY5s42qHxjMnQgHQlsr9bFsXe5FcriyXXBcMuR0vkJPAIWjdCEXWZx4JtXm4LZ4CcrihG/O119HPd+OlISMGr2m6324AkJO2WR1LwoyEMrnUs9xHgYXwhclwTm0ODo/sUYzZk+xRWx24d9OJBw8onJQ+6eiAppbJyoZ8ToiuZCcMXltuZZ5X2sJ3ykAJSrUGdQtLyCFv4oGDQvQmB0NTSrKgojQ+W9d3cbGSBZgY+EKlDUa8hYoDF2uERStIg==
+ b=Pa9O/Sf8FagN4GnlOCCCcowWQJIw6ybBc8fmwXik31zkqpsAsFYsuVRdhpQI7XKC96LjuY/iGgymctlZLbCfU+PorRukdjMJIXKx8jfijE7BJFPz0iV1rkKp2OHCu3wpzRg4HiGjTPS4xC9gHSzxLN49c0wwDhnbHiwSuRqzS1YD4qReBs2lFoUfR3Y8hnYPkVHTdEMF4lCY3xz7SV7LYRYZ9BMwOBJn61z5f/UIilbWoAWRUHdD6kzQaqgkaznupt90iQB81ITWsXRoa+LdHumrr57EPH5qY0mVAwkuqwlL6DClqW35KdO9yIMe0PO2yrFl/4dtw3HRZd/Dmwpmdw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pG5j4GCa/oUx3zoe40EjTdX/ejeoXJNJwyEIPhXR/ls=;
- b=qvDH6+HApwtOASP9p0Oj+qd3P+uTzPcQx0ieXp54LAu7XxrQhEwI4gxuZxJfv7PEEyFGyuWox3lLCLxo/lgnCh2VImxApFg4ECv/Sgtz0jT+UwnGo2K0Gms0bf5IXQD4mo2NT/fs5BtmldRJnJgp075CdnmdFLIE7DMZdmyrJ7J84J+nmQWNstaO44NrjaYnoheV3Ugya74ZnM09GIz0czkbf6S4EYGLXcInvekEyiKg7BdMttOwKm9ZOCIyLHFJsYg8gZWvQgU25BaD8LuVp7WNBoWFJVkzsKNG0LY2WsxUtEIJtcG+81OEsA2abETmCBvBpWsBg2FlW4LBsNML1Q==
+ bh=l3MVqrIe39+7CmDi0e4ZNOUd+M2fJiBq4b3/bob9MDo=;
+ b=r1mUv73zhKB1v1EWKDVL7Bri/WJSQh24gd29eVMiVVy4BL1Dfe0+Rb395CU/7GgFMWn0REJedCQYGnFA6RrxgXm+F/+H3eVEKJ5CWUM2Mslt0eqbMjBM4ld/UJA9XEMP7Hai1ad3lqKkzoPEqllxetMs/rTQLOIwGjeV9zpLRieL7lWV/nUFdfMxgSuyFwV5pDFp4cJ8RPj2s+X3AZlLgUyRH/FyINBxjHg6vgn8dA2szCksK5c1QpTRb1r4RhK5z+/4nfmM7Ty+ndKH0DpPJNlYIheH5Q/IbX2rQdPShehpv7sqA5faU0XBsMWrTN2/Hhtq1eBCCohXtjxiA073MQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,19 +32,19 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pG5j4GCa/oUx3zoe40EjTdX/ejeoXJNJwyEIPhXR/ls=;
- b=UKo0nqbcYMc5qlAJJrTohGqf7NMgGUv8Z6TL0seyC16Dc6ki3JXkP8/VIpDiQ07qHixKL7qdZgxgeJJfAlSiPMXq6peu0a+adxTfzUMoifkOjsQZB0im4zIl4gnvqcnoiNd+q1iiahDR9dr7JM6q3HiYe8H94o710JRMEP/iP+JoAyyM2aAB1e6WbBwASpkU94w1Gpqm4cV8Wu7Y+pb9cK4WF1s2yAwGfXreO1Emsl2qi7bEo5X6BoG6r+DhAZn2S5yYt+jnX7CQDHfChgaqyiZ0EFrwUPP8awfFR1zswI6w/TiCW8FTNctsIDXjWD0AZUDNkXAoMYfsE1Zv4i4//Q==
+ bh=l3MVqrIe39+7CmDi0e4ZNOUd+M2fJiBq4b3/bob9MDo=;
+ b=hUpKYZOTneVp+Qp7fD+ork3+dGWQkxXU556L0XrO6YFHV7BlAkoFor+eziw49QdXV7cruE7BxYpbdIpUg4xwYEC1T6xMSMin3Rvhho7XD7D0B6IVdD2PssJ5oZa6oU7zpJwAVEJ7HnvU6+/s33WjtNR1hKVQOjMoVWwW847zj1Pg0h2L4saPPy9Qxc/Lha1SSYG4XvEms3GD2lbUDSIm4ghyyfxXarqB6QkBmLwblIR5Qv2dLS7PAlEEyt1UOYHTyrj9zfKIF0YvbNMA9KSUu1n3kUWWAWUjy9qoev57vqt+ZL/0lWWkT47mPvC85YvC5JM+qHa2mp2v2I2vB/btng==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by OSQPR02MB7903.apcprd02.prod.outlook.com (2603:1096:604:296::8)
+ by KL1PR02MB6944.apcprd02.prod.outlook.com (2603:1096:820:104::8)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Wed, 11 Nov
- 2026 05:33:57 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.13; Wed, 11 Nov
+ 2026 05:37:24 +0000
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0615.007; Wed, 11 Nov 2026
- 05:33:57 +0000
+ 05:37:24 +0000
 From: Chao Liu <chao.liu@processmission.com>
 To: Max Chou <max.chou@sifive.com>
 Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
@@ -54,73 +54,75 @@ Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
  Aurelien Jarno <aurelien@aurel32.net>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [RFC PATCH 14/38] disas/riscv: Support Zvfwdota16bf extension
-Date: Wed, 11 Nov 2026 13:33:35 +0800
-Message-ID: <20261111053337.91192-1-chao.liu@processmission.com>
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [RFC PATCH 15/38] target/riscv: Add cfg property for Zvfqwdota8f
+ extension
+Date: Wed, 11 Nov 2026 13:37:05 +0800
+Message-ID: <20261111053706.8493-1-chao.liu@processmission.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261104194155.679241-15-max.chou@sifive.com>
+In-Reply-To: <20261104194155.679241-16-max.chou@sifive.com>
 References: 
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PH1PEPF00013310.namprd07.prod.outlook.com
- (2603:10b6:518:1::b) To TYNPR02MB9351.apcprd02.prod.outlook.com
+X-ClientProxiedBy: BY3PR10CA0022.namprd10.prod.outlook.com
+ (2603:10b6:a03:255::27) To TYNPR02MB9351.apcprd02.prod.outlook.com
  (2603:1096:405:3d0::15)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|OSQPR02MB7903:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5b475506-23a0-4a68-3677-08df3fb5619e
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|KL1PR02MB6944:EE_
+X-MS-Office365-Filtering-Correlation-Id: f33728ff-d514-481a-45a1-08df3fb5dcf5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|1800799024|23010399003|56012099006|261021121427099003|261026140227099003|261026121527099003|261022075727099003|261028144727099003|261102123227099003|261022105027099003|10067099003|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info: mLgXx2QHuGQgSX7s28GNlVho1/gRzv4Sw2HsatcXwcJWc1A5Eo/+8UIBDeYtcKfNQ7skJiuJn9ot64NVK8NSubkAczpPty9GTuHGtVeNdSBcKrj0KbC4NS2F2PMMqS+DTTblCLJ+7cmqV9RF6rbOrfl7uO4CJFBoG2Ay/Ao3GBKov6cz7p0KCldUeTVX33ruHEW5FpCk55G9hpQQk2wvZbJqjaCpeFtwFrObMpQd1VK/w+M0PQJdUWxcjA10IAr88hUVrFsIoPU7OlTCgvI5nqfsZK/nkikyRfdYjJDx6+6lNy5Q43SDj3guWu6IEsWwoEdirPgnV/nR4iL6AouStfDTs1ST7dfaGIPkSPLYwM+4NILMX6aVNqMROGYHSrDAEXdvVK/Aa1FSAHBtpeStxUPzt1FL2Iyj4yUnfJp1kMrK9jU5JcumWmUqtajz1TPfCfqxHBN/vb1xWKRFk5gfhbrlS5ml5F7pflebSJyOP7AXtnZZLHCaCeJ/N4I+biAoFGMN9J2/SBRc6i745fX+6qwMzk+K3vZ8SVf7FY2gdd3bLpkw9bC6v0nTTib0uVI03Z95ODs56VSj5o0c/KnUNNJgvvpwxNlYWBD+nQWPmNRYdasiT4SGQsm4wvLtF70PN216cj7Iry4qlQ8NjYHEIyT2kxqrlkStqxqhbiHaPs0=
+ ARA:13230040|1800799024|366016|23010399003|7416014|376014|261021121427099003|261022075727099003|261026140227099003|261026121527099003|261009223027099003|261102124527099003|261028144727099003|56012099006|261102123227099003|261022105027099003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info: YRPDtCofrrbEY6eoDE0s3eYGgH6tVBYKSYfSxC6CQGjUzyoESnI1UgF4f1xHqXE4erPoAR3os8FJBICPCOVb9HZ8S/7MiAfEdVLkSZDfRWP19lDqRRV5JTE4nDz5jb0qs3p7cyXcLbfGRQFwr4tGdt0W/ElOmsHch5uqiT83jaX+COZFPfraNkuY7Xva+LKjRGwV2Uawzw4v667Kzh8/C3H0PFgySgvs84BR1SZs4qfiZ5Q5eCh2+AivI0MDFkCqniZZUd/alIeZ2Gb+wzfQ7rUiUBlpk8UY+Eq+if5M6gg3+0MnL+ePdPdawj2eA5WM+JOfFp3vfjyJzN6GaINiqos4a7A3oN+r66DC8zl5X/s9++V/JPPPN/Mp2joAb3eYADy0OcHfojxb2OYNmTYjUFtqSEyCje0PjP+b6wS6D4m+J+GRkEw3Ya1IQRW0TCsjObYCvifdJEWFSJHf3f9NAMJEIcVd5NL6zbzhUOLnDSMyvMWePubNsob0cqmDZhBPpvXvrWK3cYevMWA53qmHREWPAKBES8Rh1wLRjHrDdW4G99gR4YM4Wlyac4GNcsKRpcUySNVgy6C3WKTpeIRV0wwKochaAkZmue8Kf6ji17XsTcXZCBbuLY17njFi0VZECwlibSTzohAEV9g5Z/0lAoYty2E0bVXiDoXbaEsShww=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024)(23010399003)(56012099006)(261021121427099003)(261026140227099003)(261026121527099003)(261022075727099003)(261028144727099003)(261102123227099003)(261022105027099003)(10067099003)(22082099003)(18002099003)(3023799007);
+ SFS:(13230040)(1800799024)(366016)(23010399003)(7416014)(376014)(261021121427099003)(261022075727099003)(261026140227099003)(261026121527099003)(261009223027099003)(261102124527099003)(261028144727099003)(56012099006)(261102123227099003)(261022105027099003)(10067099003)(22082099003)(18002099003)(6133799003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?gBYQFAohuHg6XpUdk2T5y7uKS+dhAqowQDZnlCEze1TR1GCscnOuqe949kmm?=
- =?us-ascii?Q?IrbdZC5TTt+urV+PisiGlLl/pQSO5oGAZ/oFvmKn+67pnMmQufLi5Qo5y45o?=
- =?us-ascii?Q?spKXkZbo5bnDwTPyX7yF0Rv3C3VlOr4SmIOxYisglGaroHnqZr3mTUk8bXJA?=
- =?us-ascii?Q?nVEOwh77jx9p8IQTofXTASH7VQ/7GmOz2+xKbyn42FSBkInhX+GtaK0hUTDv?=
- =?us-ascii?Q?0Th2S373WvIeh7RYqv2oqJlbeZ4fXmD+fRDBBImRX4Sw6GR/ziS2f8sTwnOF?=
- =?us-ascii?Q?Fy+hpWkdV294YaQE/5DMpFAtI6xXfTiiaQfhnWtU8+bP0t/n3cWuSkK/AFIG?=
- =?us-ascii?Q?z83h2E29DisxoVoiZHMk2/EpZ0Ih/kTgT2Iwgn3HyFmpJhFo0fkdbkURrrZR?=
- =?us-ascii?Q?qffY0OQcfXaYoC1uFebztpVrK3/AJfI8aj8gwc5rXjjRHx5/sdh7vh7Q78yC?=
- =?us-ascii?Q?g5dFcQZfyZSqeVKT5fhclOLVl03UbwHE+2UypAxc1bwsJ6hd5SYCPEZEc6ZF?=
- =?us-ascii?Q?AmDoShYCcCY5vFvn0jYESOT7s3SKPy92Q47qGwSvhYj/wGUzO2IcnEOrMg0k?=
- =?us-ascii?Q?jJwTvGoeQdqEF+ADbYtSF6X4U4MRe1Dyq1GHi1wnMVHJemxk0RXLPMVFYUX/?=
- =?us-ascii?Q?k+WL1X75D0eILntg8Emo9juV8IeedBRQuDQVeYddXvaDuuW5sTNfs9k30be9?=
- =?us-ascii?Q?oc+E9jr2OaSMXgQzlwb+OwQwpRO4JkTaf9rDokvdamhbJUzjhWNDoJN1xqMy?=
- =?us-ascii?Q?f2MHbazEX2QaqQseyCASjQrr2Ac1soiVkkamikgS2AL+NodI0hNDYHuHQpJ1?=
- =?us-ascii?Q?XA5GYySFzn+m9IRiwnRnNFp/t4sVlrYSwKNUCoT3dKpw3/GqBmkReqECA2cC?=
- =?us-ascii?Q?2Lsz7Zvnu+0DovkOlmk3552wXjisl50GBT09u37w2i4Son7IHl+0rMsjPme6?=
- =?us-ascii?Q?07F+DUcIM5GISriSzEdeXNmOpT1df1v512CSR91HCvp+jKZnoEiI+c3jE6X6?=
- =?us-ascii?Q?3H1zZXLgyA8zV7BL80g/+AYHYFdY2LxKmxaL2LwtyfjN9WWd4VgYc+fY8b3w?=
- =?us-ascii?Q?dKNKVuC7HZKT+M/emyZBIoAkNnF/UTUqi7GClik3Q7JOgJvTQ/uSNueVqtEj?=
- =?us-ascii?Q?GTXM8S66zeHhyhOkYt81qRuk2iRk94PGvzeGbVhPMXQSVfK9wOHBj9hwDbue?=
- =?us-ascii?Q?sMca4hjmr6lelpcnMoLxagsY6fd8lXbWzb3Jw2ZGRctSeUKdKcX8jjMfPHKW?=
- =?us-ascii?Q?WPahLF4KjW9Sv5N1MP32mVYzXC3p28DGwkdgHkEaDJYHRcBZs54pLCLQ/IVO?=
- =?us-ascii?Q?0KJ8PsIX8YcWGOHPlxfxOVtZFMUO8RBBj6iBUL1BMOR2Mg/Nxi5VNrDv67C4?=
- =?us-ascii?Q?c0Ht3JuPzuhrysd0oobD1Yb/cgSVNE9swL/vsbPOB3OPCnkuA4fsjLt4BS7D?=
- =?us-ascii?Q?SBO/eDqVvgD7Gp3Yuf9+dshbvhsnAkiArDcAHPzXiFXg0iEaiUj2fLqlTLUR?=
- =?us-ascii?Q?hXTlZgyLjLGMrUulCxKrycYE0Qo50ZoWW/uWnFsDUVrlPEN3p/NIxQZKj+vw?=
- =?us-ascii?Q?6M7S+EdDCXwCctTicnh34XDaQHWb7bVEP9UYGw8JBjyppnGfRapUZcoG0jW6?=
- =?us-ascii?Q?zut5V8d6sMxvD1Gy5J/Kvp3RIx+28IsD4ntphTCltIa9C6Og7pgq+kPO6sGt?=
- =?us-ascii?Q?ujDFTZJD8gXKCACLw0GOBS+hv4s58aTEJnX3+QxZH8fcC4XGImB3M4l0tEWI?=
- =?us-ascii?Q?EDWuCks4kgK/lYtFjfEyiLZkQ7Q8KFM=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?FN9QAjJe3dCDcroL2Ly0+cRBVzR+bfwXRKPl2OKK20va5uyh1zlYpQlm9JOz?=
+ =?us-ascii?Q?WXe3lSv7RDztYyWJhoLmSKy+xoRHVbyv1R4XlwTa74+CLO2sRv0mTF6noBCB?=
+ =?us-ascii?Q?3SmmxiPVA8zgsJJtfyQ9E8lDOgS681Y9k4/zNcXc9pNmhkD2nakKv5908lD7?=
+ =?us-ascii?Q?h7FO6bOkYO+x5FmRjvtH11IEVfQUH5EgrVeFJW2YbKqko1rEBBt4UoDBKy36?=
+ =?us-ascii?Q?+Uy+RcaFEJhQ40UgocJpq7ELZnTgJ2g9xAaoHh4vMd5EYf8zQ8/H7siVgusW?=
+ =?us-ascii?Q?3mp6Wz3zjtS5tkj3ReyJ7PhlPouOySoJq3rW2A36n0EZzonM4I8yMFiyWQik?=
+ =?us-ascii?Q?yKb2qWoBgStNLLGxcOMb4BOAkAPJ3VsYQ8dVlN4GwH0SSy3nzabtYgW48xLy?=
+ =?us-ascii?Q?foW+qN64XmJefVbuNtcvjfzn+TnPreYk1HtD86YaI9SOUEgvU92t2udg7vdV?=
+ =?us-ascii?Q?p/ZxQ2OXFMiv5mZGNLf5oBGOWxY81Y6t6NJEOt6a5O8hZ1kPLws8JGLWzGyv?=
+ =?us-ascii?Q?JhhJlAIIs5XIhJGJm/u5SD15cLpFJ3WbuqOAQcdXHE1INlkS2gai0nDFFonE?=
+ =?us-ascii?Q?ixBRy4Y8GaHfb9GvB6UMZKyO502TSL6S9zY5FY5Yy0wcf0dWnL0CDVaGwXx2?=
+ =?us-ascii?Q?eWKNshB8dw2o1+fHncjzMFE2YaxakIb9dgNNzdLHPJw4cccxbhQb31wa11Cy?=
+ =?us-ascii?Q?2iokHHROXXMAy0HoV/kEW8KF/QZOKhHSSowf+Xn/lbWVi5NpGWf29cuTDKfJ?=
+ =?us-ascii?Q?jErD5eu0bIy2xfvWBr/uP/p5LquZBJnkOMZP63MCzbQuHymx3J44W3e396k5?=
+ =?us-ascii?Q?Oo6sB4DDC8ysMHgL2yPeNh+WDRkP9Q9FEOspcffF/SeTg1gzQYod4MNUmrjY?=
+ =?us-ascii?Q?sWLkUybQ7vrR2RS3EzFNUHb5oqzcmAiyOaM8fbFEiPnXiFMGP8ZXYYZtdlrO?=
+ =?us-ascii?Q?OOVuqncm/6P6NQ0hDQkz+KdnN0GOrQOdAF1H50UW+ASnnaBg90dkoC1bVr1x?=
+ =?us-ascii?Q?uoWn9I0IBeZZzI+clC3Kd3A6xcHdZ9BGktrDeB/gNn6wnTPUQumeIdGmfUlM?=
+ =?us-ascii?Q?ziWSzPSt9657/V4Rdwfv9CDCGeeN44yNz6kXzJdopvi4e1CIgaNMgQoFfR0N?=
+ =?us-ascii?Q?SccM6kudw04/08BbUwpNxz4EOoCFLxVjJOcV2kYp09YYxWXoaVfq1DWvZBk+?=
+ =?us-ascii?Q?RDMi/5+h6nmr3nKWAXTXiqFsOPM9zZhVwGyCMZ9IOmGpi6tTtgaZ/TqXkxxb?=
+ =?us-ascii?Q?3kERxWQCOh0N6KxmTqmteilXU0RlVLDd4ELD8kce9Itx9Cfibq9z145qjsMA?=
+ =?us-ascii?Q?/XZiaFe4XteJ/yLbhiBuCZZPyXuBfRLWSL7k4tX8KBJLr6Qi5uO/de5V9Ssu?=
+ =?us-ascii?Q?E21JQQ7Roey2GiUFKmrDPfjB829c6fh/v5JcRG5Q6MRu3Hrxm4Gy3CtlKv+3?=
+ =?us-ascii?Q?JLkOh0xjpz3Cw+z2zDoHstVPvq69nYOdnwhmF5ulhOHVAFM0K81QEVFbRyZo?=
+ =?us-ascii?Q?jEoUlkVmeKQ3WsAZDhjR0DOGT8q7ZFFASdnhssUrMAC1zm9MDIgZhJaMBhqM?=
+ =?us-ascii?Q?BB7sEO/qviIzy6OZ2yU6DAnzFCDooEup1HkNP9WhdYJGlNm33Hvgj3JJu2Tn?=
+ =?us-ascii?Q?LNPgUHb1yoFgEeqiyXU9tx1nXOwXE2Ax6tX9vhOzU4Qh08jJvb4/F825W/6U?=
+ =?us-ascii?Q?TdQxoK0u+4dND8fIxcBkI/9jZ8i+ARkTIQtV7RBhOHGYJ6O6xJ4s2PNfWH/c?=
+ =?us-ascii?Q?VbU/g0u+/OEa59c2W7QQxDh055KJeTo=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5b475506-23a0-4a68-3677-08df3fb5619e
+X-MS-Exchange-CrossTenant-Network-Message-Id: f33728ff-d514-481a-45a1-08df3fb5dcf5
 X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 05:33:57.0902 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 05:37:24.0276 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bMqWA3DvTc3B5d14UEhqK6X8u1jJCNab89CLtJwbwwxNQtV6zSRNI5rrcr/ySBlA+Ava0miHtoKOKeOmrwkks2VenPgIefCMi5JbF3PG4Vo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSQPR02MB7903
+X-MS-Exchange-CrossTenant-UserPrincipalName: J7I6z0sBFnL8aLxPQTQjEEk2ANbfBdu4WJJGRDkgib34HXsrcFU9zgzfyb5JriQYqLhBvloMkakcTymcPPfotaZzbk4pwtrcW+VbqekaK6I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6944
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=chao.liu@processmission.com;
  helo=TYPPR03CU001.outbound.protection.outlook.com
@@ -146,14 +148,14 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu,  5 Nov 2026 03:41:29 +0800 Max Chou <max.chou@sifive.com> wrote:
+On Thu,  5 Nov 2026 03:41:30 +0800 Max Chou <max.chou@sifive.com> wrote:
 
-> Add disassembler support for the vfwdota.vv instruction from the
-> Zvfwdota16bf extension.
+> Add CPU configuration property of Zvfqwdota8f extension which depends on
+> the Zve32f extension per the specification.
 > 
 > Signed-off-by: Max Chou <max.chou@sifive.com>
 Reviewed-by: Chao Liu <chao.liu@processmission.com>
@@ -161,37 +163,73 @@ Reviewed-by: Chao Liu <chao.liu@processmission.com>
 Thanks,
 Chao
 > ---
->  disas/riscv-op.c.inc | 1 +
->  disas/riscv.c        | 4 ++++
->  2 files changed, 5 insertions(+)
+>  target/riscv/cpu.c                | 2 ++
+>  target/riscv/cpu_cfg_fields.h.inc | 1 +
+>  target/riscv/tcg/tcg-cpu.c        | 5 +++++
+>  target/riscv/tcg/vector_helper.c  | 2 ++
+>  4 files changed, 10 insertions(+)
 > 
-> diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
-> index ec767ccbf8b..aeb9423f130 100644
-> --- a/disas/riscv-op.c.inc
-> +++ b/disas/riscv-op.c.inc
-> @@ -614,6 +614,7 @@ OP(vfwcvt_rtz_xu_f_v, "vfwcvt.rtz.xu.f.v", rv_codec_v_r, rv_fmt_vd_vs2_vm)
->  OP(vfwcvt_x_f_v, "vfwcvt.x.f.v", rv_codec_v_r, rv_fmt_vd_vs2_vm)
->  OP(vfwcvt_xu_f_v, "vfwcvt.xu.f.v", rv_codec_v_r, rv_fmt_vd_vs2_vm)
->  OP(vfwcvtbf16_f_f_v, "vfwcvtbf16.f.f.v", rv_codec_v_r, rv_fmt_vd_vs2_vm)
-> +OP(vfwdota_vv, "vfwdota.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->  OP(vfwmacc_vf, "vfwmacc.vf", rv_codec_v_r, rv_fmt_vd_fs1_vs2_vm)
->  OP(vfwmacc_vv, "vfwmacc.vv", rv_codec_v_r, rv_fmt_vd_vs1_vs2_vm)
->  OP(vfwmaccbf16_vf, "vfwmaccbf16.vf", rv_codec_v_r, rv_fmt_vd_fs1_vs2_vm)
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index 2acded0c915..62feb4c653e 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -2640,6 +2640,10 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
->                  case 39: return &op_vqwdotas_vv;
->                  }
->              }
-> +            if (((inst >> 12) & 0b111) == 1 &&
-> +                ((inst >> 26) & 0b111111) == 36) {
-> +                return &op_vfwdota_vv;
-> +            }
->              if (((inst >> 25) & 1) == 1 && ((inst >> 12) & 0b111) == 2) {
->                  switch ((inst >> 26) & 0b111111) {
->                  case 32: return &op_vsm3me_vv;
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 2d905a99d68..4f2e7a8faa9 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -236,6 +236,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>      ISA_EXT_DATA_ENTRY(zvfbfwma, PRIV_VERSION_1_12_0, ext_zvfbfwma),
+>      ISA_EXT_DATA_ENTRY(zvfh, PRIV_VERSION_1_12_0, ext_zvfh),
+>      ISA_EXT_DATA_ENTRY(zvfhmin, PRIV_VERSION_1_12_0, ext_zvfhmin),
+> +    ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvfqwdota8f, PRIV_VERSION_1_13_0,
+> +                                    ext_zvfqwdota8f),
+>      ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvfwdota16bf, PRIV_VERSION_1_13_0,
+>                                      ext_zvfwdota16bf),
+>      ISA_EXT_DATA_ENTRY(zvkb, PRIV_VERSION_1_12_0, ext_zvkb),
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+> index 30c404863c8..b18abdd8b9b 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -106,6 +106,7 @@ BOOL_FIELD(ext_zvfbfmin)
+>  BOOL_FIELD(ext_zvfbfwma)
+>  BOOL_FIELD(ext_zvfh)
+>  BOOL_FIELD(ext_zvfhmin)
+> +BOOL_FIELD(ext_zvfqwdota8f)
+>  BOOL_FIELD(ext_zvfwdota16bf)
+>  BOOL_FIELD(ext_zvqwdota16i)
+>  BOOL_FIELD(ext_zvqwdota8i)
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 91e009072e6..72ce0b4fbd0 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -706,6 +706,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+>          return;
+>      }
+>  
+> +    if (cpu->cfg.ext_zvfqwdota8f && !cpu->cfg.ext_zve32f) {
+> +        error_setg(errp, "Zvfqwdota8f extension depends on Zve32f extension");
+> +        return;
+> +    }
+> +
+>      if ((cpu->cfg.ext_zdinx || cpu->cfg.ext_zhinxmin) && !cpu->cfg.ext_zfinx) {
+>          error_setg(errp, "Zdinx/Zhinx/Zhinxmin extensions require Zfinx");
+>          return;
+> diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
+> index 5947427b6b4..a4c52ed296a 100644
+> --- a/target/riscv/tcg/vector_helper.c
+> +++ b/target/riscv/tcg/vector_helper.c
+> @@ -40,6 +40,7 @@ static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
+>      target_ulong reserved = 0;
+>  
+>      if (riscv_cpu_cfg(env)->ext_zvfbfa ||
+> +        riscv_cpu_cfg(env)->ext_zvfqwdota8f ||
+>          riscv_cpu_cfg(env)->ext_zvfwdota16bf ||
+>          riscv_cpu_cfg(env)->ext_zvqwdota16i ||
+>          riscv_cpu_cfg(env)->ext_zvqwdota8i) {
+> @@ -92,6 +93,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+>      switch (vsew) {
+>      case MO_8:
+>          ill_altfmt &= !(cpu->cfg.ext_zvfbfa ||
+> +                        cpu->cfg.ext_zvfqwdota8f ||
+>                          cpu->cfg.ext_zvqwdota8i);
+>          break;
+>      case MO_16:
 > -- 
 > 2.56.0
 > 
