@@ -1,59 +1,137 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898DA606A32A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 07:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CCF606A320
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 08:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=PPP2Syfj
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=i3DVMm+U
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR3Dr-0006Lr-EG; Wed, 11 Nov 2026 02:58:23 -0500
+	id 1xR3JS-0008Hj-3N; Wed, 11 Nov 2026 03:04:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xR3Do-0006LX-Ny
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 02:58:21 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1xR3JQ-0008HA-9T; Wed, 11 Nov 2026 03:04:08 -0500
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xR3Dk-000846-L6
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 02:58:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794383882; bh=7PMqLXK7QN9ZuFdQ3I0sTsZ7SkudVbkE0Hgp7/aORLU=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To;
- b=PPP2Syfj+eva9ohVDkBeuBdd40dPFsjkWRDb2OsmJXrWmyPy6G/4nb+SGQdMfLxxk
- AKSm20mBrUPC6LrGnwnYEMXUCE7CpKxZ7JNzqikZdFa7ciI+IAHcmgnfhXf2dSOSbu
- vko53PYm7MPaawjQypgsG+Hy4l7okKL3MIoJ1qWVK+4HYUvC8/phz8vKguP4T2hTjM
- 7QJvGK3CLH9O4FzmrB4YC3bPc0tQfnIfGw6CGPnVMXvMiKe+CmPbaxUB+IUgACZFgX
- i9KZn+/61rmZU4dLkz7MLVYHsppYOIW8tC+WJnyCUU+r8834uMBjhRhNnIg8haBDR2
- i+2YQSuKpZ4vA==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F3EDC1E550B;
- Wed, 11 Nov 2026 10:58:02 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EB6BB458C99;
- Wed, 11 Nov 2026 10:58:02 +0300 (MSK)
-Message-ID: <69ee0ba9-254a-4d5b-af58-e63b821fb0ad@tls.msk.ru>
-Date: Wed, 11 Nov 2026 10:58:02 +0300
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1xR3JO-0004BF-9e; Wed, 11 Nov 2026 03:04:08 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rUD6BHRmDm/hiuD25DVkusX6OLdYtVXjuElLQX1wpg7gaEseYsx/g5udwHet+sqQlv6WaJMuxXHDwyyI00iG+tdkG+tf8HLsz19m11bt14qNfpSJ1v4xwqev2kgIy0+FrzMkv0/FG/eBTWgJyyn5hOv1nuB2yjvQ/RsE7Ty/MSVy63jvGCbDknFVVCg4H7YFes4pyTf64Z3K16GFQx65q2eCvySfHf1ijLRjgi/cVN3M9jUAFs+fgCS3Hlot81CBwv9ECeuX9KyCKFs2XruvEmmevqYMlcpGxUR4hCOsFBIQUw+/+v6iLX4Fno66rP+21roRytez00i4SsWAANKRSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ifWHdTF/UmqJbxaXWa1XH9lh9cnCCSS0LtKklfyoY9g=;
+ b=AUrIEI9GnTxUQZqD+rDpHnLXSHAmVVLbq2SMhM916VYrIehJcfAKTjOiKIuv52V32Ixr17H0yFTh6kjWOviWTgmptOjd1NlB3REOPa6BQi949cJxDYraF7VhY5Av6QSe/vDbNU69G2+WZo4cvTZdyM/hRlgX0dxwMzab91NPWphB+bbinrXSoqqniHB+O8TxZvEqqN+899foSE5B/ZPWn4XGHmaDkOlnqhEp0c+rJ6NbBtGX2rvPt9FhLQMveg4iwYj8u8r7EBrrLgWnvXAKei/Xy4m9Bxvd1YzHOyTiPWdnEwS+vl642X+cnrGITHv7CikHY9dGdIh0dU0Qh+oxbg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ifWHdTF/UmqJbxaXWa1XH9lh9cnCCSS0LtKklfyoY9g=;
+ b=i3DVMm+U9NGfK95TWCEiWPJfs9WqeVoaszUIwD2rIxaXfQytQNY5/TWOatHmcCvzGHAAVj13u6kQbQ+99VjqyRwt3vLohMrATY4Uk/0qGdYS+O1jYffROkEz3hKAUZH8HWLpsnZYqGIW2M+8xKQMrfygmXU8OWz48BW3PWP8328cm1s9QEdzinIFiTr01PfHnuRJ9X4qQ9B7OyKTWP1+60PZecWsGc/viJvS1hAduK60aCv8YtLyv386ss7XkQGBjWXm66gYsBdIRf0qlW93KVKcov3zT6S1/O2L/lgGaDpT2uwRUeZwSGLVpiwH1tTX1eWs/pdrviGMrg/ewSJtQw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
+ by SE3PR02MB9870.apcprd02.prod.outlook.com (2603:1096:101:325::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Wed, 11 Nov
+ 2026 08:04:00 +0000
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0615.007; Wed, 11 Nov 2026
+ 08:04:00 +0000
+From: Chao Liu <chao.liu@processmission.com>
+To: Max Chou <max.chou@sifive.com>
+Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [RFC PATCH 25/38] target/riscv: rvv: Implement Zvqwbdota16i
+ instructions
+Date: Wed, 11 Nov 2026 16:03:40 +0800
+Message-ID: <20261111080341.48513-1-chao.liu@processmission.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261104194155.679241-26-max.chou@sifive.com>
+References: 
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SJ0PR03CA0129.namprd03.prod.outlook.com
+ (2603:10b6:a03:33c::14) To TYNPR02MB9351.apcprd02.prod.outlook.com
+ (2603:1096:405:3d0::15)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: linux-user/vdso: reproducible?
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <c9bcda59-f2f9-4036-8aeb-1e36e1b68498@tls.msk.ru>
-Content-Language: en-US, ru-RU
-In-Reply-To: <c9bcda59-f2f9-4036-8aeb-1e36e1b68498@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SE3PR02MB9870:EE_
+X-MS-Office365-Filtering-Correlation-Id: 344d33e4-30c7-4238-4bbb-08df3fca5820
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|23010399003|7416014|1800799024|366016|261009223027099003|10067099003|3023799007|261028144727099003|261102123227099003|261026140227099003|261026121527099003|261021123027099003|261021121427099003|261022075727099003|261022105027099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: L38Ravw5VT6dqpvlqEtIuRtLn8L0sl7mV70krPv46+W0PdeSgE7ussNerTWa9JkmcvxLd3rwKR+prNLibDpvfvE1+/8cX8MztuhYw6I/bsEMBmJUcfc2cVzzYmX8HPecKrT6mTHBCeyqA7X47fyaJxKZ/v3q4AkLbjiHHO5i+nizYPcfdH5UfXP0ZDIyUgGi4raxjGUkjCM13ELRjHP2JMIaLEOdlZOmxTm6mSGKziNIfK7z2vujBdlOYFOZMM4E7UNwkIeccKwrSdnkBo4SemB81fhKgkL6+XASHonf3+nWID9QwnE9p/9CdPgdYcGCKLcJh7t7gVhi8F/2MBPLY6rTogBO6Xx+VQnuUdHvxjIjKNMVSUGtMC16eX9q13lVZtGSqNHY9CEvjgWAY2pTkA1vske+6LwCs+8Dm4GG55HtR7NlzWljFZRH0z+GSlRGKq7++PhRAU59yRObzUqQE3aOwAZL2VjAOuBkNvUb33UiR63Zosi7s0cqQf4eQMwQfJvyxJk9xmFIm7Pi4jMh85dLzstW+tjKlZ3U6w1ZZQkoO9OP6Hi/F63iTa2IIw6C2tCX1gQ888ZXxhPhPmtpI/HoKdKHORfG4xsFLvuA3b6eXH1oij5JF3rw3tpbfJK6Meh4PydMSt1PeSUXphURAt2fcuFULXGax57Al83ya0g=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(7416014)(1800799024)(366016)(261009223027099003)(10067099003)(3023799007)(261028144727099003)(261102123227099003)(261026140227099003)(261026121527099003)(261021123027099003)(261021121427099003)(261022075727099003)(261022105027099003)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?wDU1SpspOpG54kEbJOVcAlazr6xfcdIqZBjJ3am9M+Kq+P2jAxCTgYV2PYCu?=
+ =?us-ascii?Q?eVbti08jxP40tj5GNBQYTlvizLYY6dEddZeWQCib6KjOJvYUusnPyI5MvG55?=
+ =?us-ascii?Q?RDt3YXzKjIlBWWj++g04uVO6C/4gQFLamt/DHQv/rWD3jlyJ6LQ7kGeOXXCO?=
+ =?us-ascii?Q?96f3gwxZoAl3WLwrTf7SIK7u6RHsXR3hEUrZjTpjMiaFOquTHLx2BI/nDwhi?=
+ =?us-ascii?Q?DIRGxdXqZ43n843q9rI/mBb2eI0qXCt0to/TDPml+U1TJ9W8acyOxhhoqxHD?=
+ =?us-ascii?Q?ljUXSxdMpbQdbVFyg+2oefPsdQe7pYbDJdX7hZddQFhuuYYH+WESPmKWEvh7?=
+ =?us-ascii?Q?JYZ/18hDKWORQPSuPX4vvcjjEPZGCd82KhZBPzYn94YjrxY4W9MZnIx6WqXO?=
+ =?us-ascii?Q?0QpuFjN8M/aM/oqv/BNyhkyt996EWVrhDj3exLHLZ//XSwlfuZ/1RX7eGohO?=
+ =?us-ascii?Q?gfqmHN6YIacyEcNoYkyFy2r3jSzi26+XOxCRpQlV3hGCNuACXnoLYxhzwQNE?=
+ =?us-ascii?Q?WPtSYW5ixr59ppWV9KPAtgzGbvY4UT0S2dub4GIdP1RUd8gQAILbdrrZi0f+?=
+ =?us-ascii?Q?Q5g5hLIuFWpToXeEqYltabJU/DwPYsFhIaVBBOwlTSDGmBJ2vbZhXrzoydap?=
+ =?us-ascii?Q?D+wmt+Uz4tbpkhWYCZQ9IEYY4/XFpsLKSfZU0GNbqtvkebUOBSIrsdK7GF+i?=
+ =?us-ascii?Q?FPmDhmPybASnCK5Zvt7BBXWVji96tMnZGhLJMC1OeMtcXOMsAGLZ8tBHEnX/?=
+ =?us-ascii?Q?uwpIDlI2+IwzjwjvC9rhMml/a3xlNgtNjj097vaq/tOejHVJP6tEEW+E5dqp?=
+ =?us-ascii?Q?+ovvf+lUh6hfHy8lp7pERmcG4ch7MYTiP5083S/K3rVwuoZDaWzpebk5N1Bs?=
+ =?us-ascii?Q?rLytOZtISo/PQaS7XWF+QCDpA/g1+bWI7dJnZjgFOTcBMhjACiaqS3PIoA0I?=
+ =?us-ascii?Q?0GmNRV0rQ70stFQW2Z82SW9jXRlX0CYdfikQEZfLK3ohV3snAIXbRGKfII/Q?=
+ =?us-ascii?Q?5v0vCTSLzEHy2K7nhIezyPdhDBPB7PqBMj2G9nTjX4Ct6P2bO8sIG/UP/JgH?=
+ =?us-ascii?Q?L6rkbKEpAsyg77gZ4ZbjPVKwRCOvg7AWBoPpfVVpnKvQR/GE/lytYqxSFYit?=
+ =?us-ascii?Q?UydviWs50bdfkYznOpEpyx8wwnDdfwcQMv14sxDASd5zVj3dCV7AbZqfdl4M?=
+ =?us-ascii?Q?O/z5pax5h7qdTsTy2lV4WRun7Z+Ztgj3EG5die3O/C1ImIRXNDSlC3gMJeA4?=
+ =?us-ascii?Q?WodDGwNUTb8roy97HHiTiWy285Y0dYvAS33KxqVHjXDJZKnRKmCzxzzeTuIG?=
+ =?us-ascii?Q?0LARXEPnbIhj9hMIB8ElK+7HdS4DU/SdZ/MwaOva6ZJA3H3XTrBhY5xhou6U?=
+ =?us-ascii?Q?WZlU7RPTTQz1nfMl+UlPDiz1ai8nwxf5tDwss4ShlvAgQoeKG4GSXjaoaQYa?=
+ =?us-ascii?Q?hufir0PqtIYCtwVLRFSqZuqW/4srOFgfB/j8QR1QOraKdEm01MvT4r9XWGBd?=
+ =?us-ascii?Q?Rcw3ng6f0IK5MsX4mjXGgWK73yVDOEWAFVk2qA85c0LBsqKF3aHbmFbHu2VJ?=
+ =?us-ascii?Q?sj3AZlTEdpDmmWYI3PobZ2K5mvBgkEhFBrdtYsuNuRyaUUcAdfnH+Dda75MI?=
+ =?us-ascii?Q?nWlT8/Bw+Git/y0xb1Xnpy1g3QTfBF8ekbHxYnnh0+jpPuTZnYFcLWuH7Utz?=
+ =?us-ascii?Q?2ORb9bpwRpLiaxg/Nzot5pNBvpNLxh9CpRaXPjURNc1YpxsRlwpy4jKfPFgm?=
+ =?us-ascii?Q?yFCMLrqK2qFvJM0eXKtb74g0QWjuik8=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 344d33e4-30c7-4238-4bbb-08df3fca5820
+X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 08:04:00.5059 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xdS6SoLy0Rv343mfjhkW9REK6lwS41NCEjg85caqBKUnYqW8G1HX7hZIDDT1AkLL+ZSBVGz+5WyRkerdYXU48ICn10Bm625PTs8Zv2o/vQQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE3PR02MB9870
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+ envelope-from=chao.liu@processmission.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,184 +144,99 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Adding Paolo to Cc.  Can we at least add -pipe to the vdso compile command to
-avoid having a random filename embedded in the binary?  For 11.2 perhaps?
+On Thu,  5 Nov 2026 03:41:40 +0800 Max Chou <max.chou@sifive.com> wrote:
+
+> Extend the vqwbdotau.vv and vqwbdotas.vv instructions to support
+> both 8-bit (Zvqwbdota8i) and 16-bit (Zvqwbdota16i) batched
+> dot-product operations.
+> 
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 
 Thanks,
-
-/mjt
-
-On 10/24/26 08:51, Michael Tokarev wrote:
-> Hi!
+Chao
+> ---
+>  target/riscv/helper.h                       | 4 +++-
+>  target/riscv/insn32.decode                  | 2 +-
+>  target/riscv/tcg/insn_trans/trans_rvv.c.inc | 5 +++--
+>  target/riscv/tcg/vector_helper.c            | 2 ++
+>  4 files changed, 9 insertions(+), 4 deletions(-)
 > 
-> Once again I'm trying to fix a long-standing issue in debian & ubuntu with
-> vdso files build.
+> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+> index e48b9b4edec..84571a999f4 100644
+> --- a/target/riscv/helper.h
+> +++ b/target/riscv/helper.h
+> @@ -1400,9 +1400,11 @@ DEF_HELPER_6(vfwdota_vv, void, ptr, ptr, ptr, ptr, env, i32)
+>  DEF_HELPER_6(vfqwdota_vv, void, ptr, ptr, ptr, ptr, env, i32)
+>  DEF_HELPER_6(vfqwdota_alt_vv, void, ptr, ptr, ptr, ptr, env, i32)
+>  
+> -/* Zvqwbdota8i - 8-bit Integer Batched Dot Product */
+> +/* Zvqwbdota8i/Zvqwbdota16i - 8/16-bit Integer Batched Dot Product */
+>  DEF_HELPER_7(vqwbdotau_vv_b, void, ptr, ptr, ptr, ptr, i32, env, i32)
+>  DEF_HELPER_7(vqwbdotas_vv_b, void, ptr, ptr, ptr, ptr, i32, env, i32)
+> +DEF_HELPER_7(vqwbdotau_vv_h, void, ptr, ptr, ptr, ptr, i32, env, i32)
+> +DEF_HELPER_7(vqwbdotas_vv_h, void, ptr, ptr, ptr, ptr, i32, env, i32)
+>  
+>  /* SiFive Custom int8 Matrix-Multiply */
+>  DEF_HELPER_5(sf_vqmaccu_4x8x4, void, ptr, ptr, ptr, env, i32)
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index bf325229100..8a06547a570 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -1109,6 +1109,6 @@ vfwdota_vv  100100 . ..... ..... 001 ..... 1110111 @r_vm
+>  vfqwdota_vv     100110 . ..... ..... 001 ..... 1110111 @r_vm
+>  vfqwdota_alt_vv 100111 . ..... ..... 001 ..... 1110111 @r_vm
+>  
+> -# *** Zvqwbdota8i 8-bit Integer Batched Dot-Product Extension ***
+> +# *** Zvqwbdota8i/Zvqwbdota16i Integer Batched Dot-Product Extension ***
+>  vqwbdotau_vv  101110 . ..... ..... 000 ..... 1110111 @r_vm
+>  vqwbdotas_vv  101111 . ..... ..... 000 ..... 1110111 @r_vm
+> diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+> index bc12bcb9b72..650affc045b 100644
+> --- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+> @@ -4315,7 +4315,8 @@ static bool vext_vqwbdota_check(DisasContext *s, arg_rmrr *a)
+>      int32_t sew = s->sew;
+>      int32_t vd_eew = sew + 2;
+>      return vext_zvbdota_base_check(s, a, vd_eew) &&
+> -           (s->cfg_ptr->ext_zvqwbdota8i && sew == MO_8);
+> +           ((s->cfg_ptr->ext_zvqwbdota8i && sew == MO_8) ||
+> +            (s->cfg_ptr->ext_zvqwbdota16i && s->sew == MO_16));
+>  }
+>  
+>  typedef void gen_helper_zvbdota_int(TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr,
+> @@ -4325,7 +4326,7 @@ typedef void gen_helper_zvbdota_int(TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr,
+>  static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                   \
+>  {                                                                        \
+>      static gen_helper_zvbdota_int * const fns[2] = {                     \
+> -        gen_helper_##NAME##_b, NULL,                                     \
+> +        gen_helper_##NAME##_b, gen_helper_##NAME##_h,                    \
+>      };                                                                   \
+>      if (CHECK(s, a)) {                                                   \
+>          TCGv_ptr dest, src1, src2, mask;                                 \
+> diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
+> index 5ea073b6d76..683b14f28f3 100644
+> --- a/target/riscv/tcg/vector_helper.c
+> +++ b/target/riscv/tcg/vector_helper.c
+> @@ -6197,3 +6197,5 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,                  \
+>  
+>  GEN_VEXT_ZVBDOTA_INT(vqwbdotau_vv_b, 32, 8, uint8_t, H4, H1)
+>  GEN_VEXT_ZVBDOTA_INT(vqwbdotas_vv_b, 32, 8, int8_t, H4, H1)
+> +GEN_VEXT_ZVBDOTA_INT(vqwbdotau_vv_h, 64, 16, uint16_t, H8, H2)
+> +GEN_VEXT_ZVBDOTA_INT(vqwbdotas_vv_h, 64, 16, int16_t, H8, H2)
+> -- 
+> 2.56.0
 > 
-> One of the requirements here is to build everything from source, ensuring
-> the things can be rebuild and are reproducible (that is, the shipped binaries
-> can actually be produced from the provided source and not something else
-> with a hidden backdoor).
 > 
-> It'd be nice to just build the vdso.so files during regular package build.
-> But this does not work correctly neither in debian nor in ubuntu infrastructure
-> due to several reasons.  The main problem is that to build all vdso files,
-> one need to have cross-compilers for all architectures on every host
-> architecture for which qemu-user packages are produced, which is problematic
-> (especially for lower-power, or "small", architectures).
-> 
-> Additionally, llvm/clang, which can produce binaries for multiple architectures
-> and is available on all host architectures on debian, does not handle sh4 and
-> hpps which are currently needed to rebuild vdso files in qemu, so it is also
-> not an option, at least not yet (sh4 support hopefully will be available soon).
-> 
-> I'm using tricks to build vdso files on one architecture and use the result
-> when building linux-user packages on all architectures.  But this does not
-> work correctly neither in debian nor in ubuntu.
-> 
-> An alternative is to actually use the binaries provided in qemu source
-> tarball.  However in order to do that, I have to actually verify if the
-> binaries are produced from the actual source shipped with these binaries.
-> It doesn't seem to be a difficult task because of the similicity of the
-> sources - it is a simple assembler-language file which - in theory -
-> should be trivially reproducible.
-> 
-> However, when I build a vdso file locally with the same compiler options
-> and compare it with the binary shipped with qemu, I see this:
-> 
-> linux-user/aarch64 $ diffoscope vdso-be.so*
-> 2026-10-23 18:59:46 E: diffoscope.comparators.elf: Command '['objdump --line-numbers --disassemble --demangle --reloc --no-show-raw-insn -- 
-> section=.text {}']' returned non-zero exit status 1.
-> 2026-10-23 18:59:46 E: diffoscope.comparators.elf: Command '['objdump --disassemble --demangle --no-show-raw-insn --section=.text {}']' returned non- 
-> zero exit status 1.
-> --- vdso-be.so
-> +++ vdso-be.so.mjt
-> ├── readelf --wide --symbols {}
-> │ @@ -19,15 +19,15 @@
-> │       6: 0000000000000380     0 SECTION LOCAL  DEFAULT    6 .gnu.hash
-> │       7: 00000000000003b8     0 SECTION LOCAL  DEFAULT    7 .dynstr
-> │       8: 0000000000000430     0 SECTION LOCAL  DEFAULT    8 .gnu.version
-> │       9: 0000000000000440     0 SECTION LOCAL  DEFAULT    9 .gnu.version_d
-> │      10: 0000000000000478     0 SECTION LOCAL  DEFAULT   10 .eh_frame_hdr
-> │      11: 0000000000000490     0 SECTION LOCAL  DEFAULT   11 .eh_frame
-> │      12: 00000000000004b8     0 SECTION LOCAL  DEFAULT   12 .text
-> │ -    13: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS cc0Lcfxq.o
-> │ +    13: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS ccuckKYd.o
-> │      14: 0000000000000158     0 NOTYPE  LOCAL  DEFAULT    1 $d
-> │      15: 00000000000004b8     0 NOTYPE  LOCAL  DEFAULT   12 $x
-> │      16: 00000000000004f0     0 NOTYPE  LOCAL  DEFAULT   12 sigreturn_region_start
-> │      17: 00000000000004f4     0 NOTYPE  LOCAL  DEFAULT   12 sigreturn_region_end
-> │      18: 00000000000004a4     0 NOTYPE  LOCAL  DEFAULT   11 $d
-> │      19: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS
-> │      20: 00000000000001a0     0 OBJECT  LOCAL  DEFAULT  ABS _DYNAMIC
-> ├── strings --all --bytes=8 {}
-> │ @@ -1,14 +1,14 @@
-> │  __kernel_gettimeofday
-> │  __kernel_clock_gettime
-> │  __kernel_clock_getres
-> │  __kernel_rt_sigreturn
-> │  linux-vdso.so.1
-> │  LINUX_2.6.39
-> │ -cc0Lcfxq.o
-> │ +ccuckKYd.o
-> │  sigreturn_region_start
-> │  sigreturn_region_end
-> │  _DYNAMIC
-> │  __GNU_EH_FRAME_HDR
-> │  _GLOBAL_OFFSET_TABLE_
-> │  LINUX_2.6.39
-> │  __kernel_clock_getres
-> ├── readelf --wide --decompress --hex-dump=.strtab {}
-> │ @@ -1,10 +1,10 @@
-> │
-> │  Hex dump of section '.strtab':
-> │ -  0x00000000 00636330 4c636678 712e6f00 24640024 .cc0Lcfxq.o.$d.$
-> │ +  0x00000000 00636375 636b4b59 642e6f00 24640024 .ccuckKYd.o.$d.$
-> │    0x00000010 78007369 67726574 75726e5f 72656769 x.sigreturn_regi
-> │    0x00000020 6f6e5f73 74617274 00736967 72657475 on_start.sigretu
-> │    0x00000030 726e5f72 6567696f 6e5f656e 64005f44 rn_region_end._D
-> │    0x00000040 594e414d 4943005f 5f474e55 5f45485f YNAMIC.__GNU_EH_
-> │    0x00000050 4652414d 455f4844 52005f47 4c4f4241 FRAME_HDR._GLOBA
-> │    0x00000060 4c5f4f46 46534554 5f544142 4c455f00 L_OFFSET_TABLE_.
-> │    0x00000070 4c494e55 585f322e 362e3339 005f5f6b LINUX_2.6.39.__k
-> 
-> So basically, the difference is just in the temporary .o filename
-> used during the build process, and that name is random.
-> 
-> After stripping both files from debug info (aarch64-linux-gnu-strip),
-> things becomes exactly the same.
-> 
-> Can't we strip them during build anyway?
-> 
-> (I'm not an expert with these reproducible build thing, maybe they
-> have more ways to handle differences like this, and maybe more
-> suggestions to further improve the situation besides stripping -
-> asked them too).
-> 
-> It's interesting that adding -s switch to gcc produces slightly different
-> binary than not using -s and stripping after the link explicitly.
-> 
-> linux-user/aarch64$ diffoscope --tool-prefix-binutils=aarch64-linux-gnu-  vdso-be.so*
-> 2026-10-23 19:06:01 E: diffoscope.comparators.elf: Command '['objdump --line-numbers --disassemble --demangle --reloc --no-show-raw-insn -- 
-> section=.text {}']' returned non-zero exit status 1.
-> 2026-10-23 19:06:01 E: diffoscope.comparators.elf: Command '['objdump --disassemble --demangle --no-show-raw-insn --section=.text {}']' returned non- 
-> zero exit status 1.
-> --- vdso-be.so
-> +++ vdso-be.so.mjt
-> │┄ xxd not available in path. Falling back to Python hexlify.
-> │┄ Format-specific differences are supported for ELF binaries but no file-specific differences were detected; falling back to a binary diff. file(1) 
-> reports: ELF 64-bit MSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=ba5dd46a2ef8dde79536f81dd8126e0ee2f3df39, 
-> stripped
-> @@ -6,15 +6,15 @@
->   00000000000004f40000000000001000000000020000000400000000000001a0
->   00000000000001a000000000000001a000000000000001000000000000000100
->   00000000000000086474e5500000000400000000000004780000000000000478
->   0000000000000478000000000000001400000000000000140000000000000004
->   0000000400000004000000000000015800000000000001580000000000000158
->   0000000000000044000000000000004400000000000000080000000400000010
->   00000005474e5500c00000000000000400000003000000000000000400000014
-> -00000003474e5500ba5dd46a2ef8dde79536f81dd8126e0ee2f3df3900000000
-> +00000003474e550047654bef50c6d25c99110c67c0eddb8e67b78bab00000000
->   000000000000000e000000000000005a00000000000000040000000000000350
->   000000006ffffef50000000000000380000000000000000500000000000003b8
->   000000000000000600000000000002a0000000000000000a0000000000000077
->   000000000000000b0000000000000018000000006ffffffc0000000000000440
->   000000006ffffffd0000000000000002000000006ffffff00000000000000430
->   0000000000000000000000000000000000000000000000000000000000000000
->   0000000000000000000000000000000000000000000000000000000000000000
-> 
-> So, can we at least strip the files?
-> 
-> Something like this (for all files):
-> 
-> diff --git a/linux-user/aarch64/Makefile.vdso b/linux-user/aarch64/Makefile.vdso
-> index 82ed2011087..e5655888eb4 100644
-> --- a/linux-user/aarch64/Makefile.vdso
-> +++ b/linux-user/aarch64/Makefile.vdso
-> @@ -10,7 +10,9 @@ LDFLAGS = -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
->            -Wl,-z,max-page-size=4096 -Wl,-T,$(SUBDIR)/vdso.ld
-> 
->   $(SUBDIR)/vdso-be.so: vdso.S vdso.ld
-> -       $(CC) -o $@ $(LDFLAGS) -mbig-endian $<
-> +       $(CC) -o $@.tmp $(LDFLAGS) -mbig-endian $<
-> +       $(STRIP) $@.tmp && mv -f $@.tmp $@
-> 
->   $(SUBDIR)/vdso-le.so: vdso.S vdso.ld
-> -       $(CC) -o $@ $(LDFLAGS) -mlittle-endian $<
-> +       $(CC) -o $@.tmp $(LDFLAGS) -mlittle-endian $<
-> +       $(STRIP) $@.tmp && mv -f $@.tmp $@
-> 
-> Or maybe we can use something else to make this "more reproducible".
-> 
-> Thanks,
-> 
-> /mjt
 > 
 
+Sent using hkml (https://github.com/sjp38/hackermail)
 
