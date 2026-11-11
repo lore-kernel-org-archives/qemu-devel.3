@@ -1,59 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF64606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 03:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5761E606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 03:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eXqUy/NZ
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OYJqWXBy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQzNb-0007w0-V9; Tue, 10 Nov 2026 22:52:11 -0500
+	id 1xQzNp-0008IX-7w; Tue, 10 Nov 2026 22:52:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQzNa-0007vi-Dq
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:52:10 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQzNn-0008A9-0B
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:52:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQzNY-0006V3-Ga
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:52:09 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQzNk-0007Gk-Un
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:52:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794369126;
+ s=mimecast20190719; t=1794369140;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ff5D5pqbHPd+3i3+5HgWOV+7wg4pBRB9ukxjYxf2J7g=;
- b=eXqUy/NZt0BxXLh0aR/Gk9OgJDFxTjRnbz8BaDP9pNk+M3pmEw9l6UZSU1Ow5XyPTy6lk9
- vZCN/XmiGE8sgBrFThwftwIj7IbY6SJscv/9qCl/RgJNReIkxb7+eZSBzUo65pFGqlSr2Z
- 9PaGbpU3i4y7jApB2d7G66eEOQGtX3U=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vrUJBGn2vUH1UR3OPTAuN/Q+khfW6r7FRV+4klOWrSI=;
+ b=OYJqWXBynG+Ni0ffzMScKQfU2FEETm7Gl1BehWVcFDgYYi/95ufl1FSdTiP49v+g66ypQ5
+ wYu2zKNJVTNL2PZi7lB3OPfU1x+UsHTEOEMteeWodpTM32/92qVTvo+b9xQy5xbPtN+Jpo
+ NgEdwe3q5i7GX4tsU8jypB773FVUCq0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-4S6F_HivO_i4Ghtdu5JOyw-1; Tue,
- 10 Nov 2026 22:52:04 -0500
-X-MC-Unique: 4S6F_HivO_i4Ghtdu5JOyw-1
-X-Mimecast-MFC-AGG-ID: 4S6F_HivO_i4Ghtdu5JOyw_1794369123
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-MeEFWG4lPfC9zCRhjExQxA-1; Tue,
+ 10 Nov 2026 22:52:17 -0500
+X-MC-Unique: MeEFWG4lPfC9zCRhjExQxA-1
+X-Mimecast-MFC-AGG-ID: MeEFWG4lPfC9zCRhjExQxA_1794369137
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 958A61956051
- for <qemu-devel@nongnu.org>; Wed, 11 Nov 2026 03:52:03 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD0AD195605E; Wed, 11 Nov 2026 03:52:16 +0000 (UTC)
 Received: from eblake.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 22C0A300019F
- for <qemu-devel@nongnu.org>; Wed, 11 Nov 2026 03:52:02 +0000 (UTC)
+ id 50085300019F; Wed, 11 Nov 2026 03:52:15 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/8] NBD patches through 2026-11-10
-Date: Tue, 10 Nov 2026 21:51:25 -0600
-Message-ID: <20261111035200.1751734-10-eblake@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org (open list:Network Block Dev...)
+Subject: [PULL 6/8] iotests: Add new nbd-robustness test
+Date: Tue, 10 Nov 2026 21:51:31 -0600
+Message-ID: <20261111035200.1751734-16-eblake@redhat.com>
+In-Reply-To: <20261111035200.1751734-10-eblake@redhat.com>
+References: <20261111035200.1751734-10-eblake@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
@@ -79,59 +84,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The following changes since commit 723622bedb0b423de7d1c61ebbe6e7a71934949c:
+Convert the proof of concept test by Sunday Jiang into an iotest. I
+tried to get libnbd to trigger the situation, but forcing a block
+status command when no status has been initiated is not something that
+libnbd is willing to do. So this results in a hard-coded sequence of
+bytes sent over a raw socket.  Swapping the order with the previous
+patch shows the assertion failure that was previously reachable.
 
-  Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging (2026-11-09 11:58:07 -0800)
-
-are available in the Git repository at:
-
-  https://gitlab.com/ebblake/qemu.git tags/pull-nbd-2026-11-10
-
-for you to fetch changes up to 1be14f69a8350349388763f83578f071fdbfee07:
-
-  iotests: Add another nbd-robustness test (2026-11-10 11:20:24 -0600)
-
-----------------------------------------------------------------
-NBD patches through 2026-11-10
-
-A few bug fixes:
-- Guillaume Vincke: improve connection retry if NBD client hangs up quickly
-- Eric Blake: fix two low-severity CVEs with non-compliant NBD clients
-
-----------------------------------------------------------------
-Eric Blake (6):
-      docs: Mention security considerations for NBD
-      iotests: Refactor python NBD server setup
-      nbd/server: Reject rather than assert on non-compliant BLOCK_STATUS
-      iotests: Add new nbd-robustness test
-      nbd/server: Reject rather than assert on non-compliant NBD_OPT_SET_META_CONTEXT
-      iotests: Add another nbd-robustness test
-
-Guillaume Vincke (2):
-      nbd/client-connection: Fix client returning a closed channel
-      iotests: Add coverage for NBD connect thread start delay
-
- docs/system/security.rst                          |  23 +++
- nbd/client-connection.c                           |  32 ++++
- nbd/server.c                                      |  10 +-
- tests/qemu-iotests/iotests.py                     |  30 ++++
- tests/qemu-iotests/tests/nbd-multiconn            |  44 +----
- tests/qemu-iotests/tests/nbd-robustness           | 205 ++++++++++++++++++++++
- tests/qemu-iotests/tests/nbd-robustness.out       |   5 +
- tests/qemu-iotests/tests/nbd-stale-connection     |  60 +++++++
- tests/qemu-iotests/tests/nbd-stale-connection.out |  17 ++
- 9 files changed, 388 insertions(+), 38 deletions(-)
+Based-on: https://gitlab.com/qemu-project/qemu/-/work_items/4091
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20261110155356.1520433-10-eblake@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ tests/qemu-iotests/tests/nbd-robustness     | 132 ++++++++++++++++++++
+ tests/qemu-iotests/tests/nbd-robustness.out |   5 +
+ 2 files changed, 137 insertions(+)
  create mode 100755 tests/qemu-iotests/tests/nbd-robustness
  create mode 100644 tests/qemu-iotests/tests/nbd-robustness.out
- create mode 100755 tests/qemu-iotests/tests/nbd-stale-connection
- create mode 100644 tests/qemu-iotests/tests/nbd-stale-connection.out
 
+diff --git a/tests/qemu-iotests/tests/nbd-robustness b/tests/qemu-iotests/tests/nbd-robustness
+new file mode 100755
+index 00000000000..fe61a839250
+--- /dev/null
++++ b/tests/qemu-iotests/tests/nbd-robustness
+@@ -0,0 +1,132 @@
++#!/usr/bin/env python3
++# group: rw auto quick
++#
++# Test cases for NBD robustness against malicious clients
++#
++# Copyright (C) 2026 Red Hat, Inc.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import os
++import socket
++import struct
++
++import iotests
++from iotests import qemu_img_create, qemu_io
++
++# Selected NBD Protocol Constants
++NBD_MAGIC_INIT = 0x4e42444d41474943          # "NBDMAGIC"
++NBD_MAGIC_OPTS = 0x49484156454f5054          # "IHAVEOPT"
++NBD_MAGIC_REPLY = 0x0003e889045565a9         # Reply magic
++NBD_MAGIC_EXT_REPLY = 0x6e8a278c             # Structured reply magic
++NBD_FLAG_C_FIXED_NEWSTYLE = 0x1
++NBD_OPT_GO = 7
++NBD_OPT_SET_META_CONTEXT = 10
++NBD_OPT_EXTENDED_HEADERS = 11
++NBD_REP_ACK = 1
++NBD_REP_INFO = 3
++NBD_CMD_BLOCK_STATUS = 7
++
++disk = os.path.join(iotests.test_dir, 'disk')
++size = '4M'
++nbd_sock = os.path.join(iotests.sock_dir, 'nbd_sock')
++
++
++class TestNbdRobustness(iotests.QMPTestCase):
++    def setUp(self):
++        qemu_img_create('-f', iotests.imgfmt, disk, size)
++        qemu_io('-c', 'w -P 1 0 2M', '-c', 'w -P 2 2M 2M', disk)
++
++        self.vm = iotests.VM()
++        self.vm.launch()
++        self.vm.cmd('blockdev-add', {
++            'driver': iotests.imgfmt,
++            'node-name': 'n',
++            'file': {'driver': 'file', 'filename': disk}
++        })
++
++    def tearDown(self):
++        self.vm.shutdown()
++        os.remove(disk)
++        try:
++            os.remove(nbd_sock)
++        except OSError:
++            pass
++
++    def recv_exact(self, s: socket.socket, n: int) -> bytes:
++        buf = bytearray()
++        while len(buf) < n:
++            chunk = s.recv(n - len(buf))
++            if not chunk:
++                raise EOFError(f"Unexpected EOF while reading {n} bytes "
++                               f"(got {len(buf)})")
++            buf.extend(chunk)
++        return bytes(buf)
++
++    def test_invalid_block_status(self):
++        with self.run_nbd_server(nbd_sock):
++            self.add_nbd_export('n', 'r')
++
++            # Use raw socket traffic to intentionally violate NBD protocol
++            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
++                s.connect(nbd_sock)
++                # Server sends NBDMAGIC(8) + IHAVEOPT(8) + flags(2)
++                data = self.recv_exact(s, 18)
++                magic, opt, flags = struct.unpack(">QQH", data)
++                self.assertEqual(magic, NBD_MAGIC_INIT)
++                self.assertEqual(opt, NBD_MAGIC_OPTS)
++                self.assertEqual(flags, 0x3)
++
++                # Reply with flags(4) - just fixed newstyle flag
++                s.sendall(struct.pack(">I", NBD_FLAG_C_FIXED_NEWSTYLE))
++
++                # Request NBD_OPT_EXTENDED_HEADERS, no extra payload
++                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS,
++                                      NBD_OPT_EXTENDED_HEADERS, 0))
++
++                # Expect successful reply:
++                # magic(8) + option(4) + reply(4) + length(4)
++                data = self.recv_exact(s, 20)
++                magic, opt, reply, length = struct.unpack(">QIII", data)
++                self.assertEqual(magic, NBD_MAGIC_REPLY)
++                self.assertEqual(opt, NBD_OPT_EXTENDED_HEADERS)
++                self.assertEqual(reply, NBD_REP_ACK)
++                self.assertEqual(length, 0)
++
++                # Request NBD_OPT_GO, name but no info as payload
++                payload = struct.pack(">I", 1) + b'r' + struct.pack(">H", 0)
++                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS, NBD_OPT_GO,
++                                      len(payload)) + payload)
++
++                # Expect (and ignore) zero or more info packets before ack
++                while True:
++                    data = self.recv_exact(s, 20)
++                    magic, opt, reply, length = struct.unpack(">QIII", data)
++                    self.assertEqual(magic, NBD_MAGIC_REPLY)
++                    self.assertEqual(opt, NBD_OPT_GO)
++                    payload = self.recv_exact(s, length)
++                    if reply != NBD_REP_INFO:
++                        break
++                self.assertEqual(reply, NBD_REP_ACK)
++
++                # Send invalid NBD_CMD_BLOCK_STATUS with payload flag. This
++                # violates the NBD protocol (since no context was negotiated),
++                # but should not crash the server.
++                payload = struct.pack(">QI", 0x1000, 0)
++                s.sendall(struct.pack(">IHHQQQ", 0x21e41c71, 0x20,
++                                      NBD_CMD_BLOCK_STATUS, 1, 0,
++                                      len(payload)) + payload)
++
++                # Expect a rejection.
++                data = self.recv_exact(s, 32)
++                magic, flags, rtype, cookie, _, length = \
++                    struct.unpack(">IHHQQQ", data)
++                self.assertEqual(magic, NBD_MAGIC_EXT_REPLY)
++                self.assertEqual(rtype & 0x8000, 0x8000)
++                self.assertEqual(cookie, 1)
++                self.recv_exact(s, length)
++
++            self.assertTrue(self.vm.is_running())
++
++if __name__ == '__main__':
++    iotests.main(supported_fmts=['qcow2'])
+diff --git a/tests/qemu-iotests/tests/nbd-robustness.out b/tests/qemu-iotests/tests/nbd-robustness.out
+new file mode 100644
+index 00000000000..ae1213e6f86
+--- /dev/null
++++ b/tests/qemu-iotests/tests/nbd-robustness.out
+@@ -0,0 +1,5 @@
++.
++----------------------------------------------------------------------
++Ran 1 tests
++
++OK
 -- 
 2.56.0
 
