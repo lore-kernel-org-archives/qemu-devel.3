@@ -1,117 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E0F606A321
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 23:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A27E606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 23:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=alistair23.me header.i=@alistair23.me header.a=rsa-sha256 header.s=fm3 header.b=eRBT9tw2;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=20FAvLPI
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=F93U8nnz
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRHpY-0004o2-7s; Wed, 11 Nov 2026 18:34:16 -0500
+	id 1xRHuS-0006jG-8K; Wed, 11 Nov 2026 18:39:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xRHpW-0004nd-Cr
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 18:34:14 -0500
-Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1xRHuO-0006ez-DJ; Wed, 11 Nov 2026 18:39:16 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xRHpT-0004Yb-QH
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 18:34:13 -0500
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 8A6487A01CF
- for <qemu-devel@nongnu.org>; Wed, 11 Nov 2026 18:34:10 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Wed, 11 Nov 2026 18:34:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1794440050; x=1794526450; bh=xfF+6PvT84FVhWNiIazRAb41GU220XTS
- eSNUViwlxhI=; b=eRBT9tw27ZI32ElTa4MDTrYM7dGgW+syM1LgeTerhzSaM8/q
- 5EBT76mCuFx/ADYBrYlSdZeLHukzWBjpLDNY2kiIPfHLItDPgpRmSix+AXSre9p/
- cvB5u1vrz8R/96J7bnnBJu3jnskj6vVs9HCdnvm06Ai1mIYXYkYXLmjhRH/cJ/UP
- bniCpdUXbPbsfUJhL9TvrlECDDNyVKSseFL9/CfdwKCvUTwFftrxMIu3s9X4crit
- zabIsqN5Z5hUMjhTAt7QKY0YjvN0eVk6ISVQ+KvpCxbsfFoBKb+zuuT/kELqueci
- CDVsWAXzUtGhTlkFFaXNMW8nOtz19aBlCFAlTQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794440050; x=
- 1794526450; bh=xfF+6PvT84FVhWNiIazRAb41GU220XTSeSNUViwlxhI=; b=2
- 0FAvLPITwpHwpRjQSZy65zQ5DUN7Kr5cjZvScSFuUMiqu/YxqKNus4X6UusWnhk0
- SVf6R7LSsjM1q95JkCGIajzGncDmUEIMI2oMhV2CXooz0Pmnjxbw5azm0xG3TOf3
- ro62BuxFnHBL3dZ+QZoZWrRZFUCjqGjBpukwOc9JCY5WXxABvTdN3bND/9ndJ13q
- FZ8gpioWUNMTH61IXoaIl841WLAA/LPx0YJls8FjfIHEUt9UtgNqAKYNcCfC7+ld
- bgFxJjx9dI0/uT45qOGGj69eO8jxz2LMS7EfWDq79nTq77hk0JAsh6CKIyamk7/j
- hmrdokeGlBDadtMUoHjzQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794440050; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm3:rsa-sha256:TTW0AtOn1PGOxupcZVbOCQExAiTGDI6G3fsW82qN/o4vISJ
- OvU10fnY1Z/2VhzvV1xbfwj5pJ/xcI2G4Uk+ngREYJLTxZDsusxez3LOuBCqE88d
- 7TCcyHPUe7zXUg5BAaKHUwnyUVIYO9GW0yALwRF0z4pNNYadzA6VwjVZvWcvlbuI
- Ry6EIzN0XpS4bsDG4y+0ONMCMSWh62bzZVecSB41NfAtz6YftiBuIqYBaKQ035n6
- GF/JL8YA8llE9CN8sgmpo4JjJ6QApBKdS5u6fkThIKznLb9n0UWZwXCxsJBalwM7
- 4aOtoXtEc/FzHo60B/mBOlGrT13UwOwugfGWPZA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:2NR93KcIsTI00QyI68EnWpstLQBXjfa4htWNqN0sewc=:xfF+6PvT84FVhWNiIazRAb41GU220XTSeSNUViwlxhI=;
-X-ME-Sender: <xms:cPv0aiO36VE2HudTLe_-KPBaqS9Fft_tHhOhtgbVlZJ8P6O2JZujkA>
- <xme:cPv0aoZjIrtGFWe6CeJC9tIfC890OUNqFFcVhSlmzwSb4k0OU2je8Z8tj6eFvC6AN
- 3jb8oMrcPvq-yhWlsH5uug8U4LZh7fJL5ABeqFzxwoCDodJSvQOuSjH>
-X-ME-Received: <xmr:cPv0amrMFLvd70NRqw7bDua5AGnAVZJm239vd19eMHBwWhw8yriNeFRlnGfYDXzRxKoo5anUdfR4tM5A4wPwquTqdwI>
-X-ME-Proxy-Cause: dmFkZTGclP/yB7YXXyQvqElfFzrp6W0qkd0XmX08XMQv1T/NEmlk+0ny2ATlUffIkKUX7Z
- DaoeVnokgpMfQ3myi9q3SWSkyVaOGXcLkF3W6nJ/M/gbPsfScDDaOZcLhal6/hHV7mjQY1
- r7IKyMp0m+JYI9E/MJDTGqk7KHLd0qyOpjvSPsSjqiZyt6/lV/zY94Be2OFOhaS0QNBqJC
- bw2OIndcVMpk1yO9bdEthYxyW9KaEMwkPU5QGxexIkJ/rQFMfM9iS97NDXocG5SsbF7Omi
- i7TCKG2GKGBRUn/5tDrevSJGY2W3SCdSaglDhc8nLjh3TYkwddA/nUFOP5gH1fyzSiLJAq
- iNkmt3Wvwq80AszebknhYUUE3NDJw7F8s6UTidy6jxd6kxNb6N5W/c+/p54J+r7EXx30xX
- OTaDF+ND7QTCG3mMAJ7f/8Hb/hfdXi0FMSdOrtyDT/j7t+nyQYjNqU3d6hNqcU4y3fyhXq
- 0uUG/BKG+e+1Z+rQtK0s/QR2viekmCLpIzDcvP5mCdUZ+LkwwAEWfQBXQH9vIi36htv9h5
- MnalnbFzhIavjdidP+TQaIhfn75vWOpG2Sj7HWHXRBCEm3xuPROKgtksWWv5Fqp67MtFn1
- lvIXfoIPzWmzDSZOcEqt1GGgNoSRpk6jZlmvyTrk21XJ2PVkckRUK4GvbuHQ
-X-ME-Proxy: <xmx:cPv0asbIBJ4FHU7DK-HkRmPtLtVeO27A_6xjFFBmhcW8d8IEW1mJdg>
- <xmx:cPv0auTbVMlk5QSLcsMSwhMDZf9lAeBrZ1_3LFtNarGjkw8OwaZA9A>
- <xmx:cPv0aj75cW-JZJ5211e2tssBwWkNoOESptFD3qVzrMePWlKpFBiOYg>
- <xmx:cPv0ajzdb9A3DY1DmeCpBB7PArABebLHJJKRTKIGls5morBZ_gkPAw>
- <xmx:cvv0ahBhvtGkBMWbzE_CLLE_pievJXtWqNP8_Yb1ulCzFGzZZKTZIHns>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Nov 2026 18:34:07 -0500 (EST)
-Message-ID: <20f168fb2615777ff875a9d4891533c0113331de.camel@alistair23.me>
-Subject: Re: [PATCH] linux-user/vdso: make the binaries reproducible
-From: Alistair <alistair@alistair23.me>
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Date: Thu, 12 Nov 2026 09:34:04 +1000
-In-Reply-To: <20261111121259.14941-1-mjt@tls.msk.ru>
-References: <20261111121259.14941-1-mjt@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.62.1 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1xRHuL-0004aC-K0; Wed, 11 Nov 2026 18:39:16 -0500
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id A578063754;
+ Wed, 11 Nov 2026 23:39:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E751F00A0C;
+ Wed, 11 Nov 2026 23:39:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1794440351;
+ bh=0q9sZqPtBl2he/QQvCOH1b0c3kCgvm4TbJsUc7J0zGg=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc;
+ b=F93U8nnzSIwr67lmZBA0UtCOA7QzmfTm2RJbf2ROjG6JRKZ6Dnr4Psaih9S0dyIXq
+ 8wNfZ2d/Iyu/FKMepKnb09D1W6tUCqwRegMVF6OPabecsUsZ0Lu7+1O3Gz7oOn8G0S
+ A832C/S5p66AnBUf9dI9wzJ+Rf5ZFMV8n/rrttSbrc2dugSqPlZ6RV4wKUOXAKYhyy
+ Vsk3daIeGfduHUnUt2NWhUBR/NmoVHVvvaYzxo17f6YPhhJv2FgDxg8u0LRWw4ATbz
+ FKp7w8a5Z72j59HWdgsryfzPxMKAZ4Vgbr5Wab/IxCgn3f7JGW5/JzrhU+OxsZbu45
+ u5nv6BeAbzsgA==
+From: Drew Fustini <fustini@kernel.org>
+Date: Wed, 11 Nov 2026 15:38:42 -0800
+Subject: [PATCH v8 1/6] riscv: implement Ssqosid extension and srmcfg CSR
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.157;
- envelope-from=alistair@alistair23.me; helo=fhigh-b6-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261111-riscv-ssqosid-cbqri-v8-1-121f6dcfb573@kernel.org>
+References: <20261111-riscv-ssqosid-cbqri-v8-0-121f6dcfb573@kernel.org>
+In-Reply-To: <20261111-riscv-ssqosid-cbqri-v8-0-121f6dcfb573@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Sunil V L <sunilvl@oss.qualcomm.com>, 
+ Anup Patel <anup.patel@oss.qualcomm.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Nicolas Pitre <npitre@baylibre.com>, 
+ =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, 
+ Atish Patra <atish.patra@linux.dev>, 
+ =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <radim.krcmar@oss.qualcomm.com>, 
+ yunhui cui <cuiyunhui@bytedance.com>, Chen Pei <cp0613@linux.alibaba.com>, 
+ guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
+ Drew Fustini <fustini@kernel.org>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9011; i=fustini@kernel.org;
+ h=from:subject:message-id; bh=Ye7kDwPlUP2oKSXcgTTMs9jwx6r28TbTvW04gCLHQgI=;
+ b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWR9+TMvLORjxJ3QxNYlL2ft+3P43qO1bz3j+Ttu7lzbG
+ 3dMtKJ8cUcpC4MYF4OsmCLLpg95F5Z4hX5dMP/FNpg5rEwgQxi4OAVgIkbTGP5ZlrGFGLp/+Hpx
+ WfxrPrNvL87xKUr/NZDQEft/weOgs7IMI8PV+uUHGhKdp5zLPN16+npYGeNn1lqdm/FxKW43zUs
+ ++bIBAA==
+X-Developer-Key: i=fustini@kernel.org; a=openpgp;
+ fpr=1B6F948213EA489734F3997035D5CD577C1E6010
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=fustini@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,291 +86,267 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, 2026-11-11 at 15:12 +0300, Michael Tokarev wrote:
-> Currently the linux-user vdso*.so files are not reproducible,
-> because for one, the binaries embed a random temporary file
-> name used by the compiler during compilation, such as ccuckKYd.o.
->=20
-> At the very least, use -pipe to avoid the need to have a temp
-> file in the first place - this makes the build repeatable.
->=20
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+From: Kornel Dulęba <mindal@semihalf.com>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Implement the srmcfg CSR defined by the Ssqosid ISA extension
+(Supervisor-mode Quality of Service ID). The CSR contains two fields:
 
-Alistair
+  - Resource Control ID (RCID) used to determine resource allocation
+  - Monitoring Counter ID (MCID) used to track resource usage
 
-> ---
-> =C2=A0linux-user/aarch64/Makefile.vdso=C2=A0=C2=A0=C2=A0=C2=A0 | 6 ++++--
-> =C2=A0linux-user/arm/Makefile.vdso=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 | 8 +++++---
-> =C2=A0linux-user/hppa/Makefile.vdso=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 | 4 +++-
-> =C2=A0linux-user/i386/Makefile.vdso=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 | 4 +++-
-> =C2=A0linux-user/loongarch64/Makefile.vdso | 4 +++-
-> =C2=A0linux-user/ppc/Makefile.vdso=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 | 8 +++++---
-> =C2=A0linux-user/riscv/Makefile.vdso=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-| 6 ++++--
-> =C2=A0linux-user/s390x/Makefile.vdso=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-| 4 +++-
-> =C2=A0linux-user/sh4/Makefile.vdso=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 | 6 ++++--
-> =C2=A0linux-user/x86_64/Makefile.vdso=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 4 +=
-++-
-> =C2=A010 files changed, 37 insertions(+), 17 deletions(-)
->=20
-> diff --git a/linux-user/aarch64/Makefile.vdso b/linux-
-> user/aarch64/Makefile.vdso
-> index 82ed201108..1789b67268 100644
-> --- a/linux-user/aarch64/Makefile.vdso
-> +++ b/linux-user/aarch64/Makefile.vdso
-> @@ -3,6 +3,8 @@ include $(BUILD_DIR)/linux-user/aarch64/config-
-> target.mak
-> =C2=A0SUBDIR =3D $(SRC_PATH)/linux-user/aarch64
-> =C2=A0VPATH +=3D $(SUBDIR)
-> =C2=A0
-> +REPRODUCIBLE =3D -pipe
-> +
-> =C2=A0all: $(SUBDIR)/vdso-be.so $(SUBDIR)/vdso-le.so
-> =C2=A0
-> =C2=A0LDFLAGS =3D -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
-> @@ -10,7 +12,7 @@ LDFLAGS =3D -nostdlib -shared -Wl,-h,linux-vdso.so.1
-> \
-> =C2=A0=09=C2=A0 -Wl,-z,max-page-size=3D4096 -Wl,-T,$(SUBDIR)/vdso.ld
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-be.so: vdso.S vdso.ld
-> -=09$(CC) -o $@ $(LDFLAGS) -mbig-endian $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mbig-endian $<
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-le.so: vdso.S vdso.ld
-> -=09$(CC) -o $@ $(LDFLAGS) -mlittle-endian $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mlittle-endian $<
-> diff --git a/linux-user/arm/Makefile.vdso b/linux-
-> user/arm/Makefile.vdso
-> index 16ae8d7aaa..360b77185f 100644
-> --- a/linux-user/arm/Makefile.vdso
-> +++ b/linux-user/arm/Makefile.vdso
-> @@ -3,6 +3,8 @@ include $(BUILD_DIR)/linux-user/arm/config-target.mak
-> =C2=A0SUBDIR =3D $(SRC_PATH)/linux-user/arm
-> =C2=A0VPATH +=3D $(SUBDIR)
-> =C2=A0
-> +REPRODUCIBLE =3D -pipe
-> +
-> =C2=A0all: $(SUBDIR)/vdso-be8.so $(SUBDIR)/vdso-be32.so $(SUBDIR)/vdso-
-> le.so
-> =C2=A0
-> =C2=A0# Adding -use-blx disables unneeded interworking without actually
-> using blx.
-> @@ -11,10 +13,10 @@ LDFLAGS =3D -nostdlib -shared -Wl,-use-blx -Wl,-
-> z,max-page-size=3D4096 \
-> =C2=A0=09=C2=A0 -Wl,--hash-style=3Dboth -Wl,-T,$(SUBDIR)/vdso.ld
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-be8.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ $(LDFLAGS) -mbig-endian -mbe8 $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mbig-endian -mbe8 $<
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-be32.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ $(LDFLAGS) -mbig-endian -mbe32 $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mbig-endian -mbe32
-> $<
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-le.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ $(LDFLAGS) -mlittle-endian $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mlittle-endian $<
-> diff --git a/linux-user/hppa/Makefile.vdso b/linux-
-> user/hppa/Makefile.vdso
-> index 78642c4266..5f3f2ddde9 100644
-> --- a/linux-user/hppa/Makefile.vdso
-> +++ b/linux-user/hppa/Makefile.vdso
-> @@ -3,9 +3,11 @@ include $(BUILD_DIR)/linux-user/hppa/config-
-> target.mak
-> =C2=A0SUBDIR =3D $(SRC_PATH)/linux-user/hppa
-> =C2=A0VPATH +=3D $(SUBDIR)
-> =C2=A0
-> +REPRODUCIBLE =3D -pipe
-> +
-> =C2=A0all: $(SUBDIR)/vdso.so
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ -nostdlib -shared -Wl,-h,linux-vdso32.so.1 \
-> +=09$(CC) $(REPRODUCIBLE) -o $@ -nostdlib -shared -Wl,-h,linux-
-> vdso32.so.1 \
-> =C2=A0=09=C2=A0 -Wl,--build-id=3Dsha1 -Wl,--hash-style=3Dboth \
-> =C2=A0=09=C2=A0 -Wl,-T,$(SUBDIR)/vdso.ld $<
-> diff --git a/linux-user/i386/Makefile.vdso b/linux-
-> user/i386/Makefile.vdso
-> index ca2e37fa6b..e797c5c7fe 100644
-> --- a/linux-user/i386/Makefile.vdso
-> +++ b/linux-user/i386/Makefile.vdso
-> @@ -3,9 +3,11 @@ include $(BUILD_DIR)/linux-user/i386/config-
-> target.mak
-> =C2=A0SUBDIR =3D $(SRC_PATH)/linux-user/i386
-> =C2=A0VPATH +=3D $(SUBDIR)
-> =C2=A0
-> +REPRODUCIBLE =3D -pipe
-> +
-> =C2=A0all: $(SUBDIR)/vdso.so
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ -m32 -nostdlib -shared -Wl,-h,linux-gate.so.1 \
-> +=09$(CC) $(REPRODUCIBLE) -o $@ -m32 -nostdlib -shared -Wl,-
-> h,linux-gate.so.1 \
-> =C2=A0=09=C2=A0 -Wl,--build-id=3Dsha1 -Wl,--hash-style=3Dboth \
-> =C2=A0=09=C2=A0 -Wl,-T,$(SUBDIR)/vdso.ld $<
-> diff --git a/linux-user/loongarch64/Makefile.vdso b/linux-
-> user/loongarch64/Makefile.vdso
-> index ceb6110120..64a422e66d 100644
-> --- a/linux-user/loongarch64/Makefile.vdso
-> +++ b/linux-user/loongarch64/Makefile.vdso
-> @@ -3,10 +3,12 @@ include $(BUILD_DIR)/linux-user/loongarch64/config-
-> target.mak
-> =C2=A0SUBDIR =3D $(SRC_PATH)/linux-user/loongarch64
-> =C2=A0VPATH +=3D $(SUBDIR)
-> =C2=A0
-> +REPRODUCIBLE =3D -pipe
-> +
-> =C2=A0all: $(SUBDIR)/vdso.so
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ -nostdlib -shared -fpic -Wl,-h,linux-vdso.so.1 \
-> +=09$(CC) $(REPRODUCIBLE) -o $@ -nostdlib -shared -fpic -Wl,-
-> h,linux-vdso.so.1 \
-> =C2=A0=09=C2=A0 -Wl,--build-id=3Dsha1 -Wl,--hash-style=3Dboth \
-> =C2=A0=09=C2=A0 -Wl,--no-warn-rwx-segments -Wl,-z,max-page-size=3D4096 \
-> =C2=A0=09=C2=A0 -Wl,-T,$(SUBDIR)/vdso.ld $<
-> diff --git a/linux-user/ppc/Makefile.vdso b/linux-
-> user/ppc/Makefile.vdso
-> index 6b9be84381..87a2bc1c57 100644
-> --- a/linux-user/ppc/Makefile.vdso
-> +++ b/linux-user/ppc/Makefile.vdso
-> @@ -3,6 +3,8 @@ include $(BUILD_DIR)/linux-user/ppc64/config-
-> target.mak
-> =C2=A0SUBDIR =3D $(SRC_PATH)/linux-user/ppc
-> =C2=A0VPATH +=3D $(SUBDIR)
-> =C2=A0
-> +REPRODUCIBLE =3D -pipe
-> +
-> =C2=A0all: $(SUBDIR)/vdso-32.so $(SUBDIR)/vdso-64.so $(SUBDIR)/vdso-
-> 64le.so
-> =C2=A0
-> =C2=A0LDFLAGS32 =3D -nostdlib -shared -Wl,-T,$(SUBDIR)/vdso-32.ld \
-> @@ -13,10 +15,10 @@ LDFLAGS64 =3D -nostdlib -shared -Wl,-
-> T,$(SUBDIR)/vdso-64.ld \
-> =C2=A0=09=C2=A0=C2=A0=C2=A0 -Wl,--build-id=3Dsha1 -Wl,-z,max-page-size=3D=
-4096
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-32.so: vdso.S vdso-32.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ $(LDFLAGS32) -m32 $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS32) -m32 $<
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-64.so: vdso.S vdso-64.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ $(LDFLAGS64) -mbig-endian $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS64) -mbig-endian $<
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-64le.so: vdso.S vdso-64.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ $(LDFLAGS64) -mlittle-endian $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS64) -mlittle-endian $<
-> diff --git a/linux-user/riscv/Makefile.vdso b/linux-
-> user/riscv/Makefile.vdso
-> index 2eefdb70cf..2a47a3113d 100644
-> --- a/linux-user/riscv/Makefile.vdso
-> +++ b/linux-user/riscv/Makefile.vdso
-> @@ -3,13 +3,15 @@ include $(BUILD_DIR)/linux-user/riscv64/config-
-> target.mak
-> =C2=A0SUBDIR =3D $(SRC_PATH)/linux-user/riscv
-> =C2=A0VPATH +=3D $(SUBDIR)
-> =C2=A0
-> +REPRODUCIBLE =3D -pipe
-> +
-> =C2=A0all: $(SUBDIR)/vdso-32.so $(SUBDIR)/vdso-64.so
-> =C2=A0
-> =C2=A0LDFLAGS =3D -nostdlib -shared -fpic -Wl,-h,linux-vdso.so.1 -Wl,--
-> build-id=3Dsha1 \
-> =C2=A0=09=C2=A0 -Wl,--hash-style=3Dboth -Wl,-T,$(SUBDIR)/vdso.ld
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-32.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ $(LDFLAGS) -mabi=3Dilp32d -march=3Drv32g $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mabi=3Dilp32d -
-> march=3Drv32g $<
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-64.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ $(LDFLAGS) -mabi=3Dlp64d -march=3Drv64g $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mabi=3Dlp64d -
-> march=3Drv64g $<
-> diff --git a/linux-user/s390x/Makefile.vdso b/linux-
-> user/s390x/Makefile.vdso
-> index 51f7c50a2d..65ac267239 100644
-> --- a/linux-user/s390x/Makefile.vdso
-> +++ b/linux-user/s390x/Makefile.vdso
-> @@ -3,9 +3,11 @@ include $(BUILD_DIR)/linux-user/s390x/config-
-> target.mak
-> =C2=A0SUBDIR =3D $(SRC_PATH)/linux-user/s390x
-> =C2=A0VPATH +=3D $(SUBDIR)
-> =C2=A0
-> +REPRODUCIBLE =3D -pipe
-> +
-> =C2=A0all: $(SUBDIR)/vdso.so
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ -nostdlib -shared -Wl,-h,linux-vdso64.so.1 \
-> +=09$(CC) $(REPRODUCIBLE) -o $@ -nostdlib -shared -Wl,-h,linux-
-> vdso64.so.1 \
-> =C2=A0=09=C2=A0 -Wl,--build-id=3Dsha1 -Wl,--hash-style=3Dboth \
-> =C2=A0=09=C2=A0 -Wl,-T,$(SUBDIR)/vdso.ld $<
-> diff --git a/linux-user/sh4/Makefile.vdso b/linux-
-> user/sh4/Makefile.vdso
-> index ed2cc11b82..97375a4783 100644
-> --- a/linux-user/sh4/Makefile.vdso
-> +++ b/linux-user/sh4/Makefile.vdso
-> @@ -3,6 +3,8 @@ include $(BUILD_DIR)/linux-user/sh4/config-target.mak
-> =C2=A0SUBDIR =3D $(SRC_PATH)/linux-user/sh4
-> =C2=A0VPATH +=3D $(SUBDIR)
-> =C2=A0
-> +REPRODUCIBLE =3D -pipe
-> +
-> =C2=A0all: $(SUBDIR)/vdso-le.so $(SUBDIR)/vdso-be.so
-> =C2=A0
-> =C2=A0LDFLAGS =3D -nostdlib -shared -Wl,-h,linux-gate.so.1 \
-> @@ -10,9 +12,9 @@ LDFLAGS =3D -nostdlib -shared -Wl,-h,linux-gate.so.1
-> \
-> =C2=A0=09=C2=A0 -Wl,-T,$(SUBDIR)/vdso.ld
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-le.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC) -o $@ $(LDFLAGS) -ml $<
-> +=09$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -ml $<
-> =C2=A0
-> =C2=A0CC_BE =3D sh4eb-unknown-linux-gnu-gcc
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso-be.so: vdso.S vdso.ld vdso-asmoffset.h
-> -=09$(CC_BE) -o $@ $(LDFLAGS) $<
-> +=09$(CC_BE) $(REPRODUCIBLE) -o $@ $(LDFLAGS) $<
-> diff --git a/linux-user/x86_64/Makefile.vdso b/linux-
-> user/x86_64/Makefile.vdso
-> index 56fe87af72..41281ffe0a 100644
-> --- a/linux-user/x86_64/Makefile.vdso
-> +++ b/linux-user/x86_64/Makefile.vdso
-> @@ -3,9 +3,11 @@ include $(BUILD_DIR)/linux-user/x86_64/config-
-> target.mak
-> =C2=A0SUBDIR =3D $(SRC_PATH)/linux-user/x86_64
-> =C2=A0VPATH +=3D $(SUBDIR)
-> =C2=A0
-> +REPRODUCIBLE =3D -pipe
-> +
-> =C2=A0all: $(SUBDIR)/vdso.so
-> =C2=A0
-> =C2=A0$(SUBDIR)/vdso.so: vdso.S vdso.ld
-> -=09$(CC) -o $@ -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
-> +=09$(CC) $(REPRODUCIBLE) -o $@ -nostdlib -shared -Wl,-h,linux-
-> vdso.so.1 \
-> =C2=A0=09=C2=A0 -Wl,--build-id=3Dsha1 -Wl,--hash-style=3Dboth \
-> =C2=A0=09=C2=A0 -Wl,-T,$(SUBDIR)/vdso.ld $<
+The CSR is defined for S-mode, so check mstateen0.srmcfg to determine
+if S-mode is allowed to access it. In addition, accessing it when V=1
+shall cause a virtual instruction exception.
+
+The extension is enabled by default on the rv32 and rv64 base CPUs.
+
+Link: https://github.com/riscv/riscv-ssqosid/releases/tag/v1.0
+Link: https://github.com/riscv-non-isa/riscv-cbqri/releases/download/v1.0/riscv-cbqri.pdf
+Link: https://docs.riscv.org/reference/isa/priv/smstateen.html
+Reviewed-by: Radim Krčmář <radim.krcmar@oss.qualcomm.com>
+Signed-off-by: Kornel Dulęba <mindal@semihalf.com>
+[fustini: rebase, fix check_srmcfg]
+Signed-off-by: Drew Fustini <fustini@kernel.org>
+---
+ disas/riscv.c                     |  1 +
+ target/riscv/cpu.c                |  4 ++++
+ target/riscv/cpu.h                |  3 +++
+ target/riscv/cpu_bits.h           |  9 ++++++++
+ target/riscv/cpu_cfg_fields.h.inc |  1 +
+ target/riscv/machine.c            | 19 +++++++++++++++++
+ target/riscv/tcg/csr.c            | 45 +++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 82 insertions(+)
+
+diff --git a/disas/riscv.c b/disas/riscv.c
+index ca0d6e90b373..bce5f58305dd 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -703,6 +703,7 @@ static const char *csr_name(int csrno)
+     case 0x0143: return "stval";
+     case 0x0144: return "sip";
+     case 0x0180: return "satp";
++    case 0x0181: return "srmcfg";
+     case 0x0200: return "hstatus";
+     case 0x0202: return "hedeleg";
+     case 0x0203: return "hideleg";
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 5a0529fbdade..c2752ee6e3cd 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -284,6 +284,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(ssdbltrp, PRIV_VERSION_1_13_0, ext_ssdbltrp),
+     ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
+     ISA_EXT_DATA_ENTRY(sspm, PRIV_VERSION_1_13_0, ext_sspm),
++    ISA_EXT_DATA_ENTRY(ssqosid, PRIV_VERSION_1_13_0, ext_ssqosid),
+     ISA_INTERNAL_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
+     ISA_INTERNAL_EXT_DATA_ENTRY(ssstrict, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+@@ -1029,6 +1030,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+                    (!cpu->cfg.ext_svade && cpu->cfg.ext_svadu ?
+                     MENVCFG_ADUE : 0);
+     env->henvcfg = 0;
++    env->srmcfg = 0;
+ 
+ #ifdef CONFIG_TCG
+     uint8_t iprio;
+@@ -3504,6 +3506,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_zbc = true,
+         .cfg.ext_zbs = true,
+         .cfg.ext_sstc = true,
++        .cfg.ext_ssqosid = true,
+         .cfg.ext_svadu = true,
+         .cfg.ext_svvptc = true,
+     ),
+@@ -3577,6 +3580,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_zbc = true,
+         .cfg.ext_zbs = true,
+         .cfg.ext_sstc = true,
++        .cfg.ext_ssqosid = true,
+         .cfg.ext_svadu = true,
+         .cfg.ext_svvptc = true,
+     ),
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 49a1186bdbb2..0dfb280d1f33 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -369,6 +369,9 @@ struct CPUArchState {
+     uint64_t ctr_dst[16 << SCTRDEPTH_MAX];
+     uint64_t ctr_data[16 << SCTRDEPTH_MAX];
+ 
++    /* Ssqosid extension */
++    target_ulong srmcfg;
++
+     /* Machine and Supervisor interrupt priorities */
+     uint8_t miprio[64];
+     uint8_t siprio[64];
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index 3579789a1f56..33af64f3667e 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -228,6 +228,9 @@
+ #define CSR_SPTBR           0x180
+ #define CSR_SATP            0x180
+ 
++/* Ssqosid extension */
++#define CSR_SRMCFG          0x181
++
+ /* Supervisor-Level Window to Indirectly Accessed Registers (AIA) */
+ #define CSR_SISELECT        0x150
+ #define CSR_SIREG           0x151
+@@ -356,6 +359,7 @@
+ #define SMSTATEEN0_FCSR     (1ULL << 1)
+ #define SMSTATEEN0_JVT      (1ULL << 2)
+ #define SMSTATEEN0_CTR      (1ULL << 54)
++#define SMSTATEEN0_SRMCFG   (1ULL << 55)
+ #define SMSTATEEN0_P1P13    (1ULL << 56)
+ #define SMSTATEEN0_HSCONTXT (1ULL << 57)
+ #define SMSTATEEN0_IMSIC    (1ULL << 58)
+@@ -1199,4 +1203,9 @@ typedef enum CTRType {
+ #define MCONTEXT64                         0x0000000000001FFFULL
+ #define MCONTEXT32_HCONTEXT                0x0000007F
+ #define MCONTEXT64_HCONTEXT                0x0000000000003FFFULL
++
++/* SRMCFG CSR field masks (Ssqosid extension) */
++#define SRMCFG_RCID                      0x00000FFF
++#define SRMCFG_MCID                      0x0FFF0000
++
+ #endif
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 85fc3ad8bb8c..1ecdf9f393b4 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -113,6 +113,7 @@ BOOL_FIELD(ext_ssaia)
+ BOOL_FIELD(ext_smctr)
+ BOOL_FIELD(ext_ssctr)
+ BOOL_FIELD(ext_sscofpmf)
++BOOL_FIELD(ext_ssqosid)
+ BOOL_FIELD(ext_smepmp)
+ BOOL_FIELD(ext_smrnmi)
+ BOOL_FIELD(ext_ssnpm)
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 0de06e958809..fa99c68fc852 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -382,6 +382,24 @@ static const VMStateDescription vmstate_sdext = {
+     }
+ };
+ 
++static bool ssqosid_needed(void *opaque)
++{
++    RISCVCPU *cpu = opaque;
++
++    return cpu->cfg.ext_ssqosid;
++}
++
++static const VMStateDescription vmstate_ssqosid = {
++    .name = "cpu/ssqosid",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = ssqosid_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINTTL(env.srmcfg, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static int riscv_cpu_post_load(void *opaque, int version_id)
+ {
+     RISCVCPU *cpu = opaque;
+@@ -656,6 +674,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_sstc,
+         &vmstate_mseccfg,
+         &vmstate_sdext,
++        &vmstate_ssqosid,
+         NULL
+     }
+ };
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index af444e3e6f32..cf8c8d924835 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -1805,6 +1805,40 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++static RISCVException check_srmcfg(CPURISCVState *env, int csrno)
++{
++    if (!riscv_cpu_cfg(env)->ext_ssqosid) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    }
++
++    RISCVException ret = smstateen_acc_ok(env, 0, SMSTATEEN0_SRMCFG);
++    if (ret != RISCV_EXCP_NONE) {
++        return ret;
++    }
++
++    /*
++     * Even though this is an S-mode CSR the spec says that we need to throw
++     * a virtual instruction fault if a guest tries to access it.
++     */
++    return env->virt_enabled ?
++           RISCV_EXCP_VIRT_INSTRUCTION_FAULT : smode(env, csrno);
++}
++
++static RISCVException read_srmcfg(CPURISCVState *env, int csrno,
++                                  target_ulong *val)
++{
++    *val = env->srmcfg;
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException write_srmcfg(CPURISCVState *env, int csrno,
++                                   target_ulong val, uintptr_t ra)
++{
++    env->srmcfg = val & (SRMCFG_RCID | SRMCFG_MCID);
++    return RISCV_EXCP_NONE;
++}
++
++
+ #define VSTOPI_NUM_SRCS 5
+ 
+ /*
+@@ -3738,6 +3772,10 @@ static RISCVException write_mstateen0(CPURISCVState *env, int csrno,
+         if (riscv_cpu_cfg(env)->ext_ssctr) {
+             wr_mask |= SMSTATEEN0_CTR;
+         }
++
++        if (riscv_cpu_cfg(env)->ext_ssqosid) {
++            wr_mask |= SMSTATEEN0_SRMCFG;
++        }
+     }
+ 
+     return write_mstateen(env, csrno, wr_mask, new_val);
+@@ -3797,6 +3835,10 @@ static RISCVException write_mstateen0h(CPURISCVState *env, int csrno,
+         wr_mask |= SMSTATEEN0_CTR;
+     }
+ 
++    if (riscv_cpu_cfg(env)->ext_ssqosid) {
++        wr_mask |= SMSTATEEN0_SRMCFG;
++    }
++
+     return write_mstateenh(env, csrno, wr_mask, new_val);
+ }
+ 
+@@ -6377,6 +6419,9 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     /* Supervisor Protection and Translation */
+     [CSR_SATP]     = { "satp",     satp, read_satp,     write_satp     },
+ 
++    /* Supervisor-Level Quality-of-Service Identifiers (Ssqosid) */
++    [CSR_SRMCFG]   = { "srmcfg",  check_srmcfg, read_srmcfg, write_srmcfg },
++
+     /* Supervisor-Level Window to Indirectly Accessed Registers (AIA) */
+     [CSR_SISELECT]   = { "siselect",   csrind_or_aia_smode, NULL, NULL,
+                          rmw_xiselect                                       },
+
+-- 
+2.43.0
+
 
