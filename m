@@ -1,80 +1,81 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59962606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 12:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97318606A324
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 12:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=W+a2Yfko
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Bp8W5Obs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR7mP-0003xk-IB; Wed, 11 Nov 2026 07:50:21 -0500
+	id 1xR7nU-0004Tp-09; Wed, 11 Nov 2026 07:51:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xR7mO-0003xR-7x
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:50:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xR7nQ-0004TY-OO
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:51:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xR7mM-0004ja-Gi
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:50:19 -0500
+ id 1xR7nN-0004y2-V1
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:51:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794401417;
+ s=mimecast20190719; t=1794401480;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dTK3oILNh0Tnfqw4LHYB1lDDflJ8DDtJUmcDVtWkddM=;
- b=W+a2YfkosbuO0oTKc50KUu2UGfpk8b0SMUPzT9S7D9gHW4saMo3y8bblOqBSndzwv4hUeH
- E3swj6nhhE7gjeDqIoXYe9WLavZZUo7sCTr6MKmyGJLWZy2kdaOp88fqNKEZvjXD8WkJhK
- J6ZEL4sdSRMnrCdTKXrZRjOgMVNhBO8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=QqZywVtdKpDoDct9QbSTfhQtfQ8nn61ZfJnTV1dDQlA=;
+ b=Bp8W5ObsuT884EczzItvkhYzurPiU3t1J4wavq6oNo2el//DLFgs0Twe0adVhqLNFDFGdq
+ B4NbWpkQevJ+d9z0jq4yc8TYE+QL4RibX9D90t5lMQN6blB+bshHPo0+5x6bPzqLuoBR5I
+ 3sqL20OGDAD6NX8qDx5cbHm6eheqC6s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-21-BvttyQvfOhaUr4LsChlPcQ-1; Wed,
- 11 Nov 2026 07:50:13 -0500
-X-MC-Unique: BvttyQvfOhaUr4LsChlPcQ-1
-X-Mimecast-MFC-AGG-ID: BvttyQvfOhaUr4LsChlPcQ_1794401412
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-CWKx5wQRN9qewhywQiQ-MA-1; Wed,
+ 11 Nov 2026 07:51:17 -0500
+X-MC-Unique: CWKx5wQRN9qewhywQiQ-MA-1
+X-Mimecast-MFC-AGG-ID: CWKx5wQRN9qewhywQiQ-MA_1794401476
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A639B180137D; Wed, 11 Nov 2026 12:50:12 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F419519560B7; Wed, 11 Nov 2026 12:51:15 +0000 (UTC)
 Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3876D195608B; Wed, 11 Nov 2026 12:50:11 +0000 (UTC)
-Date: Wed, 11 Nov 2026 12:50:08 +0000
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8528C30001A2; Wed, 11 Nov 2026 12:51:14 +0000 (UTC)
+Date: Wed, 11 Nov 2026 12:51:11 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, david@kernel.org, imammedo@redhat.com,
  peter.maydell@linaro.org
-Subject: Re: [PATCH 2/7] backends/hostmem-file: Drop useless validation of
- property "mem-path"
-Message-ID: <avRkgKxFedsTa4p7@redhat.com>
+Subject: Re: [PATCH 3/7] backends/hostmem: Improve error reporting when
+ method alloc() fails
+Message-ID: <avRkv0WuQdlSv0o0@redhat.com>
 References: <20261111122342.634370-1-armbru@redhat.com>
- <20261111122342.634370-3-armbru@redhat.com>
+ <20261111122342.634370-4-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261111122342.634370-3-armbru@redhat.com>
+In-Reply-To: <20261111122342.634370-4-armbru@redhat.com>
 User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,14 +96,34 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Nov 11, 2026 at 01:23:37PM +0100, Markus Armbruster wrote:
-> A non-optional string property like "mem-path" cannot be null.  Drop
-> the useless check.
+On Wed, Nov 11, 2026 at 01:23:38PM +0100, Markus Armbruster wrote:
+> When HostMemoryBackend method alloc() fails, the error report isn't
+> always clear.  E.g. "-object memory-backend-shm,id=mem0,size=1E" fails
+> for me like this:
+> 
+>     qemu-system-x86_64: unable to map backing store for guest RAM: Cannot allocate memory
+> 
+> Leaves users guessing which part of the (often lengthy) command line
+> needs fixing.
+> 
+> Let's prepend a bit of context:
+> 
+>     qemu-system-x86_64: can't create memory-backend-shm: unable to map backing store for guest RAM: Cannot allocate memory
+> 
+> This makes an error message in shm_backend_memory_alloc() partly
+> redundant:
+> 
+>     qemu-system-x86_64: can't create memory-backend-shm: can't create shm backend with `share=off`
+> 
+> Change it to
+> 
+>     qemu-system-x86_64: can't create memory-backend-shm: backend requires 'share=on'
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  backends/hostmem-file.c | 5 -----
->  1 file changed, 5 deletions(-)
+>  backends/hostmem-shm.c | 2 +-
+>  backends/hostmem.c     | 3 +++
+>  2 files changed, 4 insertions(+), 1 deletion(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
