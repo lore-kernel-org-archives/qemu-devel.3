@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CCF606A320
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 08:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63174606A33E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 08:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=i3DVMm+U
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=Hbp45Uvb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR3JS-0008Hj-3N; Wed, 11 Nov 2026 03:04:10 -0500
+	id 1xR3Mx-0000m6-4z; Wed, 11 Nov 2026 03:07:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xR3JQ-0008HA-9T; Wed, 11 Nov 2026 03:04:08 -0500
+ id 1xR3Mu-0000j3-DV; Wed, 11 Nov 2026 03:07:44 -0500
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xR3JO-0004BF-9e; Wed, 11 Nov 2026 03:04:08 -0500
+ id 1xR3Ms-0005R1-8z; Wed, 11 Nov 2026 03:07:44 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rUD6BHRmDm/hiuD25DVkusX6OLdYtVXjuElLQX1wpg7gaEseYsx/g5udwHet+sqQlv6WaJMuxXHDwyyI00iG+tdkG+tf8HLsz19m11bt14qNfpSJ1v4xwqev2kgIy0+FrzMkv0/FG/eBTWgJyyn5hOv1nuB2yjvQ/RsE7Ty/MSVy63jvGCbDknFVVCg4H7YFes4pyTf64Z3K16GFQx65q2eCvySfHf1ijLRjgi/cVN3M9jUAFs+fgCS3Hlot81CBwv9ECeuX9KyCKFs2XruvEmmevqYMlcpGxUR4hCOsFBIQUw+/+v6iLX4Fno66rP+21roRytez00i4SsWAANKRSw==
+ b=mE6HAaYUGh3E6KE585jEu0nRem1i8FgkFIc3hwaJOH7yatG+ji+5VmfcQDtG12Wme8qpk7SHCcaPn6X2TeByl3tW6X9O/RNZoUYL7fmNoyt0A48naFMkyC7pGeQjNAjwe2fuLS6DZ+cN74ZuXHZEDamhTE5IXa8wRauwj2N6W7g7shIQeSKCF0YLv2k4PZJ+0E/p8Frt095TFhXKE+NODHWq76eZ4zWxnES17Ecl7ji/CpaU0lCXnEHR1mpbwPARJo4jxc/ZTluh87MvGW0FMK+seBSHHIaIVRUhnPuoS9zsD1AhtRMACleM2fVznZjz7zZWUtsrX2fyRnLwJdK+nQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ifWHdTF/UmqJbxaXWa1XH9lh9cnCCSS0LtKklfyoY9g=;
- b=AUrIEI9GnTxUQZqD+rDpHnLXSHAmVVLbq2SMhM916VYrIehJcfAKTjOiKIuv52V32Ixr17H0yFTh6kjWOviWTgmptOjd1NlB3REOPa6BQi949cJxDYraF7VhY5Av6QSe/vDbNU69G2+WZo4cvTZdyM/hRlgX0dxwMzab91NPWphB+bbinrXSoqqniHB+O8TxZvEqqN+899foSE5B/ZPWn4XGHmaDkOlnqhEp0c+rJ6NbBtGX2rvPt9FhLQMveg4iwYj8u8r7EBrrLgWnvXAKei/Xy4m9Bxvd1YzHOyTiPWdnEwS+vl642X+cnrGITHv7CikHY9dGdIh0dU0Qh+oxbg==
+ bh=D65FkJMgNQgTXNMvHlozR4kjqBBo+qjWaNrLiFyuP84=;
+ b=rGpyqXGua5/tZ3FcIO27yNffA7sZtOMoSH8l5G7Zv0HIGrbVIWESGJ84ig4M+X1DPR2LUoygbp/EXrri0yBPFLlxHJv9NsYPUUr02he47lxbwcnPQcC3bm3RDOfXlohE5oKWjS5MOf8iJvFAj0NBOmQxCcgLspGw+qbGyqZblAK+aWT0Ugry248kBFoqCZdTnW9v9i5nt+QV11dInGtRLNdmPw7QfGSpjAkWF+Dm9520T/X/E8JnXMYF8pt/pSQZFpg9bDcDtRQyQda92m/bN0DeMBiKyu3fRaB1TQ8Ki58Gr6wM19FvoZVGV3t2h8t5o9/QaUeBZv7fYgTfObmcXw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,19 +32,19 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ifWHdTF/UmqJbxaXWa1XH9lh9cnCCSS0LtKklfyoY9g=;
- b=i3DVMm+U9NGfK95TWCEiWPJfs9WqeVoaszUIwD2rIxaXfQytQNY5/TWOatHmcCvzGHAAVj13u6kQbQ+99VjqyRwt3vLohMrATY4Uk/0qGdYS+O1jYffROkEz3hKAUZH8HWLpsnZYqGIW2M+8xKQMrfygmXU8OWz48BW3PWP8328cm1s9QEdzinIFiTr01PfHnuRJ9X4qQ9B7OyKTWP1+60PZecWsGc/viJvS1hAduK60aCv8YtLyv386ss7XkQGBjWXm66gYsBdIRf0qlW93KVKcov3zT6S1/O2L/lgGaDpT2uwRUeZwSGLVpiwH1tTX1eWs/pdrviGMrg/ewSJtQw==
+ bh=D65FkJMgNQgTXNMvHlozR4kjqBBo+qjWaNrLiFyuP84=;
+ b=Hbp45Uvba/AfBWYAGdmiHUlf7pu/g9VpwOx/juiLH7IsDUJVpmWI4W4kpdsQvBInv+GsWsPF6tiK/38dUogfecZlf9YUqK/E3UkMWvMeD/jXVzlokg16MQ8BR/LIc2pPb98/HbGJORcysrCU3IG7UY4RH/mySrGbaYvrCdi9H9tVs1/U0giG8YACLxLoNHdV4N0nYDmYtMb5FYYf82LPNm/+d5HC+qUoOI4M6NCBInNujyzIiRfRtymAYgyMblQgBI7BgTKvDUDJJwuVlSR+UPFpd8SeUNO4/XdCvQL6d+Wlzh+vYADDbyiVL1lcdQwWAhrlHDD9YkBkKQrwLrXlnw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by SE3PR02MB9870.apcprd02.prod.outlook.com (2603:1096:101:325::9)
+ by SEZPR02MB7258.apcprd02.prod.outlook.com (2603:1096:101:1ef::7)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Wed, 11 Nov
- 2026 08:04:00 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.13; Wed, 11 Nov
+ 2026 08:07:34 +0000
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0615.007; Wed, 11 Nov 2026
- 08:04:00 +0000
+ 08:07:33 +0000
 From: Chao Liu <chao.liu@processmission.com>
 To: Max Chou <max.chou@sifive.com>
 Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
@@ -56,73 +56,73 @@ Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [RFC PATCH 25/38] target/riscv: rvv: Implement Zvqwbdota16i
- instructions
-Date: Wed, 11 Nov 2026 16:03:40 +0800
-Message-ID: <20261111080341.48513-1-chao.liu@processmission.com>
+Subject: Re: [RFC PATCH 26/38] target/riscv: Add cfg property for
+ Zvfwbdota16bf extension
+Date: Wed, 11 Nov 2026 16:07:14 +0800
+Message-ID: <20261111080716.48960-1-chao.liu@processmission.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261104194155.679241-26-max.chou@sifive.com>
+In-Reply-To: <20261104194155.679241-27-max.chou@sifive.com>
 References: 
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR03CA0129.namprd03.prod.outlook.com
- (2603:10b6:a03:33c::14) To TYNPR02MB9351.apcprd02.prod.outlook.com
+X-ClientProxiedBy: PH8P220CA0019.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:345::10) To TYNPR02MB9351.apcprd02.prod.outlook.com
  (2603:1096:405:3d0::15)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SE3PR02MB9870:EE_
-X-MS-Office365-Filtering-Correlation-Id: 344d33e4-30c7-4238-4bbb-08df3fca5820
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SEZPR02MB7258:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5a3b8d83-374a-4b29-eea9-08df3fcad718
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|7416014|1800799024|366016|261009223027099003|10067099003|3023799007|261028144727099003|261102123227099003|261026140227099003|261026121527099003|261021123027099003|261021121427099003|261022075727099003|261022105027099003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: L38Ravw5VT6dqpvlqEtIuRtLn8L0sl7mV70krPv46+W0PdeSgE7ussNerTWa9JkmcvxLd3rwKR+prNLibDpvfvE1+/8cX8MztuhYw6I/bsEMBmJUcfc2cVzzYmX8HPecKrT6mTHBCeyqA7X47fyaJxKZ/v3q4AkLbjiHHO5i+nizYPcfdH5UfXP0ZDIyUgGi4raxjGUkjCM13ELRjHP2JMIaLEOdlZOmxTm6mSGKziNIfK7z2vujBdlOYFOZMM4E7UNwkIeccKwrSdnkBo4SemB81fhKgkL6+XASHonf3+nWID9QwnE9p/9CdPgdYcGCKLcJh7t7gVhi8F/2MBPLY6rTogBO6Xx+VQnuUdHvxjIjKNMVSUGtMC16eX9q13lVZtGSqNHY9CEvjgWAY2pTkA1vske+6LwCs+8Dm4GG55HtR7NlzWljFZRH0z+GSlRGKq7++PhRAU59yRObzUqQE3aOwAZL2VjAOuBkNvUb33UiR63Zosi7s0cqQf4eQMwQfJvyxJk9xmFIm7Pi4jMh85dLzstW+tjKlZ3U6w1ZZQkoO9OP6Hi/F63iTa2IIw6C2tCX1gQ888ZXxhPhPmtpI/HoKdKHORfG4xsFLvuA3b6eXH1oij5JF3rw3tpbfJK6Meh4PydMSt1PeSUXphURAt2fcuFULXGax57Al83ya0g=
+ ARA:13230040|7416014|23010399003|376014|1800799024|366016|261028144727099003|261009223027099003|261102124527099003|261021121427099003|261026140227099003|261022105027099003|261022075727099003|56012099006|261026121527099003|261102123227099003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info: B31mKbqTKFTLsefNI4vXCKl+rszlJlojtOvv4HN9T/m82IrZsghBFAVQFHZhPqTBzGTYobnKuc7oSHX8E0w0Y/7h+fjmWolwPAB2pNdlIerZP/wo4BA1ysWtp/JCS+JvZ2FQE5U1ZXTZSM/LvutNBF+16Jo0W4h2zXPzBl+ZVsJ/nTKL16W5ClTxIH2PV2v6ZZdJ16vFfABdwD44SBuvUmM0p0/moI8n8zFikeEpsXJZIa5ETANtvMiw8jd9J6WFj575XKdvl/iGZmZelOzwP9APZpZZ7nOS9Z86y3wkpq0rzi6jxOUMSIWEv6U1m1JnvzEhcxvqfPRg6g1uDxtT9Q0crNHLRQm9/yO7qSLENHfmUelbSktMKPUwLolKceK3CjTa5heuRDeM6XtuDl/gHaF7xHEu0OlFeTtHybhwmyhJe1o+2nNUZ+MDq3IpehO2L9a9YNz7XHjVcD8UOUbG0LoCMOtBxhwNxLDRXspoiXp4TFH3O9QITKrZukMRFwcqrNtY59B9Ksmy/nRWEIs72jP18QHudoBJXTucWzlHpQcVTZR2cmbVMen9z/9faSL4qJOsnP/v+F/lnq7FrJEHuIAcZg1Th9vih64dNa/6Yar9Xjd3VaSCLayxEfc6LyFw/rfUJ47uQPNfJrLLJZW1ZCiewVNJpZq0MoToGXOgnO4=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(7416014)(1800799024)(366016)(261009223027099003)(10067099003)(3023799007)(261028144727099003)(261102123227099003)(261026140227099003)(261026121527099003)(261021123027099003)(261021121427099003)(261022075727099003)(261022105027099003)(56012099006)(22082099003)(18002099003);
+ SFS:(13230040)(7416014)(23010399003)(376014)(1800799024)(366016)(261028144727099003)(261009223027099003)(261102124527099003)(261021121427099003)(261026140227099003)(261022105027099003)(261022075727099003)(56012099006)(261026121527099003)(261102123227099003)(10067099003)(18002099003)(22082099003)(6133799003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?wDU1SpspOpG54kEbJOVcAlazr6xfcdIqZBjJ3am9M+Kq+P2jAxCTgYV2PYCu?=
- =?us-ascii?Q?eVbti08jxP40tj5GNBQYTlvizLYY6dEddZeWQCib6KjOJvYUusnPyI5MvG55?=
- =?us-ascii?Q?RDt3YXzKjIlBWWj++g04uVO6C/4gQFLamt/DHQv/rWD3jlyJ6LQ7kGeOXXCO?=
- =?us-ascii?Q?96f3gwxZoAl3WLwrTf7SIK7u6RHsXR3hEUrZjTpjMiaFOquTHLx2BI/nDwhi?=
- =?us-ascii?Q?DIRGxdXqZ43n843q9rI/mBb2eI0qXCt0to/TDPml+U1TJ9W8acyOxhhoqxHD?=
- =?us-ascii?Q?ljUXSxdMpbQdbVFyg+2oefPsdQe7pYbDJdX7hZddQFhuuYYH+WESPmKWEvh7?=
- =?us-ascii?Q?JYZ/18hDKWORQPSuPX4vvcjjEPZGCd82KhZBPzYn94YjrxY4W9MZnIx6WqXO?=
- =?us-ascii?Q?0QpuFjN8M/aM/oqv/BNyhkyt996EWVrhDj3exLHLZ//XSwlfuZ/1RX7eGohO?=
- =?us-ascii?Q?gfqmHN6YIacyEcNoYkyFy2r3jSzi26+XOxCRpQlV3hGCNuACXnoLYxhzwQNE?=
- =?us-ascii?Q?WPtSYW5ixr59ppWV9KPAtgzGbvY4UT0S2dub4GIdP1RUd8gQAILbdrrZi0f+?=
- =?us-ascii?Q?Q5g5hLIuFWpToXeEqYltabJU/DwPYsFhIaVBBOwlTSDGmBJ2vbZhXrzoydap?=
- =?us-ascii?Q?D+wmt+Uz4tbpkhWYCZQ9IEYY4/XFpsLKSfZU0GNbqtvkebUOBSIrsdK7GF+i?=
- =?us-ascii?Q?FPmDhmPybASnCK5Zvt7BBXWVji96tMnZGhLJMC1OeMtcXOMsAGLZ8tBHEnX/?=
- =?us-ascii?Q?uwpIDlI2+IwzjwjvC9rhMml/a3xlNgtNjj097vaq/tOejHVJP6tEEW+E5dqp?=
- =?us-ascii?Q?+ovvf+lUh6hfHy8lp7pERmcG4ch7MYTiP5083S/K3rVwuoZDaWzpebk5N1Bs?=
- =?us-ascii?Q?rLytOZtISo/PQaS7XWF+QCDpA/g1+bWI7dJnZjgFOTcBMhjACiaqS3PIoA0I?=
- =?us-ascii?Q?0GmNRV0rQ70stFQW2Z82SW9jXRlX0CYdfikQEZfLK3ohV3snAIXbRGKfII/Q?=
- =?us-ascii?Q?5v0vCTSLzEHy2K7nhIezyPdhDBPB7PqBMj2G9nTjX4Ct6P2bO8sIG/UP/JgH?=
- =?us-ascii?Q?L6rkbKEpAsyg77gZ4ZbjPVKwRCOvg7AWBoPpfVVpnKvQR/GE/lytYqxSFYit?=
- =?us-ascii?Q?UydviWs50bdfkYznOpEpyx8wwnDdfwcQMv14sxDASd5zVj3dCV7AbZqfdl4M?=
- =?us-ascii?Q?O/z5pax5h7qdTsTy2lV4WRun7Z+Ztgj3EG5die3O/C1ImIRXNDSlC3gMJeA4?=
- =?us-ascii?Q?WodDGwNUTb8roy97HHiTiWy285Y0dYvAS33KxqVHjXDJZKnRKmCzxzzeTuIG?=
- =?us-ascii?Q?0LARXEPnbIhj9hMIB8ElK+7HdS4DU/SdZ/MwaOva6ZJA3H3XTrBhY5xhou6U?=
- =?us-ascii?Q?WZlU7RPTTQz1nfMl+UlPDiz1ai8nwxf5tDwss4ShlvAgQoeKG4GSXjaoaQYa?=
- =?us-ascii?Q?hufir0PqtIYCtwVLRFSqZuqW/4srOFgfB/j8QR1QOraKdEm01MvT4r9XWGBd?=
- =?us-ascii?Q?Rcw3ng6f0IK5MsX4mjXGgWK73yVDOEWAFVk2qA85c0LBsqKF3aHbmFbHu2VJ?=
- =?us-ascii?Q?sj3AZlTEdpDmmWYI3PobZ2K5mvBgkEhFBrdtYsuNuRyaUUcAdfnH+Dda75MI?=
- =?us-ascii?Q?nWlT8/Bw+Git/y0xb1Xnpy1g3QTfBF8ekbHxYnnh0+jpPuTZnYFcLWuH7Utz?=
- =?us-ascii?Q?2ORb9bpwRpLiaxg/Nzot5pNBvpNLxh9CpRaXPjURNc1YpxsRlwpy4jKfPFgm?=
- =?us-ascii?Q?yFCMLrqK2qFvJM0eXKtb74g0QWjuik8=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?DU1ADxum2QgwcgfKSkNIQ67fSq28Z5CSNfhiYJazgXHb/SJ/XfcRWyk0L8Jk?=
+ =?us-ascii?Q?gNjeKEpxIS2a6rApOeohIiwMaoZ3FDTUe4KEnwtGcqOT0cIRpGX2sD/4qu03?=
+ =?us-ascii?Q?40DILKIWLYuYLuBCQiCTyuPWVXUlS3Z09m4U0tTpQU2I/chGaO+ntJcs20HS?=
+ =?us-ascii?Q?wZq8dB+W0rjKwQrWUFKlsigNeCtauJysZGjqNraFJkNvn/AAXV52nPICTtD2?=
+ =?us-ascii?Q?ayG84ds8ESLMzA/hTDP1zilOgUHv7XGYPOJQrvMciSLAp3ZugQCz2QY9joDP?=
+ =?us-ascii?Q?NiUvREMyOfHI2t/7KCbRltet4HJ0TIWPzSOsvdLB/DUm4VIXseCQtufFsWwu?=
+ =?us-ascii?Q?vonFVx3mHRXRdOqV9DWP9P0N8FEoI/kFFo8x4X6VQDpf+Ak7KLjB0mOv88OO?=
+ =?us-ascii?Q?mDz6HSF6e3J0MxyzSpvwL6SSaN3hw+jNspChoz9mbrJSTotjGLcPTrWgvofY?=
+ =?us-ascii?Q?t8GUkCn09TQBdA8sSxpACN6bqtSTg23KOTZDXQL0F+SU1qvkwkzZUvjNdl7v?=
+ =?us-ascii?Q?mW5xnIMNN5kzG80bPFJVovNngdsb2CtuHakJFdGIWT+hM7xXPn6TI7dMYT+D?=
+ =?us-ascii?Q?hddch3vMc5a9o53V3bKQUtvIcmV81KtozDlVBGjSvCvfZQ6Z7kIGaz8QYQLx?=
+ =?us-ascii?Q?7do7PyAjR1zFyQCC/+QBMxrw7HQdYUqQuUgkx/BVaAJqd54IKri1sJms53vt?=
+ =?us-ascii?Q?XI0/F42MxMXrTxkkiDCsJS3mas8wMHFi0tWw48k2jnBPKQZwVc8MHhi2r7pB?=
+ =?us-ascii?Q?uFMDTB7BuCubDItKMUWb61c82Vr5rZh2M7pQclY817zKkB3aJvr7Z7k36r9p?=
+ =?us-ascii?Q?pPW00+9TzCv6K1teNvIR3r6G8Hb6imksn5JbB3oeccZwo64H63rS+TFVoqgA?=
+ =?us-ascii?Q?SfA/1boETaaz9R+hd1OIU71viTGntw38QNfmJLs2rwx4+NGFudk5RbcYcUnY?=
+ =?us-ascii?Q?AktPQw/OGavccj7dsFIu2bBSgZbAPKQUsFg+s1OVCTZTaeOVlFJGV+nZXHrc?=
+ =?us-ascii?Q?K66Caw9yF7/Oeb0E6T68AOsUrlKATvvQIWAdJuMp0A455ZYRq+4xswvhHBQe?=
+ =?us-ascii?Q?uDwCJWY9+83pj+gyPFQ9m/Z+klgeILo/otc3dnTiDlKGjwlKSUnOoPSp7Rwl?=
+ =?us-ascii?Q?WVHEK4LIp/I8jEfEHWGMFEQPg9PHJmzreSWEheuKcIdgMKSqitG7zmRFRxZF?=
+ =?us-ascii?Q?URfmO92KZCQ2v+3F209Q24itoQvV9GpU9zej/bgODD3/0pxzYsz2lwqUgS9U?=
+ =?us-ascii?Q?FyxzpcmsEjjMVEjA5mt6iILtg1ncmAsbJcypNGe1LU/KZyuO69/3YhxfTN0v?=
+ =?us-ascii?Q?RYyg6qLm21hNryAYzQgib90VwzDMGd3KgyzLudeMbocnaYdDkE9ra+lkpr8m?=
+ =?us-ascii?Q?rgtdXkRHcA1oyZZvzIALWlxtdEPBqxxTXmlswM+jh1Fkrd4fCUKzmEbL2Qb5?=
+ =?us-ascii?Q?BpVt3X2a3E/KuXwGtmd/AJkl4FYrIKzBEG+Iz6DfpFdqWcydECCoCLebdETD?=
+ =?us-ascii?Q?fmBca/Pjb7BPXSrSJVcjiIuyQIqGEEeidh78D/GNuvuN0ApNiBCv1MtGse72?=
+ =?us-ascii?Q?Uvq+ne6Z19djJAfGHu3ZiNWyylf/eRg+dtpfIXCtQsKVIW4btZ/4LVEE0YfC?=
+ =?us-ascii?Q?+s7OM3qao5+fWYi0mh14GS0rgSZo8kxPbk8DsO2gBAjXYFolfE7kPGmV9eaz?=
+ =?us-ascii?Q?i+hp1PBfdt83PZEigGlJQYFQ8p+LeWifV34iV6FQD4jM3EN1Tr1EuZQnykOm?=
+ =?us-ascii?Q?eGL/qbkJ/Pbre1EUFk+EjmmTtBeLCkE=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 344d33e4-30c7-4238-4bbb-08df3fca5820
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5a3b8d83-374a-4b29-eea9-08df3fcad718
 X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 08:04:00.5059 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 08:07:33.6350 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xdS6SoLy0Rv343mfjhkW9REK6lwS41NCEjg85caqBKUnYqW8G1HX7hZIDDT1AkLL+ZSBVGz+5WyRkerdYXU48ICn10Bm625PTs8Zv2o/vQQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE3PR02MB9870
+X-MS-Exchange-CrossTenant-UserPrincipalName: K2J4glfmgleAm70vedTMVJgdGIFlXCimiA/YrQYK6ucywS1a5VQ/a7sZLk7YSNQMyaHd0aM5PTRz83jNpvJ51tWAYb63bkyDeQvVNr/QPjI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7258
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=chao.liu@processmission.com;
  helo=TYDPR03CU002.outbound.protection.outlook.com
@@ -152,86 +152,84 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu,  5 Nov 2026 03:41:40 +0800 Max Chou <max.chou@sifive.com> wrote:
+On Thu,  5 Nov 2026 03:41:41 +0800 Max Chou <max.chou@sifive.com> wrote:
 
-> Extend the vqwbdotau.vv and vqwbdotas.vv instructions to support
-> both 8-bit (Zvqwbdota8i) and 16-bit (Zvqwbdota16i) batched
-> dot-product operations.
+> Add CPU configuration property of Zvfwbdota16bf extension which depends on
+> the Zve32f extension per the specification.
 > 
 > Signed-off-by: Max Chou <max.chou@sifive.com>
 Reviewed-by: Chao Liu <chao.liu@processmission.com>
 
 Thanks,
 Chao
-> ---
->  target/riscv/helper.h                       | 4 +++-
->  target/riscv/insn32.decode                  | 2 +-
->  target/riscv/tcg/insn_trans/trans_rvv.c.inc | 5 +++--
->  target/riscv/tcg/vector_helper.c            | 2 ++
->  4 files changed, 9 insertions(+), 4 deletions(-)
+r ---
+>  target/riscv/cpu.c                | 2 ++
+>  target/riscv/cpu_cfg_fields.h.inc | 1 +
+>  target/riscv/tcg/tcg-cpu.c        | 5 +++++
+>  target/riscv/tcg/vector_helper.c  | 2 ++
+>  4 files changed, 10 insertions(+)
 > 
-> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> index e48b9b4edec..84571a999f4 100644
-> --- a/target/riscv/helper.h
-> +++ b/target/riscv/helper.h
-> @@ -1400,9 +1400,11 @@ DEF_HELPER_6(vfwdota_vv, void, ptr, ptr, ptr, ptr, env, i32)
->  DEF_HELPER_6(vfqwdota_vv, void, ptr, ptr, ptr, ptr, env, i32)
->  DEF_HELPER_6(vfqwdota_alt_vv, void, ptr, ptr, ptr, ptr, env, i32)
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 95bba330e06..c33885542f5 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -238,6 +238,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>      ISA_EXT_DATA_ENTRY(zvfhmin, PRIV_VERSION_1_12_0, ext_zvfhmin),
+>      ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvfqwdota8f, PRIV_VERSION_1_13_0,
+>                                      ext_zvfqwdota8f),
+> +    ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvfwbdota16bf, PRIV_VERSION_1_13_0,
+> +                                    ext_zvfwbdota16bf),
+>      ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvfwdota16bf, PRIV_VERSION_1_13_0,
+>                                      ext_zvfwdota16bf),
+>      ISA_EXT_DATA_ENTRY(zvkb, PRIV_VERSION_1_12_0, ext_zvkb),
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+> index 83a3d8a7f9d..80750db1ccd 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -107,6 +107,7 @@ BOOL_FIELD(ext_zvfbfwma)
+>  BOOL_FIELD(ext_zvfh)
+>  BOOL_FIELD(ext_zvfhmin)
+>  BOOL_FIELD(ext_zvfqwdota8f)
+> +BOOL_FIELD(ext_zvfwbdota16bf)
+>  BOOL_FIELD(ext_zvfwdota16bf)
+>  BOOL_FIELD(ext_zvqwbdota16i)
+>  BOOL_FIELD(ext_zvqwbdota8i)
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 8735cf94f35..8684e4c709c 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -721,6 +721,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+>          return;
+>      }
 >  
-> -/* Zvqwbdota8i - 8-bit Integer Batched Dot Product */
-> +/* Zvqwbdota8i/Zvqwbdota16i - 8/16-bit Integer Batched Dot Product */
->  DEF_HELPER_7(vqwbdotau_vv_b, void, ptr, ptr, ptr, ptr, i32, env, i32)
->  DEF_HELPER_7(vqwbdotas_vv_b, void, ptr, ptr, ptr, ptr, i32, env, i32)
-> +DEF_HELPER_7(vqwbdotau_vv_h, void, ptr, ptr, ptr, ptr, i32, env, i32)
-> +DEF_HELPER_7(vqwbdotas_vv_h, void, ptr, ptr, ptr, ptr, i32, env, i32)
->  
->  /* SiFive Custom int8 Matrix-Multiply */
->  DEF_HELPER_5(sf_vqmaccu_4x8x4, void, ptr, ptr, ptr, env, i32)
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index bf325229100..8a06547a570 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -1109,6 +1109,6 @@ vfwdota_vv  100100 . ..... ..... 001 ..... 1110111 @r_vm
->  vfqwdota_vv     100110 . ..... ..... 001 ..... 1110111 @r_vm
->  vfqwdota_alt_vv 100111 . ..... ..... 001 ..... 1110111 @r_vm
->  
-> -# *** Zvqwbdota8i 8-bit Integer Batched Dot-Product Extension ***
-> +# *** Zvqwbdota8i/Zvqwbdota16i Integer Batched Dot-Product Extension ***
->  vqwbdotau_vv  101110 . ..... ..... 000 ..... 1110111 @r_vm
->  vqwbdotas_vv  101111 . ..... ..... 000 ..... 1110111 @r_vm
-> diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> index bc12bcb9b72..650affc045b 100644
-> --- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> @@ -4315,7 +4315,8 @@ static bool vext_vqwbdota_check(DisasContext *s, arg_rmrr *a)
->      int32_t sew = s->sew;
->      int32_t vd_eew = sew + 2;
->      return vext_zvbdota_base_check(s, a, vd_eew) &&
-> -           (s->cfg_ptr->ext_zvqwbdota8i && sew == MO_8);
-> +           ((s->cfg_ptr->ext_zvqwbdota8i && sew == MO_8) ||
-> +            (s->cfg_ptr->ext_zvqwbdota16i && s->sew == MO_16));
->  }
->  
->  typedef void gen_helper_zvbdota_int(TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr,
-> @@ -4325,7 +4326,7 @@ typedef void gen_helper_zvbdota_int(TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr,
->  static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                   \
->  {                                                                        \
->      static gen_helper_zvbdota_int * const fns[2] = {                     \
-> -        gen_helper_##NAME##_b, NULL,                                     \
-> +        gen_helper_##NAME##_b, gen_helper_##NAME##_h,                    \
->      };                                                                   \
->      if (CHECK(s, a)) {                                                   \
->          TCGv_ptr dest, src1, src2, mask;                                 \
+> +    if (cpu->cfg.ext_zvfwbdota16bf && !cpu->cfg.ext_zve32f) {
+> +        error_setg(errp, "Zvfwbdota16bf extension depends on Zve32f extension");
+> +        return;
+> +    }
+> +
+>      if ((cpu->cfg.ext_zdinx || cpu->cfg.ext_zhinxmin) && !cpu->cfg.ext_zfinx) {
+>          error_setg(errp, "Zdinx/Zhinx/Zhinxmin extensions require Zfinx");
+>          return;
 > diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-> index 5ea073b6d76..683b14f28f3 100644
+> index 683b14f28f3..873adf4d7a6 100644
 > --- a/target/riscv/tcg/vector_helper.c
 > +++ b/target/riscv/tcg/vector_helper.c
-> @@ -6197,3 +6197,5 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,                  \
+> @@ -41,6 +41,7 @@ static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
 >  
->  GEN_VEXT_ZVBDOTA_INT(vqwbdotau_vv_b, 32, 8, uint8_t, H4, H1)
->  GEN_VEXT_ZVBDOTA_INT(vqwbdotas_vv_b, 32, 8, int8_t, H4, H1)
-> +GEN_VEXT_ZVBDOTA_INT(vqwbdotau_vv_h, 64, 16, uint16_t, H8, H2)
-> +GEN_VEXT_ZVBDOTA_INT(vqwbdotas_vv_h, 64, 16, int16_t, H8, H2)
+>      if (riscv_cpu_cfg(env)->ext_zvfbfa ||
+>          riscv_cpu_cfg(env)->ext_zvfqwdota8f ||
+> +        riscv_cpu_cfg(env)->ext_zvfwbdota16bf ||
+>          riscv_cpu_cfg(env)->ext_zvfwdota16bf ||
+>          riscv_cpu_cfg(env)->ext_zvqwbdota16i ||
+>          riscv_cpu_cfg(env)->ext_zvqwbdota8i ||
+> @@ -101,6 +102,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+>          break;
+>      case MO_16:
+>          ill_altfmt &= !(cpu->cfg.ext_zvfbfa ||
+> +                        cpu->cfg.ext_zvfwbdota16bf ||
+>                          cpu->cfg.ext_zvfwdota16bf ||
+>                          cpu->cfg.ext_zvqwbdota16i ||
+>                          cpu->cfg.ext_zvqwdota16i);
 > -- 
 > 2.56.0
 > 
