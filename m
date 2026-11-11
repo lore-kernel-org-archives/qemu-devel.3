@@ -1,110 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1237606A323
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 09:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1D5606A327
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 09:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q8lfQ9dU
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=CCLwG93Y
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR4Em-0001Jx-8B; Wed, 11 Nov 2026 04:03:24 -0500
+	id 1xR4N3-0005lt-UA; Wed, 11 Nov 2026 04:11:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xR4El-0001Jj-6M
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 04:03:23 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xR4Ei-00023a-PS
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 04:03:22 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-c445c95d553so398988866b.1
- for <qemu-devel@nongnu.org>; Wed, 11 Nov 2026 01:03:19 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794387798; cv=none;
- d=google.com; s=arc-20260327;
- b=EjZ9yHRUd9wtkQmbyNKQ1Eqidvczlqg8+eXhvDEl5zUHmWLIjGIeTsPUdclTO6VJNT
- BlcbdM1F0nXndnET8BGEE+IE4KJ8vJd9nuAnMkU8NxpX9tHzejpRFknY189JhXx8HTtX
- HSS6txi7yWdLhgwFcTytcZR8m+x0aYEgLF21Qa8t5Jw+JSsctt++7TlhKkDKJZwM5pBR
- onrV0LOW1kqxEvHJdAlH8EOhEmq6EkwLvl6kZ/XCNG2OAZ/kkNa7igTPmv2tv6pUBVtA
- 7OXr0/BDICEvFYZkE0IQRVcEsGgaOrNkKDgX6KmuUD4VF/AE6qtiKgDjZg+hL7ndwORB
- y1vg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=+icEnhQkuhFJ3d0ULcf/vQ7wkNAsyszYiNyhHEyGByI=;
- fh=aU1efp1Hqslajef9yw/kvM+9GDKW8LvzbV7DMPwJ+U0=;
- b=if3wmK6i0Ksg5AXof1jnUyTv/H4+L2BmeeI4OFlMrYp9vCIf37oXPUAAGmavlD/8sn
- kSzn+f9Vs/2ZVsuzS8HNrFcOSfhrFvZGX34IY72aTkdKqkxzhyt2i0yVkRGxR0Efiv1f
- cnLwgvSt2LPQQ3S/hStxs7ug7+gcTEC3prd3Ylbf8qqjzDUAtyDgXovjGBXiUR4rNW3o
- kuHBx93Hzhx53MxA8x34tKSkCYTriCZYNPvH2MsbMXkO+bta/tU82OVN6a3QM1RqfJOV
- /d4g536mtSIoVC+8daLdRBfrG3u/BUI1mTdiGpQdulQ8OMBjcEJUdOf7KzFxshjgIJ/X
- 1PSQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794387798; x=1794992598; darn=nongnu.org;
- h=content-transfer-encoding:content-type:to:subject:message-id:date
- :from:in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+icEnhQkuhFJ3d0ULcf/vQ7wkNAsyszYiNyhHEyGByI=;
- b=Q8lfQ9dUgZxyQsJKukIYbAH/qThv/nekMEOIIuytv53F0vytxbvWLuDMiRIL+xD7ft
- YmSsVxcQHj4CIWKugfcz06o4qijOK4CjmNmE6x/BMJm20NKbrKvBaGk/Nx06QFHi7rX8
- sgoHTXgqo+MwKTGlLNmDWlj4WCFJDmNq7VQY0eENAISXc42+2jO5QYKdb5PbP4+t24Hv
- +se7SsyS6qLraRG99EbfI2SpvSQPaQwkYMuCmFt02308s52W44AtqWH/JaXkaZP7FNTv
- ktwD04fOY0YWudWsLqZEo8pFZsNcEBHA+zdtFSk9o+K+EiEwWEqDUo9jegF0w4E4+ox6
- VPcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794387798; x=1794992598;
- h=content-transfer-encoding:content-type:to:subject:message-id:date
- :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=+icEnhQkuhFJ3d0ULcf/vQ7wkNAsyszYiNyhHEyGByI=;
- b=RPUxwx2+0cCJIP/OuCHUuBjGqQp+Dz+rfURIDyLx9ldCtYANBP+2LVQl7QaedYuKgG
- ZnfQWHUXwvaG6snB0Xnm0AwEBOcJMwEH9nDcLcmT+qRrjfmv2lYSacWRZ64tlJ9+nDkg
- B9elVimKF01YGRA8ajxKjx2JEFDdfBZnx3GUoxy8D7SEsA1p+PPBEAzgkeVDSn0orS8B
- 8fzwfuhFtcVwc8Nkp6yCFcEyMQ8sYA7ojO8IVrSIy5pGGY7298qjL0HepMUYQbMMJfNs
- kQmdY84Rn9GXgbz0ZWHxSn2eL9WS38iM++KAnuN9kwbGbfnyG2husQe8ZLcDisltkgdW
- /fxQ==
-X-Gm-Message-State: APuU4Z+vtJmOJqdLOp2RpwEXJKr3/2NN+kwwIbGsGcQvTdKgBSYMjO2G
- QG8tC45Tqsw7A9SofFVpF+Y6YzNyLmBFDIGhgUtaEcmPxeW9O8zB7L5rDyJeU43Pq7RI30KHjuD
- OxC2iv88yIcyat15e1VLmM+RjXOASqneweG8x
-X-Gm-Gg: AYBFou1hlJzBP+FQsSyKX8c6IokZs2evpWLNFgeJvIAvFjIJ+e777juPof1SkxVvKH+
- s3nmavSn+NYOB60X7CVVDlPz9RZN84loXEhr31JSVRg6yMr85j7zGhuMhh/c5mYIFMTWXrN0/sp
- ofEw3wBgqWDQuX9QMweCpUzISy00xjSZiXqZss6ojBy7TTgakPiQivs2fvBlV3FDd1AyK4vvUvX
- 6zHwYDCTGqjzC66rs8mttzmpH2X9nNZK08FiQm8Up+UPaIzCnaNEpSkOHPL3x/fKHhGyykiLXyf
- E6ovVTemvKLbftCsJOprlQDc2z8i5h0Nv5+BdVES8fDUKradpagu9jffd2crnFJtVh8+5YFK2cP
- kSL8U9s2Ra7RMFXDw2TxIwl2Ziz9fBxyB/+mFX1IFwaDS3X9kpleVM8F1qg==
-X-Received: by 2002:a17:907:da4:b0:c2e:40a0:7978 with SMTP id
- a640c23a62f3a-c5066a898bdmr133420366b.9.1794387797779; Wed, 11 Nov 2026
- 01:03:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xR4Mt-0005kd-MN
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 04:11:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xR4Mr-0000kA-DL
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 04:11:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794388302;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=SXd9A0lEhklwSD9T5LQflDDJnUtvgUNHtKQaVETWIQ8=;
+ b=CCLwG93YM9Q8ChTAUaVCK8UdnzRt/qaR9Rp42G1XTzKGLj04A5c9Vigktux5aPZtxGlMk7
+ +ZjDv8RCKngL+zHJIPS1vF2zU6w6Bmcvw4CopGUzygJTB882MHL7Ws4p/VQXqLYNgfih00
+ ZJ3xxx8ZCtegia+WiyS9XoiscalKuzU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-jeFfFCGaN8a7cQJUyqGBiw-1; Wed,
+ 11 Nov 2026 04:11:38 -0500
+X-MC-Unique: jeFfFCGaN8a7cQJUyqGBiw-1
+X-Mimecast-MFC-AGG-ID: jeFfFCGaN8a7cQJUyqGBiw_1794388297
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6278619560BB; Wed, 11 Nov 2026 09:11:37 +0000 (UTC)
+Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E222930001BE; Wed, 11 Nov 2026 09:11:34 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2] iotests: better heuristics to find I/O tests build/source
+ dirs
+Date: Wed, 11 Nov 2026 09:11:33 +0000
+Message-ID: <20261111091133.3527549-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261028092619.1654474-1-zhangckid@gmail.com>
-In-Reply-To: <20261028092619.1654474-1-zhangckid@gmail.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Wed, 11 Nov 2026 17:02:39 +0800
-X-Gm-Features: AclHuK8WHVAVZCEZM3aV_G8bmoHW9GH7KXV438kG3XsQWmA5klWCbws_Y3aHB3E
-Message-ID: <CAK3tnvLakd03hvsX_PsNwMCU0hTXSUxGYj+8+yd7E+D6tVVCXQ@mail.gmail.com>
-Subject: Re: [PATCH V19 00/14] iothread: Support tracking and querying
- IOThread holder
-To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,184 +85,167 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Stefan, all,
+Currently the I/O tests cannot be run if executing directly
+from the source directory, even when wrapped by the 'run'
+script, due to inadequate heuristics to guess the directories.
 
-A gentle ping on v19. Patches 1=E2=80=9313 already have Reviewed-by tags.
+If using the 'run' script, meson can tell us exactly where the
+top level build and source directories are, so we don't need
+to guess. Just read MESON_BUILD_ROOT and MESON_SOURCE_ROOT
+env variables if present.
 
-Hi Stefan, thanks for reviewing the documentation update in our previous
-email discussion. Based on your positive feedback, I'll add your
-Reviewed-by to patch 14 in the next revision. Please let me know if
-you would prefer otherwise.
-https://www.mail-archive.com/qemu-devel@nongnu.org/msg1239091.html
+If not using the 'run' script, we can do a bit better at
+guessing the path from the 'check' filename. Always resolve
+from sys.argv[0], even when it is not a symlink, instead of
+falling back to 'cwd()' which doesn't work since we stopped
+having in-tree builds. If invoked directly from the source
+tree, guess that the build root is the default 'build' name
+which often works.
 
-The series now needs a rebase onto current master, which I'll include
-in the next revision. Are there any other outstanding concerns before
-the series can be queued?
+With this change the following all work:
 
-Thanks,
-Chen
+1. From root of build dir, with run script
 
+  cd build
+  ./run tests/qemu-iotests/check 5
 
+2. From root of build dir, without run script
 
+  cd build
+  tests/qemu-iotests/check 5
 
-On Wed, Oct 28, 2026 at 5:26=E2=80=AFPM Zhang Chen <zhangckid@gmail.com> wr=
-ote:
->
-> ### Motivation
-> Currently, the relationship between IOThreads and the resources using the=
-m is
-> opaque. From a management perspective, it is difficult to determine which
-> devices or block exports are currently associated with a specific IOThrea=
-d
-> via QMP or HMP.
->
-> This series introduces a "holder" tracking mechanism based on QOM paths o=
-r
-> block exports to significantly improve IOThread observability.
-> In high-performance virtualization environments, users often pre-allocate
-> a set of IOThreads to serve as a persistent thread pool. During device
-> hotplug/unplug cycles, while IOThread objects remain persistent,
-> their attachment state changes dynamically.
->
-> By tracking these "holders," administrators can use `query-iothreads` to
-> monitor the real-time load distribution of the thread pool and identify w=
-hich
-> specific devices (e.g., virtio-blk, BlockExport) are attached to which th=
-read.
->
-> ### Technical Overview
-> * Holder tracking
->
->   Add a QAPI holder list to each IOThread.  A holder identifies either
->   a QOM object by its canonical path or a block export by its unique
->   BlockExportOptions ID.
->
-> * Explicit reference lifecycle
->
->   Add iothread_ref_and_get_aio_context() and the matching
->   iothread_unref_and_put_aio_context().  Acquiring an AioContext register=
-s a
->   holder and keeps the IOThread alive until the matching put.
->
->   Legacy callers without a matching lifecycle use the explicitly named
->   iothread_unsafe_get_aio_context().  The ambiguous legacy
->   iothread_get_aio_context() is removed after all production callers
->   are migrated.
->
-> * Subsystem integration
->
->   Track holders for block exports, monitors, virtio-blk, virtio-scsi,
->   virtio queue mappings, virtio balloon thread pinning, COLO compare,
->   vfio-user proxy, and xen-block.
->
-> * Introspection
->
->   Extend IOThreadInfo with a holders array returned by
->   query-iothreads.  Display the same information with info iothreads.
->
->
-> ### V19 -> V18 Changelog
->   - Added new patch in the last:
->     docs/devel: document holder-aware IOThread AioContext APIs
->   - Rebased on upstream code.
->   - Added IOThread prepare_delete() to reject deletion while holders
->     remain, preventing NULL IOThread lookups during virtqueue mapping
->     cleanup.
->
-> ### V18 -> V17 Changelog
->   - Saved the COLO object's QOM path for finalization and guarded
->     holder cleanup against incomplete initialization.
->   - Used the owning PCI device's QOM path for vfio-user holders
->     and saved it for disconnect().
->   - Simplified the monitor QOM path field name and clarified
->     PATCH 12's commit message.
->   - Rebased on upstream and collected Reviewed-by tags.
->
-> ### V17 -> V16 Changelog
->   - Rebase code to resolve code conflicts for patch 8:
->     "virtio-balloon: Update tracking iothread users with holder".
->     This issue caused by latest merged patch "fdc3f9a83d".
->
-> ### V16 -> V15 Changelog
->   - Unified per-monitor IOThread checks and accesses through
->     mon->iothread after initialization.
->   - Simplified PATCH 13's commit message and clarified why blockdev
->     cannot use the holder-aware get/put APIs.
->   - Dropped the v15 Patch 1 in this series, It will be taken away
->     independently by trivial-patches tree.
->
-> ### V15 -> V14 Changelog
->   - Moved monitor IOThread cleanup from unparent() to monitor_finalize(),
->     pairing complete() with instance finalization.
->   - Squashed V14 PATCH 04 and PATCH 14 into PATCH 13 and clarified the
->     blockdev lifetime assumption. Since the additional changes are minima=
-l,
->     PATCH 13 retains Stefan's Reviewed-by from V14 PATCH 04.
->   - Rebased and adapted info iothreads to the MonitorHMP interface.
->
-> ### V14 -> V13 Changelog
->   - Renamed patch 3 and clarified that it introduces holder-tracking
->     infrastructure, with users converted in subsequent patches.
->   - Documented that monitor holders are not visible to management
->     applications, while retaining the tracking for a consistent holder
->     and IOThread reference lifecycle.
->   - Rebased on the latest upstream.
->
->
-> Zhang Chen (14):
->   iothread: introduce holder tracking
->   iothread: add holder-aware AioContext accessors
->   block/export: track IOThread references
->   monitor: track IOThread users with QOM paths
->   virtio-vq-mapping: track iothread-vq-mapping references using device
->     path
->   virtio: track IOThread references for thread pinning
->   net/colo: track IOThread references using path-based holder
->   virtio-balloon: Update tracking iothread users with holder
->   vfio-user/proxy: Update tracking iothread users with device QOM paths
->   xen-block: Update tracking iothread users with holder name
->   monitor/hmp: display IOThread holders
->   iothread: make legacy AioContext getter explicitly unsafe
->   tests/unit/iothread: update AioContext ref/put helpers
->   docs/devel: document holder-aware IOThread AioContext APIs
->
->  block/export/export.c                   |  62 +++++++++++---
->  blockdev.c                              |   9 ++-
->  docs/devel/multiple-iothreads.rst       |  19 +++--
->  hw/block/dataplane/xen-block.c          |  19 ++++-
->  hw/block/virtio-blk.c                   |  21 +++--
->  hw/scsi/virtio-scsi-dataplane.c         |  22 +++--
->  hw/vfio-user/pci.c                      |   2 +-
->  hw/vfio-user/proxy.c                    |  20 ++++-
->  hw/vfio-user/proxy.h                    |   4 +-
->  hw/virtio/iothread-vq-mapping.c         |  20 +++--
->  hw/virtio/virtio-balloon.c              |  21 +++--
->  include/block/export.h                  |   5 ++
->  include/hw/virtio/iothread-vq-mapping.h |   6 +-
->  include/hw/virtio/virtio-balloon.h      |   1 +
->  include/system/iothread.h               |  38 ++++++++-
->  iothread.c                              | 102 +++++++++++++++++++++++-
->  monitor/hmp-cmds.c                      |  20 +++++
->  monitor/monitor-internal.h              |   7 +-
->  monitor/monitor.c                       |  36 ++++++---
->  monitor/qmp.c                           |  14 ++--
->  net/colo-compare.c                      |  36 ++++++---
->  qapi/misc.json                          |  94 +++++++++++++++++++---
->  tests/unit/iothread.c                   |  18 +++--
->  tests/unit/iothread.h                   |   7 +-
->  tests/unit/test-aio-multithread.c       |   5 +-
->  tests/unit/test-bdrv-drain.c            |  18 +++--
->  tests/unit/test-block-iothread.c        |  21 +++--
->  27 files changed, 535 insertions(+), 112 deletions(-)
->
-> --
-> 2.53.0
->
+3. From I/O tests subdir of build dir, with run script
+
+  cd build/tests/qemu-iotests
+  ../../run ./check 5
+
+4. From I/O tests subdir of build dir, without run script
+
+  cd build/tests/qemu-iotests
+  ./check 5
+
+5. From root of source dir, with run script
+
+  ./build/run tests/qemu-iotests/check 5
+
+6. From root of source dir, without run script
+
+  tests/qemu-iotests/check 5
+
+7. From I/O tests subdir of source dir, with run script
+
+  cd tests/qemu-iotests
+  ../../build/run ./check 5
+
+8. From I/O tests subdir of source dir, without run script
+
+  cd tests/qemu-iotests
+  ./check 5
+
+Before this commit, items 5-8 would always fail. Items 6 and
+8 will not work if using a build directory with a name other
+than the default 'build'. For those scenarios use one of the
+other 6 possible variants.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ meson.build              |  1 +
+ tests/qemu-iotests/check | 52 +++++++++++++++++++++++++++++-----------
+ 2 files changed, 39 insertions(+), 14 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index d7bcb581c18..9d15f2e9551 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3502,6 +3502,7 @@ genh += config_host_h
+ 
+ devenv = environment()
+ devenv.set('MESON_BUILD_ROOT', meson.project_build_root())
++devenv.set('MESON_SOURCE_ROOT', meson.project_source_root())
+ devenv.set('VIRTUAL_ENV', meson.project_build_root() / 'pyvenv')
+ devenv.prepend('PATH', meson.project_build_root() / 'pyvenv'/ 'bin')
+ devenv.prepend('PYTHONPATH', meson.current_source_dir() / 'tests' / 'functional')
+diff --git a/tests/qemu-iotests/check b/tests/qemu-iotests/check
+index c8ba536970c..40baa2b4107 100755
+--- a/tests/qemu-iotests/check
++++ b/tests/qemu-iotests/check
+@@ -28,18 +28,42 @@ from findtests import TestFinder
+ from testenv import TestEnv
+ from testrunner import TestRunner
+ 
+-def get_default_path(follow_link=False):
+-    """
+-    Try to automagically figure out the path we are running from.
+-    """
+-    # called from the build tree?
+-    if os.path.islink(sys.argv[0]):
+-        if follow_link:
+-            return os.path.dirname(os.readlink(sys.argv[0]))
++
++def get_build_dir():
++    if "MESON_BUILD_ROOT" in os.environ:
++        br = os.environ["MESON_BUILD_ROOT"]
++        return os.path.join(br, "tests", "qemu-iotests")
++    else:
++        if os.path.islink(sys.argv[0]):
++            iobr = os.path.dirname(sys.argv[0])
++        else:
++            iobr = os.path.join(os.path.dirname(sys.argv[0]),
++                                "..", "..", "build", "tests", "qemu-iotests")
++        if (not os.path.exists(os.path.join(iobr, "check")) or
++            os.path.exists(os.path.join(iobr, "testenv.py"))):
++            raise Exception(f"MESON_BUILD_ROOT is not set, and guessed "
++                            "I/O tests build root {iobr} does not look "
++                            "valid. Please use the 'run' script to invoke "
++                            "the I/O tests")
++        return os.path.abspath(iobr)
++
++
++def get_source_dir():
++    if "MESON_SOURCE_ROOT" in os.environ:
++        sr = os.environ["MESON_SOURCE_ROOT"]
++        return os.path.join(sr, "tests", "qemu-iotests")
++    else:
++        if os.path.islink(sys.argv[0]):
++            iosr = os.path.dirname(os.readlink(sys.argv[0]))
+         else:
+-            return os.path.dirname(os.path.abspath(sys.argv[0]))
+-    else:  # or source tree?
+-        return os.getcwd()
++            iosr = os.path.dirname(sys.argv[0])
++        if not os.path.exists(os.path.join(iosr, "testenv.py")):
++            raise Exception(f"MESON_SOURCE_ROOT is not set, and guessed "
++                            "I/O tests source root {iosr} does not look "
++                            "valid. Please use the 'run' script to invoke "
++                            "the I/O tests")
++        return os.path.abspath(iosr)
++
+ 
+ def make_argparser() -> argparse.ArgumentParser:
+     p = argparse.ArgumentParser(
+@@ -131,11 +155,11 @@ def make_argparser() -> argparse.ArgumentParser:
+                        'middle of the process.')
+     g_sel.add_argument('tests', metavar='TEST_FILES', nargs='*',
+                        help='tests to run, or "--" followed by a command')
+-    g_sel.add_argument('--build-dir', default=get_default_path(),
++    g_sel.add_argument('--build-dir', default=get_build_dir(),
+                        help='Path to iotests build directory')
+     g_sel.add_argument('--source-dir',
+-                       default=get_default_path(follow_link=True),
+-                       help='Path to iotests build directory')
++                       default=get_source_dir(),
++                       help='Path to iotests source directory')
+ 
+     return p
+ 
+-- 
+2.56.0
+
 
