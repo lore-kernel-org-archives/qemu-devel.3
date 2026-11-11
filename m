@@ -1,34 +1,34 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24B7606A885
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2569606A888
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 20:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=MCYHCntc
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=RpmF4vLE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRF9K-0001aX-80; Wed, 11 Nov 2026 15:42:30 -0500
+	id 1xRF9E-0001Nw-M8; Wed, 11 Nov 2026 15:42:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xRF9H-0001Pu-Sk
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 15:42:28 -0500
+ id 1xRF9A-0001JP-Tq
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 15:42:21 -0500
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xRF9G-0005wJ-DX
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 15:42:27 -0500
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1xRF97-0005vw-Op
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 15:42:20 -0500
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 2486B20B7166;
- Wed, 11 Nov 2026 12:42:19 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2486B20B7166
+ by linux.microsoft.com (Postfix) with ESMTPSA id 7CB5E20B7166;
+ Wed, 11 Nov 2026 12:42:11 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7CB5E20B7166
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1794429741;
- bh=4wI5YIcOwzY6HBpD8sMmTioh0AxAuhQ6aYkQ1hEXT5o=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=MCYHCntcMC364/6r5Lak0qpDhjYS3mrCuVn8lmQlxPgUJBlswT0Dr0hHI0hlvCX1w
- aVwW23o/F3+qH4wy2sKroEPQJIxbqMqzXL7lmfxeTYem9kKkKbz0Sa5te+0rMNzqD4
- G9uOxxZ766b3IvE6rptqHFC5K/vqJ3Qhf33eoLYM=
+ s=default; t=1794429732;
+ bh=+WUC/S0ewOZRCVyO43iXrz9myK8q0yh9EqQy9ChQoiU=;
+ h=From:To:Cc:Subject:Date:From;
+ b=RpmF4vLE8XLztXjzVZZyhr3c9yPvXMP9ENFt1D6epNDd+DNg2KFznixgzng+06AXk
+ KFdbL53VwAmoKtpqru8iM5OcEhA+bdSxvbq07GQYLVQxLzRLUmvnq53a1JkLhjqU7B
+ uIE24Q4ExeM0YgFK1tQN8CmaEIpQMJrW/jFN7qtw=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <wei.liu@kernel.org>,
@@ -36,12 +36,10 @@ Cc: Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 2/4] target/i386/mshv: fix vCPU run result contract
-Date: Wed, 11 Nov 2026 21:41:53 +0100
-Message-Id: <20261111204155.36683-3-magnuskulke@linux.microsoft.com>
+Subject: [PULL 0/4] MSHV fixes for 2026-11-11
+Date: Wed, 11 Nov 2026 21:41:51 +0100
+Message-Id: <20261111204155.36683-1-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261111204155.36683-1-magnuskulke@linux.microsoft.com>
-References: <20261111204155.36683-1-magnuskulke@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -65,97 +63,54 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Currently the return semantics of mshv_run_vcpu() are broken. They
-return a mix of int and exit_reason, ignoring the out param *exit.
+Various bug fixes for the Microsoft Hypervisor (MSHV) accelerator.
+The fixes have been rebased and re-tested individually.
 
-This change propagates errno's to the call site and sets the *exit value
-accordingly. We also consider the case when an ioctl has return due to a
-qemu-requested interruption of the call, this is a legitimate condition
-that should not produce an error.
+My public certificate is available at:
+https://mkulke.github.io/magnuskulke.asc
 
-Fixes: 6dec60528c419 ("target/i386/mshv: Implement mshv_vcpu_run()")
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
----
- target/i386/mshv/mshv-cpu.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+Primary key fingerprint:
+5255 B617 7982 9168 7022 31CA 68D9 BB56 DD17 8417
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 4df73bb497..e3c155da2e 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -2124,7 +2124,6 @@ static int arch_set_single_step(CPUState *cpu, bool enable)
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
- {
-     int ret;
--    enum MshvVmExit exit_reason;
-     int cpu_fd = mshv_vcpufd(cpu);
-     bool single_step;
- 
-@@ -2142,7 +2141,12 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
- 
-     ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
-     if (ret < 0) {
--        return MshvVmExitShutdown;
-+        if (errno == EINTR) {
-+            *exit = MshvVmExitSpecial;
-+            return 0;
-+        }
-+        error_report("failed to run vCPU: %s", strerror(errno));
-+        return -errno;
-     }
- 
-     /* disable single stepping by flipping RFLAGS.TF */
-@@ -2154,31 +2158,33 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
- 
-     switch (msg->header.message_type) {
-     case HVMSG_UNRECOVERABLE_EXCEPTION:
--        return MshvVmExitShutdown;
-+        *exit = MshvVmExitShutdown;
-+        return 0;
-     case HVMSG_UNMAPPED_GPA:
-     case HVMSG_GPA_INTERCEPT:
--        ret = handle_mmio(cpu, msg, &exit_reason);
-+        ret = handle_mmio(cpu, msg, exit);
-         if (ret < 0) {
-             error_report("failed to handle mmio");
--            return -1;
-+            return ret;
-         }
--        return exit_reason;
-+        return 0;
-     case HVMSG_X64_IO_PORT_INTERCEPT:
-         ret = handle_pio(cpu, msg);
-         if (ret < 0) {
--            return MshvVmExitSpecial;
-+            error_report("failed to handle PIO");
-+            return ret;
-         }
--        return MshvVmExitIgnore;
-+        *exit = MshvVmExitIgnore;
-+        return 0;
-     case HVMSG_X64_EXCEPTION_INTERCEPT:
-         bql_lock();
--        ret = handle_exception_interrupt(cpu, msg, &exit_reason);
-+        ret = handle_exception_interrupt(cpu, msg, exit);
-         bql_unlock();
-         if (ret < 0) {
-             error_report("failed to handle exception intercept");
-             return -1;
-         }
--        *exit = exit_reason;
--        return exit_reason;
-+        return 0;
-     default:
-         break;
-     }
+The following changes since commit 29760efaf96bbe5928f8111881eddbf5ac06439e:
+
+  Update version for v11.2.0-rc0 release (2026-11-10 14:47:54 -0800)
+
+are available in the Git repository at:
+
+  https://github.com/mkulke/qemu.git tags/mkulke-pull-20261111
+
+for you to fetch changes up to fcc504b77076b936ce79e33d9be68d6b73cc5dbe:
+
+  target/i386/mshv: add MshvPutState for vcpu writes (2026-11-11 20:51:04 +0100)
+
+----------------------------------------------------------------
+mshv fixes for 2026-11-11
+
+----------------------------------------------------------------
+Magnus Kulke (4):
+      accel/mshv: skip double unmap of mem regions
+      target/i386/mshv: fix vCPU run result contract
+      accel/mshv: freeze time during TSC MSR write
+      target/i386/mshv: add MshvPutState for vcpu writes
+
+ accel/mshv/mem.c            |  41 ++++++++++++++--
+ accel/mshv/mshv-all.c       |  44 ++++++++++++++---
+ hw/i386/mshv/clock.c        | 112 +++++++++++++++++++++++++++++++-------------
+ include/system/mshv.h       |   4 +-
+ include/system/mshv_int.h   |  14 +++++-
+ target/i386/mshv/mshv-cpu.c |  38 ++++++++++-----
+ target/i386/mshv/msr.c      |  21 ++++++++-
+ 7 files changed, 216 insertions(+), 58 deletions(-)
+
 -- 
 2.34.1
 
