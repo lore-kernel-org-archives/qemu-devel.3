@@ -1,45 +1,45 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9515D606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 23:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBFC606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 23:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mTC7dk5v
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KrX3x1MC
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRHuf-0006rM-B8; Wed, 11 Nov 2026 18:39:33 -0500
+	id 1xRHub-0006oF-96; Wed, 11 Nov 2026 18:39:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1xRHuP-0006g9-P3; Wed, 11 Nov 2026 18:39:18 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1xRHuP-0006fU-Bq; Wed, 11 Nov 2026 18:39:18 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1xRHuM-0004ae-FU; Wed, 11 Nov 2026 18:39:17 -0500
+ id 1xRHuL-0004aV-Tk; Wed, 11 Nov 2026 18:39:17 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 27D504237C;
- Wed, 11 Nov 2026 23:39:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA57E1F00A07;
+ by tor.source.kernel.org (Postfix) with ESMTP id CBE6B654B1;
+ Wed, 11 Nov 2026 23:39:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E49C1F00A08;
  Wed, 11 Nov 2026 23:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1794440353;
- bh=PcBBdGrhQ5R3k7uxP1aJX5g9JkIhQhZcRu0rYeN8t5Q=;
+ s=k20260515; t=1794440352;
+ bh=p2EkjD00NgxwHuOZDAGjLKWPAr3lgYtlTBf6esHWO38=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=mTC7dk5vDNuAopwcIfjfBf/tlqgzhdyOGZhssdBUION/ggjQ7bnk3Q7E6iVNQT1BC
- vsNKDCShfwbnn5waxKPVWz6lFOaSaV3c4CKm+xUBNuvUoPnDD7ABn6Pq0LZ7JxcSYZ
- 6LCCmZbcSA/LGPRZb/RRBDQj7NykAsmpNytpSHFtiLC6SwiHWwEyEWNZtepYL5XHFs
- X+nk0nqanHO0lHfNokXC98dAeozn9OK3KIqwkaMPTzMY1sC42iQATmbo4n/1ntQvfI
- ii22cs8y5MSD/Y+IYt36UaS/VHg4gBUtpWCNKlQdgqg2EXM1Ks7+3J7SB4I4cOXHmU
- 3WtOTTudZIOxA==
+ b=KrX3x1MCitcNVkOhcS62xmVQGSD+DeXtZteElvdx1+Tjk0k9BcjGO3CBTZY1rtUM5
+ xjYocf2CNdg8hgivVcnY6F1vAmFq/gUg6u7PkSKQU+pt3DI5bkzi+1o6dLtKPtnjK5
+ fgEYx/YgOZOF3pfkgYksstY820sVLSf+V+VAXLLROTpVp24WGjo2JlWW6EYglJVVFC
+ jiqf8ViWgjhcMvVOdgZCnnlpOvouWyklgJ0dQmdUbdQUVZDpoYS6U905eMjhqaJKQy
+ 8MFnk8WAvaTsJpPLY9BctkqQZaBeJSh4EibS30mmFF4Y9nvQKu8LwhiQSx1qeHrcV+
+ pqFBdyC14mXIA==
 From: Drew Fustini <fustini@kernel.org>
-Date: Wed, 11 Nov 2026 15:38:47 -0800
-Subject: [PATCH v8 6/6] hw/riscv: add CBQRI controllers to virt machine
+Date: Wed, 11 Nov 2026 15:38:46 -0800
+Subject: [PATCH v8 5/6] hw/riscv: add CBQRI to Kconfig and build if enabled
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261111-riscv-ssqosid-cbqri-v8-6-121f6dcfb573@kernel.org>
+Message-Id: <20261111-riscv-ssqosid-cbqri-v8-5-121f6dcfb573@kernel.org>
 References: <20261111-riscv-ssqosid-cbqri-v8-0-121f6dcfb573@kernel.org>
 In-Reply-To: <20261111-riscv-ssqosid-cbqri-v8-0-121f6dcfb573@kernel.org>
 To: qemu-devel@nongnu.org
@@ -56,19 +56,18 @@ Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <radim.krcmar@oss.qualcomm.com>, 
  yunhui cui <cuiyunhui@bytedance.com>, Chen Pei <cp0613@linux.alibaba.com>, 
  guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
- Drew Fustini <fustini@kernel.org>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+ Drew Fustini <fustini@kernel.org>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4125; i=fustini@kernel.org;
- h=from:subject:message-id; bh=l/yh8VexZmgfq4b3fIdOgYS3aF0Cz7D26icjss1lUH0=;
- b=kA0DAAoW2+wsw9kosQwByyZiAGr0/J6gKTmFfiR9Qn8jsRkHQPL18EQYPev69s6kXWUrJIuYK
- oh1BAAWCgAdFiEEsvBu0KRKVfWgn+i22+wsw9kosQwFAmr0/J4ACgkQ2+wsw9kosQw3FwEA8lbA
- 6/AKqD4SQjy+nKpjqvGHik6ctbgx1sL0kUkVexcA/Ra5sngwRVA6mr3/Gsph60A46mPFf0lg/Pg
- SAv7k8d0B
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1722; i=fustini@kernel.org;
+ h=from:subject:message-id; bh=W+cnuTf2qtUsZlBz+ps+xkhs+U3KpiwnS/q7hBLtoj8=;
+ b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWR9+TPvhvjegttmKo6OqaebDLaUtl/v83K6e6Eu/4tNa
+ JbptHL5jlIWBjEuBlkxRZZNH/IuLPEK/bpg/ottMHNYmUCGMHBxCsBEjr5g+O+/2CBHIclS+NE/
+ fqPCYPWohcf+X1X+cu+XNOcHt+jN/9sYGWbltfzeqjCZZcLkEFcfZeVJSz41Rm+yqhcp7LYy/ym
+ yiAUA
 X-Developer-Key: i=fustini@kernel.org; a=openpgp;
  fpr=1B6F948213EA489734F3997035D5CD577C1E6010
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=fustini@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=fustini@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -90,113 +89,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Nicolas Pitre <npitre@baylibre.com>
 
-Add CBQRI controllers to the RISC-V virt machine. The device properties
-can be fully configured from the command line:
+Add a boolean Kconfig symbol for CBQRI and imply it should be enabled
+for the RISC-V virt machine. Build the CBQRI controllers when RISC-V
+CBQRI is enabled.
 
-  $ qemu-system-riscv64 -M virt ... \
-      -device riscv.cbqri.capacity,mmio_base=0x04820000[,...] \
-      -device riscv.cbqri.bandwidth,mmio_base=0x04829000[,...]
-
-The mmio_base option is mandatory. The others are optional.
-
-As many -device arguments as wanted can be provided as long as their
-mmio regions don't conflict.
-
-To see all possible options:
-
-  $ qemu-system-riscv64 -device riscv.cbqri.capacity,help
-  riscv.cbqri.capacity options:
-    alloc_op_config_limit=<bool> - on/off (default: on)
-    alloc_op_flush_rcid=<bool> - on/off (default: on)
-    alloc_op_read_limit=<bool> - on/off (default: on)
-    at_code=<bool>         - on/off (default: on)
-    max_mcids=<uint16>     -  (default: 256)
-    max_rcids=<uint16>     -  (default: 64)
-    mmio_base=<uint64>     -  (default: 0)
-    mon_evt_id_none=<bool> - on/off (default: on)
-    mon_evt_id_occupancy=<bool> - on/off (default: on)
-    mon_op_config_event=<bool> - on/off (default: on)
-    mon_op_read_counter=<bool> - on/off (default: on)
-    ncblks=<uint16>        -  (default: 16)
-
-  $ qemu-system-riscv64 -device riscv.cbqri.bandwidth,help
-  riscv.cbqri.bandwidth options:
-    alloc_op_config_limit=<bool> - on/off (default: on)
-    alloc_op_read_limit=<bool> - on/off (default: on)
-    at_code=<bool>         - on/off (default: on)
-    max_mcids=<uint16>     -  (default: 256)
-    max_rcids=<uint16>     -  (default: 64)
-    mmio_base=<uint64>     -  (default: 0)
-    mon_evt_id_none=<bool> - on/off (default: on)
-    mon_evt_id_rdonly_count=<bool> - on/off (default: on)
-    mon_evt_id_rdwr_count=<bool> - on/off (default: on)
-    mon_evt_id_wronly_count=<bool> - on/off (default: on)
-    mon_op_config_event=<bool> - on/off (default: on)
-    mon_op_read_counter=<bool> - on/off (default: on)
-    mrbwb=<uint16>         -  (default: 819)
-    nbwblks=<uint16>       -  (default: 1024)
-
-Boolean options correspond to hardware capabilities that can be
-disabled.
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
-[fustini: rebase on riscv-to-apply.next]
+[fustini: rebase, squash the Kconfig and meson.build patches]
 Signed-off-by: Drew Fustini <fustini@kernel.org>
 ---
- hw/core/sysbus-fdt.c | 4 ++++
- hw/riscv/virt.c      | 3 +++
- 2 files changed, 7 insertions(+)
+ hw/riscv/Kconfig     | 4 ++++
+ hw/riscv/meson.build | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
-index 12238570b5e1..265917ef573e 100644
---- a/hw/core/sysbus-fdt.c
-+++ b/hw/core/sysbus-fdt.c
-@@ -35,6 +35,7 @@
- #include "hw/core/platform-bus.h"
- #include "hw/display/ramfb.h"
- #include "hw/uefi/var-service-api.h"
-+#include "hw/riscv/cbqri.h"
- #include "hw/arm/fdt.h"
- #include "hw/watchdog/sbsa_gwdt.h"
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index d89fdfcc8671..98bdebb4b814 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -1,3 +1,6 @@
++config RISCV_CBQRI
++    bool
++
+ config RISCV_IOMMU
+     bool
  
-@@ -142,6 +143,9 @@ static const BindingEntry bindings[] = {
-     TYPE_BINDING(TYPE_RAMFB_DEVICE, no_fdt_node),
-     TYPE_BINDING(TYPE_UEFI_VARS_SYSBUS, add_uefi_vars_node),
-     TYPE_BINDING(TYPE_WDT_SBSA, no_fdt_node),
-+    /* RISC-V CBQRI controllers have no generic device tree node */
-+    TYPE_BINDING(TYPE_RISCV_CBQRI_BC, no_fdt_node),
-+    TYPE_BINDING(TYPE_RISCV_CBQRI_CC, no_fdt_node),
-     TYPE_BINDING("", NULL), /* last element */
- };
+@@ -68,6 +71,7 @@ config RISCV_VIRT
+     select PLATFORM_BUS
+     select ACPI
+     select ACPI_PCI
++    imply RISCV_CBQRI
  
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index d4b501802f60..dbc0f8cfc8d7 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -57,6 +57,7 @@
- #include "hw/pci-host/gpex.h"
- #include "hw/display/ramfb.h"
- #include "hw/acpi/aml-build.h"
-+#include "hw/riscv/cbqri.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/uefi/var-service-api.h"
-@@ -1157,6 +1158,8 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
- #ifdef CONFIG_TPM
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
- #endif
-+    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RISCV_CBQRI_BC);
-+    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RISCV_CBQRI_CC);
- 
-     object_class_property_add_bool(oc, "aclint", virt_get_aclint,
-                                    virt_set_aclint);
+ config RISCV_SERVER_PLATFORM_REF
+     bool
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 6bdabb954473..c7952d67755e 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -19,6 +19,8 @@ riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
+ 	'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
+ riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
+ riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
++riscv_ss.add(when: 'CONFIG_RISCV_CBQRI', if_true: files('cbqri_capacity.c', 'cbqri_bandwidth.c'))
++
+ riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
+ riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
+ riscv_ss.add(when: 'CONFIG_K230', if_true: files('k230.c'))
 
 -- 
 2.43.0
