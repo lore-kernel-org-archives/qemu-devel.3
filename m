@@ -1,91 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91F9606A336
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 14:39:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=WZ3zBMTs;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=CFfy80JE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D6E606A324
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 14:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR9R7-00010J-Da; Wed, 11 Nov 2026 09:36:29 -0500
+	id 1xR9UJ-0001JG-T1; Wed, 11 Nov 2026 09:39:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xR9R4-0000y3-0w
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 09:36:26 -0500
-Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xR9R1-0002Oi-2D
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 09:36:25 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=GTswWzL
- 3ujmHKEGbajP0h+gA/wAV5YRjHp6tIqkdOB1Cd1GE2JZ+s0Mx7yNmDs0hEOt6XxC1FuwKf
- 4ftkf+Q4sbh14TFuDOL/iVscD8LjRSMSQqjQEccsg+rWKiIhnhJa0SxjNj5K31Q59bkf/3
- 2Vay2yzRSwPlokbYUuScqIj4KbjJhnniwm3IuIm1n/eDi1rZX463BTp3rPV8CccKJkNExv
- 9TQ9jKBLSapRmw+l3EPsyB0ZmyrckVAOKtvMy27NmyP3z9wFB66i0a/1neQwegrnvFjGgO
- oT7nl1OYtfvUrtA5/qUbpPOg4Fc6z08dygL/vHajt+sjjqQYEXuYqNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=K
- jeGOLkx7FSw05ZUb1CH94Aj74vaIo24inWmfslNUtA=;
- h=references:in-reply-to:
- date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=inLEoIY9aHcQnnwCT6I3kE8zow6UAwTOqcDPSbWfF85/JyPIJemKCNSpAK4Lq7WMtahk
- ugyJd6huMtSNiC7/QBrvBcFL94HzwhQ5p/eAb66U0srobcumJC5/bWgWPXXFbEcYvLOufQ
- P94MoWMtyERPRzoNjLI1iCd7RwNcrci73oUpAlIS2Z/QV3kmaJHC9PdK+cKixIMSNrIP/a
- eIX8mDq9WOsQMTc7mf7vnOnfL9W7TcFJqkjYj1SThNzi3XUbOkV0HQey7s5xOCQhDgNInd
- gY+mW6vfD+97675PmnwqOH1royeSy807k1sDzGn5rbMoEeJHlCdmLtoJijigX3Qw==
-ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
- header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=WZ3zBMTs; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=CFfy80JE;
- arc=none; iprev=fail; spf=none
- smtp.helo=postmaster@matebook.home.arpa; spf=softfail
- smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=KjeGOLkx
- 7FSw05ZUb1CH94Aj74vaIo24inWmfslNUtA=;
- h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=WZ3zBMTs4HQD/RZ1i++WhHmJfYOvJdNBXc/
- jF1jHAA+BljQy9pv+ukRwjO15ncZTEy7Xu9HviZUZkA4kYV3f22vI/kV0yQZHVr8UAbIKl
- sNvLpGbTlKRZG23cDVPYNNp9KZ4JzvsXjPxNlxjhjXfpWWaTqFBHsCUC03Tky8IX+qP08N
- NiyCnGjf7gj8Nwq/W0ZjzvxLyAXHspReHU23Ivi8oJc29pgQadfucUJsAyZVyjAgX+cWpc
- nFu8aMiYN9nxyvPHZb4vGgFsSzFUBcqi8d/7o2HKj7iO47iSLHKFTmgh1rpZMHfRxj3qJV
- yU1HtV4JAJTIF4OXwuj8Ythbw5Q==
-DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=KjeGOLkx7FSw05ZUb1CH94Aj74vaIo24inWmfslNUtA=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=CFfy80JEXoMdMp/MPo
- 1YNIMN3IUGdYsaC0pwbYkm/Wbqd4zfwWd2C9ypvrZ3QMxsO0Z4fTshtSprHB1ZYLDfCw==
-Received: by mx1.catap.net (OpenSMTPD) id 44bc5303;
- Wed, 11 Nov 2026 15:36:16 +0100 (CET)
-Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 78e5a114;
- Wed, 11 Nov 2026 15:35:55 +0100 (CET)
-From: Kirill A. Korinsky <kirill@korins.ky>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PATCH v7 25/26] hw/pci-bridge: add Octeon PCI memory window
-Date: Wed, 11 Nov 2026 15:32:25 +0100
-Message-ID: <20261111143533.1775-26-kirill@korins.ky>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261111143533.1775-1-kirill@korins.ky>
-References: <20261111143533.1775-1-kirill@korins.ky>
+ (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
+ id 1xR9UF-0001Er-By; Wed, 11 Nov 2026 09:39:43 -0500
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
+ id 1xR9UC-0004yN-NH; Wed, 11 Nov 2026 09:39:43 -0500
+Received: from k3-03 (unknown [159.226.43.8])
+ by APP-01 (Coremail) with SMTP id qwCowAA3YPokfvRqdHLNAA--.6200S2;
+ Wed, 11 Nov 2026 22:39:33 +0800 (CST)
+From: Tan Chi <tanchi25@mails.ucas.ac.cn>
+To: gong.shuai@sanechips.com.cn,
+	wu.fei9@sanechips.com.cn
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, mst@redhat.com, cohuck@redhat.com,
+ zhao.qingye@sanechips.com.cn, gsh517025@gmail.com
+Subject: Re: [RFC PATCH v2 10/14] hw/riscv/riscv-iommu-accel: Add
+ set/unset_iommu_device callback
+Date: Wed, 11 Nov 2026 22:38:49 +0800
+Message-ID: <20261111143849.13090-1-tanchi25@mails.ucas.ac.cn>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261029054751.563493-11-gong.shuai@sanechips.com.cn>
+References: <20261029054751.563493-11-gong.shuai@sanechips.com.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a01:4f8:271:125e::2;
- envelope-from=kirill@korins.ky; helo=mx1.catap.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qwCowAA3YPokfvRqdHLNAA--.6200S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7Gw4DAr45uw4fAryxKryfZwb_yoWfuwc_G3
+ 4ruFyDZr15tws5AFs8tr1xKrsxt34qyFy7tryUX34fJr1F934jgw1vvFWaqr18G34SyF1a
+ yFyfZw1fXr1vvjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUbhkYjsxI4VWxJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
+ 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+ 8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0
+ cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z2
+ 80aVCY1x0267AKxVW0oVCq3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY
+ 62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7V
+ C2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4II
+ rI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW5XwCF04
+ k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18
+ MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr4
+ 1lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l
+ IxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4
+ A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07johFxUUUUU=
+X-CM-SenderInfo: pwdquxrlsvqzpdlo2hpxfd2hldfou0/
+Received-SPF: pass client-ip=159.226.251.21;
+ envelope-from=tanchi25@mails.ucas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,357 +72,43 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: "Kirill A. Korinsky" <kirill@korins.ky>
+Hi Shuai and Fei,
 
-Map the PCI memory aperture and PEXP register bank. Apply SUBID
-controlled byte swapping to transactions between the big endian CPU and
-little endian PCI memory space.
+On 10/29/2026 1:47 PM, Gong Shuai wrote:
+> +    if (s->accel_state->viommu) {
+> +        goto done;
+> +    }
+>
+> +    if (!riscv_iommu_accel_alloc_viommu(s, idev, errp)) {
+> +        error_append_hint(errp, "Unable to alloc vIOMMU: idev devid 0x%x: ",
+> +                          idev->devid);
+> +        return false;
+> +    }
 
-Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
----
- hw/mips/octeon.c           |  26 ++++++
- hw/mips/octeon_internal.h  |   8 ++
- hw/pci-bridge/octeon_pci.c | 174 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 208 insertions(+)
+And in riscv_iommu_accel_alloc_viommu():
 
-diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 19d1451464..596fd678ff 100644
---- a/hw/mips/octeon.c
-+++ b/hw/mips/octeon.c
-@@ -2075,6 +2075,27 @@ static void octeon_stateful_io_write(OcteonState *s, uint64_t base,
-     octeon_csr_store(s, reg, octeon_write64(old, addr, value, size));
- }
- 
-+static uint64_t octeon_pexp_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    return octeon_pci_pexp_read(opaque, addr, size);
-+}
-+
-+static void octeon_pexp_write(void *opaque, hwaddr addr,
-+                              uint64_t value, unsigned size)
-+{
-+    octeon_pci_pexp_write(opaque, addr, value, size);
-+}
-+
-+static const MemoryRegionOps octeon_pexp_ops = {
-+    .read = octeon_pexp_read,
-+    .write = octeon_pexp_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 8,
-+    },
-+};
-+
- static uint64_t octeon_dpi_read(void *opaque, hwaddr addr, unsigned size)
- {
-     return octeon_stateful_io_read(opaque, OCTEON_DPI_BASE, addr, size);
-@@ -2854,6 +2875,11 @@ static void mips_octeon_init(MachineState *machine)
-     memory_region_add_subregion_overlap(get_system_memory(), OCTEON_CSR_BASE,
-                                         &s->csr_bank->csr, -1);
- 
-+    memory_region_init_io(&s->pexp, NULL, &octeon_pexp_ops, s,
-+                          "octeon.pexp", OCTEON_PEXP_SIZE);
-+    memory_region_add_subregion(get_system_memory(), OCTEON_PEXP_BASE,
-+                                &s->pexp);
-+
-     memory_region_init_io(&s->dpi, NULL, &octeon_dpi_ops, s,
-                           "octeon.dpi", OCTEON_DPI_SIZE);
-     memory_region_add_subregion(get_system_memory(), OCTEON_DPI_BASE,
-diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index c2a88dac46..f4ecbbac4f 100644
---- a/hw/mips/octeon_internal.h
-+++ b/hw/mips/octeon_internal.h
-@@ -18,6 +18,8 @@
- #define OCTEON_CIU_GPIO_COUNT       32
- #define OCTEON_CIU3_CP0_IRQ_COUNT   4
- #define OCTEON_CIU3_IDT_COUNT       (OCTEON_MAX_CPUS * 4)
-+#define OCTEON_PEXP_BASE            0x11f0000000000ULL
-+#define OCTEON_PEXP_SIZE            0x40000
- #define OCTEON_MIO_BOOT_REG_CFG_COUNT 8
- #define OCTEON_MIO_BOOT_LOC_SIZE    0x100
- #define OCTEON_MIO_EMM_BUF_SIZE     512
-@@ -78,6 +80,7 @@ struct OcteonState {
-     MemoryRegion boot_flash;
-     MemoryRegion boot_flash_alias;
-     MemoryRegion cvmseg;
-+    MemoryRegion pexp;
-     MemoryRegion dpi;
-     MemoryRegion fpa;
-     MemoryRegion ipd;
-@@ -98,6 +101,8 @@ struct OcteonState {
-     MemoryRegion pcie_cfg;
-     MemoryRegion pcie_sli_cfg;
-     MemoryRegion pcie0_io;
-+    MemoryRegion pcie0_mem;
-+    AddressSpace pcie0_mem_as;
- 
-     DeviceState *pci_host;
-     PCIBus *pci_bus;
-@@ -122,5 +127,8 @@ uint64_t octeon_pci_pem_read(OcteonState *s, hwaddr reg,
-                              hwaddr addr, unsigned size);
- void octeon_pci_pem_write(OcteonState *s, hwaddr reg, hwaddr addr,
-                           uint64_t value, unsigned size);
-+uint64_t octeon_pci_pexp_read(OcteonState *s, hwaddr addr, unsigned size);
-+void octeon_pci_pexp_write(OcteonState *s, hwaddr addr,
-+                           uint64_t value, unsigned size);
- 
- #endif
-diff --git a/hw/pci-bridge/octeon_pci.c b/hw/pci-bridge/octeon_pci.c
-index e2f856e164..02c42c4d09 100644
---- a/hw/pci-bridge/octeon_pci.c
-+++ b/hw/pci-bridge/octeon_pci.c
-@@ -7,6 +7,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/bswap.h"
- #include "qapi/error.h"
- #include "hw/core/resettable.h"
- #include "hw/core/sysbus.h"
-@@ -14,6 +15,7 @@
- #include "hw/pci/pci.h"
- #include "hw/pci/pci_host.h"
- #include "qemu/module.h"
-+#include "system/address-spaces.h"
- #include "system/memory.h"
- 
- #define TYPE_OCTEON_PCI_HOST "octeon-pci-host"
-@@ -29,7 +31,15 @@ OBJECT_DECLARE_TYPE(OcteonPCIHostState, OcteonPCIHostClass,
-     (OCTEON_PCIE_SLI_CFG_PORTS * OCTEON_PCIE_SLI_CFG_PORT_SIZE)
- #define OCTEON_PCIE0_IO_BASE        0x11a0400000000ULL
- #define OCTEON_PCIE0_IO_SIZE        (1ULL << 32)
-+#define OCTEON_PCIE0_MEM_BASE       0x11b0000000000ULL
- #define OCTEON_PCIE0_MEM_SIZE       (1ULL << 32)
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_BASE   0x000000e0
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_STRIDE 16
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_ESR_M  0x0000003000000000ULL
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_ESR_S  36
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_ESW_M  0x0000000c00000000ULL
-+#define OCTEON_SLI_MEM_ACCESS_SUBID_ESW_S  34
-+#define OCTEON_SLI_MEM_ACCESS_SWAP         3
- #define OCTEON_PCIE0_ENDPOINT_DEVFN PCI_DEVFN(0x0b, 0)
- #define OCTEON_PEMX_CFG_WR0         0xc0000028
- #define OCTEON_PEMX_CFG_RD0         0xc0000030
-@@ -45,6 +55,7 @@ struct OcteonPCIHostState {
-     uint32_t pem_cfg_rd_addr;
-     uint64_t pem_cfg_wr;
-     GHashTable *root_cfg;
-+    GHashTable *pexp_regs;
- };
- 
- struct OcteonPCIHostClass {
-@@ -64,6 +75,7 @@ static void octeon_pci_host_reset_hold(Object *obj, ResetType type)
-     host->pem_cfg_rd_addr = 0;
-     host->pem_cfg_wr = 0;
-     g_hash_table_remove_all(host->root_cfg);
-+    g_hash_table_remove_all(host->pexp_regs);
- }
- 
- static OcteonPCIHostState *octeon_pci_host(OcteonState *s)
-@@ -160,6 +172,34 @@ void octeon_pci_pem_write(OcteonState *s, hwaddr reg, hwaddr addr,
-     }
- }
- 
-+uint64_t octeon_pci_pexp_read(OcteonState *s, hwaddr addr, unsigned size)
-+{
-+    OcteonPCIHostState *host = octeon_pci_host(s);
-+    uint64_t reg = OCTEON_PEXP_BASE + (addr & ~7ULL);
-+    uint64_t value;
-+
-+    if (!octeon_reg_lookup(host->pexp_regs, reg, &value)) {
-+        value = 0;
-+    }
-+
-+    return octeon_read64(value, addr, size);
-+}
-+
-+void octeon_pci_pexp_write(OcteonState *s, hwaddr addr,
-+                           uint64_t value, unsigned size)
-+{
-+    OcteonPCIHostState *host = octeon_pci_host(s);
-+    uint64_t reg = OCTEON_PEXP_BASE + (addr & ~7ULL);
-+    uint64_t old;
-+
-+    if (!octeon_reg_lookup(host->pexp_regs, reg, &old)) {
-+        old = 0;
-+    }
-+
-+    octeon_reg_store(host->pexp_regs, reg,
-+                     octeon_write64(old, addr, value, size));
-+}
-+
- static uint64_t octeon_pci_absent(unsigned size)
- {
-     return size == 1 ? 0xff : size == 2 ? 0xffff : 0xffffffffU;
-@@ -256,6 +296,130 @@ static const MemoryRegionOps octeon_pcie_sli_cfg_ops = {
-     },
- };
- 
-+static uint64_t octeon_pcie_bswap(uint64_t value, unsigned size)
-+{
-+    switch (size) {
-+    case 1:
-+        return value;
-+    case 2:
-+        return bswap16(value);
-+    case 4:
-+        return bswap32(value);
-+    case 8:
-+        return bswap64(value);
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+static uint64_t octeon_pcie_mem_subid_reg(hwaddr addr)
-+{
-+    unsigned int subid = (addr >> 28) & 3;
-+
-+    return OCTEON_PEXP_BASE + OCTEON_SLI_MEM_ACCESS_SUBID_BASE +
-+           subid * OCTEON_SLI_MEM_ACCESS_SUBID_STRIDE;
-+}
-+
-+static bool octeon_pcie_mem_swap_enabled(OcteonPCIHostState *host,
-+                                         hwaddr addr, bool write)
-+{
-+    uint64_t value;
-+    uint64_t mask = write ? OCTEON_SLI_MEM_ACCESS_SUBID_ESW_M :
-+                            OCTEON_SLI_MEM_ACCESS_SUBID_ESR_M;
-+    unsigned int shift = write ? OCTEON_SLI_MEM_ACCESS_SUBID_ESW_S :
-+                                 OCTEON_SLI_MEM_ACCESS_SUBID_ESR_S;
-+
-+    if (!octeon_reg_lookup(host->pexp_regs,
-+                           octeon_pcie_mem_subid_reg(addr), &value)) {
-+        return false;
-+    }
-+
-+    return ((value & mask) >> shift) == OCTEON_SLI_MEM_ACCESS_SWAP;
-+}
-+
-+static uint64_t octeon_pcie0_mem_read(void *opaque, hwaddr addr,
-+                                      unsigned size)
-+{
-+    OcteonState *s = opaque;
-+    OcteonPCIHostState *host = octeon_pci_host(s);
-+    uint64_t value;
-+
-+    switch (size) {
-+    case 1:
-+        value = address_space_ldub(&s->pcie0_mem_as, addr,
-+                                   MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 2:
-+        value = address_space_lduw_le(&s->pcie0_mem_as, addr,
-+                                      MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 4:
-+        value = address_space_ldl_le(&s->pcie0_mem_as, addr,
-+                                     MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 8:
-+        value = address_space_ldq_le(&s->pcie0_mem_as, addr,
-+                                     MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (TARGET_BIG_ENDIAN &&
-+        !octeon_pcie_mem_swap_enabled(host, addr, false)) {
-+        value = octeon_pcie_bswap(value, size);
-+    }
-+
-+    return value;
-+}
-+
-+static void octeon_pcie0_mem_write(void *opaque, hwaddr addr,
-+                                   uint64_t value, unsigned size)
-+{
-+    OcteonState *s = opaque;
-+    OcteonPCIHostState *host = octeon_pci_host(s);
-+
-+    if (TARGET_BIG_ENDIAN &&
-+        !octeon_pcie_mem_swap_enabled(host, addr, true)) {
-+        value = octeon_pcie_bswap(value, size);
-+    }
-+
-+    switch (size) {
-+    case 1:
-+        address_space_stb(&s->pcie0_mem_as, addr, value,
-+                          MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 2:
-+        address_space_stw_le(&s->pcie0_mem_as, addr, value,
-+                             MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 4:
-+        address_space_stl_le(&s->pcie0_mem_as, addr, value,
-+                             MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    case 8:
-+        address_space_stq_le(&s->pcie0_mem_as, addr, value,
-+                             MEMTXATTRS_UNSPECIFIED, NULL);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+static const MemoryRegionOps octeon_pcie0_mem_ops = {
-+    .read = octeon_pcie0_mem_read,
-+    .write = octeon_pcie0_mem_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+    .impl = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
-+
- static int octeon_pci_map_irq(PCIDevice *pci_dev, int irq_num)
- {
-     return 0;
-@@ -273,6 +437,9 @@ static void octeon_pci_host_init(Object *obj)
-     host->root_cfg = g_hash_table_new_full(octeon_uint64_hash,
-                                            octeon_uint64_equal,
-                                            g_free, g_free);
-+    host->pexp_regs = g_hash_table_new_full(octeon_uint64_hash,
-+                                            octeon_uint64_equal,
-+                                            g_free, g_free);
- }
- 
- static void octeon_pci_host_finalize(Object *obj)
-@@ -280,6 +447,7 @@ static void octeon_pci_host_finalize(Object *obj)
-     OcteonPCIHostState *host = OCTEON_PCI_HOST(obj);
- 
-     g_hash_table_destroy(host->root_cfg);
-+    g_hash_table_destroy(host->pexp_regs);
- }
- 
- static void octeon_pci_host_class_init(ObjectClass *klass, const void *data)
-@@ -353,4 +521,10 @@ void octeon_init_pci(OcteonState *s)
-     memory_region_add_subregion(get_system_memory(), OCTEON_PCIE0_IO_BASE,
-                                 &s->pcie0_io);
- 
-+    address_space_init(&s->pcie0_mem_as, &host->mem,
-+                       "octeon.pcie0-mem-as");
-+    memory_region_init_io(&s->pcie0_mem, NULL, &octeon_pcie0_mem_ops, s,
-+                          "octeon.pcie0-mem", OCTEON_PCIE0_MEM_SIZE);
-+    memory_region_add_subregion(get_system_memory(), OCTEON_PCIE0_MEM_BASE,
-+                                &s->pcie0_mem);
- }
--- 
-2.56.0
+> +    /* Attach a HWPT based on ddtp.iommu_mode value */
+> +    hwpt_id = riscv_iommu_accel_ddtp_hwpt(s, accel);
+> +    if (!host_iommu_device_iommufd_attach_hwpt(idev, IOMMU_NO_PASID, hwpt_id,
+> +                                               errp)) {
+> +        goto free_bypass_hwpt;
+> +    }
+
+It looks like only the first VFIO device is attached to the abort/bypass
+HWPT. Subsequent devices in different IOMMU groups may remain attached
+to their original Stage-2 parent HWPT, potentially allowing DMA even
+when DDTP.Mode is OFF.
+
+Maybe we can follow ARM SMMUv3 and reattach all VFIO devices to the
+appropriate abort/bypass HWPT during reset.
+
+Thanks,
+Tan Chi
 
 
