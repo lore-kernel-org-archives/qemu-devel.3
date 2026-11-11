@@ -1,74 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F64606A326
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 12:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAEF606A33A
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 12:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Y7VX4/zc
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HXL3fAtz
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR7Mm-0002zP-LS; Wed, 11 Nov 2026 07:23:52 -0500
+	id 1xR7Ms-00030l-TM; Wed, 11 Nov 2026 07:23:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xR7Mk-0002zF-Hk
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:23:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xR7Mn-0002zl-NB
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:23:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xR7Mi-0000Z5-Tu
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:23:50 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xR7Mk-0000ZQ-Ca
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:23:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794399827;
+ s=mimecast20190719; t=1794399829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C3vLRlEciCIlHobsQE7L+mIHGxa0ovifEfqsih4JayE=;
- b=Y7VX4/zcHJ1gZK4Zf30YDB8lqRJTx5KYDH75XUEnD892OlmDsjsl41Jtkn/iYdkSj/75YG
- Ftaj/IHdHTyvdD3Uw6SL1Cz2yFQ5rF5H2gV2Cj72EvF5O5VUdnKcL5vyP2vCmShIkDtvlh
- hrxUF8cZukmhXRYw50EkgL4nf9PPUVU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=OYS0n+j2SskWhCisVLijNH4ZXdpdbSunH8tVqWIrrSo=;
+ b=HXL3fAtzgrEj7p6FpdFumCyoMmeVoXBbMvGMbxaaEi+Hmw0GA4iMNzUGJKgR8Nz11xsuMr
+ VpT7nRnpStSUKQn7uXxg9lOegYrCGgBnRKfwNyjdiHZjRkBZaeIwiiSsUMaSFHPDpQpT2J
+ Jl9NWPiHRf4gGgO1oliPYX4lx/iB1yE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-nJs39w55OoSqZodDEYueFg-1; Wed,
- 11 Nov 2026 07:23:46 -0500
-X-MC-Unique: nJs39w55OoSqZodDEYueFg-1
-X-Mimecast-MFC-AGG-ID: nJs39w55OoSqZodDEYueFg_1794399825
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655--v-vlIPyMrmvMM3cob7dJQ-1; Wed,
+ 11 Nov 2026 07:23:45 -0500
+X-MC-Unique: -v-vlIPyMrmvMM3cob7dJQ-1
+X-Mimecast-MFC-AGG-ID: -v-vlIPyMrmvMM3cob7dJQ_1794399825
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2956C1956042; Wed, 11 Nov 2026 12:23:45 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F0C52180288A; Wed, 11 Nov 2026 12:23:44 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB1F730000D3; Wed, 11 Nov 2026 12:23:44 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 97A3219634EF; Wed, 11 Nov 2026 12:23:44 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 464C521E6883; Wed, 11 Nov 2026 13:23:42 +0100 (CET)
+ id 41D5F21E6882; Wed, 11 Nov 2026 13:23:42 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: david@kernel.org, imammedo@redhat.com, berrange@redhat.com,
  peter.maydell@linaro.org
-Subject: [PATCH 4/7] backends/hostmem-epc: Register QOM type unconditionally
-Date: Wed, 11 Nov 2026 13:23:39 +0100
-Message-ID: <20261111122342.634370-5-armbru@redhat.com>
+Subject: [PATCH 3/7] backends/hostmem: Improve error reporting when method
+ alloc() fails
+Date: Wed, 11 Nov 2026 13:23:38 +0100
+Message-ID: <20261111122342.634370-4-armbru@redhat.com>
 In-Reply-To: <20261111122342.634370-1-armbru@redhat.com>
 References: <20261111122342.634370-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,64 +87,68 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The example from docs/system/i386/sgx.rst section "Launching a guest"
-fails for me like this:
+When HostMemoryBackend method alloc() fails, the error report isn't
+always clear.  E.g. "-object memory-backend-shm,id=mem0,size=1E" fails
+for me like this:
 
-    $ qemu-system-x86_64 -cpu host,+sgx-provisionkey -object memory-backend-epc,id=mem1,size=64M,prealloc=on -M sgx-epc.0.memdev=mem1,sgx-epc.0.node=0
-    qemu-system-x86_64: invalid object type: memory-backend-epc
+    qemu-system-x86_64: unable to map backing store for guest RAM: Cannot allocate memory
 
-Device "sgx-epc" has a link property to a "memory-backend-epc" (SgxEPC
-member memdev).  It's not optional, so we must create a
-"memory-backend-epc" to be able to create an "sgx-epc".  In the test
-shown above, "sgx-epc" exists, but "memory-backend-epc" does not.
+Leaves users guessing which part of the (often lengthy) command line
+needs fixing.
 
-The latter doesn't exist for me, because we register QOM type
-"memory-backend-epc" only when we can open /dev/sgx_vepc read/write,
-which fails for me.  Such conditional registration is unusual and
-problematic:
+Let's prepend a bit of context:
 
-1. Management applications use introspection interfaces to find out
-what a certain QEMU can do.  Conditional type registration makes QOM
-introspection results depend on the condition, which generally makes
-them valid only for the process that produced them.  Undesirable.
+    qemu-system-x86_64: can't create memory-backend-shm: unable to map backing store for guest RAM: Cannot allocate memory
 
-2. For user-creatable objects like "memory-backend-epc", it also makes
-QAPI introspection unreliable: query-qmp-schema claims the type
-exists (object-add argument @qom-type accepts "memory-backend-epc")
-even when it doesn't.
+This makes an error message in shm_backend_memory_alloc() partly
+redundant:
 
-Conditional registration actually serves no purpose here, because we
-still have to open /dev/sgx_vepc for real when we create the object,
-and need and do handle errors then.
+    qemu-system-x86_64: can't create memory-backend-shm: can't create shm backend with `share=off`
 
-Register unconditionally.  The example now fails to create the object,
-like this:
+Change it to
 
-    qemu-system-x86_64: can't create 'memory-backend-epc': Could not open '/dev/sgx_vepc': No such file or directory
+    qemu-system-x86_64: can't create memory-backend-shm: backend requires 'share=on'
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- backends/hostmem-epc.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ backends/hostmem-shm.c | 2 +-
+ backends/hostmem.c     | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/backends/hostmem-epc.c b/backends/hostmem-epc.c
-index e1c784249ff..bf5aecdfd45 100644
---- a/backends/hostmem-epc.c
-+++ b/backends/hostmem-epc.c
-@@ -62,12 +62,7 @@ static const TypeInfo sgx_epc_backed_info = {
+diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
+index 0a01c760551..d1cba22cbeb 100644
+--- a/backends/hostmem-shm.c
++++ b/backends/hostmem-shm.c
+@@ -31,7 +31,7 @@ shm_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     int fd = cpr_find_fd(backend_name, 0);
  
- static void register_types(void)
+     if (!backend->share) {
+-        error_setg(errp, "can't create shm backend with `share=off`");
++        error_setg(errp, "backend requires 'share=on'");
+         return false;
+     }
+ 
+diff --git a/backends/hostmem.c b/backends/hostmem.c
+index 173d042be35..1c2a5d42fc5 100644
+--- a/backends/hostmem.c
++++ b/backends/hostmem.c
+@@ -335,6 +335,7 @@ size_t host_memory_backend_pagesize(HostMemoryBackend *memdev)
+ static void
+ host_memory_backend_memory_complete(UserCreatable *uc, Error **errp)
  {
--    int fd = qemu_open_old("/dev/sgx_vepc", O_RDWR);
--    if (fd >= 0) {
--        close(fd);
--
--        type_register_static(&sgx_epc_backed_info);
--    }
-+    type_register_static(&sgx_epc_backed_info);
- }
++    ERRP_GUARD();
+     HostMemoryBackend *backend = MEMORY_BACKEND(uc);
+     HostMemoryBackendClass *bc = MEMORY_BACKEND_GET_CLASS(uc);
+     void *ptr;
+@@ -346,6 +347,8 @@ host_memory_backend_memory_complete(UserCreatable *uc, Error **errp)
+         return;
+     }
+     if (!bc->alloc(backend, errp)) {
++        error_prepend(errp, "can't create '%s': ",
++                      object_get_typename(OBJECT(uc)));
+         return;
+     }
  
- type_init(register_types);
 -- 
 2.55.0
 
