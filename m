@@ -1,56 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F6D606A326
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 12:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44970606A88C
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 12:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=jxjZfpwt
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YxJiocIh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR7CY-0005r3-Eg; Wed, 11 Nov 2026 07:13:18 -0500
+	id 1xR7Ft-0007Wb-UN; Wed, 11 Nov 2026 07:16:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xR7CW-0005qo-Lh
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:13:17 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xR7Ft-0007Vu-15
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:16:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xR7CS-0004sk-2w
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:13:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794399187; bh=jF6zjXau9iMhwYsVDPljMqmwImffhPlRfK/JOFANCGQ=;
- h=From:To:Cc:Subject:Date;
- b=jxjZfpwtt7LXxlCxEoKk2yI1WwsbzJyirU+S+klrXb4u5lbPpOGoKCWt59W2XW1y9
- xvh4Qr8Fh4qutXJdEsayhDqXRPZhU9cqsS+HssP6Jr8TzIGU6zf3yGdJAPKzecFNZ0
- cHzqgAD2fGeRGxIlhGA81J8frAjcnIavpepCOj2gDoMgoiDVo+ZePbieyatgjjEpYW
- YhXeHiuzWxZQovdTRzjhgF6iFdUQXrwY6XQhacU1tqJOvcWC6Ad+T3xTBEM60j+7hq
- XlcdEEQSSkvAu3Dh4+wrRuwdNYLMrTqe6ljTztYVgzn+m3YpTX913xEbnP3RTgvSiz
- vLJvvpgUPQ/vQ==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 68B8E1E5675;
- Wed, 11 Nov 2026 15:13:07 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3E6D2458EC8;
- Wed, 11 Nov 2026 15:13:07 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH] linux-user/vdso: make the binaries reproducible
-Date: Wed, 11 Nov 2026 15:12:59 +0300
-Message-ID: <20261111121259.14941-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xR7Fr-0005C7-EZ
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:16:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794399402;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=d+3dNTb5C6Yaz6YPsOrwsde4hWWwrBWk01C5joDfFzs=;
+ b=YxJiocIhCNrvyc5kvSRqiwDZPS5CFirUEd+7bTihF4LOvNnMgS29lCmbUde+5R8iHjxXaf
+ ipJz62DHNjurU0iz18av45fRpj9rKIXMLvFriY9kSUGEUhItK7k0PYeO8OavDuMuC7J6Xb
+ tQlbHhs90ydoh46nJ/KUsJW89VGR6Nk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-5EuLuomhPwObE-FY1lrdsA-1; Wed,
+ 11 Nov 2026 07:16:41 -0500
+X-MC-Unique: 5EuLuomhPwObE-FY1lrdsA-1
+X-Mimecast-MFC-AGG-ID: 5EuLuomhPwObE-FY1lrdsA_1794399399
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 541D018011E1; Wed, 11 Nov 2026 12:16:39 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A0CB6588; Wed, 11 Nov 2026 12:16:38 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5CDA221E6A04; Wed, 11 Nov 2026 13:16:36 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,  David
+ Hildenbrand <david@kernel.org>,  Igor Mammedov <imammedo@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Marcelo Tosatti
+ <mtosatti@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, qemu-s390x@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: Re: qemu-system-x86_64 appears to have sgx-epc, but not
+ memory-backend-epc
+In-Reply-To: <CAFEAcA_wabjzp0KF69-ay75QoOk=jE-TygrD-T-b60dw1iOs=g@mail.gmail.com>
+ (Peter Maydell's message of "Fri, 23 Oct 2026 11:44:10 +0100")
+References: <87zew5j3iv.fsf@pond.sub.org> <ats0_RfeVugAofN9@redhat.com>
+ <CAFEAcA_wabjzp0KF69-ay75QoOk=jE-TygrD-T-b60dw1iOs=g@mail.gmail.com>
+Date: Wed, 11 Nov 2026 13:16:36 +0100
+Message-ID: <87bj7vwokb.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,245 +91,96 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Currently the linux-user vdso*.so files are not reproducible,
-because for one, the binaries embed a random temporary file
-name used by the compiler during compilation, such as ccuckKYd.o.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-At the very least, use -pipe to avoid the need to have a temp
-file in the first place - this makes the build repeatable.
+> On Fri, 23 Oct 2026 at 11:21, Daniel P. Berrang=C3=A9 <berrange@redhat.co=
+m> wrote:
+>>
+>> On Thu, Oct 22, 2026 at 02:58:16PM +0200, Markus Armbruster wrote:
+>> > My build of qemu-system-x86_64 has device sgx-epc:
+>> >
+>> >  --> {"execute": "qom-list-types", "arguments": {"implements": "sgx-ep=
+c"}}
+>> >  <-- {"return": [{"name": "sgx-epc", "parent": "device"}]}
+>> >
+>> > The device as a link property to a memory-backend-epc:
+>> >
+>> >  --> {"execute": "qom-list-properties", "arguments": {"typename": "sgx=
+-epc"}}
+>> >  <-- {"return": [...
+>> >                  {"name": "memdev", "type": "link<memory-backend-epc>"=
+},
+>> >                  ...]}
+>> >
+>> > However, type memory-backend-epc does not exist:
+>
+>> There is some rather dubious code that conditionally registers
+>> the type
+>>
+>> static void register_types(void)
+>> {
+>>     int fd =3D qemu_open_old("/dev/sgx_vepc", O_RDWR);
+>>     if (fd >=3D 0) {
+>>         close(fd);
+>>
+>>         type_register_static(&sgx_epc_backed_info);
+>>     }
+>> }
+>>
+>>
+>> Normal practice is for types to be unconditionally registered.  Do we
+>> have any examples outside of this SGX case where we conditionally
+>> register types ?   Should we change this to follow normal practice ?
+>
+> TYPE_MEMORY_BACKEND_MEMFD does the same. I did a quick grep for
+> "calls to type_register not indented by exactly 4 spaces" and
+> I think the other cases are "misindented" or "data-driven
+> type registration" rather than trying to do things conditionally
+> (but I didn't actually look at all of them, instead making
+> guesses based on variable names, so maybe there's one or two
+> more I missed).
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- linux-user/aarch64/Makefile.vdso     | 6 ++++--
- linux-user/arm/Makefile.vdso         | 8 +++++---
- linux-user/hppa/Makefile.vdso        | 4 +++-
- linux-user/i386/Makefile.vdso        | 4 +++-
- linux-user/loongarch64/Makefile.vdso | 4 +++-
- linux-user/ppc/Makefile.vdso         | 8 +++++---
- linux-user/riscv/Makefile.vdso       | 6 ++++--
- linux-user/s390x/Makefile.vdso       | 4 +++-
- linux-user/sh4/Makefile.vdso         | 6 ++++--
- linux-user/x86_64/Makefile.vdso      | 4 +++-
- 10 files changed, 37 insertions(+), 17 deletions(-)
+Alright, I looked.  In addition to "misindented" or "data-driven", I
+found:
 
-diff --git a/linux-user/aarch64/Makefile.vdso b/linux-user/aarch64/Makefile.vdso
-index 82ed201108..1789b67268 100644
---- a/linux-user/aarch64/Makefile.vdso
-+++ b/linux-user/aarch64/Makefile.vdso
-@@ -3,6 +3,8 @@ include $(BUILD_DIR)/linux-user/aarch64/config-target.mak
- SUBDIR = $(SRC_PATH)/linux-user/aarch64
- VPATH += $(SUBDIR)
- 
-+REPRODUCIBLE = -pipe
-+
- all: $(SUBDIR)/vdso-be.so $(SUBDIR)/vdso-le.so
- 
- LDFLAGS = -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
-@@ -10,7 +12,7 @@ LDFLAGS = -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
- 	  -Wl,-z,max-page-size=4096 -Wl,-T,$(SUBDIR)/vdso.ld
- 
- $(SUBDIR)/vdso-be.so: vdso.S vdso.ld
--	$(CC) -o $@ $(LDFLAGS) -mbig-endian $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mbig-endian $<
- 
- $(SUBDIR)/vdso-le.so: vdso.S vdso.ld
--	$(CC) -o $@ $(LDFLAGS) -mlittle-endian $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mlittle-endian $<
-diff --git a/linux-user/arm/Makefile.vdso b/linux-user/arm/Makefile.vdso
-index 16ae8d7aaa..360b77185f 100644
---- a/linux-user/arm/Makefile.vdso
-+++ b/linux-user/arm/Makefile.vdso
-@@ -3,6 +3,8 @@ include $(BUILD_DIR)/linux-user/arm/config-target.mak
- SUBDIR = $(SRC_PATH)/linux-user/arm
- VPATH += $(SUBDIR)
- 
-+REPRODUCIBLE = -pipe
-+
- all: $(SUBDIR)/vdso-be8.so $(SUBDIR)/vdso-be32.so $(SUBDIR)/vdso-le.so
- 
- # Adding -use-blx disables unneeded interworking without actually using blx.
-@@ -11,10 +13,10 @@ LDFLAGS = -nostdlib -shared -Wl,-use-blx -Wl,-z,max-page-size=4096 \
- 	  -Wl,--hash-style=both -Wl,-T,$(SUBDIR)/vdso.ld
- 
- $(SUBDIR)/vdso-be8.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC) -o $@ $(LDFLAGS) -mbig-endian -mbe8 $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mbig-endian -mbe8 $<
- 
- $(SUBDIR)/vdso-be32.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC) -o $@ $(LDFLAGS) -mbig-endian -mbe32 $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mbig-endian -mbe32 $<
- 
- $(SUBDIR)/vdso-le.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC) -o $@ $(LDFLAGS) -mlittle-endian $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mlittle-endian $<
-diff --git a/linux-user/hppa/Makefile.vdso b/linux-user/hppa/Makefile.vdso
-index 78642c4266..5f3f2ddde9 100644
---- a/linux-user/hppa/Makefile.vdso
-+++ b/linux-user/hppa/Makefile.vdso
-@@ -3,9 +3,11 @@ include $(BUILD_DIR)/linux-user/hppa/config-target.mak
- SUBDIR = $(SRC_PATH)/linux-user/hppa
- VPATH += $(SUBDIR)
- 
-+REPRODUCIBLE = -pipe
-+
- all: $(SUBDIR)/vdso.so
- 
- $(SUBDIR)/vdso.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC) -o $@ -nostdlib -shared -Wl,-h,linux-vdso32.so.1 \
-+	$(CC) $(REPRODUCIBLE) -o $@ -nostdlib -shared -Wl,-h,linux-vdso32.so.1 \
- 	  -Wl,--build-id=sha1 -Wl,--hash-style=both \
- 	  -Wl,-T,$(SUBDIR)/vdso.ld $<
-diff --git a/linux-user/i386/Makefile.vdso b/linux-user/i386/Makefile.vdso
-index ca2e37fa6b..e797c5c7fe 100644
---- a/linux-user/i386/Makefile.vdso
-+++ b/linux-user/i386/Makefile.vdso
-@@ -3,9 +3,11 @@ include $(BUILD_DIR)/linux-user/i386/config-target.mak
- SUBDIR = $(SRC_PATH)/linux-user/i386
- VPATH += $(SUBDIR)
- 
-+REPRODUCIBLE = -pipe
-+
- all: $(SUBDIR)/vdso.so
- 
- $(SUBDIR)/vdso.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC) -o $@ -m32 -nostdlib -shared -Wl,-h,linux-gate.so.1 \
-+	$(CC) $(REPRODUCIBLE) -o $@ -m32 -nostdlib -shared -Wl,-h,linux-gate.so.1 \
- 	  -Wl,--build-id=sha1 -Wl,--hash-style=both \
- 	  -Wl,-T,$(SUBDIR)/vdso.ld $<
-diff --git a/linux-user/loongarch64/Makefile.vdso b/linux-user/loongarch64/Makefile.vdso
-index ceb6110120..64a422e66d 100644
---- a/linux-user/loongarch64/Makefile.vdso
-+++ b/linux-user/loongarch64/Makefile.vdso
-@@ -3,10 +3,12 @@ include $(BUILD_DIR)/linux-user/loongarch64/config-target.mak
- SUBDIR = $(SRC_PATH)/linux-user/loongarch64
- VPATH += $(SUBDIR)
- 
-+REPRODUCIBLE = -pipe
-+
- all: $(SUBDIR)/vdso.so
- 
- $(SUBDIR)/vdso.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC) -o $@ -nostdlib -shared -fpic -Wl,-h,linux-vdso.so.1 \
-+	$(CC) $(REPRODUCIBLE) -o $@ -nostdlib -shared -fpic -Wl,-h,linux-vdso.so.1 \
- 	  -Wl,--build-id=sha1 -Wl,--hash-style=both \
- 	  -Wl,--no-warn-rwx-segments -Wl,-z,max-page-size=4096 \
- 	  -Wl,-T,$(SUBDIR)/vdso.ld $<
-diff --git a/linux-user/ppc/Makefile.vdso b/linux-user/ppc/Makefile.vdso
-index 6b9be84381..87a2bc1c57 100644
---- a/linux-user/ppc/Makefile.vdso
-+++ b/linux-user/ppc/Makefile.vdso
-@@ -3,6 +3,8 @@ include $(BUILD_DIR)/linux-user/ppc64/config-target.mak
- SUBDIR = $(SRC_PATH)/linux-user/ppc
- VPATH += $(SUBDIR)
- 
-+REPRODUCIBLE = -pipe
-+
- all: $(SUBDIR)/vdso-32.so $(SUBDIR)/vdso-64.so $(SUBDIR)/vdso-64le.so
- 
- LDFLAGS32 = -nostdlib -shared -Wl,-T,$(SUBDIR)/vdso-32.ld \
-@@ -13,10 +15,10 @@ LDFLAGS64 = -nostdlib -shared -Wl,-T,$(SUBDIR)/vdso-64.ld \
- 	    -Wl,--build-id=sha1 -Wl,-z,max-page-size=4096
- 
- $(SUBDIR)/vdso-32.so: vdso.S vdso-32.ld vdso-asmoffset.h
--	$(CC) -o $@ $(LDFLAGS32) -m32 $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS32) -m32 $<
- 
- $(SUBDIR)/vdso-64.so: vdso.S vdso-64.ld vdso-asmoffset.h
--	$(CC) -o $@ $(LDFLAGS64) -mbig-endian $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS64) -mbig-endian $<
- 
- $(SUBDIR)/vdso-64le.so: vdso.S vdso-64.ld vdso-asmoffset.h
--	$(CC) -o $@ $(LDFLAGS64) -mlittle-endian $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS64) -mlittle-endian $<
-diff --git a/linux-user/riscv/Makefile.vdso b/linux-user/riscv/Makefile.vdso
-index 2eefdb70cf..2a47a3113d 100644
---- a/linux-user/riscv/Makefile.vdso
-+++ b/linux-user/riscv/Makefile.vdso
-@@ -3,13 +3,15 @@ include $(BUILD_DIR)/linux-user/riscv64/config-target.mak
- SUBDIR = $(SRC_PATH)/linux-user/riscv
- VPATH += $(SUBDIR)
- 
-+REPRODUCIBLE = -pipe
-+
- all: $(SUBDIR)/vdso-32.so $(SUBDIR)/vdso-64.so
- 
- LDFLAGS = -nostdlib -shared -fpic -Wl,-h,linux-vdso.so.1 -Wl,--build-id=sha1 \
- 	  -Wl,--hash-style=both -Wl,-T,$(SUBDIR)/vdso.ld
- 
- $(SUBDIR)/vdso-32.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC) -o $@ $(LDFLAGS) -mabi=ilp32d -march=rv32g $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mabi=ilp32d -march=rv32g $<
- 
- $(SUBDIR)/vdso-64.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC) -o $@ $(LDFLAGS) -mabi=lp64d -march=rv64g $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mabi=lp64d -march=rv64g $<
-diff --git a/linux-user/s390x/Makefile.vdso b/linux-user/s390x/Makefile.vdso
-index 51f7c50a2d..65ac267239 100644
---- a/linux-user/s390x/Makefile.vdso
-+++ b/linux-user/s390x/Makefile.vdso
-@@ -3,9 +3,11 @@ include $(BUILD_DIR)/linux-user/s390x/config-target.mak
- SUBDIR = $(SRC_PATH)/linux-user/s390x
- VPATH += $(SUBDIR)
- 
-+REPRODUCIBLE = -pipe
-+
- all: $(SUBDIR)/vdso.so
- 
- $(SUBDIR)/vdso.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC) -o $@ -nostdlib -shared -Wl,-h,linux-vdso64.so.1 \
-+	$(CC) $(REPRODUCIBLE) -o $@ -nostdlib -shared -Wl,-h,linux-vdso64.so.1 \
- 	  -Wl,--build-id=sha1 -Wl,--hash-style=both \
- 	  -Wl,-T,$(SUBDIR)/vdso.ld $<
-diff --git a/linux-user/sh4/Makefile.vdso b/linux-user/sh4/Makefile.vdso
-index ed2cc11b82..97375a4783 100644
---- a/linux-user/sh4/Makefile.vdso
-+++ b/linux-user/sh4/Makefile.vdso
-@@ -3,6 +3,8 @@ include $(BUILD_DIR)/linux-user/sh4/config-target.mak
- SUBDIR = $(SRC_PATH)/linux-user/sh4
- VPATH += $(SUBDIR)
- 
-+REPRODUCIBLE = -pipe
-+
- all: $(SUBDIR)/vdso-le.so $(SUBDIR)/vdso-be.so
- 
- LDFLAGS = -nostdlib -shared -Wl,-h,linux-gate.so.1 \
-@@ -10,9 +12,9 @@ LDFLAGS = -nostdlib -shared -Wl,-h,linux-gate.so.1 \
- 	  -Wl,-T,$(SUBDIR)/vdso.ld
- 
- $(SUBDIR)/vdso-le.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC) -o $@ $(LDFLAGS) -ml $<
-+	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -ml $<
- 
- CC_BE = sh4eb-unknown-linux-gnu-gcc
- 
- $(SUBDIR)/vdso-be.so: vdso.S vdso.ld vdso-asmoffset.h
--	$(CC_BE) -o $@ $(LDFLAGS) $<
-+	$(CC_BE) $(REPRODUCIBLE) -o $@ $(LDFLAGS) $<
-diff --git a/linux-user/x86_64/Makefile.vdso b/linux-user/x86_64/Makefile.vdso
-index 56fe87af72..41281ffe0a 100644
---- a/linux-user/x86_64/Makefile.vdso
-+++ b/linux-user/x86_64/Makefile.vdso
-@@ -3,9 +3,11 @@ include $(BUILD_DIR)/linux-user/x86_64/config-target.mak
- SUBDIR = $(SRC_PATH)/linux-user/x86_64
- VPATH += $(SUBDIR)
- 
-+REPRODUCIBLE = -pipe
-+
- all: $(SUBDIR)/vdso.so
- 
- $(SUBDIR)/vdso.so: vdso.S vdso.ld
--	$(CC) -o $@ -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
-+	$(CC) $(REPRODUCIBLE) -o $@ -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
- 	  -Wl,--build-id=sha1 -Wl,--hash-style=both \
- 	  -Wl,-T,$(SUBDIR)/vdso.ld $<
--- 
-2.47.3
+* register_types() in hostmem-memfd.c registers "memory-backend-memfd"
+  only when a test of memfd_create() succeeds.  This is what Peter
+  reported.
+
+* virtio_ccw_gpu_register() in hw/s390x/virtio-ccw-gpu.c registers
+  "virtio-gpu-ccw" only when have_virtio_ccw, which is true when
+  hw/s390x/virtio-ccw.c gets compiled into the binary.  So it's
+  effectively compile-time conditional.
+
+  I wish it was literally compile-time conditional, either in meson or
+  using #if.
+
+* qemu_console_early_init() in ui/console-vc.c registers "chardev-vc" if
+  it's not already registered.  early_dbus_init() in ui/dbus.c,
+  early_gtk_display_init() in ui/gtk.c, and
+  spice_app_display_early_init() in ui/spice-app.c all register it.
+
+  These are all QemuDisplay .early_init() callbacks.
+  qemu_display_early_init() calls the selected display's .early_init(),
+  if non-null.
+
+  Because qemu_console_early_init() runs after
+  qemu_display_early_init(), this always registers a "chardev-vc": the
+  active display may register its own, and when it doesn't, we get
+  ui/console-vc.c's.
+
+  More moving parts than I'd like.
+
+I'm going to post patches for backends/hostmem-{epc,memfd}.c.  I don't
+plan to clean up the other two at this time.
+
+[...]
 
 
