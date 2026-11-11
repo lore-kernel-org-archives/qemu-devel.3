@@ -1,66 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D6E606A324
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 14:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423DB606A33E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 15:08:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Ml/mcy8Y
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR9UJ-0001JG-T1; Wed, 11 Nov 2026 09:39:48 -0500
+	id 1xR9vI-0007Tl-FB; Wed, 11 Nov 2026 10:07:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
- id 1xR9UF-0001Er-By; Wed, 11 Nov 2026 09:39:43 -0500
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
- id 1xR9UC-0004yN-NH; Wed, 11 Nov 2026 09:39:43 -0500
-Received: from k3-03 (unknown [159.226.43.8])
- by APP-01 (Coremail) with SMTP id qwCowAA3YPokfvRqdHLNAA--.6200S2;
- Wed, 11 Nov 2026 22:39:33 +0800 (CST)
-From: Tan Chi <tanchi25@mails.ucas.ac.cn>
-To: gong.shuai@sanechips.com.cn,
-	wu.fei9@sanechips.com.cn
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
- palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, mst@redhat.com, cohuck@redhat.com,
- zhao.qingye@sanechips.com.cn, gsh517025@gmail.com
-Subject: Re: [RFC PATCH v2 10/14] hw/riscv/riscv-iommu-accel: Add
- set/unset_iommu_device callback
-Date: Wed, 11 Nov 2026 22:38:49 +0800
-Message-ID: <20261111143849.13090-1-tanchi25@mails.ucas.ac.cn>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261029054751.563493-11-gong.shuai@sanechips.com.cn>
-References: <20261029054751.563493-11-gong.shuai@sanechips.com.cn>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xR9uu-0007LG-6U
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 10:07:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xR9uq-0000t3-BE
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 10:07:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794409625;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=UFrM4WpSySpasTj+U73aZBoiXT47gy/wAfaPfKr5U48=;
+ b=Ml/mcy8YUmLuzLtNpYrkqK1a0RSWpDMOzfqpsYE72mwd5yzROW/Vk91MDLpo4XKZ9alZp1
+ r0WBVhmLBNtNMkWv9gy8W9VFHHImT9H2pJawYZ4ujsh/Rpdqd0HuTbPEBfWr7hwf+7qFgg
+ fdSfLcluUhOWvdW7tT7/OK3UDQDZx8w=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-4FcVdOIrNYq1Y-kkfgNXWg-1; Wed,
+ 11 Nov 2026 10:07:03 -0500
+X-MC-Unique: 4FcVdOIrNYq1Y-kkfgNXWg-1
+X-Mimecast-MFC-AGG-ID: 4FcVdOIrNYq1Y-kkfgNXWg_1794409622
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BE4F195398E; Wed, 11 Nov 2026 15:07:02 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.32.37])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BBF71195608B; Wed, 11 Nov 2026 15:07:00 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>,
+	qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>,
+	qemu-block@nongnu.org
+Subject: [PATCH] block/vhdx-log: Improve sanity checks to avoid OOB accesses
+ with bad images
+Date: Wed, 11 Nov 2026 16:06:59 +0100
+Message-ID: <20261111150659.253918-1-thuth@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowAA3YPokfvRqdHLNAA--.6200S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Gw4DAr45uw4fAryxKryfZwb_yoWfuwc_G3
- 4ruFyDZr15tws5AFs8tr1xKrsxt34qyFy7tryUX34fJr1F934jgw1vvFWaqr18G34SyF1a
- yFyfZw1fXr1vvjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUbhkYjsxI4VWxJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
- 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
- 8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0
- cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z2
- 80aVCY1x0267AKxVW0oVCq3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY
- 62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7V
- C2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4II
- rI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW5XwCF04
- k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18
- MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr4
- 1lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l
- IxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4
- A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07johFxUUUUU=
-X-CM-SenderInfo: pwdquxrlsvqzpdlo2hpxfd2hldfou0/
-Received-SPF: pass client-ip=159.226.251.21;
- envelope-from=tanchi25@mails.ucas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,43 +77,58 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Shuai and Fei,
+The multiplication "hdr->descriptor_count * sizeof(VHDXLogDescriptor)" in
+vhdx_log_hdr_is_valid() can overflow on 32-bit systems, so this function
+could mark bad images as valid when the truncated result is smaller than
+hdr->entry_length. Switch to a division on the right hand side instead to
+avoid the overflow problems.
 
-On 10/29/2026 1:47 PM, Gong Shuai wrote:
-> +    if (s->accel_state->viommu) {
-> +        goto done;
-> +    }
->
-> +    if (!riscv_iommu_accel_alloc_viommu(s, idev, errp)) {
-> +        error_append_hint(errp, "Unable to alloc vIOMMU: idev devid 0x%x: ",
-> +                          idev->devid);
-> +        return false;
-> +    }
+The second problem is in vhdx_log_read_desc(): desc_sectors is a 32-bit
+value, thus the multiplication "desc_sectors * VHDX_LOG_SECTOR_SIZE" is
+also done with 32 bit arithmetics, and the result is used as "size_t"
+parameter for qemu_try_blockalign(), i.e. the parameter here is also
+only 32 bits on 32-bit systems. Let's add a sanity check here to avoid
+the overflow problem that could lead to trouble later.
 
-And in riscv_iommu_accel_alloc_viommu():
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3860
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ block/vhdx-log.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-> +    /* Attach a HWPT based on ddtp.iommu_mode value */
-> +    hwpt_id = riscv_iommu_accel_ddtp_hwpt(s, accel);
-> +    if (!host_iommu_device_iommufd_attach_hwpt(idev, IOMMU_NO_PASID, hwpt_id,
-> +                                               errp)) {
-> +        goto free_bypass_hwpt;
-> +    }
-
-It looks like only the first VFIO device is attached to the abort/bypass
-HWPT. Subsequent devices in different IOMMU groups may remain attached
-to their original Stage-2 parent HWPT, potentially allowing DMA even
-when DDTP.Mode is OFF.
-
-Maybe we can follow ARM SMMUv3 and reattach all VFIO devices to the
-appropriate abort/bypass HWPT during reset.
-
-Thanks,
-Tan Chi
+diff --git a/block/vhdx-log.c b/block/vhdx-log.c
+index 4385a2d4f62..5c20468e1e6 100644
+--- a/block/vhdx-log.c
++++ b/block/vhdx-log.c
+@@ -246,7 +246,7 @@ static bool vhdx_log_hdr_is_valid(VHDXLogEntries *log, VHDXLogEntryHeader *hdr,
+         goto exit;
+     }
+ 
+-    if (hdr->descriptor_count * sizeof(VHDXLogDescriptor) > hdr->entry_length) {
++    if (hdr->descriptor_count > hdr->entry_length / sizeof(VHDXLogDescriptor)) {
+         goto exit;
+     }
+ 
+@@ -360,6 +360,10 @@ vhdx_log_read_desc(BlockDriverState *bs, BDRVVHDXState *s, VHDXLogEntries *log,
+     }
+ 
+     desc_sectors = vhdx_compute_desc_sectors(hdr.descriptor_count);
++    if (desc_sectors > UINT32_MAX / VHDX_LOG_SECTOR_SIZE) {
++        ret = -EINVAL;
++        goto exit;
++    }
+     desc_entries = qemu_try_blockalign(bs->file->bs,
+                                        desc_sectors * VHDX_LOG_SECTOR_SIZE);
+     if (desc_entries == NULL) {
+-- 
+2.56.0
 
 
