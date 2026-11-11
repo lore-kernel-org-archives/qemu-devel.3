@@ -1,71 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A21606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 12:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC21606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 12:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FTtZpzWq
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=aWem43lq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR7sG-0005vm-QJ; Wed, 11 Nov 2026 07:56:24 -0500
+	id 1xR7sx-0006Aj-23; Wed, 11 Nov 2026 07:57:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xR7s8-0005vH-3v
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:56:17 -0500
+ id 1xR7sk-000694-FF
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:56:59 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xR7s6-0005wm-9r
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:56:15 -0500
+ id 1xR7si-0005zG-2u
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 07:56:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794401773;
+ s=mimecast20190719; t=1794401811;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aT9QD2WMo9mvxyh3v1OMHs42ORlsTA48MeH3FISCLaQ=;
- b=FTtZpzWqSR3bzbHiglNMLboSB7toUikiTKSMqytDItVCeYHJ0e9f3lNtx4boY0FTkbxKcA
- Mxr5h8KcsUbF48sIBxEO4bj+uLzAgPthob6WP5FJBVe2MjKEAV3Xr28pr+dJqB1noyInC2
- iNVPIFXy0zytuxQUECYdB+kVNZK93k0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=bgZhdF1UUSYs3uzK8Tg/4WEtbIaKey6WShFICaMRkzg=;
+ b=aWem43lqwEeJrVD5qa//oaUfWOYcyR+fODR/SSLeYWxmB55G/f0h0u/65EWHlF2sW8PO3u
+ Cdy3C8Zg0bKN+qnMKn3QCCrrch/oWDYZ5Y2qMI2raQ7v7Da5cxKqa/u+S0TW5cfwp8lYEx
+ 0ALShHGqmAn/FJiOmTirjmhfdn7+ncI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-1LVmGuRfPviNniEmPJhVBg-1; Wed,
- 11 Nov 2026 07:56:10 -0500
-X-MC-Unique: 1LVmGuRfPviNniEmPJhVBg-1
-X-Mimecast-MFC-AGG-ID: 1LVmGuRfPviNniEmPJhVBg_1794401769
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-15-wpbx1KIvPbawQiNGLHmD0w-1; Wed,
+ 11 Nov 2026 07:56:48 -0500
+X-MC-Unique: wpbx1KIvPbawQiNGLHmD0w-1
+X-Mimecast-MFC-AGG-ID: wpbx1KIvPbawQiNGLHmD0w_1794401807
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 12580180028A; Wed, 11 Nov 2026 12:56:09 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05C3A1800372; Wed, 11 Nov 2026 12:56:47 +0000 (UTC)
 Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B204D1800542; Wed, 11 Nov 2026 12:56:07 +0000 (UTC)
-Date: Wed, 11 Nov 2026 12:56:04 +0000
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BECFA1800347; Wed, 11 Nov 2026 12:56:45 +0000 (UTC)
+Date: Wed, 11 Nov 2026 12:56:43 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, david@kernel.org, imammedo@redhat.com,
  peter.maydell@linaro.org
-Subject: Re: [PATCH 6/7] util/memfd: Improve error message when
- memfd_create() fails
-Message-ID: <avRl5EF-lHrZ9633@redhat.com>
+Subject: Re: [PATCH 7/7] backends/hostmem-memfd: Add huge TLB properties
+ unconditionally
+Message-ID: <avRmC6aBecul9e6B@redhat.com>
 References: <20261111122342.634370-1-armbru@redhat.com>
- <20261111122342.634370-7-armbru@redhat.com>
+ <20261111122342.634370-8-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261111122342.634370-7-armbru@redhat.com>
+In-Reply-To: <20261111122342.634370-8-armbru@redhat.com>
 User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -95,23 +95,47 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Nov 11, 2026 at 01:23:41PM +0100, Markus Armbruster wrote:
-> qemu_memfd_create() reports something like
+On Wed, Nov 11, 2026 at 01:23:42PM +0100, Markus Armbruster wrote:
+> We add class properties "hugetlb" and "hugetlbsize" only when a test
+> of memfd_create() succeeds.  Such conditional registration is unusual
+> and can be problematic:
 > 
->     failed to create memfd with flags 0x3: Invalid argument
+> 1. Management applications use introspection interfaces to find out
+> what a certain QEMU can do.  Conditional property addition makes QOM
+> introspection results depend on the condition, which generally makes
+> them valid only for the process that produced them.  Undesirable.
 > 
-> when memfd_create() fails.  To make sense of this, you have to
-> understand what flags are, and how to decode them.
+> 2. For user-creatable objects like "memory-backend-memfd", it also
+> makes QAPI introspection unreliable: query-qmp-schema claims the
+> properties exist (object-add takes arguments @hugetlb and @hugetlbsize
+> when argument @qom-type is "memory-backend-memfd") even when it
+> doesn't.
 > 
-> qemu_memfd_create() computes the flags from @seals and @hugetlb, so
-> show these instead, like this:
+> Conditional registration actually serves no purpose here, because we
+> still have to memfd_create() for real when we create the object, and
+> need and do handle errors then.
 > 
->     failed to create memfd with sealing and without huge pages: Invalid argument
+> Moreover, we actually KVM ioctl KVM_CREATE_GUEST_MEMFD instead of
+> memfd_create() there when @guest-memfd is on.  If the memfd_create()
+> check can fail when the ioctl could still succeed, the condition is
+> counter-productive.
+> 
+> Add the properties unconditionally.
+> 
+> To test, I hacked the qemu_memfd() call to fail.  The error for
+> -object memory-backend-memfd,id=mem0,size=1m,hugetlb=off,hugetlbsize=512,seal=on
+> changes from
+> 
+>     qemu-system-x86_64: Property 'memory-backend-memfd.hugetlbsize' not found
+> 
+> to
+> 
+>     qemu-system-x86_64: can't create 'memory-backend-memfd': failed to create memfd with sealing and without huge pages: Invalid argument
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  util/memfd.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>  backends/hostmem-memfd.c | 26 ++++++++++++--------------
+>  1 file changed, 12 insertions(+), 14 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
