@@ -1,34 +1,34 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDB9606A884
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 20:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832E0606A327
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 20:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=nA8A6r7/
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=cYp/BoLh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRF9G-0001PL-LX; Wed, 11 Nov 2026 15:42:26 -0500
+	id 1xRF9M-0001b2-Dr; Wed, 11 Nov 2026 15:42:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xRF9E-0001Nv-HO
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 15:42:24 -0500
+ id 1xRF9K-0001aa-TF
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 15:42:30 -0500
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xRF9C-0005w6-QF
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 15:42:24 -0500
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1xRF9J-0005wY-1K
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 15:42:30 -0500
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 009C120B7168;
- Wed, 11 Nov 2026 12:42:16 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 009C120B7168
+ by linux.microsoft.com (Postfix) with ESMTPSA id 1784520B7168;
+ Wed, 11 Nov 2026 12:42:22 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1784520B7168
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1794429738;
- bh=oN0BFQE0r9iYoJZoaoOolLeu+FIg48QtzzEE8ItBUdI=;
+ s=default; t=1794429744;
+ bh=wrea9xdjCfl0pQyOzEjpZJyw1biXxN2kELhw93eXq40=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=nA8A6r7/Mp3NcmhTLYHnEDpFrVQAg9TrTRWXnAcaeXv9XKnyTWMM3BYCeTUMKA2vq
- mwZuMqikCy2cRkyGkp8rhcFHEEZK9saIW5lZa0KwrlxcNu85iabKvd93i1RFc5jxM5
- TN3Xg0ZHuDprZ1mJnD2Y5wDzHclZvYTlZW+cHn6Q=
+ b=cYp/BoLhwn1rHSDWzse7FpZSKvGRZqeKX1mi0p4FVRqbaOjkewoJyDjqmKTjaBHWP
+ IaTOG9mVCWS1TqL8ftObTXPvXWQcSZIFnAY0T5bVQ7xr9x/x+/HgtkMovkmmzyAdQI
+ 1uF89i3XlGB4OL2CsSwclyoFLKAKkySGZM1D2Y6k=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <wei.liu@kernel.org>,
@@ -36,9 +36,9 @@ Cc: Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 1/4] accel/mshv: skip double unmap of mem regions
-Date: Wed, 11 Nov 2026 21:41:52 +0100
-Message-Id: <20261111204155.36683-2-magnuskulke@linux.microsoft.com>
+Subject: [PULL 3/4] accel/mshv: freeze time during TSC MSR write
+Date: Wed, 11 Nov 2026 21:41:54 +0100
+Message-Id: <20261111204155.36683-4-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261111204155.36683-1-magnuskulke@linux.microsoft.com>
 References: <20261111204155.36683-1-magnuskulke@linux.microsoft.com>
@@ -72,138 +72,260 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This change addresses a regression that was introduced when the dynamic
-mapping handler was removed, from the MSHV controller, breaking OVMF
-support.
+A regression was introduced when the HV_X64_REGISTER_TSC MSR state is
+being written to the hypervisor as part of the migration framework. If
+the MSR is written without the time being frozen, the tsc_page (a
+hyper-v enlightenment) is zeroed out and cannot be used by a guest,
+which results in a performance regression, because the guest falls back
+to costly reads of HV_X64_MSR_TIME_REF_COUNT.
 
-We introduce a small uaddr-indexed table to track mapped regions. The
-current logic turns an add into a remove op if a rom-device region is
-currently not in romd_mode.
+An implementation of pre_resume_vm hook was added to handle the clock
+lifecycle, relying on the dirty_vcpu state to avoid redundant state
+writes.
 
-We could ignore both map + unmap for this condition, but this misses a
-the case of a region transitioning from romd_mode=true => false. In this
-case we still do want to unmap a region.
-
-Fixes: 626e5dc99935 ("accel/mshv: Remove remap overlapping mappings code")
+Fixes: d540dcc5e28c ("target/i386/mshv: migrate MSRs")
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 ---
- accel/mshv/mem.c          | 41 ++++++++++++++++++++++++++++++++++++---
- accel/mshv/mshv-all.c     |  1 +
- include/system/mshv_int.h |  1 +
- 3 files changed, 40 insertions(+), 3 deletions(-)
+ accel/mshv/mshv-all.c |  33 ++++++++++++-
+ hw/i386/mshv/clock.c  | 112 ++++++++++++++++++++++++++++++------------
+ include/system/mshv.h |   4 +-
+ 3 files changed, 115 insertions(+), 34 deletions(-)
 
-diff --git a/accel/mshv/mem.c b/accel/mshv/mem.c
-index 820f87ef0c..00d69fca8d 100644
---- a/accel/mshv/mem.c
-+++ b/accel/mshv/mem.c
-@@ -13,6 +13,7 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "qemu/main-loop.h"
- #include "linux/mshv.h"
- #include "system/address-spaces.h"
- #include "system/mshv.h"
-@@ -168,6 +169,25 @@ static hwaddr align_section(MemoryRegionSection *section, hwaddr *start)
-     return (size - delta) & qemu_real_host_page_mask();
- }
- 
-+static bool uaddr_is_mapped(MshvMemoryListener *mml, hwaddr start_addr)
-+{
-+    assert(bql_locked());
-+
-+    return g_hash_table_contains(mml->mapped_regions,
-+                                 GINT_TO_POINTER(start_addr));
-+}
-+
-+static void track_region(MshvMemoryListener *mml, hwaddr start_addr, bool add)
-+{
-+    assert(bql_locked());
-+
-+    if (add) {
-+        g_hash_table_add(mml->mapped_regions, GINT_TO_POINTER(start_addr));
-+    } else {
-+        g_hash_table_remove(mml->mapped_regions, GINT_TO_POINTER(start_addr));
-+    }
-+}
-+
- void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-                        bool add)
- {
-@@ -176,15 +196,19 @@ void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-     bool writable = !area->readonly && !area->rom_device;
-     hwaddr start_addr, mr_offset, size;
-     void *ram;
-+    bool is_mapped;
-     MshvMemoryRegion mshv_mr = {0};
- 
-     size = align_section(section, &start_addr);
-     trace_mshv_set_phys_mem(add, section->mr->name, start_addr);
- 
-     /*
--     * If the memory device is a writable non-ram area, we do not
--     * want to map it into the guest memory. If it is not a ROM device,
--     * we want to remove mshv memory mapping, so accesses will trap.
-+     * ROM devices (e.g. pflash) have ram=false, rom_device=true.
-+     * In romd_mode, they behave like RAM and should be mapped.
-+     * Outside romd_mode, accesses should trap to QEMU for emulation.
-+     *
-+     * For non-RAM, non-rom_device regions (writable MMIO), we never map.
-+     * For rom_device regions not in romd_mode, we want them unmapped.
-      */
-     if (!memory_region_is_ram(area)) {
-         if (writable) {
-@@ -198,6 +222,15 @@ void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-         return;
-     }
- 
-+    is_mapped = uaddr_is_mapped(mml, start_addr);
-+
-+    if (add && is_mapped) {
-+        return;
-+    }
-+    if (!add && !is_mapped) {
-+        return;
-+    }
-+
-     mr_offset = section->offset_within_region + start_addr -
-                 section->offset_within_address_space;
- 
-@@ -213,6 +246,8 @@ void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-         error_report("Failed to set memory region");
-         abort();
-     }
-+
-+    track_region(mml, start_addr, add);
- }
- 
- static int enable_dirty_page_tracking(int vm_fd)
 diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index d820a67b95..be3abb0824 100644
+index be3abb0824..5519768cc2 100644
 --- a/accel/mshv/mshv-all.c
 +++ b/accel/mshv/mshv-all.c
-@@ -479,6 +479,7 @@ static void register_mshv_memory_listener(MshvState *s, MshvMemoryListener *mml,
+@@ -34,6 +34,7 @@
+ #include "accel/accel-cpu-ops.h"
+ #include "exec/cpu-common.h"
+ #include "system/cpus.h"
++#include "system/hw_accel.h"
+ #include "system/runstate.h"
+ #include "system/accel-blocker.h"
+ #include "system/address-spaces.h"
+@@ -579,7 +580,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
  
-     mml->listener = mshv_memory_listener;
-     mml->listener.name = name;
-+    mml->mapped_regions = g_hash_table_new(g_direct_hash, g_direct_equal);
-     memory_listener_register(&mml->listener, as);
-     for (i = 0; i < s->nr_as; ++i) {
-         if (!s->as[i].as) {
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 1f77ffd152..89b44f387a 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -49,6 +49,7 @@ struct AccelCPUState {
+     register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
  
- typedef struct MshvMemoryListener {
-     MemoryListener listener;
-+    GHashTable *mapped_regions;
-     int as_id;
- } MshvMemoryListener;
+-    mshv_clock_init();
++    ret = mshv_clock_init(vm_fd);
++    if (ret < 0) {
++        return -1;
++    }
  
+     return 0;
+ }
+@@ -928,6 +932,32 @@ static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
+     run_on_cpu(cpu, do_mshv_cpu_synchronize_pre_loadvm, RUN_ON_CPU_NULL);
+ }
+ 
++static void mshv_pre_resume_vm(AccelState *as, bool step_pending)
++{
++    MshvState *s = MSHV_STATE(as);
++    CPUState *cpu;
++    int ret, vm_fd = s->vm;
++
++    ret = mshv_clock_prepare_resume(vm_fd);
++    if (ret < 0) {
++        error_report("Failed to prepare clock for resume");
++        abort();
++    }
++
++    CPU_FOREACH(cpu) {
++        if (!cpu->vcpu_dirty) {
++            continue;
++        }
++        cpu_synchronize_post_init(cpu);
++    }
++
++    ret = mshv_clock_finish_resume(vm_fd);
++    if (ret < 0) {
++        error_report("Failed to finish clock for resume");
++        abort();
++    }
++}
++
+ static void do_mshv_cpu_synchronize(CPUState *cpu, run_on_cpu_data arg)
+ {
+     if (!cpu->vcpu_dirty) {
+@@ -963,6 +993,7 @@ static void mshv_accel_class_init(ObjectClass *oc, const void *data)
+     ac->name = "MSHV";
+     ac->init_machine = mshv_init;
+     ac->allowed = &mshv_allowed;
++    ac->pre_resume_vm = mshv_pre_resume_vm;
+ }
+ 
+ static void mshv_accel_instance_init(Object *obj)
+diff --git a/hw/i386/mshv/clock.c b/hw/i386/mshv/clock.c
+index 02c586503a..50c9aa6417 100644
+--- a/hw/i386/mshv/clock.c
++++ b/hw/i386/mshv/clock.c
+@@ -29,6 +29,7 @@
+ typedef struct MshvClockState {
+     uint64_t ref_time;
+     bool ref_time_pending;
++    bool time_frozen;
+ } MshvClockState;
+ 
+ static MshvClockState mshv_clock;
+@@ -110,52 +111,88 @@ static int mshv_set_time_freeze(int vm_fd, int freeze)
+     return 0;
+ }
+ 
+-static void mshv_clock_vm_state_change(void *opaque, bool running,
+-                                       RunState state)
++static int ensure_time_frozen(int vm_fd)
+ {
+-    MshvClockState *s = opaque;
+-    int vm_fd = mshv_state->vm;
+     int ret;
+ 
+-    if (running) {
+-        /* Skip if we have nothing to restore, e.g. on initial boot. */
+-        if (!s->ref_time_pending) {
+-            return;
+-        }
++    /* Ensure time is frozen */
++    if (mshv_clock.time_frozen) {
++        return 0;
++    }
+ 
+-        ret = mshv_set_time_freeze(vm_fd, 1);
+-        if (ret < 0) {
+-            error_report("Failed to freeze partition time on resume");
+-            abort();
+-        }
++    ret = mshv_set_time_freeze(vm_fd, 1);
++    if (ret < 0) {
++        error_report("Failed to freeze partition");
++        return -1;
++    }
++    mshv_clock.time_frozen = true;
++
++    return 0;
++}
+ 
++int mshv_clock_prepare_resume(int vm_fd)
++{
++    return ensure_time_frozen(vm_fd);
++}
++
++int mshv_clock_finish_resume(int vm_fd)
++{
++    int ret;
++    MshvClockState *s = &mshv_clock;
++
++    assert(mshv_clock.time_frozen);
++
++    /* Skip if we have nothing to restore, e.g. on initial boot. */
++    if (s->ref_time_pending) {
+         /* INVARIANT: reference time can only be written if time is frozen. */
+         ret = mshv_set_reference_time(vm_fd, s->ref_time);
+         if (ret < 0) {
+             error_report("Failed to restore reference time on resume");
+-            abort();
++            return -1;
+         }
++        s->ref_time_pending = false;
++    }
+ 
+-        if (mshv_set_time_freeze(vm_fd, 0) < 0) {
+-            error_report("Failed to unfreeze partition time on resume");
+-            abort();
+-        }
++    ret = mshv_set_time_freeze(vm_fd, 0);
++    if (ret < 0) {
++        error_report("Failed to thaw partition");
++        return -1;
++    }
++    mshv_clock.time_frozen = false;
+ 
+-        s->ref_time_pending = false;
+-    } else {
+-        /* Skip if we already have a to-be-set ref time */
+-        if (s->ref_time_pending) {
+-            return;
+-        }
++    return 0;
++}
+ 
+-        ret = mshv_get_reference_time(vm_fd, &s->ref_time);
+-        if (ret < 0) {
+-            error_report("Failed to capture reference time on stop");
+-            abort();
+-        }
++static void mshv_clock_vm_state_change(void *opaque, bool running,
++                                       RunState state)
++{
++    MshvClockState *s = opaque;
++    int vm_fd = mshv_state->vm;
++    int ret;
+ 
+-        s->ref_time_pending = true;
++    if (running) {
++        return;
+     }
++
++    /* Ensure the time if frozen before we capture the reference time. */
++    ret = ensure_time_frozen(vm_fd);
++    if (ret < 0) {
++        error_report("Failed to freeze partition time on stop");
++        abort();
++    }
++
++    /* Skip if we already have a to-be-set ref time */
++    if (s->ref_time_pending) {
++        return;
++    }
++
++    ret = mshv_get_reference_time(vm_fd, &s->ref_time);
++    if (ret < 0) {
++        error_report("Failed to capture reference time on stop");
++        abort();
++    }
++
++    s->ref_time_pending = true;
+ }
+ 
+ /*
+@@ -182,8 +219,19 @@ static const VMStateDescription vmstate_mshv_clock = {
+     },
+ };
+ 
+-void mshv_clock_init(void)
++int mshv_clock_init(int vm_fd)
+ {
++    int ret;
++
++    ret = mshv_set_time_freeze(vm_fd, 1);
++    if (ret < 0) {
++        error_report("Failed to freeze partition time on init");
++        return -1;
++    }
++    mshv_clock.time_frozen = true;
++
+     vmstate_register(NULL, 0, &vmstate_mshv_clock, &mshv_clock);
+     qemu_add_vm_change_state_handler(mshv_clock_vm_state_change, &mshv_clock);
++
++    return 0;
+ }
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index f98ddff9b5..864f2aa34d 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -58,7 +58,9 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
+ extern MshvState *mshv_state;
+ 
+ /* clock (partition reference time) */
+-void mshv_clock_init(void);
++int mshv_clock_init(int vm_fd);
++int mshv_clock_prepare_resume(int vm_fd);
++int mshv_clock_finish_resume(int vm_fd);
+ 
+ /* interrupt */
+ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
 -- 
 2.34.1
 
