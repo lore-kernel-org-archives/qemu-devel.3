@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E719F606A324
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 08:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46AA606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 08:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=HVi3Clzm
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=pS13PdnM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR3dk-0001m0-9T; Wed, 11 Nov 2026 03:25:08 -0500
+	id 1xR3oc-0005kG-No; Wed, 11 Nov 2026 03:36:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xR3di-0001ck-PQ; Wed, 11 Nov 2026 03:25:06 -0500
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ id 1xR3oP-0005jf-HM; Wed, 11 Nov 2026 03:36:09 -0500
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xR3dg-0007wP-KD; Wed, 11 Nov 2026 03:25:06 -0500
+ id 1xR3oM-0006aY-Cf; Wed, 11 Nov 2026 03:36:09 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZTP8Rzs7qki6c1lSlZ6iN5lOqogiAMKLyXX7tbpYSyRfsQucV0HViDsuRC3I+xnugXCzw2vRHD3yCttYb/gde2Ca7AGYVbnl5Luq2Eki3320xmlz0Bm/V7FZ5UOMkGQko5qGK97HCpjkrikVcPfPjNUgFqIXYJLscqCsELSZButjsONyWcg51uGMEy/rlRFkIycX7FmJGfeJMz19pDjTpiQClQPfm63BFtWCc93tD8eApaNiwdpcmdwzDTJH47/DPcG0CYt6Wzsp6485b9BprLy84yy094imyItA/Pv32A7eSqWmvYNnmr1lmpY2oTlybgyYMj9h4yiJk3zWOmaUcg==
+ b=fff4HJYwjDyo1bJL0iPi989OirTxMdl7okecpWr4UnOMG9ILR4ZvONzee95UbKuQ+2Kbj6qCFG8YvvN8t4Pl67aQrdRnSjROUCdeQNeuh4sfzbGd3nadjFwD5wKCyJ1XOUokU1H5cVUAJyzHMyyZF0ad4BW3760dxgGr6EP7q6aFFpweLv24vlGBsmoJAaHlkjj6nqh78+mZV8P/1HbZ96LjHb9FIQXa463dYSRwiLIxoSgmyTR9zYWAKEsirSvB6G97T3ONOYU7ZBxXv30s9GjdZYMFfXQ0yqB3gMtWGJwQasl9CcQqOmCHrKM8LPZXo6SuUiYu370NLluIv8FTYA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SgcNrYoEIo+1DzegBgaPMc/dKrZQzrcsAk3QJM4JruM=;
- b=sYAs24VSBSdkCMhV4i0xGIMuD/j2FTU5y7AGIjFnuRSMyY//IidgjlBDyQ/VbD1oCAB8k0wgpSeNxjkAwFb/yQRlR3tF6iXRDOGUQdnl1lShoF76u5zcwdEZFwEp5rAqITkgElr22Qm7qRT901TYy/Bbk73k0uhPfVts3q5MJ8ZBEWViWg4fQ7uQ1lD5ZjrX81hqnBKSpI7RIMiBB7WFuC6bs/Vzlhmz81ZUfh+SfBgkPAhczN0bfeFlVejdKvLnM0o77O7i/bIy33coLakNFnq8TmG0uFuXYWA+vrQCrwVvfHqW7e9kBucTah1flXMHT73+6iZW9IRdmzDdkg6aWw==
+ bh=sdu2KTXo/9V/I+2OryBhO+Ypyg3yVxZeVsJlrYpN+pE=;
+ b=KeBgEKSMS/WThhEp24pK8fpzW53F18W8TPCI2v1TIUH4k2yDyCwd39ENFYCiznO/1j/iZ37NpKpixAVjNeJYvgeN5uwWpObi896erywEtcUDk0rmBO9GHa3dTYijAmLiSagiNM8IGDlZhVwhGHmT8gtugAE5CpwCxpx4PaYtSKIXwixbFOw3+eEHj6oAbxp8yJbCu2YLNTHadadO9DFTvCv5ph7sxVR1ZmJffCNckUgoNW8wnDPhSEI7Lp12Z6nXNMpSUFHNnxTT1kobm+VWdHPX8d8ijADNWtlTeEYlCXCiD8kpFhnyOPE5L8YQMkBe3wnjm5j0Kq/w1D1Y/sxjmA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -32,19 +32,19 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SgcNrYoEIo+1DzegBgaPMc/dKrZQzrcsAk3QJM4JruM=;
- b=HVi3Clzm3+rCwtfNUN2cNUCSBU6TuwxSynHlORwKBcqIYsqVmH6hY6ldXrBRYpfbLdYYgabUN1ij0bqA8RbppzeXHurUcr6VqUtuHNUtN0khi+tKJtG1XNJTQFSF79F9iJ7nRV3PVO5iq2WlAKAkBhQ7DmFjQBpjOB2KcGo9cv32EchuD9WeQx+iB3ceqBjEWN60hw/ic7aVI1tE9WIafacCjxhcdhTFT4/j6FwTB+gRcCAk3tp6painwcBgd1Go9GuOrAnidLwgEjo+4m2KMivUX0vQo/DIPlTK1cUdZ2c7DV2l8qb6Gcuc3aEgHQS8jjeB4rDOdyLYJhaecxLrLQ==
+ bh=sdu2KTXo/9V/I+2OryBhO+Ypyg3yVxZeVsJlrYpN+pE=;
+ b=pS13PdnMo0YS2TKpOjdj7n8xW+guX789STBpFZZ31mPXtAtcNup7tmcSF45BZI9wIEbXXOqdckJcQuirf8fFLNMnACZbGXW5A+Zl1dQjGO9OePZF51JZ+wzc9ovgnt3c0N7kcYLYhWgmPphgBKO1Lwhw4OCWuFsFRyQ5t85vxTS+g7meuTBpGwNeXf3ImTukRvCnnPIghm8JeMIN6YUsaWvEczBcBQZCCUC0s4cERh7ubTn6L/9X2D/1NY/6bCr06hASrd4uRd7hkXqrFyktYLwUyyRlw5HJu4nbaUS9U7pCWvc6eiti6wzBjSPKpOFT1SV+DoTTYniuw7hKJPWHQw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by SEYPR02MB7810.apcprd02.prod.outlook.com (2603:1096:101:20a::10)
+ by KUYPR02MB9402.apcprd02.prod.outlook.com (2603:1096:d10:94::12)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Wed, 11 Nov
- 2026 08:25:00 +0000
+ 2026 08:35:58 +0000
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0615.007; Wed, 11 Nov 2026
- 08:24:59 +0000
+ 08:35:58 +0000
 From: Chao Liu <chao.liu@processmission.com>
 To: Max Chou <max.chou@sifive.com>
 Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
@@ -54,83 +54,82 @@ Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
  Aurelien Jarno <aurelien@aurel32.net>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [RFC PATCH 32/38] target/riscv: rvv: Implement Zvfqwbdota8f
- instructions
-Date: Wed, 11 Nov 2026 16:24:42 +0800
-Message-ID: <20261111082443.60614-1-chao.liu@processmission.com>
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [RFC PATCH 33/38] disas/riscv: Support Zvfqwbdota8f extension
+Date: Wed, 11 Nov 2026 16:35:40 +0800
+Message-ID: <20261111083542.63655-1-chao.liu@processmission.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261104194155.679241-33-max.chou@sifive.com>
+In-Reply-To: <20261104194155.679241-34-max.chou@sifive.com>
 References: 
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PH8PR07CA0023.namprd07.prod.outlook.com
- (2603:10b6:510:2cd::11) To TYNPR02MB9351.apcprd02.prod.outlook.com
+X-ClientProxiedBy: SJ2P221CA0004.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:a03:5db::14) To TYNPR02MB9351.apcprd02.prod.outlook.com
  (2603:1096:405:3d0::15)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SEYPR02MB7810:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3c9e5cbe-df95-4fa0-26f3-08df3fcd46c8
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|KUYPR02MB9402:EE_
+X-MS-Office365-Filtering-Correlation-Id: c44dd9ba-c11d-49a3-b97c-08df3fcecf61
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|7416014|376014|1800799024|366016|10067099003|56012099006|261022075727099003|261022105027099003|261021121427099003|261026121527099003|261026140227099003|261028144727099003|261102123227099003|261009223027099003|18002099003|22082099003|3023799007;
-X-Microsoft-Antispam-Message-Info: AJ+EjTBfuemnHnlr1D+coRBez/FC/5omOy3WuEf/lIpM4IsHlSIIorqaer7XXTdY9ioUWL16DYQTVCymLOv656l+r0PxBr+m94aj256Lzrkc2/X62kpFEd5SoDzKKQt92z0DSQ4dxmOs1zLGoXBW0T/xbykH/PKI7/2b3meQ+btvnL9j7zNXKnV7YZXEtaIxtwUepkYidIHekNY9AXkm7kN44Lc0tZH9+Ue1PMXzq0po53RovlCc+X8jtUJ708DYbazWCNHYyITD5vifZK7dJe4cWAVnw8r6YTbl35tZVKvpdtCNN0l6qw0v79vPEIyeLi/ZB76qV/ajZpS4oCIX52bshPX8rBcxoWCQqjypHaxIaKuimk+ZEvIhpy1vewRYNVUeiz0x2YOwky/+bBFpwe24SJInzMMB22S4pZEpk+64srOg4PZpjFLX/V8QK0g3Y30ldEez9gUkLvc9mb6JKOQm/wYRqfVW+p8IxJ1JL8CabgkhinDlaCNxyBQJJpB+Qzoe46FVRFgWKnAgOq6CD6kcLiqGf0cQucXnWmrLP5vXWcLLYc0SdUNRjQRIlPenSAzP4siGxo/hGaYoWwjd6c22i46WmyoocFTZwm07NsSohyYS0OYLsAe61EP/JLeoDyURCErglG+fBfeMMkzG3+56vBGiT3ODsQzVWiXsBnM=
+ ARA:13230040|23010399003|7416014|376014|1800799024|366016|10067099003|56012099006|261022105027099003|261021121427099003|261026140227099003|261026121527099003|261022075727099003|261102123227099003|261028144727099003|18002099003|22082099003|3023799007;
+X-Microsoft-Antispam-Message-Info: KSUeMygRuz0EZcVROehTwkhRvtPs/AtuWBTAiYozGXPZHf1b5gKWVX/KXZoVlaBHcaCUssTckdN7UxwNpoXuUZ+tVPvcUUi688mEVYWywbxS027sp5aCzGuJps2geTXrKFKpmJqfeheZ4W+iRPXseoJYVzQ2/hLfVtu2x+ijIqwXqZMc00eJlzpl+UZuLsM6+JkR+/4SjvOXn4mFjC3GFeYmHGDYvdlWYtLH8HHaeSRiO/n52duqURN7rV/i6n6RsiMWec6NMZZPOu/U5iGk5h4YV2BvRtBqPXo54AuvmAR3zwmiDTaltSSU8VfSboxcTAt1reNoNWeaNHAaFdr15wvylFCO96IygEDFh0Dh3XqYExWKNtp5yXE+FA+G9L8ay7g49l4IDdT60ftauUImLkPDs812u6LUxuOD6GDTpgBfJ1gTGS9R1uuDDThLvElJWHfYsNkn797S1YxJ6dFMzDgAFL40Qa9OxU4iZcBTolV+Nrqd8l6xggEQ7oBzdaeULyHGm5KBtGIbX1YLevOw7ZSzkUNC0VIB0pHTuCbbIh1S/rRcamMYwOds8AKovPR/dp4z20eRvuV/P57kvV1SOkP+Eg3CrLGtvs+YaeSu6OvuCRk0Krwc9iGRX1hsTjniBMa4jRexmzd9H+5MeXGv/3AIU7H8irrJDm2E8Xdg5zQ=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(7416014)(376014)(1800799024)(366016)(10067099003)(56012099006)(261022075727099003)(261022105027099003)(261021121427099003)(261026121527099003)(261026140227099003)(261028144727099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(3023799007);
+ SFS:(13230040)(23010399003)(7416014)(376014)(1800799024)(366016)(10067099003)(56012099006)(261022105027099003)(261021121427099003)(261026140227099003)(261026121527099003)(261022075727099003)(261102123227099003)(261028144727099003)(18002099003)(22082099003)(3023799007);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?iYA4fbyrxhz+icD8M/kf2x4JOXw4a+vgWw4QWUTunx9jsH4GhCS0iFhLJAz7?=
- =?us-ascii?Q?1tQsw1wlXJpyBIPcqQh2uve3Ko7JVI0H4f6PEVY7iUFNGOudRT3trS7en6YX?=
- =?us-ascii?Q?Pi3sFl2uwFsDimVSBahtDFSM2+5L1FaDzbnHWKn/Gdw5PymGzetPu6GMvyJZ?=
- =?us-ascii?Q?gFIv0zqIVrZqirc6zAE95KSKe6uRfC3L4yeCUArj/qq6e5uj56h4ichWB5wx?=
- =?us-ascii?Q?9eysUEGeDzDRQb671AEOz5x6QKwRhg6PZW9+sb50tYsK/Ae5584Zfz5DG7Q2?=
- =?us-ascii?Q?/pRWkijJSyNx9LNqj8ZWHkAli/NRGgCKm4xF7dj7PYDeSbtweakPXNJfJJXr?=
- =?us-ascii?Q?ltM5Fdszy4D3BqSIg4A6UQRoP0ehXzjCp21TOmFxxNvMLgF3wi/gZ3H0vcif?=
- =?us-ascii?Q?rH+lZlmpNdOtkBYKXg4zzMax3FDREATiDJJ8oLaquFq0oWDqlz9hEZn/z0h3?=
- =?us-ascii?Q?8E94+xC/ILD3XnGnRdO5A64/Wqbm8YGRh7y9iNUJQV0BX7xS+/Wo+Y+BJ0pm?=
- =?us-ascii?Q?E5knd0vcMv2wzJh2sATIhLQEdwjXzLXknW+G64I/yTsYI+4W9ewQD5mINAhV?=
- =?us-ascii?Q?YPRX++Dx8s9VovHSUkWcG+4+hPZg3gJyhFzxyTZzcNvxhLVxdKik1W8SPGZ3?=
- =?us-ascii?Q?dwhUPDNOW45I7zykyVn1iJ9CMAWNNNAjG53Tj79kUZRsZAArju/NwQHhceee?=
- =?us-ascii?Q?XGAJOzY27A6pnb+0+xG4R3OFGZQzzxsqjj1EXapJEw6uGq8xT9bH9bfbwHPw?=
- =?us-ascii?Q?siD80MlYp0GSwzzbGQNLB5HgqLYAFvWbLLKmfyT2HxgnlAImb/QeZU6idjX2?=
- =?us-ascii?Q?ZPiIX4x/5t6oYQn+/ndRpHOJM8DcnBVOb/voo8rtGtBRMExgwNPLIoVCSk/6?=
- =?us-ascii?Q?NjneboxR+Adg/eza04uIdCFypHl5HtBvHuogqKPlvSGJVX8etUH5swN15eEe?=
- =?us-ascii?Q?/FPUdZpIKU/qVvhRN4rgpqtJK/B5pAG2wvb+s+NBNfvfzmWSSemMUehl5RfQ?=
- =?us-ascii?Q?YWNgO9KU2ol7DjwsNfBGNO07pymTaTuZ6oL/HPw8bRzFAFjBqwF+Ge/9ogTV?=
- =?us-ascii?Q?w4g/M/AnVGXZg1JTbao1oQVzjmCQwzUS0whHMPEXo5R8BIEAnJzhEWP/O1W3?=
- =?us-ascii?Q?IhFoe80ubdpSzU/PNE0bB1P+m/ETnJ2J+4vXe8GnnD3Qfih+GPZOgIQrhs2b?=
- =?us-ascii?Q?mBhz6kxxJwhPxrbgzrTiWTMBiO1rq7LCLLJiUmjJywI12ZQWF9itirGFvTAn?=
- =?us-ascii?Q?8/rTPSN5ki290zFT8MB/YVEMxuQvaaa+Fl2kM701K0ViC1FhvVavfMyComru?=
- =?us-ascii?Q?RKs8Zo+xJDJ1Ht9Z5MXzicEShGRm2QF7xJlJsvv3CyuCdbnEztykH15Sd4xW?=
- =?us-ascii?Q?gp205h/wZ7p/aurmiHDkYnY5HlsHWiu7cWsksIOrMUtbvZy+V+JY9NiXLy0f?=
- =?us-ascii?Q?Iq22fheGXaZXNwaEhRrm8jgkyo6sS/jQd5ITOji0GxBM2I6OXJlDJHguQqhY?=
- =?us-ascii?Q?oe3IRT6MJT3QdxgwnYwWvn+STTkUWvLeZU4HPU2tq+6nYpoi8DUH4kxMZT+o?=
- =?us-ascii?Q?e+cGj2tqfv6wlWVRvIUs8RP12Z/YlgzeGqZdTeGuZgRZ+o8QpIw40mdVlcX/?=
- =?us-ascii?Q?XaCKcbmjDBEjCPdYLsY77105BDZ2EN+uKrOQCECzOSl6DLiZuj+jjeP5D46E?=
- =?us-ascii?Q?fujCv7Hf5OS3Hv/q5h3aR4RaQQbzTcaiWfKBAlyk+0U2Lpn3QhdWt6ka4UYx?=
- =?us-ascii?Q?OHOkA39hEUJ0x1dNoMyZMlcoNLQk4ks=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/rUzwYIO9ha2Ezsp0sEM4dbsfj768YtaKtIJ5/l0uZfAbM4tDWX9o8TavkjQ?=
+ =?us-ascii?Q?hNg+VZnWPDcCtf61eUGP5N/hLiG6a0xFIt+GpYoWYcPkV6NwAJ5xU3lx0NYX?=
+ =?us-ascii?Q?OP2vsxIGFAFaG4T0JRZFWHxiTIOvcgNPUM+njcBmaCr1AdToY9YEtegF7Hgd?=
+ =?us-ascii?Q?VtMZkBeIFLIJLQR9Wu7HJB7Q6Sx6tuT3PRQu1WFO5zenxwiBPirCfmsUc4cv?=
+ =?us-ascii?Q?IVcN1x/Z+u/Nlp9rS3ym/pVFkPsmZNaTohydn0ha38QnfIm5UYbJlBSDVm60?=
+ =?us-ascii?Q?jGsv2++AVmvB2qUnGi+tgP9FMV5tkLgNKjmpXwE14/4fR18tKewe3qxNmrMk?=
+ =?us-ascii?Q?lUQ9Y5IVwa81WN1j8sRjVCopXKIWWYvNZw7kO2JcYKxamnHchsRO6KdFBIcl?=
+ =?us-ascii?Q?sV+6f6ojjDJgMxHYAPSvOcMoLqvVmPmyzXPqFumg2io5B2/uFTwwwaz56IHJ?=
+ =?us-ascii?Q?ZCMAyrGLB3oXPbr0xHZMCDkhQnE8oNCPYKsn0x0/FTk6sJ33rK1Qu0U0olNr?=
+ =?us-ascii?Q?egKhvmA6JmhwChmSM/UhNy4FpDkZPC/F23YG3PsbBjRyAfSv0rIdt/EbMxi/?=
+ =?us-ascii?Q?BhmBL25eyRp0gyn6PYPJygY/abdlaiUtmJugn6Qv2dKfS3VxWK+MWj9A/5np?=
+ =?us-ascii?Q?YCvGTmqbTGjRuZ3Dp/halsnxN9HdBk76pt0YX4Qp2GH/JJepH42UR8OPkLC9?=
+ =?us-ascii?Q?Fi6MIB75n7FkSHmMc+cfUpRxz6kc4MzvAAeNkbG4NyytTI7niyyW27qucGmG?=
+ =?us-ascii?Q?SB3Ts3PZU5SS1TyuwRKMRAA2zWZsJkVKkE+bipxkb1g9oFhSDN1wUG6gIuRF?=
+ =?us-ascii?Q?XUXWJgJhHyMRGVAmZlXr8Mf+7d2udgMFx1ALT92Tm/vuFZIi4kAcSZJRr4wu?=
+ =?us-ascii?Q?evjfwSWc949yezr96LrKStLY2ig/G4mv5gBmyGakhSTOScukMM4dDVIw11Fd?=
+ =?us-ascii?Q?87DtziAuwEdX1nrxZYf8xY8mx56TDwzdgPNxnjahof6dNeCC8sjth/midaz2?=
+ =?us-ascii?Q?hqTJwu6/DjCdWaNxNcngxkgwvpdtNUo8M3JX5YBDoOIsYff2wyO79Rzfq2BR?=
+ =?us-ascii?Q?gcVnzaUSfD/XbRH9H0goRe+ZRlxdExiRPPwflMb9lfOKyb36PMA86mjP+5+k?=
+ =?us-ascii?Q?q1LTKDIAedWUZ0du0h2MVYTfPcDlMP/2zl+J5m6eR9bP6oGOZrnBwu+8GvVM?=
+ =?us-ascii?Q?+/JtFYYOIugmDIq4xo+/WtcVAol1ujVmf9UM+JA7mQFsIAR5eO8++A2o9LHd?=
+ =?us-ascii?Q?VGIqRdO56QbjrmJ8J44VRkQmBmzxCj7R2+bo3WMIUgDhWoMpQo/7Mf47rMPF?=
+ =?us-ascii?Q?HYUkBeWxmG9M6xliu1IDzwF2tcCFHgX7SbK0EhSMPnU9xd4dAsgpraHVm1fn?=
+ =?us-ascii?Q?LJ/tzRIMVHUda5XDeIHCbgBeUIOgFKeLZyN1VaXYX0MpCyyyJKLFYtWaM3iR?=
+ =?us-ascii?Q?MgEec7+Ug8ZyRq1VzIuL3p+X9fZSuCpW5i3mSlBxjT5mTnx58XHJAefq+KnJ?=
+ =?us-ascii?Q?lTqActP7rVHQdHlMvT6XSodPs4DU72xFRN0I1atwtS9r2mBPLnCyOl1C58/W?=
+ =?us-ascii?Q?7UnXjMGH8RR4oZN0pXc9pZTEABfxyGAlt4LIik372NkFZntTKXxLDZV5xOLd?=
+ =?us-ascii?Q?X0nNQ0+r6lcvd2/VeAUHVbWuYZyZPtfryQOwS+E7y48ffP0rmguHVF33vXes?=
+ =?us-ascii?Q?LuD/j5rIt102QyXAu48ZAUmV3afiRB7SYqjmTBsFhlCjml1tFL+XL9K3ou8P?=
+ =?us-ascii?Q?ylaOlTNA4DKuhyUqETacv3klTgQrWK0=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3c9e5cbe-df95-4fa0-26f3-08df3fcd46c8
+X-MS-Exchange-CrossTenant-Network-Message-Id: c44dd9ba-c11d-49a3-b97c-08df3fcecf61
 X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 08:24:59.8940 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 08:35:58.6715 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 42G9DZm74+W+PEynjOoSqx+oYjNB4OcRU+zCSs+g/OAir8jT18Q0Ve1dZ0Z77in26exJ8PEVMK99LahKb7UyuhmOFyQITA+RP0XZmisOVIE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR02MB7810
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+X-MS-Exchange-CrossTenant-UserPrincipalName: SGr7LByhptVsOgP3FxxoNBSaq9JhitaL5upMOdswaA9btFFN6C0gLUNM32Pfi+j7Tp0osmjomNLB3+NNzZCVvCd2dz9RG18Kh+E4E5inhfU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUYPR02MB9402
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=chao.liu@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,19 +142,19 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-19.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,UNWANTED_LANGUAGE_BODY,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu,  5 Nov 2026 03:41:47 +0800 Max Chou <max.chou@sifive.com> wrote:
+On Thu,  5 Nov 2026 03:41:48 +0800 Max Chou <max.chou@sifive.com> wrote:
 
-> Support the Zvfqwbdota8f OCP FP8 batched dot-product instructions.
-> These instructions perform 8 parallel dot products between OCP FP8 vectors,
-> accumulating into FP32 elements.
+> Adds support to disassemble Zvfqwbdota8f instructions.
+> - vfqwbdota.vv
+> - vfqwbdota.alt.vv
 > 
 > Signed-off-by: Max Chou <max.chou@sifive.com>
 Reviewed-by: Chao Liu <chao.liu@processmission.com>
@@ -163,140 +162,37 @@ Reviewed-by: Chao Liu <chao.liu@processmission.com>
 Thanks,
 Chao
 > ---
->  target/riscv/helper.h                       |  4 ++
->  target/riscv/insn32.decode                  |  4 ++
->  target/riscv/tcg/insn_trans/trans_rvv.c.inc | 13 ++++
->  target/riscv/tcg/vector_helper.c            | 69 +++++++++++++++++++++
->  4 files changed, 90 insertions(+)
+>  disas/riscv-op.c.inc | 3 +++
+>  disas/riscv.c        | 2 ++
+>  2 files changed, 5 insertions(+)
 > 
-> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> index 1f2dfd6d557..a257436fb31 100644
-> --- a/target/riscv/helper.h
-> +++ b/target/riscv/helper.h
-> @@ -1398,6 +1398,10 @@ DEF_HELPER_6(vfwdota_vv, void, ptr, ptr, ptr, ptr, env, i32)
->  /* Zvfwbdota16bf - BF16 Batched Dot Product */
->  DEF_HELPER_7(vfwbdota_vv, void, ptr, ptr, ptr, ptr, i32, env, i32)
->  
-> +/* Zvfqwbdota8f - OCP FP8 Batched Dot Product */
-> +DEF_HELPER_7(vfqwbdota_vv, void, ptr, ptr, ptr, ptr, i32, env, i32)
-> +DEF_HELPER_7(vfqwbdota_alt_vv, void, ptr, ptr, ptr, ptr, i32, env, i32)
-> +
->  /* Zvfqwdota8f - OCP FP8 Dot Product */
->  DEF_HELPER_6(vfqwdota_vv, void, ptr, ptr, ptr, ptr, env, i32)
->  DEF_HELPER_6(vfqwdota_alt_vv, void, ptr, ptr, ptr, ptr, env, i32)
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index 00ed64b73fd..48597915f7b 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -1108,6 +1108,10 @@ vfwdota_vv  100100 . ..... ..... 001 ..... 1110111 @r_vm
->  # *** Zvfwbdota16bf BF16 Batched Dot-Product Extension ***
->  vfwbdota_vv 101100 . ..... ..... 001 ..... 1110111 @r_vm
->  
-> +# *** Zvfqwbdota8f OCP FP8 Batched Dot-Product Extension ***
-> +vfqwbdota_vv     101110 . ..... ..... 001 ..... 1110111 @r_vm
-> +vfqwbdota_alt_vv 101111 . ..... ..... 001 ..... 1110111 @r_vm
-> +
->  # *** Zvfqwdota8f OCP FP8 Dot-Product Extension ***
->  vfqwdota_vv     100110 . ..... ..... 001 ..... 1110111 @r_vm
->  vfqwdota_alt_vv 100111 . ..... ..... 001 ..... 1110111 @r_vm
-> diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> index d4678171ac5..50f0f67ea60 100644
-> --- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> @@ -4417,3 +4417,16 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr * a)                 \
->  }
->  
->  GEN_ZVBDOTA_FP_TRANS(vfwbdota_vv, vext_vfwbdota_check, MO_32)
-> +
-> +/* Zvfqwbdota8f OCP FP8 Batched Dot-Product Extension */
-> +static bool vext_vfqwbdota_check(DisasContext *s, arg_rmrr * a)
-> +{
-> +    int32_t sew = s->sew;
-> +    int32_t vd_eew = sew + 2;
-> +    return s->mstatus_fs != EXT_STATUS_DISABLED &&
-> +           vext_zvbdota_base_check(s, a, vd_eew) &&
-> +           (s->cfg_ptr->ext_zvfqwbdota8f && sew == MO_8);
-> +}
-> +
-> +GEN_ZVBDOTA_FP_TRANS(vfqwbdota_vv, vext_vfqwbdota_check, MO_32)
-> +GEN_ZVBDOTA_FP_TRANS(vfqwbdota_alt_vv, vext_vfqwbdota_check, MO_32)
-> diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-> index 6f3b666784e..e641e21d088 100644
-> --- a/target/riscv/tcg/vector_helper.c
-> +++ b/target/riscv/tcg/vector_helper.c
-> @@ -6258,3 +6258,72 @@ void HELPER(vfwbdota_vv)(void *vd, void *v0, void *vs1, void *vs2, uint32_t ci,
->          }
->      }
->  }
-> +
-> +/*
-> + * Zvfqwdota8f: OCP FP8 Dot Product with Accumulation
-> + */
-> +#define GEN_VEXT_ZVBDOTA_FP8(NAME, TYPE_VS2)                             \
-> +void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,              \
-> +                  uint32_t ci, CPURISCVState *env, uint32_t desc)        \
-> +{                                                                        \
-> +    uint32_t vm = vext_vm(desc);                                         \
-> +    uint32_t vl = env->vl;                                               \
-> +    uint32_t vta = vext_vta(desc);                                       \
-> +    uint32_t vta_all_1s = vext_vta_all_1s(desc);                         \
-> +    uint32_t vlenb = riscv_cpu_cfg(env)->vlenb;                          \
-> +    uint32_t vd_emul = vext_lmul(desc);                                  \
-> +    uint32_t total_elems = (vlenb << vd_emul) >> 2;                      \
-> +    uint32_t vlmax = vlenb;                                              \
-> +    uint32_t altfmt = FIELD_EX64(env->vtype, VTYPE, ALTFMT);             \
-> +    uint32_t n, k;                                                       \
-> +    uint8_t *a_vec, *b_vec;                                              \
-> +    float32 acc, dot_result;                                             \
-> +                                                                         \
-> +    VSTART_CHECK_EARLY_EXIT(env, vl);                                    \
-> +                                                                         \
-> +    a_vec = g_new0(uint8_t, vlmax);                                      \
-> +    b_vec = g_new0(uint8_t, vlmax);                                      \
-> +                                                                         \
-> +    FloatExceptionFlags pre_fflag =                                      \
-> +        get_float_exception_flags(&env->fp_status);                      \
-> +    for (n = 0; n < 8; n++) {                                            \
-> +        if (!vm && !vext_elem_mask(v0, ci + n)) {                        \
-> +            continue;                                                    \
-> +        }                                                                \
-> +                                                                         \
-> +        for (k = 0; k < vl; k++) {                                       \
-> +            a_vec[k] = *((uint8_t *)vs2 + n * vlmax + H1(k));            \
-> +            b_vec[k] = *((uint8_t *)vs1 + H1(k));                        \
-> +        }                                                                \
-> +                                                                         \
-> +        FloatSNaNRule pre_snan_rule = get_snan_rule(&env->fp_status);    \
-> +        set_snan_rule(float_snan_never, &env->fp_status);                \
-> +        if (altfmt == 0) {                                               \
-> +            dot_result = rvbna_dot_float8_##TYPE_VS2##_float8_e4m3(      \
-> +                    a_vec, b_vec, vlmax, &env->fp_status);               \
-> +        } else {                                                         \
-> +            dot_result = rvbna_dot_float8_##TYPE_VS2##_float8_e5m2(      \
-> +                    a_vec, b_vec, vlmax, &env->fp_status);               \
-> +        }                                                                \
-> +        set_snan_rule(pre_snan_rule, &env->fp_status);                   \
-> +                                                                         \
-> +        acc = *((float32 *)vd + H4(ci + n));                             \
-> +        *((float32 *)vd + H4(ci + n)) = rvbna_final_f32_add(             \
-> +                dot_result, acc, &env->fp_status);                       \
-> +    }                                                                    \
-> +    riscv_cpu_check_fflags(env, pre_fflag);                              \
-> +                                                                         \
-> +    g_free(a_vec);                                                       \
-> +    g_free(b_vec);                                                       \
-> +                                                                         \
-> +    env->vstart = 0;                                                     \
-> +                                                                         \
-> +    if (ci + 8 < total_elems) {                                          \
-> +        if (vta_all_1s) {                                                \
-> +            vext_set_elems_1s(vd, vta, (ci + 8) * 4, total_elems * 4);   \
-> +        }                                                                \
-> +    }                                                                    \
-> +}
-> +
-> +GEN_VEXT_ZVBDOTA_FP8(vfqwbdota_vv, e4m3)
-> +GEN_VEXT_ZVBDOTA_FP8(vfqwbdota_alt_vv, e5m2)
+> diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
+> index b24ffb45d8e..58f6ddac35a 100644
+> --- a/disas/riscv-op.c.inc
+> +++ b/disas/riscv-op.c.inc
+> @@ -583,6 +583,9 @@ OP(vfnmsac_vf, "vfnmsac.vf", rv_codec_v_r, rv_fmt_vd_fs1_vs2_vm)
+>  OP(vfnmsac_vv, "vfnmsac.vv", rv_codec_v_r, rv_fmt_vd_vs1_vs2_vm)
+>  OP(vfnmsub_vf, "vfnmsub.vf", rv_codec_v_r, rv_fmt_vd_fs1_vs2_vm)
+>  OP(vfnmsub_vv, "vfnmsub.vv", rv_codec_v_r, rv_fmt_vd_vs1_vs2_vm)
+> +OP(vfqwbdota_alt_vv, "vfqwbdota.alt.vv", rv_codec_v_r_ci,
+> +   rv_fmt_vd_vs2_vs1_ci_vm)
+> +OP(vfqwbdota_vv, "vfqwbdota.vv", rv_codec_v_r_ci, rv_fmt_vd_vs2_vs1_ci_vm)
+>  OP(vfqwdota_alt_vv, "vfqwdota.alt.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
+>  OP(vfqwdota_vv, "vfqwdota.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
+>  OP(vfrdiv_vf, "vfrdiv.vf", rv_codec_v_r, rv_fmt_vd_vs2_fs1_vm)
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index af41c2204f5..a124cbb4bbe 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -2648,6 +2648,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
+>                  case 38: return &op_vfqwdota_vv;
+>                  case 39: return &op_vfqwdota_alt_vv;
+>                  case 44: return &op_vfwbdota_vv;
+> +                case 46: return &op_vfqwbdota_vv;
+> +                case 47: return &op_vfqwbdota_alt_vv;
+>                  }
+>              }
+>              if (((inst >> 25) & 1) == 1 && ((inst >> 12) & 0b111) == 2) {
 > -- 
 > 2.56.0
 > 
