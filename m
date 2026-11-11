@@ -1,87 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACC9606A32A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 10:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D18E606A327
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 10:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=NSQo4CO3
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=xzU0Arct
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR5ru-00043h-Jy; Wed, 11 Nov 2026 05:47:54 -0500
+	id 1xR5sP-0004ZZ-IU; Wed, 11 Nov 2026 05:48:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xR5rt-00040I-1L
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 05:47:53 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1xR5sJ-0004Yj-Lf
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 05:48:21 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xR5rr-0005NQ-Go
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 05:47:52 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-48e20ed3b9dso2668788f8f.2
- for <qemu-devel@nongnu.org>; Wed, 11 Nov 2026 02:47:50 -0800 (PST)
+ id 1xR5sH-0005QG-Pz
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 05:48:19 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-491aaed7565so1817801f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Nov 2026 02:48:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794394069; x=1794998869; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794394096; x=1794998896; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=7fW6jLHE/J82EIXH52/OhhWybeNV5uJE4PQsZ00J7GE=;
- b=NSQo4CO3t1KR5jgNL6r+Hgmg7bRYFkXD07hk8suphGVRODV9xQ9FY7Rql8SE8MxQ7f
- BPgEh5Vke6CJ7KCJPPaKCTLARH/d4dVKpOK008LEV28mKZ2+0+ARNXQoHLGdrsej5ZxB
- I4sO8UrimNEACLYdxU3uLmFTbrvZ/R1C0UeS5GvKajcIexRQM8ZIyFnbbBo4G95ip02S
- AkCdwfa4gxR5hs25GHpewFtXpwGO6ti3C/tly+XTAg5p2DzaXLo8jOfyNySIMQjTZ7ji
- /5qLOQGnX69oqgz613aWrponktbH9Q0vOweYSeXQkdpX5d+3PYMdLdDT0Jz9EnmPzj/y
- K2AA==
+ bh=nnfYJ7u/AVxfVNUFJ1NyWivMcqBN6zdRuXcVpR9KasI=;
+ b=xzU0Arctg5GsdXbg73OPHqwLW4MB+8ZIeLnEJlrXMr4w1xff6SBz+h3z9KPjh4CAd+
+ DEkcYDGr0PEkq0E4kIcDJiWUkHtixcH22bs8LH0osJpOdNF6SwlvnP5t5hdeWubFNk6r
+ Fq3w3/7zNxVnnnKRWLvJLkjB6mDpPBLEwIDve5ZcMIelgOozmVK7/Bzb8jgPdA/ZAfvI
+ 30C+9GAzvVFdTynEL7ztO15Hkcqf2X2NGkr2W/8nnH9Cn2JlzyYpRgfh6QAOAJi3JSzO
+ 5tYGNkh6jNzIn4qqDTLc8TB3tnr/vsDYkskhdlEPaRNgaK6wrccNQqi8hw+3y+356ZXi
+ Fq7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794394069; x=1794998869;
+ d=1e100.net; s=20260707; t=1794394096; x=1794998896;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=7fW6jLHE/J82EIXH52/OhhWybeNV5uJE4PQsZ00J7GE=;
- b=hEUfKuzo7ReHnoTff9ag8soC8akK8p1K3O+21TOB8Qpt/RSzfcQYTDJdhOcwF803M7
- NQhX4PFOD/8HaS1rVvEhK+q8Os4oQqJg/DCGgzefYxk0QMlaooHc7BldRE1igoKyGEUL
- TQtffPF96kbW1C+DWIXNZCJtLRHzxefMFjQZit1dNQawgafegIcrcfEh2dsF8yLF7Awd
- GxOXrDV4dUzM0oCQC+uBeTZj5dx1qIaKq8KjZbA9uesT8Pe9JNidc9qTDVNEqx4GUHLA
- Aefu6EhJOienC/IZtJFVJU9GkRNO1NhNdSW+o8Hc8ByXBpkdwx7QhwUZ8VUbi/NFl+me
- wMKQ==
-X-Gm-Message-State: APuU4Z/PYuTxJQXRNMbvyAO1vQeZ+08h3B+NsyQ+Ckd15dRWo7chDbgm
- OT+pwdpmNe1MuBcCRdPsxush4mBhZbbZFLnQO9eQh+RctNWQS74v7Ap7xUN9PwgOFzo=
-X-Gm-Gg: AYBFou0/+1brco/L4fuRVSGjaJJcASMTTOh2+8GKkeGS2IVHozD8hPw8OIg8WTCz7jL
- LzOIQQBk8Z1SJhXJi//ObEGS/muURrIvkj12PMVwX9R9aTVNTa6srSQl/fyBhSpc034XiOT5j1V
- UMyBG/kJyONml5qyoVJarYdH3u2ZeeWPV1NWAWhEJXf9ugVWW0YHvUzp7IAqLiwK8ShzsZXFuVw
- 5ejGrYAwse0NJYNAMsZ8Hcevlwv8tdm8f7agAqBplvTZpdAqgF2mTqYimXR0WsSFqOzDcNyB1xY
- C3sFxjJ8kQ8uqXrQ/iadWXFIfotBi+ZU7hrSC0nMt54nWBG4Q8g+uzQ+ivHJdy7Wa7wC8sg7J3R
- LW1C9sVKT36CbWAcKiFEkvrTAuttycJ/9IckBJvL1kjzAkLxYOfiWaouCwctx6cDQcfuiFW9ZwH
- uU+OcITSpNSJhuLuOIu6TyA+Kih9VH0V1Z/wMjZrerubnFLHUVVQkokmb/qkKCCRnfoS6vO8lJL
- PgoqiqE7iDpX5jM2od+OdDDx7fJpWfc2xD/B3cDdB1sal/WeA7wnHpY9SE0GiJKQjBAItsWg0Hu
- QqIaxWub5QjS45u0PG3jCZHnCGZEG7dR
-X-Received: by 2002:a05:6000:4b0f:b0:492:3176:3d64 with SMTP id
- ffacd0b85a97d-499c472020emr3131839f8f.8.1794394069591; 
- Wed, 11 Nov 2026 02:47:49 -0800 (PST)
+ bh=nnfYJ7u/AVxfVNUFJ1NyWivMcqBN6zdRuXcVpR9KasI=;
+ b=Mi7AVuG2ANTPQH9sfF7fPtO1AVHapuFoM0yeSF3RwFwhM4FpsVGhk9P7Hlt0tUm6cI
+ FF0qoEVBDmTiSuh2xxA3Pf23scCsLOHmVZdQHSV57UfkQRIT13OJO0FdoNAV4hYLaBaH
+ UNWyJycTn2ABWDKq56aBnRTQe7uLxJBSqDa8QorjIsUTtiGJu+yVzT81TqcyK9vhXqiL
+ GGhP2GJMP+N+So+1JNrFIVt6NGogSeZvBN5BNocAzYLUowWewUeix+bjHCfvtCg3Exfu
+ 8ECm5vh6EYGWKNWQtY1W+2GmxLxrwPoQIzSfkDkdgtg6PaXSOsVSykUt/bZd7BVzho7S
+ zI0g==
+X-Gm-Message-State: APuU4Z/J2H2xGcSlYEtg7qMuiONTLo5Mr4UzboEwW4kfl1212m56Xj69
+ wqKpGBfpjLxIJ1teMvjgoTA1vRknK7gBB/iEPWGZju4xtZSCoGuCzgY3TCD6OnQQ30vXdhL0NOI
+ pdF2IJUU=
+X-Gm-Gg: AYBFou3ipCe0FKX5zUVJqGbxVn5qGSA+xcawrcZMQWGTnVFcQOhUuh/3HY70ESuiPBQ
+ FW1jSFLXrA9A495j6Yh1HQp0BydmwD83uinhNqnHSGkTlF6Ajv9nnq1gtd77VI7db1eM+e0mvtr
+ Sz1WZADKJc2Zh9avfYi7Wm3UYh9Hl6YssAZfMxaJBg7V9a8jmzZD+8F696kr71l5Y/VdRI6gb1C
+ meIBgflPZmy+I3JWUVIEc5WS4QaJlLjjZYGRU+g+G9CTvjFH+CN8RT2GFi6BAXZVpfx0i55euOE
+ ROP7bIHDC0eH6f4jolxoFCQGODWBcjBV8DtIArBo2rqvteNmJONwnSLYQjq5Cp69BPa7zMDmP50
+ AGB1EBcd6JrGwFLyvm3YqX6tiwYh0ewm5yphTbMLuNwRrxnrGcottnRfyEoLkE0EGUc7xD5s8IW
+ snwTLEwS1Ph/qHljo4RymCZRqepanZ0iU+Z34LOWviTjVSfuYSmCtVyO9VBKTQlikfToR0HiiQ+
+ 4EVH8DZv6dGrLIxmv3JGQdtZTwImFCkktqCPDGPwJewenSCdrSrYKWblqPq3S1Mc5IdFfOJ6+mx
+ zR7hV9WIEPGlMN5D9wADlPYqiQK5jwC0
+X-Received: by 2002:a05:6000:2007:b0:490:1358:2265 with SMTP id
+ ffacd0b85a97d-499c80de903mr3202157f8f.34.1794394096052; 
+ Wed, 11 Nov 2026 02:48:16 -0800 (PST)
 Received: from linaro.org ([2a10:d582:31e:0:81bc:371c:5725:cc4d])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4983600bd6esm10537473f8f.28.2026.11.11.02.47.48
+ ffacd0b85a97d-498365cbfc6sm10931966f8f.41.2026.11.11.02.48.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Nov 2026 02:47:48 -0800 (PST)
-Date: Wed, 11 Nov 2026 10:47:47 +0000
+ Wed, 11 Nov 2026 02:48:15 -0800 (PST)
+Date: Wed, 11 Nov 2026 10:48:13 +0000
 From: Jim MacArthur <jim.macarthur@linaro.org>
 To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2 4/6] virtio-snd: don't allocate pcm_info zero-count buf
-Message-ID: <avRH05rhYYgTr-sa@linaro.org>
+Subject: Re: [PATCH v2 5/6] virtio-snd: cap maximum buffer_bytes to half a GiB
+Message-ID: <avRH7Q2ghdJuSOjd@linaro.org>
 References: <20261110-virtio-snd-fixes-v2-0-d5b654217676@linaro.org>
- <20261110-virtio-snd-fixes-v2-4-d5b654217676@linaro.org>
+ <20261110-virtio-snd-fixes-v2-5-d5b654217676@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261110-virtio-snd-fixes-v2-4-d5b654217676@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x435.google.com
+In-Reply-To: <20261110-virtio-snd-fixes-v2-5-d5b654217676@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,32 +109,61 @@ X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 10, 2026 at 02:39:33PM +0200, Manos Pitsidianakis wrote:
-> g_new0() might return NULL, which is UB if passed to a memcpy
-> implementation that does not expect it (not in the usual case).
+On Tue, Nov 10, 2026 at 02:39:34PM +0200, Manos Pitsidianakis wrote:
+> A faulty/malicious guest can try to exhaust host memory. Cap the buffer
+> size to 500 MiB.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3778
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3587
 > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > ---
->  hw/audio/virtio-snd.c | 5 +++++
->  1 file changed, 5 insertions(+)
+>  hw/audio/virtio-snd.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
 > 
 > diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-> index 89406f0a3a..a7d749f24f 100644
+> index a7d749f24f..a6036d5b75 100644
 > --- a/hw/audio/virtio-snd.c
 > +++ b/hw/audio/virtio-snd.c
-> @@ -267,6 +267,11 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
->          return;
->      }
+> @@ -17,6 +17,7 @@
 >  
-> +    if (count == 0) {
-> +        cmd->payload_size = 0;
-> +        cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
-> +        return;
+>  #include "qemu/osdep.h"
+>  #include "qemu/iov.h"
+> +#include "qemu/units.h"
+>  #include "qemu/log.h"
+>  #include "qemu/error-report.h"
+>  #include "system/runstate.h"
+> @@ -24,6 +25,8 @@
+>  #include "qapi/error.h"
+>  #include "hw/audio/virtio-snd.h"
+>  
+> +#define MAX_BUFFER_MIB 500
+> +
+>  #define VIRTIO_SOUND_JACK_DEFAULT 0
+>  #define VIRTIO_SOUND_STREAM_DEFAULT 2
+>  #define VIRTIO_SOUND_CHMAP_DEFAULT 0
+> @@ -368,6 +371,14 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+>                       & ~(stream->info.features));
+>          return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+>      }
+> +    if (le32_to_cpu(params->buffer_bytes) > MAX_BUFFER_MIB * MiB) {
+> +        error_report("%s: given buffer_bytes value %"PRIu32" "
+> +                     "is too big: over %d MiB",
+> +                     VIRTIO_DEVICE(s)->name,
+> +                     le32_to_cpu(params->buffer_bytes),
+> +                     MAX_BUFFER_MIB);
+> +        return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
 > +    }
->      pcm_info = g_new0(virtio_snd_pcm_info, count);
->      for (uint32_t i = 0; i < count; i++) {
->          stream_id = i + start_id;
+>  
+>      st_params = virtio_snd_pcm_get_params(s, stream_id);
+>  
+> @@ -1037,6 +1048,8 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+>          }
+>  
+>          stream = &vsnd->streams[stream_id];
+> +        size = MIN(stream->params.buffer_bytes, size);
+> +
+>          if (stream->info.direction != VIRTIO_SND_D_OUTPUT) {
+>              goto tx_err;
+>          }
 > 
 > -- 
 > 2.56.0
@@ -141,4 +171,5 @@ On Tue, Nov 10, 2026 at 02:39:33PM +0200, Manos Pitsidianakis wrote:
 > 
 
 Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+
 
