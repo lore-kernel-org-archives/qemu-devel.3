@@ -1,122 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6318A60A2609
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614C9606A32E
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 03:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=alistair23.me header.i=@alistair23.me header.a=rsa-sha256 header.s=fm3 header.b=FZSBB3NR;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yJbX/zK6
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=rrHYcRc2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQz1t-0007ki-Eb; Tue, 10 Nov 2026 22:29:45 -0500
+	id 1xQz29-0007oJ-Vc; Tue, 10 Nov 2026 22:30:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xQz1r-0007js-Pt
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:29:43 -0500
-Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xQz1q-00085c-7Z
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:29:43 -0500
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfout.stl.internal (Postfix) with ESMTP id 740061D002A8
- for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 22:29:41 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-03.internal (MEProxy); Tue, 10 Nov 2026 22:29:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1794367781; x=1794454181; bh=xU1jMkOEfBY+C3cqbXOUai/I0MeBrKoI
- 70Kaw44x/jM=; b=FZSBB3NRVwfsPQhWJ9IGe95/MkR0ZNopUy966ALlafMc9KcC
- H3TPxHDt26xLvwZvUKRGM82B4lTREQdj0yPJ9lDwwqP1pnhChXcLjb2+yZJ7T5vl
- hs/8G6eDAHucIP/9J9ML0G5wDbIbC3YwQKc50FQJ9UrFy4TnYAusbTrhMqg4ScKC
- eyDboTq1fRWTn6NYLqGvzI33e4VJ+DQedRQZad3M4uR0OQBldHV3ALpkskmraVTA
- hKuqOHCDvNn0Q753ua9jPMCYJ+xYpjwgzQ1738YxmA6jHRwBDYKc13lk6eYKNlBI
- fVlcUJ+Y0HsLhFkUD5DwiG+zaKwetrpZXq5bpQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794367781; x=
- 1794454181; bh=xU1jMkOEfBY+C3cqbXOUai/I0MeBrKoI70Kaw44x/jM=; b=y
- JbX/zK6LUdyqd2NSlPPny9yZ7+pG9Tcy9QWvQFTB0D8JEmCMRYlVBhQFqQxazuzb
- apINqXY3oMG5izoFgP3Og9GQ6CgR3ITZ2t9EPyENIVzja/wdnCN6DREy2WlDk8qx
- S2WstnC+GWC5RP0c0VrPtbswxCSF23WSVGxIam+sZSuxfgxsWYGOU7QGmt+pSsSO
- 6dPJihkQd0f/tCg2I8Q2eSqhwtwlmTz564w0+bVd6tLdu1z67mlgpQvK2/JvhaMD
- mpGSzwAWsAKI2UL+GW2S5sE7WxfZxixm1fU7Bp+EOyxnuviFdjNV4/VkVyChpKX0
- jZYQcd7ikNP09zCHTi0pg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794367781; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm3:rsa-sha256:EpZhOsRkvdsTKALhhfjTGDQpcXTiU7jZt1e6qq/MUo+FVlp
- hzTUBnTuvFUCpiky0+52GFy/zkgLPc6F5dnHvuoYxx6MM6gNfxO8Fr5GlfPq6o2W
- CJLQ015TlnXViI5qc2YU4H/M9/A+vr1WeND3iOj3xSCjbmNVbbHhCM5WBsMW07pW
- JV+QKZc+6fIBaEjARmfAFQBA6Utmm4+K98b6Ue5IYB018qc5nOFl9r+EdonhoBu5
- wdGdjaXlQQ0IBuE7pDj5/oK7W+aE5M0nOGAfOQ9LzjjKmttQyiL0B7ucfKl/Wbe8
- PeYS0MBmzLmAKaGRB4mXjXhD1GtKuQpdJMVlYdw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:k20BRj0ud4pGTYwm/ngKtFrXkrmxPT4D/rUHVUo2/kA=:xU1jMkOEfBY+C3cqbXOUai/I0MeBrKoI70Kaw44x/jM=;
-X-ME-Sender: <xms:JeHzasRujyCwbsWsDgDrPFe5s_SlaOAI4WB4QvkWs2QbSwj1-69V8A>
- <xme:JeHzaj2hkyERqCDk59XFQIEJd2f9cW8S9YZifawCVWYRVwj2FPbX6OrgopGYkc0pw
- M1MoUqV8PD-xD1FFJa-S5wGVqEFn-WwhgBKVk7sgU6OzsVEuzPs8cE>
-X-ME-Received: <xmr:JeHzapvQzuxO7tJcI5Dv6H1uzpL_j5VX5PGKi9oSotpIXmK-QB5RDUKs_Qov4xt1DblOuHPW1oConbsBX9yXbLBLqHE>
-X-ME-Proxy-Cause: dmFkZTEa8c6FDBppr/q5ebq0aoIUN284cstTqPm3bmylL6ehN7YhdonrN2YQk4t5XfeIu4
- P4Y9nIRxY4COUBsfqjupCuZih5azBUMCC5Jf5wpoln+vnlnWqXyTs+lrd6bd+8Yl0t2LV8
- tPTCl5x5HKYTgtdS3PJOHcNNlqDpMun4EP1pcWwciQ4y5Rdx0HgcQ10+1Don/+DZZnm21U
- SnWrIQYaL9UQoB0iGyuyubnmzMFPMATt+/+HveXZNK826Nj7nr8ujvuXFqL7hhJyunqCfx
- eGYP36F4tyNoTjKHTaYNDLjzbkpi5YrDNwwq8mG/iAOjvQ3kjfVegoCXtjdrpJjtx71xgH
- qhDrgOHriR7nqvO3e4vyvidlwAYWge4szU6ds3WUSF4PxjWGCRyX13QHhstCXFpPJX6JrB
- jMA71BtgWz8ZYAtzUkcJVgiTLUkQD0J3pQDGmZflbX6mL2k/y5m6TOreDD2KI8NSGkKhPe
- cHH0EwTnynkeL7Tqc+GOQeeRqPWjnMSPuQNiRdVYxnI9BEunKCTgq1oc++vBOqbmTLAmkU
- aAhSalGvrmq7aSk/mR1UTpwd3vhUekKn01HcL1jv8n/Elw8tTyh+peCwc0vbCfuZy80KbH
- nLSQgc3t6aPnRiHs1NkObyVkRr6JErkU/Nmz1oRkGZ1IH1Js7l2RBW+id6UA
-X-ME-Proxy: <xmx:JeHzahgPx-pWcfDWjLK3BRxiafwhr6G_2pzc32oc6RT5aQL1kFMkeg>
- <xmx:JeHzai-7_Rs4STCH8tpce1BhBfhJMKKLxJLn3rzCq4GRJ0caTd9dxw>
- <xmx:JeHzassKcqcU1rUCFZRuaUHE2Zej6QvB7AXPBB43XJNc-Z9kxhxLmA>
- <xmx:JeHzauqIo-YwOW6_xH0jSB-8hYASEpl_zT9Hvjr6SHeHMTB_-Df_8Q>
- <xmx:JeHzak2IcolzE8Y3KlylrLXHW1MgCT3xo2sxCDRdCDun0HNMPcjlBX_0>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Nov 2026 22:29:38 -0500 (EST)
-Message-ID: <6c540b6d6e875833f2fb1bcf1e81ccb5937d6b4d.camel@alistair23.me>
-Subject: Re: [PATCH 5/6] hw/dma/xilinx_axidma: Don't start transfer on
- TAILDESC write when halted
-From: Alistair <alistair@alistair23.me>
-To: Jay Chang <jay.chang@sifive.com>, qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Peter Maydell	
- <peter.maydell@linaro.org>, Jason Wang <jasowangio@gmail.com>, "open
- list:Xilinx Zynq" <qemu-arm@nongnu.org>, Frank Chang
- <frank.chang@sifive.com>, Jim Shu <jim.shu@sifive.com>
-Date: Wed, 11 Nov 2026 13:29:36 +1000
-In-Reply-To: <20261015033733.35116-6-jay.chang@sifive.com>
-References: <20261015033733.35116-1-jay.chang@sifive.com>
- <20261015033733.35116-6-jay.chang@sifive.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.62.1 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xQz28-0007mH-CO
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:30:00 -0500
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xQz26-0008IK-BZ
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:30:00 -0500
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-cc758830601so1729800a12.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Nov 2026 19:29:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794367795; x=1794972595; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=EwVY3HZgRYZh1309oimBv7jqOQf/3D5nVP/VQ9sMQwA=;
+ b=rrHYcRc2pwOOE7zPPS+fBTeW3dgwW6V94VQBHu3JL2tsKF/U/QzXvVGdQzbDk27ry3
+ EO8bQgnXr8lHDPixTuWArtYhFBqVnhgFulNaAgI5IZ3iNY39RKaLJ6gGsO//wJVhq5oB
+ 6ZlKeUwjjR+SMIIyN/Mb0WOC8xEPY5JlLGOjPikl/ZXwpuMXFnCLdRPxmXMCyiJ/6jQy
+ 5ph8RyjNLZzwYDYDPEDUocCOlwhIz4tcMRSC/n0nBx/VAn8jv064jN9pLfP6ghKNcNGF
+ yVEDAAu2Uk6VYlI5j5/kvgPTIrQyg0x0M4/aF13Viu2ceVA4bCHMrKSU/YkrTJl+zbuT
+ Y07A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794367795; x=1794972595;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=EwVY3HZgRYZh1309oimBv7jqOQf/3D5nVP/VQ9sMQwA=;
+ b=JVRIILtKm9y8GBqg+N98qkfSB9DDLYOjxX9rURi8pCjM0JZH5zdLjJ+QrxZLI9L49J
+ P+kyvFnZlHqZhCohU1ja3NFPYy/WhV+C1UZvZDd4aSeTfhtVqldztsd4r7u4QbLHazCk
+ fg4vxwFNeLynojQMcAq38lL54gukbsp00lHnBiAX8Zzr63fqPdesm4A9UQuO9uNl5bAn
+ X4n8nd7fG6Uo0RGtfJs/JOE2XM2N4fvMilJ9dTToeE8h03/XuzykMabJdu8PbKNYmEbj
+ 5BnXQqT6xIZYz+jMe787JUIHlFYlvqT0o+L1ginNdDwSdd7dGy2WRcxeweVRZhlCfPhy
+ apRw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEpNU+Va8my4YUG0/8sb0w6GGEKhcearNGK8iBSoHKjHzIeD/639oEYf0gne8m5ctY0jAAISoB7JLAw@nongnu.org
+X-Gm-Message-State: APuU4Z+qzX2kWUOonX9nOxn/fTdlYJeDCjmv4nDU3/01QcPbQyaQkR3y
+ wX5lVSpF2GioOjQDi5ZZKpvGwfW2Evyu81o6BOnfN5HPHrIRrgwBewpSjbCZbyRJpu4=
+X-Gm-Gg: AYBFou3SnLBZ/Jtn3gjbljFO8uEcSkql9TpgiiQmoSeuHY5pG4Ow3wqrCiSyfYUqCu9
+ F2GwMS6rltbvYn0ImYDeg+Rt8Oul1rHPAd5n/WSEJGd3WQDG/MhAVZTV84/Kf+wpRbHoebhroPp
+ ycNnmEXdvDfp/xxqf+/lZL6pnj27gJPSUkD+FOvSI/ShdpXs2+2DWZDXKu1gvKdAXp+xLqA3GfP
+ orE0Ms1S2njLlLvC4QOdaPJM7N+t/pRv5VLnE8F93zdkPOB0q/YTnnEhgzVw33l0ydgU0eOJk8z
+ mWd2Lf/rXczre2fbnFZEV8FRmvek5rTdfA82How4k1Af74TGRFOSHZql7iJCoR94q6tKMT/tGlB
+ kYls8Z9l8xYMD/nH2rDDFQLDSOT9tN6xkxnwR1QUWJWk/+kkj6U+pByW+H4T7i4LtFF7PprS8Fw
+ xMSqBO2mbJfveugpCevHQstjEhefAKnKzexwMOJWHPA0hrTHyrH2IHrbwKp1saUNS2mLB8+eoeV
+ GEXJvKzo4VB9KgtI1YYk+QC7xwIquvrYfWk47j5aoOyg3Ek/J4t+ft7Or+Nr6BvodCBMH0lbX3Z
+ iT53AQ28qdDPXsQgyLnYv49nSUwhCoNJWTXXc4biPvuMTwIHFsgAvAp/srlEtU7JjjCzyRY=
+X-Received: by 2002:a17:90b:574e:b0:3a8:10e2:ad08 with SMTP id
+ 98e67ed59e1d1-3b182f298dfmr1155497a91.48.1794367794880; 
+ Tue, 10 Nov 2026 19:29:54 -0800 (PST)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3b17db321dfsm2315840a91.5.2026.11.10.19.29.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Nov 2026 19:29:54 -0800 (PST)
+Message-ID: <548258ad-0e51-458a-827e-6b9c7d0f15d3@linaro.org>
+Date: Tue, 10 Nov 2026 19:29:52 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.150;
- envelope-from=alistair@alistair23.me; helo=fout-b7-smtp.messagingengine.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tcg/riscv64: Fix vector constant matching for logical
+ ops
+To: Alistair Francis <Alistair.Francis@wdc.com>,
+ "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
+ "aurelien@aurel32.net" <aurelien@aurel32.net>
+Cc: "palmer@dabbelt.com" <palmer@dabbelt.com>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <20261010174742.3552498-1-aurelien@aurel32.net>
+ <9ca6f711-e886-46a5-80ea-a6c750696a93@oss.qualcomm.com>
+ <auEeif_51q1K9XOz@aurel32.net>
+ <d230ae93a44b63138389d07c355c2e8d3154acd7.camel@wdc.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <d230ae93a44b63138389d07c355c2e8d3154acd7.camel@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,49 +111,185 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 2026-10-15 at 11:37 +0800, Jay Chang wrote:
-> Spec: "If the AXI DMA Channel is halted (DMASR.Halted =3D 1 and
-> DMACR.RS =3D 0), a write by the CPU to the TAILDESC_PTR register has
-> no effect except to reposition the pause point."
->=20
-> Check DMASR.Halted and DMACR.RS in axidma_kick() so that a TAILDESC
-> write while the channel is halted only updates the pointer and does
-> not start a transfer.
->=20
-> Signed-off-by: Jay Chang <jay.chang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Jim Shu <jim.shu@sifive.com>
+On 11/10/26 18:36, Alistair Francis wrote:
+> On Tue, 2026-10-27 at 22:58 +0100, Aurelien Jarno wrote:
+>> Hi Philippe,
+>>
+>> On 2026-10-24 19:00, Philippe Mathieu-Daudé wrote:
+>>> On 10/10/26 19:46, Aurelien Jarno wrote:
+>>>> For logical vector operations (in the case of the RISC-V backend
+>>>> that
+>>>> corresponds to and_vec, or_vec and xor_vec), VECE is unused.
+>>>> However,
+>>>> tcg_target_const_match() always treat it as an element size to
+>>>> extract
+>>>> the corresponding constant element from the whole constant.
+>>>>
+>>>> This causes the following aarch64 instruction
+>>>>     bic v4.8h, #0xf0
+>>>> to be translated into the following op:
+>>>>     ...
+>>>>     and_vec v128,e8,tmp5,tmp4,v128$0xff0fff0fff0fff0f
+>>>>     ...
+>>>> which is then translated to the following RISC-V instruction:
+>>>>     vand.vi v1,v1,15
+>>>>
+>>>> Fix that by, when VECE is 0 aka MO_8, only extracting the element
+>>>> if the
+>>>> it can actually be represented as a duplicated constant.
+>>>>
+>>>> Fixes: 5a63f5998791 ("tcg/riscv: Add support for basic vector
+>>>> opcodes")
+>>>> Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+>>>> ---
+>>>>    tcg/riscv64/tcg-target.c.inc | 11 +++++++++--
+>>>>    1 file changed, 9 insertions(+), 2 deletions(-)
+>>>>
+>>>> Changes v1 -> v2:
+>>>> - Use dup_const() instead of open coding the constant
+>>>> duplication.
+>>>>
+>>>> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-
+>>>> target.c.inc
+>>>> index 14a397117a..1262b71a62 100644
+>>>> --- a/tcg/riscv64/tcg-target.c.inc
+>>>> +++ b/tcg/riscv64/tcg-target.c.inc
+>>>> @@ -392,8 +392,15 @@ static bool tcg_target_const_match(int64_t
+>>>> val, int ct,
+>>>>            return 1;
+>>>>        }
+>>>>        if (type >= TCG_TYPE_V64) {
+>>>> -        /* Val is replicated by VECE; extract the highest
+>>>> element. */
+>>>> -        val >>= (-8 << vece) & 63;
+>>>> +        /*
+>>>> +         * For vector logical operations, VECE is unused and
+>>>> equals to 0, so
+>>>> +         * we need to check that the constant can properly be
+>>>> represented after
+>>>> +         * replication.
+>>>> +         */
+>>>> +        if ((vece != MO_8) || (val == dup_const(vece, val))) {
+>>>> +            /* Val is replicated by VECE; extract the highest
+>>>> element. */
+>>>> +            val >>= (-8 << vece) & 63;
+>>>> +        }
+>>>>        }
+>>>
+>>> This fixes the BIC case, but I don't think it is sufficient.
+>>>
+>>> I tested with qemu-aarch64 built for a riscv64 host, run under
+>>> qemu-riscv64 -cpu max, guest -cpu max,sve-default-vector-length=16.
+>>>
+>>> NEON bic v0.8h, #0xf0 // fail on master, now OK
+>>>
+>>> add z1.b; and z0.d, #0xf // FAIL
+>>> add z1.d; and z0.b, #0xf // FAIL
+>>> add z1.b; orr z0.d, #-16 // FAIL
+>>> add z1.d; eor z0.b, #0xf // FAIL
+>>
+>> This indeed doesn't work. The problem is that while the constant
+>> matching is being passed VECE = 0 (as it is unused for logical ops),
+>> the
+>> code generation is still being passed a 64-bit size. Therefore for
+>> the
+>> eor, it emits:
+>>    vsetivli                zero,2,e64,m1,ta,ma
+>>    lui                     t6,3
+>>    addiw                   t6,t6,-448
+>>    add                     t6,t6,s0
+>>    vle64.v                 v1,(t6)
+>>    vxor.vi                 v1,v1,15
+>>
+>> It would make more sense to use 16 e8 elements like in the original
+>> ARM
+>> SVE code, but it seems that info is lost at this stage.
+>>
+>>> Not accepting constants for and/or/xor_vec at all
+>>> (using C_O1_I2(v, v, v) to get them loaded into registers)
+>>> makes all five cases pass (I'm not sure we want to keep
+>>> the .vi forms):
+>>>
+>>> -- >8 --
+>>> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-
+>>> target.c.inc
+>>> --- a/tcg/riscv64/tcg-target.c.inc
+>>> +++ b/tcg/riscv64/tcg-target.c.inc
+>>> @@ -2779,15 +2779,15 @@ static void tcg_out_vec_op(TCGContext *s,
+>>> TCGOpcode
+>>> opc,
+>>>       case INDEX_op_and_vec:
+>>>           set_vtype_len(s, type);
+>>> -        tcg_out_opc_vv_vi(s, OPC_VAND_VV, OPC_VAND_VI, a0, a1, a2,
+>>> c2);
+>>> +        tcg_out_opc_vv(s, OPC_VAND_VV, a0, a1, a2);
+>>>           break;
+>>>       case INDEX_op_or_vec:
+>>>           set_vtype_len(s, type);
+>>> -        tcg_out_opc_vv_vi(s, OPC_VOR_VV, OPC_VOR_VI, a0, a1, a2,
+>>> c2);
+>>> +        tcg_out_opc_vv(s, OPC_VOR_VV, a0, a1, a2);
+>>>           break;
+>>>       case INDEX_op_xor_vec:
+>>>           set_vtype_len(s, type);
+>>> -        tcg_out_opc_vv_vi(s, OPC_VXOR_VV, OPC_VXOR_VI, a0, a1, a2,
+>>> c2);
+>>> +        tcg_out_opc_vv(s, OPC_VXOR_VV, a0, a1, a2);
+>>>           break;
+>>>       case INDEX_op_not_vec:
+>>>           set_vtype_len(s, type);
+>>> @@ -2976,15 +2976,15 @@ tcg_target_op_def(TCGOpcode op, TCGType
+>>> type,
+>>> unsigned flags)
+>>>       case INDEX_op_rotli_vec:
+>>>           return C_O1_I1(v, v);
+>>>       case INDEX_op_add_vec:
+>>> -    case INDEX_op_and_vec:
+>>> -    case INDEX_op_or_vec:
+>>> -    case INDEX_op_xor_vec:
+>>>       case INDEX_op_ssadd_vec:
+>>>       case INDEX_op_sssub_vec:
+>>>       case INDEX_op_usadd_vec:
+>>>       case INDEX_op_ussub_vec:
+>>>           return C_O1_I2(v, v, vK);
+>>>       case INDEX_op_sub_vec:
+>>>           return C_O1_I2(v, vK, v);
+>>> +    case INDEX_op_and_vec:
+>>> +    case INDEX_op_or_vec:
+>>> +    case INDEX_op_xor_vec:
+>>>       case INDEX_op_mul_vec:
+>>>       case INDEX_op_shlv_vec:
+>>>       case INDEX_op_shrv_vec:
+>>>       case INDEX_op_sarv_vec:
+>>>       case INDEX_op_rotlv_vec:
+>>>       case INDEX_op_rotrv_vec:
+>>>       case INDEX_op_smax_vec:
+>>>       case INDEX_op_smin_vec:
+>>>       case INDEX_op_umax_vec:
+>>>       case INDEX_op_umin_vec:
+>>>           return C_O1_I2(v, v, v);
+>>
+>> I believe that until TCG is able to propagate VECE even for logical
+>> ops,
+>> this is the thing to do. It generates suboptimal code, but correct
+>> one.
+> 
+> Are you able to update this patch and send a v3 that include these
+> fixes, or ideally what Richard said?
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+https://lore.kernel.org/qemu-devel/20261028143330.6518-1-philmd@oss.qualcomm.com/
 
-Alistair
+I thought there would be some more review, but if there's no more 
+comment I can merge it sometime this week.
 
-> ---
-> =C2=A0hw/dma/xilinx_axidma.c | 4 ++++
-> =C2=A01 file changed, 4 insertions(+)
->=20
-> diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
-> index 687b5080e0..a9c2c2a275 100644
-> --- a/hw/dma/xilinx_axidma.c
-> +++ b/hw/dma/xilinx_axidma.c
-> @@ -536,6 +536,10 @@ static uint64_t axidma_read(void *opaque, hwaddr
-> addr, unsigned size)
-> =C2=A0
-> =C2=A0static void axidma_kick(XilinxAXIDMA *d, struct Stream *s, int sid)
-> =C2=A0{
-> +=C2=A0=C2=A0=C2=A0 if (stream_halted(s) && !stream_running(s)) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->regs[R_DMASR] &=3D ~DMASR_IDLE;
-> =C2=A0=C2=A0=C2=A0=C2=A0 if (!sid) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 stream_process_mem2s(s, =
-d->tx_data_dev, d->tx_control_dev);
+
+r~
 
