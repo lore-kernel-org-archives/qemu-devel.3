@@ -1,62 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0A1606A321
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 14:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C07606A321
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 14:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=intQIeIR;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=hOjGY5W9
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=YfWh9Emy;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=YMJHSQ9n
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xR9Qy-0000sa-2y; Wed, 11 Nov 2026 09:36:20 -0500
+	id 1xR9RI-00015B-2h; Wed, 11 Nov 2026 09:36:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xR9Qm-0000qS-Rq
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 09:36:10 -0500
-Received: from mx2.catap.net ([65.21.79.163])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xR9R2-0000wf-0Q
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 09:36:25 -0500
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xR9Qj-00025c-FN
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 09:36:08 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=CHUk7NO
- L/0UHn7wziu6r4IF6Zvafckrtt2UOItTS4jKA4CtTsZBSmuPvQTcZJzNbGeEPe6p5ZsSS1
- DrVe9KQ5XwXQZ5q4ADtTjOMSdwIon/6f8bZa2XzOFEHdExCROuTAYDmpqcMdss/By3oCeQ
- ahxLiu7w+zeTbsrk921YY/pRmVgt5oLreeWGAxi/BTlGC+soilczvozvNK4jCEUT1bgrYF
- MmcZXwy3OZMcXmfMYQYnO2eWfAlrOVvzrlR5Zr9IHC9W/rBE1puoBely/3/sX9JhB3I/4k
- ntjE5HJlY8TDGCKee8YuahB/1zxLxK8MLOhwDvZF9mtIJp55EUSV14Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=l
- rjAqoX31HMeMlQZhR+5MVnVxIgBTE6lizCSXn57Hlg=;
- h=date:subject:cc:to:
- from:dkim-signature:dkim-signature; d=mx.catap.net; b=eJ0oQImUZPkZ2dGi
- eJYLYoSoV1n93uMOFxG2htrRPizIZyk0xljyomxH+Db5nN+Gd6bMp2gmXc57NvfVsoQrk3
- Kt80RpxMV3veFWOyHvD4v259THk+gzMFRXMI9gNzDz34r1eNaue84g0K/9nhj4DZMDpITn
- E+45GoZmTj9y6YkJ6aVldY5Ai/OWgvDHb4jbHNzomWM/wGoDXKQ/bXXG6F+BXh8ft5vGqd
- U8Ewk2fwK7m6FNuqzMk/pQlVPKBg4VQqduRStiEj3nv9/DRrQXWpCazWpxu2cYpz+VRQR1
- P/SurSJt38tT0XtBoYBhC38vhtuDBG8aVaWet+tPCRvDCg==
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xR9Qz-0002P2-Dt
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 09:36:23 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=ouhuy3L
+ 9L7QbM67fQAswCs3TfpKqxBNVkHRNklH+jCn/oKzxGnvtL6S1rBnMMUDrOXa43Jxplhd13
+ gwdTW9UOi+TSp2vAL6Sn6jka32xnRVUGxchH+xam1arS2wWVZPJnXkaKcPKtMbsWIrp1Rb
+ VlZo8bXTDSIxgbarj1Brm+KmzDN5affWDU/mNtDIHBDgIJ/aUFMDBOudU3SuL9Rq7qx5y3
+ H8oSmHGweL3OG26ZNaGci5XisCyVmFYu2tLdLd1e++TKPdwzqOjtdPDAdmb8a1TIh1CbCF
+ E57l70SE734BDzALbthBTxVQOMQldBWYrPzDMRW8cDFruGAqcsY2yhg==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=S
+ kBExtnoRh6TfWZo0GBNNWb5wbVHOigkT3DdK7hNQDE=;
+ h=references:in-reply-to:
+ date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=MzubI6g4dXBYhuMSXAE9WmjC2TuutKlEJeoEBJkghMN/Y4AuPiNgxOODTAPhns8wHCN/
+ 97hPEqbuSieY5Fl/dJfBmLAAA89PnBTyg+wy0w0U08hqnb9OeuG4d6Mf2Nd4EUTmGiwU6l
+ S2950c7XKJlTw9d+V0YJriuHX/RAVmXO248KKgHe+FZXii+l0dXRrysgqJEf1whTkcRIBT
+ eXrTjbcgOZvm9yQfIj9hiO4otbD3QKFUOyEe7zoI2N8Yr6Xe8Cl3+xg4KkPn2yTb43URsl
+ 4bfjz1iIpmlHgY8IleLD4Hrfc3Od9Xnn7ZL6O4HQ71TVuHJ9XKrZsUUO5c/UWlsg==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=intQIeIR; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=hOjGY5W9;
+ header.b=YfWh9Emy; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=YMJHSQ9n;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=lrjAqoX3
- 1HMeMlQZhR+5MVnVxIgBTE6lizCSXn57Hlg=; h=date:subject:cc:to:from;
- d=korins.ky; b=intQIeIRpIaaw1oyC4owiVY7TzcYeSCN4RCn71e7ubmATnXXesR7+p5
- E8kysG8NhnMTX7rtekQQ9o13D2zAYFSfdOvZS4Wtk4Q7H18wie2S8u3PWwIHvCwUqdd7x/
- Po3VX+hrGm/bhqSdlYLCRhWKnC/mFwwOf57a6YaiAIXDJ7hk/5a33TDhgQj4dMoyOMQ4sy
- 6QRJEkxzlMsfCEopnM7ENu+3iO2hC3VgTSCb1arrpY7lJewCceEhKl9ZViuOOnC4TH98/C
- C9vZh5ZbuhpxFsqnn6u2cL3X4xG7OIj6LCeozA03JnE49B3TNkBbK7dIYceCAGJy4eYHcD
- pYkJv2Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=SkBExtno
+ Rh6TfWZo0GBNNWb5wbVHOigkT3DdK7hNQDE=;
+ h=references:in-reply-to:date:
+ subject:cc:to:from; d=korins.ky; b=YfWh9Emy27KCt2rR15f3opLtwZHGhPLlxif
+ LbESRT/tKujmR68ugXYA6fQ7UdmYB/iK6qrfH5QLq6OxjqcycqhavtAN1LdFJav1OjvTHv
+ Ck29cxZUJWn8enxQmmG2gGgytlVHZJKMlfSSw8aOylfT/FWDIIdwf2yXz1WVMqd8XAVRev
+ yQOQXGmCymO7Q+UROUY8foK5NciX19S1I16awuLlUjJj6wsEf4TjNpV/b83D0LRXUvPUuJ
+ 9hI4qOF83YYWkiXj2ssqWobiSdW8GloIR7H2VMPR0BMSCfEn3/lG+LO129fW8urETeIW/L
+ 1nrCwX7Ny9KAubT4msmAttIzyqA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=lrjAqoX31HMeMlQZhR+5MVnVxIgBTE6lizCSXn57Hlg=; h=date:subject:cc:to:
- from; d=korins.ky; b=hOjGY5W9AeEyOzwC043wBjVtLuFLQ+XAT5MpOyqB+4MtyW4p9
- FToIKPMZqlRqVkMy9uFap7G1OLF69SUdVtRCA==
-Received: by mx2.catap.net (OpenSMTPD) id 64e8dbc3;
- Wed, 11 Nov 2026 15:35:58 +0100 (CET)
+ bh=SkBExtnoRh6TfWZo0GBNNWb5wbVHOigkT3DdK7hNQDE=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=YMJHSQ9nuIVlVgK0WP
+ q3+xsdB9LyhmoqE9UUQeEp8YY3Z732Hyu9ugy9yFGguItP8DN94UBwH9iuv0eaKcasDA==
+Received: by mx1.catap.net (OpenSMTPD) id 93d196e2;
+ Wed, 11 Nov 2026 15:36:15 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 1f1f04bd;
- Wed, 11 Nov 2026 15:35:54 +0100 (CET)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 2d476991;
+ Wed, 11 Nov 2026 15:35:55 +0100 (CET)
 From: Kirill A. Korinsky <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -67,16 +68,17 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
 Cc: "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PATCH v7 0/26] hw/mips: add Octeon III EBB7304 support
-Date: Wed, 11 Nov 2026 15:32:00 +0100
-Message-ID: <20261111143533.1775-1-kirill@korins.ky>
+Subject: [PATCH v7 23/26] hw/usb: add Octeon USB controller
+Date: Wed, 11 Nov 2026 15:32:23 +0100
+Message-ID: <20261111143533.1775-24-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261111143533.1775-1-kirill@korins.ky>
+References: <20261111143533.1775-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -95,121 +97,495 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Greetings,
+From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-This is rebased to 29760efaf96bbe5928f8111881eddbf5ac06439e
-(v11.2.0-rc0) and addressed a few remarks from Philippe Mathieu-Daudé.
+Add the Octeon UCTL wrapper around the DWC3 controller, including the
+big endian register window, byte swapping, DMA mapping and interrupt
+routing. Instantiate both EBB7304 USB controllers.
 
-This series adds enough Cavium Octeon III CN73xx and EBB7304 board
-support for upstream U-Boot 2026.04 to boot OpenBSD/octeon from USB
-storage or through PCI e1000 and TFTP; the same machine also reaches
-the prompt of the vendor U-Boot 2013.07 image from the Ubiquiti
-EdgeRouter Infinity ER-8-XG recovery set. The model intentionally
-covers the hardware exercised by these firmware and operating system
-paths.
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+---
+ hw/mips/Kconfig           |   1 +
+ hw/mips/octeon.c          |  31 ++++
+ hw/mips/octeon_internal.h |   6 +
+ hw/usb/meson.build        |   5 +
+ hw/usb/octeon_usb.c       | 319 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 362 insertions(+)
+ create mode 100644 hw/usb/octeon_usb.c
 
-The vendor recovery image is U-Boot 2013.07, UBNT build
-e1000_002_ef3a9; it reaches:
-
-    Octeon ubnt_e1000(Failsafe)#
-
-This is the expected command prompt of the recovery U-Boot environment;
-"Failsafe" describes the recovery image and does not indicate an
-emulation or boot failure.
-
-Early Octeon investigation used Amir Mehmood's original Octeon
-host.patch as a behavioral reference; the basic machine approach and
-several hardware model ideas come from that work. No code from that
-patch remains in this implementation.
-
-The series starts with three generic MIPS correctness fixes for MTTCG
-interrupt state, MIPS64 segment checks, and architectural tlbwr
-replacement semantics. It then adds Octeon CP0 state, the CN73xx CPU
-model, PageMask handling, and unaligned accesses before introducing an
-empty EBB7304 machine. The remaining patches add the machine state and
-peripherals incrementally, followed by the functional test.
-
-The machine currently models:
-
-* the EBB7304 RAM layout, boot flash aliases, and boot-local RAM;
-* CN73xx CPUs, Octeon CP0 state, CVMSEG, and configurable clocks;
-* reset control, legacy CIU and CIU3 interrupt routing, mailboxes, and
-  secondary CPU release;
-* UART, two TWSI controllers, synthesized DDR4 SPD, four LMC register
-  banks, fuses, RNG, POW, and the firmware probes used during platform
-  initialization;
-* the EMM registers needed for firmware MMC initialization;
-* two UCTL-wrapped DWC3 controllers, sufficient for U-Boot USB storage;
-* a minimal PCIe host bridge, sufficient for a PCI e1000 device.
-
-The functional test starts upstream U-Boot with four CPUs, enumerates
-PCI, obtains a DHCP lease, downloads bsd.rd through user mode TFTP, and
-boots the OpenBSD/octeon 7.9 installer.
-
-The OpenBSD boot and USB stress testing requires additional patch for
-xHCI which I haven't included into this series:
-https://patchew.org/QEMU/20260719215455.96122-1-kirill@korins.ky/
-
-Each submitted commit was built in sequence and given the meaningful
-smoke test available at that point. The final tree was tested with:
-
-    ninja -C build qemu-system-mips64
-    gmake -C build check-qtest-mips64
-    gmake -C build check-functional-mips64
-
-The machine was used to build a few GCC build and full OpenBSD/octeon
-release with LLVM inside OpenBSD/octeon using:
-
-    -m 32G -smp 8 -accel tcg,thread=multi
-
-The longest non interrupted workload was near two weeks.
-
-Known limitations are:
-
-* native Octeon Ethernet is not modelled; the OpenBSD test uses PCI
-  e1000;
-* EMM implements the firmware initialization path, not a complete MMC
-  data path;
-* direct kernel boot through -kernel is not implemented;
-* the newly modelled board and peripheral state lacks VMState
-  descriptions; migration and savevm are not expected to preserve the
-  complete machine state.
-
-Patch layout:
-
-  1. target/mips: make CP0 interrupt state atomic
-  2. target/mips: fix MIPS64 segment access checks
-  3. target/mips: drop hidden TLB shadowing for tlbwr
-  4. target/mips: add Octeon CP0 register state
-  5. target/mips: add Octeon CN73xx CPU model
-  6. target/mips: pass env to compute_pagemask
-  7. target/mips: accept Octeon PageMask encodings
-  8. target/mips: allow Octeon unaligned accesses
-  9. hw/mips: add empty Octeon III machine
- 10. hw/mips: add Octeon CPUs and boot memory
- 11. hw/mips: add Octeon reset controller
- 12. hw/mips: add Octeon CIU3 CPU control
- 13. hw/mips: add Octeon CIU3 interrupt routing
- 14. hw/mips: add Octeon legacy CIU
- 15. hw/mips: add Octeon CSR window
- 16. hw/mips: expose Octeon reset CSRs
- 17. hw/mips: add Octeon MIO boot support
- 18. hw/mips: wire the Octeon UART
- 19. hw/i2c: add Octeon TWSI controller
- 20. hw/mips: add Octeon EMM controller
- 21. hw/mips: add Octeon LMC controllers
- 22. hw/mips: add Octeon boot support registers
- 23. hw/usb: add Octeon USB controller
- 24. hw/pci-bridge: add Octeon PCI host bridge
- 25. hw/pci-bridge: add Octeon PCI memory window
- 26. tests/functional: test Octeon III boot
-
+diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+index 5fe5f885e3..2566df6da6 100644
+--- a/hw/mips/Kconfig
++++ b/hw/mips/Kconfig
+@@ -73,6 +73,7 @@ config MIPS_OCTEON
+     depends on MIPS64 && TARGET_BIG_ENDIAN
+     select PFLASH_CFI02
+     select SERIAL_MM
++    select USB_DWC3
+ 
+ config MIPS_CPS
+     bool
+diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
+index 7e78511b8f..94717b6c89 100644
+--- a/hw/mips/octeon.c
++++ b/hw/mips/octeon.c
+@@ -287,6 +287,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+ #define OCTEON_POW_BASE             0x1670000000000ULL
+ #define OCTEON_POW_SIZE             0x2000
+ 
++#define OCTEON_CIU3_USB0_INTSN      0x68080
++#define OCTEON_CIU3_USB1_INTSN      0x69080
++
+ #define OCTEON_UART0_BASE           0x1180000000800ULL
+ #define OCTEON_UART0_ALIAS_BASE     0x1180000000c00ULL
+ #define OCTEON_UART_TX_REG          0x40
+@@ -1032,6 +1035,15 @@ static bool octeon_ciu3_source_from_intsn(uint32_t intsn,
+         *source = OCTEON_CIU3_SRC_UART0;
+         return true;
+     }
++    if (intsn == OCTEON_CIU3_USB0_INTSN) {
++        *source = OCTEON_CIU3_SRC_USB0;
++        return true;
++    }
++    if (intsn == OCTEON_CIU3_USB1_INTSN) {
++        *source = OCTEON_CIU3_SRC_USB1;
++        return true;
++    }
++
+     if (intsn >= OCTEON_CIU3_MBOX_INTSN(0) &&
+         intsn < OCTEON_CIU3_MBOX_INTSN(OCTEON_MAX_CPUS)) {
+         *source = OCTEON_CIU3_SRC_MBOX0 +
+@@ -1047,6 +1059,10 @@ static uint32_t octeon_ciu3_source_intsn(unsigned int source)
+     switch (source) {
+     case OCTEON_CIU3_SRC_UART0:
+         return OCTEON_CIU3_UART0_INTSN;
++    case OCTEON_CIU3_SRC_USB0:
++        return OCTEON_CIU3_USB0_INTSN;
++    case OCTEON_CIU3_SRC_USB1:
++        return OCTEON_CIU3_USB1_INTSN;
+     }
+ 
+     if (source >= OCTEON_CIU3_SRC_MBOX0 &&
+@@ -1061,6 +1077,8 @@ static bool octeon_ciu3_source_is_level(unsigned int source)
+ {
+     switch (source) {
+     case OCTEON_CIU3_SRC_UART0:
++    case OCTEON_CIU3_SRC_USB0:
++    case OCTEON_CIU3_SRC_USB1:
+         return true;
+     }
+ 
+@@ -2156,6 +2174,18 @@ void octeon_irq_set(void *opaque, int irq, int level)
+         }
+         qatomic_set(&s->intc->uart_pending, level);
+         break;
++    case OCTEON_IRQ_USB0:
++        src = OCTEON_CIU3_SRC_USB0;
++        if (!octeon_ciu3_set_level(s, src, level)) {
++            return;
++        }
++        break;
++    case OCTEON_IRQ_USB1:
++        src = OCTEON_CIU3_SRC_USB1;
++        if (!octeon_ciu3_set_level(s, src, level)) {
++            return;
++        }
++        break;
+     default:
+         return;
+     }
+@@ -2791,6 +2821,7 @@ static void mips_octeon_init(MachineState *machine)
+     memory_region_add_subregion(get_system_memory(), OCTEON_POW_BASE,
+                                 &s->pow);
+ 
++    octeon_init_usb(s);
+     octeon_realize_peripherals(s);
+ }
+ 
+diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
+index f2daa35cdb..6c93c957de 100644
+--- a/hw/mips/octeon_internal.h
++++ b/hw/mips/octeon_internal.h
+@@ -22,6 +22,7 @@
+ #define OCTEON_MIO_BOOT_LOC_SIZE    0x100
+ #define OCTEON_MIO_EMM_BUF_SIZE     512
+ #define OCTEON_LMC_COUNT            4
++#define OCTEON_USB_COUNT            2
+ #define OCTEON_TWSI_COUNT           2
+ #define OCTEON_TWSI_STAT_IDLE       0xf8
+ #define OCTEON_SPD_EEPROM_SIZE      139
+@@ -29,11 +30,15 @@
+ 
+ typedef enum OcteonIRQ {
+     OCTEON_IRQ_UART,
++    OCTEON_IRQ_USB0,
++    OCTEON_IRQ_USB1,
+     OCTEON_IRQ_COUNT,
+ } OcteonIRQ;
+ 
+ typedef enum OcteonCiu3Source {
+     OCTEON_CIU3_SRC_UART0,
++    OCTEON_CIU3_SRC_USB0,
++    OCTEON_CIU3_SRC_USB1,
+     OCTEON_CIU3_SRC_MBOX0,
+     OCTEON_CIU3_SRC_COUNT = OCTEON_CIU3_SRC_MBOX0 + OCTEON_MAX_CPUS,
+ } OcteonCiu3Source;
+@@ -103,5 +108,6 @@ void octeon_irq_set(void *opaque, int irq, int level);
+ void octeon_validate_ram_size(uint64_t ram_size);
+ void octeon_init_spd(OcteonState *s);
+ void octeon_init_twsi(OcteonState *s);
++void octeon_init_usb(OcteonState *s);
+ 
+ #endif
+diff --git a/hw/usb/meson.build b/hw/usb/meson.build
+index 429dcd6a24..a84b44e58d 100644
+--- a/hw/usb/meson.build
++++ b/hw/usb/meson.build
+@@ -29,6 +29,11 @@ system_ss.add(when: 'CONFIG_USB_DWC3', if_true: files('hcd-dwc3.c'))
+ system_ss.add(when: 'CONFIG_USB_CHIPIDEA', if_true: files('chipidea.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_UDC', if_true: files('aspeed-udc.c'))
+ 
++if 'CONFIG_TCG' in config_all_accel
++  mips_ss.add(when: 'CONFIG_MIPS_OCTEON',
++              if_true: files('octeon_usb.c'))
++endif
++
+ system_ss.add(when: 'CONFIG_IMX_USBPHY', if_true: files('imx-usb-phy.c'))
+ system_ss.add(when: 'CONFIG_VT82C686', if_true: files('vt82c686-uhci-pci.c'))
+ system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-usb2-ctrl-regs.c'))
+diff --git a/hw/usb/octeon_usb.c b/hw/usb/octeon_usb.c
+new file mode 100644
+index 0000000000..48e9ec234f
+--- /dev/null
++++ b/hw/usb/octeon_usb.c
+@@ -0,0 +1,319 @@
++/*
++ * QEMU Cavium Octeon USB controller model.
++ *
++ * Copyright (c) 2026 Kirill A. Korinsky
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/bswap.h"
++#include "qapi/error.h"
++#include "hw/core/irq.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/core/resettable.h"
++#include "hw/core/sysbus.h"
++#include "hw/mips/octeon_internal.h"
++#include "hw/usb/hcd-dwc3.h"
++#include "system/address-spaces.h"
++#include "system/memory.h"
++
++#define OCTEON_UCTL_SIZE            0x100
++#define OCTEON_USB0_UCTL_BASE       0x1180068000000ULL
++#define OCTEON_USB1_UCTL_BASE       0x1180069000000ULL
++#define OCTEON_USB0_DWC3_BASE       0x1680000000000ULL
++#define OCTEON_USB1_DWC3_BASE       0x1690000000000ULL
++#define OCTEON_UCTL_SHIM_CFG        0xe8
++#define OCTEON_UCTL_SHIM_CFG_CSR_BYTE_SWAP 0x3
++#define OCTEON_UCTL_SHIM_CFG_CSR_NATIVE    0x3
++
++#define TYPE_OCTEON_USB "octeon-usb"
++OBJECT_DECLARE_TYPE(OcteonUsbState, OcteonUsbClass, OCTEON_USB)
++
++struct OcteonUsbState {
++    SysBusDevice parent_obj;
++    USBDWC3 dwc3;
++    unsigned int index;
++    MemoryRegion uctl;
++    MemoryRegion dwc3_window;
++    AddressSpace dwc3_as;
++    GHashTable *regs;
++    bool dwc3_as_initialized;
++};
++
++struct OcteonUsbClass {
++    SysBusDeviceClass parent_class;
++    ResettablePhases parent_phases;
++};
++
++static uint64_t octeon_uctl_read(void *opaque, hwaddr addr, unsigned size)
++{
++    OcteonUsbState *usb = opaque;
++    hwaddr reg = addr & ~7ULL;
++    uint64_t value;
++
++    if (!octeon_reg_lookup(usb->regs, reg, &value)) {
++        value = 0;
++    }
++
++    return octeon_read64(value, addr, size);
++}
++
++static void octeon_uctl_write(void *opaque, hwaddr addr,
++                              uint64_t value, unsigned size)
++{
++    OcteonUsbState *usb = opaque;
++    hwaddr reg = addr & ~7ULL;
++    uint64_t old;
++
++    if (!octeon_reg_lookup(usb->regs, reg, &old)) {
++        old = 0;
++    }
++
++    octeon_reg_store(usb->regs, reg, octeon_write64(old, addr, value, size));
++}
++
++static const MemoryRegionOps octeon_uctl_ops = {
++    .read = octeon_uctl_read,
++    .write = octeon_uctl_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++};
++
++static bool octeon_usb_csr_needs_swap(OcteonUsbState *usb)
++{
++#if TARGET_BIG_ENDIAN
++    uint64_t value;
++
++    if (!octeon_reg_lookup(usb->regs, OCTEON_UCTL_SHIM_CFG, &value)) {
++        return true;
++    }
++
++    return (value & OCTEON_UCTL_SHIM_CFG_CSR_BYTE_SWAP) !=
++           OCTEON_UCTL_SHIM_CFG_CSR_NATIVE;
++#else
++    return false;
++#endif
++}
++
++static uint64_t octeon_usb_swap(uint64_t value, unsigned size)
++{
++    switch (size) {
++    case 2:
++        return bswap16(value);
++    case 4:
++        return bswap32(value);
++    case 8:
++        return bswap64(value);
++    default:
++        return value;
++    }
++}
++
++static uint64_t octeon_dwc3_window_read(void *opaque, hwaddr addr,
++                                        unsigned size)
++{
++    OcteonUsbState *usb = opaque;
++    uint64_t value;
++
++    switch (size) {
++    case 1:
++        value = address_space_ldub(&usb->dwc3_as, addr,
++                                   MEMTXATTRS_UNSPECIFIED, NULL);
++        break;
++    case 2:
++        value = address_space_lduw_le(&usb->dwc3_as, addr,
++                                      MEMTXATTRS_UNSPECIFIED, NULL);
++        break;
++    case 4:
++        value = address_space_ldl_le(&usb->dwc3_as, addr,
++                                     MEMTXATTRS_UNSPECIFIED, NULL);
++        break;
++    case 8:
++        value = address_space_ldq_le(&usb->dwc3_as, addr,
++                                     MEMTXATTRS_UNSPECIFIED, NULL);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    if (octeon_usb_csr_needs_swap(usb)) {
++        value = octeon_usb_swap(value, size);
++    }
++
++    return value;
++}
++
++static void octeon_dwc3_window_write(void *opaque, hwaddr addr,
++                                     uint64_t value, unsigned size)
++{
++    OcteonUsbState *usb = opaque;
++
++    if (octeon_usb_csr_needs_swap(usb)) {
++        value = octeon_usb_swap(value, size);
++    }
++
++    switch (size) {
++    case 1:
++        address_space_stb(&usb->dwc3_as, addr, value,
++                          MEMTXATTRS_UNSPECIFIED, NULL);
++        break;
++    case 2:
++        address_space_stw_le(&usb->dwc3_as, addr, value,
++                             MEMTXATTRS_UNSPECIFIED, NULL);
++        break;
++    case 4:
++        address_space_stl_le(&usb->dwc3_as, addr, value,
++                             MEMTXATTRS_UNSPECIFIED, NULL);
++        break;
++    case 8:
++        address_space_stq_le(&usb->dwc3_as, addr, value,
++                             MEMTXATTRS_UNSPECIFIED, NULL);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static const MemoryRegionOps octeon_dwc3_window_ops = {
++    .read = octeon_dwc3_window_read,
++    .write = octeon_dwc3_window_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++};
++
++static void octeon_usb_reset_hold(Object *obj, ResetType type)
++{
++    OcteonUsbClass *ouc = OCTEON_USB_GET_CLASS(obj);
++    OcteonUsbState *usb = OCTEON_USB(obj);
++
++    if (ouc->parent_phases.hold) {
++        ouc->parent_phases.hold(obj, type);
++    }
++
++    g_hash_table_remove_all(usb->regs);
++}
++
++static void octeon_usb_realize(DeviceState *dev, Error **errp)
++{
++    OcteonUsbState *usb = OCTEON_USB(dev);
++    static const char * const uctl_name[OCTEON_USB_COUNT] = {
++        "octeon.usb0-uctl",
++        "octeon.usb1-uctl",
++    };
++    static const char * const dwc3_window_name[OCTEON_USB_COUNT] = {
++        "octeon.usb0-dwc3-window",
++        "octeon.usb1-dwc3-window",
++    };
++    static const char * const dwc3_as_name[OCTEON_USB_COUNT] = {
++        "octeon.usb0-dwc3-as",
++        "octeon.usb1-dwc3-as",
++    };
++    USBDWC3 *dwc3 = &usb->dwc3;
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    MemoryRegion *dwc3_mr;
++
++    object_property_set_link(OBJECT(&dwc3->sysbus_xhci), "dma",
++                             OBJECT(get_system_memory()), &error_abort);
++    qdev_prop_set_uint32(DEVICE(&dwc3->sysbus_xhci), "intrs", 1);
++    if (!sysbus_realize(SYS_BUS_DEVICE(dwc3), errp)) {
++        return;
++    }
++
++    dwc3_mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dwc3), 0);
++    address_space_init(&usb->dwc3_as, dwc3_mr,
++                       dwc3_as_name[usb->index]);
++    usb->dwc3_as_initialized = true;
++    memory_region_init_io(&usb->uctl, OBJECT(dev), &octeon_uctl_ops, usb,
++                          uctl_name[usb->index], OCTEON_UCTL_SIZE);
++    sysbus_init_mmio(sbd, &usb->uctl);
++    memory_region_init_io(&usb->dwc3_window, OBJECT(dev),
++                          &octeon_dwc3_window_ops, usb,
++                          dwc3_window_name[usb->index], DWC3_SIZE);
++    sysbus_init_mmio(sbd, &usb->dwc3_window);
++    sysbus_pass_irq(sbd, SYS_BUS_DEVICE(&dwc3->sysbus_xhci));
++}
++
++static void octeon_usb_init(Object *obj)
++{
++    OcteonUsbState *usb = OCTEON_USB(obj);
++
++    usb->regs = g_hash_table_new_full(octeon_uint64_hash,
++                                      octeon_uint64_equal,
++                                      g_free, g_free);
++    object_initialize_child(obj, "dwc3", &usb->dwc3, TYPE_USB_DWC3);
++}
++
++static void octeon_usb_finalize(Object *obj)
++{
++    OcteonUsbState *usb = OCTEON_USB(obj);
++
++    if (usb->dwc3_as_initialized) {
++        address_space_destroy(&usb->dwc3_as);
++    }
++    g_hash_table_destroy(usb->regs);
++}
++
++static void octeon_usb_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    OcteonUsbClass *ouc = OCTEON_USB_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->realize = octeon_usb_realize;
++    dc->user_creatable = false;
++    resettable_class_set_parent_phases(rc, NULL, octeon_usb_reset_hold, NULL,
++                                       &ouc->parent_phases);
++}
++
++static const TypeInfo octeon_usb_type_info = {
++    .name = TYPE_OCTEON_USB,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(OcteonUsbState),
++    .instance_init = octeon_usb_init,
++    .instance_finalize = octeon_usb_finalize,
++    .class_size = sizeof(OcteonUsbClass),
++    .class_init = octeon_usb_class_init,
++};
++
++static void octeon_usb_register_types(void)
++{
++    type_register_static(&octeon_usb_type_info);
++}
++
++type_init(octeon_usb_register_types)
++
++void octeon_init_usb(OcteonState *s)
++{
++    static const uint64_t uctl_base[OCTEON_USB_COUNT] = {
++        OCTEON_USB0_UCTL_BASE,
++        OCTEON_USB1_UCTL_BASE,
++    };
++    static const uint64_t dwc3_base[OCTEON_USB_COUNT] = {
++        OCTEON_USB0_DWC3_BASE,
++        OCTEON_USB1_DWC3_BASE,
++    };
++    static const OcteonIRQ irq[OCTEON_USB_COUNT] = {
++        OCTEON_IRQ_USB0,
++        OCTEON_IRQ_USB1,
++    };
++    unsigned int i;
++
++    for (i = 0; i < OCTEON_USB_COUNT; i++) {
++        DeviceState *dev = qdev_new(TYPE_OCTEON_USB);
++        OcteonUsbState *usb = OCTEON_USB(dev);
++
++        usb->index = i;
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, uctl_base[i]);
++        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 1, dwc3_base[i]);
++        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
++                           qemu_allocate_irq(octeon_irq_set, s, irq[i]));
++    }
++}
+-- 
+2.56.0
 
 
