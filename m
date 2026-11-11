@@ -1,50 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D9C606A8BC
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 19:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77126606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 19:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=UTDBtmXf
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=lY7WaBev
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRDvd-0007KY-6T; Wed, 11 Nov 2026 14:24:17 -0500
+	id 1xRE7Q-0002hw-Ue; Wed, 11 Nov 2026 14:36:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xRDva-0007K0-39
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 14:24:14 -0500
+ id 1xRE7P-0002hV-5b
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 14:36:27 -0500
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xRDvY-0003yG-3M
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 14:24:13 -0500
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1xRE7N-0006yK-3t
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 14:36:26 -0500
 Received: from example.com (unknown [167.220.208.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 46C7120B7166;
- Wed, 11 Nov 2026 11:24:05 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 46C7120B7166
+ by linux.microsoft.com (Postfix) with ESMTPSA id 6ECBE20B7166;
+ Wed, 11 Nov 2026 11:36:18 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6ECBE20B7166
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1794425046;
- bh=r5JZbYQDQVa7K3t6eDSjafiwiT9SDsKrrTk5m9gsGe4=;
+ s=default; t=1794425780;
+ bh=PFIMXLbh6/bwWJFKvdCFfStNm4X3xyuPJxjWfUyMphk=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=UTDBtmXfelyM2xrfjNOXb9Y8xM2dsKSc2xpuJJdspOaTMP9HIsZDrIn8K3QjwgtXL
- AlLmtQaKbusOL8Sv3WM1rlbu8ge1+xTM6ko7vLe0U/MiVs+YXTDdCS+jQ8kVOQi5Wv
- MZ533KGyD5qKGtLX3KabgoQWaB6TS3sGv2lRywxM=
-Date: Wed, 11 Nov 2026 20:24:05 +0100
+ b=lY7WaBev4eyRCK9rNr1RdawzXQ0yCqZeuR+lvDVFIR6z7Tq/PzebU5zNjryZznFgk
+ J54y1sIaWETnxnXvco7WwRwPqt3LcNC4dR94sybY2Au6PygjZQDQAALRlSFrKB+VfE
+ +bFtxlkPKdRwNEp2iziDFfubVqR91CyhwAveZLzI=
+Date: Wed, 11 Nov 2026 20:36:18 +0100
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@microsoft.com>,
- Wei Liu <wei.liu@kernel.org>,
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Wei Liu <liuwe@microsoft.com>, Feng Liang <feng.liang@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <doru.blanzeanu@microsoft.com>
-Subject: Re: [PATCH] target/i386/mshv: fix vCPU run result contract
-Message-ID: <avTA1SfSOhtmREGA@example.com>
-References: <20261015121911.279817-1-magnuskulke@linux.microsoft.com>
- <avRWIAZmm6kOlu2-@linux.microsoft.com>
+Subject: Re: [PATCH] accel/mshv: freeze time during TSC MSR write
+Message-ID: <avTDso4VTz7mWf+t@example.com>
+References: <20261106143928.443144-1-magnuskulke@linux.microsoft.com>
+ <avHzONXmKN0hu1fP@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <avRWIAZmm6kOlu2-@linux.microsoft.com>
+In-Reply-To: <avHzONXmKN0hu1fP@linux.microsoft.com>
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
 X-Spam_score_int: -26
@@ -71,91 +73,259 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Nov 11, 2026 at 01:48:48PM +0200, Doru Blânzeanu wrote:
-> On Thu, Oct 15, 2026 at 02:19:11PM +0200, Magnus Kulke wrote:
-> > Currently the return semantics of mshv_run_vcpu() are broken. They
-> > return a mix of int and exit_reason, ignoring the out param *exit.
+On Mon, Nov 09, 2026 at 06:22:16PM +0200, Doru Blânzeanu wrote:
+> On Fri, Nov 06, 2026 at 03:39:28PM +0100, Magnus Kulke wrote:
+> > A regression was introduced when the HV_X64_REGISTER_TSC MSR state is
+> > being written to the hypervisor as part of the migration framework. If
+> > the MSR is written without the time being frozen, the tsc_page (a
+> > hyper-v enlightenment) is zeroed out and cannot be used by a guest,
+> > which results in a performance regression, because the guest falls back
+> > to costly reads of HV_X64_MSR_TIME_REF_COUNT.
 > > 
-> > This change propagates errno's to the call site and sets the *exit value
-> > accordingly. We also consider the case when an ioctl has return due to a
-> > qemu-requested interruption of the call, this is a legitimate condition
-> > that should not produce an error.
+> > An implementation of pre_resume_vm hook was added to handle the clock
+> > lifecycle, relying on the dirty_vcpu state to avoid redundant state
+> > writes.
 > > 
-> > Fixes: 6dec60528c4 (target/i386/mshv: Implement mshv_vcpu_run())
+> > Fixes: d540dcc5e28c (target/i386/mshv: migrate MSRs)
+> > 
 > > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > > ---
-> >  target/i386/mshv/mshv-cpu.c | 28 +++++++++++++++++-----------
-> >  1 file changed, 17 insertions(+), 11 deletions(-)
+> >  accel/mshv/mshv-all.c |  33 ++++++++++++-
+> >  hw/i386/mshv/clock.c  | 111 +++++++++++++++++++++++++++++-------------
+> >  include/system/mshv.h |   4 +-
+> >  3 files changed, 113 insertions(+), 35 deletions(-)
 > > 
-> > diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> > index 4df73bb497..e3c155da2e 100644
-> > --- a/target/i386/mshv/mshv-cpu.c
-> > +++ b/target/i386/mshv/mshv-cpu.c
-> > @@ -2124,7 +2124,6 @@ static int arch_set_single_step(CPUState *cpu, bool enable)
-> >  int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
-> >  {
-> >      int ret;
-> > -    enum MshvVmExit exit_reason;
-> >      int cpu_fd = mshv_vcpufd(cpu);
-> >      bool single_step;
+> > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> > index d820a67b95..ae7577d407 100644
+> > --- a/accel/mshv/mshv-all.c
+> > +++ b/accel/mshv/mshv-all.c
+> > @@ -34,6 +34,7 @@
+> >  #include "accel/accel-cpu-ops.h"
+> >  #include "exec/cpu-common.h"
+> >  #include "system/cpus.h"
+> > +#include "system/hw_accel.h"
+> >  #include "system/runstate.h"
+> >  #include "system/accel-blocker.h"
+> >  #include "system/address-spaces.h"
+> > @@ -578,7 +579,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
 > >  
-> > @@ -2142,7 +2141,12 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+> >      register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
 > >  
-> >      ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
-> >      if (ret < 0) {
-> > -        return MshvVmExitShutdown;
-> > +        if (errno == EINTR) {
-> > +            *exit = MshvVmExitSpecial;
-> > +            return 0;
+> > -    mshv_clock_init();
+> > +    ret = mshv_clock_init(vm_fd);
+> > +    if (ret < 0) {
+> > +        return -1;
+> > +    }
+> >  
+> >      return 0;
+> >  }
+> > @@ -927,6 +931,32 @@ static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
+> >      run_on_cpu(cpu, do_mshv_cpu_synchronize_pre_loadvm, RUN_ON_CPU_NULL);
+> >  }
+> >  
+> > +static void mshv_pre_resume_vm(AccelState *as, bool step_pending)
+> > +{
+> > +    MshvState *s = MSHV_STATE(as);
+> > +    CPUState *cpu;
+> > +    int ret, vm_fd = s->vm;
+> > +
+> > +    ret = mshv_clock_prepare_resume(vm_fd);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to prepare clock for resume");
+> > +        abort();
+> > +    }
+> > +
+> > +    CPU_FOREACH(cpu) {
+> > +        if (!cpu->vcpu_dirty) {
+> > +            continue;
 > > +        }
-> > +        error_report("failed to run vCPU: %s", strerror(errno));
-> > +        return -errno;
-> >      }
+> > +        cpu_synchronize_post_init(cpu);
+> > +    }
+> > +
+> > +    ret = mshv_clock_finish_resume(vm_fd);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to finish clock for resume");
+> > +        abort();
+> > +    }
+> > +}
+> > +
+> >  static void do_mshv_cpu_synchronize(CPUState *cpu, run_on_cpu_data arg)
+> >  {
+> >      if (!cpu->vcpu_dirty) {
+> > @@ -962,6 +992,7 @@ static void mshv_accel_class_init(ObjectClass *oc, const void *data)
+> >      ac->name = "MSHV";
+> >      ac->init_machine = mshv_init;
+> >      ac->allowed = &mshv_allowed;
+> > +    ac->pre_resume_vm = mshv_pre_resume_vm;
+> >  }
 > >  
-> >      /* disable single stepping by flipping RFLAGS.TF */
-> > @@ -2154,31 +2158,33 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+> >  static void mshv_accel_instance_init(Object *obj)
+> > diff --git a/hw/i386/mshv/clock.c b/hw/i386/mshv/clock.c
+> > index 02c586503a..2a03d3cef9 100644
+> > --- a/hw/i386/mshv/clock.c
+> > +++ b/hw/i386/mshv/clock.c
+> > @@ -29,6 +29,7 @@
+> >  typedef struct MshvClockState {
+> >      uint64_t ref_time;
+> >      bool ref_time_pending;
+> > +    bool time_frozen;
+> >  } MshvClockState;
 > >  
-> >      switch (msg->header.message_type) {
-> >      case HVMSG_UNRECOVERABLE_EXCEPTION:
-> > -        return MshvVmExitShutdown;
-> > +        *exit = MshvVmExitShutdown;
+> >  static MshvClockState mshv_clock;
+> > @@ -110,52 +111,85 @@ static int mshv_set_time_freeze(int vm_fd, int freeze)
+> >      return 0;
+> >  }
+> >  
+> > -static void mshv_clock_vm_state_change(void *opaque, bool running,
+> > -                                       RunState state)
+> > -{
+> > -    MshvClockState *s = opaque;
+> > -    int vm_fd = mshv_state->vm;
+> > +static int ensure_time_frozen(int vm_fd) {
+> >      int ret;
+> >  
+> > -    if (running) {
+> > -        /* Skip if we have nothing to restore, e.g. on initial boot. */
+> > -        if (!s->ref_time_pending) {
+> > -            return;
+> > -        }
+> > +    /* Ensure time is frozen */
+> > +    if (mshv_clock.time_frozen) {
 > > +        return 0;
-> >      case HVMSG_UNMAPPED_GPA:
-> >      case HVMSG_GPA_INTERCEPT:
-> > -        ret = handle_mmio(cpu, msg, &exit_reason);
-> > +        ret = handle_mmio(cpu, msg, exit);
+> > +    }
+> >  
+> > -        ret = mshv_set_time_freeze(vm_fd, 1);
+> > -        if (ret < 0) {
+> > -            error_report("Failed to freeze partition time on resume");
+> > -            abort();
+> > -        }
+> > +    ret = mshv_set_time_freeze(vm_fd, 1);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to freeze partition");
+> > +        return -1;
+> > +    }
+> > +    mshv_clock.time_frozen = true;
+> >  
+> > +    return 0;
+> > +}
+> > +
+> > +int mshv_clock_prepare_resume(int vm_fd) {
+> > +    return ensure_time_frozen(vm_fd);
+> > +}
+> > +
+> > +int mshv_clock_finish_resume(int vm_fd) {
+> > +    int ret;
+> > +    MshvClockState *s = &mshv_clock;
+> > +
+> > +    assert(mshv_clock.time_frozen);
+> > +
+> > +    /* Skip if we have nothing to restore, e.g. on initial boot. */
+> > +    if (s->ref_time_pending) {
+> >          /* INVARIANT: reference time can only be written if time is frozen. */
+> >          ret = mshv_set_reference_time(vm_fd, s->ref_time);
 > >          if (ret < 0) {
-> >              error_report("failed to handle mmio");
-> > -            return -1;
-> > +            return ret;
+> >              error_report("Failed to restore reference time on resume");
+> > -            abort();
+> > +            return -1;
 > >          }
-> > -        return exit_reason;
-> > +        return 0;
-> >      case HVMSG_X64_IO_PORT_INTERCEPT:
-> >          ret = handle_pio(cpu, msg);
-> >          if (ret < 0) {
-> > -            return MshvVmExitSpecial;
-> > +            error_report("failed to handle PIO");
-> > +            return ret;
-> >          }
-> > -        return MshvVmExitIgnore;
-> > +        *exit = MshvVmExitIgnore;
-> > +        return 0;
-> >      case HVMSG_X64_EXCEPTION_INTERCEPT:
-> >          bql_lock();
-> > -        ret = handle_exception_interrupt(cpu, msg, &exit_reason);
-> > +        ret = handle_exception_interrupt(cpu, msg, exit);
-> >          bql_unlock();
-> >          if (ret < 0) {
-> >              error_report("failed to handle exception intercept");
-> >              return -1;
-> >          }
-> > -        *exit = exit_reason;
-> > -        return exit_reason;
-> > +        return 0;
-> >      default:
-> >          break;
+> > +        s->ref_time_pending = false;
+> > +    }
+> >  
+> > -        if (mshv_set_time_freeze(vm_fd, 0) < 0) {
+> > -            error_report("Failed to unfreeze partition time on resume");
+> > -            abort();
+> > -        }
+> > +    ret = mshv_set_time_freeze(vm_fd, 0);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to thaw partition");
+> > +        return -1;
+> > +    }
+> > +    mshv_clock.time_frozen = false;
+> >  
+> > -        s->ref_time_pending = false;
+> > -    } else {
+> > -        /* Skip if we already have a to-be-set ref time */
+> > -        if (s->ref_time_pending) {
+> > -            return;
+> > -        }
+> > +    return 0;
+> > +}
+> >  
+> > -        ret = mshv_get_reference_time(vm_fd, &s->ref_time);
+> > -        if (ret < 0) {
+> > -            error_report("Failed to capture reference time on stop");
+> > -            abort();
+> > -        }
+> > +static void mshv_clock_vm_state_change(void *opaque, bool running,
+> > +                                       RunState state)
+> > +{
+> > +    MshvClockState *s = opaque;
+> > +    int vm_fd = mshv_state->vm;
+> > +    int ret;
+> >  
+> > -        s->ref_time_pending = true;
+> > +    if (running) {
+> > +        return;
 > >      }
+> > +
+> > +    /* Ensure the time if frozen before we capture the reference time. */
+> > +    ret = ensure_time_frozen(vm_fd);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to freeze partition time on stop");
+> > +        abort();
+> > +    }
+> > +
+> > +    /* Skip if we already have a to-be-set ref time */
+> > +    if (s->ref_time_pending) {
+> > +        return;
+> > +    }
+> > +
+> > +    ret = mshv_get_reference_time(vm_fd, &s->ref_time);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to capture reference time on stop");
+> > +        abort();
+> > +    }
+> > +
+> > +    s->ref_time_pending = true;
+> >  }
+> >  
+> >  /*
+> > @@ -182,8 +216,19 @@ static const VMStateDescription vmstate_mshv_clock = {
+> >      },
+> >  };
+> >  
+> > -void mshv_clock_init(void)
+> > +int mshv_clock_init(int vm_fd)
+> >  {
+> > +    int ret;
+> > +
+> > +    ret = mshv_set_time_freeze(vm_fd, 1);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to freeze partition time on init");
+> > +        return -1;
+> > +    }
+> > +    mshv_clock.time_frozen = true;
+> > +
+> >      vmstate_register(NULL, 0, &vmstate_mshv_clock, &mshv_clock);
+> >      qemu_add_vm_change_state_handler(mshv_clock_vm_state_change, &mshv_clock);
+> > +
+> > +    return 0;
+> >  }
+> > diff --git a/include/system/mshv.h b/include/system/mshv.h
+> > index f98ddff9b5..864f2aa34d 100644
+> > --- a/include/system/mshv.h
+> > +++ b/include/system/mshv.h
+> > @@ -58,7 +58,9 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
+> >  extern MshvState *mshv_state;
+> >  
+> >  /* clock (partition reference time) */
+> > -void mshv_clock_init(void);
+> > +int mshv_clock_init(int vm_fd);
+> > +int mshv_clock_prepare_resume(int vm_fd);
+> > +int mshv_clock_finish_resume(int vm_fd);
+> >  
+> >  /* interrupt */
+> >  int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
 > > -- 
 > > 2.34.1
 > 
