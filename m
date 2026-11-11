@@ -1,64 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5761E606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 03:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF2A606A321
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Nov 2026 03:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OYJqWXBy
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=b9Hv7I02
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xQzNp-0008IX-7w; Tue, 10 Nov 2026 22:52:25 -0500
+	id 1xQzNr-0008Oo-C7; Tue, 10 Nov 2026 22:52:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQzNn-0008A9-0B
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:52:23 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQzNp-0008JU-FF
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:52:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQzNk-0007Gk-Un
- for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:52:22 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xQzNn-0007NO-TO
+ for qemu-devel@nongnu.org; Tue, 10 Nov 2026 22:52:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794369140;
+ s=mimecast20190719; t=1794369143;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vrUJBGn2vUH1UR3OPTAuN/Q+khfW6r7FRV+4klOWrSI=;
- b=OYJqWXBynG+Ni0ffzMScKQfU2FEETm7Gl1BehWVcFDgYYi/95ufl1FSdTiP49v+g66ypQ5
- wYu2zKNJVTNL2PZi7lB3OPfU1x+UsHTEOEMteeWodpTM32/92qVTvo+b9xQy5xbPtN+Jpo
- NgEdwe3q5i7GX4tsU8jypB773FVUCq0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=wrZedr75GGg9WN9k+O0G0oSPPKkMM+sHh5y9JswdQsU=;
+ b=b9Hv7I02oYSfGi3Cih1qURs6nHMj9/4LW5h10RNWg318HLbMQsRH8oo45OrdEYpl2EoiqN
+ v+9/By2gr4zlaPhrUHyczIsEDnsuRM54pz9n23PWDesCsp4Q+XBXxbdRALEFiYbQnWLiLb
+ Cd4+5TBFu0AkJhikOIrx1SEupEWK60I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-MeEFWG4lPfC9zCRhjExQxA-1; Tue,
- 10 Nov 2026 22:52:17 -0500
-X-MC-Unique: MeEFWG4lPfC9zCRhjExQxA-1
-X-Mimecast-MFC-AGG-ID: MeEFWG4lPfC9zCRhjExQxA_1794369137
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-9Z4IVmTRN12JVYBwngrxWg-1; Tue,
+ 10 Nov 2026 22:52:19 -0500
+X-MC-Unique: 9Z4IVmTRN12JVYBwngrxWg-1
+X-Mimecast-MFC-AGG-ID: 9Z4IVmTRN12JVYBwngrxWg_1794369138
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD0AD195605E; Wed, 11 Nov 2026 03:52:16 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7CFC11956060; Wed, 11 Nov 2026 03:52:18 +0000 (UTC)
 Received: from eblake.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 50085300019F; Wed, 11 Nov 2026 03:52:15 +0000 (UTC)
+ id 27AB3300019F; Wed, 11 Nov 2026 03:52:17 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org (open list:Network Block Dev...)
-Subject: [PULL 6/8] iotests: Add new nbd-robustness test
-Date: Tue, 10 Nov 2026 21:51:31 -0600
-Message-ID: <20261111035200.1751734-16-eblake@redhat.com>
+Subject: [PULL 7/8] nbd/server: Reject rather than assert on non-compliant
+ NBD_OPT_SET_META_CONTEXT
+Date: Tue, 10 Nov 2026 21:51:32 -0600
+Message-ID: <20261111035200.1751734-17-eblake@redhat.com>
 In-Reply-To: <20261111035200.1751734-10-eblake@redhat.com>
 References: <20261111035200.1751734-10-eblake@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
@@ -90,173 +92,51 @@ X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Convert the proof of concept test by Sunday Jiang into an iotest. I
-tried to get libnbd to trigger the situation, but forcing a block
-status command when no status has been initiated is not something that
-libnbd is willing to do. So this results in a hard-coded sequence of
-bytes sent over a raw socket.  Swapping the order with the previous
-patch shows the assertion failure that was previously reachable.
+The NBD protocol says that NBD_OPT_{LIST,SET}_META_CONTEXT sends
+several lengths that must be consistent: an overall option reply
+length, then a series of smaller lengths/data pairs representing the
+export name and zero or more context names. If the smaller lengths
+within the payload do not add up to the larger value, the client has
+sent garbage bytes that will trigger the server's parse of the
+client's next option to be out of sync.  However, QEMU was dying with
+an assertion failure rather than diagnosing the issue, which a
+malicious client can then exploit to mount a denial-of-service attack
+against QEMU as the NBD server.
 
-Based-on: https://gitlab.com/qemu-project/qemu/-/work_items/4091
+As with several other recent NBD protocol violations, the likelihood
+of this attack can be reduced by using TLS and x509 certs to reject
+unwanted clients (a "trusted" client can still trigger the problem,
+but you first have to compromise the trusted client into sending
+arbitrary traffic).
+
+Fixes: CVE-2026-125683
+Fixes: e7b1948d51 ("nbd: BLOCK_STATUS for standard get_block_status function: server part", v2.12.0)
+Reported-by: TonySD via https://gitlab.com/qemu-project/qemu/-/work_items/4843
+CC: qemu-stable@nongnu.org
 Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20261110155356.1520433-10-eblake@redhat.com>
+Message-ID: <20261110155356.1520433-11-eblake@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- tests/qemu-iotests/tests/nbd-robustness     | 132 ++++++++++++++++++++
- tests/qemu-iotests/tests/nbd-robustness.out |   5 +
- 2 files changed, 137 insertions(+)
- create mode 100755 tests/qemu-iotests/tests/nbd-robustness
- create mode 100644 tests/qemu-iotests/tests/nbd-robustness.out
+ nbd/server.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tests/qemu-iotests/tests/nbd-robustness b/tests/qemu-iotests/tests/nbd-robustness
-new file mode 100755
-index 00000000000..fe61a839250
---- /dev/null
-+++ b/tests/qemu-iotests/tests/nbd-robustness
-@@ -0,0 +1,132 @@
-+#!/usr/bin/env python3
-+# group: rw auto quick
-+#
-+# Test cases for NBD robustness against malicious clients
-+#
-+# Copyright (C) 2026 Red Hat, Inc.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+import socket
-+import struct
-+
-+import iotests
-+from iotests import qemu_img_create, qemu_io
-+
-+# Selected NBD Protocol Constants
-+NBD_MAGIC_INIT = 0x4e42444d41474943          # "NBDMAGIC"
-+NBD_MAGIC_OPTS = 0x49484156454f5054          # "IHAVEOPT"
-+NBD_MAGIC_REPLY = 0x0003e889045565a9         # Reply magic
-+NBD_MAGIC_EXT_REPLY = 0x6e8a278c             # Structured reply magic
-+NBD_FLAG_C_FIXED_NEWSTYLE = 0x1
-+NBD_OPT_GO = 7
-+NBD_OPT_SET_META_CONTEXT = 10
-+NBD_OPT_EXTENDED_HEADERS = 11
-+NBD_REP_ACK = 1
-+NBD_REP_INFO = 3
-+NBD_CMD_BLOCK_STATUS = 7
-+
-+disk = os.path.join(iotests.test_dir, 'disk')
-+size = '4M'
-+nbd_sock = os.path.join(iotests.sock_dir, 'nbd_sock')
-+
-+
-+class TestNbdRobustness(iotests.QMPTestCase):
-+    def setUp(self):
-+        qemu_img_create('-f', iotests.imgfmt, disk, size)
-+        qemu_io('-c', 'w -P 1 0 2M', '-c', 'w -P 2 2M 2M', disk)
-+
-+        self.vm = iotests.VM()
-+        self.vm.launch()
-+        self.vm.cmd('blockdev-add', {
-+            'driver': iotests.imgfmt,
-+            'node-name': 'n',
-+            'file': {'driver': 'file', 'filename': disk}
-+        })
-+
-+    def tearDown(self):
-+        self.vm.shutdown()
-+        os.remove(disk)
-+        try:
-+            os.remove(nbd_sock)
-+        except OSError:
-+            pass
-+
-+    def recv_exact(self, s: socket.socket, n: int) -> bytes:
-+        buf = bytearray()
-+        while len(buf) < n:
-+            chunk = s.recv(n - len(buf))
-+            if not chunk:
-+                raise EOFError(f"Unexpected EOF while reading {n} bytes "
-+                               f"(got {len(buf)})")
-+            buf.extend(chunk)
-+        return bytes(buf)
-+
-+    def test_invalid_block_status(self):
-+        with self.run_nbd_server(nbd_sock):
-+            self.add_nbd_export('n', 'r')
-+
-+            # Use raw socket traffic to intentionally violate NBD protocol
-+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
-+                s.connect(nbd_sock)
-+                # Server sends NBDMAGIC(8) + IHAVEOPT(8) + flags(2)
-+                data = self.recv_exact(s, 18)
-+                magic, opt, flags = struct.unpack(">QQH", data)
-+                self.assertEqual(magic, NBD_MAGIC_INIT)
-+                self.assertEqual(opt, NBD_MAGIC_OPTS)
-+                self.assertEqual(flags, 0x3)
-+
-+                # Reply with flags(4) - just fixed newstyle flag
-+                s.sendall(struct.pack(">I", NBD_FLAG_C_FIXED_NEWSTYLE))
-+
-+                # Request NBD_OPT_EXTENDED_HEADERS, no extra payload
-+                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS,
-+                                      NBD_OPT_EXTENDED_HEADERS, 0))
-+
-+                # Expect successful reply:
-+                # magic(8) + option(4) + reply(4) + length(4)
-+                data = self.recv_exact(s, 20)
-+                magic, opt, reply, length = struct.unpack(">QIII", data)
-+                self.assertEqual(magic, NBD_MAGIC_REPLY)
-+                self.assertEqual(opt, NBD_OPT_EXTENDED_HEADERS)
-+                self.assertEqual(reply, NBD_REP_ACK)
-+                self.assertEqual(length, 0)
-+
-+                # Request NBD_OPT_GO, name but no info as payload
-+                payload = struct.pack(">I", 1) + b'r' + struct.pack(">H", 0)
-+                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS, NBD_OPT_GO,
-+                                      len(payload)) + payload)
-+
-+                # Expect (and ignore) zero or more info packets before ack
-+                while True:
-+                    data = self.recv_exact(s, 20)
-+                    magic, opt, reply, length = struct.unpack(">QIII", data)
-+                    self.assertEqual(magic, NBD_MAGIC_REPLY)
-+                    self.assertEqual(opt, NBD_OPT_GO)
-+                    payload = self.recv_exact(s, length)
-+                    if reply != NBD_REP_INFO:
-+                        break
-+                self.assertEqual(reply, NBD_REP_ACK)
-+
-+                # Send invalid NBD_CMD_BLOCK_STATUS with payload flag. This
-+                # violates the NBD protocol (since no context was negotiated),
-+                # but should not crash the server.
-+                payload = struct.pack(">QI", 0x1000, 0)
-+                s.sendall(struct.pack(">IHHQQQ", 0x21e41c71, 0x20,
-+                                      NBD_CMD_BLOCK_STATUS, 1, 0,
-+                                      len(payload)) + payload)
-+
-+                # Expect a rejection.
-+                data = self.recv_exact(s, 32)
-+                magic, flags, rtype, cookie, _, length = \
-+                    struct.unpack(">IHHQQQ", data)
-+                self.assertEqual(magic, NBD_MAGIC_EXT_REPLY)
-+                self.assertEqual(rtype & 0x8000, 0x8000)
-+                self.assertEqual(cookie, 1)
-+                self.recv_exact(s, length)
-+
-+            self.assertTrue(self.vm.is_running())
-+
-+if __name__ == '__main__':
-+    iotests.main(supported_fmts=['qcow2'])
-diff --git a/tests/qemu-iotests/tests/nbd-robustness.out b/tests/qemu-iotests/tests/nbd-robustness.out
-new file mode 100644
-index 00000000000..ae1213e6f86
---- /dev/null
-+++ b/tests/qemu-iotests/tests/nbd-robustness.out
-@@ -0,0 +1,5 @@
-+.
-+----------------------------------------------------------------------
-+Ran 1 tests
-+
-+OK
+diff --git a/nbd/server.c b/nbd/server.c
+index 8a01c27de07..8c45f9fc43f 100644
+--- a/nbd/server.c
++++ b/nbd/server.c
+@@ -1095,6 +1095,11 @@ nbd_negotiate_meta_queries(NBDClient *client, Error **errp)
+             }
+         }
+     }
++    if (client->optlen > 0) {
++        return nbd_opt_invalid(client, errp,
++                               "Inconsistent lengths in option %s",
++                               nbd_opt_lookup(client->opt));
++    }
+
+     if (meta->base_allocation) {
+         ret = nbd_negotiate_send_meta_context(client, "base:allocation",
 -- 
 2.56.0
 
