@@ -1,91 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4C9606A334
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 16:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC63460A3831
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 16:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=M+gSRJBP
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=JTbuUst0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRXu5-0006pR-9O; Thu, 12 Nov 2026 11:44:01 -0500
+	id 1xRXwd-00012D-7g; Thu, 12 Nov 2026 11:46:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRXtz-0006i3-En
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:43:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1xRXwY-0000p1-Ie; Thu, 12 Nov 2026 11:46:34 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRXtx-0003Ud-IS
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:43:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794501832;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=37CCPBuZKSq9ynoDFziWp2z6f8eGYOzxwjI4W3dtxLc=;
- b=M+gSRJBPdDZgD7rqgMdMtx2woycoLYYobe29UX9xQ2jpAOPCq82gkuePsDhGY+MoTVMF0F
- aYeryAR/0XQ+FlpI+DXMIKPZizkWf6kqlVT7Q+TxkvMbkrp7lfCsOGraKfDnuui9L8N5xO
- wmuoIPqhepWnMy/ige3oe62YWJzbSFs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-z3eWy5C9MMyGgPbmkO97_A-1; Thu,
- 12 Nov 2026 11:43:48 -0500
-X-MC-Unique: z3eWy5C9MMyGgPbmkO97_A-1
-X-Mimecast-MFC-AGG-ID: z3eWy5C9MMyGgPbmkO97_A_1794501827
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B45B19560B5; Thu, 12 Nov 2026 16:43:45 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4ACB730000E8; Thu, 12 Nov 2026 16:43:40 +0000 (UTC)
-Date: Thu, 12 Nov 2026 16:43:37 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Gerd Hoffmann <kraxel@redhat.com>, xen-devel@lists.xenproject.org,
- qemu-ppc@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eric Blake <eblake@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Anthony PERARD <anthony@xenproject.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PULL v2 23/25] trace: stop tracking static disabled state
-Message-ID: <avXsuTvYht2mR8d4@redhat.com>
-References: <20261104201802.11556-1-stefanha@redhat.com>
- <20261104201802.11556-24-stefanha@redhat.com>
- <87se1efa5p.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1xRXwW-0008Oz-VU; Thu, 12 Nov 2026 11:46:34 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6ACFiE5Q246875; Thu, 12 Nov 2026 16:46:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=vdletRs9l8p0diLWJra+Unm+T9hDUpwt37e2QXGZs
+ Xc=; b=JTbuUst07QtBYtEMFPFpk5vpNDo9s4l9yws6SAhraGMUioaASSZGZPDzi
+ QUO8HxoQMNYgqbO/TalFIYYc82tV5scVg99sNHEJLVGES0sLUPF3SRutqVws3d8O
+ nu3okFjig3waBY0kBNkIqsq+P0vzhH237SsDNSTLyPnory/rkX9/eRQuU5e6kgFE
+ EQVHgzOQq8S44iLdwrFoFBPJi2jzHqEMz8enb1/eriTD0Uf7wPg4OgWsEQV34I8Q
+ s3yDADUNegHTDu/BCyMv5xmr7xocx5HRpFEu06EMD5ujAftMuJ7Tkb4JTR5fEoil
+ b/c3WDqW8BykUwJgf27Xr2Zj0NIPw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hsumv79t7-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 12 Nov 2026 16:46:27 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6ACFc3SJ863557; Thu, 12 Nov 2026 16:46:27 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hwegf8mdw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Nov 2026 16:46:27 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6ACGkNLA47841716
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 12 Nov 2026 16:46:23 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1A84E2004B;
+ Thu, 12 Nov 2026 16:46:23 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 468FF20043;
+ Thu, 12 Nov 2026 16:46:21 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.39.17.46])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 12 Nov 2026 16:46:21 +0000 (GMT)
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>
+Subject: [PATCH 0/2] MAINTAINERS: PPC/sPAPR maintenance updates
+Date: Thu, 12 Nov 2026 22:16:15 +0530
+Message-ID: <20261112164617.85849-1-amachhiw@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87se1efa5p.fsf@pond.sub.org>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA2NiBTYWx0ZWRfX0iLzv3qEfb8L
+ N2ZQRnmfMf3b1CvaCXfBgFSEAB0AbDTVfeMFhtN7D5kUCU9mYipZN8G5feylhj+W73l3MFrZlW8
+ y64Uotm9P8brNumkM1Z3wd/an9eUDEc=
+X-Authority-Analysis: v=2.4 cv=GISdgeNK c=1 sm=1 tr=0 ts=6af5ed64 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VN0z8MIy2WJPKx8koVsA:9
+X-Proofpoint-GUID: _NZrh2X1MdH0JXBCZRRWwi-xEx6AmbHI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA2NiBTYWx0ZWRfX68HyZrc5+mB2
+ fT7438RxlvBTps3RaoRMXkYoZoYRyaxOI1biwicpEXQ/52MiWEl4KGau7Wy/ygidOpw4sttjS35
+ nbUwefl5Juzqida826K5ehNAAK6GrtWBhFuV09KYzrFRo8EcD34QTM/BmADu7DToePgqDiIJkXA
+ z0Q9lGQD0POGJDSmZCxLUR4LJNKBDh/2uT20fQ000baaZDzPU/r6nO51rjchQGZnxBwC7cBbFRx
+ GYGL06UGKAFjrc+gLzm2e7w50i3TeM144JnlAyexz1OTy5x6qPdJHz/8PI5u8JJyOzySmgZdYGg
+ 7wIUx6cWz1DpXZXf2LaVahAT9s4EUSfsg9JTOgmpG9bsprAytNXulYkrZx7MLDkdhDNGgnW37E/
+ uinY+LBZkSHa6ep9e97BoeVD5n4geJAf9EdKX2uHwjMbylfHUqOjMt10dYesNyUK5slOVJp8gHE
+ uKit/s+ziF12rhr0RiQ==
+X-Proofpoint-ORIG-GUID: KU_ZwekCtxC4c9EME9TY697hKitUw8TY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-12_02,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 impostorscore=0 clxscore=1015 adultscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611120066
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,133 +114,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Nov 06, 2026 at 12:53:54PM +0100, Markus Armbruster wrote:
-> I missed this, because I wasn't cc'ed.
-> 
-> Stefan Hajnoczi <stefanha@redhat.com> writes:
-> 
-> > From: Daniel P. Berrangé <berrange@redhat.com>
-> >
-> > The TraceEvent struct contains a "bool sstate" field which track whether
-> > a trace event was disabled statically. i.e. at build time via the
-> > "disable" property annotation in trace-events.
-> >
-> > The only runtime use of this field is to let "trace-event-get-state"
-> > report that an event is "unavailable" instead of reporting an error for
-> > an unknown trace event.
-> >
-> > Trace events are not ABI so their names can change and the event can
-> > come and go at any time. Thus there is little utility in reporting the
-> > existence of a disabled event that cannot ever be used at runtime.
-> >
-> > Removing the "bool sstate" field from TraceEvent saves 8 bytes of
-> > space in the struct, adding up to approx 64 KB across all current
-> > events.
-> >
-> > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > Message-id: 20261102142844.3464712-24-berrange@redhat.com
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> 
-> [...]
-> 
-> > diff --git a/qapi/trace.json b/qapi/trace.json
-> > index 29c76256055..8533e378977 100644
-> > --- a/qapi/trace.json
-> > +++ b/qapi/trace.json
-> > @@ -16,8 +16,6 @@
-> >  # @TraceEventState:
-> >  #     State of a tracing event.
-> >  #
-> > -# @unavailable: The event is statically disabled.
-> > -#
-> >  # @disabled: The event is dynamically disabled.
-> >  #
-> >  # @enabled: The event is dynamically enabled.
-> > @@ -25,7 +23,7 @@
-> >  # Since: 2.2
-> >  ##
-> >  { 'enum': 'TraceEventState',
-> > -  'data': ['unavailable', 'disabled', 'enabled'] }
-> > +  'data': ['disabled', 'enabled'] }
-> 
-> No note in docs/about/removed-features.rst needed?
+This series updates the MAINTAINERS file for two PPC-related subsections:
 
-Yes it is required.
+- PPC KVM CPUs: add myself as Maintainer and update status from
+  "Odd Fixes" to "Maintained".
+- sPAPR: update status from "Odd Fixes" to "Maintained" to reflect
+  active maintenance by the existing maintainers.
+
+Amit Machhiwal (2):
+  MAINTAINERS: Step up as maintainer for PPC KVM CPUs
+  MAINTAINERS: update sPAPR status to Maintained
+
+ MAINTAINERS | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 
-> > @@ -69,6 +67,7 @@
->    ##
->    # @trace-event-set-state:
->    #     Set the dynamic tracing state of events.
->    #
->    # @name: Event name pattern (case-sensitive glob).
->    #
-> >  # @enable: Whether to enable tracing.
-> >  #
-> >  # @ignore-unavailable: Do not match unavailable events with @name.
-> > +#      Deprecated: since 11.2
-> >  #
-> >  # Since: 2.2
-> >  #
-> 
-> Are you trying to deprecate use of argument @ignore-unavailable?
-
-Yes.
-
-
-> If yes, this isn't how we do that.  Instead:
-
-/face-palm
-
-> 
->    ##
->    # @trace-event-set-state:
->    #     Set the dynamic tracing state of events.
->    #
->    # @name: Event name pattern (case-sensitive glob).
->    #
->    # @enable: Whether to enable tracing.
->    #
->    # @ignore-unavailable: Do not match unavailable events with @name.
->    #
->    # Features:
->    #
->    # @deprecated: Argument @ignore-unavailable is deperecated and does
->    #     nothing.
->    #
->    # Since: 2.2
->    #
->    # .. qmp-example::
->    #
->    #     -> { "execute": "trace-event-set-state",
->    #          "arguments": { "name": "qemu_memalign", "enable": true } }
->    #     <- { "return": {} }
->    ##
->    { 'command': 'trace-event-set-state',
->      'data': {'name': 'str', 'enable': 'bool',
->               '*ignore-unavailable': { 'type': 'bool',
->                                        'features': [ 'deprecated' ] } } }
-> 
-> with a matching update to docs/about/deprecated.rst.
-
-Yes, will CC you on the fix.
-
-With regards,
-Daniel
+base-commit: 29760efaf96bbe5928f8111881eddbf5ac06439e
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.54.0 (Apple Git-157)
 
 
