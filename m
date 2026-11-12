@@ -1,73 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9CA606A89B
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 11:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBBB606A333
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 11:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Stt4CoN0
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=d6Ytd9TL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRTIp-0003NM-3K; Thu, 12 Nov 2026 06:49:15 -0500
+	id 1xRTJ6-0003RQ-9e; Thu, 12 Nov 2026 06:49:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xRTIn-0003N1-HA
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 06:49:13 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xRTJ4-0003R2-5N
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 06:49:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xRTIm-0001Fb-0l
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 06:49:13 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xRTJ2-0001Hu-JZ
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 06:49:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794484151;
+ s=mimecast20190719; t=1794484168;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IgFmldIUB6JD4JWn9Zs4m+4gjny75GlFXD5upBZo1VA=;
- b=Stt4CoN0F43cc/4orsNDM4sytaJEMm2aogGg9YqaFZVC+2FfvzIx4kQKaMSR1ih7tlxgQC
- wpGmT/MZ7XCiuzy8SgOT8qeQ9ykXxYTvIo26Z0k100ARBVFbCY6QspL82XagzyVoUMzsIf
- yGVbXOT4rmVgL4qx8N2v+zwS86hSrKU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=0YpShDEABGAmkxbnH3ihAp/aiDpRuOyakw9qerQE6qo=;
+ b=d6Ytd9TL4DTd2oIbLUP4NU/AI1mM+nvhTTivAyjv0iQLJ3fwn0c3WgK+OtQxHq4khVbGc/
+ QoaAndm7scMqh7KO+Qr3jxeNJRtdcCu2hNiqWDbXPEtr5DYdywfEMJow4VYJE5QwS4ZBHC
+ TG49Op0WAfUDeGWWigY+/JhlsYfen70=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-DZ07MGYJP3KmwXzegOSkhw-1; Thu,
- 12 Nov 2026 06:49:09 -0500
-X-MC-Unique: DZ07MGYJP3KmwXzegOSkhw-1
-X-Mimecast-MFC-AGG-ID: DZ07MGYJP3KmwXzegOSkhw_1794484148
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-120-hxR1MSrMPjqR51R1VKeGNA-1; Thu,
+ 12 Nov 2026 06:49:26 -0500
+X-MC-Unique: hxR1MSrMPjqR51R1VKeGNA-1
+X-Mimecast-MFC-AGG-ID: hxR1MSrMPjqR51R1VKeGNA_1794484165
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B1E8F19344C7; Thu, 12 Nov 2026 11:49:08 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C82441F; Thu, 12 Nov 2026 11:49:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E01CA21E6A04; Thu, 12 Nov 2026 12:49:05 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  david@kernel.org,  imammedo@redhat.com,
- peter.maydell@linaro.org
-Subject: Re: [PATCH 1/7] backends/hostmem: Drop redundant validation of
- property "size"
-In-Reply-To: <avV0-C7TSKV4lQWP@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Thu, 12 Nov 2026 08:12:40 +0000")
-References: <20261111122342.634370-1-armbru@redhat.com>
- <20261111122342.634370-2-armbru@redhat.com>
- <avRjUJ9-d0_RxIvk@redhat.com> <87fqx6sdcz.fsf@pond.sub.org>
- <avV0-C7TSKV4lQWP@redhat.com>
-Date: Thu, 12 Nov 2026 12:49:05 +0100
-Message-ID: <8733t6s21a.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 23E56196C409; Thu, 12 Nov 2026 11:49:25 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4A4331800543; Thu, 12 Nov 2026 11:49:23 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Thu, 12 Nov 2026 15:48:49 +0400
+Subject: [PATCH 6/7] hw/display/vhost-user-gpu: fix scanout bookkeeping on
+ the 2D path
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261112-issue-4848-v1-6-aeba1cfe2c03@redhat.com>
+References: <20261112-issue-4848-v1-0-aeba1cfe2c03@redhat.com>
+In-Reply-To: <20261112-issue-4848-v1-0-aeba1cfe2c03@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry R <rdmitry0911@gmail.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3963;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=G/0MOx9MYapqfTMthJ2kS8S+QQ/MEe/7lXPDMexj9Fo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq9aeqIsoMd3USOHG2imD+cNhi/BTGGzuQM298o
+ RAhhurra9KJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCavWnqgAKCRDa6OEJdZac
+ 5UvHD/4i/Dsnvgbqu5M5d9+85Eg7MZ+aKsssWVqMk4tk6lAAaiuAeHNGdGvTjC9G1GARYV7CC60
+ cbFq3ft00GGpbxI165dpIPnLOpejCWKDygx+1Wek/CtvMJVG5LGVGFK0BE5pK2xp/IIuRCvL3xW
+ L7y12X+Is4rgznDyLgPUBXULPtFLiKScmNlfUf7Gr/M4BQFvKtacNPzkoD9OjeDT8c/0f/SLw6S
+ rYmV3gR6XpkAHKrMShaeUoxXk9ODuAH2CjD2IduSXESlcUv5+8ItdbMolwSDcE7oJQo3iB+fm9D
+ ZmWLDMT5tDY499439WqhzqTcGrI6mHTGA47gpGNf/X+dmXdorz6Ows/O826PNzUE/93D8JdQ6h+
+ J0vYwqhB8VP9Xym8Vc3g1dgwER/IkdXarG8DAK4lwk6qBTJqLuyaIRmesu2qrY82QY5BOcqC+2W
+ MPKErQxcu/xwaL9+N4ZR8I7A2HxOvgxGKsOEoIwXT5COz16t9F+X6GiGHaLzcha/6xGS4r8mslz
+ xw3KcBYwLcSnCsxywER+I5eH5C0j3UtuZYPk71fN5kyZhQLHwR2/tlnhqHsVrqk7IRQDPYGXUxi
+ C67WFraV1DIPYKNazG77D7mXoKIRsTVVodKJMmWkkQS4PvWxpM4/VqU1O+c9/nmSxW/nL5nGi5v
+ t9Q8HT1JzdbP55Q==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
 X-Spam_score: 0.5
@@ -88,55 +104,115 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+The 2D and dmabuf scanout paths disagreed on who owns
+virtio_gpu_scanout::ds and on when the frontend dmabuf is released.
 
-> On Thu, Nov 12, 2026 at 08:44:28AM +0100, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Disabling the scanout (width == 0) installs a placeholder surface
+through qemu_console_set_surface(), which frees the surface it replaces,
+leaving ds dangling. The next VHOST_USER_GPU_UPDATE then composited into
+the freed surface and installed it again. Only free a surface the console
+did not install, and drop updates that arrive without a scanout surface.
 
-[...]
+Fixes: 267f664658fe ("hw/display: add vhost-user-vga & gpu-pci")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/display/vhost-user-gpu.c | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
->> > as a separate patch I might suggest
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index 4eab482f2181..63776ab30ac5 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -192,6 +192,19 @@ vhost_user_gpu_unblock(VhostUserGPU *g)
+     vhost_user_gpu_send_msg(g, &msg);
+ }
+ 
++/*
++ * A surface not installed on the console is owned by the device, the
++ * installed one is freed by qemu_console_set_surface().
++ */
++static void
++vhost_user_gpu_clear_scanout_ds(struct virtio_gpu_scanout *s)
++{
++    if (s->ds && s->ds != qemu_console_surface(s->con)) {
++        qemu_free_displaysurface(s->ds);
++    }
++    s->ds = NULL;
++}
++
+ static void
+ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+ {
+@@ -262,6 +275,13 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+         s = &g->parent_obj.scanout[m->scanout_id];
+         con = s->con;
+ 
++        if (g->dmabuf[m->scanout_id]) {
++            qemu_console_gl_release_dmabuf(con, g->dmabuf[m->scanout_id]);
++            g_clear_pointer(&g->dmabuf[m->scanout_id], qemu_dmabuf_free);
++        }
++
++        vhost_user_gpu_clear_scanout_ds(s);
++
+         if (m->width == 0) {
+             qemu_console_set_surface(con, NULL);
+         } else {
+@@ -289,7 +309,8 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+         }
+ 
+         g->parent_obj.enable = 1;
+-        con = g->parent_obj.scanout[m->scanout_id].con;
++        s = &g->parent_obj.scanout[m->scanout_id];
++        con = s->con;
+         old = g->dmabuf[m->scanout_id];
+ 
+         if (fd == -1) {
+@@ -297,6 +318,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+                 qemu_console_gl_release_dmabuf(con, old);
+                 g_clear_pointer(&g->dmabuf[m->scanout_id], qemu_dmabuf_free);
+             }
++            vhost_user_gpu_clear_scanout_ds(s);
+             qemu_console_gl_scanout_disable(con);
+             break;
+         }
+@@ -306,6 +328,8 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+             modifier = m2->modifier;
+         }
+ 
++        vhost_user_gpu_clear_scanout_ds(s);
++
+         dmabuf = qemu_dmabuf_new(m->width, m->height,
+                                  &offset, &stride, 0, 0,
+                                  m->fd_width, m->fd_height,
+@@ -360,6 +384,11 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+ 
+         s = &g->parent_obj.scanout[m->scanout_id];
+         con = s->con;
++        if (!s->ds) {
++            error_report("vhost-user-gpu: no 2D scanout surface"
++                         " for scanout %d", m->scanout_id);
++            break;
++        }
+         pixman_image_t *image =
+             pixman_image_create_bits(PIXMAN_x8r8g8b8,
+                                      m->width,
+@@ -659,6 +688,7 @@ vhost_user_gpu_reset(VirtIODevice *vdev)
+             g_clear_pointer(&g->dmabuf[i], qemu_dmabuf_free);
+         }
+         qemu_console_gl_scanout_disable(scanout->con);
++        vhost_user_gpu_clear_scanout_ds(scanout);
+         qemu_console_set_surface(scanout->con, NULL);
+     }
+ 
 
-[...]
-
->> > so that we get the nicer message:
->> >
->> >     $ ./build/qemu-system-x86_64 -object memory-backend-ram,size=3D0,i=
-d=3Dfoo
->> >     qemu-system-x86_64: cannot create 'memory-backend-ram' with a size=
- of 0
->>=20
->> Your message assumes that the property is only ever set on behalf of an
->> object creation request.  Not true in general, qom-set exists.  I
->> believe it's true here due to the host_memory_backend_mr_inited() guard.
->> But that's not entirely obvious, isn't it?
->>=20
->> Possible phrasings that don't assume this:
->>=20
->>    property 'size' of 'memory-backend-ram' cannot be zero
->>    cannot set property 'size' of 'memory-backend-ram' to zero
->>=20
->> Is one of them good enough?  I doubt this error is common.
->
-> I'm fine with either of those, perhaps mildly leaning towards
-> the second.
->
->> There are enough "doesn't take value" error messages elsewhere to
->> justify a small series of its own.
-
-Just posted:
-
-    From: Markus Armbruster <armbru@redhat.com>
-    Subject: [PATCH] error: Improve a few error messages on setting propert=
-y to zero
-    Date: Thu, 12 Nov 2026 12:47:02 +0100
-    Message-ID: <20261112114702.969681-1-armbru@redhat.com>
+-- 
+2.56.0.116.g6de20f6092dc
 
 
