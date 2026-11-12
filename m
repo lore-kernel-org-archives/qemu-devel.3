@@ -1,168 +1,78 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D76F606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 09:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F1C606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 09:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=proofpoint20171006 header.b=gKR00pno;
-	dkim=pass (2048-bit key, unprotected) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=selector1 header.b=rTAwWYUc
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=m9sxCByS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRRPk-0001MV-04; Thu, 12 Nov 2026 04:48:16 -0500
+	id 1xRRRh-0001pX-RU; Thu, 12 Nov 2026 04:50:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1xRRPi-0001M2-7s
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 04:48:14 -0500
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1xRRRU-0001lH-2d; Thu, 12 Nov 2026 04:50:05 -0500
+Received: from [115.124.30.119] (helo=out30-119.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1xRRPg-0002sj-Bh
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 04:48:13 -0500
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AC2Zdbf1971504; Thu, 12 Nov 2026 01:48:10 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=proofpoint20171006; bh=QDPkdi8arBnwo
- KblB2Ix0PTtqmsqvAdAIehGDAzV0hc=; b=gKR00pnoEqvQ6ms9t1kTWISwxW24C
- A8WB98LnnuNNBEGhHE/D7i7H1WcDzc+I6St0x6xQKO7YwClzcNdbVdecQ68Zeyl6
- 39jOmqd4uEtwFtQcg+GgxWVuJ2CZ6AKyM8FcmswPaaVHNzai4KWE3rnWfYwlyJoE
- 1T4+38EDgzB8Y1kJJJFFh2YSLVMWh0N4ZxQAP8/zQ5tulnMoWGtZDcjo7YBEmGPf
- K8Dk4JMgOc7OZN+oLSOM2alQDBFe3xLcQZgBsVbi6xvNBjoMj2FmP99wF3BOrUdv
- 8AlhzzY6f5i11AIvPKiggNKzH7EZCx9jI+9PM5P/7vbmnyczhmPsggkMg==
-Received: from byapr05cu005.outbound.protection.outlook.com
- (mail-westusazon11020107.outbound.protection.outlook.com [52.101.85.107])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4hvqdetjch-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 12 Nov 2026 01:48:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EjLqA5pK7yGopDM67WDcpBAIil05+LrdhlNrTthv+YXzkQNjvpXCmMGLQdifMfNRqV2idO1VeGD0ie/SoCbW37AfgNElLaxU8GAkah2724m3YnpGtjLP/FTOW0zvWQTg/dr5wPPFcRpfyW5oNqO8ZHFu7JCpjyzM3HbQVI+xW8DITH905dGpHkcLfE5z4XsnwgcThwdVuw+M/rUwbb1nZMSGzgTJ+e/lRB+JL43WdHMXBOtakWsh9khXY1aBjqmFbzf99iPj6gAx2nUpshJZemnw95b0JMm2kMvFVOIwDVV4QXJDczEmL0T8n1L61nrgI2gkbzphgz8KV1IGhNTcwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QDPkdi8arBnwoKblB2Ix0PTtqmsqvAdAIehGDAzV0hc=;
- b=AzsFUdbPPxP9xSItwdGwrYrpkTmqUIKLFHSwbbBzdY4upmzn1uMZEggHoitW/1aO6NVTdKxM1KlUb7J9XtEyYF0idgXivCEDH2pzAOG0UjWYIrWD+jem+0bcJ2QPHH876f6/A8E99G6s8PLwTJ8+OSiuYuTCAWyfo72VwjsxM+6snzYeqXD49q4lplsfzYKvFof62njUM4UiNiUjxRmci3IXY+NRrM9eU/TD2unDtkFf5ckE2Pwa7q7/uINoiCeQqBxPCVmRYfhL42n99ZqAwCEmaLZj00fc1CMP4v9klNDHS5y7t45ZfPuukQa11gJooWf8vx4dDnY0XvCU6SY+NQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QDPkdi8arBnwoKblB2Ix0PTtqmsqvAdAIehGDAzV0hc=;
- b=rTAwWYUcfOaTIESNRenVXpbcrNa25cooOCXx/oIrTMcqoGB7FgHX6+5KIQJgE/FGwWl8/oSs8BeVAZtU/WOGyv05oeyh0yJhVxfJ1yLYCfbZTsym93ycTsJ+FMrEm2I74SlY+cJUK7z8v3S/5nRvdo6Pam98QEOvffd13Mja6P1WVElemIbwnDLyj03nnrIMeCTpUP69KUntUsA7BUD8eKiZQMyyyxuSY2ZFDMfyqtgKyGtKZTXSqqRiFr33/EtL3cNSxaMKjgaW45930H+1A5xZdZxocdIMfDjP9QWYoGl2EWQ7sxX5FTnUzDawRSlApMPsGX3yovq16p5XZQRV8g==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nutanix.com;
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by DM6PR02MB6811.namprd02.prod.outlook.com (2603:10b6:5:21a::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Thu, 12 Nov
- 2026 09:48:06 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%5]) with mapi id 15.21.0615.008; Thu, 12 Nov 2026
- 09:48:06 +0000
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-To: alex@shazbot.org, clg@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH] vfio: fix memory leaks during realize failures
-Date: Thu, 12 Nov 2026 09:46:52 +0000
-Message-ID: <20261112094802.2904005-1-mark.caveayland@nutanix.com>
-X-Mailer: git-send-email 2.43.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: FR0P281CA0247.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:af::16) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1xRRRH-0002yY-6O; Thu, 12 Nov 2026 04:50:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1794476975; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=Xy6WDJMo6kEy2FPjE54FEb37T1x0ljd6lMeUEcJZ6Hw=;
+ b=m9sxCBySwb0TsYQFGXDOrMD9jU2q50RK+fMa75FpH1s2sUcws19QA8/jIrmUkWsoye0Jht3fT9EM6i6iqznp7BizdYJVuqn231uh/L51+VMO4ERFnIfCrAGASAtAi9kxJsbybnuMv38YUutGPu+SZ0/Mr1XxGxeePkCL0zPRJec=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R731e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
+ TI=SMTPD_---0XEbfdcZ_1794476974; 
+Received: from
+ riscv-project-v011122129236.ea134.tbsite.net(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0XEbfdcZ_1794476974 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 12 Nov 2026 17:49:34 +0800
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
+Date: Thu, 12 Nov 2026 17:49:16 +0800
+Subject: [PATCH v4 10/14] target/riscv: Apply minstret exception accounting
+ to HPM counters
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|DM6PR02MB6811:EE_
-X-MS-Office365-Filtering-Correlation-Id: d86d8f13-1719-4eeb-40a1-08df40a20d4d
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|376014|366016|1800799024|10067099003|56012099006|261021121427099003|261022105027099003|261102123227099003|261028144727099003|261026121527099003|261026140227099003|18002099003|6133799003|3023799007;
-X-Microsoft-Antispam-Message-Info: HKS7/8LJNulT4IWDrMenhw/xQz36tU5ZkmAvUeeTXZKTsFLNGrSqnOLYeXhAljRTRzDxZ2M1IxRfXaeOzYMj8SLoOaCccyiKPTyQKyHuqznT+DVaSsgCxCwec/Z+/OBt9iXtsiA+BFk/MdX7QV9Pi5oxBoBh0iB4mSj3wWjh9EIw1KwATG+5dx7B754Fmz3rBeW1bLG8p+QD+o1f5oIQgsC/oVPycYRI0kFVCNTIQvRx9WwJ/I/CkZfThigMhJAZE8P+7D3l/sKEJUwpDLvRI7fHuKSwWYWe8oJxUVoT5xRd+OXLUXY8nKhq+xphhHm7EMzV8rpoROWpUd+uYmWIm9oNUeUlkZtrWUmVT4ksbV0qkg2C5pb+9Gm1P+5yhCMiY0cxaU0osdTrxMR9j/w3q8wcpbBXQzEW5gKD72odVaicWpZG2XkkQIqYiKSJ9SwmnXYuFvBOUzjs4587gq7ufNSATQ/grn7OeiOE5tqXgb8SSBzZSZiYHnNBtJM9/ZiTzVJZX7BA2iM1Uy4BA1FR/ufBDyCvlLcEOPa6z7QPwsJ+B66uFcY7uTPzLZP2XxBl/EuS/o/FBwx4hpyY+LZgewks3UcZN4TjM/aaxNN+NmG4AsQTdSHBeJ0b+YYzbUx67bLe5kwwKsI6YfQjyddpg0ZB3J07vvezzb9MjhBlscY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(10067099003)(56012099006)(261021121427099003)(261022105027099003)(261102123227099003)(261028144727099003)(261026121527099003)(261026140227099003)(18002099003)(6133799003)(3023799007);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?KU4L7Hva9vDeZzK+r0xMkkPnrdITSUyzyUEjpyZRq1L6K/hZtcUxfOkNsHYe?=
- =?us-ascii?Q?ZHbb2dZCjN5TjCio+gVrY7yL2uqBkFpS6S6qj90KreKzW1hBeX0V+c8ghArG?=
- =?us-ascii?Q?4Uovux+gpesWq58XgVBQhPOOdRFByvwNlMnH2W9HPBSsdHwzlJ3LvTjAmxD9?=
- =?us-ascii?Q?WUCZ8Hedsitkl01JHvhYbt5cnQ70/5xY0IIhi1tcND+K+TkN2kePjzHrQjGY?=
- =?us-ascii?Q?U3OmS7MSI8DrCf1B4kMyZTIAkgRyspmazf0c7KX7+rxSgQsE7fW++6TN4ex6?=
- =?us-ascii?Q?F0OHPn9p8pAdC/lseCvxmSvow/OmcBeRQOjKoqKnoteGWFAGgXofhE5UvizJ?=
- =?us-ascii?Q?6tQxjEUWuXXtAUMR0gUsB3a14yOV0iDvVwjj2aNk7PrGx2Bza3ybpIjbQC2N?=
- =?us-ascii?Q?9vO9Nb0V45iHlJNc74WUKt/+Mzro57/vsrkHsgWKi7f4DCQyxtsVTw1MKqvR?=
- =?us-ascii?Q?Es0bwlmAYb7NcVcHIzyxSC05Yv18+xyXVARYdDYVvdBSW64wwjZ9GGLDKFau?=
- =?us-ascii?Q?VTO80wFVNJbyFcDlr6ZqL1KmDYqIg55VgVOlpc45687e2H8k9ZaunGDQKNtL?=
- =?us-ascii?Q?PmcUrnSW21S9liNznmcd0kix5Y4MICrpt28nLIEPQ/NOttjRkQyGEU5HLk7U?=
- =?us-ascii?Q?VmpHqQ+sVYKUmRRu0bc+63tXZLHevlZpdjiNuSQWFIpMmq7SUMdaduaAa0UT?=
- =?us-ascii?Q?U3aqLenHx5rqf3IVD8/SJzn4rMCpUf0wTbCLEjndHBWpKANTPie2T/e9pmcS?=
- =?us-ascii?Q?vdKBLyzN016UjS+rabEWj4z6Pq9KpprobK587VkknXDz32bND6RvFvEG1aKJ?=
- =?us-ascii?Q?64sriBBdL2tMDlVP8vkuXQS62CMrwfdM3p6M4sOxziMccHAweu0duR3DCd40?=
- =?us-ascii?Q?FxLV6hdWMCw2aiAdcFYCdItgCOg17v5zaCGis7tx9Uugtr7OvePXMPuU7VQa?=
- =?us-ascii?Q?r/T51a4HRBG5mu5TSgQnHScTt1BM1XvFcl05mNTH3YRbVU/P3AfVwUp2rLz2?=
- =?us-ascii?Q?Pu3jsv2F/Av4ElbiI/q3uZFFliSMAZKJHWe1NndKIx61rGXfz1weFj27erl9?=
- =?us-ascii?Q?zkwQqc/bSDqpA9F86LTRO82Fz7wCvMai/vXrHfdreC0rTFg+Kx8IXb5q9pBq?=
- =?us-ascii?Q?X6J+ZTfFEZNGqrmR3312OujK9dOP3z1niYyqWZrrDrpO7g0OMl6suOgGzmLT?=
- =?us-ascii?Q?Oy1uA+x3KIOS/36xeFbBTO3hEK6EmTnSki9JIbizrdUrdZFuH31xduxy7p+m?=
- =?us-ascii?Q?oEXyiuc9t3q5TL924NJeZpmGZbhUJZEAonSTbTKLFh8qglQZNwxR6C4oRGWM?=
- =?us-ascii?Q?zi8oN81HB+LZrZ/d24mtaBICEC99xU+TL9YyegDT3JfavaWLNC33m2bxIDdb?=
- =?us-ascii?Q?xLDB2n0xBrxwlJI6j7YnRC4YsRMLLGUQECvCQfMC6HPWMznwOHZG3bwwRGH5?=
- =?us-ascii?Q?0jZetNI7ozgLQtSnChidCMyTE2Wuq2luLAkaV+hP9A00ys5hoGnsO+vVpIUj?=
- =?us-ascii?Q?Q8Jx0s7GHF6AIM9TH/M8/vHa020H2XtwNgOZ1Qck/2A4g/SUUG2yd7Lwn8CG?=
- =?us-ascii?Q?mToDSJV4gM80LRqO7JQBk0BcJ4qkK/6lc03iUkjU4EB+eGI0ibkD1p65jx1J?=
- =?us-ascii?Q?+xCTgIn73cKnan8bSBLx9YdjH4J+ga5+YTIFOKEKSy6YQqZLHfPZ0Ipj8yl5?=
- =?us-ascii?Q?DME21Ev1YaHRNPI5Gdi2gI4LYES7mKrASR/U1ZieLbZsY6KTgYb5e5WRCe/s?=
- =?us-ascii?Q?DS4xLYn8EmAmObZy/9QqKO6ipB5wAC0=3D?=
-X-Exchange-RoutingPolicyChecked: YPhlZZFGnzLZ/DOzEibrE1VZGLV8n5JjhWjrqQ3vKHBBhBa1X0Y7/O1dFwK941mVv8ymrIgYEPH8gHtsSWhTTqJmfeOjAqAsuXGu3zprHXRQJ4aGsj/FTT8nBEZ8Gfia4XJvI1U0E+jELSqzg1VuR4/Lpeb4U1ecp81TsdAsJyNAD6wBSNRuTH2ueaty8hrpV6UbFjYinuUvVIPJt5pp2YtSTY3L58dMe7EQdD9NFpZs8sIyLSZw50rKBwTblJGuk7HbFOQpw9c7vgvj1iKPBjcW/Kz/Zh9YlQkjTCEtSBVCDYxm9sMSk1wdJEjGP5dXoBjNJCAU1EON/9FJsMxPmQ==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d86d8f13-1719-4eeb-40a1-08df40a20d4d
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2026 09:48:06.3244 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fIV/NNmZOIa3XK6IW526wgCdI26Fkcmt3PcuWSzF2/o0to18JOw4Qjmf2Y0eQWLpzXns9NeRVwx92UwXYGPrUazV26BQrqLgLnYgRqXjGaU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB6811
-X-Proofpoint-GUID: Dlx6e_OqV174v2eDtvHyOYNFj0AUyRfZ
-X-Proofpoint-ORIG-GUID: Dlx6e_OqV174v2eDtvHyOYNFj0AUyRfZ
-X-Authority-Analysis: v=2.4 cv=efmo7LEH c=1 sm=1 tr=0 ts=6af58b59 cx=c_pps
- a=YibUBhyYyO2Pp3CK5Oblqg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=zJRp6_cAMcgA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
- a=64Cc0HZtAAAA:8 a=Kx0d66m_L8w6UN1NMeQA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDAzOCBTYWx0ZWRfXxKBRDPSCJry7
- NiL1AOHQGkK9x/UrjubQ+Cu9IUV6clVTi+k+a2GYEfztp0zIqPeApcmXRf+jYTUgcyrhkPoi7zN
- 4qzMJ15JuJtZddjzwE1ShNNKDg5xBlA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDAzOCBTYWx0ZWRfXy+8dpqK+ltsC
- gE//+ysFap5QIce+YHXAbyqNZ69irPKnBUudc1Xq66NBWEW10qf8T6jXrlzssR/wIA9qMNGp5Sy
- OxapCkvqZf+e2lxvZOHnC8KfJDDqzUDwB1dZKGniGfkXRYK2iMFU5wJLrYl/SzRXjtkHGH+3rVU
- xh8uhDAkVUDvoTcI+K6DmT3FfhqNGRCvQyMtCrabOp0ybe4sbaC2rmdF73MdgxkrdrJjNZlulVb
- LEWxhwYmYi5QNHmASrX6prznhuGbmp+uUgjRAmLCaytza44h6Wdqe5r2+AsxCwXvfUnhguwGAKP
- If9SeXKJttSDQeSO9Oq6W79RPOUBzgkQps3r9uHQd1C6gX7voZwmZCiwZ1mw9KMURSXQ1repqgt
- jkv64T6KNP1/khGLspDATvw1vo8rDC6CeP2FjFPwFk9ZHHJ91uahEZaqEJOR6wMBbDTx73XC+/J
- a4JM6C8BznHhDlsecIw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-12_01,2026-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261112-riscv-pmu-correctness-v4-10-e9067bdf4df5@linux.alibaba.com>
+References: <20261112-riscv-pmu-correctness-v4-0-e9067bdf4df5@linux.alibaba.com>
+In-Reply-To: <20261112-riscv-pmu-correctness-v4-0-e9067bdf4df5@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: Zephyr Li <fritchleybohrer@gmail.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794476967; l=6563;
+ i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
+ bh=Sepbp21F7tZ+a5jB4MuifNFMj2AzagdIdKv8SLLV6Z4=;
+ b=3b6kfMmXr813ikhHUi2V8sJbmU+2LUGqpKv45Qbiujh9634ybuAvaJmBU+Sjq7RKJWi2duLid
+ 5KGGSt3p6B5DXCXMKk1fZGJKA4K7KRS7+m9h8dbRWKskNYEhRUy6oeI
+X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
+ pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.119 (deferred)
+Received-SPF: pass client-ip=115.124.30.119;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-119.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -174,61 +84,225 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Both VFIOBAR and VFIORegion allocate a new MemoryRegion for use with the owner
-being the vfio-pci device itself. In the normal case where the vfio-pci device
-is finalized, the refcount on these MemoryRegions is decremented as normal
-causing them to be removed.
+With icount, helper_raise_exception() excludes faulting instructions from
+minstret but not HPM counters selecting HW_INSTRUCTIONS.
 
-Unfortunately this doesn't work if the vfio-pci device realize() function
-itself fails: in this case the vfio-pci device is never finalized leaving
-these MemoryRegions still allocated when the QEMU process terminates.
+Adjust the baseline of every running instruction counter that counts the
+current privilege mode. Do not read icount here: the helper can run inside
+a TB. Keep the existing timer, since excluding an instruction can only
+postpone overflow and expiry checks for an actual wrap.
 
-Ensure that these MemoryRegions are always removed by manually unparenting
-them in the corresponding vfio_bars_finalize() and vfio_region_finalize()
-functions.
+Extend the ECALL regression to compare both counters and add an LPAD
+fault test covering an exception inside a multi-instruction TB.
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Fixes: 14664483457b ("target/riscv: Add sscofpmf extension support")
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- hw/vfio/pci.c    | 1 +
- hw/vfio/region.c | 1 +
- 2 files changed, 2 insertions(+)
+ target/riscv/tcg/pmu.c                  | 35 ++++++++++++----
+ tests/tcg/riscv64/pmu-lpad.S            | 72 +++++++++++++++++++++++++++++++++
+ tests/tcg/riscv64/system/meson.build    |  7 ++++
+ tests/tcg/riscv64/test-minstret-ecall.S | 26 ++++++++++++
+ 4 files changed, 133 insertions(+), 7 deletions(-)
 
-[MCA: I found this whilst making changes to vfio-user that tested failure
- paths in vfio_user_pci_realize(). In this case there were a number of
- leaked MemoryRegions appearing in the output of a '--cc=clang
- --cxx=clang++ --enable-ubsan --enable-asan' build.] 
-
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 0da2e143b8..05cce1e252 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2062,6 +2062,7 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
-         vfio_region_finalize(&bar->region);
-         if (bar->mr) {
-             assert(bar->size);
-+            object_unparent(OBJECT(bar->mr));
-             g_free(bar->mr);
-             bar->mr = NULL;
-         }
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index 8de26f3d9b..15c8850072 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -523,6 +523,7 @@ void vfio_region_finalize(VFIORegion *region)
-         }
+diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
+index f88f6ae671d877ed874d22c9d4b840edb6f433a5..08298010b6d06f5792fa14ff81fe2f7a28c6476f 100644
+--- a/target/riscv/tcg/pmu.c
++++ b/target/riscv/tcg/pmu.c
+@@ -387,18 +387,39 @@ void riscv_pmu_write_inhibit(CPURISCVState *env, uint32_t value)
+ 
+ void riscv_pmu_decr_instret(CPURISCVState *env)
+ {
+-    if (!icount_enabled() ||
+-        (env->mcountinhibit & COUNTEREN_IR) ||
+-        riscv_pmu_counter_filtered(env, env->minstretcfg)) {
++    RISCVCPU *cpu = env_archcpu(env);
++    uint32_t ctr_mask;
++
++    if (!icount_enabled()) {
+         return;
      }
  
-+    object_unparent(OBJECT(region->mem));
-     g_free(region->mem);
-     g_free(region->mmaps);
+     /*
+-     * minstret is derived from icount, which includes the current
+-     * instruction.  Move the baseline forward to exclude an instruction
+-     * that raises an exception and therefore does not retire.
++     * Fixed instruction events are derived from icount, which includes the
++     * current instruction.  Move the baseline of each running
++     * instruction-source counter that counts the current privilege mode to
++     * exclude an instruction that raises an exception and does not retire.
++     *
++     * Do not read icount here: this helper can run in the middle of a TB.
++     * Excluding an instruction only postpones overflow, so keep the current
++     * timer deadline. The expiry handler checks for an actual counter wrap.
+      */
+-    env->pmu_ctrs[2].mhpmcounter_prev++;
++    ctr_mask = COUNTEREN_IR |
++               riscv_pmu_event_counter_mask(
++                   cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS);
++    while (ctr_mask) {
++        uint32_t ctr_idx = ctz32(ctr_mask);
++        uint64_t cfg = ctr_idx == 2 ? env->minstretcfg :
++                                      env->mhpmevent_val[ctr_idx];
++
++        ctr_mask &= ~BIT(ctr_idx);
++        if (!riscv_pmu_fixed_ctr_running(env, ctr_idx) ||
++            riscv_pmu_counter_filtered(env, cfg)) {
++            continue;
++        }
++
++        env->pmu_ctrs[ctr_idx].mhpmcounter_prev++;
++    }
+ }
  
+ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
+diff --git a/tests/tcg/riscv64/pmu-lpad.S b/tests/tcg/riscv64/pmu-lpad.S
+new file mode 100644
+index 0000000000000000000000000000000000000000..40a6b34b7c2b71dd42e78b6873d72df4d508289d
+--- /dev/null
++++ b/tests/tcg/riscv64/pmu-lpad.S
+@@ -0,0 +1,72 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++/* CSR number for older assemblers. */
++#define CSR_MSECCFG          0x747
++
++/* An LPAD fault must be deliverable with HPM instruction counting enabled. */
++
++	.option	norvc
++	.option	norelax
++
++	.text
++	.global	_start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++	li	t0, 2		/* HW_INSTRUCTIONS */
++	csrw	mhpmevent3, t0
++	li	t0, 1 << 10	/* mseccfg.MLPE */
++	csrs	CSR_MSECCFG, t0
++
++	/* x7[31:12] = 0 does not match the nonzero LPAD label. */
++	li	t2, 0
++	lla	a0, target
++	jalr	ra, a0, 0
++	j	fail
++
++	.balign	4
++target:
++	.word	0x00001017	/* lpad 1 */
++	/*
++	 * Keep the LPAD check inside a multi-instruction TB. Its exception
++	 * helper must not read icount before leaving generated code.
++	 */
++	.rept	16
++	nop
++	.endr
++	j	fail
++
++trap:
++	csrr	t0, mcause
++	li	t1, 18		/* Software-check exception */
++	bne	t0, t1, fail
++	csrr	t0, mtval
++	li	t1, 2		/* Landing-pad fault */
++	bne	t0, t1, fail
++	csrr	t0, mepc
++	lla	t1, target
++	bne	t0, t1, fail
++	li	a0, 0
++	j	exit
++
++fail:
++	li	a0, 1
++
++exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence. */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index 4092bab25985400a69003ec00e973aa5011e1057..66b68509c5e1bb05d699f93e4570767da7e88b97 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -74,6 +74,13 @@ tests += {
+   }
+ }
+ 
++tests += {
++  'pmu-lpad.S': {
++    'cflags': cflags,
++    'qemu_args': ['-cpu', 'max', '-icount', 'shift=0', qemu_args],
++  },
++}
++
+ # Exercise RV32 CSRs with the RV64 emulator's 64-bit target_ulong.
+ tests += {
+   '../riscv32/smcdeleg-rv32.S': {
+diff --git a/tests/tcg/riscv64/test-minstret-ecall.S b/tests/tcg/riscv64/test-minstret-ecall.S
+index ab268f7f22985820f19bde353215385608643f3a..b1857543d488df984b923ad1c135edb35cb948c7 100644
+--- a/tests/tcg/riscv64/test-minstret-ecall.S
++++ b/tests/tcg/riscv64/test-minstret-ecall.S
+@@ -18,11 +18,37 @@ _start:
+ 	li	t1, 1
+ 	bne	t0, t1, fail
+ 
++	/*
++	 * minstret and a counter selecting HW_INSTRUCTIONS must both exclude
++	 * ECALL, so they must contain the same number of retired instructions.
++	 */
++	li	t0, 12		/* mcountinhibit.IR | mcountinhibit.HPM3 */
++	csrs	mcountinhibit, t0
++	csrw	minstret, zero
++	csrw	mhpmcounter3, zero
++	li	t0, 2		/* RISCV_PMU_EVENT_HW_INSTRUCTIONS */
++	csrw	mhpmevent3, t0
++	lla	t0, trap_hpm
++	csrw	mtvec, t0
++	li	t0, 12
++	csrc	mcountinhibit, t0
++	ecall
++	bne	s3, s4, fail
++
+ 	li	a0, 0
+ 	j	_exit
+ 
+ trap:
+ 	csrr	s1, minstret
++	j	trap_check
++
++trap_hpm:
++	li	t0, 12
++	csrs	mcountinhibit, t0
++	csrr	s3, minstret
++	csrr	s4, mhpmcounter3
++
++trap_check:
+ 	csrr	t0, mcause
+ 	li	t1, 11		/* Environment call from M-mode */
+ 	bne	t0, t1, fail
+
 -- 
 2.43.0
 
