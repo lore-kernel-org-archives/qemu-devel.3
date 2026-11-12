@@ -1,92 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA0F606A327
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A69606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=SurB2W/g
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=KWd6ppN9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRV5J-0004bo-60; Thu, 12 Nov 2026 08:43:25 -0500
+	id 1xRV9k-00075w-HD; Thu, 12 Nov 2026 08:48:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRV5H-0004Xv-0x
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:43:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1xRV9c-00074r-7L
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:47:52 -0500
+Received: from mail-westusazon11010008.outbound.protection.outlook.com
+ ([52.101.85.8] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRV5F-0004iQ-1P
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:43:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794491000;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=6h6g0wHWvKV2Nutj61rgDVrOeOCPiA8Sd5YSTzA22iA=;
- b=SurB2W/gsq6ONnFtaHk+ZpEAMW0Sipal3kGCUcY++90TcWbnM708qGVYi+NqlYQjPjAFsG
- LA+nXp+cZ6CySf0m1pOtzwG5OIHLy4oJlfXvCLvb3+bMq+mVRfQ3giuNnb1K+srOQ5epjN
- s1QhcQsICjeFk9Bb9jDpl45wmhwi+8Y=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-IQnlQwIuOciP-nv4vLlSRw-1; Thu,
- 12 Nov 2026 08:43:14 -0500
-X-MC-Unique: IQnlQwIuOciP-nv4vLlSRw-1
-X-Mimecast-MFC-AGG-ID: IQnlQwIuOciP-nv4vLlSRw_1794490992
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B267A1955DE8; Thu, 12 Nov 2026 13:43:11 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22C5030000E8; Thu, 12 Nov 2026 13:43:05 +0000 (UTC)
-Date: Thu, 12 Nov 2026 13:43:03 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Yonggang Luo <luoyonggang@gmail.com>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Chao Liu <chao.liu@processmission.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Weiwei Li <liwei1518@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v5 1/3] accel: register CPU parent only for AccelCPU
- subclasses
-Message-ID: <avXCZ6IxBXWEuugm@redhat.com>
-References: <20261106023936.772-1-luoyonggang@gmail.com>
- <20261106023936.772-2-luoyonggang@gmail.com>
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1xRV9Z-0004Fu-Jk
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:47:51 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=R+2WzO7d5/sqpJK2KSEm+D8h1wVQxAASHt9sWKdTQanyLA7hjkCt+bj3sDfLr3kBumqr4PSVbT+kwclwNN/P/9Rt/KnzRRNWvVhnA4U8sFH5pkOf2HJVajBCBRLV4CbSYXJkXIYtvftNrM2eaeofzd113tuGmqioG5YQgMqogGDh3nC4ziP/yuAU9+jNPxlD7T5pdZqSz1ydiMzc63/3thOh8f+jS3m9qyWVZXeSp3Ysh/4WvqCV9i7tllTj9OLGM15v+YZhW3YqliGDOoTXmldxhFiwp+8v/g7cDPFNgQp1Nrca0keBBPD49wmkMnXRgpMivn/oxB5qR7Qe2rjUDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CWd5xL0/mLlBIO8h1l+Xtv8hSUZMHrbFlEbP9bksWEs=;
+ b=NKD7iyvhZWgln1T8BL7ufpomkFWOS6j64uy4Z72Rw6l2tvQ4cz7QunL4ZU0USrPhd+IRm6dGkGo9eR655kEg7AdD+sX4FiMiCpwVwDrHmOh9yl2xOZRFZfyPjOHkOMztWzwYWjqtPgwR6FY2p6vPYglUVpiFExF+pFFkRmDH2D3OfOLFXUULk+N45mJJvqHym/8vHPKhgs7+JXGXK2bvCELwqGZV6/38+amY/HAf1aNigtqws3xECZw7ULSd2HFb8NGJR3/fIKeywGway00xnAZRFs0XP9wNBagWWWtGAwUGyCwkILgOMFcTGV46MkyvdRJp1pZfqe9WvWIoses5wg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CWd5xL0/mLlBIO8h1l+Xtv8hSUZMHrbFlEbP9bksWEs=;
+ b=KWd6ppN91mjcuQE1FYDG2ZA6PCqBIuZdaDBEuEKCIJKJzzZIkHkHPvn4WNSQqSR9QxMt5r/DW/N3p5sUSLmYwYkdm6Y0qs3DR84GBxt0CEFR3wypZ7/Ck5dkVvjGPWyunfxFIMMgY97qWlTzaFFG1ftgYnydtGhEbjLQjWZ55zM=
+Received: from DS7PR03CA0115.namprd03.prod.outlook.com (2603:10b6:5:3b7::30)
+ by DM4PR12MB8473.namprd12.prod.outlook.com (2603:10b6:8:183::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Thu, 12 Nov
+ 2026 13:42:36 +0000
+Received: from CH7PEPF0000001B.namprd21.prod.outlook.com
+ (2603:10b6:5:3b7:cafe::36) by DS7PR03CA0115.outlook.office365.com
+ (2603:10b6:5:3b7::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.9 via Frontend Transport; Thu, 12
+ Nov 2026 13:42:36 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CH7PEPF0000001B.mail.protection.outlook.com (10.167.244.170) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.639.0 via Frontend Transport; Thu, 12 Nov 2026 13:42:36 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Thu, 12 Nov
+ 2026 07:42:36 -0600
+Date: Thu, 12 Nov 2026 07:42:06 -0600
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <richard.henderson@linaro.org>
+Subject: [ANNOUNCE] QEMU 11.2.0-rc0 is now available
+Message-ID: <ash57kbpyurpcp2lwtfq2mb4y7o6fbygckq5jqa2md7jfmr43g@hhkpjrshwoog>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20261106023936.772-2-luoyonggang@gmail.com>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH7PEPF0000001B:EE_|DM4PR12MB8473:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3dabe563-96e8-40a4-fc7e-08df40c2cffe
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|23010399003|1800799024|36860700016|82310400026|10067099003|11063799006|56012099006|261022105027099003|261022075727099003|261028144727099003|261026121527099003|261026140227099003|261009223027099003|18002099003|13003099007|27256017;
+X-Microsoft-Antispam-Message-Info: u1JnbvIXMyyEdvHbuUi7Ju2NI08w4qy8EUPIUg9Uo6P1pawoUj+UgSNVvUuw6UNmytIE1em42l/+XETknVJWUgXGmMOt33hzpTlNvznubG5Ot9ey2geAu7j5iRkPnP9evIyHz5vWYYFP1DDRwtqTMwjQ3YyJJx9PvS3P+0bHYPL723jHX/f1m/LOrmDpVmjaBBpddvGi6vIZy1p6X6+ixdvzqdSU2X2zLKXMB5fASYI52TWuDaJ/7Bcp0K8w1VoBl+p7ehizVQ5DvNEwcsJQ8wL/5NYIm7jlOGJNzHbFsTj0nsOxr62IZqXgXcf0BGhdwiv0ESy7rL8+av2UfM0slDujGGxRt7eIx7jzJ4IXh0vt1RGwji1qMaJv128DBs4EdAHS3juqlK3hjHgiSYwSyJIlgQECXiTXnJcO1H78bu8b0Q5ZoXvUqBTxqvt//ygLl+jBcHTSn9pOoWSSIqWgL+WSJbGsXfMzPCRItkAtKw+X1T9ZtyqSsXbWtpDF/xqcBnvR7+dY5PJc7wzts9hIDR9tnJYDPSOtc+Qx1BjNu3JDUcC8DzbbZxkn788OZg9Y8PbglKNqSWPGCwW3NEBdf9cEgJGDc0Sr45gtP7XoJDtnouK2TaHHoIMIaMQk7516cEXcAUQXLWN6E1RmCDerluD2W0LdOvM1yrSI7xRNsN79jaLnWLZgPA7uTBpYfq48mHur00bIBKDcLnj1inX2Yg==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(1800799024)(36860700016)(82310400026)(10067099003)(11063799006)(56012099006)(261022105027099003)(261022075727099003)(261028144727099003)(261026121527099003)(261026140227099003)(261009223027099003)(18002099003)(13003099007)(27256017);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: DrCasQxtzsl+kcWhAls7ND2E6YcXsIz3Yv3CzKEsxMSL/k8gcXN58LprNPkWXSu8Y+MGIv1MEv3YRUVN8s6WMN/3WMt7l8L4+PtQ2+2yWVdLipwdUMUvR74n5WaBt8dmC8ITeXgbk9ZSroir/SmA9ksSb1kcBmqTFqNjhjMPq0QrjFyU2pnTL8rY1YmOBI5VaABM4pIdpalL+PU356V2+0e1oxFNohNG4/snBZjk7tATqCaQbcAjALp0MhcRCeD3AoJbjueR0jyxpovjWvmh7do0LYA8RoKW501wskJRvvYTZmpwrU7PXr9PITKyB68pnSidXSw3FMlXHJb9K8cCmrLGVbYoaZFIOwsZxumjL6YalxhSEVulgA7Cful2dZMYPq48n8fVqiowOmLxZHGO7i8IoYNlXS1VX3kLm59N0pmdNKs/Cc++aOfzFbw6E20k
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2026 13:42:36.6771 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3dabe563-96e8-40a4-fc7e-08df40c2cffe
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH7PEPF0000001B.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB8473
+Received-SPF: permerror client-ip=52.101.85.8;
+ envelope-from=Michael.Roth@amd.com;
+ helo=BYAPR05CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,184 +117,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Nov 06, 2026 at 10:39:33AM +0800, Yonggang Luo wrote:
-> accel_cpu_register_type() creates the abstract parent
-> accel-<cpu type>. A subclass names that parent, and
-> type_initialize() aborts when the parent is missing. The old
-> type_init registered only target_cpu_type(), which is one name
-> in a multi-target process. Call the helper from the CPU type
-> init of each target that has an AccelCPU subclass.
-> 
-> ARM calls it because whpx-common.c parents accel-arm-cpu on
-> aarch64-softmmu. i386 calls it for TCG, KVM, HVF, NVMM, and
-> MSHV. i386-softmmu and x86_64-softmmu each pass their own
-> CPU_RESOLVING_TYPE, so WHPX on x86_64-softmmu finds
-> accel-x86_64-cpu. RISC-V calls it for TCG and KVM. PowerPC
-> calls it for KVM.
-> 
-> Other targets have no AccelCPU subclass. Machine init looks up
-> tcg-accel-<cpu type> or kvm-accel-<cpu type> and skips a missing
-> class, so those targets do not need the parent.
-> 
-> No extra tests is needed, as these QOM types already be
-> tested by the existing logic instantiating all QOM types.
-> 
-> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> ---
->  accel/accel-common.c      | 6 ++----
->  include/accel/accel-cpu.h | 2 ++
->  target/arm/cpu.c          | 2 ++
->  target/i386/cpu.c         | 2 ++
->  target/ppc/cpu_init.c     | 2 ++
->  target/riscv/cpu.c        | 8 ++++++++
->  6 files changed, 18 insertions(+), 4 deletions(-)
-> 
-> diff --git a/accel/accel-common.c b/accel/accel-common.c
-> index 00a400243f..441d1b77fa 100644
-> --- a/accel/accel-common.c
-> +++ b/accel/accel-common.c
-> @@ -130,9 +130,9 @@ static const TypeInfo accel_types[] = {
->  
->  DEFINE_TYPES(accel_types)
->  
-> -static void register_accel_target_type(void)
-> +void accel_cpu_register_type(const char *cpu_type)
->  {
-> -    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
-> +    g_autofree char *name = g_strconcat("accel-", cpu_type, NULL);
->      const TypeInfo accel_cpu_type = {
->          .name = name,
->          .parent = TYPE_OBJECT,
-> @@ -142,5 +142,3 @@ static void register_accel_target_type(void)
->  
->      type_register_static(&accel_cpu_type);
->  }
+Hello,
 
-Is there a reason why we need to register this base class
-repeatedly for each target ? This class is defined in target
-independent code and the target specific behaviour is provided
-by subclasses AFAICT, so I'm not seeing why we need to
-duplicate the class per target.
+On behalf of the QEMU Team, I'd like to announce the availability of the
+first release candidate for the QEMU 11.2 release. This release is meant
+for testing purposes and should not be used in a production environment.
 
-I just proposed changing its name to "accel-cpu" so that
-it is always available:
+  http://download.qemu.org/qemu-11.2.0-rc0.tar.xz
+  http://download.qemu.org/qemu-11.2.0-rc0.tar.xz.sig
 
-  https://lists.gnu.org/archive/html/qemu-devel/2026-11/msg02741.html
+You can help improve the quality of the QEMU 11.2 release by testing this
+release and reporting bugs using our GitLab issue tracker:
 
-> diff --git a/include/accel/accel-cpu.h b/include/accel/accel-cpu.h
-> index 9e7eede7c3..2fdb64d2ae 100644
-> --- a/include/accel/accel-cpu.h
-> +++ b/include/accel/accel-cpu.h
-> @@ -20,4 +20,6 @@ typedef struct AccelCPUClass {
->      bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
->  } AccelCPUClass;
->  
-> +void accel_cpu_register_type(const char *cpu_type);
-> +
->  #endif /* ACCEL_CPU_H */
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 71681447b2..725f1f3a5f 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -28,6 +28,7 @@
->  #include "qemu/module.h"
->  #include "qapi/error.h"
->  #include "cpu.h"
-> +#include "accel/accel-cpu.h"
->  #ifdef CONFIG_TCG
->  #include "exec/translation-block.h"
->  #include "accel/tcg/cpu-ops.h"
-> @@ -2753,6 +2754,7 @@ static const TypeInfo arm_cpu_type_info = {
->  
->  static void arm_cpu_register_types(void)
->  {
-> +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
->      type_register_static(&arm_cpu_type_info);
->  }
->  
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index eab0d5a4d4..31b09e6f8e 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -23,6 +23,7 @@
->  #include "qemu/qemu-print.h"
->  #include "qemu/hw-version.h"
->  #include "cpu.h"
-> +#include "accel/accel-cpu.h"
->  #include "tcg/helper-tcg.h"
->  #include "exec/translation-block.h"
->  #include "system/hvf.h"
-> @@ -11093,6 +11094,7 @@ static void x86_cpu_register_types(void)
->  {
->      int i;
->  
-> +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
->      type_register_static(&x86_cpu_type_info);
->      for (i = 0; i < ARRAY_SIZE(builtin_x86_defs); i++) {
->          x86_register_cpudef_types(&builtin_x86_defs[i]);
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 7f3036d903..fe3f2549b7 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -43,6 +43,7 @@
->  #include "exec/page-protection.h"
->  #include "exec/watchpoint.h"
->  #include "helper_regs.h"
-> +#include "accel/accel-cpu.h"
->  #include "internal.h"
->  #include "spr_common.h"
->  #include "power8-pmu.h"
-> @@ -7589,6 +7590,7 @@ static const TypeInfo ppc_vhyp_type_info = {
->  
->  static void ppc_cpu_register_types(void)
->  {
-> +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
->      type_register_static(&ppc_cpu_type_info);
->  #ifndef CONFIG_USER_ONLY
->      type_register_static(&ppc_vhyp_type_info);
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 362e561809..10e24f20e8 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -25,6 +25,7 @@
->  #include "qemu/guest-random.h"
->  #include "qemu/atomic.h"
->  #include "cpu.h"
-> +#include "accel/accel-cpu.h"
->  #include "cpu_vendorid.h"
->  #include "target/riscv/tcg/csr.h"
->  #include "internals.h"
-> @@ -3931,3 +3932,10 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->  };
->  
->  DEFINE_TYPES(riscv_cpu_type_infos)
-> +
-> +static void riscv_accel_cpu_register_type(void)
-> +{
-> +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
-> +}
-> +
-> +type_init(riscv_accel_cpu_register_type)
-> -- 
-> 2.55.0.windows.3
-> 
-> 
+  https://gitlab.com/qemu-project/qemu/-/milestones/20
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+The release plan, as well a documented known issues for release
+candidates, are available at:
+
+  http://wiki.qemu.org/Planning/11.2
+
+Please add entries to the ChangeLog for the 11.2 release below:
+
+  http://wiki.qemu.org/ChangeLog/11.2
+
+Thank you to everyone involved!
 
 
