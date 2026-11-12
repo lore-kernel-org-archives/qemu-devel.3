@@ -1,65 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850A0606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 11:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D7E606A323
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 11:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HWk5xQqr
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=abaUWxZG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRTL1-0006ip-B1; Thu, 12 Nov 2026 06:51:33 -0500
+	id 1xRTLH-0007du-SK; Thu, 12 Nov 2026 06:51:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xRTJq-0004S1-VM; Thu, 12 Nov 2026 06:50:21 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xRTJm-0001aC-68; Thu, 12 Nov 2026 06:50:18 -0500
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id D794440314;
- Thu, 12 Nov 2026 11:50:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948031F00A06;
- Thu, 12 Nov 2026 11:50:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1794484210;
- bh=Mwa+t/zUbLMCwrSQCilgdlSoOKQ68UcgZ6OamFtkFv8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HWk5xQqrzrzITxcA8SyRJrxzA0Q8o/HR00IgVpV/YnKkGL8MPy2s+KW1nD7wFkOmR
- 5Zn0NH+gzn0XLGxMrR4X3dfFC1a0bQpHK2JNeCkuuoN6KZFVyiXsAdlwUVWejKr3dU
- WdqnyoW6W2fe/igpAHafePMcPEX8ieWJPk92McV3QN+kMVLhbH81UCi/7eX9Ji8cmO
- nwyqQkxe1SDVqJcaBCiP2KHcPWZ3FhHMnori8ynPznjyvhrnB+wn6ZBgKqMyS9JdS9
- nYip/XalrUcVq0ByXclEqHl+Px0eoWJp2YHur3wleO62qStnbJL/IBkCluDL6b6DLP
- valEjxiWHtFfg==
-From: Niklas Cassel <cassel@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Damien Le Moal <dlemoal@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
- Sam Li <faithilikerun@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>, Jeuk Kim <jeuk20.kim@samsung.com>,
- Daejun Park <daejun7.park@samsung.com>, Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH v17 4/9] qcow2: add zoned emulation capability
-Date: Thu, 12 Nov 2026 12:49:13 +0100
-Message-ID: <20261112114918.1269168-5-cassel@kernel.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261112114918.1269168-1-cassel@kernel.org>
-References: <20261112114918.1269168-1-cassel@kernel.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRTKh-0005L6-Qi
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 06:51:11 -0500
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRTKa-0003J8-CL
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 06:51:07 -0500
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-67be9601f31so4250728d50.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 03:51:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794484263; cv=none;
+ d=google.com; s=arc-20260327;
+ b=XEmMKk/cw4eULFVrnSDOqYp9mvBStm+9IQCABR+QSGCbaXx1ow2TetyptOeCMA1yDB
+ Q00e7TN0HAKOYyniUqInjZqJ++3scNddezgwyLkEvse6twOsCogKIW0WZz7sR/ejkFNh
+ nmpv6qde6dDiz/CrIxhcN4YyxyAil4+2OD7bv+wX/80uEP6/M2iIsS3tv0hv9a33f4YE
+ JMHCQPIBg3YFY2fUtQMwBdKzU0ua6r2jdf8FUvho4eaM9VaVkofxtdZ9Z7G/lqkd40ZR
+ ePz/dWFdUOjjCj56IWcmtG40FIjO/A5K57UGXS4ZkWhcBrAXP210/s640+UUMIkeAQds
+ 2ZkA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Eq92dp7V42l6tWs0m/vtKLLV8TNAYBtM2Nh+ISG7lEk=;
+ fh=F/FpjlXIj1KWEO85ewDjzuQZMTNXt786FkXtcC+rrkk=;
+ b=YG4Pov6EJPh91rBjTPgWhLGtnVIlZ1HNS0b3Num1e2M+Lzpm/RjO8AocsmIpwDyVKK
+ PCSAsIh8UdUWQlkNy5huHxq2SVVxuSxS+rF5/2/hv4APGCVz4B4JN0dE06gF8xvACmlC
+ Q9t+z23P/VGV4kddwasv8d4z8vPI5Nm/NXPTVl9q7KmGJuPdiBlY4Iq8nyTN8/5T+t9u
+ xaNVWzoh+dH6aZQL+d20/gaxHhpau3NPwVMvL2Qb1BBqQLIF1BLrxu2EaCc1RxDlF8hp
+ Z+VZ+bULnxUkIHS4VU3vQ4uOy43RL4aHHt9MqAOkW5MuRFz2nSQEFkPrkpynsSE+Vis0
+ 37QA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794484263; x=1795089063; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Eq92dp7V42l6tWs0m/vtKLLV8TNAYBtM2Nh+ISG7lEk=;
+ b=abaUWxZGkdqSFTroODKnHjdWcl3q6aMJh3+kMnnFQRfzT46HaElIcHAYj62Sz4BuU/
+ xtcBivfhRuxkgh/q4UmOW8OFo/wBBHjc97QgjFBlBXxYV9P4BzhDMN1o7xSNyi97cnjq
+ n+YIK+6BhETHGHh9PW4fPK6e3JeaTy7k1U15nKrjb8qp30KyMuuWL0VHv6/02N9F2V/U
+ 88HRnIz05S4VTFuSVGq5xg41neZWmbP4h1T+H5XSZONCA6vMILUT9kfAm9QUV9rI2f+J
+ HMFgBEvt++r6/6Lem8NQPP6IjXNRradzUdRsjI4VqV3i7y/PNXJ+OqwYdrcsiGl7mT0a
+ pLgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794484263; x=1795089063;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Eq92dp7V42l6tWs0m/vtKLLV8TNAYBtM2Nh+ISG7lEk=;
+ b=s+6CE0TKBzkNOU2F+ler1fV4wx5dgg79TzusOeZIg7ZVJxBMCRCKPdWSyBmKuPluKc
+ 6+WkKqGGvxcBl4GryPBlYHsnNjIUGlF/R5XlW3YF/6wqLHKzWMZ46Fb5pESQC9A6Bbbd
+ 2WrH/dwtQO2QRWBOda95/CbdW2YB/Dp0yMvpa9dC+G34SiYCGKYm6VJ61jjoyv6DDSX1
+ l4ygBqqFh2+8y93K0078L3xv5wtn93b3oP47HrlxDuK0xN99DpJ/lL+LV8rcylhSRmnu
+ vvlXY/3jHiSW6t5Hwf6fWOgsZtUSdW6OoLauAPFAzqf0i3Eigz9RQHyEtxPTcSde+IJm
+ ry2w==
+X-Gm-Message-State: APuU4Z+Z9ZRIe1xTcl+5qVXVUsFKQqCuQJ9tWBqVVfs8qKA7hAyqXF+n
+ YMDqNC/JQuFDyRDiATcXBIGJJh9FgEhyIPEZozMractTY6PZB5wj3Y8oQ9jllnDOanuQ0B64jDe
+ rkEPmkkIQu5fa0hP55466l982WurdOdkVN9rjNeRVFQ==
+X-Gm-Gg: AYBFou3up2coel2tri9gRpEUVxVGWqdRtftYjkEelzj3Olmwg7/4MtYsypXkPPnTqBg
+ VXQEY5zL5kcqj8rb6z00q5l97/z+h2gLkQibVI302KjRQOo7gVjMPxR7usXPhM3Z2kubL7AI8Ri
+ kSGHdrSoD8ASBnzGrsmO5Mw/z/KscnmGccSbnJC81aNDqw9Q2OZ4pcXZhWp6BRdsz7TG7A2Dqnw
+ yF0JTXujayw6PdOAqdhFnyNnIkSbCfVMDslfu1raghAfT57qzBBjm9k2BExQg2ZkjWs/5PkfZEY
+ wUHIwuVrJHwnO1qqjUtNPc2/pIUSCQ0mf2cDe/9uhCXyw66Zfyky32uIVoBGLxQCWahO2F+XpeF
+ XbtI5PPkiRBBLxO3Wh665OuBFsN9r61Pcp3QBnRUrvy/we1W24EO78yQXFpVpGkCymMX7Vctc3I
+ um0iMDznlB/cuno8JdnCYu
+X-Received: by 2002:a05:690e:80b:10b0:67c:271e:c29b with SMTP id
+ 956f58d0204a3-67c67eff337mr2342116d50.25.1794484262559; Thu, 12 Nov 2026
+ 03:51:02 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20261112112714.357297-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20261112112714.357297-2-marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 12 Nov 2026 11:50:51 +0000
+X-Gm-Features: AclHuK8ObP32nVe1LDv1Oqf7-VStzQ4vRhOPRfUktTXKC4SCUfvv3mqKZhQzgF0
+Message-ID: <CAFEAcA_wv2OKP+nV6ZuijL0j2LZ00Se48woVeS9xcmiaERHFTQ@mail.gmail.com>
+Subject: Re: [PATCH] tests/functional: update tuxrun kernel hashes
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Halil Pasic <pasic@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,1684 +121,160 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Sam Li <faithilikerun@gmail.com>
+On Thu, 12 Nov 2026 at 11:27, <marcandre.lureau@redhat.com> wrote:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> tuxboot rebuilt the 6.18.54 kernels, so the recorded hashes no longer
+> match and the tuxrun tests fail to fetch their assets. Update the
+> kernel and vmlinux hashes for x86_64, arm64 and s390. The buildroot
+> rootfs images are unchanged.
+>
+> We may want to go back to a fixed/time tagged version to avoid future
+> breakage.
 
-By adding zone operations and zoned metadata, the zoned emulation
-capability enables full emulation support of zoned device using
-a qcow2 file. The zoned device metadata includes zone type,
-zoned device state and write pointer (WP) of each zone, which is
-stored to an array of unsigned integers.
+Yes, that seems like the right thing to me: the URLs without a datestamp
+will change, but we want immutable ones so we don't have problems with
+the test cases in stable branches. We're already doing that for the
+rootfs URLs.
 
-WP accessor (qcow2_rw_wp_at) routes reads and writes of an 8-byte
-WP slot through the write pointer cache. The write pointer cache is
-written to disk after the qcow2 metadata is written, thus guaranteeing
-that the write pointer is updated after the corresponding data is
-written. Per-completion cache flush is deferred. The WP cluster reaches
-disk on the next flush.
+I've listed below the datestamp URLs for both the old and new images.
+I guess I favour continuing to use the same (old) image rather than
+implicitly updating to a new one, though it's not a big deal either way.
 
-Each zone of a zoned device makes state transitions following
-the zone state machine. The zone state machine mainly describes
-five states, IMPLICIT OPEN, EXPLICIT OPEN, FULL, EMPTY and CLOSED.
-READ ONLY and OFFLINE states will generally be affected by device
-internal events. The operations on zones cause corresponding state
-changing.
+Fixes: 8ac1aab21fca ("tests/functional: update arm64 tuxrun images")
+Fixes: 09961fafc5a0 ("tests/functional: update s390x tuxrun images")
+Fixes: 467c9eb7dd31 ("tests/functional: update x86_64 tuxrun images")
 
-Zoned devices have limits on zone resources, which put constraints on
-write operations on zones. It is managed by active zone queues
-following LRU policy.
+We also have three riscv64 tests that refer to non-datestamp URLs:
 
-Signed-off-by: Sam Li <faithilikerun@gmail.com>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
----
-Changes by Niklas Cassel:
-- account for the zoned metadata in the refcount check, so that qemu-img
-  check does not report the clusters it occupies as leaked
-- reset and report the last zone of an image whose size is not a multiple
-  of the zone size, which is shorter than the others
-- clamp the write pointer that a zone finish leaves behind to the end of
-  the writable part of the zone
-- drop the zone append size limit, which the geometry now bounds
-- report zone errors with the errnos from block-common.h instead of
-  EIO, EINVAL and EBUSY: BLK_ZE_UNALIGNED_WRITE, BLK_ZE_BOUNDARY,
-  BLK_ZE_OPEN_RESOURCE, BLK_ZE_ACTIVE_RESOURCE and, for a write to a
-  full zone, BLK_ZE_FULL
-- refuse the management of a conventional zone with EINVAL, as other
-  invalid requests, rather than EIO
-- manage the zone resources as in the NVMe ZNS specification
-  (2.1.1.4.1): a write to an empty zone checks the active zone limit
-  also when the open zone limit is not reached, OPEN ZONE of an empty
-  zone checks the open zone limit too, and an implicitly open zone is
-  closed to make room regardless of the active zone limit, as it
-  remains active
-- manage the open zone resources for FINISH ZONE of an empty zone, as
-  ZBC requires (ZBC-3 4.5.3.2.4)
-- check the zone capacity before the zone resources, so that a write
-  past the zone capacity does not close another zone
-- drop the redundant zone capacity check for zone appends
-- shorten two comments that were longer than 80 columns
-- report the length of a conventional zone as its capacity, as the
-  whole zone is writable; Linux refuses a disk with a conventional zone
-  whose capacity is smaller than its length
-- refuse a write that starts in a conventional zone and reaches a
-  sequential zone, without writing any data (ZAC-3 4.7.2)
-- remove a closed zone from the closed list when a write fills it, so
-  that it no longer counts as an active zone
-- trace rejected zone requests instead of reporting them with
-  error_report(), which a guest could use to flood stderr
-- define the zone lists and the write pointer tracking here, where they
-  are used, rather than in the patch that adds the zoned configuration
-- check that the zoned metadata fits in the image file here, where it is
-  read, rather than in the patch that adds the zoned configuration, and
-  report a failure to get the file size through errp
-- reject a zoned metadata offset that is 0 or not a multiple of the
-  cluster size, as the write pointer cache asserts that the offset is
-  not 0, and marks the image corrupt when it is unaligned
-- declare variables at the start of blocks, as the coding style requires
----
- block/qcow2-cache.c    |   11 +-
- block/qcow2-refcount.c |   18 +
- block/qcow2.c          | 1289 +++++++++++++++++++++++++++++++++++++++-
- block/qcow2.h          |   57 ++
- block/trace-events     |   10 +
- 5 files changed, 1380 insertions(+), 5 deletions(-)
+tests/functional/riscv64/test_milkv_duo.py:
+'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
+tests/functional/riscv64/test_milkv_duo.py:
+'https://storage.tuxboot.com/kernels/6.11.9/riscv64/dtbs.tar.xz',
+tests/functional/riscv64/test_tt_atlantis.py:
+'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
+tests/functional/riscv64/test_tuxrun.py:
+'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
 
-diff --git a/block/qcow2-cache.c b/block/qcow2-cache.c
-index 23d9588b08..73f2be3641 100644
---- a/block/qcow2-cache.c
-+++ b/block/qcow2-cache.c
-@@ -275,14 +275,23 @@ int qcow2_cache_set_dependency(BlockDriverState *bs, Qcow2Cache *c,
- {
-     int ret;
- 
-+    /*
-+     * If the dependency graph is unchanged, nothing to do. This avoids
-+     * a synchronous flush on every call below.
-+     */
-+    if (c->depends == dependency) {
-+        return 0;
-+    }
-+
-     if (dependency->depends) {
-+        /* Flatten any chain on the dependency side as a cycle-breaker. */
-         ret = qcow2_cache_flush_dependency(bs, dependency);
-         if (ret < 0) {
-             return ret;
-         }
-     }
- 
--    if (c->depends && (c->depends != dependency)) {
-+    if (c->depends) {
-         ret = qcow2_cache_flush_dependency(bs, c);
-         if (ret < 0) {
-             return ret;
-diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
-index df7f6d2f23..0f20fa353e 100644
---- a/block/qcow2-refcount.c
-+++ b/block/qcow2-refcount.c
-@@ -1239,6 +1239,13 @@ int qcow2_write_caches(BlockDriverState *bs)
-         }
-     }
- 
-+    if (s->wp_cache) {
-+        ret = qcow2_cache_write(bs, s->wp_cache);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+    }
-+
-     return 0;
- }
- 
-@@ -2304,6 +2311,17 @@ calculate_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-         }
-     }
- 
-+    /* zoned metadata */
-+    if (s->zoned_header.zoned != QCOW2_Z_NONE) {
-+        ret = qcow2_inc_refcounts_imrt(bs, res, refcount_table, nb_clusters,
-+                                       s->zoned_header.zonedmeta_offset,
-+                                       (int64_t)s->zoned_header.nr_zones *
-+                                       sizeof(uint64_t));
-+        if (ret < 0) {
-+            return ret;
-+        }
-+    }
-+
-     /* bitmaps */
-     ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
-                                         nb_clusters, fix);
-diff --git a/block/qcow2.c b/block/qcow2.c
-index b197ae9ae9..f2abda1c73 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -195,6 +195,331 @@ qcow2_extract_crypto_opts(QemuOpts *opts, const char *fmt, Error **errp)
-     return cryptoopts_qdict;
- }
- 
-+#define QCOW2_WP_CONV_BIT       (1ULL << 63)
-+#define QCOW2_ZT_IS_CONV(wp)    ((wp) & QCOW2_WP_CONV_BIT)
-+#define QCOW2_GET_WP(wp)        ((wp) & ~QCOW2_WP_CONV_BIT)
-+
-+/*
-+ * To emulate a real zoned device, closed, empty and full states are
-+ * preserved after a power cycle. The open states are in-memory and will
-+ * be lost after closing the device. Read-only and offline states are
-+ * device-internal events, which are not considered for simplicity.
-+ *
-+ * The qcow2 state lock must be held when called.
-+ */
-+static inline BlockZoneState qcow2_get_zone_state(BlockDriverState *bs,
-+                                                  uint32_t index)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
-+    uint64_t zone_wp = bs->wps->wp[index];
-+    uint64_t zone_start;
-+
-+    if (QCOW2_ZT_IS_CONV(zone_wp)) {
-+        return BLK_ZS_NOT_WP;
-+    }
-+
-+    if (QTAILQ_IN_USE(zone_entry, exp_open_zone_entry)) {
-+        return BLK_ZS_EOPEN;
-+    }
-+    if (QTAILQ_IN_USE(zone_entry, imp_open_zone_entry)) {
-+        return BLK_ZS_IOPEN;
-+    }
-+
-+    zone_start = (uint64_t)index * bs->bl.zone_size;
-+    if (zone_wp == zone_start) {
-+        return BLK_ZS_EMPTY;
-+    }
-+    if (bdrv_zone_is_full(bs, index)) {
-+        return BLK_ZS_FULL;
-+    }
-+    if (zone_wp > zone_start) {
-+        if (!QTAILQ_IN_USE(zone_entry, closed_zone_entry)) {
-+            /*
-+             * The number of closed zones is not always updated in time when
-+             * the device is closed. However, it only matters when doing
-+             * zone report. Refresh the count and list of closed zones to
-+             * provide correct zone states for zone report.
-+             */
-+            QTAILQ_INSERT_HEAD(&s->closed_zones, zone_entry, closed_zone_entry);
-+            s->nr_zones_closed++;
-+        }
-+        return BLK_ZS_CLOSED;
-+    }
-+    return BLK_ZS_NOT_WP;
-+}
-+
-+/* The qcow2 state lock must be held when called */
-+static void qcow2_rm_exp_open_zone(BDRVQcow2State *s,
-+                                   uint32_t index)
-+{
-+    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
-+
-+    QTAILQ_REMOVE(&s->exp_open_zones, zone_entry, exp_open_zone_entry);
-+    s->nr_zones_exp_open--;
-+}
-+
-+/* The qcow2 state lock must be held when called */
-+static void qcow2_rm_imp_open_zone(BDRVQcow2State *s,
-+                                   int32_t index)
-+{
-+    Qcow2ZoneListEntry *zone_entry;
-+    if (index < 0) {
-+        /* Apply LRU when the index is not specified. */
-+        zone_entry = QTAILQ_LAST(&s->imp_open_zones);
-+    } else {
-+        zone_entry = &s->zone_list_entries[index];
-+    }
-+
-+    QTAILQ_REMOVE(&s->imp_open_zones, zone_entry, imp_open_zone_entry);
-+    s->nr_zones_imp_open--;
-+}
-+
-+/* The qcow2 state lock must be held when called */
-+static void qcow2_rm_open_zone(BDRVQcow2State *s,
-+                               uint32_t index)
-+{
-+    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
-+
-+    if (QTAILQ_IN_USE(zone_entry, exp_open_zone_entry)) {
-+        qcow2_rm_exp_open_zone(s, index);
-+    } else if (QTAILQ_IN_USE(zone_entry, imp_open_zone_entry)) {
-+        qcow2_rm_imp_open_zone(s, index);
-+    }
-+}
-+
-+/* The qcow2 state lock must be held when called */
-+static void qcow2_rm_closed_zone(BDRVQcow2State *s,
-+                                 uint32_t index)
-+{
-+    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
-+
-+    QTAILQ_REMOVE(&s->closed_zones, zone_entry, closed_zone_entry);
-+    s->nr_zones_closed--;
-+}
-+
-+/* The qcow2 state lock must be held when called */
-+static void qcow2_do_imp_open_zone(BDRVQcow2State *s,
-+                                   uint32_t index,
-+                                   BlockZoneState zs)
-+{
-+    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
-+
-+    switch (zs) {
-+    case BLK_ZS_EMPTY:
-+        break;
-+    case BLK_ZS_CLOSED:
-+        qcow2_rm_closed_zone(s, index);
-+        break;
-+    case BLK_ZS_IOPEN:
-+        /*
-+         * The LRU policy: update the zone that is most recently
-+         * used to the head of the zone list
-+         */
-+        if (zone_entry == QTAILQ_FIRST(&s->imp_open_zones)) {
-+            return;
-+        }
-+        QTAILQ_REMOVE(&s->imp_open_zones, zone_entry, imp_open_zone_entry);
-+        s->nr_zones_imp_open--;
-+        break;
-+    default:
-+        return;
-+    }
-+
-+    QTAILQ_INSERT_HEAD(&s->imp_open_zones, zone_entry, imp_open_zone_entry);
-+    s->nr_zones_imp_open++;
-+}
-+
-+/* The qcow2 state lock must be held when called */
-+static void qcow2_do_exp_open_zone(BDRVQcow2State *s,
-+                                   uint32_t index)
-+{
-+    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
-+
-+    QTAILQ_INSERT_HEAD(&s->exp_open_zones, zone_entry, exp_open_zone_entry);
-+    s->nr_zones_exp_open++;
-+}
-+
-+/*
-+ * The list of zones is managed using an LRU policy: the last
-+ * zone of the list is always the one that was least recently used
-+ * for writing and is chosen as the zone to close to be able to
-+ * implicitly open another zone.
-+ *
-+ * We can only close the open zones. The index is not specified
-+ * when it is less than 0.
-+ *
-+ * The qcow2 state lock must be held when called.
-+ */
-+static void qcow2_do_close_zone(BlockDriverState *bs,
-+                                int32_t index,
-+                                BlockZoneState zs)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    Qcow2ZoneListEntry *zone_entry;
-+
-+    if (index >= 0) {
-+        zone_entry = &s->zone_list_entries[index];
-+    } else {
-+        /* before removal of the last implicitly open zone */
-+        zone_entry = QTAILQ_LAST(&s->imp_open_zones);
-+    }
-+
-+    if (zs == BLK_ZS_IOPEN) {
-+        assert(zone_entry != NULL);
-+        qcow2_rm_imp_open_zone(s, index);
-+        QTAILQ_INSERT_HEAD(&s->closed_zones, zone_entry, closed_zone_entry);
-+        s->nr_zones_closed++;
-+        return;
-+    }
-+
-+    if (index >= 0 && zs == BLK_ZS_EOPEN) {
-+        qcow2_rm_exp_open_zone(s, index);
-+        /*
-+         * The zone state changes when the zone is removed from the list of
-+         * open zones (explicitly open -> empty). The closed zone list is
-+         * refreshed during get_zone_state().
-+         */
-+        qcow2_get_zone_state(bs, index);
-+    }
-+}
-+
-+/*
-+ * Read/Write the new wp value for zone `index` through write pointer
-+ * cache. Reads return the value currently held in the cache, which may
-+ * be ahead of the on-disk value if the cache hasn't been flushed yet.
-+ * Writes update the cache and mark the entry dirty.
-+ */
-+static int coroutine_fn GRAPH_RDLOCK
-+qcow2_rw_wp_at(BlockDriverState *bs, uint64_t *wp,
-+                  int32_t index, bool is_write)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    uint64_t wp_byte_off = sizeof(uint64_t) * index;
-+    uint64_t cluster_file_off =
-+        s->zoned_header.zonedmeta_offset +
-+        (wp_byte_off & ~((uint64_t)s->cluster_size - 1));
-+    size_t off_in_cluster = wp_byte_off & (s->cluster_size - 1);
-+    void *cluster_buf;
-+    uint64_t *slot;
-+    int ret;
-+
-+    assert(s->wp_cache != NULL);
-+
-+    qemu_co_mutex_lock(&s->lock);
-+    ret = qcow2_cache_get(bs, s->wp_cache, cluster_file_off, &cluster_buf);
-+    if (ret < 0) {
-+        qemu_co_mutex_unlock(&s->lock);
-+        error_report("Failed to %s WP slot (zone %d): %s",
-+                     is_write ? "write" : "read", index, strerror(-ret));
-+        return ret;
-+    }
-+
-+    slot = (uint64_t *)((char *)cluster_buf + off_in_cluster);
-+    if (is_write) {
-+        *slot = cpu_to_be64(*wp);
-+        qcow2_cache_entry_mark_dirty(s->wp_cache, cluster_buf);
-+    } else {
-+        *wp = be64_to_cpu(*slot);
-+    }
-+    qcow2_cache_put(s->wp_cache, &cluster_buf);
-+    qemu_co_mutex_unlock(&s->lock);
-+
-+    trace_qcow2_wp_tracking(index, *wp >> BDRV_SECTOR_BITS);
-+    return 0;
-+}
-+
-+/* The qcow2 state lock must be held when called */
-+static bool qcow2_can_activate_zone(BlockDriverState *bs)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+
-+    /* When the max active zone is zero, there is no limit on active zones */
-+    if (!s->zoned_header.max_active_zones) {
-+        return true;
-+    }
-+
-+    /* Active zones are zones that are open or closed */
-+    return s->nr_zones_exp_open + s->nr_zones_imp_open + s->nr_zones_closed
-+        < s->zoned_header.max_active_zones;
-+}
-+
-+/*
-+ * This function manages open zones under active zones limit, as described in
-+ * the NVMe ZNS specification (2.1.1.4.1 Managing resources). It checks if a
-+ * zone in state @zs can transition to open state while maintaining max open
-+ * and active zone limits, and returns 0 or the zone resource error that
-+ * prevents it (-BLK_ZE_OPEN_RESOURCE or -BLK_ZE_ACTIVE_RESOURCE).
-+ *
-+ * The qcow2 state lock must be held when called.
-+ */
-+static int qcow2_check_open_zone(BlockDriverState *bs, BlockZoneState zs)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+
-+    /*
-+     * An empty zone becomes active when it is opened, whereas a closed zone
-+     * already is.
-+     */
-+    if (zs == BLK_ZS_EMPTY && !qcow2_can_activate_zone(bs)) {
-+        return -BLK_ZE_ACTIVE_RESOURCE;
-+    }
-+
-+    /* When the max open zone is zero, there is no limit on open zones */
-+    if (!s->zoned_header.max_open_zones) {
-+        return 0;
-+    }
-+
-+    /*
-+     * The open zones are zones with the states of explicitly and
-+     * implicitly open.
-+     */
-+    if (s->nr_zones_imp_open + s->nr_zones_exp_open <
-+        s->zoned_header.max_open_zones) {
-+        return 0;
-+    }
-+
-+    /*
-+     * Zones are managed one at a time. Thus, the number of implicitly open
-+     * zone can never be over the open zone limit. Close only one implicitly
-+     * open zone; it remains active, so the number of active zones does not
-+     * change.
-+     *
-+     * Only an implicitly open zone can be evicted to make room. If every
-+     * open zone is explicitly open, the open zone limit cannot be satisfied.
-+     */
-+    if (!s->nr_zones_imp_open) {
-+        return -BLK_ZE_OPEN_RESOURCE;
-+    }
-+    qcow2_do_close_zone(bs, -1, BLK_ZS_IOPEN);
-+    trace_qcow2_imp_open_zones(0x23, s->nr_zones_imp_open);
-+    return 0;
-+}
-+
-+static inline int coroutine_fn GRAPH_RDLOCK
-+qcow2_refresh_zonedmeta(BlockDriverState *bs)
-+{
-+    int ret;
-+    BDRVQcow2State *s = bs->opaque;
-+    uint64_t wps_size = s->zoned_header.nr_zones * sizeof(uint64_t);
-+    g_autofree uint64_t *temp = NULL;
-+
-+    QEMU_BUILD_BUG_ON(!BDRV_ZT_IS_CONV(QCOW2_WP_CONV_BIT));
-+
-+    temp = g_new(uint64_t, s->zoned_header.nr_zones);
-+    ret = bdrv_pread(bs->file, s->zoned_header.zonedmeta_offset,
-+                     wps_size, temp, 0);
-+    if (ret < 0) {
-+        error_report("Cannot read metadata");
-+        return ret;
-+    }
-+
-+    for (uint32_t i = 0; i < s->zoned_header.nr_zones; i++) {
-+        bs->wps->wp[i] = be64_to_cpu(temp[i]);
-+    }
-+    return 0;
-+}
-+
- /*
-  * Returns true if zone_opt is valid for an image with clusters of
-  * @cluster_size bytes, false otherwise.
-@@ -521,6 +846,9 @@ qcow2_read_extensions(BlockDriverState *bs, uint64_t start_offset,
- 
-         case QCOW2_EXT_MAGIC_ZONED_FORMAT:
-         {
-+            int64_t file_length;
-+            uint64_t wp_table_size;
-+
-             if (ext.len != sizeof(zoned_ext)) {
-                 error_setg(errp, "zoned_ext: unexpected len=%" PRIu32 " "
-                            "(expected %zu)", ext.len, sizeof(zoned_ext));
-@@ -541,6 +869,9 @@ qcow2_read_extensions(BlockDriverState *bs, uint64_t start_offset,
-             zoned_ext.max_open_zones = be32_to_cpu(zoned_ext.max_open_zones);
-             zoned_ext.max_active_zones =
-                 be32_to_cpu(zoned_ext.max_active_zones);
-+            zoned_ext.zonedmeta_offset =
-+                be64_to_cpu(zoned_ext.zonedmeta_offset);
-+
-             /*
-              * A zoned image has the zoned incompatible feature bit set,
-              * which a version 2 image cannot have.
-@@ -581,6 +912,67 @@ qcow2_read_extensions(BlockDriverState *bs, uint64_t start_offset,
-                 return -EINVAL;
-             }
- 
-+            ret = qcow2_validate_table(bs, zoned_ext.zonedmeta_offset,
-+                                       zoned_ext.nr_zones, sizeof(uint64_t),
-+                                       QCOW2_MAX_NR_ZONES * sizeof(uint64_t),
-+                                       "Zoned metadata", errp);
-+            if (ret < 0) {
-+                return ret;
-+            }
-+            if (zoned_ext.zonedmeta_offset == 0) {
-+                error_setg(errp, "Zoned metadata offset invalid");
-+                return -EINVAL;
-+            }
-+
-+            /*
-+             * Reject a header that claims more zones than the file can hold.
-+             */
-+            file_length = bdrv_co_getlength(bs->file->bs);
-+            if (file_length < 0) {
-+                error_setg_errno(errp, -file_length, "Could not get file size");
-+                return file_length;
-+            }
-+            wp_table_size = (uint64_t)zoned_ext.nr_zones * sizeof(uint64_t);
-+            if (zoned_ext.zonedmeta_offset > (uint64_t)file_length ||
-+                (uint64_t)file_length - zoned_ext.zonedmeta_offset <
-+                    wp_table_size) {
-+                error_setg(errp, "Zoned metadata region exceeds the "
-+                           "image file size");
-+                return -EINVAL;
-+            }
-+
-+            bs->wps = g_malloc(sizeof(BlockZoneWps)
-+                + s->zoned_header.nr_zones * sizeof(uint64_t));
-+            ret = qcow2_refresh_zonedmeta(bs);
-+            if (ret < 0) {
-+                g_free(bs->wps);
-+                bs->wps = NULL;
-+                return ret;
-+            }
-+
-+            s->zone_list_entries = g_new0(Qcow2ZoneListEntry,
-+                                          zoned_ext.nr_zones);
-+            QTAILQ_INIT(&s->exp_open_zones);
-+            QTAILQ_INIT(&s->imp_open_zones);
-+            QTAILQ_INIT(&s->closed_zones);
-+            qemu_co_mutex_init(&bs->wps->colock);
-+
-+            s->zone_wp_state = g_new0(Qcow2ZoneWPState, zoned_ext.nr_zones);
-+            for (uint32_t i = 0; i < zoned_ext.nr_zones; i++) {
-+                QTAILQ_INIT(&s->zone_wp_state[i].in_flight);
-+                QTAILQ_INIT(&s->zone_wp_state[i].completed_pending);
-+                qemu_co_queue_init(&s->zone_wp_state[i].drain);
-+            }
-+
-+            s->wp_cache = qcow2_cache_create(bs,
-+                DIV_ROUND_UP(zoned_ext.nr_zones * sizeof(uint64_t),
-+                             s->cluster_size),
-+                s->cluster_size);
-+            if (!s->wp_cache) {
-+                error_setg(errp, "Could not allocate the write pointer cache");
-+                return -ENOMEM;
-+            }
-+
- #ifdef DEBUG_EXT
-             printf("Qcow2: Got zoned format extension: "
-                    "offset=%" PRIu64 "\n", offset);
-@@ -2943,21 +3335,304 @@ static coroutine_fn GRAPH_RDLOCK int qcow2_co_pwritev_task_entry(AioTask *task)
-                                  t->l2meta);
- }
- 
-+/*
-+ * Walk the per-zone completed_pending list while the head's LBA equals
-+ * the cached persisted-WP, advancing persisted-WP and marking each
-+ * covered request RESOLVED. On any advance, the new persisted-WP is
-+ * written into the WP cache and depends-on qcow2 L2 table cache is
-+ * established so write pointer is updated after the corresponding write
-+ * completes.
-+ *
-+ * Caller holds bs->wps->colock.
-+ */
- static int coroutine_fn GRAPH_RDLOCK
--qcow2_co_pwritev_part(BlockDriverState *bs, int64_t offset, int64_t bytes,
--                      QEMUIOVector *qiov, size_t qiov_offset,
--                      BdrvRequestFlags flags)
-+qcow2_wp_greedy_advance_locked(BlockDriverState *bs, uint32_t index)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    Qcow2ZoneWPState *zs = &s->zone_wp_state[index];
-+    uint64_t wp_byte_off = sizeof(uint64_t) * index;
-+    uint64_t cluster_file_off =
-+        s->zoned_header.zonedmeta_offset +
-+        (wp_byte_off & ~((uint64_t)s->cluster_size - 1));
-+    size_t off_in_cluster = wp_byte_off & (s->cluster_size - 1);
-+    void *cluster_buf;
-+    uint64_t *slot;
-+    uint64_t persisted_wp, new_persisted_wp;
-+    Qcow2WPReq *head;
-+    bool any_advanced = false;
-+    int ret;
-+
-+    qemu_co_mutex_lock(&s->lock);
-+    ret = qcow2_cache_get(bs, s->wp_cache, cluster_file_off, &cluster_buf);
-+    if (ret < 0) {
-+        qemu_co_mutex_unlock(&s->lock);
-+        return ret;
-+    }
-+    slot = (uint64_t *)((char *)cluster_buf + off_in_cluster);
-+    persisted_wp = be64_to_cpu(*slot);
-+    new_persisted_wp = persisted_wp;
-+
-+    QTAILQ_FOREACH(head, &zs->completed_pending, entry) {
-+        if (head->lba != new_persisted_wp) {
-+            break;
-+        }
-+        new_persisted_wp += head->len;
-+        any_advanced = true;
-+    }
-+
-+    if (!any_advanced) {
-+        qcow2_cache_put(s->wp_cache, &cluster_buf);
-+        qemu_co_mutex_unlock(&s->lock);
-+        return 0;
-+    }
-+
-+    *slot = cpu_to_be64(new_persisted_wp);
-+    qcow2_cache_entry_mark_dirty(s->wp_cache, cluster_buf);
-+    qcow2_cache_put(s->wp_cache, &cluster_buf);
-+
-+    qcow2_cache_set_dependency(bs, s->wp_cache, s->l2_table_cache);
-+    qemu_co_mutex_unlock(&s->lock);
-+
-+    while (!QTAILQ_EMPTY(&zs->completed_pending)) {
-+        head = QTAILQ_FIRST(&zs->completed_pending);
-+        if (head->lba >= new_persisted_wp) {
-+            break;
-+        }
-+        QTAILQ_REMOVE(&zs->completed_pending, head, entry);
-+        head->state = QCOW2_WP_REQ_RESOLVED;
-+        qemu_co_queue_restart_all(&head->wait);
-+    }
-+
-+    return 0;
-+}
-+
-+/*
-+ * Insert req into the zone's completed_pending list in ascending LBA
-+ * order. Data writes may complete out of order; greedy_advance walks
-+ * the list head while head->lba == persisted_wp, so the list must
-+ * stay sorted.
-+ *
-+ * Caller holds bs->wps->colock.
-+ */
-+static void
-+qcow2_wp_insert_pending_locked(Qcow2ZoneWPState *zs, Qcow2WPReq *req)
-+{
-+    Qcow2WPReq *iter;
-+
-+    req->state = QCOW2_WP_REQ_PENDING;
-+
-+    QTAILQ_FOREACH(iter, &zs->completed_pending, entry) {
-+        if (iter->lba > req->lba) {
-+            QTAILQ_INSERT_BEFORE(iter, req, entry);
-+            return;
-+        }
-+    }
-+    QTAILQ_INSERT_TAIL(&zs->completed_pending, req, entry);
-+}
-+
-+/*
-+ * Peer requests with lba > failed_lba are marked ABORTED. Survivors
-+ * with lba < failed_lba are left untouched. Logical WP is rolled back
-+ * to the contiguous extent above persisted-WP that remains covered by
-+ * survivor requests.
-+ *
-+ * Caller holds bs->wps->colock.
-+ */
-+static void
-+qcow2_wp_abort_higher_peers_locked(BlockDriverState *bs, uint32_t index,
-+                                    uint64_t failed_lba)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    Qcow2ZoneWPState *zs = &s->zone_wp_state[index];
-+    Qcow2WPReq *r, *next;
-+    uint64_t logical_wp;
-+
-+    QTAILQ_FOREACH(r, &zs->in_flight, entry) {
-+        if (r->lba > failed_lba && r->state != QCOW2_WP_REQ_ABORTED) {
-+            r->state = QCOW2_WP_REQ_ABORTED;
-+            qemu_co_queue_restart_all(&r->wait);
-+        }
-+    }
-+    QTAILQ_FOREACH_SAFE(r, &zs->completed_pending, entry, next) {
-+        if (r->lba > failed_lba) {
-+            r->state = QCOW2_WP_REQ_ABORTED;
-+            QTAILQ_REMOVE(&zs->completed_pending, r, entry);
-+            qemu_co_queue_restart_all(&r->wait);
-+        }
-+    }
-+
-+    /* Rewind logical_wp to the highest survivor end_offset. */
-+    logical_wp = failed_lba;
-+    QTAILQ_FOREACH(r, &zs->in_flight, entry) {
-+        if (r->lba < failed_lba && r->lba + r->len > logical_wp) {
-+            logical_wp = r->lba + r->len;
-+        }
-+    }
-+    QTAILQ_FOREACH(r, &zs->completed_pending, entry) {
-+        if (r->lba < failed_lba && r->lba + r->len > logical_wp) {
-+            logical_wp = r->lba + r->len;
-+        }
-+    }
-+    bs->wps->wp[index] = logical_wp;
-+}
-+
-+/*
-+ * If it is an append write request, the offset pointer needs to be updated to
-+ * the wp value of that zone after the IO completion. The unique pointer is
-+ * passed on to this function to prevent the value being changed in condition of
-+ * multiple concurrent writes.
-+ *
-+ * For host-managed zoned writes, the WP lock is acquired across the WP
-+ * check and advance, with the qcow2 state lock nested for the zone
-+ * state TAILQ traversals.
-+ */
-+static int coroutine_fn GRAPH_RDLOCK
-+qcow2_co_pwv_part(BlockDriverState *bs, int64_t *offset_ptr, int64_t bytes,
-+                  QEMUIOVector *qiov, size_t qiov_offset, bool is_append,
-+                  BdrvRequestFlags flags)
- {
-     BDRVQcow2State *s = bs->opaque;
-     int offset_in_cluster;
-     int ret;
-     unsigned int cur_bytes; /* number of sectors in current iteration */
-     uint64_t host_offset;
-+    int64_t offset = *offset_ptr;
-     QCowL2Meta *l2meta = NULL;
-     AioTaskPool *aio = NULL;
-+    int64_t start_offset, start_bytes;
-+    BlockZoneState zs;
-+    int64_t end_zone, end_offset;
-+    uint64_t *wp;
-+    int64_t zone_size = bs->bl.zone_size;
-+    int64_t zone_capacity = bs->bl.zone_capacity;
-+    int index = 0;
-+    Qcow2WPReq req;
-+    Qcow2WPReq *wp_req = NULL;
- 
-     trace_qcow2_writev_start_req(qemu_coroutine_self(), offset, bytes);
- 
-+    start_offset = offset;
-+    start_bytes = bytes;
-+    if (bs->bl.zoned == BLK_Z_HM) {
-+        index = start_offset / zone_size;
-+        wp = &bs->wps->wp[index];
-+        qemu_co_mutex_lock(&bs->wps->colock);
-+        if (QCOW2_ZT_IS_CONV(*wp)) {
-+            qemu_co_mutex_unlock(&bs->wps->colock);
-+            /*
-+             * The conventional zones are the first zones of the image. A write
-+             * that starts in one and reaches a sequential zone writes nothing
-+             * (ZAC-3 4.7.2: WRITE BOUNDARY VIOLATION).
-+             */
-+            if (start_offset + start_bytes >
-+                s->zoned_header.conventional_zones * zone_size) {
-+                trace_qcow2_zone_write_conv_to_seq(bs,
-+                                                   start_offset + start_bytes);
-+                return -BLK_ZE_BOUNDARY;
-+            }
-+        } else {
-+            if (bdrv_zone_is_full(bs, index)) {
-+                /* A full zone has no write pointer to write at */
-+                qemu_co_mutex_unlock(&bs->wps->colock);
-+                trace_qcow2_zone_write_full(bs, (uint64_t)index * zone_size);
-+                return -BLK_ZE_FULL;
-+            }
-+            if (offset != *wp && !is_append) {
-+                /* The write offset must be equal to the zone write pointer */
-+                qemu_co_mutex_unlock(&bs->wps->colock);
-+                trace_qcow2_zone_write_unaligned(bs, offset, *wp);
-+                return -BLK_ZE_UNALIGNED_WRITE;
-+            }
-+
-+            if (is_append) {
-+                /*
-+                 * The offset of append write is the write pointer value of
-+                 * that zone.
-+                 */
-+                start_offset = *wp;
-+            }
-+
-+            end_offset = start_offset + start_bytes;
-+
-+            /*
-+             * Align up (start_offset, zone_size), the start offset is not
-+             * necessarily power of two.
-+             */
-+            end_zone = index * zone_size + zone_capacity;
-+            /*
-+             * Write cannot exceed the zone capacity. Check this before the
-+             * zone resources, which may close another zone.
-+             */
-+            if (end_offset > end_zone) {
-+                qemu_co_mutex_unlock(&bs->wps->colock);
-+                trace_qcow2_zone_write_past_capacity(bs, end_offset / 512,
-+                                                     end_zone / 512);
-+                return -BLK_ZE_BOUNDARY;
-+            }
-+
-+            qemu_co_mutex_lock(&s->lock);
-+
-+            /* Only allow writes when there are zone resources left */
-+            zs = qcow2_get_zone_state(bs, index);
-+            if (zs == BLK_ZS_CLOSED || zs == BLK_ZS_EMPTY) {
-+                ret = qcow2_check_open_zone(bs, zs);
-+                if (ret < 0) {
-+                    qemu_co_mutex_unlock(&s->lock);
-+                    qemu_co_mutex_unlock(&bs->wps->colock);
-+                    trace_qcow2_zone_no_resources(bs,
-+                        ret == -BLK_ZE_OPEN_RESOURCE ? "open" : "active");
-+                    return ret;
-+                }
-+            }
-+
-+            /*
-+             * Real drives change states before it can write to the zone. If
-+             * the write fails, the zone state may have changed.
-+             *
-+             * The zone state transitions to implicit open when the original
-+             * state is empty or closed. When the wp reaches the end, the
-+             * open states (explicit open, implicit open) become full.
-+             */
-+            zs = qcow2_get_zone_state(bs, index);
-+            if (end_offset == end_zone) {
-+                /* Reaching the zone capacity implies full state */
-+                if (zs == BLK_ZS_CLOSED) {
-+                    qcow2_rm_closed_zone(s, index);
-+                } else {
-+                    qcow2_rm_open_zone(s, index);
-+                }
-+                trace_qcow2_imp_open_zones(0x24,
-+                                           s->nr_zones_imp_open);
-+            } else {
-+                qcow2_do_imp_open_zone(s, index, zs);
-+                trace_qcow2_imp_open_zones(0x24,
-+                                           s->nr_zones_imp_open);
-+            }
-+
-+            qemu_co_mutex_unlock(&s->lock);
-+
-+            /*
-+             * Submission for a zone append write. The logical-WP is updated
-+             * while the on-disk WP is not touched.
-+             */
-+            if (is_append) {
-+                *offset_ptr = start_offset;
-+                offset = start_offset;
-+            }
-+
-+            wp_req = &req;
-+            wp_req->lba = start_offset;
-+            wp_req->len = start_bytes;
-+            wp_req->state = QCOW2_WP_REQ_INFLIGHT;
-+            qemu_co_queue_init(&wp_req->wait);
-+            QTAILQ_INSERT_TAIL(&s->zone_wp_state[index].in_flight,
-+                               wp_req, entry);
-+
-+            *wp = end_offset;
-+            qemu_co_mutex_unlock(&bs->wps->colock);
-+        }
-+    }
-+
-     while (bytes != 0 && aio_task_pool_status(aio) == 0) {
- 
-         l2meta = NULL;
-@@ -3021,11 +3696,78 @@ fail_nometa:
-         g_free(aio);
-     }
- 
-+    if (wp_req != NULL) {
-+        qemu_co_mutex_lock(&bs->wps->colock);
-+        QTAILQ_REMOVE(&s->zone_wp_state[index].in_flight, wp_req, entry);
-+        if (QTAILQ_EMPTY(&s->zone_wp_state[index].in_flight)) {
-+            qemu_co_queue_restart_all(&s->zone_wp_state[index].drain);
-+        }
-+
-+        if (wp_req->state == QCOW2_WP_REQ_ABORTED) {
-+            /*
-+             * A peer's failure handler aborted us. Whether our data
-+             * write itself succeeded or not, reject it.
-+             */
-+            qemu_co_mutex_unlock(&bs->wps->colock);
-+            ret = ret < 0 ? ret : -EIO;
-+            goto wp_done;
-+        }
-+
-+        if (ret < 0) {
-+            /*
-+             * This req's data write failed. Higher-LBA peers (still
-+             * in_flight or already completed_pending) are marked ABORTED,
-+             * their waiters woken; logical-WP rewinds to the highest
-+             * surviving end_offset below this LBA. The zone remains usable.
-+             */
-+            qcow2_wp_abort_higher_peers_locked(bs, index, wp_req->lba);
-+            qemu_co_mutex_unlock(&bs->wps->colock);
-+            goto wp_done;
-+        }
-+
-+        qcow2_wp_insert_pending_locked(&s->zone_wp_state[index], wp_req);
-+
-+        ret = qcow2_wp_greedy_advance_locked(bs, index);
-+        if (ret < 0) {
-+            if (wp_req->state == QCOW2_WP_REQ_PENDING) {
-+                QTAILQ_REMOVE(&s->zone_wp_state[index].completed_pending,
-+                              wp_req, entry);
-+            }
-+            qcow2_wp_abort_higher_peers_locked(bs, index, wp_req->lba);
-+            qemu_co_mutex_unlock(&bs->wps->colock);
-+            goto wp_done;
-+        }
-+
-+        /* Block until this write pointer req is RESOLVED or ABORTED. */
-+        while (wp_req->state == QCOW2_WP_REQ_PENDING) {
-+            qemu_co_queue_wait(&wp_req->wait, &bs->wps->colock);
-+        }
-+
-+        if (wp_req->state == QCOW2_WP_REQ_ABORTED) {
-+            ret = -EIO;
-+        } else {
-+            assert(wp_req->state == QCOW2_WP_REQ_RESOLVED);
-+            ret = 0;
-+        }
-+        qemu_co_mutex_unlock(&bs->wps->colock);
-+    }
-+
-+wp_done:
-     trace_qcow2_writev_done_req(qemu_coroutine_self(), ret);
- 
-     return ret;
- }
- 
-+static int coroutine_fn GRAPH_RDLOCK
-+qcow2_co_pwritev_part(BlockDriverState *bs, int64_t offset, int64_t bytes,
-+                      QEMUIOVector *qiov, size_t qiov_offset,
-+                      BdrvRequestFlags flags)
-+{
-+    return qcow2_co_pwv_part(bs, &offset, bytes, qiov, qiov_offset, false,
-+                             flags);
-+}
-+
-+
- static int GRAPH_RDLOCK qcow2_inactivate(BlockDriverState *bs)
- {
-     BDRVQcow2State *s = bs->opaque;
-@@ -3054,6 +3796,15 @@ static int GRAPH_RDLOCK qcow2_inactivate(BlockDriverState *bs)
-                      strerror(-ret));
-     }
- 
-+    if (s->wp_cache) {
-+        ret = qcow2_cache_flush(bs, s->wp_cache);
-+        if (ret) {
-+            result = ret;
-+            error_report("Failed to flush the WP cache: %s",
-+                         strerror(-ret));
-+        }
-+    }
-+
-     /*
-      * A read-only node cannot resolve an inherited dirty bit here;
-      * leave it dirty, same as plain read access already does.
-@@ -3065,6 +3816,25 @@ static int GRAPH_RDLOCK qcow2_inactivate(BlockDriverState *bs)
-     return result;
- }
- 
-+static void qcow2_do_close_all_zone(BDRVQcow2State *s)
-+{
-+    Qcow2ZoneListEntry *zone_entry, *next;
-+
-+    QTAILQ_FOREACH_SAFE(zone_entry, &s->imp_open_zones, imp_open_zone_entry,
-+                        next) {
-+        QTAILQ_REMOVE(&s->imp_open_zones, zone_entry, imp_open_zone_entry);
-+        s->nr_zones_imp_open--;
-+    }
-+
-+    QTAILQ_FOREACH_SAFE(zone_entry, &s->exp_open_zones, exp_open_zone_entry,
-+                        next) {
-+        QTAILQ_REMOVE(&s->exp_open_zones, zone_entry, exp_open_zone_entry);
-+        s->nr_zones_exp_open--;
-+    }
-+
-+    assert(s->nr_zones_imp_open + s->nr_zones_exp_open == 0);
-+}
-+
- static void coroutine_mixed_fn GRAPH_RDLOCK
- qcow2_do_close(BlockDriverState *bs, bool close_data_file)
- {
-@@ -3080,6 +3850,10 @@ qcow2_do_close(BlockDriverState *bs, bool close_data_file)
-     cache_clean_timer_del_and_wait(bs);
-     qcow2_cache_destroy(s->l2_table_cache);
-     qcow2_cache_destroy(s->refcount_block_cache);
-+    if (s->wp_cache) {
-+        qcow2_cache_destroy(s->wp_cache);
-+        s->wp_cache = NULL;
-+    }
- 
-     qcrypto_block_free(s->crypto);
-     s->crypto = NULL;
-@@ -3105,6 +3879,12 @@ qcow2_do_close(BlockDriverState *bs, bool close_data_file)
- 
-     qcow2_refcount_close(bs);
-     qcow2_free_snapshots(bs);
-+    qcow2_do_close_all_zone(s);
-+    g_free(s->zone_list_entries);
-+    s->zone_list_entries = NULL;
-+    g_free(s->zone_wp_state);
-+    s->zone_wp_state = NULL;
-+    g_free(bs->wps);
- }
- 
- static void GRAPH_UNLOCKED qcow2_close(BlockDriverState *bs)
-@@ -3421,6 +4201,8 @@ int qcow2_update_header(BlockDriverState *bs)
-             .max_open_zones     = cpu_to_be32(s->zoned_header.max_open_zones),
-             .max_active_zones   =
-                 cpu_to_be32(s->zoned_header.max_active_zones),
-+            .zonedmeta_offset   =
-+                cpu_to_be64(s->zoned_header.zonedmeta_offset),
-         };
-         ret = header_ext_add(buf, QCOW2_EXT_MAGIC_ZONED_FORMAT,
-                              &zoned_header, sizeof(zoned_header),
-@@ -3830,7 +4612,9 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
-     int version;
-     int refcount_order;
-     uint64_t *refcount_table;
--    int ret;
-+    uint64_t zoned_meta_size, zoned_clusterlen;
-+    int64_t offset;
-+    int ret, i;
-     uint8_t compression_type = QCOW2_COMPRESSION_TYPE_ZLIB;
- 
-     assert(create_options->driver == BLOCKDEV_DRIVER_QCOW2);
-@@ -4140,6 +4924,9 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
-     }
- 
-     if (zone_struct && zone_struct->mode == QCOW2_ZONE_MODEL_HOST_MANAGED) {
-+        g_autofree uint64_t *meta = NULL;
-+        uint32_t nrz;
-+
-         s->zoned_header.zoned = QCOW2_Z_HM;
-         zone_host_managed = &zone_struct->u.host_managed;
- 
-@@ -4195,6 +4982,47 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
-             ret = -EINVAL;
-             goto unlock;
-         }
-+
-+        nrz = s->zoned_header.nr_zones;
-+        zoned_meta_size =  sizeof(uint64_t) * nrz;
-+        meta = g_new0(uint64_t, nrz);
-+
-+        for (i = 0; i < s->zoned_header.conventional_zones; ++i) {
-+            meta[i] = i * s->zoned_header.zone_size;
-+            meta[i] |= QCOW2_WP_CONV_BIT;
-+        }
-+
-+        for (; i < nrz; ++i) {
-+            meta[i] = i * s->zoned_header.zone_size;
-+        }
-+
-+        offset = qcow2_alloc_clusters(blk_bs(blk), zoned_meta_size);
-+        if (offset < 0) {
-+            ret = offset;
-+            error_setg_errno(errp, -ret, "Could not allocate clusters "
-+                                         "for zoned metadata size");
-+            goto unlock;
-+        }
-+        s->zoned_header.zonedmeta_offset = offset;
-+
-+        zoned_clusterlen = size_to_clusters(s, zoned_meta_size)
-+                * s->cluster_size;
-+        ret = qcow2_pre_write_overlap_check(blk_bs(blk), 0, offset,
-+                                            zoned_clusterlen, false);
-+        if (ret < 0) {
-+            error_setg_errno(errp, -ret, "Overlap check failed for zoned "
-+                                         "metadata");
-+            goto unlock;
-+        }
-+        for (i = 0; i < nrz; ++i) {
-+            meta[i] = cpu_to_be64(meta[i]);
-+        }
-+        ret = bdrv_pwrite(blk_bs(blk)->file, offset, zoned_meta_size, meta, 0);
-+        if (ret < 0) {
-+            error_setg_errno(errp, -ret, "Could not write zoned metadata "
-+                                         "to disk");
-+            goto unlock;
-+        }
-     } else {
-         s->zoned_header.zoned = QCOW2_Z_NONE;
-     }
-@@ -4599,6 +5427,455 @@ qcow2_co_pdiscard(BlockDriverState *bs, int64_t offset, int64_t bytes)
-     return ret;
- }
- 
-+static int coroutine_fn
-+qcow2_co_zone_report(BlockDriverState *bs, int64_t offset,
-+                     unsigned int *nr_zones, BlockZoneDescriptor *zones)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    uint64_t zone_size = s->zoned_header.zone_size;
-+    uint64_t zone_capacity = s->zoned_header.zone_capacity;
-+    int64_t capacity = bs->total_sectors << BDRV_SECTOR_BITS;
-+    int64_t size = bs->bl.nr_zones * zone_size;
-+    unsigned int nrz, si, i = 0;
-+
-+    if (offset >= capacity) {
-+        trace_qcow2_zone_report_invalid(bs, offset, capacity);
-+        return -EINVAL;
-+    }
-+
-+    nrz = ((*nr_zones) < bs->bl.nr_zones) ? (*nr_zones) : bs->bl.nr_zones;
-+    si = offset / zone_size; /* Zone size cannot be 0 for zoned device */
-+    qemu_co_mutex_lock(&bs->wps->colock);
-+    for (; i < nrz; ++i) {
-+        uint64_t wp;
-+
-+        if (i + si >= bs->bl.nr_zones) {
-+            break;
-+        }
-+
-+        zones[i].start = (si + i) * zone_size;
-+
-+        /* The last zone can be smaller than the zone size */
-+        if ((si + i + 1) == bs->bl.nr_zones && size > capacity) {
-+            uint64_t l = zone_size - (size - capacity);
-+            zones[i].length = l;
-+            zones[i].cap = MIN(zone_capacity, l);
-+        } else {
-+            zones[i].length = zone_size;
-+            zones[i].cap = zone_capacity;
-+        }
-+
-+        wp = bs->wps->wp[si + i];
-+        if (QCOW2_ZT_IS_CONV(wp)) {
-+            zones[i].type = BLK_ZT_CONV;
-+            zones[i].state = BLK_ZS_NOT_WP;
-+            /* A conventional zone is writable in full */
-+            zones[i].cap = zones[i].length;
-+            /* Clear masking bits */
-+            wp = QCOW2_GET_WP(wp);
-+        } else {
-+            zones[i].type = BLK_ZT_SWR;
-+            qemu_co_mutex_lock(&s->lock);
-+            zones[i].state = qcow2_get_zone_state(bs, si + i);
-+            qemu_co_mutex_unlock(&s->lock);
-+        }
-+        zones[i].wp = wp;
-+    }
-+    qemu_co_mutex_unlock(&bs->wps->colock);
-+    *nr_zones = i;
-+    return 0;
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+qcow2_open_zone(BlockDriverState *bs, uint32_t index)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    BlockZoneState zs;
-+    int ret;
-+
-+    qemu_co_mutex_lock(&bs->wps->colock);
-+    qemu_co_mutex_lock(&s->lock);
-+    zs = qcow2_get_zone_state(bs, index);
-+    trace_qcow2_imp_open_zones(BLK_ZO_OPEN, s->nr_zones_imp_open);
-+
-+    switch (zs) {
-+    case BLK_ZS_EMPTY:
-+        ret = qcow2_check_open_zone(bs, zs);
-+        if (ret < 0) {
-+            goto unlock;
-+        }
-+        break;
-+    case BLK_ZS_IOPEN:
-+        qcow2_rm_imp_open_zone(s, index);
-+        break;
-+    case BLK_ZS_EOPEN:
-+        qemu_co_mutex_unlock(&s->lock);
-+        qemu_co_mutex_unlock(&bs->wps->colock);
-+        return 0;
-+    case BLK_ZS_CLOSED:
-+        ret = qcow2_check_open_zone(bs, zs);
-+        if (ret < 0) {
-+            goto unlock;
-+        }
-+        qcow2_rm_closed_zone(s, index);
-+        break;
-+    case BLK_ZS_FULL:
-+        /*
-+         * A full zone has no writable capacity left and holds no zone
-+         * resources, so opening it is not a valid transition. It has to be
-+         * reset before it can be opened again.
-+         */
-+    default:
-+        ret = -EINVAL;
-+        goto unlock;
-+    }
-+
-+    qcow2_do_exp_open_zone(s, index);
-+    ret = 0;
-+
-+unlock:
-+    qemu_co_mutex_unlock(&s->lock);
-+    qemu_co_mutex_unlock(&bs->wps->colock);
-+    return ret;
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+qcow2_close_zone(BlockDriverState *bs, uint32_t index)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    BlockZoneState zs;
-+    int ret;
-+
-+    qemu_co_mutex_lock(&bs->wps->colock);
-+    qemu_co_mutex_lock(&s->lock);
-+    zs = qcow2_get_zone_state(bs, index);
-+
-+    switch (zs) {
-+    case BLK_ZS_EMPTY:
-+        break;
-+    case BLK_ZS_IOPEN:
-+        break;
-+    case BLK_ZS_EOPEN:
-+        break;
-+    case BLK_ZS_CLOSED:
-+        /* Closing a closed zone is not an error */
-+        ret = 0;
-+        goto unlock;
-+    case BLK_ZS_FULL:
-+        break;
-+    default:
-+        ret = -EINVAL;
-+        goto unlock;
-+    }
-+    qcow2_do_close_zone(bs, index, zs);
-+    ret = 0;
-+
-+unlock:
-+    qemu_co_mutex_unlock(&s->lock);
-+    qemu_co_mutex_unlock(&bs->wps->colock);
-+    return ret;
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+qcow2_finish_zone(BlockDriverState *bs, uint32_t index)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    BlockZoneState zs;
-+    uint64_t *wp;
-+    uint64_t old_wp;
-+    int ret;
-+
-+    qemu_co_mutex_lock(&bs->wps->colock);
-+    wp = &bs->wps->wp[index];
-+
-+    /* Wait for any in-flight writes to this zone to drain. */
-+    if (s->zone_wp_state) {
-+        while (!QTAILQ_EMPTY(&s->zone_wp_state[index].in_flight)) {
-+            qemu_co_queue_wait(&s->zone_wp_state[index].drain,
-+                               &bs->wps->colock);
-+        }
-+    }
-+
-+    qemu_co_mutex_lock(&s->lock);
-+    zs = qcow2_get_zone_state(bs, index);
-+
-+    switch (zs) {
-+    case BLK_ZS_EMPTY:
-+        /*
-+         * An empty or closed zone becomes implicitly open before it becomes
-+         * full, which needs zone resources as for a write (ZBC-3 4.5.3.2.4).
-+         */
-+        ret = qcow2_check_open_zone(bs, zs);
-+        if (ret < 0) {
-+            goto unlock_state;
-+        }
-+        break;
-+    case BLK_ZS_IOPEN:
-+        qcow2_rm_imp_open_zone(s, index);
-+        trace_qcow2_imp_open_zones(BLK_ZO_FINISH, s->nr_zones_imp_open);
-+        break;
-+    case BLK_ZS_EOPEN:
-+        qcow2_rm_exp_open_zone(s, index);
-+        break;
-+    case BLK_ZS_CLOSED:
-+        ret = qcow2_check_open_zone(bs, zs);
-+        if (ret < 0) {
-+            goto unlock_state;
-+        }
-+        qcow2_rm_closed_zone(s, index);
-+        break;
-+    case BLK_ZS_FULL:
-+        ret = 0;
-+        goto unlock_state;
-+    default:
-+        ret = -EINVAL;
-+        goto unlock_state;
-+    }
-+
-+    qemu_co_mutex_unlock(&s->lock);
-+
-+    old_wp = *wp;
-+    *wp = bdrv_zone_writable_end(bs, index);
-+    ret = qcow2_rw_wp_at(bs, wp, index, true);
-+    if (ret < 0) {
-+        /* Keep the in-memory write pointer equal to the on-disk one. */
-+        *wp = old_wp;
-+        goto unlock;
-+    }
-+
-+    /*
-+     * Flush the WP cache so the on-disk write pointer reflects the new state
-+     * on return.
-+     */
-+    qemu_co_mutex_lock(&s->lock);
-+    ret = qcow2_cache_flush(bs, s->wp_cache);
-+    qemu_co_mutex_unlock(&s->lock);
-+    goto unlock;
-+
-+unlock_state:
-+    qemu_co_mutex_unlock(&s->lock);
-+unlock:
-+    qemu_co_mutex_unlock(&bs->wps->colock);
-+    return ret;
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+qcow2_reset_zone(BlockDriverState *bs, uint32_t index,
-+                            int64_t len)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    unsigned int nrz = bs->bl.nr_zones;
-+    int64_t zone_size = bs->bl.zone_size;
-+    int64_t capacity = bs->total_sectors << BDRV_SECTOR_BITS;
-+    int64_t zone_start;
-+    uint64_t *wp;
-+    unsigned int n;
-+    int ret = 0;
-+    bool any_dirtied = false;
-+
-+    qemu_co_mutex_lock(&bs->wps->colock);
-+    wp = &bs->wps->wp[index];
-+    if (len == capacity) {
-+        n = nrz;
-+        index = 0;
-+        wp = &bs->wps->wp[0];
-+    } else {
-+        /*
-+         * A trailing zone that is shorter than the zone size still counts as
-+         * a whole zone, otherwise resetting it alone would round down to no
-+         * zone at all.
-+         */
-+        n = DIV_ROUND_UP(len, zone_size);
-+    }
-+
-+    for (unsigned int i = 0; i < n; ++i) {
-+        uint64_t *wp_i = (uint64_t *)(wp + i);
-+        uint64_t wpi_v = *wp_i;
-+        BlockZoneState zs;
-+        uint64_t old_wp;
-+
-+        if (QCOW2_ZT_IS_CONV(wpi_v)) {
-+            continue;
-+        }
-+
-+        /* Wait for any in-flight writes to this zone to drain. */
-+        if (s->zone_wp_state) {
-+            while (!QTAILQ_EMPTY(&s->zone_wp_state[index + i].in_flight)) {
-+                qemu_co_queue_wait(&s->zone_wp_state[index + i].drain,
-+                                   &bs->wps->colock);
-+            }
-+        }
-+
-+        qemu_co_mutex_lock(&s->lock);
-+        zs = qcow2_get_zone_state(bs, index + i);
-+        switch (zs) {
-+        case BLK_ZS_EMPTY:
-+            break;
-+        case BLK_ZS_IOPEN:
-+            qcow2_rm_imp_open_zone(s, index + i);
-+            trace_qcow2_imp_open_zones(BLK_ZO_RESET, s->nr_zones_imp_open);
-+            break;
-+        case BLK_ZS_EOPEN:
-+            qcow2_rm_exp_open_zone(s, index + i);
-+            break;
-+        case BLK_ZS_CLOSED:
-+            qcow2_rm_closed_zone(s, index + i);
-+            break;
-+        case BLK_ZS_FULL:
-+            break;
-+        default:
-+            ret = -EINVAL;
-+            qemu_co_mutex_unlock(&s->lock);
-+            goto unlock;
-+        }
-+        qemu_co_mutex_unlock(&s->lock);
-+
-+        if (zs == BLK_ZS_EMPTY) {
-+            continue;
-+        }
-+
-+        /*
-+         * Zero the data extent first. Data write fires before the WP cluster
-+         * hits disk. So the wp advance cannot become durable while stale data
-+         * is still readable.
-+         *
-+         * The last zone is shorter than the zone size when the device
-+         * capacity is not a multiple of it, so stop at the end of the device.
-+         */
-+        zone_start = (uint64_t)(index + i) * zone_size;
-+        ret = qcow2_co_pwrite_zeroes(bs, zone_start,
-+                                     MIN(zone_size, capacity - zone_start), 0);
-+        if (ret < 0) {
-+            error_report("Failed to clear zone data at zone %u",
-+                         index + i);
-+            goto unlock;
-+        }
-+
-+        qemu_co_mutex_lock(&s->lock);
-+        qcow2_cache_depends_on_flush(s->wp_cache);
-+        qemu_co_mutex_unlock(&s->lock);
-+
-+        old_wp = *wp_i;
-+        *wp_i = zone_start;
-+        ret = qcow2_rw_wp_at(bs, wp_i, index + i, true);
-+        if (ret < 0) {
-+            /* Keep the in-memory write pointer equal to the on-disk one. */
-+            *wp_i = old_wp;
-+            goto unlock;
-+        }
-+        any_dirtied = true;
-+    }
-+
-+    if (any_dirtied) {
-+        /* Single flush at the end. */
-+        qemu_co_mutex_lock(&s->lock);
-+        ret = qcow2_cache_flush(bs, s->wp_cache);
-+        qemu_co_mutex_unlock(&s->lock);
-+    }
-+
-+unlock:
-+    qemu_co_mutex_unlock(&bs->wps->colock);
-+    return ret;
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+qcow2_co_zone_mgmt(BlockDriverState *bs, BlockZoneOp op,
-+                   int64_t offset, int64_t len)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    int ret = 0;
-+    int64_t capacity = bs->total_sectors << BDRV_SECTOR_BITS;
-+    int64_t zone_size = s->zoned_header.zone_size;
-+    int64_t zone_size_mask = zone_size - 1;
-+    uint32_t index = offset / zone_size;
-+    BlockZoneWps *wps = bs->wps;
-+    uint64_t wpv;
-+
-+    if (offset >= capacity) {
-+        trace_qcow2_zone_mgmt_invalid(bs, op, offset, len,
-+                                      "offset beyond the capacity");
-+        return -EINVAL;
-+    }
-+
-+    if (offset & zone_size_mask) {
-+        trace_qcow2_zone_mgmt_invalid(bs, op, offset, len,
-+                                      "offset not zone aligned");
-+        return -EINVAL;
-+    }
-+
-+    /* The length must be zone-aligned and within the device capacity. */
-+    if ((len < capacity - offset && (len & zone_size_mask)) ||
-+        len > capacity - offset) {
-+        trace_qcow2_zone_mgmt_invalid(bs, op, offset, len,
-+                                      "length not zone aligned");
-+        return -EINVAL;
-+    }
-+
-+    qemu_co_mutex_lock(&wps->colock);
-+    wpv = wps->wp[index];
-+    qemu_co_mutex_unlock(&wps->colock);
-+
-+    if (QCOW2_ZT_IS_CONV(wpv)) {
-+        /*
-+         * ZONE_RESET_ALL is a global operation that is allowed when the
-+         * starting zone is conventional; the zone reset path itself skips
-+         * conventional zones.
-+         */
-+        if (op != BLK_ZO_RESET || len != capacity) {
-+            trace_qcow2_zone_mgmt_invalid(bs, op, offset, len,
-+                                          "conventional zone");
-+            return -EINVAL;
-+        }
-+    }
-+
-+    switch (op) {
-+    case BLK_ZO_OPEN:
-+        ret = qcow2_open_zone(bs, index);
-+        break;
-+    case BLK_ZO_CLOSE:
-+        ret = qcow2_close_zone(bs, index);
-+        break;
-+    case BLK_ZO_FINISH:
-+        ret = qcow2_finish_zone(bs, index);
-+        break;
-+    case BLK_ZO_RESET:
-+        ret = qcow2_reset_zone(bs, index, len);
-+        break;
-+    default:
-+        trace_qcow2_zone_mgmt_invalid(bs, op, offset, len,
-+                                      "unsupported operation");
-+        ret = -ENOTSUP;
-+        break;
-+    }
-+    return ret;
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+qcow2_co_zone_append(BlockDriverState *bs, int64_t *offset, QEMUIOVector *qiov,
-+                     BdrvRequestFlags flags)
-+{
-+    int64_t capacity = bs->total_sectors << BDRV_SECTOR_BITS;
-+    int64_t zone_size_mask = bs->bl.zone_size - 1;
-+    int64_t len = 0;
-+
-+    assert(flags == 0);
-+
-+    if (*offset >= capacity) {
-+        trace_qcow2_zone_append_invalid(bs, *offset,
-+                                        "offset beyond the capacity");
-+        return -ENOSPC;
-+    }
-+
-+    if (*offset & zone_size_mask) {
-+        trace_qcow2_zone_append_invalid(bs, *offset, "offset not a zone start");
-+        return -EINVAL;
-+    }
-+
-+    len = qiov->size;
-+
-+    return qcow2_co_pwv_part(bs, offset, len, qiov, 0, true, 0);
-+}
-+
- static int coroutine_fn GRAPH_RDLOCK
- qcow2_co_copy_range_from(BlockDriverState *bs,
-                          BdrvChild *src, int64_t src_offset,
-@@ -6681,6 +7958,10 @@ BlockDriver bdrv_qcow2 = {
-     .bdrv_co_pwritev_compressed_part    = qcow2_co_pwritev_compressed_part,
-     .bdrv_make_empty                    = qcow2_make_empty,
- 
-+    .bdrv_co_zone_report                = qcow2_co_zone_report,
-+    .bdrv_co_zone_mgmt                  = qcow2_co_zone_mgmt,
-+    .bdrv_co_zone_append                = qcow2_co_zone_append,
-+
-     .bdrv_snapshot_create               = qcow2_snapshot_create,
-     .bdrv_snapshot_goto                 = qcow2_snapshot_goto,
-     .bdrv_snapshot_delete               = qcow2_snapshot_delete,
-diff --git a/block/qcow2.h b/block/qcow2.h
-index edd7ed7aad..0092eb9e3d 100644
---- a/block/qcow2.h
-+++ b/block/qcow2.h
-@@ -258,6 +258,48 @@ typedef struct Qcow2ZonedHeaderExtension {
-     uint32_t max_open_zones;
- } QEMU_PACKED Qcow2ZonedHeaderExtension;
- 
-+typedef struct Qcow2ZoneListEntry {
-+    QTAILQ_ENTRY(Qcow2ZoneListEntry) exp_open_zone_entry;
-+    QTAILQ_ENTRY(Qcow2ZoneListEntry) imp_open_zone_entry;
-+    QTAILQ_ENTRY(Qcow2ZoneListEntry) closed_zone_entry;
-+} Qcow2ZoneListEntry;
-+
-+/*
-+ * Per-zone tracking for write pointer (WP) advance. A submitter
-+ * reserves an LBA range, performs the data write outside the zone
-+ * lock, then waits until the persisted WP catches up to its end
-+ * offset before returning success to the guest. A failure aborts
-+ * all higher-LBA peers in the same zone.
-+ */
-+typedef enum Qcow2WPReqState {
-+    /* data write submitted, awaiting completion */
-+    QCOW2_WP_REQ_INFLIGHT,
-+    /* data write completed, persisted WP not yet advanced past lba + len */
-+    QCOW2_WP_REQ_PENDING,
-+    /* persisted WP covers this range, submitter may ack success */
-+    QCOW2_WP_REQ_RESOLVED,
-+    /* data write failed, or a lower-LBA peer in the same zone failed */
-+    QCOW2_WP_REQ_ABORTED,
-+} Qcow2WPReqState;
-+
-+typedef struct Qcow2WPReq {
-+    uint64_t lba;                       /* start offset of the data write */
-+    uint64_t len;                       /* length in bytes */
-+    Qcow2WPReqState state;
-+    /* submitter waits for the data write to reach a terminal state */
-+    CoQueue wait;
-+    QTAILQ_ENTRY(Qcow2WPReq) entry;
-+} Qcow2WPReq;
-+
-+typedef struct Qcow2ZoneWPState {
-+    /* INFLIGHT reqs */
-+    QTAILQ_HEAD(, Qcow2WPReq) in_flight;
-+    /* PENDING reqs, sorted by lba */
-+    QTAILQ_HEAD(, Qcow2WPReq) completed_pending;
-+    /* zone mgmt ops wait here until in_flight has drained */
-+    CoQueue drain;
-+} Qcow2ZoneWPState;
-+
- typedef struct Qcow2UnknownHeaderExtension {
-     uint32_t magic;
-     uint32_t len;
-@@ -453,6 +495,21 @@ typedef struct BDRVQcow2State {
- 
-     /* States of zoned device */
-     Qcow2ZonedHeaderExtension zoned_header;
-+    QTAILQ_HEAD(, Qcow2ZoneListEntry) exp_open_zones;
-+    QTAILQ_HEAD(, Qcow2ZoneListEntry) imp_open_zones;
-+    QTAILQ_HEAD(, Qcow2ZoneListEntry) closed_zones;
-+    Qcow2ZoneListEntry *zone_list_entries;
-+    uint32_t nr_zones_exp_open;
-+    uint32_t nr_zones_imp_open;
-+    uint32_t nr_zones_closed;
-+
-+    /* Per-zone in-memory WP tracking for zoned images. */
-+    Qcow2ZoneWPState *zone_wp_state;
-+    /*
-+     * Cache holding the on-disk zonedmeta cluster(s) for zoned image.
-+     * WP advances go through this cache.
-+     */
-+    Qcow2Cache *wp_cache;
- } BDRVQcow2State;
- 
- typedef struct Qcow2COWRegion {
-diff --git a/block/trace-events b/block/trace-events
-index 950c82d4b8..e746c2aa30 100644
---- a/block/trace-events
-+++ b/block/trace-events
-@@ -70,12 +70,22 @@ luring_resubmit_short_io(void *req, int ndone) "req %p ndone %d"
- qcow2_add_task(void *co, void *bs, void *pool, const char *action, int cluster_type, uint64_t host_offset, uint64_t offset, uint64_t bytes, void *qiov, size_t qiov_offset) "co %p bs %p pool %p: %s: cluster_type %d file_cluster_offset %" PRIu64 " offset %" PRIu64 " bytes %" PRIu64 " qiov %p qiov_offset %zu"
- qcow2_writev_start_req(void *co, int64_t offset, int64_t bytes) "co %p offset 0x%" PRIx64 " bytes %" PRId64
- qcow2_writev_done_req(void *co, int ret) "co %p ret %d"
-+qcow2_zone_write_conv_to_seq(void *bs, uint64_t end_offset) "bs %p end_offset 0x%" PRIx64
-+qcow2_zone_write_full(void *bs, uint64_t zone_offset) "bs %p zone 0x%" PRIx64
-+qcow2_zone_write_unaligned(void *bs, uint64_t offset, uint64_t wp) "bs %p offset 0x%" PRIx64 " wp 0x%" PRIx64
-+qcow2_zone_write_past_capacity(void *bs, uint64_t end_sector, uint64_t zone_end_sector) "bs %p end 0x%" PRIx64 " zone end 0x%" PRIx64
-+qcow2_zone_no_resources(void *bs, const char *kind) "bs %p no more %s zones available"
-+qcow2_zone_report_invalid(void *bs, int64_t offset, int64_t capacity) "bs %p offset %" PRId64 " capacity %" PRId64
-+qcow2_zone_mgmt_invalid(void *bs, int op, int64_t offset, int64_t len, const char *reason) "bs %p op 0x%x offset %" PRId64 " len %" PRId64 ": %s"
-+qcow2_zone_append_invalid(void *bs, int64_t offset, const char *reason) "bs %p offset %" PRId64 ": %s"
- qcow2_writev_start_part(void *co) "co %p"
- qcow2_writev_done_part(void *co, int cur_bytes) "co %p cur_bytes %d"
- qcow2_writev_data(void *co, uint64_t offset) "co %p offset 0x%" PRIx64
- qcow2_pwrite_zeroes_start_req(void *co, int64_t offset, int64_t bytes) "co %p offset 0x%" PRIx64 " bytes %" PRId64
- qcow2_pwrite_zeroes(void *co, int64_t offset, int64_t bytes) "co %p offset 0x%" PRIx64 " bytes %" PRId64
- qcow2_skip_cow(void *co, uint64_t offset, int nb_clusters) "co %p offset 0x%" PRIx64 " nb_clusters %d"
-+qcow2_wp_tracking(int index, uint64_t wp) "wps[%d]: 0x%" PRIx64
-+qcow2_imp_open_zones(uint8_t op, int nrz) "nr_imp_open_zones after op 0x%x: %d"
- 
- # qcow2-cluster.c
- qcow2_alloc_clusters_offset(void *co, uint64_t offset, int bytes) "co %p offset 0x%" PRIx64 " bytes %d"
--- 
-2.56.0
+These should all be using
+ https://storage.tuxboot.com/kernels/20241122/6.11.9/riscv64/
 
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  tests/functional/aarch64/test_tuxrun.py | 4 ++--
+>  tests/functional/s390x/test_tuxrun.py   | 4 ++--
+>  tests/functional/x86_64/test_tuxrun.py  | 4 ++--
+>  3 files changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/tests/functional/aarch64/test_tuxrun.py b/tests/functional/a=
+arch64/test_tuxrun.py
+> index 2ff321582d38..6c4367c8a20d 100755
+> --- a/tests/functional/aarch64/test_tuxrun.py
+> +++ b/tests/functional/aarch64/test_tuxrun.py
+> @@ -18,10 +18,10 @@ class TuxRunAarch64Test(TuxRunBaselineTest):
+>
+>      ASSET_ARM64_KERNEL =3D Asset(
+>          'https://storage.tuxboot.com/kernels/6.18.54/arm64/Image.gz',
+> -        '39f4633bbcb444267d4d829bd28d8868a287c4c160cda64b0fd23fb090571c4=
+e')
+> +        'e297f12682af7e88735a0aae38e6fbd137192b516ab5f0fc1a81c4bcc3992e8=
+0')
+
+If we want to keep using the same image file:
+https://storage.tuxboot.com/kernels/20260930/6.18.54/arm64/Image.gz
+
+If we want to upgrade to the new one (with the e297... hash):
+https://storage.tuxboot.com/kernels/20261110/6.18.54/arm64/Image.gz
+
+(plus matching change to the vmlinux.xz URLs)
+
+>      ASSET_ARM64_VMLINUX =3D Asset(
+>          'https://storage.tuxboot.com/kernels/6.18.54/arm64/vmlinux.xz',
+> -        '6487eb113ef6e841aedab6cb6fa704006377d68f64dd544570aa42f462a52b8=
+5')
+> +        'aa9b984337e975528162ed873cf18a072b27be8e4f48e6cf0723e9b490c6317=
+1')
+>      ASSET_ARM64_ROOTFS =3D Asset(
+>          'https://storage.tuxboot.com/buildroot/20260924/arm64/rootfs.ext=
+4.zst',
+>          '4ab8cec9d1e17dbb1abdf2ae1939ad4f9d0dc2466230f6a119a7c1845cdef0b=
+1')
+> diff --git a/tests/functional/s390x/test_tuxrun.py b/tests/functional/s39=
+0x/test_tuxrun.py
+> index 1dd662aaaf05..be38fcded2e9 100755
+> --- a/tests/functional/s390x/test_tuxrun.py
+> +++ b/tests/functional/s390x/test_tuxrun.py
+> @@ -18,10 +18,10 @@ class TuxRunS390xTest(TuxRunBaselineTest):
+>
+>      ASSET_S390X_KERNEL =3D Asset(
+>          'https://storage.tuxboot.com/kernels/6.18.54/s390/bzImage',
+> -        '5efeb31754b211440e1595ab11355bb006fe78a2c0604ed0a8c55c4598b71ae=
+c')
+> +        'b5022f97e243b8ecd51fc7ce4290a15806ecc51a41edbe777fc0fcdda567269=
+e')
+
+Old image:
+https://storage.tuxboot.com/kernels/20260930/6.18.54/s390/bzImage
+
+New one:
+https://storage.tuxboot.com/kernels/20261110/6.18.54/s390/bzImage
+
+(and ditot for the vmlinux.xz)
+
+>      ASSET_S390X_VMLINUX =3D Asset(
+>          'https://storage.tuxboot.com/kernels/6.18.54/s390/vmlinux.xz',
+> -        '5bbd4d34e0950f88053a9bfd16078896df4b1ee1696fc2ad62488e681a6bdd8=
+e')
+> +        'cd70050ddb638e81c2f1b96a4629c224aedd36bf8ae3b56b264b070e94642e2=
+5')
+>      ASSET_S390X_ROOTFS =3D Asset(
+>          'https://storage.tuxboot.com/buildroot/20260924/s390/rootfs.ext4=
+.zst',
+>          '5ba18c4d18831c50a0c743990f7bdee1d3b520629d423c55b668d8fbbac9c6f=
+5')
+> diff --git a/tests/functional/x86_64/test_tuxrun.py b/tests/functional/x8=
+6_64/test_tuxrun.py
+> index 1a1138d16aea..efe907bed820 100755
+> --- a/tests/functional/x86_64/test_tuxrun.py
+> +++ b/tests/functional/x86_64/test_tuxrun.py
+> @@ -18,10 +18,10 @@ class TuxRunX86Test(TuxRunBaselineTest):
+>
+>      ASSET_X86_64_KERNEL =3D Asset(
+>          'https://storage.tuxboot.com/kernels/6.18.54/x86_64/bzImage',
+> -        '24a3ade610c2cc426ff821050de8a35930b0371357d94cc2c334abac6658552=
+b')
+> +        'ba98a8a07d5f3f3e20119341059c0f0096fda499d30e30049c1ea64553b7e7c=
+2')
+
+Old image:
+https://storage.tuxboot.com/kernels/20260930/6.18.54/x86_64/bzImage
+New image:
+https://storage.tuxboot.com/kernels/20261110/6.18.54/x86_64/bzImage
+
+(and similarly for vmlinux.xz)
+
+>      ASSET_X86_64_VMLINUX =3D Asset(
+>          'https://storage.tuxboot.com/kernels/6.18.54/x86_64/vmlinux.xz',
+> -        '77bf44cca48c9c1b9c142e16a2311d58b8ae3462b61bce44bcaf9243b5f2662=
+8')
+> +        'bc8af37608753c6ba47c6fe85f4034188b5f15bb757a0cbd79672c65122278a=
+b')
+>      ASSET_X86_64_ROOTFS =3D Asset(
+>          'https://storage.tuxboot.com/buildroot/20260924/x86_64/rootfs.ex=
+t4.zst',
+>          '8e310455b0244414ccff29c507f7ccfd4032e3587cc405e49ab0322738e3e27=
+c')
+> --
+> 2.56.0.116.g6de20f6092dc
+
+thanks
+-- PMM
 
