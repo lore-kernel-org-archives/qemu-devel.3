@@ -1,89 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB0A606A330
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB11E606A321
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 17:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=MU8sg3v6;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=JqQbUWyh
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=d+/5SIa2;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=M3j6mrl8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRYwH-0001DM-OQ; Thu, 12 Nov 2026 12:50:21 -0500
+	id 1xRYvZ-0000Cp-DS; Thu, 12 Nov 2026 12:49:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
- id 1xRYvj-0000QX-O0
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:49:47 -0500
+ id 1xRYvR-00008s-Gd
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:49:31 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
- id 1xRYvi-0001b7-80
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:49:47 -0500
+ id 1xRYvP-0001Za-GH
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:49:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794505785;
+ s=mimecast20190719; t=1794505766;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+sqBpAzyqfEQcH9rl/bb7M8TwEN+j4MMtl69FAHbaUo=;
- b=MU8sg3v61+40VnP2g8HVMX4BPDHdmDT0wjwZjiEyEA8bW8pFDTxywCXA5WzpqfGo20fPqx
- exS4pHtVCyJ+794RvoYoYuVv5vIzcw68ChW+2jj8R/4fIo6+hpEfO2l5mTUA+BVJlNTp6J
- kS7Ug8qTceG6OIdsqyUFOgQXAZiR+iU=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yqlF0e73IhEcX2gKNQKz17HOW9h+dGEhYA+z8LysMU0=;
+ b=d+/5SIa2Hwzv60TUmLR6KtXQTWKhTZG2VY4dY1W0iBpAs8GHAUfE2bq7v1R03xu0AsnbjC
+ XEFILU6+gdydDnLRdD9mJd8Yo8y0mjNOHLH/Ewv8V7M+NwONotP0Rw1dXR8pFJNgWsddnu
+ xZje4tbyCrKQtYK/cSYh8fQUAt4hr/U=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-179-gSSTkbulOgyV8IAMwLBPMA-1; Thu, 12 Nov 2026 12:49:44 -0500
-X-MC-Unique: gSSTkbulOgyV8IAMwLBPMA-1
-X-Mimecast-MFC-AGG-ID: gSSTkbulOgyV8IAMwLBPMA_1794505783
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-3b175a69ab8so40980a91.1
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 09:49:43 -0800 (PST)
+ us-mta-531-ZMnq-fPsP4K-yKSd7-vwbQ-1; Thu, 12 Nov 2026 12:49:25 -0500
+X-MC-Unique: ZMnq-fPsP4K-yKSd7-vwbQ-1
+X-Mimecast-MFC-AGG-ID: ZMnq-fPsP4K-yKSd7-vwbQ_1794505764
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3adeba76cadso18890a91.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 09:49:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1794505783; x=1795110583; darn=nongnu.org;
+ d=redhat.com; s=google; t=1794505764; x=1795110564; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=+sqBpAzyqfEQcH9rl/bb7M8TwEN+j4MMtl69FAHbaUo=;
- b=JqQbUWyh/a8vL5sa4qbDHe+/wQJZP892qwKK6Utk8nTcf5wfWaL5PEbVl30ojmskVa
- fvPF7M4gezmgPefKqpPBvTiULGBOT+buQEvEnCEJUuK+aMJlHzJSevSEbRYrBLfFgj1h
- NUidy59kTHG/1xvXryPCMHyrZAV65YMQgwrm+Dov7A7Bjry6xm6/W/uvHiOVY+dLyE4f
- 1AGDyo9m1u7o6zHHsZlRZzryzPAJyNWfzydOG9syhyr8CW24A1W7M8WWHzLPr1dQEFBc
- GF9tgrKI0P9cNqGi5nPk06d96UdFCVqZ+UmiC7d1hk3uWGrexe79MTOUMhCVAXOttR/O
- a33w==
+ bh=yqlF0e73IhEcX2gKNQKz17HOW9h+dGEhYA+z8LysMU0=;
+ b=M3j6mrl8X4Qj92r4Ls2gx+Jl9UzGpD1SgM9Cl/QY0b1zbeT204bTsR7iQ08RE9uurc
+ GL7/rhIEn/mLaaXMdyR6TiKxByQFWLHOXzbhsrOM37s7yUmJv/PVRQO0H7Djem5x+E50
+ eiSui6I6RdEkBjl9Idppwh0ufyEEKyz9h00yExDdzKPNewk4QHk8tE/RRGLa9vM2w/aa
+ KqhdoF39nqOP69d8u9eu57l6y3TSewLWR+VcYUZR5l7ETkY2fPxFoIhZ4OCGD/j/OwQz
+ N0537QRkuWrRZCutgkmP2IHrgJbsqE9buUnqj7NwLB/QaDO2JiIH8bT5SvWctgRZBuVr
+ Y+NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794505783; x=1795110583;
+ d=1e100.net; s=20260707; t=1794505764; x=1795110564;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+sqBpAzyqfEQcH9rl/bb7M8TwEN+j4MMtl69FAHbaUo=;
- b=KAPR+LCpkVsrmd36ssO+9UhyNjMctOLEnwcfBY37tgbXno35fl2rOajqrhmp2JZURI
- M5mYuG7gv6blixFA+7hbr/TzeJ9+YujqVc4TgvbFYp7QgLquqP4u3lTuWzNSvR62WmR8
- +CoIQkcTu0+eAB4zyxpkQDQHcLXYLtMHyGNiDbThebh0BbGU8gT0OIjSlsymn1tZxWcG
- EO4akT48/vDbJZ6l1vidazKrbx0oJ0HqxAfAzTfrIdkmfl/Wqyx0NlZWyU18Kg1TtKRD
- 0bFbh1XXgZBILli3rMXx93S9dZlsEH1nwGx2+ktj3kCNfzVlj/nltt+ksLf0tGsMzgqp
- Qwng==
-X-Gm-Message-State: APuU4Z/L6kFCN0sLKmOZWDfLlEEy+3Amc1/CVxagQtjuchi4nZApSVEu
- jLWqzh6qnwR6WRavn8UEkv/Pdhr9JNZxNnZks5VwEDzVJhDWWytkE04eaReQ1Q9s2tjXw6c0URR
- 1tngBf++HP2zqcWNErhmNMsOW5fOkwOwHQoxVwOzEoh5LdfbfDmcLSwWIGzdXuDStATrJxfZmFi
- 5bW7lYw1/qVNdaAHUzaT29qLOr33QEwJF4dKFJCSujkg==
-X-Gm-Gg: AYBFou1ac/DP0dHwLZ6lPbO3HpWmQmG0ZtmdaxwEAkLI/htS9poApifyLlq2lrePOca
- aaosLhUeM5n8hqd153nLVQZ4ZUy/klj1NPvuPdIKCjdjdo90forTb+WsXMv9F78qizRDpbqyXib
- ne+Yx6i6B91wbfll6bx3CDimHUONhhQRuU7qrVfSbNqMZsUcAtiUZqFnegpKM42jDL2RyYLoPt7
- RWjiHfgwrT2ZYseAw894sKKsOgmgSGkkgFf6RMFaeyMSPoUbF9TUhhLcCwzK6vspk5WAObbVAS1
- rCGCqh+NYjzdrZWONTRryUPPfUUh6h8viehc5/G3LC4IZ2VIJdqMSXw6u/UZIw7g6EFSl8YCHh2
- c0hqblKL/vKmFQcJWH45csnZO/MG5NXZvGlCgy0jaS5RkXg==
-X-Received: by 2002:a17:90b:2d08:b0:3ab:f2a9:cacd with SMTP id
- 98e67ed59e1d1-3b182f26e76mr6567040a91.49.1794505783041; 
- Thu, 12 Nov 2026 09:49:43 -0800 (PST)
-X-Received: by 2002:a17:90b:2d08:b0:3ab:f2a9:cacd with SMTP id
- 98e67ed59e1d1-3b182f26e76mr6567005a91.49.1794505782421; 
- Thu, 12 Nov 2026 09:49:42 -0800 (PST)
-Received: from tcalifan-p1g8.csb ([213.175.37.14])
+ bh=yqlF0e73IhEcX2gKNQKz17HOW9h+dGEhYA+z8LysMU0=;
+ b=0Jy+SPWnPQAtWfENhk1XhmLQgThrW+KTsmNs69D+n9TNkBhUP+EzwC0XRIvkYjaXc5
+ l/HyCfEoKukRA8FlHZf6vbfW143aaM0x6EqZCf4y8cjygpraeUhbiGKZXbM1moIZIoTj
+ CeaP+i4mOeEebOO3MbwbKVgqo0b8ZLHw7oSR5Fu2/eoES38lzua/7hoUQnXf/jwghYw8
+ UE0hY+sHKsdYihIcOARmDquOpkst5rMoQaQW8ukPu7hu4P27CFN4XQ4Jau3jKTgWPNrC
+ oWVuBzoYT2b+ZbD4jxVUriN7ew2bJgv9erQk5z0BweAMj06jI4uLqEDCNYHMzMyXJlPJ
+ CdQg==
+X-Gm-Message-State: APuU4Z95aZzfWoCUHsF77x9ZOTrbIXmbpzD2GQi0VCfanXHyOYEYZffQ
+ e4dFOa4YFob1VTT0gfvcUPRZQ2Sd0yK+9ttU7JN9nx+RKZU3g0xc2U7c8WtlVpANEuyiy4S3Rqz
+ tm2gsXH7gRSC8F1p6nA8N420ZUkvANFE2d7yDi/joljfanWzcr3+UkCariD/86B0Kk7hneC6KRO
+ svP1k1fr9a5CY4HqkYy4X6qhd5zg2L+x6vxL6nj9/FVw==
+X-Gm-Gg: AYBFou3uKmwiNGi3nuOLlwqvw8AcujRC6FL56Jam+lPbADq2+wyb6ed9Q3l2Hd0FtUx
+ ELoappenhhXCBDpoe0A2EKtEK0S3NXodf6ofVbCoXneYadE8eHjvmnk2i7VeCTmTu1Fd5cKHcID
+ 53+F1Sanqu+4lBgY+1jucNViqJv4dF0l2XdV1pdAayMXbfP25zUhGzt39FTnOu3cOCDuK0IyHDT
+ lmvpugMktQCPMDa1xulxLyV+R/1CNVp4XzbbPFCz8BYE938EqC8yi01vQ39fb6f0IP9SbP+q41w
+ hRrvTPkk9A6Tvl5BYqNtKooiP7d8+PxYP2joA8qhvk5bROIVaODU0aXjy8vjE0Wx+dMla3451aw
+ PbDoOdpjC17p/INg5sJk/7ePj/F7wpymeSHG9vA4uymITeQ==
+X-Received: by 2002:a17:90b:37c3:b0:3b0:c11a:9026 with SMTP id
+ 98e67ed59e1d1-3b18300a02emr6487997a91.55.1794505764214; 
+ Thu, 12 Nov 2026 09:49:24 -0800 (PST)
+X-Received: by 2002:a17:90b:37c3:b0:3b0:c11a:9026 with SMTP id
+ 98e67ed59e1d1-3b18300a02emr6487972a91.55.1794505763678; 
+ Thu, 12 Nov 2026 09:49:23 -0800 (PST)
+Received: from tcalifan-p1g8.csb ([213.175.46.86])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b197d0fdbdsm5664821a91.10.2026.11.12.09.49.36
+ 98e67ed59e1d1-3b197ce55c1sm5557459a91.3.2026.11.12.09.49.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Nov 2026 09:49:41 -0800 (PST)
+ Thu, 12 Nov 2026 09:49:22 -0800 (PST)
 From: Tommaso Califano <tcalifano@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -91,9 +91,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Junjie Cao <junjie.cao@linux.dev>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Tommaso Califano <tcalifano@redhat.com>, qemu-stable@nongnu.org
-Subject: [PATCH 3/9] hw/usb/dev-mtp: Check length of class control request
-Date: Thu, 12 Nov 2026 18:49:00 +0100
-Message-ID: <20261112174907.158825-4-tcalifano@redhat.com>
+Subject: [PATCH 1/9] hw/usb/dev-mtp: Fix recursive delete of directories
+Date: Thu, 12 Nov 2026 18:48:58 +0100
+Message-ID: <20261112174907.158825-2-tcalifano@redhat.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261112174907.158825-1-tcalifano@redhat.com>
 References: <20261112174907.158825-1-tcalifano@redhat.com>
@@ -128,37 +128,56 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-usb_mtp_handle_control() reads a 16-bit event code from the request
-data without checking that the host actually sent it. A request with
-wLength < 2 makes the device act on stale bytes left in the control
-buffer.
+usb_mtp_deletefn() only recursed into the grandchildren of the target,
+never deleting the files directly inside it. The directory was left
+non-empty, so rmdir() on the host always failed, and objects nested more
+than two levels deep were silently kept.
 
-STALL requests that are too short to hold the event code.
+Recurse into every child of the target instead. Since the root directory
+can now actually become empty, skip the root object itself: rmdir()'ing
+it and freeing it would leave s->objects empty.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 47bff13cea8d ("dev-mtp: add support for canceling transaction")
+Fixes: ec6206a68f70 ("usb-mtp: Support delete of mtp objects")
 Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4529
 Suggested-by: Hui Peng <https://gitlab.com/benquike>
 Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
 ---
- hw/usb/dev-mtp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/usb/dev-mtp.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
-index 1c14770a9c..1a26f681ce 100644
+index 8507e516ab..bc5a6f0891 100644
 --- a/hw/usb/dev-mtp.c
 +++ b/hw/usb/dev-mtp.c
-@@ -1525,6 +1525,10 @@ static void usb_mtp_handle_control(USBDevice *dev, USBPacket *p,
+@@ -1152,19 +1152,20 @@ enum {
  
-     switch (request) {
-     case ClassInterfaceOutRequest | 0x64:
-+        if (length < sizeof(*event)) {
-+            p->status = USB_RET_STALL;
-+            break;
-+        }
-         if (*event == EVT_CANCEL_TRANSACTION) {
-             g_free(s->result);
-             s->result = NULL;
+ static int usb_mtp_deletefn(MTPState *s, MTPObject *o, uint32_t trans)
+ {
+-    MTPObject *iter, *iter2, *iter2_next;
++    MTPObject *iter, *iter_next;
+     int ret = 0;
+ 
+     /*
+      * TODO: Add support for Protection Status
+      */
+ 
+-    QLIST_FOREACH(iter, &o->children, list) {
+-        if (iter->format == FMT_ASSOCIATION) {
+-            QLIST_FOREACH_SAFE(iter2, &iter->children, list, iter2_next) {
+-                ret |= usb_mtp_deletefn(s, iter2, trans);
+-            }
+-        }
++    QLIST_FOREACH_SAFE(iter, &o->children, list, iter_next) {
++        ret |= usb_mtp_deletefn(s, iter, trans);
++    }
++
++    /* Avoid deleting the mtp root */
++    if (o->parent == NULL) {
++        return ret ? ret : DELETE_SUCCESS;
+     }
+ 
+     if (o->format == FMT_UNDEFINED_OBJECT) {
 -- 
 2.56.0
 
