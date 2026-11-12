@@ -1,95 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21762606A32A
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 18:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DB5606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 18:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=b5vwkg7Y
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ZXm11Xt8;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DyafAo0l
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRZLp-0001Dl-1k; Thu, 12 Nov 2026 13:16:45 -0500
+	id 1xRZPW-0004qo-UJ; Thu, 12 Nov 2026 13:20:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xRZLc-0001CU-LV
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:16:32 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xRZLa-0006Yp-S7
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:16:32 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-3adac5c10e3so42891a91.0
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 10:16:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xRZPU-0004nw-0k
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:20:32 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xRZPS-0002GJ-5s
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:20:31 -0500
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6ACFZCFB2593491
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 18:20:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=FCgIjv/pWl2yYBVV36DVmP
+ tLkMLR7YdVzxsgNMr28Ko=; b=ZXm11Xt8iwl3976VkBSbzudRnUFQVhOzN9I1Ni
+ JsQe/2dd6aIWLzKi3cHTtm/6iL4PKVd9Wa0yz1khy7ec/dFoVTm20Z7//K6v/oXa
+ LqKV8u8GcTO+baNiZ946qLdZuchkwpMd43vXIWK+OOh5/HtYYOAjTVElb//p5NPS
+ YX4cLUk1gRObeF0KFonFwEAsCEt3mt7IA/00gZNSpE2ccpeSkipxCvJ0se1ZK/nT
+ HjFSownseIJLdKOXRD6HZMPTUzKMVEa2zUOzHNBcVTYaDuqKhwgpO2Fz9dS//sqk
+ 41bCw239Abevae+xxsF7kzmfhz3bEw3cC4mzT9EXjBfshJIw==
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hwbx31qx7-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 18:20:27 +0000 (GMT)
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-7d2c7a903a1so14545137.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 10:20:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794507387; x=1795112187; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=HVY2mygvzjfaTe8Ilxp7jURdd69HcM0iQlAQO87fJ/c=;
- b=b5vwkg7YykOGM33Fqb+CKpjNQrhvvfbVqHDAxZReIIEZ4dFCZ8oebKiq4yy41aIdve
- rkE9eUyeI0uarOvzzsybXPwSK6Ifx3zk7yvn67ildy6Mgs2+oZzrGLUCsHxOzIVXNNYt
- K/CQNEnxGdxzXncUzRAWomUP/5X/qsd5JttHqwB/ldbzGZf7la6AgE1MMNxuOpHEHmB0
- 8DWgNklF+1ZxwHsYKeYC8vv+gtGjyskKhde9Q8ipggwW8hy2EPXjm3sBSvH3GfN6ndLM
- TLN3NBC47MiZoKEylqIAhcQ+wi0HKSPJs7NwXvwayltwi24xvl4hvAVTZTONW3enwSSi
- /2Aw==
+ d=oss.qualcomm.com; s=google; t=1794507627; x=1795112427; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=FCgIjv/pWl2yYBVV36DVmPtLkMLR7YdVzxsgNMr28Ko=;
+ b=DyafAo0lm91yZWfmgQ7HXwUS9J481z8kvmU2Fc8j9/yKvJ86Yk2VqM8cIjdkJFV08U
+ jEcq4XKM/3ovoVzG9r3CBLqDFHamiA+sS9s7vE6f0nUzUi9n4/3X3VV9tRJokL9nCy1L
+ 48LWfe4UdI1d7jE7mQ6fzxmwGdasJDPftVtD9JbLdCIC35SzdHd3UQxoz2/PjP8FXF08
+ ALPJzYkuPRjwsf1dVmHvMbKzE+zvXyHirRs4/3u5hl5rDYMSZeW+MZUtcubgy0R4UcFE
+ t8BPD7NZGmtGxSIXLjGRnDil/JXPOT3r1wWls75e7qepzDqYnp9EmSVfHhE+tG5hnYFO
+ mQUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794507387; x=1795112187;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=HVY2mygvzjfaTe8Ilxp7jURdd69HcM0iQlAQO87fJ/c=;
- b=WfF/PBgSLiASZOMhkEpb1dlzrJmGRW1zaD/v8d4S7rt3V4pi5K0Zf3RSQract2LZTm
- E83Nc4+tGz0ZlGK0fi954YL6pUaCBRu9Eq3xfR/GFet4rrxbM5oKczWtPpBdmTqHAjx5
- s197UWwOfni76UPAFp9kriRIltpnexDenfLXQF8y5FxCC1PfHk0gJFpaOmHb3FVHN5qf
- GHc8FjVv8CndsX0BLeQj0T71G6QeAOq7BcF9vaIa3gy86/IgREiy01NWsJXqx3gluVls
- zIweC59GiHcmVAO7Pa7l2yZFcMxk4Q08KidAppgUdTu3aSX432tpVLE+L3xsbDefvetN
- aOQA==
-X-Forwarded-Encrypted: i=1;
- AL+hErEqZ1NNCxbcOU08awjmXALEF/wrTATQuYLFCm5xYPmrZaoz0iZ13AoZnYfVO/5Hu3a27BYIiKBpmg1W@nongnu.org
-X-Gm-Message-State: APuU4Z8SsmW5XJeMSMECXEaaQ3eaO0p9fM4gCkLT5cAYxEwh/vZWCNLm
- qVdjNjkqW9XGnclVRvfbA3LQn2fon2IJgHpETGHVk4P8Yx2NU+sakWjcVKIhNSrBk1sGwH3nCW6
- gZQLj8P8=
-X-Gm-Gg: AYBFou0ilkprkr+syHS6T8jtBQNbZHNbiRavMsEBl+/ortXHZOrKQKL7GFNPK45LniP
- GBYzrGElb1t3IA8MTDkItQlalWdN79Dt+liLECYh6rUqx7gvcFtxpFpyvg2vnR0h3c+NoNxrN4S
- qQgFclWe4GewuSFxVTpkVaHg+rAwfyFeafRFNAp7r+ZxQe45NFpIUa6hsl7EUTxItmuGKfJakKY
- W3QQfhzwcnFW4JUi6ZLfHjlemKcISe11tWYbl5KV8Iwl7CCo5PQtR8wT3DBEGwdxNnllNifiW10
- JPqXRVl3BBWJSJcwJN2tWDD1TWpYDCxsjxC8DClRm9IJHrKNAScVto0R4uy12WY9PSUlK7QwshJ
- iOXU12qX6iSXSJPVxAoZLX5dq/y356zgvm51njN3FxezJ1ibmmxzFu15XYCr5snl8azzDXZ47ly
- tMsxYwOQ/QXm5Sm75qAyi837qbb/F95mfe/3Yq/Yjbtd6A59u5WzCan4Z9p5jsT7JzrcLHc2+f0
- XzwtiEDF3+mWA1G+uzQ9EgVP6cBk09pIe4Ks8+orsiPkYRLMkSkJckAeFG/gNkxfbqNtjYg/uYi
- L4XscouNYhXRXQsIbY7vOwbhgG5ocsSLkvFZ6LRkyfI=
-X-Received: by 2002:a17:90b:3904:b0:3b0:99f8:eba8 with SMTP id
- 98e67ed59e1d1-3b182f8ba20mr6460918a91.66.1794507387373; 
- Thu, 12 Nov 2026 10:16:27 -0800 (PST)
-Received: from [172.31.6.238] ([69.196.88.181])
+ d=1e100.net; s=20260707; t=1794507627; x=1795112427;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=FCgIjv/pWl2yYBVV36DVmPtLkMLR7YdVzxsgNMr28Ko=;
+ b=EfNVW5rOXbQTaGP4ansUhKl8K+hTnXO8rtFfHgrJUDX9toQWmnYgoNqdp/sXY9ofaR
+ /CbJgTRHhzl5zmIREqcY0vCFJVWFAjYYe1aZH0Jc6pwhRSWQ9RuTpTycAVaWlQdtRGdV
+ rjUgHSMfEKNNFBC6v/2XOat/EHS4TopXJUutGp6znNfeL9FnZB57nR9MbyCasa3tqoO+
+ weVy/7pWknxqQ8nWci7Yyxi+MZG1SIceR7OYkJILEomn/OVTn9cOE/i6yy90LxSdbs20
+ G9xI88ZHQpMN3DztqcduvMT38aUlWaiRfOZyswPA/r9wWMhVHm6NhLgSU1EL2VT4w59l
+ Vpzg==
+X-Gm-Message-State: APuU4Z930PWDW8xxVX7hSK9OYd1rd0dJ+CRlbR/Uc2j6MWTN3Jye2t9b
+ wraUgPAXf3dOjm9V2tV2wAQiCBcaR0w7IH3RmjsFLb25P1GG92KEXWERUVmDxw+6LJ0riSB51wW
+ fg9XzhC2Mg+duaUOnz5zmXcwRpRwbBoVnbblqMzTEos6IpVd0gJ5TGqrCgQNAzIbxEfzJ
+X-Gm-Gg: AYBFou3gGtH9wUJe9xv+jNVTbx0OpjGVWg5AouwSTF2QdMiJjMh082P3NExNuc2y+qx
+ gAB+fPiw4d2YDLAaUDIMaJNdkHmg0mSxDNvxK0S7U0nZA1h1NJOmrUOn2DWNbVONqTzkjfz9Dm9
+ 0PxUhD5ttn4QfOFZ4zXNoQJXdCzbZaIGZcxxveoF1dpBeUMeVe99SvwhhDqIZZ7uItI79CAFRMu
+ yL5aJAMv2KjBDaTJoLPFGYRp1pkAiVsliMtDm3e1oNM094KsllSBydPsDySmKIFB/6RbmcDsIdO
+ JrhvTkp8Sg5y23UvPiFEQOky0Yhux0514LDZzOrqXcbORdVylrimPSC+Qlla9UIsLHKceIF9BP1
+ mkzJjauoSS+j/1dndq/AhsmmVNilKjAwqfQxYEzGX1Y/yoc3gHUwpkbsALTLKBdSd2Wea2Q/+87
+ 4BxaEeIePjBUstwg==
+X-Received: by 2002:a05:6102:f9f:b0:7cc:1192:5636 with SMTP id
+ ada2fe7eead31-7d64d6c643dmr13972137.12.1794507626654; 
+ Thu, 12 Nov 2026 10:20:26 -0800 (PST)
+X-Received: by 2002:a05:6102:f9f:b0:7cc:1192:5636 with SMTP id
+ ada2fe7eead31-7d64d6c643dmr13957137.12.1794507626088; 
+ Thu, 12 Nov 2026 10:20:26 -0800 (PST)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b197d27cf1sm5906951a91.12.2026.11.12.10.16.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Nov 2026 10:16:26 -0800 (PST)
-Message-ID: <820539b6-d161-43ff-8889-cb40c1ecc6f2@linaro.org>
-Date: Thu, 12 Nov 2026 11:16:24 -0700
+ 5b1f17b1804b1-4bb4e29daa5sm93110075e9.12.2026.11.12.10.20.24
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 12 Nov 2026 10:20:25 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Yonggang Luo <luoyonggang@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH-for-12.0] linux-user/microblaze: Unify both endianness under
+ qemu-microblaze
+Date: Thu, 12 Nov 2026 19:20:23 +0100
+Message-ID: <20261112182023.87415-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.55.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/8] NBD patches through 2026-11-10
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-References: <20261111035200.1751734-10-eblake@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261111035200.1751734-10-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=S+5MU4sP c=1 sm=1 tr=0 ts=6af6036b cx=c_pps
+ a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=zCytL104nfFYwS_0angA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=gYDTvv6II1OnSo0itH1n:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA3MyBTYWx0ZWRfX503jhS3TpVmR
+ tR6aMQa6HF+jy+rxKKEhC2St8bDO9fEcxkrrb8B5ExbW58QC5R1ymNv/KPg7cNfR6RkCHQoTc5y
+ 7wktm2WTLSBLXGd2V6fqHw5saTg3yCjVpXTgUNnCg3AZkgcvnJ8R67d0q5jOCumaGPebC1tk4XS
+ ZwM0+j9vdp45+4OOSfTSXJcc1vXgqIRWTgwLGcKP+XuFhkEg4vrEOegD69zjsf4L8iEEV9Tlrr9
+ 0otwT/+7x1MuQjM1NT84VOEsEBXH3QjM0VC0g2JQLvS22+5Ib7cQ4qzHMMfqMWf3HV5/fkjs8uJ
+ zhmr2xhibiesR6sGzn7tULYu9zwqvugOAoieuV+NAcNVfvuUDToeYQr0Haxg/cGvjb9lUO8r5rH
+ NbZxBqVP2y1/EaddVIhN2kw9SiqJ/AVJa/2W0WqaWs0Tjl8MnIHaHPX/OBYuJSs9mUwgNHdYmZG
+ pZTkphMdsPPvgMyL23g==
+X-Proofpoint-ORIG-GUID: dRjMafT6Z0i0rQCzIZN8ZSZ8zU7n5s1w
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA3MyBTYWx0ZWRfX4G0cqIagKsNA
+ Wx6xHT0ASwwAKUmjaDtJ/R/b4M/z5D++qjCEjGsLwPjpp5ce7SelGOqe/krBz2zcwmwXj7E4rgo
+ Lski1s/F9KPC6WcYgppTHlAaIEDgLJU=
+X-Proofpoint-GUID: dRjMafT6Z0i0rQCzIZN8ZSZ8zU7n5s1w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-12_02,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ adultscore=0 spamscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611120073
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,45 +153,85 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/10/26 19:51, Eric Blake wrote:
-> The following changes since commit 723622bedb0b423de7d1c61ebbe6e7a71934949c:
-> 
->    Merge tag 'for-upstream' ofhttps://repo.or.cz/qemu/kevin into staging (2026-11-09 11:58:07 -0800)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/ebblake/qemu.git tags/pull-nbd-2026-11-10
-> 
-> for you to fetch changes up to 1be14f69a8350349388763f83578f071fdbfee07:
-> 
->    iotests: Add another nbd-robustness test (2026-11-10 11:20:24 -0600)
-> 
-> ----------------------------------------------------------------
-> NBD patches through 2026-11-10
-> 
-> A few bug fixes:
-> - Guillaume Vincke: improve connection retry if NBD client hangs up quickly
-> - Eric Blake: fix two low-severity CVEs with non-compliant NBD clients
+Enable runtime byte-order selection for microblaze-linux-user
+and retain qemu-microblazeel as a compatibility alias, removing
+the separate microblazeel-linux-user build target.
 
-New failure:
+BFLT stays big-endian: the format has no endian marker.
 
-https://gitlab.com/qemu-project/qemu/-/jobs/17979973534#L298
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+Based-on: <20261112180859.85380-1-philmd@oss.qualcomm.com>
+---
+ configure                                   | 3 +++
+ configs/targets/microblaze-linux-user.mak   | 2 ++
+ configs/targets/microblazeel-linux-user.mak | 6 ------
+ linux-user/microblaze/elfload.c             | 4 ++--
+ 4 files changed, 7 insertions(+), 8 deletions(-)
+ delete mode 100644 configs/targets/microblazeel-linux-user.mak
 
-137/150 block-qcow2-optional+block-slow - 
-qemu:io-qcow2-nbd-stale-connection          FAIL             2.37s 
-exit status 1
+diff --git a/configure b/configure
+index 14b484908919..051301a62f77 100755
+--- a/configure
++++ b/configure
+@@ -1114,6 +1114,9 @@ else
+                     armeb-linux-user)
+                         error_exit "Target '$target' is no longer supported; use 'arm-linux-user' instead"
+                         ;;
++                    microblazeel-linux-user)
++                        error_exit "Target '$target' is no longer supported; use 'microblaze-linux-user' instead"
++                        ;;
+                     *)
+                         error_exit "Unknown target name '$target'"
+                         ;;
+diff --git a/configs/targets/microblaze-linux-user.mak b/configs/targets/microblaze-linux-user.mak
+index 31150f980c8f..f6f2703661b6 100644
+--- a/configs/targets/microblaze-linux-user.mak
++++ b/configs/targets/microblaze-linux-user.mak
+@@ -2,6 +2,8 @@ TARGET_ARCH=microblaze
+ TARGET_SYSTBL_ABI=common
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
++TARGET_RUNTIME_ENDIAN=y
++TARGET_USER_ALIASES=microblazeel
+ TARGET_HAS_BFLT=y
+ TARGET_XML_FILES=microblaze-core.xml microblaze-stack-protect.xml
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/microblazeel-linux-user.mak b/configs/targets/microblazeel-linux-user.mak
+deleted file mode 100644
+index 5dcd4b5b183e..000000000000
+--- a/configs/targets/microblazeel-linux-user.mak
++++ /dev/null
+@@ -1,6 +0,0 @@
+-TARGET_ARCH=microblaze
+-TARGET_SYSTBL_ABI=common
+-TARGET_SYSTBL=syscall.tbl
+-TARGET_HAS_BFLT=y
+-TARGET_XML_FILES=microblaze-core.xml microblaze-stack-protect.xml
+-TARGET_LONG_BITS=32
+diff --git a/linux-user/microblaze/elfload.c b/linux-user/microblaze/elfload.c
+index bdc0a953d593..a0ef859e1728 100644
+--- a/linux-user/microblaze/elfload.c
++++ b/linux-user/microblaze/elfload.c
+@@ -8,8 +8,8 @@
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+-    return TARGET_BIG_ENDIAN ? "any,little-endian=off"
+-                             : "any,little-endian=on";
++    return target_big_endian() ? "any,little-endian=off"
++                               : "any,little-endian=on";
+ }
+ 
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
+-- 
+2.55.0
 
-{"error": {"class": "GenericError", "desc": "write failed: Input/output 
-error"}}
-
-
-r~
 
