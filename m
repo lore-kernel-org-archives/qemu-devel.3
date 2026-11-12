@@ -1,37 +1,37 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60B9606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 11:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150DB606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 11:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XqaRbJLs
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ouhr67ZE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRTKn-0005sB-K8; Thu, 12 Nov 2026 06:51:17 -0500
+	id 1xRTKj-0005SF-LM; Thu, 12 Nov 2026 06:51:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xRTJm-0004Pg-4L; Thu, 12 Nov 2026 06:50:18 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1xRTJw-0004aV-Tx; Thu, 12 Nov 2026 06:50:25 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xRTJg-0001MH-K1; Thu, 12 Nov 2026 06:50:11 -0500
+ id 1xRTJv-0001bn-1A; Thu, 12 Nov 2026 06:50:24 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 462AA41B5B;
- Thu, 12 Nov 2026 11:50:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C88D1F00A05;
- Thu, 12 Nov 2026 11:49:57 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 1B73141F35;
+ Thu, 12 Nov 2026 11:50:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055E91F00A05;
+ Thu, 12 Nov 2026 11:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1794484200;
- bh=L0u8i04DG/rWZLaQ0bQ7qztHk7Qv92DN7rVVoZS/Vv0=;
+ s=k20260515; t=1794484221;
+ bh=Esw70AkxNjTsmKH8cQHI6dH7Fui24yncSQmZ2LGzH5A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XqaRbJLsxckvwgDEcYZxUQg3yS/7wqgVzDeBXkXxl8oXeFhyJON7WDEi6k79PkQd1
- 2aK/BQwHPnC5WwssJvd+QBIYqyUm0pQFfr+pqRhOy5DWwME/6ydBKhkwFPOzzlI4cm
- /eJfuyk/Gos2yTWwFim1rXr9yUx3sp8pOkI/+fPmJgOrHinMp2B1OaGqBOK9HxJXC7
- JDtOoIM2oFJm+TnC67mfzpfU2OWo7Jpcq43oPzneYE69lLsOz0g3PBDlwJid0Kcl97
- 3hAw58fA3h2FjJqKacV9yOa22Dh1Cmk+xzIW/NUjHher0uauJ5J9TsT3XWa7UuHo8h
- rlk19j0wb/Lzw==
+ b=Ouhr67ZEv6Z02fve0lRnJ+GS2qIK6TFKsEmV0KfTri0CCOl6iaEpruLO31NArHLMs
+ RAfV/DexgWlI/Q+r6goppxkQ7abIexBWHWSZfztt8Q9hT7JdoZA++AXuoNOpXNk7sP
+ orXCva/WA7+TogzIyTr75Zew7haTysqULT4reP9nSKXVfvSzVQsrWzcEzddlOIgWFa
+ 5kzQbwGBuPTtLVCxD5dGQLXQOpNMgF32EOG4aVzwgtCP8LDWGxVNmEhS8LGmceiaqO
+ mNY9px21TdN6Nzlcgr/QuvE97eof2so6lLlkO6DqTFSJOGEHn72GIEDh0UZToTUkad
+ giUQYZUzdPnQw==
 From: Niklas Cassel <cassel@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Damien Le Moal <dlemoal@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
@@ -42,17 +42,18 @@ Cc: Damien Le Moal <dlemoal@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
  Sam Li <faithilikerun@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Fam Zheng <fam@euphon.net>, Jeuk Kim <jeuk20.kim@samsung.com>,
  Daejun Park <daejun7.park@samsung.com>, Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH v17 1/9] docs/qcow2: add the zoned format feature
-Date: Thu, 12 Nov 2026 12:49:10 +0100
-Message-ID: <20261112114918.1269168-2-cassel@kernel.org>
+Subject: [PATCH v17 7/9] virtio-blk: report zone errors with their zone status
+ codes
+Date: Thu, 12 Nov 2026 12:49:16 +0100
+Message-ID: <20261112114918.1269168-8-cassel@kernel.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261112114918.1269168-1-cassel@kernel.org>
 References: <20261112114918.1269168-1-cassel@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -78,79 +79,116 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Sam Li <faithilikerun@gmail.com>
+virtio-blk completes a failed write with VIRTIO_BLK_S_IOERR, and a
+failed zone append or zone management request with
+VIRTIO_BLK_S_ZONE_INVALID_CMD. It never reports the zone status codes
+that virtio 1.4 (5.2.6.2) requires for a write off the write pointer
+or for a request that exceeds a zone resource limit.
 
-Add the specs for the zoned format feature of the qcow2 driver.
-The qcow2 file then can emulate real zoned devices, either passed
-through by virtio-blk device or NVMe ZNS drive to the guest
-given zoned information.
+When VIRTIO_BLK_F_ZONED is negotiated, map the zone errors of the block
+layer to them:
 
-Signed-off-by: Sam Li <faithilikerun@gmail.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+  BLK_ZE_UNALIGNED_WRITE  VIRTIO_BLK_S_ZONE_UNALIGNED_WP
+  BLK_ZE_BOUNDARY         VIRTIO_BLK_S_ZONE_INVALID_CMD
+  BLK_ZE_OPEN_RESOURCE    VIRTIO_BLK_S_ZONE_OPEN_RESOURCE
+  BLK_ZE_ACTIVE_RESOURCE  VIRTIO_BLK_S_ZONE_ACTIVE_RESOURCE
+  BLK_ZE_FULL             VIRTIO_BLK_S_ZONE_INVALID_CMD
+
+Other errors keep their status code. A FINISH that exceeds a zone
+resource limit also gets a zone resource status code, which 5.2.6
+defines for any zone operation. Zone errors of writes are reported
+regardless of the rerror/werror policy, as they are the deterministic
+result of the request.
+
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
-Changes by Niklas Cassel:
-- do not document a zone append size limit, which the driver no longer
-  stores in the image
----
- docs/system/qemu-block-drivers.rst.inc | 44 ++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ hw/block/virtio-blk.c | 49 +++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 45 insertions(+), 4 deletions(-)
 
-diff --git a/docs/system/qemu-block-drivers.rst.inc b/docs/system/qemu-block-drivers.rst.inc
-index 675daa72f9..70b9b8d1b4 100644
---- a/docs/system/qemu-block-drivers.rst.inc
-+++ b/docs/system/qemu-block-drivers.rst.inc
-@@ -172,6 +172,50 @@ This section describes each format and the options that are supported for it.
-     filename`` to check if the NOCOW flag is set or not (Capital 'C' is
-     NOCOW flag).
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 9b7c84fda6..81c68b0ee3 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -78,11 +78,45 @@ void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status)
+     virtio_notify(vdev, req->vq);
+ }
  
-+  .. option:: zone.mode
++/*
++ * Map a zone error (see include/block/block-common.h) to its virtio-blk
++ * status, or return VIRTIO_BLK_S_OK if @error is not one.
++ */
++static uint8_t virtio_blk_zone_status(VirtIOBlock *s, int error)
++{
++    if (!virtio_vdev_has_feature(VIRTIO_DEVICE(s), VIRTIO_BLK_F_ZONED)) {
++        return VIRTIO_BLK_S_OK;
++    }
 +
-+    If this is set to ``host-managed``, the image is an emulated zoned
-+    block device. This option is only valid for emulated zoned device files.
++    switch (error) {
++    case BLK_ZE_UNALIGNED_WRITE:
++        return VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
++    case BLK_ZE_BOUNDARY:
++    case BLK_ZE_FULL:
++        return VIRTIO_BLK_S_ZONE_INVALID_CMD;
++    case BLK_ZE_OPEN_RESOURCE:
++        return VIRTIO_BLK_S_ZONE_OPEN_RESOURCE;
++    case BLK_ZE_ACTIVE_RESOURCE:
++        return VIRTIO_BLK_S_ZONE_ACTIVE_RESOURCE;
++    default:
++        return VIRTIO_BLK_S_OK;
++    }
++}
 +
-+  .. option:: zone.size
-+
-+    The size of a zone in bytes. The device is divided into zones of this
-+    size with the exception of the last zone, which may be smaller.
-+    Defaults to ``256 MiB``.
-+
-+  .. option:: zone.capacity
-+
-+    The initial capacity value, in bytes, for all zones. The capacity must
-+    be less than or equal to zone size. If the last zone is smaller, then
-+    its capacity is capped. Defaults to ``zone.size``.
-+
-+    The zone capacity is per zone and may be different between zones in real
-+    devices. QCow2 sets all zones to the same capacity.
-+
-+  .. option:: zone.conventional_zones
-+
-+    The number of conventional zones of the zoned device. Defaults to ``0``
-+    (all zones are sequential-write-required).
-+
-+  .. option:: zone.max_active_zones
-+
-+    The maximum allowed active zones (zones in the implicit open, explicit
-+    open, or closed state).
-+
-+    The max active zones must be less or equal to the number of SWR
-+    (sequential write required) zones of the device. Defaults to ``0``,
-+    meaning no limit.
-+
-+  .. option:: zone.max_open_zones
-+
-+    The maximum allowed open zones (zones in the implicit open or explicit
-+    open state). The max open zones must not be larger than the max active
-+    zones. Defaults to ``zone.max_active_zones`` if that is set, otherwise
-+    ``0`` (no limit).
-+
-+    If the limits of open zones or active zones are equal to the number of
-+    SWR zones, then it is the same as having no limits.
-+
- .. program:: image-formats
- .. option:: qed
+ static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
+                                       bool is_read)
+ {
+     VirtIOBlock *s = req->dev;
+-    BlockErrorAction action = blk_get_error_action(s->blk, is_read, error);
++    uint8_t zone_status = virtio_blk_zone_status(s, error);
++    /*
++     * Zone errors are the deterministic result of the request, so they are
++     * reported whatever the rerror/werror policy: stopping the VM would only
++     * make the request fail the same way again when it is retried on resume,
++     * and ignoring the error would hide the failure from the guest.
++     */
++    BlockErrorAction action = zone_status != VIRTIO_BLK_S_OK ?
++                              BLOCK_ERROR_ACTION_REPORT :
++                              blk_get_error_action(s->blk, is_read, error);
+ 
+     if (action == BLOCK_ERROR_ACTION_STOP) {
+         /* Break the link as the next request is going to be parsed from the
+@@ -94,7 +128,8 @@ static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
+             s->rq = req;
+         }
+     } else if (action == BLOCK_ERROR_ACTION_REPORT) {
+-        virtio_blk_req_complete(req, VIRTIO_BLK_S_IOERR);
++        virtio_blk_req_complete(req, zone_status != VIRTIO_BLK_S_OK ?
++                                     zone_status : VIRTIO_BLK_S_IOERR);
+         block_acct_failed(blk_get_stats(s->blk), &req->acct);
+         g_free(req);
+     }
+@@ -781,7 +816,10 @@ static void virtio_blk_zone_mgmt_complete(void *opaque, int ret)
+     trace_virtio_blk_zone_mgmt_complete(vdev, req,ret);
+ 
+     if (ret) {
+-        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
++        err_status = virtio_blk_zone_status(s, -ret);
++        if (err_status == VIRTIO_BLK_S_OK) {
++            err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
++        }
+     }
+ 
+     virtio_blk_req_complete(req, err_status);
+@@ -841,7 +879,10 @@ static void virtio_blk_zone_append_complete(void *opaque, int ret)
+     uint8_t err_status = VIRTIO_BLK_S_OK;
+ 
+     if (ret) {
+-        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
++        err_status = virtio_blk_zone_status(s, -ret);
++        if (err_status == VIRTIO_BLK_S_OK) {
++            err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
++        }
+         goto out;
+     }
  
 -- 
 2.56.0
