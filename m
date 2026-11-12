@@ -1,128 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA3A60A262B
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA0F606A327
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VWLg2EfK;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=VrS8Gu/8
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=SurB2W/g
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRV23-0000fB-23; Thu, 12 Nov 2026 08:40:04 -0500
+	id 1xRV5J-0004bo-60; Thu, 12 Nov 2026 08:43:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xRV1X-0008ID-Nr
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:39:35 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xRV5H-0004Xv-0x
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:43:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xRV1V-00026w-Ql
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:39:31 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xRV5F-0004iQ-1P
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:43:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794490768;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NILj5bb2Nn1aI8eODnT9FcRGCzgPWojm49BJ6cezxF0=;
- b=VWLg2EfK+YL0w3JhO+mZkX1H/dsDgV2nl5U40eOxQ7AvMa+4aT6SMLpk9fQ80L98zDnfAR
- gxV2w3GfSIWibe25lLFGKNE/T86euI+yj95/x4qTZxPuOTFlwleCMcA+qOg5JWwiH8HsBx
- FV1U6hz2wAYcVP9T+Ok6cj+FpXyoja4=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-eth96f65OJyukY63laXAOw-1; Thu, 12 Nov 2026 08:39:26 -0500
-X-MC-Unique: eth96f65OJyukY63laXAOw-1
-X-Mimecast-MFC-AGG-ID: eth96f65OJyukY63laXAOw_1794490766
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2e9995cea88so39929425ad.0
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 05:39:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794490766; cv=none;
- d=google.com; s=arc-20260327;
- b=nl0kn4BJekm57F5d1IHp8CQUvlm4Rvptov2HDfZw/TSmgbPJO5uM8a+temXqbLy/ig
- bwqErsMLIclq1I11imjaq1njvOkfLhVLrg/6Jq+Kdi/7w8onHPRplQw5md4r6xvLisfX
- /GbXmPc3Le5ea5ohbaUAWw1wL5Kj+/TU9VrJ3c5JJ7KYn8IFsldWxuKsVOylVpd2Qd3a
- QPRV2XIPKCl8rsTGYDrNhlaXixWUQDQ996BEZbw2bYM8ag2PP57HCeT52P452vbWRiOk
- wkKruiRYc4YfkKDirRsOYsyKHCGm+gKpf5A6k2vuFxAHnMS1RnhCb2m9OOgtEwBkQNUD
- UAiA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=NILj5bb2Nn1aI8eODnT9FcRGCzgPWojm49BJ6cezxF0=;
- fh=6KN3gJI+IDvs7KnrTvUIdbZOaA+eVltlqMU3GB3Fgis=;
- b=qFLvqW9J41v5icnUm4sV1SkOKtWgrjG+SVEL5qBg8henOcs5u9N8CdaHIo4q++LkRa
- W0iD2mPnCTt3kOfb9dx9RXglyC+S6U+sC7zg8IOyHh/HiBF7X0DIeAaZgTrY+De8ABVo
- WdBx/FSoe0km/OmoYB/SA/TQeztNY0Ie7Nczl1sfzVY80IaTBYk+yvwSAC4EV7n0qGp0
- ptTjyYzvs6iZ9vv34xf38ECUrij+Tjw1aGRzcWicllf2lRiCIUzY3GDmwvJybMXtL2co
- hgq3fB+IuH1lhljieRolzHofzYFIDks7MNm1od1W3fGDfG1ozCo+nJNtvv68a9WV56dn
- rqqA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1794490766; x=1795095566; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=NILj5bb2Nn1aI8eODnT9FcRGCzgPWojm49BJ6cezxF0=;
- b=VrS8Gu/8KIuklXJeW0E6yz3FrI0kPrkCC8afmeXpFz821gmmzAyuYpUoNu3qU+awzK
- t5kNddFHSk20NEjNvOb+EthHnUFpvdxOOp4mIezLTZN9zuONKPXZXXJe/ofwt6pf2ISC
- 09jpygDoCr0ewIwWDSaUHp4XNKmXabRV9d5v0g3NV5XgGMWaIXi8lvj2iUbtfLMQSEF7
- 2CnhOg24PIfsr4pf+dnZu+9Ru5ZYlPwQHx7zTsmCnSuhgOkfhNwVsTiTu4K4IjEneZD6
- R6jRnQh71qRh1TBAIAgTX/ScclMJl6w4LjhDbk7+uzyQ/ibapKAekTxdXfQZe8JAvBON
- kipw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794490766; x=1795095566;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=NILj5bb2Nn1aI8eODnT9FcRGCzgPWojm49BJ6cezxF0=;
- b=ARq1EpjW3t9KwFdCmm6XOTAgvIuIC5lMVreIXK+J66kPs30YRUMj3sbFjVPFV+trW1
- tDL1Z7MNXq+KCRFiEZSWLNAG8MFM0W0VCMv99kTUD5j4CJOUuxKKq8C2HyoFRj8RYvhQ
- JVqS7xAJC657o7yutCXMMgIAqkSYMGVF9GfAYxQxRd98CeyOF/fUH7+6QcuKWpJ6Rlq9
- LHiAPWYb8bfXzHotFyDvrflOExz9QTXl1WLXTecmVQq0XxQQ7rqRlj7zdN2kIPedgbrk
- F++a/R8x7jTsKlWdLTG4iumhqVojiMb6022tJ6O1HpIe+XlozzEh0AvVnQ5rHJEWOw1q
- grEQ==
-X-Gm-Message-State: APuU4Z9eSZDXmB2BvhRUYpxoJ0GgXcUGkwzvn5p+PPYgjoYcmkrjkf3R
- gxQr3Ie7itaXoncPVGWoqtaXIZI8/QxgBsnndQeyQTNPhIyTQLHtp6lx0BWtgXBGpH+iX6//Uq3
- e2m7ijmqDLuPA33rLBTTGZiGjj67CbmJDbFu4MzEFN7ye/FWjGQZ0L527Y/799T1vhb01vRGlP6
- 3t9rYf5AjOlMLw7SEfg/ZCxZuVXO2mdo4=
-X-Gm-Gg: AYBFou0+Vf6RrHhzmr3x5tuRu+BGeDg9aeUXI3XqEhrgRgtwNa2yxhRJf7XiX22Jro4
- DcOkEbd7Ubw1qX4D5sHdbFl9cbF/5bHgzjMWX6Xht9C1x4UfbC/FhnCvfhSMBP/jDssfyXmbYz8
- P3gFvJ2yO1z3rRY14uTa+W2Rc1JgqMipamR9m2oKGh4l+9aTiDjZS8Yk4cUfdfxN7ZcWCHony/1
- 5VFNeb4gA111Xb+TloioDwZpIZjgLbmdPeMjHJV7Y5QeTqh0o+lPrMwmh1s2VdWtWWTW+BY2Y96
- jA==
-X-Received: by 2002:a17:903:9ce:b0:2e9:6645:e99e with SMTP id
- d9443c01a7336-2edd772348bmr62876075ad.28.1794490765536; 
- Thu, 12 Nov 2026 05:39:25 -0800 (PST)
-X-Received: by 2002:a17:903:9ce:b0:2e9:6645:e99e with SMTP id
- d9443c01a7336-2edd772348bmr62875775ad.28.1794490765017; Thu, 12 Nov 2026
- 05:39:25 -0800 (PST)
+ s=mimecast20190719; t=1794491000;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=6h6g0wHWvKV2Nutj61rgDVrOeOCPiA8Sd5YSTzA22iA=;
+ b=SurB2W/gsq6ONnFtaHk+ZpEAMW0Sipal3kGCUcY++90TcWbnM708qGVYi+NqlYQjPjAFsG
+ LA+nXp+cZ6CySf0m1pOtzwG5OIHLy4oJlfXvCLvb3+bMq+mVRfQ3giuNnb1K+srOQ5epjN
+ s1QhcQsICjeFk9Bb9jDpl45wmhwi+8Y=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-IQnlQwIuOciP-nv4vLlSRw-1; Thu,
+ 12 Nov 2026 08:43:14 -0500
+X-MC-Unique: IQnlQwIuOciP-nv4vLlSRw-1
+X-Mimecast-MFC-AGG-ID: IQnlQwIuOciP-nv4vLlSRw_1794490992
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B267A1955DE8; Thu, 12 Nov 2026 13:43:11 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22C5030000E8; Thu, 12 Nov 2026 13:43:05 +0000 (UTC)
+Date: Thu, 12 Nov 2026 13:43:03 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Yonggang Luo <luoyonggang@gmail.com>
+Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Weiwei Li <liwei1518@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-riscv@nongnu.org,
+ qemu-ppc@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v5 1/3] accel: register CPU parent only for AccelCPU
+ subclasses
+Message-ID: <avXCZ6IxBXWEuugm@redhat.com>
+References: <20261106023936.772-1-luoyonggang@gmail.com>
+ <20261106023936.772-2-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261109203817.1683717-1-peter.maydell@linaro.org>
-In-Reply-To: <20261109203817.1683717-1-peter.maydell@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 12 Nov 2026 17:39:13 +0400
-X-Gm-Features: AclHuK8TdBXsow9syqIkx08C1uKNPt-7B8oatm1dXkgqjCwVje7Zl5VWTBTdKHM
-Message-ID: <CAMxuvazBp_CX3GR1JAiuB1zWeTdSjhPM54FUd_rP7XcC8b=UEg@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/ccid-card-emulated: Use QemuSemaphore rather than
- QemuCond
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261106023936.772-2-luoyonggang@gmail.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,143 +97,184 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 10, 2026 at 12:38=E2=80=AFAM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
->
-> The emulated CCID card uses a QemuMutex and QemuCond to communicate
-> with its helper thread, but all it's trying to do here is "make the
-> helper thread loop wait until is signalled that it has more work to
-> do".  The existing code functions correctly, but "wait until the
-> other thread signals you" is more simply implemented with a
-> QemuSemaphore.
->
-> This avoids a Coverity complaint that we're not using the condition
-> variable in the standard
->
->    lock mutex;
->    while (!some_predicate) {
->        cond_wait(condvar, mutex);
->    }
->    do stuff;
->    unlock mutex;
->
-> pattern.
->
-> Resolves: Coverity CID 1547639
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
+On Fri, Nov 06, 2026 at 10:39:33AM +0800, Yonggang Luo wrote:
+> accel_cpu_register_type() creates the abstract parent
+> accel-<cpu type>. A subclass names that parent, and
+> type_initialize() aborts when the parent is missing. The old
+> type_init registered only target_cpu_type(), which is one name
+> in a multi-target process. Call the helper from the CPU type
+> init of each target that has an AccelCPU subclass.
+> 
+> ARM calls it because whpx-common.c parents accel-arm-cpu on
+> aarch64-softmmu. i386 calls it for TCG, KVM, HVF, NVMM, and
+> MSHV. i386-softmmu and x86_64-softmmu each pass their own
+> CPU_RESOLVING_TYPE, so WHPX on x86_64-softmmu finds
+> accel-x86_64-cpu. RISC-V calls it for TCG and KVM. PowerPC
+> calls it for KVM.
+> 
+> Other targets have no AccelCPU subclass. Machine init looks up
+> tcg-accel-<cpu type> or kvm-accel-<cpu type> and skips a missing
+> class, so those targets do not need the parent.
+> 
+> No extra tests is needed, as these QOM types already be
+> tested by the existing logic instantiating all QOM types.
+> 
+> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 > ---
-> I've tested this with a functional test that exercises the
-> "use certificates stored in files" setup from the documentation,
-> but I still need to arrange to have the official tuxrun guest
-> kernel/images updated with the extra config necessary, so in
-> the meantime I'm just posting this patch, and hope to post
-> the functional-test as a separate patch later this week.
-> The issue has been floating around in Coverity for years and
-> the existing code is not incorrect, so there's no strong
-> urgency to get this into 11.2.
->
-> PS: there is no maintainers entry for the ccid-usb code;
-> would somebody (I guess from RedHat as the original
-> contributors of it) like to take it on? Or if it's really
-> "orphan" that would be worth documenting.
->
-> ---
->  hw/usb/ccid-card-emulated.c | 22 +++++++---------------
->  1 file changed, 7 insertions(+), 15 deletions(-)
->
-> diff --git a/hw/usb/ccid-card-emulated.c b/hw/usb/ccid-card-emulated.c
-> index 6c8eec39faa..c504c52a7cd 100644
-> --- a/hw/usb/ccid-card-emulated.c
-> +++ b/hw/usb/ccid-card-emulated.c
-> @@ -129,8 +129,7 @@ struct EmulatedState {
->      VReader *reader;
->      QSIMPLEQ_HEAD(, EmulEvent) guest_apdu_list;
->      QemuMutex vreader_mutex; /* and guest_apdu_list mutex */
-> -    QemuMutex handle_apdu_mutex;
-> -    QemuCond handle_apdu_cond;
-> +    QemuSemaphore handle_apdu_sem;
->      EventNotifier notifier;
->      int      quit_apdu_thread;
->      QemuThread apdu_thread_id;
-> @@ -149,9 +148,7 @@ static void emulated_apdu_from_guest(CCIDCardState *b=
-ase,
->      qemu_mutex_lock(&card->vreader_mutex);
->      QSIMPLEQ_INSERT_TAIL(&card->guest_apdu_list, event, entry);
->      qemu_mutex_unlock(&card->vreader_mutex);
-> -    qemu_mutex_lock(&card->handle_apdu_mutex);
-> -    qemu_cond_signal(&card->handle_apdu_cond);
-> -    qemu_mutex_unlock(&card->handle_apdu_mutex);
-> +    qemu_sem_post(&card->handle_apdu_sem);
+>  accel/accel-common.c      | 6 ++----
+>  include/accel/accel-cpu.h | 2 ++
+>  target/arm/cpu.c          | 2 ++
+>  target/i386/cpu.c         | 2 ++
+>  target/ppc/cpu_init.c     | 2 ++
+>  target/riscv/cpu.c        | 8 ++++++++
+>  6 files changed, 18 insertions(+), 4 deletions(-)
+> 
+> diff --git a/accel/accel-common.c b/accel/accel-common.c
+> index 00a400243f..441d1b77fa 100644
+> --- a/accel/accel-common.c
+> +++ b/accel/accel-common.c
+> @@ -130,9 +130,9 @@ static const TypeInfo accel_types[] = {
+>  
+>  DEFINE_TYPES(accel_types)
+>  
+> -static void register_accel_target_type(void)
+> +void accel_cpu_register_type(const char *cpu_type)
+>  {
+> -    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
+> +    g_autofree char *name = g_strconcat("accel-", cpu_type, NULL);
+>      const TypeInfo accel_cpu_type = {
+>          .name = name,
+>          .parent = TYPE_OBJECT,
+> @@ -142,5 +142,3 @@ static void register_accel_target_type(void)
+>  
+>      type_register_static(&accel_cpu_type);
 >  }
->
->  static const uint8_t *emulated_get_atr(CCIDCardState *base, uint32_t *le=
-n)
-> @@ -238,9 +235,7 @@ static void *handle_apdu_thread(void* arg)
->      EmulEvent *event;
->
->      while (1) {
-> -        qemu_mutex_lock(&card->handle_apdu_mutex);
-> -        qemu_cond_wait(&card->handle_apdu_cond, &card->handle_apdu_mutex=
-);
-> -        qemu_mutex_unlock(&card->handle_apdu_mutex);
-> +        qemu_sem_wait(&card->handle_apdu_sem);
->          if (card->quit_apdu_thread) {
->              card->quit_apdu_thread =3D 0; /* debugging */
->              break;
-> @@ -496,8 +491,7 @@ static void emulated_realize(CCIDCardState *base, Err=
-or **errp)
->      QSIMPLEQ_INIT(&card->guest_apdu_list);
->      qemu_mutex_init(&card->event_list_mutex);
->      qemu_mutex_init(&card->vreader_mutex);
-> -    qemu_mutex_init(&card->handle_apdu_mutex);
-> -    qemu_cond_init(&card->handle_apdu_cond);
-> +    qemu_sem_init(&card->handle_apdu_sem, 0);
->      card->reader =3D NULL;
->      card->quit_apdu_thread =3D 0;
->      if (init_event_notifier(card, errp) < 0) {
-> @@ -556,8 +550,7 @@ static void emulated_realize(CCIDCardState *base, Err=
-or **errp)
->  out2:
->      clean_event_notifier(card);
->  out1:
-> -    qemu_cond_destroy(&card->handle_apdu_cond);
-> -    qemu_mutex_destroy(&card->handle_apdu_mutex);
-> +    qemu_sem_destroy(&card->handle_apdu_sem);
->      qemu_mutex_destroy(&card->vreader_mutex);
->      qemu_mutex_destroy(&card->event_list_mutex);
+
+Is there a reason why we need to register this base class
+repeatedly for each target ? This class is defined in target
+independent code and the target specific behaviour is provided
+by subclasses AFAICT, so I'm not seeing why we need to
+duplicate the class per target.
+
+I just proposed changing its name to "accel-cpu" so that
+it is always available:
+
+  https://lists.gnu.org/archive/html/qemu-devel/2026-11/msg02741.html
+
+> diff --git a/include/accel/accel-cpu.h b/include/accel/accel-cpu.h
+> index 9e7eede7c3..2fdb64d2ae 100644
+> --- a/include/accel/accel-cpu.h
+> +++ b/include/accel/accel-cpu.h
+> @@ -20,4 +20,6 @@ typedef struct AccelCPUClass {
+>      bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
+>  } AccelCPUClass;
+>  
+> +void accel_cpu_register_type(const char *cpu_type);
+> +
+>  #endif /* ACCEL_CPU_H */
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 71681447b2..725f1f3a5f 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -28,6 +28,7 @@
+>  #include "qemu/module.h"
+>  #include "qapi/error.h"
+>  #include "cpu.h"
+> +#include "accel/accel-cpu.h"
+>  #ifdef CONFIG_TCG
+>  #include "exec/translation-block.h"
+>  #include "accel/tcg/cpu-ops.h"
+> @@ -2753,6 +2754,7 @@ static const TypeInfo arm_cpu_type_info = {
+>  
+>  static void arm_cpu_register_types(void)
+>  {
+> +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
+>      type_register_static(&arm_cpu_type_info);
 >  }
-> @@ -571,13 +564,12 @@ static void emulated_unrealize(CCIDCardState *base)
->      qemu_thread_join(&card->event_thread_id);
->
->      card->quit_apdu_thread =3D 1; /* stop handle_apdu thread */
-> -    qemu_cond_signal(&card->handle_apdu_cond);
-> +    qemu_sem_post(&card->handle_apdu_sem);
->      qemu_thread_join(&card->apdu_thread_id);
->
->      clean_event_notifier(card);
->      /* threads exited, can destroy all condvars/mutexes */
+>  
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index eab0d5a4d4..31b09e6f8e 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -23,6 +23,7 @@
+>  #include "qemu/qemu-print.h"
+>  #include "qemu/hw-version.h"
+>  #include "cpu.h"
+> +#include "accel/accel-cpu.h"
+>  #include "tcg/helper-tcg.h"
+>  #include "exec/translation-block.h"
+>  #include "system/hvf.h"
+> @@ -11093,6 +11094,7 @@ static void x86_cpu_register_types(void)
+>  {
+>      int i;
+>  
+> +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
+>      type_register_static(&x86_cpu_type_info);
+>      for (i = 0; i < ARRAY_SIZE(builtin_x86_defs); i++) {
+>          x86_register_cpudef_types(&builtin_x86_defs[i]);
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index 7f3036d903..fe3f2549b7 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -43,6 +43,7 @@
+>  #include "exec/page-protection.h"
+>  #include "exec/watchpoint.h"
+>  #include "helper_regs.h"
+> +#include "accel/accel-cpu.h"
+>  #include "internal.h"
+>  #include "spr_common.h"
+>  #include "power8-pmu.h"
+> @@ -7589,6 +7590,7 @@ static const TypeInfo ppc_vhyp_type_info = {
+>  
+>  static void ppc_cpu_register_types(void)
+>  {
+> +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
+>      type_register_static(&ppc_cpu_type_info);
+>  #ifndef CONFIG_USER_ONLY
+>      type_register_static(&ppc_vhyp_type_info);
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 362e561809..10e24f20e8 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -25,6 +25,7 @@
+>  #include "qemu/guest-random.h"
+>  #include "qemu/atomic.h"
+>  #include "cpu.h"
+> +#include "accel/accel-cpu.h"
+>  #include "cpu_vendorid.h"
+>  #include "target/riscv/tcg/csr.h"
+>  #include "internals.h"
+> @@ -3931,3 +3932,10 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>  };
+>  
+>  DEFINE_TYPES(riscv_cpu_type_infos)
+> +
+> +static void riscv_accel_cpu_register_type(void)
+> +{
+> +    accel_cpu_register_type(CPU_RESOLVING_TYPE);
+> +}
+> +
+> +type_init(riscv_accel_cpu_register_type)
+> -- 
+> 2.55.0.windows.3
+> 
+> 
 
-I'd drop that stale comment
-
-> -    qemu_cond_destroy(&card->handle_apdu_cond);
-> -    qemu_mutex_destroy(&card->handle_apdu_mutex);
-> +    qemu_sem_destroy(&card->handle_apdu_sem);
->      qemu_mutex_destroy(&card->vreader_mutex);
->      qemu_mutex_destroy(&card->event_list_mutex);
->
-> --
-> 2.43.0
->
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
