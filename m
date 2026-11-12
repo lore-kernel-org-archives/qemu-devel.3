@@ -1,113 +1,108 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856D7606A323
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 17:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1455A606A327
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 17:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=qdWOQzXS
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ekxBLvtq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRYz0-00058i-Hp; Thu, 12 Nov 2026 12:53:10 -0500
+	id 1xRZ4F-0000zD-La; Thu, 12 Nov 2026 12:58:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xRYyw-00057x-Pm
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:53:06 -0500
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xRYyo-00022b-9h
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:53:06 -0500
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-677bc4704cbso80243d50.0
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 09:52:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794505975; cv=none;
- d=google.com; s=arc-20260327;
- b=FridcCuihOhawKBHG9PrQsrQyt4AZbV30OknRhC6h8WBeJko6EGpfX5XPB0PDtX/kj
- 920Iqdm9GV7PtNUwaGy2MdFsAuc3VTZp4F2DMEI+qfr5K7pBK/wHj97Jf/yMS4OnxanG
- wVmMR+/4vTJyOCe9gkg7Lp4i5SiY/dfR11GCSxZcPhPxGcg33kTecUQTS9ta+gcmRqsv
- MKmS986HaLIAS87Y7R85OttOjvqD8Q8CnXtL68n+mgmO6/vvAF1hF9DC27RI4YYd3Dtr
- TCboNez4M9Hjqk+qwM0I+lOdKhNZOZE3WilIkY9Pt2tKVuKlmeX6tNbYQ/HajOcpZjX2
- V0mg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=nf3vkWIV+wN9RY+bURM8lpfIXEmMBBIniBP8AXgOyTA=;
- fh=w3US15iX+NoJPbQobzeZ6/B7cq8ZLBG6SzB0JMRDU4Q=;
- b=BPb5hhSbyju6VQ+0/iUxiZrX7IcOaMkwuMc4i+2Q5zPc9Bs8ZFM6OhUK2R/zZ/MDCQ
- H0vOjlwxP9WTB+ABUVspNivdK/1f+Z0eCNYapIoAcXl3ODxFEx3uZVdg9iNdMFj6FUz7
- uC0yASwfv/DRgienWqRB47/1aJOZx4lmrZr3WbZoxr/5ossvm377b1y4D0OjBZuki+QE
- 29DOCcogExPXKM2WzO0wpa6hY1D5N+BFmaloZk+Xpl4W/diUBuKOhTXZnFyNr2/1qAG7
- c3bBMWWGsxOoIYyETZ/A3b4A2gSkqo1s/FZXUFQJ/0WJiamlbu5RZP964K8f5dgg7nxP
- WcTg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794505975; x=1795110775; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=nf3vkWIV+wN9RY+bURM8lpfIXEmMBBIniBP8AXgOyTA=;
- b=qdWOQzXS4mLpzBqpWliJjOChSiatbP1LPmcG/sAdp7DlcORu7I0zc9yicYuPDC/cKY
- fzY6UyWBBVtGDBtnLpsx+d08DMSdVsSXa0V4Zxwv5SZCRILQ03DgxyCWtt9ss7Et0nEu
- +XetLFFz2XsbL9pd7MUHIl1qhG4QLy5DbP/vfpJUreqkbzvu8agtiwz70bNyI5GdUzD2
- aby5y02iqUMDS7tWuYeMrjfH3chGXbE/LwtPlLAow0BrfFAHdN/Af9tZzcfsXhEdCcOQ
- cqT6NopCzBVuuoY4DCHsvib2/yPpiF7R5PTITeIj3CmX+3p6lRu1sjSiej81R7QOkOGE
- 2VDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794505975; x=1795110775;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=nf3vkWIV+wN9RY+bURM8lpfIXEmMBBIniBP8AXgOyTA=;
- b=rQi7hT/gfx9dpR6TRtBp7CAeATplYzdviQPXDWDcZ0k2RI0amvS6ieWlSj/1UVbNxi
- nhtBdipGnA6Ei0T8czRoY6SOPDktKxP2TuRnwC8ySGdMvhup4bo6zxgkVfCQ5+NeCOSX
- jA4H+qddCdDPpQr4M88irm0PeMJExAwTHufo8gbFlUtxxWUqdEQbq5H4gNSbYYaBO2FR
- iwdrB3Y42a9KnyP8CyLnTAlE5FDNYi4cPYEUHH7sD/KWD00rvBckdw03jCY7T6Vs2SQx
- IdN22kDRMMK4nH4HUsB659uPlZpotDUF915D/zjmYYkzMORxUGkbWBtk4YhH8KUK6ljh
- EENQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErFyo4rVHlvsAyZL0AxDUaKx3EP38vMIEfMZgeU/IqXVxsdLEl7QwOWD9BChTcJo5OgAVLNtkFiT4Sh3@nongnu.org
-X-Gm-Message-State: APuU4Z9fqjGwGr3lOPR7ad/EqFagEhUB7flKo2TReHi8dHWjhkxbb080
- ZHLNL7Bf2DIRzdXD+aB6BMLQAykm4xQGevOvCzq8Vhk+kHcPUTHIJ/RU11/PFaRdwXZjPIO1URg
- xlRC+k6/wewnM8rOcRDNgK6wYAipZITV0tWC8YvhaAA==
-X-Gm-Gg: AYBFou0MknmTpXwVQGIKyM2MlcCP6/rfYhWj9mRXQWMAc/R2lmBaVXLCoO2KLeiLDUu
- lOogJVlzUW5ZNTbexb+GEKC9yvyCDPhY6egNIxZAukc+yiEwLMXsWeviP1NBst1Pr3pqwi1z40v
- 8MGGXmkdL5dPtN/M7VPe8qqb2N8jdfS3QLhEQ37iWhY6J0uwoxGXOilih8yIihvw8wgwQVnOkyg
- VpUsBVzReXEvJ6fKIlMG5Q/jz2O0tZupV/aP6TYkV0p3pA78aVD4xMVWzSu0K7YExS4Npj/Iyj4
- nu+nPNmI6x/2EYBU5kzT0o5rHrn8EQzqJmKPXGiNVH9sA0oBGNw7+WYqwceP0kCT7KtjT8yU+9+
- lOI7x873CM87YPFOz85PlQZrpuCHN5N4mgz0S0OzJYBm1Rc+JijUTlo61Z3hlEaehgEs2X2NK0w
- I6ywmQ+WCAG5ZpWBieJfEo
-X-Received: by 2002:a05:690e:1697:b0:679:af57:d199 with SMTP id
- 956f58d0204a3-67d89681ae0mr84366d50.57.1794505975077; Thu, 12 Nov 2026
- 09:52:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1xRZ4C-0000yS-UQ; Thu, 12 Nov 2026 12:58:32 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1xRZ4A-0003al-Lf; Thu, 12 Nov 2026 12:58:32 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6ACFiNqM441816; Thu, 12 Nov 2026 17:58:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=HXvcDqFstBXeJeAusBGHw6970gofBJZ8cpe53TuiW
+ H4=; b=ekxBLvtq8QfvR87uHv37A6pYPG2QpQFjNYxfmtqWyMBtp48Zd9XBINy9w
+ 3WV695lqKLQ8CDEnw56F0lBWvm9DWDki1kycbu/oA9BkBEhM+bV92XYcYlHb/W8U
+ iigjR9esMtML2W5Zztf4Yo/m2/r0ZyLt/x7Ka5UbfajWKjJnEUk0vME9tdkmCEkS
+ NVXHp5Gl/QnORZ8IWpSvgVi3yEzMEyoTHNLE4iN+uLzLaAmpCUUNhDcLLOHYWZmp
+ bieJU5os2UVK99/lDH9+MG+CSsEmAm0y5ppgK96thLgVXcixzTBgA4l9zT/6wbi+
+ 8+2UElMex/tNY36Ozpd5rOZRNqJrg==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hsug6gvx2-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 12 Nov 2026 17:58:27 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6ACFcLU3863686; Thu, 12 Nov 2026 17:58:26 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hwegf8vv0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Nov 2026 17:58:26 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6ACHwMO352560152
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 12 Nov 2026 17:58:22 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6E3B720065;
+ Thu, 12 Nov 2026 17:58:22 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C2CB2004F;
+ Thu, 12 Nov 2026 17:58:19 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.66.64.95]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 12 Nov 2026 17:58:18 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: <qemu-devel@nongnu.org>
+Cc: <qemu-ppc@nongnu.org>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Miles Glenn <milesg@linux.ibm.com>
+Subject: [PATCH] MAINTAINERS: Mark PowerNV as Maintained
+Date: Thu, 12 Nov 2026 23:28:15 +0530
+Message-ID: <20261112175815.2260569-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.56.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261023180539.1574134-1-alex.bennee@linaro.org>
- <20261023180539.1574134-4-alex.bennee@linaro.org>
- <CAFEAcA-i6SP=Z96DKvckc-BT0eDXqKUOjdk4ccKUeORB9o=-hw@mail.gmail.com>
- <87cxsaqm1r.fsf@pond.sub.org> <87tslmarws.fsf@draig.linaro.org>
-In-Reply-To: <87tslmarws.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Nov 2026 17:52:43 +0000
-X-Gm-Features: AclHuK9JZwPzn3s40b-nsmSjb09EVfrowPFYDn4M5LWhbiV3EIQoCDcu_siCdP8
-Message-ID: <CAFEAcA8OOMbrPqhDJ3=K3m5fnfqAQg+Eio46=krPk+PkaLAXeQ@mail.gmail.com>
-Subject: Re: [PULL 03/19] .dir-locals: include QEMU code in PYTHONPATH
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: rjCpSW0Y--MKN4aUUMH__9dsc5xocCcX
+X-Authority-Analysis: v=2.4 cv=PeVqFShd c=1 sm=1 tr=0 ts=6af5fe43 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=m_SZ6Kus21JLo_oL4g4A:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: SIpLQUdy88iYBk-qa81oqtJ9Pewes6g5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA3MCBTYWx0ZWRfXwVty9fRdkv5Z
+ CakBSrhDR65VWBE1DRJpL5Lqo8AXS7Ph55uAcVLzr+wqV3yfHonNO/h5x5bGbmWBdcD4hrFcgLG
+ biuGJGIbgFAWw5kj6ew2OQIPn4ifYfAE5p5pCGdEgMyfp0QGfw5YpQBh9CHcCHFMr7+FkO4Jjft
+ vGelqTOGiCSHXVqKpS5S2aDwBU+vtPqmbdQbd0VpBPEqGTXfAVYgj2tgGrBkDU0CHZWVOiaf0yR
+ WUz5sTJ0vBZEOqkWoDpdK4JgbtOnpaMaCoYc+vEU8eZkTrcTsyLC95HFl8ydD6OccM2LYJA8xf/
+ piWGLH+WSoA5mh6YEvFwn4oD+VmLCw6JzFRO/2ttqav1B80psg6E5juRr4TIPvOcW0HTks9mFMX
+ tS5VAcQ9QvQ0jhdrBwibbidMehsCuxdvcsFKPxrfZ2vcqqUtipm4alYFltPyE/Fwawxblw77SKV
+ Dta+nbs12f21PxNMavg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA3MCBTYWx0ZWRfX/NB5iQdd0bWa
+ oXu8uLkT2yynYig/04X8MapDQcLibtbCp/cgMbMuzRNZFKRGaonPHVsNxUxXDhRbiqlrZaKbc1b
+ Ex5qf8D5LPtXEV5fmRzRxx+eaxO0m4Y=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-12_02,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 spamscore=0 malwarescore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611120070
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,70 +115,35 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 12 Nov 2026 at 17:19, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
->
-> Markus Armbruster <armbru@redhat.com> writes:
->
-> > Peter Maydell <peter.maydell@linaro.org> writes:
-> >
-> >> On Fri, 23 Oct 2026 at 19:06, Alex Benn=C3=A9e <alex.bennee@linaro.org=
-> wrote:
-> >>>
-> >>> When editing python code the linters tools have a hard time with our
-> >>> imports as they can't be found. To ease this we can expand a
-> >>> PYTHONPATH in .dir-locals so at least Emacs users can have less
-> >>> warnings in their editor.
-> >>>
-> >>> I still get complaints from python-mypy about missing library stubs
-> >>> that mean it can't do proper type analysis though.
+Change the status of PowerNV to Maintained, to reflect it is actively
+maintained
 
-> >> With this change, emacs now complains and prompts for input every
-> >> time I open a Python file inside the QEMU source tree:
-> >>
-> >> =3D=3D=3Dbegin=3D=3D=3D
-> >> The local variables list in /home/pm215/qemu/
-> >> or .dir-locals.el contains values that may not be safe (*).
-> >>
-> >> Do you want to apply it?  You can type
-> >> y  -- to apply the local variables list.
-> >> n  -- to ignore the local variables list.
-> >> !  -- to apply the local variables list, and permanently mark these
-> >>       values (*) as safe (in the future, they will be set
-> >> automatically.)
->
-> It should mark them as safe for this particular directory, not generally
-> for setting PYTHONPATH.
->
-> >> i  -- to ignore the local variables list, and permanently mark these
-> >>       values (*) as ignored
-> >>
-> >>   * eval : (when-let* ((root (locate-dominating-file default-directory
-> >> ".dir-locals.el"))) (setq-local process-environment (copy-sequence
-> >> process-environment)) (setenv "PYTHONPATH" (concat (expand-file-name
-> >> "python" root) ":" (expand-file-name "tests/functional" root))))
-> >> =3D=3D=3Dendit=3D=3D=3D
-> >>
-> >> The commit messages says "so Emacs users can have less warnings"
-> >> but from my POV this is "more warnings" (and previously I didn't
-> >> notice any warnings at all).
-> >
-> > Same here.
-> >
-> > What exactly was the problem this patch tried to solve?
->
-> It ensures the python lsp's don't complain about invalid imports because
-> they don't have visibility of the PYTHONPATH set by ./run
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-That's a bit unfortunate, but I think it's a lot less bad
-than emacs complaining every single time you open a python file.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index fa0c6d0c9bc5..7bf67c2e6d9d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1711,7 +1711,7 @@ M: Aditya Gupta <adityag@linux.ibm.com>
+ R: Glenn Miles <milesg@linux.ibm.com>
+ R: Harsh Prateek Bora <harshpb@linux.ibm.com>
+ L: qemu-ppc@nongnu.org
+-S: Odd Fixes
++S: Maintained
+ F: docs/system/ppc/powernv.rst
+ F: hw/ppc/pnv*
+ F: hw/intc/pnv*
+-- 
+2.56.0
 
--- PMM
 
