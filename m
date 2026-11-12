@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077D4606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254F2606A8AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=O3aAeml/
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XPr37mug
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRUuG-0006A8-AQ; Thu, 12 Nov 2026 08:32:00 -0500
+	id 1xRUvz-0000GF-24; Thu, 12 Nov 2026 08:33:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRUu8-00068H-Ec
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:31:52 -0500
+ id 1xRUuh-0006kA-2z
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:32:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRUu6-0003cc-E3
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:31:51 -0500
+ id 1xRUuf-0005r7-By
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:32:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794490309;
+ s=mimecast20190719; t=1794490344;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yT09c+TWZhPFeZtcufZcDwy4EHSqlKyQOrZITUkpO4k=;
- b=O3aAeml/mEKtsBCcytaRPneCqMDVzpXhcnQXFCo/htempKEPhg/hHX6gJdZxp7RqWrxEfg
- GtakaSdIufYz6nQrzEBBHOHejD545T7xYknVjSd0o00iKU6s6HbP1/LmtvwVNqzfAqyxOm
- Y0p2Qx3DSNr9ZjAQnXi/PHGw5g9kwsE=
+ bh=xpsoC5cSBSSNI0TiVzfvGo9ynHkUwvaybK6Dmv5cCeE=;
+ b=XPr37mugTdywc5KDk8aT1akaplV0Vccb7qj2WeSpSBIwL4SWbnPk5ZL61I3SV0qZY1KCdh
+ 4BLVnOlrg8FxL8qnI6OvrYNMa7H/YczZPmZoc0fc4ALE7W0+XPucutwY91GPNsfAE9Q8AT
+ O2UnZUjdqXcxqcNt5fPEnzphECWkMbs=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-386-6cxZrXykM3-nDvKUV4W-mg-1; Thu,
- 12 Nov 2026 08:31:46 -0500
-X-MC-Unique: 6cxZrXykM3-nDvKUV4W-mg-1
-X-Mimecast-MFC-AGG-ID: 6cxZrXykM3-nDvKUV4W-mg_1794490305
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-x_ku6x8bMwKT-MlmV9S37w-1; Thu,
+ 12 Nov 2026 08:32:15 -0500
+X-MC-Unique: x_ku6x8bMwKT-MlmV9S37w-1
+X-Mimecast-MFC-AGG-ID: x_ku6x8bMwKT-MlmV9S37w_1794490334
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5286318004F6; Thu, 12 Nov 2026 13:31:45 +0000 (UTC)
+ id 9EB9218005B8; Thu, 12 Nov 2026 13:32:14 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D862E1956087; Thu, 12 Nov 2026 13:31:43 +0000 (UTC)
+ id 1D9F51956087; Thu, 12 Nov 2026 13:32:12 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -54,9 +54,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Markus Armbruster <armbru@redhat.com>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 26/48] hw/m68k: rename the 'virt' machine to 'm68k-virt'
-Date: Thu, 12 Nov 2026 13:30:32 +0000
-Message-ID: <20261112133054.1977618-27-berrange@redhat.com>
+Subject: [PATCH 42/48] Revert "multi-target: restrict whpx-accel-*-cpu to
+ matching target"
+Date: Thu, 12 Nov 2026 13:30:48 +0000
+Message-ID: <20261112133054.1977618-43-berrange@redhat.com>
 In-Reply-To: <20261112133054.1977618-1-berrange@redhat.com>
 References: <20261112133054.1977618-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -91,69 +92,47 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This introduces a globally unique QOM typename 'm68k-virt' for
-the virt machine type.
+This reverts commit 1b879fe489f8894c5b07438f0b10706db916ca4f.
 
-An alias is added to resolve existing convenience name 'virt'.
+The conditional registration is no longer required since the
+base class is now using a target independent name.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/m68k/virt.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ accel/whpx/whpx-common.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index 487d9bcc8d0..398293144c8 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -324,7 +324,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 20c684638b0..78d2827809b 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -20,7 +20,6 @@
+ #include "hw/core/boards.h"
+ #include "hw/intc/ioapic.h"
+ #include "qemu/error-report.h"
+-#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-types-common.h"
+ #include "qapi/qapi-type-infos-common.h"
+@@ -493,18 +492,11 @@ static void whpx_cpu_accel_class_init(ObjectClass *oc, const void *data)
+     acc->cpu_instance_init = whpx_cpu_instance_init;
  }
  
- static const TypeInfo virt_machine_info = {
--    .name         = MACHINE_TYPE_NAME("virt"),
-+    .name         = MACHINE_TYPE_NAME("m68k-virt"),
-     .parent       = TYPE_MACHINE,
-     .abstract     = true,
-     .class_init   = virt_machine_class_init,
-@@ -351,8 +351,8 @@ type_init(virt_machine_register_types)
-     } \
-     static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
-     { \
--        .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
--        .parent = MACHINE_TYPE_NAME("virt"), \
-+        .name = MACHINE_VER_TYPE_NAME("m68k-virt", __VA_ARGS__), \
-+        .parent = MACHINE_TYPE_NAME("m68k-virt"), \
-         .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
-         .is_available = target_m68k, \
-     }; \
-@@ -368,6 +368,17 @@ type_init(virt_machine_register_types)
-     static const char *const MACHINE_VER_SYM(aliases, virt, __VA_ARGS__)[] = \
-     { \
-         MACHINE_TYPE_NAME("virt"), \
-+        MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
-+        MACHINE_TYPE_NAME("m68k-virt"), \
-+        NULL, \
-+    }; \
-+    alc->aliases = MACHINE_VER_SYM(aliases, virt, __VA_ARGS__)
-+
-+#define DEFINE_VIRT_MACHINE_ALIASES(...) \
-+    AliasedClass *alc = ALIASED_CLASS(oc); \
-+    static const char *const MACHINE_VER_SYM(aliases, virt, __VA_ARGS__)[] = \
-+    { \
-+        MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
-         NULL, \
-     }; \
-     alc->aliases = MACHINE_VER_SYM(aliases, virt, __VA_ARGS__)
-@@ -377,7 +388,9 @@ type_init(virt_machine_register_types)
-             DEFINE_VIRT_MACHINE_ALIASES_LATEST(major, minor); \
-         }, major, minor)
- #define DEFINE_VIRT_MACHINE(major, minor) \
--    DEFINE_VIRT_MACHINE_IMPL({}, major, minor)
-+    DEFINE_VIRT_MACHINE_IMPL({ \
-+            DEFINE_VIRT_MACHINE_ALIASES(major, minor); \
-+        }, major, minor)
+-/* TYPE_ACCEL_CPU is only registered for current target cpu type */
+-static bool whpx_cpu_accel_is_available(void)
+-{
+-    return !strcmp(target_cpu_type(), CPU_RESOLVING_TYPE);
+-}
+-
+ static const TypeInfo whpx_cpu_accel_type = {
+     .name = ACCEL_CPU_NAME("whpx"),
  
- static void virt_machine_11_2_options(MachineClass *mc)
- {
+     .parent = TYPE_ACCEL_CPU,
+     .class_init = whpx_cpu_accel_class_init,
+-    .is_available = whpx_cpu_accel_is_available,
+     .abstract = true,
+ };
+ 
 -- 
 2.56.1
 
