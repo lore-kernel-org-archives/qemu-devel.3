@@ -1,116 +1,91 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D07606A32A
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 16:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4C9606A334
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 16:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=defmacro.it header.i=@defmacro.it header.a=rsa-sha256 header.s=fm3 header.b=IQfjk2PS;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=QuNDsjaV
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=M+gSRJBP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRXq7-0001m1-EX; Thu, 12 Nov 2026 11:39:55 -0500
+	id 1xRXu5-0006pR-9O; Thu, 12 Nov 2026 11:44:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xRXpu-0001ZX-4f
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:39:42 -0500
-Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xRXtz-0006i3-En
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:43:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xRXps-0001v7-2r
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:39:41 -0500
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 706D17A00F2
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 11:39:38 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Thu, 12 Nov 2026 11:39:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
- cc:cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1794501578; x=
- 1794587978; bh=fxQiuGH8irVoZTqNy9QdMALg/tzNtpJuMCBrplSjhEQ=; b=I
- Qfjk2PSXfPLxQgWfNbyDNqcxDkTUsHIro1wVecDz4s4IMd5rNYZrQ1x4f14uQaDm
- ZY4vAuultx/zyRjig+qNQdUrQpbpJuuwnMCf5eBdJv35OIrY0ebj65f8hnFaiwy3
- ICploRB0qn0ovz2tm69KYGSn0klI1dxYfcP+pgs4MnAYnIuaThFwj0A3OCXVXgeH
- e/zWZ/Pxw4pSIK7s9MRj/tSm9Jzto1ZyNbotd3m/5lk4KzGt2amsBK6SbB6NtWBt
- Fn1WsnNBHztC4U3u2Xrb5eTdjWCsfEsGM9UrGCLNu+orlWEEQf06zzXpI0nKBwWc
- J7wdoCxOvgltskwkMOomA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:mime-version:references:reply-to
- :subject:subject:to:to:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; t=1794501578; x=1794587978; bh=fxQiuGH8irVoZ
- TqNy9QdMALg/tzNtpJuMCBrplSjhEQ=; b=QuNDsjaVylpcgKjLOVNMqoGsPLhRi
- QkmiGjJr0Ar2Oso0b57XSYY19i329XugAt8KrcibFxE89JHnpiX9R672Jm+MUxFt
- +jMs3dpYRj1cZakatfm5zfg7b3IEYDqztClnaUHVIFvmVOkq/FoC+VktanLKqe57
- x0V238rLnOvw535Q7m32deOMIrSubVCf2LRDcZVJLAZSqvG6mwKSmnTPOn1UyAjL
- XaoD+3j9XIhMp2H/pDUhPIOW4XCZNOrqcBuzwVCA3duaHtIkjxohMHXk+OV70xay
- +jBBaHNHMiG/pdDu+V4etnO+2KzvwxRUaUvMA5IHVwxMimgu8ghSzfeGg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=sign d=defmacro.it a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794501578; d=defmacro.it;
- mf=PGZvc3NAZGVmbWFjcm8uaXQ+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm3:rsa-sha256:M1+4/dOM3Yp6YO2toBgJZA7BfDzr0hoywukoANrZsQfr8D3
- /8DoLHUzBG7Cq7hOMVavd8kYJ6yZs4c5MFvTFcqmfnDdpb2W5i5rqaTcAsU3PayM
- k2/fQGn6pGrgs0pz4ZIYds3vmxUC3gyEKoKX836eeBUEWwIaVOlZvm5nFEd55Ehz
- /NGqzwKE5ohyS9Xlog1GJpepHreCNxi6ew1A17R+oQJ32thW+SQ/YqL0OtDNd9AF
- 799CUr8No69A//PC38VDPTMuaDAqY/NvJNCd+o8YKKQKcalIAh8nEmnt030LZVsj
- PPX4HBXbGmmU+rWC1qQCeTet3bPwPTXhk0dQ80A==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=mi-m=1; hc=12;
- hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
- mime-version,mime-version,references,subject,to;
-Message-Instance: m=1;
- h=sha256:oZ9EZHPFmqLadZ7RXJvi3nMLG3Ebd8R1V4hmCgi4FJA=:V3gxg1MPXoESE0/RvSwIb4XczfNtrGgws3VeYRUuzPg=;
-X-ME-Sender: <xms:yev1alPaLJhhYdSzXjug9-Sa2K5Kj1uO2CEVLbYfZY8oZPgz27lRXQ>
- <xme:yev1ajbVWaQPWQqTUAeqOz3jVe4HmNTsIfOtXtXFI991EKhNaSG1OmalTjLlo6rlA
- wlKmK0uExf0FNNAch9YKjTJu7oJvPQfqL_NTopv4DBSqCVCNkIkuZym>
-X-ME-Received: <xmr:yev1anxfgZk6wdKxKoclqim6hdnztcb_370_gmgFLWCw9vhBEhQJpUNBU2rs9OE7pl7-poUrrIvHDGq_mTUDD_lg3A>
-X-ME-Proxy-Cause: dmFkZTERXMn7Gjk8SjQxyqKeYahIIaUS0QifA1MgxC7Zh2gdfbz9HXxyE/HSUMZMwlXJBg
- kD34GTKLnvZZeu1hsZdcNNjXGmWfooCjaFRG1iGFZSHRUjqkVrXF9vAqqp8rd95mCPuZxl
- j07CzQByS0b/Vesh1SatnvHNwRn3/NRGN2BZomo/kfPy91TFbOaFXyjmT3gW5Aj7I62pRm
- GgT8WSs2Mur7LCXicdpQH4Sasxg7d16hWEaoCJu9rYD3E40mrHAfSIanuTRqnyfywqtPQE
- ZO2JAs8BQjGeDE+LS1S5fHI33TEL217goefacGjNLeqV8IO+Ce4hNA8/XHbwm7USqB4+kG
- 2W9Y6W7K6+0NA/PiXaAKFVknmt4yTqwd4d/P5cMMJHuDRzIn7ucrH+Xz89mAGRKklsuXss
- a7R4o9hjRpHcj4ROaWAbFOyGZB+AKYm4aOB4NjOJGaVfZ9OdUTUYdNUe0FEDcokGue4QMo
- DuWdoQDSUqlLdCeh9rFmC0+GxluGmooaupI7A0meXEar3fnrsigJJ9VqNcVcvv7ilrBQLF
- nX64DQGeOAHcVIJIRg/yHjV3QgsnNi6Sz3wQjwLEzy/JUz9PPQSn7i/YwFvNRmEeZ6vC0S
- Y2vsqQX5am49209UeS7heodfeZkQo7UKnMkx8h4XLe4C2xeMqjLDX89zfhhQ
-X-ME-Proxy: <xmx:yev1amL2W0E4BaHNH5b4bru5oselwnJFpWWUM4uP6GBighpqE027qA>
- <xmx:yev1apqG7jRAPdL3Qn7p6xVSgr0ZGFfXYCaSeppvVyNDNX1Q-4hnYA>
- <xmx:yev1atLVFv5DFJH4JdCCI3EsNoOmrU-2yIAW_N5xxBlGbgcSSdxHSg>
- <xmx:yev1amRzgSJPmpUEPyMbYDmbRpnVwNr4OqSlFpFUwsrkoBD8PcVjLg>
- <xmx:yuv1amQLbNOPFk5urxDwxjjLMCDOE9iwMOZwqeCjQ66kX3JuoV1v2OEK>
-Feedback-ID: ic0014905:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Nov 2026 11:39:36 -0500 (EST)
-Date: Thu, 12 Nov 2026 17:39:34 +0100
-From: Jesper Wendel Devantier <foss@defmacro.it>
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
- qemu-block@nongnu.org, Klaus Jensen <k.jensen@samsung.com>
-Subject: Re: [PATCH 3/3] hw/nvme: fix broadcast fdp events handling
-Message-ID: <20261112173512.0-foss@defmacro.it>
-In-Reply-To: <20261112-nvme-for-rc-v1-3-69b3e5dcd5c8@samsung.com>
-References: <20261112-nvme-for-rc-v1-0-69b3e5dcd5c8@samsung.com>
- <20261112-nvme-for-rc-v1-3-69b3e5dcd5c8@samsung.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xRXtx-0003Ud-IS
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:43:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794501832;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=37CCPBuZKSq9ynoDFziWp2z6f8eGYOzxwjI4W3dtxLc=;
+ b=M+gSRJBPdDZgD7rqgMdMtx2woycoLYYobe29UX9xQ2jpAOPCq82gkuePsDhGY+MoTVMF0F
+ aYeryAR/0XQ+FlpI+DXMIKPZizkWf6kqlVT7Q+TxkvMbkrp7lfCsOGraKfDnuui9L8N5xO
+ wmuoIPqhepWnMy/ige3oe62YWJzbSFs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-z3eWy5C9MMyGgPbmkO97_A-1; Thu,
+ 12 Nov 2026 11:43:48 -0500
+X-MC-Unique: z3eWy5C9MMyGgPbmkO97_A-1
+X-Mimecast-MFC-AGG-ID: z3eWy5C9MMyGgPbmkO97_A_1794501827
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2B45B19560B5; Thu, 12 Nov 2026 16:43:45 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4ACB730000E8; Thu, 12 Nov 2026 16:43:40 +0000 (UTC)
+Date: Thu, 12 Nov 2026 16:43:37 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, xen-devel@lists.xenproject.org,
+ qemu-ppc@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PULL v2 23/25] trace: stop tracking static disabled state
+Message-ID: <avXsuTvYht2mR8d4@redhat.com>
+References: <20261104201802.11556-1-stefanha@redhat.com>
+ <20261104201802.11556-24-stefanha@redhat.com>
+ <87se1efa5p.fsf@pond.sub.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0, 1.0
-X-Mailer: neolore
-Received-SPF: pass client-ip=202.12.124.159; envelope-from=foss@defmacro.it;
- helo=fhigh-b8-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87se1efa5p.fsf@pond.sub.org>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,61 +96,133 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On Fri, Nov 06, 2026 at 12:53:54PM +0100, Markus Armbruster wrote:
+> I missed this, because I wasn't cc'ed.
+> 
+> Stefan Hajnoczi <stefanha@redhat.com> writes:
+> 
+> > From: Daniel P. Berrangé <berrange@redhat.com>
+> >
+> > The TraceEvent struct contains a "bool sstate" field which track whether
+> > a trace event was disabled statically. i.e. at build time via the
+> > "disable" property annotation in trace-events.
+> >
+> > The only runtime use of this field is to let "trace-event-get-state"
+> > report that an event is "unavailable" instead of reporting an error for
+> > an unknown trace event.
+> >
+> > Trace events are not ABI so their names can change and the event can
+> > come and go at any time. Thus there is little utility in reporting the
+> > existence of a disabled event that cannot ever be used at runtime.
+> >
+> > Removing the "bool sstate" field from TraceEvent saves 8 bytes of
+> > space in the struct, adding up to approx 64 KB across all current
+> > events.
+> >
+> > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > Message-id: 20261102142844.3464712-24-berrange@redhat.com
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> 
+> [...]
+> 
+> > diff --git a/qapi/trace.json b/qapi/trace.json
+> > index 29c76256055..8533e378977 100644
+> > --- a/qapi/trace.json
+> > +++ b/qapi/trace.json
+> > @@ -16,8 +16,6 @@
+> >  # @TraceEventState:
+> >  #     State of a tracing event.
+> >  #
+> > -# @unavailable: The event is statically disabled.
+> > -#
+> >  # @disabled: The event is dynamically disabled.
+> >  #
+> >  # @enabled: The event is dynamically enabled.
+> > @@ -25,7 +23,7 @@
+> >  # Since: 2.2
+> >  ##
+> >  { 'enum': 'TraceEventState',
+> > -  'data': ['unavailable', 'disabled', 'enabled'] }
+> > +  'data': ['disabled', 'enabled'] }
+> 
+> No note in docs/about/removed-features.rst needed?
+
+Yes it is required.
 
 
-On Thu, 12 Nov 2026 10:53:30 +0100, Klaus Jensen <its@irrelevant.dk> wrote:
-> From: Klaus Jensen <k.jensen@samsung.com>
->
-> The Set Features handler for the FDP Events feature asserts that a
-> namespace is passed in the command because the feature is
-> namespace-specific. An invalid namespace is rejected prior to reaching
-> the handler, but the "broadcast nsid" (0xFFFFFFFF) is considered valid
-> and causes the assert to abort QEMU.
->
-> Reject it with Invalid Field in Command instead as per the
-> specification.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4792
-> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-> ---
->  hw/nvme/ctrl.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index a0d22dacedfa..71c24dc02b67 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -6636,7 +6636,9 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
->      g_autofree uint8_t *events = NULL;
->      NvmeRuHandle *ruh = NULL;
->  
-> -    assert(ns);
-> +    if (!ns) {
-> +        return NVME_INVALID_FIELD | NVME_DNR;
-> +    }
->  
->      if (!n->subsys || !n->subsys->endgrp.fdp.enabled) {
->          return NVME_FDP_DISABLED | NVME_DNR;
->
-> -- 
-> 2.53.0
->
->
->
+> > @@ -69,6 +67,7 @@
+>    ##
+>    # @trace-event-set-state:
+>    #     Set the dynamic tracing state of events.
+>    #
+>    # @name: Event name pattern (case-sensitive glob).
+>    #
+> >  # @enable: Whether to enable tracing.
+> >  #
+> >  # @ignore-unavailable: Do not match unavailable events with @name.
+> > +#      Deprecated: since 11.2
+> >  #
+> >  # Since: 2.2
+> >  #
+> 
+> Are you trying to deprecate use of argument @ignore-unavailable?
 
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Yes.
 
 
+> If yes, this isn't how we do that.  Instead:
 
+/face-palm
 
+> 
+>    ##
+>    # @trace-event-set-state:
+>    #     Set the dynamic tracing state of events.
+>    #
+>    # @name: Event name pattern (case-sensitive glob).
+>    #
+>    # @enable: Whether to enable tracing.
+>    #
+>    # @ignore-unavailable: Do not match unavailable events with @name.
+>    #
+>    # Features:
+>    #
+>    # @deprecated: Argument @ignore-unavailable is deperecated and does
+>    #     nothing.
+>    #
+>    # Since: 2.2
+>    #
+>    # .. qmp-example::
+>    #
+>    #     -> { "execute": "trace-event-set-state",
+>    #          "arguments": { "name": "qemu_memalign", "enable": true } }
+>    #     <- { "return": {} }
+>    ##
+>    { 'command': 'trace-event-set-state',
+>      'data': {'name': 'str', 'enable': 'bool',
+>               '*ignore-unavailable': { 'type': 'bool',
+>                                        'features': [ 'deprecated' ] } } }
+> 
+> with a matching update to docs/about/deprecated.rst.
+
+Yes, will CC you on the fix.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
