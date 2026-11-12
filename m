@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA92606A32D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E42F606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PUUpuo12
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JbPPqk02
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRUth-0005qJ-JV; Thu, 12 Nov 2026 08:31:25 -0500
+	id 1xRUvU-0007at-Rm; Thu, 12 Nov 2026 08:33:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRUtR-0005h4-36
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:31:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xRUui-0006kS-FQ
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:32:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRUtP-0000pw-Al
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:31:08 -0500
+ id 1xRUuf-0005sr-MO
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:32:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794490266;
+ s=mimecast20190719; t=1794490344;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UNhVyDQV08ndeLXfuw+LM4WtU1I1yz5fWjVBYtZZV7M=;
- b=PUUpuo12m6kU6mDFVf6CJxPxGiolUatdQNW6QL956rDLWHyX03ZqUkKuqxZuh8is2hBCL1
- R2TLD37BjYGQIa8g/B6koaC9lQpaO8O+FbnYmvFLcqm8WimPo9O9abYJeopx/7UCuS3TQE
- 45W6e+PbXj8UUF1stReZ7OsLgKaJcjM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=k4xXw+QeLGZ+lg6xHyzdz8XOMc2rgolQeOIZ6v36+X8=;
+ b=JbPPqk02nWngNDRKgZ+i1AQGXRfiyZ6jh3jymZ4zy7o7e7KjjGbEk413bzrRZIMvq0nHQr
+ GpacQC668joi8cds9Mw6a9I8d/l1H5fqxDq1ItaY8I9+xNPvvLgFR+2rvZFY9aNJ72d6gP
+ KdoyaMQmg5uEGyatXLu60wQCYcuL73U=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-sfdRJEF3NoC3UpaQipnpEg-1; Thu,
- 12 Nov 2026 08:31:02 -0500
-X-MC-Unique: sfdRJEF3NoC3UpaQipnpEg-1
-X-Mimecast-MFC-AGG-ID: sfdRJEF3NoC3UpaQipnpEg_1794490261
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-aw7yzkXNNcmwJXtJXzHcoQ-1; Thu,
+ 12 Nov 2026 08:32:21 -0500
+X-MC-Unique: aw7yzkXNNcmwJXtJXzHcoQ-1
+X-Mimecast-MFC-AGG-ID: aw7yzkXNNcmwJXtJXzHcoQ_1794490340
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 74C8F1800A79; Thu, 12 Nov 2026 13:31:01 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 429F61956063; Thu, 12 Nov 2026 13:32:20 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 042911956087; Thu, 12 Nov 2026 13:30:59 +0000 (UTC)
+ id CDB221956087; Thu, 12 Nov 2026 13:32:18 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -54,9 +54,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Markus Armbruster <armbru@redhat.com>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 02/48] target-info: add target_mask_selected()
-Date: Thu, 12 Nov 2026 13:30:08 +0000
-Message-ID: <20261112133054.1977618-3-berrange@redhat.com>
+Subject: [PATCH 45/48] qom: drop the 'is_available' callback from TypeInfo
+Date: Thu, 12 Nov 2026 13:30:51 +0000
+Message-ID: <20261112133054.1977618-46-berrange@redhat.com>
 In-Reply-To: <20261112133054.1977618-1-berrange@redhat.com>
 References: <20261112133054.1977618-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -64,15 +64,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,142 +92,68 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Yonggang Luo <luoyonggang@gmail.com>
+For the purposes of introspection, a binary must always register
+all compiled in types (classes). Any filtering of what is
+permitted with a given selected target should happen at time of
+use/query. As such the 'is_available' callback on TypeInfo is
+an undesirable design pattern and with Machine classes converted
+it can be removed.
 
-Return the QEMU_ARCH_* mask of the selected target. System mode
-returns QEMU_ARCH_ALL until a target is selected. User mode returns
-that target's bit. Tools return 0.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/target-info-init.h | 15 ++++++++++-----
- include/qemu/target-info.h      |  9 +++++++++
- stubs/meson.build               |  1 +
- stubs/target-mask-selected.c    | 13 +++++++++++++
- target-info-def.c               |  3 +++
- target-info-qom.c               | 10 ++++++++++
- 6 files changed, 46 insertions(+), 5 deletions(-)
- create mode 100644 stubs/target-mask-selected.c
+ include/qom/object.h | 3 ---
+ qom/object.c         | 4 ----
+ rust/qom/src/qom.rs  | 1 -
+ 3 files changed, 8 deletions(-)
 
-diff --git a/include/qemu/target-info-init.h b/include/qemu/target-info-init.h
-index b7024c9faef..84929868328 100644
---- a/include/qemu/target-info-init.h
-+++ b/include/qemu/target-info-init.h
-@@ -24,12 +24,17 @@ module_init(do_qemu_init_target_info, MODULE_INIT_TARGET_INFO)
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 70d8ea3e299..06a55b410ba 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -475,8 +475,6 @@ struct Object
+  * @class_data: Data to pass to the @class_init,
+  *   @class_base_init. This can be useful when building dynamic
+  *   classes.
+- * @is_available: callback invoked at registration time, to dynamically check if
+- *   this type should be available or not.
+  * @interfaces: The list of interfaces associated with this type.  This
+  *   should point to a static array that's terminated with a zero filled
+  *   element.
+@@ -500,7 +498,6 @@ struct TypeInfo
+     void (*class_base_init)(ObjectClass *klass, const void *data);
+     const void *class_data;
  
- /*
-  * User mode does not support multiple targets in the same binary, so just
-- * define target_info().
-+ * define target_info() and target_mask_selected(). The target is always
-+ * selected.
-  */
--#define target_info_init(ti_var)        \
--const TargetInfo *target_info(void)     \
--{                                       \
--    return &ti_var;                     \
-+#define target_info_init(ti_var)                           \
-+const TargetInfo *target_info(void)                        \
-+{                                                          \
-+    return &ti_var;                                        \
-+}                                                          \
-+uint64_t target_mask_selected(void)                        \
-+{                                                          \
-+    return QEMU_ARCH_BIT((ti_var).target_arch);            \
- }
+-    bool (*is_available)(void);
+     const InterfaceInfo *interfaces;
+ };
  
- #else /* CONFIG_USER_ONLY */
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 2cd4cc5671b..5673d10ebae 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -134,4 +134,13 @@ bool target_base_riscv(void);
-  */
- bool target_riscv64(void);
+diff --git a/qom/object.c b/qom/object.c
+index 9276b7a4351..e18622d4146 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -167,10 +167,6 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
+         abort();
+     }
  
-+/**
-+ * target_mask_selected:
-+ *
-+ * Returns the QEMU_ARCH_* mask of the selected target. System mode
-+ * returns QEMU_ARCH_ALL until a target is selected. User mode returns
-+ * that target's bit. Tools return 0.
-+ */
-+uint64_t target_mask_selected(void);
-+
- #endif
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 744fb759a2f..49cede8582f 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -12,6 +12,7 @@ stub_ss.add(files('monitor-hmp.c'))
- stub_ss.add(files('qapi-event-emit.c'))
- stub_ss.add(files('replay-mode.c'))
- stub_ss.add(files('trace-control.c'))
-+stub_ss.add(files('target-mask-selected.c'))
+-    if (info->is_available && !info->is_available()) {
+-        return NULL;
+-    }
+-
+     ti = type_new(info);
  
- if have_block
-   stub_ss.add(files('bdrv-next-monitor-owned.c'))
-diff --git a/stubs/target-mask-selected.c b/stubs/target-mask-selected.c
-new file mode 100644
-index 00000000000..510a515851c
---- /dev/null
-+++ b/stubs/target-mask-selected.c
-@@ -0,0 +1,13 @@
-+/*
-+ * Tools have no selected target.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/target-info.h"
-+
-+uint64_t target_mask_selected(void)
-+{
-+    return 0;
-+}
-diff --git a/target-info-def.c b/target-info-def.c
-index bcf9cfe1e43..a9920196266 100644
---- a/target-info-def.c
-+++ b/target-info-def.c
-@@ -9,6 +9,9 @@
- #include "qemu/osdep.h"
- #include "qemu/target-info.h"
- #include "qemu/target-info-def.h"
-+#ifdef CONFIG_USER_ONLY
-+#include "qemu/base-arch-defs.h"
-+#endif
- #include "qemu/target-info-init.h"
- #include "hw/core/boards.h"
- #include "cpu.h"
-diff --git a/target-info-qom.c b/target-info-qom.c
-index aeeedb7e818..fb4c9835e5a 100644
---- a/target-info-qom.c
-+++ b/target-info-qom.c
-@@ -9,6 +9,8 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qom/object.h"
-+#include "qemu/base-arch-defs.h"
-+#include "qemu/target-info.h"
- #include "qemu/target-info-def.h"
- #include "qemu/target-info-init.h"
- #include "qemu/target-info-qom.h"
-@@ -40,6 +42,14 @@ const TargetInfo *target_info(void)
-     return target_info_ptr;
- }
+     type_table_add(ti);
+diff --git a/rust/qom/src/qom.rs b/rust/qom/src/qom.rs
+index 81449eeefad..372be188622 100644
+--- a/rust/qom/src/qom.rs
++++ b/rust/qom/src/qom.rs
+@@ -695,7 +695,6 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
+         class_init: Some(rust_class_init::<Self>),
+         class_base_init: Self::CLASS_BASE_INIT,
+         class_data: core::ptr::null(),
+-        is_available: None,
+         interfaces: core::ptr::null(),
+     };
  
-+uint64_t target_mask_selected(void)
-+{
-+    if (!target_info_ptr) {
-+        return QEMU_ARCH_ALL;
-+    }
-+    return QEMU_ARCH_BIT(target_info_ptr->target_arch);
-+}
-+
- void target_info_qom_set_target(void)
- {
-     g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
 -- 
 2.56.1
 
