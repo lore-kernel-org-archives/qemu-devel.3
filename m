@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6F5606A327
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 16:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E92606A323
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 16:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=btqtAp2G
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=R8YczB+4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRXzD-0005SV-Ex; Thu, 12 Nov 2026 11:49:19 -0500
+	id 1xRXzA-0005Qr-HP; Thu, 12 Nov 2026 11:49:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRXz8-0005Os-W3
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:49:15 -0500
+ id 1xRXz8-0005Oa-Ov
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:49:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRXz7-0003IR-AG
+ id 1xRXz7-0003IK-8V
  for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:49:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794502153;
+ s=mimecast20190719; t=1794502152;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/qJHH2x1pQ+RxwoURxRdlSdV6WKbs/a4dytfUZ8d+mQ=;
- b=btqtAp2G2LPAzslYshVYAGD2kW18wYT7BnJaDNEAnXeIT0gbsQPGffbAnUhlm8eFUuu7a0
- MeSwr8a9DmkTWzxIrmkAMGru/+gqpAd/OSyedfNG0RZWZ9U06vWoTek5ZGIuTLvBO4snjx
- kTK9dwEYU0uS3U4qsmHT1cuUF3Jylwk=
+ bh=DObUk4bScnOOd9tbqcvJqcYRr7TF7OAC1Fy8m5x0XpI=;
+ b=R8YczB+4S1iEeald9TETE2jWExEzsoqRVbcVfXmNFZcA6OMDrwHBEpQNGQ2LKFhDJfN4Ey
+ 3movd/h8KK/ONpv8kZzGVAB+JLPBXtUYPRYf8SW4jS+35y7BhLKb+rP35S0aiEl4g47xqv
+ B7diTv1Nra0sJ8VRfZGqB3Ovpnno8iI=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-FiUifY4dNgmIuLSHqgc7Aw-1; Thu,
- 12 Nov 2026 11:49:07 -0500
-X-MC-Unique: FiUifY4dNgmIuLSHqgc7Aw-1
-X-Mimecast-MFC-AGG-ID: FiUifY4dNgmIuLSHqgc7Aw_1794502146
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-492-9lGY3qe5PjiAnGyWqo8nhQ-1; Thu,
+ 12 Nov 2026 11:49:06 -0500
+X-MC-Unique: 9lGY3qe5PjiAnGyWqo8nhQ-1
+X-Mimecast-MFC-AGG-ID: 9lGY3qe5PjiAnGyWqo8nhQ_1794502144
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1E6919560AD; Thu, 12 Nov 2026 16:49:06 +0000 (UTC)
+ id 14B89195605F; Thu, 12 Nov 2026 16:49:04 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 664C4410; Thu, 12 Nov 2026 16:49:04 +0000 (UTC)
+ id A78FB421; Thu, 12 Nov 2026 16:49:01 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -55,9 +55,9 @@ Cc: devel@lists.libvirt.org,
  Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 2/2] qapi: correctly mark 'ignore-unavailable' deprecated
-Date: Thu, 12 Nov 2026 16:48:57 +0000
-Message-ID: <20261112164857.2083799-3-berrange@redhat.com>
+Subject: [PATCH 1/2] docs: document 'unavailable' state is no longer output
+Date: Thu, 12 Nov 2026 16:48:56 +0000
+Message-ID: <20261112164857.2083799-2-berrange@redhat.com>
 In-Reply-To: <20261112164857.2083799-1-berrange@redhat.com>
 References: <20261112164857.2083799-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -93,64 +93,35 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Follow the proper QAPI syntax for deprecations and mention it
-in the documentation.
+The concept of unavailable trace events no longer exists so
+this enum entry was obsolete.
 
 Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reported-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/about/deprecated.rst |  8 ++++++++
- qapi/trace.json           | 10 ++++++++--
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ docs/about/removed-features.rst | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 0891bbc44de..a39feb23f5b 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -182,6 +182,14 @@ execution.  This special treatment of ``"no"`` is deprecated.  Use an
- empty string instead.  In a future version, ``"no"`` will be treated as
- a plain file name.
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 225841bd9bb..3a05891db2b 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -802,6 +802,14 @@ The ability to instrument QEMU helper functions with vCPU-aware trace
+ points was removed in 7.0.
  
-+``ignore-unavailable`` in ``trace-event-set-state`` (since 11.2)
-+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
++``unavailable`` state no longer reported for trace events (removed in 11.2)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 +
 +Trace events are now unconditionally built-in to all QEMU builds,
 +so the concept of an 'unavailable' trace event no longer exists.
-+The ``ignore-unavailable`` parameter in ``trace-event-set-state``
-+thus has no effect and should no longer be used.
++The ``TraceEventState`` value ``unavailable`` can thus never
++be reported and has been removed from the schema.
 +
- Human Machine Protocol (HMP) commands
+ Human Monitor Protocol (HMP) commands
  -------------------------------------
  
-diff --git a/qapi/trace.json b/qapi/trace.json
-index 8533e378977..5792a436115 100644
---- a/qapi/trace.json
-+++ b/qapi/trace.json
-@@ -67,10 +67,14 @@
- # @enable: Whether to enable tracing.
- #
- # @ignore-unavailable: Do not match unavailable events with @name.
--#      Deprecated: since 11.2
- #
- # Since: 2.2
- #
-+# Features:
-+#
-+# @deprecated: @ignore-unavailable no longer has any effect
-+#    (since 11.2)
-+#
- # .. qmp-example::
- #
- #     -> { "execute": "trace-event-set-state",
-@@ -78,4 +82,6 @@
- #     <- { "return": {} }
- ##
- { 'command': 'trace-event-set-state',
--  'data': {'name': 'str', 'enable': 'bool', '*ignore-unavailable': 'bool' } }
-+  'data': {'name': 'str', 'enable': 'bool',
-+           '*ignore-unavailable': { 'type': 'bool',
-+                                    'features': ['deprecated'] } } }
 -- 
 2.56.1
 
