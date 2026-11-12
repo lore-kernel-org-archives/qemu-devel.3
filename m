@@ -1,89 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E88606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 17:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81B2606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 17:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=QF5Vo0nq;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=MPRmfjAs
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=I0VxW3fD;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=W2yTh89c
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRYwr-0002I7-PV; Thu, 12 Nov 2026 12:50:57 -0500
+	id 1xRYwn-000211-0a; Thu, 12 Nov 2026 12:50:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
- id 1xRYwh-0001y6-0B
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:50:49 -0500
+ id 1xRYwX-0001kJ-GF
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:50:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
- id 1xRYwf-0001rZ-IL
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:50:46 -0500
+ id 1xRYwS-0001qz-Uf
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:50:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794505845;
+ s=mimecast20190719; t=1794505832;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lpiW2UTc1JtJwgcDG5X7h4CwVDLMVqvoRhnEMP828+c=;
- b=QF5Vo0nqsdZyDfL3MU2qyjSPVrqlEnbBfFJ+nDO2PAxwLvLUkZA8j6niRW3bLF5rbr1ejn
- bnYYv4nvEwxqoxn3fUaiS5SXlm7vnwRZwIU/c2SwNJL8jz40XaqUzfHAKSHV7sNcqufxTm
- XnznoITg6QcIR/esnopLpSctq3+6zf8=
+ bh=Gofs97VqTPJGXzem4UEe5yqiASS9b0iFYnxY/vnWy/w=;
+ b=I0VxW3fD41EL+Crai2RldBT84oCEEoJKiq+GAAXR13gQXmG5auzgZm5CfwRrN4LrpIGg1N
+ PZ8clK5U80tjq2mwmGIF1FnxvQhD+prAQ3UbXQZQCBVcybgrjP0f/yuyK4wpiYPQJcz+Su
+ LTLf9+EmMheZvmwdqgcghVytqgIqXoc=
 Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
  [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-L42N48lLN7WUNrt9syESIQ-1; Thu, 12 Nov 2026 12:50:43 -0500
-X-MC-Unique: L42N48lLN7WUNrt9syESIQ-1
-X-Mimecast-MFC-AGG-ID: L42N48lLN7WUNrt9syESIQ_1794505842
+ us-mta-654-yfFKuDm8N6-3_s_VjJpuAQ-1; Thu, 12 Nov 2026 12:50:28 -0500
+X-MC-Unique: yfFKuDm8N6-3_s_VjJpuAQ-1
+X-Mimecast-MFC-AGG-ID: yfFKuDm8N6-3_s_VjJpuAQ_1794505828
 Received: by mail-pf1-f197.google.com with SMTP id
- d2e1a72fcca58-89fb6a45c48so67963b3a.1
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 09:50:43 -0800 (PST)
+ d2e1a72fcca58-89f84753b43so43885b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 09:50:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1794505842; x=1795110642; darn=nongnu.org;
+ d=redhat.com; s=google; t=1794505828; x=1795110628; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=lpiW2UTc1JtJwgcDG5X7h4CwVDLMVqvoRhnEMP828+c=;
- b=MPRmfjAsmlD7SyjbLPolART/MkkiuNQe7TefV1/R0CR+bHMGDtR9oi+9eV+8Gw4E+C
- xQxwTPO7jJ4u2hI5WweqVhV4qRb9Fwu0UuG691YwnqBfZej8vYVw69vT6piy8IUKnAZh
- rlM1aJ2iksHbFvIFcQjUEgeFRXrztIomDMqpnBAO3tg2gAD9W+cjEoHD3d5TqNmUakPR
- xWCXF5oFzks6esScbK0+eUAwFTj5gYRHjxqpWekYd82/CWCAdnHaDVPEe5wPFTLi2Psu
- OMbrLoGnr3fkbz0flNh8M4AoMZh8PLinRmgYk05nmtbFnUTzXi3wVv+66O2sJy+RKwKy
- 7gAA==
+ bh=Gofs97VqTPJGXzem4UEe5yqiASS9b0iFYnxY/vnWy/w=;
+ b=W2yTh89clrU412jYN7PieX5RFWjJupAKIo9hJo5LoAGq/sKeUjiub3/Q+OIkIcyKCy
+ nylaB6ureaqOO8V5tdJEaZ7+Sl0K7wetH1Sr5cfQAW9XkDb/GOvi7ygFojPbf9oRURby
+ k6lyiHy6GSy/q9OjYjRk3j2GuheZ4FKf3NyJI5pAp7RTaHwxTxqGsZ1rbKyvocOwPUNW
+ 30qQOuI008+3ChwJM5oU46ZbyQF+Bvtu8g/5PZbK1fSdgEakxpiKuYinQ83k1WDZhSGF
+ xFfOypHMwiTOoeEnWN8McUi1nLjAGDuRJPlRJ0OfDXarGNhjRaiOYI1RfRxYQLKtMXu7
+ DozQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794505842; x=1795110642;
+ d=1e100.net; s=20260707; t=1794505828; x=1795110628;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=lpiW2UTc1JtJwgcDG5X7h4CwVDLMVqvoRhnEMP828+c=;
- b=0Y3AvFDLUaIoObriWzdvnmARCPoTmbFqE2AehY3t8mRdg/C/gDwfAvKo13wDB5T2tf
- LWG96WMRMzx4fuMC5zLR+2zSDdNEyJfjxwuXJBksLo7/We+Nq5UHJUHJ11K7FPB+ObOA
- /c5z0/DUxGX8ZqBqXioSTxBJRJMLczxqY2RZPg4axnc+LAf9kqYmXoLS8ZOGXOp8lXsH
- O0XUKQBQHBjoaEqzeMIrkzYOaoZSeka7R37HzQDgPbpO2nZnMlGQN7AxE15k1+SkZi0X
- DYqfCxUmuZ4wYWqlBo5d58Fmp8X1kD4f2Ul7spkTPpnQzuXooQCqj//tc5Ic3VKb8eW2
- 2VfA==
-X-Gm-Message-State: APuU4Z+QRSl7WRZBfzOh9jtxQHPq/UNbKPkWz/lCpZ5Tm9M/N9D1nk5t
- YH+SItNpXYML3qkEZaios7U8HfmHxlZOZ5fTP4yo9zQEhVYYNdEz2kLs9XOc/bYscu+MQu2N8zg
- R43gt1xbbIF/8HFj8DD8IpJ8lJi8OJTHhkzBWBk/FsQfBXCR3eXp589RaEJ7OkICU+1mnvYSpbf
- 2BFjRF2HpssQx/YU7UcHV+1nSJHLVeFtEhLj6RRqQilg==
-X-Gm-Gg: AYBFou23YQM2HQyPL0vE3oEBULjcUyD6ebH+3HUqd6gZGaDOz59Dq/sU5/PCBrpyMj1
- PVPb1RjwDZw8ROCadfwk+vx9HzOm9bnRWTLv/O+Za87OEIk1q3tAnsSOc4qGyA2FAFyR2hCd8TB
- 7nK3+w1Q/m7I+QCUO+3loQ8Yy0lw4iz6CACKJxy0aiGQgkAhARPJQbpY3drCLfZ/EwZNQhmoBjT
- SLhc5u8adL+pdOm1lSXy55ynl+doIA1gGtNy8kgTwxy4OcSqI9KHyg6DX2klrvQr7i/xaw0v+i2
- nZZsrH5FMOH86UCL+FX/DFM9rANPUI9Z7G80rLug6UC56RpQZ1TPH/nJRUFi4Eo8pSwVdCvmApo
- sWeBT+DQOHhN3RUzK4ztPCnqcsGDhUf75p32jdmYfstzQiw==
-X-Received: by 2002:a05:6300:6684:b0:3eb:abb7:f92c with SMTP id
- adf61e73a8af0-3f2fd69cff4mr6584560637.22.1794505842211; 
- Thu, 12 Nov 2026 09:50:42 -0800 (PST)
-X-Received: by 2002:a05:6300:6684:b0:3eb:abb7:f92c with SMTP id
- adf61e73a8af0-3f2fd69cff4mr6584539637.22.1794505841659; 
- Thu, 12 Nov 2026 09:50:41 -0800 (PST)
-Received: from tcalifan-p1g8.csb ([213.175.46.86])
+ bh=Gofs97VqTPJGXzem4UEe5yqiASS9b0iFYnxY/vnWy/w=;
+ b=erknC0NnBFZUPzsJDlw87G15m9Kn7fbW7mp6hvnil5tMf785sQnOj/umSDJVgYOM/F
+ azyqHa2jILkcRnhBZ1CWvQMe2DP/R0PI23kwlwidBJMe6NFzMsP068F513OPo5EKBRcV
+ eBBYUzL5trgTIpPeuvMkmOwnbkJIA2ufU9f8VcizgIsKDJin6q+O5tomDoKCQAIyH2kH
+ 40i8jGl9lUdkWrFroI2mWc6xLGC6zE/E9PpTKXkNK9V3NYCHWsA9pSAZWN3GbsODzPxZ
+ l6HSu+fg+xY6NW6TKaQrwlltuHUPDtHxi3ubYj114K6dk5Sv5wKaofAjKHOm+/loI+qx
+ 8J2A==
+X-Gm-Message-State: APuU4Z9OGpp9LlUvldmc9Ss0IPuFOjSP3rLVHOB6Paawk/+6/YUrKKGk
+ oSL/JrOlYanGchE+xuWUcKZFRw8yLCaycGwwWYaVP8/iKo6LxmAb6RgUhGQf7REEpLFlU81pQvT
+ dbGgq03EKg1hym0c2XGSdCcbPcApVE0HvJRyyOPuGo1P4RpusTT5NEX9JoWKvhNiqeCaARsqeV5
+ ftw9vNoVu3LGeYi3NhyTR8xayYglnTmj+fnyKs9Yw4+g==
+X-Gm-Gg: AYBFou17X4y/ijxs9h9XOhDq6+e+IUteOLA6LN+fgQp03kfIh3r/KsyT8gYex3Z589+
+ 7PYfW/dMp1iKPzkWjXlH1KqjWnghJ7N3Y/ch5CYVBYuRWS3erN6RqYPK0Jcg5eCR2+LgLyGdeeb
+ tddD+1li4Iwy44+CycGmhrOE/wWS+cJZwMlOyW6Pq42tyweJYYn/nOyhf+Qmyy0ydMsMLr8pL2T
+ ZY5nhDXcv7ZN0DbvlZDYTa8EFr9G60zrxONkvkVJBHFDx+4GugQKL2naOnicUNmoS2uSFEb9NE9
+ Ng72n71sqmNm6FuXWOxhGbNFXKw4l8lI3OnX3KAJ4OtMnVcWqOtV088n7X4ouMwCEHNx7la1faU
+ 0iVFp0JkzD2EakDSbgOycgGGjBUoofv9m1p38ecnqpsep3g==
+X-Received: by 2002:a05:6a21:7008:b0:3e1:6b00:fd1e with SMTP id
+ adf61e73a8af0-3f2ff8c79a4mr6258335637.52.1794505827731; 
+ Thu, 12 Nov 2026 09:50:27 -0800 (PST)
+X-Received: by 2002:a05:6a21:7008:b0:3e1:6b00:fd1e with SMTP id
+ adf61e73a8af0-3f2ff8c79a4mr6258310637.52.1794505827137; 
+ Thu, 12 Nov 2026 09:50:27 -0800 (PST)
+Received: from tcalifan-p1g8.csb ([213.175.37.14])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cddc186fc81sm88873a12.8.2026.11.12.09.50.35
+ 41be03b00d2f7-cddc18b4352sm88166a12.24.2026.11.12.09.50.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Nov 2026 09:50:40 -0800 (PST)
+ Thu, 12 Nov 2026 09:50:26 -0800 (PST)
 From: Tommaso Califano <tcalifano@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -91,10 +91,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Junjie Cao <junjie.cao@linux.dev>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Tommaso Califano <tcalifano@redhat.com>, qemu-stable@nongnu.org
-Subject: [PATCH 7/9] hw/usb/dev-mtp: Zero-initialize command and params in
- handle_data
-Date: Thu, 12 Nov 2026 18:49:04 +0100
-Message-ID: <20261112174907.158825-8-tcalifano@redhat.com>
+Subject: [PATCH 6/9] hw/usb/dev-mtp: Detect end of SendObject data correctly
+Date: Thu, 12 Nov 2026 18:49:03 +0100
+Message-ID: <20261112174907.158825-7-tcalifano@redhat.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261112174907.158825-1-tcalifano@redhat.com>
 References: <20261112174907.158825-1-tcalifano@redhat.com>
@@ -129,37 +128,57 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When a command container carries fewer than 5 parameters,
-usb_mtp_handle_data() passes the unset entries of params[] and fields of
-cmd to usb_mtp_command() uninitialized.
+The end of a SendObject data phase was detected by a short packet,
+assuming a 64-byte max packet size. That only holds for full speed:
+on high and super speed endpoints, transfers ending on a 64-byte
+boundary were misdetected.
 
-Zero-initialize both.
+Use the endpoint's max_packet_size. Also end the transfer as soon as
+the size declared in ObjectInfo has been received, and fail it with
+RES_INCOMPLETE_TRANSFER if a short packet arrives before that.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 840a178c94db ("usb: mtp filesharing")
+Fixes: 3e096650a64d ("dev-mtp: Add support for > 4GB file transfers")
 Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4529
 Suggested-by: Hui Peng <https://gitlab.com/benquike>
 Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
 ---
- hw/usb/dev-mtp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/usb/dev-mtp.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
 diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
-index 82de3ee401..f6f9bf52ed 100644
+index 6fd92e5a68..82de3ee401 100644
 --- a/hw/usb/dev-mtp.c
 +++ b/hw/usb/dev-mtp.c
-@@ -1890,9 +1890,9 @@ static void usb_mtp_get_data(MTPState *s, mtp_container *container,
- static void usb_mtp_handle_data(USBDevice *dev, USBPacket *p)
- {
-     MTPState *s = USB_MTP(dev);
--    MTPControl cmd;
-+    MTPControl cmd = { 0 };
-     mtp_container container;
--    uint32_t params[5];
-+    uint32_t params[5] = { 0 };
-     uint16_t container_type;
-     int i, rc;
- 
+@@ -1845,7 +1845,27 @@ static void usb_mtp_get_data(MTPState *s, mtp_container *container,
+         usb_packet_copy(p, d->data + d->data_offset, dlen);
+         d->offset += dlen;
+         d->data_offset += dlen;
+-        if ((p->iov.size % 64) || !p->iov.size) {
++        /*
++         * The transfer ends on:
++         *  - A short packet
++         *  - A Zero Length Packet
++         *  - When the declared size has been received.
++         * A size of 0xFFFFFFFF means the object is >= 4GiB and its real size
++         * is unknown, so it can be neither used to detect the end nor checked
++         * against the received length.
++         */
++        if ((p->iov.size % p->ep->max_packet_size) || !p->iov.size ||
++            (s->dataset.size != 0xFFFFFFFF && s->dataset.size == d->offset)) {
++            /* Size is known (< 4GiB) but received data doesn't match it */
++            if (s->dataset.size != 0xFFFFFFFF &&
++                s->dataset.size != d->offset) {
++                usb_mtp_queue_result(s, RES_INCOMPLETE_TRANSFER, d->trans,
++                                     0, 0, 0, 0);
++                usb_mtp_data_free(s->data_out);
++                s->data_out = NULL;
++                usb_mtp_reset_pending_write(s);
++                return;
++            }
+             if (d->length == MTP_WRITE_BUF_SZ) {
+                 d->write_status = WRITE_END;
+             } else {
 -- 
 2.56.0
 
