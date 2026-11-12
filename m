@@ -1,70 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E271606A323
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 17:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C925606A882
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 17:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=ovhcloud.com header.i=@ovhcloud.com header.a=rsa-sha256 header.s=mailout header.b=hfc0hKI0
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=a6KVj/GA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRYaQ-0008EH-7c; Thu, 12 Nov 2026 12:27:46 -0500
+	id 1xRYiM-0004Y8-TI; Thu, 12 Nov 2026 12:35:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
- id 1xRYaN-0008De-9m; Thu, 12 Nov 2026 12:27:43 -0500
-Received: from 1.mo508.mail-out.ovh.net ([5.135.90.176])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xRYiL-0004Xx-Tk
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:35:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
- id 1xRYaK-0004UG-L8; Thu, 12 Nov 2026 12:27:42 -0500
-Received: from DAGFR11EX3.OVH.local (unknown [10.109.254.33])
- by mo508.mail-out.ovh.net (Postfix) with ESMTPS id 4jQS4w3fMlz7tCZ;
- Thu, 12 Nov 2026 17:27:28 +0000 (UTC)
-Received: from [10.15.146.202] (109.190.254.61) by DAGFR11EX3.OVH.local
- (172.16.2.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Thu, 12 Nov
- 2026 18:27:27 +0100
-Message-ID: <16e512eb-a365-49b1-a4e2-e376d5697b19@ovhcloud.com>
-Date: Thu, 12 Nov 2026 18:27:26 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xRYiK-0007zx-2Z
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:35:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794504953;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3UIWWApkEK/+mdVOJppXLWJ6X2pvNKR7xYYA2tnfBKY=;
+ b=a6KVj/GAjL1gNyQIY79Ly2B695ordsofIUPvQHQ/mpO5E3SS0Mo+WAjvbQi+EmwYTqpuYq
+ nQ9w+SXpmR28GAVyVwsP1wkpi9/RtVKoN7BT30lF+GgvK22udlL/VCWrUjO4QextX2z1kK
+ F9es4bYuBDBWQSdRTcHjE5FKF3Lg1kQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-qOo5JPrqPlCpZACZhnVgOg-1; Thu,
+ 12 Nov 2026 12:35:50 -0500
+X-MC-Unique: qOo5JPrqPlCpZACZhnVgOg-1
+X-Mimecast-MFC-AGG-ID: qOo5JPrqPlCpZACZhnVgOg_1794504949
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5844A19560B8
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 17:35:49 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99DC330000E5; Thu, 12 Nov 2026 17:35:48 +0000 (UTC)
+Date: Thu, 12 Nov 2026 17:35:45 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3] .claude: delete obsolete/redundant link to AGENTS.md
+Message-ID: <avX48aE_IBbaoy0O@redhat.com>
+References: <20261013134936.1012354-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] nbd: Add an unstable query for the client state
-To: <armbru@redhat.com>
-CC: <qemu-devel@nongnu.org>, <qemu-block@nongnu.org>, <eblake@redhat.com>,
- <vsementsov@yandex-team.ru>, <kwolf@redhat.com>, <hreitz@redhat.com>
-References: <20261109160609.1434289-1-guillaume.vincke@ovhcloud.com>
- <20261109160609.1434289-2-guillaume.vincke@ovhcloud.com>
- <87v764yhjg.fsf@pond.sub.org>
- <730c1463-8dfb-4040-9c61-330882320d7c@ovhcloud.com>
- <87h5hntpls.fsf@pond.sub.org>
-Content-Language: en-US
-From: guillaume vincke <guillaume.vincke@ovhcloud.com>
-In-Reply-To: <87h5hntpls.fsf@pond.sub.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CAS4.OVH.local (172.16.1.4) To DAGFR11EX3.OVH.local
- (172.16.2.113)
-X-OVH-CORPLIMIT-SKIP: true
-x-ovh-tracer-id: 17798225729283375399
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: dmFkZTEg9JgLHizBLjlf6zMx6xBhIY8Cl6ifIdOCROV6D9igrJyYEQokxXDFBF/E+29cuF42SZWwrsBO2UjZBnDhG23NVuys50cenPWCtoknMP1iLwFY3nczz3Wh8pLveyaBeQ4EIAeYv8nN1CrbhN2InL+iwYQEQwDnBP4oQUkHCon8G1s9HsViJS07hgCEUyE/TIOG/iIeuoSQFpPqFixdhjwqtnNKZic6NV6wivIZUM3l0iD4sWfVBbdk2NJLCfiitjbydWVja7Iyovkb9CYcVSVOjNHWRruAhfTS0n07LeAnWHU4PoMFDB/ohl+6kuPtz2XEDwnfHlHgowNV3FOJ7C7gEnIMY7fZA+nei+pIIh8xfqaySusBnBSaUWD/Fc4+k689r3uVgwCTBJMNW+WYyOdhvssH75wVVhVrGX5c/yKz6/UCQaK2M/yllbIgznrPBhsTgKQRuDqqJiodxSCpdI0kuG3gUGQbCuE4wfRfcd06pPGPnOvXS9zmKL890dOBi0BqcMmj673dGzc9/pZYYaa+/zFq12u9Fa/cpJnG6z8W+YskPYt5IyCTyS5S69P0OhLE4UgHeAEb8SkBmLczA1ZNXkLkk6NOrB+TpyHT4TBWtPIqhkS0crLcGIJLYSlQekbI6X5g6U5D3LNR82jTdontwrrVUkKGMFdJuD7vE5PwMA
-DKIM-Signature: a=rsa-sha256; bh=meRBY+o6NcIsMsGq6sGHCuJI+2Aq8ZR3QcmF9w56nsY=; 
- c=relaxed/relaxed; d=ovhcloud.com; h=From; s=mailout;
- t=1794504448; v=1; 
- b=hfc0hKI03kqL/g9JsyGxkE3RDf0cHiF8BO1NTQpLhilI/CSKi/Ahry8cisjJmW1YybYf2Nvj
- cY3poFFsk53om/OmZRNTgcqkiPumpBrI2ad2oadxDZK2fP93sIVe7T5xw1hLBtArxhwvma/i7Zx
- mYtZHBlA36lU0SwzpTIdRfoE=
-Received-SPF: pass client-ip=5.135.90.176;
- envelope-from=guillaume.vincke@ovhcloud.com; helo=1.mo508.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261013134936.1012354-1-berrange@redhat.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,176 +84,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/11/26 15:22, Markus Armbruster wrote:
-> guillaume vincke <guillaume.vincke@ovhcloud.com> writes:
+Ping for any review/acks
+
+On Tue, Oct 13, 2026 at 02:49:36PM +0100, Daniel P. Berrangé wrote:
+> From the release notes for Claude Code 2.1.277:
 > 
->> On 11/10/26 13:53, Markus Armbruster wrote:
->>
->> Thanks for the review. Let me clarify before posting a v2.
->>
->>> Why block-core.json and not block-export.json?
->>
->> If I get this right, block-export.json covers the server part. I
->> thought adding this next to BlockdevOptionsNbd was a better fit. I can
->> change that in v2 if you think block-export.json is a better match.
+>   https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 > 
-> My question was a question, not a change request :)
+>   "Added AGENTS.md support: in a project with no CLAUDE.md,
+>    Claude Code reads AGENTS.md instead"
+> 
+> Version 2.1.281 fixed a few further bugs
+> 
+>   "Changed AGENTS.md support to also work on Amazon Bedrock,
+>    Google Vertex AI, Microsoft Foundry, LLM gateways, and sessions
+>    with telemetry disabled"
+> 
+> If we assume people will keep their Claude Code updated, then the
+> .claude rules we added to link to AGENTS.md are now redundant, or
+> very soon will be.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  .claude/rules/agents-md.md | 1 -
+>  1 file changed, 1 deletion(-)
+>  delete mode 100644 .claude/rules/agents-md.md
+> 
+> diff --git a/.claude/rules/agents-md.md b/.claude/rules/agents-md.md
+> deleted file mode 100644
+> index 43c994c2d36..00000000000
+> --- a/.claude/rules/agents-md.md
+> +++ /dev/null
+> @@ -1 +0,0 @@
+> -@AGENTS.md
+> -- 
+> 2.56.0
 > 
 
-I was a bit too eager there :) I will keep it where it stands for now.
-
->>>> +#
->>>> +# @connecting-wait: No active connection.  A request waits for the
->>>> +#     connection attempt to finish, while reconnect-delay has not
->>>> +#     expired.
->>>> +#
->>>> +# @connecting-nowait: No active connection.  A request fails at once
->>>> +#     if no channel is ready.
->>>> +#
->>>> +# @connected: Client has a valid connection.
->>>
->>> Double-checking: when we're in this state, there is a client connected.
->>> Correct?
->>
->> Yes. This is a client state that describes the connection as valid: the
->> channel got negotiated and is ready to process requests.
->>
->>>
->>>> +#
->>>> +# @quit: Client will not reconnect.
->>>
->>> What does this one mean exactly?
->>
->> The client stopped for good. Requests fail and it never reconnects.
->> This state is reached on fatal error or teardown.
-> 
-> Work some of that into the description?
-> 
-
-Will do!
->>>> +#
->>>> +# @running: Connection attempt is in progress.
->>>> +#
->>>> +# @parked: Connection was successful and channel is kept for the next
->>>> +#     request.
->>>> +#
->>>> +# Since: 11.2
->>>> +##
->>>> +{ 'enum': 'XDbgNbdClientConnectorState',
->>>> +  'data': [ 'running', 'parked' ] }
->>>> +
->>>> +##
->>>> +# @XDbgNbdClientConnector:
->>>> +#     The NBD connector information.
->>>> +#
->>>> +# @state: State of the connector.
->>>> +#
->>>> +# Since: 11.2
->>>> +##
->>>> +{ 'struct': 'XDbgNbdClientConnector',
->>>> +  'data': { 'state': 'XDbgNbdClientConnectorState' } }
->>>> +
->>>> +##
->>>> +# @XDbgNbdClient:
->>>> +#     The NBD connection state of the client and its connector.
->>>> +#     The two members are read independently and may not reflect a
->>>> +#     single point in time.
->>>
->>> That's unfortunate.  It'll do for debugging.  Could it create robustness
->>> issues in tests?
->>
->> On the nbd-stale-connection test it is not a problem but I can try to
->> take the locks together in v2.
-> 
-> Worth a try, I guess.
-> 
-
-Will add that in v2.
-
->>>> +#
->>>> +# @state: The client state.
->>>> +#
->>>> +# @connector: The connector details.  Only present while a connection
->>>> +#     attempt is running or its channel is parked.
-> 
-> When exactly is this member present?
-> 
-> Is it always present when @state has certain values, and never present
-> when it doesn't?  Or is it more complicated?
-> 
-
-It is never present when @state is connected. on connecting-* it is
-absent until lazy reconnection is triggered (first request after a
-failure). In quit, a running attempt or a parked channel stays until
-the node is closed, so the connector can be absent, running or parked.
-
->>>> +#
->>>> +# Since: 11.2
->>>> +##
->>>> +{ 'struct': 'XDbgNbdClient',
->>>> +  'data': { 'state': 'XDbgNbdClientState',
->>>> +            '*connector': 'XDbgNbdClientConnector' } }
->>>
->>> How the combined state machine works is not clear to me.  Is it
->>> documented anywhere?
->>
->> I did not find a proper documentation. I found the comments on the code
->> to be quite explicit though. The connector only runs in a connecting-*
->> state. In that state, when processing a request, the client tries to
->> get the channel from the connector. When the connector has a valid
->> channel but the client did not request it, the connector is in parked
->> state. Do you think this command should document that behavior?
-> 
-> Perhaps the doc comments are good enough for a debugging command to be
-> used by people who know how the state machine works.
-> 
-> I don't, I've read the doc comments several times, and the state machine
-> is still a mystery to me.  Can we do better with reasonable effort?
-> 
-
-would something like this help:
-
-1- the connector is absent while connected
-2- a failure moves the client to connecting-wait. It gets to Nowait
-    when the configured reconnect-delay is reached.
-3- In connecting-* states, the next request starts the connector which
-    gets into running.
-4- On wait, the request blocks and takes the channel when it's ready.
-    On nowait, the request fails at once if no parked channel is
-    available.
-5- on successful connection, the connector parks the channel.
-6- when the channel gets picked up by the client, it gets to connected
-    and the connector is cleared.
-7- on fatal error or when teardown is requested, the state gets to
-    quit.
-
-
->>>> +
->>>> +##
->>>> +# @x-debug-query-nbd-client:
->>>> +#     Get the NBD client state.
->>>> +#
->>>> +# @node-name: node name of the NBD client to query.
->>>
->>> How would I find the valid node names?  query-block-exports?
->>
->> The node-name is listed by query-named-block-nodes or is the one passed
->> to blockdev-add. I will add a reference to those commands in the
->> docstring to clarify.
-> 
-> What exactly makes such a node name an "NBD client"?
-
-It's a node whose driver is NBD. It gets added with blockdev-add with
-"driver": "nbd". Any other node gets the error "is not an NBD client".
-Would changing the doc to "node name of a block node using the nbd
-driver" with a reference to the query-named-block-nodes be better ?
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
