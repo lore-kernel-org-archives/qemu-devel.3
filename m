@@ -1,101 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF7E606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 17:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856D7606A323
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 17:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rw0uwYR9
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=qdWOQzXS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRYz0-00058j-JF; Thu, 12 Nov 2026 12:53:10 -0500
+	id 1xRYz0-00058i-Hp; Thu, 12 Nov 2026 12:53:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1xRYyy-00058H-Ja
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:53:08 -0500
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRYyw-00057x-Pm
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:53:06 -0500
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1xRYyv-00022r-JI
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:53:08 -0500
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-483a66818edso23724fac.0
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 09:53:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRYyo-00022b-9h
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 12:53:06 -0500
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-677bc4704cbso80243d50.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 09:52:56 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794505975; cv=none;
+ d=google.com; s=arc-20260327;
+ b=FridcCuihOhawKBHG9PrQsrQyt4AZbV30OknRhC6h8WBeJko6EGpfX5XPB0PDtX/kj
+ 920Iqdm9GV7PtNUwaGy2MdFsAuc3VTZp4F2DMEI+qfr5K7pBK/wHj97Jf/yMS4OnxanG
+ wVmMR+/4vTJyOCe9gkg7Lp4i5SiY/dfR11GCSxZcPhPxGcg33kTecUQTS9ta+gcmRqsv
+ MKmS986HaLIAS87Y7R85OttOjvqD8Q8CnXtL68n+mgmO6/vvAF1hF9DC27RI4YYd3Dtr
+ TCboNez4M9Hjqk+qwM0I+lOdKhNZOZE3WilIkY9Pt2tKVuKlmeX6tNbYQ/HajOcpZjX2
+ V0mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=nf3vkWIV+wN9RY+bURM8lpfIXEmMBBIniBP8AXgOyTA=;
+ fh=w3US15iX+NoJPbQobzeZ6/B7cq8ZLBG6SzB0JMRDU4Q=;
+ b=BPb5hhSbyju6VQ+0/iUxiZrX7IcOaMkwuMc4i+2Q5zPc9Bs8ZFM6OhUK2R/zZ/MDCQ
+ H0vOjlwxP9WTB+ABUVspNivdK/1f+Z0eCNYapIoAcXl3ODxFEx3uZVdg9iNdMFj6FUz7
+ uC0yASwfv/DRgienWqRB47/1aJOZx4lmrZr3WbZoxr/5ossvm377b1y4D0OjBZuki+QE
+ 29DOCcogExPXKM2WzO0wpa6hY1D5N+BFmaloZk+Xpl4W/diUBuKOhTXZnFyNr2/1qAG7
+ c3bBMWWGsxOoIYyETZ/A3b4A2gSkqo1s/FZXUFQJ/0WJiamlbu5RZP964K8f5dgg7nxP
+ WcTg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794505979; x=1795110779; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=F2YnP0s7EXjVFhqc1+OhYJjUXanL7Ulcltk2cgVR7UY=;
- b=rw0uwYR9CsBeBTEN5foML1cHY9Vr7ywJfxvPDugVOTxnTCzP3NtUs5XXg1uxU9aCbA
- IP9TQRXsKJ6A/ZviRCIw4klmo+b+ARFk35oeFd2V9ZN+Td+zdW+lKaBC919rhB7tnm30
- yDc8R/xqn4LetHXjh0iMrDFohZPb4c0thY2qA+uY5yxHzCDot3Jy/4DrrE8+LAozvZl5
- 9J01TqJukRNHqQgd7VzWNMml6n+TG1zQDXJqV7nLRDIF2sCQqInajDR/L3aU++cVQogI
- bR5Y6daPMJNiP6+44f07uZCEdc2Ltqnzlqt1j6ftCPhpP99azv2B18WuR3ein9uk8FSg
- mMSg==
+ d=linaro.org; s=google; t=1794505975; x=1795110775; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=nf3vkWIV+wN9RY+bURM8lpfIXEmMBBIniBP8AXgOyTA=;
+ b=qdWOQzXS4mLpzBqpWliJjOChSiatbP1LPmcG/sAdp7DlcORu7I0zc9yicYuPDC/cKY
+ fzY6UyWBBVtGDBtnLpsx+d08DMSdVsSXa0V4Zxwv5SZCRILQ03DgxyCWtt9ss7Et0nEu
+ +XetLFFz2XsbL9pd7MUHIl1qhG4QLy5DbP/vfpJUreqkbzvu8agtiwz70bNyI5GdUzD2
+ aby5y02iqUMDS7tWuYeMrjfH3chGXbE/LwtPlLAow0BrfFAHdN/Af9tZzcfsXhEdCcOQ
+ cqT6NopCzBVuuoY4DCHsvib2/yPpiF7R5PTITeIj3CmX+3p6lRu1sjSiej81R7QOkOGE
+ 2VDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794505979; x=1795110779;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=F2YnP0s7EXjVFhqc1+OhYJjUXanL7Ulcltk2cgVR7UY=;
- b=fq1hhGmZbADVFu68/TB83Rnv2zRD/aAEEi97CFYPDy25kdwR5LeftqsItZGkz/kKgb
- NUiPBJvTyeXpJPGeX9Ej1pc0KGChvoGUa4FHaFUvAKvSrM5cZ1kmbq+tGcE1ZKdOlfxH
- IiQ/5DeiVC8yo+wIR8wmmlLaziEuttx6dlx4yMn6XN+5ZJyGEFMhp++QfejwrwrDTuLf
- ejv22Lj1NMZMFaqf02chBCpWdxm++sPp53hzuE0XaVFNInkC0TAyDrXWaRyNvHOFe+qm
- JBoP8eKBn1E5VNqOl/gbPzGgJKXkQUzXduL5xbH0KaOJb4WhqqhMjnJA6iPpA4ww1j8p
- YaYQ==
+ d=1e100.net; s=20260707; t=1794505975; x=1795110775;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=nf3vkWIV+wN9RY+bURM8lpfIXEmMBBIniBP8AXgOyTA=;
+ b=rQi7hT/gfx9dpR6TRtBp7CAeATplYzdviQPXDWDcZ0k2RI0amvS6ieWlSj/1UVbNxi
+ nhtBdipGnA6Ei0T8czRoY6SOPDktKxP2TuRnwC8ySGdMvhup4bo6zxgkVfCQ5+NeCOSX
+ jA4H+qddCdDPpQr4M88irm0PeMJExAwTHufo8gbFlUtxxWUqdEQbq5H4gNSbYYaBO2FR
+ iwdrB3Y42a9KnyP8CyLnTAlE5FDNYi4cPYEUHH7sD/KWD00rvBckdw03jCY7T6Vs2SQx
+ IdN22kDRMMK4nH4HUsB659uPlZpotDUF915D/zjmYYkzMORxUGkbWBtk4YhH8KUK6ljh
+ EENQ==
 X-Forwarded-Encrypted: i=1;
- AL+hErESIq02hofK62BafVCI3m6o+m6Y4R3LRZ53cacbeeazQ/bJAZmib8Q8+XhPuRPe3s/pptpPiBuFeE9A@nongnu.org
-X-Gm-Message-State: APuU4Z/1YCPACrg/s+yG2VMv3+EepU1TVq27FdlZP2YfMSi6mCUVixD3
- uylipTYD8iGLsLOSm/p0BxxOL2XvfT+KlFHHsA3AOUw8aKRTPG2T7vY+
-X-Gm-Gg: AYBFou0qghDx+CDKEqXTvGPdVnERz2GDmLX+UGvK3tzVGEYDb+n0TzdrOwnK+MmBRjH
- qaghyVKpPHKMh4FGAVzkiDbhcIsYPerWM47zAyyVNKSs1vFi7aJS3oZbaqiDfAAtFFux6nyAjtC
- 9E9Qq8pZv5mA5+eB8g6xyDGo0apUauUvMYPmlf5jfSGc50oEZ1v8REsc3AjysfeFWGNIHjOazeU
- NA8kQrTZQ3uuJmDbDj3Gh7vD/mjLsvGHGfOlGmsXotMQnQX6wgE1N+SJanlc567zrxsZOFw34iP
- HMUhbNlURWwxqwD7R5tO33QZkrnG9G+3W3j06n9HZ1OFivaROElHRAxHV/VsED0VwbdCYbKuaCu
- sYs1P5y3JdDMb+24eo20lRLNiWYYSTq1OWqkh0t4oE3CISmOweeXAzZ54b+/xUJcrn6JdO+7jDT
- 2L17yUX5JL4g3Qv+n0PDufZ2RSEknKzZwocxF76DHDwtE5XxAtMxb9cOUV6Nvw+whX6syuQ9cYD
- xr5cha21MqWyrhULttsA5Pt329hr3bBSgLvFKPARUXaMhylLFPjMpL5/PBXVcyumCgcm5RM7reU
- d20JU6k6awYfWZ91NN++DyQnAjXilgp1PpEk
-X-Received: by 2002:a05:6870:9f11:b0:494:76db:2aa8 with SMTP id
- 586e51a60fabf-4afdf191441mr400506fac.5.1794505979154; 
- Thu, 12 Nov 2026 09:52:59 -0800 (PST)
-Received: from [172.31.11.98] ([209.52.143.85])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-4ae22f6a1aesm6023059fac.4.2026.11.12.09.52.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Nov 2026 09:52:58 -0800 (PST)
-Message-ID: <fd4eaf33-363b-4f14-88d6-9723d1bf0f16@gmail.com>
-Date: Thu, 12 Nov 2026 10:52:54 -0700
+ AL+hErFyo4rVHlvsAyZL0AxDUaKx3EP38vMIEfMZgeU/IqXVxsdLEl7QwOWD9BChTcJo5OgAVLNtkFiT4Sh3@nongnu.org
+X-Gm-Message-State: APuU4Z9fqjGwGr3lOPR7ad/EqFagEhUB7flKo2TReHi8dHWjhkxbb080
+ ZHLNL7Bf2DIRzdXD+aB6BMLQAykm4xQGevOvCzq8Vhk+kHcPUTHIJ/RU11/PFaRdwXZjPIO1URg
+ xlRC+k6/wewnM8rOcRDNgK6wYAipZITV0tWC8YvhaAA==
+X-Gm-Gg: AYBFou0MknmTpXwVQGIKyM2MlcCP6/rfYhWj9mRXQWMAc/R2lmBaVXLCoO2KLeiLDUu
+ lOogJVlzUW5ZNTbexb+GEKC9yvyCDPhY6egNIxZAukc+yiEwLMXsWeviP1NBst1Pr3pqwi1z40v
+ 8MGGXmkdL5dPtN/M7VPe8qqb2N8jdfS3QLhEQ37iWhY6J0uwoxGXOilih8yIihvw8wgwQVnOkyg
+ VpUsBVzReXEvJ6fKIlMG5Q/jz2O0tZupV/aP6TYkV0p3pA78aVD4xMVWzSu0K7YExS4Npj/Iyj4
+ nu+nPNmI6x/2EYBU5kzT0o5rHrn8EQzqJmKPXGiNVH9sA0oBGNw7+WYqwceP0kCT7KtjT8yU+9+
+ lOI7x873CM87YPFOz85PlQZrpuCHN5N4mgz0S0OzJYBm1Rc+JijUTlo61Z3hlEaehgEs2X2NK0w
+ I6ywmQ+WCAG5ZpWBieJfEo
+X-Received: by 2002:a05:690e:1697:b0:679:af57:d199 with SMTP id
+ 956f58d0204a3-67d89681ae0mr84366d50.57.1794505975077; Thu, 12 Nov 2026
+ 09:52:55 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 00/18] hw/cxl: Add a CXL Type-2 device
-To: mhonap@nvidia.com, jic23@kernel.org, alwilliamson@nvidia.com,
- clg@redhat.com, xueshuai@linux.alibaba.com, ira.weiny@intel.com,
- zhiw@nvidia.com, mst@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- junjie.cao@linux.dev, anisa.su@samsung.com, pbonzini@redhat.com,
- ankita@nvidia.com, vsethi@nvidia.com, skolothumtho@nvidia.com,
- mochs@nvidia.com, Weqaar Janjua <weqaar.janjua@packetfive.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Cc: cjia@nvidia.com, kjaju@nvidia.com, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org
-References: <20261106035911.1280066-1-mhonap@nvidia.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@gmail.com>
-In-Reply-To: <20261106035911.1280066-1-mhonap@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=akihiko.odaki@gmail.com; helo=mail-oa1-x2c.google.com
+References: <20261023180539.1574134-1-alex.bennee@linaro.org>
+ <20261023180539.1574134-4-alex.bennee@linaro.org>
+ <CAFEAcA-i6SP=Z96DKvckc-BT0eDXqKUOjdk4ccKUeORB9o=-hw@mail.gmail.com>
+ <87cxsaqm1r.fsf@pond.sub.org> <87tslmarws.fsf@draig.linaro.org>
+In-Reply-To: <87tslmarws.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 12 Nov 2026 17:52:43 +0000
+X-Gm-Features: AclHuK9JZwPzn3s40b-nsmSjb09EVfrowPFYDn4M5LWhbiV3EIQoCDcu_siCdP8
+Message-ID: <CAFEAcA8OOMbrPqhDJ3=K3m5fnfqAQg+Eio46=krPk+PkaLAXeQ@mail.gmail.com>
+Subject: Re: [PULL 03/19] .dir-locals: include QEMU code in PYTHONPATH
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,178 +120,70 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 2026/11/05 20:58, mhonap@nvidia.com wrote:
-> From: Manish Honap <mhonap@nvidia.com>
-> 
-> Hello,
-> 
-> This series adds cxl-type2, an emulated CXL Type-2 device with volatile
-> device memory. It is emulated in such a way that all the Linux checks
-> are satisfied so that CXL passthrough using vfio-pci (vfio-cxl) can be
-> developed and tested in a guest without Type-2 hardware.
-> 
-> This series builds on the Type-2 model from Zhi's series (carried in
-> Cédric's tree) and carries one fix from Shuai's tree. Shuai's tree also
-> set up the decoders through device properties and stubbed CXL Reset; the
-> firmware setup and CXL Reset here are new code.
-> Carried patches keep their authors, with a note for each change.
-> 
-> The device:
-> - PCI ID 1b36:0017 and the processing accelerator class 0x1200;
-> - PCIe DVSEC for CXL Devices with CXL.cache, CXL.mem, one HDM range,
->    cache write-back and invalidate, CXL Reset and Mem Clr; Register
->    Locator and Flex Bus Port DVSECs;
-> - CXL.cache advertised but not modelled. The device sends no CXL.cache
->    requests, and its memory is host RAM, which is coherent already. A
->    cache write-back and invalidate completes at once. The capability is
->    set because vfio-cxl takes a device as Type-2 only when it reports
->    both CXL.cache and CXL.mem;
-> - component registers with one HDM decoder;
-> - slot 0, function 0 below a CXL root port of a pxb-cxl, memory in one
->    fixed memory window selected with fmw-index, cold plug only (no
->    hotplug or unplug), not migratable.
-> 
-> No Linux driver claims the device on its own. cxl_pci does not bind to
-> the accelerator class, and sfc, the other driver that calls the CXL
-> core Type-2 interface, matches only its own devices. A guest binds
-> cxl-type2 to vfio-pci, which hands it to vfio-cxl. Testing the CXL core
-> Type-2 interface without vfio-cxl needs a driver for 1b36:0017 that
-> calls it. There is none yet.
-> 
-> QEMU has no firmware that commits the HDM decoders of a CXL route at
-> boot, and Linux attaches a Type-2 device only to a committed region
-> (devm_cxl_probe_mem()). So QEMU does that step itself. cxl-type2
-> registers its range with its pxb-cxl at realize (patch 13). At every
-> reset the pxb-cxl commits HDM decoder 0 for it (patch 12), and the
-> device commits its own decoder with Lock On Commit and enables
-> CXL.cache, CXL.mem and HDM decoding (patch 14). A pxb-cxl with a
-> registered range keeps its HDM decoder even with a single root port,
-> where it would otherwise pass accesses through. Type-3 devices, and
-> pxb-cxl without a registered range, are not affected.
-> 
-> A CXL Reset keeps the locked decoder committed, as RWL fields are not
-> affected by CXL Reset once locked (CXL r4.0 Table 8-1). DVSEC Control,
-> the range bases and HDM Decoder Global Control return to their
-> defaults, which leaves Mem_Enable and HDM Decoder Enable at 0. While
-> either is 0 the device drops CXL.mem, so guest accesses to its memory
-> fail until software sets both bits again. The CXL.io part of the reset
-> is not emulated. CONFIG_LOCK makes the RWL DVSEC fields read only until
-> a system reset.
-> 
-> Patches:
-> - 1-7:   Shared CXL code: read-0 ops for the CXL.io range of the
->           component registers, helpers from Zhi, an HDM decoder count,
->           DVSEC bit names, a device-neutral view for the direct mapping
->           code, PCI IDs;
-> - 8-17:  The device; patch 16 also exports the default component
->           register write handling, so the device can check the enable
->           bits after a write;
-> - 18:    Docs;
-> 
-> Left for later series:
-> - The CXL device registers with the mailbox, event logs and MSI-X, and
->    the CDAT;
-> - Direct mapping lifecycle fixes for Type-3 and switch topologies, and
->    Lock On Commit in host bridges and switches;
-> - Fixes for guest-triggered aborts on 1 and 2 byte mailbox writes and a
->    repeated DOE Go;
-> - Software-programmed decoders, for Linux-created Type-2 regions;
-> - A Type-2 device below a CXL switch, and migration.
-> 
-> Testing:
-> - Build every commit for x86_64 and aarch64, checkpatch for style.
-> - vfio-cxl selftest (vfio_cxl_type2_test) in an Arm L1 guest on KVM,
->    with the device below a CXL root port and an SMMUv3: 19 of 19 pass
-> 
-> - Not tested: x86_64 L1, a build without CONFIG_CXL_TYPE2_DEVICE.
-> 
-> The Linux vfio-cxl series(v5) this was tested with:
-> https://lore.kernel.org/r/20260916183540.3813685-1-mhonap@nvidia.com
-> 
-> Sent as RFC to get comments on the series structure and to request
-> 1b36:0017 devid for cxl-type2 device allocation.
+On Thu, 12 Nov 2026 at 17:19, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> Markus Armbruster <armbru@redhat.com> writes:
+>
+> > Peter Maydell <peter.maydell@linaro.org> writes:
+> >
+> >> On Fri, 23 Oct 2026 at 19:06, Alex Benn=C3=A9e <alex.bennee@linaro.org=
+> wrote:
+> >>>
+> >>> When editing python code the linters tools have a hard time with our
+> >>> imports as they can't be found. To ease this we can expand a
+> >>> PYTHONPATH in .dir-locals so at least Emacs users can have less
+> >>> warnings in their editor.
+> >>>
+> >>> I still get complaints from python-mypy about missing library stubs
+> >>> that mean it can't do proper type analysis though.
 
-Note: that device ID has already been requested for a device called 
-CnuasNIC:
+> >> With this change, emacs now complains and prompts for input every
+> >> time I open a Python file inside the QEMU source tree:
+> >>
+> >> =3D=3D=3Dbegin=3D=3D=3D
+> >> The local variables list in /home/pm215/qemu/
+> >> or .dir-locals.el contains values that may not be safe (*).
+> >>
+> >> Do you want to apply it?  You can type
+> >> y  -- to apply the local variables list.
+> >> n  -- to ignore the local variables list.
+> >> !  -- to apply the local variables list, and permanently mark these
+> >>       values (*) as safe (in the future, they will be set
+> >> automatically.)
+>
+> It should mark them as safe for this particular directory, not generally
+> for setting PYTHONPATH.
+>
+> >> i  -- to ignore the local variables list, and permanently mark these
+> >>       values (*) as ignored
+> >>
+> >>   * eval : (when-let* ((root (locate-dominating-file default-directory
+> >> ".dir-locals.el"))) (setq-local process-environment (copy-sequence
+> >> process-environment)) (setenv "PYTHONPATH" (concat (expand-file-name
+> >> "python" root) ":" (expand-file-name "tests/functional" root))))
+> >> =3D=3D=3Dendit=3D=3D=3D
+> >>
+> >> The commit messages says "so Emacs users can have less warnings"
+> >> but from my POV this is "more warnings" (and previously I didn't
+> >> notice any warnings at all).
+> >
+> > Same here.
+> >
+> > What exactly was the problem this patch tried to solve?
+>
+> It ensures the python lsp's don't complain about invalid imports because
+> they don't have visibility of the PYTHONPATH set by ./run
 
-("[PATCH v3 0/6] hw: Add Cnuas virtual devices")
-https://lore.kernel.org/qemu-devel/20260929202358.725310-1-weqaar.janjua@packetfive.com/
+That's a bit unfortunate, but I think it's a lot less bad
+than emacs complaining every single time you open a python file.
 
-Regards,
-Akihiko Odaki
-
-> 
-> References:
-> [PATCH RFC 0/5] hw/cxl: Type 2 Device RFC
-> https://lore.kernel.org/linux-cxl/20230517-rfc-type2-dev-v1-0-6eb2e470981b@intel.com/
-> 
-> Type-2 emulation trees:
-> 
-> [1] Zhi Wang
-> https://github.com/zhiwang-nvidia/qemu/commits/zhi/qemu-type2-emulation-for-review
-> 
-> [2] Cédric Le Goater
-> https://github.com/legoater/qemu/tree/cxl-type2
-> 
-> [3] Shuai Xue
-> https://gitee.com/axiqia/qemu-kvm/tree/cxl-type2-test
-> 
-> Manish Honap (12):
->    hw/cxl: Make HDM decoder initialization count-aware
->    hw/cxl: Define the CXL Device DVSEC capability and control bits
->    hw/cxl: Find the memory of a CXL device through one helper
->    hw/pci: Add PCI IDs for the CXL Type-2 device
->    hw/mem: Require a CXL root port of a pxb-cxl for cxl-type2
->    hw/pci-bridge: Add firmware HDM decoder state to pxb-cxl
->    hw/mem: Bind cxl-type2 to a fixed memory window
->    hw/mem: Commit the cxl-type2 HDM decoder at reset
->    hw/mem: Add CXL.cache with cache write-back and invalidate to
->      cxl-type2
->    hw/mem: Implement CXL Reset for cxl-type2
->    hw/mem: Clear the cxl-type2 volatile memory on a CXL Reset request
->    docs/cxl: Document the CXL Type-2 device
-> 
-> Shuai Xue (1):
->    hw/cxl: Give the component register .io sub-region read-0 ops
-> 
-> Zhi Wang (5):
->    hw/cxl: Factor out cxl_host_addr_to_dpa()
->    hw/cxl: Introduce cxl_component_update_dvsec()
->    hw/cxl: Introduce CXL type-2 device emulation
->    hw/cxl: Add the CXL type-2 DVSECs and component registers
->    hw/cxl: Map the CXL type-2 device memory through the fixed windows
-> 
->   MAINTAINERS                             |   1 +
->   docs/specs/pci-ids.rst                  |   2 +
->   docs/system/devices/cxl.rst             |  68 +++
->   hw/cxl/cxl-component-utils.c            | 227 +++++++++-
->   hw/cxl/cxl-host.c                       | 130 ++++--
->   hw/mem/Kconfig                          |   5 +
->   hw/mem/cxl_type2.c                      | 580 ++++++++++++++++++++++++
->   hw/mem/cxl_type2_stubs.c                |  20 +
->   hw/mem/cxl_type3.c                      |  68 +--
->   hw/mem/meson.build                      |   2 +
->   hw/pci-bridge/pci_expander_bridge_cxl.c |  27 +-
->   include/hw/cxl/cxl.h                    |   1 +
->   include/hw/cxl/cxl_component.h          |  26 ++
->   include/hw/cxl/cxl_device.h             |  27 ++
->   include/hw/cxl/cxl_pci.h                |  31 ++
->   include/hw/pci/pci.h                    |   1 +
->   include/hw/pci/pci_bridge.h             |   6 +
->   include/hw/pci/pci_ids.h                |   3 +
->   18 files changed, 1102 insertions(+), 123 deletions(-)
->   create mode 100644 hw/mem/cxl_type2.c
->   create mode 100644 hw/mem/cxl_type2_stubs.c
-> 
-> 
-> base-commit: f71afb409a87c4ecd0f9d63a5963eb645dfab780
-
+-- PMM
 
