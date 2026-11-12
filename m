@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7630B606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54803606A330
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GR/hSCFQ
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PmrrkZiV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRUtc-0005lo-Pl; Thu, 12 Nov 2026 08:31:20 -0500
+	id 1xRUtd-0005mk-H1; Thu, 12 Nov 2026 08:31:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRUtS-0005hC-KM
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:31:17 -0500
+ id 1xRUta-0005jO-4T
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:31:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRUtQ-0000xr-Rw
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:31:10 -0500
+ id 1xRUtY-0001Ia-17
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:31:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794490267;
+ s=mimecast20190719; t=1794490274;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=X5tqEPnDpval/zjsjFv7UUZTZpNNNmOXJzS8goVRL+Q=;
- b=GR/hSCFQXwbU096o2Nk2ccCALCbvyOQ5bZbNH4ADXiJV2vAs1iC+gSoKrqxgaXgH3So66C
- 8GtMFu0XTKfvkkciCVb+cTUxn8prcU0mlq86bhnyN0pLGBIdEtlWJInIEVNEoLPQQlfobe
- a0Iws9rbj1iLaoE8dBO2qy9FQipqE+k=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Lwn56zNkYqAvYtlO4GevRmmSKH6d6k6649k/+dHppWw=;
+ b=PmrrkZiV3s03MByH6mgXmB/7jw/qtQKv2iKygfs97T/G691HQnooA8JgGJnE9bx5HY0+Ed
+ +LLXBGhjD5pt0l5D2l0wAcSJKDlmvCtkr+Ovf1Okyy1FU38hM4atQhnO1tChir2wyr8Mxh
+ uMNrhItqEHMqcsyDsHFfAPGPrcmCZAY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-kqI2eBHZMQqtH0Paass_Bw-1; Thu,
- 12 Nov 2026 08:31:04 -0500
-X-MC-Unique: kqI2eBHZMQqtH0Paass_Bw-1
-X-Mimecast-MFC-AGG-ID: kqI2eBHZMQqtH0Paass_Bw_1794490263
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-117-dBH6RHHuO9efW6v6C6ZeEQ-1; Thu,
+ 12 Nov 2026 08:31:12 -0500
+X-MC-Unique: dBH6RHHuO9efW6v6C6ZeEQ-1
+X-Mimecast-MFC-AGG-ID: dBH6RHHuO9efW6v6C6ZeEQ_1794490271
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5956818C3DFE; Thu, 12 Nov 2026 13:31:03 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E89C1800548; Thu, 12 Nov 2026 13:31:11 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DEE401956089; Thu, 12 Nov 2026 13:31:01 +0000 (UTC)
+ id E51FE1956089; Thu, 12 Nov 2026 13:31:09 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -54,9 +54,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Markus Armbruster <armbru@redhat.com>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 03/48] qom: define a TargetSpecific interface
-Date: Thu, 12 Nov 2026 13:30:09 +0000
-Message-ID: <20261112133054.1977618-4-berrange@redhat.com>
+Subject: [PATCH 07/48] qapi: report multiple aliases in MachineInfo
+Date: Thu, 12 Nov 2026 13:30:13 +0000
+Message-ID: <20261112133054.1977618-8-berrange@redhat.com>
 In-Reply-To: <20261112133054.1977618-1-berrange@redhat.com>
 References: <20261112133054.1977618-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -66,14 +66,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,175 +91,94 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This can be used to declare a type as being target specific.
+The MachineInfo struct is extended to report the list of aliases
+from the TYPE_ALIASED interface, in preference to the traditional
+alias from the TYPE_MACHINE struct.
 
-Implementing the interface just records the target metadata,
-applying the enforcement requires the object creation path to
-call 'target_specific_class_check()' to validate the system
-state.
-
-This approach is intended to allow classes to be unconditionally
-registered, which allows introspection at any time. The target
-specific enforcement is applied at runtime in the object
-creation codepaths that need to apply restrictions. This implies
-that QOM class names must be globally unique across all targets
-known to QEMU.
+Initially we use 'alias' to fill the 'aliases' field in QOM. As
+machines get converted to set 'aliases', the first 'aliases'
+element will get used to fill 'alias. This provides backcompat
+during the transition phase.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qom/object_interfaces.h | 75 +++++++++++++++++++++++++++++++++
- qom/object_interfaces.c         | 31 ++++++++++++++
- 2 files changed, 106 insertions(+)
+ hw/core/machine-qmp-cmds.c | 25 +++++++++++++++++++++++++
+ qapi/machine.json          |  3 +++
+ 2 files changed, 28 insertions(+)
 
-diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
-index afd0fb93b2b..d222a3d7481 100644
---- a/include/qom/object_interfaces.h
-+++ b/include/qom/object_interfaces.h
-@@ -16,6 +16,17 @@ DECLARE_CLASS_CHECKERS(UserCreatableClass, USER_CREATABLE,
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 0558d6d703c..787c69e176f 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -33,6 +33,7 @@
+ #include "system/runstate.h"
+ #include "system/system.h"
+ #include "hw/s390x/storage-keys.h"
++#include "qom/object_interfaces.h"
  
- typedef struct UserCreatable UserCreatable;
+ /*
+  * QMP query for enabled and present accelerators
+@@ -163,6 +164,7 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
+         MachineClass *mc = el->data;
+         const char *default_cpu_type = machine_class_default_cpu_type(mc);
+         MachineInfo *info;
++        AliasedClass *alc = ALIASED_CLASS(mc);
  
-+#define TYPE_TARGET_SPECIFIC "target-specific"
-+
-+typedef struct TargetSpecificClass TargetSpecificClass;
-+DECLARE_CLASS_CHECKERS(TargetSpecificClass, TARGET_SPECIFIC,
-+                       TYPE_TARGET_SPECIFIC)
-+#define TARGET_SPECIFIC(obj) \
-+     INTERFACE_CHECK(TargetSpecific, (obj), \
-+                     TYPE_TARGET_SPECIFIC)
-+
-+typedef struct TargetSpecific TargetSpecific;
-+
- /**
-  * UserCreatableClass:
-  * @parent_class: the base class
-@@ -167,4 +178,68 @@ bool user_creatable_del(const char *id, Error **errp);
-  */
- void user_creatable_cleanup(void);
+         info = g_malloc0(sizeof(*info));
+         if (mc->is_default) {
+@@ -170,8 +172,31 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
+             info->is_default = true;
+         }
  
-+/**
-+ * TargetSpecificClass:
-+ * @parent_class: the base class
-+ *
-+ * Interface for classes that want to declare they have target
-+ * specific restrictions. This is intended to allow classes to
-+ * be registered and introspected unconditionally, while
-+ * preventing creation of instances unless a compatible target
-+ * is selected.
-+ */
-+struct TargetSpecificClass {
-+    InterfaceClass parent_class;
-+
-+    /*
-+     * Leave as 0 to indicate no target specific creation restrictions,
-+     * or set to a bitmask of QEMU_ARCH_nnn constants to limit what
-+     * targets it can be created under.
-+     */
-+    int targets;
-+};
-+
-+
-+/**
-+ * target_specific_class_creatable:
-+ * @oc: the object class to check
-+ *
-+ * Determine whether @oc implements the TargetSpecific
-+ * interface and if so, whether its declared targets
-+ * allow creation in the current system state.
-+ *
-+ * If @oc does not implement the TargetSpecific interface
-+ * it is assumed there are no creation restrictions.
-+ *
-+ * If @oc implements the TargetSpecific interface but leaves
-+ * the 'targets' field as zero, it is assumed there are
-+ * no creation restrictions.
-+ *
-+ * If @oc implements the TargetSpecific interface and the
-+ * 'targets' field is non-zero, it is compared to
-+ * target_mask_selected() to determine if it is valid to
-+ * create an instance of @oc.
-+ *
-+ * Returns: true if it is valid to create an instance of @oc
-+ * in the current system state, false otherwise.
-+ */
-+bool target_specific_class_creatable(ObjectClass *oc);
-+
-+
-+/**
-+ * target_specific_class_check:
-+ * @oc: the object class to check
-+ * @errp: pointer to a NULL-initialized error object
-+ *
-+ * Check whether it is permitted to create an instance
-+ * of @oc in the current system target state.
-+ *
-+ * This validates @oc against target_specific_class_creatable
-+ * and sets @errp if it is not creatable.
-+ *
-+ * Returns: @oc if it is creatable, NULL otherwise with @errp set.
-+ */
-+ObjectClass *target_specific_class_check(ObjectClass *oc,
-+                                         Error **errp);
-+
- #endif
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index d83c12744b7..f523a55b93a 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -20,6 +20,7 @@
- #include "qapi/opts-visitor.h"
- #include "qemu/config-file.h"
- #include "qemu/keyval.h"
-+#include "qemu/target-info.h"
- #include "trace.h"
++        if (alc->aliases) {
++            strList **aliases = &info->aliases;
++            size_t i;
++            info->has_aliases = true;
++            for (i = 0; alc->aliases[i] != NULL; i++) {
++                /*
++                 * We record type names internally, but publically
++                 * we report machine types to the user, hence must
++                 * strip the typename suffix
++                 */
++                int len = strlen(alc->aliases[i]) - strlen(TYPE_MACHINE_SUFFIX);
++                QAPI_LIST_APPEND(aliases,
++                                 g_strndup(alc->aliases[i], len));
++            }
++            if (!mc->alias) {
++                int len = strlen(alc->aliases[0]) - strlen(TYPE_MACHINE_SUFFIX);
++                info->alias = g_strndup(alc->aliases[0], len);
++            }
++        }
+         if (mc->alias) {
+             info->alias = g_strdup(mc->alias);
++            if (!info->aliases) {
++                strList **aliases = &info->aliases;
++                QAPI_LIST_APPEND(aliases, g_strdup(mc->alias));
++            }
+         }
  
- bool user_creatable_complete(UserCreatable *uc, Error **errp)
-@@ -280,6 +281,30 @@ void user_creatable_cleanup(void)
-     object_unparent(object_get_objects_root());
- }
- 
-+
-+bool target_specific_class_creatable(ObjectClass *oc)
-+{
-+    TargetSpecificClass *tsc =
-+        (TargetSpecificClass *)object_class_dynamic_cast(
-+            oc, TYPE_TARGET_SPECIFIC);
-+
-+    return !tsc || !tsc->targets || (tsc->targets & target_mask_selected());
-+}
-+
-+
-+ObjectClass *target_specific_class_check(ObjectClass *oc,
-+                                         Error **errp)
-+{
-+    if (!target_specific_class_creatable(oc)) {
-+        error_setg(errp, "Object '%s' not compatible with selected target",
-+                   object_class_get_name(oc));
-+        return NULL;
-+    }
-+
-+    return oc;
-+}
-+
-+
- static void register_types(void)
- {
-     static const TypeInfo uc_interface_info = {
-@@ -287,8 +312,14 @@ static void register_types(void)
-         .parent        = TYPE_INTERFACE,
-         .class_size = sizeof(UserCreatableClass),
-     };
-+    static const TypeInfo ts_interface_info = {
-+        .name          = TYPE_TARGET_SPECIFIC,
-+        .parent        = TYPE_INTERFACE,
-+        .class_size = sizeof(TargetSpecificClass),
-+    };
- 
-     type_register_static(&uc_interface_info);
-+    type_register_static(&ts_interface_info);
- }
- 
- type_init(register_types)
+         info->name = g_strdup(mc->name);
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 18d9dce849b..c25a492a4e8 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -163,6 +163,8 @@
+ #
+ # @alias: an alias for the machine name
+ #
++# @aliases: a list of aliases for the machine type name (since 12.0)
++#
+ # @is-default: whether the machine is default
+ #
+ # @cpu-max: maximum number of CPUs supported by the machine type
+@@ -202,6 +204,7 @@
+ ##
+ { 'struct': 'MachineInfo',
+   'data': { 'name': 'str', '*alias': 'str',
++            '*aliases': ['str'],
+             '*is-default': 'bool', 'cpu-max': 'int',
+             'hotpluggable-cpus': 'bool',  'numa-mem-supported': 'bool',
+             'deprecated': 'bool', '*default-cpu-type': 'str',
 -- 
 2.56.1
 
