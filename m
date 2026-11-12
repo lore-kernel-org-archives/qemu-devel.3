@@ -1,71 +1,65 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC85606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 11:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96693606A323
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 11:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Yw07+dhe
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bRe54uF3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRTLN-0008Cm-3S; Thu, 12 Nov 2026 06:51:53 -0500
+	id 1xRTLF-0007MH-7q; Thu, 12 Nov 2026 06:51:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xRTLK-0007yC-37
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 06:51:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1xRTK5-0004kB-N3; Thu, 12 Nov 2026 06:50:40 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xRTLH-00048N-UG
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 06:51:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794484307;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=4e33aWqJaBp24m0+msLwEGz+DgeayWNXszC2a84DpE4=;
- b=Yw07+dhe0c3AoX9P+vBFxq4nEPieaAW3HTK9Gw5GjTMvn6O7KrBxeTKSNHHflk1jopRAM2
- PLL/yLeDcwmPyXM/eAhoSaYb1L6IcL/c9FS2CCmqoXJ6MpU51BAJme9VTIUYgARFLOkqf1
- ReLAOgsZgsh1JFKqRh/ye1Y/m3ISeJE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-388-1F9389Y1PYeSkIHGdaVVMg-1; Thu,
- 12 Nov 2026 06:51:46 -0500
-X-MC-Unique: 1F9389Y1PYeSkIHGdaVVMg-1
-X-Mimecast-MFC-AGG-ID: 1F9389Y1PYeSkIHGdaVVMg_1794484305
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2949B18A322E; Thu, 12 Nov 2026 11:51:45 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9D0E630000D3; Thu, 12 Nov 2026 11:51:44 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 42CC921E6A04; Thu, 12 Nov 2026 12:51:42 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1xRTK1-0001ct-HE; Thu, 12 Nov 2026 06:50:30 -0500
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 1FB79630BD;
+ Thu, 12 Nov 2026 11:50:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4F81F00A05;
+ Thu, 12 Nov 2026 11:50:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1794484227;
+ bh=bFTsZY9toM/MqLYhYsDGg9N0OwuUe9slHgbPNNF3HRs=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=bRe54uF3op0tefSDA3jwPIc0tUicAMGH3xW7RS3IHb9tHOztiTwpLsHQM6kDJaoTU
+ HREZK2LeoK6A2vSuKYwooFqatM572z05RlXqEluJ/0WJwvMlqCsznchcU4KAqmb8Yn
+ wQYBPV7LZIpMCvng79AEV3X4C7k4/B1bKgy1XsbmiIanXukRoHOXVG5iWjzV4toKsg
+ f1YOTXkKhHk5jRA56HTz8A29g3Ug7NuinursHmXLfONYQmpMj/EJEKTeJIn5pLyxlj
+ Qn+WMeNtjAaGTEPaOqys1jxfDXtEHfRaqzUFt/4LBMLZoc0eGDiXo5GiyUIW2qfiyx
+ adT+L7RWKpj3A==
+From: Niklas Cassel <cassel@kernel.org>
 To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com,
-	david@kernel.org,
-	imammedo@redhat.com
-Subject: [PATCH] backends/hostmem: Factor out "property still settable" check
-Date: Thu, 12 Nov 2026 12:51:42 +0100
-Message-ID: <20261112115142.973035-1-armbru@redhat.com>
+Cc: Damien Le Moal <dlemoal@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
+ Sam Li <faithilikerun@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Jeuk Kim <jeuk20.kim@samsung.com>,
+ Daejun Park <daejun7.park@samsung.com>, Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH v17 9/9] scsi: add the sense codes of zoned block devices
+Date: Thu, 12 Nov 2026 12:49:18 +0100
+Message-ID: <20261112114918.1269168-10-cassel@kernel.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261112114918.1269168-1-cassel@kernel.org>
+References: <20261112114918.1269168-1-cassel@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,197 +71,92 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-We check whether a property can still be set like this:
+Add the sense codes that a zoned block device reports when a request
+violates the zone model (ZBC-3 and ZAC-3):
 
-    if (host_memory_backend_mr_inited(backend)) {
-        error_setg(errp, ...);
-        return;
-    }
+  ILLEGAL REQUEST, UNALIGNED WRITE COMMAND (21h/04h): a write that
+  does not start at the write pointer of a sequential write required
+  zone
 
-The actual error messages vary a bit.  Most are like
+  ILLEGAL REQUEST, WRITE BOUNDARY VIOLATION (21h/05h): a write that
+  crosses the end of the writable part of a zone
 
-    cannot change property 'PROP-NAME' of TYPE-NAME
+  DATA PROTECT, INSUFFICIENT ZONE RESOURCES (55h/0Eh): a request that
+  would open or activate more zones than the device allows
 
-but we also have
+The IDE device is going to report them for zoned devices.
 
-    cannot change property value
-
-Factor out into host_memory_backend_settable() so we can instead use:
-
-    if (!host_memory_backend_settable(backend, name, errp)) {
-        return;
-    }
-
-The error message is now always
-
-    cannot change property 'PROP-NAME' of 'TYPE-NAME'
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- include/system/hostmem.h |  2 ++
- backends/hostmem-file.c  | 24 ++++++------------------
- backends/hostmem-memfd.c |  3 +--
- backends/hostmem.c       | 21 ++++++++++++++-------
- 4 files changed, 23 insertions(+), 27 deletions(-)
+ include/scsi/utils.h |  6 ++++++
+ scsi/utils.c         | 15 +++++++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/include/system/hostmem.h b/include/system/hostmem.h
-index dcbf81aeaea..47ccc732bcb 100644
---- a/include/system/hostmem.h
-+++ b/include/system/hostmem.h
-@@ -86,6 +86,8 @@ struct HostMemoryBackend {
+diff --git a/include/scsi/utils.h b/include/scsi/utils.h
+index d5c8efa16e..d16c264b22 100644
+--- a/include/scsi/utils.h
++++ b/include/scsi/utils.h
+@@ -69,6 +69,10 @@ extern const struct SCSISense sense_code_TARGET_FAILURE;
+ extern const struct SCSISense sense_code_INVALID_OPCODE;
+ /* Illegal request, LBA out of range */
+ extern const struct SCSISense sense_code_LBA_OUT_OF_RANGE;
++/* Illegal request, Unaligned write command */
++extern const struct SCSISense sense_code_UNALIGNED_WRITE;
++/* Illegal request, Write boundary violation */
++extern const struct SCSISense sense_code_WRITE_BOUNDARY_VIOLATION;
+ /* Illegal request, Invalid field in CDB */
+ extern const struct SCSISense sense_code_INVALID_FIELD;
+ /* Illegal request, Invalid field in parameter list */
+@@ -119,6 +123,8 @@ extern const struct SCSISense sense_code_DEVICE_INTERNAL_RESET;
+ extern const struct SCSISense sense_code_WRITE_PROTECTED;
+ /* Data Protection, Space Allocation Failed Write Protect */
+ extern const struct SCSISense sense_code_SPACE_ALLOC_FAILED;
++/* Data Protection, Insufficient zone resources */
++extern const struct SCSISense sense_code_INSUFFICIENT_ZONE_RESOURCES;
+ 
+ #define SENSE_CODE(x) sense_code_ ## x
+ 
+diff --git a/scsi/utils.c b/scsi/utils.c
+index 1ee68e6822..9eb41aefdf 100644
+--- a/scsi/utils.c
++++ b/scsi/utils.c
+@@ -190,6 +190,16 @@ const struct SCSISense sense_code_LBA_OUT_OF_RANGE = {
+     .key = ILLEGAL_REQUEST, .asc = 0x21, .ascq = 0x00
  };
  
- bool host_memory_backend_mr_inited(HostMemoryBackend *backend);
-+bool host_memory_backend_settable(HostMemoryBackend *backend,
-+                                  const char *prop_name, Error **errp);
- MemoryRegion *host_memory_backend_get_memory(HostMemoryBackend *backend);
- 
- void host_memory_backend_set_mapped(HostMemoryBackend *backend, bool mapped);
-diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
-index 6ad9cad0320..b5485f12bea 100644
---- a/backends/hostmem-file.c
-+++ b/backends/hostmem-file.c
-@@ -107,9 +107,7 @@ static void set_mem_path(Object *o, const char *str, Error **errp)
-     HostMemoryBackend *backend = MEMORY_BACKEND(o);
-     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(o);
- 
--    if (host_memory_backend_mr_inited(backend)) {
--        error_setg(errp, "cannot change property 'mem-path' of %s",
--                   object_get_typename(o));
-+    if (!host_memory_backend_settable(backend, "mem-path", errp)) {
-         return;
-     }
-     g_free(fb->mem_path);
-@@ -145,9 +143,7 @@ static void file_memory_backend_set_align(Object *o, Visitor *v,
-     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(o);
-     uint64_t val;
- 
--    if (host_memory_backend_mr_inited(backend)) {
--        error_setg(errp, "cannot change property '%s' of %s", name,
--                   object_get_typename(o));
-+    if (!host_memory_backend_settable(backend, name, errp)) {
-         return;
-     }
- 
-@@ -175,9 +171,7 @@ static void file_memory_backend_set_offset(Object *o, Visitor *v,
-     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(o);
-     uint64_t val;
- 
--    if (host_memory_backend_mr_inited(backend)) {
--        error_setg(errp, "cannot change property '%s' of %s", name,
--                   object_get_typename(o));
-+    if (!host_memory_backend_settable(backend, name, errp)) {
-         return;
-     }
- 
-@@ -198,9 +192,7 @@ static void file_memory_backend_set_pmem(Object *o, bool value, Error **errp)
-     HostMemoryBackend *backend = MEMORY_BACKEND(o);
-     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(o);
- 
--    if (host_memory_backend_mr_inited(backend)) {
--        error_setg(errp, "cannot change property 'pmem' of %s.",
--                   object_get_typename(o));
-+    if (!host_memory_backend_settable(backend, "pmem", errp)) {
-         return;
-     }
- 
-@@ -221,9 +213,7 @@ static void file_memory_backend_set_readonly(Object *obj, bool value,
-     HostMemoryBackend *backend = MEMORY_BACKEND(obj);
-     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(obj);
- 
--    if (host_memory_backend_mr_inited(backend)) {
--        error_setg(errp, "cannot change property 'readonly' of %s.",
--                   object_get_typename(obj));
-+    if (!host_memory_backend_settable(backend, "readonly", errp)) {
-         return;
-     }
- 
-@@ -241,9 +231,7 @@ static void file_memory_backend_set_rom(Object *obj, int value, Error **errp)
-     HostMemoryBackend *backend = MEMORY_BACKEND(obj);
-     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(obj);
- 
--    if (host_memory_backend_mr_inited(backend)) {
--        error_setg(errp, "cannot change property 'rom' of %s.",
--                   object_get_typename(obj));
-+    if (!host_memory_backend_settable(backend, "rom", errp)) {
-         return;
-     }
- 
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index 46489212a23..e56f26cd24c 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -134,8 +134,7 @@ memfd_backend_set_hugetlbsize(Object *obj, Visitor *v, const char *name,
-     HostMemoryBackendMemfd *m = MEMORY_BACKEND_MEMFD(obj);
-     uint64_t value;
- 
--    if (host_memory_backend_mr_inited(MEMORY_BACKEND(obj))) {
--        error_setg(errp, "cannot change property value");
-+    if (!host_memory_backend_settable(MEMORY_BACKEND(m), name, errp)) {
-         return;
-     }
- 
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 173d042be35..f8fadeb28c1 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -66,9 +66,7 @@ host_memory_backend_set_size(Object *obj, Visitor *v, const char *name,
-     HostMemoryBackend *backend = MEMORY_BACKEND(obj);
-     uint64_t value;
- 
--    if (host_memory_backend_mr_inited(backend)) {
--        error_setg(errp, "cannot change property %s of %s ", name,
--                   object_get_typename(obj));
-+    if (!host_memory_backend_settable(backend, name, errp)) {
-         return;
-     }
- 
-@@ -310,6 +308,17 @@ bool host_memory_backend_mr_inited(HostMemoryBackend *backend)
-     return memory_region_size(&backend->mr) != 0;
- }
- 
-+bool host_memory_backend_settable(HostMemoryBackend *backend,
-+                                  const char *prop_name, Error **errp)
-+{
-+    if (host_memory_backend_mr_inited(backend)) {
-+        error_setg(errp, "cannot change property '%s' of '%s'",
-+                   prop_name, object_get_typename(OBJECT(backend)));
-+        return false;
-+    }
-+    return true;
-+}
++/* Illegal request, Unaligned write command */
++const struct SCSISense sense_code_UNALIGNED_WRITE = {
++    .key = ILLEGAL_REQUEST, .asc = 0x21, .ascq = 0x04
++};
 +
- MemoryRegion *host_memory_backend_get_memory(HostMemoryBackend *backend)
- {
-     return host_memory_backend_mr_inited(backend) ? &backend->mr : NULL;
-@@ -458,8 +467,7 @@ static void host_memory_backend_set_share(Object *o, bool value, Error **errp)
- {
-     HostMemoryBackend *backend = MEMORY_BACKEND(o);
++/* Illegal request, Write boundary violation */
++const struct SCSISense sense_code_WRITE_BOUNDARY_VIOLATION = {
++    .key = ILLEGAL_REQUEST, .asc = 0x21, .ascq = 0x05
++};
++
+ /* Illegal request, Invalid field in CDB */
+ const struct SCSISense sense_code_INVALID_FIELD = {
+     .key = ILLEGAL_REQUEST, .asc = 0x24, .ascq = 0x00
+@@ -330,6 +340,11 @@ const struct SCSISense sense_code_SPACE_ALLOC_FAILED = {
+     .key = DATA_PROTECT, .asc = 0x27, .ascq = 0x07
+ };
  
--    if (host_memory_backend_mr_inited(backend)) {
--        error_setg(errp, "cannot change property value");
-+    if (!host_memory_backend_settable(backend, "share", errp)) {
-         return;
-     }
-     backend->share = value;
-@@ -477,8 +485,7 @@ static void host_memory_backend_set_reserve(Object *o, bool value, Error **errp)
- {
-     HostMemoryBackend *backend = MEMORY_BACKEND(o);
- 
--    if (host_memory_backend_mr_inited(backend)) {
--        error_setg(errp, "cannot change property value");
-+    if (!host_memory_backend_settable(backend, "reserve", errp)) {
-         return;
-     }
-     if (backend->prealloc && !value) {
++/* Data Protection, Insufficient zone resources */
++const struct SCSISense sense_code_INSUFFICIENT_ZONE_RESOURCES = {
++    .key = DATA_PROTECT, .asc = 0x55, .ascq = 0x0e
++};
++
+ /*
+  * scsi_convert_sense
+  *
 -- 
-2.55.0
+2.56.0
 
 
