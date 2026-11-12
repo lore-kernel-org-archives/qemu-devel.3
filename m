@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0AE606C4B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 14:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DC9606C724
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 14:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=d1BhGW3p;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=I1dKmjUr
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=SlGKKz9A;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=MvwhR0KV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRVPy-0006jP-B8; Thu, 12 Nov 2026 09:04:46 -0500
+	id 1xRVPs-0006iF-EG; Thu, 12 Nov 2026 09:04:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xRVPa-0006Tw-KL
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 09:04:22 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xRVPV-0006So-Ls
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 09:04:20 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xRVPY-0007T7-Gh
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 09:04:22 -0500
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1xRVPS-0007S3-HT
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 09:04:17 -0500
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ACAUnRn1629431
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 14:04:19 GMT
+ 6ACBVXOF3476859
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 14:04:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- T+BUoXt5tn4PGluBlPDbHpmyBXj6a91GEDmrMsa5S2Q=; b=d1BhGW3pLnzHBsb/
- I1gqXd/YJZ9t0Wh3BE9E4fgzOJ3mfOZVaWlFNM2WISOjUfr9EIm0cuhHrkQN28MY
- VdsRu02wE0FrpvgC7Lyuk7CAZBRk59IsspMeGlkqQef078DhOX03KKJm9SOGd1PV
- t7JyL+KBrTja40tnrsbwGBs+Bx7dXElpjSWtChgITJ73InzOikLLDaCteGiWE3r6
- 7Er0GqkIxpiFRtfJ9McX7InDvsOZ66hfl9M8iBVHdqDj4+jiNYFDQWvUzaSxygb1
- FclaBXl1aa4gH9p+wIIkJvlq7xU0643fQHAD5TFtIaUodP6hWFej9ihAVC4anBB1
- bfDIBw==
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
- [209.85.221.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hwbs00q61-1
+ LDt9m4VL31vta49qyUdzCLLxgvh4VaLWpi+uQnOPXoc=; b=SlGKKz9AH8xnh6AW
+ UhMeddt9jiQ5f3AEA6jdE/KAgjX5WGRb+QDHuRcIK8flllZ4rzWhenQGWuqAwcmn
+ qRKnOBRng1lMZLmD8+2G5afc4hbXvyl8Bg4W/F51mniHqG8VbRMcepQd8iMp76ys
+ RKh1h6dgNxSX64EVqSlAm15zbbpgv+2Q7ISuiP2894jiomd5eazkZaez2ogJKPRS
+ vg7Qh8fOrwUCo2Re9sFsXZeG05j84Zd38o3E049rGyAdRMV9wUeMhMF3ADP/1vfd
+ rD5/82gGtcL1SOvOKtqqUwmA5boEOQiW3UdGZ8UYA+jxKUVukUazZFD/tmMhyque
+ 6E3I5A==
+Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com
+ [209.85.221.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hw6yuhu46-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 14:04:19 +0000 (GMT)
-Received: by mail-vk1-f197.google.com with SMTP id
- 71dfb90a1353d-5eabb3a1bd8so4053226e0c.0
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 06:04:19 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 14:04:12 +0000 (GMT)
+Received: by mail-vk1-f198.google.com with SMTP id
+ 71dfb90a1353d-5eab0467c89so5631432e0c.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 06:04:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794492259; x=1795097059; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1794492251; x=1795097051; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=T+BUoXt5tn4PGluBlPDbHpmyBXj6a91GEDmrMsa5S2Q=;
- b=I1dKmjUrLwi47FzAlZpdWJDXkxxzJWNTWw9AUpep3jBjKMl/aS8iSRMsf1dpM5XcP1
- p1bvXNZOKgV3E0qv45Ic72t59TOFoYqt43N15BUnMomeqyyZElqr5MXcgEIoGKuiJEKQ
- nutlcCHdIR6h4AhvBx0U4F1Z/uEU66At2MrWjrJiIXk96Tz1IdB88S/65PfJPgLoWE5f
- d+PV+b1FHtR8R1JOVI0Ex1TJBK2r8PB6KU3cORfnEmUgHifDSrMoClbkr8HfuAbL7SGp
- /3cTZX0Dm5Uec00+q4ttNoA9/aAmPSl2khWC1IKc/Ty4J9wMaoT2eETxX8/4lyb0GQ2+
- 56ig==
+ bh=LDt9m4VL31vta49qyUdzCLLxgvh4VaLWpi+uQnOPXoc=;
+ b=MvwhR0KVLrZQl0Ry7msEpVnS19w95W8O5pI52eIZJLQycPMvWIoFIOFjYXADM30RSV
+ ZtcNMfS5Set11YBWu0/FCBLANubY7ojCD0iWEabGyun0qWSX7BSmN60A0gyKypOWE5JX
+ MPNFQ1zxJmnk78r/tI7Ai5yoJPlIfsMI5iXCWAwvTaYdCU1M9dkjq/oyLkuRnyz6Ui97
+ fO0XByfUzyppRYuyBGKIM6Y7BQZLcFzCvNpUhQ7mFhvlTWU8pUh6UlIyI3cmIQsUUfi4
+ dOIk3hKLMTnCAg6N9Jiu3TC0LqUimoxQ4iLdG8ogbE9fr6SZyF8lwRD6CoNv/PAukCRc
+ 9log==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794492259; x=1795097059;
+ d=1e100.net; s=20260707; t=1794492251; x=1795097051;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=T+BUoXt5tn4PGluBlPDbHpmyBXj6a91GEDmrMsa5S2Q=;
- b=C4lLqRZU2FyzMATOk6PsrrW/yoI9Vxrle0EG3Jv0QgIIjmUeGrpzrfeAI3Qdv1Mcf1
- hGQtEetPi0HNKzCNt0BiWqLwBxGp3OJBO/lfN+KTBrhIK7CJqKdJ6zvbO83+qwWzsKxn
- m5b52RJ5cfO1KbJyaFOtjL9csvYJRyGlJ3fNNHK12or+SX5SUKe2s9RGVIN9P3mkEsKB
- TIKuTfLMt9AGgSV5JKoQildBwt9NAF5+MS1yRwfTNrdI+Iahaz2+n0b0ET2/ozAeLI2n
- qEGEqqrX0MhYbi/5JOtQDs99fc//zTnKACLDBdnaOpZjbVGLA5EIC6uJ26qfQVEhrjmX
- D03g==
-X-Gm-Message-State: APuU4Z+sCDCH9oY3QVa/y8O15bEGiKY7SKXL4pBW0UxvPqT19a7x8dgl
- z9/Ftm7ANWn81OvxkfWPrVGeiROJwYCm53naVHKXN/zvO0XxoIxbRxrK1K8nlolKCLfUwHzUcX7
- w3SfruwBkFWQNk9h5EX8UmFC/czjZkmFMLIN4pPhrrhZdkUWuOpVxweTQ9CIgBBxMMzpd
-X-Gm-Gg: AYBFou1Op6ZTduhcx3cbJ2PQmpQ9bSFEMWegKssdboUyDnoajPg4hMg2QB4akLMPoA5
- UI4yZ4xonzn0iYI9IiAg58JNeXR0V4u3nAW3difYI/rZCmnkcioQbLjvM/1fgc93PeHAvxrUFYX
- NTo2L9A3FjQI+Mo1nC50BE6ZgdPQW3Zq+KVKeNtJi/DvTtn1aRkHpWP0YdfClVjsstmRVJb7SoH
- LDyitwq5IdXkYJx/XRVVV1lexUWabJeWbdADgfBSl1Sdu4R+dqLzdzX3L4wq8s0LZc3DfydEADX
- 5m2B1o8y9xnIwonYEM9knKzNgZZNSFDfDY6HUCaAkKLlRLiMhCafsdP1bWSmyDzpqdbmTFg6FOl
- UTJmm7V3cZbYGvxrBlNDqoeMYEOY/LRP1w0640zY20JW52Tv6URCx8XhX6CXC1bh1W3JHR5kNv8
- 4CRF7thzm9GsyS2g==
-X-Received: by 2002:a05:6122:512:b0:5ea:e052:2ef0 with SMTP id
- 71dfb90a1353d-5ee1c3ff521mr2403386e0c.9.1794492258752; 
- Thu, 12 Nov 2026 06:04:18 -0800 (PST)
-X-Received: by 2002:a05:6122:512:b0:5ea:e052:2ef0 with SMTP id
- 71dfb90a1353d-5ee1c3ff521mr2403318e0c.9.1794492258066; 
- Thu, 12 Nov 2026 06:04:18 -0800 (PST)
+ bh=LDt9m4VL31vta49qyUdzCLLxgvh4VaLWpi+uQnOPXoc=;
+ b=Gu6lafn4HPxxBac2YBHzaVZ/SkZXHLXNYObzHUGVmajblarLD2390oEN3wgFn+88QP
+ jR7Omx0HfHtPaVG0f9+5sqisPp6YI/XC5YD2BDpuday0S0/3haCbO01SbeKTr4/cYHni
+ S96q0VHyAySkygDUVR5Vl4TzKN6tyZRcdSR7+NSep+jEk+5cW6Scx20CbXZF+BavU0Bv
+ T0lut5qcSyImL7gBlBEoq9/jixqamGzAuzV0BEFjZD3a5phwcBstnCWX+7Yi+qMOd1WA
+ I+auoRhkI1c/6GkSk5T+gACmSCqYZSlfTnxQ+wklKDYPMR58AcDpDdeuhfYv2OPpRu5Z
+ DC+g==
+X-Gm-Message-State: APuU4Z/E7RFx4sXAk0hZJXVPHMb2qlWg/WINfAgdvPoXzLS+LIRrbeW9
+ 55aEUo3av4prb4cdnoISBwuw7ONTwEUegLH0K0avgbLEDmx4Z9h6ibEaALHaomzKB3DIK+diXDp
+ hUT28FPSlW/+5xJEtvXbvp6s+WftA0yxzgff4mJNb9mNNbMfLoyuyJf2Yleamw4Hx3hsy
+X-Gm-Gg: AYBFou0Depn980VSZ6Rzb6C8ZcU5rii6bdpbWu3VzrrRxYp1XyVcDIJNYo1V9Hk+deg
+ m+NmXMkhfN9tJEGhKRNB8qisu0lJNj/pmX3JdJ/Vj13v70WymVEc3Flt/sY/krBANWEGtUdrzj9
+ s8p+1btTjr3CjwqWeJHYH362nyIT94R5CwY4S7o3e5lmnujiqrXZHbpXOj/P+xu/iLA8FRpjeC6
+ CI7sJGqpwLLsOU70sliY2J1jgYVo7oDBVJqacFDDKY2qoOTGpYArxf60E/TIuz2VSDxWjUIfO9F
+ Lai220nOL429B7xp9LmpPLybsIpeeg/g/9BvJPW1h3Kpa5ItdpZB4cxxHLSe/KOnRY731333cv2
+ UY14AEIIh+pAi4CnmPm1QsCiP0/7wLkHPOyOGCDc+B2moKYgvRR5ICiseUFsI/SzEQIddLHnF30
+ IbXs3cXTRBFzN4dA==
+X-Received: by 2002:a05:6122:3488:b0:5de:ee96:75b with SMTP id
+ 71dfb90a1353d-5ee1c426b9cmr2428087e0c.12.1794492251277; 
+ Thu, 12 Nov 2026 06:04:11 -0800 (PST)
+X-Received: by 2002:a05:6122:3488:b0:5de:ee96:75b with SMTP id
+ 71dfb90a1353d-5ee1c426b9cmr2428040e0c.12.1794492250641; 
+ Thu, 12 Nov 2026 06:04:10 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb4e271378sm81450395e9.13.2026.11.12.06.04.16
+ 5b1f17b1804b1-4bb4e26c2casm65946565e9.12.2026.11.12.06.04.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Nov 2026 06:04:17 -0800 (PST)
+ Thu, 12 Nov 2026 06:04:09 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -97,13 +97,11 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH-for-12.0 4/8] target-info: Support runtime-endian Linux-user
- targets
-Date: Thu, 12 Nov 2026 15:03:39 +0100
-Message-ID: <20261112140343.61634-5-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH-for-12.0 3/8] linux-user/aarch64: Move CPU/signal endian
+ checks to runtime
+Date: Thu, 12 Nov 2026 15:03:38 +0100
+Message-ID: <20261112140343.61634-4-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261112140343.61634-1-philmd@oss.qualcomm.com>
 References: <20261112140343.61634-1-philmd@oss.qualcomm.com>
@@ -111,35 +109,36 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA1NSBTYWx0ZWRfXzP/LJmnQkypo
- uiJff3uv20q+6ArfPRXxb32JOBh4h/nbCKkjDVKFTyUUCwumeTdFm8TKMDqE+d8lOMkHIqanCGs
- 3e9inKEwfDWsHQM0T9SkXzgR5lKkikXE6qrms4z3QdZIc6aujmFK6f1av3hTX3Wl7TWdTOGtecu
- p6dmFNwe8sN9SQJgkVum2C1OofaW9HlKl7LguaQuobzeoLKSZPLfGkWWvgbQeLf2Az4kKQ3tbM8
- 7/Ft5NfpJ7m6u524pi8/wvq3JcJcP+dP7tIGXlIJQdS6CMA+R70lk6XaCF3mYaMi77IiRmItNVh
- mpuazRGtHyHFYDT7mzL6G3IWO37wrxf5BmxdczovW8+1ERTdC9CnLOUih1ng2/dj+r2q2TxSgqD
- 39YstHwvluvcvmFxFMYmAZ2FtpYATlf5u4JIXMfCHGkwuaE9rFSgxS5y7/sVa6G6wtOIfZfZCpz
- tXm8ZesQLyqHzn6y6JQ==
-X-Authority-Analysis: v=2.4 cv=AsF7T+9P c=1 sm=1 tr=0 ts=6af5c763 cx=c_pps
- a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-GUID: MSNARAaiVn-n_5LJtWn4MDG7IMpqlmzz
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA1NSBTYWx0ZWRfX40wXAK4x61hY
+ 20C89uPFNGiR9Bh5ZxKcihgxpm7hPOG3BanL1LajUBGkvnQhhC4yGDo/iI98zy7xTNR63UenlRm
+ ZQbMAc8+kbiv374n5dL20KCfshNTqOg=
+X-Proofpoint-ORIG-GUID: MSNARAaiVn-n_5LJtWn4MDG7IMpqlmzz
+X-Authority-Analysis: v=2.4 cv=d49gWhjE c=1 sm=1 tr=0 ts=6af5c75c cx=c_pps
+ a=1Os3MKEOqt8YzSjcPV0cFA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=oRXqm_aVrHWTxU2XlOwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=tNoRWFLymzeba-QzToBc:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA1NSBTYWx0ZWRfXxudc5btpce0F
- BOvGWCsdiVumAHFjIfTjXvfEaSFengpmoi1btq8Ivgj9VHkfiBzVZh6INSRtDxcOS9T3cPxKLIz
- lPeuVEu7hOPFTKkJF4WcHmJl2JT1GQg=
-X-Proofpoint-GUID: otSYAsU8Br7rrlfy2wdx8yHVmAgRkRId
-X-Proofpoint-ORIG-GUID: otSYAsU8Br7rrlfy2wdx8yHVmAgRkRId
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=vkEjUumcn_Dj4zhYd20A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=hhpmQAJR8DioWGSBphRh:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA1NSBTYWx0ZWRfX41vTAzUeKGAP
+ +44Ropw6OCF50mLtKn27V06cuVeR8zlKkqr5nt0a6jzRSH/sENhxlgnFRtc5/8mPO78ZpRExN5r
+ 2pozZzJDfdEEf7K1/GH0GGn360p1ColQ9tS1lB9hSbDp7hmRKntX3LAP8onVFHCKBgItbgJv3kF
+ Pzcg44qL7dPZFfxundBgAoIRJuzvhy3KNLjF3Jlnt9KXjQnC8ga994xQI1zfnslazJP2DBu0QTc
+ +rqfnJ6A0JGU2tzi2Zl8Ewi4534WV6sumNCd4jEXmqo01uNGxo9uWwD7rw8yXOX5LSCxkF/Eh7t
+ /udbtLBZCStI8V/wYrX93nD85Fhln9hAw9FxYZVgb8PEm2PF1Qv3Xz0t6ONzTY7H9A+23aJuN0a
+ kiygHz8lcM0tWImVmvILOrMZskvCvNP7sHIjK7eeZtpf8+YfaOhoMmWcBSX7VprzfVh524VYx9K
+ hmIL43uwHnQdHivst1Q==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-12_01,2026-11-11_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 phishscore=0 impostorscore=0 bulkscore=0
- adultscore=0 lowpriorityscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611120055
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ phishscore=0 spamscore=0 malwarescore=0 clxscore=1015 suspectscore=0
+ adultscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611120055
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -166,208 +165,137 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a write-once ABI byte-order setter for runtime-endian Linux-user
-targets.
+Use target_big_endian() for CPU endian initialization, FPSIMD
+signal-frame ordering and CPU-versus-ABI byte-order checks.
 
-Expose const data to readers and inline runtime endian checks, keeping
-its writable initializer outside LTO.
+Preserve the behavior of the existing fixed-endian targets.
 
-Retain immutable data and compile-time byte swapping for fixed-endian
-targets. Restrict TARGET_RUNTIME_ENDIAN to Linux-user configurations.
-
-Inspired-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- meson.build                    | 26 ++++++++++++++++++++++++--
- include/exec/tswap.h           | 11 +++++++----
- include/qemu/target-info-def.h | 14 ++++++++++++++
- include/qemu/target-info.h     | 20 ++++++++++++++++++++
- target-info-def.c              | 19 +++++++++++++++++++
- 5 files changed, 84 insertions(+), 6 deletions(-)
+ target/arm/internals.h         |  2 +-
+ linux-user/aarch64/cpu_loop.c  | 12 ++++++------
+ linux-user/aarch64/signal.c    | 20 ++++++--------------
+ target/arm/gdbstub64.c         |  4 ++--
+ target/arm/tcg/translate-sve.c |  2 +-
+ 5 files changed, 16 insertions(+), 24 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index d7bcb581c181..04cf5d77f188 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3342,6 +3342,11 @@ foreach target : target_dirs
- 
-   config_target += keyval.load('configs/targets' / target + '.mak')
- 
-+  if 'TARGET_RUNTIME_ENDIAN' in config_target
-+    assert(target.endswith('linux-user'),
-+           'Runtime target endianness is only supported for Linux-user')
-+  endif
-+
-   target_kconfig = []
-   foreach sym: accelerators
-     if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
-@@ -4400,8 +4405,6 @@ foreach target : target_dirs
-     endif
-   endif
- 
--  arch_srcs += files('target-info-def.c')
--
-   if target_base_arch in target_arch
-     t = target_arch[target_base_arch].apply(config_target, strict: false)
-     arch_srcs += t.sources()
-@@ -4470,6 +4473,25 @@ foreach target : target_dirs
-     lib_deps += dep.partial_dependency(compile_args: true, includes: true)
-   endforeach
- 
-+  # Keep the writable runtime-endian definition opaque to const readers,
-+  # as for page-vary-common.c above.
-+  target_info = files('target-info-def.c')
-+  if get_option('b_lto') and 'TARGET_RUNTIME_ENDIAN' in config_target
-+    target_info_flags = ['-fno-lto']
-+    if get_option('cfi')
-+      target_info_flags += '-fno-sanitize=cfi-icall'
-+    endif
-+    target_info = static_library('target-info-' + target,
-+                                sources: target_info + genh + config_target_h[target],
-+                                dependencies: lib_deps,
-+                                include_directories: target_inc,
-+                                c_args: c_args + target_info_flags,
-+                                build_by_default: false)
-+    objects += target_info.extract_all_objects(recursive: false)
-+  else
-+    arch_srcs += target_info
-+  endif
-+
-   lib = static_library('qemu-' + target,
-                  sources: arch_srcs + genh,
-                  dependencies: lib_deps,
-diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-index 17ac5444544d..869619bac314 100644
---- a/include/exec/tswap.h
-+++ b/include/exec/tswap.h
-@@ -13,14 +13,17 @@
- #include "hw/core/cpu.h"
- 
- /*
-- * If we're in target-specific code, we can hard-code the swapping
-- * condition, otherwise we have to do (slower) run-time checks.
-+ * For fixed-endian target-specific code, hard-code the swapping condition.
-+ * Otherwise use run-time checks.
-  */
- #ifdef COMPILING_PER_TARGET
-+#ifndef TARGET_RUNTIME_ENDIAN
- #define target_needs_bswap()  (HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN)
--#else
-+#endif
-+#endif
-+#ifndef target_needs_bswap
- #define target_needs_bswap()  (HOST_BIG_ENDIAN != target_big_endian())
--#endif /* COMPILING_PER_TARGET */
-+#endif
- 
- #if defined(CONFIG_USER_ONLY) \
-     || !defined(TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API)
-diff --git a/include/qemu/target-info-def.h b/include/qemu/target-info-def.h
-index 8019d2c7196e..34058955edec 100644
---- a/include/qemu/target-info-def.h
-+++ b/include/qemu/target-info-def.h
-@@ -32,6 +32,20 @@ typedef struct TargetInfo {
-     bool page_bits_vary;
- } TargetInfo;
- 
-+#ifdef COMPILING_PER_TARGET
-+#ifdef TARGET_RUNTIME_ENDIAN
-+/*
-+ * Linux-user selects the ELF byte order before creating CPUs or guest threads.
-+ * The data is then immutable; its writable definition must stay outside LTO.
-+ */
-+#ifdef IN_TARGET_INFO_DEF
-+extern TargetInfo target_info_stub;
-+#else
-+extern const TargetInfo target_info_stub;
-+#endif
-+#endif
-+#endif
-+
- /**
-  * target_info:
-  *
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 2cd4cc5671b5..6ed4cfda8d7b 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -9,6 +9,12 @@
- #ifndef QEMU_TARGET_INFO_H
- #define QEMU_TARGET_INFO_H
- 
-+#ifdef COMPILING_PER_TARGET
-+#ifdef TARGET_RUNTIME_ENDIAN
-+#include "qemu/target-info-def.h"
-+#endif
-+#endif
-+
- /**
-  * target_name:
-  *
-@@ -40,7 +46,21 @@ const char *target_cpu_type(void);
-  * the target, so please do *not* use this function unless you  know very
-  * well what you are doing!
-  */
-+#ifdef COMPILING_PER_TARGET
-+#ifdef TARGET_RUNTIME_ENDIAN
-+static inline bool target_big_endian(void)
-+{
-+    return target_info_stub.endianness == ENDIAN_MODE_BIG;
-+}
-+
-+/* Select the Linux-user ABI byte order once, before CPUs or guest threads. */
-+void target_set_big_endian(bool big_endian);
-+#else
- bool target_big_endian(void);
-+#endif
-+#else
-+bool target_big_endian(void);
-+#endif
- 
- /**
-  * target_heterogeneous:
-diff --git a/target-info-def.c b/target-info-def.c
-index bcf9cfe1e437..7580993e0bb3 100644
---- a/target-info-def.c
-+++ b/target-info-def.c
-@@ -6,6 +6,8 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
-+#define IN_TARGET_INFO_DEF 1
-+
- #include "qemu/osdep.h"
- #include "qemu/target-info.h"
- #include "qemu/target-info-def.h"
-@@ -24,7 +26,12 @@ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
- QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS < TARGET_PAGE_BITS_MIN);
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 033d6d66da3a..1381ef9638a3 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -588,7 +588,7 @@ static inline bool arm_cpu_data_is_big_endian(CPUARMState *env)
+ #ifdef CONFIG_USER_ONLY
+ static inline bool arm_cpu_bswap_data(CPUARMState *env)
+ {
+-    return TARGET_BIG_ENDIAN ^ arm_cpu_data_is_big_endian(env);
++    return target_big_endian() ^ arm_cpu_data_is_big_endian(env);
+ }
  #endif
  
-+#ifdef TARGET_RUNTIME_ENDIAN
-+/* This writable definition must not be compiled with -flto. */
-+TargetInfo target_info_stub = {
-+#else
- static const TargetInfo target_info_stub = {
-+#endif
-     .target_name = TARGET_NAME,
-     .target_arch = glue(SYS_EMU_TARGET_, TARGET_ARCH_VARIANT),
-     .long_bits = TARGET_LONG_BITS,
-@@ -42,3 +49,15 @@ static const TargetInfo target_info_stub = {
- };
+diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
+index e7f643d69d56..91ebf4e0778f 100644
+--- a/linux-user/aarch64/cpu_loop.c
++++ b/linux-user/aarch64/cpu_loop.c
+@@ -242,13 +242,13 @@ void init_main_thread(CPUState *cs, struct image_info *info)
+     env->pc = info->entry & ~0x3ULL;
+     env->xregs[31] = info->start_stack;
  
- target_info_init(target_info_stub)
-+
-+#ifdef TARGET_RUNTIME_ENDIAN
-+void target_set_big_endian(bool big_endian)
-+{
-+    static bool endian_decided;
-+
-+    assert(!endian_decided);
-+    endian_decided = true;
-+    target_info_stub.endianness = big_endian ? ENDIAN_MODE_BIG
-+                                             : ENDIAN_MODE_LITTLE;
-+}
-+#endif
+-#if TARGET_BIG_ENDIAN
+-    env->cp15.sctlr_el[1] |= SCTLR_E0E;
+-    for (int i = 1; i < 4; ++i) {
+-        env->cp15.sctlr_el[i] |= SCTLR_EE;
++    if (target_big_endian()) {
++        env->cp15.sctlr_el[1] |= SCTLR_E0E;
++        for (int i = 1; i < 4; ++i) {
++            env->cp15.sctlr_el[i] |= SCTLR_EE;
++        }
++        arm_rebuild_hflags(env);
+     }
+-    arm_rebuild_hflags(env);
+-#endif
+ 
+     if (cpu_isar_feature(aa64_pauth, cpu)) {
+         qemu_guest_getrandom_nofail(&env->keys, sizeof(env->keys));
+diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
+index 899fce76436c..f24fcddfec3e 100644
+--- a/linux-user/aarch64/signal.c
++++ b/linux-user/aarch64/signal.c
+@@ -208,6 +208,7 @@ static void target_setup_fpsimd_record(struct target_fpsimd_context *fpsimd,
+                                        CPUARMState *env)
+ {
+     int i;
++    int big_endian = target_big_endian();
+ 
+     __put_user(TARGET_FPSIMD_MAGIC, &fpsimd->head.magic);
+     __put_user(sizeof(struct target_fpsimd_context), &fpsimd->head.size);
+@@ -216,13 +217,8 @@ static void target_setup_fpsimd_record(struct target_fpsimd_context *fpsimd,
+ 
+     for (i = 0; i < 32; i++) {
+         uint64_t *q = aa64_vfp_qreg(env, i);
+-#if TARGET_BIG_ENDIAN
+-        __put_user(q[0], &fpsimd->vregs[i * 2 + 1]);
+-        __put_user(q[1], &fpsimd->vregs[i * 2]);
+-#else
+-        __put_user(q[0], &fpsimd->vregs[i * 2]);
+-        __put_user(q[1], &fpsimd->vregs[i * 2 + 1]);
+-#endif
++        __put_user(q[0], &fpsimd->vregs[i * 2 + big_endian]);
++        __put_user(q[1], &fpsimd->vregs[i * 2 + !big_endian]);
+     }
+ }
+ 
+@@ -402,6 +398,7 @@ static void target_restore_fpsimd_record(CPUARMState *env,
+ {
+     uint32_t fpsr, fpcr;
+     int i;
++    int big_endian = target_big_endian();
+ 
+     __get_user(fpsr, &fpsimd->fpsr);
+     vfp_set_fpsr(env, fpsr);
+@@ -410,13 +407,8 @@ static void target_restore_fpsimd_record(CPUARMState *env,
+ 
+     for (i = 0; i < 32; i++) {
+         uint64_t *q = aa64_vfp_qreg(env, i);
+-#if TARGET_BIG_ENDIAN
+-        __get_user(q[0], &fpsimd->vregs[i * 2 + 1]);
+-        __get_user(q[1], &fpsimd->vregs[i * 2]);
+-#else
+-        __get_user(q[0], &fpsimd->vregs[i * 2]);
+-        __get_user(q[1], &fpsimd->vregs[i * 2 + 1]);
+-#endif
++        __get_user(q[0], &fpsimd->vregs[i * 2 + big_endian]);
++        __get_user(q[1], &fpsimd->vregs[i * 2 + !big_endian]);
+     }
+ }
+ 
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index 0c3e5b30bd6a..ee6ed8296e33 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -122,8 +122,8 @@ int aarch64_gdb_set_fpu_reg(CPUState *cs, uint8_t *buf, int reg)
+              * On the wire these are target-endian 128 bit values.
+              * In the CPU state these are host-order uint64_t values
+              * with the least-significant one first. This means they're
+-             * the other way around for target_big_endian() (which is
+-             * only true for us for aarch64_be-linux-user).
++             * the other way around for target_big_endian(), which reflects
++             * the executable's byte order in Linux-user emulation.
+              */
+             if (target_big_endian()) {
+                 q[1] = ldq_p(buf);
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 10375577b1e0..6c4cf29238c6 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -5165,7 +5165,7 @@ void gen_sve_str(DisasContext *s, TCGv_ptr base, int vofs,
+     /* Note that unpredicated load/store of vector/predicate registers
+      * are defined as a stream of bytes, which equates to little-endian
+      * operations on larger quantities.  There is no nice way to force
+-     * a little-endian store for aarch64_be-linux-user out of line.
++     * a little-endian store for big-endian Linux-user guests out of line.
+      *
+      * Attempt to keep code expansion to a minimum by limiting the
+      * amount of unrolling done.
 -- 
 2.55.0
 
