@@ -1,56 +1,59 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67402606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 01:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E4E606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 01:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dHSN4nmS
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gSIaqQvS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRJmV-0001wX-4S; Wed, 11 Nov 2026 20:39:15 -0500
+	id 1xRJzN-00042K-95; Wed, 11 Nov 2026 20:52:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xRJmP-0001ou-Kn
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 20:39:09 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xRJzL-0003z0-OA
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 20:52:31 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xRJmN-00031V-3D
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 20:39:08 -0500
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xRJzJ-0001rL-SQ
+ for qemu-devel@nongnu.org; Wed, 11 Nov 2026 20:52:31 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 7F3CA430AD;
- Thu, 12 Nov 2026 01:39:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D947B1F00A05;
- Thu, 12 Nov 2026 01:39:00 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 0E1D562FEA;
+ Thu, 12 Nov 2026 01:52:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5EC1F00A05;
+ Thu, 12 Nov 2026 01:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1794447542;
- bh=16JpmqODOB+1SVzd752/EGAX8QY6db3MkqO4sF9Yyrg=;
+ s=k20260515; t=1794448347;
+ bh=ex5Qom/Novcw2Ezs+0SDNP42YlQeSwGPdXGV5r3koP8=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=dHSN4nmSoR2Sr+rl4ADaFFEPyc2jnye/1yl4Orq0iSkS/EJQ+u8RB7CHpyPQF0L6X
- OMdMCRzjTeE805wKcivzoOxa7j8h2wGARXIToatdFtz/rlTpIEKecMecjzbhxDW71Y
- ryoFen/8f+WpPIlNK2TXbNiuzAR+D6VEj7bax1R1VfTEi6kVoZkeTJ0MQu44WioIpQ
- 2xiVFBPqZmz1fiB9mHAJwXX5pnTBKR+30DReue1LlSjr5oxoMqDFCBBFe58cfe+I78
- sfelFHvmz/dpZyJGV0OQkfq9iUAmWv61TEnsWjp1mVL67KYX9OQo/G0/mlvZC0aJLx
- c906uqOwREA+A==
-Date: Thu, 12 Nov 2026 01:38:54 +0000
+ b=gSIaqQvSPrLL8zNH9NJpDDzGrryhZ0GQ2b5ZSQvEYAohsRxPqKVIC2zOKfQVf+TUA
+ AkM7mYcWgzumnleNwrQ2oeVMHcRIqcRq1Hm+QJ/vL1yACebHcWGYY2ZhfWRPBYmu9v
+ q0DiUhyIPxCN3FbJt/YWXY7sOzHqvPmeVcC2Dmzldr1CzrJb4RHIJLTKUJPujzNDuS
+ JU/hk1SR5tfMPmeSPXSckkV2rk5Ylg/7/mCuLm5yqRhtgu/nu9r7OLuspIRXhmNNgQ
+ DF5kfwmguvFfuNoiEAStTLxMV2KoTTgQA+sdvgQhm1fVjTMJfltzqa854K+K/5b3GE
+ W2Hh+kso5tKGA==
+Date: Thu, 12 Nov 2026 01:52:19 +0000
 From: Jonathan Cameron <jic23@kernel.org>
-To: Jim MacArthur <jim.macarthur@linaro.org>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH 2/4] hw/pci: add IDE + TEE capability to PCIe root port
-Message-ID: <20261112013854.5a3cfb6b@jic23-hlaptop>
-In-Reply-To: <auxtI9xz2y3tWfl8@linaro.org>
-References: <20261029-jmac-pcie-rme-extensions-v1-0-212d2409563e@linaro.org>
- <20261029-jmac-pcie-rme-extensions-v1-2-212d2409563e@linaro.org>
- <20261104192709.3b260e06@jic23-hlaptop>
- <auxtI9xz2y3tWfl8@linaro.org>
+To: <mhonap@nvidia.com>
+Cc: <alwilliamson@nvidia.com>, <clg@redhat.com>,
+ <xueshuai@linux.alibaba.com>, <ira.weiny@intel.com>, <zhiw@nvidia.com>,
+ <mst@redhat.com>, <pierrick.bouvier@oss.qualcomm.com>,
+ <junjie.cao@linux.dev>, <anisa.su@samsung.com>, <pbonzini@redhat.com>,
+ <ankita@nvidia.com>, <vsethi@nvidia.com>, <skolothumtho@nvidia.com>,
+ <mochs@nvidia.com>, <cjia@nvidia.com>, <kjaju@nvidia.com>,
+ <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Yukiya Takaki
+ <fj2110jc@fujitsu.com>
+Subject: Re: [RFC 00/18] hw/cxl: Add a CXL Type-2 device
+Message-ID: <20261112015219.55bb312a@jic23-hlaptop>
+In-Reply-To: <20261106035911.1280066-1-mhonap@nvidia.com>
+References: <20261106035911.1280066-1-mhonap@nvidia.com>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=jic23@kernel.org; helo=sea.source.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -69,85 +72,75 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_2 autolearn=ham autolearn_force=no
-	version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_2
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 5 Nov 2026 11:48:51 +0000
-Jim MacArthur <jim.macarthur@linaro.org> wrote:
+On Fri, 6 Nov 2026 09:28:53 +0530
+<mhonap@nvidia.com> wrote:
 
-> On Wed, Nov 04, 2026 at 07:27:09PM +0000, Jonathan Cameron wrote:
-> > On Thu, 29 Oct 2026 15:05:11 +0000
-> > Jim MacArthur <jim.macarthur@linaro.org> wrote:
-> >   
-> > > From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > > 
-> > > Adds the TEE flag in the legacy config space, and the IDE
-> > > (Integrity & Data Encryption) extended capability. These
-> > > will be present when rme-cap=on is specified for the
-> > > pcie-root-port device.
-> > > 
-> > > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > > Signed-off-by: Jim MacArthur <Jim MacArthur@linaro.org>
-> > > ---
-> > >  hw/pci-bridge/gen_pcie_root_port.c | 21 ++++++++++++++++++++-
-> > >  hw/pci/pcie.c                      | 19 +++++++++++++++++++
-> > >  include/hw/pci/pcie.h              |  3 +++
-> > >  include/hw/pci/pcie_regs.h         |  4 ++++
-> > >  4 files changed, 46 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
-> > > index 5434d693d9..ab8087da87 100644
-> > > --- a/hw/pci-bridge/gen_pcie_root_port.c
-> > > +++ b/hw/pci-bridge/gen_pcie_root_port.c
-> > > @@ -26,13 +26,16 @@ OBJECT_DECLARE_SIMPLE_TYPE(GenPCIERootPort, GEN_PCIE_ROOT_PORT)
-> > >  #define GEN_PCIE_ROOT_PORT_AER_OFFSET           0x100
-> > >  #define GEN_PCIE_ROOT_PORT_ACS_OFFSET \
-> > >          (GEN_PCIE_ROOT_PORT_AER_OFFSET + PCI_ERR_SIZEOF)
-> > > -
-> > > +#define GEN_PCIE_ROOT_PORT_ACS_END \
-> > > +        (GEN_PCIE_ROOT_PORT_ACS_OFFSET + PCI_ACS_SIZEOF)  
-> > 
-> > Can't you figure this out from root port class acs offset?
-> > 
-> > Or if you want it in a fixed place follow that pattern and stash it
-> > in the root class during dev_rp_dev_class_init.
-> >   
-> 
-> There seems to be quite a lot of cases where we're arranging capabilities in
-> sequential order in memory, but hard-coding the locations. I would rather all
-> of this be replaced with a dynamic pointer which records the next capability
-> offset, and it looks like there are attempts to do this with, e.g.
-> pcie_insert_capability, but that has a lot of caveats and only gets used once.
-> 
-> I'll have another think about this, and in the meantime if anyone knows a good
-> reason why we do hardcode this, that would be useful.
+> From: Manish Honap <mhonap@nvidia.com>
+>=20
+> Hello,
+>=20
+> This series adds cxl-type2, an emulated CXL Type-2 device with volatile
+> device memory. It is emulated in such a way that all the Linux checks
+> are satisfied so that CXL passthrough using vfio-pci (vfio-cxl) can be
+> developed and tested in a guest without Type-2 hardware.
+>=20
+> This series builds on the Type-2 model from Zhi's series (carried in
+> C=C3=A9dric's tree) and carries one fix from Shuai's tree. Shuai's tree a=
+lso
+> set up the decoders through device properties and stubbed CXL Reset; the
+> firmware setup and CXL Reset here are new code.
+> Carried patches keep their authors, with a note for each change.
+>=20
+> The device:
+> - PCI ID 1b36:0017 and the processing accelerator class 0x1200;
+> - PCIe DVSEC for CXL Devices with CXL.cache, CXL.mem, one HDM range,
+>   cache write-back and invalidate, CXL Reset and Mem Clr; Register
+>   Locator and Flex Bus Port DVSECs;
+> - CXL.cache advertised but not modelled. The device sends no CXL.cache
+>   requests, and its memory is host RAM, which is coherent already. A
+>   cache write-back and invalidate completes at once. The capability is
+>   set because vfio-cxl takes a device as Type-2 only when it reports
+>   both CXL.cache and CXL.mem;
+> - component registers with one HDM decoder;
+> - slot 0, function 0 below a CXL root port of a pxb-cxl, memory in one
+>   fixed memory window selected with fmw-index, cold plug only (no
+>   hotplug or unplug), not migratable.
+>=20
+> No Linux driver claims the device on its own. cxl_pci does not bind to
+> the accelerator class, and sfc, the other driver that calls the CXL
+> core Type-2 interface, matches only its own devices. A guest binds
+> cxl-type2 to vfio-pci, which hands it to vfio-cxl. Testing the CXL core
+> Type-2 interface without vfio-cxl needs a driver for 1b36:0017 that
+> calls it. There is none yet.
+>=20
+> QEMU has no firmware that commits the HDM decoders of a CXL route at
+> boot, and Linux attaches a Type-2 device only to a committed region
+> (devm_cxl_probe_mem()). So QEMU does that step itself.
 
-I also thought about trying to fix this in the past along the lines you describe
-but never spent the time to actually do it!
+Just in case you missed it, Yukiya Takaki is looking at bios programmed
+flows.  https://lore.kernel.org/all/cover.1793003983.git.fj2110jc@fujitsu.c=
+om/
 
-So as far as I'm concerned it would be welcome. I think we would need some
-test cases though to check we aren't breaking migration by accidentally moving
-stuff around in a new qemu version.
+My immediate thought is follow a similar flow to the one I suggested
+in that patch. Doing CXL setup in QEMU but the PCI enumeration in the bios
+doesn't seem like a sustainable model to me. I'd much prefer to see a bios
+flow with just the QEMU generate tables updated in a similar fashion to
+how DSDT is updated for PXBs.
 
-> 
-> > > +
-> > > +    if (grp->rme_caps) {  
-> > Not arm specific. Can't see any harm in using a generic config name
-> > for this.  Actually I'm not seeing a reason not to always include
-> > the ide cap. Maybe less so for setting up tee.  Haven't really thought about
-> > that.
-> >   
-> 
-> Good point, IDE/TEE could be separate named options quite easily. There might
-> be more Arm RME things included later, but that can be a third option.
-> 
-> Thanks for the review,
-> 
-> Jim
+Alternative for you (assuming you care more about arm than x86) might
+be to just use the SBSA model and do the full enumeration in firmware.
+
+Unfortunately I have quite a large backlog so might be a while before
+I get a chance to take a close look at this series (or the kernel ones!)
+
+Jonathan
+
 
 
