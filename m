@@ -1,44 +1,44 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F1C606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 09:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B010660A2607
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 09:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=m9sxCByS
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=WXQgAF6V
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRRRh-0001pX-RU; Thu, 12 Nov 2026 04:50:20 -0500
+	id 1xRRSI-00029o-Qy; Thu, 12 Nov 2026 04:50:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1xRRRU-0001lH-2d; Thu, 12 Nov 2026 04:50:05 -0500
-Received: from [115.124.30.119] (helo=out30-119.freemail.mail.aliyun.com)
+ id 1xRRRV-0001la-PJ; Thu, 12 Nov 2026 04:50:05 -0500
+Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1xRRRH-0002yY-6O; Thu, 12 Nov 2026 04:50:03 -0500
+ id 1xRRRH-0002yM-5y; Thu, 12 Nov 2026 04:50:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1794476975; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=Xy6WDJMo6kEy2FPjE54FEb37T1x0ljd6lMeUEcJZ6Hw=;
- b=m9sxCBySwb0TsYQFGXDOrMD9jU2q50RK+fMa75FpH1s2sUcws19QA8/jIrmUkWsoye0Jht3fT9EM6i6iqznp7BizdYJVuqn231uh/L51+VMO4ERFnIfCrAGASAtAi9kxJsbybnuMv38YUutGPu+SZ0/Mr1XxGxeePkCL0zPRJec=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R731e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ t=1794476971; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=L18+lG+33ZkDRISFrG2gVPe/KsUSSe5K/NpXvSy3cjU=;
+ b=WXQgAF6VZHfHDT0BFjaEjNBwfQG4EsWGkeC7KGiuLTRF409avvfo+v3QMPijyuT1t0lmhi+uLzbwM9tGDXlmorAjya5McfqneYZ9g4flHRsfVTTxDkMfNDY4tn6BdKEvKrlLWiMh1zimDJZJ5CdQH3buWMxs4o9UEfI6Hgp1mMo=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
  MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XEbfdcZ_1794476974; 
+ TI=SMTPD_---0XEbfdaf_1794476970; 
 Received: from
  riscv-project-v011122129236.ea134.tbsite.net(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XEbfdcZ_1794476974 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 12 Nov 2026 17:49:34 +0800
+ fp:SMTPD_---0XEbfdaf_1794476970 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 12 Nov 2026 17:49:31 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Thu, 12 Nov 2026 17:49:16 +0800
-Subject: [PATCH v4 10/14] target/riscv: Apply minstret exception accounting
- to HPM counters
+Date: Thu, 12 Nov 2026 17:49:11 +0800
+Subject: [PATCH v4 05/14] target/riscv: Preserve minstretcfgh on RV32
+ minstretcfg writes
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261112-riscv-pmu-correctness-v4-10-e9067bdf4df5@linux.alibaba.com>
+Message-Id: <20261112-riscv-pmu-correctness-v4-5-e9067bdf4df5@linux.alibaba.com>
 References: <20261112-riscv-pmu-correctness-v4-0-e9067bdf4df5@linux.alibaba.com>
 In-Reply-To: <20261112-riscv-pmu-correctness-v4-0-e9067bdf4df5@linux.alibaba.com>
 To: qemu-devel@nongnu.org
@@ -54,17 +54,17 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794476967; l=6563;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794476967; l=3417;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=Sepbp21F7tZ+a5jB4MuifNFMj2AzagdIdKv8SLLV6Z4=;
- b=3b6kfMmXr813ikhHUi2V8sJbmU+2LUGqpKv45Qbiujh9634ybuAvaJmBU+Sjq7RKJWi2duLid
- 5KGGSt3p6B5DXCXMKk1fZGJKA4K7KRS7+m9h8dbRWKskNYEhRUy6oeI
+ bh=Gqz2+1fSkqzFiX2iZbI0LG1w00iOSpJ83sPkDQJUqrs=;
+ b=xEK/vEVxYAtjNwy2yA2gjtuIn+++OqA8zwH1v9SKuMemrHZc8XZIPr7TDqP/IRo8QDdRhjSAo
+ eOZz6U+VhfyBuTcKfT//e496mbT98IjLuKm4o0igxmDTOr6fGrijTQH
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.119 (deferred)
-Received-SPF: pass client-ip=115.124.30.119;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
+Received-SPF: pass client-ip=115.124.30.111;
  envelope-from=lyndra@linux.alibaba.com;
- helo=out30-119.freemail.mail.aliyun.com
+ helo=out30-111.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -92,144 +92,80 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-With icount, helper_raise_exception() excludes faulting instructions from
-minstret but not HPM counters selecting HW_INSTRUCTIONS.
+RV32 write_minstretcfg() replaces the full 64-bit register, clearing
+minstretcfgh and its privilege-inhibit bits.
 
-Adjust the baseline of every running instruction counter that counts the
-current privilege mode. Do not read icount here: the helper can run inside
-a TB. Keep the existing timer, since excluding an instruction can only
-postpone overflow and expiry checks for an actual wrap.
+Replace only bits 31:0, as write_mcyclecfg() does. Test that a low-half
+write preserves both set and clear xINH bits in minstretcfgh.
 
-Extend the ECALL regression to compare both counters and add an LPAD
-fault test covering an exception inside a multi-instruction TB.
-
-Fixes: 14664483457b ("target/riscv: Add sscofpmf extension support")
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Fixes: b54a84c15e38 ("target/riscv: Add cycle & instret privilege mode filtering support")
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- target/riscv/tcg/pmu.c                  | 35 ++++++++++++----
- tests/tcg/riscv64/pmu-lpad.S            | 72 +++++++++++++++++++++++++++++++++
- tests/tcg/riscv64/system/meson.build    |  7 ++++
- tests/tcg/riscv64/test-minstret-ecall.S | 26 ++++++++++++
- 4 files changed, 133 insertions(+), 7 deletions(-)
+ target/riscv/tcg/csr.c                   |  2 +-
+ tests/tcg/riscv32/pmu-minstretcfg-rv32.S | 52 ++++++++++++++++++++++++++++++++
+ tests/tcg/riscv32/system/meson.build     |  7 +++++
+ 3 files changed, 60 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index f88f6ae671d877ed874d22c9d4b840edb6f433a5..08298010b6d06f5792fa14ff81fe2f7a28c6476f 100644
---- a/target/riscv/tcg/pmu.c
-+++ b/target/riscv/tcg/pmu.c
-@@ -387,18 +387,39 @@ void riscv_pmu_write_inhibit(CPURISCVState *env, uint32_t value)
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index f11b912d38df9c9588827878b3601f672fc8f65e..93f49fdab80677ab13c924ea6c969b689ccbe502 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -1170,7 +1170,7 @@ static RISCVException write_minstretcfg(CPURISCVState *env, int csrno,
+     uint64_t inh_avail_mask;
  
- void riscv_pmu_decr_instret(CPURISCVState *env)
- {
--    if (!icount_enabled() ||
--        (env->mcountinhibit & COUNTEREN_IR) ||
--        riscv_pmu_counter_filtered(env, env->minstretcfg)) {
-+    RISCVCPU *cpu = env_archcpu(env);
-+    uint32_t ctr_mask;
-+
-+    if (!icount_enabled()) {
-         return;
-     }
- 
-     /*
--     * minstret is derived from icount, which includes the current
--     * instruction.  Move the baseline forward to exclude an instruction
--     * that raises an exception and therefore does not retire.
-+     * Fixed instruction events are derived from icount, which includes the
-+     * current instruction.  Move the baseline of each running
-+     * instruction-source counter that counts the current privilege mode to
-+     * exclude an instruction that raises an exception and does not retire.
-+     *
-+     * Do not read icount here: this helper can run in the middle of a TB.
-+     * Excluding an instruction only postpones overflow, so keep the current
-+     * timer deadline. The expiry handler checks for an actual counter wrap.
-      */
--    env->pmu_ctrs[2].mhpmcounter_prev++;
-+    ctr_mask = COUNTEREN_IR |
-+               riscv_pmu_event_counter_mask(
-+                   cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS);
-+    while (ctr_mask) {
-+        uint32_t ctr_idx = ctz32(ctr_mask);
-+        uint64_t cfg = ctr_idx == 2 ? env->minstretcfg :
-+                                      env->mhpmevent_val[ctr_idx];
-+
-+        ctr_mask &= ~BIT(ctr_idx);
-+        if (!riscv_pmu_fixed_ctr_running(env, ctr_idx) ||
-+            riscv_pmu_counter_filtered(env, cfg)) {
-+            continue;
-+        }
-+
-+        env->pmu_ctrs[ctr_idx].mhpmcounter_prev++;
-+    }
- }
- 
- int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
-diff --git a/tests/tcg/riscv64/pmu-lpad.S b/tests/tcg/riscv64/pmu-lpad.S
+     if (riscv_cpu_mxl(env) == MXL_RV32) {
+-        env->minstretcfg = val;
++        env->minstretcfg = deposit64(env->minstretcfg, 0, 32, val);
+     } else {
+         inh_avail_mask = ~MHPMEVENT_FILTER_MASK | MINSTRETCFG_BIT_MINH;
+         inh_avail_mask |= riscv_has_ext(env, RVU) ? MINSTRETCFG_BIT_UINH : 0;
+diff --git a/tests/tcg/riscv32/pmu-minstretcfg-rv32.S b/tests/tcg/riscv32/pmu-minstretcfg-rv32.S
 new file mode 100644
-index 0000000000000000000000000000000000000000..40a6b34b7c2b71dd42e78b6873d72df4d508289d
+index 0000000000000000000000000000000000000000..59ee516cea9d09d0945033a77e788e4387cd684f
 --- /dev/null
-+++ b/tests/tcg/riscv64/pmu-lpad.S
-@@ -0,0 +1,72 @@
++++ b/tests/tcg/riscv32/pmu-minstretcfg-rv32.S
+@@ -0,0 +1,52 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
-+/* CSR number for older assemblers. */
-+#define CSR_MSECCFG          0x747
++/* CSR numbers for older assemblers. */
++#define CSR_MINSTRETCFG      0x322
++#define CSR_MINSTRETCFGH     0x722
 +
-+/* An LPAD fault must be deliverable with HPM instruction counting enabled. */
++/* RV32 writes to minstretcfg must preserve minstretcfgh. */
 +
 +	.option	norvc
 +	.option	norelax
 +
 +	.text
-+	.global	_start
++	.global _start
 +_start:
-+	lla	t0, trap
-+	csrw	mtvec, t0
-+	li	t0, 2		/* HW_INSTRUCTIONS */
-+	csrw	mhpmevent3, t0
-+	li	t0, 1 << 10	/* mseccfg.MLPE */
-+	csrs	CSR_MSECCFG, t0
-+
-+	/* x7[31:12] = 0 does not match the nonzero LPAD label. */
-+	li	t2, 0
-+	lla	a0, target
-+	jalr	ra, a0, 0
-+	j	fail
-+
-+	.balign	4
-+target:
-+	.word	0x00001017	/* lpad 1 */
 +	/*
-+	 * Keep the LPAD check inside a multi-instruction TB. Its exception
-+	 * helper must not read icount before leaving generated code.
++	 * Use complementary patterns to check both set and clear xINH bits.
++	 * All fields in the low half are WPRI, so write zero there.
++	 * Exit status 1 or 2 identifies the pattern that was not preserved.
 +	 */
-+	.rept	16
-+	nop
-+	.endr
-+	j	fail
++	li	t4, 1
++	li	t0, 0x54000000		/* MINH, UINH, VUINH */
++	csrw	CSR_MINSTRETCFGH, t0
++	csrw	CSR_MINSTRETCFG, zero
++	csrr	t1, CSR_MINSTRETCFGH
++	bne	t0, t1, exit
 +
-+trap:
-+	csrr	t0, mcause
-+	li	t1, 18		/* Software-check exception */
-+	bne	t0, t1, fail
-+	csrr	t0, mtval
-+	li	t1, 2		/* Landing-pad fault */
-+	bne	t0, t1, fail
-+	csrr	t0, mepc
-+	lla	t1, target
-+	bne	t0, t1, fail
-+	li	a0, 0
-+	j	exit
-+
-+fail:
-+	li	a0, 1
++	li	t4, 2
++	li	t0, 0x28000000		/* SINH, VSINH */
++	csrw	CSR_MINSTRETCFGH, t0
++	csrw	CSR_MINSTRETCFG, zero
++	csrr	t1, CSR_MINSTRETCFGH
++	bne	t0, t1, exit
++	li	t4, 0
 +
 +exit:
 +	lla	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
++	sw	t0, 0(a1)
++	sw	t4, 4(a1)
++	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
 +
 +	/* Semihosting call sequence. */
 +	.balign	16
@@ -241,67 +177,25 @@ index 0000000000000000000000000000000000000000..40a6b34b7c2b71dd42e78b6873d72df4
 +	.data
 +	.balign	16
 +semiargs:
-+	.space	16
-diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-index 4092bab25985400a69003ec00e973aa5011e1057..66b68509c5e1bb05d699f93e4570767da7e88b97 100644
---- a/tests/tcg/riscv64/system/meson.build
-+++ b/tests/tcg/riscv64/system/meson.build
-@@ -74,6 +74,13 @@ tests += {
-   }
++	.space	8
+diff --git a/tests/tcg/riscv32/system/meson.build b/tests/tcg/riscv32/system/meson.build
+index 7364b625c02b05987af848c7f3bfcc91192e5129..6a24561607dabd261246e905583b7c8a9022cd37 100644
+--- a/tests/tcg/riscv32/system/meson.build
++++ b/tests/tcg/riscv32/system/meson.build
+@@ -29,6 +29,13 @@ tests += {
+   },
  }
  
 +tests += {
-+  'pmu-lpad.S': {
++  'pmu-minstretcfg-rv32.S': {
 +    'cflags': cflags,
-+    'qemu_args': ['-cpu', 'max', '-icount', 'shift=0', qemu_args],
++    'qemu_args': ['-cpu', 'max', qemu_args],
 +  },
 +}
 +
- # Exercise RV32 CSRs with the RV64 emulator's 64-bit target_ulong.
- tests += {
-   '../riscv32/smcdeleg-rv32.S': {
-diff --git a/tests/tcg/riscv64/test-minstret-ecall.S b/tests/tcg/riscv64/test-minstret-ecall.S
-index ab268f7f22985820f19bde353215385608643f3a..b1857543d488df984b923ad1c135edb35cb948c7 100644
---- a/tests/tcg/riscv64/test-minstret-ecall.S
-+++ b/tests/tcg/riscv64/test-minstret-ecall.S
-@@ -18,11 +18,37 @@ _start:
- 	li	t1, 1
- 	bne	t0, t1, fail
- 
-+	/*
-+	 * minstret and a counter selecting HW_INSTRUCTIONS must both exclude
-+	 * ECALL, so they must contain the same number of retired instructions.
-+	 */
-+	li	t0, 12		/* mcountinhibit.IR | mcountinhibit.HPM3 */
-+	csrs	mcountinhibit, t0
-+	csrw	minstret, zero
-+	csrw	mhpmcounter3, zero
-+	li	t0, 2		/* RISCV_PMU_EVENT_HW_INSTRUCTIONS */
-+	csrw	mhpmevent3, t0
-+	lla	t0, trap_hpm
-+	csrw	mtvec, t0
-+	li	t0, 12
-+	csrc	mcountinhibit, t0
-+	ecall
-+	bne	s3, s4, fail
-+
- 	li	a0, 0
- 	j	_exit
- 
- trap:
- 	csrr	s1, minstret
-+	j	trap_check
-+
-+trap_hpm:
-+	li	t0, 12
-+	csrs	mcountinhibit, t0
-+	csrr	s3, minstret
-+	csrr	s4, mhpmcounter3
-+
-+trap_check:
- 	csrr	t0, mcause
- 	li	t1, 11		/* Environment call from M-mode */
- 	bne	t0, t1, fail
+ if 'qemu-system-riscv32' in emulators
+   tcg_tests += {
+     'riscv32-softmmu': {
 
 -- 
 2.43.0
