@@ -1,95 +1,97 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8009C606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 15:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D2B606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 15:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nt69Zk5w
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XVLOXuft
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRX4y-00078n-7i; Thu, 12 Nov 2026 10:51:12 -0500
+	id 1xRX51-0007KA-Ej; Thu, 12 Nov 2026 10:51:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jcfaracco@gmail.com>)
- id 1xRWow-0007aC-7S
+ id 1xRWot-0007Rr-Lj
  for qemu-devel@nongnu.org; Thu, 12 Nov 2026 10:34:44 -0500
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jcfaracco@gmail.com>)
- id 1xRWou-0004ZN-GN
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 10:34:37 -0500
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-677af43eed4so4991537d50.0
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 07:34:36 -0800 (PST)
+ id 1xRWor-0004Yh-5b
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 10:34:35 -0500
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-67be9601f48so378669d50.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 07:34:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794497675; x=1795102475; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=YX0uzXaxGzHtcUKWfAH0tVvgPKthjDaKe+Cz0H0QFLg=;
- b=nt69Zk5waaD4+CiEqTuKo5maniY9NB1sKc+tNM8XL4AA+gm7PWJrIk2qq3or+/3IfN
- 4TYJtlc870C/8N+YjVQpyHD8jMGeINIqYrxMD21TOds1Dd43b7j+gRUGvuslFgtN75dy
- YnVneE+ImaQNiHpTnqRqHAIdmcl5Z0mfFnJRP2KVQknDOQDFiei+vqm3y5u4KsSGReIk
- uUYL7gH0YKSBOK4RevHSogJghfZ3+e7o7lxuiLE63FneeYxWjatES/QA/VoJfS4vPqV8
- FGKb9CV8HiRXMnnY6wqduMDafXSTJsnc7srLM+iTU93idkLxizDdsKEaJP9xR/FGnNQO
- 9VSA==
+ d=gmail.com; s=20260707; t=1794497671; x=1795102471; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=h9UddGE2ZQqj6f8ug4uHdt0gJkr3Nog0HYIcg4xSqYo=;
+ b=XVLOXuftEIVMm6yUZepFtF4DtHMxA8Z3f4YJHZqhjoG8Xp+B7z63YcRcCJkea5wY20
+ m69U9bpNY0vnZZ53Jwkc1cy2YgG5XTvmEDA5sONVaDgoKGBubPp6ltPcb7WL++Jgnpqu
+ hfX+JbjJy/DdeNn3RgsLZ9Mwt0n0vnukAULABW5jXt15RmUQGG3CSR9QiklYivVCNbho
+ XbgdSYezXzVGrauzGCQwnHAn08yHpGvtVemZfgwxVJrZEEauZManYZdlgwHmA3gkXOgA
+ /ZML8g17ajpAm/FmZpCh0t0KJ/vvcJG1+IY/vKyOnjY1982I/p8WDAkjldGNt2PCf/FJ
+ KGyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794497675; x=1795102475;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=YX0uzXaxGzHtcUKWfAH0tVvgPKthjDaKe+Cz0H0QFLg=;
- b=ssUcBlYkPPwCJyglEx1K7XPXgJxKnKN0iOgB7uqhuYgZIxq28fHpAyG5VnYaFiR1Pg
- 1ZpV5FJbxu6pm+r9X9hViBakRZthBOUXl/3ar8jGWBIexQocTRy1f/Rg3klZ0tsUSiru
- M2KGeHTXgY5HpQcV/kQJ6pC11BP7Ka7XaxlgMJ9Ypu3kp4VOeiLdVvBaCav/3W7vPxlB
- rXKYd/cQ7XqR+LtBUQRFokEqcbRVDzgbAhuFTJyqaeDC8dpKkuMyEwXjCFWRzEdVPKZI
- FgCyCaCCDSxkpQ7JS+/mTFR/46OOoeHFW23kZ68C3RYWJE7aTZzyFzaaOvpz9kx2dZVJ
- OVPQ==
-X-Gm-Message-State: APuU4Z+RRuEhlyFNYU5YY7TH5iyclg2QFJ3qaZWn6wWbJ5pY2QKNMqFx
- EU/Y0k49kQfbv1A/pDMEOOR0CQxA+4xfVA2GZclIKxZVJVdE3L2ksP5irMBHxA==
-X-Gm-Gg: AYBFou2YrIEu/VX4cSlNiMdyp9svBBneOQwtHknmfcqr/HXN/HNmsWAYvD9kzUh1I4t
- tITNf4GQBa92gTt0pN9snUPK0FZK8S9GqdAYiixeolP9i5lrs8y4Xb3vs+VW74xi+CTCczbsCvm
- niuFNejB6w+umPKMw1lg560h/18lOixRprVV/obwugw6D2bEYpYvper1gvFQl87PTtxTYVP/dNC
- jA6oQS3LYDEFdmgnMiMxnEb77GPzqk2K68fkJiFhVE/TyyeUlGADGGOi6BvHD4M+u/Z7h6lucp4
- UTjjh3YAYSrVIW8CELkrNx84N1vhiwbU4eVEQEYHEq0GiHJ9ICVQwvM1SU2aHToB/FgQpGFNUgt
- GtQfeXaVZTye3QgkHakREaYZGHAM5zlJvRN3KEDCQv8e5GsYjnmynA9LcJd0XRKc/8Tj/QsbQdt
- K7oJ/C4v0nyIZntOqAD+yr6VfTo3zxdRi54WCydrLwJCzSSn+NAb1kQYloTLDAAH6JnsNTgrpE5
- pgauWEVoUVUq+uzJhdPK0kLD5sAONqRP/SfshwSfJjb2GsP7hHN1B71n9e2eNudOIscUhJ+0qJJ
- 38aXh9gOsZMn/2JHmQ==
-X-Received: by 2002:a05:690e:43c5:b0:67c:1dca:80d with SMTP id
- 956f58d0204a3-67c67fabc89mr2926391d50.69.1794497675264; 
- Thu, 12 Nov 2026 07:34:35 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794497671; x=1795102471;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=h9UddGE2ZQqj6f8ug4uHdt0gJkr3Nog0HYIcg4xSqYo=;
+ b=ZF9kSA8TsGMhnmQW7u/QEf3YOYjmcxrPm8aV7HNdoGDOLt0HQTawFE8vYIHl9rTjYA
+ 8rFOVsg546LL4rhqhXdwgQvWp47bBgT1woOcQfEUpffz9Cw2PZUkYPQQh4u8Bo8Hgrcl
+ pfvcBwP/VOwXZIxsh2C5o8JaAreOPj9xGZ4LwenyRyzBkOuhKFrYLmyOxh5F+2rfZgzx
+ 9QZdf22ZcVENmo1prob3Xe8srQBEUzaoWuzqHQV22Dkrh+VBerNOPcXApMHJYxfg8FWP
+ rLs8zOigLaSmmGV4pIZtomc+GbkgYswIjLNIqV1eLnGjHkfy0bu6ZVCYvqg4n3ZLc3yP
+ j11g==
+X-Gm-Message-State: APuU4Z+OOEpu2gGlBI9D7/XxUumMeU1SUoilihRCNPpH/7ishFaAk+jY
+ gnpJa7o+C38j2YTZwHkvnWh8QFOoGFQMs9Fh66/TLPCkSdSYw3/sY4DV
+X-Gm-Gg: AYBFou2LomFvyEPWjBLsxyOWf83pIHBs8MEpJ9ggTixGZNmPk0E62Qq4I7R7eQ39e4q
+ v+2T8HQU5h/xM362CcgUxcw2smpuQABGEjcKc+YKQdP9ZOW8MBgqsliCDlXffuhKBZpLWqHmik7
+ kSPtBoJHjK8j8STAFHVLDddhedtnOJn9bXBPk1Dh99v0+3rR57zcQGpiyKUSv1mX3kiS9i7k4pI
+ TsyqR358mAsuigN3YVeYtk15+OuOUAk4r5NEYhHj28pChL1ozpa5KXES2629lXDjAMPuUxxb1Is
+ 6gqEc7XWW9ojd90+hqrx0P7F5D1uN7SoR59q++BqBOV0QLhBlCyM+MZzqj7MuspN/pzwhbtQtxh
+ jrsmriaZDp8n2Lws3JRwLQJY9Mjla1ZgVIQUTRS2YmtRYyhpCSh+MBvsEHHLnv/AbPWuz3x4i25
+ BnnC2KBTw5F5QcrSW+FlAeIXKeIDNTRC+uvffDbI2Qgy+Zp/JuRTb0yQ4/Vh2/RBPy2WhEU3hmT
+ fux/3n3yaOoiSMEcOXE4/cAsxqAAcOrZ4Una1ltACwDI2dhc0CBrXctriIyoDYC8EoW1nvdSKKG
+ bfbHUmJdzJOvLX3iq+Io6ug/zcgKZtQbo/E+Pt4=
+X-Received: by 2002:a05:690e:4883:20b0:679:887f:a2ba with SMTP id
+ 956f58d0204a3-67c67f1cfdcmr3007834d50.24.1794497671384; 
+ Thu, 12 Nov 2026 07:34:31 -0800 (PST)
 Received: from [192.168.0.195] ([2804:14c:3b83:954b::221c])
  by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-67c58a09074sm7656618d50.18.2026.11.12.07.34.31
+ 956f58d0204a3-67c58a09074sm7656618d50.18.2026.11.12.07.34.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Nov 2026 07:34:34 -0800 (PST)
+ Thu, 12 Nov 2026 07:34:30 -0800 (PST)
 From: Julio Faracco <jcfaracco@gmail.com>
-Date: Thu, 12 Nov 2026 12:33:56 -0300
-Subject: [PATCH 1/2] block/dmg-lzfse: reject short LZFSE decodes
+Subject: [PATCH 0/2] block/dmg-lzfse: fix short-decode heap disclosure and
+ add regression test
+Date: Thu, 12 Nov 2026 12:33:55 -0300
+Message-Id: <20261112-dmg-short-decode-v1-0-f7f342097b60@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261112-dmg-short-decode-v1-1-f7f342097b60@gmail.com>
-References: <20261112-dmg-short-decode-v1-0-f7f342097b60@gmail.com>
-In-Reply-To: <20261112-dmg-short-decode-v1-0-f7f342097b60@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MQQqAIBBA0avErBtQCcOuEi1EJ51FGhoRSHdPW
+ r7F/w0qFaYKy9Cg0M2Vc+qQ4wAu2hQI2XeDEkpLKRX6I2CNuVzoyWVPqI0wxrppmoWAnp2Fdn7
+ +5bq97wcN8vnqYgAAAA==
+X-Change-ID: 20261112-dmg-short-decode-69099ac44700
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org, 
  Julio Faracco <jcfaracco@gmail.com>, oxsignal <awo@kakao.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794497667; l=3737;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794497667; l=1289;
  i=jcfaracco@gmail.com; s=20261112; h=from:subject:message-id;
- bh=XZ5vwBF3GlRwZHRdlVeL5lr2xHF+6hHh4EotpXGq8i8=;
- b=7D10GTMc81miZmeIegAg6J3HQrh6b1L0lMzpQy5IKGqa6bZ6o04UwjQc5raTIGWGUBCdWJPWV
- tLWaYPWabeMBtCcVtz5fllQ7cJKwDuHgMukEn7GAv3LgEClT1xPgEWh
+ bh=BE+YkjW5JluSlwaxMrfT3wqfDPOF0c3c1svb2Kl1Y58=;
+ b=2VeovcHng/HAxfbe9Gx266K79Ag7vNzXuK2KEMUdHZp6l8CTKjSn6Yc+20PcgfCTY2DutDqdg
+ ZmbrhTENvDzDf4efFlkncbmJcRME/ccoJ2aCMMBfv/NOtb8mNgD1tfM
 X-Developer-Key: i=jcfaracco@gmail.com; a=ed25519;
  pk=hAqVCeSg6RtgTRedcz7HIqiICyRcEDanumwIF9bNBHg=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=jcfaracco@gmail.com; helo=mail-yx1-xb136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=jcfaracco@gmail.com; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,99 +111,43 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-dmg_uncompress_lzfse_do() treated any non-zero lzfse_decode_buffer()
-return as success. A crafted DMG can declare a larger chunk output size
-than its LZFSE stream decodes to, leaking the unzeroed tail of
-uncompressed_chunk to the guest as sector data -- a heap disclosure.
+This series fixes a heap disclosure vulnerability in the DMG block driver's
+LZFSE decompression path (CVE-2026-116483) and adds a regression test.
 
-lzfse_decode_buffer() returns the destination capacity both for an
-exact-size and a too-small destination, so decode with one extra byte of
-capacity (allocated in dmg_open()): an exact stream returns avail_out, a
-short or oversized one does not. Require out_size == avail_out. Decoding
-in place also avoids a per-chunk g_malloc()/memcpy() of up to 64 MiB in
-the read path.
+Specifically, this series (1) updates `dmg_uncompress_lzfse_do()` to decode
+with one extra byte of capacity (pre-allocated in `dmg_open()`) so that
+exact decodes can be reliably distinguished from short or oversized LZFSE
+streams, preventing unzeroed chunk tail leakage.
 
-zlib and bzip2 chunk paths already enforce this; LZFSE did not.
+It also (2) introduces a new qemu-iotest (`dmg-lzfse-short`) that
+constructs a crafted DMG with a short LZFSE stream and verifies that
+reading the chunk correctly fails with an I/O error.
 
-Fixes: CVE-2026-116483
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4662
-Reported-by: oxsignal <awo@kakao.com>
 Signed-off-by: Julio Faracco <jcfaracco@gmail.com>
 ---
- block/dmg-lzfse.c | 27 +++++++++++++++++++--------
- block/dmg.c       |  8 +++++++-
- 2 files changed, 26 insertions(+), 9 deletions(-)
+Julio Faracco (2):
+      block/dmg-lzfse: reject short LZFSE decodes
+      tests/qemu-iotests: cover the dmg LZFSE short-decode fix
 
-diff --git a/block/dmg-lzfse.c b/block/dmg-lzfse.c
-index 4ea0b9b20d..b1acd87135 100644
---- a/block/dmg-lzfse.c
-+++ b/block/dmg-lzfse.c
-@@ -33,16 +33,27 @@
- static int dmg_uncompress_lzfse_do(char *next_in, unsigned int avail_in,
-                                    char *next_out, unsigned int avail_out)
- {
--    size_t out_size = lzfse_decode_buffer((uint8_t *) next_out, avail_out,
--                                          (uint8_t *) next_in, avail_in,
--                                          NULL);
-+    size_t out_size;
- 
--    /* We need to decode the single chunk only. */
--    /* So, out_size == avail_out is not an error here. */
--    if (out_size > 0) {
--        return out_size;
-+    /*
-+     * lzfse_decode_buffer() returns the destination capacity both on an
-+     * exact decode and when the destination is too small, so on its own it
-+     * cannot tell a full chunk from a short one. The caller allocates
-+     * next_out one byte larger than avail_out (see dmg_open() in dmg.c);
-+     * decoding with that extra byte of capacity lets an exact decode
-+     * (out_size == avail_out) be distinguished from a short or oversized
-+     * stream, without a per-chunk scratch allocation or memcpy.
-+     *
-+     * next_out MUST have room for avail_out + 1 bytes.
-+     */
-+    out_size = lzfse_decode_buffer((uint8_t *) next_out, avail_out + 1,
-+                                   (uint8_t *) next_in, avail_in,
-+                                   NULL);
-+
-+    if (out_size != avail_out) {
-+        return -1;
-     }
--    return -1;
-+    return out_size;
- }
- 
- __attribute__((constructor))
-diff --git a/block/dmg.c b/block/dmg.c
-index 412d4bfc35..aa0a0a2fe5 100644
---- a/block/dmg.c
-+++ b/block/dmg.c
-@@ -587,8 +587,14 @@ static int dmg_open(BlockDriverState *bs, QDict *options, int flags,
-     /* initialize zlib engine */
-     s->compressed_chunk = qemu_try_blockalign(bs->file->bs,
-                                               ds.max_compressed_size + 1);
-+    /*
-+     * One extra byte so dmg-lzfse.c can decode a chunk in place with a
-+     * capacity of avail_out + 1 and still tell an exact decode from a
-+     * short or oversized LZFSE stream. See dmg_uncompress_lzfse_do().
-+     */
-     s->uncompressed_chunk = qemu_try_blockalign(bs->file->bs,
--                                                512 * ds.max_sectors_per_chunk);
-+                                                512 * ds.max_sectors_per_chunk
-+                                                + 1);
-     if (s->compressed_chunk == NULL || s->uncompressed_chunk == NULL) {
-         ret = -ENOMEM;
-         goto fail;
+ block/dmg-lzfse.c                            |  27 +++--
+ block/dmg.c                                  |   8 +-
+ tests/qemu-iotests/tests/dmg-lzfse-short     | 142 +++++++++++++++++++++++++++
+ tests/qemu-iotests/tests/dmg-lzfse-short.out |   2 +
+ 4 files changed, 170 insertions(+), 9 deletions(-)
+---
+base-commit: 29760efaf96bbe5928f8111881eddbf5ac06439e
+change-id: 20261112-dmg-short-decode-69099ac44700
 
+Best regards,
 -- 
-2.56.0
+Julio Faracco <jcfaracco@gmail.com>
 
 
