@@ -1,171 +1,148 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6497606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 05:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7227606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 05:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=EI8VcxUD
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=lHuN6qjM;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=GEvislH7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRMzo-0002ZB-Ix; Thu, 12 Nov 2026 00:05:14 -0500
+	id 1xRNBJ-0004M7-5g; Thu, 12 Nov 2026 00:17:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xRMzb-0002Y4-WA
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 00:05:02 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xRNBC-0004LO-Q4
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 00:16:58 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xRMzZ-0007l1-IJ
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 00:04:59 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AC2iaMv2796426; Thu, 12 Nov 2026 05:04:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NJu5mn
- 4+5mJU35Gq6U3XltoNo23+X9g3hhXMnBpdwZE=; b=EI8VcxUD8vCbC7fAoE+QhR
- hK1FAFZvTfyi0q2o3EjMNapQ2otZFsVUL4eBPYP2yaMICzoFYreld2AEaUrh5Rko
- HEOL3gTjZNzzAd8SO/+8CFlKxM/dS5VA/ium78cJv619BGym035hlB4qtFy1/XTA
- kS2GuBf6JqzJeQL+MI6pCExqnmczXw0yzY55V+CHNhN3cihrjSKaMpHHTgcJocmC
- ITANm5ysrNqlh69e3XqE9U9LFggRaamtI3Zw5QMNZIozQkbMkseKhgmjoanC0Thd
- s4ko02h2EBVJNRi7sh5+B1QIHjqZTCitkgDyXNhpBmtNYi5kXHr2sb+eFjSX91qA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hssdkwfnx-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 12 Nov 2026 05:04:46 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AC2pRd3098417; Thu, 12 Nov 2026 05:04:45 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hvkq0uxs7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Nov 2026 05:04:45 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AC54iKv37618350
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Nov 2026 05:04:44 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3E6D758059;
- Thu, 12 Nov 2026 05:04:44 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F3FC658017;
- Thu, 12 Nov 2026 05:04:41 +0000 (GMT)
-Received: from [9.61.119.48] (unknown [9.61.119.48])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 12 Nov 2026 05:04:41 +0000 (GMT)
-Message-ID: <df977bf7-c951-49b2-a44e-7954373a0a93@linux.ibm.com>
-Date: Thu, 12 Nov 2026 00:04:41 -0500
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xRNBB-0004Uv-6J
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 00:16:58 -0500
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AC2aLob3814540
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 05:16:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ is+Sy4y/vsJi6CDCmTi2xqmUzzSfXSDYr+Fxqs+VG5s=; b=lHuN6qjMrbUNSghT
+ OqltWaze/ZXItP6/R2ueVa82NM3IklDXBYLIDNp+u8iH1KyUBqzN4iNJ2RGLW7Ee
+ J97rgHGBLZlxTwzefAcH/2nkPtHd/vxPa/6Xm8drH840oS6JbJ7jzMShhYxddS+w
+ 5NB8CozhJDPQJU6iHPxLJw1AsajpmM7Y2dd9JrbTe97C0wcmB5ArolUcQseJdbCP
+ BRMzNusHPnG0OhcRnqmZhR9oufHEU8Vc26S/fL0wQzbm4Mj1JDAD/JyG6NLbtfK5
+ +YE8GPAh/B7im4fvQLbUocnMPJ08FlfFvc4zqIM0dg2Qt2SV9/Ko8M9bqkyiB6DW
+ NG3KFg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hvvw0j7tu-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 05:16:54 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93f33438950so809076885a.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Nov 2026 21:16:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1794460614; x=1795065414; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=is+Sy4y/vsJi6CDCmTi2xqmUzzSfXSDYr+Fxqs+VG5s=;
+ b=GEvislH7WXvA2g3Ojr9OlH9UXkxMGv/tXwP4OcAEn1NWCGBObAVCAkJzxMeAi2IKXZ
+ xauYMRL1vFVu/lxAUBi2gQn/3qLoJeQMkdpT0nALfL1091iXJtHzLn/0uSPQc2GY9gLs
+ kI3feRhUx7VIBKqd0b0bXo2XQqh7yyZ9AZiAiTv67felnQIm67kISGke2wmZr8Bfp38B
+ X7mZrKESzo1IYCxr18/Uk5y7Nkzs6OIC310gM+DK/WErwxIzz7omNH8efloRS6sRlLi4
+ DG/tC9OP8DLUYo5ecarh7KRC3aa7X8QvQ1BjrVHnYSk40DQWH5q0SFPtGMvhbAqGk6P6
+ zLYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794460614; x=1795065414;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=is+Sy4y/vsJi6CDCmTi2xqmUzzSfXSDYr+Fxqs+VG5s=;
+ b=yI+irfz5XWanKolLwSkQ3/XME7tvNFRwLL0cJUkmu1w3+MsbTjCbH6C4PSGuELuGZP
+ ZEAnObuucMPTEGu854FYiuHCCpVpv6QDhS9Pqb+3H6atxr68yvGhWCkhFvUgUi1oFYPU
+ MwcUwOWrhrfM+PgsPXGIhNMB3RMO3IlkJl49ySA3+o7/T3r7qcCG4mZO/qq9DP3C6AJI
+ fw7cI9a25xowAzpeMpUDS8ZT91/45URaYxj5Zc0gXSzW2xKiB3VsHiQ+s6BAVWHIkDjq
+ +fZEJaHL76lIBwk+W+QMyzFzG8mx8qttUuSkwZO4KthuCmOn5ZZ/EGwUErkGtyo6562s
+ rSIw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErHWvwBqxcWl5JdwrLGrlYSF8GToJ2BrxKqt19NqhQfGJNM6PS4nK2DzVVoQKZCjjpATN2rV/rFhAXj9@nongnu.org
+X-Gm-Message-State: APuU4Z9e4LX4zl9CZXUvPcW2k71jY4Wls+79ReLxBAo1DXiQ5pgcFdx3
+ QtiX18N496M/MbS9YXnsXzqdIeJh7C1ZoSxOBzgj8VHJbm/ctGiTHY8anduFuLY8XopDVKpoXlk
+ XkJfoesqvgIahyeg+GJ5meLTOQvtY+O2nMid6dMcVp5k51eOkd6OBSnGPCg==
+X-Gm-Gg: AYBFou12KkdUi3FwgsBRbxKOaaYHFUY8SKOp2FXVcsininuyumT8GQj7CiUL3Gq7PPL
+ Bn/AgbeeEo+nonNuFOf/aKy+u67mhN6p8XmTTB0pvuAjKr5mZhZnD5nSR9QBHBLEImMnlhsj9cI
+ sohqAxHYsUmVgY4TEWVlQrMH0hLWvjzBT65nE3Aqdw19yxl7t5wu4ujeoy86q7O2UCNtQlkA1E4
+ 2duHJmaSqTzZYNG1Yysev0+8W8aHkE2aCK8M0REPCl6e0lrsYbrUW3cO1PExy6SGETiZbWssO/H
+ BNSb+rt3qEKM9kSTjIYq4pHIQoFStl3qdfwLVofeP/1tw7+cS0zuSZOT7hSxQg7rT639rUGlfPt
+ 3QIl/O6ZP94vTIFj/kFSxiO1eFU7djBGJGEP7v4Vo3yHLfcWlEN/n1d/j0YYl1rQ5RwZVyNxWl3
+ t17D3vhjc=
+X-Received: by 2002:a05:620a:2890:b0:945:f099:8776 with SMTP id
+ af79cd13be357-947afcd01e9mr804556785a.4.1794460613901; 
+ Wed, 11 Nov 2026 21:16:53 -0800 (PST)
+X-Received: by 2002:a05:620a:2890:b0:945:f099:8776 with SMTP id
+ af79cd13be357-947afcd01e9mr804554385a.4.1794460613421; 
+ Wed, 11 Nov 2026 21:16:53 -0800 (PST)
+Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-49895f4e6ffsm13404622f8f.16.2026.11.11.21.16.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Nov 2026 21:16:52 -0800 (PST)
+Message-ID: <3f58ecbf-7774-4447-9ee8-eaa4fb4c26bf@oss.qualcomm.com>
+Date: Thu, 12 Nov 2026 06:16:51 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 01/22] migration/cpr: forbid saving duplicate CprFds
- into hash table
-From: Eric Farman <farman@linux.ibm.com>
-To: Omar Elghoul <oelghoul@linux.ibm.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
-Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, bchaney@akamai.com, mst@redhat.com,
- maciej.szmigiero@oracle.com, sgarzare@redhat.com,
- mark.kanda@oracle.com, vsementsov@yandex-team.ru, clg@redhat.com,
- den@openvz.org, dongli.zhang@oracle.com, farosas@suse.de,
- peterx@redhat.com, dwmw2@infradead.org, philmd@oss.qualcomm.com,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <20261012-up-vsock-vhost-v5-v16-0-36c38bd15ffc@virtuozzo.com>
- <20261012-up-vsock-vhost-v5-v16-1-36c38bd15ffc@virtuozzo.com>
- <5b08d2f3-7edc-4525-95e4-ee6719acaf5b@linux.ibm.com>
- <c9d80c86-e9e3-4b9c-8d8e-5f4e0ed603a9@linux.ibm.com>
+Subject: Re: [Qemu-devel] [PULL v5 04/46] target/mips: Prevent switching mode
+ related to Config3 ISA bit for nanoMIPS
 Content-Language: en-US
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <c9d80c86-e9e3-4b9c-8d8e-5f4e0ed603a9@linux.ibm.com>
+To: Aleksandar Markovic <aleksandar.markovic@rt-rk.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, Aleksandar Rikalo <arikalo@gmail.com>,
+ Stefan Markovic <smarkovic@wavecomp.com>
+References: <1535033941-861-1-git-send-email-aleksandar.markovic@rt-rk.com>
+ <1535033941-861-5-git-send-email-aleksandar.markovic@rt-rk.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <1535033941-861-5-git-send-email-aleksandar.markovic@rt-rk.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=POqaavqC c=1 sm=1 tr=0 ts=6af548ee cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=A3H8OfN2AAAA:8
- a=20KFwNOVAAAA:8 a=TYBLyS7eAAAA:8 a=liYQOHb4cClhrTlgu2sA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=hKFNpMRl0UUYlmJlzFdh:22 a=zvYvwCWiE4KgVXXeO06c:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDAxOCBTYWx0ZWRfX4sUIWibOyd7G
- gT3F8LlbtEhURQ8goQqU6xky6E7A0LHLFxvSkgRpUMOk5c8HOjUUgPKPxb/+gGjBgoSYUlQVaHc
- NXeA67mUnniZgA6pbIuHkZF14Pmed9wQcZ/FBolOqmvQ0hr1d3vN9Aq8aRUjynwd8OL8/CSw4KE
- PyvxyrzB6IrWinHYD5uIw2yNHTHBYJdLieqSuYd44hFbh0/3KHuKseRItR7R8E3zk8e6E7hDblv
- V67fR8uCXgXdUUTkkhyNRbNIw1Esde7HZn0wjFKoeWFwGd+nQqrEvzhWDozn5pe2luoJRtjc1p5
- NZDNAr1wk87hmmeFaB89wyJOTkdBbrmfvDoLek1sFPUB1lQTE/XEcqRr7w/4oIFdUbdupc/QYyy
- ymi/DB9L1DCnv2rjM5udH0a8UBz6SSRBdqmhMCLYWBYY7wGlcCEIlctwCRl/RFKCyRbLqNs9MNO
- h86+2j2K9KUoPrDUcvg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDAxOCBTYWx0ZWRfX4DpCY2T/+pH8
- +94Q7SHNimiyvkZ6oSuWOTuygaOIyp3Oxwee6fy7YD6QaOwnyFapNfgfTzpKOGpPvfIrr63gLyu
- F/ZDjFFERm88ClMG0Ps37nV4pxcMkBM=
-X-Proofpoint-ORIG-GUID: 4Bumm2g9juqN8YMssEef8vvTwv7uU8Xq
-X-Proofpoint-GUID: 4Bumm2g9juqN8YMssEef8vvTwv7uU8Xq
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: daDlcmTVooHmtHuZZ3BC233yEhr4g7GK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDAyMCBTYWx0ZWRfXxjzDo0Ad2Odd
+ oP9j0vNng0yHWsNBQpl74FsIroX/muf977GJqT2kCzquyMezaWNGx4tQW2GcjY+cbqlOgACF27V
+ qdAwf6ivzsCNcHGw7AwjXOMhDDSpWJnqL4qA07xs77+WG+hCtekyn0elSAC4W2HnaWe3EyRy+gh
+ N6MP/yuWIx4XIN0vPY8qckmVSKh8h43I/NnkvPY4iHSrl9ED30JxrATgoK0j7s0/bBUsD14oulZ
+ +cNpVdR5qJeNr+0D00/vdecDO/qx9KcJC9gXP1iuC2gVTl2dpm6Naku02CUkv6d9sh/qfEHBFrw
+ Lw8DgROiLv9SyCpV6Ma7azjGfkMaeVAjMPo12Ue8OSi9ctmlb2U3UGTmcx4V179cSR09STYOC3+
+ rxTcmxfhnW3nesGhOo/12EyyOSsKCKBNLZUhTXNFQvttfAtXTnkLF2BIHwRFSTgqwNXwh34J8E/
+ 4TqGYTrH9vOCUV99jhQ==
+X-Proofpoint-ORIG-GUID: daDlcmTVooHmtHuZZ3BC233yEhr4g7GK
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDAyMCBTYWx0ZWRfXxW811L8wL234
+ SEiVSpo4pYYmJK1PDRDoNdTyPXmkCZHAaf1MxJEee1/31RZk2s++7AguaXd/uigrPl9RIiJ7ilR
+ tssFU9CxIkRaqFWpWcqXysyLX2HBi0w=
+X-Authority-Analysis: v=2.4 cv=ct8OAF4i c=1 sm=1 tr=0 ts=6af54bc6 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=FyogFE7hAAAA:8 a=E05dM5_EIKoRRw5XvQYA:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22 a=p2WyBLmlf5vdw_nX_QRo:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-12_01,2026-11-11_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 impostorscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0 clxscore=1011
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611120018
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ adultscore=0 suspectscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 priorityscore=1501 spamscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611120020
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -178,131 +155,49 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+(now commit 0bbc0396809f6caaaf96863dafe738e94f9b73ea)
 
-+cc iommufd maintainers
+On 23/8/18 16:18, Aleksandar Markovic wrote:
+> From: Stefan Markovic <smarkovic@wavecomp.com>
+> 
+> Only if Config3.ISA is 3 (microMIPS), the mode should be switched in
+> cpu_state_reset(). Config3.ISA is 1 for nanoMIPS processors, and no mode
+> change should happen.
+> 
+> Reviewed-by: Aleksandar Markovic <amarkovic@wavecomp.com>
+> Signed-off-by: Aleksandar Markovic <amarkovic@wavecomp.com>
+> ---
+>   target/mips/translate.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/mips/translate.c b/target/mips/translate.c
+> index 4f95b9a..7fb322b 100644
+> --- a/target/mips/translate.c
+> +++ b/target/mips/translate.c
+> @@ -21841,8 +21841,8 @@ void cpu_state_reset(CPUMIPSState *env)
+>           env->CP0_Status |= (1 << CP0St_FR);
+>       }
+>   
+> -    if (env->CP0_Config3 & (1 << CP0C3_ISA)) {
+> -        /*  microMIPS on reset when Config3.ISA == {1, 3} */
+> +    if (env->CP0_Config3 & (1 << CP0C3_ISA) & (1 << (CP0C3_ISA + 1))) {
 
-On 11/11/26 11:52 PM, Eric Farman wrote:
-> 
-> 
-> On 11/10/26 3:51 PM, Omar Elghoul wrote:
->> On 10/12/26 6:28 AM, Andrey Drobyshev wrote:
->>> In its current form, the mechanism for saving CPR FDs into hash table
->>> has flaws.
->>>
->>> The CPR fd hash table uses the same CprFd for both key and value, and
->>> is created with a key destroy function.  Inserting a second element
->>> with the same (name, id) key leads to a use after free.  According to
->>> GLib docs [1], g_hash_table_insert() keeps the old key, replaces the
->>> value with the new element, and destroys the new key.  Thus when
->>> inserting 2 CprFd elements fd1 and fd2 with equal keys we get:
->>>
->>>    g_hash_table_insert(table, fd1, fd1);  /* table has fd1 -> fd1 */
->>>    g_hash_table_insert(table, fd2, fd2);  /* table has fd1 -> fd2, 
->>> fd2 freed */
->>>
->>> Any subsequent cpr_find_fd() for that key then returns freed memory.
->>>
->>> This is reachable whenever two CPR-aware objects register fds under the
->>> same name, and it happens long before an actual CPR, since cpr_save_fd()
->>> is typically called from .realize(), i.e. at boot time.
->>>
->>> Apart from the UAF itself, when the user decides to perform CPR 
->>> migration,
->>> on CPR target we'd get corrupted FD from the hash table and fail 
->>> somewhere
->>> in .realize() for affected devices.
->>>
->>> As a solution, let's altogether prohibit adding CprFds with duplicate
->>> keys.  Since FDs are being registered for a subsequent CPR right at the
->>> startup in .realize(), that'll allow us to error out and exit QEMU (or
->>> fail a device hotplug op) gracefully instead of delaying potential
->>> problems for later.  To do so, let's make cpr_save_fd() return 'bool'
->>> instead of 'void' and provide an 'errp' argument to it.  That way caller
->>> becomes responsible for checking the return value and propagating the
->>> error.
->>>
->>> Also update all the callers to use the adjusted interface to keep things
->>> compilable and bisectable.
->>>
->>> [1] https://docs.gtk.org/glib/type_func.HashTable.insert.html
->>>
->>> Fixes: a181df93bb3 ("migration/cpr: use hashtable for cpr fds")
->>> Reviewed-by: Peter Xu <peterx@redhat.com>
->>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>
->> Hi everyone, FYI we've recently run into a regression on s390x where if
->> we have a KVM guest with a PCI passthrough device using iommufd and we
->> hot-unplug the device, the guest becomes fully unresponsive. In the host
->> dmesg, we can see this message right when the hang begins:
->>
->> [ 1618.849602] vfio-pci 0001:00:00.0: No device request channel
->> registered, blocked until released by user
-> 
-> It's worth pointing out that the new error message in this commit does 
-> indeed show up in the logs, and points to the problematic device fd:
-> 
-> virtqemud[1172]: internal error: unable to execute QEMU command 'object- 
-> add': cpr fd 'iommufd0' id 0 is already registered
-> virtqemud[1172]: internal error: unable to execute QEMU command 
-> 'closefd': File descriptor named 'iommufd' not found
-> kernel: mlx5_vfio_pci 0004:00:00.0: No device request channel 
-> registered, blocked until released by user
-> 
-> 
->>
->> Bisecting qemu leads us to this patch:
->>
->> de80025348925ba9f56070ce4ec0a5a0c512d450 is the first 'bad' commit
->> commit de80025348925ba9f56070ce4ec0a5a0c512d450
->> Author: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->> Date:   Mon Oct 12 13:28:09 2026 +0300
->>
->>      migration/cpr: forbid saving duplicate CprFds into hash table
->>
->> We tried to revert the commit to confirm the root cause, but then the
->> master branch no longer compiles, so unfortunately we were not able to
->> confirm that, at least without making many changes.
->>
->> We're wondering if you might have any ideas what's going on there, or
->> what we could do to try and resolve this issue. Any thoughts would be
->> much appreciated and I'd be happy to share more info if needed.
-> 
-> 
-> Since the routine that unregisters such an fd is cpr_delete_fd(), but 
-> that gets skipped as soon as we go through the _set_fd() path, I wonder 
-> if the solution starts as something like the following?
-> 
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index ecf4caee1a..d708948357 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -161,8 +161,8 @@ void iommufd_backend_disconnect(IOMMUFDBackend *be)
->       be->users--;
->       if (!be->users) {
->           vfio_iommufd_cpr_unregister_iommufd(be);
-> +        cpr_delete_fd(iommufd_fd_name(be), 0);
->           if (be->owned) {
-> -            cpr_delete_fd(iommufd_fd_name(be), 0);
->               close(be->fd);
->               be->fd = -1;
->           }
-> 
-> What that means for the prepare_delete/finalize paths and/or the failure 
-> path in _connect is something else to ponder... Neither of those call 
-> cpr_delete_fd() themselves despite closing the fd if it owns the thing.
-> 
->>
->> Thanks in advance!
->>
->> [...]
-> 
+(1<<n) & (1<<(n+1)) is always 0, so no CPU ever resets into
+microMIPS mode. I suppose you meant:
+
+        if ((env->CP0_Config3 >> CP0C3_ISA) & 0x3) == 3) {
+
+> +        /*  microMIPS on reset when Config3.ISA is 3 */
+>           env->hflags |= MIPS_HFLAG_M16;
+>       }
+>   
 
 
