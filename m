@@ -1,47 +1,46 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332A3606A332
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 18:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA0D606A336
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 18:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=QYi3YX0c
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=kOQvpupI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRZnr-0006AS-N2; Thu, 12 Nov 2026 13:45:43 -0500
+	id 1xRZnl-00063u-Mr; Thu, 12 Nov 2026 13:45:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xRZnl-00064X-SM; Thu, 12 Nov 2026 13:45:37 -0500
+ id 1xRZnc-0005uR-2o; Thu, 12 Nov 2026 13:45:29 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xRZnk-0003eK-1k; Thu, 12 Nov 2026 13:45:37 -0500
+ id 1xRZnY-0003OP-GW; Thu, 12 Nov 2026 13:45:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794509113; bh=hcOYx8NlulQA7fYgRuOQMjk3eBYQiUUNtmBCNBNgsAU=;
+ t=1794509113; bh=yNqxXwYUKbIOOLryjs5ryABf3e0HEegWe9ILVI/IM4Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QYi3YX0chnEW0052OHULNmQcu84O3DvSvoVydJxVXl7PCq6obk4HUYQ5uDqQGoBrV
- kUDp1DYhLZ4iiXtNQQ51HivZs41+TzEiXhLUixbIX8taj0E9NuaPpBHuAGBTVgClJ3
- 6IdZ4nZ64AGPzz22NPdPGoAyT8tz0S7tuGzqY6U/iuQUi4ZT/7706EKSRNqVLh77cX
- 9SISsZL4evwdbsOj9DnB9rXj2vHvdZ+6udKZJsxf+kdRcPnTAPx9RORBknfbl/+RSR
- Nct4oLHuCzRMGVo59glPdJbLzxQSfbhNpjnZQ+ikxQxOuhtgqeof5fHEifupVV328n
- 6ATijkds1RIAQ==
+ b=kOQvpupIy6JMKe871sjkblQotKztRFsWePv6zIhFj9P3ZpuAILij1ZTSDdEfIWw8q
+ dVCR/YUDL5HZjWIpUnMAUmg01H9l97j6dQsbM50TqXSQhGJAH+2k6CZOkAAOr+z9mO
+ P9UzBAMkqLPpDDsTe4gT1HMKMGW9zmkkpirv+HMWEhmewOHN6a6g12ClLKh7dher5Y
+ B+txWrejH/QlXh6QrCf6u0T0CisKatag45/WvumvqFD/DiBHplxLa00eiPVuRtBhnZ
+ BpBUGeJ6CU0Y1MVOaJcBOWSujIOcwfD6prqN8RWpHeSNi6SO71J8kEoF928hh1tJko
+ btkZcBUYwHj3A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8D75A1E5D21;
+ by isrv.corpit.ru (Postfix) with ESMTP id 84E6C1E5D1E;
  Thu, 12 Nov 2026 21:45:13 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8BC7245AADB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 769F445AAD8;
  Thu, 12 Nov 2026 21:45:13 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5A457B7C58; Thu, 12 Nov 2026 21:45:13 +0300 (MSK)
+ id 536CEB7C52; Thu, 12 Nov 2026 21:45:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Matthew White <mehw.is.me@proton.me>, qemu-trivial@nongnu.org,
+Cc: Filip Hejsek <filip.hejsek@gmail.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 6/6] configure: --disable-containers should prevent `docker.py
- probe`
-Date: Thu, 12 Nov 2026 21:45:09 +0300
-Message-ID: <20261112184513.2324634-7-mjt@tls.msk.ru>
+Subject: [PULL 3/6] docs: fix a few typos
+Date: Thu, 12 Nov 2026 21:45:06 +0300
+Message-ID: <20261112184513.2324634-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261112184513.2324634-1-mjt@tls.msk.ru>
 References: <20261112184513.2324634-1-mjt@tls.msk.ru>
@@ -70,64 +69,192 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Matthew White <mehw.is.me@proton.me>
+From: Filip Hejsek <filip.hejsek@gmail.com>
 
-Upstream commit c4ce04cfb7460d46c0262d437a7f35bb5c5fc449 changed the
-configure file to set container_command regardless of use_containers.
-As a result, it runs `docker.py probe` to detect a Docker-compatible
-application, such as Podman, even when --disable-containers is used.
-
-On Gentoo, this reopens https://bugs.gentoo.org/732972.  As reported
-in https://bugs.gentoo.org/984747, the `docker.py probe` command can
-trigger SANDBOX ACCESS VIOLATION errors under QEMU v11.1.2:
-
- * ACCESS DENIED:  open_wr_creat: /var/lib/rpm/rpmdb.sqlite-wal
- * ACCESS DENIED:  fchown:        /var/lib/rpm/rpmdb.sqlite-wal
- ...
-
-This patch is to prevent `docker.py probe` from running and to clear
-container_command when --disable-containers is used.
-
-Buglink: https://bugs.gentoo.org/984747
-Signed-off-by: Matthew White <mehw.is.me@proton.me>
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+Reviewed-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- configure | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ docs/devel/clocks.rst                 | 2 +-
+ docs/devel/control-flow-integrity.rst | 2 +-
+ docs/devel/docs.rst                   | 2 +-
+ docs/devel/ebpf_rss.rst               | 2 +-
+ docs/devel/multi-process.rst          | 6 +++---
+ docs/devel/submitting-a-patch.rst     | 2 +-
+ docs/interop/vfio-user.rst            | 2 +-
+ docs/specs/ppc-spapr-hcalls.rst       | 2 +-
+ docs/specs/ppc-spapr-xive.rst         | 2 +-
+ docs/system/security.rst              | 2 +-
+ docs/user/main.rst                    | 2 +-
+ 11 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/configure b/configure
-index af14a9c23ef..d38268e340f 100755
---- a/configure
-+++ b/configure
-@@ -1277,12 +1277,17 @@ fi
- ##########################################
- # functions to probe cross compilers
+diff --git a/docs/devel/clocks.rst b/docs/devel/clocks.rst
+index 16de32147b9..997b09c6a4e 100644
+--- a/docs/devel/clocks.rst
++++ b/docs/devel/clocks.rst
+@@ -280,7 +280,7 @@ so you can use this to model clock controller devices which
+ have guest-programmable frequency multipliers or dividers.
  
--if test "$container_command" = ""; then
--    container_command=$($python "$source_path"/tests/docker/docker.py probe)
--    test "$container_command" = "no" && container_command=""
--fi
--if test $use_containers = "yes" && test "$container_command" != ""; then
--    docker_py="$python $source_path/tests/docker/docker.py --command $container_command"
-+if test $use_containers = "yes"; then
-+    if test "$container_command" = ""; then
-+        container_command=$($python "$source_path"/tests/docker/docker.py probe)
-+        test "$container_command" = "no" && container_command=""
-+    fi
-+    if test "$container_command" != ""; then
-+        docker_py="$python $source_path/tests/docker/docker.py --command $container_command"
-+    fi
-+else
-+    # the option --disable-containers should override and disable --container-command
-+    container_command=""
- fi
+ Similarly to ``clock_set()``, ``clock_set_mul_div()`` returns ``true`` if
+-the clock state was modified; that is, if the multiplier or the diviser
++the clock state was modified; that is, if the multiplier or the divisor
+ or both were changed by the call.
  
- # cross compilers defaults, can be overridden with --cross-cc-ARCH
+ Note that ``clock_set_mul_div()`` does not automatically call
+diff --git a/docs/devel/control-flow-integrity.rst b/docs/devel/control-flow-integrity.rst
+index 3d5702fa4cc..466888bdf16 100644
+--- a/docs/devel/control-flow-integrity.rst
++++ b/docs/devel/control-flow-integrity.rst
+@@ -39,7 +39,7 @@ are planning to also enable fuzzing, then Clang 11+ is needed (more on this
+ later).
+ 
+ Given the use of LTO, a version of AR that supports LLVM IR is required.
+-The easies way of doing this is by selecting the AR provided by LLVM::
++The easiest way of doing this is by selecting the AR provided by LLVM::
+ 
+  AR=llvm-ar-9 CC=clang-9 CXX=clang++-9 /path/to/configure --enable-cfi
+ 
+diff --git a/docs/devel/docs.rst b/docs/devel/docs.rst
+index a7768b53117..7fe7e44429f 100644
+--- a/docs/devel/docs.rst
++++ b/docs/devel/docs.rst
+@@ -5,7 +5,7 @@ QEMU Documentation
+ 
+ QEMU's documentation is written in reStructuredText format and
+ built using the Sphinx documentation generator. We generate both
+-the HTML manual and the manpages from the some documentation sources.
++the HTML manual and the manpages from the same documentation sources.
+ 
+ hxtool and .hx files
+ --------------------
+diff --git a/docs/devel/ebpf_rss.rst b/docs/devel/ebpf_rss.rst
+index ed5d33767bd..85ef5476232 100644
+--- a/docs/devel/ebpf_rss.rst
++++ b/docs/devel/ebpf_rss.rst
+@@ -31,7 +31,7 @@ Not for all packets, the hash can/should be calculated.
+ 
+ Note: currently, eBPF RSS does not support hash reporting.
+ 
+-eBPF RSS turned on by different combinations of vhost-net, vitrio-net and tap configurations:
++eBPF RSS turned on by different combinations of vhost-net, virtio-net and tap configurations:
+ 
+ - eBPF is used:
+ 
+diff --git a/docs/devel/multi-process.rst b/docs/devel/multi-process.rst
+index 4ef539c0b0b..cafe2aaba78 100644
+--- a/docs/devel/multi-process.rst
++++ b/docs/devel/multi-process.rst
+@@ -158,7 +158,7 @@ IOMMUs introduce another level of complexity, since the address given to
+ the guest virtio device to DMA to or from is not a guest physical
+ address. This case is handled by having vhost code within QEMU register
+ as a listener for IOMMU mapping changes. The vhost application maintains
+-a cache of IOMMMU translations: sending translation requests back to
++a cache of IOMMU translations: sending translation requests back to
+ QEMU on cache misses, and in turn receiving flush requests from QEMU
+ when mappings are purged.
+ 
+@@ -573,7 +573,7 @@ live migration
+ When a remote process receives a live migration indication from QEMU, it
+ will set up a channel using the received file descriptor with
+ ``qio_channel_socket_new_fd()``. This channel will be used to create a
+-*QEMUfile* that can be passed to ``qemu_save_device_state()`` to send
++*QEMUFile* that can be passed to ``qemu_save_device_state()`` to send
+ the process's device state back to QEMU. This method will be reversed on
+ restore - the channel will be passed to ``qemu_loadvm_state()`` to
+ restore the device state.
+@@ -853,7 +853,7 @@ intx irq descriptor
+ 
+ The irq descriptors are created by the proxy object
+ ``using event_notifier_init()`` to create the irq and re-sampling
+-*eventds*, and ``kvm_vm_ioctl(KVM_IRQFD)`` to bind them to an interrupt.
++*eventfds*, and ``kvm_vm_ioctl(KVM_IRQFD)`` to bind them to an interrupt.
+ The interrupt route can be found with
+ ``pci_device_route_intx_to_irq()``.
+ 
+diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
+index 5ccd09a3978..cd08881dfb3 100644
+--- a/docs/devel/submitting-a-patch.rst
++++ b/docs/devel/submitting-a-patch.rst
+@@ -241,7 +241,7 @@ Use B4
+ ~~~~~~
+ 
+ The `b4`_ tool, used for Linux kernel development, can also be used for QEMU
+-development. It is packaged in most distros and PyPi. The QEMU source tree
++development. It is packaged in most distros and PyPI. The QEMU source tree
+ includes a ``b4`` project configuration file at the root: ``.b4-config``.
+ 
+ Example workflow to prepare a patch series:
+diff --git a/docs/interop/vfio-user.rst b/docs/interop/vfio-user.rst
+index b49781a7550..bdd73f41f41 100644
+--- a/docs/interop/vfio-user.rst
++++ b/docs/interop/vfio-user.rst
+@@ -1583,7 +1583,7 @@ Neither the request or reply have a payload.
+ --------------------------------
+ 
+ This message can be used to coalesce multiple device write operations
+-into a single messgage.  It is only used as an optimization when the
++into a single message.  It is only used as an optimization when the
+ outgoing message queue is relatively full.
+ 
+ Request
+diff --git a/docs/specs/ppc-spapr-hcalls.rst b/docs/specs/ppc-spapr-hcalls.rst
+index 6cdcef20265..550026ea550 100644
+--- a/docs/specs/ppc-spapr-hcalls.rst
++++ b/docs/specs/ppc-spapr-hcalls.rst
+@@ -20,7 +20,7 @@ to an implementation specific range in PAPR.
+ ``H_RTAS (0xf000)``
+ ===================
+ 
+-RTAS stands for Run-Time Abstraction Sercies and is a set of runtime services
++RTAS stands for Run-Time Abstraction Services and is a set of runtime services
+ generally provided by the firmware inside the guest to the operating system. It
+ predates the existence of hypervisors (it was originally an extension to Open
+ Firmware) and is still used by PAPR and LoPAR to provide various services that
+diff --git a/docs/specs/ppc-spapr-xive.rst b/docs/specs/ppc-spapr-xive.rst
+index f47f739e019..8b83942a290 100644
+--- a/docs/specs/ppc-spapr-xive.rst
++++ b/docs/specs/ppc-spapr-xive.rst
+@@ -171,7 +171,7 @@ native exploitation mode* is selected should contain:
+ - ``reg``
+ 
+   contains the base address and size of the thread interrupt
+-  managnement areas (TIMA), for the User level and for the Guest OS
++  management areas (TIMA), for the User level and for the Guest OS
+   level. Only the Guest OS level is taken into account today.
+ 
+ - ``ibm,xive-eq-sizes``
+diff --git a/docs/system/security.rst b/docs/system/security.rst
+index e211fdd2344..92a5d87503e 100644
+--- a/docs/system/security.rst
++++ b/docs/system/security.rst
+@@ -107,7 +107,7 @@ an issue as a normal bug.
+   possibility of large memory peaks and apply countermeasures to
+   provide continuity of host operations. It is typical for the Linux
+   OOM killer to reap the process triggering host memory overcommit
+-  in the case of exccessive usage, offering a degree of protection.
++  in the case of excessive usage, offering a degree of protection.
+   As such, bugs which can lead to excessive/unbounded memory allocations
+   will usually not be classified as security flaws, but should be
+   fixed as hardening bugs.
+diff --git a/docs/user/main.rst b/docs/user/main.rst
+index a8ddf914249..aef33bfd9aa 100644
+--- a/docs/user/main.rst
++++ b/docs/user/main.rst
+@@ -23,7 +23,7 @@ System call translation
+ System calls are the principle interface between user-space and the
+ kernel. Generally the same system calls exist on all versions of the
+ kernel so QEMU includes a generic system call translator. The
+-translator takes care of adjusting endianess, 32/64 bit parameter size
++translator takes care of adjusting endianness, 32/64 bit parameter size
+ and then calling the equivalent host system call.
+ 
+ QEMU can also adjust device specific ``ioctl()`` calls in a similar
 -- 
 2.47.3
 
