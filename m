@@ -1,41 +1,38 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAC1606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 23:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615FB606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 23:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rev.ng header.i=@rev.ng header.a=rsa-sha256 header.s=dkim header.b=TdkxRJ5z
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rev.ng header.i=@rev.ng header.a=rsa-sha256 header.s=dkim header.b=lSZ82CrO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRe2M-00076b-3T; Thu, 12 Nov 2026 18:16:58 -0500
+	id 1xRe2K-00076Z-Jv; Thu, 12 Nov 2026 18:16:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1xRe2I-00075x-Uj
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 18:16:55 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1xRe2H-00075o-FR
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 18:16:53 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1xRe2H-0001Tl-AI
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 18:16:54 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1xRe2F-0001Ta-Vy
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 18:16:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
+ To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=xIvqupr19xUTXm40pMHZbgPcROBIpc7vo1h8khhUxvo=; b=TdkxRJ5z5vIYaj5
- n5Cz8Y6L8uEnCl2V0bY+pmLcxwOoIyWvZE1wcpaEQP8OcHGaxpBycuhu9RhfztDya37pUTSgFxUMx
- PK9ujqbz3KBjkEtmFft2zbGkvSjPmqSkRFdrAGxTFf9rUOYXCA8B/rSBT9FdjH6yPmVZ3ZixqsZ79
- Ik=;
+ List-Help; bh=qoCgSaO2c6/uU6LtJjV6SDvzzogl0drgSHrTvbiriHE=; b=lSZ82CrOl4oD6aX
+ P0b09UF7aSf7DIsalfuBmhl9L3gL7GgnAwIjMFnSVC5V223frWEcRfSgn138MVw4aDjzJKdglAVFe
+ hmTd6iHxtzga+zCk15EdhDDc7AmAyerID09O9rH5XF/avmUmwG5SxDe1h2g7L0Gr6MH9pi3k/VppB
+ Ls=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v3 1/4] target/hexagon: HLX,
- preserve scalar :mem_noshuf ordering
-Date: Fri, 13 Nov 2026 00:20:29 +0100
-Message-ID: <20261112232032.396-2-anjo@rev.ng>
-In-Reply-To: <20261112232032.396-1-anjo@rev.ng>
-References: <20261112232032.396-1-anjo@rev.ng>
+Subject: [PATCH v3 0/4] target/hexagon: Misc HLX fixes
+Date: Fri, 13 Nov 2026 00:20:28 +0100
+Message-ID: <20261112232032.396-1-anjo@rev.ng>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -60,91 +57,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Reply-to:  Anton Johansson <anjo@rev.ng>
 From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-A packet containing HLX instructions currently defers all stores to the
-end of the packet, this breaks scalar :mem_noshuf ordering.  Only
-reorder HLX stores.
+Hi,
 
-Fixes: a6fae6da070d66b9 ("target/hexagon: translate packets with HLX instructions")
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
----
- target/hexagon/translate.c  |  7 ++++---
- tests/tcg/hexagon/hlx_mem.c | 22 ++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 3 deletions(-)
+I was too slow on the review before the series got PRd, so I'll
+submit these preliminary fixes instead.  Not included here is a
+fix for --disable-hexagon-idef-parser being broken with the new
+stub HMX helpers.
 
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 8ab28d40d3..f9d4c3fb66 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -1525,8 +1525,10 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
-             for (int pass = 0; pass < 3; pass++) {
-                 for (i = 0; i < ctx->pkt.num_insns; i++) {
-                     Insn *insn = &ctx->pkt.insn[i];
-+                    bool hlx = GET_ATTRIB(insn->opcode, A_HLX);
-                     bool tmp = GET_ATTRIB(insn->opcode, A_HLX_TMP);
--                    bool store = !tmp && GET_ATTRIB(insn->opcode, A_STORE);
-+                    bool store = !tmp && hlx &&
-+                                 GET_ATTRIB(insn->opcode, A_STORE);
-                     if (pass != (tmp ? 0 : store ? 2 : 1)) {
-                         continue;
-                     }
-@@ -1534,8 +1536,7 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
-                     if (insn->hlx_new_zero) {
-                         gen_hlx_new_zero(insn);
-                     }
--                    if (GET_ATTRIB(insn->opcode, A_HLX) &&
--                        trace_event_get_state_backends(
-+                    if (hlx && trace_event_get_state_backends(
-                             TRACE_HEXAGON_HLX_OP)) {
-                         gen_helper_hlx_trace_op(tcg_env,
-                             tcg_constant_i32(insn->opcode));
-diff --git a/tests/tcg/hexagon/hlx_mem.c b/tests/tcg/hexagon/hlx_mem.c
-index 643b499fd9..c0844646a0 100644
---- a/tests/tcg/hexagon/hlx_mem.c
-+++ b/tests/tcg/hexagon/hlx_mem.c
-@@ -229,6 +229,25 @@ static void test_store_fault(void)
-     check_h("LX_S16b_new (fault)", buf_out, expected, HLX_HALF_ELEMS);
- }
- 
-+static void test_preserve_scalar_noshuf(void)
-+{
-+    uint32_t ret = 0;
-+    uint32_t ptr = 0;
-+    uint32_t val = 0x1234;
-+    asm volatile("{\n"
-+                 ".word 0xe5007822\n"
-+                 "    memw(%[ptr]) = %[val]\n"
-+                 "    %[ret] = memw(%[ptr])\n"
-+                 "}:mem_noshuf\n"
-+                 : [ret] "=r"(ret)
-+                 : [ptr] "r"(&ptr), [val] "r"(val)
-+                 : "memory");
-+    if (ret != val) {
-+        printf("FAIL broken scalar :mem_noshuf ordering\n");
-+        err++;
-+    }
-+}
-+
- int main(void)
- {
-     init_vtcm();
-@@ -253,6 +272,9 @@ int main(void)
-     /* Store in a faulting packet */
-     test_store_fault();
- 
-+    /* Make sure HLX packets preserve scalar :mem_noshuf ordering */
-+    test_preserve_scalar_noshuf();
-+
-     puts(err ? "FAIL" : "PASS");
-     return err;
- }
+
+Changes in v2:
+- Squashed tests into their respective fix patches (Marco)
+- Added missing file (Marco)
+
+Changes in v3:
+- named-parameter substitution for inline assembly tests (Brian)
+- Add Instruction::has_pair_dest to find all possible pair producers
+  (Brian, Marco)
+- Move new-regno patching to the non-HLX path of
+  decode_fill_newvalue_regno() to avoid incorrectly overwriting consumer
+  registers (Marco)
+
+
+Anton Johansson (4):
+  target/hexagon: HLX, preserve scalar :mem_noshuf ordering
+  target/hexagon: HLX, search for .new values in pair high register
+  target/hexagon: Forward return address to HLX load/store helpers
+  linux-user/hexagon: Reset hlx_ctx pointer on cpu clone
+
+ linux-user/hexagon/target_cpu.h     |  1 +
+ target/hexagon/hlx_helper.h         | 19 ++++++++++++++++
+ target/hexagon/insn.h               |  1 +
+ target/hexagon/macros.h             | 13 +++++++----
+ target/hexagon/decode.c             | 29 +++++++++++++++++++-----
+ target/hexagon/hlx_helper.c         | 31 +++++++++++++++++--------
+ target/hexagon/translate.c          |  7 +++---
+ tests/tcg/hexagon/hlx_assign_conv.c | 35 +++++++++++++++++++++++++++++
+ tests/tcg/hexagon/hlx_mem.c         | 22 ++++++++++++++++++
+ target/hexagon/gen_trans_funcs.py   |  5 +++++
+ target/hexagon/hex_common.py        |  2 ++
+ 11 files changed, 143 insertions(+), 22 deletions(-)
+ create mode 100644 target/hexagon/hlx_helper.h
+
 -- 
 2.52.0
 
