@@ -1,65 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E4E606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 01:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBECE606A323
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 02:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gSIaqQvS
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=etWZxte2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRJzN-00042K-95; Wed, 11 Nov 2026 20:52:33 -0500
+	id 1xRKE8-0008Rz-LP; Wed, 11 Nov 2026 21:07:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xRJzL-0003z0-OA
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 20:52:31 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xRKE6-0008RS-Mr; Wed, 11 Nov 2026 21:07:46 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xRJzJ-0001rL-SQ
- for qemu-devel@nongnu.org; Wed, 11 Nov 2026 20:52:31 -0500
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 0E1D562FEA;
- Thu, 12 Nov 2026 01:52:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5EC1F00A05;
- Thu, 12 Nov 2026 01:52:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1794448347;
- bh=ex5Qom/Novcw2Ezs+0SDNP42YlQeSwGPdXGV5r3koP8=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=gSIaqQvSPrLL8zNH9NJpDDzGrryhZ0GQ2b5ZSQvEYAohsRxPqKVIC2zOKfQVf+TUA
- AkM7mYcWgzumnleNwrQ2oeVMHcRIqcRq1Hm+QJ/vL1yACebHcWGYY2ZhfWRPBYmu9v
- q0DiUhyIPxCN3FbJt/YWXY7sOzHqvPmeVcC2Dmzldr1CzrJb4RHIJLTKUJPujzNDuS
- JU/hk1SR5tfMPmeSPXSckkV2rk5Ylg/7/mCuLm5yqRhtgu/nu9r7OLuspIRXhmNNgQ
- DF5kfwmguvFfuNoiEAStTLxMV2KoTTgQA+sdvgQhm1fVjTMJfltzqa854K+K/5b3GE
- W2Hh+kso5tKGA==
-Date: Thu, 12 Nov 2026 01:52:19 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: <mhonap@nvidia.com>
-Cc: <alwilliamson@nvidia.com>, <clg@redhat.com>,
- <xueshuai@linux.alibaba.com>, <ira.weiny@intel.com>, <zhiw@nvidia.com>,
- <mst@redhat.com>, <pierrick.bouvier@oss.qualcomm.com>,
- <junjie.cao@linux.dev>, <anisa.su@samsung.com>, <pbonzini@redhat.com>,
- <ankita@nvidia.com>, <vsethi@nvidia.com>, <skolothumtho@nvidia.com>,
- <mochs@nvidia.com>, <cjia@nvidia.com>, <kjaju@nvidia.com>,
- <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Yukiya Takaki
- <fj2110jc@fujitsu.com>
-Subject: Re: [RFC 00/18] hw/cxl: Add a CXL Type-2 device
-Message-ID: <20261112015219.55bb312a@jic23-hlaptop>
-In-Reply-To: <20261106035911.1280066-1-mhonap@nvidia.com>
-References: <20261106035911.1280066-1-mhonap@nvidia.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xRKE4-0007Jf-Gz; Wed, 11 Nov 2026 21:07:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1794449259; bh=ZHtGG67infQL834TFCQVL6Mofmo8PfFy4mWrYfgAx/E=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=etWZxte2L7Bms925EM5na3DQN2nc5yoowllBelxmrwp1qi0UP4SRy3m60ylUyZ7p5
+ qvOZhTkFZYEX48ccgqqQ89s03AMgWJR9t1jmMM0OQdzzayWIsgQP1yVse91YzNeDRe
+ g6R+pZ3uxY2lqU6hZthvouyMr87JzXjBcuqWVFR5GthOrX4z6j7eumTVTNeL8NKfYF
+ e2uQWVsPMeEjpZN0ssWqlxMYLKt/qJHSwORcf/G+LBTXHOujPNpdSScIc8tc6YR1wA
+ wNs0ECwGP5bdppV/+juOpOIItAE36GHsH6z+xXBsuKGg8PaajdQmgsWZ0TleH0yJfw
+ vYgj+m29UL62Q==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id C9BA01E58F7;
+ Thu, 12 Nov 2026 05:07:39 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 92960459553;
+ Thu, 12 Nov 2026 05:07:39 +0300 (MSK)
+Message-ID: <5a08b9a9-4a45-4311-98ae-d1cb8c3618c5@tls.msk.ru>
+Date: Thu, 12 Nov 2026 05:07:39 +0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH TRIVIAL] io: avoid potential double close of
+ qio_channel_file's fd
+To: Filip Hejsek <filip.hejsek@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org
+References: <20261012-fix-double-close-v1-1-d37f2224dcb0@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+In-Reply-To: <20261012-fix-double-close-v1-1-d37f2224dcb0@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,75 +67,65 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_2
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 6 Nov 2026 09:28:53 +0530
-<mhonap@nvidia.com> wrote:
+On 10/12/26 20:38, Filip Hejsek wrote:
+> Make qio_channel_file_close() set fd to -1 even if qemu_close() returns
+> an error so that qio_channel_file_finalize() doesn't call close again.
+> 
+> On Linux, close() always closes the fd, even when it returns an error.
+> Because the fd can be reused after it is closed, the close must not
+> be retried.
+> 
+> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+> ---
+>   io/channel-file.c | 12 +++++++++---
+>   1 file changed, 9 insertions(+), 3 deletions(-)
+> 
+> diff --git a/io/channel-file.c b/io/channel-file.c
+> index 5cef75a67c..afc9640518 100644
+> --- a/io/channel-file.c
+> +++ b/io/channel-file.c
+> @@ -255,12 +255,18 @@ static int qio_channel_file_close(QIOChannel *ioc,
+>   {
+>       QIOChannelFile *fioc = QIO_CHANNEL_FILE(ioc);
+>   
+> -    if (qemu_close(fioc->fd) < 0) {
+> +    int ret = qemu_close(fioc->fd);
+> +    /*
+> +     * The fd should now have been closed even if we got an error. There are
+> +     * obscure systems where this isn't always the case, but an fd leak on
+> +     * obscure systems is less bad than double close on common systems.
+> +     */
 
-> From: Manish Honap <mhonap@nvidia.com>
->=20
-> Hello,
->=20
-> This series adds cxl-type2, an emulated CXL Type-2 device with volatile
-> device memory. It is emulated in such a way that all the Linux checks
-> are satisfied so that CXL passthrough using vfio-pci (vfio-cxl) can be
-> developed and tested in a guest without Type-2 hardware.
->=20
-> This series builds on the Type-2 model from Zhi's series (carried in
-> C=C3=A9dric's tree) and carries one fix from Shuai's tree. Shuai's tree a=
-lso
-> set up the decoders through device properties and stubbed CXL Reset; the
-> firmware setup and CXL Reset here are new code.
-> Carried patches keep their authors, with a note for each change.
->=20
-> The device:
-> - PCI ID 1b36:0017 and the processing accelerator class 0x1200;
-> - PCIe DVSEC for CXL Devices with CXL.cache, CXL.mem, one HDM range,
->   cache write-back and invalidate, CXL Reset and Mem Clr; Register
->   Locator and Flex Bus Port DVSECs;
-> - CXL.cache advertised but not modelled. The device sends no CXL.cache
->   requests, and its memory is host RAM, which is coherent already. A
->   cache write-back and invalidate completes at once. The capability is
->   set because vfio-cxl takes a device as Type-2 only when it reports
->   both CXL.cache and CXL.mem;
-> - component registers with one HDM decoder;
-> - slot 0, function 0 below a CXL root port of a pxb-cxl, memory in one
->   fixed memory window selected with fmw-index, cold plug only (no
->   hotplug or unplug), not migratable.
->=20
-> No Linux driver claims the device on its own. cxl_pci does not bind to
-> the accelerator class, and sfc, the other driver that calls the CXL
-> core Type-2 interface, matches only its own devices. A guest binds
-> cxl-type2 to vfio-pci, which hands it to vfio-cxl. Testing the CXL core
-> Type-2 interface without vfio-cxl needs a driver for 1b36:0017 that
-> calls it. There is none yet.
->=20
-> QEMU has no firmware that commits the HDM decoders of a CXL route at
-> boot, and Linux attaches a Type-2 device only to a committed region
-> (devm_cxl_probe_mem()). So QEMU does that step itself.
+Hmm.  It looks like linux is the obscure system now, not the other way
+around.  Before, POSIX.1-2008 stated that after EINTR, the state of the
+FD is unspecified.  However, POSIX.1-2024 states that after EINTR, the
+FD should remain open.  And linux isn't going to change the way close(2)
+works there.
 
-Just in case you missed it, Yukiya Takaki is looking at bios programmed
-flows.  https://lore.kernel.org/all/cover.1793003983.git.fj2110jc@fujitsu.c=
-om/
+And there's no posix_close(fd, flags).  Which is not available on linux
+(yet).
 
-My immediate thought is follow a similar flow to the one I suggested
-in that patch. Doing CXL setup in QEMU but the PCI enumeration in the bios
-doesn't seem like a sustainable model to me. I'd much prefer to see a bios
-flow with just the QEMU generate tables updated in a similar fashion to
-how DSDT is updated for PXBs.
+And there's also an additional possible errno value here: EINPROGRESS.
 
-Alternative for you (assuming you care more about arm than x86) might
-be to just use the SBSA model and do the full enumeration in firmware.
+The other possible failure cases seems to be consistent.
 
-Unfortunately I have quite a large backlog so might be a while before
-I get a chance to take a close look at this series (or the kernel ones!)
+So at least, it looks like, the comment needs to be updated.  Yes,
+linux is the main target of qemu, but not only, -- and channel-file is
+used in the tools too (qemu-nbd, qemu-img, etc) - where it is rather
+irrelevant - keep it open or close it again later.
 
-Jonathan
+Why do we care about this close(2) return value here anyway?
+Have you seen actual failure case?
 
+Thanks,
 
+/mjt
 
