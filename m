@@ -1,73 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050FB606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8510160A2624
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 13:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HVS9pMB1
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Gxfcb3M0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRURT-0000AZ-7m; Thu, 12 Nov 2026 08:02:15 -0500
+	id 1xRUZ8-0005an-W0; Thu, 12 Nov 2026 08:10:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xRUR8-0008Kl-RP
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:02:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xRUR6-0005Kx-Aa
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:01:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794488511;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=q9yEj5+N1MgfukgNKbaNISPVmVSmZWeJLMxOKzlHfow=;
- b=HVS9pMB19cyhnuk1WW9l7peG45z+36jS2xk5ZhLya4Iu2D7HOOQoIMCGjcTyAa06FCfWhi
- 4ou/d/YqP6cAQUryULJ/P8ROZqUIfVtTTBRZrn/kg7PVJ0fuzyxy3V4oxJQT+HGXklpbmC
- ek6ODl1xgN5U9wgx6nAqQ8e3Feh4D/o=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-nmcExl37OzG6X2DHKTiFzg-1; Thu,
- 12 Nov 2026 08:01:46 -0500
-X-MC-Unique: nmcExl37OzG6X2DHKTiFzg-1
-X-Mimecast-MFC-AGG-ID: nmcExl37OzG6X2DHKTiFzg_1794488505
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7473D195609D; Thu, 12 Nov 2026 13:01:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.60])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 703971956086; Thu, 12 Nov 2026 13:01:43 +0000 (UTC)
-Date: Thu, 12 Nov 2026 14:01:41 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] iotests: fix false positive on running-outside-venv
- warning
-Message-ID: <avW4tfoJj5sw6_Fl@redhat.com>
-References: <20261007183338.1899422-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRUZ7-0005Rm-Lm
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:10:09 -0500
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRUZ6-0001K5-3l
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 08:10:09 -0500
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-67c58f18765so2153618d50.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 05:10:07 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794489006; cv=none;
+ d=google.com; s=arc-20260327;
+ b=RkJhYFfXSqTpL7wZYkSVgqyPAmsrj4ir84x5JMbYgoEP09OqgI91MwXWeEeFrTbnqA
+ H/LSs48YC9abEuyCv3Bf0TdDfV+Znw9iO8817i/ng/ja5T+RWZXplzFVjhKwy8XkAb+G
+ qux4ww7AziPPgzJy2Q7ncAYxQqIzzCS979RsjJ1v6RvUhm4keEw+E85lC0iCVdvZLAWf
+ 4HgiBYCZsfP73B2CoOXiNifEB6zO5/uVjU0GsvJkctfBLI5ga7lDwYoTJCiJZgK/aiCk
+ wvIMRcWF5aZiBFoXZRlEzwgB4idZhTVhKhcvO0hYl4CGzurgWHe9pPNaxNm3gKIX0Fds
+ aKzQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=nMySanBpzNXfKjFd7aBQpGBvl+mNf1G+VUmyrU87fNY=;
+ fh=xbolnpngYKBk2bdOqpUMvYyceghjRAVxcwW6iR74abI=;
+ b=J24RyUPsnpOg2UdRag9QvKnHKw2HuShQm9cGbdGUwnQcinY7IwFb0ATs5HnMdJ+/bM
+ 1GvzjVg9OF5zU/l/lZnODr/zYOBTHYqVxi7hGIFxkslZenqOAu6+0QXA/W1vEjSSI6ax
+ UyYA+KjVcDIQ2Q1YZhHPmh6c3WtCSXDFClGFfAP3+9uxt93hhiZTSn8V2dOGE8+5prR4
+ BfvgJUmZyiZCRJ/KIkytaRX7x9KloD/41rjM6VGAYzk/Ho6Ezfo5dxd3VJq3s3kxMMDk
+ 0e4NMAqTLUgbEstY3ly8nwQ3XM9A8VSR+WG9c09sGGmyoHh+6y2BLOnbjQV9smXScxYz
+ Ddqw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794489006; x=1795093806; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=nMySanBpzNXfKjFd7aBQpGBvl+mNf1G+VUmyrU87fNY=;
+ b=Gxfcb3M0qNg0nS6qw6JcrOsqJ1lJ/SPjMDROt1QMu2nfntK19mikC01ojlRziX9fzM
+ 6MR1+7oMo1TFOuWywaK0yPe1ilYIsr79NsJDx3KRGVyGI69ra+VJ7+e2Ko8G2o1UEHre
+ p/S9zBtz/i4rGa+LIZMTgNyK/5Z3mlXD+cxj/9PPw6jXelyvFvHGSY+Q4eyYlGk5V8nk
+ H/TqUT6lwwHec6XP/uZmsrGSPOweJI8wT08x6+8ZB+kDBXDnYhHm2gVDSsvKCvHKRmIH
+ Yqev3ZbCdZaazr3xLVn5DIMTsO/t/9UUP/HjeV+bYk3Tia/d55ZTLqPctv4VATXYnnGP
+ qK5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794489006; x=1795093806;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=nMySanBpzNXfKjFd7aBQpGBvl+mNf1G+VUmyrU87fNY=;
+ b=oaaH0yVaCj78KAJ92bnhvdUr3DgKS0s5wIV/QVNn00uUa1JHHPLP+p6C7eO+LjZkap
+ 2kP1d2pG6iThJZMqMvgxpYU4sK2UEGB4nSi6ovmyrI3OzE1wTnmugbgruCtxMr+Mf4Vv
+ bPokoumiw3M2MYb6m7tK+4N+dspFIsglUUkT3HJ0DZ39774Afwjt+OVcSoa/x4K0LkYk
+ 4ed6D2bwMq7cWkwtp6B2yfgqeoo9xI7mYJszVqy4UPX14c0aHMWqtdSpEQuIpo893CvL
+ PMD8GivBPsR2khd0fKSU8I4y9PV9Fuk3M1JOV1nmo1oTQ3mPayjKAB0nei8kpSbVENqO
+ vDgQ==
+X-Gm-Message-State: APuU4Z/ouqnYXY2ykTzb+kiv2UBi8iiUYjCRF8V0W40/QTEj9I9ZTGQv
+ KpRoNet5nVXPjkLVyLZSJXU2GbDF101x7nAZpKV6CI76q5qmp78UqxfxRHHH0a23UplWqTpy4Ir
+ OohJeyDIuFvySFEmabTtUqn0Vi1bo9fdpiwIhWPiveg==
+X-Gm-Gg: AYBFou2AAxptp2p1hXaVka7tWDllMP7HVr2QiOD5c381yQMtbiYRrDiQKc3q2d2bjvL
+ MWI2YF4BjzYM32x4/6K11YruO1NJv93wE2+L3xqZmeRS2VkhhQuONA3SJNHRPiAMuV6jMpoSnwQ
+ dMkpvAf/Hqa3GslMHrMvYFybaq4wlOgD3PgWy23lwJ6yQOnmks29GbQk95GaHYzbX5YhUWkhWrJ
+ yOCLPoriB25ffX1Q8BqbnM+MkjgISz+IkcAjdla59DWR9aW856t2px/kDZsPiqnngNoQ1NCqAqq
+ v0G+3VD/MDIR7u9G/HM3BwvwS7C7Aw7aTV3FZE09Nmn902A1Qa/iyfrzgb5v6H+Qw9l9aXTKQNP
+ lgMHP7u1tVXtBgX6Kjtt8wnIkUtei46cirpyiCCUjqpmlUjqlvTkjTAMXPNloRXL5YmOaGTHUbj
+ ZLF1j0UbW/WHpiGSg4MMVd
+X-Received: by 2002:a05:690e:12c6:b0:677:aee1:9f2b with SMTP id
+ 956f58d0204a3-67c67ca7a90mr3362603d50.12.1794489004820; Thu, 12 Nov 2026
+ 05:10:04 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261007183338.1899422-1-jsnow@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261021065238.15220-1-conti.manuele@gmail.com>
+In-Reply-To: <20261021065238.15220-1-conti.manuele@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 12 Nov 2026 13:09:53 +0000
+X-Gm-Features: AclHuK91k_404xGNPKVDV0IIvjhlkMoTqmp0kq7EQAV1TyitwzdpdyAmAk6MtHY
+Message-ID: <CAFEAcA9=pt=81YWPXEZ+UEnL5iVbqFAjxbMYtH_aoJHy4iAf_A@mail.gmail.com>
+Subject: Re: [PATCH] hw/ssi/stm32f2xx_spi: avoid transferring data on DR reads
+To: Manuele Conti <conti.manuele@gmail.com>
+Cc: qemu-devel@nongnu.org, alistair@alistair23.me, qemu-arm@nongnu.org, 
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,37 +112,35 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Am 07.10.2026 um 20:33 hat John Snow geschrieben:
-> Currently, iotests checks to see if you are running with the "correct"
-> python interpreter by checking string equivalence between your current
-> python and the configure-time venv python.
-> 
-> Depending on exactly *how* you launch or configure your python,
-> however, this warning may produce false positives because it treats
-> "python" as different from "python3" as different from
-> e.g. "python3.12", even though they are all actually the same exact
-> interpreter.
-> 
-> This patch fixes this by comparing only the parent directories; we
-> will now be happy with any interpreter so long as it is located within
-> build/pyvenv/bin/.
-> 
-> Note that we cannot fix this by resolving symlinks, as python venv
-> binaries are often (but not always) just symlinks to /usr/bin/<etc>,
-> and full resolution would produce even more false negatives.
-> 
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: John Snow <jsnow@redhat.com>
+On Wed, 21 Oct 2026 at 07:52, Manuele Conti <conti.manuele@gmail.com> wrote:
+>
+> Writing SPI_DR already performs the synchronous SSI transfer and stores
+> its response in spi_dr. Reading SPI_DR performs another transfer, using
+> the previous response as transmit data, and returns the new response.
+> Consequently a normal write/read pair clocks two frames on the bus and
+> can skip bytes in a peripheral's response.
+>
+> Return the response saved by the write and clear RXNE without starting
+> another transfer. Repeated reads then leave the peripheral state alone.
+>
+> Add a qtest using the upstream netduino2 machine and an M25P80 flash.
+> Check the JEDEC ID, RXNE clearing, and repeated DR reads. The test requires
+> no board changes and reproduces the unwanted extra transfers before the
+> fix.
+>
+> Fixes: 5ae74402d1f ("STM32F2xx: Add the SPI device")
+> Signed-off-by: Manuele Conti <conti.manuele@gmail.com>
 
-Thanks, applied to the block branch.
 
-Kevin
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
