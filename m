@@ -1,114 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0017B606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 09:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924E7606A330
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 09:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=pcrUb2Qf
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=XwuXaf10
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRRD6-0005yn-Ue; Thu, 12 Nov 2026 04:35:13 -0500
+	id 1xRRGI-0007hE-7M; Thu, 12 Nov 2026 04:38:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xRRCs-0005w4-C7; Thu, 12 Nov 2026 04:34:59 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xRRCo-0000X2-Fw; Thu, 12 Nov 2026 04:34:56 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AC4NWfK3274555; Thu, 12 Nov 2026 09:34:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NV7NCh
- jEJIC61dpGZKBnad0YpNhYnmuo+x5n9NkUJhI=; b=pcrUb2QfM7XQjQ83sjqv+p
- hLdiF5RX2XNDIkTfCtyL8KhJlG9OUS2WcGcZOgibNw0OJcK5RGsgHaIWPreE4hzt
- rCoDLryjWUof5PW0T1fdsSHfEqCF/MUMKjTt+8NsFsg7ZKZGVx2hzlaQVZf+jhs8
- gqBmzmOGcyUHeK0LZQgasIKkgzhIrwK/0LFNDq8o8Dy9wwB8mtKv8LuEGIIL7QWd
- 1cRCr7YYPBt+8VHnpO686wI2n0Sb89m1V9yjUhJl1ddzAULeOvsgXCWbVs4EHedb
- tM6JDTYXG8dDFJ69WWW2qErV7iMlAL+GJiYhqonVC1F7WI+vdtXcezm8oxKkPb3w
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hsug6esj7-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 12 Nov 2026 09:34:51 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AC8HH8x097815; Thu, 12 Nov 2026 09:34:50 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hvkq0vq36-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Nov 2026 09:34:50 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AC9Yn2O34079298
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Nov 2026 09:34:49 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A85A5805A;
- Thu, 12 Nov 2026 09:34:49 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BAD258052;
- Thu, 12 Nov 2026 09:34:47 +0000 (GMT)
-Received: from [9.111.49.39] (unknown [9.111.49.39])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 12 Nov 2026 09:34:47 +0000 (GMT)
-Message-ID: <4c1a9bb8-a205-46a0-8ade-87076989ef86@linux.ibm.com>
-Date: Thu, 12 Nov 2026 15:04:46 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRRGH-0007gy-AP
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 04:38:29 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRRGF-0003Mq-QB
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 04:38:29 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-490a0e72588so2226827f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 01:38:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794476306; x=1795081106; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=bEMscnaGn9bAFFmYUy0wam7T3sR3vv8Hkj+qUG7MmWc=;
+ b=XwuXaf10PHOW4KxgZUnj8b2+jf0hdFcMnEb4X2/WWun9L9JU/wvrKB2y4Ch+l6xR/c
+ MPtsLzXYH2enpFV03q3kFpJMtIXT7ueSstaV+6kqpEYC8PwOgFuRu+hc7JioDl2+GvzB
+ Jm/iZ968BuA81l+BgzEED/fKE/U65uksPDquPAdkmL8+GRnVJKB2aPaI8vWquQc0k8LT
+ JT4pi4+p41Zq5eyicFMFYQc95SgiOhK01SG0YMq5H/nUerp708F6CEolyEoHwg8BOw55
+ DsjNwhDZ7KZfsnobTgGoe1Ziib6HfBjBwop+buQQ8JL63OztfChe95dLmTAhHjk/Qe44
+ HTjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794476306; x=1795081106;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=bEMscnaGn9bAFFmYUy0wam7T3sR3vv8Hkj+qUG7MmWc=;
+ b=Hf/BRcLhc+YnFkSBxObst4sVLnvHTvUYXVzUtgAVCIyS/17A7GR9A34v++LS0bgEK0
+ 5/HG1/MlyAaKZbkuwVWiWWcbAIV7qI5kPegNV1O+lIksnxruX/Ij6u6FWZ8sF0M13O36
+ ca/cAPPrIXk07g2kzfz/c/aM/uGFa9QU1lS7APjA0Z8xexIRqDKSDqGxacVq2/6LMKM0
+ EQGzW75qRkaJ+I3IcdejolySySynBMNmRpHkC7KEPgcmgikhSS+PxZL8tMTxvJ0oR1iB
+ +h1BM90jjeKJpCyMcUhD7J3tDpHfp0JQD5y0af97FqyPvf3lRZHVkepPowDqaKdTcjYK
+ xWRg==
+X-Gm-Message-State: APuU4Z8D0995/R1cIbklJmixs+LlljgGPGLu/D7IGWLc3lFaD6LlCtJa
+ pHpePDkkyxTOu55rJHnY07URKVeCNmNVQn3jBOy9L+wjFaE3Iv4eygRVW28fYZW+TH7ufmif8yj
+ 8emyLTN4=
+X-Gm-Gg: AYBFou1VwPOmmGy67/KpeezP05Un9KF38RfiCOz90+mVSPVmn/2T2pDrL82Bcs0f3OW
+ 2LSc2qEdNZhjrFW+kPWhSIqHUZYZlAJ7xgn68ZeL22COh7AlC+eLTZOYtuhTUwuGwszoSBzOpY5
+ 70RPAuXuQiRO6r5ZRdRqebat8MNQImDNH4V4jYVvORglPfH+6m5Wu6thTD7nZjprxpXOUIl+gua
+ ng1H2jNCJENvnJ4XYQ5FYVLqCfZ9v37z1OaiCDoCHfEZzMvJJO+DWCnbVdNg6w7BZyYetowBpAd
+ p2AYbyXxZp8JbCeExL8S/ZocadVMb5atdDVmXlDDszPUYgT2G8Asa0Zccwmm25CE3yJPxotkkiO
+ BC8PR/SgjNVPvFiMEFMx9y/9UGJAgr32g6en5COhLmz/UJSOwp/VCVGWN/FVlETYdyU+kfnHVj4
+ lWHaxIKBJeFlpQYLp75Nksi+xsm7WVO5QOtsDHVP0teG5wh8oKRtRgmkJWF5Dw9H4yCjJj+SRh+
+ 4p9GspRYu5uExscakUnkOGrn1NVSVGa9tLEIivOAdQJvRQ1FjTg8TBCxHsCU4s6w0I9eayouhda
+ ImYGt8vRMCphm2QnxpuGaAYQ/89+ckvLEjrxSy2yA2iBpnHJaso9/8B64ljCdnt6ANAMzYoDSaI
+ RjG7j/4zk5ET/Ihy1+cKN7OLYFztHNnOWkL8=
+X-Received: by 2002:a05:6000:4816:b0:490:2033:1477 with SMTP id
+ ffacd0b85a97d-499c9134147mr7435927f8f.56.1794476306050; 
+ Thu, 12 Nov 2026 01:38:26 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4983585923bsm16189279f8f.11.2026.11.12.01.38.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Nov 2026 01:38:25 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH for-11.2 0/2] docs/about/deprecated: minor fixes
+Date: Thu, 12 Nov 2026 09:38:22 +0000
+Message-ID: <20261112093824.2281467-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Mark PPC TCG CPUs as Maintained
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: npiggin@gmail.com, harshpb@linux.ibm.com,
- Glenn Miles <milesg@linux.ibm.com>
-References: <20261112092750.1821470-1-rathc@linux.ibm.com>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20261112092750.1821470-1-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: bLfJSssdlTxrabXmDmxlGMt2yuINsJ4e
-X-Authority-Analysis: v=2.4 cv=PeVqFShd c=1 sm=1 tr=0 ts=6af5883b cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=v6HyfjuJ19asQ0KlDJUA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: _A3k_s6syhxYAUk5o2daPpAuZ7qyf3A2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDAzNiBTYWx0ZWRfX9jpw+JIl36Sw
- tkQvciyxkBsRjkt29enB/mLHoBmaLzfP7EvrBGB6GiYQlM8246kxSSFJH9lOExa0kXabWkqSvYJ
- J0O+FXzHj1fZaixzebQ/87VWnUI2ASCC+bt1CoGPOVyZW+rWSVOPWZME72y+IWYJomzuXK5rMI8
- niBFMQDS5bEJsTizKO+1G5kjza/IJfUnbDV9i8Htw3q9QA87Zp2TIkUS24NBNUVpVvT3QuGavtp
- teos5n7G2QZwEGN2yH9FEyoxezbrqnik+tQTIgDaEAz6uz9qeZMvFQepLVd5aIUYGmH8vQFHjGf
- SMbQ06PW7Oa9Vf8IdrPcDTdJWPiHe5LwhQR/tFShkAdHH+1rau16bufyk1dwaD1Si5JH1yFBhwv
- QH5rXkuT7eFjhJaGWPzkci2Rn1oyxV54UPiXdjX1W/FSw6yzJ+y4z7nUXjKMkLJlWJysOhP4y+b
- NEmqFp8CPciVBDGpVRQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDAzNiBTYWx0ZWRfXzBH3jes9/RK8
- CmjuJWLlCiYImviIMdgvB23A5abtx9vesi84ZpRJGJF5lox56YawjX5D4Y4B2ZJuzv1AG5V8vv0
- 0jL0s+J5Kjqoiaby2HBWHxY91MF/kfY=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-12_01,2026-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 spamscore=0 malwarescore=0 clxscore=1015 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611120036
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,35 +96,29 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+We (I :-)) forgot to put in the "since 11.0" tag when deprecating
+linux-user arm OABI/NWFPE; patch 1 adds that. Patch 2 fixes a
+"wrong kind of underline" formatting mistake I noticed while
+fixing that.
 
-On 11/12/26 14:57, Chinmay Rath wrote:
-> Update the status of PowerPC TCG CPUs from "Odd Fixes" to "Maintained"
-> to reflect their active maintenance.
->
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->   MAINTAINERS | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index fa0c6d0c9b..d268243fdb 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -348,7 +348,7 @@ M: Nicholas Piggin <npiggin@gmail.com>
->   R: Glenn Miles <milesg@linux.ibm.com>
->   R: Harsh Prateek Bora <harshpb@linux.ibm.com>
->   L: qemu-ppc@nongnu.org
-> -S: Odd Fixes
-> +S: Maintained
->   F: target/ppc/
->   F: hw/ppc/ppc.c
->   F: hw/ppc/ppc_booke.c
-+ Glenn
+thanks
+-- PMM
+
+Peter Maydell (2):
+  docs/about/deprecated: Add missing "since" marker for OABI/NWFPE
+  docs/about/deprecated: Fix heading level for AF_ALG heading
+
+ docs/about/deprecated.rst | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+-- 
+2.43.0
+
 
