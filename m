@@ -1,65 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96693606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96011606A321
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 11:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bRe54uF3
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=W5m4wv7a
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRTLF-0007MH-7q; Thu, 12 Nov 2026 06:51:45 -0500
+	id 1xRTLG-0007PX-2V; Thu, 12 Nov 2026 06:51:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xRTK5-0004kB-N3; Thu, 12 Nov 2026 06:50:40 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xRTKG-0004vp-7g
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 06:50:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xRTK1-0001ct-HE; Thu, 12 Nov 2026 06:50:30 -0500
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 1FB79630BD;
- Thu, 12 Nov 2026 11:50:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4F81F00A05;
- Thu, 12 Nov 2026 11:50:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1794484227;
- bh=bFTsZY9toM/MqLYhYsDGg9N0OwuUe9slHgbPNNF3HRs=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bRe54uF3op0tefSDA3jwPIc0tUicAMGH3xW7RS3IHb9tHOztiTwpLsHQM6kDJaoTU
- HREZK2LeoK6A2vSuKYwooFqatM572z05RlXqEluJ/0WJwvMlqCsznchcU4KAqmb8Yn
- wQYBPV7LZIpMCvng79AEV3X4C7k4/B1bKgy1XsbmiIanXukRoHOXVG5iWjzV4toKsg
- f1YOTXkKhHk5jRA56HTz8A29g3Ug7NuinursHmXLfONYQmpMj/EJEKTeJIn5pLyxlj
- Qn+WMeNtjAaGTEPaOqys1jxfDXtEHfRaqzUFt/4LBMLZoc0eGDiXo5GiyUIW2qfiyx
- adT+L7RWKpj3A==
-From: Niklas Cassel <cassel@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Damien Le Moal <dlemoal@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
- Sam Li <faithilikerun@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>, Jeuk Kim <jeuk20.kim@samsung.com>,
- Daejun Park <daejun7.park@samsung.com>, Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH v17 9/9] scsi: add the sense codes of zoned block devices
-Date: Thu, 12 Nov 2026 12:49:18 +0100
-Message-ID: <20261112114918.1269168-10-cassel@kernel.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261112114918.1269168-1-cassel@kernel.org>
-References: <20261112114918.1269168-1-cassel@kernel.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xRTKC-00024E-Uy
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 06:50:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794484238;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uYPtlENqpxpYFHpj2MTXG+kJOfmiwH7e5mqN9hKJRkc=;
+ b=W5m4wv7aXxvjPeqN+wlneQENwN9CsL9aR2/oeTf2fafG50T4YDWuXtNqtHeIOOCPhhgTKS
+ IpSPXJsb44us96V5m+Nn3JglB5+zoZ0jZzbPRvYUgLnwR/baxmGzX/eCq8cE4tDcGmRo04
+ pbx85KwIjBKbqXFkG27a846kiOKshXo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-V4UPDGg5OGe1QIVZOb6c1A-1; Thu,
+ 12 Nov 2026 06:50:34 -0500
+X-MC-Unique: V4UPDGg5OGe1QIVZOb6c1A-1
+X-Mimecast-MFC-AGG-ID: V4UPDGg5OGe1QIVZOb6c1A_1794484233
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E822183B4F6; Thu, 12 Nov 2026 11:50:30 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 390DD180054D; Thu, 12 Nov 2026 11:50:28 +0000 (UTC)
+Date: Thu, 12 Nov 2026 11:50:25 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, zhenwei.pi@linux.dev,
+ david@kernel.org, imammedo@redhat.com, jasowangio@gmail.com
+Subject: Re: [PATCH] error: Improve a few error messages on setting property
+ to zero
+Message-ID: <avWoAdQnWJey5HQ3@redhat.com>
+References: <20261112114702.969681-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20261112114702.969681-1-armbru@redhat.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,93 +84,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add the sense codes that a zoned block device reports when a request
-violates the zone model (ZBC-3 and ZAC-3):
+On Thu, Nov 12, 2026 at 12:47:02PM +0100, Markus Armbruster wrote:
+> Error messages change from
+> 
+>     Property 'TYPE-NAME.PROP-NAME' doesn't take value '0'
+> 
+> or similar to
+> 
+>     cannot set property 'PROP-NAME' of 'TYPE-NAME' to zero
+> 
+> One of them is guarded by unsigned value <= 0.  Use !value instead for
+> clarity.
+> 
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  backends/cryptodev.c     |  4 ++--
+>  backends/hostmem-memfd.c |  4 ++--
+>  backends/hostmem.c       | 11 +++++------
+>  net/dump.c               |  4 ++--
+>  4 files changed, 11 insertions(+), 12 deletions(-)
 
-  ILLEGAL REQUEST, UNALIGNED WRITE COMMAND (21h/04h): a write that
-  does not start at the write pointer of a sequential write required
-  zone
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-  ILLEGAL REQUEST, WRITE BOUNDARY VIOLATION (21h/05h): a write that
-  crosses the end of the writable part of a zone
 
-  DATA PROTECT, INSUFFICIENT ZONE RESOURCES (55h/0Eh): a request that
-  would open or activate more zones than the device allows
-
-The IDE device is going to report them for zoned devices.
-
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
----
- include/scsi/utils.h |  6 ++++++
- scsi/utils.c         | 15 +++++++++++++++
- 2 files changed, 21 insertions(+)
-
-diff --git a/include/scsi/utils.h b/include/scsi/utils.h
-index d5c8efa16e..d16c264b22 100644
---- a/include/scsi/utils.h
-+++ b/include/scsi/utils.h
-@@ -69,6 +69,10 @@ extern const struct SCSISense sense_code_TARGET_FAILURE;
- extern const struct SCSISense sense_code_INVALID_OPCODE;
- /* Illegal request, LBA out of range */
- extern const struct SCSISense sense_code_LBA_OUT_OF_RANGE;
-+/* Illegal request, Unaligned write command */
-+extern const struct SCSISense sense_code_UNALIGNED_WRITE;
-+/* Illegal request, Write boundary violation */
-+extern const struct SCSISense sense_code_WRITE_BOUNDARY_VIOLATION;
- /* Illegal request, Invalid field in CDB */
- extern const struct SCSISense sense_code_INVALID_FIELD;
- /* Illegal request, Invalid field in parameter list */
-@@ -119,6 +123,8 @@ extern const struct SCSISense sense_code_DEVICE_INTERNAL_RESET;
- extern const struct SCSISense sense_code_WRITE_PROTECTED;
- /* Data Protection, Space Allocation Failed Write Protect */
- extern const struct SCSISense sense_code_SPACE_ALLOC_FAILED;
-+/* Data Protection, Insufficient zone resources */
-+extern const struct SCSISense sense_code_INSUFFICIENT_ZONE_RESOURCES;
- 
- #define SENSE_CODE(x) sense_code_ ## x
- 
-diff --git a/scsi/utils.c b/scsi/utils.c
-index 1ee68e6822..9eb41aefdf 100644
---- a/scsi/utils.c
-+++ b/scsi/utils.c
-@@ -190,6 +190,16 @@ const struct SCSISense sense_code_LBA_OUT_OF_RANGE = {
-     .key = ILLEGAL_REQUEST, .asc = 0x21, .ascq = 0x00
- };
- 
-+/* Illegal request, Unaligned write command */
-+const struct SCSISense sense_code_UNALIGNED_WRITE = {
-+    .key = ILLEGAL_REQUEST, .asc = 0x21, .ascq = 0x04
-+};
-+
-+/* Illegal request, Write boundary violation */
-+const struct SCSISense sense_code_WRITE_BOUNDARY_VIOLATION = {
-+    .key = ILLEGAL_REQUEST, .asc = 0x21, .ascq = 0x05
-+};
-+
- /* Illegal request, Invalid field in CDB */
- const struct SCSISense sense_code_INVALID_FIELD = {
-     .key = ILLEGAL_REQUEST, .asc = 0x24, .ascq = 0x00
-@@ -330,6 +340,11 @@ const struct SCSISense sense_code_SPACE_ALLOC_FAILED = {
-     .key = DATA_PROTECT, .asc = 0x27, .ascq = 0x07
- };
- 
-+/* Data Protection, Insufficient zone resources */
-+const struct SCSISense sense_code_INSUFFICIENT_ZONE_RESOURCES = {
-+    .key = DATA_PROTECT, .asc = 0x55, .ascq = 0x0e
-+};
-+
- /*
-  * scsi_convert_sense
-  *
+With regards,
+Daniel
 -- 
-2.56.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
