@@ -1,69 +1,80 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD3D606A323
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 06:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A98606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 07:45:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OI7hU1Wv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xROTz-0006zH-PW; Thu, 12 Nov 2026 01:40:27 -0500
+	id 1xRPUC-0007ck-N2; Thu, 12 Nov 2026 02:44:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xROTs-0006wS-9e; Thu, 12 Nov 2026 01:40:22 -0500
-Received: from mxhk.zte.com.cn ([160.30.148.34])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xRPU6-0007bW-I4
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 02:44:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xROTn-0007Gf-98; Thu, 12 Nov 2026 01:40:19 -0500
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xRPU4-0006ek-K5
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 02:44:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794469474;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QslGCBPxyZS5ODa03J/suWTZiylSnpDcG5Q6LGtP3lY=;
+ b=OI7hU1Wvu4VKfzUAODhg2VYtUH/N40TRx9CnUtif0ZCJYkII51CQsB5OBBBbHdm72z3n4t
+ t3AUzlzr9ziAOb1QzaPc09xvKmAyDDKiRgckw2AbX8wp7DnnYo4KHN+llz/b/oP8LPpOWH
+ 364U/nFIJSTjsZJXoiR64b/5Dh28qEI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-jpydFdRgPNm_YAz04Mrh-Q-1; Thu,
+ 12 Nov 2026 02:44:33 -0500
+X-MC-Unique: jpydFdRgPNm_YAz04Mrh-Q-1
+X-Mimecast-MFC-AGG-ID: jpydFdRgPNm_YAz04Mrh-Q_1794469472
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4jQ9jr6gt4z5B0qP;
- Thu, 12 Nov 2026 14:40:00 +0800 (CST)
-Received: from szxlzmapp01.zte.com.cn ([10.5.231.85])
- by mse-fl1.zte.com.cn with SMTP id 6AC6dcke018003;
- Thu, 12 Nov 2026 14:39:38 +0800 (+08)
- (envelope-from gong.shuai@sanechips.com.cn)
-Received: from ubuntu-35-gs (unknown [10.230.214.35])
- by smtp (Zmail) with SMTP; Thu, 12 Nov 2026 14:39:40 +0800
-X-Zmail-TransId: 3e816af55f2502c-8d4f6
-X-Zmail-LocalSMTP: 1
-X-Zmail-RealSender: gong.shuai@sanechips.com.cn
-From: Gong Shuai <gong.shuai@sanechips.com.cn>
-To: tanchi25@mails.ucas.ac.cn
-Cc: alistair.francis@wdc.com, chao.liu@processmission.com, cohuck@redhat.com, 
- daniel.barboza@oss.qualcomm.com, gong.shuai@sanechips.com.cn,
- liwei1518@gmail.com, mst@redhat.com, palmer@dabbelt.com,
- pbonzini@redhat.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- wu.fei9@sanechips.com.cn, zhao.qingye@sanechips.com.cn,
- zhiwei_liu@linux.alibaba.com
-Subject: Re: [RFC PATCH v2 10/14] hw/riscv/riscv-iommu-accel: Add
- set/unset_iommu_device callback
-Date: Thu, 12 Nov 2026 14:39:38 +0800
-Message-ID: <20261112063938.273354-1-gong.shuai@sanechips.com.cn>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261111143849.13090-1-tanchi25@mails.ucas.ac.cn>
-References: <20261111143849.13090-1-tanchi25@mails.ucas.ac.cn>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BAFEF18002CB; Thu, 12 Nov 2026 07:44:31 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3DD3530000D3; Thu, 12 Nov 2026 07:44:31 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B6BF421E6A04; Thu, 12 Nov 2026 08:44:28 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  david@kernel.org,  imammedo@redhat.com,
+ peter.maydell@linaro.org
+Subject: Re: [PATCH 1/7] backends/hostmem: Drop redundant validation of
+ property "size"
+In-Reply-To: <avRjUJ9-d0_RxIvk@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Wed, 11 Nov 2026 12:45:04 +0000")
+References: <20261111122342.634370-1-armbru@redhat.com>
+ <20261111122342.634370-2-armbru@redhat.com>
+ <avRjUJ9-d0_RxIvk@redhat.com>
+Date: Thu, 12 Nov 2026 08:44:28 +0100
+Message-ID: <87fqx6sdcz.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
-Content-Transfer-Encoding: 8bit
-X-MAIL: mse-fl1.zte.com.cn 6AC6dcke018003
-X-TLS: YES
-X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
-X-SOURCE-IP: 10.5.228.132 unknown Thu, 12 Nov 2026 14:40:00 +0800
-X-CLEAN: YES
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6AF55F40.001/4jQ9jr6gt4z5B0qP
-Received-SPF: pass client-ip=160.30.148.34;
- envelope-from=gong.shuai@sanechips.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,73 +86,91 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Tan Chi,
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Thanks for the review.
+> On Wed, Nov 11, 2026 at 01:23:36PM +0100, Markus Armbruster wrote:
+>> Property "size" is mandatory, and its setter
+>> host_memory_backend_set_size() rejects value zero.  Delete the
+>> redundant checks for zero in the .alloc() callbacks.
+>>=20
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>> ---
+>>  backends/hostmem-epc.c   | 5 -----
+>>  backends/hostmem-file.c  | 4 ----
+>>  backends/hostmem-memfd.c | 5 -----
+>>  backends/hostmem-ram.c   | 5 -----
+>>  backends/hostmem-shm.c   | 5 -----
+>>  5 files changed, 24 deletions(-)
+>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+> ...it is a shame this was/is dead code, since the actual error message
+> from host_memory_backend_set_size() is (IMHO) worse than that from the
+> unreachable code you're deleting
+>
+>   $ ./build/qemu-system-x86_64 -object memory-backend-ram,size=3D0,id=3Df=
+oo
+>   qemu-system-x86_64: property 'size' of memory-backend-ram doesn't take =
+value '0'
 
-> Hi Shuai and Fei,
-> 
-> On 10/29/2026 1:47 PM, Gong Shuai wrote:
-> > +    if (s->accel_state->viommu) {
-> > +        goto done;
-> > +    }
-> >
-> > +    if (!riscv_iommu_accel_alloc_viommu(s, idev, errp)) {
-> > +        error_append_hint(errp, "Unable to alloc vIOMMU: idev devid 0x%x: ",
-> > +                          idev->devid);
-> > +        return false;
-> > +    }
-> 
-> And in riscv_iommu_accel_alloc_viommu():
-> 
-> > +    /* Attach a HWPT based on ddtp.iommu_mode value */
-> > +    hwpt_id = riscv_iommu_accel_ddtp_hwpt(s, accel);
-> > +    if (!host_iommu_device_iommufd_attach_hwpt(idev, IOMMU_NO_PASID, hwpt_id,
-> > +                                               errp)) {
-> > +        goto free_bypass_hwpt;
-> > +    }
-> 
-> It looks like only the first VFIO device is attached to the abort/bypass
-> HWPT. Subsequent devices in different IOMMU groups may remain attached
-> to their original Stage-2 parent HWPT, potentially allowing DMA even
-> when DDTP.Mode is OFF.
+Fair point.
 
-Your analysis is correct. A later device takes the "goto done"
-path and stays on its S2 parent. A device in that state can still
-DMA with GPA -> HPA translation while DDTP.Mode is Off, which the
-spec says must abort.
+> as a separate patch I might suggest
+>
+>     diff --git a/backends/hostmem.c b/backends/hostmem.c
+>     index 173d042be35..f523dce6eb0 100644
+>     --- a/backends/hostmem.c
+>     +++ b/backends/hostmem.c
+>     @@ -77,8 +77,8 @@ host_memory_backend_set_size(Object *obj, Visitor *=
+v, const char *name,
+           if (host_memory_backend_mr_inited(backend)) {
+               error_setg(errp, "cannot change property %s of %s ", name,
+                          object_get_typename(obj));
+               return;
+           }
 
-The RFC design and our testing were based on a single-device
-model, so this never showed up. We only started exercising
-multiple groups/devices recently, while reproducing the kernel
-issue you pointed out [1]. Before any DMA is issued, the guest
-IOMMU driver programs DDTP and sends an IODIR.INVAL_DDT, and
-each device's domain attach sends a per-device one. QEMU
-handles both by re-fetching the guest DC and attaching the
-matching nested HWPT, so by the time the DMA starts the window
-is already closed. That explains why the test passes; it just
-does not cover the window you found. Still, the gap is real
-and needs to be fixed.
+           if (!visit_type_size(v, name, &value, errp)) {
+               return;
+>          }
+>          if (!value) {
+>              error_setg(errp,
+>     -                   "property '%s' of %s doesn't take value '%" PRIu6=
+4 "'",
+>     -                   name, object_get_typename(obj), value);
+>     +                   "cannot create '%s' with a size of 0",
+>     +                   object_get_typename(obj));
+>              return;
+>          }
+>          backend->size =3D value;
+>
+> so that we get the nicer message:
+>
+>     $ ./build/qemu-system-x86_64 -object memory-backend-ram,size=3D0,id=
+=3Dfoo
+>     qemu-system-x86_64: cannot create 'memory-backend-ram' with a size of=
+ 0
 
-> 
-> Maybe we can follow ARM SMMUv3 and reattach all VFIO devices to the
-> appropriate abort/bypass HWPT during reset.
+Your message assumes that the property is only ever set on behalf of an
+object creation request.  Not true in general, qom-set exists.  I
+believe it's true here due to the host_memory_backend_mr_inited() guard.
+But that's not entirely obvious, isn't it?
 
-Thanks for the suggestion, I'll try that in the next version.
+Possible phrasings that don't assume this:
 
-[1] https://lore.kernel.org/linux-riscv/20261105144944.10193-1-tanchi25@mails.ucas.ac.cn/
+   property 'size' of 'memory-backend-ram' cannot be zero
+   cannot set property 'size' of 'memory-backend-ram' to zero
 
-Thanks,
-Shuai
+Is one of them good enough?  I doubt this error is common.
 
-> 
-> Thanks,
-> Tan Chi
-> 
+There are enough "doesn't take value" error messages elsewhere to
+justify a small series of its own.
+
 
