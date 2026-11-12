@@ -1,87 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3797A606A327
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 18:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A29D606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 18:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ftKeUHNn
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=d38SU7N1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRZ8R-0004fp-Gi; Thu, 12 Nov 2026 13:02:55 -0500
+	id 1xRZ8T-0004gZ-Fs; Thu, 12 Nov 2026 13:02:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xRZ8O-0004fA-AV
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:02:52 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1xRZ8P-0004fJ-BN
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:02:53 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xRZ8H-0004zH-H4
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:02:47 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4a1b07c3c5fso827095e9.1
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 10:02:44 -0800 (PST)
+ id 1xRZ8H-0004zO-Qx
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:02:50 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4a214af2076so751895e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 10:02:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794506563; x=1795111363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794506564; x=1795111364; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Z+e5oGU4r5lTIB9R0WOGTLO18IlLvspFB/OoKB4LXQg=;
- b=ftKeUHNny14cA1rkGFkRpWv5oye3W3JpyYJYHmuo67nNW2YV5y/wwTsZR1rXdQomRs
- 74en47UQ7swdyA3VvzRQxy9hZxuCz08mjN3SCF/xXUalRyxEMvr9Xr19BZN9whmQLQYA
- Uliqkm08NfDGUKuBJMbmsRfV1+3bYj8cfinIGm4BbsTAtNBjo4vLrr2ctJ46i9B0TNbI
- LG/gklwdChIFV4VhYO3LOYmxIjTTZSx8qW5APJTDiH1lxXdOtFJdGR99cx/8Z/eHPrFk
- M3x5l5M6HTgdp9+BdUBFDLtsNROOdi4Y6f3YloTdHEzxbbC9vYu8YUWIRPK2wQVI+W66
- EZqQ==
+ bh=89EXNihCvSXSzLQmqgDR8KvMO33G2KOTB+GxhtZ52NQ=;
+ b=d38SU7N1rMzUNoydfBJ0bmP/mUsuj2NsVMdgLQ1EtmqAHhY+vANSMu3PgBLeTwJswn
+ BTXUI7PDSitQYJMddJJIEScFcJbuHo0VIw1ulSyTG6/dW9peAhESvNSiRaZid9S2OmAA
+ OpUO0bVf2jF8eBnHv3TU4pIbo8pTxY9b3ovqyH6fwWb4HIpOPi3iNR/bzma4dMfU512t
+ icHAFv2qpE7ghOgft2xCrvZ4NiXtbx+c9d30pUSwKcpMaYv4DsWUh2Z4U9kHeG9XnZih
+ vqydWd2X1tmOonswA4L8K73hLxDH6vNV0YIyVTUkpgV/dLp1/4kxtj2lQCjNaSf3rHiv
+ hJ1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794506563; x=1795111363;
+ d=1e100.net; s=20260707; t=1794506564; x=1795111364;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Z+e5oGU4r5lTIB9R0WOGTLO18IlLvspFB/OoKB4LXQg=;
- b=fAdmgr+aM7iDT+SNBrtBV8DuenI5Rl5PWf6Nt0GcCLQSgE28i89iyh3Ho7f4vi4Fng
- O4ZDWelV/D79a8P8lw3DxHh8TmtGMtER4dtaBBaofpfyVkcSk1UMTxvXpv57iM4Wh03R
- LNJG2TNYxd73bxB4zec37Fsyv+c08uD8VSRaWlW93ER6lv+sCrWUk6+wHFXvUe0Kbisl
- 9tgwUEpjYC7nraKbnFztmOAKdRd2hhcZU03xPBi7+VTVY1wxoa1cXxcUD7h7JCk6w+Xo
- fUgv3/DO54M0RUZoOH8WrdgsZQKREIJh6C5enozxVQZEspUGAxkWo6Kh5zs+pK3w4JQ8
- QgRw==
-X-Gm-Message-State: APuU4Z9TNmwAWpbm+TJxjuab3cmSFbsB8v6ENFwOdzUbwy+TuXMwaZ0I
- iuHE5sQkaHeSBVUVtbE3bDTSzQApVay9Qdz19/kRr+R1Exq9cXrRAYuVNXrXACZVkAgBI4NQTp/
- FaUaj2Nw=
-X-Gm-Gg: AYBFou1xcpED8kR6Fm8XPHAjyUamBxMgs6LATsi0jEVVlRU61po1c77heHCcduG2ups
- YEY0yUFjkU2h3yEGwmr2iw0jv8HUnJXAAUEUIApV9QmelE8O6eGtEAU+ciPj4EhCzL9QBr0dxUD
- vtlhqbuRvKVgkofJnl9dw8dSTibMaZWqIrbOIDDIJKhMJlcVEE6ON7000baGcyMwp+iKmoF5TEV
- KydgRo4uKfSBy+Gd2i8cv/1UN9vpc0lpVvyp4uO5uUg/NnBurL9oqRPQ26nF5ibLy+HTHTDT4rI
- hPpRoE42CGDzze16Ur7/UgSGgRCS70+A1NbYqVBTz2OWbOIgrEaG3yeSRcjZs8TrKwRlVJO2+Nc
- 0O4DAe20VAshknkEE2hDllL8/6kwElYjyana7vnqnsK8iQgAzrCMBARUS/ApTzW4RcBB+8C0AbX
- ulPXZvID7Pq0KjSHI1cdwNXJL0wIZ5pPGXOayLO/2FsFB0Eg9DAQcx+61y66LHN/YlpdCkxE+Ea
- 0hhOTkLzD1dLx2igiOyGJOLQImt8lGLTeIsH3nrvAvKCR4Gxyf8VS9PNSHLyQB7cSPvk97sNC/h
- 1xMjQ/5yOEs/pNOsDvEfKkFHBbSWS0Jvu+K5zQTvECRU/WT8m9L1l7VQT7x6a1Fw70jpJTC7UzV
- sUU2eLI3n3SYcYGf265Q767uSJf7eiBlWLCHAj5iXi7ALKzn8jXV6EUM=
-X-Received: by 2002:a05:600c:3d92:b0:4ba:e7:ef3d with SMTP id
- 5b1f17b1804b1-4bb559f7044mr479475e9.1.1794506562686; 
- Thu, 12 Nov 2026 10:02:42 -0800 (PST)
+ bh=89EXNihCvSXSzLQmqgDR8KvMO33G2KOTB+GxhtZ52NQ=;
+ b=P8iZfMxqGbrUy47rSpEOHQPv4CWtBvvoReN5r/FVzBCL8eFHWxloPchyPFlVTr9lZS
+ fDE34I6eaA7mqINLN0FJtR7G7OveOJK9rQ5fjd6GTV+WFMOhjCQug4db8HwQ6LQmVl2s
+ C7h8ekK/ZRJXvYzs/FzgqbajT080fiPZvaHpnFNvW8CY9CRV46Y3/Th8K/ksyFdwPvD9
+ vY7eTAZNQTV6YKC85yomD9o6P9ZpavGziGt+/8mL9HrysZc/rg1uv8QwbpsoUZJJVTwM
+ s7uhLqk0VSUEYwllPz4fgEPftSeAyQ4FuYeuH2aYXB1E64G1lFGxcA9VBjdLEY/54rRJ
+ IeRg==
+X-Gm-Message-State: APuU4Z912qvjln3v2Pv5S9u7qu9fkOj8fJfGoqsW1v7DyVjBFdC4H9GK
+ 6+mbLdzamu0PLHrjGwXlI15DIj+caYvYZJ7Vu2+Xnv6bnhPZ5ckq9gHKKWvLbj04+LJ7FIfxSL2
+ NIMnhrfw=
+X-Gm-Gg: AYBFou3Vas3QCGUkSAkQP5kx51kJ5J4WHufpKfx+aemVA2YtzMehO0oDdM8oVLP2SFD
+ SBClsa7NAOYevjLAr34AZCGsMpu2lIz8iiRA32vU/0hpnFwTlbdcdLMODKG001bLTbmxua5Ia86
+ dbKdamcJf+Cv6C1Nh0mNnY0EuPpm06KtiPpzBa5JNbAbPca+xAqkaUCsybjLJQOx/Tzobr5ZH+k
+ GFEC2hWQ9/QMvLFjhW7WHFnqkXec+KMNKqjWpZaJp0ZkWyy/euDc+6kf5Xfgm33VV+TS1BVBGNg
+ gQVf3FRm4TJDxbCnebxV+QqtrvYek6rBLBmUPWmQ+f7HBf1IUTKeesZP2uq4cS5ySneWVDl7AuR
+ SF7xBDGgzZ5l3B/MDOhZzZUeycrH/hTuZyhXaPXWVI1o5j4frZEgbzRxbmxcBny2px/kT8djfVR
+ xzEnRuKNhZ62N4lnLFL4YxKP5WeCffAlsiXQndPH7pfeh1hBCNCfXMiYHs3Qq3SO4Q7Lhcc7NGB
+ 19kaABU08UN7ximmQCBZDRsQVnj7Yf2bnlE8v9vcH0kL03g67PrjskQqGvxANd3k7JoI9lXKBst
+ qNQRQlNcGfrSTjGTD8r5vbPMvsJFZo1Ld8J0g7dKXc0KuJo58h4WqrlWotHYbGXjoB900Kqn2w4
+ fNfr2jHiN8zrrk7LYNXZ1W3H06SnBD/dIyyGN8l3JV08rvT6XTfYBWz8=
+X-Received: by 2002:a05:600c:4f84:b0:4a1:fc98:1cb1 with SMTP id
+ 5b1f17b1804b1-4bb559f5f44mr579075e9.2.1794506563996; 
+ Thu, 12 Nov 2026 10:02:43 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c60d9fff8sm521325f8f.52.2026.11.12.10.02.41
+ ffacd0b85a97d-49c60d9fff8sm521325f8f.52.2026.11.12.10.02.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Nov 2026 10:02:41 -0800 (PST)
+ Thu, 12 Nov 2026 10:02:43 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowangio@gmail.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH 1/2] net/checksum.c: Correct handling of IP header length
-Date: Thu, 12 Nov 2026 18:02:38 +0000
-Message-ID: <20261112180239.489819-2-peter.maydell@linaro.org>
+Subject: [PATCH 2/2] net/checksum: Correct handling of checksums when IP
+ options present
+Date: Thu, 12 Nov 2026 18:02:39 +0000
+Message-ID: <20261112180239.489819-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261112180239.489819-1-peter.maydell@linaro.org>
 References: <20261112180239.489819-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,126 +109,97 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In net_checksum_calculate() we are careless about handling of the IP
-header length, in a way which can allow it to become negative for a
-suitably crafted packet.  This bypasses the attempt to check that
-it's big enough, because in comparisons like
-  if (ip_len < sizeof(tcp_header))
-ip_len is converted to size_t and we do this as an unsigned
-comparison, so negative values of ip_len pass the check.
+In net_checksum_calculate() we calculate the position of the TCP or
+UDP header in the buffer with:
+  tcp_header *tcp = (tcp_header *)(ip + 1);
+where ip is a 'struct ip_header' (and similarly for udp).
 
-This results in net_checksum_tcpudp() attempting to checksum nearly
-64K of memory (because it takes the length as a uint16_t), which will
-typically be a read off the end of a buffer resulting in a segfault.
-If the attacker is able to set up a situation where the read doesn't
-fault, it's possible for some callers that the 2-byte store of the
-updated checksum is an out-of-bounds write.
+This only gives the correct location if the IP packet has no options
+and its header is the minimum length.  Otherwise we will corrupt some
+part of the packet in writing the checksum word.
 
-This code is used by at least xen-nic, virtio-net, and the COLOj
-filter-rewriter, all of which are in QEMU's security "virtualization
-use case", though the write is probably only exploitable for the
-filter-rewriter; otherwise it's just a theoretical "information leak
-to guest" of a 2-byte checksum of 64K of host RAM.
+Fortunately packets with IP options are rare (and often get blocked
+by routers or firewalls), so this probably didn't often cause
+problems, and the incorrect offset we write to is always inside the
+packet, not out-of-bounds.
 
-Improve the checking of lengths in this function:
- * assert that the caller provided us a positive buffer length
- * check length before subtracting various header sizes,
-   rather than afterwards
- * check that the packet's IHL field reports a valid header
-   length that's not larger than the packet itself
- * check that the packet's total length field doesn't claim
-   to be smaller than the header
+Use the IP header length value from the packet to locate the TCP or
+UDP header, instead of the fixed minimum size.  While we're adjusting
+this code, make sure that we don't assign to the tcp_header or
+udp_header pointer until after we've made the length check that the
+buffer is big enough (the previous ordering of operations was
+harmless as we never used the resulting pointer, but not ideal).
+
+This was mentioned in passing in issue #4791 (which is otherwise
+a duplicate of #4720).
 
 Cc: qemu-stable@nongnu.org
 Fixes: 50dbce6538d1 ("net: improve UDP/TCP checksum computation.")
-Fixes: CVE-2026-127233
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4720
-Reported-by: Xiang Chen <https://gitlab.com/x14ngch3n>
+Reported-by: Alex Meiburg <https://gitlab.com/timeroot.alex>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- net/checksum.c | 32 ++++++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ net/checksum.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/net/checksum.c b/net/checksum.c
-index 537457d89d0..997a0dd2350 100644
+index 997a0dd2350..277b2e652d9 100644
 --- a/net/checksum.c
 +++ b/net/checksum.c
-@@ -59,7 +59,7 @@ uint16_t net_checksum_tcpudp(uint16_t length, uint16_t proto,
- 
- void net_checksum_calculate(void *data, int length, int csum_flag)
- {
--    int mac_hdr_len, ip_len;
-+    int mac_hdr_len, ip_len, ip_hdr_len;
+@@ -62,6 +62,7 @@ void net_checksum_calculate(void *data, int length, int csum_flag)
+     int mac_hdr_len, ip_len, ip_hdr_len;
      struct ip_header *ip;
      uint16_t csum;
++    uint8_t *ip_payload;
  
-@@ -69,6 +69,8 @@ void net_checksum_calculate(void *data, int length, int csum_flag)
-      * struct members (just in case).
-      */
- 
-+    assert(length >= 0);
-+
-     /* Ensure we have at least an Eth header */
-     if (length < sizeof(struct eth_header)) {
-         return;
-@@ -94,23 +96,33 @@ void net_checksum_calculate(void *data, int length, int csum_flag)
-         break;
+     /*
+      * Note: We cannot assume "data" is aligned, so the all code uses
+@@ -142,20 +143,23 @@ void net_checksum_calculate(void *data, int length, int csum_flag)
      }
  
--    length -= mac_hdr_len;
--
-     /* Now check we have an IP header (with an optional VLAN header) */
--    if (length < sizeof(struct ip_header)) {
-+    if (length < mac_hdr_len + sizeof(struct ip_header)) {
-         return;
-     }
- 
-+    length -= mac_hdr_len;
-+
-     ip = (struct ip_header *)((uint8_t *)data + mac_hdr_len);
- 
-     if (IP_HEADER_VERSION(ip) != IP_HEADER_VERSION_4) {
-         return; /* not IPv4 */
-     }
- 
-+    ip_hdr_len = IP_HDR_GET_LEN(ip);
-+
-+    if (ip_hdr_len < sizeof(struct ip_header) || ip_hdr_len > length) {
-+        /*
-+         * Ignore packet with an invalidly short IHL, or which claims the
-+         * IP header is larger than the buffer
-+         */
-+        return;
-+    }
-+
-     /* Calculate IP checksum */
-     if (csum_flag & CSUM_IP) {
-         stw_he_p(&ip->ip_sum, 0);
--        csum = net_raw_checksum((uint8_t *)ip, IP_HDR_GET_LEN(ip));
-+        csum = net_raw_checksum((uint8_t *)ip, ip_hdr_len);
-         stw_be_p(&ip->ip_sum, csum);
-     }
- 
-@@ -120,12 +132,16 @@ void net_checksum_calculate(void *data, int length, int csum_flag)
- 
-     ip_len = lduw_be_p(&ip->ip_len);
- 
--    /* Last, check that we have enough data for the all IP frame */
--    if (length < ip_len) {
-+    /*
-+     * Last, check that the packet's total length field doesn't
-+     * imply a negative amount of data given the header length,
-+     * and that it's not larger than the data buffer we have.
-+     */
-+    if (ip_len < ip_hdr_len || length < ip_len) {
-         return;
-     }
- 
--    ip_len -= IP_HDR_GET_LEN(ip);
-+    ip_len -= ip_hdr_len;
+     ip_len -= ip_hdr_len;
++    ip_payload = (uint8_t *)ip + ip_hdr_len;
  
      switch (ip->ip_p) {
      case IP_PROTO_TCP:
+     {
++        tcp_header *tcp;
++
+         if (!(csum_flag & CSUM_TCP)) {
+             return;
+         }
+ 
+-        tcp_header *tcp = (tcp_header *)(ip + 1);
+-
+         if (ip_len < sizeof(tcp_header)) {
+             return;
+         }
+ 
++        tcp = (tcp_header *)ip_payload;
++
+         /* Set csum to 0 */
+         stw_he_p(&tcp->th_sum, 0);
+ 
+@@ -170,16 +174,18 @@ void net_checksum_calculate(void *data, int length, int csum_flag)
+     }
+     case IP_PROTO_UDP:
+     {
++        udp_header *udp;
++
+         if (!(csum_flag & CSUM_UDP)) {
+             return;
+         }
+ 
+-        udp_header *udp = (udp_header *)(ip + 1);
+-
+         if (ip_len < sizeof(udp_header)) {
+             return;
+         }
+ 
++        udp = (udp_header *)ip_payload;
++
+         /* Set csum to 0 */
+         stw_he_p(&udp->uh_sum, 0);
+ 
 -- 
 2.43.0
 
