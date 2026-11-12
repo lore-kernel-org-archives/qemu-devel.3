@@ -1,152 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B36606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 18:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21762606A32A
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 18:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=TrvGaz+o;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=B5q6D8e5
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=b5vwkg7Y
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRZGL-0002Jh-S6; Thu, 12 Nov 2026 13:11:06 -0500
+	id 1xRZLp-0001Dl-1k; Thu, 12 Nov 2026 13:16:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xRZFJ-0000sC-3b
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:10:02 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xRZFH-0006VX-2H
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:10:00 -0500
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ACFZlxS011361
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 18:09:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- T+BUoXt5tn4PGluBlPDbHpmyBXj6a91GEDmrMsa5S2Q=; b=TrvGaz+o9IFsmgFj
- ALfWU0btoVj1UXdgypacTtM2ZkBSu8X8UgEEuRwdWTcuCf/Byc2/E+UnUfW4sD5N
- i2sbaFt89PZDnQpeW1dQW7EpGWotPbK59UuVUwGoJzVeFgtlqQRlglqnlGeurS4C
- Q0ohHdI68DaD4HohYTQ7PZkc05Pu9pPVA8gCFdXNOmHKftj/dSabYp6cOinx2syH
- xR0Dq7rJ5IVTyn6xOESO9zbIPekhrTwjiI3BT6GOVhE2H8UkIcST4LFZxsO8iYDw
- 2eEPRjkpLkxWzFsOQ7P4iaLpQUoYH0nN84Br1Wcfbe7WC6W1CJv15sUJoxDJyq87
- tvPAYA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hwg1b8q73-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 18:09:57 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93caf7856ffso1469485a.3
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 10:09:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xRZLc-0001CU-LV
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:16:32 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xRZLa-0006Yp-S7
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 13:16:32 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-3adac5c10e3so42891a91.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 10:16:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794506997; x=1795111797; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=T+BUoXt5tn4PGluBlPDbHpmyBXj6a91GEDmrMsa5S2Q=;
- b=B5q6D8e5WBNNq1sTwqNWmC7HEBjLgoDc2OhgjbwgG4R+FQQEbty0GuJZIADdKKVL/2
- vT7FLnPLptSPin4iXM/BFRL9Wioun0t06DF/hFhb0onIqxUj17FUmh3eyGhdeUMeELux
- A9aYdGEN/CyGNqb5MmosvKmDS/jjrE+hzAe5wVAekv+VuTxYnganol9uaH3utdPxXTKm
- fzqj3Mhbjr/sVzGX8zk5fGwWuZGI7TE6hV518TVeCfzJjfE8NQ0O1j0Yfa/Rx9n4Qrju
- g9jnfi/3sZzy9EulytK/2x+bVWgIWYal39s5FXh0qyzCwxpcpsWuowlyDO79AeMyl7lr
- DmNg==
+ d=linaro.org; s=google; t=1794507387; x=1795112187; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=HVY2mygvzjfaTe8Ilxp7jURdd69HcM0iQlAQO87fJ/c=;
+ b=b5vwkg7YykOGM33Fqb+CKpjNQrhvvfbVqHDAxZReIIEZ4dFCZ8oebKiq4yy41aIdve
+ rkE9eUyeI0uarOvzzsybXPwSK6Ifx3zk7yvn67ildy6Mgs2+oZzrGLUCsHxOzIVXNNYt
+ K/CQNEnxGdxzXncUzRAWomUP/5X/qsd5JttHqwB/ldbzGZf7la6AgE1MMNxuOpHEHmB0
+ 8DWgNklF+1ZxwHsYKeYC8vv+gtGjyskKhde9Q8ipggwW8hy2EPXjm3sBSvH3GfN6ndLM
+ TLN3NBC47MiZoKEylqIAhcQ+wi0HKSPJs7NwXvwayltwi24xvl4hvAVTZTONW3enwSSi
+ /2Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794506997; x=1795111797;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=T+BUoXt5tn4PGluBlPDbHpmyBXj6a91GEDmrMsa5S2Q=;
- b=HSyKMh/pJ7WbqNmTHgEumd3/N0+Ebmqg9NTKbtW+kZ/DNAGqycFKjbgjH4UdSvKudL
- DDNXHBCU8hI/avdXre3mFXfsfGoqNSNmr+gQmNcgJ7U7noeZY+93Dkcq3qQz2BpJ9ocZ
- fbJvu+CBNcl9sGr1CpMEILOMbbNRR6SW2wVO812efU/zuRY+tkISX/6iM/V2VbzhaoIM
- UaTByBhCtHrUSjJvqGaB98SigekBU7YHyhIUViG2uoPhRxHylgNYdLvohbL+aCnWsUAZ
- WlPQVohGC52R21rmYM4lgOS//81cASswyYi6uhin+a5FNtFO6pjpQ0G8gQ/jFZdljCvX
- 3csQ==
-X-Gm-Message-State: APuU4Z+tB/f8fIe3VEHR6lWtSM2OfmtFlSl1DUU6drATDaTTQws/xv6s
- RGj/Wwv91CEUsza+Z++Hjnm0Fp+9Del7KgOigIkyPId/96mw7aJIyKSG7+pOyEj0yh4JU7KS+hh
- cBzFmG9YUVt/ae4FhF6P+BtmXddiHsnI+bYpeasFySjgGbnBLwLYBvCmgCDv0FHE0W8I4
-X-Gm-Gg: AYBFou1XKNLX7xao617Fuzvg0lAEyTToB8bbzTiXBfQmVyJ0pQiqX1rmbnZXTKbu+oM
- jryMB8VpgJf28y/Ye3yv09wxiStfnMyZEvMI3HrRYypkBApjjY7CpV0A+QFi31HDfD7Q/HrVsLq
- bRBDkinIk5TIeIQhh5vJ+lvXw2oax0WfvUChOrhWl25A8soP6qVDByppQa1NlHlpQRuxjwhcLpx
- S8TCJ2tEbdXRtp9KfZ7BDAc8bVIj92YgEEX3X7mRJ2IWIAhiQ2GmBuy4wNyi0s6qnXEgdvB+V6V
- jx3V5byf2covBWUIANFJMfGiGfdchzcWK/g/HhBPon/ZTXlnkNqXGhe7pjPomdp6L9SbCiE4yHC
- rXuPB1vI3lXYaPG2eFG5kVjjMxwWF8FrDCkrDH55rgNv+xciVraV+qt8Bg+ufXNmNxvUePDV59U
- 3SAP0VOzNIIWPP2Q==
-X-Received: by 2002:a05:620a:600e:b0:93c:8544:6ad8 with SMTP id
- af79cd13be357-9494bbb3d9fmr33848585a.28.1794506996557; 
- Thu, 12 Nov 2026 10:09:56 -0800 (PST)
-X-Received: by 2002:a05:620a:600e:b0:93c:8544:6ad8 with SMTP id
- af79cd13be357-9494bbb3d9fmr33842185a.28.1794506996044; 
- Thu, 12 Nov 2026 10:09:56 -0800 (PST)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
+ d=1e100.net; s=20260707; t=1794507387; x=1795112187;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=HVY2mygvzjfaTe8Ilxp7jURdd69HcM0iQlAQO87fJ/c=;
+ b=WfF/PBgSLiASZOMhkEpb1dlzrJmGRW1zaD/v8d4S7rt3V4pi5K0Zf3RSQract2LZTm
+ E83Nc4+tGz0ZlGK0fi954YL6pUaCBRu9Eq3xfR/GFet4rrxbM5oKczWtPpBdmTqHAjx5
+ s197UWwOfni76UPAFp9kriRIltpnexDenfLXQF8y5FxCC1PfHk0gJFpaOmHb3FVHN5qf
+ GHc8FjVv8CndsX0BLeQj0T71G6QeAOq7BcF9vaIa3gy86/IgREiy01NWsJXqx3gluVls
+ zIweC59GiHcmVAO7Pa7l2yZFcMxk4Q08KidAppgUdTu3aSX432tpVLE+L3xsbDefvetN
+ aOQA==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEqZ1NNCxbcOU08awjmXALEF/wrTATQuYLFCm5xYPmrZaoz0iZ13AoZnYfVO/5Hu3a27BYIiKBpmg1W@nongnu.org
+X-Gm-Message-State: APuU4Z8SsmW5XJeMSMECXEaaQ3eaO0p9fM4gCkLT5cAYxEwh/vZWCNLm
+ qVdjNjkqW9XGnclVRvfbA3LQn2fon2IJgHpETGHVk4P8Yx2NU+sakWjcVKIhNSrBk1sGwH3nCW6
+ gZQLj8P8=
+X-Gm-Gg: AYBFou0ilkprkr+syHS6T8jtBQNbZHNbiRavMsEBl+/ortXHZOrKQKL7GFNPK45LniP
+ GBYzrGElb1t3IA8MTDkItQlalWdN79Dt+liLECYh6rUqx7gvcFtxpFpyvg2vnR0h3c+NoNxrN4S
+ qQgFclWe4GewuSFxVTpkVaHg+rAwfyFeafRFNAp7r+ZxQe45NFpIUa6hsl7EUTxItmuGKfJakKY
+ W3QQfhzwcnFW4JUi6ZLfHjlemKcISe11tWYbl5KV8Iwl7CCo5PQtR8wT3DBEGwdxNnllNifiW10
+ JPqXRVl3BBWJSJcwJN2tWDD1TWpYDCxsjxC8DClRm9IJHrKNAScVto0R4uy12WY9PSUlK7QwshJ
+ iOXU12qX6iSXSJPVxAoZLX5dq/y356zgvm51njN3FxezJ1ibmmxzFu15XYCr5snl8azzDXZ47ly
+ tMsxYwOQ/QXm5Sm75qAyi837qbb/F95mfe/3Yq/Yjbtd6A59u5WzCan4Z9p5jsT7JzrcLHc2+f0
+ XzwtiEDF3+mWA1G+uzQ9EgVP6cBk09pIe4Ks8+orsiPkYRLMkSkJckAeFG/gNkxfbqNtjYg/uYi
+ L4XscouNYhXRXQsIbY7vOwbhgG5ocsSLkvFZ6LRkyfI=
+X-Received: by 2002:a17:90b:3904:b0:3b0:99f8:eba8 with SMTP id
+ 98e67ed59e1d1-3b182f8ba20mr6460918a91.66.1794507387373; 
+ Thu, 12 Nov 2026 10:16:27 -0800 (PST)
+Received: from [172.31.6.238] ([69.196.88.181])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c60f8d615sm545588f8f.56.2026.11.12.10.09.54
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Nov 2026 10:09:55 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- devel@lists.libvirt.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org
-Subject: [PATCH-for-12.0 v2 07/12] target-info: Support runtime-endian
- Linux-user targets
-Date: Thu, 12 Nov 2026 19:08:53 +0100
-Message-ID: <20261112180859.85380-8-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261112180859.85380-1-philmd@oss.qualcomm.com>
-References: <20261112180859.85380-1-philmd@oss.qualcomm.com>
+ 98e67ed59e1d1-3b197d27cf1sm5906951a91.12.2026.11.12.10.16.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Nov 2026 10:16:26 -0800 (PST)
+Message-ID: <820539b6-d161-43ff-8889-cb40c1ecc6f2@linaro.org>
+Date: Thu, 12 Nov 2026 11:16:24 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=c6Q+0h9l c=1 sm=1 tr=0 ts=6af600f5 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=oRXqm_aVrHWTxU2XlOwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: xCPP4iATC0uV_GpBjz2aJ2HZ6Q2ePT33
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA3MiBTYWx0ZWRfX1dNCh33ugXPF
- 96FhKTW8nN82d2thoHu1FGKsXqeATtm4ApjxMJBEJ9pTFy2CeKCxGv2ax/vx5qiUfJD/0i6Y6pa
- yXvROXdQ9Kv53AqLXWbHPZtgEBxWroZMTSzhSzGt+wJMUMUvF8urvaj0UU2I77NqRPSh+dOO6Vm
- HTKJBCsF22n7oD3uybKSVM7hsNyrhpq7T43CtvCJP9SNe8P0i9WjNtySVw6vrnsi9mEChu0X+zm
- WlBncb5RoLdnk9pGgEzKCRtnLYjwRr4DXVK18+YdX04tHcgVCPKV4eYtiSXsjLEtIAeUKAOYg5j
- lyAA1LnB+HFejtFRMrZN8s84zaG+Rw9IdOJsvKVzktgGXpUsw92I/FfPeNjhQvqoeXTTxS4e4MA
- G/eNbb3RQDsZ0LG+GeXfjyNNa0rsHK79kX9IgLl4LeaxoEPGXRL5KZ1iW33HsCwQeNPEh+bxUxV
- Ybczi3v+4m+JPLbY2Lw==
-X-Proofpoint-ORIG-GUID: xCPP4iATC0uV_GpBjz2aJ2HZ6Q2ePT33
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA3MiBTYWx0ZWRfXwFI8To1Nu5Nj
- 2zHjbnHsf/fsWNskqRhJTIM/KJieSd0ibkmpNfcwK6DvIH2rHNdTH3NoJiMIMNhLU4ROhtDHY/V
- OyMYbxaYPg9SzaisIKBWLtw38rC3Tbs=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-12_02,2026-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 phishscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611120072
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/8] NBD patches through 2026-11-10
+To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+References: <20261111035200.1751734-10-eblake@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261111035200.1751734-10-eblake@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,217 +102,45 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a write-once ABI byte-order setter for runtime-endian Linux-user
-targets.
+On 11/10/26 19:51, Eric Blake wrote:
+> The following changes since commit 723622bedb0b423de7d1c61ebbe6e7a71934949c:
+> 
+>    Merge tag 'for-upstream' ofhttps://repo.or.cz/qemu/kevin into staging (2026-11-09 11:58:07 -0800)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/ebblake/qemu.git tags/pull-nbd-2026-11-10
+> 
+> for you to fetch changes up to 1be14f69a8350349388763f83578f071fdbfee07:
+> 
+>    iotests: Add another nbd-robustness test (2026-11-10 11:20:24 -0600)
+> 
+> ----------------------------------------------------------------
+> NBD patches through 2026-11-10
+> 
+> A few bug fixes:
+> - Guillaume Vincke: improve connection retry if NBD client hangs up quickly
+> - Eric Blake: fix two low-severity CVEs with non-compliant NBD clients
 
-Expose const data to readers and inline runtime endian checks, keeping
-its writable initializer outside LTO.
+New failure:
 
-Retain immutable data and compile-time byte swapping for fixed-endian
-targets. Restrict TARGET_RUNTIME_ENDIAN to Linux-user configurations.
+https://gitlab.com/qemu-project/qemu/-/jobs/17979973534#L298
 
-Inspired-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- meson.build                    | 26 ++++++++++++++++++++++++--
- include/exec/tswap.h           | 11 +++++++----
- include/qemu/target-info-def.h | 14 ++++++++++++++
- include/qemu/target-info.h     | 20 ++++++++++++++++++++
- target-info-def.c              | 19 +++++++++++++++++++
- 5 files changed, 84 insertions(+), 6 deletions(-)
+137/150 block-qcow2-optional+block-slow - 
+qemu:io-qcow2-nbd-stale-connection          FAIL             2.37s 
+exit status 1
 
-diff --git a/meson.build b/meson.build
-index d7bcb581c181..04cf5d77f188 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3342,6 +3342,11 @@ foreach target : target_dirs
- 
-   config_target += keyval.load('configs/targets' / target + '.mak')
- 
-+  if 'TARGET_RUNTIME_ENDIAN' in config_target
-+    assert(target.endswith('linux-user'),
-+           'Runtime target endianness is only supported for Linux-user')
-+  endif
-+
-   target_kconfig = []
-   foreach sym: accelerators
-     if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
-@@ -4400,8 +4405,6 @@ foreach target : target_dirs
-     endif
-   endif
- 
--  arch_srcs += files('target-info-def.c')
--
-   if target_base_arch in target_arch
-     t = target_arch[target_base_arch].apply(config_target, strict: false)
-     arch_srcs += t.sources()
-@@ -4470,6 +4473,25 @@ foreach target : target_dirs
-     lib_deps += dep.partial_dependency(compile_args: true, includes: true)
-   endforeach
- 
-+  # Keep the writable runtime-endian definition opaque to const readers,
-+  # as for page-vary-common.c above.
-+  target_info = files('target-info-def.c')
-+  if get_option('b_lto') and 'TARGET_RUNTIME_ENDIAN' in config_target
-+    target_info_flags = ['-fno-lto']
-+    if get_option('cfi')
-+      target_info_flags += '-fno-sanitize=cfi-icall'
-+    endif
-+    target_info = static_library('target-info-' + target,
-+                                sources: target_info + genh + config_target_h[target],
-+                                dependencies: lib_deps,
-+                                include_directories: target_inc,
-+                                c_args: c_args + target_info_flags,
-+                                build_by_default: false)
-+    objects += target_info.extract_all_objects(recursive: false)
-+  else
-+    arch_srcs += target_info
-+  endif
-+
-   lib = static_library('qemu-' + target,
-                  sources: arch_srcs + genh,
-                  dependencies: lib_deps,
-diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-index 17ac5444544d..869619bac314 100644
---- a/include/exec/tswap.h
-+++ b/include/exec/tswap.h
-@@ -13,14 +13,17 @@
- #include "hw/core/cpu.h"
- 
- /*
-- * If we're in target-specific code, we can hard-code the swapping
-- * condition, otherwise we have to do (slower) run-time checks.
-+ * For fixed-endian target-specific code, hard-code the swapping condition.
-+ * Otherwise use run-time checks.
-  */
- #ifdef COMPILING_PER_TARGET
-+#ifndef TARGET_RUNTIME_ENDIAN
- #define target_needs_bswap()  (HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN)
--#else
-+#endif
-+#endif
-+#ifndef target_needs_bswap
- #define target_needs_bswap()  (HOST_BIG_ENDIAN != target_big_endian())
--#endif /* COMPILING_PER_TARGET */
-+#endif
- 
- #if defined(CONFIG_USER_ONLY) \
-     || !defined(TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API)
-diff --git a/include/qemu/target-info-def.h b/include/qemu/target-info-def.h
-index 8019d2c7196e..34058955edec 100644
---- a/include/qemu/target-info-def.h
-+++ b/include/qemu/target-info-def.h
-@@ -32,6 +32,20 @@ typedef struct TargetInfo {
-     bool page_bits_vary;
- } TargetInfo;
- 
-+#ifdef COMPILING_PER_TARGET
-+#ifdef TARGET_RUNTIME_ENDIAN
-+/*
-+ * Linux-user selects the ELF byte order before creating CPUs or guest threads.
-+ * The data is then immutable; its writable definition must stay outside LTO.
-+ */
-+#ifdef IN_TARGET_INFO_DEF
-+extern TargetInfo target_info_stub;
-+#else
-+extern const TargetInfo target_info_stub;
-+#endif
-+#endif
-+#endif
-+
- /**
-  * target_info:
-  *
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 2cd4cc5671b5..6ed4cfda8d7b 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -9,6 +9,12 @@
- #ifndef QEMU_TARGET_INFO_H
- #define QEMU_TARGET_INFO_H
- 
-+#ifdef COMPILING_PER_TARGET
-+#ifdef TARGET_RUNTIME_ENDIAN
-+#include "qemu/target-info-def.h"
-+#endif
-+#endif
-+
- /**
-  * target_name:
-  *
-@@ -40,7 +46,21 @@ const char *target_cpu_type(void);
-  * the target, so please do *not* use this function unless you  know very
-  * well what you are doing!
-  */
-+#ifdef COMPILING_PER_TARGET
-+#ifdef TARGET_RUNTIME_ENDIAN
-+static inline bool target_big_endian(void)
-+{
-+    return target_info_stub.endianness == ENDIAN_MODE_BIG;
-+}
-+
-+/* Select the Linux-user ABI byte order once, before CPUs or guest threads. */
-+void target_set_big_endian(bool big_endian);
-+#else
- bool target_big_endian(void);
-+#endif
-+#else
-+bool target_big_endian(void);
-+#endif
- 
- /**
-  * target_heterogeneous:
-diff --git a/target-info-def.c b/target-info-def.c
-index bcf9cfe1e437..7580993e0bb3 100644
---- a/target-info-def.c
-+++ b/target-info-def.c
-@@ -6,6 +6,8 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
-+#define IN_TARGET_INFO_DEF 1
-+
- #include "qemu/osdep.h"
- #include "qemu/target-info.h"
- #include "qemu/target-info-def.h"
-@@ -24,7 +26,12 @@ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
- QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS < TARGET_PAGE_BITS_MIN);
- #endif
- 
-+#ifdef TARGET_RUNTIME_ENDIAN
-+/* This writable definition must not be compiled with -flto. */
-+TargetInfo target_info_stub = {
-+#else
- static const TargetInfo target_info_stub = {
-+#endif
-     .target_name = TARGET_NAME,
-     .target_arch = glue(SYS_EMU_TARGET_, TARGET_ARCH_VARIANT),
-     .long_bits = TARGET_LONG_BITS,
-@@ -42,3 +49,15 @@ static const TargetInfo target_info_stub = {
- };
- 
- target_info_init(target_info_stub)
-+
-+#ifdef TARGET_RUNTIME_ENDIAN
-+void target_set_big_endian(bool big_endian)
-+{
-+    static bool endian_decided;
-+
-+    assert(!endian_decided);
-+    endian_decided = true;
-+    target_info_stub.endianness = big_endian ? ENDIAN_MODE_BIG
-+                                             : ENDIAN_MODE_LITTLE;
-+}
-+#endif
--- 
-2.55.0
+{"error": {"class": "GenericError", "desc": "write failed: Input/output 
+error"}}
 
+
+r~
 
