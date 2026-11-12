@@ -1,146 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77576606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 16:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5F560A262E
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 16:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=X/XkNWQm;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=HgQIdWGe
+	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=selector2 header.b=CbBBTJNt
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRXc0-0000W5-Pq; Thu, 12 Nov 2026 11:25:20 -0500
+	id 1xRXhL-0003aS-K7; Thu, 12 Nov 2026 11:30:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xRXby-0000Ue-CA
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:25:18 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1xRXhG-0003UT-Pu; Thu, 12 Nov 2026 11:30:48 -0500
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xRXbw-0004Hx-Id
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 11:25:18 -0500
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ACFZUmk3841249
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 16:25:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- omgG1UBjsLCgKqKMy6xS5JhYelzlAqIX3n7Hq9IdgCQ=; b=X/XkNWQmXymPLgxO
- Yr+a6aGdgr9S+Kfb51y+dx0ilckb18DE4wyD72PZstA0SkHJEd5jFGxXDjKrKgVL
- xIB98uucJEs7PMItOpJ/B+EtsYoaAZXptEwNHd6za8sNm1pMXMJ6cm2rCaBIrhBo
- YVojJta6N1uhrEW9SQjDbXf/ULEeGEBDD9JCIjrp1rBOt/9xmHOzUV1VzJdrccIg
- ykUGy4k2SYlqLgjvYdUaao2NhbUHp8nCPwuix1wqzHz0kFodypCkmKLRoAWLErUA
- 9GWUlfDi0DD/loSo/6OyrSQsBjTdImCPiBpn9e8QNyNs2eCGW0kxFGgHnIqgNJyk
- vdV1LA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hw9e19vg7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 16:25:13 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5337ed1ba44so92172371cf.3
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 08:25:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794500713; x=1795105513; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=omgG1UBjsLCgKqKMy6xS5JhYelzlAqIX3n7Hq9IdgCQ=;
- b=HgQIdWGe1EGJxf54ubGKLgsWBS6npzEfiLu/gS8cxur+kjxpqugsX/A1eri+MH9cX8
- Fo3RWOdlW5WwKl4wOsVLth29T5qYgO2VRdQPEn38jK7IC4e+dx65lI6Z6piA9OuEyvbt
- 7OfNie+N+XdRZC7MXTvdSNJn5/xiMmeJPgwJFUA3u0NGFnqInEuR+sS23tQuOFog69OY
- owa6OKsP28LuS8cwBKoqYeq4bn0fil2eskS49vWOz+9sF8EerG9ZfmkzowBegjtnnO/Y
- tLBjNIVqgdtRGVrH45akTx9rT1F9RmODrJ5o1i8u2MpLf2432yb2sJJSqbQ8h0E7YtYO
- Qyeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794500713; x=1795105513;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=omgG1UBjsLCgKqKMy6xS5JhYelzlAqIX3n7Hq9IdgCQ=;
- b=YPPdCE5vWyBOiaaLC2HJNCO2Q4ujyN+2p0d6xPf6P7Kp2akBNq0cAqWi2c1UTc4Ej3
- FgINdIXDQ0FyjpzoGu3hxcUNO3AOxxIQzb/5szFUezJKu85V7j02JUk/YiJpmSNnjLGE
- jEUJpRCCl27djg0EYJ4VIa3Qa2qy5Fol7bHlpx3EtpKAJZpmkKutUXs8eemiqFVLfiZU
- iyLlQ/CBq9kAzv36yyLtMuHLHVSvGpbOZjP6XY8lfhFC3sac6J+Rf9ZgEo1GcvRWoFel
- nGg8Llu+VTk/9Bk1QuLB06tze2YtlsGP+J5BMYB1lHdvqWvSSvZu3RZlwUchTcd8orLM
- QJsg==
-X-Forwarded-Encrypted: i=1;
- AL+hErF1ya/Q2zEYVb07RUCzmQQ+Cxbj+nGkYMF5EekFThKEA3ORR3oTgeHm1f1c04byHjWPtsfIMRBJV+T6@nongnu.org
-X-Gm-Message-State: APuU4Z/4Uz5SlP6Nb40bI7+89Lqx/fehwdP7XrY+fzHCnk9fiLJAc4qw
- J8e6CTDgbBUPaVex80K2S4jS4vrOY/cFtzy6Efk4aoDgjCHN4fhiR9/YNmBwnTRke753hwS+nmm
- MRpOGkGaQwLB7WihDUd5VnOA2P6kU4R3IKIQtRmA9nKm5rsV1HLz49FBZhzrs5h58wA==
-X-Gm-Gg: AYBFou3aGwnUzKnGLbuOI3UTk2mYH3c7/wQGCi7SntDWQ+DB7g7f3NwFj4VQRFISWQF
- IiR2vwVoDof96YjSbEe5r9HWLPfnbeJp/sY6EuRHYiPARh7x4cj0cdbpmCkumy7zT9pUjspwexI
- YYMwOI+JkdFVI61l4fYRVDrwFfoJsF0571kJCTz1CyxrWbNMAWpERAiIL05zslaz4xGIjdW/lxE
- uRrx7ec/0SYhSQbxFmb8dol/FWMm0gjvVbb24cvhMaUiAeLYOQ2kDHlsZMqKZ/4F5Rrt75ISpup
- QxoTzq/8kMN5muhFOP0rUzJgyV3bDqModhIE9s5N0kRh8oLvbcw785uarHCpafNiZzivJMvax05
- if9MNT87H2buLeccgyD+kQcBVhU8gEcGGD6oV9II3oOo2S9rLjefRNO9AHNkzQJt/7RTsBc8uaH
- gw
-X-Received: by 2002:a05:622a:514a:b0:535:70b4:3f7e with SMTP id
- d75a77b69052e-556c1390750mr102959761cf.68.1794500712716; 
- Thu, 12 Nov 2026 08:25:12 -0800 (PST)
-X-Received: by 2002:a05:622a:514a:b0:535:70b4:3f7e with SMTP id
- d75a77b69052e-556c1390750mr102959131cf.68.1794500712073; 
- Thu, 12 Nov 2026 08:25:12 -0800 (PST)
-Received: from [172.31.27.103] ([209.52.143.85])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-556f374c4ccsm42435701cf.28.2026.11.12.08.25.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Nov 2026 08:25:09 -0800 (PST)
-Message-ID: <463c6622-8880-4f05-8824-a094c5dc9f1b@oss.qualcomm.com>
-Date: Thu, 12 Nov 2026 10:25:07 -0600
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1xRXhE-00053P-MV; Thu, 12 Nov 2026 11:30:46 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cCDgOd2wBD8hApdbFCfa1wK80/8kjNeZ3dEDVLHEdUSBlnDhi90FISBENUixOjL6hEM2XSuGblLHcPnC881AeYHv9rpiV9tNm0MRs3iaGgl73C1ve/MmsW9JKgrLpAUJoO0Y2ZgdmQ1rX1dDN0TJV9RXfN0GT6fUakvcbqtDDWckQLiSc+KDPX9+O3SvfxcyPhotxPt7D5DH7WgmUvTBDC6ZWW0bIEKtmGHYwFQxbcGGARVFlkDBSoy3vwdT9+wOz25Yzj/h3cSwwbjlNtdBC9CXNJGWhvH5noA1GFq6wNHdYiOeW/TGBaB7k8QJaZ/Tjly+db++PmoR6gfE9K7pMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fkHxSuJa8T4lyKtUYatyekTJ9qxxEjLGrKMjxn0XV34=;
+ b=flDHL3WCJ+Y3v/6h8EOpZTv2R3UKRlLrTNO6kT9Il0WpNM8I89fGsZbzM5SnsIESOyvf09w4VxOTp80Z3F3aSr0G00PyNPwe1oyqiUxOIuu2TpZoh1faUwPkn+Y5X+7pSmpFvgmwE2qDwVSEpd+XeHujsjC/2ooe3EPp0bMs1w8lU7EQ+aEAV7qnBIaWigFa/XS1sod0RgOVhKE0Qne39sYmy7xYvOnVhcSaOhou1+dzHsJcRLeRQy73ut+VD8wCKz27BpCTohX4gsNQwSfU2mJiS9rsvE7Bvyp/MxODcOhd9W6TlefGcKUpRBzH6S65I+m+BT6hThVOg5ljdbNHVQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fkHxSuJa8T4lyKtUYatyekTJ9qxxEjLGrKMjxn0XV34=;
+ b=CbBBTJNtiOSO6siVKuHRJ0O69frNqS1WV48ESw6qr4QOAmM399yJlA/2ST5ZiMfTwPc/nWqEIcnEU5L9OkglAn00oIVYTtoCEd8EBTVwYtvGnBInvimJnyMntW0f0ZRiGUTeRFMLYkNWd4hmHrdTgFCELeb/18GxKk41MiBC5dYek6VCGIr606R6cX3CxN2tyrmkR6GjX69/r0WpYdDbFVyG9zfqyPbTsasKs0uvLf0DYJyObfI82vuLpyNFet5urIQswO+LY9iqwsv+KdGKNkT8RbPpJkR2jyX4Jv4HGo4KcOh4T1CyaNHbtkAOVYoT5rnqyBSDdPlKvyWavJIRWQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by PA4PR08MB6189.eurprd08.prod.outlook.com (2603:10a6:102:ef::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.9; Thu, 12 Nov
+ 2026 16:30:35 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%5]) with mapi id 15.21.0615.008; Thu, 12 Nov 2026
+ 16:30:34 +0000
+Message-ID: <6b7efb67-c3ee-45a8-8bdf-b9122e819c39@virtuozzo.com>
+Date: Thu, 12 Nov 2026 17:30:33 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] scsi-disk: fix UNMAP and WRITE SAME racing with
+ inactivation
+To: Fiona Ebner <f.ebner@proxmox.com>, "Denis V. Lunev" <den@openvz.org>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-stable@nongnu.org
+References: <20261026174220.674460-1-den@openvz.org>
+ <81fde20a-d822-493d-825b-a99cc970ab71@proxmox.com>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <81fde20a-d822-493d-825b-a99cc970ab71@proxmox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VI4PEPF0000015C.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::87b) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] roms: add H2 firmware support
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20261024180657.2036255-1-brian.cain@oss.qualcomm.com>
- <20261024180657.2036255-2-brian.cain@oss.qualcomm.com>
- <4e004471-b8e2-498f-8c8b-19f0983f7082@tls.msk.ru>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <4e004471-b8e2-498f-8c8b-19f0983f7082@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA2NSBTYWx0ZWRfX9vKk8eBm9ctu
- EkfbU8sXsrKsNX+61Pb6OF87qRHFGHoUzenF7N7Vk2b8m2BKkDt/TQznCiHkBonOaTA5xFXI0Ai
- 3FJdSmRsJBk3B78q/vdhWLGtWhRgUhhF8ItIh4OuWmTLR8WC1GsiekmkZXZO1Puxbw31ICPdmRW
- ztIXGMOrn4eeaKu0nuYc+/BHpAyb3sXfrnM9XOy/nFk+vopgOJbeotM2J6ZkQMiS/gft0OWUlAz
- V9la1F1/ENLWiF5LCjS9j9DLmx/WGtTu/Gk3s1R+Rfbrd2IemVVQuXp51c05KBTZbpXLBgOUcTb
- 5UMe9a3fJzhsYZ2I7bE2idrANzgVmbGGO1namXCjtKQJ37+LaueQSDAXmqLmJNofuLGHVCXOpK8
- mzvn6xBkTTP0lwVhh6i/TjhgC8xmX/E8mCVlwkoMzgKVqLhXasd7lOQREqH8xghgJBtyTWTQ5ZL
- JAHQ5Zxf7eOTVpWerTg==
-X-Proofpoint-GUID: Iw5gw-1f9QKidTP3_NJNYs9w0Hf0TN3f
-X-Proofpoint-ORIG-GUID: Iw5gw-1f9QKidTP3_NJNYs9w0Hf0TN3f
-X-Authority-Analysis: v=2.4 cv=F6fC5ahN c=1 sm=1 tr=0 ts=6af5e869 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=U2bLIKXb3u36GtQyNyP1yA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=GP7u6OMWVVPowWkK02IA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA2NSBTYWx0ZWRfXzSNAAoMKqXgu
- NUG+n+7r252/fO+k1XROUuXtjhpE9RjtGRVXsLNa1SADoaYy1kxaKBHo8c5wQ4RXrb06Zv1bpUu
- Y7kfHUMF2o6guD9GDbC4J8EyCSVjeuY=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-12_02,2026-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 malwarescore=0 spamscore=0 clxscore=1015
- bulkscore=0 phishscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611120065
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PA4PR08MB6189:EE_
+X-MS-Office365-Filtering-Correlation-Id: 82a8d39d-84c1-4bea-22c0-08df40da46b7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|376014|23010399003|10070799003|366016|18002099003|261009223027099003|22082099003|56012099006|260925021311599003|260925022911599003|260925021911599003|10067099003|4143699003|261022105027099003|261022115727099003|261102123227099003|261022075727099003|261028144727099003|261026140227099003|261026121527099003|261021121427099003;
+X-Microsoft-Antispam-Message-Info: YuLy1Fmztp96qkxLjLp0JMNVIH/61rOdpLrf68mFIx/yDoUt3jZsYbCX9CVpqoyNXF8w39S4rJKb6Sh2u6wFMBPtAQkSX6+GMswby/0vIbq9uHY3q1iiHxSZcfcR11yndwHpd3T8g7H2kkzK5dnDG75sQab6hfucwM2NfOUlVu0Kv8ix3ZQxV3OpQ8ViGD8ge3QKhizvFjEOB7H841389Ayw4b1wCk802AHmUOM8STh+Jq1ZDhkOwZ+qQHC1V4GbzVQQw4QZaaJi3XGmLyA+P5W31rDvDUGKw69rETPLbGIRxVQ9kZwgKC5fQngzW75z3Dz0dGTOxhU413/niGOEFUQ0uyUYsM3f/fMjG45N08WpaqnQ6/uwwpuDty7H64E7bs7koXiLcAR/nhTcn1qJrDvkiXEiIVKSsaEp74GH7WgOteNU5zwuUBnQZ8AxJ6jsFBXsmD9cThmzqmbMwGTwLBHU1YAOHUiF426NYBPHttUYIXEXCClSDCqQHBUpeIMVkQdYhexWJzOM4SNnGACnWorM1WLML95+6en5iPjVKmGFEL7p3/bcbNNm1sjVRn4Ta6AUeikhonc+s47/cX8lmHxwYtM8ky5CEkgl1i0W8B+XCsSsJ/bAcoYxFbghAKxI2232ABySoj5vVAw4e59VW1fqi7N4nAYlcBGXY/TGpJE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(23010399003)(10070799003)(366016)(18002099003)(261009223027099003)(22082099003)(56012099006)(260925021311599003)(260925022911599003)(260925021911599003)(10067099003)(4143699003)(261022105027099003)(261022115727099003)(261102123227099003)(261022075727099003)(261028144727099003)(261026140227099003)(261026121527099003)(261021121427099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YjBzc0dlaDhCaisxODkyV2s3VS9qT3JUdjk0T3c5bnJKNUNBdWZjQ0lUQ0Fl?=
+ =?utf-8?B?S0pidEExcHJKM0NXV2F1ZHJUeG1LRUs5TnJhSWQzb1BMRkx4U3ZqUmkyT3Nz?=
+ =?utf-8?B?OFUyZFRlU2d0TWtiQzEwZDE2bUlHaTJBVDFyY0hJTVBhNzdkRmFDTmY5SVp5?=
+ =?utf-8?B?bElRM0xOQlA0MlpGNDM4bE92TGJ2L3R3TjJ2QzI5M2o0NWhvbVFlZExVV1lQ?=
+ =?utf-8?B?bzFWbnZ4ZldMSHZtVm1wcGM2cVBmL3J5Zjk2aDBhSmpXME94ekt2Qm94UVlz?=
+ =?utf-8?B?SGFCWksrdUdxK0w3ZzhZQ1ZXUlFWRTJYK05scDVjY01XQVVMSjJNeUFXTVgv?=
+ =?utf-8?B?UUNSZGJNNEdOVk9BZkR5UzNqTGZlejJlQ3pZb2J1YkV1dFpHbE8wQXJnVkFF?=
+ =?utf-8?B?NkhoZ2piRXFmTHVBbC9HMC9MRjVaei80NDFHdGV4UnRvTEhhdTc3NFBFaVNS?=
+ =?utf-8?B?RUF3cDErWG9jU3MwUTlXUk0rQnhxZ1BrNjEzTUNKOTcra09BOUJqY2c4VlBO?=
+ =?utf-8?B?SVkyUnpWY3RHTG5NODU3b1VML2VjcDVOb05KeS9jY1RDUGJTMnVLcmhFWEhm?=
+ =?utf-8?B?VmZiVEt1TXBDR1I0MVN4SGIzbmN4RGo2b0R5U3p0NjBVa2t3MUNnT2lBWDEx?=
+ =?utf-8?B?RWRKdmluMFZ2UmpnS2FPN3dxMGpxSXJDdGY2eHgzSXhZSmVTYlQ3NUI3WDZn?=
+ =?utf-8?B?Vk1xU0R6emRuZHFPVnlyc1N4Q3U0dzE3bjZTWDZSVmpqcUFWNll3cEZnUmp1?=
+ =?utf-8?B?RmhpWWtwZDhmWWM2YXpLV1NabHJPTjdJWmhIdk95cWVYVVVUVjlJdFgyRUJz?=
+ =?utf-8?B?aEIyZjgzY3BKZmw5T2RzWGZjdWttRjhtd2ZMeWdKNTNWcnZaN0Rpcm5vWm9I?=
+ =?utf-8?B?MWJmOVFER21ITkI0UXIyWERrdGFSalhrL0VPaVJ2cXZodDR0Y0lGcHBoYkgw?=
+ =?utf-8?B?M0M2NGpDemtNMmFkbE9tNUpEMVN0RWVCVWlJV3BvQ3ZrWC8rK3hqYjdtMEpZ?=
+ =?utf-8?B?QldGU3Q1WnBTSENoRDIxMUlQWHZrN0FpTVB5NURTWkhFQk81SHQwWlNBQUNz?=
+ =?utf-8?B?SVBnRHFVcU1RV1VnVzNOb1J1Q3RqNnROVWpUTUZWcWowaHFJV2VtZWNYNU1Z?=
+ =?utf-8?B?akduT2JQb2haYXJNUkV1cGdHM1ptNjFyTHNDQTg0SU5DZXZSc0NLY29zU05Z?=
+ =?utf-8?B?SUkwaktmeHRlSUlxTk9hM3lRQmpIQ29GblduQUNodkliTlBRZTZ0RFg4VmFu?=
+ =?utf-8?B?ZTB0bmNhejE3NXdYOEUwalpuM0NYQTRIaHNVcGJZUk82OW9JSzh0c0VpdWN0?=
+ =?utf-8?B?VCs5d0hjTFV1UXAzcWxJZHdJdSs5Y3lleU1WK0RLN1pFRHkweTdZVzdVaVpR?=
+ =?utf-8?B?YXVRcFd1RjhrN1RNbCtSR1NDaTdMakQ4MnU3L2FpQ1NUbXFzNWhoZjNNaVlJ?=
+ =?utf-8?B?dk5scWZ4emNWN2xkUFVkZzlKbDE3aHhpc2VDSW92VHZTZVBCY3FNemVZVm9B?=
+ =?utf-8?B?RkxJaWVqWlZKblZnWEwxN3JZTnh4RERULzJXcGEyN3grL3pWRG1jUUJaSjM1?=
+ =?utf-8?B?WHdOM0FWSEhMMFhDZllkM2pmT3JSU2R2RUovbU9sZldLREdZZnBRbThSeTB6?=
+ =?utf-8?B?ak9IZStxQ2VHdE9HVkxPZ243c25lOUUxeTFsVXUzQTA2M1ltQ0g1bnk5eEVv?=
+ =?utf-8?B?VHE4aUw4b2JMUkFVWjExL3JrbGN4NWEyOGJXbSs3NHFoNUJoZGlKZUZIZEZB?=
+ =?utf-8?B?eUZaby9WTmR2eXRwMVhPcDRJVEdCQjEyTWdVVFpLenJkWG9XK2lIZE0wK3ls?=
+ =?utf-8?B?aUM4OEpPMlpNTzVGWU5YWWI4cVBteUdLUElFU1ZPd3ovR2pHNC9JbDBueHhs?=
+ =?utf-8?B?WE8wYnJOSmRVdWRpNzhZQW0vNGpMYmxnRTg5QUJOTTRUYVo4V21TRHpYR05v?=
+ =?utf-8?B?VVFzUEpOdTl6b0xDMmZROE1tdGc5T1R1M1hIQjJsT2xhYkdJdVNzZUloWXFy?=
+ =?utf-8?B?bnk0OGJPSXVubkVHQUFSZW1qZ1Bjay9TSDY1bytZVkNwOXhlL1l1M09WSG9O?=
+ =?utf-8?B?aHRNUHZESDdIQzJ6WlB2dDNKT1N1NXM5eGlHOWhRbnFtTDIvVzY2R1pCaDlR?=
+ =?utf-8?B?Ujd0dDdlL3dXZjBrS09aUDRhZkljRWF3NDg4ZENhS3VrNTVBSXRPOVJKbm9E?=
+ =?utf-8?B?WUhvbXhkejFMQTQxbWhnZkhIM2lxM1F6N0czakl6SS8xWm9HR01hVHdZKzNt?=
+ =?utf-8?B?a3duenR4TnVHZWtUQnFnNjVSQUFUM21ZQ3piTWlBeExOcElFVmduUm8rL1Ay?=
+ =?utf-8?B?NDlsdTlBbHoxYU80bmg3Y0xTV0tVNFhwQUR3NGdaVkNCYU5Ld2NGZkx4WnVY?=
+ =?utf-8?Q?QsRFo//5d+2QTM7eKU5kahfzxhxwpVKc+1mm6Ir/6qES6?=
+X-MS-Exchange-AntiSpam-MessageData-1: Tpo/PAgz4jW3zw==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 82a8d39d-84c1-4bea-22c0-08df40da46b7
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2026 16:30:34.8600 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +3NqzZu+1noehqUw6HkViuVr1XEJNWGCQ8HUkZouLTvAC9s0ScFKnmbvO4VHvJDqQASokQOnsmxG4+0VI0RuWg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR08MB6189
+Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+ envelope-from=den@virtuozzo.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,49 +158,92 @@ X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On 11/12/26 17:02, Fiona Ebner wrote:
+> Hi Denis,
+>
+> Am 26.10.26 um 7:09 PM schrieb Denis V. Lunev:
+>> scsi-disk splits UNMAP into one discard per descriptor and a non-zero
+>> WRITE SAME into 512 KiB writes, submitting each step from the
+>> completion callback of the previous one. A drain in between only waits
+>> for the step in flight; the next one is queued by
+>> blk_wait_while_drained() and resumed by drain_end. When the drain is
+>> the one in bdrv_inactivate_all() (end of live migration,
+>> blockdev-set-active), the resumed request hits an inactive node:
+>>
+>>   bdrv_co_write_req_prepare: Assertion
+>>   `!(bs->open_flags & BDRV_O_INACTIVE)' failed.
+>>
+>> We hit this in production on a guest UNMAP with 38 descriptors.
+> thank you for tackling the issue! Unfortunately, I was still able to run
+> into a crash with your series applied on top of v11.2.0-rc0:
+>
+>> Thread 12 "qemu-system-x86" received signal SIGABRT, Aborted.
+>> [Switching to Thread 0x7e5ff390f6c0 (LWP 382537)]
+>> __GI_abort () at ./stdlib/abort.c:95
+>> warning: 95	./stdlib/abort.c: No such file or directory
+>> (gdb) bt
+>> #0  __GI_abort () at ./stdlib/abort.c:95
+>> #1  0x00007e5ff7ef7420 in __assert_fail_base (fmt=<optimized out>, assertion=<optimized out>, file=<optimized out>, line=2000, 
+>>     function=<optimized out>) at ./assert/assert.c:118
+>> #2  0x000064d2985a7d47 in bdrv_co_write_req_prepare (child=0x64d2b3419550, offset=0, bytes=512, req=0x7e5e468ebdd8, flags=0)
+>>     at ../block/io.c:2000
+>> #3  0x000064d2985a786b in bdrv_co_pdiscard (child=0x64d2b3419550, offset=0, bytes=512) at ../block/io.c:3217
+>> #4  0x000064d29858ee94 in blk_co_do_pdiscard (blk=0x64d2b3419050, offset=0, bytes=512, flags=BDRV_REQ_NO_QUEUE)
+>>     at ../block/block-backend.c:1821
+>> #5  0x000064d29858eded in blk_co_pdiscard (blk=0x64d2b3419050, offset=0, bytes=512, flags=BDRV_REQ_NO_QUEUE)
+>>     at ../block/block-backend.c:1849
+>> #6  0x000064d29817105b in scsi_unmap_co (iocb=0x7e5fe0001c90) at ../hw/scsi/scsi-disk.c:1873
+>> #7  0x000064d2981712aa in scsi_disk_co_aio_entry (opaque=0x7e5fe0001c90) at ../hw/scsi/scsi-disk.c:1797
+>> #8  0x000064d298785586 in coroutine_trampoline (i0=-1308221744, i1=25810) at ../util/coroutine-ucontext.c:175
+>> #9  0x00007e5ff7f27810 in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+>> #10 0x00007ffd671cda00 in ?? ()
+>> #11 0x0000000000000000 in ?? ()
+> I issued an UNMAP with 4095 descriptors, all discarding the first
+> sector, via sg_raw in the guest and then sent 'blockdev-set-active' to
+> deactivate via QMP.
+>
+> The device is
+>
+>>   -device 'scsi-hd,bus=virtioscsi1.0,channel=0,scsi-id=0,lun=1,drive=drive-scsi1,id=scsi1,device_id=drive-scsi1,write-cache=on'
+> and the blockdev
+>
+>> {
+>>   "detect-zeroes": "unmap",
+>>   "discard": "unmap",
+>>   "driver": "throttle",
+>>   "file": {
+>>     "cache": {
+>>       "direct": true,
+>>       "no-flush": false
+>>     },
+>>     "detect-zeroes": "unmap",
+>>     "discard": "unmap",
+>>     "driver": "qcow2",
+>>     "file": {
+>>       "aio": "io_uring",
+>>       "cache": {
+>>         "direct": true,
+>>         "no-flush": false
+>>       },
+>>       "detect-zeroes": "unmap",
+>>       "discard": "unmap",
+>>       "driver": "file",
+>>       "filename": "/mnt/pve/nfs/images/100/vm-100-disk-1.qcow2",
+>>       "node-name": "ef0f65238260b2e5517e288d10debc8",
+>>       "read-only": false
+>>     },
+>>     "node-name": "ff0f65238260b2e5517e288d10debc8",
+>>     "read-only": false
+>>   },
+>>   "node-name": "drive-scsi1",
+>>   "read-only": false,
+>>   "throttle-group": "throttle-drive-scsi1"
+>> }
+> Best Regards,
+> Fiona
+Great thing. Thanks a look for spending time for that.
 
-On 11/11/2026 2:09 AM, Michael Tokarev wrote:
-> On 10/24/26 21:06, Brian Cain wrote:
->
->> --- a/roms/Makefile
->> +++ b/roms/Makefile
->
->> +# Needs Hexagon SDK on PATH.
->> +hexagon_h2_build := hexagon-firmware-build
->> +hexagon_h2_src := $(CURDIR)/hexagon-hypervisor
->> +hexagon_h2_out = $(CURDIR)/$(hexagon_h2_build)
->> +hexagon_h2_booters := hexagon-booter-qcs6490-cdsp \
->> +    hexagon-booter-sm8975-nsp hexagon-booter-sa8775p-cdsp \
->> +    hexagon-booter-sc8480xp-nsp0 hexagon-booter-sa8797p-nsp0
->> +hexagon_h2_loadlinux := hexagon-loadlinux-qcs6490-cdsp \
->> +    hexagon-loadlinux-sm8975-nsp hexagon-loadlinux-sa8775p-cdsp \
->> +    hexagon-loadlinux-sc8480xp-nsp0 hexagon-loadlinux-sa8797p-nsp0
->> +hexagon_h2_common_flags = USE_PKW=0 TARGET=opt NULL_ANGEL_TRAP=1 \
->> +    HMX_HLX_SUPPORT=1 \
->> +    H2K_LOAD_ADDR=0x9b800000 H2K_GUEST_START=0xa2000000 \
->> +    H2K_GIT_COMMIT=0x$(shell git -C hexagon-hypervisor rev-parse 
->> --short=8 HEAD) \
->> +    H2K_GIT_COMMIT_LONG=0x$(shell git -C hexagon-hypervisor 
->> rev-parse HEAD) \
->> +    JFLAG=-j$(shell nproc)
->
-> Can we get rid of the git thing here please?
->
-Sorry, I will fix it.
+I'll dig further!
 
-
-> When a user downloads tarball from qemu download area and extracts it,
-> there's no git repository in there.  So the above `git rev-parse` fails.
->
-> I dunno if there should be official releases for the hexagon firmware or
-> we can create a file with some version string inside the subdir and 
-> use it
-> if exists (as we've done previously for some other roms, for exactly the
-> same reason).  But the current version is not good :)
->
-> (Testing 11.2.0-rc0 as a tarball, and noticed this immediately ;)
->
-> Thanks,
->
-> /mjt
+Den
 
