@@ -1,44 +1,44 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C97606C194
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 08:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FEA606A88C
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 08:47:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRmvY-0002uZ-11; Fri, 13 Nov 2026 03:46:32 -0500
+	id 1xRmvX-0002uJ-El; Fri, 13 Nov 2026 03:46:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xRmvU-0002tO-VH
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:29 -0500
-Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xRmvP-0002ol-3u
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:23 -0500
+Received: from krgm.moe ([103.47.186.116])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xRmvT-0007QN-E3
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:28 -0500
+ (envelope-from <prcups@krgm.moe>) id 1xRmvN-0007QZ-Gw
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:22 -0500
 Received: from yuno-loong (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id EA6F01DD;
- Fri, 13 Nov 2026 14:16:25 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id 1FCE3780F;
+ Fri, 13 Nov 2026 14:16:18 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v6 11/26] target/loongarch: add host TLBRet and handle
-Date: Fri, 13 Nov 2026 16:45:26 +0800
-Message-ID: <23c435596b199c9d3531aa29cfdc5b3bd5c5d726.1794558695.git.prcups@krgm.moe>
+Subject: [PATCH v6 06/26] target/loongarch: move timer initialization to
+ loongarh_cpu_realizefn()
+Date: Fri, 13 Nov 2026 16:45:21 +0800
+Message-ID: <00538728e2c970e2038ddf2e54d91870e210f387.1794558695.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <cover.1794558695.git.prcups@krgm.moe>
 References: <cover.1794558695.git.prcups@krgm.moe>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 2a14:640:1:12b5::1 (failed)
-Received-SPF: pass client-ip=2a14:640:1:12b5::1; envelope-from=prcups@krgm.moe;
+Received-SPF: pass client-ip=103.47.186.116; envelope-from=prcups@krgm.moe;
  helo=krgm.moe
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RDNS_NONE=0.793,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -57,102 +57,78 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add host value in enum TLBRet, and use it in raise_mmu_exception().
+After guest_timer initialization is added, irq_nr needs to be determined
+using cpu_has_lvz(), which relys on CPUCFG LVZ bit. So move it for
+preparation.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/cpu-mmu.h        |  8 ++++++++
- target/loongarch/tcg/tlb_helper.c | 18 ++++++++++++++++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ target/loongarch/cpu.c | 37 +++++++++++++++----------------------
+ 1 file changed, 15 insertions(+), 22 deletions(-)
 
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index 491eb514d9..17fb92a213 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -17,6 +17,14 @@ typedef enum TLBRet {
-     TLBRET_RI,
-     TLBRET_XI,
-     TLBRET_PE,
-+    TLBRET_HOST_MATCH,
-+    TLBRET_HOST_BADADDR,
-+    TLBRET_HOST_NOMATCH,
-+    TLBRET_HOST_INVALID,
-+    TLBRET_HOST_DIRTY,
-+    TLBRET_HOST_RI,
-+    TLBRET_HOST_XI,
-+    TLBRET_HOST_PE,
- } TLBRet;
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index d8f3af4f31..fc432cfda0 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -721,6 +721,21 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
+     CPUState *cs = CPU(dev);
+     LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(dev);
+     Error *local_err = NULL;
++    CPULoongArchState *env = cpu_env(cs);
++
++#ifdef CONFIG_TCG
++    CPUTimerState *timer;
++#endif
++
++    env->irq_nr = N_IRQS;
++    qdev_init_gpio_in(dev, loongarch_cpu_set_irq, env->irq_nr);
++#ifdef CONFIG_TCG
++    timer = env_timer(env);
++    timer->irq = IRQ_TIMER;
++    timer->cs  = cs;
++    timer_init_ns(&timer->timer, QEMU_CLOCK_VIRTUAL,
++                  &cpu_loongarch_timer_cb, timer);
++#endif
  
- typedef struct MMUContext {
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 5662b2c49a..33d5e04eb4 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -48,15 +48,24 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
-                                 MMUAccessType access_type, TLBRet tlb_error)
+     cpu_common_realize(cs, &local_err);
+     if (local_err != NULL) {
+@@ -748,27 +763,6 @@ static void loongarch_cpu_unrealizefn(DeviceState *dev)
+     lacc->parent_unrealize(dev);
+ }
+ 
+-static void loongarch_cpu_init(Object *obj)
+-{
+-#ifndef CONFIG_USER_ONLY
+-    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+-    CPULoongArchState *env = &cpu->env;
+-#ifdef CONFIG_TCG
+-    CPUTimerState *timer;
+-#endif
+-
+-    env->irq_nr = N_IRQS;
+-    qdev_init_gpio_in(DEVICE(cpu), loongarch_cpu_set_irq, env->irq_nr);
+-#ifdef CONFIG_TCG
+-    timer = env_timer(env);
+-    timer->irq = IRQ_TIMER;
+-    timer->cs  = CPU(obj);
+-    timer_init_ns(&timer->timer, QEMU_CLOCK_VIRTUAL,
+-                  &cpu_loongarch_timer_cb, timer);
+-#endif
+-#endif
+-}
+-
+ static ObjectClass *loongarch_cpu_class_by_name(const char *cpu_model)
  {
-     CPUState *cs = env_cpu(env);
--    CPUSysState *sys = env_sys(env);
-+    bool real_guest;
-+
-+    if (env_vm_level(env) == VM_LEVEL1 && tlb_error > TLBRET_HOST_MATCH) {
-+        trigger_vm_exit(env);
-+    }
-+
-+    real_guest = !env->vm_exit && env_vm_level(env);
-+    CPUSysState *sys = get_sys(env, real_guest);
+     ObjectClass *oc;
+@@ -1002,7 +996,6 @@ static const TypeInfo loongarch_cpu_type_infos[] = {
+         .parent = TYPE_CPU,
+         .instance_size = sizeof(LoongArchCPU),
+         .instance_align = __alignof(LoongArchCPU),
+-        .instance_init = loongarch_cpu_init,
  
-     switch (tlb_error) {
-     default:
-     case TLBRET_BADADDR:
-+    case TLBRET_HOST_BADADDR:
-         cs->exception_index = access_type == MMU_INST_FETCH
-                               ? EXCCODE_ADEF : EXCCODE_ADEM;
-         break;
-     case TLBRET_NOMATCH:
-+    case TLBRET_HOST_NOMATCH:
-         /* No TLB match for a mapped address */
-         if (access_type == MMU_DATA_LOAD) {
-             cs->exception_index = EXCCODE_PIL;
-@@ -68,6 +77,7 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
-         sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 1);
-         break;
-     case TLBRET_INVALID:
-+    case TLBRET_HOST_INVALID:
-         /* TLB match with no valid bit */
-         if (access_type == MMU_DATA_LOAD) {
-             cs->exception_index = EXCCODE_PIL;
-@@ -78,24 +88,28 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
-         }
-         break;
-     case TLBRET_DIRTY:
-+    case TLBRET_HOST_DIRTY:
-         /* TLB match but 'D' bit is cleared */
-         cs->exception_index = EXCCODE_PME;
-         break;
-     case TLBRET_XI:
-+    case TLBRET_HOST_XI:
-         /* Execute-Inhibit Exception */
-         cs->exception_index = EXCCODE_PNX;
-         break;
-     case TLBRET_RI:
-+    case TLBRET_HOST_RI:
-         /* Read-Inhibit Exception */
-         cs->exception_index = EXCCODE_PNR;
-         break;
-     case TLBRET_PE:
-+    case TLBRET_HOST_PE:
-         /* Privileged Exception */
-         cs->exception_index = EXCCODE_PPI;
-         break;
-     }
- 
--    if (tlb_error == TLBRET_NOMATCH) {
-+    if (tlb_error == TLBRET_NOMATCH || tlb_error == TLBRET_HOST_NOMATCH) {
-         sys->CSR_TLBRBADV = address;
-         if (is_la64(env)) {
-             sys->CSR_TLBREHI = FIELD_DP64(sys->CSR_TLBREHI, CSR_TLBREHI_64,
+         .abstract = true,
+         .class_size = sizeof(LoongArchCPUClass),
 -- 
 2.56.0
 
