@@ -1,63 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CC0606A8BA
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D714606A8A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=roWAKKmh;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=TyMgOkP3
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=rnZvgJDP;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=bxKD1c4i
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRzAM-0000ri-9L; Fri, 13 Nov 2026 16:50:38 -0500
+	id 1xRzAJ-0000Pp-60; Fri, 13 Nov 2026 16:50:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9l-0008Cq-H7
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:50:06 -0500
-Received: from mx2.catap.net ([65.21.79.163])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9c-00084g-Ug
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:53 -0500
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9i-00060m-Sq
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:50:01 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=x15Ip03
- ujL7Jj8XYczSMzciJLba5ltdBpuLPjqMFMfNq3FXo4KdjqT4rwast6lplgZcVrDqh49nN7
- TR54CmlDQp+boTWC2RMebqI9IbtTFBgyio5Y9je21fDVDOrLY8WvnPCmAik8n2KlYC+8lV
- ULGULdMhNV55qB0NvnuTH3IHtV8OhA8QnzMJHfcy6X2c7RaldjMjYBIlUz0BSNCfkX/YA2
- Fuo/qCcTGaQYk9q7CWZN2L2ljw8FxQaxNeCnXNLjc94odUHEpx1p+NYekK5FvWV0oR34yF
- nlBq13E0ezNufWjJ03+MclhlmCbINfygE9nlo7ttO1xF7l8tYKbaP9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=O
- Yv4RuWLOKPW2Jy8ZZif7tzbIOX4m2FaFYS7f3F7q5M=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9a-0005Cz-Mm
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:52 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Tgtz6v7
+ 4kw4TGQSkkPuHkI87Su8GLZHGBZhNiip0tJKErTJ+bSIKo4aiKhU1QttUegov49ulaO+Jc
+ n0ghcE1kGbbSBFoBBQI2VlJKPCX5KHmCofQLAfm3Z3Uq2qbafiYgNiIPN0PUqnMriiyQGn
+ phbB/WqW2888p8SLLgBXof0ZXOfgyIOdda9YUDoLjq2M8ZaLepFIJ/j7Avk7KYQAumkgMA
+ pQ8v8qMYTXIEywNAiH08KvxUNeSRCfFcSHcoNWou32knYALIgrfnfsbRRorvIkA0Vg6fLW
+ HDrJfUahh1jmUcJ3nTOOq+7F3zeuyJ1B8qk4LCdPpPPJdGjCdeZR73w==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=N
+ ppkIIZj6WBVq4FJI17SRKgCoRW9F3NxyUn6cpW4+E0=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=nbajc8j3+GcNk9HTK3uhGl7YF0Na4CmKhup1l/WzW+7j+36bsUjagx6S269/ZsJJN09t
- zYQ3aKUxekIzYHnPi7WuvV/c8j9unPYfbCu7z/LXILGgk0vlPqXfjQ80+yoiDVLjM7mepq
- mpmfbZL3v9gKssnRqG6+RfLHQXYeJaWKCtMHoDTvfWoyJd+ed4MXzmHfDKdkcooMCoZuuo
- sDWqh0dc2B/HgNqGQnIP0waYKmrpIKFOe0cjKhq/+3zamit9MAY9VPVYTHaBeI7ilgeEHz
- bmCRHrqUABQZDjzthFG+4OOfhd5Jmgr5tZkoo7VXaPnNSkoq9u/DULk+Jhm6Aprg==
+ b=YGXfIHUTPqaIJkQg0OCCPsrVr7gkbPj56JxGSFp6fjsEUBW38uhJ4GzKooL8KhW00JZ1
+ bvp1U7dsHaFQHaltMp92ZPHr3avYA6QY6dyp7MCA6q8yLL8cptsGEpsilCgYUWFqrDlwoG
+ 71bCq2K+9DQ9GMvO65gF7bDFtowQSDArjjH5RBO0iiKKEYwvR6fJFrA4w9Ren+quUXI+Ss
+ szLRi8AFEOYnGFETf2Ggh5h/xHn6lIPUl6Hsbaaqo0X11c8lLI+L7/uU1PeU5nA5q011Oe
+ ZvvH9kVYkJMlE5CxpAXEYjDqpPD9s2E4Vw26lJWFxkxYwy9Y3hO3ys+6ZP0t4heA==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=roWAKKmh; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=TyMgOkP3;
+ header.b=rnZvgJDP; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=bxKD1c4i;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=OYv4RuWL
- OKPW2Jy8ZZif7tzbIOX4m2FaFYS7f3F7q5M=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=NppkIIZj
+ 6WBVq4FJI17SRKgCoRW9F3NxyUn6cpW4+E0=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=roWAKKmhozN2hzf1s6aVmFiH9Ce88oDqxNu
- l0hskg7b7nKeTOfwPBE70q++0notchL1kpKDeK/gp43rjz/KISRRKWbYDFZzvpM9Br300V
- g0CY8z2TYTzsSjt5p//KUnd321xWbxyZybfcRaqDUnRPwclZI09IyigFzmDiOjSpcrO05f
- Y12O0FqFXELx+mL3bp3QVFzkNvL4KBH676GYnEFHwj30smwsRxahlFPr31tdoCNZ6x7KGa
- DzQgRg0Q/hInxFhhOstjazXnXWxOy1y+yFvYX7UEo5mLuYC4cgLdZCHwJKTeAwKAzDhPFk
- W9+J+Fgrsv9GfurYd0+knPApD/g==
+ subject:cc:to:from; d=korins.ky; b=rnZvgJDPyRNdp8HX0WGRb6Yxu6HCLWCkLmF
+ yJlGlT8YO6aLg9runFfclvm9TmnSjBdIQEhbtgF6jFsW0dPlNSSzdnayWD3acSGnI2Fizv
+ JbVhhbsMcY+RWntjZHtdiVjQv6Ni2rSLW+g8imz8yxHAIVyGq5xsiKjelb25yVWBNzyTTG
+ wIx+KU9IbebC04p/t2/FmvRWUhBga8Ox6DPQjEkbnhJyWQhK32aqJ7PP5O4wdBRX+S5MiX
+ rgsL6YbNrmv3djT8YhCWSkU294POfTWOYFlbYI6nYfZ53Fk0fulBMCfvrZ/JUHXUVy5vlr
+ p92iYioxDtF4CfZYo39+gudog0A==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=OYv4RuWLOKPW2Jy8ZZif7tzbIOX4m2FaFYS7f3F7q5M=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=TyMgOkP3y8LMVsVfWp
- bk11E8pgVGWSRgSg3DyC3Q1/uZNkTtRlaWA+tVZwf2N/kFRahw/kJB6ym3y63wIM0RAw==
-Received: by mx2.catap.net (OpenSMTPD) id b52800f2;
- Fri, 13 Nov 2026 22:49:50 +0100 (CET)
+ bh=NppkIIZj6WBVq4FJI17SRKgCoRW9F3NxyUn6cpW4+E0=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=bxKD1c4iey/FJeIOLN
+ reNu9qKVEitDxSAsmQk0+dDeKBGQ+intIebJbXg0RaDgebU3E/TMnfV61MlG5mNQq/Aw==
+Received: by mx1.catap.net (OpenSMTPD) id e91a8d17;
+ Fri, 13 Nov 2026 22:49:48 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 592566d1;
- Fri, 13 Nov 2026 22:49:33 +0100 (CET)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id b0a865b6;
+ Fri, 13 Nov 2026 22:49:32 +0100 (CET)
 From: Kirill A. Korinsky <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -68,17 +68,17 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
 Cc: "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PATCH v8 14/26] hw/mips: add Octeon legacy CIU
-Date: Fri, 13 Nov 2026 22:45:28 +0100
-Message-ID: <20261113214926.98536-15-kirill@korins.ky>
+Subject: [PATCH v8 04/26] target/mips: add Octeon CP0 register state
+Date: Fri, 13 Nov 2026 22:45:18 +0100
+Message-ID: <20261113214926.98536-5-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113214926.98536-1-kirill@korins.ky>
 References: <20261113214926.98536-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -106,351 +106,305 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-Model the legacy CIU mailbox, IPI, GPIO and UART summary registers.
-Mirror mailbox state into CIU3 interrupt sources so firmware using either
-controller observes consistent interrupt delivery.
+Octeon firmware and kernels use implementation specific CP0 registers
+for the cycle counter and local memory control.
+
+Add CvmCount, CvmCtl, and CvmMemCtl accessors for Octeon CPUs; migrate
+the new CP0 state, and translate the enabled CVMSEG virtual window to
+per vCPU backing memory.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- hw/mips/octeon.c          | 248 +++++++++++++++++++++++++++++++++++++-
- hw/mips/octeon_internal.h |   1 +
- 2 files changed, 248 insertions(+), 1 deletion(-)
+ target/mips/cpu.h                   |  5 +++
+ target/mips/system/machine.c        | 13 +++++++
+ target/mips/system/physaddr.c       | 22 +++++++++++
+ target/mips/tcg/op_helper.c         |  2 +-
+ target/mips/tcg/system/cp0_helper.c | 10 +++++
+ target/mips/tcg/system_helper.h.inc |  1 +
+ target/mips/tcg/translate.c         | 60 +++++++++++++++++++++++++++++
+ 7 files changed, 112 insertions(+), 1 deletion(-)
 
-diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 567be0905a..638d96559f 100644
---- a/hw/mips/octeon.c
-+++ b/hw/mips/octeon.c
-@@ -69,6 +69,29 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
- #define OCTEON_DR1_BASE             0x020000000ULL
- #define OCTEON_DR1_SIZE             (OCTEON_MAX_PHY_MEM_SIZE - OCTEON_DR0_SIZE)
- 
-+#define OCTEON_CIU_BASE             0x1070000000000ULL
-+#define OCTEON_CIU_LEGACY_PAGE_SIZE (4 * KiB)
-+#define OCTEON_CIU_SIZE             (1 * MiB + OCTEON_CIU_LEGACY_PAGE_SIZE)
-+#define OCTEON_CIU_FUSE             0x728
-+#define OCTEON_CIU_SUM_IPI          0x0000000100000000ULL
-+#define OCTEON_CIU_SUM_UART         0x0000000800000000ULL
-+#define OCTEON_CIU_ENABLE0          0x88006f1800000000ULL
-+#define OCTEON_CIU_IPI_SUM_BASE     0x008
-+#define OCTEON_CIU_IPI_SUM_STRIDE   0x10
-+#define OCTEON_CIU_IPI_EN_BASE      0x210
-+#define OCTEON_CIU_IPI_EN_STRIDE    0x20
-+#define OCTEON_CIU_MBOX_SET_BASE    0x600
-+#define OCTEON_CIU_MBOX_CLR_BASE    0x680
-+#define OCTEON_CIU_MBOX_SET_STRIDE  8
-+#define OCTEON_CIU_GPIO_RX_DAT      0x880
-+#define OCTEON_CIU_GPIO_TX_SET      0x888
-+#define OCTEON_CIU_GPIO_TX_CLR      0x890
-+#define OCTEON_CIU_GPIO_BIT_CFG_STRIDE OCTEON_CSR_64BIT_SIZE
-+#define OCTEON_CIU_GPIO_BIT_CFGX(x) \
-+    (0x900 + (x) * OCTEON_CIU_GPIO_BIT_CFG_STRIDE)
-+#define OCTEON_CIU_GPIO_INPUTS      ((1ULL << OCTEON_CIU_GPIO_COUNT) - 1)
-+#define OCTEON_CIU_GPIO_BIT_CFG_TX_OE (1ULL << 0)
-+
- #define OCTEON_CIU3_BASE            0x1010000000000ULL
- #define OCTEON_CIU3_SIZE            0xb0000000ULL
- #define OCTEON_CIU3_PP_RST          0x100
-@@ -97,7 +120,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
- #define OCTEON_CIU3_ISC_SIZE        (OCTEON_CIU3_NINTSN * 8)
- #define OCTEON_CIU3_MBOX_INTSN(cpu) ((cpu) + 0x4000U)
- #define OCTEON_CIU3_UART0_INTSN     0x8000
--
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 7c721ec9c5..3c9b5e499b 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -341,6 +341,8 @@ typedef struct mips_def_t mips_def_t;
+ #define CP0_REG09__COUNT           0
+ #define CP0_REG09__SAARI           6
+ #define CP0_REG09__SAAR            7
++#define CP0_REG09__CVMCOUNT        6
++#define CP0_REG09__CVMCTL          7
+ /* CP0 Register 10 */
+ #define CP0_REG10__ENTRYHI         0
+ #define CP0_REG10__GUESTCTL1       4
+@@ -349,6 +351,7 @@ typedef struct mips_def_t mips_def_t;
+ /* CP0 Register 11 */
+ #define CP0_REG11__COMPARE         0
+ #define CP0_REG11__GUESTCTL0EXT    4
++#define CP0_REG11__CVMMEMCTL       7
+ /* CP0 Register 12 */
+ #define CP0_REG12__STATUS          0
+ #define CP0_REG12__INTCTL          1
+@@ -787,6 +790,7 @@ typedef struct CPUArchState {
+  * CP0 Register 9
+  */
+     int32_t CP0_Count; /* Use qatomic for concurrent accesses. */
++    target_ulong CP0_CvmCtl;
+ #define CP0SAARI_TARGET 0    /*  5..0  */
+ #define CP0SAAR_BASE    12   /* 43..12 */
+ #define CP0SAAR_SIZE    1    /*  5..1  */
+@@ -801,6 +805,7 @@ typedef struct CPUArchState {
+  * CP0 Register 11
+  */
+     int32_t CP0_Compare;
++    target_ulong CP0_CvmMemCtl;
  /*
-  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
-  * the guest sees the virtual CVMSEG window, not this physical address.
-@@ -147,7 +169,14 @@ struct OcteonRstState {
- 
- struct OcteonIntcState {
-     OcteonPeripheralState parent_obj;
-+    MemoryRegion ciu;
-     MemoryRegion ciu3;
-+    uint32_t ciu_mbox[OCTEON_MAX_CPUS];
-+    uint64_t ciu_ipi_en[OCTEON_MAX_CPUS];
-+    uint64_t ciu_gpio_rx;
-+    uint64_t ciu_gpio_tx;
-+    uint64_t ciu_gpio_bit_cfg[OCTEON_CIU_GPIO_COUNT];
-+    bool uart_pending;
-     uint64_t ciu3_pp_rst;
-     uint32_t ciu3_src_state[OCTEON_CIU3_SRC_COUNT];
-     uint64_t ciu3_src_ctl[OCTEON_CIU3_SRC_COUNT];
-@@ -305,6 +334,12 @@ static void octeon_ciu3_clear_raw(OcteonState *s, unsigned int source)
-     } while (old != cmp);
- }
- 
-+static bool octeon_ciu3_set_mbox(OcteonState *s, unsigned int cpu)
-+{
-+    return octeon_ciu3_set_level(s, OCTEON_CIU3_SRC_MBOX0 + cpu,
-+                                 qatomic_read(&s->intc->ciu_mbox[cpu]) != 0);
-+}
-+
- static bool octeon_ciu3_isc_decode(hwaddr reg, uint32_t base,
-                                    uint32_t *intsn)
- {
-@@ -461,6 +496,12 @@ static void octeon_intc_update_cpu(OcteonState *s, unsigned int cpu_index)
-          irq < OCTEON_CIU3_CP0_IRQ_BASE + OCTEON_CIU3_CP0_IRQ_COUNT;
-          irq++) {
-         level = false;
-+        if (irq == 3) {
-+            level = qatomic_read(&s->intc->ciu_mbox[cpu_index]) &&
-+                    (qatomic_read(&s->intc->ciu_ipi_en[cpu_index]) &
-+                     OCTEON_CIU_SUM_IPI);
-+        }
-+
-         if (octeon_ciu3_pending_intsn(s, cpu_index, irq, &intsn)) {
-             level = true;
-         }
-@@ -527,6 +568,189 @@ static uint64_t octeon_ciu3_source_cpu_mask(OcteonState *s, unsigned int src)
-         s, qatomic_read(&s->intc->ciu3_src_ctl[src]));
- }
- 
-+static uint64_t octeon_ciu_gpio_rx_value(OcteonState *s)
-+{
-+    uint64_t value = 0;
-+    unsigned int i;
-+
-+    for (i = 0; i < OCTEON_CIU_GPIO_COUNT; i++) {
-+        uint64_t mask = 1ULL << i;
-+
-+        if (qatomic_read(&s->intc->ciu_gpio_bit_cfg[i]) &
-+            OCTEON_CIU_GPIO_BIT_CFG_TX_OE) {
-+            if (qatomic_read(&s->intc->ciu_gpio_tx) & mask) {
-+                value |= mask;
-+            }
-+        } else if (qatomic_read(&s->intc->ciu_gpio_rx) & mask) {
-+            value |= mask;
-+        }
-+    }
-+
-+    return value;
-+}
-+
-+static uint64_t octeon_ciu_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    OcteonState *s = opaque;
-+    uint64_t value = 0;
-+    hwaddr reg = addr & ~7ULL;
-+    unsigned int cpu;
-+
-+    if (reg == 0) {
-+        if (qatomic_read(&s->intc->uart_pending)) {
-+            value |= OCTEON_CIU_SUM_UART;
-+        }
-+        octeon_intc_request_cpu_update(s, 0);
-+        return octeon_read64(value, addr, size);
-+    }
-+
-+    if (reg == OCTEON_CIU_IPI_EN_BASE) {
-+        return octeon_read64(OCTEON_CIU_ENABLE0, addr, size);
-+    }
-+
-+    if (reg == OCTEON_CIU_FUSE) {
-+        value = octeon_present_cpu_mask(s);
-+        return octeon_read64(value, addr, size);
-+    }
-+
-+    if (reg == OCTEON_CIU_GPIO_RX_DAT) {
-+        return octeon_read64(octeon_ciu_gpio_rx_value(s), addr, size);
-+    }
-+
-+    if (reg == OCTEON_CIU_GPIO_TX_SET ||
-+        reg == OCTEON_CIU_GPIO_TX_CLR) {
-+        return octeon_read64(qatomic_read(&s->intc->ciu_gpio_tx), addr, size);
-+    }
-+
-+    if (reg >= OCTEON_CIU_GPIO_BIT_CFGX(0) &&
-+        reg < OCTEON_CIU_GPIO_BIT_CFGX(OCTEON_CIU_GPIO_COUNT)) {
-+        unsigned int index = (reg - OCTEON_CIU_GPIO_BIT_CFGX(0)) /
-+                             OCTEON_CIU_GPIO_BIT_CFG_STRIDE;
-+
-+        return octeon_read64(qatomic_read(&s->intc->ciu_gpio_bit_cfg[index]),
-+                             addr, size);
-+    }
-+
-+    if (reg >= OCTEON_CIU_IPI_SUM_BASE &&
-+        reg < OCTEON_CIU_IPI_SUM_BASE +
-+              OCTEON_MAX_CPUS * OCTEON_CIU_IPI_SUM_STRIDE &&
-+        ((reg - OCTEON_CIU_IPI_SUM_BASE) &
-+         (OCTEON_CIU_IPI_SUM_STRIDE - 1)) == 0) {
-+        cpu = (reg - OCTEON_CIU_IPI_SUM_BASE) / OCTEON_CIU_IPI_SUM_STRIDE;
-+        if (cpu < s->cpu_count && qatomic_read(&s->intc->ciu_mbox[cpu])) {
-+            return octeon_read64(OCTEON_CIU_SUM_IPI, addr, size);
-+        }
-+    }
-+
-+    if (reg >= OCTEON_CIU_IPI_EN_BASE &&
-+        reg < OCTEON_CIU_IPI_EN_BASE +
-+              OCTEON_MAX_CPUS * OCTEON_CIU_IPI_EN_STRIDE &&
-+        ((reg - OCTEON_CIU_IPI_EN_BASE) &
-+         (OCTEON_CIU_IPI_EN_STRIDE - 1)) == 0) {
-+        cpu = (reg - OCTEON_CIU_IPI_EN_BASE) / OCTEON_CIU_IPI_EN_STRIDE;
-+        if (cpu < s->cpu_count) {
-+            return octeon_read64(qatomic_read(&s->intc->ciu_ipi_en[cpu]),
-+                                 addr, size);
-+        }
-+    }
-+
-+    if (reg >= OCTEON_CIU_MBOX_CLR_BASE &&
-+        reg < OCTEON_CIU_MBOX_CLR_BASE +
-+              OCTEON_MAX_CPUS * OCTEON_CIU_MBOX_SET_STRIDE &&
-+        ((reg - OCTEON_CIU_MBOX_CLR_BASE) &
-+         (OCTEON_CIU_MBOX_SET_STRIDE - 1)) == 0) {
-+        cpu = (reg - OCTEON_CIU_MBOX_CLR_BASE) / OCTEON_CIU_MBOX_SET_STRIDE;
-+        if (cpu < s->cpu_count) {
-+            return octeon_read64(qatomic_read(&s->intc->ciu_mbox[cpu]),
-+                                 addr, size);
-+        }
-+    }
-+
-+    return 0;
-+}
-+
-+static void octeon_ciu_write(void *opaque, hwaddr addr,
-+                             uint64_t value, unsigned size)
-+{
-+    OcteonState *s = opaque;
-+    hwaddr reg = addr & ~7ULL;
-+    uint64_t old;
-+    unsigned int cpu;
-+
-+    if (reg >= OCTEON_CIU_IPI_EN_BASE &&
-+        reg < OCTEON_CIU_IPI_EN_BASE +
-+              OCTEON_MAX_CPUS * OCTEON_CIU_IPI_EN_STRIDE &&
-+        ((reg - OCTEON_CIU_IPI_EN_BASE) &
-+         (OCTEON_CIU_IPI_EN_STRIDE - 1)) == 0) {
-+        cpu = (reg - OCTEON_CIU_IPI_EN_BASE) / OCTEON_CIU_IPI_EN_STRIDE;
-+        if (cpu < s->cpu_count) {
-+            value = octeon_atomic_write64(&s->intc->ciu_ipi_en[cpu], addr,
-+                                          value, size, UINT64_MAX, 0, &old);
-+            if (old != value) {
-+                octeon_intc_request_cpu_update(s, cpu);
-+            }
-+        }
-+        return;
-+    }
-+
-+    if (reg >= OCTEON_CIU_MBOX_SET_BASE &&
-+        reg < OCTEON_CIU_MBOX_SET_BASE +
-+              OCTEON_MAX_CPUS * OCTEON_CIU_MBOX_SET_STRIDE &&
-+        ((reg - OCTEON_CIU_MBOX_SET_BASE) &
-+         (OCTEON_CIU_MBOX_SET_STRIDE - 1)) == 0) {
-+        cpu = (reg - OCTEON_CIU_MBOX_SET_BASE) / OCTEON_CIU_MBOX_SET_STRIDE;
-+        if (cpu < s->cpu_count) {
-+            old = qatomic_fetch_or(&s->intc->ciu_mbox[cpu], value & UINT32_MAX);
-+            if ((old | (value & UINT32_MAX)) != old &&
-+                octeon_ciu3_set_mbox(s, cpu)) {
-+                octeon_intc_request_cpu_update(s, cpu);
-+            }
-+        }
-+        return;
-+    }
-+
-+    if (reg >= OCTEON_CIU_MBOX_CLR_BASE &&
-+        reg < OCTEON_CIU_MBOX_CLR_BASE +
-+              OCTEON_MAX_CPUS * OCTEON_CIU_MBOX_SET_STRIDE &&
-+        ((reg - OCTEON_CIU_MBOX_CLR_BASE) &
-+         (OCTEON_CIU_MBOX_SET_STRIDE - 1)) == 0) {
-+        cpu = (reg - OCTEON_CIU_MBOX_CLR_BASE) / OCTEON_CIU_MBOX_SET_STRIDE;
-+        if (cpu < s->cpu_count) {
-+            old = qatomic_fetch_and(&s->intc->ciu_mbox[cpu],
-+                                    ~(value & UINT32_MAX));
-+            if ((old & (value & UINT32_MAX)) &&
-+                octeon_ciu3_set_mbox(s, cpu)) {
-+                octeon_intc_request_cpu_update(s, cpu);
-+            }
-+        }
-+        return;
-+    }
-+
-+    if (reg == OCTEON_CIU_GPIO_TX_SET) {
-+        value = octeon_write64(0, addr, value, size) &
-+                OCTEON_CIU_GPIO_INPUTS;
-+        qatomic_or(&s->intc->ciu_gpio_tx, value);
-+        return;
-+    }
-+
-+    if (reg == OCTEON_CIU_GPIO_TX_CLR) {
-+        value = octeon_write64(0, addr, value, size) &
-+                OCTEON_CIU_GPIO_INPUTS;
-+        qatomic_and(&s->intc->ciu_gpio_tx, ~value);
-+        return;
-+    }
-+
-+    if (reg >= OCTEON_CIU_GPIO_BIT_CFGX(0) &&
-+        reg < OCTEON_CIU_GPIO_BIT_CFGX(OCTEON_CIU_GPIO_COUNT)) {
-+        unsigned int index = (reg - OCTEON_CIU_GPIO_BIT_CFGX(0)) /
-+                             OCTEON_CIU_GPIO_BIT_CFG_STRIDE;
-+
-+        octeon_atomic_write64(&s->intc->ciu_gpio_bit_cfg[index], addr, value,
-+                              size, UINT64_MAX, 0, NULL);
-+        return;
-+    }
-+}
-+
- static void octeon_cpu_park_now(MIPSCPU *cpu)
- {
-     CPUMIPSState *env = &cpu->env;
-@@ -591,6 +815,16 @@ static void octeon_ciu3_nmi(OcteonState *s, uint64_t mask)
+  * CP0 Register 12
+  */
+diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+index bd1e4002cf..3661da0566 100644
+--- a/target/mips/system/machine.c
++++ b/target/mips/system/machine.c
+@@ -372,6 +372,18 @@ static const VMStateDescription mips_vmstate_octeon_crypto = {
      }
- }
+ };
  
-+static const MemoryRegionOps octeon_ciu_ops = {
-+    .read = octeon_ciu_read,
-+    .write = octeon_ciu_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 8,
-+    },
++static const VMStateDescription mips_vmstate_octeon_cp0 = {
++    .name = "cpu/octeon_cp0",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mips_octeon_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINTTL(env.CP0_CvmCtl, MIPSCPU),
++        VMSTATE_UINTTL(env.CP0_CvmMemCtl, MIPSCPU),
++        VMSTATE_END_OF_LIST()
++    }
 +};
 +
- static uint64_t octeon_ciu3_read(void *opaque, hwaddr addr, unsigned size)
- {
-     OcteonState *s = opaque;
-@@ -799,6 +1033,7 @@ void octeon_irq_set(void *opaque, int irq, int level)
-         if (!octeon_ciu3_set_level(s, src, level)) {
-             return;
-         }
-+        qatomic_set(&s->intc->uart_pending, level);
-         break;
-     default:
-         return;
-@@ -1042,6 +1277,12 @@ static void octeon_intc_reset_hold(Object *obj, ResetType type)
-         opc->parent_phases.hold(obj, type);
+ const VMStateDescription vmstate_mips_cpu = {
+     .name = "cpu",
+     .version_id = 21,
+@@ -490,6 +502,7 @@ const VMStateDescription vmstate_mips_cpu = {
+         &mips_vmstate_timer,
+         &mips_vmstate_octeon_multiplier,
+         &mips_vmstate_octeon_crypto,
++        &mips_vmstate_octeon_cp0,
+         NULL
      }
+ };
+diff --git a/target/mips/system/physaddr.c b/target/mips/system/physaddr.c
+index b9f44c27bc..e9e233d3b3 100644
+--- a/target/mips/system/physaddr.c
++++ b/target/mips/system/physaddr.c
+@@ -22,6 +22,14 @@
+ #include "exec/target_page.h"
+ #include "../internal.h"
  
-+    memset(intc->ciu_mbox, 0, sizeof(intc->ciu_mbox));
-+    memset(intc->ciu_ipi_en, 0, sizeof(intc->ciu_ipi_en));
-+    qatomic_set(&intc->ciu_gpio_rx, OCTEON_CIU_GPIO_INPUTS);
-+    qatomic_set(&intc->ciu_gpio_tx, 0);
-+    memset(intc->ciu_gpio_bit_cfg, 0, sizeof(intc->ciu_gpio_bit_cfg));
-+    qatomic_set(&intc->uart_pending, false);
-     qatomic_set(&intc->ciu3_pp_rst, octeon_secondary_cpu_mask(s));
-     memset(intc->ciu3_src_state, 0, sizeof(intc->ciu3_src_state));
-     memset(intc->ciu3_src_ctl, 0, sizeof(intc->ciu3_src_ctl));
-@@ -1134,6 +1375,11 @@ static void mips_octeon_init(MachineState *machine)
-     octeon_load_firmware(s);
-     octeon_create_cpus(s);
- 
-+    memory_region_init_io(&s->intc->ciu, OBJECT(s->intc), &octeon_ciu_ops, s,
-+                          "octeon.ciu", OCTEON_CIU_SIZE);
-+    memory_region_add_subregion(get_system_memory(), OCTEON_CIU_BASE,
-+                                &s->intc->ciu);
++/*
++ * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
++ * the guest sees the virtual CVMSEG window, not this physical address.
++ */
++#define OCTEON_CVMSEG_BASE 0x10000000000ULL
++#define OCTEON_CVMSEG_SIZE 0x4000ULL
++#define OCTEON_CVMSEG_MASK 0x3fffULL
 +
-     memory_region_init_io(&s->intc->ciu3, OBJECT(s->intc),
-                           &octeon_ciu3_ops, s,
-                           "octeon.ciu3", OCTEON_CIU3_SIZE);
-diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index fef88419b5..cd810f3dd5 100644
---- a/hw/mips/octeon_internal.h
-+++ b/hw/mips/octeon_internal.h
-@@ -14,6 +14,7 @@
- #include "target/mips/cpu.h"
+ static int is_seg_am_mapped(unsigned int am, bool eu, int mmu_idx)
+ {
+     /*
+@@ -130,6 +138,20 @@ int get_physical_address(const CPUMIPSState *env, hwaddr *physical,
+     int ret = TLBRET_MATCH;
+     target_ulong address = real_address;
  
- #define OCTEON_MAX_CPUS             16
-+#define OCTEON_CIU_GPIO_COUNT       32
- #define OCTEON_CIU3_CP0_IRQ_COUNT   4
- #define OCTEON_CIU3_IDT_COUNT       (OCTEON_MAX_CPUS * 4)
++#if defined(TARGET_MIPS64)
++    if ((env->insn_flags & INSN_OCTEON) && (env->CP0_CvmMemCtl & 0x100) &&
++        address >= 0xffffffffffff8000ULL &&
++        address <= 0xffffffffffffbfffULL) {
++        MIPSCPU *cpu = env_archcpu(env);
++
++        *physical = OCTEON_CVMSEG_BASE +
++                    CPU(cpu)->cpu_index * OCTEON_CVMSEG_SIZE +
++                    (address & OCTEON_CVMSEG_MASK);
++        *prot = PAGE_READ | PAGE_WRITE;
++        return TLBRET_MATCH;
++    }
++#endif
++
+     if (address <= USEG_LIMIT) {
+         /* useg */
+         uint16_t segctl;
+diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
+index c3f0c05bc3..03648c815d 100644
+--- a/target/mips/tcg/op_helper.c
++++ b/target/mips/tcg/op_helper.c
+@@ -268,7 +268,7 @@ target_ulong HELPER(rdhwr_cvmcount)(CPUMIPSState *env)
+ #ifdef CONFIG_USER_ONLY
+     return cpu_get_host_ticks();
+ #else
+-    return (uint32_t)cpu_mips_get_count(env);
++    return HELPER(mfc0_cvmcount)(env);
+ #endif
+ }
  
+diff --git a/target/mips/tcg/system/cp0_helper.c b/target/mips/tcg/system/cp0_helper.c
+index 9c2dd1780c..5c040837e0 100644
+--- a/target/mips/tcg/system/cp0_helper.c
++++ b/target/mips/tcg/system/cp0_helper.c
+@@ -23,6 +23,8 @@
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
++#include "qemu/timer.h"
++#include "hw/core/clock.h"
+ #include "cpu.h"
+ #include "internal.h"
+ #include "qemu/host-utils.h"
+@@ -374,6 +376,14 @@ target_ulong HELPER(mfc0_count)(CPUMIPSState *env)
+     return (int32_t)cpu_mips_get_count(env);
+ }
+ 
++target_ulong HELPER(mfc0_cvmcount)(CPUMIPSState *env)
++{
++    MIPSCPU *cpu = env_archcpu(env);
++
++    return clock_ns_to_ticks(cpu->clock,
++                             qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++}
++
+ target_ulong HELPER(mftc0_entryhi)(CPUMIPSState *env)
+ {
+     int other_tc = env->CP0_VPEControl & (0xff << CP0VPECo_TargTC);
+diff --git a/target/mips/tcg/system_helper.h.inc b/target/mips/tcg/system_helper.h.inc
+index eaac5e2c6f..c8b6d8b92c 100644
+--- a/target/mips/tcg/system_helper.h.inc
++++ b/target/mips/tcg/system_helper.h.inc
+@@ -31,6 +31,7 @@ DEF_HELPER_1(mftc0_tcschedule, tl, env)
+ DEF_HELPER_1(mfc0_tcschefback, tl, env)
+ DEF_HELPER_1(mftc0_tcschefback, tl, env)
+ DEF_HELPER_1(mfc0_count, tl, env)
++DEF_HELPER_1(mfc0_cvmcount, tl, env)
+ DEF_HELPER_1(mftc0_entryhi, tl, env)
+ DEF_HELPER_1(mftc0_status, tl, env)
+ DEF_HELPER_1(mftc0_cause, tl, env)
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 10811db827..0f89f76ac0 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -5472,6 +5472,19 @@ static void gen_mfc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             ctx->base.is_jmp = DISAS_EXIT;
+             register_name = "Count";
+             break;
++        case CP0_REG09__CVMCOUNT:
++            CP0_CHECK(ctx->insn_flags & INSN_OCTEON);
++            translator_io_start(&ctx->base);
++            gen_helper_mfc0_cvmcount(arg, tcg_env);
++            tcg_gen_ext32s_tl(arg, arg);
++            register_name = "CvmCount";
++            break;
++        case CP0_REG09__CVMCTL:
++            CP0_CHECK(ctx->insn_flags & INSN_OCTEON);
++            tcg_gen_ld_tl(arg, tcg_env, offsetof(CPUMIPSState, CP0_CvmCtl));
++            tcg_gen_ext32s_tl(arg, arg);
++            register_name = "CvmCtl";
++            break;
+         default:
+             goto cp0_unimplemented;
+         }
+@@ -5493,6 +5506,13 @@ static void gen_mfc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             gen_mfc0_load32(arg, offsetof(CPUMIPSState, CP0_Compare));
+             register_name = "Compare";
+             break;
++        case CP0_REG11__CVMMEMCTL:
++            CP0_CHECK(ctx->insn_flags & INSN_OCTEON);
++            tcg_gen_ld_tl(arg, tcg_env,
++                          offsetof(CPUMIPSState, CP0_CvmMemCtl));
++            tcg_gen_ext32s_tl(arg, arg);
++            register_name = "CvmMemCtl";
++            break;
+         /* 6,7 are implementation dependent */
+         default:
+             goto cp0_unimplemented;
+@@ -6188,6 +6208,11 @@ static void gen_mtc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             gen_helper_mtc0_count(tcg_env, arg);
+             register_name = "Count";
+             break;
++        case CP0_REG09__CVMCTL:
++            CP0_CHECK(ctx->insn_flags & INSN_OCTEON);
++            tcg_gen_st_tl(arg, tcg_env, offsetof(CPUMIPSState, CP0_CvmCtl));
++            register_name = "CvmCtl";
++            break;
+         default:
+             goto cp0_unimplemented;
+         }
+@@ -6208,6 +6233,13 @@ static void gen_mtc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             gen_helper_mtc0_compare(tcg_env, arg);
+             register_name = "Compare";
+             break;
++        case CP0_REG11__CVMMEMCTL:
++            CP0_CHECK(ctx->insn_flags & INSN_OCTEON);
++            tcg_gen_st_tl(arg, tcg_env,
++                          offsetof(CPUMIPSState, CP0_CvmMemCtl));
++            ctx->base.is_jmp = DISAS_STOP;
++            register_name = "CvmMemCtl";
++            break;
+         /* 6,7 are implementation dependent */
+         default:
+             goto cp0_unimplemented;
+@@ -6952,6 +6984,17 @@ static void gen_dmfc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             ctx->base.is_jmp = DISAS_EXIT;
+             register_name = "Count";
+             break;
++        case CP0_REG09__CVMCOUNT:
++            CP0_CHECK(ctx->insn_flags & INSN_OCTEON);
++            translator_io_start(&ctx->base);
++            gen_helper_mfc0_cvmcount(arg, tcg_env);
++            register_name = "CvmCount";
++            break;
++        case CP0_REG09__CVMCTL:
++            CP0_CHECK(ctx->insn_flags & INSN_OCTEON);
++            tcg_gen_ld_tl(arg, tcg_env, offsetof(CPUMIPSState, CP0_CvmCtl));
++            register_name = "CvmCtl";
++            break;
+         default:
+             goto cp0_unimplemented;
+         }
+@@ -6972,6 +7015,12 @@ static void gen_dmfc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             gen_mfc0_load32(arg, offsetof(CPUMIPSState, CP0_Compare));
+             register_name = "Compare";
+             break;
++        case CP0_REG11__CVMMEMCTL:
++            CP0_CHECK(ctx->insn_flags & INSN_OCTEON);
++            tcg_gen_ld_tl(arg, tcg_env,
++                          offsetof(CPUMIPSState, CP0_CvmMemCtl));
++            register_name = "CvmMemCtl";
++            break;
+         /* 6,7 are implementation dependent */
+         default:
+             goto cp0_unimplemented;
+@@ -7654,6 +7703,11 @@ static void gen_dmtc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             gen_helper_mtc0_count(tcg_env, arg);
+             register_name = "Count";
+             break;
++        case CP0_REG09__CVMCTL:
++            CP0_CHECK(ctx->insn_flags & INSN_OCTEON);
++            tcg_gen_st_tl(arg, tcg_env, offsetof(CPUMIPSState, CP0_CvmCtl));
++            register_name = "CvmCtl";
++            break;
+         default:
+             goto cp0_unimplemented;
+         }
+@@ -7676,6 +7730,12 @@ static void gen_dmtc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             gen_helper_mtc0_compare(tcg_env, arg);
+             register_name = "Compare";
+             break;
++        case CP0_REG11__CVMMEMCTL:
++            CP0_CHECK(ctx->insn_flags & INSN_OCTEON);
++            tcg_gen_st_tl(arg, tcg_env,
++                          offsetof(CPUMIPSState, CP0_CvmMemCtl));
++            register_name = "CvmMemCtl";
++            break;
+         /* 6,7 are implementation dependent */
+         default:
+             goto cp0_unimplemented;
 -- 
 2.56.0
 
