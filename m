@@ -1,63 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A580C606A331
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4172606A331
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=xDEuzgE8;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=j1SxeA/6
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=Y5CWjXA5;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=rJiA/5zL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRzAP-00018Q-29; Fri, 13 Nov 2026 16:50:41 -0500
+	id 1xRzAS-0001P1-1r; Fri, 13 Nov 2026 16:50:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9t-0008Le-S3
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:50:10 -0500
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9f-0008BD-6u
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:57 -0500
 Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9s-0005Cz-0C
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:50:09 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Ewyiv7n
- ztwG96cim3CMMlyepnpgVL9bRPFqoBldLz4efA4JLQBq505/CsMy4+yRx4JJwyoQCVIeQg
- nGDQZt4sMP51hMAN4FmAsTNPXcoUn4LgyzaZ4Wrbwq0ys5ppKXjqEKpzySN5pcMwzLUwEl
- x4MTvD+vDCoLVH8QihAwpLmgDhZqOH1u6Q3jUJhMVwQzeg6sA3nldrJPkrhBXbn+EAbSn5
- oNdLyd/BNxT4wzihMYECh6qhaxrVA8oMBn1O41u80aa3mWE2GErBHxKpURfppZH32XWh3t
- 30KxGCMN3ta+S3rfvcXNYgvg5wQXO+tqGl6M0jEVlbwJWR7m4eVM4OQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=a
- lPetn4aE/xvcLwyw7DORbklqnqs0MzMLKrQO9jiiqg=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9d-0005Cz-FU
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:54 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=nKPyEhE
+ kUwZlcLCdKPJK/TW7QrDsbaMEjjsw6efOsJ/0o1ij1yTg2GkI+pF26Y9SXb93qWZmKagE2
+ IIpCdYYY5Z5oDJvfinQrU9OmIB2vHDSPcakurKkQerwNDTUZ09tr2eHs5HcPK9f4UwZh31
+ ePh6oXjlLMd/IsRinl9FZJh0/i43eS+ZOehy7KOl1kIPnCn3AR6ozDt2Ubf4xZHzGJSUeL
+ M88+iW075O42a/QB0/gSlpyfxmG3VlLc1II653ltOoSYs7l1XgbDk/sTqcrnf8eaUJNJ+0
+ gBQt0zypGOudPXQesxP+5GGcTApS2luLX0YGoafBWLE/RWQXtss906g==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=w
+ LlXbjs9fLZ4HvyYWu4TBabzNrpY842h56HxKIOyFc4=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=JE4XfI8YrA0uyLn/e09pNZK5OMZtGwwbmUme61LM4C25vPuGeKxMqrl3QbCCNjghCAIo
- 9wu13LfX9pSrE4bHJrSAsZaItNRIrLMAKkVyP6Ir8KPkf0o+L9sBXsKaSxrQ7HSBmRJQqY
- a8J6pIv20ZmkfgLJbuir0Nyl2R3YEsjnVHxtG8q6gTvT/WUnbJyDwqIw3NjYQoDcdKR21o
- a8w3CCPyUU0RyMG6cNuhClyrYg30FzyDLfThqNWHbZTEoHQeny35x/e1NfQET97IPsXk/F
- Goy5pHcDvRdL4LcJZsNkrhjfzNJtMRynX7r4mi5hEyoopp2Qs4+Vtemp8LzcLpPw==
+ b=yZH9EOaCgyBCr8azbsjKCWDfFhQ8mFXyG9rtfQO6tnmC1HRI3FNrqfvfdJCOW+bXxs4s
+ II8TC4XqmSqpBApfQIgmuox7dayyBBVWXMgED0FvFZ48KhmCH8dRw8h3JewbkltBGrU06R
+ EjdATo/xN2GYycgEX9bcTUBODcvbuwNADWYZxrttwnK6PVoZGw7DHkZLOjM4DLs0aKJFag
+ BZcOd0HmwhsiUIRSo5MOGonhnReSzolg18+lf45SIHPZ+yRpR0y/FHOHwS3dxKQSr7UnSt
+ rOnhbsafpENbKz4tD8i4IXbkVHIeAInjSGbbdE64QKHWAZZ5jcOnE9GO2X8GS2fQ==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=xDEuzgE8; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=j1SxeA/6;
- arc=none; iprev=fail; spf=none
+ header.b=Y5CWjXA5; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=rJiA/5zL;
+ arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=alPetn4a
- E/xvcLwyw7DORbklqnqs0MzMLKrQO9jiiqg=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=wLlXbjs9
+ fLZ4HvyYWu4TBabzNrpY842h56HxKIOyFc4=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=xDEuzgE8O7+d20b4Q5lnj3fLgLrgJkf4yHL
- a0zkRv5NmGRfpmGPUuC6nYO55SjjBKghH6nkp8B6sQn2/rnWiKdTXIEw8F18Gf1zjPToN3
- JgHqWCsO76p4caUlyXqfuTudslqBZmuBbbJOI6sEkiqpu/3dTm6qPk0BG/Xby4C0IRm+bt
- 7PEZe4kLn0s95v5e+xqhYBJCbzMCl8KJP+ztF9ydKnwYQWY2qCaLugPhBvbbKX58lz1o29
- t/GMvw5bFhqf8KNXPWCRDlaaM2WJO5YGCEhiCG+b3UaxyL58vlFRYjNlqYIzI5AQQUqebx
- DuptVX6Qr7ZSTrvMlnLruMNRW5g==
+ subject:cc:to:from; d=korins.ky; b=Y5CWjXA5GJ4bsaXJ0XUjfJH5tkBnipaTSG+
+ Qa5IB1eNkxjVqJjOVzii1VqQqmqre0KokaNyC+zu7rBzDR1iNr+qkoYUmvvpfL3oPDxj8d
+ aXnuiBNwAE9hmhxSSR9vN82LQbDu/W0Q88qP8v3QXaOlZ6fy5JvvGGoo7kRRSaH7RAb/Nu
+ jBhtKIVP4co83QK6nWtI3xAQd24YsDrFPFoNq5czFnxuTaRPJp0uRxfhfQ4TdVs1oVpLy0
+ GviLhylU/Ey/dJjEInmTu1tvKp3uigQ9a2jbCrgCozeuHn/+0ds7PmNqW6khthWhG7JAO5
+ 8n9eHxx+sqfpgIu4z6zOrbcym+g==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=alPetn4aE/xvcLwyw7DORbklqnqs0MzMLKrQO9jiiqg=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=j1SxeA/6lEZmm09ESs
- F1ZbhFzo1VTlx3elT0oC5vWrO+MtbjaASU36vAXmeA2aqhW0sY1ZxHbwp7sV5l/3qrAA==
-Received: by mx1.catap.net (OpenSMTPD) id 1aaf49d3;
- Fri, 13 Nov 2026 22:49:51 +0100 (CET)
+ bh=wLlXbjs9fLZ4HvyYWu4TBabzNrpY842h56HxKIOyFc4=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=rJiA/5zLOEghX4N8Zz
+ laLWUJWRcqNzmX4XY7bkGjyOycQN6pieVdiJWPoG9VNlQW73jq7Doab9l+aMpKMm7ICQ==
+Received: by mx1.catap.net (OpenSMTPD) id 77b48b9e;
+ Fri, 13 Nov 2026 22:49:49 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 04480937;
- Fri, 13 Nov 2026 22:49:34 +0100 (CET)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 563eb887;
+ Fri, 13 Nov 2026 22:49:33 +0100 (CET)
 From: Kirill A. Korinsky <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -67,15 +67,17 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Cc: "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PATCH v8 26/26] tests/functional: test Octeon III boot
-Date: Fri, 13 Nov 2026 22:45:40 +0100
-Message-ID: <20261113214926.98536-27-kirill@korins.ky>
+Cc: "Kirill A . Korinsky" <kirill@korins.ky>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v8 06/26] target/mips: pass env to compute_pagemask
+Date: Fri, 13 Nov 2026 22:45:20 +0100
+Message-ID: <20261113214926.98536-7-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113214926.98536-1-kirill@korins.ky>
 References: <20261113214926.98536-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
  helo=mx1.catap.net
@@ -106,93 +108,67 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-Boot the OpenBSD/octeon ramdisk through U-Boot using an e1000 device
-and QEMU user mode TFTP. Verify PCI enumeration, DHCP, image transfer
-and entry into the OpenBSD installer.
+Pass the CPU state to compute_pagemask() and update both callers.
+This prepares for CPU specific PageMask validation without changing
+behavior.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- tests/functional/mips64/meson.build     |  2 +
- tests/functional/mips64/test_octeon3.py | 54 +++++++++++++++++++++++++
- 2 files changed, 56 insertions(+)
- create mode 100644 tests/functional/mips64/test_octeon3.py
+ target/mips/tcg/system/cp0_helper.c | 4 ++--
+ target/mips/tcg/system/tlb_helper.c | 2 +-
+ target/mips/tcg/tcg-internal.h      | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/mips64/meson.build b/tests/functional/mips64/meson.build
-index 3ff2118987..98b7c491a1 100644
---- a/tests/functional/mips64/meson.build
-+++ b/tests/functional/mips64/meson.build
-@@ -2,9 +2,11 @@
- 
- test_mips64_timeouts = {
-   'malta' : 240,
-+  'octeon3' : 300,
+diff --git a/target/mips/tcg/system/cp0_helper.c b/target/mips/tcg/system/cp0_helper.c
+index 5c040837e0..dd4f06bd8e 100644
+--- a/target/mips/tcg/system/cp0_helper.c
++++ b/target/mips/tcg/system/cp0_helper.c
+@@ -882,7 +882,7 @@ void HELPER(mtc0_memorymapid)(CPUMIPSState *env, target_ulong arg1)
+     }
  }
  
- tests_mips64_system_thorough = [
-   'malta',
-+  'octeon3',
-   'tuxrun',
- ]
-diff --git a/tests/functional/mips64/test_octeon3.py b/tests/functional/mips64/test_octeon3.py
-new file mode 100644
-index 0000000000..9c2bc67ac4
---- /dev/null
-+++ b/tests/functional/mips64/test_octeon3.py
-@@ -0,0 +1,54 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test for the Cavium Octeon III / EBB7304 machine.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+import shutil
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
-+
-+
-+class Octeon3Machine(QemuSystemTest):
-+
-+    ASSET_UBOOT = Asset(
-+        'https://kirill.korins.ky/pub/qemu-mips64-openbsd/u-boot.bin',
-+        '7e519b2e52ba44b27bfafd16738c8f485e9eda5438b4899cf6a70520a6d34396')
-+
-+    ASSET_BSD_RD = Asset(
-+        'https://kirill.korins.ky/pub/qemu-mips64-openbsd/bsd.rd',
-+        '907f26f0ff67390dd21dc85e2c854fc0e65db295b15d47ae92e1927f98ac5872')
-+
-+    def test_openbsd_ramdisk_tftp(self):
-+        self.require_netdev('user')
-+        self.require_device('e1000')
-+        self.set_machine('octeon3')
-+
-+        tftp_dir = self.scratch_file('tftp')
-+        os.mkdir(tftp_dir)
-+        shutil.copy(self.ASSET_BSD_RD.fetch(),
-+                    os.path.join(tftp_dir, 'bsd.rd'))
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-bios', self.ASSET_UBOOT.fetch(),
-+                         '-m', '1G',
-+                         '-smp', '4',
-+                         '-no-reboot',
-+                         '-netdev',
-+                         f'user,id=net0,tftp={tftp_dir},bootfile=bsd.rd',
-+                         '-device', 'e1000,netdev=net0')
-+        self.vm.launch()
-+
-+        wait_for_console_pattern(self, '=> ')
-+        ec_and_wait(self, 'pci enum', '=> ')
-+        ec_and_wait(self, 'dhcp', 'Bytes transferred')
-+        wait_for_console_pattern(self, '=> ')
-+        ec_and_wait(self, 'bootoctlinux ${loadaddr} numcores=4',
-+                    'Welcome to the OpenBSD/octeon 7.9 installation program.')
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+-uint32_t compute_pagemask(uint32_t val)
++uint32_t compute_pagemask(const CPUMIPSState *env, uint32_t val)
+ {
+     /* Don't care MASKX as we don't support 1KB page */
+     uint32_t mask = extract32(val, CP0PM_MASK, 16);
+@@ -899,7 +899,7 @@ uint32_t compute_pagemask(uint32_t val)
+ 
+ void HELPER(mtc0_pagemask)(CPUMIPSState *env, target_ulong arg1)
+ {
+-    env->CP0_PageMask = compute_pagemask(arg1);
++    env->CP0_PageMask = compute_pagemask(env, arg1);
+ }
+ 
+ void HELPER(mtc0_pagegrain)(CPUMIPSState *env, target_ulong arg1)
+diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+index e9416d93a4..b3c0b58ac7 100644
+--- a/target/mips/tcg/system/tlb_helper.c
++++ b/target/mips/tcg/system/tlb_helper.c
+@@ -878,7 +878,7 @@ refill:
+         }
+     }
+     pw_pagemask = m >> TARGET_PAGE_BITS;
+-    pw_pagemask = compute_pagemask(pw_pagemask << CP0PM_MASK);
++    pw_pagemask = compute_pagemask(env, pw_pagemask << CP0PM_MASK);
+     pw_entryhi = (address & ~0x1fff) | (env->CP0_EntryHi & 0xFF);
+     {
+         target_ulong tmp_entryhi = env->CP0_EntryHi;
+diff --git a/target/mips/tcg/tcg-internal.h b/target/mips/tcg/tcg-internal.h
+index e055040b09..c86e0d6ecb 100644
+--- a/target/mips/tcg/tcg-internal.h
++++ b/target/mips/tcg/tcg-internal.h
+@@ -45,7 +45,7 @@ bool mips_cpu_exec_interrupt(CPUState *cpu, int int_req);
+ 
+ void mmu_init(CPUMIPSState *env, const mips_def_t *def);
+ 
+-uint32_t compute_pagemask(uint32_t val);
++uint32_t compute_pagemask(const CPUMIPSState *env, uint32_t val);
+ 
+ void r4k_invalidate_tlb(CPUMIPSState *env, int idx, int use_extra);
+ uint32_t cpu_mips_get_random(const CPUMIPSState *env);
 -- 
 2.56.0
 
