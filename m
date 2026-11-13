@@ -1,31 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FEA606A88C
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 08:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBF0606B369
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 08:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRmvX-0002uJ-El; Fri, 13 Nov 2026 03:46:31 -0500
+	id 1xRmwD-0003BF-SM; Fri, 13 Nov 2026 03:47:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xRmvP-0002ol-3u
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:23 -0500
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xRmvl-00030Q-Ad
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:47 -0500
 Received: from krgm.moe ([103.47.186.116])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xRmvN-0007QZ-Gw
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:22 -0500
+ (envelope-from <prcups@krgm.moe>) id 1xRmvj-0007W4-ET
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:44 -0500
 Received: from yuno-loong (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id 1FCE3780F;
- Fri, 13 Nov 2026 14:16:18 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id 3437D82B;
+ Fri, 13 Nov 2026 14:16:41 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v6 06/26] target/loongarch: move timer initialization to
- loongarh_cpu_realizefn()
-Date: Fri, 13 Nov 2026 16:45:21 +0800
-Message-ID: <00538728e2c970e2038ddf2e54d91870e210f387.1794558695.git.prcups@krgm.moe>
+Subject: [PATCH v6 22/26] target/loongarch: add guest CSR operations
+Date: Fri, 13 Nov 2026 16:45:37 +0800
+Message-ID: <c2019d74a2bb168a670ed27ec4332ab5971f1593.1794558695.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <cover.1794558695.git.prcups@krgm.moe>
 References: <cover.1794558695.git.prcups@krgm.moe>
@@ -57,78 +56,92 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-After guest_timer initialization is added, irq_nr needs to be determined
-using cpu_has_lvz(), which relys on CPUCFG LVZ bit. So move it for
-preparation.
+Add gcsrrd, gcsrwr and gcsrxchg for guest CSR management.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/cpu.c | 37 +++++++++++++++----------------------
- 1 file changed, 15 insertions(+), 22 deletions(-)
+ target/loongarch/disas.c                      |  3 +++
+ target/loongarch/insns.decode                 |  6 +++++
+ .../tcg/insn_trans/trans_privileged.c.inc     | 27 +++++++++++++++++++
+ 3 files changed, 36 insertions(+)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index d8f3af4f31..fc432cfda0 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -721,6 +721,21 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
-     CPUState *cs = CPU(dev);
-     LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(dev);
-     Error *local_err = NULL;
-+    CPULoongArchState *env = cpu_env(cs);
-+
-+#ifdef CONFIG_TCG
-+    CPUTimerState *timer;
-+#endif
-+
-+    env->irq_nr = N_IRQS;
-+    qdev_init_gpio_in(dev, loongarch_cpu_set_irq, env->irq_nr);
-+#ifdef CONFIG_TCG
-+    timer = env_timer(env);
-+    timer->irq = IRQ_TIMER;
-+    timer->cs  = cs;
-+    timer_init_ns(&timer->timer, QEMU_CLOCK_VIRTUAL,
-+                  &cpu_loongarch_timer_cb, timer);
-+#endif
- 
-     cpu_common_realize(cs, &local_err);
-     if (local_err != NULL) {
-@@ -748,27 +763,6 @@ static void loongarch_cpu_unrealizefn(DeviceState *dev)
-     lacc->parent_unrealize(dev);
+diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+index 03d1e560dd..3010e16608 100644
+--- a/target/loongarch/disas.c
++++ b/target/loongarch/disas.c
+@@ -682,6 +682,9 @@ INSN(bgeu,         rr_offs)
+ INSN(csrrd,        r_csr)
+ INSN(csrwr,        r_csr)
+ INSN(csrxchg,      rr_csr)
++INSN(gcsrrd,       r_csr)
++INSN(gcsrwr,       r_csr)
++INSN(gcsrxchg,     rr_csr)
+ INSN(iocsrrd_b,    rr)
+ INSN(iocsrrd_h,    rr)
+ INSN(iocsrrd_w,    rr)
+diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
+index 3089d42044..4612af9433 100644
+--- a/target/loongarch/insns.decode
++++ b/target/loongarch/insns.decode
+@@ -493,6 +493,12 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
+   csrxchg           0000 0100 .............. ..... .....     @rr_csr
  }
  
--static void loongarch_cpu_init(Object *obj)
--{
--#ifndef CONFIG_USER_ONLY
--    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
--    CPULoongArchState *env = &cpu->env;
--#ifdef CONFIG_TCG
--    CPUTimerState *timer;
--#endif
--
--    env->irq_nr = N_IRQS;
--    qdev_init_gpio_in(DEVICE(cpu), loongarch_cpu_set_irq, env->irq_nr);
--#ifdef CONFIG_TCG
--    timer = env_timer(env);
--    timer->irq = IRQ_TIMER;
--    timer->cs  = CPU(obj);
--    timer_init_ns(&timer->timer, QEMU_CLOCK_VIRTUAL,
--                  &cpu_loongarch_timer_cb, timer);
--#endif
--#endif
--}
--
- static ObjectClass *loongarch_cpu_class_by_name(const char *cpu_model)
- {
-     ObjectClass *oc;
-@@ -1002,7 +996,6 @@ static const TypeInfo loongarch_cpu_type_infos[] = {
-         .parent = TYPE_CPU,
-         .instance_size = sizeof(LoongArchCPU),
-         .instance_align = __alignof(LoongArchCPU),
--        .instance_init = loongarch_cpu_init,
++{
++  gcsrrd            0000 0101 .............. 00000 .....     @r_csr
++  gcsrwr            0000 0101 .............. 00001 .....     @r_csr
++  gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
++}
++
+ iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
+ iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
+ iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 39d217877d..cfcd234340 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -39,6 +39,9 @@ GEN_FALSE_TRANS(lddir)
+ GEN_FALSE_TRANS(ertn)
+ GEN_FALSE_TRANS(dbcl)
+ GEN_FALSE_TRANS(idle)
++GEN_FALSE_TRANS(gcsrrd)
++GEN_FALSE_TRANS(gcsrwr)
++GEN_FALSE_TRANS(gcsrxchg)
  
-         .abstract = true,
-         .class_size = sizeof(LoongArchCPUClass),
+ #else
+ 
+@@ -256,6 +259,30 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+     return trans_csrxchg_impl(ctx, a, mmu_idx_vm_level(ctx->mem_idx));
+ }
+ 
++static bool trans_gcsrrd(DisasContext *ctx, arg_gcsrrd *a)
++{
++    if (!avail_LVZ(ctx) || mmu_idx_vm_level(ctx->mem_idx)) {
++        return false;
++    }
++    return trans_csrrd_impl(ctx, a, VM_LEVEL1);
++}
++
++static bool trans_gcsrwr(DisasContext *ctx, arg_gcsrwr *a)
++{
++    if (!avail_LVZ(ctx) || mmu_idx_vm_level(ctx->mem_idx)) {
++        return false;
++    }
++    return trans_csrwr_impl(ctx, a, VM_LEVEL1);
++}
++
++static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
++{
++    if (!avail_LVZ(ctx) || mmu_idx_vm_level(ctx->mem_idx)) {
++        return false;
++    }
++    return trans_csrxchg_impl(ctx, a, VM_LEVEL1);
++}
++
+ static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
+                         void (*func)(TCGv, TCGv_ptr, TCGv))
+ {
 -- 
 2.56.0
 
