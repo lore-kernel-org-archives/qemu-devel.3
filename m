@@ -1,133 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09435606A327
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 10:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD81606A327
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 10:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm2 header.b=EerXxB+d;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Uw0vLvTq
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=gnWiEo+9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRo3o-0007sR-4r; Fri, 13 Nov 2026 04:59:08 -0500
+	id 1xRo44-0008Ay-SF; Fri, 13 Nov 2026 04:59:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xRo3m-0007rt-Kw
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 04:59:06 -0500
-Received: from flow-a1-smtp.messagingengine.com ([103.168.172.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xRo3l-0004W3-4r
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 04:59:06 -0500
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailflow.phl.internal (Postfix) with ESMTP id D4D991382257
- for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 04:58:52 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Fri, 13 Nov 2026 04:58:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1794563932; x=1794571132; bh=lvDx2zS5hnxkVV6y+Wp9xY6T21L02EKL
- 57bJmmWL/QE=; b=EerXxB+dzxTjGENFMJ0sI4QXIjOUCzWe0sXt+JRu4pqfxIA4
- XR5si1I/VsXrDxyQ/n1XilFLjGdiHwAuyEI+z4J+rW8+ijLNmAiOirZpEMT4zC3W
- ruiDE9GJNCllFRWKcGqK3S8lIIbC3BoMkxiHoxK8+Cc3HS/RTBuZPEn41TCmh2q5
- rvowmoiIaYNkShIWe49B6gg7jl8VmUkSBMy3+lNJuk9tZvexAr/SitUnptfuMoH1
- afYdDmR+pQIHBums9kR7Fb2EN7ojSH4B+5FTotENhv+esFFXURx7b1fTheJyJXOB
- tvh6X5crV5jb0Ju3ierWqMyPVUFpbxWoJ5gTdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794563932; x=
- 1794571132; bh=lvDx2zS5hnxkVV6y+Wp9xY6T21L02EKL57bJmmWL/QE=; b=U
- w0vLvTq+ZBmNNWMLf+wQ5pIecfi7WMmmezHtxOisHAxA8aSLOJy/PnKo8veUDLyq
- FqS510PhcaTDV4nWXG+1ym81eeY1CKLTN+/56NRWH+XQp/BkuZDga7AaJ7dAXdU/
- Uja+9PVKImFixoNyfwr9DTJjotUCw52NuJ8cnmpVakxP0lVkMFpbD1V6Mg1Jnknb
- 5WC8rQBvO8re98B/q/GIXAc6n+7PX5GSiyZBu0Y0rl3mtl8S8Eh9KjbOUNykDwL/
- cYyTQ/BUwEXwaIVeQ7bbhRZ8T06rJaQA34dwPjTuvdk/z3HSKo2GlOskxvQN2bm7
- wlAb2qzLEWeRoMVGCoeQw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794563932; d=irrelevant.dk;
- mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:PXtLkkFt2hyxRHaIcgLs3uw3SOBzS/PZmEhG7Ola5ktSOd8
- NkVpwktKp5+8UYf+HDHgeFlCBTs0Rz40AaQis+owuNjJKcblmgGYCB6IRFIydZgc
- btxGQFurMzmCUz/7I1gpBrqoOLx+Bn049oc9kos2gZGrjJCSsDD7CMKs79177GQo
- 1P0zW9NaHb4Raxc+TN/GBkaxs3UN6pcbsujYXe2Cx7ZExiqaZ25b1JTEV7pRgudW
- DUwn4TaqfUPdF3SGZOpfe8YmxtzXdtA2wGnMuHs6Zb6trA8xe5X09GEySYoX7A9G
- FdcL4P9dHMjK/5+2Dl5NTmy/Ew91kqMxJYr04oQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=mi-m=1; hc=12;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1;
- h=sha256:myVBYRiy/F0UlvrbpLCc7KOKGyfCNrna/vWdVzzBZT0=:vQSgMx56b5PHsEtbFLH0UX/qr5zEnWHiUk3lJd3QrSY=;
-X-ME-Sender: <xms:XN_2aksnxwWBz2stfbOBtKv6OzbJlo-HJrMJSDRfDgTpRMDei4ir1w>
- <xme:XN_2asY7bTW1NbJ9gLI2ApBw1FJ_uQQh4LHcU-FEcFFbF7SHpyNhkn74cr25Tkqrx
- YT57o8E4CyqU6O55xInZm1mLvM_aTgA4JS90A-3tsP5B9Uhwe7Jouz5>
-X-ME-Received: <xmr:XN_2auzNxr83ErCWjtYl10wkCUTCn5hmzhpwZ7_imxozMJHT2KCEsY5Bwc0ZiJYtFGYUm4gnD1BaTwamF8NM_Q9g>
-X-ME-Proxy-Cause: dmFkZTGoW/r+HHkPvpDPhLJ23+QC4nYba1HxO91KJlnQiR9zkGCwEYw+hslx7rW1vDbE4+
- kz5VFVK/snpzGpHFah5+BrQC5Odi347Kgy2Mlr5HAFrBCN6MezvbAWNNiSKcqirBY4p9YX
- Ku8dAAjbQsE4uZSQQ2Syh0wYsOxS/RAvnuRHNaXbbHga8A5xc+kCsfPUk9C/MLQ0RFzI+V
- 28Zx/R3JCwUdoXIA8xPHpDV9qjOGPp4XXUOEV6BJxGO/m3rCoWoHVH2BcSg1+XollOGVCj
- rAyb3zo9XG9yafFAn9+wIglY5hkk3wGupF0KxnPeauCJX1uNNPPE5qwh7TjjzAKlG28qay
- C+QjPJe/Np75Md2tpnWK8+BEEdpVQVYHjDFDAQ1XytaF/2TZctQjG01WQfUEcgc62OAYkE
- P3752o9da1xXzCUFm5mcutA++wUHbxu5sHXWjoH6iQGUBYaQ9fC1/eQE9Edmf+iaXJKB1P
- LJkgEeNyYwkG4jON1saB8RCw9v+c1gEbe3nPBniskMkeSAndXzD2e5Zc3V7V8MrIl55XPS
- 9bTYpNrGGYIXU/eiB7gMstizM/VQyhHOFh8G2FcjBw8ASugF9WQcRJgee7b0OG4AFoqx30
- AdKYWecNgWajpOff2A+f6sOkk5GLLfk3YLXEdgGLkR1ixvIk+/j+6TS40wPQ
-X-ME-Proxy: <xmx:XN_2asi5BcFB7XGpgA04uEF4GkTrusjTU2skmltH1f8AAh5GnOjH3w>
- <xmx:XN_2aimm_fORfS9mjhAGV1hHZDLVQ905uti_IplwGwyVNBT2-zBqmg>
- <xmx:XN_2aqgDxBAMllhlY9pxSR8JMymA89Lmjst8_7TrSJsoLoAcqmCFvg>
- <xmx:XN_2au1SU5XWWlt6VSM47_rQjIu0DOaISMvUSko3yFJ8MSRPJu_TJg>
- <xmx:XN_2aizD16NKOIhljkL4kgYliAJyTBSFNQy1UpDRnREkRZJJ0thYlMYF>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Nov 2026 04:58:51 -0500 (EST)
-From: Klaus Jensen <its@irrelevant.dk>
-Date: Fri, 13 Nov 2026 10:58:40 +0100
-Subject: [PATCH v2 3/3] hw/nvme: fix broadcast fdp events handling
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRo42-00087W-Lm
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 04:59:22 -0500
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRo41-0006Y5-1u
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 04:59:22 -0500
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-67be5d0e9cbso422210d50.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 01:59:20 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794563960; cv=none;
+ d=google.com; s=arc-20260327;
+ b=K+E1GVqYjCuWIdPeYMbOv+OfwPGa6R/RRcnEIHwMtH7wszXiRrHETS6EtGMGrTRK/I
+ YkBj1CNm5NXnTLlbSEnVqX3hGkTBrYqfbE+KP1liDn1GkIzeQ1G8POaERDZ29stmFhjW
+ IEeWWXRVYQMr5G535TOIaVJelEJd2mFLq8/lazCgwykMuPk7CiPKyK9j3aL5v60uL1n5
+ CcafT1tr1955gP5PaVrGLlBEXz7O8Wwpkzv6HrRrd11FItJQbgYqqCr4tLT4mgARz3SM
+ 6BRTpU00AV33qM77v9Exkl5C/g3UHViZVsUdtqA2xhjjJxIijUfLRhLeDG2ahmuPwrTP
+ oVrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=A1R15BPCVezEKVROSd3Pf3UKuo0v/8TGSZKaMOdpKWA=;
+ fh=9DZ0E7eVOcBqava0Ok6ru6aqk+sy3EGyqcawUxrIeog=;
+ b=PyrdCqZeU5LPLn6/A2VXBjs/XZNguI/C7AbyC6ssJssWAQNtT3PTg0FM8ADE4W2Vej
+ GF6h2fhbRyC2gJIqsHkYYLUFborBmnlaBPpVXEl7uN3V1CchOHHSNie2zNGSnvaYBimZ
+ neBf2qraigSMUHDBG4YtQ54yWLqVB2xubcPl6tzkK6b/HLCFiiuMYA606AbafBj813pL
+ Ir+BMpYAQHxTbCOpmh91PfvO+ubBQBDRxIrI8ogOhApvLNn/eHV+CHqZjCKBesk1nyB0
+ QBJhYNW1vbTWZwgFICEcr6gWl1fLhlQ/5/IVZvwB3Ku0/5nrkNpbKA9Pnl5+LeAmwyBN
+ ElGw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794563960; x=1795168760; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=A1R15BPCVezEKVROSd3Pf3UKuo0v/8TGSZKaMOdpKWA=;
+ b=gnWiEo+9jAHepCsYEMssX0VMq7YwzXu5DxlIdULcnaUx4QziqTWxRd4rlCiSDgQVsp
+ 9k3alUgs53bce9rE6HhtV6nWYCk2mL3d04kjfN2BPvAAma9cVKpcbsaQZpEDH26Fv+Nd
+ elhGb6R/W5mTRoZQQj1pITV2Qailj92jp4g2dJlaw9dj+mWQIRjSBJVSXNu99jVGMO5I
+ 9NsT2AP5YQlxa3omrsbNbnSTxyTZSSpOwtXhjsxcDB2uygmhawrCu8/M1ft2pYmDly23
+ c44XZcY2CFYl33qa136Q6UCCH3JYrhYLNbvtIsJj+64TZbngHMzhTfwtycK54c+Sqrjf
+ HWkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794563960; x=1795168760;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=A1R15BPCVezEKVROSd3Pf3UKuo0v/8TGSZKaMOdpKWA=;
+ b=jrX9H+Eh9KJKyd4DNyrtW98CNLGo3xhb7MaF6q1PqqLTrZzFJuv81ZaUcUcdsx6Hyz
+ EjD9LEC3duCkEyPRhD4+lFeM/cNBrpN/7bKhbC84gi1fOqbL6fPyyRgvR/iQySCjFrfz
+ UvNTb3vEz/qRbEXlZEKDy6FpnkKlLu/6V4pjBsSjOomJ13lqeZpl/AMv0JEq0DxhxEFe
+ 1481Eumyo42OOMnDjXHU4blru9mzTwq9wto24hXo6RuDAV4+uqk/UAro1gDLEfhh1H+9
+ F+7c/nrNSD47OE3QzDzpE30KOZOvZS91CqyWCSlxo9Y8TinYCBWBvLRtakwQH6EK+FnR
+ EA5A==
+X-Gm-Message-State: APuU4Z/PMi23amomt5ToH79XcQ53kuCt/vS/mMobmZCGrRaZJd0IwbNM
+ zMfRN4lWpaX6cDonELsCnFteE1ZkeoE0dIQm/Gq5XLOJacf14BSt5ocFW7dK6z42u07vkNkLiBj
+ TTnIOZCMlQzfusyfG2KwFaQOJCVd/E0CwRXSUF+nw8w==
+X-Gm-Gg: AYBFou1JN74aB8cjPldY8+NnmfTChP6de6ayc6WacDGG4hv4y/Iy1zkL88rqXJLeKNI
+ f/DcBCYV5uK+ym3mxel+RzaZCCFheE1DzdM7ZkoyQNxTuwwFeHyCKOda4ZmEglBlZPF4OsZHlWr
+ 98DP7EDpv++6pYZmKatrFow31KlEQysOsVqutrzEpVgev6HRBsPNlkdpNegM7bpE1zZnZosfaEK
+ tzNe4uki1ksIR0cMlnId4ckLGJYiIJtgSxPil0JsIKF4kPoaU66iUVtcBLnkDUvBirUpblfjd8U
+ 5fbAaRNAQjqRXr/lzh+9srRjr71pZQB2R21LEfAjvMjhlctfZABk1mSraj1mq14byRrIf2VDYOt
+ q9PktyzMJzdWQc/Weg1GM7KyOBmpH+1r7mMOvzDoSUIRhuEP/+xDQghHtJIl2mFWQ9VMeUqrFsD
+ apyhH8BkE+MYRGvtu3rYuL
+X-Received: by 2002:a53:ac8e:0:b0:675:617e:6c2b with SMTP id
+ 956f58d0204a3-67d896b224cmr995829d50.77.1794563959602; Fri, 13 Nov 2026
+ 01:59:19 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261113-nvme-for-rc-v2-3-e458fd0e12ca@samsung.com>
-References: <20261113-nvme-for-rc-v2-0-e458fd0e12ca@samsung.com>
-In-Reply-To: <20261113-nvme-for-rc-v2-0-e458fd0e12ca@samsung.com>
-To: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
- qemu-block@nongnu.org
-Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1262; i=k.jensen@samsung.com; 
- h=from:subject:message-id;
- bh=bZ6FSzTGekAUrxfzNnfqXvXj92ap8NZ8rnIXtCAZxwQ=; 
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
- zFQRGVrQnl5WmlBR3IyMzFaQmFjQkExalNuaWM0VnpzVloycnNZCmhQVTZSSGpSdElKdjRabmtk
- dHpiVUlrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKcTl0OVd
- BQW9KRUUzaHJ6RnRUdzNwMjNvSC9pR2p0OWdYcFJwZG5OdDMwNGlSR2p1SnVRalh3eEVsUGthRw
- oyUDBaMVNzdSsyTzloWTZtMXo0bWYzMTB3SXdvMlpaeTk4d1Zla1Qxbm9zTmo4bENldUhsZDBHR
- k1NL2ZkUmd2CnI1TVZMQ01GOHh1cWxpdjczYSswaXAyZUlwM21nMTNmTzFzMDYzZTBocytkbFh6
- aG10WGN6WHJ4VkhEZFZac08KRHk3ZkJoa3BMbys1MUZwSTg2eXVlblpBM3k1L3oxZDAzUjd3TmJ
- VckZTN0IvcDhjRllIU3dUajFJV1cyNjdOVwoyNk8yQ2VmYy9pVzE3WkJaZW9MN0JHYWJVOVpxKz
- I4WmVnRGdROVllYnl0MzM1WFNlZGNFbWh0UzJxM0xiWUUrCnN3Wkx2VVBmTXdsZDZrZXZVZnphZ
- jErVUJzb3RHdVpWVGdzd1VMeEhBL1Nqc055WkIxeElTTEJXCj14MlIvCi0tLS0tRU5EIFBHUCBN
- RVNTQUdFLS0tLS0K
-X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
- fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
-Received-SPF: pass client-ip=103.168.172.136; envelope-from=its@irrelevant.dk;
- helo=flow-a1-smtp.messagingengine.com
+References: <20261109142319.73878-1-philmd@oss.qualcomm.com>
+ <f24b1be2-d114-4760-a7a5-e292951661e7@oss.qualcomm.com>
+In-Reply-To: <f24b1be2-d114-4760-a7a5-e292951661e7@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Nov 2026 09:59:07 +0000
+X-Gm-Features: AclHuK9cy4bEn0EetVO-IzdNownmghV9yBrnWzcMthw8JnN-B6YMpTRHcUJHOLs
+Message-ID: <CAFEAcA8ub6f9D+yBnhqOG+7jTD7uz0k_8FPnRd=H7zTvWgPo1Q@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Kick the other vCPUs on SEV under TCG
+ round-robin
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Lorand Marton <lorandmarton.dev@gmail.com>, 
+ Ashish Anand <ashish.a6@samsung.com>, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,51 +117,61 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Klaus Jensen <k.jensen@samsung.com>
+On Tue, 10 Nov 2026 at 07:28, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 9/11/26 15:23, Philippe Mathieu-Daud=C3=83=C2=A9 wrote:
+> > In round-robin (single-thread) TCG, all vCPUs share one
+> > host thread, so qemu_cpu_is_self() is true for every vCPU.
+> >
+> > The SEV helper used it to skip the kick of the issuing vCPU,
+> > and so skipped it for every other vCPU too: a vCPU sleeping
+> > in WFE is only woken when the RR kick timer fires.
+> >
+> > Compare against the issuing vCPU instead.
+> >
+> > Fixes: d238858bff60 ("target/arm: Implement WFE, SEV and SEVONPEND")
+> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> > ---
+> >   target/arm/tcg/op_helper.c | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+> > index 6a673e5ae6e8..173dd0e5151a 100644
+> > --- a/target/arm/tcg/op_helper.c
+> > +++ b/target/arm/tcg/op_helper.c
+> > @@ -470,11 +470,11 @@ void HELPER(wfit)(CPUARMState *env, uint32_t rd)
+> >
+> >   void HELPER(sev)(CPUARMState *env)
+> >   {
+> > -    CPUState *cs =3D env_cpu(env);
+> > +    CPUState *self =3D env_cpu(env), *cs;
+>
+> While rebasing I noticed I did that 1 week before latest ARM PR
+> and this conflicts with c5ec1bfad103 ("target/arm: don't pass env
+> to the sev helper"), then I noticed the previous 8def1f30d5d4
+> ("target/arm: hold bql when SEV sets the event_register") which is
+> a distinct fix. This patch is still needed but need this to be
+> squashed now:
+>
+>     -    CPUState *self =3D env_cpu(env), *cs;
+>     +    CPUState *self =3D current_cpu, *cs;
+>
+> Or even simpler, check @current_cpu in place (no @self local var).
 
-The Set Features handler for the FDP Events feature asserts that a
-namespace is passed in the command because the feature is
-namespace-specific. An invalid namespace is rejected prior to reaching
-the handler, but the "broadcast nsid" (0xFFFFFFFF) is considered valid
-and causes the assert to abort QEMU.
+Generally speaking, I think we should avoid use of current_cpu
+where we can -- it's an "action at a distance" global variable.
+If this function needs the CPU pointer for the current CPU then
+we should revert c5ec1bfad103 so that we pass the env pointer
+to the helper function again.
 
-Reject it with Invalid Field in Command instead as per the
-specification.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4792
-Fixes: 73064edfb864 ("hw/nvme: flexible data placement emulation")
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index a0d22dacedfa..71c24dc02b67 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -6636,7 +6636,9 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
-     g_autofree uint8_t *events = NULL;
-     NvmeRuHandle *ruh = NULL;
- 
--    assert(ns);
-+    if (!ns) {
-+        return NVME_INVALID_FIELD | NVME_DNR;
-+    }
- 
-     if (!n->subsys || !n->subsys->endgrp.fdp.enabled) {
-         return NVME_FDP_DISABLED | NVME_DNR;
-
--- 
-2.53.0
-
+thanks
+-- PMM
 
