@@ -1,51 +1,91 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54C4606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 23:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6DD606A323
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 00:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rev.ng header.i=@rev.ng header.a=rsa-sha256 header.s=dkim header.b=Z445TOlT
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=E5Q1u95R
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRe2O-00076u-NO; Thu, 12 Nov 2026 18:17:00 -0500
+	id 1xRfPk-0007QK-Bw; Thu, 12 Nov 2026 19:45:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1xRe2I-00075y-Sq
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 18:16:55 -0500
-Received: from rev.ng ([94.130.142.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1xRe2H-0001U4-3l
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 18:16:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=9irHMgZ9xnAb96XhcwIPDB9gNKGWCcYEIqFeIoCp164=; b=Z445TOlTDA6aJtT
- EM1x33g+ODJmGnQFEZ1H6iTxdVt43P2KA6np7V1MsTLq2+aomaFTzOjP1qOreEWD5iJSP0ElmPVau
- TYUHns+bGrY9mXmJaiOBFC8XenHUWnfb4WWDnnA8DR86tZgcFvb6o031dX9hrI/mEVxPSnILHihgQ
- 20=;
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xRfPh-0007Py-Rn
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 19:45:09 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xRfPe-0001j1-3K
+ for qemu-devel@nongnu.org; Thu, 12 Nov 2026 19:45:08 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-4922dbcee23so159604f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 16:45:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794530704; x=1795135504; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=LkFVsACxNmnaGkiQMYuPXI9+5TvJNIJHvYGK7iS8924=;
+ b=E5Q1u95RC53WAWpJnFd1siGBpmSuSY+nAmr3ISTpIiqPYWNc8KAIaFIr/BwkhuN3w9
+ 6VH51hlq23nrRf6SEnCJOyD5DYUMzHvc9ksFC/kVhZ+oKlVtDUVhcub87qKqeVM58xz1
+ Hr7+u0JrmoLqr7m85R8qN5hTJ2n5rHtdXfCcIkI38GTSDmBLsodz7yrYD6WE75Nht2qi
+ sV/GQOTB8E3TMCVziOOcI6pyuaDCMzXwPcyaSjzbSx41tncvyEskw+p2py5ZQ3ipg8iK
+ ktYFEuKuQ92OTtVcioeaeMD7ZiZRLojsLAPbILZr3Lt358NoXa/YhZc+F5h2DX7PNI+x
+ KFuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794530704; x=1795135504;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=LkFVsACxNmnaGkiQMYuPXI9+5TvJNIJHvYGK7iS8924=;
+ b=dBrBQGH0uXk/rVI5Qu3oI6TzqiNxR+hnsH3SLjz5mCUUnUy+WBmtTtx5BWIyFbSEWF
+ fXR4k6h4Kcii/woJyNdyauzdCDKd76iD3zdBVSE2tdvhbCjjx+KRwZbviQZLGvMaimUw
+ b94BnPK3IE1/iF51gqax4DhEhS1qeProkGWJNlI1V5gS3vNhO9va10Vu59cqNOXJk0LJ
+ uCxD4w3DEa3jg53Lx72vpan7aqkBu12ubRVm7515Jz/p1j16XH02x3unW5/9SxA9AM1S
+ xGD6JqCxNPBOWcXRbeu97pWRV84t7ExezrgHuS9Lzi72EY1eL4Y/xXqZtNSMGBYkF0Os
+ Tayg==
+X-Gm-Message-State: APuU4Z/ZDgEV/buEoIHyxeGZoqaGNmQpOqdWroG1syQYKCAmCu/JcZuN
+ z2UzA4FDeQC4tn+2TwQB6upEjEFNHOU/+0ZpMPtJsfTTz9MhMM4md6Q62/SxkwIelmE=
+X-Gm-Gg: AYBFou2pIzX1K38G0gpOyL7YPd7W9naz9NQgn159S3aQBeKlf6Xh6AdgTtgIQP1Hm4C
+ zLo63K1D40cOQ2+LrcfmlzO8l1mA65qowsqgTnFnrk0FcL62FtD0myNv92GOyGXB1T3O4yC/L82
+ B2vIKJTG2Uxso30CcFh0Ie1a9YycOn/WLIQPq75mEQSGdqNm1gkqecmbRyyYlFSH0/Lj8L2xvsX
+ ezAPGh4Ct9J0TVNb4endM4OdW5yZ6O89I552fQsaAw8lnkiX954vgTNYsBbouiXNAhMRj3GRmfj
+ ICBR+YOTU/eOVkTktFi4z5mCymylKr/tD1Km3QgQHuuahxbedwYLne+DSQ1GVh38Kl1Fn8Klf0B
+ PdSIcKRxxy4k0sx2fltRg+uu1W5FL/eL5KYcHTVxvrz8FT/3O0XWI2PQQWI3mFFpE8svDcBL4LT
+ t/eN8VXnQBXQyj0WObZGA5GoIr8HLbNd6XD1viTq2tQdgXniITRsxxk8QJlhNzoqsqF/BDc1fnD
+ +Qwo/CQ3+ci9g898UmL4YqrMVXhX7zTrC8RX8FQKYsLVPC2YweiK+JXvcbmPAGhw2pihY0DoIwh
+ 300IZR/xLutol66QWcI+ceFfuwzf
+X-Received: by 2002:a05:6000:4553:b0:48d:bfd5:79c with SMTP id
+ ffacd0b85a97d-49c73164944mr1333445f8f.42.1794530703647; 
+ Thu, 12 Nov 2026 16:45:03 -0800 (PST)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-49c6020bb7dsm1971566f8f.33.2026.11.12.16.45.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Nov 2026 16:45:01 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 62E7A5F8CE;
+ Fri, 13 Nov 2026 00:44:59 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v3 3/4] target/hexagon: Forward return address to HLX
- load/store helpers
-Date: Fri, 13 Nov 2026 00:20:31 +0100
-Message-ID: <20261112232032.396-4-anjo@rev.ng>
-In-Reply-To: <20261112232032.396-1-anjo@rev.ng>
-References: <20261112232032.396-1-anjo@rev.ng>
+Cc: peter.maydell@linaro.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [RFC PATCH] Revert ".dir-locals: include QEMU code in PYTHONPATH"
+Date: Fri, 13 Nov 2026 00:44:52 +0000
+Message-ID: <20261113004452.3027978-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -57,163 +97,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Fixes: 2db29a3615a5ad2a3 ("target/hexagon: add HLX helper support")
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
----
- target/hexagon/hlx_helper.h | 19 +++++++++++++++++++
- target/hexagon/macros.h     | 13 +++++++++----
- target/hexagon/hlx_helper.c | 31 ++++++++++++++++++++++---------
- 3 files changed, 50 insertions(+), 13 deletions(-)
- create mode 100644 target/hexagon/hlx_helper.h
+Unfortunately this relied on trusting the source tree via the
+safe-local-variable-directories otherwise users keep being prompted
+that ".dir-locals.el contains values that may not be safe".
 
-diff --git a/target/hexagon/hlx_helper.h b/target/hexagon/hlx_helper.h
-new file mode 100644
-index 0000000000..ab36cc1049
---- /dev/null
-+++ b/target/hexagon/hlx_helper.h
-@@ -0,0 +1,19 @@
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HEXAGON_HLX_HELPER_H
-+#define HEXAGON_HLX_HELPER_H
-+
-+#include "cpu.h"
-+
-+void hlx_load_vec_ra(CPUHexagonState *env, void *dst_void,
-+                     target_ulong ea, uint32_t above, uint32_t below,
-+                     uintptr_t ra);
-+
-+void hlx_store_vec_ra(CPUHexagonState *env, target_ulong ea,
-+                      void *src_void, uint32_t above, uint32_t below,
-+                      uintptr_t ra);
-+
-+#endif
-diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
-index 2748e26d6c..5799016ea4 100644
---- a/target/hexagon/macros.h
-+++ b/target/hexagon/macros.h
-@@ -22,6 +22,7 @@
- #include "hex_regs.h"
- #include "reg_fields.h"
- #include "accel/tcg/getpc.h"
-+#include "hlx_helper.h"
- 
- #define GET_FIELD(FIELD, REGIN) \
-     fEXTRACTU_BITS(REGIN, reg_field_info[FIELD].width, \
-@@ -738,8 +739,10 @@ static inline TCGv gen_read_ireg(TCGv result, TCGv val, int shift)
-                             EA, tcg_constant_i32(ABOVE), \
-                             tcg_constant_i32(BELOW))
- #else
--#define fLOADMML(EA, DST, ABOVE, BELOW) \
--    do { HELPER(hlx_load_vec)(env, &(DST), (EA), (ABOVE), (BELOW)); } while (0)
-+#define fLOADMML(EA, DST, ABOVE, BELOW)                                \
-+    do {                                                               \
-+        hlx_load_vec_ra(env, &(DST), (EA), (ABOVE), (BELOW), GETPC()); \
-+    } while (0)
- #endif
- 
- /* The helper logs the store for packet commit. */
-@@ -748,8 +751,10 @@ static inline TCGv gen_read_ireg(TCGv result, TCGv val, int shift)
-     gen_helper_hlx_store_vec(tcg_env, EA, tcg_constant_ptr((intptr_t)&(SRC)), \
-                              tcg_constant_i32(ABOVE), tcg_constant_i32(BELOW))
- #else
--#define fSTOREMML(EA, SRC, ABOVE, BELOW) \
--    do { HELPER(hlx_store_vec)(env, (EA), &(SRC), (ABOVE), (BELOW)); } while (0)
-+#define fSTOREMML(EA, SRC, ABOVE, BELOW)                                \
-+    do {                                                                \
-+        hlx_store_vec_ra(env, (EA), &(SRC), (ABOVE), (BELOW), GETPC()); \
-+    } while (0)
- #endif
- 
- /* Helpers receive .new registers in future_LRegs. */
-diff --git a/target/hexagon/hlx_helper.c b/target/hexagon/hlx_helper.c
-index c063706cfa..bc638f6403 100644
---- a/target/hexagon/hlx_helper.c
-+++ b/target/hexagon/hlx_helper.c
-@@ -7,6 +7,7 @@
- #include "cpu.h"
- #include "accel/tcg/cpu-ldst.h"
- #include "exec/helper-proto.h"
-+#include "hlx_helper.h"
- #include "hlx/hlx.h"
- #include "hw/hexagon/hexagon_hlx.h"
- #include "accel/tcg/probe.h"
-@@ -15,40 +16,52 @@
- #define HLX_MEM_ALIGN_MASK (~(HLX_VEC_SIZE_BYTES - 1))
- 
- /* Align down to 2KB. Above and below are unused in V85. */
--void HELPER(hlx_load_vec)(CPUHexagonState *env, void *dst_void,
--                          target_ulong ea, uint32_t above, uint32_t below)
-+void hlx_load_vec_ra(CPUHexagonState *env, void *dst_void,
-+                     target_ulong ea, uint32_t above, uint32_t below,
-+                     uintptr_t ra)
- {
-     HLXVector *dst = (HLXVector *)dst_void;
-     target_ulong aligned_ea = ea & HLX_MEM_ALIGN_MASK;
--    uintptr_t raddr = GETPC();
-     int mmu_idx = cpu_mmu_index(env_cpu(env), false);
- 
-     /* A 2KB-aligned access stays within one page. */
--    void *host = probe_read(env, aligned_ea, HLX_VEC_SIZE_BYTES, mmu_idx,
--                            raddr);
-+    void *host = probe_read(env, aligned_ea, HLX_VEC_SIZE_BYTES, mmu_idx, ra);
- 
-     if (host) {
-         memcpy(dst, host, HLX_VEC_SIZE_BYTES);
-     } else {
-         for (int i = 0; i < HLX_VEC_SIZE_BYTES; i += 8) {
--            uint64_t val = cpu_ldq_le_data_ra(env, aligned_ea + i, raddr);
-+            uint64_t val = cpu_ldq_le_data_ra(env, aligned_ea + i, ra);
-             memcpy(&dst->ub[i], &val, 8);
-         }
-     }
- }
- 
--void HELPER(hlx_store_vec)(CPUHexagonState *env, target_ulong ea,
--                           void *src_void, uint32_t above, uint32_t below)
-+void hlx_store_vec_ra(CPUHexagonState *env, target_ulong ea,
-+                      void *src_void, uint32_t above, uint32_t below,
-+                      uintptr_t ra)
- {
-     target_ulong aligned_ea = ea & HLX_MEM_ALIGN_MASK;
-     int mmu_idx = cpu_mmu_index(env_cpu(env), false);
- 
--    probe_write(env, aligned_ea, HLX_VEC_SIZE_BYTES, mmu_idx, GETPC());
-+    probe_write(env, aligned_ea, HLX_VEC_SIZE_BYTES, mmu_idx, ra);
-     memcpy(&env->hlx_store_data, src_void, sizeof(HLXVector));
-     env->hlx_store_va = aligned_ea;
-     env->hlx_store_pending = true;
- }
- 
-+void HELPER(hlx_load_vec)(CPUHexagonState *env, void *dst_void,
-+                          target_ulong ea, uint32_t above, uint32_t below)
-+{
-+    hlx_load_vec_ra(env, dst_void, ea, above, below, GETPC());
-+}
-+
-+void HELPER(hlx_store_vec)(CPUHexagonState *env, target_ulong ea,
-+                           void *src_void, uint32_t above, uint32_t below)
-+{
-+    hlx_store_vec_ra(env, ea, src_void, above, below, GETPC());
-+}
-+
- void HELPER(hlx_commit_store)(CPUHexagonState *env)
- {
-     target_ulong va = env->hlx_store_va;
+An alternative is for the user to add something like this to their
+local emacs config:
+
+  (defun my-return-source-if-in-qemu-tree()
+    "Return the root of source when in QEMU code."
+    (when-let ((src (expand-file-name (locate-dominating-file default-directory ".git"))))
+      (if (file-exists-p (concat src "/qemu-options.hx"))
+          src)))
+
+  (defun my-set-qemu-python-path()
+    "Set local python environment for QEMU."
+    (when-let ((root (my-return-source-if-in-qemu-tree)))
+      (setq-local process-environment (copy-sequence process-environment))
+      (setenv "PYTHONPATH" (concat (expand-file-name "python" root) ":"
+                                   (expand-file-name "tests/functional" root)))))
+
+  (use-package python
+    :hook ((python-mode python-ts-mode) . my-set-qemu-python-path))
+
+This reverts commit 3112269be3ac92343a5f0e5d9eae919edd176a35.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ .dir-locals.el | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/.dir-locals.el b/.dir-locals.el
+index 51871619422..3ac0cfc6f0d 100644
+--- a/.dir-locals.el
++++ b/.dir-locals.el
+@@ -1,8 +1,2 @@
+ ((c-mode . ((c-file-style . "stroustrup")
+-	    (indent-tabs-mode . nil)))
+- (python-mode .
+-              ((eval . (when-let* ((root (locate-dominating-file default-directory ".dir-locals.el")))
+-                         (setq-local process-environment (copy-sequence process-environment))
+-                         (setenv "PYTHONPATH"
+-                                 (concat (expand-file-name "python" root) ":"
+-                                         (expand-file-name "tests/functional" root))))))))
++	    (indent-tabs-mode . nil))))
 -- 
-2.52.0
+2.47.3
 
 
