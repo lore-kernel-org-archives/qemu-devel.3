@@ -1,32 +1,32 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD7E606B18A
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48818606A32E
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=jOLiYxfu
+	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=TfHShXJp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRrk6-00038D-Ku; Fri, 13 Nov 2026 08:55:02 -0500
+	id 1xRrjG-0001X3-Qa; Fri, 13 Nov 2026 08:54:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnuR-0004fA-Ol; Fri, 13 Nov 2026 04:49:28 -0500
+ id 1xRnta-0004N1-Pg; Fri, 13 Nov 2026 04:48:34 -0500
 Received: from smtp47.tsinghua.edu.cn ([101.6.4.71] helo=tsinghua.edu.cn)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnuP-0007Dm-1U; Fri, 13 Nov 2026 04:49:27 -0500
+ id 1xRntY-00072W-Rm; Fri, 13 Nov 2026 04:48:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mails.tsinghua.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:
  Date:Message-ID:In-Reply-To:References:MIME-Version:
- Content-Transfer-Encoding; bh=z0wAaN14MrdTcq4vNRXtU+J3HaGg6LIxXo
- L1VlhxKq4=; b=jOLiYxfu1OrcLdkdrgm9GUEGNeARzLp460MevVgWWJjyOoU1F5
- r7+CPb53wTCV8gaZRBQ3ryQG5LZDu7kHo+iO72F5mrcYmgy+Ye9htMmzxLL7eYA2
- gEJ/9uQSwj2hefpFnARBasuXckFGSQ/yL7Yi8/WyTcbNKlw2ubxeW8uuQ=
+ Content-Transfer-Encoding; bh=uyB2d7JldGTrGzC0YCKTHJcf0w2QHiOdrC
+ M0jtxiBRA=; b=TfHShXJpw5nq3aIrXupXvTMO7Bq6j5SSPoLf30YI+RCR634oMG
+ xBGMsM+IP7EJuzo+bqHYQN+Y5YTkRfvFSCIOaVKXs6IrHGjIsbwLfjmux4xYp6zA
+ uoMzo0NvTCEYB32LcYYd2UvGcMZFj8s9PFsO2KMmhTYgQW4+NMaJewl/U=
 Received: from ubuntu (unknown [101.5.154.165])
- by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S14;
- Fri, 13 Nov 2026 17:49:20 +0800 (CST)
+ by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S5;
+ Fri, 13 Nov 2026 17:48:29 +0800 (CST)
 From: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
 To: qemu-devel@nongnu.org
 Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
@@ -39,34 +39,33 @@ Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  bin.meng@processmission.com, tangtao1634@phytium.com.cn,
  Chao Liu <chao.liu@processmission.com>
-Subject: [RFC PATCH 12/20] hw/misc: add the RK3588 OTP controller
-Date: Fri, 13 Nov 2026 17:47:46 +0800
-Message-ID: <8215913c80e82187d194efc1f22e43528e0c4be6.1794555589.git.w-yf22@mails.tsinghua.edu.cn>
+Subject: [RFC PATCH 03/20] target/arm: report SMCCC v1.1 support
+Date: Fri, 13 Nov 2026 17:47:37 +0800
+Message-ID: <220bd78f343a5d9d85a03e20c26ece7152a0feb4.1794555589.git.w-yf22@mails.tsinghua.edu.cn>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
 References: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S14
-X-Coremail-Antispam: 1UD129KBjvJXoWxtFyDAFWDZFykXFykuFyUJrb_yoWfCw15pr
- n5Cry5GrWkGF47ZrZ3tFnxtF45Jan7Ww1jv3yfAFyayFW7tFy5KF4qgayYyFZ7XrW8ur18
- u39Fg3yYqr47Xw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUHa14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
- kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
- z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
- 4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
- 3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0V
- AKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1l
- Ox8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErc
- IFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_
- GFWl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxV
- WUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI
- 7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Gr0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r
- 4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4U
- MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfUeVbkUU
- UUU
+X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S5
+X-Coremail-Antispam: 1UD129KBjvJXoWxCr1DCw4DXF47uF47KF48Zwb_yoW5JFWkpF
+ W5Xrn8GryxX343Ga9xArWUZF15Ga9YkFn0yr47t3W8Wws8Jry5CrZ0g3ZakFZ8K39xua9r
+ AF12vr13KFWkXwUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUHF14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JrWl82xGYIkIc2
+ x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+ Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJw
+ A2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAa
+ c4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzV
+ Aqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S
+ 6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxw
+ ACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_GFWl
+ 42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJV
+ WUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAK
+ I48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4UJV
+ WxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF
+ 0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfUeJPEUUUUU
 X-CM-SenderInfo: fzn1wj2s6ptxtovo32xlqjx3vdohv3gofq/
 Received-SPF: pass client-ip=101.6.4.71;
  envelope-from=w-yf22@mails.tsinghua.edu.cn; helo=tsinghua.edu.cn
@@ -77,7 +76,7 @@ X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:53 -0500
+X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:52 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,280 +96,69 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Chao Liu <chao.liu@processmission.com>
 
-Add a model of the RK3588 OTP automatic read interface that U-Boot uses
-for CPU identity and device-tree initialization. The OTP array starts
-unprogrammed: a read command fills up to four data registers with zero
-words and sets a write-one-to-clear completion status bit. Commands
-outside the 1024-word array are rejected as guest errors.
+Guests use the SMCCC version call to select the conduit for firmware
+services such as SCMI.  QEMU reports PSCI 1.1 but rejects the SMCCC
+version call, so a guest running with the SMC PSCI conduit never
+initializes SMCCC and cannot use SCMI over SMC.
+
+Advertise SMCCC 1.1 through PSCI_FEATURES and the SMCCC version call.
 
 Signed-off-by: Chao Liu <chao.liu@processmission.com>
 Signed-off-by: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
 ---
- MAINTAINERS             |   1 +
- hw/arm/rk3588.c         |  23 ++++++-
- hw/misc/meson.build     |   4 +-
- hw/misc/rockchip_otp.c  | 146 ++++++++++++++++++++++++++++++++++++++++
- include/hw/arm/rk3588.h |   1 +
- 5 files changed, 173 insertions(+), 2 deletions(-)
- create mode 100644 hw/misc/rockchip_otp.c
+ target/arm/kvm-consts.h |  5 +++++
+ target/arm/tcg/psci.c   | 15 +++++++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2905276c7e..5a4ec869ea 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1066,6 +1066,7 @@ L: qemu-arm@nongnu.org
- S: Maintained
- F: hw/arm/rk3588.c
- F: hw/misc/rockchip_cru.c
-+F: hw/misc/rockchip_otp.c
- F: hw/timer/rockchip-hptimer.c
- F: include/hw/arm/rk3588.h
- F: include/hw/timer/rockchip-hptimer.h
-diff --git a/hw/arm/rk3588.c b/hw/arm/rk3588.c
-index 6e7cafea1c..acd9149933 100644
---- a/hw/arm/rk3588.c
-+++ b/hw/arm/rk3588.c
-@@ -42,6 +42,7 @@ enum {
-     RK3588_DEV_GIC_DIST,
-     RK3588_DEV_GIC_REDIST,
-     RK3588_DEV_CRU,
-+    RK3588_DEV_OTP,
-     RK3588_DEV_UART1,
-     RK3588_DEV_UART2,
-     RK3588_DEV_UART3,
-@@ -58,6 +59,7 @@ static const MemMapEntry rk3588_memmap[] = {
-     [RK3588_DEV_GIC_DIST]   = { 0xfe600000, 0x00010000 },
-     [RK3588_DEV_GIC_REDIST] = { 0xfe680000, 0x00100000 },
-     [RK3588_DEV_CRU]        = { 0xfd7c0000, 0x0005c000 },
-+    [RK3588_DEV_OTP]        = { 0xfecc0000, 0x00000400 },
-     [RK3588_DEV_UART1]      = { 0xfeb40000, 0x00010000 },
-     [RK3588_DEV_UART2]      = { 0xfeb50000, 0x00010000 },
-     [RK3588_DEV_UART3]      = { 0xfeb60000, 0x00010000 },
-@@ -111,7 +113,6 @@ static const UnimplementedDeviceConfig rk3588_unimpl_devices[] = {
-     RK3588_UNIMPLEMENTED("gpio4", 0xfec50000, 64 * KiB),
-     RK3588_UNIMPLEMENTED("i2c6", 0xfec80000, 64 * KiB),
-     RK3588_UNIMPLEMENTED("i2c7", 0xfec90000, 64 * KiB),
--    RK3588_UNIMPLEMENTED("otp-ns", 0xfecc0000, 64 * KiB),
-     RK3588_UNIMPLEMENTED("dmac2", 0xfed10000, 64 * KiB),
-     { }
- };
-@@ -217,6 +218,21 @@ static bool rk3588_soc_create_cru(RK3588SoCState *s, Error **errp)
-     return true;
- }
+diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
+index 9fba3e886d..ab64c91888 100644
+--- a/target/arm/kvm-consts.h
++++ b/target/arm/kvm-consts.h
+@@ -88,6 +88,11 @@ MISMATCH_CHECK(QEMU_PSCI_0_2_FN64_CPU_ON, PSCI_0_2_FN64_CPU_ON);
+ MISMATCH_CHECK(QEMU_PSCI_0_2_FN64_MIGRATE, PSCI_0_2_FN64_MIGRATE);
+ MISMATCH_CHECK(QEMU_PSCI_1_0_FN_PSCI_FEATURES, PSCI_1_0_FN_PSCI_FEATURES);
  
-+static bool rk3588_soc_create_otp(RK3588SoCState *s, Error **errp)
-+{
-+    SysBusDevice *otp = SYS_BUS_DEVICE(s->otp);
++/* SMCCC architecture calls. */
++#define QEMU_SMCCC_VERSION_FUNC_ID                0x80000000
++#define QEMU_SMCCC_ARCH_FEATURES_FUNC_ID          0x80000001
++#define QEMU_SMCCC_VERSION_1_1                     QEMU_PSCI_VERSION_1_1
 +
-+    if (!sysbus_realize(otp, errp)) {
-+        return false;
-+    }
-+
-+    memory_region_add_subregion(s->memory,
-+        rk3588_memmap[RK3588_DEV_OTP].base,
-+        sysbus_mmio_get_region(otp, 0));
-+
-+    return true;
-+}
-+
- static bool rk3588_soc_create_uart(RK3588SoCState *s, Error **errp)
- {
-     for (unsigned int i = RK3588_FIRST_UART; i < RK3588_NUM_UARTS; i++) {
-@@ -291,6 +307,7 @@ static void rk3588_soc_realize(DeviceState *dev, Error **errp)
+ /* PSCI v0.2 return values used by TCG emulation of PSCI */
  
-     if (!rk3588_soc_create_gic(s, errp) ||
-         !rk3588_soc_create_cru(s, errp) ||
-+        !rk3588_soc_create_otp(s, errp) ||
-         !rk3588_soc_create_uart(s, errp) ||
-         !rk3588_soc_create_hptimer(s, errp)) {
-         return;
-@@ -342,6 +359,10 @@ static void rk3588_soc_instance_init(Object *obj)
-     object_property_add_child(obj, "cru", OBJECT(s->cru));
-     object_unref(OBJECT(s->cru));
- 
-+    s->otp = qdev_new("rockchip-otp");
-+    object_property_add_child(obj, "otp", OBJECT(s->otp));
-+    object_unref(OBJECT(s->otp));
-+
-     s->hptimer = qdev_new(TYPE_ROCKCHIP_HPTIMER);
-     object_property_add_child(obj, "hptimer", OBJECT(s->hptimer));
-     object_unref(OBJECT(s->hptimer));
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 374af9331b..51c09b056e 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -183,4 +183,6 @@ system_ss.add(when: 'CONFIG_AXIADO_CLK', if_true: files('axiado_clk.c'))
- # Qualcomm Hexagon DSP subsystems
- system_ss.add(when: 'CONFIG_QCOM_QDSP6SS_CLK', if_true: files('qcom-qdsp6ss-clk.c'))
- 
--system_ss.add(when: 'CONFIG_RK3588', if_true: files('rockchip_cru.c'))
-+system_ss.add(when: 'CONFIG_RK3588', if_true: files(
-+  'rockchip_cru.c',
-+  'rockchip_otp.c'))
-diff --git a/hw/misc/rockchip_otp.c b/hw/misc/rockchip_otp.c
-new file mode 100644
-index 0000000000..81e402fdcc
---- /dev/null
-+++ b/hw/misc/rockchip_otp.c
-@@ -0,0 +1,146 @@
-+/*
-+ * Rockchip OTP
-+ *
-+ * Copyright (C) 2026 Process Mission
-+ *
-+ * Authors:
-+ *    Chao Liu <chao.liu@processmission.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * The automatic read interface exposes a bank of unprogrammed OTP words.
-+ * Each read command fills the data registers and sets the read-done status;
-+ * the status is cleared by a write-one-to-clear acknowledgement.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "qemu/module.h"
-+#include "qemu/log.h"
-+#include "hw/core/register.h"
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_ROCKCHIP_OTP "rockchip-otp"
-+OBJECT_DECLARE_SIMPLE_TYPE(RockchipOTPState, ROCKCHIP_OTP)
-+
-+/* Size of the OTP window in the RK3588 address map. */
-+#define ROCKCHIP_OTP_SIZE 0x400
-+/* Highest byte address described by rockchip_otp_regs_info[]. */
-+#define ROCKCHIP_OTP_MAX_REG 0x84
-+#define ROCKCHIP_OTP_NUM_REGS \
-+    ((ROCKCHIP_OTP_MAX_REG / sizeof(uint32_t)) + 1)
-+/* Number of 32-bit words in the OTP array. */
-+#define ROCKCHIP_OTP_NUM_WORDS 1024
-+
-+struct RockchipOTPState {
-+    SysBusDevice parent_obj;
-+
-+    RegisterInfo regs_info[ROCKCHIP_OTP_NUM_REGS];
-+    uint32_t regs[ROCKCHIP_OTP_NUM_REGS];
-+};
-+
-+REG32(AUTO_CTRL, 0x04)
-+REG32(AUTO_EN, 0x08)
-+REG32(DOUT0, 0x20)
-+REG32(DOUT1, 0x24)
-+REG32(DOUT2, 0x28)
-+REG32(DOUT3, 0x2c)
-+REG32(INT_STATUS, 0x84)
-+
-+/* INT_STATUS: a read has finished. */
-+#define ROCKCHIP_OTP_INT_STATUS_READ_DONE BIT(1)
-+
-+static void rockchip_otp_auto_read(RegisterInfo *reg, uint64_t value)
-+{
-+    RockchipOTPState *s = ROCKCHIP_OTP(reg->opaque);
-+
-+    if (value & 1) {
-+        uint32_t control = s->regs[R_AUTO_CTRL];
-+        unsigned int address = control >> 16;
-+        unsigned int count = (control >> 8) & 0xff;
-+
-+        s->regs[R_AUTO_EN] = 0;
-+        if (count == 0 || count > 4 ||
-+            address + count > ROCKCHIP_OTP_NUM_WORDS) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "rockchip-otp: invalid read command\n");
-+            return;
+ /* No Trusted OS migration to worry about when offlining CPUs */
+diff --git a/target/arm/tcg/psci.c b/target/arm/tcg/psci.c
+index d8e01df762..81ca2fbb44 100644
+--- a/target/arm/tcg/psci.c
++++ b/target/arm/tcg/psci.c
+@@ -95,6 +95,20 @@ void arm_handle_psci_call(ARMCPU *cpu)
+     case QEMU_PSCI_0_2_FN_PSCI_VERSION:
+         ret = QEMU_PSCI_VERSION_1_1;
+         break;
++    case QEMU_SMCCC_VERSION_FUNC_ID:
++        ret = QEMU_SMCCC_VERSION_1_1;
++        break;
++    case QEMU_SMCCC_ARCH_FEATURES_FUNC_ID:
++        switch ((uint32_t)param[1]) {
++        case QEMU_SMCCC_VERSION_FUNC_ID:
++        case QEMU_SMCCC_ARCH_FEATURES_FUNC_ID:
++            ret = 0;
++            break;
++        default:
++            ret = QEMU_PSCI_RET_NOT_SUPPORTED;
++            break;
 +        }
-+        /* Unprogrammed fuse words read as zero. */
-+        for (unsigned int i = 0; i < count; i++) {
-+            s->regs[R_DOUT0 + i] = 0;
-+        }
-+        s->regs[R_INT_STATUS] |= ROCKCHIP_OTP_INT_STATUS_READ_DONE;
-+    }
-+}
-+
-+static const RegisterAccessInfo rockchip_otp_regs_info[] = {
-+    { .name = "AUTO_CTRL", .addr = A_AUTO_CTRL },
-+    { .name = "AUTO_EN", .addr = A_AUTO_EN,
-+      .ro = ~1U, .post_write = rockchip_otp_auto_read },
-+    { .name = "DOUT0", .addr = A_DOUT0, .ro = UINT32_MAX },
-+    { .name = "DOUT1", .addr = A_DOUT1, .ro = UINT32_MAX },
-+    { .name = "DOUT2", .addr = A_DOUT2, .ro = UINT32_MAX },
-+    { .name = "DOUT3", .addr = A_DOUT3, .ro = UINT32_MAX },
-+    { .name = "INT_STATUS", .addr = A_INT_STATUS,
-+      .ro = ~ROCKCHIP_OTP_INT_STATUS_READ_DONE,
-+      .w1c = ROCKCHIP_OTP_INT_STATUS_READ_DONE },
-+};
-+
-+static const MemoryRegionOps rockchip_otp_ops = {
-+    .read = register_read_memory,
-+    .write = register_write_memory,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void rockchip_otp_reset(DeviceState *dev)
-+{
-+    RockchipOTPState *s = ROCKCHIP_OTP(dev);
-+
-+    for (int i = 0; i < ARRAY_SIZE(s->regs_info); i++) {
-+        register_reset(&s->regs_info[i]);
-+    }
-+}
-+
-+static void rockchip_otp_init(Object *obj)
-+{
-+    RockchipOTPState *s = ROCKCHIP_OTP(obj);
-+    RegisterInfoArray *reg_array;
-+
-+    reg_array = register_init_block32(
-+        DEVICE(obj), rockchip_otp_regs_info, ARRAY_SIZE(rockchip_otp_regs_info),
-+        s->regs_info, s->regs, &rockchip_otp_ops, false, ROCKCHIP_OTP_SIZE);
-+
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &reg_array->mem);
-+}
-+
-+static void rockchip_otp_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+
-+    device_class_set_legacy_reset(dc, rockchip_otp_reset);
-+}
-+
-+static const TypeInfo rockchip_otp_type_info = {
-+    .name = TYPE_ROCKCHIP_OTP,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RockchipOTPState),
-+    .instance_init = rockchip_otp_init,
-+    .class_init = rockchip_otp_class_init,
-+};
-+
-+static void rockchip_otp_register_types(void)
-+{
-+    type_register_static(&rockchip_otp_type_info);
-+}
-+
-+type_init(rockchip_otp_register_types)
-diff --git a/include/hw/arm/rk3588.h b/include/hw/arm/rk3588.h
-index 18c66b6bae..1f854043de 100644
---- a/include/hw/arm/rk3588.h
-+++ b/include/hw/arm/rk3588.h
-@@ -53,6 +53,7 @@ struct RK3588SoCState {
-     GICv3State gic;
-     DW8250State uart[RK3588_NUM_UARTS];
-     DeviceState *cru;
-+    DeviceState *otp;
-     MemoryRegion *memory;
-     MemoryRegion sram;
-     DeviceState *hptimer;
++        break;
+     case QEMU_PSCI_0_2_FN_MIGRATE_INFO_TYPE:
+         ret = QEMU_PSCI_0_2_RET_TOS_MIGRATION_NOT_REQUIRED; /* No trusted OS */
+         break;
+@@ -177,6 +191,7 @@ void arm_handle_psci_call(ARMCPU *cpu)
+     case QEMU_PSCI_1_0_FN_PSCI_FEATURES:
+         switch (param[1]) {
+         case QEMU_PSCI_0_2_FN_PSCI_VERSION:
++        case QEMU_SMCCC_VERSION_FUNC_ID:
+         case QEMU_PSCI_0_2_FN_MIGRATE_INFO_TYPE:
+         case QEMU_PSCI_0_2_FN_AFFINITY_INFO:
+         case QEMU_PSCI_0_2_FN64_AFFINITY_INFO:
 -- 
 2.53.0
 
