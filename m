@@ -1,61 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADD2606AC23
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C84D606A33B
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=hQSzmbod;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=UMCbB/Pc
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=LIg09aPE;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=3hu4jsGp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRz9Z-00081A-TM; Fri, 13 Nov 2026 16:49:49 -0500
+	id 1xRz9f-00084o-L4; Fri, 13 Nov 2026 16:49:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9Y-00080b-3v
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:48 -0500
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9a-00081V-7X
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:50 -0500
 Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9V-0005Cz-W4
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:47 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Vbszunp
- /31e1c1w5ugNZ8FqS8qrB100aOUQFvZZU1W9Bx0+NuD9h3leBkVh4SDySBe2IbGwf86z73
- ZkWwtOb6VNMgKXJ8FDv5kCWSaDXny/+zGuINc/PMlnN0puSbw0sENMBLq70QcJJPL9J+RM
- 7HnkXjo3OGNYETCV9fOj3eWN6PC7bLeDG7iqU0jkSFygHQ7vV2lRkY/rs6dHALA/U0A3GM
- BYspPlEq/KXZnH7ZMBaz33s4CEKzCyS4S/YPg5W1sfYZNf3oz2K3VfKSNAPUrMIjy0NHdL
- jBoxPwxxHLwcsKhANzAWOCxKD5jlWttMl+L8+YwQCQACfH/k9U0JqrQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=6
- zDwH/up1noOHi0hJQoAgQLlnYa5OXaxlSoaLGbfMes=;
- h=date:subject:cc:to:
- from:dkim-signature:dkim-signature; d=mx.catap.net; b=jFcU9e4TuBH5d7L6
- KhGVnI/fTSmuYRahEroNVK7cDu1hV7p78XevVauhc4sVCw5jwPX1BDTk2ECMxm4kcuRO33
- /vU0wew+nCavMvHcNk3MofT2Zbfz1T3mbSX9WapXbjKK/YdZhhGD+SDeuxkz37j27bXpuG
- n5Nsyv+HI7uD9w92jwuGjgYvcFYU7tFM7xPRGT6uuGf6N0rbjUt0UEBMAklcAQmgq3qz0g
- aeDZRTZ5wAAcuqhnO2zt7Nabn4GtCPMfwpcV2yaldrgnghGtj9X/DjehBqrCbOnQiT2/EW
- s0ONVC/FohQjrDu0GWNmjF0fbJc+vI220pBvW2EeEN2kPg==
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9Y-0005Cz-EQ
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:49 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=BeJWwNb
+ AVUXS72yGrvbWttJUQ9ir4KZvz2nmUhu0X//O5UIYhi0IwNmHxpWbhNfi93fBfBCEb10u/
+ F+3Ad2O6vXl6p4O9mC4GP26t0SaNGkq2mx/aTAKNczQQfGJYi9f1glmF2aak+OzMddTh2U
+ eVFDkWAko+oja7rQMwN43ZgYYXpEDHJCdnnuhB0voHaHn8s8kOkJxhYpfo+eQ8KXl9j8cj
+ gHJqh7+OZQGHUEFND8+sPM9mNGguskOCKSYerxsStpheYbtZ/ZtYqh+o5ul5kCoK2yiHkD
+ q5Sofn1SzpvKHi3RDUwf8memNjxMCzFzQvrKLBE224pVsNqbck6+Q9w==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=i
+ p+05HQUtpyNAF9Y8Zc9TEjOA31v/XNdzRO8hUjPYzU=;
+ h=references:in-reply-to:
+ date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=zBhDmlBRymzrXl2K9hb3bEm0lNw8SBSQDEnBIsFDLot7XxmzEdCYksVnvFIWZby+0UgR
+ DZKPTbSrAzDL0Z5vOCHuXOmo7t3p7ESDkjL6gXqpXSYb7u6BBooF4SE9QIkfrhw2rMTAQ1
+ Rzn4VwlR1ioLtQ734hDnJa/91kh/yAhkW5CYS4sG2n9hUjeZMu0XdKhs2q27XnJVSyYc5D
+ 1yeUuHh9hdB6P4WOvYUIaQpM+Kdi4IXyvqeapl6TK5Svpw39K1V5JQgzShSvYkn1omJHxo
+ VLUNSOuVQIOqVleuUZKqa4IM48GbLOsbYmePTNEDDuExS+pGOgQBF8N/o6/BKgEQ==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=hQSzmbod; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=UMCbB/Pc;
+ header.b=LIg09aPE; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=3hu4jsGp;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=6zDwH/up
- 1noOHi0hJQoAgQLlnYa5OXaxlSoaLGbfMes=; h=date:subject:cc:to:from;
- d=korins.ky; b=hQSzmbodBtb19PpP2sAj0lskgv/GLeCCmZ86CUbOxyctCf4jceDExo8
- RDMuqu/JbzM7UAI2iPYg3pdyYaTPo99pQeIo/GjPoTEfHfRl340u2Y+tkTBoQ4H57l/CDj
- A135Qe+9pKXbdIgji/B9EeQ1g0PF6DxYfrgBOsYYJRx5DOvhKZiSjJxC8QN3Kgf0x7KlI6
- dE+LbvXY2YsadWpxN6eJP9qKdJlMrwv089gA0ggXDlGEM09AjnzCuRztb47GN2mWWw/2Ou
- md+YBG/IKxvtJQDlwryhmtK6wboc1Bopeoyxjakx6mzwMiC7ouKX0w6oifn25GdYLCqyhN
- R0pL4mw==
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=ip+05HQU
+ tpyNAF9Y8Zc9TEjOA31v/XNdzRO8hUjPYzU=;
+ h=references:in-reply-to:date:
+ subject:cc:to:from; d=korins.ky; b=LIg09aPEbp0Mdjt7zAX/5VrhuxeZQbK/uCM
+ zW0TyoLxqSdeUFYNjyy/H7Ipv3qWcGZaCKRjHMHoO32WiAckNs4pFV2hLnZYY4uwhPEwuF
+ kezE8tFTj7aH/XK0KaRjsMSm7itsx9y05sFgU03uk/7CfdX+Of+pD9sHUkWwvMyAR8f/Eb
+ t4sIKbWoHPBnvKCgAn/sTFCcpmwPfneRI6Q+nGatWXK9lM41roIvEn08p3WFWa3YH8AoVS
+ 30g0d4YT73pcp5dgdQ+nSS3tELKqHrIrlJU2JUylCssf3z6gx7nGtyNr8hsSXP+wzKAoYW
+ NhGOtCw5/DzDKwBkOzGuOrC+tgw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=6zDwH/up1noOHi0hJQoAgQLlnYa5OXaxlSoaLGbfMes=; h=date:subject:cc:to:
- from; d=korins.ky; b=UMCbB/Pco7yOSExT/0d3I2VyANGxOR2v8QNP0XTLekL2pA9WK
- 4snMprUhEimDseU7J8itXow9ZhS/Ju4Nn8uDg==
-Received: by mx1.catap.net (OpenSMTPD) id e1490d5c;
- Fri, 13 Nov 2026 22:49:41 +0100 (CET)
+ bh=ip+05HQUtpyNAF9Y8Zc9TEjOA31v/XNdzRO8hUjPYzU=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=3hu4jsGpDv4aSK+qhO
+ 1gO9WYXKo9pJAFLW6MQ3YxZQfHa0Q+OKoEhE0S7EwTUtJk5qY9qwQPL0VtDHwB+TF1Aw==
+Received: by mx1.catap.net (OpenSMTPD) id 0977b18f;
+ Fri, 13 Nov 2026 22:49:45 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 3ad3f9ef;
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id cbcdd08e;
  Fri, 13 Nov 2026 22:49:32 +0100 (CET)
 From: Kirill A. Korinsky <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
@@ -66,11 +67,14 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Cc: "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PATCH v8 00/26] hw/mips: add Octeon III EBB7304 support
-Date: Fri, 13 Nov 2026 22:45:14 +0100
-Message-ID: <20261113214926.98536-1-kirill@korins.ky>
+Cc: "Kirill A . Korinsky" <kirill@korins.ky>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v8 02/26] target/mips: fix MIPS64 segment access checks
+Date: Fri, 13 Nov 2026 22:45:16 +0100
+Message-ID: <20261113214926.98536-3-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261113214926.98536-1-kirill@korins.ky>
+References: <20261113214926.98536-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -95,121 +99,55 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Greetings,
+From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-This is rebased to 29760efaf96bbe5928f8111881eddbf5ac06439e
-(v11.2.0-rc0) and addressed a few remarks from Philippe Mathieu-Daudé,
-and additional fix of two typos.
+The xuseg and xsseg checks only tested UX and SX respectively; kernel
+and supervisor accesses must instead use the mode bit that applies to
+the current execution mode.
 
-This series adds enough Cavium Octeon III CN73xx and EBB7304 board
-support for upstream U-Boot 2026.04 to boot OpenBSD/octeon from USB
-storage or through PCI e1000 and TFTP; the same machine also reaches
-the prompt of the vendor U-Boot 2013.07 image from the Ubiquiti
-EdgeRouter Infinity ER-8-XG recovery set. The model intentionally
-covers the hardware exercised by these firmware and operating system
-paths.
+Allow supervisor and kernel mode to use xuseg when SX or KX is set, and
+allow kernel mode to use xsseg when KX is set.
 
-The vendor recovery image is U-Boot 2013.07, UBNT build
-e1000_002_ef3a9; it reaches:
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ target/mips/system/physaddr.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-    Octeon ubnt_e1000(Failsafe)#
-
-This is the expected command prompt of the recovery U-Boot environment;
-"Failsafe" describes the recovery image and does not indicate an
-emulation or boot failure.
-
-Early Octeon investigation used Amir Mehmood's original Octeon
-host.patch as a behavioral reference; the basic machine approach and
-several hardware model ideas come from that work. No code from that
-patch remains in this implementation.
-
-The series starts with three generic MIPS correctness fixes for MTTCG
-interrupt state, MIPS64 segment checks, and architectural tlbwr
-replacement semantics. It then adds Octeon CP0 state, the CN73xx CPU
-model, PageMask handling, and unaligned accesses before introducing an
-empty EBB7304 machine. The remaining patches add the machine state and
-peripherals incrementally, followed by the functional test.
-
-The machine currently models:
-
-* the EBB7304 RAM layout, boot flash aliases, and boot-local RAM;
-* CN73xx CPUs, Octeon CP0 state, CVMSEG, and configurable clocks;
-* reset control, legacy CIU and CIU3 interrupt routing, mailboxes, and
-  secondary CPU release;
-* UART, two TWSI controllers, synthesized DDR4 SPD, four LMC register
-  banks, fuses, RNG, POW, and the firmware probes used during platform
-  initialization;
-* the EMM registers needed for firmware MMC initialization;
-* two UCTL-wrapped DWC3 controllers, sufficient for U-Boot USB storage;
-* a minimal PCIe host bridge, sufficient for a PCI e1000 device.
-
-The functional test starts upstream U-Boot with four CPUs, enumerates
-PCI, obtains a DHCP lease, downloads bsd.rd through user mode TFTP, and
-boots the OpenBSD/octeon 7.9 installer.
-
-The OpenBSD boot and USB stress testing requires additional patch for
-xHCI which I haven't included into this series:
-https://patchew.org/QEMU/20260719215455.96122-1-kirill@korins.ky/
-
-Each submitted commit was built in sequence and given the meaningful
-smoke test available at that point. The final tree was tested with:
-
-    ninja -C build qemu-system-mips64
-    gmake -C build check-qtest-mips64
-    gmake -C build check-functional-mips64
-
-The machine was used to build a few GCC build and full OpenBSD/octeon
-release with LLVM inside OpenBSD/octeon using:
-
-    -m 32G -smp 8 -accel tcg,thread=multi
-
-The longest non interrupted workload was near two weeks.
-
-Known limitations are:
-
-* native Octeon Ethernet is not modelled; the OpenBSD test uses PCI
-  e1000;
-* EMM implements the firmware initialization path, not a complete MMC
-  data path;
-* direct kernel boot through -kernel is not implemented;
-* the newly modelled board and peripheral state lacks VMState
-  descriptions; migration and savevm are not expected to preserve the
-  complete machine state.
-
-Patch layout:
-
-  1. target/mips: make CP0 interrupt state atomic
-  2. target/mips: fix MIPS64 segment access checks
-  3. target/mips: drop hidden TLB shadowing for tlbwr
-  4. target/mips: add Octeon CP0 register state
-  5. target/mips: add Octeon CN73xx CPU model
-  6. target/mips: pass env to compute_pagemask
-  7. target/mips: accept Octeon PageMask encodings
-  8. target/mips: allow Octeon unaligned accesses
-  9. hw/mips: add empty Octeon III machine
- 10. hw/mips: add Octeon CPUs and boot memory
- 11. hw/mips: add Octeon reset controller
- 12. hw/mips: add Octeon CIU3 CPU control
- 13. hw/mips: add Octeon CIU3 interrupt routing
- 14. hw/mips: add Octeon legacy CIU
- 15. hw/mips: add Octeon CSR window
- 16. hw/mips: expose Octeon reset CSRs
- 17. hw/mips: add Octeon MIO boot support
- 18. hw/mips: wire the Octeon UART
- 19. hw/i2c: add Octeon TWSI controller
- 20. hw/mips: add Octeon EMM controller
- 21. hw/mips: add Octeon LMC controllers
- 22. hw/mips: add Octeon boot support registers
- 23. hw/usb: add Octeon USB controller
- 24. hw/pci-bridge: add Octeon PCI host bridge
- 25. hw/pci-bridge: add Octeon PCI memory window
- 26. tests/functional: test Octeon III boot
+diff --git a/target/mips/system/physaddr.c b/target/mips/system/physaddr.c
+index 523197f020..b9f44c27bc 100644
+--- a/target/mips/system/physaddr.c
++++ b/target/mips/system/physaddr.c
+@@ -145,7 +145,9 @@ int get_physical_address(const CPUMIPSState *env, hwaddr *physical,
+ #if defined(TARGET_MIPS64)
+     } else if (address < 0x4000000000000000ULL) {
+         /* xuseg */
+-        if (UX && address <= (0x3FFFFFFFFFFFFFFFULL & env->SEGMask)) {
++        if (((user_mode && UX) || (supervisor_mode && SX) ||
++             (kernel_mode && KX)) &&
++            address <= (0x3FFFFFFFFFFFFFFFULL & env->SEGMask)) {
+             ret = env->tlb->map_address(env, physical, prot,
+                                         real_address, access_type);
+         } else {
+@@ -153,8 +155,8 @@ int get_physical_address(const CPUMIPSState *env, hwaddr *physical,
+         }
+     } else if (address < 0x8000000000000000ULL) {
+         /* xsseg */
+-        if ((supervisor_mode || kernel_mode) &&
+-            SX && address <= (0x7FFFFFFFFFFFFFFFULL & env->SEGMask)) {
++        if (((supervisor_mode && SX) || (kernel_mode && KX)) &&
++            address <= (0x7FFFFFFFFFFFFFFFULL & env->SEGMask)) {
+             ret = env->tlb->map_address(env, physical, prot,
+                                         real_address, access_type);
+         } else {
+-- 
+2.56.0
 
 
