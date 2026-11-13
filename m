@@ -1,32 +1,32 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F915606A339
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2FA606A33A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=gExOVnhY
+	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=bS6YQ+CX
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRrjC-0001Nx-Ld; Fri, 13 Nov 2026 08:54:06 -0500
+	id 1xRrk0-0002iu-Rg; Fri, 13 Nov 2026 08:54:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnub-0004kr-Uc; Fri, 13 Nov 2026 04:49:38 -0500
-Received: from smtp47.tsinghua.edu.cn ([101.6.4.71] helo=tsinghua.edu.cn)
+ id 1xRnug-0004yY-62; Fri, 13 Nov 2026 04:49:42 -0500
+Received: from smtp46.tsinghua.edu.cn ([101.6.4.70] helo=tsinghua.edu.cn)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnuY-0007FE-Gq; Fri, 13 Nov 2026 04:49:36 -0500
+ id 1xRnud-0007Fy-Pm; Fri, 13 Nov 2026 04:49:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mails.tsinghua.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:
  Date:Message-ID:In-Reply-To:References:MIME-Version:
- Content-Transfer-Encoding; bh=ziqaSW7s/T3WAwT7Mz/j7jHhExcw1/jQm8
- 5lHkw0d7M=; b=gExOVnhYWhnOn8O18CWMUVe4eBs4bQ/JWwEUD6yXZE/8Y+7Ay2
- zFaTghoNSiPvvh86phviTG8Uyg/KHJ6s+9sd41F2UrPpViSaGSn8ViovZBKSt+cU
- EpwnAOlqlzGH7ziwztm886HtRGfLSPXe9XrlvOXQ44cLmb2UsRtDlxtw8=
+ Content-Transfer-Encoding; bh=TFBK+ruV+8TwHllPZXoQ269vGYbSb8v7MR
+ chb9beKss=; b=bS6YQ+CXU9bmBRkSEGBwMrLIe1ET1IRUfg4zy3V2JP3k5emiFL
+ XTHdR73HnKVbAUKJa5z4grg4SKx5Z2X5H9vxOr5os+2S5I+zpzNNoOOuRaSsZ8dM
+ PNgf4k5f9IPEtrSsmkwCBVev5yjKCXhTh2LSECVrDRlnVcUmkWYC5mMEQ=
 Received: from ubuntu (unknown [101.5.154.165])
- by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S17;
- Fri, 13 Nov 2026 17:49:29 +0800 (CST)
+ by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S19;
+ Fri, 13 Nov 2026 17:49:34 +0800 (CST)
 From: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
 To: qemu-devel@nongnu.org
 Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
@@ -39,19 +39,20 @@ Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  bin.meng@processmission.com, tangtao1634@phytium.com.cn,
  Chao Liu <chao.liu@processmission.com>
-Subject: [RFC PATCH 15/20] hw/arm/rk3588: wire up the SCMI server
-Date: Fri, 13 Nov 2026 17:47:49 +0800
-Message-ID: <54d84a2574f15f9c6157e6d281ad5216b509295c.1794555589.git.w-yf22@mails.tsinghua.edu.cn>
+Subject: [RFC PATCH 17/20] hw/arm/rock-5b: connect the XTX XT25F128 SPI NOR
+ flash
+Date: Fri, 13 Nov 2026 17:47:51 +0800
+Message-ID: <4451c95e39bfe37a0587b11019798464d7215006.1794555589.git.w-yf22@mails.tsinghua.edu.cn>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
 References: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S17
-X-Coremail-Antispam: 1UD129KBjvJXoWxXF18ur4rWr4DXF4UCrW8tFb_yoW5ArW5pF
- 48Zr45XrWkGay7AwsIvr1Sgr43Ja1kWryrt3yfZr9YyFy3tr1Yyr4j9w4YkayIqrZFqw1U
- ZrWqqF4YgF47XF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S19
+X-Coremail-Antispam: 1UD129KBjvJXoWxur1fuF1UAr15Jw1rWrWxZwb_yoW5XFy8pF
+ 10kFZ8CrZ3G3WagrWayF4Sgw15Ww4vv3WUAr1fu3sYvFy7tFWDWrWxKw15CFyUWrZYy3yj
+ 9r9xXF1rtF45ur7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
  9KBjDU0xBIdaVrnRJUUUHa14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
  rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
  kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
@@ -63,12 +64,12 @@ X-Coremail-Antispam: 1UD129KBjvJXoWxXF18ur4rWr4DXF4UCrW8tFb_yoW5ArW5pF
  IFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_
  GFWl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxV
  WUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI
- 7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Gr0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r
+ 7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Xr0_Ar1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r
  4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4U
  MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfUeVbkUU
  UUU
 X-CM-SenderInfo: fzn1wj2s6ptxtovo32xlqjx3vdohv3gofq/
-Received-SPF: pass client-ip=101.6.4.71;
+Received-SPF: pass client-ip=101.6.4.70;
  envelope-from=w-yf22@mails.tsinghua.edu.cn; helo=tsinghua.edu.cn
 X-Spam_score_int: -19
 X-Spam_score: -2.0
@@ -77,7 +78,7 @@ X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:53 -0500
+X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:54 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,97 +92,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Chao Liu <chao.liu@processmission.com>
 
-Instantiate the SCMI server in the RK3588 SoC and map its shared memory
-at the address reserved by the RK3588 device tree.  The shared memory
-is overlaid on RAM so the guest can use it while the rest of the low
-memory map is unchanged.
+Connect an XT25F128 to chip select 0 of the ROCK 5B SFC. An optional
+if=mtd,index=0 drive provides the flash contents and must be exactly
+16 MiB; without a drive the flash starts erased.
 
 Signed-off-by: Chao Liu <chao.liu@processmission.com>
 Signed-off-by: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
 ---
- hw/arm/rk3588.c         | 22 ++++++++++++++++++++++
- include/hw/arm/rk3588.h |  1 +
- 2 files changed, 23 insertions(+)
+ hw/arm/Kconfig   |  1 +
+ hw/arm/rock-5b.c | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/hw/arm/rk3588.c b/hw/arm/rk3588.c
-index 2319c54c76..f4ebb59d36 100644
---- a/hw/arm/rk3588.c
-+++ b/hw/arm/rk3588.c
-@@ -19,6 +19,7 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/core/sysbus.h"
- #include "hw/cpu/cluster.h"
-+#include "hw/misc/rk3588-scmci.h"
- #include "hw/misc/unimp.h"
- #include "hw/timer/rockchip-hptimer.h"
- #include "migration/vmstate.h"
-@@ -29,6 +30,7 @@
- #define RK3588_MPIDR_AFF0_PER_AFF1   (1)
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 40f7de823c..01ae699fee 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -789,3 +789,4 @@ config ROCK5B
+     default y
+     depends on TCG && AARCH64
+     select RK3588
++    select SSI_M25P80
+diff --git a/hw/arm/rock-5b.c b/hw/arm/rock-5b.c
+index 7906d53175..abc898c50c 100644
+--- a/hw/arm/rock-5b.c
++++ b/hw/arm/rock-5b.c
+@@ -17,8 +17,12 @@
+ #include "hw/arm/boot.h"
+ #include "hw/arm/rk3588.h"
+ #include "hw/core/boards.h"
++#include "hw/core/qdev-properties.h"
+ #include "hw/core/qdev-properties-system.h"
++#include "hw/ssi/ssi.h"
+ #include "system/address-spaces.h"
++#include "system/block-backend.h"
++#include "system/blockdev.h"
+ #include "system/device_tree.h"
+ #include "system/kvm.h"
+ #include "system/qtest.h"
+@@ -37,6 +41,7 @@ static const MemMapEntry rock5b_memmap[] = {
+     [ROCK5B_HIGH_RAM] = { 0x100000000, 0x310000000 },
+ };
  
- #define RK3588_CNTFRQ                24000000
-+#define RK3588_SCMI_SHMEM_BASE       0x0010f000
- #define RK3588_SFC_SPI               206
- #define RK3588_GIC_NUM_IRQS          512
- 
-@@ -253,6 +255,21 @@ static bool rk3588_soc_create_sfc(RK3588SoCState *s, Error **errp)
-     return true;
++#define ROCK5B_FLASH_SIZE (16 * MiB)
+ /* Match the low-memory reservation made by Rockchip U-Boot for BL31. */
+ #define ROCK5B_FIRMWARE_RESERVED_SIZE (2 * MiB)
+ /* UART2 drives the board's debug header. */
+@@ -70,6 +75,28 @@ static void rock5b_connect_serial(Rock5BMachineState *s)
+     }
  }
  
-+static bool rk3588_soc_create_scmi(RK3588SoCState *s, Error **errp)
++static void rock5b_create_flash(Rock5BMachineState *s)
 +{
-+    SysBusDevice *scmi = SYS_BUS_DEVICE(s->scmi);
++    DriveInfo *di = drive_get(IF_MTD, 0, 0);
++    DeviceState *flash = qdev_new("xt25f128");
 +
-+    if (!sysbus_realize(scmi, errp)) {
-+        return false;
++    object_property_add_child(OBJECT(s), "spi-nor", OBJECT(flash));
++    if (di) {
++        BlockBackend *blk = blk_by_legacy_dinfo(di);
++        int64_t length = blk_getlength(blk);
++
++        if (length != ROCK5B_FLASH_SIZE) {
++            error_report("rock-5b: SPI NOR image must be exactly 16 MiB");
++            exit(EXIT_FAILURE);
++        }
++        qdev_prop_set_drive_err(flash, "drive", blk, &error_fatal);
 +    }
-+
-+    memory_region_add_subregion_overlap(s->memory,
-+        RK3588_SCMI_SHMEM_BASE,
-+        sysbus_mmio_get_region(scmi, 0), 1);
-+
-+    return true;
++    qdev_realize_and_unref(flash, qdev_get_child_bus(s->soc.sfc, "spi"),
++                           &error_fatal);
++    qdev_connect_gpio_out_named(s->soc.sfc, "cs", 0,
++                                qdev_get_gpio_in_named(flash, SSI_GPIO_CS, 0));
 +}
 +
- static bool rk3588_soc_create_uart(RK3588SoCState *s, Error **errp)
- {
-     for (unsigned int i = RK3588_FIRST_UART; i < RK3588_NUM_UARTS; i++) {
-@@ -329,6 +346,7 @@ static void rk3588_soc_realize(DeviceState *dev, Error **errp)
-         !rk3588_soc_create_cru(s, errp) ||
-         !rk3588_soc_create_otp(s, errp) ||
-         !rk3588_soc_create_sfc(s, errp) ||
-+        !rk3588_soc_create_scmi(s, errp) ||
-         !rk3588_soc_create_uart(s, errp) ||
-         !rk3588_soc_create_hptimer(s, errp)) {
-         return;
-@@ -388,6 +406,10 @@ static void rk3588_soc_instance_init(Object *obj)
-     object_property_add_child(obj, "sfc", OBJECT(s->sfc));
-     object_unref(OBJECT(s->sfc));
+ /*
+  * arm_load_dtb() replaces the memory nodes with a single node for low RAM;
+  * add the RAM above the peripheral hole.
+@@ -168,6 +195,8 @@ static void rock5b_init(MachineState *ms)
+                                     &s->high_ram);
+     }
  
-+    s->scmi = qdev_new(TYPE_RK3588_SCMCI);
-+    object_property_add_child(obj, "scmi", OBJECT(s->scmi));
-+    object_unref(OBJECT(s->scmi));
++    rock5b_create_flash(s);
 +
-     s->hptimer = qdev_new(TYPE_ROCKCHIP_HPTIMER);
-     object_property_add_child(obj, "hptimer", OBJECT(s->hptimer));
-     object_unref(OBJECT(s->hptimer));
-diff --git a/include/hw/arm/rk3588.h b/include/hw/arm/rk3588.h
-index 1304c11598..f85242f464 100644
---- a/include/hw/arm/rk3588.h
-+++ b/include/hw/arm/rk3588.h
-@@ -55,6 +55,7 @@ struct RK3588SoCState {
-     DeviceState *cru;
-     DeviceState *otp;
-     DeviceState *sfc;
-+    DeviceState *scmi;
-     MemoryRegion *memory;
-     MemoryRegion sram;
-     DeviceState *hptimer;
+     rock5b_direct_boot(s);
+ }
+ 
 -- 
 2.53.0
 
