@@ -1,80 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D83B606A896
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E973A606A8A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=oiyd5pM4
+	dkim=pass (2048-bit key) header.d=taktcycles.com header.i=@taktcycles.com header.a=rsa-sha256 header.s=takt1 header.b=P7jD30Is
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRrk3-0002uh-AW; Fri, 13 Nov 2026 08:54:59 -0500
+	id 1xRrj4-0000y2-2q; Fri, 13 Nov 2026 08:53:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnui-00050A-BM; Fri, 13 Nov 2026 04:49:44 -0500
-Received: from smtp46.tsinghua.edu.cn ([101.6.4.70] helo=tsinghua.edu.cn)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnug-0007GO-1Z; Fri, 13 Nov 2026 04:49:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mails.tsinghua.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:
- Date:Message-ID:In-Reply-To:References:MIME-Version:
- Content-Transfer-Encoding; bh=K2iFNuflE9lh3ECoYs1e06mchhIrRlnlB7
- /abMWYdVk=; b=oiyd5pM48fsYH10SMt857RroqrQjbDOQPE6MLs/RYGdfHHkzYN
- fnU3Qw6ObPDkpRwwZk2BY5w/xeQ9LE/mukJPz/bf7vLWQdVonb0ctDWf19QIc2Gv
- RrxvUXSokJKOZKyXZQY0R89QA+a4ArFrY1HOMQv+v2YLiLX51ZqSv5Bw8=
-Received: from ubuntu (unknown [101.5.154.165])
- by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S20;
- Fri, 13 Nov 2026 17:49:37 +0800 (CST)
-From: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
-To: qemu-devel@nongnu.org
-Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Kuan-Wei Chiu <visitorckw@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- bin.meng@processmission.com, tangtao1634@phytium.com.cn,
- Chao Liu <chao.liu@processmission.com>
-Subject: [RFC PATCH 18/20] hw/arm/rock-5b: add firmware booting
-Date: Fri, 13 Nov 2026 17:47:52 +0800
-Message-ID: <a06832670c1efef012ec5a8f02cfa0d06faf15f8.1794555589.git.w-yf22@mails.tsinghua.edu.cn>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
-References: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
+ (Exim 4.90_1) (envelope-from <rdmitry@taktcycles.com>)
+ id 1xRmPk-0003a8-8r
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:13:41 -0500
+Received: from mail.taktcycles.com ([136.243.71.244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rdmitry@taktcycles.com>)
+ id 1xRmPh-0006NS-Ls
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:13:39 -0500
+Received: from mail.taktcycles.com (unknown [192.168.64.27])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
+ (No client certificate requested)
+ by relay.taktcycles.com (Postfix) with ESMTPSA id D42178ABE;
+ Fri, 13 Nov 2026 08:13:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=taktcycles.com;
+ s=takt1; t=1794557612;
+ bh=a7pf0IShNlT7VA/AFClMo0aZbBcHuo+nIrfYIGSmQXo=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=P7jD30IsRUTlOF3af5TJi1dDZqmmv/F/VYiV06SeEn26lgSHrXrSLNMK9rY7tq/Yp
+ QvarP0ZbnTU390WjV9grFV/e6jjKCDbbNp4kwM36aUKMxySqtSotIlfumvCXCalZSH
+ 5daG2/pURTRKnQLymqrs2RPvj63TCKczjn7m68vlE8ZWLJXu4i2Zrca5JJkaQcsQ1p
+ MblwJ2pThogoV2cdjLAgEssfNNIHKRJA0GcRIW+YuOsxONSpPJhKaxa8HM6zwOyd5v
+ diya9TRzSeCkib1pZBl5Pt8P6B+XskN0zfz82FzNPKHtujip29UeBACOL17D8HRQkT
+ QGld0PM2mPxJQ==
+Received: from [192.168.64.27] (localhost [127.0.0.1])
+ by mail.taktcycles.com (Postfix) with ESMTP id 5F79C1DE4A;
+ Fri, 13 Nov 2026 08:13:32 +0000 (UTC)
+From: Dmitry R <rdmitry@taktcycles.com>
+To: =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Dmitry R <rdmitry0911@gmail.com>
+Subject: Re: [PATCH 3/7] hw/display/vhost-user-gpu: reset the console scanout
+ on device reset
+Date: Fri, 13 Nov 2026 08:13:19 -0000
+Message-ID: <179455759968.604939.8707111457391137880@taktcycles.com>
+In-Reply-To: <20261112-issue-4848-v1-3-aeba1cfe2c03@redhat.com>
+References: <20261112-issue-4848-v1-0-aeba1cfe2c03@redhat.com>
+ <20261112-issue-4848-v1-3-aeba1cfe2c03@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S20
-X-Coremail-Antispam: 1UD129KBjvJXoW3JryUJrWftw18XF1rur4fGrg_yoW7CF1DpF
- 1DArs0krWfGFyagrW3AF42gw13Xw4vvay5Wr93G3sYyF17tr9rWr48K3s5uay7Wr4vvw45
- Gr9xJrnYvFs8XrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUHa14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
- kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
- z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
- 4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
- 3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0V
- AKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1l
- Ox8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErc
- IFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_
- GFWl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxV
- WUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI
- 7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Xr0_Ar1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r
- 4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4U
- MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfUeVbkUU
- UUU
-X-CM-SenderInfo: fzn1wj2s6ptxtovo32xlqjx3vdohv3gofq/
-Received-SPF: pass client-ip=101.6.4.70;
- envelope-from=w-yf22@mails.tsinghua.edu.cn; helo=tsinghua.edu.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=136.243.71.244;
+ envelope-from=rdmitry@taktcycles.com; helo=mail.taktcycles.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:54 -0500
@@ -88,190 +74,54 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Chao Liu <chao.liu@processmission.com>
+Hi Marc-André,
 
-Load a raw U-Boot SPL image supplied with -bios at address zero and
-start it in non-secure EL2. SPL loads U-Boot proper from SPI NOR, and
-QEMU provides PSCI and SCMI services through SMC calls.
+On Thu, 12 Nov 2026 15:48:46 +0400, Marc-André Lureau wrote:
+> +        qemu_console_gl_scanout_disable(scanout->con);
+> +        qemu_console_set_surface(scanout->con, NULL);
 
-Restore the SPI boot-source value in SRAM and the HPTIMER enable state
-on reset before entering SPL.
+Thanks for the quick fixes. I tested the series on top of master
+49559567 with -display dbus,gl=on, vhost-user-vga backed by
+vhost-user-gpu --virgl, and a Debian 13 guest.
 
-Signed-off-by: Chao Liu <chao.liu@processmission.com>
-Signed-off-by: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
----
- hw/arm/rock-5b.c | 98 ++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 83 insertions(+), 15 deletions(-)
+With this patch QEMU aborts whenever the guest resets the device while
+a D-Bus listener is attached, i.e. at the virtio_gpu probe on boot and
+again after a reboot:
 
-diff --git a/hw/arm/rock-5b.c b/hw/arm/rock-5b.c
-index abc898c50c..c097e17c5c 100644
---- a/hw/arm/rock-5b.c
-+++ b/hw/arm/rock-5b.c
-@@ -10,6 +10,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/datadir.h"
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "qemu/units.h"
-@@ -17,15 +18,18 @@
- #include "hw/arm/boot.h"
- #include "hw/arm/rk3588.h"
- #include "hw/core/boards.h"
-+#include "hw/core/loader.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
- #include "hw/ssi/ssi.h"
-+#include "hw/timer/rockchip-hptimer.h"
- #include "system/address-spaces.h"
- #include "system/block-backend.h"
- #include "system/blockdev.h"
- #include "system/device_tree.h"
- #include "system/kvm.h"
- #include "system/qtest.h"
-+#include "system/reset.h"
- #include "system/system.h"
- 
- #define TYPE_ROCK5B_MACHINE MACHINE_TYPE_NAME("rock-5b")
-@@ -41,6 +45,10 @@ static const MemMapEntry rock5b_memmap[] = {
-     [ROCK5B_HIGH_RAM] = { 0x100000000, 0x310000000 },
- };
- 
-+#define ROCK5B_SPL_ADDR   0x00000000
-+#define ROCK5B_SPL_SIZE   (4 * MiB)
-+#define ROCK5B_BOOTSOURCE_ADDR (RK3588_SRAM_BASE + 0x10)
-+#define ROCK5B_BOOTSOURCE_ID  3 /* BROM_BOOTSOURCE_FSPI_M0 */
- #define ROCK5B_FLASH_SIZE (16 * MiB)
- /* Match the low-memory reservation made by Rockchip U-Boot for BL31. */
- #define ROCK5B_FIRMWARE_RESERVED_SIZE (2 * MiB)
-@@ -58,6 +66,29 @@ struct Rock5BMachineState {
-     struct arm_boot_info binfo;
- };
- 
-+static void rock5b_reset(void *opaque)
-+{
-+    Rock5BMachineState *s = opaque;
-+
-+    /* Restore the firmware handoff state before entering SPL at EL2. */
-+    address_space_stl_le(&address_space_memory, ROCK5B_BOOTSOURCE_ADDR,
-+                         ROCK5B_BOOTSOURCE_ID, MEMTXATTRS_UNSPECIFIED, NULL);
-+    address_space_stl_le(&address_space_memory,
-+                         RK3588_HPTIMER_BASE + ROCKCHIP_HPTIMER_CTRL,
-+                         ROCKCHIP_HPTIMER_ENABLE, MEMTXATTRS_UNSPECIFIED, NULL);
-+
-+    for (unsigned int i = 0; i < RK3588_NUM_CPUS; i++) {
-+        ARMCPU *cpu = &s->soc.cpu[i];
-+
-+        cpu_reset(CPU(cpu));
-+        arm_emulate_firmware_reset(CPU(cpu), 2);
-+        arm_rebuild_hflags(&cpu->env);
-+        if (i == 0) {
-+            cpu_set_pc(CPU(cpu), ROCK5B_SPL_ADDR);
-+        }
-+    }
-+}
-+
- /*
-  * The first -serial option drives the debug console; further options
-  * connect to the remaining UARTs in index order.
-@@ -128,6 +159,35 @@ static void rock5b_modify_dtb(const struct arm_boot_info *binfo, void *fdt)
-     }
- }
- 
-+static void rock5b_firmware_boot(Rock5BMachineState *s)
-+{
-+    MachineState *ms = MACHINE(s);
-+
-+    for (unsigned int i = 0; i < RK3588_NUM_CPUS; i++) {
-+        object_property_set_int(OBJECT(&s->soc.cpu[i]), "psci-conduit",
-+                                QEMU_PSCI_CONDUIT_SMC, &error_abort);
-+    }
-+
-+    if (ms->firmware) {
-+        g_autofree char *filename = qemu_find_file(QEMU_FILE_TYPE_BIOS,
-+                                                  ms->firmware);
-+        ssize_t size;
-+
-+        if (!filename) {
-+            error_report("rock-5b: cannot find SPL '%s'", ms->firmware);
-+            exit(EXIT_FAILURE);
-+        }
-+        size = load_image_targphys(filename, ROCK5B_SPL_ADDR,
-+                                   ROCK5B_SPL_SIZE, &error_fatal);
-+        if (size <= 0) {
-+            error_report("rock-5b: SPL image is empty");
-+            exit(EXIT_FAILURE);
-+        }
-+    }
-+    /* Restore the firmware handoff state after device reset. */
-+    qemu_register_reset(rock5b_reset, s);
-+}
-+
- /*
-  * arm_load_kernel() enters Linux at EL2, keeps the SMC PSCI conduit and
-  * registers the CPU reset handlers.
-@@ -157,20 +217,6 @@ static void rock5b_init(MachineState *ms)
-         exit(EXIT_FAILURE);
-     }
- 
--    if (ms->firmware) {
--        error_report("rock-5b: -bios is not supported");
--        exit(EXIT_FAILURE);
--    }
--    if (ms->kernel_filename) {
--        if (!ms->dtb) {
--            error_report("rock-5b: direct Linux boot requires -dtb");
--            exit(EXIT_FAILURE);
--        }
--    } else if (!qtest_enabled()) {
--        error_report("rock-5b: supply a Linux kernel with -kernel");
--        exit(EXIT_FAILURE);
--    }
--
-     /* Initialize the SoC object. */
-     object_initialize_child(OBJECT(s), "soc", &s->soc, TYPE_RK3588_SOC);
-     object_property_set_link(OBJECT(&s->soc), "memory",
-@@ -197,7 +243,29 @@ static void rock5b_init(MachineState *ms)
- 
-     rock5b_create_flash(s);
- 
--    rock5b_direct_boot(s);
-+    if (ms->kernel_filename) {
-+        if (ms->firmware) {
-+            error_report("rock-5b: -bios and -kernel cannot be combined");
-+            exit(EXIT_FAILURE);
-+        }
-+        if (!ms->dtb) {
-+            error_report("rock-5b: direct Linux boot requires -dtb");
-+            exit(EXIT_FAILURE);
-+        }
-+        rock5b_direct_boot(s);
-+    } else {
-+        if (!ms->firmware && !qtest_enabled()) {
-+            error_report("rock-5b: supply a U-Boot SPL image with -bios "
-+                         "or a Linux kernel with -kernel");
-+            exit(EXIT_FAILURE);
-+        }
-+        if (ms->dtb) {
-+            error_report("rock-5b: -dtb requires -kernel; U-Boot proper "
-+                         "passes the device tree from the FIT");
-+            exit(EXIT_FAILURE);
-+        }
-+        rock5b_firmware_boot(s);
-+    }
- }
- 
- static void rock5b_class_init(ObjectClass *oc, const void *data)
--- 
-2.53.0
+  qemu-system-x86_64: ../ui/dbus-listener.c:625: dbus_scanout_texture: Assertion `tex_id' failed.
 
+  #2  dbus_scanout_texture (tex_id=0, backing_width=720, backing_height=400)
+      at ../ui/dbus-listener.c:625
+  #3  dbus_gl_gfx_switch at ../ui/dbus-listener.c:904
+  #5  displaychangelistener_gfx_switch at ../ui/console.c:242
+  #6  qemu_console_set_surface at ../ui/console.c:799
+  #7  vhost_user_gpu_reset at ../hw/display/vhost-user-gpu.c:692
+  #8  virtio_reset at ../hw/virtio/virtio.c:3454
+  #10 virtio_pci_reset at ../hw/virtio/virtio-pci.c:2355
+  #11 memory_region_write_accessor (addr=20, size=1)
+      at ../system/memory.c:493
+  #19 kvm_cpu_exec at ../accel/kvm/kvm-all.c:3547
+  #20 kvm_vcpu_thread_fn at ../accel/kvm/kvm-accel-ops.c:54
+
+(line numbers with all seven patches applied)
+
+The reset comes from the guest's write to the device status register,
+so qemu_console_set_surface() runs on the vCPU thread. The placeholder
+surface reaches the listener without a texture, presumably because the
+display's EGL context is not current on that thread. virtio_gpu_reset()
+runs the same work through reset_bh in the main loop when it is called
+from a vCPU thread.
+
+Without a listener attached the series passed all our tests; the
+results for the other patches are in my replies to them and in
+https://gitlab.com/qemu-project/qemu/-/issues/4846.
+
+Dmitry
 
