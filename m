@@ -1,114 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE253606A8A3
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 18:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8B460718A9
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 18:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=1sRtsoAy
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=DTXP2waW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRw3n-0006Kd-U4; Fri, 13 Nov 2026 13:31:40 -0500
+	id 1xRwBA-0000xE-87; Fri, 13 Nov 2026 13:39:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Benjamin.Cheatham@amd.com>)
- id 1xRw3G-0006DY-KZ
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 13:31:09 -0500
-Received: from mail-eastus2azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c110::3] helo=BN8PR05CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Benjamin.Cheatham@amd.com>)
- id 1xRw3E-0001zu-Sp
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 13:31:06 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zKYYdpCZVhI4bI9/CjU/dp/LBmHW7n9feDI7ZJ+6ICicDTk8zL827Ihy245WXQJ2VftuCAYWyP2oko/IsLEyEBYjD+JgtwFD+o05VSRySWm5wKXrHh1xKmqJqDS5wmog5BDniTvsqX9mI5XDkLOaNczwedUmKWZ7OxYI6amQjYRurygQSaSL2M7uR29nnhe5zxa60vpAE1J58Q+MiLZaDL1I3C+VQ25LNxNVhWOlr98SQb5zoUcu1t4DfCkWOOhDWp5BqK0MLUuDx1ux4+UdFqhf9430DV2INijshjSHHPSjYFLG9KXGII8ivSfuGGUlK4WmEm43HE7Isi90FEVFDg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gmwFkD6f9Od6Wdw/8JVpfHr1plaEaSfaNHEixEq29J8=;
- b=RTSGSAQgz0o8bLEYwVsCazvL+QggnDmrtVk/QPerkL74oFUIVmEuo0tQBMijeeths2xqF+s0GkbRMVvP2JOVAFq41WCPIXRL2CsOYI8kzB1OTbWLK4SCOJAg/MeAtmHFHUWcQpRP9Mn0iGhU61Z7NyFfzMJEvzqqRHTIH39nLT/eZog4Rtb2eZ9gqrOIglEk4quMCrjWlAXRU0r4TtX+J+QxtDzwMA46F4wMpHlo0E0I+8P2hVRD8YEFbhYfLW0STzU21IdRju6q2C34S4vu0Fawtju9x+eJmR3JCvLXmBM5iDDQRg721A8BMn+aHTvEmXr3395uKGaKlUfuroq2aQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gmwFkD6f9Od6Wdw/8JVpfHr1plaEaSfaNHEixEq29J8=;
- b=1sRtsoAyZBj/OB1pgqtF2sN+3copsvlj5IPJfUQaioTn3afxuuminQhFNrXq8kQxaUOYRDEiXlL8BHVXKB/Jac+heW9H96FNK69ISknSryfZ05Cg2mMIO+ubG7SrLRmtqgC3MOn0IKQwTLDJShRmfSZcek/ou1e84Q4crjq4OzQ=
-Received: from DS7P220CA0118.NAMP220.PROD.OUTLOOK.COM (2603:10b6:8:25f::9) by
- LV8PR12MB9181.namprd12.prod.outlook.com (2603:10b6:408:18d::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Fri, 13 Nov
- 2026 17:49:46 +0000
-Received: from CH7PEPF0000001A.namprd21.prod.outlook.com
- (2603:10b6:8:25f:cafe::6c) by DS7P220CA0118.outlook.office365.com
- (2603:10b6:8:25f::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.9 via Frontend Transport; Fri, 13
- Nov 2026 17:49:46 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- CH7PEPF0000001A.mail.protection.outlook.com (10.167.244.169) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.592.0 via Frontend Transport; Fri, 13 Nov 2026 17:49:46 +0000
-Received: from ausbcheatha02.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Fri, 13 Nov
- 2026 11:49:44 -0600
-From: Ben Cheatham <Benjamin.Cheatham@amd.com>
-To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>
-CC: <qemu-devel@nongnu.org>, Ben Cheatham <Benjamin.Cheatham@amd.com>
-Subject: [PATCH 3/4] target/i386: Add EPYC-Genoa-v4 Model
-Date: Fri, 13 Nov 2026 11:49:25 -0600
-Message-ID: <20261113174926.1861-4-Benjamin.Cheatham@amd.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261113174926.1861-1-Benjamin.Cheatham@amd.com>
-References: <20261113174926.1861-1-Benjamin.Cheatham@amd.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xRwB2-0000s2-RP
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 13:39:09 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xRwB0-0004dq-M7
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 13:39:08 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-3b0ae87069dso1063389a91.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 10:39:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794595145; x=1795199945; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=mqpsrxXivXXM3+gNVKLG8qOo7zbWs44mAlSZGRan0mI=;
+ b=DTXP2waWk/saI60jPDjXKRPBzGGzJl2z/UIXtdEwG0oVi4WgJlVZcL6XWFD4JAmRp1
+ ESmZc8Tp3XniTgpaRdcRVywS0zUEKiCu0FZva15yyA2cKC16h9spZO1x/9JX7YUENk5C
+ Ptiu1Des562QQzwUMzFpJ/OdQk6U2WXIIVxmUa6DU4flLzLFjTO0afSFvUqlgAK1UqjX
+ npPnMdVkAXFgHm4vuQ6gqO9fRAPpFVtOtjMai0c54LWpZUjDP1G5j4icJKuxXa/DICbF
+ MFgWs3aKN7pWDVSAwj0KT+QYXmuoqER+4Y1BkVlrWEihK2JUyVpsswvetv7T0oP9nOgk
+ Cm8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794595145; x=1795199945;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mqpsrxXivXXM3+gNVKLG8qOo7zbWs44mAlSZGRan0mI=;
+ b=rwiE07oe3M3kezexNryASikWynoz+O1UzCK6QmfoEjx5/8aoOWptdtmy2EvNf5lSn4
+ 4TURR97Q2yOlUJ48GGMhJ7pzyBkJGPEn7OFt3aRhr2B4rQGw+pizykaGK2mrODW81h84
+ lU95x0D8k+NCY21faX5GBDyIkVQeyHB5dbOIcNr4NxdI/3wMemKuICZ9ArMjVUgR5SkN
+ w+eH9b+sTdI6RMLCn69sUnZIBLhDAejN/CzE790yzgWhncEtT2Nl1pMYRMdnfrS4GfAM
+ l9omoC07KA3SrawnRp5e5CXGXfRcYi7x5tXgkcS1qK5X+YCepbvRPCkLhGOns0NfsCQi
+ k9kg==
+X-Forwarded-Encrypted: i=1;
+ AL+hErHQQJ4Hsz27MliDT7LNhy0AEqnXCWCTfvVW9EiFjiPI2amGpfjXIfhv2Li0qdpvtYcU+9W/a0nq8Ff/@nongnu.org
+X-Gm-Message-State: APuU4Z+SkLLgv8L0ITOlXeDyZjuYXLnovKpWLCEQ/JIbWH3J0CZO9O5K
+ IJw6SZkevm9qU2KrAAeo7KE6TSgtjwHg61ueww785pC07lpYN74lhjvmUw4p61iK7iw=
+X-Gm-Gg: AYBFou0vePvQ3uCjpT+UVayTJCkuB6qW5Ttg8jR1UhwtOyGvCR9YlQQPMxmrLvqrTJr
+ yd3t93AvAKRvHFZj7ybs42eValCG7eehQ6Jdgg0yw3ASA5V+tBVGTMp9rPfzYLNYSYLADIhTzpf
+ MEbVaOVcLQ2/GqiWonPzyCpD2S/xeARsVSDU4cQxs9m6AlIWfnSm0RmvZGYLtja/jVnnU32f/jE
+ tVPkhIqTLFVq6K5EVbtp77axy6uEc1GIn9VIdlLlHwvfMHtPvpCfuEDWcZ4OpeVGfSWabY3mGD6
+ kezHrLQ63GfagccblpjuoTm6JsqymHCPWyUcqMAFUxbBkq4fyviLv4Y2nwT2Ecllbxz5K2o1UgW
+ ixTuhQa7CgXn18Zpzkvb6CMmEOFPZRXbftoNXaL6ktSsccL6OUMlK9FaY1r0Vy+jDfvTuAtFFEB
+ vLiUPHimzA8FCOWoUBEuhQggfBgLud60JDZhzRAAqQNjOd72YFxdREp5x+e3lXQXzpGwYQg2i5M
+ JYt9/2MU1GaDWMR5wGDSQTtpS2kDIeSbW2ekn5wahXtGk8LQjgfqgiYAzjcIBzKNQtvjJ/OiQX1
+ 3AhUQixZBhkhFRaIq2sSyJQyvP7x1hfmp6vLh4XY+WE=
+X-Received: by 2002:a17:90a:c105:b0:3b0:9976:c1c6 with SMTP id
+ 98e67ed59e1d1-3b1b0b8752fmr3069841a91.66.1794595144872; 
+ Fri, 13 Nov 2026 10:39:04 -0800 (PST)
+Received: from [172.31.6.230] ([69.196.88.181])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3b1aed74024sm5612225a91.15.2026.11.13.10.39.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Nov 2026 10:39:04 -0800 (PST)
+Message-ID: <9b64d3d9-736d-4878-80d7-4caa75eee778@linaro.org>
+Date: Fri, 13 Nov 2026 11:39:01 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-12.0 v2 00/12] linux-user/aarch64: Support both
+ endianness at runtime
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ devel@lists.libvirt.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org
+References: <20261112180859.85380-1-philmd@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261112180859.85380-1-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH7PEPF0000001A:EE_|LV8PR12MB9181:EE_
-X-MS-Office365-Filtering-Correlation-Id: b11d9b7d-e9c5-40b7-1903-08df41ae81b2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|36860700016|82310400026|23010399003|1800799024|10067099003|261021123027099003|261102123227099003|261021121427099003|11063799006|261009223027099003|18002099003|22082099003|56012099006;
-X-Microsoft-Antispam-Message-Info: P+clid+3xeYXs8Db2rNM3YQ88LT654xzaK3Iu5NXHcumTr3KRkhv5zbWY89SYQca3FsdMmctkA6nJGg24RCZ32PXY5yibaElRswyULzzikUGHygBUx+Ec6oTcGkJOrTOpMwNuG+8ZuMPUbPRVgsmxwzZ6/rxIhsY2ddaZB/Il2kZD72r701s0QckeiZcNobQqLHUdA+8wvzgoKdesDuRw4xMXK9/AaI5yFRl7q21M50VxmzqSoZfRIvs/JrJQzvXyML0iumd21B2yscFgdbQzc2H8YjD4hY498ikbUx+9DXec5ESnJ0n8MjeeOb+6SO6YcbmqlLKP80jU7JDHF+/WCKHsrPQ2/hAeC3r9G1DNyXageJ3LvpXB09IVKPGmef9oawnPpJnTtocSz3BYaMXkOMRJPwwvyCyYLwhu9d1Zih46kxOKtb/K1ME+HtPN/zqvcLT418PJyVQFRT6FLWDNsh20QreqVsGdUZFWoFoOEUrduscpeCc4KDQSSfdneouK92ADJaGGVN60q1dznKzIy2kL5DCub8n6gPpgSpzuhTPtqU0t0mNNFUlwM7QCsFcEn7GE6a5u5KEBpgVOwXnP40PZhRhj7B5JRjRDctBf/zAcQhXDEz/Itpx9DZUnlZMvr97aFT1zm09AsjnVx5NmTCPZMhsQo0GOm++8HOrZhlNcg8gzZoqRsXO0n8eudf0x7IEgWlB2YTSqbWaTavx2w==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(36860700016)(82310400026)(23010399003)(1800799024)(10067099003)(261021123027099003)(261102123227099003)(261021121427099003)(11063799006)(261009223027099003)(18002099003)(22082099003)(56012099006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: COVzR7mBWGIh0d/8LFgkB0w0tEKpNvQBSChO99yWpozNycdHV7AxIt7Ph0TQqfav+szqvsWjQYU1Aw7stT6jGwG2SLSKavHgwDfPNhq6hGW+9F//c+wC95HE9hcWZV2XnQDHUxsBD9x/bhM6b++KUx+ep5JXO4rmNucOZ8jQjP0b+expHfMB8s0r+SKF5j/n0fM/UzeHLmkxDgfAFkCOmWZyH9K6EEA847CQmZhvTexjoQyzhcIkCW4n1zDfbkqd+zJgA5AG7F6S9qFDMPoOenpUBCU2o7+8LdvOwwx+sUis+rQ6I3a9415uvUybfEE6YUBjynYe4/jVpsFDZy8E63Z3HTM0aHg1W6sOmMwv3s2og9/v7uGLK8FD+u4r+EeSkoRRmX7rvikUU0I/DKquZkNl+0k1bEh1V2sA7+ixogYgk4EKElPVLktsMGKLJekf
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 17:49:46.5391 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b11d9b7d-e9c5-40b7-1903-08df41ae81b2
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH7PEPF0000001A.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9181
-Received-SPF: pass client-ip=2a01:111:f403:c110::3;
- envelope-from=Benjamin.Cheatham@amd.com;
- helo=BN8PR05CU002.outbound.protection.outlook.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,44 +112,26 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a new version of the EPYC-Genoa model with the verw-clear feature
-set. This feature is used to mitigate the TSA L1, SQ, and FILL
-variants.
+On 11/12/26 11:08, Philippe Mathieu-Daudé wrote:
+> Since v1:
+> - add ./configure error msg
+> - cover ARM32
+> 
+> This series lets qemu-aarch64 run both little- and big-endian
+> ELF binaries, retaining qemu-aarch64_be as a compatibility alias.
 
-Signed-off-by: Ben Cheatham <Benjamin.Cheatham@amd.com>
----
- target/i386/cpu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Why would we want to do this?  qemu-aarch64_be exists, but is 
+essentially unused.  It's certainly not supported by upstream Linux.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 85745d5f907c..f80dd98d3ebd 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7075,6 +7075,16 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                 },
-                 .cache_info = &epyc_genoa_v2_cache_info
-             },
-+            {
-+                .version = 4,
-+                .props = (PropValue[]) {
-+                    { "verw-clear", "on" },
-+                    { "model-id",
-+                      "AMD EPYC-Genoa-v4 Processor" },
-+                    { /* end of list */ }
-+                },
-+                .cache_info = &epyc_genoa_v2_cache_info
-+            },
-             { /* end of list */ }
-         }
-     },
--- 
-2.53.0
+Having runtime selection of endianness seems silly within that context.
 
+
+r~
 
