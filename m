@@ -1,83 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F63606A321
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 12:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411B7606A32A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 12:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Dp8z90eH
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=BeyfcWSs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRqGL-0006I5-Kd; Fri, 13 Nov 2026 07:20:13 -0500
+	id 1xRqJL-000780-NH; Fri, 13 Nov 2026 07:23:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRqGH-0006Ho-7n
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 07:20:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xRqGF-0002h2-25
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 07:20:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794572404;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=F6QiNqBQ23OORW04Rwmr+b2u6cPDUXVuHlPWpfujuUs=;
- b=Dp8z90eHaTm13cj+//yrfB+aL+y/SeWXBu7Ie8pGiVil1N7C2LytnVPUCmMhWlzRjxx2ad
- JBOuRt3iJDrK6p6vqbmBkdOKUqJS8Xn6jJlUCI69d+LQlVqqH/OOhAh1H7dYu07Zo2GO50
- kNVFaM7XH2J/JsZ2K6R5Sr9MVi6kU6Y=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-303-eeGsS8HxONmZffVlMHsQIw-1; Fri,
- 13 Nov 2026 07:20:01 -0500
-X-MC-Unique: eeGsS8HxONmZffVlMHsQIw-1
-X-Mimecast-MFC-AGG-ID: eeGsS8HxONmZffVlMHsQIw_1794572400
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D56BA195607A; Fri, 13 Nov 2026 12:19:59 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A8B530001B9; Fri, 13 Nov 2026 12:19:58 +0000 (UTC)
-Date: Fri, 13 Nov 2026 12:19:55 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Yonggang Luo <luoyonggang@gmail.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1xRqJK-00077i-11; Fri, 13 Nov 2026 07:23:18 -0500
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1xRqJI-0003SD-0v; Fri, 13 Nov 2026 07:23:17 -0500
+Received: from linux.microsoft.com (unknown [52.164.204.246])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 4340920B7167;
+ Fri, 13 Nov 2026 04:23:06 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4340920B7167
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1794572589;
+ bh=BKTmBLHvbGbmivoltfqA5ZRCI2wTzcYHV/ItVt4bTiQ=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=BeyfcWSsJet0MdzxT6ge8KyTpON9Ljb7T9fXH9V/2vyFkFGM088LQZsjCV3+bwp83
+ 4BdavyN73FWaowrHZn/hcM4YAPQJdsmcOlno/tXQSdXkMRMNH0W/soIoc5aB6Jku8J
+ K405AniI1TJkTUe7Q50gt7hwbQDTI5q0UDH9gZ5s=
+Date: Fri, 13 Nov 2026 14:23:05 +0200
+From: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: Aastha Rawat <aastharawat@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 00/48] hw: resolve QOM type conflicts in multi-target
- builds
-Message-ID: <avcAa4U_QIu5NVQu@redhat.com>
-References: <20261112133054.1977618-1-berrange@redhat.com>
- <CAE2XoE8OvtmLOx9LqmL=aOu2ptu0UpFGYwOdU5YHQ3N=9e1rpg@mail.gmail.com>
+ Peter Maydell <peter.maydell@linaro.org>,
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v6 04/14] meson, target/arm/mshv: Enable arm64 build &
+ add initial MSHV support
+Message-ID: <avcBKaigaegTPyBV@linux.microsoft.com>
+References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-4-aefe5e76a0e3@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAE2XoE8OvtmLOx9LqmL=aOu2ptu0UpFGYwOdU5YHQ3N=9e1rpg@mail.gmail.com>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-4-aefe5e76a0e3@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,135 +71,243 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 12, 2026 at 11:08:02PM +0800, Yonggang Luo wrote:
-> On Thu, Nov 12, 2026 at 9:31 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > When building a multi-target binary, QOM types from multiple targets
-> > will be linked together. QOM types are required to have unique names
-> > when registered, so linking multiple targets in turn requires QOM type
-> > names to be unique across the QEMU codebase.
-> >
-> > Global QOM type name uniqueness is a desirable property for QEMU
-> > regardless of multi-target work, so that QEMU presents a non-ambiguous
-> > object model to applications regardless of context.
-> >
-> > In a multi-target binary, it is desirable to applications are able to
-> > introspect all types linked into QEMU, when launching with '-machine
-> > none'. Dynamic filtering of registered classes at runtime, to resolving
-> > QOM naming conflicts is undesirable, as it requires introspection
-> > to be repeated for each available target in order to discover the full
-> > set of available types in a binary.
-> >
-> > Introspection is a fairly heavy weight process due to QEMU's vast size,
-> > so enabling introspection to be done once only for all targets will be a
-> > very significant benefit for management applications with a multi-target
-> > binary.
-> >
-> > The glaring problem is that our historical design has led to multiple
-> > targets all providing a 'virt' machine type, which leads to multiple QOM
-> > types call 'virt-machine' which are all different.
-> >
-> > Having a common short name "virt" is a useful characteristic for users,
-> > but this does not imply we need to use that as the basis for primary QOM
-> > typename. It is sufficient to have an alias called 'virt'.
-> >
-> > In terms of implementation there are two core pieces
-> >
-> >  * An 'Aliased' interface which can be implemented by QOM types which
-> >    want to support type aliases.
-> >
-> >  * A 'TargetSpecific' interface which can be implemented by QOM types
-> >    which want to declare  they can only be used with a subset of targets.
-> >
-> > With those foundational pieces
-> >
-> >  * Machine implements Aliased and TargetSpecific
-> >
-> >  * query-machines reports multiple aliases and declared supported
-> >    targets per machine for introspection
-> >
-> >  * All the 'virt' machines are renamed to $target-virt, and aliases
-> >    added for the shorter 'virt' names to retain compatibility and
-> >    convenience when a target is selected
-> >
-> >  * All the machines which have 'is_available' set now report their
-> >    targets via the TargetSpecific  interface
-> >
-> >  * Creating machines validates declared targets from TargetSpecific
-> >
-> > An apparent design mistake in TYPE_ACCEL_CPU is resolved which allows
+On Thu, Oct 01, 2026 at 10:52:49AM +0000, Aastha Rawat wrote:
+> Enable the build of the MSHV accelerator for arm64 in the Meson build
+> system. Introduce initial files and stub implementations to support MSHV
+> for the ARM target.
 > 
-> Target independent TYPE_ACCEL_CPU  is my first choice, if the QOM name is
-> do not have to be kept, I think this is better.
+> Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+> ---
+>  accel/mshv/mshv-all.c       | 10 ++++--
+>  hw/i386/mshv/clock.c        |  2 +-
+>  include/system/mshv.h       |  2 +-
+>  meson.build                 |  8 ++---
+>  target/arm/meson.build      |  1 +
+>  target/arm/mshv/meson.build |  7 ++++
+>  target/arm/mshv/mshv-all.c  | 81 +++++++++++++++++++++++++++++++++++++++++++++
+>  7 files changed, 103 insertions(+), 8 deletions(-)
 > 
-> > removal of the is_available hooks from target specific CPU impls, which
-> > were working around the bug.
-> >
-> > The original proposed patches to unconditionally register some object
-> > properties is pulled in.
-> >
-> > Overall this brings us closer to having a single unified object model
-> > across all targets, without having to make runtime variations of what
-> > is exposed/reported by a given QOM class name.
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index efe19a3914..f3f1825b0b 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -142,8 +142,10 @@ static int create_partition(int mshv_fd, int *vm_fd)
+>  {
+>      int ret;
+>      uint64_t pt_flags, host_proc_features;
+> -    union hv_partition_processor_xsave_features disabled_xsave_features;
+>      union hv_partition_processor_features disabled_partition_features = {0};
+
+I think this should reside in an arch specific variant of `create_partition`.
+
+> +#if defined(__x86_64__)
+> +    union hv_partition_processor_xsave_features disabled_xsave_features;
+> +#endif
+>  
+>      struct mshv_create_partition_v2 args = {0};
+>  
+> @@ -155,7 +157,8 @@ static int create_partition(int mshv_fd, int *vm_fd)
+>                 (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES) |
+>                 (1ULL << MSHV_PT_BIT_CPU_AND_XSAVE_FEATURES);
+>  
+> -    /* enable all */
+> +#if defined(__x86_64__)
+> +    /* enable all xsave features (0 = enabled) */
+>      disabled_xsave_features.as_uint64 = 0;
+>      /*
+>       * AMX TILE XSAVE state (XTILE_DATA) is 8KB, which exceeds the
+> @@ -165,6 +168,7 @@ static int create_partition(int mshv_fd, int *vm_fd)
+>      disabled_xsave_features.amx_bf16_support = 1;
+>      disabled_xsave_features.amx_int8_support = 1;
+>      disabled_xsave_features.amx_fp16_support = 1;
+> +#endif
+>  
+>      /*
+>       * query host for supported processor features and disable unsupported
+> @@ -196,7 +200,9 @@ static int create_partition(int mshv_fd, int *vm_fd)
+>      /* populate args structure */
+>      args.pt_flags = pt_flags;
+>      args.pt_isolation = MSHV_PT_ISOLATION_NONE;
+> +#if defined(__x86_64__)
+>      args.pt_disabled_xsave = disabled_xsave_features.as_uint64;
+> +#endif
+>      args.pt_num_cpu_fbanks = MSHV_NUM_CPU_FEATURES_BANKS;
+>  
+>      ret = ioctl(mshv_fd, MSHV_CREATE_PARTITION, &args);
+> diff --git a/hw/i386/mshv/clock.c b/hw/i386/mshv/clock.c
+> index 02c586503a..b7db382752 100644
+> --- a/hw/i386/mshv/clock.c
+> +++ b/hw/i386/mshv/clock.c
+> @@ -182,7 +182,7 @@ static const VMStateDescription vmstate_mshv_clock = {
+>      },
+>  };
+>  
+> -void mshv_clock_init(void)
+> +void mshv_arch_clock_init(void)
+>  {
+>      vmstate_register(NULL, 0, &vmstate_mshv_clock, &mshv_clock);
+>      qemu_add_vm_change_state_handler(mshv_clock_vm_state_change, &mshv_clock);
+> diff --git a/include/system/mshv.h b/include/system/mshv.h
+> index f98ddff9b5..114f065db5 100644
+> --- a/include/system/mshv.h
+> +++ b/include/system/mshv.h
+> @@ -58,7 +58,7 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
+>  extern MshvState *mshv_state;
+>  
+>  /* clock (partition reference time) */
+> -void mshv_clock_init(void);
+> +void mshv_arch_clock_init(void);
+>  
+>  /* interrupt */
+>  int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
+> diff --git a/meson.build b/meson.build
+> index cae1591cd2..6a90a394a2 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -304,7 +304,8 @@ if cpu == 'aarch64'
+>    accelerator_targets += {
+>      'CONFIG_HVF': ['aarch64-softmmu'],
+>      'CONFIG_NITRO': ['aarch64-softmmu'],
+> -    'CONFIG_WHPX': ['aarch64-softmmu']
+> +    'CONFIG_WHPX': ['aarch64-softmmu'],
+> +    'CONFIG_MSHV': ['aarch64-softmmu'],
+>    }
+>  elif cpu == 'x86_64'
+>    accelerator_targets += {
+> @@ -884,10 +885,9 @@ if get_option('kvm').allowed() and host_os == 'linux'
+>  endif
+>  
+>  if get_option('mshv').allowed() and host_os == 'linux'
+> -  if get_option('mshv').enabled() and host_machine.cpu() != 'x86_64'
+> -    error('mshv accelerator requires x64_64 host')
+> +  if host_machine.cpu() in [ 'x86_64', 'aarch64' ]
+> +    accelerators += 'CONFIG_MSHV'
+>    endif
+> -  accelerators += 'CONFIG_MSHV'
+>  endif
+>  
+>  if get_option('whpx').allowed() and host_os == 'windows'
+> diff --git a/target/arm/meson.build b/target/arm/meson.build
+> index 0369f96b4c..1ac2cef26b 100644
+> --- a/target/arm/meson.build
+> +++ b/target/arm/meson.build
+> @@ -63,6 +63,7 @@ arm_common_system_ss.add(files(
+>  
+>  subdir('hvf')
+>  subdir('whpx')
+> +subdir('mshv')
+>  
+>  if 'CONFIG_TCG' in config_all_accel
+>     subdir('tcg')
+> diff --git a/target/arm/mshv/meson.build b/target/arm/mshv/meson.build
+> new file mode 100644
+> index 0000000000..169643691e
+> --- /dev/null
+> +++ b/target/arm/mshv/meson.build
+> @@ -0,0 +1,7 @@
+> +arm_mshv_ss = ss.source_set()
+> +
+> +arm_mshv_ss.add(files(
+> +  'mshv-all.c',
+> +))
+> +
+> +arm_system_ss.add_all(when: 'CONFIG_MSHV', if_true: arm_mshv_ss)
+> diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
+> new file mode 100644
+> index 0000000000..00c54f5d66
+> --- /dev/null
+> +++ b/target/arm/mshv/mshv-all.c
+> @@ -0,0 +1,81 @@
+> +/*
+> + * QEMU MSHV support
+> + *
+> + * Copyright Microsoft, Corp. 2026
+> + *
+> + * Authors: Aastha Rawat          <aastharawat@linux.microsoft.com>
+> + *          Anirudh Rayabharam    <anirudh@anirudhrb.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/arm/virt.h"
+> +#include "system/mshv.h"
+> +#include "system/mshv_int.h"
+> +
+> +static int load_regs(CPUState *cpu)
+> +{
+> +    return 0;
+> +}
+> +
+> +static int store_regs(const CPUState *cpu)
+> +{
+> +    return 0;
+> +}
+> +
+> +int mshv_arch_load_vcpu_state(CPUState *cpu)
+> +{
+> +    return load_regs(cpu);
+> +}
+> +
+> +int mshv_arch_store_vcpu_state(const CPUState *cpu)
+> +{
+> +    return store_regs(cpu);
+> +}
+> +
+> +int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+> +{
+> +    return 0;
+> +}
+> +
+> +void mshv_arch_init_vcpu(CPUState *cpu)
+> +{
+> +
+> +}
+> +
+> +void mshv_arch_destroy_vcpu(CPUState *cpu)
+> +{
+> +
+> +}
+> +
+> +int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
+> +{
+> +    return 0;
+> +}
+> +
+> +void mshv_arch_amend_proc_features(
+> +    union hv_partition_synthetic_processor_features *features)
+> +{
+> +    /*
+> +     * TLB-flush hypercalls are an x86 enlightenment. ARM guests use
+> +     * broadcast TLBI instructions instead.
+> +     */
+> +    features->tb_flush_hypercalls = 0;
+> +}
+> +
+> +void mshv_arch_disable_partition_proc_features(
+> +    union hv_partition_processor_features *disabled_features)
+> +{
+> +    /* No processor features to disable on ARM */
+> +}
+> +
+> +int mshv_arch_post_init_vm(int vm_fd)
+> +{
+> +    return 0;
+> +}
+> +
+> +int mshv_arch_migration_init(MshvState *s)
+> +{
+> +    return 0;
+> +}
 > 
-> 
-> Thanks, overall looks good to me.
-> 
-> hw/microblaze: defer PetaLogix endianness default until init:
-> https://lore.kernel.org/qemu-devel/20261105194958.1117-5-luoyonggang@gmail.com/
-> 
-> is also for avoid target_info in class_init
-
-I added a R-B to that.
-
-> The last gap is how to handling cpu class name conflict
-> target/arm: register separate max-v8 CPU types for arm and aarch64:
-> https://lore.kernel.org/qemu-devel/20261031164009.2048-7-luoyonggang@gmail.com/
-
-I had a look at your earlier proposal here:
-
-  https://lore.kernel.org/qemu-devel/20261013195606.152-1-luoyonggang@gmail.com/
-
-and to me that looks like it should do what we need.
-
- * In existing qemu-system-arm and qemu-system-aarch64 it will
-   "just work"
-
- * In qemu-system-aarch64, users can still opt-in to 32-bit
-   mode only by using "-cpu max-v8:aarch64=off"
-
-So based on Peter's comment it does not look like we need to
-have the ability to register two distnict "max-v8" CPU classes,
-a single class can do the right thing at runtime in its
-instance constructor.
-
-I see Pierrick commented that it would not work in multi-target:
-
-  https://lore.kernel.org/qemu-devel/f3649d73-1edf-440a-9534-7b00da4d075d@oss.qualcomm.com/
-
-I'm not understanding why that is ? The choice of 32-bit vs 64-bit
-is made at Object initialization time, so if the
-
-     if (target_aarch64()) {
-        ...
-
-condition is not sufficient, it seems like we could add more logic
-to that condition easily and to make it do the right thing at runtime.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+> -- 
+> 2.45.4
 
