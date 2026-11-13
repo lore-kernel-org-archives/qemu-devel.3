@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C8A60A3806
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 08:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2343606A33A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 08:50:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRmx4-0004SX-Rx; Fri, 13 Nov 2026 03:48:07 -0500
+	id 1xRmvR-0002qf-8w; Fri, 13 Nov 2026 03:46:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xRmvw-0003BM-UD
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:47:05 -0500
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xRmvO-0002mP-Pp
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:22 -0500
 Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xRmvu-0007WC-OM
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:56 -0500
+ (envelope-from <prcups@krgm.moe>) id 1xRmvM-0007QN-UP
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:22 -0500
 Received: from yuno-loong (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id DC4A97804;
- Fri, 13 Nov 2026 14:16:42 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id D63E4780E;
+ Fri, 13 Nov 2026 14:16:17 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v6 23/26] target/loongarch: add LVZ CSRs
-Date: Fri, 13 Nov 2026 16:45:38 +0800
-Message-ID: <36191830c74f33c78e3b92c1d79330ce919ed1bb.1794558695.git.prcups@krgm.moe>
+Subject: [PATCH v6 05/26] target/loongarch: add definition about guest mmu_idx
+Date: Fri, 13 Nov 2026 16:45:20 +0800
+Message-ID: <455f9e7061ffb73d3bb9ef9b43bc1029e9ac145b.1794558695.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <cover.1794558695.git.prcups@krgm.moe>
 References: <cover.1794558695.git.prcups@krgm.moe>
@@ -57,105 +57,92 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add gstat, gtlbc and gintc definitions and corresponding helpers.
+Add MMU_GUEST_IDX and MMU_GUEST_DA_IDX. Provide is_guest_mmu idx() and
+mmu_idx_to_plv to calculate plv with new mmu_idx.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/tcg/csr_helper.c             | 53 +++++++++++++++++++
- target/loongarch/tcg/helper.h                 |  3 ++
- .../tcg/insn_trans/trans_privileged.c.inc     |  3 ++
- 3 files changed, 59 insertions(+)
+ target/loongarch/cpu.h                         | 18 ++++++++++++++++++
+ .../tcg/insn_trans/trans_privileged.c.inc      |  2 +-
+ target/loongarch/tcg/tcg_cpu.c                 |  7 +++++++
+ target/loongarch/tcg/translate.c               |  3 +++
+ 4 files changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index f5b6a3d1f9..c48b328540 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -217,3 +217,56 @@ target_ulong HELPER(csrwr_pwch)(CPULoongArchState *env,
-     sys->CSR_PWCH = val;
-     return old_v;
- }
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index ff22cde702..14316fc9c5 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -516,6 +516,24 @@ struct LoongArchCPUClass {
+ #define MMU_KERNEL_IDX   MMU_PLV_KERNEL
+ #define MMU_USER_IDX     MMU_PLV_USER
+ #define MMU_DA_IDX       4
++#define MMU_GUEST_IDX    5
++#define MMU_GUEST_DA_IDX (MMU_GUEST_IDX + MMU_DA_IDX)
 +
-+target_ulong HELPER(csrwr_gstat)(CPULoongArchState *env,
-+                                target_ulong val, uint32_t vm_level)
++static inline int mmu_idx_vm_level(int mmu_idx)
 +{
-+    CPUSysState *sys = get_sys(env, VM_LEVEL0);
-+    int64_t old_v = sys->CSR_GSTAT;
-+    uint8_t old_gid = FIELD_EX64(sys->CSR_GSTAT, CSR_GSTAT, GID);
++    return mmu_idx >= MMU_GUEST_IDX;
++}
 +
-+    sys->CSR_GSTAT = FIELD_DP64(sys->CSR_GSTAT, CSR_GSTAT, PVM,
-+                                 FIELD_EX64(val, CSR_GSTAT, PVM));
-+    sys->CSR_GSTAT = FIELD_DP64(sys->CSR_GSTAT, CSR_GSTAT, GID,
-+                                 FIELD_EX64(val, CSR_GSTAT, GID));
-+
-+    if (old_gid != FIELD_EX64(sys->CSR_GSTAT, CSR_GSTAT, GID)) {
-+        tlb_flush(env_cpu(env));
++static inline int mmu_idx_to_plv(int mmu_idx)
++{
++    if (mmu_idx == MMU_DA_IDX || mmu_idx == MMU_GUEST_DA_IDX) {
++        return 0;
 +    }
-+
-+    return old_v;
-+}
-+
-+target_ulong HELPER(csrwr_gtlbc)(CPULoongArchState *env,
-+                                target_ulong val, uint32_t vm_level)
-+{
-+    CPUSysState *sys = get_sys(env, VM_LEVEL0);
-+    int64_t old_v = sys->CSR_GTLBC;
-+    uint8_t old_use_tgid = FIELD_EX64(old_v, CSR_GTLBC, USETGID);
-+    uint8_t old_tgid = FIELD_EX64(old_v, CSR_GTLBC, TGID);
-+
-+    sys->CSR_GTLBC = val;
-+    if (old_use_tgid != FIELD_EX64(sys->CSR_GTLBC, CSR_GTLBC, USETGID) ||
-+        old_tgid != FIELD_EX64(sys->CSR_GTLBC, CSR_GTLBC, TGID)) {
-+        tlb_flush(env_cpu(env));
++    if (mmu_idx_vm_level(mmu_idx)) {
++        return mmu_idx - MMU_GUEST_IDX;
 +    }
-+
-+    return old_v;
++    return mmu_idx;
 +}
-+
-+target_ulong HELPER(csrwr_gintc)(CPULoongArchState *env,
-+                                target_ulong val, uint32_t vm_level)
-+{
-+    CPUSysState *host = get_sys(env, VM_LEVEL0);
-+    CPUSysState *guest = get_sys(env, VM_LEVEL1);
-+    int64_t old_v = host->CSR_GINTC;
-+    uint8_t hwis = FIELD_EX64(val, CSR_GINTC, HWIS);
-+    /* TODO: hwip and hwic support */
-+
-+    host->CSR_GINTC = val & 0xffff00;
-+    guest->CSR_ESTAT = deposit64(guest->CSR_ESTAT, 2, 8,
-+                                 hwis);
-+
-+    return old_v;
-+}
-+
-diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
-index 1c15e7544a..63d37a00b0 100644
---- a/target/loongarch/tcg/helper.h
-+++ b/target/loongarch/tcg/helper.h
-@@ -106,6 +106,9 @@ DEF_HELPER_3(csrwr_tcfg, i64, env, tl, i32)
- DEF_HELPER_3(csrwr_ticlr, i64, env, tl, i32)
- DEF_HELPER_3(csrwr_pwcl, i64, env, tl, i32)
- DEF_HELPER_3(csrwr_pwch, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_gstat, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_gtlbc, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_gintc, i64, env, tl, i32)
- DEF_HELPER_2(iocsrrd_b, i64, env, tl)
- DEF_HELPER_2(iocsrrd_h, i64, env, tl)
- DEF_HELPER_2(iocsrrd_w, i64, env, tl)
+ 
+ static inline CPUSysState *env_sys(CPULoongArchState *env)
+ {
 diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index cfcd234340..384580c988 100644
+index 6728ce5ec9..7ee3bb8e27 100644
 --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
 +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -88,6 +88,9 @@ void loongarch_csr_translate_init(void)
-     SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
-     SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
-     SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
-+    SET_CSR_FUNC(GSTAT, NULL, gen_helper_csrwr_gstat);
-+    SET_CSR_FUNC(GTLBC, NULL, gen_helper_csrwr_gtlbc);
-+    SET_CSR_FUNC(GINTC, NULL, gen_helper_csrwr_gintc);
- }
- #undef SET_CSR_FUNC
+@@ -249,7 +249,7 @@ TRANS64(iocsrwr_d, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
  
+ static void check_mmu_idx(DisasContext *ctx)
+ {
+-    if (ctx->mem_idx != MMU_DA_IDX) {
++    if (ctx->mem_idx != MMU_DA_IDX && ctx->mem_idx != MMU_GUEST_DA_IDX) {
+         tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
+         ctx->base.is_jmp = DISAS_EXIT;
+     }
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index c2792c8db1..7babc1a1f9 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -269,6 +269,13 @@ static int loongarch_cpu_mmu_index(CPUState *cs, bool ifetch)
+     CPULoongArchState *env = cpu_env(cs);
+     CPUSysState *sys = env_sys(env);
+ 
++    if (env_vm_level(env) == VM_LEVEL1) {
++        if (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PG)) {
++            return MMU_GUEST_IDX + FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
++        }
++        return MMU_GUEST_DA_IDX;
++    }
++
+     if (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PG)) {
+         return FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
+     }
+diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+index 124dce6269..4ab06b48da 100644
+--- a/target/loongarch/tcg/translate.c
++++ b/target/loongarch/tcg/translate.c
+@@ -129,6 +129,9 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
+     } else {
+         ctx->mem_idx = MMU_DA_IDX;
+     }
++    if (ctx->base.tb->flags & HW_FLAGS_GUEST_MODE) {
++        ctx->mem_idx += MMU_GUEST_IDX;
++    }
+ 
+     /* Bound the number of insns to execute to those left on the page.  */
+     bound = -(ctx->base.pc_first | TARGET_PAGE_MASK) / 4;
 -- 
 2.56.0
 
