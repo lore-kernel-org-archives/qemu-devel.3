@@ -1,93 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D195606A8A2
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5663C606A33E
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=OL78rF9H;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=el1P6dgw
+	dkim=pass (2048-bit key, unprotected) header.d=proton.me header.i=@proton.me header.a=rsa-sha256 header.s=protonmail2 header.b=LEl2GPRD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRzAA-000050-A4; Fri, 13 Nov 2026 16:50:29 -0500
+	id 1xRz9H-0007xo-M3; Fri, 13 Nov 2026 16:49:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9c-00084E-C0
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:52 -0500
-Received: from mx2.catap.net ([65.21.79.163])
+ (Exim 4.90_1) (envelope-from <christianslima@proton.me>)
+ id 1xRz9F-0007x3-5y
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:29 -0500
+Received: from mail-10628.protonmail.ch ([79.135.106.28])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9a-0005Q1-NE
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:52 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=vk+fEfD
- LUdQvnarBSPHkwf9Xfutd9fR2/IVM1SczrXMcWO8tMY4dFlzCvifg2EhfVoZEl7FIqdahG
- NmfTfTLI1kVf5Y4NczcjAI/jjO4Kx/5zb++Q1hJz/oaUSMRECw6U5adQZyQ78gzvt1zJOY
- Dw2If9j3b/k412pbI/9zWArDtXWrUw7yps0BBy/Veb/+lx7nT+no12BUJWBYUNmQrh9112
- HlnaO4gHzVxHLSRVkqGf+Ee8qwe/ikttPwk6JEtuhelIvWknxZXWS7s/11K4RPnjh8Dn0a
- FxWu+qHQFPME0J25ZO6hIeRqLPqhNOAPq4DhVgcQQ+rU44q+cApt2Gg==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=F
- qvOgCmIkDQqxhYnE9RyFGvpOPch56C2DtN0DyG37eI=;
- h=references:in-reply-to:
- date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=UIjh+PGSElXyjnvjBEYonLM17+nq2ifyaobExu+gSaViBHoS7e40yCDstbXetTRNOiCT
- arC4eNjb7j3P5NbiQYs6+Ab1cQmV4uakwOEME6LLWpmAVHnBbL5aFacKh2sK89KLKSWjvt
- 5EAz3ss0UW8EPbV5ItbZyA/TBWe40/8yF1xHkwdQxhYT8zmz+htyXqnpw8VHIsD30sTRQs
- GcsAJy6vhWHQo7Obs6fkj+xbjkG79f9+IEKdHLv6TJIIX0XAu+2CN6A9Yklw1HJZgw2+hD
- 5Wowtqbj46pBhAa284vuCEfwJuVIep4w6cFD1rD4tsjYt3VqOoWD24Vy3/BXd/aQ==
-ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
- header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=OL78rF9H; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=el1P6dgw;
- arc=none; iprev=pass; spf=none
- smtp.helo=postmaster@matebook.home.arpa; spf=softfail
- smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=FqvOgCmI
- kDQqxhYnE9RyFGvpOPch56C2DtN0DyG37eI=;
- h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=OL78rF9H1xoGLC0lLnsBmiUB8T76RdTSNhy
- sFBJLGXu5rsV/AoCfrOgddZOmNnpaUE9uerpdyZ9kPssaRv4xbgUj5+KFAgttYzkBxvoP/
- TJKTD9lXiNIUKc9t+u0Teiyo8WtNI96Q0Q+a+oAGYZ2yEzIFgxZMCacwt222pCiSBxCZMm
- 7N3HccE2GbznfdxTVTbSzwyE0qgILgaFiMc0n5lKTZjj+Ygk8NueM1zxEFi8IznbkScLwP
- /71zzLxDNZO74LQc6x2jle4Lc1/HPwaBMAUtgYNRM5BGsASs9PyAbpyixJUi7+7ssAduEQ
- WHwRtxghc3kGtJWF4jPxkcWfXDw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=FqvOgCmIkDQqxhYnE9RyFGvpOPch56C2DtN0DyG37eI=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=el1P6dgwhTKNiQUgIG
- f35II7Q9PqVQfgMP0luZbh2Gk3l0QGpZKiAdXO/uj9+NfROx2WnVAAe+KQsEusgRebDQ==
-Received: by mx2.catap.net (OpenSMTPD) id 1ded1389;
- Fri, 13 Nov 2026 22:49:48 +0100 (CET)
-Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 6446287a;
- Fri, 13 Nov 2026 22:49:32 +0100 (CET)
-From: Kirill A. Korinsky <kirill@korins.ky>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: "Kirill A . Korinsky" <kirill@korins.ky>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v8 03/26] target/mips: drop hidden TLB shadowing for tlbwr
-Date: Fri, 13 Nov 2026 22:45:17 +0100
-Message-ID: <20261113214926.98536-4-kirill@korins.ky>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261113214926.98536-1-kirill@korins.ky>
-References: <20261113214926.98536-1-kirill@korins.ky>
+ (Exim 4.90_1) (envelope-from <christianslima@proton.me>)
+ id 1xRz9D-0003pV-DH
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=protonmail2; t=1794606564; x=1794865764;
+ bh=4twaEbuV8CPr/dd0Mz0UYalpDQ5OlRJbLeeZ8eB9/6Y=;
+ h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=LEl2GPRD9zc1XyyfqeteEVoWwq8esh4rY9SDxZhJsZNt7JFZLTaFRnsD/7/SJ1rxo
+ mByNpIueT/EgZHJPGAtw7kAPZNed6I3i37/OBpcU6ZgezhEDLih/NVa+zEPzHY6fgr
+ uUGTr2B4JT41zoneumVzn6oRIoZjPCh+uK3dfbUf5LD8/Zzr542DzLGwk6ZTwASBfg
+ 4GazzmuWRQlq1SxHty1YwppuphiQUmvC6Cods1wUX+mSAisM5c6LAHZRJWACChaKg0
+ tZ3LuHe6vHXXShtujpWxxIMkIQueJSzgNMUy0cdUp+dzaw7/M7sy4tt5HosVEapYFi
+ ll4snDrwAV/ig==
+Date: Fri, 13 Nov 2026 21:49:16 +0000
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+From: "Christian S. Lima" <christianslima@proton.me>
+Subject: [PATCH v2 2/2] target/riscv: make mstatus.SPELP read-only when S-mode
+ is not present
+Message-ID: <20261113214854.40425-3-christianslima@proton.me>
+In-Reply-To: <20261113214854.40425-1-christianslima@proton.me>
+References: <20261113214854.40425-1-christianslima@proton.me>
+Feedback-ID: 169431447:user:proton
+X-Pm-Message-ID: 1e70b7a0a3239fc1ee8ac6e8a9b87bd4b540628d
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=79.135.106.28;
+ envelope-from=christianslima@proton.me; helo=mail-10628.protonmail.ch
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,47 +70,50 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: "Kirill A. Korinsky" <kirill@korins.ky>
+According to the Zicfilp specification the bit SPELP in the mstatus
+register should be 0 (read-only) when s-mode is not present.
 
-tlbwr replaces a random architectural TLB entry. Once that happens, the
-evicted entry must stop translating guest virtual addresses.
+changes in v2:
+- Change to patch series
+- Now tooling can close the issue in Gitlab properly
 
-The current helper keeps the evicted entry in QEMU-only extra TLB state.
-That makes the old mapping survive until some later operation discards
-the extra entries. A guest can observe this directly by writing through
-a TLB mapping, replacing that entry with tlbwr, and writing through the
-old virtual address again.
+Link to v1: https://lore.kernel.org/qemu-riscv/20261112214810.78747-2-chris=
+tianslima@proton.me/
 
-Invalidate the replaced entry instead of shadowing it. This keeps the
-translated TLB state aligned with the architectural TLB contents.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4456
 
-Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Christian S. Lima <christianslima@proton.me>
 ---
- target/mips/tcg/system/tlb_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/tcg/csr.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index 17d5340789..e9416d93a4 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -165,7 +165,7 @@ static void r4k_helper_tlbwr(CPUMIPSState *env)
- {
-     int r = cpu_mips_get_random(env);
- 
--    r4k_invalidate_tlb(env, r, 1);
-+    r4k_invalidate_tlb(env, r, 0);
-     r4k_fill_tlb(env, r);
- }
- 
--- 
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 398e312c9a..9d0378bc69 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -2131,7 +2131,10 @@ static RISCVException write_mstatus(CPURISCVState *e=
+nv, int csrno,
+=20
+     /* If cfi lp extension is available, then apply cfi lp mask */
+     if (env_archcpu(env)->cfg.ext_zicfilp) {
+-        mask |=3D (MSTATUS_MPELP | MSTATUS_SPELP);
++        mask |=3D MSTATUS_MPELP;
++        if (riscv_has_ext(env, RVS)) {
++            mask |=3D MSTATUS_SPELP;
++        }
+     }
+=20
+     mstatus =3D (mstatus & ~mask) | (val & mask);
+--=20
 2.56.0
+
 
 
