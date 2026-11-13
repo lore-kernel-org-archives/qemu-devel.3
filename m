@@ -1,83 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C554606A339
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F91606A33A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=hjlWd4vy
+	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=kvgjF4UL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRrjF-0001Tg-A5; Fri, 13 Nov 2026 08:54:09 -0500
+	id 1xRrjF-0001UN-N6; Fri, 13 Nov 2026 08:54:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnte-0004NY-LJ; Fri, 13 Nov 2026 04:48:40 -0500
-Received: from smtp46.tsinghua.edu.cn ([101.6.4.70] helo=tsinghua.edu.cn)
+ id 1xRnnE-0001re-Ss; Fri, 13 Nov 2026 04:42:01 -0500
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnta-00072k-OX; Fri, 13 Nov 2026 04:48:38 -0500
+ id 1xRnnB-00021R-DY; Fri, 13 Nov 2026 04:42:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mails.tsinghua.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:
  Date:Message-ID:In-Reply-To:References:MIME-Version:
- Content-Transfer-Encoding; bh=iHEXveoXlZNOIJB/lih70MMBsZV1xP0a51
- vwPMDfNI0=; b=hjlWd4vyt13HiSdknOMCti9Qc2QLS5m0avEa5WcgeEvdvpWXc0
- VpPJtu3+lMmrKGqaF2j1F8sGiFqso8A0e4zILyLfgXbYba6qJ7ICJeHDzSXX5TNJ
- HueKMIWWJKYKuOZksvmwqmqc786kAseDjaQpJP6eFLAd4xj6o3gxXJ6RQ=
+ Content-Transfer-Encoding; bh=BhNMR/FRz2ZGwXKP9oUvq6S+TqUtEjfWRY
+ 0BsuDwE8g=; b=kvgjF4ULnsq4NPK0oz1gdXPxTiXucKfAIm3clr4rN58tgkF/rf
+ okiIarI5XumMZI4D46LK8Am7kEC3K0wKdx6Irzx1rvEWL16YhLW4fziCaUlZhRL0
+ Chjcx5Hm5aX29swj8ofSGqefIx+Oj3SGiIQO++JMEZf/zSvUQkrWea/5o=
 Received: from ubuntu (unknown [101.5.154.165])
- by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S6;
- Fri, 13 Nov 2026 17:48:30 +0800 (CST)
+ by web1 (Coremail) with SMTP id yAQGZQDXRzhZ2_ZqWAhCAg--.45084S2;
+ Fri, 13 Nov 2026 17:41:47 +0800 (CST)
 From: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
 To: qemu-devel@nongnu.org
-Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Kuan-Wei Chiu <visitorckw@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- bin.meng@processmission.com, tangtao1634@phytium.com.cn,
- Chao Liu <chao.liu@processmission.com>
-Subject: [RFC PATCH 04/20] target/arm: allow machines to handle SMC calls
-Date: Fri, 13 Nov 2026 17:47:38 +0800
-Message-ID: <d72cbcb46dab52d6a919d1212221b4202db2f4c3.1794555589.git.w-yf22@mails.tsinghua.edu.cn>
+Cc: qemu-block@nongnu.org, qemu-arm@nongnu.org, alistair@alistair23.me,
+ kwolf@redhat.com, hreitz@redhat.com, clg@kaod.org,
+ peter.maydell@linaro.org, jamin_lin@aspeedtech.com,
+ kane_chen@aspeedtech.com, farosas@suse.de, lvivier@redhat.com,
+ pbonzini@redhat.com, bin.meng@processmission.com,
+ tangtao1634@phytium.com.cn, Chao Liu <chao.liu@processmission.com>,
+ Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
+Subject: [PATCH 1/4] hw/block/m25p80: fix erase past the end of the flash
+ device
+Date: Fri, 13 Nov 2026 17:41:40 +0800
+Message-ID: <2b14e487c5719cb70f78515304293990c0abdccd.1794558546.git.w-yf22@mails.tsinghua.edu.cn>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
-References: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
+In-Reply-To: <cover.1794558546.git.w-yf22@mails.tsinghua.edu.cn>
+References: <cover.1794558546.git.w-yf22@mails.tsinghua.edu.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S6
-X-Coremail-Antispam: 1UD129KBjvJXoWxtF4fWw4kKF48Gr17JrWUurg_yoW7tw1fpF
- Z8Cr98ur4kKa4av34fCF17tF43Ca1kWrW0y39FgrWFyw17ZryFkr1Dta43KFW5Gr4UuF15
- ZF4Fvr4F93W5X37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUHa14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
- kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
- z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
- 4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
- 3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0V
- AKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1l
- Ox8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErc
- IFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_
- GFWl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxV
- WUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI
- 7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r
- 4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4U
- MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfUeVbkUU
- UUU
+X-CM-TRANSID: yAQGZQDXRzhZ2_ZqWAhCAg--.45084S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Xw18KFy7Cr4Dtr1xAr1kXwb_yoW8JF45pr
+ 1kWF45JrnagF1xWa1Sv3WSqr97CFn7Ga98Jws2934Fy390ga4IgrZxKFy5G34DJr1Sk3WU
+ Zr90va1UCF95W3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUP014x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
+ JVWxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
+ CE3s1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xv
+ F2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v26r1j6r
+ 4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I
+ 648v4I1lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_GFv_Wrylc2xSY4AK67
+ AK6r4fMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7sRE0tC7UU
+ UUU==
 X-CM-SenderInfo: fzn1wj2s6ptxtovo32xlqjx3vdohv3gofq/
-Received-SPF: pass client-ip=101.6.4.70;
- envelope-from=w-yf22@mails.tsinghua.edu.cn; helo=tsinghua.edu.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=w-yf22@mails.tsinghua.edu.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:53 -0500
+X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:50 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,199 +90,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Chao Liu <chao.liu@processmission.com>
 
-Some machines model firmware services which use vendor SMC function IDs
-while QEMU provides PSCI through the same SMC conduit.  There is
-currently no way for such a machine to take over a call before the PSCI
-path handles it.
+Erase commands are addressed at the containing erase unit; the flash
+ignores the low address bits, so an erase in the last erase unit of the
+device must not extend past the end of the backing store.
 
-Add a small registry for SMC function ID handlers.  Machines can
-register a handler which inspects the call and returns whether it was
-handled, without changing the behavior of existing callers.
-
+Fixes: 82a2499011a7 ("m25p80: Initial implementation of SPI flash device")
 Signed-off-by: Chao Liu <chao.liu@processmission.com>
 Signed-off-by: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
 ---
- MAINTAINERS              |  1 +
- include/hw/arm/arm-smc.h | 31 ++++++++++++++++
- target/arm/helper.c      | 80 ++++++++++++++++++++++++++++++++++++++++
- target/arm/internals.h   |  3 ++
- 4 files changed, 115 insertions(+)
- create mode 100644 include/hw/arm/arm-smc.h
+ hw/block/m25p80.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index fa0c6d0c9b..db1a62a0cb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -222,6 +222,7 @@ F: tests/tcg/arm/
- F: tests/tcg/aarch64/
- F: tests/qtest/arm-cpu-features.c
- F: hw/arm/
-+F: include/hw/arm/arm-smc.h
- F: hw/cpu/a*mpcore.c
- F: include/hw/cpu/a*mpcore.h
- F: docs/system/target-arm.rst
-diff --git a/include/hw/arm/arm-smc.h b/include/hw/arm/arm-smc.h
-new file mode 100644
-index 0000000000..e27d64218f
---- /dev/null
-+++ b/include/hw/arm/arm-smc.h
-@@ -0,0 +1,31 @@
-+/*
-+ * ARM SMC call dispatch
-+ *
-+ * Board and SoC models can register handlers for vendor or firmware
-+ * SMC calling convention function IDs. Under TCG, dispatch follows the
-+ * architectural trap checks and precedes exception delivery and QEMU's
-+ * PSCI emulation, so firmware services can share the SMC conduit with PSCI.
-+ *
-+ * Copyright (C) 2026 Process Mission
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_ARM_ARM_SMC_H
-+#define HW_ARM_ARM_SMC_H
-+
-+typedef bool (*ARMSCMCHandler)(const uint64_t args[8], uint64_t *ret,
-+                              void *opaque);
-+
-+/*
-+ * Register a handler for one SMCCC function ID.  The handler returns
-+ * true when it has handled the call and set *ret. args contains the
-+ * caller's x0-x7 or zero-extended r0-r7; the ARM dispatcher writes *ret
-+ * to x0/r0 and preserves the other registers. Returns 0 on success and
-+ * a negative value if the function ID is already registered.
-+ */
-+int arm_register_smc_handler(uint64_t func_id, ARMSCMCHandler handler,
-+                             void *opaque);
-+void arm_unregister_smc_handler(uint64_t func_id, ARMSCMCHandler handler);
-+
-+#endif /* HW_ARM_ARM_SMC_H */
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index f413b15eb7..61645fefa6 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -36,6 +36,7 @@
- #include "cpregs.h"
- #include "target/arm/gtimer.h"
- #include "qemu/plugin.h"
-+#include "hw/arm/arm-smc.h"
- 
- static void switch_mode(CPUARMState *env, int mode);
- #ifndef CONFIG_USER_ONLY
-@@ -9815,6 +9816,78 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
-                   new_el, env->pc, pstate_read(env));
- }
- 
-+typedef struct ARMSCMCHandlerEntry {
-+    uint64_t func_id;
-+    ARMSCMCHandler handler;
-+    void *opaque;
-+    QTAILQ_ENTRY(ARMSCMCHandlerEntry) node;
-+} ARMSCMCHandlerEntry;
-+
-+static QTAILQ_HEAD(, ARMSCMCHandlerEntry) arm_smc_handlers =
-+    QTAILQ_HEAD_INITIALIZER(arm_smc_handlers);
-+
-+int arm_register_smc_handler(uint64_t func_id, ARMSCMCHandler handler,
-+                             void *opaque)
-+{
-+    ARMSCMCHandlerEntry *entry;
-+
-+    QTAILQ_FOREACH(entry, &arm_smc_handlers, node) {
-+        if (entry->func_id == func_id) {
-+            return -1;
-+        }
-+    }
-+
-+    entry = g_new0(ARMSCMCHandlerEntry, 1);
-+    entry->func_id = func_id;
-+    entry->handler = handler;
-+    entry->opaque = opaque;
-+    QTAILQ_INSERT_TAIL(&arm_smc_handlers, entry, node);
-+
-+    return 0;
-+}
-+
-+void arm_unregister_smc_handler(uint64_t func_id, ARMSCMCHandler handler)
-+{
-+    ARMSCMCHandlerEntry *entry, *next;
-+
-+    QTAILQ_FOREACH_SAFE(entry, &arm_smc_handlers, node, next) {
-+        if (entry->func_id == func_id && entry->handler == handler) {
-+            QTAILQ_REMOVE(&arm_smc_handlers, entry, node);
-+            g_free(entry);
-+            return;
-+        }
-+    }
-+}
-+
-+bool arm_smc_handle_call(ARMCPU *cpu)
-+{
-+    CPUARMState *env = &cpu->env;
-+    uint64_t func_id = is_a64(env) ? env->xregs[0] : env->regs[0];
-+    ARMSCMCHandlerEntry *entry;
-+
-+    QTAILQ_FOREACH(entry, &arm_smc_handlers, node) {
-+        uint64_t args[8], ret;
-+
-+        if (entry->func_id != func_id) {
-+            continue;
-+        }
-+        for (size_t i = 0; i < ARRAY_SIZE(args); i++) {
-+            args[i] = is_a64(env) ? env->xregs[i] : env->regs[i];
-+        }
-+        if (!entry->handler(args, &ret, entry->opaque)) {
-+            return false;
-+        }
-+        if (is_a64(env)) {
-+            env->xregs[0] = ret;
-+        } else {
-+            env->regs[0] = ret;
-+        }
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
- /*
-  * Do semihosting call and set the appropriate return value. All the
-  * permission and validity checks have been done at translate time.
-@@ -9873,6 +9946,13 @@ void arm_cpu_do_interrupt(CPUState *cs)
-                       env->exception.syndrome);
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index baf798c6b5..2a882c392c 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -639,6 +639,19 @@ static void flash_erase(Flash *s, int offset, FlashCMD cmd)
+         abort();
      }
  
-+    if (tcg_enabled() && cs->exception_index == EXCP_SMC &&
-+        arm_smc_handle_call(cpu)) {
-+        qemu_log_mask(CPU_LOG_INT, "...handled as SMC handler call\n");
-+        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
++    /*
++     * The flash ignores the low address bits of erase commands and erases
++     * the containing erase unit. Reject requests whose erase unit is not
++     * entirely within the device.
++     */
++    offset &= ~(len - 1);
++    if (offset + len > s->size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "M25P80: erase at 0x%x for %u bytes is outside the "
++                      "device (size 0x%x)\n", offset, len, s->size);
 +        return;
 +    }
 +
-     if (tcg_enabled() && arm_is_psci_call(cpu, cs->exception_index)) {
-         arm_handle_psci_call(cpu);
-         qemu_log_mask(CPU_LOG_INT, "...handled as PSCI call\n");
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 033d6d66da..4c6825b201 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -717,6 +717,9 @@ bool arm_is_psci_call(ARMCPU *cpu, int excp_type);
- /* Actually handle a PSCI call */
- void arm_handle_psci_call(ARMCPU *cpu);
+     trace_m25p80_flash_erase(s, offset, len);
  
-+/* Dispatch a registered SMC handler call, if any. */
-+bool arm_smc_handle_call(ARMCPU *cpu);
-+
- /**
-  * arm_clear_exclusive: clear the exclusive monitor
-  * @env: CPU env
+     if ((s->pi->flags & capa_to_assert) != capa_to_assert) {
 -- 
 2.53.0
 
