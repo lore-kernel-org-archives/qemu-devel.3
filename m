@@ -1,83 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F9D606A332
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 23:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF17606A33F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 23:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YHInhJiM
+	dkim=pass (2048-bit key) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.a=rsa-sha256 header.s=rs20250326 header.b=uR4Ow0ut
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xS0TA-0000TG-Bu; Fri, 13 Nov 2026 18:14:08 -0500
+	id 1xS16d-0000yW-De; Fri, 13 Nov 2026 18:54:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1xS0T6-0000P7-8w; Fri, 13 Nov 2026 18:14:04 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xS16a-0000wF-Lm
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 18:54:53 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1xS0T2-00027x-OA; Fri, 13 Nov 2026 18:14:03 -0500
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id D137742DC8;
- Fri, 13 Nov 2026 23:13:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732CF1F000C7;
- Fri, 13 Nov 2026 23:13:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1794611631;
- bh=3VJ5VKKHRksAaEHKGJL9GJuFhNx/L3ly7jYl1xcj/1M=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=YHInhJiM36dCD4Th9g/MJ8X35hirbqXVXKqU/WSEikePU5ombWT/jufL1FVHrOXKl
- 4E4QraGvmBeRz7pBeogrXEUNAbKXojgETN2qO3bZxeFK0sen3cnNEKEvyWrysZHboE
- JPVKLloW/GMu69FKNNJZlLVRf0oS3kqSTzZkUi+D1/z5uEF1IAtNPJ0JlLS2P/AMsi
- j0h5cq386tiXVfPLEHLmXKuBMyERhFQsvBKhEnMdEEP5t1+AWNL1us8zDwn5is+q1z
- ME8Srt5sKmrhccOnkjVKIv/yGXBS6tn+wigydkHaYp0VnGGELAzyp/njT8H2Dn/5yD
- xZhv9uyhqmH8w==
-From: Drew Fustini <fustini@kernel.org>
-Date: Fri, 13 Nov 2026 15:12:39 -0800
-Subject: [PATCH v2 1/2] hw/riscv: add cache_level and node properties to
- CBQRI controllers
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xS16W-0007B9-Gk
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 18:54:52 -0500
+Received: from [172.31.11.120] (m85.aaa.bbb.ccc.bctel.net [209.52.143.85] (may
+ be forged)) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6ADNsa2F040351
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 14 Nov 2026 08:54:37 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=aZ1WawsCISDemwOoHOqHd7q2/JRcnlH5KJamL7fPwVk=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1794614078; v=1;
+ b=uR4Ow0utJAPWPISxSY2Pg3AlNjWVun9/0XcPFwkatnnRHqnToZzk7nAtn2VAwzSf
+ cu08Ye+jCv138N8P7vubR1Q2wygvps0cX9LfwE7jWsx8jMJHsh7Vjn22ChPS8Iik
+ OUwUhIJdAi2scP9gfTqTaQkvU4UwTImTSk1jtTuG935ilkdhw4oIBuUH3E/makFN
+ WgDqlFTw6OS/BR5/LKIOmU8ib+HfYysa9NhIi92k0RlknnVRTmXJZndRxXAiwtGB
+ n/GPzLDlEbvNfFmEr+UPZGbVYaX7Zh9NFt2Ua+pWWdt1bCbIVuqJTZClD5rcjU3a
+ BL/9CP9FqnqISAc3FEJwVw==
+Message-ID: <23ed503d-01ed-4ef4-96d2-e31ca00d4bd9@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 13 Nov 2026 16:54:36 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261113-riscv-rqsc-v2-1-34d47fa4141e@kernel.org>
-References: <20261113-riscv-rqsc-v2-0-34d47fa4141e@kernel.org>
-In-Reply-To: <20261113-riscv-rqsc-v2-0-34d47fa4141e@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Sunil V L <sunilvl@oss.qualcomm.com>, 
- Anup Patel <anup.patel@oss.qualcomm.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Nicolas Pitre <npitre@baylibre.com>, 
- =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, 
- Atish Patra <atish.patra@linux.dev>, 
- =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <radim.krcmar@oss.qualcomm.com>, 
- yunhui cui <cuiyunhui@bytedance.com>, Chen Pei <cp0613@linux.alibaba.com>, 
- guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
- Jinjie Ruan <ruanjinjie@huawei.com>, Jinjie Ruan <2118537295@qq.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Vasudevan Srinivasan <vasu@rivosinc.com>, 
- Drew Fustini <fustini@kernel.org>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3686; i=fustini@kernel.org;
- h=from:subject:message-id; bh=C8GjMMtR0kTO2e1y7gN/VjOKEDesqqxWM7KvRC87P9Q=;
- b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWR9n7nuYfuE1DnLduZLeHk88lrnsoPpl8HE4iO6VpMiP
- wVesQ2d0lHKwiDGxSArpsiy6UPehSVeoV8XzH+xDWYOKxPIEAYuTgGYiMhdRoaF3xh+WP6ZNae/
- W2rzkyKp2WvZZB753LD6WnspM71cSD2d4b83C89a3g87ut8sZ91YGGcyM9nzqJhu5WTxDCnb6Bd
- X0xgB
-X-Developer-Key: i=fustini@kernel.org; a=openpgp;
- fpr=1B6F948213EA489734F3997035D5CD577C1E6010
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=fustini@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/8] hw/display/vhost-user-gpu: reset scanouts on the
+ main loop
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Dmitry R <rdmitry@taktcycles.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20261113-issue-4848-v3-0-98e4fa3e77eb@redhat.com>
+ <20261113-issue-4848-v3-4-98e4fa3e77eb@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20261113-issue-4848-v3-4-98e4fa3e77eb@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,116 +74,136 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The ACPI RQSC table specifies which cache a capacity controller backs
-and which proximity domain a bandwidth controller serves.
+On 2026/11/13 9:29, Marc-André Lureau wrote:
+> vhost_user_gpu_reset() runs on the vCPU thread when the guest writes the
+> device status. Installing the placeholder surface there calls the
+> display listener without the EGL context being current, so the D-Bus
+> listener receives a surface without a texture and aborts on the tex_id
+> assertion.
+> 
+> Defer the display cleanup to a bottom half, as virtio_gpu_reset() does,
+> and wait for it when reset is triggered from a vCPU thread.
 
-Add a cache_level property to the capacity controller. It accepts 2 or
-3, the unified cache levels that the smp-cache option can place and the
-PPTT can describe, and defaults to 2. Add a node property to the
-bandwidth controller. It defaults to 0 and rejects a node the machine
-does not have.
+This suffers from the same issue the following patch series addresses:
+https://lore.kernel.org/qemu-devel/20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp/
+("[PATCH v3 0/9] virtio-gpu: Do not wait for the main thread during reset")
 
-Signed-off-by: Drew Fustini <fustini@kernel.org>
----
- hw/riscv/cbqri_bandwidth.c | 13 +++++++++++++
- hw/riscv/cbqri_capacity.c  |  8 ++++++++
- 2 files changed, 21 insertions(+)
+Regards,
+Akihiko Odaki
 
-diff --git a/hw/riscv/cbqri_bandwidth.c b/hw/riscv/cbqri_bandwidth.c
-index bd8cf2b50e4c..6c33d1738d27 100644
---- a/hw/riscv/cbqri_bandwidth.c
-+++ b/hw/riscv/cbqri_bandwidth.c
-@@ -17,7 +17,9 @@
- #include "hw/core/sysbus.h"
- #include "migration/vmstate.h"
- #include "target/riscv/cpu.h"
-+#include "hw/core/boards.h"
- #include "hw/riscv/cbqri.h"
-+#include "system/numa.h"
- 
- /* Property defaults, shared with riscv_cbqri_bc_caps_init() */
- #define BC_DEFAULT_MAX_MCIDS    256
-@@ -139,6 +141,7 @@ typedef struct RiscvCbqriBandwidthState {
- 
-     uint16_t nbwblks;
-     uint16_t mrbwb;
-+    uint32_t node;
- 
-     bool supports_at_code;
- 
-@@ -542,12 +545,21 @@ static const MemoryRegionOps riscv_cbqri_bc_ops = {
- static void riscv_cbqri_bc_realize(DeviceState *dev, Error **errp)
- {
-     RiscvCbqriBandwidthState *bc = RISCV_CBQRI_BC(dev);
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    unsigned int nb_nodes = ms->numa_state ? ms->numa_state->num_nodes : 0;
- 
-     if (!bc->mmio_base) {
-         error_setg(errp, "mmio_base property not set");
-         return;
-     }
- 
-+    /* Without -numa there is a single implicit node 0. */
-+    if (bc->node >= MAX(nb_nodes, 1)) {
-+        error_setg(errp, "node %u out of range, %u NUMA node(s)",
-+                   bc->node, MAX(nb_nodes, 1));
-+        return;
-+    }
-+
-     if (bc->nb_rcids == 0) {
-         error_setg(errp, "max_rcids must be at least 1");
-         return;
-@@ -638,6 +650,7 @@ static const Property riscv_cbqri_bc_properties[] = {
-                        BC_DEFAULT_NBWBLKS),
-     DEFINE_PROP_UINT16("mrbwb", RiscvCbqriBandwidthState, mrbwb,
-                        BC_DEFAULT_MRBWB),
-+    DEFINE_PROP_UINT32("node", RiscvCbqriBandwidthState, node, 0),
- 
-     DEFINE_PROP_BOOL("at_code", RiscvCbqriBandwidthState,
-                      supports_at_code, true),
-diff --git a/hw/riscv/cbqri_capacity.c b/hw/riscv/cbqri_capacity.c
-index 0c572aa8b02f..1585cad1d073 100644
---- a/hw/riscv/cbqri_capacity.c
-+++ b/hw/riscv/cbqri_capacity.c
-@@ -127,6 +127,7 @@ typedef struct RiscvCbqriCapacityState {
-     uint16_t nb_rcids;
- 
-     uint16_t ncblks;
-+    uint8_t cache_level;
- 
-     bool supports_at_code;
- 
-@@ -591,6 +592,11 @@ static void riscv_cbqri_cc_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    if (cc->cache_level != 2 && cc->cache_level != 3) {
-+        error_setg(errp, "cache_level must be 2 or 3");
-+        return;
-+    }
-+
-     if (cc->nb_rcids == 0) {
-         error_setg(errp, "max_rcids must be at least 1");
-         return;
-@@ -666,6 +672,8 @@ static const Property riscv_cbqri_cc_properties[] = {
-                        CC_DEFAULT_MAX_RCIDS),
-     DEFINE_PROP_UINT16("ncblks", RiscvCbqriCapacityState, ncblks,
-                        CC_DEFAULT_NCBLKS),
-+    DEFINE_PROP_UINT8("cache_level", RiscvCbqriCapacityState,
-+                      cache_level, 2),
- 
-     DEFINE_PROP_BOOL("at_code", RiscvCbqriCapacityState,
-                      supports_at_code, true),
-
--- 
-2.43.0
+> 
+> Reported-by: Dmitry R <rdmitry@taktcycles.com>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   hw/display/vhost-user-gpu.c    | 39 +++++++++++++++++++++++++++++++++++++--
+>   include/hw/virtio/virtio-gpu.h |  4 ++++
+>   2 files changed, 41 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+> index d3b720d08a73..46e7fc136583 100644
+> --- a/hw/display/vhost-user-gpu.c
+> +++ b/hw/display/vhost-user-gpu.c
+> @@ -18,6 +18,7 @@
+>   #include "chardev/char-fe.h"
+>   #include "qapi/error.h"
+>   #include "migration/blocker.h"
+> +#include "system/cpus.h"
+>   #include "standard-headers/drm/drm_fourcc.h"
+>   
+>   typedef enum VhostUserGpuRequest {
+> @@ -635,9 +636,9 @@ vhost_user_gpu_instance_finalize(Object *obj)
+>   }
+>   
+>   static void
+> -vhost_user_gpu_reset(VirtIODevice *vdev)
+> +vhost_user_gpu_reset_bh(void *opaque)
+>   {
+> -    VhostUserGPU *g = VHOST_USER_GPU(vdev);
+> +    VhostUserGPU *g = VHOST_USER_GPU(opaque);
+>       int i;
+>   
+>       /* release the scanouts before virtio_gpu_base_reset() drops ds */
+> @@ -653,6 +654,25 @@ vhost_user_gpu_reset(VirtIODevice *vdev)
+>           qemu_console_set_surface(scanout->con, NULL);
+>       }
+>   
+> +    g->reset_finished = true;
+> +    qemu_cond_signal(&g->reset_cond);
+> +}
+> +
+> +static void
+> +vhost_user_gpu_reset(VirtIODevice *vdev)
+> +{
+> +    VhostUserGPU *g = VHOST_USER_GPU(vdev);
+> +
+> +    if (qemu_in_vcpu_thread()) {
+> +        g->reset_finished = false;
+> +        qemu_bh_schedule(g->reset_bh);
+> +        while (!g->reset_finished) {
+> +            qemu_cond_wait_bql(&g->reset_cond);
+> +        }
+> +    } else {
+> +        aio_bh_call(g->reset_bh);
+> +    }
+> +
+>       virtio_gpu_base_reset(VIRTIO_GPU_BASE(vdev));
+>   
+>       vhost_user_backend_stop(g->vhost);
+> @@ -699,9 +719,23 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
+>           return;
+>       }
+>   
+> +    g->reset_bh = virtio_bh_io_new_guarded(qdev, vhost_user_gpu_reset_bh, g);
+> +    qemu_cond_init(&g->reset_cond);
+> +
+>       g->vhost_gpu_fd = -1;
+>   }
+>   
+> +static void
+> +vhost_user_gpu_device_unrealize(DeviceState *qdev)
+> +{
+> +    VhostUserGPU *g = VHOST_USER_GPU(qdev);
+> +
+> +    g_clear_pointer(&g->reset_bh, qemu_bh_delete);
+> +    qemu_cond_destroy(&g->reset_cond);
+> +
+> +    virtio_gpu_base_device_unrealize(qdev);
+> +}
+> +
+>   static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
+>   {
+>       VhostUserGPU *g = VHOST_USER_GPU(vdev);
+> @@ -722,6 +756,7 @@ vhost_user_gpu_class_init(ObjectClass *klass, const void *data)
+>       vgc->gl_flushed = vhost_user_gpu_gl_flushed;
+>   
+>       vdc->realize = vhost_user_gpu_device_realize;
+> +    vdc->unrealize = vhost_user_gpu_device_unrealize;
+>       vdc->reset = vhost_user_gpu_reset;
+>       vdc->set_status   = vhost_user_gpu_set_status;
+>       vdc->guest_notifier_mask = vhost_user_gpu_guest_notifier_mask;
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 631dfc63a4d4..c8cb91032968 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -276,6 +276,10 @@ struct VhostUserGPU {
+>       CharFrontend vhost_chr;
+>       QemuDmaBuf *dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
+>       bool backend_blocked;
+> +
+> +    QEMUBH *reset_bh;
+> +    QemuCond reset_cond;
+> +    bool reset_finished;
+>   };
+>   
+>   #define MAX_SLOTS 4096
+> 
 
 
