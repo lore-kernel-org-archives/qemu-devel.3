@@ -1,32 +1,32 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C280606E0D9
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0EE606A33F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=Cid1jVSO
+	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=hAq4WjgH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRrjN-0001c1-7v; Fri, 13 Nov 2026 08:54:17 -0500
+	id 1xRrjv-0002Lm-AS; Fri, 13 Nov 2026 08:54:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnup-000562-Sv; Fri, 13 Nov 2026 04:49:51 -0500
-Received: from smtp47.tsinghua.edu.cn ([101.6.4.71] helo=tsinghua.edu.cn)
+ id 1xRntu-0004Re-9D; Fri, 13 Nov 2026 04:48:54 -0500
+Received: from smtp46.tsinghua.edu.cn ([101.6.4.70] helo=tsinghua.edu.cn)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnun-0007Hi-Jz; Fri, 13 Nov 2026 04:49:51 -0500
+ id 1xRnts-00075w-9p; Fri, 13 Nov 2026 04:48:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mails.tsinghua.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:
  Date:Message-ID:In-Reply-To:References:MIME-Version:
- Content-Transfer-Encoding; bh=MmyOStf5xcrVxt22llyhBMFjYeGiPmpNfp
- Lc/K78E6k=; b=Cid1jVSO/xU6uXQYOfCLWR5A3pBVsPUOHWFHWfR6wURS1LWXYV
- GqXztP3A+jw26YKbCurg9Sk6F4OzoyJj52+ROkrwYsG24doJeBimK8gmaij/j4C4
- PvgFYhi0pLAUvVhF5043COI2py3eBV0LabjA43lVLcKfDEEnP/kP7OE8Q=
+ Content-Transfer-Encoding; bh=WK5vWR9M/DL8AN0c7CHFLJPHnEHwD0zM15
+ JKmbUn0kI=; b=hAq4WjgHd8AySbrxRyA2rI4N4kiMbit0U5tmiNMHwWYvnGGmdh
+ wDbZih2Xkh7FhD/nR+JtQgvZcyo9KKfLxfGjpmEIoLk5StuG80L/skn3Wh+PucHl
+ exjeBAS1LwciM75DfXV2pOcvpagde6ik+gu7KMxn9EIhq+3IJ+dXMXSfg=
 Received: from ubuntu (unknown [101.5.154.165])
- by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S22;
- Fri, 13 Nov 2026 17:49:45 +0800 (CST)
+ by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S10;
+ Fri, 13 Nov 2026 17:48:39 +0800 (CST)
 From: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
 To: qemu-devel@nongnu.org
 Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
@@ -39,36 +39,36 @@ Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  bin.meng@processmission.com, tangtao1634@phytium.com.cn,
  Chao Liu <chao.liu@processmission.com>
-Subject: [RFC PATCH 20/20] docs/system/arm: document the Radxa ROCK 5B machine
-Date: Fri, 13 Nov 2026 17:47:54 +0800
-Message-ID: <b4391e55f4808e01db4636de67b2ab926ffa879b.1794555589.git.w-yf22@mails.tsinghua.edu.cn>
+Subject: [RFC PATCH 08/20] hw/arm/rk3588: add the unimplemented device map
+Date: Fri, 13 Nov 2026 17:47:42 +0800
+Message-ID: <c682af4b7bac34ca0a5f8d85b80adf07490827c0.1794555589.git.w-yf22@mails.tsinghua.edu.cn>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
 References: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S22
-X-Coremail-Antispam: 1UD129KBjvJXoWxAFWkXr15Xr4fuF1UWF4fGrg_yoWrCrWUpa
- nIk34fKrZ7GFyfurs3GF4xXFy3J3Wvv3yUCr1xJ3s5AFsxAry8tw1DtF1Fka47WFWFkF4Y
- vryIqFyUur4rWw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUHI14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S10
+X-Coremail-Antispam: 1UD129KBjvJXoWxuw15urWrKw48uryrCFWruFg_yoW7Wr48pw
+ 1DG398JrZ5JanrCrWfAr17Ww45Aa1Iq34jgr1IkFyDXayYvr93Zr47Cr4vva4xWFZ2yr15
+ Z392gws8GFs7GaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUHa14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
  rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
  kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
- z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr1j6r
- xdM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0D
- M2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64
- kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWUJVW8JwAm
- 72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYx
- C7M4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW8
- uwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r
- 1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij
- 64vIr41lIxAIcVC0I7IYx2IY67AKxVW5JVW7JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr
- 1j6F4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1l
- IxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUSfO7UUU
- UU=
+ z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
+ 4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
+ 3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0V
+ AKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1l
+ Ox8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErc
+ IFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_
+ GFWl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxV
+ WUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI
+ 7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Gr0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r
+ 4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4U
+ MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfUeVbkUU
+ UUU
 X-CM-SenderInfo: fzn1wj2s6ptxtovo32xlqjx3vdohv3gofq/
-Received-SPF: pass client-ip=101.6.4.71;
+Received-SPF: pass client-ip=101.6.4.70;
  envelope-from=w-yf22@mails.tsinghua.edu.cn; helo=tsinghua.edu.cn
 X-Spam_score_int: -19
 X-Spam_score: -2.0
@@ -77,7 +77,7 @@ X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:54 -0500
+X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:53 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,134 +97,119 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Chao Liu <chao.liu@processmission.com>
 
-Document the currently implemented RK3588 SoC and ROCK 5B board,
-covering the modeled hardware and the boot commands.
+Add placeholder regions for the RK3588 peripheral windows that are not
+modeled yet, so that guest accesses do not report errors while the
+devices are being brought up.
 
 Signed-off-by: Chao Liu <chao.liu@processmission.com>
 Signed-off-by: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
 ---
- MAINTAINERS                 |  1 +
- docs/system/arm/rock-5b.rst | 86 +++++++++++++++++++++++++++++++++++++
- docs/system/target-arm.rst  |  1 +
- 3 files changed, 88 insertions(+)
- create mode 100644 docs/system/arm/rock-5b.rst
+ hw/arm/Kconfig  |  1 +
+ hw/arm/rk3588.c | 68 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6303b99755..3adebdcafa 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1074,6 +1074,7 @@ F: hw/timer/rockchip-hptimer.c
- F: include/hw/arm/rk3588.h
- F: include/hw/misc/rk3588-scmci.h
- F: include/hw/timer/rockchip-hptimer.h
-+F: docs/system/arm/rock-5b.rst
- F: tests/functional/aarch64/test_rock_5b.py
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 79b66de041..55fdc78364 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -778,3 +778,4 @@ config AXIADO_EVK
+ config RK3588
+     bool
+     select CPU_CLUSTER
++    select UNIMP
+diff --git a/hw/arm/rk3588.c b/hw/arm/rk3588.c
+index 8255aee7fc..ecaaa09721 100644
+--- a/hw/arm/rk3588.c
++++ b/hw/arm/rk3588.c
+@@ -18,6 +18,7 @@
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/cpu/cluster.h"
++#include "hw/misc/unimp.h"
+ #include "hw/timer/rockchip-hptimer.h"
+ #include "migration/vmstate.h"
  
- SABRELITE / i.MX6
-diff --git a/docs/system/arm/rock-5b.rst b/docs/system/arm/rock-5b.rst
-new file mode 100644
-index 0000000000..0de25cdb6d
---- /dev/null
-+++ b/docs/system/arm/rock-5b.rst
-@@ -0,0 +1,86 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
+@@ -26,6 +27,71 @@
+ 
+ #define RK3588_CNTFRQ                24000000
+ 
++#define RK3588_UNIMPLEMENTED(name, base, size) \
++    { "unimpl-" name, "rk3588." name, base, size, -1000 }
 +
-+Radxa ROCK 5B (``rock-5b``)
-+===========================
++/* Peripheral windows from RK3588 TRM v1.0, Table 1-1. */
++static const UnimplementedDeviceConfig rk3588_unimpl_devices[] = {
++    RK3588_UNIMPLEMENTED("firewall-ddr", 0xfe030000, 32 * KiB),
++    RK3588_UNIMPLEMENTED("firewall-sysmem", 0xfe038000, 32 * KiB),
++    RK3588_UNIMPLEMENTED("usb3-2", 0xfcd00000, 4 * MiB),
++    RK3588_UNIMPLEMENTED("pmu0-grf", 0xfd588000, 8 * KiB),
++    RK3588_UNIMPLEMENTED("pmu1-grf", 0xfd58a000, 8 * KiB),
++    RK3588_UNIMPLEMENTED("sys-grf", 0xfd58c000, 16 * KiB),
++    RK3588_UNIMPLEMENTED("usb2phy1-grf", 0xfd5d4000, 16 * KiB),
++    RK3588_UNIMPLEMENTED("usb2phy2-grf", 0xfd5d8000, 16 * KiB),
++    RK3588_UNIMPLEMENTED("usb2phy3-grf", 0xfd5dc000, 16 * KiB),
++    RK3588_UNIMPLEMENTED("pmu1-ioc", 0xfd5f0000, 16 * KiB),
++    RK3588_UNIMPLEMENTED("pmu2-ioc", 0xfd5f4000, 16 * KiB),
++    RK3588_UNIMPLEMENTED("bus-ioc", 0xfd5f8000, 4 * KiB),
++    RK3588_UNIMPLEMENTED("vccio1-4-ioc", 0xfd5f9000, 4 * KiB),
++    RK3588_UNIMPLEMENTED("vccio3-5-ioc", 0xfd5fa000, 4 * KiB),
++    RK3588_UNIMPLEMENTED("vccio2-ioc", 0xfd5fb000, 4 * KiB),
++    RK3588_UNIMPLEMENTED("vccio6-ioc", 0xfd5fc000, 4 * KiB),
++    RK3588_UNIMPLEMENTED("emmc-ioc", 0xfd5fd000, 4 * KiB),
++    RK3588_UNIMPLEMENTED("cru-ns", 0xfd7c0000, 32 * KiB),
++    RK3588_UNIMPLEMENTED("php-ppll-cru", 0xfd7c8000, 32 * KiB),
++    RK3588_UNIMPLEMENTED("pmu1-cru", 0xfd7f0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("bigcore0-cru", 0xfd810000, 8 * KiB),
++    RK3588_UNIMPLEMENTED("bigcore1-cru", 0xfd812000, 8 * KiB),
++    RK3588_UNIMPLEMENTED("dsu-cru", 0xfd818000, 16 * KiB),
++    RK3588_UNIMPLEMENTED("i2c0", 0xfd880000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("gpio0", 0xfd8a0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("pwm0", 0xfd8b0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("fspi", 0xfe2b0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("sdmmc", 0xfe2c0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("sdio", 0xfe2d0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("emmc", 0xfe2e0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("trng-ns", 0xfe378000, 32 * KiB),
++    RK3588_UNIMPLEMENTED("gic600", 0xfe600000, 4 * MiB),
++    RK3588_UNIMPLEMENTED("dmac0", 0xfea10000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("dmac1", 0xfea30000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("i2c4", 0xfeac0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("timer-ns0", 0xfeae0000, 32 * KiB),
++    RK3588_UNIMPLEMENTED("wdt-ns", 0xfeaf0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("spi2", 0xfeb20000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("uart1", 0xfeb40000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("uart2", 0xfeb50000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("uart3", 0xfeb60000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("uart4", 0xfeb70000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("uart5", 0xfeb80000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("uart6", 0xfeb90000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("uart7", 0xfeba0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("uart8", 0xfebb0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("uart9", 0xfebc0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("gpio1", 0xfec20000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("gpio2", 0xfec30000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("gpio3", 0xfec40000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("gpio4", 0xfec50000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("i2c6", 0xfec80000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("i2c7", 0xfec90000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("otp-ns", 0xfecc0000, 64 * KiB),
++    RK3588_UNIMPLEMENTED("dmac2", 0xfed10000, 64 * KiB),
++    { }
++};
 +
-+The ``rock-5b`` machine models the Radxa ROCK 5B single-board computer,
-+which is built around the Rockchip RK3588 SoC.
++#undef RK3588_UNIMPLEMENTED
 +
-+Supported devices
-+-----------------
+ /* The RK3588 CPU map has one A55 quad cluster and two A76 dual clusters. */
+ static const struct {
+     unsigned int num_cpus;
+@@ -101,6 +167,8 @@ static void rk3588_soc_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    create_unimplemented_devices(OBJECT(s), s->memory, rk3588_unimpl_devices);
 +
-+The ``rock-5b`` machine supports the following devices:
-+
-+* 4 Cortex-A55 and 4 Cortex-A76 CPUs
-+* GICv3 and the architectural timers
-+* On-chip SRAM
-+* HPTIMER boot control register (enable bit)
-+* UART1 through UART9
-+* Rockchip SFC with a 16 MiB SPI NOR flash
-+* Clock and reset unit (CRU) registers
-+* SCMI Base and Clock protocols over SMC (CPU and DSU clocks)
-+* OTP controller
-+
-+The machine always uses all eight CPUs and supports 128 MiB to 16 GiB
-+of RAM, with 2 GiB as the default.
-+
-+Boot options
-+------------
-+
-+The ``rock-5b`` machine boots U-Boot SPL when ``-bios`` is given and
-+Linux directly when ``-kernel`` is given; one of the two is required.
-+Both methods start the primary CPU in non-secure EL2 and provide PSCI
-+through SMC calls. DRAM is assumed to be initialized;
-+BootROM, DDR training firmware and BL31 are not modeled.
-+
-+U-Boot SPL is supplied as a raw binary with ``-bios``. QEMU loads it
-+at ``0x00000000``; SPL loads U-Boot proper from SPI NOR. The device tree
-+is taken from the Linux FIT image loaded by U-Boot, so ``-dtb`` cannot be
-+used with this method.
-+
-+Direct Linux boot supplies an AArch64 Linux ``Image`` with ``-kernel``
-+and a device tree with ``-dtb``; ``-initrd`` and ``-append`` are optional.
-+QEMU does not generate a device tree for this machine.
-+
-+Running
-+-------
-+
-+The first ``-serial`` option connects to UART2, the debug console on
-+the board's header; further ``-serial`` options connect to UART1 and
-+UART3 through UART9 in that order.
-+
-+U-Boot SPL boot
-+~~~~~~~~~~~~~~~
-+
-+With ``u-boot-spl.bin`` and ``spi-nor.img``:
-+
-+.. code-block:: bash
-+
-+   $ qemu-system-aarch64 \
-+       -machine rock-5b -m 2G -smp 8 \
-+       -display none -monitor none -serial stdio \
-+       -bios u-boot-spl.bin \
-+       -drive if=mtd,index=0,file=spi-nor.img,format=raw
-+
-+The SPI NOR image must be exactly 16 MiB. Add ``snapshot=on`` to the
-+drive option to discard guest writes.
-+
-+Direct Linux boot
-+~~~~~~~~~~~~~~~~~
-+
-+With ``Image``, ``rootfs.cpio.gz`` and ``rk3588-rock-5b.dtb``:
-+
-+.. code-block:: bash
-+
-+   $ qemu-system-aarch64 \
-+       -machine rock-5b -m 2G -smp 8 \
-+       -display none -monitor none -serial stdio \
-+       -kernel Image -initrd rootfs.cpio.gz -dtb rk3588-rock-5b.dtb \
-+       -append "console=ttyS2,1500000n8 rdinit=/init"
-+
-+Limitations
-+-----------
-+
-+The machine is TCG-only; KVM is not supported. Only the devices listed
-+above are modeled, and the remaining RK3588 peripherals are unimplemented.
-+Migration and VM snapshots are unsupported.
-diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
-index 260cd7e4d6..f195f74ce2 100644
---- a/docs/system/target-arm.rst
-+++ b/docs/system/target-arm.rst
-@@ -95,6 +95,7 @@ Board-specific documentation
-    arm/mcimx7d-sabre
-    arm/imx8m
-    arm/orangepi
-+   arm/rock-5b
-    arm/raspi
-    arm/collie
-    arm/sx1
+     if (!memory_region_init_ram(&s->sram, OBJECT(s), "rk3588.sram",
+                                 MiB, errp)) {
+         return;
 -- 
 2.53.0
 
