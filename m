@@ -1,84 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5723E606BCBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 16:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19EC5606A327
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 17:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=wHCE7c9F
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=J7NM3A5U
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRuU2-0006eO-RQ; Fri, 13 Nov 2026 11:50:38 -0500
+	id 1xRulP-00055w-I0; Fri, 13 Nov 2026 12:08:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xRuTn-00067t-00
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 11:50:24 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1xRulN-0004xC-0y
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 12:08:33 -0500
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xRuTk-0004kE-9M
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 11:50:22 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4a140e7405dso16412715e9.3
- for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 08:50:18 -0800 (PST)
+ id 1xRulK-0003PK-5L
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 12:08:32 -0500
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-67bf3c6654fso1351488d50.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 09:08:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794589708; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ct7f5XdzvFC5x0bhLlT5WPZXSiEbQ/tn81gMw9XoN01gKtFV+Ugzo8SOaIbxUTgTdD
+ wwzf/0V0RLlqrZGv42w3Wf2jm64z42HlAtCE/IryVI0KbILE4iFd0F6UWE1wmkCxPEUK
+ qOTsLyUb0SmAw6gut8vs0B4+lO8Rsly9/hnESzOdAPEbvedUgdU+iBWJ9OrPmlpVUI3I
+ B2m+YRckBZOw26AlWP2vMKQwqQgh0cDIfeaPL4efl33XU40COJl1bXC5ukaNJs49kvyv
+ G6QvkVjynnuCVKq9wz4bl9yfKSZtDRvQTXV5dmApY/FqoT6iCoFtsy5sZlvtvpcwV6xs
+ Uk6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=k2OIs3+p2FlZo0mCaxEqoqUp7K66gdq+zedHy7JrRPM=;
+ fh=Kif6ZkX9zWLatEoKkHHBkqtz0GTIi5lrj/U4WuoZBzA=;
+ b=FYEma2FS8B/+2CcWmV98n1PT9aBJvP8G1OLEb6ra2OzKqOLrmf4Dz4Y22ZMFBbomhO
+ 8yjYzaHUad6E9N2blJXTeTDB4Pg+/5GO7twgJaFNj/RdEVX/T5Dh4fkd+a+0oirTERa5
+ 8MhgAA5xlgIkX4G+wwGJtiofUwKkoU3GRE60WCTRoa5qPIK08OFk4NQW5VBRVxTyrT9Y
+ JPLTXO1N9RBouKPW3smCJ2G+iZ/+t7/rVtmXMI5IhIffImOeAIEQ7wY5EfSEke0wV0TM
+ ObQ5gvOSKmE6hiOBcKUpijybrS/mMnR7yhTSTyHxfo8uie/xBUpyWcyC8y73o3Ysp9C5
+ s0aQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794588618; x=1795193418; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kvfpWaXEFgUZuKbCtCzfYIL8xCyV1emptC/2RsaZkUg=;
- b=wHCE7c9FQJ6clQZ7Eof5HHwvPI843wq+9nCmOV5RL1b9X0jwaxMeRiG7+LKy+Zfb1a
- fmmZHtk19E8tgxgelSFm+FU3KA/39PC2xoK6sj3JllYG2b/L5cdHDSOgPgbDMrXfOjWe
- jMkLOHncm4SjER7cmNrMnjn7SYjBLDXxsGfLx7Hn2i4xL3Elyac4clokV+4nJM1DTxyF
- WE2BD25LQRSjAARUlzc33/0e4LrM9yU8JGa6NIeGLcZiDvd0XwVvWK0ddLq8dYaMAlor
- N63/MNGjwl0N7jU+iJhJAt0Y6z4DA+SaU6Y10Rh1nx3S5PZkxYyihmxDXnfcvBtmQJUC
- cUEg==
+ d=linaro.org; s=google; t=1794589708; x=1795194508; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=k2OIs3+p2FlZo0mCaxEqoqUp7K66gdq+zedHy7JrRPM=;
+ b=J7NM3A5UT/gCUMgXFLBRQYzFIXH06R/JuszuezacLKn1/o5wqgQGuFSgqsKnSQ4fKv
+ cd8XRuEH6OTXf+3ogCr1bqDhfkN++/QW8A8FgKF7hcMlmP2v3hSp3o80/KkpsuDUmwFu
+ PBSOX7tZv51E9zwGsaWEZee1x6L0Xz0RURtFuzXqRgnNxOJbPhVY1WY+qfteQfxaWVcj
+ ol04X2jlNk1YHNUqE0x7pa+LJEOxryQl8lrXEqgWpxERKas+Bqrqbt2qNXva+yxjJ+lq
+ xDIJeAgEPLKGeQI4XMO01jWQMBSUFCzfzOX3Ni09Cceb5yTFM7NLr2ebdBACzVoYsujS
+ xlpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794588618; x=1795193418;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=kvfpWaXEFgUZuKbCtCzfYIL8xCyV1emptC/2RsaZkUg=;
- b=o8Ake6rfJiyWZkHcjtAgcWaVL3phLgUnugl26KydwXyOIuwS7MbUx0Mllmp+K1TmYn
- SFjh0J6XZHl84pDDLrkBDqIBjIcg0nb3Ufg13sjKBfR7T31nN5QzR16+OFw4CeJ39q99
- m22WrjfaGAoCEp0fTqxZZg/UPY1sRIu/LWqGseRKeVQ+GTEI8gdBq1RYpix2DJ6v/sSx
- Gt9e+9VtTW31BsBAIbwK/yHOtld0XMomsfcce+UyXLuIMFW9dGPOINMl79ESu3KzZmfX
- do8tfdTC71TgwJe2DVn1aZcRN8opr0NVqeQ2PLashjmN/6YQ39CvnWZ9zSA9dsmW4KfR
- GQsA==
-X-Gm-Message-State: APuU4Z8Kfmr4jKKc3O3oOIFi9hNzJNo/POs+lZP6wE4yS8OilQIQFdK2
- Ea17UuBOP/ogqg9D53Bf9j1eFXSgbD09todxF2xKAXlHZCVxdG9PTy45GT4wa0Pm2D380n6THjG
- WSU+2V2g=
-X-Gm-Gg: AYBFou36ecVX5O2whjUO2GxZn68X9sBFJ2gpopjnaPEZR5GQhSYrvSKHbswM+GB6vYS
- Zm1OSjxlWoUX1eCG9Vhq2GnJcWDLb+2eB99erPdOypPxDZ2ZiHIJ3xP1X8s8CD0sGLXVY+tYv6r
- NlOJUAvOReZFCGaQ5QUvMBJDfxEUocDOZgWHqIgMYbQzMycQx13YkuPu4swDXKPxoXOUGs2e2td
- kBCMGAtrBksLi84wsB7i7MTqI6crpHNHkj5/Lz4GaoMAJS0wAFGzTKOtNckASh3t1d1baeeDh9N
- ryYvvM1RnV4ud4CZaAkBydEhlZHzgWSUmT8ZMPdIXjFvQykCKWzRGzavVYiykiLwRQxQDmV/+XZ
- nCiXuJeKcqwQqpIEwcMYMrSwHvmSSgyYKf4eNzq0UMq31VL4ivZo7D6UrZXGxHo32Of9MnHw+NB
- iADSdwwMrO1NOPAWE7pfIYcVBVKM+qj289wS6yXE/i36/DeBi7jfXIvAne+XOgE2HKLzTT7I2sR
- kwuDstA0hjeHeB7E5jnPWwsi+3oxrjttmZZeF3ZYeZwVKbWnJMk6xE0XydbAfoB+YXgf2QQRFBi
- yAef9XAp4aQAcSygQOB3iqMgLUjULbHrPYBV0tnmm1/nn2JuK1Vhd1JLgXARBhMhSJoM2CR0m8y
- kbN7pF3L4SUSURRZow+3fCQNJfWqRYvyn/A==
-X-Received: by 2002:a05:600c:34d6:b0:4bb:5c92:ce22 with SMTP id
- 5b1f17b1804b1-4bb5c92d047mr27316655e9.8.1794588617478; 
- Fri, 13 Nov 2026 08:50:17 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb55acdfebsm67576025e9.7.2026.11.13.08.50.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Nov 2026 08:50:16 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowangio@gmail.com>,
-	Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] hw/net/rtl8139: Limit DMA transfers to plain memory
-Date: Fri, 13 Nov 2026 16:50:15 +0000
-Message-ID: <20261113165015.1150646-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20260707; t=1794589708; x=1795194508;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=k2OIs3+p2FlZo0mCaxEqoqUp7K66gdq+zedHy7JrRPM=;
+ b=DH+9Sgio+LEtKHn5eKgddq2PX/Hx6kcLdR8h3DjftWehCfI1T29kijW8zpjY3LgSSt
+ 3sf/NVGXNwUJVbU87J/XmyjSG4zibj/wr56WAOYKsTWJOf8pfQdVSyc5PkR6KuCEd4U4
+ Qm/X2RnHXYj0tYp+sEKB2B67esNwGYtIYnrGIVslPDbtdMCMPTuVIJpiMMGr6+BIhRRS
+ uRh0hJeAZAYgMb2FKSobO8tapm6HnV4LnaBxmOUbN68+eDrOSbjwjy4ZinK2nTJnqXZX
+ 9xBWuuh2P2ry8Aps23AHWNZVpL5LlsRdVI8XWmR4/WBJcU0Cj9Nk2bpMaOZbK8XO22wH
+ kUAg==
+X-Gm-Message-State: APuU4Z/n0CWGETqyewBkfutheR4nrio60/EV8umhNGZ/pGHg14+PpoFV
+ GBFL1uyhBWJaIcRBaL1K3mtJgaoupcWwfUwuuPZrOQ8Puxq2Eu0FTebGoYJaC+I8Q7aGR/nstI8
+ +OdPz5sqLGiOL4FNLL3mwsFzcD9JUkRdWcpPWrRMywlXjir78FABZm6AwoQ==
+X-Gm-Gg: AYBFou3gM6Onz1GMik7k9DnHZRyrrB9PdUxMric6ZReJKGNCOnJKFxMMb+3WOYo0oqm
+ fOVs9lyBdrijR//rkhZXqCmqWh9VY23g6RRkL7waqQ3RBhhD97btEYX+ph1vyrsWfMtbCcSWuV1
+ lNpLPD2mAzGomUCvVHHY1gREpxuYdFASRlVg7iNBf01z5Rq1v7+PztN+d3c7iaIYaowaeJQ6EdS
+ pI15Bkrod3kPnRuS2vPiZi1lQSkzc4T5dMbUVjGEyDjrdfIf8+YbIlUKgFqHr4Otkwea5JX7A0j
+ nt8MSmcIa/x2wuMqXA/6/Czbb4ng4RsIfvGiES739HYlJgaEM7vyK3LvXBfnv1AoJpklkyfcyJ/
+ UDo2T9vDwgk85zkqYqNvSKUmsrY5OX777HJiWSTnyu5MVNOjlZX7ddcNleviC0yv26wX51SV4/0
+ c4yO4wNCX4wjR0JVf316QJ
+X-Received: by 2002:a05:690e:4847:b0:677:d251:ccc6 with SMTP id
+ 956f58d0204a3-67d89667efdmr1165127d50.71.1794589708248; Fri, 13 Nov 2026
+ 09:08:28 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Nov 2026 17:08:16 +0000
+X-Gm-Features: AclHuK91zZPBlsnoNz9wKWYmc-Lo83M11WvP_VRucf94oklhPx3SAh65xMpyfBc
+Message-ID: <CAFEAcA9Ob8CsaufaAZ6jUhrKkxSfCkcig3ciG5LK_WCNCi14NA@mail.gmail.com>
+Subject: Who should be allowed to unrealize a device, and what can you still
+ do with it afterwards?
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,275 +112,63 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-There's no reason for the RTL8139 to be doing a DMA transfer to
-something that isn't memory, and allowing it can cause weird
-re-entrancy problems, such as a DMA to the PCI hot-unplug register
-causing the device to be deleted while it's halfway through doing
-something.
+We give QOM objects a reference count. This means that if you are
+going to try to use one, you can take a ref to it, and then you're
+guaranteed that it won't disappear while you're working with it.
 
-Replace the calls to pci_dma_read() and pci_dma_write() with
-local functions that are identical except that they pass
-a MemTxAttrs that forbids non-memory accesses.
+For QDEV devices, we add the "realize" and "unrealize" steps to
+the lifecycle. There is no "reference count for having a realized
+device". So what do we intend here?
 
-This is the same approach we took to a similar problem with
-the hcd-xhci USB controller in commit 89e653b7736 (but differs
-from what we did for lsi53c895a in commit 4862d2c95104d).
+(1) We could say that if you have a reference to the device then you
+can assume it's not going to be unrealized under your feet, and have
+very careful rules about who can unrealize a device and when.
 
-The known trigger for this bug requires that you turned off
-ACPI hotplug on the QEMU commandline with
-  -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off
-so most configurations won't run into it.
+(2) We could say that if you have a reference to the device then it
+might be unrealized, but it won't be deinitialized, and you can assume
+that all the API calls you might make on it will in some sense still
+work, and at any rate at least won't try to access memory that's been
+freed or crash.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 3ada003aee2004d24f2 ("rtl8139: Use PCI DMA stub functions")
-Fixes: CVE-2026-128868
-Reported-by: VictorCHEN <ahchen-yz@outlook.com>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-I'm also wondering whether there's an approach to this class of
-bugs that would avoid us having to modify specific devices to
-insist on DMA-to-memory. It seems a bit dubious that writing to
-the PCI hot-unplug register can cause us to unrealize the plugged
-device even if lots of other things are still holding a reference
-to it. Or else we need to be more specific that you can still
-validly (in the sense of "doesn't break things") do things on or
-as part of an unrealized-but-not-yet-freed device, and move
-things like pci_config_free() from unrealize to deinit.
+In fact we don't say either of those. What we have instead is:
+(a) Some devices will free memory in unrealize, so aren't safe to
+make calls on after unrealize
+(b) Some code will call qdev_unrealize() on a device even if it has
+a ton of references on it and is likely still in use by unrelated code.
 
- hw/net/rtl8139.c | 98 +++++++++++++++++++++++++++++-------------------
- 1 file changed, 60 insertions(+), 38 deletions(-)
+The specific example here is the problem described in
+https://gitlab.com/qemu-project/qemu/-/work_items/4854
+where if something writes to the PCI hot-unplug memory mapped register
+then the PCIe code will immediately call pcie_cap_slot_unplug_cb(),
+which calls qdev_unrealize on the PCI device. For PCI devices,
+pci_config_free() gets called in the PCI base class unrealize, which
+means that all the PCI functions which look at e.g. pci_dev->config
+are now instantly not valid to call (the one that gets called in this
+example is pci_set_irq()). So if you can get a PCI device to do
+DMA to its own hot-unplug register then it's probably going to fall
+over.
 
-diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-index 16479284eea..6644c1b62c5 100644
---- a/hw/net/rtl8139.c
-+++ b/hw/net/rtl8139.c
-@@ -513,6 +513,28 @@ struct RTL8139State {
-     int rtl8139_mmio_io_addr_dummy;
- };
- 
-+/*
-+ * There's no reason for the RTL8139 to do DMA to something that
-+ * isn't memory, and it can cause weird re-entrancy problems if e.g.
-+ * a DMA write targets the PCI hot-unplug register for the device.
-+ * Set memory=1 in the memory attributes to avoid that kind of thing.
-+ */
-+static MemTxResult rtl8139_dma_write(PCIDevice *dev, dma_addr_t addr,
-+                                     const void *buf, dma_addr_t len)
-+{
-+    const MemTxAttrs attrs = { .memory = true };
-+    return pci_dma_rw(dev, addr, (void *)buf, len,
-+                      DMA_DIRECTION_FROM_DEVICE, attrs);
-+}
-+
-+static inline MemTxResult rtl8139_dma_read(PCIDevice *dev, dma_addr_t addr,
-+                                           void *buf, dma_addr_t len)
-+{
-+    const MemTxAttrs attrs = { .memory = true };
-+    return pci_dma_rw(dev, addr, buf, len,
-+                      DMA_DIRECTION_TO_DEVICE, attrs);
-+}
-+
- /* Writes tally counters to memory via DMA */
- static void RTL8139TallyCounters_dma_write(RTL8139State *s, dma_addr_t tc_addr);
- 
-@@ -756,15 +778,15 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
- 
-             if (size > wrapped)
-             {
--                pci_dma_write(d, s->RxBuf + s->RxBufAddr,
--                              buf, size-wrapped);
-+                rtl8139_dma_write(d, s->RxBuf + s->RxBufAddr,
-+                                  buf, size - wrapped);
-             }
- 
-             /* reset buffer pointer */
-             s->RxBufAddr = 0;
- 
--            pci_dma_write(d, s->RxBuf + s->RxBufAddr,
--                          buf + (size-wrapped), wrapped);
-+            rtl8139_dma_write(d, s->RxBuf + s->RxBufAddr,
-+                              buf + (size - wrapped), wrapped);
- 
-             s->RxBufAddr = wrapped;
- 
-@@ -773,7 +795,7 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
-     }
- 
-     /* non-wrapping path or overwrapping enabled */
--    pci_dma_write(d, s->RxBuf + s->RxBufAddr, buf, size);
-+    rtl8139_dma_write(d, s->RxBuf + s->RxBufAddr, buf, size);
- 
-     s->RxBufAddr += size;
- }
-@@ -971,13 +993,13 @@ static ssize_t rtl8139_receive(NetClientState *nc,
- 
-         uint32_t val, rxdw0,rxdw1,rxbufLO,rxbufHI;
- 
--        pci_dma_read(d, cplus_rx_ring_desc, &val, 4);
-+        rtl8139_dma_read(d, cplus_rx_ring_desc, &val, 4);
-         rxdw0 = le32_to_cpu(val);
--        pci_dma_read(d, cplus_rx_ring_desc+4, &val, 4);
-+        rtl8139_dma_read(d, cplus_rx_ring_desc + 4, &val, 4);
-         rxdw1 = le32_to_cpu(val);
--        pci_dma_read(d, cplus_rx_ring_desc+8, &val, 4);
-+        rtl8139_dma_read(d, cplus_rx_ring_desc + 8, &val, 4);
-         rxbufLO = le32_to_cpu(val);
--        pci_dma_read(d, cplus_rx_ring_desc+12, &val, 4);
-+        rtl8139_dma_read(d, cplus_rx_ring_desc + 12, &val, 4);
-         rxbufHI = le32_to_cpu(val);
- 
-         DPRINTF("+++ C+ mode RX descriptor %d %08x %08x %08x %08x\n",
-@@ -1040,12 +1062,12 @@ static ssize_t rtl8139_receive(NetClientState *nc,
- 
-         /* receive/copy to target memory */
-         if (dot1q_buf) {
--            pci_dma_write(d, rx_addr, buf, 2 * ETH_ALEN);
--            pci_dma_write(d, rx_addr + 2 * ETH_ALEN,
--                          buf + 2 * ETH_ALEN + VLAN_HLEN,
--                          size - 2 * ETH_ALEN);
-+            rtl8139_dma_write(d, rx_addr, buf, 2 * ETH_ALEN);
-+            rtl8139_dma_write(d, rx_addr + 2 * ETH_ALEN,
-+                              buf + 2 * ETH_ALEN + VLAN_HLEN,
-+                              size - 2 * ETH_ALEN);
-         } else {
--            pci_dma_write(d, rx_addr, buf, size);
-+            rtl8139_dma_write(d, rx_addr, buf, size);
-         }
- 
-         if (s->CpCmd & CPlusRxChkSum)
-@@ -1055,7 +1077,7 @@ static ssize_t rtl8139_receive(NetClientState *nc,
- 
-         /* write checksum */
-         val = cpu_to_le32(crc32(0, buf, size_));
--        pci_dma_write(d, rx_addr+size, (uint8_t *)&val, 4);
-+        rtl8139_dma_write(d, rx_addr + size, (uint8_t *)&val, 4);
- 
- /* first segment of received packet flag */
- #define CP_RX_STATUS_FS (1<<29)
-@@ -1101,9 +1123,9 @@ static ssize_t rtl8139_receive(NetClientState *nc,
- 
-         /* update ring data */
-         val = cpu_to_le32(rxdw0);
--        pci_dma_write(d, cplus_rx_ring_desc, (uint8_t *)&val, 4);
-+        rtl8139_dma_write(d, cplus_rx_ring_desc, (uint8_t *)&val, 4);
-         val = cpu_to_le32(rxdw1);
--        pci_dma_write(d, cplus_rx_ring_desc+4, (uint8_t *)&val, 4);
-+        rtl8139_dma_write(d, cplus_rx_ring_desc + 4, (uint8_t *)&val, 4);
- 
-         /* update tally counter */
-         ++s->tally_counters.RxOk;
-@@ -1291,43 +1313,43 @@ static void RTL8139TallyCounters_dma_write(RTL8139State *s, dma_addr_t tc_addr)
-     uint64_t val64;
- 
-     val64 = cpu_to_le64(tally_counters->TxOk);
--    pci_dma_write(d, tc_addr + 0,     (uint8_t *)&val64, 8);
-+    rtl8139_dma_write(d, tc_addr + 0,     (uint8_t *)&val64, 8);
- 
-     val64 = cpu_to_le64(tally_counters->RxOk);
--    pci_dma_write(d, tc_addr + 8,     (uint8_t *)&val64, 8);
-+    rtl8139_dma_write(d, tc_addr + 8,     (uint8_t *)&val64, 8);
- 
-     val64 = cpu_to_le64(tally_counters->TxERR);
--    pci_dma_write(d, tc_addr + 16,    (uint8_t *)&val64, 8);
-+    rtl8139_dma_write(d, tc_addr + 16,    (uint8_t *)&val64, 8);
- 
-     val32 = cpu_to_le32(tally_counters->RxERR);
--    pci_dma_write(d, tc_addr + 24,    (uint8_t *)&val32, 4);
-+    rtl8139_dma_write(d, tc_addr + 24,    (uint8_t *)&val32, 4);
- 
-     val16 = cpu_to_le16(tally_counters->MissPkt);
--    pci_dma_write(d, tc_addr + 28,    (uint8_t *)&val16, 2);
-+    rtl8139_dma_write(d, tc_addr + 28,    (uint8_t *)&val16, 2);
- 
-     val16 = cpu_to_le16(tally_counters->FAE);
--    pci_dma_write(d, tc_addr + 30,    (uint8_t *)&val16, 2);
-+    rtl8139_dma_write(d, tc_addr + 30,    (uint8_t *)&val16, 2);
- 
-     val32 = cpu_to_le32(tally_counters->Tx1Col);
--    pci_dma_write(d, tc_addr + 32,    (uint8_t *)&val32, 4);
-+    rtl8139_dma_write(d, tc_addr + 32,    (uint8_t *)&val32, 4);
- 
-     val32 = cpu_to_le32(tally_counters->TxMCol);
--    pci_dma_write(d, tc_addr + 36,    (uint8_t *)&val32, 4);
-+    rtl8139_dma_write(d, tc_addr + 36,    (uint8_t *)&val32, 4);
- 
-     val64 = cpu_to_le64(tally_counters->RxOkPhy);
--    pci_dma_write(d, tc_addr + 40,    (uint8_t *)&val64, 8);
-+    rtl8139_dma_write(d, tc_addr + 40,    (uint8_t *)&val64, 8);
- 
-     val64 = cpu_to_le64(tally_counters->RxOkBrd);
--    pci_dma_write(d, tc_addr + 48,    (uint8_t *)&val64, 8);
-+    rtl8139_dma_write(d, tc_addr + 48,    (uint8_t *)&val64, 8);
- 
-     val32 = cpu_to_le32(tally_counters->RxOkMul);
--    pci_dma_write(d, tc_addr + 56,    (uint8_t *)&val32, 4);
-+    rtl8139_dma_write(d, tc_addr + 56,    (uint8_t *)&val32, 4);
- 
-     val16 = cpu_to_le16(tally_counters->TxAbt);
--    pci_dma_write(d, tc_addr + 60,    (uint8_t *)&val16, 2);
-+    rtl8139_dma_write(d, tc_addr + 60,    (uint8_t *)&val16, 2);
- 
-     val16 = cpu_to_le16(tally_counters->TxUndrn);
--    pci_dma_write(d, tc_addr + 62,    (uint8_t *)&val16, 2);
-+    rtl8139_dma_write(d, tc_addr + 62,    (uint8_t *)&val16, 2);
- }
- 
- static void rtl8139_ChipCmd_write(RTL8139State *s, uint32_t val)
-@@ -1810,7 +1832,7 @@ static int rtl8139_transmit_one(RTL8139State *s, int descriptor)
-     DPRINTF("+++ transmit reading %d bytes from host memory at 0x%08x\n",
-         txsize, s->TxAddr[descriptor]);
- 
--    pci_dma_read(d, s->TxAddr[descriptor], txbuffer, txsize);
-+    rtl8139_dma_read(d, s->TxAddr[descriptor], txbuffer, txsize);
- 
-     /* Mark descriptor as transferred */
-     s->TxStatus[descriptor] |= TxHostOwns;
-@@ -1886,13 +1908,13 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
- 
-     uint32_t val, txdw0,txdw1,txbufLO,txbufHI;
- 
--    pci_dma_read(d, cplus_tx_ring_desc,    (uint8_t *)&val, 4);
-+    rtl8139_dma_read(d, cplus_tx_ring_desc, (uint8_t *)&val, 4);
-     txdw0 = le32_to_cpu(val);
--    pci_dma_read(d, cplus_tx_ring_desc+4,  (uint8_t *)&val, 4);
-+    rtl8139_dma_read(d, cplus_tx_ring_desc + 4, (uint8_t *)&val, 4);
-     txdw1 = le32_to_cpu(val);
--    pci_dma_read(d, cplus_tx_ring_desc+8,  (uint8_t *)&val, 4);
-+    rtl8139_dma_read(d, cplus_tx_ring_desc + 8, (uint8_t *)&val, 4);
-     txbufLO = le32_to_cpu(val);
--    pci_dma_read(d, cplus_tx_ring_desc+12, (uint8_t *)&val, 4);
-+    rtl8139_dma_read(d, cplus_tx_ring_desc + 12, (uint8_t *)&val, 4);
-     txbufHI = le32_to_cpu(val);
- 
-     DPRINTF("+++ C+ mode TX descriptor %d %08x %08x %08x %08x\n", descriptor,
-@@ -1986,8 +2008,8 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
-             DMA_ADDR_FMT" to offset %d\n", txsize, tx_addr,
-             s->cplus_txbuffer_offset);
- 
--    pci_dma_read(d, tx_addr,
--                 s->cplus_txbuffer + s->cplus_txbuffer_offset, txsize);
-+    rtl8139_dma_read(d, tx_addr,
-+                     s->cplus_txbuffer + s->cplus_txbuffer_offset, txsize);
-     s->cplus_txbuffer_offset += txsize;
- 
-     /* seek to next Rx descriptor */
-@@ -2017,7 +2039,7 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
- 
-     /* update ring data */
-     val = cpu_to_le32(tx_status);
--    pci_dma_write(d, cplus_tx_ring_desc, (uint8_t *)&val, 4);
-+    rtl8139_dma_write(d, cplus_tx_ring_desc, (uint8_t *)&val, 4);
- 
-     /* Now decide if descriptor being processed is holding the last segment of packet */
-     if (txdw0 & CP_TX_LS)
--- 
-2.43.0
+Should the PCIe hot-unplug code be more cautious about when it actually
+unrealizes the device being hot-unplugged? Or should the PCI base class
+code be being careful to make sure that all its functions continue to
+work right up until the device is deinited? (Or both, or something else?)
 
+My fix for #4854, now on-list at:
+https://lore.kernel.org/qemu-devel/20261113165015.1150646-1-peter.maydell@linaro.org/
+is "make sure this particular device can't do DMA to non-memory", but
+I feel like this is pointing to an entire class of bugs where the
+underlying problem is "hot-unplug can make things vanish under your
+feet". We already put a bandaid on the hcd-xhci USB controller in
+commit 89e653b773 and the lsi53c895a in commit 4862d2c95104d, and no
+doubt there are more...
+
+thanks
+-- PMM
 
