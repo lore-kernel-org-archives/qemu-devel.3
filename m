@@ -1,43 +1,44 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D3A606C1AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 08:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2377B60A2600
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 08:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRmvQ-0002pw-Eq; Fri, 13 Nov 2026 03:46:24 -0500
+	id 1xRmx3-0004I0-A6; Fri, 13 Nov 2026 03:48:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xRmvN-0002ll-DX
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:21 -0500
-Received: from krgm.moe ([103.47.186.116])
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xRmvt-00036u-2J
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:54 -0500
+Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xRmvK-0007Pz-RX
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:21 -0500
+ (envelope-from <prcups@krgm.moe>) id 1xRmvr-0007QN-3k
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 03:46:52 -0500
 Received: from yuno-loong (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id 30D22780D;
- Fri, 13 Nov 2026 14:16:16 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id 880741DD;
+ Fri, 13 Nov 2026 14:16:39 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v6 04/26] target/loongarch: add vm level 1 definition
-Date: Fri, 13 Nov 2026 16:45:19 +0800
-Message-ID: <4d1d8f40f581a9a0a5986480eceadc4c62e576c8.1794558695.git.prcups@krgm.moe>
+Subject: [PATCH v6 21/26] target/loongarch: add LVZ to CSR helpers
+Date: Fri, 13 Nov 2026 16:45:36 +0800
+Message-ID: <e06a774bb70bf98d7f7ac12bd8b8e576b3de435f.1794558695.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <cover.1794558695.git.prcups@krgm.moe>
 References: <cover.1794558695.git.prcups@krgm.moe>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.47.186.116; envelope-from=prcups@krgm.moe;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 2a14:640:1:12b5::1 (failed)
+Received-SPF: pass client-ip=2a14:640:1:12b5::1; envelope-from=prcups@krgm.moe;
  helo=krgm.moe
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RDNS_NONE=0.793,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -56,91 +57,157 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add VM_LEVEL1 macro, env_vm_level() and trigger_vm_exit() functions, preparing
-for later interrupt virtualization.
+Add actual LVZ handling to all CSR helpers.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/cpu.h         | 22 +++++++++++++++++++++-
- target/loongarch/tcg/tcg_cpu.c |  3 +++
- 2 files changed, 24 insertions(+), 1 deletion(-)
+ target/loongarch/tcg/csr_helper.c | 49 ++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 17 deletions(-)
 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 05309336d2..ff22cde702 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -324,7 +324,8 @@ typedef struct CPUTimerState {
- } CPUTimerState;
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 5ff89f0d10..f5b6a3d1f9 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -21,7 +21,7 @@
+ target_ulong HELPER(csrwr_stlbps)(CPULoongArchState *env,
+                                  target_ulong val, uint32_t vm_level)
+ {
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+     int64_t old_v = sys->CSR_STLBPS;
  
- #define VM_LEVEL0   0
--#define VM_LEVELS   1
-+#define VM_LEVEL1   1
-+#define VM_LEVELS   2
+     /*
+@@ -44,7 +44,7 @@ target_ulong HELPER(csrwr_stlbps)(CPULoongArchState *env,
+ target_ulong HELPER(csrrd_pgd)(CPULoongArchState *env, uint32_t vm_level)
+ {
+     int64_t v;
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
  
- #define CPU_VENDOR_LOONGSON   "Loongson"
- #define CPU_MODEL_3A5000      "3A5000"
-@@ -448,6 +449,7 @@ typedef struct CPUArchState {
- #endif
-     int vm_level;
-     unsigned int irq_nr;
-+    bool vm_exit;
- } CPULoongArchState;
+     if (sys->CSR_TLBRERA & 0x1) {
+         v = sys->CSR_TLBRBADV;
+@@ -64,7 +64,11 @@ target_ulong HELPER(csrrd_pgd)(CPULoongArchState *env, uint32_t vm_level)
+ target_ulong HELPER(csrrd_cpuid)(CPULoongArchState *env, uint32_t vm_level)
+ {
+     LoongArchCPU *lac = env_archcpu(env);
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
++
++    if (vm_level) {
++        return sys->CSR_CPUID;
++    }
  
- typedef struct LoongArchCPUTopo {
-@@ -520,6 +522,11 @@ static inline CPUSysState *env_sys(CPULoongArchState *env)
-     return &env->sys_states[env->vm_level];
+     sys->CSR_CPUID = CPU(lac)->cpu_index;
+ 
+@@ -73,13 +77,14 @@ target_ulong HELPER(csrrd_cpuid)(CPULoongArchState *env, uint32_t vm_level)
+ 
+ target_ulong HELPER(csrrd_tval)(CPULoongArchState *env, uint32_t vm_level)
+ {
+-    return cpu_loongarch_get_timer_ticks(env_timer(env));
++    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
++    return cpu_loongarch_get_timer_ticks(timer);
  }
  
-+static inline int env_vm_level(CPULoongArchState *env)
-+{
-+    return env_sys(env) - env->sys_states;
-+}
-+
- static inline void set_sys(CPULoongArchState *env, int vm_level)
+ target_ulong HELPER(csrrd_msgir)(CPULoongArchState *env, uint32_t vm_level)
  {
-     if (vm_level >= 0 && vm_level <  VM_LEVELS) {
-@@ -537,6 +544,18 @@ static inline bool cpu_has_lvz(CPULoongArchState *env)
-     return FIELD_EX32(env->cpucfg[2], CPUCFG2, LVZ);
- }
+     int irq, new;
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
  
-+static inline void trigger_vm_exit(CPULoongArchState *env)
-+{
-+    CPUSysState *host = get_sys(env, VM_LEVEL0);
-+
-+    if (env_vm_level(env) != VM_LEVEL1) {
-+        return;
-+    }
-+
-+    host->CSR_GSTAT = FIELD_DP64(host->CSR_GSTAT, CSR_GSTAT, PVM, 1);
-+    env->vm_exit = true;
-+}
-+
- static inline CPUTimerState *env_timer(CPULoongArchState *env)
+     irq = find_first_bit((unsigned long *)sys->CSR_MSGIS, 256);
+     if (irq < 256) {
+@@ -101,11 +106,20 @@ target_ulong HELPER(csrrd_msgir)(CPULoongArchState *env, uint32_t vm_level)
+ target_ulong HELPER(csrwr_estat)(CPULoongArchState *env,
+                                 target_ulong val, uint32_t vm_level)
  {
-     return &env->sys_states[0].timer_state;
-@@ -583,6 +602,7 @@ static inline void set_pc(CPULoongArchState *env, uint64_t value)
- #define HW_FLAGS_CRMD_PG    R_CSR_CRMD_PG_MASK   /* 0x10 */
- #define HW_FLAGS_VA32       0x20
- #define HW_FLAGS_EUEN_ASXE  0x40
-+#define HW_FLAGS_GUEST_MODE 0x80
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+     int64_t old_v = sys->CSR_ESTAT;
  
- #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
- 
-diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-index 0549506035..c2792c8db1 100644
---- a/target/loongarch/tcg/tcg_cpu.c
-+++ b/target/loongarch/tcg/tcg_cpu.c
-@@ -239,6 +239,9 @@ static TCGTBCPUState loongarch_get_tb_cpu_state(CPUState *cs)
-     uint32_t flags;
- 
-     flags = sys->CSR_CRMD & (R_CSR_CRMD_PLV_MASK | R_CSR_CRMD_PG_MASK);
-+    if (env_vm_level(env) == VM_LEVEL1) {
-+        flags |= HW_FLAGS_GUEST_MODE;
+-    /* Only IS[1:0] can be written */
++    /* When guest = 0, only IS[1:0] can be written.
++     * When guest = 1, ecode and esubcode of
++     * VM_LEVEL1 can be written by VM_LEVEL0.
++     */
+     sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
++    if (vm_level) {
++        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 2, 11,
++                                   extract64(val, 2, 11));
++        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 16, 15,
++                                   extract64(val, 16, 15));
 +    }
-     flags |= FIELD_EX64(sys->CSR_EUEN, CSR_EUEN, FPE) * HW_FLAGS_EUEN_FPE;
-     flags |= FIELD_EX64(sys->CSR_EUEN, CSR_EUEN, SXE) * HW_FLAGS_EUEN_SXE;
-     flags |= FIELD_EX64(sys->CSR_EUEN, CSR_EUEN, ASXE) * HW_FLAGS_EUEN_ASXE;
+     /*
+      * Software interrupts (SWI0/SWI1) are latched in CSR.ESTAT.IS[1:0].
+      * Make sure the CPU interrupt request state tracks the pending bits,
+@@ -113,7 +127,7 @@ target_ulong HELPER(csrwr_estat)(CPULoongArchState *env,
+      */
+     if (sys->CSR_ESTAT != old_v) {
+         bql_lock();
+-        loongarch_cpu_update_irq(env_archcpu(env), false);
++        loongarch_cpu_update_irq(env_archcpu(env), vm_level);
+         bql_unlock();
+     }
+ 
+@@ -123,7 +137,7 @@ target_ulong HELPER(csrwr_estat)(CPULoongArchState *env,
+ target_ulong HELPER(csrwr_asid)(CPULoongArchState *env,
+                                target_ulong val, uint32_t vm_level)
+ {
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+     int64_t old_v = sys->CSR_ASID;
+ 
+     /* Only ASID filed of CSR_ASID can be written */
+@@ -137,7 +151,7 @@ target_ulong HELPER(csrwr_asid)(CPULoongArchState *env,
+ target_ulong HELPER(csrwr_tcfg)(CPULoongArchState *env,
+                                target_ulong val, uint32_t vm_level)
+ {
+-    CPUTimerState *timer = env_timer(env);
++    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
+     CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
+     int64_t old_v = sys->CSR_TCFG;
+ 
+@@ -149,7 +163,7 @@ target_ulong HELPER(csrwr_tcfg)(CPULoongArchState *env,
+ target_ulong HELPER(csrwr_ticlr)(CPULoongArchState *env,
+                                 target_ulong val, uint32_t vm_level)
+ {
+-    CPUTimerState *timer = env_timer(env);
++    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
+     int64_t old_v = 0;
+ 
+     if (val & 0x1) {
+@@ -164,7 +178,7 @@ target_ulong HELPER(csrwr_pwcl)(CPULoongArchState *env,
+                                target_ulong val, uint32_t vm_level)
+ {
+     uint8_t shift, ptbase;
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+     int64_t old_v = sys->CSR_PWCL;
+ 
+     /*
+@@ -189,16 +203,17 @@ target_ulong HELPER(csrwr_pwcl)(CPULoongArchState *env,
+ target_ulong HELPER(csrwr_pwch)(CPULoongArchState *env,
+                                target_ulong val, uint32_t vm_level)
+ {
+-    uint8_t has_ptw;
+-    CPUSysState *sys = env_sys(env);
++    uint8_t host_has_ptw;
++    CPUSysState *sys = get_sys(env, vm_level);
+     int64_t old_v = sys->CSR_PWCH;
+ 
+     val = FIELD_DP64(val, CSR_PWCH, RESERVE, 0);
+-    has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
+-    if (!has_ptw) {
++    //host can't read guest cpucfg
++    host_has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
++    if (!host_has_ptw) {
+         val = FIELD_DP64(val, CSR_PWCH, HPTW_EN, 0);
+     }
+ 
+     sys->CSR_PWCH = val;
+     return old_v;
+- }
++}
 -- 
 2.56.0
 
