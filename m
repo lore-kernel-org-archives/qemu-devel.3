@@ -1,63 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BB2606A884
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A580C606A331
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=n3a4NDyD;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=O1xWQbTj
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=xDEuzgE8;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=j1SxeA/6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRzAZ-0001xt-JJ; Fri, 13 Nov 2026 16:50:52 -0500
+	id 1xRzAP-00018Q-29; Fri, 13 Nov 2026 16:50:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9o-0008Ht-3E
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:50:08 -0500
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9t-0008Le-S3
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:50:10 -0500
 Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9l-0005Cz-B2
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:50:03 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=kbam6Vw
- CTVrOpsdfi0Znblv0yRXCC97etHzBcWoKHQrXJrl2gb1E5/fK+Q+fUIZa1npsrxcGA3swJ
- 4lFakxQXQcxNdhx5yq53E6ZUXghHYxPPkMt50UopczL773qDsOQ2WeswsvWE251vcGOWyo
- 2fOvbSE/mmEFTEiOcM+E6clCLdrP5daM0SUhpFn7XybabCCOSgcArJEst3EpiCUCf5MivR
- hMrrGt4N08X0p2CICFbD8EUunQ1wbmD1kOybYFoZKCcaU5DFrgVrmRGdKYqLDBvBYbWhwA
- henwy2FP4yL70iV3qUUInxn/TSuMaJAI+kIlc8qSQVNNQlPHjIIyalA==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=2
- hNU5UCnqAKpYM4eKJnyut8fgLqsnGZJJMla4E5tAhI=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9s-0005Cz-0C
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:50:09 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Ewyiv7n
+ ztwG96cim3CMMlyepnpgVL9bRPFqoBldLz4efA4JLQBq505/CsMy4+yRx4JJwyoQCVIeQg
+ nGDQZt4sMP51hMAN4FmAsTNPXcoUn4LgyzaZ4Wrbwq0ys5ppKXjqEKpzySN5pcMwzLUwEl
+ x4MTvD+vDCoLVH8QihAwpLmgDhZqOH1u6Q3jUJhMVwQzeg6sA3nldrJPkrhBXbn+EAbSn5
+ oNdLyd/BNxT4wzihMYECh6qhaxrVA8oMBn1O41u80aa3mWE2GErBHxKpURfppZH32XWh3t
+ 30KxGCMN3ta+S3rfvcXNYgvg5wQXO+tqGl6M0jEVlbwJWR7m4eVM4OQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=a
+ lPetn4aE/xvcLwyw7DORbklqnqs0MzMLKrQO9jiiqg=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=asoifT0ZRLXs9HUZMff6z3VPhZjlJPF2GFJcrXAPBILsilQas2S0Pf1d1tsze+xRn8l6
- WUuhDvKIvDrElq2lt+kyB7H+aq9bx4lCbc/94CrwCcKuvH8TgsHSJKnize/v/3v23NG+JK
- I1wiNywdA45/T9SupAu+gWqHIdUDb7t+aNXaYbzk0XyH3Gl8EcxIhAa+6uIAvn/fnuUCJu
- yNsRHahqNCJappzNG5TC5E4TiZ9BK+UrvBYsoRl4wAKC2bWESyCtO6Q8sd5Ppysz0TXGHc
- CIQleseraiyjvVo7vtrJGrP61XLNVK0krhqDxMXfA96reFlc8JfEscC2AieSaWNg==
+ b=JE4XfI8YrA0uyLn/e09pNZK5OMZtGwwbmUme61LM4C25vPuGeKxMqrl3QbCCNjghCAIo
+ 9wu13LfX9pSrE4bHJrSAsZaItNRIrLMAKkVyP6Ir8KPkf0o+L9sBXsKaSxrQ7HSBmRJQqY
+ a8J6pIv20ZmkfgLJbuir0Nyl2R3YEsjnVHxtG8q6gTvT/WUnbJyDwqIw3NjYQoDcdKR21o
+ a8w3CCPyUU0RyMG6cNuhClyrYg30FzyDLfThqNWHbZTEoHQeny35x/e1NfQET97IPsXk/F
+ Goy5pHcDvRdL4LcJZsNkrhjfzNJtMRynX7r4mi5hEyoopp2Qs4+Vtemp8LzcLpPw==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=n3a4NDyD; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=O1xWQbTj;
+ header.b=xDEuzgE8; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=j1SxeA/6;
  arc=none; iprev=fail; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=2hNU5UCn
- qAKpYM4eKJnyut8fgLqsnGZJJMla4E5tAhI=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=alPetn4a
+ E/xvcLwyw7DORbklqnqs0MzMLKrQO9jiiqg=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=n3a4NDyDlEn2IFyZUQImWoPyBaNmiqSbdmT
- MmwIVjboBR5w+DoxrSVTXzomZg0ZvVHLxdntt+oke87QT5w9Gd0k1EG9nsvEQToyGYvyKv
- 5dkeWRazSkzERKAzK7sRYm6PIMTkYn7RIInA/Yyzn7hIFuDES5ZPiwohKt05Z8OI0tLiop
- oXoXzN6f/DbPiO+T6ecYBoAMvoFXVabhrENS6MvQBhQ9I62VBsFvbAP0d4YYUd2ng/kIpk
- KJx4kL9F5vyT2H1JHToIvC65lw3f32ourCCzQO+4hQaBGnVOmSeKIcefPzEVftS+yjhVf+
- nJZUMjsiQQrF6X28aGRqtYRueSw==
+ subject:cc:to:from; d=korins.ky; b=xDEuzgE8O7+d20b4Q5lnj3fLgLrgJkf4yHL
+ a0zkRv5NmGRfpmGPUuC6nYO55SjjBKghH6nkp8B6sQn2/rnWiKdTXIEw8F18Gf1zjPToN3
+ JgHqWCsO76p4caUlyXqfuTudslqBZmuBbbJOI6sEkiqpu/3dTm6qPk0BG/Xby4C0IRm+bt
+ 7PEZe4kLn0s95v5e+xqhYBJCbzMCl8KJP+ztF9ydKnwYQWY2qCaLugPhBvbbKX58lz1o29
+ t/GMvw5bFhqf8KNXPWCRDlaaM2WJO5YGCEhiCG+b3UaxyL58vlFRYjNlqYIzI5AQQUqebx
+ DuptVX6Qr7ZSTrvMlnLruMNRW5g==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=2hNU5UCnqAKpYM4eKJnyut8fgLqsnGZJJMla4E5tAhI=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=O1xWQbTjE4J+XUs2/u
- EzenvAPl8tca4iuypwru2FAja1TINfseDHwB+Mhf/xTqG1uqnv+4nDfur22RLVFywVBw==
-Received: by mx1.catap.net (OpenSMTPD) id 5e900711;
- Fri, 13 Nov 2026 22:49:50 +0100 (CET)
+ bh=alPetn4aE/xvcLwyw7DORbklqnqs0MzMLKrQO9jiiqg=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=j1SxeA/6lEZmm09ESs
+ F1ZbhFzo1VTlx3elT0oC5vWrO+MtbjaASU36vAXmeA2aqhW0sY1ZxHbwp7sV5l/3qrAA==
+Received: by mx1.catap.net (OpenSMTPD) id 1aaf49d3;
+ Fri, 13 Nov 2026 22:49:51 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 1d119322;
- Fri, 13 Nov 2026 22:49:33 +0100 (CET)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 04480937;
+ Fri, 13 Nov 2026 22:49:34 +0100 (CET)
 From: Kirill A. Korinsky <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -68,9 +68,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
 Cc: "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PATCH v8 15/26] hw/mips: add Octeon CSR window
-Date: Fri, 13 Nov 2026 22:45:29 +0100
-Message-ID: <20261113214926.98536-16-kirill@korins.ky>
+Subject: [PATCH v8 26/26] tests/functional: test Octeon III boot
+Date: Fri, 13 Nov 2026 22:45:40 +0100
+Message-ID: <20261113214926.98536-27-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113214926.98536-1-kirill@korins.ky>
 References: <20261113214926.98536-1-kirill@korins.ky>
@@ -106,280 +106,93 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-Add the shared CSR window and backing register storage. Keep mutable
-state in a resettable CSR bank device so later controllers can route
-their registers through it.
+Boot the OpenBSD/octeon ramdisk through U-Boot using an e1000 device
+and QEMU user mode TFTP. Verify PCI enumeration, DHCP, image transfer
+and entry into the OpenBSD installer.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- hw/mips/octeon.c          | 146 ++++++++++++++++++++++++++++++++++++++
- hw/mips/octeon_internal.h |   7 ++
- 2 files changed, 153 insertions(+)
+ tests/functional/mips64/meson.build     |  2 +
+ tests/functional/mips64/test_octeon3.py | 54 +++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+)
+ create mode 100644 tests/functional/mips64/test_octeon3.py
 
-diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 638d96559f..0caf088adf 100644
---- a/hw/mips/octeon.c
-+++ b/hw/mips/octeon.c
-@@ -41,6 +41,8 @@ OBJECT_DECLARE_TYPE(OcteonPeripheralState, OcteonPeripheralClass,
- OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
- #define TYPE_OCTEON_INTC "octeon-intc"
- OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
-+#define TYPE_OCTEON_CSR_BANK "octeon-csr-bank"
-+OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+diff --git a/tests/functional/mips64/meson.build b/tests/functional/mips64/meson.build
+index 3ff2118987..98b7c491a1 100644
+--- a/tests/functional/mips64/meson.build
++++ b/tests/functional/mips64/meson.build
+@@ -2,9 +2,11 @@
  
- #define OCTEON_CSR_64BIT_SIZE       8
- 
-@@ -120,6 +122,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
- #define OCTEON_CIU3_ISC_SIZE        (OCTEON_CIU3_NINTSN * 8)
- #define OCTEON_CIU3_MBOX_INTSN(cpu) ((cpu) + 0x4000U)
- #define OCTEON_CIU3_UART0_INTSN     0x8000
-+#define OCTEON_CSR_BASE             0x1180000000000ULL
-+#define OCTEON_CSR_SIZE             0x100000000ULL
- /*
-  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
-  * the guest sees the virtual CVMSEG window, not this physical address.
-@@ -187,6 +191,24 @@ struct OcteonIntcState {
-     uint8_t ciu3_irq_line[OCTEON_MAX_CPUS][OCTEON_CIU3_CP0_IRQ_COUNT];
- };
- 
-+struct OcteonCsrBankState {
-+    OcteonPeripheralState parent_obj;
-+    MemoryRegion csr;
-+    GHashTable *values;
-+};
-+
-+guint octeon_uint64_hash(gconstpointer v)
-+{
-+    uint64_t value = *(const uint64_t *)v;
-+
-+    return value ^ (value >> 32);
-+}
-+
-+gboolean octeon_uint64_equal(gconstpointer a, gconstpointer b)
-+{
-+    return *(const uint64_t *)a == *(const uint64_t *)b;
-+}
-+
- uint64_t octeon_read64(uint64_t value, hwaddr addr, unsigned size)
- {
-     if (size == 4) {
-@@ -248,6 +270,38 @@ static void octeon_validate_clocks(OcteonMachineState *oms)
-     }
+ test_mips64_timeouts = {
+   'malta' : 240,
++  'octeon3' : 300,
  }
  
-+bool octeon_reg_lookup(GHashTable *regs, uint64_t reg, uint64_t *value)
-+{
-+    uint64_t *stored = g_hash_table_lookup(regs, &reg);
+ tests_mips64_system_thorough = [
+   'malta',
++  'octeon3',
+   'tuxrun',
+ ]
+diff --git a/tests/functional/mips64/test_octeon3.py b/tests/functional/mips64/test_octeon3.py
+new file mode 100644
+index 0000000000..9c2bc67ac4
+--- /dev/null
++++ b/tests/functional/mips64/test_octeon3.py
+@@ -0,0 +1,54 @@
++#!/usr/bin/env python3
++#
++# Functional test for the Cavium Octeon III / EBB7304 machine.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+    if (!stored) {
-+        return false;
-+    }
++import os
++import shutil
 +
-+    *value = *stored;
-+    return true;
-+}
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
 +
-+void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value)
-+{
-+    uint64_t *key = g_new(uint64_t, 1);
-+    uint64_t *stored = g_new(uint64_t, 1);
 +
-+    *key = reg;
-+    *stored = value;
-+    g_hash_table_replace(regs, key, stored);
-+}
++class Octeon3Machine(QemuSystemTest):
 +
-+bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value)
-+{
-+    return octeon_reg_lookup(s->csr_bank->values, reg, value);
-+}
++    ASSET_UBOOT = Asset(
++        'https://kirill.korins.ky/pub/qemu-mips64-openbsd/u-boot.bin',
++        '7e519b2e52ba44b27bfafd16738c8f485e9eda5438b4899cf6a70520a6d34396')
 +
-+static void octeon_csr_store(OcteonState *s, uint64_t reg, uint64_t value)
-+{
-+    octeon_reg_store(s->csr_bank->values, reg, value);
-+}
++    ASSET_BSD_RD = Asset(
++        'https://kirill.korins.ky/pub/qemu-mips64-openbsd/bsd.rd',
++        '907f26f0ff67390dd21dc85e2c854fc0e65db295b15d47ae92e1927f98ac5872')
 +
- static bool octeon_ciu3_source_from_intsn(uint32_t intsn,
-                                           unsigned int *source)
- {
-@@ -1022,6 +1076,42 @@ static const MemoryRegionOps octeon_ciu3_ops = {
-     },
- };
- 
-+static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    OcteonState *s = opaque;
-+    hwaddr reg = addr & ~7ULL;
-+    uint64_t value;
++    def test_openbsd_ramdisk_tftp(self):
++        self.require_netdev('user')
++        self.require_device('e1000')
++        self.set_machine('octeon3')
 +
-+    if (!octeon_csr_lookup(s, reg, &value)) {
-+        value = 0;
-+    }
-+    return octeon_read64(value, addr, size);
-+}
++        tftp_dir = self.scratch_file('tftp')
++        os.mkdir(tftp_dir)
++        shutil.copy(self.ASSET_BSD_RD.fetch(),
++                    os.path.join(tftp_dir, 'bsd.rd'))
 +
-+static void octeon_csr_write(void *opaque, hwaddr addr,
-+                             uint64_t value, unsigned size)
-+{
-+    OcteonState *s = opaque;
-+    hwaddr reg = addr & ~7ULL;
-+    uint64_t old;
++        self.vm.set_console()
++        self.vm.add_args('-bios', self.ASSET_UBOOT.fetch(),
++                         '-m', '1G',
++                         '-smp', '4',
++                         '-no-reboot',
++                         '-netdev',
++                         f'user,id=net0,tftp={tftp_dir},bootfile=bsd.rd',
++                         '-device', 'e1000,netdev=net0')
++        self.vm.launch()
 +
-+    if (!octeon_csr_lookup(s, reg, &old)) {
-+        old = 0;
-+    }
-+    value = octeon_write64(old, addr, value, size);
-+    octeon_csr_store(s, reg, value);
-+}
++        wait_for_console_pattern(self, '=> ')
++        ec_and_wait(self, 'pci enum', '=> ')
++        ec_and_wait(self, 'dhcp', 'Bytes transferred')
++        wait_for_console_pattern(self, '=> ')
++        ec_and_wait(self, 'bootoctlinux ${loadaddr} numcores=4',
++                    'Welcome to the OpenBSD/octeon 7.9 installation program.')
 +
-+static const MemoryRegionOps octeon_csr_ops = {
-+    .read = octeon_csr_read,
-+    .write = octeon_csr_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 8,
-+    },
-+};
 +
- void octeon_irq_set(void *opaque, int irq, int level)
- {
-     OcteonState *s = opaque;
-@@ -1294,6 +1384,18 @@ static void octeon_intc_reset_hold(Object *obj, ResetType type)
-     octeon_intc_update_all_cpus(s);
- }
- 
-+static void octeon_csr_bank_reset_hold(Object *obj, ResetType type)
-+{
-+    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
-+    OcteonCsrBankState *bank = OCTEON_CSR_BANK(obj);
-+
-+    if (opc->parent_phases.hold) {
-+        opc->parent_phases.hold(obj, type);
-+    }
-+
-+    g_hash_table_remove_all(bank->values);
-+}
-+
- static void octeon_peripheral_class_init(ObjectClass *klass,
-                                           const void *data)
- {
-@@ -1302,6 +1404,23 @@ static void octeon_peripheral_class_init(ObjectClass *klass,
-     dc->user_creatable = false;
- }
- 
-+static GHashTable *octeon_reg_table_new(void)
-+{
-+    return g_hash_table_new_full(octeon_uint64_hash,
-+                                 octeon_uint64_equal,
-+                                 g_free, g_free);
-+}
-+
-+static void octeon_csr_bank_init(Object *obj)
-+{
-+    OCTEON_CSR_BANK(obj)->values = octeon_reg_table_new();
-+}
-+
-+static void octeon_csr_bank_finalize(Object *obj)
-+{
-+    g_hash_table_destroy(OCTEON_CSR_BANK(obj)->values);
-+}
-+
- static void octeon_rst_class_init(ObjectClass *klass, const void *data)
- {
-     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
-@@ -1320,6 +1439,16 @@ static void octeon_intc_class_init(ObjectClass *klass, const void *data)
-                                        NULL, &opc->parent_phases);
- }
- 
-+static void octeon_csr_bank_class_init(ObjectClass *klass, const void *data)
-+{
-+    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    resettable_class_set_parent_phases(rc, NULL,
-+                                       octeon_csr_bank_reset_hold, NULL,
-+                                       &opc->parent_phases);
-+}
-+
- static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
-                                                      const char *type,
-                                                      unsigned int index)
-@@ -1336,6 +1465,8 @@ static void octeon_create_peripherals(OcteonState *s)
- {
-     s->rst = OCTEON_RST(octeon_new_peripheral(s, TYPE_OCTEON_RST, 0));
-     s->intc = OCTEON_INTC(octeon_new_peripheral(s, TYPE_OCTEON_INTC, 0));
-+    s->csr_bank = OCTEON_CSR_BANK(octeon_new_peripheral(
-+        s, TYPE_OCTEON_CSR_BANK, 0));
- }
- 
- static void octeon_realize_peripheral(OcteonPeripheralState *dev)
-@@ -1347,6 +1478,7 @@ static void octeon_realize_peripherals(OcteonState *s)
- {
-     octeon_realize_peripheral(&s->intc->parent_obj);
-     octeon_realize_peripheral(&s->rst->parent_obj);
-+    octeon_realize_peripheral(&s->csr_bank->parent_obj);
- }
- 
- static void mips_octeon_init(MachineState *machine)
-@@ -1386,6 +1518,12 @@ static void mips_octeon_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), OCTEON_CIU3_BASE,
-                                 &s->intc->ciu3);
- 
-+    memory_region_init_io(&s->csr_bank->csr, OBJECT(s->csr_bank),
-+                          &octeon_csr_ops, s,
-+                          "octeon.csr", OCTEON_CSR_SIZE);
-+    memory_region_add_subregion_overlap(get_system_memory(), OCTEON_CSR_BASE,
-+                                        &s->csr_bank->csr, -1);
-+
-     octeon_realize_peripherals(s);
- }
- 
-@@ -1464,6 +1602,14 @@ static const TypeInfo octeon_machine_types[] = {
-         .instance_size = sizeof(OcteonIntcState),
-         .class_init = octeon_intc_class_init,
-     },
-+    {
-+        .name = TYPE_OCTEON_CSR_BANK,
-+        .parent = TYPE_OCTEON_PERIPHERAL,
-+        .instance_size = sizeof(OcteonCsrBankState),
-+        .instance_init = octeon_csr_bank_init,
-+        .instance_finalize = octeon_csr_bank_finalize,
-+        .class_init = octeon_csr_bank_class_init,
-+    },
-     {
-         .name = TYPE_OCTEON_MACHINE,
-         .parent = TYPE_MACHINE,
-diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index cd810f3dd5..6327103f52 100644
---- a/hw/mips/octeon_internal.h
-+++ b/hw/mips/octeon_internal.h
-@@ -32,6 +32,7 @@ typedef enum OcteonCiu3Source {
- typedef struct OcteonState OcteonState;
- typedef struct OcteonRstState OcteonRstState;
- typedef struct OcteonIntcState OcteonIntcState;
-+typedef struct OcteonCsrBankState OcteonCsrBankState;
- 
- typedef struct OcteonCPUState {
-     OcteonState *board;
-@@ -58,11 +59,17 @@ struct OcteonState {
-     MemoryRegion cvmseg;
-     OcteonRstState *rst;
-     OcteonIntcState *intc;
-+    OcteonCsrBankState *csr_bank;
- };
- 
-+guint octeon_uint64_hash(gconstpointer v);
-+gboolean octeon_uint64_equal(gconstpointer a, gconstpointer b);
- uint64_t octeon_read64(uint64_t value, hwaddr addr, unsigned size);
- uint64_t octeon_write64(uint64_t old, hwaddr addr,
-                         uint64_t value, unsigned size);
-+bool octeon_reg_lookup(GHashTable *regs, uint64_t reg, uint64_t *value);
-+void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value);
-+bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value);
- void octeon_irq_set(void *opaque, int irq, int level);
- 
- #endif
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.56.0
 
