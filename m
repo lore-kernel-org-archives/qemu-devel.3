@@ -1,83 +1,69 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD56606A335
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0223606A335
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=TaG96q4B
+	dkim=pass (2048-bit key) header.d=taktcycles.com header.i=@taktcycles.com header.a=rsa-sha256 header.s=takt1 header.b=ABK1+GdH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRrjt-0002C5-9Y; Fri, 13 Nov 2026 08:54:49 -0500
+	id 1xRrk6-00039q-Ud; Fri, 13 Nov 2026 08:55:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnuU-0004fP-5K; Fri, 13 Nov 2026 04:49:31 -0500
-Received: from smtp47.tsinghua.edu.cn ([101.6.4.71] helo=tsinghua.edu.cn)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRnuQ-0007E7-Rt; Fri, 13 Nov 2026 04:49:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mails.tsinghua.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:
- Date:Message-ID:In-Reply-To:References:MIME-Version:
- Content-Transfer-Encoding; bh=0slYynxcqkcuOoir1dAuL9+HYncu4X2CDr
- ICwebLZnw=; b=TaG96q4BemqPy11REescMHoRe9X1ZWTXrtxx3pvUdPg2dk1UR7
- zkHzarSaJO0FnzfUTvnoFj78vwCk79LfCD0t950TtCrTpNT/vZh5ZiHo5+1QApQc
- ZSxyqdZIXcGBqRNBfWGVsGAtSa5UhU9XEcNVLFrHWogCYC+kOZxihadv0=
-Received: from ubuntu (unknown [101.5.154.165])
- by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S15;
- Fri, 13 Nov 2026 17:49:22 +0800 (CST)
-From: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
-To: qemu-devel@nongnu.org
-Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Kuan-Wei Chiu <visitorckw@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- bin.meng@processmission.com, tangtao1634@phytium.com.cn,
- Chao Liu <chao.liu@processmission.com>
-Subject: [RFC PATCH 13/20] hw/ssi: add the Rockchip SPI flash controller
-Date: Fri, 13 Nov 2026 17:47:47 +0800
-Message-ID: <160fbdb55551ee295ca8acd80a53876210756475.1794555589.git.w-yf22@mails.tsinghua.edu.cn>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
-References: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
+ (Exim 4.90_1) (envelope-from <rdmitry@taktcycles.com>)
+ id 1xRqWH-0006Cj-AX
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 07:36:41 -0500
+Received: from mail.taktcycles.com ([136.243.71.244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rdmitry@taktcycles.com>)
+ id 1xRqWF-0000gh-DA
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 07:36:41 -0500
+Received: from mail.taktcycles.com (unknown [192.168.64.27])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
+ (No client certificate requested)
+ by relay.taktcycles.com (Postfix) with ESMTPSA id D82228A5D;
+ Fri, 13 Nov 2026 12:36:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=taktcycles.com;
+ s=takt1; t=1794573397;
+ bh=8vpNqwX30OMAAceXZkSsbTHIGmOnKKuqUqh/1UOO9v4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=ABK1+GdHBBi5UEA6vANGfirF8eg1aM4FqXYU7joYd3t36reHl0GHjpCjEqOaNHDbB
+ H0vPzcTxHCmu829CT/qW7RSFfYkVBIQkVG52SH7JottvR/x8dQPJIhugvQ188QvkUj
+ U0iAEMtfwcHJ0vNnCp2WpTBAZhnU7MqV+/iN5MMn4TuUdX4MYeMczaINJF4etgKHUe
+ WzPILs0UPwrzVL9BJa3j+n/zDJukrm8ao5MucG1okNHzMh3F1mwFF6fOA/Z/ZMRCx1
+ aiHiRD1qHWJHQ225WeJ3DxWscMr1eCL0TFV4eBFDkXdLEDFxMdV6wupHMwmD4zdppl
+ w/8OUCduAtiyQ==
+Received: from [192.168.64.27] (localhost [127.0.0.1])
+ by mail.taktcycles.com (Postfix) with ESMTP id 660BD1DF87;
+ Fri, 13 Nov 2026 12:36:37 +0000 (UTC)
+From: Dmitry R <rdmitry@taktcycles.com>
+To: =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry R <rdmitry0911@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: [PATCH v2 4/8] hw/display/vhost-user-gpu: reset scanouts on the
+ main loop
+Date: Fri, 13 Nov 2026 12:36:37 -0000
+Message-ID: <179457339706.955135.2425240084935401636@taktcycles.com>
+In-Reply-To: <20261113-issue-4848-v2-4-631414664bca@redhat.com>
+References: <20261113-issue-4848-v2-0-631414664bca@redhat.com>
+ <20261113-issue-4848-v2-4-631414664bca@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S15
-X-Coremail-Antispam: 1UD129KBjvAXoW3ZrWftr13trWkKF1fCw43trb_yoW8ArW3Xo
- WqgF45Xry8Kw4xAry0v3yI9r4xWwnrKr4kCa18uF4jva18ArnrXan8C3yY9a1rAr15tF9x
- JF4vy393Ja4kZryxn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
- AaLaJ3UjIYCTnIWjp_UUUOZ7AC8VAFwI0_Wr0E3s1l1xkIjI8I6I8E6xAIw20EY4v20xva
- j40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l82xGYIkIc2x26280x7IE14v26r126s0DM28Irc
- Ia0xkI8VCY1x0267AKxVW5JVCq3wA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l
- 84ACjcxK6xIIjxv20xvE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4UJV
- WxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE
- 3s1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2
- IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v26r1j6r4U
- McvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I64
- 8v4I1lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67AK
- 6r4fMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI
- 0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y
- 0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r4j6ryUMIIF0xvE2Ix0cI8IcVCY1x0267AKxV
- W8Jr0_Cr1UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWx
- JwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2KfnxnUUI43ZEXa7VUjCJmU
- UUUUU==
-X-CM-SenderInfo: fzn1wj2s6ptxtovo32xlqjx3vdohv3gofq/
-Received-SPF: pass client-ip=101.6.4.71;
- envelope-from=w-yf22@mails.tsinghua.edu.cn; helo=tsinghua.edu.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=136.243.71.244;
+ envelope-from=rdmitry@taktcycles.com; helo=mail.taktcycles.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:53 -0500
+X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:54 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,621 +74,51 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Chao Liu <chao.liu@processmission.com>
+Hi Marc-André,
 
-Add a model of the Rockchip SPI flash controller. The ROCK 5B boots
-U-Boot proper from the SPI NOR through this controller, so it is needed
-for firmware booting.
+On Fri, 13 Nov 2026 14:42:16 +0400, Marc-André Lureau wrote:
+> Defer the display cleanup to a bottom half, as virtio_gpu_reset() does,
+> and wait for it when reset is triggered from a vCPU thread.
 
-The model implements command, address and dummy phases, PIO and DMA
-data transfers, completion and error interrupts, interrupt masking and
-clearing, and controller reset.
+This fixes the abort I reported on v1. Same setup as before (master
+49559567 + v2, -display dbus,gl=on, vhost-user-vga backed by
+vhost-user-gpu --virgl, Debian 13 guest, a D-Bus listener attached):
+QEMU and vhost-user-gpu stay up through the guest's virtio_gpu probe
+and through five system_reset/boot cycles in a row, and the listener
+receives a new ScanoutDMABUF after each of them.
 
-Signed-off-by: Chao Liu <chao.liu@processmission.com>
-Signed-off-by: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
----
- MAINTAINERS             |   1 +
- hw/arm/Kconfig          |   1 +
- hw/arm/rk3588.c         |  29 ++-
- hw/ssi/Kconfig          |   5 +
- hw/ssi/meson.build      |   1 +
- hw/ssi/rockchip_sfc.c   | 439 ++++++++++++++++++++++++++++++++++++++++
- include/hw/arm/rk3588.h |   1 +
- 7 files changed, 475 insertions(+), 2 deletions(-)
- create mode 100644 hw/ssi/rockchip_sfc.c
+There is one new abort, though:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5a4ec869ea..7fd434ade2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1067,6 +1067,7 @@ S: Maintained
- F: hw/arm/rk3588.c
- F: hw/misc/rockchip_cru.c
- F: hw/misc/rockchip_otp.c
-+F: hw/ssi/rockchip_sfc.c
- F: hw/timer/rockchip-hptimer.c
- F: include/hw/arm/rk3588.h
- F: include/hw/timer/rockchip-hptimer.h
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 902c4ba377..eaa55eae29 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -781,4 +781,5 @@ config RK3588
-     select CPU_CLUSTER
-     select DW8250
-     select REGISTER
-+    select ROCKCHIP_SFC
-     select UNIMP
-diff --git a/hw/arm/rk3588.c b/hw/arm/rk3588.c
-index acd9149933..2319c54c76 100644
---- a/hw/arm/rk3588.c
-+++ b/hw/arm/rk3588.c
-@@ -29,7 +29,7 @@
- #define RK3588_MPIDR_AFF0_PER_AFF1   (1)
- 
- #define RK3588_CNTFRQ                24000000
--
-+#define RK3588_SFC_SPI               206
- #define RK3588_GIC_NUM_IRQS          512
- 
- /* UART1-UART9 are modeled; UART0 in the PMU power domain is unimplemented. */
-@@ -43,6 +43,7 @@ enum {
-     RK3588_DEV_GIC_REDIST,
-     RK3588_DEV_CRU,
-     RK3588_DEV_OTP,
-+    RK3588_DEV_SFC,
-     RK3588_DEV_UART1,
-     RK3588_DEV_UART2,
-     RK3588_DEV_UART3,
-@@ -60,6 +61,7 @@ static const MemMapEntry rk3588_memmap[] = {
-     [RK3588_DEV_GIC_REDIST] = { 0xfe680000, 0x00100000 },
-     [RK3588_DEV_CRU]        = { 0xfd7c0000, 0x0005c000 },
-     [RK3588_DEV_OTP]        = { 0xfecc0000, 0x00000400 },
-+    [RK3588_DEV_SFC]        = { 0xfe2b0000, 0x00004000 },
-     [RK3588_DEV_UART1]      = { 0xfeb40000, 0x00010000 },
-     [RK3588_DEV_UART2]      = { 0xfeb50000, 0x00010000 },
-     [RK3588_DEV_UART3]      = { 0xfeb60000, 0x00010000 },
-@@ -96,7 +98,6 @@ static const UnimplementedDeviceConfig rk3588_unimpl_devices[] = {
-     RK3588_UNIMPLEMENTED("i2c0", 0xfd880000, 64 * KiB),
-     RK3588_UNIMPLEMENTED("gpio0", 0xfd8a0000, 64 * KiB),
-     RK3588_UNIMPLEMENTED("pwm0", 0xfd8b0000, 64 * KiB),
--    RK3588_UNIMPLEMENTED("fspi", 0xfe2b0000, 64 * KiB),
-     RK3588_UNIMPLEMENTED("sdmmc", 0xfe2c0000, 64 * KiB),
-     RK3588_UNIMPLEMENTED("sdio", 0xfe2d0000, 64 * KiB),
-     RK3588_UNIMPLEMENTED("emmc", 0xfe2e0000, 64 * KiB),
-@@ -233,6 +234,25 @@ static bool rk3588_soc_create_otp(RK3588SoCState *s, Error **errp)
-     return true;
- }
- 
-+static bool rk3588_soc_create_sfc(RK3588SoCState *s, Error **errp)
-+{
-+    SysBusDevice *sfc = SYS_BUS_DEVICE(s->sfc);
-+
-+    object_property_set_link(OBJECT(s->sfc), "dma-memory",
-+                             OBJECT(s->memory), &error_abort);
-+    if (!sysbus_realize(sfc, errp)) {
-+        return false;
-+    }
-+
-+    memory_region_add_subregion(s->memory,
-+        rk3588_memmap[RK3588_DEV_SFC].base,
-+        sysbus_mmio_get_region(sfc, 0));
-+    sysbus_connect_irq(sfc, 0,
-+                       qdev_get_gpio_in(DEVICE(&s->gic), RK3588_SFC_SPI));
-+
-+    return true;
-+}
-+
- static bool rk3588_soc_create_uart(RK3588SoCState *s, Error **errp)
- {
-     for (unsigned int i = RK3588_FIRST_UART; i < RK3588_NUM_UARTS; i++) {
-@@ -308,6 +328,7 @@ static void rk3588_soc_realize(DeviceState *dev, Error **errp)
-     if (!rk3588_soc_create_gic(s, errp) ||
-         !rk3588_soc_create_cru(s, errp) ||
-         !rk3588_soc_create_otp(s, errp) ||
-+        !rk3588_soc_create_sfc(s, errp) ||
-         !rk3588_soc_create_uart(s, errp) ||
-         !rk3588_soc_create_hptimer(s, errp)) {
-         return;
-@@ -363,6 +384,10 @@ static void rk3588_soc_instance_init(Object *obj)
-     object_property_add_child(obj, "otp", OBJECT(s->otp));
-     object_unref(OBJECT(s->otp));
- 
-+    s->sfc = qdev_new("rockchip-sfc");
-+    object_property_add_child(obj, "sfc", OBJECT(s->sfc));
-+    object_unref(OBJECT(s->sfc));
-+
-     s->hptimer = qdev_new(TYPE_ROCKCHIP_HPTIMER);
-     object_property_add_child(obj, "hptimer", OBJECT(s->hptimer));
-     object_unref(OBJECT(s->hptimer));
-diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
-index d477d20e9b..5735b422c9 100644
---- a/hw/ssi/Kconfig
-+++ b/hw/ssi/Kconfig
-@@ -36,3 +36,8 @@ config ALLWINNER_A10_SPI
- config IMX_SPI
-     bool
-     select SSI
-+
-+config ROCKCHIP_SFC
-+    bool
-+    select REGISTER
-+    select SSI
-diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
-index f334e48e2f..701ae09ed2 100644
---- a/hw/ssi/meson.build
-+++ b/hw/ssi/meson.build
-@@ -13,3 +13,4 @@ system_ss.add(when: 'CONFIG_IMX_SPI', if_true: files('imx_spi.c'))
- system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
- system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
- system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
-+system_ss.add(when: 'CONFIG_ROCKCHIP_SFC', if_true: files('rockchip_sfc.c'))
-diff --git a/hw/ssi/rockchip_sfc.c b/hw/ssi/rockchip_sfc.c
-new file mode 100644
-index 0000000000..7960655e83
---- /dev/null
-+++ b/hw/ssi/rockchip_sfc.c
-@@ -0,0 +1,439 @@
-+/*
-+ * Rockchip Serial Flash Controller
-+ *
-+ * Copyright (c) 2026 Process Mission
-+ *
-+ * Authors:
-+ *    Chao Liu <chao.liu@processmission.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "qemu/module.h"
-+#include "qemu/units.h"
-+#include "qapi/error.h"
-+#include "hw/core/irq.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/core/register.h"
-+#include "hw/core/sysbus.h"
-+#include "hw/ssi/ssi.h"
-+#include "qom/object.h"
-+
-+#define TYPE_ROCKCHIP_SFC "rockchip-sfc"
-+OBJECT_DECLARE_SIMPLE_TYPE(RockchipSFCState, ROCKCHIP_SFC)
-+
-+#define ROCKCHIP_SFC_MMIO_SIZE 0x4000
-+#define ROCKCHIP_SFC_NUM_CS 2
-+#define ROCKCHIP_SFC_NUM_REGS (0x10c / sizeof(uint32_t))
-+
-+struct RockchipSFCState {
-+    SysBusDevice parent_obj;
-+
-+    RegisterInfo regs_info[ROCKCHIP_SFC_NUM_REGS];
-+    uint32_t regs[ROCKCHIP_SFC_NUM_REGS];
-+    MemoryRegion *dma_memory;
-+    AddressSpace dma_as;
-+    SSIBus *spi;
-+    qemu_irq irq;
-+    qemu_irq cs_lines[ROCKCHIP_SFC_NUM_CS];
-+
-+    uint32_t remaining;
-+    uint8_t address_bytes;
-+    uint8_t dummy_bytes;
-+    uint8_t cs;
-+    bool write;
-+    bool pending;
-+    bool started;
-+    bool resetting;
-+};
-+
-+REG32(CTRL, 0x000)
-+REG32(IMR, 0x004)
-+REG32(ICLR, 0x008)
-+REG32(FTLR, 0x00c)
-+REG32(RCVR, 0x010)
-+REG32(AX, 0x014)
-+REG32(ABIT, 0x018)
-+REG32(ISR, 0x01c)
-+REG32(FSR, 0x020)
-+REG32(SR, 0x024)
-+REG32(RISR, 0x028)
-+REG32(VER, 0x02c)
-+REG32(DLL_CTRL0, 0x03c)
-+REG32(DMA_TRIGGER, 0x080)
-+REG32(DMA_ADDR, 0x084)
-+REG32(LEN_CTRL, 0x088)
-+REG32(LEN_EXT, 0x08c)
-+REG32(CMD, 0x100)
-+REG32(ADDR, 0x104)
-+REG32(DATA, 0x108)
-+
-+#define SFC_INT_FINISH   BIT(4)
-+#define SFC_INT_BUS_ERR  BIT(5)
-+#define SFC_INT_NSPI_ERR BIT(6)
-+#define SFC_INT_DMA      BIT(7)
-+#define SFC_MAX_LENGTH  (32 * MiB)
-+#define SFC_LEN_CTRL_TRB_SEL BIT(0)
-+
-+static void rockchip_sfc_update_irq(RockchipSFCState *s)
-+{
-+    qemu_set_irq(s->irq, (s->regs[R_RISR] & ~s->regs[R_IMR]) != 0);
-+}
-+
-+static void rockchip_sfc_end(RockchipSFCState *s)
-+{
-+    if (s->started) {
-+        qemu_irq_raise(s->cs_lines[s->cs]);
-+    }
-+    s->pending = false;
-+    s->started = false;
-+    s->remaining = 0;
-+}
-+
-+static void rockchip_sfc_complete(RockchipSFCState *s, uint32_t status)
-+{
-+    rockchip_sfc_end(s);
-+    s->regs[R_RISR] |= status;
-+    rockchip_sfc_update_irq(s);
-+}
-+
-+static void rockchip_sfc_begin(RockchipSFCState *s)
-+{
-+    if (!s->pending || s->started) {
-+        return;
-+    }
-+
-+    qemu_irq_lower(s->cs_lines[s->cs]);
-+    s->started = true;
-+    ssi_transfer(s->spi, s->regs[R_CMD] & 0xff);
-+    for (int i = s->address_bytes - 1; i >= 0; i--) {
-+        ssi_transfer(s->spi, (s->regs[R_ADDR] >> (8 * i)) & 0xff);
-+    }
-+    for (unsigned int i = 0; i < s->dummy_bytes; i++) {
-+        ssi_transfer(s->spi, 0);
-+    }
-+    if (!s->remaining) {
-+        rockchip_sfc_complete(s, SFC_INT_FINISH);
-+    }
-+}
-+
-+static void rockchip_sfc_command(RockchipSFCState *s, uint32_t value)
-+{
-+    unsigned int address_mode = (value >> 14) & 3;
-+    unsigned int dummy_cycles = (value >> 8) & 0xf;
-+    unsigned int address_width = 1 << ((s->regs[R_CTRL] >> 10) & 3);
-+    uint32_t len;
-+
-+    if (s->regs[R_LEN_CTRL] & SFC_LEN_CTRL_TRB_SEL) {
-+        len = s->regs[R_LEN_EXT];
-+    } else {
-+        /* Normal mode: transfer bytes are in CMD[29:16]. */
-+        len = (value >> 16) & 0x3fff;
-+    }
-+
-+    rockchip_sfc_end(s);
-+    s->cs = value >> 30;
-+    if (s->cs >= ROCKCHIP_SFC_NUM_CS || len > SFC_MAX_LENGTH) {
-+        rockchip_sfc_complete(s, SFC_INT_NSPI_ERR);
-+        return;
-+    }
-+
-+    switch (address_mode) {
-+    case 1:
-+        s->address_bytes = 3;
-+        break;
-+    case 2:
-+        s->address_bytes = 4;
-+        break;
-+    case 3:
-+        if ((s->regs[R_ABIT] & 7) != 7) {
-+            rockchip_sfc_complete(s, SFC_INT_NSPI_ERR);
-+            return;
-+        }
-+        s->address_bytes = ((s->regs[R_ABIT] & 31) + 1) / 8;
-+        break;
-+    default:
-+        s->address_bytes = 0;
-+        break;
-+    }
-+    s->dummy_bytes = DIV_ROUND_UP(dummy_cycles * address_width, 8);
-+    s->write = (value >> 12) & 1;
-+    s->remaining = len;
-+    s->pending = true;
-+    if (!s->address_bytes) {
-+        rockchip_sfc_begin(s);
-+    }
-+}
-+
-+static uint32_t rockchip_sfc_read_data(RockchipSFCState *s)
-+{
-+    uint32_t value = 0;
-+    unsigned int count;
-+
-+    if (!s->started || s->write) {
-+        return 0;
-+    }
-+    count = MIN(4, s->remaining);
-+    for (unsigned int i = 0; i < count; i++) {
-+        value |= (uint32_t)ssi_transfer(s->spi, 0) << (i * 8);
-+    }
-+    s->remaining -= count;
-+    if (!s->remaining) {
-+        rockchip_sfc_complete(s, SFC_INT_FINISH);
-+    }
-+    return value;
-+}
-+
-+static void rockchip_sfc_write_data(RockchipSFCState *s, uint32_t value)
-+{
-+    unsigned int count;
-+
-+    if (!s->started || !s->write) {
-+        return;
-+    }
-+    count = MIN(4, s->remaining);
-+    for (unsigned int i = 0; i < count; i++) {
-+        ssi_transfer(s->spi, (value >> (i * 8)) & 0xff);
-+    }
-+    s->remaining -= count;
-+    if (!s->remaining) {
-+        rockchip_sfc_complete(s, SFC_INT_FINISH);
-+    }
-+}
-+
-+static void rockchip_sfc_dma(RockchipSFCState *s)
-+{
-+    uint8_t buffer[256];
-+    hwaddr addr = s->regs[R_DMA_ADDR];
-+    MemTxAttrs attrs = { .memory = true };
-+
-+    if (!s->started) {
-+        rockchip_sfc_complete(s, SFC_INT_BUS_ERR);
-+        return;
-+    }
-+
-+    while (s->remaining) {
-+        unsigned int count = MIN(sizeof(buffer), s->remaining);
-+        MemTxResult result;
-+
-+        if (s->write) {
-+            result = address_space_read(&s->dma_as, addr, attrs,
-+                                        buffer, count);
-+            if (result == MEMTX_OK) {
-+                for (unsigned int i = 0; i < count; i++) {
-+                    ssi_transfer(s->spi, buffer[i]);
-+                }
-+            }
-+        } else {
-+            for (unsigned int i = 0; i < count; i++) {
-+                buffer[i] = ssi_transfer(s->spi, 0);
-+            }
-+            result = address_space_write(&s->dma_as, addr, attrs,
-+                                         buffer, count);
-+        }
-+        if (result != MEMTX_OK) {
-+            rockchip_sfc_complete(s, SFC_INT_BUS_ERR);
-+            return;
-+        }
-+        s->remaining -= count;
-+        addr += count;
-+    }
-+    rockchip_sfc_complete(s, SFC_INT_DMA | SFC_INT_FINISH);
-+}
-+
-+static void rockchip_sfc_reset(DeviceState *dev)
-+{
-+    RockchipSFCState *s = ROCKCHIP_SFC(dev);
-+
-+    rockchip_sfc_end(s);
-+    for (unsigned int i = 0; i < ROCKCHIP_SFC_NUM_CS; i++) {
-+        qemu_irq_raise(s->cs_lines[i]);
-+    }
-+    s->resetting = true;
-+    for (unsigned int i = 0; i < ARRAY_SIZE(s->regs_info); i++) {
-+        register_reset(&s->regs_info[i]);
-+    }
-+    s->resetting = false;
-+    s->cs = 0;
-+    s->address_bytes = 0;
-+    s->dummy_bytes = 0;
-+    s->write = false;
-+    rockchip_sfc_update_irq(s);
-+}
-+
-+static uint64_t rockchip_sfc_status_read(RegisterInfo *reg, uint64_t value)
-+{
-+    RockchipSFCState *s = ROCKCHIP_SFC(reg->opaque);
-+
-+    switch (reg->access->addr) {
-+    case A_ISR:
-+        return s->regs[R_RISR] & ~s->regs[R_IMR];
-+    case A_FSR:
-+        if (s->started && !s->write && s->remaining) {
-+            return (31 << 8) | BIT(1) |
-+                   (MIN(DIV_ROUND_UP(s->remaining, 4), 31) << 16);
-+        }
-+        return (31 << 8) | BIT(1) | BIT(2);
-+    case A_SR:
-+        return s->pending ? 1 : 0;
-+    case A_DATA:
-+        return rockchip_sfc_read_data(s);
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+static void rockchip_sfc_register_write(RegisterInfo *reg, uint64_t value)
-+{
-+    RockchipSFCState *s = ROCKCHIP_SFC(reg->opaque);
-+
-+    if (s->resetting) {
-+        return;
-+    }
-+
-+    switch (reg->access->addr) {
-+    case A_IMR:
-+        rockchip_sfc_update_irq(s);
-+        break;
-+    case A_ICLR:
-+        s->regs[R_RISR] &= ~value;
-+        s->regs[R_ICLR] = 0;
-+        rockchip_sfc_update_irq(s);
-+        break;
-+    case A_RCVR:
-+        if (value & 1) {
-+            rockchip_sfc_end(s);
-+            s->regs[R_RISR] = 0;
-+            rockchip_sfc_update_irq(s);
-+        }
-+        s->regs[R_RCVR] = 0;
-+        break;
-+    case A_DMA_TRIGGER:
-+        if (value & 1) {
-+            rockchip_sfc_dma(s);
-+        }
-+        s->regs[R_DMA_TRIGGER] = 0;
-+        break;
-+    case A_CMD:
-+        rockchip_sfc_command(s, value);
-+        break;
-+    case A_ADDR:
-+        rockchip_sfc_begin(s);
-+        break;
-+    case A_DATA:
-+        rockchip_sfc_write_data(s, value);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+static const RegisterAccessInfo rockchip_sfc_regs[] = {
-+    { .name = "CTRL", .addr = A_CTRL },
-+    { .name = "IMR", .addr = A_IMR, .reset = UINT32_MAX,
-+      .post_write = rockchip_sfc_register_write },
-+    { .name = "ICLR", .addr = A_ICLR,
-+      .post_write = rockchip_sfc_register_write },
-+    { .name = "FTLR", .addr = A_FTLR },
-+    { .name = "RCVR", .addr = A_RCVR,
-+      .post_write = rockchip_sfc_register_write },
-+    { .name = "AX", .addr = A_AX },
-+    { .name = "ABIT", .addr = A_ABIT },
-+    { .name = "ISR", .addr = A_ISR, .ro = UINT32_MAX,
-+      .post_read = rockchip_sfc_status_read },
-+    { .name = "FSR", .addr = A_FSR, .ro = UINT32_MAX,
-+      .post_read = rockchip_sfc_status_read },
-+    { .name = "SR", .addr = A_SR, .ro = UINT32_MAX,
-+      .post_read = rockchip_sfc_status_read },
-+    { .name = "RISR", .addr = A_RISR, .ro = UINT32_MAX },
-+    { .name = "VER", .addr = A_VER, .ro = UINT32_MAX, .reset = 4 },
-+    { .name = "DLL_CTRL0", .addr = A_DLL_CTRL0 },
-+    { .name = "DMA_TRIGGER", .addr = A_DMA_TRIGGER,
-+      .post_write = rockchip_sfc_register_write },
-+    { .name = "DMA_ADDR", .addr = A_DMA_ADDR },
-+    { .name = "LEN_CTRL", .addr = A_LEN_CTRL },
-+    { .name = "LEN_EXT", .addr = A_LEN_EXT },
-+    { .name = "CMD", .addr = A_CMD,
-+      .post_write = rockchip_sfc_register_write },
-+    { .name = "ADDR", .addr = A_ADDR,
-+      .post_write = rockchip_sfc_register_write },
-+    { .name = "DATA", .addr = A_DATA,
-+      .post_read = rockchip_sfc_status_read,
-+      .post_write = rockchip_sfc_register_write },
-+};
-+
-+static const MemoryRegionOps rockchip_sfc_ops = {
-+    .read = register_read_memory,
-+    .write = register_write_memory,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+};
-+
-+static void rockchip_sfc_realize(DeviceState *dev, Error **errp)
-+{
-+    RockchipSFCState *s = ROCKCHIP_SFC(dev);
-+
-+    if (!s->dma_memory) {
-+        error_setg(errp, "rockchip-sfc: dma-memory link is required");
-+        return;
-+    }
-+    address_space_init(&s->dma_as, s->dma_memory, TYPE_ROCKCHIP_SFC);
-+}
-+
-+static void rockchip_sfc_unrealize(DeviceState *dev)
-+{
-+    RockchipSFCState *s = ROCKCHIP_SFC(dev);
-+
-+    address_space_destroy(&s->dma_as);
-+}
-+
-+static void rockchip_sfc_init(Object *obj)
-+{
-+    RockchipSFCState *s = ROCKCHIP_SFC(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+    RegisterInfoArray *reg_array;
-+
-+    s->spi = ssi_create_bus(DEVICE(obj), "spi");
-+    qdev_init_gpio_out_named(DEVICE(obj), s->cs_lines, "cs",
-+                             ROCKCHIP_SFC_NUM_CS);
-+    sysbus_init_irq(sbd, &s->irq);
-+    reg_array = register_init_block32(DEVICE(obj), rockchip_sfc_regs,
-+                                     ARRAY_SIZE(rockchip_sfc_regs),
-+                                     s->regs_info, s->regs, &rockchip_sfc_ops,
-+                                     false, ROCKCHIP_SFC_MMIO_SIZE);
-+    sysbus_init_mmio(sbd, &reg_array->mem);
-+}
-+
-+static const Property rockchip_sfc_properties[] = {
-+    DEFINE_PROP_LINK("dma-memory", RockchipSFCState, dma_memory,
-+                     TYPE_MEMORY_REGION, MemoryRegion *),
-+};
-+
-+static void rockchip_sfc_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+
-+    dc->realize = rockchip_sfc_realize;
-+    dc->unrealize = rockchip_sfc_unrealize;
-+    device_class_set_props(dc, rockchip_sfc_properties);
-+    device_class_set_legacy_reset(dc, rockchip_sfc_reset);
-+}
-+
-+static const TypeInfo rockchip_sfc_info = {
-+    .name = TYPE_ROCKCHIP_SFC,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RockchipSFCState),
-+    .instance_init = rockchip_sfc_init,
-+    .class_init = rockchip_sfc_class_init,
-+};
-+
-+static void rockchip_sfc_register_types(void)
-+{
-+    type_register_static(&rockchip_sfc_info);
-+}
-+
-+type_init(rockchip_sfc_register_types)
-diff --git a/include/hw/arm/rk3588.h b/include/hw/arm/rk3588.h
-index 1f854043de..1304c11598 100644
---- a/include/hw/arm/rk3588.h
-+++ b/include/hw/arm/rk3588.h
-@@ -54,6 +54,7 @@ struct RK3588SoCState {
-     DW8250State uart[RK3588_NUM_UARTS];
-     DeviceState *cru;
-     DeviceState *otp;
-+    DeviceState *sfc;
-     MemoryRegion *memory;
-     MemoryRegion sram;
-     DeviceState *hptimer;
--- 
-2.53.0
+> @@ -631,13 +632,16 @@ vhost_user_gpu_instance_finalize(Object *obj)
+> [...]
+> +    g_clear_pointer(&g->reset_bh, qemu_bh_delete);
+> +    qemu_cond_destroy(&g->reset_cond);
+
+reset_cond is initialized at the end of realize but destroyed in
+instance_finalize, so finalizing an instance that was never realized
+aborts:
+
+  qemu-system-x86_64: ../util/qemu-thread-posix.c:207: qemu_cond_destroy: Assertion `cond->initialized' failed.
+
+With v2 this happens on
+  - qemu-system-x86_64 -device vhost-user-gpu-pci,help
+    (the same with vhost-user-vga);
+  - QMP device-list-properties with typename vhost-user-gpu-pci;
+  - a device_add of vhost-user-gpu-pci that is refused, e.g. with
+    "Device 'vhost-user-gpu-pci' does not support hotplugging" on q35;
+and tests/qtest/device-introspect-test fails in
+/x86_64/device/introspect/concrete/defaults/none. Master passes all of
+them. virtio-gpu destroys its reset_cond in unrealize.
+
+I'll retest v3 and send Tested-by for 3/8 and 4/8 then.
+
+Dmitry
 
 
