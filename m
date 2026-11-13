@@ -1,114 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66A9607104E
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 18:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74ED7606A89E
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 19:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=DHTXUK4I
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=JLtBNIAA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRwQs-0005i5-31; Fri, 13 Nov 2026 13:55:30 -0500
+	id 1xRwXZ-0002N3-NC; Fri, 13 Nov 2026 14:02:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xRwQk-0005eL-Fq
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 13:55:23 -0500
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xRwXM-0002M1-8r
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 14:02:16 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xRwQi-0002iL-CF
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 13:55:21 -0500
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-67990a45e02so1377093d50.3
- for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 10:55:19 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794596119; cv=none;
- d=google.com; s=arc-20260327;
- b=J6dXYQ5DO56g9nSsH+QCuyyDzL2qvIMLsksL8Ip/tD3qgiyMjfaQhEfjRxakqsCSiz
- nsFRID0/7GOoIxtLpMfIlHy44lPu1cIY5PTMZjikQKv5JttMqaq67eMKgzyjULgQzAEw
- PqxPZCHe1GZC7JSFUFFbs3WtFaz8oK5p6ClcIUY80rawxaOTsIQxzIMWsZHoyLV3L1Pi
- yVo3pEpvkw9QtsaZZL/AzOD3zGpervChhgpzCLVQNdaJKqjSI896wu2YKmfHkRcOvQHq
- mkpjDD9VpkUI+ZNiicgZwIQju4uL3mb3Ftuqi/jEWPjljQrAFbPV3jXjwHjflZjlgYkZ
- I7Mw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=5yUQz0oRrhnwrN3KjE4ESfdFm0LqHS05K6oOdecwAAg=;
- fh=LxX7tgPD3LlDVMyq339w77dWzfJqxpF7JR3tcFjf6aA=;
- b=MKB6mPruWvh/qAAqCkYnWGJDmGLwpohDzp7nlj+7spuL0okMQCDExtxBZiYPwmK/05
- tnad3uAYzoTLxVWaPTxC+kkEWQ2gsE0xttSa98sW21QJA3olCnBRCgOTnSnBn0ipPHXr
- HoAOJkB67in3rfsRlsUUfqyI6/4dFIkJlp0LcUooRqQd0FZg4/9QgcbKNX/c8noFvxh0
- 6yCRlhy8bsDx7+CPmtPjPme4l508sOmUVVVJU4YWlaj95BldemqmhFR6fs/3lVo0MHW1
- sqQQR/xxx4ae8Q7C+AXNPeJ+1osKjsW1hLj6mROzP3TQSpfeIqcUZR9T3qtA/ihegqPk
- +Mrg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xRwXK-0006ty-Iw
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 14:02:12 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2e9ae391a05so8076085ad.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 11:02:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794596119; x=1795200919; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=5yUQz0oRrhnwrN3KjE4ESfdFm0LqHS05K6oOdecwAAg=;
- b=DHTXUK4IlAzsVZgAFs00hRC+wM1f00vwwJ/snL8mHNVbDJUpVrpBPcLLzqITZpsCXn
- yBYT20dDNJmaQPh6i/XvBOoRxu+OrwvWSOktwxtrpKTA4YG7LViv3n2dnuAfZKhBBC0t
- tqjYOXxBFMvz5zQMuNkuMO65VTQKcC3VyHWf06l9XaW2iapQpmjUz5vtrvWNHKgfQ66C
- 5lYTlyuPNBStH4zOu+DJ+0lYIAwFg2T0QAUKg4zThZHGj21ToNARvdsJK1k2K+PNMpUF
- 20ccLSpJ4fYXkyEBifVGFHDAfZQt/jrSSGWWemv9mR6Ge9eZHW9pMCBLXYSqXarauYQ3
- ZqZA==
+ d=linaro.org; s=google; t=1794596529; x=1795201329; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=nK5dNfi2wW+menjvPweGxKkSG7Fk0qQE94xB0x/3Jx8=;
+ b=JLtBNIAAwenVouaThh+AVoWLYgKf3yEHm5uqnwNsPvCpCjgY56UPAdMsC44N53hxho
+ lFyzZHavBjs6W8oDewfd+aoWHnVwKGckI7C9Uqjyd/Np4CtKgC64hSmVGf37QRyfbM+F
+ +9cFyLmonJYmuY7ySIHqO3xj7hJSZ8eWU0YIX4kbPXiOn3mpWznXJNSE7JywyNYEMown
+ WNNQyvZ/xmXTWLdqh3AaILQzptOoaJQL3yWZI0A0w1BZ9f36mLqCfPBxjscSIMLkbUYX
+ sYgca5pr0izRzapZO6aNN1273n2qPLrouo00mrH/XfHn/3sF0G4wvxE6fKpftbevzub/
+ iJ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794596119; x=1795200919;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=5yUQz0oRrhnwrN3KjE4ESfdFm0LqHS05K6oOdecwAAg=;
- b=XrkmD3eK1HwtRmAyiM/1JULtThZy0Dpl3a+lLHd/GwoKvPleVnRzhRwNA4K6E6gALT
- /Y/dUMZ4CtCg46rofaqLrNZOylnNHW0uyBZ6l/diqqOFu7DWJBzGjPCbDnKIXnjcbGIP
- escE/wV2IVi8V8mTHxHnuyHY0BDQvXALbcGaLiZQToWcHGfiA7jvhU+GeVfFf8uxR5Rn
- TdeehIFCsj6eUUuWUW/4Q5TqzywAB/DNCpiuY0xXfs3los43bd4TLi9PTJ686SW/suw8
- 5TRSiDDBN0NsOd9UT+LP42ff5iGhNW/brQlCRl7Swv8uowvQfVt6umMRYoC9oRaIrNUY
- NdBA==
+ d=1e100.net; s=20260707; t=1794596529; x=1795201329;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=nK5dNfi2wW+menjvPweGxKkSG7Fk0qQE94xB0x/3Jx8=;
+ b=SIrtQVEJRKfWdhoYdxJMIPAPifpMioSFV2Srirs2lJ9SbH1PVabIPYiDKZ5ymBTuQU
+ 1tSIKVfPACFB9w4Y3VtSlcunyXlrco4xAeITsVwFHMS7tc/RbMmuvcW6vAOUMbBecJbl
+ U2DV5XJ+lGk/Rbirp0If3JBc9bW6vsfXdNukrfd7F4Dx8j3LhaTFDOFoWKxl/Qp1Y/qc
+ +7uKWPJWCvvyID3a7HAIoXBOgUOinL7Mjoo9Bum8krWGCA8ROeVDLHolwG0J0mt+RxFl
+ 5MkgrYx0Yd7htt+uGjSGYHUR+xVZ3/OXQUUW6Nksh/ufpkiu65y7nZ9oaHEf9C81QTvq
+ RoHQ==
 X-Forwarded-Encrypted: i=1;
- AL+hErGKaCuAcspy7de6EIlqtDhIVBMQYssqwR6FPOk2KfHs02QPLlfLPnVdmP4s3CCDUDw0qtRemPzBg4o6@nongnu.org
-X-Gm-Message-State: APuU4Z+VdI1+QSloO4ghPPo+BmHgNiTt7r7dRL6kptXaAORzRa50GKV6
- Y8mXh1hWKZ4r5lsrbmQwMfHZvOQAfpH3KYmHT0pBCzUPMP9PG5rvm9EZx6jjhpzptEdC9xTOKO1
- VfoywxzwhqLjSaQ6+oOayUxbeqHQ90aWXb6Toqp1plQ==
-X-Gm-Gg: AYBFou3m5aF62Ly8i755BT/LhBg5qsinlkz60KEHDBPEk1SA6f11ujvfaBjxr+nBPLY
- XtsN4trTqG4BmkKUqizFk/BnTRxOzN9h4YLW2vyaUpl+HLtSu7/5FBBCz6qmfjE/9Ri0HGJ1sCK
- viPflicX9AP+H8wR4VHbYQnNgHq1GQTzCE2uHdgtjca3CcHPriHe/fdVqKQyReb2IDjWOqybvxi
- 3DFj5arMlU6h8Ajrz/TmpW24z+Ff4hiNi4Gys0AhmU97xSJJw7DHYMGRtM19+kdWXzQTsjG63OC
- 4k8m9sQ8MpDp9b5PlALBTErFsmDOp3gFte5I62hFoZzSThazGSHa/Fm21eH1ndPv4fLKTyJrqu7
- ShiLKgt65RUspKZDAw9sjgzr1uCIytTYlybsPr6hU4mF3FFVM8gTMhphHuAUhXUv6PnxpDHyJBs
- TZTjCrAUN9wWuo5xHn9XyAr0l2aTMRjjXGU2Edvhee+Q==
-X-Received: by 2002:a05:690e:4811:b0:67c:6e85:56d6 with SMTP id
- 956f58d0204a3-67d8971822fmr1642868d50.48.1794596118523; Fri, 13 Nov 2026
- 10:55:18 -0800 (PST)
+ AL+hErGnMbClpAKhtEDMUjzlW7bi16dxr4lP+BxVF+k7nRhAkuDKN0fa+CwxHb6wEKVaImIQjss6uxhgv/7l@nongnu.org
+X-Gm-Message-State: APuU4Z99g4ieLxqPTM++V3h5OxTEId12pW88Dg62ApSyVkU487QQHbnZ
+ X/zouHdwtXJDrOhDY5IyW2dMfX3bDBEP6kbPViB36DC20AUDJj69ym/FGm6bxWNTF1c=
+X-Gm-Gg: AYBFou3lBUxRDwT48Y5OGDT8KKCsAOdPLexqi1S/lCyyPUcBBKfHNWjgh6mHdsLzVmO
+ wVk7yR0FUmCoNI4vjecHycPiBg0ZqAnnwrCWocU+ahKGv0NHjh2xsxaWwR2Qk1FUw9omruWDMOf
+ Mara5nSmepcw9QvyVQrKufG2QHV7v+sJVYGWosspsoWMaL6UM9FsrmA97+2tuLRgbESDdaYeH4Y
+ RBNhBZq5HUbMJCbIs02kFZgfEinP/qfZN+AZDRY5r1f7046LhvpWXjvotRIxoqcf5z1JqTlEp6U
+ nGo0WVMY+3aznVnHWhiRuG3OIl4DVliZvOfdpttnFtOTha+XxBsMfKgYUBkXcGOu7+tHtlRj56t
+ GMuvOEBmC1J/C3ojhN4CKmvDzV6PiEijDkMWb8CHNCxcWNbIhnG0X2F6fjnty1A+qhJMCfFr0pS
+ VnntsYRfJ9Hc1FEO3VIgaVO167EkYATn0tRZfM9s8DVpArbu1wJLIuBoIdvK6IAaIDY/iBUMvkj
+ CcLl2Qk5TmJg4iMT5zgyUKu/zJmMtJjTzfDgcmtJIzJPuoEPAM13ywL0rfHt8/RqxwfX5UwDKAs
+ 6ckW++nD3ivKswlkAa5+qrV4md9/a4sqGQbnJswkxLw=
+X-Received: by 2002:a17:903:3845:b0:2df:b510:cebb with SMTP id
+ d9443c01a7336-2ee0d9fd788mr26567535ad.6.1794596528588; 
+ Fri, 13 Nov 2026 11:02:08 -0800 (PST)
+Received: from [172.31.6.230] ([209.52.143.85])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ee0f8d4612sm14575475ad.57.2026.11.13.11.02.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Nov 2026 11:02:08 -0800 (PST)
+Message-ID: <3efcc609-7804-4993-b69f-8a768b9a3b6a@linaro.org>
+Date: Fri, 13 Nov 2026 12:02:06 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261112180859.85380-1-philmd@oss.qualcomm.com>
- <9b64d3d9-736d-4878-80d7-4caa75eee778@linaro.org>
-In-Reply-To: <9b64d3d9-736d-4878-80d7-4caa75eee778@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Nov 2026 18:55:06 +0000
-X-Gm-Features: AclHuK_VVHo-e8YYO6oZ9bWUpkAFBAvn1WX8kWyMt4kCMftTN7Tg82QS4Y9Goc8
-Message-ID: <CAFEAcA8La+8TqFY0yCxRsXY2Ad9MA5Uu-sVEbysExZPkUXVawg@mail.gmail.com>
-Subject: Re: [PATCH-for-12.0 v2 00/12] linux-user/aarch64: Support both
- endianness at runtime
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- devel@lists.libvirt.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 0/6] NBD patches through 2026-11-10
+To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+References: <20261113143132.2414774-8-eblake@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261113143132.2414774-8-eblake@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,45 +101,37 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 13 Nov 2026 at 18:39, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 11/12/26 11:08, Philippe Mathieu-Daud=C3=A9 wrote:
-> > Since v1:
-> > - add ./configure error msg
-> > - cover ARM32
-> >
-> > This series lets qemu-aarch64 run both little- and big-endian
-> > ELF binaries, retaining qemu-aarch64_be as a compatibility alias.
->
-> Why would we want to do this?  qemu-aarch64_be exists, but is
-> essentially unused.  It's certainly not supported by upstream Linux.
+On 11/13/26 07:30, Eric Blake wrote:
+> The following changes since commit 4bcd55a1f4b926ae86872087f7f3bc9f9e1d065e:
+> 
+>    Merge tag 'pull-trivial-patches' ofhttps://gitlab.com/mjt0k/qemu into staging (2026-11-12 21:14:41 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/ebblake/qemu.git tags/pull-nbd-2026-11-10-v2
+> 
+> for you to fetch changes up to e682c0e570179bd7fa01ea896358a8cdad196a3b:
+> 
+>    iotests: Add another nbd-robustness test (2026-11-13 08:02:09 -0600)
+> 
+> In v2, defer Guillame's patches (the bug was minor, and the unit test
+> to verify the bug fix was flaky) to a later date
+> 
+> ----------------------------------------------------------------
+> NBD patches through 2026-11-10
+> 
+> A few bug fixes:
+> - Eric Blake: fix two low-severity CVEs with non-compliant NBD clients
 
-I know the kernel just dropped big-endian kernel support
-recently, but did that also extend to userspace ?
+Applied, thanks.
 
-(We should check with the kernel and gcc folks about
-whether/when it makes sense to deprecate qemu-aarch64_be.)
-
-> Having runtime selection of endianness seems silly within that context.
-
-As a more general question, is this something we would want
-for architectures where both endiannesses are relevant (e.g.
-mips, ppc64)? At the moment we consistently for all targets
-handle big vs little endian as "it's a separate target with
-its own executable". That's convenient because you can at
-compile time hardwire in things like variations in struct
-layout between the two. We could switch to doing that kind
-of thing at runtime, but what is the benefit we're aiming
-for by doing that?
-
-thanks
--- PMM
+r~
 
