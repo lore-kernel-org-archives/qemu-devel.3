@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA3E606A8BC
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 16:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3A8606A8B6
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 16:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=o0XwO8dw;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=VBwvnTMM
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=WRUW2/Wt;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=MNQ4fHlb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRtwe-0006ja-2V; Fri, 13 Nov 2026 11:16:08 -0500
+	id 1xRtwA-0005Cu-Lg; Fri, 13 Nov 2026 11:15:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xRtv3-0003qJ-I1
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 11:14:40 -0500
+ id 1xRtul-0003Sw-EI
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 11:14:11 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xRtuy-0000OE-J2
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 11:14:26 -0500
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1xRtuj-0000N1-QP
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 11:14:11 -0500
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ADFRRRB3296046
- for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 16:14:23 GMT
+ 6ADFRRnP738055
+ for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 16:14:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- AGe1K3hUo4GMTGl5PlhtYLIZgxo7jgD3mMq9y+4cDHg=; b=o0XwO8dw8ur+lgGO
- 9cmkVl1FfKE7nSF/i3Y7NWTLW5k++LGG5zpkScquOx1Mg5O9Xg8n/GGfAS27UjCc
- wjGZdYsiw56FujcPg8uuMS9P5u7+qJLGVTKtCd7bjvLQ9nEw2sKUDCZWOAcp2Sxk
- 7CkoifD0k1X6iPqVW1fu80C9i2bzgZdqcXn/Pzs06WzAQI2Bg54+acwLbWf92dXQ
- n2wfUkfutcPpUSFv5vck3eoTPdVUMgZDRAaztMdQKv048FyMhspqXgGIo5tFmkKZ
- fOHP8S64neVghLm1EMNPM0MdGDDxvQmNfTFZAcDlsR8yrgLNQ48oygoMHYp0mHYZ
- xk/16w==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hwvu6t3vr-1
+ zW11rmRsNZGc/uNLUSwQvTV8WQJqGKr3BHpraN1tjq8=; b=WRUW2/Wtyf3kJKok
+ odw08/9mQVj3VRyak42atnk//+LxNgv0a5GsNzck2y55t2L2bl36yOXmP8NqhU5T
+ QAuttlAT+fSH4HSjawNV1bSsbjUIc5/BUl7SQ8czu8qCzKJ++ruBvRM7NXqinKUg
+ NoPi+6fsrPsZuWegWq2C6QaJWZhrfMWaIv0THimtOhNa/4JavLCpZkc+rdSN4jHN
+ jJqZEA0AFhOFEJDortSG0Nedsx3Xshz0pqhfUTx3U9xC+ngNnT/1ZkRoafGoP922
+ qG+H6jUM3NxXHMOKaEmKb0IPUuvs5BnGA3q9WtUYkBB5dFOLYUenNZgmPDrBnpNQ
+ mHpV7A==
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hwv37j9g3-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 16:14:23 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id
- a1e0cc1a2514c-99b8fbf29a9so331063241.1
- for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 08:14:23 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 16:14:07 +0000 (GMT)
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-7d2cba05824so1154909137.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 08:14:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794586463; x=1795191263; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1794586447; x=1795191247; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=AGe1K3hUo4GMTGl5PlhtYLIZgxo7jgD3mMq9y+4cDHg=;
- b=VBwvnTMM/uceMl96LuhmFP/e5Wmnn4NACUT11Wx/p3zAAh4Bd/FMJcJdjxyyHlAoeJ
- Om97WPLapg+K/IBrSrKTNPg/ypXLhJReI8JjTTd6m8r/6HpPzmqIhp2sxVXH0bazB/tG
- 2gyKUT4Xp1oDiUxnRCJEkuMShgVqlcc4P/JWhM8CeKoeEi6Pmwal0HZqiX8TzZREh0Zc
- L58FMv/K8UdvuHTstZZe1SRdKCdKU5K2c2+Jpjnr+Nbi5f8YBxNJIHpw7oM/LAB73Wv0
- R1iwLTdIBk7i/3uo/6wqD0tNNrq3TX2BtyY/pHeCCH35X7mtXfY0ta+fFnucrgxHPZSE
- inlg==
+ bh=zW11rmRsNZGc/uNLUSwQvTV8WQJqGKr3BHpraN1tjq8=;
+ b=MNQ4fHlb8HqI9LDbFpnIxYM0gMk1O5OOqHQtUz8XA2ItiXV8YRbcs8wlEOl3XidxQe
+ UwOPm5EFEi3Pabocj3uCjLAADk0u5oUEOwqznrDRXGFbzywvmzKTNLpLERgNwj07zTix
+ FLKLKyNFyLrstFfLJUchehKovOCZLp1alKHjIa4zcJEuU/uDkARgYi0ySW/uX6uiNP9h
+ Xojqv/UnbAiR2FpC5jRZfgwPbmIP6W7FdIUlmDZlinVfacL4pUeuEBVQeLRqhKW632Za
+ +Nfba8RRBo/9AfwKpGQxr51xkpiCFsTu+ZBOzkvgAal+RE1WV/OPljgV8R5vD6j4tnfM
+ xdlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794586463; x=1795191263;
+ d=1e100.net; s=20260707; t=1794586447; x=1795191247;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=AGe1K3hUo4GMTGl5PlhtYLIZgxo7jgD3mMq9y+4cDHg=;
- b=N05gjfk9Y9abpg8a1ljmxUCvCHwEWYuoN7h+xCvIa6qMqvYI2mKPOj/YDLAn5WRMnE
- luSioavP+fpR6Wqy+DWzfyggZE7ez/zThDpw+bZkesUQ+v3wJn4Ze46I0D6uaOwB3SLO
- WHPxXmcxAbJZ1rhrdPYSCCyAmEvy4sgkRMES4YT+JNht+0cJQa5eACtDzLjQdmBotZ8z
- 43YCEbB90OUTv0z3uClDwkAekWoetDeaTkNf7NjNbwLNAwYv6wqcV8wLTJ4b38hGygzM
- 17c0IUAomUxEfTRSm4A2UC14rrtCuUx6cvcQEpW/iSdFUUFW1kL8VTo5m4qoZiGCmoY3
- DlqQ==
-X-Gm-Message-State: APuU4Z+OW4fqIy18B0oC9ZrI3UMGyfN3dznm/Fmbr7H53PRU5T04661n
- y0ePV+HLSc+Q1EZy3GCgYGP/0UBXFioo6Yb9BoV+jjYwr4J+ZsGbxLsNI8ou5pSER3tOy6HLPEz
- mg1YuPcaG83zyL2Jz7xYXphqwm5ITGHaOfTk4uQ+0ATsV05lidNaHdIYw/xbCYKevfufy
-X-Gm-Gg: AYBFou3P85WNulxBWWLAXzXvxY+oiAA+b+LhmLrIMi6sSUVX+fQW0dWhIUdLu4W3kfl
- tyrfSWmLWCUiwchIjmP29Jh+ixwh/8wrbQdRuwly3y+ZKbdWXUi+0+6Ytx9JqisWPhDonYLiNch
- yO19hhVkolvHOXKRlhS0SLa2l9tG3jVNR2Bcq/zDg0ofhPyYAq317KUwlYpIKXPcwCs+73tftJ5
- siQ3uSkmQl/FilqmE7VdfPrvElc63ai14stUWjQ4fe4QdCb+GLzjffw9cZS0ElsjgsDEscUTv6T
- w7GBP4J0PHcer2SPHha//dI/EsZXul2zspinV/xAMCdc0Yc/TfVyQT3OhCsUp6lvy9vUvxrAqgI
- Bz3DbrgVThZ113ryZJGXKiV/q2UeEUGyfTZHKULAcy+5rdJAcdYQfWfy51+Tqb8XvcIh5eAz4/u
- dtdew4xaFN8YugCA==
-X-Received: by 2002:a05:6102:2ac4:b0:7d2:7c63:5a0a with SMTP id
- ada2fe7eead31-7d64d81ed4bmr805717137.23.1794586462899; 
- Fri, 13 Nov 2026 08:14:22 -0800 (PST)
-X-Received: by 2002:a05:6102:2ac4:b0:7d2:7c63:5a0a with SMTP id
- ada2fe7eead31-7d64d81ed4bmr805706137.23.1794586462357; 
- Fri, 13 Nov 2026 08:14:22 -0800 (PST)
+ bh=zW11rmRsNZGc/uNLUSwQvTV8WQJqGKr3BHpraN1tjq8=;
+ b=MBJD0beMaZ/BPHlmhBGkehxj62msnALo33HBbo2J9FHP7tdTtQjSf0ln67d659F1kJ
+ A3AMiNuKvLNEiP7bYQMxy8+VbMWqIlJa+JDXlsVxloU12Irzx41f/xHAzVLAhmvIXwo5
+ 2s3S7s3McI55nT9ZebXBVhcn8DYNlo5StogJBeUpdZhh++oyRhyY9c3xLdmcIrH2AQPS
+ d5uoo1zXJk9gyN5xYh4w8AKG4djNnUlZ4nhpuUtPWu36woSUVWRTSYISWpyzExMcE/5s
+ mWKGFePwOuHych1ScfH6lzkyldhA7F+/cMCUr3+xcF5V2WiGFyvqM29iTAhnYy3BUoXO
+ Xt2A==
+X-Gm-Message-State: APuU4Z8dxS52UcGenNRNr0alAYJhWx2LO9hqr3Wayh8HS4jxzAXctNly
+ D9kli1/JuuMKimffoAomx9q8bnlEol7gurXK9lcHNSDr1SWm185rEyLuw2Vxk5gwCRtjw2/8ReA
+ BQmgBuqwAabdnzveFjMVmOKBL46XXpWo18pJqn9PlZPzl8KeM65QLg5ZcEJnEkUO6rN/1
+X-Gm-Gg: AYBFou3lOuS4oRyEcCF2plWaFDG+vN/rpJWxBWHDOaF0ndLb3oy7zcgTtHfgnBACA0o
+ YMIgoSoc3wJAqmSmWi0QnlFXnNx9ePksbiVOFORWy7cg6Ndmn/5+6VgkjdaYmawMPAa0Vn08fW7
+ 6pKqmWI/mqdEC2Ibs/VzOM1qFQw0XPe2KtR87QEnNcbSO+bBb1d9SAGLK7To2BcydH45RUPnlR1
+ +BAlBi1TX/ahnehvlrF3RS02xL8mLMSiPaNR30cRRBKfhWu8ho3EMLk/we840245P2dUZon216g
+ 9f/P95OM++UEV/IPQWQ4xFqJ/lbu2HFArRxhz08K1P5+cMmWAVHNIs06O6Id7F3xLirI1dXbe8W
+ e6/aJ+DrCfFJvwgXhXeqsZYbaBGhllAhQEwyH4H0kHv1GDPh/GxjRuTFd8jz6voIp5mdGPAnhiC
+ aGiRaUXYHOUfxCbg==
+X-Received: by 2002:a05:6102:4410:b0:7c3:c0b9:9028 with SMTP id
+ ada2fe7eead31-7d64d77b869mr1087709137.24.1794586447224; 
+ Fri, 13 Nov 2026 08:14:07 -0800 (PST)
+X-Received: by 2002:a05:6102:4410:b0:7c3:c0b9:9028 with SMTP id
+ ada2fe7eead31-7d64d77b869mr1087701137.24.1794586446746; 
+ Fri, 13 Nov 2026 08:14:06 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb4e29d24dsm168133005e9.11.2026.11.13.08.14.20
+ 5b1f17b1804b1-4bb5ba25b50sm29998895e9.14.2026.11.13.08.14.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Nov 2026 08:14:21 -0800 (PST)
+ Fri, 13 Nov 2026 08:14:06 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -99,10 +99,10 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  James Hilliard <james.hilliard1@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [PATCH 18/19] target/mips: Do not sign-extend partial LWR results on
- Octeon
-Date: Fri, 13 Nov 2026 17:11:56 +0100
-Message-ID: <20261113161158.25811-19-philmd@oss.qualcomm.com>
+Subject: [PATCH 16/19] target/mips: Decode 6-bit bit number of nanoMIPS
+ BBEQZC/BBNEZC
+Date: Fri, 13 Nov 2026 17:11:54 +0100
+Message-ID: <20261113161158.25811-17-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261113161158.25811-1-philmd@oss.qualcomm.com>
 References: <20261113161158.25811-1-philmd@oss.qualcomm.com>
@@ -110,33 +110,34 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEzMDA2NCBTYWx0ZWRfX01FqNYs+zqhX
- Y0j+hufn6tB1FbrtTNR3nehCueoZ5tE9YOUZ4TevOCI68uZeGlTBSXHUTvtcNqCDFpWWay2Zocj
- 339k0BgY4LsZu5w0LLZ9rU3E+tTOvber2bkTUI3MHPVBYHyenbhx49SpVeBfnxFrfwhzBWYYGvy
- 7CZiw7u1/7094FeDqN84MCtG/B7nLWlIirrg3adV4MZyWttWwt9tRSvEQIPRWpSTJDLMS79jNlg
- D5cYSf+PP5NydIkuvBy7Y1Tmc4s9JanaeBWS5Udx+ihzK+VII1sq7kIU3kE5R2/ktpB4Zuo0bJr
- 1x3tzDhJf525RGWR++Hzh+mSoD9LovfxyXQKcpZmILItK3GNtTZzt3mTdrBGw1wkT85R8hZo/0O
- jar3vEdOlBZ53gYNxfIUpw/fd9wFRM+s3/jzmIPEWL1T4tdx+nkghe109z2PQR2EF9m0adCHyK1
- YeWDDPAPH6D5wUXP1yw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEzMDA2NCBTYWx0ZWRfX+C+wBVwk+7n5
- 5m//aIblQtq/qUepbmEI2JT6EtZ4PzzUgXE/iX/V2DCrJDQaNiJvv1PjXm5XwrDaSbHf24xGb7D
- +aESBTcuhTaczeQH/GQvf73AC5htbsI=
-X-Proofpoint-GUID: 0fcKRT0jfHZs46JN4eG_4PGkx3uUqebi
-X-Proofpoint-ORIG-GUID: 0fcKRT0jfHZs46JN4eG_4PGkx3uUqebi
-X-Authority-Analysis: v=2.4 cv=JfcpPkKV c=1 sm=1 tr=0 ts=6af7375f cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEzMDA2NCBTYWx0ZWRfX3mwKWw/mF7kr
+ v3g3riHQZo45AWRpRunZ2w56JNmCQq0CaAHzwFe/YQ42IkkZTJBCAwBm4qi0efO6lix5mjFpYb3
+ OzdkzJqoAXOsWUIg0JfpKajIIVoJyBs=
+X-Proofpoint-ORIG-GUID: xWRInby5Dc0jRGlJQcZmse-AMIuxsRUe
+X-Proofpoint-GUID: xWRInby5Dc0jRGlJQcZmse-AMIuxsRUe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEzMDA2NCBTYWx0ZWRfX9vKVOnNkS8Ak
+ 2y9dZ5rk1SvMdYX3Cako+OPaBYEr6bif0GXkddVMrbBEr3PKZaMWBARBHrpYAYFNXTpCQjAmfcA
+ dg6BFqeDKVdJFucJ6EN4T8CW9X0ufJYTNie94TBBUViE+2lgrfwN50WW6wcgKJjQr2DjsAOdolA
+ dut1exPcOmKU7jAt7Dor9tR63oFLgM4lfkzvjXAH8QK0ipaHiuoHbbZLHgdT9HTm7syOSEzeJAr
+ y9074I1os4Gllelvs7IN71so3MnmT9GBNBmk7MJzQkownRhimIQSyTDV+gnpxRDQ+hmsKjdbuA/
+ UzY6TTdbNly4eEgSJOjO5KNjcEwdrZqM7h+/VbLCCU6sgj3hVo5yGUfpnqqGdJMnATuHrrKiJ6W
+ jkqK1OhhZZ5Cu3V8BvyljR0bpAENJCSYDxy4l/Bv+UACiIdtMRuKU5OtebAmeywPGKH/NTNlODW
+ 5JWSVR9cgLpM3L9ZnNw==
+X-Authority-Analysis: v=2.4 cv=ZeeIpcVA c=1 sm=1 tr=0 ts=6af73750 cx=c_pps
+ a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=3UIKva1vFuA4V1yXjwQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=o1xkdb1NAhiiM49bd1HK:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=M4u4gXv3FWbnTiq_ZVkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=gYDTvv6II1OnSo0itH1n:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-13_05,2026-11-11_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0 clxscore=1015
- impostorscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611130064
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ phishscore=0 impostorscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611130064
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -164,60 +165,39 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The MIPS64 Release 6.05 manual (LWR description) says that when bit
-31 is not loaded, bits 63..32 of the destination are implementation
-dependent: either unchanged or a copy of bit 31. Both behaviours are
-architecturally allowed.
+BBEQZC (MD01247 p.38) and BBNEZC (p.39) encode the bit number in
+bits 16:11; bit 17 is 'x' (don't care). The decoder used the 7-bit
+immediate (17:11) of the other P.BRI branches, so a set bit 17 gave
+a bit number >= 64 and raised Reserved Instruction on cores without
+64-bit operations. Decode only 6 bits for these two; BEQIC and the
+other P.BRI branches really have a 7-bit u field.
 
-Octeon III CN71XX hardware leaves bits 63..32 unchanged unless the
-whole word is loaded (vAddr[1:0] = 3 for big-endian, 0 for
-little-endian). QEMU always sign-extended the merged low word.
-
-Seen replaying a risu trace recorded on a Cavium Octeon III CN71XX:
-"lwr s7,26334(a2)" left r23 = 0004114d368db793 on the hardware where
-QEMU had 00000000368db793.
-
-Only change the behaviour for Octeon CPUs (INSN_OCTEON); all other
-CPUs keep sign-extending the result. LWL always loads bit 31 and is
-unchanged.
-
+Fixes: 11d0fc10b7ef ("target/mips: Add emulation of nanoMIPS 32-bit branch")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/mips/tcg/translate.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ target/mips/tcg/nanomips_translate.c.inc | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 6966b7e56abb..607384292633 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -2063,7 +2063,7 @@ void gen_lx(DisasContext *ctx, int rd, int base, int index, MemOp mop)
- static void gen_ld(DisasContext *ctx, uint32_t opc,
-                    int rt, int base, int offset)
- {
--    TCGv t0, t1;
-+    TCGv t0, t1, t2, t3;
-     int mem_idx = ctx->mem_idx;
+diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/tcg/nanomips_translate.c.inc
+index 3612c68561fd..68e9ca9cdb03 100644
+--- a/target/mips/tcg/nanomips_translate.c.inc
++++ b/target/mips/tcg/nanomips_translate.c.inc
+@@ -4403,10 +4403,12 @@ static int decode_nanomips_32_48_opc(CPUMIPSState *env, DisasContext *ctx)
+         {
+             int32_t s = sextract32(ctx->opcode, 0, 1) << 11 |
+                         extract32(ctx->opcode, 1, 10) << 1;
+-            uint32_t u = extract32(ctx->opcode, 11, 7);
++            uint32_t opc = extract32(ctx->opcode, 18, 3);
++            uint32_t u = extract32(ctx->opcode, 11,
++                                   (opc == NM_BBEQZC ||
++                                    opc == NM_BBNEZC) ? 6 : 7);
  
-     if (rt == 0 && ctx->insn_flags & (INSN_LOONGSON2E | INSN_LOONGSON2F |
-@@ -2176,7 +2176,17 @@ static void gen_ld(DisasContext *ctx, uint32_t opc,
-         t1 = tcg_temp_new();
-         gen_load_gpr(t1, rt);
-         gen_lxr(ctx, t1, t0, mem_idx, mo_endian(ctx) | MO_UL);
--        tcg_gen_ext32s_tl(t1, t1);
-+        if (ctx->insn_flags & INSN_OCTEON) {
-+            t2 = tcg_temp_new();
-+            t3 = tcg_temp_new();
-+            tcg_gen_ext32s_tl(t3, t1);
-+            tcg_gen_andi_tl(t2, t0, 3);
-+            tcg_gen_movcond_tl(TCG_COND_EQ, t1, t2,
-+                               tcg_constant_tl(disas_is_bigendian(ctx) ? 3 : 0),
-+                               t3, t1);
-+        } else {
-+            tcg_gen_ext32s_tl(t1, t1);
-+        }
-         gen_store_gpr(t1, rt);
+-            gen_compute_imm_branch(ctx, extract32(ctx->opcode, 18, 3),
+-                                   rt, u, s);
++            gen_compute_imm_branch(ctx, opc, rt, u, s);
+         }
          break;
-     case OPC_LLE:
+     default:
 -- 
 2.55.0
 
