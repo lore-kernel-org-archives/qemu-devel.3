@@ -1,63 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9179C606A33E
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2290E606AC23
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 21:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=ixQuMFDF;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=DV9r5JLD
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=IVCTwR7l;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=y4ZEpHt9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRzA9-0008WG-0S; Fri, 13 Nov 2026 16:50:27 -0500
+	id 1xRz9c-000843-34; Fri, 13 Nov 2026 16:49:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9g-0008BX-Fs
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:59 -0500
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9a-00082a-B0
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:50 -0500
 Received: from mx2.catap.net ([65.21.79.163])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9e-0005Q1-UN
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:56 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=iMKNUro
- /GRd7IOJhz7cHw5Ysu9jJG+TrWpoBJcqakeWiL3QoPGoByKZpGcRC5wCa9NDpTveQ92qHW
- ludeVd2NwvQks7p0HyzUL1ZZLaXffGl207A1IQK6KwktCaIUXjQ9cnqKE12dI3Zqk9qrZF
- AERx4za8vyoFzOXcCzaMzugettJbTn2MXg2vJzRMx/Vl5bFWHzE/2FNFVFbTkKAtFcEbKM
- xwbZJVPkm+PFgNQa4dLWfhAO6t0AOqM/IzfkSzJzwxu/gSO8xXCk7J85B0B1jw+34yEJUs
- iUcLSkt9x33U5hZ/VsJu7yOBkiqZA2RmYsFQ57qZUPD5iluatCC0yAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=x
- 3D6BlaKTou49KFSDgDVr1KT+cE7DCa/Z0LYFJ5vpow=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xRz9W-0005Q1-NE
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 16:49:50 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=m9wqaYv
+ VkC/SkLUhpxogmVKsoYzy7aN4qL3m+arAyTUORdy8vVeNn9XC17tP2U6Si+zIZx8pX5Usn
+ kYkboG979l2b8rGDFQ6AaaipT34nM3j8OfjFtXTgxSCGDoub45kFaEPRZHBP89xnSsw+a7
+ 3JJjFPSD2CrgUcWNfFSgERevpdNLChWI6RsEKY7fuCz+0FzENtMYzAH8aelOoCaPUx0UAf
+ WlZg7c2Qpcab20tJ4ve/Oe2UZsRagLMnbeQ6M4sQQWXWAUo2qGp//WPiEr/y3g5G0SkbfV
+ lA0DoJt6I750qV2mrhwWG4/MGU9Z6o3SnXKQFchMT/Donu+a+lHdy5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=t
+ 149fwDpwRDkz6g6sqocBq9j5sTNuQ3DAaBYtwRL4f4=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=syZ7GKF2yCC0Gs7y3RYTBVPrVwH7e9xuGbTe2EzBVpvfOUyVQcye5Ss2k5boj1ebWmi7
- s4DjqhTCnFZrzEPzMf1Txw+e6fln8pCO7us5MWAmPR/+hGqZgn3ClWIbGnuPLjr3wG+Oag
- kfMg7aDXdK/4oslNmMQHSI6Jd6m8haRvjuCfSjbOkxhOVpvhpMDPUXkpKQTDc2uQJWbULE
- 5cxzFt3NzUTGHXb3ii8Fbz6zf8osMGsx2JL7k/U21EaR24PICswzON0NCvc/fnxXKcEjBq
- qIWYt0E1KB6CzYNioJNIU2GKFps1xN2NPSxOSKo7IR5EUE9uXd6RnrOEBFCJEwNw==
+ b=TNuzW+uMfp0mNPfHSvfd4f+I/R1KilriEUkhEbKCLcUnmMKjpthw+dWj+shrneDplt/R
+ IMbuO0O7PtaRpmdxCYXVg0t7sKJM2aPSkbR031osek+bzga2Cm13n5fRe3OKhhrekkPtyh
+ KzILNqmrlSHPdWulZ04PDH2u3J5xNDKbz2kNhkRu/NqnTZSCTRotydzLJWZ+GQ5CxPlEuY
+ b5ld8GZRW1yh4O7NE7Y9H79iQLpACEZg/FpuISg+RIe+PLj0YyFB9Z5Yi7eJsbAoos7pRK
+ 4dTbClNTML80qRXqQ8u8hxYOaJ0cU7TFhxKQv1SFD41zlp70OICT/zU0/AHsomqw==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=ixQuMFDF; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=DV9r5JLD;
- arc=none; iprev=fail; spf=none
+ header.b=IVCTwR7l; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=y4ZEpHt9;
+ arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=x3D6BlaK
- Tou49KFSDgDVr1KT+cE7DCa/Z0LYFJ5vpow=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=t149fwDp
+ wRDkz6g6sqocBq9j5sTNuQ3DAaBYtwRL4f4=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=ixQuMFDFY9vvbD9qw3IDTC2S+pwIT+fI0Vr
- Xshuq0dp4OxP77+XgawBYSh6u78mB7oy9D5Dh4dHEWZ5BIgZeBJjf56Q+D0hj5ZNjqkUEn
- vpFD8K2hGUVM4mvOlo+yPO+X+ssr+bzt24C1AoPUf4cdVNwzLlp2KrkGT8XGrtVN0R+n/p
- FS4O+1cQh+1Sdmf67CPMOoWa1797Cv0UNo4bEWO0ZsvTh4qRhxn7BukDoRjYLgtkHcb6G/
- MMuzLs4GhTYU1VzeI3QEo/MzAq4HUeLkn5XCcyb5c3E+46VuIVUQK8nEEHf+DK87z5Kg3a
- r2XuG2Cqgba0rV/IfyqnbU3yBwA==
+ subject:cc:to:from; d=korins.ky; b=IVCTwR7lX9wohqcWSCfExMkhkh6iLVaICWS
+ X1b17DK8JtvdD4/H1mgTbaZE6NjmFxUByxdKNXT1j/7Nx/P2jwliTdHxpISPao8GEFZzu5
+ u/zCMPCjSL9uUf8A4vLZgoLyUqvmpNFENtD/73yV/WzyVZ+UUA5/bc0ZtCUN5eohU8kVId
+ qGeGnLWfUOZDL9yWfJzg2aj4CrW20ajndCG7ILMT/7Mv/M6LCnax1yFM+TDhxR0R6vy282
+ a/TCvF4rcjFq8KavA6F0Hz3gEBrIZXczadTc+RkwL2N6sDn0IefBHRlldgrhrTr2rQZ6Wj
+ YYtAixJmsTVqb4fdOlTUj0vfimA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=x3D6BlaKTou49KFSDgDVr1KT+cE7DCa/Z0LYFJ5vpow=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=DV9r5JLDYrY0E29n0k
- gEIbmB6Z31yOteWTo+6bNa/C/0t/57nZkOrTZLS/zlt0S5V+hhFZnWhi2/UIY26A2jAw==
-Received: by mx2.catap.net (OpenSMTPD) id d4d98996;
- Fri, 13 Nov 2026 22:49:49 +0100 (CET)
+ bh=t149fwDpwRDkz6g6sqocBq9j5sTNuQ3DAaBYtwRL4f4=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=y4ZEpHt9vMD6FSuJ+U
+ fCuKTcPf4WB0X2T6qKeor28orR8QmoDJOmIac394c12JQ2DVCfLSFoJ6YvfJVuXLA6Cg==
+Received: by mx2.catap.net (OpenSMTPD) id 5405e806;
+ Fri, 13 Nov 2026 22:49:42 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 79834859;
- Fri, 13 Nov 2026 22:49:33 +0100 (CET)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 38d189fc;
+ Fri, 13 Nov 2026 22:49:32 +0100 (CET)
 From: Kirill A. Korinsky <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -67,15 +67,17 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Cc: "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PATCH v8 08/26] target/mips: allow Octeon unaligned accesses
-Date: Fri, 13 Nov 2026 22:45:22 +0100
-Message-ID: <20261113214926.98536-9-kirill@korins.ky>
+Cc: "Kirill A . Korinsky" <kirill@korins.ky>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v8 01/26] target/mips: make CP0 interrupt state atomic
+Date: Fri, 13 Nov 2026 22:45:15 +0100
+Message-ID: <20261113214926.98536-2-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113214926.98536-1-kirill@korins.ky>
 References: <20261113214926.98536-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
  helo=mx2.catap.net
@@ -106,29 +108,433 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-Octeon firmware performs unaligned memory accesses during early DDR
-setup.
+MTTCG lets interrupt inputs and timer callbacks update CP0_Cause,
+CP0_Status, and CP0_Count while a vCPU checks interrupt state.
 
-Use QEMU's unaligned memory operation mode for Octeon translations,
-matching the existing treatment for MIPS R6 and Loongson3A.
+Use qatomic accessors for CP0 fields that participate in interrupt and
+timer decisions, and kick remote CPUs explicitly after raising a hard
+interrupt; MIPS interrupt line updates no longer depend on taking the
+BQL.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/mips/tcg/translate.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/mips/mips_int.c                      | 17 +++++++------
+ target/mips/cpu.h                       |  6 ++---
+ target/mips/internal.h                  | 13 ++++++----
+ target/mips/system/cp0.c                | 27 +++++++++++++--------
+ target/mips/system/cp0_timer.c          | 32 ++++++++++++++-----------
+ target/mips/tcg/system/special_helper.c | 17 +++++++------
+ target/mips/tcg/system/tlb_helper.c     | 20 +++++++++-------
+ 7 files changed, 77 insertions(+), 55 deletions(-)
 
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 0f89f76ac0..91d53d5108 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -15208,6 +15208,7 @@ static void mips_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
- #endif
-     ctx->default_tcg_memop_mask = (!(ctx->insn_flags & ISA_NANOMIPS32) &&
-                                   (ctx->insn_flags & (ISA_MIPS_R6 |
-+                                  INSN_OCTEON |
-                                   INSN_LOONGSON3A))) ? MO_UNALN : MO_ALIGN;
-     if (tb_flags & TB_FLAG_MIPS_FIXADE) {
-         ctx->default_tcg_memop_mask = MO_UNALN;
+diff --git a/hw/mips/mips_int.c b/hw/mips/mips_int.c
+index 26e7dd6d5f..537394c8fd 100644
+--- a/hw/mips/mips_int.c
++++ b/hw/mips/mips_int.c
+@@ -21,30 +21,33 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/main-loop.h"
+ #include "hw/core/irq.h"
+ #include "target/mips/cpu.h"
++#include "target/mips/internal.h"
+ 
+ static void cpu_mips_irq_request(void *opaque, int irq, int level)
+ {
+     MIPSCPU *cpu = opaque;
+     CPUMIPSState *env = &cpu->env;
+     CPUState *cs = CPU(cpu);
++    int32_t irq_bit;
+ 
+     if (irq < 0 || irq > 7) {
+         return;
+     }
+ 
+-    BQL_LOCK_GUARD();
+-
++    irq_bit = 1 << (irq + CP0Ca_IP);
+     if (level) {
+-        env->CP0_Cause |= 1 << (irq + CP0Ca_IP);
++        qatomic_or(&env->CP0_Cause, irq_bit);
+     } else {
+-        env->CP0_Cause &= ~(1 << (irq + CP0Ca_IP));
++        qatomic_and(&env->CP0_Cause, ~irq_bit);
+     }
+ 
+-    if (env->CP0_Cause & CP0Ca_IP_mask) {
+-        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
++    if (qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask) {
++        cpu_set_interrupt(cs, CPU_INTERRUPT_HARD);
++        if (!qemu_cpu_is_self(cs)) {
++            qemu_cpu_kick(cs);
++        }
+     } else {
+         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+     }
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 65d302a069..7c721ec9c5 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -786,7 +786,7 @@ typedef struct CPUArchState {
+ /*
+  * CP0 Register 9
+  */
+-    int32_t CP0_Count;
++    int32_t CP0_Count; /* Use qatomic for concurrent accesses. */
+ #define CP0SAARI_TARGET 0    /*  5..0  */
+ #define CP0SAAR_BASE    12   /* 43..12 */
+ #define CP0SAAR_SIZE    1    /*  5..1  */
+@@ -804,7 +804,7 @@ typedef struct CPUArchState {
+ /*
+  * CP0 Register 12
+  */
+-    int32_t CP0_Status;
++    int32_t CP0_Status; /* Use qatomic for concurrent accesses. */
+ #define CP0St_CU3   31
+ #define CP0St_CU2   30
+ #define CP0St_CU1   29
+@@ -848,7 +848,7 @@ typedef struct CPUArchState {
+ /*
+  * CP0 Register 13
+  */
+-    int32_t CP0_Cause;
++    int32_t CP0_Cause; /* Use qatomic for concurrent accesses. */
+ #define CP0Ca_BD   31
+ #define CP0Ca_TI   30
+ #define CP0Ca_CE   28
+diff --git a/target/mips/internal.h b/target/mips/internal.h
+index d4a4fdad91..104aa346b3 100644
+--- a/target/mips/internal.h
++++ b/target/mips/internal.h
+@@ -8,6 +8,7 @@
+ #ifndef MIPS_INTERNAL_H
+ #define MIPS_INTERNAL_H
+ 
++#include "qemu/atomic.h"
+ #include "exec/memattrs.h"
+ #ifdef CONFIG_TCG
+ #include "tcg/tcg-internal.h"
+@@ -168,9 +169,11 @@ extern const VMStateDescription vmstate_mips_cpu;
+ 
+ static inline bool cpu_mips_hw_interrupts_enabled(const CPUMIPSState *env)
+ {
+-    return (env->CP0_Status & (1 << CP0St_IE)) &&
+-        !(env->CP0_Status & (1 << CP0St_EXL)) &&
+-        !(env->CP0_Status & (1 << CP0St_ERL)) &&
++    int32_t status = qatomic_read(&env->CP0_Status);
++
++    return (status & (1 << CP0St_IE)) &&
++        !(status & (1 << CP0St_EXL)) &&
++        !(status & (1 << CP0St_ERL)) &&
+         !(env->hflags & MIPS_HFLAG_DM) &&
+         /*
+          * Note that the TCStatus IXMT field is initialized to zero,
+@@ -187,8 +190,8 @@ static inline bool cpu_mips_hw_interrupts_pending(const CPUMIPSState *env)
+     int32_t status;
+     bool r;
+ 
+-    pending = env->CP0_Cause & CP0Ca_IP_mask;
+-    status = env->CP0_Status & CP0Ca_IP_mask;
++    pending = qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask;
++    status = qatomic_read(&env->CP0_Status) & CP0Ca_IP_mask;
+ 
+     if (env->CP0_Config3 & (1 << CP0C3_VEIC)) {
+         /*
+diff --git a/target/mips/system/cp0.c b/target/mips/system/cp0.c
+index d946c8fdd9..f791207492 100644
+--- a/target/mips/system/cp0.c
++++ b/target/mips/system/cp0.c
+@@ -22,6 +22,7 @@
+ #include "cpu.h"
+ #include "internal.h"
+ #include "exec/cputlb.h"
++#include "qemu/atomic.h"
+ 
+ /* Called for updates to CP0_Status.  */
+ void sync_c0_status(const CPUMIPSState *env, CPUMIPSState *cpu, int tc)
+@@ -61,7 +62,8 @@ void sync_c0_status(const CPUMIPSState *env, CPUMIPSState *cpu, int tc)
+ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
+ {
+     uint32_t mask = env->CP0_Status_rw_bitmask;
+-    target_ulong old = env->CP0_Status;
++    target_ulong old;
++    target_ulong status;
+ 
+     if (env->insn_flags & ISA_MIPS_R6) {
+         bool has_supervisor = extract32(mask, CP0St_KSU, 2) == 0x3;
+@@ -77,9 +79,11 @@ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
+         mask &= ~(((1 << CP0St_SR) | (1 << CP0St_NMI)) & val);
+     }
+ 
+-    env->CP0_Status = (old & ~mask) | (val & mask);
++    old = qatomic_read(&env->CP0_Status);
++    status = (old & ~mask) | (val & mask);
++    qatomic_set(&env->CP0_Status, status);
+ #if defined(TARGET_MIPS64)
+-    if ((env->CP0_Status ^ old) & (old & (7 << CP0St_UX))) {
++    if ((status ^ old) & (old & (7 << CP0St_UX))) {
+         /* Access to at least one of the 64-bit segments has been disabled */
+         tlb_flush(env_cpu(env));
+     }
+@@ -93,8 +97,9 @@ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
+ 
+ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
+ {
+-    uint32_t mask = 0x00C00300;
+-    uint32_t old = env->CP0_Cause;
++    int32_t mask = 0x00C00300;
++    int32_t old;
++    int32_t cause;
+     int i;
+ 
+     if (env->insn_flags & ISA_MIPS_R2) {
+@@ -104,10 +109,12 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
+         mask &= ~((1 << CP0Ca_WP) & val);
+     }
+ 
+-    env->CP0_Cause = (env->CP0_Cause & ~mask) | (val & mask);
++    old = qatomic_fetch_and(&env->CP0_Cause, ~mask);
++    qatomic_or(&env->CP0_Cause, val & mask);
++    cause = qatomic_read(&env->CP0_Cause);
+ 
+-    if ((old ^ env->CP0_Cause) & (1 << CP0Ca_DC)) {
+-        if (env->CP0_Cause & (1 << CP0Ca_DC)) {
++    if ((old ^ cause) & (1 << CP0Ca_DC)) {
++        if (cause & (1 << CP0Ca_DC)) {
+             cpu_mips_stop_count(env);
+         } else {
+             cpu_mips_start_count(env);
+@@ -116,8 +123,8 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
+ 
+     /* Set/reset software interrupts */
+     for (i = 0 ; i < 2 ; i++) {
+-        if ((old ^ env->CP0_Cause) & (1 << (CP0Ca_IP + i))) {
+-            cpu_mips_soft_irq(env, i, env->CP0_Cause & (1 << (CP0Ca_IP + i)));
++        if ((old ^ cause) & (1 << (CP0Ca_IP + i))) {
++            cpu_mips_soft_irq(env, i, cause & (1 << (CP0Ca_IP + i)));
+         }
+     }
+ }
+diff --git a/target/mips/system/cp0_timer.c b/target/mips/system/cp0_timer.c
+index 6aed5d3af2..622fee357d 100644
+--- a/target/mips/system/cp0_timer.c
++++ b/target/mips/system/cp0_timer.c
+@@ -23,6 +23,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/core/irq.h"
+ #include "qemu/timer.h"
++#include "qemu/atomic.h"
+ #include "internal.h"
+ 
+ /* MIPS R4K timer */
+@@ -31,7 +32,7 @@ static uint32_t cpu_mips_get_count_val(CPUMIPSState *env)
+     MIPSCPU *cpu = env_archcpu(env);
+     int64_t now_ns;
+     now_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    return env->CP0_Count +
++    return qatomic_read(&env->CP0_Count) +
+             (uint32_t)clock_ns_to_ticks(cpu->count_clock, now_ns);
+ }
+ 
+@@ -56,15 +57,15 @@ static void cpu_mips_timer_expire(CPUMIPSState *env)
+ {
+     cpu_mips_timer_update(env);
+     if (env->insn_flags & ISA_MIPS_R2) {
+-        env->CP0_Cause |= 1 << CP0Ca_TI;
++        qatomic_or(&env->CP0_Cause, 1 << CP0Ca_TI);
+     }
+     qemu_irq_raise(env->irq[(env->CP0_IntCtl >> CP0IntCtl_IPTI) & 0x7]);
+ }
+ 
+ uint32_t cpu_mips_get_count(CPUMIPSState *env)
+ {
+-    if (env->CP0_Cause & (1 << CP0Ca_DC)) {
+-        return env->CP0_Count;
++    if (qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) {
++        return qatomic_read(&env->CP0_Count);
+     } else {
+         uint64_t now_ns;
+ 
+@@ -86,12 +87,13 @@ void cpu_mips_store_count(CPUMIPSState *env, uint32_t count)
+      * So env->timer may be NULL, so treat timer as disabled in that case.
+      */
+     MIPSCPU *cpu = env_archcpu(env);
+-    if (env->CP0_Cause & (1 << CP0Ca_DC) || !env->timer) {
+-        env->CP0_Count = count;
++    if ((qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) || !env->timer) {
++        qatomic_set(&env->CP0_Count, count);
+     } else {
+         /* Store new count register */
+-        env->CP0_Count = count - (uint32_t)clock_ns_to_ticks(cpu->count_clock,
+-                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++        qatomic_set(&env->CP0_Count,
++                    count - (uint32_t)clock_ns_to_ticks(cpu->count_clock,
++                            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)));
+         /* Update timer timer */
+         cpu_mips_timer_update(env);
+     }
+@@ -100,26 +102,28 @@ void cpu_mips_store_count(CPUMIPSState *env, uint32_t count)
+ void cpu_mips_store_compare(CPUMIPSState *env, uint32_t value)
+ {
+     env->CP0_Compare = value;
+-    if (!(env->CP0_Cause & (1 << CP0Ca_DC))) {
++    if (!(qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC))) {
+         cpu_mips_timer_update(env);
+     }
+     if (env->insn_flags & ISA_MIPS_R2) {
+-        env->CP0_Cause &= ~(1 << CP0Ca_TI);
++        qatomic_and(&env->CP0_Cause, ~(1 << CP0Ca_TI));
+     }
+     qemu_irq_lower(env->irq[(env->CP0_IntCtl >> CP0IntCtl_IPTI) & 0x7]);
+ }
+ 
+ void cpu_mips_start_count(CPUMIPSState *env)
+ {
+-    cpu_mips_store_count(env, env->CP0_Count);
++    cpu_mips_store_count(env, qatomic_read(&env->CP0_Count));
+ }
+ 
+ void cpu_mips_stop_count(CPUMIPSState *env)
+ {
+     /* Store the current value */
+     MIPSCPU *cpu = env_archcpu(env);
+-    env->CP0_Count += (uint32_t)clock_ns_to_ticks(cpu->count_clock,
+-                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++
++    qatomic_add(&env->CP0_Count,
++                (uint32_t)clock_ns_to_ticks(cpu->count_clock,
++                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)));
+ }
+ 
+ static void mips_timer_cb(void *opaque)
+@@ -128,7 +132,7 @@ static void mips_timer_cb(void *opaque)
+ 
+     env = opaque;
+ 
+-    if (env->CP0_Cause & (1 << CP0Ca_DC)) {
++    if (qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) {
+         return;
+     }
+ 
+diff --git a/target/mips/tcg/system/special_helper.c b/target/mips/tcg/system/special_helper.c
+index cc46542806..fe3111fb54 100644
+--- a/target/mips/tcg/system/special_helper.c
++++ b/target/mips/tcg/system/special_helper.c
+@@ -24,21 +24,22 @@
+ #include "exec/helper-proto.h"
+ #include "exec/translation-block.h"
+ #include "internal.h"
++#include "qemu/atomic.h"
+ 
+ /* Specials */
+ target_ulong HELPER(di)(CPUMIPSState *env)
+ {
+-    target_ulong t0 = env->CP0_Status;
++    target_ulong t0 = qatomic_read(&env->CP0_Status);
+ 
+-    env->CP0_Status = t0 & ~(1 << CP0St_IE);
++    qatomic_set(&env->CP0_Status, t0 & ~(1 << CP0St_IE));
+     return t0;
+ }
+ 
+ target_ulong HELPER(ei)(CPUMIPSState *env)
+ {
+-    target_ulong t0 = env->CP0_Status;
++    target_ulong t0 = qatomic_read(&env->CP0_Status);
+ 
+-    env->CP0_Status = t0 | (1 << CP0St_IE);
++    qatomic_set(&env->CP0_Status, t0 | (1 << CP0St_IE));
+     return t0;
+ }
+ 
+@@ -103,13 +104,15 @@ bool mips_io_recompile_replay_branch(CPUState *cs, const TranslationBlock *tb)
+ 
+ static inline void exception_return(CPUMIPSState *env)
+ {
++    target_ulong status = qatomic_read(&env->CP0_Status);
++
+     debug_pre_eret(env);
+-    if (env->CP0_Status & (1 << CP0St_ERL)) {
++    if (status & (1 << CP0St_ERL)) {
+         mips_env_set_pc(env, env->CP0_ErrorEPC);
+-        env->CP0_Status &= ~(1 << CP0St_ERL);
++        qatomic_set(&env->CP0_Status, status & ~(1 << CP0St_ERL));
+     } else {
+         mips_env_set_pc(env, env->CP0_EPC);
+-        env->CP0_Status &= ~(1 << CP0St_EXL);
++        qatomic_set(&env->CP0_Status, status & ~(1 << CP0St_EXL));
+     }
+     compute_hflags(env);
+     debug_post_eret(env);
+diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+index 976226a548..17d5340789 100644
+--- a/target/mips/tcg/system/tlb_helper.c
++++ b/target/mips/tcg/system/tlb_helper.c
+@@ -1107,7 +1107,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
+         env->hflags &= ~(MIPS_HFLAG_KSU);
+         /* EJTAG probe trap enable is not implemented... */
+         if (!(env->CP0_Status & (1 << CP0St_EXL))) {
+-            env->CP0_Cause &= ~(1U << CP0Ca_BD);
++            qatomic_and(&env->CP0_Cause, ~(1U << CP0Ca_BD));
+         }
+         env->active_tc.PC = env->exception_base + 0x480;
+         set_hflags_for_handler(env);
+@@ -1135,7 +1135,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
+         env->hflags |= MIPS_HFLAG_CP0;
+         env->hflags &= ~(MIPS_HFLAG_KSU);
+         if (!(env->CP0_Status & (1 << CP0St_EXL))) {
+-            env->CP0_Cause &= ~(1U << CP0Ca_BD);
++            qatomic_and(&env->CP0_Cause, ~(1U << CP0Ca_BD));
+         }
+         env->active_tc.PC = env->exception_base;
+         set_hflags_for_handler(env);
+@@ -1149,7 +1149,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
+                 offset = 0x200;
+             } else {
+                 uint32_t vector = 0;
+-                uint32_t pending = (env->CP0_Cause & CP0Ca_IP_mask) >> CP0Ca_IP;
++                uint32_t pending =
++                    (qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask) >>
++                    CP0Ca_IP;
+ 
+                 if (env->CP0_Config3 & (1 << CP0C3_VEIC)) {
+                     /*
+@@ -1247,8 +1249,8 @@ void mips_cpu_do_interrupt(CPUState *cs)
+     case EXCP_CpU:
+         cause = 11;
+         update_badinstr = 1;
+-        env->CP0_Cause = (env->CP0_Cause & ~(0x3 << CP0Ca_CE)) |
+-                         (env->error_code << CP0Ca_CE);
++        qatomic_and(&env->CP0_Cause, ~(0x3U << CP0Ca_CE));
++        qatomic_or(&env->CP0_Cause, env->error_code << CP0Ca_CE);
+         goto set_EPC;
+     case EXCP_OVERFLOW:
+         cause = 12;
+@@ -1306,9 +1308,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
+                 set_badinstr_registers(env);
+             }
+             if (env->hflags & MIPS_HFLAG_BMASK) {
+-                env->CP0_Cause |= (1U << CP0Ca_BD);
++                qatomic_or(&env->CP0_Cause, 1U << CP0Ca_BD);
+             } else {
+-                env->CP0_Cause &= ~(1U << CP0Ca_BD);
++                qatomic_and(&env->CP0_Cause, ~(1U << CP0Ca_BD));
+             }
+             env->CP0_Status |= (1 << CP0St_EXL);
+             if (env->insn_flags & ISA_MIPS3) {
+@@ -1334,8 +1336,8 @@ void mips_cpu_do_interrupt(CPUState *cs)
+ 
+         env->active_tc.PC += offset;
+         set_hflags_for_handler(env);
+-        env->CP0_Cause = (env->CP0_Cause & ~(0x1f << CP0Ca_EC)) |
+-                         (cause << CP0Ca_EC);
++        qatomic_and(&env->CP0_Cause, ~(0x1f << CP0Ca_EC));
++        qatomic_or(&env->CP0_Cause, cause << CP0Ca_EC);
+         break;
+     default:
+         abort();
 -- 
 2.56.0
 
