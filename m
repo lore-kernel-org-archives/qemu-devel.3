@@ -1,98 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15629606A33B
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 10:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E0B606C92E
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 10:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=dUYni0iS
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=HHc4kAlM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRoka-0002bS-Vw; Fri, 13 Nov 2026 05:43:21 -0500
+	id 1xRovY-0008D2-08; Fri, 13 Nov 2026 05:54:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xRoka-0002bE-09
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 05:43:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xRokY-0001fa-Hn
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 05:43:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794566597;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=94ghMMNgKCq0dSzqKSO7w1E9ij6ckVKROfbELIzA4BA=;
- b=dUYni0iS4gxxT+clVR/RqXbrt5Dkktsx2fQr3TB3Xh6Kh2oNgbTGdytd1Zh//DBsmsnwTl
- sWJhYQ4Y8q8b/AD3oT5qNlZox1uHm4DsR58VoKePbEcSz6VBWIq2ebstsLMmsFsRUP3tRf
- /wf10ayaZGXU6+p7fuPMrL9KjuqKAYo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-Kz8uF5O5NiqXH9Ma2dv19Q-1; Fri,
- 13 Nov 2026 05:43:12 -0500
-X-MC-Unique: Kz8uF5O5NiqXH9Ma2dv19Q-1
-X-Mimecast-MFC-AGG-ID: Kz8uF5O5NiqXH9Ma2dv19Q_1794566591
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 610F01955F26; Fri, 13 Nov 2026 10:43:11 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2FC47195B3F4; Fri, 13 Nov 2026 10:43:09 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 13 Nov 2026 14:42:17 +0400
-Subject: [PATCH v2 5/8] hw/display/vhost-user-gpu: don't set an fd handler
- without a socket
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRovW-0008Cu-FK
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 05:54:38 -0500
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRovU-000122-H3
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 05:54:38 -0500
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-6798af41644so539459d50.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 02:54:35 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794567275; cv=none;
+ d=google.com; s=arc-20260327;
+ b=OvGWSKEE0OP6RBoE0KcNYcy18FA6Y4VcU9FYi57fVERssZ8fAZ2p3nc+6c6PsDecWW
+ y7hOTZKU7kglZVXENhOkR0XfWsb2OWt6VDI/MModuEQxaQ9wXWBT8EPNjO17J3DM0/r1
+ mvsduVuAK2djr93jKHUEIoB+KzYSjws8lMNvPO/jSAikx6o7tLnjfMu8OU0V+I0UFFJq
+ BxRpXMpyOaVxDFKTJd7RUDLSwedMxJUYaJCWQWPLFSP98V6M5k9JDASC1cgtnVu7QI2F
+ cY2XsnG1n+bSVuAiHkCs0+M+HI64UsVNkgMhsj+RLhplMaELOduyRoT629egPia09A8I
+ ExrA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ynEhXtMQRtbEX7RjisAR2N1A3/ELcd67s5djy0g23uU=;
+ fh=y9CZtbXqSNOXxjAXW8o7F7qU42xCk0+1BRU6STfAOtY=;
+ b=ZQ8IWh3ix/JU6GHyQQxF84RzD6Gv0js8UuLtJCYYgN2NN4idmTvvr8Ca3WVHRujb6/
+ gRF+yMG6GyT0RE9oVgvcDHwxjDuX8x9kqUm1CjSCrjW3LgmDq9bqnyv0PYprdEYMPTk6
+ q30+IbIQ+0LUVbw9brsbUqN9SlOedKPfRWaJE6ibYeYr42BLMjIehb92+vpptvroSbc/
+ qNipIAARqmI5PjvMPqcghD6HzymSBzA7UgtJF8I6sUj9E8JB5EI+NdpVXxTJlAxM7oQ+
+ 7agmeOEKW+cM86uamAV7SxCIHmJsekxWhL3UgDOu1xKxd0rQHevoJ2QyHkbng5iB+djO
+ KjFw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794567275; x=1795172075; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=ynEhXtMQRtbEX7RjisAR2N1A3/ELcd67s5djy0g23uU=;
+ b=HHc4kAlMbvggP/f8f70jYJ5JfjYWjCfg2G1GjKj+hsgvp4S3dGL5/Zy/MtjvFpt5WG
+ NBJITeegTr2G5JVfvOJuNV9++33yHQGcVOyTBFExXJKbDImOVbuUni4yk2bJ7ypKVse0
+ 9+zyt7xdlcD5GDQSFsqLY/FfgMJ+cpDU9N6jiXC3kJ/NOyTb2+xMH/V/c62H4UuZF+av
+ 3lCTfF/Xyg8aOvomIKcmEqXqmJEHC24SMz3ShZ3puLkgaU+pbamS9cEAmgd1khi2tWY8
+ 1qzRQAqMqdRwZqcRSX8mazyRxsKZgbCD/gn2ymFhs0NEFNSyyWVmd4s7GucBV7yWDMof
+ j4WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794567275; x=1795172075;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ynEhXtMQRtbEX7RjisAR2N1A3/ELcd67s5djy0g23uU=;
+ b=HuZH7glfdwFK6xnyC2+eAZXWYELOiKCSmn++pa6TkHfoirSGJLnksfMeqzxlFy7VS4
+ lx9D1m5fykApZEuZ1HFibUyqm840qL+Aah+/0BkfgdeM0ZHjD6mjuHGROq229f2kskig
+ EnB9PWwpQMtj1zKeAAi3zoV2P2jDGjQg2euG7QY9NHE7KRenJNJEciZzqhniLXbHzj9R
+ CPnuF/ATzPlZotR3OqqiE8B43n5YJDgVoHwcj4ycGBFKe7iFp0tG8fYpgaDt3uuPwAqZ
+ CKxGA/dSMy30wFTujyOxwfmD2OEO0O/ZH3kftjK8YiuN3wT1Hee2dO4uYk8NEqK3+xrz
+ P9/A==
+X-Gm-Message-State: APuU4Z/8qh/Pm58ebf1op55TC+Mdf7GsgZIpiW4aSglYMmmjvn/rVOCp
+ cf3GmL8ooOJG3F+vHD03QHTIHVnxA87fBnIgiAlRh710hCZ9LpowNSbwzzYnWG7S0JhS8bqBSel
+ POgamPy5X7XC+zo/v0xN6sRZ/mMg6hWFie/2zDlmhdyFaqKCid5hnAE8=
+X-Gm-Gg: AYBFou20MqxkH0BPHRYh2AunCTTQn1W8VQnlXQP71uszf43OS30uYwcdRzmx9q/y75f
+ dcYLPTmzHaBQbS1havQeW9Nwy1E+KrAkZmY+VoEH+8J/8Zx/R92t6xQXyNj1+y2W2b2uw71nY6u
+ BkTmzUs0S8ZVxBsgZWRdVrhwlc5v4yM1DGjGOb9nJPBvglX91R0FaPpTdaNIelLuE2VfubztJwA
+ l2TScumr1s/ABmXLi7JkMizbbRzAZWtHlE73WP3JjAazO/tCT9Dz5PqBYdjv+UhlNR7cmCROCZ0
+ aeZnRgvd+UTzCE/i0J6VBAlSiegtRAXYx7ejZoXMpII7Y18vCdwSYeZTK5hJVaevG1A5ui6l8Mb
+ oN5e5tJ3SCxf486DYl5DWftTzm5M25xdebQazLZOkgJz0MSBmMdYdKtzPeEVCz31fyfWqEG8BHz
+ QZ1aSgyrJFLMDXWDf6J2wW
+X-Received: by 2002:a05:690e:4847:b0:679:b8fe:a6e8 with SMTP id
+ 956f58d0204a3-67d896b7bd3mr1131313d50.36.1794567274760; Fri, 13 Nov 2026
+ 02:54:34 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20261113-issue-4848-v2-5-631414664bca@redhat.com>
-References: <20261113-issue-4848-v2-0-631414664bca@redhat.com>
-In-Reply-To: <20261113-issue-4848-v2-0-631414664bca@redhat.com>
+References: <20261106155858.3779237-1-peter.maydell@linaro.org>
+In-Reply-To: <20261106155858.3779237-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Nov 2026 10:54:23 +0000
+X-Gm-Features: AclHuK9fyjIfXbA2bWpQvPdOex4oxnLX0zb7p-yrbseUCOds45RlERbVvcvplm4
+Message-ID: <CAFEAcA9s6N6hu0=5y0vgBhDQu4PCsL4zkTQh_Mh--ZrwSkF5YA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] meson: Revert recent changes to qemu version header
+ handling
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry R <rdmitry0911@gmail.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1426;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=VyoPwlm/5oBxY+B34+pziF0lwz87H7XXBjqB+aW/iPY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq9umoLZ/ztPhGoreuUX4TkROSCQYLrZ9gk94jZ
- gabTCmzLOWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCavbpqAAKCRDa6OEJdZac
- 5VBxD/sHMGBDPxxXTA61KD/4hnkFsuV1b93G/JU5XEmwqi3MRYRjVrLdd0eO7nU8U3UH4BkuCxV
- h0tnviUaZTCf7CvnBFxx3SQLtMUfrk59D9sKva/WRQkEwJHN56MUkMsf/kOmARnoK2LmClLw/t1
- guj0reNNaWkFuENcFog86FRbS72eGlpR/jDOSUKp2iiJ1MdbvsTHXxMLU7SYSHoVCi4E+eMhLw9
- 26WITIvnURRP2ocJea33dDvNQq08TF9VxilPUYSO8a9xtATdtkCIFJaDdMVUUsh0PFqBQ0aQUAV
- H5JEGsh8hddVSXCs/bYfr8JzIZjd6/58wR6+TZVtWtTpGAmlE7QRAAk9orMpyFiC1Xg+gyktT0A
- bpdJkbZ3l+25Pb6ERCBj2VPGc+JJoCTeuK8wpr2gWVJnWGsEJWEPc/YvJs3H/+Oe33KolQmGxjU
- UliMFCJRAAx8oMC0mZMj952gR2NHdq/1u86JRlp8y+wZXL5gSsSXSoS9PXzgSVVmmWyn3qqxSap
- oFmjjY13xHoYVXmE5WXODYlxe3tGLh7urUpHJIIBItHTCcgxJy9NW97LO212SqPPd/dmG/26Jpp
- Zr/5vLyJczFfP9rtdKTPut9KBeRFyRdXhUT1WiY5s1unK/RWwnU/4DfVnjVjyZNtgBdcpPUiRot
- px4LvRUSC7SmCpg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Yonggang Luo <luoyonggang@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ John Snow <jsnow@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,50 +118,67 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-A GL display client that stays attached across a device stop can unblock
-the console after vhost_gpu_fd has been reset to -1: the UpdateDMABUF
-reply or the one-second gl unblock timer reach
-vhost_user_gpu_gl_flushed(), which installs the display socket handler
-on fd -1. With the io_uring fd monitor, the failed poll of fd -1 is
-reported as readiness, so the handler runs and is re-armed forever.
+I have been running into this all week, and not only with build
+trees that were last built on some commit that preceded the
+introduction of the relevant commits. RTH has reviewed this,
+so I'm going to put these reverts into target-arm.next for a
+pullreq to go out by Monday. We can figure out what our preferred
+way of handling the version header is once we've fixed the breakage.
 
-Only set the handler when the device has a display socket.
+thanks
+-- PMM
 
-Fixes: 3cddb8b9e0b5 ("display/ui: add a callback to indicate GL state is flushed")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4847
-Reported-by: Dmitry R <rdmitry0911@gmail.com>
-Tested-by: Dmitry R <rdmitry0911@gmail.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/display/vhost-user-gpu.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 78df9abd3d0b..6473ccfe882c 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -449,6 +449,11 @@ end:
- static void
- vhost_user_gpu_update_blocked(VhostUserGPU *g, bool blocked)
- {
-+    /* the display socket doesn't exist before DRIVER_OK */
-+    if (g->vhost_gpu_fd == -1) {
-+        return;
-+    }
-+
-     qemu_set_fd_handler(g->vhost_gpu_fd,
-                         blocked ? NULL : vhost_user_gpu_chr_read, NULL, g);
- }
-
--- 
-2.56.0.116.g6de20f6092dc
-
+On Fri, 6 Nov 2026 at 15:59, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> This patchset is two git reverts, to revert ab78ac76f44a124 and
+> fc35f24387703da. Those commits try to move the handling of version.h
+> to entirely within the meson file with no external script, but
+> unfortunately if you do that then there is no dependency information
+> about it passed to ninja, so the file isn't recreated if it's
+> missing. In particular this breaks incremental builds from a build
+> tree that pre-dates those two commits.
+>
+> There's been some on-list discussion:
+> https://lore.kernel.org/qemu-devel/20261105181449.1691-1-luoyonggang@gmail.com/
+> Since it's not clear how we want to proceed, I'm posting this as
+> the "revert to the situation we had before", so we can discuss
+> what we want to do with a bit more leisure.
+>
+> thanks
+> -- PMM
+>
+> Peter Maydell (2):
+>   Revert "meson: rewrite scripts/qemu-version.sh directly in
+>     meson.build"
+>   Revert "include: introduce qemu/version.h"
+>
+>  meson.build                          | 29 +++++++++-------------------
+>  include/qemu/version.h               | 20 -------------------
+>  bsd-user/main.c                      |  2 +-
+>  linux-user/main.c                    |  2 +-
+>  monitor/qmp-cmds-control.c           |  2 +-
+>  qemu-img.c                           |  2 +-
+>  qemu-io.c                            |  2 +-
+>  qemu-nbd.c                           |  2 +-
+>  qga/main.c                           |  2 +-
+>  scsi/qemu-pr-helper.c                |  2 +-
+>  storage-daemon/qemu-storage-daemon.c |  2 +-
+>  system/vl.c                          |  2 +-
+>  tools/i386/qemu-vmsr-helper.c        |  3 ++-
+>  tools/qemu-vnc/qemu-vnc.c            |  2 +-
+>  util/module.c                        |  2 +-
+>  scripts/qemu-version.h.in            |  1 -
+>  scripts/qemu-version.sh              | 25 ++++++++++++++++++++++++
+>  ui/cocoa.m                           |  2 +-
+>  18 files changed, 49 insertions(+), 55 deletions(-)
+>  delete mode 100644 include/qemu/version.h
+>  delete mode 100644 scripts/qemu-version.h.in
+>  create mode 100755 scripts/qemu-version.sh
 
