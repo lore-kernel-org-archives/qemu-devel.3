@@ -1,114 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5083606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 11:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CA2606A8BE
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 11:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=o4MQ77r8
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hUDOW2nM;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=BXqaYolV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRpgw-0006Mu-Af; Fri, 13 Nov 2026 06:43:38 -0500
+	id 1xRpkK-0002SG-Sr; Fri, 13 Nov 2026 06:47:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xRpgq-0006Ls-OD
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 06:43:33 -0500
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xRpgn-00007j-0z
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 06:43:30 -0500
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-67c0bd676eeso719843d50.3
- for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 03:43:28 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794570207; cv=none;
- d=google.com; s=arc-20260327;
- b=KTiHPRsW6MY++uIiffLJR0EzvJ2bedXEvxiZTvPYxqI8Lw09cy+MqeTjIIqiW+sn7H
- Lc96yIe08STKwXuSe1BpxkXfBiSdMzcGX1c/6gHgmFBeqJ/je5nbckjukMhbK//qHI/u
- pC38n10xACHrMFNlhAg8kX55cX7o07mPE1OiAmvGAVjDXfxRQYh33iuhsBMz3mw3Manh
- fWNf5v8sfiB/Qh6/AMCgGXZbUdleruXqtOcTYJdbanYfTGQjuVQLuidSLK9S+CdS0ptE
- T0YawGuO1mLN2XD3+cWRzOhD8nk598IEBQbx/qhP8qHmJSv+uJ4mG/Ns02wY0RhnJl6J
- aloQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=E+0mnBUGdappCvN2ZRSxsaN+H452oyweMoj7dkGzn9o=;
- fh=286Q6M15v7UtZc2or++lSj7RZFntzRCAkL2zfX9VgJM=;
- b=eyGLLAStckm2AJkVzpbpH26ewSDbaeQFhnS6/XCJld4q0PlbDVjeM/P5gWedPeXhZQ
- 3Ij5NKkvTVmjPfISCXR+lKhVTLKhhGBuxyIdvkHT76amk+wm1l+rEfrw2Ch27Yy57QWb
- edKL4I9ZwEgQ4lNmknxXgqsJIHhcmVNf8M0MdG+Uam6pGPmxhSlV2LnESr18gmBgVll6
- /FVjXXkAb0o+kXBwODLoBT8Vw85zNbJJ84zWBpNMwvUGnYPMxgHrV68GxMM6cI6vRada
- IUylryiZ/wNIBkq2y+6dES+AclwGZwpIhGsWNaZzbLV0W7xVRZPkIwsYhK2J5n8w8w+6
- RbqA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
+ id 1xRpkJ-0002J1-Id
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 06:47:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
+ id 1xRpkH-0001St-MD
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 06:47:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794570424;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=x++BKVgcgJN2xEOrOl9yW3T0FbqWdxcztRd9cpPgFW0=;
+ b=hUDOW2nMywEOcMxgpzzP8n9V1l0Hd9UyGwi2R9V0NBvQ7oXJy8J1sIsOWFiSrvdH8RpE8p
+ 0iHBtQbXjniS6Abtg4wstsURqIhWSicqu4Jw17CO5zuWSearEdWGbCPIWDqdVwZCnvMSOb
+ 3m9fmtZIeat6vk8mLSGtZmk3WZVZA2Q=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-75-NAO9l0_5NEOkk8J5Nyr3vQ-1; Fri, 13 Nov 2026 06:47:03 -0500
+X-MC-Unique: NAO9l0_5NEOkk8J5Nyr3vQ-1
+X-Mimecast-MFC-AGG-ID: NAO9l0_5NEOkk8J5Nyr3vQ_1794570422
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-490a0e72578so533189f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 03:47:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794570207; x=1795175007; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=E+0mnBUGdappCvN2ZRSxsaN+H452oyweMoj7dkGzn9o=;
- b=o4MQ77r85cLD3Dy+WiKNWqrSWLDwPFbA+gsvwkqXbZccPcIO56xCqg9/FBVePGyzft
- uK/XB+0ova+wqvLQmEpZkApqijhssHzOZqxeBy/Ay/6hx0nfLRbpCjzaAnS3vYb2BU68
- shd1jA2m2KHiYtsvwHQJiMOdt/EHWUCSEDFkJ8ULUBP9A9a967GtUty94fLXN4P/vVt7
- alx4yK6FFf0RWIMemeCsSOy+40BFmeLaPfWWHapLF8WFbPEmqKtp9lKF9m0KJk1kDLve
- DX2HdKDtX1VzxG9JMZN+ZG1+b4eabIMD+00KBG6Aa2RbMt+jKi0RPkeypT9NNZ793DLD
- ZgUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794570207; x=1795175007;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=redhat.com; s=google; t=1794570422; x=1795175222; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-type:content-transfer-encoding:mime-version:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=E+0mnBUGdappCvN2ZRSxsaN+H452oyweMoj7dkGzn9o=;
- b=bs2tZk3ZwtZN2GS/cIdyRMenDQVRUF3Mmab0Mzx+RZSLwinOd6ww5yVdcKKBXwyXw8
- QN2ClyMfBBPpMFOPvqH35KfpXZnti1ghszE76JrHXCp0p/GP92DPfA1A+7l7hKTWZobJ
- n2qErJ4mFvSICur0CjfprKxZMNGUWKWU5HtK6ZPBc3AVq32dRPEMcs/uE3+m6rLMNgJW
- Rzdr+ayJqKMhwT3HCPeL8/M3LGCbJMrt9M3ASsMMwqpSIqDq5APc1iYMZRTYZsoahNuK
- BBJgxJVIJOQrBD/MB9K2dMVa7EX5LcfwlAQ/Q5blji5VM1IvszoM56V6vjVG90qAYuci
- b20A==
-X-Forwarded-Encrypted: i=1;
- AL+hErEjWVCiYqAyDuqyof8yfjDZls11kuOz8w7DOFacUFyUFF12vXeifudPovLbF+ysh0Xx7YFHloOXnFVn@nongnu.org
-X-Gm-Message-State: APuU4Z8yZyTAJe4cmzY9A8TGqQWqrzEo6rpdwgyjKjqJPmTOM0bt7/nY
- mCiQfCfVrvXGVMPSzLCae7iGd1Ln4oK8DkDvJFPekU13AGRJxgWRqDVkzyndXSH9pGXFLqwNjFK
- /hyc5O44iEqisuTlXINE9UT5yAxkUvanvjMa7K2tAuQ==
-X-Gm-Gg: AYBFou1VfrSRN37/8bbmRnFdjN+CWEEkBWnv+oEzvdHI54nvpLUbvNcrH0DqtId735s
- C4xBv+QyrbLl98hBbsAJHjhhpHYjx+uoI3JPC10c170yhWrRJplzjrla83TlhD0mM/jKt07zWm2
- ZKz46GEE3h3UPo3Jbc6bOgUg0jN9DYNVdh6Ff7tkdA3mdCqfl0JduJh2ZY8mUXSImz3/QcnfzGy
- l+ReP4yaNfsUhTwRrXjkzqg41oVsfT3FjTOV7XZ8vQnBu3jjCPoC1JhvqBE5Fg9SCl5rWl2IYxX
- koHqbuVSJrZIUIxUYXF0TwSGGl/NQ7La/UCpJ25df35Yz2QaTlrm3fALb7IoIoIvWvGlR1lIZon
- ej9hQ8tGWneNd+7I3D9ACCnjMOGWsuA7VCN98x8v2YBD1EbWRnXabaZ3UBbVokJ+KK8WUg7ghI2
- jBBMqLSpPQQiQMUKaPyyVu
-X-Received: by 2002:a05:690e:400f:b0:67c:ace:30ec with SMTP id
- 956f58d0204a3-67d8965a4e5mr1646738d50.29.1794570207487; Fri, 13 Nov 2026
- 03:43:27 -0800 (PST)
+ bh=x++BKVgcgJN2xEOrOl9yW3T0FbqWdxcztRd9cpPgFW0=;
+ b=BXqaYolVsjQ18CWJvzgzETcdhaJ/tDJx4xHLqzTu909aDReoA2yPc2MPIEp3g+JCuV
+ SMMsL3FYJpd2xbBY9Rnpp6FejJ0jttcQjphl/qCuzLnHE2vf1dZQPvVtCcFacfEZoXVO
+ MzAvT6tL8Uqa+S16SrmPk7HtogcvLKWkvc+BsZTM2kVAFXa1BgEAcN+TCzsEDHWtBgHb
+ 99gSoUcLrTIjyBGKrCPdPIPyiNAFMmhydoZbR1BZL6iPjHLqOhHPyJxCnXkS+iS5KfsM
+ IksWRdJsNIC1jwtlVmHK55MNlxna9a6JFG2qkaWRnwdAxXxJ+ybgeEf80cJC2Np8qrGQ
+ J3ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794570422; x=1795175222;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-type:content-transfer-encoding:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=x++BKVgcgJN2xEOrOl9yW3T0FbqWdxcztRd9cpPgFW0=;
+ b=QLewKmiZJjhYKE1TSeM99c3UrhIKhm/Q/g00qWk/z/RHZqFO+cViF6YFcLiT/cP2qt
+ F4fqzAiVIFrh4Biryi1eDMlPhbrarwvZctqdqplBcJKO+Pw0FlJwmoWpoXuSC/lgv9mu
+ 8bUelrlm+R0t8Rg5Vg3zlgDNNIgDR4eteKOQ11XRt4qNUwpAgS0moiTwuQV4jjTCGdbL
+ ViOkmpobZ2vtU9wEmtfsapvcZbPdyqqReohCYSkc1qNi4mEfhu6HbfKEpXZ4FjHsMvPS
+ jeW+c0mNlCch+Sg/O9qi5C5PENxVEBOQL87r5rJUEQ8UD5r8104gPmO9GiwNsy41tQxj
+ PL5Q==
+X-Gm-Message-State: APuU4Z8rh/eOvd2IqCKULHwjldLisn+PyMrp88fXYa/nyXLevvmVMdtr
+ 1zU/iWS0pfEXmAgWUB0MIXKNo8BboS1+FJ+x2TsUMUBcrVdSHKqc7ynJt2MunbYUqXvqSl2QKlo
+ nv3TjT9UQVe6dOiGqcgBtA6kiTtQQOjObUCF6peFHXzNeT27oU/MuPhG4
+X-Gm-Gg: AYBFou3c875kFqE2zhW9jbxDsh1uwPOkjZsUs1JgmG+jxDGvTZhCMJZWcLlnW48sFOq
+ t8vd2Z+0COs8Ai97tn00TEBLueBg0NWH1wZRLVKtBFUVOcYprSEX8Dm/I3RJaZkBICrCE3RU7l+
+ 0SkVCXXAoXan2WyW2IvG30FjsJuoqtsDV0BfSvgqPD3vwKPG10vuO1/jj4ubQLV1KsCTCcUlo3B
+ CQHXAmhOP1DIUah4xmW0K27csh3OUNKeaZPiGgxMjI7DR8XXMaaxXpcquiyPFAoFqa5amJZ2WLD
+ HkClll/XBbG5W9y+bWT5SrQJa4X/PV3sMgVmmYKFQ1wIC7Qq++iDSxhQZc7AYZIwgWzLnzYBO4h
+ GOPRhG3krE0drulUV9qKq
+X-Received: by 2002:a05:6000:26c1:b0:498:bc2a:8f31 with SMTP id
+ ffacd0b85a97d-49c73259d37mr6072823f8f.19.1794570422016; 
+ Fri, 13 Nov 2026 03:47:02 -0800 (PST)
+X-Received: by 2002:a05:6000:26c1:b0:498:bc2a:8f31 with SMTP id
+ ffacd0b85a97d-49c73259d37mr6072767f8f.19.1794570421615; 
+ Fri, 13 Nov 2026 03:47:01 -0800 (PST)
+Received: from localhost ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-49c604ecda5sm4696434f8f.37.2026.11.13.03.47.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Nov 2026 03:47:00 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-References: <20260929235109.1398509-1-michael.roth@amd.com>
- <20260929235109.1398509-11-michael.roth@amd.com>
- <0d92762f-b026-472c-86b6-afb9475bfb37@tls.msk.ru>
-In-Reply-To: <0d92762f-b026-472c-86b6-afb9475bfb37@tls.msk.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Nov 2026 11:43:12 +0000
-X-Gm-Features: AclHuK-0ovHMofMAU4abvH1wqwKidLGkVS0z3wn2kXuEuqiJPvEmXS2IosZGICU
-Message-ID: <CAFEAcA-UsEKBfpeQpZ-SPZ2cFXA7_XxVmOdSEQ0UfRC+z8LSTA@mail.gmail.com>
-Subject: Re: [PATCH v7 10/12] hostmem: Support fully shared guest memfd to
- back a VM
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- pbonzini@redhat.com, 
- armbru@redhat.com, pankaj.gupta@amd.com, xiaoyao.li@intel.com, 
- chao.p.peng@linux.intel.com, david@kernel.org, berrange@redhat.com, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 13 Nov 2026 12:46:59 +0100
+Message-Id: <DMU24DRY7JM0.1VG242UKW6HJO@redhat.com>
+From: "Tommaso Califano" <tcalifano@redhat.com>
+To: <marcandre.lureau@redhat.com>, "Tommaso Califano" <tcalifano@redhat.com>
+Cc: <qemu-devel@nongnu.org>, "Markus Armbruster" <armbru@redhat.com>,
+ "Richard Henderson" <richard.henderson@linaro.org>, "Junjie Cao"
+ <junjie.cao@linux.dev>, <qemu-stable@nongnu.org>
+Subject: Re: [PATCH 2/9] hw/usb/dev-mtp: Reset pending write state on
+ cancel, reset and error
+X-Mailer: aerc 0.22.0
+References: <20261112174907.158825-1-tcalifano@redhat.com>
+ <20261112174907.158825-3-tcalifano@redhat.com>
+ <179455878071.754321.2481506478534104185.b4-review@b4>
+In-Reply-To: <179455878071.754321.2481506478534104185.b4-review@b4>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=tcalifano@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,73 +121,61 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 13 Nov 2026 at 11:29, Michael Tokarev <mjt@tls.msk.ru> wrote:
+On Fri Nov 13, 2026 at 9:33 AM CET, marcandre.lureau wrote:
+>> The pending state (s->dataset.filename, s->data_out, s->write_pending)
+>> was only partially released when a transaction was canceled, the session
+>> closed, the device reset, or the write failed. This left dangling
+>> pointers and leaked memory.
+>>=20
+>> Free and clear these fields consistently on all those paths, and route
+>> the early error in usb_mtp_write_data() through the common cleanup.
+>>=20
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 53735bef108c ("usb-mtp: Advertise SendObjectInfo for write suppor=
+t")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4529
+>> Suggested-by: Hui Peng <https://gitlab.com/benquike>
+>> Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
+>> Message-ID: <20261112174907.158825-3-tcalifano@redhat.com>
+>> ---
+>>  hw/usb/dev-mtp.c | 22 +++++++++++++++-------
+>>  1 file changed, 15 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+>> index bc5a6f089178..1c14770a9c05 100644
+>> --- a/hw/usb/dev-mtp.c
+>> +++ b/hw/usb/dev-mtp.c
+>> @@ -1236,6 +1236,13 @@ static void usb_mtp_object_delete(MTPState *s, ui=
+nt32_t handle,
+>>      }
+>>  }
+>> =20
+>> +static void usb_mtp_reset_pending_write(MTPState *s) {
 >
-> On 9/30/26 02:50, Michael Roth wrote:
-> > From: Peter Xu <peterx@redhat.com>
-> >
-> > Host backends supports guest-memfd now by detecting whether it's a
-> > confidential VM.  There's no way to choose it yet from the memory level to
-> > use it fully shared.  If we use guest-memfd, it so far always implies we
-> > need two layers of memory backends, while the guest-memfd only provides the
-> > private set of pages.
-> >
-> > This patch introduces a way so that QEMU can consume guest memfd as the
-> > only source of memory to back the object (aka, fully shared).
-> >
-> > To use the fully shared guest-memfd, one can add a memfd object with:
-> >
-> >    -object memory-backend-memfd,x-guest-memfd=on,share=on
-> >
-> > Note that share=on is required with fully shared guest_memfd.
-> >
-> > Since guest-memfd is not yet a drop-in replacement for memfd (e.g. lack
-> > of hugepage support), the option is tagged as experimental for now so
-> > that it can be made available for early enablement/testing without
-> > causing any surprises for other users.
-> >
-> > PS: there's a trivial touch-up on fd<0 check, because the stub to create
-> > guest-memfd may return negative but not -1.
-
-
-> > diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-> > index 7a7855aaab..666593ff6c 100644
-> > --- a/backends/hostmem-memfd.c
-> > +++ b/backends/hostmem-memfd.c
-> > @@ -18,6 +18,9 @@
-> >   #include "qapi/error.h"
-> >   #include "qom/object.h"
-> >   #include "migration/cpr.h"
-> > +#include "system/kvm.h"
-> > +#include <linux/kvm.h>
-> > +#include "qapi/qapi-visit-common.h"
+> QEMU C style puts the opening brace of a function definition on its own l=
+ine.
 >
-> Starting with this commit, a build of qemu on sparc64 host.  As far as I remember,
-> linux on sparc64 does not support kvm, so there's no asm/kvm.h which is included
-> by linux/kvm.h.
+
+Yes, sorry I miss that.
+
+>> +    g_free(s->dataset.filename);
+>> +    s->dataset.filename =3D NULL;
+>> +    s->write_pending =3D false;
+>> +    s->dataset.size =3D 0;
 >
-> Should this include (and subsequent addiions) be #if-guarded by CONFIG_KVM perhaps?
-> Or maybe this whole file (hostmem-memfd.c) or subsystem (hostmem) should be omitted
-> if !kvm?
+> Consider also clearing dataset.format and dataset.parent_handle here.
 
-I think that:
-(1) we shouldn't include linux/kvm.h directly here; system/kvm.h will
-    pull it in for us
-(2) the KVM specific parts of this file should be ifdef guarded if the
-    default stuff in system/kvm.h is not sufficient for it to compile
-    on a non-KVM host
-(3) if the user set the guest-memfd property to "on" but we're not using
-    KVM then we should make sure that generates a suitable error
-    (i.e. if we had to ifdef the KVM stuff then the else block should
-    set the error pointer here)
+I'll check it.
 
-thanks
--- PMM
+Thanks,
+Tommaso
+
 
