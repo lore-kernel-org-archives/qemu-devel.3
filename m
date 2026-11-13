@@ -1,32 +1,32 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F5F606A33A
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C554606A339
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 13:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=nGXyCgwR
+	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.a=rsa-sha256 header.s=dkim header.b=hjlWd4vy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRrjN-0001bw-5H; Fri, 13 Nov 2026 08:54:17 -0500
+	id 1xRrjF-0001Tg-A5; Fri, 13 Nov 2026 08:54:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRntR-0004JU-1u; Fri, 13 Nov 2026 04:48:25 -0500
-Received: from zg8tmja2lje4os43os4xodqa.icoremail.net ([206.189.79.184])
+ id 1xRnte-0004NY-LJ; Fri, 13 Nov 2026 04:48:40 -0500
+Received: from smtp46.tsinghua.edu.cn ([101.6.4.70] helo=tsinghua.edu.cn)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <w-yf22@mails.tsinghua.edu.cn>)
- id 1xRntO-00071U-41; Fri, 13 Nov 2026 04:48:24 -0500
+ id 1xRnta-00072k-OX; Fri, 13 Nov 2026 04:48:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mails.tsinghua.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:
- Date:Message-ID:MIME-Version:Content-Transfer-Encoding; bh=2OuYu
- wDSIVfTPlLHBFplT3Fsykaz6y/ZYTd6iGyKIGg=; b=nGXyCgwRjuIHlCaeQN6cX
- FlXdq91QhupNrkVwOA3HymR+DC8pH99QZqscmzu2fXf7UQLcsqDDR1Sm0AlfG09R
- h+bZbZUhAFwY4EvOBD3+EUI33pGsdwRMR04gCmDiF2nVwglVOzSs6CGcSLabTKNy
- 7c/RmlzRHj93AFsAUj1DNU=
+ Date:Message-ID:In-Reply-To:References:MIME-Version:
+ Content-Transfer-Encoding; bh=iHEXveoXlZNOIJB/lih70MMBsZV1xP0a51
+ vwPMDfNI0=; b=hjlWd4vyt13HiSdknOMCti9Qc2QLS5m0avEa5WcgeEvdvpWXc0
+ VpPJtu3+lMmrKGqaF2j1F8sGiFqso8A0e4zILyLfgXbYba6qJ7ICJeHDzSXX5TNJ
+ HueKMIWWJKYKuOZksvmwqmqc786kAseDjaQpJP6eFLAd4xj6o3gxXJ6RQ=
 Received: from ubuntu (unknown [101.5.154.165])
- by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S2;
- Fri, 13 Nov 2026 17:48:12 +0800 (CST)
+ by web1 (Coremail) with SMTP id yAQGZQA3qzvR3PZqgA5CAg--.9318S6;
+ Fri, 13 Nov 2026 17:48:30 +0800 (CST)
 From: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
 To: qemu-devel@nongnu.org
 Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
@@ -37,45 +37,47 @@ Cc: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>, qemu-arm@nongnu.org,
  Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Kuan-Wei Chiu <visitorckw@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- bin.meng@processmission.com, tangtao1634@phytium.com.cn
-Subject: [RFC PATCH 00/20] hw/arm: Add initial RK3588 and ROCK 5B support
-Date: Fri, 13 Nov 2026 17:47:34 +0800
-Message-ID: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
+ bin.meng@processmission.com, tangtao1634@phytium.com.cn,
+ Chao Liu <chao.liu@processmission.com>
+Subject: [RFC PATCH 04/20] target/arm: allow machines to handle SMC calls
+Date: Fri, 13 Nov 2026 17:47:38 +0800
+Message-ID: <d72cbcb46dab52d6a919d1212221b4202db2f4c3.1794555589.git.w-yf22@mails.tsinghua.edu.cn>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
+References: <cover.1794555588.git.w-yf22@mails.tsinghua.edu.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxXr4kuF4kCr15uF18AF1fZwb_yoW5KFWfpa
- n5Arn8Krs7Gay3XrWSvFnrJF4Sv3WkWrWjkw1xXrW7AFWaqF40krnrK3Z09FyfJFWfXF13
- CFn2qryrGw47ZFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUPY14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
- JVWxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
- CE3s1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xv
- F2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v26r1j6r
- 4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I
- 648v4I1lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67
- AK6r4fMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JU6mhrU
- UUUU=
+X-CM-TRANSID: yAQGZQA3qzvR3PZqgA5CAg--.9318S6
+X-Coremail-Antispam: 1UD129KBjvJXoWxtF4fWw4kKF48Gr17JrWUurg_yoW7tw1fpF
+ Z8Cr98ur4kKa4av34fCF17tF43Ca1kWrW0y39FgrWFyw17ZryFkr1Dta43KFW5Gr4UuF15
+ ZF4Fvr4F93W5X37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUHa14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
+ kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
+ z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
+ 4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
+ 3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0V
+ AKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1l
+ Ox8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErc
+ IFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_
+ GFWl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxV
+ WUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI
+ 7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r
+ 4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4U
+ MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfUeVbkUU
+ UUU
 X-CM-SenderInfo: fzn1wj2s6ptxtovo32xlqjx3vdohv3gofq/
-Received-SPF: pass client-ip=206.189.79.184;
- envelope-from=w-yf22@mails.tsinghua.edu.cn;
- helo=zg8tmja2lje4os43os4xodqa.icoremail.net
+Received-SPF: pass client-ip=101.6.4.70;
+ envelope-from=w-yf22@mails.tsinghua.edu.cn; helo=tsinghua.edu.cn
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:52 -0500
+X-Mailman-Approved-At: Fri, 13 Nov 2026 08:53:53 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,105 +88,202 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi,
+From: Chao Liu <chao.liu@processmission.com>
 
-This series adds initial support for the Rockchip RK3588 SoC and the
-Radxa ROCK 5B board. It supports booting Linux through U-Boot SPL and
-U-Boot from SPI NOR flash, as well as direct kernel boot.
+Some machines model firmware services which use vendor SMC function IDs
+while QEMU provides PSCI through the same SMC conduit.  There is
+currently no way for such a machine to take over a call before the PSCI
+path handles it.
 
-The implementation includes the eight Cortex-A55/A76 CPUs, GICv3,
-architectural timers, SRAM, UARTs, and the Rockchip SPI flash controller.
-It also models the CRU, OTP, and HPTIMER registers needed by the boot
-software.
+Add a small registry for SMC function ID handlers.  Machines can
+register a handler which inspects the call and returns whether it was
+handled, without changing the behavior of existing callers.
 
-Patches 1-5 extend DW8250 and ARM SMC support and add the XTX XT25F128
-flash device. Patches 6-15 add the RK3588 SoC and its devices. Patches
-16-18 add the ROCK 5B board and firmware boot support. Patch 19 adds
-functional boot tests, and patch 20 adds documentation.
-
-Both boot paths have been tested with Linux 6.12.4, with U-Boot 2025.01
-used for the firmware boot path. The included functional tests cover
-booting to a Buildroot shell, reboot, and poweroff.
-
-Comments and suggestions are welcome.
-
-Thanks,
-Yifan
-
-Chao Liu (20):
-  hw/char/dw8250: implement the UART status register
-  hw/char/dw8250: expose the baudbase property
-  target/arm: report SMCCC v1.1 support
-  target/arm: allow machines to handle SMC calls
-  hw/block/m25p80: add the XTX XT25F128 SPI NOR flash
-  hw/arm: add the Rockchip RK3588 SoC
-  hw/timer: add Rockchip HPTIMER boot control
-  hw/arm/rk3588: add the unimplemented device map
-  hw/arm/rk3588: add the GICv3 interrupt controller
-  hw/arm/rk3588: add the UARTs
-  hw/misc: add the RK3588 clock and reset unit
-  hw/misc: add the RK3588 OTP controller
-  hw/ssi: add the Rockchip SPI flash controller
-  hw/misc: add RK3588 SCMI server
-  hw/arm/rk3588: wire up the SCMI server
-  hw/arm: add Radxa ROCK 5B board
-  hw/arm/rock-5b: connect the XTX XT25F128 SPI NOR flash
-  hw/arm/rock-5b: add firmware booting
-  tests/functional: add ROCK 5B boot tests
-  docs/system/arm: document the Radxa ROCK 5B machine
-
- MAINTAINERS                              |  19 +
- docs/system/arm/rock-5b.rst              |  86 ++++
- docs/system/target-arm.rst               |   1 +
- hw/arm/Kconfig                           |  16 +
- hw/arm/meson.build                       |   3 +
- hw/arm/rk3588.c                          | 452 +++++++++++++++++
- hw/arm/rock-5b.c                         | 297 ++++++++++++
- hw/block/m25p80.c                        |  20 +
- hw/char/dw8250.c                         |  45 ++
- hw/misc/meson.build                      |   5 +
- hw/misc/rk3588-scmci.c                   | 589 +++++++++++++++++++++++
- hw/misc/rockchip_cru.c                   | 233 +++++++++
- hw/misc/rockchip_otp.c                   | 146 ++++++
- hw/ssi/Kconfig                           |   5 +
- hw/ssi/meson.build                       |   1 +
- hw/ssi/rockchip_sfc.c                    | 439 +++++++++++++++++
- hw/timer/meson.build                     |   1 +
- hw/timer/rockchip-hptimer.c              | 115 +++++
- include/hw/arm/arm-smc.h                 |  31 ++
- include/hw/arm/rk3588.h                  |  64 +++
- include/hw/misc/rk3588-scmci.h           |  25 +
- include/hw/timer/rockchip-hptimer.h      |  20 +
- target/arm/helper.c                      |  80 +++
- target/arm/internals.h                   |   3 +
- target/arm/kvm-consts.h                  |   5 +
- target/arm/tcg/psci.c                    |  15 +
- tests/functional/aarch64/meson.build     |   2 +
- tests/functional/aarch64/test_rock_5b.py | 118 +++++
- 28 files changed, 2836 insertions(+)
- create mode 100644 docs/system/arm/rock-5b.rst
- create mode 100644 hw/arm/rk3588.c
- create mode 100644 hw/arm/rock-5b.c
- create mode 100644 hw/misc/rk3588-scmci.c
- create mode 100644 hw/misc/rockchip_cru.c
- create mode 100644 hw/misc/rockchip_otp.c
- create mode 100644 hw/ssi/rockchip_sfc.c
- create mode 100644 hw/timer/rockchip-hptimer.c
+Signed-off-by: Chao Liu <chao.liu@processmission.com>
+Signed-off-by: Yifan Wang <w-yf22@mails.tsinghua.edu.cn>
+---
+ MAINTAINERS              |  1 +
+ include/hw/arm/arm-smc.h | 31 ++++++++++++++++
+ target/arm/helper.c      | 80 ++++++++++++++++++++++++++++++++++++++++
+ target/arm/internals.h   |  3 ++
+ 4 files changed, 115 insertions(+)
  create mode 100644 include/hw/arm/arm-smc.h
- create mode 100644 include/hw/arm/rk3588.h
- create mode 100644 include/hw/misc/rk3588-scmci.h
- create mode 100644 include/hw/timer/rockchip-hptimer.h
- create mode 100755 tests/functional/aarch64/test_rock_5b.py
 
-
-base-commit: 49559567804523cb28cad002aa8e97f444e23ad7
+diff --git a/MAINTAINERS b/MAINTAINERS
+index fa0c6d0c9b..db1a62a0cb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -222,6 +222,7 @@ F: tests/tcg/arm/
+ F: tests/tcg/aarch64/
+ F: tests/qtest/arm-cpu-features.c
+ F: hw/arm/
++F: include/hw/arm/arm-smc.h
+ F: hw/cpu/a*mpcore.c
+ F: include/hw/cpu/a*mpcore.h
+ F: docs/system/target-arm.rst
+diff --git a/include/hw/arm/arm-smc.h b/include/hw/arm/arm-smc.h
+new file mode 100644
+index 0000000000..e27d64218f
+--- /dev/null
++++ b/include/hw/arm/arm-smc.h
+@@ -0,0 +1,31 @@
++/*
++ * ARM SMC call dispatch
++ *
++ * Board and SoC models can register handlers for vendor or firmware
++ * SMC calling convention function IDs. Under TCG, dispatch follows the
++ * architectural trap checks and precedes exception delivery and QEMU's
++ * PSCI emulation, so firmware services can share the SMC conduit with PSCI.
++ *
++ * Copyright (C) 2026 Process Mission
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_ARM_ARM_SMC_H
++#define HW_ARM_ARM_SMC_H
++
++typedef bool (*ARMSCMCHandler)(const uint64_t args[8], uint64_t *ret,
++                              void *opaque);
++
++/*
++ * Register a handler for one SMCCC function ID.  The handler returns
++ * true when it has handled the call and set *ret. args contains the
++ * caller's x0-x7 or zero-extended r0-r7; the ARM dispatcher writes *ret
++ * to x0/r0 and preserves the other registers. Returns 0 on success and
++ * a negative value if the function ID is already registered.
++ */
++int arm_register_smc_handler(uint64_t func_id, ARMSCMCHandler handler,
++                             void *opaque);
++void arm_unregister_smc_handler(uint64_t func_id, ARMSCMCHandler handler);
++
++#endif /* HW_ARM_ARM_SMC_H */
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index f413b15eb7..61645fefa6 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -36,6 +36,7 @@
+ #include "cpregs.h"
+ #include "target/arm/gtimer.h"
+ #include "qemu/plugin.h"
++#include "hw/arm/arm-smc.h"
+ 
+ static void switch_mode(CPUARMState *env, int mode);
+ #ifndef CONFIG_USER_ONLY
+@@ -9815,6 +9816,78 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
+                   new_el, env->pc, pstate_read(env));
+ }
+ 
++typedef struct ARMSCMCHandlerEntry {
++    uint64_t func_id;
++    ARMSCMCHandler handler;
++    void *opaque;
++    QTAILQ_ENTRY(ARMSCMCHandlerEntry) node;
++} ARMSCMCHandlerEntry;
++
++static QTAILQ_HEAD(, ARMSCMCHandlerEntry) arm_smc_handlers =
++    QTAILQ_HEAD_INITIALIZER(arm_smc_handlers);
++
++int arm_register_smc_handler(uint64_t func_id, ARMSCMCHandler handler,
++                             void *opaque)
++{
++    ARMSCMCHandlerEntry *entry;
++
++    QTAILQ_FOREACH(entry, &arm_smc_handlers, node) {
++        if (entry->func_id == func_id) {
++            return -1;
++        }
++    }
++
++    entry = g_new0(ARMSCMCHandlerEntry, 1);
++    entry->func_id = func_id;
++    entry->handler = handler;
++    entry->opaque = opaque;
++    QTAILQ_INSERT_TAIL(&arm_smc_handlers, entry, node);
++
++    return 0;
++}
++
++void arm_unregister_smc_handler(uint64_t func_id, ARMSCMCHandler handler)
++{
++    ARMSCMCHandlerEntry *entry, *next;
++
++    QTAILQ_FOREACH_SAFE(entry, &arm_smc_handlers, node, next) {
++        if (entry->func_id == func_id && entry->handler == handler) {
++            QTAILQ_REMOVE(&arm_smc_handlers, entry, node);
++            g_free(entry);
++            return;
++        }
++    }
++}
++
++bool arm_smc_handle_call(ARMCPU *cpu)
++{
++    CPUARMState *env = &cpu->env;
++    uint64_t func_id = is_a64(env) ? env->xregs[0] : env->regs[0];
++    ARMSCMCHandlerEntry *entry;
++
++    QTAILQ_FOREACH(entry, &arm_smc_handlers, node) {
++        uint64_t args[8], ret;
++
++        if (entry->func_id != func_id) {
++            continue;
++        }
++        for (size_t i = 0; i < ARRAY_SIZE(args); i++) {
++            args[i] = is_a64(env) ? env->xregs[i] : env->regs[i];
++        }
++        if (!entry->handler(args, &ret, entry->opaque)) {
++            return false;
++        }
++        if (is_a64(env)) {
++            env->xregs[0] = ret;
++        } else {
++            env->regs[0] = ret;
++        }
++        return true;
++    }
++
++    return false;
++}
++
+ /*
+  * Do semihosting call and set the appropriate return value. All the
+  * permission and validity checks have been done at translate time.
+@@ -9873,6 +9946,13 @@ void arm_cpu_do_interrupt(CPUState *cs)
+                       env->exception.syndrome);
+     }
+ 
++    if (tcg_enabled() && cs->exception_index == EXCP_SMC &&
++        arm_smc_handle_call(cpu)) {
++        qemu_log_mask(CPU_LOG_INT, "...handled as SMC handler call\n");
++        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
++        return;
++    }
++
+     if (tcg_enabled() && arm_is_psci_call(cpu, cs->exception_index)) {
+         arm_handle_psci_call(cpu);
+         qemu_log_mask(CPU_LOG_INT, "...handled as PSCI call\n");
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 033d6d66da..4c6825b201 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -717,6 +717,9 @@ bool arm_is_psci_call(ARMCPU *cpu, int excp_type);
+ /* Actually handle a PSCI call */
+ void arm_handle_psci_call(ARMCPU *cpu);
+ 
++/* Dispatch a registered SMC handler call, if any. */
++bool arm_smc_handle_call(ARMCPU *cpu);
++
+ /**
+  * arm_clear_exclusive: clear the exclusive monitor
+  * @env: CPU env
 -- 
 2.53.0
 
