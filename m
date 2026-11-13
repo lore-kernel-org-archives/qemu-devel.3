@@ -1,89 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2530F606A332
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 14:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76895606A895
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 14:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Mr3BeULy
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DCtI9BwD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRsK7-0008Oh-Ql; Fri, 13 Nov 2026 09:32:17 -0500
+	id 1xRsKl-0000pS-3q; Fri, 13 Nov 2026 09:32:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xRsIb-0007jd-BZ
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 09:30:52 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xRsJd-000850-RR
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 09:31:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xRsIZ-00068Z-Ah
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 09:30:40 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xRsJc-0007HQ-6N
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 09:31:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794580238;
+ s=mimecast20190719; t=1794580303;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=boVL+YPFQpURwiwZ//F+yK3LedXMmNngnhYKbtKW0I0=;
- b=Mr3BeULySCtkqZOemZukVVwI9Qy5cLYac2Gnc2flPvwJf2lg7jVPt3TEVsB+WwJUxcoo8g
- NEs8RiSWoWuN+CMj8s3WQKkpGNknD+jz32rAwMZUb7RIfGC9wS0PXoqVLRzyzyEzH+KCA1
- i2AeTmDXyJD9ygyJFiAlP6OMTM6wSVs=
+ bh=A4CoMqg6jCKbGXca/tvttRZObeWMgEW4Le3632fL4bc=;
+ b=DCtI9BwDzMnqo9L8yW+ZxbH9ZwCiWBld9aVLJuKu/GE4au+iIG/1nbT0btYIF7rV3CFXDj
+ +YzDIho6jpUiAxgsbyNRUfKArPyVAkrFc6Tqse6fzhgzN6rczlhF/Pa9R4Aiu+6KB4qmUD
+ hAubJQh3dzmvJnDaURs1wTG7eBOF1GQ=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-530-Wg-OeOZWOTy6dJ_PH4sB-g-1; Fri,
- 13 Nov 2026 09:30:36 -0500
-X-MC-Unique: Wg-OeOZWOTy6dJ_PH4sB-g-1
-X-Mimecast-MFC-AGG-ID: Wg-OeOZWOTy6dJ_PH4sB-g_1794580235
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-yvaO_GF6NXi-ZFXVJX6d_A-1; Fri,
+ 13 Nov 2026 09:31:40 -0500
+X-MC-Unique: yvaO_GF6NXi-ZFXVJX6d_A-1
+X-Mimecast-MFC-AGG-ID: yvaO_GF6NXi-ZFXVJX6d_A_1794580299
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 617F718005BC; Fri, 13 Nov 2026 14:30:35 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ id 4F8391800378; Fri, 13 Nov 2026 14:31:39 +0000 (UTC)
+Received: from eblake.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 022D6195E489; Fri, 13 Nov 2026 14:30:33 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 13 Nov 2026 18:29:59 +0400
-Subject: [PATCH v3 7/8] hw/display/vhost-user-gpu: fix scanout bookkeeping
- on the 2D path
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 41E84343; Fri, 13 Nov 2026 14:31:38 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL v2 1/6] docs: Mention security considerations for NBD
+Date: Fri, 13 Nov 2026 08:30:29 -0600
+Message-ID: <20261113143132.2414774-9-eblake@redhat.com>
+In-Reply-To: <20261113143132.2414774-8-eblake@redhat.com>
+References: <20261113143132.2414774-8-eblake@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261113-issue-4848-v3-7-98e4fa3e77eb@redhat.com>
-References: <20261113-issue-4848-v3-0-98e4fa3e77eb@redhat.com>
-In-Reply-To: <20261113-issue-4848-v3-0-98e4fa3e77eb@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry R <rdmitry@taktcycles.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3960;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=lOf5MxEmLJPnyVq3COzD5WEd7J8Zyk+m0hta2VgDXkw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq9x7mwm0Cx27c9Iwo8GIgjTwFWLIrQ8qirKxXk
- 4s1+2W0LCmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCavce5gAKCRDa6OEJdZac
- 5bHyEACimurzv9ENsni0T6lLMbOfLUsBo94SQNk+klzV7ekgwJMk1sLUVOJ0vEDKrIZEXNtDL8q
- mQZaB1Hx9dlGItXxPhAYwQM+BxxLX8/vg/8qJgzTVr3A2d1zKj7oduwcYNXdUEoWdwCYS+Z8d9A
- p7qSZqN1gK9eh48Z6b7aac5D+Uj6CrRXl5EsZlU98FbUTvDWPv31OUB4ZAFTP9VwuXhAd9oojSg
- AJ1GBIxJ7M7Z2dtxAiWgHEVBmEKL8EecmcG7cp9KzT/IFBgdkyQLnyKoTgFbJE1xQe8eKiuFQcx
- nskiy4wIo3GKl6TLkxYETfS/fQJJLbCNIAHOuOWcSFcrEK57BgvRRpL0j+nuvD7sYrMfoj+IrQ1
- vfspU3Bdget4EOVN0llAQz2WHCjudR0kFv0CU1JeOij3YbFxdwKibW0yTyG24lTqC2pS1cGVS7O
- /0tzoMqXc4Zh1IWGyNNGimvf6adrZYg4i2T5OSXVK4u7q/M+r3PY8X3Wjkc0OXkJYAcakqdBvIr
- wBpDEog9NgIxM2CJZxoFa/DZW+2MSSuw6SGRu21UDlR+NYNT3n8bzteJVtgn8/D7rR76PtEkV0g
- 4lsbVrzI7kFuZt0HGeX2vsop+zSm1CPFv49vkf5JFhHa8CsFKbKMqEsRYcam6xtKHDVBOI/LXiF
- ph/2KlW74c5HL9g==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -110,108 +87,56 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The 2D and dmabuf scanout paths disagreed on who owns
-virtio_gpu_scanout::ds and on when the frontend dmabuf is released.
+Document a policy that NBD connections should strongly consider using
+TLS and x509 certificates to filter out unwanted clients.  If a
+malicious server or client can trigger a QEMU assertion failure on a
+plaintext connection, but can trivially have risk mitigated by
+enabling TLS to weed out unknown partners (so that a full-on attack of
+QEMU would first require chaining some other attack to convince a
+"trusted" client to break protocol in the first place), then that
+reduces the CVSS-BE score of the QEMU bug. In turn, our policy already
+states that low severity scores can be fixed without an embargo.
 
-Disabling the scanout (width == 0) installs a placeholder surface
-through qemu_console_set_surface(), which frees the surface it replaces,
-leaving ds dangling. The next VHOST_USER_GPU_UPDATE then composited into
-the freed surface and installed it again. Only free a surface the console
-did not install, and drop updates that arrive without a scanout surface.
-
-Fixes: 267f664658fe ("hw/display: add vhost-user-vga & gpu-pci")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20261110155356.1520433-7-eblake@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/display/vhost-user-gpu.c | 32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ docs/system/security.rst | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index ac5bf7f8a428..554eee767cc3 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -193,6 +193,19 @@ vhost_user_gpu_unblock(VhostUserGPU *g)
-     vhost_user_gpu_send_msg(g, &msg);
- }
- 
-+/*
-+ * A surface not installed on the console is owned by the device, the
-+ * installed one is freed by qemu_console_set_surface().
-+ */
-+static void
-+vhost_user_gpu_clear_scanout_ds(struct virtio_gpu_scanout *s)
-+{
-+    if (s->ds && s->ds != qemu_console_surface(s->con)) {
-+        qemu_free_displaysurface(s->ds);
-+    }
-+    s->ds = NULL;
-+}
+diff --git a/docs/system/security.rst b/docs/system/security.rst
+index 92a5d87503e..c0254fef113 100644
+--- a/docs/system/security.rst
++++ b/docs/system/security.rst
+@@ -320,3 +320,26 @@ encryption and authorization control policy on client connections.
+ In summary, the monitor console is considered a privileged control interface to
+ QEMU and as such should only be made accessible to a trusted management
+ application or user.
 +
- static void
- vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
- {
-@@ -263,6 +276,13 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-         s = &g->parent_obj.scanout[m->scanout_id];
-         con = s->con;
- 
-+        if (g->dmabuf[m->scanout_id]) {
-+            qemu_console_gl_release_dmabuf(con, g->dmabuf[m->scanout_id]);
-+            g_clear_pointer(&g->dmabuf[m->scanout_id], qemu_dmabuf_free);
-+        }
++Block device network protocols (NBD, NFS, etc.)
++'''''''''''''''''''''''''''''''''''''''''''''''
 +
-+        vhost_user_gpu_clear_scanout_ds(s);
++When using QEMU to access remote storage over a network (such as QEMU
++acting as an NBD or NFS client) or to provide remote storage access
++(such as QEMU acting as an NBD server), it is important to realize
++that an unencrypted connection can allow any external process a
++potential attack vector via the network port. When possible, QEMU
++should be configured to require TLS to prevent a man-in-the-middle
++attack, as well as use x509 client certificates with the
++tls-creds-x509 object set with 'verify-peer=on' to check that the peer
++is allowed to connect. It may also be worth using 'tls-authz' to
++filter which certificates are allowed if the CA issues certs more
++broadly.
 +
-         if (m->width == 0) {
-             qemu_console_set_surface(con, NULL);
-         } else {
-@@ -290,7 +310,8 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-         }
- 
-         g->parent_obj.enable = 1;
--        con = g->parent_obj.scanout[m->scanout_id].con;
-+        s = &g->parent_obj.scanout[m->scanout_id];
-+        con = s->con;
-         old = g->dmabuf[m->scanout_id];
- 
-         if (fd == -1) {
-@@ -298,6 +319,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-                 qemu_console_gl_release_dmabuf(con, old);
-                 g_clear_pointer(&g->dmabuf[m->scanout_id], qemu_dmabuf_free);
-             }
-+            vhost_user_gpu_clear_scanout_ds(s);
-             qemu_console_gl_scanout_disable(con);
-             break;
-         }
-@@ -307,6 +329,8 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-             modifier = m2->modifier;
-         }
- 
-+        vhost_user_gpu_clear_scanout_ds(s);
-+
-         dmabuf = qemu_dmabuf_new(m->width, m->height,
-                                  &offset, &stride, 0, 0,
-                                  m->fd_width, m->fd_height,
-@@ -361,6 +385,11 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
- 
-         s = &g->parent_obj.scanout[m->scanout_id];
-         con = s->con;
-+        if (!s->ds) {
-+            error_report("vhost-user-gpu: no 2D scanout surface"
-+                         " for scanout %d", m->scanout_id);
-+            break;
-+        }
-         pixman_image_t *image =
-             pixman_image_create_bits(PIXMAN_x8r8g8b8,
-                                      m->width,
-@@ -660,6 +689,7 @@ vhost_user_gpu_reset_bh(void *opaque)
-             g_clear_pointer(&g->dmabuf[i], qemu_dmabuf_free);
-         }
-         qemu_console_gl_scanout_disable(scanout->con);
-+        vhost_user_gpu_clear_scanout_ds(scanout);
-         qemu_console_set_surface(scanout->con, NULL);
-     }
- 
-
++Proper hardening of network connections cannot prevent a client from
++violating protocol, but does increase the complexity of an attack,
++because a malicious actor must first find a way to convince an
++authenticated client to send the bytes that will trigger any QEMU
++misbehavior.  Use of a hardened connection is therefore an
++environmental factor used in determining the risk and severity of a
++network-triggered bug.
 -- 
-2.56.0.116.g6de20f6092dc
+2.56.0
 
 
