@@ -1,94 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E65606A321
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 11:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5083606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Nov 2026 11:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=packetfive-com.20260707.gappssmtp.com header.i=@packetfive-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=EHlcTAlZ
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=o4MQ77r8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRpdj-0002Gy-3e; Fri, 13 Nov 2026 06:40:19 -0500
+	id 1xRpgw-0006Mu-Af; Fri, 13 Nov 2026 06:43:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
- id 1xRpdh-0002Fy-QZ
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 06:40:17 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRpgq-0006Ls-OD
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 06:43:33 -0500
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
- id 1xRpdf-0006Ag-Ab
- for qemu-devel@nongnu.org; Fri, 13 Nov 2026 06:40:17 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4b467581b98so6267265e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 03:40:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xRpgn-00007j-0z
+ for qemu-devel@nongnu.org; Fri, 13 Nov 2026 06:43:30 -0500
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-67c0bd676eeso719843d50.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Nov 2026 03:43:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794570207; cv=none;
+ d=google.com; s=arc-20260327;
+ b=KTiHPRsW6MY++uIiffLJR0EzvJ2bedXEvxiZTvPYxqI8Lw09cy+MqeTjIIqiW+sn7H
+ Lc96yIe08STKwXuSe1BpxkXfBiSdMzcGX1c/6gHgmFBeqJ/je5nbckjukMhbK//qHI/u
+ pC38n10xACHrMFNlhAg8kX55cX7o07mPE1OiAmvGAVjDXfxRQYh33iuhsBMz3mw3Manh
+ fWNf5v8sfiB/Qh6/AMCgGXZbUdleruXqtOcTYJdbanYfTGQjuVQLuidSLK9S+CdS0ptE
+ T0YawGuO1mLN2XD3+cWRzOhD8nk598IEBQbx/qhP8qHmJSv+uJ4mG/Ns02wY0RhnJl6J
+ aloQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=E+0mnBUGdappCvN2ZRSxsaN+H452oyweMoj7dkGzn9o=;
+ fh=286Q6M15v7UtZc2or++lSj7RZFntzRCAkL2zfX9VgJM=;
+ b=eyGLLAStckm2AJkVzpbpH26ewSDbaeQFhnS6/XCJld4q0PlbDVjeM/P5gWedPeXhZQ
+ 3Ij5NKkvTVmjPfISCXR+lKhVTLKhhGBuxyIdvkHT76amk+wm1l+rEfrw2Ch27Yy57QWb
+ edKL4I9ZwEgQ4lNmknxXgqsJIHhcmVNf8M0MdG+Uam6pGPmxhSlV2LnESr18gmBgVll6
+ /FVjXXkAb0o+kXBwODLoBT8Vw85zNbJJ84zWBpNMwvUGnYPMxgHrV68GxMM6cI6vRada
+ IUylryiZ/wNIBkq2y+6dES+AclwGZwpIhGsWNaZzbLV0W7xVRZPkIwsYhK2J5n8w8w+6
+ RbqA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=packetfive-com.20260707.gappssmtp.com; s=20260707; t=1794570013; x=1795174813;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=l1DUBVpv1ibaPiCtKUFZlfZA+mz+/aPxuc98DTQde80=;
- b=EHlcTAlZFwAWnqd9yfXIg3wJiwNE618B3m20tAOwKBdhV21vJZ4jNQohOJUeed94j2
- GbIYYnSsRPmVQ7YJO6dit1VWozBWDKqGjhNjPGb2f/Uq6u6/p7WvZ8UpFRZA9VcFmVtj
- zDsmYhC++KUU+0JLfpXiCDMg9i9iAYyRa+x2V7P1vLt5VGEfVmrdojtaeSMcKYd2Ezr/
- FVhMtAxO6J+DkEGVap7KaOIDXplnmPKCmqIeE2DcSAtvYAQ5cZuLgWXDDxyN+KUbLYtx
- mJupoPb1Uip9TvIetgQeaaoDiGRg7SyIln0YoUa3gZ/2QlSwPD1p+lwnSMp3xwtyw7Af
- 5IEA==
+ d=linaro.org; s=google; t=1794570207; x=1795175007; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=E+0mnBUGdappCvN2ZRSxsaN+H452oyweMoj7dkGzn9o=;
+ b=o4MQ77r85cLD3Dy+WiKNWqrSWLDwPFbA+gsvwkqXbZccPcIO56xCqg9/FBVePGyzft
+ uK/XB+0ova+wqvLQmEpZkApqijhssHzOZqxeBy/Ay/6hx0nfLRbpCjzaAnS3vYb2BU68
+ shd1jA2m2KHiYtsvwHQJiMOdt/EHWUCSEDFkJ8ULUBP9A9a967GtUty94fLXN4P/vVt7
+ alx4yK6FFf0RWIMemeCsSOy+40BFmeLaPfWWHapLF8WFbPEmqKtp9lKF9m0KJk1kDLve
+ DX2HdKDtX1VzxG9JMZN+ZG1+b4eabIMD+00KBG6Aa2RbMt+jKi0RPkeypT9NNZ793DLD
+ ZgUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794570013; x=1795174813;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=l1DUBVpv1ibaPiCtKUFZlfZA+mz+/aPxuc98DTQde80=;
- b=Ad3Q381He4PvkCn5kQua0A6xQoDeYYla+uKbyRJxlTwl8diEETjxm46saiS3LNe3Bq
- G1Iho37VsuY96Weu4nxnYWhD2DlcWIFFF1DCjJFWXEaVoLC8aitDzG3zl1kZKZFos0hJ
- ru+GZZRfkLbGmnwZFbObFnGiqcrkyp3BINQp2sXXYpyg0b1wiEKbklMiJD/zJRCCYfsI
- 3K3dnW4AmUGbWT31J3SZXzNtONnHavOxIWNzMkAsCVvgMMtHaSbCe3WUFM2MMIXmrejP
- dapXjsrn1EyeVeglTiOsd+XtdiXH8I13H/05LwS0J8436LcaKIt63EqeDQkzI2qyr8hU
- 5Vhg==
-X-Gm-Message-State: APuU4Z8IJcIi+HnVwA/N6H90HHOcIMXFmY8/1kUkLKU0tVkcQGi7onBf
- yMyGNF8p2zdXSGhgNZoygVMeq7u47co3dDpg9mTkfGJP/nlDcHZ18d/i/NjIVIE3gAegV41UpmM
- N+Rp+EeT5eQ==
-X-Gm-Gg: AYBFou0Lg+5XFcOG0XVgHbzvuhEl3Op1BmUv029YaldRmdAvSZPs9ZCY1THJE/QzQeS
- ShVFS2WX4QzVXVNJv2JGcUeO8eYrJJPM9cm4R6bRpWZXKYMJs6WNbnrSxnCYM6nTavMEphlFeRp
- cP/OU/+c/HpRkcvAoDDu7qWtlHdwWV0RccGpjCAXNcvcQBnCT1zlhKN8dNPb72Wme45q9NJQ8Yy
- vF7ScUM2fHtx7aflgthLzQkm7F5vL2pZhKPsMhMMSsEUObvo9hdecK0xxrH9y3Q567XzzOvpOGw
- 5w9LBiYc6qR0siufJDGLj9gb+S+BeLoODMKm2Rsy/VARp0WHMhNertUsQdBDOsWB3Xyvy2il9dg
- zsHkhBceWb1l1gvD3lBFOHmL2xG+1/weeCioxefnmbGwgAo+XOsfvK0oi4swyuTYlHA3AtquUEn
- gYfO1JJjAQWfJYdsczLFQw+WisRw77cldmrzr5pomPgEdkMwxIw+a/LeTmNkt01jzC6ZDcSqbZw
- 1bQ4RKK8CG6N7vBuoFoW6kGtjNKbkMMJsjABSCRYG9YPGzQODs+XWJaCtwsynr0Z6AiHeL+rHA8
- i99A7k1KSyLhUYJdOaPITO3eDLhAHla9v/fvE7hrwAzpjw==
-X-Received: by 2002:a05:600c:c0c5:b0:4a1:cef3:fb3a with SMTP id
- 5b1f17b1804b1-4bb55a6602amr35392955e9.9.1794570012900; 
- Fri, 13 Nov 2026 03:40:12 -0800 (PST)
-Received: from node-dev.home ([2001:bb6:1895:f400:ddc3:8ff5:cdac:cae])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb55ae4414sm58637495e9.9.2026.11.13.03.40.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Nov 2026 03:40:12 -0800 (PST)
-From: Weqaar Janjua <weqaar.janjua@packetfive.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Weqaar Janjua <weqaar.janjua@packetfive.com>
-Subject: [PATCH v4] docs/specs/pci-ids: Reserve IDs for Cnuas vfio-user devices
-Date: Fri, 13 Nov 2026 11:39:39 +0000
-Message-ID: <20261113113939.3687534-1-weqaar.janjua@packetfive.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20260707; t=1794570207; x=1795175007;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=E+0mnBUGdappCvN2ZRSxsaN+H452oyweMoj7dkGzn9o=;
+ b=bs2tZk3ZwtZN2GS/cIdyRMenDQVRUF3Mmab0Mzx+RZSLwinOd6ww5yVdcKKBXwyXw8
+ QN2ClyMfBBPpMFOPvqH35KfpXZnti1ghszE76JrHXCp0p/GP92DPfA1A+7l7hKTWZobJ
+ n2qErJ4mFvSICur0CjfprKxZMNGUWKWU5HtK6ZPBc3AVq32dRPEMcs/uE3+m6rLMNgJW
+ Rzdr+ayJqKMhwT3HCPeL8/M3LGCbJMrt9M3ASsMMwqpSIqDq5APc1iYMZRTYZsoahNuK
+ BBJgxJVIJOQrBD/MB9K2dMVa7EX5LcfwlAQ/Q5blji5VM1IvszoM56V6vjVG90qAYuci
+ b20A==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEjWVCiYqAyDuqyof8yfjDZls11kuOz8w7DOFacUFyUFF12vXeifudPovLbF+ysh0Xx7YFHloOXnFVn@nongnu.org
+X-Gm-Message-State: APuU4Z8yZyTAJe4cmzY9A8TGqQWqrzEo6rpdwgyjKjqJPmTOM0bt7/nY
+ mCiQfCfVrvXGVMPSzLCae7iGd1Ln4oK8DkDvJFPekU13AGRJxgWRqDVkzyndXSH9pGXFLqwNjFK
+ /hyc5O44iEqisuTlXINE9UT5yAxkUvanvjMa7K2tAuQ==
+X-Gm-Gg: AYBFou1VfrSRN37/8bbmRnFdjN+CWEEkBWnv+oEzvdHI54nvpLUbvNcrH0DqtId735s
+ C4xBv+QyrbLl98hBbsAJHjhhpHYjx+uoI3JPC10c170yhWrRJplzjrla83TlhD0mM/jKt07zWm2
+ ZKz46GEE3h3UPo3Jbc6bOgUg0jN9DYNVdh6Ff7tkdA3mdCqfl0JduJh2ZY8mUXSImz3/QcnfzGy
+ l+ReP4yaNfsUhTwRrXjkzqg41oVsfT3FjTOV7XZ8vQnBu3jjCPoC1JhvqBE5Fg9SCl5rWl2IYxX
+ koHqbuVSJrZIUIxUYXF0TwSGGl/NQ7La/UCpJ25df35Yz2QaTlrm3fALb7IoIoIvWvGlR1lIZon
+ ej9hQ8tGWneNd+7I3D9ACCnjMOGWsuA7VCN98x8v2YBD1EbWRnXabaZ3UBbVokJ+KK8WUg7ghI2
+ jBBMqLSpPQQiQMUKaPyyVu
+X-Received: by 2002:a05:690e:400f:b0:67c:ace:30ec with SMTP id
+ 956f58d0204a3-67d8965a4e5mr1646738d50.29.1794570207487; Fri, 13 Nov 2026
+ 03:43:27 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2a00:1450:4864:20::329;
- envelope-from=weqaar.janjua@packetfive.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20260929235109.1398509-1-michael.roth@amd.com>
+ <20260929235109.1398509-11-michael.roth@amd.com>
+ <0d92762f-b026-472c-86b6-afb9475bfb37@tls.msk.ru>
+In-Reply-To: <0d92762f-b026-472c-86b6-afb9475bfb37@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Nov 2026 11:43:12 +0000
+X-Gm-Features: AclHuK-0ovHMofMAU4abvH1wqwKidLGkVS0z3wn2kXuEuqiJPvEmXS2IosZGICU
+Message-ID: <CAFEAcA-UsEKBfpeQpZ-SPZ2cFXA7_XxVmOdSEQ0UfRC+z8LSTA@mail.gmail.com>
+Subject: Re: [PATCH v7 10/12] hostmem: Support fully shared guest memfd to
+ back a VM
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, 
+ armbru@redhat.com, pankaj.gupta@amd.com, xiaoyao.li@intel.com, 
+ chao.p.peng@linux.intel.com, david@kernel.org, berrange@redhat.com, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,53 +120,73 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Reserve 1b36:0017 for the Cnuas virtual RDMA network adapter and
-1b36:0018 for the CnuasGPU virtual accelerator. Both are PCIe devices
-implemented outside QEMU as vfio-user servers and attached with
-"-device vfio-user-pci". Their register interfaces are documented at
-the links in the table.
+On Fri, 13 Nov 2026 at 11:29, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> On 9/30/26 02:50, Michael Roth wrote:
+> > From: Peter Xu <peterx@redhat.com>
+> >
+> > Host backends supports guest-memfd now by detecting whether it's a
+> > confidential VM.  There's no way to choose it yet from the memory level to
+> > use it fully shared.  If we use guest-memfd, it so far always implies we
+> > need two layers of memory backends, while the guest-memfd only provides the
+> > private set of pages.
+> >
+> > This patch introduces a way so that QEMU can consume guest memfd as the
+> > only source of memory to back the object (aka, fully shared).
+> >
+> > To use the fully shared guest-memfd, one can add a memfd object with:
+> >
+> >    -object memory-backend-memfd,x-guest-memfd=on,share=on
+> >
+> > Note that share=on is required with fully shared guest_memfd.
+> >
+> > Since guest-memfd is not yet a drop-in replacement for memfd (e.g. lack
+> > of hugepage support), the option is tagged as experimental for now so
+> > that it can be made available for early enablement/testing without
+> > causing any surprises for other users.
+> >
+> > PS: there's a trivial touch-up on fd<0 check, because the stub to create
+> > guest-memfd may return negative but not -1.
 
-Signed-off-by: Weqaar Janjua <weqaar.janjua@packetfive.com>
----
-v4:
-- Dropped the CnuasNIC and CnuasGPU device models and their qtests
-  (v3 patches 2, 3, 5 and 6). As Akihiko suggested, the devices move
-  out of tree as vfio-user servers in the Cnuas project.
-- Merged the two ID patches (v3 patches 1 and 4) into this one
-  documentation patch and dropped the include/hw/pci/pci.h defines,
-  since no QEMU code uses them now.
-- Linked the device specifications instead of in-tree docs.
 
-v3: https://lore.kernel.org/qemu-devel/20260929202358.725310-1-weqaar.janjua@packetfive.com/
+> > diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+> > index 7a7855aaab..666593ff6c 100644
+> > --- a/backends/hostmem-memfd.c
+> > +++ b/backends/hostmem-memfd.c
+> > @@ -18,6 +18,9 @@
+> >   #include "qapi/error.h"
+> >   #include "qom/object.h"
+> >   #include "migration/cpr.h"
+> > +#include "system/kvm.h"
+> > +#include <linux/kvm.h>
+> > +#include "qapi/qapi-visit-common.h"
+>
+> Starting with this commit, a build of qemu on sparc64 host.  As far as I remember,
+> linux on sparc64 does not support kvm, so there's no asm/kvm.h which is included
+> by linux/kvm.h.
+>
+> Should this include (and subsequent addiions) be #if-guarded by CONFIG_KVM perhaps?
+> Or maybe this whole file (hostmem-memfd.c) or subsystem (hostmem) should be omitted
+> if !kvm?
 
- docs/specs/pci-ids.rst | 6 ++++++
- 1 file changed, 6 insertions(+)
+I think that:
+(1) we shouldn't include linux/kvm.h directly here; system/kvm.h will
+    pull it in for us
+(2) the KVM specific parts of this file should be ifdef guarded if the
+    default stuff in system/kvm.h is not sufficient for it to compile
+    on a non-KVM host
+(3) if the user set the guest-memfd property to "on" but we're not using
+    KVM then we should make sure that generates a suitable error
+    (i.e. if we had to ifdef the KVM stuff then the else block should
+    set the error pointer here)
 
-diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-index 74460bb19e..26137b11bf 100644
---- a/docs/specs/pci-ids.rst
-+++ b/docs/specs/pci-ids.rst
-@@ -109,6 +109,12 @@ PCI devices (other than virtio):
-   PCIe Upstream Switch Port (``-device pcie-upstream-port``)
- 1b36:0016
-   PCIe Downstream Switch Port (``-device pcie-downstream-port``)
-+1b36:0017
-+  Cnuas virtual RDMA network adapter (vfio-user device, out of tree),
-+  https://cnuas.io/cnuas/docs/datasheets/CnuasNIC_Datasheet/
-+1b36:0018
-+  CnuasGPU virtual accelerator (vfio-user device, out of tree),
-+  https://cnuas.io/cnuas/docs/datasheets/CnuasGPU_Datasheet/
- 
- All these devices are documented in :doc:`index`.
- 
--- 
-2.43.0
-
+thanks
+-- PMM
 
