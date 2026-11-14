@@ -1,69 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC1D606A88F
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 10:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13F1606A329
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 10:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=rfc1149.net header.i=@rfc1149.net header.a=rsa-sha256 header.s=smtp header.b=JlTwmJ2E
+	dkim=pass (2048-bit key) header.d=rfc1149.net header.i=@rfc1149.net header.a=rsa-sha256 header.s=smtp header.b=DzZrL0HW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSAZk-00087a-3r; Sat, 14 Nov 2026 05:01:36 -0500
+	id 1xSAsW-0003gZ-TW; Sat, 14 Nov 2026 05:21:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sam@rfc1149.net>)
- id 1xSAZa-00086x-Eh; Sat, 14 Nov 2026 05:01:28 -0500
+ id 1xSAsU-0003YB-Of; Sat, 14 Nov 2026 05:20:58 -0500
 Received: from zoidberg.rfc1149.net ([195.154.227.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sam@rfc1149.net>)
- id 1xSAZY-0007ro-Eo; Sat, 14 Nov 2026 05:01:26 -0500
+ id 1xSAsS-0000h2-US; Sat, 14 Nov 2026 05:20:58 -0500
 Received: from 127.0.0.1 (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519MLKEM768 server-signature RSA-PSS (2048 bits) server-digest
+ key-exchange secp256r1 server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (Client did not present a certificate)
- by zoidberg.rfc1149.net (Postfix) with ESMTPSA id 8343380022;
- Sat, 14 Nov 2026 11:01:18 +0100 (CET)
+ by zoidberg.rfc1149.net (Postfix) with ESMTPSA id 29AF680022;
+ Sat, 14 Nov 2026 11:20:53 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rfc1149.net; s=smtp;
- t=1794650478; bh=G5yn2wKkwvMxnOlMsNoOxH5bAHTXonRrB9dTWI3s05A=;
- h=From:Date:Subject:To:Cc;
- b=JlTwmJ2EyQZjAyIHHUAzRT+EzTESJj0OOLwqkeqCagdcbouiB30DqMVwLe5zh+3uj
- 20fw8GAESZNQJr1SLvz0rUcaKTH+2kIJAvD8yrX6JovZej0smAyo4maGTgmNAHKwHN
- v/ByT03Hbx3K5w6bHyOw3eVDT63mQZC3J+1e+hRtT2wo9H/xE0/HlaIXixl3ctWsvr
- 46AtyDTbZKtUNt835VqRvGi4ojoOrwnZ4g0P16Ty3p83aYhMzkGCAnMkUXIxzNmx+b
- yDUNjqnRnuGIJEIusGCHgGtZJ3nED2o0nAbGbddbsQ6/kCvHTHamlHt9XwQ/PbuSYj
- KYfnz9wICr0DQ==
+ t=1794651653; bh=kASd6KyE8qx+PRFlSyohtAoNJbvzfBOc9ZPxOOr6SpM=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date;
+ b=DzZrL0HWXuR4wbtaJlU9lM1mdHVwqvyv20TSPBnG8D8Z0R4tfHM0WfRL3zQIX/ljW
+ vWovgf+mJ1w4TNmLrgpjgAwCY2oITkKm6WCbv7xgDQReHQbUHkxtX981+nJo8Di4U8
+ C94w3TbXIW1c8VfFJMXIbmn9BQ9z6oGBAKREDDTeLS8vEvvTW5GSopmY4C/VGJiLYy
+ ns5Zdzb0pwEI14/ypuAbxdHXl3P7Y5HR3n/ig7PSr3T08hZH/0Om6z5ZL/7iSgz1MC
+ t049xNjVGGQ5Fcs7GQWrZfHtTt5hDSMPkpP6UBfpwOWgBh/Dos0SKC7s4rI3gSV10y
+ VQLmLP6op407w==
 From: Samuel Tardieu <sam@rfc1149.net>
-Date: Sat, 14 Nov 2026 11:01:14 +0100
-Subject: [PATCH] rust/common: rename IntegerExt::bit() to single_bit()
+To: ~mohammadodeh <Mohammad.Odeh@exalt.ps>
+Cc: qemu-devel@nongnu.org,   Alexandre Iooss <erdnaxe@crans.org>,   Pierrick
+ Bouvier <pierrick.bouvier@oss.qualcomm.com>,   Peter Maydell
+ <peter.maydell@linaro.org>,   Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>,   Kevin Wolf
+ <kwolf@redhat.com>,   Hanna Reitz <hreitz@redhat.com>,   Fabiano Rosas
+ <farosas@suse.de>,   Laurent Vivier <lvivier@redhat.com>,   Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,   Markus
+ Armbruster
+ <armbru@redhat.com>,   =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Bernhard
+ Beschow <shentey@gmail.com>,   Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Jan Kiszka <jan.kiszka@web.de>,   Bin Meng
+ <bin.meng@processmission.com>,   Shameer Kolothum
+ <skolothumtho@nvidia.com>,   Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH qemu 1/3] hw/block: Add Macronix MX25R6435F flash
+In-Reply-To: <179449578952.8382.2790865629085512841-1@git.sr.ht>
+References: <179449578952.8382.2790865629085512841-1@git.sr.ht>
+User-Agent: mu4e 1.14.4; emacs 31.1
+Date: Sat, 14 Nov 2026 11:20:52 +0100
+Message-ID: <87pkw7zpbv.fsf@rfc1149.net>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261114-rust-single-bit-v1-1-da0172820f84@rfc1149.net>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDMBBA0avIrB1IrIbqVcRFTSd2RKJkklIQ7
- 26sy7f4fwehwCTQFTsE+rLw6jN0WYD9vPxEyO9sqFRltNY1hiQRhf20EI4c0aiHMdS07dM5yNU
- WyPHvf+yH25LGmWy8NnAcJzgYLENzAAAA
-X-Change-ID: 20261114-rust-single-bit-60366e5998ff
-To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- qemu-rust@nongnu.org, Samuel Tardieu <sam@rfc1149.net>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1580; i=sam@rfc1149.net;
- h=from:subject:message-id; bh=G5yn2wKkwvMxnOlMsNoOxH5bAHTXonRrB9dTWI3s05A=;
- b=owEBbQKS/ZANAwAKAaRXn0viD1ZBAcsmYgBq+DFuDlRBECx/pa/5KM5FR6MJwLfjXSPfZqgfc
- grlVSqPQ6uJAjMEAAEKAB0WIQQHrOpY7JQm2Kr/f7ukV59L4g9WQQUCavgxbgAKCRCkV59L4g9W
- QcV7D/4r/RTDgkfiwrJKEukxM51ensrOu/IflmuqkiOdVoTRlEEvcghffefWjD6CN4HDiGQsRK3
- V5Qf6U9C+TCCRvSs0jc1YU758ZY1FmqvMfByLZCDkkVLOBzQkOHvM87u9nIz/rFn0jPQR8vYQnr
- KTKGy+vfe+7Jw7I0Dg5oH7zLVKFTGh+86mGhqKE90LckmBJZb5YGlfn1gWE6OxY4rHhCQ57yN8C
- ErnFvbe7USiiFHI6idtS2Z05ffZCl0aLnXb6h+alA/xO5vpw/NJCQtKQV8wC3rtPtihUgwnFi2x
- NAAZfUQFSbjtIJWSXUpMRc477IQcCXk6YhWYOvqxmkt8YaRCyPmzWQKlDVS+DDNebGrlit8hrje
- +DxUpQfqDQ3qJLVAEA3Z15ae5uRHWi87HzIjEgfCFnF8BG0a4nVIKYbit6E9fEguyKcH2IipBJr
- oSWXuTUIQcqQyY8HYLkSnxMdxg2Xy+NKuna21Y0irl2yXdXub2IRXq3jWkxDJmwqKUs+py6gpfT
- y+zSm8zL0CK3DnnUkxxMlmZT+5L2/w+5YqUCE58VNPybxxUN1F//9huDrbRMV2VLh88rFbajYy2
- 04c5xPjeHqyXfoOu9gIDtngHSNiyPo09sasq/71zcCNsOuYCkeEu50x9j1CKdDIIYljvHVcz+xW
- 7Amw8oJn7rXlmDA==
-X-Developer-Key: i=sam@rfc1149.net; a=openpgp;
- fpr=07ACEA58EC9426D8AAFF7FBBA4579F4BE20F5641
+Content-Type: text/plain
 Received-SPF: pass client-ip=195.154.227.159; envelope-from=sam@rfc1149.net;
  helo=zoidberg.rfc1149.net
 X-Spam_score_int: -20
@@ -83,61 +78,48 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-An experimental Rust nightly feature `get_set_bit` introduces a `bit()`
-method on integer types which checks whether a specific bit is set. This
-clashes with QEMU's `IntegerExt::bit()` associated function which
-returns an integer with one particular bit set.
+~mohammadodeh <mohammadodeh@git.sr.ht> writes:
 
-While the `get_set_bit` feature has no planned stabilization date yet,
-this is reported as a `unstable_name_collisions` warning when compiling
-with the `strict_rust_lints` option, and warnings are turned into errors.
-Renaming `IntegerExt::bit()` to `IntegerExt::single_bit()` prevents this.
+>      { INFO("mx25l25655e", 0xc22619,      0,  64 << 10, 512, 0) },
+> +    { INFO("mx25r6435",   0xc22817,      0,  64 << 10, 128, ER_4K | ER_32K),
+> +      .sfdp_read = m25p80_sfdp_mx25r6435 },
+>      { INFO("mx66l51235f", 0xc2201a,      0,  64 << 10, 1024, ER_4K | ER_32K) },
 
-Signed-off-by: Samuel Tardieu <sam@rfc1149.net>
----
- rust/common/src/bitops.rs | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+By looking at the surrounding lines, it looks like the part suffix ("f" here) is usually included. Shouldn't it be "mx25r6435f" instead of "mx25r6435"?
 
-diff --git a/rust/common/src/bitops.rs b/rust/common/src/bitops.rs
-index 06c78c3b8a..a0aff75d76 100644
---- a/rust/common/src/bitops.rs
-+++ b/rust/common/src/bitops.rs
-@@ -34,7 +34,7 @@ pub trait IntegerExt:
- 
-     #[inline]
-     #[must_use]
--    fn bit(start: u32) -> Self
-+    fn single_bit(start: u32) -> Self
-     {
-         debug_assert!(start < Self::BITS);
- 
-@@ -105,9 +105,9 @@ fn test_extract() {
-     }
- 
-     #[test]
--    fn test_bit() {
--        assert_eq!(u8::bit(7), 128);
--        assert_eq!(u32::bit(16), 0x10000);
-+    fn test_single_bit() {
-+        assert_eq!(u8::single_bit(7), 128);
-+        assert_eq!(u32::single_bit(16), 0x10000);
-     }
- 
-     #[test]
+>      PP = 0x02,
+>      PP4 = 0x12,
+>      PP4_4 = 0x3e,
+> +    QPP_1_4_4 = 0x38,
+>      DPP = 0xa2,
+>      QPP = 0x32,
+>      QPP_4 = 0x34,
 
----
-base-commit: e9fa1f66f0d47c74b6766e1b8b87ad7c2a9394d5
-change-id: 20261114-rust-single-bit-60366e5998ff
+I would have put the `QPP_1_4_4` definition after the `QPP_4` to group the `QPP` instances.
 
-Best regards,
---  
-Samuel Tardieu <sam@rfc1149.net>
+> @@ -759,6 +762,7 @@ static void complete_collecting_data(Flash *s)
+>  
+>      switch (s->cmd_in_progress) {
+>      case DPP:
+> +    case QPP_1_4_4:
+>      case QPP:
+>      case QPP_4:
+>      case PP:
 
+Same here.
+
+Also, you haven't added a case to the switch in `get_addr_length()`. Is that because it matches the default case, or is that an oversight?
+
+Best.
+
+  Sam
+-- 
+Samuel Tardieu
 
