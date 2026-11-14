@@ -1,54 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9657A606A32E
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 15:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D28606A329
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 15:57:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSFy5-0001lm-Fh; Sat, 14 Nov 2026 10:47:05 -0500
+	id 1xSG7z-0006H4-5H; Sat, 14 Nov 2026 10:57:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1xSFy2-0001iy-Er; Sat, 14 Nov 2026 10:47:02 -0500
+ id 1xSG7o-0006GX-BE; Sat, 14 Nov 2026 10:57:09 -0500
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1xSFxz-0005uH-QO; Sat, 14 Nov 2026 10:47:02 -0500
+ id 1xSG7l-0002lm-Oz; Sat, 14 Nov 2026 10:57:08 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwAHD1tngvhqMgkGAg--.41682S2; 
- Sat, 14 Nov 2026 23:46:47 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwCXd3zLhPhqSw8GAg--.41204S2; 
+ Sat, 14 Nov 2026 23:56:59 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAf8DwjHVhgvhqRdv6AA--.29616S3;
- Sat, 14 Nov 2026 23:46:42 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAf8DwF3PJhPhqcdv6AA--.35572S3;
+ Sat, 14 Nov 2026 23:56:58 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Peter Maydell <peter.maydell@linaro.org>,
  Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
  Eric Auger <eric.auger@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Mostafa Saleh <smostafa@google.com>,
  Chao Liu <chao.liu@processmission.com>,
  Chen Baozi <chenbaozi@phytium.com.cn>,
  Jim MacArthur <jim.macarthur@linaro.org>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [PATCH v6 00/35] hw/arm/smmuv3: Support Secure state for SMMUv3
-Date: Sat, 14 Nov 2026 23:46:23 +0800
-Message-Id: <20261114154623.3599750-1-tangtao1634@phytium.com.cn>
+Subject: [PATCH v6 27/35] hw/arm/smmuv3: Route IRQ and GERROR handling by
+ SEC_SID
+Date: Sat, 14 Nov 2026 23:56:45 +0800
+Message-Id: <20261114155645.3614677-1-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwjHVhgvhqRdv6AA--.29616S3
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWr3ZUsBAgACsl
+X-CM-TRANSID: AQAAf8DwF3PJhPhqcdv6AA--.35572S3
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWr3ZUsBSwAAsu
 Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3JF13Aw4rJFy8tF15Jw13Arb_yoW7tr4kpa
- yfC3sxKrWDCa47ZrWxJa1I9asxJan7J3WUtrnrGryrXr1jyryfJr4jy34rKFyDCFyUZF43
- u3WIgan7Wr1jy3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxKrWUGrykuw45ur1kuFy5CFg_yoWDJr4kpr
+ 4qywnYgr4rKF15Xr9aga1xu3W3G34kKF1YkrWUKFWfCa4jkryYqr4DG3Wjk3yDurWkZa13
+ ZayfWFW8Zr1xAr7anT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -72,151 +72,305 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi all,
+Interrupt and global error handling currently always selects the
+Non-secure register bank, even when the event or command originates
+from the Secure programming interface. This splits CMDQ_CONS.ERR from
+GERROR.CMDQ_ERR and prevents Secure software from acknowledging the
+error through S_GERRORN.
 
-This is v6 of the Secure SMMUv3 series.
+Pass SEC_SID through the IRQ and GERROR helpers and all queue call
+sites so interrupt enable checks, global error reporting, and
+acknowledgement use the originating programming-interface bank.
 
-Many thanks to everyone who reviewed the earlier versions. This version contains
-35 commits in total. Most of them are confined to the Arm SMMU model. But a few
-commits also touch the PCI device model, and the virt machine model.
+Add separate wired interrupt outputs for Secure EventQ, CMD_SYNC
+and GERROR. Select the output by SEC_SID, register the new outputs
+and wire them to the GIC on virt and sbsa-ref. Adjust the CMDQV ACPI
+interrupt index to account for the additional SMMU outputs.
 
-Secure Stage 2 is not implemented. Secure STEs which enable Stage 2 are
-rejected with C_BAD_STE. Realm and Root programming interfaces are outside the
-scope of this series.
+Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+---
+ include/hw/arm/smmuv3.h  | 11 ++++++++++-
+ include/hw/arm/virt.h    |  1 +
+ hw/arm/sbsa-ref.c        |  8 ++++++++
+ hw/arm/smmuv3.c          | 41 ++++++++++++++++++++++++++++------------
+ hw/arm/virt-acpi-build.c |  3 ++-
+ hw/arm/virt.c            |  7 +++++++
+ 6 files changed, 57 insertions(+), 14 deletions(-)
 
-
-Commits layout:
----------------
-The commits are roughly grouped as follows:
-
-1. (#30, hw/pci only) Add a PCIDevice "sec-sid" property so boards can mark a
-   device's SEC_SID (system integration knob).
-2. (#1-2, #31-35) Core data-structure and plumbing refactors.
-3. (#3-8) Introduce SEC_SID through caches, notifiers, and helpers.
-4. (#9-12) Page table walk related updates (e.g. NSCFG/PTE helpers).
-5. (#13-20) EVTQ/CMDQ handling and invalidation paths.
-6. (#21-29) MMIO/register access checks and architectural corner cases.
-
-
-Changes since v5:
-----------------
-- Split the invalidation and register-check patches, separate secure-impl
-  from migration, and move S2 walker changes into the page-table walk patch.
-- Add fixes for Secure S1 VMID tagging (#18) and ATC_INV checks (#20).
-- Validate sec-sid in the PCI setter, reject incompatible devices through
-  the PCI IOMMU check, and refresh SEC_SID on device reuse.
-- Wire Secure IRQs on virt and sbsa-ref, and update CMDQV IRQ indexing.
-- Document secure-impl and preserve the previous default for older
-  machine types.
-- Drop the temporary [NOT-MERGE] Hafnium bring-up patch.
-
-
-Testing notes:
---------------
-- Testing MMIO accesses
-I also tested Secure-bank register reads and writes using Hafnium
-firmware as described in [1].
-
-- Testing DMA translation
-I integrated this series with the latest RFCing QTest memory-attribute
-extensions from [2]. The test integration also includes the iommu-testdev DMA
-readback fix and the SMMUv3 security-space tests. It is available in [3].
-
-All five SMMUv3 test cases passed:
--- Non-secure Stage 1.
--- Non-secure Stage 2.
--- Non-secure nested translation.
--- Secure Stage 1.
--- Secure Stage 2 rejection with C_BAD_STE.
-
-The first three cases has upstreamed. For the last two cases:
-
-    QTEST_QEMU_BINARY=./build/qemu-system-aarch64 \
-      ./build/tests/qtest/iommu-smmuv3-test --tap -k \
-      -p /aarch64/iommu-testdev/translation/secure-s1-only
-
-    QTEST_QEMU_BINARY=./build/qemu-system-aarch64 \
-      ./build/tests/qtest/iommu-smmuv3-test --tap -k \
-      -p /aarch64/iommu-testdev/translation/secure-s2-only-bad-ste
-
-
-The patches also available at [4]. The CI [5] passed with warnings from two jobs,
-which also occured in upstream CI.
-
-Best regards,
-Tao
-
-[1] https://hnusdr.github.io/2025/08/09/Test-Secure-SMMU-with-Hafnium-ENG/
-[2] https://gitlab.com/TaoTang/qemu/-/tree/series/qtest-secure-v6
-[3] https://gitlab.com/TaoTang/qemu/-/tree/integration/secure-smmu-v6-qtest
-[4] https://gitlab.com/TaoTang/qemu/-/tree/series/secure-smmu-v6
-[5] https://gitlab.com/TaoTang/qemu/-/pipelines/3065596056
-
-Tao Tang (35):
-  hw/arm/smmuv3: Introduce Secure registers
-  hw/arm/smmuv3: Introduce banked registers for SMMUv3 state
-  hw/arm/smmuv3: Thread SEC_SID through helper APIs
-  hw/arm/smmuv3: Track SEC_SID in configs and events
-  hw/arm/smmu-common: Add security-aware address space selector
-  hw/arm/smmuv3: Plumb transaction attributes into config helpers
-  hw/arm/smmuv3: Reject Secure STEs with stage-2 enabled
-  hw/arm/smmu-common: Key configuration cache on SMMUDevice and SEC_SID
-  hw/arm/smmu: Add PTE NS/NSTable helpers
-  hw/arm/smmuv3: Store CD NSCFG in TT info
-  hw/arm/smmu-common: Implement Secure state handling in ptw
-  hw/arm/smmuv3: Tag IOTLB cache keys with SEC_SID
-  hw/arm/smmuv3: Pass sec_sid into cmdq consume path
-  hw/arm/smmuv3: Make evtq producer use SEC_SID
-  hw/arm/smmuv3: Limit IOMMU notifications to Non-secure targets
-  hw/arm/smmuv3: Scope configuration invalidation by SEC_SID
-  hw/arm/smmuv3: Scope IOTLB invalidation by SEC_SID
-  hw/arm/smmuv3: Fix VMID tagging for Secure stage 1
-  hw/arm/smmuv3: Keep accelerated invalidation Non-secure-only
-  hw/arm/smmuv3: Fix ATC invalidation command checks
-  hw/arm/smmuv3: Make GERROR_IRQ_CFG registers RES0 without MSI
-  hw/arm/smmuv3: Ignore CR2 writes while the SMMU is enabled
-  hw/arm/smmuv3: Guard stream table register writes
-  hw/arm/smmuv3: Guard command queue register writes
-  hw/arm/smmuv3: Guard event queue register writes
-  hw/arm/smmuv3: Determine register bank from MMIO offset
-  hw/arm/smmuv3: Route IRQ and GERROR handling by SEC_SID
-  hw/arm/smmuv3: Implement SMMU_S_INIT register
-  hw/arm/smmuv3: Harden security checks in MMIO handlers
-  hw/pci: Add sec-sid property to PCIDevice
-  hw/arm/smmuv3: Select sec-sid from PCI property and validate
-    SECURE_IMPL
-  hw/arm/smmuv3: Reject IOMMU notifiers for non-NS devices
-  hw/arm/smmuv3: Initialize the Secure register bank
-  hw/arm/smmuv3: Add the secure-impl property
-  hw/arm/smmuv3: Migrate the Secure register bank
-
- docs/system/arm/virt.rst       |   11 +
- hw/arm/smmu-internal.h         |   13 +
- hw/arm/smmuv3-internal.h       |   39 +-
- include/hw/arm/smmu-common.h   |   80 ++-
- include/hw/arm/smmuv3-common.h |   71 +-
- include/hw/arm/smmuv3.h        |   44 +-
- include/hw/arm/virt.h          |    1 +
- include/hw/pci/pci_device.h    |    3 +
- hw/arm/sbsa-ref.c              |    8 +
- hw/arm/smmu-common.c           |  426 ++++++++++--
- hw/arm/smmuv3-accel.c          |   77 ++-
- hw/arm/smmuv3.c                | 1184 +++++++++++++++++++++++---------
- hw/arm/tegra241-cmdqv.c        |    6 +-
- hw/arm/virt-acpi-build.c       |    3 +-
- hw/arm/virt.c                  |    7 +
- hw/core/machine.c              |    1 +
- hw/pci/pci.c                   |   48 ++
- hw/arm/trace-events            |   37 +-
- 18 files changed, 1597 insertions(+), 462 deletions(-)
-
---
+diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+index 8cd2edc3412..cb05cb19e32 100644
+--- a/include/hw/arm/smmuv3.h
++++ b/include/hw/arm/smmuv3.h
+@@ -57,6 +57,14 @@ typedef struct SMMUv3RegBank {
+     SMMUQueue eventq, cmdq;
+ } SMMUv3RegBank;
+ 
++enum {
++    SMMU_IRQ_NUM_NS = 4,
++    SMMU_IRQ_S_EVTQ = SMMU_IRQ_NUM_NS,
++    SMMU_IRQ_S_CMD_SYNC,
++    SMMU_IRQ_S_GERROR,
++    SMMU_IRQ_NUM,
++};
++
+ struct SMMUv3State {
+     SMMUState     smmu_state;
+ 
+@@ -67,7 +75,7 @@ struct SMMUv3State {
+ 
+     SMMUv3RegBank bank[SMMU_SEC_SID_NUM];
+ 
+-    qemu_irq     irq[4];
++    qemu_irq     irq[SMMU_IRQ_NUM];
+     QemuMutex mutex;
+     char *stage;
+     uint8_t identifier;
+@@ -104,6 +112,7 @@ struct SMMUv3Class {
+ };
+ 
+ bool smmuv3_ats_enabled(struct SMMUv3State *s);
++int smmuv3_get_num_irqs(struct SMMUv3State *s);
+ 
+ #define TYPE_ARM_SMMUV3   "arm-smmuv3"
+ OBJECT_DECLARE_TYPE(SMMUv3State, SMMUv3Class, ARM_SMMUV3)
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 22e66d1a113..e1ec8fe53d4 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -79,6 +79,7 @@ enum {
+     VIRT_GICV5_ITS_TR_EL3,
+     VIRT_GICV5_ITS_TR_REALM,
+     VIRT_SMMU,
++    VIRT_SMMU_SECURE,
+     VIRT_UART0,
+     VIRT_MMIO,
+     VIRT_RTC,
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index 158b461eb48..ad6d0171723 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -82,6 +82,7 @@ enum {
+     SBSA_GWDT_REFRESH,
+     SBSA_GWDT_CONTROL,
+     SBSA_SMMU,
++    SBSA_SMMU_SECURE,
+     SBSA_UART,
+     SBSA_RTC,
+     SBSA_PCIE,
+@@ -155,6 +156,7 @@ static const int sbsa_ref_irqmap[] = {
+     [SBSA_XHCI] = 11,
+     [SBSA_SMMU] = 12, /* ... to 15 */
+     [SBSA_GWDT_WS0] = 16,
++    [SBSA_SMMU_SECURE] = 17,
+ };
+ 
+ static uint64_t sbsa_ref_cpu_mp_affinity(SBSAMachineState *sms, int idx)
+@@ -618,6 +620,7 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
+ {
+     hwaddr base = sbsa_ref_memmap[SBSA_SMMU].base;
+     int irq =  sbsa_ref_irqmap[SBSA_SMMU];
++    int secure_irq = sbsa_ref_irqmap[SBSA_SMMU_SECURE];
+     DeviceState *dev;
+     int i;
+ 
+@@ -636,6 +639,11 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
+         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
+                            qdev_get_gpio_in(sms->gic, irq + i));
+     }
++    for (i = SMMU_IRQ_NUM_NS; i < smmuv3_get_num_irqs(ARM_SMMUV3(dev)); i++) {
++        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
++                           qdev_get_gpio_in(sms->gic,
++                                            secure_irq + i - SMMU_IRQ_NUM_NS));
++    }
+ }
+ 
+ static void create_pcie(SBSAMachineState *sms,
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 54647964c21..97a8663349e 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -49,23 +49,30 @@
+  *
+  * @irq: irq type
+  * @gerror_mask: mask of gerrors to toggle (relevant if @irq is GERROR)
++ * @sec_sid: security state of the programming interface
+  */
+ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
+-                               uint32_t gerror_mask)
++                               uint32_t gerror_mask, SMMUSecSID sec_sid)
+ {
+-    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
++    int irq_index = irq;
+ 
+     bool pulse = false;
+ 
+     switch (irq) {
+     case SMMU_IRQ_EVTQ:
++        if (sec_sid == SMMU_SEC_SID_S) {
++            irq_index = SMMU_IRQ_S_EVTQ;
++        }
+         pulse = smmuv3_eventq_irq_enabled(s, sec_sid);
+         break;
+     case SMMU_IRQ_PRIQ:
+         qemu_log_mask(LOG_UNIMP, "PRI not yet supported\n");
+         break;
+     case SMMU_IRQ_CMD_SYNC:
++        if (sec_sid == SMMU_SEC_SID_S) {
++            irq_index = SMMU_IRQ_S_CMD_SYNC;
++        }
+         pulse = true;
+         break;
+     case SMMU_IRQ_GERROR:
+@@ -73,6 +80,9 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
+         uint32_t pending = bank->gerror ^ bank->gerrorn;
+         uint32_t new_gerrors = ~pending & gerror_mask;
+ 
++        if (sec_sid == SMMU_SEC_SID_S) {
++            irq_index = SMMU_IRQ_S_GERROR;
++        }
+         if (!new_gerrors) {
+             /* only toggle non pending errors */
+             return;
+@@ -85,14 +95,14 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
+     }
+     }
+     if (pulse) {
+-            trace_smmuv3_trigger_irq(irq);
+-            qemu_irq_pulse(s->irq[irq]);
++            trace_smmuv3_trigger_irq(irq_index);
++            qemu_irq_pulse(s->irq[irq_index]);
+     }
+ }
+ 
+-static void smmuv3_write_gerrorn(SMMUv3State *s, uint32_t new_gerrorn)
++static void smmuv3_write_gerrorn(SMMUv3State *s, uint32_t new_gerrorn,
++                                 SMMUSecSID sec_sid)
+ {
+-    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+     uint32_t pending = bank->gerror ^ bank->gerrorn;
+     uint32_t toggled = bank->gerrorn ^ new_gerrorn;
+@@ -173,7 +183,7 @@ static MemTxResult smmuv3_write_eventq(SMMUv3State *s, SMMUSecSID sec_sid,
+     }
+ 
+     if (!smmuv3_q_empty(q)) {
+-        smmuv3_trigger_irq(s, SMMU_IRQ_EVTQ, 0);
++        smmuv3_trigger_irq(s, SMMU_IRQ_EVTQ, 0, sec_sid);
+     }
+     return MEMTX_OK;
+ }
+@@ -187,7 +197,8 @@ void smmuv3_propagate_event(SMMUv3State *s, Evt *evt, SMMUSecSID sec_sid)
+     QEMU_LOCK_GUARD(&s->mutex);
+     r = smmuv3_write_eventq(s, sec_sid, evt);
+     if (r != MEMTX_OK) {
+-        smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_EVENTQ_ABT_ERR_MASK);
++        smmuv3_trigger_irq(s, SMMU_IRQ_GERROR,
++                           R_GERROR_EVENTQ_ABT_ERR_MASK, sec_sid);
+     }
+ }
+ 
+@@ -1483,7 +1494,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+         switch (type) {
+         case SMMU_CMD_SYNC:
+             if (CMD_SYNC_CS(&cmd) & CMD_SYNC_SIG_IRQ) {
+-                smmuv3_trigger_irq(s, SMMU_IRQ_CMD_SYNC, 0);
++                smmuv3_trigger_irq(s, SMMU_IRQ_CMD_SYNC, 0, sec_sid);
+             }
+             break;
+         case SMMU_CMD_PREFETCH_CONFIG:
+@@ -1733,7 +1744,8 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+     if (cmd_error) {
+         trace_smmuv3_cmdq_consume_error(smmu_cmd_string(type), cmd_error);
+         smmu_write_cmdq_err(s, cmd_error, sec_sid);
+-        smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_CMDQ_ERR_MASK);
++        smmuv3_trigger_irq(s, SMMU_IRQ_GERROR,
++                           R_GERROR_CMDQ_ERR_MASK, sec_sid);
+     }
+ 
+     trace_smmuv3_cmdq_consume_out(Q_PROD(q), Q_CONS(q),
+@@ -1849,7 +1861,7 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+         bank->irq_ctrl = data;
+         break;
+     case A_GERRORN:
+-        smmuv3_write_gerrorn(s, data);
++        smmuv3_write_gerrorn(s, data, reg_sec_sid);
+         /*
+          * By acknowledging the CMDQ_ERR, SW may notify cmds can
+          * be processed again
+@@ -2239,11 +2251,16 @@ static const MemoryRegionOps smmu_mem_ops = {
+     },
+ };
+ 
++int smmuv3_get_num_irqs(SMMUv3State *s)
++{
++    return SMMU_IRQ_NUM;
++}
++
+ static void smmu_init_irq(SMMUv3State *s, SysBusDevice *dev)
+ {
+     int i;
+ 
+-    for (i = 0; i < ARRAY_SIZE(s->irq); i++) {
++    for (i = 0; i < smmuv3_get_num_irqs(s); i++) {
+         sysbus_init_irq(dev, &s->irq[i]);
+     }
+ }
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index d368913e766..43529b73e4a 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -1169,7 +1169,8 @@ static void acpi_dsdt_add_tegra241_cmdqv(Aml *scope, VirtMachineState *vms)
+         sbdev = SYS_BUS_DEVICE(obj);
+         base = platform_bus_get_mmio_addr(pbus, sbdev, 1);
+         base += vms->memmap[VIRT_PLATFORM_BUS].base;
+-        irq = platform_bus_get_irqn(pbus, sbdev, NUM_SMMU_IRQS);
++        irq = platform_bus_get_irqn(pbus, sbdev,
++                                    smmuv3_get_num_irqs(ARM_SMMUV3(obj)));
+         irq += vms->irqmap[VIRT_PLATFORM_BUS];
+         irq += ARM_SPI_BASE;
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 0b11f7e328c..d1e12ae1b54 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -267,6 +267,7 @@ static const int a15irqmap[] = {
+     [VIRT_UART1] = 8,
+     [VIRT_ACPI_GED] = 9,
+     [VIRT_GWDT_WS0] = 10,
++    [VIRT_SMMU_SECURE] = 11,
+     [VIRT_MMIO] = 16, /* ...to 16 + NUM_VIRTIO_TRANSPORTS - 1 */
+     [VIRT_GIC_V2M] = 48, /* ...to 48 + NUM_GICV2M_SPIS - 1 */
+     [VIRT_SMMU] = 74,    /* ...to 74 + NUM_SMMU_IRQS - 1 */
+@@ -2069,6 +2070,7 @@ static void create_smmu(const VirtMachineState *vms, PCIBus *bus)
+ {
+     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+     int irq =  vms->irqmap[VIRT_SMMU];
++    int secure_irq = vms->irqmap[VIRT_SMMU_SECURE];
+     int i;
+     hwaddr base = vms->memmap[VIRT_SMMU].base;
+     hwaddr size = vms->memmap[VIRT_SMMU].size;
+@@ -2095,6 +2097,11 @@ static void create_smmu(const VirtMachineState *vms, PCIBus *bus)
+         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
+                            qdev_get_gpio_in(vms->gic, irq + i));
+     }
++    for (i = SMMU_IRQ_NUM_NS; i < smmuv3_get_num_irqs(ARM_SMMUV3(dev)); i++) {
++        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
++                           qdev_get_gpio_in(vms->gic,
++                                            secure_irq + i - SMMU_IRQ_NUM_NS));
++    }
+     create_smmuv3_dt_bindings(vms, base, size, irq);
+ }
+ 
+-- 
 2.34.1
 
 
