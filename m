@@ -1,26 +1,26 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743D1606A327
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 16:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C6D606A329
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 16:18:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSGQe-0004iZ-M5; Sat, 14 Nov 2026 11:16:37 -0500
+	id 1xSGSi-0007Ic-Uf; Sat, 14 Nov 2026 11:18:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1xSGQZ-0004go-5D; Sat, 14 Nov 2026 11:16:31 -0500
+ id 1xSGSE-00078c-21; Sat, 14 Nov 2026 11:18:18 -0500
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1xSGQW-0003AV-Nd; Sat, 14 Nov 2026 11:16:30 -0500
+ id 1xSGS8-0003Dx-8H; Sat, 14 Nov 2026 11:18:13 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwCnr8NXifhqzVMqBg--.63944S2; 
- Sun, 15 Nov 2026 00:16:23 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwC3vqa2ifhql1kqBg--.58977S2; 
+ Sun, 15 Nov 2026 00:17:58 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAf8DwsHNVifhq09v6AA--.34955S3;
- Sun, 15 Nov 2026 00:16:21 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAf8DwOHSyifhq4Nv6AA--.29617S6;
+ Sun, 15 Nov 2026 00:17:57 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Peter Maydell <peter.maydell@linaro.org>,
  Eric Auger <eric.auger@redhat.com>,
@@ -32,23 +32,22 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Chen Baozi <chenbaozi@phytium.com.cn>,
  Jim MacArthur <jim.macarthur@linaro.org>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [PATCH v6 08/35] hw/arm/smmu-common: Key configuration cache on
- SMMUDevice and SEC_SID
-Date: Sun, 15 Nov 2026 00:16:20 +0800
-Message-Id: <20261114161620.3643073-1-tangtao1634@phytium.com.cn>
+Subject: [PATCH v6 13/35] hw/arm/smmuv3: Pass sec_sid into cmdq consume path
+Date: Sun, 15 Nov 2026 00:17:47 +0800
+Message-Id: <20261114161753.3645568-4-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261114154623.3599750-1-tangtao1634@phytium.com.cn>
 References: <20261114154623.3599750-1-tangtao1634@phytium.com.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwsHNVifhq09v6AA--.34955S3
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWr3ZUsBbQAAsI
+X-CM-TRANSID: AQAAf8DwOHSyifhq4Nv6AA--.29617S6
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWr3ZUsBdgABsS
 Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxtFWUZr1UCF1xJrWkKr15urg_yoWxuw4Upr
- WxJF98Jr4UGF1fCFs3XFWxu3W5Wwn2gr1fGryagr9YkFyqyryUAF4DK3yYk3s7CrWkJF47
- ZayfWFyUCr1xA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxtFW3uF15KF4UXw13Ww15Jwb_yoWxWFyUpr
+ WDJ3sI9r18X3Z3ZF9Iv3y8uFy3J34Dtry3tr1UW3Wfu3WDAr15Xrs8Kr1ru34DGr97Aws3
+ Way3uan8Z3W2y37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -73,187 +72,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Adapt the configuration cache to distinguish entries decoded through
-different SEC_SID-selected programming interfaces by introducing a
-composite SMMUConfigKey. The key combines SMMUDevice with SEC_SID,
-preventing Secure and Non-secure configuration entries from aliasing in
-the cache and leaving the key extensible for a future Realm SEC_SID
-namespace.
+Make smmuv3_cmdq_consume() security-state aware by passing sec_sid
+from smmu_writel() call sites (CR0/GERRORN/CMDQ_PROD paths), instead
+of hardcoding Non-secure state. The related AddressSpace and MemTxAttrs
+are also obtained based on sec_sid.
 
-The cache lookup, insertion, and invalidation mechanisms are updated to
-use this new keying infrastructure.
+Also move CMD_SSEC legality checking to a single early check before
+command dispatch: Secure commands are rejected on Non-secure queues
+(including future Realm queue) with CERROR_ILL. This removes duplicated
+per-command checks in CFGI handlers.
+
+Finally, extend cmdq trace output with sec_sid so command processing
+can be correlated with the correct security bank.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/a9a840a6-c65f-4352-9a49-ddd1b5483f43@redhat.com/
 Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 Reviewed-by: Mostafa Saleh <smostafa@google.com>
 ---
- include/hw/arm/smmu-common.h |  7 ++++++
- hw/arm/smmu-common.c         | 45 ++++++++++++++++++++++++++++++++++--
- hw/arm/smmuv3.c              | 12 ++++++----
- 3 files changed, 57 insertions(+), 7 deletions(-)
+ hw/arm/smmuv3.c     | 47 +++++++++++++++++++++------------------------
+ hw/arm/trace-events |  2 +-
+ 2 files changed, 23 insertions(+), 26 deletions(-)
 
-diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index a31ffcf6e71..bd83648b14c 100644
---- a/include/hw/arm/smmu-common.h
-+++ b/include/hw/arm/smmu-common.h
-@@ -153,6 +153,11 @@ typedef struct SMMUIOTLBKey {
-     uint8_t level;
- } SMMUIOTLBKey;
- 
-+typedef struct SMMUConfigKey {
-+    SMMUDevice *sdev;
-+    SMMUSecSID sec_sid;
-+} SMMUConfigKey;
-+
- typedef struct SMMUSIDRange {
-     uint32_t start;
-     uint32_t end;
-@@ -247,6 +252,7 @@ SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
- void smmu_iotlb_insert(SMMUState *bs, SMMUTransCfg *cfg, SMMUTLBEntry *entry);
- SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
-                                 uint8_t tg, uint8_t level);
-+SMMUConfigKey smmu_get_config_key(SMMUDevice *sdev, SMMUSecSID sec_sid);
- void smmu_iotlb_inv_all(SMMUState *s);
- void smmu_iotlb_inv_asid_vmid(SMMUState *s, int asid, int vmid);
- void smmu_iotlb_inv_vmid(SMMUState *s, int vmid);
-@@ -256,6 +262,7 @@ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
- void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
-                         uint64_t num_pages, uint8_t ttl);
- void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range);
-+void smmu_configs_inv_sdev(SMMUState *s, SMMUDevice *sdev);
- /* Unmap the range of all the notifiers registered to any IOMMU mr */
- void smmu_inv_notifiers_all(SMMUState *s);
- 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index baa1ff571fa..7ac07b4c260 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -30,6 +30,26 @@
- #include "hw/arm/smmu-common.h"
- #include "smmu-internal.h"
- 
-+/* Configuration Cache Management */
-+static guint smmu_config_key_hash(gconstpointer key)
-+{
-+    const SMMUConfigKey *k = key;
-+    return g_direct_hash(k->sdev) ^ (guint)k->sec_sid;
-+}
-+
-+static gboolean smmu_config_key_equal(gconstpointer a, gconstpointer b)
-+{
-+    const SMMUConfigKey *ka = a;
-+    const SMMUConfigKey *kb = b;
-+    return ka->sdev == kb->sdev && ka->sec_sid == kb->sec_sid;
-+}
-+
-+SMMUConfigKey smmu_get_config_key(SMMUDevice *sdev, SMMUSecSID sec_sid)
-+{
-+    SMMUConfigKey key = {.sdev = sdev, .sec_sid = sec_sid};
-+    return key;
-+}
-+
- ARMSecuritySpace smmu_get_security_space(SMMUSecSID sec_sid)
- {
-     switch (sec_sid) {
-@@ -270,7 +290,8 @@ static gboolean smmu_hash_remove_by_vmid_ipa(gpointer key, gpointer value,
- static gboolean
- smmu_hash_remove_by_sid_range(gpointer key, gpointer value, gpointer user_data)
- {
--    SMMUDevice *sdev = (SMMUDevice *)key;
-+    SMMUConfigKey *config_key = (SMMUConfigKey *)key;
-+    SMMUDevice *sdev = config_key->sdev;
-     uint32_t sid = smmu_get_sid(sdev);
-     SMMUSIDRange *sid_range = (SMMUSIDRange *)user_data;
- 
-@@ -288,6 +309,24 @@ void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range)
-                                 &sid_range);
- }
- 
-+static gboolean smmu_hash_remove_by_sdev(gpointer key, gpointer value,
-+                                         gpointer user_data)
-+{
-+    SMMUConfigKey *config_key = (SMMUConfigKey *)key;
-+    SMMUDevice *target = (SMMUDevice *)user_data;
-+
-+    if (config_key->sdev != target) {
-+        return false;
-+    }
-+    trace_smmu_config_cache_inv(smmu_get_sid(target));
-+    return true;
-+}
-+
-+void smmu_configs_inv_sdev(SMMUState *s, SMMUDevice *sdev)
-+{
-+    g_hash_table_foreach_remove(s->configs, smmu_hash_remove_by_sdev, sdev);
-+}
-+
- void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
-                          uint8_t tg, uint64_t num_pages, uint8_t ttl)
- {
-@@ -983,7 +1022,9 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
-         error_propagate(errp, local_err);
-         return;
-     }
--    s->configs = g_hash_table_new_full(NULL, NULL, NULL, g_free);
-+    s->configs = g_hash_table_new_full(smmu_config_key_hash,
-+                                       smmu_config_key_equal,
-+                                       g_free, g_free);
-     s->iotlb = g_hash_table_new_full(smmu_iotlb_key_hash, smmu_iotlb_key_equal,
-                                      g_free, g_free);
-     s->smmu_pcibus_by_busptr = g_hash_table_new(NULL, NULL);
 diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index a5210d845a3..6f81f089a57 100644
+index 63a77368035..55b3970bbf2 100644
 --- a/hw/arm/smmuv3.c
 +++ b/hw/arm/smmuv3.c
-@@ -948,7 +948,7 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
-  *
-  * The configuration cache contains data resulting from both STE and CD
-  * decoding under the form of an SMMUTransCfg struct. The hash table is indexed
-- * by the SMMUDevice handle.
-+ * by a composite key of the SMMUDevice and the sec_sid.
-  */
- static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event,
-                                        SMMUSecSID sec_sid)
-@@ -956,8 +956,9 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event,
-     SMMUv3State *s = sdev->smmu;
-     SMMUState *bc = &s->smmu_state;
-     SMMUTransCfg *cfg;
-+    SMMUConfigKey lookup_key = smmu_get_config_key(sdev, sec_sid);
- 
--    cfg = g_hash_table_lookup(bc->configs, sdev);
-+    cfg = g_hash_table_lookup(bc->configs, &lookup_key);
-     if (cfg) {
-         sdev->cfg_cache_hits++;
-         trace_smmuv3_config_cache_hit(smmu_get_sid(sdev),
-@@ -973,7 +974,9 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event,
-         cfg = g_new0(SMMUTransCfg, 1);
- 
-         if (!smmuv3_decode_config(&sdev->iommu, cfg, event, sec_sid)) {
--            g_hash_table_insert(bc->configs, sdev, cfg);
-+            SMMUConfigKey *persistent_key = g_new(SMMUConfigKey, 1);
-+            *persistent_key = lookup_key;
-+            g_hash_table_insert(bc->configs, persistent_key, cfg);
-         } else {
-             g_free(cfg);
-             cfg = NULL;
-@@ -987,8 +990,7 @@ static void smmuv3_flush_config(SMMUDevice *sdev)
-     SMMUv3State *s = sdev->smmu;
-     SMMUState *bc = &s->smmu_state;
- 
--    trace_smmu_config_cache_inv(smmu_get_sid(sdev));
--    g_hash_table_remove(bc->configs, sdev);
-+    smmu_configs_inv_sdev(bc, sdev);
+@@ -112,14 +112,14 @@ static void smmuv3_write_gerrorn(SMMUv3State *s, uint32_t new_gerrorn)
+     trace_smmuv3_write_gerrorn(toggled & pending, bank->gerrorn);
  }
  
- /* Do translation with TLB lookup. */
+-static inline MemTxResult queue_read(SMMUQueue *q, Cmd *cmd)
++static inline MemTxResult queue_read(SMMUQueue *q, Cmd *cmd,
++                                     AddressSpace *as, MemTxAttrs attrs)
+ {
+     dma_addr_t addr = Q_CONS_ENTRY(q);
+     MemTxResult ret;
+     int i;
+ 
+-    ret = dma_memory_read(&address_space_memory, addr, cmd, sizeof(Cmd),
+-                          MEMTXATTRS_UNSPECIFIED);
++    ret = dma_memory_read(as, addr, cmd, sizeof(Cmd), attrs);
+     if (ret != MEMTX_OK) {
+         return ret;
+     }
+@@ -1384,14 +1384,15 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage,
+     }
+ }
+ 
+-static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
++static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+ {
+     SMMUState *bs = ARM_SMMU(s);
+     SMMUCmdError cmd_error = SMMU_CERROR_NONE;
+-    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+     SMMUQueue *q = &bank->cmdq;
+     SMMUCommandType type = 0;
++    MemTxAttrs attrs = smmu_get_txattrs(sec_sid);
++    AddressSpace *as = smmu_get_address_space(bs, sec_sid);
+ 
+     if (!smmuv3_cmdq_enabled(s, sec_sid)) {
+         return 0;
+@@ -1406,19 +1407,30 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+     while (!smmuv3_q_empty(q)) {
+         uint32_t pending = bank->gerror ^ bank->gerrorn;
+         Cmd cmd;
++        SMMUSecSID ssec = SMMU_SEC_SID_NS;
+ 
+-        trace_smmuv3_cmdq_consume(Q_PROD(q), Q_CONS(q),
++        trace_smmuv3_cmdq_consume(sec_sid, Q_PROD(q), Q_CONS(q),
+                                   Q_PROD_WRAP(q), Q_CONS_WRAP(q));
+ 
+         if (FIELD_EX32(pending, GERROR, CMDQ_ERR)) {
+             break;
+         }
+ 
+-        if (queue_read(q, &cmd) != MEMTX_OK) {
++        if (queue_read(q, &cmd, as, attrs) != MEMTX_OK) {
+             cmd_error = SMMU_CERROR_ABT;
+             break;
+         }
+ 
++        ssec = CMD_SSEC(&cmd) ? SMMU_SEC_SID_S : SMMU_SEC_SID_NS;
++        /*
++         * A command with SSec == 1 is illegal on Non-secure and Realm Command
++         * queues and raises CERROR_ILL, as specified by (IHI 0070G.b) 4.1.6.
++         */
++        if (ssec && sec_sid != SMMU_SEC_SID_S) {
++            cmd_error = SMMU_CERROR_ILL;
++            break;
++        }
++
+         type = CMD_TYPE(&cmd);
+ 
+         trace_smmuv3_cmdq_opcode(smmu_cmd_string(type));
+@@ -1438,11 +1450,6 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+             uint32_t sid = CMD_SID(&cmd);
+             SMMUDevice *sdev = smmu_find_sdev(bs, sid);
+ 
+-            if (CMD_SSEC(&cmd)) {
+-                cmd_error = SMMU_CERROR_ILL;
+-                break;
+-            }
+-
+             if (!sdev) {
+                 break;
+             }
+@@ -1462,11 +1469,6 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+             uint8_t range = CMD_STE_RANGE(&cmd);
+             SMMUSIDRange sid_range;
+ 
+-            if (CMD_SSEC(&cmd)) {
+-                cmd_error = SMMU_CERROR_ILL;
+-                break;
+-            }
+-
+             mask = (1ULL << (range + 1)) - 1;
+             sid_range.start = sid & ~mask;
+             sid_range.end = sid_range.start + mask;
+@@ -1485,11 +1487,6 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+             uint32_t sid = CMD_SID(&cmd);
+             SMMUDevice *sdev = smmu_find_sdev(bs, sid);
+ 
+-            if (CMD_SSEC(&cmd)) {
+-                cmd_error = SMMU_CERROR_ILL;
+-                break;
+-            }
+-
+             if (!sdev) {
+                 break;
+             }
+@@ -1713,7 +1710,7 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+         bank->cr[0] = data;
+         bank->cr0ack = data & ~SMMU_CR0_RESERVED;
+         /* in case the command queue has been enabled */
+-        smmuv3_cmdq_consume(s, &local_err);
++        smmuv3_cmdq_consume(s, &local_err, reg_sec_sid);
+         if (local_err) {
+             error_report_err(local_err);
+             local_err = NULL;
+@@ -1736,7 +1733,7 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+          * By acknowledging the CMDQ_ERR, SW may notify cmds can
+          * be processed again
+          */
+-        smmuv3_cmdq_consume(s, &local_err);
++        smmuv3_cmdq_consume(s, &local_err, reg_sec_sid);
+         break;
+     case A_GERROR_IRQ_CFG0: /* 64b */
+         bank->gerror_irq_cfg0 = deposit64(bank->gerror_irq_cfg0, 0, 32, data);
+@@ -1794,7 +1791,7 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+         break;
+     case A_CMDQ_PROD:
+         bank->cmdq.prod = data;
+-        smmuv3_cmdq_consume(s, &local_err);
++        smmuv3_cmdq_consume(s, &local_err, reg_sec_sid);
+         break;
+     case A_CMDQ_CONS:
+         bank->cmdq.cons = data;
+diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+index 3cbb32e917b..8a14daa9252 100644
+--- a/hw/arm/trace-events
++++ b/hw/arm/trace-events
+@@ -36,7 +36,7 @@ smmuv3_trigger_irq(int irq) "irq=%d"
+ smmuv3_write_gerror(uint32_t toggled, uint32_t gerror) "toggled=0x%x, new GERROR=0x%x"
+ smmuv3_write_gerrorn(uint32_t acked, uint32_t gerrorn) "acked=0x%x, new GERRORN=0x%x"
+ smmuv3_unhandled_cmd(uint32_t type) "Unhandled command type=%d"
+-smmuv3_cmdq_consume(uint32_t prod, uint32_t cons, uint8_t prod_wrap, uint8_t cons_wrap) "prod=%d cons=%d prod.wrap=%d cons.wrap=%d"
++smmuv3_cmdq_consume(int sec_sid, uint32_t prod, uint32_t cons, uint8_t prod_wrap, uint8_t cons_wrap) "sec_sid=%d prod=%d cons=%d prod.wrap=%d cons.wrap=%d"
+ smmuv3_cmdq_opcode(const char *opcode) "<--- %s"
+ smmuv3_cmdq_consume_out(uint32_t prod, uint32_t cons, uint8_t prod_wrap, uint8_t cons_wrap) "prod:%d, cons:%d, prod_wrap:%d, cons_wrap:%d "
+ smmuv3_cmdq_consume_error(const char *cmd_name, uint8_t cmd_error) "Error on %s command execution: %d"
 -- 
 2.34.1
 
