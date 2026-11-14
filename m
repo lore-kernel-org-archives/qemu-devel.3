@@ -1,26 +1,26 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157B3606A327
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 15:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94DC606A323
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 15:58:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSG8P-0006Jt-4A; Sat, 14 Nov 2026 10:57:48 -0500
+	id 1xSG8X-0006NP-Bw; Sat, 14 Nov 2026 10:57:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1xSG8C-0006If-EW; Sat, 14 Nov 2026 10:57:33 -0500
+ id 1xSG8D-0006Ij-In; Sat, 14 Nov 2026 10:57:35 -0500
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1xSG8A-0002nF-PT; Sat, 14 Nov 2026 10:57:32 -0500
+ id 1xSG8A-0002nJ-Ul; Sat, 14 Nov 2026 10:57:33 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwDnHKXohPhqqR0qBg--.63775S2; 
+ by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwBHT5_ohPhqph0qBg--.44340S2; 
  Sat, 14 Nov 2026 23:57:28 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAf8DwBHXWhPhqctv6AA--.37503S3;
- Sat, 14 Nov 2026 23:57:11 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAf8Dw0XTmhPhqdNv6AA--.34391S3;
+ Sat, 14 Nov 2026 23:57:26 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Peter Maydell <peter.maydell@linaro.org>,
  Eric Auger <eric.auger@redhat.com>,
@@ -34,20 +34,21 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Jim MacArthur <jim.macarthur@linaro.org>,
  Tao Tang <tangtao1634@phytium.com.cn>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 30/35] hw/pci: Add sec-sid property to PCIDevice
-Date: Sat, 14 Nov 2026 23:57:08 +0800
-Message-Id: <20261114155708.3615176-1-tangtao1634@phytium.com.cn>
+Subject: [PATCH v6 31/35] hw/arm/smmuv3: Select sec-sid from PCI property and
+ validate SECURE_IMPL
+Date: Sat, 14 Nov 2026 23:57:24 +0800
+Message-Id: <20261114155724.3615460-1-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwBHXWhPhqctv6AA--.37503S3
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWr3ZUsBTQAAso
+X-CM-TRANSID: AQAAf8Dw0XTmhPhqdNv6AA--.34391S3
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWr3ZUsBTQABsp
 Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxGrWfJr1UGFyxXF4rZF45Awb_yoWrXF43pF
- Z5Ca4FyrWkGa4fKwsIva1xCF1rWan7K3yYkrW29w1DCF17Ar9Yqw4YkFWY9F18urWvqF1Y
- 934UZFykuw1UAFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoW3KF1ktw1rXFy5WrWfCFW8tFb_yoWDWFW3pF
+ WUAFnIqr4UGFn3AFs3tw429a15Xan7WF1rKry3Ka95C347Jr17Xr1vkw1Yvr9rWFWUZw47
+ ZayIgrW5Cr42y3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -72,126 +73,309 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Arm SMMUv3 uses a SEC_SID (StreamID Security state) to determine the
-security state of the programming interface that controls a transaction.
-The architecture explicitly states that the association between a device
-and its SEC_SID is a system-defined property, not something derived from
-the physical address space.
+Read each PCI device's sec-sid property in smmu-common and cache the
+corresponding SEC_SID in SMMUDevice::sec_sid, defaulting to Non-secure
+when the property is unset. The PCI property setter validates explicit
+values. Use sdev->sec_sid in smmuv3_translate() to select the register
+bank instead of hardcoding the Non-secure context.
 
-We need a way to represent this system-defined SEC_SID for PCI devices
-if we want to implement SMMU's Secure state. So that SMMUv3 can select
-the correct register bank and configuration when handling their streams.
+Add a SMMUv3-specific compatibility check through
+PCIIOMMUOps.supports_address_space(). Reject sec-sid=secure when
+SMMU_S_IDR1.SECURE_IMPL is 0 or SMMUv3 acceleration is enabled.
+Propagate errors through errp so incompatible PCI hotplug requests
+fail without terminating QEMU.
 
-This patch adds a new char *sec_sid field to PCIDevice, together with
-a "sec-sid" QOM property. The property is intended to carry the
-platform-defined SEC_SID for the device; for now only Non-secure and
-Secure security states are supported.
-
-Validate the property in the PCI setter, accepting only the
-case-sensitive strings "non-secure" and "secure". Reject other values
-with an error when the property is set, so invalid values are caught
-in the PCI layer before reaching an SMMU.
+Typically, SEC_SID is a system-defined attribute (e.g. sideband or tied-off)
+rather than something a PCIe endpoint can freely toggle in pre-RME scenario.
+So this PCI sec-sid property is used as a static platform/testing knob to
+drive the SMMU bank selection.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
- include/hw/pci/pci_device.h |  3 +++
- hw/pci/pci.c                | 48 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+)
+ include/hw/arm/smmu-common.h |  8 +++++
+ hw/arm/smmu-common.c         | 65 ++++++++++++++++++++++++++++++++++++
+ hw/arm/smmuv3-accel.c        |  2 +-
+ hw/arm/smmuv3.c              | 48 +++++++++++++++++++++++++-
+ 4 files changed, 121 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index 5cac6e16886..6e6c49fdd19 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -187,6 +187,9 @@ struct PCIDevice {
-     uint32_t max_bounce_buffer_size;
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index a21c6061808..c94bce0e04f 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -50,6 +50,8 @@ typedef enum SMMUSecSID {
  
-     char *sriov_pf;
-+
-+    /* Arm SMMU SEC_SID */
-+    char *sec_sid;
+ MemTxAttrs smmu_get_txattrs(SMMUSecSID sec_sid);
+ ARMSecuritySpace smmu_get_security_space(SMMUSecSID sec_sid);
++int smmu_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs);
++int smmu_num_indexes(IOMMUMemoryRegion *iommu);
+ 
+ /*
+  * Page table walk error types
+@@ -134,6 +136,7 @@ typedef struct SMMUDevice {
+     void               *smmu;
+     PCIBus             *bus;
+     int                devfn;
++    SMMUSecSID         sec_sid;
+     IOMMUMemoryRegion  iommu;
+     AddressSpace       as;
+     uint32_t           cfg_cache_hits;
+@@ -204,6 +207,8 @@ struct SMMUBaseClass {
+     /*< public >*/
+ 
+     DeviceRealize parent_realize;
++    bool (*validate_sec_sid)(struct SMMUState *s, SMMUSecSID sec_sid,
++                            int bus_num, int devfn, Error **errp);
+ 
  };
  
- static inline int pci_intx(PCIDevice *pci_dev)
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index d8b117799f3..c0ca836fce9 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -51,6 +51,7 @@
- #include "hw/core/boards.h"
- #include "hw/nvram/fw_cfg.h"
+@@ -221,6 +226,9 @@ SMMUPciBus *smmu_get_sbus(SMMUState *s, PCIBus *bus);
+ /* Initialize SMMUDevice handle associated to a SMMUPciBus */
+ void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev, PCIBus *bus, int devfn);
+ 
++bool smmu_supports_address_space(PCIBus *bus, void *opaque, int devfn,
++                                Error **errp);
++
+ 
+ static inline bool smmu_sec_sid_is_secure(SMMUSecSID sec_sid)
+ {
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index 0408fd25b3a..eec270dac1d 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -21,6 +21,7 @@
+ #include "exec/target_page.h"
+ #include "hw/core/cpu.h"
+ #include "hw/pci/pci_bridge.h"
++#include "hw/pci/pci_device.h"
+ #include "hw/core/qdev-properties.h"
  #include "qapi/error.h"
-+#include "qapi/visitor.h"
- #include "qemu/cutils.h"
- #include "pci-internal.h"
- #include "qapi/qapi-builtin-type-infos.h"
-@@ -86,6 +87,46 @@ static const PropertyInfo prop_pci_busnr = {
-     .get = prop_pci_busnr_get,
- };
+ #include "qemu/jhash.h"
+@@ -91,6 +92,19 @@ AddressSpace *smmu_get_address_space(SMMUState *s, SMMUSecSID sec_sid)
+     g_assert_not_reached();
+ }
  
-+static void prop_pci_sec_sid_get(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
++int smmu_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs)
 +{
-+    qdev_prop_string.get(obj, v, name, opaque, errp);
++    if (attrs.unspecified) {
++        return SMMU_SEC_SID_NS;
++    }
++    return attrs.secure ? SMMU_SEC_SID_S : SMMU_SEC_SID_NS;
 +}
 +
-+static void prop_pci_sec_sid_set(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
++int smmu_num_indexes(IOMMUMemoryRegion *iommu)
 +{
-+    PCIDevice *dev = PCI_DEVICE(obj);
-+    g_autofree char *value = NULL;
++    return SMMU_SEC_SID_NUM;
++}
 +
-+    if (!visit_type_str(v, name, &value, errp)) {
-+        return;
+ /* IOTLB Management */
+ 
+ static guint smmu_iotlb_key_hash(gconstpointer v)
+@@ -1096,15 +1110,52 @@ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num)
+     return NULL;
+ }
+ 
++static SMMUSecSID smmu_parse_pci_sec_sid(PCIDevice *pdev)
++{
++    if (!pdev || !pdev->sec_sid ||
++        !strcmp(pdev->sec_sid, "non-secure")) {
++        return SMMU_SEC_SID_NS;
 +    }
 +
-+    if (strcmp(value, "non-secure") && strcmp(value, "secure")) {
-+        error_setg(errp, "Invalid %s value '%s'; "
-+                   "expected 'non-secure' or 'secure'", name, value);
-+        return;
++    assert(!strcmp(pdev->sec_sid, "secure"));
++    return SMMU_SEC_SID_S;
++}
++
++bool smmu_supports_address_space(PCIBus *bus, void *opaque, int devfn,
++                                Error **errp)
++{
++    SMMUState *s = opaque;
++    SMMUBaseClass *sbc = ARM_SMMU_GET_CLASS(s);
++    int bus_num = pci_bus_num(bus);
++    PCIDevice *pdev = pci_find_device(bus, bus_num, devfn);
++    SMMUSecSID sec_sid = smmu_parse_pci_sec_sid(pdev);
++
++    return !sbc->validate_sec_sid ||
++           sbc->validate_sec_sid(s, sec_sid, bus_num, devfn, errp);
++}
++
+ void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev, PCIBus *bus, int devfn)
+ {
+     static unsigned int index;
+     g_autofree char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn,
+                                             index++);
++    SMMUBaseClass *sbc = ARM_SMMU_GET_CLASS(s);
++    PCIDevice *pdev;
++    int bus_num;
++
+     sdev->smmu = s;
+     sdev->bus = bus;
+     sdev->devfn = devfn;
+ 
++    bus_num = pci_bus_num(bus);
++    pdev = pci_find_device(bus, bus_num, devfn);
++
++    sdev->sec_sid = smmu_parse_pci_sec_sid(pdev);
++    /* Also check devices realized before the SMMU was attached. */
++    if (sbc->validate_sec_sid) {
++        sbc->validate_sec_sid(s, sdev->sec_sid, bus_num, devfn, &error_fatal);
 +    }
 +
-+    g_free(dev->sec_sid);
-+    dev->sec_sid = g_steal_pointer(&value);
-+}
+     memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
+                              s->mrtypename, OBJECT(s), name, UINT64_MAX);
+     address_space_init(&sdev->as, MEMORY_REGION(&sdev->iommu), name);
+@@ -1129,18 +1180,32 @@ static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
+ {
+     SMMUState *s = opaque;
+     SMMUPciBus *sbus = smmu_get_sbus(s, bus);
++    SMMUBaseClass *sbc = ARM_SMMU_GET_CLASS(s);
+     SMMUDevice *sdev;
++    PCIDevice *pdev;
++    SMMUSecSID sec_sid;
++    int bus_num;
+ 
+     sdev = sbus->pbdev[devfn];
+     if (!sdev) {
+         sdev = sbus->pbdev[devfn] = g_new0(SMMUDevice, 1);
+         smmu_init_sdev(s, sdev, bus, devfn);
++    } else {
++        bus_num = pci_bus_num(bus);
++        pdev = pci_find_device(bus, bus_num, devfn);
++        sec_sid = smmu_parse_pci_sec_sid(pdev);
 +
-+static void prop_pci_sec_sid_release(Object *obj, const char *name,
-+                                    void *opaque)
-+{
-+    qdev_prop_string.release(obj, name, opaque);
-+}
-+
-+static const PropertyInfo prop_pci_sec_sid = {
-+    .type = "str",
-+    .qapi_type = &str_type_info,
-+    .get = prop_pci_sec_sid_get,
-+    .set = prop_pci_sec_sid_set,
-+    .release = prop_pci_sec_sid_release,
-+};
-+
- static const Property pci_props[] = {
-     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
-@@ -107,6 +148,13 @@ static const Property pci_props[] = {
-     DEFINE_PROP_STRING("sriov-pf", PCIDevice, sriov_pf),
-     DEFINE_PROP_BIT("x-pcie-ext-tag", PCIDevice, cap_present,
-                     QEMU_PCIE_EXT_TAG_BITNR, true),
-+
-+    /*
-+     * System-defined, statically configured SEC_SID for this PCI device, used
-+     * by Arm SMMU. Only support "non-secure" and "secure" security states.
-+     */
-+    DEFINE_PROP("sec-sid", PCIDevice, sec_sid, prop_pci_sec_sid, char *),
-+
-     { .name = "busnr", .info = &prop_pci_busnr },
++        if (sbc->validate_sec_sid) {
++            sbc->validate_sec_sid(s, sec_sid, bus_num, devfn, &error_fatal);
++        }
++        sdev->sec_sid = sec_sid;
+     }
+ 
+     return &sdev->as;
+ }
+ 
+ static const PCIIOMMUOps smmu_ops = {
++    .supports_address_space = smmu_supports_address_space,
+     .get_address_space = smmu_find_add_as,
  };
  
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 6fac9420cdf..5a0a689ebc9 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -899,7 +899,7 @@ static bool smmuv3_accel_supports_as(PCIBus *bus, void *opaque, int devfn,
+         }
+         return false;
+     }
+-    return true;
++    return smmu_supports_address_space(bus, opaque, devfn, errp);
+ }
+ /*
+  * Find or add an address space for the given PCI device.
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 0c367dc5221..04955d0691b 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1162,6 +1162,20 @@ static void smmuv3_fixup_event(SMMUEventInfo *event, hwaddr iova)
+     }
+ }
+ 
++static AddressSpace *smmuv3_bypass_target_as(SMMUv3State *s,
++                                             SMMUSecSID sec_sid,
++                                             int iommu_idx)
++{
++    g_assert(iommu_idx >= SMMU_SEC_SID_NS &&
++             iommu_idx < SMMU_SEC_SID_NUM);
++
++    if (smmu_sec_sid_is_secure(sec_sid) &&
++        iommu_idx == SMMU_SEC_SID_S) {
++        return smmu_get_address_space(&s->smmu_state, SMMU_SEC_SID_S);
++    }
++    return smmu_get_address_space(&s->smmu_state, SMMU_SEC_SID_NS);
++}
++
+ /* Entry point to SMMU, does everything. */
+ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+                                       IOMMUAccessFlags flag, int iommu_idx)
+@@ -1169,7 +1183,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+     SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
+     SMMUv3State *s = sdev->smmu;
+     uint32_t sid = smmu_get_sid(sdev);
+-    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
++    SMMUSecSID sec_sid = sdev->sec_sid;
+     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+     SMMUEventInfo event = {.type = SMMU_EVT_NONE,
+                            .sid = sid,
+@@ -1186,6 +1200,8 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+     };
+     SMMUTLBEntry *cached_entry = NULL;
+ 
++    entry.target_as = smmuv3_bypass_target_as(s, sec_sid, iommu_idx);
++
+     qemu_mutex_lock(&s->mutex);
+ 
+     if (!smmu_enabled(s, sec_sid)) {
+@@ -1461,6 +1477,32 @@ static inline bool smmu_hw_secure_implemented(SMMUv3State *s)
+     return FIELD_EX32(s->bank[SMMU_SEC_SID_S].idr[1], S_IDR1, SECURE_IMPL);
+ }
+ 
++static bool smmuv3_validate_sec_sid(SMMUState *bs, SMMUSecSID sec_sid,
++                                    int bus_num, int devfn, Error **errp)
++{
++    SMMUv3State *s = ARM_SMMUV3(bs);
++
++    if (sec_sid != SMMU_SEC_SID_S) {
++        return true;
++    }
++
++    if (s->accel) {
++        error_setg(errp, "PCI device %02x:%02x.%x: sec-sid=secure "
++                   "is not supported with SMMUv3 acceleration",
++                   bus_num, PCI_SLOT(devfn), PCI_FUNC(devfn));
++        return false;
++    }
++
++    if (!smmu_hw_secure_implemented(s)) {
++        error_setg(errp, "PCI device %02x:%02x.%x: sec-sid=secure "
++                   "requires S_IDR1.SECURE_IMPL=1",
++                   bus_num, PCI_SLOT(devfn), PCI_FUNC(devfn));
++        return false;
++    }
++
++    return true;
++}
++
+ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+ {
+     SMMUState *bs = ARM_SMMU(s);
+@@ -2567,6 +2609,7 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     ResettableClass *rc = RESETTABLE_CLASS(klass);
+     SMMUv3Class *c = ARM_SMMUV3_CLASS(klass);
++    SMMUBaseClass *sbc = ARM_SMMU_CLASS(klass);
+ 
+     dc->vmsd = &vmstate_smmuv3;
+     resettable_class_set_parent_phases(rc, NULL, NULL, smmu_reset_exit,
+@@ -2576,6 +2619,7 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+     device_class_set_props(dc, smmuv3_properties);
+     dc->hotpluggable = false;
+     dc->user_creatable = true;
++    sbc->validate_sec_sid = smmuv3_validate_sec_sid;
+ 
+     object_class_property_set_description(klass, "accel",
+         "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be "
+@@ -2649,6 +2693,8 @@ static void smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
+ 
+     imrc->translate = smmuv3_translate;
+     imrc->notify_flag_changed = smmuv3_notify_flag_changed;
++    imrc->attrs_to_index = smmu_attrs_to_index;
++    imrc->num_indexes = smmu_num_indexes;
+ }
+ 
+ static const TypeInfo smmuv3_type_info = {
 -- 
 2.34.1
 
