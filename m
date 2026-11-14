@@ -1,135 +1,135 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B99606A327
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 14:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5263C606A327
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 14:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UukwlWuz;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=UQGQZbVE
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gSJWJd4F;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=J0mWeQNd
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSFDo-00069a-VR; Sat, 14 Nov 2026 09:59:17 -0500
+	id 1xSFE7-0006D8-6l; Sat, 14 Nov 2026 09:59:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xSFDk-00069G-47
- for qemu-devel@nongnu.org; Sat, 14 Nov 2026 09:59:12 -0500
+ id 1xSFE5-0006CW-T3
+ for qemu-devel@nongnu.org; Sat, 14 Nov 2026 09:59:34 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xSFDi-0006bo-Fq
- for qemu-devel@nongnu.org; Sat, 14 Nov 2026 09:59:11 -0500
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1xSFE4-0006cU-Cv
+ for qemu-devel@nongnu.org; Sat, 14 Nov 2026 09:59:33 -0500
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AEDjsid3173363
- for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 14:59:08 GMT
+ 6AEDkUIi4115461
+ for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 14:59:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- jDUwkgEpWaGqE4dX1S/21Eud69lr8W+Vks2CT4jVbIk=; b=UukwlWuzBGSAthdj
- rM4bm1ZfdlRv3udg95zHY8Gd8A0AQd+aZApeYu84Uln9GNz47LYRHQ8aMHZwUddw
- 610mr4f0xZ81LE8OwNt5XhfZP99D7qT91D9FzM7qcBq9No4NPtewVVGYsuTptlZG
- 5zOSus+LO24k4UlhKKjzSMjZf+0SaPsyoZv6X5V0YQaQh1temZXnW+UYX9Kjw3bH
- Wn+4sfhVrUReWhUPtY5YqSMssW0iIYMYe+EcWof1V69ArZN1LJGM/zVn7IgJNiKy
- rG17vPOnrn7nvL13+9UoixNOYhKlg0X3tHnmKVv8g5ufWXLnOCSm/RjWkl+ovHsa
- 2r9m0A==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hxhmhh0rn-1
+ FSzzRlAvObNwnscGZErSUDZCcV6NAKdMWWojaWvjaoo=; b=gSJWJd4FYNVxvTCx
+ E75n4KIKURHa4sD6Oof8SmTQDRoLGE96FXXWhEBvBRULIqoZWnVG9ekCKNXPDvHU
+ gKFyvX65w1TQvaCB0S1D+UnAol888NQ69SX3kKO/FLAMT0ARDRPjXQcFDYAtLiWi
+ h+SFu0d7P9yqZ6tHMeJckEFLPV561wrh1kz6QYdX5Aos3Oj+hfdUdGwnYoBiwAXo
+ XHAvQCdPUF5Pz9j3Xpkc8f5jjfxxMjEvR4NsHEq7VPY8/OJy1K45pp1z7saHoGgI
+ 1ubiFl42vj3GCG87V2uye/lE3VJAQeln4ts/efxg2Ct/N07+KUJqFbHXfSs5q8nZ
+ p7UzfA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hxhhjs2uc-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 14:59:08 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-3b0a528ca65so1545967a91.0
- for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 06:59:08 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 14:59:25 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2ed2c307e62so31955735ad.0
+ for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 06:59:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794668348; x=1795273148; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1794668365; x=1795273165; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=jDUwkgEpWaGqE4dX1S/21Eud69lr8W+Vks2CT4jVbIk=;
- b=UQGQZbVE0CEdG7UBBzggJXIsMFkisKGDlNfqPkJNYtbl1O9hmhGHjQLTEpLG++WhJE
- Yr/K8k88ntSOKhFGgBRPi8mfWvxOzd7Hawg8QNsGWULGK2J0ErQzqyT8XLEdIpW4CMrp
- 8BcCQoGUNbIBEyI7sZ+GUFgIqPm1L+8SyzitPpd5OAdMlpJd3K+iUuBvU+k1LAYA58dX
- j9UHFRWn+aI1X0n35auBKHnvdcoDVAmf1lMaJBqvOc+9FkiSwtrGD7g69A3diLTl6WXv
- WraPEfsoq6KAs1jARP6TbQ3Rv8oGDGa6KlsLzYfl4Ie8B6aKNUaJvDrxVg79iuYPYN2O
- OfSQ==
+ bh=FSzzRlAvObNwnscGZErSUDZCcV6NAKdMWWojaWvjaoo=;
+ b=J0mWeQNdtgr6QOvo6B4MCIwrVO8zW6nB1j6ekdlA5r/Ww6TJkhC0rrnqxcPsGNvbtk
+ X35Krc0fCCQPDLv33jA9EiurGpsdf5pO17Szi48bW31Fl04naIaHTZOuWX1U59+eARvU
+ urF5a2RLNVJQ8YmNfb9yEjuaoEQH7SjkXx35tMSlmXSS0DFiHYZybBXUke5IU7gWcqfj
+ FJM216iGGJHop/G1pLudqcdZ4lO6AqTXkW52FPjrILzW2ej4ho/Iq5Lf/m/lRDwKMfu7
+ VvwcQoGbEtMZu/dhtUZYsFpWdp3Nc5pbg6PirFTCvbMVr4x4njUGsEsuS/tCd4fTGWpc
+ JMEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794668348; x=1795273148;
+ d=1e100.net; s=20260707; t=1794668365; x=1795273165;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=jDUwkgEpWaGqE4dX1S/21Eud69lr8W+Vks2CT4jVbIk=;
- b=vzkDba1mlgp6V/IIcPG6iPYDc8VXzaXvQul2Rteay8o1fBOX6bQEUnB4/QeUrSaFU9
- wnV7glLXiRRjzOq68bgIBXv6//E33MmHJzPe0xp7nxQf3p2ThwNBHCB8tmtCb8Oi5d4H
- rpaXknHAcMz9jry0lGu1J5pug6Oko02oyaPTMuEN0/u5zKU8vD5GrkOP0QkIgLKiEFCU
- SduIoMfF9qeCitaJiVLvZP0RFmiHHq+xe638ZGqkeOBnP4fMm0G1Uor0+zV8iAS9uKJs
- mMf2cBXziA49dgIiOLgPSyfAiUOFRzZqhbJPXRXVJBxOxjb4g4Ieh42rtj76Zt/FHWZ7
- yK8g==
+ bh=FSzzRlAvObNwnscGZErSUDZCcV6NAKdMWWojaWvjaoo=;
+ b=bXsD5leU8kZe7eV4RxDhsCrP8sgdrZpBOmpxyZWP3cWK23f2IcqrWPplqP9xvSJgrt
+ o6cn7uiL7RWMZ3NMXy+guvvxeEf89id8IUVNjMQxa+6xenHpukOhYpggquqFnNZS2Qcp
+ ToEmjtYjTNxj/T/bpj7X0KCcQap/cHI3iCwlPjBcEFC4gUiLjOJBBibeFVgdpHm4P+In
+ aogFX1LIoLWPxJCuD/rlIe1vgLNODu714fMbqP3o85EZ4vo62cyChE5jsdw1Wnfz30zt
+ /loMYshpNTrDMZIHg3Ufg96dxkFH+LzY/F8344+bbyJ9U1Ro0XMnJE09+aE586/2YKrO
+ vuEw==
 X-Forwarded-Encrypted: i=1;
- AL+hErG4oymJ3Qqt0gKhBdKhiozZFh7iwkj6+tqiKkMyi8vaqkSSrgB8IToXEEWk2xqFVAwkSD4JB8RXZXRJ@nongnu.org
-X-Gm-Message-State: APuU4Z8APPmQEypwKxibf7MBX3r5PKDysxXbk2MA12VAdlNF0lYS7FRY
- Df94A9v64uaBs2FJWhCg1Z1ItpvxdTCV98odjRwiF6D6fmJ2gKqOOtFKLC02M9PPEk4Ss3QONHM
- 5gOL4p8f1dCbQjZ9LRU7w9f1NVGx49MNX0xxbY8LR1zts/HcHgA1ZDHgITg==
-X-Gm-Gg: AYBFou0v2b07es1XKkv/0W53Y2B+OMx83ChPL154DK1dvFc2XR4DDwbw19wb/6pOPNX
- NW1l4pbkzA96bXVZrN8k4gHL9zsgC3tcPtp2mZFEgnCzkzZ/ZPKeLSQ+Ejn6QSO2zrG4kdNtX0r
- fTyHcaQf6fM3oBgZ357hVjDh0ix+e38ZfbbO0JiKJXC8bYSkuvlFBccVAS+1CSqi5foJK1U08n5
- tdHL2NfzqVuatbkkd8YkXZvoDmbZpDna2mz2Rf5cD7bpK1iJ3ZWf/qXeMFxdYFtUifqnNswr4O+
- DpukTXBQednfWOL2A6D57u7OIRQPHb8JJO+J6MC0YMEDTG9A3DnoWjqV9F6G90P9o9B34M6yHLE
- FLk+POcpeZ1pBzk+cKsOfh5RMotIZS75fkGmVfYIByRdxY7q0UtTyFQ5d7y7yRTOsI4hBWkshLd
- Q+qx5x8QJeHur7CU15dAZ1jK9t623fQQ==
-X-Received: by 2002:a17:90b:2783:b0:3b0:af68:77a with SMTP id
- 98e67ed59e1d1-3b1b07ef475mr5424511a91.6.1794668347740; 
- Sat, 14 Nov 2026 06:59:07 -0800 (PST)
-X-Received: by 2002:a17:90b:2783:b0:3b0:af68:77a with SMTP id
- 98e67ed59e1d1-3b1b07ef475mr5424496a91.6.1794668347294; 
- Sat, 14 Nov 2026 06:59:07 -0800 (PST)
+ AL+hErEjsagT64eyi857aHGbqh9RE3bjw1b1thpb8NniogEVZZiwHVg4AEej7cd3jwnc29Y+yYyyXWfet6oe@nongnu.org
+X-Gm-Message-State: APuU4Z9IqwAiIYNF50I4Oto3dvh3Ip2YqCVHnMzbmxrXDMsENF69UFGh
+ +1eaIW3WaDQvRK4Z+iz9FpCNHcIV14wT0KiDqMLPS49h0ED8bakKqsw0MZ0yYEHDiYrfsTMcq6r
+ XBa100RqaNEagGIhJtidoGsBYWkxkJy0gerJHgFZWKiTUIf0gfTbW4wczeQ==
+X-Gm-Gg: AYBFou2oi2fDKUvY/X2NoV6vKEsIicKiHI9KMjsfuv7H8zG1AIvyfs5isVJOlSkAB5b
+ 88A+hXav6kt9Gq6CUrLbsBNbno/Xj2ssi+4VIg7nCCc7Ybpxs3m9z48g34M71VlLQ11KfNvBbBa
+ S5121bbCno68i51UPV7hO5dUgfPam9CFLJVfmaHIKvjjlhEHwG6EtrgcxiWmTVi5MM8Ab6QIKCw
+ BQV8tSLeXL68qfmc7npzcMHvMkW0rlFAr7XlLsGvNUqS0k8jNU8ae3c7LiYuJOpwevOnlPSovIt
+ 7Vv5Hi9/pQijI6UpRg8wnxI7wM5AwUlwPBLiRWgTpDo+1seeXTaeBuqTQ1lNPgU2YQRJ2yGpvo5
+ lGcV5B5HhX8yVD2M8t+D0lI7bLfU2zBqr282C3byahkYAuNI7JteUahik+Y4zasa6KQxJAvsF+h
+ adi2U8b1OPWgopLDsTbMWojuxqBC0jXg==
+X-Received: by 2002:a17:902:d98c:b0:2e9:5b4e:b8a1 with SMTP id
+ d9443c01a7336-2ee0dcadca5mr55882225ad.55.1794668365043; 
+ Sat, 14 Nov 2026 06:59:25 -0800 (PST)
+X-Received: by 2002:a17:902:d98c:b0:2e9:5b4e:b8a1 with SMTP id
+ d9443c01a7336-2ee0dcadca5mr55882035ad.55.1794668364577; 
+ Sat, 14 Nov 2026 06:59:24 -0800 (PST)
 Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b197d0f497sm14328185a91.8.2026.11.14.06.59.06
+ d9443c01a7336-2ee0f7e5055sm21575215ad.39.2026.11.14.06.59.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Nov 2026 06:59:06 -0800 (PST)
-Message-ID: <e4a7622f-d87c-42c3-9a36-4e461199fd4b@oss.qualcomm.com>
-Date: Sat, 14 Nov 2026 07:59:05 -0700
+ Sat, 14 Nov 2026 06:59:24 -0800 (PST)
+Message-ID: <d471f075-cdc0-462c-a894-04bd1a097479@oss.qualcomm.com>
+Date: Sat, 14 Nov 2026 07:59:23 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] roms: record the H2 commit in a file
+Subject: Re: [PATCH 2/2] pc-bios: rebuild H2 firmware
 Content-Language: en-US
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
 References: <20261112173901.3748880-1-brian.cain@oss.qualcomm.com>
- <20261112173901.3748880-2-brian.cain@oss.qualcomm.com>
+ <20261112173901.3748880-3-brian.cain@oss.qualcomm.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20261112173901.3748880-2-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20261112173901.3748880-3-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: OkYoylicb1VIU57-vdvQnT2_r74Y4kjQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE0MDA1OSBTYWx0ZWRfX/T9vwSNq8Df9
- dTwRSWQF3UZGwTFVhyAFDKOyEpHo18xA/JOvYX8Q9wEn/XBHn+FHWrNhfgBB3CZvsi9G8eGo2dL
- nXvytykXfP/TkI7EWkVY5lYbSLtH9dg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE0MDA1OSBTYWx0ZWRfX9v9HO1R8QkFF
- VTDIBzqh3rDAh8VHZgEaU0mdgT3ynz/G1NkRCDXm76wtCiU7xCgKUElHK2MpydZhQ/GZEnt2SqZ
- Cz5cO4FPBQQF9wnedLSgtWjnY6tABkaMj1ZAzjUe+OPpYom3gcb2I2R3MwYlphgTftRvquseEZz
- 24li0MWdWkOXhuuVy7Kz7wvmcJus1cA5fCqIuziyij3tkUcBWSTRZoGJ8LSf1WYNEa08O7SGJco
- PUyCiIk7X1esJBB0yOvyKeXK/MOegxmxkQ5r2b5kTrdf/9KQORy1+OumQrrqOfbP3hlH4ynUf4h
- pz6TVIfM5IGOk7Vcq8/xkZjnJ3xmHMECt9uksBnt4Ztlg8cruOwTBa8/XpKTQVnByEgIXlXeMfw
- YqBGT+0zI1EonaVXolXWGGDI9eFBg95GIj8QnUKuENw6nM2bCShpzn3ZkZu/b/55kbrwcR6++m5
- 0L9d8XyktEFC//djsGw==
-X-Authority-Analysis: v=2.4 cv=e/2T2qp/ c=1 sm=1 tr=0 ts=6af8773c cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE0MDA1OSBTYWx0ZWRfX/ROMcj1Ysnml
+ 769cVhzOjyIDJZ1Ph0nRVgDMMUVIrj8bww37aErcJbMMrZoClP7kCA+GG7Hsui80JntVBjljL1x
+ bE2CNRUSYnutJwC+DPze3hb2KRJywiKdLHFaIYeUsayRc71XhPod7/Tkn/BygJEaRw7rpGyfUXS
+ wSfGwNhMiaqUoxl/cv0UkuDnoeLuy6BSQniTCl2N9j0iafU96vGIr0Xt20srlXpAijxBhSVpYkn
+ HFRyh3Up8oBMuwqUhjueIcnNHu2yJTt3eaEITb6LL1oGPiIVfjfXhHQYgJbiQPXUEZxDd9bmWic
+ ER8vwVf/sVlUOxe+l+ojJp7OpFOfnwaoOK5gRGrOdTzT9jwXYiv0OEe8qUIJAisD62ZydGMnQyE
+ fNCvoaBy3Od1U2zDILHpCoVYhGpPtbsiJaycoAXfpiWcy9/Rd3NrzzdwwzWwk5w4taUxifNgPaC
+ OhyLP4j4DOt3m9fzw5Q==
+X-Proofpoint-ORIG-GUID: 5zhHbNBNK7dNUVavkP8ptTX8gNrE648S
+X-Proofpoint-GUID: 5zhHbNBNK7dNUVavkP8ptTX8gNrE648S
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE0MDA1OSBTYWx0ZWRfXwihny1fkezKz
+ lgql9pDXgTjdzk+nbkZ4Auwke7QSMys8KGdJT5SZOSzBy9uSrOftcQxAutcYYQa17Bx5we7ZRWj
+ oIxbqGHWXtVuDVulzAyQPKlDGLcGtrQ=
+X-Authority-Analysis: v=2.4 cv=X9rHu2Te c=1 sm=1 tr=0 ts=6af8774d cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=ffpSfegR4-WdZWGtI_QA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-ORIG-GUID: OkYoylicb1VIU57-vdvQnT2_r74Y4kjQ
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=v85dxRR-US6wc7jHZUwA:9 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-14_04,2026-11-11_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- malwarescore=0 spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
+ phishscore=0 impostorscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
+ adultscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611140059
 Received-SPF: pass client-ip=205.220.168.131;
@@ -162,70 +162,24 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 11/12/26 10:39 AM, Brian Cain wrote:
-> The H2 build ID was derived by running `git rev-parse`, which fails when
-> building from a source tarball.  Leaving H2K_GIT_COMMIT as "0x" does
-> not compile.
-> 
-> Instead we'll keep the commit in a tracked file, regenerate it when it's
-> a submodule.
+> Rebuild the H2 images with the updated roms/Makefile.
+> The H2 sources and build ID are unchanged.
 > 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   MAINTAINERS                     |  1 +
->   roms/Makefile                   | 13 +++++++++++--
->   roms/hexagon-hypervisor-version |  1 +
->   3 files changed, 13 insertions(+), 2 deletions(-)
->   create mode 100644 roms/hexagon-hypervisor-version
+>   pc-bios/README                          |   7 +++----
+>   pc-bios/hexagon_booter_qcs6490_cdsp     | Bin 285292 -> 285292 bytes
+>   pc-bios/hexagon_booter_sa8775p_cdsp     | Bin 281224 -> 281224 bytes
+>   pc-bios/hexagon_booter_sa8797p_nsp0     | Bin 288904 -> 288904 bytes
+>   pc-bios/hexagon_booter_sc8480xp_nsp0    | Bin 288908 -> 288908 bytes
+>   pc-bios/hexagon_booter_sm8975_nsp       | Bin 288900 -> 288900 bytes
+>   pc-bios/hexagon_loadlinux_qcs6490_cdsp  | Bin 200428 -> 200428 bytes
+>   pc-bios/hexagon_loadlinux_sa8775p_cdsp  | Bin 200456 -> 200456 bytes
+>   pc-bios/hexagon_loadlinux_sa8797p_nsp0  | Bin 208136 -> 208136 bytes
+>   pc-bios/hexagon_loadlinux_sc8480xp_nsp0 | Bin 208140 -> 208140 bytes
+>   pc-bios/hexagon_loadlinux_sm8975_nsp    | Bin 208132 -> 208132 bytes
+>   11 files changed, 3 insertions(+), 4 deletions(-)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index fa0c6d0c9bc..df264c30753 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1399,6 +1399,7 @@ F: tests/qtest/qcom-dsp-test.c
->   F: docs/devel/hexagon-sys.rst
->   F: pc-bios/hexagon*
->   F: roms/hexagon-hypervisor
-> +F: roms/hexagon-hypervisor-version
->   
->   LoongArch Machines
->   ------------------
-> diff --git a/roms/Makefile b/roms/Makefile
-> index bae8f3b766b..2cbab2d1993 100644
-> --- a/roms/Makefile
-> +++ b/roms/Makefile
-> @@ -226,11 +226,20 @@ hexagon_h2_booters := hexagon-booter-qcs6490-cdsp \
->   hexagon_h2_loadlinux := hexagon-loadlinux-qcs6490-cdsp \
->   	hexagon-loadlinux-sm8975-nsp hexagon-loadlinux-sa8775p-cdsp \
->   	hexagon-loadlinux-sc8480xp-nsp0 hexagon-loadlinux-sa8797p-nsp0
-> +-include hexagon-hypervisor-version
-> +
-> +hexagon-hypervisor-version: hexagon-hypervisor
-> +	if test -e hexagon-hypervisor/.git; then \
-> +		echo "H2K_COMMIT = $$(git -C hexagon-hypervisor rev-parse HEAD)" > $@; \
-> +	else \
-> +		touch $@; \
-> +	fi
-> +
 
-Maybe would be better to always read from the (existing) file, and 
-compare content to give output. With this, we can catch the "updated the 
-submodule but forgot to update the file" situation.
-
->   hexagon_h2_common_flags = USE_PKW=0 TARGET=opt NULL_ANGEL_TRAP=1 \
->   	HMX_HLX_SUPPORT=1 \
->   	H2K_LOAD_ADDR=0x9b800000 H2K_GUEST_START=0xa2000000 \
-> -	H2K_GIT_COMMIT=0x$(shell git -C hexagon-hypervisor rev-parse --short=8 HEAD) \
-> -	H2K_GIT_COMMIT_LONG=0x$(shell git -C hexagon-hypervisor rev-parse HEAD) \
-> +	H2K_GIT_COMMIT=0x$(shell echo $(H2K_COMMIT) | cut -c1-8) \
-> +	H2K_GIT_COMMIT_LONG=0x$(H2K_COMMIT) \
->   	JFLAG=-j$(shell nproc)
->   
->   .PHONY: hexagon-qcs6490-cdsp hexagon-sm8975-nsp \
-> diff --git a/roms/hexagon-hypervisor-version b/roms/hexagon-hypervisor-version
-> new file mode 100644
-> index 00000000000..4aeabdc7d0e
-> --- /dev/null
-> +++ b/roms/hexagon-hypervisor-version
-> @@ -0,0 +1 @@
-> +H2K_COMMIT = 23d5bde4313c1e63ba64dd5d7f542b1055188ef8
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
