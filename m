@@ -1,95 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037FF606A33D
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 13:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E623606A329
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Nov 2026 14:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=wMULg9u5
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=RXmI7JTO;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Z0kQqPbi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSDjn-0007lP-0y; Sat, 14 Nov 2026 08:24:11 -0500
+	id 1xSFA5-0005b2-Ni; Sat, 14 Nov 2026 09:55:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSDja-0007hq-BX
- for qemu-devel@nongnu.org; Sat, 14 Nov 2026 08:23:59 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSDjY-00081H-5F
- for qemu-devel@nongnu.org; Sat, 14 Nov 2026 08:23:58 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4a207b02a2cso10400175e9.1
- for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 05:23:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xSFA1-0005Zv-6b
+ for qemu-devel@nongnu.org; Sat, 14 Nov 2026 09:55:21 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xSF9z-00039l-Lx
+ for qemu-devel@nongnu.org; Sat, 14 Nov 2026 09:55:20 -0500
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AEDkwwf118002
+ for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 14:55:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ KF8il6VPHoIL+B20ag6mrMLmQ4AsAoPnLRfcbVT5+UQ=; b=RXmI7JTOGQQfqx0H
+ aIfMxYnHHvLr8WQYaH4zPa7nRlCoSLZfiTto7JQ7MlYRXXq0cfPRUMwweTypdcLo
+ 13NBfbFNj/BS99gE9AZCUqF00P43+nWG5jVFDno7muCOj0CcdLyHoDWd4de5hoL6
+ wLk3ClzU9t32OrP9sjSho7xTw4D/n/ukCfu6CT3+WXneUJgrEKCuNXJz2EMWmLTX
+ JxY+seneOYF7q+SOJ94aGLCF93YkJhj06wGMb2dQKDifbj5arlhQLttGunHjslyN
+ lUPYlg/dfKOhbYqb9GF3/sC44Z2sl/uONjU3ogTK0KmtMqUkeX7aQfNWvKGFdfCz
+ 4mAo5g==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hxhjqh1rh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 14:55:16 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-cc4216aee8fso2342157a12.1
+ for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 06:55:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794662634; x=1795267434; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=AYigO0Jz9iiefYHwMEhCa+1yikT++DWVv7odFVY6EkM=;
- b=wMULg9u5RgHJORL2hjCPq7NiFRt5r1ngoQHG6dPz7xkkjJTqaqrm7NVMjretN3aGte
- YPWbUnfGt4YLwYJn4zjUntLYxaVLl52Jx2CDYHZmUqBoYDl2FwkOW44QzEwxXQeqf5zn
- DzacNLTM1DK4U9bgtJK9yzL/TcuCukFOkd51J0pkzuSUqCc8wjeVrMWyMQDBdJk1ODtc
- azP/TjfbM36spUSWBXyeLhZYqO/6NXCB4ArpiE51NSxL9n2lVB9cxX8h8m4aNM+y/2a8
- vmu7+JMEwo1kkF2lIIVQp+Bt91vAxkznF9NI2ZLSFTjvoRXSTVUkQFXaFVUjs2aCoFFh
- mBgQ==
+ d=oss.qualcomm.com; s=google; t=1794668115; x=1795272915; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=KF8il6VPHoIL+B20ag6mrMLmQ4AsAoPnLRfcbVT5+UQ=;
+ b=Z0kQqPbiT8AseOrKG9FEvCSNlAzPA90VibQm2IqUckyuNVTxz4qduCAxT1JBoAXrgM
+ ga9Snx239hxo3OiFWDn4ZNkZFh3bkCLVpCFHt0wd/YzkGSJedRvimP1UO8sSBO6SUQSZ
+ ISIinorAN8iQE4LhoknY4l3b6HQX/f7dSAx4MO/V+tSwYRKQxvVbCC+eVpSYgjhEOAgF
+ yuq81hPbN0zp0AtifyKGg8GAoQyLlyAXRjxVAZxo8HE5Aen8iZDyc/QOkk+Xn57zolEy
+ 0VrzSBrjhyZke1oap2SN9AC77edrlbLSI1QErZQh15/paAD/1lp0DLndvl5j5T16ks+V
+ VBrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794662634; x=1795267434;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=AYigO0Jz9iiefYHwMEhCa+1yikT++DWVv7odFVY6EkM=;
- b=g+0Ko25xbF4Q2i1mBmbaHz78rqEJTHNRgKvVxcFJQ/hKngbfrzFrmNc6gMBtfjA9KH
- YNFtOcQqZHqiaoLJugOOk26wEMplDi5+0AVlVQAC3WhNQI/sOlAWOrgkBB32LJWuU0ZZ
- O8l3bnhU7cc0vmqXtbbt/1TYqo9HPdR5lPNXwVWGx2BXeBfweG4QsgjPG9Ko+h0ObW/B
- rZaGZwc5sm4VXHuMlXGV/0vtJZJ5nZjvRn0o7ZJStTxOEtncg5/NycevizI0gZwLk2Ut
- BpcRRl7zDzVP4QuPLeypJACHjYJwC2IAWbWQcg4fA72G3VdNzdJj7/WVhi93xhVgMNy3
- ZLyA==
-X-Gm-Message-State: APuU4Z+nYsEDhVyKNd4dcSRDN3ZZWRHpM3Ns9D3ByjSzj7tJCsdF84m6
- XSmiiZmfQgTHn/j4gG65O5S/M18Lovdw+q+Hxpco3KBCUpTgo/+ZLQAAsJ+C22eGUm4Ps0w+z2/
- qSX9gWow=
-X-Gm-Gg: AYBFou3fj6kb+AbXnc2nIDRJ8dVHX0u41aEYbWQwDDtX2PeuWjSA3wqjdzXxcfkXMCO
- j0un3E064maM/pwCw6vn+GEHjamhSUabiTDPuJnwYKOcfRJ49xofYtNPW3+xusLSILgAM4xEZ7b
- iuHsdiQQIpJlzC5qSd3i11FEYKSp60iMzEpJxdTiKFgGBBwYj8GtzFVedsO0Dru0bcKwApyIJuy
- DRtWbr2VelgSNqrwZg49eQswFlYPEe7On8pXC3gZczMEQ2vNyAeujvbrGrxSkpzI0sGxZ/wRi3k
- bEh//E1pQiMhghgmRA2KvbaDG+Q9hvcckwWGmBk9P26D1Cc3epStr73jsmpDX1io6Yd7nXBAL+K
- xjlBZ+xXe/lSaY0VM1lG7exiosgpltqFRp2VGfAnsYnMdFYNj6ncNvM3cvDJ7cXBbEeqxvkuzaw
- ufJ18EEHzpV53EQwMBYt7o/Zo7UzpqPLqxcJrPky0n7hHd2kGrCEqZFmuwqXkrxpKPBZ8ruzcIo
- F7DViyyCqQqZRJjam6N+8ixqsbDbP9fjViCk3J8DyrMJzjzrn6x5Z991nv0G3ZzRGqMd6dL+wcV
- 3PYFR4BkAA/nLm0238oj7Djite82i4T56yyMh+7i1POLYXLNCX7ld40/ogUW18l/ewQnTdM9CBN
- JiJ2dV8bjqEC/w6Ykyrb49yOwvKBEBsceGA==
-X-Received: by 2002:a05:600c:4585:b0:4a1:cf60:dcc3 with SMTP id
- 5b1f17b1804b1-4bb55a8ccaemr116807415e9.29.1794662634197; 
- Sat, 14 Nov 2026 05:23:54 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb55a0ffcdsm130357045e9.0.2026.11.14.05.23.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 14 Nov 2026 05:23:53 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Jason Wang <jasowangio@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v2 for-11.2 1/2] net/checksum.c: Correct handling of IP header
- length
-Date: Sat, 14 Nov 2026 13:23:49 +0000
-Message-ID: <20261114132350.1456994-2-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261114132350.1456994-1-peter.maydell@linaro.org>
-References: <20261114132350.1456994-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20260707; t=1794668115; x=1795272915;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=KF8il6VPHoIL+B20ag6mrMLmQ4AsAoPnLRfcbVT5+UQ=;
+ b=Qz/eop+y/c/ugZncemEyiCYcmqKpPSD6gC84rib4CdcaU4rgcLyvt8yAY6Eg9WHyVJ
+ T7quc4ToU780K5C0VCcfCPSvvcpvFU6quCObSNPzy6iucQcfIrDPQiJ7byCfaBLqHljT
+ NnDrKzo7fZuVVhaqo/O/Fhb9RPyiwCqvgo2Cw+lYt6mDSNmQ1e0XDpVA+IpAftJjv0FX
+ ILvjL/jmpQ5PBAInhnmsZ7OK24c1T1wZpZswTyWC/9gFBeWxw4QjGKPI56W/TfzOahgD
+ 1c5DmpTXEFbcI33UVhyVlhp17IE5kP45upuKgCAcheuji8AcVI19m9SdrGVO2briWf8W
+ CLaQ==
+X-Forwarded-Encrypted: i=1;
+ AL+hErFOE6R+jryeizZQYyrc1GeZ2xwbMexTvX89n7odXZFkXZvwsbO8jE1f1lJY552MKk0eIoXayPqh3THN@nongnu.org
+X-Gm-Message-State: APuU4Z+043Kqz4ysgI9ri07Wkl71oUN02On/a2rk5awK1d/PCirbVf70
+ tY94a5Xn9tbiQqjMa7KtmFHaCs64dFvsUwzR4oh1vZAv9UADtNSxay5DI8FD7177ko7/S8SaWsw
+ tp2k27moZxPMbm6TWRu6VsulDlzqNI7qWhenwMEYs6J+q2NVQCqikMRCmsg==
+X-Gm-Gg: AYBFou10PeEvoi+tlN224ww23WlnPid7GfQIjz+6JquFCDCrqt+Coe0cIrjEkm0CIAx
+ YUWHI9pQv0NqAoolWVHCpL+4gMmH/lAXWftK6qfLDt8V8bKdfSvEUnPvwcPMc+78khc5q2c8NyK
+ 0tQ5lRB5ZK5FF0i2g+HxLAtX/zor/jpn98/1E6SAbzJUVIaA2zNkbM9y0AJCJU5EdrW1w8vXvIm
+ Cu4UF8ttR6vtfx/+7+7KHGOi039GZ+tAMfD6eUJye6ALiYQpG1hK9bLv4NYHYS0d/gEKXTXiA82
+ VwMUlIMVi05PHuen1EU6Cn5b8AJFok4+/EsA8neZ5TbHpiYiYbLuM9IwLHDD6h2tCUgaJRgZy2l
+ WnUVAAzyshGPjXfuAuX8XncHh7a4a8W0vVwx0VNxbV6MGy44p67rrVsm0ST2NemX2Cp9Gi9rkUz
+ POM1pSApAunnJ/o0pYc7QWZ/GCOPyTsw==
+X-Received: by 2002:a05:6a21:3d86:b0:3e9:290d:9774 with SMTP id
+ adf61e73a8af0-3f7a74c350fmr4339584637.44.1794668115530; 
+ Sat, 14 Nov 2026 06:55:15 -0800 (PST)
+X-Received: by 2002:a05:6a21:3d86:b0:3e9:290d:9774 with SMTP id
+ adf61e73a8af0-3f7a74c350fmr4339570637.44.1794668115051; 
+ Sat, 14 Nov 2026 06:55:15 -0800 (PST)
+Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8bed2d0f473sm2117898b3a.53.2026.11.14.06.55.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 14 Nov 2026 06:55:13 -0800 (PST)
+Message-ID: <5413509f-59cf-4492-86c7-4c5a5ccce715@oss.qualcomm.com>
+Date: Sat, 14 Nov 2026 07:55:13 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.2 0/2] docs/about/deprecated: minor fixes
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20261112093824.2281467-1-peter.maydell@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20261112093824.2281467-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: KvDo7yKaq2_BoHIUSCx4cfGx0QVx9cY0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE0MDA1OSBTYWx0ZWRfXwzXJqv0C9ewV
+ yFaEPX8ZRWY9Ls+9Mc6Itm+Fuo8tiHdJ6bIertZz7fNyBUUxrjVnF28HZ3ur6/92nAKhPt6sfy3
+ 0HFOFHpCl06bwhSqstvjSl0FCuJqPukTtRvn1U+hNN9VQc2B2TNDLT/2Q2wiAYVoaWC451dCAEh
+ vOdvf1/GI7V1oIYn/7mJevHuMfgE6uW1R8ofjKQZ9DvI5Mci7DTRgHH2me7vKO213xap3FmgPzs
+ YuW+rsG10vhBwWC6tCoQL+AemzDSB9Tn6Hx0wdwJTWpWDsX/osOLSqCNdpgVCfZPy02DxuUQVSb
+ yvjtFnr5iVWcMqb7v7l5Yy/smYCJ7ojHV+e8FcZ3OG4qi3fwndG4utfJM35tSUYP+0Av2TnDm8N
+ 6P/H/seXkQEhOGj97btCQMPrGclf4y2UX0xOxbbzLcN8+xT/fBlujbSRuQEPqECcn8G62MfaOPu
+ jIzXC+fORubjpHqBzJA==
+X-Authority-Analysis: v=2.4 cv=TqJzFzXh c=1 sm=1 tr=0 ts=6af87654 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=FBHOFjIeNngc2ybFw-MA:9 a=QEXdDO2ut3YA:10
+ a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-GUID: KvDo7yKaq2_BoHIUSCx4cfGx0QVx9cY0
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE0MDA1OSBTYWx0ZWRfX6EQEsffK76jM
+ 4fRLTtJsnJlPJySU8oaNCxtaUk3wwR6KhqEFv7yoLRn9MxiE9khsKFvKIpKRVsSUsjHwDTM5eIY
+ BUGOs/MHtovaa3zrLEl6rY6Vm8Nxc64=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-14_04,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ spamscore=0 priorityscore=1501 phishscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611140059
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,153 +151,30 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In net_checksum_calculate() we are careless about handling of the IP
-header length, in a way which can allow it to become negative for a
-suitably crafted packet.  This bypasses the attempt to check that
-it's big enough, because in comparisons like
-  if (ip_len < sizeof(tcp_header))
-ip_len is converted to size_t and we do this as an unsigned
-comparison, so negative values of ip_len pass the check.
+On 11/12/26 2:38 AM, Peter Maydell wrote:
+> We (I :-)) forgot to put in the "since 11.0" tag when deprecating
+> linux-user arm OABI/NWFPE; patch 1 adds that. Patch 2 fixes a
+> "wrong kind of underline" formatting mistake I noticed while
+> fixing that.
+> 
+> thanks
+> -- PMM
+> 
+> Peter Maydell (2):
+>    docs/about/deprecated: Add missing "since" marker for OABI/NWFPE
+>    docs/about/deprecated: Fix heading level for AF_ALG heading
+> 
+>   docs/about/deprecated.rst | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
 
-This results in net_checksum_tcpudp() attempting to checksum nearly
-64K of memory (because it takes the length as a uint16_t), which will
-typically be a read off the end of a buffer resulting in a segfault.
-If the attacker is able to set up a situation where the read doesn't
-fault, it's possible for some callers that the 2-byte store of the
-updated checksum is an out-of-bounds write.
-
-This code is used by at least xen-nic, virtio-net, and the COLOj
-filter-rewriter, all of which are in QEMU's security "virtualization
-use case", though the write is probably only exploitable for the
-filter-rewriter; otherwise it's just a theoretical "information leak
-to guest" of a 2-byte checksum of 64K of host RAM.
-
-Improve the checking of lengths in this function:
- * make the input length size_t as it is a buffer length
- * use unsigned int for internal always-positive lengths, so
-   comparisons are always unsigned-vs-unsigned
- * check length before subtracting various header sizes,
-   rather than afterwards
- * check that the packet's IHL field reports a valid header
-   length that's not larger than the packet itself
- * check that the packet's total length field doesn't claim
-   to be smaller than the header
-
-All the callsites are already passing an unsigned value to this
-function, with the exception of those in ftgmac100.c and imx_fec.c.
-Those two pass an "int" value which can't ever be negative.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 50dbce6538d1 ("net: improve UDP/TCP checksum computation.")
-Fixes: CVE-2026-127233
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4720
-Reported-by: Xiang Chen <https://gitlab.com/x14ngch3n>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-v1->v2:
- * use 'size_t' for length argument, and drop assert(length >= 0)
- * use 'unsigned int' for mac_hdr_len, ip_len, ip_hdr_len
----
- include/net/checksum.h |  2 +-
- net/checksum.c         | 32 +++++++++++++++++++++++---------
- 2 files changed, 24 insertions(+), 10 deletions(-)
-
-diff --git a/include/net/checksum.h b/include/net/checksum.h
-index 188e4cca0b7..6c565f2e0ab 100644
---- a/include/net/checksum.h
-+++ b/include/net/checksum.h
-@@ -30,7 +30,7 @@ uint32_t net_checksum_add_cont(int len, uint8_t *buf, int seq);
- uint16_t net_checksum_finish(uint32_t sum);
- uint16_t net_checksum_tcpudp(uint16_t length, uint16_t proto,
-                              uint8_t *addrs, uint8_t *buf);
--void net_checksum_calculate(void *data, int length, int csum_flag);
-+void net_checksum_calculate(void *data, size_t length, int csum_flag);
- 
- static inline uint32_t
- net_checksum_add(int len, uint8_t *buf)
-diff --git a/net/checksum.c b/net/checksum.c
-index 537457d89d0..9e4ba1bc910 100644
---- a/net/checksum.c
-+++ b/net/checksum.c
-@@ -57,9 +57,9 @@ uint16_t net_checksum_tcpudp(uint16_t length, uint16_t proto,
-     return net_checksum_finish(sum);
- }
- 
--void net_checksum_calculate(void *data, int length, int csum_flag)
-+void net_checksum_calculate(void *data, size_t length, int csum_flag)
- {
--    int mac_hdr_len, ip_len;
-+    unsigned int mac_hdr_len, ip_len, ip_hdr_len;
-     struct ip_header *ip;
-     uint16_t csum;
- 
-@@ -94,23 +94,33 @@ void net_checksum_calculate(void *data, int length, int csum_flag)
-         break;
-     }
- 
--    length -= mac_hdr_len;
--
-     /* Now check we have an IP header (with an optional VLAN header) */
--    if (length < sizeof(struct ip_header)) {
-+    if (length < mac_hdr_len + sizeof(struct ip_header)) {
-         return;
-     }
- 
-+    length -= mac_hdr_len;
-+
-     ip = (struct ip_header *)((uint8_t *)data + mac_hdr_len);
- 
-     if (IP_HEADER_VERSION(ip) != IP_HEADER_VERSION_4) {
-         return; /* not IPv4 */
-     }
- 
-+    ip_hdr_len = IP_HDR_GET_LEN(ip);
-+
-+    if (ip_hdr_len < sizeof(struct ip_header) || ip_hdr_len > length) {
-+        /*
-+         * Ignore packet with an invalidly short IHL, or which claims the
-+         * IP header is larger than the buffer
-+         */
-+        return;
-+    }
-+
-     /* Calculate IP checksum */
-     if (csum_flag & CSUM_IP) {
-         stw_he_p(&ip->ip_sum, 0);
--        csum = net_raw_checksum((uint8_t *)ip, IP_HDR_GET_LEN(ip));
-+        csum = net_raw_checksum((uint8_t *)ip, ip_hdr_len);
-         stw_be_p(&ip->ip_sum, csum);
-     }
- 
-@@ -120,12 +130,16 @@ void net_checksum_calculate(void *data, int length, int csum_flag)
- 
-     ip_len = lduw_be_p(&ip->ip_len);
- 
--    /* Last, check that we have enough data for the all IP frame */
--    if (length < ip_len) {
-+    /*
-+     * Last, check that the packet's total length field doesn't
-+     * imply a negative amount of data given the header length,
-+     * and that it's not larger than the data buffer we have.
-+     */
-+    if (ip_len < ip_hdr_len || length < ip_len) {
-         return;
-     }
- 
--    ip_len -= IP_HDR_GET_LEN(ip);
-+    ip_len -= ip_hdr_len;
- 
-     switch (ip->ip_p) {
-     case IP_PROTO_TCP:
--- 
-2.43.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
