@@ -1,44 +1,44 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5A8606A329
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 23:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8CF606A31F
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 23:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=e+DpAJt9
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OgEJLJ5S
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSjxL-00064Z-Ix; Sun, 15 Nov 2026 18:48:19 -0500
+	id 1xSjy0-0006Uc-Jy; Sun, 15 Nov 2026 18:49:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1xSjxH-00063r-89; Sun, 15 Nov 2026 18:48:15 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1xSjxt-0006TT-Sa; Sun, 15 Nov 2026 18:48:54 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1xSjxE-0000tS-QZ; Sun, 15 Nov 2026 18:48:14 -0500
+ id 1xSjxs-0002ek-90; Sun, 15 Nov 2026 18:48:53 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 809FE6133E;
- Sun, 15 Nov 2026 23:48:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6321F000C4;
- Sun, 15 Nov 2026 23:48:09 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id A2785416BD;
+ Sun, 15 Nov 2026 23:48:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99531F000C4;
+ Sun, 15 Nov 2026 23:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1794786491;
- bh=7jwUo6SMm+qz7yHzkjSMzKGTJOOKV5bPyelRDmrvzFc=;
+ s=k20260515; t=1794786530;
+ bh=yXmnkhhCAx1XdFvw4w4lZjMZPlQ1eGS5MC7nyRNcLl0=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=e+DpAJt9lzWm06ySb8A1K3J6yjqbEI5Gd1/qedeOcqku9MSS4vcz/u/PRa3avXax9
- lUYpgtNtjK7w+W0o/Gjiu4Q+dlNeMnQ2NLPSa2GnazFse32vy5uaoxApNReEye9VwM
- Dmvc0fy8dVp9l/pw6MZs/xRpYLeIH+Ao62uOzXV+UW+Y9wBgqvIly27UABKzwvtj07
- Pf9FOcdTNKCZqW6rNPa32N9aN+cOns/WNox+YA8iotfAl/Yy5LULMTEWwf82/vqQ1H
- QI05xf6/aNEkUKYmlAaI7n+S9lK7wrur133aZkuWdBDAhE2TT2PJpEMcJ9cXvoDThz
- WqmF7P3WvOzpA==
-Message-ID: <dd625bf6-977a-42f1-9789-730f2708919b@kernel.org>
-Date: Sun, 15 Nov 2026 15:48:08 -0800
+ b=OgEJLJ5S11yf7u3ZLcOVUOJnOQxuCcIsyCsdtJ7qT7I9Z+Qd+4h51p/YshDO/lq1h
+ 2RUkwEaca81J9uVDJiY9VzylQbVZLEv6TpN2IZdfICgAJc9TyHbPtNaFipNJxO1ThI
+ EtRt0X9EfY07oB/cHzzVoKHrMB4W9Lb91fuBTBp9M91CU5TVLcHLIW2Uxql8JFDZv8
+ xkTTKRU7wZxMkUiNhjT5VVPrF5FZ0P1xAC+6gcYFJ0QyaiS2NSlRQzGp67AQSPBfQN
+ +Z3Lub4ir14JZMrrkVB1Q30WJ/iyuNPyHYbXaPmz2fc51rmbr4l+SlWydABKTORPB0
+ XF71aoJPdMDpw==
+Message-ID: <de26df08-ddb7-4b0f-8218-cc08a87d635a@kernel.org>
+Date: Sun, 15 Nov 2026 15:48:47 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 7/9] virtio-blk: report zone errors with their zone
- status codes
+Subject: Re: [PATCH v17 8/9] block: add accessors for the zone model, capacity
+ and open zone limit
 To: Niklas Cassel <cassel@kernel.org>, qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -49,15 +49,15 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  Fam Zheng <fam@euphon.net>, Jeuk Kim <jeuk20.kim@samsung.com>,
  Daejun Park <daejun7.park@samsung.com>
 References: <20261112114918.1269168-1-cassel@kernel.org>
- <20261112114918.1269168-8-cassel@kernel.org>
+ <20261112114918.1269168-9-cassel@kernel.org>
 Content-Language: en-US
 From: Damien Le Moal <dlemoal@kernel.org>
 Organization: Western Digital Research
-In-Reply-To: <20261112114918.1269168-8-cassel@kernel.org>
+In-Reply-To: <20261112114918.1269168-9-cassel@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=dlemoal@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=dlemoal@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -84,26 +84,12 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 11/12/26 03:49, Niklas Cassel wrote:
-> virtio-blk completes a failed write with VIRTIO_BLK_S_IOERR, and a
-> failed zone append or zone management request with
-> VIRTIO_BLK_S_ZONE_INVALID_CMD. It never reports the zone status codes
-> that virtio 1.4 (5.2.6.2) requires for a write off the write pointer
-> or for a request that exceeds a zone resource limit.
-> 
-> When VIRTIO_BLK_F_ZONED is negotiated, map the zone errors of the block
-> layer to them:
-> 
->   BLK_ZE_UNALIGNED_WRITE  VIRTIO_BLK_S_ZONE_UNALIGNED_WP
->   BLK_ZE_BOUNDARY         VIRTIO_BLK_S_ZONE_INVALID_CMD
->   BLK_ZE_OPEN_RESOURCE    VIRTIO_BLK_S_ZONE_OPEN_RESOURCE
->   BLK_ZE_ACTIVE_RESOURCE  VIRTIO_BLK_S_ZONE_ACTIVE_RESOURCE
->   BLK_ZE_FULL             VIRTIO_BLK_S_ZONE_INVALID_CMD
-> 
-> Other errors keep their status code. A FINISH that exceeds a zone
-> resource limit also gets a zone resource status code, which 5.2.6
-> defines for any zone operation. Zone errors of writes are reported
-> regardless of the rerror/werror policy, as they are the deterministic
-> result of the request.
+> Add the block-backend accessors blk_get_zone_model(),
+> blk_get_zone_capacity() and blk_get_max_open_zones(), which report the
+> zoned model, the zone capacity and the maximum number of open zones of
+> the backing device, mirroring the existing blk_get_zone_size(). This
+> lets device models query the zoned geometry without dereferencing
+> BlockDriverState internals.
 > 
 > Signed-off-by: Niklas Cassel <cassel@kernel.org>
 
