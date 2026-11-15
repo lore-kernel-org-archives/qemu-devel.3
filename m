@@ -1,58 +1,59 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F9D606A31A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 08:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA8B606A896
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 11:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=LfxYGcYN
+	dkim=pass (1024-bit key) header.d=seu.edu.cn header.i=@seu.edu.cn header.a=rsa-sha256 header.s=default header.b=RK0WLV5Z
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSVz5-0004Kj-UT; Sun, 15 Nov 2026 03:53:12 -0500
+	id 1xSYpl-0004Rn-BQ; Sun, 15 Nov 2026 06:55:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xSVz3-0004KR-Lv
- for qemu-devel@nongnu.org; Sun, 15 Nov 2026 03:53:10 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
+ id 1xSYpc-0004R9-HS
+ for qemu-devel@nongnu.org; Sun, 15 Nov 2026 06:55:37 -0500
+Received: from mail-m155101.qiye.163.com ([101.71.155.101])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xSVz1-0005xx-Nc
- for qemu-devel@nongnu.org; Sun, 15 Nov 2026 03:53:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794732783; bh=78oux7jPNl7obsgICvDkHC49GJqoI/fuAHAQ5+pvDX4=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=LfxYGcYNuBRrxpIxIqa/K8rkFNrNjoTWaFz6CgI7HcKanXGMWB6UWJjKMgM0FI9wd
- R2TK5o6MSxs5LjIkc3PBxgyYHvRVrgxQdHBG0eRVIcp6vZf5n7jOYblyiUlb52tsL4
- yp1JxA3zwaPuF7NAdN9IPXvNEmhaSBt0C0GtBO/gW3cCIoY+x4Dg1+iWL+M8v8dRvq
- ks37M4jd5eQoO16VPlqqMRCUjlUQxWxGBtTRR6hmVEEOAkpbOfj4EvM85nqzwr1RH+
- 6bTaWLpdh7gFXLyla2jFBSiTtKGwNHXCl/gm88685NXhMv3uL0ccKPkYDaw/yIqUOF
- BgfSpa228hp8A==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 159291E69DA;
- Sun, 15 Nov 2026 11:53:03 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DAE0445E72F;
- Sun, 15 Nov 2026 11:53:02 +0300 (MSK)
-Message-ID: <b239f6d3-bed9-4d9b-a7f8-c07c3d297cc8@tls.msk.ru>
-Date: Sun, 15 Nov 2026 11:53:02 +0300
+ (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
+ id 1xSYpZ-0002Q9-PD
+ for qemu-devel@nongnu.org; Sun, 15 Nov 2026 06:55:36 -0500
+Received: from [192.168.17.1] (unknown [124.79.98.159])
+ by smtp.qiye.163.com (Hmail) with ESMTP id 54b7e04f8;
+ Sun, 15 Nov 2026 19:48:16 +0800 (GMT+08:00)
+From: Hongyan Xu <getshell@seu.edu.cn>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [RFC PATCH] migration/rdma: remove the dangling fd handler before
+ re-entering loadvm
+Date: Sun, 15 Nov 2026 19:48:13 +0800
+Message-ID: <179474329361.103840.4072531561797843442@seu.edu.cn>
+In-Reply-To: <ar6sjer6_pafjhhb@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260904033130.276-1-getshell@seu.edu.cn>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/vdso: make the binaries reproducible
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20261111121259.14941-1-mjt@tls.msk.ru>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20261111121259.14941-1-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-HM-Tid: 0aa1df0960b903a1kunmbac61c98bf7c3
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+ tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaQkoeVk5CGUhDSUtJQ0hJSFYeHw
+ 5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKSU9VTEJVQkNVSk5CWVdZFhoPEhUdFFlBWU9LSFVCQklOS1
+ VKS0tVSkJLQlkG
+DKIM-Signature: a=rsa-sha256;
+ b=RK0WLV5ZAlCC5wryC/Zfg/QzXJqcv7QYbuyAip8bHwuLLNMR5SjNpaAf0NJUPUtNsyrg2pHvVhuLq22iIXKIcscIDFqunIiQ35JNnPrEN1qI/dtomnttANcNVqBea2YLZAEwl7LrbFmM6dzNxTPY5LW9wsCBUBi9jzOXkhhJz5o=;
+ c=relaxed/relaxed; s=default; d=seu.edu.cn; v=1; 
+ bh=fyW36UmvDRZooZywH7plbBj1J9JPNpOc34KtzPfvCNM=;
+ h=date:mime-version:subject:message-id:from;
+Received-SPF: pass client-ip=101.71.155.101; envelope-from=getshell@seu.edu.cn;
+ helo=mail-m155101.qiye.163.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,48 +66,33 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/11/26 15:12, Michael Tokarev wrote:
-> Currently the linux-user vdso*.so files are not reproducible,
-> because for one, the binaries embed a random temporary file
-> name used by the compiler during compilation, such as ccuckKYd.o.
-> 
-> At the very least, use -pipe to avoid the need to have a temp
-> file in the first place - this makes the build repeatable.
+Hi Peter,
 
-> --- a/linux-user/aarch64/Makefile.vdso
-> +++ b/linux-user/aarch64/Makefile.vdso
-> @@ -3,6 +3,8 @@ include $(BUILD_DIR)/linux-user/aarch64/config-target.mak
->   SUBDIR = $(SRC_PATH)/linux-user/aarch64
->   VPATH += $(SUBDIR)
->   
-> +REPRODUCIBLE = -pipe
-> +
->   all: $(SUBDIR)/vdso-be.so $(SUBDIR)/vdso-le.so
->   
->   LDFLAGS = -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
-> @@ -10,7 +12,7 @@ LDFLAGS = -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
->   	  -Wl,-z,max-page-size=4096 -Wl,-T,$(SUBDIR)/vdso.ld
->   
->   $(SUBDIR)/vdso-be.so: vdso.S vdso.ld
-> -	$(CC) -o $@ $(LDFLAGS) -mbig-endian $<
-> +	$(CC) $(REPRODUCIBLE) -o $@ $(LDFLAGS) -mbig-endian $<
-Unfortunately this doesn't work anyway.  I dunno why but apparently
-some gcc versions ignore -pipe and still use a random file in /tmp.
+Thanks for confirming the problem and for the simpler suggestion.
 
-Besides, it is still too gcc-version-specific - for example, a more
-recent gcc generates additional sections in the resulting binary -
-.ARM.attributes, and even symbol referencs - aeabi_feature_and_bits.
+I tried your version of the fix (remove the fd handler after
+qemu_coroutine_yield() returns, instead of inside fd_coroutine_enter())
+on top of qemu master e9fa1f66f0d4 and ran the existing tests:
 
-Sigh.
+  - tests/unit/test-coroutine: 13/13 passed
+  - tests/unit/test-aio:      27/27 passed
 
-Thanks,
+Both the normal fd path and the re-entry path remove the handler exactly
+once, and the stack-allocated FDYieldUntilData is no longer referenced by
+a stale handler.
 
-/mjt
+The analysis that led here (fd handler registered on a stack object and
+re-entered through a path that bypasses fd_coroutine_enter()) came from
+our in-house static analysis tool, so I am glad it matches a real issue
+you had already seen.
+
+Best regards,
+Hongyan
 
