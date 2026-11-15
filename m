@@ -1,37 +1,37 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E881F606A31A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 14:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCB8606A31A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 14:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=QPfKuK02
+	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=V4oXjSfg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSbDD-0000zW-2n; Sun, 15 Nov 2026 09:28:07 -0500
+	id 1xSbDq-0001AS-Ah; Sun, 15 Nov 2026 09:28:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
- id 1xSbD6-0000yC-Rb
- for qemu-devel@nongnu.org; Sun, 15 Nov 2026 09:28:01 -0500
-Received: from out-253.mta0.migadu.com ([2001:41d0:1004:224b::fd]
+ id 1xSbDd-00015N-Np
+ for qemu-devel@nongnu.org; Sun, 15 Nov 2026 09:28:35 -0500
+Received: from out-13.mta0.migadu.com ([2001:41d0:1004:224b::d]
  helo=mta0.migadu.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
- id 1xSbD3-0002tO-9W
- for qemu-devel@nongnu.org; Sun, 15 Nov 2026 09:28:00 -0500
+ id 1xSbDa-0002v1-3m
+ for qemu-devel@nongnu.org; Sun, 15 Nov 2026 09:28:32 -0500
 X-Envelope-To: qemu-devel@nongnu.org
-DKIM-Signature: a=rsa-sha256; bh=Frm2+DfSzCR6Ct1vVFNIx/u9GBix4Ax3ASVcJtQUZZo=; 
+DKIM-Signature: a=rsa-sha256; bh=WYq/gBGjNsfGjHnrMChky3FyCarsbXa6jjT5w2j4HOo=; 
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794752867; v=1; x=1795357667;
- b=QPfKuK024kOqyMnEDNRlTR1R7xPwNYWvUxeMU7Lt4CR9iNlbX6ujh6LHLo10jYd8ZN02niNC
- ij3LNCwGci4ByAbFxkbZDOmoRmBfF9jda/2dJRQTbQiwZx0+pNNB7yEC0CVnttjIVujEPqWJlXe
- lZGrjeXA4AcSszykA7Hvcpuw=
+ t=1794752906; v=1; x=1795357706;
+ b=V4oXjSfgyUxWbvJFeIY/4ql2PgFWIewNtTtfd5HRaZc8oU0ZkWoPtPT9N0YGxvx4r5lO5iG/
+ zOv2/NYSyPNSNA7GuHV42Y2HrpyIO00F/pwpx8DJYPuqsFl249L8voK3E1uP81/8dVMm8PddrAO
+ JLz8dD63NkbC9jxeO9+kK4Hc=
 X-Envelope-To: qemu-devel@nongnu.org
-Received: by smtp.migadu.com with ESMTPS id b7d0cf66fc45c0f0;
- Sun, 15 Nov 2026 14:27:47 +0000
-X-Mizu-Trace-ID: b7d0cf66fc45c0f0
+Received: by smtp.migadu.com with ESMTPS id 868c1201a04459f0;
+ Sun, 15 Nov 2026 14:28:26 +0000
+X-Mizu-Trace-ID: 868c1201a04459f0
 X-Migadu-Flow: FLOW_OUT
 From: Junjie Cao <junjie.cao@linux.dev>
 To: Tommaso Califano <tcalifano@redhat.com>
@@ -40,17 +40,18 @@ Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Junjie Cao <junjie.cao@linux.dev>
-Subject: Re: [PATCH 1/9] hw/usb/dev-mtp: Fix recursive delete of directories
-Date: Sun, 15 Nov 2026 08:27:41 -0600
-Message-ID: <20261115142741.1299632-1-junjie.cao@linux.dev>
+Subject: Re: [PATCH 9/9] hw/usb/dev-mtp: Stop processing SendObjectInfo after
+ an error
+Date: Sun, 15 Nov 2026 08:28:19 -0600
+Message-ID: <20261115142819.1299849-1-junjie.cao@linux.dev>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261112174907.158825-2-tcalifano@redhat.com>
+In-Reply-To: <20261112174907.158825-10-tcalifano@redhat.com>
 References: <20261112174907.158825-1-tcalifano@redhat.com>
- <20261112174907.158825-2-tcalifano@redhat.com>
+ <20261112174907.158825-10-tcalifano@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:41d0:1004:224b::fd;
+Received-SPF: pass client-ip=2001:41d0:1004:224b::d;
  envelope-from=junjie.cao@linux.dev; helo=mta0.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -76,12 +77,16 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Tommaso,
+On Thu, Nov 12, 2026 at 06:49:06PM +0100, Tommaso Califano wrote:
+> When SendObjectInfo fails its checks, usb_mtp_command() queues an error
+> response and then falls through. It still allocates s->data_out. The
+> data phase is then dropped because a result is pending, so s->data_out
+> is never released.
 
-Tested with mtp-delfile (libmtp 1.1.20) in a Linux guest on xHCI and
-EHCI, on a store holding D/f1, D/sub/f2 and D/sub/deep/f3. Deleting D
-on master returns Partial_Deletion and leaves f1 and deep/f3; with
-the series it returns OK and D is gone.
+The guest cannot read that error on master: while s->data_out is
+set, usb_mtp_handle_data() stalls every BULK IN, and the next command
+with it. With this patch the response carries the error code and the
+next command works.
 
 Reviewed-by: Junjie Cao <junjie.cao@linux.dev>
 Tested-by: Junjie Cao <junjie.cao@linux.dev>
