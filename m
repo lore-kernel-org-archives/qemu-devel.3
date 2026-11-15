@@ -1,112 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DA4606A31A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 12:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8BF606A31F
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 12:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tfRPX0M1
+	dkim=pass (2048-bit key, unprotected) header.d=krum-com-ar.20260707.gappssmtp.com header.i=@krum-com-ar.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=jPa106ok
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSZTl-00074G-6S; Sun, 15 Nov 2026 07:37:05 -0500
+	id 1xSZhD-0000ok-2g; Sun, 15 Nov 2026 07:50:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xSZTg-00073W-81
- for qemu-devel@nongnu.org; Sun, 15 Nov 2026 07:37:00 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <federico@krum.com.ar>)
+ id 1xSWy1-0002Q6-M0
+ for qemu-devel@nongnu.org; Sun, 15 Nov 2026 04:56:09 -0500
+Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xSZTe-0004y1-31
- for qemu-devel@nongnu.org; Sun, 15 Nov 2026 07:36:59 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-6b633ddfad6so4074001a12.3
- for <qemu-devel@nongnu.org>; Sun, 15 Nov 2026 04:36:57 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794746216; cv=none;
+ (Exim 4.90_1) (envelope-from <federico@krum.com.ar>)
+ id 1xSWxz-0007LH-VV
+ for qemu-devel@nongnu.org; Sun, 15 Nov 2026 04:56:09 -0500
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-862b273ed58so70399a34.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Nov 2026 01:56:06 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794736566; cv=none;
  d=google.com; s=arc-20260327;
- b=qTFDY9KW3dAbrsNdyTGayRi0zJp4d5lXSfLY2H8GnuIKvLuEj6npLLjIzFvAGmg6fY
- tRox9W3f1/F9BC5yA47b0I2hBVRmZ4y683xsO15UBZ9nxcCP+zSDFmbC8mQOpZccZBc+
- MGzF3Kkg1e9j65yU+Gl30TsUSWKbIvjCIOLAJvOCI9QYVhp72kp3bCJKimXHzhqvlxIo
- 27mGIthf6B48f6zUEK2RynefqfIVGrgnuybmGP9YIek5+KcZJhKKjhissDQE7a8eAmX5
- bqqLrqz9ba2PUjSgpGHJylCjYBAy/fJ1KyLHc3B1vdaNqw9OPVbHwRWzxWpZbNvN1udY
- Dm5Q==
+ b=OQrh08OiHJItYYiQUt4A/8jLOJjqfreAcexh8cbjuQzH4yj1qBe812iaNa4PZqmYVI
+ VaKCT8GX+BKc2R6It/81LMAHA+pbbO8QdiCLk8t+rWJFOgyxlg7Eqa3ZEZWBhWrgfxeC
+ M1jw4qol2mPmy7rn6btZEp4DWpHtGNn07VyeBP0ZmRQFtzlOgZRdYxeCkSGSiwka4DJO
+ BXNA6BFGS0MNZ4EnlUFaAiLaX3Gy+9/vos1DbNaqMoDjDDeoTYTCjPQ8MWhBsKvejj+G
+ 14oXypJ0SmwuqnXxHKYQ0H4PqbsHwUxE3mk8XVKMEUEZYNNM4/kDov8qe4KnRZu9lMn8
+ glyg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=OkdAOsx+yWXDDyFyjSOqsYVadQDnmdXUz5uWJDobODY=;
- fh=nix4+GlRgdmrBdIsvTlJ4IdWZHfR0KZEXFDPSgynqEk=;
- b=QgKHL8AKFpSeZ9SLJBMFXT9/53qSZupLGsfMMv3J+MyQyps3YZgFSFj9TFafW2D40+
- YmQAldXXfKuADkr0fcgXpERFfNIrMKHYpPjmDexyBkJLAO8lmuAFyga1TklbZ9c3ndSg
- OijYqkqo0bPf2Zlb2F3kG8xQpiExh1d2xufeKCJP60jnjGBluPwuxETbB7bldg/vw4jL
- ikf99oq2W+KkDNBOLFDoRrJuXIPDcQ2UE1qWzOwA7QL+BOxWHjrCuvWmo3yNROffrOWL
- OzbDMz2/HYMBPsniVUPLDqwxhGk4EX20c07n2U4QseaOL5jVMxuTnv7bKyQ9A8x3/7cJ
- j/rA==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=YhkIf3n3wfA78DxNxyjOLPpfwJXYvAwA2cCOL5DLqtg=;
+ fh=LjmFQJgVelyhfnky7EyCJEpDOLP7QPW6PlE6Pj4hjIo=;
+ b=oA6O6wNJfvVVbnT+VMMAmpw/mS6ilNUKutXbsibuYDZvjb2iIvlulUAzv/DomrrVUr
+ +T+WmYcpM6l0N3pCRSEh0QlfrRJxXrwVaL2sjMLWXynw/RSIkoBYDinCMhjYHi5Cei8x
+ EE33qOvGPvadmRi4nRhulJHjWQiHuoBo2kE7pUGfT7C+qkGoGVeFNR/EgKXjTdqFLwzW
+ a3udexErfLEIMQDmth9SYv7EUezrpCNkJHqLFp15HfT69D4T3PeIkIpWA/kJk/8kvIFl
+ zckuRXiWfMLoUKVDdeo6C5OL5nMvrQd+ymNIf0MaTimKhbq5iqwWxMuUEx8lyzOKA0hV
+ po2Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794746216; x=1795351016; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=OkdAOsx+yWXDDyFyjSOqsYVadQDnmdXUz5uWJDobODY=;
- b=tfRPX0M1GZ3DvRb2FhI9PG+1uDZS8qkPfK+cW1FDN8014q4wHJEYYg6jc72n69goxB
- 6yuTiP2NOd55zkUvgOfcHegUTNfT3OEO/HDljMD6WL8kf+y3Smdv0cmg4eIL75VqvW39
- Ifz8Qq+jU/lmbJmkYcvKfQE+MHAUjysFTiT4lzUZ9xorwNIkIM8CoBav///HdSG8mlVO
- /JSxjkjvoOZuAZDr+XSxgGEhgBzovMF3YRcGKhpT9bZBcYmnLF7LHirdhFLndY17iMox
- dn5Ia2o5M2vJnMyjRtZM6yV0m61nfDheyFkfe24hKQ/NuRnNz41hRh6vcPN5FBiy0PUE
- +zpQ==
+ d=krum-com-ar.20260707.gappssmtp.com; s=20260707; t=1794736566; x=1795341366;
+ darn=nongnu.org; 
+ h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=YhkIf3n3wfA78DxNxyjOLPpfwJXYvAwA2cCOL5DLqtg=;
+ b=jPa106ok1hmVlNhQS6l2MFljX1mseSLT9nwhANF2l/P+fYE1y2Q/QOdczsDJYZIQqI
+ Q0gEWEJ9CZfkv+2y1sLlkvfLxs8gBdmNEUtg1tODpuPVObm7bA08iOen+BQg6vqJwK6d
+ FC04ovXwkQhwrVMAfsQMPNxWS+6v3uXiDdhDof8qNP7fYb3wTbL/XAolyKqYhO75tVsR
+ J3JgsAeCHqPO6ZCCB6E0WRD2IshrCj40ssd8Pbg1b1kAlQTPUxrbl4iGn1EfNjl4wLyR
+ 8jAKq6xnpmdmd/B+e8LdXvXXv3mIYoZWIGizz4ICa80LgayX5ovtsU2tGQkBxNmPWIK/
+ m/Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794746216; x=1795351016;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=OkdAOsx+yWXDDyFyjSOqsYVadQDnmdXUz5uWJDobODY=;
- b=n47igMjzEcslvofxdd0iqW+NM4trDdmOwhmwUGB6pXrRfFxmSC7WqL/yaSXdmB43sP
- 1pV2dGDL9K+T395Q6TEveX9Ut0V5I5l/+cXYRro5ehufiPTUaCzA1JKqiBAr4Cdf6vAl
- w9sEquvNCDHuKzZY2buJ7Yke3AAYwX5ACiEmu15xNwL95yIATZXBVeA6IT3/EuAbXjrO
- t4Ki9EeAssuJI+eaDvgh0Z82d7wAwfjE7IUQCzY1zzazaqlhx32Q5i6XAqR8oeTxN63S
- j6OTQOwJxxrSXVDJfXCnCFugas81bo+P+dhsAKULRB4VCpCD91fvBz8DzeCxj01NMbkf
- 9gEg==
-X-Gm-Message-State: APuU4Z8KPB53aqn9iBVznL1eHXhJDTa4WdqAqAJirfnqcnG+5Y3lKaEI
- JNHJof05Zt27h9Xy5xRYpexbQVp75cW5XAfMFg8KH/w9ObnzVDJvADBIvUUhRoRFbvDt5233pK4
- GoE3/759c2Q2BK5gVe1e59M22Bc3cC4k=
-X-Gm-Gg: AYBFou3sJs3id0SqzWGODPqkfY4MOheSiXlWX/jKNW3wmnQW7wv7wSSsXCaC0d4G5T+
- iAb/P6PwnfIihedFnRh/0crG5MhCpwJDT9kcCyg1KiMC5VFxPUjbMAFt9AGOmb4e8yTycHdzsRV
- NpnAY2Tij/9s93hMp5192Q5hah1H4XyYYAt7JWIT9+HY4+WajfuiMacJjWMUL1hgHqPqvrlGm6A
- HrmdUVastZmh/gtHlGCRek04VHY548odXzev3Y7Hw24cjoYo4btcz+VDWYuySER4EH/uH5s9QJi
- oIHlN+IuGK7drMekvRK8ixOhTF+4EjgCphzWlBFYxtZDs3TKu1zaxIHMQxAhgRRGgL/1mWmhtU1
- URUO/1KURSkJaEhkRGTAzevMPr9ZdtZc/3lUV
-X-Received: by 2002:a05:6402:a6c4:10b0:6b4:7b28:858b with SMTP id
- 4fb4d7f45d1cf-6b7c0be1709mr3992012a12.19.1794746215766; Sun, 15 Nov 2026
- 04:36:55 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794736566; x=1795341366;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=YhkIf3n3wfA78DxNxyjOLPpfwJXYvAwA2cCOL5DLqtg=;
+ b=nzzUVtlHroR0YpnWbnUwRruI+zn0aWu5P6EbySPcn50ypJcdC6thRYHljzl5hcudIM
+ OCYaWHqg8YCYpaBE2pua8LrSqo/Sfk15R2a7et80Cm/T1oMqhb55NeBJ1H32OY5JImNC
+ GZelue4XP56xBqdWwwr5r+JN1h4yAJyXsnDNIUPU/ix8ZFUD2RqxsPzd1ciB75auow4d
+ wKLzi9wQHAqPuo13PIYSyzJj7wRXrW3iI9E6CfefQzPXDPtkK2hLRR+d/p1+gSvXxG5U
+ iRNRCI3an2gyRN+0W4zq0xjooCh/P9CE5FlLtmupkLbzRR16z3Vq0yc++fz+UJow2GnO
+ U2Aw==
+X-Gm-Message-State: APuU4Z9ohBXgiISd+fZS0jfYiFb9MZVwOr1zaYa+ChftKVuiZO6I2Oeu
+ lTaFxhBsILYq8HbOoRffV/bXg0UarSTCaiskUn4PFgATAXIMK5sNi2zuGv3I9PBAKe3qMFHZQhi
+ qgF9w1C6D0f3zS+8/7tcd5DGU6ga63B67dEx3DjPM5RNAQ4TOb6MBnlXyQSs=
+X-Gm-Gg: AYBFou1oRiDsDLXq4JIpttKnj/5+tnQFz7c+vc2j/hw1MFw/rOyyw8vpK+PZm1qwGSB
+ SlaRFSyFpGS3sRAbZkBga2rX9LXZ4bMP5JCkToKEdcJ+2MPnpXOzGvVykXeHrIA7TzEHCbCPMEE
+ +Six8rHEeQ9ALuwl7M4r7HNu39Rf40jJ1hTgZ+JNYTYXzysFS1LH0YcRlhomc+hX9WbHenm23Y7
+ 2IfHBfF8p8iYqM612kx5Sp7xpvdFYtLp5/pYQJ2hUv6gUaYdyWR7rFpHwos1nszBNawboBuxEAd
+ ZfPUKVUXdAvlpF2Xtk2bLD20FQoVyBZI2rsvKiVAfPbNeEHgoue+kkEoUyf4dEMld8kyxM7Gg3Q
+ wuYtbn2A7LmIbw88YYrz3T49P9/xHvFVI8lLqm7aroF3vUnFluVL2v1VbSISiDtzNHnKLRUSLWn
+ iDLirRDgg=
+X-Received: by 2002:a05:6830:6e13:b0:862:abdf:7712 with SMTP id
+ 46e09a7af769-862abdf8be4mr3115073a34.0.1794736565893; Sun, 15 Nov 2026
+ 01:56:05 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261112133054.1977618-1-berrange@redhat.com>
- <20261112133054.1977618-5-berrange@redhat.com>
-In-Reply-To: <20261112133054.1977618-5-berrange@redhat.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Sun, 15 Nov 2026 20:36:41 +0800
-X-Gm-Features: AclHuK9zWqrGavQfJKERJQpNZqWySWahjtbbjJmW65ul6bPmNMOBnVaW9sCNUrk
-Message-ID: <CAE2XoE8+=z+LcdqFWoLc=Ho8d7QGBgkJL8jL4cgup-o_X2fTrw@mail.gmail.com>
-Subject: Re: [PATCH 04/48] qom: define an Aliased interface
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Markus Armbruster <armbru@redhat.com>
+From: Federico Krum <federico@krum.com.ar>
+Date: Sun, 15 Nov 2026 10:55:54 +0100
+X-Gm-Features: AclHuK_If72qxVMyytYslkGkVmIkEFsKbC1g8OqFxKuc9x5AFu6GvzZzebXcZx4
+Message-ID: <CAOveVYyOPSopzt35PZZ57Yk7rLJ6Q7QQus7xFdNgG5WyssKLHg@mail.gmail.com>
+Subject: [PATCH] hw/nvram: add the Mac OS 9 "APL,MacOS75" PRAM partition
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
+ envelope-from=federico@krum.com.ar; helo=mail-ot1-x32e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 15 Nov 2026 07:50:49 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,246 +108,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 12, 2026 at 9:31=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> All QOM types must have a globally unique typename, however, for
-> user convenience, some might also want to have aliases which are
-> permitted to be ambiguous. Define an "Aliased" interface which
-> can be implemented by types which want to support aliases.
->
-> When resolving an alias, if there are multiple QOM types with a
-> matching alias this is considered an error. Ambiguity can be
-> resolved by matching system state, with the selected target
-> being the currently implemented filter.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  include/qom/object_interfaces.h | 77 +++++++++++++++++++++++++++++++++
->  qom/object_interfaces.c         | 57 ++++++++++++++++++++++++
->  2 files changed, 134 insertions(+)
->
-> diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfa=
-ces.h
-> index d222a3d7481..010e37d63f7 100644
-> --- a/include/qom/object_interfaces.h
-> +++ b/include/qom/object_interfaces.h
-> @@ -27,6 +27,17 @@ DECLARE_CLASS_CHECKERS(TargetSpecificClass, TARGET_SPE=
-CIFIC,
->
->  typedef struct TargetSpecific TargetSpecific;
->
-> +#define TYPE_ALIASED "aliased"
-> +
-> +typedef struct AliasedClass AliasedClass;
-> +DECLARE_CLASS_CHECKERS(AliasedClass, ALIASED,
-> +                       TYPE_ALIASED)
-> +#define ALIASED(obj) \
-> +     INTERFACE_CHECK(Aliased, (obj), \
-> +                     TYPE_ALIASED)
-> +
-> +typedef struct Aliased Aliased;
-> +
->  /**
->   * UserCreatableClass:
->   * @parent_class: the base class
-> @@ -242,4 +253,70 @@ bool target_specific_class_creatable(ObjectClass *oc=
-);
->  ObjectClass *target_specific_class_check(ObjectClass *oc,
->                                           Error **errp);
->
-> +/**
-> + * AliasedClass
-> + * @parent_class: the base class
-> + *
-> + * Interface for classes that want to declare they have aliases
-> + * for their primary type name.
-> + *
-> + * While QOM type names are required to be unique, aliases allow
-> + * for ambiguity across classes. The ambiguity is resolved at
-> + * runtime based on system state, typically by the selection of
-> + * a specific target. If ambiguity cannot be resolved, the user
-> + * will need to use the unique QOM type name instead.
-> + */
-> +struct AliasedClass {
-> +    InterfaceClass parent_class;
-> +
-> +    const char *const *aliases; /* NULL terminated list of typenames */
+Mac OS 9 looks for a CHRP NVRAM partition with signature 0xa0 named
+"APL,MacOS75" to store its PRAM and name registry.
+pmac_format_nvram_partition() only creates the OpenBIOS "common" partition
+and the Mac OS X one, so every boot prints
 
+  MacOS: unable to find a usable NVRAM partition - using offset 0x1400.
 
-Hi Daniel,
-I have a though that can we specify the target for each alias, so for examp=
-le
-"aarch64-virt" will pair with QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64)
-and
-"arm-virt" will pair with QEMU_ARCH_BIT(SYS_EMU_TARGET_ARM),
-so that when select name aarch64-virt, we will automatically infer the
-QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64) out.
+and the guest then keeps PRAM at offset 0x1400, which is inside the
+partition reserved for Mac OS X.
 
-Also
-"virt" will pair with QEMU_ARCH_ALL, this is for single-target binary.
-So that the paired target can be either QEMU_ARCH_ALL or single
-QEMU_ARCH_BIT(target_arch).
-After this design,  the TYPE_TARGET_SPECIFIC won't be needed anymore and
-we can use machine names to select "target_arch" in an explicit way(As
-each alias name is
-mapped to explicit QEMU_ARCH_BIT(target_arch)). for QEMU_ARCH_ALL is
-only work for single-target binary.
+Fill the free area left between both partitions with the Mac OS 9 partition
+instead of a free space one, and keep the previous behaviour when that area
+is too small (for example with many -prom-env variables). Only the 16 byte
+CHRP header is written on each boot, so the PRAM contents survive as long as
+the NVRAM has a backing store.
 
-And we can add some helper macro to generate the pair easily.
+Tested with Mac OS 9.2.2 on the mac99 machine: the warning is gone and the
+guest boots and runs normally.
 
-> +};
-> +
-> +
-> +/**
-> + * aliased_class_matches:
-> + * @oc: the class object to check
-> + * @typename: the possible type name alias to check
-> + *
-> + * Determine whether @oc implements the Aliased interface
-> + * and has declared an alias that matches @typename.
-> + *
-> + * Returns: true if @oc implements Aliased and has an
-> + * alias named @typename, false otherwise
-> + */
-> +bool aliased_class_matches(ObjectClass *oc,
-> +                           const char *typename);
-> +
-> +
-> +/**
-> + * aliased_class_resolve:
-> + * @implements: a parent type to validate
-> + * @typename: a type name to search for
-> + * @errp: pointer to a NULL initialized error object
-> + *
-> + * Search all registered QOM types that implement
-> + * both @implements and the Aliased interface for
-> + * one that declares an alias @typename.
-> + *
-> + * If there is a single QOM class with a matching alias
-> + * it will be returned.
-> + *
-> + * If there are multiple QOM classes with a matching
-> + * alias an error will be raised about the ambiguous
-> + * match.
-> + *
-> + * If the QOM class also implements the TargetSpecific
-> + * interface and the current system target does not
-> + * match the declared supported targets, aliases for
-> + * that QOM class will be ignored. This is usually
-> + * sufficient to resolve ambiguity between types.
-> + *
-> + * Returns: a unique QOM class with an alias @typename,
-> + * or NULL if zero or multiple aliases match, with @errp
-> + * set.
-> + */
-> + ObjectClass *aliased_class_resolve(const char *implements,
-> +                                    const char *typename,
-> +                                    Error **errp);
-> +
->  #endif
-> diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-> index f523a55b93a..136629f88b2 100644
-> --- a/qom/object_interfaces.c
-> +++ b/qom/object_interfaces.c
-> @@ -305,6 +305,57 @@ ObjectClass *target_specific_class_check(ObjectClass=
- *oc,
->  }
->
->
-> +bool aliased_class_matches(ObjectClass *oc, const char *typename)
-> +{
-> +    AliasedClass *alc =3D
-> +        (AliasedClass *)object_class_dynamic_cast(
-> +            oc, TYPE_ALIASED);
-> +
-> +    return alc && alc->aliases && g_strv_contains(alc->aliases, typename=
-);
-> +}
-> +
-> +
-> +ObjectClass *aliased_class_resolve(const char *implements,
-> +                                   const char *typename,
-> +                                   Error **errp)
-> +{
-> +    g_autoptr(GSList) objs =3D object_class_get_list(implements, false);
-> +    GSList *el;
-> +    ObjectClass *ret =3D NULL;
-> +    g_autofree const char **matches =3D NULL;
-> +    size_t nmatches =3D 0;
-> +
-> +    for (el =3D objs; el; el =3D el->next) {
-> +        ObjectClass *oc =3D el->data;
-> +
-> +        if (aliased_class_matches(oc, typename) &&
-> +            target_specific_class_creatable(oc)) {
-> +            matches =3D g_renew(const char *, matches, nmatches + 2);
-> +            matches[nmatches] =3D object_class_get_name(oc);
-> +            matches[nmatches + 1] =3D NULL;
-> +
-> +            ret =3D oc;
-> +        }
-> +    }
-> +
-> +    if (nmatches > 1) {
-> +        g_autofree char *matchesstr =3D g_strjoinv(", ", (char **)matche=
-s);
-> +        error_setg(errp,
-> +                   "Object alias '%s' is not unique, matches %s",
-> +                   typename, matchesstr);
-> +        return NULL;
-> +    }
-> +
-> +    if (!ret) {
-> +        error_setg(errp, "Object '%s' not found, no child of '%s' regist=
-ered",
-> +                   typename, implements);
-> +        return NULL;
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +
->  static void register_types(void)
->  {
->      static const TypeInfo uc_interface_info =3D {
-> @@ -317,9 +368,15 @@ static void register_types(void)
->          .parent        =3D TYPE_INTERFACE,
->          .class_size =3D sizeof(TargetSpecificClass),
->      };
-> +    static const TypeInfo al_interface_info =3D {
-> +        .name          =3D TYPE_ALIASED,
-> +        .parent        =3D TYPE_INTERFACE,
-> +        .class_size =3D sizeof(AliasedClass),
-> +    };
->
->      type_register_static(&uc_interface_info);
->      type_register_static(&ts_interface_info);
-> +    type_register_static(&al_interface_info);
->  }
->
->  type_init(register_types)
-> --
-> 2.56.1
->
+Signed-off-by: Federico Krum <federico@krum.com.ar>
+---
+Note: written with the help of an AI assistant; the change was reviewed,
+built and tested by me with Mac OS 9.2.2 on mac99.
 
+ hw/nvram/mac_nvram.c | 43 +++++++++++++++++++++++++++++++++----------
+ 1 file changed, 33 insertions(+), 10 deletions(-)
 
---
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+diff --git a/hw/nvram/mac_nvram.c b/hw/nvram/mac_nvram.c
+index efadb3c..adca155 100644
+--- a/hw/nvram/mac_nvram.c
++++ b/hw/nvram/mac_nvram.c
+@@ -164,18 +164,31 @@ static void macio_nvram_register_types(void)
+     type_register_static(&macio_nvram_type_info);
+ }
+
+-/* Set up a system OpenBIOS NVRAM partition */
+-static void pmac_format_nvram_partition_of(MacIONVRAMState *nvr, int off,
+-                                           int len)
++/* Set up a system OpenBIOS NVRAM partition, return the offset past it */
++static int pmac_format_nvram_partition_of(MacIONVRAMState *nvr, int off,
++                                          int len)
+ {
+-    int sysp_end;
+-
+     /* OpenBIOS nvram variables partition */
+-    sysp_end = chrp_nvram_create_system_partition(&nvr->data[off],
+-                                                  DEF_SYSTEM_SIZE, len) + off;
++    return chrp_nvram_create_system_partition(&nvr->data[off],
++                                              DEF_SYSTEM_SIZE, len) + off;
++}
+
+-    /* Free space partition */
+-    chrp_nvram_create_free_partition(&nvr->data[sysp_end], len - sysp_end);
++/*
++ * Mac OS 9 looks for a CHRP "APL,MacOS75" partition to keep its PRAM
++ * (0x100 bytes right after the 0x10 byte header) and name registry.
++ */
++#define MACOS_NVRAM_SIGNATURE   (0xA0)
++#define MACOS_NVRAM_MIN_SIZE    (0x110)
++
++static void pmac_format_nvram_partition_macos(MacIONVRAMState *nvr, int off,
++                                              int len)
++{
++    ChrpNvramPartHdr *part_header = (ChrpNvramPartHdr *)&nvr->data[off];
++
++    part_header->signature = MACOS_NVRAM_SIGNATURE;
++    pstrcpy(part_header->name, sizeof(part_header->name), "APL,MacOS75");
++
++    chrp_nvram_finish_partition(part_header, len);
++}
+
+ #define OSX_NVRAM_SIGNATURE     (0x5A)
+@@ -205,12 +218,22 @@ static void
+pmac_format_nvram_partition_osx(MacIONVRAMState *nvr, int off,
+ /* Set up NVRAM with OF and OSX partitions */
+ void pmac_format_nvram_partition(MacIONVRAMState *nvr, int len)
+ {
++    int sysp_end, hole;
++
+     /*
+      * Mac OS X expects side "B" of the flash at the second half of NVRAM,
+      * so we use half of the chip for OF and the other half for a free OSX
+      * partition.
+      */
+-    pmac_format_nvram_partition_of(nvr, 0, len / 2);
++    sysp_end = pmac_format_nvram_partition_of(nvr, 0, len / 2);
++    hole = len / 2 - sysp_end;
++    if (hole >= MACOS_NVRAM_MIN_SIZE) {
++        /* Mac OS 9 PRAM partition, keeps the previous PRAM contents */
++        pmac_format_nvram_partition_macos(nvr, sysp_end, hole);
++    } else if (hole > 0) {
++        /* Free space partition */
++        chrp_nvram_create_free_partition(&nvr->data[sysp_end], hole);
++    }
+     pmac_format_nvram_partition_osx(nvr, len / 2, len / 2);
+ }
+ type_init(macio_nvram_register_types)
+-- 
+2.56.0
 
