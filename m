@@ -1,26 +1,26 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53903606A31D
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 07:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F94606A31F
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 07:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSUwh-0008WM-05; Sun, 15 Nov 2026 02:46:39 -0500
+	id 1xSUwg-0008W8-Nn; Sun, 15 Nov 2026 02:46:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1xSUwT-0008Tw-Mb; Sun, 15 Nov 2026 02:46:26 -0500
+ id 1xSUwS-0008Tl-DZ; Sun, 15 Nov 2026 02:46:25 -0500
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1xSUwP-0004op-Ah; Sun, 15 Nov 2026 02:46:25 -0500
+ id 1xSUwN-0004oO-7g; Sun, 15 Nov 2026 02:46:24 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwCnr1tKY_lq5EEHAg--.41914S2; 
- Sun, 15 Nov 2026 15:46:18 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwCXR5xIY_lqlJowBg--.39700S2; 
+ Sun, 15 Nov 2026 15:46:16 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAf8DwFnQ_Y_lqF+j6AA--.34770S8;
- Sun, 15 Nov 2026 15:46:17 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAf8DwFnQ_Y_lqF+j6AA--.34770S6;
+ Sun, 15 Nov 2026 15:46:14 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
@@ -29,25 +29,25 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Chen Baozi <chenbaozi@phytium.com.cn>,
  Chao Liu <chao.liu@processmission.com>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [PATCH v6 5/5] [NOT-MERGE] tests/qtest: add q35 SMM-only x86 attrs
- coverage
-Date: Sun, 15 Nov 2026 15:46:07 +0800
-Message-Id: <20261115074607.456045-6-tangtao1634@phytium.com.cn>
+Subject: [PATCH v6 3/5] tests/qtest: Add libqtest attrs helpers for memory
+ accesses
+Date: Sun, 15 Nov 2026 15:46:05 +0800
+Message-Id: <20261115074607.456045-4-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261115074607.456045-1-tangtao1634@phytium.com.cn>
 References: <20261115074607.456045-1-tangtao1634@phytium.com.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwFnQ_Y_lqF+j6AA--.34770S8
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWr4tsgAeAAAsQ
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAf8DwFnQ_Y_lqF+j6AA--.34770S6
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWr4tsgAdAAAsc
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3Ar43Gw43WrWDKF48tF1DKFg_yoWDGFyrpF
- y5CFnIkF4av3WxZan8Ja17G3WF9Fs3Cay8WrW5Jwn5Ca18CF9FyryqkFyvqrnrJrW0vw1r
- u3WDJFZrGas8taDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
+X-Coremail-Antispam: 1Uk129KBjvAXoWfZw1xtw1kAw17Zw1xJrW5KFg_yoW5WFyfXo
+ WrtF4jq34DXwnrZrW0vryxGr9rXw47CF45Xwn5t3W5Ka4rGrn09a1fKanxZa4j9F1rGrWk
+ JFZ7XrWYgrWIyFZ7n29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
+ J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
+ UUUUUUU==
 Received-SPF: pass client-ip=162.243.164.118;
  envelope-from=tangtao1634@phytium.com.cn;
  helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
@@ -75,306 +75,984 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a q35-only test path for x86 secure attrs by introducing an optional
-test-only RAM region that is mapped only into the SMM address space.
+Expose libqtest APIs for qtest memory commands with optional attrs:
+- qtest_{read,write}{b,w,l,q}_attrs()
+- qtest_mem{read,write,set}_attrs()
+- qtest_buf{read,write}_attrs()
 
-The new qtest-x86-attrs-test enables this region with
-`-global mch.x-smm-test-ram=on` and verifies that accesses with the
-`secure` attribute reach the SMM-only region, while default accesses do
-not. This provides the x86 cross-verification that qtest-attrs-test does
-not cover, where normal RAM is visible from both the default and SMM
-address spaces.
+Keep the existing libqtest memory access helpers as wrappers passing
+NULL attrs, so current users remain unchanged.
 
-This is a NOT-MERGE commit.
+Also add matching libqtest-single shortcut wrappers for the *_attrs
+helpers.
+
+Add response assertions and typed failure helpers for negative tests,
+so callers do not have to parse raw qtest responses.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/hw/pci-host/q35.h          |   8 ++
- hw/pci-host/q35.c                  |  27 +++++
- tests/qtest/qtest-x86-attrs-test.c | 175 +++++++++++++++++++++++++++++
- tests/qtest/meson.build            |   1 +
- 4 files changed, 211 insertions(+)
- create mode 100644 tests/qtest/qtest-x86-attrs-test.c
+ tests/qtest/libqtest-single.h | 156 ++++++++++++++
+ tests/qtest/libqtest.h        | 275 +++++++++++++++++++++++++
+ tests/qtest/libqtest.c        | 375 +++++++++++++++++++++++++++++-----
+ 3 files changed, 753 insertions(+), 53 deletions(-)
 
-diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
-index f31a71010b6..5ba7541d321 100644
---- a/include/hw/pci-host/q35.h
-+++ b/include/hw/pci-host/q35.h
-@@ -49,8 +49,10 @@ struct MCHPCIState {
-     MemoryRegion smram, low_smram, high_smram;
-     MemoryRegion tseg_blackhole, tseg_window;
-     MemoryRegion smbase_blackhole, smbase_window;
-+    MemoryRegion smm_test_ram;
-     bool has_smram_at_smbase;
-     bool has_smm_ranges;
-+    bool enable_smm_test_ram;
-     Range pci_hole;
-     uint64_t below_4g_mem_size;
-     uint64_t above_4g_mem_size;
-@@ -99,6 +101,12 @@ struct Q35PCIHost {
- #define MCH_HOST_BRIDGE_PCIEXBAR_SIZE          8       /* 64bit register */
- #define MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT       0xb0000000
- #define MCH_HOST_BRIDGE_PCIEXBAR_MAX           (0x10000000) /* 256M */
-+/*
-+ * Optional qtest-only RAM window used to expose an address that exists only
-+ * in the SMM address space, so x86 secure attrs can be cross-checked.
+diff --git a/tests/qtest/libqtest-single.h b/tests/qtest/libqtest-single.h
+index 851724cbcb8..2812b86bd45 100644
+--- a/tests/qtest/libqtest-single.h
++++ b/tests/qtest/libqtest-single.h
+@@ -291,6 +291,162 @@ static inline void memwrite(uint64_t addr, const void *data, size_t size)
+     qtest_memwrite(global_qtest, addr, data, size);
+ }
+ 
++/**
++ * writeb_attrs:
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Writes an 8-bit value to guest memory with optional transaction attributes.
 + */
-+#define MCH_HOST_BRIDGE_SMM_TEST_RAM_BASE      0xfef00000
-+#define MCH_HOST_BRIDGE_SMM_TEST_RAM_SIZE      (64 * KiB)
- #define MCH_HOST_BRIDGE_PCIEXBAR_ADMSK         Q35_MASK(64, 35, 28)
- #define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 27))
- #define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 26))
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index d53441561f5..11671e15c74 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -640,12 +640,19 @@ static void mch_realize(PCIDevice *d, Error **errp)
-     int i;
-     MCHPCIState *mch = MCH_PCI_DEVICE(d);
- 
-+    ERRP_GUARD();
-+
-     if (mch->ext_tseg_mbytes > MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_MAX) {
-         error_setg(errp, "invalid extended-tseg-mbytes value: %" PRIu16,
-                    mch->ext_tseg_mbytes);
-         return;
-     }
- 
-+    if (mch->enable_smm_test_ram && !mch->has_smm_ranges) {
-+        error_setg(errp, "x-smm-test-ram requires SMM support");
-+        return;
-+    }
-+
-     /* setup pci memory mapping */
-     pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
- 
-@@ -676,6 +683,24 @@ static void mch_realize(PCIDevice *d, Error **errp)
- 
-     if (mch->has_smm_ranges) {
-         mch_init_smram_regions(mch);
-+
-+        if (mch->enable_smm_test_ram) {
-+            /*
-+             * This is a QEMU-specific, test-only region. It is mapped only
-+             * into mch->smram so qtest can verify that x86 secure attrs
-+             * select the SMM address space rather than the default one.
-+             */
-+            memory_region_init_ram(&mch->smm_test_ram, OBJECT(mch),
-+                                   "smm-test-ram",
-+                                   MCH_HOST_BRIDGE_SMM_TEST_RAM_SIZE, errp);
-+            if (*errp) {
-+                return;
-+            }
-+            memory_region_add_subregion(&mch->smram,
-+                                        MCH_HOST_BRIDGE_SMM_TEST_RAM_BASE,
-+                                        &mch->smm_test_ram);
-+        }
-+
-         object_property_add_const_link(qdev_get_machine(), "smram",
-                                        OBJECT(&mch->smram));
-     }
-@@ -685,6 +710,8 @@ static const Property mch_props[] = {
-     DEFINE_PROP_UINT16("extended-tseg-mbytes", MCHPCIState, ext_tseg_mbytes,
-                        64),
-     DEFINE_PROP_BOOL("smbase-smram", MCHPCIState, has_smram_at_smbase, true),
-+    DEFINE_PROP_BOOL("x-smm-test-ram", MCHPCIState, enable_smm_test_ram,
-+                     false),
- };
- 
- static void mch_class_init(ObjectClass *klass, const void *data)
-diff --git a/tests/qtest/qtest-x86-attrs-test.c b/tests/qtest/qtest-x86-attrs-test.c
-new file mode 100644
-index 00000000000..0d39b2ef8ca
---- /dev/null
-+++ b/tests/qtest/qtest-x86-attrs-test.c
-@@ -0,0 +1,175 @@
-+/*
-+ * QTest for x86 memory access with transaction attributes
-+ *
-+ * Verify q35 SMM address-space access with the secure attribute.
-+ *
-+ * Copyright (c) 2026 Phytium Technology
-+ *
-+ * Author:
-+ *  Tao Tang <tangtao1634@phytium.com.cn>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/cutils.h"
-+#include "libqtest.h"
-+
-+#define TEST_ADDR_OFFSET_NS     0x1000ULL
-+#define TEST_X86_BASE           0x0ULL
-+#define TEST_X86_SMM_BASE       0xfef00000ULL
-+
-+#define TEST_ADDR_X86           (TEST_X86_BASE + TEST_ADDR_OFFSET_NS)
-+
-+#define X86_MACHINE_ARGS        "-machine q35,smm=on -m 1G -accel tcg " \
-+                                "-global mch.x-smm-test-ram=on"
-+
-+static void assert_default_scalar_read_isolated(QTestState *qts, uint64_t addr,
-+                                                char **before,
-+                                                uint8_t secure_value)
++static inline void writeb_attrs(uint64_t addr, uint8_t value, const char *attrs)
 +{
-+    g_auto(GStrv) after = NULL;
-+    uint64_t value;
++    qtest_writeb_attrs(global_qtest, addr, value, attrs);
++}
++
++/**
++ * writew_attrs:
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Writes a 16-bit value to guest memory with optional transaction attributes.
++ */
++static inline void writew_attrs(uint64_t addr, uint16_t value,
++                                const char *attrs)
++{
++    qtest_writew_attrs(global_qtest, addr, value, attrs);
++}
++
++/**
++ * writel_attrs:
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Writes a 32-bit value to guest memory with optional transaction attributes.
++ */
++static inline void writel_attrs(uint64_t addr, uint32_t value,
++                                const char *attrs)
++{
++    qtest_writel_attrs(global_qtest, addr, value, attrs);
++}
++
++/**
++ * writeq_attrs:
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Writes a 64-bit value to guest memory with optional transaction attributes.
++ */
++static inline void writeq_attrs(uint64_t addr, uint64_t value,
++                                const char *attrs)
++{
++    qtest_writeq_attrs(global_qtest, addr, value, attrs);
++}
++
++/**
++ * readb_attrs:
++ * @addr: Guest address to read from.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Reads an 8-bit value from guest memory with optional transaction attributes.
++ *
++ * Returns: Value read.
++ */
++static inline uint8_t readb_attrs(uint64_t addr, const char *attrs)
++{
++    return qtest_readb_attrs(global_qtest, addr, attrs);
++}
++
++/**
++ * readw_attrs:
++ * @addr: Guest address to read from.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Reads a 16-bit value from guest memory with optional transaction attributes.
++ *
++ * Returns: Value read.
++ */
++static inline uint16_t readw_attrs(uint64_t addr, const char *attrs)
++{
++    return qtest_readw_attrs(global_qtest, addr, attrs);
++}
++
++/**
++ * readl_attrs:
++ * @addr: Guest address to read from.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Reads a 32-bit value from guest memory with optional transaction attributes.
++ *
++ * Returns: Value read.
++ */
++static inline uint32_t readl_attrs(uint64_t addr, const char *attrs)
++{
++    return qtest_readl_attrs(global_qtest, addr, attrs);
++}
++
++/**
++ * readq_attrs:
++ * @addr: Guest address to read from.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Reads a 64-bit value from guest memory with optional transaction attributes.
++ *
++ * Returns: Value read.
++ */
++static inline uint64_t readq_attrs(uint64_t addr, const char *attrs)
++{
++    return qtest_readq_attrs(global_qtest, addr, attrs);
++}
++
++/**
++ * memread_attrs:
++ * @addr: Guest address to read from.
++ * @data: Pointer to where memory contents will be stored.
++ * @size: Number of bytes to read.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Read guest memory into a buffer with optional transaction attributes.
++ */
++static inline void memread_attrs(uint64_t addr, void *data, size_t size,
++                                 const char *attrs)
++{
++    qtest_memread_attrs(global_qtest, addr, data, size, attrs);
++}
++
++/**
++ * memwrite_attrs:
++ * @addr: Guest address to write to.
++ * @data: Pointer to the bytes that will be written to guest memory.
++ * @size: Number of bytes to write.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Write a buffer to guest memory with optional transaction attributes.
++ */
++static inline void memwrite_attrs(uint64_t addr, const void *data, size_t size,
++                                  const char *attrs)
++{
++    qtest_memwrite_attrs(global_qtest, addr, data, size, attrs);
++}
++
++/**
++ * memset_attrs:
++ * @addr: Guest address to write to.
++ * @pattern: Byte pattern to fill the guest memory region with.
++ * @size: Number of bytes to write.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Write a pattern to guest memory with optional transaction attributes.
++ */
++static inline void memset_attrs(uint64_t addr, uint8_t pattern, size_t size,
++                                const char *attrs)
++{
++    qtest_memset_attrs(global_qtest, addr, pattern, size, attrs);
++}
++
+ /**
+  * clock_step_next:
+  *
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index 9c17da930e1..a999fc3e52f 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -252,6 +252,28 @@ void qtest_qmp_send_raw(QTestState *s, const char *fmt, ...)
+ gchar **qtest_raw_cmd(QTestState *s, const char *fmt, ...)
+     G_GNUC_PRINTF(2, 3);
+ 
++/**
++ * qtest_cmd_assert_response:
++ * @s: #QTestState instance to operate on.
++ * @expected: expected qtest response line.
++ * @fmt: qtest protocol text to send, formatted like sprintf().
++ *
++ * Sends a qtest command and asserts that its response matches @expected.
++ */
++void qtest_cmd_assert_response(QTestState *s, const char *expected,
++                               const char *fmt, ...)
++    G_GNUC_PRINTF(3, 4);
++
++/**
++ * qtest_cmd_assert_failure:
++ * @s: #QTestState instance to operate on.
++ * @fmt: qtest protocol text to send, formatted like sprintf().
++ *
++ * Sends a qtest command and asserts that its response starts with ``ERR``.
++ */
++void qtest_cmd_assert_failure(QTestState *s, const char *fmt, ...)
++    G_GNUC_PRINTF(2, 3);
++
+ /**
+  * qtest_socket_server:
+  * @socket_path: the UNIX domain socket path
+@@ -716,6 +738,32 @@ uint64_t qtest_csr_call(QTestState *s, const char *name,
+  */
+ void qtest_bufread(QTestState *s, uint64_t addr, void *data, size_t size);
+ 
++/**
++ * qtest_bufread_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ * @data: Pointer to where memory contents will be stored.
++ * @size: Number of bytes to read.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Read guest memory into a buffer and receive using a base64 encoding with
++ * optional transaction attributes.
++ */
++void qtest_bufread_attrs(QTestState *s, uint64_t addr, void *data, size_t size,
++                         const char *attrs);
++
++/**
++ * qtest_bufread_attrs_assert_failure:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ * @size: Number of bytes to read.
++ * @attrs: Transaction attributes string.
++ *
++ * Assert that an attributed base64 memory read fails.
++ */
++void qtest_bufread_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                        size_t size, const char *attrs);
++
+ /**
+  * qtest_memwrite:
+  * @s: #QTestState instance to operate on.
+@@ -739,6 +787,35 @@ void qtest_memwrite(QTestState *s, uint64_t addr, const void *data, size_t size)
+ void qtest_bufwrite(QTestState *s, uint64_t addr,
+                     const void *data, size_t size);
+ 
++/**
++ * qtest_bufwrite_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @data: Pointer to the bytes that will be written to guest memory.
++ * @size: Number of bytes to write.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Write a buffer to guest memory and transmit using a base64 encoding with
++ * optional transaction attributes.
++ */
++void qtest_bufwrite_attrs(QTestState *s, uint64_t addr,
++                          const void *data, size_t size,
++                          const char *attrs);
++
++/**
++ * qtest_bufwrite_attrs_assert_failure:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @data: Pointer to the bytes to write.
++ * @size: Number of bytes to write.
++ * @attrs: Transaction attributes string.
++ *
++ * Assert that an attributed base64 memory write fails.
++ */
++void qtest_bufwrite_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                         const void *data, size_t size,
++                                         const char *attrs);
++
+ /**
+  * qtest_memset:
+  * @s: #QTestState instance to operate on.
+@@ -750,6 +827,204 @@ void qtest_bufwrite(QTestState *s, uint64_t addr,
+  */
+ void qtest_memset(QTestState *s, uint64_t addr, uint8_t patt, size_t size);
+ 
++/**
++ * qtest_writeb_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Writes an 8-bit value to guest memory with optional transaction attributes.
++ */
++void qtest_writeb_attrs(QTestState *s, uint64_t addr, uint8_t value,
++                        const char *attrs);
++
++/**
++ * qtest_writeb_attrs_assert_failure:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ * @attrs: Transaction attributes string.
++ *
++ * Assert that an attributed 8-bit memory write fails.
++ */
++void qtest_writeb_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                       uint8_t value, const char *attrs);
++
++/**
++ * qtest_writew_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Writes a 16-bit value to guest memory with optional transaction attributes.
++ */
++void qtest_writew_attrs(QTestState *s, uint64_t addr, uint16_t value,
++                        const char *attrs);
++
++/**
++ * qtest_writel_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Writes a 32-bit value to guest memory with optional transaction attributes.
++ */
++void qtest_writel_attrs(QTestState *s, uint64_t addr, uint32_t value,
++                        const char *attrs);
++
++/**
++ * qtest_writeq_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Writes a 64-bit value to guest memory with optional transaction attributes.
++ */
++void qtest_writeq_attrs(QTestState *s, uint64_t addr, uint64_t value,
++                        const char *attrs);
++
++/**
++ * qtest_readb_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Reads an 8-bit value from guest memory with optional transaction attributes.
++ *
++ * Returns: Value read.
++ */
++uint8_t qtest_readb_attrs(QTestState *s, uint64_t addr, const char *attrs);
++
++/**
++ * qtest_readb_attrs_assert_failure:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ * @attrs: Transaction attributes string.
++ *
++ * Assert that an attributed 8-bit memory read fails.
++ */
++void qtest_readb_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                      const char *attrs);
++
++/**
++ * qtest_readw_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Reads a 16-bit value from guest memory with optional transaction attributes.
++ *
++ * Returns: Value read.
++ */
++uint16_t qtest_readw_attrs(QTestState *s, uint64_t addr, const char *attrs);
++
++/**
++ * qtest_readl_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Reads a 32-bit value from guest memory with optional transaction attributes.
++ *
++ * Returns: Value read.
++ */
++uint32_t qtest_readl_attrs(QTestState *s, uint64_t addr, const char *attrs);
++
++/**
++ * qtest_readq_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Reads a 64-bit value from guest memory with optional transaction attributes.
++ *
++ * Returns: Value read.
++ */
++uint64_t qtest_readq_attrs(QTestState *s, uint64_t addr, const char *attrs);
++
++/**
++ * qtest_memread_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ * @data: Pointer to where memory contents will be stored.
++ * @size: Number of bytes to read.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Read guest memory into a buffer with optional transaction attributes.
++ */
++void qtest_memread_attrs(QTestState *s, uint64_t addr, void *data, size_t size,
++                         const char *attrs);
++
++/**
++ * qtest_memread_attrs_assert_failure:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ * @size: Number of bytes to read.
++ * @attrs: Transaction attributes string.
++ *
++ * Assert that an attributed hexadecimal memory read fails.
++ */
++void qtest_memread_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                        size_t size, const char *attrs);
++
++/**
++ * qtest_memwrite_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @data: Pointer to the bytes that will be written to guest memory.
++ * @size: Number of bytes to write.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Write a buffer to guest memory with optional transaction attributes.
++ */
++void qtest_memwrite_attrs(QTestState *s, uint64_t addr, const void *data,
++                          size_t size, const char *attrs);
++
++/**
++ * qtest_memwrite_attrs_assert_failure:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @data: Pointer to the bytes to write.
++ * @size: Number of bytes to write.
++ * @attrs: Transaction attributes string.
++ *
++ * Assert that an attributed hexadecimal memory write fails.
++ */
++void qtest_memwrite_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                         const void *data, size_t size,
++                                         const char *attrs);
++
++/**
++ * qtest_memset_attrs:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @patt: Byte pattern to fill the guest memory region with.
++ * @size: Number of bytes to write.
++ * @attrs: Optional transaction attributes string.
++ *
++ * Write a pattern to guest memory with optional transaction attributes.
++ */
++void qtest_memset_attrs(QTestState *s, uint64_t addr, uint8_t patt, size_t size,
++                        const char *attrs);
++
++/**
++ * qtest_memset_attrs_assert_failure:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @patt: Byte pattern to fill the guest memory region with.
++ * @size: Number of bytes to write.
++ * @attrs: Transaction attributes string.
++ *
++ * Assert that an attributed memory fill fails.
++ */
++void qtest_memset_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                       uint8_t patt, size_t size,
++                                       const char *attrs);
++
+ /**
+  * qtest_clock_step_next:
+  * @s: #QTestState instance to operate on.
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 3b2e31240e7..91f7525bdf1 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -820,6 +820,37 @@ gchar **qtest_raw_cmd(QTestState *s, const char *fmt, ...)
+     return qtest_rsp_words(s);
+ }
+ 
++void qtest_cmd_assert_response(QTestState *s, const char *expected,
++                               const char *fmt, ...)
++{
++    va_list ap;
++    g_autofree gchar *cmd = NULL;
++    g_autofree gchar *line = NULL;
++    g_auto(GStrv) response = NULL;
++
++    va_start(ap, fmt);
++    cmd = g_strdup_vprintf(fmt, ap);
++    va_end(ap);
++
++    response = qtest_raw_cmd(s, "%s", cmd);
++    line = g_strjoinv(" ", response);
++    g_assert_cmpstr(line, ==, expected);
++}
++
++void qtest_cmd_assert_failure(QTestState *s, const char *fmt, ...)
++{
++    va_list ap;
++    g_autofree gchar *cmd = NULL;
++    g_auto(GStrv) response = NULL;
++
++    va_start(ap, fmt);
++    cmd = g_strdup_vprintf(fmt, ap);
++    va_end(ap);
++
++    response = qtest_raw_cmd(s, "%s", cmd);
++    g_assert_cmpstr(response[0], ==, "ERR");
++}
++
+ static void qtest_rsp(QTestState *s)
+ {
+     gchar **words = qtest_rsp_args(s, 0);
+@@ -827,6 +858,14 @@ static void qtest_rsp(QTestState *s)
+     g_strfreev(words);
+ }
+ 
++static void qtest_rsp_assert_failure(QTestState *s)
++{
++    gchar **words = qtest_rsp_words(s);
++
++    g_assert_cmpstr(words[0], ==, "ERR");
++    g_strfreev(words);
++}
++
+ static int qtest_query_target_endianness(QTestState *s)
+ {
+     gchar **args;
+@@ -1341,66 +1380,44 @@ uint32_t qtest_inl(QTestState *s, uint16_t addr)
+     return qtest_big_endian(s) ? bswap32(v) : v;
+ }
+ 
+-static void qtest_write(QTestState *s, const char *cmd, uint64_t addr,
+-                        uint64_t value)
+-{
+-    qtest_sendf(s, "%s 0x%" PRIx64 " 0x%" PRIx64 "\n", cmd, addr, value);
+-    qtest_rsp(s);
+-}
+-
+ void qtest_writeb(QTestState *s, uint64_t addr, uint8_t value)
+ {
+-    qtest_write(s, "writeb", addr, value);
++    qtest_writeb_attrs(s, addr, value, NULL);
+ }
+ 
+ void qtest_writew(QTestState *s, uint64_t addr, uint16_t value)
+ {
+-    qtest_write(s, "writew", addr, value);
++    qtest_writew_attrs(s, addr, value, NULL);
+ }
+ 
+ void qtest_writel(QTestState *s, uint64_t addr, uint32_t value)
+ {
+-    qtest_write(s, "writel", addr, value);
++    qtest_writel_attrs(s, addr, value, NULL);
+ }
+ 
+ void qtest_writeq(QTestState *s, uint64_t addr, uint64_t value)
+ {
+-    qtest_write(s, "writeq", addr, value);
+-}
+-
+-static uint64_t qtest_read(QTestState *s, const char *cmd, uint64_t addr)
+-{
+-    gchar **args;
+-    int ret;
+-    uint64_t value;
+-
+-    qtest_sendf(s, "%s 0x%" PRIx64 "\n", cmd, addr);
+-    args = qtest_rsp_args(s, 2);
+-    ret = qemu_strtou64(args[1], NULL, 0, &value);
+-    g_assert(!ret);
+-    g_strfreev(args);
+-
+-    return value;
++    qtest_writeq_attrs(s, addr, value, NULL);
+ }
+ 
+ uint8_t qtest_readb(QTestState *s, uint64_t addr)
+ {
+-    return qtest_read(s, "readb", addr);
++    return qtest_readb_attrs(s, addr, NULL);
+ }
+ 
+ uint16_t qtest_readw(QTestState *s, uint64_t addr)
+ {
+-    return qtest_read(s, "readw", addr);
++    return qtest_readw_attrs(s, addr, NULL);
+ }
+ 
+ uint32_t qtest_readl(QTestState *s, uint64_t addr)
+ {
+-    return qtest_read(s, "readl", addr);
++    return qtest_readl_attrs(s, addr, NULL);
+ }
+ 
+ uint64_t qtest_readq(QTestState *s, uint64_t addr)
+ {
+-    return qtest_read(s, "readq", addr);
++    return qtest_readq_attrs(s, addr, NULL);
+ }
+ 
+ static int hex2nib(char ch)
+@@ -1418,23 +1435,7 @@ static int hex2nib(char ch)
+ 
+ void qtest_memread(QTestState *s, uint64_t addr, void *data, size_t size)
+ {
+-    uint8_t *ptr = data;
+-    gchar **args;
+-    size_t i;
+-
+-    if (!size) {
+-        return;
+-    }
+-
+-    qtest_sendf(s, "read 0x%" PRIx64 " 0x%zx\n", addr, size);
+-    args = qtest_rsp_args(s, 2);
+-
+-    for (i = 0; i < size; i++) {
+-        ptr[i] = hex2nib(args[1][2 + (i * 2)]) << 4;
+-        ptr[i] |= hex2nib(args[1][2 + (i * 2) + 1]);
+-    }
+-
+-    g_strfreev(args);
++    qtest_memread_attrs(s, addr, data, size, NULL);
+ }
+ 
+ uint64_t qtest_rtas_call(QTestState *s, const char *name,
+@@ -1499,23 +1500,76 @@ void qtest_add_data_func(const char *str, const void *data,
+ }
+ 
+ void qtest_bufwrite(QTestState *s, uint64_t addr, const void *data, size_t size)
++{
++    qtest_bufwrite_attrs(s, addr, data, size, NULL);
++}
++
++void qtest_bufread(QTestState *s, uint64_t addr, void *data, size_t size)
++{
++    qtest_bufread_attrs(s, addr, data, size, NULL);
++}
++
++void qtest_memwrite(QTestState *s, uint64_t addr, const void *data, size_t size)
++{
++    qtest_memwrite_attrs(s, addr, data, size, NULL);
++}
++
++void qtest_memset(QTestState *s, uint64_t addr, uint8_t pattern, size_t size)
++{
++    qtest_memset_attrs(s, addr, pattern, size, NULL);
++}
++
++static bool qtest_has_attrs(const char *attrs)
++{
++    return attrs && attrs[0];
++}
++
++void qtest_bufwrite_attrs(QTestState *s, uint64_t addr, const void *data,
++                          size_t size, const char *attrs)
+ {
+     gchar *bdata;
+ 
+     bdata = g_base64_encode(data, size);
+     qtest_sendf(s, "b64write 0x%" PRIx64 " 0x%zx ", addr, size);
+     s->ops.send(s, bdata);
++    if (qtest_has_attrs(attrs)) {
++        s->ops.send(s, " ");
++        s->ops.send(s, attrs);
++    }
+     s->ops.send(s, "\n");
+     qtest_rsp(s);
+     g_free(bdata);
+ }
+ 
+-void qtest_bufread(QTestState *s, uint64_t addr, void *data, size_t size)
++void qtest_bufwrite_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                         const void *data, size_t size,
++                                         const char *attrs)
++{
++    gchar *bdata;
++
++    bdata = g_base64_encode(data, size);
++    qtest_sendf(s, "b64write 0x%" PRIx64 " 0x%zx ", addr, size);
++    s->ops.send(s, bdata);
++    if (qtest_has_attrs(attrs)) {
++        s->ops.send(s, " ");
++        s->ops.send(s, attrs);
++    }
++    s->ops.send(s, "\n");
++    qtest_rsp_assert_failure(s);
++    g_free(bdata);
++}
++
++void qtest_bufread_attrs(QTestState *s, uint64_t addr, void *data, size_t size,
++                         const char *attrs)
+ {
+     gchar **args;
+     size_t len;
+ 
+-    qtest_sendf(s, "b64read 0x%" PRIx64 " 0x%zx\n", addr, size);
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "b64read 0x%" PRIx64 " 0x%zx %s\n", addr, size, attrs);
++    } else {
++        qtest_sendf(s, "b64read 0x%" PRIx64 " 0x%zx\n", addr, size);
++    }
+     args = qtest_rsp_args(s, 2);
+ 
+     g_base64_decode_inplace(args[1], &len);
+@@ -1529,7 +1583,171 @@ void qtest_bufread(QTestState *s, uint64_t addr, void *data, size_t size)
+     g_strfreev(args);
+ }
+ 
+-void qtest_memwrite(QTestState *s, uint64_t addr, const void *data, size_t size)
++void qtest_bufread_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                        size_t size, const char *attrs)
++{
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "b64read 0x%" PRIx64 " 0x%zx %s\n",
++                    addr, size, attrs);
++    } else {
++        qtest_sendf(s, "b64read 0x%" PRIx64 " 0x%zx\n", addr, size);
++    }
++    qtest_rsp_assert_failure(s);
++}
++
++static void qtest_write_attrs(QTestState *s, const char *cmd,
++                              uint64_t addr, uint64_t value,
++                              const char *attrs)
++{
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "%s 0x%" PRIx64 " 0x%" PRIx64 " %s\n",
++                    cmd, addr, value, attrs);
++    } else {
++        qtest_sendf(s, "%s 0x%" PRIx64 " 0x%" PRIx64 "\n", cmd, addr, value);
++    }
++    qtest_rsp(s);
++}
++
++static void qtest_write_attrs_assert_failure(QTestState *s, const char *cmd,
++                                              uint64_t addr, uint64_t value,
++                                              const char *attrs)
++{
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "%s 0x%" PRIx64 " 0x%" PRIx64 " %s\n",
++                    cmd, addr, value, attrs);
++    } else {
++        qtest_sendf(s, "%s 0x%" PRIx64 " 0x%" PRIx64 "\n",
++                    cmd, addr, value);
++    }
++    qtest_rsp_assert_failure(s);
++}
++
++static uint64_t qtest_read_attrs(QTestState *s, const char *cmd,
++                                 uint64_t addr, const char *attrs)
++{
++    gchar **args;
 +    int ret;
++    uint64_t value;
 +
-+    after = qtest_raw_cmd(qts, "readb 0x%" PRIx64 "\n", addr);
-+
-+    if (g_strcmp0(before[0], "ERR") == 0) {
-+        g_assert_cmpstr(after[0], ==, "ERR");
-+        return;
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "%s 0x%" PRIx64 " %s\n", cmd, addr, attrs);
++    } else {
++        qtest_sendf(s, "%s 0x%" PRIx64 "\n", cmd, addr);
 +    }
++    args = qtest_rsp_args(s, 2);
++    ret = qemu_strtou64(args[1], NULL, 0, &value);
++    g_assert(!ret);
++    g_strfreev(args);
 +
-+    g_assert_cmpstr(before[0], ==, "OK");
-+    g_assert_nonnull(before[1]);
-+    g_assert_cmpstr(after[0], ==, "OK");
-+    g_assert_nonnull(after[1]);
-+    g_assert_cmpstr(after[1], ==, before[1]);
-+
-+    ret = qemu_strtou64(after[1], NULL, 0, &value);
-+    g_assert_cmpint(ret, ==, 0);
-+    g_assert_cmpuint(value, !=, secure_value);
++    return value;
 +}
 +
-+static void assert_default_bulk_read_isolated(QTestState *qts, uint64_t addr,
-+                                              char **before,
-+                                              const uint8_t *expected,
-+                                              size_t len)
++static void qtest_read_attrs_assert_failure(QTestState *s, const char *cmd,
++                                             uint64_t addr, const char *attrs)
 +{
-+    g_auto(GStrv) after = NULL;
-+    g_autofree gchar *expected_b64 = NULL;
-+
-+    expected_b64 = g_base64_encode(expected, len);
-+    after = qtest_raw_cmd(qts, "b64read 0x%" PRIx64 " 0x%zx\n", addr, len);
-+
-+    if (g_strcmp0(before[0], "ERR") == 0) {
-+        g_assert_cmpstr(after[0], ==, "ERR");
-+        return;
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "%s 0x%" PRIx64 " %s\n", cmd, addr, attrs);
++    } else {
++        qtest_sendf(s, "%s 0x%" PRIx64 "\n", cmd, addr);
 +    }
-+
-+    g_assert_cmpstr(before[0], ==, "OK");
-+    g_assert_nonnull(before[1]);
-+    g_assert_cmpstr(after[0], ==, "OK");
-+    g_assert_nonnull(after[1]);
-+    g_assert_cmpstr(after[1], ==, before[1]);
-+    g_assert_cmpstr(after[1], !=, expected_b64);
++    qtest_rsp_assert_failure(s);
 +}
 +
-+static void test_x86_scalar_attrs(void)
++void qtest_writeb_attrs(QTestState *s, uint64_t addr, uint8_t value,
++                        const char *attrs)
 +{
-+    QTestState *qts;
-+    g_auto(GStrv) before = NULL;
-+    uint8_t val;
-+
-+    if (!qtest_has_machine("q35")) {
-+        g_test_skip("q35 machine not available");
-+        return;
-+    }
-+
-+    qts = qtest_init(X86_MACHINE_ARGS);
-+
-+    qtest_writeb_attrs(qts, TEST_ADDR_X86, 0x11, NULL);
-+    val = qtest_readb_attrs(qts, TEST_ADDR_X86, NULL);
-+    g_assert_cmpuint(val, ==, 0x11);
-+
-+    qtest_writeb_attrs(qts, TEST_ADDR_X86 + 0x1, 0x22, "secure");
-+    val = qtest_readb_attrs(qts, TEST_ADDR_X86 + 0x1, "secure");
-+    g_assert_cmpuint(val, ==, 0x22);
-+
-+    before = qtest_raw_cmd(qts, "readb 0x%" PRIx64 "\n",
-+                           (uint64_t)(TEST_X86_SMM_BASE + 0x2));
-+    qtest_writeb_attrs(qts, TEST_X86_SMM_BASE + 0x2, 0x33, "secure");
-+    val = qtest_readb_attrs(qts, TEST_X86_SMM_BASE + 0x2, "secure");
-+    g_assert_cmpuint(val, ==, 0x33);
-+    assert_default_scalar_read_isolated(qts, TEST_X86_SMM_BASE + 0x2,
-+                                        before, 0x33);
-+
-+    qtest_quit(qts);
++    qtest_write_attrs(s, "writeb", addr, value, attrs);
 +}
 +
-+static void test_x86_bulk_attrs(void)
++void qtest_writeb_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                       uint8_t value, const char *attrs)
 +{
-+    QTestState *qts;
-+    g_auto(GStrv) before = NULL;
-+    uint8_t wbuf[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-+    uint8_t rbuf[8];
++    qtest_write_attrs_assert_failure(s, "writeb", addr, value, attrs);
++}
++
++void qtest_writew_attrs(QTestState *s, uint64_t addr, uint16_t value,
++                        const char *attrs)
++{
++    qtest_write_attrs(s, "writew", addr, value, attrs);
++}
++
++void qtest_writel_attrs(QTestState *s, uint64_t addr, uint32_t value,
++                        const char *attrs)
++{
++    qtest_write_attrs(s, "writel", addr, value, attrs);
++}
++
++void qtest_writeq_attrs(QTestState *s, uint64_t addr, uint64_t value,
++                        const char *attrs)
++{
++    qtest_write_attrs(s, "writeq", addr, value, attrs);
++}
++
++uint8_t qtest_readb_attrs(QTestState *s, uint64_t addr, const char *attrs)
++{
++    return qtest_read_attrs(s, "readb", addr, attrs);
++}
++
++void qtest_readb_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                      const char *attrs)
++{
++    qtest_read_attrs_assert_failure(s, "readb", addr, attrs);
++}
++
++uint16_t qtest_readw_attrs(QTestState *s, uint64_t addr, const char *attrs)
++{
++    return qtest_read_attrs(s, "readw", addr, attrs);
++}
++
++uint32_t qtest_readl_attrs(QTestState *s, uint64_t addr, const char *attrs)
++{
++    return qtest_read_attrs(s, "readl", addr, attrs);
++}
++
++uint64_t qtest_readq_attrs(QTestState *s, uint64_t addr, const char *attrs)
++{
++    return qtest_read_attrs(s, "readq", addr, attrs);
++}
++
++void qtest_memread_attrs(QTestState *s, uint64_t addr, void *data,
++                         size_t size, const char *attrs)
++{
++    uint8_t *ptr = data;
++    gchar **args;
 +    size_t i;
 +
-+    if (!qtest_has_machine("q35")) {
-+        g_test_skip("q35 machine not available");
++    if (!size) {
 +        return;
 +    }
 +
-+    qts = qtest_init(X86_MACHINE_ARGS);
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "read 0x%" PRIx64 " 0x%zx %s\n", addr, size, attrs);
++    } else {
++        qtest_sendf(s, "read 0x%" PRIx64 " 0x%zx\n", addr, size);
++    }
++    args = qtest_rsp_args(s, 2);
 +
-+    qtest_memwrite_attrs(qts, TEST_ADDR_X86 + 0x100, wbuf, sizeof(wbuf), NULL);
-+    qtest_memread_attrs(qts, TEST_ADDR_X86 + 0x100, rbuf, sizeof(rbuf), NULL);
-+    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-+
-+    qtest_memwrite_attrs(qts, TEST_ADDR_X86 + 0x180,
-+                         wbuf, sizeof(wbuf), "secure");
-+    qtest_memread_attrs(qts, TEST_ADDR_X86 + 0x180,
-+                        rbuf, sizeof(rbuf), "secure");
-+    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-+
-+    before = qtest_raw_cmd(qts, "b64read 0x%" PRIx64 " 0x%zx\n",
-+                           (uint64_t)(TEST_X86_SMM_BASE + 0x100),
-+                           sizeof(wbuf));
-+    qtest_memwrite_attrs(qts, TEST_X86_SMM_BASE + 0x100,
-+                         wbuf, sizeof(wbuf), "secure");
-+    qtest_memread_attrs(qts, TEST_X86_SMM_BASE + 0x100,
-+                        rbuf, sizeof(rbuf), "secure");
-+    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-+    assert_default_bulk_read_isolated(qts, TEST_X86_SMM_BASE + 0x100, before,
-+                                      wbuf, sizeof(wbuf));
-+
-+    qtest_memset_attrs(qts, TEST_X86_SMM_BASE + 0x120,
-+                       0x5a, sizeof(rbuf), "secure");
-+    qtest_memread_attrs(qts, TEST_X86_SMM_BASE + 0x120,
-+                        rbuf, sizeof(rbuf), "secure");
-+    for (i = 0; i < sizeof(rbuf); i++) {
-+        g_assert_cmpuint(rbuf[i], ==, 0x5a);
++    for (i = 0; i < size; i++) {
++        ptr[i] = hex2nib(args[1][2 + (i * 2)]) << 4;
++        ptr[i] |= hex2nib(args[1][2 + (i * 2) + 1]);
 +    }
 +
-+    qtest_bufwrite_attrs(qts, TEST_X86_SMM_BASE + 0x200,
-+                         wbuf, sizeof(wbuf), "secure");
-+    qtest_bufread_attrs(qts, TEST_X86_SMM_BASE + 0x200,
-+                        rbuf, sizeof(rbuf), "secure");
-+    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
-+
-+    qtest_quit(qts);
++    g_strfreev(args);
 +}
 +
-+int main(int argc, char **argv)
++void qtest_memread_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                        size_t size, const char *attrs)
 +{
-+    g_test_init(&argc, &argv, NULL);
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "read 0x%" PRIx64 " 0x%zx %s\n", addr, size, attrs);
++    } else {
++        qtest_sendf(s, "read 0x%" PRIx64 " 0x%zx\n", addr, size);
++    }
++    qtest_rsp_assert_failure(s);
++}
 +
-+    if (!qtest_has_accel("tcg")) {
-+        g_test_skip("TCG accelerator not available");
-+        return 0;
++void qtest_memwrite_attrs(QTestState *s, uint64_t addr, const void *data,
++                          size_t size, const char *attrs)
+ {
+     const uint8_t *ptr = data;
+     size_t i;
+@@ -1545,17 +1763,68 @@ void qtest_memwrite(QTestState *s, uint64_t addr, const void *data, size_t size)
+         sprintf(&enc[i * 2], "%02x", ptr[i]);
+     }
+ 
+-    qtest_sendf(s, "write 0x%" PRIx64 " 0x%zx 0x%s\n", addr, size, enc);
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "write 0x%" PRIx64 " 0x%zx 0x%s %s\n",
++                    addr, size, enc, attrs);
++    } else {
++        qtest_sendf(s, "write 0x%" PRIx64 " 0x%zx 0x%s\n", addr, size, enc);
++    }
+     qtest_rsp(s);
+     g_free(enc);
+ }
+ 
+-void qtest_memset(QTestState *s, uint64_t addr, uint8_t pattern, size_t size)
++void qtest_memwrite_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                         const void *data, size_t size,
++                                         const char *attrs)
++{
++    const uint8_t *ptr = data;
++    size_t i;
++    char *enc;
++
++    g_assert(size);
++    enc = g_malloc(2 * size + 1);
++
++    for (i = 0; i < size; i++) {
++        sprintf(&enc[i * 2], "%02x", ptr[i]);
 +    }
 +
-+    qtest_add_func("/qtest/x86/attrs/scalar", test_x86_scalar_attrs);
-+    qtest_add_func("/qtest/x86/attrs/bulk", test_x86_bulk_attrs);
-+
-+    return g_test_run();
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "write 0x%" PRIx64 " 0x%zx 0x%s %s\n",
++                    addr, size, enc, attrs);
++    } else {
++        qtest_sendf(s, "write 0x%" PRIx64 " 0x%zx 0x%s\n", addr, size, enc);
++    }
++    qtest_rsp_assert_failure(s);
++    g_free(enc);
 +}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 9b08369d3bb..94479b4757d 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -129,6 +129,7 @@ qtests_i386 = \
-    'cpu-plug-test',
-    'migration-test',
-    'qtest-attrs-test',
-+   'qtest-x86-attrs-test',
-   ]
++
++void qtest_memset_attrs(QTestState *s, uint64_t addr, uint8_t pattern,
++                        size_t size, const char *attrs)
+ {
+-    qtest_sendf(s, "memset 0x%" PRIx64 " 0x%zx 0x%02x\n", addr, size, pattern);
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "memset 0x%" PRIx64 " 0x%zx 0x%02x %s\n",
++                    addr, size, pattern, attrs);
++    } else {
++        qtest_sendf(s, "memset 0x%" PRIx64 " 0x%zx 0x%02x\n",
++                    addr, size, pattern);
++    }
+     qtest_rsp(s);
+ }
  
- if dbus_display and config_all_devices.has_key('CONFIG_VGA')
++void qtest_memset_attrs_assert_failure(QTestState *s, uint64_t addr,
++                                       uint8_t pattern, size_t size,
++                                       const char *attrs)
++{
++    if (qtest_has_attrs(attrs)) {
++        qtest_sendf(s, "memset 0x%" PRIx64 " 0x%zx 0x%02x %s\n",
++                    addr, size, pattern, attrs);
++    } else {
++        qtest_sendf(s, "memset 0x%" PRIx64 " 0x%zx 0x%02x\n",
++                    addr, size, pattern);
++    }
++    qtest_rsp_assert_failure(s);
++}
++
+ QDict *qtest_vqmp_assert_failure_ref(QTestState *qts,
+                                      const char *fmt, va_list args)
+ {
 -- 
 2.34.1
 
