@@ -1,88 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07431606A323
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 00:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18768606A327
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Nov 2026 00:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=t6sIhQAA
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Uw0saFSf
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSOQJ-0008S5-NQ; Sat, 14 Nov 2026 19:48:47 -0500
+	id 1xSOQR-00005t-T8; Sat, 14 Nov 2026 19:48:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xSOQH-0008Q0-Fh
- for qemu-devel@nongnu.org; Sat, 14 Nov 2026 19:48:45 -0500
-Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
+ id 1xSOQP-00005S-T1
+ for qemu-devel@nongnu.org; Sat, 14 Nov 2026 19:48:53 -0500
+Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xSOQG-00017N-1T
- for qemu-devel@nongnu.org; Sat, 14 Nov 2026 19:48:45 -0500
-Received: by mail-dy1-x132c.google.com with SMTP id
- 5a478bee46e88-37d424f1ae8so492288eec.1
- for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 16:48:43 -0800 (PST)
+ id 1xSOQO-00018C-EJ
+ for qemu-devel@nongnu.org; Sat, 14 Nov 2026 19:48:53 -0500
+Received: by mail-dy1-x132f.google.com with SMTP id
+ 5a478bee46e88-33bf40b0c8bso912655eec.0
+ for <qemu-devel@nongnu.org>; Sat, 14 Nov 2026 16:48:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794703723; x=1795308523; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1794703731; x=1795308531; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Xjgo6KQJSS+b+bdZzT2EkMy778ORLKBtElCHB3931Zw=;
- b=t6sIhQAAo2FvGLMHSk4SKOy5CoYzVPd/9eyL2yaYFVx4GQci8Zm7Cs9o/DpaV+Cvqr
- ajtjjKuMQbLvm1jljx1SnycsrYfTPL9rL9eU7K1gcKD8iGMOe8nDhABItxcLKhINs61J
- V+Ln0LjD3Z8c3yFcxEyx32iUU0aeGydMYJjNsqjad49+/4H8EIvgMVWBTNHDc1/eeRkk
- 4zqLZgBAVZClXurd5Qy1fo4brcW3tYkKLD7iYeng+HPBig/2CBc/K5Xsgb1qoZCV6XW1
- g6L5NgxjMhZFNRGxf26McHeVi1jeGURE3cU6SEFr8DjjxVhRE1MdUbBH1YXU+8KA5tYb
- OQGQ==
+ bh=VTz7mTqV/9RRUs/Zm/ywSfZMtIOKlgcWSJimbOoThy0=;
+ b=Uw0saFSfEoSafzvfItoJsnkBwM/iBIpRKLyuJApF9clO6vCqWv8tEcRVSKgt05fJYM
+ ujWDpNBnivrawdIAvZAEKBvggFqIOo6ZOcW200rxt0TmJQrFf8Ralqe9rz5MHuI13a/R
+ hwa0tlFH8EXfSMdvq4nXY0MqKy3WHr/j36i+ep2st/uXwbv9T+hPKzMFWZoroPdkEQw3
+ fnj15Vnno6gNiBUycr7sPkeqbwql+sccImZX22LSfkFtoOxmBewFNrm/uL2OQnAWERpw
+ UQHmCqrlWzc/VJLMJWdyNGIixtTdpiK4eviHkhVx0MU3z6bgBgwW+aATYlzbm1eSjGtJ
+ 43TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794703723; x=1795308523;
+ d=1e100.net; s=20260707; t=1794703731; x=1795308531;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Xjgo6KQJSS+b+bdZzT2EkMy778ORLKBtElCHB3931Zw=;
- b=f3C0lw1qpnAJvx2mjY/P8jKCRfe/WuwBtXZCHhBcBX716nDfEJwi/j1/ZGn3Mh9gxP
- Sfd/W8hlhUq/z0pDV5g02xI8sBsvnnJAC5y1AKEeXgBQJyA5i8czUdgiv5o750/iVr/o
- FGsIIMl+aVZWmUj7PpHi5eaWW45A2+QiL0TEwH7pqf2fZ3dyzag2wn4y8zzh8DupDGGB
- ufMYRQFvCP9r+FvTES9B/GX7UyRq+QGlCoU+PIumzIFk+R9GSdwgke9VZR9oKqL3eULX
- lcezdhaX6UGYqONXh7wBYP3XqFA8wwsqN+mx4VR3pRwyyZyxi+O46s7qusD07sCtglGN
- GBUQ==
-X-Gm-Message-State: APuU4Z9xIu/2xcEMoh5uYUiD6iaYPHIZShRNpEr7dH7WuxaBxO0uKzRA
- VWWpJdL0LAqpj8C0e9WuRUyVYmCElriEVEiuopSHpqmsGBpgwo5QzSz152ocVA==
-X-Gm-Gg: AYBFou19rp1tE7Q+w32ezUlsJEOEc9S+tIlKeyS2RDmmxHd61NLAueU4xYhBzuP81VF
- leKgWW1sc5Gh3tAL0OBMAUw1J6RuO0M38U8WRkLITGfc10E5RmPs0v1yM7zL7mZRK2eTBvjzu+S
- duVEP+ZxNfF/skYKrc5qpiO8Hwp8q/4qcLTNt39C+JR52jmlH79bTfT09bT0Kd7cgrPELk78Qw4
- T8ksGCEEClxyQa1tRODwMyAdx+ADz8/gR7WSkaBvcXtxVsUfpd20AFMR3+d6uIusTg2CpSzL2Xa
- lGmr+gwTq/50lZfRPiT45n8PZoC5Dj2jxQ9DqWXtBOBeT1sxfATB53DinSUw/dg3am4RjsJKkn7
- 0oWVFvaN2U5ZHii8ZWHa7tkUiMd0TuGIFTWD8mP9Z3ANP5vKuEUf8nKR/vZ/vP7gMo8wHt0Yr/9
- LcBIxxyWyuaM+xv0lKZj7Dc/qmHRVNe3g/BGKn0JSJWyhW0o+vOxbGKV6633dwcmSB9mRg72Gz5
- qOU+ZzTVtXlXDCwJlmIDFee26/nrvKUnabCtvvK+KD5qtbJqrhCiNGmjvJrcIBPihFnmvO2UBjE
- 1MdidAZ0j26BZ9LQ/T00XJ4QeyPyXe4WUYASVVy8pThycRo=
-X-Received: by 2002:a05:7301:1705:b0:36e:c9e5:33aa with SMTP id
- 5a478bee46e88-37965f9ea5bmr6142125eec.13.1794703722543; 
- Sat, 14 Nov 2026 16:48:42 -0800 (PST)
+ bh=VTz7mTqV/9RRUs/Zm/ywSfZMtIOKlgcWSJimbOoThy0=;
+ b=HBNcwTuiWQKL723tedO0lSQFowTVW9+YYYhOEdc+aIkEHnXdJTI5vkcq2Fm2Fnn/Lu
+ j19pW/eLuaPm1Bf+m9Lc/mY+xoAzXg71bA4EDOklfuDMkrTDtiLtQR6lJREAlBjFTkt0
+ ilxD91G6OiYgR+11EK7VtwkGkfMuQvMvPp/fGcX6hdjbFQQfYUT+7+iXevtdypIMjufB
+ kNELa+47CQzOE0JKoiLHn1m6KDari7x4v6LJRlB42exKDHRwRkym5J6pilCMyIfX9fqJ
+ bk+BPa4Jgi/YXx0VrUBnJOAe0fx8zGIKGExDMBs6XobAkIwIVspLSKJ4npN5YkxTEH2C
+ 2PjQ==
+X-Gm-Message-State: APuU4Z8A7gN33/fW1jCVc1Y6P3owMi3rbesN0H+gL+obDztbF+zpekVE
+ 9Y5+tUTuk8f/Eer+j/n8NlHUSkcIy8osB+N3kux8xEwpwB3RmoU+DjqIXqkQyg==
+X-Gm-Gg: AYBFou1fVj104i2w6SCZgxXQbzX8MMvOqykr3vFks8PAG1FYt917GyTFx+zNFu4Vj73
+ DUjbllaAtOwKA/1RoBWXWouEccFAeMw9L+wwMTaMS/bDXy8qfK6p6lalSUn8mSeVcOtW/Uf3CQC
+ 0Hyv3VYNTsKVnQ4d/TNV9hZjgDFmQWQlOM+7qpwvwc88aGrZSERb0EJd/OrLeNIIxUnpHlnw6pu
+ ow1p4esvts43w93iYhlMDZOBjR/igdKoU6Lou6I5BlrZUHlhqbDNRXxN70smOz7Se9Wy109XiXw
+ kxty7xWMM6oMHZ3z8Tz5aewNFAMzW+oT72V95lsfy33lFv9cgDrfkeCnJ9mj7N9D5qmSa7pAtNa
+ p4wdCeSIiNNiqrS+cAZj2KjRCZVR4vZ26Sy8zUxP0QqdoBr40HuDzbyeYaupP6wUl6MRYQUnULv
+ VoQKjmtkL8VHO5EpGVcs9kstX8xBL1/aqjQIJASCX62W5YmyLx39wr9dPlIpXnx01gTWRzncohE
+ ZIhciy1lKGo9os77ckb8pGz2eVnIFW8fofS8A4LTTuJb27p0ZFAe2CzTK48eDi4IWmxPonwIXc3
+ 0WStxcDUdfDa5oa42ulolgva8rl9LknKeuMQhgwZq7F3pjGe
+X-Received: by 2002:a05:7300:8b:b0:377:5cb:a534 with SMTP id
+ 5a478bee46e88-37965da9681mr6960281eec.17.1794703731065; 
+ Sat, 14 Nov 2026 16:48:51 -0800 (PST)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-379553316f2sm21102926eec.9.2026.11.14.16.48.39
+ 5a478bee46e88-379553316f2sm21102926eec.9.2026.11.14.16.48.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 14 Nov 2026 16:48:42 -0800 (PST)
+ Sat, 14 Nov 2026 16:48:50 -0800 (PST)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Tan Chi <tanchi25@mails.ucas.ac.cn>,
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>
-Subject: [PULL 5/8] hw/riscv: Select SSI for IBEX
-Date: Sun, 15 Nov 2026 10:48:16 +1000
-Message-ID: <20261115004819.2586336-6-alistair.francis@wdc.com>
+ Chao Liu <chao.liu@processmission.com>, Nutty Liu <nutty.liu@hotmail.com>
+Subject: [PULL 8/8] target/riscv/tcg: clear itrigger_enabled during
+ trigger_reset_hold()
+Date: Sun, 15 Nov 2026 10:48:19 +1000
+Message-ID: <20261115004819.2586336-9-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261115004819.2586336-1-alistair.francis@wdc.com>
 References: <20261115004819.2586336-1-alistair.francis@wdc.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
- envelope-from=alistair23@gmail.com; helo=mail-dy1-x132c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
+ envelope-from=alistair23@gmail.com; helo=mail-dy1-x132f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,40 +110,41 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Tan Chi <tanchi25@mails.ucas.ac.cn>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The Ibex SPI host controller uses the SSI bus infrastructure,
-but CONFIG_IBEX does not select CONFIG_SSI.
+We're leaving env->itrigger_enabled untouched during reset() while at
+the same time resetting triggers to AD_MATCH (type 2).
 
-This causes undefined references to SSI functions, including
-ssi_transfer(), when building a minimal RV32 OpenTitan target
-without default devices.
+So, in case we reset the CPU during an itrigger session, translation
+code will enter itrigger_match helper every time (via ctx->itrigger),
+and the helper will do nothing since there's no type 3 triggers set.
+And we'll keep doing that until something else clears
+env->itrigger_enabled.  This is a niche case that it's a bit hard to hit
+but it will cost a bit of performance for no good reason.
 
-Select SSI from IBEX to ensure that the required bus
-implementation is built.
+Found while reviewing an itrigger related patch.
 
-Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
+Fixes: 577f02869488 ("target/riscv: Add itrigger_enabled field to CPURISCVState").
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20261101031547.125591-6-tanchi25@mails.ucas.ac.cn>
+Message-ID: <20261111070600.169519-2-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/Kconfig | 1 +
+ target/riscv/tcg/debug.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index f3bf8d159cba..807fcaaf280e 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -6,6 +6,7 @@ config RISCV_NUMA
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index 8b58cbd07ab7..988bc815d79c 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -1213,4 +1213,5 @@ void riscv_trigger_reset_hold(CPURISCVState *env)
+     }
  
- config IBEX
-     bool
-+    select SSI
- 
- config RISCV_DEVICE_COMMON
-     bool
+     env->mcontext = 0;
++    env->itrigger_enabled = false;
+ }
 -- 
 2.55.0
 
