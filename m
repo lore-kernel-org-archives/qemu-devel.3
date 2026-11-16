@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91F9606A338
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFC5606A331
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=NNEd2tPP
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=iEczOC/2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Jv-0006th-C8; Mon, 16 Nov 2026 15:28:55 -0500
+	id 1xT3Kk-0007sl-Gv; Mon, 16 Nov 2026 15:29:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Jp-0006dM-Ih; Mon, 16 Nov 2026 15:28:49 -0500
+ id 1xT3KM-0007dw-Gz; Mon, 16 Nov 2026 15:29:23 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Jn-0001a9-3M; Mon, 16 Nov 2026 15:28:49 -0500
+ id 1xT3KH-0001cB-ID; Mon, 16 Nov 2026 15:29:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860765; bh=yxmPMYOPKanA2aL+V7G6eLgCIDNMVSmEQIcjvmE/Jss=;
+ t=1794860765; bh=uykobFzFbJheWmjvIvfm7k2S7vLkwWrwewoOHM0aTVU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NNEd2tPPMQA1EtXBZWOlJxq+9KJRiQVaFERnirmQ3TtkHn1OI/v5W4YMV3lzujGd9
- kZ16NOYOvUsXixMGq2Ql9yD6A+HKsI7B7ys0VgJvFfcfUMM0IBujoG1w83mwzKvkQV
- X4qdR2vL1/WlV6T85sdVIQNap/5GTXg1iULZDR1Kp08IBAXuyAOXq2X1Dk2r7SJ2HN
- S8XB31F00UQU+qtvP0AvpFpfLT9l2XveE11Z8NyRYRoquD0zzAXpv9q+aWo6gmonF4
- nGYU8kjLa9VzP3LPBn5y9Ohh/2SyvA+1aKHRURdKgguQu2UPS2gGoDK0e3dcXphBj2
- BA65ch/PrE0bw==
+ b=iEczOC/2C8+4Y90a7BOxtO9U/YYztt59k3NiTOLzvMRkk/D+2TbwuD2WQGdX1KrgS
+ 59mFEZiaMK3AJMHUg7lilAOdzJWXyMNwQaUVYdvH0oKSczgEVjUI1afa+b2fgs0M0P
+ KdRn1e5NPcYuN3dGMslI1r1/BZLpSNq3VB5vlwaPtZwsC4njRQqwZMhfEuYLyB99av
+ CuPjDZHmTvuwmQ6QuoW52xgz5cUr28T0QzhV/s9PRQ2PCB4n3rslQR0PFt9Bxnv+XW
+ pkX3osEfDEeSjzRgpysL63qILg3bGoXcMeQB4Sdi4jk7tM0lOTU14Rw4ipH57nr92p
+ NTsEmgpk5v2dg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 316661E71B5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 47CCF1E71B8;
  Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2E68245FBE1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 456F245FBE4;
  Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 24E9EB8E86; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
+ id 2E1E7B8E8C; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@linux.dev>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 32/63] hw/usb/hcd-xhci: fail Address Device when the
- DCBAA entry is unreadable
-Date: Mon, 16 Nov 2026 23:25:11 +0300
-Message-ID: <20261116202554.535325-32-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Daniel Paziyski <danielpaziyski@gmail.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 35/63] pci: fix null pointer dereference on pci device
+ registration failure
+Date: Mon, 16 Nov 2026 23:25:14 +0300
+Message-ID: <20261116202554.535325-35-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -67,125 +67,52 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Junjie Cao <junjie.cao@linux.dev>
+From: Daniel Paziyski <danielpaziyski@gmail.com>
 
-xhci_address_slot() ignores the result of reading the slot's DCBAA
-entry. When that read fails the output context pointer is whatever the
-failed read left behind, zero for unassigned memory, so the slot and
-ep0 contexts land at guest address 0 and the command completes with
-Success.
+When a PCI device fails to be registered using do_pci_register_device, which
+takes the PCI device as one of its arguments, and returns the PCI device itself
+on success or null on failure, the acpi index is forcefully released using
+pci_unregister_acpi_index.
 
-Log the failed read and raise HCE, as the context DMA helpers do, and
-return TRB Error, as Address Device already does for an unreadable
-input control context. xhci_die() only flags HCE and leaves the
-controller running; the HSE and halt of xHCI 1.2 section 4.10.2.6 are
-not added here.
+However, this causes a null pointer to be passed always on failure to
+pci_unregister_acpi_index. Instead, do not reassign pci_dev from the return
+value of do_pci_register_device, just check it.
 
-usb_xhci_post_load() reads the same entry; a failure there now disables
-the slot, as an unresolvable slot context already does.
-
-Fixes: 62c6ae04cf43 ("xhci: Initial xHCI implementation")
-Fixes: 37352df30fbc ("xhci: add live migration support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4706
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
-Message-ID: <20261031033725.1275414-2-junjie.cao@linux.dev>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 8b604732242e7027f89d90dc117517a9694bdc66)
+Resolves: Coverity CID 1689947
+Fixes: 432ea8cc7d27 ("pcie_sriov: register user created virtual function before realizing it")
+Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20261101162132.147838-2-danielpaziyski@gmail.com>
+(cherry picked from commit 7ecad9ed2e1c7fc7076cb23186c0e3b3317b6c4e)
+(Fixes: 11ecc538c5b2 in 11.1.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 5d7a77b8bcf..b5cc1ad2ff5 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -534,6 +534,23 @@ static inline void xhci_dma_write_u32s(XHCIState *xhci, dma_addr_t addr,
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index d4187293b1f..51713451cb3 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2310,10 +2310,8 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+         pci_dev->cap_present |= QEMU_PCIE_CAP_CXL;
      }
- }
  
-+static bool xhci_read_dcbaa(XHCIState *xhci, unsigned int slotid,
-+                            dma_addr_t *octx)
-+{
-+    dma_addr_t dcbaap = xhci_addr64(xhci->dcbaap_low, xhci->dcbaap_high);
-+    uint64_t poctx;
-+
-+    if (ldq_le_dma(xhci->as, dcbaap + 8 * slotid, &poctx,
-+                   MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: DMA memory access failed!\n",
-+                      __func__);
-+        xhci_die(xhci);
-+        return false;
-+    }
-+    *octx = xhci_mask64(poctx);
-+    return true;
-+}
-+
- static XHCIPort *xhci_lookup_port(XHCIState *xhci, struct USBPort *uport)
- {
-     int index;
-@@ -2103,8 +2120,7 @@ static TRBCCode xhci_address_slot(XHCIState *xhci, unsigned int slotid,
-     XHCISlot *slot;
-     USBPort *uport;
-     USBDevice *dev;
--    dma_addr_t ictx, octx, dcbaap;
--    uint64_t poctx;
-+    dma_addr_t ictx, octx;
-     uint32_t ictl_ctx[2];
-     uint32_t slot_ctx[4];
-     uint32_t ep0_ctx[5];
-@@ -2113,10 +2129,10 @@ static TRBCCode xhci_address_slot(XHCIState *xhci, unsigned int slotid,
- 
-     assert(slotid >= 1 && slotid <= xhci->numslots);
- 
--    dcbaap = xhci_addr64(xhci->dcbaap_low, xhci->dcbaap_high);
--    ldq_le_dma(xhci->as, dcbaap + 8 * slotid, &poctx, MEMTXATTRS_UNSPECIFIED);
-+    if (!xhci_read_dcbaa(xhci, slotid, &octx)) {
-+        return CC_TRB_ERROR;
-+    }
-     ictx = xhci_mask64(pictx);
--    octx = xhci_mask64(poctx);
- 
-     DPRINTF("xhci: input context at "DMA_ADDR_FMT"\n", ictx);
-     DPRINTF("xhci: output context at "DMA_ADDR_FMT"\n", octx);
-@@ -3522,24 +3538,21 @@ static int usb_xhci_post_load(void *opaque, int version_id)
-     XHCIState *xhci = opaque;
-     XHCISlot *slot;
-     XHCIEPContext *epctx;
--    dma_addr_t dcbaap, pctx;
-+    dma_addr_t pctx;
-     uint32_t slot_ctx[4];
-     uint32_t ep_ctx[5];
-     int slotid, epid, state;
--    uint64_t addr;
--
--    dcbaap = xhci_addr64(xhci->dcbaap_low, xhci->dcbaap_high);
- 
-     for (slotid = 1; slotid <= xhci->numslots; slotid++) {
-         slot = &xhci->slots[slotid-1];
-         if (!slot->addressed) {
-             continue;
-         }
--        ldq_le_dma(xhci->as, dcbaap + 8 * slotid, &addr, MEMTXATTRS_UNSPECIFIED);
--        slot->ctx = xhci_mask64(addr);
--
--        xhci_dma_read_u32s(xhci, slot->ctx, slot_ctx, sizeof(slot_ctx));
--        slot->uport = xhci_lookup_uport(xhci, slot_ctx);
-+        slot->uport = NULL;
-+        if (xhci_read_dcbaa(xhci, slotid, &slot->ctx)) {
-+            xhci_dma_read_u32s(xhci, slot->ctx, slot_ctx, sizeof(slot_ctx));
-+            slot->uport = xhci_lookup_uport(xhci, slot_ctx);
-+        }
-         if (!slot->uport) {
-             /* should not happen, but may trigger on guest bugs */
-             slot->enabled = 0;
+-    pci_dev = do_pci_register_device(pci_dev,
+-                                     object_get_typename(OBJECT(qdev)),
+-                                     pci_dev->devfn, errp);
+-    if (pci_dev == NULL) {
++    if (!do_pci_register_device(pci_dev, object_get_typename(OBJECT(qdev)),
++                                pci_dev->devfn, errp)) {
+         pci_unregister_acpi_index(pci_dev);
+         return;
+     }
 -- 
 2.47.3
 
