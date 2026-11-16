@@ -1,106 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D455E606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3CE606A329
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm2 header.b=l8MXO5SW;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bwiFQqH+
+	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm2 header.b=WClJmsR7;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dCk26i+E
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT4bD-0000GU-W7; Mon, 16 Nov 2026 16:50:52 -0500
+	id 1xT4bJ-0000Ox-EJ; Mon, 16 Nov 2026 16:50:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4ay-00006B-Al
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:37 -0500
-Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4b1-000098-FU
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:41 -0500
+Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4av-0004YX-J2
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:36 -0500
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4ax-0004rM-ML
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:37 -0500
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfout.stl.internal (Postfix) with ESMTP id 4803C1D00147
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 16:50:29 -0500 (EST)
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 057BF7A00C6
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 16:50:34 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-05.internal (MEProxy); Mon, 16 Nov 2026 16:50:29 -0500
+ by phl-compute-05.internal (MEProxy); Mon, 16 Nov 2026 16:50:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:message-id:mime-version
- :reply-to:subject:subject:to:to; s=fm2; t=1794865829; x=
- 1794952229; bh=/VCVNlicp/qsiZtPhJ2t+Y7bflupiFpucmyrK6BZl8A=; b=l
- 8MXO5SWizga8hoIZOjmu9CSYQod7Fbdb4Ccnii0YM7Nm+AJmKCedL+G83D81QKyO
- YaQaH3nhmTOG1c2RpDLVatAFBnAsKCtbliBU7dCHKpQoxPTYxMobe/XINrQjUWo5
- h6b64fvhpuMlvmL0B06b3VtRahxwVMP74iG6H3D7qKqAyACRSqxVA5nte9b7lyyM
- 8FsMk40wS377BIQf89tC+B9XKGmSrFN1+oHgVlp2LhLeJAfmTiwmBYYPeaCTD0AW
- 7I559IOfujkheMbjgX5MbuLA7zaaSa2xORRvw+/VC3gsCooJVgT1xg69yRvAinrd
- f/ZDqpthsGaALIksmOMAQ==
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1794865834; x=1794952234; bh=eE4xwjoKzAG+Ylgwflzjt6IvuhW0E1XA
+ T9NuQWZ3jEE=; b=WClJmsR7zwN9YzhT7vM36Gsy5Yl1g9LiQUkF25lkqpllzk6G
+ kY9O3zhsE8LN3IYaq9HtNHWb1J/e2bUO1gNoAj7p4REIBYwrevLmMmknwAI8yHph
+ ud6rgsWU8rTHkH8clmHJG9vj9CyufTCoFdGOPbv4Gh6C3Hq0KzuU+AHFajWUuei3
+ 9EEFRjIdaJc+3i9o8ONxu9ItCmThT/E/M3dBsM702Xwd8kZxqr+16BFWq75a+vzD
+ gpW+3mmi9Q3i9hjyPrd1y5a5Q2l5lOknUc3EVB63qHs0/RaCmbtBMoVk7YBpIAY6
+ M/9DE0KpVDSlSnUPnOQp6jQzDi3Q9OUSuua7iA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; t=1794865829; x=1794952229; bh=/VCVNlicp/qsiZtPhJ2t+Y7bflup
- iFpucmyrK6BZl8A=; b=bwiFQqH+4eaGJMZLgpaGPtsPEEY3Ey7Rn6s9Kl0WjgyX
- kJEPlNpJxq/aAs6ik/Wrgy2jQsum7MePVVQ7JCgOqTrO+96yrjX4mFRm9Il68sYP
- l2pp1ZOLW1qUykTi4/fxqh8DRZJWvM0BQLgutlGQATRshBJL0NOsSNV/CnLQBIfX
- Sl60I9StHIuRNyoNS+zc4xKlg1cKYpUzM6jNBy3up7UrAH4pUGJOty2J9v4bp5Ph
- 2F9+auhr5az8JSj1mbIe4Y0EKhhyK49IRyfULY4BVCp5HKwUHPo1Hf7kqXBQMW6Z
- ZQKeKEa9DtzTnQiCp7OVIS/aKoC78YjK11ZL/m2lxg==
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794865834; x=
+ 1794952234; bh=eE4xwjoKzAG+Ylgwflzjt6IvuhW0E1XAT9NuQWZ3jEE=; b=d
+ Ck26i+EuXVK3kqoW81XmP2Oiw50GqMCS0ffdp5PHjbSpotKsLUxgjrc9Ybb8VfSo
+ 7B3+u3RR/Q/rJheBrSLZ9nKfXzBTYaxfN2zt7cKmKSxVC+mDRwbe2F4+Z8kLDezC
+ o6QuQFl0EaIgifMERGPEI9Cv6JyTLfLLZoETQ1G+nNcGfYHQ/VJ+/NvlOEybW7e+
+ DKm5+HWfnThhM/x2y5kIMI0d6BAwPtuyWw7VTrVcMxHC7NxhWoYrO2h1lbebktNU
+ wE5HPNG8Bzkf+PZwMy2CVwWK8wVBaBXK7YLAbk1ZLehyDMIGzduX63Op+DIk6GMm
+ qeih7gdu1EI+810+gvIiw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
  action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794865829; d=irrelevant.dk;
+DKIM2-Signature: i=1; m=1; t=1794865834; d=irrelevant.dk;
  mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:T5vckCxgJIuD1DgvTb8R8sI6gjWwHbf8huygQr8O/22AmTQ
- 2GvM9kDtkaQts3FulKK+XLvPzjEba08NMnZLuOXdKoXcLDJ9hT+6PnJz9SnhXPC1
- ijJi422QvH0e9r4OufnRIHKRtDaGAYdR8vNOWhydJGdoVD0ugIW+iy0+OAgDBPXX
- OtAB/veg7ANfUjzZmIYFU8//172CeMzfdcNYRYEnm/TkViMJARTqkErj4qiLKhLB
- E4GOVZF2+avqiJRfS7/bWWLSHL9+duRNkKDIe3Xshvi7EeJ2Agf6WdXhQCramtmn
- q+S9x9rKKLYAQ53G5NKln2s712jzu3mwmIhnWwg==;
+ s=fm2:rsa-sha256:AMA8e8m25r1+U4hhQ3l1wZYo5LPhFk3ZddpcMLgr198HCad
+ OI+CkPjy+NvlToBMQKbDuCy2OHvQ/B4WfYp5ueUw4/iLu5k6NQsTH4u+Z2kG4PTo
+ IzGgbVJqQ7xrQjtjmwymljodC3R7VEdA8vvZ5o4J+tAhsTH8OV7xZDcy5OQwhaLp
+ OY/su68g9JvlUQipyiotytTqopDjEaHmc2JgyLBB6hGuI0g4ms9okvYQmZIzhMrh
+ KH35l8m0FZR+klYZgWATfWiErw41gkR+6NmDvsztXGK3TI2g4pM+/6Hr1QM6QDe2
+ VMb6+B0rHDMIFQwAaE6deMaIvMUv1p4kCz4L09g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=mi-m=1; hc=10;
+ action=mi-m=1; hc=12;
  hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,message-id,mime-version,subject,to;
+ from,in-reply-to,message-id,mime-version,references,subject,to;
 Message-Instance: m=1;
- h=sha256:QwtoOK/a5fVEgKeG04zR300H9woqTrI2CqPcAgfZBg0=:D/at9NL5crMo7uBFFpKXwxdxbpwZay9XXWbo3809VtY=;
-X-ME-Sender: <xms:pHr7am3LEJM5sIXWdklC7wE24tM8__j8kWS0sD-0oCwOiYS2twFvgQ>
- <xme:pHr7atZ2_mCEhUxCl4ee-MtJM8Rlc-ygS-wTsT0Vqni8Gi_oge2NtT1xa37d7k1Kx
- O3BWjVVK0y6U_-wkXNOJctbXCvvXaVs-TDTts6c2mM3NA-CYSnxB5iK>
-X-ME-Received: <xmr:pHr7auCP-eeQ282ttyld_GiwNUXs5LLpF85rwyQVe_6v44texh3d175icHyBMt0Md0P1Nlzqm3XOvJQzpDUh2YOHvwG27cbeYdkLIGjAGkId0dOqqjxoizMU6Q>
-X-ME-Proxy-Cause: dmFkZTES8D8xSt0srsgoFMWwIbV8R6jWfsmXgno/I711FmPtBCJAndVyZGwfjwErKV/Hj0
- XCpRm0Dt9B8n+YucMWDdenSzfQ8YTNMCG5F9ret7bAuTkgU7yzglczNXVofCTxheKEsyn9
- ZS4g6E9Z0vHM9mlUqCKWIO7LvXBSmFv35Ijx8kcyLvz+V8LN54Rhnv5TKQjoJHWP/SRCnI
- RnrWtshHm2CdRL7iGy+FwgQKc0tAGKKg9aKoRjJOVvDPd4J/KaLRFea5EynZsZBGI/JDfD
- gMO/COVIRu5wVDOXIz3+YSbKfo3fWxSDy6OHpNJoNxvKRKdXG/yvak5jNZ1+lr6pMn9VHt
- 6fobhD00EGyQAloNnz77Tt+co4yJWvIpRr88AF5fAm+h1V1Lmeba5kngTJho+s0z/6GduN
- DkJGga1c+l5zHGX+R2YWJZAdt8xIcOIWWVfNKnG2XcyAl7XtL4M8QdY1FMjRpSirKFALF0
- 8Ib+qbCf3tNMNAd+OPuSBbHSLeVk/4utII9t3mKChlvMJ+b5aQl4U9sPAEnPCIKt6aQiLN
- NWHSbBCD2WImPR/H7pmn1OSgv8xG4co2uk3yHt8qsvvjmawFBdEMWo3dhLi8/SVnz3/LJn
- 4H7A23aEOP9hfr6l75+8Ga8idc+pS/ztjsDrR/lW/rtZNTdnMsYcWu+6sdRQ
-X-ME-Proxy: <xmx:pHr7av9515BM5lVh6DvqERvYl6acZk7WiktaNPQ_bbLfQqmHP3k3Lw>
- <xmx:pHr7au8T7BBdEVV1tlfM81SzvDHDUmR21LUo6Szf7gB1mMe7uJkEIQ>
- <xmx:pHr7ame6i9kL0tJZEiJ8lMpFaFRhbXbma2BrYHq_lLazkb5n-txF-g>
- <xmx:pHr7anFjTL2ff5oRcyoAU6e_SVAKPFIycnIiB_BwuZEVrJ7Or5OiNQ>
- <xmx:pXr7aro7epH4itb8yhUfCmUtNjRmuKVRHjokcy1Ak2w1VrKYSt2lIF5Y>
+ h=sha256:g+QVZvVuqiO4tnm1pUYewakBGAYXrbqEkwhu+6PU3IE=:KyCt5hE/JYIaLwcHj5WH5ivnjrE4i0kobIaoVbZvw0c=;
+X-ME-Sender: <xms:qnr7akXcZz4dAqmISx3WdDyjzd4DICQUMzqqayDrvMRNo8DsmGQgnw>
+ <xme:qnr7aknFcqh06kmap5qTv9ufX9KQxXXnFobKX1xAM8cxBl01ALCefW_YEqWepriZN
+ q14ZoFEUbc71wf3X3rbIRbhVojnN7i89EZbSKytv9CSFNnp5nIazgtd>
+X-ME-Received: <xmr:qnr7aqnmLIbVkN3SE853IE8-qzsW2QAADP0toUmlHpyF-kBwPe8QefXwGMy9VMKE4qIJF4LlKyCKB6jbaQaeB1Y7A9IRUQBOV80NW2hThRlDpIz0oB1ODeE96w>
+X-ME-Proxy-Cause: dmFkZTEOTEsRhshwhFhjGm0XmTp8Zk3rpv3WK1ppJyRPrpT2j0EYQcbyI7e8QRql8kaTJb
+ tRNriysCz8DIG6YaRalW/jIfFJO5QkQzQdcdOPUvs9TBMP5MGBovYTCm5QIC6MhperCZy6
+ C5gBRDj+CTj34knB28w5xR0SyLo840auzLqb8rUUvaBi7msJsk4wSei8+stZCDXcuGvJ6j
+ 6UTxvdGJ6FBwpjjzfGYE2DWkobeknWhtC0aVUuOr2Z3Vn1DJ72j0DB4nMvXV8Tv+3QYUOQ
+ /kn7BPCLM4cybsOiLvAHfXGUCNBAsifUM75P9GfPBlE2YetPNtOD/3cqARq9HskToQ5ArG
+ eUBl80bbNA52Uj0ay0dJD7n5lKK4MSt4C4gJA6uJ8+fb03SfiMJnplAI6E9K7KBQeQtNAE
+ js1ewOhWXHQatPE1ZlLCBQku6DC/ZbzdFzy2WIYjlXop9wPpaJzNt0z/om+Z6Ha07OHQJs
+ 2BjREGHzGeLda1tRmNakodkj6ynp5ugoM1P+qmimv6mUwhxSnKjPhPpMT8Mbfa9NRoCMXA
+ opYmoV3e1awp9MZNH+zChLDDF35XjdyebIdvHdIsZnUkGtzpr5rGTZsywAb+CKAwP1ptRQ
+ mjXGHmZrnf8f5UWR2hDlBWTcWL/m4HLOwxXwaxLGsiqdd18g3mLGuHcph4nw
+X-ME-Proxy: <xmx:qnr7akbs2dyP9UfpQw9AzcMfQnec0XqT9VQxmzDFhoqzFrDKw6mcPA>
+ <xmx:qnr7asRStt5nGO53RQdMMtt2zAH9BTEbPJK5PnL3pvyZNSDaGD8AmQ>
+ <xmx:qnr7ausKOvQu599_otZpONsClkVplvPA-qXWnLqOxrFKiI9GSK6h6A>
+ <xmx:qnr7auH3qX4XE4M5w8Yn4GrxXTF-V-3Z_BuK90cK3uC_e-X0NyoI8Q>
+ <xmx:qnr7aks6Sp9-5LxfKS1xdBK3Ir7FN4g2mM6ll7KE5qGy_zXEbfrZXuHR>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Nov 2026 16:50:27 -0500 (EST)
+ 16 Nov 2026 16:50:33 -0500 (EST)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 0/7] hw/nvme fixes
-Date: Mon, 16 Nov 2026 22:50:06 +0100
-Message-ID: <20261116215014.59993-1-its@irrelevant.dk>
+ =?UTF-8?q?Markku=20Ahvenj=C3=A4rvi?= <mankku@gmail.com>,
+ qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: [PULL 2/7] hw/nvme: fix missed CQ updates
+Date: Mon, 16 Nov 2026 22:50:08 +0100
+Message-ID: <20261116215014.59993-3-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261116215014.59993-1-its@irrelevant.dk>
+References: <20261116215014.59993-1-its@irrelevant.dk>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.145; envelope-from=its@irrelevant.dk;
- helo=fout-b2-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.158; envelope-from=its@irrelevant.dk;
+ helo=fhigh-b7-smtp.messagingengine.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,46 +125,57 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Markku Ahvenjärvi <mankku@gmail.com>
 
-Hi,
+When doorbell buffers are enabled, CQ head updates may race with
+completion posting. When a CQ doorbell leaves pending completions, the
+event index may become stale and cause the guest to suppress the next
+MMIO doorbell write. QEMU may then fail to observe that the CQ has
+been drained. With legacy INTx, this can leave the interrupt asserted
+indefinitely and cause an interrupt storm.
 
-The following changes since commit 573577bff0138681ddd4ee2410c51bead7b53e74:
+Update the CQ event index as part of doorbell processing to ensure that
+subsequent head updates notify QEMU.
 
-  Merge tag 'pull-target-arm-20261116' of https://gitlab.com/pm215/qemu into staging (2026-11-16 12:09:43 -0800)
+Cc: qemu-stable@nongnu.org
+Fixes: 3f7fe8de3d49 ("hw/nvme: Implement shadow doorbell buffer support")
+Fixes: 2e53b0b45024 ("hw/nvme: Use ioeventfd to handle doorbell updates")
+Signed-off-by: Markku Ahvenjärvi <mankku@gmail.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/nvme/ctrl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-are available in the Git repository at:
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index e591842a4a33..52fa4b327c1f 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -4789,6 +4789,7 @@ static void nvme_cq_notifier(EventNotifier *e)
+         return;
+     }
+ 
++    nvme_update_cq_eventidx(cq);
+     nvme_update_cq_head(cq);
+ 
+     if (cq->tail == cq->head) {
+@@ -8633,6 +8634,8 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
+             }
+ 
+             nvme_irq_deassert(n, cq);
++        } else if (n->dbbuf_enabled) {
++            nvme_update_cq_eventidx(cq);
+         }
+     } else {
+         /* Submission queue doorbell write */
+-- 
+2.53.0
 
-  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20261116
-
-for you to fetch changes up to c0080f56036249df4a3f56e07e90cb0e56b3fd34:
-
-  hw/nvme: fix broadcast fdp events handling (2026-11-16 22:41:27 +0100)
-
-----------------------------------------------------------------
-nvme queue
-
-----------------------------------------------------------------
-Klaus Jensen (4):
-      hw/nvme: verify source and destination lba size for copy
-      hw/nvme: reject fdp.runs smaller than the lba data size
-      hw/nvme: fix fdp reclaim unit accounting
-      hw/nvme: fix broadcast fdp events handling
-
-Markku Ahvenjärvi (3):
-      hw/nvme: prevent cq_pending underflow
-      hw/nvme: fix missed CQ updates
-      hw/nvme: clear interrupts on controller reset
-
- hw/nvme/ctrl.c | 24 +++++++++++++++++++++---
- hw/nvme/ns.c   |  6 ++++++
- 2 files changed, 27 insertions(+), 3 deletions(-)
 
