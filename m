@@ -1,115 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2310606A32C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 17:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D325D606A896
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 17:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=KzMwwpP0;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=ENcCiAXB
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AkM4uYMV;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=bqFh/4NQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT03u-0005nx-Dw; Mon, 16 Nov 2026 12:00:11 -0500
+	id 1xT06W-0006U1-7e; Mon, 16 Nov 2026 12:02:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xT03n-0005nL-P5
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 12:00:04 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xT05m-0006ND-Dy
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 12:02:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xT03l-0005YI-3G
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 12:00:03 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xT05i-0006VD-Vx
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 12:02:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794848400;
+ s=mimecast20190719; t=1794848521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jcdMzwH05vEglK+FDJ0LdhdOwh/SUlmxD/Prh2rJE78=;
- b=KzMwwpP0i+bokxV1izMSIhdacPf+nVC7pYN9ih+EpX1I4GHp1u2MbzI6XYeMGfXDTzrjIo
- Tx5PT8PwfWyd/73at2VyGBP6WBnm/5w4sveN7WRbjqZbDZt4LL4TUguBruv5bn5QhVO1TL
- u6i8O2SAH8QRZb4dkqmUCMWVXXf4oaY=
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Uq4bt5UrjbA0HqIgp3vitj1azyu0T2kn3YEMyvMvgX4=;
+ b=AkM4uYMVzZ+Lk9dAqnlNwtap4y3JHX+1F6naW6Ek1J/s7eJAzTaEg9r4TGvPsYv6h5K2d5
+ w+xKGdN/2Db1lFwU9wdYY682Np333FaDKrfHdbIDJtmcMv8sGOwBX/Lc7gbF5/y/M3ZFPF
+ ssJFR9ZzAeyB2PCi2jKis2vhv0wyoo8=
+Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
+ [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-511-PTu_OpihO1iM_w4kPi89LA-1; Mon, 16 Nov 2026 11:59:58 -0500
-X-MC-Unique: PTu_OpihO1iM_w4kPi89LA-1
-X-Mimecast-MFC-AGG-ID: PTu_OpihO1iM_w4kPi89LA_1794848398
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-677deb12bceso5785608d50.0
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 08:59:58 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794848398; cv=none;
+ us-mta-189-S2qI6ujaMuqkI6HXt5Ynzg-1; Mon, 16 Nov 2026 12:01:59 -0500
+X-MC-Unique: S2qI6ujaMuqkI6HXt5Ynzg-1
+X-Mimecast-MFC-AGG-ID: S2qI6ujaMuqkI6HXt5Ynzg_1794848519
+Received: by mail-yx1-f70.google.com with SMTP id
+ 956f58d0204a3-67994567a44so5199984d50.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 09:01:59 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794848519; cv=none;
  d=google.com; s=arc-20260327;
- b=nGKyzPvA576rguKHUcIDhNbmyOkPpVBwFZEJoINRfK3nxPftC1lC5ZKt8rikBrxKvn
- Y0FmD5hgh0z+LSvMc6cgAQxm9njOdtLFBvY6s6RRnD5oUKQ9V8hQUDaZzMfCQcJpg++b
- t0ulnJ/IHgsH7HwMXo3q5obVcgpezhamZi1vJ72R25JQOI+TdG7mxMIHPnZbqlgQ0IQ6
- GPHa6DbCt6n2gg6m9iRhhoplfDFcUsu/DftcvwYCNmHtYtQAMIa3uTRaE26siLF9o8s1
- KpdMhhj7DNNhZsSTCj3mjFTILsDvwTkECoYgse9fRGSiVdZXCduzi3PDfIDf7yztIvuo
- mpjg==
+ b=VcivuO81DOnJ2udx4w4BfRfH7wN4UDzV6V6i3f+2DSxCKhJRy0O0N4ULgIdcOx3sIx
+ xvu5DuatIbi7kYsii6VxlhdH/tfLNFCZ5KWRXR6SYzKnVDTgd/uhMYoxldl3yGlclwZu
+ 5CVNhLlWOEsYAovdvSjvk2I+VB6xw064lqOsALoTNkCVuaVP8E5NF53X1JuIaCuaeGKT
+ yINmkj7tAxxsodsjHWGkH6Z4dhxrW24rteEU+S+U9PI6nia6piJpf8ifmlxUPDgYoStO
+ Ski/rKX9gqbW+ub0w4x1AqrzrJV/WCN2AmnWwtCc9PePv1x8V4Lk4Xx5+dIOGm09quuy
+ GjFA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=jcdMzwH05vEglK+FDJ0LdhdOwh/SUlmxD/Prh2rJE78=;
- fh=b1DpNd/Juw7w841x4GpvvSch3Np+ovauu20gkpQSVvg=;
- b=EvEmC7CAKRuwKSUwyNwf/EqMmtCEAlKzzbNVZodXeGHynLfXOvjcqc36TNNgQ8uGSl
- 70m3dBY0SMTOvuCl2NqW5DffsxaNAhzAx70S0S24eTmLnVmbuuDp9XIyHftdvMPWxQlH
- Tr1HnzKOuBonVfvV/kGuudee+wLo6A1RCpjXpi1BV2gkL39QExX8nTNL3W8FRO8Zq4GU
- 8hfK9JiHz5CgqgbcL1m3IUScyqd2ZE6AE6a2o1hspcnjSGTdOUQBqQc+6kZyfP1UfNfF
- f57AqmNjan7tkTylm0ehW9wNv6ee0ScrcVGZ+mUQ6KOQPjyPgz1A6uIEKYCLuEbOPC/O
- okvA==; darn=nongnu.org
+ bh=Uq4bt5UrjbA0HqIgp3vitj1azyu0T2kn3YEMyvMvgX4=;
+ fh=590vJ5tVHg5cMspmNPv9rR9I4bZI5zsyrUJvfaBGb+4=;
+ b=qSkSVNXPuAObFN1m1C7Egl/r05xPKDPBofKQJPczBskx5HgEyFU7ioaX4WQf7UwyPU
+ UAK239YKsV0xmundlh6oMN1HuKpJDum7XLBd+7RrSV8eGA8AJLhtxefRLlAuUz+ny2VF
+ v/aZkGz4ndGZ/J0t24q3+Dh/fSPq3K1hi/NUFoGIIZYa2/ZXOv8LTJtvnWH6q2hTIgi0
+ xLWXDRBHLFx0iXliaK7gcxUG3wKP+R+XPCm1QQKbm76Ju1t+7gb4nsZJ1JUDbAt0lS3s
+ XsuCKOiqFpLNoYD81UsCL0mz9ycJ7NS1Jkbjreald4l4CCzeocfF2FLxp+wOS6oFSLks
+ 4ApQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1794848398; x=1795453198; darn=nongnu.org;
+ d=redhat.com; s=google; t=1794848519; x=1795453319; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=jcdMzwH05vEglK+FDJ0LdhdOwh/SUlmxD/Prh2rJE78=;
- b=ENcCiAXBNiVLZsJKSO8xzuUYjoN2qH6yDbyA/DSt0vxPHnEISjOY6QI27zVKAjkXZ+
- 98/tFoO0YKVvX+o65GdzDGMPoOz0zcZOnoz6xWHkjpI39N+SpFSu727NwI6A0B7GJUb1
- 1yKaCW+xGv4IllTXnB6iE1gUYYXemal5iWqG7IyLCZZENFiZsD8ULwCmRtxUTfWkPvDn
- lX6oqZ00l96pH6LmEdEvlJYaYIx0CDpb1Wf6qAnfbqF/d2Xj/rm5skBFT1Pdw++3w+17
- FlupfNMEr4hFr8hKpCMm2xML42J7APwO/bKXHn19n9cPMhizObYSOBysNuSw2lmqxJ3G
- 7GLw==
+ bh=Uq4bt5UrjbA0HqIgp3vitj1azyu0T2kn3YEMyvMvgX4=;
+ b=bqFh/4NQcoABadaGSGLuYAdmtHCTFc/ycwNiJKwJ1ylOyy2EX7DbiTykMFWNcIpP1Z
+ 5k1+kztWnkdPs47A0N+zmOyVwHSMNFjHad5BHJcjAILdaZq+RjiQdNEqDDNjgDyboLaP
+ ZM7oamBwrufDW/owi8OUnr5V5Xxw8KkgadPAYr0iFVR2llRHZ/Dca6I2UdLD+yXCft/D
+ HQk8/k1J9t25RhrQi+X4U/V2cJdN/SSZ3l09I6/wNz5wudQHaAzgFu6p69TI38zi6BLc
+ CQxnpx/ghOvGAX83xoNkxQtFxuqnh5qEzo/W6FTtS/3pG08wiNB4ZJM2aS7vvYbo3gNS
+ Ukeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794848398; x=1795453198;
+ d=1e100.net; s=20260707; t=1794848519; x=1795453319;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=jcdMzwH05vEglK+FDJ0LdhdOwh/SUlmxD/Prh2rJE78=;
- b=yfaV+5SjE2+zD8fgh51Oo6Rr5P9qrZx0UkazqRBEyH6LiI4eTVn3lvNinM2MWGJ7KS
- jy1bMEHrLuqlCDhivmZA9sNc9KmDW6Ol6VC+PfCYGBsH0cS0FMDBMsB4Ug9IMAMuAXCO
- 1Hv1QVBk9Iv9DE/XUoWK5yW7DRDmnq53d8XZitEtHP7jWLS0aIZzczBy6mfOMCL295OB
- ti5UHcCTiH1+MLP57AcOyIFTXK7tMC+QJaSyC7RIu+rdZR6l0lowkt7TwZk2EzBzPEZi
- x3Ebiuqt1dkGdjIWyzqE9J1dzSYDKPW1Sh4ACv/9nnW0DGPA2iYgZQ/MVzxZPlbL6kA3
- L+kg==
-X-Gm-Message-State: APuU4Z8gB8KfM02QH3csOaaXXJV7CBJbGX6xHavh+P+3v2Phvw1J5vIb
- BNg4AqnTCiWlATxIhD02o8b252dvAFExcewkh8Miklzqg1BVL4yRJnAVDKt316JZeIFFNmNIHjp
- ejJb9sKjJalbJY4SvquxltE/Qvz4SsXQg14UKPPTj3A/SMcExAQzUKpdLqJAj7DZPd++rMWio2T
- 3MxM5tEJfzCkmWS6JigLbW8k+razgwmot06iqCHMo=
-X-Gm-Gg: AZFdTZdO8zA6LmwKzDsZnlTbbQAmxP9b+YsUJwJiBSn2zXrh0QtcMaxKh0IxoKX44zM
- rpOTrcPvjobCf+ub0Ps3jKcjtKUTYOyNLwyKVFe3haDHeQiYiSZJ0Hv6FjgTqSjjy1t7iCJZY8o
- rEqQhwFH5Jw0D6oYkCS+A/7FRqzkdd03JKRyAKMu+P2kpArx6HbnNJ8JvcpkE6+QrhFMbfL7VnF
- rrty3houYw4AnDC
-X-Received: by 2002:a05:690e:4504:10b0:677:c671:56f2 with SMTP id
- 956f58d0204a3-67d896aaa68mr3508120d50.65.1794848397716; 
- Mon, 16 Nov 2026 08:59:57 -0800 (PST)
-X-Received: by 2002:a05:690e:4504:10b0:677:c671:56f2 with SMTP id
- 956f58d0204a3-67d896aaa68mr3508115d50.65.1794848397166; Mon, 16 Nov 2026
- 08:59:57 -0800 (PST)
+ bh=Uq4bt5UrjbA0HqIgp3vitj1azyu0T2kn3YEMyvMvgX4=;
+ b=KwOx+tll8+2Nm9kAUQOaQ+/cTlodz+yU6ouWrS8KhdXJKfGsQnm+mymrbQDX/djy68
+ XykwXnRxp8VGSl8kSExSXmToV4VJumy1o4brS5LEGWU/RYMB8qIPc1W3IxvsnZhveEQ7
+ 9LH3qlvqHUMgL+arEKTvqjMlrRiA5H4xY7GfccVHErPVV2ta4O795z9rb9gjZxh9syJa
+ fBc0yOmAbFp6mP8jgoE6gdWd0fikNhsnkUIXhi0HAAqE1jf4HgNy5zOFE1T3kWr4NZHN
+ aTcEgq0wKrNM0AMTgikscb0j9YzOO6raY7r3KNdtN1JO4umyVj7Zi7phVABtQHvBsVy7
+ T91g==
+X-Gm-Message-State: APuU4Z9xAi4sm/Fktc2Vt3BtSzC4K4yraIHAgKEQIqb4qy+1sdqCmdTQ
+ hacMoCj1lLGD4ur2vwOi/R89oH014nFhLOYfZxh8mgFHQI3hD9j2OJTNvxiOQ212/ACEnxu3SV2
+ RHGsmGRMs/dgYESudMjBXRTwA2AJCbj1lxBog5vtdVOPcJbBodHTj93AvzKA98fZPFsEDFLj3Ff
+ blpckLAbvxJOSEvD/qb/ngsWbUPLq2N6o=
+X-Gm-Gg: AZFdTZfqReO6oWshi0NrlIbM8GnSYMxtM8PVeQO/AhfxWcdi/WVNe5obiBvaQS+G581
+ E6O2uwn8ZyI9qoLqpfMx/x8StAHLVXmIKtNdWVudfgRCx/+6XS7xb2vprFQxjH1uoubi5xfiC1J
+ mdFF8pwJc8N9eEOcQQvOgABESmLPNHP1ntGd/fxrkYuzxWu2iLr7SQHq7m/fNQoK3f0IZq2oYFv
+ HRqKoUfRLkrpGfv
+X-Received: by 2002:a53:a802:0:b0:67b:e31d:6ee5 with SMTP id
+ 956f58d0204a3-67d8976853amr5020374d50.90.1794848518789; 
+ Mon, 16 Nov 2026 09:01:58 -0800 (PST)
+X-Received: by 2002:a53:a802:0:b0:67b:e31d:6ee5 with SMTP id
+ 956f58d0204a3-67d8976853amr5020338d50.90.1794848518198; Mon, 16 Nov 2026
+ 09:01:58 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261106191356.1207295-1-jsnow@redhat.com>
-In-Reply-To: <20261106191356.1207295-1-jsnow@redhat.com>
+References: <20261112112956.361209-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20261112112956.361209-2-marcandre.lureau@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Mon, 16 Nov 2026 11:59:45 -0500
-X-Gm-Features: AclHuK_OHt_U2Y5egd4wN4XvySQZblaGV2_egoAegAuOJYFYw-vM8AmwKLSOrd0
-Message-ID: <CAFn=p-ZycqTSMe1JnvDCWKPKLXpmo5OdMJ3BV63YrTucV0fPKA@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/i386: move bios functions into x86-bios.c
-To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Date: Mon, 16 Nov 2026 12:01:47 -0500
+X-Gm-Features: AclHuK-t0awv9XPG26domtpLdCbLt0dxGDMpAUglFNAn0A8ZzpFYfO202NgJu6g
+Message-ID: <CAFn=p-ZZ3o022sYXbq2ZsPd5AkzqGuc4Vu=kBwNKAAocZ+j38Q@mail.gmail.com>
+Subject: Re: [PATCH] python/qemu: fix accelerator detection with annotated
+ -accel help
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, richard.henderson@linaro.org, 
+ Cleber Rosa <crosa@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
@@ -140,350 +140,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Ping, I think we do want this for 11.2 as it fixes a build failure.
+On Thu, Nov 12, 2026 at 6:30=E2=80=AFAM <marcandre.lureau@redhat.com> wrote=
+:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> QEMU annotates the accelerator names in "-accel help" with their
+> security status, eg "kvm (secure)". kvm_available() compares the
+> entries with the plain accelerator name, so the check fails and
+> functional tests using require_accelerator('kvm') are silently
+> skipped.
+>
+> Keep only the accelerator name of each line.
+>
+> fwiw, I am surprised we don't seem to have a CI that exercice functional
+> kvm tests, or compare against a baseline to avoid this kind of
+> regression.
+>
+> Fixes: d3b770fc6342 ("system: report acclerator security status in help o=
+utput")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  python/qemu/utils/accel.py | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/python/qemu/utils/accel.py b/python/qemu/utils/accel.py
+> index f915b646692e..7e3f43d6b489 100644
+> --- a/python/qemu/utils/accel.py
+> +++ b/python/qemu/utils/accel.py
+> @@ -47,8 +47,9 @@ def list_accel(qemu_bin: str) -> List[str]:
+>      except:
+>          LOG.debug("Failed to get the list of accelerators in %s", qemu_b=
+in)
+>          raise
+> -    # Skip the first line which is the header.
+> -    return [acc.strip() for acc in out.splitlines()[1:]]
+> +    # Skip the first line which is the header, and drop annotations
+> +    # such as " (secure)" from the accelerator names.
+> +    return [acc.split(' ')[0] for acc in out.splitlines()[1:]]
+>
+>
+>  def kvm_available(target_arch: Optional[str] =3D None,
+> --
+> 2.56.0.116.g6de20f6092dc
+>
+
+adding to python staging and will send a pull alongside 3.15 support
+(pending tests)
 
 --js
-
-On Fri, Nov 6, 2026 at 2:14=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
->
-> Currently, these functions are located in x86-common.c. However, when
-> configuring QEMU with `--without-default-devices`, we encounter a
-> linking error at final assembly time where these functions cannot be
-> located.
->
-> Split these functions out into a new x86-bios.c module to allow
-> defaultless compilations of x86_64 to succeed.
->
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  hw/i386/x86-bios.c   | 143 +++++++++++++++++++++++++++++++++++++++++++
->  hw/i386/x86-common.c | 125 -------------------------------------
->  hw/i386/x86.c        |   1 -
->  hw/i386/meson.build  |   1 +
->  4 files changed, 144 insertions(+), 126 deletions(-)
->  create mode 100644 hw/i386/x86-bios.c
->
-> diff --git a/hw/i386/x86-bios.c b/hw/i386/x86-bios.c
-> new file mode 100644
-> index 00000000000..525e42e7252
-> --- /dev/null
-> +++ b/hw/i386/x86-bios.c
-> @@ -0,0 +1,143 @@
-> +/*
-> + * x86 bios loading functions
-> + *
-> + * Copyright (c) 2003-2004 Fabrice Bellard
-> + * Copyright (c) 2019, 2024-2026 Red Hat, Inc.
-> + *
-> + * SPDX-License-Identifier: MIT
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/datadir.h"
-> +#include "qapi/error.h"
-> +#include "qemu/units.h"
-> +
-> +#include "hw/core/loader.h"
-> +#include "hw/i386/x86.h"
-> +#include "kvm/tdx.h"
-> +#include "target/i386/sev.h"
-> +
-> +void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
-> +                       MemoryRegion *bios, bool read_only)
-> +{
-> +    uint64_t bios_size =3D memory_region_size(bios);
-> +    uint64_t isa_bios_size =3D MIN(bios_size, 128 * KiB);
-> +
-> +    memory_region_init_alias(isa_bios, NULL, "isa-bios", bios,
-> +                             bios_size - isa_bios_size, isa_bios_size);
-> +    memory_region_add_subregion_overlap(isa_memory, 1 * MiB - isa_bios_s=
-ize,
-> +                                        isa_bios, 1);
-> +    memory_region_set_readonly(isa_bios, read_only);
-> +}
-> +
-> +static int get_bios_size(X86MachineState *x86ms,
-> +                         const char *bios_name, char *filename)
-> +{
-> +    int bios_size;
-> +
-> +    if (filename) {
-> +        bios_size =3D get_image_size(filename, NULL);
-> +    } else {
-> +        bios_size =3D -1;
-> +    }
-> +    if (bios_size <=3D 0 ||
-> +        (bios_size % 65536) !=3D 0) {
-> +        goto bios_error;
-> +    }
-> +
-> +    return bios_size;
-> +
-> + bios_error:
-> +    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-> +    exit(1);
-> +}
-> +
-> +static void load_bios_from_file(X86MachineState *x86ms, const char *bios=
-_name,
-> +                                char *filename, int bios_size,
-> +                                bool isapc_ram_fw)
-> +{
-> +    ssize_t ret;
-> +
-> +    /* BIOS load */
-> +    if (machine_require_guest_memfd_private(MACHINE(x86ms))) {
-> +        memory_region_init_ram_guest_memfd_private(
-> +            &x86ms->bios, NULL, "pc.bios", bios_size, &error_fatal);
-> +        if (is_tdx_vm()) {
-> +            tdx_set_tdvf_region(&x86ms->bios);
-> +        }
-> +    } else {
-> +        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
-> +                               bios_size, &error_fatal);
-> +    }
-> +    if (sev_enabled() || is_tdx_vm()) {
-> +        /*
-> +         * The concept of a "reset" simply doesn't exist for
-> +         * confidential computing guests, we have to destroy and
-> +         * re-launch them instead.  So there is no need to register
-> +         * the firmware as rom to properly re-initialize on reset.
-> +         * Just go for a straight file load instead.
-> +         */
-> +        void *ptr =3D memory_region_get_ram_ptr(&x86ms->bios);
-> +        load_image_size(filename, ptr, bios_size);
-> +        x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_siz=
-e);
-> +    } else {
-> +        memory_region_set_readonly(&x86ms->bios, !isapc_ram_fw);
-> +        ret =3D rom_add_file_fixed(bios_name, (uint32_t)(-bios_size), -1=
-);
-> +        if (ret !=3D 0) {
-> +            goto bios_error;
-> +        }
-> +    }
-> +
-> +    return;
-> +
-> + bios_error:
-> +    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-> +    exit(1);
-> +}
-> +
-> +void x86_bios_rom_reload(X86MachineState *x86ms)
-> +{
-> +    int bios_size;
-> +    const char *bios_name;
-> +    char *filename;
-> +
-> +    if (memory_region_size(&x86ms->bios) =3D=3D 0) {
-> +        /* if -bios is not used */
-> +        return;
-> +    }
-> +
-> +    bios_name =3D MACHINE(x86ms)->firmware ?: "bios.bin";
-> +    filename =3D qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-> +
-> +    bios_size =3D get_bios_size(x86ms, bios_name, filename);
-> +
-> +    void *ptr =3D memory_region_get_ram_ptr(&x86ms->bios);
-> +    load_image_size(filename, ptr, bios_size);
-> +    x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_size);
-> +}
-> +
-> +void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmw=
-are,
-> +                       MemoryRegion *rom_memory, bool isapc_ram_fw)
-> +{
-> +    int bios_size;
-> +    const char *bios_name;
-> +    g_autofree char *filename;
-> +
-> +    bios_name =3D MACHINE(x86ms)->firmware ?: default_firmware;
-> +    filename =3D qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-> +
-> +    bios_size =3D get_bios_size(x86ms, bios_name, filename);
-> +    load_bios_from_file(x86ms, bios_name, filename, bios_size, isapc_ram=
-_fw);
-> +
-> +    if (!machine_require_guest_memfd_private(MACHINE(x86ms))) {
-> +        /* map the last 128KB of the BIOS in ISA space */
-> +        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
-> +                          !isapc_ram_fw);
-> +    }
-> +
-> +    /* map all the bios at the top of memory */
-> +    memory_region_add_subregion(rom_memory,
-> +                                (uint32_t)(-bios_size),
-> +                                &x86ms->bios);
-> +    return;
-> +}
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index dcd4fa8eb79..350fcbc20e1 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -995,128 +995,3 @@ void x86_load_linux(X86MachineState *x86ms,
->      option_rom[nb_option_roms].name =3D "linuxboot_dma.bin";
->      nb_option_roms++;
->  }
-> -
-> -void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
-> -                       MemoryRegion *bios, bool read_only)
-> -{
-> -    uint64_t bios_size =3D memory_region_size(bios);
-> -    uint64_t isa_bios_size =3D MIN(bios_size, 128 * KiB);
-> -
-> -    memory_region_init_alias(isa_bios, NULL, "isa-bios", bios,
-> -                             bios_size - isa_bios_size, isa_bios_size);
-> -    memory_region_add_subregion_overlap(isa_memory, 1 * MiB - isa_bios_s=
-ize,
-> -                                        isa_bios, 1);
-> -    memory_region_set_readonly(isa_bios, read_only);
-> -}
-> -
-> -static int get_bios_size(X86MachineState *x86ms,
-> -                         const char *bios_name, char *filename)
-> -{
-> -    int bios_size;
-> -
-> -    if (filename) {
-> -        bios_size =3D get_image_size(filename, NULL);
-> -    } else {
-> -        bios_size =3D -1;
-> -    }
-> -    if (bios_size <=3D 0 ||
-> -        (bios_size % 65536) !=3D 0) {
-> -        goto bios_error;
-> -    }
-> -
-> -    return bios_size;
-> -
-> - bios_error:
-> -    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-> -    exit(1);
-> -}
-> -
-> -static void load_bios_from_file(X86MachineState *x86ms, const char *bios=
-_name,
-> -                                char *filename, int bios_size,
-> -                                bool isapc_ram_fw)
-> -{
-> -    ssize_t ret;
-> -
-> -    /* BIOS load */
-> -    if (machine_require_guest_memfd_private(MACHINE(x86ms))) {
-> -        memory_region_init_ram_guest_memfd_private(
-> -            &x86ms->bios, NULL, "pc.bios", bios_size, &error_fatal);
-> -        if (is_tdx_vm()) {
-> -            tdx_set_tdvf_region(&x86ms->bios);
-> -        }
-> -    } else {
-> -        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
-> -                               bios_size, &error_fatal);
-> -    }
-> -    if (sev_enabled() || is_tdx_vm()) {
-> -        /*
-> -         * The concept of a "reset" simply doesn't exist for
-> -         * confidential computing guests, we have to destroy and
-> -         * re-launch them instead.  So there is no need to register
-> -         * the firmware as rom to properly re-initialize on reset.
-> -         * Just go for a straight file load instead.
-> -         */
-> -        void *ptr =3D memory_region_get_ram_ptr(&x86ms->bios);
-> -        load_image_size(filename, ptr, bios_size);
-> -        x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_siz=
-e);
-> -    } else {
-> -        memory_region_set_readonly(&x86ms->bios, !isapc_ram_fw);
-> -        ret =3D rom_add_file_fixed(bios_name, (uint32_t)(-bios_size), -1=
-);
-> -        if (ret !=3D 0) {
-> -            goto bios_error;
-> -        }
-> -    }
-> -
-> -    return;
-> -
-> - bios_error:
-> -    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-> -    exit(1);
-> -}
-> -
-> -void x86_bios_rom_reload(X86MachineState *x86ms)
-> -{
-> -    int bios_size;
-> -    const char *bios_name;
-> -    char *filename;
-> -
-> -    if (memory_region_size(&x86ms->bios) =3D=3D 0) {
-> -        /* if -bios is not used */
-> -        return;
-> -    }
-> -
-> -    bios_name =3D MACHINE(x86ms)->firmware ?: "bios.bin";
-> -    filename =3D qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-> -
-> -    bios_size =3D get_bios_size(x86ms, bios_name, filename);
-> -
-> -    void *ptr =3D memory_region_get_ram_ptr(&x86ms->bios);
-> -    load_image_size(filename, ptr, bios_size);
-> -    x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_size);
-> -}
-> -
-> -void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmw=
-are,
-> -                       MemoryRegion *rom_memory, bool isapc_ram_fw)
-> -{
-> -    int bios_size;
-> -    const char *bios_name;
-> -    g_autofree char *filename;
-> -
-> -    bios_name =3D MACHINE(x86ms)->firmware ?: default_firmware;
-> -    filename =3D qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-> -
-> -    bios_size =3D get_bios_size(x86ms, bios_name, filename);
-> -    load_bios_from_file(x86ms, bios_name, filename, bios_size, isapc_ram=
-_fw);
-> -
-> -    if (!machine_require_guest_memfd_private(MACHINE(x86ms))) {
-> -        /* map the last 128KB of the BIOS in ISA space */
-> -        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
-> -                          !isapc_ram_fw);
-> -    }
-> -
-> -    /* map all the bios at the top of memory */
-> -    memory_region_add_subregion(rom_memory,
-> -                                (uint32_t)(-bios_size),
-> -                                &x86ms->bios);
-> -    return;
-> -}
-> diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-> index 4b75b7406a8..5f842351daf 100644
-> --- a/hw/i386/x86.c
-> +++ b/hw/i386/x86.c
-> @@ -35,7 +35,6 @@
->  #include "hw/acpi/aml-build.h"
->  #include "hw/i386/x86.h"
->  #include "hw/i386/topology.h"
-> -
->  #include "hw/core/nmi.h"
->  #include "kvm/kvm_i386.h"
->
-> diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-> index e16930c4319..6bb73b8731c 100644
-> --- a/hw/i386/meson.build
-> +++ b/hw/i386/meson.build
-> @@ -5,6 +5,7 @@ i386_ss.add(files(
->    'monitor.c',
->    'multiboot.c',
->    'x86.c',
-> +  'x86-bios.c',
->    'x86-cpu.c',
->  ))
->
-> --
-> 2.56.0
->
 
 
