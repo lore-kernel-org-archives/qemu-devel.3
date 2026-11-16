@@ -1,61 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33231606A323
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E721A606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PJKIobST
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RWUNzjLj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT55Z-0003mk-Dm; Mon, 16 Nov 2026 17:22:13 -0500
+	id 1xT567-0004LT-J0; Mon, 16 Nov 2026 17:22:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55T-0003ko-Tg
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xT55l-0003uR-U3
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55S-0005q9-6x
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:07 -0500
+ id 1xT55k-00061V-2O
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794867725;
+ s=mimecast20190719; t=1794867743;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wBq9pcr1JOR5XHoo8faLFsSboSRQPhGGiJ+j8polE5Y=;
- b=PJKIobSTI6wW22yp+nBj9Q5/uoxYHEbC52v2xt1f0TEiVGWIs2vCmM40gadF1Zsx4a9sN6
- ldduqzk7NPwdwN3YgMqdMnCI64Fn0TeSvr6+SLq+4wRlIZDmGQhhgK2R6V6iMSGK+DE4OQ
- RzyaiZwinjiaA1nw1azxF5iwsNiOuk4=
+ bh=eBOdwvirENIbrZxdABl0pmCfFqE9qg9CPFcQFRN7OC0=;
+ b=RWUNzjLjnYpHeVh8eYwW9lKFuOw4Kdx0iMLUYKxL2BUeziKuAwUHVYTvL3Lg4gp7efzhgs
+ F8s6QTjhpZc7Y/Pp6MGmyvMwJDO8UkcTjlOUeN6j2kt6XOWAKI8By6jjbvgpv33br50oRk
+ 0W9S1eGx/io5DxnRvi0fyuo7UptDrP8=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-CTzmEV6uP7-oPoDlOM-mPQ-1; Mon,
- 16 Nov 2026 17:22:03 -0500
-X-MC-Unique: CTzmEV6uP7-oPoDlOM-mPQ-1
-X-Mimecast-MFC-AGG-ID: CTzmEV6uP7-oPoDlOM-mPQ_1794867722
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-Lw5ns_htMtCZRpFf33H0dQ-1; Mon,
+ 16 Nov 2026 17:22:21 -0500
+X-MC-Unique: Lw5ns_htMtCZRpFf33H0dQ-1
+X-Mimecast-MFC-AGG-ID: Lw5ns_htMtCZRpFf33H0dQ_1794867740
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6E5C1956064
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:02 +0000 (UTC)
+ id D1762195605A
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:20 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4B06030001A2; Mon, 16 Nov 2026 22:22:01 +0000 (UTC)
+ id D01EE30001A2; Mon, 16 Nov 2026 22:22:19 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 01/26] hw: mark most virtio PCI devices as secure
-Date: Mon, 16 Nov 2026 22:21:33 +0000
-Message-ID: <20261116222158.2840471-2-berrange@redhat.com>
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 13/26] hw: define most common PCI types as secure
+Date: Mon, 16 Nov 2026 22:21:45 +0000
+Message-ID: <20261116222158.2840471-14-berrange@redhat.com>
 In-Reply-To: <20261116222158.2840471-1-berrange@redhat.com>
 References: <20261116222158.2840471-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -63,14 +62,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
 X-Spam_score: 0.5
 X-Spam_bar: /
 X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -91,145 +90,219 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-These are all intended for use in a virtualization scenario and must
-provide a security boundary. This can be done for almost all virtio
-PCI devices by modifying the common type register helper.
-
-Exceptions are made for the virtio-gpu-gl, virtio-vga-gl,
-virtio-vga-rutatbaga and virtio-gpu-rutabaga devices.
-
-Despite being intended for virtualization use cases, the complexity
-of support for 3d acceleration is such that QEMU can't offer security
-for these devices at this time.
+Essentially all PCI infrastructure is in scope for the virtualization
+use case, aside from the niche simba bridge and the CXL related pieces.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/display/virtio-gpu-pci-gl.c   |  2 +-
- hw/display/virtio-vga-gl.c       |  2 +-
- hw/display/virtio-vga-rutabaga.c |  2 +-
- hw/virtio/virtio-pci.c           | 17 ++++++++++++++++-
- include/hw/virtio/virtio-pci.h   | 10 +++++++++-
- 5 files changed, 28 insertions(+), 5 deletions(-)
+ hw/pci-bridge/gen_pcie_downstream_port.c | 1 +
+ hw/pci-bridge/gen_pcie_root_port.c       | 1 +
+ hw/pci-bridge/gen_pcie_upstream_port.c   | 1 +
+ hw/pci-bridge/i82801b11.c                | 1 +
+ hw/pci-bridge/ioh3420.c                  | 1 +
+ hw/pci-bridge/pci_bridge_dev.c           | 2 ++
+ hw/pci-bridge/pci_expander_bridge.c      | 5 +++++
+ hw/pci-bridge/pcie_pci_bridge.c          | 1 +
+ hw/pci-bridge/xio3130_downstream.c       | 1 +
+ hw/pci-bridge/xio3130_upstream.c         | 1 +
+ hw/pci/pci.c                             | 4 ++++
+ 11 files changed, 19 insertions(+)
 
-diff --git a/hw/display/virtio-gpu-pci-gl.c b/hw/display/virtio-gpu-pci-gl.c
-index c8923795dfa..dc67516b377 100644
---- a/hw/display/virtio-gpu-pci-gl.c
-+++ b/hw/display/virtio-gpu-pci-gl.c
-@@ -51,7 +51,7 @@ module_kconfig(VIRTIO_PCI);
+diff --git a/hw/pci-bridge/gen_pcie_downstream_port.c b/hw/pci-bridge/gen_pcie_downstream_port.c
+index d00bbd55f0c..3084a208a85 100644
+--- a/hw/pci-bridge/gen_pcie_downstream_port.c
++++ b/hw/pci-bridge/gen_pcie_downstream_port.c
+@@ -188,6 +188,7 @@ static const TypeInfo gen_pcie_downstream_port_info = {
+     .parent        = TYPE_PCIE_SLOT,
+     .instance_size = sizeof(GenPCIEDownstreamPort),
+     .class_init    = gen_pcie_downstream_port_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_PCIE_DEVICE },
+         { }
+diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
+index 8cabeadac89..3c0177661c6 100644
+--- a/hw/pci-bridge/gen_pcie_root_port.c
++++ b/hw/pci-bridge/gen_pcie_root_port.c
+@@ -161,6 +161,7 @@ static const TypeInfo gen_rp_dev_info = {
+     .parent        = TYPE_PCIE_ROOT_PORT,
+     .instance_size = sizeof(GenPCIERootPort),
+     .class_init    = gen_rp_dev_class_init,
++    .secure        = true,
+ };
  
- static void virtio_gpu_gl_pci_register_types(void)
- {
--    virtio_pci_types_register(&virtio_gpu_gl_pci_info);
-+    virtio_pci_types_register_insecure(&virtio_gpu_gl_pci_info);
- }
+  static void gen_rp_register_types(void)
+diff --git a/hw/pci-bridge/gen_pcie_upstream_port.c b/hw/pci-bridge/gen_pcie_upstream_port.c
+index 61ae3a294a9..da3e9e2d637 100644
+--- a/hw/pci-bridge/gen_pcie_upstream_port.c
++++ b/hw/pci-bridge/gen_pcie_upstream_port.c
+@@ -163,6 +163,7 @@ static const TypeInfo gen_pcie_upstream_port_info = {
+     .parent        = TYPE_PCIE_PORT,
+     .instance_size = sizeof(GenPCIEUpstreamPort),
+     .class_init    = gen_pcie_upstream_port_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_PCIE_DEVICE },
+         { }
+diff --git a/hw/pci-bridge/i82801b11.c b/hw/pci-bridge/i82801b11.c
+index 1d73c14c1f8..f702b20bcd5 100644
+--- a/hw/pci-bridge/i82801b11.c
++++ b/hw/pci-bridge/i82801b11.c
+@@ -107,6 +107,7 @@ static const TypeInfo i82801b11_bridge_info = {
+     .parent        = TYPE_PCI_BRIDGE,
+     .instance_size = sizeof(I82801b11Bridge),
+     .class_init    = i82801b11_bridge_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { },
+diff --git a/hw/pci-bridge/ioh3420.c b/hw/pci-bridge/ioh3420.c
+index bba640f495b..2c4882c4cf1 100644
+--- a/hw/pci-bridge/ioh3420.c
++++ b/hw/pci-bridge/ioh3420.c
+@@ -120,6 +120,7 @@ static const TypeInfo ioh3420_info = {
+     .name          = "ioh3420",
+     .parent        = TYPE_PCIE_ROOT_PORT,
+     .class_init    = ioh3420_class_init,
++    .secure        = true,
+ };
  
- type_init(virtio_gpu_gl_pci_register_types)
-diff --git a/hw/display/virtio-vga-gl.c b/hw/display/virtio-vga-gl.c
-index 178e4c71725..029d288c035 100644
---- a/hw/display/virtio-vga-gl.c
-+++ b/hw/display/virtio-vga-gl.c
-@@ -42,7 +42,7 @@ module_kconfig(VIRTIO_VGA);
- static void virtio_vga_register_types(void)
- {
-     if (have_vga) {
--        virtio_pci_types_register(&virtio_vga_gl_info);
-+        virtio_pci_types_register_insecure(&virtio_vga_gl_info);
-     }
- }
+ static void ioh3420_register_types(void)
+diff --git a/hw/pci-bridge/pci_bridge_dev.c b/hw/pci-bridge/pci_bridge_dev.c
+index bc53bcb69d8..86e8daaa068 100644
+--- a/hw/pci-bridge/pci_bridge_dev.c
++++ b/hw/pci-bridge/pci_bridge_dev.c
+@@ -268,6 +268,7 @@ static const TypeInfo pci_bridge_dev_info = {
+     .instance_size     = sizeof(PCIBridgeDev),
+     .class_init        = pci_bridge_dev_class_init,
+     .instance_finalize = pci_bridge_dev_instance_finalize,
++    .secure            = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_HOTPLUG_HANDLER },
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+@@ -294,6 +295,7 @@ static const TypeInfo pci_bridge_dev_seat_info = {
+     .parent            = TYPE_PCI_BRIDGE_DEV,
+     .instance_size     = sizeof(PCIBridgeDev),
+     .class_init        = pci_bridge_dev_seat_class_init,
++    .secure            = true,
+ };
  
-diff --git a/hw/display/virtio-vga-rutabaga.c b/hw/display/virtio-vga-rutabaga.c
-index 1e07ee0b0d3..8ff715f8a35 100644
---- a/hw/display/virtio-vga-rutabaga.c
-+++ b/hw/display/virtio-vga-rutabaga.c
-@@ -41,7 +41,7 @@ module_kconfig(VIRTIO_VGA);
- static void virtio_vga_register_types(void)
- {
-     if (have_vga) {
--        virtio_pci_types_register(&virtio_vga_rutabaga_info);
-+        virtio_pci_types_register_insecure(&virtio_vga_rutabaga_info);
-     }
- }
+ static void pci_bridge_dev_register(void)
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index a96b2d228eb..5b07186c91e 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -87,6 +87,7 @@ static const TypeInfo pxb_bus_info = {
+     .parent        = TYPE_PCI_BUS,
+     .instance_size = sizeof(PXBBus),
+     .class_init    = pxb_bus_class_init,
++    .secure        = true,
+ };
  
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index c73f1f546cb..fe2e545c302 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2510,7 +2510,9 @@ static void virtio_pci_non_transitional_instance_init(Object *obj)
-     proxy->disable_modern = false;
- }
+ static const TypeInfo pxb_pcie_bus_info = {
+@@ -94,6 +95,7 @@ static const TypeInfo pxb_pcie_bus_info = {
+     .parent        = TYPE_PCIE_BUS,
+     .instance_size = sizeof(PXBBus),
+     .class_init    = pxb_bus_class_init,
++    .secure        = true,
+ };
  
--void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-+static void
-+virtio_pci_types_register_internal(const VirtioPCIDeviceTypeInfo *t,
-+                                   bool secure)
- {
-     char *base_name = NULL;
-     TypeInfo base_type_info = {
-@@ -2527,6 +2529,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-         .name = t->generic_name,
-         .parent = base_type_info.name,
-         .class_init = virtio_pci_generic_class_init,
-+        .secure = secure,
+ static const char *pxb_host_root_bus_path(PCIHostState *host_bridge,
+@@ -154,6 +156,7 @@ static const TypeInfo pxb_host_info = {
+     .name          = TYPE_PXB_HOST,
+     .parent        = TYPE_PCI_HOST_BRIDGE,
+     .class_init    = pxb_host_class_init,
++    .secure        = true,
+ };
+ 
+ 
+@@ -331,6 +334,7 @@ static const TypeInfo pxb_dev_info = {
+     .parent        = TYPE_PCI_DEVICE,
+     .instance_size = sizeof(PXBDev),
+     .class_init    = pxb_dev_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { },
+@@ -368,6 +372,7 @@ static const TypeInfo pxb_pcie_dev_info = {
+     .parent        = TYPE_PXB_DEV,
+     .instance_size = sizeof(PXBPCIEDev),
+     .class_init    = pxb_pcie_dev_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { },
+diff --git a/hw/pci-bridge/pcie_pci_bridge.c b/hw/pci-bridge/pcie_pci_bridge.c
+index e826fb2829f..03b6b1c0f54 100644
+--- a/hw/pci-bridge/pcie_pci_bridge.c
++++ b/hw/pci-bridge/pcie_pci_bridge.c
+@@ -162,6 +162,7 @@ static const TypeInfo pcie_pci_bridge_info = {
+         .parent = TYPE_PCI_BRIDGE,
+         .instance_size = sizeof(PCIEPCIBridge),
+         .class_init = pcie_pci_bridge_class_init,
++        .secure = true,
          .interfaces = (const InterfaceInfo[]) {
+             { TYPE_HOTPLUG_HANDLER },
              { INTERFACE_PCIE_DEVICE },
-             { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-@@ -2562,6 +2565,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-             .name          = t->non_transitional_name,
-             .parent        = base_type_info.name,
-             .instance_init = virtio_pci_non_transitional_instance_init,
-+            .secure = secure,
-             .interfaces = (const InterfaceInfo[]) {
-                 { INTERFACE_PCIE_DEVICE },
-                 { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-@@ -2576,6 +2580,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-             .name          = t->transitional_name,
-             .parent        = base_type_info.name,
-             .instance_init = virtio_pci_transitional_instance_init,
-+            .secure = secure,
-             .interfaces = (const InterfaceInfo[]) {
-                 /*
-                  * Transitional virtio devices work only as Conventional PCI
-@@ -2590,6 +2595,16 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-     g_free(base_name);
- }
+diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+index 0c3fed3053b..ded948ebd0f 100644
+--- a/hw/pci-bridge/xio3130_downstream.c
++++ b/hw/pci-bridge/xio3130_downstream.c
+@@ -175,6 +175,7 @@ static const TypeInfo xio3130_downstream_info = {
+     .name          = TYPE_XIO3130_DOWNSTREAM,
+     .parent        = TYPE_PCIE_SLOT,
+     .class_init    = xio3130_downstream_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_PCIE_DEVICE },
+         { }
+diff --git a/hw/pci-bridge/xio3130_upstream.c b/hw/pci-bridge/xio3130_upstream.c
+index 40057b749bf..9d58105f8bd 100644
+--- a/hw/pci-bridge/xio3130_upstream.c
++++ b/hw/pci-bridge/xio3130_upstream.c
+@@ -144,6 +144,7 @@ static const TypeInfo xio3130_upstream_info = {
+     .name          = "x3130-upstream",
+     .parent        = TYPE_PCIE_PORT,
+     .class_init    = xio3130_upstream_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_PCIE_DEVICE },
+         { }
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index d8b117799f3..57072590b11 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -321,6 +321,7 @@ static const TypeInfo pci_bus_info = {
+     .instance_size = sizeof(PCIBus),
+     .class_size = sizeof(PCIBusClass),
+     .class_init = pci_bus_class_init,
++    .secure = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_FW_CFG_DATA_GENERATOR_INTERFACE },
+         { }
+@@ -335,11 +336,13 @@ static const TypeInfo cxl_interface_info = {
+ static const TypeInfo pcie_interface_info = {
+     .name          = INTERFACE_PCIE_DEVICE,
+     .parent        = TYPE_INTERFACE,
++    .secure        = true,
+ };
  
-+void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-+{
-+    virtio_pci_types_register_internal(t, true);
-+}
-+
-+void virtio_pci_types_register_insecure(const VirtioPCIDeviceTypeInfo *t)
-+{
-+    virtio_pci_types_register_internal(t, false);
-+}
-+
- unsigned virtio_pci_optimal_num_queues(unsigned fixed_queues)
- {
-     /*
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index ee50fb0d551..f033237035a 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -239,8 +239,16 @@ typedef struct VirtioPCIDeviceTypeInfo {
-     const InterfaceInfo *interfaces;
- } VirtioPCIDeviceTypeInfo;
+ static const TypeInfo conventional_pci_interface_info = {
+     .name          = INTERFACE_CONVENTIONAL_PCI_DEVICE,
+     .parent        = TYPE_INTERFACE,
++    .secure        = true,
+ };
  
--/* Register virtio-pci type(s).  @t must be static. */
-+/*
-+ * Register virtio-pci type(s).
-+ * @t must be static.
-+ *
-+ * Since they serve the virtualization use case, most virtio
-+ * devices are expected to be classed as secure. In the rare
-+ * scenario where this is not desired, use the second method.
-+ */
- void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t);
-+void virtio_pci_types_register_insecure(const VirtioPCIDeviceTypeInfo *t);
+ static void pcie_bus_class_init(ObjectClass *klass, const void *data)
+@@ -353,6 +356,7 @@ static const TypeInfo pcie_bus_info = {
+     .name = TYPE_PCIE_BUS,
+     .parent = TYPE_PCI_BUS,
+     .class_init = pcie_bus_class_init,
++    .secure = true,
+ };
  
- /**
-  * virtio_pci_optimal_num_queues:
+ static const TypeInfo cxl_bus_info = {
 -- 
 2.56.1
 
