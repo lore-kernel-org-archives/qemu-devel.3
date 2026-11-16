@@ -1,86 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDD4606E48F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11327606E4B1
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=rCxVS+8G
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=lA1mwQBr
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSueQ-0003r4-HP; Mon, 16 Nov 2026 06:13:32 -0500
+	id 1xSufo-0004gS-0p; Mon, 16 Nov 2026 06:14:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueF-0003p0-Tu
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:19 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1xSuee-0003vk-GR
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:44 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueB-00027e-Hw
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:19 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-490d59c3edaso1957827f8f.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:07 -0800 (PST)
+ id 1xSuec-0002De-SS
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:44 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4a1fbd52ab6so26119425e9.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794827587; x=1795432387; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=ga/sbnWQ8Rp+xdNe/cHzOy1FCcskcCSsEElXR/zwWWM=;
- b=rCxVS+8Gm1rFLfwsHZ6QegHqFPx2i5fOn4FSZfg5yrZ/zXrB79ZQFTBm89G0VK7XBz
- 8T5SdsQYTVpoewCWuOerldzlItMGVAnBmqkRgnEf6TG0HKo5VvWShaGNqpVuT57FY4kp
- OZp1EMtkSGOBcEImt7pAxE4fCNU7Vf7tqUydJJnHSZtQhbWOoXZOB7/SHlgIkkq3U7RA
- pUVljgAKjUHvLAg3UOSFidg0TWcQXt0/9RGdouFBGeH/54CvEKGY8BLkfiEVYv5nsc3t
- yKTFWFVCkV7lxCkV/CjXHGhv4pLZ7uIYzRDGN6w9NhbyD943E97YSmlHqen7FeVJ8LZ2
- splQ==
+ d=linaro.org; s=google; t=1794827617; x=1795432417; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=3oLvKLNFfyQdIc5Ssx0Wha578zuNyp8H42uMNEjgyog=;
+ b=lA1mwQBr3ovd9N+00SnHhixEhl0F7Zhxp7fJLqsWWHmDcISxIu2okTYvoQTuqlq6yj
+ O7655KTPnq19lIErAMc/Lflj2Sv1xst50dnSS/xxEGOGfq7MvgwCRNLr5ipmzpbEs833
+ Ypnr+M1C4VT1Nn+PcvIxSyJ3F/qsixjWWHIgM4fMUXbbPg2rE6dblA5uxlJa3S+5dIXD
+ BDLautNBl/LIa5PHXxQXxRxtr18wCFP8Fkh452U0erAFzcqVYVx7Q67jS6srid//EFj7
+ aKa0LGzsWp2msbYmRHjdGxhH9fasBYPM4OtNqKgAWU2XedbHJmntIwuGkkiY0wNKHbk8
+ Kjww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794827587; x=1795432387;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=ga/sbnWQ8Rp+xdNe/cHzOy1FCcskcCSsEElXR/zwWWM=;
- b=lun1IavqNi9DHTKVyyG8DXhv5tTlhw1cVjuM//4JU5Ly5XWtLyht+UYo0m4RVMpQ5F
- q5hGN5nKjHzeIRH0CBBsaAqTu90lwpWCuARRUfHL4xIr0t9OEOV2mOL8AHEtCzu4LDrG
- L8JtpFTEPBWkXXL3PwXWUzf1Xap+cLc9aNDtDENoVQV/X0nk+la5yMfn9OOUzqXXCcPh
- 3lKO79kiyii3AWNSbnlfgNuGcCOX+sEznmlEa/KDM+mbAZCbi+8qMLLXllliDtU3zEIb
- ViO+1zD4EH7z1+wsbnn6IN19l76Uv98DJhU+X5hs1g/xSty9GDJtMA3LMsMhbtsv/sIy
- STtg==
-X-Gm-Message-State: APuU4Z9kfbWd+UKMv1uu5rALhjiHd6h2fTYtZOb5cqlbMGjM0CeIqpba
- pCxITXATJ9e0bZVu3s+nOMMaHm5nNMDmJZa7fF3/JJLX1LA+8XDxK0vWAjnv7Jb0AtLaHq3HUvn
- tane/G/o=
-X-Gm-Gg: AZFdTZdWF2rEY+/iqOnCl7Zs3iEt/dwIoBVDFwS6eZYeIwHWHhkEA/QKRyFJnuH3MBi
- 9PvQrltMMeiLuAtLk5QSg+KtYUDqK2ExmOhF/3Cg8QsfHa+Px+Nx6TZ51ykD/pxD1Ik38/0DXca
- sFRYc+p/2M6rcx/l29Ge1JxuLMd665iuL/uRNzt8G9+cP2GBP7feZ6xexyLpbpQsCnkQ+XHoJyw
- GbspzOfy4vP5foSv48ebPINZ9CycsHr0haODVnl++4Q3Ble9GJ+v02qs6Lc5QlINMS+t5GCEy5C
- tfkwd+o6DFvsQ8VY2pcBB4xZX3yJj4WWn7cZ8teZksKwE6LF+zA0qnfbZuMtYElv94uu8Q1LMV4
- zXVnfONyt4HSoeeA5GBrDPgTheBj0Lf/OcSBDCOmI4IPHOLL221UXbNb+ZYr9fpbxM+zf2h+La/
- qfcuGG7F2g2CjcCG9J3NmclQfvYLtqVFZkiR4nYFlQwd9McHIq03LdXGbgDdjruIt15ndzzjc7D
- rkRb553wL355EOGn9l5AkWli+kV4akSLsvX7cpfLomjJiQONv9pochXazXJgOHlV4GtjQHxiFYO
- YpnwxgyQgsHrXfiWBe/4a+necVcOVmS7a8AJeGoA/hCV9amvZZgt6m8i8BS5WzwO/ze46cklLmN
- n2gGYXnY9yy+AkocC7s5t8eaiyzjraFFBh3dIb0uamDIxrcxnFYrNBeE=
-X-Received: by 2002:a05:6000:4211:b0:498:364d:7509 with SMTP id
- ffacd0b85a97d-49b02d4cd48mr32112594f8f.24.1794827586600; 
- Mon, 16 Nov 2026 03:13:06 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794827617; x=1795432417;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=3oLvKLNFfyQdIc5Ssx0Wha578zuNyp8H42uMNEjgyog=;
+ b=JTT4lMFmGzOUa0/4Jn12BG9U6Fiy4vGGyUuWocay39V9jJHYm4X50J7Yp+ihqaHYal
+ Wo0OHnmUAnZVWFTQW4RRjY7FNZl5FkMDmjEMfnUE1LGHdSa1mHUUkW3qrXVhE5ryKtq3
+ tpVba14fI3J+ZV0x32+Myez5tDsm4CmaclS54BRkLGovEQuo/ddQ/MhZ1TZnzxrKYbw1
+ mAoVpA28LJuXTF/N3ZsgOmBqpx8/Q2wMDPw5lEJBT2hYWPAnXolq4ayUlqSc+/thPf+E
+ zujFKxxf0PY96zEl7Ub+UodDhrZkHciQvneqaDvkqGgGMld/CkHpF8J/SPzl5zeLNZzp
+ 9aVQ==
+X-Gm-Message-State: APuU4Z+pYTHsD/lzZGk+YHKwQ/S4qekwbYQ4fLLGPDCpUdU9CW+9/HtI
+ m9ev3jgiCuzgUFqVq2nT1UATLpP4yq/8zB4E43GYO0iXKWvKw/J5WNgE7f3WkCSARtv1pOr33QQ
+ l0YOLhbg=
+X-Gm-Gg: AYBFou3Ii9dfcUuXLchrvS+0MA7qe0Sry7qJUBOYjyhqo4ViWPfnywp4+tsmwk+oYuw
+ lr1SyDNggeFumCqK3KfaJZ2Aj2Gtd8DKEcUB4S0XLGAsG4lAjeTsiFNeXrsVa9nM1X5aGsBCgGD
+ 6FFx5zMEL8B0YMRAvUsh4zDsEG6+DSUmqWdCjXU8x1n+Wr4ixzhYrXgRHhMQNphJBnSpjCELu3e
+ 2QUub/m8dOMP9nuaPFNg9HJyq3WaaIy5e/QECyDv7mZwE65WQZZwC6NaCcoPPAzkssVR0N3k9gW
+ hc1SnNmGemZLB8kt7eW7bIk9QdAERHIOSoUPtCPHP9CYSUCyC4NfFBLmYlC+NopjwxFl+8FLyXx
+ hfcNUXdiDvWUEKhHcq3Htf/2M/zQpQVNUcxgzXP3YMnYtNetzr89DFIDk9wIiKychx/h3VtRpeZ
+ Ty3QtzDoF2TlZQBIA6iNTBnkr/HdEZA05bwdQ0ZJZzyUBpwyZdYyEh+Kg31DH174FBxGskASR26
+ 3mYUAGt+HRXH9+Kse3TD/M0JDZ7UXUxqlNVNuZO0vmFWCvruhxON9MTlgIrr6NoDWLvDj4Egn76
+ m/xvVF5kn/Rpa6+aq5v0a6ayixldXPxsuoU0igguaHx5YarkK4jmf0E2PFs2UdFJmj/Rq3QlRqH
+ cyvhEsI6O8LBwbPUaK4mdfeZrkzZueaoPbA==
+X-Received: by 2002:a05:600c:4e8c:b0:4bb:60ba:49e0 with SMTP id
+ 5b1f17b1804b1-4bb60ba4a70mr144443695e9.26.1794827617567; 
+ Mon, 16 Nov 2026 03:13:37 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.05
+ ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Nov 2026 03:13:05 -0800 (PST)
+ Mon, 16 Nov 2026 03:13:36 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/33] hw/ssi/stm32f2xx_spi: avoid transferring data on DR reads
-Date: Mon, 16 Nov 2026 11:12:31 +0000
-Message-ID: <20261116111303.1692832-2-peter.maydell@linaro.org>
+Subject: [PULL 29/33] Revert ".dir-locals: include QEMU code in PYTHONPATH"
+Date: Mon, 16 Nov 2026 11:12:59 +0000
+Message-ID: <20261116111303.1692832-30-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116111303.1692832-1-peter.maydell@linaro.org>
 References: <20261116111303.1692832-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,128 +108,55 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Manuele Conti <conti.manuele@gmail.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Writing SPI_DR already performs the synchronous SSI transfer and stores
-its response in spi_dr. Reading SPI_DR performs another transfer, using
-the previous response as transmit data, and returns the new response.
-Consequently a normal write/read pair clocks two frames on the bus and
-can skip bytes in a peripheral's response.
+Unfortunately this relied on trusting the source tree via the
+safe-local-variable-directories otherwise users keep being prompted
+that ".dir-locals.el contains values that may not be safe".
 
-Return the response saved by the write and clear RXNE without starting
-another transfer. Repeated reads then leave the peripheral state alone.
+An alternative is for the user to add something like this to their
+local emacs config:
 
-Add a qtest using the upstream netduino2 machine and an M25P80 flash.
-Check the JEDEC ID, RXNE clearing, and repeated DR reads. The test requires
-no board changes and reproduces the unwanted extra transfers before the
-fix.
+  (defun my-return-source-if-in-qemu-tree()
+    "Return the root of source when in QEMU code."
+    (when-let ((src (expand-file-name (locate-dominating-file default-directory ".git"))))
+      (if (file-exists-p (concat src "/qemu-options.hx"))
+          src)))
 
-Fixes: 5ae74402d1f ("STM32F2xx: Add the SPI device")
-Signed-off-by: Manuele Conti <conti.manuele@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-id: 20261021065238.15220-1-conti.manuele@gmail.com
+  (defun my-set-qemu-python-path()
+    "Set local python environment for QEMU."
+    (when-let ((root (my-return-source-if-in-qemu-tree)))
+      (setq-local process-environment (copy-sequence process-environment))
+      (setenv "PYTHONPATH" (concat (expand-file-name "python" root) ":"
+                                   (expand-file-name "tests/functional" root)))))
+
+  (use-package python
+    :hook ((python-mode python-ts-mode) . my-set-qemu-python-path))
+
+This reverts commit 3112269be3ac92343a5f0e5d9eae919edd176a35.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20261113004452.3027978-1-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS                      |  1 +
- hw/ssi/stm32f2xx_spi.c           |  1 -
- tests/qtest/stm32f2xx-spi-test.c | 50 ++++++++++++++++++++++++++++++++
- tests/qtest/meson.build          |  2 ++
- 4 files changed, 53 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/stm32f2xx-spi-test.c
+ .dir-locals.el | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3d53e104c5b..15942aaba3a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1225,6 +1225,7 @@ F: hw/char/stm32f2xx_usart.c
- F: hw/timer/stm32f2xx_timer.c
- F: hw/adc/*
- F: hw/ssi/stm32f2xx_spi.c
-+F: tests/qtest/stm32f2xx-spi-test.c
- F: include/hw/*/stm32*.h
- 
- STM32F405
-diff --git a/hw/ssi/stm32f2xx_spi.c b/hw/ssi/stm32f2xx_spi.c
-index 871d57324d1..da1dbb7bd7a 100644
---- a/hw/ssi/stm32f2xx_spi.c
-+++ b/hw/ssi/stm32f2xx_spi.c
-@@ -82,7 +82,6 @@ static uint64_t stm32f2xx_spi_read(void *opaque, hwaddr addr,
-     case STM_SPI_SR:
-         return s->spi_sr;
-     case STM_SPI_DR:
--        stm32f2xx_spi_transfer(s);
-         s->spi_sr &= ~STM_SPI_SR_RXNE;
-         return s->spi_dr;
-     case STM_SPI_CRCPR:
-diff --git a/tests/qtest/stm32f2xx-spi-test.c b/tests/qtest/stm32f2xx-spi-test.c
-new file mode 100644
-index 00000000000..619191cf6cc
---- /dev/null
-+++ b/tests/qtest/stm32f2xx-spi-test.c
-@@ -0,0 +1,50 @@
-+/*
-+ * STM32F2XX SPI controller tests
-+ *
-+ * Copyright (c) 2026 Manuele Conti <conti.manuele@gmail.com>
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+/* The first SSI bus found by -device belongs to SPI3. */
-+#define SPI3_BASE 0x40003c00
-+#define SPI_CR1   (SPI3_BASE + 0x00)
-+#define SPI_SR    (SPI3_BASE + 0x08)
-+#define SPI_DR    (SPI3_BASE + 0x0c)
-+#define SPI_RXNE  (1U << 0)
-+
-+static void test_jedec_id(void)
-+{
-+    static const uint8_t jedec_id[] = { 0x20, 0x20, 0x14 };
-+    QTestState *qts = qtest_init("-machine netduino2 "
-+                               "-device m25p80,bus=ssi");
-+
-+    /* Enable SPI in master mode, with software slave management. */
-+    qtest_writel(qts, SPI_CR1, (1U << 9) | (1U << 8) |
-+                             (1U << 6) | (1U << 2));
-+
-+    qtest_writeb(qts, SPI_DR, 0x9f);
-+    qtest_readb(qts, SPI_DR);
-+
-+    for (unsigned i = 0; i < ARRAY_SIZE(jedec_id); i++) {
-+        qtest_writeb(qts, SPI_DR, 0);
-+        g_assert_cmphex(qtest_readl(qts, SPI_SR) & SPI_RXNE, ==, SPI_RXNE);
-+        g_assert_cmphex(qtest_readb(qts, SPI_DR), ==, jedec_id[i]);
-+        g_assert_cmphex(qtest_readl(qts, SPI_SR) & SPI_RXNE, ==, 0);
-+
-+        /* Reading DR again must not clock another byte out of the flash. */
-+        g_assert_cmphex(qtest_readb(qts, SPI_DR), ==, jedec_id[i]);
-+        g_assert_cmphex(qtest_readl(qts, SPI_SR) & SPI_RXNE, ==, 0);
-+    }
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("/stm32f2xx/spi/jedec-id", test_jedec_id);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 79946960869..626791d1eb4 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -258,6 +258,8 @@ qtests_exynos4210 = \
- qtests_arm = \
-   (config_all_devices.has_key('CONFIG_OLIMEX_STM32_H405') ? \
-    ['stm32f405-timer-test', 'stm32f405-rcc-test'] : []) + \
-+  (config_all_devices.has_key('CONFIG_NETDUINO2') and
-+   config_all_devices.has_key('CONFIG_SSI_M25P80') ? ['stm32f2xx-spi-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-dualtimer-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_TIMER') ? ['cmsdk-apb-timer-test'] : []) + \
+diff --git a/.dir-locals.el b/.dir-locals.el
+index 51871619422..3ac0cfc6f0d 100644
+--- a/.dir-locals.el
++++ b/.dir-locals.el
+@@ -1,8 +1,2 @@
+ ((c-mode . ((c-file-style . "stroustrup")
+-	    (indent-tabs-mode . nil)))
+- (python-mode .
+-              ((eval . (when-let* ((root (locate-dominating-file default-directory ".dir-locals.el")))
+-                         (setq-local process-environment (copy-sequence process-environment))
+-                         (setenv "PYTHONPATH"
+-                                 (concat (expand-file-name "python" root) ":"
+-                                         (expand-file-name "tests/functional" root))))))))
++	    (indent-tabs-mode . nil))))
 -- 
 2.43.0
 
