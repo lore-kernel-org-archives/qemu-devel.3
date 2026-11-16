@@ -1,142 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFA8606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 23:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6649606A329
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 23:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=FOlD9o+W;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=bp/a+pIF
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=eeUgPQYt
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT66L-0002L8-R0; Mon, 16 Nov 2026 18:27:05 -0500
+	id 1xT6QJ-0007tD-MW; Mon, 16 Nov 2026 18:47:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xT66K-0002Hh-45
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:27:04 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xT66I-0002ef-Gi
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:27:03 -0500
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AGNR1R3433237
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 23:27:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- XOlAif9+UeZJzVKcXQRPB55gCt56fpHNmcBcTHOnQl4=; b=FOlD9o+WvY3DaV2A
- A1FeIawo07P/fb7QknqeqmB8fOIfPkiqeandHSctW3995jaMy4Nzq9RXzC+fHMQo
- ujz8s48ySzodl7F4mEE/9CGSY+Mq0YKVf1LrCbEt1oOY51L7ocWzXA/U+IpNG4Ie
- 9i+cTH1aIHBIaiTZeIT7jgIrKo1tKBMC6wZ0VN0lRNfiep/deXUUzZgMS8lzaS2D
- zCaXVDqxJ0dNPGX5IYfLUXPZ7uU/Hsrk/sBpwRQFuxME9RfnYrwKMV12zp5MtE3e
- ljs8ur3mi8eSkae45z0G3f0Ggv3Tuulj1c5naHjFg1blrSVlOs0rZdrpGgUZ7VdW
- FBFAHw==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j01f82gab-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 23:26:58 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-99e0a55e4b4so647580241.0
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 15:26:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xT6QE-0007ss-Mp
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:47:38 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xT6QC-0002q9-Uh
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:47:38 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-3b3a42a4bcdso480698a91.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 15:47:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794871580; x=1795476380; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=XOlAif9+UeZJzVKcXQRPB55gCt56fpHNmcBcTHOnQl4=;
- b=bp/a+pIF7R+ivPh0NMa1alMaPMAW0qXsX/nDSXbayMJZcn3lpAJYQS05tbi/Mylsvh
- AwBupZbZfgTNn6YEPi0/BtvbAti+5/BoSBYvwtGCG3exDAr1CjXpJMWVf596d0ZZtENa
- vMgX2GzBVKzwGUqqpA0xtx7qo8x2lysujZSsziQZFlkuImVj97B0NlvkVa2rWYsUwAWv
- 7hFhhAPtzZLDIzPxfXReoRfTdm1JovG1gBI2Y/oVh/pFuTYSO3uXt6HWKmJCNmQq0pE1
- 8s3UTbOaH4Ni4bUBJvMY4Kp3pp84D/ca2Uo6vEel/8FjrS82ipOOrQ3CJuAlmy1FkUxe
- DMPQ==
+ d=linaro.org; s=google; t=1794872854; x=1795477654; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=geae31w6Nn+SvnF21c05lr0SRkeyuUsbjSAMeyKAlKg=;
+ b=eeUgPQYt+74PhEa9X2c4NqNAxVUc2/5Ra6ybZNhE/KhNz2M0NMnDM8Y5uHungq6cY0
+ V1QNRCixsFsBXTVdNPToAvWE1qwhTzkrwnxrkaFW72lrvzwUGPUkfOgvH6nJURvH07qK
+ n9ZN8zZcUDPucWqm8Nb707TqyjXA9t8aetWEyCRDJl1Qd51GzGGWWw7xIn1N2OtES4qT
+ +fLWTXJtJqbDflqpv/0Jc74IwrWDufLx7gAJsL06cU9kvxJY0Vw0Dud7MlWm5Gsb6dER
+ Zu1THr3SR9B+uSzyAf4rTnmobf3HoysWIi/pLtxwDHMmK1GbiEDhTUNqlROkP6nbFNBy
+ AfdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794871580; x=1795476380;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=XOlAif9+UeZJzVKcXQRPB55gCt56fpHNmcBcTHOnQl4=;
- b=o3CvEddvYIUypbUQqU4XOy1GU8enIFVHABP1i/bjCqc/X4m/kBzE2zCSQBUFL7wL3/
- cMPH4HkZZaFCnrp5VRYAzbF3oRIRTOFj+3eSRPWGoZOJSn+qlMHWJOFRV2IgR1Qv4qDn
- bUWmWTL7Ey2zj8iudpPPY/nHF+35cgBUC04TqEyhc3mg+s+Oz28gVT+y2Gv9FQ8detqn
- ouVN/f9ilQoGiDDNTvRah6dRN8H+6u2gAeghD5JgnrleThlybKp+mI6crbs1jRDVbnMf
- 0IWxlzuBUzNWQ7bCkFsyTuXYXzzZ4wfzZKwINJ2UP0o7b+llZG3MrxhibGqyMoi1Yi5p
- I5UQ==
-X-Gm-Message-State: APuU4Z/1get1vxwCf5WnsSgv/exADeA1MdcZIGIMmjm3fpTtCcqXR7z4
- 9iwfk+juP0SyEq9ZudYOZZm6rQyg7/B3YXwdBpKK8QsumRf/nf9cLaKDLLd5sc2Z/020QRRk65H
- 2JrcgRzOVuLlVTLQRZGGAewmPEpL4VWwRU8KeI3YI3eFSSMAtod7KG1fdL+WL8EdG9A==
-X-Gm-Gg: AYBFou1X+66mVtC2haEDdi8FqkpxdvzjE7UFSoFkJyQL0hgqTQcwySaJlbwL7xxgcqJ
- uhKoyJcVUisWQ+BAbrgDFZB1psLklLj3cYRuTXvo9Tik/59Dj+vkhiyTqrEFSOurX5KwDaWiamt
- 2XV1O5PMdTAbomOEE/EKw2A+6NFRyqQvqqsc8aIe8OUFA50P6nlGNgzCZu/G1wHM6ytnNtxZuCx
- Vxrm1Px6juCbzd3+TxxShdYCb6w+o3lYrVtH/2xIaOMT+DZ8Esn1CHJ7uOpwGLTA1t5c7MVMmvI
- k0VSmwUL/g02nkbplMYnc/+CNdOtKvPAQ63ja+k7ONfeu2y3w4v9T7ObvHy6Ebobjm/4IslI20U
- CSwxcLIyNxwLcarCJdUGA2wKEvLrJT/mGOun0vgcDowLOi66Q+BdnUP8e6+wMn8w/p1XeeXlq5E
- IxMCsLJDDXhCi4zg==
-X-Received: by 2002:a05:6102:605c:b0:7be:37d8:1567 with SMTP id
- ada2fe7eead31-7d64d7047c7mr3012486137.10.1794871580252; 
- Mon, 16 Nov 2026 15:26:20 -0800 (PST)
-X-Received: by 2002:a05:6102:605c:b0:7be:37d8:1567 with SMTP id
- ada2fe7eead31-7d64d7047c7mr3012482137.10.1794871579631; 
- Mon, 16 Nov 2026 15:26:19 -0800 (PST)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
+ d=1e100.net; s=20260707; t=1794872854; x=1795477654;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=geae31w6Nn+SvnF21c05lr0SRkeyuUsbjSAMeyKAlKg=;
+ b=atHbbrJmK1IckYwjLzUUti98Sc0ctBDtA17Eg8CiY9XGm+lDiPmEQZE5MFBvh+FNGC
+ jgZBcL4aGRfvETmsNNMIFqg/g3bx7h34fM4UMvRcJTFBzd5STkW41poMHftld17w4/6S
+ Fl9fg5iMHuZGa6FnXqQJGP+89Ny9hWZE0ZP6FU8BYNUdjGch5la9txP/BELJAhICBrOH
+ I+9bPD0vLGzpGX38lVxYVQmw3lHPJNnszDY4TTubPZi3zRW34kZqUJFXbOHxC20i6/uX
+ fFb8RIhPLaBCait6LO/7vd0FPC7nPBEp2oSptiOlRucU51Jjr7nNRy0n5q4Aw4j+XE4m
+ Q87g==
+X-Forwarded-Encrypted: i=1;
+ AL+hErHUPhuJYbC+Eul1BexUJ/BeI2IVURTS015qQDx/ifUiTSFC1M1Hxu0pDECamtRSp9iYwcXP2rLCoTo1@nongnu.org
+X-Gm-Message-State: APuU4Z/sI9yKQuQlbTe24R0vE9Jscw6BzhFeBKvVE5ZrXLkUAgI+Wb3j
+ gpzPb1DgRSVcbqLReQLT4V7SzCo/zgdSaW7J1G59MbamEqu2iiJzUC50Ttkbwe9pKiA=
+X-Gm-Gg: AZFdTZeeWROAQgoftQT5xNW/CrVQmoZo+T9BKbdlvlRYjyoNpIIUmHit77lD9Kmsvns
+ g08lEt4+jAmo6mufqhS4SOduwBMLjfzPircNlu0saUtL9awqvZkDkswBTAFoCDXu59oAHfszO2W
+ ZesldEDel2EQrHu2IfIeUgeJuq8IaKNx+boGej7IqoG/VRSdnZAGtT/q4Z2GuN82bessCILj2wF
+ RaToHLJrIZigFnb3z29cef83sbwxba/OUgeqS6NCwCinnmUnl+ol7Yh9QF1zInZAb/wcl5GUw7A
+ KcT6QDWQkxYUcp7/9pXOOYfCF+R9xsYgDYzj0WovnpitKSF9P8oDdGgH2txYCvZ9FvXOUhnAGmn
+ 00uBT68UCV460G+G5bR8+CDz9kYuh/XpFk/D/ELAihYX5XlKevRG7ZrFAqqHIMdV/Reu4iaBVWJ
+ 2dZQAzjmEH40PKeT7y+z3ob3/sgX0uirsXk0kPpLyWqjvUn5vsUTiJn6eSVYIxCRfkGDReXdiM9
+ Dfz//PZvo2U/jYbZXK8vmUQxaW5QCRGxUNa944cRPB/uTcCZKI07PBZPky3BukimIWec+KQwR0S
+ QyWGrqHq5j5DL+MPiRpfrz3WbitH/GC8Rjg58E1ak4KwTDhBDuOBGn5FPzQjDtkPJoNH9E0=
+X-Received: by 2002:a17:90b:4483:b0:3ab:413:49bc with SMTP id
+ 98e67ed59e1d1-3b1b0a4c331mr10795905a91.37.1794872854468; 
+ Mon, 16 Nov 2026 15:47:34 -0800 (PST)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb7839c5c3sm22887905e9.12.2026.11.16.15.26.18
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Nov 2026 15:26:18 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 21/22] hw/xen: Mark legacy Xen backends as hotpluggable
-Date: Tue, 17 Nov 2026 00:23:34 +0100
-Message-ID: <20261116232335.31593-22-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261116232335.31593-1-philmd@oss.qualcomm.com>
-References: <20261116232335.31593-1-philmd@oss.qualcomm.com>
+ 98e67ed59e1d1-3b3abbac776sm1191649a91.3.2026.11.16.15.47.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Nov 2026 15:47:34 -0800 (PST)
+Message-ID: <3901913f-e91c-4f5c-933a-2011b29034d8@linaro.org>
+Date: Mon, 16 Nov 2026 15:47:32 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA5MyBTYWx0ZWRfX6gUq1ggnuVre
- 7lQfoNM4r84Gjt8Fe5hE2maUPdUoHabGos4EOlYy3d2gcixZFn54i3PUbAktCVoJAJ+rUr5dHuh
- APcfAURFN/CVId/ZdxXKxAOrO4pjsDGLkSHJsoN3SoUgd3T5/mLn8pZEavMvnnbf1en8mf33xrV
- iWJfMbalw2ED4JU//SRjDFeeNJcFjpi4iX07sXN+LJZJJqXttDFrjqPGckQzlcH6LMHa24kd6YI
- nlflRsEWv0QP3rSFKtuwBKz/z0s6tDtt/p6uVrxJg8HSN+zpm0mp2MNAB7sL/UiBGmwrUhkC6od
- O9hTxZiC/mOBmdI4V1c118aa00+4SRcl+vzYtsyRPMWWHEc6sQBcYNOXaa21Wb5y0jXZa+FMa4z
- XTb1B/PK/lNtbV8kyYHSf1ME7jMNAPpkYNAw2K1LoD5pWe3K4Wqo1TVJxseKs9coF3ZmPhx98QK
- QBdv95f092w2xxPLOkw==
-X-Proofpoint-GUID: sJTgeHmoCflxgNmD9SJIMPKS5d67t5sD
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA5MyBTYWx0ZWRfX3y0sRiW0L3Kh
- eh0pjzOBEmmaKOsfhZDg23sIEWBQRW1InS5SHE+2nAjWUfOH7xhsurbjbAiFzezzeTDnoal9k0s
- Z7wOtwC5Cg5XLtv7cxJe69az6EY6lIA=
-X-Proofpoint-ORIG-GUID: sJTgeHmoCflxgNmD9SJIMPKS5d67t5sD
-X-Authority-Analysis: v=2.4 cv=VMpIDNPX c=1 sm=1 tr=0 ts=6afb9145 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=8AirrxEcAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=GyTj49Ovo5v0flL5NPUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22
- a=ST-jHhOKWsTCqRlWije3:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-16_07,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 suspectscore=0 impostorscore=0 bulkscore=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611160093
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/7] hw/nvme fixes
+To: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Klaus Jensen <k.jensen@samsung.com>
+References: <20261116215014.59993-1-its@irrelevant.dk>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261116215014.59993-1-its@irrelevant.dk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -149,62 +103,35 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peng Fan <peng.fan@nxp.com>
+On 11/16/26 13:50, Klaus Jensen wrote:
+> From: Klaus Jensen<k.jensen@samsung.com>
+> 
+> Hi,
+> 
+> The following changes since commit 573577bff0138681ddd4ee2410c51bead7b53e74:
+> 
+>    Merge tag 'pull-target-arm-20261116' ofhttps://gitlab.com/pm215/qemu into staging (2026-11-16 12:09:43 -0800)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20261116
+> 
+> for you to fetch changes up to c0080f56036249df4a3f56e07e90cb0e56b3fd34:
+> 
+>    hw/nvme: fix broadcast fdp events handling (2026-11-16 22:41:27 +0100)
+> 
+> ----------------------------------------------------------------
+> nvme queue
 
-Commit 250e797ceada ("hw/xen: Have legacy Xen backend inherit from
-DYNAMIC_SYS_BUS_DEVICE") changed TYPE_XENBACKEND to inherit from
-TYPE_DYNAMIC_SYS_BUS_DEVICE, whose class sets hotpluggable = false.
+Applied, thanks.
 
-Legacy Xen backends are created from xenstore at runtime, after the
-machine is ready, so device_initfn() marks them as hotplugged. The new
-class setting makes device_set_realized() reject them with:
-
-  Device 'xen-backend' does not support hotplugging
-
-Since xen_be_get_xendev() realizes the device with &error_fatal, QEMU
-then exits. For example, "xl usbdev-attach" triggers this when the qusb
-backend is created dynamically, killing the guest. The same flag also
-causes qdev_unplug() to ignore these devices.
-
-Override hotpluggable in xendev_class_init() to restore the behavior
-before the offending commit.
-
-Fixes: 250e797ceada ("hw/xen: Have legacy Xen backend inherit from DYNAMIC_SYS_BUS_DEVICE")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Tested-by: Julian Vetter <julian.vetter@vates.tech>
-Acked-by: Stefano Stabellini <sstabellini@kernel.org>
-Message-ID: <20261116-qemu-xen-usb-v1-1-bff36d5b646b@nxp.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- hw/xen/xen-legacy-backend.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-index 7977b527127b..bf4396c9460d 100644
---- a/hw/xen/xen-legacy-backend.c
-+++ b/hw/xen/xen-legacy-backend.c
-@@ -640,6 +640,13 @@ static void xendev_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    /*
-+     * Legacy Xen backends are created and destroyed dynamically from
-+     * xenstore at runtime, after the machine has been initialized.
-+     * TYPE_DYNAMIC_SYS_BUS_DEVICE marks devices as not hotpluggable,
-+     * so override that here.
-+     */
-+    dc->hotpluggable = true;
-     dc->bus_type = TYPE_XENSYSBUS;
- }
- 
--- 
-2.55.0
-
+r~
 
