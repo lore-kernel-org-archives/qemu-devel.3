@@ -1,76 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F3A606A323
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 16:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E0B606A33B
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 16:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=fcGOK7Yi
+	dkim=pass (1024-bit key, unprotected) header.d=quante.one header.i=@quante.one header.a=rsa-sha256 header.s=cloudpit header.b=Rlg7fuO/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSzQ6-0007vF-La; Mon, 16 Nov 2026 11:19:03 -0500
+	id 1xSzTU-0001NU-5O; Mon, 16 Nov 2026 11:22:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
- id 1xSzPp-0007rn-QY
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:18:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <christian@quante.one>)
+ id 1xSzTR-0001HM-Gl; Mon, 16 Nov 2026 11:22:29 -0500
+Received: from nx186.node02.secure-mailgate.com ([192.162.87.186])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
- id 1xSzPm-0002dP-N0
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:18:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794845922;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YD5Blv3Ly9d/eocToinizkzNYTyJaElJ/QKyDj+BPjA=;
- b=fcGOK7YipOe1ass4XGqVjR6g7/tc/+BWzVxyljioIrDAdUEnaAcM3uEFTxvvCdJHsePiGk
- L2jNTzTiZnOsn10+Jq2KtKlD/+ghNtr+IHbVuD899IhGnWAw3pSELz9spzGN8OmWtzcbGE
- Gk6TB9eiSou66bpEPWuUPzlQgoxcM4k=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-qaNfg8LTOI-xdkTqGWtI9A-1; Mon,
- 16 Nov 2026 11:17:18 -0500
-X-MC-Unique: qaNfg8LTOI-xdkTqGWtI9A-1
-X-Mimecast-MFC-AGG-ID: qaNfg8LTOI-xdkTqGWtI9A_1794845838
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D27A3195D005; Mon, 16 Nov 2026 16:17:17 +0000 (UTC)
-Received: from eashurov-thinkpadx1carbongen12.raanaii.csb
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2109F410; Mon, 16 Nov 2026 16:17:14 +0000 (UTC)
-From: Elizabeth Ashurov <eashurov@redhat.com>
+ (Exim 4.90_1) (envelope-from <christian@quante.one>)
+ id 1xSzTP-0000Fk-3H; Mon, 16 Nov 2026 11:22:29 -0500
+Received: from web279.dogado.net ([31.47.255.59])
+ by node02.secure-mailgate.com with esmtps (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.94.2) (envelope-from <christian@quante.one>)
+ id 1xSzTE-00CW9P-Fg; Mon, 16 Nov 2026 17:22:18 +0100
+Received: from Zeuss.fritz.box (p57b2ffb6.dip0.t-ipconnect.de [87.178.255.182])
+ (Authenticated sender: christian@quante.one)
+ by web279.dogado.net (Postfix) with ESMTPSA id 271E3282943;
+ Mon, 16 Nov 2026 17:22:11 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
+ s=cloudpit; t=1794846132;
+ bh=if30rIP8+DWQolW7tyYCi65CxTJiAZzWI2CEnrgBX0w=;
+ h=From:To:Cc:Subject:Date:From;
+ b=Rlg7fuO/tjQyWt0DaE8F58AQHWHC6+8mpFhNJWQGbzey5p7MDi6k6ds4J9aAi89gi
+ MHj2RLMGbA2pGaQ4jrEaZxY2fIopVYDqgbap1lcQgMcD1Ed1thSJlAzDSNNMOaZ+m5
+ NDmpTZ9s2u/BEy6Axl96pZxuFvte4DhyjaXDa2dA=
+X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
+From: Christian Quante <christian@quante.one>
 To: qemu-devel@nongnu.org
-Cc: kkostiuk@redhat.com, michael.roth@amd.com, dholler@redhat.com,
- armbru@redhat.com, fdeutsch@redhat.com, yvugenfi@redhat.com,
- kramdoss@redhat.com, Elizabeth Ashurov <eashurov@redhat.com>
-Subject: [PATCH v3 2/2] qga: Add guest-get-driver-services command for Windows
-Date: Mon, 16 Nov 2026 18:16:08 +0200
-Message-ID: <20261116161608.1145725-3-eashurov@redhat.com>
-In-Reply-To: <20261116161608.1145725-1-eashurov@redhat.com>
-References: <20261116161608.1145725-1-eashurov@redhat.com>
+Cc: kraxel@redhat.com, balaton@eik.bme.hu, mst@redhat.com, pbonzini@redhat.com,
+ peterx@redhat.com, philmd@oss.qualcomm.com, kwolf@redhat.com,
+ jsnow@redhat.com, hreitz@redhat.com, farosas@suse.de, lvivier@redhat.com,
+ marcandre.lureau@redhat.com, odaki@rsg.ci.i.u-tokyo.ac.jp,
+ richard.henderson@linaro.org, mjt@tls.msk.ru, qemu-block@nongnu.org,
+ qemu-stable@nongnu.org
+Subject: Withdrawal of my pending patches (written with AI assistance)
+Date: Mon, 16 Nov 2026 17:21:23 +0100
+Message-ID: <20261116162123.8527-1-christian@quante.one>
+X-Mailer: git-send-email 2.53.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eashurov@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-PPP-Message-ID: <179484613211.652326.4506329505005404133@web279.dogado.net>
+X-PPP-Vhost: quante.one
+X-SecureMailgate-Domain: web279.dogado.net
+X-SecureMailgate-Username: 31.47.255.59
+Authentication-Results: secure-mailgate.com;
+ auth=pass smtp.auth=31.47.255.59@web279.dogado.net
+X-SecureMailgate-Outgoing-Class: ham
+X-SecureMailgate-Outgoing-Evidence: Combined (0.08)
+X-Recommended-Action: accept
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVde9jLxQVzhBUnku5ZK9/OQdH/g5Xk48G8
+ fNEsIrVeZCu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
+ zJ6mVE7ewsipSVIfs4Z7R2GnCdeNxV4tA2HwQn97S5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
+ 1vk99RO8CkBBeOWZWzhmlHwZjt9mdOtYechJ/ikE1WgRg4cS6A6B6pTstltS07kaQJ8I9sYal0h7
+ 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgnsj5xBssn0tIIHA3aH
+ QzCq60l8YRpcxCjc2gcMa3Btw+OTpzU5Yy8oe2B0dJEHaEkqZOJGV2rGZzAbG8h1gtZeBYfLAJ36
+ RwtyxBRSZ+49vRTbtL2xdv15aIRWgfI+e3bKAVGCsj3syyAgjkeElAqpympn9Qu9+qOAy3gbtVOj
+ 1va6YhK5+dp8kEJU4mkN7XR1uPsgRZuVzkMk1nNs1DI/AtrPIdrj+MU9VljMuQX+KaMAyJW22/qr
+ FCGyTHEChKOME80+HzI05N/GY8fJ7Q+SXEnnu3wNVkc5It+/rMjHIKm3P59UJG1k9axRPrr6VJnu
+ 6mRJcBCvqTGSaTEp3sSCLm37s3WKeMIWIGsITuh6xVDqzA08iw5lNTCPqxu/Tf9tCBikOb/VIcWB
+ 1wD71iSmn+IeVr6hpcD4n6aukp6RdkmguQ+DxIA9kGOfHfjoPGbMXe9dIBGa2b5mCEmRBMBV70e4
+ wgQsGYkBMhlI4dOUBZ7t2w55LqiFPyoZKyYUSDAPHXxjq2A09VZCtd9IE6xLQPqPSmgkf2rR+sR9
+ StmGIR+UtjOvgqOFSF8G9GCEzF7MQ+bLY64w5gxDNqywnL645ZKq8uI66hekW7QsMPuD9lKWtlPB
+ bNXQ4QgVcd39aIMn4gtHiA5BOPjHx3g7UbIr0j6m8Z3TbuDICLL8IEpevqQ1cv04nsK9aoUYSlnC
+ RnsBCSf3kpMO36LqsCYmrUY4CzCvRwvqVEAQMkdN/mM3fGLIiJeUE/3oNsBizT8bwOjuTVHN5Oyb
+ 5a7ce8OKHV2D/nJmqQVjm9pQK+yEfs0QBCpsO/Pxd1YvdZuooMNn1nW9CPts942jgiBHZTGfQqst
+ mvni4DsdvpDSN6CWTjglrSy5a/o4rJv5DhhaFkkWeY0OdXPtr0YLB5IKVhOGun7HSwsON1wh1xpD
+ Se4KVeizO8dtVhKN+9/KNqonH3Ez1atO/mpOaiqLTT2I808XC7uuDEVFWbeJk0JpoH7+62XJNPhb
+ 3uEBdIZhTi/GRORCJZ6JOW16W/8nkd0N7tqGJSaCSm5Ip0FFcxC2w+rfWXmvhf9/PqHkE/eclnzJ
+ pUyzKiE53/2pu39f8ayy4PmoIK7+Wz+M3Q4uqZcUXVuY0hSxXSzFZvplGiUheeLMuYRj18+fB8FQ
+ QuOKz1mV99KWcDBjk9+YseVXoQXNnFEe+Nrzu9pPs2TEKE7lapcJLe9NquanPkET8/FK87za3FG6
+ skt/DNhzVfdYAWUP9T27PHqOuCJBUwGYm28JMh2nFvlk1I+LiV5+7u4hYkLyVctr6X6bTKqEODrE
+ hhDtdBZ0Y0hjgg==
+X-Report-Abuse-To: spam@node04.secure-mailgate.com
+X-Complaints-To: abuse@node01.secure-mailgate.com
+Received-SPF: pass client-ip=192.162.87.186; envelope-from=christian@quante.one;
+ helo=nx186.node02.secure-mailgate.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,519 +101,67 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a new guest-get-driver-services command that returns registered
-driver services from the Service Control Manager
-(EnumServicesStatusExW).  Each entry includes the service name,
-configured binary path, current SCM status, and FileVersion and
-CompanyName metadata extracted from the driver binary.
+Hi all,
 
-Normalize driver binary paths from the service database before
-reading version resources, including SystemRoot,
-environment-variable, NT-prefix, and relative path forms.
+I recently learned that QEMU does not accept contributions that include
+AI-generated content (docs/devel/code-provenance.rst, in place since
+June 2025).  I did not know this when I sent my patches.  The code,
+the commit messages and my mails on this list were drafted with
+Anthropic's Claude; I reviewed, corrected and tested them.
 
-Unrecognized SCM service states are reported as "unknown" with a
-log message rather than aborting the enumeration, so that future
-Windows versions do not break the command.
+I apologize for this.  My aim was to make QEMU better at running old
+operating systems and software, not to be disrespectful or to waste
+your time.
 
-Link against version.dll (-lversion) for the GetFileVersionInfo
-and VerQueryValue APIs.
+I withdraw these pending submissions:
 
-Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
----
- qga/commands-win32.c | 364 +++++++++++++++++++++++++++++++++++++++++++
- qga/meson.build      |   5 +-
- qga/qapi-schema.json |  58 +++++++
- 3 files changed, 425 insertions(+), 2 deletions(-)
+- hw/display/cirrus_vga: fix four BitBLT bugs seen with old guest
+  drivers (5 patches)
+  https://lore.kernel.org/qemu-devel/20261018050643.9288-1-christian@quante.one/
+- hw/input/pckbd: raise the keyboard irq for 0xd2 also while disabled
+  https://lore.kernel.org/qemu-devel/20261018051715.12267-1-christian@quante.one/
+- system/memory: keep coalesced MMIO zones when RAM is mapped over them
+  (v1 and v2)
+  https://lore.kernel.org/qemu-devel/20261018051813.12379-1-christian@quante.one/
+  https://lore.kernel.org/qemu-devel/20261027093223.129015-1-christian@quante.one/
 
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-index e01033d8c5..e11260c8f0 100644
---- a/qga/commands-win32.c
-+++ b/qga/commands-win32.c
-@@ -29,6 +29,7 @@
- #include <wininet.h>
- #include <pdh.h>
- #include <dismapi.h>
-+#include <winver.h>
- 
- #include "guest-agent-core.h"
- #include "vss-win32.h"
-@@ -2747,6 +2748,369 @@ out:
-     return head;
- }
- 
-+static GuestDriverServiceStatus ga_driver_service_status(DWORD state)
-+{
-+    switch (state) {
-+    case SERVICE_STOPPED:
-+        return GUEST_DRIVER_SERVICE_STATUS_STOPPED;
-+    case SERVICE_START_PENDING:
-+        return GUEST_DRIVER_SERVICE_STATUS_START_PENDING;
-+    case SERVICE_STOP_PENDING:
-+        return GUEST_DRIVER_SERVICE_STATUS_STOP_PENDING;
-+    case SERVICE_RUNNING:
-+        return GUEST_DRIVER_SERVICE_STATUS_RUNNING;
-+    case SERVICE_CONTINUE_PENDING:
-+        return GUEST_DRIVER_SERVICE_STATUS_CONTINUE_PENDING;
-+    case SERVICE_PAUSE_PENDING:
-+        return GUEST_DRIVER_SERVICE_STATUS_PAUSE_PENDING;
-+    case SERVICE_PAUSED:
-+        return GUEST_DRIVER_SERVICE_STATUS_PAUSED;
-+    default:
-+        return GUEST_DRIVER_SERVICE_STATUS_UNKNOWN;
-+    }
-+}
-+
-+/* Convert an SCM driver path into a path usable by Win32 file APIs. */
-+static WCHAR *ga_resolve_driver_path(const WCHAR *path)
-+{
-+    WCHAR windows_dir[MAX_PATH + 1];
-+    g_autofree WCHAR *trimmed = NULL;
-+    g_autofree WCHAR *expanded = NULL;
-+    const WCHAR *start = path;
-+    const WCHAR *end;
-+    const WCHAR *remainder = NULL;
-+    size_t prefix_len;
-+    size_t path_len;
-+    size_t windows_len;
-+    DWORD expanded_len;
-+    UINT windows_dir_len;
-+
-+    while (*start != L'\0' && iswspace(*start)) {
-+        start++;
-+    }
-+    end = start + wcslen(start);
-+    while (end > start && iswspace(end[-1])) {
-+        end--;
-+    }
-+    if (end - start >= 2 && start[0] == L'"' && end[-1] == L'"') {
-+        start++;
-+        end--;
-+    }
-+    if (end == start) {
-+        return NULL;
-+    }
-+
-+    path_len = end - start;
-+    trimmed = g_new(WCHAR, path_len + 1);
-+    memcpy(trimmed, start, path_len * sizeof(WCHAR));
-+    trimmed[path_len] = L'\0';
-+
-+    expanded_len = ExpandEnvironmentStringsW(trimmed, NULL, 0);
-+    if (expanded_len == 0) {
-+        return NULL;
-+    }
-+    expanded = g_new(WCHAR, expanded_len);
-+    path_len = ExpandEnvironmentStringsW(trimmed, expanded, expanded_len);
-+    if (path_len == 0 || path_len > expanded_len) {
-+        return NULL;
-+    }
-+
-+    prefix_len = wcslen(L"\\SystemRoot");
-+    if (_wcsnicmp(expanded, L"\\SystemRoot", prefix_len) == 0 &&
-+        (expanded[prefix_len] == L'\0' ||
-+         expanded[prefix_len] == L'\\' ||
-+         expanded[prefix_len] == L'/')) {
-+        remainder = expanded + prefix_len;
-+    } else {
-+        prefix_len = wcslen(L"SystemRoot");
-+        if (_wcsnicmp(expanded, L"SystemRoot", prefix_len) == 0 &&
-+            (expanded[prefix_len] == L'\0' ||
-+             expanded[prefix_len] == L'\\' ||
-+             expanded[prefix_len] == L'/')) {
-+            remainder = expanded + prefix_len;
-+        }
-+    }
-+
-+    windows_dir_len = GetWindowsDirectoryW(windows_dir,
-+                                            ARRAY_SIZE(windows_dir));
-+    if (windows_dir_len == 0 || windows_dir_len >= ARRAY_SIZE(windows_dir)) {
-+        return NULL;
-+    }
-+    windows_len = windows_dir_len;
-+
-+    if (remainder != NULL) {
-+        WCHAR *ret = g_new(WCHAR, windows_len + wcslen(remainder) + 1);
-+
-+        memcpy(ret, windows_dir, windows_len * sizeof(WCHAR));
-+        wcscpy(ret + windows_len, remainder);
-+        return ret;
-+    }
-+
-+    if (wcsncmp(expanded, L"\\??\\", 4) == 0) {
-+        expanded[1] = L'\\';
-+
-+        return g_steal_pointer(&expanded);
-+    }
-+
-+    if ((iswalpha(expanded[0]) && expanded[1] == L':') ||
-+        expanded[0] == L'\\') {
-+        return g_steal_pointer(&expanded);
-+    }
-+
-+    path_len = wcslen(expanded);
-+    start = expanded;
-+    while (*start == L'\\' || *start == L'/') {
-+        start++;
-+        path_len--;
-+    }
-+    {
-+        WCHAR *ret = g_new(WCHAR, windows_len + path_len + 2);
-+
-+        memcpy(ret, windows_dir, windows_len * sizeof(WCHAR));
-+        ret[windows_len] = L'\\';
-+        wcscpy(ret + windows_len + 1, start);
-+        return ret;
-+    }
-+}
-+
-+typedef struct QGAVersionTranslation {
-+    WORD language;
-+    WORD code_page;
-+} QGAVersionTranslation;
-+
-+/* Return CompanyName from a localized file-version string table. */
-+static char *ga_get_file_vendor(const void *version_info)
-+{
-+    QGAVersionTranslation *translations = NULL;
-+    static const QGAVersionTranslation fallback = { 0x0409, 0x04b0 };
-+    UINT translations_len = 0;
-+    UINT count = 0;
-+    UINT i;
-+
-+    if (VerQueryValueW(version_info, L"\\VarFileInfo\\Translation",
-+                       (void **)&translations, &translations_len) &&
-+        translations != NULL) {
-+        count = translations_len / sizeof(*translations);
-+    }
-+
-+    for (i = 0; i <= count; i++) {
-+        const QGAVersionTranslation *translation;
-+        WCHAR query[64];
-+        WCHAR *company = NULL;
-+        UINT company_len = 0;
-+        char *vendor;
-+
-+        translation = i < count ? &translations[i] : &fallback;
-+        swprintf(query, ARRAY_SIZE(query),
-+                 L"\\StringFileInfo\\%04x%04x\\CompanyName",
-+                 translation->language, translation->code_page);
-+        if (!VerQueryValueW(version_info, query, (void **)&company,
-+                            &company_len) || company_len <= 1) {
-+            continue;
-+        }
-+        vendor = g_utf16_to_utf8(company, -1, NULL, NULL, NULL);
-+        if (vendor != NULL && vendor[0] != '\0') {
-+            return vendor;
-+        }
-+        g_free(vendor);
-+    }
-+    return NULL;
-+}
-+
-+/* Add optional FileVersion and CompanyName data from a driver binary. */
-+static bool ga_get_driver_file_metadata(const WCHAR *path,
-+                                        GuestDriverService *service,
-+                                        Error **errp)
-+{
-+    g_autofree void *version_info = NULL;
-+    VS_FIXEDFILEINFO *fixed_info = NULL;
-+    PVOID old_redirection = NULL;
-+    DWORD ignored;
-+    DWORD version_size;
-+    UINT fixed_info_len;
-+    bool redirection_disabled;
-+    bool version_loaded = false;
-+
-+    redirection_disabled =
-+        Wow64DisableWow64FsRedirection(&old_redirection);
-+
-+    version_size = GetFileVersionInfoSizeW(path, &ignored);
-+    if (version_size != 0) {
-+        version_info = g_malloc(version_size);
-+        version_loaded = GetFileVersionInfoW(path, 0, version_size,
-+                                             version_info);
-+    }
-+
-+    if (redirection_disabled &&
-+        !Wow64RevertWow64FsRedirection(old_redirection)) {
-+        error_setg_win32(errp, GetLastError(),
-+                         "failed to restore WOW64 filesystem redirection "
-+                         "for driver service '%s'", service->name);
-+        return false;
-+    }
-+
-+    if (!version_loaded) {
-+        return true;
-+    }
-+
-+    if (VerQueryValueW(version_info, L"\\", (void **)&fixed_info,
-+                       &fixed_info_len) &&
-+        fixed_info_len >= sizeof(*fixed_info) &&
-+        fixed_info->dwSignature == VS_FFI_SIGNATURE) {
-+        service->version = g_strdup_printf(
-+            "%u.%u.%u.%u",
-+            HIWORD(fixed_info->dwFileVersionMS),
-+            LOWORD(fixed_info->dwFileVersionMS),
-+            HIWORD(fixed_info->dwFileVersionLS),
-+            LOWORD(fixed_info->dwFileVersionLS));
-+    }
-+
-+    service->vendor = ga_get_file_vendor(version_info);
-+    return true;
-+}
-+
-+/*
-+ * Add optional configuration and binary metadata for one driver service.
-+ * Ordinary per-service lookup failures leave optional fields unset.
-+ */
-+static bool ga_get_driver_service_config(SC_HANDLE manager,
-+                                         const WCHAR *name,
-+                                         GuestDriverService *service,
-+                                         Error **errp)
-+{
-+    SC_HANDLE handle;
-+    g_autofree QUERY_SERVICE_CONFIGW *config = NULL;
-+    g_autofree WCHAR *resolved_path = NULL;
-+    DWORD size = 0;
-+    DWORD err;
-+    bool success = true;
-+
-+    handle = OpenServiceW(manager, name, SERVICE_QUERY_CONFIG);
-+    if (handle == NULL) {
-+        slog("failed to open configuration for driver service '%s', "
-+             "error=%lu", service->name, GetLastError());
-+        return true;
-+    }
-+
-+    QueryServiceConfigW(handle, NULL, 0, &size);
-+    err = GetLastError();
-+    if (err != ERROR_INSUFFICIENT_BUFFER) {
-+        slog("failed to get configuration size for driver service '%s', "
-+             "error=%lu", service->name, err);
-+        goto out;
-+    }
-+
-+    config = g_malloc(size);
-+    if (!QueryServiceConfigW(handle, config, size, &size)) {
-+        slog("failed to get configuration for driver service '%s', "
-+             "error=%lu", service->name, GetLastError());
-+        goto out;
-+    }
-+
-+    if (config->lpBinaryPathName == NULL ||
-+        config->lpBinaryPathName[0] == L'\0') {
-+        goto out;
-+    }
-+
-+    service->driver_path = g_utf16_to_utf8(config->lpBinaryPathName, -1,
-+                                           NULL, NULL, NULL);
-+
-+    resolved_path = ga_resolve_driver_path(config->lpBinaryPathName);
-+    if (resolved_path != NULL &&
-+        !ga_get_driver_file_metadata(resolved_path, service, errp)) {
-+        success = false;
-+    }
-+
-+out:
-+    CloseServiceHandle(handle);
-+    return success;
-+}
-+
-+GuestDriverServiceList *qmp_guest_get_driver_services(Error **errp)
-+{
-+    GuestDriverServiceList *head = NULL, **tail = &head;
-+    g_autofree BYTE *buffer = NULL;
-+    SC_HANDLE manager = NULL;
-+    DWORD buffer_size = 256 * 1024;
-+    DWORD bytes_needed;
-+    DWORD services_returned;
-+    DWORD resume = 0;
-+    DWORD err;
-+    bool complete;
-+    bool success = false;
-+
-+    manager = OpenSCManagerW(NULL, NULL, SC_MANAGER_ENUMERATE_SERVICE);
-+    if (manager == NULL) {
-+        error_setg_win32(errp, GetLastError(),
-+                         "failed to open service control manager");
-+        goto out;
-+    }
-+
-+    buffer = g_malloc(buffer_size);
-+    do {
-+        ENUM_SERVICE_STATUS_PROCESSW *services;
-+        DWORD i;
-+
-+        bytes_needed = 0;
-+        services_returned = 0;
-+        complete = EnumServicesStatusExW(manager, SC_ENUM_PROCESS_INFO,
-+                                         SERVICE_DRIVER, SERVICE_STATE_ALL,
-+                                         buffer, buffer_size, &bytes_needed,
-+                                         &services_returned, &resume, NULL);
-+        if (!complete) {
-+            err = GetLastError();
-+            if (err != ERROR_MORE_DATA) {
-+                error_setg_win32(errp, err,
-+                                 "failed to enumerate driver services");
-+                goto out;
-+            }
-+            if (services_returned == 0) {
-+                error_setg(errp, "driver service enumeration made no "
-+                           "progress (buffer needs %lu bytes)", bytes_needed);
-+                goto out;
-+            }
-+        }
-+
-+        services = (ENUM_SERVICE_STATUS_PROCESSW *)buffer;
-+        for (i = 0; i < services_returned; i++) {
-+            g_autoptr(GuestDriverService) service = NULL;
-+
-+            service = g_new0(GuestDriverService, 1);
-+            service->name = ga_utf16_to_utf8_required(
-+                services[i].lpServiceName, "service name", errp);
-+            if (service->name == NULL) {
-+                goto out;
-+            }
-+            service->status = ga_driver_service_status(
-+                services[i].ServiceStatusProcess.dwCurrentState);
-+            if (service->status == GUEST_DRIVER_SERVICE_STATUS_UNKNOWN) {
-+                slog("driver service '%s' has unknown state %lu",
-+                     service->name,
-+                     services[i].ServiceStatusProcess.dwCurrentState);
-+            }
-+
-+            if (!ga_get_driver_service_config(manager,
-+                                              services[i].lpServiceName,
-+                                              service, errp)) {
-+                goto out;
-+            }
-+            QAPI_LIST_APPEND(tail, g_steal_pointer(&service));
-+        }
-+    } while (!complete);
-+    success = true;
-+
-+out:
-+    if (manager != NULL) {
-+        CloseServiceHandle(manager);
-+    }
-+    if (!success) {
-+        qapi_free_GuestDriverServiceList(head);
-+        head = NULL;
-+    }
-+    return head;
-+}
-+
-+
- char *qga_get_host_name(Error **errp)
- {
-     wchar_t tmp[MAX_COMPUTERNAME_LENGTH + 1];
-diff --git a/qga/meson.build b/qga/meson.build
-index cfa2157efb..15860d938d 100644
---- a/qga/meson.build
-+++ b/qga/meson.build
-@@ -94,8 +94,9 @@ qga_ss = qga_ss.apply({})
- gen_tlb = []
- qga_libs = []
- if host_os == 'windows'
--  qga_libs += ['-lws2_32', '-lwinmm', '-lpowrprof', '-lwtsapi32', '-lwininet', '-liphlpapi', '-lnetapi32',
--               '-lsetupapi', '-lcfgmgr32', '-luserenv', '-lpdh' ]
-+  qga_libs += ['-lws2_32', '-lwinmm', '-lpowrprof', '-lwtsapi32',
-+               '-lwininet', '-liphlpapi', '-lnetapi32', '-lsetupapi',
-+               '-lcfgmgr32', '-luserenv', '-lpdh', '-lversion' ]
-   if have_qga_vss
-     qga_libs += ['-lole32', '-loleaut32', '-lshlwapi', '-Wl,--enable-stdcall-fixup']
-     subdir('vss-win32')
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 081c99bc74..913fe25924 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -1590,6 +1590,33 @@
-   'returns': ['GuestDeviceInfo'],
-   'if': 'CONFIG_WIN32' }
- 
-+##
-+# @GuestDriverServiceStatus:
-+#
-+# @stopped: the service is stopped
-+#
-+# @start-pending: the service is starting
-+#
-+# @stop-pending: the service is stopping
-+#
-+# @running: the service is running
-+#
-+# @continue-pending: the service is resuming
-+#
-+# @pause-pending: the service is pausing
-+#
-+# @paused: the service is paused
-+#
-+# @unknown: SCM returned a service state not recognized by this
-+#     QGA version
-+#
-+# Since: 11.2
-+##
-+{ 'enum': 'GuestDriverServiceStatus',
-+  'data': [ 'stopped', 'start-pending', 'stop-pending', 'running',
-+            'continue-pending', 'pause-pending', 'paused', 'unknown' ],
-+  'if': 'CONFIG_WIN32' }
-+
- ##
- # @GuestDriverPackage:
- #
-@@ -1610,6 +1637,26 @@
-             '*vendor': 'str' },
-   'if': 'CONFIG_WIN32' }
- 
-+##
-+# @GuestDriverService:
-+#
-+# @name: service name
-+#
-+# @driver-path: driver binary path configured in the service database
-+#
-+# @version: four-part FileVersion from the driver binary
-+#
-+# @vendor: CompanyName from the driver binary
-+#
-+# @status: current service status
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'GuestDriverService',
-+  'data': { 'name': 'str', '*driver-path': 'str', '*version': 'str',
-+            '*vendor': 'str', 'status': 'GuestDriverServiceStatus' },
-+  'if': 'CONFIG_WIN32' }
-+
- ##
- # @guest-get-driver-packages:
- #
-@@ -1621,6 +1668,17 @@
-   'returns': ['GuestDriverPackage'],
-   'if': 'CONFIG_WIN32' }
- 
-+##
-+# @guest-get-driver-services:
-+#
-+# Retrieve registered driver services in the guest.
-+#
-+# Since: 11.2
-+##
-+{ 'command': 'guest-get-driver-services',
-+  'returns': ['GuestDriverService'],
-+  'if': 'CONFIG_WIN32' }
-+
- ##
- # @GuestAuthorizedKeys:
- #
--- 
-2.55.0
+Zoltan and Philippe, I am sorry that I cannot follow up on your
+reviews of these patches.
 
+The following patches were made the same way and are already merged,
+some of them also in stable releases:
+
+- hw/block/fdc: do not claim a diskette that is not there (2 patches,
+  since 11.1.0)
+  https://lore.kernel.org/qemu-devel/20260714164031.60551-1-christian@quante.one/
+- hw/input/ps2: answer unknown mouse commands with a resend (2 patches;
+  the first one also in the stable releases since 11.1.2, 11.0.5 and
+  10.0.14)
+  https://lore.kernel.org/qemu-devel/20260825075127.34876-1-christian@quante.one/
+- tests/qtest/fdc-test: give each test case its own instance (3 patches)
+  https://lore.kernel.org/qemu-devel/20260822104329.42121-1-christian@quante.one/
+- hw/block/fdc: account for read and write requests
+  https://lore.kernel.org/qemu-devel/20260824114216.231916-1-christian@quante.one/
+- tests/qtest/fdc-test: check block accounting of non-DMA reads
+  https://lore.kernel.org/qemu-devel/20261011081433.73397-1-christian@quante.one/
+- ui/dbus: send a Scanout before the first Update of a new surface
+  (2 patches)
+  https://lore.kernel.org/qemu-devel/20261022134335.12241-1-christian@quante.one/
+
+The same applies to my Tested-by for "target/i386: Update cc_op for
+SAHF" and the issues #3959 and #3971.
+
+Whether you keep or revert the merged patches is your decision; I will
+not object to a revert.  Now that I know the policy, I will of course
+respect it.
+
+Regards,
+Christian Quante
 
