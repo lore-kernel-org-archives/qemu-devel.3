@@ -1,51 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02B2606A339
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6019C606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=fMUIxDgt
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Q7ehl9OK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Bp-00077i-ME; Mon, 16 Nov 2026 15:20:35 -0500
+	id 1xT3J0-0003E2-OC; Mon, 16 Nov 2026 15:27:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Bh-0006re-Kl; Mon, 16 Nov 2026 15:20:25 -0500
+ id 1xT3Is-0002Vq-Be; Mon, 16 Nov 2026 15:27:51 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Be-0007z8-SH; Mon, 16 Nov 2026 15:20:25 -0500
+ id 1xT3Iq-0001So-MF; Mon, 16 Nov 2026 15:27:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860369; bh=ql2u+W5JWE+vYt4BOaT825XscfxCXLTrI0HeJ3yrqxY=;
+ t=1794860764; bh=ANEyYj4q13neqA8L6r5lsRnbAzusxPUZ+KNpTZFU5Jk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fMUIxDgtgKDWqsD9m5DvG+8X8XV/pQIyA+80Esgh9dJuTFLoGCEQqcYAEb9wL9rAa
- TYlBcsy7K8FPh8eHd8K88yDlKvPMBHVzxBjmigtU/EL9BEsDVYYoaD4LnKSV5Hbp1Y
- MEwIC9Mxo4gOdorNqV14viS1fugE45u/prThfARqirHVrEJq+dW/5OVoXxvLbQKGPF
- cOHF7pQxTkf1FanyFBKOhxdaa1eLh1q0aKF8WP7fm11YNn2ynY3frahNdR3yF5L1EE
- dM4QMePNVrUYHaoh+nUAEx57JhJbK2dZQrGY6QjuPd6QMWMOoz2GKxMb2RjxwN4ioA
- 8YnMtqFFoh1qA==
+ b=Q7ehl9OKZEJ/g1v7V+Zqnk29uua24iiqcyhu/r6cI4Rh6UjKCmOJ8Z0lII7viRE7I
+ MLtV+0gewm6ap5vrsqIA0BzZjlujA8cGDNyQYrfNQWutgY8jTYZxWaNq1Xh9L0DHL4
+ GVYDAbKuHAnHAEbHh/7Bu1PYOuB0raRhh1VHpXIWketljlaB1oAwZ68eBxr/5nWaBr
+ 9iC+kUP/BzWGPx16Y7Rb8F815OgaCDtlEUJYZtJO8NJ1rUNtwxTg9VP44B6wP8ZrzP
+ yfWU6aZk4r+IwDw+SiPSG7mlX5QgF7w0Du4KeymFOzwR+VP3+BJi+Pkksu9l9oUqDj
+ TNVynZfSwz6Xg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AAAA71E7145;
- Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 265F01E71AB;
+ Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A74E445FB7B;
- Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2400745FBD7;
+ Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 69B39B8DEC; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ id A978AB8E72; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Daejun Park <daejun7.park@samsung.com>,
- Stanley Jhu <stanleyjhu@google.com>, Jeuk Kim <jeuk20.kim@samsung.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 15/59] hw/ufs: Check the PRDT size against the
- transfer length of the CDB
-Date: Mon, 16 Nov 2026 23:18:19 +0300
-Message-ID: <20261116201922.534306-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Keith Monahan <keith@techtravels.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 22/63] target/hppa: Use 32-bit load of PSW in rsm and
+ ssm
+Date: Mon, 16 Nov 2026 23:25:01 +0300
+Message-ID: <20261116202554.535325-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
-References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
+References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -75,302 +74,50 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Keith Monahan <keith@techtravels.org>
 
-scsi-hd moves as many bytes as the SG list of a request holds, and
-ufs-lu builds that list from the whole PRDT. When the PRDT is larger
-than the transfer length in the CDB, a WRITE writes more blocks than
-the CDB names and a READ reads more. A one-block WRITE(10) at LBA 0
-with an 8 KiB PRDT also wrote LBA 1, and its response reported no
-residual. A UFS device transfers what the CDB asks for and reports the
-rest of the Expected Data Transfer Length as a residual.
+Since commit ebc9401a4067 ("target/hppa: Split PSW X and B into their
+own field") env->psw is a uint32_t followed by psw_xb, but trans_rsm()
+and trans_ssm() still read it with a 64-bit load.
 
-The commands that scsi-hd emulates had their residual computed against
-the PRDT too: an INQUIRY with an allocation length of 36, a 4 KiB PRDT
-and an Expected Data Transfer Length of 4096 reported an overflow of
-4294959176 bytes. It now reports an underflow of 4060.
+On a big-endian host the low half of that load is psw_xb, so the value
+passed to swap_system_mask() has none of the current system mask bits.
+SSM and RSM therefore clear every PSW system mask bit except those named
+in the instruction. For example, "ssm 2,r0" with PSW_Q set clears Q, and
+the next interruption does not record IIR, ISR and IOR. This makes the
+hppa-fpu-test dtlb-load case fail on s390x hosts.
 
-When the PRDT is smaller than the transfer length, scsi-hd moved what it
-holds and the request completed without an error, for example a
-two-block WRITE(10) with a 4 KiB PRDT. Such a request now fails with OCS
-MISMATCH DATA BUFFER SIZE, as one without a PRDT does. As in
-virtio-scsi, the PRDT is compared with the transfer length of the CDB,
-which for commands that return data is the allocation length, and before
-scsi-hd checks the CDB.
+Load only the 32-bit psw field.
 
-The new ufs_fit_data_buffer() in ufs.c, where the SG list is built from
-the PRDT, cuts a longer list and reports a shorter one; ufs-lu passes it
-the transfer length that scsi_req_new() parsed. The HID qtest wrote
-eight blocks from a one-block buffer, so give it eight blocks. The new
-long-prdt and short-prdt qtests failed before this change.
-
-Fixes: 2a8b36a4967d ("hw/ufs: Support for UFS logical unit")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Stanley Jhu <stanleyjhu@google.com>
-Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit f9e0f4d949a0cec465e5f40ce8721b49b7850371)
-(Mjt: fix context in hw/ufs/ufs.h and drop a hunk in tests/qtest/ufs-test.c)
+Fixes: ebc9401a4067 ("target/hppa: Split PSW X and B into their own field")
+Cc: qemu-stable@nongnu.org  # v9.1+
+Signed-off-by: Keith Monahan <keith@techtravels.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit e0c80f0b9ca5792a91a0d14d09c3da05641d8402)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index b74f1186bfe..9434229f4cd 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -280,15 +280,19 @@ static UfsReqResult ufs_process_scsi_cmd(UfsLu *lu, UfsRequest *req)
-                             req);
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 002189ddfbd..4415eb73df7 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -2367,7 +2367,7 @@ static bool trans_rsm(DisasContext *ctx, arg_rsm *a)
+     nullify_over(ctx);
  
-     /*
--     * A command that moves data needs a PRDT. Without one there is no SG
--     * list, and the SCSI layer would call the transfer_data callback, which
--     * ufs-lu does not set. Fail the request with OCS MISMATCH DATA BUFFER
--     * SIZE, as virtio-scsi fails a buffer that does not match the command.
--     * A request that reports a pending unit attention instead moves no data;
--     * its sense is already set, so let it through and the guest sees the UA.
-+     * scsi-hd moves as many bytes as the SG list holds, and without an SG
-+     * list it would call the transfer_data callback, which ufs-lu does not
-+     * set. A UFS device moves what the CDB asks for, so fit the PRDT to the
-+     * transfer length, and fail a request whose PRDT describes less, a
-+     * missing PRDT included, with OCS MISMATCH DATA BUFFER SIZE, as
-+     * virtio-scsi fails a buffer that does not match the command. The
-+     * response reports the rest of the Expected Data Transfer Length as a
-+     * residual. A request that reports a pending unit attention moves no
-+     * data; its sense is already set, so let it through and the guest sees
-+     * the UA.
-      */
--    if (scsi_req->cmd.mode != SCSI_XFER_NONE && !req->sg &&
--        !scsi_req->sense_len) {
-+    if (!scsi_req->sense_len &&
-+        !ufs_fit_data_buffer(req, scsi_req->cmd.xfer)) {
-         scsi_req_unref(scsi_req);
-         return UFS_REQUEST_MISMATCH_DATA_BUF;
-     }
-diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 6f7ea9c95f2..fa29dd6c8ec 100644
---- a/hw/ufs/trace-events
-+++ b/hw/ufs/trace-events
-@@ -19,6 +19,7 @@ ufs_mcq_create_cq(uint8_t cqid, uint64_t addr, uint16_t size) "mcq create cq cqi
- ufs_err_dma_read_utrd(uint32_t slot, uint64_t addr) "failed to read utrd. UTRLDBR slot %"PRIu32", UTRD dma addr %"PRIu64""
- ufs_err_dma_read_req_upiu(uint32_t slot, uint64_t addr) "failed to read req upiu. UTRLDBR slot %"PRIu32", request upiu addr %"PRIu64""
- ufs_err_dma_read_prdt(uint32_t slot, uint64_t addr) "failed to read prdt. UTRLDBR slot %"PRIu32", prdt addr %"PRIu64""
-+ufs_err_mismatch_data_buf(uint32_t slot, uint8_t task_tag, uint64_t xfer, uint64_t prdt_size) "slot %"PRIu32", task tag %"PRIu8", transfer length %"PRIu64", PRDT %"PRIu64""
- ufs_err_dma_read_sq(uint8_t sqid, uint64_t addr) "failed to read sq entry. sqid %"PRIu8", hwaddr %"PRIu64""
- ufs_err_dma_write_utrd(uint32_t slot, uint64_t addr) "failed to write utrd. UTRLDBR slot %"PRIu32", UTRD dma addr %"PRIu64""
- ufs_err_dma_write_rsp_upiu(uint32_t slot, uint64_t addr) "failed to write rsp upiu. UTRLDBR slot %"PRIu32", response upiu addr %"PRIu64""
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index f7de13f6972..3fd3db10423 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -232,6 +232,41 @@ static MemTxResult ufs_dma_read_prdt(UfsRequest *req)
-     return MEMTX_OK;
- }
+     tmp = tcg_temp_new_i64();
+-    tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
++    tcg_gen_ld32u_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
+     tcg_gen_andi_i64(tmp, tmp, ~a->i);
+     gen_helper_swap_system_mask(tmp, tcg_env, tmp);
+     save_gpr(ctx, a->t, tmp);
+@@ -2387,7 +2387,7 @@ static bool trans_ssm(DisasContext *ctx, arg_ssm *a)
+     nullify_over(ctx);
  
-+/*
-+ * Fit the SG list built from the PRDT to the len bytes that the command of
-+ * req moves: keep only the first len bytes of a longer list. Return false if
-+ * the PRDT describes fewer than len bytes.
-+ */
-+bool ufs_fit_data_buffer(UfsRequest *req, uint64_t len)
-+{
-+    QEMUSGList *prdt_sg = req->sg;
-+    uint64_t prdt_size = prdt_sg ? prdt_sg->size : 0;
-+    QEMUSGList *sg;
-+    int i;
-+
-+    if (prdt_size < len) {
-+        trace_ufs_err_mismatch_data_buf(req->slot,
-+                                        req->req_upiu.header.task_tag, len,
-+                                        prdt_size);
-+        return false;
-+    }
-+    if (prdt_size == len) {
-+        return true;
-+    }
-+
-+    sg = g_new0(QEMUSGList, 1);
-+    qemu_sglist_init(sg, prdt_sg->dev, prdt_sg->nsg, prdt_sg->as);
-+    for (i = 0; i < prdt_sg->nsg && sg->size < len; i++) {
-+        qemu_sglist_add(sg, prdt_sg->sg[i].base,
-+                        MIN(prdt_sg->sg[i].len, len - sg->size));
-+    }
-+    qemu_sglist_destroy(prdt_sg);
-+    g_free(prdt_sg);
-+    req->sg = sg;
-+    req->data_len = sg->size;
-+    return true;
-+}
-+
- static MemTxResult ufs_dma_read_upiu(UfsRequest *req)
- {
-     MemTxResult ret;
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 7cf30af00f3..e4a7e4ff8d3 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -250,5 +250,6 @@ void ufs_build_upiu_header(UfsRequest *req, uint8_t trans_type, uint8_t flags,
-                            uint16_t data_segment_length);
- void ufs_build_query_response(UfsRequest *req);
- void ufs_complete_req(UfsRequest *req, UfsReqResult req_result);
-+bool ufs_fit_data_buffer(UfsRequest *req, uint64_t len);
- void ufs_init_wlu(UfsLu *wlu, uint8_t wlun);
- #endif /* HW_UFS_UFS_H */
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index 451737c1ac3..95f71a15b17 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -858,6 +858,142 @@ static void ufstest_sync_cache(void *obj, void *data, QGuestAllocator *alloc)
-     ufs_exit(ufs, alloc);
- }
- 
-+static void ufstest_long_prdt(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
-+        REQUEST_SENSE,
-+    };
-+    /* One block at LBA 0 and at LBA 1 */
-+    const uint8_t write_lba0_cdb[UFS_CDB_SIZE] = {
-+        WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00,
-+    };
-+    const uint8_t read_lba0_cdb[UFS_CDB_SIZE] = {
-+        READ_10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00,
-+    };
-+    const uint8_t read_lba1_cdb[UFS_CDB_SIZE] = {
-+        READ_10, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01, 0x00,
-+    };
-+    /* Allocation length 36 */
-+    const uint8_t inquiry_cdb[UFS_CDB_SIZE] = {
-+        INQUIRY, 0x00, 0x00, 0x00, 0x24, 0x00,
-+    };
-+    uint8_t buf[2 * 4096];
-+    uint8_t zero_buf[4096] = { 0 };
-+    uint8_t write_buf[2 * 4096];
-+    UtpUpiuRsp rsp_upiu, write_rsp_upiu;
-+    enum UtpOcsCodes ocs;
-+
-+    ufs_init(ufs, alloc);
-+    ocs = ufs_send_scsi_command(ufs, 1, request_sense_cdb, NULL, 0, buf, 4096,
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+
-+    /* A one-block WRITE with a two-block PRDT writes one block */
-+    memset(write_buf, 0xa5, sizeof(write_buf));
-+    ocs = ufs_send_scsi_command(ufs, 1, write_lba0_cdb, write_buf,
-+                                sizeof(write_buf), NULL, 0, &write_rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(write_rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    ocs = ufs_send_scsi_command(ufs, 1, read_lba1_cdb, NULL, 0, buf, 4096,
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpmem(buf, 4096, zero_buf, sizeof(zero_buf));
-+
-+    g_assert_cmpuint(write_rsp_upiu.header.flags, ==, UFS_UPIU_FLAG_UNDERFLOW);
-+    g_assert_cmpuint(be32_to_cpu(write_rsp_upiu.sr.residual_transfer_count),
-+                     ==, 4096);
-+
-+    /* A one-block READ with a two-block PRDT reads one block */
-+    ocs = ufs_send_scsi_command(ufs, 1, read_lba0_cdb, NULL, 0, buf,
-+                                sizeof(buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(rsp_upiu.header.flags, ==, UFS_UPIU_FLAG_UNDERFLOW);
-+    g_assert_cmpuint(be32_to_cpu(rsp_upiu.sr.residual_transfer_count), ==,
-+                     4096);
-+    g_assert_cmpmem(buf, 4096, write_buf, 4096);
-+
-+    /* A 36-byte INQUIRY with a 4 KiB PRDT reports the rest as a residual */
-+    ocs = ufs_send_scsi_command(ufs, 1, inquiry_cdb, NULL, 0, buf, 4096,
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(rsp_upiu.header.flags, ==, UFS_UPIU_FLAG_UNDERFLOW);
-+    g_assert_cmpuint(be32_to_cpu(rsp_upiu.sr.residual_transfer_count), ==,
-+                     4096 - 36);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+static void ufstest_short_prdt(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
-+        REQUEST_SENSE,
-+    };
-+    /* Two blocks at LBA 2, and one */
-+    const uint8_t write_2_cdb[UFS_CDB_SIZE] = {
-+        WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x02, 0x00,
-+    };
-+    const uint8_t read_2_cdb[UFS_CDB_SIZE] = {
-+        READ_10, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x02, 0x00,
-+    };
-+    const uint8_t write_1_cdb[UFS_CDB_SIZE] = {
-+        WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x01, 0x00,
-+    };
-+    const uint8_t read_1_cdb[UFS_CDB_SIZE] = {
-+        READ_10, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x01, 0x00,
-+    };
-+    /* Allocation length 36 */
-+    const uint8_t inquiry_cdb[UFS_CDB_SIZE] = {
-+        INQUIRY, 0x00, 0x00, 0x00, 0x24, 0x00,
-+    };
-+    uint8_t buf[4096];
-+    uint8_t zero_buf[4096] = { 0 };
-+    uint8_t write_buf[4096];
-+    UtpUpiuRsp rsp_upiu;
-+    enum UtpOcsCodes ocs;
-+
-+    ufs_init(ufs, alloc);
-+    ocs = ufs_send_scsi_command(ufs, 1, request_sense_cdb, NULL, 0, buf, 4096,
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    memset(write_buf, 0x5a, sizeof(write_buf));
-+
-+    /* A PRDT that describes less than the command moves fails */
-+    ocs = ufs_send_scsi_command(ufs, 1, write_2_cdb, write_buf,
-+                                sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
-+    ocs = ufs_send_scsi_command(ufs, 1, read_2_cdb, NULL, 0, buf, sizeof(buf),
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
-+    ocs = ufs_send_scsi_command(ufs, 1, inquiry_cdb, NULL, 0, buf, 16,
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
-+
-+    /* The failed WRITE wrote nothing */
-+    ocs = ufs_send_scsi_command(ufs, 1, read_1_cdb, NULL, 0, buf, sizeof(buf),
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpmem(buf, sizeof(buf), zero_buf, sizeof(zero_buf));
-+
-+    /* A matching PRDT still works */
-+    ocs = ufs_send_scsi_command(ufs, 1, write_1_cdb, write_buf,
-+                                sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ocs = ufs_send_scsi_command(ufs, 1, read_1_cdb, NULL, 0, buf, sizeof(buf),
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpmem(buf, sizeof(buf), write_buf, sizeof(write_buf));
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
- static void ufstest_mcq_cq_wraparound(void *obj, void *data,
-                                       QGuestAllocator *alloc)
- {
-@@ -1363,6 +1499,8 @@ static void ufs_register_nodes(void)
-     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
-     qos_add_test("no-prdt", "ufs", ufstest_no_prdt, &io_test_opts);
-     qos_add_test("sync-cache", "ufs", ufstest_sync_cache, &io_test_opts);
-+    qos_add_test("long-prdt", "ufs", ufstest_long_prdt, &io_test_opts);
-+    qos_add_test("short-prdt", "ufs", ufstest_short_prdt, &io_test_opts);
-     qos_add_test("mcq-cq-wraparound", "ufs", ufstest_mcq_cq_wraparound,
-                  &mcq_test_opts);
-     qos_add_test("query-flag", "ufs", ufstest_query_flag_request,
+     tmp = tcg_temp_new_i64();
+-    tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
++    tcg_gen_ld32u_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
+     tcg_gen_ori_i64(tmp, tmp, a->i);
+     gen_helper_swap_system_mask(tmp, tcg_env, tmp);
+     save_gpr(ctx, a->t, tmp);
 -- 
 2.47.3
 
