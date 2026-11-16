@@ -1,60 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A68606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8146F606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Yd5RjTD2
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=BWHwL9b9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT567-0004M6-Mu; Mon, 16 Nov 2026 17:22:47 -0500
+	id 1xT56C-0004jf-Tw; Mon, 16 Nov 2026 17:22:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55r-0003wo-7C
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:32 -0500
+ id 1xT562-000487-0K
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55o-00062A-W5
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:30 -0500
+ id 1xT560-00064I-Cw
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794867747;
+ s=mimecast20190719; t=1794867759;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jY7cwWDnssXWxeK/VSmybTy70JOwXP4zGPZ9rVcDbc8=;
- b=Yd5RjTD2Ryq6biEdkQ7cK50MjypwzRJdOJzu7S4kKyB/uEKs/coDAkbTJVLKGx+Ijy3x7p
- hPtww9ZuZl4jp4EKCf65qImW8z5HkduY5jyxvY8FcsOR9a9eKLeHnbbVeylPF+lcDDmkJo
- N57jICk3+kR3Yl+460sW6NZ3hbwYMGc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=AhY1Ul04wOAeLuH+FICgn5g0ASX25eUaNXlPqjB5lMo=;
+ b=BWHwL9b9XKnIbXyE/Z9d6E5ghNg7hP0GTNSZSZ8bFvmJJatfph2r/9BPYA98HW2/DUu4aI
+ bxqZxkvEQ2OP1+NaOAgYJdfykUqISkN5wD8K4jDXgaB9FtnlhVx+9QokkPboaYRu6ZHqY6
+ YWVfAeEETKGfsQCncpbYxCervYyi09E=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-BmQW0VNKMnuF6yWhZizoZQ-1; Mon,
- 16 Nov 2026 17:22:25 -0500
-X-MC-Unique: BmQW0VNKMnuF6yWhZizoZQ-1
-X-Mimecast-MFC-AGG-ID: BmQW0VNKMnuF6yWhZizoZQ_1794867744
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-0xMIXA1ENy-uIwwkr4vMQw-1; Mon,
+ 16 Nov 2026 17:22:38 -0500
+X-MC-Unique: 0xMIXA1ENy-uIwwkr4vMQw-1
+X-Mimecast-MFC-AGG-ID: 0xMIXA1ENy-uIwwkr4vMQw_1794867757
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5084195607A
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:24 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 78FA11956072
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:37 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E83D930001A2; Mon, 16 Nov 2026 22:22:23 +0000 (UTC)
+ id 8F8783001DAC; Mon, 16 Nov 2026 22:22:36 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 16/26] hw/tpm: mark all TPM implementations as secure
-Date: Mon, 16 Nov 2026 22:21:48 +0000
-Message-ID: <20261116222158.2840471-17-berrange@redhat.com>
+Subject: [PULL 25/26] hw/input: mark PS/2 and PC Keyboard devices as secure
+Date: Mon, 16 Nov 2026 22:21:57 +0000
+Message-ID: <20261116222158.2840471-26-berrange@redhat.com>
 In-Reply-To: <20261116222158.2840471-1-berrange@redhat.com>
 References: <20261116222158.2840471-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -90,92 +90,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-All of the TPM implementations are in scope of virtualization
-usage, so mark them all as secure.
+These are part of the baseline x86 featureset so required for
+virtualization use cases.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/ppc/spapr_tpm_proxy.c | 1 +
- hw/tpm/tpm_crb.c         | 1 +
- hw/tpm/tpm_spapr.c       | 1 +
- hw/tpm/tpm_tis_i2c.c     | 1 +
- hw/tpm/tpm_tis_isa.c     | 1 +
- hw/tpm/tpm_tis_sysbus.c  | 1 +
- 6 files changed, 6 insertions(+)
+ hw/input/pckbd.c | 3 ++-
+ hw/input/ps2.c   | 6 ++++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/hw/ppc/spapr_tpm_proxy.c b/hw/ppc/spapr_tpm_proxy.c
-index 19889e80bc1..bb6efec20c9 100644
---- a/hw/ppc/spapr_tpm_proxy.c
-+++ b/hw/ppc/spapr_tpm_proxy.c
-@@ -166,6 +166,7 @@ static const TypeInfo spapr_tpm_proxy_info = {
-     .parent        = TYPE_DEVICE,
-     .instance_size = sizeof(SpaprTpmProxy),
-     .class_init    = spapr_tpm_proxy_class_init,
+diff --git a/hw/input/pckbd.c b/hw/input/pckbd.c
+index b09c3bce933..0250252cd67 100644
+--- a/hw/input/pckbd.c
++++ b/hw/input/pckbd.c
+@@ -766,7 +766,8 @@ static const TypeInfo i8042_mmio_info = {
+     .parent        = TYPE_SYS_BUS_DEVICE,
+     .instance_init = i8042_mmio_init,
+     .instance_size = sizeof(MMIOKBDState),
+-    .class_init    = i8042_mmio_class_init
++    .class_init    = i8042_mmio_class_init,
 +    .secure        = true,
  };
  
- static void spapr_tpm_proxy_register_types(void)
-diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index 78db2205207..ab6121ed9e6 100644
---- a/hw/tpm/tpm_crb.c
-+++ b/hw/tpm/tpm_crb.c
-@@ -558,6 +558,7 @@ static const TypeInfo tpm_crb_info = {
-     .parent = TYPE_DEVICE,
-     .instance_size = sizeof(CRBState),
-     .class_init  = tpm_crb_class_init,
-+    .secure = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_TPM_IF },
-         { }
-diff --git a/hw/tpm/tpm_spapr.c b/hw/tpm/tpm_spapr.c
-index 19075d1f012..3957c5268b7 100644
---- a/hw/tpm/tpm_spapr.c
-+++ b/hw/tpm/tpm_spapr.c
-@@ -414,6 +414,7 @@ static const TypeInfo tpm_spapr_info = {
-     .parent        = TYPE_VIO_SPAPR_DEVICE,
-     .instance_size = sizeof(SpaprTpmState),
-     .class_init    = tpm_spapr_class_init,
+ void i8042_isa_mouse_fake_event(ISAKBDState *isa)
+diff --git a/hw/input/ps2.c b/hw/input/ps2.c
+index 01af4350b3b..9d96dddde66 100644
+--- a/hw/input/ps2.c
++++ b/hw/input/ps2.c
+@@ -1293,7 +1293,8 @@ static const TypeInfo ps2_kbd_info = {
+     .name          = TYPE_PS2_KBD_DEVICE,
+     .parent        = TYPE_PS2_DEVICE,
+     .instance_size = sizeof(PS2KbdState),
+-    .class_init    = ps2_kbd_class_init
++    .class_init    = ps2_kbd_class_init,
 +    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_TPM_IF },
-         { }
-diff --git a/hw/tpm/tpm_tis_i2c.c b/hw/tpm/tpm_tis_i2c.c
-index b4f258c7bcb..302296affb6 100644
---- a/hw/tpm/tpm_tis_i2c.c
-+++ b/hw/tpm/tpm_tis_i2c.c
-@@ -551,6 +551,7 @@ static const TypeInfo tpm_tis_i2c_info = {
-     .name          = TYPE_TPM_TIS_I2C,
-     .parent        = TYPE_I2C_SLAVE,
-     .instance_size = sizeof(TPMStateI2C),
+ };
+ 
+ static void ps2_mouse_class_init(ObjectClass *klass, const void *data)
+@@ -1313,7 +1314,8 @@ static const TypeInfo ps2_mouse_info = {
+     .name          = TYPE_PS2_MOUSE_DEVICE,
+     .parent        = TYPE_PS2_DEVICE,
+     .instance_size = sizeof(PS2MouseState),
+-    .class_init    = ps2_mouse_class_init
++    .class_init    = ps2_mouse_class_init,
 +    .secure        = true,
-     .class_init    = tpm_tis_i2c_class_init,
-         .interfaces = (const InterfaceInfo[]) {
-         { TYPE_TPM_IF },
-diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
-index 2b1267133ac..da3a932b033 100644
---- a/hw/tpm/tpm_tis_isa.c
-+++ b/hw/tpm/tpm_tis_isa.c
-@@ -187,6 +187,7 @@ static const TypeInfo tpm_tis_isa_info = {
-     .instance_size = sizeof(TPMStateISA),
-     .instance_init = tpm_tis_isa_initfn,
-     .class_init  = tpm_tis_isa_class_init,
-+    .secure = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_TPM_IF },
-         { TYPE_ACPI_DEV_AML_IF },
-diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
-index a7b0002d826..0afb52c3be3 100644
---- a/hw/tpm/tpm_tis_sysbus.c
-+++ b/hw/tpm/tpm_tis_sysbus.c
-@@ -167,6 +167,7 @@ static const TypeInfo tpm_tis_sysbus_info = {
-     .instance_init = tpm_tis_sysbus_initfn,
-     .instance_finalize = tpm_tis_sysbus_finalize,
-     .class_init  = tpm_tis_sysbus_class_init,
-+    .secure = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_TPM_IF },
-         { }
+ };
+ 
+ static void ps2_init(Object *obj)
 -- 
 2.56.1
 
