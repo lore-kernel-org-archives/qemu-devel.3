@@ -1,48 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CAD606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8616606A323
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=lLpdmb+Z
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=wGgCxj9d
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3ND-0002D6-ME; Mon, 16 Nov 2026 15:32:24 -0500
+	id 1xT3OB-0003jN-EY; Mon, 16 Nov 2026 15:33:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Kt-0008Dc-5v; Mon, 16 Nov 2026 15:29:56 -0500
+ id 1xT3MX-0001Zt-1P; Mon, 16 Nov 2026 15:31:37 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Kr-0001jK-0d; Mon, 16 Nov 2026 15:29:54 -0500
+ id 1xT3M9-0003S7-DM; Mon, 16 Nov 2026 15:31:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860765; bh=qp+01s8Vk0FRwOAOhhZUFRw2b3XFkOYkCbQL+UX90vI=;
+ t=1794860766; bh=7CeJxmpr5Abod75RRn1RmnmkHpVN6S6Vq4KZBIlFeQE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lLpdmb+ZWkbCTAKMNOqATqWOHFv8TURjUzH1gZGsgUQEscmLWcy9+A+hLYKH7YnFj
- TGxjAStiHKfuKQhNNwStbUPvC4sU4RwDXGVZ2R2tP/ykXgBRU+HFd8V4p62MEVKj77
- BusHFmql+OleWN3BEaLLyBWE+ICZR7J8xLvDjBBQDFkhdzhSKRuGEebrXIaO7vX+kl
- QjYYQkQcMLh2KlvO8icWucCZGFTy4BAc037tNVa5URtUSwYftV8n6MgFeeaSQ3Ja2F
- uYodGp/v08sT2tFoK8AWA0bWwbBhzz2chP41IqfOZUSi/AgGa66dh5E145E0U4KBNC
- Cr5wPr3Pj2/tQ==
+ b=wGgCxj9dbfCe7i4tyvayX666NWcXjH4/JYQ4A1ApWUVdbbeISaJwH4No4HI7oFYle
+ Iy7fSGutwXAw9/FUjyC+4yEtsyg5nX6P5UDIRmKX+ohGWG5Z4W6zYv2yQFUMvOppbs
+ i+V/aRewCX1ECAVV6AH+nnaaTEJJ5X8WzDb5mvpDZHIQ0/iW/D+T5LkoWQPfwfPtQl
+ 14f5/mhehBlFFQwbAoUAqtoMnWZiFZfnysR9PufnTvz30TJvbG7p5q6cLhe1IHsDf2
+ U8hcokwQiCuKht0tN/t2zr+RJ+EX4/dzz4jnBwMkU/rAyBOnvu1gmM142EA6eEnF7T
+ IVTFiA+/lXaPg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7A3D91E71BF;
- Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D13BB1E71C6;
+ Mon, 16 Nov 2026 23:26:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 77AF945FBEB;
- Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CDC1E45FBF2;
+ Mon, 16 Nov 2026 23:26:06 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 423EAB8E9A; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
+ id C5A3AB8EA8; Mon, 16 Nov 2026 23:26:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 42/63] target/arm/ptw: check XN for ARMv6 in
- get_S1prot()
-Date: Mon, 16 Nov 2026 23:25:21 +0300
-Message-ID: <20261116202554.535325-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 49/63] block/vmdk: Avoid reading off the end of
+ descriptor memory
+Date: Mon, 16 Nov 2026 23:25:28 +0300
+Message-ID: <20261116202554.535325-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -76,53 +75,60 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The XN bits are supported in all ARMv6 and onward VMSA translation
-tables, but we were ignoring them unless the CPU was at least v7.
+In vmdk_parent_open() and vmdk_read_cid(), we read DESC_SIZE bytes
+from the image file into a malloc'd buffer, and then look through it
+for a keyword using strstr().  If found, we skip past the keyword and
+attempt to parse a value from the next part of the buffer.  However,
+we failed to check whether the end of the keyword is right at the end
+of the buffer, and so a malicious image can cause us to read off the
+end when parsing the value part.
 
-For the ARM_FEATURE_V6 case, we retrieve the AP and XN bits in
-get_phys_addr_v6() but we don't check the XN bit in get_S1prot().
-Since you can't validly get to get_S1prot() except via
-get_phys_addr_v6() or get_phys_addr_lpae(), we can remove the version
-check entirely and need not explicitly check for "v6 or better"..
+Check for this condition before attempting to parse the value.
 
-Change the `else if (arm_feature(env, ARM_FEATURE_V7))` check in
-get_S1prot() to plain `else`.
+The worst case here is that the image causes us to read some junk
+from the heap into the BlockDriverState backing_file and
+auto_backing_file fields; the image could control those anyway, and
+it's unlikely that this heap data could e.g. be leaked to the guest.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d8e052b3876356 ("target-arm: get_phys_addr_lpae: more xn control")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4367
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-id: 20261106-armv6-xn-check-v2-1-1291bb77a6c2@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: tweaked commit message]
+Reported-by: router0mail <https://gitlab.com/router0mail>
+Fixes: 5f4da8c0f3736b2 ("New multiple snapshot support for VMDK")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4571
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 7eacd04f49b901927e42641e5050245eb449d282)
+Message-ID: <20261103143516.2182626-3-peter.maydell@linaro.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit fe2cbdda07c20c3b55e91522113b10a5d70ac0b3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index ce256fc87c4..6671aba42ff 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1595,7 +1595,7 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
-         if (regime_has_2_ranges(mmu_idx) && !is_user) {
-             xn = pxn || (user_rw & PAGE_WRITE);
-         }
--    } else if (arm_feature(env, ARM_FEATURE_V7)) {
-+    } else {
-         switch (regime_el(mmu_idx)) {
-         case 1:
-         case 3:
-@@ -1613,8 +1613,6 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
-         case 2:
-             break;
-         }
--    } else {
--        xn = wxn = 0;
+diff --git a/block/vmdk.c b/block/vmdk.c
+index 13163fde66a..bc672107158 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -330,6 +330,10 @@ vmdk_read_cid(BlockDriverState *bs, int parent, uint32_t *pcid)
+         goto out;
      }
+     p_name += cid_str_size;
++    if (p_name >= desc + DESC_SIZE) {
++        ret = -EINVAL;
++        goto out;
++    }
+     if (sscanf(p_name, "%" SCNx32, &cid) != 1) {
+         ret = -EINVAL;
+         goto out;
+@@ -501,6 +505,10 @@ static int GRAPH_RDLOCK vmdk_parent_open(BlockDriverState *bs)
+         char *end_name;
  
-     if (xn || (wxn && (prot_rw & PAGE_WRITE))) {
+         p_name += sizeof("parentFileNameHint") + 1;
++        if (p_name >= desc + DESC_SIZE + 1) {
++            ret = -EINVAL;
++            goto out;
++        }
+         end_name = strchr(p_name, '\"');
+         if (end_name == NULL) {
+             ret = -EINVAL;
 -- 
 2.47.3
 
