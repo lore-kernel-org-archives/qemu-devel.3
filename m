@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB878606A32F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DD2606A339
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=XGhJjHXV
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=WEgC/64U
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Bh-0006qr-Pv; Mon, 16 Nov 2026 15:20:25 -0500
+	id 1xT3D8-0001q5-8U; Mon, 16 Nov 2026 15:21:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Bd-0006nf-0q; Mon, 16 Nov 2026 15:20:21 -0500
+ id 1xT3Cj-0000GH-Hh; Mon, 16 Nov 2026 15:21:30 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Ba-00069n-BW; Mon, 16 Nov 2026 15:20:20 -0500
+ id 1xT3Ch-0003Ly-72; Mon, 16 Nov 2026 15:21:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860369; bh=QvbmtuxWQFX+6vBs5yY7YS7reS0fb2fEw5Ub2DYUXfE=;
+ t=1794860372; bh=EwRGcWOw7F14FSh6Ddceg4eoGzsFxQAGGI3g9IHly98=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XGhJjHXVCescIsx7cAr3DVTTI+0HSXL3MoErMtBSmCszKx6wmAFTlyAjPdZGEh9fC
- aps3kR9JP0NqwnEG667DVKYNh+N4+Nd10QqqMNNuc6kJRJ0DKHZfFvP7hxS1dc4r4M
- 3So9nMbwPA+PBTa+nkwLsp59at8GjI+b5/GR4z/7EK2NNuH0sv+5gte6BRHFGV7Dzd
- ftpmRn26wICmocQ5L3U/rUSEoo0/QKydka1KMNwxNrMr3edx2hpKINULk3Wlvzoc6U
- 6M0RVmQ1dzUW0OS9UjbRWY22AZzJsrz7kKlCZbmw0/YWFQhVPy1EYTvnWhCSdqqWI0
- clHXAWffMJkWg==
+ b=WEgC/64UNq+AicqDYs1pCkDSlvMKbzE0Vq2Z1qcu0CMglVDaqRZUogO/CuT4SjAu8
+ +nswX3Cufc2DuKGTi5C0LW2DaRvTuYPXgw4HpHglr1vzLlvlw7zquUox0uajO31nAK
+ lQP0GRyPJ4zzxx5CHStHDq/6DIavwgyX8Zc/bGBxkJV4M6+XET3TD91bMEKOQiSh4+
+ oAyP1kxkUBNtXmqCZLm7cYpk8NaYsIsfweeAF6W6xfuthJWI/83eCRGkfkGP/mU1Un
+ FROC5rLhFxjVBhRccVTHCsRBqMT0gVaG8CNEqXhWCcAzc4Yl9ez6y2LdIkjd/7i2d5
+ 759O/zC06OHHg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9CEC71E7143;
- Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 571151E714F;
+ Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9974745FB79;
- Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 53EDC45FB85;
+ Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 63B90B8DE8; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ id 43881B8E00; Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Daejun Park <daejun7.park@samsung.com>,
- Jeuk Kim <jeuk20.kim@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 13/59] hw/ufs: Fail SCSI commands that move data
- without a PRDT
-Date: Mon, 16 Nov 2026 23:18:17 +0300
-Message-ID: <20261116201922.534306-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@linux.dev>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 25/59] tests/qtest/usb-hcd-xhci: test Address Device
+ with an unreadable DCBAA
+Date: Mon, 16 Nov 2026 23:18:29 +0300
+Message-ID: <20261116201922.534306-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
@@ -74,178 +74,192 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Junjie Cao <junjie.cao@linux.dev>
 
-A command whose CDB transfers data, sent with a PRDT length of 0,
-reaches scsi-hd without an SG list. The SCSI layer then calls the
-transfer_data callback of the bus, which ufs_scsi_info does not set, and
-QEMU dies with SIGSEGV. A guest triggers this with, for example, an
-INQUIRY whose PRDT is empty; the new no-prdt qtest crashed QEMU before
-this change.
+Point DCBAAP at unassigned memory before Address Device. The fixed
+controller completes it with TRB Error and raises HCE; check that, and
+that the 64 bytes at guest address 0, where the contexts used to be
+written, stay intact. With DCBAAP restored the command then succeeds
+on retry.
 
-Check the transfer direction that scsi_req_new() parsed, and fail such a
-command with OCS MISMATCH DATA BUFFER SIZE before it reaches scsi-hd:
-the PRDT describes less data than the command moves. virtio-scsi
-likewise fails a command that has no matching buffer
-(VIRTIO_SCSI_S_OVERRUN). A request that only reports a pending unit
-attention moves no data and goes through, so that the guest still sees
-the unit attention.
-
-Handing scsi-hd an empty SG list instead is not enough: READ and WRITE
-then complete synchronously in dma_blk_io() and trip the assertion in
-scsi_dma_complete().
-
-Fixes: 2a8b36a4967d ("hw/ufs: Support for UFS logical unit")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 4992210c844592663e8f3265cd4ff47c0bf03d6f)
-(Mjt: context fixup across missing v11.1.0-2246-gcd8fecdaefdf
- "hw/ufs: Track SCSIRequest and cancel pending requests in ufs_clear_req")
+Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
+Message-ID: <20261031033725.1275414-3-junjie.cao@linux.dev>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 213c716c58738be9d39488e56e6d6ed25dacd14e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index 50549d35a0b..7d052c954e9 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -250,6 +250,8 @@ static UfsReqResult ufs_emulate_scsi_cmd(UfsLu *lu, UfsRequest *req)
- static UfsReqResult ufs_process_scsi_cmd(UfsLu *lu, UfsRequest *req)
- {
-     uint8_t task_tag = req->req_upiu.header.task_tag;
-+    SCSIRequest *scsi_req;
-+    uint32_t len;
+diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
+index add2290bffa..be09b838c5d 100644
+--- a/tests/qtest/usb-hcd-xhci-test.c
++++ b/tests/qtest/usb-hcd-xhci-test.c
+@@ -56,6 +56,7 @@
+ #define ER_TRANSFER             32
+ #define ER_COMMAND_COMPLETE     33
+ #define CC_SUCCESS              1
++#define CC_TRB_ERROR            5
  
-     /*
-      * Each ufs-lu has its own independent virtual SCSI bus. Therefore, we can't
-@@ -261,11 +263,24 @@ static UfsReqResult ufs_process_scsi_cmd(UfsLu *lu, UfsRequest *req)
-         return ufs_emulate_scsi_cmd(lu, req);
-     }
+ #define EP_TYPE_ISOCH_OUT       1
+ #define EP_TYPE_CONTROL         4
+@@ -64,6 +65,8 @@
  
--    SCSIRequest *scsi_req =
--        scsi_req_new(lu->scsi_dev, task_tag, lu->lun, req->req_upiu.sc.cdb,
--                     UFS_CDB_SIZE, req);
-+    scsi_req = scsi_req_new(lu->scsi_dev, task_tag, lu->lun,
-+                            req->req_upiu.sc.cdb, UFS_CDB_SIZE, req);
+ #define XHCI_RING_TRBS          64
+ #define XHCI_MICROFRAME_NS      125000
++/* in the PCI hole of the pc machine, nothing is mapped there */
++#define XHCI_UNASSIGNED_ADDR    0xf0000000
  
--    uint32_t len = scsi_req_enqueue(scsi_req);
-+    /*
-+     * A command that moves data needs a PRDT. Without one there is no SG
-+     * list, and the SCSI layer would call the transfer_data callback, which
-+     * ufs-lu does not set. Fail the request with OCS MISMATCH DATA BUFFER
-+     * SIZE, as virtio-scsi fails a buffer that does not match the command.
-+     * A request that reports a pending unit attention instead moves no data;
-+     * its sense is already set, so let it through and the guest sees the UA.
-+     */
-+    if (scsi_req->cmd.mode != SCSI_XFER_NONE && !req->sg &&
-+        !scsi_req->sense_len) {
-+        scsi_req_unref(scsi_req);
-+        return UFS_REQUEST_MISMATCH_DATA_BUF;
-+    }
-+
-+    len = scsi_req_enqueue(scsi_req);
-     if (len) {
-         scsi_req_continue(scsi_req);
-     }
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 6144e727dd4..f7de13f6972 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -1649,10 +1649,16 @@ void ufs_complete_req(UfsRequest *req, UfsReqResult req_result)
-     UfsHc *u = req->hc;
-     assert(req->state == UFS_REQUEST_RUNNING);
- 
--    if (req_result == UFS_REQUEST_SUCCESS) {
-+    switch (req_result) {
-+    case UFS_REQUEST_SUCCESS:
-         req->utrd.header.dword_2 = cpu_to_le32(UFS_OCS_SUCCESS);
--    } else {
-+        break;
-+    case UFS_REQUEST_MISMATCH_DATA_BUF:
-+        req->utrd.header.dword_2 = cpu_to_le32(UFS_OCS_MISMATCH_DATA_BUF_SIZE);
-+        break;
-+    default:
-         req->utrd.header.dword_2 = cpu_to_le32(UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+        break;
-     }
- 
-     req->state = UFS_REQUEST_COMPLETE;
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 9e800cafacd..7cf30af00f3 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -44,6 +44,8 @@ typedef enum UfsReqResult {
-     UFS_REQUEST_SUCCESS = 0,
-     UFS_REQUEST_FAIL = 1,
-     UFS_REQUEST_NO_COMPLETE = 2,
-+    /* The PRDT describes less data than the command moves */
-+    UFS_REQUEST_MISMATCH_DATA_BUF = 3,
- } UfsReqResult;
- 
- #define UFS_INVALID_SLOT (-1)
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index eccf151c41a..12fd73ea882 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -769,6 +769,50 @@ static void ufstest_read_write(void *obj, void *data, QGuestAllocator *alloc)
-     ufs_exit(ufs, alloc);
+ typedef struct XHCITest {
+     QTestState *qts;
+@@ -71,7 +74,7 @@ typedef struct XHCITest {
+     QPCIBus *bus;
+     struct qhc hc;
+     uint32_t oper, runtime, doorbell;
+-    uint64_t cmd_ring, event_ring, input_ctx;
++    uint64_t dcbaa, cmd_ring, event_ring, input_ctx;
+     unsigned int cmd_idx, event_idx;
+     unsigned int port, slot;
+ } XHCITest;
+@@ -226,8 +229,9 @@ static bool xhci_next_event(XHCITest *x, uint32_t *status, uint32_t *control)
+     return true;
  }
  
-+static void ufstest_no_prdt(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    uint8_t buf[4096];
-+    const uint8_t inquiry_cdb[UFS_CDB_SIZE] = {
-+        /* INQUIRY, allocation length 36 */
-+        INQUIRY, 0x00, 0x00, 0x00, 0x24
-+    };
-+    const uint8_t write_cdb[UFS_CDB_SIZE] = {
-+        /* WRITE(10) to LBA 0, transfer length 1 */
-+        WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00
-+    };
-+    enum UtpOcsCodes ocs;
-+    UtpUpiuRsp rsp_upiu;
-+    const int test_lun = 1;
-+
-+    ufs_init(ufs, alloc);
-+
-+    /* A pending unit attention is reported even without a PRDT */
-+    ocs = ufs_send_scsi_command(ufs, test_lun, write_cdb, NULL, 0, NULL, 0,
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
-+    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0xf, ==, UNIT_ATTENTION);
-+
-+    /* Commands that move data but come without a PRDT fail */
-+    ocs = ufs_send_scsi_command(ufs, test_lun, inquiry_cdb, NULL, 0, NULL, 0,
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
-+
-+    ocs = ufs_send_scsi_command(ufs, test_lun, write_cdb, NULL, 0, NULL, 0,
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
-+
-+    /* The logical unit keeps working */
-+    ocs = ufs_send_scsi_command(ufs, test_lun, inquiry_cdb, NULL, 0, buf, 0x24,
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(buf[0] & 0x1f, ==, TYPE_DISK);
-+
-+    ufs_exit(ufs, alloc);
+-static unsigned int xhci_command(XHCITest *x, uint64_t parameter,
+-                                 uint32_t control)
++/* Submit a command and return its completion code. */
++static unsigned int xhci_submit_command(XHCITest *x, uint64_t parameter,
++                                        uint32_t control, unsigned int *slot)
+ {
+     uint32_t status;
+ 
+@@ -238,17 +242,30 @@ static unsigned int xhci_command(XHCITest *x, uint64_t parameter,
+ 
+     g_assert_true(xhci_next_event(x, &status, &control));
+     g_assert_cmpuint(TRB_GET_TYPE(control), ==, ER_COMMAND_COMPLETE);
+-    g_assert_cmpuint(TRB_GET_CCODE(status), ==, CC_SUCCESS);
+-    return TRB_GET_SLOT(control);
++    if (slot) {
++        *slot = TRB_GET_SLOT(control);
++    }
++    return TRB_GET_CCODE(status);
 +}
 +
- static void ufstest_mcq_cq_wraparound(void *obj, void *data,
-                                       QGuestAllocator *alloc)
++/* Submit a command that has to succeed and return the slot ID. */
++static unsigned int xhci_command(XHCITest *x, uint64_t parameter,
++                                 uint32_t control)
++{
++    unsigned int slot;
++
++    g_assert_cmpuint(xhci_submit_command(x, parameter, control, &slot), ==,
++                     CC_SUCCESS);
++    return slot;
+ }
+ 
+ /*
+- * Start qemu-xhci with one USB device, run the controller and bring the
+- * device to the Addressed state.
++ * Start qemu-xhci with one USB device, run the controller, enable a slot
++ * for the device and fill in the input context for Address Device.
+  */
+-static void xhci_test_start(XHCITest *x, const char *usb_device)
++static void xhci_test_init(XHCITest *x, const char *usb_device)
  {
-@@ -1272,6 +1316,7 @@ static void ufs_register_nodes(void)
-     qos_add_test("init", "ufs", ufstest_init, NULL);
-     qos_add_test("legacy-read-write", "ufs", ufstest_read_write, &io_test_opts);
-     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
-+    qos_add_test("no-prdt", "ufs", ufstest_no_prdt, &io_test_opts);
-     qos_add_test("mcq-cq-wraparound", "ufs", ufstest_mcq_cq_wraparound,
-                  &mcq_test_opts);
-     qos_add_test("query-flag", "ufs", ufstest_query_flag_request,
+-    uint64_t dcbaa, erst, ep0_ring;
++    uint64_t erst, ep0_ring;
+     unsigned int maxports;
+ 
+     memset(x, 0, sizeof(*x));
+@@ -267,14 +284,14 @@ static void xhci_test_start(XHCITest *x, const char *usb_device)
+     xhci_writel(x, x->oper + XHCI_USBCMD, USBCMD_HCRST);
+     g_assert_false(xhci_readl(x, x->oper + XHCI_USBCMD) & USBCMD_HCRST);
+ 
+-    dcbaa = xhci_alloc_page(x);
++    x->dcbaa = xhci_alloc_page(x);
+     erst = xhci_alloc_page(x);
+     x->cmd_ring = xhci_alloc_page(x);
+     x->event_ring = xhci_alloc_page(x);
+     x->input_ctx = xhci_alloc_page(x);
+ 
+     xhci_writel(x, x->oper + XHCI_CONFIG, 1);
+-    xhci_writeq(x, x->oper + XHCI_DCBAAP, dcbaa);
++    xhci_writeq(x, x->oper + XHCI_DCBAAP, x->dcbaa);
+     qtest_writeq(x->qts, erst, x->event_ring);
+     qtest_writel(x->qts, erst + 8, XHCI_RING_TRBS);
+     xhci_writel(x, x->runtime + XHCI_ERSTSZ, 1);
+@@ -296,7 +313,7 @@ static void xhci_test_start(XHCITest *x, const char *usb_device)
+     }
+ 
+     x->slot = xhci_command(x, 0, TRB_TYPE(CR_ENABLE_SLOT));
+-    qtest_writeq(x->qts, dcbaa + 8 * x->slot, xhci_alloc_page(x));
++    qtest_writeq(x->qts, x->dcbaa + 8 * x->slot, xhci_alloc_page(x));
+ 
+     /* input control context: add slot and ep0 */
+     qtest_writel(x->qts, x->input_ctx + 0x04, 0x3);
+@@ -308,6 +325,12 @@ static void xhci_test_start(XHCITest *x, const char *usb_device)
+     qtest_writel(x->qts, x->input_ctx + 0x44,
+                  (64 << 16) | (EP_TYPE_CONTROL << 3));
+     qtest_writeq(x->qts, x->input_ctx + 0x48, ep0_ring | 1);
++}
++
++/* xhci_test_init(), then bring the device to the Addressed state. */
++static void xhci_test_start(XHCITest *x, const char *usb_device)
++{
++    xhci_test_init(x, usb_device);
+     xhci_command(x, x->input_ctx,
+                  TRB_TYPE(CR_ADDRESS_DEVICE) | (x->slot << 24));
+ }
+@@ -355,6 +378,44 @@ static bool xhci_test_supported(const char *usb_device)
+     return true;
+ }
+ 
++/*
++ * Address Device reads the output context pointer from the DCBAA. Point
++ * DCBAAP at unassigned memory: the command has to fail instead of carrying
++ * on with the zero the failed read leaves behind, which used to put the
++ * contexts at guest address 0 and still report Success.
++ */
++static void test_xhci_address_device_dcbaa_read_error(void)
++{
++    uint8_t fill[64], low_mem[sizeof(fill)];
++    unsigned int ccode;
++    XHCITest x;
++
++    if (!xhci_test_supported("usb-kbd")) {
++        return;
++    }
++
++    xhci_test_init(&x, "-device usb-kbd");
++    memset(fill, 0xaa, sizeof(fill));
++    qtest_memwrite(x.qts, 0, fill, sizeof(fill));
++    xhci_writeq(&x, x.oper + XHCI_DCBAAP, XHCI_UNASSIGNED_ADDR);
++
++    ccode = xhci_submit_command(&x, x.input_ctx,
++                                TRB_TYPE(CR_ADDRESS_DEVICE) | (x.slot << 24),
++                                NULL);
++    g_assert_cmpuint(ccode, ==, CC_TRB_ERROR);
++    g_assert_cmphex(xhci_readl(&x, x.oper + XHCI_USBSTS) & USBSTS_HCE, ==,
++                    USBSTS_HCE);
++    qtest_memread(x.qts, 0, low_mem, sizeof(low_mem));
++    g_assert_cmpmem(low_mem, sizeof(low_mem), fill, sizeof(fill));
++
++    /* The failed command left the slot usable. */
++    xhci_writeq(&x, x.oper + XHCI_DCBAAP, x.dcbaa);
++    xhci_command(&x, x.input_ctx,
++                 TRB_TYPE(CR_ADDRESS_DEVICE) | (x.slot << 24));
++
++    xhci_test_end(&x);
++}
++
+ /*
+  * An isoch TD with SIA set is run at the next interval boundary. That has to
+  * hold once the microframe index no longer fits in 32 bits as well.
+@@ -481,6 +542,8 @@ int main(int argc, char **argv)
+     if (qtest_has_device("usb-ccid")) {
+         qtest_add_func("/xhci/pci/hotplug/usb-ccid", test_usb_ccid_hotplug);
+     }
++    qtest_add_func("/xhci/pci/address-device/dcbaa-read-error",
++                   test_xhci_address_device_dcbaa_read_error);
+     qtest_add_func("/xhci/pci/isoch/mfindex-32bit",
+                    test_xhci_isoch_mfindex_32bit);
+     qtest_add_func("/xhci/pci/intr/mfindex-32bit",
 -- 
 2.47.3
 
