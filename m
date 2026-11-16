@@ -1,52 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DD2606A339
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A3D606A32C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=WEgC/64U
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=sNTOCVAs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3D8-0001q5-8U; Mon, 16 Nov 2026 15:21:54 -0500
+	id 1xT3BH-0006Qt-6w; Mon, 16 Nov 2026 15:19:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Cj-0000GH-Hh; Mon, 16 Nov 2026 15:21:30 -0500
+ id 1xT3BE-0006Q2-Ny; Mon, 16 Nov 2026 15:19:56 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Ch-0003Ly-72; Mon, 16 Nov 2026 15:21:29 -0500
+ id 1xT3BC-0005w5-Uw; Mon, 16 Nov 2026 15:19:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860372; bh=EwRGcWOw7F14FSh6Ddceg4eoGzsFxQAGGI3g9IHly98=;
+ t=1794860369; bh=Nie+KAfwRFziVSyZdIT4/QdzraK+ITkLRfprEU7t254=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WEgC/64UNq+AicqDYs1pCkDSlvMKbzE0Vq2Z1qcu0CMglVDaqRZUogO/CuT4SjAu8
- +nswX3Cufc2DuKGTi5C0LW2DaRvTuYPXgw4HpHglr1vzLlvlw7zquUox0uajO31nAK
- lQP0GRyPJ4zzxx5CHStHDq/6DIavwgyX8Zc/bGBxkJV4M6+XET3TD91bMEKOQiSh4+
- oAyP1kxkUBNtXmqCZLm7cYpk8NaYsIsfweeAF6W6xfuthJWI/83eCRGkfkGP/mU1Un
- FROC5rLhFxjVBhRccVTHCsRBqMT0gVaG8CNEqXhWCcAzc4Yl9ez6y2LdIkjd/7i2d5
- 759O/zC06OHHg==
+ b=sNTOCVAs9PqAMMkh8pMyeQxKLtFH6xyqbdXsNu0lq8qw3yJ4qT5a9rmMPH0/Wtyr6
+ qcXQTDiMGMaJwsED2j480oE9jNfXL9y6YIM8jkPGdhjp8Jy7/p0XC8mGp07lhtpuVU
+ //6CJEJL93q4R8N4gKM22fPaO9Ooc0CnICH8PHo36tHEu0gxTmeiVjzrikTDYiiUvD
+ VsTaHOLrigLv2gyDaecl3gqbjjZLciatCB9TRjkV3Zv8n5EOrR5q63Jyjt0G0ZIEsy
+ HuYOdu0Lzj7+WkG4lLvEoQeTOYKb/MF0I59B5FrsRy/8VqNbLaWjT5G/Yhz3rcTOjJ
+ cfg//5MTaW+Tw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 571151E714F;
- Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 905111E7141;
+ Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 53EDC45FB85;
- Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8B6F645FB77;
+ Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 43881B8E00; Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
+ id 5DD7FB8DE4; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@linux.dev>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 25/59] tests/qtest/usb-hcd-xhci: test Address Device
- with an unreadable DCBAA
-Date: Mon, 16 Nov 2026 23:18:29 +0300
-Message-ID: <20261116201922.534306-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 11/59] hw/net/cadence_gem: Check guest-provided queue
+ numbers in screening registers
+Date: Mon, 16 Nov 2026 23:18:15 +0300
+Message-ID: <20261116201922.534306-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -67,199 +69,87 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Junjie Cao <junjie.cao@linux.dev>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Point DCBAAP at unassigned memory before Address Device. The fixed
-controller completes it with TRB Error and raises HCE; check that, and
-that the 64 bytes at guest address 0, where the contexts used to be
-written, stay intact. With DCBAAP restored the command then succeeds
-on retry.
+The Cadence GEM allows the guest to program "screening registers"
+which control which queue received network data should be sent to.
+The field for the queue number in these registers is 4 bits, but the
+device might not actually have that many queues.  We weren't checking
+this, which meant the guest could program a value that caused us to
+index off the end of various arrays.
 
-Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
-Message-ID: <20261031033725.1275414-3-junjie.cao@linux.dev>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 213c716c58738be9d39488e56e6d6ed25dacd14e)
+Check against num_priority_queues, and treat out-of-range values
+as if the screen didn't match (i.e. go to queue 0). (This is a
+best guess at reasonable behaviour since I don't have access to
+a datasheet for this device.)
+
+Cc: qemu-stable@nongnu.org
+Fixes: e8e4994313b7 ("cadence_gem: Add support for screening")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4363
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20261023153106.1710228-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit b26d4302a8978e1fe467b4d90a2e826f898f11d3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
-index add2290bffa..be09b838c5d 100644
---- a/tests/qtest/usb-hcd-xhci-test.c
-+++ b/tests/qtest/usb-hcd-xhci-test.c
-@@ -56,6 +56,7 @@
- #define ER_TRANSFER             32
- #define ER_COMMAND_COMPLETE     33
- #define CC_SUCCESS              1
-+#define CC_TRB_ERROR            5
+diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+index defa446fbb2..7966a936410 100644
+--- a/hw/net/cadence_gem.c
++++ b/hw/net/cadence_gem.c
+@@ -854,6 +854,7 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
+     uint32_t reg;
+     bool matched, mismatched;
+     int i, j;
++    int queue = 0; /* default to queue 0 if no match */
  
- #define EP_TYPE_ISOCH_OUT       1
- #define EP_TYPE_CONTROL         4
-@@ -64,6 +65,8 @@
+     for (i = 0; i < s->num_type1_screeners; i++) {
+         reg = s->regs[R_SCREENING_TYPE1_REG0 + i];
+@@ -881,7 +882,8 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
+         }
  
- #define XHCI_RING_TRBS          64
- #define XHCI_MICROFRAME_NS      125000
-+/* in the PCI hole of the pc machine, nothing is mapped there */
-+#define XHCI_UNASSIGNED_ADDR    0xf0000000
- 
- typedef struct XHCITest {
-     QTestState *qts;
-@@ -71,7 +74,7 @@ typedef struct XHCITest {
-     QPCIBus *bus;
-     struct qhc hc;
-     uint32_t oper, runtime, doorbell;
--    uint64_t cmd_ring, event_ring, input_ctx;
-+    uint64_t dcbaa, cmd_ring, event_ring, input_ctx;
-     unsigned int cmd_idx, event_idx;
-     unsigned int port, slot;
- } XHCITest;
-@@ -226,8 +229,9 @@ static bool xhci_next_event(XHCITest *x, uint32_t *status, uint32_t *control)
-     return true;
- }
- 
--static unsigned int xhci_command(XHCITest *x, uint64_t parameter,
--                                 uint32_t control)
-+/* Submit a command and return its completion code. */
-+static unsigned int xhci_submit_command(XHCITest *x, uint64_t parameter,
-+                                        uint32_t control, unsigned int *slot)
- {
-     uint32_t status;
- 
-@@ -238,17 +242,30 @@ static unsigned int xhci_command(XHCITest *x, uint64_t parameter,
- 
-     g_assert_true(xhci_next_event(x, &status, &control));
-     g_assert_cmpuint(TRB_GET_TYPE(control), ==, ER_COMMAND_COMPLETE);
--    g_assert_cmpuint(TRB_GET_CCODE(status), ==, CC_SUCCESS);
--    return TRB_GET_SLOT(control);
-+    if (slot) {
-+        *slot = TRB_GET_SLOT(control);
-+    }
-+    return TRB_GET_CCODE(status);
-+}
-+
-+/* Submit a command that has to succeed and return the slot ID. */
-+static unsigned int xhci_command(XHCITest *x, uint64_t parameter,
-+                                 uint32_t control)
-+{
-+    unsigned int slot;
-+
-+    g_assert_cmpuint(xhci_submit_command(x, parameter, control, &slot), ==,
-+                     CC_SUCCESS);
-+    return slot;
- }
- 
- /*
-- * Start qemu-xhci with one USB device, run the controller and bring the
-- * device to the Addressed state.
-+ * Start qemu-xhci with one USB device, run the controller, enable a slot
-+ * for the device and fill in the input context for Address Device.
-  */
--static void xhci_test_start(XHCITest *x, const char *usb_device)
-+static void xhci_test_init(XHCITest *x, const char *usb_device)
- {
--    uint64_t dcbaa, erst, ep0_ring;
-+    uint64_t erst, ep0_ring;
-     unsigned int maxports;
- 
-     memset(x, 0, sizeof(*x));
-@@ -267,14 +284,14 @@ static void xhci_test_start(XHCITest *x, const char *usb_device)
-     xhci_writel(x, x->oper + XHCI_USBCMD, USBCMD_HCRST);
-     g_assert_false(xhci_readl(x, x->oper + XHCI_USBCMD) & USBCMD_HCRST);
- 
--    dcbaa = xhci_alloc_page(x);
-+    x->dcbaa = xhci_alloc_page(x);
-     erst = xhci_alloc_page(x);
-     x->cmd_ring = xhci_alloc_page(x);
-     x->event_ring = xhci_alloc_page(x);
-     x->input_ctx = xhci_alloc_page(x);
- 
-     xhci_writel(x, x->oper + XHCI_CONFIG, 1);
--    xhci_writeq(x, x->oper + XHCI_DCBAAP, dcbaa);
-+    xhci_writeq(x, x->oper + XHCI_DCBAAP, x->dcbaa);
-     qtest_writeq(x->qts, erst, x->event_ring);
-     qtest_writel(x->qts, erst + 8, XHCI_RING_TRBS);
-     xhci_writel(x, x->runtime + XHCI_ERSTSZ, 1);
-@@ -296,7 +313,7 @@ static void xhci_test_start(XHCITest *x, const char *usb_device)
+         if (matched && !mismatched) {
+-            return FIELD_EX32(reg, SCREENING_TYPE1_REG0, QUEUE_NUM);
++            queue = FIELD_EX32(reg, SCREENING_TYPE1_REG0, QUEUE_NUM);
++            goto out;
+         }
      }
  
-     x->slot = xhci_command(x, 0, TRB_TYPE(CR_ENABLE_SLOT));
--    qtest_writeq(x->qts, dcbaa + 8 * x->slot, xhci_alloc_page(x));
-+    qtest_writeq(x->qts, x->dcbaa + 8 * x->slot, xhci_alloc_page(x));
+@@ -974,12 +976,23 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
+         }
  
-     /* input control context: add slot and ep0 */
-     qtest_writel(x->qts, x->input_ctx + 0x04, 0x3);
-@@ -308,6 +325,12 @@ static void xhci_test_start(XHCITest *x, const char *usb_device)
-     qtest_writel(x->qts, x->input_ctx + 0x44,
-                  (64 << 16) | (EP_TYPE_CONTROL << 3));
-     qtest_writeq(x->qts, x->input_ctx + 0x48, ep0_ring | 1);
-+}
-+
-+/* xhci_test_init(), then bring the device to the Addressed state. */
-+static void xhci_test_start(XHCITest *x, const char *usb_device)
-+{
-+    xhci_test_init(x, usb_device);
-     xhci_command(x, x->input_ctx,
-                  TRB_TYPE(CR_ADDRESS_DEVICE) | (x->slot << 24));
- }
-@@ -355,6 +378,44 @@ static bool xhci_test_supported(const char *usb_device)
-     return true;
- }
- 
-+/*
-+ * Address Device reads the output context pointer from the DCBAA. Point
-+ * DCBAAP at unassigned memory: the command has to fail instead of carrying
-+ * on with the zero the failed read leaves behind, which used to put the
-+ * contexts at guest address 0 and still report Success.
-+ */
-+static void test_xhci_address_device_dcbaa_read_error(void)
-+{
-+    uint8_t fill[64], low_mem[sizeof(fill)];
-+    unsigned int ccode;
-+    XHCITest x;
-+
-+    if (!xhci_test_supported("usb-kbd")) {
-+        return;
-+    }
-+
-+    xhci_test_init(&x, "-device usb-kbd");
-+    memset(fill, 0xaa, sizeof(fill));
-+    qtest_memwrite(x.qts, 0, fill, sizeof(fill));
-+    xhci_writeq(&x, x.oper + XHCI_DCBAAP, XHCI_UNASSIGNED_ADDR);
-+
-+    ccode = xhci_submit_command(&x, x.input_ctx,
-+                                TRB_TYPE(CR_ADDRESS_DEVICE) | (x.slot << 24),
-+                                NULL);
-+    g_assert_cmpuint(ccode, ==, CC_TRB_ERROR);
-+    g_assert_cmphex(xhci_readl(&x, x.oper + XHCI_USBSTS) & USBSTS_HCE, ==,
-+                    USBSTS_HCE);
-+    qtest_memread(x.qts, 0, low_mem, sizeof(low_mem));
-+    g_assert_cmpmem(low_mem, sizeof(low_mem), fill, sizeof(fill));
-+
-+    /* The failed command left the slot usable. */
-+    xhci_writeq(&x, x.oper + XHCI_DCBAAP, x.dcbaa);
-+    xhci_command(&x, x.input_ctx,
-+                 TRB_TYPE(CR_ADDRESS_DEVICE) | (x.slot << 24));
-+
-+    xhci_test_end(&x);
-+}
-+
- /*
-  * An isoch TD with SIA set is run at the next interval boundary. That has to
-  * hold once the microframe index no longer fits in 32 bits as well.
-@@ -481,6 +542,8 @@ int main(int argc, char **argv)
-     if (qtest_has_device("usb-ccid")) {
-         qtest_add_func("/xhci/pci/hotplug/usb-ccid", test_usb_ccid_hotplug);
+         if (matched && !mismatched) {
+-            return FIELD_EX32(reg, SCREENING_TYPE2_REG0, QUEUE_NUM);
++            queue = FIELD_EX32(reg, SCREENING_TYPE2_REG0, QUEUE_NUM);
++            break;
+         }
      }
-+    qtest_add_func("/xhci/pci/address-device/dcbaa-read-error",
-+                   test_xhci_address_device_dcbaa_read_error);
-     qtest_add_func("/xhci/pci/isoch/mfindex-32bit",
-                    test_xhci_isoch_mfindex_32bit);
-     qtest_add_func("/xhci/pci/intr/mfindex-32bit",
+ 
+-    /* We made it here, assume it's queue 0 */
+-    return 0;
++out:
++    if (queue >= s->num_priority_queues) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "Screening register selected out of range queue %d\n",
++                      queue);
++        /*
++         * This is a best guess at reasonable behaviour in the absence
++         * of a datasheet to confirm it.
++         */
++        queue = 0;
++    }
++    return queue;
+ }
+ 
+ static uint32_t gem_get_queue_base_addr(CadenceGEMState *s, bool tx, int q)
 -- 
 2.47.3
 
