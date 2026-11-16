@@ -1,93 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2F2606A32A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 03:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E01606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 03:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ztFzdJxt
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=n2DDni4T
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSnTV-0007fX-4q; Sun, 15 Nov 2026 22:33:45 -0500
+	id 1xSnY0-0000uF-Oo; Sun, 15 Nov 2026 22:38:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xSmij-0005S2-L2
- for qemu-devel@nongnu.org; Sun, 15 Nov 2026 21:45:26 -0500
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xSnXy-0000qB-EI
+ for qemu-devel@nongnu.org; Sun, 15 Nov 2026 22:38:22 -0500
+Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xSmih-0004Xe-R3
- for qemu-devel@nongnu.org; Sun, 15 Nov 2026 21:45:25 -0500
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-8253bc5a613so2365668a34.0
- for <qemu-devel@nongnu.org>; Sun, 15 Nov 2026 18:45:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xSnXw-0008Dm-Hs
+ for qemu-devel@nongnu.org; Sun, 15 Nov 2026 22:38:22 -0500
+Received: by mail-oo1-xc33.google.com with SMTP id
+ 006d021491bc7-71adbbf09d8so1024634eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Nov 2026 19:38:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794797121; x=1795401921; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1794800299; x=1795405099; darn=nongnu.org;
  h=cc:to:message-id:content-transfer-encoding:content-type
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=jvKAweWSF1WL2MIE6+mbKhodNmuJdfWHL+r3/lgJz4M=;
- b=ztFzdJxtD3VIZhu25ZUEtDrwyMvf5YF6GNw1/vCP2NdI0fuvASJUFn380EiLM3K7OC
- jd6CkoQrXvSslvaoI9d9j1DTVyrcaJ2cJFpw6ZhkQIKomtokztAtatKYMTWPss7uqIvP
- EnS2A2HcxnGp+bkwA01l+kknqv7OVXe5VvZAbgPzdF2COU2NlRO7kuvER2mx7rbaNAua
- V9O4ZGmeJ26FanhYunQPjhFhySAIjy9pWS8Lvqqn4qus72vQlpuC+bEUf2Hyo9BjqHnD
- lG0+ep1Sn+ZgHSj79VQrdVkPe1Lnk1dGkqUeqt5MaPbdHq6QaaZGOZ1ES/pjORJzAkAT
- rwTw==
+ bh=M760Ygh1lMS5cssuQZVdGw+HrfQj6IlfhNSMlYCYFEI=;
+ b=n2DDni4TW/HlPgahmXj5FkZ7X4IuFyYGLvfQSmH/eanF1aPXNf6Uc5xvKcCI2EoPE8
+ U16dPKzhF4fN1AObWwu0ibkCgDoSzb5sER+8gP9IkOk62ATOUo7M+BWpwEV1rc1GlVOe
+ k/IWbkFxvFy5f4FqxOV/6rbzGofPd8oYNR85Lik5iTUpFSPXh+WRp4/oXJVNkwqB98Uf
+ CFy529GZeVGBrtf5NoQKj+kORgaIKkzC+Ut3+SwavFpPiNjEe5wOypa5bRmhYgiovmQN
+ T2rloRP8wOH7ZlJLUE08+pTaOF+CfIzpupdNorCXaFE9aaYc63kgD3TjeJNvUDUo/1t1
+ HG5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794797121; x=1795401921;
+ d=1e100.net; s=20260707; t=1794800299; x=1795405099;
  h=cc:to:message-id:content-transfer-encoding:content-type
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=jvKAweWSF1WL2MIE6+mbKhodNmuJdfWHL+r3/lgJz4M=;
- b=T6goNIzvHD/VX2KyxfNjAratCLGv6OjHEqjSGxYZ3u1yWHoPC984MNbJ4hZ61XmQm3
- ud6oFVdhaTGAB+ZaFBqWEgZFB0POOtaPRrTHU6egTDK6CXdIFR5/V7oQVv3PejK4YHDF
- hEmakVBekScNOl+9nmzBHpIhy4aaYkvB1YfvdbeE4RV279fi91nXzS4Dj/uJFB5kiVEw
- 8YWId7hqiJTSVv1/mdo2gr0kExsFKnUG6lkvAMfIQ/31ecsxMH2Emv5Rw/GdvUjjhpTy
- SU6n5zvQII6GcycjA/lSEjedv2IyDEPBRVG1O2U2AmC/ZcOgAAhrLWagM6e+x/9vQ02E
- zdZg==
-X-Gm-Message-State: APuU4Z/n//BdLtwuMufPq8Ht2V5e5dh0yau4wOPac1s0bGqZN48XDhYu
- +QRPvLyYeOGNwHN+J3cVXM/S6h+0nddWiG6ul7j5IxNCjzT9xPn+gYyT
-X-Gm-Gg: AYBFou0NYiRLP7LqeL7fVGU5tqjBKGwpBqaqspBWbIoRlE2paaaZorDj2xFp634s/WV
- 35dflZJfGzqAJGpq9p+27ZOPpU8qH2otHM7vJfZ72vDS667wU0L0C+ihM7UnBvL5C0MTbmu+uFA
- dHPgDFs9Ly2tOjTSPu14pKSgffF7zBJzLd1TSGCXNviEFzKNYi4fmm6S3N5hJf9ilMr+HuxGbeW
- xMZxTvK/tgI9Zv50fVWfjk6Ki3wCCtpXcPze51hpR0wrV+oks7lHFVgfXWa16aU88E3Uts7/zOJ
- 5BZvRsPUMbcnud+2prekmgjTQgwOc8tsdOkdFr0TlVi7/UaFVxhlaZFb3jnM2fH42AsnER+uUEa
- vgK7MrYyzjDOi6/7p2CKM9IbIzweaTYLcxN2Buin3ZaUF+kqT5GG3CXRQ8AwHs3tHJdmiEQkIsD
- 9PHmwBeXA+JjDFWotXIhqvnkjn4yGnuD+YcPHft7Ifs21+0jblqPTNhFzOLgftvdaDrj21jDAsY
- BDOD5cxztmMUmVlYXPPcrv01FJPgACtm6Kahi0FTj5Zi80q0y/EnuCdIQeIogONpF4HA94dQ4/4
- 0NGe8sFXH9UGpg/rVEAxzz5XCA==
-X-Received: by 2002:a05:6830:230c:b0:822:a034:551f with SMTP id
- 46e09a7af769-86289738d61mr12244345a34.2.1794797121570; 
- Sun, 15 Nov 2026 18:45:21 -0800 (PST)
+ bh=M760Ygh1lMS5cssuQZVdGw+HrfQj6IlfhNSMlYCYFEI=;
+ b=u44WhImmbkKPTcYDd86mMAU4vWeO038Yn53FKzhvKQ2HxHz8wubMQTIW7s/Ouhubfl
+ QW5gSBmYDEqIFfrDqEcNmAPZMmOd5bDyKcb8dQliyqW3ZIVcbIzJJwO+PkL41ESN/zgf
+ phMWxECBGWESl4+Xe5ak7Sdlrquu0VStydhjbQPaT0KwpxM1G4qdW/dn/1S5FakooDKD
+ wUGlkbdNS15m1OWPah0gS5XQaCU/GsgSGip/MX8IL0MvjKMDVSZdHkKIFGgaFp/XUaQL
+ BmcjYJoCMlOk/c4MPBIJVoHZXCJMY8lWesvaF72BOBUCGX+1IAcCSyl4rPKzw/fNs3YX
+ A8Ew==
+X-Gm-Message-State: APuU4Z+fFF9BcZgTt35bQ+tK1rlrSZDLH6+tsSPU+t9jCT88DSoYjdum
+ 3cSMKIlrKy38w5lYse/uC4c0rGnJIU5xaJJUasIf57Wcg7YPmFkjxauK
+X-Gm-Gg: AYBFou3TeB+eqY8Y+ROFu8SDlwtudS8GZODIAlRJG4C/gxTu8gpoFnNE0eQ+Sf/qE4+
+ LtiFl5oY/L+NNMNPZKk1oYQLHnhrreSEZC6OPY+mD+CX0G+w5MnzdmJQBkIaV4ktbcqJdeuUeU2
+ t9ykxbU3ffIX9SnpB37MQaqTQetvQHuqVNGaIvcUWs5IwwrnqPLRl3KfzUZ8GO8n8YGO3ONxbci
+ R7S/RXYgzOy6EM47GJuKbf/Ul32hT9VwaxRJeHzfTT33xd3dp8XdNrNR4id/o1TB+OYRoVET/6c
+ ZwfvxvYaRNTb4FtUwNBPOTzuWL4gtzxkLRUtant6npIw8vxJpso1CkmHcGyj5JRT2HknosGJod+
+ kiD9RfxDpjcaEVRC+UXFykFlNI0phAW4YLV24WsSWUp01fwJNQdSVo/DQeLXCRXppNP/WyPbKHq
+ SqVA1c/86iX5rP+9KLcQffF7ysYhMSpjVEz2MnHnqlP4Zml9GSeAw+L1sU5sfBDv0gUDaUAXxQU
+ 6rODLN5U06jpvRa8DLgK+tQva1u6i8/zmhDQrCkoQg4VoAOWAr20sOo8TZjib9gRgzRDvAk06id
+ O0DY9/svRVvXphGuNbdvgSzPOUS30SCpUBNFYOv3R7k+lEHq
+X-Received: by 2002:a05:6820:81e:b0:71a:d594:e831 with SMTP id
+ 006d021491bc7-71ad594f240mr2609845eaf.36.1794800299276; 
+ Sun, 15 Nov 2026 19:38:19 -0800 (PST)
 Received: from [127.0.1.1] ([2605:ad80:33:509c:d439:680c:b591:d1b2])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-862aa7a3530sm5274688a34.8.2026.11.15.18.45.18
+ 006d021491bc7-71ab4335912sm7523451eaf.13.2026.11.15.19.38.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Nov 2026 18:45:19 -0800 (PST)
+ Sun, 15 Nov 2026 19:38:18 -0800 (PST)
 From: Andrew Nguyen <xmphyr@gmail.com>
-Date: Sun, 15 Nov 2026 20:45:10 -0600
-Subject: [PATCH] hw/net: always validate the interrupt index of the first
- RX descriptor
+Date: Sun, 15 Nov 2026 21:38:02 -0600
+Subject: [PATCH] target/i386: make error message for -cpu host more informative
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261115-4729-out-of-bounds-rx-interrupt-idx-v1-1-164891765f6c@gmail.com>
-X-B4-Tracking: v=1; b=H4sIADVu+moC/x2NQQqDMBAAvyJ77kITrFG/Ujyou9a9JLJJJCD+v
- cHjwDBzQWQVjjA2FyifEiX4CubVwLrP/scoVBns23bGmA+2zg4YcsKw4RKyp4haUHxi1Xykqhd
- 0PXXD7KhvHUEtHcqblOfyne77D4XcZHN1AAAA
+Message-Id: <20261115-4836-cpu-host-error-v1-1-fdf0eb56ba8a@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAJl6+moC/x3MSQqAMAxA0auUrA2YOuJVxIVDtNm0kqoI4t0tL
+ t/i/wciq3CEzjygfEmU4BMoMzC70W+MsiSDzW1NRBWWbVHjvJ/oQjyQVYMicVtN1HC+0gKp3JV
+ Xuf9rP7zvB8y1eVhlAAAA
 To: qemu-devel@nongnu.org
-Cc: Andrew Nguyen <xmphyr@gmail.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Andrew Nguyen <xmphyr@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794797118; l=1643;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794800297; l=1680;
  i=xmphyr@gmail.com; s=20261115; h=from:subject:message-id;
- bh=NmDf79vE8hv0YfgtmCbuGLoZ1VFY8keRaG09xlPsi1w=;
- b=+zLhpnWqBXVfM1FoWXh+vOrYbW+1PdqdxnwmATum6vdWMIGV61ws83fUlq0THoOEwNM9DTFVj
- WT/Yzs4sP/oD857r8lC7BjQonO2SIifW62J25od5GcOHZb1vbPt0S3U
+ bh=Dr+9mb6M3YR6t5QP2S0QwtBj0rEB1PhVrsG2rhdCZcQ=;
+ b=9ITfSpK8+LD9e+QxEjYQp1nXQUBTIuBQmaDxfBUwxzgaOIDUkMIjjMfyUJvrORTewXXZSw5Xz
+ Gn0C00nHf3ZBjPZ//TG122h5lCwl59nw/Izo9W5v6THYJy0djwN6x6v
 X-Developer-Key: i=xmphyr@gmail.com; a=ed25519;
  pk=NNmtCKBlfBcUb+tQiMXr0u4Z3W1r0gSDovSDVTzPWXE=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=xmphyr@gmail.com; helo=mail-ot1-x333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
+ envelope-from=xmphyr@gmail.com; helo=mail-oo1-xc33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,7 +95,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 15 Nov 2026 22:33:34 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -115,54 +113,47 @@ X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Made it so that vmxnet3_validate_interrupts will always validate
-s->rxq_descr[0].intr_idx.
+Included the mention of WHPX when the option -cpu host doesn't have
+an accelerator option.
 
 Signed-off-by: Andrew Nguyen <xmphyr@gmail.com>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4729
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4836
 ---
-This is a resolution for issue #4729: https://gitlab.com/qemu-project/qemu/-/work_items/4729.
-From the report, I got the impression that rxq_descr[0] will always "exist" even if the value
-of rxq_num is 0. This is because RXQ_IDX is 0. Therefore, my solution is to always validate
-rxq_descr[0].intr_idx.
+This is a resolution for issue #4836: https://gitlab.com/qemu-project/qemu/-/work_items/4836.
+"-cpu host" by itself is not permitted; an accelerator must be specified as well. For Linux,
+it is KVM. macOS is HVF and Windows is WHPX. 
 
-To: qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+Previously, QEMU would only tell the user to use either KVM or HVF, essentially excluding 
+Windows users. This patch adds WHPX to the error message. A similar patch was made seven
+months ago in target/arm/cpu.c:1861.
+
 Signed-off-by: Andrew Nguyen <xmphyr@gmail.com>
-
+---
 Changes:
-- vmxnet3.c: changed the RX queue interrupt index validation for loop to a do-while loop
+- cpu.c:10229: added WHPX to the error message when "-cpu host" doesn't include an accelerator
 ---
- hw/net/vmxnet3.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ target/i386/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index 24c551a054..58bb7fb869 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -1367,13 +1367,15 @@ static bool vmxnet3_validate_interrupts(VMXNET3State *s)
-         }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index eab0d5a4d4..7dd5535f80 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10229,7 +10229,8 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+ 
+     if (xcc->host_cpuid_required && !accel_uses_host_cpuid()) {
+         g_autofree char *name = x86_cpu_class_get_model_name(xcc);
+-        error_setg(&local_err, "CPU model '%s' requires KVM or HVF", name);
++        error_setg(&local_err, "The '%s' CPU type can only be used with KVM,
++            HVF or WHPX", name);
+         goto out;
      }
  
--    for (i = 0; i < s->rxq_num; i++) {
-+    i = 0;
-+    do {
-         int idx = s->rxq_descr[i].intr_idx;
-         VMW_CFPRN("Verifying RX queue %d interrupt index (%d)", i, idx);
-         if (!vmxnet3_validate_irq_idx("RX", s->msix_used, idx)) {
-             return false;
-         }
--    }
-+        i++;
-+    } while (i < s->rxq_num);
- 
-     return true;
- }
 
 ---
 base-commit: e9fa1f66f0d47c74b6766e1b8b87ad7c2a9394d5
-change-id: 20261115-4729-out-of-bounds-rx-interrupt-idx-78d69a7d847d
+change-id: 20261115-4836-cpu-host-error-1e85b17e0f1d
 
 Best regards,
 -- 
