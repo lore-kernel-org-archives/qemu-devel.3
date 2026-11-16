@@ -1,76 +1,108 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07C9606A330
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 18:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E2A606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 18:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OqWbX7EL
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=g7AbcToi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT1Tu-000395-57; Mon, 16 Nov 2026 13:31:07 -0500
+	id 1xT1Xg-0005Jt-9x; Mon, 16 Nov 2026 13:35:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xT1Tj-00037y-7F
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 13:30:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xT1Th-00089a-8U
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 13:30:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794853852;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f2sp73OxbRa315hH9KSI5cjTj/d+t91CVjrljgc/5Bw=;
- b=OqWbX7ELSz1kKMHxHfdQe/frs4IxFc5uLXl8hAU0ltml51rZ6vNFDYm5d3iyxuW/L8f9WH
- JM1ZUy2L6cFHcENhCjZNAkF2vP4s6HYkjDS1DsE2xbu48wTUqGFgf1eQxJ0g2BbpE5Adk+
- /9dd51fkqKH6AK4A2UGGdOPAeMHnqz8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-101-Mdw4au9oOL-hhCK2Aptn7g-1; Mon,
- 16 Nov 2026 13:30:50 -0500
-X-MC-Unique: Mdw4au9oOL-hhCK2Aptn7g-1
-X-Mimecast-MFC-AGG-ID: Mdw4au9oOL-hhCK2Aptn7g_1794853849
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7913A1955F72; Mon, 16 Nov 2026 18:30:49 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 577E83001DA7; Mon, 16 Nov 2026 18:30:47 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 1/2] python: add support for Python3.15
-Date: Mon, 16 Nov 2026 13:30:44 -0500
-Message-ID: <20261116183045.118241-2-jsnow@redhat.com>
-In-Reply-To: <20261116183045.118241-1-jsnow@redhat.com>
-References: <20261116183045.118241-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xT1XZ-0005JC-48
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 13:34:53 -0500
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xT1XW-0002A8-Mn
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 13:34:52 -0500
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-8b0d126f631so34530997b3.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 10:34:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794854087; cv=none;
+ d=google.com; s=arc-20260327;
+ b=kNMRPZL8lndPiJ7TtuiQAoIp94XM0zrgQ3FjEV9QY0by5kQY2eOwm+WhQVKApX3gne
+ lST++LzFnJOVnuCA8lzf6tkOQng3qMAPb4qDsl5EqDcR9gI0PH9fnMCyDM53HCJjna0z
+ 0mP6lUPSUhwEAMt9zlq5y793CsVmJ8U9Ca67iTgscFY1413/DDz7NU4+N+0jGT6lP5NQ
+ 8Tk+uviKy4mt0KIEuP+aOL7yD224P5jm+UakVCE/n/T5vGdUYlusMEeoRcLJglAje5TE
+ uD2rvxvHO4ir2H7lD1mD/IZXnMOcKf5u0OQSk4JRpCHpYyMAOHACvjYMKHHDubenk4qO
+ F3cQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=VuTuxQfl5NArYExShj36N8I527uWdtoSUOxSKrWFzYs=;
+ fh=TUtDHcpMQL4Nds+5uYqWwB9npkUmkuEQ3GJWKeG/QEU=;
+ b=GZMHViWf5ZnlDuwaz8kZdxbhhjzKarCeDIl6yRkkVbqaN2Zj0SNPbqA8i70bJO8+gp
+ 2093IReID3sUaGQfTqUanfufPsf4RSAfAAeLwQPzpSiatNu7FNIqu++NNeUBISyVvljG
+ lGr1lOUEay25xo28Slv5IRwQif3TJ8kJ84xWF9VAqFDZbQ/ES4ZyLTd2akWMA3fGj81t
+ NNWkpUpAob9eRPrPmNThYrgHTgiZH6BO8/OshxW+fEMlWD9ZLfDCNoET9OaHmrrM9oLQ
+ xX/tvY15nmQ1KEtXnDZ4zOCtyaoU30OPYzQpQ3Ru6YPecVuW87xElBuFgrc4eOGrnePS
+ Endw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1794854087; x=1795458887; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=VuTuxQfl5NArYExShj36N8I527uWdtoSUOxSKrWFzYs=;
+ b=g7AbcToilqV7JIyGrjIEPyQqEMKVxZ8eRb2yb7WXXA3xO9sis7MhQkrBF5yxhenJIN
+ VqDNywG5ER8URT02RS+Pu5aWI6HZ8p63feWcHxfPcDZMBcQnl9PcvEgVVZ6u3DoZuE+F
+ OtxmO/sf2exhqmlbGL6X6kZ0Z+oJJ22loJu3XwAU0CvHwcR7HA0yBbeGt296hF+Cta3a
+ 8noZiSkDdug8FpXw717FkhgKmDnlC77qQUG2IlYgq/6J7MXG6jVub9aDepTNQ0IdI/DO
+ 8/4anPSrhRqlIfXjJ58h0PgwYjQ9r5KmQC2ZilIG/CGW8HeZw6gkVtx2i7nW2q4yavqA
+ XYbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794854087; x=1795458887;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=VuTuxQfl5NArYExShj36N8I527uWdtoSUOxSKrWFzYs=;
+ b=naA7wzeaHUGpnfqfgzmC1xPLKLYlAEDscwI1BAJJcEv5psZHnLnNgiSqKdWu6+Qh/P
+ q1+jB4fI8InHcJnFFaYnG7QDkMTEor+I4ZdH4e77DrVYEcswGqKkJifu11gBgExzVktx
+ 68Ua9KjFO0s2F70srxHlj58m47jAKHBxag0MWgXMZsNtc6nZZk7tVSyDKD46Be0AaJty
+ nJyZUWAteiqhdr6lbz+kDrr9K7gQLmqCf19FSXf9yJBwKWdwB64zAli3FrJJyjC1yhLU
+ n+KAhI6WB6TAfBb2w4w7iaHxHFMXJVNda8ypskOfTw99HbKlvPRC5m6v3ozTcGV08mVb
+ nT4g==
+X-Gm-Message-State: APuU4Z+ldXBnbXH+RmcALo+AGubqP7ibULQsrEYbzldgSL4kHBWBNjF8
+ ORu/kYW33xiouUz8TlAAoGvopuYl3FnvSKkUI/+jGr5ArUobL4q1OsvnSDTXeESm4nGuvtrysj5
+ Ibi/oeuLGOd5wynlEwnN1y+XSD/w68OE=
+X-Gm-Gg: AZFdTZfg1KV9aJ5fiSZJyqS+zSUSwdj2c82pvC81kibMKIyAvvlQM51z+D+wdvLc3SK
+ PvAPR/qW3EU2UdMSh64kAuEXSrGc3vqCf1Xa2p0kr8A1Y67dSQDvQuA6Kby8M1ZToSpyhrvK7WN
+ ztU1MIXdgoYLvBn0VeMfCl1b/rw/peeJEyGwxFr3gngMSMKm/sDQHeGn1NA1THcbRkKDcPL9nkp
+ q5tybXeyZbe79bICemDTco0bmU0dw/bZdiueaKTOxXPPMq5JxSLqUnpKyoemb/1Cj7TUGv88ouL
+ TH445DSjLxYnWE39pSkyyMZOhALqnLZIX/DzFtYiOTelysuWjObdqzqlMiDmZNE71JNPq12Ycxl
+ rrlF84v1hB+vCJVbEvh4DjJcvEWzKPyVJ34qUJAfixFg/noRKUs2JL4keIBECZxHF5One
+X-Received: by 2002:a05:690c:6d84:b0:8b4:e258:3dd with SMTP id
+ 00721157ae682-8b4e2581868mr12219647b3.9.1794854086591; Mon, 16 Nov 2026
+ 10:34:46 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+References: <20261116155409.300888-1-chris.bainbridge@canonical.com>
+In-Reply-To: <20261116155409.300888-1-chris.bainbridge@canonical.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 16 Nov 2026 22:34:33 +0400
+X-Gm-Features: Aa3M54o_gPgHAXAKDcKnmyc00hB6dXZCaeGPPGnl3mN7vI9hOzY_FH3MzAdVRfU
+Message-ID: <CAJ+F1CJ+mbTpCTKqz_eLRUD2DcknXTM2WjF42ash0F-uYfnY4g@mail.gmail.com>
+Subject: Re: [PATCH] ui: fix screendump PPM corruption when the width is not
+ 4-aligned
+To: Chris Bainbridge <chris.bainbridge@canonical.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,89 +122,74 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Update tests, docs and infrastructure to explicitly support and test
-Python3.15.
+On Mon, Nov 16, 2026 at 8:11=E2=80=AFPM Chris Bainbridge
+<chris.bainbridge@canonical.com> wrote:
+>
+> ppm_save() writes pixman_image_get_stride(linebuf) bytes per row, but
+> the P6 header declares the image as width x height, i.e. width * 3
+> bytes per row for the PIXMAN_BE_r8g8b8 line buffer.
+>
+> pixman rounds scanlines up to 32-bit boundaries, so the line buffer's
+> stride is 4 * DIV_ROUND_UP(width * 3, 4), which is larger than
+> width * 3 whenever (width * 3) % 4 !=3D 0.  Every row then carries up to
+> 3 extra padding bytes that PPM consumers do not expect: readers which
+> trust the header see progressively misaligned pixels (a diagonally
+> sheared image, with the row padding interpreted as pixel data), and
+> the file ends up height * (stride - width * 3) bytes larger than the
+> header describes.
+>
+> All standard display widths are multiples of 4 (and so is their
+> width * 3), which has kept the artifact invisible for years; any
+> non-aligned width triggers it.  Example: after a VNC client requests a
+> desktop resize to a non-aligned size (SetDesktopSize), or with
+> -device virtio-vga,edid=3Don,xres=3D1050, the screendump of a healthy
+> guest is diagonally sheared at the correct resolution, while every
+> other display path (e.g. VNC) shows the correct image.
+>
+> Write exactly width * 3 bytes per row, matching the header.  The PNG
+> path is unaffected: it uses the same padded r8g8b8 line buffer, but
+> png_write_row() only consumes the width * 3 bytes described by the
+> IHDR.
+>
+> Verification: on QEMU 10.2.1 with virtio-vga and a 1050-pixel-wide
+> scanout, stock screendump emits a sheared PPM whose size exceeds the
+> header by height * (stride - width * 3); with this patch the PPM is
+> exactly header + width * 3 * height bytes and renders identically to
+> the PNG screendump.  scripts/checkpatch.pl reports 0 errors, 0
+> warnings.
+>
+> Fixes: b12f32c408ef ("pixman: switch screendump function.")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Chris Bainbridge <chris.bainbridge@canonical.com>
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20261109193145.3557626-1-jsnow@redhat.com>
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- configure                              | 2 +-
- tests/docker/dockerfiles/python.docker | 5 ++---
- python/Makefile                        | 4 ++--
- python/setup.cfg                       | 3 ++-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-diff --git a/configure b/configure
-index af14a9c23ef..745899b0e6d 100755
---- a/configure
-+++ b/configure
-@@ -497,7 +497,7 @@ first_python=
- if test -z "${PYTHON}"; then
-     # A bare 'python' is traditionally python 2.x, but some distros
-     # have it as python 3.x, so check in both places.
--    for binary in python3 python python3.14 python3.13 python3.12; do
-+    for binary in python3 python python3.15 python3.14 python3.13 python3.12; do
-         if has "$binary"; then
-             python=$(command -v "$binary")
-             if check_py_version "$python"; then
-diff --git a/tests/docker/dockerfiles/python.docker b/tests/docker/dockerfiles/python.docker
-index 79c554a2d87..86b38ba55dd 100644
---- a/tests/docker/dockerfiles/python.docker
-+++ b/tests/docker/dockerfiles/python.docker
-@@ -11,11 +11,10 @@ ENV PACKAGES="\
-     python3-pip \
-     python3-tox \
-     python3-virtualenv \
--    python3.10 \
--    python3.11 \
-     python3.12 \
-     python3.13 \
--    python3.9 \
-+    python3.14 \
-+    python3.15 \
-     "
- 
- RUN dnf install -y $PACKAGES
-diff --git a/python/Makefile b/python/Makefile
-index 7868a48a232..99066bfa3e0 100644
---- a/python/Makefile
-+++ b/python/Makefile
-@@ -15,8 +15,8 @@ help:
- 	@echo "make check-tox:"
- 	@echo "    Run tests against multiple python versions."
- 	@echo "    These tests use the newest dependencies."
--	@echo "    Requires: Python 3.12 - 3.14, and tox."
--	@echo "    Hint (Fedora): 'sudo dnf install python3-tox python3.14'"
-+	@echo "    Requires: Python 3.12 - 3.15, and tox."
-+	@echo "    Hint (Fedora): 'sudo dnf install python3-tox python3.15'"
- 	@echo "    The variable QEMU_TOX_EXTRA_ARGS can be use to pass extra"
- 	@echo "    arguments to tox".
- 	@echo ""
-diff --git a/python/setup.cfg b/python/setup.cfg
-index 927f72a46f6..d4130a2b27b 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -17,6 +17,7 @@ classifiers =
-     Programming Language :: Python :: 3.12
-     Programming Language :: Python :: 3.13
-     Programming Language :: Python :: 3.14
-+    Programming Language :: Python :: 3.15
-     Typing :: Typed
- 
- [options]
-@@ -145,7 +146,7 @@ multi_line_output=3
- # of python available on your system to run this test.
- 
- [tox:tox]
--envlist = py312, py313, py314
-+envlist = py312, py313, py314, py315
- skip_missing_interpreters = true
- 
- [testenv]
--- 
-2.56.1
-
+> ---
+>  ui/ui-qmp-cmds.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/ui/ui-qmp-cmds.c b/ui/ui-qmp-cmds.c
+> index 753cc2bf52..64027da2c0 100644
+> --- a/ui/ui-qmp-cmds.c
+> +++ b/ui/ui-qmp-cmds.c
+> @@ -309,9 +309,10 @@ static bool ppm_save(int fd, pixman_image_t *image, =
+Error **errp)
+>      linebuf =3D qemu_pixman_linebuf_create(PIXMAN_BE_r8g8b8, width);
+>      for (y =3D 0; y < height; y++) {
+>          qemu_pixman_linebuf_fill(linebuf, image, width, 0, y);
+> +        /* Write width * 3 bytes, not the 4-byte-aligned linebuf stride =
+*/
+>          if (qio_channel_write_all(QIO_CHANNEL(ioc),
+>                                    (char *)pixman_image_get_data(linebuf)=
+,
+> -                                  pixman_image_get_stride(linebuf), errp=
+) < 0) {
+> +                                  width * 3, errp) < 0) {
+>              return false;
+>          }
+>      }
+> --
+> 2.53.0
+>
+>
 
