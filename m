@@ -1,50 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2253A606A332
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7E8606A322
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=NR/qfosy
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=CMgoF76n
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3OH-00048I-4n; Mon, 16 Nov 2026 15:33:25 -0500
+	id 1xT3Ma-0001kI-9b; Mon, 16 Nov 2026 15:31:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3NH-0002NR-Co; Mon, 16 Nov 2026 15:32:25 -0500
+ id 1xT3Kp-00086I-Jf; Mon, 16 Nov 2026 15:29:51 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3ND-0004uF-RP; Mon, 16 Nov 2026 15:32:23 -0500
+ id 1xT3Kn-0001gU-IY; Mon, 16 Nov 2026 15:29:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860768; bh=nrUtHJNCt2EEtnQRM6xZInrtOQPJWtR8pqVWFRyNxRM=;
+ t=1794860765; bh=eaR6qn47q3yADUMD8c0zfNPEPWE7BKEqjpD0u4U+IlM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NR/qfosyWNa8KM2nDGTTkK5B4u4UrL5vHj9TgIowxeGNfKA5yuII+jinhKVduVBV/
- wgbWckptO7pn3lLzi9o1rBlyFOH26CK9L3CPNQwMekkQrWMOnKCq6+qwOH5LEOVxxq
- quzdc/TRaI1wVGmpW92foPGbhdTgSY+zVvAaqrqsoO2VjQ9aBZEODp7L+EwybunXXy
- U/8uyKiAT9UveOTOg8ixu8iAROze04n7q+42k9m68FCBIX1Dh65Qb45HPKO8ej0Wrm
- pYVrR7E43BCX6QfmWO2XXqTtqwQtPL7UqrScFMffTXmhmXz1ZFtw9GAvn0tos7jLjY
- cPzjLE7PAQjFw==
+ b=CMgoF76nkW0DBquXojhGGl5Zgb7yMxdUgMg4jSWpuJyz1oMy6U9Jzvlp8cpr+tadu
+ KvGUblvt8rQKMYTiovoGDSnDDnOjsR4yo+bSONfdWMg+TGltBmBSYoreMv4PaC1kBp
+ js1fxoH9M26zt3gKVxx9OLeMvzrypYaPRj3sz0M4rjaOgPgg/fVOyWSLK7KFmQQAPs
+ M7dohtjEuqqbIozaoJ5MS7K2e+tAwedSjE9CFxRZ9/5I65VN0tx4luLxv90E17lHi8
+ 9Omc0S/8p1J4b2yKcIVyZwyet4+zQNSzcIa/KO5uK10zDNMeyiCDM2ITnCWAhhWt8K
+ l0r/AUXmU6+nQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 14B671E71CF;
- Mon, 16 Nov 2026 23:26:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6491B1E71BC;
+ Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 11AD345FBFA;
- Mon, 16 Nov 2026 23:26:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 612FE45FBE8;
+ Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F2894B8EB8; Mon, 16 Nov 2026 23:26:07 +0300 (MSK)
+ id 398CEB8E94; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
- Guthrie McAfee Armstrong <git@gmarmstrong.dev>,
- Gautam Menghani <gautam@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 57/63] spapr-vscsi: clamp adapter info DMA write
- length to struct size
-Date: Mon, 16 Nov 2026 23:25:36 +0300
-Message-ID: <20261116202554.535325-57-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
+ Xianglai Li <lixianglai@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 39/63] target/loongarch: Fix memory access address
+ with fldle
+Date: Mon, 16 Nov 2026 23:25:18 +0300
+Message-ID: <20261116202554.535325-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -70,77 +67,66 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Chinmay Rath <rathc@linux.ibm.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-vscsi_send_adapter_info() used the guest-supplied common.length
-field directly as the size argument to spapr_vio_dma_write().
-Since common.length is controlled by the guest, a value larger
-than sizeof(struct mad_adapter_info_data) (148 bytes) caused
-dma_memory_write() to read past the end of the stack-allocated info
-struct, leaking arbitrary host stack contents into guest memory.
+With instruction fldle, similar with ldle instruction, address of accessed
+memory should come from register rj rather than rj + rk,. The same with
+instruction fldgt/fstle/fstgt.
 
-Fix this by clamping the write length to sizeof(info), then using
-spapr_vio_dma_set() to zero-fill any remaining bytes the guest
-requested beyond that size. This mirrors the existing pattern in
-vscsi_send_capabilities().
-
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4626
-Reported-by: Guthrie McAfee Armstrong <git@gmarmstrong.dev>
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
-Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20261007144434.374749-1-rathc@linux.ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-(cherry picked from commit 74e68729ca8ee576bef823798ffc80589b1edd63)
+Cc: qemu-stable@nongnu.org
+Fixes: 34423c019419 ("target/loongarch: Extract make_address_x() helper")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Xianglai Li <lixianglai@loongson.cn>
+(cherry picked from commit 94c862925d3c0518209f8856031d3785fe87e2e6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
-index b4c8f94d22a..7ec780da79e 100644
---- a/hw/scsi/spapr_vscsi.c
-+++ b/hw/scsi/spapr_vscsi.c
-@@ -966,6 +966,8 @@ static int vscsi_send_adapter_info(VSCSIState *s, vscsi_req *req)
- {
-     struct viosrp_adapter_info *sinfo;
-     struct mad_adapter_info_data info;
-+    uint16_t len, req_len;
-+    uint64_t buffer;
-     int rc;
+diff --git a/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc b/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc
+index b863ba1dc21..628b33330b0 100644
+--- a/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc
+@@ -82,7 +82,7 @@ static bool gen_fload_gt(DisasContext *ctx, arg_frr *a, MemOp mop)
+     CHECK_FPE;
  
-     sinfo = &req_iu(req)->mad.adapter_info;
-@@ -985,11 +987,23 @@ static int vscsi_send_adapter_info(VSCSIState *s, vscsi_req *req)
-     info.os_type = cpu_to_be32(2);
-     info.port_max_txu[0] = cpu_to_be32(VSCSI_MAX_SECTORS << 9);
+     gen_helper_asrtgt_d(tcg_env, src1, src2);
+-    addr = make_address_x(ctx, src1, src2);
++    addr = make_address_i(ctx, src1, 0);
+     tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, mop);
+     maybe_nanbox_load(dest, mop);
+     set_fpr(a->fd, dest);
+@@ -100,7 +100,7 @@ static bool gen_fstore_gt(DisasContext *ctx, arg_frr *a, MemOp mop)
+     CHECK_FPE;
  
--    rc = spapr_vio_dma_write(&s->vdev, be64_to_cpu(sinfo->buffer),
--                             &info, be16_to_cpu(sinfo->common.length));
-+    req_len = len = be16_to_cpu(sinfo->common.length);
-+    buffer = be64_to_cpu(sinfo->buffer);
-+    if (len > sizeof(info)) {
-+        fprintf(stderr, "vscsi_send_adapter_info: adapter info size mismatch !\n");
-+        /*
-+         * Just read and populate the structure that is known.
-+         * Zero rest of the structure.
-+         */
-+        len = sizeof(info);
-+    }
-+    rc = spapr_vio_dma_write(&s->vdev, buffer, &info, len);
-     if (rc)  {
-         fprintf(stderr, "vscsi_send_adapter_info: DMA write failure !\n");
-     }
-+    if (req_len > len) {
-+        spapr_vio_dma_set(&s->vdev, (buffer + len), 0, (req_len - len));
-+    }
+     gen_helper_asrtgt_d(tcg_env, src1, src2);
+-    addr = make_address_x(ctx, src1, src2);
++    addr = make_address_i(ctx, src1, 0);
+     tcg_gen_qemu_st_tl(src3, addr, ctx->mem_idx, mop);
  
-     sinfo->common.status = rc ? cpu_to_be32(1) : 0;
+     return true;
+@@ -116,7 +116,7 @@ static bool gen_fload_le(DisasContext *ctx, arg_frr *a, MemOp mop)
+     CHECK_FPE;
  
+     gen_helper_asrtle_d(tcg_env, src1, src2);
+-    addr = make_address_x(ctx, src1, src2);
++    addr = make_address_i(ctx, src1, 0);
+     tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, mop);
+     maybe_nanbox_load(dest, mop);
+     set_fpr(a->fd, dest);
+@@ -134,7 +134,7 @@ static bool gen_fstore_le(DisasContext *ctx, arg_frr *a, MemOp mop)
+     CHECK_FPE;
+ 
+     gen_helper_asrtle_d(tcg_env, src1, src2);
+-    addr = make_address_x(ctx, src1, src2);
++    addr = make_address_i(ctx, src1, 0);
+     tcg_gen_qemu_st_tl(src3, addr, ctx->mem_idx, mop);
+ 
+     return true;
 -- 
 2.47.3
 
