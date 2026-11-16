@@ -1,52 +1,56 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DEC606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F075606A32A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Fee0m73R
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=SAC9iUpH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3C4-0007sW-Qb; Mon, 16 Nov 2026 15:20:49 -0500
+	id 1xT3BD-0006Oo-3Z; Mon, 16 Nov 2026 15:19:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3C2-0007km-7c; Mon, 16 Nov 2026 15:20:46 -0500
+ id 1xT3BA-0006NR-Ca; Mon, 16 Nov 2026 15:19:52 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3C0-00086g-7Q; Mon, 16 Nov 2026 15:20:45 -0500
+ id 1xT3B8-0005kz-Ha; Mon, 16 Nov 2026 15:19:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860369; bh=ikuXXfCFjRnH2i59Ync0gKKIoB2cCb7V8BNkDPOWdmQ=;
+ t=1794860369; bh=UN0dsV273R/BEc8CS1vAd5mJ29SYV17QZbdRHqh4koU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Fee0m73RFlmcDGyReddowGVJWe9QRukLIyr7F4upLJyg8N7ZwDnvWcGEgsL49pjAQ
- gA+Ey7IRJd9/692muri07x5yISLqnis0N6ra+M66feGdFwEXrw0K6yjAvmAP2oaz4R
- bb3sEa/hHMEn3ssQiscQiM7Rt0c9XXNVH5ZfRmjsRLL5zXJroaelu599mgYL+MEkra
- zVNT6W2cmZJpwieTswx5zBBPENWJzhcfZmb3ETg3gNersod4ozMEFHx21ERxgmXQSl
- HQ9E+Q9gARuV7n8rZcmOw87mcJONi1g8g2A3yDckE0ICdRLQtWdBCdv3YF6H0wqM9E
- XpLzG3dcehF6Q==
+ b=SAC9iUpHHDr4Fy6zbyrh+eIl30stEEmF0poGQtvk/U0RLS/nO98FiEHxOdH36mUhZ
+ FN9vKuAi43Y120/U6bMephjWvFNOYIGprFKeSAecrQb5mmsl2aeW+30bXZenuclXiG
+ 7/kfxhdPRsZ6G4D7vOs26Fman9skZTOx64pQtP3HUPYcpRnAfG7u2lctyAE1IbPTR4
+ It693mx0C/0T56BDk3nFH1nYyV90vFgwtx/+hkEWMYK8o49HB4q5LC55tYWR1cEdpv
+ OTr3KlES2l3lAcxitpvl3C/HNEPIm5eg1VCASZXnmKOXlSfMydBI59Bsm26MaNGwlW
+ MzAVXkY/oho/g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B137D1E7146;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7D8351E713E;
  Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AE14E45FB7C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7B0D545FB74;
  Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6C8ACB8DEE; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ id 550BEB8DDE; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Keith Monahan <keith@techtravels.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 16/59] target/hppa: Use 32-bit load of PSW in rsm and
- ssm
-Date: Mon, 16 Nov 2026 23:18:20 +0300
-Message-ID: <20261116201922.534306-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
+ Bin Meng <bin.meng@processmission.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 08/59] hw/watchdog/wdt_imx2: Preserve own locked bits
+ in WCR
+Date: Mon, 16 Nov 2026 23:18:12 +0300
+Message-ID: <20261116201922.534306-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,50 +78,49 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Keith Monahan <keith@techtravels.org>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Since commit ebc9401a4067 ("target/hppa: Split PSW X and B into their
-own field") env->psw is a uint32_t followed by psw_xb, but trans_rsm()
-and trans_ssm() still read it with a 64-bit load.
+Apparently there is a typo in the WCR locked bits handling: The locked
+values for s->wcr must come from itself rather than from s->wicr, so fix
+that. Without it, guests such as u-boot may experience inadvertent
+reboots when configuring the WCR register.
 
-On a big-endian host the low half of that load is psw_xb, so the value
-passed to swap_system_mask() has none of the current system mask bits.
-SSM and RSM therefore clear every PSW system mask bit except those named
-in the instruction. For example, "ssm 2,r0" with PSW_Q set clears Q, and
-the next interruption does not record IIR, ISR and IOR. This makes the
-hppa-fpu-test dtlb-load case fail on s390x hosts.
-
-Load only the 32-bit psw field.
-
-Fixes: ebc9401a4067 ("target/hppa: Split PSW X and B into their own field")
-Cc: qemu-stable@nongnu.org  # v9.1+
-Signed-off-by: Keith Monahan <keith@techtravels.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit e0c80f0b9ca5792a91a0d14d09c3da05641d8402)
+Cc: qemu-stable@nongnu.org
+Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog support")
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20261006083445.30362-2-shentey@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit c278e6dc1abc4f33c0b9737d47b3b7ae8676e654)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 0d0d1bc99bc..504b29fcca0 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -2359,7 +2359,7 @@ static bool trans_rsm(DisasContext *ctx, arg_rsm *a)
-     nullify_over(ctx);
- 
-     tmp = tcg_temp_new_i64();
--    tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
-+    tcg_gen_ld32u_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
-     tcg_gen_andi_i64(tmp, tmp, ~a->i);
-     gen_helper_swap_system_mask(tmp, tcg_env, tmp);
-     save_gpr(ctx, a->t, tmp);
-@@ -2379,7 +2379,7 @@ static bool trans_ssm(DisasContext *ctx, arg_ssm *a)
-     nullify_over(ctx);
- 
-     tmp = tcg_temp_new_i64();
--    tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
-+    tcg_gen_ld32u_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
-     tcg_gen_ori_i64(tmp, tmp, a->i);
-     gen_helper_swap_system_mask(tmp, tcg_env, tmp);
-     save_gpr(ctx, a->t, tmp);
+diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
+index 18e40bd4664..10b4fd3d2c1 100644
+--- a/hw/watchdog/wdt_imx2.c
++++ b/hw/watchdog/wdt_imx2.c
+@@ -156,18 +156,18 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
+     case IMX2_WDT_WCR:
+         if (s->wcr_locked) {
+             value &= ~IMX2_WDT_WCR_LOCK_MASK;
+-            value |= (s->wicr & IMX2_WDT_WCR_LOCK_MASK);
++            value |= (s->wcr & IMX2_WDT_WCR_LOCK_MASK);
+         }
+         s->wcr_locked = true;
+         if (s->wcr_wde_locked) {
+             value &= ~IMX2_WDT_WCR_WDE;
+-            value |= (s->wicr & ~IMX2_WDT_WCR_WDE);
++            value |= (s->wcr & ~IMX2_WDT_WCR_WDE);
+         } else if (value & IMX2_WDT_WCR_WDE) {
+             s->wcr_wde_locked = true;
+         }
+         if (s->wcr_wdt_locked) {
+             value &= ~IMX2_WDT_WCR_WDT;
+-            value |= (s->wicr & ~IMX2_WDT_WCR_WDT);
++            value |= (s->wcr & ~IMX2_WDT_WCR_WDT);
+         } else if (value & IMX2_WDT_WCR_WDT) {
+             s->wcr_wdt_locked = true;
+         }
 -- 
 2.47.3
 
