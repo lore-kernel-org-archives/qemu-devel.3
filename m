@@ -1,86 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF73606A8A0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EBA606A8A7
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=pAsVYxer
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=fmOpOhgH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSueO-0003qL-Jk; Mon, 16 Nov 2026 06:13:30 -0500
+	id 1xSueZ-0003sO-7M; Mon, 16 Nov 2026 06:13:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueE-0003ow-OZ
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:19 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1xSueL-0003qk-87
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:28 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueB-00027k-I1
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:18 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-48fd2e38825so2074335f8f.2
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:09 -0800 (PST)
+ id 1xSueG-00029s-Fl
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:23 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-492f0a1b685so2354291f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794827588; x=1795432388; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794827599; x=1795432399; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=5rBiFwwMVmpfqyc5w3Wjsy/YNwNF2ZPWBBCtGodzQgA=;
- b=pAsVYxeradEM3CNCBVrwvXEWgpaMICqsLSWmWiP1cQa8MuvldEGdfkVbmmYbMo5XhT
- MnmIfLLG+96P8fQZpFV60oZOGEDyVf7yPr/eF6nmZFo9R+2oA8MTBaBGrQTGJWaPjR7N
- E3BEvQ7niwjlhvdaclDzAHc3705JQCVnPKsmWQDnltVS5G6IniyPAfyuGFXmDHVDZ+uC
- bgeA0QQcqyIoAwKKd2dIsOFfsxNr4xUZlTNcd9mdu2iSyxR+gEn979yDV4YFvDSHSlKZ
- /Z7tLmfx0lKGFo6y1X2AaTGZQTr8iYW50Y8Vcf0YXf2pbed1cqnxHs31JHCvxKH8F6IM
- O6xg==
+ bh=CnMUk4PqwLKmABb5XS8dEwBI81Oyl0v4bv0Q38Wo4ZM=;
+ b=fmOpOhgHFfxL1XKQVXOME1NV3ZqIEZuOE37dn6jIsObvPLmaTT48dy/YnGqROq8Yz4
+ SeFOGPqXRSFZ3iqJmelGgtE185DV9BedUa1MalZT7M9R7HYltHaTI/7vbvIqIxZ5ls+U
+ 2/VYYpClQQUJwVI1pMJdZ3EoMCIHdI7twOaT8uT22OuYJzkM63hfcTAzRxQiOHCZFxAq
+ c4dC8T+ad05Ll9G1m7puq3uLJJZPV7GPfej7/dcg0egByFXQro+p//7H/YEZ+jgwVsww
+ ZrTQGFgtQ6VGRs47LZFF/M/m858bwEM8lAUorw5d1vE2r48DPJ/W/TMIbHkpinDCs+SV
+ 2xJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794827588; x=1795432388;
+ d=1e100.net; s=20260707; t=1794827599; x=1795432399;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=5rBiFwwMVmpfqyc5w3Wjsy/YNwNF2ZPWBBCtGodzQgA=;
- b=uGxfp3Y1EGLucugj6YmToBc3ZLI2RISwZNI7nXUKcfPlXMO/b+tHo3y8PA/DyeDjBu
- 3kVBIh+CKjVDAIy9+lHxpjBqUf8dYl9Ug8U2xlQ/lh2oMR4ToEks97diDugDDafLf/Xa
- cU2t4pJ/oknaamd1BL0oifKgpWcs+E+A0GpL5d4ct9wGRAHP8pZLN+ukfCRtcH6S+ObT
- 8CLC2TAaswAoUgY9sZ6m0uxYChSb9Zmdo6gJzX0J3BE8I17eKrbu+wBvDzMuSbjJ2DPy
- PHoUSblNUnNqN4BX+jeVzGz5VRMxJuyCS8xK5eOfoWGaTh1d4CoQREe+2wwjX0GrGi2+
- qqWA==
-X-Gm-Message-State: APuU4Z+7tSJpw8iSF4cHbbUdj+OeypMPrLPLF+4hbRk1MyqmuLN/R8ar
- AkVbA6Q4E86RGf34UUOEW14prhp9hwHaBV7kAHLhN72UlNItp9nJ+hPm+2codVXDVKNTfiHOAoQ
- jM3qqdqs=
-X-Gm-Gg: AZFdTZdpsy7bo1X/3n+nK1hMRkH9Bt9T+7PUJekPzvQvl6ugan3il6mI6TKqAlgpZBJ
- FGZm5U5z4jjPVx5HNLpX6hS4s+Gf3kdLd/mMMdw/ydU2hZOiUyDUrIVJydV1PZx36gK4jpeWRpL
- ds3Fd7q6eYXMwvH/A7gCQsZ6OC8o/dcNdAgF39Npkwu27hHs/M/TsTrhBV/FLTGcbilWobWHBVz
- FTPFlGAc3pnCks/KeCeZ2pIw0kvq9nL+SZUGmWEHaNesG4quYVcIkK33BCPln7O5RxoFC6qO4O9
- SfNeiOpZNc4aVLdRWhyinOwfYHBprSM2CKB96iQiD7orN1EiVNfjyOGK2g6RZqVDpuNvNiPgvdU
- 3hCvAkaRKvtGytF6ycRhOPkFRZSUN+PctFUDb4UiFqmysqP0FP9wLztKRtBTi/hbExDguukqQgJ
- vh5Vi/adoQEBPGj/V54U6q76yApy1j8c6ALm+6v+WH0hiZK8bC6jMh87B2z/Gt7lB0x/w2Udtay
- 0v5zzVZZ19KcKEwHd6pyiQzA0nX/0EPZNgAiFo3vevQ9fWX9BOwV6rUi+YtEPPg4SW3cnJ1eSsP
- 532awdlHH38/D5RNzoOvXxx27Z8IABAX3vgXke5rciHz47WWcczJtPT8qOYuQx7EIezMcPOOJdt
- d2222XxnHIcXPfanYBdDGRVI1oRqh1d9FjA==
-X-Received: by 2002:a05:6000:4b0b:b0:48e:20f9:8d75 with SMTP id
- ffacd0b85a97d-49c72c9c398mr21246550f8f.48.1794827587675; 
- Mon, 16 Nov 2026 03:13:07 -0800 (PST)
+ bh=CnMUk4PqwLKmABb5XS8dEwBI81Oyl0v4bv0Q38Wo4ZM=;
+ b=i8I7VV8Ep3b+bmrH8L5ad6+155NwdnZqCQ9tsfQY0gazJIMyln5iCekMCfbiGFW+w2
+ 7/sCRnqw9ySeqtIG/dDPGON57bsEB4AWZEcb/DahAQTXw97KCcgB7osGA2/uMD12D5dO
+ rEThtDdRkdSf903ORH6y9YdzFH7KSsk0t5rarMk4UoJVx0/DOirWosFouSdfDO4Cb8qZ
+ rQwqv6+Sk9tUAebBvd5ko2B9nc6InR1YrpK+VgjZ3G5U14o3tHjqKNoZcy2I2vaFPXq+
+ 7uo/kLk+qRoHnbGP/8l6rDoXv9UMDTa05614RCV6/YlmOavdHIk+CA8di1NbZAif5zo2
+ Ewng==
+X-Gm-Message-State: APuU4Z+3KmwQ2GUeZsurDVM5NmgwGzx1G8iZWVk/GLEmVaGOMj3PbYSI
+ 89uKKsWNq4MftEpqKOYrk+dX8SRGyysfzAjdi5bVq9PzU8/uDfLu3z41X9eeK7hohWEnqbic3Nu
+ nKI9NZhY=
+X-Gm-Gg: AZFdTZdFvDFFS0Ipd0xYx3vfUdEsAtCoy6Kw4GbvrexXeNT/InWxtuVCC0WJxzJgEo6
+ NoScSZuSS1P0u+vWpTqy7nAWxChevI8QY5QJVrvHcJPJWcClWL8hznV6fhIUC6OuDMjAoqnNHLL
+ cxxWOAifykT3piASKFeVJhtshTp86uPjRd6cCWQGrfII4ST2o8rEeVHA4sTfo9m8pnsr8mxqMgy
+ TqC+JIr5pURR8EbZz353IS+D6LHp7p46c4XI7g6EBh7DiqAJw8kETIvgvff1gRJTnspTHRh9Z5e
+ 9PLjBXIjPt6eygx0Anr7FsCHaYYjkwXnTaaS/ZyoMDHed7OJuHguarELOFx5sfJ3x/TG8ivTYXU
+ 8ilPM1fMeNsW+fRndDhtB7pGQ63mpyxpUboP7urWtEbXib4a4XooPsnV2dcoQq1OiRCeZHU2oA4
+ exORqje3KwpYvOwm9P0NMeAzxDqYOT6ChL24Yf2+PbNbUEmBLU+N1SJqTs2GKXUmsboGDLcfFop
+ 378ksUczdk2LzBTNjwi1+mz25DAryWnrg0WVBqDddj1MO1zQEcO8av6Bo7IZcNDzMrCHb+TWCsm
+ JTnVvUR++R6LFIgGIWTEDnR1JZXVkttg3vzix6r4UncdWeX2sn1mXVgT2yd0BSCvuDP63pIp2Op
+ NaGWhzu4/QLeUa7bDdfwYpE42Hlwm6tUXCbG9AxwCXnRidlmmxBtKnIU=
+X-Received: by 2002:a5d:64cf:0:b0:48d:f3ee:7cc with SMTP id
+ ffacd0b85a97d-49c71a66085mr19840265f8f.30.1794827598759; 
+ Mon, 16 Nov 2026 03:13:18 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.06
+ ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Nov 2026 03:13:06 -0800 (PST)
+ Mon, 16 Nov 2026 03:13:18 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/33] hw/arm/bcm2838: Route SPI0 interrupt to GIC
-Date: Mon, 16 Nov 2026 11:12:32 +0000
-Message-ID: <20261116111303.1692832-3-peter.maydell@linaro.org>
+Subject: [PULL 13/33] net/eth.c: In eth_get_protocols(),
+ don't report TCP data offset off end of packet
+Date: Mon, 16 Nov 2026 11:12:43 +0000
+Message-ID: <20261116111303.1692832-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116111303.1692832-1-peter.maydell@linaro.org>
 References: <20261116111303.1692832-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,120 +108,37 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Hanyu <hywei737@utexas.edu>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-On raspi4b, SPI0's interrupt is connected only to the legacy interrupt
-controller. Linux guests whose device trees use the GIC therefore
-can't detect an SPI0 interrupt.
+eth_get_protocols() already rejects some out-of-bounds offsets found in
+packets. Add a missing check for TCP data offset.
 
-This patch adds a two-output IRQ splitter to deliver SPI0's interrupt
-to both the legacy controller and GIC SPI 118. This follows commit
-fb3e0557a4cb ("hw/arm/bcm2838: Route I2C interrupts to GIC").
-
-Testing
-
-Add these options to the QEMU invocation:
-
-  -device m25p80,bus=spi,drive=flash0 \
-  -blockdev node-name=flash0,driver=file,filename=flash.bin
-
-Before the change, probing fails and /proc/mtd contains no devices:
-
-  spi-nor spi0.0: SPI transfer timed out
-  spi_master spi0: failed to transfer one message from queue
-  spi-nor: probe of spi0.0 failed with error -2
-
-After the change, the flash is detected:
-
-  spi-nor spi0.0: m25p80 (1024 Kbytes)
-  # cat /proc/mtd
-  dev:    size   erasesize  name
-  mtd0: 00100000 00010000 "spi0.0"
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3013
-Signed-off-by: Hanyu <hywei737@utexas.edu>
-Message-id: 20261109035234.722952-1-hywei787@gmail.com
+Fixes: eb700029c783 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4155
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20261109-eth-v2-4-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/bcm2835_peripherals.h |  1 +
- include/hw/arm/bcm2838_peripherals.h |  1 +
- hw/arm/bcm2835_peripherals.c         | 14 +++++++++++---
- hw/arm/bcm2838.c                     |  4 ++++
- 4 files changed, 17 insertions(+), 3 deletions(-)
+ net/eth.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/arm/bcm2835_peripherals.h b/include/hw/arm/bcm2835_peripherals.h
-index 4f356f46435..cd66a734e7c 100644
---- a/include/hw/arm/bcm2835_peripherals.h
-+++ b/include/hw/arm/bcm2835_peripherals.h
-@@ -71,6 +71,7 @@ struct BCMSocPeripheralBaseState {
-     BCM2835SDHostState sdhost;
-     UnimplementedDeviceState i2s;
-     BCM2835SPIState spi[1];
-+    SplitIRQ spi_irq_splitter;
-     BCM2835I2CState i2c[3];
-     OrIRQState orgated_i2c_irq;
-     SplitIRQ orgated_i2c_irq_splitter;
-diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
-index 60bfacdce49..f9279daa4d0 100644
---- a/include/hw/arm/bcm2838_peripherals.h
-+++ b/include/hw/arm/bcm2838_peripherals.h
-@@ -27,6 +27,7 @@
- #define GIC_SPI_INTERRUPT_DMA_9_10     88
- #define GIC_SPI_INTERRUPT_AUX_UART1    93
- #define GIC_SPI_INTERRUPT_I2C          117
-+#define GIC_SPI_INTERRUPT_SPI          118
- #define GIC_SPI_INTERRUPT_SDHOST       120
- #define GIC_SPI_INTERRUPT_UART0        121
- #define GIC_SPI_INTERRUPT_RNG200       125
-diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
-index 558c180df9f..be40c6b92a4 100644
---- a/hw/arm/bcm2835_peripherals.c
-+++ b/hw/arm/bcm2835_peripherals.c
-@@ -166,6 +166,8 @@ static void raspi_peripherals_base_init(Object *obj)
-     /* SPI */
-     object_initialize_child(obj, "bcm2835-spi0", &s->spi[0],
-                             TYPE_BCM2835_SPI);
-+    object_initialize_child(obj, "spi-irq-splitter",
-+                            &s->spi_irq_splitter, TYPE_SPLIT_IRQ);
- 
-     /* I2C */
-     object_initialize_child(obj, "bcm2835-i2c0", &s->i2c[0],
-@@ -480,10 +482,16 @@ void bcm_soc_peripherals_common_realize(DeviceState *dev, Error **errp)
- 
-     memory_region_add_subregion(&s->peri_mr, SPI0_OFFSET,
-                 sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->spi[0]), 0));
-+    qdev_prop_set_uint32(DEVICE(&s->spi_irq_splitter), "num-lines", 2);
-+    if (!qdev_realize(DEVICE(&s->spi_irq_splitter), NULL, errp)) {
-+        return;
-+    }
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[0]), 0,
--                       qdev_get_gpio_in_named(DEVICE(&s->ic),
--                                              BCM2835_IC_GPU_IRQ,
--                                              INTERRUPT_SPI));
-+                       qdev_get_gpio_in(DEVICE(&s->spi_irq_splitter), 0));
-+    qdev_connect_gpio_out(DEVICE(&s->spi_irq_splitter), 0,
-+                          qdev_get_gpio_in_named(DEVICE(&s->ic),
-+                                                 BCM2835_IC_GPU_IRQ,
-+                                                 INTERRUPT_SPI));
- 
-     /* I2C */
-     for (n = 0; n < 3; n++) {
-diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
-index 650b1fe8f44..1bde9e68af9 100644
---- a/hw/arm/bcm2838.c
-+++ b/hw/arm/bcm2838.c
-@@ -188,6 +188,10 @@ static void bcm2838_realize(DeviceState *dev, Error **errp)
-     qdev_connect_gpio_out(DEVICE(&ps_base->orgated_i2c_irq_splitter), 1,
-                           qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_I2C));
- 
-+    /* Connect the SPI interrupt to the interrupt controller */
-+    qdev_connect_gpio_out(DEVICE(&ps_base->spi_irq_splitter), 1,
-+                          qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_SPI));
-+
-     /* Connect VC mailbox to the interrupt controller */
-     sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->mboxes), 0,
-                        qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_MBOX));
+diff --git a/net/eth.c b/net/eth.c
+index 038f7d889c3..a444377fd0a 100644
+--- a/net/eth.c
++++ b/net/eth.c
+@@ -197,7 +197,8 @@ void eth_get_protocols(const struct iovec *iov, size_t iovcnt, size_t iovoff,
+         if (_eth_copy_chunk(input_size,
+                             iov, iovcnt,
+                             *l4hdr_off, sizeof(l4hdr_info->hdr.tcp),
+-                            &l4hdr_info->hdr.tcp)) {
++                            &l4hdr_info->hdr.tcp) &&
++            input_size - *l4hdr_off >= TCP_HEADER_DATA_OFFSET(&l4hdr_info->hdr.tcp)) {
+             l4hdr_info->proto = ETH_L4_HDR_PROTO_TCP;
+             *l5hdr_off = *l4hdr_off +
+                 TCP_HEADER_DATA_OFFSET(&l4hdr_info->hdr.tcp);
 -- 
 2.43.0
 
