@@ -1,47 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575C8606A329
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D4D606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ARpvr96S
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=EDSKKxlQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Ei-0006Lp-OX; Mon, 16 Nov 2026 15:23:33 -0500
+	id 1xT3B5-0006Kp-1G; Mon, 16 Nov 2026 15:19:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3EU-000671-Fe; Mon, 16 Nov 2026 15:23:18 -0500
+ id 1xT3B1-0006JH-Sy; Mon, 16 Nov 2026 15:19:43 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3ER-0003id-Or; Mon, 16 Nov 2026 15:23:18 -0500
+ id 1xT3B0-00058G-5U; Mon, 16 Nov 2026 15:19:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860375; bh=wS68NHd3/LFn2/P1rEYu7xGocZk21XRhnud6V7zBcM4=;
+ t=1794860369; bh=p4S3MfSPjGQKxhAVcgOiL4Wp7/u/k/COE2C98T0F2NA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ARpvr96SIAeF0v+fMenNj6fDSOogw/N1Td6rfXbNeiUT61MhA4HeGkDoMbRlv7un4
- wDmcsooIHzARcsTJjAZYH2uryB6ZQ1n0wzrEMEUDGq77j3eOthQlePqzRj69eJvjAl
- 74eatm6WKvJuYBIZgqA8wL3MTLhMbL5wLIMf0Kd8etYMRYD/YqkbOTHRw8J3ZX3/K1
- XQyasB+A2mdAT8j/uqCzaxAYPIhZ/pYt6fMJO1Yf5RsxgYZ89FTPsh61xNYgr8mowi
- HgtSpI59q6Ww3bI2XLsAC0JhIRc2BBwyIRpMahGcsUVip30xMyNkXByo2PhWi5Qe9P
- bKrZnGqoZUpUQ==
+ b=EDSKKxlQZ5Ev51xDukr5U/IEbezFTUHCC3eF5OQeySUACMlOQOGa1tJiBk7J+rR2v
+ c372PbrlVsOymO0ClSnUccuW1N0AMgIaPB8Et/fy8UMplgVq/lEXSu3bi9E+VU4Gul
+ xx1rsvo7SXKGfyMyrwyOI58KTooTsuaxt46WpxS5c7BbpmBNtczn+vmiRqVhfiG8ok
+ M3N4vlLwYx5nsh/Lj/Zs1Ald1WdD1xvvuBpuQt6vM8bH1hlJT5oN/s0n/nj75eodYf
+ DNGYfoeex9GUX83SRFTAA2qPxYtz/lrR5duQVYCq6JngpKlH0x3FihCOktl74sEAKk
+ tVcAAm5ErxzKw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DC8151E7164;
- Mon, 16 Nov 2026 23:19:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5E9AC1E7139;
+ Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DA1DE45FB9A;
- Mon, 16 Nov 2026 23:19:35 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 59B5945FB6F;
+ Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D33C4B8E24; Mon, 16 Nov 2026 23:19:35 +0300 (MSK)
+ id 4679BB8DD4; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 43/59] block/vmdk: Avoid reading off the end of
- descriptor memory
-Date: Mon, 16 Nov 2026 23:18:47 +0300
-Message-ID: <20261116201922.534306-43-mjt@tls.msk.ru>
+ Bibo Mao <maobibo@loongson.cn>, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 03/59] linux-user/loongarch64: In extframe_alloc,
+ align before subtracting sctx_info size
+Date: Mon, 16 Nov 2026 23:18:07 +0300
+Message-ID: <20261116201922.534306-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
@@ -67,68 +68,79 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In vmdk_parent_open() and vmdk_read_cid(), we read DESC_SIZE bytes
-from the image file into a malloc'd buffer, and then look through it
-for a keyword using strstr().  If found, we skip past the keyword and
-attempt to parse a value from the next part of the buffer.  However,
-we failed to check whether the end of the keyword is right at the end
-of the buffer, and so a malicious image can cause us to read off the
-end when parsing the value part.
+In extframe_alloc() we allocate space on the guest stack for a
+context struct, which consists of a target_sctx_info plus a more
+specific struct such as target_lasx_context.  The specific struct may
+have a higher alignment requirement than the basic target_sctx_info.
 
-Check for this condition before attempting to parse the value.
+The Linux kernel code for this is in arch/loongarch/kernel/signal.c
+in extframe_alloc():
 
-The worst case here is that the image causes us to read some junk
-from the heap into the BlockDriverState backing_file and
-auto_backing_file fields; the image could control those anyway, and
-it's unlikely that this heap data could e.g. be leaked to the guest.
+       unsigned long new_base = base - size;
+
+       new_base = round_down(new_base, (align < 16 ? 16 : align));
+       new_base -= sizeof(struct sctx_info);
+
+and it first adjusts the base (SP) address down by the size of the
+specific struct, then rounds that down to provide the required
+alignment, and finally subtracts the size of the sctx_info.
+
+QEMU's version does this in the wrong order, subtracting both the
+specific struct size and the sctx_info size before rounding down for
+alignment.  This means that for the target_lasx_context which needs
+32-alignment, we instead give the start of sctx_info 32-alignment,
+which (since that is 16 bytes long) means that the
+target_lasx_context is only 16-aligned.
+
+This manifests as a failure in the TCG tests such as
+loongarch64-linux-user-signals.test if you build with the clang
+sanitizers enabled:
+
+../../linux-user/loongarch64/signal.c:182:13: runtime error: member access within misaligned address 0x7dc793950b90 for type 'struct target_lasx_context', which requires 32 byte alignment
+0x7dc793950b90: note: pointer points here
+ 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00
+              ^
+    #0 0x57216113d881 in setup_sigframe /home/pm215/qemu/build/clang/../../linux-user/loongarch64/signal.c:182:13
+    #1 0x57216113d881 in setup_rt_frame /home/pm215/qemu/build/clang/../../linux-user/loongarch64/signal.c:389:5
+    #2 0x5721612a5041 in handle_pending_signal /home/pm215/qemu/build/clang/../../linux-user/signal.c:1349:9
+    #3 0x5721612a46ef in process_pending_signals /home/pm215/qemu/build/clang/../../linux-user/signal.c:1401:17
+    #4 0x57216113baa3 in cpu_loop /home/pm215/qemu/build/clang/../../linux-user/loongarch64/cpu_loop.c:121:9
+
+Correct setup_extcontext() to match the order the kernel does it.
 
 Cc: qemu-stable@nongnu.org
-Reported-by: router0mail <https://gitlab.com/router0mail>
-Fixes: 5f4da8c0f3736b2 ("New multiple snapshot support for VMDK")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4571
+Fixes: 9d5cd6587a70d613 ("linux-user: Add LoongArch signal support")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20261103143516.2182626-3-peter.maydell@linaro.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit fe2cbdda07c20c3b55e91522113b10a5d70ac0b3)
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit c341f8ce205ff931e12df857fb69f4c87172bdbb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/vmdk.c b/block/vmdk.c
-index c059f8493d2..117e25492bf 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -330,6 +330,10 @@ vmdk_read_cid(BlockDriverState *bs, int parent, uint32_t *pcid)
-         goto out;
-     }
-     p_name += cid_str_size;
-+    if (p_name >= desc + DESC_SIZE) {
-+        ret = -EINVAL;
-+        goto out;
-+    }
-     if (sscanf(p_name, "%" SCNx32, &cid) != 1) {
-         ret = -EINVAL;
-         goto out;
-@@ -501,6 +505,10 @@ static int GRAPH_RDLOCK vmdk_parent_open(BlockDriverState *bs)
-         char *end_name;
+diff --git a/linux-user/loongarch64/signal.c b/linux-user/loongarch64/signal.c
+index 1a322f96973..b42851cf452 100644
+--- a/linux-user/loongarch64/signal.c
++++ b/linux-user/loongarch64/signal.c
+@@ -111,9 +111,10 @@ static abi_ptr extframe_alloc(struct extctx_layout *extctx,
+ {
+     abi_ptr sp = orig_sp;
  
-         p_name += sizeof("parentFileNameHint") + 1;
-+        if (p_name >= desc + DESC_SIZE + 1) {
-+            ret = -EINVAL;
-+            goto out;
-+        }
-         end_name = strchr(p_name, '\"');
-         if (end_name == NULL) {
-             ret = -EINVAL;
+-    sp -= sizeof(struct target_sctx_info) + size;
++    sp -= size;
+     align = MAX(align, CONTEXT_INFO_ALIGN);
+     sp = ROUND_DOWN(sp, align);
++    sp -= sizeof(struct target_sctx_info);
+     sctx->gaddr = sp;
+ 
+     size = orig_sp - sp;
 -- 
 2.47.3
 
