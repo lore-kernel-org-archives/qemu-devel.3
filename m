@@ -1,47 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5E3606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D273606A32F
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=FbDxGBn1
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=PusWh6kJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3D5-0001aP-Pq; Mon, 16 Nov 2026 15:21:52 -0500
+	id 1xT3GC-0000Rd-MC; Mon, 16 Nov 2026 15:25:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3D3-0001JW-5g; Mon, 16 Nov 2026 15:21:49 -0500
+ id 1xT3Fc-00083M-OY; Mon, 16 Nov 2026 15:24:29 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3D1-0003MM-6l; Mon, 16 Nov 2026 15:21:48 -0500
+ id 1xT3Fa-0004Ru-VX; Mon, 16 Nov 2026 15:24:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860372; bh=+gArnahP3rGS6raxNzTW+kdUDb2Fzx/cyly0B0xKU58=;
+ t=1794860377; bh=z/PVdMOLYsc8cHYlINYrslvcRFz8sSi/WlvZZjGDre8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=FbDxGBn1CXO+4cZHZARnBR5I8EmsTSnaPGS3x7amO0sTAWtdAZf1G4dfqH5LYRZcY
- OdD8YT69FnRTqBcD5svz6VjxywU87ovOQW9pMY/QKP3Whik7nVvoQdAQE6Cd2Li0wO
- fMjkjsqnvHT02nG6DLbRk3HdOefsSMQmbMhlFxbaTZM1ZkgYOTYhuiENxew1OyPGqO
- O+4PXGijzZF+IPPbG7ngFqhIOlapU3qmlOAlLNxTFVvazaRsjdKiET9yFvqwN+MMvc
- fMyY2Z2iNUaWKEI0XfPDPPMteldDk6reuy0IBgNk4f7y+WQJpRrWYV/W0k9eQ4UyR1
- vvvb8cwfEn9sw==
+ b=PusWh6kJnqdBOijpG4i8oXa09dgXBJEeepdEvnh7CJv7+RsfyrNc2fIdkPB7x26dl
+ pPfHFFX3Fsxz0jfl+J2m0quXJdzV9C9wsDrwIcPDLy3IyW6bpWH7B+kzB8O5N5aueA
+ vILNER/jV0lRzDggBKSz0Q9Vtr7Wmpjm3fNi7+DzwX768dojGcudHVHT+ZZVpu2/vt
+ AyOg45yhTDNBmqwi+FAz3wN191J3fRYkkxjEreynHPUgr/Zv4e55TQzi0rBBtTtmfE
+ TFnZeHhcfWt2rPKOsGOW5VrRLIJeuAMcFshxnsgsE2NgVnUaum5IDa8KhJDVeTyEBC
+ N+vCF2Ur40HfQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5CD6F1E7150;
- Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BB3821E716F;
+ Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5A5CA45FB86;
- Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B75B945FBA4;
+ Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 46505B8E02; Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
+ id 96E74B8E38; Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
+ Guthrie McAfee Armstrong <git@gmarmstrong.dev>,
+ Gautam Menghani <gautam@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 26/59] target/i386/tcg: reject VEX.NP for MMX
- instructions
-Date: Mon, 16 Nov 2026 23:18:30 +0300
-Message-ID: <20261116201922.534306-26-mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 53/59] spapr-vscsi: clamp adapter info DMA write
+ length to struct size
+Date: Mon, 16 Nov 2026 23:18:57 +0300
+Message-ID: <20261116201922.534306-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
@@ -67,118 +70,76 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Chinmay Rath <rathc@linux.ibm.com>
 
-MMX instructions do not have a VEX encoding, so reject VEX instructions
-with no prefix for instructions that use X86_SPECIAL_MMX.
+vscsi_send_adapter_info() used the guest-supplied common.length
+field directly as the size argument to spapr_vio_dma_write().
+Since common.length is controlled by the guest, a value larger
+than sizeof(struct mad_adapter_info_data) (148 bytes) caused
+dma_memory_write() to read past the end of the stack-allocated info
+struct, leaking arbitrary host stack contents into guest memory.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 9f94fd68c89bed9bd59019a0bb2ad7d2e5458bcf)
+Fix this by clamping the write length to sizeof(info), then using
+spapr_vio_dma_set() to zero-fill any remaining bytes the guest
+requested beyond that size. This mirrors the existing pattern in
+vscsi_send_capabilities().
+
+Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4626
+Reported-by: Guthrie McAfee Armstrong <git@gmarmstrong.dev>
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20261007144434.374749-1-rathc@linux.ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+(cherry picked from commit 74e68729ca8ee576bef823798ffc80589b1edd63)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index b3989e07b42..d29e9a21771 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1928,6 +1928,12 @@ static int decode_modrm(DisasContext *s, CPUX86State *env,
-     return modrm;
- }
- 
-+static bool is_mmx(const DisasContext *s, const X86OpEntry *e)
-+{
-+    return (e->special == X86_SPECIAL_MMX &&
-+            !(s->prefix & (PREFIX_REPZ | PREFIX_REPNZ | PREFIX_DATA)));
-+}
-+
- static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp *ot)
+diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
+index 6962194eaac..60efcca9570 100644
+--- a/hw/scsi/spapr_vscsi.c
++++ b/hw/scsi/spapr_vscsi.c
+@@ -958,6 +958,8 @@ static int vscsi_send_adapter_info(VSCSIState *s, vscsi_req *req)
  {
-     switch (size) {
-@@ -1973,8 +1979,7 @@ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp
-         return true;
+     struct viosrp_adapter_info *sinfo;
+     struct mad_adapter_info_data info;
++    uint16_t len, req_len;
++    uint64_t buffer;
+     int rc;
  
-     case X86_SIZE_dq: /* SSE/AVX 128-bit */
--        if (e->special == X86_SPECIAL_MMX &&
--            !(s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
-+        if (is_mmx(s, e)) {
-             *ot = MO_64;
-             return true;
-         }
-@@ -1992,8 +1997,7 @@ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp
-         return true;
+     sinfo = &req_iu(req)->mad.adapter_info;
+@@ -977,11 +979,23 @@ static int vscsi_send_adapter_info(VSCSIState *s, vscsi_req *req)
+     info.os_type = cpu_to_be32(2);
+     info.port_max_txu[0] = cpu_to_be32(VSCSI_MAX_SECTORS << 9);
  
-     case X86_SIZE_x:  /* 128/256-bit, based on operand size */
--        if (e->special == X86_SPECIAL_MMX &&
--            !(s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
-+        if (is_mmx(s, e)) {
-             *ot = MO_64;
-             return true;
-         }
-@@ -2088,8 +2092,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-         goto get_reg;
- 
-     case X86_TYPE_V:  /* reg in the modrm byte selects an XMM/YMM register */
--        if (decode->e.special == X86_SPECIAL_MMX &&
--            !(s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
-+        if (is_mmx(s, &decode->e)) {
-             op->unit = X86_OP_MMX;
-         } else {
-             op->unit = X86_OP_SSE;
-@@ -2110,8 +2113,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-         goto get_modrm;
- 
-     case X86_TYPE_W:  /* XMM/YMM modrm operand */
--        if (decode->e.special == X86_SPECIAL_MMX &&
--            !(s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
-+        if (is_mmx(s, &decode->e)) {
-             op->unit = X86_OP_MMX;
-         } else {
-             op->unit = X86_OP_SSE;
-@@ -2123,8 +2125,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-         goto get_modrm_reg;
- 
-     case X86_TYPE_U:  /* R/M in the modrm byte selects an XMM/YMM register */
--        if (decode->e.special == X86_SPECIAL_MMX &&
--            !(s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
-+        if (is_mmx(s, &decode->e)) {
-             op->unit = X86_OP_MMX;
-         } else {
-             op->unit = X86_OP_SSE;
-@@ -2446,12 +2447,15 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
-     case 4:
-     case 5:
-     case 7:
--        if (s->prefix & PREFIX_VEX) {
-+        if (is_mmx(s, e)) {
-+            if (s->prefix & PREFIX_VEX) {
-+                goto illegal;
-+            }
-+        } else if (s->prefix & PREFIX_VEX) {
-             if (!(s->flags & HF_AVX_EN_MASK)) {
-                 goto illegal;
-             }
--        } else if (e->special != X86_SPECIAL_MMX ||
--                   (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ | PREFIX_DATA))) {
-+        } else {
-             if (!(s->flags & HF_OSFXSR_MASK)) {
-                 goto illegal;
-             }
-@@ -2855,8 +2859,7 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         }
+-    rc = spapr_vio_dma_write(&s->vdev, be64_to_cpu(sinfo->buffer),
+-                             &info, be16_to_cpu(sinfo->common.length));
++    req_len = len = be16_to_cpu(sinfo->common.length);
++    buffer = be64_to_cpu(sinfo->buffer);
++    if (len > sizeof(info)) {
++        fprintf(stderr, "vscsi_send_adapter_info: adapter info size mismatch !\n");
++        /*
++         * Just read and populate the structure that is known.
++         * Zero rest of the structure.
++         */
++        len = sizeof(info);
++    }
++    rc = spapr_vio_dma_write(&s->vdev, buffer, &info, len);
+     if (rc)  {
+         fprintf(stderr, "vscsi_send_adapter_info: DMA write failure !\n");
      }
++    if (req_len > len) {
++        spapr_vio_dma_set(&s->vdev, (buffer + len), 0, (req_len - len));
++    }
  
--    if (decode.e.special == X86_SPECIAL_MMX &&
--        !(s->prefix & (PREFIX_REPZ | PREFIX_REPNZ | PREFIX_DATA))) {
-+    if (is_mmx(s, &decode.e)) {
-         gen_helper_enter_mmx(tcg_env);
-     }
+     sinfo->common.status = rc ? cpu_to_be32(1) : 0;
  
 -- 
 2.47.3
