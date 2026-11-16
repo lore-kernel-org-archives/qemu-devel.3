@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A17606A322
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DEC606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=dEFusoe2
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Fee0m73R
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Bd-0006ng-Pi; Mon, 16 Nov 2026 15:20:22 -0500
+	id 1xT3C4-0007sW-Qb; Mon, 16 Nov 2026 15:20:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Bb-0006is-4r; Mon, 16 Nov 2026 15:20:19 -0500
+ id 1xT3C2-0007km-7c; Mon, 16 Nov 2026 15:20:46 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3BZ-00065v-8p; Mon, 16 Nov 2026 15:20:18 -0500
+ id 1xT3C0-00086g-7Q; Mon, 16 Nov 2026 15:20:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860369; bh=tZX44yjKYKOiSeyvdcdgdcFqjOn+JYJUfS8AB8ZoSMc=;
+ t=1794860369; bh=ikuXXfCFjRnH2i59Ync0gKKIoB2cCb7V8BNkDPOWdmQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dEFusoe2+aDrLvQL5/EdvKLpQ0vmqFqq25IavnwW09uzz+ZPZwRMftSGujTbSIPLP
- yZQo2M621mwu19bOjryc989bPCfKzaBb47p751IWe8GlTO1tigdEimu2Rbence+/b/
- 4g8WIXcA0dvbWjgxlsR8Fds8y0xtiIoe/yNiX0zvlZ00Shp1tPHUcdqrvfa3hfKj8/
- VCoT3IExbVTm6QRgP3YXqtMSu8/pvstrOMcQeYHtUfYNF8Hfldr3Xv9o7pxefOxweh
- /GIm9NxAZ7Gc1Sm4YAq72beImXUdb9kfrlpbts73/Rxj4d2QXy8PJlbAaWEoyCfUIi
- 0IKtjSkIn+kCw==
+ b=Fee0m73RFlmcDGyReddowGVJWe9QRukLIyr7F4upLJyg8N7ZwDnvWcGEgsL49pjAQ
+ gA+Ey7IRJd9/692muri07x5yISLqnis0N6ra+M66feGdFwEXrw0K6yjAvmAP2oaz4R
+ bb3sEa/hHMEn3ssQiscQiM7Rt0c9XXNVH5ZfRmjsRLL5zXJroaelu599mgYL+MEkra
+ zVNT6W2cmZJpwieTswx5zBBPENWJzhcfZmb3ETg3gNersod4ozMEFHx21ERxgmXQSl
+ HQ9E+Q9gARuV7n8rZcmOw87mcJONi1g8g2A3yDckE0ICdRLQtWdBCdv3YF6H0wqM9E
+ XpLzG3dcehF6Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 95D5C1E7142;
+ by isrv.corpit.ru (Postfix) with ESMTP id B137D1E7146;
  Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 931BF45FB78;
+ by tsrv.corpit.ru (Postfix) with ESMTP id AE14E45FB7C;
  Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 60BB1B8DE6; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ id 6C8ACB8DEE; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@linux.dev>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 12/59] hw/cxl: free the CCI background timer on
- Type-3 reset and exit
-Date: Mon, 16 Nov 2026 23:18:16 +0300
-Message-ID: <20261116201922.534306-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Keith Monahan <keith@techtravels.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 16/59] target/hppa: Use 32-bit load of PSW in rsm and
+ ssm
+Date: Mon, 16 Nov 2026 23:18:20 +0300
+Message-ID: <20261116201922.534306-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
@@ -74,92 +74,50 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Junjie Cao <junjie.cao@linux.dev>
+From: Keith Monahan <keith@techtravels.org>
 
-ct3d_reset() re-runs cxl_init_cci() on all three CCIs, and each run
-allocates a fresh background timer without freeing the old one, so
-every reset leaks three QEMUTimers.  ct3_exit() doesn't free them
-either.
+Since commit ebc9401a4067 ("target/hppa: Split PSW X and B into their
+own field") env->psw is a uint32_t followed by psw_xb, but trans_rsm()
+and trans_ssm() still read it with a 64-bit load.
 
-Upstream fixed this in 259b877eac36 ("hw/cxl: fix timer leak in
-cxl_destroy_cci()") and a004df0be51f ("hw/cxl: destroy primary CCI
-before re-initialization on reset"), but both rely on
-cxl_destroy_cci() and the .initialized flag from 98cbac128f1c, which
-only went in for 10.1.  Add a minimal cxl_destroy_cci() here and call
-it before each re-init and from ct3_exit().  timer_free() takes NULL,
-so the first reset needs no guard.
+On a big-endian host the low half of that load is psw_xb, so the value
+passed to swap_system_mask() has none of the current system mask bits.
+SSM and RSM therefore clear every PSW system mask bit except those named
+in the instruction. For example, "ssm 2,r0" with PSW_Q set clears Q, and
+the next interruption does not record IIR, ISR and IOR. This makes the
+hppa-fpu-test dtlb-load case fail on s390x hosts.
 
-ASan on v10.0.15, 5x system_reset on a paused guest with one
-cxl-type3: 720 bytes in 15 allocations from cxl_init_cci ->
-timer_new_ms before, none after.  cxl-test passes.
+Load only the 32-bit psw field.
 
-Fixes: 221d2cfbdb53 ("hw/cxl/mbox: Add support for background operations")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
+Fixes: ebc9401a4067 ("target/hppa: Split PSW X and B into their own field")
+Cc: qemu-stable@nongnu.org  # v9.1+
+Signed-off-by: Keith Monahan <keith@techtravels.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit e0c80f0b9ca5792a91a0d14d09c3da05641d8402)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 516c01d8402..6cbc6493673 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -2986,6 +2986,12 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
-     cci->fw.slot[cci->fw.active_slot - 1] = true;
- }
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 0d0d1bc99bc..504b29fcca0 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -2359,7 +2359,7 @@ static bool trans_rsm(DisasContext *ctx, arg_rsm *a)
+     nullify_over(ctx);
  
-+void cxl_destroy_cci(CXLCCI *cci)
-+{
-+    timer_free(cci->bg.timer);
-+    cci->bg.timer = NULL;
-+}
-+
- static void cxl_copy_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmds)[256])
- {
-     for (int set = 0; set < 256; set++) {
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 1606aa32790..df9c70973ee 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -973,6 +973,9 @@ static void ct3_exit(PCIDevice *pci_dev)
-     cxl_doe_cdat_release(cxl_cstate);
-     msix_uninit_exclusive_bar(pci_dev);
-     g_free(regs->special_ops);
-+    cxl_destroy_cci(&ct3d->cci);
-+    cxl_destroy_cci(&ct3d->vdm_fm_owned_ld_mctp_cci);
-+    cxl_destroy_cci(&ct3d->ld0_cci);
-     if (ct3d->dc.host_dc) {
-         cxl_destroy_dc_regions(ct3d);
-         address_space_destroy(&ct3d->dc.host_dc_as);
-@@ -1222,15 +1225,18 @@ static void ct3d_reset(DeviceState *dev)
+     tmp = tcg_temp_new_i64();
+-    tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
++    tcg_gen_ld32u_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
+     tcg_gen_andi_i64(tmp, tmp, ~a->i);
+     gen_helper_swap_system_mask(tmp, tcg_env, tmp);
+     save_gpr(ctx, a->t, tmp);
+@@ -2379,7 +2379,7 @@ static bool trans_ssm(DisasContext *ctx, arg_ssm *a)
+     nullify_over(ctx);
  
-     pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed);
-     cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
-+    cxl_destroy_cci(&ct3d->cci);
-     cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
- 
-     /*
-      * Bring up an endpoint to target with MCTP over VDM.
-      * This device is emulating an MLD with single LD for now.
-      */
-+    cxl_destroy_cci(&ct3d->vdm_fm_owned_ld_mctp_cci);
-     cxl_initialize_t3_fm_owned_ld_mctpcci(&ct3d->vdm_fm_owned_ld_mctp_cci,
-                                           DEVICE(ct3d), DEVICE(ct3d),
-                                           512); /* Max payload made up */
-+    cxl_destroy_cci(&ct3d->ld0_cci);
-     cxl_initialize_t3_ld_cci(&ct3d->ld0_cci, DEVICE(ct3d), DEVICE(ct3d),
-                              512); /* Max payload made up */
- 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 3a0ee7e8e79..d9238c903eb 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -316,6 +316,7 @@ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max);
- void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
-                                   DeviceState *d, size_t payload_max);
- void cxl_init_cci(CXLCCI *cci, size_t payload_max);
-+void cxl_destroy_cci(CXLCCI *cci);
- void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
-                           size_t payload_max);
- int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
+     tmp = tcg_temp_new_i64();
+-    tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
++    tcg_gen_ld32u_i64(tmp, tcg_env, offsetof(CPUHPPAState, psw));
+     tcg_gen_ori_i64(tmp, tmp, a->i);
+     gen_helper_swap_system_mask(tmp, tcg_env, tmp);
+     save_gpr(ctx, a->t, tmp);
 -- 
 2.47.3
 
