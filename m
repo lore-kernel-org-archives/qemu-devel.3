@@ -1,50 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F075F606A882
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 16:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06264606A883
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 16:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DpJd3MXM
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NXSnH0HZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSzvG-0007xb-PQ; Mon, 16 Nov 2026 11:51:18 -0500
+	id 1xSzvG-0007xp-PQ; Mon, 16 Nov 2026 11:51:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xSzuj-0007c1-4b
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:50:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xSzuh-0007eJ-K4
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xSzuh-0007ba-CE
  for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:50:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xSzue-0007du-HR
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:50:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794847838;
+ s=mimecast20190719; t=1794847831;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NIkcB0xFVInRVan0YUgAxqPrhANw4KC3xtWTa3NWmiE=;
- b=DpJd3MXM5kWrAf0HFtgx/jw3eFJ7+nT6q5buW0XNHO4PKanXQUKsnruTMvmcLXAl4+d8UM
- AWuxdj6rPMUodDMsLKUN6ayYzdWCwWy/iMM9RW0piWlRaIp3awD0rpqIFOOFaH8QDJpeYL
- esxM7P/pR5gO0UqG84DXVGNPEL5XoOQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=CRoYJNo2Ut/C9F0PKvSMgrpZBQkzD9p9HmTEG0fAlqU=;
+ b=NXSnH0HZsopuI8tO56ZzZpUDiX2T6c3J6hijbt3UXog+EOldti1HAMNnwLJ7w7/vVZk6o6
+ 4juvwxM2DOtRPjuJut9Fk9rRzaQuKHMb0DkLRrjw7TAc7RHzdiloEDKqyG4NSpK7ICKuZA
+ rvuW1XGtNoVZaRwgA32xd70obcpHPig=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-4TvjXVxqOGu-um8TZYAVbA-1; Mon,
- 16 Nov 2026 11:50:33 -0500
-X-MC-Unique: 4TvjXVxqOGu-um8TZYAVbA-1
-X-Mimecast-MFC-AGG-ID: 4TvjXVxqOGu-um8TZYAVbA_1794847831
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-zsTcbiazNmSDz6sDb0s-AQ-1; Mon,
+ 16 Nov 2026 11:50:29 -0500
+X-MC-Unique: zsTcbiazNmSDz6sDb0s-AQ-1
+X-Mimecast-MFC-AGG-ID: zsTcbiazNmSDz6sDb0s-AQ_1794847827
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 40DD91955EA8; Mon, 16 Nov 2026 16:50:31 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CC5D18002FC; Mon, 16 Nov 2026 16:50:27 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 24AB9195B3C7; Mon, 16 Nov 2026 16:50:27 +0000 (UTC)
+ id 4272C195B3C9; Mon, 16 Nov 2026 16:50:21 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -63,25 +63,24 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 5/7] debug/mem: name coroutine stacks
-Date: Mon, 16 Nov 2026 11:50:00 -0500
-Message-ID: <20261116165002.30939-6-jsnow@redhat.com>
+Subject: [PATCH v2 4/7] debug/mem: name pthreads
+Date: Mon, 16 Nov 2026 11:49:59 -0500
+Message-ID: <20261116165002.30939-5-jsnow@redhat.com>
 In-Reply-To: <20261116165002.30939-1-jsnow@redhat.com>
 References: <20261116165002.30939-1-jsnow@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,30 +101,85 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- util/oslib-posix.c | 3 +++
- 1 file changed, 3 insertions(+)
+ meson.build              |  8 ++++++++
+ util/qemu-thread-posix.c | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
 
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index dc001da66dd..454579c72df 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -60,6 +60,7 @@
+diff --git a/meson.build b/meson.build
+index d7bcb581c18..ef961df2f64 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2878,7 +2878,15 @@ config_host_data.set('CONFIG_PTHREAD_GET_NAME_NP', cc.links(osdep_prefix + '''
+     pthread_get_name_np(pthread_self(), buf, sizeof(buf));
+     return 0;
+   }''', dependencies: threads))
++config_host_data.set('CONFIG_PTHREAD_GETATTR_NP', cc.links(osdep_prefix + '''
++  #include <pthread.h>
  
- #include "qemu/memalign.h"
- #include "qemu/mmap-alloc.h"
++  int main(void)
++  {
++    pthread_attr_t attr;
++    pthread_getattr_np(pthread_self(), &attr);
++    return 0;
++  }''', dependencies: threads))
+ config_host_data.set('CONFIG_PTHREAD_CONDATTR_SETCLOCK', cc.links(osdep_prefix + '''
+   #include <pthread.h>
+ 
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index 089606c93fb..967e0f15f6d 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -17,6 +17,7 @@
+ #include "qemu-thread-common.h"
+ #include "qemu/tsan.h"
+ #include "qemu/bitmap.h"
 +#include "qemu/mmap-vma.h"
  
- #define MAX_MEM_PREALLOC_THREAD_COUNT 32
+ #if defined(CONFIG_PTHREAD_SET_NAME_NP) || defined(CONFIG_PTHREAD_GET_NAME_NP)
+ #include <pthread_np.h>
+@@ -362,6 +363,13 @@ static void qemu_thread_atexit_notify(void *arg)
  
-@@ -742,6 +743,8 @@ void *qemu_alloc_stack(size_t *sz)
-         abort();
-     }
- 
-+    qemu_name_vma(ptr, *sz, "coroutine-stack");
+ void qemu_thread_set_name(const char *name)
+ {
++# if defined(CONFIG_PTHREAD_GETATTR_NP)
++    pthread_attr_t real_attr;
++    void *pthread_addr;
++    size_t stacksize;
++    size_t guardsize;
++# endif
 +
-     /* Stack grows down -- guard page at the bottom. */
-     if (mprotect(ptr, pagesz, PROT_NONE) != 0) {
-         perror("failed to set up stack guard page");
+     /*
+      * Attempt to set the thread name; note that this is for debug, so
+      * we're not going to fail if we can't set it.
+@@ -373,6 +381,28 @@ void qemu_thread_set_name(const char *name)
+ # elif defined(CONFIG_PTHREAD_SET_NAME_NP)
+     pthread_set_name_np(pthread_self(), name);
+ # endif
++
++# if defined(CONFIG_PTHREAD_GETATTR_NP)
++    if (pthread_getattr_np(pthread_self(), &real_attr)) {
++        return;
++    }
++
++    if (pthread_attr_getguardsize(&real_attr, &guardsize)) {
++        goto cleanup;
++    }
++
++    if (pthread_attr_getstack(&real_attr, &pthread_addr, &stacksize)) {
++        goto cleanup;
++    }
++
++    /* Though there's a guard page, it isn't actually marked RO, so
++     * just label the entire region */
++    qemu_name_vma(pthread_addr - guardsize, stacksize + guardsize,
++                  "pthread (%s)", name);
++
++ cleanup:
++    pthread_attr_destroy(&real_attr);
++# endif
+ }
+ 
+ typedef struct {
 -- 
 2.56.1
 
