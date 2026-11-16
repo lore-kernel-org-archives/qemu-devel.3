@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338BB606A322
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC21606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm2 header.b=BLKKKvnX;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=jPQ3fmw/
+	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm2 header.b=KKGNlyw8;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=RaFAs0F6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT4bs-00017d-LH; Mon, 16 Nov 2026 16:51:32 -0500
+	id 1xT4bs-00015U-B8; Mon, 16 Nov 2026 16:51:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4b8-0000F5-Oh
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:48 -0500
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4bP-0000ZU-6K
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:51:06 -0500
 Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4b6-0005JW-R1
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:46 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 2BF6D7A0021
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 16:50:44 -0500 (EST)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4bM-0005iQ-GQ
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:51:01 -0500
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id CCB7C7A00C6
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 16:50:49 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Mon, 16 Nov 2026 16:50:44 -0500
+ by phl-compute-05.internal (MEProxy); Mon, 16 Nov 2026 16:50:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1794865844; x=
- 1794952244; bh=kJc7UF0ewDB2ZBijTug07HT75+V0/+30QifhuL0KcsQ=; b=B
- LKKKvnXTNudlOwZY32+7BuuI+kmbAlpYYsc+4xK6H9PXB+pg9VZdJ/jnoci6rjk6
- W/9Pbr32p27RQS4zraBHl/CztHn3sJ19096vLbGau9PHOKsaDKuDQuDWH8pz8rF1
- dldwOyRtDj7Rzz3wZM+MXoMVoK83GlNq42mUN8r1uzkxZdaouK+35VGGtnOKg7hP
- k2QZ0dAdhTtOhHgLLSdDhU1mr4Vh4WRz6bMUr0xiTZsMpjOVxO/7/38X/7gluZzW
- git1Cou4u55N9tTZ2If8By832iVksjsBvLglKu+SIDxbNvwZrqyTbU6FZ/hp5zcw
- w7ezD/K/MzLKX2ofx4ohw==
+ :reply-to:subject:subject:to:to; s=fm2; t=1794865849; x=
+ 1794952249; bh=hg/nfdaLuv3cSRj4xPBlxqvtgqssfNexReQpgCtwlXQ=; b=K
+ KGNlyw8KuMFosJ+D3Vwbd3/m/4B4SOXtYfjIaopFUBztGSAZpZto7HvpRYHuwqCi
+ j6Mc/WnDmFZHrIjIDqutH3YhOEG5qVB4NQkg2OMZ6CoKCe8dGH2hP0TPn6/kMEZQ
+ XtWuw8mvbVxItLdGZ3Ld2V/muYMXnIX4w0wpiBhciC25nS3m8KNej6myk+hZnl4w
+ eUWuAE81bsFoJvKC4DoKqgYr97eHgM6xZQkbRUpbkiHcKOvvwA7oCGXgSwipclSL
+ kfSjKanO2RAvlINVcVIrcJdE4H4S7nvvwzXFCQU9QHUIWYG1pwzdBz2Z2r/ZNDni
+ hU2yQBeJit5ftjeB1qzFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1794865844; x=1794952244; bh=k
- Jc7UF0ewDB2ZBijTug07HT75+V0/+30QifhuL0KcsQ=; b=jPQ3fmw/gWwes8Sxs
- +3AJHYKIN1sUeZUAvoF8PAUeKBQUXVLqc7q4fR2NPnJzvKahCyO2v1A3/ekrxDl8
- LR3uZhgLVdZgSEKDosFbhrNvfltyNAKcRUhYDtXKGR6XOjy/j8mI5nPGtvvGn7F9
- YH7CqE/3iAAmzlSCH02PUJrutiu4uucWe4xA7trMtd90VttrQMFzCbwRpfukp8HW
- F5rJkrTgf7ccAFHaMDSYdNdxGN4ItQZo7AxyeDiaJwDqJNRiy7N5Cas8U3QcA0r3
- wVmJI5ed5RJnv6LaUkHWfc2oLbhziiygJvtt9fO1mZMGPvyvnytH6y8ooUy6zgIE
- gscWg==
+ :x-me-sender:x-sasl-enc; s=fm3; t=1794865849; x=1794952249; bh=h
+ g/nfdaLuv3cSRj4xPBlxqvtgqssfNexReQpgCtwlXQ=; b=RaFAs0F6dRfSsjYx6
+ XxOUGwLd6Pt6ZzLfwQqFJtAq9mqzSq6JJKgWhN+GDO7iswgZi/4NngJ7/0rXJG07
+ 5ch668nxMVMHe0KZvU9ItCTqQiH8pwUq7XNEcHGElVAH3ItPwbY3SVLSmwMAQ/Vn
+ X7tr3aWveRjB07x0dhKlSIFMSNrYJf4gU5EulpZa2w22L6hbRi013Q+xdahRvv4u
+ nagyv74cIoxuzPcimSpG7INzqHAfzdmh1NjdeH0zfoWp+0YHtRC28EO5Mlq5mTSs
+ 7mVh+hhpAav0t6P/L/ucge0dwO1CNxs10YLMb2eG8Y+btOajXp4npUhJjPaXzt99
+ 9KQzg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
  action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794865844; d=irrelevant.dk;
+DKIM2-Signature: i=1; m=1; t=1794865849; d=irrelevant.dk;
  mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:g7ciKoRqu0iEGcfVpmz66xN/wCmrERmB7pNizuDHc4y34Hk
- BZ2rlR+MJcGQK4cHT6xBM3ZvGQpY80oeI4GZV8+g4nVE78SN/DiHgVWXcxjQ8OYw
- hEeQsuBCDau9MUdXJ3tH0HcIp9dAE682kTGbR6e4M6AsTimTP8DLDKqVzteYcmj5
- IOXuOyVYnyzQMwSF1qLlh/RtzghKQwNzsjwBn6yZLrditlZSSDXwIfcV84NzuJcJ
- 042pQ+Wv6nt8Nhn49SvdWP/xuTUgi6wy8YMBXLeqrxEZvr/iJMqMEVC5hUZ87j/L
- mGZR5jhvCCTes+2f+4Ck7/JSjE2EH5oMdpnwnvQ==;
+ s=fm2:rsa-sha256:BhKP/66Lq4tHyIMMN1nrGF+Pv7dhSZv/S7o/C8d4cUjbMfO
+ wCAE+ngfTJl0l1QJEJj4UJZo+hQVY0LW3xUpyAv6yCLJKJoetT4a+bFYh9sNtS+K
+ mMfgRpikXBgTw7WKdm6/wOl7A5DR9TeAv9iJN3CEDsaYsqZuz3uDGNdy4ZW29uTE
+ uvX7Qk5LluDgQs71cPxjlVvLqDjFTzjo2RExMbgOtUFwDNqz3HBtrvsouqx8n0Yz
+ WsuAwMmxYkMmvO3lkExS+QerqKjmHF2CbR0Yd97HZj+Ae1aSzab7M+OVB8183zYi
+ 3vRZeI5EnfnUidMC9WhyamKv3G8p0LVec+BBIgA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
  action=mi-m=1; hc=11;
  hn=cc,content-transfer-encoding,date,feedback-id,from,
  in-reply-to,message-id,mime-version,references,subject,to;
 Message-Instance: m=1;
- h=sha256:10Ed5O8WqTip22PCrEnkYQrTbblDaFKHKb65jxjNYCc=:Hmt76ITSS43fV5Ani1J3YWRCpfxpqYetg4HYVVef614=;
-X-ME-Sender: <xms:s3r7apJmkOlXOCaQmAaRIYkJ6bNz34Kyzsmd7FMz4ZWl2aSxTSuv9A>
- <xme:s3r7avM3iKsjp9BlXaUlI7bQU9kOlwR5b-ipe2CzeZujGe_d1mJ6gHEJZ8n-_U-Q6
- 0YwtdvOmSNti4oSjtogaHme5a37whWhDj0IRLWCC7uDJfWe2gw_og0>
-X-ME-Received: <xmr:s3r7ahmAIi1Oq-6tWPZJHuAYJboNWaPXqKYVPBOFKdmAoL6lIuHP9A_95cYI_6EhUoBjvqqAX4rLZfxeBmW8pms9Y6sDpAbirhHdAmr-uydc8VakjVdfh2Gqpg>
-X-ME-Proxy-Cause: dmFkZTFy7iejwYF8R6pgM2a3CpNbLlro9fsD75g2yzrFNAd5PmdgvTYh1/eRSWnWpwbXu1
- HzGlgFWb5Mc6khiKfSe7BRN1Rj81GuJmBIFaiJAv6qgLhDJOFNTaISsau+71zNjhLftcQR
- tThKXPYRHDJ35YKr3GgpMxILGNcR1vRrtfuHeGzUEToUAjhCNcu/qY/WvVgUXTuPP3AQzG
- e8V3jTOnoARdVPR7ZO8iksdh0c8kdXA61/Jr4sCiGjOaEF2cz7wMg1s+Fb7Uqht3Mxjd8h
- HBjB3X5kUK3mVGVZ+b2KkYuP0BfX+FzDNfFBKEGW7jRm0nZ9iVo92bw3Ck+ZgKSAyLFEVj
- 7GPazEvbx+OdER2Vhi66llvUwrB/0ofpt5VZ8BMTw/WJflM6HE537xDJKZRpxCuU6p/n09
- 1SDpu350BixFPxpfuKiYHxT2v7xMmaVJa9VwBG7lP0usWCjcBsd2WLHZkU/NIQi9RZ7hJi
- y7+6495gdN7L6PawuyQb0EMwpThd/3HBcBsxGU4QGwZ/cnUlUELsY0rcSJ1Ri+suB8T6NW
- GZHQD4w7czfVvAlIqmu7n0lWVa/ZeyVeG2gApLOxg9FwrfJ2TqI4soEP161VxDFHno3cxN
- kCqYLKnLVssBv5h7Cmje0U5UoD+x4qksu7HCMGHQjynrUREkq02zyZlqVPzw
-X-ME-Proxy: <xmx:s3r7ar77O4pE3CRFq0eJdhJYoLSJBKx9f1QdCd6lJjRsEpcLm6Q97g>
- <xmx:s3r7at2hayqjMn4E63HvnOON_jTu-WJZKpIkbZbSVlwNfq0zRLbycw>
- <xmx:s3r7auGW5RWldAgOwmiSfZ-rbqcAD3ejRp2uce056I2oy5LxuegpEw>
- <xmx:s3r7akjy-fUAA4O-FIv2lej8Zy4zq7qkTY0mPeFMoWDenezAJGqhjA>
- <xmx:tHr7amSKuKVaFdmu6ZCVl7b2QCpOvoXcWePJzFWX-ZoW8LWBlvHnv0n3>
+ h=sha256:utUnPTvA9icpEIYjOk+ffNJC4Y1KgR7BeLQV8XLlHiI=:PwOBXO1ymwFg1xrA0ttO8qA2Vt6g81a+dcmjNC24VFU=;
+X-ME-Sender: <xms:uXr7anQ-VCAI3_8ZtA6Cr7rnoIWCIOa-MTIuBAjAy6M5Z2yYDAma5g>
+ <xme:uXr7agYrxRLGOOfCCJEWunlXC_hgVXexm5RocqFe7zrO1rHHQYgb2cqt9TXc-wzP5
+ TjNO9iWdCkx21RKU-RlNKS_U-J8bo_8K3pMQGonKka8XcwSdcDkZThb>
+X-ME-Received: <xmr:uXr7aqewi458KryxxrO5oii5rKyCq48lKBXlg6reiJ10a0-7xdtUaL6TnNc7-Wy5czqMLv1VUW4mQ_OhCg7sBu5mJaGJmZJw-htoMe3uZuhtDIp6lDJtvzV4wg>
+X-ME-Proxy-Cause: dmFkZTEV+RmlZ3Jobw8xLg0FFfmh/l+nEcXFjda+0aGwP3bTjJPyGQk8VX8ANMfPlOeNHy
+ 53bHciVCYz+f7Isfonp4Ez+Zz6s4TGaW55UuCN5Hh1mi5vDIp6pN1TcxFADIdGx0JQFZjn
+ 5IbSEPmX0bf1j0E/HYhZ0SWuId1PchdDBYQ65Z/Ftmkq4+X+OQajv6lDNSW4XCzDnaztoy
+ C0RjapWPT9ZVvjn/qsSyF5r3Xyo5CFpsAzjgoWXy+jMui1OeGZjrpkKgharlApXDSEf9UL
+ sCpJNJxR/h6dLWZY+Qj3Rnbc71zjq4oS9MeM3munjvMqvDGe+Yj2UYFQ9djqTWiSRKNXUW
+ rh2Hto0VKt1W3Y2T/YRsmXlODMkWKgNQaOtqmZqYi1RcMFuFawC/uFdErxVo6bPUkgjWnS
+ flgxVVGN6gCB9Qz+nAOMEca0S2JCh6olxeSUa2paOaUjeWodVGZP3Bw4EPwacLR/792cYZ
+ tw6yFpYh2KW8AjXs1eBTqYQHMKXi5qDmmGc6hTCgSRMNi1RY9wi/0nwe2JsG8N8z4uFpQy
+ i8l+ZhcheneHcgJ5Cvij6dolbKJ9pCvGUnPxmd6s/XfZfzbTYAtvQpfjV9hJFaGhFFrPg9
+ uXz0lnlEsWkmtVx8dtnwDCexi9eK0rVDepLj3ZZ7F7j4KFWxOu1NTiLd33GQ
+X-ME-Proxy: <xmx:uXr7ahL_sHHPSUio4DN1UGVhbjU5GzCRXmtX4DfDizDpHBGJdPTgtQ>
+ <xmx:uXr7anLkB6M_WE2hrE2H8wpFLShi9z8H1gHGLYQzldZN0oNM_gGHZA>
+ <xmx:uXr7agU_8R7o9I-moBJjBstDdyEnPM83alqz479Fhed7MRxyEDnj0w>
+ <xmx:uXr7aglRqjqX2NxxnbQ8-Y2lrN8VolNmcmcRYxjUcJZ7iGULTRXo7A>
+ <xmx:uXr7ahgm8rOOwYuFIGHIRS971KcwP77-rDZMklWdB1XNfV2VWheNWxCE>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Nov 2026 16:50:42 -0500 (EST)
+ 16 Nov 2026 16:50:48 -0500 (EST)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -95,9 +95,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Jesper Wendel Devantier <foss@defmacro.it>,
  Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
  qemu-block@nongnu.org
-Subject: [PULL 5/7] hw/nvme: reject fdp.runs smaller than the lba data size
-Date: Mon, 16 Nov 2026 22:50:11 +0100
-Message-ID: <20261116215014.59993-6-its@irrelevant.dk>
+Subject: [PULL 7/7] hw/nvme: fix broadcast fdp events handling
+Date: Mon, 16 Nov 2026 22:50:13 +0100
+Message-ID: <20261116215014.59993-8-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261116215014.59993-1-its@irrelevant.dk>
 References: <20261116215014.59993-1-its@irrelevant.dk>
@@ -134,37 +134,39 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Klaus Jensen <k.jensen@samsung.com>
 
-The reclaim unit accounting in nvme_do_write_fdp spins forever if RUNS
-is configured to be smaller than LBADS.
+The Set Features handler for the FDP Events feature asserts that a
+namespace is passed in the command because the feature is
+namespace-specific. An invalid namespace is rejected prior to reaching
+the handler, but the "broadcast nsid" (0xFFFFFFFF) is considered valid
+and causes the assert to abort QEMU.
 
-Reject such an invalid configuration upfront.
+Reject it with Invalid Field in Command instead as per the
+specification.
 
 Cc: qemu-stable@nongnu.org
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4792
 Fixes: 73064edfb864 ("hw/nvme: flexible data placement emulation")
 Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ns.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/nvme/ctrl.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 2ae26a9acbd0..37d45bb4d533 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -485,6 +485,12 @@ static bool nvme_ns_init_fdp(NvmeNamespace *ns, Error **errp)
-     char *r, *p;
-     uint16_t *ph;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index a0d22dacedfa..71c24dc02b67 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -6636,7 +6636,9 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
+     g_autofree uint8_t *events = NULL;
+     NvmeRuHandle *ruh = NULL;
  
-+    if (endgrp->fdp.runs < nvme_l2b(ns, 1)) {
-+        error_setg(errp, "fdp.runs must be greater than or equal to the "
-+                   "lba data size of the namespace");
-+        return false;
+-    assert(ns);
++    if (!ns) {
++        return NVME_INVALID_FIELD | NVME_DNR;
 +    }
-+
-     if (!ns->params.fdp.ruhs) {
-         ns->fdp.nphs = 1;
-         ph = ns->fdp.phs = g_new(uint16_t, 1);
+ 
+     if (!n->subsys || !n->subsys->endgrp.fdp.enabled) {
+         return NVME_FDP_DISABLED | NVME_DNR;
 -- 
 2.53.0
 
