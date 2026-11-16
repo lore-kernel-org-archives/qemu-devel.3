@@ -1,50 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C20606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D02606A33E
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=MJGa9QDj
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=oWvrH30j
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3I0-0007PB-La; Mon, 16 Nov 2026 15:26:58 -0500
+	id 1xT3IL-0008N8-0r; Mon, 16 Nov 2026 15:27:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Hp-0007FF-Qb; Mon, 16 Nov 2026 15:26:47 -0500
+ id 1xT3Hx-0007Ny-4r; Mon, 16 Nov 2026 15:26:54 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Ho-0007Fi-82; Mon, 16 Nov 2026 15:26:45 -0500
+ id 1xT3Hu-0000QU-Kt; Mon, 16 Nov 2026 15:26:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860763; bh=W5Nf+YjLNjybUF/5cgnhH6WXH4RsNccGNwbGh186bXg=;
+ t=1794860763; bh=iDO8YgBNisLMtpFBHoP6bEyivsTJkDaD+wQA//0mWcs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MJGa9QDjAv4Vs29TXT4xlrxOIehUr0MEfuPoOUZBwHkrEoSzS4jYn7HF0/wgxlhrF
- toL7Iq5r9r5ShbxShBtcjZO7lAl23qyBtr/qppIiAWu6IEdI8ecIskdfjbGJHDiJSm
- x0SBVh3Qg28DGVRbZ0iwz0GTWwOHuBi742FWBC8/CoYHIIMk2Q2RcmHtsoNkT7uYOw
- RouPKy+7h7HtSAnSCSSAYfYMBZT4nB+bq2e5gMmFOubesdpvYAW1lb4i34XGDoxeMI
- Uw0k0fhjkDqNdedWBeVqA0yFZDL2aczMcuKt94QtkAfBZh2F1ArEEc5xib1TnJyad2
- a4UtKwfo2iakg==
+ b=oWvrH30jrToRBT2egbetuLtXjypbTyei4dQWBIueAuEUpog+mEGOuGhSc8rolXuKa
+ KAsfAiKYz4bt/giGFiROGlQfS4ayiiMO2DsihARfa/gsYQydN+z0z9oRS6bZfugpcN
+ RVt53/bxIalGIWIfmaYjOmJ8WRSX2Yp4M52//qqjZU2vQwL/z9VSW7WrYvV2CJZcER
+ 0Inib7XCzM6ipOFj8DCyP7iX9UIYSS4XDC549Qmyp1hSuG/s4cFlU0wMMyATXJqXV/
+ m9TFt1BuyX78PPpZdj3P5RFx6LRId2FqHPyJbj/YDIfJRDYerQ64ZB+sGwSf81dQVT
+ 1IGYsGB8DlPZA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C5CB91E719F;
+ by isrv.corpit.ru (Postfix) with ESMTP id DBF1A1E71A2;
  Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C2C5345FBCB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D8A5045FBCE;
  Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 85D95B8E5A; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ id 8EC91B8E60; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- Bin Meng <bin.meng@processmission.com>,
  Peter Maydell <peter.maydell@linaro.org>,
+ Bin Meng <bin.meng@processmission.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 10/63] hw/watchdog/wdt_imx2: Preserve own locked bits
- in WCR
-Date: Mon, 16 Nov 2026 23:24:49 +0300
-Message-ID: <20261116202554.535325-10-mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 13/63] hw/arm/imx8mm-evk: Fix reference count of SoC
+ object
+Date: Mon, 16 Nov 2026 23:24:52 +0300
+Message-ID: <20261116202554.535325-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -80,47 +80,36 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-Apparently there is a typo in the WCR locked bits handling: The locked
-values for s->wcr must come from itself rather than from s->wicr, so fix
-that. Without it, guests such as u-boot may experience inadvertent
-reboots when configuring the WCR register.
+Using sysbus_realize_and_unref() requires object_new() rather than
+object_new_with_props(), otherwise the initial reference count is
+subtracted twice, i.e. ends up being one too low.
 
 Cc: qemu-stable@nongnu.org
-Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog support")
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Fixes: 7bcd1f30bc83 ("hw/arm: Add the i.MX 8MM EVK board")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20261006083445.30362-2-shentey@gmail.com>
+Message-ID: <20261006083445.30362-6-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit c278e6dc1abc4f33c0b9737d47b3b7ae8676e654)
+(cherry picked from commit c814f8c9f8e788051ef16dba6300af93f9c0190d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
-index c83d4107c19..3283990bbf8 100644
---- a/hw/watchdog/wdt_imx2.c
-+++ b/hw/watchdog/wdt_imx2.c
-@@ -156,18 +156,18 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
-     case IMX2_WDT_WCR:
-         if (s->wcr_locked) {
-             value &= ~IMX2_WDT_WCR_LOCK_MASK;
--            value |= (s->wicr & IMX2_WDT_WCR_LOCK_MASK);
-+            value |= (s->wcr & IMX2_WDT_WCR_LOCK_MASK);
-         }
-         s->wcr_locked = true;
-         if (s->wcr_wde_locked) {
-             value &= ~IMX2_WDT_WCR_WDE;
--            value |= (s->wicr & ~IMX2_WDT_WCR_WDE);
-+            value |= (s->wcr & ~IMX2_WDT_WCR_WDE);
-         } else if (value & IMX2_WDT_WCR_WDE) {
-             s->wcr_wde_locked = true;
-         }
-         if (s->wcr_wdt_locked) {
-             value &= ~IMX2_WDT_WCR_WDT;
--            value |= (s->wicr & ~IMX2_WDT_WCR_WDT);
-+            value |= (s->wcr & ~IMX2_WDT_WCR_WDT);
-         } else if (value & IMX2_WDT_WCR_WDT) {
-             s->wcr_wdt_locked = true;
-         }
+diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
+index 6b7774d3e25..9a9f8921da6 100644
+--- a/hw/arm/imx8mm-evk.c
++++ b/hw/arm/imx8mm-evk.c
+@@ -77,8 +77,8 @@ static void imx8mm_evk_init(MachineState *machine)
+         .modify_dtb = imx8mm_evk_modify_dtb,
+     };
+ 
+-    s = FSL_IMX8MM(object_new_with_props(TYPE_FSL_IMX8MM, OBJECT(machine),
+-                                         "soc", &error_fatal, NULL));
++    s = FSL_IMX8MM(object_new(TYPE_FSL_IMX8MM));
++    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+     object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+ 
 -- 
 2.47.3
 
