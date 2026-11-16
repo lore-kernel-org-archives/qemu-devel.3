@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8661606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DE2606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ZAgoDjEL
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=tm1708BU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3OL-0004aq-Ja; Mon, 16 Nov 2026 15:33:30 -0500
+	id 1xT3Iv-0002al-3q; Mon, 16 Nov 2026 15:27:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3LQ-0000EF-Jr; Mon, 16 Nov 2026 15:30:35 -0500
+ id 1xT3Ip-0002Ou-8W; Mon, 16 Nov 2026 15:27:48 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3LF-0001kl-4p; Mon, 16 Nov 2026 15:30:26 -0500
+ id 1xT3In-0001Ot-4D; Mon, 16 Nov 2026 15:27:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860765; bh=g7an4iUQbuxIfVZnlzrMeJkeAcJbO1cwfTsFfvvFn0k=;
+ t=1794860764; bh=VhCh+ZItEwMKkXMlJ5Z6sLJKjcdNqXp6EbtDIetXkYI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZAgoDjELXKcvkqHkfJV2vLFUHzX6NisermK2YsAHRonVmpdcHZFr5Pckn4N5F30Yb
- c5+fT0nfaFHn35A6ZU03I9/3mIqS4OOE+HUf+0SbvvoifC7X0YT3/ztswmx+2Ut+BB
- 580wbNlEAjtakITVe4PGrKm1ZElaCj9/VYKIr5/fvoz1UzET1pN2zfEzMck6nOBXz6
- 6EByh5KM86WQSLzhVSGCUoXZR9RoEXqgErEP+L4+PSwRpkzoWrZOvhswOT10BCb3js
- MP4p0avNluTG+tNZlxLkH33S810pDtVMRVLxLE1XnslAeoE7RpYZDIeB29k2ls+14G
- h6GABHHJmKyIQ==
+ b=tm1708BUnVZ8n3F3rBqb/PIfT2zBa5XRg1CRHmt5s9tdOzuupk5fhNU627siJBmRu
+ tYwrJBV3wMm6iCvvVJnj9X5iWmZz/dHheKoj3yG8aFL1nEYC8GmYu4bQjDiDbuv6Kd
+ l1m6KreIn1JZcrsqfuoP+MMHQ2gU19B10Glo5AaDMLHdAF1bGRcHcFxEVAZgKhYIsL
+ bS719u9ut4l/MhQ1fPK8kRJLaqbElmsNixO8lqYqXOGJP50/JtbmVv+fkpi1hNx8z1
+ dqhvxlBPJMMfXKXlJnhdSAzBCy2Lk/o3gq3OvFAomW7F5hf0KSZnuvNdfPhy1zh5QL
+ rQ2Ky1ANaWoqg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 87E7C1E71C1;
- Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A7721E71A9;
+ Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 855D345FBED;
- Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 16F8C45FBD5;
+ Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 47EDDB8E9E; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
+ id A37DEB8E6E; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 44/63] hw/intc/arm_gic: move num-priority-bits check
-Date: Mon, 16 Nov 2026 23:25:23 +0300
-Message-ID: <20261116202554.535325-44-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Daejun Park <daejun7.park@samsung.com>,
+ Jeuk Kim <jeuk20.kim@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 20/63] hw/ufs: Pass SYNCHRONIZE CACHE(16) to scsi-hd
+ as SYNCHRONIZE CACHE(10)
+Date: Mon, 16 Nov 2026 23:24:59 +0300
+Message-ID: <20261116202554.535325-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -74,71 +74,131 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Daejun Park <daejun7.park@samsung.com>
 
-We check the num-priority-bits property for sane values in
-arm_gic_realize(), but the property is defined on the "common"
-superclass, so it is present also for TYPE_KVM_ARM_GIC.  Currently
-this misplaced check is harmless, beacuse the KVM subclass never
-looks at the property value.  However, we are about to make a change
-that will want to use the property value in code called from the
-common class's reset method.
+scsi-hd implements SYNCHRONIZE CACHE(10) only and fails the 16-byte
+variant with INVALID COMMAND OPERATION CODE. Linux sends SYNCHRONIZE
+CACHE(16) to zoned disks (sd_zbc sets use_16_for_sync), so once a
+logical unit can be zoned, every flush from such a guest fails. With
+the zoned logical units and without this change, a Linux 7.3-rc7
+guest logged
 
-Move num-priority-bits property value check to the common class
-realize method, where it belongs.
+  sd 2:0:0:1: [sdb] tag#9 Add. Sense: Invalid command operation code
+  critical target error, dev sdb, sector 0 op 0x1:(WRITE) flags 0x800
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-id: 20261106-gic_read_bpr_from_property-v2-2-9f096cce4814@linaro.org
-[PMM: rewrote commit message, moved patch before the change that
- it is a prerequisite for]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 2527d738072b9d9d8a2c8262127003c6aa9f9983)
+and fsync() on the disk failed with EREMOTEIO.
+
+scsi-hd flushes the whole medium for SYNCHRONIZE CACHE(10) and does not
+look at its LBA range. Hand the 16-byte command to scsi-hd as the
+10-byte one and keep the IMMED bit. This keeps the UFS change inside
+hw/ufs; if scsi-disk learns SYNCHRONIZE CACHE(16), the translation can
+go.
+
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit ad2f77a00b4ab8ef98863048a842a459c031dce8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
-index 4d4b79e6f34..b60f1f630b0 100644
---- a/hw/intc/arm_gic.c
-+++ b/hw/intc/arm_gic.c
-@@ -2117,16 +2117,6 @@ static void arm_gic_realize(DeviceState *dev, Error **errp)
-         return;
+diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
+index 2da5bb50fb0..9b574b0ea37 100644
+--- a/hw/ufs/lu.c
++++ b/hw/ufs/lu.c
+@@ -368,6 +368,8 @@ static UfsReqResult ufs_emulate_scsi_cmd(UfsLu *lu, UfsRequest *req)
+ static UfsReqResult ufs_process_scsi_cmd(UfsLu *lu, UfsRequest *req)
+ {
+     uint8_t task_tag = req->req_upiu.header.task_tag;
++    uint8_t *cdb = req->req_upiu.sc.cdb;
++    uint8_t sync_cache_10[UFS_CDB_SIZE] = { SYNCHRONIZE_CACHE };
+     SCSIRequest *scsi_req;
+     uint32_t len;
+ 
+@@ -381,8 +383,19 @@ static UfsReqResult ufs_process_scsi_cmd(UfsLu *lu, UfsRequest *req)
+         return ufs_emulate_scsi_cmd(lu, req);
      }
  
--    if (s->n_prio_bits > GIC_MAX_PRIORITY_BITS ||
--       (s->virt_extn ? s->n_prio_bits < GIC_VIRT_MAX_GROUP_PRIO_BITS :
--        s->n_prio_bits < GIC_MIN_PRIORITY_BITS)) {
--        error_setg(errp, "num-priority-bits cannot be greater than %d"
--                   " or less than %d", GIC_MAX_PRIORITY_BITS,
--                   s->virt_extn ? GIC_VIRT_MAX_GROUP_PRIO_BITS :
--                   GIC_MIN_PRIORITY_BITS);
--        return;
--    }
--
-     /* This creates distributor, main CPU interface (s->cpuiomem[0]) and if
-      * enabled, virtualization extensions related interfaces (main virtual
-      * interface (s->vifaceiomem[0]) and virtual CPU interface).
-diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
-index 304d89cf562..a7c0763ab6a 100644
---- a/hw/intc/arm_gic_common.c
-+++ b/hw/intc/arm_gic_common.c
-@@ -233,6 +233,16 @@ static void arm_gic_common_realize(DeviceState *dev, Error **errp)
-          */
-         s->num_lrs = 4;
-     }
-+
-+    if (s->n_prio_bits > GIC_MAX_PRIORITY_BITS ||
-+       (s->virt_extn ? s->n_prio_bits < GIC_VIRT_MAX_GROUP_PRIO_BITS :
-+        s->n_prio_bits < GIC_MIN_PRIORITY_BITS)) {
-+        error_setg(errp, "num-priority-bits cannot be greater than %d"
-+                   " or less than %d", GIC_MAX_PRIORITY_BITS,
-+                   s->virt_extn ? GIC_VIRT_MAX_GROUP_PRIO_BITS :
-+                   GIC_MIN_PRIORITY_BITS);
-+        return;
+-    scsi_req = scsi_req_new(lu->scsi_dev, task_tag, lu->lun,
+-                            req->req_upiu.sc.cdb, UFS_CDB_SIZE, req);
++    /*
++     * scsi-hd implements SYNCHRONIZE CACHE(10) only, while Linux sends the
++     * 16-byte variant to zoned disks. scsi-hd flushes the whole medium for
++     * SYNCHRONIZE CACHE(10) whatever its LBA range, so pass the 16-byte
++     * command on as the 10-byte one, keeping IMMED.
++     */
++    if (cdb[0] == SYNCHRONIZE_CACHE_16) {
++        sync_cache_10[1] = cdb[1] & 0x02;
++        cdb = sync_cache_10;
 +    }
++
++    scsi_req = scsi_req_new(lu->scsi_dev, task_tag, lu->lun, cdb, UFS_CDB_SIZE,
++                            req);
+ 
+     /*
+      * A command that moves data needs a PRDT. Without one there is no SG
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index ea7b9aa62a7..3c9e9e4032c 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -814,6 +814,51 @@ static void ufstest_no_prdt(void *obj, void *data, QGuestAllocator *alloc)
+     ufs_exit(ufs, alloc);
  }
  
- static inline void arm_gic_common_reset_irq_state(GICState *s, int cidx,
++static void ufstest_sync_cache(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    uint8_t buf[4096];
++    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
++        REQUEST_SENSE,
++    };
++    const uint8_t sync_cache_10_cdb[UFS_CDB_SIZE] = {
++        SYNCHRONIZE_CACHE,
++    };
++    const uint8_t sync_cache_16_cdb[UFS_CDB_SIZE] = {
++        SYNCHRONIZE_CACHE_16,
++    };
++    const uint8_t sync_cache_16_immed_cdb[UFS_CDB_SIZE] = {
++        SYNCHRONIZE_CACHE_16, 0x02 /* IMMED */
++    };
++    enum UtpOcsCodes ocs;
++    UtpUpiuRsp rsp_upiu;
++    const int test_lun = 1;
++
++    ufs_init(ufs, alloc);
++
++    /* Clear Unit Attention */
++    ocs = ufs_send_scsi_command(ufs, test_lun, request_sense_cdb, NULL, 0,
++                                buf, sizeof(buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++
++    ocs = ufs_send_scsi_command(ufs, test_lun, sync_cache_10_cdb, NULL, 0,
++                                NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++
++    ocs = ufs_send_scsi_command(ufs, test_lun, sync_cache_16_cdb, NULL, 0,
++                                NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++
++    ocs = ufs_send_scsi_command(ufs, test_lun, sync_cache_16_immed_cdb, NULL,
++                                0, NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++
++    ufs_exit(ufs, alloc);
++}
++
+ static void ufstest_mcq_cq_wraparound(void *obj, void *data,
+                                       QGuestAllocator *alloc)
+ {
+@@ -1766,6 +1811,7 @@ static void ufs_register_nodes(void)
+     qos_add_test("legacy-read-write", "ufs", ufstest_read_write, &io_test_opts);
+     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
+     qos_add_test("no-prdt", "ufs", ufstest_no_prdt, &io_test_opts);
++    qos_add_test("sync-cache", "ufs", ufstest_sync_cache, &io_test_opts);
+     qos_add_test("mcq-cq-wraparound", "ufs", ufstest_mcq_cq_wraparound,
+                  &mcq_test_opts);
+     qos_add_test("query-flag", "ufs", ufstest_query_flag_request,
 -- 
 2.47.3
 
