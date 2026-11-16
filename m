@@ -1,49 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145C4606A322
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2EC606A330
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=lut3L/m0
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=kHpk8Zb/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3G7-0000Je-EQ; Mon, 16 Nov 2026 15:24:59 -0500
+	id 1xT3Lk-0000Br-Ol; Mon, 16 Nov 2026 15:30:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Fh-00086r-OZ; Mon, 16 Nov 2026 15:24:35 -0500
+ id 1xT3KR-0007mU-Oi; Mon, 16 Nov 2026 15:29:30 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Fe-0004St-Il; Mon, 16 Nov 2026 15:24:32 -0500
+ id 1xT3KO-0001fZ-7x; Mon, 16 Nov 2026 15:29:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860377; bh=8FslejbiorBmxhMExlCo4mCX+3blUCGOc18RZeMs9ys=;
+ t=1794860765; bh=SDPdW7HDE9NnibewVIOHtjaVG7JiD0OXNontjy430ms=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lut3L/m0mczEv+/evtjiEChfo8y38QrLuNEtCHnwXlFWfZo83x1UeHj9pdP8854+9
- 85AXG8RF1kif99guAnj6/FGHOVTyO/mZMH7zxpVFKZYNGiCoyYXtfElbdoSTsqy3J8
- sUEeKF9AQBBKOq8bZQYUy81QlJ3ICFGd4vlqMZnUgMoTuB847dNpQ+Z5a60giI0oin
- VMaNgLriDhs30gGNKaJOlioj6HyYpJ/uloCdOaObaYWd14Nty/bF7T1UC5kYBtVaZU
- JNPAOthifgw7nH/HAJqoUWdCp7zeV+eJPc8oIE7JpALn4r6Zie9A50Tc0Fe2S0EYQr
- BouNbcMJMqdog==
+ b=kHpk8Zb/uqNdDASKYJ9ObSVsPTCw0YzeMJ6AQsH8UF/fAODw+hoFYtnda18cQKFPg
+ UyV04L69g2cvrmC3uhlj+LO5l5PzF2nG08v1Uj6gd+U3BFSH4PjehIDYZYmnF/7sdw
+ DLzxXXUOZJp7+QQg1mWndbwQMJJEvg0UfRmgGerfKvRyok8AsICiwdn5xSUW2SynHR
+ 0ZR86PGncF7RaYu/yrraGio59xZk8mwrpXhecHFXz52xVcyWX3R3SYF8G/SEknK/iD
+ FrM2luAWbT/1r4NEFQe60eGlK8e3bGebHHhNE/hlag1wuLPXHEzKhViWFb1qIQdImr
+ zhlmon0j2PfEA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E988F1E7175;
- Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5E6C31E71BB;
+ Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E606D45FBB5;
- Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5B74245FBE7;
+ Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A913FB8E44; Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
+ id 36B71B8E92; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 59/59] iotests: Add another nbd-robustness test
-Date: Mon, 16 Nov 2026 23:19:03 +0300
-Message-ID: <20261116201922.534306-59-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 38/63] target/i386/tcg: reject VEX.NP for MMX
+ instructions
+Date: Mon, 16 Nov 2026 23:25:17 +0300
+Message-ID: <20261116202554.535325-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
-References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
+References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -66,131 +67,119 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Eric Blake <eblake@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Convert the proof of concept test by TonySD into another case of the
-iotest. This is yet another instance where a hard-coded exchange is
-easier than forcing libnbd into producing an exchange that violates
-the protocol.  Swapping the order with the previous patch shows the
-assertion failure that was previously reachable.
+MMX instructions do not have a VEX encoding, so reject VEX instructions
+with no prefix for instructions that use X86_SPECIAL_MMX.
 
-Based-on: https://gitlab.com/qemu-project/qemu/-/work_items/4843
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20261110155356.1520433-12-eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit e682c0e570179bd7fa01ea896358a8cdad196a3b)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 9f94fd68c89bed9bd59019a0bb2ad7d2e5458bcf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/tests/nbd-robustness b/tests/qemu-iotests/tests/nbd-robustness
-index fe61a839250..410dfca04e3 100755
---- a/tests/qemu-iotests/tests/nbd-robustness
-+++ b/tests/qemu-iotests/tests/nbd-robustness
-@@ -21,6 +21,7 @@ NBD_MAGIC_REPLY = 0x0003e889045565a9         # Reply magic
- NBD_MAGIC_EXT_REPLY = 0x6e8a278c             # Structured reply magic
- NBD_FLAG_C_FIXED_NEWSTYLE = 0x1
- NBD_OPT_GO = 7
-+NBD_OPT_STRUCTURED_REPLY = 8
- NBD_OPT_SET_META_CONTEXT = 10
- NBD_OPT_EXTENDED_HEADERS = 11
- NBD_REP_ACK = 1
-@@ -128,5 +129,77 @@ class TestNbdRobustness(iotests.QMPTestCase):
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index ebd2905cf42..5532ed0d7e0 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -2134,6 +2134,12 @@ static void decode_modrm(DisasContext *s, CPUX86State *env,
+     decode->mem = (AddressParts){ def_seg, base, index, scale, disp };
+ }
  
-             self.assertTrue(self.vm.is_running())
++static bool is_mmx(const DisasContext *s, const X86OpEntry *e)
++{
++    return (e->special == X86_SPECIAL_MMX &&
++            !(s->prefix & (PREFIX_REPZ | PREFIX_REPNZ | PREFIX_DATA)));
++}
++
+ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp *ot)
+ {
+     switch (size) {
+@@ -2179,8 +2185,7 @@ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp
+         return true;
  
-+    def test_invalid_set_meta_context(self):
-+        with self.run_nbd_server(nbd_sock):
-+            self.add_nbd_export('n', 'r')
-+
-+            # Use raw socket traffic to intentionally violate NBD protocol
-+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
-+                s.connect(nbd_sock)
-+                # Server sends NBDMAGIC(8) + IHAVEOPT(8) + flags(2)
-+                data = self.recv_exact(s, 18)
-+                magic, opt, flags = struct.unpack(">QQH", data)
-+                self.assertEqual(magic, NBD_MAGIC_INIT)
-+                self.assertEqual(opt, NBD_MAGIC_OPTS)
-+                self.assertEqual(flags, 0x3)
-+
-+                # Reply with flags(4) - just fixed newstyle flag
-+                s.sendall(struct.pack(">I", NBD_FLAG_C_FIXED_NEWSTYLE))
-+
-+                # Request NBD_OPT_STRUCTURED_REPLY, no extra payload
-+                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS,
-+                                      NBD_OPT_STRUCTURED_REPLY, 0))
-+
-+                # Expect successful reply:
-+                # magic(8) + option(4) + reply(4) + length(4)
-+                data = self.recv_exact(s, 20)
-+                magic, opt, reply, length = struct.unpack(">QIII", data)
-+                self.assertEqual(magic, NBD_MAGIC_REPLY)
-+                self.assertEqual(opt, NBD_OPT_STRUCTURED_REPLY)
-+                self.assertEqual(reply, NBD_REP_ACK)
-+                self.assertEqual(length, 0)
-+
-+                # Request NBD_OPT_SET_META_CONTEXT with invalid length
-+                # namelen(4) + str + queries(4) + {querylen(4) + str)
-+                payload = struct.pack(">I", 1) + b'r'
-+                payload += struct.pack(">II", 1, 1) + b'X'
-+                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS,
-+                                      NBD_OPT_SET_META_CONTEXT,
-+                                      len(payload) + 1) + payload)
-+
-+                # Request NBD_OPT_GO, name but no info as payload
-+                # (request is early, but does not hurt here)
-+                payload = struct.pack(">I", 1) + b'r' + struct.pack(">H", 0)
-+                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS, NBD_OPT_GO,
-+                                      len(payload)) + payload)
-+
-+                # Expect error reply to SET_META_CONTEXT:
-+                # magic(8) + option(4) + reply(4) + length(4)
-+                data = self.recv_exact(s, 20)
-+                magic, opt, reply, length = struct.unpack(">QIII", data)
-+                self.assertEqual(magic, NBD_MAGIC_REPLY)
-+                self.assertEqual(opt, NBD_OPT_SET_META_CONTEXT)
-+                self.assertEqual(reply & 0x80000000, 0x80000000)
-+                self.recv_exact(s, length)
-+
-+                # Expect early disconnect for unaligned GO. Could show up as
-+                # either b'' or ConnectionResetError
-+                try:
-+                    data = s.recv(1)
-+                    self.assertEqual(data, b'')
-+                except ConnectionResetError:
-+                    pass
-+
-+                # Further writes must trigger an error (EPIPE / ECONNRESET)
-+                with self.assertRaises((BrokenPipeError, ConnectionResetError,
-+                                        OSError)):
-+                    s.sendall(b'X')
-+
-+            # QEMU should still be up
-+            self.assertIsNone(self.vm.exitcode())
-+            self.assertTrue(self.vm.is_running())
-+            res = self.vm.cmd('query-status')
-+            self.assertEqual(res['status'], 'running')
-+
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2'])
-diff --git a/tests/qemu-iotests/tests/nbd-robustness.out b/tests/qemu-iotests/tests/nbd-robustness.out
-index ae1213e6f86..fbc63e62f88 100644
---- a/tests/qemu-iotests/tests/nbd-robustness.out
-+++ b/tests/qemu-iotests/tests/nbd-robustness.out
-@@ -1,5 +1,5 @@
--.
-+..
- ----------------------------------------------------------------------
--Ran 1 tests
-+Ran 2 tests
+     case X86_SIZE_dq: /* SSE/AVX 128-bit */
+-        if (e->special == X86_SPECIAL_MMX &&
+-            !(s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
++        if (is_mmx(s, e)) {
+             *ot = MO_64;
+             return true;
+         }
+@@ -2198,8 +2203,7 @@ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp
+         return true;
  
- OK
+     case X86_SIZE_x:  /* 128/256-bit, based on operand size */
+-        if (e->special == X86_SPECIAL_MMX &&
+-            !(s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
++        if (is_mmx(s, e)) {
+             *ot = MO_64;
+             return true;
+         }
+@@ -2294,8 +2298,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
+         goto get_reg;
+ 
+     case X86_TYPE_V:  /* reg in the modrm byte selects an XMM/YMM register */
+-        if (decode->e.special == X86_SPECIAL_MMX &&
+-            !(s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
++        if (is_mmx(s, &decode->e)) {
+             op->unit = X86_OP_MMX;
+         } else {
+             op->unit = X86_OP_SSE;
+@@ -2316,8 +2319,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
+         goto get_modrm;
+ 
+     case X86_TYPE_W:  /* XMM/YMM modrm operand */
+-        if (decode->e.special == X86_SPECIAL_MMX &&
+-            !(s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
++        if (is_mmx(s, &decode->e)) {
+             op->unit = X86_OP_MMX;
+         } else {
+             op->unit = X86_OP_SSE;
+@@ -2329,8 +2331,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
+         goto get_modrm_reg;
+ 
+     case X86_TYPE_U:  /* R/M in the modrm byte selects an XMM/YMM register */
+-        if (decode->e.special == X86_SPECIAL_MMX &&
+-            !(s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
++        if (is_mmx(s, &decode->e)) {
+             op->unit = X86_OP_MMX;
+         } else {
+             op->unit = X86_OP_SSE;
+@@ -2656,12 +2657,15 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
+     case 4:
+     case 5:
+     case 7:
+-        if (s->prefix & PREFIX_VEX) {
++        if (is_mmx(s, e)) {
++            if (s->prefix & PREFIX_VEX) {
++                goto illegal;
++            }
++        } else if (s->prefix & PREFIX_VEX) {
+             if (!(s->flags & HF_AVX_EN_MASK)) {
+                 goto illegal;
+             }
+-        } else if (e->special != X86_SPECIAL_MMX ||
+-                   (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ | PREFIX_DATA))) {
++        } else {
+             if (!(s->flags & HF_OSFXSR_MASK)) {
+                 goto illegal;
+             }
+@@ -3100,8 +3104,7 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+         }
+     }
+ 
+-    if (decode.e.special == X86_SPECIAL_MMX &&
+-        !(s->prefix & (PREFIX_REPZ | PREFIX_REPNZ | PREFIX_DATA))) {
++    if (is_mmx(s, &decode.e)) {
+         gen_helper_enter_mmx(tcg_env);
+     }
+ 
 -- 
 2.47.3
 
