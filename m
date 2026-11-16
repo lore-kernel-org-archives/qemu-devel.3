@@ -1,62 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC5C606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07C9606A330
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 18:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=S+Onz/05
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OqWbX7EL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT1U4-0003Ca-Sd; Mon, 16 Nov 2026 13:31:18 -0500
+	id 1xT1Tu-000395-57; Mon, 16 Nov 2026 13:31:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xT1Tl-000388-H7
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xT1Tj-00037y-7F
  for qemu-devel@nongnu.org; Mon, 16 Nov 2026 13:30:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xT1Tk-0008Sf-1V
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 13:30:57 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xT1Th-00089a-8U
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 13:30:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794853855;
+ s=mimecast20190719; t=1794853852;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=inqSDjRwj1cmHKF78y4QQLOer55VNVnLtotKrZpNin0=;
- b=S+Onz/05aVuUZMYldqwFfMfYKqp5PktyvBac9C+MG0pJFDi5ukKmyVBEeORejmIkO9yzzA
- szbUrVn3OKxfVa+HAMr0eQnrnyUEtAHsklZwl6Pbk1ou8eZYSc3xJq3jZTGqvjap8DJDNh
- JCn4CFZLusJ0TYBKFGIQW+OBysq54bI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=f2sp73OxbRa315hH9KSI5cjTj/d+t91CVjrljgc/5Bw=;
+ b=OqWbX7ELSz1kKMHxHfdQe/frs4IxFc5uLXl8hAU0ltml51rZ6vNFDYm5d3iyxuW/L8f9WH
+ JM1ZUy2L6cFHcENhCjZNAkF2vP4s6HYkjDS1DsE2xbu48wTUqGFgf1eQxJ0g2BbpE5Adk+
+ /9dd51fkqKH6AK4A2UGGdOPAeMHnqz8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-91-yYwIsbJ7PCKDtGudKTY7lg-1; Mon,
- 16 Nov 2026 13:30:52 -0500
-X-MC-Unique: yYwIsbJ7PCKDtGudKTY7lg-1
-X-Mimecast-MFC-AGG-ID: yYwIsbJ7PCKDtGudKTY7lg_1794853851
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-101-Mdw4au9oOL-hhCK2Aptn7g-1; Mon,
+ 16 Nov 2026 13:30:50 -0500
+X-MC-Unique: Mdw4au9oOL-hhCK2Aptn7g-1
+X-Mimecast-MFC-AGG-ID: Mdw4au9oOL-hhCK2Aptn7g_1794853849
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E89A61800540; Mon, 16 Nov 2026 18:30:50 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7913A1955F72; Mon, 16 Nov 2026 18:30:49 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AD4F43001DA7; Mon, 16 Nov 2026 18:30:49 +0000 (UTC)
+ id 577E83001DA7; Mon, 16 Nov 2026 18:30:47 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 2/2] python/utils: fix accelerator detection with annotated
- -accel help
-Date: Mon, 16 Nov 2026 13:30:45 -0500
-Message-ID: <20261116183045.118241-3-jsnow@redhat.com>
+Subject: [PULL 1/2] python: add support for Python3.15
+Date: Mon, 16 Nov 2026 13:30:44 -0500
+Message-ID: <20261116183045.118241-2-jsnow@redhat.com>
 In-Reply-To: <20261116183045.118241-1-jsnow@redhat.com>
 References: <20261116183045.118241-1-jsnow@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -66,13 +64,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,45 +90,88 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Update tests, docs and infrastructure to explicitly support and test
+Python3.15.
 
-QEMU annotates the accelerator names in "-accel help" with their
-security status, eg "kvm (secure)". kvm_available() compares the
-entries with the plain accelerator name, so the check fails and
-functional tests using require_accelerator('kvm') are silently
-skipped.
-
-Keep only the accelerator name of each line.
-
-fwiw, I am surprised we don't seem to have a CI that exercice functional
-kvm tests, or compare against a baseline to avoid this kind of
-regression.
-
-Fixes: d3b770fc6342 ("system: report acclerator security status in help output")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20261112112956.361209-2-marcandre.lureau@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20261109193145.3557626-1-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/qemu/utils/accel.py | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ configure                              | 2 +-
+ tests/docker/dockerfiles/python.docker | 5 ++---
+ python/Makefile                        | 4 ++--
+ python/setup.cfg                       | 3 ++-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/python/qemu/utils/accel.py b/python/qemu/utils/accel.py
-index f915b646692..7e3f43d6b48 100644
---- a/python/qemu/utils/accel.py
-+++ b/python/qemu/utils/accel.py
-@@ -47,8 +47,9 @@ def list_accel(qemu_bin: str) -> List[str]:
-     except:
-         LOG.debug("Failed to get the list of accelerators in %s", qemu_bin)
-         raise
--    # Skip the first line which is the header.
--    return [acc.strip() for acc in out.splitlines()[1:]]
-+    # Skip the first line which is the header, and drop annotations
-+    # such as " (secure)" from the accelerator names.
-+    return [acc.split(' ')[0] for acc in out.splitlines()[1:]]
+diff --git a/configure b/configure
+index af14a9c23ef..745899b0e6d 100755
+--- a/configure
++++ b/configure
+@@ -497,7 +497,7 @@ first_python=
+ if test -z "${PYTHON}"; then
+     # A bare 'python' is traditionally python 2.x, but some distros
+     # have it as python 3.x, so check in both places.
+-    for binary in python3 python python3.14 python3.13 python3.12; do
++    for binary in python3 python python3.15 python3.14 python3.13 python3.12; do
+         if has "$binary"; then
+             python=$(command -v "$binary")
+             if check_py_version "$python"; then
+diff --git a/tests/docker/dockerfiles/python.docker b/tests/docker/dockerfiles/python.docker
+index 79c554a2d87..86b38ba55dd 100644
+--- a/tests/docker/dockerfiles/python.docker
++++ b/tests/docker/dockerfiles/python.docker
+@@ -11,11 +11,10 @@ ENV PACKAGES="\
+     python3-pip \
+     python3-tox \
+     python3-virtualenv \
+-    python3.10 \
+-    python3.11 \
+     python3.12 \
+     python3.13 \
+-    python3.9 \
++    python3.14 \
++    python3.15 \
+     "
  
+ RUN dnf install -y $PACKAGES
+diff --git a/python/Makefile b/python/Makefile
+index 7868a48a232..99066bfa3e0 100644
+--- a/python/Makefile
++++ b/python/Makefile
+@@ -15,8 +15,8 @@ help:
+ 	@echo "make check-tox:"
+ 	@echo "    Run tests against multiple python versions."
+ 	@echo "    These tests use the newest dependencies."
+-	@echo "    Requires: Python 3.12 - 3.14, and tox."
+-	@echo "    Hint (Fedora): 'sudo dnf install python3-tox python3.14'"
++	@echo "    Requires: Python 3.12 - 3.15, and tox."
++	@echo "    Hint (Fedora): 'sudo dnf install python3-tox python3.15'"
+ 	@echo "    The variable QEMU_TOX_EXTRA_ARGS can be use to pass extra"
+ 	@echo "    arguments to tox".
+ 	@echo ""
+diff --git a/python/setup.cfg b/python/setup.cfg
+index 927f72a46f6..d4130a2b27b 100644
+--- a/python/setup.cfg
++++ b/python/setup.cfg
+@@ -17,6 +17,7 @@ classifiers =
+     Programming Language :: Python :: 3.12
+     Programming Language :: Python :: 3.13
+     Programming Language :: Python :: 3.14
++    Programming Language :: Python :: 3.15
+     Typing :: Typed
  
- def kvm_available(target_arch: Optional[str] = None,
+ [options]
+@@ -145,7 +146,7 @@ multi_line_output=3
+ # of python available on your system to run this test.
+ 
+ [tox:tox]
+-envlist = py312, py313, py314
++envlist = py312, py313, py314, py315
+ skip_missing_interpreters = true
+ 
+ [testenv]
 -- 
 2.56.1
 
