@@ -1,89 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369B4606A781
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234F4606A330
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=FA2NRU3j
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=VRFPpCOq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSufQ-0004En-JH; Mon, 16 Nov 2026 06:14:32 -0500
+	id 1xSuef-0003wD-Nb; Mon, 16 Nov 2026 06:13:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSued-0003v8-5G
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:43 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1xSueU-0003sA-Pj
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:36 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueS-0002CP-Q9
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:36 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-49465892f7bso2737793f8f.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:32 -0800 (PST)
+ id 1xSueQ-0002Bg-31
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:32 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4a140e7405dso34867535e9.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794827611; x=1795432411; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=aJLetTbZJ7Rf7k1mQrskTb9PQBrK7zGSIhhOsVLO8KY=;
- b=FA2NRU3jN/rh/pitxyrgYkS0D81jyXzKH2c0WJBU7hfBuRs3kaENLzleXDfUd/xs8W
- Qh2o0qkD402ysq6Epdr65hYE7qTNUy5dRid8qEW4ALs63+BGBPAEPillQ6qY8z6KldQi
- 9SxSE08tkLV0OtZPdw4qZVzKKrt77b8etxf/6bpOfzeLKK9qAunM9THKgLhHpJJSjW6J
- isfdNiy5rJRGZhwqenpQzNF8ZDeh9s61il16oybaP6d593BXXPWzODdHe+JQjhIgTofU
- QpkOd3T8vgUiE8RZRfSJrArlqvaZN4TgFvKd4/B0wrXLXFh5AKQUp0Yt5oTBltk9fk3o
- quLQ==
+ d=linaro.org; s=google; t=1794827607; x=1795432407; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=MMRHoVzzc0EDS3fwZLo7PKSoGIS2Ack5SdX/7J5QnFw=;
+ b=VRFPpCOqaD5DaJ7PMV4tEzc882kDp8jPwhZsHEI3cMZamAbaDy8ILueRRqZgSROei2
+ RWAydRjxfLspQHqaagGN0MkZvs6A/nA0xu9z3yhg2FPHBUgKOe/9ew1P7+2AFAG7CDmJ
+ IQ4VHRveVkeubxBBS9i5wQDO4B/6gQdeTd8k2TweVWQpDRj6ATnJi0UAyYiCfYAh2Xci
+ RnXImj2OG4qjYa8bUCKcRbJSvqsVqhYwiG5RE6xqeHIh2frV08lQ9GCQEaMxU3UFsPGb
+ fTm4nu5xPx75LLuoeSkmf96zZGBu3hBKH/y4vtGSHZyyHYRUEV+xoNIz0TbY4KfdlyIO
+ ikvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794827611; x=1795432411;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=aJLetTbZJ7Rf7k1mQrskTb9PQBrK7zGSIhhOsVLO8KY=;
- b=yjq/uGLBrluCZ9YcKtGsufXWPMXkjHE5fQKT4Q7/svzZ+mRMXpdESYUw2lws/P9Mww
- t2Gp18k0ebsiSo7qUIHFjUwe9SkN0vITnmil7d00prRAkxEZ9PCfmNPzN+bcTRxHxq8z
- SD1X5oMSD3tE8M0EsA7Wpv5nrygszu72IaJE6G1909GfIdbLU6BgPFUWEiZTl2NYZ1AW
- Gv4i08u9K0Y/IyHjcNMO+JwtaJlaYmR55YY10r+pMM1+4QwAtDNkJwppJ5oHAUVCBlkD
- nn61CRGO9sCjIuydufFxuvakyoT4lHN548QjQJJnMrz+3wcH9huHdMmzZM9MKsN2CKfu
- FNUA==
-X-Gm-Message-State: APuU4Z81lhNyfGCB9dNDxtE043SK0UluHFocv4oGgMrhyIoqGXK0rtCT
- 37ALpiHwUIzcVj8V1h3n1QmY2Qf3ncawlhsTpg9J8USU59I7pTAfX5jlvxkUxqIJZaA65vfgkv5
- VvYop3xk=
-X-Gm-Gg: AZFdTZekmnOyM8fJCe1rHsR8nEG7vv+61kFE3zRu4SY3GXeT7NKxKXBMVUEFPBhz2kG
- baA4PV+sl8HprGjPMo1wT/44xUt15ngA+sMAqojfBAOva7oO2mqEKBqGkyf6quH1AbaWGI9+iuS
- cuhsdfTL0kVIcHjrexzy6HwrD+6wuCJh98SCDgeOHNkeRydbxtIF6mZV/ALk5JF3F2FkYzR0kDM
- 89hZbTSfm0UoKnUy5ElqMEzXodYE6xonxRlNKRjgaf5U7dt8nyNpO1gCoDytKW5q0tQnO9vMZxq
- sTZk2iCeJXfgegiMAw1MzhpByWCXl4wdvIhlzedWjHvZS3Wt20xW5p7VebNI9DVN3ssJqzx7Ej3
- gj6oyA0hQNh/ivMreSQDPJQhq3X2sOttqzbqku7wOMxO+yjRTxjsCcjuywo6Fwe/v+IeJp7fZXF
- 5XH1s0btINtynzVSiRHYWz6w8hpJGdhM1CmX87K+OIYVuBUmlGFwfCG/i1cCbY/2M7i0szvpl/X
- +gXT1qyEqo0VBIT2rPzim/tRNcxZmmg5bMAVcQX5WGAK/utRbMFZIs++IwgPhhcmIZPBI8afXvs
- f/Er0l03ZY97PoxxJVuaY4KnjfECF8Dwpu0vKfd24VB8nQomjvaN6r39leBeuip2V+ZOc1U3O9G
- rB4Kn/PF6ysIB9r3Zcb1MWSGQH7gVL2UDHg==
-X-Received: by 2002:a05:6000:4b0b:b0:48e:20f9:8d75 with SMTP id
- ffacd0b85a97d-49c72c9c398mr21249342f8f.48.1794827611186; 
- Mon, 16 Nov 2026 03:13:31 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794827607; x=1795432407;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=MMRHoVzzc0EDS3fwZLo7PKSoGIS2Ack5SdX/7J5QnFw=;
+ b=kwpoOb3RTnIevUcujSjbzOxNmrUJx6kJguBVW2xBpJtcDvIMyiq24x5wJhFozr2UfQ
+ F+3souEW9fuYjuCyS1CX/5PCsNWdMz4mlIGPoqU0kjymJ+JKG6I+CM6DkMGY9RiECFZ4
+ nxfmhcKqSYphujdcaPijjaKE/Exkfps4xzSEvmXeCXhH2Ih5QEZgNf4aY3zCn1ImvqJc
+ uAZQjg2dUeAd9B7/Fpwo2IE15CZI2FcWw8qVNv5XzV4y4A93J09zYk17OVTFv4Zrn9Tx
+ dCf6RTSO1xLbGk/sD9HjUclRG0JuFcw8N682i/sbUpfwuklLeBpS/GTHACMyhg+yG8cW
+ 19ZA==
+X-Gm-Message-State: APuU4Z8bcaHN5k/23X6afv1PH6/2Jc9PV32dl//RvNOQJZKIo3Tg97HE
+ Rz0QUsVWEHur0IwwaxnhUlupof3JhLc58BLiCehH9ysOFjst2njWmVnzLGmAc51HwO/w4hbB2so
+ tNcFWZCc=
+X-Gm-Gg: AYBFou0SptXzXTNZcljnsyRgdW1NnO8yCI7WJzIVBhoDWPHSZrkDDDun1vLH6xLq3BF
+ JuVEnEr/VDqolEVjXDPn/iH2Mz1XWM8oGb1VNX8L7R1tTQN+M8CstVg5r9eWI/vx6faayx/dQS9
+ 0LzSDkLANV7nnysm6Eh3bWM3qVo6elxB3QjVu8lz4p1cVAF82bBcT73droNofF13dei0UCLPC/0
+ VJ4X65jeLhGVqai4+BQ+ptbsymlAsH2EqMV1h5JAj3QsQw9teHI7d37PNtqbC2P0XOG6Ev+tSdA
+ RNrAasXpid2oEW8A/ZDVBMkg9pFtdWdFeyavEpLrzNzH+XOjmUju4HYSg45D9V7sib4EdeIJFlN
+ rb7+quKA8QE4iT6mVfJTm7uOeLSVd83I6wdVSwFZDBUI6repNW8aUWoH/9nSP5+tXVVFipmK/Df
+ yatuyOL3Dok5ldpaWTiq89HPF0MgniKSHW6DYAM+JYkG2LRvU3iGL2C44bHUuTQZjrbNHhO0Cb9
+ iPk3HHYSMsq73pFkYA9DhWoc/hHr9pl+rxlixK0aFltQ2lJ9ASvShrMEk/XyeSKKtKXjcu79EW7
+ sYSrU/Ikc6FHo4xVWDJTCtnDAq3S5cfsdDFtafUz0Qmf2h5dqp/5BmY550KlRIPPAebgFOKwL85
+ NXaU+dicOWiG39/m5NOqUpcUgZAS7UfHZWg==
+X-Received: by 2002:a05:600c:37cf:b0:4b2:2ec5:8a2b with SMTP id
+ 5b1f17b1804b1-4bb55a4301emr218097165e9.10.1794827607242; 
+ Mon, 16 Nov 2026 03:13:27 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.30
+ ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Nov 2026 03:13:30 -0800 (PST)
+ Mon, 16 Nov 2026 03:13:26 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/33] tests/qtest: Make netfilter tests accept padded ethernet
- packets
-Date: Mon, 16 Nov 2026 11:12:54 +0000
-Message-ID: <20261116111303.1692832-25-peter.maydell@linaro.org>
+Subject: [PULL 20/33] hw/net/net_tx_pkt: Sanity check GSO headers in
+ net_tx_pkt_build_vheader()
+Date: Mon, 16 Nov 2026 11:12:50 +0000
+Message-ID: <20261116111303.1692832-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116111303.1692832-1-peter.maydell@linaro.org>
 References: <20261116111303.1692832-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,109 +100,76 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Currently the various netfilter tests assume and assert that the data
-they get from the filter is an exact match for the data that they
-send in to it via the net socket backend.  This happens to be the
-case currently because the net socket backend fails to pad frames to
-the ethernet minimum when the device expects that (unlike e.g.  the
-tap backend).  When we fix the socket backend to honour the device's
-request for padding, the netfilter will see padded packets for
-devices that require them (which is most of them), and not for those
-that don't (notably virtio-net).
+In net_tx_pkt_build_vheader(), we are insufficiently cautious
+about headers from the packet from the guest. Add more checking:
+ * that the segment offload payload gso_size isn't 0
+ * that the packet is not too small
+ * that the TCP th_off is inside the payload
+ * that we aren't going to overflow in our header length calculation
 
-This seems best considered as a test error: if you're using netfilter
-to look at what a particular network device is receiving, you want to
-actually see what it is receiving.  And most real-world users of
-filtering will be doing it with the backends like TAP that were
-already doing pad-before-filter; it's only the oddball backends like
-'socket' that forgot to pad.
+Of these, the most significant extra check is in calculation of the
+virt_hdr length.  We calculate this with
+ pkt->virt_hdr.hdr_len = pkt->hdr_len + l4hdr.th_off * sizeof(uint32_t);
 
-Make the test cases accept as valid both padded and unpadded frames.
+The struct field is 16 bits, and so this can overflow if the guest
+hands us a packet of close to 64K in size and an appropriate
+l4hdr.th_off. The effect is that we record a bogus virt_hdr.hdr_len,
+and later on in net_tx_pkt_tcp_fragment_init() this will cause us
+to make a very large allocation that causes g_malloc() to abort.
+
+This is a hardening issue rather than a security issue, because the
+amount of guest control over the allocation size is such that it can
+only generate allocations very close to SIZE_MAX which always make
+g_malloc() abort, and so it's a guest self-denial-of-service only.
 
 Cc: qemu-stable@nongnu.org
+Fixes: e263cd49c73c595 ("Packet abstraction for VMWARE network devices")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3648
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-id: 20261110180655.2072265-2-peter.maydell@linaro.org
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-id: 20261109-eth-v2-11-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/test-filter-buffer.c     | 4 +++-
- tests/qtest/test-filter-mirror.c     | 4 +++-
- tests/qtest/test-filter-redirector.c | 4 +++-
- 3 files changed, 9 insertions(+), 3 deletions(-)
+ hw/net/net_tx_pkt.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/test-filter-buffer.c b/tests/qtest/test-filter-buffer.c
-index 441cbb975ca..418caccf00a 100644
---- a/tests/qtest/test-filter-buffer.c
-+++ b/tests/qtest/test-filter-buffer.c
-@@ -11,6 +11,7 @@
- #include "qobject/qdict.h"
- #include "qemu/iov.h"
- #include "qemu/sockets.h"
-+#include "net/eth.h"
+diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+index b134348fe80..b2935900fe7 100644
+--- a/hw/net/net_tx_pkt.c
++++ b/hw/net/net_tx_pkt.c
+@@ -335,6 +335,11 @@ bool net_tx_pkt_build_vheader(struct NetTxPkt *pkt, bool tso_enable,
+         break;
  
- /*
-  * Test that changing interval at runtime affects packet release timing.
-@@ -148,7 +149,8 @@ static void test_change_interval_timer(void)
-     ret = recv(recv_sock, &len, sizeof(len), 0);
-     g_assert_cmpint(ret, ==, sizeof(len));
-     len = ntohl(len);
--    g_assert_cmpint(len, ==, sizeof(send_buf));
-+    /* The snooped network device might or might not have asked for padding */
-+    g_assert(len == sizeof(send_buf) || len == MAX(sizeof(send_buf), ETH_ZLEN));
+     case VIRTIO_NET_HDR_GSO_UDP:
++        if (IP_FRAG_ALIGN_SIZE(gso_size) == 0 ||
++            pkt->payload_len < sizeof(struct udp_header) ||
++            pkt->hdr_len + sizeof(struct udp_header) > UINT16_MAX) {
++            return false;
++        }
+         pkt->virt_hdr.gso_size = gso_size;
+         pkt->virt_hdr.hdr_len = pkt->hdr_len + sizeof(struct udp_header);
+         break;
+@@ -344,7 +349,10 @@ bool net_tx_pkt_build_vheader(struct NetTxPkt *pkt, bool tso_enable,
+         bytes_read = iov_to_buf(&pkt->vec[NET_TX_PKT_PL_START_FRAG],
+                                 pkt->payload_frags, 0, &l4hdr, sizeof(l4hdr));
+         if (bytes_read < sizeof(l4hdr) ||
+-            l4hdr.th_off * sizeof(uint32_t) < sizeof(l4hdr)) {
++            gso_size == 0 ||
++            l4hdr.th_off * sizeof(uint32_t) < sizeof(l4hdr) ||
++            l4hdr.th_off * sizeof(uint32_t) > pkt->payload_len ||
++            pkt->hdr_len + l4hdr.th_off * sizeof(uint32_t) > UINT16_MAX) {
+             return false;
+         }
  
-     ret = recv(recv_sock, recv_buf, len, 0);
-     g_assert_cmpint(ret, ==, len);
-diff --git a/tests/qtest/test-filter-mirror.c b/tests/qtest/test-filter-mirror.c
-index 723d2c2f291..9972712cb49 100644
---- a/tests/qtest/test-filter-mirror.c
-+++ b/tests/qtest/test-filter-mirror.c
-@@ -15,6 +15,7 @@
- #include "qemu/sockets.h"
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
-+#include "net/eth.h"
- 
- static void test_mirror(void)
- {
-@@ -58,7 +59,8 @@ static void test_mirror(void)
-     g_assert_cmpint(ret, ==, sizeof(len));
-     len = ntohl(len);
- 
--    g_assert_cmpint(len, ==, sizeof(send_buf));
-+    /* The snooped network device might or might not have asked for padding */
-+    g_assert(len == sizeof(send_buf) || len == MAX(sizeof(send_buf), ETH_ZLEN));
-     recv_buf = g_malloc(len);
-     ret = recv(recv_sock[0], recv_buf, len, 0);
-     g_assert_cmpint(ret, ==, len);
-diff --git a/tests/qtest/test-filter-redirector.c b/tests/qtest/test-filter-redirector.c
-index 5540c232c0b..a4f9b73c72a 100644
---- a/tests/qtest/test-filter-redirector.c
-+++ b/tests/qtest/test-filter-redirector.c
-@@ -57,6 +57,7 @@
- #include "qemu/sockets.h"
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
-+#include "net/eth.h"
- 
- static void test_redirector_tx(void)
- {
-@@ -115,7 +116,8 @@ static void test_redirector_tx(void)
-     g_assert_cmpint(ret, ==, sizeof(len));
-     len = ntohl(len);
- 
--    g_assert_cmpint(len, ==, sizeof(send_buf));
-+    /* The snooped network device might or might not have asked for padding */
-+    g_assert(len == sizeof(send_buf) || len == MAX(sizeof(send_buf), ETH_ZLEN));
-     recv_buf = g_malloc(len);
-     ret = recv(recv_sock, recv_buf, len, 0);
-     g_assert_cmpint(ret, ==, len);
 -- 
 2.43.0
 
