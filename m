@@ -1,119 +1,84 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696B4606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F0F606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm2 header.b=U3in7DcV;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=RGLR5LQo
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=buf7rbB8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT4bW-0000e1-G1; Mon, 16 Nov 2026 16:51:15 -0500
+	id 1xT4eN-0004uy-Ni; Mon, 16 Nov 2026 16:54:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4b3-0000CH-Al
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:43 -0500
-Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xT4eL-0004ub-I7
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:54:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4b1-00055l-6N
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:40 -0500
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
- by mailfout.stl.internal (Postfix) with ESMTP id 5BC661D00147
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 16:50:38 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-11.internal (MEProxy); Mon, 16 Nov 2026 16:50:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1794865838; x=1794952238; bh=+cAGA+uLVe3sDgAEw6qH75oAIXqoY6FT
- zPbmI4hrLdg=; b=U3in7DcVPM9whGxrP+adKxXVjf+hcq2FOTOt1/A6FMUhLJBG
- ciPaprQEjzd8++i1tEb6yPitnyC1vNKtTWPBl0wffSqgzZa+xXkQLOmCfMRBYKan
- rVxRDPpjidTsDAwpgXIJsIUzW4aEGnYEIm9MNs6TnZGRNTZ1ssd19CNmVvYVcHj9
- RP4fnZbo/2xzsFC7CJ9nwWe9xPCQ/I8jJqty2qSlG7RIng5LU4ruxipP3O/BBe4C
- jK36VJbwsJgC/mg85hjGj/YCtmX8tzyNPEIokQeFdkeAfuG1kx0iYyoRKg9W1zE0
- vJEULHLtonb11dgFN5duLxRhSK8UdnxJvt1gNA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794865838; x=
- 1794952238; bh=+cAGA+uLVe3sDgAEw6qH75oAIXqoY6FTzPbmI4hrLdg=; b=R
- GLR5LQoJz1fC1h+H+Na2o71+P1YIXrHxJFfSiU9kaPJG/uH6r3Mj0u9Fp4iVJGO4
- b/NolJxbnXI6Avwind6BjhDsljUSW5Dz7mNMHWRNbV8Us4+r3QUb3Z/p75KiCsFX
- b6N/vXsKhRmZKf+xnohyyIoD+wC79NYD2WCaAixipn4brI/D4BPe9n96IQcobSGD
- ob73iNfpilx62o30ph8vPuoDtUBd7P7hISA385WpGkK8NmXGZNC3V1RSQoriXzeI
- jaTSpD1tRUowUU+IMyIUisKdJHoUhzwXxnHupPyM1HGYpkAXPfGBQc9bG66Eco49
- 8wAfE6BkxxjJ4vhZ/YPKg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794865838; d=irrelevant.dk;
- mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:HBXR69m1lG3tGAesBIucvtc2B+YsqjTYzjTXQoAIgav0BK4
- Btdg+KEySPtEk+RJgWuY9OVguthcMfDpylJrsClhXC4sBGBiv6os7wfJnzX6LbC+
- rh5GxBhxCzVk2lt2kZoR37pfi1ADKQj387XCxTSBZeSddzgsGh5bcjwBCKyJT7Wm
- opxtnLRoT2N+DAYyqcEQhYSngRhcYHlnEa3eeyOaKeR/6MLsMaH8EHW3MvpKMaVW
- vcEeNSxTiLF3e9D0H2my4GqDaWrQmo2Of28as2Ejl+ETROOystAM54NTESpWQdtU
- f4Mq10xbnTThwg8OCQIQwox7HwptygisRkrPTkA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=mi-m=1; hc=12;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1;
- h=sha256:4HkBnRmNs59sqcJR8crRYVS0dr0fKn7+0X2rGw8CjfA=:lSFvTUv5Sfhu10nBTkpXRmnbNU4v1k43HxNdSo4dGq8=;
-X-ME-Sender: <xms:rXr7ageGE4RpnFMRTDFsGjP7udTWZax7SbF-tC_igqaNTCOe8NLYuA>
- <xme:rXr7auNY5kfhxu4BsV1FYMMCgZDGX3XDejmHXs78EcL48MSHGQhMw_DwTtqmSwaAR
- hmqoCUu-dsFfstewTI5tW1jHx_h9hUfwrF2VViDXvrIlQOVZ-IZqy0A>
-X-ME-Received: <xmr:rXr7ajsb99599SVhv1vMGgsO6WSoI6ADyapH7za-lpFCw2CtoZjonlyjAt7ikPISXoAKyRitTGYRcwuVGilc9bFwWMTz__kYUYFEyJYnpFJlfGd-E7lnlk719w>
-X-ME-Proxy-Cause: dmFkZTF1MANP5a6KGRygogZctHchavWPiKruQh9ID8GOuPTdWG+FVLLc2ROnNPjnrzPyzK
- AuKGRPhkXaEIhyC8Di/OWSTR1Zmj1vMdVAmMwXmZuu6+usslqYBgbwfTdvd0z0P4kWvqY1
- 6812fOL4INvrQfRvCKOtREMiMLlLrH9ww/BuhpCHpIvTX6SPiM+iHSxLsKZgokgwtbTeEb
- 0+ynhbr2nJljUy3lL7F3xIw8Tat2Poxz0Qrg1nU0Lqd6BWBq3zuP8ftZ3Z41JiKCcnK8wy
- ktgHnDQuSKfzFdYeZlmCIwenuAWCXMmbhemX0XWRW5IW8a06okGn3YDKrwELR3xo7DmPL5
- 40AYrr8FjyqOZtWA53t2X1FI8akBCt2j0cBhP1M6euXoAHkzBqVzqZTCZDkhw6VfUZqW4C
- wI0DpQt7HsIWHQmDtTSPlnq7KkXVM38K8qPrB5DINWEfaesldWCAMHPwH5z1kuYTtcQ3BW
- fF+Bdi1U+HZE96ofcDGLIzuZV8loAse+1mLzTIy6a3o+kjiurs5m6UirP5BjbsSx+2TzKt
- PhYjs/OyNp/MA7QEjofRD+Z3N5JdZdwhxJDf8I7BygUVDy+xiyyxwjF5Y2MgfK5KTNnoOx
- HWdM5pBJDIiebH2WO08Lqgoe6GXUXXrt/dETpUVZt5ENHIskeqphNMlAZOpA
-X-ME-Proxy: <xmx:rXr7anB6xWjKf8qMIHy7V194tnM7B3BUs4ewlF5wjjDIjIPzOCs23g>
- <xmx:rXr7aqaWc46J1rYJ5pnbgBloVeGPDnrgq887wDT7QbsyplkpS1D5Aw>
- <xmx:rXr7aiX-JGMQMftyusuneA0vQLQ626i1wchN1rahfQl0qVO8NMjPKA>
- <xmx:rXr7apOjsVSFmoaVKymzc0yk8-H2w2cdOEY-T0XrmEXKrY2pIFUqnA>
- <xmx:rnr7auX2QW1_9qrhGbK0i3Tbu11Y5IRBa_cpiwgIT4cNIBRR4QRAlgGN>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Nov 2026 16:50:36 -0500 (EST)
-From: Klaus Jensen <its@irrelevant.dk>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Markku=20Ahvenj=C3=A4rvi?= <mankku@gmail.com>,
- qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Subject: [PULL 3/7] hw/nvme: clear interrupts on controller reset
-Date: Mon, 16 Nov 2026 22:50:09 +0100
-Message-ID: <20261116215014.59993-4-its@irrelevant.dk>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261116215014.59993-1-its@irrelevant.dk>
-References: <20261116215014.59993-1-its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xT4eG-0007mC-L4
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:54:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794866040;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dMO92H3IHMbw7U6gFQR6TevJ95bVwMA722vhRMZTG7A=;
+ b=buf7rbB8tPBXCawiNX5PXyNa5R5lViVK/gyHRHI8tUfn6VGimasGVwVaGI6ua+233q61DO
+ A200fjicpToxIOEKJiUWTDkxNnGLDWrxwq+5KFyzjIzIMptwt9FTa01HwiakDySUc7eq2S
+ n/SDciUWfAXR5N3/bxQnzaskq9xrUMs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-25-SbwFZecSNPK6bo9ZpS_Cpg-1; Mon,
+ 16 Nov 2026 16:53:53 -0500
+X-MC-Unique: SbwFZecSNPK6bo9ZpS_Cpg-1
+X-Mimecast-MFC-AGG-ID: SbwFZecSNPK6bo9ZpS_Cpg_1794866032
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD4C81956057; Mon, 16 Nov 2026 21:53:51 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 167341800543; Mon, 16 Nov 2026 21:53:49 +0000 (UTC)
+Date: Mon, 16 Nov 2026 21:53:46 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH 04/48] qom: define an Aliased interface
+Message-ID: <avt7apWvO-6QwI_u@redhat.com>
+References: <20261112133054.1977618-1-berrange@redhat.com>
+ <20261112133054.1977618-5-berrange@redhat.com>
+ <CAE2XoE8+=z+LcdqFWoLc=Ho8d7QGBgkJL8jL4cgup-o_X2fTrw@mail.gmail.com>
+ <1447ca17-52a6-c069-d3b0-f778c60dca20@eik.bme.hu>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.145; envelope-from=its@irrelevant.dk;
- helo=fout-b2-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <1447ca17-52a6-c069-d3b0-f778c60dca20@eik.bme.hu>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,46 +89,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Markku Ahvenjärvi <mankku@gmail.com>
+On Sun, Nov 15, 2026 at 04:31:01PM +0100, BALATON Zoltan wrote:
+> On Sun, 15 Nov 2026, Yonggang Luo wrote:
+> > On Thu, Nov 12, 2026 at 9:31 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > > 
+> > > All QOM types must have a globally unique typename, however, for
+> > > user convenience, some might also want to have aliases which are
+> > > permitted to be ambiguous. Define an "Aliased" interface which
+> > > can be implemented by types which want to support aliases.
+> > > 
+> > > When resolving an alias, if there are multiple QOM types with a
+> > > matching alias this is considered an error. Ambiguity can be
+> > > resolved by matching system state, with the selected target
+> > > being the currently implemented filter.
+> > > 
+> > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > > ---
+> > >  include/qom/object_interfaces.h | 77 +++++++++++++++++++++++++++++++++
+> > >  qom/object_interfaces.c         | 57 ++++++++++++++++++++++++
+> > >  2 files changed, 134 insertions(+)
+> > > 
+> > > diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
+> > > index d222a3d7481..010e37d63f7 100644
+> > > --- a/include/qom/object_interfaces.h
+> > > +++ b/include/qom/object_interfaces.h
+> > > @@ -27,6 +27,17 @@ DECLARE_CLASS_CHECKERS(TargetSpecificClass, TARGET_SPECIFIC,
+> > > 
+> > >  typedef struct TargetSpecific TargetSpecific;
+> > > 
+> > > +#define TYPE_ALIASED "aliased"
+> > > +
+> > > +typedef struct AliasedClass AliasedClass;
+> > > +DECLARE_CLASS_CHECKERS(AliasedClass, ALIASED,
+> > > +                       TYPE_ALIASED)
+> > > +#define ALIASED(obj) \
+> > > +     INTERFACE_CHECK(Aliased, (obj), \
+> > > +                     TYPE_ALIASED)
+> > > +
+> > > +typedef struct Aliased Aliased;
+> 
+> I wonder if it would be simpler to add the possibility to define aliases to
+> all QOM objects as standard instead of by an interface? This is useful for
+> other cases, it came up here too for example:
+> https://lists.nongnu.org/archive/html/qemu-ppc/2025-02/msg00113.html
+> Or maybe this could be done with this interface by common super classes
+> implementing it such as device and machine allowing aliases that commonly
+> need it to use it but then it would be quite widespread use to consider just
+> adding it to object right away which may also help interaction with arch.
+> Why separating it into an interface is better when we need it for most
+> objects?
 
-Clear stale CQ interrupt state and ensure the interrupt line is
-deasserted when resetting an NVMe controller.
+We really don't need it for most objects. It is somewhat common for
+machine classes, just because we have many called 'virt', but even
+they are a minority of all machines. The number of places we might
+need it outside of machines will likely not exceed single digits.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4142
-Fixes: 83d7ed5c570d ("hw/nvme: fix pin-based interrupt behavior (again)")
-Signed-off-by: Markku Ahvenjärvi <mankku@gmail.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+The core QOM framework tries to be a fairly "pure" object model
+without QEMU specific aspects to its design. It is somewhat
+inspired by GObject, and I still rather regret that QEMU is not
+using GObject as it would have done everything we need and made
+life easier.
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 52fa4b327c1f..4a626203cad8 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8136,6 +8136,10 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
-     stl_le_p(&n->bar.intmc, 0);
-     stl_le_p(&n->bar.cc, 0);
- 
-+    n->cq_pending = 0;
-+    n->irq_status = 0;
-+    nvme_irq_check(n);
-+
-     n->dbbuf_dbs = 0;
-     n->dbbuf_eis = 0;
-     n->dbbuf_enabled = false;
+Stuff that starts to get QEMU specific is pushed into interfaces
+like UserCreatable, or abstract base classes like "Device". IMHO
+it is beneficial to retain this conceptual division, as it lets
+us understand the behaviour of QOM as a framework in isolation
+from the bulk of QEMU.
+
+With regards,
+Daniel
 -- 
-2.53.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
