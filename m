@@ -1,149 +1,83 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25C2606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3D2606A322
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=eY1oLqNw;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ck3Xo/Wg
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Uz5ZT4k0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT4VO-00059a-Go; Mon, 16 Nov 2026 16:44:51 -0500
+	id 1xT4Wd-0006X6-05; Mon, 16 Nov 2026 16:46:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xT4V7-00054q-9p
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:44:34 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xT4WV-0006Tz-QM
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:46:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xT4V5-0003BU-RL
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:44:33 -0500
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AGJfVOf2135153
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 21:44:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Af4RadDwrszYCpIQj9m8xq3nJtPa9NtNLp2qnf2Me1s=; b=eY1oLqNwDeA6qpiC
- maBtE5r9iW/5bOc4df1/+EsF8psaSEfhGZrn692gA0RhGzB7XHkAnjEYq/avgwy2
- ypKDl9roYrlE4pWAVmJkHBTdjacJSueqTW/fZkhg2JTNmHDWHCgHaXmaSg0nptOL
- VAtuxJ0pmyyttvyqgVWlC/d0UbvaSrPsyhAF56nlgmhmOXNCODWWcIk7/PMVbYyD
- EqoHiohKogRcer8YIjKGFTnwBWv90G6GOHUCUghXYI0rl/yR2vfFxaYktPEGbsIe
- ez16+Jbc4M6lYv2vWt9y8zGf7A3T1nuLLJz4giIKcFoZY5O4d3uYXk2g3VHbLj+I
- 3WDJYA==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0003jmpj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 21:44:30 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-1b3b63b9665so1557886c88.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 13:44:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794865469; x=1795470269; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Af4RadDwrszYCpIQj9m8xq3nJtPa9NtNLp2qnf2Me1s=;
- b=ck3Xo/Wgfaz9tsO2aEbV6dX+9upKIvohfNLiXsA8lG8/GA4SW/RzHUn0CTanShArNG
- bCFuHsSAJKdkpfPpqnDNGu3igqf2xobnRTZphS970+6j3UegBLdssb6a/AEZZ5YgEzQ3
- pM+ODWytjwm8C7+pNmAnFfAtqJutl6OfUNXknz/maZKaKxk21lFSAjdRJdW8zAxmG8/S
- H0c1olrlEIyRLCtyQcbMjGibWwZ6KvHcHJJNeMt1Vk4dnN79SBkdW7n2Qi6zHKcXPzR1
- jBC+bhd069wltfRbMcbUbAw3LLmoA0SIQkwoOtsAkajv3lV6ZK35mOcyxdyfjP/nfdQ+
- f/3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794865469; x=1795470269;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Af4RadDwrszYCpIQj9m8xq3nJtPa9NtNLp2qnf2Me1s=;
- b=ColKtzJ8SiuX/uXN1yHnxYhmBGCjcW/Kt5ET45QpKQvGbz7YVY2VfXa3+YD+Z6RUaV
- oB1F6l81fi0z3jKthHcFZjaGAHaqqbmoVVNHEZ2E3Y3Ius166+I8+rXB9J0mHB9C16bd
- NooJhEpibpyVv7zR5+AkTd5hYFAwcBE98R23X33OfG6riyJRFm3H3TlMq4K1pu1iMLk9
- lZhsSonRG+tkSU1d0LiE4bcY9fVmfKanPa50zBlhff30uNLu+krhzmX2kM42sCx1aBfK
- FrDOu8G7XA/gilh4MDitndMKfv5YKMq66RxhVgHUZHbsSKoyuJ+DiULWb41KgJH6sGQJ
- zBDA==
-X-Forwarded-Encrypted: i=1;
- AL+hErFHbH+rdJZCihTghBl2TR8hciFjHzdO/qxfBS96BJfSw66PeHVCHhO10EXFkBUkmujQ5MnCkpdAqn7D@nongnu.org
-X-Gm-Message-State: APuU4Z/Ge/A7rM+uJw9SK/1sLATUr4akP7DrFO98UuRFTfmLaV+holGi
- tW/80fhw60M0GogKE5+itU9yEB4Lwrn87iWF8/qId9yCZsq+bbv7Lpt7DjLjOcIoT7xQewGlVJj
- dLedLdVhYEidRpLB78VGajwAmj1jxDW1AAdFURjAtYlXoNLemnxIiIB5zyqq8QVU4fw==
-X-Gm-Gg: AYBFou1tsstYeryEVBKEDwiX7FJQTsPqtEZUBPfoz4vw4SExCJKCZJrREeXhGQYzw8T
- RENO1EgrZNznZXQoJY16+6j9Db+K9IV+fzSm1IsT1/1T+Wgy5pq/D0gVZXTRtbhW6luslgfDgnn
- p2Sxtdbw3hWsditLeQwb7pzBXNFWsqS4gp4ZcXa8k2NperDMXToZEktxvZgl9+DlMt549zFgMT8
- xUhyyDmVxJZpJqa6hwXnqMLaHcu3Z827kWbtCjCBnuPZlWRfrgRMMKSELWByRmXotEPfFD7ZzDC
- yVu9F6RSZf15ON9oxCF9kYtZZCCNJeWm6q1u9e5XIessLbueUmFUZsedmWlr1iuTNIJNI9skOrg
- DUn+za/jWYLwfOJTGtT4Gf70wp81/Y96gXkFXvdQFC15NXU66Br0jjd/Ww3auyHhJhJpxiWndrf
- FCqf+8hhCNRB/gHGDwb4DHqwWQUIJjxSyoddpTNfIcnOc=
-X-Received: by 2002:a05:701b:2519:b0:1b2:373c:997 with SMTP id
- a92af1059eb24-1b5031128damr10876426c88.25.1794865468948; 
- Mon, 16 Nov 2026 13:44:28 -0800 (PST)
-X-Received: by 2002:a05:701b:2519:b0:1b2:373c:997 with SMTP id
- a92af1059eb24-1b5031128damr10876389c88.25.1794865468227; 
- Mon, 16 Nov 2026 13:44:28 -0800 (PST)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1b50319d40asm35420612c88.11.2026.11.16.13.44.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Nov 2026 13:44:27 -0800 (PST)
-Message-ID: <70844d40-3c25-468b-a843-361e13f7af77@oss.qualcomm.com>
-Date: Mon, 16 Nov 2026 13:44:26 -0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xT4WT-0003oh-P9
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:45:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794865557;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QHeAW8Rhpd7c2SrWyyuPtG1l0e/NjwPKadW8ZqCZqsM=;
+ b=Uz5ZT4k0GIGt3qaDvHUoo8hvmVaIr/s88g/EqZ7ugNXHzcflhVeh5QE8vlpK3sst3JEkZ1
+ Nh2iASU7mX24mHuHonHvxuAcHx8+kYuol5Q6ns46VwlolzIvfBa1DzAOPas6saJLF7ePZq
+ bfHyCy7sAKt/YJWkGv61u4VitJumS08=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-o0SyNY-DN0-L6PpciMwySA-1; Mon,
+ 16 Nov 2026 16:45:53 -0500
+X-MC-Unique: o0SyNY-DN0-L6PpciMwySA-1
+X-Mimecast-MFC-AGG-ID: o0SyNY-DN0-L6PpciMwySA_1794865552
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 249B01955D57; Mon, 16 Nov 2026 21:45:52 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D83D81956054; Mon, 16 Nov 2026 21:45:50 +0000 (UTC)
+Date: Mon, 16 Nov 2026 21:45:48 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Yonggang Luo <luoyonggang@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH 04/48] qom: define an Aliased interface
+Message-ID: <avt5jDfUKmxvuxBu@redhat.com>
+References: <20261112133054.1977618-1-berrange@redhat.com>
+ <20261112133054.1977618-5-berrange@redhat.com>
+ <CAE2XoE8+=z+LcdqFWoLc=Ho8d7QGBgkJL8jL4cgup-o_X2fTrw@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 45/48] qom: drop the 'is_available' callback from TypeInfo
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Markus Armbruster <armbru@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>
-References: <20261112133054.1977618-1-berrange@redhat.com>
- <20261112133054.1977618-46-berrange@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261112133054.1977618-46-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: O_cmEuKN2UD864LEa3xH-HOMebpbjKK4
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA4NiBTYWx0ZWRfX0Ffpy7B+io+4
- gN27halrg0C5ovp8PaQFdPovqbuNsMG10S8S1QhBLotSNzCG0sLJy9/9yEYOzuihe/neYjpcM1h
- r0cO1Zcm8L5qvs8QNDeGWp/BvziNblw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA4NiBTYWx0ZWRfX6hynaiccIIp1
- fHX9VTJILIbmRoZfvFKHvCgagoARuDtNWIzof0tSPVDvKFcWbfqXQpCvBtxEoPTaZoAQDF2toSg
- rcwXgejfuWzmRdlnkO0ksGX8JjDqN/UkkSrsPM5vl7U4SFULAQvSHTLsfY/T/s+WPS7VXV3YQ8A
- LaPlURUaYPUVJTbTtpOygRITDItVhmuBmDjY9hZhZxG2a86rietWfgNJ6TFnPZTfDv4I1QiPo0b
- hPUNRqnozHHzxcsDSeDG7ct6kAs8GnoyKsZEu7RcEKnWCj1ttt1ZAoUdd+okwfJFLnJs3OtS4Xo
- j3z44ri8rWz8uv5cSmWKxNTQSZk3B8xsLlNAZyqvFdarYSgGZVe3hBt5cPqeylL3Vq7LIQa5rA9
- usDP+2bqZcHWhsRWT38+SDU8uw3U7dMmHHkAdhDaXGeg2VwQTOceLAmOl1i0OJzqxjZM3wtdkGL
- VcoopMJQsZQZDyoeoQA==
-X-Authority-Analysis: v=2.4 cv=Z4N5j3RA c=1 sm=1 tr=0 ts=6afb793e cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=rthXEgwDb10q6xcp4BIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
-X-Proofpoint-ORIG-GUID: O_cmEuKN2UD864LEa3xH-HOMebpbjKK4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-16_06,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- malwarescore=0 bulkscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611160086
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <CAE2XoE8+=z+LcdqFWoLc=Ho8d7QGBgkJL8jL4cgup-o_X2fTrw@mail.gmail.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,31 +88,117 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/12/2026 5:30 AM, Daniel P. Berrangé wrote:
-> For the purposes of introspection, a binary must always register
-> all compiled in types (classes). Any filtering of what is
-> permitted with a given selected target should happen at time of
-> use/query. As such the 'is_available' callback on TypeInfo is
-> an undesirable design pattern and with Machine classes converted
-> it can be removed.
+On Sun, Nov 15, 2026 at 08:36:41PM +0800, Yonggang Luo wrote:
+> On Thu, Nov 12, 2026 at 9:31 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > All QOM types must have a globally unique typename, however, for
+> > user convenience, some might also want to have aliases which are
+> > permitted to be ambiguous. Define an "Aliased" interface which
+> > can be implemented by types which want to support aliases.
+> >
+> > When resolving an alias, if there are multiple QOM types with a
+> > matching alias this is considered an error. Ambiguity can be
+> > resolved by matching system state, with the selected target
+> > being the currently implemented filter.
+> >
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  include/qom/object_interfaces.h | 77 +++++++++++++++++++++++++++++++++
+> >  qom/object_interfaces.c         | 57 ++++++++++++++++++++++++
+> >  2 files changed, 134 insertions(+)
+> >
+> > diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
+> > index d222a3d7481..010e37d63f7 100644
+> > --- a/include/qom/object_interfaces.h
+> > +++ b/include/qom/object_interfaces.h
+> > @@ -27,6 +27,17 @@ DECLARE_CLASS_CHECKERS(TargetSpecificClass, TARGET_SPECIFIC,
+> >
+> >  typedef struct TargetSpecific TargetSpecific;
+> >
+> > +#define TYPE_ALIASED "aliased"
+> > +
+> > +typedef struct AliasedClass AliasedClass;
+> > +DECLARE_CLASS_CHECKERS(AliasedClass, ALIASED,
+> > +                       TYPE_ALIASED)
+> > +#define ALIASED(obj) \
+> > +     INTERFACE_CHECK(Aliased, (obj), \
+> > +                     TYPE_ALIASED)
+> > +
+> > +typedef struct Aliased Aliased;
+> > +
+> >  /**
+> >   * UserCreatableClass:
+> >   * @parent_class: the base class
+> > @@ -242,4 +253,70 @@ bool target_specific_class_creatable(ObjectClass *oc);
+> >  ObjectClass *target_specific_class_check(ObjectClass *oc,
+> >                                           Error **errp);
+> >
+> > +/**
+> > + * AliasedClass
+> > + * @parent_class: the base class
+> > + *
+> > + * Interface for classes that want to declare they have aliases
+> > + * for their primary type name.
+> > + *
+> > + * While QOM type names are required to be unique, aliases allow
+> > + * for ambiguity across classes. The ambiguity is resolved at
+> > + * runtime based on system state, typically by the selection of
+> > + * a specific target. If ambiguity cannot be resolved, the user
+> > + * will need to use the unique QOM type name instead.
+> > + */
+> > +struct AliasedClass {
+> > +    InterfaceClass parent_class;
+> > +
+> > +    const char *const *aliases; /* NULL terminated list of typenames */
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  include/qom/object.h | 3 ---
->  qom/object.c         | 4 ----
->  rust/qom/src/qom.rs  | 1 -
->  3 files changed, 8 deletions(-)
 > 
+> Hi Daniel,
+> I have a though that can we specify the target for each alias, so for example
+> "aarch64-virt" will pair with QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64)
+> and
+> "arm-virt" will pair with QEMU_ARCH_BIT(SYS_EMU_TARGET_ARM),
+> so that when select name aarch64-virt, we will automatically infer the
+> QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64) out.
 
-Good!
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+I don't believe we need to distinguish aliases "arm-virt" and
+"aarch64-virt" - this series proposes just using "arm-virt"
+unconditionally.  Likewise for the other targets where there
+is a 32/64 variant - eg  this series adds 'riscv-virt' as the
+alias, not "riscv64-virt" or "riscv32-virt".
+
+With that, the list of aliases we need is fixed per machine
+class, and doesn't need to be associated directly with a
+subset of targets the machine is compatible with.
+
+
+
+> Also
+> "virt" will pair with QEMU_ARCH_ALL, this is for single-target binary.
+> So that the paired target can be either QEMU_ARCH_ALL or single
+> QEMU_ARCH_BIT(target_arch).
+> After this design,  the TYPE_TARGET_SPECIFIC won't be needed anymore and
+> we can use machine names to select "target_arch" in an explicit way(As
+> each alias name is
+> mapped to explicit QEMU_ARCH_BIT(target_arch)). for QEMU_ARCH_ALL is
+> only work for single-target binary.
+> 
+> And we can add some helper macro to generate the pair easily.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
