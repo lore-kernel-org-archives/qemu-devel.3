@@ -1,149 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B567606A322
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D455E606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=PNH5YTbN;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=d5UgMAuF
+	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm2 header.b=l8MXO5SW;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bwiFQqH+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT4aW-0008HI-BM; Mon, 16 Nov 2026 16:50:08 -0500
+	id 1xT4bD-0000GU-W7; Mon, 16 Nov 2026 16:50:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xT4aT-0008Bv-Jp
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:05 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4ay-00006B-Al
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:37 -0500
+Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xT4aR-0003TO-SK
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:05 -0500
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AGJfG9R2247144
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 21:50:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qCEu+jXXxMBsVU1iz/Np5kaZoVjfKPzRDm3nJKe3cfE=; b=PNH5YTbNmYRUQRqQ
- 7vgrg5wjZ5iKXgHRvBn3XFQeojN861cpKnywFDyDl12tGhCvrNBHzHEHkTO/sfZi
- 5RQ+UZ0RU6W++wTcZrN17cquQe9NmHPa93iomcR60SU/Fi2W5Wx2Sud8zFDTjtSY
- rvtABjt/rtLfZCqSO7UjL4CoB6Ed02u178UDYDda18MdJDSst/807mDFqsgYkeIc
- cxtZEPOUy/s659ZcbyRqsjYeZDDNAsWg7p8l6gwAxKr6iauM9BaRJQHpaDMp+/Eq
- Ez/ctiSPfiqBGC+Snl4CUaaxJdLS1qP9QX134AZBDonEClhW+ry+9Rx5rOlpQ0wi
- CcedaQ==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hyyqyaqwh-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 21:50:02 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-33713e5e6daso3583727eec.0
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 13:50:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794865802; x=1795470602; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qCEu+jXXxMBsVU1iz/Np5kaZoVjfKPzRDm3nJKe3cfE=;
- b=d5UgMAuFIVD9bWWCrm+yzkQGI8r0gTKX38VLW1THCdWWk7jBL6pinQ3mca/UOAUoaY
- ordCp1aM2AwJQOcy0yX6hspxMzIwGSXPkt1szSa6EMJG3yf2wn5OSXPWqTK7KsZ1+Ui+
- wp/lUUoKsxiHeR4ao897dkMHl+5IXb1CcP1yd3M6TDlCHXk+vpkzjreVDftETlJKCH62
- Gv0+tOlEYW0quWwRag4JFU9MSXR69MsrFd6YxC/OI4rz77SKN4NL1xN3Y2HAQSMfHhwK
- lR1xM2jFAc8ftjRsrz7bl6rZOjrHtkJe8cDAkQ2wZtvX//94ny6pFMJw7UE8aT0y9G9F
- Okbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794865802; x=1795470602;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=qCEu+jXXxMBsVU1iz/Np5kaZoVjfKPzRDm3nJKe3cfE=;
- b=q+eZkMlB+/EOYtE6iP4Rdh/1p5iKUuhjiBzS8JYO8mRPwIRrzo5vtqgGigPEJQPOa8
- Z6AMZwLgXS6YlNp3qxRAI+x1jDxCb/S0ftCAgear7ZuyiVMlP1FOCSj/Q2qFpGiwNh9S
- zgfLad5QfUeXC2ecsWrDwHvbjyBFzOPEKkrso8rBGxEl7H9fDhqghKCy0oth2zYYsber
- ujf/WVYBcySyx0g25Ibdgeq9asxofHoPCh5J3I6wF7egAJPylFQmmBgVKW5uya3hZPE+
- 9i3Dmt1ppbRyUbReOtz4cvsTgn8bsupv+a5+PaD9w9CnOEDkKUab62xuPY8yJfEwpRNa
- MegQ==
-X-Gm-Message-State: APuU4Z8EEFaouT1zNRCWPf9+qgMsK3L5gaBLtAv9BWgTCfH1WV+QYRHn
- 3MGNmVVjrP2TrKcg7ku2IwZUbHrPs+bGwrP68dNpjpfS+bS4eYjBpOIXi0K+iJNwsv0LOfEjkQ/
- 7y5agr+XVMADOzvgajEw8VsbINc4MuOSCa/YRCjU4iujHzSJ9TmH6BHn4pA==
-X-Gm-Gg: AYBFou3ag4MmVIg89vkZ1tsLNLRy9gDgm9XMOcEKr6b2DsgYu7AgehatmTbYWBJ9rYc
- Ugqx1uxgKkOEq9UHD/HD3mPOW+UCzfgPp5801SE0GUqCM2jvE3rnpt9AZEqFCeNTGzF8+Psvcj5
- UHYcLc3uaC+9N045LXWBtpL1KbOd5gy0xbMgg7Z9TNNni2FF9VRyfQT8IKXmIfJCtVcOCgR0OSX
- ba8jWRAPlvqQ6prtCGs5UuDDSeY85Ya53vRKICwqF9KPN10+fEHo1dENZ2bQ91VkTu4DGx7yfSs
- qL3eBQiC7Rs5/T0Sehc1M9QFiP4LquIviR/0u7CunVbJt1K2WFM7uUqRTek7mrQOl6Xj5/5J9vC
- WmVWsQzRo731NKFpTRTmjN+9pWsC/xYHtE0tDPwKFJKcKXu3LkcFJdosd0OCf+DGksJWx4Z6V/7
- PJvIAJHTvvJy+q1ehSCnNCW8laaf6/1BQfs5/QGK2+Ers=
-X-Received: by 2002:a05:7300:81:b0:378:2e89:3958 with SMTP id
- 5a478bee46e88-379676fc09cmr12109723eec.19.1794865801630; 
- Mon, 16 Nov 2026 13:50:01 -0800 (PST)
-X-Received: by 2002:a05:7300:81:b0:378:2e89:3958 with SMTP id
- 5a478bee46e88-379676fc09cmr12109694eec.19.1794865801056; 
- Mon, 16 Nov 2026 13:50:01 -0800 (PST)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-380e031f3e5sm4167309eec.12.2026.11.16.13.50.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Nov 2026 13:50:00 -0800 (PST)
-Message-ID: <c70bccd3-5a14-4a8a-9ab6-84e764a2a88a@oss.qualcomm.com>
-Date: Mon, 16 Nov 2026 13:49:59 -0800
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xT4av-0004YX-J2
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:50:36 -0500
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.stl.internal (Postfix) with ESMTP id 4803C1D00147
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 16:50:29 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-05.internal (MEProxy); Mon, 16 Nov 2026 16:50:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm2; t=1794865829; x=
+ 1794952229; bh=/VCVNlicp/qsiZtPhJ2t+Y7bflupiFpucmyrK6BZl8A=; b=l
+ 8MXO5SWizga8hoIZOjmu9CSYQod7Fbdb4Ccnii0YM7Nm+AJmKCedL+G83D81QKyO
+ YaQaH3nhmTOG1c2RpDLVatAFBnAsKCtbliBU7dCHKpQoxPTYxMobe/XINrQjUWo5
+ h6b64fvhpuMlvmL0B06b3VtRahxwVMP74iG6H3D7qKqAyACRSqxVA5nte9b7lyyM
+ 8FsMk40wS377BIQf89tC+B9XKGmSrFN1+oHgVlp2LhLeJAfmTiwmBYYPeaCTD0AW
+ 7I559IOfujkheMbjgX5MbuLA7zaaSa2xORRvw+/VC3gsCooJVgT1xg69yRvAinrd
+ f/ZDqpthsGaALIksmOMAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; t=1794865829; x=1794952229; bh=/VCVNlicp/qsiZtPhJ2t+Y7bflup
+ iFpucmyrK6BZl8A=; b=bwiFQqH+4eaGJMZLgpaGPtsPEEY3Ey7Rn6s9Kl0WjgyX
+ kJEPlNpJxq/aAs6ik/Wrgy2jQsum7MePVVQ7JCgOqTrO+96yrjX4mFRm9Il68sYP
+ l2pp1ZOLW1qUykTi4/fxqh8DRZJWvM0BQLgutlGQATRshBJL0NOsSNV/CnLQBIfX
+ Sl60I9StHIuRNyoNS+zc4xKlg1cKYpUzM6jNBy3up7UrAH4pUGJOty2J9v4bp5Ph
+ 2F9+auhr5az8JSj1mbIe4Y0EKhhyK49IRyfULY4BVCp5HKwUHPo1Hf7kqXBQMW6Z
+ ZQKeKEa9DtzTnQiCp7OVIS/aKoC78YjK11ZL/m2lxg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+ repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+ action=sign d=irrelevant.dk a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1794865829; d=irrelevant.dk;
+ mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
+ rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
+ s=fm2:rsa-sha256:T5vckCxgJIuD1DgvTb8R8sI6gjWwHbf8huygQr8O/22AmTQ
+ 2GvM9kDtkaQts3FulKK+XLvPzjEba08NMnZLuOXdKoXcLDJ9hT+6PnJz9SnhXPC1
+ ijJi422QvH0e9r4OufnRIHKRtDaGAYdR8vNOWhydJGdoVD0ugIW+iy0+OAgDBPXX
+ OtAB/veg7ANfUjzZmIYFU8//172CeMzfdcNYRYEnm/TkViMJARTqkErj4qiLKhLB
+ E4GOVZF2+avqiJRfS7/bWWLSHL9+duRNkKDIe3Xshvi7EeJ2Agf6WdXhQCramtmn
+ q+S9x9rKKLYAQ53G5NKln2s712jzu3mwmIhnWwg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+ repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+ action=mi-m=1; hc=10;
+ hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+ from,message-id,mime-version,subject,to;
+Message-Instance: m=1;
+ h=sha256:QwtoOK/a5fVEgKeG04zR300H9woqTrI2CqPcAgfZBg0=:D/at9NL5crMo7uBFFpKXwxdxbpwZay9XXWbo3809VtY=;
+X-ME-Sender: <xms:pHr7am3LEJM5sIXWdklC7wE24tM8__j8kWS0sD-0oCwOiYS2twFvgQ>
+ <xme:pHr7atZ2_mCEhUxCl4ee-MtJM8Rlc-ygS-wTsT0Vqni8Gi_oge2NtT1xa37d7k1Kx
+ O3BWjVVK0y6U_-wkXNOJctbXCvvXaVs-TDTts6c2mM3NA-CYSnxB5iK>
+X-ME-Received: <xmr:pHr7auCP-eeQ282ttyld_GiwNUXs5LLpF85rwyQVe_6v44texh3d175icHyBMt0Md0P1Nlzqm3XOvJQzpDUh2YOHvwG27cbeYdkLIGjAGkId0dOqqjxoizMU6Q>
+X-ME-Proxy-Cause: dmFkZTES8D8xSt0srsgoFMWwIbV8R6jWfsmXgno/I711FmPtBCJAndVyZGwfjwErKV/Hj0
+ XCpRm0Dt9B8n+YucMWDdenSzfQ8YTNMCG5F9ret7bAuTkgU7yzglczNXVofCTxheKEsyn9
+ ZS4g6E9Z0vHM9mlUqCKWIO7LvXBSmFv35Ijx8kcyLvz+V8LN54Rhnv5TKQjoJHWP/SRCnI
+ RnrWtshHm2CdRL7iGy+FwgQKc0tAGKKg9aKoRjJOVvDPd4J/KaLRFea5EynZsZBGI/JDfD
+ gMO/COVIRu5wVDOXIz3+YSbKfo3fWxSDy6OHpNJoNxvKRKdXG/yvak5jNZ1+lr6pMn9VHt
+ 6fobhD00EGyQAloNnz77Tt+co4yJWvIpRr88AF5fAm+h1V1Lmeba5kngTJho+s0z/6GduN
+ DkJGga1c+l5zHGX+R2YWJZAdt8xIcOIWWVfNKnG2XcyAl7XtL4M8QdY1FMjRpSirKFALF0
+ 8Ib+qbCf3tNMNAd+OPuSBbHSLeVk/4utII9t3mKChlvMJ+b5aQl4U9sPAEnPCIKt6aQiLN
+ NWHSbBCD2WImPR/H7pmn1OSgv8xG4co2uk3yHt8qsvvjmawFBdEMWo3dhLi8/SVnz3/LJn
+ 4H7A23aEOP9hfr6l75+8Ga8idc+pS/ztjsDrR/lW/rtZNTdnMsYcWu+6sdRQ
+X-ME-Proxy: <xmx:pHr7av9515BM5lVh6DvqERvYl6acZk7WiktaNPQ_bbLfQqmHP3k3Lw>
+ <xmx:pHr7au8T7BBdEVV1tlfM81SzvDHDUmR21LUo6Szf7gB1mMe7uJkEIQ>
+ <xmx:pHr7ame6i9kL0tJZEiJ8lMpFaFRhbXbma2BrYHq_lLazkb5n-txF-g>
+ <xmx:pHr7anFjTL2ff5oRcyoAU6e_SVAKPFIycnIiB_BwuZEVrJ7Or5OiNQ>
+ <xmx:pXr7aro7epH4itb8yhUfCmUtNjRmuKVRHjokcy1Ak2w1VrKYSt2lIF5Y>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Nov 2026 16:50:27 -0500 (EST)
+From: Klaus Jensen <its@irrelevant.dk>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 0/7] hw/nvme fixes
+Date: Mon, 16 Nov 2026 22:50:06 +0100
+Message-ID: <20261116215014.59993-1-its@irrelevant.dk>
+X-Mailer: git-send-email 2.53.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/48] hw/core: implement TYPE_ALIASED interface in
- machines
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>, Markus Armbruster <armbru@redhat.com>,
- Yonggang Luo <luoyonggang@gmail.com>
-References: <20261112133054.1977618-1-berrange@redhat.com>
- <20261112133054.1977618-7-berrange@redhat.com>
- <cb7bad9f-96d9-4a7f-ad40-ed19e14f83bb@oss.qualcomm.com>
- <avt4aNmLorhgCvh_@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <avt4aNmLorhgCvh_@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA4NiBTYWx0ZWRfX3DgYGw5Lq51t
- sXtTBSrs8zV9Ep+QbWqUwLT19OJQkaFCKH9eqYPJBW7Vn3C6ZIkGlkeyEENLEODHdow7nqYmwR/
- 8ZTcT09S7ldJkB5Sn6Fu8FjXhQ3BlOw=
-X-Proofpoint-GUID: QEzIXWoU7Q-x7tFrQU7uCvPpB_wBpPni
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA4NiBTYWx0ZWRfXwMiJgmVlsrtz
- 1ELZ8goRXxnHwVmcE1z8fzS8xbuoaQ//Bf6jpIe+MOzJYogT+T7onBMW+KIQCRzP7gqPFv/vpuD
- rbQn5X1ybvwQ+j4FrR0Lp7fOvWvZMhMmDOsQZ9DrEZoIVWK+XDMlawTlz1IpDj7Cl48q5KzqJ56
- eK4VyoK8ZZD2vjmvdaGAB9E5VnoyMxHYiQ7dcuuuZBUIFCBv3AGj7iLICDd0spg0w9BD6qKA2z0
- nPn4Hd7I91btZIYR+h+xecWQDNP4BiC7EIrPPyMya/O+EhJVYiuEzjyQoMlIwwM7LAM0GSv2CsP
- 3sgTAT5EzSN/XUMb4ExGwinJhhQikMSjz+p5Ib81dUoPUYVqDBn33+4hKi66VGzBgzRAO6IF8Eh
- cBAyj9+QOHaoI3hWVxj00QUXUR/ocDYl8np5CS7/Cgl4ItN5K+QWp6csHQNwZXbqdwLFJj1LR8/
- xKaExZ18HDkpPDYI9SA==
-X-Proofpoint-ORIG-GUID: QEzIXWoU7Q-x7tFrQU7uCvPpB_wBpPni
-X-Authority-Analysis: v=2.4 cv=ePeGH3p1 c=1 sm=1 tr=0 ts=6afb7a8a cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=JMrKL6tA5vKXgQWL8zYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-16_06,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611160086
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=202.12.124.145; envelope-from=its@irrelevant.dk;
+ helo=fout-b2-smtp.messagingengine.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,72 +119,46 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/16/2026 1:40 PM, Daniel P. Berrangé wrote:
-> On Mon, Nov 16, 2026 at 12:48:47PM -0800, Pierrick Bouvier wrote:
->> On 11/12/2026 5:30 AM, Daniel P. Berrangé wrote:
->>> Make the TYPE_MACHINE class implement the TYPE_ALIASED
->>> interface which will replace use of the 'alias' parameter
->>> in MachineClass. The current 'alias' records the user
->>> facing machine name, while 'aliases' in TYPE_ALIASED
->>> will report an internal type name alias.
->>>
->>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>> ---
->>>  hw/core/machine.c | 4 ++++
->>>  1 file changed, 4 insertions(+)
->>>
->>> diff --git a/hw/core/machine.c b/hw/core/machine.c
->>> index ed9bf8f5008..f7406537aa7 100644
->>> --- a/hw/core/machine.c
->>> +++ b/hw/core/machine.c
->>> @@ -1802,6 +1802,10 @@ static const TypeInfo machine_info = {
->>>      .instance_size = sizeof(MachineState),
->>>      .instance_init = machine_initfn,
->>>      .instance_finalize = machine_finalize,
->>> +    .interfaces = (const InterfaceInfo[]) {
->>> +        { TYPE_ALIASED },
->>> +        { }
->>> +    }
->>>  };
->>>  
->>>  static void machine_register_types(void)
->>
->> Since very few machines require this alias mechanism, would that be
->> better to be add it where it's needed?
-> 
-> Unconditionally adding it is a simplication for other code in
-> the series. By doing this we can use the normal QOM cast
-> "ALIASED_CLASS(mc)" from the machine to the interface which
-> asserts on failure.
-> 
-> If we only did add the interface for a subset of machines, we have
-> to remember to use (AliasedClass*)object_class_dynamic_cast(OBJECT(mc))
-> and check the return value for NULL, which is both more verbose
-> and error prone.
-> 
-> So I thought the overhead of adding the interface to the Machine base
-> class was probably a reasonable tradeoff.
->
+From: Klaus Jensen <k.jensen@samsung.com>
 
-After reviewing the whole series, it's acceptable indeed.
+Hi,
 
->>
->> Not a strong opinion though:
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>
->> Regards,
->> Pierrick
->>
-> 
-> With regards,
-> Daniel
+The following changes since commit 573577bff0138681ddd4ee2410c51bead7b53e74:
 
+  Merge tag 'pull-target-arm-20261116' of https://gitlab.com/pm215/qemu into staging (2026-11-16 12:09:43 -0800)
+
+are available in the Git repository at:
+
+  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20261116
+
+for you to fetch changes up to c0080f56036249df4a3f56e07e90cb0e56b3fd34:
+
+  hw/nvme: fix broadcast fdp events handling (2026-11-16 22:41:27 +0100)
+
+----------------------------------------------------------------
+nvme queue
+
+----------------------------------------------------------------
+Klaus Jensen (4):
+      hw/nvme: verify source and destination lba size for copy
+      hw/nvme: reject fdp.runs smaller than the lba data size
+      hw/nvme: fix fdp reclaim unit accounting
+      hw/nvme: fix broadcast fdp events handling
+
+Markku Ahvenjärvi (3):
+      hw/nvme: prevent cq_pending underflow
+      hw/nvme: fix missed CQ updates
+      hw/nvme: clear interrupts on controller reset
+
+ hw/nvme/ctrl.c | 24 +++++++++++++++++++++---
+ hw/nvme/ns.c   |  6 ++++++
+ 2 files changed, 27 insertions(+), 3 deletions(-)
 
