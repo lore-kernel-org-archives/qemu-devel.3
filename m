@@ -1,49 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB9F606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE748606A32C
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=WLrKKAJC
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=RiHogp4t
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3B9-0006NE-Tx; Mon, 16 Nov 2026 15:19:52 -0500
+	id 1xT3B0-0006Ij-N6; Mon, 16 Nov 2026 15:19:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3B8-0006MV-AH; Mon, 16 Nov 2026 15:19:50 -0500
+ id 1xT3Ay-0006I8-Ne; Mon, 16 Nov 2026 15:19:40 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3B6-0005dZ-DI; Mon, 16 Nov 2026 15:19:50 -0500
+ id 1xT3Av-0004FL-Di; Mon, 16 Nov 2026 15:19:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860369; bh=JfAd1R8ogif0PxqcfVcc/iuSN+Qfy0fsKfU3Rryk/Y8=;
+ t=1794860369; bh=VAehvupFy2KYW0zpRY/st8fHDKhpOhXOk3+U6MhDESU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WLrKKAJCEcz4OA7j1H/abnDHIrCnWNZVuSTJXMUbTry/sY4YvwiB4qXd0sqU6sAD2
- cSbKNNKp6R8rMZl15fMgcXPNwfd5HMX5z31DNCLBwHR6QkJteJV7t/G+fmpjie53OH
- oZLlWimrQWxn1IkHNRfNOT2tLjhEYTgVve9mnIdR8SiU2rq3fliASEfgBprogEb5/9
- FT/5MNEfVfK4LF8g2d0r0IeBAXWUTehSmA/C1FSMGva0BIopzlE1Q/nIuDBg+eYoAu
- z/k2+g7M4v18kJaoibgAcfXIkwxlJdVZs1/8ta2kZLQeAaeYn8yWSd5LY82/rEf01r
- ruLdVm+S+5alw==
+ b=RiHogp4tMStAoUy8gOpfHtB7rVhQv4c1jrGoeCfxMrIh6FTGy5bTFkxtPQo8Gxxot
+ LfT2Ny48E2Km2xlxz8dnW5x93E6MO68EhU7yxQ4T//mVhB/VryqBM+nZnw4W+B6l3/
+ ix6lKrSrNoGf4cPoPsHoldMtamGQQBCsKDcUnIjV1XMcxL6swGGVZwUjAfoaTBHXwv
+ 2mZrX7VOXAVB05dcbfcbB6hFSLeyiZ24bPctXyrE0OXdNYYY3ytxNA+nquEDabTQJr
+ HwBsrAvurb/yVbuVDICR55zmcd8qGuf5vqzZsB7xQDyyJT71zQY7T6h4Yt+S/HEJHj
+ xlR7nvlJu4SyQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 78B111E713D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4CAF11E7137;
  Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7653F45FB73;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 484E945FB6D;
  Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5223FB8DDC; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ id 40158B8DD0; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nikhil Kumar Singh <nikhilks@linux.ibm.com>,
- Aditya Gupta <adityag@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 07/59] hw/pci-host/pnv_phb4: fix guest-triggerable
- abort on 8-byte config access
-Date: Mon, 16 Nov 2026 23:18:11 +0300
-Message-ID: <20261116201922.534306-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Collin L. Walling <walling@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 01/59] target/s390x: externalize feat dependency array
+Date: Mon, 16 Nov 2026 23:18:05 +0300
+Message-ID: <20261116201922.534306-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
@@ -56,8 +55,8 @@ X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,88 +68,321 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,UPPERCASE_50_75,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+From: Collin Walling <walling@linux.ibm.com>
 
-A guest-triggerable assertion crash (DoS) exists in pnv_phb4_config_write()
-and pnv_phb4_config_read(). When a guest performs an 8-byte access to
-PHB_CONFIG_DATA (offset 0x130), QEMU aborts because the switch(size)
-statement in the config accessors only handles 1, 2, and 4-byte accesses,
-hitting g_assert_not_reached() in the default case.
+Move the feature dependency array (dep[][2]) from cpu_models.c to
+cpu_features.c, rename the array to s390_feat_deps, and externalize
+its length.
 
-Since guest input is untrusted, an invalid access size should not crash
-the host. Fix this by adding a size > 4 guard in pnv_phb4_reg_write() and
-pnv_phb4_reg_read() before the config accessor calls, and by replacing
-the g_assert_not_reached() in pnv_phb4_config_write() and
-pnv_phb4_config_read() with phb_error() to cover any other callers.
-Invalid reads now return ~0ull, maintaining PCI conventions.
+This will allow the array to be used between both files.
 
-Fixes: 4f9924c4d4cf ("ppc/pnv: Add models for POWER9 PHB4 PCIe Host bridge")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3591
-Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260805090530.1333997-1-nikhilks@linux.ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-(cherry picked from commit 0b76df366bfd9f25b0f01d66c96e8e5d81984d01)
+Signed-off-by: Collin Walling <walling@linux.ibm.com>
+Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20261009185559.144750-2-walling@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit 349a5fa831b7e5c75281e3fb4e36923dc25c5954)
+(Mjt: use actual contents of the dependency array in 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index 178c73f519b..d597dd1d49f 100644
---- a/hw/pci-host/pnv_phb4.c
-+++ b/hw/pci-host/pnv_phb4.c
-@@ -83,7 +83,9 @@ static void pnv_phb4_config_write(PnvPHB4 *phb, unsigned off,
-         val = bswap32(val);
-         break;
-     default:
--        g_assert_not_reached();
-+        phb_error(phb, "invalid config write size %u at offset 0x%x\n",
-+                  size, off);
-+        return;
-     }
-     pci_host_config_write_common(pdev, cfg_addr, limit, val, size);
- }
-@@ -118,7 +120,9 @@ static uint64_t pnv_phb4_config_read(PnvPHB4 *phb, unsigned off,
-     case 4:
-         return bswap32(val);
-     default:
--        g_assert_not_reached();
-+        phb_error(phb, "invalid config read size %u at offset 0x%x\n",
-+                  size, off);
-+        return ~0ull;
-     }
+diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
+index 4b5be6798ef..19303afbef2 100644
+--- a/target/s390x/cpu_features.c
++++ b/target/s390x/cpu_features.c
+@@ -213,6 +213,127 @@ void s390_feat_bitmap_to_ascii(const S390FeatBitmap features, void *opaque,
+     };
  }
  
-@@ -506,6 +510,11 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
++const int s390_feat_deps[][2] = {
++    { S390_FEAT_IPTE_RANGE, S390_FEAT_DAT_ENH },
++    { S390_FEAT_IDTE_SEGMENT, S390_FEAT_DAT_ENH },
++    { S390_FEAT_IDTE_REGION, S390_FEAT_DAT_ENH },
++    { S390_FEAT_IDTE_REGION, S390_FEAT_IDTE_SEGMENT },
++    { S390_FEAT_LOCAL_TLB_CLEARING, S390_FEAT_DAT_ENH},
++    { S390_FEAT_LONG_DISPLACEMENT_FAST, S390_FEAT_LONG_DISPLACEMENT },
++    { S390_FEAT_DFP_FAST, S390_FEAT_DFP },
++    { S390_FEAT_TRANSACTIONAL_EXE, S390_FEAT_STFLE_49 },
++    { S390_FEAT_EDAT_2, S390_FEAT_EDAT},
++    { S390_FEAT_MSA_EXT_5, S390_FEAT_KIMD_SHA_512 },
++    { S390_FEAT_MSA_EXT_5, S390_FEAT_KLMD_SHA_512 },
++    { S390_FEAT_MSA_EXT_4, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_SIE_CMMA, S390_FEAT_CMM },
++    { S390_FEAT_SIE_CMMA, S390_FEAT_SIE_GSLS },
++    { S390_FEAT_SIE_PFMFI, S390_FEAT_EDAT },
++    { S390_FEAT_MSA_EXT_8, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_MSA_EXT_9, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_MSA_EXT_9, S390_FEAT_MSA_EXT_4 },
++    { S390_FEAT_MULTIPLE_EPOCH, S390_FEAT_TOD_CLOCK_STEERING },
++    { S390_FEAT_VECTOR_PACKED_DECIMAL, S390_FEAT_VECTOR },
++    { S390_FEAT_VECTOR_PACKED_DECIMAL_ENH, S390_FEAT_VECTOR_PACKED_DECIMAL },
++    { S390_FEAT_VECTOR_PACKED_DECIMAL_ENH2, S390_FEAT_VECTOR_PACKED_DECIMAL_ENH },
++    { S390_FEAT_VECTOR_PACKED_DECIMAL_ENH3, S390_FEAT_VECTOR_PACKED_DECIMAL_ENH2 },
++    { S390_FEAT_VECTOR_ENH, S390_FEAT_VECTOR },
++    { S390_FEAT_VECTOR_ENH2, S390_FEAT_VECTOR_ENH },
++    { S390_FEAT_VECTOR_ENH3, S390_FEAT_VECTOR_ENH2 },
++    { S390_FEAT_INSTRUCTION_EXEC_PROT, S390_FEAT_SIDE_EFFECT_ACCESS_ESOP2 },
++    { S390_FEAT_SIDE_EFFECT_ACCESS_ESOP2, S390_FEAT_ESOP },
++    { S390_FEAT_CMM_NT, S390_FEAT_CMM },
++    { S390_FEAT_GUARDED_STORAGE, S390_FEAT_SIDE_EFFECT_ACCESS_ESOP2 },
++    { S390_FEAT_MULTIPLE_EPOCH, S390_FEAT_STORE_CLOCK_FAST },
++    { S390_FEAT_MULTIPLE_EPOCH, S390_FEAT_TOD_CLOCK_STEERING },
++    { S390_FEAT_SEMAPHORE_ASSIST, S390_FEAT_STFLE_49 },
++    { S390_FEAT_KIMD_SHA3_224, S390_FEAT_MSA },
++    { S390_FEAT_KIMD_SHA3_256, S390_FEAT_MSA },
++    { S390_FEAT_KIMD_SHA3_384, S390_FEAT_MSA },
++    { S390_FEAT_KIMD_SHA3_512, S390_FEAT_MSA },
++    { S390_FEAT_KIMD_SHAKE_128, S390_FEAT_MSA },
++    { S390_FEAT_KIMD_SHAKE_256, S390_FEAT_MSA },
++    { S390_FEAT_KLMD_SHA3_224, S390_FEAT_MSA },
++    { S390_FEAT_KLMD_SHA3_256, S390_FEAT_MSA },
++    { S390_FEAT_KLMD_SHA3_384, S390_FEAT_MSA },
++    { S390_FEAT_KLMD_SHA3_512, S390_FEAT_MSA },
++    { S390_FEAT_KLMD_SHAKE_128, S390_FEAT_MSA },
++    { S390_FEAT_KLMD_SHAKE_256, S390_FEAT_MSA },
++    { S390_FEAT_KMAC_HMAC_SHA_224, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_KMAC_HMAC_SHA_256, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_KMAC_HMAC_SHA_384, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_KMAC_HMAC_SHA_512, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_KMAC_HMAC_ESHA_224, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_KMAC_HMAC_ESHA_256, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_KMAC_HMAC_ESHA_384, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_KMAC_HMAC_ESHA_512, S390_FEAT_MSA_EXT_3 },
++    { S390_FEAT_KM_FULL_XTS_AES_128, S390_FEAT_MSA_EXT_4 },
++    { S390_FEAT_KM_FULL_XTS_AES_256, S390_FEAT_MSA_EXT_4 },
++    { S390_FEAT_KM_FULL_XTS_EAES_128, S390_FEAT_MSA_EXT_4 },
++    { S390_FEAT_KM_FULL_XTS_EAES_256, S390_FEAT_MSA_EXT_4 },
++    { S390_FEAT_PRNO_TRNG_QRTCR, S390_FEAT_MSA_EXT_5 },
++    { S390_FEAT_PRNO_TRNG, S390_FEAT_MSA_EXT_5 },
++    { S390_FEAT_SIE_KSS, S390_FEAT_SIE_F2 },
++    { S390_FEAT_AP_QUERY_CONFIG_INFO, S390_FEAT_AP },
++    { S390_FEAT_AP_FACILITIES_TEST, S390_FEAT_AP },
++    { S390_FEAT_PTFF_QSIE, S390_FEAT_MULTIPLE_EPOCH },
++    { S390_FEAT_PTFF_QTOUE, S390_FEAT_MULTIPLE_EPOCH },
++    { S390_FEAT_PTFF_STOE, S390_FEAT_MULTIPLE_EPOCH },
++    { S390_FEAT_PTFF_STOUE, S390_FEAT_MULTIPLE_EPOCH },
++    { S390_FEAT_AP_QUEUE_INTERRUPT_CONTROL, S390_FEAT_AP },
++    { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
++    { S390_FEAT_NNPA, S390_FEAT_VECTOR },
++    { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
++    { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
++    { S390_FEAT_UV_FEAT_AP_INTR, S390_FEAT_UV_FEAT_AP },
++    { S390_FEAT_PFCR_QAF, S390_FEAT_CCF_BASE },
++    { S390_FEAT_PFCR_CSDST, S390_FEAT_CCF_BASE },
++    { S390_FEAT_PFCR_CSDSTG, S390_FEAT_CCF_BASE },
++    { S390_FEAT_PFCR_CSTST, S390_FEAT_CCF_BASE },
++    { S390_FEAT_PFCR_CSTSTG, S390_FEAT_CCF_BASE },
++    { S390_FEAT_INEFF_NC_TX, S390_FEAT_TRANSACTIONAL_EXE },
++    { S390_FEAT_PLO_CLO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_CSO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_DCSO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_CSSTO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_CSDSTO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_CSTSTO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TCS, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TCSG, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TCSX, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TCSO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QCS, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QCSG, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QCSX, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QCSO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_LO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_DLX, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_DLO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TL, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TLG, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TLX, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TLO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QL, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QLG, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QLX, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QLO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_STO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_DST, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_DSTG, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_DSTX, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_DSTO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TST, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TSTG, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TSTX, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_TSTO, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QST, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QSTG, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QSTX, S390_FEAT_PLO_EXT },
++    { S390_FEAT_PLO_QSTO, S390_FEAT_PLO_EXT },
++};
++
++const size_t s390_feat_deps_len = ARRAY_SIZE(s390_feat_deps);
++
+ void s390_get_deprecated_features(S390FeatBitmap features)
+ {
+     static const int feats[] = {
+diff --git a/target/s390x/cpu_features.h b/target/s390x/cpu_features.h
+index 5635839d032..5b692a587df 100644
+--- a/target/s390x/cpu_features.h
++++ b/target/s390x/cpu_features.h
+@@ -55,6 +55,10 @@ typedef struct {
+     int bit;                /* bit within the feature type area (fixed) */
+ } S390FeatDef;
  
-     /* Special case outbound configuration data */
-     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
-+        if (size > 4) {
-+            phb_error(phb, "invalid config write size %u at 0x%"PRIx64"\n",
-+                      size, off);
-+            return;
-+        }
-         pnv_phb4_config_write(phb, off & 0x3, size, val);
-         return;
++/* Tuple of features[][0] that depend on other features[][1] */
++extern const int s390_feat_deps[][2];
++extern const size_t s390_feat_deps_len;
++
+ /* use ordinary bitmap operations to work with features */
+ typedef unsigned long S390FeatBitmap[BITS_TO_LONGS(S390_FEAT_MAX)];
+ 
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index 93a05e43d79..90e9f528359 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -436,132 +436,14 @@ void s390_cpu_list(void)
+ 
+ static void check_consistency(const S390CPUModel *model)
+ {
+-    static int dep[][2] = {
+-        { S390_FEAT_IPTE_RANGE, S390_FEAT_DAT_ENH },
+-        { S390_FEAT_IDTE_SEGMENT, S390_FEAT_DAT_ENH },
+-        { S390_FEAT_IDTE_REGION, S390_FEAT_DAT_ENH },
+-        { S390_FEAT_IDTE_REGION, S390_FEAT_IDTE_SEGMENT },
+-        { S390_FEAT_LOCAL_TLB_CLEARING, S390_FEAT_DAT_ENH},
+-        { S390_FEAT_LONG_DISPLACEMENT_FAST, S390_FEAT_LONG_DISPLACEMENT },
+-        { S390_FEAT_DFP_FAST, S390_FEAT_DFP },
+-        { S390_FEAT_TRANSACTIONAL_EXE, S390_FEAT_STFLE_49 },
+-        { S390_FEAT_EDAT_2, S390_FEAT_EDAT},
+-        { S390_FEAT_MSA_EXT_5, S390_FEAT_KIMD_SHA_512 },
+-        { S390_FEAT_MSA_EXT_5, S390_FEAT_KLMD_SHA_512 },
+-        { S390_FEAT_MSA_EXT_4, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_SIE_CMMA, S390_FEAT_CMM },
+-        { S390_FEAT_SIE_CMMA, S390_FEAT_SIE_GSLS },
+-        { S390_FEAT_SIE_PFMFI, S390_FEAT_EDAT },
+-        { S390_FEAT_MSA_EXT_8, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_MSA_EXT_9, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_MSA_EXT_9, S390_FEAT_MSA_EXT_4 },
+-        { S390_FEAT_MULTIPLE_EPOCH, S390_FEAT_TOD_CLOCK_STEERING },
+-        { S390_FEAT_VECTOR_PACKED_DECIMAL, S390_FEAT_VECTOR },
+-        { S390_FEAT_VECTOR_PACKED_DECIMAL_ENH, S390_FEAT_VECTOR_PACKED_DECIMAL },
+-        { S390_FEAT_VECTOR_PACKED_DECIMAL_ENH2, S390_FEAT_VECTOR_PACKED_DECIMAL_ENH },
+-        { S390_FEAT_VECTOR_PACKED_DECIMAL_ENH3, S390_FEAT_VECTOR_PACKED_DECIMAL_ENH2 },
+-        { S390_FEAT_VECTOR_ENH, S390_FEAT_VECTOR },
+-        { S390_FEAT_VECTOR_ENH2, S390_FEAT_VECTOR_ENH },
+-        { S390_FEAT_VECTOR_ENH3, S390_FEAT_VECTOR_ENH2 },
+-        { S390_FEAT_INSTRUCTION_EXEC_PROT, S390_FEAT_SIDE_EFFECT_ACCESS_ESOP2 },
+-        { S390_FEAT_SIDE_EFFECT_ACCESS_ESOP2, S390_FEAT_ESOP },
+-        { S390_FEAT_CMM_NT, S390_FEAT_CMM },
+-        { S390_FEAT_GUARDED_STORAGE, S390_FEAT_SIDE_EFFECT_ACCESS_ESOP2 },
+-        { S390_FEAT_MULTIPLE_EPOCH, S390_FEAT_STORE_CLOCK_FAST },
+-        { S390_FEAT_MULTIPLE_EPOCH, S390_FEAT_TOD_CLOCK_STEERING },
+-        { S390_FEAT_SEMAPHORE_ASSIST, S390_FEAT_STFLE_49 },
+-        { S390_FEAT_KIMD_SHA3_224, S390_FEAT_MSA },
+-        { S390_FEAT_KIMD_SHA3_256, S390_FEAT_MSA },
+-        { S390_FEAT_KIMD_SHA3_384, S390_FEAT_MSA },
+-        { S390_FEAT_KIMD_SHA3_512, S390_FEAT_MSA },
+-        { S390_FEAT_KIMD_SHAKE_128, S390_FEAT_MSA },
+-        { S390_FEAT_KIMD_SHAKE_256, S390_FEAT_MSA },
+-        { S390_FEAT_KLMD_SHA3_224, S390_FEAT_MSA },
+-        { S390_FEAT_KLMD_SHA3_256, S390_FEAT_MSA },
+-        { S390_FEAT_KLMD_SHA3_384, S390_FEAT_MSA },
+-        { S390_FEAT_KLMD_SHA3_512, S390_FEAT_MSA },
+-        { S390_FEAT_KLMD_SHAKE_128, S390_FEAT_MSA },
+-        { S390_FEAT_KLMD_SHAKE_256, S390_FEAT_MSA },
+-        { S390_FEAT_KMAC_HMAC_SHA_224, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_KMAC_HMAC_SHA_256, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_KMAC_HMAC_SHA_384, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_KMAC_HMAC_SHA_512, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_KMAC_HMAC_ESHA_224, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_KMAC_HMAC_ESHA_256, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_KMAC_HMAC_ESHA_384, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_KMAC_HMAC_ESHA_512, S390_FEAT_MSA_EXT_3 },
+-        { S390_FEAT_KM_FULL_XTS_AES_128, S390_FEAT_MSA_EXT_4 },
+-        { S390_FEAT_KM_FULL_XTS_AES_256, S390_FEAT_MSA_EXT_4 },
+-        { S390_FEAT_KM_FULL_XTS_EAES_128, S390_FEAT_MSA_EXT_4 },
+-        { S390_FEAT_KM_FULL_XTS_EAES_256, S390_FEAT_MSA_EXT_4 },
+-        { S390_FEAT_PRNO_TRNG_QRTCR, S390_FEAT_MSA_EXT_5 },
+-        { S390_FEAT_PRNO_TRNG, S390_FEAT_MSA_EXT_5 },
+-        { S390_FEAT_SIE_KSS, S390_FEAT_SIE_F2 },
+-        { S390_FEAT_AP_QUERY_CONFIG_INFO, S390_FEAT_AP },
+-        { S390_FEAT_AP_FACILITIES_TEST, S390_FEAT_AP },
+-        { S390_FEAT_PTFF_QSIE, S390_FEAT_MULTIPLE_EPOCH },
+-        { S390_FEAT_PTFF_QTOUE, S390_FEAT_MULTIPLE_EPOCH },
+-        { S390_FEAT_PTFF_STOE, S390_FEAT_MULTIPLE_EPOCH },
+-        { S390_FEAT_PTFF_STOUE, S390_FEAT_MULTIPLE_EPOCH },
+-        { S390_FEAT_AP_QUEUE_INTERRUPT_CONTROL, S390_FEAT_AP },
+-        { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
+-        { S390_FEAT_NNPA, S390_FEAT_VECTOR },
+-        { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
+-        { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
+-        { S390_FEAT_UV_FEAT_AP_INTR, S390_FEAT_UV_FEAT_AP },
+-        { S390_FEAT_PFCR_QAF, S390_FEAT_CCF_BASE },
+-        { S390_FEAT_PFCR_CSDST, S390_FEAT_CCF_BASE },
+-        { S390_FEAT_PFCR_CSDSTG, S390_FEAT_CCF_BASE },
+-        { S390_FEAT_PFCR_CSTST, S390_FEAT_CCF_BASE },
+-        { S390_FEAT_PFCR_CSTSTG, S390_FEAT_CCF_BASE },
+-        { S390_FEAT_INEFF_NC_TX, S390_FEAT_TRANSACTIONAL_EXE },
+-        { S390_FEAT_PLO_CLO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_CSO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_DCSO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_CSSTO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_CSDSTO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_CSTSTO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TCS, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TCSG, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TCSX, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TCSO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QCS, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QCSG, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QCSX, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QCSO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_LO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_DLX, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_DLO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TL, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TLG, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TLX, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TLO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QL, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QLG, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QLX, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QLO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_STO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_DST, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_DSTG, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_DSTX, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_DSTO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TST, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TSTG, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TSTX, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_TSTO, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QST, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QSTG, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QSTX, S390_FEAT_PLO_EXT },
+-        { S390_FEAT_PLO_QSTO, S390_FEAT_PLO_EXT },
+-    };
+     int i;
+ 
+-    for (i = 0; i < ARRAY_SIZE(dep); i++) {
+-        if (test_bit(dep[i][0], model->features) &&
+-            !test_bit(dep[i][1], model->features)) {
++    for (i = 0; i < s390_feat_deps_len; i++) {
++        if (test_bit(s390_feat_deps[i][0], model->features) &&
++            !test_bit(s390_feat_deps[i][1], model->features)) {
+             warn_report("\'%s\' requires \'%s\'.",
+-                        s390_feat_def(dep[i][0])->name,
+-                        s390_feat_def(dep[i][1])->name);
++                        s390_feat_def(s390_feat_deps[i][0])->name,
++                        s390_feat_def(s390_feat_deps[i][1])->name);
+         }
      }
-@@ -643,6 +652,11 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-     uint64_t val;
- 
-     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
-+        if (size > 4) {
-+            phb_error(phb, "invalid config read size %u at 0x%"PRIx64"\n",
-+                      size, off);
-+            return ~0ull;
-+        }
-         return pnv_phb4_config_read(phb, off & 0x3, size);
-     }
- 
+ }
 -- 
 2.47.3
 
