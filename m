@@ -1,88 +1,108 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9460606A322
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 19:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B842606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 19:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=samsara.com header.i=@samsara.com header.a=rsa-sha256 header.s=google header.b=Znj30zMP
+	dkim=pass (2048-bit key) header.d=samsara.com header.i=@samsara.com header.a=rsa-sha256 header.s=google header.b=bqrQ+NjP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT2lA-0005u8-Ix; Mon, 16 Nov 2026 14:53:00 -0500
+	id 1xT2mM-0006Mo-6C; Mon, 16 Nov 2026 14:54:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gavin.li@samsara.com>)
- id 1xT2l9-0005tz-2H
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 14:52:59 -0500
-Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
+ id 1xT2mK-0006MG-BW
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 14:54:12 -0500
+Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gavin.li@samsara.com>)
- id 1xT2l6-0001pU-AR
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 14:52:58 -0500
-Received: by mail-dy1-x1330.google.com with SMTP id
- 5a478bee46e88-3282db206d3so10754627eec.0
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 11:52:54 -0800 (PST)
+ id 1xT2mI-0001tx-L1
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 14:54:12 -0500
+Received: by mail-oi1-x236.google.com with SMTP id
+ 5614622812f47-4af81963f35so3061319b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 11:54:10 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794858849; cv=none;
+ d=google.com; s=arc-20260327;
+ b=FZyO+MOFvpXlcTkhYWKAvKOrDCxtP3OtD94Pnx2nT6pr/dlweNv4qCmyjDDLN7UNno
+ fT3MDrlN87LIKunYRcSpnb3cLTu2M9rtsJ2/BfXdi4qq/o+cH9WaAx7GVoCpCz5Tbhx2
+ u5a2OkoSd/7sLNRmpteKhGesqq9iP0SlIu0q2YZ0ggTuRJG1A6ElEUwN8re7Bl4tl3Yt
+ 36Ww5qetyPv3ILdHI4C7vo4yKFeHddBLwHXFBvqQGbOY1G1sQ3F7tYplFwBAGZU44cW3
+ ST+wCNcnemcjw91FvkNLtOLEj/4fULgLcQTr8Oz0D0h3yqS33Xu5EMELHWrL94+QQKVU
+ rFxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=9IxRPVUes4vwIhbav5H9RS1073Sfk/Q69n1LiM1a70Q=;
+ fh=OKM02RvmQWu7b6nGBQAM1BfCb8iWAWfhGOV3376jpyw=;
+ b=NsshZsC7tUlgPJCqzSvpwXnwN7MtbcUtVq7wrVXQb8NVw4I1G5WxIt+bqy+gPcuO3m
+ YhuRlechOxySeUvQpbr0RZTBWoQXmR5fhW7Ma0dLrVa+Ez/cen1jZ73V8nmAC2PlqPR2
+ u7dmegz/eY96h3Z1EZxqRnPsMk5v7EQKiWnaAQncLDTKaOsT3SgUuuRIoG84noMHbzF4
+ UOa0OZfh4t2+1ULrlSe+2ymxtgnm3iMPEhtpYi6Ue2pFBMU7SdjU5mNsQx+DE2pQRayz
+ sITbfPRT3/l0oO1H6QXQmTgI84wv8wCabsD6sgzY9NpBtF6OMVpu23z7gRX/d0DE7Ne/
+ OysQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=samsara.com; s=google; t=1794858773; x=1795463573; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=C/9E2J4Yex5wXvuNGm2rLRIf+6hY4TVMoCWe9lYn/Rw=;
- b=Znj30zMPKeAA7K/ZVz2ZFXYzEJvD39IZKT3lOeL0e+u/chUU9728LNnOWK/j4B+0x5
- tofGNm1gF+61rcYFMJdxZ8lCC1msW9QHQq2/ZgaHNXWsYeEJRi5OIHkbBNejzr9HxTUL
- rOOYTrlBDfyZAoDSR22yBb78j/BJkHyQbMcrrPFH4TToT233uSizqcJIkzTC+EFg2DvS
- lWO91mcNZOEp2wK+ut2sjGs/AxAe5tmO0tKg8joi9xdmCvG2ZQS6iVemVvmHlnaCfYnO
- /S+2vD3pDQ9HjSJYEaKRvCZWXfl6t1FbBjLfQkOta8Tmjhdu9XFfOJgxRjFqfh9MAMKh
- Frfg==
+ d=samsara.com; s=google; t=1794858849; x=1795463649; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=9IxRPVUes4vwIhbav5H9RS1073Sfk/Q69n1LiM1a70Q=;
+ b=bqrQ+NjPTUcnxyNe5tUjrHp5g9h0hsHc07iwKKogeCVBhd9++JgbxkgFB2nK7+GtBE
+ wjS8iqUfsgVVdbK6wO2UEB/ZPkeCCbE/C3oq7HbFGNadxg0UJFRJmxmdUakIKXMy8zbW
+ X37+h7aVp5YLVPl8LUgYUQr6DsSSOnw0Zu8N0nXnGDY2HGsPqdcQU1LDrqwm0XpwMdzS
+ 30ITzvZ0h+GKl/A004JrmpPZZdXBOhI4nohwO8FUbHtPCzM3afRPIUoLQCaD9xcAnq5z
+ 2fUlhqhncc3W61CTgP7+/AMIN7aHsfyECrq146CGYz+eZ3KA6bPM3l3mJU3j2XJIbE9H
+ HujQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794858773; x=1795463573;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=C/9E2J4Yex5wXvuNGm2rLRIf+6hY4TVMoCWe9lYn/Rw=;
- b=HNYxk3se/bJsGO/au010pgsahZdBwfKOtH7X37xxemngnpC8InOcNOtHNiX4096osD
- Ym+t9ZswQPawXUIBZatXIi4UcB5pecspIPC8vVBaPpsdNG2qdGT6qdq5Lzp1zjmDiz6o
- 2ryI8QN9kIPeZwFNf0bO+DNvmd45H0/IVvfjVRQHIMlPLzwv/Psu3jzrtZ7hUF/DWB0N
- fsaknRqxpAn/fqY9RLLTnjXu+D6N7vd1yMj5RJQATcNMgewD0chmYvTN2oUNCI0Jq1U6
- U7UfYrws+jnGVPnVFoisnOyYdpz0Xp+CFHY9QVGKA/Tk3khv/Q0lLuPHB4/0VWJNn3Fq
- ltuA==
-X-Gm-Message-State: APuU4Z/tryjQCQ0GdQWfgONMfS4jI9k0qkiFJBUX4SYnd2qJNaR5Vn5I
- 1FDc7OxQfx5YUPVkMBDI+nPqhqfaw7c514Ms7He79hdnRDjmXeGIJ8wldnGSeV0igNkN5EW3my6
- F0qyP1g==
-X-Gm-Gg: AZFdTZeyKvy62ndFpSM08Ra7KcOgUjWz1/hZwR1/2rNoxkAxFfUSstBwg2a4KhdvBjl
- wERzwzZUxVr0PASDiFymbAkaA5MAkaUJn1HyXnyGK0DzjYJpkG1ohSveNaJHF7D9tKTMYk6+y8t
- T4jomxJ9QR+D97XPAmI6eNOFBtaH5nw4HIyopYqwhu4cPbL54SweU6Isvg4MIZGnXUwMYBo8l3D
- mrWc+wOhM8L6KTVZUdQutIGIU6SnE/lH63EJEjY7QC3l4XdqxkjWpjr6FF9/RSRg3QGZfAAraLP
- eeet+YseO389va0mHk7NqDQN1qmEoGRzbFOXM+6KE1+T9mvmtyOequswDPAjSUThdrfNLWntmFH
- TAv7lz4+vZUtohgOJP7juwJ9ov32h3VMtOVwZz3OTtl81urFJL8uLhWG826BZgDUN+b5YhtxnQM
- 0/foTppI7ULrPi/F57pXzV7oYn5/oEmnS5RktjGiaeXNDSV1Fy89kTslxuZ8i2rwFMPyb8MctMh
- Z7zTqcL7Lu3qEsU4OCKy06JRRYpu905LNv/biTmMf4p+WWzWsBjZ25kJTtGq4rZs+yAmbnuFJxl
- 23L9H7WjUu9Cx9+dZvP/hhfpDDhouUmUvFQANOV6wTP3YVk1PH/4oFsjDAbtBj2FFYtpJKyTqiR
- z21mpEvE=
-X-Received: by 2002:a05:7300:d718:b0:36a:12c1:3adb with SMTP id
- 5a478bee46e88-37966b52740mr17093257eec.20.1794858772764; 
- Mon, 16 Nov 2026 11:52:52 -0800 (PST)
-Received: from Mac.attlocal.net ([136.226.78.120])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-37956bad134sm44414767eec.27.2026.11.16.11.52.51
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Nov 2026 11:52:52 -0800 (PST)
-From: Gavin Li <gavin.li@samsara.com>
-To: qemu-devel@nongnu.org
-Cc: Gavin Li <gavin.li@samsara.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Samuel Thibault <samuel.thibault@ens-lyon.org>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v2] net: add per-connection guestfwd unix support
-Date: Mon, 16 Nov 2026 11:52:41 -0800
-Message-ID: <20261116195241.41819-1-gavin.li@samsara.com>
-X-Mailer: git-send-email 2.55.0
+ d=1e100.net; s=20260707; t=1794858849; x=1795463649;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=9IxRPVUes4vwIhbav5H9RS1073Sfk/Q69n1LiM1a70Q=;
+ b=fchh/FapLqdemF5OEC+Ny4tpFaKu1kPKrEGYS+172HVVG1o5J1DiQwQPPQ/7sVB8Dd
+ +3EucgCUuvcUGNiDrmie7OE14cC2ZrCnFHqcoiw16R6KKLozoaYIFF7CWzciJMqCcvkY
+ n+wPOVYMLQYYRVAvSjMAqdqndOSsjU0oLpVS0YT7jIjna6sQaLuLuWFUBSg+JlWA/KMU
+ 5hrtMsyBpkKFa5v+lgWauQA157gWh0p4c52cDbO0rd8Q+njFBCtppaG516bGJ/M0OO6o
+ 8vZNRcrAFkTpdJw8og/iSM+wY96AvHpErbc2/z5poBkucdrnZY6l9WtA7AzaaBweBrly
+ U3PQ==
+X-Forwarded-Encrypted: i=1;
+ AL+hErG3qroP/I5UH7ZXgvVEdyMI3PEwsYlo2d+4KtcOPeFExxBru34OoRq0rGWpsnA5BD7ipEBhm9awux40@nongnu.org
+X-Gm-Message-State: APuU4Z+wIBW4OabFJ1EYV/tw/7CJPhbwktvSOPD+LCCcaysiAqIHL96u
+ 6Mbknp+BxV8+KXr9+ArX5YIn48ep3HOkNJTu1OYmnVzhhI0Ga5VUDWA5JqQN6Tp0RQO3aVtOR8X
+ +d03nkMcFeBI1llZHg33gJlp3LwWJuL9BQ6ZIDaqM
+X-Gm-Gg: AYBFou3d5tLTN71cw/uN4lakmYEGc1EDBOKQeJzCGSEyr7LekBv39xhVYP9sLzVci5a
+ p+d8koZZZYBAiHDPMagpJx/BizUCur01VVLexpPLAOrmyGq+t2FaBk9/LFQ5nd7QtARLGga4cog
+ r/bsSaThY6QoR+QxJYvknpT1frY4baZ9766LJAev4n85QbQEmqGznaxER69ykbwReEGVJZi/wC5
+ Y9SRnD8lXQlz2LcUMni6oy1V1W4KwsujbDQpwPLhorGXmZackHcHhaOxOO3uIBsA+4KdAHfaTn+
+ fA2qNGrdrHvm8nwC3ne8ZZMaj9lKF8Y7r2WPaTTiFmwS/VCSN2V1kmB/aodN+2MWQGykQk/Wl96
+ /UrP8GkGfGs7C+KuIrQdJfTX3EP/x8zYinciQ2LjJ0PbcS94PVZNlEqNrdHnkZvj8BnNlGb2gxk
+ bdXfUACGfPURk6QAI=
+X-Received: by 2002:a05:6808:ecb:b0:55c:836:5955 with SMTP id
+ 5614622812f47-56e64dfa414mr8954304b6e.44.1794858849021; Mon, 16 Nov 2026
+ 11:54:09 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
- envelope-from=gavin.li@samsara.com; helo=mail-dy1-x1330.google.com
+References: <20261107044225.2786-1-gavin.li@samsara.com>
+ <avXZcIP3t8DExhse@redhat.com> <avjim5JwouXNASfm@end>
+In-Reply-To: <avjim5JwouXNASfm@end>
+From: Gavin Li <gavin.li@samsara.com>
+Date: Mon, 16 Nov 2026 11:53:57 -0800
+X-Gm-Features: AclHuK--gxfiq2-5u8_r7pAYLtTndRrMIM3VCad-TCTtdMV0s9rQ--NbbWTJDjA
+Message-ID: <CAKvMnUXZZhT+rTb7L3ybkrLhh0xma6FKQKKogLLWgtyGPtgV5w@mail.gmail.com>
+Subject: Re: [PATCH v1] net: add per-connection guestfwd unix support
+To: Samuel Thibault <samuel.thibault@gnu.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
+ envelope-from=gavin.li@samsara.com; helo=mail-oi1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,89 +121,116 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-For -netdev user,guestfwd=..., add support for unix2: in addition to the
-currently supported tcp: and cmd:. With unix2:, a new connection is
-opened to the given unix socket per TCP connection to the target
-address/port pair. The unix socket need not exist at qemu startup time.
+Thanks for the review all. I've posted a v2 patch that shortens
+"unix-per-connection" to "unix2" and updates the commit message
+for clarity.
 
-This is an improvement over the current unix: support, which mixes all
-guest connections onto a single host unix connection, and (by default)
-requires the unix socket to be present at qemu startup time.
+Gavin
 
-Also update the minimum libslirp version to 4.2.0 (released in 2020) as it
-adds support for the slirp_add_unix() function.
-
-Signed-off-by: Gavin Li <gavin.li@samsara.com>
----
-Changes in v2:
-- rename unix-per-connection to unix2
-- update commit message for references
-
- meson.build     | 2 +-
- net/slirp.c     | 6 ++++++
- qemu-options.hx | 9 +++++++++
- 3 files changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/meson.build b/meson.build
-index d7bcb581c1..6567ede5d9 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1289,7 +1289,7 @@ endif
- slirp = not_found
- if not get_option('slirp').auto() or have_system
-   slirp = dependency('slirp', required: get_option('slirp'),
--                     method: 'pkg-config')
-+                     method: 'pkg-config', version: '>=4.2.0')
-   # slirp < 4.7 is incompatible with CFI support in QEMU.  This is because
-   # it passes function pointers within libslirp as callbacks for timers.
-   # When using a system-wide shared libslirp, the type information for the
-diff --git a/net/slirp.c b/net/slirp.c
-index 451c0fd1ba..2886c0b22f 100644
---- a/net/slirp.c
-+++ b/net/slirp.c
-@@ -1159,6 +1159,12 @@ static int slirp_guestfwd(SlirpState *s, const char *config_str, Error **errp)
-                        "forwarding rule '%s'", config_str);
-             return -1;
-         }
-+    } else if (g_str_has_prefix(p, "unix2:")) {
-+        if (slirp_add_unix(s->slirp, &p[6], &server, port) < 0) {
-+            error_setg(errp, "Conflicting/invalid host:port in guest "
-+                       "forwarding rule '%s'", config_str);
-+            return -1;
-+        }
-     } else {
-         Error *err = NULL;
-         /*
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 5fe9d73eaa..488a4e9828 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3553,6 +3553,15 @@ SRST
-             # and connect the TCP stream to its stdin/stdout
-             |qemu_system| -nic  'user,id=n1,guestfwd=tcp:10.0.2.100:1234-cmd:netcat 10.10.1.1 4321'
- 
-+    ``guestfwd=[tcp]:server:port-unix2:path``
-+        With ``unix2:``, a new connection is opened to the given unix socket
-+        per TCP connection made by the guest. The unix socket need not exist
-+        at startup time.
-+
-+        .. parsed-literal::
-+
-+            |qemu_system| -nic user,guestfwd=tcp:10.0.2.100:1234-unix2:/tmp/socket
-+
- ``-netdev tap,id=id[,fd=h][,ifname=name][,script=file][,downscript=dfile][,br=bridge][,helper=helper]``
-     Configure a host TAP network backend with ID id.
- 
-
-base-commit: 71f25c75417d31c214ba2cd26b273c114fc99987
--- 
-2.55.0
-
+On Sat, Nov 14, 2026 at 2:37=E2=80=AFPM Samuel Thibault <samuel.thibault@gn=
+u.org> wrote:
+>
+> Hello,
+>
+> Daniel P. Berrang=C3=A9, le jeu. 12 nov. 2026 15:21:20 +0000, a ecrit:
+> > On Fri, Nov 06, 2026 at 11:42:25PM -0500, Gavin Li wrote:
+> > > For -netdev user,guestfwd=3D..., add support for unix-per-connection:=
+ in
+> > > addition to the currently supported tcp: and cmd:. With
+> > > unix-per-connection:, a new connection is opened to the given unix
+> > > socket.  This is an improvement over the current unix: support, which
+> > > does not support 1:1 guest:host connections.
+> >
+> > I'm not familiar with guestfwd, but from the manpage, I would
+> > rather assume that it always opens a new connection to the host
+> > socket for each guest connection.
+>
+> No, qemu opens the unix socket at initialization and just forwards data
+> to it.
+>
+> > What are its current semantics when two guest connections are
+> > initiated on the same port, if that's not happening ?
+>
+> It's just mixing the data coming from the connections into the unix
+> connection, and sending all data from the unix connection to one of the
+> tcp connection.
+>
+> > > diff --git a/net/slirp.c b/net/slirp.c
+> > > index 451c0fd1ba..b0b03b2bf5 100644
+> > > --- a/net/slirp.c
+> > > +++ b/net/slirp.c
+> > > @@ -1159,6 +1159,12 @@ static int slirp_guestfwd(SlirpState *s, const=
+ char *config_str, Error **errp)
+> > >                         "forwarding rule '%s'", config_str);
+> > >              return -1;
+> > >          }
+> > > +    } else if (g_str_has_prefix(p, "unix-per-connection:")) {
+> >
+> > This is rather a mouthful as a parameter name,
+>
+> It seemed a bit long to me too.
+>
+> > and including '-' in the name is undesirable, since we're already
+> > using '-' as a general separator.
+>
+> That's indeed a no-go.
+>
+> > Could it be just 'unix' to match the use of 'unix' in hostfwd ?
+>
+> That would prevent from being able to get the one-unix-connection
+> behavior.
+>
+> Samuel
+>
+> > > +        if (slirp_add_unix(s->slirp, &p[20], &server, port) < 0) {
+> > > +            error_setg(errp, "Conflicting/invalid host:port in guest=
+ "
+> > > +                       "forwarding rule '%s'", config_str);
+> > > +            return -1;
+> > > +        }
+> > >      } else {
+> > >          Error *err =3D NULL;
+> > >          /*
+> > > diff --git a/qemu-options.hx b/qemu-options.hx
+> > > index 5fe9d73eaa..062cd39aa3 100644
+> > > --- a/qemu-options.hx
+> > > +++ b/qemu-options.hx
+> > > @@ -3553,6 +3553,15 @@ SRST
+> > >              # and connect the TCP stream to its stdin/stdout
+> > >              |qemu_system| -nic  'user,id=3Dn1,guestfwd=3Dtcp:10.0.2.=
+100:1234-cmd:netcat 10.10.1.1 4321'
+> > >
+> > > +    ``guestfwd=3D[tcp]:server:port-unix-per-connection:path``
+> > > +        With ``unix-per-connection:``, a new connection is opened to=
+ the
+> > > +        given unix socket per TCP connection made by the guest. The =
+unix socket
+> > > +        need not exist at startup time.
+> >
+> > I think the existing docs probably benefit from an update to
+> > better show how the new parmeter is different from what I
+> > would think was already the semantics.
+> >
+> > > +
+> > > +        .. parsed-literal::
+> > > +
+> > > +            |qemu_system| -nic user,guestfwd=3Dtcp:10.0.2.100:1234-u=
+nix-per-connection:/tmp/socket
+> > > +
+> > >  ``-netdev tap,id=3Did[,fd=3Dh][,ifname=3Dname][,script=3Dfile][,down=
+script=3Ddfile][,br=3Dbridge][,helper=3Dhelper]``
+> > >      Configure a host TAP network backend with ID id.
+> > >
+> > >
+> > > base-commit: 71f25c75417d31c214ba2cd26b273c114fc99987
+> > > --
+> > > 2.55.0
+> > >
 
