@@ -1,46 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB527606A329
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8661606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Va+5j/1F
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ZAgoDjEL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3OM-0004fD-FA; Mon, 16 Nov 2026 15:33:30 -0500
+	id 1xT3OL-0004aq-Ja; Mon, 16 Nov 2026 15:33:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3NK-0002Rn-O1; Mon, 16 Nov 2026 15:32:29 -0500
+ id 1xT3LQ-0000EF-Jr; Mon, 16 Nov 2026 15:30:35 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3NI-0004wg-95; Mon, 16 Nov 2026 15:32:26 -0500
+ id 1xT3LF-0001kl-4p; Mon, 16 Nov 2026 15:30:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860768; bh=ReChRmTH6o+82kJvEruAiDnNEWtl/z56p4SurDKRSQk=;
+ t=1794860765; bh=g7an4iUQbuxIfVZnlzrMeJkeAcJbO1cwfTsFfvvFn0k=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Va+5j/1FfvGUkpOULjy1f9AYglzNHEUfznDYaemYm+8QpXQmFl8Go9cWYJaRmrAWq
- 5Yzk/52LpHdqaOQ3G7gZXUkQMxphLqbSZpVib900mDDCOJsJMhhDs3V7HO5+cWJvaX
- eh3Ks2FNVzWPmuU+0TqqAeOfUOnYuyZZpcT9NbPlExY3aKbVmEHXjtgK1k9GNt+WEb
- oDgXFx+K3KQEN5SrbK08Xf4pK8yDziplrSkkZ4ATKjRa/l6uNgchHYSmCo9B9Ws9ZE
- lYWvBRvEBNB16t0ARXxUj8gNni2MAeg2Okxe+BWII9PkRHe4xTCRNfjS/ElVcvhFZR
- c15gxF1+fyIXA==
+ b=ZAgoDjELXKcvkqHkfJV2vLFUHzX6NisermK2YsAHRonVmpdcHZFr5Pckn4N5F30Yb
+ c5+fT0nfaFHn35A6ZU03I9/3mIqS4OOE+HUf+0SbvvoifC7X0YT3/ztswmx+2Ut+BB
+ 580wbNlEAjtakITVe4PGrKm1ZElaCj9/VYKIr5/fvoz1UzET1pN2zfEzMck6nOBXz6
+ 6EByh5KM86WQSLzhVSGCUoXZR9RoEXqgErEP+L4+PSwRpkzoWrZOvhswOT10BCb3js
+ MP4p0avNluTG+tNZlxLkH33S810pDtVMRVLxLE1XnslAeoE7RpYZDIeB29k2ls+14G
+ h6GABHHJmKyIQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2FB711E71D3;
- Mon, 16 Nov 2026 23:26:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 87E7C1E71C1;
+ Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2CC2545FC06;
- Mon, 16 Nov 2026 23:26:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 855D345FBED;
+ Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0A1DAB8EC0; Mon, 16 Nov 2026 23:26:08 +0300 (MSK)
+ id 47EDDB8E9E; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 61/63] iotests: Add new nbd-robustness test
-Date: Mon, 16 Nov 2026 23:25:40 +0300
-Message-ID: <20261116202554.535325-61-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 44/63] hw/intc/arm_gic: move num-priority-bits check
+Date: Mon, 16 Nov 2026 23:25:23 +0300
+Message-ID: <20261116202554.535325-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -66,179 +67,78 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Eric Blake <eblake@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-Convert the proof of concept test by Sunday Jiang into an iotest. I
-tried to get libnbd to trigger the situation, but forcing a block
-status command when no status has been initiated is not something that
-libnbd is willing to do. So this results in a hard-coded sequence of
-bytes sent over a raw socket.  Swapping the order with the previous
-patch shows the assertion failure that was previously reachable.
+We check the num-priority-bits property for sane values in
+arm_gic_realize(), but the property is defined on the "common"
+superclass, so it is present also for TYPE_KVM_ARM_GIC.  Currently
+this misplaced check is harmless, beacuse the KVM subclass never
+looks at the property value.  However, we are about to make a change
+that will want to use the property value in code called from the
+common class's reset method.
 
-Based-on: https://gitlab.com/qemu-project/qemu/-/work_items/4091
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20261110155356.1520433-10-eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 3e6759157ecb59525ae83a892c6219f6a123fa41)
+Move num-priority-bits property value check to the common class
+realize method, where it belongs.
+
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-id: 20261106-gic_read_bpr_from_property-v2-2-9f096cce4814@linaro.org
+[PMM: rewrote commit message, moved patch before the change that
+ it is a prerequisite for]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 2527d738072b9d9d8a2c8262127003c6aa9f9983)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/tests/nbd-robustness b/tests/qemu-iotests/tests/nbd-robustness
-new file mode 100755
-index 00000000000..fe61a839250
---- /dev/null
-+++ b/tests/qemu-iotests/tests/nbd-robustness
-@@ -0,0 +1,132 @@
-+#!/usr/bin/env python3
-+# group: rw auto quick
-+#
-+# Test cases for NBD robustness against malicious clients
-+#
-+# Copyright (C) 2026 Red Hat, Inc.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index 4d4b79e6f34..b60f1f630b0 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -2117,16 +2117,6 @@ static void arm_gic_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    if (s->n_prio_bits > GIC_MAX_PRIORITY_BITS ||
+-       (s->virt_extn ? s->n_prio_bits < GIC_VIRT_MAX_GROUP_PRIO_BITS :
+-        s->n_prio_bits < GIC_MIN_PRIORITY_BITS)) {
+-        error_setg(errp, "num-priority-bits cannot be greater than %d"
+-                   " or less than %d", GIC_MAX_PRIORITY_BITS,
+-                   s->virt_extn ? GIC_VIRT_MAX_GROUP_PRIO_BITS :
+-                   GIC_MIN_PRIORITY_BITS);
+-        return;
+-    }
+-
+     /* This creates distributor, main CPU interface (s->cpuiomem[0]) and if
+      * enabled, virtualization extensions related interfaces (main virtual
+      * interface (s->vifaceiomem[0]) and virtual CPU interface).
+diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
+index 304d89cf562..a7c0763ab6a 100644
+--- a/hw/intc/arm_gic_common.c
++++ b/hw/intc/arm_gic_common.c
+@@ -233,6 +233,16 @@ static void arm_gic_common_realize(DeviceState *dev, Error **errp)
+          */
+         s->num_lrs = 4;
+     }
 +
-+import os
-+import socket
-+import struct
-+
-+import iotests
-+from iotests import qemu_img_create, qemu_io
-+
-+# Selected NBD Protocol Constants
-+NBD_MAGIC_INIT = 0x4e42444d41474943          # "NBDMAGIC"
-+NBD_MAGIC_OPTS = 0x49484156454f5054          # "IHAVEOPT"
-+NBD_MAGIC_REPLY = 0x0003e889045565a9         # Reply magic
-+NBD_MAGIC_EXT_REPLY = 0x6e8a278c             # Structured reply magic
-+NBD_FLAG_C_FIXED_NEWSTYLE = 0x1
-+NBD_OPT_GO = 7
-+NBD_OPT_SET_META_CONTEXT = 10
-+NBD_OPT_EXTENDED_HEADERS = 11
-+NBD_REP_ACK = 1
-+NBD_REP_INFO = 3
-+NBD_CMD_BLOCK_STATUS = 7
-+
-+disk = os.path.join(iotests.test_dir, 'disk')
-+size = '4M'
-+nbd_sock = os.path.join(iotests.sock_dir, 'nbd_sock')
-+
-+
-+class TestNbdRobustness(iotests.QMPTestCase):
-+    def setUp(self):
-+        qemu_img_create('-f', iotests.imgfmt, disk, size)
-+        qemu_io('-c', 'w -P 1 0 2M', '-c', 'w -P 2 2M 2M', disk)
-+
-+        self.vm = iotests.VM()
-+        self.vm.launch()
-+        self.vm.cmd('blockdev-add', {
-+            'driver': iotests.imgfmt,
-+            'node-name': 'n',
-+            'file': {'driver': 'file', 'filename': disk}
-+        })
-+
-+    def tearDown(self):
-+        self.vm.shutdown()
-+        os.remove(disk)
-+        try:
-+            os.remove(nbd_sock)
-+        except OSError:
-+            pass
-+
-+    def recv_exact(self, s: socket.socket, n: int) -> bytes:
-+        buf = bytearray()
-+        while len(buf) < n:
-+            chunk = s.recv(n - len(buf))
-+            if not chunk:
-+                raise EOFError(f"Unexpected EOF while reading {n} bytes "
-+                               f"(got {len(buf)})")
-+            buf.extend(chunk)
-+        return bytes(buf)
-+
-+    def test_invalid_block_status(self):
-+        with self.run_nbd_server(nbd_sock):
-+            self.add_nbd_export('n', 'r')
-+
-+            # Use raw socket traffic to intentionally violate NBD protocol
-+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
-+                s.connect(nbd_sock)
-+                # Server sends NBDMAGIC(8) + IHAVEOPT(8) + flags(2)
-+                data = self.recv_exact(s, 18)
-+                magic, opt, flags = struct.unpack(">QQH", data)
-+                self.assertEqual(magic, NBD_MAGIC_INIT)
-+                self.assertEqual(opt, NBD_MAGIC_OPTS)
-+                self.assertEqual(flags, 0x3)
-+
-+                # Reply with flags(4) - just fixed newstyle flag
-+                s.sendall(struct.pack(">I", NBD_FLAG_C_FIXED_NEWSTYLE))
-+
-+                # Request NBD_OPT_EXTENDED_HEADERS, no extra payload
-+                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS,
-+                                      NBD_OPT_EXTENDED_HEADERS, 0))
-+
-+                # Expect successful reply:
-+                # magic(8) + option(4) + reply(4) + length(4)
-+                data = self.recv_exact(s, 20)
-+                magic, opt, reply, length = struct.unpack(">QIII", data)
-+                self.assertEqual(magic, NBD_MAGIC_REPLY)
-+                self.assertEqual(opt, NBD_OPT_EXTENDED_HEADERS)
-+                self.assertEqual(reply, NBD_REP_ACK)
-+                self.assertEqual(length, 0)
-+
-+                # Request NBD_OPT_GO, name but no info as payload
-+                payload = struct.pack(">I", 1) + b'r' + struct.pack(">H", 0)
-+                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS, NBD_OPT_GO,
-+                                      len(payload)) + payload)
-+
-+                # Expect (and ignore) zero or more info packets before ack
-+                while True:
-+                    data = self.recv_exact(s, 20)
-+                    magic, opt, reply, length = struct.unpack(">QIII", data)
-+                    self.assertEqual(magic, NBD_MAGIC_REPLY)
-+                    self.assertEqual(opt, NBD_OPT_GO)
-+                    payload = self.recv_exact(s, length)
-+                    if reply != NBD_REP_INFO:
-+                        break
-+                self.assertEqual(reply, NBD_REP_ACK)
-+
-+                # Send invalid NBD_CMD_BLOCK_STATUS with payload flag. This
-+                # violates the NBD protocol (since no context was negotiated),
-+                # but should not crash the server.
-+                payload = struct.pack(">QI", 0x1000, 0)
-+                s.sendall(struct.pack(">IHHQQQ", 0x21e41c71, 0x20,
-+                                      NBD_CMD_BLOCK_STATUS, 1, 0,
-+                                      len(payload)) + payload)
-+
-+                # Expect a rejection.
-+                data = self.recv_exact(s, 32)
-+                magic, flags, rtype, cookie, _, length = \
-+                    struct.unpack(">IHHQQQ", data)
-+                self.assertEqual(magic, NBD_MAGIC_EXT_REPLY)
-+                self.assertEqual(rtype & 0x8000, 0x8000)
-+                self.assertEqual(cookie, 1)
-+                self.recv_exact(s, length)
-+
-+            self.assertTrue(self.vm.is_running())
-+
-+if __name__ == '__main__':
-+    iotests.main(supported_fmts=['qcow2'])
-diff --git a/tests/qemu-iotests/tests/nbd-robustness.out b/tests/qemu-iotests/tests/nbd-robustness.out
-new file mode 100644
-index 00000000000..ae1213e6f86
---- /dev/null
-+++ b/tests/qemu-iotests/tests/nbd-robustness.out
-@@ -0,0 +1,5 @@
-+.
-+----------------------------------------------------------------------
-+Ran 1 tests
-+
-+OK
++    if (s->n_prio_bits > GIC_MAX_PRIORITY_BITS ||
++       (s->virt_extn ? s->n_prio_bits < GIC_VIRT_MAX_GROUP_PRIO_BITS :
++        s->n_prio_bits < GIC_MIN_PRIORITY_BITS)) {
++        error_setg(errp, "num-priority-bits cannot be greater than %d"
++                   " or less than %d", GIC_MAX_PRIORITY_BITS,
++                   s->virt_extn ? GIC_VIRT_MAX_GROUP_PRIO_BITS :
++                   GIC_MIN_PRIORITY_BITS);
++        return;
++    }
+ }
+ 
+ static inline void arm_gic_common_reset_irq_state(GICState *s, int cidx,
 -- 
 2.47.3
 
