@@ -1,60 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9CF606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78741606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PWyWRc1n
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Lqk7/KaS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT55p-0003v4-2s; Mon, 16 Nov 2026 17:22:29 -0500
+	id 1xT55n-0003uo-4c; Mon, 16 Nov 2026 17:22:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55d-0003pP-V3
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xT55g-0003qg-Mi
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55c-000606-5l
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:17 -0500
+ id 1xT55f-00060g-BD
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794867736;
+ s=mimecast20190719; t=1794867738;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4RakmOfzO2HIg1ERqTipYC3X7m5Ep8ErWyOWZdo1gno=;
- b=PWyWRc1ne1i2RVrFy2ibL988IV1fHcIc58mFQUvUeA/VjpgteAmGQL+sWRStZk/8nWHB2/
- McBomJQbM8BUaugFD9LRm7NUZE9iqAFQIaopgVpBMRD6Iipf7CjS8RJTusIYtkOep/Rct+
- uiojYFcg76DjexVTLkkJ+aGb19KdNe4=
+ bh=BOJS/JpV5E6GmVOy7eoHPRcUYEeboDTjcgEfWddKA8s=;
+ b=Lqk7/KaSrTys/UpRSkRZzWEXYJSA/ruLW4H5gYWMJL9+3x57XyXLrf7mHSUz59G4255bAx
+ LQ0NvOewZep8EsSpFJeYvDudGR4iD1RmiugXDq9vC0Hhs/nxbZ8tLZUGoC5JNBUhCQsbKy
+ ZDmxCNEkijZCrZlis+gSCpaka048x4I=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-CPTuduCvMpy9QNAeFMN5fA-1; Mon,
- 16 Nov 2026 17:22:11 -0500
-X-MC-Unique: CPTuduCvMpy9QNAeFMN5fA-1
-X-Mimecast-MFC-AGG-ID: CPTuduCvMpy9QNAeFMN5fA_1794867730
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-a-vhxprAM7ONhPjT-R6IkA-1; Mon,
+ 16 Nov 2026 17:22:17 -0500
+X-MC-Unique: a-vhxprAM7ONhPjT-R6IkA-1
+X-Mimecast-MFC-AGG-ID: a-vhxprAM7ONhPjT-R6IkA_1794867736
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8DE5C1800546
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:10 +0000 (UTC)
+ id 758471800546
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:16 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A46773001DB0; Mon, 16 Nov 2026 22:22:09 +0000 (UTC)
+ id 3E57B30001A2; Mon, 16 Nov 2026 22:22:15 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 06/26] hw/xen: mark all Xen related object types as being secure
-Date: Mon, 16 Nov 2026 22:21:38 +0000
-Message-ID: <20261116222158.2840471-7-berrange@redhat.com>
+Subject: [PULL 10/26] hw/scsi: mark spapr SCSI controller as secure
+Date: Mon, 16 Nov 2026 22:21:42 +0000
+Message-ID: <20261116222158.2840471-11-berrange@redhat.com>
 In-Reply-To: <20261116222158.2840471-1-berrange@redhat.com>
 References: <20261116222158.2840471-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -62,14 +63,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,163 +90,28 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-All Xen paravirtualized devices are intended to provide a host /
-guest security barrier, so mark all Xen object types as secure.
+The spapr vscsi controller is used by default with spapr machines
+in a virtualization use case.
 
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/block/xen-block.c        | 2 ++
- hw/char/xen_console.c       | 1 +
- hw/i386/xen/xen-hvm.c       | 1 +
- hw/i386/xen/xen_platform.c  | 1 +
- hw/i386/xen/xen_pvdevice.c  | 1 +
- hw/net/xen_nic.c            | 1 +
- hw/xen/xen-bus.c            | 2 ++
- hw/xen/xen-legacy-backend.c | 3 +++
- hw/xen/xen_pt.c             | 1 +
- 9 files changed, 13 insertions(+)
+ hw/scsi/spapr_vscsi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
-index ffdb0806573..e04190cd26f 100644
---- a/hw/block/xen-block.c
-+++ b/hw/block/xen-block.c
-@@ -742,6 +742,7 @@ static const TypeInfo xen_disk_type_info = {
-     .parent = TYPE_XEN_BLOCK_DEVICE,
-     .instance_size = sizeof(XenDiskDevice),
-     .class_init = xen_disk_class_init,
-+    .secure = true,
- };
- 
- static void xen_cdrom_unrealize(XenBlockDevice *blockdev)
-@@ -789,6 +790,7 @@ static const TypeInfo xen_cdrom_type_info = {
-     .parent = TYPE_XEN_BLOCK_DEVICE,
-     .instance_size = sizeof(XenCDRomDevice),
-     .class_init = xen_cdrom_class_init,
-+    .secure = true,
- };
- 
- static void xen_block_register_types(void)
-diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
-index bdeb76dc870..df6a708494d 100644
---- a/hw/char/xen_console.c
-+++ b/hw/char/xen_console.c
-@@ -513,6 +513,7 @@ static const TypeInfo xen_console_type_info = {
-     .parent = TYPE_XEN_DEVICE,
-     .instance_size = sizeof(XenConsole),
-     .class_init = xen_console_class_init,
-+    .secure = true,
- };
- 
- static void xen_console_register_types(void)
-diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
-index b2378fe3f05..f7a154b8307 100644
---- a/hw/i386/xen/xen-hvm.c
-+++ b/hw/i386/xen/xen-hvm.c
-@@ -792,6 +792,7 @@ static const TypeInfo xen_i8259_type_infos[] = {
-         .name = TYPE_XEN_I8259_PIC,
-         .parent = TYPE_DEVICE,
-         .instance_init = xen_i8259_pic_init,
-+        .secure = true,
-     },
- };
- 
-diff --git a/hw/i386/xen/xen_platform.c b/hw/i386/xen/xen_platform.c
-index c8b852be0cc..ec0084d6fb8 100644
---- a/hw/i386/xen/xen_platform.c
-+++ b/hw/i386/xen/xen_platform.c
-@@ -604,6 +604,7 @@ static const TypeInfo xen_platform_info = {
-     .parent        = TYPE_PCI_DEVICE,
-     .instance_size = sizeof(PCIXenPlatformState),
-     .class_init    = xen_platform_class_init,
-+    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-         { },
-diff --git a/hw/i386/xen/xen_pvdevice.c b/hw/i386/xen/xen_pvdevice.c
-index fab26a06af1..74636046d0c 100644
---- a/hw/i386/xen/xen_pvdevice.c
-+++ b/hw/i386/xen/xen_pvdevice.c
-@@ -139,6 +139,7 @@ static const TypeInfo xen_pv_type_info = {
-     .parent        = TYPE_PCI_DEVICE,
-     .instance_size = sizeof(XenPVDevice),
-     .class_init    = xen_pv_class_init,
-+    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-         { },
-diff --git a/hw/net/xen_nic.c b/hw/net/xen_nic.c
-index f4d0b060130..e615303da6a 100644
---- a/hw/net/xen_nic.c
-+++ b/hw/net/xen_nic.c
-@@ -579,6 +579,7 @@ static const TypeInfo xen_net_type_info = {
-     .parent = TYPE_XEN_DEVICE,
-     .instance_size = sizeof(XenNetDev),
-     .class_init = xen_netdev_class_init,
-+    .secure = true,
- };
- 
- static void xen_net_register_types(void)
-diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
-index 8def3bb68bc..17bbbe2ea71 100644
---- a/hw/xen/xen-bus.c
-+++ b/hw/xen/xen-bus.c
-@@ -404,6 +404,7 @@ static const TypeInfo xen_bus_type_info = {
-     .instance_size = sizeof(XenBus),
-     .class_size = sizeof(XenBusClass),
-     .class_init = xen_bus_class_init,
-+    .secure = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_HOTPLUG_HANDLER },
-         { }
-@@ -1141,6 +1142,7 @@ static const TypeInfo xen_bridge_type_info = {
-     .name = TYPE_XEN_BRIDGE,
-     .parent = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(XenBridge),
-+    .secure = true,
- };
- 
- static void xen_register_types(void)
-diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-index 7977b527127..75f8ac7efde 100644
---- a/hw/xen/xen-legacy-backend.c
-+++ b/hw/xen/xen-legacy-backend.c
-@@ -648,6 +648,7 @@ static const TypeInfo xendev_type_info = {
-     .parent        = TYPE_DYNAMIC_SYS_BUS_DEVICE,
-     .class_init    = xendev_class_init,
-     .instance_size = sizeof(XenLegacyDevice),
+diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
+index 7ec780da79e..eedae00273e 100644
+--- a/hw/scsi/spapr_vscsi.c
++++ b/hw/scsi/spapr_vscsi.c
+@@ -1312,6 +1312,7 @@ static const TypeInfo spapr_vscsi_info = {
+     .parent        = TYPE_VIO_SPAPR_DEVICE,
+     .instance_size = sizeof(VSCSIState),
+     .class_init    = spapr_vscsi_class_init,
 +    .secure        = true,
  };
  
- static void xen_sysbus_class_init(ObjectClass *klass, const void *data)
-@@ -661,6 +662,7 @@ static const TypeInfo xensysbus_info = {
-     .name       = TYPE_XENSYSBUS,
-     .parent     = TYPE_BUS,
-     .class_init = xen_sysbus_class_init,
-+    .secure     = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_HOTPLUG_HANDLER },
-         { }
-@@ -670,6 +672,7 @@ static const TypeInfo xensysbus_info = {
- static const TypeInfo xensysdev_info = {
-     .name          = TYPE_XENSYSDEV,
-     .parent        = TYPE_SYS_BUS_DEVICE,
-+    .secure        = true,
- };
- 
- static void xenbe_register_types(void)
-diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
-index 0fe9c0aada8..504c5593188 100644
---- a/hw/xen/xen_pt.c
-+++ b/hw/xen/xen_pt.c
-@@ -1079,6 +1079,7 @@ static const TypeInfo xen_pci_passthrough_info = {
-     .instance_finalize = xen_pci_passthrough_finalize,
-     .class_init = xen_pci_passthrough_class_init,
-     .class_size = sizeof(XenPTDeviceClass),
-+    .secure = true,
-     .instance_init = xen_pci_passthrough_instance_init,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+ static void spapr_vscsi_register_types(void)
 -- 
 2.56.1
 
