@@ -1,52 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F32606A329
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DD5606A323
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ZDb1KbrJ
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=rCJpFsCn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3PB-0006Fh-4z; Mon, 16 Nov 2026 15:34:24 -0500
+	id 1xT3Hd-00063u-7p; Mon, 16 Nov 2026 15:26:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Ms-0002EC-R5; Mon, 16 Nov 2026 15:32:11 -0500
+ id 1xT3HT-0005KA-UP; Mon, 16 Nov 2026 15:26:24 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Mf-0004ip-52; Mon, 16 Nov 2026 15:31:57 -0500
+ id 1xT3HQ-00070m-8E; Mon, 16 Nov 2026 15:26:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860767; bh=mZUm6xTh3/cuzmJw3eBEPERmqphBaRT94JY3IJ2ClJs=;
+ t=1794860763; bh=lzsaAoRw8OAij13MG0mlwwySxQNp3H0aLTQR7xnlLPM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZDb1KbrJZYdagQfjrMcxZ9O4nxIMYsj7vC4rNlRRUDsevBhs5UmwDngqO19lqu77A
- zjLBvYer+w6MHDcUFbbcECxf/dxo6nukvo7pD4xXlc03SoiHpi5NJaVxlqBxb14Z8l
- 227e5G7JTh1xx/w/qKdlyyMhhMsiyijw72Gy7e4c+fCs5Qg0+JA+2al3cEIlGz1Hmi
- 2AUvAP+90pU3jKmhkMJx/TrOY8u4Xogit0+m4khVdb5VmP9+P2LABshv41oqCOAJX7
- sjVzv6YA3vuKlyDySWIrTYsnQwjm1M+9T2tEOLnDiicEOWd+12OpzTu0lEyuOw+1iS
- VCXdeAI2UsrVA==
+ b=rCJpFsCnWbjDFp5qA4Kk+e06XxNqNvGyeXd/OjHlESsCQ5V/kqSDjUiBvGDXSvjIu
+ fmZBNuzt404IFd2Wx0ssarnu67MWbsNSDMDUThtcIqifIm9mY7N8QbFp3ubIHILpxX
+ LAJnkzw+2fI+MDLICxccs3TjRGn3+P4jxG+i4lDT0uDNk+HDL+7hWS8atjU/kqurCe
+ 8ode72JXA1n6Rfs7Yh04sCcfJ8hmsUaCnQ9tYD9B2t8x6jCmBxIpTS7tJ4T8fa6apF
+ zdFDwBJMsOfKrhANVbuGG6vV0HdfR3fGtMNUV7ms05sxOoDfKx4wvJdy0/HXZAdMMR
+ UmnUXVbFULXlw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EC02C1E71CA;
- Mon, 16 Nov 2026 23:26:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BDC821E719E;
+ Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E930145FBF5;
- Mon, 16 Nov 2026 23:26:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B886C45FBCA;
+ Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E2D5AB8EAE; Mon, 16 Nov 2026 23:26:07 +0300 (MSK)
+ id 82EF0B8E58; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 52/63] block/vmdk: Avoid overflowing multiplication in
- vmdk_open_vmdk4()
-Date: Mon, 16 Nov 2026 23:25:31 +0300
-Message-ID: <20261116202554.535325-52-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bin Meng <bin.meng@processmission.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 09/63] hw/sd/sdcard: Keep high-capacity memory blocks
+ at 512 bytes
+Date: Mon, 16 Nov 2026 23:24:48 +0300
+Message-ID: <20261116202554.535325-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -67,58 +69,201 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Bin Meng <bin.meng@processmission.com>
 
-In vmdk_open_vmdk4() we set the uint32_t l1_entry_sectors with:
-    l1_entry_sectors = le32_to_cpu(header.num_gtes_per_gt)
-                        * le64_to_cpu(header.granularity);
+SDHC and SDXC memory commands always transfer 512-byte blocks regardless
+of the length selected by CMD16. QEMU stores that selected length for
+LOCK_UNLOCK but also used it directly for several memory command paths.
 
-We have checked that num_gtes_per_gt is at most 512, but the
-header.granularity has not been checked at this point, and so the
-multiply can overflow the 32-bit variable.  This overflow is harmless
-beacuse we're about to call vmdk_add_extent(), which will fail if the
-header.granularity (cluster_sectors) is more than 0x20_0000, but it's
-a potential trap for the future if code that relies on the
-l1_entry_sectors value gets added between where we set it and where
-we make that check.
+Route single- and multi-block memory sizing through the existing helper
+that distinguishes high-capacity cards from SDSC.
 
-Check for overlarge granularity at the point of multiplication so
-it's clear we can't overflow.
+This lets PolarFire SoC HSS validate the complete GPT header and locate
+its boot partition instead of receiving only the eight-byte signature.
 
 Cc: qemu-stable@nongnu.org
-Reported-by: Tristan <https://gitlab.com/TristanInSec>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4029
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20261103143516.2182626-6-peter.maydell@linaro.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 43d614ab3a2dfbbe8549b4410aef5ff0b8b0c661)
+Fixes: 2d7adea4fe57 ("hw/sd: Support SDHC size cards")
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20261014012323.322790-12-bin.meng@processmission.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit b5424abaf8e9a24ef1bcdd43e426405b3991801a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/vmdk.c b/block/vmdk.c
-index a9d32360a4f..473893370d9 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -1050,7 +1050,10 @@ vmdk_open_vmdk4(BlockDriverState *bs, BdrvChild *file, int flags,
-         error_setg(errp, "L2 table size too big");
-         return -EINVAL;
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 780e9f62953..5cb84155541 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -1975,18 +1975,20 @@ static sd_rsp_type_t sd_cmd_SET_BLOCKLEN(SDState *sd, SDRequest req)
+ static sd_rsp_type_t sd_cmd_READ_SINGLE_BLOCK(SDState *sd, SDRequest req)
+ {
+     uint64_t addr;
++    uint32_t blk_len;
+ 
+     if (sd->state != sd_transfer_state) {
+         return sd_invalid_state_for_cmd(sd, req);
      }
--
-+    if (le64_to_cpu(header.granularity) > 0x200000) {
-+        error_setg(errp, "Invalid granularity, image may be corrupt");
-+        return -EFBIG;
-+    }
-     l1_entry_sectors = le32_to_cpu(header.num_gtes_per_gt)
-                         * le64_to_cpu(header.granularity);
-     if (l1_entry_sectors == 0) {
+ 
++    blk_len = sd_blk_len(sd);
+     addr = sd_req_get_address(sd, req);
+-    if (!address_in_range(sd, "READ_SINGLE_BLOCK", addr, sd->blk_len)) {
++    if (!address_in_range(sd, "READ_SINGLE_BLOCK", addr, blk_len)) {
+         return sd_r1;
+     }
+ 
+-    sd_blk_read(sd, addr, sd->blk_len);
+-    return sd_cmd_to_sendingdata(sd, req, addr, NULL, sd->blk_len);
++    sd_blk_read(sd, addr, blk_len);
++    return sd_cmd_to_sendingdata(sd, req, addr, NULL, blk_len);
+ }
+ 
+ /* CMD19 */
+@@ -2025,13 +2027,15 @@ static sd_rsp_type_t sd_cmd_SET_BLOCK_COUNT(SDState *sd, SDRequest req)
+ static sd_rsp_type_t sd_cmd_WRITE_SINGLE_BLOCK(SDState *sd, SDRequest req)
+ {
+     uint64_t addr;
++    uint32_t blk_len;
+ 
+     if (sd->state != sd_transfer_state) {
+         return sd_invalid_state_for_cmd(sd, req);
+     }
+ 
++    blk_len = sd_blk_len(sd);
+     addr = sd_req_get_address(sd, req);
+-    if (!address_in_range(sd, "WRITE_SINGLE_BLOCK", addr, sd->blk_len)) {
++    if (!address_in_range(sd, "WRITE_SINGLE_BLOCK", addr, blk_len)) {
+         return sd_r1;
+     }
+ 
+@@ -2045,7 +2049,7 @@ static sd_rsp_type_t sd_cmd_WRITE_SINGLE_BLOCK(SDState *sd, SDRequest req)
+     }
+ 
+     sd->blk_written = 0;
+-    return sd_cmd_to_receivingdata(sd, req, addr, sd->blk_len);
++    return sd_cmd_to_receivingdata(sd, req, addr, blk_len);
+ }
+ 
+ /* CMD26 */
+@@ -2372,7 +2376,7 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+         switch (sd->state) {
+         case sd_transfer_state:
+ 
+-            if (!address_in_range(sd, "READ_BLOCK", addr, sd->blk_len)) {
++            if (!address_in_range(sd, "READ_BLOCK", addr, sd_blk_len(sd))) {
+                 return sd_r1;
+             }
+ 
+@@ -2392,7 +2396,8 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+         switch (sd->state) {
+         case sd_transfer_state:
+ 
+-            if (!address_in_range(sd, "WRITE_BLOCK", addr, sd->blk_len)) {
++            if (!address_in_range(sd, "WRITE_BLOCK", addr,
++                                  sd_blk_len(sd))) {
+                 return sd_r1;
+             }
+ 
+@@ -2662,6 +2667,7 @@ static void sdcard_write_data_dump(const char *proto, const char *cmd_desc,
+ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+ {
+     unsigned int partition_access;
++    uint32_t blk_len;
+     int i;
+     const uint8_t *value = buf;
+ 
+@@ -2678,6 +2684,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
+         return length;
+ 
++    blk_len = sd_blk_len(sd);
+     sdcard_write_data_dump(sd->proto->name,
+                            sd->last_cmd_name,
+                            sd->current_cmd, sd->data_offset, buf, length);
+@@ -2704,7 +2711,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+         if (sd->data_offset == 0) {
+             /* Start of the block - let's check the address is valid */
+             if (!address_in_range(sd, "WRITE_MULTIPLE_BLOCK",
+-                                  sd->data_start, sd->blk_len)) {
++                                  sd->data_start, blk_len)) {
+                 break;
+             }
+             if (sd->size <= SDSC_MAX_CAPACITY) {
+@@ -2715,7 +2722,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+             }
+         }
+         sd->data[sd->data_offset++] = value[0];
+-        if (sd->data_offset >= sd->blk_len) {
++        if (sd->data_offset >= blk_len) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+             partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+@@ -2726,7 +2733,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+                 sd_blk_write(sd, sd->data_start, sd->data_offset);
+             }
+             sd->blk_written++;
+-            sd->data_start += sd->blk_len;
++            sd->data_start += blk_len;
+             sd->data_offset = 0;
+             sd->csd[14] |= 0x40;
+ 
+@@ -2810,7 +2817,7 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+     /* TODO: Append CRCs */
+     const uint8_t dummy_byte = 0x00;
+     unsigned int partition_access;
+-    uint32_t io_len;
++    uint32_t blk_len;
+     uint8_t *value = buf;
+ 
+     if (!sd->blk || !blk_is_inserted(sd->blk)) {
+@@ -2830,11 +2837,11 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+         return length;
+     }
+ 
+-    io_len = sd_blk_len(sd);
++    blk_len = sd_blk_len(sd);
+ 
+     trace_sdcard_read_data(sd->proto->name,
+                            sd->last_cmd_name, sd->current_cmd,
+-                           sd->data_offset, sd->data_size, io_len);
++                           sd->data_offset, sd->data_size, blk_len);
+     switch (sd->current_cmd) {
+     case 6:  /* CMD6:   SWITCH_FUNCTION */
+     case 8:  /* CMD8:   SEND_EXT_CSD */
+@@ -2859,22 +2866,22 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+ 
+         if (sd->data_offset == 0) {
+             if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
+-                                  sd->data_start, io_len)) {
++                                  sd->data_start, blk_len)) {
+                 *value = dummy_byte;
+                 return length;
+             }
+             partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+                     & EXT_CSD_PART_CONFIG_ACC_MASK;
+             if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
+-                emmc_rpmb_blk_read(sd, sd->data_start, io_len);
++                emmc_rpmb_blk_read(sd, sd->data_start, blk_len);
+             } else {
+-                sd_blk_read(sd, sd->data_start, io_len);
++                sd_blk_read(sd, sd->data_start, blk_len);
+             }
+         }
+         *value = sd->data[sd->data_offset++];
+ 
+-        if (sd->data_offset >= io_len) {
+-            sd->data_start += io_len;
++        if (sd->data_offset >= blk_len) {
++            sd->data_start += blk_len;
+             sd->data_offset = 0;
+ 
+             if (sd->multi_blk_cnt != 0) {
 -- 
 2.47.3
 
