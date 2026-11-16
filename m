@@ -1,47 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8616606A323
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5C7606A331
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=wGgCxj9d
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=vntnab73
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3OB-0003jN-EY; Mon, 16 Nov 2026 15:33:20 -0500
+	id 1xT3OQ-00055m-Dd; Mon, 16 Nov 2026 15:33:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3MX-0001Zt-1P; Mon, 16 Nov 2026 15:31:37 -0500
+ id 1xT3N5-0002H6-6f; Mon, 16 Nov 2026 15:32:19 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3M9-0003S7-DM; Mon, 16 Nov 2026 15:31:36 -0500
+ id 1xT3Mu-0004ng-G0; Mon, 16 Nov 2026 15:32:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860766; bh=7CeJxmpr5Abod75RRn1RmnmkHpVN6S6Vq4KZBIlFeQE=;
+ t=1794860768; bh=O6fEJjZO3KZYAUOiqLmew3c6k5yc3DMNI9sxgRVqWUg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wGgCxj9dbfCe7i4tyvayX666NWcXjH4/JYQ4A1ApWUVdbbeISaJwH4No4HI7oFYle
- Iy7fSGutwXAw9/FUjyC+4yEtsyg5nX6P5UDIRmKX+ohGWG5Z4W6zYv2yQFUMvOppbs
- i+V/aRewCX1ECAVV6AH+nnaaTEJJ5X8WzDb5mvpDZHIQ0/iW/D+T5LkoWQPfwfPtQl
- 14f5/mhehBlFFQwbAoUAqtoMnWZiFZfnysR9PufnTvz30TJvbG7p5q6cLhe1IHsDf2
- U8hcokwQiCuKht0tN/t2zr+RJ+EX4/dzz4jnBwMkU/rAyBOnvu1gmM142EA6eEnF7T
- IVTFiA+/lXaPg==
+ b=vntnab73THqxnYfI1wszGWM6eDKl4WAk2MPre2E4mPPwgFfTaPGSlYlHvhklwogeh
+ cfPZ1TRZM8ELiMLauI3qyzlxI2jvmH17r1Ob2YHRSixYq1TmKwqKfb1SBFElEEId4o
+ hH3ibqB1zcFP28yQlH9z0BSqGrvmz1VJ5ikoda9tkKbowB0DOjB1CdI/SpkvJUWB4o
+ u2/TMvlpN1g6ThmqEWvo3XBewXqKoZFBMurpoc7yqk9ctaMh+qDDFzO2Tiy1yn605s
+ gYwMyoh+ulHtQS4GonxB+q/20LcXakuuJw+dShnd9A7gfNLIi88LtbmW1Nj6eJjdZk
+ dK6Jfu5OUtSqA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D13BB1E71C6;
- Mon, 16 Nov 2026 23:26:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0319F1E71CC;
+ Mon, 16 Nov 2026 23:26:08 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CDC1E45FBF2;
- Mon, 16 Nov 2026 23:26:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0002345FBF7;
+ Mon, 16 Nov 2026 23:26:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C5A3AB8EA8; Mon, 16 Nov 2026 23:26:06 +0300 (MSK)
+ id E9AEDB8EB2; Mon, 16 Nov 2026 23:26:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 49/63] block/vmdk: Avoid reading off the end of
- descriptor memory
-Date: Mon, 16 Nov 2026 23:25:28 +0300
-Message-ID: <20261116202554.535325-49-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ "Denis V. Lunev" <den@openvz.org>, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 54/63] qcow2: fix snapshot data corruption with
+ discard-no-unref=on
+Date: Mon, 16 Nov 2026 23:25:33 +0300
+Message-ID: <20261116202554.535325-54-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -67,68 +68,61 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-In vmdk_parent_open() and vmdk_read_cid(), we read DESC_SIZE bytes
-from the image file into a malloc'd buffer, and then look through it
-for a keyword using strstr().  If found, we skip past the keyword and
-attempt to parse a value from the next part of the buffer.  However,
-we failed to check whether the end of the keyword is right at the end
-of the buffer, and so a malicious image can cause us to read off the
-end when parsing the value part.
+Whenever option discard-no-unref=on is enabled, we bypass refcount
+machinery and unconditionally punch hole in the data on 'discard' and
+'write -z -u' paths.  However, when this same cluster is also referenced
+by an internal snapshot, such operations lead to problems.  The active L2
+table is copied before it is changed, so the snapshot metadata stays
+correct, but the host range under it is punched out and the snapshot reads
+zeroes there afterwards. qemu-img check finds nothing wrong.
 
-Check for this condition before attempting to parse the value.
-
-The worst case here is that the image causes us to read some junk
-from the heap into the BlockDriverState backing_file and
-auto_backing_file fields; the image could control those anyway, and
-it's unlikely that this heap data could e.g. be leaked to the guest.
+Fix this by guarding the 'keep_reference' flag by the presence of the
+QCOW_OFLAG_COPIED bit.  I.e. only proceed with unconditional data
+punching if we own this cluster exclusively.
 
 Cc: qemu-stable@nongnu.org
-Reported-by: router0mail <https://gitlab.com/router0mail>
-Fixes: 5f4da8c0f3736b2 ("New multiple snapshot support for VMDK")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4571
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20261103143516.2182626-3-peter.maydell@linaro.org>
+Fixes: 42a2890a76f4 ("qcow2: add discard-no-unref option")
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20261105161515.794213-3-andrey.drobyshev@virtuozzo.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit fe2cbdda07c20c3b55e91522113b10a5d70ac0b3)
+(cherry picked from commit 3fe45543bf42ae60be1fb20e7f0b5dba6210e810)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 13163fde66a..bc672107158 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -330,6 +330,10 @@ vmdk_read_cid(BlockDriverState *bs, int parent, uint32_t *pcid)
-         goto out;
-     }
-     p_name += cid_str_size;
-+    if (p_name >= desc + DESC_SIZE) {
-+        ret = -EINVAL;
-+        goto out;
-+    }
-     if (sscanf(p_name, "%" SCNx32, &cid) != 1) {
-         ret = -EINVAL;
-         goto out;
-@@ -501,6 +505,10 @@ static int GRAPH_RDLOCK vmdk_parent_open(BlockDriverState *bs)
-         char *end_name;
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index e02fae6a0c6..cc473c7c796 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -1953,6 +1953,7 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
+         QCow2ClusterType cluster_type =
+             qcow2_get_cluster_type(bs, old_l2_entry);
+         bool keep_reference = (cluster_type != QCOW2_CLUSTER_COMPRESSED) &&
++                              (old_l2_entry & QCOW_OFLAG_COPIED) &&
+                               !full_discard &&
+                               (s->discard_no_unref &&
+                                type == QCOW2_DISCARD_REQUEST);
+@@ -2097,8 +2098,9 @@ zero_in_l2_slice(BlockDriverState *bs, uint64_t offset,
+         QCow2ClusterType type = qcow2_get_cluster_type(bs, old_l2_entry);
+         bool unmap = (type == QCOW2_CLUSTER_COMPRESSED) ||
+             ((flags & BDRV_REQ_MAY_UNMAP) && qcow2_cluster_is_allocated(type));
+-        bool keep_reference =
+-            (s->discard_no_unref && type != QCOW2_CLUSTER_COMPRESSED);
++        bool keep_reference = s->discard_no_unref &&
++                              type != QCOW2_CLUSTER_COMPRESSED &&
++                              (old_l2_entry & QCOW_OFLAG_COPIED);
+         uint64_t new_l2_entry = old_l2_entry;
+         uint64_t new_l2_bitmap = old_l2_bitmap;
  
-         p_name += sizeof("parentFileNameHint") + 1;
-+        if (p_name >= desc + DESC_SIZE + 1) {
-+            ret = -EINVAL;
-+            goto out;
-+        }
-         end_name = strchr(p_name, '\"');
-         if (end_name == NULL) {
-             ret = -EINVAL;
 -- 
 2.47.3
 
