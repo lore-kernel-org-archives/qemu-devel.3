@@ -1,136 +1,143 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488A5606A323
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 23:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E09606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 23:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=CmBOVwo4;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RuAH3DE5
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=CFnjsenY;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=BwqSJ80b
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT65H-0007jg-0k; Mon, 16 Nov 2026 18:25:59 -0500
+	id 1xT65h-0000NO-FQ; Mon, 16 Nov 2026 18:26:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xT65F-0007gX-9Y
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:25:57 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xT65f-0000FP-CZ
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:26:23 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xT65D-0007WV-63
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:25:56 -0500
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1xT65d-0000xi-IC
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:26:23 -0500
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AGNPs3R3075585
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 23:25:54 GMT
+ 6AGNPm533211213
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 23:26:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- cL9+k3XtzDMOko9zb71vfHlZhYVmkpLJk3Smbhb8zfw=; b=CmBOVwo4Zz+L1xyu
- TrB7Ea6Tsc9oAKwOzJ2BZz4mKi2wBrNdnBsQ4ZYWZDFX5xVzHzGO8Z+yRDOENKTh
- HZmot+7fLkBgTMaBFkIVa9mDTqcM6Ur65qeuOBRF4WYweXiaL05ct8vEDKiypkau
- tsL+dkgC0Cgq8QOOxgS2QuyMYiL+c40aOOR3L3gq1HB9WlIgz5S+R076+KpJVjq5
- 7yJlUkMN/gbz7EjqiEZxKFJksUvQfK0FM1R3Y8yY6fJdtu94mU8yUX6K91Q+LXUt
- sQE/xS+dScy3akaeA7gCL+HfzmCP4PMAl8cvklcGa/Bw7qlh5JkPN0HsF4RzUS6A
- cD7gqg==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
- [209.85.217.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hyxx2k8f3-1
+ L3gRUxaU7+J9rICz8CpKtnuNVQuuYC+Z2MjUNOJiB3g=; b=CFnjsenYAOl8XlvG
+ I44qov3kZTe2un41+fRtEoGD5k4plwi6/P34+djMWTpsPfqqvgXWePPBv4eIOni1
+ qG939PI05i8z6NVE1cYEKRrdfhMJTVuejVncsHr6ZpzNATa8XUMTqk8VuklRzyFy
+ cs0TXbvUYQJUCbcC5r9nwBV64a4PaHxo2qbUj8hC+piUgRsiGzvcoEILRX+QxkHR
+ YnhG49P2CD7neMOY8a1YXatQuC0bP8+qjYGghunFznXHuLytx0SUsBy5aYT2GrTy
+ u1em5MnlIKrfq2aJCe57SLnjMV+ag6FtO/wqy7dljJSJDgAjLtTUz1D13y/xeqyC
+ csttoQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j07regv6b-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 23:25:54 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id
- ada2fe7eead31-7cc10da5ad4so706692137.2
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 15:25:54 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 23:26:20 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93909014c85so367038985a.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 15:26:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794871553; x=1795476353; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=cL9+k3XtzDMOko9zb71vfHlZhYVmkpLJk3Smbhb8zfw=;
- b=RuAH3DE5uXYagcKHyGqGOJXrE0WeHtoIPd0/nDSTmEfjDdpK7M4HrQoQaCMOX5spAy
- kbjhy7W+V3w9z/0QTe2J9lBBuc8HSZp3ND1r9tebm8PH592QeJJ/PY9q0mwuUi1ig100
- FnvTaolw+a/wO65Pku9Bz/SpTX/TQfCgB8K2XRyJZn2bAQ1MYcqWnleQIK3BQNGM5EmJ
- ySL9vt+LYGn3AYXL/iv471wuU7BCLrxmRWPMy1bbbpV64Lgb+Gn5Nz+waHfHEgky7Ejr
- BGSwnV8WZ1QN23tAaP+qh04ArraJofDGDqjFbs9eY97KqOAPLitH6vTPwVSeVHQG31UT
- 0lvw==
+ d=oss.qualcomm.com; s=google; t=1794871579; x=1795476379; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=L3gRUxaU7+J9rICz8CpKtnuNVQuuYC+Z2MjUNOJiB3g=;
+ b=BwqSJ80bHyiFYkCteDH7Vl7H8//g8WXh8DyURgkDLFUTE58KgWP2PEi+9QyJeCnPox
+ UqkPDJLuazgGiAFz6RfiWH60/XXPYZ3O5QlvsgV2LBdkOtAd8rVZ7HcZA2cvZozsXF/a
+ RFyRuvaIw4VW07oBt4hAcQqj4BaT3s0mBvsHRjswG+QMBh2gZ8pBcks6gzy4eH4jl3VQ
+ PCMXpmKg06oYh7hB41fPGPh+NXcRIDJFlHKjEbnDrScvEJ8Feetvvwg5ihEDLGM/9bNW
+ 3ZCOIlBCGVxlDdAwZP8pUjaOrj7kjdbMTUxtUciAIxJ3prrcgoponrt/qWrj6hJOb3px
+ th8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794871553; x=1795476353;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=cL9+k3XtzDMOko9zb71vfHlZhYVmkpLJk3Smbhb8zfw=;
- b=t47NLpifvDTzhm373F23rmvTkqRvrHmPAr672h1qUfOkEvYMv+kanUApVzFkWUeazl
- Jatsb+cpnjj3G+8/Kcv7lIuIQ86YGAFe3jxMZkEVCznkis6N7fidK+tfrTznkGutOL6l
- cFbmm0Lzj5LWEGt4YuaFBxPI5FOmk2aDTjHPRG4f0J1a7fH6ekLYQtKoSHTNvB0roh3k
- L5ypgcR95lqwPd1iNMx6E07T/WxTgFp/1bTfFwol5xxlb/E6iPUb952x8cuzlJ8g+0cF
- oBquA9Y8OglYGHlcYVGkNjGhYXJQ2NGwD8K7yz3t6iRHC2aLIp/QVWKQriqtMnrlhrP1
- U9EQ==
-X-Gm-Message-State: APuU4Z+JEIh2Z2aIcciWVp/+x2rmRM+VWKabJMdn7qB2Ythbvt6uzsH1
- v1OPLOqeDDjhipAlZLYCnxYvW+ed4IaZ49fj6428QAVYGtAD8vD7siWLPpqytyRxm926ynrKuC2
- iXC3an09HKMZtKi+ivUJ3FVZVIQqMJQ8BxkTVHNkhRxTH+b95dsHbGsgRNIp5lkNeMA==
-X-Gm-Gg: AYBFou2CD6dzwKy+97WxkI9T59uwQCviwdaXroMW7IlYUYCtqVx8YNqO7QiW7gH9i9r
- MIHG1N8mV/XLXzwLcsYy4EGfr5lyQqIZlHmusGpBTgKgSAUOEJvmj9FwlsW9/MHWG5aCrHl/6DT
- yoBVhDkx0AvnxktQ+eshDJ32BKJziI7iWYqnLBKK72592ww9ILvLmeRkYUbIxa03Z1/39FsiV+8
- PlZqfjlWAowdH7gFLuNh7w1FaKul463bfze24/spgJyxENOi6q0iuRKKZP8ETVd9pU0qR+P7sIo
- 2TVJvvV2XM3b2HJWBGB8X4AytSw5b+UbcKYHPC7QrD6TJNaTQl4sVwdkgbJg+XOkBb9RO8jFRAR
- ZAVXATCQXCiLy0YtvclLxVbeL+pwuoIcyL2BRSvKhGT6WV2oJvwTDVpOXDKOr2bj2WKDKtx08mo
- O+R4DnvgLyPUv5yw==
-X-Received: by 2002:a05:6102:1484:b0:7d0:6db8:dc33 with SMTP id
- ada2fe7eead31-7d64d4738eemr4218224137.2.1794871552952; 
- Mon, 16 Nov 2026 15:25:52 -0800 (PST)
-X-Received: by 2002:a05:6102:1484:b0:7d0:6db8:dc33 with SMTP id
- ada2fe7eead31-7d64d4738eemr4218201137.2.1794871550172; 
- Mon, 16 Nov 2026 15:25:50 -0800 (PST)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
+ d=1e100.net; s=20260707; t=1794871579; x=1795476379;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=L3gRUxaU7+J9rICz8CpKtnuNVQuuYC+Z2MjUNOJiB3g=;
+ b=uJId1qJ+q+GFyawaGd0PBErjDlLYdHC4BGG69z7MZ0pr6KcCs8x5J+hOHEBCXtJ4sN
+ le5F0r89HUxlWO5oDLgVNEFlrpna5MkM1koVLbQltm9mFXEL9X53nXaRVSVdB5PhehLP
+ 3i+JrMU7i1oUzFC7OLeW/lOts5AFOQ8tYZeNbfQrYISpozq50LaeZ7iZCqpZEMhybhMT
+ 5r806RdyJZojOXTW+nXzjlK/CRUYFDjIXzWxwkbsImIv88WQQo/k8zvrKXkm1YLz4gyu
+ klUXsRJdngsCsP4/VeQXgqEmqXDEmXwcGxCflsbvwpvKkDhLJwUZtC2z55jVCj7m1nGW
+ I44A==
+X-Forwarded-Encrypted: i=1;
+ AL+hErH6QqGoPa5apnxv+6DsKMIkvpz0hXLLRbTbLAxAztqRYQ5PRAtfKG6yVigDmT4hLicuB6REDQtCSqJW@nongnu.org
+X-Gm-Message-State: APuU4Z/UANetvX/3g5mMyG4rgwKjJtJNP0SkfNwKoBWtvmISeoQ8rgAF
+ THiVihtMoUXBCcyA4UJz24NlJrfZiCnJXZ/O4qJWMQSMTBFSIeslY44+csBL+V3sY9NB15vE9Yv
+ UvMr80SJ+X2HrgK+BEwS+ppIa5M80pOxzkylmbT6eJ5i4Ki/SgckIdlGKhA==
+X-Gm-Gg: AYBFou1DJLIqXlYlsUZzuxkAVPIk/+yEzSrggt+P37EAWPinDTFO2UGrtBbuVy7arkJ
+ i/f/3KJAcetzM7e6cCvYAhz5ku+7oJI0D+v2xZE5ocugmhCuQhE6tKFc/eVkIBRMEVfPaG6PxWh
+ rQkdxt2czoUD3CwuKjvUx2aCZyZFJtCrDjr+XEs2wnimMRvy6ZWHypYgY5Np8hmCbbuA/BBJ/4q
+ VoYyOJaqbO/0LuF3AGXK4mEo5vbtRwdv1SgxxptOGsg89myULfibzu7SoJNZ1GnwH3YMp0vFSJB
+ dBXI+UeQ9HH7LPS9MaNRIy8JPNUvZ/AKs/qY8YEPgNIHHN88Jius4cCyXlbjxBHlYHYJV1fLAie
+ 6DnhjOw0ulQ09bZI2N2oNO1/vUPHC6rJyqguRLN7243Zm0ck6wQes1iucymlYHo7Pxj/8nGgdAc
+ DDl/a5qrI=
+X-Received: by 2002:a05:620a:4693:b0:949:6e15:e1d7 with SMTP id
+ af79cd13be357-9498b875da9mr207359485a.25.1794871579195; 
+ Mon, 16 Nov 2026 15:26:19 -0800 (PST)
+X-Received: by 2002:a05:620a:4693:b0:949:6e15:e1d7 with SMTP id
+ af79cd13be357-9498b875da9mr207355385a.25.1794871578734; 
+ Mon, 16 Nov 2026 15:26:18 -0800 (PST)
+Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb732a2a9csm84281395e9.3.2026.11.16.15.25.49
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Nov 2026 15:25:49 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 17/22] hw/usb/dev-mtp: Fix recursive delete of directories
-Date: Tue, 17 Nov 2026 00:23:30 +0100
-Message-ID: <20261116232335.31593-18-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261116232335.31593-1-philmd@oss.qualcomm.com>
-References: <20261116232335.31593-1-philmd@oss.qualcomm.com>
+ ffacd0b85a97d-49c888b90d4sm24595241f8f.9.2026.11.16.15.26.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Nov 2026 15:26:17 -0800 (PST)
+Message-ID: <9b65adf5-f208-4e3c-966c-e17f7228a284@oss.qualcomm.com>
+Date: Tue, 17 Nov 2026 00:26:15 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] tcg-tests: detect redundant exe_name/test_name
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Weiwei Li <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ qemu-riscv@nongnu.org, Chao Liu <chao.liu@processmission.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20261116232140.2758664-1-pierrick.bouvier@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261116232140.2758664-1-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=R7WWitRX c=1 sm=1 tr=0 ts=6afb9102 cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA5MyBTYWx0ZWRfX633cklV60Ajp
+ a2QHxsjuRMNXJqJZmHmQ69nVPn+FzC0epRAxr1DkhLmyTEVK+kB1C/xGM7/4u12zAcqtox2v31E
+ CWvQgvuECRsbXKSM6GP5Zre35DJuD0o=
+X-Proofpoint-ORIG-GUID: 2DQ4EsicYVho2gAHVNUd8_hVjkR6Y1xA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA5MyBTYWx0ZWRfXwW0Kp4irk6iB
+ CpLk5I+kk4HXnUxeVxoJGUdw82rTh9ZIDnp9MBPXEE0+WDHykUFfHpB0LCVdP0AUVYe7ZV/lCPz
+ gyn/fiRMBOpchuyVWsIZk09j2ph7XqwpuuJFKqKnLpBsEEeJZ+JA4354tCZf7OGWeWp55grf9fq
+ dvYm9BfQiAwTRl/ZaFz2X3ZaM4S33K1POwm4h3tq8rZ4M7jBPYTQbqGUHnFSvGzGkVFwVuvaPxm
+ ntq+C1wyJirtwXv3SQup57YaNQ5gTS1wLiVwUOSG59Oz8qKUzJYmfYZC9gZ1BTXTW5y7QqODS82
+ gajGmwqIqxsxstM0iqgolweoiRxb/ClCfsCENZe/IaLD+CLUnXc6NcmIZaYIXyn6NVp7mBgur2S
+ efPir5ZnYi84J7c/uQfdDVYuMwG2V5fxToIKB0PqOgy9ochsQvsho6SBzsqK3zwMc0/uk5hQOt0
+ NpUAb5V5Bowke4ScvAA==
+X-Proofpoint-GUID: 2DQ4EsicYVho2gAHVNUd8_hVjkR6Y1xA
+X-Authority-Analysis: v=2.4 cv=R9uWitRX c=1 sm=1 tr=0 ts=6afb911c cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8
- a=V3ISmJJGlPdSwDKQ4g0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=crWF4MFLhNY0qMRaF8an:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA5MyBTYWx0ZWRfX6rQUtt7T3nXS
- 0aDN703ZRYME4tMNpbL5Mi2nZBV13fBYrx7QTUUsRDSySrPxLxeV+EJNgCit9yEK8npX3VLwExl
- W7a/6UeMj+Iknd+03+HePjrmlQdE33M=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA5MyBTYWx0ZWRfX+r6gOacScna8
- Q6tFcyg+PzalGv99O/YUG3YihGWZw/KvzIxo81GVQaSPx1AAUdscvN36qTa7LBveUoxF0NUyjV9
- A+MEUqDd3dOQvs6PhBtmNwVYXJpCnOdokGLE+irmiOL3q/bZ0ynhNTpHw7mSt9YLPk+CR05veo3
- ceWw6xMhOiCyjYXILrzxpaL41RnkZdjm7xfqvbmG28kf0rzfTMjPrNLMmDbR/i9BAHCgyJVyDKi
- h0Q65e1MYsZkCES3PXwau16o/r9J2FgJ4TbvMoRSk5O5fdGNXNohDw9ktWysW68LbkZluCdSHLv
- MX3gQgiFt1rEy0pTtZoossa7R84MdWZ+b7t2Sh0GsxbbtvJg8TW43P0ZO6Cce6w00/pDp2FMIWB
- NkGplWNHi+m94zIdQvd3Y4SuWxI+ud7JmKBOfZaNwKkuQ4MHfpMqM6u7hfDBh0k6SUy65bAuQ4T
- OpIuMcsvOZTw0thy5ow==
-X-Proofpoint-GUID: jLyhd4Z2vDjl4S_gpS-D53PNoKWXcjiO
-X-Proofpoint-ORIG-GUID: jLyhd4Z2vDjl4S_gpS-D53PNoKWXcjiO
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-16_07,2026-11-16_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 priorityscore=1501 phishscore=0 adultscore=0
- bulkscore=0 malwarescore=0 suspectscore=0 impostorscore=0 spamscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ adultscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611160093
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -149,71 +156,26 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Tommaso Califano <tcalifano@redhat.com>
+On 17/11/26 00:21, Pierrick Bouvier wrote:
+> Detect and report an error if set exe_name/test_name matches the default one,
+> thus explaining to developer it's not needed to set it.
+> 
+> Pierrick Bouvier (2):
+>    tests/tcg/riscv64/system: remove exe_name as it's already the default
+>      one
+>    tests/tcg: detect redundant exe_name/test_name
+> 
+>   tests/tcg/meson.build                | 8 ++++++++
+>   tests/tcg/riscv64/system/meson.build | 1 -
+>   2 files changed, 8 insertions(+), 1 deletion(-)
 
-usb_mtp_deletefn() only recursed into the grandchildren of the target,
-never deleting the files directly inside it. The directory was left
-non-empty, so rmdir() on the host always failed, and objects nested more
-than two levels deep were silently kept.
-
-Recurse into every child of the target instead. Since the root directory
-can now actually become empty, skip the root object itself: rmdir()'ing
-it and freeing it would leave s->objects empty.
-
-Cc: qemu-stable@nongnu.org
-Fixes: ec6206a68f70 ("usb-mtp: Support delete of mtp objects")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4529
-Suggested-by: Hui Peng <https://gitlab.com/benquike>
-Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
-Reviewed-by: Junjie Cao <junjie.cao@linux.dev>
-Tested-by: Junjie Cao <junjie.cao@linux.dev>
-Message-ID: <20261112174907.158825-2-tcalifano@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- hw/usb/dev-mtp.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
-
-diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
-index 8507e516ab1e..bc5a6f089178 100644
---- a/hw/usb/dev-mtp.c
-+++ b/hw/usb/dev-mtp.c
-@@ -1152,19 +1152,20 @@ enum {
- 
- static int usb_mtp_deletefn(MTPState *s, MTPObject *o, uint32_t trans)
- {
--    MTPObject *iter, *iter2, *iter2_next;
-+    MTPObject *iter, *iter_next;
-     int ret = 0;
- 
-     /*
-      * TODO: Add support for Protection Status
-      */
- 
--    QLIST_FOREACH(iter, &o->children, list) {
--        if (iter->format == FMT_ASSOCIATION) {
--            QLIST_FOREACH_SAFE(iter2, &iter->children, list, iter2_next) {
--                ret |= usb_mtp_deletefn(s, iter2, trans);
--            }
--        }
-+    QLIST_FOREACH_SAFE(iter, &o->children, list, iter_next) {
-+        ret |= usb_mtp_deletefn(s, iter, trans);
-+    }
-+
-+    /* Avoid deleting the mtp root */
-+    if (o->parent == NULL) {
-+        return ret ? ret : DELETE_SUCCESS;
-     }
- 
-     if (o->format == FMT_UNDEFINED_OBJECT) {
--- 
-2.55.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
