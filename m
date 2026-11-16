@@ -1,50 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226B7606A330
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 16:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851BD606A33F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 16:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RPl+cxzB
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=MhOmPRKM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSzvq-0008ID-ST; Mon, 16 Nov 2026 11:51:52 -0500
+	id 1xSzvs-0008M6-Nf; Mon, 16 Nov 2026 11:51:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xSzun-0007e3-Vj
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:50:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xSzug-0007bX-Hj
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:50:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xSzum-0007ei-3M
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:50:45 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xSzue-0007dk-Hi
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:50:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794847843;
+ s=mimecast20190719; t=1794847826;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YP0uMjXbMZzhkU1dEuU+r+EAx9s3iL97wWTm1GvIKRo=;
- b=RPl+cxzBRiCCaRJvXffXemkoG0fzUT7FcckM0J67AzxRhzVnLlNJ5vd0E3Qlt1iWNkfx5v
- 3h/oMK9WkwyLqt47BGjKbRoPhLJnvXNtk9BpfsEm88WMQgAWRlmvRE8s1TzSKdkyPbC/B5
- X+tR/aKYFtN0Pwuh7YhJg5+LodpPjqw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=JSlihkLJpIlxY9tcrA9GhmKKT3bZReqpBGh+tfoa3wk=;
+ b=MhOmPRKM+UhTuUZg9JWhfHokIY52nhavBIAjAY82cyPfgxgY+MFgsS+klUSDoaa8xiGML2
+ Wghkskd/8h66NIJ8MI10cXobUtMlT54Drb2Ob9/4NV/TVCYdDES1O80z2pXl0U6XbQlAzA
+ Rs+SE9Pt584wp3+xhe1fL2e1ElqOLnY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-83-oXN2bRmCNliD4RMRV-JqRQ-1; Mon,
- 16 Nov 2026 11:50:37 -0500
-X-MC-Unique: oXN2bRmCNliD4RMRV-JqRQ-1
-X-Mimecast-MFC-AGG-ID: oXN2bRmCNliD4RMRV-JqRQ_1794847834
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-yGqqOj_WOveyFYXSrH9_ZA-1; Mon,
+ 16 Nov 2026 11:50:24 -0500
+X-MC-Unique: yGqqOj_WOveyFYXSrH9_ZA-1
+X-Mimecast-MFC-AGG-ID: yGqqOj_WOveyFYXSrH9_ZA_1794847822
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8295D18004F6; Mon, 16 Nov 2026 16:50:34 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B798B180055B; Mon, 16 Nov 2026 16:50:21 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 75E1C195B3C7; Mon, 16 Nov 2026 16:50:31 +0000 (UTC)
+ id 007FE195B3C8; Mon, 16 Nov 2026 16:50:17 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -63,9 +63,9 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 6/7] debug/mem: name qemu_anon_ram_alloc/qemu_ram_mmap pages
-Date: Mon, 16 Nov 2026 11:50:01 -0500
-Message-ID: <20261116165002.30939-7-jsnow@redhat.com>
+Subject: [PATCH v2 3/7] debug/mem: name <reserved> regions in mmap-alloc
+Date: Mon, 16 Nov 2026 11:49:58 -0500
+Message-ID: <20261116165002.30939-4-jsnow@redhat.com>
 In-Reply-To: <20261116165002.30939-1-jsnow@redhat.com>
 References: <20261116165002.30939-1-jsnow@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -73,14 +73,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,192 +100,47 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This patch adds a nickname parameter to qemu_anon_ram_alloc, which
-passes it to qemu_ram_mmap, which passes it in turn to mmap_activate,
-where it is used to name the region being allocated.
+For mmap memory reserved by QEMU, give it the name "<reserved>". This
+will show up in maps output as "anon: qemu: <reserved>".
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/mmap-alloc.h  |  3 ++-
- include/qemu/osdep.h       |  2 +-
- hw/display/virtio-gpu-gl.c |  2 +-
- migration/ram.c            |  3 ++-
- system/physmem.c           |  7 +++++--
- target/i386/kvm/tdx.c      |  3 ++-
- util/mmap-alloc.c          | 10 +++++++---
- util/oslib-posix.c         |  4 ++--
- util/oslib-win32.c         |  2 +-
- 9 files changed, 23 insertions(+), 13 deletions(-)
+ util/mmap-alloc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/qemu/mmap-alloc.h b/include/qemu/mmap-alloc.h
-index 8344daaa03f..c34587179b6 100644
---- a/include/qemu/mmap-alloc.h
-+++ b/include/qemu/mmap-alloc.h
-@@ -36,7 +36,8 @@ void *qemu_ram_mmap(int fd,
-                     size_t size,
-                     size_t align,
-                     uint32_t qemu_map_flags,
--                    off_t map_offset);
-+                    off_t map_offset,
-+                    const char *nickname);
- 
- void qemu_ram_munmap(int fd, void *ptr, size_t size);
- 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index b27d159d5bb..5e712ff1c6c 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -552,7 +552,7 @@ void QEMU_ERROR("code path is reachable")
- 
- int qemu_daemon(int nochdir, int noclose);
- void *qemu_anon_ram_alloc(size_t size, uint64_t *align, bool shared,
--                          bool noreserve);
-+                          bool noreserve, const char *nickname);
- void qemu_anon_ram_free(void *ptr, size_t size);
- int qemu_shm_alloc(size_t size, Error **errp);
- 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 2b7a41c4664..66c302315c5 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -145,7 +145,7 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
- #if !defined(CONFIG_WIN32)
-     if (virtio_gpu_hostmem_enabled(b->conf)) {
-         map = qemu_ram_mmap(-1, b->conf.hostmem, qemu_real_host_page_size(),
--                            0, 0);
-+                            0, 0, "virgl-hostmem");
-         if (map == MAP_FAILED) {
-             error_setg_errno(errp, errno,
-                              "virgl hostmem region could not be initialized");
-diff --git a/migration/ram.c b/migration/ram.c
-index e6db3bf5238..c48e05078d1 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3720,7 +3720,8 @@ int colo_init_ram_cache(Error **errp)
-     WITH_RCU_READ_LOCK_GUARD() {
-         RAMBLOCK_FOREACH_NOT_IGNORED(block) {
-             block->colo_cache = qemu_anon_ram_alloc(block->used_length,
--                                                    NULL, false, false);
-+                                                    NULL, false, false,
-+                                                    "colo cache");
-             if (!block->colo_cache) {
-                 error_setg(errp, "Can't alloc memory for COLO cache of "
-                            "block %s, size 0x" RAM_ADDR_FMT,
-diff --git a/system/physmem.c b/system/physmem.c
-index a7300bb9d97..202e3a5cd00 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1767,7 +1767,8 @@ static void *file_ram_alloc(RAMBlock *block,
-     qemu_map_flags |= (block->flags & RAM_SHARED) ? QEMU_MAP_SHARED : 0;
-     qemu_map_flags |= (block->flags & RAM_PMEM) ? QEMU_MAP_SYNC : 0;
-     qemu_map_flags |= (block->flags & RAM_NORESERVE) ? QEMU_MAP_NORESERVE : 0;
--    area = qemu_ram_mmap(fd, memory, block->mr->align, qemu_map_flags, offset);
-+    area = qemu_ram_mmap(fd, memory, block->mr->align, qemu_map_flags, offset,
-+                         "file_ram_alloc");
-     if (area == MAP_FAILED) {
-         error_setg_errno(errp, errno,
-                          "unable to map backing store for guest RAM");
-@@ -2169,7 +2170,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-         } else {
-             new_block->host = qemu_anon_ram_alloc(new_block->max_length,
-                                                   &new_block->mr->align,
--                                                  shared, noreserve);
-+                                                  shared, noreserve,
-+                                                  new_block->mr->name);
-+
-             if (!new_block->host) {
-                 g_autofree char *size_s = size_to_str(new_block->max_length);
-                 error_setg_errno(errp, errno,
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 52bb2ec6ced..e4d589fc950 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -354,7 +354,8 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
-         case TDVF_SECTION_TYPE_TD_HOB:
-         case TDVF_SECTION_TYPE_TEMP_MEM:
-             entry->mem_ptr = qemu_ram_mmap(-1, entry->size,
--                                           qemu_real_host_page_size(), 0, 0);
-+                                           qemu_real_host_page_size(), 0, 0,
-+                                           "tdx");
-             if (entry->mem_ptr == MAP_FAILED) {
-                 error_report("Failed to mmap memory for TDVF section %d",
-                              entry->type);
 diff --git a/util/mmap-alloc.c b/util/mmap-alloc.c
-index 2133b2c9bda..f0b903dfdbe 100644
+index ed14f9c64de..2133b2c9bda 100644
 --- a/util/mmap-alloc.c
 +++ b/util/mmap-alloc.c
-@@ -187,7 +187,8 @@ static void *mmap_reserve(size_t size, int fd)
-  * it accessible.
-  */
- static void *mmap_activate(void *ptr, size_t size, int fd,
--                           uint32_t qemu_map_flags, off_t map_offset)
-+                           uint32_t qemu_map_flags, off_t map_offset,
-+                           const char *nickname)
+@@ -22,6 +22,7 @@
+ #include "qemu/host-utils.h"
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
++#include "qemu/mmap-vma.h"
+ 
+ #define HUGETLBFS_MAGIC       0x958458f6
+ 
+@@ -152,6 +153,7 @@ static bool map_noreserve_effective(int fd, uint32_t qemu_map_flags)
+ static void *mmap_reserve(size_t size, int fd)
  {
-     const bool noreserve = qemu_map_flags & QEMU_MAP_NORESERVE;
-     const bool readonly = qemu_map_flags & QEMU_MAP_READONLY;
-@@ -236,6 +237,8 @@ static void *mmap_activate(void *ptr, size_t size, int fd,
-          */
-         activated_ptr = mmap(ptr, size, prot, flags, fd, map_offset);
-     }
+     int flags = MAP_PRIVATE;
++    void *ptr;
+ 
+ #if defined(__powerpc64__) && defined(__linux__)
+     /*
+@@ -174,7 +176,10 @@ static void *mmap_reserve(size_t size, int fd)
+     flags |= MAP_ANONYMOUS;
+ #endif
+ 
+-    return mmap(0, size, PROT_NONE, flags, fd, 0);
++    ptr = mmap(0, size, PROT_NONE, flags, fd, 0);
++    qemu_name_vma(ptr, size, "<reserved>");
 +
-+    qemu_name_vma(ptr, size, "%s", nickname);
-     return activated_ptr;
++    return ptr;
  }
  
-@@ -253,7 +256,8 @@ void *qemu_ram_mmap(int fd,
-                     size_t size,
-                     size_t align,
-                     uint32_t qemu_map_flags,
--                    off_t map_offset)
-+                    off_t map_offset,
-+                    const char *nickname)
- {
-     const size_t guard_pagesize = mmap_guard_pagesize(fd);
-     size_t offset, total;
-@@ -277,7 +281,7 @@ void *qemu_ram_mmap(int fd,
-     offset = QEMU_ALIGN_UP((uintptr_t)guardptr, align) - (uintptr_t)guardptr;
- 
-     ptr = mmap_activate(guardptr + offset, size, fd, qemu_map_flags,
--                        map_offset);
-+                        map_offset, nickname);
-     if (ptr == MAP_FAILED) {
-         munmap(guardptr, total);
-         return MAP_FAILED;
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 454579c72df..ba3ebb52eb5 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -207,13 +207,13 @@ fail_close:
- 
- /* alloc shared memory pages */
- void *qemu_anon_ram_alloc(size_t size, uint64_t *alignment, bool shared,
--                          bool noreserve)
-+                          bool noreserve, const char *nickname)
- {
-     const uint32_t qemu_map_flags = (shared ? QEMU_MAP_SHARED : 0) |
-                                     (noreserve ? QEMU_MAP_NORESERVE : 0);
-     size_t align = QEMU_VMALLOC_ALIGN;
- #ifndef EMSCRIPTEN
--    void *ptr = qemu_ram_mmap(-1, size, align, qemu_map_flags, 0);
-+    void *ptr = qemu_ram_mmap(-1, size, align, qemu_map_flags, 0, nickname);
- 
-     if (ptr == MAP_FAILED) {
-         return NULL;
-diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-index 5f3e8f4d980..52c6335995c 100644
---- a/util/oslib-win32.c
-+++ b/util/oslib-win32.c
-@@ -45,7 +45,7 @@ static int get_allocation_granularity(void)
- }
- 
- void *qemu_anon_ram_alloc(size_t size, uint64_t *align, bool shared,
--                          bool noreserve)
-+                          bool noreserve, const char *nickname)
- {
-     void *ptr;
- 
+ /*
 -- 
 2.56.1
 
