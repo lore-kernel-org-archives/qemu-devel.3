@@ -1,47 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFAF606A332
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D164606A330
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=goT4iTxn
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=E0CxympA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Je-0005eL-BW; Mon, 16 Nov 2026 15:28:38 -0500
+	id 1xT3Ha-0005jV-FW; Mon, 16 Nov 2026 15:26:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3JJ-0005Jt-Vm; Mon, 16 Nov 2026 15:28:20 -0500
+ id 1xT3HN-0004cX-36; Mon, 16 Nov 2026 15:26:17 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3JI-0001WV-87; Mon, 16 Nov 2026 15:28:17 -0500
+ id 1xT3HL-0006jG-4p; Mon, 16 Nov 2026 15:26:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860764; bh=C1WbyADS6G0qkGaNktwqYyjV1h8A27c5ePURFDg2M+U=;
+ t=1794860763; bh=S+1X54r4bObqC1yaMiN1eMbYqDjrRON3FNJZeWKr04U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=goT4iTxnuKpF0qKJjN3iVV8NmM5Ub26soBIPGWcB96kab9moJrps2+atdT3UA0kGj
- vG21i6rCZ8ZjqQeIxuvqHzXZwzghcP/+E4mPp8ZZEIJT409k9UZVJQgS1SDQ9zVO1E
- 6+zkfqs9SyJGFVewZOtyH7TyELHSYCGKtAvuMhlfotOvhsEIh7wIacok2QhOoKYmOe
- 0MsfxgIqmg3CDs0dHLgDQt6UAGrFDoc015pBRt8hDqdvA4h9wE/2lMiKxN0SXHIpa1
- NaluIId9gzLkh9z0kx6Sr8EvJYWFYd21xrF7wARHbGqE2MqIxuZmBhnt2TSCQFcMR6
- AIcqRS5JXMU+A==
+ b=E0CxympAB+3QCLPkfEZy5plpZtzQ0bu3CFocCEGaDHZyevqU1WTmmjriqYCrLetHJ
+ cvlUoRgqq3VgjtrrHc3njsvwp/GtIbFx4VvhDYINxVG8Ne9U4PvgsXq2UilrHQmWgR
+ B0XCs0/s356+XuUfP4q+921TKYfBTGyhynoIlFVGwZymkSHyoDWU3UHGN1xuABxS5z
+ RMHP1QrCPFHjNGc74E2sAiNFJMyp6VL7PFbdypK3D2qh4FEsucGzbmMITGURwdrp8E
+ G+z/yEweTSLmaz7lLiFwhROrgRP/yO08roLMdAGh7xH1y0hxAUkgbGroGxomj2QKjc
+ Q6GkTCzvvOxmA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E1C11E71AF;
- Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A15B11E719B;
+ Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3B8CB45FBDB;
- Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9DBB145FBC7;
+ Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B51E4B8E7A; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ id 7A554B8E52; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Farhan Ali <alifm@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 26/63] s390x/pci: Free FMB timer on zPCI device unplug
-Date: Mon, 16 Nov 2026 23:25:05 +0300
-Message-ID: <20261116202554.535325-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Tan Chi <tanchi25@mails.ucas.ac.cn>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nutty Liu <nutty.liu@hotmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 06/63] hw/riscv/riscv-iommu: fix entry leak with
+ ioatc-limit=0
+Date: Mon, 16 Nov 2026 23:24:45 +0300
+Message-ID: <20261116202554.535325-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -74,41 +77,46 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Tan Chi <tanchi25@mails.ucas.ac.cn>
 
-On an SCLP deconfigure we don't clean up the FMB timer. If there is a
-pending unplug request then we can destroy the S390PCIBusDevice object
-without correctly cleaning up the timer. So fmb_update() will then run on
-freed memory. Clean up the FMB timer before we destroy the S390PCIBusDevice
-object to prevent this use after free.
+riscv_iommu_translate() allocates an IOATC entry before passing it to
+riscv_iommu_iot_update(). The update helper normally transfers ownership
+to the hash table.
 
-When FMB was introduced with commit 6e92c70c37 ("s390x/pci: add common
-function measurement block") we originally cleaned up the FMB timer in
-s390_pcihost_unplug(). This behavior was changed in the re-work done with
-commit e0998fe89104 ("s390x/pci: Introduce unplug requests and split unplug
-handler").
+When ioatc-limit is zero, however, the helper returns without inserting or
+freeing the entry. Every cacheable non-identity translation therefore leaks
+one RISCVIOMMUEntry.
 
-Fixes: e0998fe89104 ("s390x/pci: Introduce unplug requests and split unplug handler")
+Avoid this by disabling caching at the caller when ioatc-limit is zero,
+so riscv_iommu_translate() does not allocate an IOATC entry in the first
+place. This avoids special-casing entry freeing in riscv_iommu_iot_update()
+and keeps the ownership semantics simpler.
+
+Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Fixes: 9d085a1c3cb2 ("hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20261028224611.240515-1-alifm@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit e91d320a5bbce93b95d3b9ce3acff18977d05981)
+Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Message-ID: <20261005111523.277550-1-tanchi25@mails.ucas.ac.cn>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 9c20897e50f44837e53896fe504a63a6dd696c34)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 2bb87f731b1..673ac4ecd19 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -1254,6 +1254,7 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
-         pbdev = S390_PCI_DEVICE(dev);
-         pbdev->fid = 0;
-+        fmb_timer_free(pbdev);
-         QTAILQ_REMOVE(&s->zpci_devs, pbdev, link);
-         g_hash_table_remove(s->zpci_table, &pbdev->idx);
-         if (pbdev->iommu && pbdev->iommu->dma_limit) {
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 323a041b4a5..866f49cc39a 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2919,7 +2919,8 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
+         /* Translation disabled or invalid. */
+         iotlb.addr_mask = 0;
+         iotlb.perm = IOMMU_NONE;
+-    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb, true)) {
++    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb,
++                                     as->iommu->iot_limit > 0)) {
+         /* Translation disabled or fault reported. */
+         iotlb.addr_mask = 0;
+         iotlb.perm = IOMMU_NONE;
 -- 
 2.47.3
 
