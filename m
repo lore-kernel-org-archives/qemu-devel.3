@@ -1,56 +1,51 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E041606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145C4606A322
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=bzVOLprg
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=lut3L/m0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Jv-0006vL-JE; Mon, 16 Nov 2026 15:28:55 -0500
+	id 1xT3G7-0000Je-EQ; Mon, 16 Nov 2026 15:24:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Jl-0006D2-Fv; Mon, 16 Nov 2026 15:28:45 -0500
+ id 1xT3Fh-00086r-OZ; Mon, 16 Nov 2026 15:24:35 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Jj-0001Xk-2H; Mon, 16 Nov 2026 15:28:45 -0500
+ id 1xT3Fe-0004St-Il; Mon, 16 Nov 2026 15:24:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860764; bh=eDNxkS+dA+OK+lwCj+mOVXnuoXLtsmNMw6UQXxiovGw=;
+ t=1794860377; bh=8FslejbiorBmxhMExlCo4mCX+3blUCGOc18RZeMs9ys=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bzVOLprgzUaJvmDTWsc3RX4N6mKQZw5x+V4LhuBDLhGGOEjvTkszmuAcTsYMbrRyl
- 9WXLeQInEb6V64fzc4jZpmi5gbiotxKDfmIpz/1tNSCO8/yLaWpCZgdeh2ey42/MNU
- cgCqvpnlKsYX45dr5KpJwD36KLxoU4z/0QUqHsEcw16xfVoefn2FUst4kwTqPQoa3D
- 0BdEpRGWELZ20s2pQEKXeQGO0g7Btz1yVbiWHryA5sXW9IAq/XF7SJ9hLdSM7QManw
- Td5yzGl7D5sYrWVelucrEm71SSAjdSkhBMdgxkC96efVif3VhprJg5g8wqD/OmA1H4
- f2jvoz5h8VgJQ==
+ b=lut3L/m0mczEv+/evtjiEChfo8y38QrLuNEtCHnwXlFWfZo83x1UeHj9pdP8854+9
+ 85AXG8RF1kif99guAnj6/FGHOVTyO/mZMH7zxpVFKZYNGiCoyYXtfElbdoSTsqy3J8
+ sUEeKF9AQBBKOq8bZQYUy81QlJ3ICFGd4vlqMZnUgMoTuB847dNpQ+Z5a60giI0oin
+ VMaNgLriDhs30gGNKaJOlioj6HyYpJ/uloCdOaObaYWd14Nty/bF7T1UC5kYBtVaZU
+ JNPAOthifgw7nH/HAJqoUWdCp7zeV+eJPc8oIE7JpALn4r6Zie9A50Tc0Fe2S0EYQr
+ BouNbcMJMqdog==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 58ACD1E71B3;
- Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E988F1E7175;
+ Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5631F45FBDF;
- Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E606D45FBB5;
+ Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C1114B8E82; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ id A913FB8E44; Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Lorand Marton <lorandmarton.dev@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 30/63] target/arm: hold bql when SEV sets the
- event_register
-Date: Mon, 16 Nov 2026 23:25:09 +0300
-Message-ID: <20261116202554.535325-30-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 59/59] iotests: Add another nbd-robustness test
+Date: Mon, 16 Nov 2026 23:19:03 +0300
+Message-ID: <20261116201922.534306-59-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
-References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
+References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -79,63 +74,123 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Eric Blake <eblake@redhat.com>
 
-There is a race in qemu_process_cpu_events and sleeping on halt_cond
-where we can miss the setting of the event_register which would cause
-arm_cpu_has_work to report we shouldn't sleep. As by definition the
-bql has to be held when we go to sleep against halt_cond guard the
-kicking of the cpus by the SEV helper with the BQL to ensure things
-are properly serialised.
+Convert the proof of concept test by TonySD into another case of the
+iotest. This is yet another instance where a hard-coded exchange is
+easier than forcing libnbd into producing an exchange that violates
+the protocol.  Swapping the order with the previous patch shows the
+assertion failure that was previously reachable.
 
-The other places that set event_register are fine as they are either
-in the same vCPU context or are already serialised by the BQL.
-
-Also use qemu_cond_wait_bql like the other halt_cond users.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4660
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4670
-Cc: qemu-stable@nongnu.org
-Fixes: d238858bff60 ("target/arm: Implement WFE, SEV and SEVONPEND for Cortex-M")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Lorand Marton <lorandmarton.dev@gmail.com>
-Message-id: 20261030141046.2710206-2-alex.bennee@linaro.org
-Message-ID: <20261029161310.2065290-4-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 8def1f30d5d4429abe163173debd06f160198350)
+Based-on: https://gitlab.com/qemu-project/qemu/-/work_items/4843
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20261110155356.1520433-12-eblake@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit e682c0e570179bd7fa01ea896358a8cdad196a3b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/system/cpus.c b/system/cpus.c
-index 97e5a5edee2..04005ae5595 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -471,7 +471,7 @@ void qemu_process_cpu_events(CPUState *cpu)
-             slept = true;
-             qemu_plugin_vcpu_idle_cb(cpu);
-         }
--        qemu_cond_wait(cpu->halt_cond, &bql);
-+        qemu_cond_wait_bql(cpu->halt_cond);
-     }
-     if (slept) {
-         qemu_plugin_vcpu_resume_cb(cpu);
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 56d79836209..38ba515bef4 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -475,7 +475,10 @@ void HELPER(wfit)(CPUARMState *env, uint32_t rd)
+diff --git a/tests/qemu-iotests/tests/nbd-robustness b/tests/qemu-iotests/tests/nbd-robustness
+index fe61a839250..410dfca04e3 100755
+--- a/tests/qemu-iotests/tests/nbd-robustness
++++ b/tests/qemu-iotests/tests/nbd-robustness
+@@ -21,6 +21,7 @@ NBD_MAGIC_REPLY = 0x0003e889045565a9         # Reply magic
+ NBD_MAGIC_EXT_REPLY = 0x6e8a278c             # Structured reply magic
+ NBD_FLAG_C_FIXED_NEWSTYLE = 0x1
+ NBD_OPT_GO = 7
++NBD_OPT_STRUCTURED_REPLY = 8
+ NBD_OPT_SET_META_CONTEXT = 10
+ NBD_OPT_EXTENDED_HEADERS = 11
+ NBD_REP_ACK = 1
+@@ -128,5 +129,77 @@ class TestNbdRobustness(iotests.QMPTestCase):
  
- void HELPER(sev)(CPUARMState *env)
- {
--    CPUState *cs = env_cpu(env);
-+    CPUState *cs;
+             self.assertTrue(self.vm.is_running())
+ 
++    def test_invalid_set_meta_context(self):
++        with self.run_nbd_server(nbd_sock):
++            self.add_nbd_export('n', 'r')
 +
-+    BQL_LOCK_GUARD();
++            # Use raw socket traffic to intentionally violate NBD protocol
++            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
++                s.connect(nbd_sock)
++                # Server sends NBDMAGIC(8) + IHAVEOPT(8) + flags(2)
++                data = self.recv_exact(s, 18)
++                magic, opt, flags = struct.unpack(">QQH", data)
++                self.assertEqual(magic, NBD_MAGIC_INIT)
++                self.assertEqual(opt, NBD_MAGIC_OPTS)
++                self.assertEqual(flags, 0x3)
 +
-     CPU_FOREACH(cs) {
-         ARMCPU *target_cpu = ARM_CPU(cs);
-         target_cpu->env.event_register = true;
++                # Reply with flags(4) - just fixed newstyle flag
++                s.sendall(struct.pack(">I", NBD_FLAG_C_FIXED_NEWSTYLE))
++
++                # Request NBD_OPT_STRUCTURED_REPLY, no extra payload
++                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS,
++                                      NBD_OPT_STRUCTURED_REPLY, 0))
++
++                # Expect successful reply:
++                # magic(8) + option(4) + reply(4) + length(4)
++                data = self.recv_exact(s, 20)
++                magic, opt, reply, length = struct.unpack(">QIII", data)
++                self.assertEqual(magic, NBD_MAGIC_REPLY)
++                self.assertEqual(opt, NBD_OPT_STRUCTURED_REPLY)
++                self.assertEqual(reply, NBD_REP_ACK)
++                self.assertEqual(length, 0)
++
++                # Request NBD_OPT_SET_META_CONTEXT with invalid length
++                # namelen(4) + str + queries(4) + {querylen(4) + str)
++                payload = struct.pack(">I", 1) + b'r'
++                payload += struct.pack(">II", 1, 1) + b'X'
++                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS,
++                                      NBD_OPT_SET_META_CONTEXT,
++                                      len(payload) + 1) + payload)
++
++                # Request NBD_OPT_GO, name but no info as payload
++                # (request is early, but does not hurt here)
++                payload = struct.pack(">I", 1) + b'r' + struct.pack(">H", 0)
++                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS, NBD_OPT_GO,
++                                      len(payload)) + payload)
++
++                # Expect error reply to SET_META_CONTEXT:
++                # magic(8) + option(4) + reply(4) + length(4)
++                data = self.recv_exact(s, 20)
++                magic, opt, reply, length = struct.unpack(">QIII", data)
++                self.assertEqual(magic, NBD_MAGIC_REPLY)
++                self.assertEqual(opt, NBD_OPT_SET_META_CONTEXT)
++                self.assertEqual(reply & 0x80000000, 0x80000000)
++                self.recv_exact(s, length)
++
++                # Expect early disconnect for unaligned GO. Could show up as
++                # either b'' or ConnectionResetError
++                try:
++                    data = s.recv(1)
++                    self.assertEqual(data, b'')
++                except ConnectionResetError:
++                    pass
++
++                # Further writes must trigger an error (EPIPE / ECONNRESET)
++                with self.assertRaises((BrokenPipeError, ConnectionResetError,
++                                        OSError)):
++                    s.sendall(b'X')
++
++            # QEMU should still be up
++            self.assertIsNone(self.vm.exitcode())
++            self.assertTrue(self.vm.is_running())
++            res = self.vm.cmd('query-status')
++            self.assertEqual(res['status'], 'running')
++
+ if __name__ == '__main__':
+     iotests.main(supported_fmts=['qcow2'])
+diff --git a/tests/qemu-iotests/tests/nbd-robustness.out b/tests/qemu-iotests/tests/nbd-robustness.out
+index ae1213e6f86..fbc63e62f88 100644
+--- a/tests/qemu-iotests/tests/nbd-robustness.out
++++ b/tests/qemu-iotests/tests/nbd-robustness.out
+@@ -1,5 +1,5 @@
+-.
++..
+ ----------------------------------------------------------------------
+-Ran 1 tests
++Ran 2 tests
+ 
+ OK
 -- 
 2.47.3
 
