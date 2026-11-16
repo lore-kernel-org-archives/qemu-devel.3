@@ -1,86 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AE0606BD35
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02D6606BD1E
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=z5Mfaf3w
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=spH6fKGq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSueY-0003sC-Mi; Mon, 16 Nov 2026 06:13:39 -0500
+	id 1xSufi-0004UJ-CH; Mon, 16 Nov 2026 06:14:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueE-0003ou-Ju
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:19 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1xSuef-0003wE-Np
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:45 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueB-00027s-Jl
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:18 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-48e10a70540so1790958f8f.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:10 -0800 (PST)
+ id 1xSuec-0002Dj-TC
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:45 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4a1b07c3c5fso37332985e9.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794827589; x=1795432389; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794827619; x=1795432419; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=RNd36oaJ1HdGT+rhZlENz1yPtG0nBRRajHzmEN2ptno=;
- b=z5Mfaf3wiFPnWoDT9dbmKjfZFPAeU4xRCXOtKVhqdv1q33+BUEC+Rd5yOwjaZTowbq
- xV9jL4Jhc6R3hYcZokVo10xBChiYGvaRz0w11cMVBSjna09dDCi7RbMS/V8QDyVdx+RO
- fPs+mVAdSUnDqw6KTZBLECR3fBvSsKF0W2QiRzK/IgdocmyUtmLjj4gOxwupcFOFXlps
- eOi1m5Huo10oRj37UuJu79aVO9lGXTngLiMmuzuk6aBJWEUldI/QfDPDP+vmXiS7rqTr
- i0ZkeRrGO3+TMcDCX2cYHmOtZkWCOUNBpckxepMzh0yaU7ukzFHskfnbyNi5A2YIh3Fb
- tixA==
+ bh=zOcK/FpIa2soozQBIj8qTA+KfQuG2+4S2+axJptJAD4=;
+ b=spH6fKGqJ2z8jD+/2Xp55le0J2AAJ+uQXE6FkIhwDWeWoHoEn3ex3yuIzLI7u1f4cp
+ jfkEQREeAgbASX+0DHR9uqMcM7BRYKne117cpi5p79KzGfZaKTtVvjDAN7UzY3+O7XMA
+ eL0I3iOVZg3EWQjP+e7+djMgK6hjMvmR8iE4UVs+Uh7Af9XEgbWG3nwlGmH/JbHUvEJi
+ HN6xIkGmKofQ8lorSI9InzfGqYTpccWMY58+aaULHwfJpQkl34Ltg385Fkv0vhhW9Cds
+ Z9Yqs8KUOouEzWsykKqIKR7VVnSAYMsOoqeBIWP+mCygNwSry9q98dbnsc//pIdXzCHU
+ OUkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794827589; x=1795432389;
+ d=1e100.net; s=20260707; t=1794827619; x=1795432419;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=RNd36oaJ1HdGT+rhZlENz1yPtG0nBRRajHzmEN2ptno=;
- b=mtM+EZFcZsd3sdoZwlE9gkVeNPAaTbONGJxmifra91geBQu7jtFpboylCf8AeUQ03H
- MfR/OWBimIeE6jPOj3OMFsYW1tw0+UHgIFQSEqSlOQ1MHWFbH+g3LKojjfuldWMemakF
- N62UsG/QK0RZ6Aqoer4MLQLwZ78hRl997u47wwf38b5rQyNDY+HgS2Z56ryI7u9FwyTM
- MY2N7iMd4TYuBlf79+qO4Gbq+sz2sSjkf+gsAfPRxAwdwKpazpSowFjTKnh6LHXEiRwP
- fW0S6yuHcNnO4ZFhW+QtKnGCcfdLPOFThvrnBUHtkC16I1dCTh/LDy7ZOgARDMA+kErJ
- dt8A==
-X-Gm-Message-State: APuU4Z/BKlgXtoKWj5R/OjaScTu6Mwb6YtlF7q4xPu8mocQqzKA1dynD
- H1sX1ol5dHUOVpGXS2WREkFocMpw8C07UzpHRjxEDQ/CLYHCsmevsiVqs4vBdZAKZ8mxByJQaUi
- NNrGAnSg=
-X-Gm-Gg: AZFdTZdBuiJLz70IT5q2rzQ9lsUUSP3YLTcivj4WCxI/H/HrRibBrHybXIMfzkr2a+q
- +19loT44GH/BrYbxumT6DTO3Z3rDvL+rpn0yEg9aRmQywJjG1GjEAboExR7bHvNv9eTJebA1C0F
- Usz46+wRPQpHe1AoeF781WgmiFR3UoSeVICdWLxwxlnsLZi02ucE2lkYRa+HVX3E89nM2nok3BR
- XO3CCbA3jILifU663k/IbgEW2Y1tuv/d+3THZQZ2le2jW9+//kncstHHm4X+gYRzcG2jK4cvtV/
- RIEJzpS9PE9Y2PycGxSmIh+Je8gFJexlXwGUeqUEr+62mylo+UU4gJ2ZcyTQBimwWXpKWQsVav3
- bT8OEjNKLHkEBe5Zex0+hglo0QkXzjS0s6Z62CjMDVmZxALfmOfB7+a0F0Calo7N3/gWivDVJTd
- v791jFm48IeU0nEEv0zyPw+0/XqDJKKiC969DELWDWULKcDAlCdEoL1k5xhP/XFZ6zEGWPhCJuQ
- 1TDCAppWVxEvdPs/YsWsES9Yuc0zhorPe6lHiANShczMx9P2HzlDCJTRvSp3GHW8oTpzwDioUiH
- xeshM9ANKvPePRDC3vDJmPNOBkg+ungdng9nkoosQyZYDGYP3KpyXNSBDPxCYGEam53LNXUblsG
- BieJBvnaZJ+kLJF4NaMHneeCAX0MCSSE5uytgCAHyuDn0H8qUojs49Sg=
-X-Received: by 2002:a05:6000:22c1:b0:488:83f7:6352 with SMTP id
- ffacd0b85a97d-49c6fc9e5bemr22822140f8f.4.1794827589562; 
- Mon, 16 Nov 2026 03:13:09 -0800 (PST)
+ bh=zOcK/FpIa2soozQBIj8qTA+KfQuG2+4S2+axJptJAD4=;
+ b=20ZEHxrxh3E0NJ8s7e3wymWmB4jP2I+RwJdLYsOlZXLe+ODGqucfsv9S+mITkvgOiY
+ hmQ+OrZOE0Abuj0XLPDrICiOYT8Cj/uzgpmQoBLMTCnY7NYnYYBqPzdaGjS0QFvCeAPn
+ UH4JASbAjSq+DTdBeVQf2ozQEiPfBWiMh4EWydS0evVF45ZrCFiIMtdJxI5e5PrXjmZ2
+ F/BxFhFlgoFWMPCLOyo/LKh9H+Wff+5WU/9whoQe2JGMIYoBrJPixD72KqkStYO+kV1s
+ 1Iqmlm43prWVm/wSsm8xT6qeSPZrdFobVTmx+pqUF7WbAFPB1dZJIkf1jtygvVLyR2zA
+ 2khg==
+X-Gm-Message-State: APuU4Z8Ku7Gyt+2oXX4eCPWrb2Djn71C6Cg+jJUskj8g4ydLADE9dAVP
+ 8I2xmqh4/Q23u/GQu0DCXSBlK9TxIKbApDCK+CqSVR1VeRD98edcL8c062rRbW8Fg0lJ7qBScT+
+ S/qX7N2o=
+X-Gm-Gg: AYBFou3WqQWalJcleMDID/yCO3zAX7R+A1AdD/Jtypui+XGL8RC+ICES1xqctQ4KCB7
+ 4gwNXzYHMkgJyjBK+X9QRixjJ5Q+WUCWIJscvzlm6yo3V474J8rP/n9IcppCK5gW9USiGFEDfe9
+ hf4ti1rFATl7ygSikuIT+sRytz8ZWbDY9rldtKi45Pqx+LvAFofakU8Jg89bCliQ4U78dxKA5PX
+ 1HqlSb88M0UvAVYTqXP40Q4T7GjS7tZx56pFSmPxNpsR8KkD8mOMbE6T9d+XQIMrrxXErFmtswz
+ pbPW/DS3IeT3scBHQ0lLuDoo2z2OpDmz1YolHh+hHq9wJC2KS7qqWAzaEX+V++umvVGKTNg8+id
+ qC0rXkdEEXcwtTuqlGA2FV8bJOLJtlUQ71k0G7SGeXpN5+mNRB+PnAgRSQ0JXbcZ5GfAjrsflsz
+ GidC1/Ac+X/ArRyi2mRx/NWlDpjmEGZBEVU4hvxl2tBr5PDfqVIgHP4hNB0a61vq+nBqkVCpAwm
+ EpisxXFhaRBHFBYJ9mjj3ZqWMTAhaTvVsFJsMN8IjDVAL5bVBzGitBlBj92MxeTzyCWS4/EkPfk
+ pAeelmb5CMmXXW+YQl1LE29hm7vMooOOy0LhBrkCRqCJdQk4gqwByAH0g9PkOKNtO8XDjRLNBS5
+ c2gnZY+8y6DIvm13dQWKFzRyYTVEaADsB0ms=
+X-Received: by 2002:a05:600c:8b23:b0:4bb:6f6a:1976 with SMTP id
+ 5b1f17b1804b1-4bb6f6a1e5amr80203685e9.2.1794827618633; 
+ Mon, 16 Nov 2026 03:13:38 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.08
+ ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Nov 2026 03:13:08 -0800 (PST)
+ Mon, 16 Nov 2026 03:13:37 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/33] hw/intc/arm_gicv5: Free memory in finalize
-Date: Mon, 16 Nov 2026 11:12:34 +0000
-Message-ID: <20261116111303.1692832-5-peter.maydell@linaro.org>
+Subject: [PULL 30/33] docs/about/deprecated: Add missing "since" marker for
+ OABI/NWFPE
+Date: Mon, 16 Nov 2026 11:13:00 +0000
+Message-ID: <20261116111303.1692832-31-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116111303.1692832-1-peter.maydell@linaro.org>
 References: <20261116111303.1692832-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,57 +107,37 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The GICv5 allocates memory and creates hashtables during realize and
-as part of its operation.  Free those resources in finalize.
+In 750c2d53ee4 we deprecated our linux-user support for the Arm OABI
+and NWFPE emulation; however we forgot to mark the text in
+deprecated.rst with the usual indication of what version it was
+deprecated in.  We announced the deprecation of this feature in the
+11.0 release, so note that.
 
-Since the GICv5 is created at QEMU startup and remains in existence
-for the lifetime of the process, this isn't an in-practice leak,
-only a theoretical one.
-
+Cc: qemu-stable@nongnu.org
+Fixes: 750c2d53ee48f1e ("docs: Deprecate Arm OABI and NWFPE support")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
-Message-id: 20261103172616.2400758-3-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-id: 20261112093824.2281467-2-peter.maydell@linaro.org
 ---
- hw/intc/arm_gicv5.c        | 11 +++++++++++
- hw/intc/arm_gicv5_common.c |  3 +++
- 2 files changed, 14 insertions(+)
+ docs/about/deprecated.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index d0a8574916b..fd6456cd8aa 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -1970,6 +1970,17 @@ static void gicv5_init(Object *obj)
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index de7d502babb..4188445ed45 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -451,8 +451,8 @@ across versions).
+ linux-user mode CPUs
+ --------------------
  
- static void gicv5_finalize(Object *obj)
- {
-+    GICv5 *s = ARM_GICV5(obj);
-+
-+    for (int i = 0; i < NUM_GICV5_DOMAINS; i++) {
-+        GHashTable *ht = s->phys_lpi_config[i].lpi_cache;
-+
-+        if (ht) {
-+            g_hash_table_destroy(ht);
-+        }
-+
-+        g_free(s->hppi[i]);
-+    }
- }
+-OABI and NWFPE support for Arm CPUs
+-'''''''''''''''''''''''''''''''''''
++OABI and NWFPE support for Arm CPUs (since 11.0)
++''''''''''''''''''''''''''''''''''''''''''''''''
  
- static void gicv5_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
-index 2920b11cc39..cfadfee4f05 100644
---- a/hw/intc/arm_gicv5_common.c
-+++ b/hw/intc/arm_gicv5_common.c
-@@ -112,6 +112,9 @@ static void gicv5_common_init(Object *obj)
- 
- static void gicv5_common_finalize(Object *obj)
- {
-+    GICv5Common *cs = ARM_GICV5_COMMON(obj);
-+
-+    g_free(cs->spi);
- }
- 
- static void gicv5_common_realize(DeviceState *dev, Error **errp)
+ Linux for 32-bit Arm has had two major ABIs: the original OABI and the
+ more modern EABI. OABI support was marked as obsolete in GCC 4.7 and
 -- 
 2.43.0
 
