@@ -1,63 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88807606A884
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A68606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cB+RqkCJ
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Yd5RjTD2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT55n-0003uj-3y; Mon, 16 Nov 2026 17:22:28 -0500
+	id 1xT567-0004M6-Mu; Mon, 16 Nov 2026 17:22:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55a-0003nI-4B
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:14 -0500
+ id 1xT55r-0003wo-7C
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55Y-0005zc-5n
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:13 -0500
+ id 1xT55o-00062A-W5
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794867731;
+ s=mimecast20190719; t=1794867747;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VYmz55K1mxZSDbD/poMIYWasVkJuIlsanoxTzDDkf5I=;
- b=cB+RqkCJLcPKcAb2VCI74uBJMKLe78GOQpkMrxCnjBgCrVQj/dH2uerKM0+xBMw0nl7DEM
- Eqf1eLlaflXAi/evBNY1pss6dv1RAPT3ytxFf6Cmu1YnzUCp/7VLDvuMltHyzLh7wu/5gK
- LsAOPim/w1HAtuNagl8FPUjS28nmKhU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jY7cwWDnssXWxeK/VSmybTy70JOwXP4zGPZ9rVcDbc8=;
+ b=Yd5RjTD2Ryq6biEdkQ7cK50MjypwzRJdOJzu7S4kKyB/uEKs/coDAkbTJVLKGx+Ijy3x7p
+ hPtww9ZuZl4jp4EKCf65qImW8z5HkduY5jyxvY8FcsOR9a9eKLeHnbbVeylPF+lcDDmkJo
+ N57jICk3+kR3Yl+460sW6NZ3hbwYMGc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-aF9BawrbPe2NZuU3Q1tqdQ-1; Mon,
- 16 Nov 2026 17:22:10 -0500
-X-MC-Unique: aF9BawrbPe2NZuU3Q1tqdQ-1
-X-Mimecast-MFC-AGG-ID: aF9BawrbPe2NZuU3Q1tqdQ_1794867729
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-BmQW0VNKMnuF6yWhZizoZQ-1; Mon,
+ 16 Nov 2026 17:22:25 -0500
+X-MC-Unique: BmQW0VNKMnuF6yWhZizoZQ-1
+X-Mimecast-MFC-AGG-ID: BmQW0VNKMnuF6yWhZizoZQ_1794867744
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7254B1956057
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:09 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D5084195607A
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:24 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BAE7B30001A2; Mon, 16 Nov 2026 22:22:07 +0000 (UTC)
+ id E83D930001A2; Mon, 16 Nov 2026 22:22:23 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>
-Subject: [PULL 05/26] hw/vfio: mark all VFIO object classes as secure
-Date: Mon, 16 Nov 2026 22:21:37 +0000
-Message-ID: <20261116222158.2840471-6-berrange@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 16/26] hw/tpm: mark all TPM implementations as secure
+Date: Mon, 16 Nov 2026 22:21:48 +0000
+Message-ID: <20261116222158.2840471-17-berrange@redhat.com>
 In-Reply-To: <20261116222158.2840471-1-berrange@redhat.com>
 References: <20261116222158.2840471-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -93,122 +90,92 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The VFIO subsystem is about securely passing host PCI devices
-to a guest, so all the classes should be presumed to be offering
-a security boundary.
+All of the TPM implementations are in scope of virtualization
+usage, so mark them all as secure.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Acked-by: Cornelia Huck <cohuck@redhat.com> #s390 types
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/vfio-user/pci.c | 1 +
- hw/vfio/ap.c       | 1 +
- hw/vfio/ccw.c      | 1 +
- hw/vfio/igd.c      | 1 +
- hw/vfio/iommufd.c  | 2 ++
- hw/vfio/pci.c      | 2 ++
- hw/vfio/spapr.c    | 1 +
- 7 files changed, 9 insertions(+)
+ hw/ppc/spapr_tpm_proxy.c | 1 +
+ hw/tpm/tpm_crb.c         | 1 +
+ hw/tpm/tpm_spapr.c       | 1 +
+ hw/tpm/tpm_tis_i2c.c     | 1 +
+ hw/tpm/tpm_tis_isa.c     | 1 +
+ hw/tpm/tpm_tis_sysbus.c  | 1 +
+ 6 files changed, 6 insertions(+)
 
-diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-index c749ff149f8..e3749cdd393 100644
---- a/hw/vfio-user/pci.c
-+++ b/hw/vfio-user/pci.c
-@@ -489,6 +489,7 @@ static const TypeInfo vfio_user_pci_info = {
-     .class_init = vfio_user_pci_class_init,
-     .instance_init = vfio_user_pci_init,
-     .instance_finalize = vfio_user_pci_finalize,
-+    .secure = true,
+diff --git a/hw/ppc/spapr_tpm_proxy.c b/hw/ppc/spapr_tpm_proxy.c
+index 19889e80bc1..bb6efec20c9 100644
+--- a/hw/ppc/spapr_tpm_proxy.c
++++ b/hw/ppc/spapr_tpm_proxy.c
+@@ -166,6 +166,7 @@ static const TypeInfo spapr_tpm_proxy_info = {
+     .parent        = TYPE_DEVICE,
+     .instance_size = sizeof(SpaprTpmProxy),
+     .class_init    = spapr_tpm_proxy_class_init,
++    .secure        = true,
  };
  
- static void register_vfio_user_dev_type(void)
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 2926e04ad49..45d67b8ba70 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -356,6 +356,7 @@ static const TypeInfo vfio_ap_info = {
-     .instance_size = sizeof(VFIOAPDevice),
-     .instance_init = vfio_ap_instance_init,
-     .class_init = vfio_ap_class_init,
-+    .secure = true,
- };
- 
- static void vfio_ap_type_init(void)
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 8e29a3ae613..6d71e196ee0 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -723,6 +723,7 @@ static const TypeInfo vfio_ccw_info = {
-     .instance_size = sizeof(VFIOCCWDevice),
-     .instance_init = vfio_ccw_instance_init,
-     .class_init = vfio_ccw_class_init,
-+    .secure = true,
- };
- 
- static void register_vfio_ccw_type(void)
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 728b60d3d4a..46ad988ee68 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -321,6 +321,7 @@ static const TypeInfo vfio_pci_igd_lpc_bridge_info = {
-     .name = "vfio-pci-igd-lpc-bridge",
-     .parent = TYPE_PCI_DEVICE,
-     .class_init = vfio_pci_igd_lpc_bridge_class_init,
+ static void spapr_tpm_proxy_register_types(void)
+diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+index 78db2205207..ab6121ed9e6 100644
+--- a/hw/tpm/tpm_crb.c
++++ b/hw/tpm/tpm_crb.c
+@@ -558,6 +558,7 @@ static const TypeInfo tpm_crb_info = {
+     .parent = TYPE_DEVICE,
+     .instance_size = sizeof(CRBState),
+     .class_init  = tpm_crb_class_init,
 +    .secure = true,
      .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-         { },
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 90ddb54f4c3..97f6470643f 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -1061,10 +1061,12 @@ static const TypeInfo types[] = {
-         .parent = TYPE_VFIO_IOMMU,
-         .instance_size = sizeof(VFIOIOMMUFDContainer),
-         .class_init = vfio_iommu_iommufd_class_init,
-+        .secure = true,
-     }, {
-         .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO,
-         .parent = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
-         .class_init = hiod_iommufd_vfio_class_init,
-+        .secure = true,
-     }
- };
- 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 0da2e143b88..96078660777 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -4115,6 +4115,7 @@ static const TypeInfo vfio_pci_info = {
-     .class_init = vfio_pci_class_init,
-     .instance_init = vfio_pci_init,
-     .instance_finalize = vfio_pci_finalize,
+         { TYPE_TPM_IF },
+         { }
+diff --git a/hw/tpm/tpm_spapr.c b/hw/tpm/tpm_spapr.c
+index 19075d1f012..3957c5268b7 100644
+--- a/hw/tpm/tpm_spapr.c
++++ b/hw/tpm/tpm_spapr.c
+@@ -414,6 +414,7 @@ static const TypeInfo tpm_spapr_info = {
+     .parent        = TYPE_VIO_SPAPR_DEVICE,
+     .instance_size = sizeof(SpaprTpmState),
+     .class_init    = tpm_spapr_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_TPM_IF },
+         { }
+diff --git a/hw/tpm/tpm_tis_i2c.c b/hw/tpm/tpm_tis_i2c.c
+index b4f258c7bcb..302296affb6 100644
+--- a/hw/tpm/tpm_tis_i2c.c
++++ b/hw/tpm/tpm_tis_i2c.c
+@@ -551,6 +551,7 @@ static const TypeInfo tpm_tis_i2c_info = {
+     .name          = TYPE_TPM_TIS_I2C,
+     .parent        = TYPE_I2C_SLAVE,
+     .instance_size = sizeof(TPMStateI2C),
++    .secure        = true,
+     .class_init    = tpm_tis_i2c_class_init,
+         .interfaces = (const InterfaceInfo[]) {
+         { TYPE_TPM_IF },
+diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
+index 2b1267133ac..da3a932b033 100644
+--- a/hw/tpm/tpm_tis_isa.c
++++ b/hw/tpm/tpm_tis_isa.c
+@@ -187,6 +187,7 @@ static const TypeInfo tpm_tis_isa_info = {
+     .instance_size = sizeof(TPMStateISA),
+     .instance_init = tpm_tis_isa_initfn,
+     .class_init  = tpm_tis_isa_class_init,
 +    .secure = true,
- };
- 
- static const Property vfio_pci_nohotplug_properties[] = {
-@@ -4151,6 +4152,7 @@ static const TypeInfo vfio_pci_nohotplug_info = {
-     .parent = TYPE_VFIO_PCI,
-     .instance_size = sizeof(VFIOPCIDevice),
-     .class_init = vfio_pci_nohotplug_class_init,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_TPM_IF },
+         { TYPE_ACPI_DEV_AML_IF },
+diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
+index a7b0002d826..0afb52c3be3 100644
+--- a/hw/tpm/tpm_tis_sysbus.c
++++ b/hw/tpm/tpm_tis_sysbus.c
+@@ -167,6 +167,7 @@ static const TypeInfo tpm_tis_sysbus_info = {
+     .instance_init = tpm_tis_sysbus_initfn,
+     .instance_finalize = tpm_tis_sysbus_finalize,
+     .class_init  = tpm_tis_sysbus_class_init,
 +    .secure = true,
- };
- 
- static void register_vfio_pci_dev_type(void)
-diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-index 42690e4323d..1027c434c07 100644
---- a/hw/vfio/spapr.c
-+++ b/hw/vfio/spapr.c
-@@ -544,6 +544,7 @@ static const TypeInfo types[] = {
-         .parent = TYPE_VFIO_IOMMU_LEGACY,
-         .instance_size = sizeof(VFIOSpaprContainer),
-         .class_init = vfio_iommu_spapr_class_init,
-+        .secure = true,
-     },
- };
- 
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_TPM_IF },
+         { }
 -- 
 2.56.1
 
