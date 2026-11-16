@@ -1,94 +1,158 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E0B606A33B
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 16:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EC5606A322
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 16:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=quante.one header.i=@quante.one header.a=rsa-sha256 header.s=cloudpit header.b=Rlg7fuO/
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UNU0Zlal;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=hrjaEW8o
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSzTU-0001NU-5O; Mon, 16 Nov 2026 11:22:32 -0500
+	id 1xSzcW-0003LH-EW; Mon, 16 Nov 2026 11:31:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1xSzTR-0001HM-Gl; Mon, 16 Nov 2026 11:22:29 -0500
-Received: from nx186.node02.secure-mailgate.com ([192.162.87.186])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xSzcN-0003KL-Ih
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:31:45 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1xSzTP-0000Fk-3H; Mon, 16 Nov 2026 11:22:29 -0500
-Received: from web279.dogado.net ([31.47.255.59])
- by node02.secure-mailgate.com with esmtps (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.94.2) (envelope-from <christian@quante.one>)
- id 1xSzTE-00CW9P-Fg; Mon, 16 Nov 2026 17:22:18 +0100
-Received: from Zeuss.fritz.box (p57b2ffb6.dip0.t-ipconnect.de [87.178.255.182])
- (Authenticated sender: christian@quante.one)
- by web279.dogado.net (Postfix) with ESMTPSA id 271E3282943;
- Mon, 16 Nov 2026 17:22:11 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
- s=cloudpit; t=1794846132;
- bh=if30rIP8+DWQolW7tyYCi65CxTJiAZzWI2CEnrgBX0w=;
- h=From:To:Cc:Subject:Date:From;
- b=Rlg7fuO/tjQyWt0DaE8F58AQHWHC6+8mpFhNJWQGbzey5p7MDi6k6ds4J9aAi89gi
- MHj2RLMGbA2pGaQ4jrEaZxY2fIopVYDqgbap1lcQgMcD1Ed1thSJlAzDSNNMOaZ+m5
- NDmpTZ9s2u/BEy6Axl96pZxuFvte4DhyjaXDa2dA=
-X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
-From: Christian Quante <christian@quante.one>
-To: qemu-devel@nongnu.org
-Cc: kraxel@redhat.com, balaton@eik.bme.hu, mst@redhat.com, pbonzini@redhat.com,
- peterx@redhat.com, philmd@oss.qualcomm.com, kwolf@redhat.com,
- jsnow@redhat.com, hreitz@redhat.com, farosas@suse.de, lvivier@redhat.com,
- marcandre.lureau@redhat.com, odaki@rsg.ci.i.u-tokyo.ac.jp,
- richard.henderson@linaro.org, mjt@tls.msk.ru, qemu-block@nongnu.org,
- qemu-stable@nongnu.org
-Subject: Withdrawal of my pending patches (written with AI assistance)
-Date: Mon, 16 Nov 2026 17:21:23 +0100
-Message-ID: <20261116162123.8527-1-christian@quante.one>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xSzcL-0004Ip-MK
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 11:31:43 -0500
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AGGIecT2055784
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 16:31:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ lboPQskACxY4qLfqt7rvseev/MINSGdPQDJPOOrlG7c=; b=UNU0Zlal1OSsM5sq
+ X7FHJCoi888s2LBz+7ieopuDLunkmivnX31+8Rvfvg0kCW+RNzJiqmwTnppZRDQT
+ RlLo1/l+/Uuw0XnSU+dnr8QDbzikcEOvLXoUT+fx2UfvmqEyhHQXY/kFh6WVzOmP
+ WYto9S+Y21/T2TgIlRlQUve+IfOZQeEbLf7q6rLPy7TOyeTKXDJIbfQfnbbfWyH0
+ ZpAe81E2Z1emP2F1+HVk3I7gBbH+2RO/Evg1OpQYiEMx/MfWdvKFJQs/BKopYQ7N
+ QAWrZ3rNtVh99rmdhp8X2FprGOG0Q01yfYtUqIvTnqc0IqfckhfNvXo0F1WLdEAD
+ KY7tlA==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hyyrqherd-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 16:31:39 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-cdd769cc9deso1864023a12.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 08:31:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1794846699; x=1795451499; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=lboPQskACxY4qLfqt7rvseev/MINSGdPQDJPOOrlG7c=;
+ b=hrjaEW8okyPH5uSLIYQuKjTK+3o4RalTKFZSwyVKnc14pkjc6fWA9Htp+VPzZfK3z8
+ 8TD3F1tMM95fdkaYDoikSozOUnLkPWxiUCurhcIEpBfOQARjl2B5ZJ++ldZVuR7OHbZ3
+ JJpdfwr0k2pXN4DzdXvOnZvVv/kGmcDoOKoKSHfuOMJ1PK6iTFWfxySzqfNdWg6pVd0t
+ 6IzyyEIidJET8zkEuL96hk9G3t/SeoPWszIJCWoUIbIzvoJMTNmA4V4sA16+8SYLkKOz
+ Qx2qiMYB4ubseXfP1rVfybJr+CohUCYd6N14Uttv+LRFvSQAkNOnIuThpl7wsX9CYaeu
+ faIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794846699; x=1795451499;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=lboPQskACxY4qLfqt7rvseev/MINSGdPQDJPOOrlG7c=;
+ b=e/YBnn416tDyQPZZYF+QPjC2gqQ8YcsnmC/+qntUUMkkAifQENnF/ByZEBj53pPfmp
+ GFNX8gIwWsm6ayoozvcN3mxWkLOo/q/aV0uIwJXc/tqgF5/qiAJeRVEO33ga9zuz8qK/
+ Xqygw+eHuDcgou9PF7/XpckaGlRVIh+chjqdkT5q2CJBIOcs8UkkVgMRnMEm4wMe9JrW
+ 9idbv+8zU8gTLmPOvVfvAKAv41AZV6b9Gni7FWtPL+YBV0J0Gm7Xs/SGNQZcrT7NXrnN
+ L4iBzbTSqh4J70uCgD+5vIgs2aPBdLJoIVSJI09+KxUSvlGPUqIQluFYs/R0UX5aKXaJ
+ WlNA==
+X-Forwarded-Encrypted: i=1;
+ AL+hErGPHns6imRHSvtdbl32cuuUvcrUYLrBwQJKUwnpCs2qY8s6Aw9IOQzzgfBm19gDncMalQbBnlxHoLDT@nongnu.org
+X-Gm-Message-State: APuU4Z8eLKVq94wdUBfvL6jXUWknVXai586k1wP/tevx3pZ4iHxpeJN8
+ TRVKElC8eVdwFh6kzqZGsfav+G1YZWLWc95a7NjsGXQri0b4LD3nQRYZRU85LnvDBFxvNt8g5TG
+ nNxSS6ZLa3E82MgV4iJPxVlL4hK7grsYNo5X62ZUVlnj4zqXAPytAA5qBSw==
+X-Gm-Gg: AZFdTZdrZS9I7CfcHrHVnWfgjBS/UPx26lFiFztxmCugIxcJ9BHmKEcQe4pgBR0Hcip
+ emWezDzWYkXq//sUEXHu9X0A1e/IPwc9gSXV4weMQTfnajJiHO/9REN3HR6oDkxeTVv5xukqgx3
+ UPNa0kAYCFvirX1GScKN0dSmnTvxFa5TDGqoh0EQfvnxyfZoc7Pa2XZmm3XhKu4k+ECzeO2LenG
+ cLk+SYejdUKVgg0aYuzdgcdR/ckbwhzo2Wd/F7IAbe0r3CjTITxJqSUEB+UbGzU/W4A2P3V6iVt
+ J1bNHB7+VxQ8j3JJEY4o/JVDvJgjtqHoZBuIiksAg/a0K2CLDSn7CWr6sG42JcbWb+Oh2EXeiyU
+ RrjMfA2FKTE4sZ12cf65cP3vgHGRsW04DzPGGkSiL2AHf6SQqnwV1wyJCvUVOBfaMQi1SgjzU83
+ M5m2vEPRc1SREU5TELP7SQg3jJ1AgqpJvKgrU+U8jMDs0=
+X-Received: by 2002:a17:903:908:b0:2e9:970c:2c9 with SMTP id
+ d9443c01a7336-2ee0dc341bamr115252605ad.42.1794846698652; 
+ Mon, 16 Nov 2026 08:31:38 -0800 (PST)
+X-Received: by 2002:a17:903:908:b0:2e9:970c:2c9 with SMTP id
+ d9443c01a7336-2ee0dc341bamr115252295ad.42.1794846698043; 
+ Mon, 16 Nov 2026 08:31:38 -0800 (PST)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2efd7a583b4sm1740275ad.44.2026.11.16.08.31.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Nov 2026 08:31:37 -0800 (PST)
+Message-ID: <558f35d3-5a10-4652-8af4-4a88f382ca3d@oss.qualcomm.com>
+Date: Mon, 16 Nov 2026 08:31:36 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-12.0 v2 00/12] linux-user/aarch64: Support both
+ endianness at runtime
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ devel@lists.libvirt.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org
+References: <20261112180859.85380-1-philmd@oss.qualcomm.com>
+ <9b64d3d9-736d-4878-80d7-4caa75eee778@linaro.org>
+ <CAFEAcA8La+8TqFY0yCxRsXY2Ad9MA5Uu-sVEbysExZPkUXVawg@mail.gmail.com>
+ <ccfcea11-ada8-4753-a71f-f59ed1bcb067@oss.qualcomm.com>
+ <CAFEAcA9FE_dTUo5s2g7DMw9-ZhbjBUOfF0RJxdT7gMwm-rYuGQ@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA9FE_dTUo5s2g7DMw9-ZhbjBUOfF0RJxdT7gMwm-rYuGQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <179484613211.652326.4506329505005404133@web279.dogado.net>
-X-PPP-Vhost: quante.one
-X-SecureMailgate-Domain: web279.dogado.net
-X-SecureMailgate-Username: 31.47.255.59
-Authentication-Results: secure-mailgate.com;
- auth=pass smtp.auth=31.47.255.59@web279.dogado.net
-X-SecureMailgate-Outgoing-Class: ham
-X-SecureMailgate-Outgoing-Evidence: Combined (0.08)
-X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVde9jLxQVzhBUnku5ZK9/OQdH/g5Xk48G8
- fNEsIrVeZCu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
- zJ6mVE7ewsipSVIfs4Z7R2GnCdeNxV4tA2HwQn97S5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
- 1vk99RO8CkBBeOWZWzhmlHwZjt9mdOtYechJ/ikE1WgRg4cS6A6B6pTstltS07kaQJ8I9sYal0h7
- 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgnsj5xBssn0tIIHA3aH
- QzCq60l8YRpcxCjc2gcMa3Btw+OTpzU5Yy8oe2B0dJEHaEkqZOJGV2rGZzAbG8h1gtZeBYfLAJ36
- RwtyxBRSZ+49vRTbtL2xdv15aIRWgfI+e3bKAVGCsj3syyAgjkeElAqpympn9Qu9+qOAy3gbtVOj
- 1va6YhK5+dp8kEJU4mkN7XR1uPsgRZuVzkMk1nNs1DI/AtrPIdrj+MU9VljMuQX+KaMAyJW22/qr
- FCGyTHEChKOME80+HzI05N/GY8fJ7Q+SXEnnu3wNVkc5It+/rMjHIKm3P59UJG1k9axRPrr6VJnu
- 6mRJcBCvqTGSaTEp3sSCLm37s3WKeMIWIGsITuh6xVDqzA08iw5lNTCPqxu/Tf9tCBikOb/VIcWB
- 1wD71iSmn+IeVr6hpcD4n6aukp6RdkmguQ+DxIA9kGOfHfjoPGbMXe9dIBGa2b5mCEmRBMBV70e4
- wgQsGYkBMhlI4dOUBZ7t2w55LqiFPyoZKyYUSDAPHXxjq2A09VZCtd9IE6xLQPqPSmgkf2rR+sR9
- StmGIR+UtjOvgqOFSF8G9GCEzF7MQ+bLY64w5gxDNqywnL645ZKq8uI66hekW7QsMPuD9lKWtlPB
- bNXQ4QgVcd39aIMn4gtHiA5BOPjHx3g7UbIr0j6m8Z3TbuDICLL8IEpevqQ1cv04nsK9aoUYSlnC
- RnsBCSf3kpMO36LqsCYmrUY4CzCvRwvqVEAQMkdN/mM3fGLIiJeUE/3oNsBizT8bwOjuTVHN5Oyb
- 5a7ce8OKHV2D/nJmqQVjm9pQK+yEfs0QBCpsO/Pxd1YvdZuooMNn1nW9CPts942jgiBHZTGfQqst
- mvni4DsdvpDSN6CWTjglrSy5a/o4rJv5DhhaFkkWeY0OdXPtr0YLB5IKVhOGun7HSwsON1wh1xpD
- Se4KVeizO8dtVhKN+9/KNqonH3Ez1atO/mpOaiqLTT2I808XC7uuDEVFWbeJk0JpoH7+62XJNPhb
- 3uEBdIZhTi/GRORCJZ6JOW16W/8nkd0N7tqGJSaCSm5Ip0FFcxC2w+rfWXmvhf9/PqHkE/eclnzJ
- pUyzKiE53/2pu39f8ayy4PmoIK7+Wz+M3Q4uqZcUXVuY0hSxXSzFZvplGiUheeLMuYRj18+fB8FQ
- QuOKz1mV99KWcDBjk9+YseVXoQXNnFEe+Nrzu9pPs2TEKE7lapcJLe9NquanPkET8/FK87za3FG6
- skt/DNhzVfdYAWUP9T27PHqOuCJBUwGYm28JMh2nFvlk1I+LiV5+7u4hYkLyVctr6X6bTKqEODrE
- hhDtdBZ0Y0hjgg==
-X-Report-Abuse-To: spam@node04.secure-mailgate.com
-X-Complaints-To: abuse@node01.secure-mailgate.com
-Received-SPF: pass client-ip=192.162.87.186; envelope-from=christian@quante.one;
- helo=nx186.node02.secure-mailgate.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=VcJir1p9 c=1 sm=1 tr=0 ts=6afb2feb cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=Hxx5zoP2HA8tHVih_BIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-ORIG-GUID: s8B568n6BmelSHAbgSN5aUCoWawSKv1R
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA2NCBTYWx0ZWRfX0EBBxiW2+R5v
+ MHJsLK/L0qmCil2IzrvGJmBQClxXZG05/1n0VOyDq+yIubHZTKeeqFNbpUMUN5SuwvBmFiEGRJG
+ +tzDsdAFc4frwOIz3XRdCbu8kTXkkwcXoLVZQs6ld1U6q0wWVPtOejOAzo6G4KxlzXX3cuVYIxS
+ oQyYRqhqZQ1cYMjlOxG7fQT5P8qD8lI/Ws0/YVu0qifb9Gpe5OGA8fcvE2SpzimtQwZjmOnYMG8
+ 0R+izQSIoUn4HUbhzL/vC19OHSE4n2V6NThgu7ngIB82fYRhHODAAsy7KYGSlPHPpWAx7BPVayK
+ KssC6Nx4E9wiiOQTyu45fLoYPSJm711Dr3TMATxCC9Ck2tnS2WeviQLSQQu/JZB9t0dwkbl48A5
+ Uqb1CHtPipi/PnXKsHSxd2zISDBNKTMj4oX9zaLgURlqyin8rnnwpfg8XehUSevtB5ih6A7o8/m
+ nz1SZ0s0B8+Mwocxv9g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA2NCBTYWx0ZWRfX9vE4cQs/Y+2R
+ 621/d1e/Rfm4xNZwAnkeYNosKShN/JGpdhYPXK9uRqvRd3we8rfkow6saMSZ2xYxnzS2CfD+f+b
+ FFfLaItZRWNUHLX3n8zYf3IjxPiIEOw=
+X-Proofpoint-GUID: s8B568n6BmelSHAbgSN5aUCoWawSKv1R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-16_05,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611160064
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,67 +165,78 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi all,
+On 11/16/2026 2:00 AM, Peter Maydell wrote:
+> On Mon, 16 Nov 2026 at 08:53, Philippe Mathieu-Daudé
+> <philmd@oss.qualcomm.com> wrote:
+>>
+>> On 13/11/26 19:55, Peter Maydell wrote:
+>>> As a more general question, is this something we would want
+>>> for architectures where both endiannesses are relevant (e.g.
+>>> mips, ppc64)? At the moment we consistently for all targets
+>>> handle big vs little endian as "it's a separate target with
+>>> its own executable". That's convenient because you can at
+>>> compile time hardwire in things like variations in struct
+>>> layout between the two. We could switch to doing that kind
+>>> of thing at runtime, but what is the benefit we're aiming
+>>> for by doing that?
+>>
+>> I did the other conversions (Microblaze, Xtensa, PPC, MIPS, SH4)
+>> and wanted to test the water first where this would get more attention,
+>> with the series involving less changes.
+>>
+>> My motivation is MIPS where we currently have 6 binaries and I'd like
+>> to add binaries to cover more ABIs without having a combinatory
+>> explosion and have 18 linux-user MIPS binaries. With this approach I
+>> reduced the current MIPS set to 3 binaries and add 2 more, ending with
+>> 5 covering more ABIs instead of currently 6.
+>>
+>> In order to get there I need the few core changes introduced in this
+>> series, which affect all user binaries. I have the idea ARM users are
+>> the first ones interested by no performance change thus is where
+>> I started the benchmark to prove this approach have no impact in emulation.
+>>
+>> The TargetInfo structure change (one initializer LTO-protected and
+>> all accessors via read-only exposed structure) is also what Richard
+>> was very keen to have (page size support planned) instead of the
+>> current approach.
+>>
+>> I'm thus returning the question as: why would we not want to do this?
+> 
+> Mostly because what we have today works, and the idea of "the
+> target ABI is known at compile-time" is quite deeply embedded in the
+> way the linux-user code is written (both in terms of ifdefs and
+> also C types being defined appropriately for one specific ABI).
+>
 
-I recently learned that QEMU does not accept contributions that include
-AI-generated content (docs/devel/code-provenance.rst, in place since
-June 2025).  I did not know this when I sent my patches.  The code,
-the commit messages and my mails on this list were drafted with
-Anthropic's Claude; I reviewed, corrected and tested them.
+The last part is what we had for system mode, and precisely what we have
+been able to eliminate while working on the single-binary.
+We could keep minimal wrappers to previous binaries in case we want to
+wait a few releases to completely remove them.
 
-I apologize for this.  My aim was to make QEMU better at running old
-operating systems and software, not to be disrespectful or to waste
-your time.
+In this case, the benefit is that the same existing binary (without
+endianness variant) will be able to run "more things".
+Since we talk about user-mode, it's strictly dependent on the program
+passed in parameter, and we don't need to manually specify endianness
+anywhere.
 
-I withdraw these pending submissions:
+For the "how to make sure it works like before?", as usual, testing, and
+a small leap of faith are required.
 
-- hw/display/cirrus_vga: fix four BitBLT bugs seen with old guest
-  drivers (5 patches)
-  https://lore.kernel.org/qemu-devel/20261018050643.9288-1-christian@quante.one/
-- hw/input/pckbd: raise the keyboard irq for 0xd2 also while disabled
-  https://lore.kernel.org/qemu-devel/20261018051715.12267-1-christian@quante.one/
-- system/memory: keep coalesced MMIO zones when RAM is mapped over them
-  (v1 and v2)
-  https://lore.kernel.org/qemu-devel/20261018051813.12379-1-christian@quante.one/
-  https://lore.kernel.org/qemu-devel/20261027093223.129015-1-christian@quante.one/
+Overall, I think it would be a nice move for user-mode.
 
-Zoltan and Philippe, I am sorry that I cannot follow up on your
-reviews of these patches.
-
-The following patches were made the same way and are already merged,
-some of them also in stable releases:
-
-- hw/block/fdc: do not claim a diskette that is not there (2 patches,
-  since 11.1.0)
-  https://lore.kernel.org/qemu-devel/20260714164031.60551-1-christian@quante.one/
-- hw/input/ps2: answer unknown mouse commands with a resend (2 patches;
-  the first one also in the stable releases since 11.1.2, 11.0.5 and
-  10.0.14)
-  https://lore.kernel.org/qemu-devel/20260825075127.34876-1-christian@quante.one/
-- tests/qtest/fdc-test: give each test case its own instance (3 patches)
-  https://lore.kernel.org/qemu-devel/20260822104329.42121-1-christian@quante.one/
-- hw/block/fdc: account for read and write requests
-  https://lore.kernel.org/qemu-devel/20260824114216.231916-1-christian@quante.one/
-- tests/qtest/fdc-test: check block accounting of non-DMA reads
-  https://lore.kernel.org/qemu-devel/20261011081433.73397-1-christian@quante.one/
-- ui/dbus: send a Scanout before the first Update of a new surface
-  (2 patches)
-  https://lore.kernel.org/qemu-devel/20261022134335.12241-1-christian@quante.one/
-
-The same applies to my Tested-by for "target/i386: Update cc_op for
-SAHF" and the issues #3959 and #3971.
-
-Whether you keep or revert the merged patches is your decision; I will
-not object to a revert.  Now that I know the policy, I will of course
-respect it.
+> The idea of not having to have 18 different MIPS linux-user binaries
+> is pretty tempting, though.
+> 
+> thanks
+> -- PMM
 
 Regards,
-Christian Quante
+Pierrick
 
