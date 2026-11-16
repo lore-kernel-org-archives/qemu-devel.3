@@ -1,99 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA40606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 23:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189C9606A333
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 23:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jMKlc5Pe;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=GBJOJIQf
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ZFGkakDR;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dsjF5/z6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT64m-0006lr-1I; Mon, 16 Nov 2026 18:25:30 -0500
+	id 1xT64y-0006sq-9I; Mon, 16 Nov 2026 18:25:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xT64a-0006eh-Iw
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:25:16 -0500
+ id 1xT64j-0006mI-R4
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:25:26 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xT64Y-0004X8-P0
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:25:16 -0500
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1xT64h-00059G-Es
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:25:25 -0500
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AGLCDNp2710439
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 23:25:13 GMT
+ 6AGJenjS2727710
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 23:25:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- FaaV/EsEktMabD8dGYYauHKBWzcfKbywPrEEulzv7u0=; b=jMKlc5Peu8e0pV1D
- eQbh08M9WZVPQaFoikQfClWxWD1uhHOdY5LqKEZhwKGoIrLiOd1MXUfbdotVHdRa
- MVaN0II8cUU2SQ21NPpYsmAHjaBNnjWwIh9eQ86h7iQUoNjpJrdwMPdgEW2TtKY1
- DiR2XNIP0/FephXA0yPv+9tzlTJXDP0YM+dKjk/P46QLiAjVgaS5oKwC56E8ecPl
- EpC2ffy8XjYFQyn3dOeZP8PT7xk/ie96qPE/9oGbS10vRdy0IMXluqtnbbc2v5di
- 0sCoNSjad/ixrojy9R2kSEVOfDc5se18oKLK5YHX6dvPSMcbSQHCq3aKFo6IvIXB
- u/Y6CQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j09htgcsm-1
+ 3SjpamYB+ObW21/fwHJmI37OjTdNmeMF+p5JD+ApNWk=; b=ZFGkakDRhiZ/JnEC
+ IsOkN9m4aI3XRkvsB4zqB7FwoOmSfC7rjHlLnou3aeIZG2ZtwxIHYGljCxKAVjS3
+ t7gjoAFyJNmt3Bb/iUoNm8zzAY7g9CAS9pSc5WIVXkOAdybqIwr79s2230xAS4ZP
+ k7Ays6O6KBjSdql9RDIEHDP6dJsrjYppEYMhMXhCZEITeMGRFUDQOttjKgT0ae+S
+ B69exaq6MPP2XaO3VZCU49yDqlDOxjny+Fv8vupyTbDdI7tFNFLmWJuUchsyobv7
+ aACYSZtZItpmjUx6ahz83RWpaiWhohY8LMUxEsZCwCPnlIa56EnGq+Gobx3ARRKD
+ kzMQNA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j07regv37-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 23:25:13 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-94967c6d4f4so243690785a.2
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 15:25:13 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 23:25:21 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-94961511b61so553973485a.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 15:25:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794871512; x=1795476312; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1794871521; x=1795476321; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=FaaV/EsEktMabD8dGYYauHKBWzcfKbywPrEEulzv7u0=;
- b=GBJOJIQfr8fHdjXVkCjAGkRYCTTOjnbjE0hupKN8YBjtErcy2WguABruQmMETHA+qh
- koUVfAUSt61p4+SeIqSP6XFZZ8/VTVwp3bp8kd00+WqUlKzQxkI9a7eYTB60ijKX43is
- qYuZ8J7bdAd3lCEMCeDIe2phXy1PAPEE8sv3boD2F+reDLjkEIlmUuKPpN7NXWpUg1Yv
- 3E6fzGnilEfng1gf+DGzM45aptEriOppAl7Uv7Malfz5GhR2Q6Z3pAhMtxHEM2bUR9Bf
- g6KbGhBb5aPh5W21VeQC8Z+Heq3ichAbAvAopUNTwLChEMLIH4PVxto7JqbYQC6bTSCA
- 5jCA==
+ bh=3SjpamYB+ObW21/fwHJmI37OjTdNmeMF+p5JD+ApNWk=;
+ b=dsjF5/z63M+90x0DJi0ubuAoCKDgxGEV5we3Mm4bl9fSlkqKGhzzd6fZ7W1O/7cNVu
+ cCDKMV8M0IAuCo9pxyVwKyDGHdOR5fpZgNlzkLt9lQBgtw0j+txK9JyHE04zG0kmup+0
+ w7x4mQxPtP5r3NA5KX9KWSTDYmOByj2AsLQ4+hrIYUXGkhUxUat0yOamujKkHCtV4jN8
+ j6xhzYt0Zjtgz5DpATSRwkLE5uz5bnN+RLD6x2j0UghP7kiJTbLeSdmbSyfe4+jEL3j+
+ 5ZzjgmWkWdBwx6KPkUVN7Ucdo4xxzQs+GPmDiCq2uvmDflbD4vfCS9u6f87XmqWSgKPY
+ So9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794871512; x=1795476312;
+ d=1e100.net; s=20260707; t=1794871521; x=1795476321;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=FaaV/EsEktMabD8dGYYauHKBWzcfKbywPrEEulzv7u0=;
- b=Azl9aSmriEC1Yx6fqnutnW7RmLMUscJX708KHsxMhfoP8WniKPkFzond0uwlfepvYs
- RmNPrkLKBfMvyNUIGMYAxa4XTPIXMqkZvkEbpLeqbXqwi3JXJKoTriTrryLnXDkJQkIs
- f3PPRm9iZ2D0YuT+jT+WnwVvA16L1RoVp4KfJY/Bnlf3oggpAEOXSh91Xs/ZNdYSzvEo
- HIWMGO00PoD8Vka+IxHMcOnAqfxd6Epe41sccEWgnYVGEbUkSUa+CnjUHND8ylYIUj7j
- S5NyOpsjmxYcsWWif4S5td+p5bXwqeZnNQSvyXjQGSyvJNKOD0h1WsDL0HH3Iwz7Rijb
- kXqg==
-X-Gm-Message-State: APuU4Z8FA8HJArLI8o09J5RrJYb+ngHaBn5LyrRLM2ch/HnC/UK5GGyY
- 6NlPoA3q43FhvjDeoFxaIOM6Ype5r4GhMZNv3qqngYJkyiRJY33Ry3CI4qJtDkTcrPStcKBWzDR
- btrGceji6OjXbN/60rMGGe8CjP7DEjhrYsrBBqp9vzCQbUbYxuD7cKPNJT9y4v4GZFQ==
-X-Gm-Gg: AYBFou23bIZd5llIqORu7seMHv3YkbAabtMtHGKvPfnD9AxIdzelFzghKt/VR+Cqs6A
- 8xKh1ZvVPNlSL053Or3fsxu4E8NXw+cAuqZg+KM9nUg49WhY9qkqN1hHABzChvT8jpZ3C5YGEqG
- dgWYx9PDWjxmhrN4gg3506gtpTTZmF+yw/SQ6RRjncHXIR9JwUttv3SMnaYgg7KRVa4sNS6CAw0
- WP75xEZHERB69g72NQwoThPo8ZfCGeccYVRTZncpYF4RMOJKiGHn9N4tBugmJP0ROkbiWRF9Kgd
- 0HCCThMSYxvQ8gLna/kli5dkACDGpNTBQ9xw6pBTXlVut1TkqMoK7M/a0Hq/2RkQudT/yK682sl
- h2cN0/NUodBZTbT9/p68a4Wyz/aMfMbpvgeHvY79gXu8/q9gXnbucz/t4kDlB/3jyVTOYAJNWo2
- raj+2VO0ZRvFSZ/g==
-X-Received: by 2002:a05:620a:1a09:b0:948:e2fb:c00a with SMTP id
- af79cd13be357-9494bb892fbmr2006538285a.28.1794871512257; 
- Mon, 16 Nov 2026 15:25:12 -0800 (PST)
-X-Received: by 2002:a05:620a:1a09:b0:948:e2fb:c00a with SMTP id
- af79cd13be357-9494bb892fbmr2006534585a.28.1794871511755; 
- Mon, 16 Nov 2026 15:25:11 -0800 (PST)
+ bh=3SjpamYB+ObW21/fwHJmI37OjTdNmeMF+p5JD+ApNWk=;
+ b=sJwrpWqd0ShaTg22dQydcH3pV94Lh+knZqiI7xlVLxPDtbZjc886Rekw3Irfe45S1A
+ 0CQe6Kmtc5MqYGf18cR3AOBVZvCOP8OPLkaQZacJ2UkQZH7XVnjASCj8AbLtP2WN+gJ/
+ SF15aLHyRaEEKfDVqzgM8ABtAwn4w3rtpvBMmKTE0NS3L+L0lHNAJpqGlGrzHVmTGTcL
+ l9W7iB5EJyNxanQGm5Jwz0I8H/RjWGYrFtTtzYxUTAWQQmu2nPgHWWv69erlEMq8A2ec
+ Q1Db8XfYgzNVI6QnkNeu7gVaMPr3x9MGYWQT344RzNP1t+EYCWnV6I2etFB/ZdWJpXho
+ cdTg==
+X-Gm-Message-State: APuU4Z+AAPmSEnp+4WP/tToKgLD4Np2OYLP/2FJ/tc64pX59L2R3ScRZ
+ zskREjrcbuTCFMeN/Etn+V186YbB5pVYmyvIPMLC9aRd7bIeb/KDeXOQDbOZAcuf1cc3SlXx2be
+ Ev+Dkk165J4ZqXR2DtRRXU57RB1SbA0q8fxBT00N5IDCqThQOmOBetrk12mcArzKGBg==
+X-Gm-Gg: AYBFou0f/pOlbPProhgzDnp+h00ecz0u3VGv3jZeoHDrcxeiNsRO4YfQ0tqVFa00yHV
+ yIMXEg9xpBNvmPirL9y+mUTOxksOWDfzfUuB3mlBu5iw8oWWmVBH84FX/UgH5gBeSQEHwz9TaMq
+ 25C3tndj4QRP41uUfopmr8S9Uw3XYL2eWnNAb5uKj+rhWlDoezDNT7gIOLgsBoK19CvA1QiytvE
+ DnglCIE/7SYxOTa5gkJyNf0/XS4BG+9hzaEX0ZRZOzoh7X3RL0TKbDEvQ0qCUwKrNNNnf65u5mI
+ BqRX5pcCQwpIaS8D2pMK02N0suUSgSUlivqFfo02rgOM4OWN2U7FDKde/5rTp5I7a4kG6TQkMoJ
+ dCtDDZTfh81zH+N/jkXCW8Tmnf8ZpAW5rKRyPCqApGkdI+r9lYk0GvQUf6kbm8CfLkm4qGr0sVA
+ je0/b+4BQE7WWm6Q==
+X-Received: by 2002:a05:620a:4399:b0:949:7759:7faa with SMTP id
+ af79cd13be357-9497759914dmr871859885a.60.1794871520820; 
+ Mon, 16 Nov 2026 15:25:20 -0800 (PST)
+X-Received: by 2002:a05:620a:4399:b0:949:7759:7faa with SMTP id
+ af79cd13be357-9497759914dmr871857085a.60.1794871520350; 
+ Mon, 16 Nov 2026 15:25:20 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c603f4d29sm24239567f8f.35.2026.11.16.15.25.09
+ ffacd0b85a97d-49c7da37b19sm25345998f8f.5.2026.11.16.15.25.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Nov 2026 15:25:10 -0800 (PST)
+ Mon, 16 Nov 2026 15:25:18 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/22] pvg: disable by default
-Date: Tue, 17 Nov 2026 00:23:25 +0100
-Message-ID: <20261116232335.31593-13-philmd@oss.qualcomm.com>
+Subject: [PULL 13/22] hw/i386: move bios functions into x86-bios.c
+Date: Tue, 17 Nov 2026 00:23:26 +0100
+Message-ID: <20261116232335.31593-14-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261116232335.31593-1-philmd@oss.qualcomm.com>
 References: <20261116232335.31593-1-philmd@oss.qualcomm.com>
@@ -101,31 +101,31 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA5MyBTYWx0ZWRfXxOQG2V/FtvZ3
- YGqBfIVjQaFly7FikUTgvTPwVEtwX/8Is196DAkhvRklSlP9O7Li3UNJcKvOiM21TPZtaXMB7ip
- FIY68y+Wa0LNcQFqGqJ8OQIcZ3J7nxo=
-X-Proofpoint-ORIG-GUID: OQufl6KCOh1hrJVn-nKV4XnWEggdUsRY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA5MyBTYWx0ZWRfXxpdRJW4a/AHH
- 0qse1jTeem841B+ET3g9J7WWRbJnp9oAIqU2/gwMNwX1//o7SX/15+ZvEhXLeZXnJMQ1Pp7auyI
- i99K/IRIauNoZ2Y5kCtay0eglVWs6uqt+g4lYWLaZ6M9Xth5+OcvwSWoW5Lfne2NYlBGfFUrTS/
- O4DDaCqUEfPIjUskm3CIpw2CNzc1QXe6FM5EHKlsTldtRRWmBohJWwLJ6qvMfFmiGX67FqOcABy
- FtV2DTq20pPz6HVZgBqgymzgVMurwUpW6LEo23X9q/fV0mJdh9Y9aSUOAkNZvSb0e55Kg+LqtG2
- 6dadk3eh6pI1DDW6x3z5z4j1uBW6OcnCMsHP2OYFVAtCTO4gLlMSRGzrxep7E59mZR6T9GULsS6
- 1/QnIYuIvcQ0Wpn7T891qQqP+o3KNIyL0uqE2b48wyuV5i/R7GCTCcLPP3el+wNTREY+hz6xyd3
- iAt8MxIw8r5hQAJfmug==
-X-Authority-Analysis: v=2.4 cv=K963jCWI c=1 sm=1 tr=0 ts=6afb90d9 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA5MyBTYWx0ZWRfXxsSsYD6I9Y0+
+ 407NyX7VaYuJeNmB5sj9YL3yg6TxYBR/7qkcB0LQaJt6mJARRtwGNDzRlxNXX5prtc/H9i7A/RE
+ 8gqz5DFz70HqeXcfWi2k7mrquIEOrw4=
+X-Proofpoint-ORIG-GUID: 9zTEkg0iMUb2pABoke9QutpweANKzv1D
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA5MyBTYWx0ZWRfX1kwd0Lm5fELy
+ B9WTmn0bTpz7uL63R4Rdg/xxikPJIr1AAVLyAtMdoGRqvUmSTV7qLqgLhVsbOoOBXLJlNT951pB
+ iixHaYIoJ0pkvtVB6fozcnE9uOQJMAXQRjb3rxSnWUPbsUs/2ZNvx0/n386Oqkjx9i7yWOGX/gY
+ OI/W35GqbmWqmQTdTMgmVM+y0n6FW8NTG/HT2ccBqzbN0YFyxhrL2EiCMaw2AjJS2WoCxoXjP3K
+ SStMfn/XUm7iNicK32zgGFXPo0uXFtLLpz9lvV3ej6tL3AhH42gjGzJfvDy7w7K7pB26Wbyme++
+ wxlChetL5aOX7FKvZsUZIO8oyHouimEioJiYHpNgUJEzBQlmpOJImIAqXSAJeqf8X4o/Y1pYw83
+ jilIhq9AFu1PNmdeSws426YiLJxYjDTLeZ0Bb7fWkPE7/C67Da1/biUvzuvJStgqSbC3jDxPPxN
+ sZJXxN/mRrLuJMf2Nyw==
+X-Proofpoint-GUID: 9zTEkg0iMUb2pABoke9QutpweANKzv1D
+X-Authority-Analysis: v=2.4 cv=R9uWitRX c=1 sm=1 tr=0 ts=6afb90e1 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=sNqdT3DZ9Mi9C-_xMs8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: OQufl6KCOh1hrJVn-nKV4XnWEggdUsRY
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=-uGbPBS1G-rfqM4RPtMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-16_06,2026-11-16_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 malwarescore=0 adultscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ adultscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611160093
 Received-SPF: pass client-ip=205.220.168.131;
@@ -155,36 +155,334 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: John Snow <jsnow@redhat.com>
 
-macOS 27 removes support for x86 processors. As such, support
-for ParavirtualizedGraphics as a public API has been removed.
+Currently, these functions are located in x86-common.c. However, when
+configuring QEMU with `--without-default-devices`, we encounter a
+linking error at final assembly time where these functions cannot be
+located.
 
-Current QEMU does not compile with ParavirtualizedGraphics enabled
-and the arm64 side of PVG is not documented or supported by Apple
-for third-party use.
+Split these functions out into a new x86-bios.c module to allow
+defaultless compilations of x86_64 to succeed.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20261116144951.71940-1-mohamed@unpredictable.fr>
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: John Snow <jsnow@redhat.com>
+Message-ID: <20261106191356.1207295-1-jsnow@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- meson_options.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/i386/x86-bios.c   | 143 +++++++++++++++++++++++++++++++++++++++++++
+ hw/i386/x86-common.c | 125 -------------------------------------
+ hw/i386/x86.c        |   1 -
+ hw/i386/meson.build  |   1 +
+ 4 files changed, 144 insertions(+), 126 deletions(-)
+ create mode 100644 hw/i386/x86-bios.c
 
-diff --git a/meson_options.txt b/meson_options.txt
-index 9ae8e44ab54e..ada233473eab 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -208,7 +208,7 @@ option('lzfse', type : 'feature', value : 'auto',
-        description: 'lzfse support for DMG images')
- option('lzo', type : 'feature', value : 'auto',
-        description: 'lzo compression support')
--option('pvg', type: 'feature', value: 'auto',
-+option('pvg', type: 'feature', value: 'disabled',
-        description: 'macOS paravirtualized graphics support')
- option('rbd', type : 'feature', value : 'auto',
-        description: 'Ceph block device driver')
+diff --git a/hw/i386/x86-bios.c b/hw/i386/x86-bios.c
+new file mode 100644
+index 000000000000..525e42e7252f
+--- /dev/null
++++ b/hw/i386/x86-bios.c
+@@ -0,0 +1,143 @@
++/*
++ * x86 bios loading functions
++ *
++ * Copyright (c) 2003-2004 Fabrice Bellard
++ * Copyright (c) 2019, 2024-2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: MIT
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/datadir.h"
++#include "qapi/error.h"
++#include "qemu/units.h"
++
++#include "hw/core/loader.h"
++#include "hw/i386/x86.h"
++#include "kvm/tdx.h"
++#include "target/i386/sev.h"
++
++void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
++                       MemoryRegion *bios, bool read_only)
++{
++    uint64_t bios_size = memory_region_size(bios);
++    uint64_t isa_bios_size = MIN(bios_size, 128 * KiB);
++
++    memory_region_init_alias(isa_bios, NULL, "isa-bios", bios,
++                             bios_size - isa_bios_size, isa_bios_size);
++    memory_region_add_subregion_overlap(isa_memory, 1 * MiB - isa_bios_size,
++                                        isa_bios, 1);
++    memory_region_set_readonly(isa_bios, read_only);
++}
++
++static int get_bios_size(X86MachineState *x86ms,
++                         const char *bios_name, char *filename)
++{
++    int bios_size;
++
++    if (filename) {
++        bios_size = get_image_size(filename, NULL);
++    } else {
++        bios_size = -1;
++    }
++    if (bios_size <= 0 ||
++        (bios_size % 65536) != 0) {
++        goto bios_error;
++    }
++
++    return bios_size;
++
++ bios_error:
++    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
++    exit(1);
++}
++
++static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
++                                char *filename, int bios_size,
++                                bool isapc_ram_fw)
++{
++    ssize_t ret;
++
++    /* BIOS load */
++    if (machine_require_guest_memfd_private(MACHINE(x86ms))) {
++        memory_region_init_ram_guest_memfd_private(
++            &x86ms->bios, NULL, "pc.bios", bios_size, &error_fatal);
++        if (is_tdx_vm()) {
++            tdx_set_tdvf_region(&x86ms->bios);
++        }
++    } else {
++        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
++                               bios_size, &error_fatal);
++    }
++    if (sev_enabled() || is_tdx_vm()) {
++        /*
++         * The concept of a "reset" simply doesn't exist for
++         * confidential computing guests, we have to destroy and
++         * re-launch them instead.  So there is no need to register
++         * the firmware as rom to properly re-initialize on reset.
++         * Just go for a straight file load instead.
++         */
++        void *ptr = memory_region_get_ram_ptr(&x86ms->bios);
++        load_image_size(filename, ptr, bios_size);
++        x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_size);
++    } else {
++        memory_region_set_readonly(&x86ms->bios, !isapc_ram_fw);
++        ret = rom_add_file_fixed(bios_name, (uint32_t)(-bios_size), -1);
++        if (ret != 0) {
++            goto bios_error;
++        }
++    }
++
++    return;
++
++ bios_error:
++    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
++    exit(1);
++}
++
++void x86_bios_rom_reload(X86MachineState *x86ms)
++{
++    int bios_size;
++    const char *bios_name;
++    char *filename;
++
++    if (memory_region_size(&x86ms->bios) == 0) {
++        /* if -bios is not used */
++        return;
++    }
++
++    bios_name = MACHINE(x86ms)->firmware ?: "bios.bin";
++    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
++
++    bios_size = get_bios_size(x86ms, bios_name, filename);
++
++    void *ptr = memory_region_get_ram_ptr(&x86ms->bios);
++    load_image_size(filename, ptr, bios_size);
++    x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_size);
++}
++
++void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
++                       MemoryRegion *rom_memory, bool isapc_ram_fw)
++{
++    int bios_size;
++    const char *bios_name;
++    g_autofree char *filename;
++
++    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
++    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
++
++    bios_size = get_bios_size(x86ms, bios_name, filename);
++    load_bios_from_file(x86ms, bios_name, filename, bios_size, isapc_ram_fw);
++
++    if (!machine_require_guest_memfd_private(MACHINE(x86ms))) {
++        /* map the last 128KB of the BIOS in ISA space */
++        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
++                          !isapc_ram_fw);
++    }
++
++    /* map all the bios at the top of memory */
++    memory_region_add_subregion(rom_memory,
++                                (uint32_t)(-bios_size),
++                                &x86ms->bios);
++    return;
++}
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index dcd4fa8eb798..350fcbc20e18 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -995,128 +995,3 @@ void x86_load_linux(X86MachineState *x86ms,
+     option_rom[nb_option_roms].name = "linuxboot_dma.bin";
+     nb_option_roms++;
+ }
+-
+-void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
+-                       MemoryRegion *bios, bool read_only)
+-{
+-    uint64_t bios_size = memory_region_size(bios);
+-    uint64_t isa_bios_size = MIN(bios_size, 128 * KiB);
+-
+-    memory_region_init_alias(isa_bios, NULL, "isa-bios", bios,
+-                             bios_size - isa_bios_size, isa_bios_size);
+-    memory_region_add_subregion_overlap(isa_memory, 1 * MiB - isa_bios_size,
+-                                        isa_bios, 1);
+-    memory_region_set_readonly(isa_bios, read_only);
+-}
+-
+-static int get_bios_size(X86MachineState *x86ms,
+-                         const char *bios_name, char *filename)
+-{
+-    int bios_size;
+-
+-    if (filename) {
+-        bios_size = get_image_size(filename, NULL);
+-    } else {
+-        bios_size = -1;
+-    }
+-    if (bios_size <= 0 ||
+-        (bios_size % 65536) != 0) {
+-        goto bios_error;
+-    }
+-
+-    return bios_size;
+-
+- bios_error:
+-    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
+-    exit(1);
+-}
+-
+-static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
+-                                char *filename, int bios_size,
+-                                bool isapc_ram_fw)
+-{
+-    ssize_t ret;
+-
+-    /* BIOS load */
+-    if (machine_require_guest_memfd_private(MACHINE(x86ms))) {
+-        memory_region_init_ram_guest_memfd_private(
+-            &x86ms->bios, NULL, "pc.bios", bios_size, &error_fatal);
+-        if (is_tdx_vm()) {
+-            tdx_set_tdvf_region(&x86ms->bios);
+-        }
+-    } else {
+-        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
+-                               bios_size, &error_fatal);
+-    }
+-    if (sev_enabled() || is_tdx_vm()) {
+-        /*
+-         * The concept of a "reset" simply doesn't exist for
+-         * confidential computing guests, we have to destroy and
+-         * re-launch them instead.  So there is no need to register
+-         * the firmware as rom to properly re-initialize on reset.
+-         * Just go for a straight file load instead.
+-         */
+-        void *ptr = memory_region_get_ram_ptr(&x86ms->bios);
+-        load_image_size(filename, ptr, bios_size);
+-        x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_size);
+-    } else {
+-        memory_region_set_readonly(&x86ms->bios, !isapc_ram_fw);
+-        ret = rom_add_file_fixed(bios_name, (uint32_t)(-bios_size), -1);
+-        if (ret != 0) {
+-            goto bios_error;
+-        }
+-    }
+-
+-    return;
+-
+- bios_error:
+-    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
+-    exit(1);
+-}
+-
+-void x86_bios_rom_reload(X86MachineState *x86ms)
+-{
+-    int bios_size;
+-    const char *bios_name;
+-    char *filename;
+-
+-    if (memory_region_size(&x86ms->bios) == 0) {
+-        /* if -bios is not used */
+-        return;
+-    }
+-
+-    bios_name = MACHINE(x86ms)->firmware ?: "bios.bin";
+-    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
+-
+-    bios_size = get_bios_size(x86ms, bios_name, filename);
+-
+-    void *ptr = memory_region_get_ram_ptr(&x86ms->bios);
+-    load_image_size(filename, ptr, bios_size);
+-    x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_size);
+-}
+-
+-void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+-                       MemoryRegion *rom_memory, bool isapc_ram_fw)
+-{
+-    int bios_size;
+-    const char *bios_name;
+-    g_autofree char *filename;
+-
+-    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
+-    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
+-
+-    bios_size = get_bios_size(x86ms, bios_name, filename);
+-    load_bios_from_file(x86ms, bios_name, filename, bios_size, isapc_ram_fw);
+-
+-    if (!machine_require_guest_memfd_private(MACHINE(x86ms))) {
+-        /* map the last 128KB of the BIOS in ISA space */
+-        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
+-                          !isapc_ram_fw);
+-    }
+-
+-    /* map all the bios at the top of memory */
+-    memory_region_add_subregion(rom_memory,
+-                                (uint32_t)(-bios_size),
+-                                &x86ms->bios);
+-    return;
+-}
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index 4b75b7406a81..5f842351daff 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -35,7 +35,6 @@
+ #include "hw/acpi/aml-build.h"
+ #include "hw/i386/x86.h"
+ #include "hw/i386/topology.h"
+-
+ #include "hw/core/nmi.h"
+ #include "kvm/kvm_i386.h"
+ 
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index e16930c43197..6bb73b8731cc 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -5,6 +5,7 @@ i386_ss.add(files(
+   'monitor.c',
+   'multiboot.c',
+   'x86.c',
++  'x86-bios.c',
+   'x86-cpu.c',
+ ))
+ 
 -- 
 2.55.0
 
