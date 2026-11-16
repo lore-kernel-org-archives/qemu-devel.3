@@ -1,48 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481C8606A339
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461D8606A338
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=U+JntUqj
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=D2DbMLP9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Jj-00062s-OI; Mon, 16 Nov 2026 15:28:43 -0500
+	id 1xT3MU-0001J1-4C; Mon, 16 Nov 2026 15:31:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3JN-0005Kw-Fb; Mon, 16 Nov 2026 15:28:22 -0500
+ id 1xT3LZ-0000IX-MI; Mon, 16 Nov 2026 15:30:48 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3JL-0001X3-Ce; Mon, 16 Nov 2026 15:28:21 -0500
+ id 1xT3LJ-0001lm-9v; Mon, 16 Nov 2026 15:30:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860764; bh=wtqYCGqO/EXgfzXDkoOUM2f7MvKzaIka+TDmyuN9R1Q=;
+ t=1794860765; bh=YJJdg60cVgO2nku5RohJMuai4q/eqt+rKkwNN3p2Ehc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=U+JntUqjvUcxgzrXfWIWJ7RYV7u+WjPR337zccuVjnJxO7kob64j4bG0YOdq5Av2x
- 4vZjbjhDuntemOIvXqRMGmX5d4peZL1dY0ybYoqa97g0F9LFisyRY39V1U1jqEqOAz
- gU5zM1Do9UJPjBJVLf9MPriumVUYWsIrCujvCt0fJcDlSvsSWJK/CHd5l4Vh4DCS/4
- uAOcLTc9eJmkehmK7KhPHNpOSGxCfMO6IzVWeB4x0K3BLKpX3LDP0avlZVe0WzWoHr
- FjGx8KEt32FFwnUYpXDufEcEkQuU89QW1+nqEbZEIbue6J4npNdaMPmZKiNLr8Dar2
- C7FFceOlwdszw==
+ b=D2DbMLP9KeIK0Xho75az7evtbZFmwGCOEQNy9lK66JxUomzNvccbtH6e8sM/ew1b0
+ C6XsDZlPjwXyMUV2qOaUTBZQiTM1NUJys0Thnw9/UT0oxsXuwssKwRStp6pUnkZi1M
+ S+s6crhBAUtbNun+diTxplfwe3bt+81ziUWE3yoU+v25fy8FoRRlqeL6UrB/GKCKyc
+ wG0F0SRr2R0FaLCkRxdRDKzaAzWtIBVhRNg/xIKx/Zkh4GxfJeAk0d8kWEUCmwoRMQ
+ vB3rdo1e7iDYwAeB38b695bZj4BN5BJG0icynbcxTWpm1q9ajrJKYvFrmlD6L1a5MX
+ tTKwy24erhEHA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4B5FD1E71B1;
- Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8FC831E71C2;
+ Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 48E0245FBDD;
- Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8B7F345FBEE;
+ Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BB133B8E7E; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ id 4AF7FB8EA0; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 28/63] hw/dma/xlnx_dpdma: Don't allow DMA off end of
- host buffers
-Date: Mon, 16 Nov 2026 23:25:07 +0300
-Message-ID: <20261116202554.535325-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 45/63] hw/intc/arm_gic: do not hardcode GICv2 minimum
+ binary point
+Date: Mon, 16 Nov 2026 23:25:24 +0300
+Message-ID: <20261116202554.535325-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -76,177 +76,165 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-The xlnx_dpdma DMA engine allows the guest to do DMA to host buffers
-for audio and graphics data.  These buffers are set up by the xlnx_dp
-device, which calls xlnx_dpdma_set_host_data_location() to tell the
-DMA engine where they are.  However, this API doesn't provide any way
-to say how big the host buffers are, and the DMA engine does not
-check whether the guest is trying to write off the end of the buffer.
+The number of priority bits is implementation defined, and indeed
+machines such as a9mpcore and arm11mpcore define it in the
+num-priority-bits property. However we still hardcoded GIC_MIN_BPR.
 
-Add a length argument to xlnx_dpdma_set_host_data_location(), and
-bounds check the guest's DMA writes against it.  The DPDMA ISR has
-bits for each channel for "descriptor payload is too large", so we
-report such overflows there.
+This commit replaces the GIC_MIN_BPR and GIC_MIN_ABPR defs with macros
+that read the property.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d3c6369a96a8 ("introduce xlnx-dpdma")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4134
+The calculation is based on "Table 4-47 Active Priorities register
+implementation" in the GICv2 spec (page 4-150 of ARM IHI 0048B.b
+ID072613):
+
++---------------+---------------+---------------+
+|               |               |    Maximum    |
+| Minimum value | Minimum value |    number of  |
+|   of Secure   | of Non-secure |     group     |
+|   GICC_BPR    |   GICC_BPR    | priority bits |
++===============+===============+===============+
+|             3 |             4 |             4 |
+|             2 |             3 |             5 |
+|             1 |             2 |             6 |
+|             0 |             1 |             7 |
++---------------+---------------+---------------+
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4375
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-id: 20261106-gic_read_bpr_from_property-v2-1-9f096cce4814@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-id: 20261025110857.1973128-1-peter.maydell@linaro.org
-(cherry picked from commit c8b6ce2fa6d65a65e8b535d6d9a94593a2927929)
+(cherry picked from commit 43523008040e39044a8fa91d020460f65705a6bb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
-index 98126ef320d..06594980292 100644
---- a/hw/display/xlnx_dp.c
-+++ b/hw/display/xlnx_dp.c
-@@ -333,9 +333,11 @@ static inline void xlnx_dp_audio_activate(XlnxDPState *s)
-                    & DP_TX_AUD_CTRL) != 0);
-     audio_be_set_active_out(s->audio_be, s->amixer_output_stream, activated);
-     xlnx_dpdma_set_host_data_location(s->dpdma, DP_AUDIO_DMA_CHANNEL(0),
--                                      &s->audio_buffer_0);
-+                                      &s->audio_buffer_0,
-+                                      sizeof(s->audio_buffer_0));
-     xlnx_dpdma_set_host_data_location(s->dpdma, DP_AUDIO_DMA_CHANNEL(1),
--                                      &s->audio_buffer_1);
-+                                      &s->audio_buffer_1,
-+                                      sizeof(s->audio_buffer_1));
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index b60f1f630b0..0236f45c3d1 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -479,7 +479,7 @@ static void gic_activate_irq(GICState *s, int cpu, int irq)
+      * and update the running priority.
+      */
+     int prio = gic_get_group_priority(s, cpu, irq);
+-    int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : GIC_MIN_BPR;
++    int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : gic_min_bpr(s);
+     int preemption_level = prio >> (min_bpr + 1);
+     int regno = preemption_level / 32;
+     int bitno = preemption_level % 32;
+@@ -521,7 +521,7 @@ static int gic_get_prio_from_apr_bits(GICState *s, int cpu)
+         if (!apr) {
+             continue;
+         }
+-        return (i * 32 + ctz32(apr)) << (GIC_MIN_BPR + 1);
++        return (i * 32 + ctz32(apr)) << (gic_min_bpr(s) + 1);
+     }
+     return 0x100;
  }
+@@ -1561,7 +1561,7 @@ static inline uint32_t gic_apr_ns_view(GICState *s, int cpu, int regno)
+     /* Return the Nonsecure view of GICC_APR<regno>. This is the
+      * second half of GICC_NSAPR.
+      */
+-    switch (GIC_MIN_BPR) {
++    switch (gic_min_bpr(s)) {
+     case 0:
+         if (regno < 2) {
+             return s->nsapr[regno + 2][cpu];
+@@ -1592,7 +1592,7 @@ static inline void gic_apr_write_ns_view(GICState *s, int cpu, int regno,
+                                          uint32_t value)
+ {
+     /* Write the Nonsecure view of GICC_APR<regno>. */
+-    switch (GIC_MIN_BPR) {
++    switch (gic_min_bpr(s)) {
+     case 0:
+         if (regno < 2) {
+             s->nsapr[regno + 2][cpu] = value;
+@@ -1731,10 +1731,10 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
+                 /* WI when CBPR is 1 */
+                 return MEMTX_OK;
+             } else {
+-                s->abpr[cpu] = MAX(value & 0x7, GIC_MIN_ABPR);
++                s->abpr[cpu] = MAX(value & 0x7, gic_min_abpr(s));
+             }
+         } else {
+-            int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : GIC_MIN_BPR;
++            int min_bpr = gic_is_vcpu(cpu) ? GIC_VIRT_MIN_BPR : gic_min_bpr(s);
+             s->bpr[cpu] = MAX(value & 0x7, min_bpr);
+         }
+         break;
+@@ -1746,7 +1746,7 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
+             /* unimplemented, or NS access: RAZ/WI */
+             return MEMTX_OK;
+         } else {
+-            s->abpr[cpu] = MAX(value & 0x7, GIC_MIN_ABPR);
++            s->abpr[cpu] = MAX(value & 0x7, gic_min_abpr(s));
+         }
+         break;
+     case 0xd0: case 0xd4: case 0xd8: case 0xdc:
+diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
+index a7c0763ab6a..fec5662d695 100644
+--- a/hw/intc/arm_gic_common.c
++++ b/hw/intc/arm_gic_common.c
+@@ -259,8 +259,8 @@ static inline void arm_gic_common_reset_irq_state(GICState *s, int cidx,
+         s->current_pending[i] = 1023;
+         s->running_priority[i] = 0x100;
+         s->cpu_ctlr[i] = 0;
+-        s->bpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_BPR : GIC_MIN_BPR;
+-        s->abpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_ABPR : GIC_MIN_ABPR;
++        s->bpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_BPR : gic_min_bpr(s);
++        s->abpr[i] = gic_is_vcpu(i) ? GIC_VIRT_MIN_ABPR : gic_min_abpr(s);
  
- static inline void xlnx_dp_audio_mix_buffer(XlnxDPState *s)
-@@ -566,6 +568,18 @@ static void xlnx_dp_aux_set_command(XlnxDPState *s, uint32_t value)
-     s->core_registers[DP_INTERRUPT_SIGNAL_STATE] |= 0x04;
- }
+         if (!gic_is_vcpu(i)) {
+             for (j = 0; j < GIC_INTERNAL; j++) {
+diff --git a/include/hw/intc/arm_gic.h b/include/hw/intc/arm_gic.h
+index be923f7ed88..a1f4a2eebab 100644
+--- a/include/hw/intc/arm_gic.h
++++ b/include/hw/intc/arm_gic.h
+@@ -72,8 +72,6 @@
  
-+/*
-+ * Return the size of the surface in bytes. Pixman doesn't provide
-+ * a helper function/accessor for this, so we must calculate it
-+ * from the stride and height. Note that a pixman stride can
-+ * potentially be negative, hence the abs().
-+ */
-+static inline uint64_t surface_data_size(DisplaySurface *s)
+ /* Number of SGI target-list bits */
+ #define GIC_TARGETLIST_BITS 8
+-#define GIC_MAX_PRIORITY_BITS 8
+-#define GIC_MIN_PRIORITY_BITS 4
+ 
+ #define TYPE_ARM_GIC "arm_gic"
+ typedef struct ARMGICClass ARMGICClass;
+diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
+index b169394e6ca..db7370a80ab 100644
+--- a/include/hw/intc/arm_gic_common.h
++++ b/include/hw/intc/arm_gic_common.h
+@@ -37,8 +37,8 @@
+ #define MAX_NR_GROUP_PRIO 128
+ #define GIC_NR_APRS (MAX_NR_GROUP_PRIO / 32)
+ 
+-#define GIC_MIN_BPR 0
+-#define GIC_MIN_ABPR (GIC_MIN_BPR + 1)
++#define GIC_MAX_PRIORITY_BITS 8
++#define GIC_MIN_PRIORITY_BITS 4
+ 
+ /* Architectural maximum number of list registers in the virtual interface */
+ #define GIC_MAX_LR 64
+@@ -151,6 +151,20 @@ struct GICState {
+ };
+ typedef struct GICState GICState;
+ 
++
++static inline uint32_t gic_min_bpr(GICState *s)
 +{
-+    /* Can't overflow because stride and height are both int */
-+    return (uint64_t)abs(surface_stride(s)) * surface_height(s);
++    uint32_t num_preemption_bits = s->n_prio_bits == 8 ? 7 : s->n_prio_bits;
++    assert(!(s->n_prio_bits > GIC_MAX_PRIORITY_BITS
++             || s->n_prio_bits < GIC_MIN_PRIORITY_BITS));
++    return 7 - num_preemption_bits;
 +}
 +
- static void xlnx_dp_set_dpdma(const Object *obj, const char *name, Object *val,
-                               Error **errp)
- {
-@@ -580,7 +594,8 @@ static void xlnx_dp_set_dpdma(const Object *obj, const char *name, Object *val,
-         DisplaySurface *surface = qemu_console_surface(s->console);
-         XlnxDPDMAState *dma = XLNX_DPDMA(val);
-         xlnx_dpdma_set_host_data_location(dma, DP_GRAPHIC_DMA_CHANNEL,
--                                          surface_data(surface));
-+                                          surface_data(surface),
-+                                          surface_data_size(surface));
-     }
- }
- 
-@@ -644,9 +659,11 @@ static void xlnx_dp_recreate_surface(XlnxDPState *s)
-         }
- 
-         xlnx_dpdma_set_host_data_location(s->dpdma, DP_GRAPHIC_DMA_CHANNEL,
--                                            surface_data(s->g_plane.surface));
-+                                          surface_data(s->g_plane.surface),
-+                                          surface_data_size(s->g_plane.surface));
-         xlnx_dpdma_set_host_data_location(s->dpdma, DP_VIDEO_DMA_CHANNEL,
--                                            surface_data(s->v_plane.surface));
-+                                          surface_data(s->v_plane.surface),
-+                                          surface_data_size(s->v_plane.surface));
-     }
- }
- 
-@@ -1396,7 +1413,8 @@ static void xlnx_dp_realize(DeviceState *dev, Error **errp)
-     s->console = qemu_graphic_console_create(dev, 0, &xlnx_dp_gfx_ops, s);
-     surface = qemu_console_surface(s->console);
-     xlnx_dpdma_set_host_data_location(s->dpdma, DP_GRAPHIC_DMA_CHANNEL,
--                                      surface_data(surface));
-+                                      surface_data(surface),
-+                                      surface_data_size(surface));
- 
-     as.freq = 44100;
-     as.nchannels = 2;
-diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
-index 32f56036a4c..9d8e7593698 100644
---- a/hw/dma/xlnx_dpdma.c
-+++ b/hw/dma/xlnx_dpdma.c
-@@ -589,6 +589,7 @@ static void xlnx_dpdma_reset(DeviceState *dev)
- 
-     for (i = 0; i < 6; i++) {
-         s->data[i] = NULL;
-+        s->datalen[i] = 0;
-         s->operation_finished[i] = true;
-     }
- }
-@@ -760,6 +761,14 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-             int64_t transfer_len = xlnx_dpdma_desc_get_transfer_size(&desc);
-             uint32_t line_size = xlnx_dpdma_desc_get_line_size(&desc);
-             uint32_t line_stride = xlnx_dpdma_desc_get_line_stride(&desc);
++static inline uint32_t gic_min_abpr(GICState *s)
++{
++    return gic_min_bpr(s) + 1;
++}
 +
-+            if (transfer_len > s->datalen[channel]) {
-+                s->registers[DPDMA_ISR] |= ((1 << 18) << channel);
-+                xlnx_dpdma_update_irq(s);
-+                DPRINTF("Descriptor payload too large..\n");
-+                goto update_descriptor;
-+            }
-+
-             if (xlnx_dpdma_desc_is_contiguous(&desc)) {
-                 source_addr[0] = xlnx_dpdma_desc_get_source_address(&desc, 0);
-                 while (transfer_len != 0) {
-@@ -809,6 +818,7 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-             }
-         }
- 
-+    update_descriptor:
-         if (xlnx_dpdma_desc_update_enabled(&desc)) {
-             /* The descriptor need to be updated when it's completed. */
-             DPRINTF("update the descriptor with the done flag set.\n");
-@@ -831,7 +841,7 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
- }
- 
- void xlnx_dpdma_set_host_data_location(XlnxDPDMAState *s, uint8_t channel,
--                                         void *p)
-+                                       void *p, uint64_t len)
- {
-     if (!s) {
-         qemu_log_mask(LOG_UNIMP, "DPDMA client not attached to valid DPDMA"
-@@ -841,6 +851,7 @@ void xlnx_dpdma_set_host_data_location(XlnxDPDMAState *s, uint8_t channel,
- 
-     assert(channel <= 5);
-     s->data[channel] = p;
-+    s->datalen[channel] = len;
- }
- 
- void xlnx_dpdma_trigger_vsync_irq(XlnxDPDMAState *s)
-diff --git a/include/hw/dma/xlnx_dpdma.h b/include/hw/dma/xlnx_dpdma.h
-index 7cf67aef6e1..0fc24e23ad3 100644
---- a/include/hw/dma/xlnx_dpdma.h
-+++ b/include/hw/dma/xlnx_dpdma.h
-@@ -38,6 +38,7 @@ struct XlnxDPDMAState {
-     MemoryRegion iomem;
-     uint32_t registers[XLNX_DPDMA_REG_ARRAY_SIZE];
-     uint8_t *data[6];
-+    uint64_t datalen[6];
-     bool operation_finished[6];
-     qemu_irq irq;
- };
-@@ -69,10 +70,10 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-  * @s The DPDMA state.
-  * @channel The channel associated to the pointer.
-  * @p The buffer where to store the data.
-+ * @len: The length of the buffer in bytes.
-  */
--/* XXX: add a maximum size arg and send an interrupt in case of overflow. */
- void xlnx_dpdma_set_host_data_location(XlnxDPDMAState *s, uint8_t channel,
--                                       void *p);
-+                                       void *p, uint64_t len);
- 
- /*
-  * xlnx_dpdma_trigger_vsync_irq: Trigger a VSYNC IRQ when the display is
+ #define TYPE_ARM_GIC_COMMON "arm_gic_common"
+ typedef struct ARMGICCommonClass ARMGICCommonClass;
+ DECLARE_OBJ_CHECKERS(GICState, ARMGICCommonClass,
 -- 
 2.47.3
 
