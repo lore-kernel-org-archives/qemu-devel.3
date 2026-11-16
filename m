@@ -1,48 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B92606A330
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F233606A32A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=IQFL7i+f
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=QJX3xWed
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Ex-0006mt-VD; Mon, 16 Nov 2026 15:23:48 -0500
+	id 1xT3Ew-0006fy-52; Mon, 16 Nov 2026 15:23:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Ew-0006iw-Ig; Mon, 16 Nov 2026 15:23:46 -0500
+ id 1xT3Es-0006aW-JC; Mon, 16 Nov 2026 15:23:42 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Eu-0004Hq-0q; Mon, 16 Nov 2026 15:23:45 -0500
+ id 1xT3Ep-0003jd-Uk; Mon, 16 Nov 2026 15:23:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860377; bh=stW+cyUQxD1X3Wc/PxzVbC6NMwk8q1CUoCJzErXArb8=;
+ t=1794860376; bh=pXMXEbnHsglZZCcy7aptHL0FzwBizZ7clAhhF2CWA6Y=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=IQFL7i+fzCC2RTbJSQV2/FK4ganJG612MVyM1UqL+n1yKXCnuAn4zWoDXeHqSEQzQ
- MJgOJuu3g3rnjcMjoFRp+T6wx9QsrOA+EEXXTBHMOUf+o/yDwqPuW0ygQ49kdhiRNf
- Otz/u3fzoOTVmuxj1+3i8b73yUkkfB8DSN4m/sh8Y+/44q0NXflE8vI4AgtdHUWl16
- JkeQObYpVlyeUPAWc9e2cEH8b2PEpCZJFkltpnMFDU2vAFW6dKEBc4W1I3xm4M901+
- R1bm0vXZiNOWRrAoU50o0kYKhNrrYcnKLP+7qMqWMggb0QUHDqM47U7elLDe4JIn1Y
- 7YANFOzGIZVBg==
+ b=QJX3xWedXoCgQFuVhFdwln9yJn0QlEVfFDif0l6wxyIz9Kn1ZQ1eUU4leh7SVwLgr
+ ed5mHScIg17TE4hoZag9957QOmYf6Qto8EeNuD0gnSD6kCikkTd3AbKzpq0pyn6vPm
+ tuTTQC5CfnCT67TLBVAN9SCHxM63BeagigNOZklWqzvLSiAHob/At+/ftYI980svsx
+ f6cDpmd+coQ1Q4WrFIjyeFKtTlNPMAAtQhopWcvebwryeQQRUpqmEnkP8gE9PAC4mT
+ 1VvHf0ekV4R3w5hmcco2YEgMhWYsvwD/FfcK7RdBxOnX11NaHMn6gE3U+597c7Dxjw
+ jrCNY95+WJVAQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 975361E7169;
- Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C2EF91E7166;
+ Mon, 16 Nov 2026 23:19:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 93A0545FB9E;
- Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C0BE045FB9C;
+ Mon, 16 Nov 2026 23:19:36 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 84DAAB8E2C; Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
+ id BB5F5B8E28; Mon, 16 Nov 2026 23:19:36 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
- Alberto Garcia <berto@igalia.com>, Eric Blake <eblake@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 47/59] iotests/common.rc: add disk_usage function
-Date: Mon, 16 Nov 2026 23:18:51 +0300
-Message-ID: <20261116201922.534306-47-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 45/59] block/vmdk: Reject a zero cluster_sectors
+ parameter
+Date: Mon, 16 Nov 2026 23:18:49 +0300
+Message-ID: <20261116201922.534306-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
@@ -68,63 +67,55 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Move the definition from iotests/250 to common.rc.  This is used to
-detect real disk usage of sparse files.  In particular, we want to use
-it for checking subclusters-based discards.
+In vmdk_add_extent() we reject image files with an excessively large
+cluster_sectors parameter, but have no lower bound.  In particular,
+if the cluster_sectors is 0 then we will set l1_entry_sectors also to
+0, and later crash with a SIGFPE for division by zero.
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Reviewed-by: Alberto Garcia <berto@igalia.com>
-Message-ID: <20240913163942.423050-6-andrey.drobyshev@virtuozzo.com>
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20250509204341.3553601-27-eblake@redhat.com>
-(cherry picked from commit be9bac072ede6e6aa27079f59efcf17b56bd7b26)
-(Mjt: subsequent tests will use this function)
+Reject a zero cluster_sectors value, unless this is a flat extent (in
+which case cluster_sectors isn't relevant and the callsite always
+passes us zero).
+
+The worst case here is a self-denial-of-service with a QEMU crash,
+so this is a hardening bug.
+
+Cc: qemu-stable@nongnu.org
+Fixes: b3976d3c8b89 ("VMDK: introduce VmdkExtent")
+Reported-by: Tristan <https://gitlab.com/TristanInSec>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4017
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20261103143516.2182626-5-peter.maydell@linaro.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 09153b7e5f8f90bda4c8d6a2ac39bedc9c6ba373)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/250 b/tests/qemu-iotests/250
-index af48f83abac..c0a0dbc0ff1 100755
---- a/tests/qemu-iotests/250
-+++ b/tests/qemu-iotests/250
-@@ -52,11 +52,6 @@ _unsupported_imgopts data_file
- # bdrv_co_truncate(bs->file) call in qcow2_co_truncate(), which might succeed
- # anyway.
+diff --git a/block/vmdk.c b/block/vmdk.c
+index ae51c0de430..138e24f2b11 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -545,6 +545,11 @@ static int vmdk_add_extent(BlockDriverState *bs,
+     BDRVVmdkState *s = bs->opaque;
+     int64_t nb_sectors;
  
--disk_usage()
--{
--    du --block-size=1 $1 | awk '{print $1}'
--}
--
- size=2100M
- 
- _make_test_img -o "cluster_size=1M,preallocation=metadata" $size
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 95c12577dd4..237f746af88 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -140,6 +140,12 @@ _optstr_add()
-     fi
- }
- 
-+# report real disk usage for sparse files
-+disk_usage()
-+{
-+    du --block-size=1 "$1" | awk '{print $1}'
-+}
++    if (!flat && cluster_sectors == 0) {
++        error_setg(errp, "Invalid zero granularity, image may be corrupt");
++        return -EINVAL;
++    }
 +
- # Set the variables to the empty string to turn Valgrind off
- # for specific processes, e.g.
- # $ VALGRIND_QEMU_IO= ./check -qcow2 -valgrind 015
+     if (cluster_sectors > 0x200000) {
+         /* 0x200000 * 512Bytes = 1GB for one cluster is unrealistic */
+         error_setg(errp, "Invalid granularity, image may be corrupt");
 -- 
 2.47.3
 
