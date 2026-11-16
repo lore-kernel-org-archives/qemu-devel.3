@@ -1,47 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB53606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B83D606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=iqY/F0Sv
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=XrkscXK7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3HN-0004UE-2z; Mon, 16 Nov 2026 15:26:17 -0500
+	id 1xT3JX-0005Rx-Vg; Mon, 16 Nov 2026 15:28:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3HJ-0004Ax-Iz; Mon, 16 Nov 2026 15:26:13 -0500
+ id 1xT3JI-0005DX-SD; Mon, 16 Nov 2026 15:28:16 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3HH-0006U9-Ar; Mon, 16 Nov 2026 15:26:13 -0500
+ id 1xT3JG-0001U0-RV; Mon, 16 Nov 2026 15:28:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860763; bh=qGjseEVC48CZ/nboZ7wB2TVfVaNl+47s32xqISzzbsI=;
+ t=1794860764; bh=FItYTm+n60dhZQjOz93waUwFpucKfghHavpZo4wfVWI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iqY/F0SvO/JAQXgjclA7G7G9n0pPQrizUQFhtuQmLsOEGiVzQBX3he84+0/nyUFxB
- OrUkcRiyaD2cJXneM/IkoSMeDIebekr0SQXxKnwrpkcrvEB2L272hUZViCsW8q+jOz
- Leiep4mLYx32oUvIeBKrA/NqylBI1qdpkHOH3RhKySNbUFmJt5zFk/WI66muJ2CYUn
- c45zLLt/ElCIiAbnkn9HWiUYL3XsFSp0jKdCZ9LVHbcqf6siv5lzVFfAcFUVfbZgVf
- K6XZa53zv6dtOUZOUvPdQdMFN6A7FOaxVpyQW6R+/bGnl2XYv2FSMvrJhJCBJ5XdNW
- yfiTRLdGfQsaA==
+ b=XrkscXK70+Oh+quUZxHv7qrTxOFr7fxIpaZm3u6oE629DNcg4JlDR+HnMHpryoleK
+ DXK6sx99I4cIqvBzuIuLqljzgmI8h0eN1rMzX+Sn29QQ00oteeCAGPotDpPEQrLXOC
+ L/OX4aK9+n4DWSLzayvAUQhLztDVl5dlKFyUVbhfssAwKNhmzW5VjoNPs6v1y3bYPf
+ XvWgSSDPcNc+dMD8H+jQvp8lcvRocKQbOsiorhtuqtuoK9MqzdA7rAsDpWWxKEBtfw
+ Vdo6Y9YvKUhOAaWpgAtxjzo+hoHtf+GuRYPvZnFIYilHvHqFPTKKg2XJ5NxRwX7Wmb
+ 2bmth2X9Yc7Kw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9101D1E7199;
- Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 37DF41E71AE;
+ Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8DE2445FBC5;
- Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3519B45FBDA;
+ Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 74869B8E4E; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ id B2302B8E78; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Omar Elghoul <oelghoul@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 04/63] s390x/pci: reclaim DMA slots upon IOMMU disable
-Date: Mon, 16 Nov 2026 23:24:43 +0300
-Message-ID: <20261116202554.535325-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Oleksij Samorukov <samm@net-art.cz>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Roman Bogorodskiy <bogorodskiy@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 25/63] qga: set FreeBSD virtio-serial channel to raw
+ mode
+Date: Mon, 16 Nov 2026 23:25:04 +0300
+Message-ID: <20261116202554.535325-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -74,51 +75,74 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Omar Elghoul <oelghoul@linux.ibm.com>
+From: Oleksij Samorukov <samm@net-art.cz>
 
-s390_pci_iommu_disable() destroys the I/O TLB and unpins the host's
-mappings, but it doesn't account for reclaiming the freed DMA slots.
-This is problematic when an IOMMU is disabled and re-enabled while
-reusing the container (e.g. during a guest reboot), which may cause the
-RPCIT path to fail with DMA slots exhaustion errors, manifesting as
-unexplained ENOMEMs in the guest.
+On FreeBSD the virtio-console port is a tty, unlike Linux's
+/dev/virtio-ports which is a character device.  It defaults to canonical
+mode with echo and software flow control enabled, so the QGA stream
+protocol does not work: the initial guest-sync handshake is held in the
+line discipline and the host eventually times out.
 
-Fix it by reclaiming all the entries in the I/O TLB's hash table before
-removing all its entries. The actual DMA slots consumed by the IOMMU are
-already relinquished to vfio when the memory subregion is deleted in the
-same function.
+The existing FreeBSD-specific code only clears ECHO.  Configure the port
+the same way as the ISA serial path: disable canonical mode, echo and
+software flow control, and set VMIN/VTIME.  Use TCSANOW instead of
+TCSAFLUSH so a handshake that arrives between open() and tcsetattr() is
+not discarded.
+
+Tested on FreeBSD 15.1 aarch64 under UTM/QEMU.  Before the change
+utmctl ip-address timed out and the guest received zero bytes; after the
+change QGA commands and guest-set-time work.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 37fa32de7073 ("s390x/pci: Honor DMA limits set by vfio")
-Signed-off-by: Omar Elghoul <oelghoul@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20261021175031.23840-1-oelghoul@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit 24f4453789bd0fe4339e659e5ab25210e79ca0c0)
-(Mjt: back-port across v11.1.0-2159-gf2cb275ea968
- "s390x/pci: Move dm_mr from S390PCIIOMMU to S390PCIBusDevie")
+Fixes: c6cd588bb3a29a831c862780631a7d2145ade5de ("qga: Add initial FreeBSD support")
+Signed-off-by: Oleksij Samorukov <samm@net-art.cz>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Tested-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
+Link: https://lore.kernel.org/qemu-devel/20261017201905.12211-1-samm@net-art.cz
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+(cherry picked from commit 03efcb7cfdef40ee3124a80b2609d800ec1df1db)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index eff980fdfe9..2bb87f731b1 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -763,6 +763,14 @@ void s390_pci_iommu_direct_map_enable(S390PCIIOMMU *iommu)
- void s390_pci_iommu_disable(S390PCIIOMMU *iommu)
- {
-     iommu->enabled = false;
-+    if (iommu->dma_limit) {
+diff --git a/qga/channel-posix.c b/qga/channel-posix.c
+index 9ccc8b7bd14..c6dfb2df633 100644
+--- a/qga/channel-posix.c
++++ b/qga/channel-posix.c
+@@ -156,9 +156,10 @@ static gboolean ga_channel_open(GAChannel *c, const gchar *path,
+ #endif
+ #ifdef __FreeBSD__
+         /*
+-         * In the default state channel sends echo of every command to a
+-         * client. The client program doesn't expect this and raises an
+-         * error. Suppress echo by resetting ECHO terminal flag.
++         * FreeBSD's virtio-console port is a tty (unlike Linux's
++         * /dev/virtio-ports, which is a character device) and defaults to
++         * canonical mode with echo and software flow control enabled.
++         * QGA uses a raw stream protocol, so put the port in raw mode.
+          */
+         struct termios tio;
+         if (tcgetattr(fd, &tio) < 0) {
+@@ -166,8 +167,19 @@ static gboolean ga_channel_open(GAChannel *c, const gchar *path,
+             close(fd);
+             return false;
+         }
+-        tio.c_lflag &= ~ECHO;
+-        if (tcsetattr(fd, TCSAFLUSH, &tio) < 0) {
++        tio.c_iflag &= ~(IGNBRK | BRKINT | IGNPAR | PARMRK | INPCK | ISTRIP |
++                         INLCR | IGNCR | ICRNL | IXON | IXOFF | IXANY |
++                         IMAXBEL);
++        tio.c_oflag = 0;
++        tio.c_lflag = 0;
++        tio.c_cflag |= CLOCAL | CREAD;
++        tio.c_cc[VMIN] = 1;
++        tio.c_cc[VTIME] = 0;
 +        /*
-+         * Account for all the DMA mappings still in the IOTLB; they will be
-+         * returned to vfio when we delete the memory subregion via
-+         * memory_region_del_subregion() below.
++         * Use TCSANOW rather than TCSAFLUSH: the host may already have sent
++         * the initial handshake between open() and tcsetattr().
 +         */
-+        iommu->dma_limit->avail += g_hash_table_size(iommu->iotlb);
-+    }
-     g_hash_table_remove_all(iommu->iotlb);
-     if (iommu->dm_mr) {
-         memory_region_del_subregion(&iommu->mr, iommu->dm_mr);
++        if (tcsetattr(fd, TCSANOW, &tio) < 0) {
+             error_setg_errno(errp, errno, "error setting channel termios attrs");
+             close(fd);
+             return false;
 -- 
 2.47.3
 
