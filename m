@@ -1,46 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21C9606A322
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002F9606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=rWyH7XFe
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=MqnrFlid
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Pw-0007UD-Sd; Mon, 16 Nov 2026 15:35:09 -0500
+	id 1xT3Po-0006j4-Pa; Mon, 16 Nov 2026 15:35:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3NM-0002Rr-4l; Mon, 16 Nov 2026 15:32:29 -0500
+ id 1xT3NC-0002Hn-0R; Mon, 16 Nov 2026 15:32:19 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3NJ-0004xW-AC; Mon, 16 Nov 2026 15:32:27 -0500
+ id 1xT3N5-0004rW-Rh; Mon, 16 Nov 2026 15:32:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860768; bh=8FslejbiorBmxhMExlCo4mCX+3blUCGOc18RZeMs9ys=;
+ t=1794860768; bh=re2/BbEcvJIcZdp0j5Ix2HFLmsPC4ndGgCsC4W6V7dc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rWyH7XFeIAOkW0SgqccbwLEsowA8WpA3upfH0Hh9KsgvomovmqhRzlVGhYnfV6cZZ
- 2p6tB8ng+9JzP//7Gnqcnehq9bZA8yfUAIe5d7sEpbhDWO5y1aGxyqnR8YvXAHcWms
- Xf5+dAW2vnsmoV6US14ZZsimA/H/0+zHYA+OIN6NzuMRM7hoNISAEn4CR6Jag42c9E
- Sqxk3rwGknqTKM3xQMpSH0dWTNloHu6H7KT9Amuf5mPAXc9BD8uw9wT0Q1Gzi0rQg8
- 8A7+7h4ABoxQW18DVCxHLKAgwWTMxPao3LNeMLn5+5RGslQM8XlEYdhgL9iuJGa7iT
- LWr5KoJjkW91Q==
+ b=MqnrFlidPAtXXB2Y85dqzfMg6LRP4mO2CCe/icixSDeKIWKVVf4aZS5aOBjIdhhkf
+ q5guF0Y0jdyny96i/ztC1C9ihPIPOKh3Vw+mP5z5UWdU5BfL+ncCcouvDde3mkVxgv
+ rwnaM8R1mkOKGKb6Buh3krk9biTKjttBlGIRcK0Kds1+j7SguFdJ9ZkI5rWJT0Qe6u
+ oX1ZclfT3QhpWRtQFQ00yl7j0v9/KcpD+tbo4wPzv+SKuVLeue6KBdhnCnCl8r2ZbH
+ LUSxCkLAKQ6uc7UZPjQ1M3uPXZ7zKX3M2vL1RAPCuVEXBra6QoWbN4OaD4Mii1acuu
+ Ict8r0KbkwXZw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B3A91E71D5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 09BCF1E71CD;
  Mon, 16 Nov 2026 23:26:08 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3829845FC0A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0530945FBF8;
  Mon, 16 Nov 2026 23:26:08 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0FDB6B8EC4; Mon, 16 Nov 2026 23:26:08 +0300 (MSK)
+ id ECB9DB8EB4; Mon, 16 Nov 2026 23:26:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 63/63] iotests: Add another nbd-robustness test
-Date: Mon, 16 Nov 2026 23:25:42 +0300
-Message-ID: <20261116202554.535325-63-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ "Denis V. Lunev" <den@openvz.org>, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 55/63] iotests/290: add 'discard' and 'write -z -u'
+ case with a snapshot
+Date: Mon, 16 Nov 2026 23:25:34 +0300
+Message-ID: <20261116202554.535325-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -66,131 +68,68 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Eric Blake <eblake@redhat.com>
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-Convert the proof of concept test by TonySD into another case of the
-iotest. This is yet another instance where a hard-coded exchange is
-easier than forcing libnbd into producing an exchange that violates
-the protocol.  Swapping the order with the previous patch shows the
-assertion failure that was previously reachable.
+Before the previous commit, issuing 'discard' and 'write -z -u'
+operations with discard-no-unref=on option enabled led to data
+corruption.  Add a test to cover this case.
 
-Based-on: https://gitlab.com/qemu-project/qemu/-/work_items/4843
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20261110155356.1520433-12-eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit e682c0e570179bd7fa01ea896358a8cdad196a3b)
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20261105161515.794213-4-andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 8f23f50082b2b8e283a7e76ee1fb5dbde880991c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/tests/nbd-robustness b/tests/qemu-iotests/tests/nbd-robustness
-index fe61a839250..410dfca04e3 100755
---- a/tests/qemu-iotests/tests/nbd-robustness
-+++ b/tests/qemu-iotests/tests/nbd-robustness
-@@ -21,6 +21,7 @@ NBD_MAGIC_REPLY = 0x0003e889045565a9         # Reply magic
- NBD_MAGIC_EXT_REPLY = 0x6e8a278c             # Structured reply magic
- NBD_FLAG_C_FIXED_NEWSTYLE = 0x1
- NBD_OPT_GO = 7
-+NBD_OPT_STRUCTURED_REPLY = 8
- NBD_OPT_SET_META_CONTEXT = 10
- NBD_OPT_EXTENDED_HEADERS = 11
- NBD_REP_ACK = 1
-@@ -128,5 +129,77 @@ class TestNbdRobustness(iotests.QMPTestCase):
+diff --git a/tests/qemu-iotests/290 b/tests/qemu-iotests/290
+index 6689b903dc7..7e5316fe031 100755
+--- a/tests/qemu-iotests/290
++++ b/tests/qemu-iotests/290
+@@ -130,6 +130,22 @@ $QEMU_IMG map --output=json "$TEST_IMG" | _filter_qemu_img_map
+ echo "# Output of qemu-img map for the image with kept reference"
+ $QEMU_IMG map --output=json "$NOUNREF_IMG" | _filter_qemu_img_map
  
-             self.assertTrue(self.vm.is_running())
- 
-+    def test_invalid_set_meta_context(self):
-+        with self.run_nbd_server(nbd_sock):
-+            self.add_nbd_export('n', 'r')
++echo
++echo "### Discard with 'discard-no-unref' on a cluster shared with a snapshot"
++echo
 +
-+            # Use raw socket traffic to intentionally violate NBD protocol
-+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
-+                s.connect(nbd_sock)
-+                # Server sends NBDMAGIC(8) + IHAVEOPT(8) + flags(2)
-+                data = self.recv_exact(s, 18)
-+                magic, opt, flags = struct.unpack(">QQH", data)
-+                self.assertEqual(magic, NBD_MAGIC_INIT)
-+                self.assertEqual(opt, NBD_MAGIC_OPTS)
-+                self.assertEqual(flags, 0x3)
++_make_test_img 128k
++$QEMU_IO -c 'write -q -P 0xaa 0 128k' "$TEST_IMG" | _filter_qemu_io
++$QEMU_IMG snapshot -c snap "$TEST_IMG"
++QEMU_IO_OPTIONS=$QEMU_IO_OPTIONS_NO_FMT \
++$QEMU_IO -c 'discard -q 0 64k' -c 'write -q -z -u 64k 64k' --image-opts \
++         "driver=$IMGFMT,file.filename=$TEST_IMG,discard-no-unref=on" \
++         | _filter_qemu_io
++$QEMU_IO -c 'read -q -P 0 0 128k' "$TEST_IMG" | _filter_qemu_io
++$QEMU_IMG snapshot -a snap "$TEST_IMG"
++$QEMU_IO -c 'read -q -P 0xaa 0 128k' "$TEST_IMG" | _filter_qemu_io
++_check_test_img
 +
-+                # Reply with flags(4) - just fixed newstyle flag
-+                s.sendall(struct.pack(">I", NBD_FLAG_C_FIXED_NEWSTYLE))
+ # success, all done
+ echo "*** done"
+ rm -f $seq.full
+diff --git a/tests/qemu-iotests/290.out b/tests/qemu-iotests/290.out
+index d8f8d5ff493..264fbcb28ca 100644
+--- a/tests/qemu-iotests/290.out
++++ b/tests/qemu-iotests/290.out
+@@ -86,4 +86,9 @@ Images are identical.
+ # Output of qemu-img map for the image with kept reference
+ [{ "start": 0, "length": 65536, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
+ { "start": 65536, "length": 65536, "depth": 0, "present": true, "zero": true, "data": false, "compressed": false, "offset": OFFSET}]
 +
-+                # Request NBD_OPT_STRUCTURED_REPLY, no extra payload
-+                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS,
-+                                      NBD_OPT_STRUCTURED_REPLY, 0))
++### Discard with 'discard-no-unref' on a cluster shared with a snapshot
 +
-+                # Expect successful reply:
-+                # magic(8) + option(4) + reply(4) + length(4)
-+                data = self.recv_exact(s, 20)
-+                magic, opt, reply, length = struct.unpack(">QIII", data)
-+                self.assertEqual(magic, NBD_MAGIC_REPLY)
-+                self.assertEqual(opt, NBD_OPT_STRUCTURED_REPLY)
-+                self.assertEqual(reply, NBD_REP_ACK)
-+                self.assertEqual(length, 0)
-+
-+                # Request NBD_OPT_SET_META_CONTEXT with invalid length
-+                # namelen(4) + str + queries(4) + {querylen(4) + str)
-+                payload = struct.pack(">I", 1) + b'r'
-+                payload += struct.pack(">II", 1, 1) + b'X'
-+                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS,
-+                                      NBD_OPT_SET_META_CONTEXT,
-+                                      len(payload) + 1) + payload)
-+
-+                # Request NBD_OPT_GO, name but no info as payload
-+                # (request is early, but does not hurt here)
-+                payload = struct.pack(">I", 1) + b'r' + struct.pack(">H", 0)
-+                s.sendall(struct.pack(">QII", NBD_MAGIC_OPTS, NBD_OPT_GO,
-+                                      len(payload)) + payload)
-+
-+                # Expect error reply to SET_META_CONTEXT:
-+                # magic(8) + option(4) + reply(4) + length(4)
-+                data = self.recv_exact(s, 20)
-+                magic, opt, reply, length = struct.unpack(">QIII", data)
-+                self.assertEqual(magic, NBD_MAGIC_REPLY)
-+                self.assertEqual(opt, NBD_OPT_SET_META_CONTEXT)
-+                self.assertEqual(reply & 0x80000000, 0x80000000)
-+                self.recv_exact(s, length)
-+
-+                # Expect early disconnect for unaligned GO. Could show up as
-+                # either b'' or ConnectionResetError
-+                try:
-+                    data = s.recv(1)
-+                    self.assertEqual(data, b'')
-+                except ConnectionResetError:
-+                    pass
-+
-+                # Further writes must trigger an error (EPIPE / ECONNRESET)
-+                with self.assertRaises((BrokenPipeError, ConnectionResetError,
-+                                        OSError)):
-+                    s.sendall(b'X')
-+
-+            # QEMU should still be up
-+            self.assertIsNone(self.vm.exitcode())
-+            self.assertTrue(self.vm.is_running())
-+            res = self.vm.cmd('query-status')
-+            self.assertEqual(res['status'], 'running')
-+
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2'])
-diff --git a/tests/qemu-iotests/tests/nbd-robustness.out b/tests/qemu-iotests/tests/nbd-robustness.out
-index ae1213e6f86..fbc63e62f88 100644
---- a/tests/qemu-iotests/tests/nbd-robustness.out
-+++ b/tests/qemu-iotests/tests/nbd-robustness.out
-@@ -1,5 +1,5 @@
--.
-+..
- ----------------------------------------------------------------------
--Ran 1 tests
-+Ran 2 tests
- 
- OK
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=131072
++No errors were found on the image.
+ *** done
 -- 
 2.47.3
 
