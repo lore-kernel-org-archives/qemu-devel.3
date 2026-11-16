@@ -1,55 +1,55 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D164606A330
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC05606A329
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=E0CxympA
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=x6uQQ/+a
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Ha-0005jV-FW; Mon, 16 Nov 2026 15:26:30 -0500
+	id 1xT3IE-0007qO-Kx; Mon, 16 Nov 2026 15:27:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3HN-0004cX-36; Mon, 16 Nov 2026 15:26:17 -0500
+ id 1xT3Hx-0007Nx-4Q; Mon, 16 Nov 2026 15:26:54 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3HL-0006jG-4p; Mon, 16 Nov 2026 15:26:16 -0500
+ id 1xT3Hv-0000Ri-5y; Mon, 16 Nov 2026 15:26:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860763; bh=S+1X54r4bObqC1yaMiN1eMbYqDjrRON3FNJZeWKr04U=;
+ t=1794860763; bh=/B3RGNgzJY3FR0UGENEgNI0YcCnK3/XicyQWNPycH5k=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=E0CxympAB+3QCLPkfEZy5plpZtzQ0bu3CFocCEGaDHZyevqU1WTmmjriqYCrLetHJ
- cvlUoRgqq3VgjtrrHc3njsvwp/GtIbFx4VvhDYINxVG8Ne9U4PvgsXq2UilrHQmWgR
- B0XCs0/s356+XuUfP4q+921TKYfBTGyhynoIlFVGwZymkSHyoDWU3UHGN1xuABxS5z
- RMHP1QrCPFHjNGc74E2sAiNFJMyp6VL7PFbdypK3D2qh4FEsucGzbmMITGURwdrp8E
- G+z/yEweTSLmaz7lLiFwhROrgRP/yO08roLMdAGh7xH1y0hxAUkgbGroGxomj2QKjc
- Q6GkTCzvvOxmA==
+ b=x6uQQ/+al6yE8zLBnMs4rYWsug8iGRjjB4OAEoEfPNLiVNP/G0tb8IJO6DlPgfwEI
+ gD51/UEkW0RYO+4sl6PCjsMwB596qaYKx3gqfJGK0JgPUtC77poRitmhJdtisufgzZ
+ 6cCawj7mIYpAAQv09Zk1HPofHtAXRKNQCtbzbPTPBJWoD9V58yfCNN7py+7mUFBi9J
+ QvpqBGZYRs9AsmVHJt/t2B2nkC3rx7SPsJluS81X/9gfxYB7rsnCQeANbULhwrhqnL
+ 6UkFacH//tqtzZzUZwvkKC1S7m5booBhG7LOX0642fjP+xRxz0Yx71N0so6DQaIx0A
+ BrT/76qmTJqMQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A15B11E719B;
+ by isrv.corpit.ru (Postfix) with ESMTP id E5D7D1E71A3;
  Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9DBB145FBC7;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E0E9A45FBCF;
  Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7A554B8E52; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ id 91AA6B8E62; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Tan Chi <tanchi25@mails.ucas.ac.cn>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 06/63] hw/riscv/riscv-iommu: fix entry leak with
- ioatc-limit=0
-Date: Mon, 16 Nov 2026 23:24:45 +0300
-Message-ID: <20261116202554.535325-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Marcelo Manzo <marcelomanzo@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 14/63] hw/pci-host/aspeed_pcie: Fix global MSI setting
+ during class initialization
+Date: Mon, 16 Nov 2026 23:24:53 +0300
+Message-ID: <20261116202554.535325-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -77,46 +77,51 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Tan Chi <tanchi25@mails.ucas.ac.cn>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-riscv_iommu_translate() allocates an IOATC entry before passing it to
-riscv_iommu_iot_update(). The update helper normally transfers ownership
-to the hash table.
+The ASPEED PCIe class may be registered for machines that do not
+instantiate a PCIe root complex. Updating the global msi_nonbroken
+flag from class_init() therefore affects unrelated machines.
 
-When ioatc-limit is zero, however, the helper returns without inserting or
-freeing the entry. Every cacheable non-identity translation therefore leaks
-one RISCVIOMMUEntry.
+Defer the update to the per-device realize handler, so the flag
+changes only when an ASPEED PCIe root complex is actually
+instantiated.
 
-Avoid this by disabling caching at the caller when ioatc-limit is zero,
-so riscv_iommu_translate() does not allocate an IOATC entry in the first
-place. This avoids special-casing entry freeing in riscv_iommu_iot_update()
-and keeps the ownership semantics simpler.
-
-Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Fixes: 9d085a1c3cb2 ("hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20261005111523.277550-1-tanchi25@mails.ucas.ac.cn>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 9c20897e50f44837e53896fe504a63a6dd696c34)
+Fixes: f002aa35f320 ("hw/pci-host/aspeed: Add AST2600 PCIe config space and host bridge")
+Reported-by: Marcelo Manzo <marcelomanzo@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Marcelo Manzo <marcelomanzo@gmail.com>
+Tested-by: Marcelo Manzo <marcelomanzo@gmail.com>
+Message-ID: <20261020033755.2618640-1-jamin_lin@aspeedtech.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 8cc795376e954818dce06cfc640efdea721d6061)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 323a041b4a5..866f49cc39a 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2919,7 +2919,8 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
-         /* Translation disabled or invalid. */
-         iotlb.addr_mask = 0;
-         iotlb.perm = IOMMU_NONE;
--    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb, true)) {
-+    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb,
-+                                     as->iommu->iot_limit > 0)) {
-         /* Translation disabled or fault reported. */
-         iotlb.addr_mask = 0;
-         iotlb.perm = IOMMU_NONE;
+diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
+index b46eb74234b..ceb010f2133 100644
+--- a/hw/pci-host/aspeed_pcie.c
++++ b/hw/pci-host/aspeed_pcie.c
+@@ -181,6 +181,8 @@ static void aspeed_pcie_rc_realize(DeviceState *dev, Error **errp)
+     g_autofree char *dram_alias_name = NULL;
+     g_autofree char *root_bus_name = NULL;
+ 
++    msi_nonbroken = true;
++
+     /* PCI configuration space */
+     pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);
+     sysbus_init_mmio(sbd, &pex->mmio);
+@@ -294,8 +296,6 @@ static void aspeed_pcie_rc_class_init(ObjectClass *klass, const void *data)
+ 
+     hc->root_bus_path = aspeed_pcie_rc_root_bus_path;
+     device_class_set_props(dc, aspeed_pcie_rc_props);
+-
+-    msi_nonbroken = true;
+ }
+ 
+ /*
 -- 
 2.47.3
 
