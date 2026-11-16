@@ -1,80 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84A7606C113
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54C2606C117
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=t/bDt15F
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=i7CdxeNS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSufs-0004x5-7v; Mon, 16 Nov 2026 06:15:02 -0500
+	id 1xSufe-0004QN-C9; Mon, 16 Nov 2026 06:14:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueG-0003pb-2Z
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:20 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1xSueg-0003wg-7S
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:46 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueB-000284-LO
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:19 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-492fcbfaa87so1692833f8f.3
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:12 -0800 (PST)
+ id 1xSuec-0002Dy-Uq
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:45 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-48e10a70540so1791370f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794827592; x=1795432392; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794827621; x=1795432421; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=pjw8iuDZkRxk9QIN6UyEUQIMdDyB9ab6e2fltNT38po=;
- b=t/bDt15FD3a6+7aOtj71DjOO/omUggUOg95rivDrF2Nw34Pr34F6OwL4v/QJesZero
- H9M22Or+L5Pwk6+qTKOUWkWqNfrULgCsUOGbfexym2NTRV3gkkl6vK6LUjh5r0coa+E+
- 56pE/IT5hQjGdf0xPvc7H1bbRmrpFqDLBQYWqVz6BlasnaaEeTUo6QCL/1zNTmLIYzNr
- OmxM/17hG+pXZDu9BrRenpawIc6wchV4s4HCavY4FGyyDOe8Ka5Ll26af5epRxplE7mh
- UV/a+doDgg5ROyXo1xRMVLgtDnKDF76J0DIgOzTj7C8BimrPL3czZTp/6ELkmv0LuPgd
- +c0Q==
+ bh=adxIr/XFyHr4P8yYnBX6Rcv9bXNf1Ug2i/vRC0a93N8=;
+ b=i7CdxeNSfktXkNIQjlQu5mi1EOXFTCaUvpH2C84tejRGkQknjBRE1m/paX5lDKTnV0
+ LNf/7WYe7KKgeyAQoc3DyblKAkoFO7PfuHjzi7mYu6DEOwKwNxC7Yi2fhP7+Wxi1NtfE
+ YJuXbK/bWHkJeMbbj3+aYToqmiPF0ZWMmi3sougY03B5iw8QKun+w1smlhqP6MOVlayi
+ rQUpLzIboaZxz0wQNUOIA4j688pbhxA8cb819uFJqoGGyqaKfKJ8wuGVMml1Nn3ej+Kl
+ nDH0MvecinO4SM0u8s17wTUFmihnEOvWP5NX3hAsF8QnzjUhK5LySYS+ohmL2rUWxSkK
+ m0ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794827592; x=1795432392;
+ d=1e100.net; s=20260707; t=1794827621; x=1795432421;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=pjw8iuDZkRxk9QIN6UyEUQIMdDyB9ab6e2fltNT38po=;
- b=pQAHrMGwD0F/3g3S8UydzxaaPpgJbwOrx8ZuSdHVGyYD4ogd6Nejh2m385NN5QlrKR
- umXyAQrru52P34qd4LbFJpR6RxzbyGulE1oCNM6TpERvxUIxU/v8eYWEEwftyoZdYSnF
- 7iEjKQ4Z8Lzl33JOJqg35C/yPa//vODSGbjbgVQ5UgQbX3gYW7/YtVndFds12/lKoCvA
- bdvGI/vXcrDWtmAR6KfmA02xDu3WSabrrOi03wmPS83eOLlU8Wl/wfD3EM8c4HyNKkAQ
- 7ZiaGmSHEZ1By21L3tdGpmb5hMPL5mUmQ/Yl+kOp8nMuPz8scn2iRpeDTmhndlyhs+fW
- Qh3Q==
-X-Gm-Message-State: APuU4Z+esuXxfbA89Ox5phy6LI3/GklOEki2Oab+i6jnHyLm9dwegSj6
- xFDrrxbD5V7JYn+z3RqQbwGgZKrBUmZBsiuusPhUWrYQL5LHLfGw0AtO7FU4gEtOQd94MTlIGjc
- dAX5u4+c=
-X-Gm-Gg: AZFdTZe/ORQu86YLfRiEpfgvlviTls88LYnAAy7nisHd2bF49gp0Q2oLT/pn4e+dV7k
- C4BJm7Hu5Q755u8JSkIr4qr/h5965TF0TZHySnLtVqIfKh1vGY9pL3NFXjydNVxUwZzyvxDmyVd
- Xu2LWhCnN4TjveO+kScaBjM0EeO0L4HIOPxtSTbXEwU2KYBp+09jVp0IpgXgWi5JyTrLlZBd+E5
- vUfKE6vA25059yban0anflBcnPydT7aJUqo/CvZLFcD60+xqU+ymreBWNsBZ4jMfPlMyTsL0TD1
- xiWOdfiTqPQKQm7A4KtfTFdTi2Pd2kkFI7c1if3OyTkHa8enkNPSqNavMn+MhRFAsHDxxsBU3yB
- 1gq6LRVqCMZwZpYReRBFY1TrKJOzLRGTeAIc4W7uggWUX3nsjxsqXLB3/cEw607wcs+GOlkwDCI
- 5U5FfVAD+Fqd/uCq659Nw71BeS1oqmgQNciAnMYpso5vfY215mmWVE8VctSR1YL26kqPxf/V2QX
- ttsZVLWMtn5ogHLylwwfuBt8ZBz9lZeX3ZXcsZecJc/aiJzckWKoKsKq/MYZcCurL5581Xs1ypn
- vB098rewQ0nIgpMNxzm76hgy/p6iJhu/2tC3vbfqQUkspNOOyESNOxHtjPdfA1O5jhwcAXdaY/a
- KJK40fb2tj8HUYMw8HJQWJk0WZRgWLVcRDA==
-X-Received: by 2002:a05:6000:2613:b0:48e:3085:7cf0 with SMTP id
- ffacd0b85a97d-49c7467b551mr18246962f8f.51.1794827591579; 
- Mon, 16 Nov 2026 03:13:11 -0800 (PST)
+ bh=adxIr/XFyHr4P8yYnBX6Rcv9bXNf1Ug2i/vRC0a93N8=;
+ b=AhU6n/7/YcbYO/A7noJ2BnU/769CAMqj8EGaAwGawh61F/sJkUJtK0Vjrvf7KSlo9r
+ EXOIe8/rGGeU7/OOOztheQP7vlc8v5mN8Vwr9x9nzSrxI1ixiMguIU+YC8s6Y8HqSf43
+ L2ABiHM3MIe9oDs/beLT6sE197BsHW9Ki3dSUB2bDgbxoHNovCRIDD1RghNd/RfJz+kk
+ 3FbrUodLur9aruADALh+xwqaqFiRgKGtfEQRFV0QSkq2i0cJpQHDc3RuTaeIREEVNoIa
+ DjTaWsk7W1w08645Z7GGDSQOk7RjZEBa5/G0B0qnN5BF4fn0nDh9EUu/YRF/TWNcZkbX
+ VRsA==
+X-Gm-Message-State: APuU4Z++0a0xwy8tn0kt2wHDbI23L33Nj9XFaFDQt1jMQM4EMM9tvjiR
+ WEfPi431gxTUWZtkZ0pBhk6KkK7q7gMhsDQ5eqglbDm2/kNe1Ov6RCYmEZHllyEMk4+AZfz6eIo
+ L9gIIUUM=
+X-Gm-Gg: AZFdTZdMzUn7Vs7ASGkvszer0+d+LkFnSx/faba0ydNCCpDYeu7BpF1GVhFzEzaIorz
+ NofFqMWHy4UMUDGVHJINixOvo+rw5LXqh26CHQa0CRliZQ0/1ZxYTGoXs+6RSCHMuAqQA7eEHUV
+ UrzGypYQJq+JWu945+NpOPCthA2eUQ+iAkNJEYdTZSXT3ywRqKry1R/RIClq+uM6G4R4HCLNN7g
+ 8a8dmJHPw/xFjNTh0yDxLtQHfsgvasAwKcF7Qxker0MRm2O3ixaPRT8iXUvSdw4qvEN71glzFYq
+ fLNz9ngINgGKd/Zq3D5eHNsyLwqBXkLlb/Xtl5CluACmJdVw3FmlrskXYRGILhLV8jFph4Rci9Z
+ OJ8mSkSmIE4EEOOKpVNrXhLdUX4cuZJI/JdPVFS6eyiHxUI1NnKQLemAS1GDsMMBRPI6nbDdmHS
+ 4ikQs9kMlagCH2EuoVypEPNb4ekCiWqnC8iMAGNZ/HkNva9U52qCqXyPEbHsw7qpmBxriXtDsx0
+ 8dtqKcl2ZSaqhupz/8FYrPvrN2JQw765K5aHAVlaMdl2iLW9V3bG9kgwcEJ95innN2cnrz5bla5
+ deRCttVnAY2xtdK62mAx5HOfDwmWiMDtPJi/Qu7ZYePlnMPpEjNWund8C+sUci9JN0LX62Mo06p
+ Z7+8qm+zJYnByijOCAOgiOBu8XCpeEW4+3JXjHupRK3N1SK4ACulWvHU=
+X-Received: by 2002:a05:6000:480c:b0:491:45bc:d691 with SMTP id
+ ffacd0b85a97d-49c6fc9e626mr20756606f8f.2.1794827620996; 
+ Mon, 16 Nov 2026 03:13:40 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.10
+ ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Nov 2026 03:13:10 -0800 (PST)
+ Mon, 16 Nov 2026 03:13:39 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/33] hw/intc/arm_gicv5: Use correct type for value in
- lpi_cache_get_hppi()
-Date: Mon, 16 Nov 2026 11:12:36 +0000
-Message-ID: <20261116111303.1692832-7-peter.maydell@linaro.org>
+Subject: [PULL 32/33] hw/net: cadence: Honor subword lanes in the GEM registers
+Date: Mon, 16 Nov 2026 11:13:02 +0000
+Message-ID: <20261116111303.1692832-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116111303.1692832-1-peter.maydell@linaro.org>
 References: <20261116111303.1692832-1-peter.maydell@linaro.org>
@@ -82,8 +81,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,42 +108,167 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-lpi_cache_get_hppi() is a function we pass to g_hash_table_foreach()
-to iterate over the LPI cache hashtable.  This hash table has keys
-which are GINT_TO_POINTER(intid) and values which hold the L2 ISTE
-value, allocated as "hashvalue = g_new(uint32_t, 1)".
+From: Bin Meng <bin.meng@processmission.com>
 
-The function is passed the key and value as type 'gpointer' and has
-to cast them to the real types itself, but it incorrectly casts the
-value pointer to a uint64_t*.  This works on little-endian hosts
-(since we only read specific fields of the L2 ISTE using bitmasking),
-but won't work on big-endian, and trips the clang sanitizer.
+The GEM MMIO callbacks ignored the low address bits and access size.
+Byte reads therefore always returned lane zero, causing guest driver
+that reads the station address byte by byte to turn four unique MAC
+addresses into the same value. Partial writes had the corresponding
+lane-selection problem.
 
-Fix the pointer type; for consistency we fix also the type of the
-local variable, though that was not producing any incorrect
-behaviour.
+Extract the requested little-endian read lane and merge partial writes
+with the current register value. Preserve the existing read-clear and
+write-clear behavior and dynamic queue pointer readback.
 
-Cc: qemu-stable@nongnu.org
-Fixes: a0562ada75e ("hw/intc/arm_gicv5: Calculate HPPI in the IRS")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+With this change, reset the TX queue pointers only when a write covers
+TX-enable and leaves it clear, and only start a PHY operation when a
+write covers the OP/ST fields in the PHY maintenance register.
+
+Fixes: e9f186e514a7 ("cadence_gem: initial version of device model")
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20261103172616.2400758-5-peter.maydell@linaro.org
+Message-id: 20261109143410.3279305-1-bin.meng@processmission.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/net/cadence_gem.c | 55 +++++++++++++++++++++++++++-----------------
+ 1 file changed, 34 insertions(+), 21 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index fd6456cd8aa..26dcbc82ed4 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -390,7 +390,7 @@ typedef struct GetHPPIUserData {
- static void lpi_cache_get_hppi(gpointer key, gpointer value, gpointer user_data)
+diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+index 9a94b3b8ca4..7456f0e18e7 100644
+--- a/hw/net/cadence_gem.c
++++ b/hw/net/cadence_gem.c
+@@ -1603,8 +1603,11 @@ static uint64_t gem_read(void *opaque, hwaddr offset, unsigned size)
  {
-     uint64_t id = GPOINTER_TO_INT(key);
--    uint64_t l2_iste = *(uint64_t *)value;
-+    uint32_t l2_iste = *(uint32_t *)value;
-     uint32_t prio, iaffid;
-     GetHPPIUserData *ud = user_data;
+     CadenceGEMState *s;
+     uint32_t retval;
++    unsigned shift;
++
+     s = opaque;
+ 
++    shift = (offset & 3) * 8;
+     offset >>= 2;
+     retval = s->regs[offset];
+ 
+@@ -1638,7 +1641,7 @@ static uint64_t gem_read(void *opaque, hwaddr offset, unsigned size)
+ 
+     DB_PRINT("0x%08x\n", retval);
+     gem_update_int_status(s);
+-    return retval;
++    return extract32(retval, shift, size * 8);
+ }
+ 
+ /*
+@@ -1649,35 +1652,43 @@ static void gem_write(void *opaque, hwaddr offset, uint64_t val,
+         unsigned size)
+ {
+     CadenceGEMState *s = (CadenceGEMState *)opaque;
+-    uint32_t readonly;
++    uint32_t access_mask;
++    uint32_t writable_mask;
++    uint32_t write_val;
++    unsigned shift;
+     int i;
+ 
+     DB_PRINT("offset: 0x%04x write: 0x%08x ", (unsigned)offset, (unsigned)val);
++    shift = (offset & 3) * 8;
++    access_mask = MAKE_64BIT_MASK(shift, size * 8);
++    write_val = (uint32_t)val << shift;
+     offset >>= 2;
+ 
+     /* Squash bits which are read only in write value */
+-    val &= ~(s->regs_ro[offset]);
+-    /* Preserve (only) bits which are read only and wtc in register */
+-    readonly = s->regs[offset] & (s->regs_ro[offset] | s->regs_w1c[offset]);
++    write_val &= ~(s->regs_ro[offset]);
+ 
+-    /* Copy register write to backing store */
+-    s->regs[offset] = (val & ~s->regs_w1c[offset]) | readonly;
++    /* Copy writable bits in the accessed lanes to the backing store */
++    writable_mask = access_mask &
++                    ~(s->regs_ro[offset] | s->regs_w1c[offset]);
++    s->regs[offset] = (s->regs[offset] & ~writable_mask) |
++                      (write_val & writable_mask);
+ 
+     /* do w1c */
+-    s->regs[offset] &= ~(s->regs_w1c[offset] & val);
++    s->regs[offset] &= ~(s->regs_w1c[offset] & write_val);
+ 
+     /* Handle register write side effects */
+     switch (offset) {
+     case R_NWCTRL:
+-        if (FIELD_EX32(val, NWCTRL, ENABLE_RECEIVE)) {
++        if (FIELD_EX32(write_val, NWCTRL, ENABLE_RECEIVE)) {
+             for (i = 0; i < s->num_priority_queues; ++i) {
+                 gem_get_rx_desc(s, i);
+             }
+         }
+-        if (FIELD_EX32(val, NWCTRL, TRANSMIT_START)) {
++        if (FIELD_EX32(write_val, NWCTRL, TRANSMIT_START)) {
+             gem_transmit(s);
+         }
+-        if (!(FIELD_EX32(val, NWCTRL, ENABLE_TRANSMIT))) {
++        if ((access_mask & R_NWCTRL_ENABLE_TRANSMIT_MASK) &&
++            !(FIELD_EX32(s->regs[offset], NWCTRL, ENABLE_TRANSMIT))) {
+             /* Reset to start of Q when transmit disabled. */
+             for (i = 0; i < s->num_priority_queues; i++) {
+                 s->tx_desc_addr[i] = gem_get_tx_queue_base_addr(s, i);
+@@ -1692,37 +1703,37 @@ static void gem_write(void *opaque, hwaddr offset, uint64_t val,
+         gem_update_int_status(s);
+         break;
+     case R_RXQBASE:
+-        s->rx_desc_addr[0] = val;
++        s->rx_desc_addr[0] = s->regs[offset];
+         break;
+     case R_RECEIVE_Q1_PTR ... R_RECEIVE_Q7_PTR:
+-        s->rx_desc_addr[offset - R_RECEIVE_Q1_PTR + 1] = val;
++        s->rx_desc_addr[offset - R_RECEIVE_Q1_PTR + 1] = s->regs[offset];
+         break;
+     case R_TXQBASE:
+-        s->tx_desc_addr[0] = val;
++        s->tx_desc_addr[0] = s->regs[offset];
+         break;
+     case R_TRANSMIT_Q1_PTR ... R_TRANSMIT_Q7_PTR:
+-        s->tx_desc_addr[offset - R_TRANSMIT_Q1_PTR + 1] = val;
++        s->tx_desc_addr[offset - R_TRANSMIT_Q1_PTR + 1] = s->regs[offset];
+         break;
+     case R_RXSTATUS:
+         gem_update_int_status(s);
+         break;
+     case R_IER:
+-        s->regs[R_IMR] &= ~val;
++        s->regs[R_IMR] &= ~write_val;
+         gem_update_int_status(s);
+         break;
+     case R_JUMBO_MAX_LEN:
+-        s->regs[R_JUMBO_MAX_LEN] = val & MAX_JUMBO_FRAME_SIZE_MASK;
++        s->regs[R_JUMBO_MAX_LEN] &= MAX_JUMBO_FRAME_SIZE_MASK;
+         break;
+     case R_INT_Q1_ENABLE ... R_INT_Q7_ENABLE:
+-        s->regs[R_INT_Q1_MASK + offset - R_INT_Q1_ENABLE] &= ~val;
++        s->regs[R_INT_Q1_MASK + offset - R_INT_Q1_ENABLE] &= ~write_val;
+         gem_update_int_status(s);
+         break;
+     case R_IDR:
+-        s->regs[R_IMR] |= val;
++        s->regs[R_IMR] |= write_val;
+         gem_update_int_status(s);
+         break;
+     case R_INT_Q1_DISABLE ... R_INT_Q7_DISABLE:
+-        s->regs[R_INT_Q1_MASK + offset - R_INT_Q1_DISABLE] |= val;
++        s->regs[R_INT_Q1_MASK + offset - R_INT_Q1_DISABLE] |= write_val;
+         gem_update_int_status(s);
+         break;
+     case R_SPADDR1LO:
+@@ -1738,7 +1749,9 @@ static void gem_write(void *opaque, hwaddr offset, uint64_t val,
+         s->sar_active[(offset - R_SPADDR1HI) / 2] = true;
+         break;
+     case R_PHYMNTNC:
+-        gem_handle_phy_access(s);
++        if (access_mask & (R_PHYMNTNC_OP_MASK | R_PHYMNTNC_ST_MASK)) {
++            gem_handle_phy_access(s);
++        }
+         break;
+     }
  
 -- 
 2.43.0
