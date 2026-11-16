@@ -1,138 +1,136 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754D3606A331
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E207F606A32C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 21:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UGhSt58p;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=TA1oCMAk
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=QV4I/fq1;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=R/FsqcWQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT4Bu-0000tX-6L; Mon, 16 Nov 2026 16:24:42 -0500
+	id 1xT4CL-0001My-6D; Mon, 16 Nov 2026 16:25:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xT4Bt-0000tN-LD
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:24:41 -0500
+ id 1xT4CJ-0001J3-DY
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:25:07 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xT4Bs-000759-3B
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:24:41 -0500
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1xT4CH-0000XY-RH
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 16:25:07 -0500
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AGLCH4g2710674
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 21:24:38 GMT
+ 6AGJesrF2727738
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 21:25:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Pn8ZauuxneugD97112aHzL8KYzpcRb3KThkh77SOImk=; b=UGhSt58pRAZ3fZ2t
- u35wAV3AfyHH9TYc98VDpSjERY9BdxsRQuhh7ljthAxlvbbvB5lvJuWpSyErPq7x
- 118h56AMpS6OOEzzVyY5isOpj1GrmWVASZnTXC31R7KWTQcacWd0OhTRBH3kMXHu
- NLa7synzzDHSnTnEJBz/qZDTnGMBjew/G3Yi7+F+Qo9e08QJxHkD4RL6jiNNJOkk
- ppV/MIAwHUA4U/vt+i3iexsxZDvCqENzuDLeTmMj10r7g1AdOLe5KoiF7lZM7vc/
- JBbcmuuoXBFOeKfJ0JG5m4RR3MYc6kASGvL+lBJQ4PN7zM0nucpL5ZrWe58kPC0t
- 22/BIw==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j09htg18a-1
+ yMqdOICA+OpAY/ATGXwEKSukeoHZA4NXxgP8ONGyHgE=; b=QV4I/fq1kzKnlgh5
+ 7XSJFj/f+aN+ji7421o0hsg/kFciP1JysnbnO677F7CfmclRcY2ZylSYtt0kpvIx
+ Yw0UKNJSGiGMtTlwAmGhzM+YdgQcxWy2elvPb40ePrdN3bXUoOqDf3lkqAElRYgU
+ t+l5M9PJZgkb1cErkao/FpFCfGQXRlrmB6PodwuTWJPj3+qH7uG0qkaGbSE9mPlf
+ vctvg/Ycg7m3y3ikZ/zDDos3+EIMYR61CbnF19+1ptncivqNJVYcne1qxZehyQ9w
+ kYp89QaYtesIdzKZt3bY80wy2xEPUxWOwGp+KPrDQaSqmvkKEIyDmpANoHAWiZ43
+ wGY3Ig==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j07reggbw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 21:24:38 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-33c35f5ca6cso5636324eec.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 13:24:38 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 21:25:04 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-1a71dd190b0so5922769c88.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 13:25:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794864278; x=1795469078; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1794864304; x=1795469104; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Pn8ZauuxneugD97112aHzL8KYzpcRb3KThkh77SOImk=;
- b=TA1oCMAkPfjSTuf8bMBVXiRUs34XforYxty6seNOndjhHHubvNHYV3s4Fv9hAdl13O
- +Jo8Ht3KB3nWvEssqAY3IuOOjkMuje5Gj6/9fZ9C7YzORjKDJgU2xL0FGTNn0vaokE5g
- AN+mfKdpaqkxZWcEGiLC1d1Jlrh2SSJ+GT4CQ4UCn9nNT3fij/oFXfpjs69iZ4k+TK/B
- kFXnWqlgOXuQcdq/vivz6pe5UXJd1KZTK34JRGZAQIbrTTb0Psy3VdfALeiotAW3C5yg
- 8nUzC7UcQfUsLZom4U/gSRSAPDksfyTqEMWxVeiRM0ljmKIla8acnwcLLJSSCJ918Slw
- aR0w==
+ bh=yMqdOICA+OpAY/ATGXwEKSukeoHZA4NXxgP8ONGyHgE=;
+ b=R/FsqcWQOzRdxvdwqONZ3WX7bG3LVHTvR/+2gAIwE61EXMZtCKkPS2ST6PSY8UW3t9
+ VzFYrfbwEE5qRDDtIbHT8GBXyK3p4oa3PCBN/kjAFURjElABl1gd0E6Tfc+UFTukHV57
+ 8cmRG/JN5QyUEUVbbWxfym83bDKF21f3cph5tm8RFoeeVPIGoe9yN6U94xgJo+uDwCGm
+ 6Yr86cUhqDdwkuFMjLHboDgfILzkSaGthAEn9hAEq5UX7h46tncbE2leRojqHrPQZaHD
+ 4vkpaw7BaKRQAb7iDAU63qpmBDYI8EArV3RDYG3qIAcH/7rKFIB8rnCrLEKTVmdtQrkJ
+ wjFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794864278; x=1795469078;
+ d=1e100.net; s=20260707; t=1794864304; x=1795469104;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Pn8ZauuxneugD97112aHzL8KYzpcRb3KThkh77SOImk=;
- b=dy03Qec54NZxNxXW2/zHA1PJGOIwnotoMkrzi+i16gq3ZH8+3OWXELEkM4jFLBH9ZZ
- N+8Pjz+ORfVU+eHYmrc7KvddgSmAOyxp+WeThnl/4PxMOujn1r/KpTDGFCk35B4+hPJG
- zmoo8olVEAdJ45B7ioaAvOyXQDvZkAVkU/4G7ZzOradO+2Rjxt2T5eQZNTjpvqOvHYbR
- 7jhZoPCVc65kG0Mgih9YB6ssC2p2XiaJTD8gizaO/z6m71uDg42/uyTRsyXQPgiIWt2q
- MbPkZdibPQxm5OK3KRtNEqlw6yysHeKJnfazgkyodfyWpgvljkYURuoXADPLV4cvZ2cD
- T2iQ==
+ bh=yMqdOICA+OpAY/ATGXwEKSukeoHZA4NXxgP8ONGyHgE=;
+ b=OsreDnYQlpyGEKvkIqesw679uyIHdPwF4dXRN6m/FUCz+z1g+VG9AUHdHH1TriO4RO
+ l5CoXglXCxi/6+KuQZ/4E/4BIvSH/p79OzrrXvM6LbSDN9F3Qqqw9hx0b4lnGyjPeQfI
+ zLhXKYVJIBAmAsw6lNh0aX3Cxa20mWHv7LwnwrZS8QfRZ32+eFNepj7z2O6Pw59gsuiy
+ gNUZXjeUr/tRxYTJqVNwkW7TvmXn12Bu0PTOqDOqYk8iGSv8Fzr1z63wLF1Axhj9zMak
+ 1RA1ver3LMdgiQqpIprGTEI6P2Oc6R0mEjQaPb4y54HWUJe7dcgaz6VuLwoovwCuX/9K
+ 5IbQ==
 X-Forwarded-Encrypted: i=1;
- AL+hErGH4GCzPWbWQwK2F4kpQ+5mTMWzx++7sW9PxCLVD5lULfTLeQzY9gs/eC4Xs0HgbDeGr32rbsxYYso9@nongnu.org
-X-Gm-Message-State: APuU4Z+WqCX8a5bUHtYwCyV+K/8m+4iJVNpZRjTcyVyghsrM5DNF5Bpj
- 5y0VCnPKSTNPuAbIkS4YH82quQMV4lkplGatbA9my2DPnzipYvM4VQsaO25hyd0J7mUXveKMrPD
- P2CWLvW7Omzzk33lzj/IenQ6QBIzT7/9DaQ/uOb3cD8SY4XLH0IX903xyCw==
-X-Gm-Gg: AYBFou0vQYyXLgIFowfU5GhM41QEPZtpgGl3Olc8rO1Fm4C9Y1PxGN3QAyaoqXT/Aaw
- nQ2JUcjLQ8uT1Mnu+WJquusZntAouJ+sDQz4FnCI0ihFNWxKCdyIH6QT/tj+jUHwmooFUxA6DqI
- 6nWOQA0bLK87dYpkINiyJ4Rr/IYqLMfyMCIxpktzRaUpM+E9toXPTMUj0araeT7NfHM9xhqk12r
- nNA/9axqUVFLmkwzxPHlqeSa+GTl0OqcKxvVKpXDidzJ+7ok/KW7HGsPZxSnsgS4Zd7pneZD7xW
- E8ZhRrY3TmNype6vUdws4pjbAbdPdqakjqCELDO6VyxFGUBDuETeMJf6jW/6HlnZGd3iOhFETgi
- qDc9WqI7Qk2qiq3lPMk8LE+EQqD77Dbuf3+pBW8RWRHerl4s1vqhUOHt2DkBfRDoTApqBUyJZa8
- UvhmT3zNFwyzRqnJbHWp0z9hmts1Y+fhUMG11uDiB0pNw=
-X-Received: by 2002:a05:693c:8816:20b0:36f:350b:3838 with SMTP id
- 5a478bee46e88-379671247e7mr11426104eec.31.1794864272864; 
- Mon, 16 Nov 2026 13:24:32 -0800 (PST)
-X-Received: by 2002:a05:693c:8816:20b0:36f:350b:3838 with SMTP id
- 5a478bee46e88-379671247e7mr11426090eec.31.1794864272346; 
- Mon, 16 Nov 2026 13:24:32 -0800 (PST)
+ AL+hErG9NGucHP0pZAqVQdOq6qsCEG+/oqo3wvC4qb3NXx5hr1htF0TOXzYkKl+EXRyen6TpeSuKn8GB9ZGq@nongnu.org
+X-Gm-Message-State: APuU4Z/M+BsFPCIaQzK292z9NcGA/wW+rUAuoD9plrrapHEzL4VwVbCd
+ h8+o6maxEXl5q8TcCr5plJbLU4aBupp3C8+XNTO9EjzjIwn86qzsxjQPRh2T//Bme+uIVQP+YLZ
+ /1PbMF2+yqjNjbjaUBUVV0QiY3HRJBe7qjhRrc66uyJy6m5f1kVdVxR3wYQ==
+X-Gm-Gg: AYBFou2R1aERYDkaoHAWt9f3qsOXPRSIMYglE387XU+xCstjIVxzmZl40zDQZ0fjMSd
+ pCrVfXh+KtimghJXmXdsc1jw/cWTF/rCMk6t2Y01iWin8ip1dHa1aHtI/Lyq4TfQGNp6qeMtaQT
+ f7p95m86pLJoPTTlLOPUfVxwKgOmdUrQFXAv3BFse7ZiouOvMDLHJ8PWkyfLSsstAjNCGJ8VH4w
+ wDbgqrpG8OKvNNjkhFEmojuQGC+NsLgOefSmU44QzYQtEZJh8weQODwz4yH3dPtcnUTT3Am7MVD
+ Qz+JZWpMSR9fi3dkapp70lVVzZ31JhaVFN4C8TQMKbsABVKqdEEdK0nWdf3EWU2lI3Q9H0zuzZ6
+ hJTI1F6l26VXNCjVQ8GcwLeyUsia8W0KtSdkYCNEDm0eOlZ3nzhgTU4uyiHaF+XVDY4qzPHD+1Q
+ +gmNvhx8hBgmUCwPX3RrvUuKWYi5xPWcJgbAThq4rLD0k=
+X-Received: by 2002:a05:701b:42c6:10b0:1b3:ba92:145a with SMTP id
+ a92af1059eb24-1b503171008mr12621400c88.19.1794864303695; 
+ Mon, 16 Nov 2026 13:25:03 -0800 (PST)
+X-Received: by 2002:a05:701b:42c6:10b0:1b3:ba92:145a with SMTP id
+ a92af1059eb24-1b503171008mr12621369c88.19.1794864303137; 
+ Mon, 16 Nov 2026 13:25:03 -0800 (PST)
 Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3795378c2fesm37709137eec.1.2026.11.16.13.24.31
+ a92af1059eb24-1b50316e195sm39587025c88.8.2026.11.16.13.25.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Nov 2026 13:24:31 -0800 (PST)
-Message-ID: <be322ed6-f039-421d-8c3f-b81a230d0f3a@oss.qualcomm.com>
-Date: Mon, 16 Nov 2026 13:24:30 -0800
+ Mon, 16 Nov 2026 13:25:02 -0800 (PST)
+Message-ID: <4e102163-d2f9-4533-8aa0-10d75fd7c4a0@oss.qualcomm.com>
+Date: Mon, 16 Nov 2026 13:25:01 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 33/48] system: filter machines based on target during
- creation
+Subject: Re: [PATCH 34/48] hw/core: implement TYPE_TARGET_SPECIFIC for machine
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Markus Armbruster <armbru@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>
 References: <20261112133054.1977618-1-berrange@redhat.com>
- <20261112133054.1977618-34-berrange@redhat.com>
+ <20261112133054.1977618-35-berrange@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261112133054.1977618-34-berrange@redhat.com>
+In-Reply-To: <20261112133054.1977618-35-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA4NSBTYWx0ZWRfX1As8aBHHdujT
- dexQc7j9s3lEaI+8hcEZ5EAewNWR5suqwNlLMtiNnAcbRsI2IBtB8ONiiGylfnecCzfUWeLe4mI
- /BDmiaK1nAb3opS+YwEZGloS5GEgsEE=
-X-Proofpoint-ORIG-GUID: JQ_YHvg0iyt6CBllcRPsqGXQ-6CokCvp
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA4NSBTYWx0ZWRfX9I5tC6aT7rjG
- JoJWMXs2TKpYOROs8SQyNgSTVctrQLaOATXTEE5LPww6Kh0WZxO3yHcd1j2hPiAx+ZbMx32oeMz
- vWTID8uTxmZbEGM872tCaAIal1E+Jn3mGBV1YQjbJM91bVNBx9jZdrdi4GYyx/ldKJ2ARx+9orD
- h5Fe/AUVwnb+UMvtGfAC6T8+v5pquU7dGSaOgaTJn4lCL7AhEm26oEVinfyAxAQLymeEJ5/oz9K
- BMojvOCCsRJo12cAHNpC/Vxm9Vnee8OVstN1aCuXV8rY1UF5CCTRg8MV5NhGekycz8T5c2URvjk
- 6KYvuwAPm71yECEIZr2ktLQT5QcyqC+G4Ah8k8DOp+0sxY8PFLm/yFtZkVoCQwnuNC6PBYPXTFN
- BAg9ylI5uYDWjxQ44TybOXgOQa5AfW/R+o9JF4nUARFHfaGsZhmQ+8A1l787MgSKy9oq0KOcl/D
- /1z2OHcfgXDgUgdezFA==
-X-Authority-Analysis: v=2.4 cv=K963jCWI c=1 sm=1 tr=0 ts=6afb7496 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA4NSBTYWx0ZWRfX7UxHWRp2vw3F
+ hP0Oxl5nkzD6FvP9ME/gyjndpXls6rxJc1LPLnHObbTkxwOPRw+qorwp6fs35zOLCQ0rmayn3Pp
+ 4kTHuy463TelDVHKtT8t59SlQyGcFs4=
+X-Proofpoint-ORIG-GUID: -wDwggnS_1kYGNhKdVJCtG8Lqeaj5niu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA4NSBTYWx0ZWRfX3BImynAKEZX7
+ GDaBFnGK3U3u7ZvJ6WV7MQaTgtfb+k+NbE0k4JCj0Vwu7m6FRqK9zNSH9caIj2I7xiB5g4OJHmy
+ QQdy2/NPZNmdq7hUr+A+iLrKU9AYyz2BAfaS2pz59FT/Do0jz93U9vEDQXjW1EyAIyKrWJyI+Bj
+ SVqgiAR4ND0e0ZcgYJQPtdgxysb3Q1ObfsN5SpfTHUijarQ+S4nJBYl9iqV+IAx+FNJm6k9wXja
+ bYDKZ1iguDFNWLV7XVKbc4HmjpPBRUggm7TPzOjfD4vpKbTlWtkePa9RhTK7qvyu0OarEwZmI8w
+ Zj3oD1uqqsuYxtG3TbMnrHMZZT/k607zQ4qePIZHHCpibFWitkSd5W4CNiXpWFj3hCmAp1n81nn
+ sy9oGH+oz661QJYD6jP/acPr1O9+OaBZj44dUYWU948q1RRaBxkktA+jH4gsTs69Dg01+EZjfBb
+ Hbj3r+ywX20bUe1rRRw==
+X-Proofpoint-GUID: -wDwggnS_1kYGNhKdVJCtG8Lqeaj5niu
+X-Authority-Analysis: v=2.4 cv=R9uWitRX c=1 sm=1 tr=0 ts=6afb74b0 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=hLhM-RRBbqfcn9oER4cA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-GUID: JQ_YHvg0iyt6CBllcRPsqGXQ-6CokCvp
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=qwkxIZFZQYzmEp0n1YwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-16_06,2026-11-16_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 malwarescore=0 adultscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ adultscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611160085
 Received-SPF: pass client-ip=205.220.168.131;
@@ -165,15 +163,22 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 11/12/2026 5:30 AM, Daniel P. Berrangé wrote:
-> When creating a machine instance, validate that it is creatable
-> on the current selected target.
+> The Machine base class implements TYPE_TARGET_SPECIFIC since
+> its children will almost all be target specific.
+> 
+> When the 'targets' field is set to a non-zero value on a
+> machine type, it will block creation of an instance of the
+> machine unless the current selected target matches. This
+> allows the current 'is_available' callback to be removed.
+> 
+> Eventually only the 'none' machine is likely to leave the
+> 'targets' field set to 0, since it is universally creatable.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->  system/vl.c | 16 +++++++++++-----
->  1 file changed, 11 insertions(+), 5 deletions(-)
+>  hw/core/machine.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-
 
