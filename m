@@ -1,105 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6842F606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 15:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312AE606A33F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 16:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=sFuDzw+d
+	dkim=pass (4096-bit key, unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20251003 header.b=MtD9NJhP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSyF8-0004lt-N5; Mon, 16 Nov 2026 10:03:39 -0500
+	id 1xSzHT-00048w-7R; Mon, 16 Nov 2026 11:10:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSyF4-0004le-0B
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 10:03:34 -0500
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSyF2-0007pR-Au
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 10:03:33 -0500
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-67bee1f693bso2979742d50.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 07:03:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794841409; cv=none;
- d=google.com; s=arc-20260327;
- b=YP19ikc9vCsfGypl1X2YnLQObgjugKF4VOGNDS6sxhWq+sC5hs0U3Butk/MGA9T4zT
- 4uNq2jEUIQXyBmJyYis/FdwwCeedQEu8xXn9SrxCRfPV/bl9fmdqH4y/AvPqvSnL9mOX
- KSzG19HV+Ilisz15PHjBK3mO9t9kentsIy1BFqT1W42/GyfQeSAm8VixB8l5UXzX+Kh6
- LmzPaa2+OaExs6HzQuv6gbrpnL6oOLQ0Jt6LXuRVyvJUFpmt/Aygri85QHFL/Q9THCoB
- 6UhHghTyuoeHLRoVTsZ80hPQzj/miQe4GnqjE5IS4r3ejeAmB3x8POpA+yh1HG+a0Mzi
- rfig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=USC2HzXhMm7gUvDh4qi+O5SvnCMzFSAYxYLQ9xom+fs=;
- fh=fD7D10OYhga5S6sFXOfoU7oKAvi9BDzpECUX6+b8H8M=;
- b=q7JH0kpv6PVHpeIKU7hbAVcCKkea7A0cLNuYvn6Lb41LddqEOxrBH6gW8Az0Q8rBKb
- 9+W9gyqYQ8hzGi1lUeIYsZWdHnZNbxFsfsXowQgKSdUEyG3VdnKYuPwWqcbDon6SynnX
- x+g+bLxzm1+eT+DWb3FGKFA1BFEA6blWch3ntwxM7W7NPijmFllfaiXutXBkgxm4CAdu
- P4S0MRDphqi9OOYgdSMyT7a/+PrToPUxcczP3JGStitQEm91Umzqg5LR6xz7mwgzmKWi
- fVKWqcOydHxiYU+2rVyLwZylfuO5zp9CgHc8eV+6S6vKuTgMY0NhzVLeXjijoA7UccWO
- 6gWQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794841409; x=1795446209; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:mime-version:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=USC2HzXhMm7gUvDh4qi+O5SvnCMzFSAYxYLQ9xom+fs=;
- b=sFuDzw+d3dWAiqxtZfoozG8F4NB/XC6WeV1c8ZLyTq7Ap+naoQRMKAWaHmMtGztiKI
- cH5B4lcU6KnGR0Qx7RN2wya09PrTyY+EhZdpvJxw+ijTDFzvzblrtRMehk9ZwA3Jfl2j
- ZuFWAVgOPwOWwAHezZU4CXYBxNKMoEOPHmEq2ha/kCjs0fKfHCVK0+ZByflx2pvjSyUp
- PtF0KdSxGOG3Gib3yFg/eraET5Qm0lUAbmnaRZfQoA/AWnziH0skZiFkEZFZm+5q5CI1
- crwtrd3SchBYoKZadyMugfJ0yZaoiKgk70oh62qvurtKTEAtoLHi5lO9tY7lhJZ5oM2/
- P6ag==
+ (Exim 4.90_1) (envelope-from <chris.bainbridge@canonical.com>)
+ id 1xSz2L-0000cQ-GO
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 10:54:29 -0500
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chris.bainbridge@canonical.com>)
+ id 1xSz2J-0000jf-Ot
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 10:54:29 -0500
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 96B913F71C
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 15:54:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1794844453;
+ bh=cfsQLM282692b9XkuXE/gp/fNGSKqysS9JDIp28ql/g=;
+ h=From:To:Cc:Subject:Date:Message-ID:MIME-Version;
+ b=MtD9NJhPqufS62nscAy3K5WxiD6U+zTUVipjw7a66JiSepYR4IJ8El9VC+/268xw2
+ PEdMkZmehUHIcY6PWkEKRYRzAt6JNn2aaVNiLOwUBLULKcAqdgXPRqZAn6/uVXA/+K
+ 7qYzejqP8UDDKMq8B9IlxAghZZTgNsj2pFwTr9cYhm6TXYKwDhz5pYYZmvCjawFwHX
+ 4TNMxQzAmXv8uqUAzUTr6FYgDh0FdahqClUYOn6NsCQebW0ZneUP5YP3PZ9h5oSImE
+ 8UDJUHBMKU1Bo3mj+Q9pTHChnbL+ka+Qvhq7kgyNGlyMdH5+/ksmXQQwW6TOReWHRp
+ 9uKPovTUSttKUBV0bE0NfP7rDTg+/hwcNJ36SJnYU08S//aRKhd02JvKLW351DMGk/
+ yH1SzwWXBhBqjE/O7UFEs1wkqrViUeEg82zNzqcNdfy3ReAhyFuOvME0o/K60g46vs
+ rdq08ycDuGA7lBh+iL6f5sfh4sm/ovQNb7ng3/UqcRUSRUjP2iV93IZIAvLP1lxdak
+ z9ppAQgOkRkY1gx+FNdzSfCpfXN0eIt3V89tti5AbpZrLHuhAKdvztVb1G0nPjhHyH
+ 5kJ0VDvDCtn5g6lKOUXtpXrveLt9fEMyGnIdWfB8PsJ5zQTb03o/dz4gFGrjdCtg+1
+ 4UJYpTu0NR7Ef1HinDAaAKzs=
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4a204f135ffso16901955e9.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 07:54:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794841409; x=1795446209;
- h=content-type:cc:to:subject:message-id:date:from:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=USC2HzXhMm7gUvDh4qi+O5SvnCMzFSAYxYLQ9xom+fs=;
- b=KlKTZvWBzCnCTFSwM6tcc4XVxXHl9tOg5mkHZDyN21qbmIo7idfyXW2PU9Bz2+dlRc
- +whHjYRN6AvL9zbCD6/6HlOkBxV+ilU6JYDVt4M8dzQELKDpgh1VxWdMTr/eCS7iWGb5
- nYAqOEVZIYYz6u7wdva3kArIRhfW2cCtGGFVSOPkMyqDv8LNlW+n+Gmc9Wp/7UWneIl5
- 1smEI651QD6czemDjPdzK15kcS4Z/l2PJnS850vfvSpH5Gcux0Z++mIWvjbHr52hL75J
- TJZZtFb179rIBOKhEyNuAucKRVfTPaWAMAd6s+Sho69GffD7CVm7DEEtS3ZZ9svOzfQ+
- AkFw==
-X-Gm-Message-State: APuU4Z+/7lV4CiUKHHsyOiRlchHDltP+2ncleSjmitwUeuxNWxl5c7lL
- h8G92cuUeDhA3VznItFkjspAvs1Krw7Np6h7juDDheS24ODMzMg0rJiLQnmq9L6NHx8cIAd8F/2
- tXiVcJmEJzq/2pwjxBRCMdV9otAacWUuzhvb1Uv7ahSsEdwp/24TQ4kGpyg==
-X-Gm-Gg: AZFdTZd0JQ6iOd8rcKgAYNF7EF2NyzsNBUXOhdD929KwsjVzsI2djz1q7KAcfYMx6p1
- BiAYPqYOD/fRbXjPPqJ8jgyorNhn3Ku3mokNp3uKIwUYKOgspTFZmDIch8CrACM1AQljOs4vUDA
- s/4IrjlpA95oQn20b7NgFUjINf/ovdCGMLPMcxexvfAit0Er2iY4Xc+1hXnYHlm/Fj1cIpyfvIg
- o7UQpIN14/BHCkTrj7o9wCF+3G6TwBOJzmFG/lS+bf7JPW+V48LR9u7s8k/1YrnWg4LyKC1jfO8
- LXeit1fIcEyz5KYpY240LanuQQFOjkzhDLkrnhb+36eYrOgawuAMgqk48iOo7qaN9JZBSTEOee9
- d+ImZ+2JMu2zpcbFdP9xar0xHnpWvaKHm019Dtsy9hnRcntGX2XAvPZqbqyHJN7fojuoHhW8Wmz
- QD2evApDWFG70pA0fZOWq7
-X-Received: by 2002:a05:690e:13ce:b0:67d:b84d:5bc5 with SMTP id
- 956f58d0204a3-67db84d5ed2mr1395536d50.3.1794841409235; Mon, 16 Nov 2026
- 07:03:29 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794844453; x=1795449253;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cfsQLM282692b9XkuXE/gp/fNGSKqysS9JDIp28ql/g=;
+ b=zL85wOKFiRz0aSnQJAUQNmKVrS/n1avmis2o90HH+DtxwqgUf8PZSjYHbTtLQLoXYD
+ fBfJZdyNyYE39Z2zs0wJQGeWDcMZz/yDwoxjoID5eKl0DaQdZcpxT3PZxuOiSPc6WJvZ
+ VzrQ3KyIUvNsf/ydkiavFYSp7YPrMRwtdTieg65PsVlhXla+ermr+sfptMshrkn6L56G
+ nUxiVRZFJSuIWqETbAbjs0NcMSvP4IIJOhyTuQ2vgojksvp5xV2X7umhj1hhLimUQrZ2
+ NYfUrAEnwMCXzKW3sQykwYO7HR/P2R78SfYdY93bhG2TZZ+B5nnGpzF768OcTXIYPs+3
+ XZJQ==
+X-Gm-Message-State: APuU4Z9foTGAok6kkjht3Wi+109SBQdnbe1BpuV1N25LvmLAT10v50+F
+ PhUv/79BtzGjbmcDtLXqc48nqy3IbvOdUBIduOaImNvftJ/OKe8g9IbPvS4HGGlnOU9LL315+bk
+ 3FHudzBPRx6h69Kp0pMia64ThJbOUZ6Bhzp+svJRUaxneznmRFGluwiSkEuFCRfs3JMCZitDGPL
+ GSmwlgdv0=
+X-Gm-Gg: AYBFou0PrwzO2pjZmJaEkva7+pqQ0855JE9jyedOwNDkqLwRu6qmXC8WuAJsefoAINc
+ sqn9l2UjdtI8RVolw3CuL/R9DuIQfxdl/LlW6yqDdCNV9JSgL8lLnR1p0ZZbRec/rbXbN7iWePq
+ uz5q3uY5soNoQSnyV7v6NfZX2df1qZM6xLhWfXci/2igfJ6JutBVT1PNE215BftpYhNgbVKMrJc
+ KfE7z3hVnbjBp0TK56I+7Y9n3gyf3ff7U/85eEi0x1LPariHlcuO33B7EIDKObgEFcbd9AufO1Y
+ ttW1qwuDPSyiVCjfbaFjx5pbzBNIi0PnEvgT/2DiBMLTajHyrC/A3ScvUDO2EkO8+3IofCW8bx1
+ hR+k1wIau0beUJ7Con5A985qk7rNe5eVXTVuzyboWOsaspjlt1OOGLD6+hyFsVKU=
+X-Received: by 2002:a05:600c:4e45:b0:4a2:e0c:2b0a with SMTP id
+ 5b1f17b1804b1-4bb55a84b08mr226515215e9.16.1794844453129; 
+ Mon, 16 Nov 2026 07:54:13 -0800 (PST)
+X-Received: by 2002:a05:600c:4e45:b0:4a2:e0c:2b0a with SMTP id
+ 5b1f17b1804b1-4bb55a84b08mr226514725e9.16.1794844452643; 
+ Mon, 16 Nov 2026 07:54:12 -0800 (PST)
+Received: from px13.Home ([2a06:5902:822:4600:c90d:b019:3410:bcf9])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4a33c344a58sm311313f8f.34.2026.11.16.07.54.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Nov 2026 07:54:12 -0800 (PST)
+From: Chris Bainbridge <chris.bainbridge@canonical.com>
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, qemu-stable@nongnu.org,
+ Chris Bainbridge <chris.bainbridge@canonical.com>
+Subject: [PATCH] ui: fix screendump PPM corruption when the width is not
+ 4-aligned
+Date: Mon, 16 Nov 2026 15:54:09 +0000
+Message-ID: <20261116155409.300888-1-chris.bainbridge@canonical.com>
+X-Mailer: git-send-email 2.53.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Nov 2026 15:03:16 +0000
-X-Gm-Features: AclHuK_4SxFLG4mAFqtRDLRJdp4ikswX5qyJO0CJ2km7nro7Szg0qDKchOB2Kk4
-Message-ID: <CAFEAcA_77DxGK-26Z6=qx0a88Zd0KQgFjKgJc2CgTmm-iOzbsg@mail.gmail.com>
-Subject: memory_region_init_ram_ptr() handling of sizes that are less than a
- page
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=chris.bainbridge@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 16 Nov 2026 11:09:58 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,54 +111,70 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-memory_region_init_ram_ptr() (and memory_region_init_ram_device_ptr())
-create a MemoryRegion backed by a lump of memory provided by the caller.
-They do this by calling qemu_ram_alloc_from_ptr(), passing the size
-and pointer along. However, qemu_ram_alloc_from_ptr() does this,
-regardless of whether it was given a host pointer or not:
+ppm_save() writes pixman_image_get_stride(linebuf) bytes per row, but
+the P6 header declares the image as width x height, i.e. width * 3
+bytes per row for the PIXMAN_BE_r8g8b8 line buffer.
 
-    align = qemu_real_host_page_size();
-    align = MAX(align, TARGET_PAGE_SIZE);
-    size = ROUND_UP(size, align);
-    max_size = ROUND_UP(max_size, align);
+pixman rounds scanlines up to 32-bit boundaries, so the line buffer's
+stride is 4 * DIV_ROUND_UP(width * 3, 4), which is larger than
+width * 3 whenever (width * 3) % 4 != 0.  Every row then carries up to
+3 extra padding bytes that PPM consumers do not expect: readers which
+trust the header see progressively misaligned pixels (a diagonally
+sheared image, with the row padding interpreted as pixel data), and
+the file ends up height * (stride - width * 3) bytes larger than the
+header describes.
 
-The result is that if the caller passed us a lump of memory that's
-not a multiple of both the host and target page sizes then we create
-a RAMBlock whose used_length and max_length fields claim that it's
-larger than the actual backing memory. Any user of RAMBlocks that
-trusts that information (such as the migration code) will then
-happily read or write off the end of the backing memory.
+All standard display widths are multiples of 4 (and so is their
+width * 3), which has kept the artifact invisible for years; any
+non-aligned width triggers it.  Example: after a VNC client requests a
+desktop resize to a non-aligned size (SetDesktopSize), or with
+-device virtio-vga,edid=on,xres=1050, the screendump of a healthy
+guest is diagonally sheared at the correct resolution, while every
+other display path (e.g. VNC) shows the correct image.
 
-This obviously isn't right, but is the problem:
- * that qemu_ram_alloc_from_ptr() shouldn't align if it's given
-   a host pointer, and all users of RAMBlock need to be able to
-   cope with unaligned base pointers and sizes?
- * that qemu_ram_alloc_from_ptr() should complain (assert?) about
-   unaligned base pointers and sizes, and all callers trying to
-   use it for smaller MRs need to be fixed?
+Write exactly width * 3 bytes per row, matching the header.  The PNG
+path is unaffected: it uses the same padded r8g8b8 line buffer, but
+png_write_row() only consumes the width * 3 bytes described by the
+IHDR.
 
-This came to my attention via
- https://gitlab.com/qemu-project/qemu/-/work_items/4877
-which reports that trying to migrate the AVR 'uno' machine runs
-into this because it creates an "sram-as-io" MemoryRegion backed
-by a local allocation which is less than a page.
+Verification: on QEMU 10.2.1 with virtio-vga and a 1050-pixel-wide
+scanout, stock screendump emits a sheared PPM whose size exceeds the
+header by height * (stride - width * 3); with this patch the PPM is
+exactly header + width * 3 * height bytes and renders identically to
+the PNG screendump.  scripts/checkpatch.pl reports 0 errors, 0
+warnings.
 
-Related is
- https://gitlab.com/qemu-project/qemu/-/work_items/4663
-which reports that the tpm-tis-device doesn't work under hvf, because
-that device creates a non-aligned RAM MR with memory_region_init_ram_ptr(),
-and the hvf code fails with an error when it sees a non-aligned
-lump of RAM.
+Fixes: b12f32c408ef ("pixman: switch screendump function.")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Chris Bainbridge <chris.bainbridge@canonical.com>
+---
+ ui/ui-qmp-cmds.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-I'm not sure which direction we should be going in trying to fix these.
+diff --git a/ui/ui-qmp-cmds.c b/ui/ui-qmp-cmds.c
+index 753cc2bf52..64027da2c0 100644
+--- a/ui/ui-qmp-cmds.c
++++ b/ui/ui-qmp-cmds.c
+@@ -309,9 +309,10 @@ static bool ppm_save(int fd, pixman_image_t *image, Error **errp)
+     linebuf = qemu_pixman_linebuf_create(PIXMAN_BE_r8g8b8, width);
+     for (y = 0; y < height; y++) {
+         qemu_pixman_linebuf_fill(linebuf, image, width, 0, y);
++        /* Write width * 3 bytes, not the 4-byte-aligned linebuf stride */
+         if (qio_channel_write_all(QIO_CHANNEL(ioc),
+                                   (char *)pixman_image_get_data(linebuf),
+-                                  pixman_image_get_stride(linebuf), errp) < 0) {
++                                  width * 3, errp) < 0) {
+             return false;
+         }
+     }
+-- 
+2.53.0
 
-thanks
--- PMM
 
