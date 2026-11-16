@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB17606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F293606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gWlsXpTT
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=fJybn4Ww
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT569-0004TR-D3; Mon, 16 Nov 2026 17:22:49 -0500
+	id 1xT568-0004Od-9i; Mon, 16 Nov 2026 17:22:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55z-00046O-Bh
+ id 1xT560-00047x-LQ
  for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55x-00063n-JN
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:38 -0500
+ id 1xT55z-000644-5Z
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794867757;
+ s=mimecast20190719; t=1794867758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V/UvBHnpi8PReJALZW+4SgI/XiIMJOiQmKXt11NpCws=;
- b=gWlsXpTT3W5TvEqYqMqzJcGxNurJd6kYFBeaxTjj3bqzp+fRD9R0fkxFcdxJakB2DDrS3m
- RXjOBb2g4vHAV9l+lBT86BO7QcK71DysSdpPxxmqBQD8SMi1sz0cCMjdMZjYS4khxpOJjA
- IVSlFVkMj3a4Jbdw0QalndNoJ+Y56UA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ZF/GZw261j7nYjDiMSPebcgwmDkIKJCV1UxqJCvQzS4=;
+ b=fJybn4Wwwj5+OZttwbSqLlJ+abuxZggMGbBsTouaPpBvbty0w0X1ihzullOfQy0rf22qZx
+ Wmy6fIzIpmpwcwAWeNQCFVRYrBio2nybO0k2ioCahslF9wWDnu6xq1mxH0xb5PAsLZQq8x
+ QXUEBdRRAOdYT7XJ+ld+71aZBsZWHJM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-xhLtd7NzNvyrNUAC4Z8CNA-1; Mon,
- 16 Nov 2026 17:22:35 -0500
-X-MC-Unique: xhLtd7NzNvyrNUAC4Z8CNA-1
-X-Mimecast-MFC-AGG-ID: xhLtd7NzNvyrNUAC4Z8CNA_1794867754
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-J6oRLRE8PPqor3E7x5EV6w-1; Mon,
+ 16 Nov 2026 17:22:37 -0500
+X-MC-Unique: J6oRLRE8PPqor3E7x5EV6w-1
+X-Mimecast-MFC-AGG-ID: J6oRLRE8PPqor3E7x5EV6w_1794867756
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CCD57180047F
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:34 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5531B1800576
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:36 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9590E30001A2; Mon, 16 Nov 2026 22:22:33 +0000 (UTC)
+ id 2912330001A2; Mon, 16 Nov 2026 22:22:34 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 23/26] hw: mark KVM clock and RTC devices as secure
-Date: Mon, 16 Nov 2026 22:21:55 +0000
-Message-ID: <20261116222158.2840471-24-berrange@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 24/26] hw: device AMD, Intel and ARM IOMMUs as secure
+Date: Mon, 16 Nov 2026 22:21:56 +0000
+Message-ID: <20261116222158.2840471-25-berrange@redhat.com>
 In-Reply-To: <20261116222158.2840471-1-berrange@redhat.com>
 References: <20261116222158.2840471-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -90,41 +90,71 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-These are core infrastructure in virtualization cases so must
-provide a security boundary.
+These are needed in virtualization use cases to support PCI device
+assignment use cases so must provide a security boundary.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/i386/kvm/clock.c  | 1 +
- hw/rtc/mc146818rtc.c | 1 +
- 2 files changed, 2 insertions(+)
+ hw/arm/smmuv3.c       | 2 ++
+ hw/i386/amd_iommu.c   | 4 +++-
+ hw/i386/intel_iommu.c | 1 +
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
-index e3dad136d31..d3e23013114 100644
---- a/hw/i386/kvm/clock.c
-+++ b/hw/i386/kvm/clock.c
-@@ -366,6 +366,7 @@ static const TypeInfo kvmclock_info = {
-     .parent        = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(KVMClockState),
-     .class_init    = kvmclock_class_init,
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index ed19536a4dc..2a9721b87e7 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -2272,12 +2272,14 @@ static const TypeInfo smmuv3_type_info = {
+     .instance_init = smmuv3_instance_init,
+     .class_size    = sizeof(SMMUv3Class),
+     .class_init    = smmuv3_class_init,
 +    .secure        = true,
  };
  
- /* Note: Must be called after VCPU initialization. */
-diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-index 835684abce5..887a8b07582 100644
---- a/hw/rtc/mc146818rtc.c
-+++ b/hw/rtc/mc146818rtc.c
-@@ -1044,6 +1044,7 @@ static const TypeInfo mc146818rtc_info = {
-     .parent        = TYPE_ISA_DEVICE,
-     .instance_size = sizeof(MC146818RtcState),
-     .class_init    = rtc_class_initfn,
-+    .secure        = true,
+ static const TypeInfo smmuv3_iommu_memory_region_info = {
+     .parent = TYPE_IOMMU_MEMORY_REGION,
+     .name = TYPE_SMMUV3_IOMMU_MEMORY_REGION,
+     .class_init = smmuv3_iommu_memory_region_class_init,
++    .secure = true,
+ };
+ 
+ static void smmuv3_register_types(void)
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 2d5c7b5cdf6..be4b9b28ef6 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -2848,7 +2848,8 @@ static const TypeInfo amdvi_sysbus = {
+     .name = TYPE_AMD_IOMMU_DEVICE,
+     .parent = TYPE_X86_IOMMU_DEVICE,
+     .instance_size = sizeof(AMDVIState),
+-    .class_init = amdvi_sysbus_class_init
++    .class_init = amdvi_sysbus_class_init,
++    .secure = true,
+ };
+ 
+ static void amdvi_pci_class_init(ObjectClass *klass, const void *data)
+@@ -2870,6 +2871,7 @@ static const TypeInfo amdvi_pci = {
+     .parent = TYPE_PCI_DEVICE,
+     .instance_size = sizeof(AMDVIPCIState),
+     .class_init = amdvi_pci_class_init,
++    .secure = true,
      .interfaces = (const InterfaceInfo[]) {
-         { TYPE_ACPI_DEV_AML_IF },
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
          { },
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index b7da5d086d3..cea27794184 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -5727,6 +5727,7 @@ static const TypeInfo vtd_info = {
+     .parent        = TYPE_X86_IOMMU_DEVICE,
+     .instance_size = sizeof(IntelIOMMUState),
+     .class_init    = vtd_class_init,
++    .secure        = true,
+ };
+ 
+ static int vtd_attrs_to_index(IOMMUMemoryRegion *iommu_mr, MemTxAttrs attrs)
 -- 
 2.56.1
 
