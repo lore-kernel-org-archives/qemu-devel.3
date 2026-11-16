@@ -1,100 +1,100 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439AA606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 13:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77650606A339
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 13:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=b0nFcOUS;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=ptm768tS
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gbFF+5Kz;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Q3PZ4U2z
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSwdL-0002fU-2B; Mon, 16 Nov 2026 08:20:32 -0500
+	id 1xSweB-0003Mv-GE; Mon, 16 Nov 2026 08:21:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xSwdC-0002dB-VP
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 08:20:23 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xSwe6-0003KB-Cw
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 08:21:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xSwdA-0008Ci-35
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 08:20:21 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xSwe4-0008Qx-Tl
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 08:21:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794835218;
+ s=mimecast20190719; t=1794835275;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=c0oJdfl5PeD/AefQHBTlui+FiTp8gI4g9os8rLKXKpM=;
- b=b0nFcOUScfRerdrLyqdtZbgrIqynW02GjQr8Tv1fGTzVDzv/WDwD42F2+X5/gCXd+sz4uK
- nTlNW6hJEbhqN20DdfKZM7TfLs8hmqV1DADTcniyfCSpQ60N/QetJHtV0rMyRS7Zd9M0jD
- VodZ5Bj29XNOWu0sSTtD9lHnN4t+oSI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Y4k32IW79ZH1tZuSI7GxpzyRLeQDo58xgr7jqO6rgco=;
+ b=gbFF+5Kzpgygty0pPM6UpXGUQf5inBLFE/4d8C9+VG9z3QKiFXTSBkYl9at9Q0elRU14GM
+ VhYLvtdz5wCoTgdrEyWNY/+OtF/xoYQh0gHE0mPdNfrBigm03Qdf+fBIqrkm5XPg3EKkEX
+ G7m111JvslOqxM8zVVZH/z2ISR9Oyv0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-_Nd20b2AMbqfA-HdqhMj-g-1; Mon, 16 Nov 2026 08:20:17 -0500
-X-MC-Unique: _Nd20b2AMbqfA-HdqhMj-g-1
-X-Mimecast-MFC-AGG-ID: _Nd20b2AMbqfA-HdqhMj-g_1794835216
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-48e0461e040so3047606f8f.0
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 05:20:17 -0800 (PST)
+ us-mta-479-9XXGtZztNMuTgLuvJJ-hTw-1; Mon, 16 Nov 2026 08:21:13 -0500
+X-MC-Unique: 9XXGtZztNMuTgLuvJJ-hTw-1
+X-Mimecast-MFC-AGG-ID: 9XXGtZztNMuTgLuvJJ-hTw_1794835273
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4b0a307487aso16141705e9.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 05:21:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1794835216; x=1795440016; darn=nongnu.org;
+ d=redhat.com; s=google; t=1794835272; x=1795440072; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=c0oJdfl5PeD/AefQHBTlui+FiTp8gI4g9os8rLKXKpM=;
- b=ptm768tSZahz7E88K9kzqGinuCoH3KjIS6bpqODH02UFjLErVvili/6/ojJrCx8ORH
- ckwPlcug6QxqrH8WrlwR/QmRN+hglTQzcFSqLTN2GEt/KEGV8WMmWAjJAlTZNW97f95G
- Gy7VgTNn8kY5fU6hlytWDJ5gT0nGecER5/Yu2z+tkRMoPJCa0b42eGJgEkpihEounOgo
- 0vWG9VqVfjHewTxFO0DDLbNoocRVdQeVGYHq5E6vAxiP4ShfJXrpaUY/Uo3heSjLJY2t
- dLEKeXoCOqDpIeVaUgBnY2mkH61FRt3mq372cgUgE438kDrsjqj7NkWfgEFl6N0/oTbl
- VE+A==
+ :content-type; bh=Y4k32IW79ZH1tZuSI7GxpzyRLeQDo58xgr7jqO6rgco=;
+ b=Q3PZ4U2zpUW896Oi6Kw7cJI1a4GM9UygMRzvXncDtZafZaaMn2ntSqEe0QAB9lq1Gf
+ aJIjNK52cW/jFjlkyK0CVgH5rfKshCzKSXmaay04hoe74Xq+zLpVrSsMls5Py6dIst60
+ aBnwvfVQhoa8FGwH53czkTI4c2E2JhgtIC2sO1Odb6caa/PcwaEsz8Tez+7CZ5zFpika
+ /dSwDlVq/8Ne4clvM68UsnBQL97+kxmmS0zYIzXZ8iCCCPnQERMxWi6J8DMJo35xzYiw
+ UyCroFW1W0Te4qARrsALomqZyZFSRLEvzfe06C4Oz/psu+Yej0GI93fFyM42jA7DIPeE
+ LEVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794835216; x=1795440016;
+ d=1e100.net; s=20260707; t=1794835272; x=1795440072;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=c0oJdfl5PeD/AefQHBTlui+FiTp8gI4g9os8rLKXKpM=;
- b=b5FFjUfegsm94dssw+TtmNLCdgxLNb8qOp4C7FMuWkedL5X8XQdSsMbGy6mF5y1xc/
- O6mwN5uRMy0D7V/0D78W6yc/6dEt8IYzRUQpPW69D3X4/65kDXYV+21TdHXKQl6tgyXk
- /qsDtbsRVapaA1EbtgQJmOKVFJpxL4Nz0z6xbcw9aUh04b+l1gWhHnZGVeryLrS4jTTq
- 1U3gxD7eGqPwa72wc9X8npkmMtXEawjnMZcMGj6N9kC4+pfjGiZoOfRebkPHP2LUOTIY
- vft8PxuEF+iLM5Sk9Oe9kbUUCfthnQ88ibv1aGSoToGNSf6wjbNuNEGmcpitI1310KUa
- peZA==
+ bh=Y4k32IW79ZH1tZuSI7GxpzyRLeQDo58xgr7jqO6rgco=;
+ b=DEer7/RiJPKgYbprNRksuG9SbYOdPQNm+OlkKLd3NMFpyILNaQGZ+Bx89ydnSsDMI8
+ EoQlIwBaNXAnEm0h7esnLENKb/B5FxuLLMPrkBWp5FIGIMYEz621vL9A6u0aLYcliM+a
+ 2CKL2+VGrjE7kLP9Rd4Hw38IJqUq8LzZ4B5kx2FdP+QB/lQGZmcanFUlMIxsTzxEpJvl
+ uEqtKXsG+a/1x3cc9r+Ao6NZuSfOvmg+r2JWGQ28863OoCtDL+RNurDxRThKS0BTwpqq
+ ICc56HCtuZre0KnD7j28xkXSxteR0wnUSzbMbYURaWnF9EcVPC4VINugUukDtbeefxTT
+ ikGw==
 X-Forwarded-Encrypted: i=1;
- AL+hErGE/Lym/H/kBvZhG/c2wzmzAwDnBCsXO97JhciFCI/X40MWCH1wjnwVwMpccu1x9MaUjOOThar8jPWO@nongnu.org
-X-Gm-Message-State: APuU4Z/un2/fNPBACcrlDuMRI7t8gXqB+GvUmoBNwdKC9ggImzFuAHQn
- VZDl0Hd+cALxVNiW5ksxWCpUBY8l0qP1yNHrKRTBxeD7Mky4Dvi2JlITW9DtMNRAgc3t3n5jZb1
- Hhi088KAq/+Mi0oSTyvy6Y0As2AvFAbeIxbES/ihHarGFx9GyAlTF4wxfTeXT367M
-X-Gm-Gg: AZFdTZfwhu86vCm7j+CxXJuG0PHpIMdMKyBKUSqv2nGu/bfz+OlV6r1/4oxAQP328pP
- VbG4WOkVGClFNE1vpj7eYMvJJyz56FCU9+qaMFcIlaxfyyyMCnBCMDkySN57UGYtfIOjRB2ZtmF
- q52k+ELQ/o9WNB7BvN5O4qFlwkL0PSI5OPos4pwWHbpZUffkrxDIb4uMe3n6ukZ5tQlxKGH9iAs
- 7wyC5x8wm1VUOb/i9UcOOSUymtaaFfPVicxeBEG6ZgTacaJSIcW5aWWy8yXPsDf6DVALUbHhOwU
- S6WdbvvKyBHyVB+Ign56cJpIaDtomS4KvqLJkWwM2WYE4VKqnS5b9UeY8QVqXTncuSq7Gjac0XW
- /ajEZI8fn08TUbl+YA3yfP/6T8Ho83Wrbmoutrp5aroT0
-X-Received: by 2002:a05:6000:25ec:b0:493:803e:800f with SMTP id
- ffacd0b85a97d-49c725e5749mr22989660f8f.29.1794835216231; 
- Mon, 16 Nov 2026 05:20:16 -0800 (PST)
-X-Received: by 2002:a05:6000:25ec:b0:493:803e:800f with SMTP id
- ffacd0b85a97d-49c725e5749mr22989617f8f.29.1794835215906; 
- Mon, 16 Nov 2026 05:20:15 -0800 (PST)
+ AL+hErFQYTTXEg48T3WBkG7hkBI1dcp+Zo5AKgjUGpPxuKkA9vOjIuRqE+RAVAm2dxU0Ytz9fxp/VwKbT/EF@nongnu.org
+X-Gm-Message-State: APuU4Z/F/blt/V+PUb/Zasdx/o/1wZlUV3ujdmUil1h8OR+6zaXpbgt9
+ HPiep+mZkuLZlfK7uolv64ULEKi8PPaNvmp8/sY0ubSTnciWE1rKy2g1WhLexk5HBaMuh/5MeBF
+ dpRJ3O4d3OxZ5tmEiCkPRSFJRA7MvDpLk4z/HYXfzuHhQYqKUFlK1n3KE
+X-Gm-Gg: AYBFou3NejvL4ccFct3HuzK/Mh+ZmToR2bi/jTL+L1mqN2reS449TW0xBgoAIs04VBL
+ psHGUW4RlaBqBuHZp4DVdkwF/J6GC40aPKTGoqW2ke5y7J2BGzyVWqa13hZYQy5HwaUt8SXJ2jA
+ hQZRumHCG9tjanCaoALJVa5dedwF9Mrtr2TrKQKDUqT0J19VcSwQ8wGiF4n+nqp/7mqmWsqfnQ9
+ 2Zf4+8OcPQUDOKFjypE3cQHwKqlAKxObyk9BDHwSiIxs1P3w21cNXoH4I/s2p+NPppwHN2F+pzi
+ hw/SOB6Xd2qEAoTlwJcHdirjbxY+kZKHTRmdn0ebz/5JJJee7mQemzzr2DEwXySfqPWTJhbqA/u
+ Ym4BriIMirNzfJHqdzbDrv/MI5vxvVqjWEsvTpjQbS8BbaA==
+X-Received: by 2002:a05:600c:3509:b0:4a1:fc98:1cb1 with SMTP id
+ 5b1f17b1804b1-4bb55c5f579mr228015485e9.2.1794835272538; 
+ Mon, 16 Nov 2026 05:21:12 -0800 (PST)
+X-Received: by 2002:a05:600c:3509:b0:4a1:fc98:1cb1 with SMTP id
+ 5b1f17b1804b1-4bb55c5f579mr228014895e9.2.1794835272074; 
+ Mon, 16 Nov 2026 05:21:12 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.115.75]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c7da37b19sm22697565f8f.5.2026.11.16.05.20.12
+ ffacd0b85a97d-49c609c8a77sm22564912f8f.49.2026.11.16.05.21.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Nov 2026 05:20:12 -0800 (PST)
-Message-ID: <328228e4-fcc3-424c-8d49-bb4d334cda6a@redhat.com>
-Date: Mon, 16 Nov 2026 14:20:11 +0100
+ Mon, 16 Nov 2026 05:21:11 -0800 (PST)
+Message-ID: <96329cae-05bf-4152-bd7f-e236fc5eb68a@redhat.com>
+Date: Mon, 16 Nov 2026 14:21:10 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 21/26] hw/uefi: mark the EFI vars service as secure
+Subject: Re: [PATCH v3 24/26] hw: device AMD, Intel and ARM IOMMUs as secure
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20261113184254.2524253-1-berrange@redhat.com>
- <20261113184254.2524253-22-berrange@redhat.com>
+ <20261113184254.2524253-25-berrange@redhat.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -139,7 +139,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20261113184254.2524253-22-berrange@redhat.com>
+In-Reply-To: <20261113184254.2524253-25-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -171,14 +171,16 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 Am 13.11.26 um 19:42 schrieb Daniel P. Berrangé:
-> This is used to persist EFI variables when NVRAM is not available
-> or undesirable.
+> These are needed in virtualization use cases to support PCI device
+> assignment use cases so must provide a security boundary.
 > 
 > Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/uefi/var-service-sysbus.c | 2 ++
->   1 file changed, 2 insertions(+)
+>   hw/arm/smmuv3.c       | 2 ++
+>   hw/i386/amd_iommu.c   | 4 +++-
+>   hw/i386/intel_iommu.c | 1 +
+>   3 files changed, 6 insertions(+), 1 deletion(-)
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
