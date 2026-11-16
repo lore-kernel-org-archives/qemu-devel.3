@@ -1,53 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF985606A33D
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7EE606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=BYSCNStL
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=bMmPsahv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3K4-0007B1-Iq; Mon, 16 Nov 2026 15:29:05 -0500
+	id 1xT3OU-0005L3-9j; Mon, 16 Nov 2026 15:33:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Jn-0006LR-4O; Mon, 16 Nov 2026 15:28:47 -0500
+ id 1xT3M2-0000gM-D2; Mon, 16 Nov 2026 15:31:18 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Jl-0001Zh-9b; Mon, 16 Nov 2026 15:28:46 -0500
+ id 1xT3LS-0002CK-KG; Mon, 16 Nov 2026 15:31:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860765; bh=QyEn6H0h0dIiYa4NPYVGG1VSmScSxVPtMOjRq5KL0no=;
+ t=1794860765; bh=oBvztot5RygZe9Wu0p7nRZjRlCb6mXp066CN+gHE2zk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BYSCNStL1oUKfSCDtBgZmSXxWp1Imeh+CM2OaCVZWiffQFEQoZvc7BmqWYv0nwRC9
- G1PLh4QwbyfbTZ29EwsWRkNZgnyHAWOFQ2EFsBo9k0DFp29XumS8nj6dmVylW38gnM
- u7zxq36owy4U2Xon+fdl1BDeuUkfbPmUXq4SXNlxFffU1G+PP1xUHPCjXGiFQHdC7r
- T9i9vWLkJff16a/JKuL8h2ZgZGm6gH96Mbcju2dfC0yWP8wFiDnCMB/Xtbya/lX7Nn
- CExzRloQl65GDNtXST2+fJePUDpWl29YK56053ZuHEkRF9FUXeQedZQsf5tzlrqyCq
- 6Nq6/1XR5K8og==
+ b=bMmPsahv7pK0qNNqztqBte0CSyTIOmgRwLdoM6xqryyKJXjmov98osiRj7RuQHD7e
+ I5NzMYtm0Jb6sjj0FYGaS1j6LgCzaEeyG62HAjbgkeVrJ+YmjG5hptAGrbg8RfUIZD
+ MLLiRKYDJcOpRob81QYG0Og+VxpBy5tPo04ZJGZI2DhpRgDizUb1gnm2sb4MG7F8ry
+ W2kOWGGSJ8pYyMSABK9cWu8QTAFkrmMdTWp5jdyoYtlwI7iHufhR8k38StTn2bfKih
+ +xSEOYfYf2/PiDF2A9ZNs8Jzw9wfaHuMCk1MkfhI7MDQaR4HuNOPmTEGVkCZ8WItaG
+ vadNoff8yoKVg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2B9801E71B4;
+ by isrv.corpit.ru (Postfix) with ESMTP id 950441E71C3;
  Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2914E45FBE0;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9290745FBEF;
  Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 2159EB8E84; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
+ id 4DBA9B8EA2; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@linux.dev>,
- Farid <fa1rid@live.com>, Thomas Huth <thuth@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 31/63] usb-host: reset the open retry count after a
- successful open
-Date: Mon, 16 Nov 2026 23:25:10 +0300
-Message-ID: <20261116202554.535325-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Chris Copeland <chris@chrisnc.net>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 46/63] target/arm: Clear the local monitor on AArch32
+ (v8) exception returns
+Date: Mon, 16 Nov 2026 23:25:25 +0300
+Message-ID: <20261116202554.535325-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,57 +68,54 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Junjie Cao <junjie.cao@linux.dev>
+From: Chris Copeland <chris@chrisnc.net>
 
-usb_host_auto_check() gives up on a matching device once three opens
-have failed, and clears the failure count only when a scan finds no
-matching device at all. A device that re-enumerates, e.g. after a
-firmware reboot, is closed on NO_DEVICE and usb_host_close() rescans at
-once, while libusb still lists the old address: that open fails and
-counts, the next 2 s scan opens the new address, and nothing clears the
-count. After the third such cycle the device is skipped until a scan
-finds it absent or the usb-host device is re-added.
+A/R-profile exception returns prior to Armv8 do not clear the local
+exclusive monitor, but in Armv8-A/R it is cleared.
 
-Clear the count once an open succeeds. A device that cannot be opened at
-all still stops after three attempts.
+From the Arm Architecture Reference Manual for A-profile architecture
+(DDI0487 M.d) §E2.10.4 "Context switch support":
 
-The source-level fixture attached to #4673 reproduces the same sequence;
-its remaining cases expect a failure budget per enumerated device, which
-this change does not add.
+    "An exception return clears the local monitor."
 
-Fixes: 3ee886c5ba77 ("usb-host: limit open retries")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4631
-Buglink: https://gitlab.com/qemu-project/qemu/-/issues/4673
+The same language appears in the R-profile manual (DDI111353 A.a)
+§B2.11.4 "Context switch support".
+
+We correctly clear the monitor for an A64 exception return, but
+in adding v8 support we missed that the A32 exception return path
+needed updating.
+
 Cc: qemu-stable@nongnu.org
-Reported-by: Farid <fa1rid@live.com>
-Reported-by: Prateek Rungta <https://gitlab.com/prateek2>
-Suggested-by: Farid <fa1rid@live.com>
-Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
-Message-ID: <20261028160727.780978-1-junjie.cao@linux.dev>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit ab46596975c554d7c29cc04efba79f07932c5591)
+Signed-off-by: Chris Copeland <chris@chrisnc.net>
+Message-id: 20261108-armv8-exception-return-clrex-v1-1-ec11079bf695@chrisnc.net
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: commit message tweak]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 47ecb80041034b09b96490e4ee72d06232dfc919)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
-index 8dbf66f37b0..78f939b15bf 100644
---- a/hw/usb/host-libusb.c
-+++ b/hw/usb/host-libusb.c
-@@ -1925,6 +1925,7 @@ static void usb_host_auto_check(void *unused)
-                     s->errcount++;
-                     continue;
-                 }
-+                s->errcount = 0;
-                 break;
-             }
-         }
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 38ba515bef4..422cef2163c 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -808,6 +808,10 @@ void HELPER(cpsr_write_eret)(CPUARMState *env, uint32_t val)
+     mask = aarch32_cpsr_valid_mask(env->features, &env_archcpu(env)->isar);
+     cpsr_write(env, val, mask, CPSRWriteExceptionReturn);
+ 
++    if (arm_feature(env, ARM_FEATURE_V8)) {
++        arm_clear_exclusive(env);
++    }
++
+     /* Generated code has already stored the new PC value, but
+      * without masking out its low bits, because which bits need
+      * masking depends on whether we're returning to Thumb or ARM
 -- 
 2.47.3
 
