@@ -1,109 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC45606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 09:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4F1606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 09:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=D0aT8Z3x
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=SWrdztzZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xStBf-0007dh-43; Mon, 16 Nov 2026 04:39:43 -0500
+	id 1xStRN-0006Xq-MA; Mon, 16 Nov 2026 04:55:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xStBU-0007UC-Ly
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 04:39:32 -0500
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1xStRK-0006XS-Fd
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 04:55:54 -0500
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xStBS-0007ib-Le
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 04:39:32 -0500
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-67db0791748so939422d50.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 01:39:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794821969; cv=none;
+ id 1xStRH-0001su-V8
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 04:55:53 -0500
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-67db1f6f50eso922807d50.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 01:55:51 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794822950; cv=none;
  d=google.com; s=arc-20260327;
- b=O1Do5oOHSfbLWJZ0n1I5mA5x3O7puvxyMpSsn9MPzwoXV0FzRiZ9y3+czic8yUWSo6
- Q77Dh2K5nYBrENIDSi2Hkds4Asi+T9ou5JUMSEeSzV+oCmLRdMqDc8ksE5fl/AyOd1cm
- uJj1YreJmv6lUilZGn5L4Jip+1wX9Iv0pRWO9ZuYFgg47ux1EhMk8J/xIHmIimyBWj/E
- 9oSJ0bLPHHEvbQkifSnuB8aNE++XksMA+gktMl4kfFzwLAF0/eliy8ztaRYyp/myQlzy
- grCizdTlsEjizdoLA8NphOT7Xkwv7ESEnnoIiqGjAenuWakUUK0vVhPijFBUKsDN59/7
- T2cA==
+ b=TCfrSixRekJ9BuTjD8FgaD1llcRjtl0sVUUMa87keRUhNDmTUqYxduQ/dMlOZKPD2h
+ Rf+z80RQ1tm1szG9HwBxL6rw1pbLUWImpumx+UkLVHG/5irDj//jLmBUQxd1O0vA3sk8
+ +NdfPX2cYpAIVrhEKLzTIbX63qqYUJEr0PzWAecWYO3x8MQMKR8CdnU3HuPPFGtUXRUy
+ 7GNwJvZtt/3FfElJNU5AS5ECdf0JZBFjyzkNtpV7/52zZsp8wlP5jwHBY747oDm2qFjw
+ 1K1u8+K5z9ynCmYr+N/dWXxHfOwa2tW9AXGNZeh18Pzhs1PxJy5IdOSBR/Mzq5bkzcu1
+ kUIA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=y0CCCDmrkaACLJwcZ4fedUr0rieWoTSauijnC1Ky1us=;
- fh=OlIsXiW4bzwVFXZelGQqaYszKezmJxjLqPXicD6K1S0=;
- b=qKak1Zo4YCP0TyTeilt4WvzfvqLzOWWm5O910yCKDYEZ3A6M09hpEptNBTGomKBq3i
- fB9V3kCnLq1K7VOrcvMuLDrLSP0w7qghjgQACAO6rnlysDL/Wq9iua6y+aacr9osUVsh
- gn52ybE2nTIzzMMLQlrHDPB2KuK3KKGvbGHqIEJ2PGLTkhjI04v1t4t9OMJ7kBz7Q8KQ
- 2eXVZ6IgjKO1Dc2V5rC8vVJNyIiERTt6nYgFSLB9wPrqowrpSB1qBvK1IUm1FqgAHK/y
- NYGPbqMV/p5fW90V/Z0YXNFLKQaNQhYTPHpWCwkKrs1MpDWwFxDgMpcRTpXRdifGCSLX
- YsRQ==; darn=nongnu.org
+ bh=dHpt5BEgS9XvCThL9tAUpr/conMjxdNUnVKFUIvkzm0=;
+ fh=hsB5Cjbiv2lE513iZTHeCPbP4VsCh9HQj1vpKez3KkM=;
+ b=pz8PzM61n7bhT6WRCtlXEU8R8ChjUImrnvso6hyM+AJhsQWfm510KOa9tp0q7plz1w
+ RSSz2RJmmn+omDpfpu1GXcdG5nULHO2Y6/Be6LB3iCah4jOpK0vXX9PwuQl1U3mPKiQ2
+ 9gRSSWHwyNSyfwaIN5vKwbZPJ/ObxRNunIdDVZqQQhVmhG9tJJkYwfs9gX1Dea5IXCoq
+ deQwmAwEOWjpL4Gt7cdfEMhnqtmPSXdCibuMrEnH29Jg1Tcm2K4Bv84XtQJ3Sw4OfJ46
+ nDDg75+r0n3anjq1iiZgw98GtMLAO0QDwZA9zISGXPmegXjpnrTNhjj/QdGMrUMKj8P5
+ lYXw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794821969; x=1795426769; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794822950; x=1795427750; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=y0CCCDmrkaACLJwcZ4fedUr0rieWoTSauijnC1Ky1us=;
- b=D0aT8Z3xnKCykBAu3GQHIv5e6o2AkbtwUYs5Sw0mtUc7DCLf0cExvG0fj5+X826VDL
- Z5rPBp/kpXGCwOhWwxXWgRH4xOQqBe/xGPXgd0KCRB7SCDLYNu7018NkxsKLBqBWpbj5
- rn1WKaPLeiKmqgQskxXI46jzZjC19kJz5VboPB8JDY+y6tBu+EkFyNuc9OefAV0iGq7r
- TbmkFpeLfi/v8/YdFksYum5Q+WR0gbvX83ZW01SPcs2V9jpMcyOQDTg/Fz21oguLCSpn
- RRvMmaw1xva4yufQxtv3HiXrQZ8pFUuzV041SWfI4l3n0qlDcImLME19X6HNhXxfzrlX
- TpkA==
+ bh=dHpt5BEgS9XvCThL9tAUpr/conMjxdNUnVKFUIvkzm0=;
+ b=SWrdztzZFVcFiqrgCLr3ViMkrwifhX32Q4wCXCPAdCmYZb4PNm2DTby2tWNZiSt0hu
+ pUo5OdTaLpUb5+ssVdxuZCIm3GuO710meb7mtreciMpOkNF1t7cMSGVUfSSbUNCHDwLV
+ AhN4gEsnjQtZ5h2ZXrK4LR30v5/FFncWKvKKYYvLll6jQ1Ix2fRk5wzlzNNq7QZCxE88
+ E32KCQTETSYwTg/Xbv9QXbKyC8vTwXM5nOQ9aFAjPYDJjAhK6lvV7j+DpSwDY1tzdtVh
+ FMA5f/GUP05JJ1jBbhjgTQvAfqj/5eLhMm1Z46X9y3c/RLXc9NVDH87lzChdL3Yo0by0
+ 7IBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794821969; x=1795426769;
+ d=1e100.net; s=20260707; t=1794822950; x=1795427750;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=y0CCCDmrkaACLJwcZ4fedUr0rieWoTSauijnC1Ky1us=;
- b=2JlC1guZC/L+WqcCboMNjsgkI5pDh+osPXvIChXK8QPLpjaZptipOihuhDiX+l8IF5
- QhywGqA6KyvC6SwfusFWKEC38ZB7e903mkZFAqWx8SB2//9wc1M5FLRhaCRKIe/PdcBE
- opOAn5snJfSbY05xWLomNo/Cr++QvLfqdK64U+CA3KkaHRPYXlYJuePWhhRe6R1c7Q6X
- +sj2knGjjCHy1ZDg4es8Onl6TYFL9GkMRF+V7g74gdDamROyYAmkVjKMdeB2VI34Msvf
- CjMdaoBQr55aUYafEXIX/dag5qfh5m9V+Ehe/lnlilkLzHSEGLzvDFEF6OgLj+YO+lsK
- gIWg==
-X-Forwarded-Encrypted: i=1;
- AL+hErESBSi2is5lsEUe0jk5jPSrC0dEcZYqjxyj41wtAgYC9jcqu7vtexFpy/3i4iga6zqx3qKlOM0HA8M3@nongnu.org
-X-Gm-Message-State: APuU4Z+xiSSszgce082VfMKbw5LQrmP/sfEiIetfdeM4o2eIvXaCMpUT
- BxU1HU6V9tC2h+GQX0w4d9Kj4ZdEbW/x0VEdqRBIxmW2urgy+dheg+TsUIJ1YOV00p5g7fUFEMr
- WI3y2iDN+lGjttNx+7spDcTbOJ/Z+201P7ri2xxo1rQ==
-X-Gm-Gg: AZFdTZfOQeBqtx6qrtMn1d5KGCAYRY53BCE4z8BglqGbLvF6WF/PrgeNgGdYpNYJYeX
- z6koxuSI6i1C9NscXruZ9YMzG5wATxYwwfgVB4XdUR5OJ32tOKhLJHucd8fR42BDQRuyqJk7Omr
- gsfgarPRqOEY5e0DlJo6f55u4TH5Wg+nDB+4EiaQ391LrlFsYehAC9ZxwBhfIg5gABTweTLI5cv
- BQqJvJp1cEo96hxnBD8nfJx0fZp+15fIRCZbyVFoxEpqhnZPozZDbssYRl+1+05lY3SE7q6Csqp
- 9VNBN4I7aFge2pPYBsA0KhSdZX/OjXn+YWJf7spJEV0/jzIQ/1jnEeiV9DG/WfsLKsLPQWQ7LTH
- Jtj0xwhEY0iEWMtguIaTiGS8MxNvDezgpJH6ccnYeZfu68Yq30vFWA99XcvfvkY/hcn9ZJ3kIYm
- f3Y107LS/0sxhMFnkudAFs
-X-Received: by 2002:a05:690e:118a:b0:67d:b753:f6ff with SMTP id
- 956f58d0204a3-67db753fd90mr1175955d50.32.1794821968867; Mon, 16 Nov 2026
- 01:39:28 -0800 (PST)
+ bh=dHpt5BEgS9XvCThL9tAUpr/conMjxdNUnVKFUIvkzm0=;
+ b=XXQsw9N0+4aZK7vxpzDWI65MzJqLBDcL2krIVEHsH7fYrAB8BLEH4UmB1q8qQ5ANVc
+ 9wyXFNtvO+CNXWwlhCaJE/ZyfRqAjLP8/9KjQShdpuEtP6EDLkRligQyI4sIfTyv6Tr+
+ a2Ee5d2juPuuwkopgrWedJpxxKB7kFY3zUFZEa8wXkbGRA7vV1he8ltgvOl6/gk4GjJF
+ d97lq7R6kWpD5kQqG0nIPQZY60nqnK7mttxLdQbrVJR9LMr5OYwAWFCON1JhL2k5fcdp
+ ncH7KRgl71Sm0NFjU3GLXKjXADw8T0e4p3gdY8YJDv4/vPVWWuLchbhn/ccJ1FQoGm5z
+ kRrQ==
+X-Gm-Message-State: APuU4Z86BdpuC40GweFJXcg4fM1j26viOaF34AbkaWjKkc0eAMa91UUV
+ D3x7tshrokkaK2by0HWGZXC8rL0AwGmH5KLBoMN33KcY6yPoVnkPxrr+WCx1EN3AnTjVX5+DuR/
+ 0aE0Cni4+REdqh5oH2CaTG5UMpLrT4FPwAWh79xLhEQ==
+X-Gm-Gg: AZFdTZdmDUPUlPV9LfNYnYscvs35W+ZC6FxevTyrA6FEqttuCMNnz6VS2YWCdPHFrbI
+ VaL6fX1m9MKjcKtsA4Ef2MgpFM+vwF3ZIRN2sytOU3qgza94Qy9CjtdTIViVmuQHm7PvhsApPjI
+ SPR/M/VKzJuNdrV5yTo33wug5aPBRGTWLV66AQg8B1y1fDA7bctrluZ7O0B4W3lSo2gL5M1i8mQ
+ 6kPt+RVZeZW2oB66stgzJgzhH2q2wr6ZHSBtuFCFVhAHMxcCfU2Us2gmcYk0IcNwa0q9YSQCwiL
+ YuxV+7ydLmQ0PYQ4nyTysVLv42opkIEXpePzqI8ARKkoViEiQxOi9VXV2zdQoWuIlbXVO/mnFY9
+ /HEIJCfzGYl9jJBkXVz2O1ZO36ni9ZP0yMzdriGKJ4jXltOPrInXjgsig2WbHeeAzNSrn5w5FIX
+ s1JGCSqBbbqw3HGNZD8Xdmevqi4Ofo1qfrqHLc4JsXAg==
+X-Received: by 2002:a53:c38b:0:b0:67a:5ed4:9507 with SMTP id
+ 956f58d0204a3-67d8983bdccmr4413025d50.93.1794822950418; Mon, 16 Nov 2026
+ 01:55:50 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261109143410.3279305-1-bin.meng@processmission.com>
- <CAFEAcA-yqrPWXngq-pR5F2Eg9qSN=7f+AJThw9SzFtCF-pj7+w@mail.gmail.com>
- <7f1575516a34fa20a587727add826566ddda5c8d.camel@alistair23.me>
-In-Reply-To: <7f1575516a34fa20a587727add826566ddda5c8d.camel@alistair23.me>
+References: <20261113161158.25811-1-philmd@oss.qualcomm.com>
+ <CAFEAcA8G-aoxoeEOy2SyUcYyrfxMazHZvB+hfZZYOrbMcmhxkw@mail.gmail.com>
+ <f749e844-5f7b-4e5e-9251-40251c531b82@oss.qualcomm.com>
+In-Reply-To: <f749e844-5f7b-4e5e-9251-40251c531b82@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Nov 2026 09:39:15 +0000
-X-Gm-Features: AclHuK9zNsmV1LUaAxEn7YyqhUzQQKJPQXadGywGC7Nb5vLNRCz3-VsVB6pXy0I
-Message-ID: <CAFEAcA_Uw_Kc8JBfaHtCT7JZGVuLZY8Urj0Espp8XUq-DLjRbQ@mail.gmail.com>
-Subject: Re: [PATCH v3] hw/net: cadence: Honor subword lanes in the GEM
- registers
-To: Alistair <alistair@alistair23.me>
-Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Jason Wang <jasowangio@gmail.com>, qemu-arm@nongnu.org
+Date: Mon, 16 Nov 2026 09:55:38 +0000
+X-Gm-Features: AclHuK8QfXXByg-QA1hveAvS9ro5qva5lGXNSxQUl26FQ_6ZWcyBkUJTnfucGS0
+Message-ID: <CAFEAcA-ihP0DrO404vZDYVbnPjbZg2UMAanYJPMqmtR039oG-w@mail.gmail.com>
+Subject: Re: [PATCH 00/19] target/mips: Mixed bag of fixes
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Vince Del Vecchio <Vince.DelVecchio@mediatek.com>, 
+ Faraz Shahbazker <faraz.shahbazker@mediatek.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Milica Lazarevic <Milica.Lazarevic@syrmia.com>,
+ James Hilliard <james.hilliard1@gmail.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,49 +124,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 16 Nov 2026 at 04:11, Alistair <alistair@alistair23.me> wrote:
->
-> On Fri, 2026-11-13 at 10:00 +0000, Peter Maydell wrote:
-> > On Mon, 9 Nov 2026 at 14:34, Bin Meng <bin.meng@processmission.com>
-> > wrote:
-> > >
-> > > The GEM MMIO callbacks ignored the low address bits and access
-> > > size.
-> > > Byte reads therefore always returned lane zero, causing guest
-> > > driver
-> > > that reads the station address byte by byte to turn four unique MAC
-> > > addresses into the same value. Partial writes had the corresponding
-> > > lane-selection problem.
-> > >
-> > > Extract the requested little-endian read lane and merge partial
-> > > writes
-> > > with the current register value. Preserve the existing read-clear
-> > > and
-> > > write-clear behavior and dynamic queue pointer readback.
-> > >
-> > > With this change, reset the TX queue pointers only when a write
-> > > covers
-> > > TX-enable and leaves it clear, and only start a PHY operation when
-> > > a
-> > > write covers the OP/ST fields in the PHY maintenance register.
-> > >
-> > > Fixes: e9f186e514a7 ("cadence_gem: initial version of device
-> > > model")
-> > > Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> > > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> >
-> > This device is used by both arm and riscv machines. Alistair,
-> > do you plan to take it via the riscv queue?
->
-> I just sent a PR for 11.2, so I'm happy for this to go via the ARM tree
+On Mon, 16 Nov 2026 at 08:37, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+> On 13/11/26 17:34, Peter Maydell wrote:
+> > If you have a little time for MIPS could I get you to have a look at
+> > Coverity issue 1689817 ? It's not urgent, but Coverity complains about
+> > what it thinks is some dead code in the dextr_s_h helper:
 
-OK, I've applied it to target-arm.next.
+> > I don't know what this instruction is supposed to be doing, but
+> > it would be helpful if somebody who does could have a look and
+> > rewrite the code to either do the right thing if the current
+> > code is wrong, or else to rephrase it so it is clearer about
+> > what it's doing if it's getting the right result in a weird way.
+>
+> Although MD00375 (MIPS64 DSP) and MD00765 (microMIPS64 DSP) manuals
+> list the DEXTP* or DEXTR* instructions encoding tables, they do not
+> contains these instruction descriptions. We can infer from the MIPS32
+> EXTR_S.H semantics which saturates to [-0x8000, 0x7FFF], sign-extend
+> to 64 bits and apply to the 128-bit HI:LO.
+
+
+> But this is a good opportunity to rewrite in a more readable style
+> (I'm not a fan of complex condition checks in particular when 'else if'
+> is involved, I rather use local self-descriptive booleans); the same
+> fix becomes:
+>
+> -- >8 --
+> diff --git a/target/mips/tcg/dsp_helper.c b/target/mips/tcg/dsp_helper.c
+> index 73934cab7786..82a9a29c0213 100644
+> --- a/target/mips/tcg/dsp_helper.c
+> +++ b/target/mips/tcg/dsp_helper.c
+> @@ -3379,28 +3379,25 @@ target_ulong HELPER(extr_s_h)(target_ulong ac,
+> target_ulong shift,
+>   target_ulong HELPER(dextr_s_h)(target_ulong ac, target_ulong shift,
+>                                 CPUMIPSState *env)
+>   {
+> -    int64_t temp[2];
+> -    uint32_t temp127;
+> +    uint64_t temp[2];
+> +    int64_t lo;
+> +    bool negative, fits_s64, fits_s16;
+>
+>       shift =3D shift & 0x1F;
+>
+> -    mipsdsp_rashift_acc((uint64_t *)temp, ac, shift, env);
+> +    mipsdsp_rashift_acc(temp, ac, shift, env);
+>
+> -    temp127 =3D (temp[1] >> 63) & 0x01;
+> +    lo =3D temp[0];
+> +    negative =3D temp[1] >> 63;
+> +    fits_s64 =3D temp[1] =3D=3D (uint64_t)(lo >> 63);
+> +    fits_s16 =3D lo =3D=3D (int16_t)lo;
+>
+> -    if ((temp127 =3D=3D 0) && (temp[1] > 0 || temp[0] > 32767)) {
+> -        temp[0] &=3D 0xFFFF0000;
+> -        temp[0] |=3D 0x00007FFF;
+> -        set_DSPControl_overflow_flag(1, 23, env);
+> -    } else if ((temp127 =3D=3D 1) &&
+> -            (temp[1] < 0xFFFFFFFFFFFFFFFFll
+> -             || temp[0] < 0xFFFFFFFFFFFF1000ll)) {
+> -        temp[0] &=3D 0xFFFF0000;
+> -        temp[0] |=3D 0x00008000;
+> -        set_DSPControl_overflow_flag(1, 23, env);
+> +    if (fits_s64 && fits_s16) {
+> +        return lo;
+>       }
+> -
+> -    return (int64_t)(int16_t)(temp[0] & MIPSDSP_LO);
+> +    set_DSPControl_overflow_flag(1, 23, env);
+> +    return negative ? INT16_MIN : INT16_MAX;
+>   }
+>
+> ---
+>
+> Is it reviewable-enough to be a single fix patch or do you rather
+> that split in 1 fix and 1 refactor?
+
+I think that's OK as a single patch if you explain in the
+commit message which cases the old code was getting wrong
+and what the intent of the code is.
 
 -- PMM
 
