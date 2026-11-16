@@ -1,48 +1,49 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B83D606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2B9606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=XrkscXK7
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=bibt/eSW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3JX-0005Rx-Vg; Mon, 16 Nov 2026 15:28:32 -0500
+	id 1xT3OL-0004aw-J6; Mon, 16 Nov 2026 15:33:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3JI-0005DX-SD; Mon, 16 Nov 2026 15:28:16 -0500
+ id 1xT3M7-0000j7-Kd; Mon, 16 Nov 2026 15:31:20 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3JG-0001U0-RV; Mon, 16 Nov 2026 15:28:16 -0500
+ id 1xT3Lc-0002GU-67; Mon, 16 Nov 2026 15:31:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860764; bh=FItYTm+n60dhZQjOz93waUwFpucKfghHavpZo4wfVWI=;
+ t=1794860765; bh=VZYeQs9fkeLwh05Oo7J7HwmY1T+Ic3dcIVWW9Eu5goE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XrkscXK70+Oh+quUZxHv7qrTxOFr7fxIpaZm3u6oE629DNcg4JlDR+HnMHpryoleK
- DXK6sx99I4cIqvBzuIuLqljzgmI8h0eN1rMzX+Sn29QQ00oteeCAGPotDpPEQrLXOC
- L/OX4aK9+n4DWSLzayvAUQhLztDVl5dlKFyUVbhfssAwKNhmzW5VjoNPs6v1y3bYPf
- XvWgSSDPcNc+dMD8H+jQvp8lcvRocKQbOsiorhtuqtuoK9MqzdA7rAsDpWWxKEBtfw
- Vdo6Y9YvKUhOAaWpgAtxjzo+hoHtf+GuRYPvZnFIYilHvHqFPTKKg2XJ5NxRwX7Wmb
- 2bmth2X9Yc7Kw==
+ b=bibt/eSWHxHKfEsOF5OdMsnOlBJAfFLFi09g9yOeVFwbybP+gYrOhMbkZ0fwIe+JX
+ X34aJ1jQ7vBqCFDrbY2ByhUBj5hKhcyIh60RL+XYBdNDnPmlzjjYlyKKpnH97TeWbE
+ DUuTNDqcCw03qYuVMlR1UeLpArvVSxwjJ2eISB06do7KrFy03RzCGWB/c8PR1/s7Xx
+ xeLnq3GdVS1PzDmRc390wvLEbGOyJ5OF5R9PkXpEcagZ8UXWqTybHBvIAkHw4WWtZQ
+ uFeXUyklCVVYu2wyJCd/eiHo1rZKbaUCNPTxPmupru1MghdFDchiv2Chw3qebMX+6E
+ fqvj4r2d+dE2A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 37DF41E71AE;
- Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9AEFF1E71C4;
+ Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3519B45FBDA;
- Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9876C45FBF0;
+ Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B2302B8E78; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ id 50A2DB8EA4; Mon, 16 Nov 2026 23:26:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Oleksij Samorukov <samm@net-art.cz>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Roman Bogorodskiy <bogorodskiy@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 25/63] qga: set FreeBSD virtio-serial channel to raw
- mode
-Date: Mon, 16 Nov 2026 23:25:04 +0300
-Message-ID: <20261116202554.535325-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Anton Johansson <anjo@rev.ng>,
+ Tommaso Califano <tcalifano@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 47/63] target/riscv: Fix CPU state access on
+ big-endian hosts
+Date: Mon, 16 Nov 2026 23:25:26 +0300
+Message-ID: <20261116202554.535325-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
@@ -75,74 +76,92 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Oleksij Samorukov <samm@net-art.cz>
+From: Anton Johansson <anjo@rev.ng>
 
-On FreeBSD the virtio-console port is a tty, unlike Linux's
-/dev/virtio-ports which is a character device.  It defaults to canonical
-mode with echo and software flow control enabled, so the QGA stream
-protocol does not work: the initial guest-sync handshake is held in the
-line discipline and the host eventually times out.
+mstatus and mstatus_hs are uint64_t but accessed through
 
-The existing FreeBSD-specific code only clears ECHO.  Configure the port
-the same way as the ISA serial path: disable canonical mode, echo and
-software flow control, and set VMIN/VTIME.  Use TCSANOW instead of
-TCSAFLUSH so a handshake that arrives between open() and tcsetattr() is
-not discarded.
+  tcg_gen_[ld|st]_tl(..., offsetof(mstatus))
 
-Tested on FreeBSD 15.1 aarch64 under UTM/QEMU.  Before the change
-utmctl ip-address timed out and the guest received zero bytes; after the
-change QGA commands and guest-set-time work.
+which on a big-endian host running riscv32 incorrectly accesses the
+top 32 bits rather than the lower bits.
 
-Cc: qemu-stable@nongnu.org
-Fixes: c6cd588bb3a29a831c862780631a7d2145ade5de ("qga: Add initial FreeBSD support")
-Signed-off-by: Oleksij Samorukov <samm@net-art.cz>
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Tested-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
-Link: https://lore.kernel.org/qemu-devel/20261017201905.12211-1-samm@net-art.cz
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-(cherry picked from commit 03efcb7cfdef40ee3124a80b2609d800ec1df1db)
+Widen the operations to 64 bit so the lower bits are modified.
+
+Fixes: 284d697c74ef ("target/riscv: Merge m/vsstatus and m/vsstatush into one uint64_t unit")
+Reviewed-by: Tommaso Califano <tcalifano@redhat.com>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20261023063025.8827-1-anjo@rev.ng>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit bf67d56f282c1ee25b67dfda3f8ca54d2bd4648e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qga/channel-posix.c b/qga/channel-posix.c
-index 9ccc8b7bd14..c6dfb2df633 100644
---- a/qga/channel-posix.c
-+++ b/qga/channel-posix.c
-@@ -156,9 +156,10 @@ static gboolean ga_channel_open(GAChannel *c, const gchar *path,
- #endif
- #ifdef __FreeBSD__
-         /*
--         * In the default state channel sends echo of every command to a
--         * client. The client program doesn't expect this and raises an
--         * error. Suppress echo by resetting ECHO terminal flag.
-+         * FreeBSD's virtio-console port is a tty (unlike Linux's
-+         * /dev/virtio-ports, which is a character device) and defaults to
-+         * canonical mode with echo and software flow control enabled.
-+         * QGA uses a raw stream protocol, so put the port in raw mode.
-          */
-         struct termios tio;
-         if (tcgetattr(fd, &tio) < 0) {
-@@ -166,8 +167,19 @@ static gboolean ga_channel_open(GAChannel *c, const gchar *path,
-             close(fd);
-             return false;
+diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
+index 9684dbe7528..1f6bcb16f78 100644
+--- a/target/riscv/tcg/translate.c
++++ b/target/riscv/tcg/translate.c
+@@ -684,7 +684,7 @@ static TCGv get_address_indexed(DisasContext *ctx, int rs1, TCGv offs)
+  */
+ static void mark_fs_dirty(DisasContext *ctx)
+ {
+-    TCGv tmp;
++    TCGv_i64 tmp;
+ 
+     if (!has_ext(ctx, RVF)) {
+         return;
+@@ -694,15 +694,15 @@ static void mark_fs_dirty(DisasContext *ctx)
+         /* Remember the state change for the rest of the TB. */
+         ctx->mstatus_fs = EXT_STATUS_DIRTY;
+ 
+-        tmp = tcg_temp_new();
+-        tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+-        tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+-        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tmp = tcg_temp_new_i64();
++        tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
++        tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+ 
+         if (ctx->virt_enabled) {
+-            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+-            tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+-            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
++            tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
          }
--        tio.c_lflag &= ~ECHO;
--        if (tcsetattr(fd, TCSAFLUSH, &tio) < 0) {
-+        tio.c_iflag &= ~(IGNBRK | BRKINT | IGNPAR | PARMRK | INPCK | ISTRIP |
-+                         INLCR | IGNCR | ICRNL | IXON | IXOFF | IXANY |
-+                         IMAXBEL);
-+        tio.c_oflag = 0;
-+        tio.c_lflag = 0;
-+        tio.c_cflag |= CLOCAL | CREAD;
-+        tio.c_cc[VMIN] = 1;
-+        tio.c_cc[VTIME] = 0;
-+        /*
-+         * Use TCSANOW rather than TCSAFLUSH: the host may already have sent
-+         * the initial handshake between open() and tcsetattr().
-+         */
-+        if (tcsetattr(fd, TCSANOW, &tio) < 0) {
-             error_setg_errno(errp, errno, "error setting channel termios attrs");
-             close(fd);
-             return false;
+     }
+ }
+@@ -717,21 +717,21 @@ static inline void mark_fs_dirty(DisasContext *ctx) { }
+  */
+ static void mark_vs_dirty(DisasContext *ctx)
+ {
+-    TCGv tmp;
++    TCGv_i64 tmp;
+ 
+     if (ctx->mstatus_vs != EXT_STATUS_DIRTY) {
+         /* Remember the state change for the rest of the TB.  */
+         ctx->mstatus_vs = EXT_STATUS_DIRTY;
+ 
+-        tmp = tcg_temp_new();
+-        tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+-        tcg_gen_ori_tl(tmp, tmp, MSTATUS_VS);
+-        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tmp = tcg_temp_new_i64();
++        tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tcg_gen_ori_i64(tmp, tmp, MSTATUS_VS);
++        tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+ 
+         if (ctx->virt_enabled) {
+-            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+-            tcg_gen_ori_tl(tmp, tmp, MSTATUS_VS);
+-            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ori_i64(tmp, tmp, MSTATUS_VS);
++            tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+         }
+     }
+ }
 -- 
 2.47.3
 
