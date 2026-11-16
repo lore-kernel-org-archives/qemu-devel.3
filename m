@@ -1,87 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C03606A332
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBAF606A332
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=eIZHYdXT
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=f1+YE6kP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSuep-0003xk-Tu; Mon, 16 Nov 2026 06:13:56 -0500
+	id 1xSufB-000404-Os; Mon, 16 Nov 2026 06:14:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSuee-0003vs-Kx
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:44 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1xSueO-0003r0-PD
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:30 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueZ-0002DK-Uz
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:44 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-492f0a1b685so2354487f8f.0
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:35 -0800 (PST)
+ id 1xSueK-0002B6-Ge
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:26 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-491d1f66968so536460f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794827615; x=1795432415; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794827603; x=1795432403; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=lqHPBwg6LCXp8nV/5IqQVT0IUGaBPYvsZU88BJzDtTE=;
- b=eIZHYdXTwSNhuJ6HDD8HGXbfwyEjExbr/getboERDmR+/ClOCS0olSqw7Wr+CwH7xx
- In2IeVUvqs2sbi9dGaHYKyMCa0QyxJH8W05+4BY1mgLoE5dVZPWDhcgwECiEY+PE5wKg
- ZGeCy5PCENLR4gPLCFqfPRgDoeG++ELmLyeD7Ps7yYvMp0ddwGgc0Ndta7T1T/3iIcju
- Vb/b+aPyis0Yik86KBCUQ21MbUpAHzaq/XOhiQ7RQZd1hecirhvSj6nK5FZPj86fhDCq
- rgupe2noYm71SE66KuSvB4xE8pzxIaBv0YVnkFrgoFWxLDXD01uTIflKhOhwgkFDS9/s
- WW4Q==
+ bh=cFs0jMd9FQ081ajvl89T/IIEC/4yeBrwaqCaW0cbeP8=;
+ b=f1+YE6kPutS4QTw/LlrZ+78HlkrxIxxLuct0qScw6J+BnzjfII3lmFw+IDTs+jN77H
+ oLn1qfzGWvLZ3BP9yaeRzYsjzBdQ1w/7Bj/yJGJ169mLdOgWw7zSyT1opXUIYrm0I3+O
+ OhXMUdQTaIh615lPxsUaFzlXaN2+oisd9VKmBLgy9PMHs8qJ81yZKW/HnTYRA4rjLChL
+ 7cfuuzPpo7rvfZNb/Rx0E9i0Xmm6A9LJRQuCqkhCK3hTqkupjGinQfAXAb1QEQlgMYQ9
+ lCsnFfO31QY8twPEBv8uDMaFFLJ32FYJ4qs6vZ/XhQV3feXucLzSC/bA56sT+Npah+ri
+ /gIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794827615; x=1795432415;
+ d=1e100.net; s=20260707; t=1794827603; x=1795432403;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=lqHPBwg6LCXp8nV/5IqQVT0IUGaBPYvsZU88BJzDtTE=;
- b=25uaRA3jhMB5Oyfq72X2Z582NRFQwgLHAeceNWYYGYmQaFOo+fJLTIi+GezP7EV2HN
- bUmRCmzlhV9+rw+1z23RFOWB2UYpayLZ1HKnfZLDyGN87+8EwbnqlX/O5bzqtAZs7dJs
- xzCOy7kmod9NqTIwQnws3aP/9VlxmjbYFh1szSVBj859lAcEF9aym4FvVeheHYVSmU13
- Ee/b9t2Qzm6lDLjXpW3DZ3OO58WhKyN/BDHGaH/TFcdfLMW78Ra6DYJmSvI90Z7E0xgT
- tmvKy+Ge8o/r5mVpWrX2ElS1FKlrZrBOmqRoT4nBl/7ErH/IktIZi5/FMrKAN1JD2kuQ
- yHuw==
-X-Gm-Message-State: APuU4Z9j7Oe/r74qRcQjKs1XGXRwz/1iptdN0oAyUhXsrPYohD5ULT15
- uQ8I9mmm08BV4LA4y8K1ePxN2tXi75QyOJ0VJX82y2OoSYpxGtw0plqUBJATAbZ3RYipciv4WU9
- zpkXGtLY=
-X-Gm-Gg: AZFdTZeVP4hX/U4Ck+5dBGeHAaui6J6xZvQhfY6FdvdIYgGY7dy0efyOCvNzgOf9uN6
- Hg48qNgkVkUXyhft3QKOni/wIzh640KTgHIcXB1vjy7hMxu7Lri7aKLXD6QD9BB5mf0+gUlISr1
- hrrZlt5KuGUWdnPobAdy54UDaTwe2IndJRdQXyafVv+fDNXXlot1iXl5A0rJYPqnM/KrLeS6iDM
- egAzP8rA30mHaTAK+I0/zH4q5TGAJG1sCM3uLvsoJ3LEMBro8bOhhJIc5B+t/nSLKyZTY9T9U2k
- Kb4VyREstuhHWgfLvpwfdLdpapCAoxAja/WmgIx4xaBclx+eM+S9KnRiNJRPjb9BX70hpWUfdhr
- MEOroh0oYDV0gD1oPSKDbUtLQ0wxTIYS+f+JuU0lpU3OTamHEMROifz1p2cubMtdV0367uS6W3v
- 5ETLqTSaupkSOECbpq/8yH9bRw3GKaCcznSyp6DPjtrfkzMitFSZ4U7KglHkFpozMcyYsedl34X
- b9FMnFTXOQsiD3lKP75abalP+/nKWirvG7jE4MCGOer/tCs9XU+TbVZrvE5f88L3qmCoq+2IUdW
- t/1K1ku1QvnrTEgt/l5PwYx4DALGzfs/zBNX5O6XjKXbGsXpJLwufHCYq38DAzi+HObOKBthxdN
- S9Kf1ZRZ92ljxlkrO1C7yWRaKmD5+7UZ6Pg==
-X-Received: by 2002:a05:6000:2888:b0:493:d5f0:4e68 with SMTP id
- ffacd0b85a97d-49c72307130mr23606735f8f.36.1794827614728; 
- Mon, 16 Nov 2026 03:13:34 -0800 (PST)
+ bh=cFs0jMd9FQ081ajvl89T/IIEC/4yeBrwaqCaW0cbeP8=;
+ b=NX0EIBfrfyKriPhTFoe6vhaGWUAP5QJBWNy3Shb9pZtNGxwoZer8kiHY1jdEiFPwqv
+ hfYoaItma5NtzCSSzPzJtYE7ENcqyxWWXg1v0ON2J6NsTAFPsY0kOYdUJbcZKaN5qH+F
+ 8+kroP2vMqhUmIcN4kVV2f5/Zkrqw2Y0Aqzj8nITRE5NCo90aPR4MAJ9FU5Qzjp5i1VS
+ FRQjIskbFJzi7fCySY9dqk6yo8yrM9dg7QcaaZ1JUl+J++pliMlzHaCee0wWgIwk9wN2
+ zcsa9AMxg4F9vFFUzSDBXwmvKCGyv3c6W9GqSI2pAzBAGhxjvs1PPWUaHpoW2mjIWZU/
+ YQIg==
+X-Gm-Message-State: APuU4Z9bvmnWGxCxtibXi2twb/yML9Hl+d9M2tRGMb5udUWwnR86l0zG
+ F80WKygwPQETDk6dEoyjIXi3188ZUhnqY1b4MAh9HDxzxFs6360zLTzwX51I1I1fezjEgUn9xK6
+ UY0brPcY=
+X-Gm-Gg: AZFdTZcXFblsLQbn9o9py+glznUUwqG2bfQVca3DI07n8m7u2uaU6aO2ZR2R9tPescy
+ IdBtavYTFUUQQTeyzTugkpq4sUM6bAQXlxC4CD9ksONU5ZrpzucsbNLk8zHY2C6fVY3kQ7yhAVV
+ DgFIfyTViFXOR3881CQHztgyolJHPLeVf5O88yzz4MvVqbh4Ssxc+KcKwZQRp/yyWbZUN9QDkdj
+ YlsRO2QevCQFK/DAHNFo04d3Sv9N1pfzDjuHMO4RmjUoCNRusyhMUfkDC8velsZQD4tN2nrhzWU
+ L6lZiwMpU4DjMXj6io/ehbgmM5IIIoQtDEt9WyhiH516AbY+bMwX1y/vVRxuXtRzkdQxXkDKSjB
+ fc9+9x1naa7FMYVKJEtvwUaEUKk87usrcmEn92mMgazUhFh8uSzgLHPUNrH8UO25n2g72UylZ21
+ BiG++LtM2XjaYRppSHH+aYuGy6OabbCEpV/WF6pt3rB8Ib5n6CvhfpVUhiz7gikqnW8IT2tUvkJ
+ GlbksA/k+Bv6RWVGscB2rB4k8gQES6p1Xyl2krQ/vyvsYI7c6XA/GMw8P+EYq1CuK+OipjbIlTp
+ tmLvKZQGd5QbsPfJ2bMMuBvuyB8QRQmr6tIc6xMmOXeh0IZWwTN2uDrH/mN5LubKiEW4GiOZ5FK
+ JXehQbtY8MMekihDXB1bxrPpvixHU0r0QXw==
+X-Received: by 2002:a5d:5887:0:b0:48d:fd4d:7fbf with SMTP id
+ ffacd0b85a97d-49c6d4539d5mr24594811f8f.4.1794827602915; 
+ Mon, 16 Nov 2026 03:13:22 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.33
+ ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Nov 2026 03:13:33 -0800 (PST)
+ Mon, 16 Nov 2026 03:13:21 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/33] hw/net/eepro100: fix use-after-free on reset after
- hot-unplug
-Date: Mon, 16 Nov 2026 11:12:57 +0000
-Message-ID: <20261116111303.1692832-28-peter.maydell@linaro.org>
+Subject: [PULL 16/33] net/eth.c: Move the Routing Header Hdr Ext Len check
+Date: Mon, 16 Nov 2026 11:12:46 +0000
+Message-ID: <20261116111303.1692832-17-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116111303.1692832-1-peter.maydell@linaro.org>
 References: <20261116111303.1692832-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,97 +99,61 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Stefan Weil <sw@weilnetz.de>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-e100_nic_realize() registers a system reset handler via
-qemu_register_reset(nic_reset, s), but pci_nic_uninit() never
-unregisters it. After the device is hot-unplugged, the LegacyReset
-object stored in the root reset container still holds the raw pointer
-to the freed EEPRO100State, so the next system reset invokes
-nic_reset() on freed memory.
+RFC 8200 - Internet Protocol, Version 6 (IPv6) Specification section
+4.4 [1] says the Routing Header length depends on the Routing Type, so
+place the checks of the Hdr Ext Len and the Routing Type together.
 
-Instead, define a reset phase on the device itself: assign
-phases.hold in eepro100_class_init() to a wrapper around nic_reset().
-The device is already part of the resettable tree via its parent bus
-(TYPE_DEVICE implements the Resettable interface), so no explicit
-registration is needed, and the reset state is automatically dropped
-when the device is unplugged. This follows the approach used by the
-e1000, e1000e and igb emulations.
+[1] https://datatracker.ietf.org/doc/html/rfc8200#section-4.4
 
-Reported-by: Hui Peng <benquike@gmail.com>
-Reported-by: MyeonghunPak <https://gitlab.com/mhun512>
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20261103215430.703404-1-sw@weilnetz.de
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4058
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4510
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
+Message-id: 20261109-eth-v2-7-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/eepro100.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/eth.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/hw/net/eepro100.c b/hw/net/eepro100.c
-index aaa3eb60f8a..8fe7f31bd2f 100644
---- a/hw/net/eepro100.c
-+++ b/hw/net/eepro100.c
-@@ -617,6 +617,13 @@ static void nic_reset(void *opaque)
-     nic_selective_reset(s);
- }
+diff --git a/net/eth.c b/net/eth.c
+index 484f61ef31d..54b0a77fa0a 100644
+--- a/net/eth.c
++++ b/net/eth.c
+@@ -407,7 +407,8 @@ _eth_get_rss_ex_dst_addr(const struct iovec *pkt, int pkt_frags,
+     bytes_read = iov_to_buf(pkt, pkt_frags, ext_hdr_offset,
+                             &rt_hdr, sizeof(rt_hdr));
+     assert(bytes_read == sizeof(rt_hdr));
+-    if ((rt_hdr.rtype != 2) || (rt_hdr.segleft != 1)) {
++    if (rt_hdr.len != sizeof(struct in6_address) / 8 ||
++        rt_hdr.rtype != 2 || rt_hdr.segleft != 1) {
+         return false;
+     }
+     bytes_read = iov_to_buf(pkt, pkt_frags, ext_hdr_offset + sizeof(rt_hdr),
+@@ -518,12 +519,10 @@ bool eth_parse_ipv6_hdr(const struct iovec *pkt, int pkt_frags,
  
-+static void eepro100_reset_hold(Object *obj, ResetType type)
-+{
-+    EEPRO100State *s = DO_UPCAST(EEPRO100State, dev, PCI_DEVICE(obj));
-+
-+    nic_reset(s);
-+}
-+
- #if defined(DEBUG_EEPRO100)
- static const char * const e100_reg[PCI_IO_SIZE / 4] = {
-     "Command/Status",
-@@ -1871,8 +1878,6 @@ static void e100_nic_realize(PCIDevice *pci_dev, Error **errp)
-     qemu_macaddr_default_if_unset(&s->conf.macaddr);
-     logout("macaddr: %s\n", nic_dump(&s->conf.macaddr.a[0], 6));
+         switch (curr_ext_hdr_type) {
+         case IP6_ROUTING:
+-            if (ext_hdr.ip6r_len == sizeof(struct in6_address) / 8) {
+-                info->rss_ex_dst_valid =
+-                    _eth_get_rss_ex_dst_addr(pkt, pkt_frags,
+-                                             ip6hdr_off + info->full_hdr_len,
+-                                             &ext_hdr, &info->rss_ex_dst);
+-            }
++            info->rss_ex_dst_valid =
++                _eth_get_rss_ex_dst_addr(pkt, pkt_frags,
++                                         ip6hdr_off + info->full_hdr_len,
++                                         &ext_hdr, &info->rss_ex_dst);
+             info->full_hdr_len += (ext_hdr.ip6r_len + 1) * IP6_EXT_GRANULARITY;
+             break;
  
--    nic_reset(s);
--
-     s->nic = qemu_new_nic(&net_eepro100_info, &s->conf,
-                           object_get_typename(OBJECT(pci_dev)),
-                           pci_dev->qdev.id,
-@@ -1881,8 +1886,6 @@ static void e100_nic_realize(PCIDevice *pci_dev, Error **errp)
-     qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
-     TRACE(OTHER, logout("%s\n", qemu_get_queue(s->nic)->info_str));
- 
--    qemu_register_reset(nic_reset, s);
--
-     s->vmstate = g_memdup(&vmstate_eepro100, sizeof(vmstate_eepro100));
-     s->vmstate->name = qemu_get_queue(s->nic)->model;
-     vmstate_register_any(VMSTATE_IF(&pci_dev->qdev), s->vmstate, s);
-@@ -2064,6 +2067,7 @@ static void eepro100_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-     E100PCIDeviceInfo *info;
- 
-     info = eepro100_get_class_by_name(object_class_get_name(klass));
-@@ -2080,6 +2084,7 @@ static void eepro100_class_init(ObjectClass *klass, const void *data)
-     k->revision = info->revision;
-     k->subsystem_vendor_id = info->subsystem_vendor_id;
-     k->subsystem_id = info->subsystem_id;
-+    rc->phases.hold = eepro100_reset_hold;
- }
- 
- static void eepro100_register_types(void)
 -- 
 2.43.0
 
