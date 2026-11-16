@@ -1,120 +1,148 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D13606A88F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 17:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07718606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 17:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RbUFAC1D;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=DGr79r0f
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=GTebx31m;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=K8SlsqjT
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT0GO-0003bu-7R; Mon, 16 Nov 2026 12:13:04 -0500
+	id 1xT0SA-0006i8-BI; Mon, 16 Nov 2026 12:25:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1xT0GL-0003bV-0s
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 12:13:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xT0S8-0006gt-2J
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 12:25:12 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1xT0GJ-0007or-1T
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 12:13:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794849177;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3sjBxoGOYwuAX1aR0c7CSWHtoyw3M4gkajNUpNVeVbs=;
- b=RbUFAC1DQ+Ga0j9lLxg/QxVbqX8rOli/JLkFdNZahuZ2lYz2iXxesmc00U6TjAZFbndJCr
- ncVTBKeKdTGTyjUwZzTnc0OTMDn33GIYuA2ZQj5S6cClTb5ZoEXDjDGeaa0eyOkVQgxOYs
- L8yVdwKY6qI0fg1mdiTrcbGpcLUGDnw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-KowhD293OI252wFEnShd6g-1; Mon, 16 Nov 2026 12:12:56 -0500
-X-MC-Unique: KowhD293OI252wFEnShd6g-1
-X-Mimecast-MFC-AGG-ID: KowhD293OI252wFEnShd6g_1794849175
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48df02b91f9so23020f8f.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 09:12:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xT0S3-0008EK-5y
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 12:25:11 -0500
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AGGKAY73693035
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 17:25:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ xruf0SimTCXDJkMcL8QrA6GYaSKSSMNI6nw1dibwElo=; b=GTebx31m0qSo2ywr
+ vJ+gYKBUejKpRDmKHAxl5F683kblHTRm//dU9OXoX1Gk9dwoJOw38zQC8I9OJmeX
+ MsIXfzOmpHP9cIFIJdIkUgygxDwTtiyzIl9w6a2LsNNjDp9WIIYeAcacr++/B6Kv
+ HKY++OznMckB6EZD2VwH2jwmvhYO99c1vSt4lTbvx/pxOHmKIvsXO1cyoAHg2lrv
+ MOH+oQ6CYwxg3LX55zDQhJejhBWSeEJqo0nJCzFIy7NjgPExnEHvvvGrF40aXYL9
+ 6PO6oWGUFBhDZHxkirgCAf89IaX9FSC3bGaOIHDxHwDg8VBsxbSrVKTPDH7dP9Sa
+ iiz7eA==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j01f818fh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 17:25:02 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-91eb3a63064so1515326d6.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 09:25:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1794849175; x=1795453975; darn=nongnu.org;
- h=content-type:mime-version:message-id:date:references:in-reply-to
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=3sjBxoGOYwuAX1aR0c7CSWHtoyw3M4gkajNUpNVeVbs=;
- b=DGr79r0f73Q5+WAg2u7o5mSCmiiFOeV8mf6YWeaikC6hbH9DtHuDEPn1OprdyTqs5i
- MukbDa8AH1k3c2touFjiYCY7EsHMwFbBuIjcNC2BqV3Rs//Psn/b5VRuraAIM2A7WKOL
- ct9waeS92+OicaWzNMLiquTRvyHgvHAuS9EiMci594ioFqm8zNKiUCEC7nOnJpYaiSaU
- FTx9Ig9tGV6OJC5Ev4zhauYLSmk1H041N5fVQWs4ZWfRgbWXu4ovWQzDxc9XWwbh6o9a
- RJ6xYkIbdK/BPKpZ6QbzeNXzEAPIWmx7MWYS5IWDbhXmCIkD3Vy6Idy8J9kUmG6RWIj2
- gNlQ==
+ d=oss.qualcomm.com; s=google; t=1794849902; x=1795454702; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=xruf0SimTCXDJkMcL8QrA6GYaSKSSMNI6nw1dibwElo=;
+ b=K8SlsqjTxet3XFZ7sPWvgHlsHTU0qNfnrTQlvY/l8PF1gH7QkHRvMDsfV0YsDcq6C8
+ 7gd+5rsvgZLBbtGwn38Z3ZHidUDqErfWNcqbTX42AiUKW+UDGHimws6BQmgHcwOJWiOp
+ AbgTUej/Ao2/4Pk8/7Ivdae1O4yOGkYlpNSZHj3iyZeYxkGQpeXz1xBX+qCmFcaxYp4i
+ eWAjruC/QEyJNqJiz0bO+m5B94bFpvovG3VxkS0ZSdfZKOkO1xY4XEw3PORXs7AyHOJm
+ TmIHbpztHQaQdWDM2DqX5vHxBh5Id6s3oEkLtn+a/MufbD1+bpplsNigxa2uUe0cF4bN
+ OVkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794849175; x=1795453975;
- h=content-type:mime-version:message-id:date:references:in-reply-to
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=3sjBxoGOYwuAX1aR0c7CSWHtoyw3M4gkajNUpNVeVbs=;
- b=m91f7s8bqqItH1Pw4zLAKpSEYsfGdCVXO4mT+BzFj4MW5SO/R3gCj8p7KfiBpy5Ks3
- /A2xe/yxFPcK813eIRskUpkleK07Zh1WUx51VgPd+ZxH0BvrgvLuUA23TUefgHWfioGC
- LsD0/tvFQZloJrmKuUaRn7M4TL2AUsmM4D9lBeceD6P6LmEvJRPWENBxfCLsJhumLSeT
- d0WVvkhYFqP9Izv2ZOtuEjo8zXvcpXtKy3whw0+J8UeigdHlHze+zxut8aPfy7Ct1kt+
- Za55wsNoW7n/Dz1d12duL/vSQ3/3JCUsWHk48NHJ2H7jeDycsvh5KX178WHeEMDyc6Go
- wUtA==
+ d=1e100.net; s=20260707; t=1794849902; x=1795454702;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xruf0SimTCXDJkMcL8QrA6GYaSKSSMNI6nw1dibwElo=;
+ b=IJhoZ7qG1sq/2+0c+cK2saXNdJYp9eu6o8PcAtua2mB1KDDWjUjHHnWlkViCDJPnZv
+ wA3L9O6urz5+LPFYY74gDgY2QvUPIpr0CMeFQ8IR3P08cB/hwYEF+S5W9mY96jmv6SBY
+ vqyYGXG3qxbWS+FD/NE6+i8fBszSMsWSeHAVapZDCg9RP3sY0tUHx453G7hKT7oFpjZJ
+ LaogZ04Biu4YKQ3tpJVMKqqlnbYFxXr97pvhu/iFjGn/Q0lBRyd/gF/eAeED5PrwSAA8
+ LbvqjaxpSwYAnzQxz8pBTdZ8U0PpXQUPj0fIi4yf+2KUoPJWOIUk0x65QqHLj0lvdTh3
+ F4sA==
 X-Forwarded-Encrypted: i=1;
- AL+hErHZqItx93BP2PEKY1+kOQA+VCOkBGoO1+OrjqTHZYoPoXmhv9WVu70vqK6OMBVGhB+oKJmVwUABeAHL@nongnu.org
-X-Gm-Message-State: APuU4Z+Kmp/13r0TKwn8eOqbDeYZXjfcNpuBfsn0Qux6IEZEJA7XexrF
- ry1dvMRgdrXizEKSaoMpf3DnKtUN8rB5+wNz/ccF/HgW8Mb/GTHnlPI8+s/kTRSfIA6dzze2K97
- 8TZ/7zcqcDTQ/Z0YzzW4I6hxNpLgC4srnGMa8+bjlGI5iAr5rldEE3jcEHxrHVKVQuVRvxhyRoF
- JYpM/8gc3uOAhXMUtqJjwy9f2K80zYHVlqw1+T2UXFC5+1fA==
-X-Gm-Gg: AYBFou1M1aY71yMsEOgrzLO2RzFOtRBTnJIqlULoS8k69sBi3DY6lDr4RbMyDkohboW
- ml1050src/ATgS4aUwEoks7VYhpLxUT0UPM6RaN8MIIgKTgu1EuTWKiKnRG/xljMcez2IASlR6j
- JqpOfL8vim3JDWlyoqLZXt6CI0xvdOEam+wA2QSbpj+wwSjvXsmtP24oaWWrVSIt4u2LhGxrDzK
- BovMaBorEXPxJ+3Cjg9xgjGFx8S6/pQewoFllY99h3hRmrG5Eim36EF/C8aFV7piGZ2XWID/Qtr
- vBK7UFJ9jmNjO44HlZD/9QtFgJWAbjTRrpvGCaaw5aU88HpzBs6UiBV25zOTK19ZmOUge6QehEU
- Ke1L+t2LsaeTLe+cQhgxOITo4IXeOf3CBNMoGjtF/VTQgJDPs7pY/KCXZ5eMAVy7MOzHRoxp2VZ
- jtQ/PXAq3bx7RB0og=
-X-Received: by 2002:a05:600c:5493:b0:4a1:c27d:e1a8 with SMTP id
- 5b1f17b1804b1-4bb783813a7mr3047485e9.10.1794849174771; 
- Mon, 16 Nov 2026 09:12:54 -0800 (PST)
-X-Received: by 2002:a05:600c:5493:b0:4a1:c27d:e1a8 with SMTP id
- 5b1f17b1804b1-4bb783813a7mr3046825e9.10.1794849174186; 
- Mon, 16 Nov 2026 09:12:54 -0800 (PST)
-Received: from vkuznets-thinkpadx1carbongen12.rmtcz.csb (g3.ign.cz.
- [91.219.240.17]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb732a2a9csm67737045e9.3.2026.11.16.09.12.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Nov 2026 09:12:52 -0800 (PST)
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
-To: DV <dv@etik.com>
-Cc: Alexander Graf <graf@amazon.com>, Sean Christopherson
- <seanjc@google.com>, kvm@vger.kernel.org, linux-kernel@vger.kernel.org,
- hpa@zytor.com, x86@kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- nh-open-source@amazon.com, gurugubs@amazon.com, jalliste@amazon.co.uk,
- Michael Kelley <mhklinux@outlook.com>, John Starks
- <jostarks@microsoft.com>, David Woodhouse <dwmw2@infradead.org>, Marcelo
- Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] kvm: hyper-v: Delay firing of expired stimers
-In-Reply-To: <1435d106-d4b0-487e-85d3-4032a9fe9332@etik.com>
-References: <20260115141520.24176-1-graf@amazon.com>
- <aXO8I6xuZyZB7CxV@google.com>
- <769f538d-dd42-4d36-a4c5-7e6e48b209f6@amazon.com>
- <87bjigaeyx.fsf@redhat.com>
- <1435d106-d4b0-487e-85d3-4032a9fe9332@etik.com>
-Date: Mon, 16 Nov 2026 18:12:51 +0100
-Message-ID: <kupzev8hf8s.fsf@vkuznets-thinkpadx1carbongen12.rmtcz.csb>
+ AL+hErHJXsA2lYZt3/s1e072t6b7sgkFQMUhZlSeSgomiPTYe8kWtpp6JyB5+qRzO9vvZA66I7B18rhbMCIP@nongnu.org
+X-Gm-Message-State: APuU4Z9nZ6WI2BHpOpJt6nzZhHwX+EOENfARmQ2oc8bShPsD5vioqpMa
+ q2FGIIxhEodB6KYR1BVQes5lfBBkxRZbFIEzuU/FndS2zXTrWtLzYY1+1CRkMwg/0xBuy08Bpzo
+ ImknTGO+VQ/ZJKey96sWXNZ0aU9GNjlTUkjwHLoU4IC4kRzy+SKVr5Sga1DC9BPUKrw==
+X-Gm-Gg: AZFdTZfHAmv/J1AOy9mH84bjg9ySisNGc7gJiRrfYDUE7JojshmRM2p6kKcXTNJ3qfV
+ aj7bAadeTAhhm8Iua/wnhnLQ5gCLvLQ+C/mcky/+oNRRn3LgvUzi2Y8qtwxzr+XSDw3WpFL/qrU
+ E8s8Tria1HBqs5xkcWXNIE2xQlsTMMFrZ7NMoPQ1uIAhgsriaDVnxHJObixzKdRBKQxJudqUmjv
+ xcFfxP0ei3N8F1cb5lP3u0diQGfcLPwTaIs2lnnLMr1sDVqh8b8GOBSgEpZgY2U6JbkuhVu+Xpm
+ zfPnK6zND+XN36jI3L/fHuhtfhgpUJ1YHBRoxQgoPWzDCEOHxQHoycomRye/hzD2466njOkMNti
+ 1UQmBF2jHzaF7NGfNw7cHqlCycWc4UtsEklkNgBjXz8eFFKQ19ZnNC4XnmJ55ZhBKww32fwG1Iy
+ +upnTmf75JPE7dpBb8F/4V8jTOHqCXSVxwatElOg==
+X-Received: by 2002:a05:6214:f2b:b0:920:fa91:1778 with SMTP id
+ 6a1803df08f44-920fcd29161mr3240526d6.17.1794849902265; 
+ Mon, 16 Nov 2026 09:25:02 -0800 (PST)
+X-Received: by 2002:a05:6214:f2b:b0:920:fa91:1778 with SMTP id
+ 6a1803df08f44-920fcd29161mr3240016d6.17.1794849901697; 
+ Mon, 16 Nov 2026 09:25:01 -0800 (PST)
+Received: from [10.222.168.147] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91f23d453casm90121496d6.10.2026.11.16.09.25.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Nov 2026 09:25:00 -0800 (PST)
+Message-ID: <987426a9-a3cc-43ca-8dff-4e911a253a68@oss.qualcomm.com>
+Date: Mon, 16 Nov 2026 11:24:59 -0600
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=vkuznets@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] roms: record the H2 commit in a file
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+References: <20261112173901.3748880-1-brian.cain@oss.qualcomm.com>
+ <20261112173901.3748880-2-brian.cain@oss.qualcomm.com>
+ <e4a7622f-d87c-42c3-9a36-4e461199fd4b@oss.qualcomm.com>
+ <0a20e3fe-74d4-46d2-851c-f14cde22c842@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <0a20e3fe-74d4-46d2-851c-f14cde22c842@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA2OSBTYWx0ZWRfX4Nu2SuxYyVcf
+ gblSpQ6UZCqSIlAoY30ruHrLiFAFaQPEjRiU6wDTsyUAur4LiYHpX/32nRA9ObQe2Ybv1ZprMN/
+ KrXMKWHsfkJXP1Y2ycHyvTNu9kkyHTD06gf80V7QVIFADO7Vww0k+get2UGuh3ouBzGxl+f/874
+ Uj39Rhfg76bwzd1eg4Yc8Qkev+HAEzUVnn5sUVoSWsC+ZbF0K7Zy2jC14DqyMUWBcg9s0JjXEQ3
+ a9TfAz8R0H11x4aL5SG5Grfpydz00kzZXXe9URQnToBH4LWqeUrwlzIUwiVM+ry0QYqWPdf7CYf
+ qHxuLQdjIAMyxotaiojrEHgNtsu75LboGWgJDmeclEn4NzRCCC5Fl23dNtbVcg3EtFMEYJQh7FF
+ hLXjHdbKG5R5GKxdTOnhzN7D5OGxKbHZCrvolxcoXDH81jeN8LurHIbObuO6BirQBsaTPc1Rids
+ rxFaK9qr0a1F33ZZ1cg==
+X-Proofpoint-GUID: kZWt89x3AbTtte_PzcackUH5W2J9wKZ9
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA2OSBTYWx0ZWRfX3dOK8XenxMXd
+ F6/sC8LVDqnxSyKiO4d847p3+hkEosHIquZYMIaqCSs8WFCwRSsqfYVGXc9TI59JpWFoytuFx5t
+ Jb+a50FwxmfO44H9Yhckk8FYQZvJ4Oc=
+X-Proofpoint-ORIG-GUID: kZWt89x3AbTtte_PzcackUH5W2J9wKZ9
+X-Authority-Analysis: v=2.4 cv=VMpIDNPX c=1 sm=1 tr=0 ts=6afb3c6f cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=uU8fyrZGgv_c9p3nWBsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-16_05,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611160069
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,164 +154,98 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-DV <dv@etik.com> writes:
 
-> Hi Vitaly, Alex, all,
+On 11/14/2026 9:00 AM, Pierrick Bouvier wrote:
+> On 11/14/26 7:59 AM, Pierrick Bouvier wrote:
+>> On 11/12/26 10:39 AM, Brian Cain wrote:
+>>> The H2 build ID was derived by running `git rev-parse`, which fails 
+>>> when
+>>> building from a source tarball.  Leaving H2K_GIT_COMMIT as "0x" does
+>>> not compile.
+>>>
+>>> Instead we'll keep the commit in a tracked file, regenerate it when 
+>>> it's
+>>> a submodule.
+>>>
+>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>>> ---
+>>>    MAINTAINERS                     |  1 +
+>>>    roms/Makefile                   | 13 +++++++++++--
+>>>    roms/hexagon-hypervisor-version |  1 +
+>>>    3 files changed, 13 insertions(+), 2 deletions(-)
+>>>    create mode 100644 roms/hexagon-hypervisor-version
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index fa0c6d0c9bc..df264c30753 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -1399,6 +1399,7 @@ F: tests/qtest/qcom-dsp-test.c
+>>>    F: docs/devel/hexagon-sys.rst
+>>>    F: pc-bios/hexagon*
+>>>    F: roms/hexagon-hypervisor
+>>> +F: roms/hexagon-hypervisor-version
+>>>       LoongArch Machines
+>>>    ------------------
+>>> diff --git a/roms/Makefile b/roms/Makefile
+>>> index bae8f3b766b..2cbab2d1993 100644
+>>> --- a/roms/Makefile
+>>> +++ b/roms/Makefile
+>>> @@ -226,11 +226,20 @@ hexagon_h2_booters := 
+>>> hexagon-booter-qcs6490-cdsp \
+>>>    hexagon_h2_loadlinux := hexagon-loadlinux-qcs6490-cdsp \
+>>>        hexagon-loadlinux-sm8975-nsp hexagon-loadlinux-sa8775p-cdsp \
+>>>        hexagon-loadlinux-sc8480xp-nsp0 hexagon-loadlinux-sa8797p-nsp0
+>>> +-include hexagon-hypervisor-version
+>>> +
+>>> +hexagon-hypervisor-version: hexagon-hypervisor
+>>> +    if test -e hexagon-hypervisor/.git; then \
+>>> +        echo "H2K_COMMIT = $$(git -C hexagon-hypervisor rev-parse 
+>>> HEAD)" > $@; \
+>>> +    else \
+>>> +        touch $@; \
+>>> +    fi
+>>> +
+>>
+>> Maybe would be better to always read from the (existing) file, and
+>> compare content to give output. With this, we can catch the "updated the
+>> submodule but forgot to update the file" situation.
+>>
 >
-> On Mon, 26 Jan 2026, Vitaly Kuznetsov wrote:
->> My bet goes to the clocksource switch, e.g. the guest disables (or
->> just stops using, good luck detecting that :-) ) TSC page and uses
->> raw TSC for some period or something.
->
-> I think I've hit a close relative of this, with a reproducer that
-> works on every boot. A Windows guest running its own Hyper-V computes
-> direct-mode stimer deadlines from the raw TSC, while KVM's reference
-> counter lags the TSC because of how QEMU restores kvmclock. Here the
-> lag is positive, so the guest's timers fire late instead of storming.
->
-> Setup
-> -----
->
-> Host: Intel Core Ultra 9 285K (invariant TSC, 3686.4 MHz), Linux
-> 7.3.0, QEMU 10.2.4 (pc-q35-10.2), libvirt 12.2.0.
->
-> Guest: Windows 11 Pro 26H2 (build 26300.9711), 8 vCPUs, with
-> virtualization-based security on. So Windows runs as the root
-> partition on its own Hyper-V (L1), nested on KVM.
->
->    -cpu host,migratable=off,hv-time=on,hv-relaxed=on,hv-vapic=on,
->         hv-spinlocks=0xfff,hv-vpindex=on,hv-runtime=on,hv-synic=on,
->         hv-stimer=on,hv-stimer-direct=on,hv-frequencies=on,
->         hv-tlbflush=on,hv-tlbflush-direct=on,hv-tlbflush-ext=on,
->         hv-evmcs=on,hv-avic=on,hv-emsr-bitmap=on,hv-xmm-input=on,...
->
-> Symptom
-> -------
->
-> Every timer inside Windows fired 0.3-0.7 s late. A 1 ms wait on a
-> high-resolution waitable timer took up to 466 ms, and an indirect
-> display driver paced only by a timer refreshed at 6-8 Hz instead of
-> 120. Things only moved when some other interrupt woke a vCPU.
->
-> What L1 does
-> ------------
->
-> With both hv-stimer-direct and hv-frequencies, L1 arms stimer0 in
-> direct mode (config 0x1ef8: vector 0xef, direct, auto-enable) and
-> writes absolute counts. Call X the amount by which the reference
-> counter lags guest TSC / HV_X64_MSR_TSC_FREQUENCY. L1's counts are
-> X too far out. A timer that should fire right away looks like this:
->
->    kvm_hv_stimer_start_one_shot: vcpu_id 6 timer 0
->        time_now 40095770231 count 40100417164
->
-> That count is 464.69 ms ahead of time_now, and X on that boot was
-> 464.7 ms. L1 writes the count again on every L2 timer exit, so such a
-> timer keeps moving to now + X and only fires once the vCPU is quiet
-> for that long.
->
-> Without hv-stimer-direct, without hv-frequencies, or without
-> hv-stimer, L1 uses the local APIC timer instead (TMICT/TDCR writes,
-> a relative countdown), and all timers are on time. I've turned direct
-> mode off as a workaround: a 1 ms wait is now late by at most 1.24 ms.
->
-> Why the reference counter lags
-> ------------------------------
->
-> get_time_ref_counter() follows kvmclock on both paths. The fallback
-> divides get_kvmclock_ns() by 100, and compute_tsc_page_parameters()
-> takes the TSC page's tsc_offset from the pvclock system_time.
->
-> QEMU's kvmclock_realize() calls KVM_GET_CLOCK when the VM is created.
-> kvmclock_vm_state_change() writes the saved value back with
-> KVM_SET_CLOCK when the VM starts running, and saves a new value
-> whenever it stops. So kvmclock, and with it the reference counter,
-> stands still from creation to first run and during every pause. The
-> guest TSC keeps counting through both. On six boots X was 297, 465,
-> 570, 495, 669 and 512 ms.
->
-> Two measurements tie X to this:
->
-> - In a trace from QEMU startup, extrapolated back to zero, the guest
->    TSC started at host monotonic 265208.1505 s and the reference
->    counter at 265208.8205 s, 0.670 s later. X on that boot was
->    669.2 ms.
->
-> - virsh suspend for 1.045 s, then resume: X grew from 669.2 to
->    1689.3 ms (+1020.1 ms), and L1's far stimer deadline moved out by
->    the same amount.
->
-> hv-evmcs off (X = 570.1 ms) and hv-reenlightenment on (X = 494.7 ms)
-> didn't change the behaviour. Host load and power management were
-> ruled out too.
->
-> Connection to your thread
-> -------------------------
->
-> If the reference counter were ahead of TSC time instead, L1's
-> deadlines would land in the past. stimer_start() expires a one-shot
-> whose count is in the past at once, L1 arms it again on its next
-> exit, and that would look like the expired-stimer storm Alex's patch
-> delays.
->
-> I haven't been able to try that here, because libvirt is set up to
-> start a fresh QEMU whenever the guest reboots. But a reset inside the
-> same QEMU process sets the guest TSC back to 0 while kvmclock keeps
-> counting, so I'd expect it to flip the sign, possibly by the whole
-> previous uptime. A resume path that restores the two clocks
-> differently could do the same.
->
-> Questions
-> ---------
->
-> 1. Should KVM keep the Hyper-V reference counter equal to guest TSC /
->     TSC frequency when hv-frequencies is exposed? L1 seems to assume
->     it is.
->
-> 2. If so, where does the fix belong: in QEMU's kvmclock save/restore,
->     or in KVM deriving the reference counter (and TSC page) from the
->     guest TSC?
->
-> 3. If not, should hv-stimer-direct be documented as unsafe for guests
->     that run their own Hyper-V?
->
+> and compare content to *git* output.
 
-From what I remember, direct mode synthetic timers were added
-specifically to aid Hyper-V-on-KVM case as non-nested Windows was
-preferring non-direct version anyway. So I believe we need a fix and not
-3).
+Sure - that's fine with me - @Michael do you have a preference?
 
-I'm wondering if the issue is somewhat related to the nasty hack we put
-in 
+I just followed what edk2 was doing, assuming it was already 
+satisfactory for the packaging/distro usage.
 
-commit 0469f2f7ab4c6a6cae4b74c4f981c4da6d909411
-Author: Vitaly Kuznetsov <vkuznets@redhat.com>
-Date:   Tue Mar 16 15:37:36 2021 +0100
 
-    KVM: x86: hyper-v: Don't touch TSC page values when guest opted for re-enlightenment
-
-but maybe hibernation is somewhat different. Or maybe we misunderstood
-the problem in the first place and only fixed one sympthom of it?
-
-> I can share the full traces and the Windows-side timer and frame
-> probes if they'd help.
 >
-> Claude Code, an AI coding assistant, did the tracing and analysis
-> while I was looking into why the VM's virtual display ran at a few
-> frames per second.
+>>>    hexagon_h2_common_flags = USE_PKW=0 TARGET=opt NULL_ANGEL_TRAP=1 \
+>>>        HMX_HLX_SUPPORT=1 \
+>>>        H2K_LOAD_ADDR=0x9b800000 H2K_GUEST_START=0xa2000000 \
+>>> -    H2K_GIT_COMMIT=0x$(shell git -C hexagon-hypervisor rev-parse 
+>>> --short=8 HEAD) \
+>>> -    H2K_GIT_COMMIT_LONG=0x$(shell git -C hexagon-hypervisor 
+>>> rev-parse HEAD) \
+>>> +    H2K_GIT_COMMIT=0x$(shell echo $(H2K_COMMIT) | cut -c1-8) \
+>>> +    H2K_GIT_COMMIT_LONG=0x$(H2K_COMMIT) \
+>>>        JFLAG=-j$(shell nproc)
+>>>       .PHONY: hexagon-qcs6490-cdsp hexagon-sm8975-nsp \
+>>> diff --git a/roms/hexagon-hypervisor-version 
+>>> b/roms/hexagon-hypervisor-version
+>>> new file mode 100644
+>>> index 00000000000..4aeabdc7d0e
+>>> --- /dev/null
+>>> +++ b/roms/hexagon-hypervisor-version
+>>> @@ -0,0 +1 @@
+>>> +H2K_COMMIT = 23d5bde4313c1e63ba64dd5d7f542b1055188ef8
 >
-> Thanks,
-> David
->
-
--- 
-Vitaly
-
 
