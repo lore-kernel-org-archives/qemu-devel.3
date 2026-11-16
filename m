@@ -1,55 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6811A606A323
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38383606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=w0Rvj6iq
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=OxCvzOLf
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3JN-0005IH-Cx; Mon, 16 Nov 2026 15:28:22 -0500
+	id 1xT3IU-0000tU-8L; Mon, 16 Nov 2026 15:27:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3JG-0004xw-PV; Mon, 16 Nov 2026 15:28:15 -0500
+ id 1xT3IR-0000bZ-FH; Mon, 16 Nov 2026 15:27:23 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3JD-0001TO-Rn; Mon, 16 Nov 2026 15:28:14 -0500
+ id 1xT3IN-0001Nq-Ft; Mon, 16 Nov 2026 15:27:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860764; bh=iGmpaBwYWM3eHjQxJF1QYPsp8dZjY54snE8gdfQB6Ns=;
+ t=1794860764; bh=zPvKBc1aw4e58ZcQW03JQcHbB2sLCcT9CPHhiw5r3eE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=w0Rvj6iq86N6eCJCJs9jrLNxI+hucJ3kLWqlbXpPhbQz9px9EQiHBR/spvZTfAx20
- sVd9W7t0mo27LyDqmd/IP3pin7N8+LXZ9c5ZKwwPVmfZ/GetLgw04I53k3NGNecDCa
- ijvpma2om8yov8RP0HtIWuwK+WRm3orGRHf3HNwGlorOdpqwTx5mkV5RAYwKR/mCze
- MeLeLG6jjJFqKhdfm3Yn9Upvo6k8Hc3IWcGzFbdVCeNfk0HxI/6kmgIiv50QI7H90N
- k25ceHVacAcjXAGispbZ/+jYSnuSwLLgdMLcP1zNeYJMFd8sL6LAZ1KSe/1OJo1HOp
- pZ38wK3Bhyakg==
+ b=OxCvzOLfBvcNzfDzXWu8c0+aWuV86gA5Ew6cAnPB6eAssRgVxB08TUPC03Y3z+QVF
+ LPFollkkdDF+/p/esfrUWIf6Y+4srFy5MsuUbUYTFUUoVTImsAOlIlsc3jshFX4MQM
+ 8G44tUO7w8Oct+/uK0s1m4HawQ0ptpvMpmlzNIzkSAocAbUUA/blUi0DkkQGhVbXbs
+ gPlepz29ZsvZt9hjXkQGz5EL9ZHacwWpcr6iQhLTmRo057zMmIKTunzNWP7SODPuCc
+ pQMy8AweYDPSPazbpO6pEWTo5eB+Zlgt9djxKy4lqcK2o+CKDws9wmYM2D/WeHxmpd
+ 3Vh1XzX8Ssd/A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 329E81E71AD;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0C9FD1E71A7;
  Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3066C45FBD9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 06E5E45FBD3;
  Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AF52FB8E76; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ id 9D774B8E6A; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- oxsignal <awo@kakao.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 24/63] qed: fix incorrect denominator in
- qed_bytes_to_clusters() (CVE-2026-118594)
-Date: Mon, 16 Nov 2026 23:25:03 +0300
-Message-ID: <20261116202554.535325-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 18/63] hw/cxl: destroy primary CCI before
+ re-initialization on reset
+Date: Mon, 16 Nov 2026 23:24:57 +0300
+Message-ID: <20261116202554.535325-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,46 +67,78 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-cluster_size - 1 is often used in bitwise mask operations in qed.h, so
-this bug is probably a copy-paste error. qed_bytes_to_clusters() uses a
-division and the denominator should be the full cluster_size value.
+ct3d_reset() re-initializes the primary CCI through the call chain
+cxl_device_register_init_t3() -> cxl_initialize_mailbox_t3() ->
+cxl_init_cci(), but never calls cxl_destroy_cci() first.  Each reset
+cycle therefore leaks the old timer and leaves the old mutex
+undestroyed while silently overwriting the CCI state.
 
-This bug can be used to leak heap memory to the guest with a QED file
-where cluster_size <= 32 KB (the default is 64 KB) and table_size = 8 or
-16 (the default is 4).
+Per CXL r4.0, the "Mailbox Interfaces Ready" bit in the Memory Device
+Status register (Table 8-212) is set after a Conventional Reset or CXL
+Reset once the device has re-initialized its mailbox interfaces.  The
+CCI is the software abstraction of these interfaces and must be properly
+torn down before re-initialization.
 
-Fixes: CVE-2026-118594
-Fixes: 298800cae72e ("qed: Table, L2 cache, and cluster functions")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4737
-Reported-by: oxsignal <awo@kakao.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 2a2fc7ea6c72b0f07d6e58493b05296de85dee57)
+The secondary CCIs (vdm_fm_owned_ld_mctp_cci, ld0_cci) already follow
+the correct destroy-before-reinit pattern in the same function; apply
+the same discipline to the primary CCI.
+
+Also destroy the secondary CCIs in ct3_exit() where they were
+previously leaked at device removal time.  Guard the primary CCI
+teardown there with the same .initialized check used for the secondary
+CCIs: the primary CCI is only brought up from the reset path
+(cxl_device_register_init_t3()), so a device that is unrealized before
+its first reset would otherwise tear down a never-initialized CCI.
+
+Fixes: cac36a8faffc ("hw/cxl/mbox: Pull the CCI definition out of the CXLDeviceState")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260729144645.1552511-3-junjie.cao@intel.com>
+(cherry picked from commit a004df0be51fd0f5c2b6bde9c61889302f99c7a1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/qed.h b/block/qed.h
-index 26d4bf038c7..04bcd7ac4fa 100644
---- a/block/qed.h
-+++ b/block/qed.h
-@@ -253,7 +253,7 @@ static inline uint64_t qed_offset_into_cluster(BDRVQEDState *s, uint64_t offset)
- static inline uint64_t qed_bytes_to_clusters(BDRVQEDState *s, uint64_t bytes)
- {
-     return qed_start_of_cluster(s, bytes + (s->header.cluster_size - 1)) /
--           (s->header.cluster_size - 1);
-+           s->header.cluster_size;
- }
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index a04dc74ecc4..363ac632f9e 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1076,7 +1076,15 @@ static void ct3_exit(PCIDevice *pci_dev)
+     cxl_doe_cdat_release(cxl_cstate);
+     msix_uninit_exclusive_bar(pci_dev);
+     g_free(regs->special_ops);
+-    cxl_destroy_cci(&ct3d->cci);
++    if (ct3d->cci.initialized) {
++        cxl_destroy_cci(&ct3d->cci);
++    }
++    if (ct3d->vdm_fm_owned_ld_mctp_cci.initialized) {
++        cxl_destroy_cci(&ct3d->vdm_fm_owned_ld_mctp_cci);
++    }
++    if (ct3d->ld0_cci.initialized) {
++        cxl_destroy_cci(&ct3d->ld0_cci);
++    }
+     if (ct3d->dc.host_dc) {
+         cxl_destroy_dc_regions(ct3d);
+         address_space_destroy(&ct3d->dc.host_dc_as);
+@@ -1331,6 +1339,9 @@ static void ct3d_reset(DeviceState *dev)
+                               ct3d->flitmode);
+     cxl_component_register_init_common(reg_state, write_msk,
+                                        CXL2_TYPE3_DEVICE, ct3d->hdmdb);
++    if (ct3d->cci.initialized) {
++        cxl_destroy_cci(&ct3d->cci);
++    }
+     cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
  
- static inline unsigned int qed_l1_index(BDRVQEDState *s, uint64_t pos)
+     /*
 -- 
 2.47.3
 
