@@ -1,55 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376AA606A322
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481C8606A339
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=n5yWEPJi
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=U+JntUqj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3J3-0003V9-Oe; Mon, 16 Nov 2026 15:28:02 -0500
+	id 1xT3Jj-00062s-OI; Mon, 16 Nov 2026 15:28:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3Iv-0002hp-DI; Mon, 16 Nov 2026 15:27:53 -0500
+ id 1xT3JN-0005Kw-Fb; Mon, 16 Nov 2026 15:28:22 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3It-0001TM-Pk; Mon, 16 Nov 2026 15:27:53 -0500
+ id 1xT3JL-0001X3-Ce; Mon, 16 Nov 2026 15:28:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860764; bh=0MZgjF4tMoIKTt+lwNdvrl+shQhPMmGeOj4MSy77COA=;
+ t=1794860764; bh=wtqYCGqO/EXgfzXDkoOUM2f7MvKzaIka+TDmyuN9R1Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=n5yWEPJiGWO0goi0ohGeobJ0D9GJJkmfrCt9+kbafHo7FJ+gVnDWAbHYNh7lV8/V2
- unsK1FtuJ9Hz2hphgvQFCD0HtzFEO8OwJ4gmqsVMY2Zil6XB+UqvumRaXglbo8oNkt
- 0m7SfCq/1/OsBfOwumFHL8vFpBtBo4KPaMkVmfceQaHgXWMPt7IF8CUi+CyQhxEv/9
- sYHNBtquRnk+39kupHEYFlrdLMT0uaAfVPZfDRqejgKEF303B00CHkcehxsnxDEwEe
- XbeqH3d3tC+207ipLsHjcgQd2uGXe7shZnquvFUxN5LTcoOf2gAkdqvaVrWm5Q8S7G
- skE6DIZocC1OA==
+ b=U+JntUqjvUcxgzrXfWIWJ7RYV7u+WjPR337zccuVjnJxO7kob64j4bG0YOdq5Av2x
+ 4vZjbjhDuntemOIvXqRMGmX5d4peZL1dY0ybYoqa97g0F9LFisyRY39V1U1jqEqOAz
+ gU5zM1Do9UJPjBJVLf9MPriumVUYWsIrCujvCt0fJcDlSvsSWJK/CHd5l4Vh4DCS/4
+ uAOcLTc9eJmkehmK7KhPHNpOSGxCfMO6IzVWeB4x0K3BLKpX3LDP0avlZVe0WzWoHr
+ FjGx8KEt32FFwnUYpXDufEcEkQuU89QW1+nqEbZEIbue6J4npNdaMPmZKiNLr8Dar2
+ C7FFceOlwdszw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2CECD1E71AC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4B5FD1E71B1;
  Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2955245FBD8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 48E0245FBDD;
  Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AC820B8E74; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
+ id BB133B8E7E; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stian Halseth <stian@itx.no>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 23/63] accel/tcg: Do not flush and retry in place in
- tb_gen_code
-Date: Mon, 16 Nov 2026 23:25:02 +0300
-Message-ID: <20261116202554.535325-23-mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 28/63] hw/dma/xlnx_dpdma: Don't allow DMA off end of
+ host buffers
+Date: Mon, 16 Nov 2026 23:25:07 +0300
+Message-ID: <20261116202554.535325-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,59 +68,185 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Stian Halseth <stian@itx.no>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-When the code buffer is full in a serial context, tb_gen_code() flushes
-it and retries in place. cpu_exec_loop() then chains its last_tb, now
-freed, into the new TB. When that TB is invalidated, tb_jmp_unlink()
-follows the stale entry and qemu crashes inside its SIGSEGV handler.
+The xlnx_dpdma DMA engine allows the guest to do DMA to host buffers
+for audio and graphics data.  These buffers are set up by the xlnx_dp
+device, which calls xlnx_dpdma_set_host_data_location() to tell the
+DMA engine where they are.  However, this API doesn't provide any way
+to say how big the host buffers are, and the DMA engine does not
+check whether the guest is trying to write off the end of the buffer.
 
-Always queue the flush and leave through cpu_loop_exit(), as before
-commit ebf7a5d294a3. This also brings back the cleanup in
-cpu_loop_exit() and cpu_exec_longjmp_cleanup() that the retry skipped.
-
-Since commit 25e5c6a320db ("accel/tcg: Allow cross-page goto_tb
-chaining in user-only builds"), user-only builds hit this easily,
-e.g. qemu-sparc64 -tb-size 1 on a program writing next to its PLT.
+Add a length argument to xlnx_dpdma_set_host_data_location(), and
+bounds check the guest's DMA writes against it.  The DPDMA ISR has
+bits for each channel for "descriptor payload is too large", so we
+report such overflows there.
 
 Cc: qemu-stable@nongnu.org
-Fixes: ebf7a5d294a3 ("accel/tcg: Improve buffer overflow in tb_gen_code")
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Stian Halseth <stian@itx.no>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 3992091713eb51a4a1cf0a592a30ae9e856c6b55)
+Fixes: d3c6369a96a8 ("introduce xlnx-dpdma")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4134
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-id: 20261025110857.1973128-1-peter.maydell@linaro.org
+(cherry picked from commit c8b6ce2fa6d65a65e8b535d6d9a94593a2927929)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index 328d96aba30..ea8257935ed 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -288,12 +288,11 @@ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
-     assert_no_pages_locked();
-     tb = tcg_tb_alloc(tcg_ctx);
-     if (unlikely(!tb)) {
--        /* flush must be done */
--        if (cpu_in_serial_context(cpu)) {
--            trace_tb_gen_code_buffer_overflow("tcg_tb_alloc");
--            tb_flush__exclusive_or_serial();
--            goto buffer_overflow;
--        }
-+        /*
-+         * Flush must be done.  Always exit the cpu loop so that the
-+         * last_tb linkage within the inner cpu loop does not apply.
-+         */
-+        trace_tb_gen_code_buffer_overflow("tcg_tb_alloc");
-         queue_tb_flush(cpu);
-         mmap_unlock();
-         /* Make the execution loop process the flush as soon as possible.  */
+diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+index 98126ef320d..06594980292 100644
+--- a/hw/display/xlnx_dp.c
++++ b/hw/display/xlnx_dp.c
+@@ -333,9 +333,11 @@ static inline void xlnx_dp_audio_activate(XlnxDPState *s)
+                    & DP_TX_AUD_CTRL) != 0);
+     audio_be_set_active_out(s->audio_be, s->amixer_output_stream, activated);
+     xlnx_dpdma_set_host_data_location(s->dpdma, DP_AUDIO_DMA_CHANNEL(0),
+-                                      &s->audio_buffer_0);
++                                      &s->audio_buffer_0,
++                                      sizeof(s->audio_buffer_0));
+     xlnx_dpdma_set_host_data_location(s->dpdma, DP_AUDIO_DMA_CHANNEL(1),
+-                                      &s->audio_buffer_1);
++                                      &s->audio_buffer_1,
++                                      sizeof(s->audio_buffer_1));
+ }
+ 
+ static inline void xlnx_dp_audio_mix_buffer(XlnxDPState *s)
+@@ -566,6 +568,18 @@ static void xlnx_dp_aux_set_command(XlnxDPState *s, uint32_t value)
+     s->core_registers[DP_INTERRUPT_SIGNAL_STATE] |= 0x04;
+ }
+ 
++/*
++ * Return the size of the surface in bytes. Pixman doesn't provide
++ * a helper function/accessor for this, so we must calculate it
++ * from the stride and height. Note that a pixman stride can
++ * potentially be negative, hence the abs().
++ */
++static inline uint64_t surface_data_size(DisplaySurface *s)
++{
++    /* Can't overflow because stride and height are both int */
++    return (uint64_t)abs(surface_stride(s)) * surface_height(s);
++}
++
+ static void xlnx_dp_set_dpdma(const Object *obj, const char *name, Object *val,
+                               Error **errp)
+ {
+@@ -580,7 +594,8 @@ static void xlnx_dp_set_dpdma(const Object *obj, const char *name, Object *val,
+         DisplaySurface *surface = qemu_console_surface(s->console);
+         XlnxDPDMAState *dma = XLNX_DPDMA(val);
+         xlnx_dpdma_set_host_data_location(dma, DP_GRAPHIC_DMA_CHANNEL,
+-                                          surface_data(surface));
++                                          surface_data(surface),
++                                          surface_data_size(surface));
+     }
+ }
+ 
+@@ -644,9 +659,11 @@ static void xlnx_dp_recreate_surface(XlnxDPState *s)
+         }
+ 
+         xlnx_dpdma_set_host_data_location(s->dpdma, DP_GRAPHIC_DMA_CHANNEL,
+-                                            surface_data(s->g_plane.surface));
++                                          surface_data(s->g_plane.surface),
++                                          surface_data_size(s->g_plane.surface));
+         xlnx_dpdma_set_host_data_location(s->dpdma, DP_VIDEO_DMA_CHANNEL,
+-                                            surface_data(s->v_plane.surface));
++                                          surface_data(s->v_plane.surface),
++                                          surface_data_size(s->v_plane.surface));
+     }
+ }
+ 
+@@ -1396,7 +1413,8 @@ static void xlnx_dp_realize(DeviceState *dev, Error **errp)
+     s->console = qemu_graphic_console_create(dev, 0, &xlnx_dp_gfx_ops, s);
+     surface = qemu_console_surface(s->console);
+     xlnx_dpdma_set_host_data_location(s->dpdma, DP_GRAPHIC_DMA_CHANNEL,
+-                                      surface_data(surface));
++                                      surface_data(surface),
++                                      surface_data_size(surface));
+ 
+     as.freq = 44100;
+     as.nchannels = 2;
+diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+index 32f56036a4c..9d8e7593698 100644
+--- a/hw/dma/xlnx_dpdma.c
++++ b/hw/dma/xlnx_dpdma.c
+@@ -589,6 +589,7 @@ static void xlnx_dpdma_reset(DeviceState *dev)
+ 
+     for (i = 0; i < 6; i++) {
+         s->data[i] = NULL;
++        s->datalen[i] = 0;
+         s->operation_finished[i] = true;
+     }
+ }
+@@ -760,6 +761,14 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+             int64_t transfer_len = xlnx_dpdma_desc_get_transfer_size(&desc);
+             uint32_t line_size = xlnx_dpdma_desc_get_line_size(&desc);
+             uint32_t line_stride = xlnx_dpdma_desc_get_line_stride(&desc);
++
++            if (transfer_len > s->datalen[channel]) {
++                s->registers[DPDMA_ISR] |= ((1 << 18) << channel);
++                xlnx_dpdma_update_irq(s);
++                DPRINTF("Descriptor payload too large..\n");
++                goto update_descriptor;
++            }
++
+             if (xlnx_dpdma_desc_is_contiguous(&desc)) {
+                 source_addr[0] = xlnx_dpdma_desc_get_source_address(&desc, 0);
+                 while (transfer_len != 0) {
+@@ -809,6 +818,7 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+             }
+         }
+ 
++    update_descriptor:
+         if (xlnx_dpdma_desc_update_enabled(&desc)) {
+             /* The descriptor need to be updated when it's completed. */
+             DPRINTF("update the descriptor with the done flag set.\n");
+@@ -831,7 +841,7 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+ }
+ 
+ void xlnx_dpdma_set_host_data_location(XlnxDPDMAState *s, uint8_t channel,
+-                                         void *p)
++                                       void *p, uint64_t len)
+ {
+     if (!s) {
+         qemu_log_mask(LOG_UNIMP, "DPDMA client not attached to valid DPDMA"
+@@ -841,6 +851,7 @@ void xlnx_dpdma_set_host_data_location(XlnxDPDMAState *s, uint8_t channel,
+ 
+     assert(channel <= 5);
+     s->data[channel] = p;
++    s->datalen[channel] = len;
+ }
+ 
+ void xlnx_dpdma_trigger_vsync_irq(XlnxDPDMAState *s)
+diff --git a/include/hw/dma/xlnx_dpdma.h b/include/hw/dma/xlnx_dpdma.h
+index 7cf67aef6e1..0fc24e23ad3 100644
+--- a/include/hw/dma/xlnx_dpdma.h
++++ b/include/hw/dma/xlnx_dpdma.h
+@@ -38,6 +38,7 @@ struct XlnxDPDMAState {
+     MemoryRegion iomem;
+     uint32_t registers[XLNX_DPDMA_REG_ARRAY_SIZE];
+     uint8_t *data[6];
++    uint64_t datalen[6];
+     bool operation_finished[6];
+     qemu_irq irq;
+ };
+@@ -69,10 +70,10 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+  * @s The DPDMA state.
+  * @channel The channel associated to the pointer.
+  * @p The buffer where to store the data.
++ * @len: The length of the buffer in bytes.
+  */
+-/* XXX: add a maximum size arg and send an interrupt in case of overflow. */
+ void xlnx_dpdma_set_host_data_location(XlnxDPDMAState *s, uint8_t channel,
+-                                       void *p);
++                                       void *p, uint64_t len);
+ 
+ /*
+  * xlnx_dpdma_trigger_vsync_irq: Trigger a VSYNC IRQ when the display is
 -- 
 2.47.3
 
