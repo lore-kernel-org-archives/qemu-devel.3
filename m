@@ -1,87 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02D6606BD1E
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD4D606BD35
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=spH6fKGq
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=gwN75Gwc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSufi-0004UJ-CH; Mon, 16 Nov 2026 06:14:52 -0500
+	id 1xSufF-00046Q-NF; Mon, 16 Nov 2026 06:14:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSuef-0003wE-Np
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:45 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1xSueS-0003rs-Mz
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:34 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSuec-0002Dj-TC
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:45 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4a1b07c3c5fso37332985e9.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:39 -0800 (PST)
+ id 1xSueO-0002Ba-HZ
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:31 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-48e10a70540so1791204f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794827619; x=1795432419; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794827606; x=1795432406; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=zOcK/FpIa2soozQBIj8qTA+KfQuG2+4S2+axJptJAD4=;
- b=spH6fKGqJ2z8jD+/2Xp55le0J2AAJ+uQXE6FkIhwDWeWoHoEn3ex3yuIzLI7u1f4cp
- jfkEQREeAgbASX+0DHR9uqMcM7BRYKne117cpi5p79KzGfZaKTtVvjDAN7UzY3+O7XMA
- eL0I3iOVZg3EWQjP+e7+djMgK6hjMvmR8iE4UVs+Uh7Af9XEgbWG3nwlGmH/JbHUvEJi
- HN6xIkGmKofQ8lorSI9InzfGqYTpccWMY58+aaULHwfJpQkl34Ltg385Fkv0vhhW9Cds
- Z9Yqs8KUOouEzWsykKqIKR7VVnSAYMsOoqeBIWP+mCygNwSry9q98dbnsc//pIdXzCHU
- OUkg==
+ bh=HEFF52zQcGWzOKUVmjH4myjX8doFqqSzEqp+wmFiVeE=;
+ b=gwN75Gwc/mWbnqwDoTitrUYVswGDdiEC06cYQA7ronwDdPe+UfwjqmloOJqEvozKJ/
+ NaGsu3OAjtf50fWhce4PM8iH21r1X2OwC5Px5SXftSQlhAaLjdB78VL79Ce+qWByDM0t
+ iiN8DG6E5sB2wYbBdlBCWZm3WEjQUvMIVgt9YhDML0K6so4gTgq/9SxjjI6S1mzPjTja
+ JGfcWg8b20BD85CEpSldvojgV6K4IysVwU8ht+JtVAoX/jG1iC+NQNXpMEzGaXfqlHUN
+ nQIXviFaoi6ag3Id9w/XgDhaJa9vM7eMipmzR4w1A8WwejBuEo0Q1oKHY68pydpQKXRO
+ kneQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794827619; x=1795432419;
+ d=1e100.net; s=20260707; t=1794827606; x=1795432406;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=zOcK/FpIa2soozQBIj8qTA+KfQuG2+4S2+axJptJAD4=;
- b=20ZEHxrxh3E0NJ8s7e3wymWmB4jP2I+RwJdLYsOlZXLe+ODGqucfsv9S+mITkvgOiY
- hmQ+OrZOE0Abuj0XLPDrICiOYT8Cj/uzgpmQoBLMTCnY7NYnYYBqPzdaGjS0QFvCeAPn
- UH4JASbAjSq+DTdBeVQf2ozQEiPfBWiMh4EWydS0evVF45ZrCFiIMtdJxI5e5PrXjmZ2
- F/BxFhFlgoFWMPCLOyo/LKh9H+Wff+5WU/9whoQe2JGMIYoBrJPixD72KqkStYO+kV1s
- 1Iqmlm43prWVm/wSsm8xT6qeSPZrdFobVTmx+pqUF7WbAFPB1dZJIkf1jtygvVLyR2zA
- 2khg==
-X-Gm-Message-State: APuU4Z8Ku7Gyt+2oXX4eCPWrb2Djn71C6Cg+jJUskj8g4ydLADE9dAVP
- 8I2xmqh4/Q23u/GQu0DCXSBlK9TxIKbApDCK+CqSVR1VeRD98edcL8c062rRbW8Fg0lJ7qBScT+
- S/qX7N2o=
-X-Gm-Gg: AYBFou3WqQWalJcleMDID/yCO3zAX7R+A1AdD/Jtypui+XGL8RC+ICES1xqctQ4KCB7
- 4gwNXzYHMkgJyjBK+X9QRixjJ5Q+WUCWIJscvzlm6yo3V474J8rP/n9IcppCK5gW9USiGFEDfe9
- hf4ti1rFATl7ygSikuIT+sRytz8ZWbDY9rldtKi45Pqx+LvAFofakU8Jg89bCliQ4U78dxKA5PX
- 1HqlSb88M0UvAVYTqXP40Q4T7GjS7tZx56pFSmPxNpsR8KkD8mOMbE6T9d+XQIMrrxXErFmtswz
- pbPW/DS3IeT3scBHQ0lLuDoo2z2OpDmz1YolHh+hHq9wJC2KS7qqWAzaEX+V++umvVGKTNg8+id
- qC0rXkdEEXcwtTuqlGA2FV8bJOLJtlUQ71k0G7SGeXpN5+mNRB+PnAgRSQ0JXbcZ5GfAjrsflsz
- GidC1/Ac+X/ArRyi2mRx/NWlDpjmEGZBEVU4hvxl2tBr5PDfqVIgHP4hNB0a61vq+nBqkVCpAwm
- EpisxXFhaRBHFBYJ9mjj3ZqWMTAhaTvVsFJsMN8IjDVAL5bVBzGitBlBj92MxeTzyCWS4/EkPfk
- pAeelmb5CMmXXW+YQl1LE29hm7vMooOOy0LhBrkCRqCJdQk4gqwByAH0g9PkOKNtO8XDjRLNBS5
- c2gnZY+8y6DIvm13dQWKFzRyYTVEaADsB0ms=
-X-Received: by 2002:a05:600c:8b23:b0:4bb:6f6a:1976 with SMTP id
- 5b1f17b1804b1-4bb6f6a1e5amr80203685e9.2.1794827618633; 
- Mon, 16 Nov 2026 03:13:38 -0800 (PST)
+ bh=HEFF52zQcGWzOKUVmjH4myjX8doFqqSzEqp+wmFiVeE=;
+ b=qhZvaIv9rPVqpVd6MdOkHVizfELxdMN4ANn4b6y4C5NHqVaEkEcVQHfq/xiYdRjZ+3
+ peb9+X+DH+7nz4htYwH2IiUXMV5V3/ZFYgIlra4m5A2NP1JiZaNQDV0irIKvFkTFxko2
+ oRwY85KvwUN8vOP7aYF2uA5n6Jx1P/l3iarsrUCzAl2hl/uGedXv0y98FMzfldmYJu2d
+ 556Z+7b0np68HsYZHUbXl52uMliFlAVYvvYGfTb0mxwArK+72uEHMesMsZjAhbDetJB8
+ Ohd2CRmMfRV/vh/fO+Rgk5fVkykqI8OFShyE6POalBYAEwJAy6rR6BEQnAM7vnoS8X6T
+ j+lQ==
+X-Gm-Message-State: APuU4Z80pNd+9YgRiHS6Fnks7niz45OhXFFkZsDIDFNBUoLKVxOFEj1N
+ 9OFd6qRJD4f4w62D8IdcIRwUmolfZC7Qea1+B0DAb5aq+woym1WpzyyvRd5oy17RndiEtv8MCqc
+ 9CVkAklE=
+X-Gm-Gg: AZFdTZciFHxQ06wfqmzpYkPeSdCgyuBlZDgZJMIipVuO3rsv66lJaNo54+abgo9Bkg8
+ kwxPMqF2yflVDYYGPXvJBomSsw9VL+gF4k6pvbtN2qS8Zfxa6Fxr+MD4kWpEx5HyZ4S7sj14v3C
+ AQBDkMMi1R6OxA5mG1YVey6uup5+SXze8BQfd8OvyonxB0vN7acUNk/WGXI3F+LZ4UeGzVIwf5F
+ D/tcQ7EAT9RmRzJbRDO76WUl6o0yAz8J25RjtmHpbPJd3Jsy3nSeFcOA5AkUyHiX3Hg1cXTufbm
+ HSFfJdwDfcXvXTPskrxgAfHM8yKBSvRnP5A9BWYWdZxktTYlD5vwogEhaC09ODmAk37PX4lrMtJ
+ cH91HsEzMC0fhUxqhT7kiUqhsR77hEc9fVlYMmA38hspQ+CO6Nr8gtN9+xB2tUcVZaE3PJgetLH
+ 6W5UBNWLrxwM6faLLumadCugciwOVhXgVCWE+fWpdR9KdTc6su+CE9gg8fUesWbbwj5GEtnWpNZ
+ uYLohTa1EVYYNo6caOMiMxT87pS2OZ8+wocVe7Dt5MpZSSGDG+isRgj6dKoXtDV7A55gzj6v27p
+ 5ycnsc52546FBH5Cs5YW/m74oG+rg6CAU3hYVXm0h3jGNUKTwQoMq71pDjJvdGZXjmY1QM3QuZQ
+ PmSWRSUQ/AUa9hTlSGQEUmiDpLvKlGAfJnw==
+X-Received: by 2002:a5d:5e85:0:b0:48d:f391:5c45 with SMTP id
+ ffacd0b85a97d-49c740bcf7amr19942300f8f.42.1794827606194; 
+ Mon, 16 Nov 2026 03:13:26 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.37
+ ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Nov 2026 03:13:37 -0800 (PST)
+ Mon, 16 Nov 2026 03:13:25 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 30/33] docs/about/deprecated: Add missing "since" marker for
- OABI/NWFPE
-Date: Mon, 16 Nov 2026 11:13:00 +0000
-Message-ID: <20261116111303.1692832-31-peter.maydell@linaro.org>
+Subject: [PULL 19/33] include/net/eth.h: Make eth_get_l2_hdr_length_iov()
+ check protocol
+Date: Mon, 16 Nov 2026 11:12:49 +0000
+Message-ID: <20261116111303.1692832-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116111303.1692832-1-peter.maydell@linaro.org>
 References: <20261116111303.1692832-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,37 +107,43 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In 750c2d53ee4 we deprecated our linux-user support for the Arm OABI
-and NWFPE emulation; however we forgot to mark the text in
-deprecated.rst with the usual indication of what version it was
-deprecated in.  We announced the deprecation of this feature in the
-11.0 release, so note that.
+In eth_get_l2_hdr_length() we return sizeof(eth_header) for
+any protocol other than VLAN or DVLAN. However, in the iov
+version of this function, if the packet is larger than
+the ethernet header but not large enough for both the eth_header
+and the vlan_header we'll end up returning the actual packet
+size rather than the eth_header size. Fix the "not enough
+data" return case.
+
+This will only cause issues if the caller isn't already checking
+offsets and sizes, so this is defence-in-depth.  It also in theory
+corrects the result for the hypothetical case of an ethernet-level
+protocol that allows a payload of less than 4 bytes.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 750c2d53ee48f1e ("docs: Deprecate Arm OABI and NWFPE support")
+Fixes: eb700029c783 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-id: 20261112093824.2281467-2-peter.maydell@linaro.org
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-id: 20261109-eth-v2-10-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/about/deprecated.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/eth.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index de7d502babb..4188445ed45 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -451,8 +451,8 @@ across versions).
- linux-user mode CPUs
- --------------------
+diff --git a/include/net/eth.h b/include/net/eth.h
+index e10684ed923..3e83f5d68c0 100644
+--- a/include/net/eth.h
++++ b/include/net/eth.h
+@@ -321,7 +321,7 @@ eth_get_l2_hdr_length_iov(const struct iovec *iov, size_t iovcnt, size_t iovoff)
+     size_t copied = iov_to_buf(iov, iovcnt, iovoff, p, ARRAY_SIZE(p));
  
--OABI and NWFPE support for Arm CPUs
--'''''''''''''''''''''''''''''''''''
-+OABI and NWFPE support for Arm CPUs (since 11.0)
-+''''''''''''''''''''''''''''''''''''''''''''''''
+     if (copied < ARRAY_SIZE(p)) {
+-        return copied;
++        return MIN(copied, sizeof(struct eth_header));
+     }
  
- Linux for 32-bit Arm has had two major ABIs: the original OABI and the
- more modern EABI. OABI support was marked as obsolete in GCC 4.7 and
+     return eth_get_l2_hdr_length(p);
 -- 
 2.43.0
 
