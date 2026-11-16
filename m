@@ -1,87 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E655E606BE2D
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98F1606AB74
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 11:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=CouZtney
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=x+Gpba3E
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xSuec-0003uu-T3; Mon, 16 Nov 2026 06:13:42 -0500
+	id 1xSuf4-0003zt-Td; Mon, 16 Nov 2026 06:14:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueI-0003qB-Fe
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:24 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1xSueU-0003s9-PB
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:36 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xSueE-00028p-B2
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:21 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-49134c8509fso3274508f8f.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:17 -0800 (PST)
+ id 1xSueQ-0002Bv-DK
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 06:13:33 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-491846221ffso2996475f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 03:13:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794827596; x=1795432396; darn=nongnu.org;
+ d=linaro.org; s=google; t=1794827608; x=1795432408; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=gNUPkpbDXQCDBt3QEsN8Lb8ogQufVlkJZMGSxDNGCaw=;
- b=CouZtneyNMtccaoXudVmuJc8T9N5RdpsQMjHeAzTQWO0wkVKw5vMtIMPp4y6FWKhEc
- ZRBHtNaUoSK6vXYsbirSJsShbaUIyYM2sRUpqCd8jhI0pnnXMJg2A+EOrwtwS1gAD6J6
- maLR2Ohzg6ouhCGMkcKOqYp86Kuicf54TQw4cwVLxaft6JE7sStxEHcM8rz3upgtZKX1
- WKNumYRe4w50jgbCVLvPrIR2GbxfB4Vs23yrDq5tZt2c6MNxJ/BGywn9Cw+r5hFR3BpU
- 45r1fnF3L+p0iX7cjpQ3VBzaepkgWIEVL4hRA/GX9PmZMIOCGgWhU4e1qMzIyYxKQ1yL
- dSxg==
+ bh=cwdI2ks2UX6ufxBpWH5uqNqrepl84PaA06uzdEISrr4=;
+ b=x+Gpba3EcWbUtBnulFNEi2bb8fHdiPxXfp55iE3ngp5MHkrzuX/GTQRRL1xOOas/c8
+ t5OP63dxrqM6ecFc1EyCOANctUFB1jhhWZZNNG3TJR7O8BW/7WPTcoVKTfnnQsHqsnJE
+ 30fJmekJ1pAgLM2D/vE0rapgy2NqT2k1JkzUjknDEPfzZsuFzubOTdBPuzRlrpZt1THb
+ AivheXDOGtqEsSI9bkDv56dP4l8PTmvvCArfU8MOWx0U1JpY4eqlBLd251k0fAyd1QvE
+ QZ6DGbHHAz3HLdMQMk25l5cJ7WlgpiaVkEENQhZwAvlMIPG4i4gfXjqM+b+/gAWHPaAy
+ 1soA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794827596; x=1795432396;
+ d=1e100.net; s=20260707; t=1794827608; x=1795432408;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=gNUPkpbDXQCDBt3QEsN8Lb8ogQufVlkJZMGSxDNGCaw=;
- b=fAWdE3v8oI50QjxGd4pyNYcJYM+6Ixk42Bz/J3ojhwSaCtO4cJtAK21HYK//je8qP7
- NX87TtrPQK0ZqBKU3IzaNxXr6XHHsjPidPWQNDTP5HYpk+5j37rWuhlKnhCCsk1DT4xn
- vWVRdSLpyFeSQK3Cn0JRs3mOs9GhoofWOaa1RwamWgq4E/kXP0RpkmuXuIJ0+k1MRqBB
- S6UvFuem38g/x3Hw/pcA9o4jSMECuI+eJiXCT+TTVUOiYWX/t3WOQra2zvk1MzQHZMxe
- fHxiZjrKxFHKHCpr/kEYe7tqBB+jR32gDumyFw343S7jZPzZK8+8IjZLLd6GiYlTpQzn
- XXvw==
-X-Gm-Message-State: APuU4Z9REQuvg2LUaAQazPMwBbfPdzDMLYcxKdNQmgNvTcEr3dZGHfjN
- l9n/H7wu1CP74xKuBEnFsVY6xQMlXpIyCkpzbcBIrodQAzzK+dm4kyXCJgSESbhUfsBIyzdfKun
- biyRE6kc=
-X-Gm-Gg: AZFdTZcx4HNLinHpqbkZyWk+qvAz+e0Lw51XMX6jXtyo7fxrS4QBWeHan0cTQ4jrRuJ
- 5vDRU/Tr9hHYcGtn4120EF7Np8gCEOxKGJPVq3zL676e/45IxFVBGjvUPIDX9CEUnAT5Onkg+Fb
- iQAPB0qUXNnFoTF1Y2OgztFNi6drPp9Rw1t7KUN2IbXSBGTufgLdO/+HyTSCWkEwnxE4hJoHSV3
- DU+XM4yDfFEXFSTI54144+o66Z4C/LPG+pO1faOMnx3VmgDB5QVqGsimx2hi9v8Mf+sV3zmGaxA
- crrL4Fr6S0tTm1IdA/veSmQg30B+bmJvE4rlBK8qlASGsMWnpBsE2yT/SfaFwsQY1W/qV3Xxanv
- d+0AOyOnFkmwT93siWmC1f6QPCp+ZBgAKF6jrdPX/dIoA1fGpd4xSSY7LTTZoMJVpUyZRYhgCvo
- 4G+uswfy/OnOe/jmjfq9UWcFjjh9Wd0zosE6TnQqt678GSrjAUBKacUhdM9fnG3la78TBf2yrrC
- vPpLreXHHnvq5eeIYE0iJS77geK7V9e0GPkYu5+uqGQPEBtSY7JYNsR+TIks8/Q1BCdqzBcoIhq
- RI5xuEgKuTwKM/XNlj9rpYPEHTDkInCCJgwQTgBI5Xxl+cCu0LsYnT9dOZSfBWBsmyWN/2sr8wv
- RazyDAw+jQWBCdySQg8Q1JODRmfQ23dTc9g==
-X-Received: by 2002:a05:6000:29d9:b0:498:b92a:30b with SMTP id
- ffacd0b85a97d-49c70ed7d88mr14144803f8f.15.1794827596569; 
- Mon, 16 Nov 2026 03:13:16 -0800 (PST)
+ bh=cwdI2ks2UX6ufxBpWH5uqNqrepl84PaA06uzdEISrr4=;
+ b=NZyD5JM94w6hFtiSy1AkJoFhZ36A7cuh9MFJtGb9ktxTg4BNZH6IpwBdp/N3T17dOw
+ EriVrsWy+20gAQsgZZBFIgMnaJpCzNtc27tKYedzgsdW3uBxU495FTRl2D2v4+tVcsdC
+ fIvhpqVQtkxcPIgCI/cIXiNquN772/rxPn/y36goFJdXYb4Xwjs/3lPd8GCA5fE5FpFr
+ E4RJHir9mFWknrLZ9LwsqwBHS2iXSlcM7ByuJebIAYotazA7LdACG8acfYPqQl13pwml
+ LgwPsbYzCbv53q5sQ6BoAAgGsCntKuNIVZWKLJYpa88/iTUkYkzkgvJOyffG4WmanlTW
+ qzug==
+X-Gm-Message-State: APuU4Z8GwMt4QgEiT0wfJ60fwA/vTdwTFwVQcP1Qt3QrlrBmh1SOXTAl
+ 5pKoH8o/Tmo/O5/o8R7JVsRow1M0p4jg7bfT4s6hSLjyqlCIxxigttxCy9vfRJmcJzo3tzkYjni
+ r9QxNgH0=
+X-Gm-Gg: AZFdTZfPyg0c1usf7mJC+zTaEbw2KQ+fymOQVdxa/d87ztGLc2XnMTOwUw1Ld8tw5cm
+ 8z77ADdIzIj1pmV7yWSDq7uARGOH+72D8p4Zx7voz7li53nqXnyAE7axFymo0Y2HxxIGWMnDBbM
+ DobnN8wQA1LehnsxeBIKHhgGy0NHLxHAjXPUf7goVFL5Gj9+h9pTwUUqGtDIM68idIOo3DgWE45
+ GwQPvhtNTj91LN34vcBbYXs1ykenGyCAQ9i+bSDC8Ytc7y1NYLhhB/kUkXcaSHvJao21yUu1SP2
+ ++L4GTZYDeyHzRiEFvHjNvS3xruWsRf6UkflDwWCqeqom583BJqDvuaKrxpOHTsDoyLLv/VPQIJ
+ q7z6zOLTr7SsYLwNbZHLgwJfqhn5XVNr8XQZV+BZqmBJa772Ov++ecteUv2hqykiFfqII6Tgq96
+ HWp3zQ2g5LMlFG0BnDLICYV6k1xjGXPSKV+ft2pzrR3nyniWnee+/zrJRJo2E9QNgOZR4jwHzga
+ +qN5ahXSWJnWAov/LCUy3UeTW74eTCSuWpjiwsu8Vjrho0DgCDlqBUzWtSwbg+HYTbJP0UJWBqn
+ maphGeEE1iUT5pUFrBfDUDnHCfMsn0T8+AJ+KU/9W6/a99o7+Fc1ymc57lPh38xhHKhVIYn6bqa
+ XMx2QTS/3zXq5u2UMEs/8mBrJnLudC7/nFA==
+X-Received: by 2002:a5d:5f51:0:b0:48e:d88:55f4 with SMTP id
+ ffacd0b85a97d-49c6d63fad2mr23388887f8f.2.1794827608197; 
+ Mon, 16 Nov 2026 03:13:28 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.15
+ ffacd0b85a97d-49c6d079a2asm19490469f8f.16.2026.11.16.03.13.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Nov 2026 03:13:15 -0800 (PST)
+ Mon, 16 Nov 2026 03:13:27 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/33] net/eth.c: Check for undersized L2 headers in
- eth_get_protocols()
-Date: Mon, 16 Nov 2026 11:12:41 +0000
-Message-ID: <20261116111303.1692832-12-peter.maydell@linaro.org>
+Subject: [PULL 21/33] hw/net/net_tx_pkt: Sanity check virt hdr len in
+ net_tx_tcp_fragment_init
+Date: Mon, 16 Nov 2026 11:12:51 +0000
+Message-ID: <20261116111303.1692832-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116111303.1692832-1-peter.maydell@linaro.org>
 References: <20261116111303.1692832-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,65 +100,51 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In net_tx_pkt_tcp_fragment_init() we calculate the l4 header size by
+subtracting the packet's virt_hdr.hdr_len from its overall length,
+and then we g_malloc() that many bytes.  This shouldn't underflow if
+the caller has been sanity checking sizes and offsets, but as
+defence-in-depth, check again here before relying on it for the
+malloc size.
 
-We already have some header bounds checks. Add a missing check for
-L2 headers.
+This change would suffice to avoid the guest self-denial-of-service
+via overflowing the virt_hdr.hdr_len calculation in
+net_tx_pkt_tcp_fragment_init() which we fixed in the preceding
+commit.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-stable@nongnu.org
+Fixes: 02ef5fdc092bd4 ("hw/net/net_tx_pkt: Implement TCP segmentation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3648
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20261109-eth-v2-2-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-id: 20261109-eth-v2-12-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- net/eth.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ hw/net/net_tx_pkt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/eth.c b/net/eth.c
-index 12ec316e240..59b278b887c 100644
---- a/net/eth.c
-+++ b/net/eth.c
-@@ -139,21 +139,28 @@ void eth_get_protocols(const struct iovec *iov, size_t iovcnt, size_t iovoff,
-     bool fragment = false;
-     size_t input_size = iov_size(iov, iovcnt);
-     size_t copied;
-+    uint32_t hdr_size;
-     uint8_t ip_p;
+diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+index b2935900fe7..dc2563721e8 100644
+--- a/hw/net/net_tx_pkt.c
++++ b/hw/net/net_tx_pkt.c
+@@ -604,7 +604,7 @@ static bool net_tx_pkt_tcp_fragment_init(struct NetTxPkt *pkt,
+     size_t bytes_read = 0;
+     struct tcp_hdr *th;
  
-     *hasip4 = *hasip6 = false;
--    *l3hdr_off = iovoff + eth_get_l2_hdr_length_iov(iov, iovcnt, iovoff);
-     l4hdr_info->proto = ETH_L4_HDR_PROTO_INVALID;
+-    if (!pkt->payload_frags) {
++    if (!pkt->payload_frags || pkt->virt_hdr.hdr_len <= pkt->hdr_len) {
+         return false;
+     }
  
-+    if (input_size < iovoff) {
-+        return;
-+    }
-+
-+    hdr_size = eth_get_l2_hdr_length_iov(iov, iovcnt, iovoff);
-+    if (input_size - iovoff < hdr_size) {
-+        return;
-+    }
-+
-+    *l3hdr_off = iovoff + hdr_size;
-+
-     proto = eth_get_l3_proto(iov, iovcnt, *l3hdr_off);
- 
-     if (proto == ETH_P_IP) {
-         struct ip_header *iphdr = &ip4hdr_info->ip4_hdr;
- 
--        if (input_size < *l3hdr_off) {
--            return;
--        }
--
-         copied = iov_to_buf(iov, iovcnt, *l3hdr_off, iphdr, sizeof(*iphdr));
-         if (copied < sizeof(*iphdr) ||
-             IP_HEADER_VERSION(iphdr) != IP_HEADER_VERSION_4) {
 -- 
 2.43.0
 
