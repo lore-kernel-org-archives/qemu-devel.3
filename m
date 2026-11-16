@@ -1,60 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E721A606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F078606A329
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 22:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RWUNzjLj
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=F5XrrHRR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT567-0004LT-J0; Mon, 16 Nov 2026 17:22:47 -0500
+	id 1xT56C-0004iW-6o; Mon, 16 Nov 2026 17:22:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55l-0003uR-U3
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:26 -0500
+ id 1xT55t-00042O-Pz
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xT55k-00061V-2O
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:25 -0500
+ id 1xT55s-00062q-5Y
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 17:22:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794867743;
+ s=mimecast20190719; t=1794867751;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eBOdwvirENIbrZxdABl0pmCfFqE9qg9CPFcQFRN7OC0=;
- b=RWUNzjLjnYpHeVh8eYwW9lKFuOw4Kdx0iMLUYKxL2BUeziKuAwUHVYTvL3Lg4gp7efzhgs
- F8s6QTjhpZc7Y/Pp6MGmyvMwJDO8UkcTjlOUeN6j2kt6XOWAKI8By6jjbvgpv33br50oRk
- 0W9S1eGx/io5DxnRvi0fyuo7UptDrP8=
+ bh=T/2Z1BlVTezOfjC99rTFYUm4Q4tj2jz48CkoWpnq3a4=;
+ b=F5XrrHRRSvtICEJ/DpoS4q5bE5+CoWZS/oXCba1Ujoijddif29fO+2b61lwaXEaJcciXj5
+ IScLOzhBfQVhdaducGQvVeJEXshV3ZqviPnxxa6cbLUd/fb9aGSjQmZQA5tPAIu2zNvoJL
+ QwAr8LhayR0pwQjN0Xl2QV3RF9clO80=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-Lw5ns_htMtCZRpFf33H0dQ-1; Mon,
- 16 Nov 2026 17:22:21 -0500
-X-MC-Unique: Lw5ns_htMtCZRpFf33H0dQ-1
-X-Mimecast-MFC-AGG-ID: Lw5ns_htMtCZRpFf33H0dQ_1794867740
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-Cn8riihkPAmVpp0sL_rdzQ-1; Mon,
+ 16 Nov 2026 17:22:28 -0500
+X-MC-Unique: Cn8riihkPAmVpp0sL_rdzQ-1
+X-Mimecast-MFC-AGG-ID: Cn8riihkPAmVpp0sL_rdzQ_1794867747
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1762195605A
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:20 +0000 (UTC)
+ id 56FDF19560BC
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:22:27 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D01EE30001A2; Mon, 16 Nov 2026 22:22:19 +0000 (UTC)
+ id 6BE7130001A2; Mon, 16 Nov 2026 22:22:26 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 13/26] hw: define most common PCI types as secure
-Date: Mon, 16 Nov 2026 22:21:45 +0000
-Message-ID: <20261116222158.2840471-14-berrange@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 18/26] hw/audio: mark Intel HDA devices & codecs as secure
+Date: Mon, 16 Nov 2026 22:21:50 +0000
+Message-ID: <20261116222158.2840471-19-berrange@redhat.com>
 In-Reply-To: <20261116222158.2840471-1-berrange@redhat.com>
 References: <20261116222158.2840471-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -90,219 +90,71 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Essentially all PCI infrastructure is in scope for the virtualization
-use case, aside from the niche simba bridge and the CXL related pieces.
+This is traditionally the primary audio backend for x86 as
+virtio-snd is a relatively new invention.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/pci-bridge/gen_pcie_downstream_port.c | 1 +
- hw/pci-bridge/gen_pcie_root_port.c       | 1 +
- hw/pci-bridge/gen_pcie_upstream_port.c   | 1 +
- hw/pci-bridge/i82801b11.c                | 1 +
- hw/pci-bridge/ioh3420.c                  | 1 +
- hw/pci-bridge/pci_bridge_dev.c           | 2 ++
- hw/pci-bridge/pci_expander_bridge.c      | 5 +++++
- hw/pci-bridge/pcie_pci_bridge.c          | 1 +
- hw/pci-bridge/xio3130_downstream.c       | 1 +
- hw/pci-bridge/xio3130_upstream.c         | 1 +
- hw/pci/pci.c                             | 4 ++++
- 11 files changed, 19 insertions(+)
+ hw/audio/hda-codec.c | 3 +++
+ hw/audio/intel-hda.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/hw/pci-bridge/gen_pcie_downstream_port.c b/hw/pci-bridge/gen_pcie_downstream_port.c
-index d00bbd55f0c..3084a208a85 100644
---- a/hw/pci-bridge/gen_pcie_downstream_port.c
-+++ b/hw/pci-bridge/gen_pcie_downstream_port.c
-@@ -188,6 +188,7 @@ static const TypeInfo gen_pcie_downstream_port_info = {
-     .parent        = TYPE_PCIE_SLOT,
-     .instance_size = sizeof(GenPCIEDownstreamPort),
-     .class_init    = gen_pcie_downstream_port_class_init,
-+    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_PCIE_DEVICE },
-         { }
-diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
-index 8cabeadac89..3c0177661c6 100644
---- a/hw/pci-bridge/gen_pcie_root_port.c
-+++ b/hw/pci-bridge/gen_pcie_root_port.c
-@@ -161,6 +161,7 @@ static const TypeInfo gen_rp_dev_info = {
-     .parent        = TYPE_PCIE_ROOT_PORT,
-     .instance_size = sizeof(GenPCIERootPort),
-     .class_init    = gen_rp_dev_class_init,
+diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
+index 173fe56bea3..ee0d18c4caa 100644
+--- a/hw/audio/hda-codec.c
++++ b/hw/audio/hda-codec.c
+@@ -873,6 +873,7 @@ static const TypeInfo hda_audio_output_info = {
+     .name          = "hda-output",
+     .parent        = TYPE_HDA_AUDIO,
+     .class_init    = hda_audio_output_class_init,
 +    .secure        = true,
  };
  
-  static void gen_rp_register_types(void)
-diff --git a/hw/pci-bridge/gen_pcie_upstream_port.c b/hw/pci-bridge/gen_pcie_upstream_port.c
-index 61ae3a294a9..da3e9e2d637 100644
---- a/hw/pci-bridge/gen_pcie_upstream_port.c
-+++ b/hw/pci-bridge/gen_pcie_upstream_port.c
-@@ -163,6 +163,7 @@ static const TypeInfo gen_pcie_upstream_port_info = {
-     .parent        = TYPE_PCIE_PORT,
-     .instance_size = sizeof(GenPCIEUpstreamPort),
-     .class_init    = gen_pcie_upstream_port_class_init,
-+    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_PCIE_DEVICE },
-         { }
-diff --git a/hw/pci-bridge/i82801b11.c b/hw/pci-bridge/i82801b11.c
-index 1d73c14c1f8..f702b20bcd5 100644
---- a/hw/pci-bridge/i82801b11.c
-+++ b/hw/pci-bridge/i82801b11.c
-@@ -107,6 +107,7 @@ static const TypeInfo i82801b11_bridge_info = {
-     .parent        = TYPE_PCI_BRIDGE,
-     .instance_size = sizeof(I82801b11Bridge),
-     .class_init    = i82801b11_bridge_class_init,
-+    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-         { },
-diff --git a/hw/pci-bridge/ioh3420.c b/hw/pci-bridge/ioh3420.c
-index bba640f495b..2c4882c4cf1 100644
---- a/hw/pci-bridge/ioh3420.c
-+++ b/hw/pci-bridge/ioh3420.c
-@@ -120,6 +120,7 @@ static const TypeInfo ioh3420_info = {
-     .name          = "ioh3420",
-     .parent        = TYPE_PCIE_ROOT_PORT,
-     .class_init    = ioh3420_class_init,
+ static void hda_audio_duplex_class_init(ObjectClass *klass, const void *data)
+@@ -888,6 +889,7 @@ static const TypeInfo hda_audio_duplex_info = {
+     .name          = "hda-duplex",
+     .parent        = TYPE_HDA_AUDIO,
+     .class_init    = hda_audio_duplex_class_init,
 +    .secure        = true,
  };
  
- static void ioh3420_register_types(void)
-diff --git a/hw/pci-bridge/pci_bridge_dev.c b/hw/pci-bridge/pci_bridge_dev.c
-index bc53bcb69d8..86e8daaa068 100644
---- a/hw/pci-bridge/pci_bridge_dev.c
-+++ b/hw/pci-bridge/pci_bridge_dev.c
-@@ -268,6 +268,7 @@ static const TypeInfo pci_bridge_dev_info = {
-     .instance_size     = sizeof(PCIBridgeDev),
-     .class_init        = pci_bridge_dev_class_init,
-     .instance_finalize = pci_bridge_dev_instance_finalize,
-+    .secure            = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_HOTPLUG_HANDLER },
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-@@ -294,6 +295,7 @@ static const TypeInfo pci_bridge_dev_seat_info = {
-     .parent            = TYPE_PCI_BRIDGE_DEV,
-     .instance_size     = sizeof(PCIBridgeDev),
-     .class_init        = pci_bridge_dev_seat_class_init,
-+    .secure            = true,
- };
- 
- static void pci_bridge_dev_register(void)
-diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-index a96b2d228eb..5b07186c91e 100644
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
-@@ -87,6 +87,7 @@ static const TypeInfo pxb_bus_info = {
-     .parent        = TYPE_PCI_BUS,
-     .instance_size = sizeof(PXBBus),
-     .class_init    = pxb_bus_class_init,
+ static void hda_audio_micro_class_init(ObjectClass *klass, const void *data)
+@@ -903,6 +905,7 @@ static const TypeInfo hda_audio_micro_info = {
+     .name          = "hda-micro",
+     .parent        = TYPE_HDA_AUDIO,
+     .class_init    = hda_audio_micro_class_init,
 +    .secure        = true,
  };
  
- static const TypeInfo pxb_pcie_bus_info = {
-@@ -94,6 +95,7 @@ static const TypeInfo pxb_pcie_bus_info = {
-     .parent        = TYPE_PCIE_BUS,
-     .instance_size = sizeof(PXBBus),
-     .class_init    = pxb_bus_class_init,
-+    .secure        = true,
- };
- 
- static const char *pxb_host_root_bus_path(PCIHostState *host_bridge,
-@@ -154,6 +156,7 @@ static const TypeInfo pxb_host_info = {
-     .name          = TYPE_PXB_HOST,
-     .parent        = TYPE_PCI_HOST_BRIDGE,
-     .class_init    = pxb_host_class_init,
-+    .secure        = true,
- };
- 
- 
-@@ -331,6 +334,7 @@ static const TypeInfo pxb_dev_info = {
-     .parent        = TYPE_PCI_DEVICE,
-     .instance_size = sizeof(PXBDev),
-     .class_init    = pxb_dev_class_init,
-+    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-         { },
-@@ -368,6 +372,7 @@ static const TypeInfo pxb_pcie_dev_info = {
-     .parent        = TYPE_PXB_DEV,
-     .instance_size = sizeof(PXBPCIEDev),
-     .class_init    = pxb_pcie_dev_class_init,
-+    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-         { },
-diff --git a/hw/pci-bridge/pcie_pci_bridge.c b/hw/pci-bridge/pcie_pci_bridge.c
-index e826fb2829f..03b6b1c0f54 100644
---- a/hw/pci-bridge/pcie_pci_bridge.c
-+++ b/hw/pci-bridge/pcie_pci_bridge.c
-@@ -162,6 +162,7 @@ static const TypeInfo pcie_pci_bridge_info = {
-         .parent = TYPE_PCI_BRIDGE,
-         .instance_size = sizeof(PCIEPCIBridge),
-         .class_init = pcie_pci_bridge_class_init,
-+        .secure = true,
-         .interfaces = (const InterfaceInfo[]) {
-             { TYPE_HOTPLUG_HANDLER },
-             { INTERFACE_PCIE_DEVICE },
-diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
-index 0c3fed3053b..ded948ebd0f 100644
---- a/hw/pci-bridge/xio3130_downstream.c
-+++ b/hw/pci-bridge/xio3130_downstream.c
-@@ -175,6 +175,7 @@ static const TypeInfo xio3130_downstream_info = {
-     .name          = TYPE_XIO3130_DOWNSTREAM,
-     .parent        = TYPE_PCIE_SLOT,
-     .class_init    = xio3130_downstream_class_init,
-+    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_PCIE_DEVICE },
-         { }
-diff --git a/hw/pci-bridge/xio3130_upstream.c b/hw/pci-bridge/xio3130_upstream.c
-index 40057b749bf..9d58105f8bd 100644
---- a/hw/pci-bridge/xio3130_upstream.c
-+++ b/hw/pci-bridge/xio3130_upstream.c
-@@ -144,6 +144,7 @@ static const TypeInfo xio3130_upstream_info = {
-     .name          = "x3130-upstream",
-     .parent        = TYPE_PCIE_PORT,
-     .class_init    = xio3130_upstream_class_init,
-+    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_PCIE_DEVICE },
-         { }
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index d8b117799f3..57072590b11 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -321,6 +321,7 @@ static const TypeInfo pci_bus_info = {
-     .instance_size = sizeof(PCIBus),
-     .class_size = sizeof(PCIBusClass),
-     .class_init = pci_bus_class_init,
-+    .secure = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_FW_CFG_DATA_GENERATOR_INTERFACE },
-         { }
-@@ -335,11 +336,13 @@ static const TypeInfo cxl_interface_info = {
- static const TypeInfo pcie_interface_info = {
-     .name          = INTERFACE_PCIE_DEVICE,
-     .parent        = TYPE_INTERFACE,
-+    .secure        = true,
- };
- 
- static const TypeInfo conventional_pci_interface_info = {
-     .name          = INTERFACE_CONVENTIONAL_PCI_DEVICE,
-     .parent        = TYPE_INTERFACE,
-+    .secure        = true,
- };
- 
- static void pcie_bus_class_init(ObjectClass *klass, const void *data)
-@@ -353,6 +356,7 @@ static const TypeInfo pcie_bus_info = {
-     .name = TYPE_PCIE_BUS,
-     .parent = TYPE_PCI_BUS,
-     .class_init = pcie_bus_class_init,
+ static void hda_audio_register_types(void)
+diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
+index 431deb22113..514df06885e 100644
+--- a/hw/audio/intel-hda.c
++++ b/hw/audio/intel-hda.c
+@@ -45,6 +45,7 @@ static const TypeInfo hda_codec_bus_info = {
+     .name = TYPE_HDA_BUS,
+     .parent = TYPE_BUS,
+     .instance_size = sizeof(HDACodecBus),
 +    .secure = true,
  };
  
- static const TypeInfo cxl_bus_info = {
+ void hda_codec_bus_init(DeviceState *dev, HDACodecBus *bus, size_t bus_size,
+@@ -1275,12 +1276,14 @@ static const TypeInfo intel_hda_info_ich6 = {
+     .name          = "intel-hda",
+     .parent        = TYPE_INTEL_HDA_GENERIC,
+     .class_init    = intel_hda_class_init_ich6,
++    .secure        = true,
+ };
+ 
+ static const TypeInfo intel_hda_info_ich9 = {
+     .name          = "ich9-intel-hda",
+     .parent        = TYPE_INTEL_HDA_GENERIC,
+     .class_init    = intel_hda_class_init_ich9,
++    .secure        = true,
+ };
+ 
+ static void hda_codec_device_class_init(ObjectClass *klass, const void *data)
 -- 
 2.56.1
 
