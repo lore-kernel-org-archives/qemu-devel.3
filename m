@@ -1,54 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A3D606A32C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E73E606A32A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=sNTOCVAs
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Ys6fz0nZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3BH-0006Qt-6w; Mon, 16 Nov 2026 15:19:59 -0500
+	id 1xT3ES-00061z-VU; Mon, 16 Nov 2026 15:23:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3BE-0006Q2-Ny; Mon, 16 Nov 2026 15:19:56 -0500
+ id 1xT3EQ-0005vJ-Ai; Mon, 16 Nov 2026 15:23:14 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3BC-0005w5-Uw; Mon, 16 Nov 2026 15:19:56 -0500
+ id 1xT3EO-0003eV-Jc; Mon, 16 Nov 2026 15:23:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860369; bh=Nie+KAfwRFziVSyZdIT4/QdzraK+ITkLRfprEU7t254=;
+ t=1794860372; bh=+E2vT1HGOlmve3KrlDJHOjYXSVaj9LO7zh5tk2Wwplg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=sNTOCVAs9PqAMMkh8pMyeQxKLtFH6xyqbdXsNu0lq8qw3yJ4qT5a9rmMPH0/Wtyr6
- qcXQTDiMGMaJwsED2j480oE9jNfXL9y6YIM8jkPGdhjp8Jy7/p0XC8mGp07lhtpuVU
- //6CJEJL93q4R8N4gKM22fPaO9Ooc0CnICH8PHo36tHEu0gxTmeiVjzrikTDYiiUvD
- VsTaHOLrigLv2gyDaecl3gqbjjZLciatCB9TRjkV3Zv8n5EOrR5q63Jyjt0G0ZIEsy
- HuYOdu0Lzj7+WkG4lLvEoQeTOYKb/MF0I59B5FrsRy/8VqNbLaWjT5G/Yhz3rcTOjJ
- cfg//5MTaW+Tw==
+ b=Ys6fz0nZ7UrXSjbVw1zljAvTmDzetv963DEPDdv+1rF7M9grnlfEImGe1EP1HDAM3
+ QfCgWm8X85PEXe1F1FzF+sxkobfkJ4+TUqNqGnCGrusA95+QktBYl1FQ/ElVh0KQtz
+ Mk/U0DN3ikx+q+qUfZ1Fk3cQXX89Jof38GSIguHFICgJhSVHZjFj81OyqcEbzVR8ie
+ M/GwIMLTuudhW2ClT7vxMJQ2+RYUaidPABm0K4BrfsdNyZ0V4l1B4MfWEEFvpDVPHZ
+ qVB76c9IoZuXc+jlhUrvutysozggw3miU3DCRnmFiD2XoVQlG6/db+FD0QlOeWgU+s
+ Zyd35+vDhDW0A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 905111E7141;
- Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CEB731E715F;
+ Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8B6F645FB77;
- Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CA69C45FB98;
+ Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5DD7FB8DE4; Mon, 16 Nov 2026 23:19:29 +0300 (MSK)
+ id 72447B8E20; Mon, 16 Nov 2026 23:19:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Anton Johansson <anjo@rev.ng>,
+ Tommaso Califano <tcalifano@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 11/59] hw/net/cadence_gem: Check guest-provided queue
- numbers in screening registers
-Date: Mon, 16 Nov 2026 23:18:15 +0300
-Message-ID: <20261116201922.534306-11-mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 41/59] target/riscv: Fix CPU state access on
+ big-endian hosts
+Date: Mon, 16 Nov 2026 23:18:45 +0300
+Message-ID: <20261116201922.534306-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,87 +69,99 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Anton Johansson <anjo@rev.ng>
 
-The Cadence GEM allows the guest to program "screening registers"
-which control which queue received network data should be sent to.
-The field for the queue number in these registers is 4 bits, but the
-device might not actually have that many queues.  We weren't checking
-this, which meant the guest could program a value that caused us to
-index off the end of various arrays.
+mstatus and mstatus_hs are uint64_t but accessed through
 
-Check against num_priority_queues, and treat out-of-range values
-as if the screen didn't match (i.e. go to queue 0). (This is a
-best guess at reasonable behaviour since I don't have access to
-a datasheet for this device.)
+  tcg_gen_[ld|st]_tl(..., offsetof(mstatus))
 
-Cc: qemu-stable@nongnu.org
-Fixes: e8e4994313b7 ("cadence_gem: Add support for screening")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4363
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20261023153106.1710228-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit b26d4302a8978e1fe467b4d90a2e826f898f11d3)
+which on a big-endian host running riscv32 incorrectly accesses the
+top 32 bits rather than the lower bits.
+
+Widen the operations to 64 bit so the lower bits are modified.
+
+Fixes: 284d697c74ef ("target/riscv: Merge m/vsstatus and m/vsstatush into one uint64_t unit")
+Reviewed-by: Tommaso Califano <tcalifano@redhat.com>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20261023063025.8827-1-anjo@rev.ng>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit bf67d56f282c1ee25b67dfda3f8ca54d2bd4648e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
-index defa446fbb2..7966a936410 100644
---- a/hw/net/cadence_gem.c
-+++ b/hw/net/cadence_gem.c
-@@ -854,6 +854,7 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
-     uint32_t reg;
-     bool matched, mismatched;
-     int i, j;
-+    int queue = 0; /* default to queue 0 if no match */
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index e1e087a36b7..b8df29745b6 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -670,7 +670,7 @@ static TCGv get_address_indexed(DisasContext *ctx, int rs1, TCGv offs)
+  */
+ static void mark_fs_dirty(DisasContext *ctx)
+ {
+-    TCGv tmp;
++    TCGv_i64 tmp;
  
-     for (i = 0; i < s->num_type1_screeners; i++) {
-         reg = s->regs[R_SCREENING_TYPE1_REG0 + i];
-@@ -881,7 +882,8 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
-         }
+     if (!has_ext(ctx, RVF)) {
+         return;
+@@ -680,15 +680,15 @@ static void mark_fs_dirty(DisasContext *ctx)
+         /* Remember the state change for the rest of the TB. */
+         ctx->mstatus_fs = EXT_STATUS_DIRTY;
  
-         if (matched && !mismatched) {
--            return FIELD_EX32(reg, SCREENING_TYPE1_REG0, QUEUE_NUM);
-+            queue = FIELD_EX32(reg, SCREENING_TYPE1_REG0, QUEUE_NUM);
-+            goto out;
+-        tmp = tcg_temp_new();
+-        tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+-        tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+-        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tmp = tcg_temp_new_i64();
++        tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
++        tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+ 
+         if (ctx->virt_enabled) {
+-            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+-            tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+-            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
++            tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
          }
      }
- 
-@@ -974,12 +976,23 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
-         }
- 
-         if (matched && !mismatched) {
--            return FIELD_EX32(reg, SCREENING_TYPE2_REG0, QUEUE_NUM);
-+            queue = FIELD_EX32(reg, SCREENING_TYPE2_REG0, QUEUE_NUM);
-+            break;
-         }
-     }
- 
--    /* We made it here, assume it's queue 0 */
--    return 0;
-+out:
-+    if (queue >= s->num_priority_queues) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Screening register selected out of range queue %d\n",
-+                      queue);
-+        /*
-+         * This is a best guess at reasonable behaviour in the absence
-+         * of a datasheet to confirm it.
-+         */
-+        queue = 0;
-+    }
-+    return queue;
  }
+@@ -703,21 +703,21 @@ static inline void mark_fs_dirty(DisasContext *ctx) { }
+  */
+ static void mark_vs_dirty(DisasContext *ctx)
+ {
+-    TCGv tmp;
++    TCGv_i64 tmp;
  
- static uint32_t gem_get_queue_base_addr(CadenceGEMState *s, bool tx, int q)
+     if (ctx->mstatus_vs != EXT_STATUS_DIRTY) {
+         /* Remember the state change for the rest of the TB.  */
+         ctx->mstatus_vs = EXT_STATUS_DIRTY;
+ 
+-        tmp = tcg_temp_new();
+-        tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+-        tcg_gen_ori_tl(tmp, tmp, MSTATUS_VS);
+-        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tmp = tcg_temp_new_i64();
++        tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tcg_gen_ori_i64(tmp, tmp, MSTATUS_VS);
++        tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+ 
+         if (ctx->virt_enabled) {
+-            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+-            tcg_gen_ori_tl(tmp, tmp, MSTATUS_VS);
+-            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ori_i64(tmp, tmp, MSTATUS_VS);
++            tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+         }
+     }
+ }
 -- 
 2.47.3
 
