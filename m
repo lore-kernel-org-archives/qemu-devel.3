@@ -1,53 +1,55 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26989606A32F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6811A606A323
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 20:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=qiuB4SKO
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=w0Rvj6iq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT3Fr-0008P7-2e; Mon, 16 Nov 2026 15:24:44 -0500
+	id 1xT3JN-0005IH-Cx; Mon, 16 Nov 2026 15:28:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3FZ-00082O-FY; Mon, 16 Nov 2026 15:24:28 -0500
+ id 1xT3JG-0004xw-PV; Mon, 16 Nov 2026 15:28:15 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xT3FS-0004KI-Ko; Mon, 16 Nov 2026 15:24:20 -0500
+ id 1xT3JD-0001TO-Rn; Mon, 16 Nov 2026 15:28:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794860377; bh=re2/BbEcvJIcZdp0j5Ix2HFLmsPC4ndGgCsC4W6V7dc=;
+ t=1794860764; bh=iGmpaBwYWM3eHjQxJF1QYPsp8dZjY54snE8gdfQB6Ns=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qiuB4SKOFar6ClHQT+nsdV2Dr5VNiYaW6WtHket/vQ1BnBooEIQzuLVifcF9LHIr+
- qRULkelmPkU+ebiT7sVQPbDDcJmdXVT0VVJtcSXtHEy4+CMZp+NsF2ES8mabb7925q
- O5jrQhCzgohPA4VuCw/GRheYvrCJUYF6YJfpfCvcAcx016xLY3m3VjKez4I2n8nkJT
- fcVesfoV3ZwQd5C6sNCcqRb225H1W5rSXviQrZ41yOScsy3pY92Ti6uvK1Xv2vl6GK
- 4R6jwnDpmQHqm9hXh/Ltnc5I38+PuDLPrpoguc/PPDcyPOARwIjFTjPNXoZpSAfNzO
- eve2I1W2A573Q==
+ b=w0Rvj6iq86N6eCJCJs9jrLNxI+hucJ3kLWqlbXpPhbQz9px9EQiHBR/spvZTfAx20
+ sVd9W7t0mo27LyDqmd/IP3pin7N8+LXZ9c5ZKwwPVmfZ/GetLgw04I53k3NGNecDCa
+ ijvpma2om8yov8RP0HtIWuwK+WRm3orGRHf3HNwGlorOdpqwTx5mkV5RAYwKR/mCze
+ MeLeLG6jjJFqKhdfm3Yn9Upvo6k8Hc3IWcGzFbdVCeNfk0HxI/6kmgIiv50QI7H90N
+ k25ceHVacAcjXAGispbZ/+jYSnuSwLLgdMLcP1zNeYJMFd8sL6LAZ1KSe/1OJo1HOp
+ pZ38wK3Bhyakg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AC3D01E716D;
- Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 329E81E71AD;
+ Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A9CF245FBA2;
- Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3066C45FBD9;
+ Mon, 16 Nov 2026 23:26:04 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 91183B8E34; Mon, 16 Nov 2026 23:19:37 +0300 (MSK)
+ id AF52FB8E76; Mon, 16 Nov 2026 23:26:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- "Denis V. Lunev" <den@openvz.org>, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ oxsignal <awo@kakao.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 51/59] iotests/290: add 'discard' and 'write -z -u'
- case with a snapshot
-Date: Mon, 16 Nov 2026 23:18:55 +0300
-Message-ID: <20261116201922.534306-51-mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 24/63] qed: fix incorrect denominator in
+ qed_bytes_to_clusters() (CVE-2026-118594)
+Date: Mon, 16 Nov 2026 23:25:03 +0300
+Message-ID: <20261116202554.535325-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
-References: <qemu-stable-10.0.16-20261116212616@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
+References: <qemu-stable-11.1.4-20261116212645@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,68 +70,46 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-Before the previous commit, issuing 'discard' and 'write -z -u'
-operations with discard-no-unref=on option enabled led to data
-corruption.  Add a test to cover this case.
+cluster_size - 1 is often used in bitwise mask operations in qed.h, so
+this bug is probably a copy-paste error. qed_bytes_to_clusters() uses a
+division and the denominator should be the full cluster_size value.
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20261105161515.794213-4-andrey.drobyshev@virtuozzo.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 8f23f50082b2b8e283a7e76ee1fb5dbde880991c)
+This bug can be used to leak heap memory to the guest with a QED file
+where cluster_size <= 32 KB (the default is 64 KB) and table_size = 8 or
+16 (the default is 4).
+
+Fixes: CVE-2026-118594
+Fixes: 298800cae72e ("qed: Table, L2 cache, and cluster functions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4737
+Reported-by: oxsignal <awo@kakao.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 2a2fc7ea6c72b0f07d6e58493b05296de85dee57)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/290 b/tests/qemu-iotests/290
-index 6689b903dc7..7e5316fe031 100755
---- a/tests/qemu-iotests/290
-+++ b/tests/qemu-iotests/290
-@@ -130,6 +130,22 @@ $QEMU_IMG map --output=json "$TEST_IMG" | _filter_qemu_img_map
- echo "# Output of qemu-img map for the image with kept reference"
- $QEMU_IMG map --output=json "$NOUNREF_IMG" | _filter_qemu_img_map
+diff --git a/block/qed.h b/block/qed.h
+index 26d4bf038c7..04bcd7ac4fa 100644
+--- a/block/qed.h
++++ b/block/qed.h
+@@ -253,7 +253,7 @@ static inline uint64_t qed_offset_into_cluster(BDRVQEDState *s, uint64_t offset)
+ static inline uint64_t qed_bytes_to_clusters(BDRVQEDState *s, uint64_t bytes)
+ {
+     return qed_start_of_cluster(s, bytes + (s->header.cluster_size - 1)) /
+-           (s->header.cluster_size - 1);
++           s->header.cluster_size;
+ }
  
-+echo
-+echo "### Discard with 'discard-no-unref' on a cluster shared with a snapshot"
-+echo
-+
-+_make_test_img 128k
-+$QEMU_IO -c 'write -q -P 0xaa 0 128k' "$TEST_IMG" | _filter_qemu_io
-+$QEMU_IMG snapshot -c snap "$TEST_IMG"
-+QEMU_IO_OPTIONS=$QEMU_IO_OPTIONS_NO_FMT \
-+$QEMU_IO -c 'discard -q 0 64k' -c 'write -q -z -u 64k 64k' --image-opts \
-+         "driver=$IMGFMT,file.filename=$TEST_IMG,discard-no-unref=on" \
-+         | _filter_qemu_io
-+$QEMU_IO -c 'read -q -P 0 0 128k' "$TEST_IMG" | _filter_qemu_io
-+$QEMU_IMG snapshot -a snap "$TEST_IMG"
-+$QEMU_IO -c 'read -q -P 0xaa 0 128k' "$TEST_IMG" | _filter_qemu_io
-+_check_test_img
-+
- # success, all done
- echo "*** done"
- rm -f $seq.full
-diff --git a/tests/qemu-iotests/290.out b/tests/qemu-iotests/290.out
-index d8f8d5ff493..264fbcb28ca 100644
---- a/tests/qemu-iotests/290.out
-+++ b/tests/qemu-iotests/290.out
-@@ -86,4 +86,9 @@ Images are identical.
- # Output of qemu-img map for the image with kept reference
- [{ "start": 0, "length": 65536, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
- { "start": 65536, "length": 65536, "depth": 0, "present": true, "zero": true, "data": false, "compressed": false, "offset": OFFSET}]
-+
-+### Discard with 'discard-no-unref' on a cluster shared with a snapshot
-+
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=131072
-+No errors were found on the image.
- *** done
+ static inline unsigned int qed_l1_index(BDRVQEDState *s, uint64_t pos)
 -- 
 2.47.3
 
