@@ -1,81 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42B8606A88A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 14:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D21B606A32A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 14:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hpe6/doM
+	dkim=pass (1024-bit key, unprotected) header.d=pond.sub.org header.i=@pond.sub.org header.a=rsa-sha256 header.s=mail header.b=kWpnYvg9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTKd0-0005oy-6h; Tue, 17 Nov 2026 09:57:46 -0500
+	id 1xTKe3-00065E-K4; Tue, 17 Nov 2026 09:58:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xTKcy-0005oT-Ln
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 09:57:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xTKdh-00063U-KM
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 09:58:32 -0500
+Received: from oxygen.pond.sub.org ([94.130.129.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xTKcx-0000ec-0c
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 09:57:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794927462;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s9JYdlZdFabNw7qL1F5zQ3pQ6ZpMO7APWPC1D7efmvw=;
- b=hpe6/doMQsJEh8wHKZt7ibHwfn88GN6cwpc9rr2qw4SajOUCBLYnfP0Vi+g0/0Kutmc7mF
- Zj0jBtNZ1fO6DPq9QbilFic2JYlqkXZYoAHFx8P3A8Epj7stzPiwiLFDDVNCz2HX1DLQ6C
- IgnJhNYrzMAqrCvvVJdQQfBYENEfGB8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-455-CtEfAtWBOS-QB8kpDlYiIA-1; Tue,
- 17 Nov 2026 09:57:38 -0500
-X-MC-Unique: CtEfAtWBOS-QB8kpDlYiIA-1
-X-Mimecast-MFC-AGG-ID: CtEfAtWBOS-QB8kpDlYiIA_1794927457
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xTKdf-0000hD-J1
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 09:58:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=pond.sub.org; s=mail;
+ t=1794927495; bh=lgcHjJy01yWYnl1Fg5rvRkVuFDyiYuZ4XtWy0dgNako=;
+ h=From:To:Cc:Subject:Date:From;
+ b=kWpnYvg9KwhFzyips1M58NQSjtCk26qLt86ddVEPvcafF1gGWvTXcN1TaLbhf04oC
+ W3jzPryFAYrgNLN36NaJIxwGxP3CO3fedQfNnKx/zzHSClpUEjg0+yxlCJkil7uQ3v
+ +qBPyuUPdtuWkWMw+VgUgVYtX3sb6MlDenbdYoLw=
+Received: from blackfin.pond.sub.org (p4fd045cf.dip0.t-ipconnect.de
+ [79.208.69.207])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A258A1956050; Tue, 17 Nov 2026 14:57:37 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 903A11956054; Tue, 17 Nov 2026 14:57:36 +0000 (UTC)
-Date: Tue, 17 Nov 2026 14:57:33 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: System emulator security boundary policy now enforceable
-Message-ID: <avxrXQ1cpJY0KUKa@redhat.com>
-References: <avwn7izLPHpSmVun@redhat.com>
- <CAFEAcA9otxN=xhb7C8JRQ7HGNZqvzdpDjBaFQ7rCxDviip-rZA@mail.gmail.com>
- <avwt7XWPt9WNo90r@redhat.com>
- <CAJ+F1CLNpSAw4Fp5Yph8iZjytqP+Fcy6e6yFtg6DEWoVTurY8Q@mail.gmail.com>
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by oxygen.pond.sub.org (Postfix) with ESMTPSA id 8D9482017D;
+ Tue, 17 Nov 2026 15:58:15 +0100 (CET)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1C42121E6A04; Tue, 17 Nov 2026 15:58:21 +0100 (CET)
+From: Markus Armbruster <armbru@pond.sub.org>
+To: Elena Ufimtseva <elena.ufimtseva@oracle.com>, Jagannathan Raman
+ <jag.raman@oracle.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: x-remote-object breaks QOM introspection
+Date: Tue, 17 Nov 2026 15:58:21 +0100
+Message-ID: <87jymbjyia.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ+F1CLNpSAw4Fp5Yph8iZjytqP+Fcy6e6yFtg6DEWoVTurY8Q@mail.gmail.com>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+Received-SPF: pass client-ip=94.130.129.15; envelope-from=armbru@pond.sub.org;
+ helo=oxygen.pond.sub.org
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,78 +66,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 17, 2026 at 06:55:17PM +0400, Marc-André Lureau wrote:
-> Hi
-> 
-> On Tue, Nov 17, 2026 at 2:36 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Tue, Nov 17, 2026 at 10:24:26AM +0000, Peter Maydell wrote:
-> > > On Tue, 17 Nov 2026 at 10:10, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > >
-> > > > With the latest pull request of mine that is merged, we now have
-> > > > the mechanism for enforcement of the QEMU security boundary policy
-> > > > with annotations completed across QOM classes for machine types,
-> > > > devices and accelerators.
-> > > >
-> > > > For a bug disclosure affecting a system emulator to be accepted
-> > > > as a security flaw the reproducer scenario must now pass without
-> > > > warnings when adding the '-compat insecure-input' flag.
-> > >
-> > > How does the marking work? I'm confused about what's going
-> > > on with the pl011 UART (which is on the security boundary
-> > > because the arm virt board uses it). Unlike hw/char/serial.c
-> > > and some others, there's no ".secure = true" in hw/char/pl011.c.
-> > > But it isn't being rejected by
-> > > ./build/kvmonly/qemu-system-aarch64 -accel kvm -M virt -display none
-> > > -compat insecure-input=reject -serial stdio
-> > >
-> > > so presumably we have figured out it's secure somehow. What's
-> > > the mechanism here?
-> >
-> > Currently we've only marked things which are explicitly user
-> > creatable. ie they appear in '-machine help', '-accel help'
-> > or '-device help' lists.
-> >
-> > If a machine type is marked as secure, then implicitly devices
-> > which are built-in for that machine are also considered secure.
-> > Similarly if a device is marked as secure, then implicitly
-> > any QOM parents of that device are also secure.
-> >
-> > In the next release cycle, I want to explicitly mark the
-> > built-in devices to make this clear to developers, and also
-> > explicitly mark parent types.
-> >
-> > Then code can explicitly validate the built-in devices & parents,
-> > so that we can detect if someone adds something inappropriate
-> > in our security boundary without realizing implications.
-> 
-> We also need to cover devices created via -vga, -nic, -usbdevice, -audio
-> 
-> I am not sure how to approach this though. Should we make all the
-> object_new() path faillible? Or use a top-down solution?
-> 
-> I'd favour the bottom-up approach so we can properly check all objects
-> instantiations and fix as needed
+Watch this:
 
-Once we get all parents marked, and all machine type built-in device
-marked, then we can move the check into the Device 'realize' path
-and catch everything.
+    $ qemu-system-x86_64 -S -nodefaults -display none -qmp stdio
+    {"QMP": {"version": {"qemu": {"micro": 90, "minor": 1, "major": 11}, "package": "v11.2.0-rc0-3-g38171f59ccb-dirty"}, "capabilities": ["oob"]}}
+    {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
+    {"return": {}}
+    {"execute": "qom-list-properties", "arguments": {"typename": "x-remote-object"}}
+--> qemu-system-x86_64: (null) is not a PCI device
+    {"return": [{"name": "type", "type": "string", "qapi-type": "str"}, {"name": "devid", "type": "string", "qapi-type": "str"}, {"name": "fd", "type": "string", "qapi-type": "str"}]}
 
+The error message is suspicious.  Origin:
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+    static void remote_object_machine_done(Notifier *notifier, void *data)
+    {
+        RemoteObject *o = container_of(notifier, RemoteObject, machine_done);
+        DeviceState *dev = NULL;
+        QIOChannel *ioc = NULL;
+        Coroutine *co = NULL;
+        RemoteCommDev *comdev = NULL;
+        Error *err = NULL;
 
+        dev = qdev_find_recursive(sysbus_get_default(), o->devid);
+        if (!dev || !object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
+            error_report("%s is not a PCI device", o->devid);
+            return;
+        }
+
+o->devid is null, dev is null.
+
+Glibc's %s shows null pointer as "(null)".  There are libcs that simply
+crash.
+
+Stack backtrace:
+
+    #0  remote_object_machine_done (notifier=0x5555587d17e8, data=0x0)
+        at ../hw/remote/remote-obj.c:93
+    #1  0x000055555578700e in qemu_add_machine_init_done_notifier
+        (notify=0x5555587d17e8) at ../hw/core/machine.c:1721
+    #2  0x00005555556f26dd in remote_object_init (obj=0x5555587d17c0)
+        at ../hw/remote/remote-obj.c:149
+    #3  0x0000555555cbda2d in object_init_with_type
+        (obj=0x5555587d17c0, ti=0x5555577c02d0) at ../qom/object.c:430
+    #4  0x0000555555cbde2c in object_initialize_with_type
+        (obj=0x5555587d17c0, size=136, type=0x5555577c02d0) at ../qom/object.c:512
+    #5  0x0000555555cbe6fa in object_new_with_type (type=0x5555577c02d0)
+        at ../qom/object.c:710
+    #6  0x0000555555cbe784 in object_new
+        (typename=0x555558356a10 "x-remote-object") at ../qom/object.c:726
+    #7  0x0000555555e2d6be in qmp_qom_list_properties
+        (typename=0x555558356a10 "x-remote-object", errp=0x7fffffffd888)
+        at ../qom/qom-qmp-cmds.c:290
+    [...]
+
+I believe using qemu_add_machine_init_done_notifier() is wrong here.
+Could we use UserCreatableClass method complete()?
+
+Aside: we should probably check all uses of
+qemu_add_machine_init_done_notifier().
 
