@@ -1,114 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026BF606A330
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 15:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6B3606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 15:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=aYpwZp75
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hbflxGL9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTKwa-0008JE-KF; Tue, 17 Nov 2026 10:18:00 -0500
+	id 1xTLQS-0004NG-0W; Tue, 17 Nov 2026 10:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xTKw6-0008HA-Bj
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 10:17:46 -0500
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xTKw2-0005DA-MK
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 10:17:29 -0500
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-677bc4704cbso4952166d50.0
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 07:17:21 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794928641; cv=none;
- d=google.com; s=arc-20260327;
- b=hLkTdfsHHhtHahA1XcWDPyvQGywMEVbGd8xvPUzE4FLc6m1b5hzkriBHJsoWQsfYYl
- 2EMQpWZYJfNbEpwQXNTDapXnZszIu2SYJ/l3CdfIhML5NK+ykTEy6RvxtEFma234166p
- 3RFmKf2db1o1RRe0XaavWAdytQaK3k69b4ADMtysP0OjjfVBg+RXXmaSYX1t02LQPouX
- Kf0UDsocb8X2GaUFpAghdxggAmPzWeZlHGDwsIWn3IxZvf/O3Q/9CXqfK1SPzkhUwUev
- 06Nu9KJiHTi4qvtpWzix4zwuFzUeVh07sDUQENdWzJrAmZToVoSdbNLf/hEEIDQiEVav
- rsRA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=MBW5D4CjDDY+8kCrvGFQlhDf3e9qQhNlGIu++bbIG/Y=;
- fh=/JS77veIKt/S+fkZ8tgyRWLxJwtjCfHfDybhpv2ZsgI=;
- b=V3dT2rb7jsJT7zqj8e91bL2iwlup/hzJpryvZULoNK7pWSP5caL+jqLKdLG4eZVfWW
- CdKnEkKxWEQefFp05sfzn9il4b8x9n1Dh++e2UYxNVWLonu2Cys8MeeeHFduciGQ4f65
- FSlhoimshThRsr4myRGujrRP48mfT7mZzH3DAAk3T+RpnuutpKmO+kSTOvgoSOUJm6mS
- XGDBzywYnJzHVPGjnOpjuMcuZBoxV/pHGUpIaD1ZLezYtrce8QslW3Bs0HTiSXTqx77/
- oPdbZx2DPGMBc9m5nSHN7UyHAOiZgiHNvjz/SV18w9J50rhNkN+ZzTdrB0ag1LWquaxP
- 0VlA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794928641; x=1795533441; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=MBW5D4CjDDY+8kCrvGFQlhDf3e9qQhNlGIu++bbIG/Y=;
- b=aYpwZp75s9Ox1HRzVVcnFkT6VTMltmWZi8jcmN+kVGxM4nMMH2cTtRlVDO8B2v1lJC
- 3sbAe1hWb4Xb520jvlU1j1+QDBxd8Mvx7q8IT5a33VgQfErfi4YjkeOZbzukA34pIuB6
- 8qIVaEFTcmj4fCqVzTM0ZPzUV59U6kT+OfUnBfQhhyKqIpASodTzd4F7C4aPYuyz36kI
- 5h135r/S4SF2ANKixH1advzdBGk7N4pEcl8nvIea/neh/UTC8YimgSG2ZEgyPgzptFyi
- 97PADeE4QL0HOOwbXMKvBwLsM05WYJyVpHDu7uDgdTYrHB9XdLrd26wZo8OMoPHhluUJ
- T/uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794928641; x=1795533441;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=MBW5D4CjDDY+8kCrvGFQlhDf3e9qQhNlGIu++bbIG/Y=;
- b=jrsUpTiBUzuSgrmIt+gmBWq7qdQtuNKt1GpOnj2ZazusbJetM6800FyI0vvddujIbx
- JYqJNNnnTsoFfznkaRauS2pOFtvxPLl1Fq2K4O2yJMtgCpt69ZEzsqylw5nEgwfmW8xG
- L65MVSZswtQHCduBOJAVMAeZK/eW0wqVsJflJ0uq7z2QHR1fqVdrD1tDTFC0AmnwIjsN
- oPMFptFc4MXYeDD7zektjoeo2zlY4G9ohGNGhg3DrQfbwjQ2xasyJsZTJRGDEHmClTB7
- ptYE5faoY4xk0Rz+Th4r418jB0qISGlyxQvSzNlR3Kcii/sewyugtiY09JG+2yH5Ef0H
- vVLA==
-X-Forwarded-Encrypted: i=1;
- AL+hErHfLGucYUZ39HZ7+9lyp8CJtL6R8MA8nywLdap4wYUUmrV27Bl1nsX+PbVcd6yzdSMmrmq5dzBx8HO8@nongnu.org
-X-Gm-Message-State: APuU4Z/p5w0fAF1oiIzKCmUMmzj0c6KEJAJVA+xG3KWdI3rWjFKcBJQ4
- ofiz0Qpjn01r1gt9HCX7u82+Hqb+yBK9n2EReRUmGaLxBBzrumhA5lgH6QpT2lxjv1P3yPL47HR
- T5sOklIMmIpDEoH6nbpspfO6+mGDDLY/a+Tvgm9tFAA==
-X-Gm-Gg: AZFdTZclWKmE+AeeKUOHnegAq/2EYkzU0Ynq3YnSiqam/BmumeHPcAq/9gINQLj0VS8
- Dd+FlxA7u2F7Iy0MCFgLm35krTdGQmvFWL7kE/a7wa4hxgzo711fPxlHyzsJo5uqXTIPt3XnxEs
- 0NTWrdTPV6npYMeN+vRademzyD3g+vIIGtlEPMXP1rJL7fE3VEM1SMjbt8sNibWuGwpr13+9IuK
- aQHsfEHRYqUCe1D2XCpkht03hvrT9f2ywmHhabE76BGGMLz1STn5vkJhT+UqcT30a02gH7WYD4w
- 4N8/cBxyJCFRL56Ts0SCLyOa3uQacSscFyatxKrCRlLQUkLeaVFdWMcYkBwSruWWMR9HJ6L5sU2
- 5oAV+DVUbIDyYRbIu199GvDHj9+n4DBxTobaPyv2XSjySgB8Ma7x1x17pxcBbPDHSezMs7o6rDD
- wX0BjVZDNSZPTabTNhpF7g+Q==
-X-Received: by 2002:a05:690e:168a:b0:67d:99fc:2e46 with SMTP id
- 956f58d0204a3-67d99fc38d3mr5349841d50.36.1794928640508; Tue, 17 Nov 2026
- 07:17:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTLQF-0004Le-SD
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 10:48:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTLQA-00083X-Rh
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 10:48:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794930513;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8Mc4J2lDb63h5sajd5x/zDwtbC6G68Ai+1pAe5r+iss=;
+ b=hbflxGL9dLu9pnBXkDYJIHnm2lJLgNP/amXxY7rHqNxN2omcvyDEmlrTQdVxrdWia0cAg6
+ BLVxwaHAwh4GWQKklXWxAkH57FW9mY4gYEX5nYUpDii0TvOg/D/nr1X1zPaXU+nnPH0AFC
+ BNhNpIbvq/dXDw0+FOHS5XwS3Kn84o8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-gSr1hosOMx2tpou1s13Wpw-1; Tue,
+ 17 Nov 2026 10:48:29 -0500
+X-MC-Unique: gSr1hosOMx2tpou1s13Wpw-1
+X-Mimecast-MFC-AGG-ID: gSr1hosOMx2tpou1s13Wpw_1794930507
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 715B418002F7; Tue, 17 Nov 2026 15:48:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.7])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 76B1C18011D4; Tue, 17 Nov 2026 15:48:25 +0000 (UTC)
+Date: Tue, 17 Nov 2026 16:48:23 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, "open list:Floppy" <qemu-block@nongnu.org>
+Subject: Re: [RFC PATCH] hw/block: validate the fdc sector position fits
+ within bounds
+Message-ID: <avx3R-1e8EKwHvf4@redhat.com>
+References: <20260812172842.60524-1-alex.bennee@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261028052024.38377-1-harshpb@linux.ibm.com>
- <20261028052024.38377-7-harshpb@linux.ibm.com>
- <CAFEAcA-CML7CFxn7WC0d2uuE6cHJbM2-p2Lv-wcAXWU9kpsRWw@mail.gmail.com>
- <e2e9c608-f139-447f-887f-8fb4909470a3@linux.ibm.com>
-In-Reply-To: <e2e9c608-f139-447f-887f-8fb4909470a3@linux.ibm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 17 Nov 2026 15:17:08 +0000
-X-Gm-Features: AclHuK_NQKiF6NWxXp721e8z9ZQRSir6_VSv0Rs7AA4KyTfpBUphoQMLgSOoPdM
-Message-ID: <CAFEAcA8M6PhCQV6EtKSp9VtqroA2Ah82y1--q_8Argg686_YwA@mail.gmail.com>
-Subject: Re: [PULL 6/6] spapr-vscsi: clamp adapter info DMA write length to
- struct size
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-stable@nongnu.org, qemu-devel@nongnu.org, 
- Chinmay Rath <rathc@linux.ibm.com>,
- Guthrie McAfee Armstrong <git@gmarmstrong.dev>, 
- Gautam Menghani <gautam@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260812172842.60524-1-alex.bennee@linaro.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,72 +80,138 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, 10 Nov 2026 at 06:54, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->
-> + qemu-stable
->
-> Hi Peter,
->
-> On 05/11/26 8:57 pm, Peter Maydell wrote:
-> > On Wed, 28 Oct 2026 at 05:21, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
-> >>
-> >> From: Chinmay Rath <rathc@linux.ibm.com>
-> >>
-> >> vscsi_send_adapter_info() used the guest-supplied common.length
-> >> field directly as the size argument to spapr_vio_dma_write().
-> >> Since common.length is controlled by the guest, a value larger
-> >> than sizeof(struct mad_adapter_info_data) (148 bytes) caused
-> >> dma_memory_write() to read past the end of the stack-allocated info
-> >> struct, leaking arbitrary host stack contents into guest memory.
-> >>
-> >> Fix this by clamping the write length to sizeof(info), then using
-> >> spapr_vio_dma_set() to zero-fill any remaining bytes the guest
-> >> requested beyond that size. This mirrors the existing pattern in
-> >> vscsi_send_capabilities().
-> >>
-> >> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4626
-> >> Reported-by: Guthrie McAfee Armstrong <git@gmarmstrong.dev>
-> >> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> >> Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
-> >> Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-> >> Link: https://lore.kernel.org/qemu-devel/20261007144434.374749-1-rathc@linux.ibm.com
-> >> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> >
-> > Shouldn't this be Cc: qemu-stable@nongnu.org ?
->
-> Yes, should have been marked for stable. I have CCed it now though.>
-> > Given that spapr-vscsi is supposed to be covered by the "virtualization
-> > use case", have we deliberately decided we didn't want to give this
-> > a CVE, or did that step in the process get missed ?
->
-> I think it got missed, can we still request for a CVE to be assigned on
-> the gitlab issue?
+Am 12.08.2026 um 19:28 hat Alex Bennée geschrieben:
+> Previously the guest controlled the value of last_sec and wasn't
+> particularly careful to check it didn't exceed the media size. We
+> can't re-use drv->last_sec as that changes as we do operations so we
+> set media_last_sect when the geometry is probed.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3800
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-I asked Dan on IRC, and he said:
+So first of all, I disagree with the report. If you attach a whole image
+file to a device, then you have to expect that the device uses it and
+can't make your security depend on the device not actually making use of
+it.
 
-"depends how far in the past it is - if we've not released the fix
- in a major release, I'd jsut temporarily re-open the bug and add the
- CVE::Required tag, and close it again once assigned
- that way we at least get a record of the CVE in the issue tracker, even
- though its missnig from the merged commit message
- if it was already fixed in a previous major release, I'd just accept
- that we dropped the ball and move on without a CVE"
+>  hw/block/fdc-internal.h |  1 +
+>  hw/block/fdc.c          | 28 ++++++++++++++++++++++------
+>  2 files changed, 23 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/block/fdc-internal.h b/hw/block/fdc-internal.h
+> index e219623dc7a..81775fe55aa 100644
+> --- a/hw/block/fdc-internal.h
+> +++ b/hw/block/fdc-internal.h
+> @@ -83,6 +83,7 @@ typedef struct FDrive {
+>      uint8_t max_track;        /* Nb of tracks           */
+>      uint16_t bps;             /* Bytes per sector       */
+>      uint8_t ro;               /* Is read-only           */
+> +    uint8_t media_last_sect;  /* last sector of current track according to media */
+>      uint8_t media_changed;    /* Is media changed       */
+>      uint8_t media_rate;       /* Data rate of medium    */
+>  
+> diff --git a/hw/block/fdc.c b/hw/block/fdc.c
+> index 1178b959a64..18a61f5ce87 100644
+> --- a/hw/block/fdc.c
+> +++ b/hw/block/fdc.c
+> @@ -192,6 +192,7 @@ static void fd_init(FDrive *drv)
+>      drv->max_track = 0;
+>      drv->ro = true;
+>      drv->media_changed = 1;
+> +    drv->media_last_sect = 0;
+>  }
+>  
+>  #define NUM_SIDES(drv) ((drv)->flags & FDISK_DBL_SIDES ? 2 : 1)
+> @@ -373,6 +374,7 @@ static int pick_geometry(FDrive *drv)
+>      }
+>      drv->max_track = parse->max_track;
+>      drv->last_sect = parse->last_sect;
+> +    drv->media_last_sect = parse->last_sect;
+>      drv->disk = parse->drive;
+>      drv->media_rate = parse->rate;
+>      return 0;
+> @@ -1905,6 +1907,17 @@ static void fdctrl_handle_partid(FDCtrl *fdctrl, int direction)
+>      fdctrl_to_result_phase(fdctrl, 1);
+>  }
+>  
+> +static bool fd_validate_last_sect(FDrive *drv, uint8_t new_last_sect_val)
+> +{
+> +    if (drv->media_validated && new_last_sect_val > drv->media_last_sect) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "FDC: Guest attempted to set last_sect to %u, exceeding valid media max of %u\n",
+> +                      new_last_sect_val, drv->media_last_sect);
+> +        return false;
+> +    }
+> +    return true;
+> +}
+> +
+>  static void fdctrl_handle_restore(FDCtrl *fdctrl, int direction)
+>  {
+>      FDrive *cur_drv = get_cur_drv(fdctrl);
+> @@ -1919,6 +1932,10 @@ static void fdctrl_handle_restore(FDCtrl *fdctrl, int direction)
+>      /* timers */
+>      fdctrl->timer0 = fdctrl->fifo[7];
+>      fdctrl->timer1 = fdctrl->fifo[8];
+> +    if (!fd_validate_last_sect(cur_drv, fdctrl->fifo[9])) {
+> +        fdctrl_stop_transfer(fdctrl, FD_SR0_ABNTERM, FD_SR1_EC, 0x00);
+> +        return;
+> +    }
+>      cur_drv->last_sect = fdctrl->fifo[9];
 
-which sounds like a good idea to me.
+Does having a separate drv->media_last_sect actually have a practical
+advantage here compared to just not letting the guest change
+drv->last_sect? The spec only talks about restoring values that you got
+from SAVE.
 
-Speaking of things that got missed, what about
-https://lore.kernel.org/qemu-devel/20260819095855.115823-1-rathc@linux.ibm.com/
-("hw/scsi: validate IU buffer bounds in vscsi_preprocess_desc()")
-which is another one from Chinmay for this device that got posted
-back in August and never applied ?
+Are there any guests that would abuse RESTORE to temporarily set a
+smaller number of sectors? I don't expect working with the floppy with a
+wrong number of sectors could possibly work?
 
-thanks
--- PMM
+>      fdctrl->lock = fdctrl->fifo[10] >> 7;
+>      cur_drv->perpendicular = (fdctrl->fifo[10] >> 2) & 0xF;
+
+> @@ -1983,13 +2000,12 @@ static void fdctrl_handle_format_track(FDCtrl *fdctrl, int direction)
+>          fdctrl->data_state &= ~FD_STATE_MULTI;
+>      cur_drv->bps =
+>          fdctrl->fifo[2] > 7 ? 16384 : 128 << fdctrl->fifo[2];
+> -#if 0
+> -    cur_drv->last_sect =
+> -        cur_drv->flags & FDISK_DBL_SIDES ? fdctrl->fifo[3] :
+> -        fdctrl->fifo[3] / 2;
+> -#else
+> +
+> +    if (!fd_validate_last_sect(cur_drv, fdctrl->fifo[3])) {
+> +        fdctrl_stop_transfer(fdctrl, FD_SR0_ABNTERM, FD_SR1_EC, 0x00);
+> +        return;
+> +    }
+
+I think it's perfectly valid to start with a medium formatted as a 720k
+disk and then reformat it as 1.44M. And yes, after formatting you'll be
+able to access parts of the image that weren't accessible before. I
+don't even consider this a bug at all, let alone a security relevant
+one.
+
+Some questions that sound more valid to me would be:
+
+1. Should FORMAT TRACK only accept formats from fd_formats instead of
+   completely arbitrary values? Can physical floppy drives really do any
+   arbitrary format? And maybe even more importantly, if you format a
+   floppy with an unknown format, the next start of QEMU won't detect
+   the same format again, but present something else.
+
+2. Related to the same problem, should fdc truncate the image to the new
+   size so that the next startup will detect the new format?
+
+3. When formatting the floppy, should we zero out the whole image?
+
+Kevin
+
 
