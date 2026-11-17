@@ -1,105 +1,117 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E1E606A330
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 19:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46108606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 19:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=rM42LZOs
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=X4u8GNlf;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=rq3RfJkv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTOni-00051h-LO; Tue, 17 Nov 2026 14:25:06 -0500
+	id 1xTOoZ-0005aQ-MQ; Tue, 17 Nov 2026 14:25:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xTOnh-000518-0u
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:25:05 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xTOnf-00067D-F3
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:25:04 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-8b68e59ab33so163770b3a.2
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 11:25:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xTOoY-0005aI-RA
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:25:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xTOoX-0006Lw-79
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:25:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794943554;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UYJOYmMRpa+58zg04ePGocLLAlV341a/mR14+veifPE=;
+ b=X4u8GNlfPmAZLeqPZ02zCyy7xqUbFUKPe3l6ZVnSCECo8auVYDaxeAYDmk28TdphaiXSZa
+ n6WDqH5Bexuz2ZaBqSV6nHLpeiCjuPEJqy/veRp14mRGDCFsGbuYsY5CLSNVuYa5I2/jyb
+ +dwVEVyfzyR1XK8F+WSIQfpNdGfW8Rk=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562-NLPQH0cbP-q8F-G61UDWPw-1; Tue, 17 Nov 2026 14:25:53 -0500
+X-MC-Unique: NLPQH0cbP-q8F-G61UDWPw-1
+X-Mimecast-MFC-AGG-ID: NLPQH0cbP-q8F-G61UDWPw_1794943553
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-55bc8181defso3609341cf.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 11:25:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794943502; x=1795548302; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=VZQXKu+gh7117b+ofqeeCxyj54F0KDbdKpdIDb7gRAg=;
- b=rM42LZOsFzKcD1B/kaP1Io68VIUFBRDtl19ZQ4WZdbQbtWl0SHDzJsVAc8bi0gvgxI
- M0+D9R8aNPfy0OppZYXuVVOhBKF3ScYgO0CXK+i9tnngTvwun6Ok6m9w2PhUqCQBQFGl
- 7fhUj87YViZ4lfSvkunW50DgX0AC3pn0mW9zy2cr+8oW3CZcM2rjvvY37GcEj0eEmmrQ
- mwqYWddGU5zxjuraxr8UM0K8yMmU1YZXaH/8JeeJ2hkSsuQ09ptsv4H2Z0B+HdMwKutP
- DrOhlMEHZX1C39FZmdGWqNq0dCgf3Zq8yJdtq/Q5NLPhXt88FxKkoAIQvQwP3ywd3mX/
- Mixg==
+ d=redhat.com; s=google; t=1794943553; x=1795548353; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=UYJOYmMRpa+58zg04ePGocLLAlV341a/mR14+veifPE=;
+ b=rq3RfJkv9Gg4HXNtMmBlSHGfI0Fjla+jEA2HO/xmI5PDurqTY2G/PjLqtwQuRagr0H
+ 0GYMw/cO7ex3AZVSK0fMWKZlhmHh4xA/tcZmshk3ADcHs8MjaGSsjt1cSnLelkiIV5FF
+ iDMZzGkmp8lEIbUv1rbWw7TiG31bCiyHZQWbu+0QX4hJzO4Y/P+IiuPNoKto9HEUSyU/
+ cAZVWsjN0SYwtlTOG2qqssa+BiOtQ+oAhgqOsxoOVDcHH4Qatp9WLBFlqM0Z1smDjRMc
+ bkFcSb91p0v41FO7EHhG651bm3tU2BrMWgG5DogOj1MvRCVptQOu4nA/h+FFEf6ALEZD
+ CzEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794943502; x=1795548302;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=VZQXKu+gh7117b+ofqeeCxyj54F0KDbdKpdIDb7gRAg=;
- b=n9C2sSKDyLYm7gshEbZ0pc07n893JT4b7TqhlBbjf2b+OfcXXLIJMdy9TSEjm1wlxc
- K138IUHf1jNFlONgVVBb9E4DPTpHJA76Ht1oFEUm1tK5kA4jb4YQ6YQa1F2q3iXAKX1h
- hyhjG4CK4hHjMqDN8tmo9crfRMfzoYrkRV2s+AQlCYjTNiutqWMRaqBmsM538dUx1RXA
- cJSlnZeBJDoYreft49GUVaIJEalcE8rp/8ZEEl6lZyjoT2NxJHgXlvGngKSp5fwqc0vx
- UmavVXfx2EElDOy63OVArRZyJtMr5+nWD95p7fPvryalBEFzSVq5bNbOMbp6d3RIyTmA
- OsWQ==
+ d=1e100.net; s=20260707; t=1794943553; x=1795548353;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=UYJOYmMRpa+58zg04ePGocLLAlV341a/mR14+veifPE=;
+ b=g8Pvs+lL0QMA0BExK1OhkcsolRpMzPaJh7DiedeirUVsgluHOp5bElHPQD53IzJk87
+ 3uR99EmzuCcjmctcZjz0igXyE2RcKRs0hBVV7gfJPoKhLXRV30v/EdnorhuR3uPOhiEc
+ G/oVyIaaD5h/cHX8coHm5QcdAKz7hBJHAcRaAunS3T/HbiI1YJwdRbzDyojBzXzuxEMh
+ On99ac3K/PXetoNONqllljCHBNwvSsUv3Guac2lb4U1Un0iPp+lblucSPzj0Q/at8WYW
+ KUulacNlwEa2G6UwXamW3GFI/P+Xk+Xe1T3qWvK3DEP1lBVGiu32S9Q5pC65Iu7HjYUw
+ ++Tg==
 X-Forwarded-Encrypted: i=1;
- AL+hErHq6E2oWxMIlOxdo5kpuuXRz2VUysgs4spAHRrxz+X4NDIaDI/9wI6JhDxG8vDfQW7KKkWc0kTIHMBi@nongnu.org
-X-Gm-Message-State: APuU4Z8OCSQCosI4bhTc2FNBh9tL3CcqplLo11lwOfe0kY0RC3kHP+3b
- klMY0bT85nZ8Fg1Lq2FGJs6A8u1nB/FTB7C3MEFuVflWfVGiTPngBquWUVgQHEFFTYU=
-X-Gm-Gg: AYBFou1FdNASn0arkhSBqcsU7t9a06u875YTL58GmRp6FvyZLleCxTUEJk1WIFxH+Xt
- D+skiSQ5VETnA+hGqwupmHuUnMxCksrtJdxwKs93fNjO1uljx0Plm1KlNQUUq3XQiZu5KVsNEeF
- REOfsjx2Zsngls4XixODVaGfW39th+d+EGrO8Iqe2IEruV4Nj5tqlnmg8jPwugB/JicXagXBTwm
- 6UROcYQTpeXOYFH4EL1/kLvF9cOTMfiooPJ6DwuDxkotL/L5dDIPhNIAUgJBmeSNBfqTcRAVDMn
- zWmfhwOGTi6sqntcq4GwYI49kUiNxupAJ2Ula4fQAA4iuC5ATyl5DLUKboUIwAkPbNegTJes2wP
- XolEv9KSNWY8FflSpWF+WujDeIlpvCBvZuQu1XTueeKfyjwlLEWuXkmoJia56+4Pn2yhHEqDs0h
- 6Hu6uxb8dT6rQu/w8CPpaB6fXOs/ptcWDFl9TSe49hxsKhjCAKfXmNdDNa0D1e1puI6b4q5JGcD
- uQGkeWAtRl0de54398ZzlVX+3sF8sYERszf8unkrv4QMqdUemWVUDl1kNSQLOn1d8WFI9WqwOOv
- irIeMwo7bh2PFqx38dniUZBy21ZorTPS/i9+oC4cWX3uy/su6xRWUIvTQZq/PFgGk3bJtLk=
-X-Received: by 2002:a05:6a00:2ea7:b0:8b5:a10a:a3e7 with SMTP id
- d2e1a72fcca58-8c5d4eba267mr130651b3a.49.1794943501664; 
- Tue, 17 Nov 2026 11:25:01 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8c5cb93d023sm59688b3a.47.2026.11.17.11.25.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Nov 2026 11:25:01 -0800 (PST)
-Message-ID: <21001b17-c1d0-4a7e-a679-ae5afe5bb6b9@linaro.org>
-Date: Tue, 17 Nov 2026 11:24:59 -0800
+ AL+hErEt7Lp9yXI64CX2r4REKabsthK6cYxLUul/NZSkKZ4G0+eb9W5H20NU8zq17MnmzILEmmBAjAi5/+qq@nongnu.org
+X-Gm-Message-State: APuU4Z9Bps5ENtigohR8XHyvhu2B6DpBXy9KwKq5MICfgXsa/Wpnuxf3
+ fHLzsGFlu6Tt5h1eJpJtqTfjj3m56pcGqqeS19E94OJwqJ/CYR6zl+CS2yZLcdX6A3uUyzaa8JJ
+ KXoqf4JR9Nus85JcER09peOijGw3yTuTd+sBZAueFC5V2O4ab8jFjxAF+
+X-Gm-Gg: AYBFou0B9atEHyGrPNeaiAY0OjacYO5L6z/JpkRksrwNFVwb8TpIDvMLultaiXWxTvu
+ m2oWr44l+7ItS4/XqllMjaxDxDja+TlJOHsNqgMrzIgujj2/FresJ+wG/tB0ej4nVS7wLgw38xg
+ wVQ2AYUnVr+AQXnHMF0tTO0wgn1mbnZP031m4yuuYWTL7XCJIu3+RVv8iM59ZTsa/U+eQNBM4QI
+ AF1V0uKDP39GwCmh64I2AZ9pYdG+8OQuEeLUkiWyd7dRePu3A+ROCzJk/kyLy6peYZBaJOuV8x2
+ 4/x7y73HWWQwj37p4eabsqTdrYVcy/+9AS4jdvVzu9kf/mHBjT5svB082fAHd96BozshoNdHhfx
+ f736Lqc2YGK0Jz2R+vlktDl4BctII26s1xSpljjdupP3k
+X-Received: by 2002:a05:622a:13cd:b0:536:6f16:d923 with SMTP id
+ d75a77b69052e-55d5a6b62c5mr4691521cf.40.1794943552600; 
+ Tue, 17 Nov 2026 11:25:52 -0800 (PST)
+X-Received: by 2002:a05:622a:13cd:b0:536:6f16:d923 with SMTP id
+ d75a77b69052e-55d5a6b62c5mr4691101cf.40.1794943552032; 
+ Tue, 17 Nov 2026 11:25:52 -0800 (PST)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-55d5909ec98sm3944261cf.22.2026.11.17.11.25.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Nov 2026 11:25:51 -0800 (PST)
+Date: Tue, 17 Nov 2026 14:25:50 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
+ david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
+ mark.kanda@oracle.com, bchaney@akamai.com,
+ pierrick.bouvier@oss.qualcomm.com, alex@shazbot.org, clg@redhat.com,
+ yi.l.liu@intel.com, eric.auger@redhat.com, zhenzhong.duan@intel.com,
+ mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ armbru@redhat.com, eblake@redhat.com
+Subject: Re: [PATCH 00/21] migration/cpr: introduce cpr-luo mode to support
+ KHO/LUO
+Message-ID: <avyqPuj7jz3QKM7K@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261012235727.398133-1-dongli.zhang@oracle.com>
+ <95d4d77e-7b30-463e-96a1-6add4495e451@oracle.com>
+ <875wxvs2na.fsf@suse.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/19] target/mips: Decode 6-bit bit number of nanoMIPS
- BBEQZC/BBNEZC
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Vince Del Vecchio <Vince.DelVecchio@mediatek.com>,
- Faraz Shahbazker <faraz.shahbazker@mediatek.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Milica Lazarevic <Milica.Lazarevic@Syrmia.com>,
- James Hilliard <james.hilliard1@gmail.com>,
- Aleksandar Rikalo <arikalo@gmail.com>
-References: <20261113161158.25811-1-philmd@oss.qualcomm.com>
- <20261113161158.25811-17-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261113161158.25811-17-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <875wxvs2na.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,29 +123,26 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/13/26 08:11, Philippe Mathieu-Daudé wrote:
-> BBEQZC (MD01247 p.38) and BBNEZC (p.39) encode the bit number in
-> bits 16:11; bit 17 is 'x' (don't care). The decoder used the 7-bit
-> immediate (17:11) of the other P.BRI branches, so a set bit 17 gave
-> a bit number >= 64 and raised Reserved Instruction on cores without
-> 64-bit operations. Decode only 6 bits for these two; BEQIC and the
-> other P.BRI branches really have a 7-bit u field.
-> 
-> Fixes: 11d0fc10b7ef ("target/mips: Add emulation of nanoMIPS 32-bit branch")
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
-> ---
->   target/mips/tcg/nanomips_translate.c.inc | 8 +++++---
->   1 file changed, 5 insertions(+), 3 deletions(-)
+On Tue, Nov 17, 2026 at 04:01:45PM -0300, Fabiano Rosas wrote:
+> Sorry for the delay, we're all swimming in slop these days. The only
+> feedback I have at the moment is that this feature needs tests. What's
+> your plan in this regard? Can this run with nested virtualization? Or
+> perhaps is there a way to mock the kernel interfaces and ensure QEMU
+> does the right thing even without them? We don't need much, but the code
+> definitely needs to be exercised somehow.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Apologize from my side too on being slow, I'm going to start reading mails
+on the list this week, but it'll still be slow, together with other things.
+Just to say, this one is on my review list.  Sorry again.
 
-r~
+-- 
+Peter Xu
+
 
