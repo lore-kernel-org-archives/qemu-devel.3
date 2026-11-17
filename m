@@ -1,63 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9DF606A331
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 13:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF05606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 13:32:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=m4Juy8Ie
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTJDV-0000YW-Ei; Tue, 17 Nov 2026 08:27:21 -0500
+	id 1xTJI5-0002JH-T2; Tue, 17 Nov 2026 08:32:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1xTJDS-0000Xw-TB
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:27:18 -0500
-Received: from atcsqr.andestech.com ([220.128.198.184])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1xTJDQ-0003tH-RF
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:27:18 -0500
-Received: from mail.andestech.com (atcpcs55.andestech.com [10.0.1.155])
- by Atcsqr.andestech.com with ESMTPS id 6AHDQnNs073909
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
- Tue, 17 Nov 2026 21:26:49 +0800 (+08)
- (envelope-from alvinga@andestech.com)
-Received: from ATCPCS34.andestech.com (10.0.1.134) by atcpcs55.andestech.com
- (10.0.1.155) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.56; Tue, 17 Nov
- 2026 21:26:49 +0800
-Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS34.andestech.com
- (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 17 Nov
- 2026 21:26:48 +0800
-To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
- <daniel.barboza@oss.qualcomm.com>, <zhiwei_liu@linux.alibaba.com>,
- <chao.liu@processmission.com>, Alvin Chang <alvinga@andestech.com>
-Subject: [PATCH v1 1/2] target/riscv: Write zero into mtinst/htinst for
- SSAMOSWAP faults
-Date: Tue, 17 Nov 2026 21:26:37 +0800
-Message-ID: <20261117132638.1452474-2-alvinga@andestech.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261117132638.1452474-1-alvinga@andestech.com>
-References: <20261117132638.1452474-1-alvinga@andestech.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xTJI2-0002HJ-WB
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:32:03 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xTJI0-0000sG-8u
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:32:02 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-490c3ae81d3so2675439f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 05:31:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794922318; x=1795527118; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=2qB+TruDA6V/Hg/qEMwbvI5mG5608AYXXpYycfVwoYU=;
+ b=m4Juy8Ieyc4P3Rwbi7uS6qbx3z23oC8zDkLa5JbxVB/qlkqxj0YNKXIte+iwrqhNYr
+ WdLEIRlUR52TPvsOCCoEdQqlnZ7oehh4+AyOfiN7fPfBKhu1v279HespHPAUWwsgZKP3
+ jvx/+qfmYOr0PufDClV6b2O1zETAAmvpP4Q6DXLRvkfCGvTYN935A/AfLmYAkHCnmxXt
+ 8PH+cNnCaPu7MgNTugG1Ak/UJ/XoIuthX7/ukE+KYh/WbVh1qqBy34Gw2s9BSfnM4B8h
+ 3qmaYwE1qG8DBxtseexv2g1LWM7e6+Jc/SjVf5ih6eRBxMy1V1e70Sw4lwj39OrI96jN
+ eS+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794922318; x=1795527118;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=2qB+TruDA6V/Hg/qEMwbvI5mG5608AYXXpYycfVwoYU=;
+ b=jYKRg8IPHdqkwC0lrvS2MhSXCt+Xc5fdMZ17wtfL+uisVmKSrPCfYffwUXjMosnirj
+ SyR5sjhZjBeZxlSwMnoLjvMmewvHFCAtTs6pxPFN+RYBihHzSedSThdUxzIw4dI84AL/
+ UHAA/G23Z47k27yoih+LLn/5YgHXYyZtpYsR2EBKOLI9215DXAy0qrtUN2KQJDYr0eWF
+ spR+mFQj3ieb5U6x0MFfPOua1r5+2Idhtx9qOBMLUUIpSG6nod9CqFeQ/CbhKzwmSwao
+ S7T5Klh+LY3Bgu0aFiR7dVNFNycG0lmJeDWs1gFCdPD7gyNcwQTzEAXmo/IM6X1LZZP9
+ c/2Q==
+X-Gm-Message-State: APuU4Z/bB7gNvPjPvvuJQkp0rXLzO7e4MkAISHXXPOKFa4De6gb72JMD
+ L5uscy8iVO4Nl02GxHi/E60S4VDgukfPquN4SykAm5jk82nV4YazQZ/fiyfiOhxGa6oaFncufGL
+ xSI7Yumw=
+X-Gm-Gg: AZFdTZdqVvurIejNPJXhH9eNxCJJZxcAMSTkH68+zNmG/4mp0kTcB+VUn+2JvVrejfe
+ gUuympngJ09GKGKkp+Wn9NmnDUqWCExxizVOhJS06dklmBBRrVhiOKPfOZGV40hiGlJmZS2dxJB
+ HaACJsFc5NHYr7J3VRKAslaWFzGUznscxF00gOIeJbtzTgl6eQsQDBGV5gc0+KrF7kbfRxN/LIi
+ s2parPF1CnsvxFCfylCO0eJ9PFSkVTqGqHQqgKd/81Hui5KlPVxZ8tvEVX5LfG8kU3+U+nWq7rf
+ vdOSeihrUn4IQg3oyX6av8RcbOj+OmD7A5fp2WrdtqoGPemR38UDWwe8mOa/kU3VFEshatqEWJZ
+ Mtr1Jjo/csDKYk74WJe2zW84TRWnLj9AsdzEMB1KmFm9SBkTO9I4yryFDmU7R6XBUw7KOkehjYY
+ jrJnWHAY8H5P1OBW2hOMJy+AG8ZnfvQDzv+aV/tgj/H2F6Ck2de+xd4md5bQ4MoUpfFGEdd2z1q
+ TCEoN7b8kd0lkT/Dh9C1L0Dz9+AvD3LOCoZecapuP6GhVD5uNPti0CtpAS65FEQDBRYwoYur0gI
+ Dwt7UE7XNj8m9ws/kCRmL2hj7ahmHucsv+geV6wB/E8S/2RyLiAa99EnEIzyPiReoKH0R5F3ucS
+ D9WqQeNMhCi1ubGjR1n4pGAEKqgSfrXiUbawUH2w/I80AEqDH/IL9f1s=
+X-Received: by 2002:a5d:584b:0:b0:490:71a7:6f51 with SMTP id
+ ffacd0b85a97d-49c72ba6509mr28875120f8f.45.1794922317904; 
+ Tue, 17 Nov 2026 05:31:57 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-49c609c8a77sm28516886f8f.49.2026.11.17.05.31.56
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Nov 2026 05:31:57 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 7/8] hw/i386/amd_iommu: Mask address when calculating large PTE
+ page size
+Date: Tue, 17 Nov 2026 13:31:48 +0000
+Message-ID: <20261117133149.2108068-8-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261117133149.2108068-1-peter.maydell@linaro.org>
+References: <20261117133149.2108068-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
- ATCPCS34.andestech.com (10.0.1.134)
-X-DKIM-Results: atcpcs55.andestech.com; dkim=none;
-X-DNSRBL: 
-X-SPAM-SOURCE-CHECK: pass
-X-MAIL: Atcsqr.andestech.com 6AHDQnNs073909
-Received-SPF: pass client-ip=220.128.198.184;
- envelope-from=alvinga@andestech.com; helo=Atcsqr.andestech.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,68 +99,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alvin Chang <alvinga@andestech.com>
-From:  Alvin Chang via qemu development <qemu-devel@nongnu.org>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.0 required=3.0 tests=BAYES_00,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The privileged spec defines transformed instructions for standard AMO
-instructions which do not include SSAMOSWAP. The spec also says: "If a
-synchronous trap occurs for a standard instruction for which no
-transformation has been defined, the trap instruction register shall
-be written with zero".
+The amd_iommu handling of the "large PTE page size" (where Next Level
+bits are 0b111) case is not correct.  We calculate the page size
+using the address in the descriptor (as per table 14 of the spec),
+but we don't explicitly pick out the Page Address field, instead
+passing the whole PTE word to cto64().  This means that a PTE which
+incorrectly sets all the reserved high bits can cause cto64() to
+return 63 or 64, and we will try to shift by an out of range amount,
+which is undefined behaviour.
 
-So mtinst and htinst should be zero for SSAMOSWAP faults. The previous
-implementation only compares opcode which is not enough to distinguish
-SSAMOSWAP from standard AMO instructions. This commit further compares
-it with funct5.
+Mask the PTE with AMDVI_DEV_PT_ROOT_MASK to get the page address
+(matching how we do it to get the address for the next page table
+level in NEXT_PTE_ADDR).
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4721
-Fixes: f06bfe3dc38c ("target/riscv: implement zicfiss instructions")
-Signed-off-by: Alvin Chang <alvinga@andestech.com>
+Cc: qemu-stable@nongnu.org
+Fixes: a74bb3110a5b ("amd_iommu: Add helpers to walk AMD v1 Page Table format")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3618
+Reported-by: huntr bubble <https://gitlab.com/bubblehuntr>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Sairaj kodilkar <sarunkod@amd.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Message-id: 20261105105816.3012283-1-peter.maydell@linaro.org
 ---
- target/riscv/instmap.h        | 2 ++
- target/riscv/tcg/cpu_helper.c | 9 ++++++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ hw/i386/amd_iommu.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/instmap.h b/target/riscv/instmap.h
-index f877530576..bddcf313df 100644
---- a/target/riscv/instmap.h
-+++ b/target/riscv/instmap.h
-@@ -165,6 +165,8 @@ enum {
-     OPC_RISC_AMOMAX      = OPC_RISC_ATOMIC | (0x14 << 27),
-     OPC_RISC_AMOMINU     = OPC_RISC_ATOMIC | (0x18 << 27),
-     OPC_RISC_AMOMAXU     = OPC_RISC_ATOMIC | (0x1C << 27),
-+
-+    OPC_RISC_SSAMOSWAP   = OPC_RISC_ATOMIC | (0x09 << 27),
- };
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 948d8611b15..008e882724c 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -216,7 +216,8 @@
+ /*
+  * Take a PTE value with mode=0x07 and return the page size it encodes.
+  */
+-#define PTE_LARGE_PAGE_SIZE(pte)    (1ULL << (1 + cto64(((pte) | 0xfffULL))))
++#define PTE_LARGE_PAGE_SIZE(pte) \
++    (1ULL << (1 + cto64((((pte) & AMDVI_DEV_PT_ROOT_MASK) | 0xfffULL))))
  
- #define MASK_OP_SYSTEM(op)   (MASK_OP_MAJOR(op) | (op & (0x7 << 12)))
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 58e98e975c..94e385261b 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -2078,9 +2078,12 @@ static target_ulong riscv_transformed_insn(CPURISCVState *env,
-         /* Transform 32bit (or wider) instructions */
-         switch (MASK_OP_MAJOR(insn)) {
-         case OPC_RISC_ATOMIC:
--            xinsn = insn;
--            access_rs1 = GET_RS1(insn);
--            access_size = 1 << GET_FUNCT3(insn);
-+            /* Exclude SSAMOSWAP.W and SSAMOSWAP.D */
-+            if (MASK_OP_ATOMIC_NO_AQ_RL_SZ(insn) != OPC_RISC_SSAMOSWAP) {
-+                xinsn = insn;
-+                access_rs1 = GET_RS1(insn);
-+                access_size = 1 << GET_FUNCT3(insn);
-+            }
-             break;
-         case OPC_RISC_LOAD:
-         case OPC_RISC_FP_LOAD:
+ /* Return number of PTEs to use for a given page size (expected power of 2) */
+ #define PAGE_SIZE_PTE_COUNT(pgsz)       (1ULL << ((ctz64(pgsz) - 12) % 9))
 -- 
 2.43.0
 
