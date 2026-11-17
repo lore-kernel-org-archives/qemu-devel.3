@@ -1,145 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BEBF606A32C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 19:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D2360A6F47
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 19:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=RveFks/D;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=E9AHUbt5
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ca2PjarP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTOtO-0006yu-Qs; Tue, 17 Nov 2026 14:30:59 -0500
+	id 1xTOut-0007Tu-2M; Tue, 17 Nov 2026 14:32:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xTOtH-0006yd-Eu
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:30:51 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xTOtF-0006qX-8s
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:30:51 -0500
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AHJUjCn1083094
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 19:30:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- yMxRdluc3ifaXqlswg+BQ4apmcOjofQOMcHK+mBZ0HM=; b=RveFks/DYxG5ZCo5
- AgnBJ2juEkjgoCTsylBKCKvUtjJ4yjae9uVNxqC3L+xrT3y/uO5hZ21GwLBPxlAB
- CIPv7DdFsvel7Rv62SmO0xHNncwB2dVFrbMJi+bAgnT03I+Hgch8Wxvil+uDc2DG
- iGlxrCfUGMRlTYIM2Bg8a/H0OXFkMPlu6Bzo1f1v+Wsgf+p+FCaUySLo9XUv682K
- 1r/f/3PGkdMcsR7AS27/iL6iQtTMy1X+VwuGKKer9N4Rhzu58pNEA4fDztMXzemC
- 9pyPI4Y7ZrKLQvQ1qacFxWIxoh6yEdC+pw8enoRvcWmztBDkBbQGt62rJJwiAEnd
- FqzzKg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0w58r00g-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 19:30:47 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-91eb0610cb9so899296d6.3
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 11:30:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <agarwaljayesh03@gmail.com>)
+ id 1xTOup-0007So-JX
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:32:28 -0500
+Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <agarwaljayesh03@gmail.com>)
+ id 1xTOun-0002QN-NA
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:32:27 -0500
+Received: by mail-dl1-x1230.google.com with SMTP id
+ a92af1059eb24-18818daa3e7so728969c88.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 11:32:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794943847; x=1795548647; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=yMxRdluc3ifaXqlswg+BQ4apmcOjofQOMcHK+mBZ0HM=;
- b=E9AHUbt57jdRyxuzjI74sy7/Leo5pueNK29n1ON4B76/o7flMyUImeaNxv17/uh8A2
- QJjRMhiy4MDTBLgZQg7Zv4JMZ/LHIU/I/BQHW6UeNwnxF1uwqXiZrR0McPWPOmyQvgl+
- bI20ypO9smu/kjZB8H4vqSlPx0ytaE+pssvm4uTajP5NykG5hXOWowWdX9nNrS6A037G
- JhCBZFe8XiC3SQ1KhAtUAMjw8O6FO265ivHvoRDiGJzwKGN1kh08lXSQulpCWbr/iry8
- wlxAwnWxlAEQsXT6278sek/QefRAjIZAk4Ex0Qk/p3vzuqvwlGlrvjOPof3XdGtCQ/BY
- m7rg==
+ d=gmail.com; s=20260707; t=1794943944; x=1795548744; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=HmYnR1KqHS4CMsKPXreIVS5wq+3xL0tziKeOsDFzLQs=;
+ b=Ca2PjarPTddhWO8yec2GoDIUl3jmKEKE1RdNz9s/DEBKxkBBqAYUrFQHRbyp5RmNzo
+ Sxkg9ICI3yBogQv06mVOq3hJvtAwxMF4eMbJz4UNAG+0IAAaIVUURL+uKIFxWJct1sYx
+ ZVmJcs9kM5SgLfMVewfaGpiPaH+v2X9a0wRjyjVSfFQMR8xY2XN2gy0Q+PKI+hS0lUkP
+ Owdo/uTBMCw6tS0ZgJ18w8fI7AH8mp5xv3/GBS7feuYh4gq6+uZWU30D7K4fbFghSk7I
+ GiSpwKIR/hsnv0kX8fqgXe4YBzM0GFsQMUCr7dfqcRuKYUzhEHhGX6cY/f8CCoEkAOFP
+ EYTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794943847; x=1795548647;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1794943944; x=1795548744;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=yMxRdluc3ifaXqlswg+BQ4apmcOjofQOMcHK+mBZ0HM=;
- b=jwsNP5HonDpuZ9FSG+m6L9/DIo8yGg+n4fX/vcvw7PA1ttf4Glccp1dJ0byo7o3HFC
- ppmwCb7h3P3J0nqCCmVqncPBZi8wtTc3DDKtRXNiVhTjqgiqTs5CzopWu78uhYNo+vmb
- EdD7LqCFCB7T/7gIQA9cbCfMSF8U60IJJZI+lDuf/NC6JLuo+2sTFDgHib/0f8vjw6RL
- F7TGNaHSbyhz0NCYm2IXhQG60TR8EjgxDLJjKEPjVsU16zilOwkutLpdwvvrKdcJdJpD
- 2JpW/E96Kwr3P62lHAFI8PRS17Mj66z4rDwn24AtKmr7fvVKIeAC8edivl4+8FmduJqJ
- APQw==
-X-Forwarded-Encrypted: i=1;
- AL+hErFGHMExrPoQvrSbVNGjKFaNdWTwxsLAkWUXvt6HHM9pNmE7O+cYHEFPXCoJJ+x8c3QoA4w6DHdMPbau@nongnu.org
-X-Gm-Message-State: APuU4Z9tvebV6Q5Vwt5HWrwm0SN7jHCuh26Z+YEm33vJNemiy5N9I0ta
- ZNR1MxXIi/Q+6quj2MKFTytDLjUDJK9vc1IVXHLljbIOdDP+aGlwQGjLRYsMU+ADdKfg1tQsjFW
- JNgq2F7Czc7YP1H8bFMTaKPEV9nV1HxaA25tVrxnJzDtO/ahbYtLg1jFvYkq+Ulke4Q==
-X-Gm-Gg: AZFdTZdGN9Tmq0tCMG5PmvCUWXSlpyHbbmbnrLnjvaclbUT7ai/MHpkazl7BM6hTky3
- e2Fm4hxDv5XZxV30j+5TyOU0GYsQ7fcjEDh+fBxtha665/9Jcsbdd47RrAsI2tRUd7hVQTFyPHr
- YiTfX+fyHc3N21EMl2m39YLNropStVAckVtx3Rr1jxmAfRmuyXyRUgm+/tmQfzYo/A3aCBikifi
- MZjUUt4eyxq1UyLbU6biyG+uny6jE+n2hWwPgPTx6ITCir8CtrnHGEvDQ06kz3y2sLTCzkhB2Pr
- GYtm+kSgMlU+6xOss6F3iWpVfI2lN62SKjoREZ6RCGi5hxhn8D3wc2WVtNwgebJXK3E6gt+jQRi
- WMBH3z2WMV0S4BEREfGpEdzt9Kg1RNpzTGGTMkrXmf9hkSz8pTCwFzFz6E1+IecNvnvGnZVhBpt
- ZoVkQ/Xi9Tjl1cqO9qJnRdW/QS6Ip/LUaL+/KHig==
-X-Received: by 2002:a05:6214:2621:b0:91e:7bb7:fd65 with SMTP id
- 6a1803df08f44-92114f088e6mr2369466d6.56.1794943845746; 
- Tue, 17 Nov 2026 11:30:45 -0800 (PST)
-X-Received: by 2002:a05:6214:2621:b0:91e:7bb7:fd65 with SMTP id
- 6a1803df08f44-92114f088e6mr2367706d6.56.1794943843931; 
- Tue, 17 Nov 2026 11:30:43 -0800 (PST)
-Received: from [10.222.168.147] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-92114dbef06sm1378136d6.45.2026.11.17.11.30.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Nov 2026 11:30:43 -0800 (PST)
-Message-ID: <5a7e606a-18b4-4357-a70d-8ec9960003fa@oss.qualcomm.com>
-Date: Tue, 17 Nov 2026 13:30:42 -0600
+ bh=HmYnR1KqHS4CMsKPXreIVS5wq+3xL0tziKeOsDFzLQs=;
+ b=PCzrJlGKiTlwUWF3HRQPK5Ikn2gdXKW69Uu0fHdHHvqZjXb6Ekz51yT4kcEAE1OhdC
+ wm/OhA4Qn92crWpbxtxMh0iKzVrULehAqBNuszfnBO+Dm185Wh3klH2kdXyJE5zATSl6
+ h5QdH64fdHvjHfPDAeMrotUHmcsdOvpm2d0IihTzJi4tNpeZjg6RvXfec0ffkHbY+CjH
+ 71HHUQVVrxo731jHr7v4sUeddmBcCEJa8cqGVKDXFTi6qmeLuCOhg1F9Be2pNjIi1Hlm
+ Cd6hqusX1XgpuYk12ws3ypKXCSVNqH88mEH/qwnjAHrDGEVvxcpE9jBSSRvf+7f+KXt3
+ hHgg==
+X-Gm-Message-State: APuU4Z+3Yux9YnHt1kUaSOwmOUIx8sF7xD4B0UVUAA33hPoaxRtipNpW
+ LGU3v5hKrd5yxSqE8GBV1J6t/ikAn0Mf+sL29NyFHLOR4Um2UByidpvdkfmhVltw
+X-Gm-Gg: AYBFou1FyG3OvZtYUPi+YGh+mWqUN1rsVeNQ2FZI8LTD5bX9RCUTt1/3YJRXXdY1n/n
+ y6FiId7H7HGGeAr2MEGl/v8GvpZ8WeHBQJ1kIpsuwO67tWYfxI29b8yemwLeDLIhnis2yz6bWZB
+ eGqhNFtn+GPgXtVV0+mapCsPgD9gnB0r7euC35/NbSvrl/z7zOfYuXPRRLYsp6gYADecpHxs2P3
+ H3PCe6aqh/36S8ak/wQN76H/0CrDPrrnW/AT5kRFESMuD/IZwt+c/My0/JtoTdf5EHbIVTqP5U8
+ j9q8n2++u4OXuKkhcieaUgRxUvy+tIvFWnrZbVRSwM0Mh072/tu1vFFWzS/E7L+oJvgsLf0v8eE
+ hF0826gO5bE2WhSs+M4yui00HvtgEB0Ds4Z5+hu/x4w0f+duTunObmbYuLGYfe/TlwV2PMBaHdP
+ CWKA7tXyqjXllD4U+kqDtdt1mgrG4fH0MxZdJvqtK4jAzaNA6rkAt0uYekx96sYMjymtJNr3yXh
+ A1Cym//TCc1mihg2+DBec6doIClpFqNvfQlEvLrgF4xxmmSJe1ZT9szvOKjXfF6Lt8dVGHmC/VH
+ +40Dpl5Zo9pGmsq31XqXrXyojPzP8vKw8pBL/tAngTTgmoOLT1ymXyguLf1OYvjC7gt4jUyDWUl
+ Q3X3KOmNejg==
+X-Received: by 2002:a05:701b:4586:20b0:1ab:cbd0:1c96 with SMTP id
+ a92af1059eb24-1b53a429876mr2719513c88.4.1794943943468; 
+ Tue, 17 Nov 2026 11:32:23 -0800 (PST)
+Received: from LinuxMachine.bits-hyderabad.ac.in ([14.98.244.195])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-382a45274aesm159132eec.2.2026.11.17.11.32.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Nov 2026 11:32:22 -0800 (PST)
+From: Jayesh Agarwal <agarwaljayesh03@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, philmd@oss.qualcomm.com, qemu-arm@nongnu.org,
+ s23adhik@csclub.uwaterloo.ca, Jayesh Agarwal <agarwaljayesh03@gmail.com>
+Subject: [PATCH] hw/arm/bcm2838: Route system timer interrupts to GIC
+Date: Wed, 18 Nov 2026 01:02:05 +0530
+Message-ID: <20261117193205.8236-1-agarwaljayesh03@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/14] target/hexagon: reject HMX operands outside VTCM
-To: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20261117183629.2002840-1-marco.liebel@oss.qualcomm.com>
- <20261117183629.2002840-5-marco.liebel@oss.qualcomm.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261117183629.2002840-5-marco.liebel@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDA3NyBTYWx0ZWRfX/LsETtVWmahV
- rTpWPsLMMMx7S/rtABlenrFfHuToHtKUovz5G96idWVWwaSg780AEQ/IOFfX+pZS44PHDE+vYlW
- yshirTF2wUUrLTF76bzWcUgKa248P7mcxMJBCzbq2XX1GpxhvNnIFP0nQwRATT7JhxbB38fmJrd
- SmfhkyoIuXlKxO/RH0crZibChZBlbTC1y24k64Tf+jwWjwjaIMczHY2wYRe7wbuHkkMB4qjzw1K
- eCmsAAeeIiwI6W5YzF7YNYFfvYzfeP8gVNg/vhOvJ0rNptIAtBWBe8dF6LSD7ABymWLj/ohpReI
- N9CaVpMGrFqekexs0U0WW4OsYFyVyK6B7XFxrplaWYxxl/kV4LxWiQ7Pil2TdjZYxM1mWAApNVq
- ksxpOF8PY4KPkpP3R13WHzKsM2XEzj6VS7fa7QRjoAlfKl0uqmagSvRVxfPPrAQAy3l3VMFgF/L
- zOPQ7V76wge3VIpy+xw==
-X-Proofpoint-ORIG-GUID: R370hpcmpTII6qqZXfN3rZoSMR3JQsHr
-X-Proofpoint-GUID: R370hpcmpTII6qqZXfN3rZoSMR3JQsHr
-X-Authority-Analysis: v=2.4 cv=fIqsTpae c=1 sm=1 tr=0 ts=6afcab67 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=2lr0pSPp7RyiNU-4YqwA:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDA3NyBTYWx0ZWRfXyZc/AenViNfl
- HGd5lnyxE3S3iyIibbzQpVxz6jbtM662y7BZa9E1dO8TEdOtXJZZp9lGdGg+82EoqsuMYayAQoi
- 1FP+iiKPYr5Uzx70UH0ZXW4zk5KCKuk=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-17_04,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 impostorscore=0
- suspectscore=0 priorityscore=1501 malwarescore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170077
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
+ envelope-from=agarwaljayesh03@gmail.com; helo=mail-dl1-x1230.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,103 +97,170 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+The system timer interrupts are only routed to the legacy interrupt
+controller and not to the GIC, so a guest using the GIC (software that
+relies on the system timer interrupts through the GIC, such as bare
+metal programs or hobby kernels) never receives them.
 
-On 11/17/2026 12:36 PM, Marco Liebel wrote:
-> Check activation and weight addresses against the machine VTCM range
-> before executing packet instructions. An invalid operand raises the
-> precise coprocessor VMEM address error and prevents packet commit.
-> HMX arithmetic remains unimplemented.
->
-> Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
-> ---
->   target/hexagon/helper.h    |  3 +++
->   target/hexagon/op_helper.c | 19 +++++++++++++++++++
->   target/hexagon/translate.c | 11 +++++++++++
->   3 files changed, 33 insertions(+)
->
-> diff --git a/target/hexagon/helper.h b/target/hexagon/helper.h
-> index 292ca8eb7c..eddde9ab34 100644
-> --- a/target/hexagon/helper.h
-> +++ b/target/hexagon/helper.h
-> @@ -22,6 +22,9 @@ DEF_HELPER_FLAGS_3(raise_exception, TCG_CALL_NO_RETURN, noreturn, env, i32, i32)
->   DEF_HELPER_2(commit_store, void, env, int)
->   DEF_HELPER_3(gather_store, void, env, i32, int)
->   DEF_HELPER_1(commit_hvx_stores, void, env)
-> +#ifndef CONFIG_USER_ONLY
-> +DEF_HELPER_3(hmx_check_address, void, env, i32, i32)
-> +#endif
->   DEF_HELPER_FLAGS_4(fcircadd, TCG_CALL_NO_RWG_SE, s32, s32, s32, s32, s32)
->   DEF_HELPER_FLAGS_1(fbrev, TCG_CALL_NO_RWG_SE, i32, i32)
->   DEF_HELPER_4(sfrecipa, i64, env, f32, f32, i32)
-> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-> index 71b27ef07f..8ed9aff7ee 100644
-> --- a/target/hexagon/op_helper.c
-> +++ b/target/hexagon/op_helper.c
-> @@ -52,6 +52,25 @@
->   #include "hw/intc/hex-l2vic.h"
->   #include "hex_interrupts.h"
->   #include "hexswi.h"
-> +#include "system/physmem.h"
-> +#endif
-> +
-> +#ifndef CONFIG_USER_ONLY
-> +void HELPER(hmx_check_address)(CPUHexagonState *env, uint32_t va, uint32_t pc)
-> +{
-> +    HexagonCPU *cpu = env_archcpu(env);
-> +    uint32_t config[2];
-> +    uint64_t base, size;
-> +
-> +    physical_memory_read(cpu->globalregs->config_table_addr + 0x38,
-> +                         config, sizeof(config));
-> +    base = (uint64_t)le32_to_cpu(config[0]) << 16;
-> +    size = (uint64_t)le32_to_cpu(config[1]) << 10;
+A qemu_irq connection follows one output, one input. So also wiring the
+timer to the GIC would replace its connection to the legacy controller.
 
-If you give these cfgtable values as properties to the vCPUs, then maybe 
-this whole thing can be in TCG instead of a helper?
+Add a splitter per system-timer interrupt line so that each interrupt
+reaches both the legacy controller (output 0 of the splitters) and the
+GIC (output 1 of the splitters). The timer channel n goes to GIC SPI
+64+n, so channels 0-3 go to SPIs 64-67.
 
+Testing:
+The raspi4b machine started in the qtest mode:
+	qemu-system-aarch64 -M raspi4b -display none -accel qtest -qtest stdio
 
-> +    if (va < base || va - base >= size) {
-> +        env->cause_code = 0x26; /* Coprocessor VMEM address error */
+Ran following commands:
+	irq_intercept_in /machine/soc/peripherals
+	readl 0xfe003004
+	writel 0xfe00300c 1000
+	writel 0xfe003010 2000
+	writel 0xfe003014 3000
+	writel 0xfe003018 4000
+	clock_step 5000000
+	readl 0xfe003000
 
-I think this is HEX_CAUSE_COPROC_LDST.
+Before the fix:
+    clock_step 5000000
+    OK 5000000
+    readl 0xfe003000
+    OK 0x000000000000000f
+The alarm fires correctly (status flag outputs 0xf), but no IRQ raise
+64-67 reaches the GIC.
 
-If not, please add this as a new HEX_CAUSE to target/hexagon/cpu_bits.h.
+After the fix:
+    clock_step 5000000
+    IRQ raise 64
+    IRQ raise 65
+    IRQ raise 66
+    IRQ raise 67
+    OK 5000000
+    readl 0xfe003000
+    OK 0x000000000000000f
+The alarm fires, and all the four channels reached GIC lines 64-67.
 
+Reported-by: Sourojeet Adhikari <s23adhik@csclub.uwaterloo.ca>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jayesh Agarwal <agarwaljayesh03@gmail.com>
+---
+This was picked up from Sourojeet's earlier patch, here is the link:
+https://lore.kernel.org/qemu-devel/3cca4eb3-09d1-4467-81fd-27a5bfe19a3e@csclub.uwaterloo.ca/
 
-> +        do_raise_exception(env, HEX_EVENT_PRECISE, pc, GETPC());
-> +    }
-> +}
->   #endif
->   
->   #ifdef CONFIG_USER_ONLY
-> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-> index 10ed73590c..de5baf9f6e 100644
-> --- a/target/hexagon/translate.c
-> +++ b/target/hexagon/translate.c
-> @@ -946,6 +946,17 @@ static void gen_start_packet(DisasContext *ctx)
->           gen_precise_exception(HEX_CAUSE_NO_COPROC2_ENABLE, ctx->pkt.pc);
->           ctx->hmx_check_emitted = true;
->       }
-> +    if (ctx->pkt.pkt_has_hmx) {
-> +        for (i = 0; i < ctx->pkt.num_insns; i++) {
-> +            Insn *insn = &ctx->pkt.insn[i];
-> +            if (GET_ATTRIB(insn->opcode, A_HMX) &&
-> +                (GET_ATTRIB(insn->opcode, A_PAIR_1OF2) ||
-> +                 GET_ATTRIB(insn->opcode, A_PAIR_2OF2))) {
-> +                gen_helper_hmx_check_address(tcg_env,
-> +                    hex_gpr[insn->regno[0]], tcg_constant_i32(ctx->pkt.pc));
-> +            }
-> +        }
-> +    }
->   #endif
->   }
->   
+ hw/arm/bcm2835_peripherals.c         | 33 ++++++++++++++++++----------
+ hw/arm/bcm2838.c                     |  7 ++++++
+ include/hw/arm/bcm2835_peripherals.h |  1 +
+ include/hw/arm/bcm2838_peripherals.h |  4 ++++
+ 4 files changed, 33 insertions(+), 12 deletions(-)
+
+diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
+index 558c180df9..f619beba33 100644
+--- a/hw/arm/bcm2835_peripherals.c
++++ b/hw/arm/bcm2835_peripherals.c
+@@ -95,6 +95,14 @@ static void raspi_peripherals_base_init(Object *obj)
+     /* SYS Timer */
+     object_initialize_child(obj, "systimer", &s->systmr,
+                             TYPE_BCM2835_SYSTIMER);
++    /*
++     * One splitter per system-timer interrupt line so that each interrupt
++     * reaches both the legacy controller and the GIC.
++     */
++    for (int n = 0; n < BCM2835_SYSTIMER_COUNT; n++) {
++        object_initialize_child(obj, "systmr-irq-splitter[*]",
++                                &s->systmr_irq_splitter[n], TYPE_SPLIT_IRQ);
++    }
+ 
+     /* UART0 */
+     object_initialize_child(obj, "uart0", &s->uart0, TYPE_PL011);
+@@ -302,18 +310,19 @@ void bcm_soc_peripherals_common_realize(DeviceState *dev, Error **errp)
+     }
+     memory_region_add_subregion(&s->peri_mr, ST_OFFSET,
+                 sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->systmr), 0));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 0,
+-        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
+-                               INTERRUPT_TIMER0));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 1,
+-        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
+-                               INTERRUPT_TIMER1));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 2,
+-        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
+-                               INTERRUPT_TIMER2));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 3,
+-        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
+-                               INTERRUPT_TIMER3));
++    for (n = 0; n < BCM2835_SYSTIMER_COUNT; n++) {
++        qdev_prop_set_uint32(DEVICE(&s->systmr_irq_splitter[n]),
++                "num-lines", 2);
++        if (!qdev_realize(DEVICE(&s->systmr_irq_splitter[n]), NULL, errp)) {
++            return;
++        }
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), n,
++                qdev_get_gpio_in(DEVICE(&s->systmr_irq_splitter[n]), 0));
++        qdev_connect_gpio_out(DEVICE(&s->systmr_irq_splitter[n]), 0,
++                qdev_get_gpio_in_named(DEVICE(&s->ic),
++                    BCM2835_IC_GPU_IRQ,
++                    INTERRUPT_TIMER0 + n));
++    }
+ 
+     /* UART0 */
+     qdev_prop_set_chr(DEVICE(&s->uart0), "chardev", serial_hd(0));
+diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
+index 650b1fe8f4..d151c50f1e 100644
+--- a/hw/arm/bcm2838.c
++++ b/hw/arm/bcm2838.c
+@@ -188,6 +188,13 @@ static void bcm2838_realize(DeviceState *dev, Error **errp)
+     qdev_connect_gpio_out(DEVICE(&ps_base->orgated_i2c_irq_splitter), 1,
+                           qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_I2C));
+ 
++    /* Connect the system timer interrupts to the interrupt controller */
++    for (int n = 0; n < BCM2835_SYSTIMER_COUNT; n++) {
++        int int_n = GIC_SPI_INTERRUPT_SYS_TIMER0 + n;
++        qdev_connect_gpio_out(DEVICE(&ps_base->systmr_irq_splitter[n]), 1,
++                              qdev_get_gpio_in(gicdev, int_n));
++    }
++
+     /* Connect VC mailbox to the interrupt controller */
+     sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->mboxes), 0,
+                        qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_MBOX));
+diff --git a/include/hw/arm/bcm2835_peripherals.h b/include/hw/arm/bcm2835_peripherals.h
+index 4f356f4643..bd41e0de92 100644
+--- a/include/hw/arm/bcm2835_peripherals.h
++++ b/include/hw/arm/bcm2835_peripherals.h
+@@ -54,6 +54,7 @@ struct BCMSocPeripheralBaseState {
+     qemu_irq irq, fiq;
+ 
+     BCM2835SystemTimerState systmr;
++    SplitIRQ systmr_irq_splitter[BCM2835_SYSTIMER_COUNT];
+     BCM2835MphiState mphi;
+     UnimplementedDeviceState txp;
+     UnimplementedDeviceState armtmr;
+diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
+index 60bfacdce4..af2d3b2030 100644
+--- a/include/hw/arm/bcm2838_peripherals.h
++++ b/include/hw/arm/bcm2838_peripherals.h
+@@ -20,6 +20,10 @@
+ /* SPI */
+ #define GIC_SPI_INTERRUPT_MBOX         33
+ #define GIC_SPI_INTERRUPT_MPHI         40
++#define GIC_SPI_INTERRUPT_SYS_TIMER0   64
++#define GIC_SPI_INTERRUPT_SYS_TIMER1   65
++#define GIC_SPI_INTERRUPT_SYS_TIMER2   66
++#define GIC_SPI_INTERRUPT_SYS_TIMER3   67
+ #define GIC_SPI_INTERRUPT_DWC2         73
+ #define GIC_SPI_INTERRUPT_DMA_0        80
+ #define GIC_SPI_INTERRUPT_DMA_6        86
+-- 
+2.43.0
+
 
