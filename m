@@ -1,113 +1,83 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4440606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 20:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21158606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 20:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=B3Kjuw5z
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=WK1nQZyJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTPxm-0000T8-Bk; Tue, 17 Nov 2026 15:39:34 -0500
+	id 1xTPyw-0000nq-JV; Tue, 17 Nov 2026 15:40:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <drifabdelmalekmohamedsaid@gmail.com>)
- id 1xTPxk-0000Sr-HS
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 15:39:32 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <drifabdelmalekmohamedsaid@gmail.com>)
- id 1xTPxi-0003u3-Gz
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 15:39:32 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-c4d28f75d62so27220466b.0
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 12:39:29 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794947968; cv=none;
- d=google.com; s=arc-20260327;
- b=ASXCwliCV0hMYQmt8AdgWxW5ds0YOWyA3RBGzCCbS9QgHD+SI4xkRCO/2Ts6TXIrOI
- 2HdMpyJrcPkTH8McBox9V8Yd9iuFbhw0jzhM3c1Opx/Z77I56Nk4VbpN4GoQSuKfM9nf
- Vc/g+ourWVQXpMWMX+1zijpC5VEYuAgT4tYQ9CKlAMYpC+bg/X+miKPaPcVvbmHXCYEh
- Fx4cWCo8cJLAKbW96r8616QDyIuR1Sn+lSATxOlrFKvy3vtbtSxAe9nrqlPxCcaTXZtY
- GdvKGN1qv29jWtEc1zE8SXApqvkcmaH9ntHconFykY1GHGE2l/B0WJyaP6Jbbe4ZpDtp
- ehwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=nuqglsj7S0Oo8qX9BRP8HtzJZtpJNifhet9Oac7fdkg=;
- fh=29/Ntc7ys/VsX3JjAgdGNVdCTIp6b2lYprZJb50Y3UI=;
- b=QV1fMqJEdGgCzYxMhAt/Mf57ZGfCUofrKBj1B1o7GBHEq+/Z88W4zG8F1O8iTT069P
- 03L184S4gIKTUn7dZM1lvMy3GTRUZ7bJ9dbNPk6DKvITH5AiAfTFdKolU4cbqL+VZf94
- 4s3lq7ciwrDHe8zf+Y0yipnrB/7colpd8XemxHiaSe6YRHv/P1sIS+LNazcab5e/mS36
- WKpwdE+rqEDs+Y5o1Geikpw0Uj49HNysonreGuvo5O8dYfrnKHg1WybWLVWOgLs3QMgf
- 2rD8gwR2wKbqJGTz9bgO+4jrWvGsZNXGvyZ8mfzrTm2vpM1zkB/cPHEzsNMsE9S1gzf8
- U1SQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794947968; x=1795552768; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=nuqglsj7S0Oo8qX9BRP8HtzJZtpJNifhet9Oac7fdkg=;
- b=B3Kjuw5zv+vmWBrDqFBB8ClspvNnc1KfjWccVgBsZ2DmhOU8GfksFYcVQoBXmIb/nZ
- hMwxYFIZikZU74Aq2zCPa/ntmK88oGQU7ocDDa6rbCY7KGzPaNgSc6MsMRYF0Wv9nIMb
- 3RW2KpVUBcVFZhIFw/JrEB12Sba0CHxX3swYKLZm7gLXXmj9I1wQjipNsu2wXgoP1knr
- rWoZF63TwcdBiHiMtQPRfpLuw0UfkdUrRnZhdpePdX544zhPw3T58rzfZPGg+by1d6uh
- bR6pQAAnzPumhZKExMbXTD95jJp2a1dizBI2nVwgZBEYNje9A7v0b8uarH1sJ3Rw6zzh
- 0HNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794947968; x=1795552768;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=nuqglsj7S0Oo8qX9BRP8HtzJZtpJNifhet9Oac7fdkg=;
- b=nectzeldlGQ7ueP/lT3h+oGNEhfSCoWz4Pd5T7nzkH4EXZDw4U+b/cjqifLlhT8tqw
- 53nUKxhEujfjsF2rw/fNfohILir9v0mJ9podeGaVMa5spPsVZlU9gzCaEuTGLAp8qEWX
- uwWFhSmFXriB1YxZFkF/854ZdscyP8pThIg4xRyzUYEFUSLEXQeuBLKvzrRaXkiCmxej
- iZr4X4P+9+fzP9Mi9zWMOweTMlHPd+BaiGmWs7Hlz6UvNavlPI5vU05r7ZIcxLj27hid
- lZWzAn3Srdb5aptiKab4mggg3dSkRRufbKMF0ma7NFElVkeZgQk5YmWgJUWOTpWbEGPm
- jN/A==
-X-Forwarded-Encrypted: i=1;
- AL+hErGG0uthrvdtDU3VmA2C+jm6V9s66v0JaLMUv+rpnHVlItyORpaiKa5l3rrGCVl9KR5nFKSJK4KKbbkA@nongnu.org
-X-Gm-Message-State: APuU4Z9qca1CgXcHOAQk1Z5CalYb6BEY1UdVj9ml20ozwA5Ii8WQL0FG
- kRL+pwNWF9DcHuevCQJmYSZfZUL5i5o1nFGvOR8n2qwRW5/dOgeC8ZSDEBlL5cZveLloLsz/ZTF
- eIY1hxSoVIxa332WxSeOlGV/fltenOSA=
-X-Gm-Gg: AYBFou3uku5dQeU3y4sawYi9+dR3OaMNziJDsL4d2wJ3iQCzgXPVnRehW5lbnV9t4IA
- pmmdr+MmCFUXiGvL+FmhdlD6qEcQS+W7goN9Oo3ThxJpDC44kcTN/gFu2h5yBlPKqMOro4AdVch
- KeLEH2j2tmjZfatbUUIaXeKSawMLiTP2u93VyXe+fu3hZ4vnBz1Ymvxl0fZAS5dumR6mXpevdc+
- iXtR7p9+szvB2IYNU1seNdUXBX5W2XxPWmdECttOexZNcTGfrcusUnzopM44aFUjsOPVuNy7cpc
- +y9d1VgsjccTcBbCs+noirtQ135mWsSubFKC217lJyIA6v91iNOcc9yWfmMwAka0Pvm5NVXOUJh
- kvs8oxE0RNW8SJKyVdZvm71tsVLoAOWMsnJdQxMeUpezA0y2BXvJ+hnIppe5+jPV9d1ar6PTe11
- 3EqB+V4+5SGfE4sQ2kz2E=
-X-Received: by 2002:a17:906:7953:b0:c2d:bd87:7fa7 with SMTP id
- a640c23a62f3a-c510e379d33mr36915266b.24.1794947968205; Tue, 17 Nov 2026
- 12:39:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xTPyX-0000mN-1P
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 15:40:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xTPyU-0007bV-MF
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 15:40:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794948016;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iAiAp7BEMA/eBMBXH5ERYOL/uL5EYBzgoV/K8yYH1Mg=;
+ b=WK1nQZyJIG1RsFuh6/CLTj840QC4YeEs/ccqdy4DekKeArc0vZnwXM78XA5wNtKYhrPd6M
+ jPpSmEOonL+1yV1JOp3YF18n+84q5xxEV+yDo4uzs6g6eg1d5K/EYDphkVL8SiJ9/laiSA
+ vLrmWBtoArU7dpCNVPdHFDToYytqIXU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-373-9LlDAeSjPJSsqN9vkeM2vw-1; Tue,
+ 17 Nov 2026 15:40:12 -0500
+X-MC-Unique: 9LlDAeSjPJSsqN9vkeM2vw-1
+X-Mimecast-MFC-AGG-ID: 9LlDAeSjPJSsqN9vkeM2vw_1794948011
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 90BDB1955BED; Tue, 17 Nov 2026 20:40:10 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 90F3B195B3C2; Tue, 17 Nov 2026 20:40:06 +0000 (UTC)
+Date: Tue, 17 Nov 2026 14:40:04 -0600
+From: Eric Blake <eblake@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+Message-ID: <avy4mkin-orpwskO@redhat.com>
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-2-pbonzini@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261101150847.29157-1-drifabdelmalekmohamedsaid@gmail.com>
-In-Reply-To: <20261101150847.29157-1-drifabdelmalekmohamedsaid@gmail.com>
-From: DRIF ABDELMALEK MOHAMED SAID <drifabdelmalekmohamedsaid@gmail.com>
-Date: Tue, 17 Nov 2026 21:39:15 +0100
-X-Gm-Features: AclHuK-g-EiLZBhVaSob9-DD-NzmLxDpaPvp6lCGuMt1wh2bCKYQBWTM6kvr8gM
-Message-ID: <CA+xk8n8vg27FBmsSgTxwOmbRW1eNhjs+QOC8POH4OmP=8A6o4A@mail.gmail.com>
-Subject: Re: [PATCH] hw/i386/kvm/xen_evtchn: use lock guards
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: David Woodhouse <dwmw2@infradead.org>, Paul Durrant <paul@xen.org>, 
- "Michael S . Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=drifabdelmalekmohamedsaid@gmail.com;
- helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260930085433.830743-2-pbonzini@redhat.com>
+User-Agent: NeoMutt/20260616
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,204 +89,179 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hello,
-Just following up on this patch to see if anyone has had a chance to
-review it or if any changes are needed.
-Thanks,
-Drif Abdelmalek Mohamed Said
+[Chiming in late]
 
-On Sun, Nov 1, 2026 at 4:08=E2=80=AFPM Drif Abdelmalek Mohamed Said
-<drifabdelmalekmohamedsaid@gmail.com> wrote:
->
-> Replace qemu_mutex_lock()/qemu_mutex_unlock() pairs with
-> QEMU_LOCK_GUARD()/WITH_QEMU_LOCK_GUARD() in functions with error paths
-> and early returns: xen_evtchn_bind_pirq_op(), xen_physdev_unmap_pirq(),
-> xen_be_evtchn_bind_interdomain() and xen_be_evtchn_unbind().
->
-> No functional change intended.
->
-> Signed-off-by: Drif Abdelmalek Mohamed Said <drifabdelmalekmohamedsaid@gm=
-ail.com>
+On Wed, Sep 30, 2026 at 10:54:30AM +0200, Paolo Bonzini wrote:
+> Until now QEMU's code provenance policy declined any contribution
+> believed to include or derive from AI-generated content.  A blanket ban
+> was easy to maintain while LLM output was rarely usable on its own, but
+> as the tools improved an absolute prohibition has become harder to
+> justify and enforce.
+
+That ban is still impacting contributions today:
+
+https://lists.gnu.org/archive/html/qemu-devel/2026-11/msg03382.html
+https://lists.gnu.org/archive/html/qemu-devel/2026-11/msg03845.html
+
+...
+
+> Revise the policy according to the above considerations, and introduce the
+> "AI-used-for:" trailer as a record of where AI was used.  The standard is
+> slightly different from the more usual "Assisted-by"; the intention is for
+> the metadata to provide more information for reviewers to judge the result,
+> and to scope areas for which Signed-off-by cannot guarantee full control
+> of provenance.
+> 
+> In any case, use of AI does not relax any other contribution requirement:
+> authors still need to comply with the DCO (declaring that they have
+> corporate authorization to contribute, for example) and take technical
+> responsibility for their work.
+> 
+> [Commit message largely based on discussions with Daniel Berrangé,
+>  Alistair Francis, Peter Maydell, Kevin Wolf and others. - Paolo]
+> 
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Alistair Francis <alistair.francis@wdc.com>
+> Cc: BALATON Zoltan <balaton@eik.bme.hu>
+> Cc: Daniel P. Berrangé <berrange@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: Warner Losh <imp@bsdimp.com>
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Link: https://lore.kernel.org/qemu-devel/20260524083329-mutt-send-email-mst@kernel.org/T/
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  hw/i386/kvm/xen_evtchn.c | 82 +++++++++++++++-------------------------
->  1 file changed, 31 insertions(+), 51 deletions(-)
->
-> diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
-> index 9379383e53..c0250cb357 100644
-> --- a/hw/i386/kvm/xen_evtchn.c
-> +++ b/hw/i386/kvm/xen_evtchn.c
-> @@ -1293,20 +1293,17 @@ int xen_evtchn_bind_pirq_op(struct evtchn_bind_pi=
-rq *pirq)
->          return -EBUSY;
->      }
->
-> -    qemu_mutex_lock(&s->port_lock);
-> +    WITH_QEMU_LOCK_GUARD(&s->port_lock) {
-> +        ret =3D allocate_port(s, 0, EVTCHNSTAT_pirq, pirq->pirq,
-> +                            &pirq->port);
-> +        if (ret) {
-> +            return ret;
-> +        }
->
-> -    ret =3D allocate_port(s, 0, EVTCHNSTAT_pirq, pirq->pirq,
-> -                        &pirq->port);
-> -    if (ret) {
-> -        qemu_mutex_unlock(&s->port_lock);
-> -        return ret;
-> +        s->pirq[pirq->pirq].port =3D pirq->port;
-> +        trace_kvm_xen_bind_pirq(pirq->pirq, pirq->port);
->      }
->
-> -    s->pirq[pirq->pirq].port =3D pirq->port;
-> -    trace_kvm_xen_bind_pirq(pirq->pirq, pirq->port);
-> -
-> -    qemu_mutex_unlock(&s->port_lock);
-> -
->      /*
->       * Need to do the unmask outside port_lock because it may call
->       * back into the MSI translate function.
-> @@ -1919,27 +1916,24 @@ int xen_physdev_unmap_pirq(struct physdev_unmap_p=
-irq *unmap)
->      }
->
->      BQL_LOCK_GUARD();
-> -    qemu_mutex_lock(&s->port_lock);
-> -
-> -    if (!pirq_inuse(s, pirq)) {
-> -        qemu_mutex_unlock(&s->port_lock);
-> -        return -ENOENT;
-> -    }
-> +    WITH_QEMU_LOCK_GUARD(&s->port_lock) {
-> +        if (!pirq_inuse(s, pirq)) {
-> +            return -ENOENT;
-> +        }
->
-> -    gsi =3D s->pirq[pirq].gsi;
-> +        gsi =3D s->pirq[pirq].gsi;
->
-> -    /* We can only unmap GSI PIRQs */
-> -    if (gsi < 0) {
-> -        qemu_mutex_unlock(&s->port_lock);
-> -        return -EINVAL;
-> -    }
-> +        /* We can only unmap GSI PIRQs */
-> +        if (gsi < 0) {
-> +            return -EINVAL;
-> +        }
->
-> -    s->gsi_pirq[gsi] =3D 0;
-> -    s->pirq[pirq].gsi =3D IRQ_UNBOUND; /* Doesn't actually matter becaus=
-e: */
-> -    pirq_inuse_word(s, pirq) &=3D ~pirq_inuse_bit(pirq);
-> +        s->gsi_pirq[gsi] =3D 0;
-> +        s->pirq[pirq].gsi =3D IRQ_UNBOUND; /* Doesn't actually matter be=
-cause: */
-> +        pirq_inuse_word(s, pirq) &=3D ~pirq_inuse_bit(pirq);
->
-> -    trace_kvm_xen_unmap_pirq(pirq, gsi);
-> -    qemu_mutex_unlock(&s->port_lock);
-> +        trace_kvm_xen_unmap_pirq(pirq, gsi);
-> +    }
->
->      if (gsi =3D=3D IRQ_MSI_EMU) {
->          kvm_update_msi_routes_all(NULL, true, 0, 0);
-> @@ -2078,7 +2072,7 @@ int xen_be_evtchn_bind_interdomain(struct xenevtchn=
-_handle *xc, uint32_t domid,
->          return -EINVAL;
->      }
->
-> -    qemu_mutex_lock(&s->port_lock);
-> +    QEMU_LOCK_GUARD(&s->port_lock);
->
->      /* The guest has to have an unbound port waiting for us to bind */
->      gp =3D &s->port_table[guest_port];
-> @@ -2095,15 +2089,14 @@ int xen_be_evtchn_bind_interdomain(struct xenevtc=
-hn_handle *xc, uint32_t domid,
->              if (kvm_xen_has_cap(EVTCHN_SEND)) {
->                  assign_kernel_eventfd(gp->type, guest_port, xc->fd);
->              }
-> -            break;
-> +            return ret;
->          }
->          /* fall through */
->
->      case EVTCHNSTAT_unbound:
->          be_port =3D find_be_port(s, xc);
->          if (!be_port) {
-> -            ret =3D -ENOSPC;
-> -            goto out;
-> +            return -ENOSPC;
->          }
->
->          gp->type =3D EVTCHNSTAT_interdomain;
-> @@ -2113,24 +2106,16 @@ int xen_be_evtchn_bind_interdomain(struct xenevtc=
-hn_handle *xc, uint32_t domid,
->          if (kvm_xen_has_cap(EVTCHN_SEND)) {
->              assign_kernel_eventfd(gp->type, guest_port, xc->fd);
->          }
-> -        ret =3D be_port;
-> -        break;
-> +        return be_port;
->
->      default:
-> -        ret =3D -EINVAL;
-> -        break;
-> +        return -EINVAL;
->      }
-> -
-> - out:
-> -    qemu_mutex_unlock(&s->port_lock);
-> -
-> -    return ret;
->  }
->
->  int xen_be_evtchn_unbind(struct xenevtchn_handle *xc, evtchn_port_t port=
-)
->  {
->      XenEvtchnState *s =3D xen_evtchn_singleton;
-> -    int ret;
->
->      if (!s) {
->          return -ENOTSUP;
-> @@ -2140,12 +2125,10 @@ int xen_be_evtchn_unbind(struct xenevtchn_handle =
-*xc, evtchn_port_t port)
->          return -EFAULT;
->      }
->
-> -    qemu_mutex_lock(&s->port_lock);
-> +    QEMU_LOCK_GUARD(&s->port_lock);
->
-> -    if (port && port !=3D xc->be_port) {
-> -        ret =3D -EINVAL;
-> -        goto out;
-> -    }
-> +    if (port && port !=3D xc->be_port)
-> +        return -EINVAL;
->
->      if (xc->guest_port) {
->          XenEvtchnPort *gp =3D &s->port_table[xc->guest_port];
-> @@ -2164,10 +2147,7 @@ int xen_be_evtchn_unbind(struct xenevtchn_handle *=
-xc, evtchn_port_t port)
->
->      s->be_handles[xc->be_port] =3D NULL;
->      xc->be_port =3D 0;
-> -    ret =3D 0;
-> - out:
-> -    qemu_mutex_unlock(&s->port_lock);
-> -    return ret;
-> +    return 0;
->  }
->
->  int xen_be_evtchn_close(struct xenevtchn_handle *xc)
-> --
-> 2.47.3
->
+>  docs/devel/code-provenance.rst |  71 +----------
+>  docs/devel/index-process.rst   |   1 +
+>  docs/devel/llm-usage.rst       | 213 +++++++++++++++++++++++++++++++++
+>  AGENTS.md                      |  42 +++++--
+>  scripts/checkpatch.pl          |   5 +-
+>  5 files changed, 252 insertions(+), 80 deletions(-)
+>  create mode 100644 docs/devel/llm-usage.rst
+
+> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+> index 65b8f232a08..7403961378e 100644
+> --- a/docs/devel/code-provenance.rst
+> +++ b/docs/devel/code-provenance.rst
+> @@ -128,6 +128,10 @@ that are commonly used during QEMU development:
+>     suggestions for how to change a patch, it is good practice to credit them
+>     by including a ``Suggested-by`` tag.
+>  
+> + * **AI-used-for**: when AI/LLM tools were used to produce the patch, this tag
+> +   discloses what they were used for.  See :ref:`llm-usage` for the cases in
+> +   which it is required.
+> +
+
+> +++ b/docs/devel/llm-usage.rst
+> @@ -0,0 +1,213 @@
+> +.. _llm-usage:
+> +
+> +Use of AI-generated content
+> +===========================
+> +
+> +.. warning::
+> +
+> +   Please read the below policy before using AI to contribute code or
+> +   documentation to QEMU.  This applies to ChatGPT, Claude, Copilot,
+> +   Llama, and similar tools.
+
+...
+
+> +LLM-assisted and LLM-created contributions
+> +''''''''''''''''''''''''''''''''''''''''''
+> +
+> +Use of generative AI can be classified in the following four buckets:
+> +
+> +- "background" assistance, such as completion and code review.  This does
+> +  not need disclosure.
+> +
+> +- small LLM-assisted bugfixes (as a rule of thumb, below 10 lines of code)
+> +  are allowed with disclosure.  Splitting a submission in multiple parts
+> +  is **not** a valid way to bypass this rule; repeated, frequent posting
+> +  of such fixes must follow the rule for full contributions.
+> +
+> +- use of LLMs to help generating parts of a larger patch---test cases,
+> +  adaptations of existing code, boilerplate code for a new API, a tool to
+> +  help performing mechanical changes, etc.  These are generally allowed;
+> +  disclosure is highly recommended for non-trivial, functional code.
+
+I see lots of discussion about whether to stop here (and s/four/three/
+above), and leaving off the fourth bullet (or splitting it to a
+separate patch for later) appeals to me personally. But I can also go
+along with the final bullet if that is what the consensus lands on.
+
+> +
+> +- large, heavily LLM-assisted contributions where LLMs write large parts
+> +  of functional code.  These are only allowed if *pre-arranged*,
+> +  *high-quality* and *well-tested*.
+> +
+> +The last case (*"LLM-created contribution"*) is the one that requires
+> +a more careful approach.  In particular:
+> +
+> +- "Pre-arranged" means that a maintainer has communicated ahead of time,
+> +  for example on `IRC or the QEMU mailing
+> +  list <https://www.qemu.org/contribute/>`__, that they are willing
+> +  to review an LLM-created contribution.
+> +
+> +- "High-quality" means that the contributor must apply the same judgment
+> +  that would be applied to other code changes.  Contributors must invest
+> +  substantial time reviewing their contributions, curating them, and
+> +  understanding them in depth.
+> +
+> +- "Well-tested" means the LLM-created contributions will be held to a
+> +  higher standard than human-created ones, because LLMs make it easier
+> +  to write tests.  There are no exceptions for "writing the tests seems
+> +  hard" or for `yak shaving <https://en.wiktionary.org/wiki/yak_shaving>`__.
+
+My most recent contribution where LLM assistance was useful was
+designing a qemu-iotest for proving that a CVE was fixed. The actual
+fix is not something I was willing to trust to AI, but the tedium of
+doing a write-once known-broken NBD implementation just to prove that
+the former bug is no longer triggered, when the unit test itself is
+not part of the final QEMU binary, hit the threshold of where I can
+see the value in LLM increasing the "well-tested" nature of QEMU.
+
+> +
+> +.. note::
+> +    Pre-arrangement ensures maintainers have bandwidth for review before a
+> +    contributor invests effort in creating a large change.  This is not
+> +    a new concept in QEMU: maintainers have always encouraged early
+> +    alignment on mailing lists or IRC prior to major architecture or
+> +    subsystem refactoring.
+> +
+> +    Maintainers have freedom to determine what constitutes "high quality".
+> +    Because LLMs lower the cost of patch generation, maintainers may demand
+> +    significantly larger revisions than for purely human-written code.
+> +
+> +The QEMU project explicitly forbids using LLMs to do "clean room"
+> +reimplementation of existing code whose license is not compatible
+> +with the GNU General Public License, version 2 **or later**.
+> +
+> +.. _ai-used-for:
+> +
+> +Commit messages for AI-assisted changes
+> +'''''''''''''''''''''''''''''''''''''''
+
+...
+
+Reviewed-by: Eric Blake <eblake@redhat.com>
+
+At this point, we're too close to 11.2 to flip the policy switch any
+sooner than 12.0.
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
