@@ -1,113 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB3E606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 17:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE87C606A32C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 18:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AoFabRzQ;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=L1eVQ+sC
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=IF26q7PO;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=tSy5NeQj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTNO1-0006lB-Pv; Tue, 17 Nov 2026 12:54:29 -0500
+	id 1xTNTB-0007Vz-0w; Tue, 17 Nov 2026 12:59:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xTNO0-0006l1-LP
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:54:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xTNT7-0007Vg-1g
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:59:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xTNNy-0004Z9-TX
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:54:28 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xTNT4-0004Rz-Sd
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:59:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794938062;
+ s=mimecast20190719; t=1794938381;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bcz2C3M0nBV7LPJ6x+8JDDRrADUanvmWqDNeY+7M2RU=;
- b=AoFabRzQ3ZzAL1OKxoNHUkXizx2khl38oiOiMeepw8odup+MIVHqohF/rAPc7w6Vrcl9Bb
- /OnJ01wtIdJIHLQaV6LoHWeXQEUjW5JIVg0SvncL5Z/B/MD0mpaniM/zPpJ9U3PLNbAW44
- WwtjcIkQiGOf2KsADTzu/CtFt4zsPP8=
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vl1CxJaY+02I5u3HjSWg7CDXN1GxJ7x1NMxc1BTQwm0=;
+ b=IF26q7POpYKm5uiHrwb5bfX7pW/PqftymPpJ4gEJJlnqnMC4ZEmhneXMjIkigcrBwZFYdZ
+ 17heg/ywjqnh2nQGSbfGg1W0cohM9yOQ+siD7J30HQkc1tHnyMAvIKIEleq3j74aECQau9
+ o3TgBCxUqIYxBgTT5OLUlWpTbuuYtDg=
+Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
+ [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-nLlnptSPPJ2yueuhAlxTJw-1; Tue, 17 Nov 2026 12:54:21 -0500
-X-MC-Unique: nLlnptSPPJ2yueuhAlxTJw-1
-X-Mimecast-MFC-AGG-ID: nLlnptSPPJ2yueuhAlxTJw_1794938060
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-67dabc6d5dfso5026765d50.2
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 09:54:21 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794938060; cv=none;
+ us-mta-493-ma9TrIkbN7e7kYvGzdsKpQ-1; Tue, 17 Nov 2026 12:59:37 -0500
+X-MC-Unique: ma9TrIkbN7e7kYvGzdsKpQ-1
+X-Mimecast-MFC-AGG-ID: ma9TrIkbN7e7kYvGzdsKpQ_1794938376
+Received: by mail-yx1-f72.google.com with SMTP id
+ 956f58d0204a3-67dbb53a803so4158178d50.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 09:59:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794938376; cv=none;
  d=google.com; s=arc-20260327;
- b=rtgVL6e+GkDMB/P7B1BgsC1nSedOFS+22i5cCYz3I7U2f9kVLndX9HxJP5dIy2vLqM
- pLWu3Nv5SwNzDAwxkZ8fUO2bCZuVRLp0XIwAG79W30nKM/F0VUOLXdE8Z2b9jkfmrF3r
- YeHR2V7yqMKv26erQaVewVR0GvVO3ZY6xCr5Em8Z/zPg4vVDZ3L/1Jw4XBrmq1mKSMmy
- A7zMLaRjRC5Rx3ljrpVB7zkEc4sEZdbYEJpPhC0Vr9a+jAuwO3tFtz/CXKk15RchKpYr
- mmZ5sCBThmvchSlhtOB7S8CRdWM0pWpSBlxzYMEv1ScbP7BSaZ5ncgQJADQifzn0d7Nh
- 9GEA==
+ b=d7AIKDJPlMx+T0mPnpqcbz4IVX3bYWLgDshYJZMzZQBz6y3iEvt6gqEoKVCgOiLGG7
+ Bv0RQYjPMT8TumxAlItAFOwD/np/GMKVlckaXhrzfbzUJInd0BFKtYxwUp79Qg9jL00C
+ SEqQ7hDjFTk+nAX0YsVeqICy92ZDa85Y8Z/U5JrGziB/YA/A545HGXnqGi5+G7nHv7RY
+ q4zYDkQgPGJ+jwccFoJJSGrONfn8Bw7b/8CGFb0ClOnUU1Gsfs52w8hm1M8Rrf/1yHj2
+ MDC5JkM74T/3jlwhEdrBsgLgJHixSfiomQ2HVbTNm9wgp0pjOk4BbR4d2zagJIkObem4
+ KZ9w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Bcz2C3M0nBV7LPJ6x+8JDDRrADUanvmWqDNeY+7M2RU=;
+ bh=vl1CxJaY+02I5u3HjSWg7CDXN1GxJ7x1NMxc1BTQwm0=;
  fh=aM8heEw08rewKoAzVI8T3Lmgm/CRSAFyugkfKMMnfg8=;
- b=jmJZEqMr5FOD1fKusUrT80e+yy18iWmUrNiG6DPZPV1L+YCLrNdIhkce6siNzRfM8I
- Beq9VgyUXsl9B5bds9pPXfmKr1YX7NUt2t36G4ErY1RQS+aWFK/ppCSZsF5oYllpSq5i
- 9JmenaOEykSwBpob3fDatBBK9V6fIXRr8o/F+ozyfzlgMYVOpgYacYTYKIzNgKQ1PFy1
- vBJQluz9wYDu23zTUhRL4v6buu9ZLo11VbcCjlTyp4Q8z/kP1C8YqCgqiUvptze3WKzn
- fvpOG9VwqKNvj5RZ0alDUZT/D49OJKDe2OS4bCTPaGZCNgjW+olS/E3CnOEBJY8u2JCZ
- 7F3Q==; darn=nongnu.org
+ b=W3dd+5qgof7qBG0Dg5SkFhE4vtwG6e4cE2tIQk8qo7hULaaKDa/95LNz4wdZD6OQgq
+ 8ISfAXHy8pkGhJnWamRFMq98Sqtu1cJm7mKwWKMbE3oCuc4iWSIS9vT5mKo3XcOpG+AK
+ kLB5vALUVc6t4mW2nXvhxeUBPxFjD4I1OB3TKZ8a28XPk9poGVDjo+YPpPPJwc+o21qP
+ xYlr0Xz0OXHLN2HzQDTEOk3jZi1Tm17iX9kvm66GCeh5buNy9b8MD8rIxmRzkPI8PcDL
+ UoLBl/StLNL5mF+1PD44UTphhixZ1+gS2xgCVFXfeuswZxEexrHYJe3RthbOFjlkdPV5
+ fSSA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1794938060; x=1795542860; darn=nongnu.org;
+ d=redhat.com; s=google; t=1794938376; x=1795543176; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Bcz2C3M0nBV7LPJ6x+8JDDRrADUanvmWqDNeY+7M2RU=;
- b=L1eVQ+sCiAjVnnjW9yUxSfvKqsPjG4wrNyxs78PoW/25pGcFTaK+wrMt17vuxbGUuh
- aqmvtdBGT9xDtrnvWntrnoGpETunh72PpDxNXlwDnfzaREmT1uH1uY773JJCiPKKv3dn
- 6jzNtRfqpe/wM3cUHOUODKH0hLTaeNBnXaoVVmUhWFDW9uRYcTRuhUxbtwkLn6ODtcMh
- 8ccCWs7o20BMrnStgDk8BRHRfoiewH/CbygHttuwT/3DxFp7SWTGmeYpfcsYS6VFQIm0
- 27g/Byp7hBkOIY2evq/1QyfN22dcQEpVewYkMJAN4nvzV3z8Bby48REMagd2irHX9vPf
- UkWg==
+ bh=vl1CxJaY+02I5u3HjSWg7CDXN1GxJ7x1NMxc1BTQwm0=;
+ b=tSy5NeQjKOAH0/9y0pU5aIuhyDvrQyGvouELOKNNpLId2xzawi3T5++29YMqeueRhV
+ zg0jXXyGQI3RJ5RjOAh2JDMLuI7EQ7DvtEQKAy7hfWJmwv3jujWCOC4sCLY0S52jsNWi
+ 6E4OkQSmKwJtv1mP4sYsBLyZ7XE5u1RNnptyYPxhE49piM2gSfQm7Wqk+la81f3v09K0
+ TTLHNRKWvkX5Bax0JWBczU+oVnvqQrDmt8qo+EW4hEYaP4qOKJ/gn25QnACo3/Yn4lV5
+ 0NZef6uXvA+nrc0sq73fpTLXA90QSh/Q3SA2HFzV3diRHrDJZn48U45OXB3lTi+zYLLO
+ GZ4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794938060; x=1795542860;
+ d=1e100.net; s=20260707; t=1794938376; x=1795543176;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Bcz2C3M0nBV7LPJ6x+8JDDRrADUanvmWqDNeY+7M2RU=;
- b=Ii2+z908PgMF2hqMb3b+nwmP0e7Ye+ykIBCu9SsSWY6mXO2aaMNT5JFljTBQBTKGsp
- nmHPHlZMXqlddqoxOefZtqQ9aE5sJHEHwdH8uryD588ZDw3j7QJoCXi3esDg+c/lRA5u
- /kjHS2lTminwmihv8UJKi7/BmqpCtWofM0PkquoqYuULAGI5B7kN38T/8mXS98K/0ox3
- e1kWhtmphgJXkrakvjsjn2u+Zo1CDCJBVqKYeY7mq6fH614Bcvae1D7eNNZrNa1DUCoa
- Um387+H2IGeqVJd/q7unBfMuQhIadoLuBwMMUwXPepHLo9vaUNmd3FvrMag1P03TDla+
- Yd9g==
-X-Gm-Message-State: APuU4Z+9Okm6J0fv14+Xk0XBIJ1mx35cnSMCBdQIFZdgp7vMmO3XN7JR
- r7IyBi/tuVfKDeDI8ukMXgdoEdcZtOLcIkGYEmpU0NpdOx8C4fiohfXU4J+O34Qo3hb/O16/j+m
- itOojlnfAJiVE/2yZtGIzqXFJWSvq0CoXFjKci4+DJ14CweO2vMpJJcz3PZ3S361mLIRNQJl97B
- JQILBwnVLG4hE5Kr34mCHhEiRLB+ndEdc=
-X-Gm-Gg: AZFdTZfnZNm+y0b7d4pQcAFS7STl5tOqL9WeB+BKXfmZLGY/Y79Z9vy8hUEgt6MyCfo
- BUwOy7i+8nXSmU19WLifDvARm+VfvbFvPXIlHVls/H95Scp/rLbSAM87Mp93rlFyJTfB75x4ser
- UMfCrd1/jNL3q8KlObjBxnhlGk4bGBgchSjtPIf6RvAD2ATcQ7NMitQ8DX+yURKGvyXmtKdEwPA
- D+WWlgYGZyCeYxM
-X-Received: by 2002:a05:690e:144a:b0:67c:1d44:7897 with SMTP id
- 956f58d0204a3-67dd3d4f896mr229637d50.12.1794938060583; 
- Tue, 17 Nov 2026 09:54:20 -0800 (PST)
-X-Received: by 2002:a05:690e:144a:b0:67c:1d44:7897 with SMTP id
- 956f58d0204a3-67dd3d4f896mr229622d50.12.1794938060030; Tue, 17 Nov 2026
- 09:54:20 -0800 (PST)
+ bh=vl1CxJaY+02I5u3HjSWg7CDXN1GxJ7x1NMxc1BTQwm0=;
+ b=Jir1pEzlJrzPF7iFwi5XROfn7GivgX6xcajjHpZqrfC5CyEFZG3oLytoQnRcwZQvR5
+ ej+NNMJa2j/4xBwkmJjsSrz0m9KPayFN+5Er7hYewUh0N5YFniwYNuQPnquNMdz3rKcL
+ xl/e2WpNOd2iwe+WjPmySYyVwTc/1rNxgIBAYJWsmmWKFWoR8LaReubvPOiBVBY36rA1
+ EsntAehBWSMV8W+ngz73bAecOMmFViKu7XBtFpCbrmEezvU+JOxdxJBLG6rG9jGpOoZj
+ m2GUERKGSgZApjg7KrbkLbHQh4/rSRyDim/HJzoBKo/ZC4SxNCkKyyVzxlbcWz2la5Tg
+ aJ9g==
+X-Gm-Message-State: APuU4Z8Zj1PKCBdkq/thsVPlEJM6GGnif0Rz5B7vEevzxKHuVfRzkuB1
+ fN3mcFQOfYJYyiN4z1Fwn8irM+a+IsAsYQCKXypmy8sigXhcl9ez1xaLEdolTjl1B0vRigSbAxE
+ IutmntOFcpVVvOYr/HSuk9zdVy3BeEnThPx8VOoCapPD3H+L1O91PW8aVQRM5QMpjDJLWg4xTJ3
+ JBJOLCkt5Z6o01yo7YvzquTWzQTX1pKvA=
+X-Gm-Gg: AZFdTZcYFltG188Xxl7JEga5RRN6WPeFGycUKvpZqncXWhIAPkA0mdo24izMO7C9QKA
+ DphpqJetqSU8CmOSgxqIuWF/ClQrvHkfZjPYBb5Dnv/fpXQq59QBEibhoDsN3DAi/5Ah1WIBgUN
+ pWsEjXpCEWKlrf4n3qmY8q9Bp557AD/4pNRt5G6XDtQ5USn6jhuZCqxDbW+iIMeBK0KooBVB1XN
+ btk9tX/AQ0fdWMi
+X-Received: by 2002:a05:690e:4182:b0:67c:1ebe:3844 with SMTP id
+ 956f58d0204a3-67dd3cf9c28mr212005d50.2.1794938376429; 
+ Tue, 17 Nov 2026 09:59:36 -0800 (PST)
+X-Received: by 2002:a05:690e:4182:b0:67c:1ebe:3844 with SMTP id
+ 956f58d0204a3-67dd3cf9c28mr211982d50.2.1794938375902; Tue, 17 Nov 2026
+ 09:59:35 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20261116165002.30939-1-jsnow@redhat.com>
- <20261116165002.30939-6-jsnow@redhat.com>
- <avxa4ZVUP5GcWi5v@redhat.com>
-In-Reply-To: <avxa4ZVUP5GcWi5v@redhat.com>
+ <20261116165002.30939-2-jsnow@redhat.com>
+ <avxZFbMNjEmnY2yK@redhat.com>
+In-Reply-To: <avxZFbMNjEmnY2yK@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Tue, 17 Nov 2026 12:54:07 -0500
-X-Gm-Features: AclHuK9JBg0lxzsrWkkVeYrlg-5ShEC8ITTTmo5RceCDv2_djJuCATVOvfKauC8
-Message-ID: <CAFn=p-ZKZ_S_33e_PZ-5tyU=DHczE=cVSCWEvkSZRJsKkbo3PA@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] debug/mem: name coroutine stacks
+Date: Tue, 17 Nov 2026 12:59:23 -0500
+X-Gm-Features: AclHuK_DtNwb7PXUej_MF5pzE6TrIDPiVJKRVs4ZeA6ganrEwOTaTfhsBtGAuDk
+Message-ID: <CAFn=p-Z+LoTqzLAirksuHjt8fghkjWOyvMZ=YJdUFQftHdiA3A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] debug/mem: add utility to name anonymous memory
+ mappings
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
@@ -124,14 +125,14 @@ Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -14
 X-Spam_score: -1.5
 X-Spam_bar: -
 X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
  RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -152,59 +153,166 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 17, 2026 at 8:47=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
+On Tue, Nov 17, 2026 at 8:39=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
 edhat.com> wrote:
 >
-> On Mon, Nov 16, 2026 at 11:50:00AM -0500, John Snow wrote:
+> On Mon, Nov 16, 2026 at 11:49:56AM -0500, John Snow wrote:
+> > Add support to name mmap'd memory regions using
+> > PR_SET_VMA_ANON_NAME. On unsupported platforms, these QEMU utility
+> > functions are no-ops.
+> >
+> > This is useful primarily for debugging and profiling QEMU; being able
+> > to see and correlate each VMA segment with a specific use within QEMU.
+> >
+> > Support for PR_SET_VMA_ANON_NAME was added in Linux 5.17, and requires
+> > CONFIG_ANON_VMA_NAME=3Dy to be set in the kernel configuration. Fedora
+> > (and RHEL) do not enable this feature by default. See also
+> > https://man7.org/linux/man-pages/man2/pr_set_vma.2const.html
+> >
 > > Signed-off-by: John Snow <jsnow@redhat.com>
 > > ---
-> >  util/oslib-posix.c | 3 +++
-> >  1 file changed, 3 insertions(+)
->
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
+> >  include/qemu/mmap-vma.h | 18 +++++++++++
+> >  util/mmap-vma.c         | 71 +++++++++++++++++++++++++++++++++++++++++
+> >  util/meson.build        |  1 +
+> >  3 files changed, 90 insertions(+)
+> >  create mode 100644 include/qemu/mmap-vma.h
+> >  create mode 100644 util/mmap-vma.c
 > >
-> > diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-> > index dc001da66dd..454579c72df 100644
-> > --- a/util/oslib-posix.c
-> > +++ b/util/oslib-posix.c
-> > @@ -60,6 +60,7 @@
-> >
-> >  #include "qemu/memalign.h"
-> >  #include "qemu/mmap-alloc.h"
+> > diff --git a/include/qemu/mmap-vma.h b/include/qemu/mmap-vma.h
+> > new file mode 100644
+> > index 00000000000..763ea5a5cab
+> > --- /dev/null
+> > +++ b/include/qemu/mmap-vma.h
+> > @@ -0,0 +1,18 @@
+> > +/*
+> > + * Utility for naming VMA allocations in linux
+> > + *
+> > + * Copyright (c) Red Hat, Inc 2026
+> > + *
+> > + * SPDX-License-Identifier: LGPL-2.1-or-later
+> > + */
+> > +
+> > +#ifndef __QEMU_MMAP_VMA_H
+> > +#define __QEMU_MMAP_VMA_H
+> > +
+> > +#include <stddef.h>
+> > +#include "osdep.h"
+> > +
+> > +int qemu_name_vma(void *ptr, size_t sz, const char *fmt, ...)
+> > +    G_GNUC_PRINTF(3, 4);
+> > +
+> > +#endif
+> > diff --git a/util/mmap-vma.c b/util/mmap-vma.c
+> > new file mode 100644
+> > index 00000000000..7a50965d496
+> > --- /dev/null
+> > +++ b/util/mmap-vma.c
+> > @@ -0,0 +1,71 @@
+> > +/*
+> > + * Utility for naming VMA allocations in linux
+> > + *
+> > + * Copyright (c) Red Hat, Inc 2026
+> > + *
+> > + * SPDX-License-Identifier: LGPL-2.1-or-later
+> > + */
 > > +#include "qemu/mmap-vma.h"
-> >
-> >  #define MAX_MEM_PREALLOC_THREAD_COUNT 32
-> >
-> > @@ -742,6 +743,8 @@ void *qemu_alloc_stack(size_t *sz)
-> >          abort();
-> >      }
-> >
-> > +    qemu_name_vma(ptr, *sz, "coroutine-stack");
+> > +#include "qemu/osdep.h"
+> > +
+> > +#include <errno.h>
+> > +#include <stddef.h>
+> > +#include <stdio.h>
+> > +
+> > +#if defined(__linux__)
+> > +#include <sys/prctl.h>
+> > +#endif
+> > +
+> > +#define VMA_PREFIX " qemu: "
+> > +#define VMA_MAXLEN 80
+> > +
+> > +/*
+> > + * Give a human-readable name to a previously mmap'd memory segment.
+> > + * This feature is only available on Linux >=3D 5.17, and only when th=
+e
+> > + * kernel was configured with CONFIG_ANON_VMA_NAME=3Dy.
+> > + *
+> > + * For systems without this option, prctl() will return -1 and set
+> > + * errno to EINVAL, and can be safely ignored.
+> > + *
+> > + * For systems with this option, these human-readable names will be
+> > + * visible in /proc/$pid/[s]maps, pmap output, etc.
+> > + */
+> > +G_GNUC_PRINTF(3, 0)
+> > +static int qemu_vname_vma(void *ptr, size_t sz, const char *fmt, va_li=
+st args)
 >
-> Our coroutines are crying out to be named in the future :-)
+> As the comment says above, we can't assume the kernel will have
+> the feature enabled.
+>
+> It is harmless if we try to set the VMA name and it fails
+> though. We merely loose a bit of debug info. Thus I'd
+> suggest we make the function return type 'void', so that
+> it is clear that we do NOT expect callers to check for
+> errors.
 
-I know :)
-
-I looked for five minutes but wasn't exactly sure how to name them. My
-understanding is each coroutine stack could theoretically service
-different routines, but only one at a time. I am not so clear on our
-model that I felt I could confidently give them meaningful names, so I
-left it as an exercise to a future reader.
-
-(Naughty, naughty.)
-
-Since we're in freeze and it seems unlikely we'll agree this is rc1
-fodder, I'm happy to take some extra time and improve the helpers, but
-some pointed suggestions would not go wrong :)
+You're probably right, I think I was holding out for the possibility
+of callers being able to check if they got the memory region
+boundaries correct (in the case of naming ptmalloc buffers), but....
+with the amount of extra work it'd take to make a robust system for
+identifying actual mmap regions possible, it'd be just as easy to add
+a simple int retcode back in, so... void for now it is, sure.
 
 --js
 
 >
+> > +{
+> > +    int rc =3D 0;
 > > +
-> >      /* Stack grows down -- guard page at the bottom. */
-> >      if (mprotect(ptr, pagesz, PROT_NONE) !=3D 0) {
-> >          perror("failed to set up stack guard page");
+> > +#if defined(PR_SET_VMA_ANON_NAME)
+> > +    char strbuf[VMA_MAXLEN];
+> > +
+> > +    assert(sizeof(VMA_PREFIX) < sizeof(strbuf));
+> > +    strncpy(strbuf, VMA_PREFIX, sizeof(strbuf));
+> > +    rc =3D vsnprintf(strbuf + sizeof(VMA_PREFIX),
+> > +                   sizeof(strbuf) - sizeof(VMA_PREFIX), fmt, args);
+> > +    if (rc < 0) {
+> > +        return -errno;
+> > +    } else if (rc >=3D (sizeof(strbuf) - sizeof(VMA_PREFIX))) {
+> > +        sprintf(strbuf + sizeof(strbuf) - 4, "...");
+> > +    }
+> > +
+> > +    rc =3D prctl(PR_SET_VMA, PR_SET_VMA_ANON_NAME, ptr, sz, strbuf);
+> > +    if (rc) {
+> > +        return -errno;
+> > +    }
+> > +#endif
+> > +
+> > +    return rc;
+> > +}
+> > +
+> > +G_GNUC_PRINTF(3, 4)
+> > +int qemu_name_vma(void *ptr, size_t sz, const char *fmt, ...)
+> > +{
+> > +    int rc;
+> > +    va_list args;
+> > +
+> > +    va_start(args, fmt);
+> > +    rc =3D qemu_vname_vma(ptr, sz, fmt, args);
+> > +    va_end(args);
+> > +
+> > +    return rc;
+> > +}
+> > diff --git a/util/meson.build b/util/meson.build
+> > index fa174c07a57..861ee228d5b 100644
+> > --- a/util/meson.build
+> > +++ b/util/meson.build
+> > @@ -1,5 +1,6 @@
+> >  util_ss.add(files('osdep.c', 'cutils.c', 'unicode.c', 'qemu-timer-comm=
+on.c'))
+> >  util_ss.add(files('thread-context.c'), numa)
+> > +util_ss.add(files('mmap-vma.c'))
+> >  if host_os !=3D 'windows'
+> >    util_ss.add(files('aio-posix.c'))
+> >    util_ss.add(files('fdmon-poll.c'))
 > > --
 > > 2.56.1
 > >
