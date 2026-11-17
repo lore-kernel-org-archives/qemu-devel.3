@@ -1,58 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EC0606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 13:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F4C606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 13:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=jHZpVCIv
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bjitvu9b
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTJNp-0006YE-2Q; Tue, 17 Nov 2026 08:38:01 -0500
+	id 1xTJO4-0006iM-GM; Tue, 17 Nov 2026 08:38:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xTJNm-0006X1-Cf
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:37:58 -0500
+ id 1xTJO1-0006dd-Q3
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:38:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xTJNk-00035f-8n
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:37:57 -0500
+ id 1xTJO0-0003B9-7i
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:38:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794922674;
+ s=mimecast20190719; t=1794922691;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=oFBMsUI+Ucyzs+OoWLQ1u3Vywo6TgCrAeUy+LC9uL2k=;
- b=jHZpVCIvWfC/mJzeRVjlwhR8DOl33iHkppPZm1sgOkkx5AVhHLb280bZBi1hQtjHIk7uSR
- Pv3b5LgkhUwCq7wdeXKhDLhNfJBZaTCNTa1cn18Jk4TUpLxMib8V5GRS4sj+KDDbGdbpBl
- vMQ7V6i2Vg4Lnsvf5fmAJ1Sa4p3HIKE=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/hNje6YUHdnu3aRo8fA0Fhrbju+nZwVH0sRanEkzr14=;
+ b=bjitvu9b/ZP/VPkoRNcxw5J7A1hTWlQ0Frh5WOuwy0e4bKztlB0eIAX8VH2GvYZn403LeG
+ BJ8HnHkqd1BgKUxjRGgqVKSyea7XDHB/DETI/gZ3FJjYtQ6dQzKxlYsoBeSnccNUMe4l53
+ 3UUqKNgneIU7z/CXkmf99xp7VZHWgJs=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-wOX_B_-KN1qsGcSBagh_lw-1; Tue,
- 17 Nov 2026 08:37:53 -0500
-X-MC-Unique: wOX_B_-KN1qsGcSBagh_lw-1
-X-Mimecast-MFC-AGG-ID: wOX_B_-KN1qsGcSBagh_lw_1794922672
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-314-gmed5SfyN0u7n52lrbg07w-1; Tue,
+ 17 Nov 2026 08:38:10 -0500
+X-MC-Unique: gmed5SfyN0u7n52lrbg07w-1
+X-Mimecast-MFC-AGG-ID: gmed5SfyN0u7n52lrbg07w_1794922689
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 92185195607B
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 13:37:52 +0000 (UTC)
+ id 3DFBD1954B2C
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 13:38:09 +0000 (UTC)
 Received: from pbonzini-thinkpadx1carbon6th.rmtit.csb
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E170B41F
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 13:37:51 +0000 (UTC)
+ id 8FF30428
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 13:38:08 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/15] i386, Rust for 2026-11-17
-Date: Tue, 17 Nov 2026 14:37:35 +0100
-Message-ID: <20261117133750.322253-1-pbonzini@redhat.com>
+Subject: [PULL 13/15] target/i386/tcg: remove unused operand sizes
+Date: Tue, 17 Nov 2026 14:37:48 +0100
+Message-ID: <20261117133750.322253-14-pbonzini@redhat.com>
+In-Reply-To: <20261117133750.322253-1-pbonzini@redhat.com>
+References: <20261117133750.322253-1-pbonzini@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -78,88 +81,83 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The following changes since commit 97c88c61d45dee6e1f9bc160a338048189846d28:
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/tcg/decode-new.h     |  4 ----
+ target/i386/tcg/decode-new.c.inc | 10 ++++------
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
-  Merge tag 'docs-security-devices-pull-request' of https://gitlab.com/berrange/qemu into staging (2026-11-16 15:48:48 -0800)
-
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to 5705f0759f17896ae60257af7fc7d23858777fc0:
-
-  rust/common: rename IntegerExt::bit() to single_bit() (2026-11-17 14:35:23 +0100)
-
-----------------------------------------------------------------
-* target/i386/kvm: fix latched INIT lost in kvm_put_vcpu_events()
-* target/i386/kvm: set VM ioctl KVM_SET_TSC_KHZ to maintain TSC synchronization
-* target/i386/tcg: fix CPUID checks for TZCNT and LZCNT
-* target/i386/tcg: reject VEX encodings of PBLENDVB, BLENDVPS and BLENDVPD
-* target/i386/tcg: fix SETCC(zu) optimization
-* target/i386/tcg: fix lea address calculation for CS register
-* target/i386/tcg: Fix 64-bit RSP truncation on far transfers
-* target/i386/tcg: all scalar instructions should be LIG
-* target/i386/tcg: treat ENTER's size operand as unsigned
-* target/i386/tcg: remove unused argument of decode_ops
-* target/i386/tcg: remove unused operand sizes
-* tests/tcg: fix load/restore for test-avx and test-mmx
-* rust: fix failure with nightly libstd
-
-----------------------------------------------------------------
-Denis V. Lunev (1):
-      target/i386/kvm: fix latched INIT lost in kvm_put_vcpu_events()
-
-Dongli Zhang (1):
-      target/i386/kvm: set VM ioctl KVM_SET_TSC_KHZ to maintain TSC synchronization
-
-Mark Cave-Ayland (1):
-      target/i386/tcg: fix lea address calculation for CS register
-
-NickSampanis (3):
-      target/i386/tcg: Fix 64-bit RSP truncation on retf in 64-bit mode
-      target/i386/tcg: Fix 64-bit RSP truncation on far call in 64-bit mode
-      target/i386/tcg: Fix 64-bit RSP truncation on far call through a call gate
-
-Paolo Bonzini (7):
-      target/i386/tcg: fix CPUID checks for TZCNT and LZCNT
-      target/i386/tcg: reject VEX encodings of PBLENDVB, BLENDVPS and BLENDVPD
-      target/i386/tcg: fix SETCC(zu) optimization
-      tests/tcg: fix load/restore for test-avx and test-mmx
-      target/i386/tcg: all scalar instructions should be LIG
-      target/i386/tcg: remove unused argument of decode_ops
-      target/i386/tcg: remove unused operand sizes
-
-Samuel Tardieu (1):
-      rust/common: rename IntegerExt::bit() to single_bit()
-
-z Y (1):
-      target/i386/tcg: treat ENTER's size operand as unsigned
-
- target/i386/tcg/decode-new.h      |  7 ++--
- target/i386/kvm/kvm.c             | 19 ++++++++-
- target/i386/tcg/seg_helper.c      | 15 +++++--
- target/i386/tcg/translate.c       | 22 +++++++++-
- tests/tcg/i386/test-avx.c         | 22 +++++-----
- tests/tcg/i386/test-i386-blendv.c | 51 +++++++++++++++++++++++
- tests/tcg/i386/test-i386-enter.c  | 42 +++++++++++++++++++
- tests/tcg/i386/test-mmx.c         | 22 +++++-----
- target/i386/tcg/decode-new.c.inc  | 88 +++++++++++++++++++--------------------
- target/i386/tcg/emit.c.inc        |  8 ++++
- rust/common/src/bitops.rs         |  8 ++--
- tests/tcg/i386/meson.build        |  2 +
- tests/tcg/x86_64/meson.build      |  2 +
- 13 files changed, 229 insertions(+), 79 deletions(-)
- create mode 100644 tests/tcg/i386/test-i386-blendv.c
- create mode 100644 tests/tcg/i386/test-i386-enter.c
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index 7f7ed3b6cf4..72ab6473e4a 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -73,15 +73,11 @@ typedef enum X86OpSize {
+     X86_SIZE_d,  /* 32-bit */
+     X86_SIZE_dq, /* SSE/AVX 128-bit */
+     X86_SIZE_p,  /* Far pointer */
+-    X86_SIZE_pd, /* SSE/AVX packed double precision */
+-    X86_SIZE_pi, /* MMX */
+-    X86_SIZE_ps, /* SSE/AVX packed single precision */
+     X86_SIZE_q,  /* 64-bit */
+     X86_SIZE_qq, /* AVX 256-bit */
+     X86_SIZE_s,  /* Descriptor */
+     X86_SIZE_sd, /* SSE/AVX scalar double precision */
+     X86_SIZE_ss, /* SSE/AVX scalar single precision */
+-    X86_SIZE_si, /* 32-bit GPR */
+     X86_SIZE_v,  /* 16/32/64-bit, based on operand size */
+     X86_SIZE_w,  /* 16-bit */
+     X86_SIZE_x,  /* 128/256-bit, based on operand size */
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 731434ff50b..19c76a12009 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -73,8 +73,8 @@
+  * the V/U/H/W types to P/N/P/Q if there is no prefix, as well as changing
+  * "x" to "q" if there is no prefix.
+  *
+- * In addition, the ss/ps/sd/pd types are sometimes mushed together as "x"
+- * if the difference is expressed via prefixes.  Individual instructions
++ * In addition, the ss/sd types are sometimes mushed together as "x"
++ * if the difference is expressed via prefixes; individual instructions
+  * are separated by prefix in the generator functions.
+  *
+  * There is a custom size "xh" used to address half of a SSE/AVX operand.
+@@ -82,6 +82,8 @@
+  * for 256-bit AVX operands, etc.  It is used for conversion operations
+  * such as VCVTPH2PS or VCVTSS2SD.
+  *
++ * pi/ps/pd are simply written as "q" or "x".
++ *
+  * There are a couple cases in which instructions (e.g. MOVD) write the
+  * whole XMM or MM register but are established incorrectly in the manual
+  * as "d" or "q".  These have to be fixed for the decoder to work correctly.
+@@ -2448,7 +2450,6 @@ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp
+         *ot = s->dflag;
+         return true;
+ 
+-    case X86_SIZE_pi: /* MMX */
+     case X86_SIZE_q:  /* 64-bit */
+     case X86_SIZE_sd: /* SSE/AVX scalar double precision */
+         *ot = MO_64;
+@@ -2497,9 +2498,6 @@ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp
+             *ot = MO_64;
+             return true;
+         }
+-        /* fall through */
+-    case X86_SIZE_ps: /* SSE/AVX packed single precision */
+-    case X86_SIZE_pd: /* SSE/AVX packed double precision */
+         *ot = s->vex_l ? MO_256 : MO_128;
+         return true;
+ 
 -- 
 2.56.0
+
 
 
