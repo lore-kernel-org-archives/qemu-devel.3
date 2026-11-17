@@ -1,123 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12ED606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 19:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB389606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 19:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=0kaWqUDv;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=jM/oommN;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=PuraewIY;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=A9lSNoMD
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=XmzUvsWk;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=XNkT2nEF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTORR-0005Yg-Jz; Tue, 17 Nov 2026 14:02:05 -0500
+	id 1xTOTW-00067a-3o; Tue, 17 Nov 2026 14:04:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xTORM-0005Vs-HK
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:02:01 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xTORK-0003LX-27
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:02:00 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id CC12C221BC;
- Tue, 17 Nov 2026 19:01:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1794942109; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+cTcbBfQVQYoz3X4MUG0pt5pb0Nok8xSug2RJ5v2izw=;
- b=0kaWqUDvmu4wy55tQOva7XtCVGAM3f7/0hc8Jeppai25dzoriQVdJbAZZ5LnfDPNBHIiuY
- EYMVr0tMDr8X676r5UGmzMKjCYADOMWy6D/ua+0H/4WVkiSDF+M3vfsMj2k2knWYOKyHC/
- ZNSm52ijBP2DWOsCAnf2xRh8EP6LLZE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1794942109;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+cTcbBfQVQYoz3X4MUG0pt5pb0Nok8xSug2RJ5v2izw=;
- b=jM/oommNuPLB/Fv4mHAL4yIYl5emvCihXkmk0HgpZ4iTfLaBcma/XH+TfH67XLAfZIoWKQ
- BqigUYMaZqhlw4Cg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=PuraewIY;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=A9lSNoMD
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1794942108; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+cTcbBfQVQYoz3X4MUG0pt5pb0Nok8xSug2RJ5v2izw=;
- b=PuraewIYLLv4wpMYex677QzfN7taNaVrdTtlCnQKoBRr6FGpEVcy5VlHf1dtsGv5qZi62U
- nwRy0b4CQspUewvdzBaFreqhVDn3dK1D7bfiX3Sq8EOnIF6p667LPIlfeNC53XwE80y/oc
- ZsK3HAgWoWAIBvOaV5js8tPo1vlECz4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1794942108;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+cTcbBfQVQYoz3X4MUG0pt5pb0Nok8xSug2RJ5v2izw=;
- b=A9lSNoMDtdHQEiOjCLPH/hdLs5DHI1dTNeckcsQUceichIiqFbiudy3EULqD/dfNVh2WNU
- yK2Yga7MH377uMDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 385461334C;
- Tue, 17 Nov 2026 19:01:48 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gS3YMJuk/Gp5WgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Nov 2026 19:01:48 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org
-Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
- peterx@redhat.com, mark.kanda@oracle.com, bchaney@akamai.com,
- pierrick.bouvier@oss.qualcomm.com, alex@shazbot.org, clg@redhat.com,
- yi.l.liu@intel.com, eric.auger@redhat.com, zhenzhong.duan@intel.com,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com, armbru@redhat.com,
- eblake@redhat.com
-Subject: Re: [PATCH 00/21] migration/cpr: introduce cpr-luo mode to support
- KHO/LUO
-In-Reply-To: <95d4d77e-7b30-463e-96a1-6add4495e451@oracle.com>
-References: <20261012235727.398133-1-dongli.zhang@oracle.com>
- <95d4d77e-7b30-463e-96a1-6add4495e451@oracle.com>
-Date: Tue, 17 Nov 2026 16:01:45 -0300
-Message-ID: <875wxvs2na.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xTOTU-00067G-Fs
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:04:12 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xTOTS-0007NY-0H
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 14:04:12 -0500
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AHFQeLa1916197
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 19:04:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=OJz0xo08RMpxgKaeuIhDiqsj
+ AmztsPne/U8NjLIunFA=; b=XmzUvsWkpMA9GuZZAUb2GH9HBaMsG0f+PNHGsOnC
+ i81+9BwFxu1invHV4i74R8XWbzG5K3rObNAqJP56zpavK/pXUZ9ZifA8bE//DUoA
+ PYMNEgj4YuP4+kv+/XTIBvv1QRMQOVDkwUNWy2qYUDdwinL/K0uO+7RiwHef9Sx1
+ gjcrh0yAzVzY0EoAnV4NDoL85P7cczXf99Ce/A8O6PjK24vzW8dvtHWJ6UZbcMFp
+ Khnt/H60yOFJa/2hnqsHrDx8QAwNFapgFaRkuM1C61DD927HpVFGCUaUF6kk6eH0
+ Pi9VsRv/7OzUel2CRhQfZQwx/Po99+nH/FNygstKFMmu3g==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0nc827gk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 19:04:07 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-921052e3e92so454826d6.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 11:04:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1794942247; x=1795547047; darn=nongnu.org;
+ h=in-reply-to:from:content-language:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:content-type:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=OJz0xo08RMpxgKaeuIhDiqsjAmztsPne/U8NjLIunFA=;
+ b=XNkT2nEFoJ1miaTc+N87A5Fj/b6qLNymu/0hpp2B2TTia+B7Cuhr5JPCl2uTLlQeJG
+ 5oOZtdnVmW7CMXIQY6TzSkqtb97/mhXILMnzuay6pQSZnAQ6noKwXAjfshb8gEzg/bF3
+ R2J0dSMCahLPeiyAPWnDAmNIa9L3JKLUT+N2yaQHpkKkLqn8HuNBD/ZqbwCgvfGqmNev
+ SQiXnNPGmDq03f+ycNT4oxmOqUpk3Rz+WIKa6kqoFXZUNVyh67zU7oDyXXMo2E/NVpMX
+ T8HAcPfyWRfw5Ubpf80lxVn4F2ovowKwrCAWUIT0w0r3GO/h4030IRHf4kL/19vpsngQ
+ 4wlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794942247; x=1795547047;
+ h=in-reply-to:from:content-language:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:content-type:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=OJz0xo08RMpxgKaeuIhDiqsjAmztsPne/U8NjLIunFA=;
+ b=wE5gUpPD2zZxeqp/EeM+wX/7IFha8HXU8JMUnWdTHaURRsmP4z37/2LLYmGH6sglV5
+ /mym5uVQvzEes9F58knjppW00KVL9sAXImqGc59smtyTv7dqS3uJa2ByLV4/6REZvPmf
+ 3VBSc4xnPXEk0En6ykMnG872yb+tDPXxuVoq5kQ5AYosBxwLhxWbKS62s53kkWca5KWE
+ /Z24Hg4HDulzoFhIfBTTMUOgBtme+1BzkzBI6jVNSE6H83q6qJ2fge9Q14WPODP85H/w
+ OmW4L9BFFhlC9IbRnfA3WCGkXRWkZ5HRpIJtlRrL/8kUt/ac/Z12L5pg0cqbAJvyQjG5
+ 40vw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErExrJDyL/KNMGowaG+aChfDovfV5sw6i8l9k2rSsy9QFFQHBNUgXOaPwnmTQxDWHflAh6Xx2Ml1drZO@nongnu.org
+X-Gm-Message-State: APuU4Z8ETB15dVnpq+OC7IAhTu3HP7Y1K/RvIQGpjvnhrSpUsHnbQReZ
+ dosD8oqnPxgxBOygJA7Z7cENbWhhmZhsyTG/sJTHkHP/Ex+QkE66CXB0RbVztguOhi4JPRIOghi
+ BTc16KfXnLBCEdftEKMAHIe2LT+VQIakq2ZLoK13wld0OO3oA5q+LvDRrFA==
+X-Gm-Gg: AZFdTZfrP4mEBejhmY8Bui5MmdXMcf0VHLjaPruteYNI02YP5nOddOXR4DLeU5akJol
+ rg67eZlyj7kBUy6X7dEO17bq81Yk6eVEk2Y/rCoCvBecDOiX2yU1LkAVjRvhkKXAPV63/AvC41K
+ ilHNf8ecgBQPimcR3mftp+aqbR8Wq528rO8AxER/0SmJe+5mFAVMsGYAYUSWtrSfuU35cQbmpld
+ +HLxbHKSt5t1oQ1CAQaevPiHpERElwMiSo7WJD5qHj3C+t0M8yjxcRieeZSk4oGr7oVJWJl5i/b
+ P4JW9vPicug7D5VFSeXEZVkMztcMlOKGXynzcEWTRBnCN1oqnKi4QBhQHNXdRVWcIL59NB1AG0p
+ pmJe7zr1pZu1kwPu0mTjtF0rYGr+vCBGlEWfSRFEqA2faDNGGWuULoy0ogohS/DAn59qi5YP2vP
+ IOkJVdomthF84fJdZUszZmAhwwXW5+shu36h+DpA==
+X-Received: by 2002:a05:6214:1c0b:b0:91f:1498:4e2b with SMTP id
+ 6a1803df08f44-92114dc90abmr1956096d6.9.1794942246902; 
+ Tue, 17 Nov 2026 11:04:06 -0800 (PST)
+X-Received: by 2002:a05:6214:1c0b:b0:91f:1498:4e2b with SMTP id
+ 6a1803df08f44-92114dc90abmr1955346d6.9.1794942246355; 
+ Tue, 17 Nov 2026 11:04:06 -0800 (PST)
+Received: from [10.222.168.147] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-92114dbef06sm816026d6.45.2026.11.17.11.04.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Nov 2026 11:04:05 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary="------------rZLLbMI5m0Ygffd06Jktb00E"
+Message-ID: <01ab9fca-5bc7-47bd-96ac-97cbac739e94@oss.qualcomm.com>
+Date: Tue, 17 Nov 2026 13:04:04 -0600
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-13.51 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
- BAYES_HAM(-3.00)[100.00%]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWELVE(0.00)[19]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; MID_RHS_MATCH_FROM(0.00)[];
- REDIRECTOR_URL(0.00)[urldefense.com];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -13.51
-X-Rspamd-Queue-Id: CC12C221BC
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/14] target/hexagon: distinguish packet-page instruction
+ TLB misses
+To: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20261117183629.2002840-1-marco.liebel@oss.qualcomm.com>
+ <20261117183629.2002840-7-marco.liebel@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20261117183629.2002840-7-marco.liebel@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=LaipeTfi c=1 sm=1 tr=0 ts=6afca527 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=r77TgQKjGQsHNAKrUKIA:9
+ a=EUspDBNiAAAA:8 a=Y1NePytOHucoCMjDTT0A:9 a=QEXdDO2ut3YA:10
+ a=9WBUS0BUyEarGz7gnyEA:9 a=OdRElRcbYItEDeqh:21 a=_W_S_7VecoQA:10
+ a=lqcHg5cX4UMA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDA3NSBTYWx0ZWRfX2xxD3QGy4CTz
+ cyYKSx/8NMby5Xmalgm34WDeTEKcUZ2x6MthCQih+0R8p1kmJvS/rceny6Q15RaW11ltteeJp67
+ hTF6qiAMMawhuD5spwKVF/LL41g3m0M=
+X-Proofpoint-GUID: -9z6bLc2OvYWUcXk3DDBwuxtKJ_sH9U4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDA3NSBTYWx0ZWRfXy7K+URyzhO/M
+ J1UT4rJMWLbKPhEfSIYMgCCZkxd3c9VOgKHtcAKH72Uc0ZldxR8DIc10e6RUOAhAUgNnSq8NFzV
+ txBYG0002TG0tKpVYnfGXStqVvtGrHp6G72YAp00LM0xqi0Vc6264uYs23tTaIQC/t7feLkX7U0
+ H03P2K7WnGzTrGwMHkU87KCxDF3P+fJ4bF1d3UEax82BciWT18vBPC2f1gWcPj0bhgmThOyWx5i
+ 2YeT/Wiuuzq4gKu5nJIQATzghusdvvpxS92VNtPI5r46hK7CxycRv7MorvyUAqddzOFK+TJxXFm
+ ByvTPramo9TWoDndEfbvFmYXC9UC7tWjo0HrBEPYD7txhqgz993dDkfdzjtmd89GCntWPJYR4BZ
+ 0WbMKIi7Rds2IJTcwxf2H0vrUZgQhjkJhpoi0+kBK4KS5t927XXj2ztqy2eE56pVyQLzQtP+JS3
+ qdp5o4aSQ1LMA3nxEsg==
+X-Proofpoint-ORIG-GUID: -9z6bLc2OvYWUcXk3DDBwuxtKJ_sH9U4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-17_03,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 phishscore=0 clxscore=1015 malwarescore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170075
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,212 +153,65 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Dongli Zhang <dongli.zhang@oracle.com> writes:
+This is a multi-part message in MIME format.
+--------------rZLLbMI5m0Ygffd06Jktb00E
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> I am rebasing the patchset on top of the most recent QEMU commit, especially
-> "migration/cpr: support vhost-vsock devices".
->
-> Meanwhile, any feedback on the proposal is appreciated.
->
 
-Sorry for the delay, we're all swimming in slop these days. The only
-feedback I have at the moment is that this feature needs tests. What's
-your plan in this regard? Can this run with nested virtualization? Or
-perhaps is there a way to mock the kernel interfaces and ensure QEMU
-does the right thing even without them? We don't need much, but the code
-definitely needs to be exercised somehow.
+On 11/17/2026 12:36 PM, Marco Liebel wrote:
+> A page-aligned fault address does not imply a straddling packet.
+> Compare its page with the packet PC page to select cause 0x60 or 0x61.
+>
+> Signed-off-by: Marco Liebel<marco.liebel@oss.qualcomm.com>
+> ---
+>   target/hexagon/cpu.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-> So far, the main idea is to reuse as much code as possible from cpr-exec and
-> cpr-transfer.
->
-> 1. Introduce the new cpr-luo mode.
-> 2. Use a UUID to identify a LUO session.
-> 3. Introduce APIs to create, preserve, and retrieve sessions and fds.
-> 4. As LUO uses the name, id, and token instead of an fd, create an independent
-> VMStateDescription rather than reuse the one for cpr-exec and cpr-transfer.
-> 5. Compute the token when transforming entries from the hash table into the list.
-> 6. Preserve fds on the source. Follow the approach used in cpr-exec and
-> cpr-transfer.
-> 7. Retrieve fds on the target. Follow the approach used in cpr-exec and
-> cpr-transfer. The tricky part is where to set the cpr incoming mode.
-> 8. There is no need to modify save_fd() or load_fd(), as we only need to migrate
-> the corresponding name and token, not the fds.
-> 9. Handle corner-case errors.
-> 10. Block VFIO.
->
-> Thank you very much!
->
-> Dongli Zhang
->
-> On Mon, Oct 12, 2026 4:55:56PM -0700, Dongli Zhang wrote:
->> This series introduces cpr-luo, a CPR migration mode that uses the Linux Live
->> Update Orchestrator (LUO) and Kexec Handover (KHO) to support KVM host kernel
->> updates through kexec. On the outgoing side, QEMU saves CPR state in a memfd and
->> preserves
->> 
->> This series introduces cpr-luo, a CPR migration mode that uses the Linux
->> Live Update Orchestrator (LUO) and Kexec Handover (KHO) to support KVM host
->> kernel updates through kexec.
->> 
->> On the outgoing side, QEMU saves CPR state in a memfd and preserves that fd
->> together with the RAMBlock backing fds in LUO. KHO carries the preserved LUO
->> state into the new kernel. The incoming QEMU retrieves the CPR state and
->> RAMBlock backing fds from LUO after kexec.
->> 
->> The regular migration stream carries device vmstate.
->> 
->> Although VFIO is currently blocked, I have an offline implementation that
->> skips cpr-luo mode in cpr_is_incoming(), skips precopy, and carefully handles
->> monitor_fd_param() although I never use it, so that VFIO is always
->> reconstructed. It works with both iommufd and legacy for mlx5_vfio_pci by
->> saving the VFIO and vendor specific state in vmstate as well.
->> 
->> The result is that guest RAM remains available across a kexec-based host
->> kernel update without copying its contents through the migration stream.
->> 
->> Here is the main idea of the patchset:
->> 
->> 1. Introduce the new cpr-luo mode.
->> 2. Use a UUID to identify a LUO session.
->> 3. Introduce APIs to create, preserve, and retrieve sessions and fds.
->> 4. As LUO uses the name, id, and token instead of an fd, create an
->> independent VMStateDescription rather than reuse the one for cpr-exec and
->> cpr-transfer.
->> 5. Compute the token when transforming entries from the hash table into the
->> list.
->> 6. Preserve fds on the source. Follow the approach used in cpr-exec and
->> cpr-transfer.
->> 7. Retrieve fds on the target. Follow the approach used in cpr-exec and
->> cpr-transfer. The tricky part is where to set the cpr incoming mode.
->> 8. There is no need to modify save_fd() or load_fd(), as we only need to
->> migrate the corresponding name and token, not the fds.
->> 9. Handle corner-case errors.
->> 10. Block VFIO.
->> 
->> I may need to rebase the current patchset on top of the patches below,
->> from which I learned quite a lot in each iteration. While working on this
->> patchset, I identified some cleanup and code issues in cpr-exec and
->> cpr-transfer. I may send fixes for them separately.
->> 
->> [PATCH v16 00/22] migration/cpr: support vhost-vsock devices
->> https://urldefense.com/v3/__https://lore.kernel.org/all/20261012-up-vsock-vhost-
->> v5-v16-0-36c38bd15ffc@virtuozzo.com/__;!!ACWV5N9M2RV99hQ!N58C4d74-
->> zpeHeXtxKWUAIRgf18-Xzk7_V7p49rzvh29deg5g2oBeAn0R5b89vJzLBPv6rkzjTo-8F0Iy16Z0oRy$ <https://urldefense.com/v3/__https://lore.kernel.org/all/20261012-up-vsock-vhost-v5-v16-0-36c38bd15ffc@virtuozzo.com/__;!!ACWV5N9M2RV99hQ!N58C4d74-zpeHeXtxKWUAIRgf18-Xzk7_V7p49rzvh29deg5g2oBeAn0R5b89vJzLBPv6rkzjTo-8F0Iy16Z0oRy$>
->> 
->> Example:
->> 
->> Add "kho=on liveupdate=on" to host kernel cmdline.
->> 
->> Create QEMU instance with memfd.
->> 
->> qemu-system-x86_64 \
->> -uuid 6f1b9f5a-6b92-4a5d-ae57-7a0ddabc1234 \
->> -machine q35,dump-guest-core=off,memory-backend=ram0,aux-ram-share=on \
->> -accel kvm -cpu host \
->> -name debug-threads=on \
->> -m 8G -smp 4 \
->> -object memory-backend-memfd,id=ram0,size=8G,share=on \
->> -device virtio-blk-pci,drive=drive0,id=virtblk0,num-queues=4 \
->> -drive file=boot.qcow2,if=none,id=drive0 \
->> -netdev user,id=net0,hostfwd=tcp::5028-:22 \
->> -device virtio-net-pci,netdev=net0 \
->> -vnc :8 -monitor stdio
->> 
->> Don't terminate QEMU process after cpr-luo migration.
->> 
->> (qemu) migrate_set_parameter mode cpr-luo
->> (qemu) migrate -d file:cpr-luo.state
->> (qemu) info status
->> VM status: paused (postmigrate)
->> 
->> Use kexec to reboot the KVM host.
->> 
->> host# kexec -s -l /boot/vmlinuz-$(uname -r) --initrd=/boot/initramfs-$(uname -r).img --reuse-cmdline
->> host# sync
->> host# kexec -e
->> 
->> Resume QEMU instance after kexec reboot.
->> 
->> qemu-system-x86_64 \
->> -uuid 6f1b9f5a-6b92-4a5d-ae57-7a0ddabc1234 \
->> -machine q35,dump-guest-core=off,memory-backend=ram0,aux-ram-share=on \
->> -accel kvm -cpu host \
->> -name debug-threads=on \
->> -m 8G -smp 4 \
->> -object memory-backend-memfd,id=ram0,size=8G,share=on \
->> -device virtio-blk-pci,drive=drive0,id=virtblk0,num-queues=4 \
->> -drive file=boot.qcow2,if=none,id=drive0 \
->> -netdev user,id=net0,hostfwd=tcp::5028-:22 \
->> -device virtio-net-pci,netdev=net0 \
->> -vnc :8 -monitor stdio \
->> -incoming cpr-luo:defer
->> 
->> (qemu) migrate_incoming file:cpr-luo.state
->> (qemu) info status
->> VM status: running
->> 
->> 
->> Dongli Zhang (21):
->>   qapi/migration: add cpr-luo migration mode
->>   migration/cpr: move CprFd definition to header file
->>   scripts/update-linux-headers: Add liveupdate.h
->>   linux-headers: import liveupdate UAPI header
->>   migration/cpr-luo: require a non-null machine UUID
->>   migration/cpr-luo: add LUO session management
->>   migration/cpr-luo: add LUO fd management helpers
->>   migration/cpr-luo: track LUO fds
->>   migration/cpr-luo: add LUO fd VMStateDescription
->>   migration/cpr-luo: add tokens for LUO fds
->>   migration/cpr: move QEMUFile fd helpers to common code
->>   migration/cpr-luo: add state fd helpers
->>   migration/cpr: add more arguments for cpr_walk_fd()
->>   migration/cpr-luo: add helpers to preserve and retrieve all LUO fds
->>   migration/cpr-luo: enable cpr-luo mode for source side preservation
->>   migration/cpr-luo: enable cpr-luo mode for target side retrieval
->>   migration/cpr-luo: abort session when migration fails
->>   system/physmem: add cpr-luo blocker
->>   monitor/qmp: close LUO session when resuming source QEMU
->>   vfio: block cpr-luo migration
->>   migration: cpr-luo documentation
->> 
->>  backends/hostmem-memfd.c         |   1 +
->>  backends/hostmem-shm.c           |   1 +
->>  docs/devel/migration/CPR.rst     |  64 +++++++
->>  hw/vfio/cpr-iommufd.c            |  17 +-
->>  hw/vfio/cpr-legacy.c             |   8 +
->>  include/hw/vfio/vfio-cpr.h       |   1 +
->>  include/migration/cpr.h          |  37 +++-
->>  include/system/iommufd.h         |   1 +
->>  include/system/system.h          |   2 +
->>  linux-headers/linux/liveupdate.h | 239 +++++++++++++++++++++++++
->>  migration/cpr-exec.c             |  32 +---
->>  migration/cpr-luo-stub.c         |  78 ++++++++
->>  migration/cpr-luo.c              | 328 ++++++++++++++++++++++++++++++++++
->>  migration/cpr.c                  | 126 +++++++++++--
->>  migration/meson.build            |   6 +
->>  migration/migration.c            |  12 +-
->>  migration/options.c              |   6 +
->>  migration/ram.c                  |   1 +
->>  monitor/qmp-cmds.c               |   7 +
->>  qapi/migration.json              |  11 +-
->>  scripts/update-linux-headers.sh  |   2 +-
->>  system/globals.c                 |   5 +
->>  system/physmem.c                 |   9 +-
->>  system/vl.c                      |   9 +
->>  24 files changed, 950 insertions(+), 53 deletions(-)
->> 
->> base-commit: 3377670ee96b5a68361016680a95b9013709d4b7
->> 
->> Thank you very much!
->> 
->> Dongli Zhang
->> 
->> 
+
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+
+--------------rZLLbMI5m0Ygffd06Jktb00E
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 11/17/2026 12:36 PM, Marco Liebel
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20261117183629.2002840-7-marco.liebel@oss.qualcomm.com">
+      <pre wrap="" class="moz-quote-pre">A page-aligned fault address does not imply a straddling packet.
+Compare its page with the packet PC page to select cause 0x60 or 0x61.
+
+Signed-off-by: Marco Liebel <a class="moz-txt-link-rfc2396E" href="mailto:marco.liebel@oss.qualcomm.com">&lt;marco.liebel@oss.qualcomm.com&gt;</a>
+---
+ target/hexagon/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <pre wrap="" class="moz-quote-pre"><span
+    style="padding: 0px; tab-size: 8;"
+    class="hljs diff colorediffs language-diff"><span
+    class="hljs-comment">Reviewed-by: Brian Cain <a class="moz-txt-link-rfc2396E" href="mailto:brian.cain@oss.qualcomm.com">&lt;brian.cain@oss.qualcomm.com&gt;</a></span></span></pre>
+  </body>
+</html>
+
+--------------rZLLbMI5m0Ygffd06Jktb00E--
 
