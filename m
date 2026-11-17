@@ -1,89 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEB2606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 08:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED708606A890
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 08:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=h30AjDFY
+	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=kJ0S4Sxv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTEwG-0003Du-SM; Tue, 17 Nov 2026 03:53:16 -0500
+	id 1xTF13-0004Dy-SM; Tue, 17 Nov 2026 03:58:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xTEwF-0003DT-3o
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 03:53:15 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1xTF12-0004Df-M3
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 03:58:12 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xTEwC-0004QA-OB
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 03:53:14 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-6b408f2d936so6687714a12.1
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 00:53:12 -0800 (PST)
+ id 1xTF10-0008UU-Fl
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 03:58:12 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-c505186727fso242923266b.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 00:58:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1794905591; x=1795510391; darn=nongnu.org;
+ d=sifive.com; s=google; t=1794905889; x=1795510689; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=4+6siOWoxN5F3pSHbv5cNjyTYhALCGylXW4k7C6DU1c=;
- b=h30AjDFYOl6oVLEvRsrpnMfwvjf1CtGzGf1QS34RGWXYL7BkBgyc/bu8Qos45WAZaL
- NUG2aLUT4/0AdES3eDyZUmXqiCEWZE3xYOxo9eKV423JH4N1qlFGKqf7rg4affM4EA7x
- U9x8BFHDR2AUsb2NjNcuU5e/eLxeswJM5HZVFK3QrFjycCsFtHVr4TPZPI9ZQPOaAZj8
- oT0xj6ebB4kHQHuY1ICjj9rjjF2S8M1vxNsCiT4QO6w4+LSSSj2WPt38bu27zlAJUsZM
- Dk/FmISgBwG57t/cJ+1zOx0IO8EtU1aK30hXeONJ4o/xngylPymo9Z/2EYSThX0aQbxt
- JbOw==
+ :content-type; bh=xrx2aASjqtzCZtcmbyEDZtYppb1iQk8pPRelgP4kkAI=;
+ b=kJ0S4SxvpOTIV+5N8D5XCuKT4kSu2XIYVYwXRfExTZcRJaecTVoVwaHcaGTtCium+o
+ xvLovT6tobc5+sS/MLYRNGBaiC30Y3/wGNvaybvdciGE+74YkX+eheQKfzkKLRIyZZhK
+ 0jrrl6JT7KoqaFuzugaI1CyJpxAEBfoH60tfs4w7wWk3xa7tH5ygOXt5hUIJIA9fsea4
+ rQitwwd3fG1Mfzp6vQojOx9JTChKzdl0qojSInJd/H/hzEGlCz5tGoiagirP31diCVwB
+ HzKl0xgz2Wbno76pxkJivKKP9BPHBnIG+7tqHyEejMpAKWyLaEN3nOfhleWBEN68k7Jw
+ aIZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794905591; x=1795510391;
+ d=1e100.net; s=20260707; t=1794905889; x=1795510689;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=4+6siOWoxN5F3pSHbv5cNjyTYhALCGylXW4k7C6DU1c=;
- b=sljut3d+BCm7+wVlGQVKpjIHCeAir8Gy979piEW0WGDInIQBWDhGs9daIl3UoIzKeG
- i8ublmt3W11d0Ka+CZMKyh7JOJ3I4LoG5KF2lgVe6ccrAjPplhCE2wsvY26SoPw3EV7w
- ggJXZJ1SBc+hqyNJ0fNsnoI+T8E541WhNYx8t7jSqZapFEcs56sN894V3MaV4FWnTfc9
- xOfzfSz26hkRtW+ZkrhXOhYMS1YR8foyixYCJI+S2bjt5dDs0k7wgQgdmeSxawkTsTFQ
- OhZLqvo6ILESHOYcKqKhV+AvTUGSBq2NUG3IgsUI3SqAFiuNH3YYNN8cbZGKXSVZ7j50
- XRYQ==
-X-Gm-Message-State: APuU4Z+aP+2rTXIWVPjYuMNMh2XTEbaKSs67p5O26wmS+pMiwVQ7y1cy
- WTImj5oSLGA55i1qDqfJthb6y/qb4IpIolhQi2tniEIdql/j26b2zLiaXzWdzyExR36E9BAcdN/
- Qqb6dyNZmQt8ymosaAFdYttKqE6iFP0Scg1V9Nu21YjC2sqZKykt8dSCBwOBAq9LxGFcTcNxx4I
- AKtSFsRYS2bFMZCmygEh1CO6OT6c8WJ7EtDoHKlb8xu3E=
-X-Gm-Gg: AYBFou3J/w3wezCoH4J+/ZffRfHkKjlnAzy17Bv88SdZC8swEJJJMxVDmhMA516Cyxa
- 5hUYUyAQO3Ct4vP3tuZa2qZv520ukpfGV2mL1EzXN6aqk/yJ8jyM2haFdt9jvcsB8iHxLWbgz5B
- b+8p+GjQw/oaZQWpYo6JxSxLIQVCLAF5P4DPJHzVicOZ4NvjueSpLyj13D6SpfR46nQgxH70PYe
- SO2WdBw+dAlBIcx6rpgoH6OwRCPUiqhg+wlTjUSUA7+GIr9okV/WIqkbaXWJKZZRkU5oQXHwxC8
- ojiIBCg5Cmx7p0SyIQ5Shy9xvOpaaLXGdfzaaHBoCKAAlb0quMf5qVvdoPxhfaIGO5bgWGwrNPi
- 7e+XCHKfNob8XQi9yBEJhER+3bdlC1EoFrfiovGmTw85huH52ZB+dlMJRN2xibYu3nfFWIIXYPw
- IMaufeu8iRo44jvYlacwdKNVUm0xw7UYAtpQQoRyg6HUgYHMRTPrKEWGWhks4i+9p+MN2NlWvt/
- Sa2+mMf9bcANgF/5aQIOumWj1IXoKW0oblZ+O4olqJLpolK0SGqFPtD2Muj3POVqQXEkImaQcJV
- tfMrh/bIWk0yH+N4Pf9Tar72Rxii4PRAvmOrZHqaPKDJcrXUAHrEFGAHBw7znL41N5A=
-X-Received: by 2002:a17:907:72c8:b0:c50:73bd:ed25 with SMTP id
- a640c23a62f3a-c50964287eemr1007449966b.49.1794905590496; 
- Tue, 17 Nov 2026 00:53:10 -0800 (PST)
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com.
- [209.85.208.54]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c5095b58b66sm515568666b.50.2026.11.17.00.53.08
+ bh=xrx2aASjqtzCZtcmbyEDZtYppb1iQk8pPRelgP4kkAI=;
+ b=xGddDZN/S9Lnsc0xqdqNlf1okvo9oe1HMmnH1ga8BckTUpdEuCswr0YYHJbm6ThCme
+ 3hmc0O3kHYZ/NTNMgdLB//F+4AjsUKjAd2sUGz7UwXvT4L8L+a9QaIniQQWNP6CiNu6r
+ RpiqVdbppnhA2dKbIpGJf7iRFEsPGDxl9nX+yvITwutORCpfDboediq3kQf/xzX5Yw3b
+ XJkjU2mb032SlLnJtl1VPuepL7PFRecyBZ1sZVKqk2q0QoYsN4NrliIlOijQQ/u+a6AJ
+ 45Y0xyUQtlf0Yp+I/84tVO7lgEe839PTadN1ggTxzUy/0nI8P+4vTqcTq7aqiEueKF7h
+ 0Kww==
+X-Gm-Message-State: APuU4Z9oNzh+kxMO3us19SEOAJcka5SwTxOihxto6fARrlzjWXR/wUIN
+ VI4f/vde3CN4H+KpNi0mys47onVJuad4VPtnWIG6lXSkt0CuOttbCuWWDtDj/J0BXm6xFeLU5wT
+ C1ybBLLwU7scq3+nfRAcDbPFTvjAz2figz5IEMVQ8V/U+Y+KA7pWVBhpl+RsLU3inOMYLkhnRik
+ ddB+pc90n7MoZfigCEWQaHxGXf+VjvsQ3xze3s8iQ14mw=
+X-Gm-Gg: AYBFou3FLZCkauIFWly8aA5qgXSCnRPe05MTP5wxP62VPL2OCC/s1wJTzsz0hPo+xf9
+ jPHbJFGWipUeXaVuO1KUxjIe/Gh2EduG5HCwF1cVUgvY9sI6eV1WJJ8kW1606dGwp3X2499mqAh
+ 6qkeBSrvnHV0zlMdVyjElUEFgCQKWUeBBh30ECLnKdCdEwrZ35fbbh4SQwR2SpnmJD1NSZwILdG
+ INneVofXCCoaX7kHU0b0ao8SH3oW/htUQX7mXUOtkDk0m6wfOUYKP+yVFNDKJ2lUBpbjy+KjBHn
+ YzNdeB2UcrENuNne01AtwPZ03yboE+YI99ygfF8QRhT9tzZ4hGW0WFfTfnANukW+FU6Cei0K+4+
+ sbHFOqhpM0l5cPAwt7+fOhg25oIqFDqi3ZceJm6wscpKUXyKo3WUjble8IzpDw10j5qQycr4ZgD
+ 7L9GAGAMfelbiW+cnwWEZ/f8LyX2oc/qBOXUw+BKdobcohUFAlX8Nf54jhbXlpwdPUCpBFKOOHF
+ mLKWhN6Bp7Y9tEYHuVdBZkIeHb4wtVa1kvJ1JB5FDqqX1U5Dl3s54h8TgmTW5lGPcYwiboJzo7J
+ 2WiOiJ4F7yr6hx21xPYvjdBGnAL9P5zdPW+pgOWL++oe/kSYwMCKyKBui/X1b+k41RA=
+X-Received: by 2002:a17:907:3f02:b0:c50:5186:6dc2 with SMTP id
+ a640c23a62f3a-c509636b5f5mr1227491866b.24.1794905888679; 
+ Tue, 17 Nov 2026 00:58:08 -0800 (PST)
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com.
+ [209.85.218.52]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c5095b23b1fsm520246066b.21.2026.11.17.00.58.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Nov 2026 00:53:09 -0800 (PST)
-Received: by mail-ed1-f54.google.com with SMTP id
- 4fb4d7f45d1cf-6b7bffb5b8fso5485255a12.3
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 00:53:08 -0800 (PST)
-X-Received: by 2002:a05:6402:44dc:b0:6b7:1c:eae0 with SMTP id
- 4fb4d7f45d1cf-6b7c0c1ff32mr8009779a12.24.1794905588364; Tue, 17 Nov 2026
- 00:53:08 -0800 (PST)
+ Tue, 17 Nov 2026 00:58:07 -0800 (PST)
+Received: by mail-ej1-f52.google.com with SMTP id
+ a640c23a62f3a-c505186727fso242916866b.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 00:58:06 -0800 (PST)
+X-Received: by 2002:a17:907:9492:b0:c2e:52d6:1fb7 with SMTP id
+ a640c23a62f3a-c509636a2ffmr988069066b.22.1794905886301; Tue, 17 Nov 2026
+ 00:58:06 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20260825-upstream-ntrace_core-v1-0-f8be2f40d2fd@gmail.com>
- <20260825-upstream-ntrace_core-v1-1-f8be2f40d2fd@gmail.com>
-In-Reply-To: <20260825-upstream-ntrace_core-v1-1-f8be2f40d2fd@gmail.com>
+ <20260825-upstream-ntrace_core-v1-2-f8be2f40d2fd@gmail.com>
+In-Reply-To: <20260825-upstream-ntrace_core-v1-2-f8be2f40d2fd@gmail.com>
 From: Jay Chang <jay.chang@sifive.com>
-Date: Tue, 17 Nov 2026 16:52:57 +0800
-X-Gmail-Original-Message-ID: <CAMXXpfaYax-65nOrxMj0pEA3bgq3Ujz72iUbCZs0UhH6zSU5dw@mail.gmail.com>
-X-Gm-Features: AclHuK8MQoklHcAganw1PuQpM5tkim66BL6V-uC6bhC-WKRB_ndxl63hYNk5e6U
-Message-ID: <CAMXXpfaYax-65nOrxMj0pEA3bgq3Ujz72iUbCZs0UhH6zSU5dw@mail.gmail.com>
-Subject: Re: [PATCH 01/13] hw/riscv/trace-encoder: add ntrace enable flag
+Date: Tue, 17 Nov 2026 16:57:55 +0800
+X-Gmail-Original-Message-ID: <CAMXXpfaWB7ThMhMwWGPswVhbNO8WoN9zbF5msp9k9XHj54UUQw@mail.gmail.com>
+X-Gm-Features: AclHuK-7e_E-nSEAQU92XKWBNlv37GKi9q3dN3M77frFQiApyxepb3L_cGdSbfk
+Message-ID: <CAMXXpfaWB7ThMhMwWGPswVhbNO8WoN9zbF5msp9k9XHj54UUQw@mail.gmail.com>
+Subject: Re: [PATCH 02/13] hw/riscv/trace-encoder.c: add trace ntrace/etrace
+ selection logic
 To: Konstantin Semichastnov <antikostya2@gmail.com>
 Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
@@ -92,9 +93,9 @@ Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  qemu-riscv@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Alexei Filippov <halip0503@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000fff9b806607505ef"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=jay.chang@sifive.com; helo=mail-ed1-x531.google.com
+Content-Type: multipart/alternative; boundary="000000000000c2275406607517ea"
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=jay.chang@sifive.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,142 +117,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000fff9b806607505ef
+--000000000000c2275406607517ea
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Reviewed-by: Jay Chang<jay.chang@sifive.com>
 Thanks
 
+
 On Tue, Aug 25, 2026 at 10:49=E2=80=AFPM Konstantin Semichastnov <
 antikostya2@gmail.com> wrote:
 
-> Initial commit of N-Trace support patch series based on "RISC-V n-trace
-> (Nexus-based Trace) Specification" Version 1.0.
-> With Trace control devices based on "RISC-V Trace Control Interface
-> Specification" Version 1.0.
+> Selecting trace message format rely on `TraceEncoder->ntrace` flag.
+> This flag mirrors trTeFormat bit.
 >
-> Selecting trace message format rely on trTeFormat bit of trTeControl
-> trace encoder register.
+> For now only two values supported:
 >
-> We will mirror trTeFormat value in trace encoder in `ntrace` field to
-> simplify checking of current format in trace encoder logic.
+>  - E-Trace (trTeFormat =3D 0), trace format, described by Efficient trace
+> spec.
 >
-> This commit only mirrors register value in field, logic based on this
-> field value is added in next commit.
+>  - N-Trace (trTeFormat =3D 1), trace format, described by Nexus trace spe=
+c.
+>
+> For now we not yet implemented any N-Trace messages, so currently
+> `ntrace` field only disables E-Trace messages competely. We will reuse
+> this field in following commits, when N-Trace messages added.
 >
 > Signed-off-by: Konstantin Semichastnov <antikostya2@gmail.com>
 > ---
->  hw/riscv/trace-encoder.c | 22 +++++++++++++++++++++-
->  hw/riscv/trace-encoder.h |  2 ++
->  2 files changed, 23 insertions(+), 1 deletion(-)
+>  hw/riscv/trace-encoder.c    | 29 +++++++++++++++++++++++++----
+>  target/riscv/trace_helper.c |  8 ++++++--
+>  2 files changed, 31 insertions(+), 6 deletions(-)
 >
 > diff --git a/hw/riscv/trace-encoder.c b/hw/riscv/trace-encoder.c
-> index 55acb1f2ae..53345a478c 100644
+> index 53345a478c..34c8f60ce1 100644
 > --- a/hw/riscv/trace-encoder.c
 > +++ b/hw/riscv/trace-encoder.c
-> @@ -84,6 +84,9 @@ REG32(TR_TE_CONTROL, 0x0)
->  #define R_TR_TE_CONTROL_RESET R_TR_TE_CONTROL_EMPTY_MASK
->  #define R_TR_TE_CONTROL_RO_BITS R_TR_TE_CONTROL_EMPTY_MASK
->
-> +#define TR_TE_CONTROL_FORMAT_ETRACE 0
-> +#define TR_TE_CONTROL_FORMAT_NTRACE 1
-> +
->  /*
->   * trTeImpl register fields
->   */
-> @@ -153,7 +156,6 @@ static uint64_t
-> trencoder_te_ctrl_set_hardwire_vals(uint64_t input)
->      input =3D FIELD_DP32(input, TR_TE_CONTROL, CONTEXT, 0);
->      input =3D FIELD_DP32(input, TR_TE_CONTROL, INST_STALL_ENA, 0);
->      input =3D FIELD_DP32(input, TR_TE_CONTROL, INHIBIT_SRC, 1);
-> -    input =3D FIELD_DP32(input, TR_TE_CONTROL, FORMAT, 0);
->
->      /* SYNC_MODE and SYNC_MAX will be revisited */
->      input =3D FIELD_DP32(input, TR_TE_CONTROL, INST_SYNC_MODE, 0);
-> @@ -168,6 +170,7 @@ static uint64_t trencoder_te_ctrl_prew(RegisterInfo
+> @@ -254,7 +254,11 @@ static void trencoder_te_ctrl_postw(RegisterInfo
 > *reg, uint64_t val)
->      uint32_t trTeActive =3D ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL,
-> ACTIVE);
->      uint32_t trTeInstTracing =3D ARRAY_FIELD_EX32(te->regs, TR_TE_CONTRO=
-L,
->                                                  INST_TRACING);
-> +    uint32_t trTeFormat =3D ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL,
-> FORMAT);
->      uint32_t temp;
 >
->      val =3D trencoder_te_ctrl_set_hardwire_vals(val);
-> @@ -205,6 +208,19 @@ static uint64_t trencoder_te_ctrl_prew(RegisterInfo
-> *reg, uint64_t val)
->          val =3D FIELD_DP32(val, TR_TE_CONTROL, INST_TRACING, 0);
->      }
->
-> +    temp =3D FIELD_EX32(val, TR_TE_CONTROL, FORMAT);
-> +    if (te->trace_running) {
-> +        /* Do not allow to change tracing format while tracing is
-> enabled. */
-> +        val =3D FIELD_DP32(val, TR_TE_CONTROL, FORMAT, trTeFormat);
-> +    } else if (temp !=3D TR_TE_CONTROL_FORMAT_ETRACE &&
-> +               temp !=3D TR_TE_CONTROL_FORMAT_NTRACE) {
-> +        /*
-> +         * Do not change format, if requested format is not supported
-> +         * (only E-Trace and N-Trace formats are supported for now)
-> +         */
-> +        val =3D FIELD_DP32(val, TR_TE_CONTROL, FORMAT, trTeFormat);
-> +    }
-> +
->      return val;
->  }
->
-> @@ -215,6 +231,7 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg=
-,
-> uint64_t val)
->      uint32_t trTeEnable =3D ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL,
-> ENABLE);
->      uint32_t trTeInstTracing =3D ARRAY_FIELD_EX32(te->regs, TR_TE_CONTRO=
-L,
->                                                  INST_TRACING);
-> +    uint32_t trTeFormat =3D ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL,
-> FORMAT);
->      RISCVCPU *cpu =3D te->cpu;
->      CPURISCVState *env =3D &cpu->env;
->
-> @@ -233,6 +250,8 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg=
-,
-> uint64_t val)
->
->      te->enabled =3D trTeEnable ? true : false;
->
-> +    te->ntrace =3D (trTeFormat =3D=3D TR_TE_CONTROL_FORMAT_NTRACE);
-> +
 >      if (!te->trace_running && trTeInstTracing) {
 >          /* Starting trace. Ask the CPU for the first trace insn */
->          te->trace_next_insn =3D true;
-> @@ -314,6 +333,7 @@ static void trencoder_reset(DeviceState *dev)
->      te->enabled =3D false;
->      te->trace_running =3D false;
->      te->trace_next_insn =3D false;
-> +    te->ntrace =3D false;
->      env->trace_running =3D false;
+> -        te->trace_next_insn =3D true;
+> +        if (te->ntrace) {
+> +            /* send ProgTraceSync message */
+> +        } else {
+> +            te->trace_next_insn =3D true;
+> +        }
 >
->      te->branch_map =3D 0;
-> diff --git a/hw/riscv/trace-encoder.h b/hw/riscv/trace-encoder.h
-> index 48cf8366ee..fed0ef9a48 100644
-> --- a/hw/riscv/trace-encoder.h
-> +++ b/hw/riscv/trace-encoder.h
-> @@ -44,6 +44,8 @@ struct TraceEncoder {
->      bool enabled;
->      bool trace_running;
->      bool trace_next_insn;
+>          te->ramsink_ramstart =3D trencoder_read_ramsink_writep(te);
+>          te->ramsink_ramlimit =3D trencoder_read_ramsink_ramlimit(te);
+> @@ -442,6 +446,8 @@ static void trencoder_send_sync_msg(Object
+> *trencoder_obj, uint64_t pc)
+>      uint8_t msg_size;
+>      bool is_branch_taken;
+>
+> +    g_assert(!trencoder->ntrace);
 > +
-> +    bool ntrace;
->  };
+>      trencoder->first_pc =3D pc;
+>      is_branch_taken =3D trencoder_addr_is_branch_taken(trencoder, pc);
+>      msg_size =3D rv_etrace_gen_encoded_sync_msg(msg, pc, priv,
+> @@ -458,6 +464,8 @@ static void trencoder_send_updiscon(TraceEncoder
+> *trencoder, uint64_t pc)
+>      bool updiscon =3D !notify;
+>      uint8_t msg_size;
 >
->  #define TYPE_TRACE_ENCODER "trace-encoder"
+> +    g_assert(!trencoder->ntrace);
+> +
+>      if (trencoder->branches > 0) {
+>          msg_size =3D rv_etrace_gen_encoded_format1(format2_msg,
+>                                                   trencoder->branches,
+> @@ -485,6 +493,8 @@ void trencoder_set_first_trace_insn(Object
+> *trencoder_obj, uint64_t pc)
+>      uint8_t msg_size;
+>      bool is_branch_taken;
+>
+> +    g_assert(!trencoder->ntrace);
+> +
+>      if (trencoder->updiscon_pending) {
+>          trencoder_send_updiscon(trencoder, pc);
+>      }
+> @@ -508,6 +518,11 @@ void trencoder_trace_trap_insn(Object *trencoder_obj=
+,
+>      g_autofree uint8_t *msg =3D g_malloc0(TRACE_MSG_MAX_SIZE);
+>      uint8_t msg_size;
+>
+> +    if (trencoder->ntrace) {
+> +        /* send IndirectBranchHist message */
+> +        return;
+> +    }
+> +
+>      if (trencoder->updiscon_pending) {
+>          trencoder_send_updiscon(trencoder, pc);
+>      }
+> @@ -525,9 +540,15 @@ static void trencoder_send_branch_map(Object
+> *trencoder_obj)
+>      g_autofree uint8_t *msg =3D g_malloc0(TRACE_MSG_MAX_SIZE);
+>      uint8_t msg_size;
+>
+> -    msg_size =3D rv_etrace_gen_encoded_format1_noaddr(msg,
+> -                                                    te->branches,
+> -                                                    te->branch_map);
+> +    if (te->ntrace) {
+> +        /* send ResourceFull message */
+> +        return;
+> +    } else {
+> +        msg_size =3D rv_etrace_gen_encoded_format1_noaddr(msg,
+> +                                                        te->branches,
+> +                                                        te->branch_map);
+> +    }
+> +
+>      trencoder_send_message_smem(te, msg, msg_size);
+>  }
+>
+> diff --git a/target/riscv/trace_helper.c b/target/riscv/trace_helper.c
+> index cd57641d9b..9b43aeac09 100644
+> --- a/target/riscv/trace_helper.c
+> +++ b/target/riscv/trace_helper.c
+> @@ -34,8 +34,12 @@ void helper_trace_updiscon(CPURISCVState *env)
+>      RISCVCPU *cpu =3D env_archcpu(env);
+>      TraceEncoder *te =3D TRACE_ENCODER(cpu->trencoder);
+>
+> -    te->updiscon_pending =3D true;
+> -    te->trace_next_insn =3D true;
+> +    if (te->ntrace) {
+> +        /* send IndirectBranchHist message */
+> +    } else {
+> +        te->updiscon_pending =3D true;
+> +        te->trace_next_insn =3D true;
+> +    }
+>  }
+>
+>  void helper_trace_branch(CPURISCVState *env, target_ulong pc, int taken)
 >
 > --
 > 2.43.0
@@ -259,158 +260,178 @@ L,
 >
 >
 
---000000000000fff9b806607505ef
+--000000000000c2275406607517ea
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><span class=3D"gmail-il">Reviewed</span>-by: Jay Chang&lt;=
-<a href=3D"mailto:jay.chang@sifive.com">jay.chang@sifive.com</a>&gt;<div>Th=
-anks</div></div><br><div class=3D"gmail_quote gmail_quote_container"><div d=
-ir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 25, 2026 at 10:49=E2=80=AFPM Ko=
-nstantin Semichastnov &lt;<a href=3D"mailto:antikostya2@gmail.com">antikost=
-ya2@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">Initial commit of N-Trace support patch series based on &quot;=
-RISC-V n-trace<br>
-(Nexus-based Trace) Specification&quot; Version 1.0.<br>
-With Trace control devices based on &quot;RISC-V Trace Control Interface<br=
->
-Specification&quot; Version 1.0.<br>
+<div dir=3D"ltr"><div><div class=3D"gmail-gs" style=3D"margin:0px;min-width=
+:0px;padding:0px 0px 20px;width:auto;font-family:&quot;Google Sans&quot;,Ro=
+boto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:medium"><div class=3D=
+"gmail-"><div class=3D"gmail-ii gmail-gt gmail-adO" id=3D"gmail-:15l" style=
+=3D"direction:ltr;margin:8px 0px 0px;padding:0px;font-size:0.875rem;overflo=
+w-x:hidden"><div class=3D"gmail-a3s gmail-aiL" id=3D"gmail-:15k" style=3D"d=
+irection:ltr;font-style:normal;font-variant:normal;font-size-adjust:none;fo=
+nt-kerning:auto;font-feature-settings:normal;font-stretch:normal;font-size:=
+small;line-height:1.5;font-family:Arial,Helvetica,sans-serif;overflow:auto =
+hidden"><div id=3D"gmail-avWBGd-82"><div dir=3D"ltr">Reviewed-by: Jay Chang=
+&lt;<a href=3D"mailto:jay.chang@sifive.com" target=3D"_blank">jay.chang@sif=
+ive.com</a>&gt;<div>Thanks</div></div></div></div></div><div class=3D"gmail=
+-WhmR8e" id=3D"gmail-avWBGd-83" style=3D"clear:both"></div></div></div><br =
+class=3D"gmail-Apple-interchange-newline"></div></div><br><div class=3D"gma=
+il_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tu=
+e, Aug 25, 2026 at 10:49=E2=80=AFPM Konstantin Semichastnov &lt;<a href=3D"=
+mailto:antikostya2@gmail.com">antikostya2@gmail.com</a>&gt; wrote:<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex">Selecting trace message =
+format rely on `TraceEncoder-&gt;ntrace` flag.<br>
+This flag mirrors trTeFormat bit.<br>
 <br>
-Selecting trace message format rely on trTeFormat bit of trTeControl<br>
-trace encoder register.<br>
+For now only two values supported:<br>
 <br>
-We will mirror trTeFormat value in trace encoder in `ntrace` field to<br>
-simplify checking of current format in trace encoder logic.<br>
+=C2=A0- E-Trace (trTeFormat =3D 0), trace format, described by Efficient tr=
+ace spec.<br>
 <br>
-This commit only mirrors register value in field, logic based on this<br>
-field value is added in next commit.<br>
+=C2=A0- N-Trace (trTeFormat =3D 1), trace format, described by Nexus trace =
+spec.<br>
+<br>
+For now we not yet implemented any N-Trace messages, so currently<br>
+`ntrace` field only disables E-Trace messages competely. We will reuse<br>
+this field in following commits, when N-Trace messages added.<br>
 <br>
 Signed-off-by: Konstantin Semichastnov &lt;<a href=3D"mailto:antikostya2@gm=
 ail.com" target=3D"_blank">antikostya2@gmail.com</a>&gt;<br>
 ---<br>
-=C2=A0hw/riscv/trace-encoder.c | 22 +++++++++++++++++++++-<br>
-=C2=A0hw/riscv/trace-encoder.h |=C2=A0 2 ++<br>
-=C2=A02 files changed, 23 insertions(+), 1 deletion(-)<br>
+=C2=A0hw/riscv/trace-encoder.c=C2=A0 =C2=A0 | 29 +++++++++++++++++++++++++-=
+---<br>
+=C2=A0target/riscv/trace_helper.c |=C2=A0 8 ++++++--<br>
+=C2=A02 files changed, 31 insertions(+), 6 deletions(-)<br>
 <br>
 diff --git a/hw/riscv/trace-encoder.c b/hw/riscv/trace-encoder.c<br>
-index 55acb1f2ae..53345a478c 100644<br>
+index 53345a478c..34c8f60ce1 100644<br>
 --- a/hw/riscv/trace-encoder.c<br>
 +++ b/hw/riscv/trace-encoder.c<br>
-@@ -84,6 +84,9 @@ REG32(TR_TE_CONTROL, 0x0)<br>
-=C2=A0#define R_TR_TE_CONTROL_RESET R_TR_TE_CONTROL_EMPTY_MASK<br>
-=C2=A0#define R_TR_TE_CONTROL_RO_BITS R_TR_TE_CONTROL_EMPTY_MASK<br>
+@@ -254,7 +254,11 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg,=
+ uint64_t val)<br>
 <br>
-+#define TR_TE_CONTROL_FORMAT_ETRACE 0<br>
-+#define TR_TE_CONTROL_FORMAT_NTRACE 1<br>
-+<br>
-=C2=A0/*<br>
-=C2=A0 * trTeImpl register fields<br>
-=C2=A0 */<br>
-@@ -153,7 +156,6 @@ static uint64_t trencoder_te_ctrl_set_hardwire_vals(uin=
-t64_t input)<br>
-=C2=A0 =C2=A0 =C2=A0input =3D FIELD_DP32(input, TR_TE_CONTROL, CONTEXT, 0);=
-<br>
-=C2=A0 =C2=A0 =C2=A0input =3D FIELD_DP32(input, TR_TE_CONTROL, INST_STALL_E=
-NA, 0);<br>
-=C2=A0 =C2=A0 =C2=A0input =3D FIELD_DP32(input, TR_TE_CONTROL, INHIBIT_SRC,=
- 1);<br>
--=C2=A0 =C2=A0 input =3D FIELD_DP32(input, TR_TE_CONTROL, FORMAT, 0);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0/* SYNC_MODE and SYNC_MAX will be revisited */<br>
-=C2=A0 =C2=A0 =C2=A0input =3D FIELD_DP32(input, TR_TE_CONTROL, INST_SYNC_MO=
-DE, 0);<br>
-@@ -168,6 +170,7 @@ static uint64_t trencoder_te_ctrl_prew(RegisterInfo *re=
-g, uint64_t val)<br>
-=C2=A0 =C2=A0 =C2=A0uint32_t trTeActive =3D ARRAY_FIELD_EX32(te-&gt;regs, T=
-R_TE_CONTROL, ACTIVE);<br>
-=C2=A0 =C2=A0 =C2=A0uint32_t trTeInstTracing =3D ARRAY_FIELD_EX32(te-&gt;re=
-gs, TR_TE_CONTROL,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0INST_TRACING);<br>
-+=C2=A0 =C2=A0 uint32_t trTeFormat =3D ARRAY_FIELD_EX32(te-&gt;regs, TR_TE_=
-CONTROL, FORMAT);<br>
-=C2=A0 =C2=A0 =C2=A0uint32_t temp;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0val =3D trencoder_te_ctrl_set_hardwire_vals(val);<br>
-@@ -205,6 +208,19 @@ static uint64_t trencoder_te_ctrl_prew(RegisterInfo *r=
-eg, uint64_t val)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0val =3D FIELD_DP32(val, TR_TE_CONTROL, IN=
-ST_TRACING, 0);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 temp =3D FIELD_EX32(val, TR_TE_CONTROL, FORMAT);<br>
-+=C2=A0 =C2=A0 if (te-&gt;trace_running) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Do not allow to change tracing format while=
- tracing is enabled. */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D FIELD_DP32(val, TR_TE_CONTROL, FORMAT,=
- trTeFormat);<br>
-+=C2=A0 =C2=A0 } else if (temp !=3D TR_TE_CONTROL_FORMAT_ETRACE &amp;&amp;<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0temp !=3D TR_TE_CON=
-TROL_FORMAT_NTRACE) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Do not change format, if requested for=
-mat is not supported<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* (only E-Trace and N-Trace formats are =
-supported for now)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D FIELD_DP32(val, TR_TE_CONTROL, FORMAT,=
- trTeFormat);<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0return val;<br>
-=C2=A0}<br>
-<br>
-@@ -215,6 +231,7 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg, =
-uint64_t val)<br>
-=C2=A0 =C2=A0 =C2=A0uint32_t trTeEnable =3D ARRAY_FIELD_EX32(te-&gt;regs, T=
-R_TE_CONTROL, ENABLE);<br>
-=C2=A0 =C2=A0 =C2=A0uint32_t trTeInstTracing =3D ARRAY_FIELD_EX32(te-&gt;re=
-gs, TR_TE_CONTROL,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0INST_TRACING);<br>
-+=C2=A0 =C2=A0 uint32_t trTeFormat =3D ARRAY_FIELD_EX32(te-&gt;regs, TR_TE_=
-CONTROL, FORMAT);<br>
-=C2=A0 =C2=A0 =C2=A0RISCVCPU *cpu =3D te-&gt;cpu;<br>
-=C2=A0 =C2=A0 =C2=A0CPURISCVState *env =3D &amp;cpu-&gt;env;<br>
-<br>
-@@ -233,6 +250,8 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg, =
-uint64_t val)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0te-&gt;enabled =3D trTeEnable ? true : false;<br>
-<br>
-+=C2=A0 =C2=A0 te-&gt;ntrace =3D (trTeFormat =3D=3D TR_TE_CONTROL_FORMAT_NT=
-RACE);<br>
-+<br>
 =C2=A0 =C2=A0 =C2=A0if (!te-&gt;trace_running &amp;&amp; trTeInstTracing) {=
 <br>
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Starting trace. Ask the CPU for the fi=
 rst trace insn */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0te-&gt;trace_next_insn =3D true;<br>
-@@ -314,6 +333,7 @@ static void trencoder_reset(DeviceState *dev)<br>
-=C2=A0 =C2=A0 =C2=A0te-&gt;enabled =3D false;<br>
-=C2=A0 =C2=A0 =C2=A0te-&gt;trace_running =3D false;<br>
-=C2=A0 =C2=A0 =C2=A0te-&gt;trace_next_insn =3D false;<br>
-+=C2=A0 =C2=A0 te-&gt;ntrace =3D false;<br>
-=C2=A0 =C2=A0 =C2=A0env-&gt;trace_running =3D false;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 te-&gt;trace_next_insn =3D true;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (te-&gt;ntrace) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* send ProgTraceSync message */=
 <br>
-=C2=A0 =C2=A0 =C2=A0te-&gt;branch_map =3D 0;<br>
-diff --git a/hw/riscv/trace-encoder.h b/hw/riscv/trace-encoder.h<br>
-index 48cf8366ee..fed0ef9a48 100644<br>
---- a/hw/riscv/trace-encoder.h<br>
-+++ b/hw/riscv/trace-encoder.h<br>
-@@ -44,6 +44,8 @@ struct TraceEncoder {<br>
-=C2=A0 =C2=A0 =C2=A0bool enabled;<br>
-=C2=A0 =C2=A0 =C2=A0bool trace_running;<br>
-=C2=A0 =C2=A0 =C2=A0bool trace_next_insn;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 te-&gt;trace_next_insn =3D true;=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0te-&gt;ramsink_ramstart =3D trencoder_rea=
+d_ramsink_writep(te);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0te-&gt;ramsink_ramlimit =3D trencoder_rea=
+d_ramsink_ramlimit(te);<br>
+@@ -442,6 +446,8 @@ static void trencoder_send_sync_msg(Object *trencoder_o=
+bj, uint64_t pc)<br>
+=C2=A0 =C2=A0 =C2=A0uint8_t msg_size;<br>
+=C2=A0 =C2=A0 =C2=A0bool is_branch_taken;<br>
+<br>
++=C2=A0 =C2=A0 g_assert(!trencoder-&gt;ntrace);<br>
 +<br>
-+=C2=A0 =C2=A0 bool ntrace;<br>
-=C2=A0};<br>
+=C2=A0 =C2=A0 =C2=A0trencoder-&gt;first_pc =3D pc;<br>
+=C2=A0 =C2=A0 =C2=A0is_branch_taken =3D trencoder_addr_is_branch_taken(tren=
+coder, pc);<br>
+=C2=A0 =C2=A0 =C2=A0msg_size =3D rv_etrace_gen_encoded_sync_msg(msg, pc, pr=
+iv,<br>
+@@ -458,6 +464,8 @@ static void trencoder_send_updiscon(TraceEncoder *trenc=
+oder, uint64_t pc)<br>
+=C2=A0 =C2=A0 =C2=A0bool updiscon =3D !notify;<br>
+=C2=A0 =C2=A0 =C2=A0uint8_t msg_size;<br>
 <br>
-=C2=A0#define TYPE_TRACE_ENCODER &quot;trace-encoder&quot;<br>
++=C2=A0 =C2=A0 g_assert(!trencoder-&gt;ntrace);<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0if (trencoder-&gt;branches &gt; 0) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0msg_size =3D rv_etrace_gen_encoded_format=
+1(format2_msg,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 trencoder-&gt;branches,<br>
+@@ -485,6 +493,8 @@ void trencoder_set_first_trace_insn(Object *trencoder_o=
+bj, uint64_t pc)<br>
+=C2=A0 =C2=A0 =C2=A0uint8_t msg_size;<br>
+=C2=A0 =C2=A0 =C2=A0bool is_branch_taken;<br>
+<br>
++=C2=A0 =C2=A0 g_assert(!trencoder-&gt;ntrace);<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0if (trencoder-&gt;updiscon_pending) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0trencoder_send_updiscon(trencoder, pc);<b=
+r>
+=C2=A0 =C2=A0 =C2=A0}<br>
+@@ -508,6 +518,11 @@ void trencoder_trace_trap_insn(Object *trencoder_obj,<=
+br>
+=C2=A0 =C2=A0 =C2=A0g_autofree uint8_t *msg =3D g_malloc0(TRACE_MSG_MAX_SIZ=
+E);<br>
+=C2=A0 =C2=A0 =C2=A0uint8_t msg_size;<br>
+<br>
++=C2=A0 =C2=A0 if (trencoder-&gt;ntrace) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* send IndirectBranchHist message */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0if (trencoder-&gt;updiscon_pending) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0trencoder_send_updiscon(trencoder, pc);<b=
+r>
+=C2=A0 =C2=A0 =C2=A0}<br>
+@@ -525,9 +540,15 @@ static void trencoder_send_branch_map(Object *trencode=
+r_obj)<br>
+=C2=A0 =C2=A0 =C2=A0g_autofree uint8_t *msg =3D g_malloc0(TRACE_MSG_MAX_SIZ=
+E);<br>
+=C2=A0 =C2=A0 =C2=A0uint8_t msg_size;<br>
+<br>
+-=C2=A0 =C2=A0 msg_size =3D rv_etrace_gen_encoded_format1_noaddr(msg,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 te-&gt;branches,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 te-&gt;branch_map);<br>
++=C2=A0 =C2=A0 if (te-&gt;ntrace) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* send ResourceFull message */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
++=C2=A0 =C2=A0 } else {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 msg_size =3D rv_etrace_gen_encoded_format1_noa=
+ddr(msg,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 te-&gt;branches,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 te-&gt;branch_map);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0trencoder_send_message_smem(te, msg, msg_size);<br>
+=C2=A0}<br>
+<br>
+diff --git a/target/riscv/trace_helper.c b/target/riscv/trace_helper.c<br>
+index cd57641d9b..9b43aeac09 100644<br>
+--- a/target/riscv/trace_helper.c<br>
++++ b/target/riscv/trace_helper.c<br>
+@@ -34,8 +34,12 @@ void helper_trace_updiscon(CPURISCVState *env)<br>
+=C2=A0 =C2=A0 =C2=A0RISCVCPU *cpu =3D env_archcpu(env);<br>
+=C2=A0 =C2=A0 =C2=A0TraceEncoder *te =3D TRACE_ENCODER(cpu-&gt;trencoder);<=
+br>
+<br>
+-=C2=A0 =C2=A0 te-&gt;updiscon_pending =3D true;<br>
+-=C2=A0 =C2=A0 te-&gt;trace_next_insn =3D true;<br>
++=C2=A0 =C2=A0 if (te-&gt;ntrace) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* send IndirectBranchHist message */<br>
++=C2=A0 =C2=A0 } else {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 te-&gt;updiscon_pending =3D true;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 te-&gt;trace_next_insn =3D true;<br>
++=C2=A0 =C2=A0 }<br>
+=C2=A0}<br>
+<br>
+=C2=A0void helper_trace_branch(CPURISCVState *env, target_ulong pc, int tak=
+en)<br>
 <br>
 -- <br>
 2.43.0<br>
@@ -418,5 +439,5 @@ index 48cf8366ee..fed0ef9a48 100644<br>
 <br>
 </blockquote></div>
 
---000000000000fff9b806607505ef--
+--000000000000c2275406607517ea--
 
