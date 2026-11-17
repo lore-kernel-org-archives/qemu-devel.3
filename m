@@ -1,50 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A98606A323
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Nov 2026 23:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA0C606A329
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 00:01:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=QnUBk3ru
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT6T3-00007r-Oq; Mon, 16 Nov 2026 18:50:33 -0500
+	id 1xT6dc-0003SU-Ml; Mon, 16 Nov 2026 19:01:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
- id 1xT6T2-00007I-KV
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:50:32 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
- id 1xT6Sy-0005Ek-Td
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 18:50:32 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 502B448657;
- Tue, 17 Nov 2026 00:50:19 +0100 (CET)
-From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xT6dY-0003OV-KK
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 19:01:24 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xT6dW-0003QX-OO
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 19:01:24 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-89d6bd67045so210277b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 16:01:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794873681; x=1795478481; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rXDpusdlPIZoSkpdHN32nrgNmQGbbMyVhAReGptt12M=;
+ b=QnUBk3ruidCui6iqXOQ7vrd9uIe3I1aRGoicd/3v3N6Fph6asTu6i6EhVaOIQTr22p
+ 6vmnWV3wb/PswEEa5xp8DfRlER7UQJN5HbruVH8fcQtU+tgYemDVw9QJnud46PQAD5OC
+ edzj7D2HlU1PdzVKgpT5U3X2K4hT5opZ65zi2L69a53MY0H/7s/pVQRSTqMVOFJzcAnT
+ XqqIY8LsmnKv2WvBOYCMI2SFs+neettdtWlPC3P2DiKpW3KmthItzP2QuFeIMebUQeDZ
+ vEiW9U+OrBdEtayebi7wz/+jBvU7eunfaDEQbYdbZ1f/JnZAJA2/KfRKk32eOJGVAYi8
+ R4Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794873681; x=1795478481;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=rXDpusdlPIZoSkpdHN32nrgNmQGbbMyVhAReGptt12M=;
+ b=gcv6RW38G1fwUQnoKqcVLXfcJeYYgshIc6Qyw3XjDh/MAxuMw+Dd37ItZ+30iaWqxp
+ It4xg8oLC937JrhvJGHMLVo7YIKoFULEP9J+AwEIiqG59/PSfZV+RZQFXToQrtRdm/ut
+ AAZrXgqaA4H/UqJd+OMWap52ztgs/NMhg163OyZiArgd1eVnn2D9LBRDoXttHyk23TUX
+ qDmaELm0JmL0AOfo9gstysFt7Fq5+1G23ooDNIufCkByoc12ac1o+5vuKakkE02q7R9Y
+ WCV+1r1P56GIF5BtQ/FD5OiSx5JVGOVfDyoQ0C9Uf3ReR9bGtytHNDqxBXmXMm8Ua2OO
+ G7bw==
+X-Gm-Message-State: APuU4Z/ED1SCJTkyAf37R64nD4jm+LR3jft7WlhQ6mf3kPlNz2cyP30/
+ jom4PejsymbqbTuCaDjV6eOeOfMggEtlbhy4RGl91wIVJxnGnoMYw747NiQE9nOdu/j7Fh2qefz
+ xFLaC
+X-Gm-Gg: AYBFou0Wql4+PadlNUqwHvbFXUJbrjdK+Wgz3d2/I6atUXdlwyGtM0WoMVM3unx+Uks
+ ShKy8xNxthGjztBx903zcD2LH6bSSUWl21h5Nyd7JHbCaSRlcDwjVbhDNQ3/cdBgk5IONHrp+UQ
+ 7WQQdURqX18k11EHk3jIgo4xOUST5113yNPafyAbRERvSO/zzzutRLZT2SxqzHJePchABFwsjPy
+ sfAckfR3usqZ935QJyU0lHH/ENpcEWIKgb/vDiggKQd+Xs5RP2hEsFO2oIwG1yWbtjYQFDu4x2P
+ gFp4MjZHy3oAuXKFQEAQJytU8nmRq9/i7RMiFZ+YShM6eHXB4N6Y+itDkkc5I30vasNSv9ZTYVC
+ 4epILcaMNQ16VVJaYZjR+87aSIgDbADYqvRaqOx5QCN27+/NkKoU80Bhny2NKlwK8WMEPf+12P3
+ QtuIL7aMPQCgv13sGrYav6qXUHF6qgCnp0AFbnP2CjX76C/beDBU+dN/4cHWC9WbY/mUXO4WJDt
+ xo6UxqvO1y+sRLPd78H1lkmCw1qc4SFhjqbextbELWtHVeT7HyHj3WraadeHN30uVstHym4zAuq
+ Bza6JQhNJXle9BsH/I8Tpz/7/JucTnKV/pRXUqSPplpnVRsacTy1JMSvaNFp
+X-Received: by 2002:a05:6a00:3011:b0:8b9:227b:c0a with SMTP id
+ d2e1a72fcca58-8c453bcb909mr610609b3a.5.1794873680672; 
+ Mon, 16 Nov 2026 16:01:20 -0800 (PST)
+Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8bed20548fbsm4505995b3a.37.2026.11.16.16.01.19
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Nov 2026 16:01:20 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH for-12.0 2/2] hw/i386/microvm: add versioned machine types
-Date: Tue, 17 Nov 2026 00:30:14 +0100
-Message-ID: <20261116235010.3622909-3-t.lamprecht@proxmox.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261116235010.3622909-1-t.lamprecht@proxmox.com>
-References: <20261116235010.3622909-1-t.lamprecht@proxmox.com>
+Subject: [PATCH for-11.2] accel/tcg: Fix jump cache flush after large page
+ flush
+Date: Mon, 16 Nov 2026 16:01:18 -0800
+Message-ID: <20261117000118.642891-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1794873016032
-Received-SPF: pass client-ip=94.136.29.106;
- envelope-from=t.lamprecht@proxmox.com; helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -56,196 +96,88 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-microvm was meant for short-lived guests [1] and thus wasn not
-versioned, so migration across QEMU versions is not supported. It is now
-also intersting for long-lived ones as better isolated alternative for
-Linux containers though, which would be nice to allow migration to hosts
-with a newer QEMU, and Paolo noted that microvm could start having
-versioned variants [2].
+When a large page flush occurs, flush the entire jump cache.
 
-Add microvm-X.Y machine types, starting with 12.0. "microvm" itself is
-left "unversioned" as it is, instead of becoming an alias of the latest
-version. An unversioned machine type is meant to be a moving target
-[2], which includes resolving a CPU model name without a version, like
-"Cascadelake-Server", to the latest version of the model. A versioned
-type needs a fixed default for that, and an alias cannot differ from
-the type it refers to. So the versioned types derive from microvm and
-default to version 1, like pc and q35 do.
-
-A machine class does not inherit the compat property array of its
-parent class and TypeInfo.secure is not inherited either, so the
-versioned types add microvm_properties and set the flag again.
-
-Both sides of a migration have to use the same versioned type. The
-machine type check of the migration stream does not fully enforce
-this, as it only compares as many characters as the name of the source
-has, i.e., it rejects microvm-12.0 to microvm, but not microvm to
-microvm-12.0.
-
-Also document that with KVM or HVF migration needs the same guest
-physical address width on both hosts.
-
-[1] https://lore.kernel.org/qemu-devel/af3acd26-f114-5889-182a-7dbd025393b9@redhat.com/
-[2] https://lore.kernel.org/qemu-devel/004396c0-8370-4015-b746-3c800f45984f@redhat.com/
-
-Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4873
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- docs/system/i386/microvm.rst                  | 21 ++++++++-
- hw/i386/microvm.c                             | 43 +++++++++++++++++++
- .../x86_64/test_cpu_model_versions.py         | 41 ++++++++++++++++++
- 3 files changed, 104 insertions(+), 1 deletion(-)
+ accel/tcg/cputlb.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/docs/system/i386/microvm.rst b/docs/system/i386/microvm.rst
-index 077ea15751..56804f1bd8 100644
---- a/docs/system/i386/microvm.rst
-+++ b/docs/system/i386/microvm.rst
-@@ -9,6 +9,24 @@ designed for short-lived guests. microvm also establishes a baseline
- for benchmarking and optimizing both QEMU and guest operating systems,
- since it is optimized for both boot time and footprint.
- 
-+``microvm`` itself is not versioned: its defaults may change with every
-+QEMU version, so it does not support migration between QEMU versions.
-+The ``microvm-X.Y`` machine types are versioned. They keep the behaviour
-+they had in the QEMU X.Y release, so that VM migration works between
-+QEMU versions, as long as both sides use the same versioned type. The
-+first one is ``microvm-12.0``.
-+
-+On the versioned types, a CPU model name without a version, like
-+``Cascadelake-Server``, refers to the first version of the model, as on
-+the ``pc`` and ``q35`` machine types, while ``microvm`` uses the latest
-+version. Use a versioned name, like ``Cascadelake-Server-v5``, to select
-+a specific one.
-+
-+With KVM or HVF and a 64-bit CPU model, microvm uses the host's
-+physical address width for the guest, so migration also requires the
-+same width on both hosts, for example by capping it with the
-+``host-phys-bits-limit`` CPU property to a value both hosts support.
-+
- 
- Supported devices
- -----------------
-@@ -34,7 +52,8 @@ Currently, microvm does *not* support the following features:
- 
- - PCI-only devices.
- - Hotplug of any kind.
--- Live migration across QEMU versions.
-+- Live migration across QEMU versions, unless a versioned machine type
-+  is used.
- 
- 
- Using the microvm machine type
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index ae22bdf433..5bb6cd1f51 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -735,3 +735,46 @@ static void microvm_machine_init(void)
-     type_register_static(&microvm_machine_info);
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 3ca484b039..9eb794929f 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -472,7 +472,7 @@ static inline void tlb_flush_vtlb_page_locked(CPUState *cpu, int mmu_idx,
+     tlb_flush_vtlb_page_mask_locked(cpu, mmu_idx, page, -1);
  }
- type_init(microvm_machine_init);
-+
-+/*
-+ * Defaults of the versioned machine types, which derive from the
-+ * unversioned one. The compat properties are added again, as a machine
-+ * class does not inherit the compat_props array of its parent class.
-+ */
-+static void microvm_machine_options(MachineClass *mc)
-+{
-+    MicrovmMachineClass *mmc = MICROVM_MACHINE_CLASS(mc);
-+
-+    mmc->default_cpu_version = 1;
-+    compat_props_add(mc->compat_props, microvm_properties,
-+                     G_N_ELEMENTS(microvm_properties));
-+}
-+
-+#define DEFINE_MICROVM_MACHINE(major, minor) \
-+    static void MACHINE_VER_SYM(class_init, microvm, major, minor)( \
-+        ObjectClass *oc, \
-+        const void *data) \
-+    { \
-+        MachineClass *mc = MACHINE_CLASS(oc); \
-+        microvm_machine_options(mc); \
-+        MACHINE_VER_SYM(options, microvm, major, minor)(mc); \
-+        MACHINE_VER_DEPRECATION(major, minor); \
-+    } \
-+    static const TypeInfo MACHINE_VER_SYM(info, microvm, major, minor) = \
-+    { \
-+        .name = MACHINE_VER_TYPE_NAME("microvm", major, minor), \
-+        .parent = TYPE_MICROVM_MACHINE, \
-+        .class_init = MACHINE_VER_SYM(class_init, microvm, major, minor), \
-+        .secure = true, \
-+    }; \
-+    static void MACHINE_VER_SYM(register, microvm, major, minor)(void) \
-+    { \
-+        MACHINE_VER_DELETION(major, minor); \
-+        type_register_static(&MACHINE_VER_SYM(info, microvm, major, minor)); \
-+    } \
-+    type_init(MACHINE_VER_SYM(register, microvm, major, minor));
-+
-+static void microvm_machine_12_0_options(MachineClass *mc)
-+{
-+}
-+DEFINE_MICROVM_MACHINE(12, 0)
-diff --git a/tests/functional/x86_64/test_cpu_model_versions.py b/tests/functional/x86_64/test_cpu_model_versions.py
-index 36c968f1c0..18b9e934b0 100755
---- a/tests/functional/x86_64/test_cpu_model_versions.py
-+++ b/tests/functional/x86_64/test_cpu_model_versions.py
-@@ -178,6 +178,47 @@ def test_unversioned_alias(self):
  
-         self.validate_aliases(cpus)
+-static void tlb_flush_page_locked(CPUState *cpu, int midx, vaddr page)
++static bool tlb_flush_page_locked(CPUState *cpu, int midx, vaddr page)
+ {
+     vaddr lp_addr = cpu->neg.tlb.d[midx].large_page_addr;
+     vaddr lp_mask = cpu->neg.tlb.d[midx].large_page_mask;
+@@ -480,12 +480,13 @@ static void tlb_flush_page_locked(CPUState *cpu, int midx, vaddr page)
+     /* Check if we need to flush due to large pages.  */
+     if ((page & lp_mask) == lp_addr) {
+         tlb_flush_one_mmuidx_locked(cpu, midx, get_clock_realtime());
+-    } else {
+-        if (tlb_flush_entry_locked(tlb_entry(cpu, midx, page), page)) {
+-            tlb_n_used_entries_dec(cpu, midx);
+-        }
+-        tlb_flush_vtlb_page_locked(cpu, midx, page);
++        return true;
+     }
++    if (tlb_flush_entry_locked(tlb_entry(cpu, midx, page), page)) {
++        tlb_n_used_entries_dec(cpu, midx);
++    }
++    tlb_flush_vtlb_page_locked(cpu, midx, page);
++    return false;
+ }
  
-+    def test_microvm_alias(self):
-+        """
-+        Check if unversioned CPU model is an alias pointing to the latest
-+        version on the unversioned microvm machine type
-+        """
-+        self.set_machine('microvm')
-+        self.vm.add_args('-S')
-+        self.vm.launch()
-+
-+        cpus = dict((m['name'], m) for m in
-+                    self.vm.cmd('query-cpu-definitions'))
-+
-+        latest = max(int(m.group(1)) for m in
-+                     (re.fullmatch(r'Cascadelake-Server-v(\d+)', name)
-+                      for name in cpus) if m)
-+        self.assertEqual(cpus['Cascadelake-Server'].get('alias-of'),
-+                         'Cascadelake-Server-v%d' % latest,
-+                         'Cascadelake-Server must be an alias of its latest '
-+                         'version')
-+
-+        self.validate_aliases(cpus)
-+
-+    def test_microvm_12_0_alias(self):
-+        """
-+        Check if unversioned CPU model is an alias pointing to right version
-+        on a versioned microvm machine type
-+        """
-+        self.set_machine('microvm-12.0')
-+        self.vm.add_args('-S')
-+        self.vm.launch()
-+
-+        cpus = dict((m['name'], m) for m in
-+                    self.vm.cmd('query-cpu-definitions'))
-+
-+        self.assertEqual(cpus['Cascadelake-Server'].get('alias-of'),
-+                         'Cascadelake-Server-v1',
-+                         'Cascadelake-Server must be an alias of '
-+                         'Cascadelake-Server-v1')
-+
-+        self.validate_aliases(cpus)
-+
-     def test_none_alias(self):
-         """
-         Check if unversioned CPU model is an alias pointing to some version
+ /**
+@@ -502,13 +503,16 @@ static void tlb_flush_page_by_mmuidx_async_0(CPUState *cpu,
+                                              MMUIdxMap idxmap)
+ {
+     int mmu_idx;
++    bool lp_flushed = false;
+ 
+     assert_cpu_is_self_or_stopped(cpu);
+ 
+     qemu_spin_lock(&cpu->neg.tlb.c.lock);
+     for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
+         if ((idxmap >> mmu_idx) & 1) {
+-            tlb_flush_page_locked(cpu, mmu_idx, addr);
++            if (tlb_flush_page_locked(cpu, mmu_idx, addr)) {
++                lp_flushed = true;
++            }
+         }
+     }
+     qemu_spin_unlock(&cpu->neg.tlb.c.lock);
+@@ -517,8 +521,12 @@ static void tlb_flush_page_by_mmuidx_async_0(CPUState *cpu,
+      * Discard jump cache entries for any tb which might potentially
+      * overlap the flushed page, which includes the previous.
+      */
+-    tb_jmp_cache_clear_page(cpu, addr - TARGET_PAGE_SIZE);
+-    tb_jmp_cache_clear_page(cpu, addr);
++    if (lp_flushed) {
++        tcg_flush_jmp_cache(cpu);
++    } else {
++        tb_jmp_cache_clear_page(cpu, addr - TARGET_PAGE_SIZE);
++        tb_jmp_cache_clear_page(cpu, addr);
++    }
+ }
+ 
+ /**
 -- 
-2.47.3
-
+2.53.0
 
 
