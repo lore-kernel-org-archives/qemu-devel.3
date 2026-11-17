@@ -1,70 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CED3606A329
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 11:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177FD606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 11:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hsZaz7y8
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gwHKUe54
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTGuo-00062C-Ow; Tue, 17 Nov 2026 05:59:54 -0500
+	id 1xTGvg-0006mz-4X; Tue, 17 Nov 2026 06:00:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xTGun-00061q-Mc
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 05:59:53 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTGve-0006fg-Jv
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 06:00:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xTGul-0006gs-FW
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 05:59:53 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTGvc-0006xG-AB
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 06:00:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794913191;
+ s=mimecast20190719; t=1794913243;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=g/vhY7ox4/MCn2RQABiHieJur0g1VMBVpfS8YfN9iYo=;
- b=hsZaz7y8yMTV0VOUSsRZ/clJ6TyVyEMCNJW6LEXxGCTKPqY96Ut3iUSgmoS/G8Q0XvzcfW
- fqhWZry2B1Sv0bkyx1nLs2VORtmaWdMYcD+4Txm0xqdHQ8CprS6zghZ0sFV2STqYF2i5C0
- 4cNAm6Denmoe6pz0PEsuAKknHL8c66w=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=cdiSlWnf/e4vsYljnV66MbhzRz9JzKADYsGHZ1ExTsQ=;
+ b=gwHKUe54a51Su8V9XrMl9VUXNCBfL4wI3QBXvybUs/ztz+E//4etXO/dob94QPCUZeMqny
+ nWPCRSshQAsJFbu0/rbA8CnL8vrx8qllMtdV/3Q0njJdh7OMEY2xRcBz+BHdxgmtiSe63r
+ NqKtN/AyYbqAwR5KWPhjzrcZ2vVK+4M=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-qkjHGWxYNtycpbGwFF_Exg-1; Tue,
- 17 Nov 2026 05:59:49 -0500
-X-MC-Unique: qkjHGWxYNtycpbGwFF_Exg-1
-X-Mimecast-MFC-AGG-ID: qkjHGWxYNtycpbGwFF_Exg_1794913188
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-3mZrlPrBNf2V5xN4JYR3Ug-1; Tue,
+ 17 Nov 2026 06:00:40 -0500
+X-MC-Unique: 3mZrlPrBNf2V5xN4JYR3Ug-1
+X-Mimecast-MFC-AGG-ID: 3mZrlPrBNf2V5xN4JYR3Ug_1794913239
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B4992195605A
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 10:59:48 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.3])
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3D7619560AD; Tue, 17 Nov 2026 11:00:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.7])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 36DB930001A2
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 10:59:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B486A21E6880; Tue, 17 Nov 2026 11:59:45 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	pbonzini@redhat.com,
-	berrange@redhat.com
-Subject: [PATCH v3 2/3] qdev: Remove unused DEFINE_PROP_ARRAY parameter
- _arraytype
-Date: Tue, 17 Nov 2026 11:59:44 +0100
-Message-ID: <20261117105945.2802923-3-armbru@redhat.com>
-In-Reply-To: <20261117105945.2802923-1-armbru@redhat.com>
-References: <20261117105945.2802923-1-armbru@redhat.com>
+ id DBB323000223; Tue, 17 Nov 2026 11:00:36 +0000 (UTC)
+Date: Tue, 17 Nov 2026 12:00:34 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH 0/3] block: fix the size change notification in
+ bdrv_replace_child_bs()
+Message-ID: <avwz0td5pLJ3TECD@redhat.com>
+References: <20261105203752.3169635-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261105203752.3169635-1-den@openvz.org>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
 X-Spam_score: 0.5
@@ -85,315 +82,30 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Am 05.11.2026 um 21:37 hat Denis V. Lunev geschrieben:
+> These address Kevin's review of the series which went in through
+> Eric's block pull as 8b267376df87..28fafb3147f5:
+> https://lore.kernel.org/qemu-devel/auyju4uLIBaCGPKH@redhat.com/
+> 
+> Tested with a local qtest, not included: with a second scsi-hd sharing
+> the new node, master reports CAPACITY DATA HAS CHANGED to that device
+> after qom-set on the first one, and with patch 3 it does not.
+> 
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Hanna Reitz <hreitz@redhat.com>
+> Cc: Eric Blake <eblake@redhat.com>
+> Cc: Philippe Mathieu-Daud� <philmd@oss.qualcomm.com>
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- include/hw/block/block.h          |  2 +-
- include/hw/core/qdev-properties.h | 14 +++++---------
- hw/input/stellaris_gamepad.c      |  2 +-
- hw/intc/arm_gicv3_common.c        |  2 +-
- hw/intc/arm_gicv5_common.c        |  4 ++--
- hw/intc/rx_icu.c                  |  4 ++--
- hw/misc/arm_sysctl.c              |  4 ++--
- hw/misc/mps2-scc.c                |  2 +-
- hw/net/rocker/rocker.c            |  2 +-
- hw/net/virtio-net.c               |  2 +-
- hw/nvram/xlnx-efuse.c             |  2 +-
- hw/nvram/xlnx-versal-efuse-ctrl.c |  2 +-
- hw/riscv/riscv_hart.c             |  6 ++----
- hw/virtio/virtio-iommu-pci.c      |  2 +-
- tests/unit/test-qdev.c            |  2 +-
- hw/display/apple-gfx-mmio.m       |  2 +-
- hw/display/apple-gfx-pci.m        |  2 +-
- 17 files changed, 25 insertions(+), 31 deletions(-)
+Thanks, applied to the block branch.
 
-diff --git a/include/hw/block/block.h b/include/hw/block/block.h
-index c0a8b84df1f..4a4c5f92920 100644
---- a/include/hw/block/block.h
-+++ b/include/hw/block/block.h
-@@ -83,7 +83,7 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
-                             _conf.account_failed, ON_OFF_AUTO_AUTO),    \
-     DEFINE_PROP_ARRAY("stats-intervals", _state,                        \
-                      _conf.num_stats_intervals, _conf.stats_intervals,  \
--                     qdev_prop_uint32, uint32_t)
-+                     qdev_prop_uint32)
- 
- #define DEFINE_BLOCK_PROPERTIES(_state, _conf)                          \
-     DEFINE_PROP_DRIVE("drive", _state, _conf.blk),                      \
-diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
-index 36a448be208..7187df02163 100644
---- a/include/hw/core/qdev-properties.h
-+++ b/include/hw/core/qdev-properties.h
-@@ -144,17 +144,15 @@ extern const PropertyInfo qdev_prop_link_array;
-  * @_name: name of the array
-  * @_state: name of the device state structure type
-  * @_field: uint32_t field in @_state to hold the array length
-- * @_arrayfield: field in @_state (of type '@_arraytype *') which
-- *               will point to the array
-+ * @_arrayfield: field in @_state which will point to the array
-  * @_arrayprop: PropertyInfo for the array elements (e.g. qdev_prop_uint32);
-  *              a corresponding array PropertyInfo named @_arrayprop##_array
-  *              must exist
-- * @_arraytype: C type of the array elements
-  *
-  * Define device properties for a variable-length array _name.  The array is
-  * represented as a list in the visitor interface.
-  *
-- * @_arraytype is required to be movable with memcpy().
-+ * The element type must be movable with memcpy().
-  *
-  * When the array property is set, the @_field member of the device
-  * struct is set to the array length, and @_arrayfield is set to point
-@@ -164,7 +162,7 @@ extern const PropertyInfo qdev_prop_link_array;
-  * @_arrayfield memory.
-  */
- #define DEFINE_PROP_ARRAY(_name, _state, _field,                        \
--                          _arrayfield, _arrayprop, _arraytype)          \
-+                          _arrayfield, _arrayprop)                      \
-     DEFINE_PROP(_name, _state, _field, _arrayprop##_array, uint32_t,    \
-                 .set_default = true,                                    \
-                 .defval.u = 0,                                          \
-@@ -179,10 +177,8 @@ extern const PropertyInfo qdev_prop_link_array;
-  * @_name: name of the array
-  * @_state: name of the device state structure type
-  * @_field: uint32_t field in @_state to hold the array length
-- * @_arrayfield: field in @_state (of type '@_arraytype *') which
-- *               will point to the array
-+ * @_arrayfield: field in @_state which will point to the array
-  * @_linktype: QOM type name of the link type
-- * @_arraytype: C type of the array elements
-  *
-  * Define device properties for a variable-length array _name of links
-  * (i.e. this is the array version of DEFINE_PROP_LINK).
-@@ -191,7 +187,7 @@ extern const PropertyInfo qdev_prop_link_array;
-  * where each string is the QOM path of the object to be linked.
-  */
- #define DEFINE_PROP_LINK_ARRAY(_name, _state, _field, _arrayfield,      \
--                               _linktype, _arraytype)                   \
-+                               _linktype)                               \
-     DEFINE_PROP(_name, _state, _field, qdev_prop_link_array, uint32_t,  \
-                 .set_default = true,                                    \
-                 .defval.u = 0,                                          \
-diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
-index 376d91abad7..20613f64997 100644
---- a/hw/input/stellaris_gamepad.c
-+++ b/hw/input/stellaris_gamepad.c
-@@ -80,7 +80,7 @@ static void stellaris_gamepad_reset_enter(Object *obj, ResetType type)
- 
- static const Property stellaris_gamepad_properties[] = {
-     DEFINE_PROP_ARRAY("keycodes", StellarisGamepad, num_buttons,
--                      keycodes, qdev_prop_uint32, uint32_t),
-+                      keycodes, qdev_prop_uint32),
- };
- 
- static void stellaris_gamepad_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index f7ba74e6d52..1298b6b735e 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -615,7 +615,7 @@ static const Property arm_gicv3_common_properties[] = {
-      */
-     DEFINE_PROP_BOOL("force-8-bit-prio", GICv3State, force_8bit_prio, 0),
-     DEFINE_PROP_ARRAY("redist-region-count", GICv3State, nb_redist_regions,
--                      redist_region_count, qdev_prop_uint32, uint32_t),
-+                      redist_region_count, qdev_prop_uint32),
-     DEFINE_PROP_LINK("sysmem", GICv3State, dma, TYPE_MEMORY_REGION,
-                      MemoryRegion *),
-     DEFINE_PROP_UINT32("first-cpu-index", GICv3State, first_cpu_idx, 0),
-diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
-index cfadfee4f05..7d49dc141ec 100644
---- a/hw/intc/arm_gicv5_common.c
-+++ b/hw/intc/arm_gicv5_common.c
-@@ -194,9 +194,9 @@ static void gicv5_common_realize(DeviceState *dev, Error **errp)
- 
- static const Property arm_gicv5_common_properties[] = {
-     DEFINE_PROP_LINK_ARRAY("cpus", GICv5Common, num_cpus,
--                           cpus, TYPE_ARM_CPU, ARMCPU *),
-+                           cpus, TYPE_ARM_CPU),
-     DEFINE_PROP_ARRAY("cpu-iaffids", GICv5Common, num_cpu_iaffids,
--                      cpu_iaffids, qdev_prop_uint32, uint32_t),
-+                      cpu_iaffids, qdev_prop_uint32),
-     DEFINE_PROP_UINT32("irsid", GICv5Common, irsid, 0),
-     DEFINE_PROP_UINT32("spi-range", GICv5Common, spi_range, 0),
-     DEFINE_PROP_UINT32("spi-base", GICv5Common, spi_base, 0),
-diff --git a/hw/intc/rx_icu.c b/hw/intc/rx_icu.c
-index 992b069ae24..125a6dcb680 100644
---- a/hw/intc/rx_icu.c
-+++ b/hw/intc/rx_icu.c
-@@ -356,9 +356,9 @@ static const VMStateDescription vmstate_rxicu = {
- 
- static const Property rxicu_properties[] = {
-     DEFINE_PROP_ARRAY("ipr-map", RXICUState, nr_irqs, map,
--                      qdev_prop_uint8, uint8_t),
-+                      qdev_prop_uint8),
-     DEFINE_PROP_ARRAY("trigger-level", RXICUState, nr_sense, init_sense,
--                      qdev_prop_uint8, uint8_t),
-+                      qdev_prop_uint8),
- };
- 
- static void rxicu_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/misc/arm_sysctl.c b/hw/misc/arm_sysctl.c
-index ebc95b9bb54..1df85593a5c 100644
---- a/hw/misc/arm_sysctl.c
-+++ b/hw/misc/arm_sysctl.c
-@@ -626,10 +626,10 @@ static const Property arm_sysctl_properties[] = {
-     DEFINE_PROP_UINT32("proc_id", arm_sysctl_state, proc_id, 0),
-     /* Daughterboard power supply voltages (as reported via SYS_CFG) */
-     DEFINE_PROP_ARRAY("db-voltage", arm_sysctl_state, db_num_vsensors,
--                      db_voltage, qdev_prop_uint32, uint32_t),
-+                      db_voltage, qdev_prop_uint32),
-     /* Daughterboard clock reset values (as reported via SYS_CFG) */
-     DEFINE_PROP_ARRAY("db-clock", arm_sysctl_state, db_num_clocks,
--                      db_clock_reset, qdev_prop_uint32, uint32_t),
-+                      db_clock_reset, qdev_prop_uint32),
- };
- 
- static void arm_sysctl_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/misc/mps2-scc.c b/hw/misc/mps2-scc.c
-index 554b504c720..32f9e166fee 100644
---- a/hw/misc/mps2-scc.c
-+++ b/hw/misc/mps2-scc.c
-@@ -464,7 +464,7 @@ static const Property mps2_scc_properties[] = {
-      * motherboard configuration controller to suit the FPGA image.
-      */
-     DEFINE_PROP_ARRAY("oscclk", MPS2SCC, num_oscclk, oscclk_reset,
--                      qdev_prop_uint32, uint32_t),
-+                      qdev_prop_uint32),
- };
- 
- static void mps2_scc_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
-index 910dce901b6..afbc32e99d9 100644
---- a/hw/net/rocker/rocker.c
-+++ b/hw/net/rocker/rocker.c
-@@ -1466,7 +1466,7 @@ static const Property rocker_properties[] = {
-     DEFINE_PROP_UINT64("switch_id", Rocker,
-                        switch_id, 0),
-     DEFINE_PROP_ARRAY("ports", Rocker, fp_ports,
--                      fp_ports_peers, qdev_prop_netdev, NICPeers),
-+                      fp_ports_peers, qdev_prop_netdev),
- };
- 
- static const VMStateDescription rocker_vmsd = {
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 36edb768b17..93bde28b94f 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -4380,7 +4380,7 @@ static const Property virtio_net_properties[] = {
-     DEFINE_PROP_BIT64("hash", VirtIONet, host_features,
-                     VIRTIO_NET_F_HASH_REPORT, false),
-     DEFINE_PROP_ARRAY("ebpf-rss-fds", VirtIONet, nr_ebpf_rss_fds,
--                      ebpf_rss_fds, qdev_prop_string, char*),
-+                      ebpf_rss_fds, qdev_prop_string),
-     DEFINE_PROP_BIT64("guest_rsc_ext", VirtIONet, host_features,
-                     VIRTIO_NET_F_RSC_EXT, false),
-     DEFINE_PROP_UINT32("rsc_interval", VirtIONet, rsc_timeout,
-diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
-index 7d2030f7aa1..c75704662a5 100644
---- a/hw/nvram/xlnx-efuse.c
-+++ b/hw/nvram/xlnx-efuse.c
-@@ -267,7 +267,7 @@ static const Property efuse_properties[] = {
-     DEFINE_PROP_UINT32("efuse-size", XlnxEFuse, efuse_size, 64 * 32),
-     DEFINE_PROP_BOOL("init-factory-tbits", XlnxEFuse, init_tbits, true),
-     DEFINE_PROP_ARRAY("read-only", XlnxEFuse, ro_bits_cnt, ro_bits,
--                      qdev_prop_uint32, uint32_t),
-+                      qdev_prop_uint32),
- };
- 
- static void efuse_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/nvram/xlnx-versal-efuse-ctrl.c b/hw/nvram/xlnx-versal-efuse-ctrl.c
-index f5d5587cb65..101320b82fd 100644
---- a/hw/nvram/xlnx-versal-efuse-ctrl.c
-+++ b/hw/nvram/xlnx-versal-efuse-ctrl.c
-@@ -740,7 +740,7 @@ static const Property efuse_ctrl_props[] = {
-                      TYPE_XLNX_EFUSE, XlnxEFuse *),
-     DEFINE_PROP_ARRAY("pg0-lock",
-                       XlnxVersalEFuseCtrl, extra_pg0_lock_n16,
--                      extra_pg0_lock_spec, qdev_prop_uint16, uint16_t),
-+                      extra_pg0_lock_spec, qdev_prop_uint16),
- };
- 
- static void efuse_ctrl_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-index 32fd39737ff..132cf873700 100644
---- a/hw/riscv/riscv_hart.c
-+++ b/hw/riscv/riscv_hart.c
-@@ -48,11 +48,9 @@ static const Property riscv_harts_props[] = {
-      * defined by "rnmi-exception-vector".
-      */
-     DEFINE_PROP_ARRAY("rnmi-interrupt-vector", RISCVHartArrayState,
--                      num_rnmi_irqvec, rnmi_irqvec, qdev_prop_uint64,
--                      uint64_t),
-+                      num_rnmi_irqvec, rnmi_irqvec, qdev_prop_uint64),
-     DEFINE_PROP_ARRAY("rnmi-exception-vector", RISCVHartArrayState,
--                      num_rnmi_excpvec, rnmi_excpvec, qdev_prop_uint64,
--                      uint64_t),
-+                      num_rnmi_excpvec, rnmi_excpvec, qdev_prop_uint64),
-     DEFINE_PROP_LINK("memory", RISCVHartArrayState, memory,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
- };
-diff --git a/hw/virtio/virtio-iommu-pci.c b/hw/virtio/virtio-iommu-pci.c
-index 7b5ffddc1e9..1f3a07c5d11 100644
---- a/hw/virtio/virtio-iommu-pci.c
-+++ b/hw/virtio/virtio-iommu-pci.c
-@@ -38,7 +38,7 @@ static const Property virtio_iommu_pci_properties[] = {
-     DEFINE_PROP_UINT32("class", VirtIOPCIProxy, class_code, 0),
-     DEFINE_PROP_ARRAY("reserved-regions", VirtIOIOMMUPCI,
-                       vdev.nr_prop_resv_regions, vdev.prop_resv_regions,
--                      qdev_prop_reserved_region, ReservedRegion),
-+                      qdev_prop_reserved_region),
- };
- 
- static void virtio_iommu_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
-diff --git a/tests/unit/test-qdev.c b/tests/unit/test-qdev.c
-index 77c3eee7171..8cd004b1efa 100644
---- a/tests/unit/test-qdev.c
-+++ b/tests/unit/test-qdev.c
-@@ -23,7 +23,7 @@ static const Property my_dev_props[] = {
-     DEFINE_PROP_UINT32("u32", MyDev, prop_u32, 100),
-     DEFINE_PROP_STRING("string", MyDev, prop_string),
-     DEFINE_PROP_ARRAY("array-u32", MyDev, prop_array_u32_nb, prop_array_u32,
--                     qdev_prop_uint32, uint32_t),
-+                     qdev_prop_uint32),
- };
- 
- static void my_dev_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/display/apple-gfx-mmio.m b/hw/display/apple-gfx-mmio.m
-index 58beaadd1f1..dcd04617eb8 100644
---- a/hw/display/apple-gfx-mmio.m
-+++ b/hw/display/apple-gfx-mmio.m
-@@ -258,7 +258,7 @@ static void apple_gfx_mmio_reset(Object *obj, ResetType type)
- static const Property apple_gfx_mmio_properties[] = {
-     DEFINE_PROP_ARRAY("display-modes", AppleGFXMMIOState,
-                       common.num_display_modes, common.display_modes,
--                      qdev_prop_apple_gfx_display_mode, AppleGFXDisplayMode),
-+                      qdev_prop_apple_gfx_display_mode),
- };
- 
- static void apple_gfx_mmio_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/display/apple-gfx-pci.m b/hw/display/apple-gfx-pci.m
-index b0694f4cb85..74f79c8b157 100644
---- a/hw/display/apple-gfx-pci.m
-+++ b/hw/display/apple-gfx-pci.m
-@@ -118,7 +118,7 @@ static void apple_gfx_pci_reset(Object *obj, ResetType type)
- static const Property apple_gfx_pci_properties[] = {
-     DEFINE_PROP_ARRAY("display-modes", AppleGFXPCIState,
-                       common.num_display_modes, common.display_modes,
--                      qdev_prop_apple_gfx_display_mode, AppleGFXDisplayMode),
-+                      qdev_prop_apple_gfx_display_mode),
- };
- 
- static void apple_gfx_pci_class_init(ObjectClass *klass, const void *data)
--- 
-2.55.0
+Kevin
 
 
