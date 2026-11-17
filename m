@@ -1,57 +1,59 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE7B606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 02:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6CE606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 02:04:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT8Y0-0007D7-8V; Mon, 16 Nov 2026 21:03:48 -0500
+	id 1xT8Y1-0007DW-Hh; Mon, 16 Nov 2026 21:03:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xT8Xu-0007CX-Gg
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 21:03:42 -0500
+ id 1xT8Xy-0007Cw-B7
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 21:03:46 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xT8Xr-0002Vp-UA
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 21:03:42 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1xT8Xs-0002Vr-6r
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 21:03:43 -0500
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8DxztD1tftqNFIgAA--.3206S3;
- Tue, 17 Nov 2026 10:03:33 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxvtD3tftqOlIgAA--.340S3;
+ Tue, 17 Nov 2026 10:03:35 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJBxJs3rtftqAxo1AA--.64899S2;
- Tue, 17 Nov 2026 10:03:24 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBxJs3rtftqAxo1AA--.64899S4;
+ Tue, 17 Nov 2026 10:03:35 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <17746591750@163.com>,
 	Peter Maydell <peter.maydell@linaro.org>
 Cc: Xianglai Li <lixianglai@loongson.cn>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 0/2] target/loongarch: Fix vmstate_tlb migration issue
-Date: Tue, 17 Nov 2026 10:04:56 +0800
-Message-ID: <20261117020458.2203333-1-maobibo@loongson.cn>
+Subject: [PATCH v2 2/2] target/loongarch: Discard vmstate_tlb field
+Date: Tue, 17 Nov 2026 10:04:58 +0800
+Message-ID: <20261117020458.2203333-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261117020458.2203333-1-maobibo@loongson.cn>
+References: <20261117020458.2203333-1-maobibo@loongson.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxJs3rtftqAxo1AA--.64899S2
+X-CM-TRANSID: qMiowJBxJs3rtftqAxo1AA--.64899S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7JryfKF4DJry3Zr17JFy8Xrc_yoW3Jrg_u3
- 47Jry8CF4UW3WkJa4j9ry5X3sIvay0qFn8A3WUJr43K3y8JFyrWw4v93ZxZryUtrWDJrs8
- Aws8XryFkr1xtosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+X-Coremail-Antispam: 1Uk129KBj9xXoWrZr4Duw17KF4rAr15ZFW3XFc_yoWfWFgEg3
+ W7Awn7uw48Way0kw4YvrZ5JFyfWw409FnYvayqgF40k3y5K34rGw4vg3WDAry2vrnxJF4r
+ ArsrtryfCr4ayosvyTuYvTs0mTUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvT
  s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
  cSsGvfJTRUUUb78YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ vaj40_Wr0E3s1l1IIY67AEw4v_JF0_JFyl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
  WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
  JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE14v2
  6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
  xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
  Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7
- IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
+ IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
  6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
- AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1EksDUUUUU==
+ AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8rwIDUUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -70,34 +72,39 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This reverts commit 9e771d547b72d1eecd962725fad7508af3b97183.
-The old commit breaks migration of a loongarch "virt-11.1" machine from
-QEMU 11.1 to current head-of-git.
+TLB in destination can reconstruct from scratch, it is not necessary
+to migrate the TLB entries. Here set return value as false in function
+tlb_needed(), so that vmstate_tlb field is discard during migration.
 
-Also this patch discards field of vmstate_tlb during migration since TLB
-can reconstruct from scratch.
-
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
-v1 ... v2:
-  1. Add test steps to resolve the issue in the comments of patch 1
-  2. Add Resolves tag in the comments of patch 1
----
-Bibo Mao (2):
-  Revert "target/loongarch: Remove TLB entry in vmstate"
-  target/loongarch: Discard vmstate_tlb field
+ target/loongarch/machine.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
- target/loongarch/machine.c | 39 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
-
-
-base-commit: e9fa1f66f0d47c74b6766e1b8b87ad7c2a9394d5
+diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+index 957dc2ed71..a91700cbff 100644
+--- a/target/loongarch/machine.c
++++ b/target/loongarch/machine.c
+@@ -178,7 +178,11 @@ static const VMStateDescription vmstate_pmu = {
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+ static bool tlb_needed(void *opaque)
+ {
+-    return tcg_enabled();
++    /*
++     * Not needed, will remove field of vmstate_tlb when virt-11.1 is
++     * deprecated.
++     */
++    return false;
+ }
+ 
+ /* TLB state */
 -- 
 2.54.0
 
