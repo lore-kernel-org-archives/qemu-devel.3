@@ -1,81 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAEC606A332
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 17:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8B1606A32A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 17:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DLskXJzK
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FRYYy54M
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTMcT-0004P7-3G; Tue, 17 Nov 2026 12:05:21 -0500
+	id 1xTMp8-0006a6-9h; Tue, 17 Nov 2026 12:18:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xTMc0-0004Kf-E4
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:04:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTMp4-0006Y5-PS
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:18:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xTMby-0006i8-46
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:04:52 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTMp3-0006aL-8U
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:18:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794935088;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1794935901;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Zc1t6r8yymXUoviERSskpV95rysNvp4t7EsUH+EYf/4=;
- b=DLskXJzKt5hxTNKhVbuMyVLT/edFbYflUSbj8oA2ctmxOB+tpkf6xjnFOsQ+HovFfvXU/q
- cbaYBsmnlx2SoZZVacpWjCX5EI4UEAUfLzRPD2SBZfFfe0V0+KRBP9h/3dvX4EiaZOgejT
- fK5iCh7UGHKVz+TUgjUILc9vcYhvuXw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ce6aUHCZ7Rx31iKQJVNhPpVlzSao3T5q4N453t3rLrE=;
+ b=FRYYy54MwHZfNuqVXZdekCLu8ZfRYbnmf9FTKOJDlAAhJS5r2e70rPYmyW7M0BL99QRc9z
+ FZ4iegjvPO8WKcJLX+V0QL5C3ZjtcnsnM+nAjGgummObPxvc/S4GxM9aXOdheYzfmzLrgv
+ 6oXnZIhrRkz8d3JqquTwSfe9k7bgwlI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-hC8G46h_PfSVE2HFDm6uTg-1; Tue,
- 17 Nov 2026 12:04:46 -0500
-X-MC-Unique: hC8G46h_PfSVE2HFDm6uTg-1
-X-Mimecast-MFC-AGG-ID: hC8G46h_PfSVE2HFDm6uTg_1794935084
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-hA3dP4gcOrKxixHnyxqsGA-1; Tue,
+ 17 Nov 2026 12:18:17 -0500
+X-MC-Unique: hA3dP4gcOrKxixHnyxqsGA-1
+X-Mimecast-MFC-AGG-ID: hA3dP4gcOrKxixHnyxqsGA_1794935896
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61DA319560B5; Tue, 17 Nov 2026 17:04:44 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E51FD3001DAD; Tue, 17 Nov 2026 17:04:42 +0000 (UTC)
-Date: Tue, 17 Nov 2026 17:04:40 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- pick Peter Xu <peterx@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v2] tests/docker/dockerfiles/release: use full registry
- name for image
-Message-ID: <avyI7f2N7vo3EoCN@redhat.com>
-References: <20261117170244.3180399-1-pierrick.bouvier@oss.qualcomm.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05D3C1800599; Tue, 17 Nov 2026 17:18:16 +0000 (UTC)
+Received: from merkur.redhat.com (unknown [10.44.32.7])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6B507195B3C7; Tue, 17 Nov 2026 17:18:14 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	richard.henderson@linaro.org,
+	qemu-devel@nongnu.org
+Subject: [PULL 6/8] block: read the old child length after draining in
+ bdrv_replace_child_bs()
+Date: Tue, 17 Nov 2026 18:17:56 +0100
+Message-ID: <20261117171758.237462-7-kwolf@redhat.com>
+In-Reply-To: <20261117171758.237462-1-kwolf@redhat.com>
+References: <20261117171758.237462-1-kwolf@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261117170244.3180399-1-pierrick.bouvier@oss.qualcomm.com>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,32 +79,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 17, 2026 at 10:02:44AM -0700, Pierrick Bouvier wrote:
-> By default, podman does not have docker.io preconfigured as default
-> registry, so building fails.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  tests/docker/dockerfiles/release.docker | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+From: "Denis V. Lunev" <den@openvz.org>
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+bdrv_drained_begin() runs nested event loops, and old_bs can be resized
+from there by something other than the BlockBackend being switched: an
+export truncating it, or a block job completing. old_len read before
+the drain is then stale, and comparing it with new_len sends a
+notification the parent does not need or skips one it does.
 
-With regards,
-Daniel
+Read it once both nodes are drained, so that the read, the comparison
+and the notification see the same sizes. A resize which completes in
+the drain notifies the parents of old_bs, @child included, on its own.
+
+Fixes: 8b267376df87 ("block: notify the parent when a replaced child has a different size")
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20261105203752.3169635-2-den@openvz.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ block.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/block.c b/block.c
+index 006c3413406..9df1a48c06b 100644
+--- a/block.c
++++ b/block.c
+@@ -5566,11 +5566,12 @@ int bdrv_replace_child_bs(BdrvChild *child, BlockDriverState *new_bs,
+ 
+     GLOBAL_STATE_CODE();
+ 
+-    old_len = bdrv_getlength(old_bs);
+-
+     bdrv_ref(old_bs);
+     bdrv_drained_begin(old_bs);
+     bdrv_drained_begin(new_bs);
++
++    old_len = bdrv_getlength(old_bs);
++
+     bdrv_graph_wrlock();
+ 
+     bdrv_replace_child_tran(child, new_bs, tran);
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.56.1
 
 
