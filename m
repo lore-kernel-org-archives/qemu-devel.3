@@ -1,57 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0817E606A331
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 17:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8310606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 17:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=SO6/K5Cf
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=BhbDXLtJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTMp7-0006a4-RQ; Tue, 17 Nov 2026 12:18:25 -0500
+	id 1xTMp3-0006XP-Bc; Tue, 17 Nov 2026 12:18:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTMp3-0006Xn-IN
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:18:21 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTMou-0006VZ-QX
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:18:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTMp1-0006Zs-5l
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:18:20 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTMot-0006Xu-C7
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:18:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794935898;
+ s=mimecast20190719; t=1794935890;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PTpRWT2bESwLS0+s3VKD+x7p2+QjMOw7dkDSTrY+dCs=;
- b=SO6/K5Cf6lYmmgrcax4Ssw0vvrQ4Ds1MWqimogVDuj+w1CQ9owqwsjfqn1XLzZTVTCbS9F
- Dbi5BTLl4ivueoSqxSJ+M4oqL9FxJy34bNT/CO8ZAi+4OdZZJlEtAMy8GlAEpilUB4WFmD
- AwEzBRuur4zdLqAT9+DeJkkWDEAawLY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=oiebR+41tfkDis4dKbv6PVhs3ti6+XQM//Yxopo4Kng=;
+ b=BhbDXLtJ5f8+QS6/28QnC7kP7FmGw7RpIJyYc3bFcH1c9m5mbzkEC4gXe02GQnCjh/en9q
+ 54qSOHIfDbCliL4FvDZfThDtZL0ItyZbnWzoOb5xLVuoxbuMZ+IT3jSKb6maCihE2KSgln
+ rY3+3+gcxH+fUuZqQq8NMLVcU+/69/U=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-600-TqLBcRjeOKiFi_BdOwIAWQ-1; Tue,
- 17 Nov 2026 12:18:15 -0500
-X-MC-Unique: TqLBcRjeOKiFi_BdOwIAWQ-1
-X-Mimecast-MFC-AGG-ID: TqLBcRjeOKiFi_BdOwIAWQ_1794935894
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-396-oa0Rdg12MhaovJ4GD_Hhuw-1; Tue,
+ 17 Nov 2026 12:18:07 -0500
+X-MC-Unique: oa0Rdg12MhaovJ4GD_Hhuw-1
+X-Mimecast-MFC-AGG-ID: oa0Rdg12MhaovJ4GD_Hhuw_1794935886
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1BC12195608D; Tue, 17 Nov 2026 17:18:14 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16A73180059B; Tue, 17 Nov 2026 17:18:06 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.32.7])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9CA36195B3C5; Tue, 17 Nov 2026 17:18:12 +0000 (UTC)
+ id 8512C195B3C6; Tue, 17 Nov 2026 17:18:04 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 5/8] block/vhdx: Add alignment checks for region tables
-Date: Tue, 17 Nov 2026 18:17:55 +0100
-Message-ID: <20261117171758.237462-6-kwolf@redhat.com>
+Subject: [PULL 1/8] block/bochs: validate bitmap size and compute
+ extent_blocks after validation
+Date: Tue, 17 Nov 2026 18:17:51 +0100
+Message-ID: <20261117171758.237462-2-kwolf@redhat.com>
 In-Reply-To: <20261117171758.237462-1-kwolf@redhat.com>
 References: <20261117171758.237462-1-kwolf@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -60,14 +61,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,56 +79,72 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Thomas Huth <thuth@redhat.com>
+From: malike <malike@kylinos.cn>
 
-According to the VHDX specification:
+bochs_open() computes bitmap_blocks using the formula
+"1 + (le32_to_cpu(bochs.bitmap) - 1) / 512".  le32_to_cpu() returns
+uint32_t, so when bochs.bitmap is zero the subtraction wraps to
+UINT32_MAX (0xFFFFFFFF) in unsigned arithmetic, yielding
+bitmap_blocks = 8388608 instead of 1.
 
- "The FileOffset and Length fields specify the 64-bit byte offset and 32-bit
-  byte length of the object within the file. The values must be a multiple of
-  1 MB, and FileOffset must be at least 1 MB."
+The bitmap field is read directly from the on-disk image header and was
+never validated.  The overflowed bitmap_blocks propagates into
+seek_to_sector()'s bitmap_offset calculation, causing reads to target
+wrong offsets and return I/O errors or incorrect data.
 
-Thus let's add a sanity check to avoid that bad things could happen later.
+Add an explicit zero check for bochs.bitmap before the formula.
+
+Also move the extent_blocks calculation to after the existing
+extent_size validation.  The same "1 + (x - 1) / 512" pattern applies
+to extent, but extent==0 is already caught by the "extent_size <
+BDRV_SECTOR_SIZE" check; the calculation is moved after that check for
+clarity and robustness, and uses the already-validated s->extent_size
+instead of re-reading the header field.
 
 Cc: qemu-stable@nongnu.org
-Buglink: https://gitlab.com/qemu-project/qemu/-/work_items/3762
-Reported-by: Daniel Wade <danjwade95@gmail.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20261113072336.46309-1-thuth@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Fixes: a8753c3466dc ("Bochs disk image support")
+Signed-off-by: malike <malike@kylinos.cn>
+Message-ID: <20261014033419.236057-1-malike@kylinos.cn>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/vhdx.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ block/bochs.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/block/vhdx.c b/block/vhdx.c
-index 8013a90a1a4..e71973cf525 100644
---- a/block/vhdx.c
-+++ b/block/vhdx.c
-@@ -566,6 +566,16 @@ vhdx_open_region_tables(BlockDriverState *bs, BDRVVHDXState *s)
+diff --git a/block/bochs.c b/block/bochs.c
+index bfda88017d9..7a8091d47d9 100644
+--- a/block/bochs.c
++++ b/block/bochs.c
+@@ -167,8 +167,13 @@ static int bochs_open(BlockDriverState *bs, QDict *options, int flags,
  
-         vhdx_region_entry_le_import(&rt_entry);
+     s->data_offset = le32_to_cpu(bochs.header) + (s->catalog_size * 4);
  
-+        /*
-+         * According to the VHDX spec, offset and length must be multiple
-+         * of 1 MiB and offset must be at least 1 MiB.
-+         */
-+        if (!QEMU_IS_ALIGNED(rt_entry.file_offset, MiB) ||
-+            !QEMU_IS_ALIGNED(rt_entry.length, MiB) || !rt_entry.file_offset) {
-+            ret = -EINVAL;
-+            goto fail;
-+        }
++    if (le32_to_cpu(bochs.bitmap) == 0) {
++        error_setg(errp, "Bitmap size must not be zero");
++        ret = -EINVAL;
++        goto fail;
++    }
 +
-         /* check for region overlap between these entries, and any
-          * other memory regions in the file */
-         ret = vhdx_region_check(s, rt_entry.file_offset, rt_entry.length);
+     s->bitmap_blocks = 1 + (le32_to_cpu(bochs.bitmap) - 1) / 512;
+-    s->extent_blocks = 1 + (le32_to_cpu(bochs.extent) - 1) / 512;
+ 
+     s->extent_size = le32_to_cpu(bochs.extent);
+     if (s->extent_size < BDRV_SECTOR_SIZE) {
+@@ -188,6 +193,8 @@ static int bochs_open(BlockDriverState *bs, QDict *options, int flags,
+         goto fail;
+     }
+ 
++    s->extent_blocks = 1 + (s->extent_size - 1) / 512;
++
+     if (s->catalog_size < DIV_ROUND_UP(bs->total_sectors,
+                                        s->extent_size / BDRV_SECTOR_SIZE))
+     {
 -- 
 2.56.1
 
