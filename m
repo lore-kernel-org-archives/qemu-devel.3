@@ -1,68 +1,69 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189D4606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 14:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B426606A32A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 14:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=k/ttNT5x
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nelOpxkE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTKS3-0002wP-8s; Tue, 17 Nov 2026 09:46:28 -0500
+	id 1xTKS5-0002wi-5A; Tue, 17 Nov 2026 09:46:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zachwade.k@gmail.com>)
- id 1xTKRZ-0002ue-Jv
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 09:46:05 -0500
-Received: from mail-pi2-x0b.google.com ([2607:f8b0:4864:3a::b])
+ id 1xTKRd-0002uu-P9
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 09:46:14 -0500
+Received: from mail-pi2-x09.google.com ([2607:f8b0:4864:3a::9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zachwade.k@gmail.com>)
- id 1xTKRY-0007wY-5l
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 09:45:57 -0500
-Received: by mail-pi2-x0b.google.com with SMTP id
- 41be03b00d2f7-cd693e0942bso1262067a12.1
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 06:45:55 -0800 (PST)
+ id 1xTKRa-0007wi-7J
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 09:46:01 -0500
+Received: by mail-pi2-x09.google.com with SMTP id
+ 41be03b00d2f7-cdd769c49dbso2290147a12.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 06:45:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794926754; x=1795531554; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=M2c87rC0eKg0YcAW0LWTJsk9v+Ge4vxJJOiIV6oGOIk=;
- b=k/ttNT5xKS/CcqpxQ3/35mZk/xrMM4gKqg3jdIkeJ15bIMIvJvb2beNXb/gLEob2As
- +f3dMYF7WJ6iap+CNQwxpYjLakugKDAzWjEz7Yu2onkmuL343P8mf2cZ3clrcR16x8/s
- ekbPu2bsUeof1cNREkHgtD6K/5Fe0qETx8IesI4NmX9AuTDlNJ0FWv9YCADwMBGpo3Ht
- K1CzNXREKs/y8Zpr71NfiXunkykNSS8VVqFUudqsSZK5mqNzkkXr2vjriMCTqji3fDym
- +k5k/b68RhOC/4Qc34u33ctQwZ3gLC9m9f0hF8Ga6mQVWBymvvImjCvNUHdcTBhglxZb
- KJJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794926754; x=1795531554;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20260707; t=1794926756; x=1795531556; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=M2c87rC0eKg0YcAW0LWTJsk9v+Ge4vxJJOiIV6oGOIk=;
- b=v1rZ6i1X23qnDe41NEqAiqb3w2cFgkHVN59jr4Gs/Hw1R9KZiYtl4m2XhX1deo3dbc
- ksSHNjaWyAYQnqbAQLx/dHyT6Zpo4BbSmunaTVpxVGStQpjlr7sUtJh4J19eNjh7WiOi
- +mftgrnHKzj0z8FZ5eIOoY5Vku4qunLptelCXdRIKrPl24b7kyXIu/QOUG6wEHiNAaEV
- Xuj1TXQChzWU1yWGiDn9OSD9IJWeZk3An2U5FfSD8NQJ63vjdz192eAK4PoyyHiZpZNP
- cqCKYHF4Z6DaoKB6u4pTD0Jgwc+sxC4HW5vAmZR9krqzCGa2fnrX/F7AilHgwfCLhhdi
- I67w==
-X-Gm-Message-State: APuU4Z+HTiKaYb/y25tJUYtj68NCLTr667FcDGAOwrEfj6sYZfN9zhou
- VNJM7Rbw/DIVjr50UucrfyH+zWdONsLmSVEhMan9XcT4w5fDM7QA+QejFja4RAAFA5xHl/qh
-X-Gm-Gg: AYBFou0x20ax9MlV9MiaOmheCtxuPpBCLZglcrOKypjHWVw91FzQeaiNSDPQOt8Z2WK
- lcx1N4klsNg1NySNQAegp1zhpZpmX+sSjGSWJsOrWRsNoOE3vg1SlH24SBZPyc3NH9DZn4yJQTW
- hZ/55j/qrQrky1UZjfbdHkksU1kejhgMgE85F4ySPrbnwqLgKL1zn2zbbMHdogLoKcpX5XsKD0c
- UR2H+W/ZfZ/6yTKY7Ebe0UB2n+pACwLqzej5FaG09UxTI5sHRriTFC/ZEm15dIOnsTHNAkDPG1W
- iUmErWGuB56DIuj1813VXUziJg/dO7S2QlTFSdujOr8hGYYKll+0SZvsLv3tMvczjTUaqOt5NUI
- 1uTYE9eLeqkkO5/NQSQYXAdP5f81nQ4L2XPuldSo22R4lVQU25W0c6lMmgzRDn+l2ahsPpjjnBV
- 2kqrjHnGIKqSnKV2xlgLQANhQ4i2VN87T8alcOzKTI0A4Th9nuIJl0K4a4E+y/wEG2EfXEpFg2l
- uUYtWzXo8rJI/QMnHZowHa2ImdOCWIT9hH6riI283oEIhkjW/NSJtJnC+XbC+ndzIV8Ho3WELss
- nZvOOiP3kjNs5eg3oJsD1JdH0/8=
-X-Received: by 2002:a05:6a20:6a22:b0:3fa:df2d:d3cf with SMTP id
- adf61e73a8af0-3fadf2dd8c7mr7371879637.14.1794926753655; 
- Tue, 17 Nov 2026 06:45:53 -0800 (PST)
+ bh=EDSurTbj8NuiS/VBIFZZBRq/3uZ+Ad6RYdcMEGiHyTE=;
+ b=nelOpxkE5wJ5ps7+NBYTaxq59Ehgl2xFjsNlPxFBSaNMxyOrCo1FKd18gz6Fxk0dFp
+ 0iFaG46cNb7T/d9iGT84COEt63aQ5YT9CvyIcWskWSLzyOUFMMUnma7+XgCkUaxeCGp8
+ 6I0vqxMS9qNdBI0N718VvqrTPYbTGLHax/4aa9sMLduyCFUN2NgrlDLyV44HhS5TyFvR
+ TNyNNtUTOz/X9eiIlc5/YeLN1G+TmxUMHlQDYJ7Bpeeb7mu7MnUi/cTNvLHbGOm48zCB
+ B+eWH5oqT6Visuuowssqg2uvsWD8CVdbJ9CyHhh9wqDGVtRYMxNVrmn1lAyTXqCyvY1d
+ p2mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794926756; x=1795531556;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=EDSurTbj8NuiS/VBIFZZBRq/3uZ+Ad6RYdcMEGiHyTE=;
+ b=Xsg0tq1UW/9BHSIkg5BmJyGuza+jz1cvP/MnPSsT9wtYUKDsB7teNLnxoMkHRlnv90
+ ofmGaZKLaICpwFm2g4poKgOXW0niAxDB8vsmaPoXMlV9Bv1jRSLiYyhzLEV9znItlbNh
+ IOtsc45/Em8cNjbM4x0r4henrzHJ88GLHovNl8dXzkBA8AxA8y3O0ije995M+aswGwuj
+ Y+uM6n1NFHAgjp3/mjyX62of8XQ+yXvrhBTsevOLTKX8AQ1SEQGJZp7nUPf+8X0wB5Y8
+ EmTMfG/jOSzPRaMAckyYDnlFuxEJk06Q2MVAkoKxCZXbnOfPTZx51im7/gy5+/YSgBvY
+ KZSw==
+X-Gm-Message-State: APuU4Z9Sk1I2c8di+D02UF3g2I2/V/3gNFf1AkLSscp7dQHVg20hBP37
+ tSDQ5JFrlhh5mEhRuOwUmH0/baqSzl92nGl1B3WA3unNGdYX5A9L75OgbGKi9X2/Tbs6Lg==
+X-Gm-Gg: AYBFou1Hnsa+lamBqlDg6icOtrjk/yAsHpIrQ2b5K6YVdYQw1kM3TaLrzCL7wmXk/VM
+ sMNScRQo1PTZ2MurUofR1G058CruARdBudD4L82TPN+0kQok7vkYS/DYJ7vJX52nEdoZliZ4kIN
+ KdXqA/KtyxX7HCKbH5A2MhuG7yvhtq7jT+Ec/V8lPJlp439Hj34R3facSJLTu/9ebjFCxWbrrue
+ hUI2py24t2zgkE4JTHA5MaT9j4cb5wrf8xbo7r2Vbi9Z9Gf9luNr76vyEcvG+6VT62NX2mCVD/k
+ ehVbrAa1jTRBq2Ci9UV2Vv19wGfQ2p2dofLIGfudS61j70Gq1yqapZOlO6TRXXe3RmFMDcDmyKD
+ n2r2rRTup9CYCWpis48jl3GGNIaPHRJIcXaC1/hRLdrrn4ZdLmeXBYvvMJlvMSrjUY+3an8DYdD
+ D120YcJXgkuDt0mUVT7XNwBtP6NHOGKulGzrgeEFxvNBN+VYc7OOtfyBdx/FgxgU/ZxDuK/6CS1
+ NabAF+rfIePkICEBcFSXpV8FrHvqPjqkS3SfdeZNY23rsboWhxqlqwaKhiwa5AWAuBgXyVvwwgp
+ cR7cUZmdLqQicU9GO8qN+b92S+M=
+X-Received: by 2002:a05:6a21:168d:b0:3eb:a7ca:4d70 with SMTP id
+ adf61e73a8af0-3f7a8bd850amr13693876637.58.1794926756113; 
+ Tue, 17 Nov 2026 06:45:56 -0800 (PST)
 Received: from ubuntu.. ([103.49.135.232]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cde150b8efcsm1244776a12.2.2026.11.17.06.45.51
+ 41be03b00d2f7-cde150b8efcsm1244776a12.2.2026.11.17.06.45.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Nov 2026 06:45:53 -0800 (PST)
+ Tue, 17 Nov 2026 06:45:55 -0800 (PST)
 From: Zhu Wei <zachwade.k@gmail.com>
 X-Google-Original-From: Zhu Wei <zhuwei@sangfor.com.cn>
 To: qemu-devel@nongnu.org,
@@ -70,16 +71,18 @@ To: qemu-devel@nongnu.org,
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  niming <niming@sangfor.com.cn>, zhuwei <zhuwei@sangfor.com.cn>,
  "zachwade . k" <zachwade.k@gmail.com>
-Subject: [PATCH 0/1] block/monitor: fix BlockJobInfoList leak in
+Subject: [PATCH 1/1] block/monitor: fix BlockJobInfoList leak in
  hmp_info_block_jobs()
-Date: Tue, 17 Nov 2026 22:45:47 +0800
-Message-ID: <20261117144548.3252867-1-zhuwei@sangfor.com.cn>
+Date: Tue, 17 Nov 2026 22:45:48 +0800
+Message-ID: <20261117144548.3252867-2-zhuwei@sangfor.com.cn>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261117144548.3252867-1-zhuwei@sangfor.com.cn>
+References: <20261117144548.3252867-1-zhuwei@sangfor.com.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3a::b;
- envelope-from=zachwade.k@gmail.com; helo=mail-pi2-x0b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3a::9;
+ envelope-from=zachwade.k@gmail.com; helo=mail-pi2-x09.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,25 +111,55 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: zhuwei <zhuwei@sangfor.com.cn>
 
-Hi,
+hmp_info_block_jobs() uses 'list' both as the head of the BlockJobInfoList
+returned by qmp_query_block_jobs() and as the iterator of the while loop.
+Once the loop finishes, 'list' is NULL, so the call to
+qapi_free_BlockJobInfoList(list) at the end of the function frees nothing
+and the whole list returned by qmp_query_block_jobs() is leaked.
 
-hmp_info_block_jobs() walks the BlockJobInfoList returned by
-qmp_query_block_jobs() with a single variable, 'list', which is used both
-as the head of the list and as the loop iterator.  By the time the loop
-terminates 'list' is NULL, so the trailing call to
-qapi_free_BlockJobInfoList(list) frees nothing and the full list handed
-back by qmp_query_block_jobs() is leaked.  Every "info block-jobs" HMP
-command run while a job is active (stream, mirror, commit, backup...)
-leaks the whole list.
+Keep the head of the list in a separate variable and free that one after
+the loop, so the entire list is released as intended.
 
-The patch keeps the head of the list in a separate variable ('head') and
-frees that one after the loop, so the list is released as intended.  No
-functional change is expected; it only fixes the leak.
-
-Reported-by: niming <niming@sangfor.com.cn>
+Fixes: 2bcad73c4b9b ("monitor/hmp: move hmp_info_block* to block-hmp-cmds.c")
 Signed-off-by: niming <niming@sangfor.com.cn>
 Signed-off-by: zhuwei <zhuwei@sangfor.com.cn>
 ---
  block/monitor/block-hmp-cmds.c | 7 +++++--
  1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
+index 7bae4d425c..d3f404146a 100644
+--- a/block/monitor/block-hmp-cmds.c
++++ b/block/monitor/block-hmp-cmds.c
+@@ -760,7 +760,7 @@ void hmp_info_blockstats(MonitorHMP *hmp, const QDict *qdict)
+ 
+ void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
+ {
+-    BlockJobInfoList *list;
++    BlockJobInfoList *list, *head;
+ 
+     list = qmp_query_block_jobs(&error_abort);
+ 
+@@ -769,6 +769,9 @@ void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
+         return;
+     }
+ 
++    /* Keep the head: list is NULL once the loop below is done */
++    head = list;
++
+     while (list) {
+         if (list->value->type == JOB_TYPE_STREAM) {
+             monitor_hmp_printf(hmp, "Streaming device %s: Completed %" PRId64
+@@ -791,7 +794,7 @@ void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
+         list = list->next;
+     }
+ 
+-    qapi_free_BlockJobInfoList(list);
++    qapi_free_BlockJobInfoList(head);
+ }
+ 
+ void hmp_info_snapshots(MonitorHMP *hmp, const QDict *qdict)
+-- 
+2.56.0
+
 
