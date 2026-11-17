@@ -1,96 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D0E606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 01:59:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=WnL3P8zi
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE7B606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 02:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xT8TB-0004vX-Uz; Mon, 16 Nov 2026 20:58:50 -0500
+	id 1xT8Y0-0007D7-8V; Mon, 16 Nov 2026 21:03:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xT8TB-0004vP-17
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 20:58:49 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xT8T9-0001AP-C6
- for qemu-devel@nongnu.org; Mon, 16 Nov 2026 20:58:48 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-3b3a9a4a765so360248a91.0
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 17:58:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794880726; x=1795485526; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=fgdlV9YKjHqRJFBSKSXdmr/4dt9gfmPr/3jlO9pGvaQ=;
- b=WnL3P8ziLUf1yC3Rnx84ZHe4PubAqL2mtI/lGk69ElnV8g5sqjD0wNX0hO2fk/va7A
- L/k8E0oMd6WTlAvAtrqu0y/SCpFVmnYDoTyAlSqkeZpBJgGebg7tYmZ5NtujKFuOqCX9
- pbl1R+ZAMQVB2WiXh02dV9CLKm8q4NWN2vsFE8Q+u5F4BAt1QG2L250iKWxx29t4xOw6
- h4ksqbizdTWDOSDaqoMJ4mT2CJsteXQ4ETJAj5gztOQ3q8mluSGeuKMBACNFQs8o6LZE
- 7etAMqugK/6st+NmO+LB1gd0dw90rqNTuvu0WWhOmFuu0of8kD46BTccS3zclyzYZpQl
- 007g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794880726; x=1795485526;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=fgdlV9YKjHqRJFBSKSXdmr/4dt9gfmPr/3jlO9pGvaQ=;
- b=jV0zr+avxQmBmECA6HqLRMP8QBSKBKHha/PYQ5EzU2K/OO7CH6MJb/49eokp6DJEIc
- C1VYi1+a2sXTutRYF3tlULBNNIkf7Icwpkgc0i2KZ4/ej6FUM4wGGj9bTub7JgjFM+9/
- Glcqdg6nTjoi4srEl7dzdaz4Sx8vOYnwo+39xVebU4xReHx4dVrLqXismIK7SfoEEh/F
- 2/ULJIgEkrnVXGMBWEiN2HKuZ1DeYBjZDJaA8o39/cfpgN4A7sjW3VkORelRa1BkUAGx
- 1khdLpAo4VVdSN1VFtvKbjaDAvok3i/e1OS0xmTBtDg2gG27IJAsU/mr+GTGN4zqnDZ4
- KxOA==
-X-Forwarded-Encrypted: i=1;
- AL+hErFFi5Nti2dlXz1lA8QfHMysG8PkKUWp5pTr4UPUM82/2eG/sQOYvNkjmyU9tfbtgCQ8NuiUUL1YdA2o@nongnu.org
-X-Gm-Message-State: APuU4Z9JsgLnv/Xfn0vtDlyS0oi/qou6b4mBZzzECyqgkB0lah37uEES
- y4gUKNhNVW3ZI6d1L3wmLACTvjwGvQmwMEFnJnVk3ieKIFw8F9x0QEmOVY+TL7orbuw=
-X-Gm-Gg: AZFdTZdvt+4XUEbAj2B/J1xAE2eA37ttD++wKDpG+y0eii2ICu82fSRk1/ebBhJ14q0
- E8dbtO2m/urH+jZcvbcO4k//3BjdhsxsRIruEdUT4Xwj3vKqFCG5Dq6wrWHltLUsKP9i2fPY7Xa
- dsX9DJn+Td8V7QJB5Fh/MsCfB9VabjCr5VoMTGG3L6B47NM7Xxo9+HVt3tc9OKrVd+aSnJobIKt
- IVygRhDmVCNZtm51AEj22gbGZtZ4ayyfOg/f0PSt2qzlwO5vqiHi4lkskB0yJNQzIEaiwLsLdLV
- MnsEdIdNEmkWmdvtFr5gZnf6yGud/6qtQdhYco6sphpoJJsUemxF2v8wrRJFQAJODNb4CzOKXiF
- XkqMRhCp/+XNgxNLvgqWnbZbz4Wt3bgt+kZ5acRAjLEy+RqAVlgKdn5cMt6JYN9BH23EzV+irzE
- IfzF/VUOMQhqqouJmn/XC4UsmY83GDSZHrnYUaeyyJypDs8DdXSMzbuYJDztWISOL+0Z6hUF9J0
- YVNI0xbvo5a6mvjoan1dxqGsqy6HFTulhGPXTtGEudVphzjNTdpG+9XAVXkRC7IYfjTDKEP8jdB
- MYagvY7GWesaq9kkWyqMskVJh6gGgZ377aRHq4D8JQexRMo3ENDN98tEfqiwzzpyG7a61SE=
-X-Received: by 2002:a17:90a:c88b:b0:3ac:3588:b548 with SMTP id
- 98e67ed59e1d1-3b1b09e69c6mr12731814a91.13.1794880725543; 
- Mon, 16 Nov 2026 17:58:45 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b3abb786ecsm1478776a91.2.2026.11.16.17.58.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Nov 2026 17:58:45 -0800 (PST)
-Message-ID: <35a15138-f1bc-4b2c-899f-745fc154be11@linaro.org>
-Date: Mon, 16 Nov 2026 17:58:43 -0800
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xT8Xu-0007CX-Gg
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 21:03:42 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xT8Xr-0002Vp-UA
+ for qemu-devel@nongnu.org; Mon, 16 Nov 2026 21:03:42 -0500
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8DxztD1tftqNFIgAA--.3206S3;
+ Tue, 17 Nov 2026 10:03:33 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [127.0.0.1])
+ by front1 (Coremail) with SMTP id qMiowJBxJs3rtftqAxo1AA--.64899S2;
+ Tue, 17 Nov 2026 10:03:24 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <17746591750@163.com>,
+	Peter Maydell <peter.maydell@linaro.org>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 0/2] target/loongarch: Fix vmstate_tlb migration issue
+Date: Tue, 17 Nov 2026 10:04:56 +0800
+Message-ID: <20261117020458.2203333-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/26] Device security tagging
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-References: <20261116222158.2840471-1-berrange@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261116222158.2840471-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJBxJs3rtftqAxo1AA--.64899S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoW7JryfKF4DJry3Zr17JFy8Xrc_yoW3Jrg_u3
+ 47Jry8CF4UW3WkJa4j9ry5X3sIvay0qFn8A3WUJr43K3y8JFyrWw4v93ZxZryUtrWDJrs8
+ Aws8XryFkr1xtosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUb78YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
+ JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
+ xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
+ Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7
+ IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
+ 6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
+ AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1EksDUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,33 +70,35 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/16/26 14:21, Daniel P. Berrangé wrote:
-> The following changes since commit e9fa1f66f0d47c74b6766e1b8b87ad7c2a9394d5:
-> 
->    Merge tag 'pull-nbd-2026-11-10-v2' ofhttps://gitlab.com/ebblake/qemu into staging (2026-11-13 08:44:16 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/berrange/qemu tags/docs-security-devices-pull-request
-> 
-> for you to fetch changes up to 277f11f3e474d03cdff03e541db5a2d731ccb439:
-> 
->    hw/i386: mark vmmouse / vmport as secure (2026-11-16 18:08:38 +0000)
-> 
-> ----------------------------------------------------------------
-> * Mark user creatable devices as secure where they are
->    intended for the virtualization use case and are
->    expected to provide security boundary
+This reverts commit 9e771d547b72d1eecd962725fad7508af3b97183.
+The old commit breaks migration of a loongarch "virt-11.1" machine from
+QEMU 11.1 to current head-of-git.
 
-Applied, thanks.
+Also this patch discards field of vmstate_tlb during migration since TLB
+can reconstruct from scratch.
 
-r~
+---
+v1 ... v2:
+  1. Add test steps to resolve the issue in the comments of patch 1
+  2. Add Resolves tag in the comments of patch 1
+---
+Bibo Mao (2):
+  Revert "target/loongarch: Remove TLB entry in vmstate"
+  target/loongarch: Discard vmstate_tlb field
+
+ target/loongarch/machine.c | 39 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+
+base-commit: e9fa1f66f0d47c74b6766e1b8b87ad7c2a9394d5
+-- 
+2.54.0
+
 
