@@ -1,126 +1,133 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F7F606A323
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 09:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14290606A895
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 09:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HRpadrhM;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=N0p/Wvyy
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=izNKbThv;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ef3wYwNm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTFOT-0001Nc-Gg; Tue, 17 Nov 2026 04:22:25 -0500
+	id 1xTFOZ-0001OG-FO; Tue, 17 Nov 2026 04:22:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xTFOK-0001NF-0d
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 04:22:16 -0500
+ id 1xTFOP-0001Ng-G3
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 04:22:23 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xTFOI-0001Yr-3S
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 04:22:15 -0500
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1xTFON-0001Z9-QS
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 04:22:21 -0500
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AH6M3KW3980901
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 09:22:12 GMT
+ 6AH8nLYg844338
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 09:22:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=c3T5/LnQXF9f0aALNq0fM3
- XLp2cUR+w131uXYxhZHoc=; b=HRpadrhMgqg+ozpyTIoXT5f4JhBgSXEnFhny4V
- i+ak429lxolr44WaEWazePgE98eajILE8TLD/bbk+0g//WBq7wEFfjtqgmr9f5il
- igrXOH0+mYwbW05Vp8XE6quR5IWPIHAguNVEKN8r12sL6Uyu5MUAJsqeEf+Bm3oN
- Xga95G+3LaHGRszqx6kbORNShyZkpUodY0sJLBGwvvTTbXeCVyNYfJbVRutW36rx
- opQOc7Gvthna0St5CemB3D0dGUelBFkR8KAgvoH2LzitGf+X1jh8GHzSTl7QT1i7
- iZpTC+/D274U+ImWJbrPUm6k8joMD/fb7Ep8xRFles/+G8GA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0hkd0p55-1
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ aSP0ylQGd/BxdisFXMRQMhtoZyp4cdpWdqn221kA6Fs=; b=izNKbThvn3KZD88Q
+ inkpovWAGrqFKOKvTwDudDCUGf5/bFv9AvXiMWtjz2/ucBWu2+cqjosmct+x/ht2
+ U4EqM1gx12HZ1YOFQKLl0MffkV3/U2MYcPcLVBN9c89S6EaeBwSt6OCx/Cf1qYOy
+ S03uXk/+YGjI2dQQ02/Vzp++IQE02mYO1MlkaSx8G4LQTeBmZj9JjZD2SnnbPGMs
+ f3juo+8ct6Vb1Jmu/85LOaINK/Afwq9vWsZ5/tqkBeTM0eRd3JfQcIzlEp2X91h5
+ yQ+dVLKLj9hxDTOdSjMslt0nP9MKF3wRiiNZwTqWV4M3yrAePaBgjYMtXlmzOZ7J
+ 7vAALg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0c7h1snb-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 09:22:11 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93f5844cb60so143981185a.0
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 01:22:11 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 09:22:18 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93909014c85so444395085a.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 01:22:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794907331; x=1795512131; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=c3T5/LnQXF9f0aALNq0fM3XLp2cUR+w131uXYxhZHoc=;
- b=N0p/WvyyEUtct3qzm4kgBmBKvH4hin8kADyRdhYn1ScOJV64keXXE+DKIIm8y0Toin
- msME5lBtEVXYqquaPVtfCqxfQCSj0SmRhDTCDnLoWpBmdPAsRenCFcdoafQi52w1ehSl
- 28ehHbOeLAh58qznbPAWBLIJ4A13x6AVgvlwmoTK42FRl3gIWy1W7RTP493tuVoCHj/c
- PYbwy7m4yDjaTF9WpeXQzCMjwxUtrV4oxCODjG6+x3VzAndCnFP1QFS4kC5PzOqC/fbo
- 9mxcioIQ8/fLFWQS3D70t2OfXIoJ2tjCchwSR4YG8kr3WRgIFhTUsEhA6gCOT2ody1vV
- kj2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794907331; x=1795512131;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1794907338; x=1795512138; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=c3T5/LnQXF9f0aALNq0fM3XLp2cUR+w131uXYxhZHoc=;
- b=DokYf9ldhaTeHORq6jZGzM9ZJ2s42hQYC0AWqthSeGFJWTV8dwwzkmuAU6RJZQG6QK
- djslKgMEfQTIe5LsXR9Q5Le/404ufMNBGhIiXEZ/QQ5OiqGy5wuItdXkMHBlITe7efLc
- fh92s+cJVHTEZXdX9eZ/UPnDTgZBOXYV0SEqTRIrTPW1FBpNu5Co34JduJ/IFrOoSyNn
- 9/mtdUhQ0x6upzsEJwnaNJuYDzdtZsfb6uuxDp8vzpFM9HBXHmM3OldJNWQra+v9f2lG
- JQECEwmpFGe3+tdUsksKuJ8Txxb4DsDDA6OzMdZM3vL19oYDyChNZ2uMcuq+261eXgXx
- EcuA==
-X-Gm-Message-State: APuU4Z/4YAbiFeoJCZs8Y95Qvnf5lT1UWgZQ5D6nuaSYdv1cJYVNU2S8
- qR1ZpvrD/LyQay/Q8jl0zgUtNrlywyjcl+sd6thhu2pc3rp/YR6turPXnl5TVm0b4j6fxtyzNZ0
- roEO4XzcgWUVPsbnH6hRE+qAZhoU3cRnZygGHh6Welfwf+j1OXo8hpAZUZWPQk+qYYQ==
-X-Gm-Gg: AYBFou1wCON/VJFfd95+ODrE2IQG/GBAD0JDrUBtsOcYNjV3047+D62pIMgC7MBl3v7
- xQy02Xa9UYFYhdLFLIOG2Zc0Q5G8rh5d+//zUA3za5XBxvaIqxhEGqaJ40/ynT/GoMhbQ1awBFf
- GNIkGRNA23c8sDRC+uhpsyAr0C8JX+TLp+0Up8AmxAeDXBvnHt/Er6qgLGmoiLmUpZHg/jEjuW/
- YaDxmJxv2bbeqRb/5hE4vX97jPpNgso/QWK1lpSnMV5ooEcyUFeLlywIfFFv92jt5W02B57Bl5f
- gBeRhFhKFchMaMcUAsMH9uBtoFcdwhtXlKvXa5UVeFdoRFzLRKlXj0YTc9wT5RCgci76UN2+TLf
- Kw/9abAFndgopczveTu2FYP5RImsThe2REOVj1qYtqf4Ws9OjzjWGZKCbz415HvfP4Eim2v83TD
- nPvty+YcFYCEziVw==
-X-Received: by 2002:a05:620a:2910:b0:949:671a:cc77 with SMTP id
- af79cd13be357-9498b765b0amr295693385a.1.1794907331125; 
- Tue, 17 Nov 2026 01:22:11 -0800 (PST)
-X-Received: by 2002:a05:620a:2910:b0:949:671a:cc77 with SMTP id
- af79cd13be357-9498b765b0amr295690985a.1.1794907330586; 
- Tue, 17 Nov 2026 01:22:10 -0800 (PST)
+ bh=aSP0ylQGd/BxdisFXMRQMhtoZyp4cdpWdqn221kA6Fs=;
+ b=ef3wYwNm0mm0sVccX6MimHQ2A3c5lNW0elahuydaSqtc4hMoZKZn7ngTyVN3objn3L
+ 7gsPHFQGbaL+aPKCYYQ1M6bAGUScrf3JQbitt81zUadXBEWV1XOyRDTAVITEGJnkIJwP
+ qG6qmv9R5IYSbBVvEffK/RQea0nto9K0GBHz4nL+w4zlhfiHOMGUbEQzNeEePzT2SguJ
+ +iQLY26pFOD+AM+mMCyFpOvFqKN7nvbZ2/BW5xEzKmyBvsqISelMvP1nGqOUuNB/Jsdq
+ hiCY06m8esNR4fsuBIWIZHaT0vm3sMgGB0E8p2/dFo2QXAPchypvabmq9z5bVRAiJpqa
+ Kl9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794907338; x=1795512138;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=aSP0ylQGd/BxdisFXMRQMhtoZyp4cdpWdqn221kA6Fs=;
+ b=D5SBfWKsjbRZl5yDAcWU1xe+UaQH+2LSDRj3hnTm8sNO1ATeciNwwsRA40LdWpmkZp
+ e0WUgkvR9AIh3ayYXKxOsvaBiEdQn6NIMezPlg0Tc6QQ5FLIsC/2rBJr3xviivvxlE//
+ 3Jt21Ls8CZWzj/9+N7jFMGFRaEvpdK+Gqr8ROT50CNhIrnf4eY0JUHlmsXkm0BpT4w51
+ B0tAoGPgDTEe5bJ24Fk5eabAj3k2ikPXY4V26jaRboI73p5ilZgoahaad62AD2LL/3+r
+ Z0d3DGp0xbJ9amfiiuNh3Hr1Em+OstOMORqPpEf7gPNM0x9AuVbtzLydTGjLfLMI7Jx6
+ 6Gqg==
+X-Gm-Message-State: APuU4Z+LkqKIamu5om1LPJdA9Dpq6sbiXrNnusxjDuIrckhh+L6RME8E
+ GdG6azSBmXgkCGkETIcA9QT2KyOSwQUbk6VVK1MMkZ5RiyybbxvW6/p9aHo9QRpIyzsmHGWpyFG
+ j8lekDScmgfJc4gwDneaI6KM+YxDudvzDUVFC6wyIDDFCKkcFGtCY1wkj4rhDceHgmA==
+X-Gm-Gg: AYBFou0A8xQOufY+5ALuBq+BPe58BlZ05caZUNT4S8oQOEpJkVq07FBKgVY6IFYzoRB
+ dh2Q0+59VbOCE/vx8L3LILu9Ma0pURrAUjB1WiBW8W+uq/QF2yOfLprOmmvW7qiaUnRahUXrWk5
+ 8HBh41Ujreq6qAFhyg/8NYf8xx8yvITe+QCgp85u5bzz1LRwEjcvKNtLJkCN5yvCT9zBrrJbdS/
+ mQUCTeaZQajS22CHRCZtSWBHDrRX+hMEa5Exra/sbOsDR2iN//BDO3ZY0gtXp7Y05ebSJVXEjQt
+ EJ8YG4jZ38u280y2xOfx5e1t5BDOeC1lfi1ak35Sby2Z31NdTOBXsTdNwkP+T7WdiVVCWKsEVH7
+ c6BtMxDAlJqQjny7k3YGGUYD+r+ZtAotIR6vUCCTsv/bmzcZv027va210fxjIham439fihLGcM5
+ FDDjOFysippklkIg==
+X-Received: by 2002:a05:620a:710d:b0:93e:c691:a1c with SMTP id
+ af79cd13be357-9494bcdb46fmr2160225585a.76.1794907337881; 
+ Tue, 17 Nov 2026 01:22:17 -0800 (PST)
+X-Received: by 2002:a05:620a:710d:b0:93e:c691:a1c with SMTP id
+ af79cd13be357-9494bcdb46fmr2160222185a.76.1794907337266; 
+ Tue, 17 Nov 2026 01:22:17 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49d673ce75fsm20149108f8f.55.2026.11.17.01.22.09
+ ffacd0b85a97d-49c5f7828a4sm27000485f8f.23.2026.11.17.01.22.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 17 Nov 2026 01:22:09 -0800 (PST)
+ Tue, 17 Nov 2026 01:22:16 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/22] Misc TCG & HW patches for 2026-11-17
-Date: Tue, 17 Nov 2026 10:22:07 +0100
-Message-ID: <20261117092208.50442-1-philmd@oss.qualcomm.com>
+Subject: [PULL v2 15/22] hw/usb/ccid-card: Use QemuSemaphore rather than
+ QemuCond
+Date: Tue, 17 Nov 2026 10:22:08 +0100
+Message-ID: <20261117092208.50442-2-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261117092208.50442-1-philmd@oss.qualcomm.com>
+References: <20261117092208.50442-1-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=eqFKXYpX c=1 sm=1 tr=0 ts=6afc1cc3 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-GUID: TUAJD8aMiS6nxr2QZ2m5go6IyAIYu1Ve
+X-Proofpoint-ORIG-GUID: TUAJD8aMiS6nxr2QZ2m5go6IyAIYu1Ve
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDAzNyBTYWx0ZWRfX+TH2/FFbvzs5
+ 0oDsfjPrdJeZF0JnJ/lObJW7kA/57vqf7aBIgyAn64vpRErQMsf24R339JqHfLv83L332L5cVhp
+ uwPs/3oghAGTA68hdHptNGBXWqbDi0h4eKQ8gx7A2fs4hfbdkO7J6qd35HNxV9pprr/U0Tyvrm7
+ B9t65HRJPsKwEl+NOwIPx5jrhFrRBamzODbCHOaYIMueKsJhGIKLMDTFqBSCX575pEpZLYw3eyb
+ p/7BgOm3xhFb7wX2r4wKEikNYxUbvUyo9v61u480fdyPR+KYN0yD6MAn4nH9VXwXTlNiqAAPfq5
+ MGOgZUXXyngPQkwr7EeaAALBJAoyq9fP7NnKsk5ZelKR63zyRy8NweZUdJ3zib4FDz7quZMtyI9
+ Y57eeKAsga5uljohh1nLqfsHHK5bXtre/b0HA0Reui6aWedqbmOprRdqEBIwWZG90avhsGym+Tq
+ ohDEV5CEhqik456jLLA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDAzNyBTYWx0ZWRfX090NkbK0Ys14
+ xYLZpLWcS8lkmwH7JxDB7h2bi+k27PWcN+IM/qsjCfZ3fgxCMqo1hq+dNX54RMuazxFU3dwI/xB
+ GkkOtvHKRPLZzlNKCvwRwDKXIwPBIIk=
+X-Authority-Analysis: v=2.4 cv=bobZl0ai c=1 sm=1 tr=0 ts=6afc1cca cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=p0WdMEafAAAA:8 a=NEAV23lmAAAA:8 a=LKIf4-MQdHYapxLYbd4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDAzNyBTYWx0ZWRfXyo5/I0YpmGN/
- 9sPcc8DPPgeOVSTCZUWjAzrRwvducLvFjw77eLWtPzE15TWwB/j5sYJWevsKkarBevnqWSHHt85
- LcZgmoZJmMAibey7skgNlhHg4he6IW4=
-X-Proofpoint-GUID: YqpW5FJtQ1-Dr4pJ67Nf9l0zkfQBratv
-X-Proofpoint-ORIG-GUID: YqpW5FJtQ1-Dr4pJ67Nf9l0zkfQBratv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDAzNyBTYWx0ZWRfX8Q3tzyUXrLbO
- xawP2aQalxOnwh6gX19bR4NBnwwdKE1g/1V7znuaB6uWQy0QiP3t9JGpNdQv0v7Ups14lmI7cjj
- 8xMFRqJUv0RQwmS+iz+rVojiD95tosxptZ2dt9SEVvi8HdZlXjd81gG5sSlRuyBIf0b3gusLE6R
- 7wngSb0gya1uWpy62xB0P6+KWWU6pIW6Mmdvr9Rw0sIlDKJPBhpijdTIOAwVFP7fogwymI8id+7
- Fy0gBO7SsM86nYrMIP2XpFX96YqYjmcQZh0hIbbGebCzFQuS2lPpMpmO/62c2C3KU5TdKkvyHIg
- looX9KITc1vB1T8XBazCQuNPbxaGg9+acklGflkZnTxe4N0gPjFEFYxEeh0AdbMoT5wE1b6J2fr
- rL82WsiLijBMJ3YnKd4f5Tra8Fc1yCpdCJcHY3T/jf0Zu4r5NvDbqXam/AKBZtsfHEkFNWuuGGQ
- 7D3MziSKukQCB9goFEQ==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=aOiLcrS4A5S5HNe15wYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-17_01,2026-11-16_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0
+ impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 clxscore=1015 malwarescore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170037
 Received-SPF: pass client-ip=205.220.180.131;
@@ -143,108 +150,116 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-v2: Fixed mangled UTF8 in R-b tag (Marc-Andr=C3=A9 Lureau)
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The following changes since commit 97c88c61d45dee6e1f9bc160a338048189846d28:
+The emulated CCID card uses a QemuMutex and QemuCond to communicate
+with its helper thread, but all it's trying to do here is "make the
+helper thread loop wait until is signalled that it has more work to
+do".  The existing code functions correctly, but "wait until the
+other thread signals you" is more simply implemented with a
+QemuSemaphore.
 
-  Merge tag 'docs-security-devices-pull-request' of https://gitlab.com/berrange/qemu into staging (2026-11-16 15:48:48 -0800)
+This avoids a Coverity complaint that we're not using the condition
+variable in the standard
 
-are available in the Git repository at:
+   lock mutex;
+   while (!some_predicate) {
+       cond_wait(condvar, mutex);
+   }
+   do stuff;
+   unlock mutex;
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20261117
+pattern.
 
-for you to fetch changes up to f445ebd9d7fc1ea229821646d8d84c41b856da40:
+Resolves: Coverity CID 1547639
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20261109203817.1683717-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ hw/usb/ccid-card-emulated.c | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
 
-  hw/virtio/virtio-iommu: Fix IOVA address lookup (2026-11-17 10:02:52 +0100)
-
-Ignoring usual spurious checkpatch errors.
-
-----------------------------------------------------------------
-Misc fixes for 11.2
-
-- Build system (obsolete Kconfig, QGA, illumos, macOS pvg)
-- Fix wrong constant encoding in the vector .vi immediate emitters on RISC-V TCG
-- USB device fixes (CCID card, U2F, MTP)
-- m25p80, virtio-iommu, Xen
-----------------------------------------------------------------
-
-Bin Guo (1):
-  hw/usb/u2f: validate ring buffer indices on migration load
-
-Brad Smith (1):
-  qga: fix uname() return value check in guest-get-osinfo
-
-Chao Liu (1):
-  hw/block/m25p80: fix write enable latch after WRSR2
-
-Eric Auger (1):
-  hw/virtio/virtio-iommu: Fix IOVA address lookup
-
-John Snow (3):
-  build: remove vestigial CONFIG_SGA
-  build: update CONFIG_PVPANIC
-  hw/i386: move bios functions into x86-bios.c
-
-Mohamed Mediouni (1):
-  pvg: disable by default
-
-Peng Fan (1):
-  hw/xen: Mark legacy Xen backends as hotpluggable
-
-Peter Maydell (1):
-  hw/usb/ccid-card: Use QemuSemaphore rather than QemuCond
-
-Philippe Mathieu-Daudé (7):
-  tcg/riscv64: Factor encode_vi_raw() out of encode_vi()
-  tcg/riscv64: Use a uimm5 encoder for vector shift immediates
-  tcg/riscv64: Extract elements for vector arithmetic immediates
-  tcg/riscv64: Fix constant handling in vector comparisons and selects
-  tcg/riscv64: Fix logical vector immediate matching and emission
-  tests/tcg/aarch64: Add vector immediate regression tests
-  hw/usb/u2f: Use QemuSemaphore rather than QemuCond
-
-Roman Bogorodskiy (2):
-  meson.build: fix getifaddrs() detection on illumos
-  qga: fix build on illumos
-
-Tommaso Califano (3):
-  hw/usb/dev-mtp: Fix recursive delete of directories
-  hw/usb/dev-mtp: Check length of class control request
-  hw/usb/dev-mtp: Stop processing SendObjectInfo after an error
-
- configs/devices/i386-softmmu/default.mak |   6 +-
- meson.build                              |   2 +-
- tcg/riscv64/tcg-target-con-set.h         |   1 +
- tcg/riscv64/tcg-target-con-str.h         |   1 +
- hw/block/m25p80.c                        |   1 +
- hw/i386/x86-bios.c                       | 143 ++++++++++++++
- hw/i386/x86-common.c                     | 125 ------------
- hw/i386/x86.c                            |   1 -
- hw/usb/ccid-card-emulated.c              |  22 +--
- hw/usb/dev-mtp.c                         |  24 ++-
- hw/usb/u2f-emulated.c                    |  19 +-
- hw/usb/u2f.c                             |  31 +++
- hw/virtio/virtio-iommu.c                 |   2 +-
- hw/xen/xen-legacy-backend.c              |   7 +
- qga/commands-posix.c                     |   8 +-
- tests/tcg/aarch64/sve-vec-imm.c          | 233 +++++++++++++++++++++++
- tcg/riscv64/tcg-target.c.inc             | 116 ++++++++---
- hw/i386/meson.build                      |   1 +
- meson_options.txt                        |   2 +-
- tests/qtest/meson.build                  |   2 +-
- tests/tcg/aarch64/meson.build            |   1 +
- 21 files changed, 555 insertions(+), 193 deletions(-)
- create mode 100644 hw/i386/x86-bios.c
- create mode 100644 tests/tcg/aarch64/sve-vec-imm.c
-
+diff --git a/hw/usb/ccid-card-emulated.c b/hw/usb/ccid-card-emulated.c
+index 4083cf8f4be0..4bd5399fb6e0 100644
+--- a/hw/usb/ccid-card-emulated.c
++++ b/hw/usb/ccid-card-emulated.c
+@@ -129,8 +129,7 @@ struct EmulatedState {
+     VReader *reader;
+     QSIMPLEQ_HEAD(, EmulEvent) guest_apdu_list;
+     QemuMutex vreader_mutex; /* and guest_apdu_list mutex */
+-    QemuMutex handle_apdu_mutex;
+-    QemuCond handle_apdu_cond;
++    QemuSemaphore handle_apdu_sem;
+     EventNotifier notifier;
+     int      quit_apdu_thread;
+     QemuThread apdu_thread_id;
+@@ -149,9 +148,7 @@ static void emulated_apdu_from_guest(CCIDCardState *base,
+     qemu_mutex_lock(&card->vreader_mutex);
+     QSIMPLEQ_INSERT_TAIL(&card->guest_apdu_list, event, entry);
+     qemu_mutex_unlock(&card->vreader_mutex);
+-    qemu_mutex_lock(&card->handle_apdu_mutex);
+-    qemu_cond_signal(&card->handle_apdu_cond);
+-    qemu_mutex_unlock(&card->handle_apdu_mutex);
++    qemu_sem_post(&card->handle_apdu_sem);
+ }
+ 
+ static const uint8_t *emulated_get_atr(CCIDCardState *base, uint32_t *len)
+@@ -238,9 +235,7 @@ static void *handle_apdu_thread(void* arg)
+     EmulEvent *event;
+ 
+     while (1) {
+-        qemu_mutex_lock(&card->handle_apdu_mutex);
+-        qemu_cond_wait(&card->handle_apdu_cond, &card->handle_apdu_mutex);
+-        qemu_mutex_unlock(&card->handle_apdu_mutex);
++        qemu_sem_wait(&card->handle_apdu_sem);
+         if (card->quit_apdu_thread) {
+             card->quit_apdu_thread = 0; /* debugging */
+             break;
+@@ -496,8 +491,7 @@ static void emulated_realize(CCIDCardState *base, Error **errp)
+     QSIMPLEQ_INIT(&card->guest_apdu_list);
+     qemu_mutex_init(&card->event_list_mutex);
+     qemu_mutex_init(&card->vreader_mutex);
+-    qemu_mutex_init(&card->handle_apdu_mutex);
+-    qemu_cond_init(&card->handle_apdu_cond);
++    qemu_sem_init(&card->handle_apdu_sem, 0);
+     card->reader = NULL;
+     card->quit_apdu_thread = 0;
+     if (init_event_notifier(card, errp) < 0) {
+@@ -556,8 +550,7 @@ static void emulated_realize(CCIDCardState *base, Error **errp)
+ out2:
+     clean_event_notifier(card);
+ out1:
+-    qemu_cond_destroy(&card->handle_apdu_cond);
+-    qemu_mutex_destroy(&card->handle_apdu_mutex);
++    qemu_sem_destroy(&card->handle_apdu_sem);
+     qemu_mutex_destroy(&card->vreader_mutex);
+     qemu_mutex_destroy(&card->event_list_mutex);
+ }
+@@ -571,13 +564,12 @@ static void emulated_unrealize(CCIDCardState *base)
+     qemu_thread_join(&card->event_thread_id);
+ 
+     card->quit_apdu_thread = 1; /* stop handle_apdu thread */
+-    qemu_cond_signal(&card->handle_apdu_cond);
++    qemu_sem_post(&card->handle_apdu_sem);
+     qemu_thread_join(&card->apdu_thread_id);
+ 
+     clean_event_notifier(card);
+     /* threads exited, can destroy all condvars/mutexes */
+-    qemu_cond_destroy(&card->handle_apdu_cond);
+-    qemu_mutex_destroy(&card->handle_apdu_mutex);
++    qemu_sem_destroy(&card->handle_apdu_sem);
+     qemu_mutex_destroy(&card->vreader_mutex);
+     qemu_mutex_destroy(&card->event_list_mutex);
+ 
 -- 
 2.55.0
 
