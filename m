@@ -1,134 +1,145 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03ACD606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 22:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E045C606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 22:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=zenithal.me header.i=@zenithal.me header.a=rsa-sha256 header.s=selector1 header.b=XZD75WOQ
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=POtRPXZR;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Y/4i9VvE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTRbc-0007cY-8E; Tue, 17 Nov 2026 17:24:48 -0500
+	id 1xTRny-0002Be-HY; Tue, 17 Nov 2026 17:37:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i@zenithal.me>) id 1xTRba-0007cM-PH
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 17:24:46 -0500
-Received: from mail-japanwestazon11020143.outbound.protection.outlook.com
- ([52.101.228.143] helo=OS0P286CU011.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xTRnw-0002BU-Da
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 17:37:32 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i@zenithal.me>) id 1xTRbY-00013g-7d
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 17:24:46 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Z4Rp0whvWy7rg9Xv9WRoGlzSKdJQvAs8oHzRKa1u3sJ2GjP3N1dOGBNu8LN1OylBoHWZEbKPtBRRWySeKaeVQd74i6bCvbRC4WwHSpLj+d5siWmq2gsT87+3XCgXVVHS15MLeNnAtVXbH8mOBw/jpHRmjvza2qOKZP3W7fUU+FckZWuetVOpwuXhkSsw/zg1Ml0vE0DbvjsrfnsDvHAswNcH6Af4pkSbCq5xadLwURWojS0a3BkfdkxkBe3Rd4S3KOSxtmxA0kBRMHVbp7s40XHgT3SzKXtVoEtB6MWvXN/66DsVEVgBl/nXwpoXSmnIOl/eHzTMhgupebzgO4tXwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ump/wm/B7FacgI1/OmkWLP5v8K1ylotkbBIj3HtqIwU=;
- b=NyTRib1jZ7pjxnIbCT77DNnOowX8E2XGskpGuXAAlhXyJaQlofb/v00nqfr2dyhbYW5c3Y//J8soCTazxaGVJRIsgjQ+iwU42Ck/GCzKuOFlVIZMlY7T3wBwBFZUacekXwbrYB6SBJNmbAqVy0fpEzChBB8sOaPEluaTo+SxIAhDSwTEouz2x4XdRarV+OTIZEgZ0RO6kQQLGjh8g1cHjZe11vpLNsUtyj3TZF8x18Nzb7VwSbhg0KAxhF2gTxKL4697pQaVnVYZDkuK2R3jqH5kEik1EYQH8W/oMbXe+ZfaX77+DYOguZ1H+In3lxZ690uYQbkS/t8hurAm/vVyAQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=zenithal.me; dmarc=pass action=none header.from=zenithal.me;
- dkim=pass header.d=zenithal.me; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zenithal.me;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ump/wm/B7FacgI1/OmkWLP5v8K1ylotkbBIj3HtqIwU=;
- b=XZD75WOQt4Mff5gnIFG7B0bkoTXWf0gFu4WdSAueLfd2KPAtYvD5sRyEhsgI/8zwKPoyXEQziD5GBRq+s7Djo4rzl6KU8yc/Zc1glUzk0A6eEGMFRLAxKwdm4K5TbUuAo/i/bdVdRQkmpzsJKmzxoNXzLNnXChR1WkIrcozpHQ4=
-Received: from TYCP286MB1393.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:c0::6) by
- OSZP286MB1583.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:1b7::13) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.14; Tue, 17 Nov 2026 22:19:35 +0000
-Received: from TYCP286MB1393.JPNP286.PROD.OUTLOOK.COM
- ([fe80::a22c:62cd:f039:f25]) by TYCP286MB1393.JPNP286.PROD.OUTLOOK.COM
- ([fe80::a22c:62cd:f039:f25%6]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
- 22:19:35 +0000
-From: Hongren Zheng <i@zenithal.me>
-To: Peter Maydell <peter.maydell@linaro.org>, Bin Guo
- <guobin@linux.alibaba.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "Canokeys . org"
- <contact@canokeys.org>
-Subject: Re: [PATCH] hw/usb/canokey: validate endpoint number in
- canokey_handle_data
-Thread-Topic: [PATCH] hw/usb/canokey: validate endpoint number in
- canokey_handle_data
-Thread-Index: AQHddsvEO12aI7QT706BfLjcGmqRWLcyzIz6
-Date: Tue, 17 Nov 2026 22:19:35 +0000
-Message-ID: <TYCP286MB1393A2F623C0081276E0563EBC7B2@TYCP286MB1393.JPNP286.PROD.OUTLOOK.COM>
-References: <20260918095718.33745-1-guobin@linux.alibaba.com>
- <CAFEAcA_wtZP7BvxMfamQG8XV5U0Q96Y1=Q5PL_mCEatfdrywPA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_wtZP7BvxMfamQG8XV5U0Q96Y1=Q5PL_mCEatfdrywPA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=zenithal.me;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYCP286MB1393:EE_|OSZP286MB1583:EE_
-x-ms-office365-filtering-correlation-id: 8e18c937-e68a-4270-04be-08df44f8dc6c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|23010399003|376014|41320700013|786006|1800799024|22082099003|18002099003|6133799003|20046099003|4143699003|56012099006|261026140227099003|261028144727099003|261021121427099003|10067099003|261021135927099003|261026121527099003|261102123227099003|261009223027099003|261022105027099003|38070700021;
-x-microsoft-antispam-message-info: 7S2kbPGmTItG5lt9KIlfbENsdXr77BTuhocTxDdE9TfthzclrqcUFlNphbj3/1bMNorl5qsH9vYFcks3D1mkPTIeqD4iopSG4moEAp7VYNou6jwgtJm/+i4IKkZU4T9WWLJwTfB99r79R7p/Uwx9K2jOt7ivV+zqlpTERllTWwsHlaDGp1VKDlA8Jmlenf0GS4RNibHOl6r55hqwbFxBkQ4/+rTY/iM4e7oEld5+Rs7hp3KFsY19Sx+rMTmJK8y1JFtX5yux4xesnzIe1CElDhMQPJxd7+1zfUSrLK/7jLowaMRIRUmljyY6WRAuuDU7D2+WC3E2s8z0g8Dk/WqWWEVEIwn7O6pP+Z9lukXowgpRbB4kiTkKzeFcTbEGIeQUcGnbtE85+g5yv23qub2gid7yoBOGBYOKYhhzF//m5IV4RA5f7nF0L+aGLmSRdsT8wr1EgiMzZlvFJ4AmfujCPtTSzBt1klqtOA+eBOCDMyOxFM+Qm1dj/a9hBekpRllIWOVTdt8Qo+s/f3wWLkXxB7zEQ+nCmWWxkOW6t+3IPG2m/Bm4oCTrM/2O3LT8Fwad2L5XlUIBZFXubZUw9WoCDnLtGAOn8RkYJI+hbdnG+XY60xGUwgTkWc44Huq+scrcYo3oUjnfnF3x1p624emigmRqLWIWK5hLFuDiENZfhTs=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYCP286MB1393.JPNP286.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(376014)(41320700013)(786006)(1800799024)(22082099003)(18002099003)(6133799003)(20046099003)(4143699003)(56012099006)(261026140227099003)(261028144727099003)(261021121427099003)(10067099003)(261021135927099003)(261026121527099003)(261102123227099003)(261009223027099003)(261022105027099003)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Izc11Fh24i1du/cAGLz9QuDakKHAcyvRw3bbBPBUfBKJqY74STGXwukgNS?=
- =?iso-8859-1?Q?xuxPQIwuP+Z7PPzQ8IcjR43xMCg1/BBERMudnPNOxN0fz23vOL+oZyPe+X?=
- =?iso-8859-1?Q?9lP472oFnL6z9NMmRzqcEMCAozXa2TDS0PfCCAaWoA3YX7JsHNp0yQ1kjh?=
- =?iso-8859-1?Q?DuJXc8+pB4hmIGdZG0/N+xzF6ZtpMOFyj1DAMG5c2XdZA2qxZBycp+1KLo?=
- =?iso-8859-1?Q?fqWoFRt5muG4GG7DTGvM1QV2o3cbKTRUJ0pDKw3phHE+gQTh/o2MQkmfl8?=
- =?iso-8859-1?Q?Wk+wt+aWKJ9B/1vvxQ/oNd3RZIxGb1XdznsydMoIMoXbaVoKu5siYxUWXf?=
- =?iso-8859-1?Q?uq6ZO3Acl48q8wjE12iOkjf9k3QFplvzwjKRJHxAJPD9b01NMc25Iqhamp?=
- =?iso-8859-1?Q?UwOQHTZj4CyyNspKH1MUysf6u8xj7EJS3AKUT2mdOHCBv42rBV775zG8Xq?=
- =?iso-8859-1?Q?Bjo8gO3oSWFBeIOfuZyRT0gjAThEOkWxVI5Jh3Y94uze4ppKtw4PWP4Xee?=
- =?iso-8859-1?Q?hlXPXOeP0CgyFyZTCp+wv5rwvXyGZ1qOzp786rL1liSRXZtp6EYPvPtgCg?=
- =?iso-8859-1?Q?UuTSP0iAJTQK23APeI+2MNBe0ZOp5ybKTfRGmRPMG89yAOBgtgy0pVtBwA?=
- =?iso-8859-1?Q?Fwra1f8blmTPMxKaOfWOgvjH+caQ5BqhUU2ppziUjVHE0zkemDD8bsRQlC?=
- =?iso-8859-1?Q?up1MmcuG4zEKwHGr6nc042qkEZl4WdH4lUYjF9fd8IZOAJPzFW/8S8fOYD?=
- =?iso-8859-1?Q?Ggwie8WSMawDOxDrOUQVQrXgKeMwBGbbm8RiViiC1denYfMPBzGI2DO5Qf?=
- =?iso-8859-1?Q?RucaCtrD4t8J3Spn2HaR0IimlwPZVRquGue7tPwkEQw+18GDUgMBVOGrkv?=
- =?iso-8859-1?Q?8/5dxGB+xm2XeGMXW+u7TB7vuJ16jhdTP7y45Xl/nRwoCG5hTmh5Wr7tzw?=
- =?iso-8859-1?Q?FRlJcMxezmwdPDPHKnGd3EnZU4Xl7VMHquvLedMqRN5mk1B5irXMFUn6MS?=
- =?iso-8859-1?Q?eFf7hzHHPV/6L2vOL7rCGxze7MGtRfQFIYBqELnxGxRri435ijTg7BbZxo?=
- =?iso-8859-1?Q?BintdA38bcSqe1nomGZtdqJ7BjnxJtPqpv4kBhdfkXFeUpa8yEFKqN1I8B?=
- =?iso-8859-1?Q?UB5oFOyyDQGcjx59ENndhILDoi60M5/brvHeHRfHEgqJAFWRofxeG3XrAU?=
- =?iso-8859-1?Q?m9ig8tdc/XubtFdu7edcL/eHLCrOQ677JKDC83+AskxTTTPnqmJiloZt07?=
- =?iso-8859-1?Q?SbzWj1Y1OxtjsoXuXOqll+sN3o58T9nhmP/qJiT/7Hxutox/mJBmCueDD0?=
- =?iso-8859-1?Q?CfL4e1SiNRVhIYxOtHDPYdhPebmX7m9XQLzpbtUYOZu4ZzREQkcAAgDVLd?=
- =?iso-8859-1?Q?VQ3XKHT+ixc3SfT59LoRF7nf3OCUoo4bGcq+T/AW3UH72Fuxz7tjkfzc7k?=
- =?iso-8859-1?Q?D7YnQULYe8Q/W/OO50UBXOEXKze7QhZ0S9sJgiYmx7mtTofzW+tf7Xk+jF?=
- =?iso-8859-1?Q?jvTFFvV+8ESjqgBlC6CyZyGsPVoebnUzBYa6LuRQWI5BqHPzg7xOoCv9V+?=
- =?iso-8859-1?Q?9Y+jAnk4+oONtDtbJGbYcKG30FQFP7jqjuIxeET+yqAfEqKyjpBphOl4R+?=
- =?iso-8859-1?Q?4zUPw5wFrzE+/ZY4JazgUor2Wx6VDgjVU1HJlf7Hljq0dlDzHEscoW924a?=
- =?iso-8859-1?Q?iaf10BWmad0LXlS5oN9lZ8CXmLSIsNAPQ0qMrCeha6hYUNT0NPUGgBtggs?=
- =?iso-8859-1?Q?vR/kEYbuKuUv5U63NUgKpk/HI=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xTRnu-0006kV-P2
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 17:37:32 -0500
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AHMbSWF1487418
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 22:37:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ nWD3TdtRi8CFtRGiFqzH5UXMrma1SaI6ByQbtVRquvw=; b=POtRPXZRUOvMeTA3
+ Qsj2eM8VJYkhqxrIpi5jLiZk1efamz1Wox4SfapjElKyCU+tSG2FLfR31jRriL2w
+ KlnEEOHq3fe9dAhJR3x0zx0BWmuiaMCJ2yfJSWIZA+jSIKhCJtIW9Ikxx2+iQvJ9
+ AJpzvIiKea+Pucz7TjelanZ35X0jfZRfeLZOv9F3xT9tEaDM6wHhKBRyJmRp9eB/
+ /54ItvBeS784es9mUl9NWsCmwhUbsmH6TOKvmu+meMgvUZVZoxeyWNq4GsmUg7dh
+ Tkfw3rhrxZMzIlo5+FWKx8J/VV/wDIQoKhDLZihzg3JhqrPE3/4L/Hscmg2yf9pR
+ xMKQ5A==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0yv8g03t-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 22:37:28 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-91b937ecbb4so4261616d6.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 14:37:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1794955048; x=1795559848; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=nWD3TdtRi8CFtRGiFqzH5UXMrma1SaI6ByQbtVRquvw=;
+ b=Y/4i9VvESeBUNRJQZJol/GaKzwVx8nEE+km5jjCWIOPxwK8j2Y4BliDJAq+Px82ziW
+ 7m8VxCfXw3/nB0lIM4vAhTGBBnKK95Rnb35JdQhJYOgreTT/eAUHmCvkFRWZ6KdMkpLs
+ Hk34moktIw7WUiZkW6TVGaCMr0Ccfr+nPzB4GvJ/uBQZNBLXqrihcggatjdV2L+DyfHZ
+ IQd4A7087PHhv4W9Jq+NJaSeZtcyQ5HEjjc+WFxgQBOxZR3AU3AfTS3o4UDHtb/5NZr2
+ n2PvztFqPkP89HhYTpq0kIvScTRQtvCAZn1xkeLNCjQ/pNMS9H7Kzmm9BkbKV3gQwdX8
+ 8L9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794955048; x=1795559848;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=nWD3TdtRi8CFtRGiFqzH5UXMrma1SaI6ByQbtVRquvw=;
+ b=TfRgUoKnf3QOVkV7naw/CbebTBp/us6DfH30ytb8rd0/kpYI4ORsNcfFkGsKCDmRwF
+ n7NXsX25hWyX2eUWcdRgfbu0seLW1F4KBftIsVvUXyDeZstcL8HMqBjlaHsmWBjjmSgg
+ qbxbDyHKDOGsyctUyyLNraDO0vOCgJArpBfexiW74qeoybZ2BP/gASsiuN7+x0TsDioc
+ DgJuF9wM2nGrjTcQAaJQe7UHyyU2nvGeVn/RcNfcY/IZ233y54s79eFaHgGpUXG8ekHz
+ Tm3Nt7Q8sMCC/5Vc6qLd7MZ2W7DTIJtB5s8xYcY8TFE340OkP+uI/239cnT2JQxZTAr1
+ kPZQ==
+X-Forwarded-Encrypted: i=1;
+ AL+hErH3Ij9KSB/379o3jia7E6ipX+9u/UkG5ReZSMbww6XE3Crnlllqxdby+3kwwfG+uqjg2lEHSXzpMov6@nongnu.org
+X-Gm-Message-State: APuU4Z8vQxYioeCnoUNda7uUj05QFadjafAjHW9w3UsSWtGraH/zqjWR
+ YPNaXJdRnXrVtXexZdcI2gahE9iqJZiaFwJlwQDK7etARv4NYf2aJkkRl2VcN7f8p5Ngl/mOypA
+ NK2C8sIrJSi30qJZN70WqnWmwxVkGTEb2yRLpo/6/hrpDTFZNLrCzFwTmQlGNxWScCg==
+X-Gm-Gg: AYBFou3OZ6kTUoXVUNgxfOODruzf35b7qMG8S2Y05DCZgiA+0cO5qjk3o4edmQHjabN
+ VN8a5h+v8U7/sfFG6tKjDoPBvxh9uEemB7lpnA2fLS5wsMFuqmZeagYK+WX4gAwIpthUVMIVunh
+ a6XaLj4jF9ekDJI3z9bDZsaixM2gmXYzTjfrjgo0aFHSezS6axmdIoIkTZJKhHcb/hN53HDxuP1
+ rZ8FSHkXFuiwiCcyo5R7gDXYBfWc5jjFt02y08oSi0/Iot/tjq5dn4ZBzcHmhMulLq23VwLH9K9
+ yB5t79HVbuVfQJD2JfxUIg5iKLDUHzUXxeqBWcyL4ca3w0iDp1rjZGte6reAwHYOdD8mv0MS27u
+ ncrAhlyXXmEYqccQd7x13MFLCmhCqmi77oNtUH7h+xmO62pCOq8ko72uFzS1YZE05AUH8uDT+pi
+ lbE8d517U=
+X-Received: by 2002:a05:620a:a0d6:20b0:949:9cf0:badd with SMTP id
+ af79cd13be357-9499cf0d671mr18380485a.73.1794955047644; 
+ Tue, 17 Nov 2026 14:37:27 -0800 (PST)
+X-Received: by 2002:a05:620a:a0d6:20b0:949:9cf0:badd with SMTP id
+ af79cd13be357-9499cf0d671mr18378185a.73.1794955047027; 
+ Tue, 17 Nov 2026 14:37:27 -0800 (PST)
+Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4a6573baa9fsm1328599f8f.57.2026.11.17.14.37.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Nov 2026 14:37:26 -0800 (PST)
+Message-ID: <c4eafbdd-e5ac-453b-afab-2f0a0fdddfe4@oss.qualcomm.com>
+Date: Tue, 17 Nov 2026 23:37:24 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: zenithal.me
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYCP286MB1393.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8e18c937-e68a-4270-04be-08df44f8dc6c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Nov 2026 22:19:35.0282 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 436d481c-43b1-4418-8d7f-84c1e4887cf0
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: VaSoULXHyy5jD39ug46sfqh1NT99ohxfUpK226PzzZH5vzxUwvQP0OeiEEPUw0Tv
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSZP286MB1583
-Received-SPF: pass client-ip=52.101.228.143; envelope-from=i@zenithal.me;
- helo=OS0P286CU011.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/19] target/mips: Fix nanoMIPS BEQC16/BNEC16 corner cases
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20261113161158.25811-1-philmd@oss.qualcomm.com>
+ <20261113161158.25811-14-philmd@oss.qualcomm.com>
+ <eea3dea3-5a85-4b9e-a74d-17f3d5c56296@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <eea3dea3-5a85-4b9e-a74d-17f3d5c56296@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: IKYv4VZmrXnqfC5170NpGxIeadG9B_Nz
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDA5MCBTYWx0ZWRfXxIbLLeXlQQYA
+ cJOrJl9dZYmQrKBUtCeCL5VYnab8oKfw25bkqwNOSOWW/YhBgCLb7Uf2DgRnkYr9nCv2CnA22qy
+ 1suG5fLHM19pU0syAHr1E9HRrhha2c0=
+X-Authority-Analysis: v=2.4 cv=c60+0h9l c=1 sm=1 tr=0 ts=6afcd728 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=-VfCWUJZJeg5MFCRqNMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDA5MCBTYWx0ZWRfX7ZmGgEJ6UE7L
+ VXBLDgij3WiTWtc2OVDqbYjVIisuzbgHTId5FDC4qpD97BtpAHJirpvrNBSEy6B36inTI5Z54f9
+ VZFSRhgY5/ABTXK95JFWVWHbT2qGt5uU5Cdekh/kEoCxrBOUZIB86ykp04rS0lhCG4kUJMiPeGi
+ XC4Aiyt7SJJb5V1mQNKh9FKAM+gumjX7X1OXiV/0u4Uykljgmuzy6AZI/VlMDdW5wi/mPclyPS4
+ KM2b5PH9f5RjGWtDiw+1oEUXTWMNelogswMgGGzfGooNjuoVyGO+oIwKiUKq3PdG6yJhoxzBFK7
+ T6/PxEP5Ddk6FPafBNp69p8fA9gU5HPSIHYgJEb9XrDW1bimqztVcPaolyTvzYjfbxJxqcdmCCO
+ sr6m7HkHichXKGq25vwRa8n0bKFQQAmAinGEE+KwHmmCIIMDQtMWmCAQXDWVp7X0JvfwbVdOrHQ
+ wcpi3LAeLgwLrRaFOnA==
+X-Proofpoint-ORIG-GUID: IKYv4VZmrXnqfC5170NpGxIeadG9B_Nz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-17_04,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 clxscore=1015 impostorscore=0 bulkscore=0 phishscore=0
+ adultscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170090
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,74 +152,55 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-> On Fri, 18 Sept 2026 at 10:58, Bin Guo <guobin@linux.alibaba.com> wrote:=
-=0A=
-> > canokey_handle_data() takes the endpoint number from the USB packet=0A=
-> > (p->ep->nr, guest-selectable 1..15) and uses it to index the fixed-size=
-=0A=
-> > ep_out[] / ep_out_size[] arrays of CanoKeyState, which hold only=0A=
-> > CANOKEY_EP_NUM =3D 3 entries.  A forged bulk-OUT transfer on any endpoi=
-nt=0A=
-> > number >=3D 3 therefore reads a bogus length from past ep_out_size[] an=
-d=0A=
-> > writes guest data through a wild pointer read from past ep_out[].=0A=
-> >=0A=
-> > Validate p->ep->nr against CANOKEY_EP_NUM and return USB_RET_STALL for=
-=0A=
-> > invalid endpoints, before any array access.=0A=
-> >=0A=
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4481=0A=
-> > Signed-off-by: Bin Guo <guobin@linux.alibaba.com>=0A=
-> =0A=
-> Probably worth Cc: qemu-stable@nongnu.org=0A=
-> =0A=
-> > --=0A=
-> =0A=
-> Did you have trouble getting the canokey code to build? I've=0A=
-> been playing around with it, and the canokey-qemu library=0A=
-> appears to have a busted pkgconfig file, such that meson=0A=
-> can't find the include path for it and the #include in QEMU fails.=0A=
-> I guess if you installed it to the system include it would work.=0A=
-> =0A=
-> NB: given that the canokey-qemu library is Apache licensed=0A=
-> and QEMU is GPL-2, the whole canokey support in QEMU seems=0A=
-> of very niche utility, because you can't actually distribute=0A=
-> a QEMU binary that you build with it AIUI. And distros=0A=
-> generally don't ship the canokey-qemu library anyway I think.=0A=
-> =0A=
-> So is it actually useful to anybody, or should we just deprecate it?=0A=
-> =0A=
-> thanks=0A=
-> -- PMM=0A=
-> =0A=
-=0A=
-Thanks for the email. The fix looks good to me.=0A=
-=0A=
-Reviewed-by: Hongren Zheng <i@zenithal.me>=0A=
-=0A=
-Regarding the build, indeed it requires modifying PKG_CONFIG_PATH=0A=
-for meson to find it for custom build, and this behavior is documented in [=
-1].=0A=
-If it is a system package, it should be fine.=0A=
-=0A=
-For downstream usage, NixOS used it for CI testing of their=0A=
-systemd-cryptoenroll for ensuring successful booting after upgrading [2].=
-=0A=
-There are efforts to push it for other distros [3]. I acknowledge that it=
-=0A=
-is niche, but I think there are still users.=0A=
-=0A=
-[1] https://www.qemu.org/docs/master/system/devices/canokey.html=0A=
-[2] https://mynixos.com/nixpkgs/package/canokey-qemu=0A=
-[3] https://github.com/canokeys/canokey-qemu/issues/6=0A=
-=0A=
-Best,=0A=
-Hongren=0A=
+On 17/11/26 20:18, Richard Henderson wrote:
+> On 11/13/26 08:11, Philippe Mathieu-Daudé wrote:
+>> BNEC[16] with identical registers is never taken, so it is a NOP.
+>> gen_compute_branch_nm() instead wrote $ra and skipped the next
+>> 4 bytes as if it were a MIPS branch-and-link-likely.
+>>
+>> Also raise Reserved Instruction on NMS cores, where the 16-bit
+>> forms are not available.
+>>
+>> Fixes: 764371d24c51 ("target/mips: Add emulation of nanoMIPS 16-bit 
+>> branch")
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> ---
+>>   target/mips/tcg/nanomips_translate.c.inc | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/ 
+>> tcg/nanomips_translate.c.inc
+>> index f9dc573dbb01..25d57e75a0b0 100644
+>> --- a/target/mips/tcg/nanomips_translate.c.inc
+>> +++ b/target/mips/tcg/nanomips_translate.c.inc
+>> @@ -4756,6 +4756,10 @@ static int decode_isa_nanomips(CPUMIPSState 
+>> *env, DisasContext *ctx)
+>>                   /* P16.BRI */
+>>                   uint32_t opc = extract32(ctx->opcode, 4, 3) <
+>>                                  extract32(ctx->opcode, 7, 3) ? 
+>> OPC_BEQ : OPC_BNE;
+>> +                check_nms(ctx);
+>> +                if (rs == rt) {
+>> +                    break;
+>> +                }
+>>                   gen_compute_branch_nm(ctx, opc, 2, rs, rt,
+>>                                         extract32(ctx->opcode, 0, 4) 
+>> << 1);
+>>               }
+> 
+> Surely not.  BNE x,x is never taken, but BEQ x,x is.
+
+Right... Updated as:
+
+-                if (rs == rt) {
++                if (opc == OPC_BNE && rs == rt) {
+
 
