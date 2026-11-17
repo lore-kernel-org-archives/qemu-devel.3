@@ -1,109 +1,130 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533DA606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 09:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D158C606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 09:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=VeFQeyDM
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VIPQwyJb;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=aWXDR86a
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTFpI-0000hC-19; Tue, 17 Nov 2026 04:50:08 -0500
+	id 1xTFr0-0001GW-3r; Tue, 17 Nov 2026 04:51:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xTFpF-0000h0-Sv
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 04:50:05 -0500
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xTFpD-0006AB-QM
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 04:50:05 -0500
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-67be1e468a8so3433786d50.0
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 01:50:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794909002; cv=none;
+ (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
+ id 1xTFqw-0001G9-Mc
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 04:51:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
+ id 1xTFqu-00072d-NO
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 04:51:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794909105;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nYfDsNP59E+DGbFUSt8JrPmYtbBI6V08U5HwKJ40uL4=;
+ b=VIPQwyJb2bJzICm8TxWhhWE/kwZAVWnrKilggDu1qr7H6Ed7VuuXuxAYKFnr2MY7tqU7aa
+ L8bMqtpWsCAygHBNaulb6bH7tJFqC+tYNzmoAl4udKZToZHXWco+rxI8GCEukZlzGqbv8N
+ 824LRaTZVHR7ZDIuE+L/amR733lU+RQ=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-28-rbhpzSj1NByqGvrQIwejXg-1; Tue, 17 Nov 2026 04:51:43 -0500
+X-MC-Unique: rbhpzSj1NByqGvrQIwejXg-1
+X-Mimecast-MFC-AGG-ID: rbhpzSj1NByqGvrQIwejXg_1794909102
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-3ab3c13806bso16767341fa.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 01:51:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794909102; cv=none;
  d=google.com; s=arc-20260327;
- b=d2y6Q5zk0XnBeGR5ERPoK7NQitzn2i97PzGEntGF28mCB2CKEHNakjXoMA+Y4BErdb
- fFZbu/hEIQVaGS4P4nCdR6/7mKRZZr9WjLCxA5G7ii6XrxhkN3X/kAD4yhIGk6hCB2r9
- ZC6BqzHrbvYoLSz6Vx3u4cpp68JYww8+PPUwblwqWjjcOsVV8ps/q0ofAhhyW/y+SKUI
- G1E9FOMZKtXQ8oxFuL5gb0ebvfHjWBfqCXpjMiPiENWoDnCk/G+T55alG6Iri0dkY1R7
- J55vQ8yA9iFGA/VHSSsDI7IXQUU9Gf/7dPjC6YSlAoKkBoIbThbrrknHekd++nNpuKoz
- eQeg==
+ b=jVvGxEDJRLRScwVulczAyCXCclG11/EZvoXTq4dTV5TAd/1Ay2JVnwmkuR/WcvHxwD
+ CfxcqZ5iNltbpkd5BRsXB2B+fvPmWQjpUE1+0Z6XdHb2oNL2ky2sZEe8I8Mm0othI1Bn
+ FyzgL04HON2P4MrS9e3mqgMd5LDEAAkJCPfoNp6zU95ApvF+Fd9hXaDw16ZlK1oinGQS
+ OjnFRHTnZZCctNKdYqZ3wIH5XAx/lk4DTQyxMjYFwWsO5ahCIRMKmug4g8t2IsV3KJ5h
+ AqBKcHp/b8WJChokCK2KrpGS8x5yWQMk+EeLZH2HGqlyfSyrN097lK/MBKRqr8ycGVG7
+ IMtQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=E3CNOD8dA5ZafE+nxPTtNWf0ATM8QrOkHaNcJSHg1ZU=;
- fh=MrV9cXt2uLRQ8LpXiA2NOxutgQNP8RXusX5akFbzq8A=;
- b=UNtK+uqSkAxUu+b+wb1X2FiRYfNvsNwa1uW3CceMXCdrnu366ytId/DYXutzKL1V7k
- 97l5E+0yPizFqeABriiU4yfRP4mR4M5vy2DN0HQzyTMQUcv96D0zeDPLIgGbhNn4sCGo
- fgZF6uzC524chuFpirNZ47Aju2kYXnC1g4bmRn4AtGcJEIS8jgLV9Xr5iW7H9AvhCeRs
- XpYgjzY6cjXoXTfjww/T67+ZoJU0qaKiUvci15O06ebZGt31FQe3g0Mn5LSj1NhxmsX4
- ZQqFuLlLBf4S46A5jHdPe6jBmFZpTytE0pr7ZSUPvx/LdL3xulslLaMtRCsZwSKRddDO
- Xi9g==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=nYfDsNP59E+DGbFUSt8JrPmYtbBI6V08U5HwKJ40uL4=;
+ fh=11UpUA1LSWV17iKazw9WH0X+uR6JzqsiXiAlS1NWwm0=;
+ b=AL/VXDKn1wGrFHz4Coc5OP/gbI+MjiidP8skNgtsIwMyGzFGqVaqcxxt43cHtRinhj
+ 784LNTzFM6tx8gDUqaDnbdFHt9pVJhDl0ZhSNJ618fsFaUjFZSWappM0cfi1IH2qTKGk
+ Z7SgF4QeublzZtI4RDwIxlbEQViaNyMvMTJ0/IdjO2CHIpuGq3PGfMGuHhdhtEKIWB9K
+ BOsME/0U9L8q6QFj7MoMQyfghUTCtPGIJ+mQ/EyEoTtr/axiTMfs2JyyerumNkajWK63
+ yOIpr/0/1b2suZMak7FNl1ky+dPtiHQ3hKGow2H7k87Hon6j8De6UwJimDHT8pho2z0A
+ B2sw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794909002; x=1795513802; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=E3CNOD8dA5ZafE+nxPTtNWf0ATM8QrOkHaNcJSHg1ZU=;
- b=VeFQeyDMoqDykRi8grRh3dQ6Q700wR6WnESrXtPIK+8YenLMI1Go6LE+1UwWPKhU34
- Dzq9vbiOjgFIHLdeN5PZ3AphBUG8Q0UrGdijk6pGQ6DaS5vf+o7wYb/CvK2MZexl7S5k
- MsijSMM0cio7JoGY/6OEFp34JbFmEeO0ZNQ1LLqJ+O9PV9FiZ3swXKGYMoLd+AtTTNqo
- wnJqqkyEEGPJ5WHpI7Z8qdbaEDgpWmLnppEgvbQa57GtLphdh4XHxpscmK5XN1Qc59e0
- YCHhu5jB0zqfRRIdDTNUMzrbZKFT5rwGAXWZyoNd7jD/nYXK/fV8lg23FuFtiwBs4rG6
- /Vyg==
+ d=redhat.com; s=google; t=1794909102; x=1795513902; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=nYfDsNP59E+DGbFUSt8JrPmYtbBI6V08U5HwKJ40uL4=;
+ b=aWXDR86ayUjXwtDEWDxf1R1QjHb/21zIxf+XCmviA2dF1bcdG++BaHdRx1huCACk4c
+ kBfBPMMeBQATV0M6EPFVlsRXOX1uoqOQPnsed8nIKk86Uq8VKX9EYNc2QaaA9QCJSngY
+ gvg3IFWEESmI53PyH0vBJoWOB7DGbI4cNUZjH0g4Q+CQM5enDUB43AXGU9wTwZWXvmo3
+ NasGSsVN5bFANgEtr7QpzsNElxm/tQ+LEnbdwWwDZHrDsubZM0w3S2cT/OPbv7GCzDO2
+ VQGF32+CEZ/U5z2H3VzA+6FnNf3VwIg5lxFsgzOoISElejSvziG9b0JCtBdQeZmGDzcE
+ Xj8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794909002; x=1795513802;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=E3CNOD8dA5ZafE+nxPTtNWf0ATM8QrOkHaNcJSHg1ZU=;
- b=lHBF2X2TKukQyGFKv/jklqlqw8u5VwwQms/fUQ7b0pHOSgNr6hYXBU3jLrcyayTrVq
- sAhtE6CbzGhNHFkNmDxErWhtW6PtK0hQ6+CVxUaQgOJecAehHOn+mTRz3eLrGS1WtWoy
- WdbHzk9Pxx7kuruI9goGPKN+QaAPgEnnpNWifT1HOQFAf/0jHxduAZljKyd3ykXmlfED
- MrQriFMBhqP8qoIMAEHr2g8WLqDNVnP5w0VmBRsx6reevN/4CcRbjvmJXxHWhoJD0nab
- KypXkTx/LXqtyrJmzwFb4fAioqz5YRWtpnMmig9LCVCiCkP53VHii8mhzbVDMyE+p5c2
- OdVQ==
-X-Gm-Message-State: APuU4Z9V/bfWHJRxTkU3npXCR0dbipu6QGAXpK1lZ0oR1Qlg6SeYDdZD
- gvlJdu7tamoRZbpNhffcjBLTtEx8OnLYaWCXPd4a5l77Sq0KZDrg8qe2WutKNtN+UtXTI8VUZA5
- vaAMZ+yKPUUCGYlBfRuT0/n7DTOb4OxS0knUoxU3/mg==
-X-Gm-Gg: AZFdTZffdrkaTkyS6U8acqmUu14gbtoqimkam+BJMpx5WYweXqybbNdfsALJjm4WRVB
- ZDDrvF1TCLY0RprP4XJo0vCQYKTBc1ipRLGGN3h3TnZuFEe0yhxYDHpIdy2pjVIW/Upk4ypnjYJ
- 4FVQyW8cIHnfWzYEqqbLFU9MvxZgDRj5SCQF5pBdlh6ARqSkO9fgRudnEzIVH3soNuO6ISpxsBL
- VGhFqundIJDbbeYGlqNCr5gRL5Y92mLRr/gX+MqINRmOOf1HG43f7TUeICm0aP4x8T3OnwGCFGo
- cPFJju3tTriLLcuise0/2z4dtCdnd5htKM5iPpS/1eoyWwWfqs2xr6XdaXW/dsG+p+n9vm3XwFd
- VrquX4YMSbPwmWizWuxo19tm2KUQn0yt6eo0km4cWO1PJ867xZ5I8QQjiYv/+a8Xnu2MX6pOmaO
- gpPK0XxtKMQMKRmfN3cew1
-X-Received: by 2002:a05:690e:4843:b0:67c:1383:1d68 with SMTP id
- 956f58d0204a3-67d89707fd3mr5298046d50.76.1794909001609; Tue, 17 Nov 2026
- 01:50:01 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794909102; x=1795513902;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=nYfDsNP59E+DGbFUSt8JrPmYtbBI6V08U5HwKJ40uL4=;
+ b=DOz0zvPRlyUqvNowo2WOOZu4PZRAYWoY7ijIQLnV1YbH5jDTty0Z1GcBpOJStdTm/3
+ kSbKBVsrvZPg2FF+QFwYIyv1rvFMXpMb6Dpit4O4prDjFvGD54p2QHaVg9hTWBkWlenJ
+ YPM7D4DZXt+9oCZonWjTUuop+hAb8KQdZSTFBrFbv7mROiaZKMO33njZoKOaFHWtq5fM
+ 1zlRsBb/GjRTKBC+DI36SU0P1MxdcINu1wwdqjIZIOPfh2kMCQ/7V2+3BOm7xt81iFIP
+ ejf10Qw98legcSqXp5OaVLRxGWbk/xFgUVCz0q0hu/RTrmegzowLqWdGWlh+rYy9rl8d
+ dbhg==
+X-Forwarded-Encrypted: i=1;
+ AL+hErFXn40u75L1wz3JraHwxPb2lPTPVqBaWsYEfYzIlz9If4mrcz6eD0cEZdRwc/MxpsnQVfG3RVIUCKKD@nongnu.org
+X-Gm-Message-State: APuU4Z9kEazQTsperPGqQz21Vzskzb7mD18rbljl3NvjTRih5WNIBFgV
+ S+6Q1bWUdHn8LXZcN1UApW/coD2uOQ+SZe4W1Bntc4NbipEnWzdu7V9A0YoP43E9kXbPFjKD+mh
+ H7HDLkRyJOrkR8VHLwMOY/l4GnGpJtYgLrx8YduJ/bpfVx1TC7ZSu20AWVFxt3lAVl9atyAfEnN
+ GL3w9bpZGn8YKv9t1gCWu3iZLtFHLSdDs=
+X-Gm-Gg: AYBFou0Z5Xx9LiZuZ4i5FlqYJki+MgkQiDP2IxiqNOuhldYI6EfOSNYmYULxnwH6gTD
+ c76wh7f5jHf2kL+n/D0J8zmQeBhuFiJb46UCU6uf8ibJBccI8gxgu4g0uf7PXzRP2LvDuZfeeR1
+ bu90FzsvUJeP426UMUUSRqq7ohRMoQk5ehjarfQfMpry8iwx8DEXgg+pZwLQ==
+X-Received: by 2002:a05:651c:154c:b0:3ab:1525:60ae with SMTP id
+ 38308e7fff4ca-3ae2b66dfe7mr37978081fa.18.1794909101839; 
+ Tue, 17 Nov 2026 01:51:41 -0800 (PST)
+X-Received: by 2002:a05:651c:154c:b0:3ab:1525:60ae with SMTP id
+ 38308e7fff4ca-3ae2b66dfe7mr37978031fa.18.1794909101453; Tue, 17 Nov 2026
+ 01:51:41 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261113165015.1150646-1-peter.maydell@linaro.org>
- <66899f0f-8f36-4963-a899-6a960dd3f963@oss.qualcomm.com>
-In-Reply-To: <66899f0f-8f36-4963-a899-6a960dd3f963@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 17 Nov 2026 09:49:49 +0000
-X-Gm-Features: AclHuK_-4gRosQrz_MiG5q0ZVB3CuusV24KrBorHLhkeRrMtLC1TXb4Y6TtWoZY
-Message-ID: <CAFEAcA-YC4siSNtZUXdMzFWh6fZWPKBbQKctX9rUWT9hghduBA@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/rtl8139: Limit DMA transfers to plain memory
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowangio@gmail.com>, 
- Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20261116161608.1145725-1-eashurov@redhat.com>
+ <20261116161608.1145725-2-eashurov@redhat.com>
+ <87eccklznp.fsf@pond.sub.org>
+ <CAPMcbCoO_axhKym4TU=t0MqEBzMawWzDR1SEYfpykwo1crkWUQ@mail.gmail.com>
+In-Reply-To: <CAPMcbCoO_axhKym4TU=t0MqEBzMawWzDR1SEYfpykwo1crkWUQ@mail.gmail.com>
+From: Elizabeth Ashurov <eashurov@redhat.com>
+Date: Tue, 17 Nov 2026 11:51:30 +0200
+X-Gm-Features: AclHuK9p0I6LFRezoBlFZozUZ1XGH9_7HCU1iCysrS6hNQOu02bq6_K54i4i2jQ
+Message-ID: <CAK957kE=AGaDw2L1PNxDHksERdVNcq6i3w0Ac_+q2vCm642eLg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] qga: Add guest-get-driver-packages command for
+ Windows
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ michael.roth@amd.com, 
+ dholler@redhat.com, fdeutsch@redhat.com, yvugenfi@redhat.com, 
+ kramdoss@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000006585b1066075d7f4"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eashurov@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,106 +137,230 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	HTML_MESSAGE,INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 16 Nov 2026 at 22:19, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 13/11/26 17:50, Peter Maydell wrote:
-> > There's no reason for the RTL8139 to be doing a DMA transfer to
-> > something that isn't memory, and allowing it can cause weird
-> > re-entrancy problems, such as a DMA to the PCI hot-unplug register
-> > causing the device to be deleted while it's halfway through doing
-> > something.
-> >
-> > Replace the calls to pci_dma_read() and pci_dma_write() with
-> > local functions that are identical except that they pass
-> > a MemTxAttrs that forbids non-memory accesses.
-> >
-> > This is the same approach we took to a similar problem with
-> > the hcd-xhci USB controller in commit 89e653b7736 (but differs
-> > from what we did for lsi53c895a in commit 4862d2c95104d).
-> >
-> > The known trigger for this bug requires that you turned off
-> > ACPI hotplug on the QEMU commandline with
-> >    -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=3Doff
-> > so most configurations won't run into it.
-> >
-> > Cc: qemu-stable@nongnu.org
-> > Fixes: 3ada003aee2004d24f2 ("rtl8139: Use PCI DMA stub functions")
-> > Fixes: CVE-2026-128868
-> > Reported-by: VictorCHEN <ahchen-yz@outlook.com>
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > I'm also wondering whether there's an approach to this class of
-> > bugs that would avoid us having to modify specific devices to
-> > insist on DMA-to-memory. It seems a bit dubious that writing to
-> > the PCI hot-unplug register can cause us to unrealize the plugged
-> > device even if lots of other things are still holding a reference
-> > to it. Or else we need to be more specific that you can still
-> > validly (in the sense of "doesn't break things") do things on or
-> > as part of an unrealized-but-not-yet-freed device, and move
-> > things like pci_config_free() from unrealize to deinit.
->
-> While still thinking about that, ...
->
-> >
-> >   hw/net/rtl8139.c | 98 +++++++++++++++++++++++++++++------------------=
--
-> >   1 file changed, 60 insertions(+), 38 deletions(-)
-> >
-> > diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-> > index 16479284eea..6644c1b62c5 100644
-> > --- a/hw/net/rtl8139.c
-> > +++ b/hw/net/rtl8139.c
-> > @@ -513,6 +513,28 @@ struct RTL8139State {
-> >       int rtl8139_mmio_io_addr_dummy;
-> >   };
-> >
-> > +/*
-> > + * There's no reason for the RTL8139 to do DMA to something that
-> > + * isn't memory, and it can cause weird re-entrancy problems if e.g.
-> > + * a DMA write targets the PCI hot-unplug register for the device.
-> > + * Set memory=3D1 in the memory attributes to avoid that kind of thing=
-.
-> > + */
-> > +static MemTxResult rtl8139_dma_write(PCIDevice *dev, dma_addr_t addr,
-> > +                                     const void *buf, dma_addr_t len)
-> > +{
-> > +    const MemTxAttrs attrs =3D { .memory =3D true };
-> > +    return pci_dma_rw(dev, addr, (void *)buf, len,
-> > +                      DMA_DIRECTION_FROM_DEVICE, attrs);
-> > +}
-> > +
-> > +static inline MemTxResult rtl8139_dma_read(PCIDevice *dev, dma_addr_t =
-addr,
->
-> (drop inline)
+--0000000000006585b1066075d7f4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Agreed. This was a cut and paste from the pci_dma_read() prototype.
+As Kostiantyn mentioned, this is indeed Microsoft terminology. I'll add a
+brief explanation in v4.
 
-> > +                                           void *buf, dma_addr_t len)
-> > +{
-> > +    const MemTxAttrs attrs =3D { .memory =3D true };
-> > +    return pci_dma_rw(dev, addr, buf, len,
-> > +                      DMA_DIRECTION_TO_DEVICE, attrs);
+Thanks for the review!
+
+On Tue, Nov 17, 2026 at 9:49=E2=80=AFAM Kostiantyn Kostiuk <kkostiuk@redhat=
+.com>
+wrote:
+
 >
-> ... these new helpers correctly return a MemTxResult but the
-> callers still ignore it. I appreciate this would be a larger
-> rework, unlikely worth it. What is your plan?
+>
+> On Tue, Nov 17, 2026 at 8:50=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com>
+> wrote:
+>
+>> Elizabeth Ashurov <eashurov@redhat.com> writes:
+>>
+>> > Add a new guest-get-driver-packages command that returns out-of-box
+>> > driver packages from the Windows Driver Store, enumerated via the
+>> > DISM API (DismGetDrivers).  Each entry includes the published INF
+>> > name, original INF name, version, and provider.
+>> >
+>> > Load DismApi.dll dynamically with LoadLibraryExW so that its absence
+>> > does not prevent qemu-ga from starting.  Initialize DISM lazily once
+>> > per QGA process and open a separate online DISM session for each
+>> > command invocation, with process cleanup registered through
+>> > ga_command_state_add.
+>> >
+>> > Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
+>>
+>> [...]
+>>
+>> > diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+>> > index 8cd0ba048b..081c99bc74 100644
+>> > --- a/qga/qapi-schema.json
+>> > +++ b/qga/qapi-schema.json
+>> > @@ -1590,6 +1590,37 @@
+>> >    'returns': ['GuestDeviceInfo'],
+>> >    'if': 'CONFIG_WIN32' }
+>> >
+>> > +##
+>> > +# @GuestDriverPackage:
+>> > +#
+>> > +# An out-of-box driver package installed in the guest.
+>>
+>> Excuse my ignorance: what's an "out-of-box driver package"?  Is this
+>> established Windows terminology, or something you made up?
+>>
+>
+> Inbox drivers and Out-of-Box drivers are MSFT terminology.
+> Inbox - preinstalled in Windows, built-in
+> Out-of-Box - OEM, Vendors drivers that should be installed manually
+>
+>
+>>
+>> Please use the revised syntax for introductions:
+>>
+>>    ##
+>>    # @GuestDriverPackage:
+>>    #     An out-of-box driver package installed in the guest.
+>>
+>> Same below.
+>>
+>> > +#
+>> > +# @name: published INF name
+>> > +#
+>> > +# @original-name: base name of the original INF file
+>> > +#
+>> > +# @version: four-part version from the package INF DriverVer entry
+>> > +#
+>> > +# @vendor: package provider from the INF metadata
+>> > +#
+>> > +# Since: 11.2
+>>
+>> 12.0
+>>
+>> Same below.
+>>
+>> > +##
+>> > +{ 'struct': 'GuestDriverPackage',
+>> > +  'data': { 'name': 'str', '*original-name': 'str', 'version': 'str',
+>> > +            '*vendor': 'str' },
+>> > +  'if': 'CONFIG_WIN32' }
+>> > +
+>> > +##
+>> > +# @guest-get-driver-packages:
+>> > +#
+>> > +# Retrieve out-of-box driver packages installed in the guest.
+>> > +#
+>> > +# Since: 11.2
+>> > +##
+>> > +{ 'command': 'guest-get-driver-packages',
+>> > +  'returns': ['GuestDriverPackage'],
+>> > +  'if': 'CONFIG_WIN32' }
+>> > +
+>> >  ##
+>> >  # @GuestAuthorizedKeys:
+>> >  #
+>>
+>>
 
-I don't care enough about the rtl8139 to do that kind of spring
-cleaning on it (and a memory transaction error will only happen
-if the guest is doing something stupid, in which case we don't
-care as long as it doesn't cause actual security problems).
-My aim at the moment is only to try to get our backlog of
-"confidential" bugs down...
+--0000000000006585b1066075d7f4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-thanks
--- PMM
+<div dir=3D"ltr"><p>As Kostiantyn mentioned, this is indeed Microsoft termi=
+nology. I&#39;ll add a brief explanation in v4.</p><p>Thanks for the review=
+!</p></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D=
+"ltr" class=3D"gmail_attr">On Tue, Nov 17, 2026 at 9:49=E2=80=AFAM Kostiant=
+yn Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com">kkostiuk@redhat.com</=
+a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><d=
+iv dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote"><d=
+iv dir=3D"ltr" class=3D"gmail_attr">On Tue, Nov 17, 2026 at 8:50=E2=80=AFAM=
+ Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" target=3D"_blan=
+k">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex">Elizabeth Ashurov &lt;<a href=3D"mailto:eashurov@redhat=
+.com" target=3D"_blank">eashurov@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; Add a new guest-get-driver-packages command that returns out-of-box<br=
+>
+&gt; driver packages from the Windows Driver Store, enumerated via the<br>
+&gt; DISM API (DismGetDrivers).=C2=A0 Each entry includes the published INF=
+<br>
+&gt; name, original INF name, version, and provider.<br>
+&gt;<br>
+&gt; Load DismApi.dll dynamically with LoadLibraryExW so that its absence<b=
+r>
+&gt; does not prevent qemu-ga from starting.=C2=A0 Initialize DISM lazily o=
+nce<br>
+&gt; per QGA process and open a separate online DISM session for each<br>
+&gt; command invocation, with process cleanup registered through<br>
+&gt; ga_command_state_add.<br>
+&gt;<br>
+&gt; Signed-off-by: Elizabeth Ashurov &lt;<a href=3D"mailto:eashurov@redhat=
+.com" target=3D"_blank">eashurov@redhat.com</a>&gt;<br>
+<br>
+[...]<br>
+<br>
+&gt; diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json<br>
+&gt; index 8cd0ba048b..081c99bc74 100644<br>
+&gt; --- a/qga/qapi-schema.json<br>
+&gt; +++ b/qga/qapi-schema.json<br>
+&gt; @@ -1590,6 +1590,37 @@<br>
+&gt;=C2=A0 =C2=A0 &#39;returns&#39;: [&#39;GuestDeviceInfo&#39;],<br>
+&gt;=C2=A0 =C2=A0 &#39;if&#39;: &#39;CONFIG_WIN32&#39; }<br>
+&gt;=C2=A0 <br>
+&gt; +##<br>
+&gt; +# @GuestDriverPackage:<br>
+&gt; +#<br>
+&gt; +# An out-of-box driver package installed in the guest.<br>
+<br>
+Excuse my ignorance: what&#39;s an &quot;out-of-box driver package&quot;?=
+=C2=A0 Is this<br>
+established Windows terminology, or something you made up?<br></blockquote>=
+<div><br></div><div>Inbox drivers and Out-of-Box drivers are MSFT=C2=A0term=
+inology.</div><div>Inbox - preinstalled in Windows, built-in</div><div>Out-=
+of-Box - OEM, Vendors drivers that should be installed manually</div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+Please use the revised syntax for introductions:<br>
+<br>
+=C2=A0 =C2=A0##<br>
+=C2=A0 =C2=A0# @GuestDriverPackage:<br>
+=C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0An out-of-box driver package installed in=
+ the guest.<br>
+<br>
+Same below.<br>
+<br>
+&gt; +#<br>
+&gt; +# @name: published INF name<br>
+&gt; +#<br>
+&gt; +# @original-name: base name of the original INF file<br>
+&gt; +#<br>
+&gt; +# @version: four-part version from the package INF DriverVer entry<br=
+>
+&gt; +#<br>
+&gt; +# @vendor: package provider from the INF metadata<br>
+&gt; +#<br>
+&gt; +# Since: 11.2<br>
+<br>
+12.0<br>
+<br>
+Same below.<br>
+<br>
+&gt; +##<br>
+&gt; +{ &#39;struct&#39;: &#39;GuestDriverPackage&#39;,<br>
+&gt; +=C2=A0 &#39;data&#39;: { &#39;name&#39;: &#39;str&#39;, &#39;*origina=
+l-name&#39;: &#39;str&#39;, &#39;version&#39;: &#39;str&#39;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*vendor&#39;: &#39;str=
+&#39; },<br>
+&gt; +=C2=A0 &#39;if&#39;: &#39;CONFIG_WIN32&#39; }<br>
+&gt; +<br>
+&gt; +##<br>
+&gt; +# @guest-get-driver-packages:<br>
+&gt; +#<br>
+&gt; +# Retrieve out-of-box driver packages installed in the guest.<br>
+&gt; +#<br>
+&gt; +# Since: 11.2<br>
+&gt; +##<br>
+&gt; +{ &#39;command&#39;: &#39;guest-get-driver-packages&#39;,<br>
+&gt; +=C2=A0 &#39;returns&#39;: [&#39;GuestDriverPackage&#39;],<br>
+&gt; +=C2=A0 &#39;if&#39;: &#39;CONFIG_WIN32&#39; }<br>
+&gt; +<br>
+&gt;=C2=A0 ##<br>
+&gt;=C2=A0 # @GuestAuthorizedKeys:<br>
+&gt;=C2=A0 #<br>
+<br>
+</blockquote></div></div>
+</blockquote></div>
+
+--0000000000006585b1066075d7f4--
+
 
