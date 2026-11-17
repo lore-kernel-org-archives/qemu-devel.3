@@ -1,103 +1,148 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830EB606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 18:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3100D606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 18:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=e93VUx9M
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=TDamfgdb;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=TNAsqRuU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTO3D-0001Jc-Dy; Tue, 17 Nov 2026 13:37:03 -0500
+	id 1xTO7U-00067L-7s; Tue, 17 Nov 2026 13:41:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
- id 1xTO2n-0001F0-8C
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 13:36:37 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xTO7I-00063n-0g
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 13:41:16 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
- id 1xTO2j-0000ox-6y
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 13:36:36 -0500
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xTO7F-0001Jf-Gu
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 13:41:15 -0500
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AHGYS2R2743270
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 18:36:31 GMT
+ 6AHFQNmU923362
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 18:41:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=u+GIH82Uwks
- 3bHJmDQTrDZnl71saKl/LHsrSdaOn2tU=; b=e93VUx9MQiuSVoNUmE4xZokl3Ec
- TW4xNEomPUYaLfkpGf/KmdFIx8qKQ+SrSVPFFiKIxoehp0WrzfCd+wso50XOWorf
- b+fJjkEhF6VHX+b2JlthbVvz8pifHG8P6fgQ87OEIF9557Jxphypfw9M40QD7sIt
- lgFVlgJb+GCZKv0P3GmNyElZIMHuYbWuo6T5AIMDvaIXnz8WP7Qn6cRDMIpA1Yed
- Z4kalveFqqxIuKbd5+LyLEl5gnjaSJ0bPEX/MTmJ0aRJ/svhGJWxN9HpSIIqsPbb
- NW2QdD+rI7a8gNmvrPUqS8TeiDsDwf5GJxNf6DYNHAoa5LTV5hsNh3tw2nA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0tjm0kex-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 18:36:31 +0000 (GMT)
-Received: from pps.filterd (nalasppmta05.qualcomm.com [127.0.0.1])
- by NALASPPMTA05.qualcomm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AHIaUQu3045983; Tue, 17 Nov 2026 18:36:30 GMT
-Received: from hu-devc-lv-u24-a.qualcomm.com (hu-mliebel-lv.qualcomm.com
- [10.81.81.31])
- by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 6AHIaUvQ3045969
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 17 Nov 2026 18:36:30 +0000 (GMT)
-Received: by hu-devc-lv-u24-a.qualcomm.com (Postfix, from userid 4282937)
- id B5CD32550F; Tue, 17 Nov 2026 10:36:29 -0800 (PST)
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Marco Liebel <marco.liebel@oss.qualcomm.com>
-Subject: [PATCH 10/14] target/hexagon: preserve inactive BADVA registers
-Date: Tue, 17 Nov 2026 10:36:25 -0800
-Message-ID: <20261117183629.2002840-11-marco.liebel@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261117183629.2002840-1-marco.liebel@oss.qualcomm.com>
-References: <20261117183629.2002840-1-marco.liebel@oss.qualcomm.com>
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ k5l9NOjqVYOXqRxD/oTDvjEOtqUYuw0UH/N1tNLR2wA=; b=TDamfgdbBrH2epb9
+ 3O83PoQ8/eEnUTFqwWuyghhbvVBLzYiGvYngJGH1QSc4OF3utkcDm0XAtcF21YW+
+ 50S55mYjlG5RFsnlZeyZPQ64xeCBRNsLLF8wvpvIGsGAuhWgwXDeSrVOjSebMmXc
+ 5IJrJlXeanN1Go5GxVB+66aXrPXIW/4H0xdBRK2L+520n47toQaela9nehQrA0mO
+ Lz3YX91znru1CVztvthejESuZuSlSP9dx/IpfuS+WfHOed0ETU7n/eVmOV7Hx9As
+ lsZ57ak9eO9pGpUfPVszUEXVnugLqjGb5dIAlwIsNOE2lRGcSAxZCCFJPyAjGMuq
+ f10qWA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0qms1h1f-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 18:41:11 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-375f0fd31f4so200174eec.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 10:41:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1794940871; x=1795545671; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=k5l9NOjqVYOXqRxD/oTDvjEOtqUYuw0UH/N1tNLR2wA=;
+ b=TNAsqRuUwX5K4EsnnQJJbM/CY/NUhd7wTx3t7cJamhEN2hz19FGTt1bQzdJTmgY6RG
+ 8vpQkwgUcNInao3WZz/0pxXZm1cHmV6eLQOaDrzMRh93yJKeQwTKMKgF19s/EHCaBiZC
+ tvvfTP1f24TkVKOx5gDfDKV3fHUlEOyYH42MYrT1oRQQiGb4Ge3mCGi21MJKJ/AS5KDs
+ f/PI5LNiOOCb1Umxt5pFokP76UM1SCM0AO+0072Jgi8w2jZ7KmW6Btg+tzaJupUgp7Cs
+ +lo57EMwIuqq7sNofrv/EMDRA5YhEXwHF2vmQPTRCVCL091tLztiqkmKGIBVLx7DloBX
+ fyVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794940871; x=1795545671;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=k5l9NOjqVYOXqRxD/oTDvjEOtqUYuw0UH/N1tNLR2wA=;
+ b=JsS8LIrFkbys71L4pRD+CYvoA7zP12HUO2HhrqcGJaYbN1ALaZILbt5Fl5pvuLRla1
+ MIn0NYi4tOBXiLSaWie1tWMEMLjhq3GZeDR6LOajNtCIMdlSzptiU3UvwDnX+260XkmG
+ JXrX66Bj7pHsz94TFUxC3F2Q2uWsQI/uysSVL/rnBISrrHUV217Mg4ZEFprKgh+7xBg7
+ VjS+Kaeux7f+FxeFpk/CLHfYzGKgh+R8dujR3P1lhKflefgrtjJBJFXmwoC1ukA+DIy9
+ cAT/FV62PWjO323nwvtLMpJ8uHCAQ7t9u2tkQFmkXTAiridwVV8x3j8D3iC441pe+IzA
+ 6Ebg==
+X-Forwarded-Encrypted: i=1;
+ AL+hErHGYic0dDPfRFmdTdxe7iCcro4O1n2OExsnDCaPDQ9tRtZtEBSGV095GBWP3H23Lf2qnfyz55wJEHaW@nongnu.org
+X-Gm-Message-State: APuU4Z/usww7yXNxXp6tXKOXxWv9iDEhgCdbZLup5BptjtM4bnYfIcpr
+ XGisakFWhFtDYuX6MhMx+i7+49gT5KPgH3NB1s2KuyjOwzBGjY4gHhFtOUikld4sl9QQAwqBPa1
+ cwrRMAueY1yu+UIlV01V0Kf2aWQSmOxWzJj1JzSD9OfW+Xk6uomTEY15IrQ==
+X-Gm-Gg: AZFdTZeD6Dd60CbPWYahPkvBeZae+2YRfMDMcnCzt6VtFWB8RQr9mZxSDA9Cu67NzYi
+ JKXbCbvDxWdhKG5hMyLNOQRVryvxH6y+FmFF3WLO15AXuwcL4w4++mrRDkhd6//G1CJ9uCIY6Yi
+ oEV2HqU1mSV7ChdxuqcfMAFdcChwWVH2/AwCPHnYq+0YPMZW0VjOimZBsKT6ZOS+SUGs5ssFsoK
+ MSH4V/enpmkwF3LX1ucEwcT6jxixxvbyGokR24gkjrSqqQXEtlsQtMm7vw4hvbX+utHnYEsQOUQ
+ o09Rf2DRO2l0CJ7WNlzaJ+fV1it/2Q/uDF824Vul/NzylqFds5D2TmFVnBB8rlzBBwYgFJZfew7
+ +NWNtXgPI3GM9Jn4UrXSW8bvFUvQ0R4KJt9TY54/0LP4UMmtxiGgRtEjw+/r8L2OQF7HivFV8aT
+ JhJr4MXCfZf+EmUtKE2TTsh39QdiynVNPW3etIVVVIZPA=
+X-Received: by 2002:a05:7300:fc14:b0:36f:5746:3364 with SMTP id
+ 5a478bee46e88-38281215bb8mr262560eec.28.1794940871046; 
+ Tue, 17 Nov 2026 10:41:11 -0800 (PST)
+X-Received: by 2002:a05:7300:fc14:b0:36f:5746:3364 with SMTP id
+ 5a478bee46e88-38281215bb8mr262538eec.28.1794940870369; 
+ Tue, 17 Nov 2026 10:41:10 -0800 (PST)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-379563df84fsm87472829eec.20.2026.11.17.10.41.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Nov 2026 10:41:09 -0800 (PST)
+Message-ID: <e182e374-421b-4465-baf8-9b5895964402@oss.qualcomm.com>
+Date: Tue, 17 Nov 2026 10:41:07 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDA3NCBTYWx0ZWRfX5rgG+hFPoenP
- HlZGCFHp8bRknsa85dcsIsDJO9QiFU9dWuobxXUKDYaPMXf52S2bYTRgVCpR7ZDTAmfRerUi82V
- 2ACmR4C2KsrjWVurpdJM1KRXu3sMopc2PUqnpjCIrdRlPZx/HC+2hOb8XT/zrDcBuw7L4ea+IpU
- wjQio0C0lErXHozOYLCYR4zY7g8ckOPNS9P/pIezHh6znAEM/MA4QTM6i1PllevXltae4CMR/YD
- omzOmoXHs3FGq2CzzEKsGF0cWjsJUeO6iQiLVLFWJkZxziRoMhbpvKZkR2uFvk6ma4bknPvXPSC
- nyut4oCPxpQMXu4g2DxKsPabIE+I6MhMwUN7CFxbFY1aTLkIF6QSv+bpOEQwsmElu9ce6CrZYCv
- MjipiE/X89+LihpY/XyNDcRygGR4Kl+896lErcVr7Aq5WlFAgLmr03a0zgIzrKVPrhwUSap3ewp
- bYWkS9ZikBOg7/552xw==
-X-Proofpoint-ORIG-GUID: cU2MV1fSpjbu0huHK9x9xMsL2zFgQjg7
-X-Proofpoint-GUID: cU2MV1fSpjbu0huHK9x9xMsL2zFgQjg7
-X-Authority-Analysis: v=2.4 cv=Br8IUoX5 c=1 sm=1 tr=0 ts=6afc9eaf cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8 a=Stv3M7lcxomkFMvdv2cA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDA3NCBTYWx0ZWRfX2PZhyrdyFgla
- ipnZUgdZ8mu8MGpRvRF4yVPGfsHxkyY1qRzqTNML02h2NWr2pR5oSdA5UqMRtnBWw1W1z4iu/h/
- x0vZJKeST98PWxp+HfyWBluRZFN5FP8=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/14] target/hexagon: read the old predicate value
+ through C4
+To: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>
+References: <20261117183629.2002840-1-marco.liebel@oss.qualcomm.com>
+ <20261117183629.2002840-2-marco.liebel@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261117183629.2002840-2-marco.liebel@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDA3NCBTYWx0ZWRfX5uQzmmjdIlFe
+ qLdIJyL5R0/brsy0t5vQv2ZwcUHp/W7Hy21dLGp6K8jX14Fppn/qfzWEyBYu+mkw1H1gnKi9XcY
+ i8bwRw4FkWcvnsltSEyIpQF8y2k05pw=
+X-Proofpoint-ORIG-GUID: CYj8oQ5l-cu16VLXYJ-z1K2eELqWGgXD
+X-Proofpoint-GUID: CYj8oQ5l-cu16VLXYJ-z1K2eELqWGgXD
+X-Authority-Analysis: v=2.4 cv=BIEmP1QG c=1 sm=1 tr=0 ts=6afc9fc7 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=1yJ8gBRUuYsls8p9yqoA:9 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDA3NCBTYWx0ZWRfXywClBT2KND5g
+ 8mHBIbCv61RQ3i10B8LTjKQydKZblSy0HmPr+IbLXeTcXcHxOdNks8KzMAxlTTnzi6PtPLA2qm1
+ Y6gQ5vDSLrBZFGLNTdiBLZDKsLjtcQMvlqkYhZanLvkQcL+HW16pkiBNnsIyTwPGh5mWLW1Mq81
+ iVPttDXdbQSmo6rK3vH4pi9blQ0djRLNMmUakohUzf/sWihWKrJWUqHD/7YaIgMgNcViRk6F6Uw
+ vjqGc8KvJSUo1W0YnDp/j+bWv/nHMx7aNi22NJXvf7Hoo8wWDlAW13688vB0hH8Vi7MqATRcbKF
+ nZ5PAADmVbSAdEFWKysci/ij+cGdDtephtAM7FEVJ0Rox3cEv+i0TQnOs1sQG0rO/sI/EZ2B53r
+ 0Tn+eqvwFl3w/ByjnoAab/VUfLQkmbzYksPe+9bHc4UfqZr5CvQKiuFvQO3M4bndBIU1aGx4OPZ
+ zmVbOmwbMijdKT/n4hQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-17_03,2026-11-16_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 impostorscore=0 spamscore=0 phishscore=0 suspectscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611170074
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=mliebel@qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ priorityscore=1501 adultscore=0 bulkscore=0 clxscore=1015 malwarescore=0
+ phishscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170074
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,57 +154,27 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Clear the validity bit without overwriting the inactive slot address.
-Fault handlers can retain BADVA values across exceptions.
+On 11/17/2026 10:36 AM, Marco Liebel wrote:
+> Track C4 reads as reads of all four predicates. This prevents the
+> packet short circuit from exposing a predicate result to an old-value
+> control register read.
+> 
+> Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+> ---
+>  target/hexagon/translate.h      |  6 +++++-
+>  tests/tcg/hexagon/meson.build   |  1 +
+>  tests/tcg/hexagon/packet_user.c | 38 +++++++++++++++++++++++++++++++++
+>  3 files changed, 44 insertions(+), 1 deletion(-)
+>  create mode 100644 tests/tcg/hexagon/packet_user.c
+> 
 
-Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
----
- target/hexagon/cpu.c | 6 ------
- 1 file changed, 6 deletions(-)
-
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index af86dec7dd..77fd8156ed 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -750,8 +750,6 @@ static bool hexagon_cpu_translate_for_debug(CPUState *cs, vaddr addr,
- }
- 
- 
--#define INVALID_BADVA 0xbadabada
--
- static void set_badva_regs(CPUHexagonState *env, uint32_t VA, int slot,
-                            MMUAccessType access_type)
- {
-@@ -763,8 +761,6 @@ static void set_badva_regs(CPUHexagonState *env, uint32_t VA, int slot,
-             if (valid & (1U << i)) {
-                 env->t_sreg[HEX_SREG_BADVA0 + i] =
-                     i == slot ? VA : env->mem_access_va[i];
--            } else {
--                env->t_sreg[HEX_SREG_BADVA0 + i] = INVALID_BADVA;
-             }
-         }
-         SET_SSR_FIELD(env, SSR_V0, valid & 1);
-@@ -775,12 +771,10 @@ static void set_badva_regs(CPUHexagonState *env, uint32_t VA, int slot,
- 
-     if (access_type == MMU_INST_FETCH || slot == 0) {
-         env->t_sreg[HEX_SREG_BADVA0] = VA;
--        env->t_sreg[HEX_SREG_BADVA1] = INVALID_BADVA;
-         SET_SSR_FIELD(env, SSR_V0, 1);
-         SET_SSR_FIELD(env, SSR_V1, 0);
-         SET_SSR_FIELD(env, SSR_BVS, 0);
-     } else if (slot == 1) {
--        env->t_sreg[HEX_SREG_BADVA0] = INVALID_BADVA;
-         env->t_sreg[HEX_SREG_BADVA1] = VA;
-         SET_SSR_FIELD(env, SSR_V0, 0);
-         SET_SSR_FIELD(env, SSR_V1, 1);
--- 
-2.43.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
