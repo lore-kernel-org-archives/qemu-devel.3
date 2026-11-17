@@ -1,95 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB86A606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 05:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1329606A323
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 05:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PJCy9f2V
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oA+AX4Wn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTByu-0000Jf-1R; Tue, 17 Nov 2026 00:43:48 -0500
+	id 1xTC61-0001RL-Fy; Tue, 17 Nov 2026 00:51:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kmehltretter@gmail.com>)
- id 1xTByr-0000Iw-4T
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 00:43:45 -0500
+ id 1xTC5z-0001Qp-Ez
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 00:51:07 -0500
 Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kmehltretter@gmail.com>)
- id 1xTByp-0006NP-B8
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 00:43:44 -0500
+ id 1xTC5x-0007C4-Mq
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 00:51:07 -0500
 Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4b467581b98so37401205e9.0
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 21:43:42 -0800 (PST)
+ 5b1f17b1804b1-4a1b07c3c5fso48007545e9.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 21:51:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794894221; x=1795499021; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1794894664; x=1795499464; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=92vnorFbr3vOHfrN1G11rwU37DCe/opDQJz3fRlDtrE=;
- b=PJCy9f2VCtOHpr+ZliF2yQ0E1V8+1sdI6KivYtl7TcGjw6npkBY5dYF7MPrGU8qwm9
- TdjhRe0ug7kw9s7mzd1/n90l8jDzWNJ+F/KIP1xdBYVuv7LPTV420Uz6fTeOzhjkzlAc
- /3cqPwzZnbvJ41qTx6d+NVnagQZZR+J/AR4wOs0Ra/4RQEY1dg/qik5i3tBpOgdvyV9i
- JC3wzBrUSTIgtqv4XMPkJ6h1rGVtDSAd+nxmvb4YJJNSAeQtvTWRyqJnlTUhg7IJYe1c
- Zjtu+4UbDLN9durvTS7RyegmzeMKn29xZMIfy19KpPL8JcoyVNedcmKiUrJjS9s5m6M1
- T3Iw==
+ bh=xE0hZtAygoMZWedu8RkV57BFv0QFgxcv6Jo0h3lc6+Q=;
+ b=oA+AX4Wnk/7fW9vjXxc0ijlhKrpchrKiOCyOKH/8WqjP+ZRGtvmqZJm46ACCIlvsho
+ 3w1YqCZ8xuYWTXcryhVX1WkGd85nmXhwl0BphmMdKZaT+mWNxMD4pzKwjVJcHrNN6YJK
+ SCB36go8nnXZXjUjeVP5uQjiqbgDQXGAtqttwH8UVDo+KxWO66CFq3HWX8ir7lUoKY08
+ fGW/LF6oEy3+HfT8G8Sy8pVtsSnzem6o4Wu+l1z4rL1UG7V29k7NPxWxUgL9gMEYC9k7
+ QpLMSKBGG29bKt4KcH0rQUHT7hQH3RFJQi7CKx5Tv9sIpOjc0IRqjKtQMksmdMUYF27l
+ 1Azw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794894221; x=1795499021;
+ d=1e100.net; s=20260707; t=1794894664; x=1795499464;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=92vnorFbr3vOHfrN1G11rwU37DCe/opDQJz3fRlDtrE=;
- b=MnosV0B2YaDJ+FA6isRwclMEt5A64jvYEBaLmD9RYVJ9fTiL0IqGlxRWsBZuB28FnG
- TeVdJ6NAHPU3S/pcuLRE0skW5mvPzGZBe5hCOCzwGsgl1GwYv64NzWBf1jS1eApfpQCM
- aG6hSN3U5QiGhxo8UffQOVIyW+5d9c92PdeuuXv0VXITRwcqwaUOnQ+WkIfG34ylxrNE
- F1H90qqiHYdTbe9FSCrUoGDgIZAEdl1TrvBhZPsSoLJ1eTsqUgHTKhZpuuYPgug5xYth
- REQoYlOjvE3jUqFFTuoaRoRynXrOVddrSKVA6AXDrJKi9OggQ5JfWsTa3uT10S0eD7T9
- ZOeg==
+ bh=xE0hZtAygoMZWedu8RkV57BFv0QFgxcv6Jo0h3lc6+Q=;
+ b=XWzjd72oVMSPPQ9MOxL2l8sKQG3P058WRAuBhR5q5Ehls1S1MjEoxLFHVIk8xCM82K
+ rVLqspLD7XL/wEXeCwd5TGF8kFLN/ITwdwLl5qTtDgX3J9kOdvJ52nSw3svxY6oGuf3O
+ bkFM7RO6gBlnHPyWYy+Z2OHe6oZkT/9IsZXHQHPf/4fIc9yzOizpqiFQGnQzEQwgsKGi
+ qhKbytOgX3X+6Ew9DMDLX4zNxAxmcFmDMCuIt2ShF1obNGHDwdh0Ey3iltB3i+oRG5TA
+ UlaNasEr+JatcsMUDBtGe5vYNBMSaVxwR9Qzq/zb1Z1S5BbOCXBhdtEQ5RrJ+/uz6vOY
+ RE1w==
 X-Forwarded-Encrypted: i=1;
- AL+hErGaSRGBcwUrvOhyjBHZlH33WyN7YEjR7oHzL9iFBCW62arhEqic34R+vGjoKp7bTqkqI9hE1M4ZdbYs@nongnu.org
-X-Gm-Message-State: APuU4Z8Kc5Xz1r7nk/jnUIYfMt4RDaAYcTEifcWURliZ6ARQTaEao4+u
- Kmz6rR65dztW5Qsz6+juUs1vSlBk+ArIBKWE+71LgzHiYt/u7KXLDj2f
-X-Gm-Gg: AYBFou1hWcxJJ0+x4LBWDmteICcj44LG7Py5PlvRYrJjhpJSWxuEZu5iOuu6BtXSgS1
- /qgEK6aPkCTuTpxjnBeHvXKoU4BUfSzv/8tq6goMWhiS5GW3sBXAjG3zjFYNT18aVI7LNHZcZW4
- 0pijuHr4I3KXp0eTV4IH/JPHyJJ+FxKD7TiNrxViy2CHtwXTG6lQAIVVZFvsPt8bNPhhtgZ36PW
- hkEGYO3iJx5WpBkLZjuDFNLsIbnSRhQzQ+VCWXYvCBiWEqRCD1C27oJpKFR710oJTpPchPdaaof
- rXdgWvKNO+Eiaa5VQfbC+7sYaozovMfeHSVcHDSdYBncEB2GLNMT/D5HTdNYOKVaU3W9BtGyCj0
- ojsaag8aINkoOCIca9kwcEaPnBTpeaNbBYM0nQz1WAr4Ex5hEItSkozafgDq/xcRGn61dvGotp8
- GXU/MEgFiPWhRJU1nYtEx4dFryFVqfo0jNSMlH4rlvfin0MP0jwBNQaJ4G3AO7hXpK83PwbDsdN
- GTIh4uonbbiSxrbX5FXIKmQvJkFTOlbbc4Zk59wu05wKzZkpM0gKCkfHMwAmXCn8FBEL1NLwmOZ
- srHs8gePYfTvKa/Gs5YePS0TndbpmnyQ1ev6ClxY0zERzSdlM63UODFJc+/ZKcZOoMIahMs6i9v
- vUdiSyvkJSj5w7StP9oPDx0E646InD9tMCOUzsVZwsz6ZRBY1yfrkEb835UIMtsGW22YGMSrnlh
- TnuwJH4iTpWIPD1G5lTKOfTm55G+E6rc5jeKFpTpiyFG+SIsM=
-X-Received: by 2002:a05:600c:3113:b0:4a1:d537:1c8d with SMTP id
- 5b1f17b1804b1-4bb55aabda0mr268344195e9.19.1794894221262; 
- Mon, 16 Nov 2026 21:43:41 -0800 (PST)
+ AL+hErGt5byn+zY8+e75itGzCZu/SZKJ9X5OpHIbTYFOLKGcDehtud5NsTuvsmX6QOiSZmtrSQIEPjNx0Gu5@nongnu.org
+X-Gm-Message-State: APuU4Z+4TLycgdQSABzn/+HW0W1Dx8k/vwWKQiqPCI0uDUKidkIJwOYg
+ qveh8YnQWy7FYwJYZFiI/UeGbbRw2kqdz0UOmRQmf5YpM1VSv/ukBINx
+X-Gm-Gg: AYBFou1Lnxo+SIMGlqrdRhU1vYbxn2LGUc9lEyCgT+tEw5ImRfLwEAM1dSY28XHUtb+
+ eNOZ4ENS0dzTC0HRAHUIWmHTIdoEDJdw2FqFexowU5UO79h1hZcfdPiClQRuc2ouZXSg3i2lWhY
+ N2gitFMmMGH6mEmirXf+M5diR9DKi9Zcm3W4belxKmWadoKS/5n4Rp6x2l92Ptzwj0maUWmWQ6N
+ JwErYLgjjo1KIk9xn5preFPlhoRBZTIXj4br38AGjTCunejd9xnkWaECqkctjFbCY16taxJs/tD
+ YaAGHlrhYkxL++/Jbco4OX/dVdxJlg5b+PIIdq6RUaZw51QRDhy6w3ejIIEseSWF6YPJdlCIRWc
+ N0BMTa03I6E0KA+EgDu8EZNS7KHLy4hNNyA5CSzuXXPMBKmIXHSBnHQuZtGJ5alVA7AFK2NcjgD
+ KScZ/o7ZfaQ2saIDx7L0T/BEyfsEsvESLCZ/4ZF/GTy++KTt6SZMDUcEe6QDsUdUIK5HjbBkw5d
+ +1x3QwrdcbBLz+Q2jeK2imlWS6XA+8AJv6PJF3AC/3RUeNoA8MyFdTexF/ZkH1rj5pgAVAtPprV
+ aI0SomK4wydvfb2sTwZRxY7WaI1WmXPbUqRdj31AYCcI+3OvvzTpITL82xzcT7s5k1K/VB8a8oY
+ /1xL794SZW01F4YgEZq1CGah5Q5hNaBVA7uEfP9IHLzLrV2qsYx+25wEaqtz2N+bPU6l+8VebiP
+ s56VK3Vme1PADiVrKs9zlsJznCHoNDRf4IWwXJSPKDoVysKQ==
+X-Received: by 2002:a05:600c:670b:b0:4bb:7987:fbbc with SMTP id
+ 5b1f17b1804b1-4bb7987fdc3mr10916125e9.1.1794894663910; 
+ Mon, 16 Nov 2026 21:51:03 -0800 (PST)
 Received: from MacBook-Pro-von-Karl.localdomain
  (dynamic-2a02-3100-b014-0b01-69e0-6cd4-9e72-ec17.310.pool.telefonica.de.
  [2a02:3100:b014:b01:69e0:6cd4:9e72:ec17])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb68c00b10sm125424745e9.0.2026.11.16.21.43.39
+ 5b1f17b1804b1-4bb783853b5sm41816735e9.2.2026.11.16.21.51.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Nov 2026 21:43:40 -0800 (PST)
+ Mon, 16 Nov 2026 21:51:03 -0800 (PST)
 From: Karl Mehltretter <kmehltretter@gmail.com>
-To: Abhigyan Kumar <314abh@gmail.com>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: Re: [PATCH] target/riscv: make Zicfiss CBO checks independent of TLB
- state
-Date: Tue, 17 Nov 2026 06:43:30 +0100
-Message-Id: <20261117054330.85494-1-kmehltretter@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Jean-Christophe Dubois <jcd@tribudubois.net>
+Subject: Re: [PATCH for-11.2] hw/watchdog/wdt_imx2: Fix migration when
+ pretimeout-support not enabled
+Date: Tue, 17 Nov 2026 06:50:38 +0100
+Message-Id: <20261117055038.88311-1-kmehltretter@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20261114215908.260568-1-314abh@gmail.com>
-References: <20261114215908.260568-1-314abh@gmail.com>
+In-Reply-To: <20261116114641.1799526-1-peter.maydell@linaro.org>
+References: <20261116114641.1799526-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -102,7 +95,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,26 +115,26 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sun, 15 Nov 2026 at 03:29, Abhigyan Kumar <314abh@gmail.com> wrote:
-> This commit introduces CPUTLBEntryFull.extra.riscv.sstack as
-> a marker for shadow stack pages inside TLB entries. When riscv.sstack is
-> set, check_zicbom_access falls through it to probe_write.
+On Mon, 16 Nov 2026 at 11:46, Peter Maydell <peter.maydell@linaro.org> wrote:
+> The wdt_imx2 device has optional support for pretimeouts, which are
+> present on most i.MX SoCs but not on i.MX31.  If the QOM property
+> 'pretimeout-support' is not set to true then we don't create the
+> ptimer associated with that feature.  However, the migration vmstate
+> unconditionally lists that ptimer, with the result that trying to
+> save the vmstate of an i.MX31-based machine like "kzm" will hit an
+> assertion.
 >
-> With this commit, the now-redundant special case in get_physical_address
-> for probe is removed. is_probe in a call to get_physical_address is
-> replaced with is_sstack_page. As a side effect non-fault probes of
-> shadow stack pages no longer see them as unreadable, matching what a
-> usual load does.
+> Move the migration of 'itimer' into its own subsection which we only
+> send when pretimeout support is enabled.
 >
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4789
-> Fixes: 669b4867495c ("target/riscv: mmu changes for zicfiss shadow stack protection")
-> Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
+> Fixes: daca13d495a11 ("hw/watchdog: Implement full i.MX watchdog support")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4876
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
+With this patch on master (97c88c61d45d), saving and loading a paused kzm
+machine exits 0 instead of aborting in vmstate_save_vmsd_v().
 
-With this patch on master (97c88c61d45d), the reproducer from #4789 passes and
-exits 0.
-
-Tested on Debian 13 x86_64 (riscv64-softmmu and riscv64-linux-user build).
+Tested on Debian 13 x86_64.
 
 Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
 
