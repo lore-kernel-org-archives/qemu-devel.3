@@ -1,86 +1,84 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EED606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 13:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05322606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 13:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=P+w9xpy+
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=iAWZXeTv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTJI7-0002Ka-VS; Tue, 17 Nov 2026 08:32:08 -0500
+	id 1xTJI6-0002JI-Dq; Tue, 17 Nov 2026 08:32:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xTJI0-0002H0-G8
+ id 1xTJHy-0002Gt-O7
  for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:32:02 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xTJHx-0000WN-8H
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:31:59 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-48e10a70540so2608952f8f.1
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 05:31:55 -0800 (PST)
+ id 1xTJHt-0000Ju-HV
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:31:56 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4b467581b98so43307745e9.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 05:31:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794922314; x=1795527114; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=pSa7ptreDk5dKB5WmKzb47P1wr9NhX2Iyt0QzoUiRNQ=;
- b=P+w9xpy+LsI2G5tOPQ5mq/b2tSoXM964OGQ+LdENE7avwEgPuHK0CcMbuYRtSGuc7G
- RBwPJfPdZcpVBkibnhlUxshiPGh4xuDu325ZjjDzODTFlVlIZu2J5wTlLEpc/5YkJVTF
- DIhedfKVSrcTzmrgTNJeBtnMxsCbDou1pLgNcd3JHXq5jJrOvNlBDe/tAb0Gi1l6Z1tz
- rMcakzPcf/ojTgGpzBmy6virxeLcIZHP30uFYV68zPi/7jI0X2yoqBChUg9GLtMJt1b8
- n0XCJcs7JvxZjWJ0+oAwDNTeGH6e602ZRKVLiNfee9HpzNjb1qzc17FcqYlBTUa2wyl2
- qZew==
+ d=linaro.org; s=google; t=1794922312; x=1795527112; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=lsBy4QQqpE46PRdO+saaGGS03mizv0NFRFGb0T9l2rI=;
+ b=iAWZXeTvPtkGuB9oX3lAHK3305gKYJ4OssJMP357GUNnFkN8i16yUB78KxH61pSZHG
+ +J7dWuJJxDWRllFdFAWaUE22D+Li2oXj/9DRQEF1GPdIiqGBZpvzi6geFJyqsSubjo0A
+ zenZjZspC+m/Kmolom3THazKDoysHPMl1Ig8jK61Xn5bAL2DkG+z0iB16PTqbuDzcXEm
+ 6AYqK7glJF5cny/ktpdYFqEzyAI7y29yle0HnZ6P3nGheY1J/KqzPxBlAYfuoQIqwxSd
+ /2kcyPSLp1mu0jDfr2wKPPJg2W4lXzpB9buM9BYleqrKgSeDeIrMZjxgFjqSKF9+le20
+ BUlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794922314; x=1795527114;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=pSa7ptreDk5dKB5WmKzb47P1wr9NhX2Iyt0QzoUiRNQ=;
- b=eKdSri5bRxNq615u0O7Y+yAou8/Oyfb9WyB6Z4LqgwY1qWG+FxlEkJ6vvJFYZFylFT
- 4jx4R+GTFGhv098cKcrJHBAamMz1nHrdODc0XR04T+9LMKQl5yReSUw7irkPxkK9yFkz
- JZ53f4CboJSGfgKmMRfyj4XwGMCroLNwiM3djwUsI6RlJ3oBc8vWkcmfS+cgbdS+n76N
- ZBKyDMvglgNfWpoKougkUEEwEfRETek4lA8vcjnaOg+sgh6BtQ+A9HnTHR11/ysvZsf+
- cwC+9M9OipoZqSwTyuwTxcm5jE0P9M5TRJgxYayr5yn2XQmJLTB4A9ctwPlAt4aEauWg
- GQ5A==
-X-Gm-Message-State: APuU4Z+snUsM0IVdThNZ0SQwkYA/8k10TPNl+6BlLqIi6+pCjKzwFgr5
- NG7Q/NKCMvng7oE65FO5J8xwYXiParDsZMroJ9WpaX3Xn2fcu57L+KbrWSObN4xeQUNSEXzlJRM
- qFXwd4Nw=
-X-Gm-Gg: AZFdTZfhKsn7WUjKgRVfjQKGx1n/uKtS1PTo3X+LbavF1f/6DYamYuRtkY5RyxBZah5
- o7NmALy6wQ7r0a0CkTZlqeYDvQ/mQ7eFQfgzfEcEzIuxIOqbKb7C0Oz79QsUdg1cz39AQmQUQqr
- 1umaM+op0vIjyTYSxzAmEvfpUDr/BUzobtezr1c602jo0SOKcNn2UKuMkdPp2nJXh4QPNKPkY8r
- mAeOfMtWBv0D9utkx0kGPBaRnLKE5h3gJQkihwGayjKMRlI8xLEwzn95zaN3GEKbRisFl4otgfI
- jGOYPzXiDUoWkGM60OzVL+M0ut7IMFcrw0VxRltkR8I9C5T4puBIVwgTaGLWL1/prbqQvnePWil
- 55hsNgdx74JZkK82R99Mb9TX0neueXV/TVxciebkavFjW0eMTeqUI3KC/ITY86a+uuuPU4BVTJJ
- 4urAd8mJg8JLkNB924A0Sq/9GoNvLTA5QP9N1VasT84lMRLcdfiTi6kIuVdf9t/bHxrFVswlrfJ
- OeuQQxJawUQUgHILuJV/lvNWRPThoqJtR0CRjfRWS6ynIcuQJIaMWtgl/irK8Q88A6q3fmILYEb
- aj7+cR1f2Iq54tWELrlMgMiFcGxh7htQbt6wvWrDmmqVYze7t4IiytIa1V2PAbpRfrNC86R6w5l
- 5AQ1dosKd/1mdh2/h0fgUts9uuAKs12HR01pxOTAGTGdVWFdFro4Uuy4=
-X-Received: by 2002:a05:6000:2010:b0:4a3:836d:6f61 with SMTP id
- ffacd0b85a97d-4a3836d7039mr5745228f8f.12.1794922314026; 
- Tue, 17 Nov 2026 05:31:54 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794922312; x=1795527112;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=lsBy4QQqpE46PRdO+saaGGS03mizv0NFRFGb0T9l2rI=;
+ b=lltbvTIMhpk4FzC2gdcOo3EllXYaOrGmjz01/5RbB0E6//T37MYTz+FSiLtLhtedp4
+ 5SMflxOiLx4ZeNbClxwkCvwKiWvWQfOiWSnRC0VKPjgOMAjBTerVq7SILCBUQTggD1Xo
+ DbbJMUhZI6hv0raEcLEVqwE2U2DB9lKWol76JN3fEXhAk6iajerZVnNws5da6K6W1lAE
+ HjabnTlXgNN78B975kCS8UpRWSvruIPB2oFYemTyrLeyD5OlGKsW//fv8uflzcJH+2tI
+ hZkDdTIFKVXqXMUVkLAQCwMof9JNWsEmaoHsYBA9KnEPcrN3knHGIOLOsujuX9/86fXX
+ JOhQ==
+X-Gm-Message-State: APuU4Z+10zTo9wbGkq87huVkavcPmYVOhAMf7G0Ev+E11h9BRevWJAVl
+ f6IjkKp2PrErhhEM6+YnvAkWdK97OBWVlGnUYM+bp981x6FMgZ4EVN14XhTolN5GjpK2qiWFpz7
+ rGXLdVT4=
+X-Gm-Gg: AYBFou0HlB8+t+zhkLRiPv+Xk4kvWVBf3KNQUgBJk+N3alKkQRJWgzSSJByTCKKj1Ok
+ lStektfb9NL9jMIYulFcs1y1AaqnavafaVlCUdck0KQ+TXWghq7EpGa8VJjUog8fMp59ToRm6IU
+ 25y4ZWlhnBRhrKkPpWRxT4y6SGiAI8bdldP5Uqhl/fsDn/e6pQWd2yEq28ypqAckXe6HgejRAe4
+ B73MKP8s/JYaXRR7tXcFqo1JHfsNHlH8iBlfUMg6pvCu+mrND1kxGrjKKuApv1+dKC3aYT/dm4C
+ L4/3KwzRPfSEzM3LSbhM+i3VtlcLbr4oAqtnlhidXGn8BYmUjQRdEaSbESzY4Z0kg0QoLNpr74d
+ mBn21NiLDjOLhufnFnJ8z+L08v4XU2aa4i+YBREBGhLfnx8OaFPEALm/598/OnB+TlWr1CBWTFJ
+ fi5BuPQwtWZNZklW+iFHh1sO9x9/yIeVY0RLR9/ZWLIi1WNEGGc3Ztg+cGfcLsDPXpoCwnf/i1J
+ Nh75Pp+IrfAcr76+0dgwmeo5isGvtJ4ajovHxrhYF6xw/8CIaOnuyiHCNyzJ6YuvGdKPZ57NiZr
+ nW9mQ2+Pngi5b+vQq19wdV33DbM8ITecFNuKoAzT0z9N/3DEep1XcMhIedZ9QISOMW5A0pET9ZL
+ sSgcB0/oxMGidUjAY5vjwfVnXlIuHqpqGbLs=
+X-Received: by 2002:a05:600c:8b56:b0:4a6:44b:2593 with SMTP id
+ 5b1f17b1804b1-4bb55ad0711mr294445895e9.29.1794922311277; 
+ Tue, 17 Nov 2026 05:31:51 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-49c609c8a77sm28516886f8f.49.2026.11.17.05.31.53
+ ffacd0b85a97d-49c609c8a77sm28516886f8f.49.2026.11.17.05.31.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Nov 2026 05:31:53 -0800 (PST)
+ Tue, 17 Nov 2026 05:31:50 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 3/8] target/arm: Get HVC UNDEF cases for Secure mode right
-Date: Tue, 17 Nov 2026 13:31:44 +0000
-Message-ID: <20261117133149.2108068-4-peter.maydell@linaro.org>
+Subject: [PULL 0/8] target-arm queue
+Date: Tue, 17 Nov 2026 13:31:41 +0000
+Message-ID: <20261117133149.2108068-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261117133149.2108068-1-peter.maydell@linaro.org>
-References: <20261117133149.2108068-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,97 +97,84 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In the pre_hvc helper, we have a "bool secure = false" and a FIXME
-comment that we should use the actual Secure state. This is a
-signpost to the fact that we're not getting the UNDEF cases right.
-Specifically, we get most of them correct but are missing the ones
-related to Secure state:
+Hi; this is a small pullreq of little things that I forgot about
+but which I hope will still make it into rc1... The only big
+patch in here is the new ccid-card-emulated test case.
 
- * For A64: HVC must UNDEF at EL1 if EL2 is not enabled in the
-   current Security state
+thanks
+-- PMM
 
- * For v8 A32/T32, HVC must UNDEF in Secure state, if EL2 is not
-   enabled in the current Security state
+The following changes since commit 97c88c61d45dee6e1f9bc160a338048189846d28:
 
- * For v7, HVC must UNDEF in Secure state
+  Merge tag 'docs-security-devices-pull-request' of https://gitlab.com/berrange/qemu into staging (2026-11-16 15:48:48 -0800)
 
-The v7 requirement is identical to the v8 A32/T32 one, since
-there is no Secure EL2 in v7.
+are available in the Git repository at:
 
-This fixes a bug where HVC should have UNDEFed but instead trapped
-when in Secure state with Secure EL2 disabled.  The bug is unlikely
-to affect real-world code, because only test code puts itself in a
-situation where HVC should UNDEF and then executes HVC and requires
-it to UNDEF.
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20261117
 
-This was noticed by Coverity, because the "if (secure && ...)"
-check was dead code.
+for you to fetch changes up to 81641446c0b5aefdc814131f0ce7435b9f5787ca:
 
-CID: 1689834
-Cc: qemu-stable@nongnu.org
-Fixes: 35979d71c401 ("target-arm: A64: Emulate the HVC insn")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20261030092815.573973-1-peter.maydell@linaro.org
----
- target/arm/tcg/op_helper.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+  tests/functional/x86_64: Add test for ccid-card-emulated (2026-11-17 13:06:01 +0000)
 
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 22f47f7450a..b6113096b53 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -1302,8 +1302,6 @@ void HELPER(pre_hvc)(CPUARMState *env)
- {
-     ARMCPU *cpu = env_archcpu(env);
-     int cur_el = arm_current_el(env);
--    /* FIXME: Use actual secure state.  */
--    bool secure = false;
-     bool undef;
- 
-     if (arm_is_psci_call(cpu, EXCP_HVC)) {
-@@ -1313,6 +1311,8 @@ void HELPER(pre_hvc)(CPUARMState *env)
-         return;
-     }
- 
-+    /* Note that we have already UNDEFed HVC from EL0 at translation time */
-+
-     if (!arm_feature(env, ARM_FEATURE_EL2)) {
-         /* If EL2 doesn't exist, HVC always UNDEFs */
-         undef = true;
-@@ -1323,12 +1323,19 @@ void HELPER(pre_hvc)(CPUARMState *env)
-         undef = env->cp15.hcr_el2 & HCR_HCD;
-     }
- 
--    /* In ARMv7 and ARMv8/AArch32, HVC is undef in secure state.
--     * For ARMv8/AArch64, HVC is allowed in EL3.
--     * Note that we've already trapped HVC from EL0 at translation
--     * time.
-+    /*
-+     * In ARMv7 and ARMv8/AArch32, HVC is undef in Secure state if
-+     * EL2 is not enabled in the current security state (which is
-+     * always for Secure in v7, as Secure EL2 doesn't exist there).
-+     *
-+     * For ARMv8/AArch64, HVC is undef at EL1 if EL2 is not enabled in
-+     * the current security state.
-+     *
-+     * Because we've already dealt with "EL2 not implemented" above,
-+     * arm_is_el2_enabled() is effectively always true here in NonSecure,
-+     * and we don't need to explicitly also check for secure/non-secure.
-      */
--    if (secure && (!is_a64(env) || cur_el == 1)) {
-+    if (!arm_is_el2_enabled(env) && (!is_a64(env) || cur_el == 1)) {
-         undef = true;
-     }
- 
--- 
-2.43.0
+----------------------------------------------------------------
+target-arm queue:
+ * Revert recent qemu version.h handling changes
+ * target/arm: Get HVC UNDEF cases for Secure mode right
+ * target/riscv: Fix RCsc ordering of Zalasr store-release
+ * target/arm: Fix RCsc ordering of store-release instructions
+ * target/arm: Fix barrier polarity of A32 LDA load-acquire
+ * hw/i386/amd_iommu: Mask address when calculating large PTE page size
+ * tests/functional/x86_64: Add test for ccid-card-emulated
 
+----------------------------------------------------------------
+LIU Zhiwei (3):
+      target/riscv: Fix RCsc ordering of Zalasr store-release
+      target/arm: Fix RCsc ordering of store-release instructions
+      target/arm: Fix barrier polarity of A32 LDA load-acquire
+
+Peter Maydell (5):
+      Revert "meson: rewrite scripts/qemu-version.sh directly in meson.build"
+      Revert "include: introduce qemu/version.h"
+      target/arm: Get HVC UNDEF cases for Secure mode right
+      hw/i386/amd_iommu: Mask address when calculating large PTE page size
+      tests/functional/x86_64: Add test for ccid-card-emulated
+
+ meson.build                                      |  29 ++--
+ hw/i386/amd_iommu.h                              |   3 +-
+ include/qemu/version.h                           |  20 ---
+ bsd-user/main.c                                  |   2 +-
+ linux-user/main.c                                |   2 +-
+ monitor/qmp-cmds-control.c                       |   2 +-
+ qemu-img.c                                       |   2 +-
+ qemu-io.c                                        |   2 +-
+ qemu-nbd.c                                       |   2 +-
+ qga/main.c                                       |   2 +-
+ scsi/qemu-pr-helper.c                            |   2 +-
+ storage-daemon/qemu-storage-daemon.c             |   2 +-
+ system/vl.c                                      |   2 +-
+ target/arm/tcg/op_helper.c                       |  21 ++-
+ target/arm/tcg/translate-a64.c                   |  13 ++
+ target/arm/tcg/translate.c                       |   8 +-
+ tools/i386/qemu-vmsr-helper.c                    |   3 +-
+ tools/qemu-vnc/qemu-vnc.c                        |   2 +-
+ util/module.c                                    |   2 +-
+ target/riscv/tcg/insn_trans/trans_rvzalasr.c.inc |   8 ++
+ scripts/qemu-version.h.in                        |   1 -
+ scripts/qemu-version.sh                          |  25 ++++
+ tests/functional/x86_64/meson.build              |   1 +
+ tests/functional/x86_64/test_ccid_emulated.py    | 167 +++++++++++++++++++++++
+ ui/cocoa.m                                       |   2 +-
+ 25 files changed, 261 insertions(+), 64 deletions(-)
+ delete mode 100644 include/qemu/version.h
+ delete mode 100644 scripts/qemu-version.h.in
+ create mode 100755 scripts/qemu-version.sh
+ create mode 100755 tests/functional/x86_64/test_ccid_emulated.py
 
