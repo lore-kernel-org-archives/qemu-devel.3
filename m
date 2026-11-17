@@ -1,115 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B211606A32C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 18:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5E7606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 18:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=DPWXHV6H
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ta1ZYdQs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTOJq-0002WC-46; Tue, 17 Nov 2026 13:54:14 -0500
+	id 1xTOKI-0002jH-4X; Tue, 17 Nov 2026 13:54:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xTOJk-0002VM-Tm; Tue, 17 Nov 2026 13:54:09 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xTOJh-00014r-VT; Tue, 17 Nov 2026 13:54:07 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AHFQt9U2731233; Tue, 17 Nov 2026 18:54:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=Gl30yeper/9jSIRmPKka1EbbTCp22uA8gzytBflCQrw=; b=DPWXHV6Hcalc
- YKtavBGjdRWO33Oln+4EBmbYuFqTFoNtfdnTKiN/OOTyWpdUQNJ52JZbHzkiCfF+
- uW5kygGzx65c12BQNihsgdL3eMC2o2R/JKacIcBrRwixWwYbY1rAQShuoosuMoXb
- Gtm6i0IxF9zxkSVo1P4naESwa1qZ9VbpUsKi696qE5IOXZE+Z54TT39p/E7IG6nj
- riJCYkj72OzaTDYVXxCZh7Zkh20azZX+mTQkUVqzhSPdvohXdvnLQssSHVZM1OgF
- Q+trBT25p0AUB+20HL6rDwg3xnJn1zzTy4teHgqLQrBfE6z7Z0Dt2XUsM6XGNGJQ
- onI4cLZBuA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hxfc54ybb-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 17 Nov 2026 18:54:00 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AHFnpZ84159552; Tue, 17 Nov 2026 18:53:59 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hy2bvf5j1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Nov 2026 18:53:59 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AHIrwcZ65405356
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Nov 2026 18:53:58 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A969A5805A;
- Tue, 17 Nov 2026 18:53:58 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3828158054;
- Tue, 17 Nov 2026 18:53:58 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 17 Nov 2026 18:53:58 +0000 (GMT)
-Message-ID: <54099e817836cac4c73174496253d2f299a686c4.camel@linux.ibm.com>
-Subject: Re: [PATCH] MAINTAINERS: Change XIVE status to Maintained, adding
- self as co-maintainer
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Gautam Menghani <gautam@linux.ibm.com>
-Cc: harshpb@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Date: Tue, 17 Nov 2026 12:53:57 -0600
-In-Reply-To: <avbhQTWuvdbuu7jr@li-fbf77acc-29ba-11b2-a85c-e8e934f50a46.ibm.com>
-References: <20261112074640.219753-1-gautam@linux.ibm.com>
- <f728d68ca68868d3995df0d1ee0f95476dd4dd1a.camel@linux.ibm.com>
- <avbhQTWuvdbuu7jr@li-fbf77acc-29ba-11b2-a85c-e8e934f50a46.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xTOKG-0002fQ-Bq
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 13:54:40 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xTOKE-00016m-QI
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 13:54:40 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-3ae7626d14aso13630a91.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 10:54:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1794941677; x=1795546477; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Ha5YZxCe+fucO5QYzSYZXVUE55wVJRDIC1jgRIZp6cg=;
+ b=ta1ZYdQsHUSJasx42NWoOoV2VG4VofrxuBcSZVl3a19h1P4GLF/wRTiaKu/SrjqZGc
+ RZG5WUrKyTbWXMZ1TOKpWTyaeLtINZ6z2W2jMBGNYjfL/O4qOAioKHgKhCQkxi7doGBK
+ vwQCh7jGT/F6X0bf0jfCO2Dk9RDFYUWcwNg2o1Z3kX1V71++MVZoxwBJO4uPucbBo+5J
+ F6M5amLB7UGGp+8lmo0Xte+JYT+s7cSMoh65c6Ocl7z1ovDzoBoTKwuSAErdqortqFFw
+ UVvH3p6OcXZjGPTSukk8w1nYfsWnQe66yCTmqdncbVZMWp2HqLc+sVASJEZ0cGqFN9H9
+ 3dnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794941677; x=1795546477;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Ha5YZxCe+fucO5QYzSYZXVUE55wVJRDIC1jgRIZp6cg=;
+ b=IHiur+Kdwd787LlDsnroEXaAY9gilnRBZBB6J44gLazjOyEaiidTcjDfqgRpxh+gEF
+ FqN9Iy+ZApkXMDLffHfPnvvCtsJnQtKbqCjjNeppJITzLt5yUYHGqq86g+mBtst+dYOs
+ NVvgoTQkdQcBtRDQ2fjnab+qfhNa81KxV8rK7j6IT2J6yOXH5xiu9ugsa4X5UmnKHMqx
+ LvVgSTZiIU0QqTmeBesriYckI6tiA5nfkuK+GiS+Z5D8hb3YntgUr0SvTTdWXfHEFbck
+ bfg0KM0yvdichcXNvLn56QNhQDbPiEhdCypeUw8QtO/OsUtKVaslIn7r6Ogs1xlX5NxT
+ X7cg==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEALPbnof3F67e9jV83iZRgCIrN8a6oBNX4S4J3APpwuoSUr+ZjdktPI+DQdT+rRLt13sF5G9UA0j5N@nongnu.org
+X-Gm-Message-State: APuU4Z9t9Tj0epkvCd8GgRGEqxGmtmi29F7JuKmxROUbtlsVi425PhxS
+ zVLOX2DScBUDubHaxw46Rr+z3vxyiOUEdfiKjyiXQLQSmEhfnl000NCPdHOqzvg61eA=
+X-Gm-Gg: AZFdTZfGqNIPbVF/xMzh6vfOvvGk1YiZHdwBEpIeDbQnqotpbmXNZLshOq4ruvWMvH+
+ 3N4hnMshJj2HunhDQvIHMzruqLQvinX4XaVI9DdEv2QyN61rVPBw1sMmyMGQ/QtYge0uZOifMyh
+ tuwyDTqcTVzAoRedHWyPi4r5r7l/P6RJLSKsgIplrfVuNvCQyBu8YVsj2/AYmywL0UWuxNXh9l0
+ BKa38F8kaqAn3y1LjRL3Z+4utgnbCs9432vkuswyRp+QWhtSmfBBQ5HalfNwfcHUNjHjKqM3658
+ I1IFY0OYxhpmSlXYR9zmpXj6N/3eYY/8YNHnq9figsZmQVGHSKnwR8mdEgzNEKVEmgQvcArziba
+ wsRRPHESR05Y/Vj5EaQ+BPm46LLurXuss/xhbioWPDX/kpU+yisXu0mmRQ1itQ5pL7YfM5c8TAu
+ w7dB/+DB/oUeWwfecm7J4TyuXZFu2I198Ybl50VGfKHM/TTbz6/z+D+GuOlwje5XgFg+UOx612N
+ 3xw5eUttiAbyitceE7/I2wfKvu48KJYf0O+x8JG3bAFja13A7BQ5NbWthYphFnFKq1hQ70ueMfk
+ 7aSWuHqRupVRXGPutClq1moDu527SxUCy5PDNTkrDo/crVTAzY5IbE0ce4ijKhVqOuz95vU=
+X-Received: by 2002:a17:90b:1644:b0:3a7:e11c:4e6e with SMTP id
+ 98e67ed59e1d1-3b3d07cafe2mr330012a91.59.1794941676768; 
+ Tue, 17 Nov 2026 10:54:36 -0800 (PST)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3b3d1d32d71sm110939a91.1.2026.11.17.10.54.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Nov 2026 10:54:36 -0800 (PST)
+Message-ID: <0c5bb423-f761-4556-87fa-4e59dba754a7@linaro.org>
+Date: Tue, 17 Nov 2026 10:54:34 -0800
 X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDA3MyBTYWx0ZWRfX23InHUYN/J3o
- +1NOcGZlbIusg0Q4ip+NMW2WiL7IDhybjU5rCDLKv6k+BUMUTLwMdqGSZ8POd6fCLVz3foE6/GE
- yYz2rSAuzStvWTRStQ6xsAWoH3txhZg=
-X-Authority-Analysis: v=2.4 cv=Fu6QbGrq c=1 sm=1 tr=0 ts=6afca2c8 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=-C0ItT94nz96NXNb-dIA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDA3MyBTYWx0ZWRfX8JKD5eUwGVbj
- 64czMee7CfP/vs4UqXOYa2zrwxeSJFWSFrN00sHGXbnEdgHv8Ihbmgb6nul0blEOIWJ5M+oikP1
- MSCPMnGfcNa+U2KJHdFLxAG9p4lwrDhcHyw776DONu/sE/krzKz3m5FT527sRV/6LOjxcpmLCLl
- FAWe120tibCGMlbyWpZY0pe8pdj3t2BYQZglOdULki3ZCVTNAjLvjETjRGWExyYT9XT2MuofkNV
- Kd6yYRXbliIkoN1+h5ojvoifF3f8+OWffRKypdMMZZX5vRo7P+qz0xBa+ypcKJvihZqXwUV3XTq
- Os3Bii7i3GLvnThYbd5LZ00Tb4qXw+0SroZYyRDfeJYJehjlDdDjyM1bN7RyIcNg793AtjJ+2aR
- CBPuss5Xcz0Et55PklbVHQNm0+6QIOUJCzIKbGTr03CrLItvOXHHZZKJQ7AAJX2EJZnR9TKLN1U
- sK80x7+lciVFvwq71Cw==
-X-Proofpoint-GUID: CAqOnt-zDgWBF1ciH4sOucOiL4ZCK3zS
-X-Proofpoint-ORIG-GUID: CAqOnt-zDgWBF1ciH4sOucOiL4ZCK3zS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-17_03,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
- impostorscore=0 spamscore=0 suspectscore=0 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170073
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/19] target/mips: Check for MIPS II when decoding
+ BLEZL/BGTZL
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Vince Del Vecchio <Vince.DelVecchio@mediatek.com>,
+ Faraz Shahbazker <faraz.shahbazker@mediatek.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Milica Lazarevic <Milica.Lazarevic@Syrmia.com>,
+ James Hilliard <james.hilliard1@gmail.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+References: <20261113161158.25811-1-philmd@oss.qualcomm.com>
+ <20261113161158.25811-2-philmd@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261113161158.25811-2-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,66 +110,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_2 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-I was only supposed to be a temporary maintainer until someone with
-more XIVE understanding (you?) could step up.  It's fine if you would
-prefer to keep me for this patch.  I can submit a separate patch to
-remove myself later.
-
-Thanks,
-
-Glenn
-
-On Fri, 2026-11-13 at 15:38 +0530, Gautam Menghani wrote:
-> On Thu, Nov 12, 2026 at 08:53:21AM -0600, Miles Glenn wrote:
-> > Hi Gautam!  Thanks for taking on maintenance of the XIVE code.  Could
-> > you also remove me as maintainer?
+On 11/13/26 08:11, Philippe Mathieu-Daudé wrote:
+> Branch-likely instructions were introduced in MIPS II; on MIPS I
+> they signal Reserved Instruction. BEQL/BNEL and the REGIMM likely
+> forms already check ISA_MIPS2, but BLEZL and BGTZL (non-R6) did not.
 > 
-> Hi Glenn,
+> Fixes: d9224450208e ("target-mips: Tighten ISA level checks")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>   target/mips/tcg/translate.c | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> The intention of this patch is mainly to mark the status as maintained, and I'm stepping up to share the
-> maintainance responsibility. It would be good to have you as the co-maintainer / reviewer.
-> Do let me know your thoughts.
-> 
-> Thanks,
-> Gautam
-> 
-> > Thanks,
-> > 
-> > Glenn
-> > 
-> > On Thu, 2026-11-12 at 13:16 +0530, Gautam Menghani wrote:
-> > > Add self as XIVE co-maintainer and also update XIVE's status to 'Maintained'
-> > > to reflect the actual status.
-> > > 
-> > > Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-> > > ---
-> > >  MAINTAINERS | 4 ++--
-> > >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > index fa0c6d0c9b..47c0b6b4ca 100644
-> > > --- a/MAINTAINERS
-> > > +++ b/MAINTAINERS
-> > > @@ -3078,9 +3078,9 @@ F: tests/qtest/fw_cfg-test.c
-> > >  
-> > >  XIVE
-> > >  M: Glenn Miles <milesg@linux.ibm.com>
-> > > -R: Gautam Menghani <gautam@linux.ibm.com>
-> > > +M: Gautam Menghani <gautam@linux.ibm.com>
-> > >  L: qemu-ppc@nongnu.org
-> > > -S: Odd Fixes
-> > > +S: Maintained
-> > >  F: hw/*/*xive*
-> > >  F: include/hw/*/*xive*
-> > >  F: tests/qtest/*xive*
+> diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+> index 10811db827c9..f521e0ec5bd0 100644
+> --- a/target/mips/tcg/translate.c
+> +++ b/target/mips/tcg/translate.c
+> @@ -14621,6 +14621,7 @@ static bool decode_opc_legacy(CPUMIPSState *env, DisasContext *ctx)
+>               gen_compute_compact_branch(ctx, op, rs, rt, imm << 2);
+>           } else {
+>               /* OPC_BLEZL */
+> +            check_insn(ctx, ISA_MIPS2);
+>               gen_compute_branch(ctx, op, 4, rs, rt, imm << 2, 4);
+>           }
+>           break;
+> @@ -14634,6 +14635,7 @@ static bool decode_opc_legacy(CPUMIPSState *env, DisasContext *ctx)
+>               gen_compute_compact_branch(ctx, op, rs, rt, imm << 2);
+>           } else {
+>               /* OPC_BGTZL */
+> +            check_insn(ctx, ISA_MIPS2);
+>               gen_compute_branch(ctx, op, 4, rs, rt, imm << 2, 4);
+>           }
+>           break;
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
