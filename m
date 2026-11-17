@@ -1,93 +1,125 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1BF606A323
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 13:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B2B606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 14:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Wh5+POs8
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=vlQHTn4l;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=17ZwiBdh;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=oDYa0LUo;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=XADUjylz
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTJXi-00066J-Pb; Tue, 17 Nov 2026 08:48:14 -0500
+	id 1xTJld-0001rt-Kg; Tue, 17 Nov 2026 09:02:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xTJXX-00064X-SM
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:48:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xTJXT-00012U-72
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 08:48:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794923279;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xTJla-0001m5-F4
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 09:02:35 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xTJlY-0003m5-L1
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 09:02:34 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E48B91F792;
+ Tue, 17 Nov 2026 14:02:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1794924150; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=14UVjjrtXaLimJ0dPNu2/7985kENti5IxkJtxTPyBa0=;
- b=Wh5+POs8bPIedjVa7/6DCVkqGMSyE22Ta7w3G0/GmxKA9Gevv6M63Ff/mtw6sOoDoDeD9y
- Q87zcPFSeiHNMDKGarp6s2TEDjfN+bWC9hmeT2MIEiYbYDSJIprcQGbrrtJRODb0H0vZqC
- 6HXOkcrnScMu0ZN6jZPQlfQjKVuulFQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-FK9GctNVNaKM8bEVmu_D4A-1; Tue,
- 17 Nov 2026 08:47:54 -0500
-X-MC-Unique: FK9GctNVNaKM8bEVmu_D4A-1
-X-Mimecast-MFC-AGG-ID: FK9GctNVNaKM8bEVmu_D4A_1794923273
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ bh=WLMO6yGlwGcoAu7zaAIE0ZRH6W0u7YEMycdY2IbQIq4=;
+ b=vlQHTn4lPgjp0RGNdtEErQpOSUAujmourvxGWGb71675Jv+TK5uBf2xmKrfaDyILLrvhdK
+ TCzLTrn7xgo1ik6MjNQlvZaKUe9SlLUYY8B47ga0jdUYw6Wjc3vUGviIWkDGm3bdccx3+Z
+ oZnOdHuD9fvUjykEYQSi+Uq8HM66yc4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1794924150;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WLMO6yGlwGcoAu7zaAIE0ZRH6W0u7YEMycdY2IbQIq4=;
+ b=17ZwiBdh7iE2GMndhKnbXEvma4dCs0SxmAmkbTn5aXpTlc7J5cqITRwzBkT5pT0+TeLyme
+ 1ut4urs3YWvTtnBw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=oDYa0LUo;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=XADUjylz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1794924149; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WLMO6yGlwGcoAu7zaAIE0ZRH6W0u7YEMycdY2IbQIq4=;
+ b=oDYa0LUor2v5pbaS0GzGnRhdmfvzu38m3mGjZpeip4d8tlViWmSPHklkWjVGkxyTPHQ3vn
+ 1BOdtoqbNbtDVgaAqi0LzM1Pgp3Hr8F75ZSWbW5kWRmnFaSbxe3HtXRqkz+M0jGqpOL6fn
+ ZzRmUnXW5XeJa0UANOnOWgPSEZivZa4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1794924149;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WLMO6yGlwGcoAu7zaAIE0ZRH6W0u7YEMycdY2IbQIq4=;
+ b=XADUjylzNzla7D0bOh/ou3H1lKAgvU/bG8XPmvvBM0GG6Q3RB/sgKMrD+HVpFD8Jw/C8iq
+ ADoJNoV5Sz9oqrDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C70B19560B3; Tue, 17 Nov 2026 13:47:53 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 10F9518011D7; Tue, 17 Nov 2026 13:47:47 +0000 (UTC)
-Date: Tue, 17 Nov 2026 13:47:45 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, kvm@vger.kernel.org,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Fabiano Rosas <farosas@suse.de>,
- Alistair Francis <alistair.francis@wdc.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Stefan Weil <sw@weilnetz.de>, Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v2 4/7] debug/mem: name pthreads
-Message-ID: <avxbAf6FlGMthTCE@redhat.com>
-References: <20261116165002.30939-1-jsnow@redhat.com>
- <20261116165002.30939-5-jsnow@redhat.com>
- <avxapBFgrHUV3rfp@redhat.com>
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5AA8413302;
+ Tue, 17 Nov 2026 14:02:28 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id sb88OXNe/GpUIAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 17 Nov 2026 14:02:28 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, Zhao Liu <zhao1.liu@intel.com>, Stefan Weil
+ <sw@weilnetz.de>
+Subject: Re: [PATCH 03/10] oslib: add qemu_thread_states()
+In-Reply-To: <20260915203455.580999-4-den@openvz.org>
+References: <20260915203455.580999-1-den@openvz.org>
+ <20260915203455.580999-4-den@openvz.org>
+Date: Tue, 17 Nov 2026 11:02:25 -0300
+Message-ID: <87jymbsgi6.fsf@suse.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <avxapBFgrHUV3rfp@redhat.com>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-13.51 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
+ BAYES_HAM(-3.00)[100.00%]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[];
+ URIBL_BLOCKED(0.00)[qualcomm.com:email,suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,weilnetz.de:email,intel.com:email,openvz.org:email,linaro.org:email];
+ DKIM_TRACE(0.00)[suse.de:+]; FROM_HAS_DN(0.00)[];
+ MISSING_XM_UA(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[8];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Score: -13.51
+X-Rspamd-Queue-Id: E48B91F792
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,111 +130,169 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 17, 2026 at 01:46:12PM +0000, Daniel P. Berrangé wrote:
-> On Mon, Nov 16, 2026 at 11:49:59AM -0500, John Snow wrote:
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  meson.build              |  8 ++++++++
-> >  util/qemu-thread-posix.c | 30 ++++++++++++++++++++++++++++++
-> >  2 files changed, 38 insertions(+)
-> > 
-> > diff --git a/meson.build b/meson.build
-> > index d7bcb581c18..ef961df2f64 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -2878,7 +2878,15 @@ config_host_data.set('CONFIG_PTHREAD_GET_NAME_NP', cc.links(osdep_prefix + '''
-> >      pthread_get_name_np(pthread_self(), buf, sizeof(buf));
-> >      return 0;
-> >    }''', dependencies: threads))
-> > +config_host_data.set('CONFIG_PTHREAD_GETATTR_NP', cc.links(osdep_prefix + '''
-> > +  #include <pthread.h>
-> >  
-> > +  int main(void)
-> > +  {
-> > +    pthread_attr_t attr;
-> > +    pthread_getattr_np(pthread_self(), &attr);
-> > +    return 0;
-> > +  }''', dependencies: threads))
-> >  config_host_data.set('CONFIG_PTHREAD_CONDATTR_SETCLOCK', cc.links(osdep_prefix + '''
-> >    #include <pthread.h>
-> >  
-> > diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-> > index 089606c93fb..967e0f15f6d 100644
-> > --- a/util/qemu-thread-posix.c
-> > +++ b/util/qemu-thread-posix.c
-> > @@ -17,6 +17,7 @@
-> >  #include "qemu-thread-common.h"
-> >  #include "qemu/tsan.h"
-> >  #include "qemu/bitmap.h"
-> > +#include "qemu/mmap-vma.h"
-> >  
-> >  #if defined(CONFIG_PTHREAD_SET_NAME_NP) || defined(CONFIG_PTHREAD_GET_NAME_NP)
-> >  #include <pthread_np.h>
-> > @@ -362,6 +363,13 @@ static void qemu_thread_atexit_notify(void *arg)
-> >  
-> >  void qemu_thread_set_name(const char *name)
-> >  {
-> > +# if defined(CONFIG_PTHREAD_GETATTR_NP)
-> > +    pthread_attr_t real_attr;
-> > +    void *pthread_addr;
-> > +    size_t stacksize;
-> > +    size_t guardsize;
-> > +# endif
-> > +
-> >      /*
-> >       * Attempt to set the thread name; note that this is for debug, so
-> >       * we're not going to fail if we can't set it.
-> > @@ -373,6 +381,28 @@ void qemu_thread_set_name(const char *name)
-> >  # elif defined(CONFIG_PTHREAD_SET_NAME_NP)
-> >      pthread_set_name_np(pthread_self(), name);
-> >  # endif
-> > +
-> > +# if defined(CONFIG_PTHREAD_GETATTR_NP)
-> > +    if (pthread_getattr_np(pthread_self(), &real_attr)) {
-> > +        return;
-> > +    }
-> > +
-> > +    if (pthread_attr_getguardsize(&real_attr, &guardsize)) {
-> > +        goto cleanup;
-> > +    }
-> > +
-> > +    if (pthread_attr_getstack(&real_attr, &pthread_addr, &stacksize)) {
-> > +        goto cleanup;
-> > +    }
-> > +
-> > +    /* Though there's a guard page, it isn't actually marked RO, so
-> > +     * just label the entire region */
-> > +    qemu_name_vma(pthread_addr - guardsize, stacksize + guardsize,
-> > +                  "pthread (%s)", name);
-> 
-> On the one hand this code is pretty sketchy as it is making
-> some assumptions about glibc allocating thread stack. On
-> the other hand qemu_name_vma() is a no-op on non-Linux
-> platforms, and we ignore fails, so we'll degrade nicely if
-> any C libraries (musl) deal with thread stack differently.
-> 
-> I feel that glibc itself really ought to set the VMA name
-> in response to pthread_set_name_np but I'm open to us doing
-> this in QEMU though as I think it is safe enough.
+"Denis V. Lunev" <den@openvz.org> writes:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> From: Denis V. Lunev <den@openvz.org>
+>
+> A watchdog that reports a hang wants to say what every thread was doing,
+> and that answer is host specific. Put it beside the other process
+> introspection helpers rather than in the code that happens to need it
+> first.
+>
+> Describe each thread by id, name, scheduler state and the wait channel
+> it is parked on, all of which Linux exposes in /proc/self/task without
+> privilege. That is already enough to separate a thread blocked on a
+> userspace lock, which waits in a futex, from one blocked in the kernel,
+> which names the primitive it sits on. Skip the caller, which is
+> reporting rather than hanging.
+>
+> Hosts with no way to answer return NULL, leaving the caller to print
+> its own message and nothing more.
+>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> Cc: Zhao Liu <zhao1.liu@intel.com>
+> Cc: Stefan Weil <sw@weilnetz.de>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> ---
+>  include/qemu/osdep.h | 10 +++++++
+>  util/oslib-posix.c   | 71 ++++++++++++++++++++++++++++++++++++++++++++
+>  util/oslib-win32.c   |  5 ++++
+>  3 files changed, 86 insertions(+)
+>
+> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+> index 96afe09632..8039bf91b8 100644
+> --- a/include/qemu/osdep.h
+> +++ b/include/qemu/osdep.h
+> @@ -667,6 +667,16 @@ int qemu_get_thread_id(void);
+>   */
+>  bool qemu_debugger_attached(void);
+>=20=20
+> +/**
+> + * qemu_thread_states:
+> + *
+> + * Returns a newly allocated, newline terminated description of every th=
+read
+> + * in this process apart from the caller: its id, name, scheduler state =
+and
+> + * the wait channel it is parked on, or NULL on a host that cannot repor=
+t any
+> + * of that.
+> + */
+> +char *qemu_thread_states(void);
+> +
+>  /**
+>   * qemu_kill_thread:
+>   * @tid: thread id.
+> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+> index 4eb6a40628..79887d370c 100644
+> --- a/util/oslib-posix.c
+> +++ b/util/oslib-posix.c
+> @@ -134,6 +134,77 @@ bool qemu_debugger_attached(void)
+>  #endif
+>  }
+>=20=20
+> +#ifdef CONFIG_LINUX
+> +
+> +static char *read_task_file(const char *tid, const char *name)
+> +{
+> +    g_autofree char *path =3D g_strdup_printf("/proc/self/task/%s/%s", t=
+id, name);
+> +    char *buf =3D NULL;
+> +
+> +    g_file_get_contents(path, &buf, NULL, NULL);
+> +    return buf;
+> +}
+> +
+> +static void append_thread_state(GString *out, const char *tid)
+> +{
+> +    g_autofree char *comm =3D read_task_file(tid, "comm");
+> +    g_autofree char *stat =3D NULL;
+> +    g_autofree char *wchan =3D NULL;
+> +    char state =3D '?';
+> +    char *rparen;
+> +
+> +    if (!comm) {
+> +        return;
+> +    }
+> +    g_strchomp(comm);
+> +
+> +    stat =3D read_task_file(tid, "stat");
+> +    if (stat) {
+> +        /* comm can hold anything, ')' included, so scan from the right =
+*/
+> +        rparen =3D strrchr(stat, ')');
+> +        if (rparen && rparen[1] =3D=3D ' ') {
+> +            state =3D rparen[2];
+> +        }
+> +    }
+> +    g_string_append_printf(out, "  %-7s %-16s %c\n", tid, comm, state);
+> +
+> +    wchan =3D read_task_file(tid, "wchan");
+> +    if (wchan && wchan[0]) {
+> +        g_string_append_printf(out, "      wchan %s\n", wchan);
+> +    }
+> +}
+> +
+> +char *qemu_thread_states(void)
+> +{
+> +    g_autoptr(GDir) dir =3D g_dir_open("/proc/self/task", 0, NULL);
+> +    const char *tid;
+> +    GString *out;
+> +
+> +    if (!dir) {
+> +        return NULL;
+> +    }
+> +    out =3D g_string_new(NULL);
+> +    while ((tid =3D g_dir_read_name(dir))) {
+> +        if (atoi(tid) !=3D qemu_get_thread_id()) {
+> +            append_thread_state(out, tid);
+> +        }
+> +    }
+> +    if (!out->len) {
+> +        g_string_free(out, TRUE);
+> +        return NULL;
+> +    }
+> +    return g_string_free(out, FALSE);
+> +}
+> +
+> +#else
+> +
+> +char *qemu_thread_states(void)
+> +{
+> +    return NULL;
+> +}
+> +
+> +#endif /* CONFIG_LINUX */
+> +
+>  int qemu_kill_thread(int tid, int sig)
+>  {
+>  #if defined(__linux__)
+> diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+> index 6663d83151..d18886847c 100644
+> --- a/util/oslib-win32.c
+> +++ b/util/oslib-win32.c
+> @@ -233,6 +233,11 @@ bool qemu_debugger_attached(void)
+>      return IsDebuggerPresent();
+>  }
+>=20=20
+> +char *qemu_thread_states(void)
+> +{
+> +    return NULL;
+> +}
+> +
+>  char *
+>  qemu_get_local_state_dir(void)
+>  {
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
