@@ -1,100 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979CC606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 06:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BB8606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 06:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sSegLMRn
+	dkim=pass (1024-bit key) header.d=pond.sub.org header.i=@pond.sub.org header.a=rsa-sha256 header.s=mail header.b=JUr4a+uw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTCoh-0000uS-Ov; Tue, 17 Nov 2026 01:37:19 -0500
+	id 1xTD1f-0002JQ-T8; Tue, 17 Nov 2026 01:50:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kmehltretter@gmail.com>)
- id 1xTCog-0000uI-58
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 01:37:18 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <kmehltretter@gmail.com>)
- id 1xTCoe-0004jn-Lk
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 01:37:17 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4bb5b8ef642so27035035e9.1
- for <qemu-devel@nongnu.org>; Mon, 16 Nov 2026 22:37:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794897434; x=1795502234; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ndICgOEm94+VTKH0mf23noz/2OmgqVy/PIpVBcaw1Ls=;
- b=sSegLMRnBrk5nv208ojan0D2iEmHsF9cEGvULD/aVpM0QuTfp52U3KKX9JnSSgIrZR
- glmzoohCb8P3lrnSeFngwB2CqPeutsR7lKHTrPJp+ZUOLJusxF/nUbBGoMBuw/XOOg5O
- ykw1vBEHc+bkKrRNh1Fzdh3lm0GeWm1/1Hs4KtLLFEuawP9omchOZxrxagQK/wQNGiLS
- smKGqurPcBvvwMhK36K2UqibB0pPswN4UDkNw80EoG1KzScGmHCwnIAC3CY4fgt38Rgt
- eMrPDmWuNyxPU75FwdNVqvjcygRAChJB7tO9Atb1rwYfHwpE1+0R161mFvjaYdhYrbYa
- gjOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794897434; x=1795502234;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ndICgOEm94+VTKH0mf23noz/2OmgqVy/PIpVBcaw1Ls=;
- b=VrxGVcs1sre+I53uVvFA8eW3/US1ivkohpRo/vj1wn76d9MNCikNvHQo+CEScmtqk/
- S9LjhUWw1qCX2/GpzStscV2hCqb4t1H6FBGXyls8elpxPXoS2Uxj8o+OaoZCi7XyiWt9
- 8gtGYbOm2QjIOTYoqmevurx3LYZVeasOBCuCXdKaneZepuG2FyM2PMg4ildGHV80mFUy
- uZRVdjJXf7m1sBRvPohjFVVYirISKwNmTJOf/CwWI869uAYlus63WyMmTa0euVJkjHX8
- oEpiUrTyixFJFJ5qWAOYWig5Ja3IqtcKKjoX1JcavctCZl2c7ZoBA7k19/qVgDIILf9u
- CQJA==
-X-Forwarded-Encrypted: i=1;
- AL+hErGqWOoRcJH0/9b7LkOJDv9YQOfdzR1Gnmt36J+Klpr7pM/dqS9S/VsMNUqDxtjzu4BmG7gxnca0/hJc@nongnu.org
-X-Gm-Message-State: APuU4Z93IZrqdwE+y3AZJT/vG+VG8mZ/E7mb9sgqN4tHb9kukzUTq0Lh
- KqGDM7H7fs9Pkn5AjhBvK/af/zNahjgkTME2SkMkLyPtadqGTLdfv/Tj
-X-Gm-Gg: AYBFou30EjMn0l0PQ4MSdlzTMY4u35t4gj80Cq6sObzyN7DgXDxZdjHjbov2NMKaL0t
- go8BZUWor8rig5z6i+7U3S3oSuSfLGfFf8jVpi5KwTSs7jtw9io7L0yKzDpXFASP7RvPj5l50KF
- ZtnCEkOULuEYj9hyBNH9p4OBRVoKNjScTb8GQAcTr4ookPvX162UFXqJ71uVqL6zFC4ffz9Yv3E
- E4TslrwFzLQ+EjR9XufdvVSH+1r2GPh+zjMnUdcpHBsS4sSKpg7gW7G4KFc+t6+ZMYU65XSVJX/
- /rbPKs4YltmbnSc/kkwF2Pv14a9BLG4RW1T3xSlj9R/RCKP3oijivJjZC62GiHtrCZE0GFnLVMk
- Avc5iXjmekVa8wLdHa033ix5kjAVDBlMu0NAYnDoznpOLjHyIzFPdG+yejxuLoWBaV68SrLzUsy
- 8ypfwiDM6vghD1qCIU2Sdq1G/XY3sbITY2Np3evEzOkxaWhijGRogf6Akh74mT2PsznP1IhHwsk
- dHkBHr0UcpNFKip63ooLtGJlKn4vzoRVmtntnLFKMbyPJRvCvfQg9DxlnK341t7rFcsBSK+WMJZ
- kVuLf792JV34+4v8IzN4UCse7lx2b4PLuVQDmmmA+U33eT2W8+sdl9/iNBw37bJIU4ip8JQ7ZAD
- i3nu6Y8FjCd0IHE116Yxh/cvg8MjVOBcbdgBiKM7pANWoVKE7AaJe8R1EhWR5cZ6AbZ7yRJNoUN
- rd8xVgP5pTxuWAqS9y+8vWR6ak+YECwJSPV95KsI6mcKCBrDqEyJmeHnO8L3kDhSh3LY62u9cc
-X-Received: by 2002:a05:600c:3509:b0:4a1:fc98:1cb1 with SMTP id
- 5b1f17b1804b1-4bb55c5f579mr275969695e9.2.1794897434525; 
- Mon, 16 Nov 2026 22:37:14 -0800 (PST)
-Received: from MacBook-Pro-von-Karl.localdomain
- (dynamic-2a02-3100-b014-0b01-69e0-6cd4-9e72-ec17.310.pool.telefonica.de.
- [2a02:3100:b014:b01:69e0:6cd4:9e72:ec17])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb783c255asm40409805e9.13.2026.11.16.22.37.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Nov 2026 22:37:12 -0800 (PST)
-From: Karl Mehltretter <kmehltretter@gmail.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>, Song Gao <17746591750@163.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 0/2] target/loongarch: Fix vmstate_tlb migration issue
-Date: Tue, 17 Nov 2026 07:37:04 +0100
-Message-Id: <20261117063704.98777-1-kmehltretter@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20261117020458.2203333-1-maobibo@loongson.cn>
-References: <20261117020458.2203333-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xTD1e-0002J9-G0
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 01:50:42 -0500
+Received: from oxygen.pond.sub.org ([94.130.129.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xTD1c-0006YK-8H
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 01:50:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=pond.sub.org; s=mail;
+ t=1794898230; bh=XJC9aN06pXZHY+1Zy2nvjAONrCdTdm29+uvOJHKYBTY=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=JUr4a+uwvhsT/+zvdiv7s3JsY46+SnqGt9SeSgvcYW1iSbOONo/cyAG3BZJba2DjY
+ Y16Eb6ewFLb6LcL6ETsus0nCVkgYZyYiKi4r79TxCc0MoTZ2fmJlJDaVwuTkYT/hFV
+ kVK4E1Ue2a7n4WGjW2NNu/BHS8bvPqzp39D2ACsk=
+Received: from blackfin.pond.sub.org (p4fd045cf.dip0.t-ipconnect.de
+ [79.208.69.207])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by oxygen.pond.sub.org (Postfix) with ESMTPSA id AF15B2061D;
+ Tue, 17 Nov 2026 07:50:30 +0100 (CET)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D89DB21E6A04; Tue, 17 Nov 2026 07:50:34 +0100 (CET)
+From: Markus Armbruster <armbru@pond.sub.org>
+To: Elizabeth Ashurov <eashurov@redhat.com>
+Cc: qemu-devel@nongnu.org,  kkostiuk@redhat.com,  michael.roth@amd.com,
+ dholler@redhat.com,  armbru@redhat.com,  fdeutsch@redhat.com,
+ yvugenfi@redhat.com,  kramdoss@redhat.com
+Subject: Re: [PATCH v3 1/2] qga: Add guest-get-driver-packages command for
+ Windows
+In-Reply-To: <20261116161608.1145725-2-eashurov@redhat.com> (Elizabeth
+ Ashurov's message of "Mon, 16 Nov 2026 18:16:07 +0200")
+References: <20261116161608.1145725-1-eashurov@redhat.com>
+ <20261116161608.1145725-2-eashurov@redhat.com>
+Date: Tue, 17 Nov 2026 07:50:34 +0100
+Message-ID: <87eccklznp.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=kmehltretter@gmail.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+Received-SPF: pass client-ip=94.130.129.15; envelope-from=armbru@pond.sub.org;
+ helo=oxygen.pond.sub.org
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,30 +70,88 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, 17 Nov 2026 at 10:04, Bibo Mao <maobibo@loongson.cn> wrote:
-> This reverts commit 9e771d547b72d1eecd962725fad7508af3b97183.
-> The old commit breaks migration of a loongarch "virt-11.1" machine from
-> QEMU 11.1 to current head-of-git.
+Elizabeth Ashurov <eashurov@redhat.com> writes:
+
+> Add a new guest-get-driver-packages command that returns out-of-box
+> driver packages from the Windows Driver Store, enumerated via the
+> DISM API (DismGetDrivers).  Each entry includes the published INF
+> name, original INF name, version, and provider.
 >
-> Also this patch discards field of vmstate_tlb during migration since TLB
-> can reconstruct from scratch.
+> Load DismApi.dll dynamically with LoadLibraryExW so that its absence
+> does not prevent qemu-ga from starting.  Initialize DISM lazily once
+> per QGA process and open a separate online DISM session for each
+> command invocation, with process cleanup registered through
+> ga_command_state_add.
+>
+> Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
 
-With this series applied on master (97c88c61d45d), migrating a paused
-virt-11.1 machine under TCG from QEMU 11.1.3 to master and from master
-back to 11.1.3 both exit 0.
+[...]
 
-Tested with patch 1/2 alone and with both patches applied on Debian 13 x86_64.
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index 8cd0ba048b..081c99bc74 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -1590,6 +1590,37 @@
+>    'returns': ['GuestDeviceInfo'],
+>    'if': 'CONFIG_WIN32' }
+>  
+> +##
+> +# @GuestDriverPackage:
+> +#
+> +# An out-of-box driver package installed in the guest.
 
-Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
+Excuse my ignorance: what's an "out-of-box driver package"?  Is this
+established Windows terminology, or something you made up?
 
-Thanks,
-Karl
+Please use the revised syntax for introductions:
+
+   ##
+   # @GuestDriverPackage:
+   #     An out-of-box driver package installed in the guest.
+
+Same below.
+
+> +#
+> +# @name: published INF name
+> +#
+> +# @original-name: base name of the original INF file
+> +#
+> +# @version: four-part version from the package INF DriverVer entry
+> +#
+> +# @vendor: package provider from the INF metadata
+> +#
+> +# Since: 11.2
+
+12.0
+
+Same below.
+
+> +##
+> +{ 'struct': 'GuestDriverPackage',
+> +  'data': { 'name': 'str', '*original-name': 'str', 'version': 'str',
+> +            '*vendor': 'str' },
+> +  'if': 'CONFIG_WIN32' }
+> +
+> +##
+> +# @guest-get-driver-packages:
+> +#
+> +# Retrieve out-of-box driver packages installed in the guest.
+> +#
+> +# Since: 11.2
+> +##
+> +{ 'command': 'guest-get-driver-packages',
+> +  'returns': ['GuestDriverPackage'],
+> +  'if': 'CONFIG_WIN32' }
+> +
+>  ##
+>  # @GuestAuthorizedKeys:
+>  #
 
