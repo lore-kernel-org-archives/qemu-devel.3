@@ -1,101 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46D5606A336
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 12:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F378606A339
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 12:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=IsOKWgHz;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=bvznUT8H
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=SPNiEJXZ;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=TDaY8Vof
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTHzD-0000rA-R8; Tue, 17 Nov 2026 07:08:34 -0500
+	id 1xTI9g-0002QR-DB; Tue, 17 Nov 2026 07:19:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xTHzB-0000r1-Aj
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 07:08:29 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xTI9f-0002Q7-6x
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 07:19:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xTHz7-0001gv-Gv
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 07:08:27 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xTI9d-0005Lb-Dp
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 07:19:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794917302;
+ s=mimecast20190719; t=1794917956;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=oR7r+LdHvm3f6cL4vt0AXV+i+T5VFo3EPxsTb2MkM90=;
- b=IsOKWgHzV9b0Yi+QqPPvqWWMbbuXLL4lV7g3UeEXpAOj9L2OWX3gZPpWvueQBIeABS9L78
- XZJRQNnN5eazFhTTjxIXOdl3fcyJwZBz7uzLv58F19GfLOXZwnV2PsnN2IZxxB8n5J699D
- puWIjlGz7LHVxJ7asjKv8F7r9v3KFM8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HBhd7zcu71EGVyZS38zXNrfMaI/qWYXB0bIOCNmPGCY=;
+ b=SPNiEJXZbDo2JSQRM2oPyyP7HhbGwCHR0K7yXTYwNQWOirSy8WrnakXq6KO94tAkGx7RwB
+ lwE/xR43vER/bwDAgNhPB2vwEfRXKA75s5iIt2eVmRxZF6XYvTI8cnWzsMoxabJprRNl01
+ qn7jj8Z9IVFiQv1RRbcEYA768I1B830=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-3pNFls-uMrawr3RUjNVcQw-1; Tue, 17 Nov 2026 07:08:20 -0500
-X-MC-Unique: 3pNFls-uMrawr3RUjNVcQw-1
-X-Mimecast-MFC-AGG-ID: 3pNFls-uMrawr3RUjNVcQw_1794917300
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4a16dc2323cso39611765e9.3
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 04:08:20 -0800 (PST)
+ us-mta-316-gAAGPYT1PNuPy5prfH0iag-1; Tue, 17 Nov 2026 07:19:12 -0500
+X-MC-Unique: gAAGPYT1PNuPy5prfH0iag-1
+X-Mimecast-MFC-AGG-ID: gAAGPYT1PNuPy5prfH0iag_1794917951
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-49d8ce126f6so2901212f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 04:19:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1794917299; x=1795522099; darn=nongnu.org;
+ d=redhat.com; s=google; t=1794917951; x=1795522751; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=oR7r+LdHvm3f6cL4vt0AXV+i+T5VFo3EPxsTb2MkM90=;
- b=bvznUT8H6iJ/lm0TkiifFcxIG4K+h+Szq2Fc61QThK7GUVx179+jKwOEtGimjPhhMu
- hhyB7qC5j+YDc6Wfi3Ng6gXfiP/LYctG61Za4Gg0S1A9DAF5J2NnJaQ9v7NmfwXsJ5ux
- UtdtmUSnEgqB2W4weI7zYZF/eNWVvAV+7MRS2srNxN616yO0IrAnUTDCjHEGaK4BpC7f
- aKc3KERfRaDAH4W74EoTQ9o8Rq8AckNB9f2OI29x7fvoU7WwbsiswkqO0boyCri59+vb
- dP16a1lSHYZkCv2Dq0Ehcjq10oHbWRcv+ZrOijzWlMcUDl8TIz3Cxo+i/J2h1uIQqWqJ
- cRaw==
+ bh=HBhd7zcu71EGVyZS38zXNrfMaI/qWYXB0bIOCNmPGCY=;
+ b=TDaY8VoffmbURmRVeSW2sfyVlFHlnPaP69LyJRVGRu31n3w6aJOweq0m1pXjThLIVM
+ 05GDEY2kmrEyFNUs/cix2/eyriNz75uXK5s0Tt8sFP2pZVoX9bAoJC3hN1b/V//cD64q
+ 4JjNxCekjYfsMdI30s8YKcWSs8/IrYcSTdoCSoJeXVgAF0v6UhdAvmdwhvG8hqbxPFli
+ uYPFIVHog9hyKjcinqKDx1/HQYaqTvm+OYaywoOI4V0t6uQfsmdwCToOc0xJKk8SVqzm
+ CeYH5XKmDLEat2U7E2M8h1CoXnV/XW97PTk8CcvlhYlIyATc/FmBvrvW9tGGgJq+LqR6
+ EwoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794917299; x=1795522099;
+ d=1e100.net; s=20260707; t=1794917951; x=1795522751;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=oR7r+LdHvm3f6cL4vt0AXV+i+T5VFo3EPxsTb2MkM90=;
- b=PkTj+9d871mmRsZWV/5xHSWv8xBO0yGtga3pPdrC9Gh+Ui+j/6ep2jbjSJ7ikTtjeQ
- TZZVyfbSFqSuGKv4IRPQYS2me3TW0JBrAEzZm2iybtT+P2sHoIOLXkqZErN6lsA6xZeY
- 3wVcl7z//dJtA4KIG/ArYfztO/470qE5xWkwBk6ulJBqdkPeRjVh4Z8eZscE/QAq8dO2
- o2NX0tfU/zl4gwO0oqOPlI3HF3YXw4qpoJHjjGVAw0iUqfIrlbW7cb7LMncQcKg2XH2C
- pHpqAT/hdPRxSMqiZ/F1reU9CYA/kpvJQQZl3G9i33MpMRCQl7VR8Ffk73KPWpGBXeUl
- jC+Q==
-X-Gm-Message-State: APuU4Z8ZznK6YhWf416UcbhL4POm6XAzzIKsYv8llPWVsQ4bDiXv1AOg
- cZj8gl6H7+WMBBMxfJSW/8YGRCJAsctseBNM9gbCw+ZlWcV9vtqPhwQSVNh8ueHaNajE2DdiotX
- Q1QpiWaMWtnu0WZaGepeMNwh4Z6kyrZc36hW59nIVWzaliz7gqM2YTqWa
-X-Gm-Gg: AYBFou1mLj4eZpWSFp049+lzUx+OtnuQUhBRnkjwz/JlLvDsS/JVNZ9+6wZUqUAtkav
- LeRS54XulMiu0ybBtrcHK6zIml5sR/G9p8qvVXRPHCtUuoIwYKc5PWMDX+rUfD284+RsM7C5GWJ
- ZBaARgm6zDbrflb4k9IZvvGmF+vmLypfTZ10pfKVONWlaoSoLKLuUjUDLKLUS7vxkrWlcwmN1U5
- 2fmzq1L0XopKPQ8T/sMxSmHqfmZ3+p2jgnoIgaDa/pwEYfUYAGgnVa7k6gZoaZklb9cKhmpldD3
- un5Wrqsh7SrVP6TZ59sst0JwjK9d0caSEi7cW3chfGi7pmM80BocVr1Rewh8T14/YMGpf+Qz8Zv
- wR6grawzgXuURdab+iA+ixm1/8EsSxlzvBZgNbJtmqik=
-X-Received: by 2002:a05:600c:621b:b0:4bb:5f95:c014 with SMTP id
- 5b1f17b1804b1-4bb5f95c108mr228674155e9.19.1794917299498; 
- Tue, 17 Nov 2026 04:08:19 -0800 (PST)
-X-Received: by 2002:a05:600c:621b:b0:4bb:5f95:c014 with SMTP id
- 5b1f17b1804b1-4bb5f95c108mr228673375e9.19.1794917298951; 
- Tue, 17 Nov 2026 04:08:18 -0800 (PST)
+ bh=HBhd7zcu71EGVyZS38zXNrfMaI/qWYXB0bIOCNmPGCY=;
+ b=IgEnupNH7YbcwI/wn9+hQ79M+Nxv/mtXapP8AAfYRWxQbzWlgl69TTkbHaZz8aUw72
+ ib7G+L8DAre6pqOQjNezrNz7crkd5QGxNEcbL6Pe6yYWB0NnOstLOjE/IA1Byyp10/ES
+ iEhtEi/Mo9ooLnVmi4GqKrwBbJf7oEdNBFCIXvV59CliAjyJUWxGO6L9TfNqQs7NbYRa
+ d34bG/OWqsMyYrOzzREA5da1hqcr2WYC4b9aDK1qhybi+G0+6uHhuBf5ZKAd4ut1ztsL
+ IrNXFwT+KLqDgWT9pLwnegAYV8aMAJ/q89jkIpBDexcA7TtezymYJ7Z3ab6nd5Znco+Z
+ FIjw==
+X-Gm-Message-State: APuU4Z/bYrG5ZFQQyKOvv0QCXzEReGf/nCWimdG7uVK9dTE9osRPwena
+ OCp8qqP+QNdLiF0maipajqMWjfNqA/IrOVHzy55wzQCnrAJawJ+yyH5EAWmuo5czrZFhGkjSlDp
+ ntmjPEUbbbmu42SjYBvzm20dNTou6MA9/2BcRzC+dk9zhqJjGCcmWrHVs
+X-Gm-Gg: AZFdTZfrEEo7ua/Mo/K7Fqoibrj+1TrfIjJaDuTadZ80XLiki3fBfzDaBfK2nkxPeg9
+ zS+53DzR2EFjzKBBdYkDBs1ocl0nIjlnllTiISujI/BZLi/Iykit1m5+DdXpMOx0ZFUJ9vcm8RN
+ RdePBjUWBshX44pXLJXxrbICg82SYq5HKrXe+Nwqkcz6Hibl0LsT4P+4lCY7cldV5EauDkUYA2H
+ zhBAQQduANtdzHMfXv+1Wc/mZ6LlP2cDmFDW6gLIpxrLRthSvvGjXQtZ4Q+o+KJUo+P79PzHfVK
+ 8SewOIeCp+5HPHbqmZDB5d5tYgIig78c+bVWB2OkrXCIXwb3ialyi6etgQt8I3h0+DaJ2aPMoWW
+ UA26G9c/J0L3DlRzvSvyfRBbV4mR4tPSNkCvjtZOY14E=
+X-Received: by 2002:adf:e190:0:b0:493:8847:841b with SMTP id
+ ffacd0b85a97d-49c70b059e9mr28592857f8f.19.1794917951225; 
+ Tue, 17 Nov 2026 04:19:11 -0800 (PST)
+X-Received: by 2002:adf:e190:0:b0:493:8847:841b with SMTP id
+ ffacd0b85a97d-49c70b059e9mr28592783f8f.19.1794917950564; 
+ Tue, 17 Nov 2026 04:19:10 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc0:1520:4400:d78d:7b2d:2f5d:e08f])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb7838c912sm58082635e9.4.2026.11.17.04.08.17
+ ffacd0b85a97d-49c5fe370f8sm24964231f8f.27.2026.11.17.04.19.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Nov 2026 04:08:18 -0800 (PST)
-Date: Tue, 17 Nov 2026 07:08:15 -0500
+ Tue, 17 Nov 2026 04:19:09 -0800 (PST)
+Date: Tue, 17 Nov 2026 07:19:07 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Sairaj Kodilkar <sarunkod@amd.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] hw/i386/amd_iommu: Mask address when calculating large
- PTE page size
-Message-ID: <20261117070754-mutt-send-email-mst@kernel.org>
-References: <20261105105816.3012283-1-peter.maydell@linaro.org>
- <CAFEAcA_osj+ewemYAt1A+8LA+LuDcJXqvyLfdQS68C_TLq5qjA@mail.gmail.com>
+To: Anton Kuchin <antonkuchin@nebius.com>
+Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, NB-CoreTeam@nebius.com
+Subject: Re: [PATCH 1/2] hw/acpi/aml-build: Ignore used ranges outside the
+ requested window
+Message-ID: <20261117071727-mutt-send-email-mst@kernel.org>
+References: <20261107-users-antonkuchin-to-send-fix-crs-replace-with-free-ranges-v1-0-0cede42456c4@nebius.com>
+ <20261107-users-antonkuchin-to-send-fix-crs-replace-with-free-ranges-v1-1-0cede42456c4@nebius.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA_osj+ewemYAt1A+8LA+LuDcJXqvyLfdQS68C_TLq5qjA@mail.gmail.com>
+In-Reply-To: <20261107-users-antonkuchin-to-send-fix-crs-replace-with-free-ranges-v1-1-0cede42456c4@nebius.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -118,46 +118,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 17, 2026 at 11:40:27AM +0000, Peter Maydell wrote:
-> On Thu, 5 Nov 2026 at 10:58, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > The amd_iommu handling of the "large PTE page size" (where Next Level
-> > bits are 0b111) case is not correct.  We calculate the page size
-> > using the address in the descriptor (as per table 14 of the spec),
-> > but we don't explicitly pick out the Page Address field, instead
-> > passing the whole PTE word to cto64().  This means that a PTE which
-> > incorrectly sets all the reserved high bits can cause cto64() to
-> > return 63 or 64, and we will try to shift by an out of range amount,
-> > which is undefined behaviour.
-> >
-> > Mask the PTE with AMDVI_DEV_PT_ROOT_MASK to get the page address
-> > (matching how we do it to get the address for the next page table
-> > level in NEXT_PTE_ADDR).
-> >
-> > Cc: qemu-stable@nongnu.org
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3618
-> > Reported-by: huntr bubble <https://gitlab.com/bubblehuntr>
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
+On Sat, Nov 07, 2026 at 12:59:48AM +0100, Anton Kuchin wrote:
+> build_crs() collects used resources without any information about
+> valid address windows. These resources can therefore lie outside
+> the interval passed to crs_replace_with_free_ranges().
 > 
-> As this is a small fix that's been reviewed and not yet picked
-> up, I'll take it through target-arm.next. I have a small set
-> of "oops I forgot about that" patches that I'm planning to
-> send today.
+> crs_replace_with_free_ranges() assumed all used ranges lie within
+> the interval.
+
+you mean assumes?
+
+> Ranges outside it could therefore produce free ranges
+> extending below or above its bounds.
+
+could in what sense? does it produce them?
+in what configuratoons?
+
+
+> As a result, the guest kernel
+> may assign a device an invalid address range.
+
+And does it? what guest?
+
 > 
-> thanks
-> -- PMM
+> Skip ranges with limit below the interval start or with base above
+> the interval's end.
 
+and then what happens?
 
-yea have a small set too.
-
-Sure, take this.
-
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> 
+> Signed-off-by: Anton Kuchin <antonkuchin@nebius.com>
+> ---
+>  hw/acpi/aml-build.c | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 990abc64cd8b..90837b513e69 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -124,7 +124,7 @@ static gint crs_range_compare(gconstpointer a, gconstpointer b)
+>  }
+>  
+>  /*
+> - * crs_replace_with_free_ranges - given the 'used' ranges within [start - end]
+> + * crs_replace_with_free_ranges - given the 'used' ranges and [start - end]
+>   * interval, computes the 'free' ranges from the same interval.
+>   * Example: If the input array is { [a1 - a2],[b1 - b2] }, the function
+>   * will return { [base - a1], [a2 - b1], [b2 - limit] }.
+> @@ -140,6 +140,16 @@ void crs_replace_with_free_ranges(GPtrArray *ranges,
+>      for (i = 0; i < ranges->len; i++) {
+>          CrsRangeEntry *used = g_ptr_array_index(ranges, i);
+>  
+> +        /* skip ranges below the window */
+> +        if (used->limit < free_base) {
+> +            continue;
+> +        }
+> +
+> +        /* skip ranges above the window */
+> +        if (used->base > end) {
+> +            break;
+> +        }
+> +
+>          if (free_base < used->base) {
+>              crs_range_insert(free_ranges, free_base, used->base - 1);
+>          }
+> 
+> -- 
+> 2.43.0
 
 
