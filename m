@@ -1,133 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7983C606A32A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 20:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4440606A31C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 20:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=jG3xpfKF;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=ZnOe0d6Z;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=jG3xpfKF;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=ZnOe0d6Z
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=B3Kjuw5z
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTPo2-0007mE-BU; Tue, 17 Nov 2026 15:29:30 -0500
+	id 1xTPxm-0000T8-Bk; Tue, 17 Nov 2026 15:39:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xTPo0-0007le-H5
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 15:29:28 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <drifabdelmalekmohamedsaid@gmail.com>)
+ id 1xTPxk-0000Sr-HS
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 15:39:32 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xTPnw-0000ij-RA
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 15:29:26 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 011EC1F803;
- Tue, 17 Nov 2026 20:29:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1794947363; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8Y8KG6bCScanUzQ7sDjojShALbqw8E7b7C5aZSXBJKs=;
- b=jG3xpfKFnQB8l9eIqpAH+ztcOHjRPmj1wfo3iABABrTvGjFpDYnOCJJxqQ25NZJROEXXEv
- 7DvB42epQYwUXyaKkFSBrI3S4r0Ir2UOtsupEnbF36nkret9otUhtichAQw4bOx4CiPzOL
- totY90jXSm4C/+xvSRPgida4ApunTnc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1794947363;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8Y8KG6bCScanUzQ7sDjojShALbqw8E7b7C5aZSXBJKs=;
- b=ZnOe0d6ZkECGSzfDSH6/IJP0vxHHCRxR+IU6ncWmsfMUofDKYz2eLHOu4Av1OjFXk8GzlZ
- Q1xQXIwVm+lDS0Ag==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=jG3xpfKF;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ZnOe0d6Z
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1794947363; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8Y8KG6bCScanUzQ7sDjojShALbqw8E7b7C5aZSXBJKs=;
- b=jG3xpfKFnQB8l9eIqpAH+ztcOHjRPmj1wfo3iABABrTvGjFpDYnOCJJxqQ25NZJROEXXEv
- 7DvB42epQYwUXyaKkFSBrI3S4r0Ir2UOtsupEnbF36nkret9otUhtichAQw4bOx4CiPzOL
- totY90jXSm4C/+xvSRPgida4ApunTnc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1794947363;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8Y8KG6bCScanUzQ7sDjojShALbqw8E7b7C5aZSXBJKs=;
- b=ZnOe0d6ZkECGSzfDSH6/IJP0vxHHCRxR+IU6ncWmsfMUofDKYz2eLHOu4Av1OjFXk8GzlZ
- Q1xQXIwVm+lDS0Ag==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6B07113302;
- Tue, 17 Nov 2026 20:29:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id rhGQASK5/GoDNQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Nov 2026 20:29:22 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Michael Roth
- <michael.roth@amd.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>, "Dr. David Alan Gilbert"
- <dave@treblig.org>, Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Blake <eblake@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH 14/21] util: introduce capture of textual messages in
- data recorder
-In-Reply-To: <20261015112044.1999748-15-berrange@redhat.com>
-References: <20261015112044.1999748-1-berrange@redhat.com>
- <20261015112044.1999748-15-berrange@redhat.com>
-Date: Tue, 17 Nov 2026 17:29:19 -0300
-Message-ID: <87v75vqk0w.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <drifabdelmalekmohamedsaid@gmail.com>)
+ id 1xTPxi-0003u3-Gz
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 15:39:32 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-c4d28f75d62so27220466b.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 12:39:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794947968; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ASXCwliCV0hMYQmt8AdgWxW5ds0YOWyA3RBGzCCbS9QgHD+SI4xkRCO/2Ts6TXIrOI
+ 2HdMpyJrcPkTH8McBox9V8Yd9iuFbhw0jzhM3c1Opx/Z77I56Nk4VbpN4GoQSuKfM9nf
+ Vc/g+ourWVQXpMWMX+1zijpC5VEYuAgT4tYQ9CKlAMYpC+bg/X+miKPaPcVvbmHXCYEh
+ Fx4cWCo8cJLAKbW96r8616QDyIuR1Sn+lSATxOlrFKvy3vtbtSxAe9nrqlPxCcaTXZtY
+ GdvKGN1qv29jWtEc1zE8SXApqvkcmaH9ntHconFykY1GHGE2l/B0WJyaP6Jbbe4ZpDtp
+ ehwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=nuqglsj7S0Oo8qX9BRP8HtzJZtpJNifhet9Oac7fdkg=;
+ fh=29/Ntc7ys/VsX3JjAgdGNVdCTIp6b2lYprZJb50Y3UI=;
+ b=QV1fMqJEdGgCzYxMhAt/Mf57ZGfCUofrKBj1B1o7GBHEq+/Z88W4zG8F1O8iTT069P
+ 03L184S4gIKTUn7dZM1lvMy3GTRUZ7bJ9dbNPk6DKvITH5AiAfTFdKolU4cbqL+VZf94
+ 4s3lq7ciwrDHe8zf+Y0yipnrB/7colpd8XemxHiaSe6YRHv/P1sIS+LNazcab5e/mS36
+ WKpwdE+rqEDs+Y5o1Geikpw0Uj49HNysonreGuvo5O8dYfrnKHg1WybWLVWOgLs3QMgf
+ 2rD8gwR2wKbqJGTz9bgO+4jrWvGsZNXGvyZ8mfzrTm2vpM1zkB/cPHEzsNMsE9S1gzf8
+ U1SQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1794947968; x=1795552768; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=nuqglsj7S0Oo8qX9BRP8HtzJZtpJNifhet9Oac7fdkg=;
+ b=B3Kjuw5zv+vmWBrDqFBB8ClspvNnc1KfjWccVgBsZ2DmhOU8GfksFYcVQoBXmIb/nZ
+ hMwxYFIZikZU74Aq2zCPa/ntmK88oGQU7ocDDa6rbCY7KGzPaNgSc6MsMRYF0Wv9nIMb
+ 3RW2KpVUBcVFZhIFw/JrEB12Sba0CHxX3swYKLZm7gLXXmj9I1wQjipNsu2wXgoP1knr
+ rWoZF63TwcdBiHiMtQPRfpLuw0UfkdUrRnZhdpePdX544zhPw3T58rzfZPGg+by1d6uh
+ bR6pQAAnzPumhZKExMbXTD95jJp2a1dizBI2nVwgZBEYNje9A7v0b8uarH1sJ3Rw6zzh
+ 0HNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794947968; x=1795552768;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=nuqglsj7S0Oo8qX9BRP8HtzJZtpJNifhet9Oac7fdkg=;
+ b=nectzeldlGQ7ueP/lT3h+oGNEhfSCoWz4Pd5T7nzkH4EXZDw4U+b/cjqifLlhT8tqw
+ 53nUKxhEujfjsF2rw/fNfohILir9v0mJ9podeGaVMa5spPsVZlU9gzCaEuTGLAp8qEWX
+ uwWFhSmFXriB1YxZFkF/854ZdscyP8pThIg4xRyzUYEFUSLEXQeuBLKvzrRaXkiCmxej
+ iZr4X4P+9+fzP9Mi9zWMOweTMlHPd+BaiGmWs7Hlz6UvNavlPI5vU05r7ZIcxLj27hid
+ lZWzAn3Srdb5aptiKab4mggg3dSkRRufbKMF0ma7NFElVkeZgQk5YmWgJUWOTpWbEGPm
+ jN/A==
+X-Forwarded-Encrypted: i=1;
+ AL+hErGG0uthrvdtDU3VmA2C+jm6V9s66v0JaLMUv+rpnHVlItyORpaiKa5l3rrGCVl9KR5nFKSJK4KKbbkA@nongnu.org
+X-Gm-Message-State: APuU4Z9qca1CgXcHOAQk1Z5CalYb6BEY1UdVj9ml20ozwA5Ii8WQL0FG
+ kRL+pwNWF9DcHuevCQJmYSZfZUL5i5o1nFGvOR8n2qwRW5/dOgeC8ZSDEBlL5cZveLloLsz/ZTF
+ eIY1hxSoVIxa332WxSeOlGV/fltenOSA=
+X-Gm-Gg: AYBFou3uku5dQeU3y4sawYi9+dR3OaMNziJDsL4d2wJ3iQCzgXPVnRehW5lbnV9t4IA
+ pmmdr+MmCFUXiGvL+FmhdlD6qEcQS+W7goN9Oo3ThxJpDC44kcTN/gFu2h5yBlPKqMOro4AdVch
+ KeLEH2j2tmjZfatbUUIaXeKSawMLiTP2u93VyXe+fu3hZ4vnBz1Ymvxl0fZAS5dumR6mXpevdc+
+ iXtR7p9+szvB2IYNU1seNdUXBX5W2XxPWmdECttOexZNcTGfrcusUnzopM44aFUjsOPVuNy7cpc
+ +y9d1VgsjccTcBbCs+noirtQ135mWsSubFKC217lJyIA6v91iNOcc9yWfmMwAka0Pvm5NVXOUJh
+ kvs8oxE0RNW8SJKyVdZvm71tsVLoAOWMsnJdQxMeUpezA0y2BXvJ+hnIppe5+jPV9d1ar6PTe11
+ 3EqB+V4+5SGfE4sQ2kz2E=
+X-Received: by 2002:a17:906:7953:b0:c2d:bd87:7fa7 with SMTP id
+ a640c23a62f3a-c510e379d33mr36915266b.24.1794947968205; Tue, 17 Nov 2026
+ 12:39:28 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20261101150847.29157-1-drifabdelmalekmohamedsaid@gmail.com>
+In-Reply-To: <20261101150847.29157-1-drifabdelmalekmohamedsaid@gmail.com>
+From: DRIF ABDELMALEK MOHAMED SAID <drifabdelmalekmohamedsaid@gmail.com>
+Date: Tue, 17 Nov 2026 21:39:15 +0100
+X-Gm-Features: AclHuK-g-EiLZBhVaSob9-DD-NzmLxDpaPvp6lCGuMt1wh2bCKYQBWTM6kvr8gM
+Message-ID: <CA+xk8n8vg27FBmsSgTxwOmbRW1eNhjs+QOC8POH4OmP=8A6o4A@mail.gmail.com>
+Subject: Re: [PATCH] hw/i386/kvm/xen_evtchn: use lock guards
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: David Woodhouse <dwmw2@infradead.org>, Paul Durrant <paul@xen.org>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 011EC1F803
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-13.51 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
- BAYES_HAM(-3.00)[100.00%]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[13]; MIME_TRACE(0.00)[0:+];
- FROM_HAS_DN(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- TO_DN_SOME(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim]
-X-Spam-Score: -13.51
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=drifabdelmalekmohamedsaid@gmail.com;
+ helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -140,228 +119,204 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Hello,
+Just following up on this patch to see if anyone has had a chance to
+review it or if any changes are needed.
+Thanks,
+Drif Abdelmalek Mohamed Said
 
-> Introduce a circular buffer concept to the data recorder that can be
-> used to capture text based messages from subsystems. Support for
-> multiple distinct "buckets" is provided, one per type of information
-> to be captured. This ensures that data from subsystems which is
-> captured at a high rate, does not prematurely wrap the buffer and
-> overwrite (still relevant) messages from a subsystem that records
-> at a low rate.
+On Sun, Nov 1, 2026 at 4:08=E2=80=AFPM Drif Abdelmalek Mohamed Said
+<drifabdelmalekmohamedsaid@gmail.com> wrote:
 >
-> Each bucket has a max capacity of 64 KB by default (though it is
-> configurable), but grows on demand. IOW the bucket capacity puts
-> an upper limit on memory usage, actual usage will be zero until
-> data is recorded. Every captured message will be prefixed by a
-> timestamp and suffixed by a newline, if one is not already present
-> at the end of the message.
+> Replace qemu_mutex_lock()/qemu_mutex_unlock() pairs with
+> QEMU_LOCK_GUARD()/WITH_QEMU_LOCK_GUARD() in functions with error paths
+> and early returns: xen_evtchn_bind_pirq_op(), xen_physdev_unmap_pirq(),
+> xen_be_evtchn_bind_interdomain() and xen_be_evtchn_unbind().
 >
-> While writing into the bufers is synchronized with mutex locks,
-> when dumping from a signal handler the buffers are accessed
-> without any locking to avoid deadlocks. Atomic loads/stores are
-> used in certain places so the signal handler can dump data with
-> acceptable accuracy even when racing with other threads still
-> writing new messages.
+> No functional change intended.
 >
-> When the circular buffer wraps, old messages will be overwritten
-> without attention to message boundaries. IOW, when later dumping
-> the data recorder, the first printed message is likely to have
-> its leading text and timestamp missing. This is considered an
-> acceptable tradeoff to avoid tracking message boundaries which
-> greatly adds complexity and is hard todo safely without locks
-> when dumping.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Drif Abdelmalek Mohamed Said <drifabdelmalekmohamedsaid@gm=
+ail.com>
 > ---
->  include/qemu/tldr.h         |  52 +++++++
->  qapi/qom.json               |   5 +-
->  qapi/tldr.json              |  34 +++++
->  qemu-options.hx             |   8 +
->  tests/unit/test-util-tldr.c | 272 ++++++++++++++++++++++++++++++++++
->  util/tldr-internal.h        |  31 ++++
->  util/tldr.c                 | 282 +++++++++++++++++++++++++++++++++++-
->  7 files changed, 682 insertions(+), 2 deletions(-)
+>  hw/i386/kvm/xen_evtchn.c | 82 +++++++++++++++-------------------------
+>  1 file changed, 31 insertions(+), 51 deletions(-)
 >
-> diff --git a/include/qemu/tldr.h b/include/qemu/tldr.h
-> index 67152b136b3..5766acecb64 100644
-> --- a/include/qemu/tldr.h
-> +++ b/include/qemu/tldr.h
-> @@ -9,6 +9,58 @@
->  #ifndef QEMU_TLDR_H__
->  #define QEMU_TLDR_H__
->=20=20
-> +#include "qapi/qapi-types-tldr.h"
-> +
-> +extern unsigned int qtldr_msg_enabled_mask;
-> +
-> +/**
-> + * qtldr_msg_enabled:
-> + * @bucket: bucket to check status for
-> + *
-> + * Returns: true if @bucket is enabled for recording
-> + */
-> +#define qtldr_msg_enabled(bucket) \
-> +    (qtldr_msg_enabled_mask & (1 << bucket))
-> +
-> +/**
-> + * qtldr_msg_record:
-> + * @bucket: bucket to record into
-> + * @msg: the message text to record
-> + *
-> + * Records @msg into @bucket, potentially overwriting
-> + * old messages if the capacity is at its maximum
-> + */
-> +void qtldr_msg_record(QTLDRMsgBucketType bucket,
-> +                      const char *msg);
-> +
-> +/**
-> + * qtldr_msg_record_printf:
-> + * @bucket: bucket to record into
-> + * @fmt: the message format string to record
-> + * @...: the arguments for @fmt
-> + *
-> + * Formats @fmt as a printf string and records the
-> + * result into @bucket, potentially overwriting
-> + * old messages if the capacity is at its maximum
-> + */
-> +void qtldr_msg_record_printf(QTLDRMsgBucketType bucket,
-> +                             const char *fmt, ...)
-> +    G_GNUC_PRINTF(2, 3);
-> +
-> +/**
-> + * qtldr_msg_record_vprintf:
-> + * @bucket: bucket to record into
-> + * @fmt: the message format string to record
-> + * @ap: the arguments for @fmt
-> + *
-> + * Formats @fmt as a printf string and records the
-> + * result into @bucket, potentially overwriting
-> + * old messages if the capacity is at its maximum
-> + */
-> +void qtldr_msg_record_vprintf(QTLDRMsgBucketType bucket,
-> +                              const char *fmt, va_list ap)
-> +    G_GNUC_PRINTF(2, 0);
-> +
->  /**
->   * qtldr_crash_dump_signal:
->   * @si: signal information
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 1c9031fba9a..f1c37bce6c2 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -8,6 +8,7 @@
->  { 'include': 'block-core.json' }
->  { 'include': 'common.json' }
->  { 'include': 'crypto.json' }
-> +{ 'include': 'tldr.json' }
->=20=20
->  ##
->  # ***********************
-> @@ -1239,11 +1240,13 @@
->  #
->  # @crash-target: fully qualified path to perserve data recorder
->  #                contents on QEMU crash
-> +# @messages: custom configuration for message buckets
->  #
->  # Since: 11.2.0
->  ##
->  { 'struct': 'QTLDRConfigProperties',
-> -  'data': { '*crash-target': 'str' }
-> +  'data': { '*crash-target': 'str',
-> +            '*messages': ['QTLDRMsgBucketConfig'] }
+> diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
+> index 9379383e53..c0250cb357 100644
+> --- a/hw/i386/kvm/xen_evtchn.c
+> +++ b/hw/i386/kvm/xen_evtchn.c
+> @@ -1293,20 +1293,17 @@ int xen_evtchn_bind_pirq_op(struct evtchn_bind_pi=
+rq *pirq)
+>          return -EBUSY;
+>      }
+>
+> -    qemu_mutex_lock(&s->port_lock);
+> +    WITH_QEMU_LOCK_GUARD(&s->port_lock) {
+> +        ret =3D allocate_port(s, 0, EVTCHNSTAT_pirq, pirq->pirq,
+> +                            &pirq->port);
+> +        if (ret) {
+> +            return ret;
+> +        }
+>
+> -    ret =3D allocate_port(s, 0, EVTCHNSTAT_pirq, pirq->pirq,
+> -                        &pirq->port);
+> -    if (ret) {
+> -        qemu_mutex_unlock(&s->port_lock);
+> -        return ret;
+> +        s->pirq[pirq->pirq].port =3D pirq->port;
+> +        trace_kvm_xen_bind_pirq(pirq->pirq, pirq->port);
+>      }
+>
+> -    s->pirq[pirq->pirq].port =3D pirq->port;
+> -    trace_kvm_xen_bind_pirq(pirq->pirq, pirq->port);
+> -
+> -    qemu_mutex_unlock(&s->port_lock);
+> -
+>      /*
+>       * Need to do the unmask outside port_lock because it may call
+>       * back into the MSI translate function.
+> @@ -1919,27 +1916,24 @@ int xen_physdev_unmap_pirq(struct physdev_unmap_p=
+irq *unmap)
+>      }
+>
+>      BQL_LOCK_GUARD();
+> -    qemu_mutex_lock(&s->port_lock);
+> -
+> -    if (!pirq_inuse(s, pirq)) {
+> -        qemu_mutex_unlock(&s->port_lock);
+> -        return -ENOENT;
+> -    }
+> +    WITH_QEMU_LOCK_GUARD(&s->port_lock) {
+> +        if (!pirq_inuse(s, pirq)) {
+> +            return -ENOENT;
+> +        }
+>
+> -    gsi =3D s->pirq[pirq].gsi;
+> +        gsi =3D s->pirq[pirq].gsi;
+>
+> -    /* We can only unmap GSI PIRQs */
+> -    if (gsi < 0) {
+> -        qemu_mutex_unlock(&s->port_lock);
+> -        return -EINVAL;
+> -    }
+> +        /* We can only unmap GSI PIRQs */
+> +        if (gsi < 0) {
+> +            return -EINVAL;
+> +        }
+>
+> -    s->gsi_pirq[gsi] =3D 0;
+> -    s->pirq[pirq].gsi =3D IRQ_UNBOUND; /* Doesn't actually matter becaus=
+e: */
+> -    pirq_inuse_word(s, pirq) &=3D ~pirq_inuse_bit(pirq);
+> +        s->gsi_pirq[gsi] =3D 0;
+> +        s->pirq[pirq].gsi =3D IRQ_UNBOUND; /* Doesn't actually matter be=
+cause: */
+> +        pirq_inuse_word(s, pirq) &=3D ~pirq_inuse_bit(pirq);
+>
+> -    trace_kvm_xen_unmap_pirq(pirq, gsi);
+> -    qemu_mutex_unlock(&s->port_lock);
+> +        trace_kvm_xen_unmap_pirq(pirq, gsi);
+> +    }
+>
+>      if (gsi =3D=3D IRQ_MSI_EMU) {
+>          kvm_update_msi_routes_all(NULL, true, 0, 0);
+> @@ -2078,7 +2072,7 @@ int xen_be_evtchn_bind_interdomain(struct xenevtchn=
+_handle *xc, uint32_t domid,
+>          return -EINVAL;
+>      }
+>
+> -    qemu_mutex_lock(&s->port_lock);
+> +    QEMU_LOCK_GUARD(&s->port_lock);
+>
+>      /* The guest has to have an unbound port waiting for us to bind */
+>      gp =3D &s->port_table[guest_port];
+> @@ -2095,15 +2089,14 @@ int xen_be_evtchn_bind_interdomain(struct xenevtc=
+hn_handle *xc, uint32_t domid,
+>              if (kvm_xen_has_cap(EVTCHN_SEND)) {
+>                  assign_kernel_eventfd(gp->type, guest_port, xc->fd);
+>              }
+> -            break;
+> +            return ret;
+>          }
+>          /* fall through */
+>
+>      case EVTCHNSTAT_unbound:
+>          be_port =3D find_be_port(s, xc);
+>          if (!be_port) {
+> -            ret =3D -ENOSPC;
+> -            goto out;
+> +            return -ENOSPC;
+>          }
+>
+>          gp->type =3D EVTCHNSTAT_interdomain;
+> @@ -2113,24 +2106,16 @@ int xen_be_evtchn_bind_interdomain(struct xenevtc=
+hn_handle *xc, uint32_t domid,
+>          if (kvm_xen_has_cap(EVTCHN_SEND)) {
+>              assign_kernel_eventfd(gp->type, guest_port, xc->fd);
+>          }
+> -        ret =3D be_port;
+> -        break;
+> +        return be_port;
+>
+>      default:
+> -        ret =3D -EINVAL;
+> -        break;
+> +        return -EINVAL;
+>      }
+> -
+> - out:
+> -    qemu_mutex_unlock(&s->port_lock);
+> -
+> -    return ret;
 >  }
->=20=20
->  ##
-> diff --git a/qapi/tldr.json b/qapi/tldr.json
-> index 8e2b7cda324..987d36b91f8 100644
-> --- a/qapi/tldr.json
-> +++ b/qapi/tldr.json
-> @@ -26,3 +26,37 @@
->  #     <- { "return": {} }
->  ##
->  { 'command': 'tldr-dump', 'data': 'QTLDRDumpOptions' }
-> +
-> +##
-> +# @QTLDRMsgBucketType:
-> +#     List of message bucket types
-> +#
-> +# @error: error messages and warnings
-> +# @command: QMP commands which change state and error responses
-> +# @event: QMP events reflecting state changes
-> +# @log: log messages from any subsystems
-
-Hm, all of these are generic and shared between subsystems, I'm not sure
-how the "high rate vs. low rate" property is to be kept if some code
-just runs fast over all of these classes of messages.
-
-> +#
-> +# Since: 11.2.0
-> +##
-> +{ 'enum': 'QTLDRMsgBucketType',
-> +  'data': ['error', 'command', 'event', 'log' ] }
-> +
-> +
-> +##
-> +# @QTLDRMsgBucketConfig:
-> +#     Configuration for message buckets
-> +#
-> +# @type: the message bucket to enable
-> +# @capacity: override the default bucket size, in bytes (64kb)
-
-kB
-
-> +#
-> +# Each bucket allocates memory on demand, so capacity merely
-> +# puts an upper limit on the memory usage in a bucket.  The
-> +# capacity must be larger than the per-message size limit,
-> +# which is 2048 bytes.
-> +#
-> +# Since: 11.2.0
-> +##
-> +{ 'struct': 'QTLDRMsgBucketConfig',
-> +  'data': { 'type': 'QTLDRMsgBucketType',
-> +            '*capacity': 'size' }
-> +}
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 5f96257cef0..da9d1e2b7bd 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -6685,6 +6685,8 @@ SRST
->=20=20
->=20=20
->      ``-object tldr-config,id=3Did,crash-target=3Dpath``
-> +        \
-> +    ``-object "{'qom-type':'tldr-config','id':'tldr','crash-target':'foo=
-','messages':[{'type':'BUCKET','capacity':BYTES}]}"``
-
-So it's not possible to add new message buckets later on because the
-singleton tldr-config is already created?
-
->          Creating the ``tldr-config`` object enables the thrifty live data
->          recorder, which continuously captures important information about
->          the operation of the QEMU process. When a SIGSEGV, SIGBUS,
-> @@ -6695,6 +6697,12 @@ SRST
->          The ``tldr-dump`` QMP command can also be used at any time to
->          save the captured data to an arbitrary file.
->=20=20
-> +        The data recorder will capture upto 64kb of data by default in
-
-up to 64 KiB
-
-> +        each bucket, but when using the JSON syntax for ``-object``, this
-> +        can be tailored with the ``messages`` parameter. ``BUCKET`` takes
-> +        one of ``error``, ``command``, ``event``, or ``log`` and the
-> +        capacity value is in bytes.
-> +
->          The ``tldr-config`` object can be added at initial startup
->          or via QMP at runtime. Once created, however, it is not
->          permitted to disable it.
+>
+>  int xen_be_evtchn_unbind(struct xenevtchn_handle *xc, evtchn_port_t port=
+)
+>  {
+>      XenEvtchnState *s =3D xen_evtchn_singleton;
+> -    int ret;
+>
+>      if (!s) {
+>          return -ENOTSUP;
+> @@ -2140,12 +2125,10 @@ int xen_be_evtchn_unbind(struct xenevtchn_handle =
+*xc, evtchn_port_t port)
+>          return -EFAULT;
+>      }
+>
+> -    qemu_mutex_lock(&s->port_lock);
+> +    QEMU_LOCK_GUARD(&s->port_lock);
+>
+> -    if (port && port !=3D xc->be_port) {
+> -        ret =3D -EINVAL;
+> -        goto out;
+> -    }
+> +    if (port && port !=3D xc->be_port)
+> +        return -EINVAL;
+>
+>      if (xc->guest_port) {
+>          XenEvtchnPort *gp =3D &s->port_table[xc->guest_port];
+> @@ -2164,10 +2147,7 @@ int xen_be_evtchn_unbind(struct xenevtchn_handle *=
+xc, evtchn_port_t port)
+>
+>      s->be_handles[xc->be_port] =3D NULL;
+>      xc->be_port =3D 0;
+> -    ret =3D 0;
+> - out:
+> -    qemu_mutex_unlock(&s->port_lock);
+> -    return ret;
+> +    return 0;
+>  }
+>
+>  int xen_be_evtchn_close(struct xenevtchn_handle *xc)
+> --
+> 2.47.3
+>
 
