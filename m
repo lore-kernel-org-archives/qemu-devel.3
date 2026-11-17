@@ -1,110 +1,150 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD66606A891
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 08:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8242A606A33F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 08:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UM1WVLmR
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Xa6Gebdq;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=eIpydRiA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTEbR-0007ZI-0B; Tue, 17 Nov 2026 03:31:46 -0500
+	id 1xTEnA-0001WR-5L; Tue, 17 Nov 2026 03:43:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ralerrdirsardx@gmail.com>)
- id 1xTEbK-0007Yo-2r
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 03:31:40 -0500
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ralerrdirsardx@gmail.com>)
- id 1xTEbH-0001nL-5e
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 03:31:37 -0500
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-8b0dba37a7fso41028947b3.0
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 00:31:34 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794904294; cv=none;
- d=google.com; s=arc-20260327;
- b=n1l4LOR6W8k2hWXZTtPp/wozszYvavvn3kdfNSqmghazD95cFh1LbtxwRB8Ji4jj+r
- VA+uX/gSLJat70r5ohjp2ih1VjVLCnZqB9gg1h0/7on7OAsyrQATH7sndSLWm18kz6qZ
- Es/UJUolwA7gzl1/5IBI+cNoeNA0+0hrDTnFbKYSJYAYucgh8vZOjufojY7jgdh2uYHx
- dRlhF+TrWx34bEd+HauuywTSpKHYYqvWv1Cc0tmcHH0INNJqP72iumqzpVDgsJ8Tog35
- xlW/LTvnhOMwbnQ+Q5t7XSoqVl4B31PsR0FFEc0RXW/S06wZFAhyGTPjaOSh7d0OQS0c
- D5lg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=eAgNS6yL9X2jabg4qcURC6HMXosGY3Sud4DfXFOKdTE=;
- fh=kcRckPYkpczKkk0OKEnjS6iMZzWEE5C9DIfv7ZXcqJQ=;
- b=fe3WNUjErpYAcveVRANvQfwjQzMqGKv6Q3JpUP3fZTlOQ5BTDNVO3QbHTL/IdLP3IT
- wwgww7wtiKp5MYCpzLgz9StC4ZVOYhBoDO+utIa/yzqdYrf/1DT3giUXLLUzNSPTSkPz
- uvNEzUjMy19DmeFHpSuf0/BzQQQaXFa/xrbBZmhSIy30k79eG+bE8GDDPzFZhKmWiWmf
- iBpsjdgPhuMcscdap4qjhqv76LUjh5vFa+pSuZLXy9wjqOGH4ETSDFYTpAFOGbRYIOcv
- 2A80Kyzzck/tgIBkO56bjVC+k8lqc0ld3MLeTKfmexXBONqxbWE3+VC9AU2HUCBpHDOs
- 6MlQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xTEn4-0001W8-RD
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 03:43:48 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xTEn2-0001HX-Li
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 03:43:46 -0500
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AH6f07i2998606
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 08:43:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ djHbPyTVcDNSisCWpeCcDexZolzlwP/SGBF3RKIRGTc=; b=Xa6Gebdq2H9XHhsL
+ /SHEfT6HPWIGIOq0RGiX2Pj5uGDv6bT7Bs7sHtujIgL+oeM+BcSypn5jnuHmP8es
+ yB//tZRZgN1d+3l/osho93RiCu86cUGGEkbfqTlO7pLk+qVtpI1gvj5khcx739oi
+ 2CGTBMSm4BNPygwOPjyk6bJR9vMsbvJBjgNte3c65xKamMHtfwJBrAFuF6HeyyIg
+ YXlvi5rK9Y5Khx9FlLY/2EzsMPh3QFl5OxKGFH9Gqt5xYHKHPz3iOyOqHiBKu6xe
+ wvIQ7avgNUwiA87jkTzG3kFMMNkXX413TBjnE0fnj/c24WFefzx6ndbQO/ILqWVA
+ rsPqGg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0hve0fn8-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 08:43:34 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93f37c94ceeso121155285a.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 00:43:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794904294; x=1795509094; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=eAgNS6yL9X2jabg4qcURC6HMXosGY3Sud4DfXFOKdTE=;
- b=UM1WVLmRWD1FVPkFRgHJIRQYRwKa4nEBFRXxBjmMO4JrWn7LKWoJDLCyiihQLeB4fe
- RLZwG3wAw2xAQNhWbliM0znEUu6Ryh8MSnCZl3K7joSXSNqrcylLclQADwhCLuy+algV
- nneho0tGA22dr1+W96VYpBIp7zKfzvw+B+gKDXxIj0R0JqPEjstk1ZtvwWQ+viMM4vw/
- JSz1LIbaLehRBEWCNpdlGShSgNv6KAR1/rSeNRQ2ORTGM8BlHdd3GNzJDZg62ui7a2c6
- VtrCaZPiCPHS8L3QHcfIDLLnB53eBvfWSV7ukgO4p7W4YytvTthxFZIX7+Keq+Iwm20E
- 3uFw==
+ d=oss.qualcomm.com; s=google; t=1794905013; x=1795509813; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=djHbPyTVcDNSisCWpeCcDexZolzlwP/SGBF3RKIRGTc=;
+ b=eIpydRiAbW8b6mpZFuBapibfTylBpLN6RoVBot9r4tCFescBL8HXKRjtl7DVAyiLp7
+ UcLwnO80trR9gLXrAw65NO2gfAabcfDDCVZjBqZ1+z9ynj/4L/RC/X9Y0TpeaW9SzUZD
+ aTuEEA9PNzD5+RlS4kw+Bj0Vu4PxHmRG7Icf5wQcgmiH6LY4YCeK48zfWouiF2rHKk5u
+ oyxKk3KUJPQQiUmSQoiNd5lNe/Yn2sleLVZLKshaQWvf6vy8fAczPZAz/lfmS9/NjS9Q
+ HvJiQWAw/6Rhd/kNs7IFO03FxCy5rfIkY1jIgE5Ibuq5CR836hrw/DpAnYmCSg4Q6H0N
+ RKug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794904294; x=1795509094;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=eAgNS6yL9X2jabg4qcURC6HMXosGY3Sud4DfXFOKdTE=;
- b=fArNGPuOklEn7+ZnU/VBc5obb9FlfPBey5ipq4PDq2jalJvUk0qGIPXT3gMjcavckg
- qqqwk4okANqwec71vmgR016Ue14nNfuoHYYVB5m3Sw25YWLarrOSKQpanj9tlDZR22MM
- DffXmr7OjxkkLTyxBuTk6mJYbtAyJGSYXkxgLGqQUg64XCBbp2bnxdhOIy5lELJLc4Kz
- OmtBlHqTsUy2cPXVjgsuLXzClSjE4IKLTAJYeyazguC0egJqlPKQBsnI36rMThwqnSbe
- FM300Qu+LsLiLhRqS8jxP9MNERjFS4gpUBsOBxg5xQxgO/eiV9YCzJbRTTQmLiQ8i9vn
- WQWQ==
-X-Gm-Message-State: APuU4Z9mBLG+OuqvswSdN65CjwMcUD+7F92SpCuOzmuO51RT6pCGkB9e
- nTwd4s/el8lT6uKzBIpBtRpYPcmPfMcYGU2aVq+KFGtKhAy6Me0ltnatW4qfqtPfJS0qbhbC77F
- /W9lG/SaJ3Y7F45Dn11TcCaHqL+fe1CX8SgC2
-X-Gm-Gg: AZFdTZeND8AxH1H+x61Z4yvwa1wfgP0KY30z5J55XV6SlgQvQUpDdW5WUVNqeCHG+3a
- ab4eT2jx2CdbwryWZs9LWa2gXG801A+lo5IT8UzkY0+BDoTvVdx89cTVSYIPxBTCu/lFuahUYVE
- cQxiFJDzOnG8sGceJU4Vxw39o1TyD08Ao1HB9j9SM0nixWpmWtE/JgwG851zKPS7UjB8CMVAr/5
- SNurIvOqYOgDvqOl0Hz4m841XOD81YcFLIwA5DIx8QkHzDCjYyd0CMEMH+/90P6PWTdhuol7Qre
- rsA8BYyvtfbP45W8t8NBnketZMzXeqcdG7nZ7LJ3g48AG2FzTSyE6d5Dkxu0i9jlN42e1xWpiCz
- Hs1UK7h+bk00Cbe+AS29xd5wAdJ2eTlLxQFEq0gLg3tm6JMpWOnDYBShrBn0yC1jgs5gjned3f+
- LdIMG0i4qEbGYiKrEd9GXN8R+spw3y
-X-Received: by 2002:a53:c808:0:b0:675:c1e8:d522 with SMTP id
- 956f58d0204a3-67d89745f29mr4321658d50.134.1794904293554; Tue, 17 Nov 2026
- 00:31:33 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794905013; x=1795509813;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=djHbPyTVcDNSisCWpeCcDexZolzlwP/SGBF3RKIRGTc=;
+ b=Rdpj5AInVYCTSIMCjcwBDA5Zyk7DLtGG97g/7JmRWm1yMXx2zvhqUwAE9uYUuuBk0Z
+ 42f/z0GdT2jps/AqCt5aRzE8sobakswWVngoBwfQVbmHrGoXuHP83q551V8rIvydTm2e
+ 8I6AvLiF9eyirLYFNfPpK4HeqNfJXtwbWu4nWoVltU3s+GqSi4PGata4L5doB9Ty8kmd
+ 5KL5bngL1MghpBsXNS6JBPzSD2f140j9rjFn6SYAPyLaaxT8n8W8PBULbt0QwK9XY2sb
+ GQfVyesbYVrkmbhhxzomiGoLkvno/CNwNDmzrxw1hLXCG4Ds4M8nFo/+XYAitJsCRpRL
+ zKMA==
+X-Forwarded-Encrypted: i=1;
+ AL+hErE1ehX//USJeCnWBz4PUgXVBlg2/RelF8zRc+i6S7xLy2tZD+AnYJEsmN2OqgRudioc9V97pDeun5Ff@nongnu.org
+X-Gm-Message-State: APuU4Z/dKwcW9TimLS7p8ZRwk7HW02Oe1rhF80YIF6soRU4qVEdOU41f
+ hFKaj3UCvbRTr3EUQ2UVlSyckki3alpE7RStqevENE73TgTZd+AWVpamUUKYPH/SUwzMEhhy2Oo
+ MDC8oRl0RCI9DnksKZrvExMnPpxhKZcbnqKrm47U9Vt5WVIB/q1EwfoIK6w==
+X-Gm-Gg: AYBFou1paZW9raSfR5nJDXikfW7Qla1Fgok+d1+B7P/AhARFNGLVEWFShoGXKBfis7G
+ 6JODs5DlnrayPN/T8Qeu5HWHRYeTMuoPC+a4BqBaiyLwX48A4izNJLaOJOKJhKRQ4cEIblS9x51
+ y19N4iBIFjHM3hKt/e9MCfWcRLss8+lmb1HgyAp5kUq3l+7ro8ByweQ4f9E2CAVUR6cvOjm6up/
+ f750A3u9r31njgstEbmTwNMMYIi+jhIPpvjrAAkQ3fhCPFfreAiQDXpIHp4Cmh1UPFUVnN9JRQh
+ F6a3Iw5yXIvDknPb7bEzHVNVGvvjzm5GyOGalOBVSGlhmZ0bfnQwdTHGsq+0DpPHnBQg8x0exHH
+ FkrHzwZDbfddhztJxUXJm85Yf4AygbpU3FN6z9iMB1IMZIftTaVs2oe6bvw+FjiARtnCMcdmbX8
+ MKl8jbeo4=
+X-Received: by 2002:a05:620a:2781:b0:945:fd9c:b26f with SMTP id
+ af79cd13be357-9498b7655bamr305132685a.2.1794905013216; 
+ Tue, 17 Nov 2026 00:43:33 -0800 (PST)
+X-Received: by 2002:a05:620a:2781:b0:945:fd9c:b26f with SMTP id
+ af79cd13be357-9498b7655bamr305131185a.2.1794905012740; 
+ Tue, 17 Nov 2026 00:43:32 -0800 (PST)
+Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-49c60f8d615sm27191580f8f.56.2026.11.17.00.43.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Nov 2026 00:43:31 -0800 (PST)
+Message-ID: <c3c954c7-257a-4ee0-95ea-052ff7876213@oss.qualcomm.com>
+Date: Tue, 17 Nov 2026 09:43:31 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261027130613.113038-1-ralerrdirsardx@gmail.com>
-In-Reply-To: <20261027130613.113038-1-ralerrdirsardx@gmail.com>
-From: Artemii Mashanov <ralerrdirsardx@gmail.com>
-Date: Tue, 17 Nov 2026 11:31:22 +0300
-X-Gm-Features: AclHuK8hCD3OhNUAbEAbaRv-nNWiRmFeZiKQkFwhV1LLMxRp5K4s1MQxfVdPbEU
-Message-ID: <CAGHp__ZfCyvBz02hCYD+D901gCpVOCrVz7CMzOBMt0hpQ8JPCQ@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/x86_64: fix modify_ldt ABI and lm handling
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=ralerrdirsardx@gmail.com; helo=mail-yw1-x112a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: make error message for -cpu host more
+ informative
+Content-Language: en-US
+To: xmphyr <xmphyr@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20261115-4836-cpu-host-error-v1-1-fdf0eb56ba8a@gmail.com>
+ <CAFEAcA_dyd8Y5mJc_J7dtDwLL3eDaEo1P8fx01Rjkgah+q4Dvw@mail.gmail.com>
+ <ae1a4df8-e52a-45c8-b723-60d86931f286@oss.qualcomm.com>
+ <CA+hLWEGpkbvcyYV+u_keidnXE2yRrnkbqAEMy9=PkYvV3He_MQ@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <CA+hLWEGpkbvcyYV+u_keidnXE2yRrnkbqAEMy9=PkYvV3He_MQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDAzNCBTYWx0ZWRfX822s3BcEaE+U
+ 9kEqa0xExoAgzPFZ/TFzPed8t7mLYLpVOBK1XNV9DTdOl9CN99+eN8YmJmRUjI8cZh/kvjLvWEa
+ /ChjKPZfHCq3nJBk8lfuu9pzeB93hNk=
+X-Proofpoint-GUID: Uw9o5AOCZS_sZ9UkjMsn-SbJg-x5rc0l
+X-Proofpoint-ORIG-GUID: Uw9o5AOCZS_sZ9UkjMsn-SbJg-x5rc0l
+X-Authority-Analysis: v=2.4 cv=dqhOmFg4 c=1 sm=1 tr=0 ts=6afc13b6 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VwQbUJbxAAAA:8 a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
+ a=ywXvYsWstchaLYkw83EA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDAzNCBTYWx0ZWRfXxZC1alzpSR0s
+ AY/aI9Q8sTrgYoFtSRkyFZVej3w9Di9OnQhCbmNd4g6kEtIunAFrTVrdPFUfi8QZjo8oAL1hFAl
+ iug44xejY+vcVUOSNiqhr+MuNuLtI2mV9emw4AEuNPEMRyvnTPu9qs4l5odaaPElCMGiiPOjhB1
+ q19Rqb8uuoAou51x8hyoXyy4evMgdSZ/WtHm0J6n+D01/PvDlVmi5yRsiIrRSOTH/JemLliPVPL
+ W0g+uf3fqAVL8HGo+hoLcRu9CEiNek+ac4cNl6y0VIN9Wsk2rmYS5GAYvbDV+GWExyaa+379pqs
+ fKyCgRWlgRtem27+2W1rmWUXJHo6rIffvUgs8RFAIQfmqom7fuQElwa2Xdx/8qBb3AX0w7pfD+O
+ ekbXwXNsdyZgGCcJGO0BepbRjdVu4hzEY7zW6tqlwOVJN+EfDxbu2X/G3OUmzsiKOXN90b+krvI
+ jp4QjN7jKw8/G9qzrfg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-17_01,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 malwarescore=0 adultscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170034
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,219 +157,123 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi,
+Hi Andrew,
 
-Ping on this patch. Could someone please take a look when time permits?
+On 17/11/26 05:15, xmphyr wrote:
+> I appreciate the both of you for the feedback.
+> 
+> As Philippe has suggested, I will add hwaccel_enabled() as a condition in
+> order to check for KVM, HVF, or WHPX.
+> 
+> To Peter, instead of explicitly printing the list of accelerators, maybe I
+> should add a macro of a string that's something like "KVM, HVF, or WHPX"?
+> This would be in include/system/hw_accel.h.
 
-Please let me know if any changes or additional testing are needed.
+Or:
 
-Thanks,
-Artemii
+   error_setg(&local_err, "CPU type '%s' can not work with '%s':"
+                          " hardware   accelerator required",
+                          name, current_accel_name());
 
-=D0=B2=D1=82, 27 =D0=BE=D0=BA=D1=82. 2026=E2=80=AF=D0=B3. =D0=B2 16:07, Art=
-emii Mashanov <ralerrdirsardx@gmail.com>:
->
-> Linux uses a 16-byte user_desc on x86_64, with a 32-bit base_addr.
-> QEMU expects 24 bytes instead and rejects valid modify_ldt writes.
->
-> Use a 32-bit base_addr and swap it accordingly. Ignore lm when
-> building LDT entries, matching Linux. Add a shared i386/x86_64
-> regression test for the ABI size and descriptor contents.
->
-> Based on the diagnosis and proposed fix by naehrwert in issue #4691.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4691
-> Signed-off-by: Artemii Mashanov <ralerrdirsardx@gmail.com>
+> As a sidenote, this is my first patch.
+
+Going well so far! :)
+
+> When I receive feedback, should I
+> reply first with my plan and get feedback on that before sending a revision?
+
+Extra reply is never an issue, the list is noisy anyway, subscribers
+have to filter for noise.
+
+When the requested changes are not obvious, it is indeed better to
+expose your plan before respinning, so doubts can be cleared early
+enough.
+
+(Also, on technical mailing lists, it is better to not write comments
+at the top, see 
+https://subspace.kernel.org/etiquette.html#do-not-top-post-when-replying 
+for an explanation)
+
+Regards,
+
+Phil.
+
+> 
 > ---
->  linux-user/syscall.c               | 10 +----
->  linux-user/x86_64/target_syscall.h |  4 +-
->  tests/tcg/i386/meson.build         |  1 +
->  tests/tcg/i386/modify-ldt.c        | 72 ++++++++++++++++++++++++++++++
->  tests/tcg/x86_64/meson.build       |  1 +
->  5 files changed, 78 insertions(+), 10 deletions(-)
->  create mode 100644 tests/tcg/i386/modify-ldt.c
->
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index 0380691..a5d827b 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -6237,7 +6237,7 @@ static abi_long write_ldt(CPUX86State *env,
->      struct target_modify_ldt_ldt_s ldt_info;
->      struct target_modify_ldt_ldt_s *target_ldt_info;
->      int seg_32bit, contents, read_exec_only, limit_in_pages;
-> -    int seg_not_present, useable, lm;
-> +    int seg_not_present, useable;
->      uint32_t *lp, entry_1, entry_2;
->
->      if (bytecount !=3D sizeof(ldt_info))
-> @@ -6245,7 +6245,7 @@ static abi_long write_ldt(CPUX86State *env,
->      if (!lock_user_struct(VERIFY_READ, target_ldt_info, ptr, 1))
->          return -TARGET_EFAULT;
->      ldt_info.entry_number =3D tswap32(target_ldt_info->entry_number);
-> -    ldt_info.base_addr =3D tswapal(target_ldt_info->base_addr);
-> +    ldt_info.base_addr =3D tswap32(target_ldt_info->base_addr);
->      ldt_info.limit =3D tswap32(target_ldt_info->limit);
->      ldt_info.flags =3D tswap32(target_ldt_info->flags);
->      unlock_user_struct(target_ldt_info, ptr, 0);
-> @@ -6258,11 +6258,6 @@ static abi_long write_ldt(CPUX86State *env,
->      limit_in_pages =3D (ldt_info.flags >> 4) & 1;
->      seg_not_present =3D (ldt_info.flags >> 5) & 1;
->      useable =3D (ldt_info.flags >> 6) & 1;
-> -#ifdef TARGET_ABI32
-> -    lm =3D 0;
-> -#else
-> -    lm =3D (ldt_info.flags >> 7) & 1;
-> -#endif
->      if (contents =3D=3D 3) {
->          if (oldmode)
->              return -TARGET_EINVAL;
-> @@ -6309,7 +6304,6 @@ static abi_long write_ldt(CPUX86State *env,
->          ((seg_not_present ^ 1) << 15) |
->          (seg_32bit << 22) |
->          (limit_in_pages << 23) |
-> -        (lm << 21) |
->          0x7000;
->      if (!oldmode)
->          entry_2 |=3D (useable << 20);
-> diff --git a/linux-user/x86_64/target_syscall.h b/linux-user/x86_64/targe=
-t_syscall.h
-> index 68f55f8..06f3af5 100644
-> --- a/linux-user/x86_64/target_syscall.h
-> +++ b/linux-user/x86_64/target_syscall.h
-> @@ -17,7 +17,7 @@
->  #if 0 // Redefine this
->  struct target_modify_ldt_ldt_s {
->         unsigned int  entry_number;
-> -        abi_ulong     base_addr;
-> +        abi_uint      base_addr;
->         unsigned int  limit;
->         unsigned int  seg_32bit:1;
->         unsigned int  contents:2;
-> @@ -30,7 +30,7 @@ struct target_modify_ldt_ldt_s {
->  #else
->  struct target_modify_ldt_ldt_s {
->         unsigned int  entry_number;
-> -        abi_ulong     base_addr;
-> +        abi_uint      base_addr;
->         unsigned int  limit;
->          unsigned int flags;
->  };
-> diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
-> index e7c3095..b68b219 100644
-> --- a/tests/tcg/i386/meson.build
-> +++ b/tests/tcg/i386/meson.build
-> @@ -8,6 +8,7 @@ tests +=3D {
->    'hello-i386.c': {
->      'cflags': ['-ffreestanding', '-fno-stack-protector', '-nostdlib'],
->    },
-> +  'modify-ldt.c': {},
->    'test-aes.c': {'cflags': ['-O1', '-msse2', '-maes']},
->    'test-i386-adcox.c': {'cflags': ['-O2']},
->    'test-i386-bmi2.c': {'cflags': ['-O2', '-fwrapv']},
-> diff --git a/tests/tcg/i386/modify-ldt.c b/tests/tcg/i386/modify-ldt.c
-> new file mode 100644
-> index 0000000..4bfa4ea
-> --- /dev/null
-> +++ b/tests/tcg/i386/modify-ldt.c
-> @@ -0,0 +1,72 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +#define _GNU_SOURCE
-> +#include <asm/ldt.h>
-> +#include <assert.h>
-> +#include <errno.h>
-> +#include <stdint.h>
-> +#include <sys/syscall.h>
-> +#include <unistd.h>
-> +
-> +static void check_entry(const struct user_desc *desc, int func,
-> +                        uint64_t expected)
-> +{
-> +    uint64_t entries[2];
-> +
-> +    assert(syscall(SYS_modify_ldt, func, desc, sizeof(*desc)) =3D=3D 0);
-> +    assert(syscall(SYS_modify_ldt, 0, entries, sizeof(entries)) =3D=3D
-> +           sizeof(entries));
-> +    /* Linux sets the accessed bit when installing a descriptor. */
-> +    assert((entries[desc->entry_number] & ~(UINT64_C(1) << 40)) =3D=3D e=
-xpected);
-> +}
-> +
-> +int main(void)
-> +{
-> +    struct user_desc desc =3D {
-> +        .entry_number =3D 1,
-> +        .base_addr =3D 0x89abcdef,
-> +        .limit =3D 0x54321,
-> +        .seg_32bit =3D 1,
-> +        .limit_in_pages =3D 1,
-> +        .useable =3D 1,
-> +    };
-> +    const unsigned int invalid_sizes[] =3D {0, 15, 17, 24};
-> +
-> +    _Static_assert(sizeof(desc) =3D=3D 16, "modify_ldt user_desc must be=
- 16 bytes");
-> +    for (unsigned int i =3D 0;
-> +         i < sizeof(invalid_sizes) / sizeof(invalid_sizes[0]); i++) {
-> +        long ret =3D syscall(SYS_modify_ldt, 0x11, &desc, invalid_sizes[=
-i]);
-> +
-> +        /* Linux returns int-sized errors; libc may have translated them=
-. */
-> +        assert((int)ret =3D=3D -EINVAL || (ret =3D=3D -1 && errno =3D=3D=
- EINVAL));
-> +    }
-> +    for (int func =3D 1; func <=3D 0x11; func +=3D 0x10) {
-> +        for (int contents =3D MODIFY_LDT_CONTENTS_DATA;
-> +             contents <=3D MODIFY_LDT_CONTENTS_CODE; contents +=3D 2) {
-> +            uint64_t expected =3D UINT64_C(0x89c5f2abcdef4321);
-> +
-> +            desc.contents =3D contents;
-> +            if (contents =3D=3D MODIFY_LDT_CONTENTS_CODE) {
-> +                expected |=3D UINT64_C(1) << 43;
-> +            }
-> +            if (func =3D=3D 0x11) {
-> +                expected |=3D UINT64_C(1) << 52;
-> +            }
-> +            check_entry(&desc, func, expected);
-> +#ifdef __x86_64__
-> +            desc.lm =3D 1;
-> +            check_entry(&desc, func, expected);
-> +            desc.lm =3D 0;
-> +#endif
-> +        }
-> +    }
-> +    desc =3D (struct user_desc) {
-> +        .entry_number =3D 1,
-> +        .read_exec_only =3D 1,
-> +        .seg_not_present =3D 1,
-> +    };
-> +#ifdef __x86_64__
-> +    desc.lm =3D 1;
-> +#endif
-> +    check_entry(&desc, 0x11, 0);
-> +    return 0;
-> +}
-> diff --git a/tests/tcg/x86_64/meson.build b/tests/tcg/x86_64/meson.build
-> index ad4d1f5..56f4e8a 100644
-> --- a/tests/tcg/x86_64/meson.build
-> +++ b/tests/tcg/x86_64/meson.build
-> @@ -25,6 +25,7 @@ test_mmx_h =3D custom_target('test_mmx_h',
->                             output: 'test-mmx.h')
->
->  tests +=3D {
-> +  '../i386/modify-ldt.c': {},
->    '../i386/test-i386-ssse3.c': {},
->    '../i386/test-3dnow.c': {
->      'cflags': ['-I', meson.current_build_dir(),
-> --
-> 2.55.0
->
+> Thanks,
+> Andrew Nguyen
+> 
+> On Mon, Nov 16, 2026 at 8:10 AM Philippe Mathieu-Daudé <
+> philmd@oss.qualcomm.com> wrote:
+> 
+>> Hi Andrew,
+>>
+>> On 16/11/26 10:38, Peter Maydell wrote:
+>>> On Mon, 16 Nov 2026 at 03:38, Andrew Nguyen <xmphyr@gmail.com> wrote:
+>>>>
+>>>> Included the mention of WHPX when the option -cpu host doesn't have
+>>>> an accelerator option.
+>>>>
+>>>> Signed-off-by: Andrew Nguyen <xmphyr@gmail.com>
+>>>>
+>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4836
+>>>> ---
+>>>> This is a resolution for issue #4836:
+>> https://gitlab.com/qemu-project/qemu/-/work_items/4836.
+>>>> "-cpu host" by itself is not permitted; an accelerator must be
+>> specified as well. For Linux,
+>>>> it is KVM. macOS is HVF and Windows is WHPX.
+>>>>
+>>>> Previously, QEMU would only tell the user to use either KVM or HVF,
+>> essentially excluding
+>>>> Windows users. This patch adds WHPX to the error message. A similar
+>> patch was made seven
+>>>> months ago in target/arm/cpu.c:1861.
+>>>>
+>>>> Signed-off-by: Andrew Nguyen <xmphyr@gmail.com>
+>>>> ---
+>>>> Changes:
+>>>> - cpu.c:10229: added WHPX to the error message when "-cpu host" doesn't
+>> include an accelerator
+>>>> ---
+>>>>    target/i386/cpu.c | 3 ++-
+>>>>    1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>>> index eab0d5a4d4..7dd5535f80 100644
+>>>> --- a/target/i386/cpu.c
+>>>> +++ b/target/i386/cpu.c
+>>>> @@ -10229,7 +10229,8 @@ static void x86_cpu_realizefn(DeviceState *dev,
+>> Error **errp)
+>>>>
+>>>>        if (xcc->host_cpuid_required && !accel_uses_host_cpuid()) {
+>>>>            g_autofree char *name = x86_cpu_class_get_model_name(xcc);
+>>>> -        error_setg(&local_err, "CPU model '%s' requires KVM or HVF",
+>> name);
+>>>> +        error_setg(&local_err, "The '%s' CPU type can only be used
+>> with KVM,
+>>>> +            HVF or WHPX", name);
+>>>>            goto out;
+>>>>        }
+>>>
+>>> The code isn't checking "is this KVM, HVF or WHPX", though.
+>>> accel_uses_host_cpuid() is checking "not TCG" (also "not qtest" but as
+>>> that's a test facility we don't need to mention it here). Listing
+>>> an explicit set of accelerators means it gets out of date whenever
+>>> a new one is added (as has already happened here once when the
+>>> WHPX accelerator was added and the message not updated).
+>>
+>> See commit f7fa2b88084c22299b347cea8fd9fadb0b136b22 for an example
+>> of the hwaccel_enabled() method.
+>>
+> 
+
 
