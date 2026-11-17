@@ -1,146 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B28606A335
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 18:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B211606A32C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 18:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=k7FnVHU9;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=BO5GtbQh
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=DPWXHV6H
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTOIn-0002AK-L3; Tue, 17 Nov 2026 13:53:09 -0500
+	id 1xTOJq-0002WC-46; Tue, 17 Nov 2026 13:54:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xTOIl-0002AA-Lg
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 13:53:07 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1xTOJk-0002VM-Tm; Tue, 17 Nov 2026 13:54:09 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xTOIk-00012I-87
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 13:53:07 -0500
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AHIETNm1033075
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 18:53:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- AF3TFYOUA3tF/MACNvQ9vBbJ8tbs9Xhtjzaj2A/+d0w=; b=k7FnVHU9Pcyw4eCt
- jitKZ8ov9wDMj94KF8XnaBgFqQNqCZsfknqY3idAV3d2/x8k1Rb8NGjfjBxLcGFF
- RqzjRB9nE44Axz/Z5MAj0Oh17W6FoxoCMQF/F99UDlJ5HtHPmcwxajdJhvaaDJZ6
- fSGcdxygJipye/3W2avfJtnx1ZiDDnVAK2eH+mLNrHoUsETXaRLdbmfj8AHYtCaB
- AOocQSYmfe10Akazyp47Nkjp1RVqVVWZ8MI75978IDQAsM0OVqXx9zf/XYPwAnkZ
- 0eT96zyDVkHpr+9f6rhIPhC9RTwX/F2enFfsfdmdNTYWWI0GLIJarqtXGERvOtyj
- 3zOjSQ==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0v1fg56b-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 18:53:04 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-14373747468so133843c88.1
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 10:53:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1794941584; x=1795546384; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=AF3TFYOUA3tF/MACNvQ9vBbJ8tbs9Xhtjzaj2A/+d0w=;
- b=BO5GtbQhgaHaXQoQlsz6vXli8k81q7fcARbBm058KxuaNivY5ilhO2ej998dZLNJFS
- XNsCHSMAze7JRyYaMxxsxRNPGcLU0QSFFInVXZcbkoDCNpgqL30C3inXfov9MzlEiJC3
- LwqZ9PeOttJv99l7fPiRHKmeNhrhJSa03TzYny/N+eWgpFfoqQ7CGkNBxB77jT2P6Q3c
- tqh6yapjKeSwb2kHVF/+NDt0Bih+ncI4dR/exztDKPMtYLVu3F+brz966OQkoHwMVLtr
- TdkGfmWZkXhXE/wU9TbIHZ4ID7MtWm6O1m6ntdGN7/4JO6eklvVTnfGoxUYjR5lxpinM
- kwlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794941584; x=1795546384;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=AF3TFYOUA3tF/MACNvQ9vBbJ8tbs9Xhtjzaj2A/+d0w=;
- b=DsA2TQ+RAMoMaj0MX8MtCCig9/2263en5+ZYp04lZSajPmDDkntNSphKoV9TKUFd/c
- Hc8M0aRTGDND/Yj1pwHKcyn6fJf6ik0Nb1e2Ut8SSF+W1hSfWXe1indRXK/SjQDjXDND
- 0GPZwNLw5SYFopUF5xvheCYZ9uiLA2BrFnbnSV3MFKtyBYR+Keh18pMcmbEdsbiuizOo
- /Op/g9F7LjR4bGocY1lR27KVUc3qalWYDFxnjUaZRllM0SuOqtYe8GDRYxZF6j1yb79l
- SY7jkXBK8MFtD0Zt2mztCGT1ytGJ+7Wl/HbdHhQ+n1Gc8d70Dp4mMhy7XNCSglZaEhM3
- +PVA==
-X-Forwarded-Encrypted: i=1;
- AL+hErHO6pCkDE4n2v31ECJ6C4Ibb3bMEEhSMCLQMJWRq2d0bTfiOnWa2A7EJnjQkY1T2oaIZBtUGJrWzEVq@nongnu.org
-X-Gm-Message-State: APuU4Z9c+fTiCjiEBcDI7tpegA4pdStGS2IM/FED05CivygUKVoqoiof
- jf8VFVhif63B+Y/UKj93VRHpG+fXcd4LmLfWB5gOigB3em5ujjXRwDFMq1Pa5R8DpUnyDnM5cSm
- jvXtt4UroFf8SVbyCybPJ9mwoPux6nWwCiMMx3AVYNT8rBXH+grWl7WqzqQ==
-X-Gm-Gg: AYBFou1DCbaw8XGJ7CkFilk8Vg3BUjB9XGajq+6tVaMQYD1h+cSYSACaGZOES1BB2W/
- 9seMIHX8PEDSatU2xOIbjeSLAGFmkqwYdP2WO/ayPc85hmPS4cR9LrIEMpVjwg8B53pZzHyI7DF
- PuQkxX7qS1gE22gYpAFZraNY+uC+tl5Gq5FFW77NwRc354FUiTKP5aStmia1II8h2S81QWJoYFY
- F45bEsxdkFjbv+9nvla3JPM6bM9cBTnl9yaHzdt47Rb58P+4dMpo0+8ZaRgPc+fyCHr2Qbgfl0J
- LryhtJGOcMBcFBu79z7Q0d59dt3OKQ4ko506M8fudnQcj5QxhE1t7MHNNKyLstV21L5Gf+jC8gt
- puQwddDk0kk2M156fzvDxsBri1O+y2dTitx4VdAnqYuOmcu+e/wf9hACnoidM2X0Gne1ZTNYH82
- IhWFRz3IbfhCuHpv4Vm8K21L22ZKqO5F+Q8cetaXqrywg=
-X-Received: by 2002:a05:701a:844c:20b0:1b5:1ee6:b6a1 with SMTP id
- a92af1059eb24-1b543d3ed19mr355086c88.38.1794941583818; 
- Tue, 17 Nov 2026 10:53:03 -0800 (PST)
-X-Received: by 2002:a05:701a:844c:20b0:1b5:1ee6:b6a1 with SMTP id
- a92af1059eb24-1b543d3ed19mr355069c88.38.1794941583313; 
- Tue, 17 Nov 2026 10:53:03 -0800 (PST)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1b5446f589esm182670c88.1.2026.11.17.10.53.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Nov 2026 10:53:02 -0800 (PST)
-Message-ID: <9be38ec5-80ba-4a6a-b038-c66e29babaf7@oss.qualcomm.com>
-Date: Tue, 17 Nov 2026 10:53:01 -0800
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1xTOJh-00014r-VT; Tue, 17 Nov 2026 13:54:07 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AHFQt9U2731233; Tue, 17 Nov 2026 18:54:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=Gl30yeper/9jSIRmPKka1EbbTCp22uA8gzytBflCQrw=; b=DPWXHV6Hcalc
+ YKtavBGjdRWO33Oln+4EBmbYuFqTFoNtfdnTKiN/OOTyWpdUQNJ52JZbHzkiCfF+
+ uW5kygGzx65c12BQNihsgdL3eMC2o2R/JKacIcBrRwixWwYbY1rAQShuoosuMoXb
+ Gtm6i0IxF9zxkSVo1P4naESwa1qZ9VbpUsKi696qE5IOXZE+Z54TT39p/E7IG6nj
+ riJCYkj72OzaTDYVXxCZh7Zkh20azZX+mTQkUVqzhSPdvohXdvnLQssSHVZM1OgF
+ Q+trBT25p0AUB+20HL6rDwg3xnJn1zzTy4teHgqLQrBfE6z7Z0Dt2XUsM6XGNGJQ
+ onI4cLZBuA==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hxfc54ybb-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 17 Nov 2026 18:54:00 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AHFnpZ84159552; Tue, 17 Nov 2026 18:53:59 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hy2bvf5j1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Nov 2026 18:53:59 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6AHIrwcZ65405356
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Nov 2026 18:53:58 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A969A5805A;
+ Tue, 17 Nov 2026 18:53:58 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3828158054;
+ Tue, 17 Nov 2026 18:53:58 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 17 Nov 2026 18:53:58 +0000 (GMT)
+Message-ID: <54099e817836cac4c73174496253d2f299a686c4.camel@linux.ibm.com>
+Subject: Re: [PATCH] MAINTAINERS: Change XIVE status to Maintained, adding
+ self as co-maintainer
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Gautam Menghani <gautam@linux.ibm.com>
+Cc: harshpb@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Date: Tue, 17 Nov 2026 12:53:57 -0600
+In-Reply-To: <avbhQTWuvdbuu7jr@li-fbf77acc-29ba-11b2-a85c-e8e934f50a46.ibm.com>
+References: <20261112074640.219753-1-gautam@linux.ibm.com>
+ <f728d68ca68868d3995df0d1ee0f95476dd4dd1a.camel@linux.ibm.com>
+ <avbhQTWuvdbuu7jr@li-fbf77acc-29ba-11b2-a85c-e8e934f50a46.ibm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/14] target/hexagon: bound packet lookahead to the
- current page
-To: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>
-References: <20261117183629.2002840-1-marco.liebel@oss.qualcomm.com>
- <20261117183629.2002840-8-marco.liebel@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261117183629.2002840-8-marco.liebel@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 0DRV5M2s0tCTyRbi_0SlL62Af14owpmn
-X-Proofpoint-GUID: 0DRV5M2s0tCTyRbi_0SlL62Af14owpmn
-X-Authority-Analysis: v=2.4 cv=IbgSymqa c=1 sm=1 tr=0 ts=6afca290 cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=YHqdVtTeOabZ1ThQ9-4A:9 a=QEXdDO2ut3YA:10
- a=Fk4IpSoW4aLDllm1B1p-:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDA3NSBTYWx0ZWRfX81tI4uqv+Jm8
- 7hEoxGytJbXD+w4hVGLE3IWbV5GPljv4mvcm3Y8kBmbYEj6MF+rYoqJ9YMxrlAKgqLK8RSqzPy6
- lmX/FT3LuFnt0zV6m4VFROpuxmqDvVcw2hSIWekYcqfy1sM4HVldaWBBo18DpaoDztrLJ2aRdxs
- 7PSen2CcViOThec1+95W65rWPPeWBcRvwo5ecyY+k9//9XiH4gKvwhsvDKCIHMG4pDcdongkmwA
- jEOrML1nU7i2JazZnV4BiOKJVEPeduNQpgZKPxCsIEx35z0xKjvz5ZyMrIyyLcK7hnIJXMUWw9b
- FjLj7tu1zS3rU3BBkIBwZIlNpH3/qKKOUcX3i++WCjie8Q+5whlk5jHfMry71wuXeUfNINMpLgy
- VbP2qrZuv2QwtlKK8O8HWK4bdJNsipA/KlddMHZsHDaisZfVCq7+Wqvr0pMrd8Kw1qy7/LURM7U
- fycNF2bkJZ1Ck63v9WQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDA3NSBTYWx0ZWRfX4DJsMAVOJA6E
- /SC2nTZeNSh739xxsyN5mjHWA45Vo2SjH6FzxTiU9dDUYca9XaSrbm+tePk/4iQrdB9C43zcGSp
- wSusdEZ+o2+d5WjYce2d8puJ4E5fg3A=
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDA3MyBTYWx0ZWRfX23InHUYN/J3o
+ +1NOcGZlbIusg0Q4ip+NMW2WiL7IDhybjU5rCDLKv6k+BUMUTLwMdqGSZ8POd6fCLVz3foE6/GE
+ yYz2rSAuzStvWTRStQ6xsAWoH3txhZg=
+X-Authority-Analysis: v=2.4 cv=Fu6QbGrq c=1 sm=1 tr=0 ts=6afca2c8 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=69wJf7TsAAAA:8 a=-C0ItT94nz96NXNb-dIA:9 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDA3MyBTYWx0ZWRfX8JKD5eUwGVbj
+ 64czMee7CfP/vs4UqXOYa2zrwxeSJFWSFrN00sHGXbnEdgHv8Ihbmgb6nul0blEOIWJ5M+oikP1
+ MSCPMnGfcNa+U2KJHdFLxAG9p4lwrDhcHyw776DONu/sE/krzKz3m5FT527sRV/6LOjxcpmLCLl
+ FAWe120tibCGMlbyWpZY0pe8pdj3t2BYQZglOdULki3ZCVTNAjLvjETjRGWExyYT9XT2MuofkNV
+ Kd6yYRXbliIkoN1+h5ojvoifF3f8+OWffRKypdMMZZX5vRo7P+qz0xBa+ypcKJvihZqXwUV3XTq
+ Os3Bii7i3GLvnThYbd5LZ00Tb4qXw+0SroZYyRDfeJYJehjlDdDjyM1bN7RyIcNg793AtjJ+2aR
+ CBPuss5Xcz0Et55PklbVHQNm0+6QIOUJCzIKbGTr03CrLItvOXHHZZKJQ7AAJX2EJZnR9TKLN1U
+ sK80x7+lciVFvwq71Cw==
+X-Proofpoint-GUID: CAqOnt-zDgWBF1ciH4sOucOiL4ZCK3zS
+X-Proofpoint-ORIG-GUID: CAqOnt-zDgWBF1ciH4sOucOiL4ZCK3zS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-17_03,2026-11-16_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- phishscore=0 impostorscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
+ priorityscore=1501 malwarescore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
+ impostorscore=0 spamscore=0 suspectscore=0 phishscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170075
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170073
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,25 +121,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_2 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/17/2026 10:36 AM, Marco Liebel wrote:
-> Do not fetch an unmapped page while deciding where to end a TB.
-> This lets complete packets retire before a straddling packet faults,
-> and preserves the correct packet restart address.
-> 
-> Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
-> ---
->  target/hexagon/translate.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
+I was only supposed to be a temporary maintainer until someone with
+more XIVE understanding (you?) could step up.  It's fine if you would
+prefer to keep me for this patch.  I can submit a separate patch to
+remove myself later.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Thanks,
+
+Glenn
+
+On Fri, 2026-11-13 at 15:38 +0530, Gautam Menghani wrote:
+> On Thu, Nov 12, 2026 at 08:53:21AM -0600, Miles Glenn wrote:
+> > Hi Gautam!  Thanks for taking on maintenance of the XIVE code.  Could
+> > you also remove me as maintainer?
+> 
+> Hi Glenn,
+> 
+> The intention of this patch is mainly to mark the status as maintained, and I'm stepping up to share the
+> maintainance responsibility. It would be good to have you as the co-maintainer / reviewer.
+> Do let me know your thoughts.
+> 
+> Thanks,
+> Gautam
+> 
+> > Thanks,
+> > 
+> > Glenn
+> > 
+> > On Thu, 2026-11-12 at 13:16 +0530, Gautam Menghani wrote:
+> > > Add self as XIVE co-maintainer and also update XIVE's status to 'Maintained'
+> > > to reflect the actual status.
+> > > 
+> > > Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+> > > ---
+> > >  MAINTAINERS | 4 ++--
+> > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/MAINTAINERS b/MAINTAINERS
+> > > index fa0c6d0c9b..47c0b6b4ca 100644
+> > > --- a/MAINTAINERS
+> > > +++ b/MAINTAINERS
+> > > @@ -3078,9 +3078,9 @@ F: tests/qtest/fw_cfg-test.c
+> > >  
+> > >  XIVE
+> > >  M: Glenn Miles <milesg@linux.ibm.com>
+> > > -R: Gautam Menghani <gautam@linux.ibm.com>
+> > > +M: Gautam Menghani <gautam@linux.ibm.com>
+> > >  L: qemu-ppc@nongnu.org
+> > > -S: Odd Fixes
+> > > +S: Maintained
+> > >  F: hw/*/*xive*
+> > >  F: include/hw/*/*xive*
+> > >  F: tests/qtest/*xive*
+
 
