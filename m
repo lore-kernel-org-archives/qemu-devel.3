@@ -1,60 +1,56 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8B1606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE6C606A330
 	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 17:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FRYYy54M
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=e9fBMBmn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTMp8-0006a6-9h; Tue, 17 Nov 2026 12:18:26 -0500
+	id 1xTMp1-0006Wt-GF; Tue, 17 Nov 2026 12:18:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTMp4-0006Y5-PS
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:18:23 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTMot-0006VE-KY
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:18:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTMp3-0006aL-8U
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:18:22 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xTMor-0006XT-LM
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 12:18:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794935901;
+ s=mimecast20190719; t=1794935888;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ce6aUHCZ7Rx31iKQJVNhPpVlzSao3T5q4N453t3rLrE=;
- b=FRYYy54MwHZfNuqVXZdekCLu8ZfRYbnmf9FTKOJDlAAhJS5r2e70rPYmyW7M0BL99QRc9z
- FZ4iegjvPO8WKcJLX+V0QL5C3ZjtcnsnM+nAjGgummObPxvc/S4GxM9aXOdheYzfmzLrgv
- 6oXnZIhrRkz8d3JqquTwSfe9k7bgwlI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=AB+XUP+Dtrs1fgH1rYxV/GclfPH4H6j3RvBCrBN+9Eg=;
+ b=e9fBMBmn2Q8EJ5MDysWNMU08UeED1xoWc2f/npyGtADeKeJv62TMqfRcrpH2ceLVra/Xcp
+ FKallG1Q5uJ0BqxRK8H7XjaD2G+3tn2qWJ28Xp3krRPlW8EpDJZSj5tA5x9xIFz9Z/8eHA
+ TlUHYoST/Hr+rIBhpuUxcYLbUENDJf8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-hA3dP4gcOrKxixHnyxqsGA-1; Tue,
- 17 Nov 2026 12:18:17 -0500
-X-MC-Unique: hA3dP4gcOrKxixHnyxqsGA-1
-X-Mimecast-MFC-AGG-ID: hA3dP4gcOrKxixHnyxqsGA_1794935896
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-490-HfqrvQkINVGTvgBP_1P5Pg-1; Tue,
+ 17 Nov 2026 12:18:05 -0500
+X-MC-Unique: HfqrvQkINVGTvgBP_1P5Pg-1
+X-Mimecast-MFC-AGG-ID: HfqrvQkINVGTvgBP_1P5Pg_1794935884
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05D3C1800599; Tue, 17 Nov 2026 17:18:16 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA2401800370; Tue, 17 Nov 2026 17:18:03 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.32.7])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6B507195B3C7; Tue, 17 Nov 2026 17:18:14 +0000 (UTC)
+ id 989CD195B3C5; Tue, 17 Nov 2026 17:18:02 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 6/8] block: read the old child length after draining in
- bdrv_replace_child_bs()
-Date: Tue, 17 Nov 2026 18:17:56 +0100
-Message-ID: <20261117171758.237462-7-kwolf@redhat.com>
-In-Reply-To: <20261117171758.237462-1-kwolf@redhat.com>
-References: <20261117171758.237462-1-kwolf@redhat.com>
+Subject: [PULL 0/8] Block layer patches
+Date: Tue, 17 Nov 2026 18:17:50 +0100
+Message-ID: <20261117171758.237462-1-kwolf@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -80,59 +76,61 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_PATCH,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: "Denis V. Lunev" <den@openvz.org>
+The following changes since commit 97c88c61d45dee6e1f9bc160a338048189846d28:
 
-bdrv_drained_begin() runs nested event loops, and old_bs can be resized
-from there by something other than the BlockBackend being switched: an
-export truncating it, or a block job completing. old_len read before
-the drain is then stale, and comparing it with new_len sends a
-notification the parent does not need or skips one it does.
+  Merge tag 'docs-security-devices-pull-request' of https://gitlab.com/berrange/qemu into staging (2026-11-16 15:48:48 -0800)
 
-Read it once both nodes are drained, so that the read, the comparison
-and the notification see the same sizes. A resize which completes in
-the drain notifies the parents of old_bs, @child included, on its own.
+are available in the Git repository at:
 
-Fixes: 8b267376df87 ("block: notify the parent when a replaced child has a different size")
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20261105203752.3169635-2-den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- block.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+  https://repo.or.cz/qemu/kevin.git tags/for-upstream
 
-diff --git a/block.c b/block.c
-index 006c3413406..9df1a48c06b 100644
---- a/block.c
-+++ b/block.c
-@@ -5566,11 +5566,12 @@ int bdrv_replace_child_bs(BdrvChild *child, BlockDriverState *new_bs,
- 
-     GLOBAL_STATE_CODE();
- 
--    old_len = bdrv_getlength(old_bs);
--
-     bdrv_ref(old_bs);
-     bdrv_drained_begin(old_bs);
-     bdrv_drained_begin(new_bs);
-+
-+    old_len = bdrv_getlength(old_bs);
-+
-     bdrv_graph_wrlock();
- 
-     bdrv_replace_child_tran(child, new_bs, tran);
--- 
-2.56.1
+for you to fetch changes up to 4f5c09c6228f317eab3144ecc27e8b13b3526128:
+
+  block: notify only the replaced child in bdrv_replace_child_bs() (2026-11-17 11:46:13 +0100)
+
+----------------------------------------------------------------
+Block layer patches
+
+- vhdx, bochs: Image validation fixes
+- Fix the size change notification in bdrv_replace_child_bs()
+- iotests: Minor fixes to deal more correctly with exotic environments
+
+----------------------------------------------------------------
+Daniel P. Berrangé (1):
+      iotests: better heuristics to find I/O tests build/source dirs
+
+Denis V. Lunev (3):
+      block: read the old child length after draining in bdrv_replace_child_bs()
+      block: add bdrv_child_notify_resize() to notify a single parent
+      block: notify only the replaced child in bdrv_replace_child_bs()
+
+John Snow (1):
+      iotests: fix false positive on running-outside-venv warning
+
+Thomas Huth (2):
+      block/vhdx-log: Improve sanity checks to avoid OOB accesses with bad images
+      block/vhdx: Add alignment checks for region tables
+
+malike (1):
+      block/bochs: validate bitmap size and compute extent_blocks after validation
+
+ include/block/block_int-io.h  |  8 ++++++-
+ block.c                       |  7 +++---
+ block/bochs.c                 |  9 +++++++-
+ block/io.c                    | 14 +++++++++---
+ block/vhdx-log.c              |  6 ++++-
+ block/vhdx.c                  | 10 +++++++++
+ tests/qemu-iotests/testenv.py |  8 +++----
+ meson.build                   |  1 +
+ tests/qemu-iotests/check      | 52 +++++++++++++++++++++++++++++++------------
+ 9 files changed, 88 insertions(+), 27 deletions(-)
 
 
