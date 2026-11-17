@@ -1,58 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A3B606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 05:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E263D606A323
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Nov 2026 06:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=reyZ6iJU
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=rGiCKgys
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTC5p-0001Pm-1w; Tue, 17 Nov 2026 00:50:57 -0500
+	id 1xTCVh-00062G-AQ; Tue, 17 Nov 2026 01:17:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xTC5j-0001PP-Iq; Tue, 17 Nov 2026 00:50:52 -0500
+ id 1xTCVf-000622-3D; Tue, 17 Nov 2026 01:17:39 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xTC5g-0007BW-S9; Tue, 17 Nov 2026 00:50:51 -0500
+ id 1xTCVc-00050b-K5; Tue, 17 Nov 2026 01:17:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1794894644; bh=0hDGWVy9PDToA3dzbsYhv7pzhgrUt3Z6Iwoy/G0Hbnc=;
+ t=1794896251; bh=W4QMNqJvelowpXLZgWLjQIdCf9FCvtCjG/QAYFcoN40=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=reyZ6iJUEpR4znM8gdrRqnzp7hiUfCjqZVc8P7bOHcb4RJrbIrr24BKJbVOdTJSNq
- 0cW+JY8rh5MameR9SrQEvqdv7VpMlLEth6AnVXV3xmu4SdW65/ZyQaIq4EBPvMIlCI
- Xi18EiZcxIph5tTPezFF1nKXMI40IQR4UZBydNEQTaSLE9don4NtQ8ZhquEtJ/SmNa
- qci9O6zp9sUZTSeql02YiIOasyr13uov+u2FUJJ0FKXEE59e2PB2Sue1nPHhQBIAkG
- CKdl5Hqx5+V++RYHJtrQxhdtUdW9pY0PfIlYqZE/IWsweezSfvL8Dy+AzO33sztHmp
- B47a7eMMxYPBw==
+ b=rGiCKgysLbKgVgMCfWykzedKyYAVHzBQoNDaB1NezQQUv4+pkzUwSl//z/rtx9TvN
+ fXz48C+kYaW8Y7fC3NhfwS1s4MiktauXm7JDC+gg3YV1hlpIm3Tcp+lpr3eoqKV042
+ ltRNNOzailK6FMHyMyeVMZ598d7CQG2x9uhe65UwEXFtazAZfLMM1EhFvRe6bUXfiK
+ 8GNUpUJ+3PsoyFpE6b8nppoYWzInT+Uq+9ZLfDZHLxqh5KTjLXr7bbHjZLntScw8+X
+ RABMB9Rko9A/hwklXqeQeBKAs4BTjDlhhAL8GCtW4T9v/iwfCXiyaahqCVTxtbz2NZ
+ Dy5i1MuyCc1kA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CA0241E736D;
- Tue, 17 Nov 2026 08:50:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B992F1E7426;
+ Tue, 17 Nov 2026 09:17:31 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A56F245FF0E;
- Tue, 17 Nov 2026 08:50:44 +0300 (MSK)
-Message-ID: <aef0393a-cf09-43ce-ae6d-ef5aa0b30317@tls.msk.ru>
-Date: Tue, 17 Nov 2026 08:50:44 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id A9EFE45FF30;
+ Tue, 17 Nov 2026 09:17:31 +0300 (MSK)
+Message-ID: <b7a1cdca-b6d2-4d17-a1d1-5b88e60219b5@tls.msk.ru>
+Date: Tue, 17 Nov 2026 09:17:31 +0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/14] net/eth.c: Check for undersized L2 headers in
- eth_get_protocols()
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>,
+Subject: Re: [PATCH v2] hw/net/eepro100: fix use-after-free on reset after
+ hot-unplug
+To: Stefan Weil <sw@weilnetz.de>, Jason Wang <jasowangio@gmail.com>
+Cc: qemu-devel@nongnu.org, Hui Peng <benquike@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  QEMU Stable <qemu-stable@nongnu.org>
-References: <20261109-eth-v2-0-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
- <20261109-eth-v2-2-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
+References: <20261103215430.703404-1-sw@weilnetz.de>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20261109-eth-v2-2-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20261103215430.703404-1-sw@weilnetz.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -74,24 +68,46 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/9/26 08:23, Akihiko Odaki wrote:
-> We already have some header bounds checks. Add a missing check for
-> L2 headers.
+On 11/4/26 00:54, Stefan Weil via qemu development wrote:
+> e100_nic_realize() registers a system reset handler via
+> qemu_register_reset(nic_reset, s), but pci_nic_uninit() never
+> unregisters it. After the device is hot-unplugged, the LegacyReset
+> object stored in the root reset container still holds the raw pointer
+> to the freed EEPRO100State, so the next system reset invokes
+> nic_reset() on freed memory.
+> 
+> Instead, define a reset phase on the device itself: assign
+> phases.hold in eepro100_class_init() to a wrapper around nic_reset().
+> The device is already part of the resettable tree via its parent bus
+> (TYPE_DEVICE implements the Resettable interface), so no explicit
+> registration is needed, and the reset state is automatically dropped
+> when the device is unplugged. This follows the approach used by the
+> e1000, e1000e and igb emulations.
+> 
+> Reported-by: Hui Peng <benquike@gmail.com>
+> Reported-by: MyeonghunPak <https://gitlab.com/mhun512>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4058
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4510
+> Signed-off-by: Stefan Weil <sw@weilnetz.de>
+> ---
+> 
+>   hw/net/eepro100.c | 13 +++++++++----
+>   1 file changed, 9 insertions(+), 4 deletions(-)
 
-Hi!
-
-This patch hasn't been Cc'ed to qemu-stable - I think it deserves to be there too,
-is it not? :)
-
- From this patchset, only this and 07/14 "net/eth.c: Move the Routing Header Hdr Ext Len check"
-are not marked for-stable.
+I'm picking this one up for qemu-stable too.  It's not a big deal
+since the situation is quite obscure and the emulated nic is rather
+obsolete by now, it's unlikely someone will try to hot-unplug it.
+But qemu should not crash in such cases, and the change is simple
+enough.
 
 Thanks,
 
