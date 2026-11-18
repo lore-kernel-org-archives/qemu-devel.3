@@ -1,75 +1,119 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BEC606A333
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 08:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C55E606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 08:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eaK4W0tS
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=J+R7OzBJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTagd-00070I-79; Wed, 18 Nov 2026 03:06:35 -0500
+	id 1xTauM-0001F8-Fm; Wed, 18 Nov 2026 03:20:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
- id 1xTagb-0006zw-SE
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 03:06:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1xTauK-0001Ej-OU; Wed, 18 Nov 2026 03:20:44 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
- id 1xTagZ-00064T-Id
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 03:06:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794989190;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=He+qCbbqVJZH/A0Nwpw+pe+BKib3YtG6R1QRSyOzk/I=;
- b=eaK4W0tSPmpqKvwmIBiAVX1Nw7pjXKltk8EOc4mb/CHSRIE1GkZQt53LbZ9i154i3vR+ja
- qvVpILULSFdO0DIOmXoTe7LAmVsPuXwknDAKbtk5ULTQIQQXe2mpFkdVNe0plHrsBJ8563
- KCKBUIiXl/mtmE3ayIaYGGsLhcEBsK0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-gCYeC2eDO-a15louTG-yKw-1; Wed,
- 18 Nov 2026 03:06:26 -0500
-X-MC-Unique: gCYeC2eDO-a15louTG-yKw-1
-X-Mimecast-MFC-AGG-ID: gCYeC2eDO-a15louTG-yKw_1794989185
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F7051800473; Wed, 18 Nov 2026 08:06:25 +0000 (UTC)
-Received: from eashurov-thinkpadx1carbongen12.raanaii.csb
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5400421; Wed, 18 Nov 2026 08:06:22 +0000 (UTC)
-From: Elizabeth Ashurov <eashurov@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: kkostiuk@redhat.com, michael.roth@amd.com, dholler@redhat.com,
- armbru@redhat.com, fdeutsch@redhat.com, yvugenfi@redhat.com,
- kramdoss@redhat.com, Elizabeth Ashurov <eashurov@redhat.com>
-Subject: [PATCH v4 1/2] qga: Add guest-get-driver-packages command for Windows
-Date: Wed, 18 Nov 2026 10:06:09 +0200
-Message-ID: <20261118080610.1322669-2-eashurov@redhat.com>
-In-Reply-To: <20261118080610.1322669-1-eashurov@redhat.com>
-References: <20261118080610.1322669-1-eashurov@redhat.com>
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1xTauJ-0007O0-14; Wed, 18 Nov 2026 03:20:44 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AI2SFo94044999; Wed, 18 Nov 2026 08:20:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=f1lOn4
+ Tzl1/vDxAHI09g7JVRYaE/NPDA1HXTcvam3iM=; b=J+R7OzBJKBAp4LHMgIeY3G
+ cBfftsX3O14czcZdiNVSBuy+qVGB0mvazzSVZxOdgSj15TckgRFNmodPWGQ3Ks6d
+ MeuVNDlSrhOtAchrs4l8+tO1wBeDHPKr5levtlUrOnkVAAKXl3kkdajHK8r3uS3O
+ WtBNOs5u9Wa5F1/BqZeAQThch+PpbSeSpiHdaNal1/eO+s6dk9xjYId3i52xIAY7
+ KA/VfOxK78G/sz1ckMEQ121yoZOaBjl/Phkoccb3oZFzRoJ6SaDVyt9fw3q/H7pw
+ bhPsXbcfsbiAWmwrajbMDiAc5TptStsDXXGnIIa6KOyvfhjQzrwWMiDp9kdKhznw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105wsfpd-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 18 Nov 2026 08:20:36 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AI789571660697; Wed, 18 Nov 2026 08:20:35 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j17c4r65u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Nov 2026 08:20:35 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6AI8KXW834472336
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 18 Nov 2026 08:20:34 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CE3F458067;
+ Wed, 18 Nov 2026 08:20:33 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E8E9458056;
+ Wed, 18 Nov 2026 08:20:30 +0000 (GMT)
+Received: from [9.111.1.121] (unknown [9.111.1.121])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 18 Nov 2026 08:20:30 +0000 (GMT)
+Message-ID: <08e2c460-a9b2-4b7e-950b-cad9c77e416f@linux.ibm.com>
+Date: Wed, 18 Nov 2026 13:50:29 +0530
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eashurov@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/scsi: validate IU buffer bounds in
+ vscsi_preprocess_desc()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
+ harshpb@linux.ibm.com, fam@euphon.net, pbonzini@redhat.com,
+ amachhiw@linux.ibm.com, qemu-stable@nongnu.org
+References: <20260819095855.115823-1-rathc@linux.ibm.com>
+ <CAFEAcA_BGS73EcunV7=kedi4t6p93bcmNSABRFLsJA5fORqTYw@mail.gmail.com>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <CAFEAcA_BGS73EcunV7=kedi4t6p93bcmNSABRFLsJA5fORqTYw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: p74SEzc61J5pOvB3QHq-0PoSWmdCt6Lh
+X-Proofpoint-GUID: TxKRwRssaXBPumx56sFnSpfjqrNwh6ou
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE4MDAzMSBTYWx0ZWRfX5esW3BnT+zfU
+ bX7VPu+Za2sl6cwxH5wh8rCp2filAY9bMhYlcsmaB0DJJIC6LK+0jgCJFUUxzqJG/+RRgSqf3S+
+ JiQwBYhjbA+QtflvD/rtAUweA+007WfQ64PHnT8P3F+QW8HoT7i/kx0BYPsBAiOK8G4N2/SbuSC
+ NasGqamjDTkMZ2ZQeN4ruY27qdbqw8WF9GIEDVLQMA4VjBzU+VWxmjtOJ6ros6NJmps19ntxwoJ
+ pfJEV5TV0VfJqzEiqDQx54k8bUyziH0bvWzq2YEKBDkw4B8/L0QrSJ9bqdws9HcP9/jtIoRh2Xa
+ 5fawMGnRpv+jf2r4Q3C8Y9VfkdHODqeeo5vmOuIykMsH7gdIAeqQ5mRvf+MlW/z4TN8wDDK3K6Y
+ 75yQ9sokb2zMXOMKP9u4YpkKhvNqZKkUe6iLOIJ2RuuEAMjTIMCD/e/XUuCJP1qZ/XVW3JDuIwa
+ eILUo/nvV0Lr3fh8uXA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE4MDAzMSBTYWx0ZWRfX+Y0OQx5+iSIi
+ qsUXTNPk9lVREt3X8UEy3GO3aG8vGjewwTdaCJbWOxZ7Iuia3pOjNiIK5E2pgBd+6J54aq9nqkL
+ vWyeaM/cRbKtaO3WW0DaWu9LyNQ9dhc=
+X-Authority-Analysis: v=2.4 cv=K+m3jCWI c=1 sm=1 tr=0 ts=6afd5fd4 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=p0WdMEafAAAA:8
+ a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=uOy0yLtoxDpWe9ThBvcA:9 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-18_01,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 clxscore=1011 adultscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611180031
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,395 +125,51 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a new guest-get-driver-packages command that returns out-of-box
-driver packages from the Windows Driver Store, enumerated via the
-DISM API (DismGetDrivers).  Each entry includes the published INF
-name, original INF name, version, and provider.
++CC : qemu-stable
 
-Load DismApi.dll dynamically with LoadLibraryExW so that its absence
-does not prevent qemu-ga from starting.  Initialize DISM lazily once
-per QGA process and open a separate online DISM session for each
-command invocation, with process cleanup registered through
-ga_command_state_add.
+Hi Peter,
 
-Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
----
- qga/commands-win32.c | 292 +++++++++++++++++++++++++++++++++++++++++++
- qga/qapi-schema.json |  30 +++++
- 2 files changed, 322 insertions(+)
+On 11/5/26 20:59, Peter Maydell wrote:
+> On Wed, 19 Aug 2026 at 11:00, Chinmay Rath <rathc@linux.ibm.com> wrote:
+>> cdb_offset and local_desc values are dependent on the guest. If the value
+>> is large enough, it can lead to an out-of-bounds read in vscsi_fetch_desc().
+>>
+>> Add an 'avail' constant in vscsi_preprocess_desc() representing the number of
+>> bytes available in srp_cmd.add_data[] and use it to prevent out-of-bound reads.
+>>
+>> Make all callers of vscsi_preprocess_desc() check its return value and
+>> handle failure accordingly.
+>>
+>> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4162
+>> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> Shouldn't this be Cc: qemu-stable@nongnu.org ?
+This got missed. I have cced now. Will take care further on.
+>
+> Did we deliberately decide this wasn't CVE-worthy, or did that
+> step in the process get skipped?
+This got skipped as well. I have added the "CVE-required" tag in the 
+Gitlab issue now.
+Will take care in future.
+>
+> Ideally bug fix commits, especially ones we might want to backport,
+> should include a "Fixes:" tag giving the commit hash and subject
+> of the commit that introduced the bug they're fixing.
 
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-index 2bf5581aaa..e01033d8c5 100644
---- a/qga/commands-win32.c
-+++ b/qga/commands-win32.c
-@@ -28,6 +28,7 @@
- #include <wtsapi32.h>
- #include <wininet.h>
- #include <pdh.h>
-+#include <dismapi.h>
- 
- #include "guest-agent-core.h"
- #include "vss-win32.h"
-@@ -1981,12 +1982,15 @@ done:
-     g_free(rawpasswddata);
- }
- 
-+static void ga_cleanup_dism_api(void);
-+
- /* register init/cleanup routines for stateful command groups */
- void ga_command_state_init(GAState *s, GACommandState *cs)
- {
-     if (!vss_initialized()) {
-         ga_command_state_add(cs, NULL, guest_fsfreeze_cleanup);
-     }
-+    ga_command_state_add(cs, NULL, ga_cleanup_dism_api);
- }
- 
- /* MINGW is missing two fields: IncomingFrames & OutgoingFrames */
-@@ -2455,6 +2459,294 @@ GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
-     return head;
- }
- 
-+static void error_setg_dism(Error **errp, HRESULT hr, const char *msg)
-+{
-+    if (HRESULT_FACILITY(hr) == FACILITY_WIN32) {
-+        error_setg_win32(errp, HRESULT_CODE(hr), "%s", msg);
-+    } else {
-+        error_setg(errp, "%s (HRESULT 0x%08" PRIx32 ")", msg,
-+                   (uint32_t)hr);
-+    }
-+}
-+
-+static void ga_log_dism_error(HRESULT hr, const char *msg)
-+{
-+    Error *local_err = NULL;
-+
-+    error_setg_dism(&local_err, hr, msg);
-+    slog("%s", error_get_pretty(local_err));
-+    error_free(local_err);
-+}
-+
-+typedef HRESULT WINAPI QGADismInitializeFunc(
-+    DismLogLevel log_level, PCWSTR log_file_path, PCWSTR scratch_directory);
-+typedef HRESULT WINAPI QGADismShutdownFunc(void);
-+typedef HRESULT WINAPI QGADismOpenSessionFunc(
-+    PCWSTR image_path, PCWSTR windows_directory, PCWSTR system_drive,
-+    DismSession *session);
-+typedef HRESULT WINAPI QGADismCloseSessionFunc(DismSession session);
-+typedef HRESULT WINAPI QGADismGetDriversFunc(
-+    DismSession session, WINBOOL all_drivers,
-+    DismDriverPackage **driver_package, unsigned int *driver_count);
-+typedef HRESULT WINAPI QGADismDeleteFunc(void *dism_structure);
-+
-+typedef struct QGADismApi {
-+    HMODULE module;
-+    QGADismInitializeFunc *initialize;
-+    QGADismShutdownFunc *shutdown;
-+    QGADismOpenSessionFunc *open_session;
-+    QGADismCloseSessionFunc *close_session;
-+    QGADismGetDriversFunc *get_drivers;
-+    QGADismDeleteFunc *delete;
-+} QGADismApi;
-+
-+static QGADismApi dism_api;
-+static bool dism_initialized;
-+
-+static FARPROC ga_get_dism_function(HMODULE module, const char *name,
-+                                    Error **errp)
-+{
-+    FARPROC function = GetProcAddress(module, name);
-+
-+    if (function == NULL) {
-+        error_setg_win32(errp, GetLastError(),
-+                         "failed to resolve %s from DismApi.dll", name);
-+    }
-+    return function;
-+}
-+
-+static void ga_unload_dism_api(QGADismApi *api)
-+{
-+    if (api->module != NULL && !FreeLibrary(api->module)) {
-+        slog("failed to unload DismApi.dll, error=%lu", GetLastError());
-+    }
-+    memset(api, 0, sizeof(*api));
-+}
-+
-+/*
-+ * Load DISM from System32 and resolve its entry points at runtime, so a
-+ * missing DismApi.dll prevents only this command rather than QGA startup.
-+ */
-+static bool ga_load_dism_api(QGADismApi *api, Error **errp)
-+{
-+    api->module = LoadLibraryExW(L"DismApi.dll", NULL,
-+                                 LOAD_LIBRARY_SEARCH_SYSTEM32);
-+    if (api->module == NULL) {
-+        error_setg_win32(errp, GetLastError(),
-+                         "failed to load DismApi.dll");
-+        return false;
-+    }
-+
-+    api->initialize = (QGADismInitializeFunc *)
-+        ga_get_dism_function(api->module, "DismInitialize", errp);
-+    if (api->initialize == NULL) {
-+        goto fail;
-+    }
-+    api->shutdown = (QGADismShutdownFunc *)
-+        ga_get_dism_function(api->module, "DismShutdown", errp);
-+    if (api->shutdown == NULL) {
-+        goto fail;
-+    }
-+    api->open_session = (QGADismOpenSessionFunc *)
-+        ga_get_dism_function(api->module, "DismOpenSession", errp);
-+    if (api->open_session == NULL) {
-+        goto fail;
-+    }
-+    api->close_session = (QGADismCloseSessionFunc *)
-+        ga_get_dism_function(api->module, "DismCloseSession", errp);
-+    if (api->close_session == NULL) {
-+        goto fail;
-+    }
-+    api->get_drivers = (QGADismGetDriversFunc *)
-+        ga_get_dism_function(api->module, "DismGetDrivers", errp);
-+    if (api->get_drivers == NULL) {
-+        goto fail;
-+    }
-+    api->delete = (QGADismDeleteFunc *)
-+        ga_get_dism_function(api->module, "DismDelete", errp);
-+    if (api->delete == NULL) {
-+        goto fail;
-+    }
-+
-+    return true;
-+
-+fail:
-+    ga_unload_dism_api(api);
-+    return false;
-+}
-+
-+static bool ga_ensure_dism_api(Error **errp)
-+{
-+    HRESULT hr;
-+
-+    if (dism_initialized) {
-+        return true;
-+    }
-+
-+    if (!ga_load_dism_api(&dism_api, errp)) {
-+        return false;
-+    }
-+
-+    hr = dism_api.initialize(DismLogErrors, NULL, NULL);
-+    if (FAILED(hr)) {
-+        error_setg_dism(errp, hr, "failed to initialize DISM");
-+        ga_unload_dism_api(&dism_api);
-+        return false;
-+    }
-+
-+    dism_initialized = true;
-+    return true;
-+}
-+
-+static void ga_cleanup_dism_api(void)
-+{
-+    HRESULT hr;
-+
-+    if (dism_initialized) {
-+        hr = dism_api.shutdown();
-+        if (FAILED(hr)) {
-+            ga_log_dism_error(hr, "failed to shut down DISM");
-+        }
-+        dism_initialized = false;
-+    }
-+
-+    ga_unload_dism_api(&dism_api);
-+}
-+
-+static char *ga_utf16_to_utf8_required(const WCHAR *str, const char *name,
-+                                       Error **errp)
-+{
-+    g_autoptr(GError) gerr = NULL;
-+    char *ret;
-+
-+    if (str == NULL || str[0] == L'\0') {
-+        error_setg(errp, "driver %s is missing", name);
-+        return NULL;
-+    }
-+
-+    ret = g_utf16_to_utf8(str, -1, NULL, NULL, &gerr);
-+    if (ret == NULL) {
-+        error_setg(errp, "failed to convert driver %s to UTF-8: %s",
-+                   name, gerr->message);
-+    }
-+    return ret;
-+}
-+
-+static const WCHAR *ga_windows_path_basename(const WCHAR *path)
-+{
-+    const WCHAR *name = path;
-+
-+    while (*path != L'\0') {
-+        if (*path == L'\\' || *path == L'/') {
-+            name = path + 1;
-+        }
-+        path++;
-+    }
-+    return name;
-+}
-+
-+GuestDriverPackageList *qmp_guest_get_driver_packages(Error **errp)
-+{
-+    GuestDriverPackageList *head = NULL, **tail = &head;
-+    DismSession session = DISM_SESSION_DEFAULT;
-+    DismDriverPackage *drivers = NULL;
-+    Error *local_err = NULL;
-+    HRESULT hr;
-+    UINT count = 0;
-+    UINT i;
-+
-+    if (!ga_ensure_dism_api(&local_err)) {
-+        goto out;
-+    }
-+
-+    hr = dism_api.open_session(DISM_ONLINE_IMAGE, NULL, NULL, &session);
-+    if (FAILED(hr)) {
-+        error_setg_dism(&local_err, hr,
-+                        "failed to open online DISM session");
-+        goto out;
-+    }
-+
-+    /*
-+     * FALSE retrieves only out-of-box drivers, meaning drivers that were
-+     * not originally included in the Windows image. See:
-+     * https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/dism/dismgetdrivers-function
-+     */
-+    hr = dism_api.get_drivers(session, FALSE, &drivers, &count);
-+    if (FAILED(hr)) {
-+        error_setg_dism(&local_err, hr,
-+                        "failed to enumerate driver packages");
-+        goto out;
-+    }
-+
-+    for (i = 0; i < count; i++) {
-+        g_autoptr(GuestDriverPackage) package = NULL;
-+
-+        package = g_new0(GuestDriverPackage, 1);
-+        package->name = ga_utf16_to_utf8_required(drivers[i].PublishedName,
-+                                                  "package name", &local_err);
-+        if (package->name == NULL) {
-+            goto out;
-+        }
-+
-+        if (drivers[i].OriginalFileName != NULL &&
-+            drivers[i].OriginalFileName[0] != L'\0') {
-+            const WCHAR *original_name = ga_windows_path_basename(
-+                drivers[i].OriginalFileName);
-+
-+            if (original_name[0] != L'\0') {
-+                package->original_name = g_utf16_to_utf8(
-+                    original_name, -1, NULL, NULL, NULL);
-+            }
-+        }
-+
-+        package->version = g_strdup_printf("%u.%u.%u.%u",
-+                                           drivers[i].MajorVersion,
-+                                           drivers[i].MinorVersion,
-+                                           drivers[i].Build,
-+                                           drivers[i].Revision);
-+
-+        if (drivers[i].ProviderName != NULL &&
-+            drivers[i].ProviderName[0] != L'\0') {
-+            package->vendor = g_utf16_to_utf8(drivers[i].ProviderName, -1,
-+                                              NULL, NULL, NULL);
-+        }
-+
-+        QAPI_LIST_APPEND(tail, g_steal_pointer(&package));
-+    }
-+
-+out:
-+    if (drivers != NULL) {
-+        hr = dism_api.delete(drivers);
-+        if (FAILED(hr)) {
-+            if (local_err == NULL) {
-+                error_setg_dism(&local_err, hr,
-+                                "failed to release driver package data");
-+            } else {
-+                ga_log_dism_error(hr,
-+                                  "failed to release driver package data");
-+            }
-+        }
-+    }
-+    if (session != DISM_SESSION_DEFAULT) {
-+        hr = dism_api.close_session(session);
-+        if (FAILED(hr)) {
-+            if (local_err == NULL) {
-+                error_setg_dism(&local_err, hr,
-+                                "failed to close online DISM session");
-+            } else {
-+                ga_log_dism_error(hr,
-+                                  "failed to close online DISM session");
-+            }
-+        }
-+    }
-+    if (local_err != NULL) {
-+        qapi_free_GuestDriverPackageList(head);
-+        head = NULL;
-+        error_propagate(errp, local_err);
-+    }
-+    return head;
-+}
-+
- char *qga_get_host_name(Error **errp)
- {
-     wchar_t tmp[MAX_COMPUTERNAME_LENGTH + 1];
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 8cd0ba048b..97992afda3 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -1590,6 +1590,36 @@
-   'returns': ['GuestDeviceInfo'],
-   'if': 'CONFIG_WIN32' }
- 
-+##
-+# @GuestDriverPackage:
-+#     An out-of-box driver package installed in the guest
-+#     (a driver package not originally included in the Windows image).
-+#
-+# @name: published INF name
-+#
-+# @original-name: base name of the original INF file
-+#
-+# @version: four-part version from the package INF DriverVer entry
-+#
-+# @vendor: package provider from the INF metadata
-+#
-+# Since: 12.0
-+##
-+{ 'struct': 'GuestDriverPackage',
-+  'data': { 'name': 'str', '*original-name': 'str', 'version': 'str',
-+            '*vendor': 'str' },
-+  'if': 'CONFIG_WIN32' }
-+
-+##
-+# @guest-get-driver-packages:
-+#     Retrieve out-of-box driver packages installed in the guest.
-+#
-+# Since: 12.0
-+##
-+{ 'command': 'guest-get-driver-packages',
-+  'returns': ['GuestDriverPackage'],
-+  'if': 'CONFIG_WIN32' }
-+
- ##
- # @GuestAuthorizedKeys:
- #
--- 
-2.55.0
+I shall post a v2 with fixes tag for the CVE that gets assigned and the 
+commit hash which introduced the bug.
 
+Thanks,
+Chinmay
+
+>
+> thanks
+> -- PMM
+>
 
