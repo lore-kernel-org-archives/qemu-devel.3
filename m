@@ -1,126 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BABC606A320
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 12:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCDB606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 13:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=mjL4sIY7
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=iND+RA3G
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTfBI-0001YS-GV; Wed, 18 Nov 2026 07:54:32 -0500
+	id 1xTftH-00015c-8w; Wed, 18 Nov 2026 08:39:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xTfBG-0001Y9-MG
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:54:30 -0500
-Received: from smtpout2.mo540.mail-out.ovh.net ([51.210.91.51])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xTfBD-0003fr-7H
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:54:30 -0500
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4jV1l31rmTz46dJ;
- Wed, 18 Nov 2026 12:54:23 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed, 18 Nov 2026 12:54:23 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.92])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4jV1l31Cmxz20Nw; Wed, 18 Nov 2026 12:54:23 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
- (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 2FADD12E435C;
- Wed, 18 Nov 2026 12:54:21 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-110S0040832b8eb-1d9d-4a14-a2df-6c6d37b53f7c,
- 240B2D80E6D5B5AB1626C6D871A46C45E5CC6673) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <c81acaea-2c43-4151-aee5-cd9f165d8235@kaod.org>
-Date: Wed, 18 Nov 2026 13:54:20 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xTftA-00015B-4Q
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 08:39:53 -0500
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xTft7-0006eb-VN
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 08:39:51 -0500
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-67da62357acso1253587d50.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 05:39:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795009188; cv=none;
+ d=google.com; s=arc-20260327;
+ b=aZJmk5Dz6GWB7DxEkZ8FaebFZVEBzfzWk6AI7qQIxKVeWK+IUaUaqqCj/2Sq1Fvcxi
+ oehMaCgu3+0D+afLf8qcjsCNEjeBtUTT4ozM/jrNaBFvBnkOx0ot7kQONzHGxdbX3tgA
+ gdlvoHRV1Z4GqCHDqlHVlFOGzpj/Nsn8N9tBmPVDKq1YlqAbpnY1+OfvGSVTIbRJB3d2
+ LqI5BsylDo9oihSfTGDARfNCtOBjKIOKlsrvU73qogyw66rngJxKbDc1QWrQPyQQIisP
+ GZX+xjUx6VL0fImcd92+dpYKoHP9hyWwLPTBsw6pHhRf5itZawr2fMASlToQz4fzTbXv
+ OZUQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=HJsRux+mEwnX9dvBMAuE1oJpmEDFJkfloWkR6CW9ztM=;
+ fh=JYGwuqguaSdPek5G7rPw3Y/CGHv5PxmTzr+JZI7v3MQ=;
+ b=q+oUsMiYSykDZcoDMUMG+Hj9FQkghNHGg0P9XDgRcocfqm0dqkma/AjRnGpdecW2Pm
+ UfeL9/O55C0AhQyCWEQMWOpOz06hAL1h8+UrCXR5uWUHMSKS3bOJPOfkDuFlSZeDCJPI
+ AJnHykpdpndx/H4tINoxFj1pbhT7uTvM3NAdBfOu6WAnqP1EPu6HSkRfdRIxRDCOG9xB
+ El36OtrHL4PebVzdTOEkGBE+BcxccGMDuV+5DW3m7Y2EikTXSBrZW193EEm8WpboWuhX
+ cqFSWY/iaYBwXYU1VZOwSyYJhv/M+bICgkgXe7J0Xrr44IHfaXjdoPcFr4yP5ruFlYfz
+ iTbw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795009188; x=1795613988; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=HJsRux+mEwnX9dvBMAuE1oJpmEDFJkfloWkR6CW9ztM=;
+ b=iND+RA3GCOLmusMGCnEvWCu2YEXZP7VVaQgX+iF+MvrvdFL0kokyWBnVIMlCAijl+u
+ 6gRZp7loDgJWUAZaFtS3cvqK46ZtegTZxn8Uyv5fwVjvDOmr5C5GdTXQlqVFXd0faZyu
+ CTYTuY+bmTQ0ePGbIGmmeC0fNo8fHZe/AB7NF8q0fYcliliFSmNJrO+FwXwyZGMQ1dYM
+ slyC48ZrVHFeVk4XzS5fWy1qCyG+HWGehpfjL8l3UEt9xR240s9PIz+nULVbyFHzquL+
+ CDNca0jSNAU/Qey6qYS4KhAyotTv0C+suXCeDsZrlM/5f8S69CJamtoW0w375wardTam
+ 1dSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795009188; x=1795613988;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=HJsRux+mEwnX9dvBMAuE1oJpmEDFJkfloWkR6CW9ztM=;
+ b=TXH43RfifddBL1riDYi8LcK0KGqxcx5/O0wDusF5ktmNjebPrqVgS6s2bABlI9s2l1
+ fwdOx5w0A9DEu2fMD1H6vz3IXXR7/+DPrrCw/pjff5elGhT9tYFpyLPolt6swS42WQhW
+ QdxehQyLb8FxKYYnRrWR7wD4bN+ycld3Cac26SQAmavzfPhUutPch+tiYPYyxQ3ZywIW
+ pte/1STjbyEHhz2QtYXswuLTA0gq3brLxT7fYLzI1E9xUrERT/9Yx926N0H06Ig3piCA
+ 3KcJAaH9qxx0ysTfhkWUQGEXF1UsEgI7U/ChpZbOsU8scKESOhKdKA7mGrTA94p62Sbw
+ EA4g==
+X-Forwarded-Encrypted: i=1;
+ AL+hErGb5SkykAJEpASXmU12Pi/DMhzILTnC8Kwbvwip1V4iazTApeq1gFqCMYU22Wbef4pPqVQOQAYnsVrY@nongnu.org
+X-Gm-Message-State: APuU4Z8fgFpXCo4q5Ci92rtvBosanDt7jy6v89laI2OEDUj+qvUdoiFn
+ 7HBWozuIJLnEl4aGREkMJsIYkIuPllJ0yCqTsqTDsdyWGbAGFyV56bNJAIFg/DNM9ByvEtKxQp6
+ kyDITFw49OnfTDy4/MK5XbyVhKGGeGP+4gIC0sAJmIA==
+X-Gm-Gg: AZFdTZfxeFkbW1IK3OCyL3cK2b1uCeVWtDbw/5cZ4v0j/+byOpz/pcE0ZSYKi+5kKwI
+ 8abTzn+1HRXnTfaUS9gKk13c3b52slKnLeFxHazYHlb9VewJB1AI2aHO7xNNhkk7Nl0FDMVq27t
+ /HIhT8jv1LgriuPftf7FU2Aib8/4bzFUb1vUY2l177MRns80legIZ0lB/ja4aA8pD2b+UcUiRR0
+ /aM1S17+NGVjT0KyBicZBGiWky9TBGH1UB6Nqx++Nl++kxDGWUAPHl2KF22euUYgEwyCadh+189
+ KRryt7fkSRTxBYTmET/a3ff/GKqVWtschQKI8o04WY7UGrdOgtDFCddPxt5v+aMmx+n+lQ5KJjE
+ mckZn0UGq3DauITm4/T6y4pCiH2yAzF9XltMtUj0vA/XJ5l2BYBgYkmirN1W3fntB2G9hWNhGuL
+ jHkjuem4fsSt1Q3rBFU47o
+X-Received: by 2002:a05:690e:bca:b0:67c:1dca:80f with SMTP id
+ 956f58d0204a3-67dd4549813mr1053341d50.54.1795009187839; Wed, 18 Nov 2026
+ 05:39:47 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/11] Add SSP/TSP power control and DRAM remap support
- for AST2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260723022300.4174471-1-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260723022300.4174471-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 11528933572218104947
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFbi2z0xkPrrBV649DJhwHt0RuwPxPH3eG4hAoWtqeRQYsodMmNFsYgGmwflYVNlfscUx4KdHSgwKm26zF5P2dly9bxNhZPw2C3xzIOgsgKXvf43eeXk0QRMHx7FeB+yJBb7ZcWQ6U0DQ8U7ikML4yJEeIGt5uY+LHiLXQ9vU2md+ibz9vB0DBJanzfCyKrsn03FF0KLKHUaBBAbw4mn0KFwKRLotAneGT7ZeBeYbzleIQGp3iE5SD6O0cgyBOKWtQrYnuTPQ0IaWCPrDmZjbD4CNAY7l+a9SqImypoRrtCFRvoummLyaUf8OYf+vYklXjlGUljEnAzG8MvCeinMUdKQlLOPqfkKhSHV1AQiamElL9IKo6fSdmhv7QpyPKln/EICXqi3bfGoMktF7IT9kTLvXYxTeXaJXVPsTQvDvvoFLnp88Z31bTStqT8oVdzWlexyHrtsvCGKK43Q3MEOflASmNrN5M1aBszqCF38qQRb16MYd/rpvxooNshaUWUZBYn7T9um1xKVccTkYH+zp2ffanbUWq8o9p4M2DywHru3hkflV0+bccOzJg8mz9dHrKWSdmEV+earYIvYs0fjl49zdwEVp/1bPqUWhFijOdgs4dnsLhQ0HKcJDEcdwec49hiWqnEqsiy1xuo4cGNYuAsBkYLbkxO0KwxsTTQ40fYVQ
-DKIM-Signature: a=rsa-sha256; bh=Qv89hpfLxmtZjk+C1qnmFuz8v0CRsMtdLRak0Qenf/4=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1795006463; v=1;
- b=mjL4sIY7IAbdnsif4uCUcV8QcdOFwOjMjYTrnAI3Q4f1JkEgYADGWANfeeeL2l/E8oikzlV6
- 7WvN0CfnSSPI/fRanb/DOeNs/oUuENiy3EvXiakcIDmlGiEsBNIfbUQhUr5g01Buee+3R9HQN9h
- 2lGtxhfxF850+NAailyb4sZ+O4JbH0GmCUKEyzSEzOk0Ck6xFk6A1GzTyQQnEsyt9MkNXHX6hiF
- BP35GLODTl1kv4luJ02qf0UkADjhLxK/5hTZMiBxDAJmJwzA/5sWjZGro/H+P+w4y4aXLE3/A/z
- UJfW1F3jDxlpkDzpr1LlQu0a2ABMr33EjC8qUIhZyGUMg==
-Received-SPF: pass client-ip=51.210.91.51; envelope-from=clg@kaod.org;
- helo=smtpout2.mo540.mail-out.ovh.net
+References: <20260918095718.33745-1-guobin@linux.alibaba.com>
+ <CAFEAcA_wtZP7BvxMfamQG8XV5U0Q96Y1=Q5PL_mCEatfdrywPA@mail.gmail.com>
+ <TYCP286MB1393A2F623C0081276E0563EBC7B2@TYCP286MB1393.JPNP286.PROD.OUTLOOK.COM>
+In-Reply-To: <TYCP286MB1393A2F623C0081276E0563EBC7B2@TYCP286MB1393.JPNP286.PROD.OUTLOOK.COM>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 18 Nov 2026 13:39:32 +0000
+X-Gm-Features: AclHuK9Ts0GNy4n3F2PUr-kqxYsrfnnCP5K47r6Vg8sdJy9RGfAsGXfG_c1kCqc
+Message-ID: <CAFEAcA-fWQy3afLRzCPjX2GQMDydx2w6eKbrmBBic8nOuwsDKA@mail.gmail.com>
+Subject: Re: [PATCH] hw/usb/canokey: validate endpoint number in
+ canokey_handle_data
+To: Hongren Zheng <i@zenithal.me>
+Cc: Bin Guo <guobin@linux.alibaba.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "Canokeys . org" <contact@canokeys.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,109 +118,90 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Jamin,
+On Tue, 17 Nov 2026 at 22:19, Hongren Zheng <i@zenithal.me> wrote:
+>
+> > On Fri, 18 Sept 2026 at 10:58, Bin Guo <guobin@linux.alibaba.com> wrote:
+> > > canokey_handle_data() takes the endpoint number from the USB packet
+> > > (p->ep->nr, guest-selectable 1..15) and uses it to index the fixed-size
+> > > ep_out[] / ep_out_size[] arrays of CanoKeyState, which hold only
+> > > CANOKEY_EP_NUM = 3 entries.  A forged bulk-OUT transfer on any endpoint
+> > > number >= 3 therefore reads a bogus length from past ep_out_size[] and
+> > > writes guest data through a wild pointer read from past ep_out[].
+> > >
+> > > Validate p->ep->nr against CANOKEY_EP_NUM and return USB_RET_STALL for
+> > > invalid endpoints, before any array access.
+> > >
+> > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4481
+> > > Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> >
+> > Probably worth Cc: qemu-stable@nongnu.org
+> >
+> > > --
+> >
+> > Did you have trouble getting the canokey code to build? I've
+> > been playing around with it, and the canokey-qemu library
+> > appears to have a busted pkgconfig file, such that meson
+> > can't find the include path for it and the #include in QEMU fails.
+> > I guess if you installed it to the system include it would work.
+> >
+> > NB: given that the canokey-qemu library is Apache licensed
+> > and QEMU is GPL-2, the whole canokey support in QEMU seems
+> > of very niche utility, because you can't actually distribute
+> > a QEMU binary that you build with it AIUI. And distros
+> > generally don't ship the canokey-qemu library anyway I think.
+> >
+> > So is it actually useful to anybody, or should we just deprecate it?
 
-On 7/23/26 04:23, Jamin Lin wrote:
-> This series improves AST2700 platform support by aligning SSP/TSP
-> power and reset behavior with hardware, and enabling DRAM remapping
-> required for proper firmware boot flow.
-> 
-> This series depends on:
-> [v4,0/9] Refactor AST2700 SCU preparation for coprocessors
-> https://patchwork.kernel.org/project/qemu-devel/cover/20260717084559.3477061-1-jamin_lin@aspeedtech.com/
-> 
-> v1:
->    1. The changes move DRAM/SDMC initialization earlier to support memory
-> aliasing, add DRAM aliases for SSP/TSP SDRAM remap, and implement
-> SSP/TSP reset, power-on, and remap controls via SCU registers.
->    2. With these updates, SSP and TSP can be booted via PSP and load their
-> binaries from DRAM. Functional tests and documentation are updated
-> accordingly.
-> 
-> v2:
->    Fix "make check" failure caused by both AST2700 and AST1700 realizing the same
->    TYPE_AST2700_SCU model.
->    
-> v3:
->   1. Drop "Move DRAM and SDMC initialization earlier to support memory aliasing"
->   2. Support SPI/FMC FIFO Mode
->   3. Add unimplemented devices
-> 
-> v4:
->   1. Introduce Aspeed2700SCU subclass and separate from generic SCU.
->   2. Add separate reset handler for AST2700 SCUIO
->   3. Add AST2700 SCUIO RNG control and data registers
->   4. Share single SCUIO instance across PSP, SSP, and TSP
->   5. Fix AST2700 FC hardware strap settings
-> 
-> v5:
->   1. To speed up the review process, move the following patches into a separate
->      patch series, as they are not directly related to the main topic of this series:
->   
->      [v4,01/21] hw/misc/aspeed_scu: Introduce Aspeed2700SCU subclass and separate from generic SCU
->      [v4,02/21] hw/misc/aspeed_scu: Add separate reset handler for AST2700 SCUIO
->      [v4,11/21] hw/arm/ast27x0: Share FMC controller with SSP and TSP
->      [v4,12/21] hw/arm/aspeed_ast27x0: Add unimplemented Privilege Controller MMIO regions for SSP/TSP (Merged)
->      [v4,13/21] hw/arm/aspeed_ast27x0: Add unimplemented OTP controller MMIO regions for SSP/TSP (Merged)
->      [v4,14/21] hw/block/m25p80: Implement volatile status register write enable for Winbond
->      [v4,15/21] hw/ssi/aspeed_smc: Add Data FIFO-based flash access support for AST2700
->      [v4,16/21] hw/misc/aspeed_scu: Drop noisy unhandled read logs for AST2700 SCU/SCUIO (Merged)
->      [v4,17/21] hw/misc/aspeed_scu: Add AST2700 SCUIO RNG control and data registers (Merged)
->      [v4,18/21] hw/arm/ast27x0: Share single SCUIO instance across PSP, SSP, and TSP
->      [v4,19/21] hw/arm/aspeed_ast27x0-fc: Fix hardware strap settings (Merged)
->      
->    2. Add memory_region_transaction_begin() and memory_region_transaction_commit()
->       to protect the transaction.
-> 
-> v6:
->    1. Move the DRAM remap MemoryRegions from the SCU to the SSP/TSP
->       coprocessor state itself.
->    2. Set ssp_cpuid/tsp_cpuid directly once the SSP/TSP's armv7m core is
->       realized, instead of pre-guessing them from board code via a QOM
->       property.
->    3. Correct AST2700 SCU to SCUIO to AST1700
-> 
-> Jamin Lin (11):
->    hw/arm/aspeed_ast1700: Correct AST2700 SCU to SCUIO
->    hw/arm/ast27x0: Start SSP in powered-off state to match hardware
->      behavior
->    hw/arm/ast27x0: Start TSP in powered-off state to match hardware
->      behavior
->    hw/arm/ast27x0: Add DRAM alias for SSP SDRAM remap
->    hw/arm/ast27x0: Add DRAM alias for TSP SDRAM remap
->    hw/misc/aspeed_scu: Implement SSP reset and power-on control via SCU
->      registers
->    hw/misc/aspeed_scu: Implement TSP reset and power-on control via SCU
->      registers
->    hw/misc/aspeed_scu: Add SCU support for SSP SDRAM remap
->    hw/misc/aspeed_scu: Add SCU support for TSP SDRAM remap
->    tests/functional/aarch64/test_aspeed_ast2700fc: Boot SSP/TSP via PSP
->      and load binaries from DRAM
->    docs: Add support vbootrom and update Manual boot for ast2700fc
-> 
->   docs/system/arm/aspeed.rst                    |  42 ++-
->   include/hw/arm/aspeed_ast1700.h               |   2 +-
->   include/hw/arm/aspeed_coprocessor.h           |   2 +
->   include/hw/misc/aspeed_scu.h                  |   5 +
->   hw/arm/aspeed_ast1700.c                       |  22 +-
->   hw/arm/aspeed_ast27x0-fc.c                    |   4 +
->   hw/arm/aspeed_ast27x0-ssp.c                   |  45 ++++
->   hw/arm/aspeed_ast27x0-tsp.c                   |  37 +++
->   hw/misc/aspeed_scu.c                          | 240 ++++++++++++++++++
->   .../aarch64/test_aspeed_ast2700fc.py          |  29 ++-
->   10 files changed, 396 insertions(+), 32 deletions(-)
-> 
+> Thanks for the email. The fix looks good to me.
+>
+> Reviewed-by: Hongren Zheng <i@zenithal.me>
+>
+> Regarding the build, indeed it requires modifying PKG_CONFIG_PATH
+> for meson to find it for custom build, and this behavior is documented in [1].
+> If it is a system package, it should be fine.
 
-The test passes. v7 should be fine for merge with the changes I proposed.
+Setting PKG_CONFIG_PATH is not sufficient. The problem is that
+the pkg-config is:
 
-Thanks,
+prefix=/home/pm215/src/canokey-install
+libdir=lib
+includedir=include
 
-C.
+Name: libcanokey-qemu
+Description: CanoKey lib for QEMU
+Version: 1
+Libs: -L${libdir} -lcanokey-qemu
+Cflags: -I${includedir}
+
+but it doesn't actually put ${prefix} into the libdir or
+includedir variables. So meson put "-Iinclude" into CFLAGS,
+which can't find the include file. I think it ought to say
+
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+> For downstream usage, NixOS used it for CI testing of their
+> systemd-cryptoenroll for ensuring successful booting after upgrading [2].
+> There are efforts to push it for other distros [3]. I acknowledge that it
+> is niche, but I think there are still users.
+>
+> [1] https://www.qemu.org/docs/master/system/devices/canokey.html
+> [2] https://mynixos.com/nixpkgs/package/canokey-qemu
+> [3] https://github.com/canokeys/canokey-qemu/issues/6
+
+But what about the license conflict? I don't see distros
+being likely to want to enable building something that
+isn't redistributable, and especially something that's
+documented as "testing purposes only, no warranty on
+the security".
+
+thanks
+-- PMM
 
