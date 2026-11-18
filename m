@@ -1,118 +1,100 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AB1606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 11:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596D0606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 11:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Hb7gZaYJ
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IoHWbIEP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTdqO-0001a0-9I; Wed, 18 Nov 2026 06:28:52 -0500
+	id 1xTduy-0002P5-1W; Wed, 18 Nov 2026 06:33:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xTdqM-0001Zm-41; Wed, 18 Nov 2026 06:28:50 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xTdqK-0000xF-Aj; Wed, 18 Nov 2026 06:28:49 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AIBQgu53533235; Wed, 18 Nov 2026 11:28:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ObSQQ5
- oZhwpykEt9eODJgLd347hczCFEemRSdNKjH3E=; b=Hb7gZaYJf7GPSQwkbmaoy3
- Yjt8BEF2vIKNCztgnrBenvS62APrz/VT80cv0UC8A9pE/b2Hz2sAFlZYHXlBCOUF
- EHn14BoSUMS+CUsFqQz0dFOf7r2bDZTUzXKOkFG1MCq4RYdjLOVzpMMBzHJGL6ml
- Zx5MdX0KOX8H9DHca8Co97FwB7bb3Z4a3+fG+oWtpuA3K0cMW6DtpUPtuE6njHvR
- VIZCdHfoKKm9LHVHHjLwsbHNaFFJjXOrzr7jwTHq6o5AQxfpHh60u8U5AUT4aCkb
- mwIfCa42A10k1UxZ/7msoVFRBNtIFu6Khn3FyUL8W6oW+q3SIp+721fy3AT//5cA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105rj59k-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 18 Nov 2026 11:28:44 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AIBJtPm3324490; Wed, 18 Nov 2026 11:28:44 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hyxwt87gb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Nov 2026 11:28:44 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AIBSghO26280536
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Nov 2026 11:28:42 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BAB7A58068;
- Wed, 18 Nov 2026 11:28:42 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EB13D58065;
- Wed, 18 Nov 2026 11:28:39 +0000 (GMT)
-Received: from [9.111.1.121] (unknown [9.111.1.121])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 18 Nov 2026 11:28:39 +0000 (GMT)
-Message-ID: <97ba694e-756a-4e6f-93d4-85fb316149d5@linux.ibm.com>
-Date: Wed, 18 Nov 2026 16:58:38 +0530
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xTdup-0002OI-TM
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 06:33:31 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xTdun-00023E-Tm
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 06:33:27 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-6a642495d81so1533224a12.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 03:33:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1795001604; x=1795606404; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=+FOjB+5Nw7o9aupcwZsIvfXjeXJgh2wqV9Ep5Aay0cE=;
+ b=IoHWbIEPteE9l+m3syQ5ovXgjpj/fFkcqlMrOHRsZWIFJu2t+hIGENgtQ2FRZcmvp6
+ 3201U5nsLlTrpu9YTJV+MVSElrZ4qwBFmFCzC1l3DslSjGM4VQHZwq1BftoIkpViTIzH
+ OSzOBCXJfXp5a4IFac4gJbOJnRbuQCW3eIKreH5nS1sNAVgubDfz5n5offDmRI/UCWMA
+ jp0360hxtT+R7pIvXCO1fnkAlDPDysL6niNb6hXIDKcyybNGrp46VxTLvJRjoJYwGR8M
+ ixccr6jAXHjDpuUTwxKh9ZCHNGIcl2NqydhUjlVZ4jOq2LHatB9O9NAjJn+3K5eBLgsI
+ 8dnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795001604; x=1795606404;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=+FOjB+5Nw7o9aupcwZsIvfXjeXJgh2wqV9Ep5Aay0cE=;
+ b=Pn6k1sISV3J1YHX9LFtIu/Bo8M6fN9MyAuTUG6nWsnvUPxdqjx1rvKI7xE5mvOylVG
+ aCvBc0aORFZVUWsJ4YjCc8OOrvaGUcu4UeHcVBc2z1VLzsRDmADylx0aZNEUpnaVaF0s
+ Q6u1gGJjJ+jKXvsfQWjj3lKM/hZIX1FJsG8nHPkkpTyafvgtYQIkr6sFCpwfRYq6PiC6
+ vYajVUAVV4gwOB8GHjlWGGyqgAlD/CqWaQR3C+rw6TdqwMeT8wSsZMgVZO4ZcuDjngJY
+ y+8P03KINn660c4X6WLlFgDt1yy4ByGi+8AfQmyI/DAV2JlCUqPSLcYUd/VUEJC0QJYf
+ PKUw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErFD2FIQzxkt5Ntbm8f+EfXRr7x8FNC9T/h6B7hATdudux6RvjiKSNO2RaUhe0vWH94+eNrMlNsS6afk@nongnu.org
+X-Gm-Message-State: APuU4Z/WMpXPLtWJyAEujL3f7xHluKe4ruPrygXyMIek4dLFViJqxcmx
+ cn+HWg1SJ4Ry59kl72s1lPJR6Hl0eMyhUdZedeb8wX/KKGPPzyY8u+HM
+X-Gm-Gg: AYBFou0KvSR297klB0QwFDSTNZeglrtVrpE0LWErWybKLJqOQzbndv7wTr9TERLAEoS
+ bWxEu+85U14Q9WR1eK0XlDXctmXHQlpj7n5fKcCUjoznG4GD223TyWcO+8mxDCQGhzJjbBeZO8K
+ 3fd0nISDAtb5DY/cXVjVjB7Pcs+Wz/VU3OtOb0N0IoUC5Pl1TkasHiwTn7GKO156TO2ABbJEtyU
+ F+5DtLx3SirATBR+9bKmg91acPQGv54Q1PWDqg0Bt/elRzAnyZzLmz3l4z6vvdHkubz+KCS9JCV
+ VS4lewBBTPUmOopk+33REk/h/gIaSulbwwOCm2OdI3DswC6upiGAgYNPrck5boN1m0yU+oEt6pQ
+ z89wLnGsFRP88KIdbUGhVwfQGpjPeFY1i2VKnBJcWQvu8cI1VPk9b6e6iPANklrGhFvSic+zIKt
+ y63wiUxKtJfPKvPofi0pktz4jbW38XJUg9WUq8kErcJoIEdgrSZeaC0U+iQCVDSfyF0OI1bO5Jo
+ gV7Y+FB9qx9wUaIe+/KEadKR3GtPidZCjVO1wKJmEb7Tkwd9bJfXJEDUl8QXkIpXU9AV/gl/GhE
+ sJcOwrf0g09VT1tnlyrh1A2aCdM7gn70QRo=
+X-Received: by 2002:a05:6402:e9e:b0:6b8:5eba:f1e0 with SMTP id
+ 4fb4d7f45d1cf-6b887ead518mr1578235a12.21.1795001603659; 
+ Wed, 18 Nov 2026 03:33:23 -0800 (PST)
+Received: from ehlo.thunderbird.net ([62.214.191.67])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6b88a225b12sm902845a12.28.2026.11.18.03.33.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Nov 2026 03:33:22 -0800 (PST)
+Date: Wed, 18 Nov 2026 11:33:15 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
+CC: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ =?ISO-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v3 00/23] target/ppc: Correct Freescale Book E CPU models
+In-Reply-To: <20261108120034.1755008-1-bin.meng@processmission.com>
+References: <20261108120034.1755008-1-bin.meng@processmission.com>
+Message-ID: <7D055497-E7EC-4AAE-BA5B-69F4164D78B3@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/ppc: Test CF_NO_GOTO_PTR in cflags, not in TB flags
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, mattst88@gmail.com,
- Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20261117080843.8314-1-philmd@oss.qualcomm.com>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20261117080843.8314-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: dNl5opanVHY2Zi-D2oijcA6Aoo6BQXD6
-X-Authority-Analysis: v=2.4 cv=e8uT2qp/ c=1 sm=1 tr=0 ts=6afd8bed cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=JsepMA0FrfH1NqDOvd8A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE4MDA0NSBTYWx0ZWRfX9WqfUOnoFr8e
- rqz5PXdt97RdMpW3c7HOEg6PXSmSvbgjyMM9/CsOqscQHdSSjUdVQmrBNMLbN8BOr9L1JbZMt4n
- HOFHI90cecuh1HL5whGY5sGS1CRBN98=
-X-Proofpoint-ORIG-GUID: ZTyl_qQVPIDNLeSgD0yfsB8UrwPbPaGH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE4MDA0NSBTYWx0ZWRfX5Okr8UNswPn+
- QemerupQ80bXVbuxAHGWn/Kp/yhh0QHMqLySc1V35bLGWRbIKsxuH+ebYdKRMiHI7MoHPYpO1w1
- rPtqjmq+u58vg+zMyIsj7vCqFEd0Yx9ZptZJ+GaEWUHkp+usr7NdXnoES9JHrZzFchnKrWpjTYb
- d/XYNrD/iTzST/UhwLELEvjYm/gK0yQkjmzD64k6Dho3OoaG0Jg+88Pv0aX9rc42srbua4EqAIr
- GIsudNbn/WJO9Kgyp9l6gwW6BQPIh/pDVdraQSC5rXPUDW57cmTLWOoC7fxZvI4f1/etLrLKMq9
- A+wjhV/cJtEaDb0jJJsW1kwY9ml8SpImPCLJGzuBRQTG9ngSGBnCVK7j7L890np7Fh7dflwyBFW
- QRUPl8LWl5JQ73wzdLsN2y0MM3jk5jXBJg7FvFHNwrP0UxC86OyuOmOLW2IblKgII9CIqqzda0c
- /mCta/wmcreCiAhDqhg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-18_03,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 priorityscore=1501 suspectscore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 malwarescore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611180045
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,56 +107,125 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 
-On 11/17/26 13:38, Philippe Mathieu-Daudé wrote:
-> CF_NO_GOTO_PTR is a TB cflags bit, but it was tested against
-> tb->flags, where bit 10 is HFLAGS_SE. Use tb_cflags().
+
+Am 8=2E November 2026 11:59:59 UTC schrieb Bin Meng <bin=2Emeng@processmis=
+sion=2Ecom>:
+>This series corrects SPR access, cache and MMU configuration, and
+>instruction availability in the Freescale Book E CPU models=2E It also
+>fixes host PVR matching and adds system TCG tests for e500mc, e5500
+>and e6500=2E
 >
-> Fixes: 46d396bde988 ("target/ppc: enable PMU instruction count")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   target/ppc/translate.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>The patches are grouped as follows:
 >
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 467b8f3d4ec2..dccae25bb4ec 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2645,7 +2645,7 @@ static void gen_lookup_and_goto_ptr(DisasContext *ctx)
->            * tcg_gen_lookup_and_goto_ptr will exit the TB if
->            * CF_NO_GOTO_PTR is set. Count insns now.
->            */
-> -        if (ctx->base.tb->flags & CF_NO_GOTO_PTR) {
-> +        if (tb_cflags(ctx->base.tb) & CF_NO_GOTO_PTR) {
->               pmu_count_insns(ctx);
->           }
->   
-> @@ -5160,7 +5160,7 @@ static void ppc_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
->            * tcg_gen_lookup_and_goto_ptr will exit the TB if
->            * CF_NO_GOTO_PTR is set. Count insns now.
->            */
-> -        if (ctx->base.tb->flags & CF_NO_GOTO_PTR) {
-> +        if (tb_cflags(ctx->base.tb) & CF_NO_GOTO_PTR) {
->               pmu_count_insns(ctx);
->           }
-Hi Philippe,
-Thanks for addressing the review comments brought up by Anton and Matt 
-on the original patch :
-https://lore.kernel.org/qemu-devel/20261104163854.87398-1-richard.henderson@linaro.org/
+>- patch #1-#3 and #5, bug fixes to PIR write access, the MAS5 SPR number
+>  and cache block/line sizes (qemu-stable cc'ed)
+>- patch #4 and #6, complete e500mc/e5500 L1 cache configuration and
+>  remove redundant e6500 cache geometry bits
+>- patch #7-#11, register the missing cache, MMU-assist and several
+>  control SPRs
+>- patch #12-#14, split the PowerISA 2=2E05 instructions into integer and
+>  floating-point groups, due to differences seen on e500 series cores
+>- patch #15-#17: Add TCG tests for illegal-instruction exceptions, byte
+>  comparison and parity results, and FPSCR field-mask handling
+>- patch #18-#21, complete the e500 family MMU configuration, correct
+>  PID register counts and express MMUCFG/TLBnCFG with named fields
+>- patch #22-#23, fix EPCR write width and host PVR revision matching
+>  for Book E KVM
+>
+>Changes in v3:
+>- Cover the new system test directories in MAINTAINERS
+>- Add the missing SPDX license identifier to the README
+>- target/ppc: Build e6500 MMUCFG values from field encodings
+>- target/ppc: Complete MMU configuration for e500 family cores
+>- target/ppc: Limit e500mc and e5500 to one PID register
+>- target/ppc: Express e6500 TLB configuration with named fields
+>- target/ppc: Keep embedded processor control within 32 bits
+>- target/ppc: Match e500mc/e5500/e6500 host PVR revisions
+>
+>Changes in v2:
+>- Group ISA 2=2E05 features into integer and floating-point flags
+>- Use the first free bit for the floating-point group
+>- Align flag definitions and comment endings
+>- Enable the shared ISA 2=2E05 integer flag on e5500 and e6500
+>- Align the FPSCR W/L behavior flag comment ending
+>- Rebase the PPC64 test entry onto the Meson variable cleanup
+>
+>Bin Meng (23):
+>  target/ppc: Correct PIR write access on e500 cores
+>  target/ppc: Correct the MAS5 SPR number
+>  target/ppc: Correct the e500mc and e5500 cache block size fields
+>  target/ppc: Complete e500mc and e5500 L1 cache configuration
+>  target/ppc: Correct cache line size for e6500
+>  target/ppc: Drop redundant e6500 L1 cache geometry bits
+>  target/ppc: Register L1CSR2 on e500mc/e5500/e6500 cores
+>  target/ppc: Register L2CFG0 and L2CSR1 on e500mc and e5500
+>  target/ppc: Register MAS5 and MAS8 on e500mc/e5500/e6500
+>  target/ppc: Register PWRMGTCR0 on e6500
+>  target/ppc: Register IVOR42 on e6500
+>  target/ppc: Split the ISA 2=2E05 instruction feature group
+>  target/ppc: Enable byte comparison and parity on e5500 and e6500
+>  target/ppc: Ignore FPSCR W/L fields on e500mc, e5500 and e6500
+>  tests/tcg/ppc: Add Book E illegal instruction tests
+>  tests/tcg/ppc: Test byte comparison and parity on e5500/e6500
+>  tests/tcg/ppc: Test FPSCR W/L handling on e500mc/e5500/e6500
+>  target/ppc: Build e6500 MMUCFG values from field encodings
+>  target/ppc: Complete MMU configuration for e500 family cores
+>  target/ppc: Limit e500mc and e5500 to one PID register
+>  target/ppc: Express e6500 TLB configuration with named fields
+>  target/ppc: Keep embedded processor control within 32 bits
+>  target/ppc: Match e500mc/e5500/e6500 host PVR revisions
+>
+> MAINTAINERS                                |  2 +-
+> target/ppc/cpu=2Eh                           | 45 ++++++----
+> target/ppc/cpu_init=2Eh                      |  3 +-
+> target/ppc/cpu_init=2Ec                      | 99 +++++++++++++++++-----
+> target/ppc/translate=2Ec                     | 10 ++-
+> target/ppc/translate/fixedpoint-impl=2Ec=2Einc |  6 +-
+> target/ppc/translate/fp-impl=2Ec=2Einc         | 14 ++-
+> target/ppc/translate/fp-ops=2Ec=2Einc          |  9 +-
+> meson_options=2Etxt                          |  4 +
+> scripts/meson-buildoptions=2Esh              |  2 +
+> tests/tcg/meson=2Ebuild                      |  1 +
+> tests/tcg/ppc/meson=2Ebuild                  |  5 ++
+> tests/tcg/ppc/system/README                | 24 ++++++
+> tests/tcg/ppc/system/boot=2ES                | 92 ++++++++++++++++++++
+> tests/tcg/ppc/system/byte-parity=2ES         | 33 ++++++++
+> tests/tcg/ppc/system/fpscr=2ES               | 75 ++++++++++++++++
+> tests/tcg/ppc/system/isa=2Eout               |  1 +
+> tests/tcg/ppc/system/kernel=2Eld             | 18 ++++
+> tests/tcg/ppc/system/macros=2Einc            | 56 ++++++++++++
+> tests/tcg/ppc/system/meson=2Ebuild           | 39 +++++++++
+> tests/tcg/ppc/system/unsupported=2ES         | 31 +++++++
+> tests/tcg/ppc64/meson=2Ebuild                |  2 +
+> tests/tcg/ppc64/system/meson=2Ebuild         | 33 ++++++++
+> 23 files changed, 554 insertions(+), 50 deletions(-)
+> create mode 100644 tests/tcg/ppc/meson=2Ebuild
+> create mode 100644 tests/tcg/ppc/system/README
+> create mode 100644 tests/tcg/ppc/system/boot=2ES
+> create mode 100644 tests/tcg/ppc/system/byte-parity=2ES
+> create mode 100644 tests/tcg/ppc/system/fpscr=2ES
+> create mode 100644 tests/tcg/ppc/system/isa=2Eout
+> create mode 100644 tests/tcg/ppc/system/kernel=2Eld
+> create mode 100644 tests/tcg/ppc/system/macros=2Einc
+> create mode 100644 tests/tcg/ppc/system/meson=2Ebuild
+> create mode 100644 tests/tcg/ppc/system/unsupported=2ES
+> create mode 100644 tests/tcg/ppc64/system/meson=2Ebuild
+>
+>---
+>base-commit: f29ccc287a6cfdd51d3a4fd17fbe9af3310a0ac5
+>branch: ppc-fsl-booke
+>
 
-I think it'd be correct to include the original "Reported-by" and 
-"Reviewed-by"s from the above mentioned patch as well.
+FWIW: Series:
 
-+cc : Matt and Anton
-
-Regards,
-Chinmay
->   
+Acked-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
