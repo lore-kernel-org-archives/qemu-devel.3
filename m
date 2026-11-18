@@ -1,121 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239F1606A330
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 08:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C650606A32A
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 08:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=nkq1l3hb
+	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=0JnQBq9Q
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTb1N-000362-Q3; Wed, 18 Nov 2026 03:28:03 -0500
+	id 1xTb8g-0003zt-Ic; Wed, 18 Nov 2026 03:35:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xTb1I-00035T-5r; Wed, 18 Nov 2026 03:27:57 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xTb8e-0003wF-SY
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 03:35:32 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xTb1E-0007gP-Ra; Wed, 18 Nov 2026 03:27:55 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AI2SSJf2432379; Wed, 18 Nov 2026 08:27:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=lVwZUK
- gXmG+GyiwPE2vjnLxdHvL6jl7K/3+zcyi5oJ8=; b=nkq1l3hb5rfrjCICaYjoNq
- TeMC6EqkqyDa5AYy+7vrey3rKJZN0hN2CqRYhcZjHdwZKatU5uIGak5xJjWfXshm
- 5HTTor0Zqze2QsynQUPQ/Y4gFU/ddIn3pT5LAGkETGRoT9vg5F12DJnA9joAHqfq
- bw94/Y4xRejLXyWDjOKk+H6klcNJg2E4JgthjbBC2zbR1u5hHUWS2fRbbh718G8O
- Fa5iydbuOMzs8Gsa8l4Ge2s4+kUzbnexQQqCyyiitu+vRa/w3MtwJFZ9oVL6qvn2
- Y8WpCQRVGJqHtvt031nqNQ0sQI6dXBeDapELvEiblEbWuxHwxAAT8z6dAVP/l3Jg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105rhj37-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 18 Nov 2026 08:27:47 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AI87KJr2766468; Wed, 18 Nov 2026 08:27:46 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hyxwt7r3j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Nov 2026 08:27:46 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AI8RjaL11207608
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Nov 2026 08:27:45 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E8DF058052;
- Wed, 18 Nov 2026 08:27:44 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ED05358056;
- Wed, 18 Nov 2026 08:27:42 +0000 (GMT)
-Received: from [9.111.1.121] (unknown [9.111.1.121])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 18 Nov 2026 08:27:42 +0000 (GMT)
-Message-ID: <639f0cf2-f637-4fd4-bfb8-645c584a9377@linux.ibm.com>
-Date: Wed, 18 Nov 2026 13:57:41 +0530
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xTb8d-00051t-Fr
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 03:35:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=MsrGlmS6/+Kmllis2f9S7X6HjnU0+QAYrGTG8ffSIZQ=; b=0JnQBq9QZlnKwTgzT+y+zhak58
+ GnpOifUdSPBJfasi+TKfk2UMDwz/tCwu6uB3pGgmkJTEq0tl02iugzDMkdnFL4TfPBvYXoyo6hBOj
+ Hg7vTIe0kzY0JapGQY90R3YhqO/vdSSGlXjPneMDTxj7kE4GXSFLD0G90V1xJGXeEm3QHKF2cMBVj
+ LI3KglEol3SfGUgQSh4F7voHmyLM/EYc/gcNCrMEy1UQO7wL/h1G7JqW1uyVZYj0GQacJzhMo5x05
+ Sm/RvgSidgqjVkHh5buv21fTWhKFkv4Jf6N5I97m3b0akS5gjKU44DNPvDbYJEiNj+JV5riNUYoRN
+ pZMxqStVfaejFG7+X8hVw+2+2sXc4kM2XdS8luxf/EPNP2A8xP8sswiuaMZCnhqH+FlKL+wcXv2Hv
+ oqkvguherw4dUiRyjmn/6N4q4GteTLJJj/lD/RaaC5hO1vgV07BTN8cIvd5+vwAEcMMtkZvLKrIKb
+ HfpEKNTsSAsyxFzSDkWC1UQyWZhZYo/KDR9TSBc62z8CsP7BkeABixOMo80qAQQwdY/2wsV6E0JnH
+ 8+Z92gRFUAefVaVLVdW19b0qNxO4Wcako3hGTQd80jjo1uvgTeQ0nLvtEuHyGeMytfnUlW9xGtUP7
+ 6iiZm2GaiXVe/RQIg9hFCSKuN89VWLqfQYJTDqq+g=;
+Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xTb7j-008ALW-EK; Wed, 18 Nov 2026 08:34:35 +0000
+Message-ID: <bf68bef8-0eed-4939-9480-cf4a8de4bfbc@ilande.co.uk>
+Date: Wed, 18 Nov 2026 08:35:23 +0000
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 6/6] spapr-vscsi: clamp adapter info DMA write length to
- struct size
-To: Peter Maydell <peter.maydell@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-stable@nongnu.org, qemu-devel@nongnu.org,
- Guthrie McAfee Armstrong <git@gmarmstrong.dev>,
- Gautam Menghani <gautam@linux.ibm.com>
-References: <20261028052024.38377-1-harshpb@linux.ibm.com>
- <20261028052024.38377-7-harshpb@linux.ibm.com>
- <CAFEAcA-CML7CFxn7WC0d2uuE6cHJbM2-p2Lv-wcAXWU9kpsRWw@mail.gmail.com>
- <e2e9c608-f139-447f-887f-8fb4909470a3@linux.ibm.com>
- <CAFEAcA8M6PhCQV6EtKSp9VtqroA2Ah82y1--q_8Argg686_YwA@mail.gmail.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <th.huth+qemu@posteo.eu>, Laurent Vivier <laurent@vivier.eu>
+References: <20261117080747.8035-1-philmd@oss.qualcomm.com>
 Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <CAFEAcA8M6PhCQV6EtKSp9VtqroA2Ah82y1--q_8Argg686_YwA@mail.gmail.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20261117080747.8035-1-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: NS37BvVQr6epYuHvpcYtyRgo-GkIODIe
-X-Authority-Analysis: v=2.4 cv=e8uT2qp/ c=1 sm=1 tr=0 ts=6afd6183 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=mzCaFhDXLt_ih2R9WysA:9
- a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE4MDAzMyBTYWx0ZWRfX7ZhVe2wQxwGi
- RGEOHlWncforQS8moRuzqqQi0E60/LwFpmK+ub5JWwTGIygLt3Tucjun4dgTHloKUv0VwY81AMe
- JxMBgaHSW3B3L/hNmcFTzAORfhCbBAU=
-X-Proofpoint-ORIG-GUID: NS37BvVQr6epYuHvpcYtyRgo-GkIODIe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE4MDAzMyBTYWx0ZWRfXxuaMY+Oy8a4B
- laOvh8ZOGgHM6DLrPVtNJySPQNAtiqwTQD/c9WrYjlbsNUb++Jz6EFPJJl6onf3eG1SPWDv8LSN
- IjBsA4XhMre4Da4hxDzQ69j87PNBa1Xl1zb2ExB5gShIbVTncPl/F80/z7zRRC/SSTBwwQkNO9N
- lNIAQ2ioUDpBe7y9Q1xEDQunZ+a39DF/BG3/x9vaV+nNIi7u3fVPHkgAI/Y1DCrt7RMZ/mJk9gx
- VJal2EIpJ8X6s+PyK+Zkn6MlUDCuXC52hY4RZA77o7RHG87E6JbaWwl8atHl9gGGjPfjm+py1WY
- MiJk4Z1Kup1JYKkt8YfbYyltcVthuQod5ScUSXmrPn6qZ6KPL/utOx8qnUvcCB51z3TeQihnUg5
- 8CSvdwYEpBHuA3Q5PcU1S3Wrphv2i6WozvSO51/YR4CCjz58kZcyFlw+jMMK9I2NfJ88QvJtXCx
- 6w951Zget54II7ikmhA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-18_01,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 malwarescore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611180033
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] target/m68k: Fix TB_FLAGS_TRACE* definitions
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,75 +101,48 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On 17/11/2026 08:07, Philippe Mathieu-Daudé wrote:
 
-On 11/17/26 20:47, Peter Maydell wrote:
-> On Tue, 10 Nov 2026 at 06:54, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->> + qemu-stable
->>
->> Hi Peter,
->>
->> On 05/11/26 8:57 pm, Peter Maydell wrote:
->>> On Wed, 28 Oct 2026 at 05:21, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>>> From: Chinmay Rath <rathc@linux.ibm.com>
->>>>
->>>> vscsi_send_adapter_info() used the guest-supplied common.length
->>>> field directly as the size argument to spapr_vio_dma_write().
->>>> Since common.length is controlled by the guest, a value larger
->>>> than sizeof(struct mad_adapter_info_data) (148 bytes) caused
->>>> dma_memory_write() to read past the end of the stack-allocated info
->>>> struct, leaking arbitrary host stack contents into guest memory.
->>>>
->>>> Fix this by clamping the write length to sizeof(info), then using
->>>> spapr_vio_dma_set() to zero-fill any remaining bytes the guest
->>>> requested beyond that size. This mirrors the existing pattern in
->>>> vscsi_send_capabilities().
->>>>
->>>> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4626
->>>> Reported-by: Guthrie McAfee Armstrong <git@gmarmstrong.dev>
->>>> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
->>>> Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
->>>> Tested-by: Gautam Menghani <gautam@linux.ibm.com>
->>>> Link: https://lore.kernel.org/qemu-devel/20261007144434.374749-1-rathc@linux.ibm.com
->>>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->>> Shouldn't this be Cc: qemu-stable@nongnu.org ?
->> Yes, should have been marked for stable. I have CCed it now though.>
->>> Given that spapr-vscsi is supposed to be covered by the "virtualization
->>> use case", have we deliberately decided we didn't want to give this
->>> a CVE, or did that step in the process get missed ?
->> I think it got missed, can we still request for a CVE to be assigned on
->> the gitlab issue?
-> I asked Dan on IRC, and he said:
->
-> "depends how far in the past it is - if we've not released the fix
->   in a major release, I'd jsut temporarily re-open the bug and add the
->   CVE::Required tag, and close it again once assigned
->   that way we at least get a record of the CVE in the issue tracker, even
->   though its missnig from the merged commit message
->   if it was already fixed in a previous major release, I'd just accept
->   that we dropped the ball and move on without a CVE"
->
-> which sounds like a good idea to me.
->
-> Speaking of things that got missed, what about
-> https://lore.kernel.org/qemu-devel/20260819095855.115823-1-rathc@linux.ibm.com/
-> ("hw/scsi: validate IU buffer bounds in vscsi_preprocess_desc()")
-> which is another one from Chinmay for this device that got posted
-> back in August and never applied ?
-Hey Peter,
+> TB_FLAGS_TRACE and TB_FLAGS_TRACE_BIT are swapped.
+> Fix to avoid m68k_get_tb_cpu_state() set an invalid bit.
+> 
+> Fixes: 5e50c6c72bf8 ("target/m68k: implement m68k trace mode")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>   target/m68k/cpu.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+> index 781c98f78400..5adca8ed49f7 100644
+> --- a/target/m68k/cpu.h
+> +++ b/target/m68k/cpu.h
+> @@ -606,8 +606,8 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+>   #define TB_FLAGS_SFC_S          (1 << TB_FLAGS_SFC_S_BIT)
+>   #define TB_FLAGS_DFC_S_BIT      15
+>   #define TB_FLAGS_DFC_S          (1 << TB_FLAGS_DFC_S_BIT)
+> -#define TB_FLAGS_TRACE          16
+> -#define TB_FLAGS_TRACE_BIT      (1 << TB_FLAGS_TRACE)
+> +#define TB_FLAGS_TRACE_BIT      16
+> +#define TB_FLAGS_TRACE          (1 << TB_FLAGS_TRACE_BIT)
+>   
+>   void dump_mmu(CPUM68KState *env);
 
-I have responded on the original thread now, and shall take care going 
-forward.
+*facepalm*. I must have introduced this bug during submission for upstream as I 
+definitely used it during development for debugging a NetBSD issue. Thanks for 
+spotting this Phil!
 
-Regards,
-Chinmay
->
-> thanks
-> -- PMM
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+
+
+ATB,
+
+Mark.
+
 
