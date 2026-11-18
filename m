@@ -1,93 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9558B606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946DB606A32C
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 06:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lHSlRZGU
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iug4zFJ4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTYlV-0005Cg-B4; Wed, 18 Nov 2026 01:03:29 -0500
+	id 1xTYlP-0005Bn-7M; Wed, 18 Nov 2026 01:03:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xTYlK-0005Bi-9u
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 01:03:19 -0500
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xTYlH-0005BL-4s
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 01:03:15 -0500
+Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xTYlI-0003zL-J3
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 01:03:17 -0500
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-71aea92f666so387302eaf.2
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 22:03:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xTYlF-0003Y8-Dw
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 01:03:14 -0500
+Received: by mail-oa1-x29.google.com with SMTP id
+ 586e51a60fabf-4ad587ba293so416167fac.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 22:03:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794981795; x=1795586595; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Xl2/uj5l9DlpnL9JicC2LIldYUr6zKoBKpkVXIT8Bo8=;
- b=lHSlRZGUHPxXWu7rDQfGOZmvehHbZQCq7aLmzk+7LqdtXr/3j2inbo79XmG+R2GV2I
- DHL5gEC0UZcKFUEGxPyQxfqOn4iod0qQnGyjDNrQ/k3WYpIJRdsJyzJwaeB9SE7iWGlh
- tVM2K0HZ2sphluHNTOHXK8FN8b2MJenZnwLD8Znivqyls031MldnB0oVctnRvJaIk//5
- XrdE1CCIGPXDtckDI3Zzls/XK2YdZGREJpMPzD4MyY//2ZTtQUaoUNXWCHl1HCkrtpyk
- i65TMQRmM7Cw0UHYuJAlrG0Vt5/UID3EoINtPz+t+uagc9ipKtjgi8sxYsYnIKyU+xTo
- ThjA==
+ d=gmail.com; s=20260707; t=1794981790; x=1795586590; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=JrHhCUsXhPTUpH9xjNmeczBcmgtCd0+kazu1Dq95rGw=;
+ b=iug4zFJ4cdLAOF188m85kdsv9T059bLM4jQTjy+i9dZFWCKSQnY+N/CORlBqAz4zZ7
+ Ib3CvjgXfSRJ2rvTRqAnxCfqMOdkRm8wlWa/QwAsZa3FFaDhavfgLnJFd3u4tRs3ykAJ
+ Rm5q6qe7WVxsDZ/CnVIl58F27GLGo8rTeDS7wJHeTdxwTsh8zqs0ZnWWerNr+B8V+NEV
+ zmuxKopi/yrQS+qZb9pctHPCo3gzHjYfIm/yOib65nZ4pWZr78cuuFGpDhDQQmlYu9lT
+ Za0pGS45RJLABFBESf+ryQ0gCr6J0Oc3GuuetqvGjdhH4Y2ggS9Sr8eN6BU54rqIMPYO
+ 08yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794981795; x=1795586595;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Xl2/uj5l9DlpnL9JicC2LIldYUr6zKoBKpkVXIT8Bo8=;
- b=W5TU2/nHpEoXDJDgq4sga0sTPk60wHNFnzuMcY0uSBxz7O4sB7fIG7jGoLQtFGLZwB
- BLq4RjY9vdBnwW5cNXLstVQcyiTss4Up2NM38fNlDVEXq7QdoNFJC2cO3sMtIfv3xpn3
- Li9jBBirWPKTecDLm4ElMcAi+2TkeB2KaGneONVUG5bkfyGreEQcbBvD6t0+W54SukXe
- /q9BpGa51ZIt+0Lq/FyYC7HJAop/8b+PEvTVHmJ/1qOqwqr76GM3H3nnV7xbmZWMKxxJ
- BtvUrpT5g73xVoGv1lNCigjUmZGx8qCuoiIDA+q6I/coiAPQOjWDi3fRVMS/ttbF+Lxz
- XYig==
-X-Gm-Message-State: APuU4Z/Iqa3qCKm8OoCL93ViCO9+56+fNjb405KiHEnng1pZ/qmCh/5P
- afPODJImL8wZGogBxwM8M026v8RF3VCdBVfcmvZY9XH1eX5F1p0x0YID
-X-Gm-Gg: AYBFou0G3YmX35X4BbDw+eWG+9IrDqMzXqlS6duCY8REMOIfV7Qeqkjwm1/kN2WcBR8
- xFbwns3hJYFRi4ptLnkEiLsYJ5CZp/UAP6dWw224SNzW+hutcQfhzceECjjtgyvR5rFG0tPhscV
- TC/NiVfHC+7RcsOjbSgfV27jJIAxM7j7KEItuG0elTLa2rgEOebpRCIgPAARq7Xgjv+Aq/+MBDb
- YIqDkKbk9IOc1bfr8kU4W6TLIlBrNtnK8QuA/elGrJPICmq8V1SyWaTh3YPxCAXUfK1XmiiLosZ
- pYKRZMuL4y0hlFy4qjZLjG/TlknYQ5y4j1bPTcNR60pGWfSg5S98R5oG5nGzNYoCVdUOxKYSKwP
- /LtydnPckt+7wCHpNvBq1i3OO/sqRcQCPx+IsrnWjb/GN70cUlNxv/TTOFIRp/46GJrVj/WtOyR
- H8m5GVvuuPSxsfbr3SFplA/M+8bixP0UkXPr+gEMQ9ekpHwsH/VMb9JB9HIwSI5aqhuoOWo7hgJ
- 7z6f68mcVQIeNQwOMkHT+c2oLJwhRDC4iDST7SDl9I9nznY/anHrCdJMzZ+4uICN/SV0BHBqP10
- bdlTlTb0U36nEalOank3T0XBzFQ=
-X-Received: by 2002:a05:6820:16a0:b0:71b:187f:1d05 with SMTP id
- 006d021491bc7-71b187f2097mr1273431eaf.68.1794981795174; 
- Tue, 17 Nov 2026 22:03:15 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794981790; x=1795586590;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=JrHhCUsXhPTUpH9xjNmeczBcmgtCd0+kazu1Dq95rGw=;
+ b=tJYRxh/LyfcWtYVG3GR3k5X+++HYhUEO52e08NTPnH93Z3SQ93XVMW3sOFOYMn7VwQ
+ 4Uuzt9RWVM1JuuRdt6QfF1GOm3r04XgncryZJ/DkDUifszx3RUaC7TWquEsdkJ6NbnFI
+ nSBq07AFn/wLzAcU7vxWRAmjvi3tIouC5GDVRxsGi26YkiYHJTlgxj06QSuKES9zeJD0
+ haVXL/AMtNB8+doRwIBH2hUdYk/0Yw96DWIXXdhUBODJYszQcaRB0w/LtPxTgLZn778W
+ iy4vNTY8tkBqojbSXtpOVPPfqfd5o1Qcedg5/i/UMHIYV00b3MkAFBgPpDpx+Gd3kQZg
+ QQZg==
+X-Gm-Message-State: APuU4Z8KbyuFfsytet0z4jPza7W0/h3mNvCYW7Ad9VcAzJF0qjevVLff
+ lOy6weJ5tQlkwFdBSXiOa6x13XoiksaGoZnX3qcX+UvLQkP0ugPrqQp9
+X-Gm-Gg: AYBFou24C3ZQgxOOHhcYIsymeXctbqumlAWAcnj8c4uVtt7GjZQBmWdp44UWzlwpQ1e
+ ycL1+ZwOhKJ/AHVpx0OXxMumgYoYUYZA6snGa0wGen+6iOLOREkArwsjydHQVFMkOuL7XrRuk+E
+ yRnLOJC8tYYpvStAHKJ/H5wVaSxo9t+MCneswIZFtSbZNEz6m83ucfmLKhe5J2yn7U72GT8CsKk
+ s/zFDBFDionQcvAXYmlXMHzYm+rl9ikcROWc2gUL5epVDxZhYQ69sk+3vXhEA3IlJpxhOzMvRBK
+ 9Tuxrnlv8QShmd0sqWSPoDaE8z9HPQzbnzDZ5sE6eOeW0wIbryS+DPsLFqtBMBGyimBE8wwxUD0
+ k1GuwQ5B24SmY4glIGOTQnA3Dbej3vxDPe9I6IxagVV7msvXiOQeAce0pCEzofYWVTmo5E/Ph0u
+ bOZppElG0JTj+DX0NUbsNfeovNeJxvKkHw+veyRbo3SIqhb1/PnP5e7C4jddRVwGKSTZne8fwwN
+ p+6/oUrpR6qYg1Cr2/f7MUYQRlBag6xVOrlPFzjZblQTSbxeOy1CSBmZOTvKmH9GgmJcm3T/PmC
+ eE51j6yDi3TmoHJLd3vMveBtFgI=
+X-Received: by 2002:a05:6871:2edf:b0:493:186e:b51 with SMTP id
+ 586e51a60fabf-4b75d2575eamr1276186fac.20.1794981790084; 
+ Tue, 17 Nov 2026 22:03:10 -0800 (PST)
 Received: from [127.0.1.1] ([2605:ad80:33:509c:ff29:6c8b:a81b:ce71])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-4b74372cb6bsm1358721fac.4.2026.11.17.22.03.12
+ 586e51a60fabf-4b74372cb6bsm1358721fac.4.2026.11.17.22.03.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Nov 2026 22:03:13 -0800 (PST)
+ Tue, 17 Nov 2026 22:03:09 -0800 (PST)
 From: Andrew Nguyen <xmphyr@gmail.com>
-Date: Wed, 18 Nov 2026 00:02:53 -0600
-Subject: [PATCH v2 2/2] target/i386: check hardware acceleration with -cpu
- host and scalable error
+Subject: [PATCH v2 0/2] target/i386: make error message for -cpu host more
+ informative
+Date: Wed, 18 Nov 2026 00:02:51 -0600
+Message-Id: <20261118-4836-cpu-host-error-v2-0-ba02bb640d9d@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261118-4836-cpu-host-error-v2-2-ba02bb640d9d@gmail.com>
-References: <20261118-4836-cpu-host-error-v2-0-ba02bb640d9d@gmail.com>
-In-Reply-To: <20261118-4836-cpu-host-error-v2-0-ba02bb640d9d@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAIs//WoC/32NQQ6CMBBFr0Jm7RgGLRJX3MOwKHQKkwglUyQaw
+ t2tHMDle8l/f4PIKhzhnm2gvEqUMCUoThl0g516RnGJociLkogMXqtLid38wiHEBVk1KBJXpqU
+ b554cpOWs7OV9VB9N4kHiEvRznKz0s/97KyGhdz7n1pStrWzdj1ae5y6M0Oz7/gWAs22MtgAAA
+ A==
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
  Peter Maydell <peter.maydell@linaro.org>, Andrew Nguyen <xmphyr@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794981788; l=2033;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794981788; l=1813;
  i=xmphyr@gmail.com; s=20261115; h=from:subject:message-id;
- bh=IZ8lIXL26iA16ORR+IngSnn/rMP1mNzjWyTWSalCn8g=;
- b=ccqZBxRmI9IKEe09TTiGb50yzzMv6W0O/dW3Vh+8zjGESB9FpawhfruFHZkxCJj2oiQ7Ray0H
- b6i/ACP5xA9BfW4JnAL6O6qfrX1hFsmgBylJatylE5Q5gBjMvdl9g21
+ bh=zGxLgq+fmlHyrsqB2xJLoUlX1Dd0O3Hr1GSHB+dpaiA=;
+ b=+jzBaNJ49eCo7JoSW2B/MfdDldWXoIj5jXMvyEVg5PmeMQS0VpGUBBkUulBPboYdJiTp63mSR
+ jwkGvEhlWlaDkB8kVvQbm3BN5oVxtcVkZhR+eAwiOF+gXTBEs9HN1Lo
 X-Developer-Key: i=xmphyr@gmail.com; a=ed25519;
  pk=NNmtCKBlfBcUb+tQiMXr0u4Z3W1r0gSDovSDVTzPWXE=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=xmphyr@gmail.com; helo=mail-oo1-xc36.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::29;
+ envelope-from=xmphyr@gmail.com; helo=mail-oa1-x29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,74 +107,56 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Added an additional check with -cpu host: that a hardware accelerator is
-enabled. The error message for when a hardware accelerator isn't used
-gives a list of supported hardware accelerators. This list is made more
-scalable in the form of a separate function that is substantially easier
-to find and append later down the line.
+This is a resolution for issue #4836: https://gitlab.com/qemu-project/qemu/-/work_items/4836.
+"-cpu host" by itself is not permitted; an accelerator must be specified as well. For Linux,
+it is KVM. macOS is HVF and Windows is WHPX.
+
+Previously, QEMU would only tell the user to use either KVM or HVF, essentially excluding
+Windows users.
 
 Signed-off-by: Andrew Nguyen <xmphyr@gmail.com>
 ---
+I originally was going to make hwaccel_names() a macro, but that felt wrong. 
+
+I am considering putting the hwaccel_enabled() call in accel_uses_host_cpuid(), but I'm not 
+totally sure what that function is for at the higher level. My assumption is whether or not 
+QEMU is able to get the CPU's capabilities.
+
+Just now realizing that the cover letter should largely be left unchanged between revisions.
+However, I don't know where to put additional comments otherwise...
+
+---
+Changes in v1:
+- cpu.c:10229: added WHPX to the error message when "-cpu host" doesn't include an accelerator
+
+Changes in v2:
+- cpu.c: added a check for hardware acceleration
+- cpu.c: replaced the explicit list of hardware accelerators
+- hw_accel.h: created function hwaccel_names() to return the list of hw accerlator names
+- Link to v1: https://lore.kernel.org/qemu-devel/20261115-4836-cpu-host-error-v1-1-fdf0eb56ba8a@gmail.com
+
+---
+Andrew Nguyen (2):
+      target/i386: make error message for -cpu host more informative
+      target/i386: check hardware acceleration with -cpu host and scalable error
+
  include/system/hw_accel.h | 10 ++++++++++
- target/i386/cpu.c         |  8 +++++---
- 2 files changed, 15 insertions(+), 3 deletions(-)
+ target/i386/cpu.c         |  7 +++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+---
+base-commit: e9fa1f66f0d47c74b6766e1b8b87ad7c2a9394d5
+change-id: 20261115-4836-cpu-host-error-1e85b17e0f1d
 
-diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
-index f0c10b6d80..04608073f7 100644
---- a/include/system/hw_accel.h
-+++ b/include/system/hw_accel.h
-@@ -54,4 +54,14 @@ static inline bool hwaccel_enabled(void)
-         || whpx_enabled();
- }
- 
-+/**
-+ * hwaccel_names:
-+ *
-+ * Returns: String of supported hardware accelerators.
-+ */
-+static inline const char *hwaccel_names(void)
-+{
-+    return "kvm, hvf, whpx, or nvmm";
-+}
-+
- #endif /* QEMU_HW_ACCEL_H */
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 7dd5535f80..375a4453e4 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -25,6 +25,7 @@
- #include "cpu.h"
- #include "tcg/helper-tcg.h"
- #include "exec/translation-block.h"
-+#include "system/hw_accel.h"
- #include "system/hvf.h"
- #include "system/mshv.h"
- #include "system/whpx.h"
-@@ -10227,10 +10228,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    if (xcc->host_cpuid_required && !accel_uses_host_cpuid()) {
-+    if (xcc->host_cpuid_required && (!accel_uses_host_cpuid() ||
-+        !hwaccel_enabled())) {
-         g_autofree char *name = x86_cpu_class_get_model_name(xcc);
--        error_setg(&local_err, "The '%s' CPU type can only be used with KVM,
--            HVF or WHPX", name);
-+        error_setg(&local_err, "The '%s' CPU type can only be used with "
-+            "hardware accelerators %s.", name, hwaccel_names());
-         goto out;
-     }
- 
-
+Best regards,
 -- 
-2.43.0
+Andrew Nguyen <xmphyr@gmail.com>
 
 
