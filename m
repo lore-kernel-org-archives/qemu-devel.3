@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B22606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84517606A32C
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 10:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Jh5bVGFV
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=I8Oo/fbi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTd7D-00023I-Gg; Wed, 18 Nov 2026 05:42:11 -0500
+	id 1xTd7I-000245-43; Wed, 18 Nov 2026 05:42:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xTd7B-000234-DB
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 05:42:09 -0500
+ id 1xTd7F-00023h-LW
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 05:42:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xTd79-0007zX-8Y
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 05:42:09 -0500
+ id 1xTd7C-0008Bv-8b
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 05:42:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1794998526;
+ s=mimecast20190719; t=1794998529;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=J6nB5hNDDLFPyL6UC11z8wuXocmeP22ooCkXbT/lpYE=;
- b=Jh5bVGFVnweNHbBzzkb8FHZL7SrbhoL38Xa7nHTHh616vDMR+tErX2kL0hKLkBHF0K0MG9
- jQGfdb6WClWZmmznEFQ28gaKuthyLcgpeDinkfFClLRVvLqyE5E61pPRvZ84nTGctK5E8Y
- 7mqRrBKbx/MAEmdcpdR+uK2N8N2OotQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=NCNEVlFjRYtXaF0pj08BiD4SgrUDi+bG/fNpwhqEOqQ=;
+ b=I8Oo/fbiXHR32+OqklvYtruyfKfMNzWyOK7UQ+HuLveo4PuABPBhb+MGZn7TytXhuTW8Z/
+ mEEkscrd1nPr+S/b497l2Yqr3gLsqx+BH/XuaxIRk8X6mUZOPqjsCTBOPP6/68FWVUmdjq
+ JBIniPS/7yZO6rk1MKFkdL85VTDVees=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-Mt3Itd6_OiOE71uXBe6ufw-1; Wed,
- 18 Nov 2026 05:42:05 -0500
-X-MC-Unique: Mt3Itd6_OiOE71uXBe6ufw-1
-X-Mimecast-MFC-AGG-ID: Mt3Itd6_OiOE71uXBe6ufw_1794998523
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-tIDh5gmUPPe7hWVwbWWfCw-1; Wed,
+ 18 Nov 2026 05:42:02 -0500
+X-MC-Unique: tIDh5gmUPPe7hWVwbWWfCw-1
+X-Mimecast-MFC-AGG-ID: tIDh5gmUPPe7hWVwbWWfCw_1794998520
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E1CE1955D97; Wed, 18 Nov 2026 10:42:03 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CFD8219560A6; Wed, 18 Nov 2026 10:41:59 +0000 (UTC)
 Received: from pbonzini-thinkpadx1carbon6th.rmtit.csb
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3F136195B3C2; Wed, 18 Nov 2026 10:42:00 +0000 (UTC)
+ id 9C2BA195B3C4; Wed, 18 Nov 2026 10:41:56 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S . Tsirkin" <mst@redhat.com>,
@@ -56,12 +56,10 @@ Cc: "Michael S . Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 2/4] AGENTS.md: let agents know what the participation rules
- are
-Date: Wed, 18 Nov 2026 11:41:48 +0100
-Message-ID: <20261118104150.599535-3-pbonzini@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+Date: Wed, 18 Nov 2026 11:41:47 +0100
+Message-ID: <20261118104150.599535-2-pbonzini@redhat.com>
 In-Reply-To: <20261118104150.599535-1-pbonzini@redhat.com>
 References: <20261118104150.599535-1-pbonzini@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -97,176 +95,457 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Humans seem to be extremely unreliable in following rules around this,
-even after being told directly and repeatedly. Telling agents what to
-do seems to yield better results.
+Until now QEMU's code provenance policy declined any contribution
+believed to include or derive from AI-generated content.  A blanket ban
+was easy to maintain while LLM output was rarely usable on its own, but
+as the tools improved an absolute prohibition has become harder to
+justify and enforce.
 
-The starting point for this document is GStreamer's AGENTS.md file, as
-of commit d08375499c279a56c0e77c928fbeae0d80cdf937.  I used GStreamer's
-agent instructions in the context of Meson, which uses a very similar
-file, and it's both annoying and too willing to take the lead once the
-model decides that it likes you.
+Even a simple code review task these days may result in the agent
+suggesting code changes, or producing a useful test case to verify the
+presence or absence of a bug.  A hardline interpretation of the policy
+makes it hard to use AI even for tasks that are explicitly allowed.
 
-To avoid this, the text tries to favor cooperation between agent and user.
-It suggests that the agent includes the state of the work when committing,
-so that contributors have the material they need to review the agent's
-work.
+On top of this, several maintainers have pointed out that contributions
+that can be reasonably suspected to be AI-assisted or more have been
+posted and included.  Some of these contributions are actually of very
+high quality; it seems that the mailing list-based contribution process
+has mostly protected QEMU from low quality patches.  A prohibition on
+AI puts maintainers in a difficult position: on one hand the DCO process
+lets them rely on the submitter's certification of origin, on the other
+hand maintainers are supposed to know and implement the process policies.
 
-To test it I tried the following prompt:
+Since the policy has been written, other projects have discussed and
+taken their stance on AI contributions.  These vary from full prohibition
+(though typically motivated by social reasons rather than legal, e.g.
+for Zig) to limited use (e.g. GCC, allowing small contributions and
+tests to use AI), to cautious experimentation.
 
-  Hi, i am doing my first AI assisted contribution to QEMU. i am familiar
-  with the project, but would nevertheless like to experiment. please
-  generate a sample implementation of a pressure sensor, of any model,
-  of a kind that is commonly used with Arduino or ESP32 microcontrollers.
+This proposed policy seeks to implement the cautious experimentation
+approach, inspired mostly by the Rust project's policy and by Software
+Freedom Conservancy's own recommendations on LLMs and generative AI.
 
-The agent did read llm-usage.rst and after doing the work (implementing
-a BMP280 pressure/temperature sensor) it noticed:
+Relying on Conservancy's legal guidance allows us to focus on the
+interaction between contributors and maintainers.  Conservancy in
+particular provides this point to alleviate the concern that motivated
+the policy, about whether the submitter has the legal right to contribute
+the code and about unintentional reproduction of copyrighted code:
 
-  Policy, before this goes anywhere near the list. A new device model plus
-  qtest is the fourth bucket in docs/devel/llm-usage.rst: large, heavily
-  LLM-assisted, allowed only if pre-arranged — a maintainer has to say on
-  IRC or the list beforehand that they'll review it. hw/sensor is Philippe
-  Mathieu-Daudé (Odd Fixes), with Corey Minyard on I2C. I should have
-  flagged this before writing rather than after; that's on me. Disclosure
-  would be AI-used-for: code, tests above your Signed-off-by, and the
-  commit message and any list replies have to be yours, not edited from mine.
+   "Copyleft Everything" remains the best viable and safest approach
+   Certainly those who want to release FOSS under non-copyleft licenses
+   have more to worry about when using these tools.
 
-I then asked "Can you provide a draft of the commit message with all the
-sources (datasheet, etc.)?" The agent complied but noticed:
+While we shouldn't treat copyleft as a silver bullet, it is effective
+as part of a defense in depth strategy that includes, for example,
+"de minimis" thresholds and `AGENTS.md` instructions that encourage user
+participation in the design.
 
-  AGENTS.md and docs/devel/llm-usage.rst state that commit messages MUST
-  be written by humans — an AI-drafted one must not reach the list
-  even lightly edited. So treat the below as scaffolding for facts and
-  sources, and write the final text yourself.
+Therefore, the revised policy considers QEMU's copyleft to be a viable
+approach to any unanswered legal questions about AI-generated
+contributions and their copyright status.  This lets the policy
+focus on the topic of what AI-assisted contributions require of
+maintainers.
 
-After some editing I asked "ok, will you please commit for me?" and
-it did so with basically my text, while also reminding me about the need
-for maintainer pre-arrangement.
+Going full circle to the reason why we might need to review the
+policy, there is the question of how to make sure policy is applied.
+QEMU maintainers have already experimented with using AGENTS.md files;
+subsequent patches will also try to embody the "work better, not faster"
+mantra into an AGENTS.md file.  Nevertheless, some explicit prohibitions
+should be included in the policy, and they are indeed.  The list is short
+and based on the Rust policy and the GStreamer AGENTS.md file.
 
-I asked "assuming pre-arrangement is this ok according to the policy?"
-and this was the assessment:
+Revise the policy according to the above considerations, and introduce the
+"AI-used-for:" trailer as a record of where AI was used.  The standard is
+slightly different from the more usual "Assisted-by"; the intention is for
+the metadata to provide more information for reviewers to judge the result,
+and to scope areas for which Signed-off-by cannot guarantee full control
+of provenance.
 
-  "Well-tested" — held to a higher standard, and here's what's actually
-  missing: [...] the vmstate (no migration test), reading past 0xFC and
-  reserved registers, the pointer_valid error path, oversampling/filter
-  fields beyond one readback, and behavior against a real driver — Linux
-  bmp280 was never run against this. None of those is hard; whether the
-  current set clears the higher bar is a judgment call I'd rather hand
-  you than make.
+For now, community consensus was to delay a decision on larger
+contributions that are mostly or entirely AI-generated.  The feasibility
+of rejecting such contributions remains to be seen, since some suspected
+AI-assisted contributions would still be disallowed.
 
-  "High-quality" is the open one. The doc asks that you have reviewed and
-  curated the contribution and can explain the changes and the rationale
-  in depth. In this session you engaged with the commit message and the
-  sources — and caught my datasheet error, which I got wrong — but the
-  design decisions were mine and unexamined by you [...]
+In any case, use of AI does not relax any other contribution requirement:
+authors still need to comply with the DCO (declaring that they have
+corporate authorization to contribute, for example) and take technical
+responsibility for their work.
 
-Overall, the files do affect the behavior of the agent.  The agent
-however made too many design decisions on its own.  This will be fixed
-in a separate step.
+[Commit message largely based on discussions with Daniel Berrangé,
+ Alistair Francis, Peter Maydell, Kevin Wolf and others. - Paolo]
 
-Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260524083329-mutt-send-email-mst@kernel.org/T/
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- AGENTS.md | 73 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
+ docs/devel/code-provenance.rst |  71 ++----------
+ docs/devel/index-process.rst   |   1 +
+ docs/devel/llm-usage.rst       | 191 +++++++++++++++++++++++++++++++++
+ AGENTS.md                      |  37 ++++---
+ scripts/checkpatch.pl          |   5 +-
+ 5 files changed, 225 insertions(+), 80 deletions(-)
+ create mode 100644 docs/devel/llm-usage.rst
 
+diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+index 65b8f232a08..7403961378e 100644
+--- a/docs/devel/code-provenance.rst
++++ b/docs/devel/code-provenance.rst
+@@ -128,6 +128,10 @@ that are commonly used during QEMU development:
+    suggestions for how to change a patch, it is good practice to credit them
+    by including a ``Suggested-by`` tag.
+ 
++ * **AI-used-for**: when AI/LLM tools were used to produce the patch, this tag
++   discloses what they were used for.  See :ref:`llm-usage` for the cases in
++   which it is required.
++
+ Subsystem maintainer requirements
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+@@ -282,68 +286,5 @@ boilerplate code template which is then filled in to produce the final patch.
+ The output of such a tool would still be considered the "preferred format",
+ since it is intended to be a foundation for further human authored changes.
+ Such tools are acceptable to use, provided there is clearly defined copyright
+-and licensing for their output. Note in particular the caveats applying to AI
+-content generators below.
+-
+-Use of AI-generated content
+-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-
+-TL;DR:
+-
+-  **Current QEMU project policy is to DECLINE any contributions which are
+-  believed to include or derive from AI generated content. This includes
+-  ChatGPT, Claude, Copilot, Llama and similar tools.**
+-
+-  **This policy does not apply to other uses of AI, such as researching APIs
+-  or algorithms, static analysis, or debugging, provided their output is not
+-  included in contributions.**
+-
+-The increasing prevalence of AI-assisted software development results in a
+-number of difficult legal questions and risks for software projects, including
+-QEMU.  Of particular concern is content generated by `Large Language Models
+-<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs).
+-
+-The QEMU community requires that contributors certify their patch submissions
+-are made in accordance with the rules of the `Developer's Certificate of
+-Origin (DCO) <dco>`.
+-
+-To satisfy the DCO, the patch contributor has to fully understand the
+-copyright and license status of content they are contributing to QEMU. With AI
+-content generators, the copyright and license status of the output is
+-ill-defined with no generally accepted, settled legal foundation.
+-
+-Where the training material is known, it is common for it to include large
+-volumes of material under restrictive licensing/copyright terms. Even where
+-the training material is all known to be under open source licenses, it is
+-likely to be under a variety of terms, not all of which will be compatible
+-with QEMU's licensing requirements.
+-
+-How contributors could comply with DCO terms (b) or (c) for the output of AI
+-content generators commonly available today is unclear.  The QEMU project is
+-not willing or able to accept the legal risks of non-compliance.
+-
+-The QEMU project thus requires that contributors refrain from using AI content
+-generators on patches intended to be submitted to the project, and will
+-decline any contribution if use of AI is either known or suspected.
+-
+-Examples of tools impacted by this policy includes GitHub's CoPilot, OpenAI's
+-ChatGPT, Anthropic's Claude, and Meta's Code Llama, and code/content
+-generation agents which are built on top of such tools.
+-
+-This policy may evolve as AI tools mature and the legal situation is
+-clarified.
+-
+-Exceptions
+-^^^^^^^^^^
+-
+-The QEMU project welcomes discussion on any exceptions to this policy,
+-or more general revisions. This can be done by contacting the qemu-devel
+-mailing list with details of a proposed tool, model, usage scenario, etc.
+-that is beneficial to QEMU, while still mitigating issues around compliance
+-with the DCO.  After discussion, any exception will be listed below.
+-
+-Exceptions do not remove the need for authors to comply with all other
+-requirements for contribution.  In particular, the "Signed-off-by"
+-label in a patch submission is a statement that the author takes
+-responsibility for the entire contents of the patch, including any parts
+-that were generated or assisted by AI tools or other tools.
++and licensing for their output. Note in particular the caveats applying to
++:ref:`AI content generators <llm-usage>`.
+diff --git a/docs/devel/index-process.rst b/docs/devel/index-process.rst
+index 5807752d704..ce0f4e73197 100644
+--- a/docs/devel/index-process.rst
++++ b/docs/devel/index-process.rst
+@@ -13,6 +13,7 @@ Notes about how to interact with the community and how and where to submit patch
+    maintainers
+    style
+    submitting-a-patch
++   llm-usage
+    code-provenance
+    trivial-patches
+    stable-process
+diff --git a/docs/devel/llm-usage.rst b/docs/devel/llm-usage.rst
+new file mode 100644
+index 00000000000..5f6d64de52f
+--- /dev/null
++++ b/docs/devel/llm-usage.rst
+@@ -0,0 +1,191 @@
++.. _llm-usage:
++
++Use of AI-generated content
++===========================
++
++.. warning::
++
++   Please read the below policy before using AI to contribute code or
++   documentation to QEMU.  This applies to ChatGPT, Claude, Copilot,
++   Llama, and similar tools.
++
++This document provides guidance around acceptable practices
++for using `Large Language Models
++<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs)
++when contributing to QEMU.
++
++The QEMU project does not want to dictate what tools contributors
++use for their work on the project.  However, the increasing
++prevalence of AI-assisted software development and of LLMs specifically
++poses a number of difficult questions.  Risks to open source projects
++include maintainer burnout from an increased number of contributions, as
++well as the risk to the project from unintentional inclusion of copyrighted
++material in the LLM's output.
++
++In order to mitigate these risks, the QEMU project limits the way
++in which use of the output of generative AI can be included in
++contributions to QEMU.  The main guidelines for use of generative AI
++tools are as follows:
++
++- It's fine to use LLMs to answer questions, analyze, distill,
++  refine, check, suggest, review. Use of LLMs to *create* is limited.
++
++- If in doubt, disclose any use of AI tools other than simple code
++  completion and code review.
++
++- LLMs are allowed as a tool to write *better*, not *faster*.
++
++**For any kind of LLM usage, the expectation is that the human contributor
++shall be able to :ref:`understand and explain the changes <write_a_meaningful_commit_message>`,
++the design choices, and the rationale behind them.**
++
++.. note:: **Use of AI does not remove the need for authors to comply
++          with all other requirements for contribution.**  In particular,
++          the ``Signed-off-by`` label in a patch submission is a statement
++          that the author takes responsibility for the entire contents of
++          the patch, certifying that their patch submission is made in
++          accordance with the rules of the :ref:`Developer's Certificate of
++          Origin (DCO) <dco>`.
++
++Prohibited use of AI
++''''''''''''''''''''
++
++The QEMU community is a collaboration between humans, not AI agent
++façades. The following items MUST be written by humans:
++
++- cover letters and commit messages
++
++- responses to reviewer comments
++
++- issue descriptions or comments
++
++Light copy editing of human-written text with an AI is allowed.
++
++An exception is made for defects detected by specialized tooling,
++including fuzzers and LLM-assisted defect detection. Such issues must
++be reviewed by a human before creation, must be created by a human and
++communication with maintainers must be done by a human, but including
++the verbatim tool output in the issue description is explicitly allowed.
++
++Repeated violations of these rules may be treated as a :ref:`code_of_conduct`
++violation.
++
++Official project agents may be exempted from one or more of these
++rules, at the discretion of the QEMU project maintainer(s).
++No such agent currently exists; in the future, such official
++agents will be listed in the documentation.
++
++LLM-assisted and LLM-created contributions
++''''''''''''''''''''''''''''''''''''''''''
++
++Use of generative AI can be classified in the following four buckets:
++
++- "background" assistance, such as completion and code review.  This does
++  not need disclosure.
++
++- small LLM-assisted bugfixes (as a rule of thumb, below 10 lines of code)
++  are allowed with disclosure.
++
++- use of LLMs to help generating parts of a larger patch---test cases,
++  adaptations of existing code, boilerplate code for a new API, a tool to
++  help performing mechanical changes, etc.  These are generally allowed;
++  disclosure is required for non-trivial, functional code changes.
++
++Large, heavily LLM-assisted contributions where LLMs write large parts
++of functional code are currently not allowed.
++
++LLM-created contributions will be held to a higher standard of testing
++than human-created ones.  Maintainers have freedom to determine what
++constitutes "high quality"; in particular, because LLMs lower the cost
++of patch generation, there are no exceptions for "writing the tests seems
++hard".
++
++Contributors who submit LLM-created contributions are required to
++apply the same judgment that would be applied to other code changes.
++They must invest substantial time reviewing the code and, when
++applicable, curating individual commits.
++
++The QEMU project explicitly forbids using LLMs to do "clean room"
++reimplementation of existing code whose license is not compatible
++with the GNU General Public License, version 2 **or later**.
++
++.. _ai-used-for:
++
++Commit messages for AI-assisted changes
++'''''''''''''''''''''''''''''''''''''''
++
++Whenever this policy requires disclosure of AI usage, contributing
++AI-assisted changes to QEMU requires you to certify that you followed
++the instructions in this document and in QEMU's ``AGENTS.md``.
++**To do so, include an ``AI-used-for:`` line before the
++:ref:`Signed-off-by <code-provenance>` line whenever the policy
++requires disclosure [2]_.** By using 'AI-used-for', a contributor
++identifies areas of the patch that involved use of AI/LLM, and attests
++that their usage of AI/LLMs was in compliance with QEMU policies.
++
++The text of the trailer is one or more of ``code``, ``tests``, or
++``docs``, possibly followed by an explanation in parentheses:
++
++.. code-block:: none
++
++     AI-used-for: tests, docs
++     AI-used-for: code
++     AI-used-for: code (refactoring)
++     AI-used-for: code (prototype)
++
++Do not include your prompts or summarize the conversation in the commit
++message or cover letter.  Extract any information that is relevant to the
++reviewer and include it in commit messages, cover letters or code comments.
++
++QEMU does *not* use ``Assisted-by``, ``Co-authored-by`` or ``Generated-by``
++trailers to indicate AI usage.  In particular, do not specify the exact
++AI model or tool used to create the commit.
++
++Deterministic tooling (sed, coccinelle, formatters) is out of scope for
++the trailer, but should be mentioned in the commit message.
++
++.. [2] ``AI-used-for`` must not be included unless some part of the patch
++       *content* was authored by the AI.  It should also not be included for
++       "background" usage such as autocomplete or obtaining a pre-review of
++       the patch.
++
++Motivation
++''''''''''
++
++There is not a consensus within the QEMU project---and likely never will
++be---about when/how/where it is acceptable to use AI-based tools.  Many
++members of the QEMU project and community find value in AI; many others
++feel that its negative impact on society and the climate are severe enough
++that no use is acceptable.  Still others are working out their opinion.
++
++In accordance with Software Freedom Conservancy's recommendations:
++
++- the project seeks to both support those contributors who outright reject
++  generative AI systems, and to not shun those who choose to use them;
++
++- we consider QEMU's copyleft to be a viable approach to the unanswered
++  legal questions about AI-generated contributions and their copyright
++  status;
++
++- we encourage contributors not to overuse LLMs, and to *add* them to
++  their existing skills and tools instead of replacing them.
++
++A common source of grief for maintainers is the (often valid) impression
++that AI enables contributions without understanding the effort they take
++for those who process them.  Effectively, this shifts a major part of the
++burden from the contributors to the maintainers---the scarcest resource
++in any free software project, not just QEMU.  Contributors should be
++mindful of this and take into account the demand they put on maintainers
++with LLM-assisted work.
++
++
++Sources
++'''''''
++
++This policy was informed by:
++
++- `Recommendations When Using LLM-backed Generative AI Systems for
++  FOSS Contributions <https://sfconservancy.org/llm-gen-ai/llm-backed-generative-ai-recommendations.html>`__
++
++- `GStreamer AGENTS.md file <https://gitlab.freedesktop.org/gstreamer/gstreamer/-/blob/d08375499c279/AGENTS.md>`__
++
 diff --git a/AGENTS.md b/AGENTS.md
-index 284059832b2..d646d548535 100644
+index c3d7664d0ae..284059832b2 100644
 --- a/AGENTS.md
 +++ b/AGENTS.md
-@@ -8,12 +8,80 @@ is **a scarce resource**.
- There are strictly-enforced rules for you, the agent, to participate in the
- project.
+@@ -1,21 +1,32 @@
+ # Agent Guidelines for the QEMU Project
  
-+## Interactions with maintainers must be human-human
-+
-+The QEMU project has strict rules on what AI-generated material can
-+reach the maintainers.
-+
-+### No AI-written text must reach maintainers
-+
-+These rules apply when publishing AI-assisted work to GitLab or the mailing list:
-+
-+- **AI-written cover letters and commit messages are banned**.  These are
-+  easy to recognize and waste reviewers' time.
-+- **AI-generated responses to reviewer comments are banned**. This undermines
-+  the human-to-human interaction fundamental to code review.
-+- **AI-written issue ("work item") descriptions or comments are banned**. These
-+  are verbose and waste triagers' time.
-+  - An exception is made for issues for defects detected by automated or
-+    semi-automated tooling, including fuzzers and LLM-assisted defect
-+    detection.  Such issues must be reviewed by a human before creation,
-+    must be created by a human and communication with maintainers must
-+    be done by a human, but including the verbatim tool output in the
-+    issue description is explicitly allowed.
-+
-+Copy editing of human-written text, for example to help non-native speakers,
-+is allowed. Keep such edits small and precise.
-+
-+The human's workflow may require you to perform commits or request you to
-+produce private drafts of maintainer-facing text.  These are allowed, but must
-+be marked as requiring rewrite by a human before publication.
-+
-+### No automated posting
-+
-+Assume that you are *not* an "official project agent" and that the
-+official agent exception in `docs/devel/llm-usage.rst` does not apply
-+to you; no such agent currently exists.  Therefore, you **must not**
-+use any API, CLI, or web UI automation to:
-+
-+- Interact on the QEMU mailing lists
-+- Create, edit, or close **issues ("work items")**
-+- Post **comments** on merge requests, issues or commits
-+- Open or update **merge requests (MRs)**.  QEMU does not use merge requests anyway.
-+
-+Defect detection agents are *never* official project agents.  The permission
-+to include verbatim agent output in an issue description does not allow you
-+to create the issue; a human must review the output and file it.
-+
- ## Helping the human to respect project policy
+-As an agent you MUST abide by the "Use of AI-generated content" policy
+-in `docs/devel/code-provenance.rst` at all times.
++QEMU is a cross-platform emulator and virtualizer. Due to the complexity
++of the domain and codebase, and the interactions therein, the QEMU
++project relies extensively on the effort of **human reviewers**, which
++is **a scarce resource**.
  
- QEMU's policy for AI-assisted work requires the human to develop in-depth
- familiarity with contributions and disclose use of agents to write parts
- of the code.
+-You are permitted to assist users only in the following scenarios:
++There are strictly-enforced rules for you, the agent, to participate in the
++project.
  
-+### Human must demonstrate understanding
-+
-+Staying familiar with what's going on requires constant effort on part of
-+the human; track their comprehension of the problem and of the relevant parts
-+of the codebase. Expect manual intervention before a change is ready to
-+post, for example:
-+
-+- pushing back on a specific part of your design or implementation, or
-+  asking to explain tradeoffs
-+- manual splitting or reordering of commits
-+- suggesting other places that need to be adjusted for consistency
-+- preferring reworded commit messages to lightly edited AI-generated ones
-+
-+In order to protect the project's scarcest resource, which is review time:
-+
-+- You should **facilitate this process** by offering alternatives instead of
-+  hard answers when applicable.
-+- You must **tell humans about these expectations** at handover.  Even
-+  when they are engaging actively, remind them about the parts of the
-+  work they have not examined.
-+
-+### AI usage must be disclosed and/or pre-arranged
-+
- Background assistance such as review or explanation does not require disclosure.
- Read `docs/devel/llm-usage.rst` before generating code, tests, or documentation
- intended for contribution; committing agent-generated material; or advising on
-@@ -34,6 +102,11 @@ the material.
-   know these rules and follow them.
- - Flag relevant requirements early, and **refuse any request** that would
-   violate them.
-+- If the human moves faster than their understanding, slow down and ask to
-+  resolve any open design choices.
-+
-+In case of contradiction consider `AGENTS.md` authoritative on how to behave,
-+since it is crafted specifically for agents.
+-- researching APIs or algorithms
+-- static analysis
+-- debugging
+-- local experiments not intended to be upstreamed
+-- trivial non-copyrightable changes
++## Helping the human to respect project policy
  
- Violations on part of the human may be treated as code of conduct violations,
- and may lead to sanctions including a permanent ban.
+-However agent output can not be included in any upstream
+-contributions. If a request falls outside these permitted categories
+-(e.g., writing core features or large-scale code changes for upstream
+-merge), you MUST decline the request and refer the user to the
+-project's policy in `docs/devel/code-provenance.rst`.
++QEMU's policy for AI-assisted work requires the human to develop in-depth
++familiarity with contributions and disclose use of agents to write parts
++of the code.
++
++Background assistance such as review or explanation does not require disclosure.
++Read `docs/devel/llm-usage.rst` before generating code, tests, or documentation
++intended for contribution; committing agent-generated material; or advising on
++disclosure. It is not required for review, explanation, or other background
++assistance that produces no contribution content.
++
++When agent-generated content is included in a contribution, remind the human
++to determine the appropriate disclosure under `docs/devel/llm-usage.rst`.
++If you commit agent-generated material, include an `AI-used-for:` trailer
++before `Signed-off-by`. Do not omit it by folding the material into a larger
++commit.  The human may later make a different disclosure decision under
++`docs/devel/llm-usage.rst`, after independently reworking and integrating
++the material.
+ 
+ ## Final instructions
+ 
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index e7514a4a9f5..cc311684d66 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1885,8 +1885,9 @@ sub process {
+ 		      $1 =~ /\bcopilot\b | \bchatgpt\b | \bcodex\b | \bcursor\b |
+ 			     \bgemini\b | \bllama\b | \bnoreply\b | \[bot\] |
+ 			     \bclaude\b.*(?:opus|sonnet|fable|haiku|anthropic\.com)/xi))) {
+-			ERROR("QEMU does not allow using AI for contributions, " .
+-				"see docs/devel/code-provenance.rst\n" . $herecurr);
++			ERROR("do not use \"$line\" to credit an AI agent, " .
++				"use the \"AI-used-for\" trailer instead; " .
++				"see docs/devel/llm-usage.rst\n" . $herecurr);
+ 		}
+ 
+ # Check for duplicate trailers and self-review
 -- 
 2.56.0
 
