@@ -1,59 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAAC606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 12:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EE7606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 12:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ZQixPt+H
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ImR5Evng
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTei4-0002QH-Kl; Wed, 18 Nov 2026 07:24:20 -0500
+	id 1xTehx-0002MQ-2D; Wed, 18 Nov 2026 07:24:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xTehv-0002MP-MV
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:24:12 -0500
+ id 1xTehs-0002Lo-RD
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:24:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xTeht-0004PK-Jk
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:24:11 -0500
+ id 1xTehq-0004BS-Bu
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:24:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795004649;
+ s=mimecast20190719; t=1795004645;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eM1zYvj0hiN0WCKibtQfKwk4bUqp+pEx5+LmXGp9N2s=;
- b=ZQixPt+HQVxLkr9vE9mpP813wQbzRc/DvcRDXHMgFbECw9PRpWOhSD04+Pgijj5Dod10Q1
- 9B5PcqALZs+qjLvNGBDXXHpA77vjUb7kZMob5CP2WuyKu0VzTIlpemUmpZovhHznSkBI8t
- FT2DapRU0to9IDMEvfEKHDvV6w8v6NU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=IVdg0kwDlTU1CbrqzrqqyiAzKkYVIlwOgwSvxrXFyRc=;
+ b=ImR5Evngj6JIj5u5Sc4ObgbXnpLvPBpViqAqghYHQeNAawAbmH4uRi2EniOq1Zpv1mJvsD
+ Ue2SnSDInxpXG+0F0w4GzM2HfBAhKerUygBss2dYj6yuOnxwuuGNGTo0MiDPqB8m8DWPgi
+ 4TfeBntr4uzvh7FwLTz1hyrPdaut1AI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-ls-s44g5Ode4AD9ORc2nqQ-1; Wed,
- 18 Nov 2026 07:24:06 -0500
-X-MC-Unique: ls-s44g5Ode4AD9ORc2nqQ-1
-X-Mimecast-MFC-AGG-ID: ls-s44g5Ode4AD9ORc2nqQ_1795004645
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-v2AeAo2UNtKjkw1lolb88Q-1; Wed,
+ 18 Nov 2026 07:24:04 -0500
+X-MC-Unique: v2AeAo2UNtKjkw1lolb88Q-1
+X-Mimecast-MFC-AGG-ID: v2AeAo2UNtKjkw1lolb88Q_1795004643
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82E69195608F
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 12:24:05 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E6361800366
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 12:24:03 +0000 (UTC)
 Received: from pbonzini-thinkpadx1carbon6th.rmtit.csb
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D203D18004FF
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 12:24:04 +0000 (UTC)
+ id B032A18004FF
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 12:24:02 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [RFC PATCH 05/26] target/i386/tcg: add CPUID checks to the trie
-Date: Wed, 18 Nov 2026 13:23:36 +0100
-Message-ID: <20261118122357.659634-6-pbonzini@redhat.com>
+Subject: [RFC PATCH 03/26] target/i386/tcg: restrict REX2 to opcodes where
+ REX2 differs, no_rex2 where it is the same
+Date: Wed, 18 Nov 2026 13:23:34 +0100
+Message-ID: <20261118122357.659634-4-pbonzini@redhat.com>
 In-Reply-To: <20261118122357.659634-1-pbonzini@redhat.com>
 References: <20261118122357.659634-1-pbonzini@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -62,14 +63,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,202 +88,102 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Make cpuid() an ordinary constraint, instead of covering it in
-disas_insn(), so that opcodes can decode differently depending on CPUID
-features, instead of just raising #UD when it is absent.  For example,
-F3 0F BC is TZCNT with ABM and BSF without.  Allow two entries to overlap
-if exactly one of them has cpuid(); the trie then tests the feature and
-picks the entry with cpuid() if it is present, and the other one if not.
-
-Implementing cpuid() in maketable.py also allows checking for multiple
-CPUID features, which is particularly useful for AES+AVX or AES+AVX+VAES.
+REX2 is the same as the legacy encoding except in rows 4, 7, A and E
+of map 0 and rows 3 and 8 of map 1, which the decoder reaches through
+separate entry points.  Only allow REX2 lines in those rows, and do
+not let legacy lines in those rows accept REX2, including via an
+opcode range; this also means that chk(no_rex2) in REX2 lines is
+non-sensical, so reject it.
 
 AI-used-for: code, tests
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/maketable.py      | 76 +++++++++++++++++++++++++------
- target/i386/tcg/test_maketable.py |  1 +
- 2 files changed, 63 insertions(+), 14 deletions(-)
+ target/i386/tcg/decode.def        |  3 ++-
+ target/i386/tcg/maketable.py      | 20 ++++++++++++++++++++
+ target/i386/tcg/test_maketable.py |  4 +++-
+ 3 files changed, 25 insertions(+), 2 deletions(-)
 
+diff --git a/target/i386/tcg/decode.def b/target/i386/tcg/decode.def
+index e18cc054ee5..59010401d4e 100644
+--- a/target/i386/tcg/decode.def
++++ b/target/i386/tcg/decode.def
+@@ -122,7 +122,8 @@
+ //
+ //     chk(a, ...)     checks from X86InsnCheck in decode-new.h, without the
+ //                     X86_CHECK_ prefix.  i64 and o64 also choose between
+-//                     lines for the same opcode.
++//                     lines for the same opcode.  no_rex2 removes the REX2
++//                     encoding from lines that would inherit it automatically.
+ //
+ //     cpuid(feature, ...)
+ //                     one or more X86CPUIDFeatures that the instruction needs.
 diff --git a/target/i386/tcg/maketable.py b/target/i386/tcg/maketable.py
-index 826d82a2780..a1ebc906899 100644
+index 841c376c6b0..2a52307d97e 100644
 --- a/target/i386/tcg/maketable.py
 +++ b/target/i386/tcg/maketable.py
-@@ -24,7 +24,7 @@
- import pathlib
- import re
- import sys
--from collections.abc import Callable
-+from collections.abc import Callable, Container
- from dataclasses import dataclass, field, replace
- from typing import ClassVar, Generic, TypeVar, cast, overload
- 
-@@ -360,6 +360,7 @@ class Sel(enum.Enum):
-     MODE64 = enum.auto()
-     ND = enum.auto()
-     NF = enum.auto()
-+    CPUID = enum.auto()
+@@ -347,6 +347,10 @@ def parse_file(lines: list[str], filename: str = '<string>') -> list[Insn]:
+     return insns
  
  
- # Number of values of each selector.
-@@ -374,6 +375,7 @@ class Sel(enum.Enum):
-     Sel.MODE64: 2,
-     Sel.ND: 2,
-     Sel.NF: 2,
-+    Sel.CPUID: 2,
- }
- 
- # Values of the selectors that an entry accepts; a selector that is not
-@@ -496,12 +498,21 @@ def accepts(self, sel: Sel, v: int) -> bool:
-         allowed = self.constraints.get(sel)
-         return allowed is None or v in allowed
- 
--    def constrains(self, sel: Sel) -> bool:
-+    def constrains(self, sel: Sel, checked: frozenset[str]) -> bool:
-+        if sel == Sel.CPUID:
-+            return any(f not in checked for f in self.features())
-         return sel in self.constraints
- 
++# Rows of map 0 and 1 where REX2 differs from the legacy encoding.
++REX2_ROWS = {None: {0x4, 0x7, 0xA, 0xE}, '0F': {0x3, 0x8}}
++
++
+ class SemanticError(Exception):
+     def __init__(self, insn: Insn, msg: str):
+         super().__init__(msg)
+@@ -427,6 +431,14 @@ class Entry:
      def error(self, msg: str) -> SemanticError:
          return SemanticError(self.insn, msg)
  
-+    def features(self) -> list[str]:
-+        # CPUID features from cpuid() are all required.
-+        for m in self.insn.modifiers:
-+            if m.name == 'cpuid':
-+                return m.args
-+        return []
++    def is_rex2(self) -> bool:
++        # Whether the opcodes are in the rows where REX2 differs from the
++        # legacy encoding
++        prefix = self.insn.prefix
++        rows = REX2_ROWS.get(prefix.map, set())
++        lo, hi = self.insn.opcode
++        return all((b >> 4) in rows for b in range(lo, hi + 1))
 +
-     def is_rex2(self) -> bool:
-         # Whether the opcodes are in the rows where REX2 differs from the
-         # legacy encoding
-@@ -763,6 +774,9 @@ def compute_constraints(self) -> None:
-         elif prefix.l is not None:
-             c[Sel.L] = L_VALUES[prefix.l]
+     def check_prefix(self) -> None:
+         prefix = self.insn.prefix
+         enc = prefix.encoding
+@@ -455,6 +467,14 @@ def check_prefix(self) -> None:
+         if enc == 'REX2' and prefix.map not in (None, '0F'):
+             raise self.error(f'REX2 cannot encode map {prefix.map}')
  
-+        if self.features():
-+            c[Sel.CPUID] = frozenset([1])
++        # Elsewhere, REX2 is the same as the legacy encoding.
++        if enc == 'REX2' and not self.is_rex2():
++            raise self.error('REX2 lines are only needed for rows 4, 7, A, E of map 0 '
++                             'and 3, 8 of map 1')
++        checks = {arg for m in self.insn.modifiers if m.name == 'chk' for arg in m.args}
++        if enc == 'REX2' and 'no_rex2' in checks:
++            raise self.error('REX2 is incompatible with chk(no_rex2)')
 +
-         if prefix.nd is not None:
-             c[Sel.ND] = frozenset([prefix.nd == 'ND1'])
-         if prefix.nf is not None:
-@@ -829,6 +843,9 @@ class Leaf(TrieItem):
- class Node(TrieItem):
-     sel: Sel
- 
-+    # For Sel.CPUID only, the feature that is tested.
-+    feature: str | None = None
-+
-     # Subtree for each value of the selector, initially UD.  Several values
-     # can share the same subtree, for example all opcodes of 50..57+r or
-     # all values of L for LIG.  When flattening, subtrees are replaced
-@@ -845,9 +862,9 @@ def __post_init__(self) -> None:
- # the same opcode, for example CMOVcc and the mask register instructions.
- # MODE64 is last because chk(i64) and chk(o64) are mostly checks on a single
- # line; checking it earlier would duplicate the subtrees for all the other
--# lines of the same opcode.
-+# lines of the same opcode.  The same is true of cpuid().
- SEL_ORDER = [Sel.BYTE, Sel.ENC, Sel.L, Sel.PREFIX, Sel.REG, Sel.MOD,
--             Sel.W, Sel.ND, Sel.NF, Sel.MODE64]
-+             Sel.W, Sel.ND, Sel.NF, Sel.MODE64, Sel.CPUID]
- 
- 
- @dataclass
-@@ -857,28 +874,57 @@ class Trie:
-     # Sel.BYTE.
-     maps: dict[int, Node] = field(default_factory=dict)
- 
--    def lookup(self, map: int, values: dict[Sel, int]) -> Entry | None:
--        # Walk the trie; selectors that are not in values are 0.
-+    def lookup(self, map: int, values: dict[Sel, int],
-+               features: Container[str] = frozenset()) -> Entry | None:
-+        # Walk the trie; selectors that are not in values are 0.  If
-+        # features is given, it lists the CPUID features that are present.
-         item: TrieItem = self.maps[map]
-         while isinstance(item, Node):
--            item = item.children[values.get(item.sel, 0)]
-+            if item.sel == Sel.CPUID:
-+                assert item.feature is not None
-+                item = item.children[item.feature in features]
-+            else:
-+                item = item.children[values.get(item.sel, 0)]
-         assert isinstance(item, Leaf)
-         return item.entry
- 
- 
--# Key of the cache of subtrees: the position in SEL_ORDER of the first
--# selector that is left, and the candidate entries.
--CacheKey = tuple[int, tuple[int, ...]]
-+# Key of the cache of subtrees: the selectors that are left, the CPUID
-+# features that were checked, and the candidate entries.
-+CacheKey = tuple[int, frozenset[str], tuple[int, ...]]
- 
- 
--def build_subtree(entries: list[Entry], start: int, cache: dict[CacheKey, TrieItem]) -> TrieItem:
-+def build_cpuid_node(entries: list[Entry], start: int, cache: dict[CacheKey, TrieItem],
-+                     checked: frozenset[str]) -> Node:
-+    def unchecked(entry: Entry, checked: frozenset[str]) -> list[str]:
-+        return [f for f in entry.features() if f not in checked]
-+
-+    # Each CPUID node checks one feature, so lines with several features
-+    # need several nodes.  Lines without cpuid() are only used if the
-+    # feature is absent (for example BSF and TZCNT).
-+    feature = next(f for e in entries for f in unchecked(e, checked))
-+    need = [e for e in entries if feature in unchecked(e, checked)]
-+    fallback = [e for e in entries if not unchecked(e, checked)]
-+    if len(need) + len(fallback) != len(entries):
-+        lines = ', '.join(f'{e.insn.filename}:{e.insn.lineno}' for e in entries)
-+        raise entries[0].error(f'different cpuid() for the same opcode: {lines}')
-+
-+    node = Node(sel=Sel.CPUID, feature=feature)
-+    checked = checked | {feature}
-+    node.children[0] = build_subtree(fallback, start, cache, checked)
-+    node.children[1] = build_subtree(need, start, cache, checked)
-+    return node
-+
-+
-+def build_subtree(entries: list[Entry], start: int, cache: dict[CacheKey, TrieItem],
-+                  checked: frozenset[str] = frozenset()) -> TrieItem:
-     # Entries with the same set of candidates share the subtree.
--    key = (start, tuple(id(e) for e in entries))
-+    key = (start, checked, tuple(id(e) for e in entries))
-     if key in cache:
-         return cache[key]
- 
-     pos = next((i for i in range(start, len(SEL_ORDER))
--                if any(e.constrains(SEL_ORDER[i]) for e in entries)), None)
-+                if any(e.constrains(SEL_ORDER[i], checked) for e in entries)), None)
-     sel = None if pos is None else SEL_ORDER[pos]
-     item: TrieItem
-     if sel is None:
-@@ -886,12 +932,14 @@ def build_subtree(entries: list[Entry], start: int, cache: dict[CacheKey, TrieIt
-             other = entries[1].insn
-             raise entries[0].error(f'overlaps with {other.filename}:{other.lineno}')
-         item = Leaf(entry=entries[0]) if entries else Leaf.UD
-+    elif sel == Sel.CPUID:
-+        item = build_cpuid_node(entries, start, cache, checked)
-     else:
-         assert pos is not None
-         node = Node(sel=sel)
-         for v in range(SEL_VALUES[sel]):
-             subset = [e for e in entries if e.accepts(sel, v)]
--            node.children[v] = build_subtree(subset, pos + 1, cache)
-+            node.children[v] = build_subtree(subset, pos + 1, cache, checked)
- 
-         # If all values lead to the same subtree, the node is not needed.
-         # The opcode byte is kept, because it is the root of each map.
+     def check_opcode(self) -> None:
+         lo, hi = self.insn.opcode
+         # With +r, bits 0-2 of the opcode are the register number, so the
 diff --git a/target/i386/tcg/test_maketable.py b/target/i386/tcg/test_maketable.py
-index 11e3c6dc1d5..b32d47a58bd 100644
+index 0015bed9a23..b682d289184 100644
 --- a/target/i386/tcg/test_maketable.py
 +++ b/target/i386/tcg/test_maketable.py
-@@ -27,6 +27,7 @@
-     parse_file,
-     parse_line,
- )
-+import collections.abc
- 
- 
- class TestParser(unittest.TestCase):
+@@ -321,7 +321,6 @@ def test_prefix(self) -> None:
+             'EVEX.512.66.0F38.W1 00   VPSHUFB   Vx,Hx,Wx',
+             'EVEX.LLZ.NP.MAP4.ND1.NF0 00   ADD   Bb,Eb,Gb',
+             'REX2.NP.W0 A1   JMP_m   Iq(r)',
+-            'REX2.0F 05   SYSCALL',
+         ]
+         for text in good:
+             with self.subTest(text=text):
+@@ -338,6 +337,9 @@ def test_prefix(self) -> None:
+             'VEX.66 67   X   Vx',              # VEX without a map
+             'EVEX.66 67   X   Vx',             # EVEX without a map
+             'REX2.0F38 00   X   Vx',           # REX2 only has maps 0 and 1
++            'REX2.0F 05   SYSCALL',            # same as legacy
++            'REX2 A1..B0   X   Iq',            # partly same as legacy
++            'REX2 A1       X   Iq  chk(no_rex2)', # REX2 + no_rex2
+         ]
+         for text in bad:
+             with self.subTest(text=text):
 -- 
 2.56.0
 
