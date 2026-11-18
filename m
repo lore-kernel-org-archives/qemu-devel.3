@@ -1,99 +1,138 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDEC606A331
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 18:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA2C606A320
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 19:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JrZ+SVHy
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=JA8C5BNE;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=NhHPmBJx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTkrr-00054D-06; Wed, 18 Nov 2026 13:58:52 -0500
+	id 1xTlga-0003Bs-C3; Wed, 18 Nov 2026 14:51:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xTkro-00053t-7F
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 13:58:48 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xTkrm-0007TL-Go
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 13:58:47 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-492690dd5daso1193256f8f.1
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 10:58:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xTlgO-0003B4-Fk
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 14:51:06 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xTlgM-0007TE-JU
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 14:51:04 -0500
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AIJMt8f3700137
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 19:50:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=nb1JaOdMmXwfB98bD7Afx5kBWM5xGXkFH9g
+ MCoPGzxE=; b=JA8C5BNE1DgzsF5weaMoNDHqCAVrk1DIuWXxaZrRzujjF7Ut05x
+ 6l0nmnSIsk7WyLT0YUOrS5HLSjMKFHnD5MKxfChaYZ5rZFtRKwGIbupdr8WEWIWv
+ uEmA3E7BRKyWyKSWn77iwTK4TtLI32w7q/woCQo2AhVLRF8JMnp/Ok26Z3wGZRYC
+ tEid89faWiz4gQKQGkKM24JnwYD6D1A7CWPPPdUJGlNAv6yqj7h6M+GY1B/CO6Ar
+ T3KVgUAcH0Q/4pjUQ1zgT4+6tWZThK9W/BlrNxgVcZwJNpre+AEXq2h7k5NOoPmE
+ OaElXw+HP7zU+aYe3YDYAt7xiG7LLIAY+Ag==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1etns5sj-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 19:50:56 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93909014c85so309754385a.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 11:50:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795028324; x=1795633124; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=OZCH2QJjicQ9khKl2pIaRDMnb2uv3waK5lzNG8XRMuE=;
- b=JrZ+SVHyPvZigNYRgiYACP5/JqgJnwYjZwggG8MKDhhGDjzLJclzWX7fN/t780Pikw
- POp5NpqYrvOJXuN9aze9ISIZMqwNjDG0oeuo9mMvufvQ+S99G3zLS7nfRCry0tFs+jOJ
- 8QelaTgVo3j5O3sO2/tdhAHpWe+omGV59KPbEVGIzt3HPf3uRFW15kO8926jCH7N5eSl
- 8tNNYiwXy3RDC6ZYa02JQZPcgfVVO+vfpR+eSXmcTSotFwWMNFao1JhVA3kSS1u+OoTt
- yMGO/fvvi7V87ik2KY/DdHBYG3UpTLR9UN8/nf8i3uNBT87ZGTx7lkknx0wjsDIDfaas
- POMw==
+ d=oss.qualcomm.com; s=google; t=1795031455; x=1795636255; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=nb1JaOdMmXwfB98bD7Afx5kBWM5xGXkFH9gMCoPGzxE=;
+ b=NhHPmBJx8txLqrmvZV9TFiwbIzYsKKG4FfI71Z1ov6ZXUvYjmVkyjJV9fksmsk7oGa
+ 6l2axokAXz0FbCUfdO/ttbKbYaEJNlrBKT8uyDPwRrZKEnfFtwJYfo7/Qhao+F0bjQAT
+ /AxvRfm4oOPiAfuGaORzKt0qIb1Qc8rm8iw/zkJfV98vMLex741yGaTay/76LMc40pHo
+ KlDt7BK24qvnjk2IQ4TKAgsiPXvH7roKp0EARhSnLyE1tNGZhigQ4m1PZ5kjnYREWxBv
+ tB80ncV+xSf5dq2RS08Tsgv8eOtTlpjnmC8gG5hPFFQUEyWLKtvk4s8FEkYc+OVH2V28
+ Yfpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795028324; x=1795633124;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=OZCH2QJjicQ9khKl2pIaRDMnb2uv3waK5lzNG8XRMuE=;
- b=IzYCZyPm3cOckzmKMiyI+wBlslzgbcFK+JR/dPzP85Qf52/GAmIAs15/chvugBZ/Gn
- mNEYzbfDCVT6IVRO4jTnt4szFw0U9HadnCVZnur0Xqcru7LYSjUreqcUOTOdTMsoEyFj
- vqzGGCNUY0DPBn9FRhEqAaNzz2+M2Xw59gi7ez3eg828yxzd4DqyUAh/B4MiA0wxoFEn
- nEbQ0vf84f4g2UB3tPRPyCBwEFmLRYjcxvQNoLCARnwX8PZokFYA9+tJkM658/VQrEUH
- mXqpTVEyCgGsd3IrDRaySetczfITQcGTpstr5fcKI7W4UhvIn73quLRpFvEZTxWS3CXm
- hkNQ==
-X-Gm-Message-State: APuU4Z8dtXyYrF5JyAQtfbllH9nrkmcrDE0NGnT7M0JWlETHwn5Twlqw
- pkoSvsJSRSZrQZDTSX8yF1bYTj2cfvjVdKDXQQS1G3tc6vxi4ja12qbX31dP2g==
-X-Gm-Gg: AZFdTZc6wRknpFSujSuZl5J6zJYVg79YSczOgmRqSf/TGVN5oF/q4fh2fsq8SdqF6iV
- 1zD33hX0QvtRBzDPSs8xZUDmQAbEycYOeAOjo0KxNbM1SXSp2xGvF5x3Zm+0X/M/kQLaZdNbOE6
- cQ4qmSgxy7Txx+4LjlBxLYaDC4A4wAtzN1QM2EDhD5t98n3Bx4y0pieaZM5NgrLah+0Idp6pczl
- YEea6Mf6g5gXqkxNspib6Yv7zNTmRVXHeAx33Xn7ssuJJvBFUZJXoWSV1NnvhuC4JT8HJb9B2Ce
- S3EWroLzmz3kdEr7hh1Wz0Q2NcySn9+q6h9TLnyKcxmNyJvnhOI6daVyI+sSP4qVdCGS3ArQud9
- SIKPt1XUpaKgVDbYZmTDLfp7cHQuDEs1yQeRoR4HjLm+gtXZjLQydMV+3pbPsRdFsf9GpuVYKqt
- Axophge3d/838Z0tqwArfEoJW7htPHt7P80TL504IrsMmsiNUlGZ6w7oSdBMir1nRYP/TgOBj0p
- WuMopViPd8MGo10HuA/7sYOMFRlDUIvc0Png3vyyqWaNZpulbJpf3vdC2IJoMz05Nlt7mZnfcdH
- j7KiA54/L1i/Hslo5GPRyO8AncynkuGBcQ==
-X-Received: by 2002:a5d:5f48:0:b0:48b:a4b:5a2c with SMTP id
- ffacd0b85a97d-4a696cfde99mr7321103f8f.3.1795028323484; 
- Wed, 18 Nov 2026 10:58:43 -0800 (PST)
-Received: from ehlo.thunderbird.net ([62.214.191.67])
+ d=1e100.net; s=20260707; t=1795031455; x=1795636255;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=nb1JaOdMmXwfB98bD7Afx5kBWM5xGXkFH9gMCoPGzxE=;
+ b=ICpD6BFfwSqFHROdiGk2U2EabIozlc6kJwn6BhTJAIiOkJFd4YLdXobtSgBnuXv1QA
+ L3eFLmgXHyKOVFUYb0aJs18vXzuo/vSWxOcHHxxjc3+v8DMSlTNJVGGH5HeKYr4OEUqv
+ 4utfwzu41zt1QFl//Ej81c7GnRWjlpEhHUmfohWMWECR7l6yHbdheCbx/rrbhdH0K98b
+ DxDMxk9h5CDxVjdr/CGZl62GMk221Wn46zes5KKcTmtNGWta/WvDpV+4NdN1GEW2D6HG
+ h4ADzrQjTY6jNGl5Y65ubOJeUoeJOIEYrq3AKS04PnuGHPnFfEwrmsSYDExox2RMt4vO
+ zfew==
+X-Gm-Message-State: APuU4Z/KKcZ3DLf6NQnCGif+VteQ2xgGCPUb5Oy5Y6GVcEJLNNHCso13
+ iL2R64Ll7A3Sq9n8o7N/OfYja2rq9bCIDBHyj3ML1qWKPs6tTHmPqXjm5cUHqchNDbZqoVS6lGk
+ 8ffZQIdg8nxrWdEPhjLo4h3jtzRK0s5TW5haBCOJOvy015wSactKA3DFzBUPbrUs58A==
+X-Gm-Gg: AYBFou2Ub7a/r1XdP1fn6jYYTzyrXN5gTh7lmLC8NdBnWS5SR/DbrTc4SnN0PbNkRF2
+ Ag8kBGKgCSvF81UUX9UB7ShglNqppHMSuwAunIgPLi5nPmZmAc4G2Pd8SPmtSJu6vuwJTxFXOQn
+ XJxK1rYUZ8JvIT9mvbwnwipePVjlXuKv465SsHBKrSDkwaV9Jaf3+s05OfN2fOb7xxMp3E4MrnL
+ st1UM/qnoce8DuDSxE6tVx/OIJTAJ3e0M40t3RWyiaoldHhkG7V+mMneB8AtIcaUetBXKrBcw1h
+ LfqLdxvOz4fdTUUahl+Q9UI3YMBIOKZVTnM/n/8Us50MMbCHR2HhkFyioqQ0B5U0jFmMqTch4hH
+ TKFMWgDHZCL0OwgQIEwSSwVsZRuUd8jIvI7NCvOjzhPrQZd/a9k6U+sFCjT0UfmVFImYy2sNFFk
+ IMalc0q6TQ
+X-Received: by 2002:a05:620a:4506:b0:949:6841:2ba2 with SMTP id
+ af79cd13be357-9499957e2c2mr737144185a.22.1795031454910; 
+ Wed, 18 Nov 2026 11:50:54 -0800 (PST)
+X-Received: by 2002:a05:620a:4506:b0:949:6841:2ba2 with SMTP id
+ af79cd13be357-9499957e2c2mr737140385a.22.1795031454400; 
+ Wed, 18 Nov 2026 11:50:54 -0800 (PST)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([179.193.8.137])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4a65693389dsm5814833f8f.48.2026.11.18.10.58.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Nov 2026 10:58:43 -0800 (PST)
-Date: Wed, 18 Nov 2026 18:58:42 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>
-CC: QEMU Developers <qemu-devel@nongnu.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: =?US-ASCII?Q?Re=3A_Who_should_be_allowed_to_unrealize_a_device?=
- =?US-ASCII?Q?=2C_and_what_can_you_still_do_with_it_afterwards=3F?=
-In-Reply-To: <CAFEAcA9BnWRnyMp4rswY1dxA4b5FQpQhK3YsGYGPXzwa-5YfGA@mail.gmail.com>
-References: <CAFEAcA9Ob8CsaufaAZ6jUhrKkxSfCkcig3ciG5LK_WCNCi14NA@mail.gmail.com>
- <de8cfd7a-9c43-44ac-baba-c8f892749dc4@eik.bme.hu>
- <CAFEAcA9BnWRnyMp4rswY1dxA4b5FQpQhK3YsGYGPXzwa-5YfGA@mail.gmail.com>
-Message-ID: <64F81A8F-4EC2-4147-B254-089A2D956264@gmail.com>
+ af79cd13be357-9499b81d4a0sm256444785a.43.2026.11.18.11.50.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Nov 2026 11:50:53 -0800 (PST)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH] target/riscv: sanitize mnstatus.MNPP field [GL4826]
+Date: Wed, 18 Nov 2026 16:50:49 -0300
+Message-ID: <20261118195049.1256735-1-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=b8UncdGx c=1 sm=1 tr=0 ts=6afe01a0 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=a6tGUzlCxnQfwxx7nGpYxQ==:17
+ a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=p0WdMEafAAAA:8
+ a=EUspDBNiAAAA:8 a=UnszTeD0MEx6vb_Bg3UA:9 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: rUgnXTXJ-HrypvRhlK9dFlOIMVWzxJPo
+X-Proofpoint-ORIG-GUID: rUgnXTXJ-HrypvRhlK9dFlOIMVWzxJPo
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE4MDA3NyBTYWx0ZWRfX5wiijH2LeihL
+ +3XN79g6fLEMm5fi3zD/7sdBpMLr720M/B2N17L00wxkoHUjF0Xon1aF7FPVSfLiy/y+10INgT+
+ bh0Ole35szcpDNJ1uBZu39sQWJSQCyM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE4MDA3NyBTYWx0ZWRfXymFCDa7LDaEp
+ GfkzsiHOagKv+RxPE/wXPv9rjlQH8tYZREO/Q72oXmKy/PzVV8eQYs8Zh9y0OL5KZkj+bzmPELn
+ lxBM1vsCzuab9VIIIJXF4Tf0wvTbvWsaTTEo8sUOuwrw5YXnAH1mot0nMrDfDN+E+S3/VxedneJ
+ wbTp/3MNn/4OM9mQPa8wW8sVVEJON5x6nOvdIpFr4rZO8plMwUn5bPE9QQn7fKbz/B30msG/4jy
+ LfmMnTLKyDeHBz/iy9MJLSNYYXCmlAZu5WesqqHguMcNSrvpLTFU19pG+94uDw9ndq6SwyDx/lP
+ EGz/EnpvKESNy41O8kPhQTWMirsWzJawwJhmhcb22/l1r+EClVVn2ux57sYv6SfL2goND/SBXqK
+ peB+9+4wdfvzBeNsrruniDk7zl5LockKhlF+AzvbvZ/kXhr9/BOp/pyQOKsy8f7Lcq6xv21Nu5G
+ hxzTLe07anbZXle2lGw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-18_06,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0 spamscore=0
+ clxscore=1015 phishscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611180077
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,66 +144,156 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-1.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+We need to handle mnstatus.MNPP the same way we already do with
+mstatus.MPP - do not allow the reserved value 10b to be written.
 
+Fixes: 5db557f82bff ("target/riscv: Add Smrnmi CSRs")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4826
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ target/riscv/tcg/csr.c                        | 11 +++
+ tests/tcg/riscv64/system/meson.build          |  7 ++
+ tests/tcg/riscv64/test-mstatus-mnstatus-mpp.S | 75 +++++++++++++++++++
+ 3 files changed, 93 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-mstatus-mnstatus-mpp.S
 
-Am 14=2E November 2026 10:37:09 UTC schrieb Peter Maydell <peter=2Emaydell=
-@linaro=2Eorg>:
->On Fri, 13 Nov 2026 at 20:07, BALATON Zoltan <balaton@eik=2Ebme=2Ehu> wro=
-te:
->>
->> On Fri, 13 Nov 2026, Peter Maydell wrote:
->> > We give QOM objects a reference count=2E This means that if you are
->> > going to try to use one, you can take a ref to it, and then you're
->> > guaranteed that it won't disappear while you're working with it=2E
->> >
->> > For QDEV devices, we add the "realize" and "unrealize" steps to
->> > the lifecycle=2E There is no "reference count for having a realized
->> > device"=2E So what do we intend here?
->> >
->> > (1) We could say that if you have a reference to the device then you
->> > can assume it's not going to be unrealized under your feet, and have
->> > very careful rules about who can unrealize a device and when=2E
->> >
->> > (2) We could say that if you have a reference to the device then it
->> > might be unrealized, but it won't be deinitialized, and you can assum=
-e
->> > that all the API calls you might make on it will in some sense still
->> > work, and at any rate at least won't try to access memory that's been
->> > freed or crash=2E
->>
->> I have no idea but (2) seems to be impossible to achieve without likely
->> also patching all devices one by one that don't expect this now=2E So I
->> think requiring that a device should only be unrealized if the caller o=
-f
->> unrealize has the only reference to it would make sense=2E This is at l=
-east
->> easy to check but may not be easy to ensure in every case but, failing
->> that may only leave a leaked device at worst but not break things=2E So=
- I'd
->> vote (1)=2E
->
->The good news about (2) is that the only devices that can be
->unrealized is the ones that can be hot-unplugged, which is
->"PCI devices and a handful of others", so we wouldn't have to look
->at literally every device=2E But I agree that if we can figure out a
->viable rule for when you're allowed to unrealize then that would
->probably be less work to implement=2E
->
->One thing I'm not sure about is what unrealize is actually for=2E
->Is there ever anything that a device needs to do in unrealize that
->it could not postpone to deinit?
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index af444e3e6f..eff5aec586 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -2023,6 +2023,10 @@ static target_ulong legalize_xatp(CPURISCVState *env, target_ulong old_xatp,
+     return old_xatp;
+ }
+ 
++/*
++ * This function is also used to legalize mnstatus.MNPP since both
++ * fields are located in 0x1800 and uses the same encoding.
++ */
+ static target_ulong legalize_mpp(CPURISCVState *env, target_ulong old_mpp,
+                                  target_ulong val)
+ {
+@@ -5789,6 +5793,13 @@ static RISCVException write_mnstatus(CPURISCVState *env, int csrno,
+ {
+     target_ulong mask = (MNSTATUS_NMIE | MNSTATUS_MNPP);
+ 
++    /*
++     * MNPP uses the same encoding as mstatus.MPP, ergo we need to
++     * 'legalize' it the same way.  Since they map to the same bit
++     * field (0x1800) we'll just the same helper.
++     */
++    val = legalize_mpp(env, get_field(env->mnstatus, MNSTATUS_MNPP), val);
++
+     if (riscv_has_ext(env, RVH)) {
+         /* Flush tlb on mnstatus fields that affect VM. */
+         if ((val ^ env->mnstatus) & MNSTATUS_MNPV) {
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index 9edab1fd7a..a16ef84104 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -81,6 +81,13 @@ tests += {
+   }
+ }
+ 
++tests += {
++  'test-mstatus-mnstatus-mpp.S': {
++    'cflags': cflags,
++    'qemu_args': ['-cpu', 'max,smpmpmt=false,smdbltrp=true,ssdbltrp=true,smrnmi=true', qemu_args],
++  }
++}
++
+ tests += {
+   'test-xsfvqmacc.S': {
+     'cflags': cflags,
+diff --git a/tests/tcg/riscv64/test-mstatus-mnstatus-mpp.S b/tests/tcg/riscv64/test-mstatus-mnstatus-mpp.S
+new file mode 100644
+index 0000000000..b3a734ccf3
+--- /dev/null
++++ b/tests/tcg/riscv64/test-mstatus-mnstatus-mpp.S
+@@ -0,0 +1,75 @@
++/*
++ * Test if mstatus.MPP and mnstatus.MNPP will write reserved values.
++ * See Gitlab 4826 for more info.
++ *
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#define CSR_MNSTATUS 0x744
++
++.option norvc
++	.text
++	.global _start
++
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++
++	/* Set mstatus.MPP [12:11] and mnstatus.MNPP to 11b  */
++	li	t0, 0b11
++	slli	t0, t0, 11
++	csrs	mstatus, t0
++	csrs	CSR_MNSTATUS, t0
++
++	/* Set mstatus.MPP to reserved value 10b by clearing bit 11. */
++	li	t1, 1
++	slli	t1, t1, 11
++	csrs	mstatus, t1
++
++	/* mstatus.MPP must be equal to 11b (ignoring the last write).  */
++	csrr	s0, mstatus
++	srli	s0, s0, 11
++	li	t2, 3
++	and	s0, s0, t2
++	bne	s0, t2, _fail
++
++	/* Set mnstatus.MNPP to reserved value 10b by clearing bit 11. */
++	csrs	CSR_MNSTATUS, t1
++
++	/* mnstatus.MNPP must be equal to 11b (ignoring the last write).  */
++	csrr	s0, CSR_MNSTATUS
++	srli	s0, s0, 11
++	and	s0, s0, t2
++	bne	s0, t2, _fail
++
++	li	a0, 0
++	j	_exit
++
++_fail:
++	li	a0, 1
++	j	_exit
++
++trap:
++	# Any trap is a fail code 1
++	li	a0, 1
++
++# Exit code in a0
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++
++	# Semihosting call sequence
++.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+-- 
+2.43.0
 
-I think this question boils down to what the difference between init() and=
- realize() is=2E deinit() and unrealize() should be their respective duals,=
- i=2Ee=2E undo what has been done there=2E
-
-Best regards,
-Bernhard
 
