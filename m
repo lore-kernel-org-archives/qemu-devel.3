@@ -1,48 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC06606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 12:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C82606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 12:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=j/l2SFU2
+	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=EFiEdeX9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTel4-0001u5-HG; Wed, 18 Nov 2026 07:27:26 -0500
+	id 1xTemv-0003TM-DK; Wed, 18 Nov 2026 07:29:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xTekt-0001jg-NM
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:27:17 -0500
-Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xTemo-0003ST-W7
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:29:15 -0500
+Received: from 9.mo2.mail-out.ovh.net ([46.105.35.181])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xTekp-0000lx-DG
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:27:15 -0500
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4jV17R0tW0z666Q;
- Wed, 18 Nov 2026 12:26:58 +0000 (UTC)
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net. [127.0.0.1])
- by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed, 18 Nov 2026 12:26:58 +0000 (UTC)
-Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.208])
- by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4jV17Q2yCqz1y06; Wed, 18 Nov 2026 12:26:58 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.0])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xTemm-0001Ny-N7
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:29:14 -0500
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [79.137.60.221])
+ by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4jV19x27Jzz41r2;
+ Wed, 18 Nov 2026 12:29:08 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Wed, 18 Nov 2026 12:29:08 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.96.215])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4jV19w39b4z6Mf1; Wed, 18 Nov 2026 12:29:08 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.1])
  (Authenticated sender: clg@kaod.org)
- by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id B3B7094209F; 
- Wed, 18 Nov 2026 12:26:56 +0000 (UTC)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ ECF9E192430C; Wed, 18 Nov 2026 12:29:06 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-114S008661dceb2-59c2-465f-bee7-83d6c67b4e85,
+ (GARM-97G0023684ecf6-57d2-4915-b93e-d256a9b981ef,
  240B2D80E6D5B5AB1626C6D871A46C45E5CC6673) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <fe3a41ea-c366-44e6-857e-b12ee68300b7@kaod.org>
-Date: Wed, 18 Nov 2026 13:26:55 +0100
+Message-ID: <fec7776d-c42b-486c-9d0c-25ea0747bc50@kaod.org>
+Date: Wed, 18 Nov 2026 13:29:06 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 04/11] hw/arm/ast27x0: Add DRAM alias for SSP SDRAM
- remap
+Subject: Re: [PATCH v6 06/11] hw/misc/aspeed_scu: Implement SSP reset and
+ power-on control via SCU registers
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -54,7 +54,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
 Cc: Troy Lee <troy_lee@aspeedtech.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 References: <20260723022300.4174471-1-jamin_lin@aspeedtech.com>
- <20260723022300.4174471-5-jamin_lin@aspeedtech.com>
+ <20260723022300.4174471-7-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -99,30 +99,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260723022300.4174471-5-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260723022300.4174471-7-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 11065907235049942131
+x-ovh-tracer-id: 11102498982587182195
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGTxOCJnjaJJesbBBbox8dhe8CwImlSPj1KC82xYwawc+LLaQEnt4lbtr8Fl9Mqpf934hRXDfNfwl+Vx4wGSvhqh8cB2YkhCTxRp8QiRiDxiKqPpUsuHwZn7SkmUK6Vz2688qjigyD2Wz585qq4aEMtnidQzeUy3cEjxhQizoYbxLl/3o8mYAUJBaUsl7SrXZxCRcGwQgJUNQqzdgisxSUkl9nueoOf3Y/CjDhdqrrNSEg6CrWhjhAyavqq81+CzlEDXscP2SsAwYxF6KIZRTkD07EXR45L9pNjgXSm3x4uI4kMNZZ64hVEY+JT2RQrx2lcM1oGUGuoRPqmlLkz1BMkjh7GBzASabpfpmHG/FwZhXKvJl7Q2xuZP4VnnfHfVogBI2XqZauIgY4WA6srJOvX04/kkt0YKu6Kk5blmmOoc6i8hajQR4DxlHxV+vccJQFArexiEMleDkF+/1qFNDqkJ1YAbX2C9sm+OLblI5Og5mR4DCtbsWyjeimltz3T8nUW8bT7tfuZEHJliHpcl3y39PMW3drihCYl/NXMkF1bBppJIYPtQLM+Etoz+Zu7pz99+L7ksD406tnHqe2unZ3jvMcOghPL8s4Ock27u/A0pJWfKF802VD1jZ9eQUdJBABafrNVODRU7yVCk941/jtI0WCnA3l6xGJS92Oqh4tkpA
-DKIM-Signature: a=rsa-sha256; bh=COJZfL/aaAM/gT4VBy+tzZ0MnEwM7GD7HuNYKMaLAvA=; 
+X-VR-SPAMCAUSE: dmFkZTElsT/MGqXBoO+3rc6JifCZ6AAyxABAWpoxFnRVrstV8/mBb/GPKn1D7O9/wYDB/UJ4Z9537oQZB5GHqL4wovDAzV1eikAf2xaqp5dgP7Rp6ii4g5YDT8Tz7GcXVMz2GZPZe9daQJsryVSI9kTakJKv3UJczXLyOrVE6/VxMfBwKewTBqMnmNpzdg3+SWyBSx23oMgNfMRjJWHIbXFhw39Q/ontf9PI8JkmYurQE9Wlanly0p7Ina2wQiFss1XQ7HKfdP+ooO5xf3ZunUoRDYcc+D3sAOAu7mb5aLa3IJsBeVbLmV2L/f0KHDINpTvlUw/P7tZowZb+QT9Y+zga3h3BkIoXzhNiqyB0cHaqkFbt1SlMDDflPfDkdsLJjOQ1ebxwzQw1QoCjI067572SANljUzKEp2TIIq/mB47icnEGk0m4eJQ8cu2zlPO1kRzRs0FaJGu8eqifQnNcydrqHeIItz735GZpXm4dVKK5LrzL95+vMtUx5JYX9eujVWoOr5AMirwZL4A//vW7+CAfQ8qj4UERokhb0Cv0UqWATIFLACUIBcRMxJCf1WmTV6X/+aWKzbop8JffOzBFYFi/zoBvbsd6dQDt+PJBmtwOdXUf3sQRJM+hBMZ7RUo3HrpamgPIF/un87Z+EPHMSu+lDZRYjGDE4UJcox4Cohln9nfsEw
+DKIM-Signature: a=rsa-sha256; bh=Eo5ZPPM2AKEjNfqXn5MfPxFIIYJd6SG2PWAk3tVOA3Y=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1795004820; v=1;
- b=j/l2SFU2gD1P4I2HlyTLKMbbCsTaF2G0IKllVRzooT8+j14/9wxWQ2k7IjBIV+rrLVeL2/cj
- DSAQQ1j0Z21cOwgv/F7FQXGeqbRN3K5S+m6PsWZsoHAbxmXfWMIqEqY7YmBEn9WY+RXPO2aPtkt
- 8TGiT3sbMslD9x0MTlkZnhz4b20rdWzyxU8Hvxh1j2pgEck0OvUjdhlD06telLpdXnF4kwYGon2
- ghXuG7+g0/L1LPBx5YreZacUIzOUGbN25J5XSJNv/nPbuPyWghOfHUh0fCDrzJ+I47hPQGIcJGU
- veK/7H/d8vI/NFS23ObNsYPL4ghSyH71g27L9C/Ep+x0A==
-Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
- helo=smtpout1.mo528.mail-out.ovh.net
+ t=1795004950; v=1;
+ b=EFiEdeX9HMUXaPv2KiyYHKDVTmzMhZoo2SHVnf2u32n450tB4h46SJijj2FuMC/zYL8u+Pay
+ Vn8/6x4/sxBC/OqJR1XWCXO+MiQ+c4m+SfvNqjNPDVyqEr0IU2um6ZpM758BnOU5OYz05FhusXz
+ NXdJ4aIHNPvj4IJb3WLDmq95dbWnEerej00QctE2PdAYaZ5uelH3wK4bmKH4pQaGx4PeOAZ9Ijd
+ UqktEmmuyoESqsQqLsTLSz1ZqoV0aQiM/VfOg3WRCXxK7kG/xXWViN4cGv3CPs6PV79+Ym2mvul
+ fjQ6C6/5J6Mt01zke3XTwcFDFcsBciU4+mfOigd+h04wA==
+Received-SPF: pass client-ip=46.105.35.181; envelope-from=clg@kaod.org;
+ helo=9.mo2.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,217 +142,226 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Jamin,
-
 On 7/23/26 04:23, Jamin Lin wrote:
-> This commit adds two MemoryRegion aliases to support PSP access to
-> SSP SDRAM through shared memory remapping.
+> This patch implements SSP reset and power control logic in the SCU for AST2700.
+> It introduces support for the following behavior:
 > 
-> The SSP exposes two DRAM aliases:
->    - remap1 maps PSP DRAM at 0x400000000 to SSP SDRAM offset 0x5880000
->    - remap2 maps PSP DRAM at 0x42C000000 to SSP SDRAM offset 0x0
+> 1. SSP Reset Trigger (via SCU 0x200):
+>     - SSP reset is triggered by writing 1 to bit 30 (RW1S) of SYS_RESET_CTRL_1.
 > 
-> These mappings follow the default SCU register configuration used by
-> the ASPEED SDK firmware, which defines the memory window mapping
-> between PSP and the SSP.
+> 2. SSP Reset State and Source Hold (via SCU 0x120):
+>     - Upon reset, bit 8 (RST_RB) is set to indicate the SSP is in reset.
+>     - Bit 10 (RST_SRC_RB) is set to indicate the reset was triggered by an external source.
+>     - Bit 1 (RST) is a software-controlled bit used to request holding SSP in reset.
+>     - If an external reset source is present and bit 1 is set, bit 9 (RST_HOLD_RB)
+>       will also be asserted to indicate the SSP is being held in reset.
+>     - If bit 1 is cleared, RST_HOLD_RB will be deasserted accordingly.
 > 
-> The alias MemoryRegions belong to the SSP coprocessor state itself
-> (Aspeed27x0CoprocessorState), since that is what they represent; the
-> SCU only holds pointers to them (ssp_remap[0]/ssp_remap[1]) so its
-> control registers can reposition/resize the aliases at runtime. These
-> can't be QOM link properties since the SCU is already realized by the
-> time the SSP sets them, so the pointers are written in directly.
+> 3. Hold Release and Power-on:
+>     - If RST_HOLD_RB is clear (0), SSP is powered on immediately after reset is deasserted.
+>     - If RST_HOLD_RB is set (1), the user must write ENABLE (bit 0) to SSP_CTRL_0 to release
+>       the hold and power on SSP explicitly.
+>     - Writing ENABLE (bit 0) is a one-shot operation and will auto-clear after execution.
 > 
-> The SSP cpu_index is only known once the SSP's armv7m core is
-> realized, so it is written directly into the shared SCU at that
-> point. Its "not wired up" default of -1 is now set explicitly in the
-> SCU's own realize(), since nothing else sets it via a QOM property
-> anymore.
+> 4. Reset Status Clear (via SCU 0x204):
+>     - The reset status can be cleared by writing 1 to bit 30 (RW1C) of SYS_RST_CLR_1,
+>       which will deassert RST_SRC_RB and potentially trigger power-on if no hold is active.
+> 
+> 5. SSP Power Control Logic:
+>     - `handle_ssp_tsp_on()` clears RST_SRC_RB and RST_RB (if not held), and invokes
+>       `arm_set_cpu_on_and_reset(cpuid)` to power on the SSP core (CPUID 4).
+>     - `handle_ssp_tsp_off()` sets RST_RB and RST_SRC_RB; if RST is active, also asserts
+>       RST_HOLD_RB and invokes `arm_set_cpu_off(cpuid)`.
+> 
+> 6. Register Initialization and Definitions:
+>     - Adds SCU register definitions for SSP_CTRL_0 (0x120), SYS_RST_CTRL_1 (0x200),
+>       and SYS_RST_CLR_1 (0x204).
+>     - Updates the reset values for these registers during SCU initialization.
+> 
+> The default values are based on EVB (evaluation board) register dump observations.
+> This patch enables proper modeling of SSP lifecycle management across reset,
+> hold, and power-on states for the AST2700 SoC.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 > ---
->   include/hw/arm/aspeed_coprocessor.h |  2 ++
->   include/hw/misc/aspeed_scu.h        |  3 +++
->   hw/arm/aspeed_ast27x0-fc.c          |  2 ++
->   hw/arm/aspeed_ast27x0-ssp.c         | 38 +++++++++++++++++++++++++++++
->   hw/misc/aspeed_scu.c                |  3 +++
->   5 files changed, 48 insertions(+)
+>   hw/misc/aspeed_scu.c | 109 +++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 109 insertions(+)
 > 
-> diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
-> index 23c3b97f06..d9d0ae7b6d 100644
-> --- a/include/hw/arm/aspeed_coprocessor.h
-> +++ b/include/hw/arm/aspeed_coprocessor.h
-> @@ -52,6 +52,8 @@ struct Aspeed27x0CoprocessorState {
->       MemoryRegion scu_alias;
->       MemoryRegion scuio_alias;
->       MemoryRegion fmc_alias;
-> +    MemoryRegion dram_remap[2];
-> +    MemoryRegion *dram;
->       Aspeed2700SCUState *scu;
->       AspeedSCUState *scuio;
->       AspeedSMCState *fmc;
-> diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
-> index 904549465f..01e8854104 100644
-> --- a/include/hw/misc/aspeed_scu.h
-> +++ b/include/hw/misc/aspeed_scu.h
-> @@ -44,6 +44,9 @@ struct AspeedSCUState {
->   
->   struct Aspeed2700SCUState {
->       AspeedSCUState parent_obj;
-> +
-> +    MemoryRegion *ssp_remap[2];
-> +    int ssp_cpuid;
->   };
->   
->   #define AST2400_A1_SILICON_REV   0x02010303U
-> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index 058cea42ed..af700e748f 100644
-> --- a/hw/arm/aspeed_ast27x0-fc.c
-> +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -155,6 +155,8 @@ static bool ast2700fc_ssp_init(Ast2700FCState *s, AspeedSoCState *psp,
->                               &error_abort);
->       object_property_set_link(OBJECT(&s->ssp), "sram",
->                                OBJECT(&psp->sram), &error_abort);
-> +    object_property_set_link(OBJECT(&s->ssp), "dram",
-> +                             OBJECT(psp->dram_mr), &error_abort);
->       object_property_set_link(OBJECT(&s->ssp), "scu",
->                                OBJECT(&s->ca35.scu), &error_abort);
->       object_property_set_link(OBJECT(&s->ssp), "scuio",
-
-Keeping the wiring at machine level seems cleaner for shared resources.
-So I think the DRAM remap regions and cpuid should be wired here too.
-
-Something like :
-
-     /* Wire SSP DRAM remap regions and cpuid into the shared SCU */
-     object_property_set_link(OBJECT(&s->ca35.scu), "ssp-remap0",
-                              OBJECT(&s->ssp.dram_remap[0]), &error_abort);
-     object_property_set_link(OBJECT(&s->ca35.scu), "ssp-remap1",
-                              OBJECT(&s->ssp.dram_remap[1]), &error_abort);
-     s->ca35.scu.ssp_cpuid = CPU(s->ssp.armv7m.cpu)->cpu_index;
-
-See below.
-
-> diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-> index 9c984d23cd..2b0cf5041f 100644
-> --- a/hw/arm/aspeed_ast27x0-ssp.c
-> +++ b/hw/arm/aspeed_ast27x0-ssp.c
-> @@ -184,6 +184,12 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
->           return;
->       }
->   
-> +    if (!a->dram) {
-> +        error_setg(errp, TYPE_ASPEED27X0SSP_COPROCESSOR
-> +                   ": 'dram' link is not set");
-> +        return;
-> +    }
-> +
->       /* AST27X0 SSP Core */
->       armv7m = DEVICE(&a->armv7m);
->       qdev_prop_set_uint32(armv7m, "num-irq", 256);
-> @@ -201,6 +207,12 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
->                                &error_abort);
->       sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
->   
-> +    /*
-> +     * cpu_index is only known once the armv7m core above is realized;
-> +     * write it directly into the shared SCU.
-> +     */
-> +    a->scu->ssp_cpuid = CPU(a->armv7m.cpu)->cpu_index;
-> +
-
-Having the SSP and TSP SoC models reach into the shared SCU during
-their own realize is a "device-modifying-another-device" pattern
-that's hard to audit.
-
-
->       /* SDRAM */
->       sdram_name = g_strdup_printf("aspeed.sdram.%d",
->                                    CPU(a->armv7m.cpu)->cpu_index);
-> @@ -232,6 +244,30 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
->       memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCUIO],
->                                   &a->scuio_alias);
->   
-> +    /*
-> +     * DRAM remap aliases used by PSP to access SSP SDRAM:
-> +     * - remap[0] maps PSP DRAM at 0x400000000 (size: 0x1A77E000) to
-> +     *   SSP SDRAM offset 0x5880000
-> +     * - remap[1] maps PSP DRAM at 0x42C000000 (size: 0x05880000) to
-> +     *   SSP SDRAM offset 0x0
-> +     */
-> +    memory_region_init_alias(&a->dram_remap[0], OBJECT(a), "ssp.dram.remap1",
-> +                             a->dram, 0, 0x1a77e000);
-> +    memory_region_init_alias(&a->dram_remap[1], OBJECT(a), "ssp.dram.remap2",
-> +                             a->dram, 0x2c000000, 0x05880000);
-> +    memory_region_add_subregion(&s->sdram, 0, &a->dram_remap[1]);
-> +    memory_region_add_subregion(&s->sdram,
-> +                                memory_region_size(&a->dram_remap[1]),
-> +                                &a->dram_remap[0]);
-> +
-> +    /*
-> +     * The SCU is already realized at this point (it belongs to the PSP,
-> +     * which is realized before the SSP), so the remaps are linked in
-> +     * directly instead of via QOM properties.
-> +     */
-> +    a->scu->ssp_remap[0] = &a->dram_remap[0];
-> +    a->scu->ssp_remap[1] = &a->dram_remap[1];
-> +
-
-same "device-modifying-another-device" pattern. This is true for all the
-  a->scu-> assignments.
-
->       /* INTC */
->       if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
->           return;
-> @@ -317,6 +353,8 @@ static const Property aspeed_27x0_coprocessor_properties[] = {
->                        TYPE_ASPEED_SCU, AspeedSCUState *),
->       DEFINE_PROP_LINK("fmc", Aspeed27x0CoprocessorState, fmc, TYPE_ASPEED_SMC,
->                        AspeedSMCState *),
-> +    DEFINE_PROP_LINK("dram", Aspeed27x0CoprocessorState, dram,
-> +                     TYPE_MEMORY_REGION, MemoryRegion *),
->   };
->   
->   static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass,
 > diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-> index ca93c3699d..4025ea3205 100644
+> index 5d34dbea5e..0fdeaf5648 100644
 > --- a/hw/misc/aspeed_scu.c
 > +++ b/hw/misc/aspeed_scu.c
-> @@ -932,6 +932,9 @@ static void aspeed_ast2700_scu_reset_hold(Object *obj, ResetType type)
+> @@ -20,6 +20,7 @@
+>   #include "qemu/guest-random.h"
+>   #include "qemu/module.h"
+>   #include "trace.h"
+> +#include "target/arm/arm-powerctl.h"
 >   
->   static void aspeed_2700_scu_realize(DeviceState *dev, Error **errp)
->   {
-> +    Aspeed2700SCUState *a = ASPEED_2700_SCU(dev);
+>   #define TO_REG(offset) ((offset) >> 2)
+>   
+> @@ -143,6 +144,17 @@
+>   #define AST2700_HW_STRAP1_SEC2    TO_REG(0x28)
+>   #define AST2700_HW_STRAP1_SEC3    TO_REG(0x2C)
+>   
+> +/* SSP TSP */
+> +#define AST2700_SCU_SSP_CTRL_0          TO_REG(0x120)
+> +#define AST2700_SSP_TSP_ENABLE          BIT(0)
+> +#define AST2700_SSP_TSP_RST             BIT(1)
+> +#define AST2700_SSP_TSP_RST_RB          BIT(8)
+> +#define AST2700_SSP_TSP_RST_HOLD_RB     BIT(9)
+> +#define AST2700_SSP_TSP_RST_SRC_RB      BIT(10)
+> +#define AST2700_SCU_SYS_RST_CTRL_1      TO_REG(0x200)
+> +#define AST2700_SCU_SYS_RST_CLR_1       TO_REG(0x204)
+> +#define AST2700_SCU_SYS_RST_SSP         BIT(30)
 > +
-> +    a->ssp_cpuid = -1;
-
-hmm, these should be in an instance_init handler.
-
->       aspeed_scu_realize(dev, errp);
+>   #define AST2700_SCU_CLK_SEL_1       TO_REG(0x280)
+>   #define AST2700_SCU_HPLL_PARAM      TO_REG(0x300)
+>   #define AST2700_SCU_HPLL_EXT_PARAM  TO_REG(0x304)
+> @@ -841,6 +853,35 @@ static void aspeed_2600_scu_class_init(ObjectClass *klass, const void *data)
+>       asc->ops = &aspeed_ast2600_scu_ops;
 >   }
 >   
+> +static void handle_2700_ssp_tsp_on(struct AspeedSCUState *s, int cpuid,
+> +                                   int reg)
+> +{
+> +    uint32_t val = s->regs[reg];
+> +
+> +    val &= ~AST2700_SSP_TSP_RST_SRC_RB;
+> +    if (!(val & AST2700_SSP_TSP_RST_HOLD_RB)) {
+> +        val &= ~AST2700_SSP_TSP_RST_RB;
+> +        arm_set_cpu_on_and_reset(cpuid);
+> +    }
+> +
+> +    s->regs[reg] = val;
+> +}
+> +
+> +static void handle_2700_ssp_tsp_off(struct AspeedSCUState *s, int cpuid,
+> +                                    int reg)
+> +{
+> +    uint32_t val = s->regs[reg];
+> +
+> +    val |= AST2700_SSP_TSP_RST_RB;
+> +    val |= AST2700_SSP_TSP_RST_SRC_RB;
+> +    if (val & AST2700_SSP_TSP_RST) {
+> +        val |= AST2700_SSP_TSP_RST_HOLD_RB;
+> +    }
+> +    arm_set_cpu_off(cpuid);
+> +
+> +    s->regs[reg] = val;
+> +}
+> +
+>   static uint64_t aspeed_ast2700_scu_read(void *opaque, hwaddr offset,
+>                                           unsigned size)
+>   {
+> @@ -861,10 +902,14 @@ static uint64_t aspeed_ast2700_scu_read(void *opaque, hwaddr offset,
+>   static void aspeed_ast2700_scu_write(void *opaque, hwaddr offset,
+>                                        uint64_t data64, unsigned size)
+>   {
+> +    Aspeed2700SCUState *a = ASPEED_2700_SCU(opaque);
+>       AspeedSCUState *s = ASPEED_SCU(opaque);
+>       int reg = TO_REG(offset);
+>       /* Truncate here so bitwise operations below behave as expected */
+>       uint32_t data = data64;
+> +    uint32_t active;
+> +    uint32_t oldval;
+> +    int cpuid;
+>   
+>       if (reg >= ASPEED_AST2700_SCU_NR_REGS) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+> @@ -876,6 +921,63 @@ static void aspeed_ast2700_scu_write(void *opaque, hwaddr offset,
+>       trace_aspeed_ast2700_scu_write(offset, size, data);
+>   
+>       switch (reg) {
+> +    case AST2700_SCU_SSP_CTRL_0:
+> +        cpuid = a->ssp_cpuid;
+> +        if (cpuid < 0) {
+> +            return;
+> +        }
+> +        oldval = s->regs[reg];
+> +        data &= 0xff;
+> +        active = oldval ^ data;
+> +
+> +        /*
+> +         * If reset bit is being released (1 -> 0) and no other reset source
+> +         * is active, clear HOLD_RB and power on the corresponding CPU.
+> +         */
+> +        if ((active & AST2700_SSP_TSP_RST) && !(data & AST2700_SSP_TSP_RST)) {
+> +            s->regs[reg] &= ~AST2700_SSP_TSP_RST_HOLD_RB;
+> +            if ((oldval & AST2700_SSP_TSP_RST_RB) &&
+> +                !(oldval & AST2700_SSP_TSP_RST_SRC_RB)) {
+> +                handle_2700_ssp_tsp_on(s, cpuid, reg);
+> +            }
+> +        }
+> +
+> +        /*
+> +         * If ENABLE bit is newly set and reset state is ready,
+> +         * clear HOLD_RB and power on the corresponding CPU.
+> +         */
+> +        if ((active & AST2700_SSP_TSP_ENABLE) &&
+> +            (oldval & AST2700_SSP_TSP_RST_RB) &&
+> +            (oldval & AST2700_SSP_TSP_RST_HOLD_RB) &&
+> +            !(oldval & AST2700_SSP_TSP_RST_SRC_RB)) {
+> +                s->regs[reg] &= ~AST2700_SSP_TSP_RST_HOLD_RB;
+> +                handle_2700_ssp_tsp_on(s, cpuid, reg);
+> +        }
+> +
+> +        /* Auto-clear the ENABLE bit (one-shot behavior) */
+> +        data &= ~AST2700_SSP_TSP_ENABLE;
+> +        s->regs[reg] = (s->regs[reg] & ~0xff) | (data & 0xff);
+> +        return;
+> +    case AST2700_SCU_SYS_RST_CTRL_1:
+> +        if (a->ssp_cpuid < 0) {
+> +            return;
+> +        }
+> +        if (data & AST2700_SCU_SYS_RST_SSP) {
+> +            handle_2700_ssp_tsp_off(s, a->ssp_cpuid, AST2700_SCU_SSP_CTRL_0);
+> +        }
+> +        s->regs[reg] |= data;
+> +        return;
+> +    case AST2700_SCU_SYS_RST_CLR_1:
+> +        if (a->ssp_cpuid < 0) {
+> +            return;
+> +        }
+> +        oldval = s->regs[AST2700_SCU_SYS_RST_CTRL_1];
+> +        active = data & oldval;
+> +        if (active & AST2700_SCU_SYS_RST_SSP) {
+> +            handle_2700_ssp_tsp_on(s, a->ssp_cpuid, AST2700_SCU_SSP_CTRL_0);
+> +        }
+> +        s->regs[AST2700_SCU_SYS_RST_CTRL_1] &= ~active;
+> +        return;
+>       default:
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                         "%s: Unhandled write at offset 0x%" HWADDR_PRIx "\n",
+> @@ -903,6 +1005,8 @@ static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
+>       [AST2700_HW_STRAP1_SEC1]        = 0x000000FF,
+>       [AST2700_HW_STRAP1_SEC2]        = 0x00000000,
+>       [AST2700_HW_STRAP1_SEC3]        = 0x1000408F,
+> +    [AST2700_SCU_SSP_CTRL_0]        = 0x000007FE,
+> +    [AST2700_SCU_SYS_RST_CTRL_1]    = 0xFFC37FDC,
+>       [AST2700_SCU_HPLL_PARAM]        = 0x0000009f,
+>       [AST2700_SCU_HPLL_EXT_PARAM]    = 0x8000004f,
+>       [AST2700_SCU_DPLL_PARAM]        = 0x0080009f,
+> @@ -922,12 +1026,17 @@ static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
+>   
+>   static void aspeed_ast2700_scu_reset_hold(Object *obj, ResetType type)
+>   {
+> +    Aspeed2700SCUState *a = ASPEED_2700_SCU(obj);
+>       AspeedSCUState *s = ASPEED_SCU(obj);
+>       AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(obj);
+>   
+>       memcpy(s->regs, asc->resets, asc->nr_regs * 4);
+>       s->regs[AST2700_SILICON_REV] = s->silicon_rev;
+>       s->regs[AST2700_HW_STRAP1] = s->hw_strap1;
+> +
+> +    if (a->ssp_cpuid > 0) {
 
-Please try with :
+a->ssp_cpuid >= 0
 
-static void aspeed_2700_scu_instance_init(Object *obj)
-{
-     Aspeed2700SCUState *a = ASPEED_2700_SCU(obj);
-
-     a->ssp_cpuid = -1;
-     a->tsp_cpuid = -1;
-
-     object_property_add_link(obj, "ssp-remap0", TYPE_MEMORY_REGION,
-                              (Object **)&a->ssp_remap[0],
-                              object_property_allow_set_link, 0);
-     object_property_add_link(obj, "ssp-remap1", TYPE_MEMORY_REGION,
-                              (Object **)&a->ssp_remap[1],
-                              object_property_allow_set_link, 0);
-     object_property_add_link(obj, "tsp-remap", TYPE_MEMORY_REGION,
-                              (Object **)&a->tsp_remap,
-                              object_property_allow_set_link, 0);
-}
-
-
-and
+> +        arm_set_cpu_off(a->ssp_cpuid);
+> +    }
+>   }
+>   
+>   static void aspeed_2700_scu_realize(DeviceState *dev, Error **errp)
 
 
