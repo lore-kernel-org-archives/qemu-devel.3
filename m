@@ -1,74 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BB4606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 12:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE5E606A320
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 12:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=dfzDmvJw
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RikYXzuD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTei4-0002QJ-Mx; Wed, 18 Nov 2026 07:24:22 -0500
+	id 1xTeiI-0002bk-R6; Wed, 18 Nov 2026 07:24:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xTehv-0002M2-Aj
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:24:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xTeiB-0002Sj-Vq
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:24:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xTehs-0004MW-JA
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:24:11 -0500
+ id 1xTei8-0005c2-Dg
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 07:24:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795004647;
+ s=mimecast20190719; t=1795004663;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y52It5H6paWaZS38DrvCgIt5ZL/PfJ9391msH5ehZmA=;
- b=dfzDmvJwI8UJaEz4t5N59WVnyGM/NF5PXjizeicL8ghhP87GWPnN6BNjsKvUfz49DUqVBH
- Zn9iowpboSAVcEYQEGcnk0hNF2cWaEigIA23T5VJNWBvZgbTH0x1ZylfS8Sgrop97c1+he
- FiyzCHJSIJ9cMpVA/ZySrzX6AyRj/IE=
+ bh=lNVHdTLgAXFTTy2Jj1zw03rSyxQGc3Pu1htUe3O/JkQ=;
+ b=RikYXzuDjDo/poFeO7d890yo1t/52wNxaxKSXBEvKWT0HlfKXYnEyG6AwsrrGGm3JOHRmm
+ PQvR8WDgphkDTYkasYi22VQ7ZlojlUd66H1Tkm7jpmOIVv9LdS+pjDb0rHTBy6PC5vtsxl
+ JCJwEuOQuLKW4rKDUIiGqPmhLOaAk2M=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-227-5Hghnb1aMNqYtE7MArqrwA-1; Wed,
- 18 Nov 2026 07:24:05 -0500
-X-MC-Unique: 5Hghnb1aMNqYtE7MArqrwA-1
-X-Mimecast-MFC-AGG-ID: 5Hghnb1aMNqYtE7MArqrwA_1795004644
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-OmsXEoMJPIG1AHnB1ETvPQ-1; Wed,
+ 18 Nov 2026 07:24:21 -0500
+X-MC-Unique: OmsXEoMJPIG1AHnB1ETvPQ-1
+X-Mimecast-MFC-AGG-ID: OmsXEoMJPIG1AHnB1ETvPQ_1795004660
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7047C1956056
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 12:24:04 +0000 (UTC)
+ id C37D51956095
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 12:24:20 +0000 (UTC)
 Received: from pbonzini-thinkpadx1carbon6th.rmtit.csb
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0D5F180055C
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 12:24:03 +0000 (UTC)
+ id 213C7180055C
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 12:24:19 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [RFC PATCH 04/26] target/i386/tcg: build a decoding trie from the
- table description
-Date: Wed, 18 Nov 2026 13:23:35 +0100
-Message-ID: <20261118122357.659634-5-pbonzini@redhat.com>
+Subject: [RFC PATCH 19/26] target/i386/tcg: convert EVEX map 4 to decode.def
+Date: Wed, 18 Nov 2026 13:23:50 +0100
+Message-ID: <20261118122357.659634-20-pbonzini@redhat.com>
 In-Reply-To: <20261118122357.659634-1-pbonzini@redhat.com>
 References: <20261118122357.659634-1-pbonzini@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
 X-Spam_score: 0.5
 X-Spam_bar: /
 X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,474 +88,554 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Compute, for each entry, the values of the decoder selectors that lead
-to it (opcode map and byte, mandatory prefix, encoding, W, L, ND, NF,
-ModRM.reg, ModRM.mod, 64-bit mode).  Then build a trie for each opcode
-map out of them.
+Describe EVEX map 4 in decode.def and remove opcodes_EVEX_map4,
+decode_EVEX4cc, decode_EVEX4_MOVBE, decode_EVEX4_66, decode_EVEX4_8F and
+decode_EVEX4_FF.  decode_EVEX_map4() now runs the program from entry
+point 4.
 
-Constraints are built from the opcode column of decode.def, the
-operand types (R, U and N operands require mod == 3, memory operands
-need mod != 3), and the modifiers (for example chk(i64) and chk(o64)).
+NFx and NDx prefixes, plus splitting on register/memory operands,
+make it easy to specify CMOVcc, CFCMOVcc and SETcc and get rid of the
+cfcmov_nd0 and cfcmov_nd1 tables.  The E operand of the register forms
+needs to become R for maketable.py to identify the split correctly,
+and likewise MOVBE is split into register and memory entries instead of
+rewriting E to M in decode_EVEX4_MOVBE().
 
-The trie looks at the selectors in a fixed order, skipping those that
-no entry in a subtree cares about, and shares subtrees with the same
-set of candidate entries.  In order to support WIG/LIG/LLIG and
-ignore_mod, leaves also have a list of fields to set.
+While APX shares groups 1, 2 and 3 are shared with the legacy encoding,
+I am inlining them in order to have the NF0 annotations specified directly
+in the decoding table.  Groups 4 and 5 are also shared but only for INC,
+DEC, so expanding them is not a particular problem.
 
-AI-used-for: code, tests
+AI-used-for: code
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/maketable.py      | 246 +++++++++++++++++++++++++++++-
- target/i386/tcg/test_maketable.py | 132 ++++++++++++++++
- 2 files changed, 377 insertions(+), 1 deletion(-)
+ target/i386/tcg/decode-new.c.inc | 257 +++++--------------------------
+ target/i386/tcg/decode.def       | 197 +++++++++++++++++++++++
+ 2 files changed, 233 insertions(+), 221 deletions(-)
 
-diff --git a/target/i386/tcg/maketable.py b/target/i386/tcg/maketable.py
-index 2a52307d97e..826d82a2780 100644
---- a/target/i386/tcg/maketable.py
-+++ b/target/i386/tcg/maketable.py
-@@ -20,12 +20,13 @@
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 1c5c6687419..7d91ddbd4c5 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1293,9 +1293,10 @@ static void decode_group1(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
  
- from __future__ import annotations
+     if (op == 7) {
+         /* prevent writeback for CMP */
++        entry->op1 = entry->op0;
++        entry->s1 = entry->s0;
+         entry->op0 = X86_TYPE_None;
+         entry->s0 = X86_SIZE_None;
+-        entry->vex_class = X86_EVEX_APX_cmp;
+     } else {
+         entry->special = X86_SPECIAL_HasLock;
+     }
+@@ -1335,24 +1336,24 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+ {
+     static const X86OpEntry opcodes_grp3[16] = {
+         /* 0xf6 */
+-        [0x00] = X86_OP_ENTRYrr(TEST, E,b, I,b, evex_apx_cmp p_00),
+-        [0x01] = X86_OP_ENTRYrr(TEST, E,b, I,b, evex_apx_cmp p_00),
+-        [0x02] = X86_OP_ENTRYwr(NOT,  B,b, E,b, evex_apx p_00 chk(nf0) lock),
+-        [0x03] = X86_OP_ENTRYwr(NEG,  B,b, E,b, evex_apx p_00 lock),
+-        [0x04] = X86_OP_ENTRYrr(MUL,  E,b, 0,b, evex_apx p_00 zextT0 zextT1),
+-        [0x05] = X86_OP_ENTRYrr(IMUL, E,b, 0,b, evex_apx p_00 sextT0 sextT1),
+-        [0x06] = X86_OP_ENTRYr(DIV,   E,b,      evex_apx p_00),
+-        [0x07] = X86_OP_ENTRYr(IDIV,  E,b,      evex_apx p_00),
++        [0x00] = X86_OP_ENTRYrr(TEST, E,b, I,b),
++        [0x01] = X86_OP_ENTRYrr(TEST, E,b, I,b),
++        [0x02] = X86_OP_ENTRY1(NOT,   E,b,      lock),
++        [0x03] = X86_OP_ENTRY1(NEG,   E,b,      lock),
++        [0x04] = X86_OP_ENTRYrr(MUL,  E,b, 0,b, zextT0 zextT1),
++        [0x05] = X86_OP_ENTRYrr(IMUL, E,b, 0,b, sextT0 sextT1),
++        [0x06] = X86_OP_ENTRYr(DIV,   E,b),
++        [0x07] = X86_OP_ENTRYr(IDIV,  E,b),
  
-+import enum
- import pathlib
- import re
- import sys
- from collections.abc import Callable
- from dataclasses import dataclass, field, replace
--from typing import Generic, TypeVar, cast, overload
-+from typing import ClassVar, Generic, TypeVar, cast, overload
+         /* 0xf7 */
+-        [0x08] = X86_OP_ENTRYrr(TEST, E,v, I,z, evex_apx_cmp p_00_66),
+-        [0x09] = X86_OP_ENTRYrr(TEST, E,v, I,z, evex_apx_cmp p_00_66),
+-        [0x0a] = X86_OP_ENTRYwr(NOT,  B,v, E,v, evex_apx p_00_66 chk(nf0) lock),
+-        [0x0b] = X86_OP_ENTRYwr(NEG,  B,v, E,v, evex_apx p_00_66 lock),
+-        [0x0c] = X86_OP_ENTRYrr(MUL,  E,v, 0,v, evex_apx p_00_66 zextT0 zextT1),
+-        [0x0d] = X86_OP_ENTRYrr(IMUL, E,v, 0,v, evex_apx p_00_66 sextT0 sextT1),
+-        [0x0e] = X86_OP_ENTRYr(DIV,   E,v,      evex_apx p_00_66),
+-        [0x0f] = X86_OP_ENTRYr(IDIV,  E,v,      evex_apx p_00_66),
++        [0x08] = X86_OP_ENTRYrr(TEST, E,v, I,z),
++        [0x09] = X86_OP_ENTRYrr(TEST, E,v, I,z),
++        [0x0a] = X86_OP_ENTRY1(NOT,   E,v,      lock),
++        [0x0b] = X86_OP_ENTRY1(NEG,   E,v,      lock),
++        [0x0c] = X86_OP_ENTRYrr(MUL,  E,v, 0,v, zextT0 zextT1),
++        [0x0d] = X86_OP_ENTRYrr(IMUL, E,v, 0,v, sextT0 sextT1),
++        [0x0e] = X86_OP_ENTRYr(DIV,   E,v),
++        [0x0f] = X86_OP_ENTRYr(IDIV,  E,v),
+     };
  
- T = TypeVar('T')
+     int w = (*b & 1);
+@@ -1365,12 +1366,12 @@ static void decode_group4_5(DisasContext *s, CPUX86State *env, X86OpEntry *entry
+ {
+     static const X86OpEntry opcodes_grp4_5[16] = {
+         /* 0xfe */
+-        [0x00] = X86_OP_ENTRYwr(INC,    B,b, E,b,                      evex_apx p_00 lock),
+-        [0x01] = X86_OP_ENTRYwr(DEC,    B,b, E,b,                      evex_apx p_00 lock),
++        [0x00] = X86_OP_ENTRY1(INC,    E,b,                            lock),
++        [0x01] = X86_OP_ENTRY1(DEC,    E,b,                            lock),
  
-@@ -347,9 +348,65 @@ def parse_file(lines: list[str], filename: str = '<string>') -> list[Insn]:
-     return insns
+         /* 0xff */
+-        [0x08] = X86_OP_ENTRYwr(INC,    B,v, E,v,                      evex_apx p_00_66 lock),
+-        [0x09] = X86_OP_ENTRYwr(DEC,    B,v, E,v,                      evex_apx p_00_66 lock),
++        [0x08] = X86_OP_ENTRY1(INC,     E,v,                           lock),
++        [0x09] = X86_OP_ENTRY1(DEC,     E,v,                           lock),
+         [0x0a] = X86_OP_ENTRYr(CALL_m,  E,f64,                         zextT0),
+         [0x0b] = X86_OP_ENTRYr(CALLF_m, M,p),
+         [0x0c] = X86_OP_ENTRYr(JMP_m,   E,f64,                         zextT0),
+@@ -1481,11 +1482,10 @@ static const X86OpEntry opcodes_root[256] = {
+     [0x76] = X86_OP_ENTRYr(Jcc, J,b),
+     [0x77] = X86_OP_ENTRYr(Jcc, J,b),
  
+-    /* decode_group1 is shared with EVEX map4.  */
+-    [0x80] = X86_OP_GROUP3(group1, B,b, E,b, I,b),
+-    [0x81] = X86_OP_GROUP3(group1, B,v, E,v, I,z),
+-    [0x82] = X86_OP_GROUP3(group1, B,b, E,b, I,b, chk(i64)),
+-    [0x83] = X86_OP_GROUP3(group1, B,v, E,v, I,b),
++    [0x80] = X86_OP_GROUP2(group1, E,b, I,b),
++    [0x81] = X86_OP_GROUP2(group1, E,v, I,z),
++    [0x82] = X86_OP_GROUP2(group1, E,b, I,b, chk(i64)),
++    [0x83] = X86_OP_GROUP2(group1, E,v, I,b),
+     [0x84] = X86_OP_ENTRYrr(TEST, E,b, G,b),
+     [0x85] = X86_OP_ENTRYrr(TEST, E,v, G,v),
+     [0x86] = X86_OP_ENTRY2(XCHG, E,b, G,b, xchg),
+@@ -1518,9 +1518,8 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xB6] = X86_OP_ENTRY3(MOV, LoBits,b, I,b, None, None),
+     [0xB7] = X86_OP_ENTRY3(MOV, LoBits,b, I,b, None, None),
  
-+class Sel(enum.Enum):
-+    # Same as X86DecodeSel in decode-new.h.
-+    BYTE = enum.auto()
-+    REG = enum.auto()
-+    MOD = enum.auto()
-+    PREFIX = enum.auto()
-+    ENC = enum.auto()
-+    W = enum.auto()
-+    L = enum.auto()
-+    MODE64 = enum.auto()
-+    ND = enum.auto()
-+    NF = enum.auto()
-+
-+
-+# Number of values of each selector.
-+SEL_VALUES = {
-+    Sel.BYTE: 256,
-+    Sel.REG: 8,
-+    Sel.MOD: 2,
-+    Sel.PREFIX: 4,
-+    Sel.ENC: 4,
-+    Sel.W: 2,
-+    Sel.L: 4,
-+    Sel.MODE64: 2,
-+    Sel.ND: 2,
-+    Sel.NF: 2,
-+}
-+
-+# Values of the selectors that an entry accepts; a selector that is not
-+# present accepts all values.  For example, "NP|66.0F 67" accepts
-+# {Sel.PREFIX: {0, 1}, Sel.BYTE: {0x67}} in map 1.
-+Constraints = dict[Sel, frozenset[int]]
-+
-+PREFIX_MAPS = {
-+    None: 0, '0F': 1, '0F38': 2, '0F3A': 3,
-+    'MAP3': 3, 'MAP4': 4, 'MAP5': 5, 'MAP6': 6, 'MAP7': 7,
-+}
-+
-+# Values of Sel.PREFIX and Sel.ENC, same as X86DecodePrefix and
-+# X86DecodeEncoding.
-+MANDATORY_PREFIXES = {'NP': 0, '66': 1, 'F3': 2, 'F2': 3}
-+ENC_LEGACY, ENC_REX2, ENC_VEX, ENC_EVEX = range(4)
-+ENCODINGS = {
-+    'LEGACY': ENC_LEGACY,
-+    'REX2': ENC_REX2,
-+    'VEX': ENC_VEX,
-+    'EVEX': ENC_EVEX,
-+}
-+
- # Rows of map 0 and 1 where REX2 differs from the legacy encoding.
- REX2_ROWS = {None: {0x4, 0x7, 0xA, 0xE}, '0F': {0x3, 0x8}}
+-    /* decode_group2 is shared with EVEX map4.  */
+-    [0xC0] = X86_OP_GROUP3(group2, B,b, E,b, I,b),
+-    [0xC1] = X86_OP_GROUP3(group2, B,v, E,v, I,b),
++    [0xC0] = X86_OP_GROUP2(group2, E,b, I,b),
++    [0xC1] = X86_OP_GROUP2(group2, E,v, I,b),
+     [0xC2] = X86_OP_ENTRYr(RET, I,w),
+     [0xC3] = X86_OP_ENTRY0(RET),
+     [0xC4] = X86_OP_ENTRY3(LES, G,z, EM,p, None, None, chk(i64)),
+@@ -1528,11 +1527,10 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xC6] = X86_OP_GROUP3(group11, E,b, I,b, None, None), /* reg=000b */
+     [0xC7] = X86_OP_GROUP3(group11, E,v, I,z, None, None), /* reg=000b */
  
-+W_VALUES = {'W0': frozenset([0]), 'W1': frozenset([1])}
-+L_VALUES = {
-+    'L0': frozenset([0]), '128': frozenset([0]), 'LZ': frozenset([0]), 'LLZ': frozenset([0]),
-+    'L1': frozenset([1]), '256': frozenset([1]),
-+    '512': frozenset([2]),
-+}
-+
+-    /* decode_group2 is shared with EVEX map4.  */
+-    [0xD0] = X86_OP_GROUPwr(group2, B,b, E,b),
+-    [0xD1] = X86_OP_GROUPwr(group2, B,v, E,v),
+-    [0xD2] = X86_OP_GROUP3(group2, B,b, E,b, 1,b), /* CL */
+-    [0xD3] = X86_OP_GROUP3(group2, B,v, E,v, 1,b), /* CL */
++    [0xD0] = X86_OP_GROUP1(group2, E,b),
++    [0xD1] = X86_OP_GROUP1(group2, E,v),
++    [0xD2] = X86_OP_GROUP2(group2, E,b, 1,b), /* CL */
++    [0xD3] = X86_OP_GROUP2(group2, E,v, 1,b), /* CL */
+     [0xD4] = X86_OP_ENTRY2(AAM, 0,w, I,b, chk(i64)),
+     [0xD5] = X86_OP_ENTRY2(AAD, 0,w, I,b, chk(i64)),
+     [0xD6] = X86_OP_ENTRYw(SALC, 0,b, chk(i64)),
+@@ -1765,196 +1763,13 @@ static void decode_REX2_map1(DisasContext *s, CPUX86State *env, X86OpEntry *entr
+     decode_REX2(s, env, entry, b, opcode_rex2_map1);
+ }
  
- class SemanticError(Exception):
-     def __init__(self, insn: Insn, msg: str):
-@@ -428,6 +485,20 @@ class Entry:
-     insn: Insn
-     operands: list[Operand] = field(init=False, default_factory=list)
+-static void decode_EVEX4cc(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+-{
+-    uint8_t modrm = get_modrm(s, env);
+-    int mod = (modrm >> 6) & 3;
+-
+-    static const X86OpEntry setcc =
+-        X86_OP_ENTRYw(SETcc, E,b, evex_apx_zu chk(nf0) p_f2);
+-
+-    /*
+-     * All EVEX-promoted register-destination conditional moves (all CFCMOV
+-     * cases except "CFCMOV rm, r", and three-operand CMOV) have zero-upper
+-     * Note that this is specific to CMOV/CFCMOV, and not ZU!
+-     *
+-     * For NDD=0, NF represents the direction.  For NDD=1, NF represents fault
+-     * suppression.
+-     */
+-    static const X86OpEntry cfcmov_nd0[2][2] = {
+-        { /* NF=0 */
+-            X86_OP_ENTRY3(CFCMOVcc_ld,  G,v, ZERO,v, M,v, p_00_66 evex_apx zextwT0),
+-            X86_OP_ENTRY3(CMOVcc,       G,v, ZERO,v, E,v, p_00_66 evex_apx zextwT0),
+-        },
+-        { /* NF=1 */
+-            X86_OP_ENTRYwr(CFCMOVcc_st, M,v, G,v,         p_00_66 evex_apx),
+-            X86_OP_ENTRY3(CMOVcc,       E,v, ZERO,v, G,v, p_00_66 evex_apx zextwT0),
+-        },
+-    };
+-    static const X86OpEntry cfcmov_nd1[2][2] = {
+-        { /* NF=0 */
+-            X86_OP_ENTRY3(CMOVcc,       B,v, G,v, E,v,    p_00_66 evex_apx zextwT0),
+-            X86_OP_ENTRY3(CMOVcc,       B,v, G,v, E,v,    p_00_66 evex_apx zextwT0),
+-        },
+-        { /* NF=1 */
+-            X86_OP_ENTRY3(CFCMOVcc_ld,  B,v, G,v, M,v,    p_00_66 evex_apx zextwT0),
+-            X86_OP_ENTRY3(CMOVcc,       B,v, G,v, E,v,    p_00_66 evex_apx zextwT0),
+-        },
+-    };
+-
+-    if (s->prefix & PREFIX_REPNZ) {
+-        *entry = setcc;
+-    } else {
+-        *entry = (EVEX_APX_ND(s) ? cfcmov_nd1 : cfcmov_nd0)[EVEX_APX_NF(s)][mod == 3];
+-    }
+-}
+-
+-static void decode_EVEX4_MOVBE(DisasContext *s, CPUX86State *env,
+-                               X86OpEntry *entry, uint8_t *b)
+-{
+-    entry->gen = gen_MOVBE;
+-    if ((get_modrm(s, env) >> 6) != 3) {
+-        /* skip the load/store to be able to use MO_BE in code generation.  */
+-        if (entry->op0 == X86_TYPE_E) {
+-            entry->op0 = X86_TYPE_M;
+-        } else {
+-            entry->op1 = X86_TYPE_M;
+-        }
+-    }
+-}
+-
+-static void decode_EVEX4_66(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+-{
+-    entry->gen = (s->prefix & PREFIX_DATA) ? gen_ADCX : gen_ADOX;
+-}
+-
+-static void decode_EVEX4_8F(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+-{
+-    int op = (get_modrm(s, env) >> 3) & 7;
+-    if (op == 0) {
+-        entry->gen = gen_POP2;
+-    } else {
+-        *entry = UNKNOWN_OPCODE;
+-    }
+-}
+-
+-static void decode_EVEX4_FF(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+-{
+-    static const X86OpEntry push2 =
+-        X86_OP_ENTRYrr(PUSH2, B,d64, R,d64,     evex_apx_pp2 p_00);
+-
+-    int op = (get_modrm(s, env) >> 3) & 7;
+-    if (op == 6) {
+-        *entry = push2;
+-    } else {
+-        decode_group4_5(s, env, entry, b);
+-    }
+-}
+-
+-/*
+- * Missing: ENQCMD, ENQCMDS, INVEPT, INVPCID, INVVPID,
+- * KMOVD, KMOVW, KMOVD, KMOVQ, MOVDIR64B, MOVDIRI, URDMSR,
+- * UWRMSR, WRSSD, WRSSQ, WRUSSD, WRUSSQ, LDTILECFG, STTILECFG,
+- * TILELOADD, TILELOADDDT1, TILESTORED.
+- */
+-static const X86OpEntry opcodes_EVEX_map4[256] = {
+-    [0x00] = X86_OP_ENTRY3(ADD, B,b, E,b, G,b, evex_apx p_00 lock),
+-    [0x01] = X86_OP_ENTRY3(ADD, B,v, E,v, G,v, evex_apx p_00_66 lock),
+-    [0x02] = X86_OP_ENTRY3(ADD, B,b, G,b, E,b, evex_apx p_00 lock),
+-    [0x03] = X86_OP_ENTRY3(ADD, B,v, G,v, E,v, evex_apx p_00_66 lock),
+-    [0x08] = X86_OP_ENTRY3(OR, B,b, E,b, G,b, evex_apx p_00 lock),
+-    [0x09] = X86_OP_ENTRY3(OR, B,v, E,v, G,v, evex_apx p_00_66 lock),
+-    [0x0A] = X86_OP_ENTRY3(OR, B,b, G,b, E,b, evex_apx p_00 lock),
+-    [0x0B] = X86_OP_ENTRY3(OR, B,v, G,v, E,v, evex_apx p_00_66 lock),
+-
+-    [0x10] = X86_OP_ENTRY3(ADC, B,b, E,b, G,b, evex_apx p_00 chk(nf0) lock),
+-    [0x11] = X86_OP_ENTRY3(ADC, B,v, E,v, G,v, evex_apx p_00_66 chk(nf0) lock),
+-    [0x12] = X86_OP_ENTRY3(ADC, B,b, G,b, E,b, evex_apx p_00 chk(nf0) lock),
+-    [0x13] = X86_OP_ENTRY3(ADC, B,v, G,v, E,v, evex_apx p_00_66 chk(nf0) lock),
+-    [0x18] = X86_OP_ENTRY3(SBB, B,b, E,b, G,b, evex_apx p_00 chk(nf0) lock),
+-    [0x19] = X86_OP_ENTRY3(SBB, B,v, E,v, G,v, evex_apx p_00_66 chk(nf0) lock),
+-    [0x1A] = X86_OP_ENTRY3(SBB, B,b, G,b, E,b, evex_apx p_00 chk(nf0) lock),
+-    [0x1B] = X86_OP_ENTRY3(SBB, B,v, G,v, E,v, evex_apx p_00_66 chk(nf0) lock),
+-
+-    [0x20] = X86_OP_ENTRY3(AND,  B,b, E,b, G,b, evex_apx p_00 lock),
+-    [0x21] = X86_OP_ENTRY3(AND,  B,v, E,v, G,v, evex_apx p_00_66 lock),
+-    [0x22] = X86_OP_ENTRY3(AND,  B,b, G,b, E,b, evex_apx p_00 lock),
+-    [0x23] = X86_OP_ENTRY3(AND,  B,v, G,v, E,v, evex_apx p_00_66 lock),
+-    [0x24] = X86_OP_ENTRY4(SHLD, B,v, E,v, G,v, evex_apx p_00_66),
+-    [0x28] = X86_OP_ENTRY3(SUB,  B,b, E,b, G,b, evex_apx p_00 lock),
+-    [0x29] = X86_OP_ENTRY3(SUB,  B,v, E,v, G,v, evex_apx p_00_66 lock),
+-    [0x2A] = X86_OP_ENTRY3(SUB,  B,b, G,b, E,b, evex_apx p_00 lock),
+-    [0x2B] = X86_OP_ENTRY3(SUB,  B,v, G,v, E,v, evex_apx p_00_66 lock),
+-    [0x2C] = X86_OP_ENTRY4(SHRD, B,v, E,v, G,v, evex_apx p_00_66),
+-
+-    [0x30] = X86_OP_ENTRY3(XOR, B,b, E,b, G,b, evex_apx p_00 lock),
+-    [0x31] = X86_OP_ENTRY3(XOR, B,v, E,v, G,v, evex_apx p_00_66 lock),
+-    [0x32] = X86_OP_ENTRY3(XOR, B,b, G,b, E,b, evex_apx p_00 lock),
+-    [0x33] = X86_OP_ENTRY3(XOR, B,v, G,v, E,v, evex_apx p_00_66 lock),
+-    [0x38] = X86_OP_ENTRYrr(CMP, E,b, G,b, evex_apx_cmp p_00),
+-    [0x39] = X86_OP_ENTRYrr(CMP, E,v, G,v, evex_apx_cmp p_00_66),
+-    [0x3A] = X86_OP_ENTRYrr(CMP, G,b, E,b, evex_apx_cmp p_00),
+-    [0x3B] = X86_OP_ENTRYrr(CMP, G,v, E,v, evex_apx_cmp p_00_66),
+-
+-    [0x40] = X86_OP_GROUP0(EVEX4cc),
+-    [0x41] = X86_OP_GROUP0(EVEX4cc),
+-    [0x42] = X86_OP_GROUP0(EVEX4cc),
+-    [0x43] = X86_OP_GROUP0(EVEX4cc),
+-    [0x44] = X86_OP_GROUP0(EVEX4cc),
+-    [0x45] = X86_OP_GROUP0(EVEX4cc),
+-    [0x46] = X86_OP_GROUP0(EVEX4cc),
+-    [0x47] = X86_OP_GROUP0(EVEX4cc),
+-    [0x48] = X86_OP_GROUP0(EVEX4cc),
+-    [0x49] = X86_OP_GROUP0(EVEX4cc),
+-    [0x4A] = X86_OP_GROUP0(EVEX4cc),
+-    [0x4B] = X86_OP_GROUP0(EVEX4cc),
+-    [0x4C] = X86_OP_GROUP0(EVEX4cc),
+-    [0x4D] = X86_OP_GROUP0(EVEX4cc),
+-    [0x4E] = X86_OP_GROUP0(EVEX4cc),
+-    [0x4F] = X86_OP_GROUP0(EVEX4cc),
+-
+-    [0x60] = X86_OP_GROUPwr(EVEX4_MOVBE,  G,v, E,v,     evex_apx cpuid(MOVBE) chk(nf0) p_00_66),
+-    [0x61] = X86_OP_GROUPwr(EVEX4_MOVBE,  E,v, G,v,     evex_apx cpuid(MOVBE) chk(nf0) p_00_66),
+-    [0x66] = X86_OP_GROUP3(EVEX4_66, B,y, G,y, E,y,     evex_apx zextT0 zextT1 cpuid(ADX) chk(nf0) p_66_f3),
+-    [0x69] = X86_OP_ENTRY3(IMUL3, G,v, E,v, I,z,        evex_apx_zu sextT0 p_00_66),
+-    [0x6B] = X86_OP_ENTRY3(IMUL3, G,v, E,v, I,b,        evex_apx_zu sextT0 p_00_66),
+-
+-    [0x80] = X86_OP_GROUP3(group1,   B,b, E,b, I,b,     evex_apx p_00),
+-    [0x81] = X86_OP_GROUP3(group1,   B,v, E,v, I,z,     evex_apx p_00_66),
+-    [0x83] = X86_OP_GROUP3(group1,   B,v, E,v, I,b,     evex_apx p_00_66),
+-    [0x84] = X86_OP_ENTRYrr(TEST,    E,b, G,b,          evex_apx_cmp p_00_66),
+-    [0x85] = X86_OP_ENTRYrr(TEST,    E,v, G,v,          evex_apx_cmp p_00_66),
+-    [0x88] = X86_OP_ENTRYwr(POPCNT,  G,v, E,v,          evex_apx cpuid(POPCNT) zextT0 p_00_66),
+-    [0x8F] = X86_OP_GROUPw(EVEX4_8F, R,d64, /* B,d64 */ evex_apx_pp2 p_00),
+-
+-    [0xA4] = X86_OP_ENTRY4(SHLD,     B,v, E,v, G,v,     evex_apx p_00_66),
+-    [0xA5] = X86_OP_ENTRY3(SHLD,     B,v, E,v, G,v,     evex_apx p_00_66),
+-    [0xAC] = X86_OP_ENTRY4(SHRD,     B,v, E,v, G,v,     evex_apx p_00_66),
+-    [0xAD] = X86_OP_ENTRY3(SHRD,     B,v, E,v, G,v,     evex_apx p_00_66),
+-    [0xAF] = X86_OP_ENTRY3(IMUL3,    B,v, G,v, E,v,     evex_apx sextT0 sextT1 p_00_66),
+-
+-    [0xC0] = X86_OP_GROUP3(group2,   B,b, E,b, I,b,     evex_apx p_00),
+-    [0xC1] = X86_OP_GROUP3(group2,   B,v, E,v, I,b,     evex_apx p_00_66),
+-
+-    [0xD0] = X86_OP_GROUPwr(group2,  B,b, E,b,          evex_apx p_00),
+-    [0xD1] = X86_OP_GROUPwr(group2,  B,v, E,v,          evex_apx p_00_66),
+-    [0xD2] = X86_OP_GROUP3(group2,   B,b, E,b, 1,b,     evex_apx p_00), /* CL */
+-    [0xD3] = X86_OP_GROUP3(group2,   B,v, E,v, 1,b,     evex_apx p_00_66), /* CL */
+-
+-    [0xF0] = X86_OP_ENTRY2(CRC32,    G,d, E,b,          evex_apx cpuid(SSE42) chk(nf0) p_00),
+-    [0xF1] = X86_OP_ENTRY2(CRC32,    G,d, E,v,          evex_apx cpuid(SSE42) chk(nf0) p_00_66),
+-    [0xF4] = X86_OP_ENTRYwr(TZCNT,   G,v, E,v,          evex_apx zextT0 p_00_66),
+-    [0xF5] = X86_OP_ENTRYwr(LZCNT,   G,v, E,v,          evex_apx zextT0 p_00_66),
+-    [0xF6] = X86_OP_GROUP1(group3,   E,b),
+-    [0xF7] = X86_OP_GROUP1(group3,   E,v),
+-    [0xFE] = X86_OP_GROUP1(group4_5, E,b),
+-    [0xFF] = X86_OP_GROUP1(EVEX4_FF, E,v),
+-};
+-
+ static void decode_EVEX_map4(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+ {
++    const X86OpEntry *row;
++
+     *b = x86_ldub_code(env, s);
+-    *entry = opcodes_EVEX_map4[*b];
++    row = decode_run(s, env, 4, b);
++    *entry = row ? *row : UNKNOWN_OPCODE;
+ }
+ #endif
  
-+    # Opcode map, and values of the selectors that lead to this entry.
-+    map: int = field(init=False, default=0)
-+    constraints: Constraints = field(init=False, default_factory=dict)
-+
-+    # Selectors whose value is replaced when decoding (X86_OP_SET).
-+    sets: dict[Sel, int] = field(init=False, default_factory=dict)
-+
-+    def accepts(self, sel: Sel, v: int) -> bool:
-+        allowed = self.constraints.get(sel)
-+        return allowed is None or v in allowed
-+
-+    def constrains(self, sel: Sel) -> bool:
-+        return sel in self.constraints
-+
-     def error(self, msg: str) -> SemanticError:
-         return SemanticError(self.insn, msg)
+diff --git a/target/i386/tcg/decode.def b/target/i386/tcg/decode.def
+index 658cbe7f7b9..d30885a11e6 100644
+--- a/target/i386/tcg/decode.def
++++ b/target/i386/tcg/decode.def
+@@ -457,3 +457,200 @@ NP.0F3A CC                      SHA1RNDS4     Vdq,Wdq,Ib         cpuid(SHA_NI)
+ VEX.66.0F3A DF                  VAESKEYGEN    Vdq,Wdq,Ib         E4 cpuid(AES, AVX)
  
-@@ -659,6 +730,63 @@ def check_modifiers(self) -> None:
-         if len(classes) > 1:
-             raise self.error('more than one exception class')
- 
-+    def compute_constraints(self) -> None:
-+        prefix = self.insn.prefix
-+        c = self.constraints
-+
-+        self.map = PREFIX_MAPS[prefix.map]
-+        lo, hi = self.insn.opcode
-+        c[Sel.BYTE] = frozenset(range(lo, hi + 1))
-+
-+        if prefix.mandatory is not None:
-+            c[Sel.PREFIX] = frozenset(MANDATORY_PREFIXES[p] for p in prefix.mandatory)
-+        elif prefix.encoding in ('VEX', 'EVEX'):
-+            # VEX.pp and EVEX.pp are part of the opcode; like in the SDM,
-+            # no mandatory prefix means NP.
-+            c[Sel.PREFIX] = frozenset([MANDATORY_PREFIXES['NP']])
-+
-+        # Lines without an encoding also accept REX2, except in the rows
-+        # where REX2 has its own lines.
-+        checks = {arg for m in self.insn.modifiers if m.name == 'chk' for arg in m.args}
-+        encs = set(ENCODINGS[e] for e in [prefix.encoding or 'LEGACY'])
-+        if ENC_LEGACY in encs and not self.is_rex2() and 'no_rex2' not in checks:
-+            encs.add(ENC_REX2)
-+        c[Sel.ENC] = frozenset(encs)
-+
-+        # WIG, LIG and LLIG accept all values, and decode as 0.
-+        if prefix.w == 'WIG':
-+            self.sets[Sel.W] = 0
-+        elif prefix.w is not None:
-+            c[Sel.W] = W_VALUES[prefix.w]
-+        if prefix.l in ('LIG', 'LLIG'):
-+            self.sets[Sel.L] = 0
-+        elif prefix.l is not None:
-+            c[Sel.L] = L_VALUES[prefix.l]
-+
-+        if prefix.nd is not None:
-+            c[Sel.ND] = frozenset([prefix.nd == 'ND1'])
-+        if prefix.nf is not None:
-+            c[Sel.NF] = frozenset([prefix.nf == 'NF1'])
-+
-+        # i64 and o64 select the row based on the mode; the other checks
-+        # (including i64_amd and o64_intel) stay in the row.
-+        if 'i64' in checks:
-+            c[Sel.MODE64] = frozenset([0])
-+        elif 'o64' in checks:
-+            c[Sel.MODE64] = frozenset([1])
-+
-+        if self.insn.modrm_reg is not None:
-+            c[Sel.REG] = frozenset([self.insn.modrm_reg])
-+
-+        # R, U, N and ignore_mod are register operands (mod == 3), M and
-+        # other operands with the m modifier are memory operands (mod != 3).
-+        if any(m.name == 'ignore_mod' for m in self.insn.modifiers):
-+            self.sets[Sel.MOD] = 1
-+        elif any(op.type in REGISTER_TYPES for op in self.insn.operands) and not self.insn.lobits:
-+            c[Sel.MOD] = frozenset([1])
-+        elif any('m' in op.mods for op in self.operands):
-+            c[Sel.MOD] = frozenset([0])
-+
-     def __post_init__(self) -> None:
-         self.check_prefix()
-         self.check_opcode()
-@@ -666,12 +794,128 @@ def __post_init__(self) -> None:
-         self.fixup_operands()
-         self.check_modrm()
-         self.check_modifiers()
-+        self.compute_constraints()
- 
- 
- def analyze(insns: list[Insn]) -> list[Entry]:
-     return [Entry(insn) for insn in insns]
- 
- 
-+# The trie has the same contents as the list of entries, but organized as
-+# the decoder walks it: each node looks at one property of the instruction
-+# (the selector) and has a subtree for each of its values, and the leaves
-+# are the entries.  It is then lowered to the X86DecodeStep bytecode in
-+# decode-new.h.
+ VEX|EVEX.F2.0F3A.LZ.NF0 F0      RORX          Gy,Ey,Ib           E13 cpuid(BMI2)
 +
 +
-+@dataclass(kw_only=True)
-+class TrieItem:
-+    # Position in the flattened output, None until then: the row number
-+    # for a Leaf, the index of the first step for a Node.
-+    index: int | None = None
++// EVEX map 4 (APX)
++// ----------------
++//
++// Missing: ENQCMD, ENQCMDS, INVEPT, INVPCID, INVVPID, KMOVD, KMOVW, KMOVD, KMOVQ,
++// MOVDIR64B, MOVDIRI, URDMSR, UWRMSR, WRSSD, WRSSQ, WRUSSD, WRUSSQ, LDTILECFG,
++// STTILECFG, TILELOADD, TILELOADDDT1, TILESTORED.
++//
++// All of APX is only reachable in 64-bit mode.  maketable.py leaves the rows
++// of this map empty in 32-bit builds, so that they do not reference gen_*
++// emitters that are only defined for TARGET_X86_64.
 +
++EVEX.NP.MAP4               00     ADD         Bb,Eb,Gb                   APX lock
++EVEX.NP|66.MAP4            01     ADD         Bv,Ev,Gv                   APX lock
++EVEX.NP.MAP4               02     ADD         Bb,Gb,Eb                   APX lock
++EVEX.NP|66.MAP4            03     ADD         Bv,Gv,Ev                   APX lock
 +
-+@dataclass(kw_only=True)
-+class Leaf(TrieItem):
-+    UD: ClassVar[Leaf]
++EVEX.NP.MAP4               08     OR          Bb,Eb,Gb                   APX lock
++EVEX.NP|66.MAP4            09     OR          Bv,Ev,Gv                   APX lock
++EVEX.NP.MAP4               0A     OR          Bb,Gb,Eb                   APX lock
++EVEX.NP|66.MAP4            0B     OR          Bv,Gv,Ev                   APX lock
 +
-+    # None only for UD.
-+    entry: Entry | None = None
++EVEX.NP.MAP4.NF0           10     ADC         Bb,Eb,Gb                   APX lock
++EVEX.NP|66.MAP4.NF0        11     ADC         Bv,Ev,Gv                   APX lock
++EVEX.NP.MAP4.NF0           12     ADC         Bb,Gb,Eb                   APX lock
++EVEX.NP|66.MAP4.NF0        13     ADC         Bv,Gv,Ev                   APX lock
 +
-+Leaf.UD = Leaf(entry=None)
++EVEX.NP.MAP4.NF0           18     SBB         Bb,Eb,Gb                   APX lock
++EVEX.NP|66.MAP4.NF0        19     SBB         Bv,Ev,Gv                   APX lock
++EVEX.NP.MAP4.NF0           1A     SBB         Bb,Gb,Eb                   APX lock
++EVEX.NP|66.MAP4.NF0        1B     SBB         Bv,Gv,Ev                   APX lock
 +
++EVEX.NP.MAP4               20     AND         Bb,Eb,Gb                   APX lock
++EVEX.NP|66.MAP4            21     AND         Bv,Ev,Gv                   APX lock
++EVEX.NP.MAP4               22     AND         Bb,Gb,Eb                   APX lock
++EVEX.NP|66.MAP4            23     AND         Bv,Gv,Ev                   APX lock
++EVEX.NP|66.MAP4            24     SHLD        Bv,Ev,Gv,Ib                APX
 +
-+@dataclass(kw_only=True)
-+class Node(TrieItem):
-+    sel: Sel
++EVEX.NP.MAP4               28     SUB         Bb,Eb,Gb                   APX lock
++EVEX.NP|66.MAP4            29     SUB         Bv,Ev,Gv                   APX lock
++EVEX.NP.MAP4               2A     SUB         Bb,Gb,Eb                   APX lock
++EVEX.NP|66.MAP4            2B     SUB         Bv,Gv,Ev                   APX lock
++EVEX.NP|66.MAP4            2C     SHRD        Bv,Ev,Gv,Ib                APX
 +
-+    # Subtree for each value of the selector, initially UD.  Several values
-+    # can share the same subtree, for example all opcodes of 50..57+r or
-+    # all values of L for LIG.  When flattening, subtrees are replaced
-+    # by their index.
-+    children: list[TrieItem] = field(init=False)
++EVEX.NP.MAP4               30     XOR         Bb,Eb,Gb                   APX lock
++EVEX.NP|66.MAP4            31     XOR         Bv,Ev,Gv                   APX lock
++EVEX.NP.MAP4               32     XOR         Bb,Gb,Eb                   APX lock
++EVEX.NP|66.MAP4            33     XOR         Bv,Gv,Ev                   APX lock
 +
-+    def __post_init__(self) -> None:
-+        self.children = [Leaf.UD] * SEL_VALUES[self.sel]
++EVEX.NP.MAP4               38     CMP         Eb(r),Gb                   APX_cmp
++EVEX.NP|66.MAP4            39     CMP         Ev(r),Gv                   APX_cmp
++EVEX.NP.MAP4               3A     CMP         Gb(r),Eb                   APX_cmp
++EVEX.NP|66.MAP4            3B     CMP         Gv(r),Ev                   APX_cmp
 +
++// Conditional moves.  All the EVEX-promoted register-destination conditional
++// moves (all CFCMOV cases except "CFCMOV rm, r", and three-operand CMOV) have
++// zero-upper semantics.  Note that this is specific to CMOV/CFCMOV, and not
++// ZU!
++//
++// For ND=0, NF represents the direction.  For ND=1, NF represents fault
++// suppression.  The memory forms of CFCMOV use the M operand type so that
++// the emitter does the load or store only if needed.
++EVEX.NP|66.MAP4.ND0.NF0    40..4F CFCMOVcc_ld Gv(w,zx),ZEROv,Mv          APX
++EVEX.NP|66.MAP4.ND0.NF0    40..4F CMOVcc      Gv(w,zx),ZEROv,Rv          APX
++EVEX.NP|66.MAP4.ND0.NF1    40..4F CFCMOVcc_st Mv(w),Gv                   APX
++EVEX.NP|66.MAP4.ND0.NF1    40..4F CMOVcc      Rv(w,zx),ZEROv,Gv          APX
++EVEX.NP|66.MAP4.ND1.NF0    40..4F CMOVcc      Bv(w,zx),Gv,Ev             APX
++EVEX.NP|66.MAP4.ND1.NF1    40..4F CFCMOVcc_ld Bv(w,zx),Gv,Mv             APX
++EVEX.NP|66.MAP4.ND1.NF1    40..4F CMOVcc      Bv(w,zx),Gv,Rv             APX
++EVEX.F2.MAP4.NF0           40..4F SETcc       Eb(w)                      APX_zu
 +
-+# Order of the selectors; a selector is skipped if no entry in the subtree looks
-+# at it.  Other than the opcode byte, which comes first as it is the densest,
-+# the encoding and L are used to separate legacy instructions from VEX ones with
-+# the same opcode, for example CMOVcc and the mask register instructions.
-+# MODE64 is last because chk(i64) and chk(o64) are mostly checks on a single
-+# line; checking it earlier would duplicate the subtrees for all the other
-+# lines of the same opcode.
-+SEL_ORDER = [Sel.BYTE, Sel.ENC, Sel.L, Sel.PREFIX, Sel.REG, Sel.MOD,
-+             Sel.W, Sel.ND, Sel.NF, Sel.MODE64]
++// The memory forms of MOVBE use the M operand type, so that gen_MOVBE does
++// the load or store with MO_BE.  The register forms (not present in the
++// legacy encoding) use the R operand type, which is loaded or stored
++// normally, and gen_MOVBE then swaps the bytes of the loaded value.
++EVEX.NP|66.MAP4.NF0        60     MOVBE       Gv(w),Mv                   APX cpuid(MOVBE)
++EVEX.NP|66.MAP4.NF0        60     MOVBE       Gv(w),Rv                   APX cpuid(MOVBE)
++EVEX.NP|66.MAP4.NF0        61     MOVBE       Mv(w),Gv                   APX cpuid(MOVBE)
++EVEX.NP|66.MAP4.NF0        61     MOVBE       Rv(w),Gv                   APX cpuid(MOVBE)
 +
++EVEX.66.MAP4.NF0           66     ADCX        By,Gy(zx),Ey(zx)           APX cpuid(ADX)
++EVEX.F3.MAP4.NF0           66     ADOX        By,Gy(zx),Ey(zx)           APX cpuid(ADX)
++EVEX.NP|66.MAP4            69     IMUL3       Gv,Ev(sx),Iz               APX_zu
++EVEX.NP|66.MAP4            6B     IMUL3       Gv,Ev(sx),Ib               APX_zu
 +
-+@dataclass
-+class Trie:
-+    # Root for each opcode map (0 for one-byte opcodes, 1 for 0F, 2 for
-+    # 0F38, 3 for 0F3A, 4-7 for the EVEX maps).  Each root looks at
-+    # Sel.BYTE.
-+    maps: dict[int, Node] = field(default_factory=dict)
++EVEX.NP.MAP4               80 /0  ADD         Bb,Eb,Ib                   APX lock
++EVEX.NP.MAP4               80 /1  OR          Bb,Eb,Ib                   APX lock
++EVEX.NP.MAP4.NF0           80 /2  ADC         Bb,Eb,Ib                   APX lock
++EVEX.NP.MAP4.NF0           80 /3  SBB         Bb,Eb,Ib                   APX lock
++EVEX.NP.MAP4               80 /4  AND         Bb,Eb,Ib                   APX lock
++EVEX.NP.MAP4               80 /5  SUB         Bb,Eb,Ib                   APX lock
++EVEX.NP.MAP4               80 /6  XOR         Bb,Eb,Ib                   APX lock
++EVEX.NP.MAP4               80 /7  CMP         Eb(r),Ib                   APX_cmp
++EVEX.NP|66.MAP4            81 /0  ADD         Bv,Ev,Iz                   APX lock
++EVEX.NP|66.MAP4            81 /1  OR          Bv,Ev,Iz                   APX lock
++EVEX.NP|66.MAP4.NF0        81 /2  ADC         Bv,Ev,Iz                   APX lock
++EVEX.NP|66.MAP4.NF0        81 /3  SBB         Bv,Ev,Iz                   APX lock
++EVEX.NP|66.MAP4            81 /4  AND         Bv,Ev,Iz                   APX lock
++EVEX.NP|66.MAP4            81 /5  SUB         Bv,Ev,Iz                   APX lock
++EVEX.NP|66.MAP4            81 /6  XOR         Bv,Ev,Iz                   APX lock
++EVEX.NP|66.MAP4            81 /7  CMP         Ev(r),Iz                   APX_cmp
++EVEX.NP|66.MAP4            83 /0  ADD         Bv,Ev,Ib                   APX lock
++EVEX.NP|66.MAP4            83 /1  OR          Bv,Ev,Ib                   APX lock
++EVEX.NP|66.MAP4.NF0        83 /2  ADC         Bv,Ev,Ib                   APX lock
++EVEX.NP|66.MAP4.NF0        83 /3  SBB         Bv,Ev,Ib                   APX lock
++EVEX.NP|66.MAP4            83 /4  AND         Bv,Ev,Ib                   APX lock
++EVEX.NP|66.MAP4            83 /5  SUB         Bv,Ev,Ib                   APX lock
++EVEX.NP|66.MAP4            83 /6  XOR         Bv,Ev,Ib                   APX lock
++EVEX.NP|66.MAP4            83 /7  CMP         Ev(r),Ib                   APX_cmp
++EVEX.NP|66.MAP4            84     TEST        Eb(r),Gb                   APX_cmp
++EVEX.NP|66.MAP4            85     TEST        Ev(r),Gv                   APX_cmp
++EVEX.NP|66.MAP4            88     POPCNT      Gv(w),Ev(zx)               APX cpuid(POPCNT)
++// The destinations are R and B.
++EVEX.NP.MAP4               8F /0  POP2        Rd64(w)                    APX_pp2
 +
-+    def lookup(self, map: int, values: dict[Sel, int]) -> Entry | None:
-+        # Walk the trie; selectors that are not in values are 0.
-+        item: TrieItem = self.maps[map]
-+        while isinstance(item, Node):
-+            item = item.children[values.get(item.sel, 0)]
-+        assert isinstance(item, Leaf)
-+        return item.entry
++EVEX.NP|66.MAP4            A4     SHLD        Bv,Ev,Gv,Ib                APX
++EVEX.NP|66.MAP4            A5     SHLD        Bv,Ev,Gv                   APX
++EVEX.NP|66.MAP4            AC     SHRD        Bv,Ev,Gv,Ib                APX
++EVEX.NP|66.MAP4            AD     SHRD        Bv,Ev,Gv                   APX
++EVEX.NP|66.MAP4            AF     IMUL3       Bv,Gv(sx),Ev(sx)           APX
 +
++EVEX.NP.MAP4               C0 /0  ROL         Bb,Eb(zx),Ib               APX
++EVEX.NP.MAP4               C0 /1  ROR         Bb,Eb(zx),Ib               APX
++EVEX.NP.MAP4.NF0           C0 /2  RCL         Bb,Eb(zx),Ib               APX
++EVEX.NP.MAP4.NF0           C0 /3  RCR         Bb,Eb(zx),Ib               APX
++EVEX.NP.MAP4               C0 /4  SHL         Bb,Eb(zx),Ib               APX
++EVEX.NP.MAP4               C0 /5  SHR         Bb,Eb(zx),Ib               APX
++EVEX.NP.MAP4               C0 /6  SHL         Bb,Eb(zx),Ib               APX
++EVEX.NP.MAP4               C0 /7  SAR         Bb,Eb(sx),Ib               APX
++EVEX.NP|66.MAP4            C1 /0  ROL         Bv,Ev(zx),Ib               APX
++EVEX.NP|66.MAP4            C1 /1  ROR         Bv,Ev(zx),Ib               APX
++EVEX.NP|66.MAP4.NF0        C1 /2  RCL         Bv,Ev(zx),Ib               APX
++EVEX.NP|66.MAP4.NF0        C1 /3  RCR         Bv,Ev(zx),Ib               APX
++EVEX.NP|66.MAP4            C1 /4  SHL         Bv,Ev(zx),Ib               APX
++EVEX.NP|66.MAP4            C1 /5  SHR         Bv,Ev(zx),Ib               APX
++EVEX.NP|66.MAP4            C1 /6  SHL         Bv,Ev(zx),Ib               APX
++EVEX.NP|66.MAP4            C1 /7  SAR         Bv,Ev(sx),Ib               APX
 +
-+# Key of the cache of subtrees: the position in SEL_ORDER of the first
-+# selector that is left, and the candidate entries.
-+CacheKey = tuple[int, tuple[int, ...]]
++EVEX.NP.MAP4               D0 /0  ROL         Bb(w),Eb(zx)               APX
++EVEX.NP.MAP4               D0 /1  ROR         Bb(w),Eb(zx)               APX
++EVEX.NP.MAP4.NF0           D0 /2  RCL         Bb(w),Eb(zx)               APX
++EVEX.NP.MAP4.NF0           D0 /3  RCR         Bb(w),Eb(zx)               APX
++EVEX.NP.MAP4               D0 /4  SHL         Bb(w),Eb(zx)               APX
++EVEX.NP.MAP4               D0 /5  SHR         Bb(w),Eb(zx)               APX
++EVEX.NP.MAP4               D0 /6  SHL         Bb(w),Eb(zx)               APX
++EVEX.NP.MAP4               D0 /7  SAR         Bb(w),Eb(sx)               APX
++EVEX.NP|66.MAP4            D1 /0  ROL         Bv(w),Ev(zx)               APX
++EVEX.NP|66.MAP4            D1 /1  ROR         Bv(w),Ev(zx)               APX
++EVEX.NP|66.MAP4.NF0        D1 /2  RCL         Bv(w),Ev(zx)               APX
++EVEX.NP|66.MAP4.NF0        D1 /3  RCR         Bv(w),Ev(zx)               APX
++EVEX.NP|66.MAP4            D1 /4  SHL         Bv(w),Ev(zx)               APX
++EVEX.NP|66.MAP4            D1 /5  SHR         Bv(w),Ev(zx)               APX
++EVEX.NP|66.MAP4            D1 /6  SHL         Bv(w),Ev(zx)               APX
++EVEX.NP|66.MAP4            D1 /7  SAR         Bv(w),Ev(sx)               APX
++EVEX.NP.MAP4               D2 /0  ROL         Bb,Eb(zx),RCXb             APX
++EVEX.NP.MAP4               D2 /1  ROR         Bb,Eb(zx),RCXb             APX
++EVEX.NP.MAP4.NF0           D2 /2  RCL         Bb,Eb(zx),RCXb             APX
++EVEX.NP.MAP4.NF0           D2 /3  RCR         Bb,Eb(zx),RCXb             APX
++EVEX.NP.MAP4               D2 /4  SHL         Bb,Eb(zx),RCXb             APX
++EVEX.NP.MAP4               D2 /5  SHR         Bb,Eb(zx),RCXb             APX
++EVEX.NP.MAP4               D2 /6  SHL         Bb,Eb(zx),RCXb             APX
++EVEX.NP.MAP4               D2 /7  SAR         Bb,Eb(sx),RCXb             APX
++EVEX.NP|66.MAP4            D3 /0  ROL         Bv,Ev(zx),RCXb             APX
++EVEX.NP|66.MAP4            D3 /1  ROR         Bv,Ev(zx),RCXb             APX
++EVEX.NP|66.MAP4.NF0        D3 /2  RCL         Bv,Ev(zx),RCXb             APX
++EVEX.NP|66.MAP4.NF0        D3 /3  RCR         Bv,Ev(zx),RCXb             APX
++EVEX.NP|66.MAP4            D3 /4  SHL         Bv,Ev(zx),RCXb             APX
++EVEX.NP|66.MAP4            D3 /5  SHR         Bv,Ev(zx),RCXb             APX
++EVEX.NP|66.MAP4            D3 /6  SHL         Bv,Ev(zx),RCXb             APX
++EVEX.NP|66.MAP4            D3 /7  SAR         Bv,Ev(sx),RCXb             APX
 +
-+
-+def build_subtree(entries: list[Entry], start: int, cache: dict[CacheKey, TrieItem]) -> TrieItem:
-+    # Entries with the same set of candidates share the subtree.
-+    key = (start, tuple(id(e) for e in entries))
-+    if key in cache:
-+        return cache[key]
-+
-+    pos = next((i for i in range(start, len(SEL_ORDER))
-+                if any(e.constrains(SEL_ORDER[i]) for e in entries)), None)
-+    sel = None if pos is None else SEL_ORDER[pos]
-+    item: TrieItem
-+    if sel is None:
-+        if len(entries) > 1:
-+            other = entries[1].insn
-+            raise entries[0].error(f'overlaps with {other.filename}:{other.lineno}')
-+        item = Leaf(entry=entries[0]) if entries else Leaf.UD
-+    else:
-+        assert pos is not None
-+        node = Node(sel=sel)
-+        for v in range(SEL_VALUES[sel]):
-+            subset = [e for e in entries if e.accepts(sel, v)]
-+            node.children[v] = build_subtree(subset, pos + 1, cache)
-+
-+        # If all values lead to the same subtree, the node is not needed.
-+        # The opcode byte is kept, because it is the root of each map.
-+        first = node.children[0]
-+        if sel != Sel.BYTE and all(child is first for child in node.children):
-+            assert isinstance(first, TrieItem)
-+            item = first
-+        else:
-+            item = node
-+    cache[key] = item
-+    return item
-+
-+
-+def build_trie(entries: list[Entry]) -> Trie:
-+    trie = Trie()
-+    cache: dict[CacheKey, TrieItem] = {}
-+    for map in sorted({e.map for e in entries}):
-+        in_map = [e for e in entries if e.map == map]
-+        root = build_subtree(in_map, 0, cache)
-+        assert isinstance(root, Node) and root.sel == Sel.BYTE
-+        trie.maps[map] = root
-+    return trie
-+
-+
- def main() -> int:
-     entries: list[Entry] = []
-     for filename in sys.argv[1:]:
-diff --git a/target/i386/tcg/test_maketable.py b/target/i386/tcg/test_maketable.py
-index b682d289184..11e3c6dc1d5 100644
---- a/target/i386/tcg/test_maketable.py
-+++ b/target/i386/tcg/test_maketable.py
-@@ -7,7 +7,16 @@
- import unittest
- 
- from maketable import (
-+    ENC_EVEX,
-+    ENC_LEGACY,
-+    ENC_REX2,
-+    ENC_VEX,
-     Entry,
-+    Leaf,
-+    Node,
-+    Sel,
-+    Trie,
-+    build_trie,
-     Insn,
-     Modifier,
-     Operand,
-@@ -358,3 +367,126 @@ def test_modrm(self) -> None:
- 
-     def test_mode64(self) -> None:
-         self.assertRaises(SemanticError, self.analyze, '63   X   Ew,Gw   chk(i64, o64)')
-+
-+
-+class TestTrie(unittest.TestCase):
-+    def build(self, *lines: str) -> Trie:
-+        insns = [parse_line(text, '<test>', i) for i, text in enumerate(lines, start=1)]
-+        return build_trie(analyze([insn for insn in insns if insn is not None]))
-+
-+    def emitter(self, trie: Trie, map: int, **values: int) -> str | None:
-+        entry = trie.lookup(map, {Sel[k.upper()]: v for k, v in values.items()})
-+        return None if entry is None else entry.insn.emitter
-+
-+    def test_prefix_and_encoding(self) -> None:
-+        trie = self.build('NP|66.0F 67   PACKUSWB    Vx,Hx,Wx   E4(mmx)',
-+                          'VEX.66.0F.WIG 67   VPACKUSWB   Vx,Hx,Wx')
-+        self.assertEqual(self.emitter(trie, 1, byte=0x67, prefix=0), 'PACKUSWB')
-+        self.assertEqual(self.emitter(trie, 1, byte=0x67, prefix=1, enc=ENC_REX2), 'PACKUSWB')
-+        self.assertIsNone(self.emitter(trie, 1, byte=0x67, prefix=2))
-+        self.assertEqual(self.emitter(trie, 1, byte=0x67, prefix=1, enc=ENC_VEX), 'VPACKUSWB')
-+        self.assertIsNone(self.emitter(trie, 1, byte=0x67, prefix=1, enc=ENC_EVEX))
-+        self.assertIsNone(self.emitter(trie, 1, byte=0x68, prefix=1, enc=ENC_LEGACY))
-+
-+    def test_ignored_fields(self) -> None:
-+        trie = self.build('VEX.66.0F.WIG.LIG 67   X   Vx,Hx,Wx')
-+        for w in (0, 1):
-+            for l in (0, 1):
-+                entry = trie.lookup(1, {Sel.BYTE: 0x67, Sel.PREFIX: 1, Sel.ENC: ENC_VEX,
-+                                        Sel.W: w, Sel.L: l})
-+                assert entry is not None
-+                self.assertEqual(entry.sets, {Sel.W: 0, Sel.L: 0})
-+
-+    def test_w_and_l(self) -> None:
-+        trie = self.build('NP.W0.0F C7 /1   CMPXCHG8B    Mq',
-+                          'NP.W1.0F C7 /1   CMPXCHG16B   Mdq',
-+                          'VEX.66.0F38.W0.L0 18   X128   Vx,Wx',
-+                          'VEX.66.0F38.W0.256 18  X256   Vx,Wx')
-+        self.assertEqual(self.emitter(trie, 1, byte=0xC7, reg=1, w=0), 'CMPXCHG8B')
-+        self.assertEqual(self.emitter(trie, 1, byte=0xC7, reg=1, w=1), 'CMPXCHG16B')
-+        self.assertIsNone(self.emitter(trie, 1, byte=0xC7, reg=1, w=0, mod=1))
-+        self.assertIsNone(self.emitter(trie, 1, byte=0xC7, reg=0, w=0))
-+        vex = dict(byte=0x18, prefix=1, enc=ENC_VEX)
-+        self.assertEqual(self.emitter(trie, 2, l=0, **vex), 'X128')
-+        self.assertEqual(self.emitter(trie, 2, l=1, **vex), 'X256')
-+        self.assertIsNone(self.emitter(trie, 2, l=0, w=1, **vex))
-+
-+    def test_reg_and_mod(self) -> None:
-+        trie = self.build('NP.0F AE /0    FXSAVE     My(w)',
-+                          'F3.0F AE /0    RDxxBASE   Ry(w)',
-+                          'F3.0F AE /1    RDxxBASE   Ry(w)',
-+                          'F3.0F AE /2    WRxxBASE   Ry(r)',
-+                          'F3.0F AE /3    WRxxBASE   Ry(r)')
-+        self.assertEqual(self.emitter(trie, 1, byte=0xAE, reg=0, mod=0, prefix=0), 'FXSAVE')
-+        self.assertEqual(self.emitter(trie, 1, byte=0xAE, reg=0, mod=1, prefix=2), 'RDxxBASE')
-+        self.assertEqual(self.emitter(trie, 1, byte=0xAE, reg=1, mod=1, prefix=2), 'RDxxBASE')
-+        self.assertEqual(self.emitter(trie, 1, byte=0xAE, reg=3, mod=1, prefix=2), 'WRxxBASE')
-+        self.assertIsNone(self.emitter(trie, 1, byte=0xAE, reg=0, mod=1, prefix=0))
-+        self.assertIsNone(self.emitter(trie, 1, byte=0xAE, reg=0, mod=0, prefix=2))
-+
-+    def test_shared_subtrees(self) -> None:
-+        trie = self.build('50..57+r   PUSH   Rd64(r)')
-+        root = trie.maps[0]
-+        self.assertTrue(all(root.children[b] is root.children[0x50] for b in range(0x50, 0x58)))
-+        self.assertIs(root.children[0x00], Leaf.UD)
-+        self.assertIs(root.children[0x00], root.children[0xFF])
-+        self.assertEqual(self.emitter(trie, 0, byte=0x53, mod=0), 'PUSH')
-+
-+    def test_ignore_mod(self) -> None:
-+        trie = self.build('NP.0F 20   MOV   Ry_d64(w),Cy_d64   ignore_mod')
-+        for mod in (0, 1):
-+            entry = trie.lookup(1, {Sel.BYTE: 0x20, Sel.MOD: mod})
-+            assert entry is not None
-+            self.assertEqual(entry.sets, {Sel.MOD: 1})
-+
-+    def test_mode64(self) -> None:
-+        trie = self.build('63      ARPL     Ew,Gw         chk(i64)',
-+                          'W1 63   MOVSXD   Gv(w),Ed      chk(o64)',
-+                          'W0 63   MOV      Gv(w),Ev      chk(o64)')
-+        for w in (0, 1):
-+            self.assertEqual(self.emitter(trie, 0, byte=0x63, mode64=0, w=w), 'ARPL')
-+        self.assertEqual(self.emitter(trie, 0, byte=0x63, mode64=1, w=1), 'MOVSXD')
-+        self.assertEqual(self.emitter(trie, 0, byte=0x63, mode64=1, w=0), 'MOV')
-+
-+    def test_vex_implies_np(self) -> None:
-+        trie = self.build('VEX.128.0F.WIG 77   VZEROUPPER')
-+        self.assertEqual(self.emitter(trie, 1, byte=0x77, prefix=0, enc=ENC_VEX), 'VZEROUPPER')
-+        for prefix in (1, 2, 3):
-+            self.assertIsNone(self.emitter(trie, 1, byte=0x77, prefix=prefix, enc=ENC_VEX))
-+
-+    def test_crc32(self) -> None:
-+        # With 66 F2, the prefix selector is F2 and 66 is the operand size.
-+        trie = self.build('NP|66.0F38 F1   MOVBE   Mv(w),Gv',
-+                          'F2.0F38 F1      CRC32   Gd,Ev')
-+        self.assertEqual(self.emitter(trie, 2, byte=0xF1, prefix=1, mod=0), 'MOVBE')
-+        self.assertEqual(self.emitter(trie, 2, byte=0xF1, prefix=3, mod=1), 'CRC32')
-+
-+    def test_rex2(self) -> None:
-+        trie = self.build('A1           MOV     RAXv(w),Ov',
-+                          'REX2.NP.W0 A1   JMP_m   Iq',
-+                          '70..7F       Jcc     Jb',
-+                          '00           ADD     Eb,Gb')
-+        self.assertEqual(self.emitter(trie, 0, byte=0xA1, enc=ENC_LEGACY), 'MOV')
-+        self.assertEqual(self.emitter(trie, 0, byte=0xA1, enc=ENC_REX2), 'JMP_m')
-+        self.assertEqual(self.emitter(trie, 0, byte=0x75, enc=ENC_LEGACY), 'Jcc')
-+        self.assertIsNone(self.emitter(trie, 0, byte=0x75, enc=ENC_REX2))
-+        self.assertEqual(self.emitter(trie, 0, byte=0x00, enc=ENC_REX2), 'ADD')
-+
-+    def test_modrm(self) -> None:
-+        trie = self.build('NP.0F 01 /1   SIDT      Ms',
-+                          'NP.0F AE /5   LFENCE    Ry(r)')
-+        self.assertEqual(self.emitter(trie, 1, byte=0x01, reg=1, mod=0), 'SIDT')
-+        self.assertIsNone(self.emitter(trie, 1, byte=0xAE, reg=5, mod=0))
-+        self.assertEqual(self.emitter(trie, 1, byte=0xAE, reg=5, mod=1), 'LFENCE')
-+
-+    def test_memory_modifier(self) -> None:
-+        trie = self.build('C4   LES   Gz(w),Ep(m)')
-+        self.assertEqual(self.emitter(trie, 0, byte=0xC4, mod=0), 'LES')
-+        self.assertIsNone(self.emitter(trie, 0, byte=0xC4, mod=1))
-+
-+    def test_overlap(self) -> None:
-+        self.assertRaises(SemanticError, self.build, '00   ADD   Eb,Gb', '00   ADC   Eb,Gb')
-+        self.assertRaises(SemanticError, self.build,
-+                          'NP|66.0F 67   X   Vx', '66.0F 67   Y   Vx')
-+        self.assertRaises(SemanticError, self.build,
-+                          '0F AE /0   X   Ey', 'F3.0F AE /0   Y   Ry(w)')
++EVEX.NP.MAP4.NF0           F0     CRC32       Gd,Eb                      APX cpuid(SSE42)
++EVEX.NP|66.MAP4.NF0        F1     CRC32       Gd,Ev                      APX cpuid(SSE42)
++EVEX.NP|66.MAP4            F4     TZCNT       Gv(w),Ev(zx)               APX
++EVEX.NP|66.MAP4            F5     LZCNT       Gv(w),Ev(zx)               APX
++EVEX.NP.MAP4               F6 /0  TEST        Eb(r),Ib                   APX_cmp
++EVEX.NP.MAP4               F6 /1  TEST        Eb(r),Ib                   APX_cmp
++EVEX.NP.MAP4.NF0           F6 /2  NOT         Bb(w),Eb                   APX lock
++EVEX.NP.MAP4               F6 /3  NEG         Bb(w),Eb                   APX lock
++EVEX.NP.MAP4               F6 /4  MUL         Eb(r,zx),RAXb(zx)          APX
++EVEX.NP.MAP4               F6 /5  IMUL        Eb(r,sx),RAXb(zx)          APX
++EVEX.NP.MAP4               F6 /6  DIV         Eb(r)                      APX
++EVEX.NP.MAP4               F6 /7  IDIV        Eb(r)                      APX
++EVEX.NP|66.MAP4            F7 /0  TEST        Ev(r),Iz                   APX_cmp
++EVEX.NP|66.MAP4            F7 /1  TEST        Ev(r),Iz                   APX_cmp
++EVEX.NP|66.MAP4.NF0        F7 /2  NOT         Bv(w),Ev                   APX lock
++EVEX.NP|66.MAP4            F7 /3  NEG         Bv(w),Ev                   APX lock
++EVEX.NP|66.MAP4            F7 /4  MUL         Ev(r,zx),RAXv(zx)          APX
++EVEX.NP|66.MAP4            F7 /5  IMUL        Ev(r,sx),RAXv(zx)          APX
++EVEX.NP|66.MAP4            F7 /6  DIV         Ev(r)                      APX
++EVEX.NP|66.MAP4            F7 /7  IDIV        Ev(r)                      APX
++EVEX.NP.MAP4               FE /0  INC         Bb(w),Eb                   APX lock
++EVEX.NP.MAP4               FE /1  DEC         Bb(w),Eb                   APX lock
++EVEX.NP|66.MAP4            FF /0  INC         Bv(w),Ev                   APX lock
++EVEX.NP|66.MAP4            FF /1  DEC         Bv(w),Ev                   APX lock
++EVEX.NP.MAP4               FF /6  PUSH2       Bd64(r),Rd64               APX_pp2
 -- 
 2.56.0
 
