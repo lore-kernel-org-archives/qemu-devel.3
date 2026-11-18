@@ -1,123 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0879606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 16:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD09606A325
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 16:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Js72x2gx
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=hwlKyzur
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTiiV-00026v-W4; Wed, 18 Nov 2026 11:41:04 -0500
+	id 1xTimI-0002yq-KP; Wed, 18 Nov 2026 11:44:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xTii0-00024F-L9
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 11:40:34 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xTimG-0002y2-8j
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 11:44:56 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xTihy-00086Z-R1
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 11:40:32 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-48dfc0421d9so1083676f8f.1
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 08:40:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xTimE-0000Yf-9K
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 11:44:55 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-3b094e649d3so832719a91.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 08:44:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795020027; x=1795624827; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Qj9O5BafqD5AqBLi6VM7UVywZd5JUQes68/kr9jEnRs=;
- b=Js72x2gxu1BJ+vc9+wuvfE353Pwcl8ZK1Yo+v9SJPLWAlS93p2mA0Wfucn7LBdzMNm
- 7L5YjnbakkFJ9p7sOqjaxhp0EAH3BveVHuZwXQByKGioYXCaL+bfvmHVKdDeCQ60MGec
- NaQGFDj50+51DlgymidnQxLN8ggfih5i8VpXm90RANwQBnr/xmZLzsjDmc0ZyzIeaT6q
- /3r73yr4sshlfxjORJ66gSoAYOToOA+S0RtpX3Nk/kLOmYPsGzw8ugrnUHv+hg1kJUmq
- Ibgvct0oWnn93uGVG89P6tfoAtAIH38Wqnst93WK9trYMODhoAjgOZt+Uc/EPr9fQTt1
- Tlow==
+ d=linaro.org; s=google; t=1795020292; x=1795625092; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xwTU6SidLn/Lf6Y0YpDQoNnJtYweqL7WV5JpvHEoEvo=;
+ b=hwlKyzurUSkTHSNAIG2TWRCKCTtz5mtYxxNUGquc/pO2ss0kwP2SsXmTM7aRaYZEw6
+ SbqxBzem5GfrLQcLuPbc4XStnOkcUFBfUmE7RJP1GeHLhasS6QCGkXYNlbs2qc8OVicx
+ HhCLNIKmYb7cze9aJ19j0qmbqbB3GvdzE1P3L6aMW8fci/R4wrGErEcVeF5YJNx//shO
+ +XdlSUcPm5T5Bi81OqGw3KWD4PrqwEX0LBxoutWH4lFYmBqKj2V00ZXL1eXyCKq+r7Wi
+ wVTUgAPDtReBj23EFlnfl/HTAwZAQZC4fB5movDMB4Pj6DW112ofsrCUWT8LjJWfFE7Z
+ VSbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795020027; x=1795624827;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Qj9O5BafqD5AqBLi6VM7UVywZd5JUQes68/kr9jEnRs=;
- b=D7cTikXYBW13CDEfTQmiXazZianNw+AQkmIXWSXG9pPw2CspeMnGtMBPcAFUeqzY1D
- K0GciYIQ9gzzilDXlS2w+uvBRcEY1o3XpudRS1gAsZWWi/uldIMtoV6hBX1sLnP0sE8n
- ++AIBS3zkfFdmp90MVOebc1ve2biEyVWfhFc8VCcbPaUjoDuPFROtnQ/8dkw9yu4bunX
- I2tGMzHmsCiQHcghGeqdQu34hOG+JeXT0idYUxF/WYcbUQOSNrIMrCnRCr8iS5z6xMl+
- Z2J0nZPKYdZgwng3UYJZFUlXQllpfOMnJ9Ry5cRuPvc+QAZQTzbgXPsLnDTd1xyL6DcF
- jdZA==
+ d=1e100.net; s=20260707; t=1795020292; x=1795625092;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xwTU6SidLn/Lf6Y0YpDQoNnJtYweqL7WV5JpvHEoEvo=;
+ b=jKmazJcfsdcY54ft3AVnUK4yQ3/FD52Bp8qJkLFh23So6pD+x4w4sB7OqeaO39LKRL
+ 9afXozCGrwK80F8PPSvabBzEFoeBLrXB+xfigX366+SHJ1Q5yJTY4kAnScSdlTHpYsMK
+ ALZR5bRGEux3zHaxpYdoorIVt0VWeO1FVdOnjFVWLNxFCAAlM8p+Q5Qtlh/vqJqQZHzt
+ K7W7VyZ08kWL+xfqOP1Cbc3MHmxvGzreQRP8M8nRzvpsmGiVz94akR8XFmsiH10Qsp8A
+ lpy0Ur3l7y5Pu5PN7dGDBZyHsDHlUbaQRw8kb8G4KOwHDe4/LGgOHm9qn9Gb6XHgiZh4
+ EPEQ==
 X-Forwarded-Encrypted: i=1;
- AL+hErF7+D27clZslXNE8XLKJDtcDHvKA4gqTJwKR3o0h8FCLL76OZOsFUoDxEU5ii0Vzc0E2LXHlS8EKdUJ@nongnu.org
-X-Gm-Message-State: APuU4Z87ljlgmdUK1iUVEkYGdvOivIo4TCttFneu0nd2vyatTkk/WI5c
- Wvtpqc+pZrUi5JgDACn7jQoRMWkjFcAOJRxc+dj7hT2Sa2Wu7n3zTdG4nV9J2FSk/zg=
-X-Gm-Gg: AZFdTZdfmBV2dQrDa6wPdCTui3Kak1vELfpKXM5F2Q2X6HD9TXwQqLj8LFO7+YY1556
- EBEAUwYzx5JI7cNyesHhmDPyJ/78GjpJt4ph1DZREYqbz0bOQxrp/GjbVbye/qO6W9uLnbQgXP6
- d3miPWCsQzmRUeaQ3y8W8WjH9JtnAXdpLUdXH0dD24lT/GC+6N52NGJHzzzMiIA68RP9gXTqKQ1
- ZdmIbq+FketMH4kI3FUQ0WP6poUo8c7MA56RWYaMPODNo3y4OJ4vt7m76HSE81mGJDhVMRh7Emu
- nLdpSiz6ZZcSyAgHRA8lgvZ4WCk3S71UsG7EKnR7v4b6KxCLjl0H5wrOMog7yfsbkS+V5arfnXx
- /29t5W2/fzeyCN2d2GzhZ0O5SdTU4Ap6N02x5BNzn/quoqWvRZk1OWCaQmdexd5keMVuPWqmNf+
- W6E7wm379GTN7P053QXuxfK122U251vfQU8aT2d4xloguTrgEEQHoc+W2Zqb7MpqHUjAT3ryOHO
- E3EYUs9oWbbNDySRXF2WQ1s2/Wngn9j67To6DUfjYRz+YFATT6UPAdznId4Sw3Tb1i8M+5QaCQP
- QGvY5gI09CsIdsScXx/nXhAADQKM
-X-Received: by 2002:a05:6000:46cf:b0:48c:414f:cc12 with SMTP id
- ffacd0b85a97d-4a63a7a1409mr5073668f8f.40.1795020027244; 
- Wed, 18 Nov 2026 08:40:27 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4a655608733sm5249835f8f.22.2026.11.18.08.40.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Nov 2026 08:40:26 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 20B9B5F857;
- Wed, 18 Nov 2026 16:40:25 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
- Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, Chris
- Wedgwood <cw@f00f.org>, dbarboza@qti.qualcomm.com, Demi Marie Obenour
- <demiobenour@gmail.com>, dhedde@kalrayinc.com, Eric Blake
- <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
- Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
- <eric.auger@redhat.com>, felipe@nutanix.com, helge.deller@googlemail.com,
- Alyssa Ross <hi@alyssa.is>, iggy@theiggy.com, Warner Losh
- <imp@bsdimp.com>, jacob.oursland@gmail.com, Jan Kiszka
- <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
- jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
- <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>, matthieu@minio.io, Max Chou
- <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>, "Ho,
- Nelson" <nelson.ho@windriver.com>, Paul Walmsley
- <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
- Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, utsingh@redhat.com, Wei Wang <wei.w.wang@intel.com>,
- z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "zwu.kernel@gmail.com" <zwu.kernel@gmail.com>, Peter Xu <peterx@redhat.com>
-Subject: KVM/QEMU community call 24/11/2026 @ 14:00 UTC
-User-Agent: mu4e 1.14.5-pre1; emacs 30.1
-Date: Wed, 18 Nov 2026 16:40:25 +0000
-Message-ID: <87tsle5c06.fsf@draig.linaro.org>
+ AL+hErEdSTFnLlFWOggHT+Ch+gry6uKZNPZ6NPGmOQOEF2NvD5+6t7ZkKTq07syAn00o7T9HIhhAH0XPesXi@nongnu.org
+X-Gm-Message-State: APuU4Z+Oc7HU7smPl+pSLEM9ZgO0/jwRPh0JJcnaum+TLcXUKAkAXJ2a
+ 9+z+ZfawLLj+Zj0vtf0pCOY2NizjUgqvSOdz2P8lR/3urunEq6IrXR3omQvFPQC6m07eDEu+Kwy
+ n/anF
+X-Gm-Gg: AZFdTZfKV393CBdbox2RlgbHKxJJLr6XMO7DaCb25YaJdeCiNnRHGlXiyt+p/1pntfO
+ MXbnNjQ2pVho6vWZbBkhgrXZPdu+HZzdvfKh68zBQtUnEAFtjNZdXUQ4+ix9rQNygSKzhW4wO2v
+ dLaIKKs/ifHD1WN2y2xemxD7JZ49mCkGU0QBKFqTejsGt1slj+WfNwmfTskUINU3TqBokAg9XCk
+ 8Cco4R+Me+K5lHuse4XlVxdvdFwOCCXw9OyxRhIBUL9MChbyvGF0aGaHJDmB5OBk3Eo1coHWiig
+ iAvDZBnZD8FyCna6Qo3BOt6Cxg31bsT6/Dm5lUm2gY2rZ4w6DZzmGtsQIB60OayNeQAK6V4USnw
+ Aj9yhGaJbwD5Nb+MBtpWkcziO/u1gfN3vF0LRdhca+2n5LqzqILVdlKaWkKY7Anbl0iEjziGFaa
+ mxTAZtiOCWJ5DMD0RZ6P8KVNr0FOrdpka4JLRN1l7NG+IO0mOba7i50bCTaJQSPaeHqVahTiQn+
+ +/LKUmB0EAmI4O9SMS9WvKTiasyx2AdAWtqJllXXog6hXk8XtQAffhe4UVxanQ5vhJ1Oy7P/OAd
+ B+rHe8RRPAc1ALDJppMiclvMSvupfd3b8REjINSVSWe/Fpu5Oaehd5+DMl36StDTAavIHcg=
+X-Received: by 2002:a17:90a:c106:b0:3b3:b8f1:f152 with SMTP id
+ 98e67ed59e1d1-3b3d0641feamr3149771a91.2.1795020292442; 
+ Wed, 18 Nov 2026 08:44:52 -0800 (PST)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3b3f6be0617sm31770a91.13.2026.11.18.08.44.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Nov 2026 08:44:51 -0800 (PST)
+Message-ID: <fc40727d-c46c-4fa7-9b30-992e48f7ff43@linaro.org>
+Date: Wed, 18 Nov 2026 08:44:50 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/ppc: Test CF_NO_GOTO_PTR in cflags, not in TB flags
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, mattst88@gmail.com,
+ Anton Johansson <anjo@rev.ng>
+References: <20261117080843.8314-1-philmd@oss.qualcomm.com>
+ <97ba694e-756a-4e6f-93d4-85fb316149d5@linux.ibm.com>
+ <a15a57a4-4520-46b4-83cb-2b8c872ff028@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <a15a57a4-4520-46b4-83cb-2b8c872ff028@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,37 +108,25 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On 11/18/26 06:33, Philippe Mathieu-Daudé wrote:
+>> Hi Philippe,
+>> Thanks for addressing the review comments brought up by Anton and Matt 
+>> on the original patch :
+>> https://lore.kernel.org/qemu-devel/20261104163854.87398-1- 
+>> richard.henderson@linaro.org/
+> 
+> Amusing, I was not aware of this patch, we figured it within a 2 week
+> interval :) The ppc_tr_tb_stop() path is not updated however. Richard,
+> do you rather respin your patch with the ppc_tr_tb_stop() change or
+> keep this one?
+Keep this one, Phil.
 
-Hi,
-
-The KVM/QEMU community call is at:
-
-https://meet.jit.si/kvmcallmeeting
-@
-24/11/2026 14:00 UTC
-
-We have one agenda item already and I suspect it will take the whole
-session. As a follow-up from the maintainers summit and Paolo's series:
-
-  Message-ID: <20261118104150.599535-1-pbonzini@redhat.com>
-  Date: Wed, 18 Nov 2026 11:41:46 +0100
-  Subject: [PATCH v5 0/4] docs/devel, AGENTS.md: a completely new policy on=
- AI-generated contributions
-  From: Paolo Bonzini <pbonzini@redhat.com>
-
-to discuss the potential policy change on AI submissions and how far it
-should go.
-
-If there are any other urgent topics please let me know.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
