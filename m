@@ -1,101 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995B3606A320
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 15:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDD9606A320
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 15:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=defmacro.it header.i=@defmacro.it header.a=rsa-sha256 header.s=fm3 header.b=IjO0LF7o;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=kElxl6lb
+	dkim=pass (2048-bit key, unprotected) header.d=defmacro.it header.i=@defmacro.it header.a=rsa-sha256 header.s=fm3 header.b=JNz3PNKU;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=VRrL+EUh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xThC2-0005Uh-D2; Wed, 18 Nov 2026 10:03:26 -0500
+	id 1xThC1-0005Q1-5o; Wed, 18 Nov 2026 10:03:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xThBY-000577-Nw
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 10:03:02 -0500
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xThB1-00052i-V5
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 10:02:29 -0500
 Received: from fout-a3-smtp.messagingengine.com ([103.168.172.146])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xThBG-00041P-IY
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 10:02:54 -0500
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfout.phl.internal (Postfix) with ESMTP id BD31FEC0AFD
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 10:02:35 -0500 (EST)
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xThAz-0003N0-Pp
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 10:02:23 -0500
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfout.phl.internal (Postfix) with ESMTP id 06FAEEC0AFF
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 10:02:21 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Wed, 18 Nov 2026 10:02:35 -0500
+ by phl-compute-06.internal (MEProxy); Wed, 18 Nov 2026 10:02:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
  :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1795014155;
- x=1795100555; bh=/AnaGI/OvXrSqErA6o+8cCBt8Kvh1v8QbFQRuVfTzSk=; b=
- IjO0LF7oQj1UY8QRHqsTExE//Zm2cIQOniOuiKhQ42AimSKOfRxIUl5oMyvLhvgw
- ZML/N28yBYJByS9leo6/X/9HorXHsLRqMNKVOlQrlj6AMJr822p20YuDHZ/bisnX
- mG/ejAARpCjFZ20hnllE5AuJ76b5xtg9s4IZl2xuZBXiVChd967bczQl71EanZOX
- mvuzC/ExGWQPoOATD6B4+q26HLv9VZzIS9BfieNUj9ESrOVRCfZLLtXQjtweGCIq
- jP+iwwt21lTl50HIabN9tq+dIIFxvGVFcCtGAQku5rSkrAAYmUzGv1D0RoUsJp8D
- azfMHPtE5bTVl5RRQ/kg2A==
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1795014141;
+ x=1795100541; bh=K+BI1AxWrp7G3ieV3bXw1U9T9+MSMVqF+RKvEfWHmNI=; b=
+ JNz3PNKUuJkj0keNO22OMHFuoJLg5du4olcsUEfkcHs363BbvOJYDsSk6X1rzyiF
+ H+StB3l7uJYCAjaGKb9krfAjnU2Ky/2jyBMeW6nPgvE4YDpKxzkpMd0qEn5ratnb
+ kD3hbZcRZpHy0FUKPvskdqgZjGJ49Q5cMOMze6QmXlgsej32tCer+zQMZPXpP/U8
+ gvgm+AntG+jefLBcEQgE3KlCy3OuKp6tLSniBtSqDIjQcu3Gg03W6qGX7TLlBYY/
+ VfUgp6kuNxcQsjGx2yvOkH7jrhfFGU+Wpeyb5aVgr9apJJlMx2BohpAE9EHcHxpq
+ V2PSNEw8uY3x2JZhaw9AGg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795014155; x=
- 1795100555; bh=/AnaGI/OvXrSqErA6o+8cCBt8Kvh1v8QbFQRuVfTzSk=; b=k
- Elxl6lbKvqRuTJUNYGrhuDmAeV9einrY4gEkyi1OFv2/j5DLZJUVRcuoo/PzqzHo
- Z+IuyvJOgW0YK+cl/p04pbKllN/VQaRwJLetLXx7QiGcOtT9hPnDMkETkWHrpoRC
- yLTUAcCTSIcqjL002joBtYgSDlvZr8lpiKNVdsg/NPhu6E7fpOnJbuWuHyoDyHJS
- V4Rfh/byq6kZVq1ClLbKEUTVJj1deG6MnqQ0gG/cEXyz7DKVSQGKyylf6tQXUPfG
- cxSLwFymALCILtau73G/o+io0fuDA2cVMjgoPaiooYnG+iRdoe2vS0cPhC9zjeuj
- B1ko5wGT52V0f9Wqj8kWg==
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795014141; x=
+ 1795100541; bh=K+BI1AxWrp7G3ieV3bXw1U9T9+MSMVqF+RKvEfWHmNI=; b=V
+ RrL+EUh20R4BuhgjkJfnV1TD7MHuJhsIaQpQzSeZQuy9F0Ousxte0o71ZAtJe5Hj
+ 2v5uiTGolPmK9MdkKvngdUKiwFlvR+OPeZcS58gni1zSosGpVvtlaRu5dv9ROaXA
+ j1xG2Ccox/i9rByLwvWfmWkf7B4F451EALzp6+pYatSWi/cft6Q7aQgWuxVCFzCD
+ /6wHGcA/tOgmTBFVe4nQ4tm3uCPXchboTqJVdGfRszZQVumjtyaFr42Vox1r7ckV
+ t93BZeXF42CwAh2BOTek9IqNbCAVZU+azn8INHDJfbjNRbIQpJWA9e66VFprfLMg
+ kca1TclAoXPTToG8TPOjA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
  action=sign d=defmacro.it a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795014155; d=defmacro.it;
+DKIM2-Signature: i=1; m=1; t=1795014141; d=defmacro.it;
  mf=PGZvc3NAZGVmbWFjcm8uaXQ+;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm3:rsa-sha256:HXsW2y7nWaxJKcE7RTAW6KSgWGBdmc8GnxpK3eCc6Mq8bUk
- TQGVEzJD4CEsa3zypE/GF0Y+nWC8XpA4HrWDzkO0+dpOEk71rWUSCqHy7TPpdT7A
- 9hR/IkJDF01rkMf23N4QBvFAwhh5dktBPXXsMdSUZbnNY+otqQdh+JdLrDvFumDt
- t3cbmki/78wkc0fev4IE5hJAG4hwKoe1Cs6yDOOMkvF2+AffZ/W6NSz97y7Ezd9H
- qtpwDWYxmRmugetWFMiBtKOE7+ez0fCL8LXBVn3CTIX3UNKjB8NDmZVLL78EH94n
- Lo0SpkGMa8H8wXxiBHDmDZNGYLEnTxOYqyRjhYw==;
+ s=fm3:rsa-sha256:FCaJ5Y/z7XCBeD3Aw3frM0B2zcusCWGog74FppzB8wkOuMG
+ tFvDWBmhnK1YtPtwuNHZ1vL5xIxZDvzRD0dSxF0ZWwlZ1lpK8YxuwMuTSGh9y7vk
+ A1sWIu6QxgKLKqog+ZIdzGddAsFsXUnI/HwYwuXQk287hnZykXd7DoFOO2AqO9T5
+ U2uDNsFW/TYL7eKASd32KV18dxQLHAIKSuFDYt910vSOL4+sV0LTtYSuJ6GtbmKc
+ 1kMxdOrHaoKZx9wuWiTjg/sE6U5C5hT76EIKeUQSTcz5m7tDs5uHy/ne/nSOCX7G
+ byYwRoCoBvOJqv0SGnxJ8Rv271Z0IHJcEtMofxQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
  action=mi-m=1; hc=12;
  hn=cc,content-transfer-encoding,content-type,date,feedback-id,
  from,in-reply-to,message-id,mime-version,references,subject,to;
 Message-Instance: m=1;
- h=sha256:/6lOfPMkySs4cPH19ds6byrbAJgqlPBUDONnEqEdBtA=:KwRkgoRYR3oKb2Xrwiy7DKzRUwo/VMwNU4Q8mZcOlbM=;
-X-ME-Sender: <xms:C779aiEdhr5FRPrcOYlSME10yj_D06IOi_brWU7A9ln09kjIDAVlDg>
- <xme:C779ahRV62sQN9vujt8iyg6k3Qz7YM8gQySN2-1lgbXaal76DHOY_79rxaPcDRGXm
- 5FP-yNTHyZr1z_mLzsD9R2-CYq8MvNcZ97yyUzdoKAXqZNJJ8-Go3g9>
-X-ME-Received: <xmr:C779audyhB-S3VUkTt8sKfVinp1QkMTf520ZNNilCE-G7VFLyshuu9drEpJvUaraS1k>
+ h=sha256:tng5x4MjFQNzpschSQqnWasoBi9emkbpvvll8pKfRoQ=:gIdko7ibWUarwBIgfETABeIW0OCbjp3OZitlczHLgFo=;
+X-ME-Sender: <xms:_L39apTwJyF0iHNcP9wSFRe0fFcy6OqDjz6n46gPBEwTpElZKvsOAQ>
+ <xme:_L39arvAkiSXuTwmOaHDWzWY7aLAIZFNxSo5wYaI70W1eD0_cQrEbTHLQwjeUeTHE
+ 5F6lrPc5X2y5sSZJMXOil1yzyhzLQATzO2K6wddHQOf5iUhFt4lqP8>
+X-ME-Received: <xmr:_L39aqZZQZjSR-wzb0gaeZUtUIkETcQHjTPJB6jt79CVl8YANkr5APRYI8dPz9Qlznc>
 X-ME-Proxy-Cause: dmFkZTEb3vsAhEsk+czLgVLgpYCRht1vdkohoC7UopAIGj3NwdEa7iroZHyj5SkJgWMtSZ
  1c5iEYe4KFRrorvYenfcw5rGx9fJswQlfcMx/rXj9OF/wAw/8kM5R4Y7lXuXMtjHgVNeax
  GnG6V0FQcnP2B9HFSsEUm+VJ35DFfhZIl7EdN3F+3VZ3qRRt3eVBGMqvOC0SNQ8MGyQpDJ
  rWjg3WbD4EDdi9ec2CaU2k2YVfj8kprsW3Yf5bJYnpOqh5fhzwTusvnWXuPgX3CP+xi0yO
- eXCKUtwgyyRkd3Nt1POKvbeUAKm/VTGYmXQbkstcjsd90jXGppRUMoAZM6LjQ8bSFYpMJs
- 0fia8lruLfsFV4hb773rar1eLvfAuulHCLLZg9Xb2yG3fdacqWosOcZ93+YFmc5RPYfZXi
- wYXIJgmaCb1HXbF7uSOvf1/oGJkzsfbC0yLd1tic6W9++aOTb3f5hz0mmkhNdLlYCgDtcI
- GKI2ldNsthUO9n6W1sXx3xhy1I6dOxjeSOb4lZldbrzVtKe+Js84JrZ8D1VhPJimESZCFC
- RQ05qTpi+5i+kIliX0+d+8MdX8RxNVbOwhcacApI6To8wlRngHMh21grxx/hW1CarBfGbR
- bAo6BSuWG/TsOohQoMmaSZyprrA8OU+LTg9vXubUrPfOF7apL6OQXvXZVeJQ
-X-ME-Proxy: <xmx:C779agrRV_Iu8PXfq-S4PsB6f7cgFoyileVrjUieEpRW7gqmwy9COQ>
- <xmx:C779av9sWFq3m911s0nyFZK3zfdkqVvY-Zc9G9YuJXQDDw6M_nyvFQ>
- <xmx:C779asdRHe1JCjokPNLOfcy_r1YvqbGsGVsDVG0AyQ50-eaye3GMOQ>
- <xmx:C779apK6mNE7qz764L0aRtZnVsc8FZWcl8hZ6bJK0mN1iLJRnIELRg>
- <xmx:C779as1y3IGs4bIci448SBASg3H0P27Gyu9YX9Wxz-ZmXLthcQX9PAbJ>
+ eXCKUtwgyyRkd3Nt1POKvbeUAKm/VTGYmXQbkstcjsd90jXGppRUMoAZM6LjQ8bSFYpMiC
+ CJ4bgtE+v17VkXfICusBbwiezg9zHE9UJkGuJsQ+mmdACYn4bw+Miz7SDaAWBwYOFhiqSL
+ Xn8PHvlA0uW5a9r3OSwiIJQ791FEFAnG5nops+qaG0tu6ro+Ntr7E+y7AzNMHf73haNOBc
+ LGcu49a9WduEwIBRL23/ln0/ovdWtS+Zd/GLO4LmygAUGr9miTny5xX3fvVPmLriAZsD8q
+ 5XXga27P34axnHRXyEDRYHTRqvRj1EaAa7fzDsjYufCXDajbR72PHYTrbo+mrWRPxUhP5m
+ zrwHlFp9FLbQWQaEmHj//d42RHS5zz88UYVFkac9shaB8OSfiFa48HsXrZAw
+X-ME-Proxy: <xmx:_L39ahGR1xqppievqgSdqvMNBfJLmOVVd7C8gtayyd2wwVM1eBTB1w>
+ <xmx:_L39auxkjdwybysGLTZ8b72Yl9qHdNaD3s-P7207vt_mszI-K7leXw>
+ <xmx:_L39ajlwXYbfXLh__NAPbozmJcLU2Q4LcfGOmX6EJBAUpILh5EQzHQ>
+ <xmx:_L39annNnXHwKate4PhsbH0SpdBb9gv0rK52WbH5ww3BdhrBIpB9ww>
+ <xmx:_b39au0wBKG7Mt7ByDgWoQV2ho5g6WGP-Q_mkGhwZziy_7Xm5iqswYZW>
 Feedback-ID: ic0014905:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Nov 2026 10:02:34 -0500 (EST)
+ 18 Nov 2026 10:02:12 -0500 (EST)
 From: Jesper Devantier <foss@defmacro.it>
-Date: Wed, 18 Nov 2026 16:01:32 +0100
-Subject: [PATCH 5/7] hw/nvme: get feature FDP (1Dh) fixes
+Date: Wed, 18 Nov 2026 16:01:29 +0100
+Subject: [PATCH 2/7] hw/nvme: get feature - fix and revamp NS/NSID checks
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261118-jwd-181126-fdp-fixes-v1-5-ed76fad7861d@samsung.com>
+Message-Id: <20261118-jwd-181126-fdp-fixes-v1-2-ed76fad7861d@samsung.com>
 References: <20261118-jwd-181126-fdp-fixes-v1-0-ed76fad7861d@samsung.com>
 In-Reply-To: <20261118-jwd-181126-fdp-fixes-v1-0-ed76fad7861d@samsung.com>
 To: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
@@ -132,79 +132,99 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Jesper Wendel Devantier <j.devantier@samsung.com>
 
-- endurance group is 16 bits, mask appropriately
-- support reporting current/default values correctly
-- use fdp enabled helper
+From the 2.4 Base specification, section 4.4 - RUH-scoped features'
+get feature command should return Invalid Field if NSID is set to
+the broadcast value.
+NS-scoped features' get features command should, unless otherwise
+specified in section 5.2.30, return Invalid Namespace or Format.
+
+This patch
+- reorders the checks
+- ensures FID 1Eh (FDP events) correctly abort with Invalid Field
+  if a broadcast NSID is provided
+- handles this special check in a switch-case, to provide for
+  other special cases - such as other RUH-scoped features or
+  exceptions from 5.2.30
+- saves the returned `NvmeNamespace *` from `nvme_ns` to `ns`
+- removes duplicate checks for NVME_ERROR_RECOVERY and
+  NVME_FDP_EVENTS
 
 Signed-off-by: Jesper Wendel Devantier <j.devantier@samsung.com>
 ---
- hw/nvme/ctrl.c | 25 +++++++------------------
- 1 file changed, 7 insertions(+), 18 deletions(-)
+ hw/nvme/ctrl.c | 42 ++++++++++++++++--------------------------
+ 1 file changed, 16 insertions(+), 26 deletions(-)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 8fc0884fcda..d82ff6793ff 100644
+index ee670481876..c8da01f11d0 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -6342,16 +6342,17 @@ static uint16_t nvme_get_feature_timestamp(NvmeCtrl *n, NvmeRequest *req)
-     return nvme_c2h(n, (uint8_t *)&timestamp, sizeof(timestamp), req);
- }
- 
--static int nvme_get_feature_fdp(NvmeCtrl *n, uint32_t endgrpid,
-+static int nvme_get_feature_fdp(NvmeCtrl *n, uint16_t endgrpid,
-+                                bool current,
-                                 uint32_t *result)
- {
-     *result = 0;
- 
--    if (!n->subsys || !n->subsys->endgrp.fdp.enabled) {
-+    if (!nvme_fdp_enabled(n) || endgrpid != 0x1) {
-         return NVME_INVALID_FIELD | NVME_DNR;
+@@ -6436,18 +6436,26 @@ static uint16_t nvme_get_feature(NvmeCtrl *n, NvmeRequest *req)
      }
  
--    *result = FIELD_DP16(0, FEAT_FDP, FDPE, 1);
-+    *result = FIELD_DP16(0, FEAT_FDP, FDPE, current ? 1 : 0);
-     *result = FIELD_DP16(*result, FEAT_FDP, CONF_NDX, 0);
- 
-     return NVME_SUCCESS;
-@@ -6428,7 +6429,7 @@ static uint16_t nvme_get_feature(NvmeCtrl *n, NvmeRequest *req)
-     uint16_t iv;
-     NvmeNamespace *ns;
-     int i;
--    uint16_t endgrpid = 0, ret = NVME_SUCCESS;
-+    uint16_t ret = NVME_SUCCESS;
- 
-     static const uint32_t nvme_feature_default[NVME_FID_MAX] = {
-         [NVME_ARBITRATION] = NVME_ARB_AB_NOLIMIT,
-@@ -6528,13 +6529,7 @@ static uint16_t nvme_get_feature(NvmeCtrl *n, NvmeRequest *req)
-         return nvme_c2h(n, (uint8_t *)&n->features.hbs,
-                         sizeof(n->features.hbs), req);
-     case NVME_FDP_MODE:
--        endgrpid = dw11 & 0xff;
+     if (nvme_feature_cap[fid] & NVME_FEAT_CAP_NS) {
+-        if (!nvme_nsid_valid(n, nsid) || nsid == NVME_NSID_BROADCAST) {
++        if (nsid == NVME_NSID_BROADCAST) {
+             /*
+-             * The Reservation Notification Mask and Reservation Persistence
+-             * features require a status code of Invalid Field in Command when
+-             * NSID is FFFFFFFFh. Since the device does not support those
+-             * features we can always return Invalid Namespace or Format as we
+-             * should do for all other features.
++             * Base 2.4, section 4.4, if broadcast NSID:
++             * - If feature is RUH-scoped:
++             *   abort with Invalid field
++             * - If feature is NS-scoped:
++             *   Unless otherwise stated in 5.2.30, abort with
++             *   status Invalid Namespace or Format
+              */
++            switch (fid) {
++            case NVME_FDP_EVENTS:
++                return NVME_INVALID_FIELD | NVME_DNR;
++            default:
++                return NVME_INVALID_NSID | NVME_DNR;
++            }
++        } else if (!nvme_nsid_valid(n, nsid)) {
+             return NVME_INVALID_NSID | NVME_DNR;
+         }
 -
--        if (endgrpid != 0x1) {
+-        if (!nvme_ns(n, nsid)) {
++        ns = nvme_ns(n, nsid);
++        if (!ns) {
+             return NVME_INVALID_FIELD | NVME_DNR;
+         }
+     }
+@@ -6489,15 +6497,6 @@ static uint16_t nvme_get_feature(NvmeCtrl *n, NvmeRequest *req)
+ 
+         return NVME_INVALID_FIELD | NVME_DNR;
+     case NVME_ERROR_RECOVERY:
+-        if (!nvme_nsid_valid(n, nsid)) {
+-            return NVME_INVALID_NSID | NVME_DNR;
+-        }
+-
+-        ns = nvme_ns(n, nsid);
+-        if (unlikely(!ns)) {
 -            return NVME_INVALID_FIELD | NVME_DNR;
 -        }
 -
--        ret = nvme_get_feature_fdp(n, endgrpid, &result);
-+        ret = nvme_get_feature_fdp(n, dw11 & 0xffff, true, &result);
-         if (ret) {
-             return ret;
+         result = ns->features.err_rec;
+         goto out;
+     case NVME_VOLATILE_WRITE_CACHE:
+@@ -6536,15 +6535,6 @@ static uint16_t nvme_get_feature(NvmeCtrl *n, NvmeRequest *req)
          }
-@@ -6579,13 +6574,7 @@ defaults:
-         }
-         break;
-     case NVME_FDP_MODE:
--        endgrpid = dw11 & 0xff;
+         goto out;
+     case NVME_FDP_EVENTS:
+-        if (!nvme_nsid_valid(n, nsid)) {
+-            return NVME_INVALID_NSID | NVME_DNR;
+-        }
 -
--        if (endgrpid != 0x1) {
+-        ns = nvme_ns(n, nsid);
+-        if (unlikely(!ns)) {
 -            return NVME_INVALID_FIELD | NVME_DNR;
 -        }
 -
--        ret = nvme_get_feature_fdp(n, endgrpid, &result);
-+        ret = nvme_get_feature_fdp(n, dw11 & 0xffff, false, &result);
+         ret = nvme_get_feature_fdp_events(n, ns, req, &result);
          if (ret) {
              return ret;
-         }
 
 -- 
 2.51.2
