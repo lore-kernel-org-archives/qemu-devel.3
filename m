@@ -1,116 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88171606A32F
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 16:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EBD606A32C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 16:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm2 header.b=agUqjnQx;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=RLy1Vsbo
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=fI68/4Pd;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=ZNayhTVK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTieU-0000T4-KN; Wed, 18 Nov 2026 11:36:56 -0500
+	id 1xTieZ-0000Ua-UG; Wed, 18 Nov 2026 11:37:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xTidw-0000QN-FU
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 11:36:21 -0500
-Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
+ id 1xTie6-0000Rp-LB
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 11:36:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xTidu-0005b8-Is
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 11:36:20 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 99ED07A0259
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 11:36:16 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Wed, 18 Nov 2026 11:36:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1795019776; x=
- 1795106176; bh=VsrDUILDAUM4m1cPuEoMghsIta77LgsjOquSSmXtd6w=; b=a
- gUqjnQxlxosTXOtZVCGslhV/Q6KhEHqNyBQxfd8rRVFiYV7uqZyrX8r7yXr2PhTn
- dzQMbzifik56lbcNQRHgKLxmXZo/oHF2HmzX1Kt6iSPnSK0veaFcpPQ4TjimEdVo
- A1W+J5pYTPBJZ6pDOD4RH4GhWb/FMUYDagbcdGo5eEtRC+pQg/ywsjS21TYNkjRn
- oKq8SBjHaA+gb/UB180GIXFqYe+c1//FUSCnPSRL+9n8d+H+W/c58JphhW3eUJ7p
- +XhYtYOXSDg1jqTaekFDLY1J5d5CWlqidrqC5gFtbebUWlcxfNlpoW3GLaCK1694
- GvTFZZ/aXOiK7tGaYS/rw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1795019776; x=1795106176; bh=VsrDUILDAUM4m1cPuEoMghsIta77LgsjOqu
- SSmXtd6w=; b=RLy1VsbozcRuumI0IYCnW0jOEeS9YLZ88flwO1ooOi12hn/zeI5
- FPInAjBeUezY0LZFZZNlVRtREQMMcO/dWXZt0G/NPjl4kwiA24jJnTL5mA6OoyuK
- bo9Q1wX37kSCUNx3Ib9sY2KPQJqRhZl+4sRFWsjjpcu9ri8n7Jnm0h4sIFUxuBC/
- tZeoCYkGql6qGiEWAhdIGQSeAZNN6+WsErFq+32DcXJzdCqU7ajkj8v8R2z+4BXV
- 1LB3mEHwO4JLZz0q6TxAWjX9+TJj4cy75UbOVSTFHF7kJ1/1HuVfVFo3aRwWn2F1
- U85tzz25S/ncNe7JTraVjzZqvnYvbb/Q8JA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795019776; d=irrelevant.dk;
- mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:HrLGIdw4FdtelkX8i8E/SdmOJNDJyd7ae/xFwWeLormrLcV
- xdK8alxNzgb7joNvweiPn0RiTNCfbC5SIpndG9meWgcNByU8eCXOVOothIKX7oa5
- bMnD7mUIe4SKQYFt9Sywgml5LObSoXpaEEcJDjoCP6PkTJjcQjbX1xxpXYC0sy6C
- ZanUSUGrWmlSbb0LImpbZYJQDeCMZcUcMStfj/C7nbL+8477QbFfIDWboJMLn89l
- tfxt9M8o8pjOEmxeC5B5a+QedbAQeHFHuk0jP8t9cAmgS2dC3kdFXrMH1bifw1cy
- aKT8uwELPjvpYiFfTqGfmz0DsZER/2DATGyI+wQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=mi-m=1; hc=12;
- hn=cc,content-disposition,content-type,date,feedback-id,from,
- in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1;
- h=sha256:ExnIdU8JicYZ6y4qenSEyx7f0t3kjqhPFDyYm/NRriw=:4/llhpyMzHXX1h/tL76JHhjBfgelhKC1fUHP3yKO7XE=;
-X-ME-Sender: <xms:_9P9ajd3wqP3vtP84wgWR1cKmwi-CJJlQ5-8BHkXkHr4l4lEjY4TIQ>
- <xme:_9P9aiKGmA2zHZEW7DnGseLocuTdy3zyjr8ySFm_GcOXlXk9e0ueEBIfcsiQM9g-x
- 8wWPLv7BfGKA0PI-eKexPmhBeIGQxJinf07QtyTGLh9sicdXW1biFXS>
-X-ME-Received: <xmr:_9P9aoHwBEwPxevKbDKXQ2G-nmZNc6Hysu4EOFNqFL2fxp8E5-UmHnU5zcZMnaAuTuo4XK9dbK0n5UcoWjQ27vRUJTphanE>
-X-ME-Proxy-Cause: dmFkZTG3I3sR8n7UyuUGRxcSCcNz/sE2vl3lwBxWt4/PsIJWnW1ElvkUR0oUQ0OuacDztA
- GYUQBta8B9nWhabwsw5zkbl3QvN3El89xyQMO/EEex/Y+kDnHJgfBv+UU4KTg2zG6/RwPt
- WHxdB4pB/bOLfbfMre2XpKlgBPy3zFXGqZqGjJD4SGO89zybA0qmN2znDs1GL08DzI0Fs9
- vWd1xhvTq0IeRyVH1YxgK6y0iG9p0ItatHophew1NBFxRjoQqlUJk6p3a/eeLdj4gOkM2g
- 8eIWynQcauhTzS4JYHCXUGJ3fGw56SAKKuECkw89Hiho7zH3QnUq3X2gQiCVuuaVEUsLDr
- vw1SDap8nTITpdTWQBxd8g9gMxfvQBKyq7XG2XOxq4ztlhIELiAxODR8g3CrfTNxJmlS58
- thmCay4O5dghoq/aIrF9MWTgRoXsIpMklIkq7fabXucPC3DMxkuqrVPQbkzt4ORxfE0NZj
- AtDQmyBMNgJ7xqnTiy9NAsPPQtmUt6nz8x3nDKXbjiaEXu685reaZxE4Tl/VkhVTjA4pUy
- 7ps3d8iqI7nO0W/MnZ+Eo7jKSaqJ+elnLcBJnpiNAlWZtGg4M7nITPtY1nenpl1ZE3WjED
- 5TF5n/vTM6bjb6Fo8tzexjLbtolbSvcEDVMMXbtYHW/C+t08EklvzlLJDumQ
-X-ME-Proxy: <xmx:_9P9alCOi1q-T9Z7kdOeV0efwDJrJdrFv_YJFdKCWNp4VxrJRZ7Z9A>
- <xmx:_9P9ar_SyslZZC6raBoJBP8JJ6fseJHgnjsWd3v-hZhaDJ60YODClA>
- <xmx:_9P9ahDFtPLURDSB7pGpx4jVOTtNscZZLKDdM_1yZLgB6WsWEo3lSw>
- <xmx:_9P9agQXOrHQ0Kx1HtTd26YL0hhOasBsp7DlLL4R1r7kh6q64-7i4g>
- <xmx:ANT9aha_d4tGr_p5sAwqd6zc6BUm6TNj3vDsSexOsGS04vPsCo7xyEUg>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Nov 2026 11:36:15 -0500 (EST)
-Date: Wed, 18 Nov 2026 17:36:13 +0100
-From: Klaus Jensen <its@irrelevant.dk>
-To: Jesper Devantier <foss@defmacro.it>
-Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
- qemu-block@nongnu.org, Jesper Wendel Devantier <j.devantier@samsung.com>
-Subject: Re: [PATCH 5/7] hw/nvme: get feature FDP (1Dh) fixes
-Message-ID: <av3T-nIrgsD_kXY6@AALNPWKJENSEN.aal.scsc.local>
-References: <20261118-jwd-181126-fdp-fixes-v1-0-ed76fad7861d@samsung.com>
- <20261118-jwd-181126-fdp-fixes-v1-5-ed76fad7861d@samsung.com>
+ (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
+ id 1xTie4-0005bz-Nc
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 11:36:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795019786;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aY42yXy+Gc3XVnHoDZtUEAdKmQMKVBfhq6L8tGc7xHs=;
+ b=fI68/4PdqMS9GdnV75EWTkz6iRN5e899b05wLmAxtvFcXl/i3Z0gBzNEWZnrVM6Yjj0Z9m
+ xMZh+2r1sPSJJ2lJETWylH4IJeBew0fOnZCYv72iv9E6AtszDd1Joe1cCjfzOmqSpcnmUU
+ od8l3YPMmgTWVCgLWCNcv+vPYEWjmME=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-510-S9_Iv-blM2anpp5sDYOANg-1; Wed, 18 Nov 2026 11:36:24 -0500
+X-MC-Unique: S9_Iv-blM2anpp5sDYOANg-1
+X-Mimecast-MFC-AGG-ID: S9_Iv-blM2anpp5sDYOANg_1795019784
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4ba078abd78so8939265e9.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 08:36:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1795019783; x=1795624583; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-type:content-transfer-encoding:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=aY42yXy+Gc3XVnHoDZtUEAdKmQMKVBfhq6L8tGc7xHs=;
+ b=ZNayhTVKVIaCTkoNTZhcKGcYEdA8lJyVtvoFK4/DicIY6j84gwoIg2BYDUianAPCt8
+ fDAppJaOfjlum3+Av51+CllcV8IgTD6AJC31vZ01dNnvfABrDZuJs/P8cwp9Nv4hRSl3
+ jWrSO3cXTQrkNJIkWFdhMVXxI7GI1fSVne6r6vXdqzfSPOfpDd6RWew5kz5kzCOnFae/
+ 9GTnVQe7hNzkWnP2sO8faj4Eqkl7E+g2pm0PKpjkKt/eP8I+haVhfJjGfl2tlQUFY+hq
+ VJuDoJLfDvprIz8QfviZpASFUatmiKt/YH6bHa5StO5ZG+UIWm2nWhQIHFx+16R6yAcv
+ hTIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795019783; x=1795624583;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-type:content-transfer-encoding:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=aY42yXy+Gc3XVnHoDZtUEAdKmQMKVBfhq6L8tGc7xHs=;
+ b=QjUdLsA1oUb57yhizc2o3Pr1tOvhXQu73WFDslJOapVOexjmGXJ8YJxiQWpEG2zuNi
+ zRltNTdm/mDxm2l0RfmHc2mVkRjCwE8CfuutwsgE7sektgsCA52aG+Bm4WOyjVXa8SGD
+ z8BOyJuLni/CC96Zht7rznuU2ZY2p9X5rkeg3HAToZ8NwpMqTTVR4zalw12MHN7I5pIw
+ D22tp6aMisbOjXKc2Bf+2HEwHwxpN0zi59uVTbhrFFUym+XUJEikRBO/gTkENgOhObsp
+ VAaZC28KaAlyYRxbx0Lw6kNTap8VNLfAof9VIQSHKnLQ46Q1/uJcHpl/Bw9ObqzMRWJF
+ 6k/g==
+X-Forwarded-Encrypted: i=1;
+ AL+hErHKYiqMx1s2Wh3s0w4rxUYO02XNc1SAxWUWmbcvQKOtKepNyOG1lR+J4JBp2zsKnqNsM53owud3e1hD@nongnu.org
+X-Gm-Message-State: APuU4Z+9Uun/GJtC5d5Ah2u0VMFai5zHGDTtIQiFaa78Ej6NY31bGMtd
+ rBQSSpzvq6GDFLrcXoelOp+vJ927DP2SffRjOby7Fl5xmD683WmAeElp8IzCGz0gwCtaQUwTyR2
+ 7haLuqAdyHQk7ZIejQmqLj5jYRk0jY1w2FEQhGHSxIDSmVpjThU5OK1eK
+X-Gm-Gg: AYBFou389+iRgrF11T0CnL2ynVjFl2xcqBa4SpuWF7SaPEA8KuH80SKS+lcgXBPn04X
+ ZSIkMdO+w+C946ICCKvauV6fwjJs7O5mDfKwf3Ln81zTjmuXn8TlXSXme9KAYgdGSB1r8hUOzLB
+ Ct+1d6V8IwG3jbdW3UJPoNEEk5IAwWh51EtIWbyUL5o6gkzoTslJOnuRoVM+kA/XX+OGQ9cs4Oo
+ OnhD7imdIAVSPo8wjJzASXoQMO1OxJISIolRSQoUoQMi15oJlLDPw8sixYv7B5M+v8Mhy1daRRS
+ wlDCFeztLk7zOZGAULgwRrPKkPhmDStL2mwa51TyfAoHeDh8ZxnaU3xRnaOacBYrKJYSmP7Xszv
+ 9CCvBpfy8lwAXA8qAVPv1BZ1zEj+a/3i1ZjAtc+N/2VzX
+X-Received: by 2002:a05:600c:4f56:b0:4b7:6c16:7b43 with SMTP id
+ 5b1f17b1804b1-4bb7da12aa6mr65931075e9.10.1795019783484; 
+ Wed, 18 Nov 2026 08:36:23 -0800 (PST)
+X-Received: by 2002:a05:600c:4f56:b0:4b7:6c16:7b43 with SMTP id
+ 5b1f17b1804b1-4bb7da12aa6mr65930685e9.10.1795019783055; 
+ Wed, 18 Nov 2026 08:36:23 -0800 (PST)
+Received: from localhost ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb78418853sm218992725e9.8.2026.11.18.08.36.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Nov 2026 08:36:22 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="HOoinY1SBJRuJXig"
-Content-Disposition: inline
-In-Reply-To: <20261118-jwd-181126-fdp-fixes-v1-5-ed76fad7861d@samsung.com>
-Received-SPF: pass client-ip=202.12.124.155; envelope-from=its@irrelevant.dk;
- helo=fhigh-b4-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 18 Nov 2026 17:36:21 +0100
+Message-Id: <DMYHENSUOATR.2W9NUORQJN8HX@redhat.com>
+Cc: "Tommaso Califano" <tcalifano@redhat.com>
+Subject: Re: [PULL 00/22] Misc TCG & HW patches for 2026-11-17
+From: "Tommaso Califano" <tcalifano@redhat.com>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ "Michael Tokarev" <mjt@tls.msk.ru>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.22.0
+References: <20261116232335.31593-1-philmd@oss.qualcomm.com>
+ <66172cab-a9a3-4be6-a4e7-edc77ba9da44@tls.msk.ru>
+ <a8399514-7046-4bf5-a26c-1076d83c5b77@oss.qualcomm.com>
+In-Reply-To: <a8399514-7046-4bf5-a26c-1076d83c5b77@oss.qualcomm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=tcalifano@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,61 +121,52 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---HOoinY1SBJRuJXig
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Nov 18 16:01, Jesper Devantier wrote:
-> From: Jesper Wendel Devantier <j.devantier@samsung.com>
->=20
-> - endurance group is 16 bits, mask appropriately
-> - support reporting current/default values correctly
-> - use fdp enabled helper
->=20
-> Signed-off-by: Jesper Wendel Devantier <j.devantier@samsung.com>
-> ---
->  hw/nvme/ctrl.c | 25 +++++++------------------
->  1 file changed, 7 insertions(+), 18 deletions(-)
->=20
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index 8fc0884fcda..d82ff6793ff 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -6342,16 +6342,17 @@ static uint16_t nvme_get_feature_timestamp(NvmeCt=
-rl *n, NvmeRequest *req)
->      return nvme_c2h(n, (uint8_t *)&timestamp, sizeof(timestamp), req);
->  }
-> =20
-> -static int nvme_get_feature_fdp(NvmeCtrl *n, uint32_t endgrpid,
-> +static int nvme_get_feature_fdp(NvmeCtrl *n, uint16_t endgrpid,
-> +                                bool current,
->                                  uint32_t *result)
+On Wed Nov 18, 2026 at 3:45 PM CET, Philippe Mathieu-Daud=C3=A9 wrote:
+> On 18/11/26 14:43, Michael Tokarev wrote:
+>> On 11/17/26 02:23, Philippe Mathieu-Daud=C3=A9 wrote:
+>>=20
+>>> Tommaso Califano (3):
+>>> =C2=A0=C2=A0 hw/usb/dev-mtp: Fix recursive delete of directories
+>>> =C2=A0=C2=A0 hw/usb/dev-mtp: Check length of class control request
+>>> =C2=A0=C2=A0 hw/usb/dev-mtp: Stop processing SendObjectInfo after an er=
+ror
+>>=20
+>> Hi!
+>>=20
+>> Philippe, there were a 7-patch series by Tommaso, grouped into a
+>> single patch set because they touch the same file and all together
+>> fix a single issue --
+>>  =C2=A0 https://gitlab.com/qemu-project/qemu/-/work_items/4529
+>
+> I missed all are needed for the issue to be fixed :/
+>
 
-Minor nit. Since we are changing the function signature here, we should
-change that int return value to uint16_t.
+Since this issue covers multiple independent bugs, feel free to
+cherry-pick only the commits you want. I=E2=80=99ll follow up with a new se=
+ries
+for the rest, and either open a new GitLab issue for the remaining bugs
+or reopen the existing one once it auto-closes.
 
---HOoinY1SBJRuJXig
-Content-Type: application/pgp-signature; name=signature.asc
+>> Did you omit the other 4 changes because of the review comments?
+>
+> Yeah, as individual fixes they seems worthwhile in the release,
+> unfortunately I couldn't merge all of them because the comments
+> were not addressed by the time we had to tag the RC.
+>
 
------BEGIN PGP SIGNATURE-----
+Unfortunately, I just realized when (and what) the RC date is, and I had
+been holding off a bit waiting for reviews :(
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmr90/oACgkQTeGvMW1P
-DenBbQf+PYLY3MN/LlKFkYClukMnJiXUAai2v3T6seamfT6nmwscd/TTnnmz7fQi
-kl3ieFauNhdPIMzRIDBFG8H+I21Rjno5FRtrP/7GQMUtYaSYLmEF0yovQk+qFx7l
-nLSHpBL3YMrgb+mVYbPGJfYCz3jK5T+eouPB6+gOLuOFX0u5Kg1fvyX6hG2071/a
-kZz8X06o0f+SnrLIO7WiWz4MhmqoV9I8YNnExsbUqV/ovYjKAm5jfdRQW+tBzweQ
-d/Mbae/0ybH6v3nA4fsU7bgApUMv5UbmLImhV8ouSFO85UB/ZMZTCrkuSoFa6iT2
-jyEqsB+rOHzdudK496I8uTmQ82zTjw==
-=DXLT
------END PGP SIGNATURE-----
+Regards,
+Tommaso
 
---HOoinY1SBJRuJXig--
 
