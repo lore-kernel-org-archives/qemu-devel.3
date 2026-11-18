@@ -1,59 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AC5606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 07:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EEC606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 08:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pond.sub.org header.i=@pond.sub.org header.a=rsa-sha256 header.s=mail header.b=m9/SNQV2
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=TzX0KMkx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTaCf-0003IZ-DM; Wed, 18 Nov 2026 02:35:37 -0500
+	id 1xTagW-0006zG-N6; Wed, 18 Nov 2026 03:06:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
- id 1xTaCc-0003Ho-9I
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 02:35:34 -0500
-Received: from oxygen.pond.sub.org ([2a01:4f8:13b:3ad0:1::3])
+ (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
+ id 1xTagU-0006yw-UO
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 03:06:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
- id 1xTaCY-0002PG-Qf
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 02:35:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=pond.sub.org; s=mail;
- t=1794987321; bh=TUP/4WMsmMlfK57gZbRD59y9Bo1PsnOTpF56rzZaYx0=;
- h=From:To:Cc:Subject:Date:From;
- b=m9/SNQV2/JfBeq/ZVpVNuu+uC0+Rre3sNIKiLPm1zq42FAy1sZOFxyzCknV1jjGpi
- 9WQmUq7uACTsBWy2zcTZ4OFB3HwRp0kWwHmW1CJX+w5dVcEDWH8PevKaYbFmOpPlOT
- RiREFCSMD9hGgrQcT4dRlNC+ze67oEyYrwD/YPF8=
-Received: from blackfin.pond.sub.org (p4fd045cf.dip0.t-ipconnect.de
- [79.208.69.207])
+ (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
+ id 1xTagT-000643-CN
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 03:06:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1794989183;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OTqirsZJzXPy6GJTIHpTyFLpsShmOBl52SM1goSetKo=;
+ b=TzX0KMkxR8XDZu6oPmxfy83jcTNF1uSaYbLpCHQHVhge1rVi+Rzfdg4wLvQDpOdOFE5nMg
+ W/pS57DVlZHqEORHISGmMZ9SK2ZzrqIld+2kUTSOaBqCxP+Y4jhRQdS3SLsTde2ru0qFTg
+ 8B5nA8hlwu0aWEGfyH/qeENRLl7HqmY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-nQm5rdhZPNKkjnj9cWiLyg-1; Wed,
+ 18 Nov 2026 03:06:19 -0500
+X-MC-Unique: nQm5rdhZPNKkjnj9cWiLyg-1
+X-Mimecast-MFC-AGG-ID: nQm5rdhZPNKkjnj9cWiLyg_1794989178
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (Client did not present a certificate)
- by oxygen.pond.sub.org (Postfix) with ESMTPSA id 285212084E
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 08:35:20 +0100 (CET)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BC85221E6A04; Wed, 18 Nov 2026 08:35:26 +0100 (CET)
-From: Markus Armbruster <armbru@pond.sub.org>
-To: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Subject: python/qemu/ too picky with QMP responses?
-Date: Wed, 18 Nov 2026 08:35:26 +0100
-Message-ID: <87bj7mioch.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D431180035C; Wed, 18 Nov 2026 08:06:18 +0000 (UTC)
+Received: from eashurov-thinkpadx1carbongen12.raanaii.csb
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E710F421; Wed, 18 Nov 2026 08:06:14 +0000 (UTC)
+From: Elizabeth Ashurov <eashurov@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: kkostiuk@redhat.com, michael.roth@amd.com, dholler@redhat.com,
+ armbru@redhat.com, fdeutsch@redhat.com, yvugenfi@redhat.com,
+ kramdoss@redhat.com, Elizabeth Ashurov <eashurov@redhat.com>
+Subject: [PATCH v4 0/2] qga: Add Windows driver information commands
+Date: Wed, 18 Nov 2026 10:06:08 +0200
+Message-ID: <20261118080610.1322669-1-eashurov@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a01:4f8:13b:3ad0:1::3;
- envelope-from=armbru@pond.sub.org; helo=oxygen.pond.sub.org
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eashurov@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,74 +78,34 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Marc-Andr=C3=A9 and I broke python/qemu/utils/qom_common.py in commit
-0eee31cf1085 (qapi/qom: add qapi-type to qom-list, qom-list-properties,
-qom-list-get):
+This series introduces two new QGA commands for Windows:
+* guest-get-driver-packages: retrieve out-of-box driver packages
+from the Windows Driver Store.
+* guest-get-driver-services: retrieve registered driver services
+and their metadata from the Service Control Manager and
+driver binaries.
 
-    $ bld/run qom-list -s ../images/test-qmp /chardevs
-    Traceback (most recent call last):
-      File "/work/armbru/qemu/bld/pyvenv/bin/qom-list", line 8, in <module>
-        sys.exit(QOMList.entry_point())
-                 ~~~~~~~~~~~~~~~~~~~^^
-      File "/work/armbru/qemu/python/qemu/utils/qom_common.py", line 230, i=
-n entry_point
-        return cls.command_runner(args)
-               ~~~~~~~~~~~~~~~~~~^^^^^^
-      File "/work/armbru/qemu/python/qemu/utils/qom_common.py", line 215, i=
-n command_runner
-        return cmd.run()
-               ~~~~~~~^^
-      File "/work/armbru/qemu/python/qemu/utils/qom.py", line 179, in run
-        rsp =3D self.qom_list(self.path)
-      File "/work/armbru/qemu/python/qemu/utils/qom_common.py", line 192, i=
-n qom_list
-        return [ObjectPropertyInfo.make(x) for x in rsp]
-                ~~~~~~~~~~~~~~~~~~~~~~~^^^
-      File "/work/armbru/qemu/python/qemu/utils/qom_common.py", line 52, in=
- make
-        assert value.keys() <=3D {'name', 'type', 'description', 'default-v=
-alue'}
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^=
-^^^^
-    AssertionError
+Changes in v4:
+* Address documentation review comments.
+* Update Since tags to 12.0.
 
-Needs fixing for 11.2.  I can take care of it, but I have questions.
+Elizabeth Ashurov (2):
+  qga: Add guest-get-driver-packages command for Windows
+  qga: Add guest-get-driver-services command for Windows
 
-Here's what breaks:
+ qga/commands-win32.c | 656 +++++++++++++++++++++++++++++++++++++++++++
+ qga/meson.build      |   5 +-
+ qga/qapi-schema.json |  87 ++++++
+ 3 files changed, 746 insertions(+), 2 deletions(-)
 
-    @classmethod
-    def make(cls, value: Dict[str, Any]) -> 'ObjectPropertyInfo':
-        """
-        Build an ObjectPropertyInfo from a Dict with an unknown shape.
-        """
-        assert value.keys() >=3D {'name', 'type'}
---->    assert value.keys() <=3D {'name', 'type', 'description', 'default-v=
-alue'}
-        return cls(value['name'], value['type'],
-                   value.get('description'),
-                   value.get('default-value'))
+-- 
+2.55.0
 
-The first assertion checks we got the members we actually require.
-
-The second assertion checks we got no members we don't know.
-
-The commit I quoted added member @qapi-type without updating the second
-assertion.
-
-Adding it to the set of members we know would be easy enough.  But is it
-appropriate?  docs/devel/qapi-code-gen.rst section "Compatibility
-considerations":
-
-    Clients are expected to ignore [members] they don't know.
-
-Shouldn't we do that here?
-
-Any objections to me hunting down and deleting such assertions?
 
