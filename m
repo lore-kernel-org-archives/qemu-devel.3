@@ -1,132 +1,77 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D34B606A320
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 18:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F711606A32A
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 18:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=iishrfHb;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=GbGKbIRU;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=cNCN68hR;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=gCDUO1IG
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bzfwAcJg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTkSc-0001D3-Vz; Wed, 18 Nov 2026 13:32:47 -0500
+	id 1xTkpg-0004aT-Gd; Wed, 18 Nov 2026 13:56:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xTkSb-0001Cu-Sk
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 13:32:45 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xTkSZ-0005VM-Uk
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 13:32:45 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xTkpa-0004Zi-LZ
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 13:56:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xTkpY-00063G-Da
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 13:56:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795028187;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jThveY4S67zZMJYBqJwOqJDhHbaSY9Uh6r7FQJNwRgE=;
+ b=bzfwAcJgjItrgvCIox4S8lXRuDhj/Wkm+Y3i5jstOKSf/IBxcQVwQkjGuvL6eYBsoMBNrf
+ kixmUQoqHbXDO9wPwMZLjeQRVCTgJtQFFUzw5o+RuY3IWbo6200YPgut0dbZ7yO8tS0J9t
+ SSGYOaZKRxuQtsvTot43Tqy1HmOqXzc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-hocwnYeXON2JG5EJngCybQ-1; Wed,
+ 18 Nov 2026 13:56:22 -0500
+X-MC-Unique: hocwnYeXON2JG5EJngCybQ-1
+X-Mimecast-MFC-AGG-ID: hocwnYeXON2JG5EJngCybQ_1795028181
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C1C5D223DE;
- Wed, 18 Nov 2026 18:32:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1795026760; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1cq21hS9aDuyLfvy/56aXppNvajsCFBqnj0aUfOo1Kc=;
- b=iishrfHbtnNxyqbqqm42lbqFJu14SqJCwXtIcLOaLZtQsjKnfN1JLIgLxw4GZNnuLmyITn
- N8kOTRG3FYosnS+0JvoQR00vYvCwe0rVM+WHBFWHaQjJAhbSy3lRTQHg0gCfFhvRzdIbkP
- wzpv4F6pVjKT1YCvGW+1vHJPWxmHD3s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1795026760;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1cq21hS9aDuyLfvy/56aXppNvajsCFBqnj0aUfOo1Kc=;
- b=GbGKbIRUXsLe3rrR9+PR07HXPKhDEFxbdCBCmJwqvNodNXeBVWXBB0D1DV/E1bZFGr8w1I
- oTRJpmif2S1UWyAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=cNCN68hR;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gCDUO1IG
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1795026758; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1cq21hS9aDuyLfvy/56aXppNvajsCFBqnj0aUfOo1Kc=;
- b=cNCN68hRIXr5+5co7Stycsj0NT/+AJO+/Pnt6qyHnChsWLFSKksoI2WVosgsQ3/fYfjPCs
- LbucUhmSjbQMUlgKH3vAAMYlg4AnLJPEcyCd/cuJpMnu9aNrsbm0nnSwQkmHVo0oZ5yEEY
- B6R/1Q0owB8ZP5dSlxeDlBVp5/iA1o8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1795026758;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1cq21hS9aDuyLfvy/56aXppNvajsCFBqnj0aUfOo1Kc=;
- b=gCDUO1IGvBrFX9duQV9Q9TZuTIkzgNnmCbbL00zt8VycbuXE+eFkOAhOk2/OJZQ5C3Q3lF
- YTq5fTt0uLYZfPAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2D936134E9;
- Wed, 18 Nov 2026 18:32:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id UecCLkXv/WpTPgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 18 Nov 2026 18:32:37 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Dongli Zhang <dongli.zhang@oracle.com>, Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, david@kernel.org, imammedo@redhat.com,
- maciej.szmigiero@oracle.com, mark.kanda@oracle.com, bchaney@akamai.com,
- pierrick.bouvier@oss.qualcomm.com, alex@shazbot.org, clg@redhat.com,
- yi.l.liu@intel.com, eric.auger@redhat.com, zhenzhong.duan@intel.com,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com, armbru@redhat.com,
- eblake@redhat.com
-Subject: Re: [PATCH 00/21] migration/cpr: introduce cpr-luo mode to support
- KHO/LUO
-In-Reply-To: <fa74f48d-dfd2-4336-8ea2-a53d46004e72@oracle.com>
-References: <20261012235727.398133-1-dongli.zhang@oracle.com>
- <95d4d77e-7b30-463e-96a1-6add4495e451@oracle.com> <875wxvs2na.fsf@suse.de>
- <avyqPuj7jz3QKM7K@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <fa74f48d-dfd2-4336-8ea2-a53d46004e72@oracle.com>
-Date: Wed, 18 Nov 2026 15:32:35 -0300
-Message-ID: <87se0yq9bw.fsf@suse.de>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA9681956042; Wed, 18 Nov 2026 18:56:19 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EABE21956042; Wed, 18 Nov 2026 18:56:18 +0000 (UTC)
+Date: Wed, 18 Nov 2026 13:56:17 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Jens Axboe <axboe@kernel.dk>
+Cc: John Maguire <jmaguire2013@gmail.com>, f.ebner@proxmox.com,
+ fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, t.lamprecht@proxmox.com
+Subject: Re: Excessive IO PSI for iothread when using io_uring since QEMU 10.2
+Message-ID: <20261118185617.GA670091@shajnocz.csb>
+References: <4EF13FE7-E6F3-42E2-83F9-635310B028DE@gmail.com>
+ <3069e3f8-2cbf-436f-bf35-303fc90001ce@kernel.dk>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-13.51 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
- BAYES_HAM(-3.00)[100.00%]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[19]; MIME_TRACE(0.00)[0:+];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,oracle.com:email];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -13.51
-X-Rspamd-Queue-Id: C1C5D223DE
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3069e3f8-2cbf-436f-bf35-303fc90001ce@kernel.dk>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,110 +83,72 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Dongli Zhang <dongli.zhang@oracle.com> writes:
+On Wed, Nov 18, 2026 at 08:58:11AM -0700, Jens Axboe wrote:
+> On 11/15/26 4:05 PM, John Maguire wrote:
+> > On Tue, Jun 02, 2026, Stefan Hajnoczi wrote:
+> >> Pinging Jens: io_uring accounts POLL_ADD SQEs as blocking I/O activity
+> >> whereas select(2)/poll(2)/epoll_wait(2) do not. Would it make sense to
+> >> follow the same accounting as the syscalls for this operation since that
+> >> is probably expected?
+> > 
+> > Hello,
+> > 
+> > I run Incus on two hosts and see misleading iowait and IO pressure on
+> > both since Incus 7.6, which puts virtio disks on a dedicated iothread by
+> > default. Incus users now hit this without opting into iothreads.
+> > 
+> > Host 1: Arch Linux, stock QEMU 11.1.3, kernel 6.18.62, 16 CPUs, five
+> > VMs. /proc/pressure/io shows about 80% "some" and 75% "full", with
+> > 20-30% iowait. The disks are lightly loaded (under 15% util), there are
+> > no D-state tasks, the pressure is confined to the cgroup holding the
+> > QEMU processes, and each QEMU process has one thread in io_cqring_wait.
+> > It started the day I upgraded from Incus 7.5.1 to 7.6; QEMU 11.1.x had
+> > been in use on this host since late September without it.
+> > 
+> > Host 2: Debian 13, kernel 6.12.116, 56 CPUs, four VMs, Zabbly's Incus
+> > packages. These bundle QEMU 11.1.3 with the pve-qemu patch
+> > "fdmon-io_uring: avoid idle event loop being accounted as IO wait".
+> > Pressure is about 68% "some" and 65% "full" with disks under 1% util,
+> > and again one thread per QEMU process in io_cqring_wait. This kernel
+> > does not advertise IORING_FEAT_NO_IOWAIT (added in 6.15), so the patch
+> > has no effect there.
+> > 
+> > So the downstream patch only helps on 6.15+ kernels, and distros
+> > shipping unpatched QEMU get these numbers by default.
+> > 
+> > Is there a preferred way forward? Fiona offered to submit the Proxmox
+> > workaround to qemu-devel, and Stefan asked whether io_uring should
+> > instead account POLL_ADD the way poll(2) does. Either would fix this
+> > for users on distro packages.
+> 
+> We can just queue up the patches for stable so they bubble back to
+> older versions, I think that's the cleanest approach and gets us
+> a unified interface across supported kernel versions.
 
-> Hi Fabiano and Peter,
->
-> On Tue, Nov 17, 2026 11:25:50AM -0800, Peter Xu wrote:
->> On Tue, Nov 17, 2026 at 04:=E2=80=8A01:=E2=80=8A45PM -0300, Fabiano Rosa=
-s wrote: > Sorry for the
->> delay, we're all swimming in slop these days. The only > feedback I have=
- at the
->> moment is that this feature needs tests. What's > your plan in this rega=
-rd?
->>=20
->> On Tue, Nov 17, 2026 at 04:01:45PM -0300, Fabiano Rosas wrote:
->>> Sorry for the delay, we're all swimming in slop these days. The only
->>> feedback I have at the moment is that this feature needs tests. What's
->>> your plan in this regard? Can this run with nested virtualization? Or
->>> perhaps is there a way to mock the kernel interfaces and ensure QEMU
->>> does the right thing even without them? We don't need much, but the code
->>> definitely needs to be exercised somehow.
->
-> Thank you very much for the response and suggestion. I will follow this t=
-o make
-> the feature more robust.
->
-> So far, the only way to test it is through kexec, which not only takes ti=
-me but
-> also isn't friendly to unit testing.
->
-> Based on my understanding of LUO/KHO, with the latest mainline Linux kern=
-el,
-> once the fds are preserved, there is no way to retrieve them until after =
-kexec.
->
-> Therefore, perhaps we could implement the LUO API functions in QEMU throu=
-gh an
-> ops interface.
->
-> 1. The first idea is to implement an emulator so that the ops interface c=
-an
-> support both the real API and a test API. The test API would talk to the
-> emulator to emulate the preserve/retrieve procedure.
->
+Fiona: On the QEMU side, please submit the QEMU IORING_FEAT_NO_IOWAIT
+patch upstream and let's merge it on qemu.git/master and
+qemu.git/stable. Given that the kernel feature is available, QEMU might
+as well use it.
 
-Where does that emulator sit exactly? Because the problem of
-transfering state will be the same as in 2 below, no? Since QEMU source
-needs to exit.
+Jens: I still think io_uring operations should perform accounting inside
+the kernel the same way as the equivalent syscalls do (e.g. poll(2) does
+not count as iowait).
 
-> 2. The second idea is to implement a set of test ops, with QEMU launched =
-by a
-> parent process. The source QEMU could preserve fds, and the target QEMU c=
-ould
-> retrieve them through the parent process.
->
+Pushing the responsibility of deciding what counts as iowait to
+userspace via IORING_FEAT_NO_IOWAIT means the decision is duplicated in
+every application that uses io_uring. That only makes sense to me if
+accounting should work differently on a per-application basis and
+applications therefore need full control. I'm not aware of applications
+actually wanting to do that? Or is iowait fundamentally incompatible
+with io_uring so that applications are the only ones who can decide?
 
-Something like migration-test as the parent process sounds easy enough.
+Stefan
 
-> 3. The third idea is to implement something in the kernel to emulate a qu=
-ick
-> switch between outgoing and incoming fds so that we can retrieve them
-> immediately after preserving them.
->
-
-Anything in-kernel would have to be part of a larger LUO testing
-approach I think. Otherwise we waste effort. I don't suppose the kernel
-side has any sort of selftests (or similar) for this?
-
-What can we get from /dev/liveupdate in the host without having to
-kexec? On a quick look, I see systemd has a test-luo program, I wonder
-if they have a way to test outside of a VM.
-
-One other aspect aside from the normal functioning of the feature is how
-does QEMU behave when the host doesn't support LUO or the configuration
-is not quite right. Although easy to fix, those issues tend to be
-numerous when the support for a kernel feature is first implemented in
-QEMU. A test that doesn't access the host at all might miss those.
-
-> Options (1) and (2) seem better. While (2) looks easier to implement for =
-quick
-> unit testing, (1) would be better for testing with arbitrary devices and
-> configurations in cpr-luo mode.
->
-
-Let's understand a bit better what the options are, but we don't need to
-do anything fancy, we can improve the testing as the work evolves.
-
-> Thank you very much!
->
-> Dongli Zhang
->
->>=20
->> Apologize from my side too on being slow, I'm going to start reading mai=
-ls
->> on the list this week, but it'll still be slow, together with other thin=
-gs.
->> Just to say, this one is on my review list.  Sorry again.
->>=20
->> --=20
->> Peter Xu
->>=20
 
