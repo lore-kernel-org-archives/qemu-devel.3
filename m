@@ -1,105 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA7B606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 00:01:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=zqOBhgUy
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E92606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 01:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTT7G-0006zg-SQ; Tue, 17 Nov 2026 19:01:34 -0500
+	id 1xTUKM-0000UC-J0; Tue, 17 Nov 2026 20:19:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xTT7F-0006zI-6X
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 19:01:33 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xTT7D-0002jx-By
- for qemu-devel@nongnu.org; Tue, 17 Nov 2026 19:01:32 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3ae691283ecso169333a91.0
- for <qemu-devel@nongnu.org>; Tue, 17 Nov 2026 16:01:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1794960090; x=1795564890; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=vobrmFjqWRK9OrWnyBl9iG2HQNcI1qES4s/zOFwF9LM=;
- b=zqOBhgUypNhxXc1FKqlDofqSmvKLfK6zGqqvJZnD+EUvU5avNEZhlReUXXDfXJ+kZP
- UWjNP7qAxG9mvhjlDDzWSrNVNVOuyzDYRU7lNuCoM5mivkjkWz5oHjxUza8Prx3J8gV/
- w+SrdAk9GbR0JlNjEGfo/wA1NuEAzmbM6JeGfXobLv1swI6JiflMqBxTIFrvI59Vf1b4
- eh7ZSmLS45c19KXIn3/PjerzBOCUGVC0execKo+0lGwDdPOn1uhn4rrUITNY6D7ho8Kg
- 7W31cTUiXaxbVWcfj64lneF1/JNEoMvsZL3qkL8k5OFHIkCB86TWYMaEi4NzMQRRxzOD
- +JCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794960090; x=1795564890;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=vobrmFjqWRK9OrWnyBl9iG2HQNcI1qES4s/zOFwF9LM=;
- b=K1cvmRG1BSl80FTXZYWbD2vhGN7opWinREic38amsbhsuHUdG+g43TKd9lEwHcsOn0
- C1TKzg9SvH/LRJ6iFi2hRHu5fAm/yqBF06om3LV/I94YpnOeOEYJtWfkMihKNjkqEqzw
- PZrpjO7eBcYqz5jsvfhwYC7zaEDtnXs/GJiHnABQ2KOetRwY8bvrLxf0uBBx1qA1xnaZ
- o+hsCSj88mCWChZZ9dcJLLdjAuyaZTudoYZz20DxzMhwVy19tpOn3JPDSPGkeoLnrS2L
- Ql7GgnrmYnFsVvhqWs7b6q75kY/7cXoQqxmcQsX+Z4O2ATkdM5ba3bPCzmzdq22LBeSc
- cztQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErF8fowZuk+M01BlWl7DXuzcpkrKrHQcNzmC4I8HtzUhBAw9ywSApcFUr4SWl9aeuK/CggDKdcsV2O/k@nongnu.org
-X-Gm-Message-State: APuU4Z+wBs6YCl8K5WCrOQV16zaGnd+Nx8jU97PXR8gIn8i6uckef2vh
- ZJ+KLplsWRXiMuyBbJUEmzNnK53v7uPB7RdKC87nj0UW/AJocNmCFX8tSiApYyhxU4E=
-X-Gm-Gg: AZFdTZe2wH/MbiM5WjFYV94FbSX19JXzf8/0Uz7afS6DaB1idkF93DaB+SNA4tSU7rz
- Y38RNCgCCiJcuAnpQaanu6/IvmlSJ1Fcmm7vGwKU6aadtmp3Lz0X2DcA/+22rT3aHtj3dsNZ4zL
- /veHOUYD9/wt9LFFMQKKz1y3oEG+9ODQsGZEp83wMxiR41zKieYRBfd0XUfucoysJCCb1WqFHWC
- cYAElZ050pL/3AxPA85nodJSR0IE9v/vAA+EUeWJ5XT2PiRPIwpxGvV+9BgiknVi9/hoWueVG8Y
- +OZ+V8t1n1PwTWUs+zc4WqhIhZ2dau4VSXG7cwepkq9nJ4BiFi0IswI6/RaUPH9YtXwi4whCpA7
- mqAWNRgmuXT+jjjIoA+5F92ZxulqiE3ie2lJSkf32h5s1T8btR6VUGdJcKdLCiqEm9R1E5PPAKG
- ZwZe8lSuawWnyXP1mPAzvHEx09D/BSidcjAM+xTyIS3GfLEqT6pvMr1faMz8eY5msZ5GMQUqB1H
- S6DHJ53K6433qjk79a8CzzRG/BsNP72mTrWPquYYG8Zl92VyIueeSKM1tBE+FqN+Ce11gpjYaZj
- m93iwo6SanfYK9ib0xQikCH3rzfKlKzcItuxsXqlqh0N+qpgaMA90J0H1IrVMj6XWHA7Pfs=
-X-Received: by 2002:a17:90b:4a42:b0:3b0:a413:dd8e with SMTP id
- 98e67ed59e1d1-3b3d0871658mr561635a91.43.1794960089530; 
- Tue, 17 Nov 2026 16:01:29 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b3ac4ddecasm6135903a91.14.2026.11.17.16.01.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Nov 2026 16:01:28 -0800 (PST)
-Message-ID: <663f579e-7281-4b71-9e38-d3d5639af55e@linaro.org>
-Date: Tue, 17 Nov 2026 16:01:26 -0800
+ (Exim 4.90_1) (envelope-from <zhuwei@sangfor.com.cn>)
+ id 1xTUKH-0000R8-OC; Tue, 17 Nov 2026 20:19:05 -0500
+Received: from mail-m1093.netease.com ([154.81.10.93])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhuwei@sangfor.com.cn>)
+ id 1xTUKE-0000uj-GQ; Tue, 17 Nov 2026 20:19:05 -0500
+Received: from [172.16.212.10] (unknown [43.247.70.81])
+ by smtp.qiye.163.com (Hmail) with ESMTP id 550d2e3a8;
+ Wed, 18 Nov 2026 09:09:46 +0800 (GMT+08:00)
+Message-ID: <99786c66-3217-4c7f-b406-9b3bcb241e95@sangfor.com.cn>
+Date: Wed, 18 Nov 2026 09:09:45 +0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/19] target/mips: Require the MT module for MFTR/MTTR
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Vince Del Vecchio <Vince.DelVecchio@mediatek.com>,
- Faraz Shahbazker <faraz.shahbazker@mediatek.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Milica Lazarevic <Milica.Lazarevic@Syrmia.com>,
- James Hilliard <james.hilliard1@gmail.com>,
- Aleksandar Rikalo <arikalo@gmail.com>
-References: <20261113161158.25811-1-philmd@oss.qualcomm.com>
- <20261113161158.25811-4-philmd@oss.qualcomm.com>
- <ec413b6f-23ff-42f6-8e21-52c565afb426@linaro.org>
- <72caf091-61e8-40a7-bb07-abd19478f0c9@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <72caf091-61e8-40a7-bb07-abd19478f0c9@oss.qualcomm.com>
+Subject: Re: [PATCH 1/1] block/monitor: fix BlockJobInfoList leak in
+ hmp_info_block_jobs()
+To: Markus Armbruster <armbru@pond.sub.org>, Zhu Wei <zachwade.k@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ niming <niming@sangfor.com.cn>
+References: <20261117144548.3252867-1-zhuwei@sangfor.com.cn>
+ <20261117144548.3252867-2-zhuwei@sangfor.com.cn>
+ <8733szjpra.fsf@pond.sub.org>
+From: zhuwei <zhuwei@sangfor.com.cn>
+In-Reply-To: <8733szjpra.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 7bit
+X-HM-Tid: 0aa1ec33e44603a9kunm745cc833515303
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+ tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaTR0YVkgeHkxCThkZTxhDSVYVFA
+ kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlPSFVJT0xVTEtVQ0pZV1kWGg8SFR0UWUFZT0tIVUpLSU
+ 9PT0hVSktLVUpCS0tZBg++
+Received-SPF: pass client-ip=154.81.10.93; envelope-from=zhuwei@sangfor.com.cn;
+ helo=mail-m1093.netease.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,39 +60,73 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/17/26 14:35, Philippe Mathieu-Daudé wrote:
-> On 17/11/26 20:00, Richard Henderson wrote:
->> On 11/13/26 08:11, Philippe Mathieu-Daudé wrote:
->>> MFTR/MTTR must raise Reserved Instruction on processors not
->>> implementing the MT module (MD00378 pp.46/50, Config3.MT:
->>> table 6.21). Use check_cp0_mt(), as done for the other MT
->>> instructions, instead of only check_cp0_enabled().
->>>
->>> Fixes: ead9360e2fbc ("Partial support for 34K multithreading")
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->>> ---
->>>   target/mips/tcg/translate.c | 4 ++--
->>>   1 file changed, 2 insertions(+), 2 deletions(-)
+
+
+On 2026/11/18 2:07, Markus Armbruster wrote:
+> Zhu Wei <zachwade.k@gmail.com> writes:
+> 
+>> From: zhuwei <zhuwei@sangfor.com.cn>
 >>
->> Surely check_cp0_mt must be enabled for user-only,
->> not sit behind an ifdef.
+>> hmp_info_block_jobs() uses 'list' both as the head of the BlockJobInfoList
+>> returned by qmp_query_block_jobs() and as the iterator of the while loop.
+>> Once the loop finishes, 'list' is NULL, so the call to
+>> qapi_free_BlockJobInfoList(list) at the end of the function frees nothing
+>> and the whole list returned by qmp_query_block_jobs() is leaked.
+>>
+>> Keep the head of the list in a separate variable and free that one after
+>> the loop, so the entire list is released as intended.
+>>
+>> Fixes: 2bcad73c4b9b ("monitor/hmp: move hmp_info_block* to block-hmp-cmds.c")
 > 
-> I suppose I got lucky, MIPS_HFLAG_CP0 is never set in user-mode so
-> the OPC_CP0 dispatch already raises CpU before any MT check could apply.
+> Pure code motion.  Please try again :)
 > 
-> I'll remove the #ifdef (and fix the Config5/Config3 typo in comment),
-> thanks!
-I meant, check_cp0_mt is undefined for user-only.
-How does this compile?
-
-
-r~
+>> Signed-off-by: niming <niming@sangfor.com.cn>
+>> Signed-off-by: zhuwei <zhuwei@sangfor.com.cn>
+>> ---
+>>   block/monitor/block-hmp-cmds.c | 7 +++++--
+>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
+>> index 7bae4d425c..d3f404146a 100644
+>> --- a/block/monitor/block-hmp-cmds.c
+>> +++ b/block/monitor/block-hmp-cmds.c
+>> @@ -760,7 +760,7 @@ void hmp_info_blockstats(MonitorHMP *hmp, const QDict *qdict)
+>>   
+>>   void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
+>>   {
+>> -    BlockJobInfoList *list;
+>> +    BlockJobInfoList *list, *head;
+>>   
+>>       list = qmp_query_block_jobs(&error_abort);
+>>   
+>> @@ -769,6 +769,9 @@ void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
+>>           return;
+>>       }
+>>   
+>> +    /* Keep the head: list is NULL once the loop below is done */
+>> +    head = list;
+>> +
+>>       while (list) {
+>>           if (list->value->type == JOB_TYPE_STREAM) {
+>>               monitor_hmp_printf(hmp, "Streaming device %s: Completed %" PRId64
+>> @@ -791,7 +794,7 @@ void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
+>>           list = list->next;
+>>       }
+>>   
+>> -    qapi_free_BlockJobInfoList(list);
+>> +    qapi_free_BlockJobInfoList(head);
+>>   }
+>>   
+>>   void hmp_info_snapshots(MonitorHMP *hmp, const QDict *qdict)
+> 
+> Patch looks good to me, but I'd drop the comment.
+> 
+I'd be glad to.
 
