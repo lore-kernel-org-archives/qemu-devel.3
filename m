@@ -1,54 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E92606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 01:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D77606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 02:00:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTUKM-0000UC-J0; Tue, 17 Nov 2026 20:19:11 -0500
+	id 1xTUy7-00052T-LW; Tue, 17 Nov 2026 21:00:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhuwei@sangfor.com.cn>)
- id 1xTUKH-0000R8-OC; Tue, 17 Nov 2026 20:19:05 -0500
-Received: from mail-m1093.netease.com ([154.81.10.93])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhuwei@sangfor.com.cn>)
- id 1xTUKE-0000uj-GQ; Tue, 17 Nov 2026 20:19:05 -0500
-Received: from [172.16.212.10] (unknown [43.247.70.81])
- by smtp.qiye.163.com (Hmail) with ESMTP id 550d2e3a8;
- Wed, 18 Nov 2026 09:09:46 +0800 (GMT+08:00)
-Message-ID: <99786c66-3217-4c7f-b406-9b3bcb241e95@sangfor.com.cn>
-Date: Wed, 18 Nov 2026 09:09:45 +0800
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xTUy2-0004us-R2
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 21:00:10 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xTUy0-0008EE-Um
+ for qemu-devel@nongnu.org; Tue, 17 Nov 2026 21:00:10 -0500
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8DxUNGcBv1qiKggAA--.28977S3;
+ Wed, 18 Nov 2026 09:59:57 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [127.0.0.1])
+ by front1 (Coremail) with SMTP id qMiowJAx3c6bBv1q2Xg1AA--.41804S2;
+ Wed, 18 Nov 2026 09:59:56 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <17746591750@163.com>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	qemu-devel@nongnu.org
+Subject: [PATCH 0/4] target/loongarch: Small enhancements to CSR emulation
+Date: Wed, 18 Nov 2026 10:01:26 +0800
+Message-ID: <20261118020130.2418653-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] block/monitor: fix BlockJobInfoList leak in
- hmp_info_block_jobs()
-To: Markus Armbruster <armbru@pond.sub.org>, Zhu Wei <zachwade.k@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- niming <niming@sangfor.com.cn>
-References: <20261117144548.3252867-1-zhuwei@sangfor.com.cn>
- <20261117144548.3252867-2-zhuwei@sangfor.com.cn>
- <8733szjpra.fsf@pond.sub.org>
-From: zhuwei <zhuwei@sangfor.com.cn>
-In-Reply-To: <8733szjpra.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-HM-Tid: 0aa1ec33e44603a9kunm745cc833515303
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaTR0YVkgeHkxCThkZTxhDSVYVFA
- kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlPSFVJT0xVTEtVQ0pZV1kWGg8SFR0UWUFZT0tIVUpLSU
- 9PT0hVSktLVUpCS0tZBg++
-Received-SPF: pass client-ip=154.81.10.93; envelope-from=zhuwei@sangfor.com.cn;
- helo=mail-m1093.netease.com
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAx3c6bBv1q2Xg1AA--.41804S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoW7JFykKrW3Kw47Gr13Zw4kXwc_yoWfJrg_Xa
+ 4xJFyDCr4DWa4fJa90vFZ8X345GF40kFn0yFZrXrWfCry2qFn8GrWqga95Zr1jvF15Jrs8
+ ZrsFqr1Yk34IvosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUb78YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
+ JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
+ xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
+ Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7
+ IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
+ 6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
+ AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1LiSJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,73 +69,34 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+There are some small enhancements to CSR register emulation on
+LoongArch based on the manual, such as fixing CSR.MISC being
+incorrectly marked read-only and avoiding raising an exception on
+writes to read-only CSRs etc.
+
+Bibo Mao (4):
+  target/loongarch: Fix BADV for BCE exception
+  target/loongarch: Fix CSR.MISC being incorrectly marked read-only
+  target/loongarch: Remove csrrd_cpuid() helper
+  target/loongarch: Do not raise exception on read-only CSR write
+
+ target/loongarch/csr.c                        |  2 +-
+ target/loongarch/tcg/csr_helper.c             | 10 ------
+ target/loongarch/tcg/helper.h                 |  1 -
+ .../tcg/insn_trans/trans_privileged.c.inc     | 34 +++++++++++--------
+ target/loongarch/tcg/tcg_cpu.c                |  2 --
+ 5 files changed, 21 insertions(+), 28 deletions(-)
 
 
-On 2026/11/18 2:07, Markus Armbruster wrote:
-> Zhu Wei <zachwade.k@gmail.com> writes:
-> 
->> From: zhuwei <zhuwei@sangfor.com.cn>
->>
->> hmp_info_block_jobs() uses 'list' both as the head of the BlockJobInfoList
->> returned by qmp_query_block_jobs() and as the iterator of the while loop.
->> Once the loop finishes, 'list' is NULL, so the call to
->> qapi_free_BlockJobInfoList(list) at the end of the function frees nothing
->> and the whole list returned by qmp_query_block_jobs() is leaked.
->>
->> Keep the head of the list in a separate variable and free that one after
->> the loop, so the entire list is released as intended.
->>
->> Fixes: 2bcad73c4b9b ("monitor/hmp: move hmp_info_block* to block-hmp-cmds.c")
-> 
-> Pure code motion.  Please try again :)
-> 
->> Signed-off-by: niming <niming@sangfor.com.cn>
->> Signed-off-by: zhuwei <zhuwei@sangfor.com.cn>
->> ---
->>   block/monitor/block-hmp-cmds.c | 7 +++++--
->>   1 file changed, 5 insertions(+), 2 deletions(-)
->>
->> diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
->> index 7bae4d425c..d3f404146a 100644
->> --- a/block/monitor/block-hmp-cmds.c
->> +++ b/block/monitor/block-hmp-cmds.c
->> @@ -760,7 +760,7 @@ void hmp_info_blockstats(MonitorHMP *hmp, const QDict *qdict)
->>   
->>   void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
->>   {
->> -    BlockJobInfoList *list;
->> +    BlockJobInfoList *list, *head;
->>   
->>       list = qmp_query_block_jobs(&error_abort);
->>   
->> @@ -769,6 +769,9 @@ void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
->>           return;
->>       }
->>   
->> +    /* Keep the head: list is NULL once the loop below is done */
->> +    head = list;
->> +
->>       while (list) {
->>           if (list->value->type == JOB_TYPE_STREAM) {
->>               monitor_hmp_printf(hmp, "Streaming device %s: Completed %" PRId64
->> @@ -791,7 +794,7 @@ void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
->>           list = list->next;
->>       }
->>   
->> -    qapi_free_BlockJobInfoList(list);
->> +    qapi_free_BlockJobInfoList(head);
->>   }
->>   
->>   void hmp_info_snapshots(MonitorHMP *hmp, const QDict *qdict)
-> 
-> Patch looks good to me, but I'd drop the comment.
-> 
-I'd be glad to.
+base-commit: e9fa1f66f0d47c74b6766e1b8b87ad7c2a9394d5
+-- 
+2.54.0
+
 
