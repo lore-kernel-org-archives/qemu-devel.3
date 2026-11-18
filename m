@@ -1,100 +1,154 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE18606A320
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 15:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7BE606A32C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Nov 2026 15:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=XQkPK+qI
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=YIj8Mcj7;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OAjarMXV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xThdV-0004BP-Jj; Wed, 18 Nov 2026 10:31:49 -0500
+	id 1xThea-0004kL-4R; Wed, 18 Nov 2026 10:32:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xThdG-00048x-DB
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 10:31:36 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xThdE-0006uH-Ax
- for qemu-devel@nongnu.org; Wed, 18 Nov 2026 10:31:34 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4a2000d5fb1so6519585e9.1
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 07:31:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xTheE-0004gZ-0F
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 10:32:35 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xTheC-0002O7-3e
+ for qemu-devel@nongnu.org; Wed, 18 Nov 2026 10:32:33 -0500
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AIDQM0X3912419
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 15:32:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ UheKrYAI9m42QIBsOVRlJRqrVVotx5ft7J9rdCw6tIY=; b=YIj8Mcj7UCfmWZW3
+ pxMl2rgPdLgWpl9zAr6PYnndm/JVMwxnOgNIGA6NXhHzeEc9vaCVqUOZxrCB//wD
+ +AZPt99xQX34xuql7gM6AQ4s1l66sCvJxB41nD7Y4fv+vmFoD6XrJW6ru+o4qfn8
+ wRRHV3H4tOtW32Am0Ny0rHIMt2Goopu0ymvxw4EAiKt1ponwPP0J+yChH1UVyiy4
+ /VlaqW7OTqDr7kyn334ky63NVrqKjKzdxq35coM8dTgsgps12bb6hFStzChkASpq
+ wU8Jqgp5QHuc8A0z+FA8aiMmZJBVkR+Be0k6h6nwhT3U6ua3a7enauYGt4Uu8l3t
+ mbJKlg==
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0yv9bryw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 15:32:30 +0000 (GMT)
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-8b2fb1f981fso16207177b3.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 07:32:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795015889; x=1795620689; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=xWxL8/TeQZ5GwiysaE6OXHvyuXrn7cu6NxWcHzqNhsw=;
- b=XQkPK+qIQocpSyW/FZIHU8wdT2bGkLmkY+HCZ+4vJHJIO61Fnznd8XHYXqYpfdJ20r
- D2uvY/Yxfui7G4B9AQGxsKeCE21D8fMsL5/k/fik9vRIpDWkXmSXqA3wSHYDerl4/e3C
- Tisv9e1dp/FBuJxs7BqRuOQ+clsjWuEeRwUvu7QTFaz8kLEvbCRnuJ72VKM3Gp3YJQcE
- prmB17DcDVyHN4rMOm8USHs7tuPE8/YlI5cgFa4i7BGltyVgCcAOXGBRyfhu1VUcTnvG
- dcPbT/cXoLCInxim8GBGjeN9bMGUMNME1gJ19flXeT0g+45CY7FcTm5wEvIffQLUIACu
- wFow==
+ d=oss.qualcomm.com; s=google; t=1795015950; x=1795620750; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=UheKrYAI9m42QIBsOVRlJRqrVVotx5ft7J9rdCw6tIY=;
+ b=OAjarMXVK/8/uEBzEj5yhvGBuP1zM9/6p5ND5pgcLRMiJAaFW8hL3AiH1wqPdotcIT
+ MO9njXWrv8d9N3A+g1QiSxK4VuPumrMhjxyL+OpUEv//+VMcMF3rhWN+fbil5PuJ/Cas
+ /zVbTGKA1Zs8uBT6CSCTn3XewiaoCcSSKsPTOlJR+FwMBaHr6deHDUWf0XiZV+CbJFSg
+ Zze7xsLiNdKTAc+S3/OTtshGtU1XJor5oR7mdLG+AUUJqE34gNvPhQ2MD3xq+pXAIVks
+ FIw4q+FswyBfYYB2b3puy0xhAvi1xKaRgnCtRa1X7neJy4YHiO9uEnpcpqeiJwhsN16a
+ dUlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795015889; x=1795620689;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xWxL8/TeQZ5GwiysaE6OXHvyuXrn7cu6NxWcHzqNhsw=;
- b=vmj5W2BJCDPuIPgST+BMbBjeyGUINhshdehUfHHvfsOAWg46c6/bP8nnX7Cgeb/Tbh
- 86x5LjuALdKjonRNtTflWJdUQAItyJD23iz1FrOoyC2mIqdIlh32egKnI3iCq6+W21sx
- lgfBMQhrfXbfyd3xwggLTSz0fMWuXS52ZOD5e2FNw7nsrLkKBWnBZgBH+hWiMCxxV7an
- poATBW3PuPIJkAPGeUzWYXwTYm1m4/t3ldaCvMU0BLPryCwYtTCrxGRcs4nAbTX77USK
- GANV2OWWa/g1UwoW4it8bPAHfc60cHjSzx9iXamaJGlOF+XtIhq8jUYCxtXi2bsMwQ4B
- FiMQ==
-X-Gm-Message-State: APuU4Z/zQ8zA2yjmeP73IJ/u2ViCBUW4AJdJOcVmNdzCeCfCBodLSVXO
- iFjauEa4vv4U+mJ0vi6SaIhonwQXQ2QS1lnp5GDNSiAdIqyj71qqdqlsNyFGsoLq0ho=
-X-Gm-Gg: AYBFou2M2OPP4tv6pIJJuH3uBHnV9xkTxLlQr7Rh/83MGvZnGmBLvr6uNwmIiNvDpPw
- RStWU3HULfqFn/VwIkiXWUJwtKcSro/njUIu682phQLRuozbqoB6sB7KIviSWinX4foc49y80ry
- zdt+IgOgbnKvTADjlAtUjHd8egrljYYGX2ohexcF49hxgtWMkKms7Jky0CkDXAyOExw+V2X9ss0
- pHubG3ZsTh58C9qUisq4n4w4wW/ds/iz0ysS6IFGn9g8ofHpHa+1C+Jz0Lb4Yb0D2syED6aBMXJ
- ULIp7225goVVSaTVnywhMX6S1H/YGgEQ4gIdM5EzY9E1V2dTFSz/kweycoFTiLoErol1gKSA9Rn
- 4A2sLHZgaCyfF2+MfT4CxvwL/+EKyfv2g+gP4MhRJ4me5Yfsm5Vthhijs000Dn/FlC7DVoSq+v8
- vcUE7UJfqCU6kHs5srB2AJz7aHcQTtS2SVQrCRH3jZrdJ0BhicQXSC+/cF3QofQ8W7V6Xt7SAkV
- sTDaUUQY9qhbcdyrW6CrXqx/y/VO5u+rzvMZeQpRDmYxd9CGqP+/8s7hdGyp3jYQyUyL7wQJ74Y
- jUZZI0RpLF8iKSCuI9IYQT3n+LK7AypawAqa1boe+mJsYKknQg==
-X-Received: by 2002:a05:600c:c16d:b0:4a1:d459:db4b with SMTP id
- 5b1f17b1804b1-4bb7da3aee1mr55391225e9.24.1795015888595; 
- Wed, 18 Nov 2026 07:31:28 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb7e580745sm39976685e9.2.2026.11.18.07.31.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Nov 2026 07:31:27 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2E6845F857;
- Wed, 18 Nov 2026 15:31:26 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  John Snow
- <jsnow@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Mauro
- Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: Re: [RFC PATCH] docs: add a diagram of the development process
-In-Reply-To: <b6a6e0bc-90b0-4162-8ec9-098d1ced1069@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Fri, 6 Nov 2026 13:01:33 -0800")
-References: <20261106122111.3005638-1-alex.bennee@linaro.org>
- <dfc31d65-d309-461d-a47e-3df3c658d56e@oss.qualcomm.com>
- <87ld7566jz.fsf@draig.linaro.org>
- <b6a6e0bc-90b0-4162-8ec9-098d1ced1069@oss.qualcomm.com>
-User-Agent: mu4e 1.14.5-pre1; emacs 30.1
-Date: Wed, 18 Nov 2026 15:31:26 +0000
-Message-ID: <87zev65f75.fsf@draig.linaro.org>
+ d=1e100.net; s=20260707; t=1795015950; x=1795620750;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=UheKrYAI9m42QIBsOVRlJRqrVVotx5ft7J9rdCw6tIY=;
+ b=yua/hwrZuJIBRclzmm00ZxKJi+J4rkRPcr4IpVCx2jK4QoD9A5IIic3b6BhFbMf0pt
+ T9ctT2AAdL0T2rGLYe0bTqQB+fljj2YeZOAzifha4fT1DPn3EDpwSePI+zP5heX6SQ4s
+ wDFg9mz3DVUT3rGK7odzxJ9VtI9hnWdcXvonbZ2N0lw1EJHsI/XZklaOP7gKeLVTSwkn
+ KlnYca+ZxotVtImOg2DxsFE8u9F7hzHZq4XQ2Mb6pVgTUz8GN2rgO/hBKjwmwjVSyXCl
+ 8pq1oU+l8VEpc7KVbAJSwbsWHVvnZNNyZIKywOYs67clr1a9YvLr6Tvjn2Li+KEnK1P4
+ zCbw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErFsC94vEAb+2CNzdM7k0O6owkTFe/+8lBXme1+X+OidC23+hKgdLwXWFZ0Jy/chVnrOX2IKsp2AZeTT@nongnu.org
+X-Gm-Message-State: APuU4Z+8MVClpsNzqE0ZJJC/ezfvIrLjmevU2tCp0SEZZ/GmQA1yyJqG
+ arXiJGtEI6mDeI3gwQTa6uatQ47NZix8PWyQyijULq30aJ7DkX29vwPra0wxueNx/Gw2CIm/tfj
+ 0OKGCX3prR4SlKOWAc5sEKwSsmYarKJDISw+r0rD3IM4Vv27viqgeLpjPcw==
+X-Gm-Gg: AZFdTZcThR8JVDyStfrSHM54YxH2nu36HIRw/WAqoLlwBP3R0oJbmq/kdRcDQKPLkoN
+ nIlpTXQh085bL4VH6uLyW+a62lHf/izt6s0kNvL0liUCd4GzHZjWmQ+iGL8KTZaQiuzdrtgfxza
+ p11YK9mIwFZsbqZwZU4TLNyvrfvzXJQ0LgmRxW8a9EudgpGI5fKOHxKi/QI9iKXQeBuP41GDQT8
+ 3UlBeiWltsy036Shyk+IhozE+tu+Vh60iFN355e3ZF+hVp3ajFIb/f6zbmJpLXGXG+vDrklb7eU
+ 9pm1RZZcZhJUHdDybOLT6fLZEUVZYnU99C4GcU/8yPjXmlRDND8d29MVeh+s+pr/2jN4rSdAJ+q
+ zm9qLbGQJvN7Rb4basEVwQ0WMx95XNgA+a2IWKJdcVw1gjX3uO4UUuZABIr6OqhdyqOWlUrVwMl
+ odR8kROFI=
+X-Received: by 2002:a05:690e:43cb:b0:67c:6a94:f104 with SMTP id
+ 956f58d0204a3-67dd3f8bf82mr878698d50.61.1795015949888; 
+ Wed, 18 Nov 2026 07:32:29 -0800 (PST)
+X-Received: by 2002:a05:690e:43cb:b0:67c:6a94:f104 with SMTP id
+ 956f58d0204a3-67dd3f8bf82mr878676d50.61.1795015949176; 
+ Wed, 18 Nov 2026 07:32:29 -0800 (PST)
+Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4a656c11f1csm5868540f8f.53.2026.11.18.07.32.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Nov 2026 07:32:28 -0800 (PST)
+Message-ID: <74083d44-2bf2-4972-ad84-52c9b93f099e@oss.qualcomm.com>
+Date: Wed, 18 Nov 2026 16:32:27 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/6] tcg/riscv64: Fix vector immediate handling
+Content-Language: en-US
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Palmer Dabbelt
+ <palmer@dabbelt.com>, qemu-arm@nongnu.org,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20261028143330.6518-1-philmd@oss.qualcomm.com>
+ <d16001a6-d66c-4af5-8e61-35484b24c37c@tls.msk.ru>
+ <5f508944-1398-4163-9c72-ba7970640c6b@tls.msk.ru>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <5f508944-1398-4163-9c72-ba7970640c6b@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE4MDA2MSBTYWx0ZWRfX8kTCdjnoanst
+ ++sjcSJdA29aMov7LNc9pVd+BzaHZcNympnh8/6eNnkqagqAIjDZ1/QwCks0vDUMsLMIcTH7zN0
+ eNN3v7D7aBuhlsXUdafJeHpaFjsHud0=
+X-Authority-Analysis: v=2.4 cv=acT0Dhot c=1 sm=1 tr=0 ts=6afdc50e cx=c_pps
+ a=NMvoxGxYzVyQPkMeJjVPKg==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=VwQbUJbxAAAA:8 a=hXZgYZo4AAAA:8 a=X8Xlvf7YKcKku9pxmycA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=kLokIza1BN8a-hAJ3hfR:22
+ a=37BJPeUnzxYkbV1yBC-1:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE4MDA2MSBTYWx0ZWRfX7+lTpcSB7h1+
+ kUCyMdjczN4FwxWeI9KryVoLtmEI2eMrazVVjUuAjcm2Uble9KCppYApGeDx+SDrQDFiGA6gjkx
+ EVorjvwtV890f0DfTRCQU56x3jG6RKIboNzVkq4HM7GsUzRgt0OjqGWBM36I0El0doQ7Jtz8eWB
+ Cb66AbvSiDvNXcAJ/9TaHZdhnNI5PpS+kudlUV/dG+fhAfEqb9WDRQQSDGrcuncPC2B6kg7CP3l
+ +uiHP+30BP/VtSUDY/YUGA183nIQqpB5XqP98gs7GXOFWqT0DHwIH1Kfvc+dRurjeVCuD1eC3gY
+ 1Pxe3ekOWDbSVFg04c54o22pCitrauoNNa9fSlRau5eNKPR4OtvXypFo0rlY6PpR75V/VfR2nEn
+ MbY/QFst37i3G3PQ/aPAa0+bdRlm5f68klfwhG7MaG4o/1WmSE7rA8gflzpFBfLNJjwL5BLgKGD
+ zxy7uPjFJ0a+RdB9EJA==
+X-Proofpoint-ORIG-GUID: EwUw97We33dzOYExRcnjWsz0OGDd5BkN
+X-Proofpoint-GUID: EwUw97We33dzOYExRcnjWsz0OGDd5BkN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-18_04,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 impostorscore=0 bulkscore=0
+ malwarescore=0 priorityscore=1501 spamscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611180061
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,123 +161,72 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-
-> On 11/6/2026 12:36 PM, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>=20
->>> On 11/6/2026 4:21 AM, Alex Benn=C3=A9e wrote:
->>>> We've had various versions of this diagram for a while so I thought it
->>>> would be worth adding to the developer docs. I chose plantuml as it
->>>> has a plugin for sphinx that we can use and supports sequence diagrams
->>>> which could be useful for documenting other features in the code base.
->>>>
->>>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>>>
->>>> ---
->>>> vRFC
->>>>   - I've bundled all the plumbing together in this commit but it can
->>>>   be split up if we want to go forward.
->>>> ---
-<snip>
->>>> diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/=
-qemu.yml
->>>> index abbd3e3f0b8..de4395cd3c7 100644
->>>> --- a/tests/lcitool/projects/qemu.yml
->>>> +++ b/tests/lcitool/projects/qemu.yml
->>>> @@ -89,6 +89,7 @@ packages:
->>>>   - pcre-static
->>>>   - pixman
->>>>   - pkg-config
->>>> + - plantuml
->>>>   - pulseaudio
->>>>   - python3
->>>>   - python3-numpy
+On 18/11/26 15:34, Michael Tokarev wrote:
+> On 11/18/26 17:32, Michael Tokarev wrote:
+>> On 10/28/26 17:33, Philippe Mathieu-Daudé wrote:
+>>> The riscv64 backend mishandles constant operands of RVV .vi forms:
 >>>
->>> It will silently disable doc by default for most of the people
->>> unfortunately, not sure it's the best move we can do.
-
-Do most people build the docs? As long as it fails hard for
---enable-docs I think that should be OK right? Especially if we update
-the min requirements for the project.
-
->>=20
->> plantuml seems to be pretty widely packaged so in this sense its just
->> another dependency.
->>=20
->>> Maybe a simpler solution could be to generate diagrams out of sphinx,
->>> add them as a dependency, and generate a blank image (or an image with
->>> diagram source and a message - please install plantuml) if not
->>> available. What does plantuml brings compares to graphviz builtin
->>> extension?
->>=20
->> Ohh I didn't realize there was graphviz - I'll see if I can recreate
->> with that.
+>>> - logical ops apply the immediate at a stale SEW (wrong results,
+>>>    since v9.2);
+>>> - arithmetic, compare and select ops encode the whole replicated
+>>>    64-bit constant instead of one element;
+>>> - shifts take uimm5, but the encoder checks for simm5.
+>>>
+>>> 1-2: add a uimm5 encoder for shifts,
+>>> 3-4: extract one element (vec_imm()) for arithmetic and compare/select,
+>>> 5: follow rth suggestion of adding a new constraint to pick the smallest
+>>>     element size at which the constant replicates as a simm5, and the
+>>>     emitter switches SEW to it,
+>>> 6: AI-generated regression test.
+>>>
+>>> Tested with qemu-aarch64 built for a riscv64 host (debug-TCG), run
+>>> under qemu-riscv64 -cpu max: the new test fails or aborts before the
+>>> series, and passes with it at every SVE vector length.
+>>>
+>>> [1] https://lore.kernel.org/qemu-devel/20261010174742.3552498-1- 
+>>> aurelien@aurel32.net/
+>>> Supersedes: <20261010174742.3552498-1-aurelien@aurel32.net>
+>>>
+>>> Philippe Mathieu-Daudé (6):
+>>>    tcg/riscv64: Factor encode_vi_raw() out of encode_vi()
+>>>    tcg/riscv64: Use a uimm5 encoder for vector shift immediates
+>>>    tcg/riscv64: Extract elements for vector arithmetic immediates
+>>>    tcg/riscv64: Fix constant handling in vector comparisons and selects
+>>>    tcg/riscv64: Fix logical vector immediate matching and emission
+>>>    tests/tcg/aarch64: Add vector immediate regression tests
 >>
->
-> If graphviz is not installed, a warning is emitted, which stops the
-> build since we turn warnings into error.
->
-> The warning emitted has no type, so it can't be filtered with
-> suppress_warning setting from sphinx-build.
->
-> However, since sphinx uses standard logging framework, you can silence
-> it this way: https://github.com/sphinx-doc/sphinx/issues/10219
->
-> ```
-> --- a/docs/conf.py
-> +++ b/docs/conf.py
-> @@ -24,6 +24,7 @@
-> +import logging
->  import os
->  import sys
->  import sphinx
-> @@ -66,8 +67,20 @@
->      'qapi_domain',
->      'qapidoc',
->      'qmp_lexer',
-> +    'sphinx.ext.graphviz',
->  ]
->
-> +# Render graphviz diagrams as SVG so they scale cleanly in HTML output.
-> +graphviz_output_format =3D 'svg'
-> +
-> +# Silence the warning emitted by sphinx.ext.graphviz when 'dot' is not
-> +# installed. Diagrams are then rendered as their raw source instead.
-> +class _NoDotWarning(logging.Filter):
-> +    def filter(self, record):
-> +        return 'cannot be run (needed for graphviz output)' not in
-> record.getMessage()
-> +
-> +logging.getLogger('sphinx.sphinx.ext.graphviz').addFilter(_NoDotWarning(=
-))
-> ```
->
-> The advantage is that graphviz is not a required dependency, so doc is
-> still built for anyone having sphinx installed. That's a nice end result
-> I think.
+>> Hi!
+>>
+>>  From this patchset, 5/6 "Fix logical vector immediate matching and 
+>> emission" is
+>> marked for-stable.  However, it uses a function (vec_imm) which is 
+>> introduced in
+>> 3/6  "Fix logical vector immediate matching and emission".  Obviously, 
+>> just 5/6
+>> alone wont work.
+>>
+>> However, it feels like whole patchset should be picked up for the 
+>> stable series,
+>> not just a single patch - because the whole thing fixes an assortment 
+>> of problems
+>> in this area.
+> 
+> Aha, so the other patches fixes ussues introduced after the last qemu 
+> releases.
+> So..
+> 
+>> Alternatively I can pick just this function from 3/6, which does not 
+>> feel right.
+> 
+> This seems to be the right way to go.
 
-I don't know - silently building a not quite complete set of docs seems
-like the wrong way around but I'm happy to defer to the distro folks
-here.
+If this isn't too much burden, sure. Otherwise I'll defer to Aurelien.
 
->
->>> Also, text diagrams (https://asciidraw.github.io/) with raw formatting
->>> have the advantage to not require any external tool.
->>=20
->> I have the ascii original although ditaa seemed more of a stretch:
->>=20
-<snip>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
