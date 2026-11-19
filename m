@@ -1,150 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3318C606A331
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 17:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD03606A324
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 18:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=bHlEHhBL;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=buwx9HlW
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=g1iYYANh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU6PX-0005Ne-Pj; Thu, 19 Nov 2026 12:59:03 -0500
+	id 1xU6ZY-0007HP-Fi; Thu, 19 Nov 2026 13:09:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xU6PR-0005M6-0J
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 12:58:57 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xU6ZV-0007Fk-WC
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:09:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xU6PO-0000Gg-W0
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 12:58:56 -0500
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJGrkPR1385633
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 17:58:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4waiPZMKL/Ghb/svH5ksFW9cuRFsB6HQFoJvGjPSaqc=; b=bHlEHhBLdC5C9uyF
- ogkgw07N9Ab+BmRE8os0j9w12lvMj1r8DwAcKDbvc8bJYrOAFHV5CYIiEz1BnEwX
- kTZLL+lygxrdvIA6L0viNoBr91h6CEYrnZH2mKOpW/hIY/siAYdyl6YfZ0P9jjEW
- CJ24l0DF9yvRFkmHzNtRsKJiyWAXLIpSK/khzp4FnU4ypSjHQuD1lzJVLfo5ZOWC
- kLTtjs6DgpyAG2OLo9JFl7FA6qo8zNEMW3+s72Rnx7oA86byGpDV09xoYaYLNA73
- G6atSDrA/3jM2CrC6sfgKpA6TXr3AVzSNgzY85tdA9qQ2pKhs6AX19tobbTVT9za
- NtHtJA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1x70advh-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 17:58:52 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93909014c85so12288985a.0
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 09:58:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795111132; x=1795715932; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=4waiPZMKL/Ghb/svH5ksFW9cuRFsB6HQFoJvGjPSaqc=;
- b=buwx9HlW6tsBZprgZKngDgOatgkuyVBHJ0QFonwgNCIycIpk9LSC2LAs2/fRBhMG/9
- a7VRRc+amw/wlk4/7rn/yZXn7YVJtAE+WUuleN8XPS0f2k3pFijzFiYzs+NpSv33fw27
- EJ0MrXWFOUqexbyvntACN/SpEtRNLc1KB5vGuTisFd7QtmRGZ6DnzKINbRKkJh9fPf1y
- us9/J5Q/+7E4voidHf/z+ngKDXsMJHmJgHGA2h0lGkoOrb2hwhqiFR0s7Em1c8Wapk18
- DqHF2G/4E1YZHQfQSKOPYkzg0wpovBT/wnWaCezZWwm7e+H1Zkq65+zLzR7mpznU8hb6
- Bw7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795111132; x=1795715932;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=4waiPZMKL/Ghb/svH5ksFW9cuRFsB6HQFoJvGjPSaqc=;
- b=tFzA/3disQhoetDq5Msyrvs0AuUIHyVxAvc42Cdxj6JZpGO09OOAOleEnSYwikNqQ9
- F2eaM432Y+fEzvV+fg9EK3UNaUsaBhv/QchrxK2hN2Rkygni95Yvdb/zn1b1B2nrtn1Y
- wQkUINmL4jJ++yB3mwxra5m8OZ1usRwaBX7USNL3Y9Xmp1MHktS9w+YQxGD9hZ7ZZLdG
- 6YMLB8docCmqQw6EQkGvLaOmD3pCVoUI41LD6Fk9oDTec/b07lPBv76pVBH7JTqYCgid
- 817q0FT3rT4m14iBNsbwGwxyZrU8tMML9EWOI/GNI8k1+nS3sM0zB5SGdisJ1dBoth41
- UZeA==
-X-Forwarded-Encrypted: i=1;
- AL+hErHK1F+vzngDWLD6u1tNx5CXl3fDdczE9iRreLPPY2zXOsBCXAVeLYHSaNh90ozqJvDw5Nj0s1g89dAs@nongnu.org
-X-Gm-Message-State: APuU4Z+M+lz5oTu3WJZyr9qvLlls92SmyrtVOl4nwFkjUir6Mk6WYYNh
- gAh++5UdDz6hQORYNE8Qv4j5B5J/fNfY6TYUbk0MAJ1mZjJj+AiuZ7oR2SIRs36BW4uqaWNsT6y
- mvCn91o8rJ7eHkE+TBy0tpEbhLSPLx5GEjiWBrHEWukfkj88dpPPGAayktQ==
-X-Gm-Gg: AYBFou1Wg6XyOXpYXiZBmUoSheYdfKAA8O2CRz87bko+9zDS7Nr+B745BWNFAln07+j
- N552W5gFI6retAcaGeKONcavODAhcYBEjUwpVKHJxWRnrVEtqKX5ryiufICCzEtmAgmgkMwEV5w
- al/ZcI9HkDvMlFAwlW+mwcWnAnFtghJM1LrFwxaWvqhqjyBVs3+stpwfhLqwjzuKhhUQPp5sa22
- OyWPAPlQcLjYeQ645AInNgBFRl7wqWdiriw2uYxQfkQWjmfsQN0hxdP4YYMrftoJSiY+2GdkyY6
- sAt18dXsqs72SaGDQZnMEdG5PIi78g9OC5qfbW9kvNVcXIUR/cirCNjA2qFXTZKYakzxTAZ0cjS
- mqmKkFMdAN9RLKQ8g3YrLzRodpZdRmj4k8ET5SVz5f/Fo3STmhJZaoHo6eVh9DNVJ5POqnCikzo
- jxz8Ihr+4=
-X-Received: by 2002:a05:620a:701c:b0:949:a254:706a with SMTP id
- af79cd13be357-949ba96eae0mr55468985a.14.1795111132172; 
- Thu, 19 Nov 2026 09:58:52 -0800 (PST)
-X-Received: by 2002:a05:620a:701c:b0:949:a254:706a with SMTP id
- af79cd13be357-949ba96eae0mr55464185a.14.1795111131558; 
- Thu, 19 Nov 2026 09:58:51 -0800 (PST)
-Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6b10b5f6sm883680f8f.34.2026.11.19.09.58.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Nov 2026 09:58:50 -0800 (PST)
-Message-ID: <bf24f1a1-c795-4a40-bf3c-f684fb28353e@oss.qualcomm.com>
-Date: Thu, 19 Nov 2026 18:58:49 +0100
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xU6ZT-0002g8-Vd
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:09:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795111756;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jkIlbtmZVumTJJBY5ABYx0TdF26cp657auFpnsOuiRk=;
+ b=g1iYYANhhLrFEuByIBa0oSzF1r2B5JHPMRiHp5YGz9KrqAyxFkBEYVtezPI+jZeu/x4mRS
+ h7sYeUKXz7scRG44U5dROwRhhk7lk8Zu6Vu877IhsbiXM/jT83uPFUW332fN5tpbeqRY/H
+ vU+J9jWQKxKVTpXJKXUFEhPBBBnp3vc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-x9NM4C08O_ORDXCuauK3yQ-1; Thu,
+ 19 Nov 2026 13:09:09 -0500
+X-MC-Unique: x9NM4C08O_ORDXCuauK3yQ-1
+X-Mimecast-MFC-AGG-ID: x9NM4C08O_ORDXCuauK3yQ_1795111748
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5FD681800546; Thu, 19 Nov 2026 18:09:08 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E593430000D3; Thu, 19 Nov 2026 18:09:02 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ kvm@vger.kernel.org, Marcelo Tosatti <mtosatti@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH] i386/cpu: mark CPU properties as const
+Date: Thu, 19 Nov 2026 13:08:59 -0500
+Message-ID: <20261119180859.1044425-1-jsnow@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/scsi: validate IU buffer bounds in
- vscsi_preprocess_desc()
-Content-Language: en-US
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, harshpb@linux.ibm.com, fam@euphon.net,
- pbonzini@redhat.com, amachhiw@linux.ibm.com,
- qemu-block <qemu-block@nongnu.org>
-References: <20260819095855.115823-1-rathc@linux.ibm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260819095855.115823-1-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: KZ6v3guib2CiQI_cM2vW6p-1Fdez3FpW
-X-Authority-Analysis: v=2.4 cv=RdgFmFtv c=1 sm=1 tr=0 ts=6aff38dc cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=p0WdMEafAAAA:8 a=VnNF1IyMAAAA:8 a=eLGE-lYFzjDE4tTs6sYA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA3MSBTYWx0ZWRfX3sHFSRg4vm0I
- 5nsJqXsI75EVzfI4rrBJbyiwsu1y8ivoUaFsYoRVU5cPyr/1DFfAO3AT8/utId3M3FwxVFHzSM9
- nRYYRIxEApmMutb+KXp8qfoEv5PqxCs=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA3MSBTYWx0ZWRfXw85IsR7RyLMA
- Ry9gRlQxAPxACsxF0q8NAtyAJ6XyKoq7RAHHqmXku0FkKVMRiscHeMgmTwsLIpv/qwwY+MxeUIc
- E9YjMIf/VR8q98HbE74Q1CL02J+VbRzOH3J9F/A2tw3GLNbr50mEhicZPBsgzmd7Y7ZwsJdAUzD
- a0tHNmMZI4/+uYqivKKeC4ZLd+n8NfF38qjh2K1qFBAqTrKpnYzDQ2u+NHokOSVhQPdSHmkXW95
- YJ6egTd/ovXYQqTJsdiMzLDJNHpPCMQw40nJYPKuK27K9EEyfD4uIBWuC20Lua8aL28h/5zmS/P
- BmsV3R0QFhMcroSv0bdWx3NI6Sobaj91noo9wUt4N4UMCthQvPBTPb5bY+81CPWe7KvF0/mXMms
- E+EIP2l9FgIGiiJTk8o367lOK3x+AsGVx+nqxxAVERDP9t22MWtU60PL6tfVe7Ge9KqbxlcRhRn
- B0GacIAXMuB1c3W8MoQ==
-X-Proofpoint-GUID: KZ6v3guib2CiQI_cM2vW6p-1Fdez3FpW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-19_04,2026-11-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 malwarescore=0
- adultscore=0 spamscore=0 bulkscore=0 clxscore=1015 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611190071
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,138 +76,205 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Chinmay,
+Currently, these large property tables are loaded in the read-write
+`.data` segment; by marking them as const they can be loaded as part
+of `.rodata` instead, where these tables can be shared between multiple
+instances of QEMU as RssFile memory instead of RssAnon memory.
 
-On 19/8/26 11:58, Chinmay Rath wrote:
-> cdb_offset and local_desc values are dependent on the guest. If the value
-> is large enough, it can lead to an out-of-bounds read in vscsi_fetch_desc().
-> 
-> Add an 'avail' constant in vscsi_preprocess_desc() representing the number of
-> bytes available in srp_cmd.add_data[] and use it to prevent out-of-bound reads.
-> 
-> Make all callers of vscsi_preprocess_desc() check its return value and
-> handle failure accordingly.
-> 
-> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4162
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->   hw/scsi/spapr_vscsi.c | 43 ++++++++++++++++++++++++++++++++++++++-----
->   1 file changed, 38 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
-> index b4c8f94d22..9fef224727 100644
-> --- a/hw/scsi/spapr_vscsi.c
-> +++ b/hw/scsi/spapr_vscsi.c
-> @@ -484,6 +484,8 @@ static int data_out_desc_size(struct srp_cmd *cmd)
->   static int vscsi_preprocess_desc(vscsi_req *req)
->   {
->       struct srp_cmd *cmd = &req_iu(req)->srp.cmd;
-> +    /* bytes available for descriptors behind srp_cmd.add_data */
-> +    const unsigned avail = SRP_MAX_IU_LEN - offsetof(struct srp_cmd, add_data);
->   
->       req->cdb_offset = cmd->add_cdb_len & ~3;
->   
-> @@ -498,16 +500,35 @@ static int vscsi_preprocess_desc(vscsi_req *req)
->       case SRP_NO_DATA_DESC:
->           break;
->       case SRP_DATA_DESC_DIRECT:
-> +        if (req->cdb_offset + sizeof(struct srp_direct_buf) > avail) {
-> +            fprintf(stderr,
-> +                    "vscsi_preprocess_desc: direct desc out of bounds\n");
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ target/i386/cpu-internal.h |  2 +-
+ target/i386/cpu-system.c   |  2 +-
+ target/i386/cpu.c          | 30 +++++++++++++++---------------
+ target/i386/kvm/tdx.c      |  2 +-
+ 4 files changed, 18 insertions(+), 18 deletions(-)
 
-Please replace fprintf() by qemu_log...(GUEST_ERRORS, ...).
-
-> +            return -1;
-> +        }
->           req->total_desc = req->local_desc = 1;
->           break;
->       case SRP_DATA_DESC_INDIRECT: {
-> -        struct srp_indirect_buf *ind_tmp = (struct srp_indirect_buf *)
-> -                (cmd->add_data + req->cdb_offset);
-> +        struct srp_indirect_buf *ind_tmp;
-> +
-> +        if (req->cdb_offset + sizeof(struct srp_indirect_buf) > avail) {
-> +            fprintf(stderr,
-> +                    "vscsi_preprocess_desc: indirect desc out of bounds\n");
-
-Ditto.
-
-> +            return -1;
-> +        }
-> +        ind_tmp = (struct srp_indirect_buf *)(cmd->add_data + req->cdb_offset);
->   
->           req->total_desc = be32_to_cpu(ind_tmp->table_desc.len) /
->                             sizeof(struct srp_direct_buf);
->           req->local_desc = req->writing ? cmd->data_out_desc_cnt :
->                             cmd->data_in_desc_cnt;
-> +
-> +        /* desc_list[] entries must also fit inside the IU buffer */
-> +        if (req->local_desc * sizeof(struct srp_direct_buf) >
-> +            avail - req->cdb_offset - sizeof(struct srp_indirect_buf)) {
-> +            fprintf(stderr,
-> +                    "vscsi_preprocess_desc: local_desc out of bounds\n");
-
-Ditto.
-
-> +            return -1;
-> +        }
->           break;
->       }
->       default:
-> @@ -725,7 +746,11 @@ static void vscsi_inquiry_no_target(VSCSIState *s, vscsi_req *req)
->       memcpy(&resp_data[8], "QEMU    ", 8);
->   
->       req->writing = 0;
-> -    vscsi_preprocess_desc(req);
-> +    if (vscsi_preprocess_desc(req) < 0) {
-> +        vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
-> +        vscsi_send_rsp(s, req, CHECK_CONDITION, 0, 0);
-> +        return;
-> +    }
->       rc = vscsi_srp_transfer_data(s, req, 0, resp_data, len);
->       if (rc < 0) {
->           vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
-> @@ -775,7 +800,12 @@ static void vscsi_report_luns(VSCSIState *s, vscsi_req *req)
->           i += 8;
->       }
->   
-> -    vscsi_preprocess_desc(req);
-> +    if (vscsi_preprocess_desc(req) < 0) {
-> +        g_free(resp_data);
-> +        vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
-> +        vscsi_send_rsp(s, req, CHECK_CONDITION, 0, 0);
-> +        return;
-> +    }
->       rc = vscsi_srp_transfer_data(s, req, 0, resp_data, len);
->       g_free(resp_data);
->       if (rc < 0) {
-> @@ -823,7 +853,10 @@ static int vscsi_queue_cmd(VSCSIState *s, vscsi_req *req)
->           req->writing = (n < 1);
->   
->           /* Preprocess RDMA descriptors */
-> -        vscsi_preprocess_desc(req);
-> +        if (vscsi_preprocess_desc(req) < 0) {
-
-scsi_req_cancel() does not send an SRP response by itself,
-so now guest waits until timeout... (That makes me wonder
-how this patch was tested). In order to return a proper error
-to the guest, please add:
-
-                req->dma_error = true;
-
-> +            scsi_req_cancel(req->sreq);
-> +            return 1;
-> +        }
->   
->           /* Get transfer direction and initiate transfer */
->           if (n > 0) {
+diff --git a/target/i386/cpu-internal.h b/target/i386/cpu-internal.h
+index 7f234cfd1b7..fbe767ca906 100644
+--- a/target/i386/cpu-internal.h
++++ b/target/i386/cpu-internal.h
+@@ -53,7 +53,7 @@ typedef struct FeatureWordInfo {
+     uint64_t no_autoenable_flags;
+ } FeatureWordInfo;
+ 
+-extern FeatureWordInfo feature_word_info[];
++extern const FeatureWordInfo feature_word_info[];
+ 
+ void x86_cpu_expand_features(X86CPU *cpu, Error **errp);
+ 
+diff --git a/target/i386/cpu-system.c b/target/i386/cpu-system.c
+index c03cece7bd8..50de1170447 100644
+--- a/target/i386/cpu-system.c
++++ b/target/i386/cpu-system.c
+@@ -62,7 +62,7 @@ static QDict *x86_cpu_static_props(void)
+     }
+ 
+     for (w = 0; w < FEATURE_WORDS; w++) {
+-        FeatureWordInfo *fi = &feature_word_info[w];
++        const FeatureWordInfo *fi = &feature_word_info[w];
+         int bit;
+         for (bit = 0; bit < 64; bit++) {
+             if (!fi->feat_names[bit]) {
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index eab0d5a4d4a..988193207f8 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -78,7 +78,7 @@ struct CPUID2CacheDescriptorInfo {
+  * TLB, prefetch and sectored cache related descriptors are not included.
+  * From Intel SDM Volume 2A, CPUID instruction
+  */
+-struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
++const struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
+     [0x06] = { .level = 1, .type = INSTRUCTION_CACHE, .size =   8 * KiB,
+                .associativity = 4,  .line_size = 32, },
+     [0x08] = { .level = 1, .type = INSTRUCTION_CACHE, .size =  16 * KiB,
+@@ -241,7 +241,7 @@ static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache, bool *unmacthed)
+     assert(cache->line_size > 0);
+     assert(cache->associativity > 0);
+     for (i = 0; i < ARRAY_SIZE(cpuid2_cache_descriptors); i++) {
+-        struct CPUID2CacheDescriptorInfo *d = &cpuid2_cache_descriptors[i];
++        const struct CPUID2CacheDescriptorInfo *d = &cpuid2_cache_descriptors[i];
+         if (d->level == cache->level && d->type == cache->type &&
+             d->size == cache->size && d->line_size == cache->line_size &&
+             d->associativity == cache->associativity) {
+@@ -1047,7 +1047,7 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+             CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE | \
+             CPUID_8000_0021_EAX_KERNEL_FEATURES)
+ 
+-FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
++const FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+     [FEAT_1_EDX] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+@@ -1879,7 +1879,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+ 
+ bool is_feature_word_cpuid(uint32_t feature, uint32_t index, int reg)
+ {
+-    FeatureWordInfo *wi;
++    const FeatureWordInfo *wi;
+     FeatureWord w;
+ 
+     for (w = 0; w < FEATURE_WORDS; w++) {
+@@ -2223,7 +2223,7 @@ static inline uint64_t x86_cpu_xsave_xss_components(X86CPU *cpu)
+  */
+ static uint64_t x86_cpu_get_migratable_flags(X86CPU *cpu, FeatureWord w)
+ {
+-    FeatureWordInfo *wi = &feature_word_info[w];
++    const FeatureWordInfo *wi = &feature_word_info[w];
+     CPUX86State *env = &cpu->env;
+     uint64_t r = 0;
+     int i;
+@@ -2458,7 +2458,7 @@ static const CPUCaches epyc_cache_info = {
+     },
+ };
+ 
+-static CPUCaches epyc_v4_cache_info = {
++static const CPUCaches epyc_v4_cache_info = {
+     .l1d_cache = &(CPUCacheInfo) {
+         .type = DATA_CACHE,
+         .level = 1,
+@@ -2512,7 +2512,7 @@ static CPUCaches epyc_v4_cache_info = {
+     },
+ };
+ 
+-static CPUCaches epyc_v5_cache_info = {
++static const CPUCaches epyc_v5_cache_info = {
+     .l1d_cache = &(CPUCacheInfo) {
+         .type = DATA_CACHE,
+         .level = 1,
+@@ -7422,7 +7422,7 @@ static const TypeInfo max_x86_cpu_type_info = {
+     .class_init = max_x86_cpu_class_init,
+ };
+ 
+-static char *feature_word_description(FeatureWordInfo *f)
++static char *feature_word_description(const FeatureWordInfo *f)
+ {
+     assert(f->type == CPUID_FEATURE_WORD || f->type == MSR_FEATURE_WORD);
+ 
+@@ -7463,7 +7463,7 @@ void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
+                                const char *verbose_prefix)
+ {
+     CPUX86State *env = &cpu->env;
+-    FeatureWordInfo *f = &feature_word_info[w];
++    const FeatureWordInfo *f = &feature_word_info[w];
+     int i;
+     g_autofree char *feat_word_str = feature_word_description(f);
+ 
+@@ -7491,7 +7491,7 @@ void mark_forced_on_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
+                              const char *verbose_prefix)
+ {
+     CPUX86State *env = &cpu->env;
+-    FeatureWordInfo *f = &feature_word_info[w];
++    const FeatureWordInfo *f = &feature_word_info[w];
+     int i;
+ 
+     if (!cpu->force_features) {
+@@ -7794,7 +7794,7 @@ static void x86_cpu_get_feature_words(Object *obj, Visitor *v,
+     X86CPUFeatureWordInfoList *list = NULL;
+ 
+     for (w = 0; w < FEATURE_WORDS; w++) {
+-        FeatureWordInfo *wi = &feature_word_info[w];
++        const FeatureWordInfo *wi = &feature_word_info[w];
+         /*
+                 * We didn't have MSR features when "feature-words" was
+                 *  introduced. Therefore skipped other type entries.
+@@ -8111,7 +8111,7 @@ static void x86_cpu_list(void)
+ 
+     names = NULL;
+     for (i = 0; i < ARRAY_SIZE(feature_word_info); i++) {
+-        FeatureWordInfo *fw = &feature_word_info[i];
++        const FeatureWordInfo *fw = &feature_word_info[i];
+         for (j = 0; j < 64; j++) {
+             if (fw->feat_names[j]) {
+                 names = g_list_append(names, (gpointer)fw->feat_names[j]);
+@@ -8214,7 +8214,7 @@ static uint8_t x86_cpu_get_host_avx10_version(void)
+ 
+ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+ {
+-    FeatureWordInfo *wi = &feature_word_info[w];
++    const FeatureWordInfo *wi = &feature_word_info[w];
+     uint64_t r = 0;
+     uint64_t unavail = 0;
+ 
+@@ -9617,7 +9617,7 @@ static void x86_cpu_adjust_level(X86CPU *cpu, uint32_t *min, uint32_t value)
+ static void x86_cpu_adjust_feat_level(X86CPU *cpu, FeatureWord w)
+ {
+     CPUX86State *env = &cpu->env;
+-    FeatureWordInfo *fi = &feature_word_info[w];
++    const FeatureWordInfo *fi = &feature_word_info[w];
+     uint32_t eax = fi->cpuid.eax;
+     uint32_t region = eax & 0xF0000000;
+ 
+@@ -10497,7 +10497,7 @@ static void x86_cpu_register_feature_bit_props(X86CPUClass *xcc,
+                                                FeatureWord w,
+                                                int bitnr)
+ {
+-    FeatureWordInfo *fi = &feature_word_info[w];
++    const FeatureWordInfo *fi = &feature_word_info[w];
+     const char *name = fi->feat_names[bitnr];
+ 
+     if (!name) {
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 52bb2ec6ced..ec38e3625a6 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -885,7 +885,7 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
+     struct kvm_cpuid_entry2 *entry;
+     X86CPU *cpu = X86_CPU(cs);
+     CPUX86State *env = &cpu->env;
+-    FeatureWordInfo *wi;
++    const FeatureWordInfo *wi;
+     FeatureWord w;
+     bool mismatch = false;
+     int r = -1;
+-- 
+2.56.1
 
 
