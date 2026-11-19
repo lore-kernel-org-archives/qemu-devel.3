@@ -1,34 +1,34 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB704606A324
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 15:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C80606A324
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 15:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=TcEox5L+
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=fvxSjeKI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU3xq-0006wo-Ui; Thu, 19 Nov 2026 10:22:19 -0500
+	id 1xU40i-0007eU-40; Thu, 19 Nov 2026 10:25:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xU3xe-0006w2-NY; Thu, 19 Nov 2026 10:22:06 -0500
+ id 1xU40X-0007Wq-JK; Thu, 19 Nov 2026 10:25:06 -0500
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xU3xc-000387-TD; Thu, 19 Nov 2026 10:22:06 -0500
+ id 1xU40V-0007ga-Rs; Thu, 19 Nov 2026 10:25:05 -0500
 Received: from example.com (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 20C0220B716A;
- Thu, 19 Nov 2026 07:21:56 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 20C0220B716A
+ by linux.microsoft.com (Postfix) with ESMTPSA id 7BD0920B7169;
+ Thu, 19 Nov 2026 07:24:57 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7BD0920B7169
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795101720;
- bh=91vLDm9esa2UYE3beL983ujdoZi45yscOAuVqZiDq1I=;
+ s=default; t=1795101900;
+ bh=W9bvr2CKV1pYOK8Tuu3G2yA4zJ44x0r0PbM39+maf0U=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=TcEox5L+gi3aEy3NQpH6mRAi/5csJhU//8tTMHjBhRAxzjDn/O7/n1rdoxewXE8W4
- HPQwoGp990Ii2h2KmpyMY/CtgVfwAfxFG+GJyyVOPpBzewUmf5idZ/1sRNBeQMegQr
- SAEKpNloRjZXjOq1pWKc2jbzVcvFIaNQfokGURCw=
-Date: Thu, 19 Nov 2026 16:21:55 +0100
+ b=fvxSjeKIgNSWH+qdZiM+/eTCqz4oBvTIXLU/uNHRSqpzSoKhXRafYF8MzqLnznRCi
+ mu4fiMjxB+Y2rXGDeozd80SzBvMuKKgvPSGhIptYr4zobUpI/bsfcDyXSriVa0LoYc
+ FickbMh7s3F2YyQjwPA1TeC7p+RbSZ8v75N7Ivww=
+Date: Thu, 19 Nov 2026 16:24:56 +0100
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: Aastha Rawat <aastharawat@linux.microsoft.com>
 Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
@@ -46,7 +46,7 @@ Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
 Subject: Re: [PATCH v6 03/14] accel/mshv: make MSHV migration initialization
  arch-specific
-Message-ID: <av8UE3dpLrEY6uD9@example.com>
+Message-ID: <av8UyInK9UM/M3wV@example.com>
 References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
  <20261001-mshv_accel_arm64_supp-v6-3-aefe5e76a0e3@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
@@ -148,6 +148,9 @@ On Thu, Oct 01, 2026 at 10:52:48AM +0000, Aastha Rawat wrote:
 > -    mshv_clock_init();
 > +    ret = mshv_arch_migration_init(s);
 > +    if (ret < 0) {
+
+if this is fallible now, do we need to unwind the previous steps?
+
 > +        return ret;
 > +    }
 >  
@@ -203,8 +206,8 @@ On Thu, Oct 01, 2026 at 10:52:48AM +0000, Aastha Rawat wrote:
 > +
 > +int mshv_arch_migration_init(MshvState *s)
 
-mshv_clock_init() is also relevant for pause/resume handling, so maybe
-"mshv_arch_vm_state_init()"?
+mshv_clock_init() also covers pause/resume, so maybe
+"mshv_arch_vm_state_init()" would be a better name?
 
 > +{
 > +    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
