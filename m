@@ -1,77 +1,75 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD6F606A331
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 22:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DA9606A326
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 22:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=it9Fo0Od
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=fQN6kHLK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUAdc-0001rN-0U; Thu, 19 Nov 2026 17:29:52 -0500
+	id 1xUAgF-0002Qg-7x; Thu, 19 Nov 2026 17:32:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xUAdZ-0001r6-1B
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:29:49 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xUAgA-0002Q7-GG
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:32:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xUAdX-00087A-BX
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:29:48 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xUAg8-00028Z-U8
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:32:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795127385;
+ s=mimecast20190719; t=1795127548;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+8JZF0E9oq4U/QzBU7B/paBr7hqXbBY6EQgmFBdxCsI=;
- b=it9Fo0OdEfzMHdgmD0T+3/SUVMB5aCClWkad6w7xcyVR/BVatEnLMcEswervwaaBWRH9fw
- elUsSl24NwvgTOrsG0JK07NK7A9psQZJCWfftKLLwuw6KehXmBXB11nTnylhyOUstzG+MQ
- u9tP5sl+8Z4UzIDEl+UvskD158c7agM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=msep5PbqPJBrosM7lwfoq6KFWgs/BA/7Emnf/fGn1is=;
+ b=fQN6kHLKTd6a5uXc6QdrwmB6iLsiNqms/AyeEgKsbYHcIxM/J2C5FSPFI9/ITb4UzZALCj
+ tsDC+yzwmbuihABo8xoMbwknr905Yn0PWZZmRN2wxOlHcp1Kn9nHgSQ0NfmW7QJO4cyoYP
+ wvlbKtfR/57/7e3fzGlxUp841kLT2yY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-375--GZ8lpZMNIKJvOl0erzhVA-1; Thu,
- 19 Nov 2026 22:29:41 +0000
-X-MC-Unique: -GZ8lpZMNIKJvOl0erzhVA-1
-X-Mimecast-MFC-AGG-ID: -GZ8lpZMNIKJvOl0erzhVA_1795127379
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-FmaeiRFbNmWMp0bzurWDbg-1; Thu,
+ 19 Nov 2026 22:32:24 +0000
+X-MC-Unique: FmaeiRFbNmWMp0bzurWDbg-1
+X-Mimecast-MFC-AGG-ID: FmaeiRFbNmWMp0bzurWDbg_1795127543
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1AC61945117; Thu, 19 Nov 2026 22:29:38 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D50D71800344; Thu, 19 Nov 2026 22:32:22 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9D5B630000D3; Thu, 19 Nov 2026 22:29:37 +0000 (UTC)
-Date: Thu, 19 Nov 2026 17:29:36 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Hongyan Xu <getshell@seu.edu.cn>,
- Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Subject: Re: [PATCH for-12.0] coroutine: Make yield_until_fd_readable()
- detach fd handler always
-Message-ID: <20261119222936.GB780462@shajnocz.csb>
-References: <20261119145311.1144878-1-peterx@redhat.com>
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E2BE618004F5; Thu, 19 Nov 2026 22:32:19 +0000 (UTC)
+Date: Thu, 19 Nov 2026 16:32:17 -0600
+From: Eric Blake <eblake@redhat.com>
+To: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ vsementsov@yandex-team.ru, kwolf@redhat.com, hreitz@redhat.com,
+ stefanha@redhat.com, fam@euphon.net
+Subject: Re: [PATCH 2/5] block: Refresh the connection before block_resize
+Message-ID: <av91249yWhnS7Gri@redhat.com>
+References: <20261119144632.232457-1-guillaume.vincke@ovhcloud.com>
+ <20261119144632.232457-3-guillaume.vincke@ovhcloud.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261119145311.1144878-1-peterx@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20261119144632.232457-3-guillaume.vincke@ovhcloud.com>
+User-Agent: NeoMutt/20260616
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,76 +81,111 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 19, 2026 at 09:53:11AM -0500, Peter Xu wrote:
-> Hongyan reported a possible use-after-free of RDMA migration code:
+On Thu, Nov 19, 2026 at 03:46:29PM +0100, Guillaume Vincke wrote:
+> When a network based device is not connected, there is no way for the
+> backend to notify a change. For instance, the NBD client relies on lazy
+> reconnection. Therefore, if an NBD backend changes size, there is
+> currently no way to update the device size until at least one I/O
+> operation is sent.
 > 
-> https://lore.kernel.org/all/20260904033130.276-1-getshell@seu.edu.cn
+> This patch adds the bdrv_co_refresh_connection callback to the
+> BlockDriver structure so a reconnection can be forced. Considering
+> nbd_co_truncate() does not perform any I/O, it also modifies the QMP
+> block_resize implementation to execute the callback, if defined, before
+> truncating.
 > 
-> The issue seems real, while this patch is a proposal to fix it in a simpler
-> way, meanwhile it should be a problem to the yield_until_fd_readable()
-> helper in general, so it should make more sense to be fixed there too.
+> No functional change.
+
+At least not until later patches start implementing the new
+callback. But overall the explanation of why this callback is useful
+makes sense to me.
+
 > 
-> The problem is about the use of the stack allocated FDYieldUntilData where
-> we must make sure after yield_until_fd_readable() returns it's not used
-> anywhere.  If the coroutine yielded can be entered from outside of this
-> helper (fd_coroutine_enter()), then the aio handler might be installed even
-> after yield_until_fd_readable() returns, and that makes the stack variable
-> accessible by aio codd, even if stack gone.
-> 
-> Fix it by moving the aio handler removal outside the handler.
-> 
-> Reported-by: Hongyan Xu <getshell@seu.edu.cn>
-> Cc: Stefan Hajnoczi <stefanha@redhat.com>
-> Cc: Kevin Wolf <kwolf@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
-> Cc: Hongyan Xu <getshell@seu.edu.cn>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
 > ---
+>  block/block-backend.c             | 12 ++++++++++++
+>  block/io.c                        | 24 ++++++++++++++++++++++++
+>  blockdev.c                        |  9 +++++++++
+>  include/block/block-io.h          |  8 ++++++++
+>  include/block/block_int-common.h  |  3 +++
+>  include/system/block-backend-io.h |  2 ++
+>  6 files changed, 58 insertions(+)
 > 
-> NOTE: I targeted this for 12.0 because the bug was not introduced in 11.2,
-> however this seems to be a real bug fix to coroutine in general, I'll leave
-> that to maintainers to decide if to pick it for 11.2.
-> ---
->  util/qemu-coroutine-io.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/util/qemu-coroutine-io.c b/util/qemu-coroutine-io.c
-> index 364f4d5abf..3c0a7feafa 100644
-> --- a/util/qemu-coroutine-io.c
-> +++ b/util/qemu-coroutine-io.c
-> @@ -74,7 +74,6 @@ typedef struct {
->  static void fd_coroutine_enter(void *opaque)
->  {
->      FDYieldUntilData *data = opaque;
-> -    aio_set_fd_handler(data->ctx, data->fd, NULL, NULL, NULL, NULL, NULL);
->      qemu_coroutine_enter(data->co);
+> diff --git a/block/block-backend.c b/block/block-backend.c
+> index 656c0aed67..b133bb8292 100644
+> --- a/block/block-backend.c
+> +++ b/block/block-backend.c
+> @@ -2600,6 +2600,18 @@ int coroutine_fn blk_co_truncate(BlockBackend *blk, int64_t offset, bool exact,
+>      return bdrv_co_truncate(blk->root, offset, exact, prealloc, flags, errp);
 >  }
 >  
-> @@ -89,4 +88,9 @@ void coroutine_fn yield_until_fd_readable(int fd)
->      aio_set_fd_handler(data.ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
->                         &data);
->      qemu_coroutine_yield();
-> +    /*
-> +     * Always remove the fd handler, no matter the re-entering of this
-> +     * coroutine was caused by fd_coroutine_enter() or something else.
-> +     */
-> +    aio_set_fd_handler(data.ctx, fd, NULL, NULL, NULL, NULL, NULL);
->  }
+> +int coroutine_fn blk_co_refresh_connection(BlockBackend *blk, Error **errp)
+> +{
 
-Why would the coroutine be entered? Should there be a loop around
-qemu_coroutine_yield() - otherwise we fix the invalid stack memory
-access but return to the caller without fulfilling the purpose of the
-function (waiting for the fd to become readable), which could cause
-further bugs?
+Check out scripts/git.orderfile for a way to list the .h changes (with
+the documentation) ahead of the .c changes (with the implementation).
 
-Stefan
+> +++ b/blockdev.c
+> @@ -2314,6 +2314,7 @@ void coroutine_fn qmp_block_resize(const char *device, const char *node_name,
+>      BlockBackend *blk;
+>      BlockDriverState *bs;
+>      AioContext *old_ctx;
+> +    int ret;
+>  
+>      bs = bdrv_lookup_bs(device, node_name, &local_err);
+>      if (local_err) {
+> @@ -2338,6 +2339,14 @@ void coroutine_fn qmp_block_resize(const char *device, const char *node_name,
+>          return;
+>      }
+>  
+> +    old_ctx = bdrv_co_enter(bs);
+> +    ret = blk_co_refresh_connection(blk, errp);
+> +    bdrv_co_leave(bs, old_ctx);
+> +    if (ret < 0) {
+> +        blk_co_unref(blk);
+> +        return;
+> +    }
+> +
+>      bdrv_drained_begin(bs);
+>  
+>      old_ctx = bdrv_co_enter(bs);
+
+Am I missing a reason for why you add a separate bdrv_co_enter/leave
+critical section prior the bdrv_drained_begin, rather than reusing the
+critical section already present during the drained region?  Is it
+because you want to ensure the (re-)connection is in place before the
+drain can trigger IO traffic?
+
+> diff --git a/include/block/block-io.h b/include/block/block-io.h
+> index f671476f08..5a7328fed5 100644
+> --- a/include/block/block-io.h
+> +++ b/include/block/block-io.h
+> @@ -114,6 +114,14 @@ int coroutine_fn GRAPH_RDLOCK bdrv_co_flush(BlockDriverState *bs);
+>  int coroutine_fn GRAPH_RDLOCK bdrv_co_pdiscard(BdrvChild *child, int64_t offset,
+>                                                 int64_t bytes);
+>  
+> +/*
+> + * Ensure the connection is ready to process requests by re-establishing it if
+> + * closed.
+> + * Returns 0 when the driver does not declare the callback.
+> + */
+> +int coroutine_fn GRAPH_RDLOCK bdrv_co_refresh_connection(BdrvChild *child,
+> +                                                         Error **errp);
+
+Maybe word it as "Returns 0 when ready or if driver does not declare
+the callback, and -errno on failure to reconnect."
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
