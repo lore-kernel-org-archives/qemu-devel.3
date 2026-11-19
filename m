@@ -1,87 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0AD606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 17:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65944606A324
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 17:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Sl1YfHVP
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Xyzxkak9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU5if-0007XY-M3; Thu, 19 Nov 2026 12:14:45 -0500
+	id 1xU635-0002gI-8J; Thu, 19 Nov 2026 12:35:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xU5iX-0007Ws-9Q
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 12:14:40 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xU631-0002fx-PB
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 12:35:47 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xU5iP-0001NJ-ET
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 12:14:34 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4a2153c8525so19086705e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 09:14:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xU630-0006c1-2g
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 12:35:47 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-cc751eddf25so8205a12.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 09:35:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795108467; x=1795713267; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=lpvWYMwp0TsV4MHcEs4e2IgMJEKTJw3Kk55W69mntzo=;
- b=Sl1YfHVPRiJF+6ruMSm5j39C++Km8+6RdzZONEKEkbrEBzzaTI5l95O95PtF8neSOY
- jbGtFep7M/X+18wDV+cLcq8xJaNKSDtSrNXxvgRVPJrjjwor/IBmz6Y7/9zgTWwLdMNH
- TZbsU6Hjub4CMdklFEZkkelAtCkLZW2bEfFCeDdCKt5B3mPWvtzr+OhHLrzAFWBn1pPl
- NfYkkydswVL+4LksCSX+v70VxmTLFQWJz0datkv9S0UB9ZcRZrXShSvvlX+IhRcrgOPN
- 71N2S9k45fiBmrxB1sivUaMo1Bc4BgG5ffvewwU5pLgDmx2mjk1SmAeOA2yyLG6tY2/6
- rcRQ==
+ d=linaro.org; s=google; t=1795109743; x=1795714543; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=WSCFoWDi5YcWCqSGNxSODHykMjMIcgaD0oYjyztbjUY=;
+ b=Xyzxkak9t3w0g2wMuN66c9k6dL9aMqZEV/Ol77/hGiSD8Aw4Y0RwptTNuQrVAkbhWJ
+ vzrgoA18YUpHGtaI/NpEkUmxh8CLvDE4EO73yLwJobRSl0zi0bIhMTRxbNJKJvlU8+pi
+ 1WQZSsjZAbOW43VzGBgrjHjIbfOHnESJs06ICx2dB7WRVMeyk3rjLmWzUZdcvXs5VP7W
+ 61GtQ3rhbN3XPn1dY6mEFRTTnWgR/yulSh+mf6Bux7lc5jjasd2Lm+M4MVQ9+gIFjDI6
+ AbiLdLflqvcLNV4O0tA2c5zmQUcU/ZgP2LW7KH13wTDCJtyu8XOI84PjIBs3ZAJoN7M9
+ Z1aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795108467; x=1795713267;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1795109743; x=1795714543;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=lpvWYMwp0TsV4MHcEs4e2IgMJEKTJw3Kk55W69mntzo=;
- b=faldWKMyzlsd0adriwvv8C0Q3a6hSZLPzpMChJP0KLDuh71AR7o5+EoDanbS6W+pUb
- s39qx/5wBdI8pissu0xUJW6OqFqVPP1gxK38IopGaoquXuvXYh+D0wkUbXkfj2LyIeiI
- lQdYdzCR2jlJ6qgVtB1+ku3UpqbNU929K0UIerWpzwEyNOzyfxxYLjh8KpGInXhyDM/h
- qcFuSbwlpqZ6x3Zjz903HhU9o0rW/ArVDJRj2tLiCUP7Z2qjNWth7jXXCqD++0kBE1iL
- /FhBZhy6amGgzK5tU3ha0VcLvf57tEvOBcTDkobeyQYTLb3q6cg0SidUVrQ/ckXj1jsg
- PxiQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErFiLp86Z4uGZ9cQskQjXhjyWKXKhRuQwO/IDDBjpv60tYSOPAZ5Qicou6+ti6pASe4/+6tgjuUWEvv/@nongnu.org
-X-Gm-Message-State: APuU4Z+GVkgpW5q5VeFDQbDem3kISuUXT7qIRxfXPAtFqcuiH852OdE3
- SJnWAbS7Yav4rZVALX4l6d4ccT4AHw4iLvJJgaDUs7fYELw9Td4iAdVPQ2MWxM3jkIY=
-X-Gm-Gg: AYBFou0L9EeQY5UV1HuhohHsAG2rk6yXHjP6czrgSHdKwup4ApoyRghbyQX0HfpQRf6
- HMaoS7+cGp1Nz+EDRIJzcni/YjEPh22dpZUhry13/K/WUfp83Cvec6B0hbUkILxFGVCOT5l+V/S
- mqN/eMgqAh6bAiLrzFLcMMOxBCzwGwkDojIiUXckMijI1frCV5NxpwqvYf2/WLXixi3zMfdNJ70
- H0VxdXFBw+fTcsWpqgkuBJLFVKg+DUW3FtjL7kARXmG/k0qzG/U6h1BwZsgRFiVpMM+W9VAXusC
- J69ipcfpnzmWBhbzk5XcEQmErERUaqdbnNSbnSkbQOv/h8frjtqpOep2oZ2q80Ypib/9X9l9AcW
- JCbSgcs4UNiz9ppdkJCxR2yMBVgJeFfU/ql+bYAZ2p/Wzv9bKyYxUI7U8WSp0oAKGzMK77Moz1e
- VqH/bFCMx1TNO66vhnNAldrNnmSoKDCGg5CCcrcs4A62u78VVehuEaJT1D/U3DWNNS09f9nFdNw
- skk6GcEyVShPhYYI9XRmud2TXhkFdyGlEI//pmHRReLIcDkDQM4rLDMnVsgYaO8hkHRwOWqgrMK
- xAns7ofDejyZX4xlHUW6fnUtJdC17LMedzN+BN31+Iop7/I87prAuP4/7+Kbo0SMqIH86t/9T2l
- B61N9przYY2d4tg6nc4qG3NBMCSbTFg9NzA==
-X-Received: by 2002:a05:600c:6218:b0:4a0:1b14:e283 with SMTP id
- 5b1f17b1804b1-4bb887c341dmr5093475e9.1.1795108466904; 
- Thu, 19 Nov 2026 09:14:26 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ bh=WSCFoWDi5YcWCqSGNxSODHykMjMIcgaD0oYjyztbjUY=;
+ b=yvgfHFtmRBjW8Lw2mYNTke8WfBK0u41a3MpAh1V0LShTkNh2NL/5fTZOnQ8azlXLNU
+ eKPKlcrSRDLJpIum6XMPIrmIflap0FcyALOEeTRb/ESPYR7kaj0Gnne8FdwJBpuTpOS3
+ SUDS+Fv4OZ8cXhlFYwd/ixewxlshCFZr+T+wj06oSrEvIvNSLAmoLTT5i5eX1XlaUmXe
+ rlQ8s3nUPFC7eoLi7GAgn50udQNW9LTKzs8CiY1oMLDaUR3WGppNdrPNsrKFSnKF13dm
+ GDEUmcyvnEPmeitB+o3gbXj6tjEYKaLmuOnLiq1twL9auPi+5fywpq/cQgiser4niHZW
+ LGHg==
+X-Gm-Message-State: APuU4Z/miOCbT3EIt+52Rm2+JjfuHpglGEOzHI0LA1ZEznSma+peultu
+ jrn72xNsN/eMQCsSqssTh/Jo7BSNLQ1t4TsPhePx9e2sXdByM6r7+wOUNOS3ZLUI26w=
+X-Gm-Gg: AZFdTZdDmso4uLOwLSwX0HZgko5ryWBCd809sm77PT4mFTl0IGoZeGM9m/Egbolsvcs
+ Vuo9mnU0M7FbJF6aVRAlTcU+X9OWslC3k4h+rLndlml6Dt5BznBOAvG98+1njxi/0tc9z/zqD8c
+ 5qvZ12CuPOqJmU88PSykyB3s0R/EAidg6oZrpr1yQC4BxF7dUpXRLimQaL0MJSlH2i4hWpx1qr/
+ mQaF4zM9Ltgcxs3MCIV6vG4wgH9w2VX2UZUXJmsRQv1EtwIs+QkFazP+FPRTkNf9Wqg7ItK3huF
+ +Ma90jLeAbm/qMgaA7IXZKvaOvOn/ZVCawK5fNEXGEYk216GLWncrwtdn8spKukppGm5ufiOIqY
+ gUk04j4X8w6Acw6kzBIlXxMfIcY5lKkY+s1kI0YZjDvyMEAnMNN/UaCMoIZhbfwf6V8/dBKLHfx
+ 9bUCFLmj6LVOSL8JfG3Cr5p92jyzrZp7VfMmkbb7gkVi98x2rkKf28Mti2f50m6mQ8H7hzPTW3t
+ 2tE5ZwWbxRaao5XKMiF3u5KlqzLhaPu2f3xHAl7S4zcKE16cP5iNTX3OlxkxkjvUbLatfDvTLAE
+ qnzsQIqhhd4BG7YVdP80gF0LAYH5O4RgT2Uwc7fLNu5GUuE3TSQVHzbesID4bt7IN5vsn6RfAbK
+ bepjyojTphcqWiSPJ
+X-Received: by 2002:a17:90b:2701:b0:3aa:fdad:7d6e with SMTP id
+ 98e67ed59e1d1-3b41c8d9224mr77475a91.10.1795109742711; 
+ Thu, 19 Nov 2026 09:35:42 -0800 (PST)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb884ab091sm15717655e9.11.2026.11.19.09.14.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Nov 2026 09:14:26 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-Subject: [PATCH for-11.2] hw/ssi/aspeed_smc: Correct minimum_version_id in
- vmstate
-Date: Thu, 19 Nov 2026 17:14:25 +0000
-Message-ID: <20261119171425.3186790-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ 98e67ed59e1d1-3b405ecbd0bsm3410958a91.15.2026.11.19.09.35.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Nov 2026 09:35:42 -0800 (PST)
+Message-ID: <e9797996-ab93-466f-8404-0733e7dcf781@linaro.org>
+Date: Thu, 19 Nov 2026 09:35:40 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 02/15] target/i386/tcg: reject VEX encodings of PBLENDVB,
+ BLENDVPS and BLENDVPD
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20261117133750.322253-1-pbonzini@redhat.com>
+ <20261117133750.322253-3-pbonzini@redhat.com>
+ <CAFEAcA9YRZTkdjhOm9M6kW_E8HayQONUNEFWdVg=t7k6Ow273g@mail.gmail.com>
+ <CAFEAcA-9Z5bXAedSmRBHOonR3rXjHhzTLtt3HNBws4OkiFCyYg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-9Z5bXAedSmRBHOonR3rXjHhzTLtt3HNBws4OkiFCyYg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,67 +106,85 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In commit 29139270d8ad70f2 we made an incompatible change to the
-migration state for the aspeed_smc device, and bumped the version_id
-and minimum_version_id: this is because we increased ASPEED_SMC_R_MAX
-and so the regs array is bigger.
+On 11/19/26 04:30, Peter Maydell wrote:
+> On Thu, 19 Nov 2026 at 12:10, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>
+>> On Tue, 17 Nov 2026 at 13:38, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>>
+>>> The opcodes 66 0F 38 10, 14 and 15 (PBLENDVB, BLENDVPS and BLENDVPD) have
+>>> vex_class 4, which allows both the legacy and the VEX encoding, so
+>>> VEX.66.0F38 10, 14 and 15 were decoded as the same instructions.  The VEX
+>>> forms of these instructions are VPBLENDVB, VBLENDVPS and VBLENDVPD, which
+>>> have four operands and are in map 0F 3A, so the VEX opcodes in map 0F 38
+>>> should raise #UD.
+>>>
+>>> Keep vex_class 4, which provides the legacy SSE checks, and add a new
+>>> vex_special that raises #UD if the VEX or EVEX prefix is present.  This
+>>> is borderline disgusting, but an effective solution to x86's opcode sprawl
+>>> will have to wait for a new AI policy...
+>>>
+>>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>>
+>> Hi; this test case fails "make check" if built with clang.
+>>
+>> Configure flags:
+>>    '--cc=clang' '--cxx=clang++'
+>> '--target-list=x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user'
+>> '--enable-debug'
+> 
+> ...and in fact it breaks with gcc too:
+> 
+> /home/pm215/qemu/tests/tcg/../docker/docker.py --command podman run
+> --run-as-current-user -- --security-opt label=disable --platform
+> linux/amd64 -w /home/pm215/qemu/build/x86 -v
+> /home/pm215/qemu/build/x86:/home/pm215/qemu/build/x86 -v
+> /home/pm215/qemu:/home/pm215/qemu qemu/debian-i686-cross
+> i686-linux-gnu-gcc ../../tests/tcg/i386/test-i386-blendv.c -o
+> tests/tcg/i386-linux-user-test-i386-blendv.test -static -MMD -MF
+> tests/tcg/i386-linux-user-test-i386-blendv.d -Wall -Werror -O0 -g
+> -fno-strict-aliasing -fno-stack-protector
+> ../../tests/tcg/i386/test-i386-blendv.c: In function ‘main’:
+> ../../tests/tcg/i386/test-i386-blendv.c:20:22: error: the register
+> ‘xmm1’ cannot be clobbered in ‘asm’ for the current target
+>     20 | #define SSE_INSN(op) asm volatile(".byte 0x66, 0x0f, 0x38, "
+> #op ", 0xc9" \
+>        |                      ^~~
+> ../../tests/tcg/i386/test-i386-blendv.c:43:5: note: in expansion of
+> macro ‘SSE_INSN’
+>     43 |     SSE_INSN(0x10);
+>        |     ^~~~~~~~
+> ../../tests/tcg/i386/test-i386-blendv.c:20:22: error: the register
+> ‘xmm1’ cannot be clobbered in ‘asm’ for the current target
+>     20 | #define SSE_INSN(op) asm volatile(".byte 0x66, 0x0f, 0x38, "
+> #op ", 0xc9" \
+>        |                      ^~~
+> ../../tests/tcg/i386/test-i386-blendv.c:44:5: note: in expansion of
+> macro ‘SSE_INSN’
+>     44 |     SSE_INSN(0x14);
+>        |     ^~~~~~~~
+> ../../tests/tcg/i386/test-i386-blendv.c:20:22: error: the register
+> ‘xmm1’ cannot be clobbered in ‘asm’ for the current target
+>     20 | #define SSE_INSN(op) asm volatile(".byte 0x66, 0x0f, 0x38, "
+> #op ", 0xc9" \
+>        |                      ^~~
+> ../../tests/tcg/i386/test-i386-blendv.c:45:5: note: in expansion of
+> macro ‘SSE_INSN’
+>     45 |     SSE_INSN(0x15);
+>        |     ^~~~~~~~
+> 
+> I'm not sure how this made it through CI, maybe it's a compiler
+> version related thing?
+Plus or minus version, I expect it's how the compiler is configured, 
+whether sse is enabled by default for i686.  We just need to add -msse 
+to cflags to ensure it.
 
-However, the old vmstate was handling migration from a range of
-vmstate versions, with version_id = 3 and minimum_version_id = 1.
-The change to ASPEED_SMC_R_MAX is (intentionally) not compatible with
-any of those older versions, and so it should have moved
-minimum_version_id up to 4 (matching the new version_id), not merely
-increment it.
 
-The effect of this is that trying a migration save on v11.1.3 and
-then a load on the current head of git fails in a confusing way
-("Missing section footer for aspeed.smc") rather than clearly ("error
-while loading state for instance 0x0 of device 'aspeed.smc':
-aspeed.smc: incoming version_id 3 is too old for local minimum
-version_id 5").
-
-Since we now don't need to try to handle migration from versions 2
-and 3 at all, we can drop the complications in the vmstate struct (an
-unused field, and field only present in version 3 and up). Clean
-these up and set the version_id and minimum_version_id to 5
-accordingly.
-
-Fixes: 29139270d8ad70f2 ("hw/ssi/aspeed_smc: Add Data FIFO-based flash access support for AST2700")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4880
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/ssi/aspeed_smc.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index ec9ad0f747e..f82947e752e 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -1218,12 +1218,11 @@ static void aspeed_smc_realize(DeviceState *dev, Error **errp)
- 
- static const VMStateDescription vmstate_aspeed_smc = {
-     .name = "aspeed.smc",
--    .version_id = 4,
--    .minimum_version_id = 2,
-+    .version_id = 5,
-+    .minimum_version_id = 5,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(regs, AspeedSMCState, ASPEED_SMC_R_MAX),
--        VMSTATE_UNUSED_V(2, 2), /* was snoop_index/snoop_dummies */
--        VMSTATE_BOOL_V(unselect, AspeedSMCState, 3),
-+        VMSTATE_BOOL(unselect, AspeedSMCState),
-         VMSTATE_END_OF_LIST()
-     }
- };
--- 
-2.43.0
-
+r~
 
