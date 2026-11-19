@@ -1,76 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3B6606A325
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 20:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E7A606A331
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 20:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=IhbHr/Qq
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=BMZOMxT1;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=FjAkwtO4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU8fe-0008Sz-M7; Thu, 19 Nov 2026 15:23:50 -0500
+	id 1xU8iT-0001nS-3e; Thu, 19 Nov 2026 15:26:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xU8fd-0008SW-Ar
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 15:23:49 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xU8iR-0001nH-FJ
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 15:26:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xU8fW-0003JC-Md
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 15:23:44 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xU8iP-0007DD-PN
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 15:26:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795119822;
+ s=mimecast20190719; t=1795120000;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n7ijLyDQT5N01imvJZvlansp62otmTWiU/aPlqnLi0w=;
- b=IhbHr/Qqthm0YeJs2pAwLPas6QJX8vDR5Sn8UX78qp7w3CjXVvF2LI5uSNJnwgbfoL7yO4
- 9cM28TwldAZM21Ww6Mc/ceWXK5YYbRajHzM0njkvargw9OwecEnZ+vmSpdvJTKJyTwhJcV
- eG2asjip40bk72ZnlCt4jvFuGnWc32A=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-y5GfXF3eMPCjdwnqXzUaCA-1; Thu,
- 19 Nov 2026 20:23:37 +0000
-X-MC-Unique: y5GfXF3eMPCjdwnqXzUaCA-1
-X-Mimecast-MFC-AGG-ID: y5GfXF3eMPCjdwnqXzUaCA_1795119816
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1A451955DA2; Thu, 19 Nov 2026 20:23:36 +0000 (UTC)
-Received: from eblake.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A30FD34C; Thu, 19 Nov 2026 20:23:34 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:Network Block Dev...)
-Subject: [PULL 1/3] nbd: Refactor structured payload interpretation
-Date: Thu, 19 Nov 2026 14:23:11 -0600
-Message-ID: <20261119202330.3853797-6-eblake@redhat.com>
-In-Reply-To: <20261119202330.3853797-5-eblake@redhat.com>
-References: <20261119202330.3853797-5-eblake@redhat.com>
+ bh=zzLahnCh7vHXMkhpE4qQVEViCHrPIKPUXcE/kX8uJHw=;
+ b=BMZOMxT1C0Pl0lW/g47+ECINIMuJihg2znlCBONr8oIpjOEF27grvh0oJ92B/RJdf5KD01
+ n823/zRsqIUGQcIFby+xjv78wI7vvQ9La478NqDNYhubnIKwCKZBaSkahFzr9mPKeX3Jwl
+ Gx3rB32SfRrjgvtl6i6GCFqA9nk46Fw=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-637-Q3YE1U68N723eImbfIl1Mw-1; Thu, 19 Nov 2026 15:26:38 -0500
+X-MC-Unique: Q3YE1U68N723eImbfIl1Mw-1
+X-Mimecast-MFC-AGG-ID: Q3YE1U68N723eImbfIl1Mw_1795119998
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-91b937ecbb4so4077046d6.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 12:26:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1795119998; x=1795724798; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=zzLahnCh7vHXMkhpE4qQVEViCHrPIKPUXcE/kX8uJHw=;
+ b=FjAkwtO4dTP7APwd0+a1+JDtQ+bBbCMSA9sNt7+QDbt5KT1ZBVw2ZmIF2sBfyDN9cp
+ C/kJthUrZ6K61QxyGsl3hrbJlHQXrbkWQLwum7ZmQp/y/yBpet3JwYirZYF1LqLs69tU
+ GpYEBLhPHvowLqZ8Uf1uX7NjUiqtf3IC9dUgXck1Uuzl6DCgfizpr6TpmiZtHqloMXiJ
+ n2Yel/rJ+rhYtNkEBvJpA9hhIXYxnQ1FpY4KKmIHltSWPiGFkeCEi3UINLcMEBuQCdQ/
+ hHYnvtLjpamis/llV3H/wfja8dSYtcI/2uZqBMt7kLmdbm3Zcpbnp3Ts0HcGPbXyQbjB
+ /Mvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795119998; x=1795724798;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=zzLahnCh7vHXMkhpE4qQVEViCHrPIKPUXcE/kX8uJHw=;
+ b=PEjq3iAF/3FFztw/iQnr0qmvTBD4GAQQrueGqvgbBtlZpPktbwAds1Jq9n5S83iZq3
+ 9lpVbKgySb2K1XrcXn693uCE7n73ejFI1aU9Ypevd3vi8/gku1MH0U/CNyIkaxapYmVY
+ OgQuJhV4J7ovaMo+y/pEYgKCLih999iu4MZ9Sr25UgRJvDWTSpqbMjs2mu0wL1o8fMRU
+ /9VbaAH+nBm8XSnJYdyPJtztd7LIBy8Yv0XAiBbKscTPm80a64Bn02GvzJTK9muK782Y
+ NrbW6n5dgf3RJRHfsJFT2uKsCw2WyVA1D/ny5lo+S7b5BDaxl+5OmBkB5wDh1cjNbqNc
+ DmNQ==
+X-Gm-Message-State: APuU4Z8YC/OGbdCRF4qbwwd1QpXmKq8GxMaPh4hSW7X19moCRP0Gwwio
+ QRQyCBTG6m8Zrg5ER2Iuqw1nQk9Dnr4H6kfVC1BsTqRyLhS5wWxyVuAFA1yUBFAwhJ55AHArpm2
+ 4m4cFZDia3rlLpm2wpsTvmWHcYBfzflL+ZjNhzantoDOw2LJj6rmA2Brl
+X-Gm-Gg: AZFdTZdQpOAjMWTRH3VNps2ssS7BmYnJ52Ve4d5GyGjkf8pC06LnLusZ6RDHx9UszmG
+ UldpVAd7EUp7GRSNXYMMfEVGDZgg5aFc0x26HKhB8oSVxLMadoakFqmGMFDtgc3WuOqft+irFGz
+ ONOYmwvDLGP42JmsZq9RzzyYlQ7Pz8/MaNdBMfYVpiu5Ie8uYTc/FeRbZsg4yk51urt4yzx1fMq
+ EL8FwCrJRFPLNrPbbHy1yXuG0EpGYSV0BtCEc5Ri3A44zBPxLdFtfKhMVr2Ybrpx3W52ilNv6cL
+ CvXHn2cGyEbP44sbmm0UVSi3ApaQg7FoLe+Q96hUNVkPngT73+w/Y/SbvFjUgrbWWl5v9NASkw7
+ k7ozOUVGif7z7jlwTNqM/iCMc+gxknrfQA4JQ7SMTX6yg
+X-Received: by 2002:a05:6214:6181:20b0:91f:316d:2f5d with SMTP id
+ 6a1803df08f44-92134ab7ee2mr11910156d6.17.1795119997882; 
+ Thu, 19 Nov 2026 12:26:37 -0800 (PST)
+X-Received: by 2002:a05:6214:6181:20b0:91f:316d:2f5d with SMTP id
+ 6a1803df08f44-92134ab7ee2mr11909706d6.17.1795119997064; 
+ Thu, 19 Nov 2026 12:26:37 -0800 (PST)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-921349b253csm7519266d6.15.2026.11.19.12.26.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Nov 2026 12:26:36 -0800 (PST)
+Date: Thu, 19 Nov 2026 15:26:35 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+	Fabiano Rosas <farosas@suse.de>
+Subject: Re: VMSTATE_VALIDATE failures on outbound migration
+Message-ID: <av9be5IWLpQJu-F_@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <CAFEAcA-iAdTGc0M4ZV5LYXscVVj2oEr7FN+Ac=oBo2_oxuygzg@mail.gmail.com>
+ <av8k8oiG8lRh5bVI@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAFEAcA_8EAke9-dk-2HfkQ5BJyuODtcSK+DUcmYKRSKgEf=Wnw@mail.gmail.com>
+ <av9D4pVMM989xNcE@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAFEAcA8UWw+CpaS8wyy0A_MSeXhJ3NzJGcLm-iHkzmw5t9Cd_w@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8UWw+CpaS8wyy0A_MSeXhJ3NzJGcLm-iHkzmw5t9Cd_w@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,67 +124,98 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-An upcoming patch wants to reuse the payload of a structured reply
-chunk in further code for additional safety checks on the server's
-response.  It will be easiest if the initial parse converts the
-payload from network order into host order along the way, so that I
-don't introduce subtle endian-specific bugs in that upcoming code. A
-quick audit shows that none of the current callers of
-payload_advance*() were reading a memory location within the payload
-after its initial parse.
+On Thu, Nov 19, 2026 at 06:53:19PM +0000, Peter Maydell wrote:
+> I don't think you can deal with the pcie_aer usage this way though,
+> can you ?
 
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20261113223742.2546619-7-eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Attached a patch for that, please have a look.
+
+IMHO it's a matter of if we think VMSTATE_VALIDATE() useful.  At least for
+the current form, I don't like it, especially hijacking the field_exists().
+I hope post_load_errp() is enough.
+
+Thanks,
+
+===8<===
+From d92c2548ea084091d3baf51682b150dd4e0f2316 Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Thu, 19 Nov 2026 14:53:47 -0500
+Subject: [PATCH] pcie/aer: Remove the usage of VMSTATE_VALIDATE()
+
+Paving way removing it.  We can replace it with a post_load_errp() instead.
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- block/nbd.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ hw/pci/pcie_aer.c | 40 +++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 35 insertions(+), 5 deletions(-)
 
-diff --git a/block/nbd.c b/block/nbd.c
-index e5e16722ba2..052469b3547 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -578,24 +578,36 @@ err:
-     return rc;
+diff --git a/hw/pci/pcie_aer.c b/hw/pci/pcie_aer.c
+index 43b14c1f22..87248556d4 100644
+--- a/hw/pci/pcie_aer.c
++++ b/hw/pci/pcie_aer.c
+@@ -807,21 +807,51 @@ static const VMStateDescription vmstate_pcie_aer_err = {
+     }
+ };
+ 
+-static bool pcie_aer_state_log_num_valid(void *opaque, int version_id)
+-{
+-    PCIEAERLog *s = opaque;
++typedef struct {
++    uint16_t v;
++} tmp_u16;
+ 
++static bool pcie_aer_state_log_num_valid(PCIEAERLog *s)
++{
+     return s->log_num <= s->log_max;
  }
-
-+/* Consume a field of payload, while swapping it in place to host-endian. */
- static inline uint16_t payload_advance16(uint8_t **payload)
- {
-+    uint16_t value = lduw_be_p(*payload);
-+    stw_he_p(*payload, value);
-     *payload += 2;
--    return lduw_be_p(*payload - 2);
-+    return value;
- }
-
- static inline uint32_t payload_advance32(uint8_t **payload)
- {
-+    uint32_t value = ldl_be_p(*payload);
-+    stl_he_p(*payload, value);
-     *payload += 4;
--    return ldl_be_p(*payload - 4);
-+    return value;
- }
-
- static inline uint64_t payload_advance64(uint8_t **payload)
- {
-+    uint64_t value = ldq_be_p(*payload);
-+    stq_he_p(*payload, value);
-     *payload += 8;
--    return ldq_be_p(*payload - 8);
-+    return value;
- }
-
-+/*
-+ * nbd_parse_offset_hole_payload:
-+ * Parse a chunk for NBD_REPLY_TYPE_OFFSET_HOLE, updating payload in
-+ * place to a host-endian description of the region described.
-+ */
- static int nbd_parse_offset_hole_payload(BDRVNBDState *s,
-                                          NBDStructuredReplyChunk *chunk,
-                                          uint8_t *payload, uint64_t orig_offset,
+ 
++static bool pcie_aer_state_log_num_post_load(void *opaque, int version,
++                                             Error **errp)
++{
++    PCIEAERLog *s = container_of(opaque, PCIEAERLog, log_num);
++
++    if (!pcie_aer_state_log_num_valid(s)) {
++        error_setg(errp, "PCIe AER log num too big: log_num > log_max");
++        return false;
++    }
++
++    return true;
++}
++
++static const VMStateDescription vmstate_pcie_aer_log_num = {
++    .name = "PCIE_AER_ERROR_LOG/NUM",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load_errp = pcie_aer_state_log_num_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT16(v, tmp_u16),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ const VMStateDescription vmstate_pcie_aer_log = {
+     .name = "PCIE_AER_ERROR_LOG",
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT16(log_num, PCIEAERLog),
++        /*
++         * Only to use STRUCT for a post_load_errp().  New code should try
++         * to use something look better, e.g. subsections in order.
++         */
++        VMSTATE_STRUCT(log_num, PCIEAERLog, 1,
++                       vmstate_pcie_aer_log_num, uint16_t),
+         VMSTATE_UINT16_EQUAL(log_max, PCIEAERLog),
+-        VMSTATE_VALIDATE("log_num <= log_max", pcie_aer_state_log_num_valid),
+         VMSTATE_STRUCT_VARRAY_POINTER_UINT16(log, PCIEAERLog, log_num,
+                               vmstate_pcie_aer_err, PCIEAERErr),
+         VMSTATE_END_OF_LIST()
 -- 
-2.56.1
+2.56.0
+
+
+
+-- 
+Peter Xu
 
 
