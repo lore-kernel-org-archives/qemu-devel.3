@@ -1,61 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC1D606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B591F606A320
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 06:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=LFGTSxe/
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=EMdAtu72
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTvfZ-0004Sr-D9; Thu, 19 Nov 2026 01:30:53 -0500
+	id 1xTvfX-0004R7-19; Thu, 19 Nov 2026 01:30:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1xTvfG-0004L6-BI; Thu, 19 Nov 2026 01:30:37 -0500
+ id 1xTvfD-0004Kr-22; Thu, 19 Nov 2026 01:30:33 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1xTvfE-0005tT-5p; Thu, 19 Nov 2026 01:30:34 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1xTvfA-0005Tr-IP; Thu, 19 Nov 2026 01:30:30 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJ4jHuW3324077; Thu, 19 Nov 2026 06:30:30 GMT
+ 6AJ4jG2D1531860; Thu, 19 Nov 2026 06:30:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Ome7GrWPFjmkhpK2E
- 0dYx3KMEx0gnR50d7CJNFY1CRs=; b=LFGTSxe/8vhL4q3RYdUeHxsylWUM7ccCY
- sTkY6Zncf+EkeRdBe+I52znZGzdA4jJID3IY32Kf9rI+hqPU37ADzClT8/eNmHjx
- 9JuA6YcPgMgHXPlUQM5mG7jOw3AKtY7/xyPLzMQCmtm7uPyre33iP2N2wRxpLD2x
- XQlVQ1nguuZx6LwQeU+VE2nex6V1SDj4cjWwZRrkshYJABcad4xKklK/w/tFeVMD
- n2+WEWnR8+59/kQqq2bxpTMFuDUoHuHND2Jop/T59pAgH3w6Bf5KmO0w0yFae9Sq
- e+JTMBRMaa3aGVqnIa7ZnDQSY4EDXPrg2xYvcBlOCFqEi8uU7UTfg==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105nf090-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=6n16mv
+ NJsEEIpRyHreXXXAE/cMs1czam33NMUNflIxE=; b=EMdAtu72xAmLcDH9APM7Kv
+ Dro0HAQw4hYcqzKGILkrdAjkp7Lq6eal3+mOPxFwmt2TfXWEXrrD2+wnc07q7XaS
+ 5yxdiTcZPEuqs8YboAjV+cfsKoSwGfeLVh0vWObEmS+uxucKLEPfQt9OiErDf3YB
+ EAGNHY9ZoLYmUsQodY6VXQeLtGAVWt0H9ERHQ7JyQFqg2l6U2aOiGILLNFbZy8Gg
+ hvEtiJs1XGKSZatIimaipvSzkpskp4iQ58e7B4JDXJuy96Od1jMhnItgNTguDaLQ
+ oFyYs5r9o931Y7Eh9C830XPR2UsQjUA8lJe5FSkxJB8ZeFziOgL/8IaovyI9Xakw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105rpyuq-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 19 Nov 2026 06:30:29 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJ4rN8X063061; Thu, 19 Nov 2026 06:30:28 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4j1hd6tkep-1
+ Thu, 19 Nov 2026 06:30:24 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AJ4xPbf2919850; Thu, 19 Nov 2026 06:30:24 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j1bb5by6b-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 19 Nov 2026 06:30:28 +0000 (GMT)
+ Thu, 19 Nov 2026 06:30:24 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AJ6URNu24052324
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6AJ6TVFw27591412
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 19 Nov 2026 06:30:27 GMT
+ Thu, 19 Nov 2026 06:29:32 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B7B395805D;
- Thu, 19 Nov 2026 06:30:27 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DEA1B58043;
+ by IMSVA (Postfix) with ESMTP id 43D8558055;
  Thu, 19 Nov 2026 06:30:22 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B7E0158043;
+ Thu, 19 Nov 2026 06:30:16 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.124.221.175])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 19 Nov 2026 06:30:22 +0000 (GMT)
+ Thu, 19 Nov 2026 06:30:15 +0000 (GMT)
 From: Anushree Mathur <anushree.mathur@linux.ibm.com>
 To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
@@ -66,43 +67,46 @@ Cc: Anushree Mathur <anushree.mathur@linux.ibm.com>,
  Miles Glenn <milesg@linux.ibm.com>,
  Aditya Gupta <adityag@linux.ibm.com>, misanjum@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>, Utkarsh Verma <uverma@linux.ibm.com>
-Subject: [PATCH v2 2/4] tests/functional/ppc64: add pseries security caps test
-Date: Thu, 19 Nov 2026 11:59:48 +0530
-Message-ID: <20261119062951.83498-3-anushree.mathur@linux.ibm.com>
+Subject: [PATCH v2 1/4] tests/functional/ppc64: add pseries CPU hotplug test
+Date: Thu, 19 Nov 2026 11:59:47 +0530
+Message-ID: <20261119062951.83498-2-anushree.mathur@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261119062951.83498-1-anushree.mathur@linux.ibm.com>
 References: <20261030131025.32219-1-anushree.mathur@linux.ibm.com>
  <20261119062951.83498-1-anushree.mathur@linux.ibm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDAyNSBTYWx0ZWRfX5ACXwqUFcz+a
- vRJT9UAH86Erf3GrAwWqCWEJUrntuLI/5kKhk/HJKmTmFmiCPpru+u2k7fAMLM3rue1iN6+TjJr
- qUh2omrM/Ss10xLOCmq0/V0MfECy4J+TQvKqxXpM1oaV8pOhbJicrHSAYaQrkg8iyqYEa5vLCYZ
- 6U4RvpYXcNSSKGkGZstcLVAPrec70BhwibKY7nVrB769bD2KRUbXqxPnJg0DQLqaCIyNZ1iOdUA
- E/Ui57jOwOdDnPMCDkNsKiF6MzaZOayeQOhX+HeRmDFidtUQ5paLNu54D0onPr1k732zkxK4vc5
- MF01yLqAFWWpqXx75l9AnQvD+r/M1kebB3rlhJ8wqAK85BZDDOOjn51cBytPLQLusYOKmFUM2jQ
- ghPUDVzr5cWIo2iSYJs6OcN3R6DaX+7pnWJphFXNUEw2xUKlGJZadmyxh3UdXnzob1FByFQd2Wo
- /Otx898a2Belftgqj7A==
-X-Authority-Analysis: v=2.4 cv=HN9WhYtv c=1 sm=1 tr=0 ts=6afe9786 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=ap8TLsdQcWgLwmS6zZkA:9
-X-Proofpoint-GUID: s3zgFI06cKxK6oK-xjsaZiGbygQhSLQ-
-X-Proofpoint-ORIG-GUID: HwU-VJFt0ZIC9vC7aJ7LwHGauyAEgx38
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDAyNSBTYWx0ZWRfX4fQbXXajBkkJ
- gduCH4tielrolrzLvfmbLclAEGXjIjuM78NEzfXsInMRuwM79a+B6088viFKyzWoaWwLgYeMfQ6
- FtfAfFMKi/MFkjg4gfHDZVaRsJjReD4=
+X-Proofpoint-GUID: VJOJL-HOXrP7MLmi98FZ_u9PtL8Evmz0
+X-Authority-Analysis: v=2.4 cv=e8uT2qp/ c=1 sm=1 tr=0 ts=6afe9781 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=NEAV23lmAAAA:8
+ a=VnNF1IyMAAAA:8 a=sa340zWXXxNFbS3KqbkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDAyNSBTYWx0ZWRfX5gWQzayxP27j
+ /0Zb1+GhlOmJdEGx6bkSbpQEP4Aq0hJ5QXlSSRMwvYT7SQzWSR3rrlK2/3spdOptjorb3xqKlRZ
+ yLeMEfUN3Jii+lJkCaDb03ArfdVsmC0=
+X-Proofpoint-ORIG-GUID: yANXytZn0J0xEuJ8knALzAf2RpZBzM66
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDAyNSBTYWx0ZWRfX8/zJFxRqFl9m
+ +BisSrA5r/okrN9uln8dEbvsyh5xrNj7UNVrY9vHHyINszhn/8t+oSHgmhgbRuXk2m4NbPksbVL
+ REv+uDRbz1d/V9IFFUQAnqJrWJQ7M/QBq1Df8M7wIjJaSMP5p5y4aR8L8TuZCOeWKFsCIuwCW2v
+ Efq8l1tPs5rvO29VrZnVQo/dovrs+XxRTqMEks4xCuMSJYBWtGH9vMlmS+NboNqKiQfFCpQguQQ
+ 4DgzGDFdEykGbGRBxB7VOlx036LnnMdnXoQZNc75K4Suys9odjfpPiSbv6ns6Uj8kAsHVATSpLX
+ fhhXFLMa2xRPmu5Y6hwUkROvc4Bovkgd29YXZoYlrseWvaYuKu+oF7ZwauXY3+QMBR/ew6Dzg/K
+ dLRJP5HNzD4y2jatYvqkN0Q+E7vkZ6E9DsMKQhhibHRpPMeIa2gQg2XA5YTB9i/PBbmucd0IvtN
+ 0z4F5o9WpfLk6p7HIPQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-19_01,2026-11-16_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0
- adultscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611190025
+ clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611190025
 Received-SPF: pass client-ip=148.163.156.1;
  envelope-from=anushree.mathur@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -123,225 +127,260 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a quick functional test (no Linux boot required) that checks that
-the pseries machine type accepts its security capability options and
-that backward-compatible versioned machine types can be instantiated,
-using the QMP interface.
+Add a functional test that exercises DLPAR (Dynamic Logical
+Partitioning) CPU hotplug and unplug on the pseries machine type.
 
-Each test starts QEMU with -S (halted) so no firmware or kernel is
-needed.  The tests cover:
+The pseries machine supports adding and removing CPU cores at runtime
+via RTAS calls made by the guest.  This test boots a minimal Linux
+kernel with a single core (-smp 2,threads=2,cores=1,maxcpus=4), then
+uses QMP device_add to attach a second core, verifies the guest sees
+it via /sys/devices/system/cpu/online, and then removes it again.
 
-  * test_pseries_in_query_machines: pseries appears in query-machines
-    and is marked is-default=true.
-  * test_pseries_security_caps_override: cap-cfpc, cap-sbbc, cap-ibs
-    and cap-ccf-assist overrides are accepted and the machine starts.
-  * test_pseries_nested_hv_cap: cap-nested-hv=on is accepted.
-  * test_pseries_compat_7_2/9_2/10_0: versioned compat machines can be
-    instantiated and are not marked is-current.
-  * test_pseries_cap_hpt_max_page_size: cap-hpt-max-page-size is
-    reachable via the QOM tree at /machine.
+The CPU driver name is detected dynamically via query-hotpluggable-cpus
+so the test remains correct when the default pseries CPU changes in a
+future QEMU release (e.g. power10 -> power11).
 
-All tests complete in under 5 seconds each and are registered in the
-tests_ppc64_system_quick list.
+Two variants are provided:
+  - test_pseries_cpu_hotplug_tcg: runs under TCG on any host arch.
+  - test_pseries_cpu_hotplug_kvm: runs under KVM on ppc64le hosts with
+    kvm-hv loaded; skipped automatically elsewhere.  An explicit
+    /proc/modules check for kvm_hv is added because on ppc64le the base
+    kvm module can create /dev/kvm without kvm-hv, which would cause the
+    test to error rather than skip.
+
+x-vof=on is intentionally NOT used: VOF skips the SLOF firmware path
+that sets up the RTAS event interrupt, causing CPU hotplug events to be
+silently dropped by the guest kernel.
 
 Signed-off-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
 ---
-v2: reworded the commit message to say what is actually checked,
-fixed docstrings that did not match the code and dropped the skipped
-query-cpu-model-expansion placeholder test.
+v2: assets now from raphael502/qemu-ppc-boot instead of
+legoater/qemu-ppc-boot (same files, same sha256); wrapped long URL
+lines for checkpatch.
 
- tests/functional/ppc64/meson.build          |   1 +
- tests/functional/ppc64/test_pseries_caps.py | 162 ++++++++++++++++++++
- 2 files changed, 163 insertions(+)
- create mode 100755 tests/functional/ppc64/test_pseries_caps.py
+ tests/functional/ppc64/meson.build         |   2 +
+ tests/functional/ppc64/test_hotplug_cpu.py | 185 +++++++++++++++++++++
+ 2 files changed, 187 insertions(+)
+ create mode 100755 tests/functional/ppc64/test_hotplug_cpu.py
 
 diff --git a/tests/functional/ppc64/meson.build b/tests/functional/ppc64/meson.build
-index 45468087cb..d91209f041 100644
+index cb3c745624..45468087cb 100644
 --- a/tests/functional/ppc64/meson.build
 +++ b/tests/functional/ppc64/meson.build
-@@ -14,6 +14,7 @@ test_ppc64_timeouts = {
+@@ -2,6 +2,7 @@
  
- tests_ppc64_system_quick = [
-   'migration',
-+  'pseries_caps',
-   'vmstate',
- ]
- 
-diff --git a/tests/functional/ppc64/test_pseries_caps.py b/tests/functional/ppc64/test_pseries_caps.py
+ test_ppc64_timeouts = {
+   'fadump' : 480,
++  'hotplug_cpu' : 480,
+   'hv' : 1000,
+   'mac99' : 120,
+   'openbsd' : 240,
+@@ -19,6 +20,7 @@ tests_ppc64_system_quick = [
+ tests_ppc64_system_thorough = [
+   'e500',
+   'fadump',
++  'hotplug_cpu',
+   'hv',
+   'mac99',
+   'openbsd',
+diff --git a/tests/functional/ppc64/test_hotplug_cpu.py b/tests/functional/ppc64/test_hotplug_cpu.py
 new file mode 100755
-index 0000000000..9ef3f48bb1
+index 0000000000..bd01bc2022
 --- /dev/null
-+++ b/tests/functional/ppc64/test_pseries_caps.py
-@@ -0,0 +1,162 @@
++++ b/tests/functional/ppc64/test_hotplug_cpu.py
+@@ -0,0 +1,185 @@
 +#!/usr/bin/env python3
 +# Copyright (c) 2025 IBM Corporation
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+from qemu_test import QemuSystemTest
++import platform
++
++from qemu_test import LinuxKernelTest, Asset
++from qemu_test import exec_command_and_wait_for_pattern
 +
 +
-+class PseriesCapsTest(QemuSystemTest):
++class PseriesCpuHotplug(LinuxKernelTest):
 +    """
-+    Quick (no-boot) tests for pseries machine capabilities.
++    Test DLPAR CPU hotplug/unplug on the pseries machine type.
 +
-+    Each test starts QEMU with -S (halted) so no firmware or kernel is
-+    needed.  The tests exercise the QMP interface to verify that:
++    The pseries machine implements the PAPR CPU hotplug protocol: the
++    hypervisor presents Dynamic Reconfiguration Connectors (DRCs) to
++    the guest, and the guest uses RTAS calls to accept or reject CPUs
++    that are offered or withdrawn.
 +
-+      * The machine type is visible in 'query-machines' output.
-+      * Known security capability properties (cap-cfpc, cap-sbbc,
-+        cap-ibs, cap-ccf-assist, cap-nested-hv) are accepted.
-+      * Versioned compat machines (pseries-7.2, pseries-9.2 and
-+        pseries-10.0) can be instantiated and are not marked
-+        is-current.
-+      * cap-hpt-max-page-size is reachable via the QOM tree.
++    Topology used: -smp 2,threads=2,cores=1,maxcpus=4 — 1 active core
++    (cpu0+cpu1 online), max 2 cores.  Hot-add core-id=2 → online goes
++    0-3; hot-remove → back to 0-1.  Verified via /sys/.../cpu/online.
++
++    Two variants are provided:
++      * test_pseries_cpu_hotplug_tcg — uses TCG, runs on any host arch.
++      * test_pseries_cpu_hotplug_kvm — uses KVM, requires a ppc64le host
++        with kvm-hv loaded; skipped automatically on other hosts.
 +    """
 +
-+    timeout = 30
++    timeout = 480
 +
-+    # ------------------------------------------------------------------ #
-+    # Helpers
-+    # ------------------------------------------------------------------ #
++    # Buildroot image built for pseries (ppc64le little-endian paravirtual).
++    ASSET_KERNEL = Asset(
++        ('https://github.com/raphael502/qemu-ppc-boot/raw/refs/heads/main/'
++         'buildroot/qemu_ppc64le_pseries-2023.11-8-gdcd9f0f6eb-20240104/'
++         'vmlinux'),
++        'fc20d5820ad83ed514ac5f88af7e2692d47ab7f36dab290cdb137d05b98502f5')
 +
-+    def _launch_stopped(self, machine='pseries', extra_args=None):
-+        """Launch QEMU paused (-S) for the named machine and return."""
-+        self.set_machine(machine)
-+        self.vm.add_args('-S', '-nodefaults')
-+        if extra_args:
-+            self.vm.add_args(*extra_args)
++    ASSET_ROOTFS = Asset(
++        ('https://github.com/raphael502/qemu-ppc-boot/raw/refs/heads/main/'
++         'buildroot/qemu_ppc64le_pseries-2023.11-8-gdcd9f0f6eb-20240104/'
++         'rootfs.ext2'),
++        '6fd31e2300e9921d1192aa5c997760fc8bc40a18513cc466c56902f72d61fd23')
++
++    def _boot_pseries(self, accel):
++        """
++        Boot pseries with 1 core present and room for a second core.
++
++        -smp 2,threads=2,cores=1,maxcpus=4 gives us:
++          * 1 active core  → cpu0 + cpu1 (2 SMT threads)
++          * 1 spare core slot that can be filled by device_add
++
++        accel must be 'tcg' or 'kvm'.
++        """
++        kernel_path = self.ASSET_KERNEL.fetch()
++        rootfs_path = self.ASSET_ROOTFS.fetch()
++
++        self.set_machine('pseries')
++        # Do NOT use x-vof=on here — VOF skips the SLOF firmware path that
++        # sets up the RTAS event interrupt (epow/check-exception).  Without
++        # SLOF, the guest kernel's pseries_hp_wq workqueue is never triggered
++        # and CPU hotplug RTAS events are silently dropped.
++        if accel == 'tcg':
++            self.vm.add_args('-accel', 'tcg,thread=multi')
++        else:
++            self.vm.add_args('-accel', 'kvm')
++        self.vm.add_args('-smp', '2,threads=2,cores=1,maxcpus=4')
++        self.vm.add_args('-m', '512M')
++        self.vm.set_console()
++        self.vm.add_args('-drive',
++                         f'file={rootfs_path},if=scsi,index=0,format=raw')
++        self.vm.add_args(
++            '-kernel', kernel_path,
++            '-append', 'root=/dev/sda console=hvc0 rootwait printk.time=0',
++        )
 +        self.vm.launch()
++        self.wait_for_console_pattern('buildroot login:')
++        exec_command_and_wait_for_pattern(self, 'root', '#')
 +
-+    def _query_machine_info(self, name):
-+        """Return the entry from query-machines that matches *name* or alias."""
-+        machines = self.vm.cmd('query-machines')
-+        for m in machines:
-+            if m['name'] == name or m.get('alias') == name:
-+                return m
-+        return None
-+
-+    # ------------------------------------------------------------------ #
-+    # Test: basic pseries machine is visible in query-machines
-+    # ------------------------------------------------------------------ #
-+
-+    def test_pseries_in_query_machines(self):
-+        """pseries (latest) must appear in query-machines output."""
-+        self._launch_stopped('pseries')
-+        info = self._query_machine_info('pseries')
-+        self.assertIsNotNone(info,
-+                             'pseries not found in query-machines output')
-+        # The default/latest versioned machine carries is-default=True.
-+        self.assertTrue(
-+            info.get('is-default', False),
-+            'pseries alias should be marked is-default=true',
-+        )
-+
-+    # ------------------------------------------------------------------ #
-+    # Test: security cap overrides are accepted without error
-+    # ------------------------------------------------------------------ #
-+
-+    def test_pseries_security_caps_override(self):
++    def _get_hotplug_cpu_driver(self):
 +        """
-+        Verify pseries accepts all well-known security cap overrides.
++        Return the spapr-cpu-core driver name for an empty hotplug slot.
 +
-+        These are the options used by the KVM nested-HV path in
-+        test_hv.py.  We only check that QEMU starts cleanly (no launch
-+        exception); the actual cap values are enforced by separate
-+        migration / capability tests.
++        query-hotpluggable-cpus lists all possible CPU slots; entries
++        without a 'qom-path' key are currently empty.  The 'type' field
++        of any empty slot gives the driver name to pass to device_add.
++        This avoids hard-coding a CPU version string (e.g.
++        'power11_v2.0-spapr-cpu-core') that would break when the default
++        pseries CPU changes in a future QEMU release.
 +        """
-+        caps = (
-+            'cap-cfpc=broken,'
-+            'cap-sbbc=broken,'
-+            'cap-ibs=broken,'
-+            'cap-ccf-assist=off'
-+        )
-+        self._launch_stopped(
-+            'pseries',
-+            extra_args=['-machine', f'pseries,{caps}'],
-+        )
-+        # If we get here the machine launched without errors.
-+        machines = self.vm.cmd('query-machines')
-+        aliases = [m.get('alias') for m in machines]
-+        self.assertIn('pseries', aliases)
++        cpus = self.vm.cmd('query-hotpluggable-cpus')
++        for entry in cpus:
++            if 'qom-path' not in entry:
++                return entry['type']
++        self.fail('No empty hotpluggable CPU slot found')
 +
-+    # ------------------------------------------------------------------ #
-+    # Test: nested-HV cap is accepted
-+    # ------------------------------------------------------------------ #
-+
-+    def test_pseries_nested_hv_cap(self):
-+        """pseries must accept cap-nested-hv=on without raising an error."""
-+        self._launch_stopped(
-+            'pseries',
-+            extra_args=['-machine', 'pseries,x-vof=on,cap-nested-hv=on'],
-+        )
-+        machines = self.vm.cmd('query-machines')
-+        aliases = [m.get('alias') for m in machines]
-+        self.assertIn('pseries', aliases)
-+
-+    # ------------------------------------------------------------------ #
-+    # Test: versioned compat machines can be instantiated
-+    # ------------------------------------------------------------------ #
-+
-+    def _test_compat_machine(self, version_str):
++    def _do_cpu_hotplug(self):
 +        """
-+        Helper: launch a versioned compat machine and verify that the
-+        name appears in query-machines and that it is not marked
-+        is-current (compat machines are never the latest version).
++        Shared hotplug/unplug logic, called after the guest has booted.
++
++        Confirms cpu0+cpu1 are online, hot-adds a second core (cpu2+cpu3),
++        verifies they come online, hot-removes the core, and verifies they
++        go offline.  Finishes with a clean guest poweroff.
 +        """
-+        self._launch_stopped(version_str)
-+        info = self._query_machine_info(version_str)
-+        self.assertIsNotNone(
-+            info,
-+            f'compat machine {version_str!r} not found in query-machines',
-+        )
-+        # Compat (versioned) machines are not the latest, so is-current
-+        # must be absent or False.
-+        self.assertFalse(
-+            info.get('is-current', False),
-+            f'{version_str} should not be marked is-current=true',
++        # Confirm initial state: cpu0 and cpu1 online, cpu2 offline/absent.
++        # Use /sys/devices/system/cpu/online which lists only truly online
++        # CPUs — sysfs cpu dirs exist for possible CPUs too so ls is wrong.
++        exec_command_and_wait_for_pattern(
++            self,
++            'cat /sys/devices/system/cpu/online',
++            '0-1',
 +        )
 +
-+    def test_pseries_compat_7_2(self):
-+        """pseries-7.2 (vmstate reference version) can be instantiated."""
-+        self._test_compat_machine('pseries-7.2')
++        # Detect the correct driver for the empty hotplug slot dynamically
++        # so the test works regardless of which CPU version pseries defaults
++        # to (power10, power11, etc.).
++        driver = self._get_hotplug_cpu_driver()
 +
-+    def test_pseries_compat_9_2(self):
-+        """pseries-9.2 can be instantiated."""
-+        self._test_compat_machine('pseries-9.2')
-+
-+    def test_pseries_compat_10_0(self):
-+        """pseries-10.0 can be instantiated."""
-+        self._test_compat_machine('pseries-10.0')
-+
-+    # ------------------------------------------------------------------ #
-+    # Test: cap-hpt-max-page-size is reachable via the QOM tree
-+    # ------------------------------------------------------------------ #
-+
-+    def test_pseries_cap_hpt_max_page_size(self):
-+        """
-+        Verify that pseries exposes cap-hpt-max-page-size in its
-+        machine properties (it is used by migration compat checks).
-+        """
-+        self._launch_stopped('pseries')
-+        # query-machine-props is not a real QMP command; we use the
-+        # object model instead.
-+        props = self.vm.cmd('qom-list', path='/machine')
-+        prop_names = [p['name'] for p in props]
-+        # The property should be reachable via the QOM tree.
-+        self.assertIn(
-+            'cap-hpt-max-page-size', prop_names,
-+            'pseries /machine must expose cap-hpt-max-page-size via QOM',
++        # Hot-add core at core-id=2 (supplies threads cpu2 and cpu3 in SMT-2).
++        # With threads=2 the available hotplug slot is core-id=2.
++        self.vm.cmd(
++            'device_add',
++            driver=driver,
++            id='hotcpu1',
++            **{'core-id': 2},
 +        )
++
++        # Poll until cpu2+cpu3 are online.  The sentinel is built using a
++        # shell variable (echo hotplug_cpu_$R) so the full string
++        # 'hotplug_cpu_done' never appears in the command text.  This avoids
++        # a false match on the shell's echo of the typed command, which
++        # exec_command_and_wait_for_pattern scans before any output arrives.
++        exec_command_and_wait_for_pattern(
++            self,
++            'until [ "$(cat /sys/devices/system/cpu/online)" = "0-3" ];'
++            ' do sleep 0.5; done; R=done; echo hotplug_cpu_$R',
++            'hotplug_cpu_done',
++        )
++
++        # Hot-remove the core.
++        self.vm.cmd('device_del', id='hotcpu1')
++
++        # Wait until the kernel acknowledges the removal.
++        exec_command_and_wait_for_pattern(
++            self,
++            'until [ "$(cat /sys/devices/system/cpu/online)" = "0-1" ];'
++            ' do sleep 0.2; done; R=done; echo unplug_cpu_$R',
++            'unplug_cpu_done',
++        )
++
++        exec_command_and_wait_for_pattern(self, 'poweroff', '#')
++        self.vm.wait()
++
++    def test_pseries_cpu_hotplug_tcg(self):
++        """Hot-add then hot-remove a CPU core on pseries using TCG."""
++        self.require_accelerator('tcg')
++        self._boot_pseries('tcg')
++        self._do_cpu_hotplug()
++
++    def test_pseries_cpu_hotplug_kvm(self):
++        """Hot-add then hot-remove a CPU core on pseries using KVM.
++
++        Requires a ppc64le host with kvm-hv loaded; skipped automatically
++        on other hosts.
++        """
++        self.require_accelerator('kvm')
++        # On ppc64le the base kvm module can be loaded (and /dev/kvm created)
++        # without kvm-hv, so checking /dev/kvm alone is not sufficient.
++        # Verify that kvm_hv is actually present in /proc/modules.
++        # This check is ppc64-specific; other arches (x86, arm, ...) use
++        # different KVM modules and rely solely on /dev/kvm.
++        if platform.machine() in ('ppc64le', 'ppc64'):
++            try:
++                with open('/proc/modules', encoding='utf-8') as f:
++                    if not any(line.split()[0] == 'kvm_hv' for line in f):
++                        self.skipTest('kvm-hv module is not loaded')
++            except OSError:
++                pass
++        self._boot_pseries('kvm')
++        self._do_cpu_hotplug()
 +
 +
 +if __name__ == '__main__':
-+    PseriesCapsTest.main()
++    PseriesCpuHotplug.main()
 -- 
 2.55.0
 
