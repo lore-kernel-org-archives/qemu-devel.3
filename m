@@ -1,89 +1,120 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E4C606AA9D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 18:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B273D606A337
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 18:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=VZNKQqf3
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EYsJN8ZO;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=RrUj3nPW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU7Fn-0005q1-Ca; Thu, 19 Nov 2026 13:53:03 -0500
+	id 1xU7Fd-0005ok-IQ; Thu, 19 Nov 2026 13:52:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3hEX_agsKCmsLXUcXWUNfRbPXXPUN.LXVZNVd-MNeNUWXWPWd.XaP@flex--coltonlewis.bounces.google.com>)
- id 1xU7Fj-0005pW-8e
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:52:59 -0500
-Received: from mail-oi1-x247.google.com ([2607:f8b0:4864:20::247])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3hEX_agsKCmsLXUcXWUNfRbPXXPUN.LXVZNVd-MNeNUWXWPWd.XaP@flex--coltonlewis.bounces.google.com>)
- id 1xU7Fh-0002RB-02
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:52:58 -0500
-Received: by mail-oi1-x247.google.com with SMTP id
- 5614622812f47-574f8578e48so157040b6e.2
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 10:52:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xU7Fa-0005nx-9m
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:52:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xU7FY-0002QB-L9
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:52:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795114367;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3xU1AfNzARCfJJvjM8RgferpX/JP5+MUWt/2XG6xSfM=;
+ b=EYsJN8ZO/37mkDHd71uMQ0HVgMSU8rhBicZqUkjZYU0G74k/QDFmE4DEFBZToNVvZeVfPQ
+ or9YmBCf+e/ZrDUALdb/YfO1urWnrA9yyzA0h2om2aebNl8brZSrA3xe2ckhKEGYgykMMn
+ S/idDCvjHPaD3713r6fEzS+2YBp1PAw=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-IEvsn3R9Oh2JMUh78cPyTw-1; Thu, 19 Nov 2026 13:52:45 -0500
+X-MC-Unique: IEvsn3R9Oh2JMUh78cPyTw-1
+X-Mimecast-MFC-AGG-ID: IEvsn3R9Oh2JMUh78cPyTw_1795114365
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-9210a12765eso3141756d6.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 10:52:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20260707; t=1795114373; x=1795719173; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:mime-version:date:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=TH5vitwFPm9bGuJwkWFGWD1DGO5XNv6nZY+HFNZ0AOQ=;
- b=VZNKQqf3GvT++C/lltn5G0iHuQoCGC40DuHFpJxaBL2wDnB8jCklTF4rIConiPc9bE
- qBMuuXFfzamgNFRBPjpP4h6QMwFURGLU3YyvOGArznpK3YLyEjpGWW+fFs712Kq+pwSI
- sPr+GpfFF2WFXxVXAhlMUoSe+wUoF+N9rb8fGu6+l9i/WaQk3bYlEFGm3d7uVORLOCye
- kJbMYRzkhMWR2M/2h82H8EdWDhpo/cxPlr5XXRYODRTRCEHaddz3u53d5EQt064jBPGq
- KGTsYEKmfMV4xjKWWyYPKvHtgC3Z0z7V17G3bXyC7l1W+cGkrpXd863O1EpmM815RKwD
- 65pw==
+ d=redhat.com; s=google; t=1795114365; x=1795719165; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3xU1AfNzARCfJJvjM8RgferpX/JP5+MUWt/2XG6xSfM=;
+ b=RrUj3nPWlCPHgD1iIIB1IJk1gvfQC52muYblCAGWfeRlxC8WfTz+nVdE57Fga2uABz
+ JVwkhGv1Mhm/L4K6weEK/GbH+Cnv/ZpXzER4ijsXnIXkXGyhhIgzlqIFgPZWldzz9Hu7
+ vpmPFN+nQhyV7gTuOeAtdiUR/RmBLa6S0vXOToa5bU/v9aU+gDRTy4+SJufal3n6SXA6
+ I/uWLc/iRxm9ZrtcUBQAR4WZhmM4qrQ0Rs3EGj2/o6AiphCejuIvAkrXH8Emz9I+KtJz
+ jHrY17TYS/kgPWYt96MxzEg754bzg0q80B4cOjwzfBdHItHXptiXApXehDrJotDdWjEH
+ XS+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795114373; x=1795719173;
- h=content-type:cc:to:from:subject:message-id:mime-version:date
+ d=1e100.net; s=20260707; t=1795114365; x=1795719165;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=TH5vitwFPm9bGuJwkWFGWD1DGO5XNv6nZY+HFNZ0AOQ=;
- b=dImMP5+yU2H4YIKPHylgJ1KqYSUSPFBdaL9aw+2NOuaJ7L34Vir/w58e2y3B8bKqJ3
- /f9tzr8dTVdbv+EzpSrcOyqc20MrX677fInm4qrqppndU0QtqVVK1kjSU/UtsgXLJQGD
- mx5nDcIHWOHinIaTHIQf2ET4imtF3xBFw7eEkWAD5OPGOfeSPfGuQ5xYPU9O/8TL6zz6
- HzcXNLP5+G5sHBctt8ZkAOKTnZwcUI4UJppXithSg82QrUEHN0zGnGvi0DRlPJ2y3xg9
- dqC1kAOipH28pJnTIyHMS22+iygBhJU6GXoBwbw23TCimmSe9AZ8aa1hXb7E7nTFsnFV
- Lwcg==
+ bh=3xU1AfNzARCfJJvjM8RgferpX/JP5+MUWt/2XG6xSfM=;
+ b=OHITCvHstRmLUd8mG/dlPezQhsxFkvPilfFK3+TLpyJU1cXVNhRQcSyR3x2sgOTa0P
+ NLXwoljyWRMHRu/shayGdhdnGz9ztrvWu4RkogAQ9kGTV+EkxLXdzCpiTyE3uO6XPDmX
+ XSaaMIBoFQYp7iAdpZZ2Tr+yb5HaAy2MdfJonsDmU+y68TTiTE+mY9ygvYZwi13ki69e
+ awbUp5RHB2sU/1Mm4J/LGmaXpkB72Ee+HGeWPY0FU2S38CoArVGsk8wyjBpWQk14NBh1
+ 3wm03QzH3Z4Wb/QareFj8iHA22XxDnKvs+D8rer+1jo5FBkd345yW4FuKc4S3KFYkOSH
+ J4pQ==
 X-Forwarded-Encrypted: i=1;
- AL+hErEozklC9iHfWLEsHB8C2k4WeukmWCI56H8pCSG8zMD9xR79Tdnipx+vwQErn2h2mmB9ddDHA1g03JM3@nongnu.org
-X-Gm-Message-State: APuU4Z8qEIV3lowb8GwleJ4muuF4vu0eixbI//nluGlO0xhWrO5cUf2x
- cl0e1NDht24EFXkFV1+DaBTHyEY1pvh7tFvJyvmIag8NRiGzNBx6U0F2DRNwp2bEg84yQ9GttSw
- OwxM+1+mwUnyARclglbjDEv27iA==
-X-Received: from ilmy14.prod.google.com ([2002:a92:d80e:0:b0:50c:2841:18fc])
- (user=coltonlewis job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6808:1528:b0:4d6:90d3:e185 with SMTP id
- 5614622812f47-57a0b645ee5mr1052075b6e.46.1795114372340; 
- Thu, 19 Nov 2026 10:52:52 -0800 (PST)
-Date: Thu, 19 Nov 2026 18:52:51 +0000
+ AL+hErHKikYVC5/7dqoSmDYyPB0Uj338pRvHqulGXC2Agjkx9mNKqvwPdt0f3xAud3+AwMDrl/hiRFIyNp4C@nongnu.org
+X-Gm-Message-State: APuU4Z97JAUQe/cU+9pTMctrJ0HSWc8YTFdR36ZsoMMCyc5M5jxUeyHq
+ p88y7Tsf6QEDkz05Ly/3yk27HR+5qx3QHFJlSdAr3r8WAzqHdFrBFvk8lMPAd9XpImx7coPid4k
+ l6J6orgaOac3CUwhmPVioEbLofX6C8ombNcETTaEQjL3DwY5ajdUAzDOA
+X-Gm-Gg: AZFdTZdv0xv3jgN0evgX67tI7xG9PKjEkm43AinR3DuPbl0xe6ClT4S8XpuViNnEQsP
+ IvyrB9vRDi860qalSVkhLjvJC6rL4tu4L3P+a+sO3RNPi3kKW1xjKyQGvh0z2H5rcRMHnEaOR2l
+ vyocXdxlRuQ/4XS4WSoCDjapXBcb8hTet/7NMfayMchILyw530F8VvSgIyTIklA5cCPuqYLeuSg
+ aZ/isn6MJ4kDNpWW73WTOBAMIJ5XKu8Uplv90viODjXlyRgwwUf9p9xhXRXrGI8+BM7znni1Qwd
+ jBpg/Wt3O7MRDk6APpVzxMogsN9xVFekBtLkniMp/q2PxVbpQYVuOM3jQ5JOlm8weTfha47mNVD
+ YeGEqD0Y8poUrtPAzw+P3JToh6bxfG9bX3vFPw2zfRKCD
+X-Received: by 2002:a05:6214:62d1:20b0:921:2cb9:4506 with SMTP id
+ 6a1803df08f44-92134b73592mr6901276d6.45.1795114364642; 
+ Thu, 19 Nov 2026 10:52:44 -0800 (PST)
+X-Received: by 2002:a05:6214:62d1:20b0:921:2cb9:4506 with SMTP id
+ 6a1803df08f44-92134b73592mr6900846d6.45.1795114364014; 
+ Thu, 19 Nov 2026 10:52:44 -0800 (PST)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-921349cdfbasm5474456d6.17.2026.11.19.10.52.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Nov 2026 10:52:43 -0800 (PST)
+Date: Thu, 19 Nov 2026 13:52:42 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "open list:nvme" <qemu-block@nongnu.org>
+Subject: Re: [RFC PATCH] tests/functional: add migration diagnostics and pace
+ nvme activity (HACK!)
+Message-ID: <av9FeuY9pnYHXblq@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260921190345.1709227-1-alex.bennee@linaro.org>
+ <asZIy2Rm8QF4TSca@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAJqdLrqxJF4tgfRYrm27rGivP-HyLUX=YCNUiaFqq4nDq0a5pQ@mail.gmail.com>
+ <as6RsuZP6jkZ8twC@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAJqdLrpQLJtXptSURtnT4xo4LJTduhksqAKnoPHCHbbfdVhW0w@mail.gmail.com>
+ <as_rOWkhyPnWsMfL@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAJqdLrqxmTQeSUziBAtuhb94mVEjU1G_oEx1N1sLwKT3O=gDTA@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.56.1.809.ga0b61035b5-goog
-Message-ID: <20261119185251.638036-1-coltonlewis@google.com>
-Subject: [RFC PATCH v2] target/arm: Enable KVM PMU partitioning and counter
- limit
-From: Colton Lewis <coltonlewis@google.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Marc Zyngier <maz@kernel.org>, 
- Oliver Upton <oupton@kernel.org>, Will Deacon <will@kernel.org>, 
- James Clark <james.clark@linaro.org>, Mingwei Zhang <mizhang@google.com>,
- qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, kvmarm@lists.linux.dev, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::247;
- envelope-from=3hEX_agsKCmsLXUcXWUNfRbPXXPUN.LXVZNVd-MNeNUWXWPWd.XaP@flex--coltonlewis.bounces.google.com;
- helo=mail-oi1-x247.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJqdLrqxmTQeSUziBAtuhb94mVEjU1G_oEx1N1sLwKT3O=gDTA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,262 +126,72 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=unavailable
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add CPU properties to configure PMU event counters and KVM ARM64 PMU
-counter partitioning:
-- 'kvm-pmu-partition' (bool, KVM only): enables
-  KVM_ARM_VCPU_PMU_V3_ENABLE_PARTITION
-- 'pmu-num-counters' (uint32, TCG and KVM): sets the number of
-  general-purpose PMU event counters (PMCR_EL0.N) and configures
-  KVM_ARM_VCPU_PMU_V3_SET_NR_COUNTERS under KVM
+On Wed, Oct 21, 2026 at 06:06:46PM +0200, Alexander Mikhalitsyn wrote:
+> Am Mi., 14. Okt. 2026 um 22:51 Uhr schrieb Peter Xu <peterx@redhat.com>:
+> >
+> > On Wed, Oct 14, 2026 at 10:18:45AM +0200, Alexander Mikhalitsyn wrote:
+> > > > - for this test, should we remove snapshot=on but instead create an
+> > > >   explicit overlay that will be used on both src/dst qemu?
+> > >
+> > > This should solve the issue too, at the same time if test is R/O I'm
+> > > not sure if we really need this.
+> >
+> 
+> Dear Peter,
 
-When 'kvm-pmu-partition=on' and 'pmu-num-counters=N' are passed via
--cpu under KVM, QEMU enables hardware PMU partitioning and reserves N
-general-purpose event counters for the guest prior to calling
-KVM_ARM_VCPU_PMU_V3_INIT.
+Hi, Alexander,
 
-Note that this patch is an RFC to demonstrate the KVM ARM64 PMU
-Partitioning uAPI. That is why it aborts immediately if setting the
-device attributes does not succeed.
+> 
+> sorry for such a long delay with reply. Was busy plumbing some other stuff :-(
 
-Signed-off-by: Colton Lewis <coltonlewis@google.com>
----
-Companion RFC to the v10 kernel series "ARM64 PMU Partitioning", based
-on QEMU master (`08c9bbb825`, v11.2.0-rc1).
-`KVM_ARM_VCPU_PMU_V3_ENABLE_PARTITION` is attribute 5 (with
-`KVM_ARM_VCPU_PMU_V3_SET_NR_COUNTERS` = 4), matching the v10 uAPI.
+Same here. :(
 
-Built cleanly (0 warnings) for both native x86_64 and cross-arm64
-(`aarch64-softmmu` with KVM and `aarch64-linux-user`). Verified with
-the v10 kernel (`7.4.0-rc3+`):
-- TCG (`aarch64-softmmu`): `pmu-num-counters` = 0, 2, default (6), 31,
-  `pmu=off`, rejection of `pmu-num-counters=32` (> 31), and rejection
-  of `kvm-pmu-partition=on` under TCG.
-- KVM (`-accel kvm -machine virt,gic-version=3`, cross-arm64 binary
-  inside a VHE TCG host with 6 GP counters): `-smp 2` boots with
-  `kvm-pmu-partition=on` (`pmu-num-counters` = 0, 2, 5) and emulated
-  `pmu-num-counters=3`, plus negative rejections for missing
-  `pmu-num-counters`, `pmu-num-counters=6` (partitioned), `=7`
-  (emulated), and `=32` (> 31). Zero host kernel warnings.
+Let's fix this first, or it'll be forgotten!
 
-Changes since v1:
-https://lore.kernel.org/kvmarm/20260924173051.2117637-1-coltonlewis@google.com/
-- Rebase onto QEMU master (`08c9bbb825`, v11.2.0-rc1).
-- Tag patch as RFC until the kernel uAPI is accepted (Peter Maydell).
-- Document `kvm-pmu-partition` (including `pmu-num-counters=0` without
-  `FEAT_HPMN0`) and `pmu-num-counters` in
-  `docs/system/arm/cpu-features.rst` (Peter Maydell).
-- Move the partitioning toggle into `kvm_arm_add_vcpu_properties()` as
-  `kvm-pmu-partition` using `DEFINE_PROP_BOOL` (Peter Maydell).
-- Keep `pmu-num-counters` general (`DEFINE_PROP_UINT32`) and wire it up
-  for both TCG (`reset_pmcr_el0`) and KVM (Peter Maydell).
-- Guard the `pmu_num_counters` override in `arm_cpu_realizefn()` with
-  `#ifndef CONFIG_USER_ONLY` so `aarch64-linux-user` does not zero
-  `reset_pmcr_el0.N`.
-- Wrap commit message lines to 72 columns.
+> 
+> > Then.. maybe no need to bother. :)
+> >
+> > I think we should better remove snapshot=on no matter what, then whoever
+> > sends a patch add migration blocker for it won't fail this test.  Seems the
+> > /tmp mount is still needed then.
+> 
+> Yeah, if we really gonna make snapshot=on to be a migration blocker (which seems
+> like a clean way to protect users from doing weird stuff like I
+> accidentally did in my test :-D).
+> 
+> I need to look on the option you've earlier suggested with "explicit
+> overlay that will be used on both src/dst qemu".
+> I'll get back to you ;-)
+> 
+> Btw, does my fix with mounting tmpfs actually solves the problem for
+> you? I'm just curious,
+> because I wasn't able to reproduce the problem locally tho... And if
+> so, then probably we should
+> land this tmpfs-mount change for now, while we can prepare a better
+> and generic fix to get rid of snapshot=on,
+> add migration blocker for it and so on. WDYT?
 
- docs/system/arm/cpu-features.rst | 29 +++++++++++++++++++++
- target/arm/cpu.c                 | 19 ++++++++++++++
- target/arm/cpu.h                 |  4 +++
- target/arm/kvm.c                 | 44 ++++++++++++++++++++++++++++++++
- 4 files changed, 96 insertions(+)
+I agree.
 
-diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-index 10b0eff27e..9d95f727be 100644
---- a/docs/system/arm/cpu-features.rst
-+++ b/docs/system/arm/cpu-features.rst
-@@ -217,6 +217,21 @@ the list of KVM VCPU features and their descriptions.
- 
-   Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3.
- 
-+``kvm-pmu-partition``
-+  By default kvm-pmu-partition is disabled.
-+
-+  When kvm-pmu-partition is enabled, KVM partitions the physical PMUv3
-+  hardware counters between the guest and host using ``MDCR_EL2.HPMN``,
-+  granting the guest direct, untrapped access to its partition of event
-+  counters and the cycle counter.  Enabling ``kvm-pmu-partition``
-+  requires explicitly configuring the number of guest event counters via
-+  ``pmu-num-counters`` to a value strictly less than the number of
-+  general-purpose counters implemented by the host PMU (leaving at least
-+  one general-purpose counter reserved for host profiling).  On hosts
-+  without ``FEAT_HPMN0``, setting ``pmu-num-counters=0`` (cycle counter
-+  only) requires at least two general-purpose host counters so physical
-+  counter 0 can be reserved and hidden behind traps.
-+
- TCG VCPU Features
- =================
- 
-@@ -495,3 +510,17 @@ Legal values for ``S`` are 30, 34, 36, and 39; the default is 30.
- 
- As with ``x-rme``, the ``x-l0gptsz`` property may be renamed or
- removed in some future QEMU release.
-+
-+PMU CPU Properties
-+==================
-+
-+``pmu``
-+  Enable or disable the Performance Monitoring Unit (PMU).
-+
-+``pmu-num-counters``
-+  Set the number of general-purpose event counters exposed by the PMU
-+  (encoded in ``PMCR_EL0.N``) for both TCG and KVM guests (between 0 and
-+  31 for TCG, or up to the number of counters supported by the host PMU
-+  for KVM).  When ``kvm-pmu-partition`` is enabled under KVM, this
-+  value must be strictly less than the number of general-purpose
-+  counters implemented by the host PMU.
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index dde03ffdd6..81b2b83ce2 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1361,6 +1361,9 @@ static const Property arm_cpu_pmsav7_dregion_property =
-             DEFINE_PROP_UNSIGNED_NODEFAULT("pmsav7-dregion", ARMCPU,
-                                            pmsav7_dregion,
-                                            qdev_prop_uint32, uint32_t);
-+static const Property arm_cpu_pmu_num_counters_property =
-+            DEFINE_PROP_UINT32("pmu-num-counters", ARMCPU, pmu_num_counters,
-+                               UINT32_MAX);
- #endif
- 
- static bool arm_get_pmu(Object *obj, Error **errp)
-@@ -1628,6 +1631,10 @@ static void arm_cpu_post_init(Object *obj)
-     if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
-         cpu->has_pmu = true;
-         object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
-+#ifndef CONFIG_USER_ONLY
-+        qdev_property_add_static(DEVICE(obj),
-+                                 &arm_cpu_pmu_num_counters_property);
-+#endif
-     }
- 
-     /*
-@@ -2250,6 +2257,18 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-         unset_feature(env, ARM_FEATURE_PMU);
-     }
-     if (arm_feature(env, ARM_FEATURE_PMU)) {
-+#ifndef CONFIG_USER_ONLY
-+        if (cpu->pmu_num_counters != UINT32_MAX) {
-+            if (cpu->pmu_num_counters > 31) {
-+                error_setg(errp, "pmu-num-counters %" PRIu32
-+                           " exceeds maximum of 31", cpu->pmu_num_counters);
-+                return;
-+            }
-+            cpu->isar.reset_pmcr_el0 =
-+                (cpu->isar.reset_pmcr_el0 & ~PMCRN_MASK) |
-+                (cpu->pmu_num_counters << PMCRN_SHIFT);
-+        }
-+#endif
-         pmu_init(cpu);
- 
-         if (tcg_enabled() || hvf_enabled()) {
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index b2f393f501..990204d7b6 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1024,6 +1024,10 @@ struct ArchCPU {
-     bool has_el3;
-     /* CPU has PMU (Performance Monitor Unit) */
-     bool has_pmu;
-+    /* CPU has PMU Partitioning enabled in KVM mode */
-+    bool kvm_pmu_partition;
-+    /* Number of PMU event counters (PMCR_EL0.N) */
-+    uint32_t pmu_num_counters;
-     /* CPU has VFP */
-     bool has_vfp;
-     /* CPU has 32 VFP registers */
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index df86ad387c..a712c5a1d1 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -37,6 +37,7 @@
- #include "gdbstub/enums.h"
- #include "hw/core/boards.h"
- #include "hw/core/irq.h"
-+#include "hw/core/qdev-properties.h"
- #include "qapi/visitor.h"
- #include "qemu/log.h"
- #include "hw/acpi/acpi.h"
-@@ -608,6 +609,9 @@ static void kvm_set_psci_version(Object *obj, const char *value, Error **errp)
-     cpu->psci_version = PSCI_VERSION(maj, min);
- }
- 
-+static const Property arm_cpu_kvm_pmu_partition_property =
-+    DEFINE_PROP_BOOL("kvm-pmu-partition", ARMCPU, kvm_pmu_partition, false);
-+
- /* KVM VCPU properties should be prefixed with "kvm-". */
- void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
- {
-@@ -624,6 +628,14 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
-                                         "will be counted.");
-     }
- 
-+    if (arm_feature(env, ARM_FEATURE_PMU)) {
-+        qdev_property_add_static(DEVICE(obj),
-+                                 &arm_cpu_kvm_pmu_partition_property);
-+        object_property_set_description(obj, "kvm-pmu-partition",
-+                                        "Set on to enable KVM PMU counter "
-+                                        "partitioning.");
-+    }
-+
-     cpu->kvm_steal_time = ON_OFF_AUTO_AUTO;
-     object_property_add_bool(obj, "kvm-steal-time", kvm_steal_time_get,
-                              kvm_steal_time_set);
-@@ -1913,6 +1925,10 @@ static bool kvm_arm_set_device_attr(ARMCPU *cpu, struct kvm_device_attr *attr,
-     return true;
- }
- 
-+#ifndef KVM_ARM_VCPU_PMU_V3_ENABLE_PARTITION
-+#define KVM_ARM_VCPU_PMU_V3_ENABLE_PARTITION 5
-+#endif
-+
- void kvm_arm_pmu_init(ARMCPU *cpu)
- {
-     struct kvm_device_attr attr = {
-@@ -1923,6 +1939,34 @@ void kvm_arm_pmu_init(ARMCPU *cpu)
-     if (!cpu->has_pmu) {
-         return;
-     }
-+
-+    if (cpu->kvm_pmu_partition) {
-+        uint32_t partition = 1;
-+        struct kvm_device_attr part_attr = {
-+            .group = KVM_ARM_VCPU_PMU_V3_CTRL,
-+            .attr = KVM_ARM_VCPU_PMU_V3_ENABLE_PARTITION,
-+            .addr = (intptr_t)&partition,
-+        };
-+
-+        if (!kvm_arm_set_device_attr(cpu, &part_attr, "PMU partition")) {
-+            error_report("failed to enable KVM PMU partition");
-+            abort();
-+        }
-+    }
-+
-+    if (cpu->pmu_num_counters != UINT32_MAX) {
-+        struct kvm_device_attr cnt_attr = {
-+            .group = KVM_ARM_VCPU_PMU_V3_CTRL,
-+            .attr = KVM_ARM_VCPU_PMU_V3_SET_NR_COUNTERS,
-+            .addr = (intptr_t)&cpu->pmu_num_counters,
-+        };
-+
-+        if (!kvm_arm_set_device_attr(cpu, &cnt_attr, "PMU nr_counters")) {
-+            error_report("failed to set KVM PMU nr_counters");
-+            abort();
-+        }
-+    }
-+
-     if (!kvm_arm_set_device_attr(cpu, &attr, "PMU")) {
-         error_report("failed to init PMU");
-         abort();
+I tested your patch, it works for me, used to fail almost certainly but now
+it passes in a seq of runs.  I just thought it wasn't a good enough fix,
+but considering my poor speed on reply (which is this one me to blame), I
+think we should fix it first.
 
-base-commit: 08c9bbb825148dec9669f5184ecf18823bb6d631
+You can send a formal patch and attach:
+
+Tested-by: Peter Xu <peterx@redhat.com>
+
+Thanks,
+
 -- 
-2.56.1.708.g77570a6a1d-goog
+Peter Xu
 
 
