@@ -1,33 +1,33 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DC8606A324
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00351606A324
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:18:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU1zn-0006fi-Qk; Thu, 19 Nov 2026 08:16:13 -0500
+	id 1xU1zY-0006ZW-3K; Thu, 19 Nov 2026 08:15:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xU1za-0006cW-35; Thu, 19 Nov 2026 08:15:58 -0500
-Received: from mxct.zte.com.cn ([183.62.165.209])
+ id 1xU1zV-0006Yw-27; Thu, 19 Nov 2026 08:15:53 -0500
+Received: from mxhk.zte.com.cn ([160.30.148.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xU1zV-0005St-01; Thu, 19 Nov 2026 08:15:57 -0500
+ id 1xU1zS-0005T1-Tm; Thu, 19 Nov 2026 08:15:52 -0500
 Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mxct.zte.com.cn (FangMail) with ESMTPS id 4jVf963sFMz52Rpk;
- Thu, 19 Nov 2026 21:15:38 +0800 (CST)
-Received: from szxl2zmapp06.zte.com.cn ([10.1.32.108])
- by mse-fl2.zte.com.cn with SMTP id 6AJDFYrS060268;
- Thu, 19 Nov 2026 21:15:34 +0800 (+08)
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4jVf9C2KqGz4yjjV;
+ Thu, 19 Nov 2026 21:15:43 +0800 (CST)
+Received: from szxl2zmapp05.zte.com.cn ([10.1.32.37])
+ by mse-fl2.zte.com.cn with SMTP id 6AJDFa9F060271;
+ Thu, 19 Nov 2026 21:15:36 +0800 (+08)
  (envelope-from gong.shuai@sanechips.com.cn)
 Received: from ubuntu-35-gs (unknown [10.230.214.35])
- by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:37 +0800
-X-Zmail-TransId: 3e816afef67802f-556b8
+ by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:39 +0800
+X-Zmail-TransId: 3e816afef67b02f-556fa
 X-Zmail-LocalSMTP: 1
 X-Zmail-RealSender: gong.shuai@sanechips.com.cn
 From: Gong Shuai <gong.shuai@sanechips.com.cn>
@@ -43,10 +43,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Wu Fei <wu.fei9@sanechips.com.cn>,
  Qingye Zhao <zhao.qingye@sanechips.com.cn>,
  Gong Shuai <gong.shuai@sanechips.com.cn>
-Subject: [RFC PATCH v3 03/15] hw/riscv/riscv-iommu: Allow PCI IOMMU ops to be
- overridden
-Date: Thu, 19 Nov 2026 21:15:12 +0800
-Message-ID: <20261119131524.395861-4-gong.shuai@sanechips.com.cn>
+Subject: [RFC PATCH v3 07/15] hw/riscv/riscv-iommu-accel: Initialize shared
+ system address space
+Date: Thu, 19 Nov 2026 21:15:16 +0800
+Message-ID: <20261119131524.395861-8-gong.shuai@sanechips.com.cn>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
 References: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
@@ -54,20 +54,20 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
 Content-Transfer-Encoding: 8bit
-X-MAIL: mse-fl2.zte.com.cn 6AJDFYrS060268
+X-MAIL: mse-fl2.zte.com.cn 6AJDFa9F060271
 X-TLS: YES
 X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
-X-SOURCE-IP: 10.5.228.133 unknown Thu, 19 Nov 2026 21:15:38 +0800
+X-SOURCE-IP: 10.5.228.133 unknown Thu, 19 Nov 2026 21:15:43 +0800
 X-CLEAN: YES
 X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6AFEF67A.000/4jVf963sFMz52Rpk
-Received-SPF: pass client-ip=183.62.165.209;
- envelope-from=gong.shuai@sanechips.com.cn; helo=mxct.zte.com.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Fangmail-MID-QID: 6AFEF67F.000/4jVf9C2KqGz4yjjV
+Received-SPF: pass client-ip=160.30.148.34;
+ envelope-from=gong.shuai@sanechips.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,62 +82,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Wu Fei <wu.fei9@sanechips.com.cn>
 
-Add an iommu_ops field to RISCVIOMMUState and use it when
-registering the IOMMU on a PCI bus, falling back to the default
-riscv_iommu_ops when unset. This lets callers install custom PCI
-IOMMU ops without changing existing behaviour.
+To support accelerated RISC-V IOMMU instances, introduce a shared
+system-wide AddressSpace (shared_as_sysmem) that aliases the global
+system memory. This shared AddressSpace will be used in a subsequent
+patch for all vfio-pci devices behind all accelerated IOMMU instances
+within a VM.
+
+Sharing a single system AddressSpace ensures that all devices behind
+accelerated IOMMUs use the same system address space pointer. This
+allows VFIO/iommufd to reuse a single IOAS ID in
+iommufd_cdev_attach(), enabling the Stage-2 page tables to be shared
+within the VM rather than duplicated for each IOMMU instance.
+
+This follows the approach of the ARM SMMUv3 accel device.
 
 Signed-off-by: Wu Fei <wu.fei9@sanechips.com.cn>
 Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
 ---
- hw/riscv/riscv-iommu.c | 5 ++++-
- hw/riscv/riscv-iommu.h | 3 +++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ hw/riscv/riscv-iommu-accel.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 0e6970773a..6381986265 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -3007,7 +3007,10 @@ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
-         RISCVIOMMUState *last = (RISCVIOMMUState *)bus->iommu_opaque;
-         QLIST_INSERT_AFTER(last, iommu, iommus);
-     } else if (!bus->iommu_ops && !bus->iommu_opaque) {
--        pci_setup_iommu(bus, &riscv_iommu_ops, iommu);
-+        if (!iommu->iommu_ops) {
-+            iommu->iommu_ops = &riscv_iommu_ops;
-+        }
-+        pci_setup_iommu(bus, iommu->iommu_ops, iommu);
-     } else {
-         error_setg(errp, "can't register secondary IOMMU for PCI bus #%d",
-             pci_bus_num(bus));
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 403d10b321..cf2904c118 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -24,6 +24,7 @@
- #include "system/dma.h"
- #include "hw/riscv/iommu.h"
- #include "hw/riscv/riscv-iommu-bits.h"
-+#include "hw/pci/pci.h"
+diff --git a/hw/riscv/riscv-iommu-accel.c b/hw/riscv/riscv-iommu-accel.c
+index 41e4d03be6..a843cf9d01 100644
+--- a/hw/riscv/riscv-iommu-accel.c
++++ b/hw/riscv/riscv-iommu-accel.c
+@@ -9,6 +9,14 @@
+ #include "riscv-iommu.h"
+ #include "riscv-iommu-accel.h"
  
- typedef enum riscv_iommu_igs_modes riscv_iommu_igs_mode;
- 
-@@ -97,6 +98,8 @@ struct RISCVIOMMUState {
-     /* HPM event counters */
-     GHashTable *hpm_event_ctr_map; /* Mapping of events to counters */
-     uint8_t hpm_cntrs;
++/*
++ * The root region aliases the global system memory, and shared_as_sysmem
++ * provides a shared Address Space referencing it. This Address Space is used
++ * by all vfio-pci devices behind all accelerated IOMMU instances within a VM.
++ */
++static MemoryRegion root, sysmem;
++static AddressSpace *shared_as_sysmem;
 +
-+    const PCIIOMMUOps *iommu_ops;
+ static RISCVIOMMUAccelDevice *riscv_iommu_accel_get_dev(RISCVIOMMUState *s,
+                                                         PCIBus *bus, int devfn)
+ {
+@@ -43,7 +51,24 @@ static const PCIIOMMUOps riscv_iommu_accel_ops = {
+     .get_address_space = riscv_iommu_accel_find_as,
  };
  
- void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
++static void riscv_iommu_accel_as_init(RISCVIOMMUState *s)
++{
++    if (shared_as_sysmem) {
++        return;
++    }
++
++    memory_region_init(&root, OBJECT(s), "root", UINT64_MAX);
++    memory_region_init_alias(&sysmem, OBJECT(s), "riscv-iommu-accel-sysmem",
++                             get_system_memory(), 0,
++                             memory_region_size(get_system_memory()));
++    memory_region_add_subregion(&root, 0, &sysmem);
++
++    shared_as_sysmem = g_new0(AddressSpace, 1);
++    address_space_init(shared_as_sysmem, &root, "riscv-iommu-accel-as-sysmem");
++}
++
+ void riscv_iommu_accel_init(RISCVIOMMUState *s)
+ {
+     s->iommu_ops = &riscv_iommu_accel_ops;
++    riscv_iommu_accel_as_init(s);
+ }
 -- 
 2.53.0
 
