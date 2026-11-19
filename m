@@ -1,75 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11869606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF8B606A324
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:16:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Kstlxb40
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU1zT-0006YE-AC; Thu, 19 Nov 2026 08:15:51 -0500
+	id 1xU1zc-0006du-Ir; Thu, 19 Nov 2026 08:16:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xU1zF-0006XP-W3
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 08:15:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
+ id 1xU1zW-0006ZP-Ot; Thu, 19 Nov 2026 08:15:54 -0500
+Received: from mxhk.zte.com.cn ([160.30.148.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xU1zD-0004nz-Cs
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 08:15:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795094133;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=Kstlxb40wvCzbGFoi9zlBY8SDEyw8fT60NZOo7DEq74MUiAIwCmvMRKBDmjA+ipB6b9OYN
- Z3/FgE1nFz8fLypcOEuIPXXbCyzSs2pZ4stHAcD/XZ9ZklU1/rU00m0rYlSvoVmTMU5d+v
- fICaZxj51+e7UxM2IIUU/I0ucLuNrYs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-67-l8nxeJWINDOoZ_LcxhnAIQ-1; Thu,
- 19 Nov 2026 13:15:29 +0000
-X-MC-Unique: l8nxeJWINDOoZ_LcxhnAIQ-1
-X-Mimecast-MFC-AGG-ID: l8nxeJWINDOoZ_LcxhnAIQ_1795094127
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
+ id 1xU1zT-0005nJ-Sm; Thu, 19 Nov 2026 08:15:54 -0500
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 193C318001DE; Thu, 19 Nov 2026 13:15:27 +0000 (UTC)
-Received: from pbonzini-thinkpadx1carbon6th.rmtit.csb
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 97B7C3001DA7; Thu, 19 Nov 2026 13:15:24 +0000 (UTC)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@kernel.org>,
- Igor Mammedov <imammedo@redhat.com>, Peter Xu <peterx@redhat.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH for-11.2] hostmem: allow building without KVM support
-Date: Thu, 19 Nov 2026 14:15:18 +0100
-Message-ID: <20261119131518.275237-1-pbonzini@redhat.com>
-In-Reply-To: <20261119111050.1203459-1-mjt@tls.msk.ru>
-References: 
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4jVf9H1xhcz4yjjG;
+ Thu, 19 Nov 2026 21:15:47 +0800 (CST)
+Received: from szxl2zmapp07.zte.com.cn ([10.1.32.52])
+ by mse-fl2.zte.com.cn with SMTP id 6AJDFdEf060324;
+ Thu, 19 Nov 2026 21:15:39 +0800 (+08)
+ (envelope-from gong.shuai@sanechips.com.cn)
+Received: from ubuntu-35-gs (unknown [10.230.214.35])
+ by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:43 +0800
+X-Zmail-TransId: 3e816afef67e02f-55743
+X-Zmail-LocalSMTP: 1
+X-Zmail-RealSender: gong.shuai@sanechips.com.cn
+From: Gong Shuai <gong.shuai@sanechips.com.cn>
+To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Tan Chi <tanchi25@mails.ucas.ac.cn>,
+ Wu Fei <wu.fei9@sanechips.com.cn>,
+ Qingye Zhao <zhao.qingye@sanechips.com.cn>,
+ Gong Shuai <gong.shuai@sanechips.com.cn>
+Subject: [RFC PATCH v3 12/15] hw/riscv/riscv-iommu-accel: Apply the DDTP mode
+ to every device
+Date: Thu, 19 Nov 2026 21:15:21 +0800
+Message-ID: <20261119131524.395861-13-gong.shuai@sanechips.com.cn>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
+References: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MAIL: mse-fl2.zte.com.cn 6AJDFdEf060324
+X-TLS: YES
+X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
+X-SOURCE-IP: 10.5.228.133 unknown Thu, 19 Nov 2026 21:15:47 +0800
+X-CLEAN: YES
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 6AFEF683.000/4jVf9H1xhcz4yjjG
+Received-SPF: pass client-ip=160.30.148.34;
+ envelope-from=gong.shuai@sanechips.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,16 +80,132 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Queued, thanks.
+The DDTP mode decides how the IOMMU translates accesses from the
+devices behind it. On reset, attach every device to the pre-allocated
+abort or bypass HWPT selected by DDTP mode and re-apply the mode on
+every accepted DDTP change.
 
-Paolo
+Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
+---
+ hw/riscv/riscv-iommu-accel.c | 38 ++++++++++++++++++++++++++++++++++++
+ hw/riscv/riscv-iommu-accel.h |  6 ++++++
+ hw/riscv/riscv-iommu.c       | 15 ++++++++++++++
+ 3 files changed, 59 insertions(+)
 
+diff --git a/hw/riscv/riscv-iommu-accel.c b/hw/riscv/riscv-iommu-accel.c
+index e203c384a6..47303323c7 100644
+--- a/hw/riscv/riscv-iommu-accel.c
++++ b/hw/riscv/riscv-iommu-accel.c
+@@ -496,6 +496,44 @@ bool riscv_iommu_accel_install_dc_all(RISCVIOMMUState *s)
+     return all_ok;
+ }
+ 
++/*
++ * Attach every accelerated device to the pre-allocated abort/bypass proxy
++ * HWPT selected by the current DDTP mode. All the devices must be re-attached
++ * whenever the DDTP mode is (re)applied.
++ */
++bool riscv_iommu_accel_attach_ddtp_hwpt(RISCVIOMMUState *s, Error **errp)
++{
++    RISCVIOMMUAccelState *accel = s->accel_state;
++    RISCVIOMMUAccelDevice *accel_dev;
++    Error *local_err = NULL;
++    bool all_ok = true;
++    uint32_t hwpt_id;
++
++    if (!accel || !accel->viommu) {
++        return true;
++    }
++
++    hwpt_id = riscv_iommu_accel_ddtp_hwpt(s, accel);
++    QLIST_FOREACH(accel_dev, &accel->device_list, next) {
++        if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->idev,
++                                                   IOMMU_NO_PASID, hwpt_id,
++                                                   &local_err)) {
++            error_append_hint(&local_err, "Failed to attach DDTP hwpt %u for "
++                              "idev devid 0x%x", hwpt_id,
++                              accel_dev->idev->devid);
++            error_report_err(local_err);
++            local_err = NULL;
++            all_ok = false;
++        }
++    }
++
++    if (!all_ok) {
++        error_setg(errp, "Failed to attach all DDTP based HWPTs properly");
++    }
++
++    return all_ok;
++}
++
+ static const PCIIOMMUOps riscv_iommu_accel_ops = {
+     .supports_address_space = riscv_iommu_accel_supports_as,
+     .get_address_space = riscv_iommu_accel_find_as,
+diff --git a/hw/riscv/riscv-iommu-accel.h b/hw/riscv/riscv-iommu-accel.h
+index 85a1ab6d42..bf614017e2 100644
+--- a/hw/riscv/riscv-iommu-accel.h
++++ b/hw/riscv/riscv-iommu-accel.h
+@@ -42,6 +42,7 @@ typedef struct RISCVIOMMUAccelDevice {
+ void riscv_iommu_accel_init(RISCVIOMMUState *s);
+ bool riscv_iommu_accel_install_dc(RISCVIOMMUState *s, int devid);
+ bool riscv_iommu_accel_install_dc_all(RISCVIOMMUState *s);
++bool riscv_iommu_accel_attach_ddtp_hwpt(RISCVIOMMUState *s, Error **errp);
+ #else
+ static inline void riscv_iommu_accel_init(RISCVIOMMUState *s)
+ {
+@@ -56,6 +57,11 @@ riscv_iommu_accel_install_dc_all(RISCVIOMMUState *s)
+ {
+     return true;
+ }
++static inline bool
++riscv_iommu_accel_attach_ddtp_hwpt(RISCVIOMMUState *s, Error **errp)
++{
++    return true;
++}
+ #endif
+ 
+ #endif /* HW_RISCV_RISCV_IOMMU_ACCEL_H */
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index fa751d566f..7a55b7514b 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1966,6 +1966,16 @@ static void riscv_iommu_process_ddtp(RISCVIOMMUState *s)
+     s->ddtp = new_ddtp;
+ 
+     riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_DDTP, new_ddtp);
++
++    /* Apply the new DDTP mode to the accelerated devices */
++    if (s->accel && new_ddtp != old_ddtp) {
++        if (new_mode == RISCV_IOMMU_DDTP_MODE_OFF ||
++            new_mode == RISCV_IOMMU_DDTP_MODE_BARE) {
++            riscv_iommu_accel_attach_ddtp_hwpt(s, NULL);
++        } else {
++            riscv_iommu_accel_install_dc_all(s);
++        }
++    }
+ }
+ 
+ /* Command function and opcode field. */
+@@ -2894,6 +2904,11 @@ void riscv_iommu_reset(RISCVIOMMUState *s)
+     qemu_mutex_lock(&s->iot_lock);
+     g_hash_table_remove_all(s->iot_cache);
+     qemu_mutex_unlock(&s->iot_lock);
++
++    /* Re-attach every accelerated device based on the reset DDTP mode */
++    if (s->accel) {
++        riscv_iommu_accel_attach_ddtp_hwpt(s, NULL);
++    }
+ }
+ 
+ static const Property riscv_iommu_properties[] = {
+-- 
+2.53.0
 
 
