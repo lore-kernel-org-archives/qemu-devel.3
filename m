@@ -1,61 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A2D606A325
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 22:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4784606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 22:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UbPmvlMD
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UaioQr2x
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUA9s-0003EE-CP; Thu, 19 Nov 2026 16:59:08 -0500
+	id 1xUA9s-0003EA-Ag; Thu, 19 Nov 2026 16:59:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
- id 1xUA9j-00038Y-7Y
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 16:58:59 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xUA9k-00039B-7v
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 16:59:00 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
- id 1xUA9g-0006Zu-R1
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 16:58:58 -0500
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1xUA9g-0006Ze-R6
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 16:58:59 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJJUXsj3367484
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 21:58:55 GMT
+ 6AJJ1Sd71936307
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 21:58:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=Tw320WyG9HA
- HgBL9Puhhfdy/eph5t+YAV50d16pJ/2o=; b=UbPmvlMDs9CbSaRqlPPmSd5pzjZ
- AWTodZWYzD3dRZqKDOO9IB25HgUDV3moLuRpWw4Gq9cf97DniTgSue6SlP+aedm9
- 4JQIFfeBi1JM56yPn8gjOuV0gD1vJAf+buno6wSOexkKVPvpA58di3HfElegn4c6
- n2eYXTZS9M9hIoAypTCoUD2Lu37PI9k7TbqYy8e6Gvtynh4Nn+6gW7VY6GM6c93T
- IPneJKHx+o725cMIjAPOQcB3fPsCBYkUM3++7Ej1n9FgtKBichW15O2cuaqfrTA0
- TpLGrrnrrGfk663vMxkJZ5N4NW+k1OrA4DArDHzZFW4IITH0yQ7arHc+kBw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
+ :mime-version:references:subject:to; s=qcppdkim1; bh=KPV1ZXv9EGJ
+ wTz9glzUKwTI5SWkFIm+3uFyt4FC4+aU=; b=UaioQr2xcJAIM2eT4tnZc+frNs6
+ yUxu4kJJuXAGhj2xYBmgRIwi20yObdoZcqGY+hnAmLBSHA6pX5iPdVYz5954fddv
+ Alm1YPaLHW3TJSr4N3W0B4VhU1ZYiS5sLzXKnCSvot7c7pxUtiMuh8KAsUfrPOiV
+ FYhzBHW28OABkLHmZ3o/76fXuQxT6NV4bFiC5oWvK7fnuyae7l6hKaECKCAFbIPN
+ FHXO/aWGMeMpyZGUktf1Lk7E1FWmgN4k8AbrQIVIAvstZhIfkHMkXDmJnI4lewJ8
+ XsYcN3UFTAOa7jRtaMrMG0ODv2INHoxxXRS8egbVCh3q1ZW8fxswRg5CYbg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
  [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j27b5rnbg-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j22ugt9j3-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 21:58:55 +0000 (GMT)
-Received: from pps.filterd (nalasppmta02.qualcomm.com [127.0.0.1])
- by NALASPPMTA02.qualcomm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJLws7D3812789; Thu, 19 Nov 2026 21:58:54 GMT
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 21:58:54 +0000 (GMT)
+Received: from pps.filterd (nalasppmta04.qualcomm.com [127.0.0.1])
+ by NALASPPMTA04.qualcomm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AJLwrVn3770693; Thu, 19 Nov 2026 21:58:53 GMT
 Received: from hu-devc-lv-u24-a.qualcomm.com (hu-mliebel-lv.qualcomm.com
  [10.81.81.31])
- by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 6AJLwsnk3812749
+ by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 6AJLwrw93770687
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 19 Nov 2026 21:58:54 +0000 (GMT)
+ Thu, 19 Nov 2026 21:58:53 +0000 (GMT)
 Received: by hu-devc-lv-u24-a.qualcomm.com (Postfix, from userid 4282937)
- id 603F02578D; Thu, 19 Nov 2026 13:58:53 -0800 (PST)
+ id 46B122575D; Thu, 19 Nov 2026 13:58:53 -0800 (PST)
 From: Marco Liebel <marco.liebel@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Marco Liebel <marco.liebel@oss.qualcomm.com>
-Subject: [PATCH v3 09/15] target/hexagon: retain both scalar packet fault
- addresses
-Date: Thu, 19 Nov 2026 13:58:47 -0800
-Message-ID: <20261119215853.987158-10-marco.liebel@oss.qualcomm.com>
+Subject: [PATCH v3 04/15] target/hexagon: reject HMX operands outside VTCM
+Date: Thu, 19 Nov 2026 13:58:42 -0800
+Message-ID: <20261119215853.987158-5-marco.liebel@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261119215853.987158-1-marco.liebel@oss.qualcomm.com>
 References: <20261119215853.987158-1-marco.liebel@oss.qualcomm.com>
@@ -65,33 +64,33 @@ Content-Transfer-Encoding: 8bit
 X-Proofpoint-Reinject: loops=2 maxloops=12
 X-QCInternal: smtphost
 X-QCInternal: smtphost
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA4OCBTYWx0ZWRfXxf2fGbc1M820
- 6dYGmJso1xgGMFqI1YHWlJiWwP/BwV4i9C1oKEki+qi2rgtKg7Cw679DugCxC5keAqwLMXni4G1
- XAyo3oqR8ibS3Kys77b/0Eb42IIC09U=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA4OCBTYWx0ZWRfX0VdK+Hhyae/X
- HN5NclcSw0gGHAL5asHupDtuCFkzb19YfncC7ytsnQBQYjPpOuI6GWEBU0uvw6Qet7vD5NBIa3D
- jQdgNAhaVF1sb7Z5fVNVtjrbgOVn9Crrp9nUrBFjFYi7s6OMXnapbRVEIrSeqUUquG/xbMp8GKh
- e3mUng4FiOHge8wurFEWUw9aJO36gTebCoIkJY6p+R3tZp+jRRncsYkrzs1BQRqGYJWbrt42pmD
- QbO4xyNnH8Patmy3f5QVXg5/pS3vO7A4op9yGmuiWbdNRjXHsfo0OqF269VVTis6P5mvx4pxpwb
- WYuWEH+4hrP30zEbcUybOoYxtBVmGRVJF3Z7nJc5lXtzhmmcr9pVDbkZC/KOH7U2NYkBnMmM6+K
- 589SEJFi+FFhwJasy/ZJ/6I/R2uIawpFbZPK61xL4pfs5hil/bS4xo+/zc98VP0VQEmPD3BKCZi
- SqoOL8sCNDY3WM8frRw==
-X-Proofpoint-GUID: KmuygY9QRpzg1xDI7RvEibvpDNGZGK52
-X-Proofpoint-ORIG-GUID: KmuygY9QRpzg1xDI7RvEibvpDNGZGK52
-X-Authority-Analysis: v=2.4 cv=LPTz05W9 c=1 sm=1 tr=0 ts=6aff711f cx=c_pps
+X-Proofpoint-GUID: nNKPqxKc0Apt6y2L187SgQU5EwnaSEcv
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA4OCBTYWx0ZWRfXznPUjLnfiSxD
+ BDVX4zcvIq1ZjC2b2HHXzgGdds68ZvRN05/DMUQddiOLeh9RfJszilbvIUmI/Jq5CwUWGQgquym
+ 2pDXSn/WnaSg/jSko8iaD2FFGsk2aaM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA4OCBTYWx0ZWRfXzyJUAovGi76I
+ CzXQDNFtkesbf7U0kQVy01J0lzW+8aWqvS44i9PTBLHbEwDEddy3pdwLeXMwbeZ0VVdgFHvIyx8
+ 7OZ5tC9rkQQAAsxoKw6v3fZgpqcFF6q2r3w6WjziNW566wLR6QX9zO7D714VYvm62K0nXwpaJ2c
+ 9RxwDyY9gJziSNPxK+46X/LqD+mc+vlnSa/dYqhSfwe1856ZZwq4lT6cJ8cd3jWOyB2nmXp2JVq
+ ptt7YmLzRQFkOIGqEsq6t7eb9BsZnf+OHSKiSN6dzU4nARtSRSduWwLG3WqTWMRyGCfVRnQgIwD
+ loPDQqZ7qMofwRza2Ay7/3xVuG8j3TRYZ2RYEZp9BQ5kN1ud7zu9hueI21GrLbatpdDSwlwYG6T
+ 9Y80U1lA0CyMr+ouepZGi1JxCQHpLX8+xb6jecuxgXcb/1cslOiYtHo8EGMWjrPePrvjzDrucKl
+ qCXaHy8VSykkMleDevA==
+X-Authority-Analysis: v=2.4 cv=YeEodARf c=1 sm=1 tr=0 ts=6aff711e cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8 a=9Yne1IhLnBY4bJs1OgIA:9
+ a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8 a=AOcVaDlDQPZahzFAqEIA:9
+X-Proofpoint-ORIG-GUID: nNKPqxKc0Apt6y2L187SgQU5EwnaSEcv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-19_05,2026-11-19_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 spamscore=0 adultscore=0 lowpriorityscore=0
- phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0 suspectscore=0
+ spamscore=0 phishscore=0 clxscore=1015 priorityscore=1501 adultscore=0
+ bulkscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611190088
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=mliebel@qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=mliebel@qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -116,256 +115,148 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Generate address-only code from scalar memory semantics. Record both
-active slots before memory execution, without loads, stores, or pointer
-updates. Use the recorded addresses and validity bits on a data fault.
+Check activation and weight addresses against the machine VTCM range
+before executing packet instructions. An invalid operand raises the
+precise coprocessor VMEM address error and prevents packet commit.
+HMX arithmetic remains unimplemented.
 
 Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
 ---
- target/hexagon/cpu.c                 | 16 ++++++++++++
- target/hexagon/cpu.h                 |  2 ++
- target/hexagon/gen_tcg_func_table.py |  6 +++++
- target/hexagon/gen_tcg_funcs.py      | 38 ++++++++++++++++++++++++++++
- target/hexagon/genptr.c              | 17 +++++++++++++
- target/hexagon/genptr.h              |  4 +++
- target/hexagon/hex_common.py         | 22 ++++++++++++++++
- target/hexagon/translate.c           | 16 ++++++++++++
- target/hexagon/translate.h           |  1 +
- 9 files changed, 122 insertions(+)
+ hw/hexagon/hex-subsys.c      |  4 ++++
+ include/hw/hexagon/hexagon.h |  2 ++
+ target/hexagon/cpu.c         |  2 ++
+ target/hexagon/cpu.h         |  2 ++
+ target/hexagon/translate.c   | 26 ++++++++++++++++++++++++++
+ target/hexagon/translate.h   |  4 ++++
+ 6 files changed, 40 insertions(+)
 
+diff --git a/hw/hexagon/hex-subsys.c b/hw/hexagon/hex-subsys.c
+index 52ec0cadac..d2e095bb91 100644
+--- a/hw/hexagon/hex-subsys.c
++++ b/hw/hexagon/hex-subsys.c
+@@ -181,6 +181,8 @@ void hex_subsys_create(HexagonCommonMachineState *hms,
+                            sizeof(m_cfg->cfgtable), m_cfg->cfgbase,
+                            &address_space_memory);
+ 
++    hms->vtcm_base = (uint64_t)m_cfg->cfgtable.vtcm_base << 16;
++    hms->vtcm_size = (uint64_t)m_cfg->cfgtable.vtcm_size_kb << 10;
+     if (m_cfg->cfgtable.vtcm_size_kb > 0) {
+         memory_region_init_ram(&hms->vtcm, NULL, "vtcm.ram",
+                                m_cfg->cfgtable.vtcm_size_kb * 1024,
+@@ -204,6 +206,8 @@ void hex_subsys_add_cpu(HexagonCommonMachineState *hms, DeviceState *cpu)
+     Object *hmx;
+ 
+     object_property_add_child(OBJECT(hms->cluster), "cpu[*]", OBJECT(cpu));
++    qdev_prop_set_uint64(cpu, "vtcm-base", hms->vtcm_base);
++    qdev_prop_set_uint64(cpu, "vtcm-size", hms->vtcm_size);
+     object_property_set_link(OBJECT(cpu), "global-regs",
+                              OBJECT(hms->glob_regs), &error_fatal);
+     object_property_set_link(OBJECT(cpu), "tlb", OBJECT(hms->tlb),
+diff --git a/include/hw/hexagon/hexagon.h b/include/hw/hexagon/hexagon.h
+index 2ca4a518db..a856651fba 100644
+--- a/include/hw/hexagon/hexagon.h
++++ b/include/hw/hexagon/hexagon.h
+@@ -187,6 +187,8 @@ struct HexagonCommonMachineState {
+     MemoryRegion cfgtable_rom;
+     uint32_t cfgtable_data[HEXAGON_CFGSPACE_ENTRIES];
+     MemoryRegion vtcm;
++    uint64_t vtcm_base;
++    uint64_t vtcm_size;
+     DeviceState *cluster;
+     DeviceState *l2vic;
+     DeviceState *qtimer;
 diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 11d622948e..34f80d6671 100644
+index 3575b31d19..effa95534b 100644
 --- a/target/hexagon/cpu.c
 +++ b/target/hexagon/cpu.c
-@@ -759,6 +759,22 @@ static void set_badva_regs(CPUHexagonState *env, uint32_t VA, int slot,
- {
-     env->t_sreg[HEX_SREG_BADVA] = VA;
- 
-+    if (access_type != MMU_INST_FETCH && env->mem_access_valid) {
-+        uint32_t valid = env->mem_access_valid | (1U << slot);
-+        for (int i = 0; i < 2; i++) {
-+            if (valid & (1U << i)) {
-+                env->t_sreg[HEX_SREG_BADVA0 + i] =
-+                    i == slot ? VA : env->mem_access_va[i];
-+            } else {
-+                env->t_sreg[HEX_SREG_BADVA0 + i] = INVALID_BADVA;
-+            }
-+        }
-+        SET_SSR_FIELD(env, SSR_V0, valid & 1);
-+        SET_SSR_FIELD(env, SSR_V1, (valid >> 1) & 1);
-+        SET_SSR_FIELD(env, SSR_BVS, slot);
-+        return;
-+    }
-+
-     if (access_type == MMU_INST_FETCH || slot == 0) {
-         env->t_sreg[HEX_SREG_BADVA0] = VA;
-         env->t_sreg[HEX_SREG_BADVA1] = INVALID_BADVA;
+@@ -69,6 +69,8 @@ static const Property hexagon_cpu_properties[] = {
+     DEFINE_PROP_LINK("tlb", HexagonCPU, tlb, TYPE_HEXAGON_TLB,
+                      HexagonTLBState *),
+     DEFINE_PROP_UINT32("exec-start-addr", HexagonCPU, boot_addr, 0xffffffff),
++    DEFINE_PROP_UINT64("vtcm-base", HexagonCPU, vtcm_base, 0),
++    DEFINE_PROP_UINT64("vtcm-size", HexagonCPU, vtcm_size, 0),
+     DEFINE_PROP_LINK("l2vic", HexagonCPU, l2vic,
+                      TYPE_HEX_L2VIC_INTERFACE, HexL2VicInterface *),
+     DEFINE_PROP_LINK("global-regs", HexagonCPU, globalregs,
 diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-index d6a513988c..915da339a0 100644
+index 5739254f1f..1eb6c7d8bf 100644
 --- a/target/hexagon/cpu.h
 +++ b/target/hexagon/cpu.h
-@@ -167,6 +167,8 @@ typedef struct CPUArchState {
-     uint32_t t_sreg[NUM_SREGS];
-     /* Slot of the memory operation currently being executed or probed. */
-     uint32_t mem_slot;
-+    uint32_t mem_access_valid;
-+    uint32_t mem_access_va[2];
- 
-     uint32_t greg[NUM_GREGS];
- 
-diff --git a/target/hexagon/gen_tcg_func_table.py b/target/hexagon/gen_tcg_func_table.py
-index ba56ede568..3ec136d6f1 100755
---- a/target/hexagon/gen_tcg_func_table.py
-+++ b/target/hexagon/gen_tcg_func_table.py
-@@ -22,6 +22,12 @@ def main():
-             f.write(f"    [{tag}] = generate_{tag},\n")
- 
-         f.write("};\n\n")
-+        f.write("#ifndef CONFIG_USER_ONLY\n")
-+        f.write("const SemanticInsn opcode_address[XX_LAST_OPCODE] = {\n")
-+        for tag in hex_common.tags:
-+            if not hex_common.tag_ignore(tag) and hex_common.packet_memory_info(tag):
-+                f.write(f"    [{tag}] = address_{tag},\n")
-+        f.write("};\n#endif\n\n")
-         f.write("#endif    /* HEXAGON_FUNC_TABLE_H */\n")
- 
- 
-diff --git a/target/hexagon/gen_tcg_funcs.py b/target/hexagon/gen_tcg_funcs.py
-index eb2e5f3a7e..f67056049e 100755
---- a/target/hexagon/gen_tcg_funcs.py
-+++ b/target/hexagon/gen_tcg_funcs.py
-@@ -154,11 +154,49 @@ def gen_tcg_func(f, tag, regs, imms):
-     f.write("}\n\n")
- 
- 
-+def gen_memory_address(f, tag, regs, imms):
-+    info = hex_common.packet_memory_info(tag)
-+    if info is None:
-+        return
-+    ea, pred, width = info
-+    for reg in ("SP", "FP", "GP", "LR"):
-+        ea = ea.replace(f"fREAD_{reg}()", f"hex_gpr[HEX_REG_{reg}]")
-+    f.write("#ifndef CONFIG_USER_ONLY\n")
-+    f.write(f"static void address_{tag}(DisasContext *ctx)\n{{\n")
-+    f.write("    Insn *insn G_GNUC_UNUSED = ctx->insn;\n")
-+    f.write("    TCGv EA = tcg_temp_new();\n")
-+    for i, (regtype, regid) in enumerate(regs):
-+        name = f"{regtype}{regid}V"
-+        if regtype == "R" and re.search(rf"\b{name}\b", ea):
-+            f.write(f"    TCGv {name} = hex_gpr[insn->regno[{i}]];\n")
-+    for immlett, bits, shift in imms:
-+        name = hex_common.imm_name(immlett)
-+        if re.search(rf"\b{name}\b", ea):
-+            i = 1 if immlett.isupper() else 0
-+            f.write(f"    int {name} = insn->immed[{i}];\n")
-+    if pred:
-+        name = pred.group(3)
-+        i = next(i for i, (t, r) in enumerate(regs)
-+                 if f"{t}{r}" == name[:-1])
-+        source = "ctx->new_pred_value" if pred.group(1) == "NEW" else "hex_pred"
-+        f.write("    TCGv LSB = tcg_temp_new();\n")
-+        f.write("    TCGLabel *skip = gen_new_label();\n")
-+        f.write(f"    tcg_gen_andi_tl(LSB, {source}[insn->regno[{i}]], 1);\n")
-+        cond = "NE" if pred.group(2) else "EQ"
-+        f.write(f"    tcg_gen_brcondi_tl(TCG_COND_{cond}, LSB, 0, skip);\n")
-+    f.write(f"    {ea};\n")
-+    f.write("    gen_log_mem_address(ctx, EA);\n")
-+    if pred:
-+        f.write("    gen_set_label(skip);\n")
-+    f.write("}\n#endif\n\n")
-+
-+
- def gen_def_tcg_func(f, tag, tagregs, tagimms):
-     regs = tagregs[tag]
-     imms = tagimms[tag]
- 
-     gen_tcg_func(f, tag, regs, imms)
-+    gen_memory_address(f, tag, regs, imms)
- 
- 
- def main():
-diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
-index 954dea6622..e270a41b8d 100644
---- a/target/hexagon/genptr.c
-+++ b/target/hexagon/genptr.c
-@@ -1722,6 +1722,23 @@ static void vec_to_qvec(size_t size, TCGv_ptr dstbase, intptr_t dstoff,
-     }
+@@ -248,6 +248,8 @@ struct ArchCPU {
+     HexagonHMXContextState *hmx_ctx;
+     HexagonTLBState *tlb;
+     uint32_t boot_addr;
++    uint64_t vtcm_base;
++    uint64_t vtcm_size;
+     HexagonGlobalRegState *globalregs;
+     uint32_t htid;
+     HexL2VicInterface *l2vic;
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 10ed73590c..3601c4e9f3 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -149,6 +149,20 @@ void gen_precise_exception(int cause, uint32_t PC)
+                                tcg_constant_i32(PC));
  }
  
 +#ifndef CONFIG_USER_ONLY
-+void gen_log_mem_address(DisasContext *ctx, TCGv va)
++static void gen_hmx_check_address(DisasContext *ctx, TCGv_i32 address)
 +{
-+    unsigned slot = ctx->insn->slot;
-+    TCGv valid = tcg_temp_new();
++    TCGv_i64 offset = tcg_temp_new_i64();
++    TCGLabel *valid = gen_new_label();
 +
-+    tcg_debug_assert(slot < 2);
-+    tcg_gen_st_i32(va, tcg_env,
-+                   offsetof(CPUHexagonState, mem_access_va[slot]));
-+    tcg_gen_ld_i32(valid, tcg_env,
-+                   offsetof(CPUHexagonState, mem_access_valid));
-+    tcg_gen_ori_i32(valid, valid, 1U << slot);
-+    tcg_gen_st_i32(valid, tcg_env,
-+                   offsetof(CPUHexagonState, mem_access_valid));
++    tcg_gen_extu_i32_i64(offset, address);
++    tcg_gen_subi_i64(offset, offset, ctx->vtcm_base);
++    tcg_gen_brcondi_i64(TCG_COND_LTU, offset, ctx->vtcm_size, valid);
++    gen_precise_exception(HEX_CAUSE_COPROC_LDST, ctx->pkt.pc);
++    gen_set_label(valid);
 +}
 +#endif
 +
- void probe_noshuf_load(TCGv va, int s, int mi)
+ static void gen_exec_counters(DisasContext *ctx)
  {
-     TCGv size = tcg_constant_tl(s);
-diff --git a/target/hexagon/genptr.h b/target/hexagon/genptr.h
-index 270375251f..99dff75973 100644
---- a/target/hexagon/genptr.h
-+++ b/target/hexagon/genptr.h
-@@ -23,6 +23,10 @@
- #include "translate.h"
- 
- extern const SemanticInsn opcode_genptr[];
-+#ifndef CONFIG_USER_ONLY
-+extern const SemanticInsn opcode_address[];
-+void gen_log_mem_address(DisasContext *ctx, TCGv va);
-+#endif
- 
- void gen_store32(TCGv vaddr, TCGv src, uint32_t width, uint32_t slot);
- void gen_store1(TCGv_env cpu_env, TCGv vaddr, TCGv src, uint32_t slot);
-diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index f85f063f52..6d335e9423 100755
---- a/target/hexagon/hex_common.py
-+++ b/target/hexagon/hex_common.py
-@@ -299,6 +299,28 @@ def need_pkt_has_multi_cof(tag):
-     return False
- 
- 
-+def packet_memory_info(tag):
-+    """Return a side-effect-free scalar address expression, if available."""
-+    attrs = attribdict[tag]
-+    if not ("A_LOAD" in attrs or "A_STORE" in attrs):
-+        return None
-+    if any(a in attrs for a in ("A_CVI", "A_HVX", "A_HLX", "A_HMX")):
-+        return None
-+    sem = semdict[tag]
-+    ea = re.search(r"fEA_(?:RI|RRs|IRs|IMM|REG|BREVR)\([^;]+\)", sem)
-+    if not ea:
-+        return None
-+    # A locked store is conditional on the reservation, not a predicate.
-+    if "fSTORE_LOCKED" in sem:
-+        return None
-+    width = next((n for n in (1, 2, 4, 8)
-+                  if f"A_MEMSIZE_{n}B" in attrs), None)
-+    if width is None:
-+        return None
-+    pred = re.search(r"fLSB(OLD|NEW)(NOT)?\((P\w+)\)", sem)
-+    return ea.group(0), pred, width
-+
-+
- def need_pkt_need_commit(tag):
-     return 'A_IMPLICIT_WRITES_USR' in attribdict[tag]
- 
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 68d6a64fe6..41151250b7 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -814,6 +814,7 @@ static void gen_start_packet(DisasContext *ctx)
-      * gen phase, so clear it again.
-      */
-     bitmap_zero(ctx->pregs_written, NUM_PREGS);
-+    ctx->mem_addresses_generated = false;
- #ifndef CONFIG_USER_ONLY
-     for (i = 0; i < HEX_SREG_GLB_START; i++) {
-         ctx->t_sreg_new_value[i] = NULL;
-@@ -1021,6 +1022,21 @@ static void gen_insn(DisasContext *ctx)
- 
- #ifndef CONFIG_USER_ONLY
-     if (GET_ATTRIB(opcode, A_LOAD) || GET_ATTRIB(opcode, A_STORE)) {
-+        if (!ctx->mem_addresses_generated) {
-+            Insn *saved = ctx->insn;
-+
-+            tcg_gen_st_i32(tcg_constant_i32(0), tcg_env,
-+                           offsetof(CPUHexagonState, mem_access_valid));
-+            for (int i = 0; i < ctx->pkt.num_insns; i++) {
-+                Insn *in = &ctx->pkt.insn[i];
-+                if (opcode_address[in->opcode]) {
-+                    ctx->insn = in;
-+                    opcode_address[in->opcode](ctx);
-+                }
-+            }
-+            ctx->insn = saved;
-+            ctx->mem_addresses_generated = true;
-+        }
-         tcg_gen_st_i32(tcg_constant_i32(ctx->insn->slot), tcg_env,
-                        offsetof(CPUHexagonState, mem_slot));
+     tcg_gen_addi_tl(hex_gpr[HEX_REG_QEMU_PKT_CNT],
+@@ -946,6 +960,16 @@ static void gen_start_packet(DisasContext *ctx)
+         gen_precise_exception(HEX_CAUSE_NO_COPROC2_ENABLE, ctx->pkt.pc);
+         ctx->hmx_check_emitted = true;
      }
++    if (ctx->pkt.pkt_has_hmx) {
++        for (i = 0; i < ctx->pkt.num_insns; i++) {
++            Insn *insn = &ctx->pkt.insn[i];
++            if (GET_ATTRIB(insn->opcode, A_HMX) &&
++                (GET_ATTRIB(insn->opcode, A_PAIR_1OF2) ||
++                 GET_ATTRIB(insn->opcode, A_PAIR_2OF2))) {
++                gen_hmx_check_address(ctx, hex_gpr[insn->regno[0]]);
++            }
++        }
++    }
+ #endif
+ }
+ 
+@@ -1583,6 +1607,8 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
+     ctx->hlx_coproc_enabled = hex_cpu->hlx != NULL &&
+                               hex_cpu->hlx->contexts_bitmap != 0;
+     ctx->hlx_check_emitted = false;
++    ctx->vtcm_base = hex_cpu->vtcm_base;
++    ctx->vtcm_size = hex_cpu->vtcm_size;
+ #endif
+     ctx->branch_cond = TCG_COND_NEVER;
+     ctx->is_tight_loop = FIELD_EX32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP);
 diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-index aaafcb0954..ac498b78fd 100644
+index c988c85f33..aaafcb0954 100644
 --- a/target/hexagon/translate.h
 +++ b/target/hexagon/translate.h
-@@ -88,6 +88,7 @@ typedef struct DisasContext {
-     DECLARE_BITMAP(insn_qregs_read, NUM_QREGS);
-     bool pre_commit;
-     bool need_commit;
-+    bool mem_addresses_generated;
-     TCGCond branch_cond;
-     target_ulong branch_dest;
-     bool is_tight_loop;
+@@ -114,6 +114,10 @@ typedef struct DisasContext {
+     DECLARE_BITMAP(lregs_updated_tmp, NUM_LREGS);
+     bool hmx_coproc_enabled;
+     bool hmx_check_emitted;
++#ifndef CONFIG_USER_ONLY
++    uint64_t vtcm_base;
++    uint64_t vtcm_size;
++#endif
+ } DisasContext;
+ 
+ bool is_gather_store_insn(DisasContext *ctx);
 -- 
 2.43.0
 
