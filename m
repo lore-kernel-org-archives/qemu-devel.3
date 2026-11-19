@@ -1,53 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD487606A32A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124AC606A324
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=q/g32FXj
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=OPu3F+sc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU2FE-00071k-Sv; Thu, 19 Nov 2026 08:32:09 -0500
+	id 1xU2Gg-0007JE-0n; Thu, 19 Nov 2026 08:33:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xU2F5-00070v-Ls
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 08:31:59 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xU2GW-0007HY-Q7
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 08:33:28 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xU2F2-0004Ik-8l
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 08:31:59 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xU2GV-0004Og-7Y
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 08:33:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795095111; bh=MTrgid6ueet1JIG5qlUiV7DHOoefWlB993SPkmpONCw=;
+ t=1795095205; bh=Ia4xDRJ+gmNVJBFkArAQUeKUUD/MM6/vye8rK7QLKbs=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=q/g32FXjEzX2z7shF/sN9fupK7Q55O+sj30ffio4KTRcFQUyJlqu8ys+s9klRWrH5
- uDr/lT/l33F7S5jXnv7DKQWI/xnqyIw/inTaEelNp0Bxj3c+2bl1uZ8TcU3u3qLx0w
- 3dUZCP05l4OH0wQ0v2mr2wbKJV4pHidXLJs5SvQ9A5ryNfLoTVpU2AuA9e3xN+EQSL
- /FYtP1AffRwA3BXZQBK/cwuvMwbqb4jW5md6RdW5IUSTFEqwmH2cPkdmL4TA6pUvx9
- WTeP4+7XwYu5pOsA5cD8pHJPEEikuP+Xs+7i9rmg2IC4gpFXGF9mpSLCQAkWPnzsbh
- QO1i1Mb1zLFhQ==
+ b=OPu3F+sc3YD1rzn1IjU8wWYVpLhwX3jLOBiIwvY4a+zwVa+L9PXg62k1W1+fFYT4n
+ hIxbuwPE/B/Nl24FP9paFtH2b6KcbKEx8tHnHokX49BIH4Px6SPGuByZRB4BxXg6IP
+ y7OSVDMFigq39CCq3B6ScEFE6RzRIRloinUaAVlJu7DTicP1YRwHvmCcWXUPJ0nXq9
+ dMvi3PK+h7Dae0hL8WSH9qurSZP2mHSZWyqwBgdWlG8bss8wgxW6ADOcwGt8Om58ye
+ 8LLuUluRCArspNK5HWaQVlkronpY9sC0r1Gl8ofalvP1LZY4sAPLWBXlSO7BvW7qXB
+ i7Y5i2RYigAOQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 45EE81E7F82;
- Thu, 19 Nov 2026 16:31:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A5181E7F84;
+ Thu, 19 Nov 2026 16:33:25 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 30C5C46190E;
- Thu, 19 Nov 2026 16:31:51 +0300 (MSK)
-Message-ID: <ca80e84f-28b7-4156-823e-b00679ef8a27@tls.msk.ru>
-Date: Thu, 19 Nov 2026 16:31:51 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 884B3461910;
+ Thu, 19 Nov 2026 16:33:25 +0300 (MSK)
+Message-ID: <9625a8d1-d74b-4f85-b27e-8ba2bfa64185@tls.msk.ru>
+Date: Thu, 19 Nov 2026 16:33:25 +0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.2] hostmem: allow building without KVM support
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@kernel.org>,
- Igor Mammedov <imammedo@redhat.com>, Peter Xu <peterx@redhat.com>,
+Subject: Re: [PATCH v2 for-11.2] hostmem: allow building without KVM support
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@kernel.org>, Igor Mammedov
+ <imammedo@redhat.com>, Peter Xu <peterx@redhat.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Fabiano Rosas <farosas@suse.de>
-References: <20261119131518.275237-1-pbonzini@redhat.com>
+References: <20261119113309.1205353-1-mjt@tls.msk.ru>
+ <18e8c852-9870-4232-aae7-66db4672fdd9@oss.qualcomm.com>
+ <2fc4fb7c-7d8b-4af9-8ab2-6ce3682acd13@tls.msk.ru>
+ <eda18b65-ad5e-4985-843a-bbadc5e7f390@oss.qualcomm.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20261119131518.275237-1-pbonzini@redhat.com>
+In-Reply-To: <eda18b65-ad5e-4985-843a-bbadc5e7f390@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -74,12 +78,26 @@ X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/19/26 16:15, Paolo Bonzini wrote:
-> Queued, thanks.
+On 11/19/26 14:54, Philippe Mathieu-Daudé wrote:
+> On 2026-11-19 12:46, Michael Tokarev wrote:
 
-Please queue the v2 which is with a complete commit message :)
+>> Sure I can add
+>>
+>> #ifndef GUEST_MEMFD_FLAG_MMAP  (if you prefer not to use #ifndef CONFIG_KVM)
+>> # define GUEST_MEMFD_FLAG_MMAP 0
+>> # define GUEST_MEMFD_FLAG_INIT_SHARED 0
+>> #endif
+>>
+>> but it much uglier and less understandable than #ifndef CONFIG_KVM.
+> 
+> As you prefer. That would be the first accelerator check in backends/,
+> I'm not sure we want it (then they are hard to remove):
+Well, sure, -- what would be the better way here?
 
-Thanks!
+I don't have particular preferences, I just want this bug to be fixed
+(without sacrificing the future development ofc).
+
+Thanks,
 
 /mjt
 
