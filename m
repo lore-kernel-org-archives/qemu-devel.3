@@ -1,66 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C19B606A33C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2387B606A33B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=TCss5Gea
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qiNm0FXH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU2OH-0000CE-BR; Thu, 19 Nov 2026 08:41:29 -0500
+	id 1xU2Sn-0000zI-Ti; Thu, 19 Nov 2026 08:46:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xU2OC-0000BY-A8; Thu, 19 Nov 2026 08:41:24 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xU2O9-0006Oo-Vo; Thu, 19 Nov 2026 08:41:24 -0500
-Received: from example.com (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 5608320B7169;
- Thu, 19 Nov 2026 05:41:12 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5608320B7169
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795095675;
- bh=kSP667k5nEQUvRwVG/nGw2/6F04cmTOdSKQVTNp7/Ro=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=TCss5Gea8WG8Zw2ymTTltyzlfaEWH9axC5dxJ7yNIVi8zNpA6GaU5nOELVOkxYoHT
- 3iH1vEaFA1xDG4g0i2RaWfxCD5i5UOJ5Kmu22ukCJIX2l3kdqt71+Ej94XHzU7hyD8
- fi/qpTSxIe/DlMRss0+zHw7kUpTh0cmYjXjx3SqY=
-Date: Thu, 19 Nov 2026 14:41:11 +0100
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Aastha Rawat <aastharawat@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v6 01/14] accel/mshv: extract common CPU register helpers
-Message-ID: <av78d3TLGnB94nZM@example.com>
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-1-aefe5e76a0e3@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1xU2ST-0000yP-Ic; Thu, 19 Nov 2026 08:45:51 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1xU2SR-0003Sr-CY; Thu, 19 Nov 2026 08:45:49 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AJBu9Vs2870886; Thu, 19 Nov 2026 13:45:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ONr4qM
+ jCVEwcCCYQAcxxORvJQxl+3VTb0Sr7kxHw3/M=; b=qiNm0FXHy5on7uNtOCwOFQ
+ Z19XyYEZqWgG0OJISQd52AQOzG7TB9S2aZQgM+cfeBS/+G1m4FYpxtu9KtSAUYe/
+ OFb6QkdiKa0zlzLhz6rANUI8JemVnHK2BW5TMx1rZq9OPoMGaKb57rNIPoqqSf5A
+ PCanScwjZE4a+mlkfwOCXu4QZ3Vrvj3SA3Tg8NQeL0DYFU2G+MlpRFwly0PAxYej
+ gHYzPtEVnNmiGzwKIGQM01PaZnSgM3p/tjKPL2nQ3djjURbACb9hzgKenEii4k7+
+ HMrJESFs/T8O2Regl1PGcMomjzjkaIjTtj7Dd8jcA+82WMMZuckdWwxcb9gR1Dvg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105w13n2-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 19 Nov 2026 13:45:42 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AJBo0m02498589; Thu, 19 Nov 2026 13:45:41 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j1v9x9wb7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Nov 2026 13:45:41 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6AJDjdqO49938772
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 19 Nov 2026 13:45:39 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD9092004E;
+ Thu, 19 Nov 2026 13:45:39 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7619A20040;
+ Thu, 19 Nov 2026 13:45:39 +0000 (GMT)
+Received: from [9.68.16.159] (unknown [9.68.16.159])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 19 Nov 2026 13:45:39 +0000 (GMT)
+Message-ID: <661210fb-a40e-4e92-ad13-07e0238ed6b4@linux.ibm.com>
+Date: Thu, 19 Nov 2026 14:45:39 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-1-aefe5e76a0e3@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] virtio-blk: Deprecate silent truncation of serial
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, stefanha@redhat.com,
+ mst@redhat.com, devel@lists.libvirt.org, qemu-devel@nongnu.org
+References: <20261029231001.194240-1-kwolf@redhat.com>
+ <259057b5-d900-4388-a4fc-b698860ba158@linux.ibm.com>
+ <avcRG6PtcXbB0KvJ@redhat.com>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <avcRG6PtcXbB0KvJ@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: IsRm81-7XNBqsBLqGD6oB3uU1MUykx-W
+X-Authority-Analysis: v=2.4 cv=Z8x5j3RA c=1 sm=1 tr=0 ts=6afefd86 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=iW4lf9acZbQJq8buDm8A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: IsRm81-7XNBqsBLqGD6oB3uU1MUykx-W
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA1MyBTYWx0ZWRfXzeeQ3iFB/a28
+ +VQzyyrmXlM0nB6vxeLfDyPX60CYSuavD7fiuKJBjO74y2KiMuwcBNywiKjVXf0Nz5l3DHOfZ7N
+ NS2SCJLHxcGl2tq/18e3C7ndLkcPJm0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA1MyBTYWx0ZWRfXz1G5Yo4+xXf4
+ atwAdF0y83vA/KqzjdYbv+zDM0kGUBoWQKepd/KVKgANDJ4GXwUebF+UeEwZ9lyHnSE/Y3U9spy
+ rfgw6K576ZDFNh1rvrJEE4gUPumoLtaS9LQLAMIDGKP8kai4wt2sBG0k4JMzeNUcD4XTkywmxv8
+ IdomdbBVQ6xbZFPSVBwWwo5kbsqV+R2kO7NVEfzcWsHfNaBgEN8MKF8ygHro2jd9Ladddowg4Mq
+ sWbdb2uNal3E42Yb0xwp7LlZN1gXTrFiMXmAx0AQtavfnwKau2B64yTKVxZyviiKB3rVHTU0mMg
+ f6RhA/q7R2GmdiaqXS6FbC1gXZibn1dhnqWcAWTiWeBFxk7bcwNFLocLOFOPpk+0MqvBf5y8QCE
+ 8Hc/Q5hbuzjlOHUJ9z6yvaPLdCKG5mfCbgFTob4/L9N4OIkG77jMcUd0je1Xo/VvO9RpwvO4Pq0
+ 4MhKmgmYYjReuAgKOFQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-19_03,2026-11-19_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ adultscore=0 bulkscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611190053
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,370 +121,121 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 01, 2026 at 10:52:46AM +0000, Aastha Rawat wrote:
-> Move arch-independent MSHV CPU register handling functions into
-> accel/mshv/mshv-cpu-common.c. Update x86 MSHV backends to use these
-> shared helpers.
+Am 13.11.26 um 14:31 schrieb Kevin Wolf:
+> Am 09.11.2026 um 14:21 hat Christian Borntraeger geschrieben:
+>> Am 30.10.26 um 00:09 schrieb Kevin Wolf via Devel:
+>>> QEMU has allowed the user to specify serials of arbitrary length for
+>>> virtio-blk devices, even though the virtio-blk protocol can only
+>>> communicate 20 characters of the serial to the guest. This means that a
+>>> longer serial number on the command line is silently truncated to 20
+>>> characters from the guest perspective.
+>>>
+>>> As a first step to fix this, deprecate the silent truncation and turn it
+>>> into a warning; we can later make this a hard error. While touching
+>>> GET_ID, let's make it more spec compliant and clean up the internal
+>>> state.
+>>>
+>>> Another part is planned that will actually enable users to use longer
+>>> serials and additional device identifiers. This will need spec changes
+>>> and would take more time than we have until the QEMU 11.2 freeze anyway,
+>>> so I'll address this later. For now, the important thing is to get the
+>>> deprecation period started.
+>>
+>> Consider me interested for future extensions.
+>> Additional information via virtio-blk would be really helpful. e.g. when
+>> forwarding a scsi LUN having the WWID visible for virtio-blk would be really
+>> nice. One usecase is that the guest visible WWID can be used to talk to
+>> the storage server to create snapshots without having to have a translation
+>> table from guest virtio-blk device to WWID. This was actually a real ask from
+>> a customer.
 > 
-> Prefix get_generic_regs() with mshv_ for proper namespacing since it
-> is now public.
+> So let's talk about what specific information to add while we touch the
+> spec. My first thought was adding whatever two or three things scsi-disk
+> offers in qdev, but after actually looking at the code and the spec I'm
+> not so sure any more. We seem to have:
 > 
-> Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
-> ---
->  accel/mshv/meson.build       |   3 +-
->  accel/mshv/mshv-cpu-common.c | 151 +++++++++++++++++++++++++++++++++++++++++++
->  include/system/mshv_int.h    |   1 +
->  target/i386/mshv/mshv-cpu.c  | 125 +----------------------------------
->  4 files changed, 155 insertions(+), 125 deletions(-)
+> - vendor, product (standard INQUIRY data)
+> - serial (VPD page 0x80)
+> - device_id (VPD page 0x83, vendor-specific descriptor for LUN)
+> - wwn (VPD page 0x83, 64 bit NAA descriptor for LUN)
+> - port_wwn (VPD page 0x83, 64 bit NAA descriptor for SAS target port)
+> - port_index (VPD page 0x83, relative target port identifier for SAS target port)
 > 
-> diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
-> index e433187cde0..ebe32921b3d 100644
-> --- a/accel/mshv/meson.build
-> +++ b/accel/mshv/meson.build
-> @@ -1,5 +1,6 @@
->  system_ss.add(when: 'CONFIG_MSHV', if_true: files(
->    'irq.c',
->    'mem.c',
-> -  'mshv-all.c'
-> +  'mshv-all.c',
-> +  'mshv-cpu-common.c'
->  ))
-> diff --git a/accel/mshv/mshv-cpu-common.c b/accel/mshv/mshv-cpu-common.c
-> new file mode 100644
-> index 00000000000..e8ef34689e3
-> --- /dev/null
-> +++ b/accel/mshv/mshv-cpu-common.c
-> @@ -0,0 +1,151 @@
-> +/*
-> + * QEMU MSHV common CPU register helpers
-> + *
-> + * Copyright Microsoft, Corp. 2026
-> + *
-> + * Authors: Ziqiao Zhou   <ziqiaozhou@microsoft.com>
-> + *          Magnus Kulke  <magnuskulke@microsoft.com>
-> + *          Jinank Jain   <jinankjain@microsoft.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +#include "qemu/memalign.h"
-> +
-> +#include "system/mshv.h"
-> +#include "linux/mshv.h"
-> +#include "system/mshv_int.h"
-> +
-> +#include "hw/core/cpu.h"
-> +
-> +#include <sys/ioctl.h>
-> +
-> +int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-> +                          size_t n_regs)
-> +{
-> +    int cpu_fd = mshv_vcpufd(cpu);
-> +    int vp_index = cpu->cpu_index;
-> +    size_t in_sz, assocs_sz;
-> +    hv_input_set_vp_registers *in = cpu->accel->hvcall_args.input_page;
-> +    struct mshv_root_hvcall args = {0};
-> +    int ret;
-> +
-> +    /* find out the size of the struct w/ a flexible array at the tail */
-> +    assocs_sz = n_regs * sizeof(hv_register_assoc);
-> +    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
-> +
-> +    /* fill the input struct */
-> +    memset(in, 0, sizeof(hv_input_set_vp_registers));
-> +    in->vp_index = vp_index;
-> +    memcpy(in->elements, assocs, assocs_sz);
-> +
-> +    /* create the hvcall envelope */
-> +    args.code = HVCALL_SET_VP_REGISTERS;
-> +    args.in_sz = in_sz;
-> +    args.in_ptr = (uint64_t) in;
-> +    args.reps = (uint16_t) n_regs;
-> +
-> +    /* perform the call */
-> +    ret = mshv_hvcall(cpu_fd, &args);
-> +    if (ret < 0) {
-> +        error_report("Failed to set registers");
-> +        return -1;
-> +    }
-> +
-> +    /* assert we set all registers */
-> +    if (args.reps != n_regs) {
-> +        error_report("Failed to set registers: expected %zu elements"
-> +                     ", got %u", n_regs, args.reps);
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-> +                            size_t n_regs)
-> +{
-> +    int cpu_fd = mshv_vcpufd(cpu);
-> +    int vp_index = cpu->cpu_index;
-> +    hv_input_get_vp_registers *in = cpu->accel->hvcall_args.input_page;
-> +    hv_register_value *values = cpu->accel->hvcall_args.output_page;
-> +    size_t in_sz, names_sz, values_sz;
-> +    int i, ret;
-> +    struct mshv_root_hvcall args = {0};
-> +
-> +    /* find out the size of the struct w/ a flexible array at the tail */
-> +    names_sz = n_regs * sizeof(hv_register_name);
-> +    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
-> +
-> +    /* fill the input struct */
-> +    memset(in, 0, sizeof(hv_input_get_vp_registers));
-> +    in->vp_index = vp_index;
-> +    for (i = 0; i < n_regs; i++) {
-> +        in->names[i] = assocs[i].name;
-> +    }
-> +
-> +    /* determine size of value output buffer */
-> +    values_sz = n_regs * sizeof(union hv_register_value);
-> +
-> +    /* create the hvcall envelope */
-> +    args.code = HVCALL_GET_VP_REGISTERS;
-> +    args.in_sz = in_sz;
-> +    args.in_ptr = (uint64_t) in;
-> +    args.out_sz = values_sz;
-> +    args.out_ptr = (uint64_t) values;
-> +    args.reps = (uint16_t) n_regs;
-> +
-> +    /* perform the call */
-> +    ret = mshv_hvcall(cpu_fd, &args);
-> +    if (ret < 0) {
-> +        error_report("Failed to retrieve registers");
-> +        return -1;
-> +    }
-> +
-> +    /* assert we got all registers */
-> +    if (args.reps != n_regs) {
-> +        error_report("Failed to retrieve registers: expected %zu elements"
-> +                     ", got %u", n_regs, args.reps);
-> +        return -1;
-> +    }
-> +
-> +    /* copy values into assoc */
-> +    for (i = 0; i < n_regs; i++) {
-> +        assocs[i].value = values[i];
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
-> +{
-> +    int ret;
-> +    struct mshv_create_vp vp_arg = {
-> +        .vp_index = vp_index,
-> +    };
-> +
-> +    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
-> +    if (ret < 0) {
-> +        error_report("failed to create mshv vcpu: %s", strerror(errno));
-> +        return -1;
-> +    }
-> +
-> +    *cpu_fd = ret;
-> +
-> +    return 0;
-> +}
-> +
-> +void mshv_remove_vcpu(int vm_fd, int cpu_fd)
-> +{
-> +    close(cpu_fd);
-> +}
-> +
-> +void mshv_setup_hvcall_args(AccelCPUState *state)
-> +{
-> +    void *mem = qemu_memalign(HV_HYP_PAGE_SIZE, 2 * HV_HYP_PAGE_SIZE);
-> +
-> +    state->hvcall_args.base = mem;
-> +    state->hvcall_args.input_page = mem;
-> +    state->hvcall_args.output_page = (uint8_t *)mem + HV_HYP_PAGE_SIZE;
-> +}
-> diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-> index 3dffe3c5fbf..2e8caad8fde 100644
-> --- a/include/system/mshv_int.h
-> +++ b/include/system/mshv_int.h
-> @@ -107,6 +107,7 @@ void mshv_arch_amend_proc_features(
->  void mshv_arch_disable_partition_proc_features(
->       union hv_partition_processor_features *disabled_features);
->  int mshv_arch_post_init_vm(int vm_fd);
-> +void mshv_setup_hvcall_args(AccelCPUState *state);
->  int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
->  int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
->  typedef struct mshv_root_hvcall mshv_root_hvcall;
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index f528dd2b9a2..3eee097432a 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -357,103 +357,6 @@ static int translate_gva(const CPUState *cpu, uint64_t gva, uint64_t *gpa,
->      return 0;
->  }
->  
-> -int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-> -                          size_t n_regs)
-> -{
-> -    int cpu_fd = mshv_vcpufd(cpu);
-> -    int vp_index = cpu->cpu_index;
-> -    size_t in_sz, assocs_sz;
-> -    hv_input_set_vp_registers *in = cpu->accel->hvcall_args.input_page;
-> -    struct mshv_root_hvcall args = {0};
-> -    int ret;
-> -
-> -    /* find out the size of the struct w/ a flexible array at the tail */
-> -    assocs_sz = n_regs * sizeof(hv_register_assoc);
-> -    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
-> -
-> -    /* fill the input struct */
-> -    memset(in, 0, sizeof(hv_input_set_vp_registers));
-> -    in->vp_index = vp_index;
-> -    memcpy(in->elements, assocs, assocs_sz);
-> -
-> -    /* create the hvcall envelope */
-> -    args.code = HVCALL_SET_VP_REGISTERS;
-> -    args.in_sz = in_sz;
-> -    args.in_ptr = (uint64_t) in;
-> -    args.reps = (uint16_t) n_regs;
-> -
-> -    /* perform the call */
-> -    ret = mshv_hvcall(cpu_fd, &args);
-> -    if (ret < 0) {
-> -        error_report("Failed to set registers");
-> -        return -1;
-> -    }
-> -
-> -    /* assert we set all registers */
-> -    if (args.reps != n_regs) {
-> -        error_report("Failed to set registers: expected %zu elements"
-> -                     ", got %u", n_regs, args.reps);
-> -        return -1;
-> -    }
-> -
-> -    return 0;
-> -}
-> -
-> -int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-> -                          size_t n_regs)
-> -{
-> -    int cpu_fd = mshv_vcpufd(cpu);
-> -    int vp_index = cpu->cpu_index;
-> -    hv_input_get_vp_registers *in = cpu->accel->hvcall_args.input_page;
-> -    hv_register_value *values = cpu->accel->hvcall_args.output_page;
-> -    size_t in_sz, names_sz, values_sz;
-> -    int i, ret;
-> -    struct mshv_root_hvcall args = {0};
-> -
-> -    /* find out the size of the struct w/ a flexible array at the tail */
-> -    names_sz = n_regs * sizeof(hv_register_name);
-> -    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
-> -
-> -    /* fill the input struct */
-> -    memset(in, 0, sizeof(hv_input_get_vp_registers));
-> -    in->vp_index = vp_index;
-> -    for (i = 0; i < n_regs; i++) {
-> -        in->names[i] = assocs[i].name;
-> -    }
-> -
-> -    /* determine size of value output buffer */
-> -    values_sz = n_regs * sizeof(union hv_register_value);
-> -
-> -    /* create the hvcall envelope */
-> -    args.code = HVCALL_GET_VP_REGISTERS;
-> -    args.in_sz = in_sz;
-> -    args.in_ptr = (uint64_t) in;
-> -    args.out_sz = values_sz;
-> -    args.out_ptr = (uint64_t) values;
-> -    args.reps = (uint16_t) n_regs;
-> -
-> -    /* perform the call */
-> -    ret = mshv_hvcall(cpu_fd, &args);
-> -    if (ret < 0) {
-> -        error_report("Failed to retrieve registers");
-> -        return -1;
-> -    }
-> -
-> -    /* assert we got all registers */
-> -    if (args.reps != n_regs) {
-> -        error_report("Failed to retrieve registers: expected %zu elements"
-> -                     ", got %u", n_regs, args.reps);
-> -        return -1;
-> -    }
-> -
-> -    /* copy values into assoc */
-> -    for (i = 0; i < n_regs; i++) {
-> -        assocs[i].value = values[i];
-> -    }
-> -
-> -    return 0;
-> -}
-> -
->  static int set_standard_regs(const CPUState *cpu)
->  {
->      X86CPU *x86cpu = X86_CPU(cpu);
-> @@ -2040,29 +1943,6 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
->      return 0;
->  }
->  
-> -void mshv_remove_vcpu(int vm_fd, int cpu_fd)
-> -{
-> -    close(cpu_fd);
-> -}
-> -
-> -
-> -int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
-> -{
-> -    int ret;
-> -    struct mshv_create_vp vp_arg = {
-> -        .vp_index = vp_index,
-> -    };
-> -    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
-> -    if (ret < 0) {
-> -        error_report("failed to create mshv vcpu: %s", strerror(errno));
-> -        return -1;
-> -    }
-> -
-> -    *cpu_fd = ret;
-> -
-> -    return 0;
-> -}
-> -
->  static void read_segment_descriptor(CPUState *cpu,
->                                      struct x86_segment_descriptor *desc,
->                                      enum X86Seg seg_idx)
-> @@ -2121,7 +2001,6 @@ void mshv_arch_init_vcpu(CPUState *cpu)
->      CPUX86State *env = &x86_cpu->env;
->      AccelCPUState *state = cpu->accel;
->      size_t page = HV_HYP_PAGE_SIZE, xsave_len;
-> -    void *mem = qemu_memalign(page, 2 * page);
->      int ret;
->      X86XSaveHeader *header;
->  
-> @@ -2143,9 +2022,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
->          env->regs_page = (struct hv_vp_register_page *) rp;
->      }
->  
-> -    state->hvcall_args.base = mem;
-> -    state->hvcall_args.input_page = mem;
-> -    state->hvcall_args.output_page = (uint8_t *)mem + page;
-> +    mshv_setup_hvcall_args(state);
->  
->      env->emu_mmio_buf = g_new(char, 4096);
->  
-> 
-> -- 
-> 2.45.4
 
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+
+Sorry for the delay, so this seems to be the following on my system.
+/dev/disk/by-id/scsi-360050768108285159000000000000110
+
+- scsi-3: Prefix indicating SCSI-3 device identification method
+- 6: NAA (Network Address Authority) identifier type 6 (IEEE Registered Extended)
+- 0050768108285159000000000000110: The actual 128-bit identifier (32 hex digits)
+
+WWN vs WWID:
+1. WWN (World Wide Name):
+- Typically 64-bit (16 hex characters)
+- Used for Fibre Channel devices
+- Format: NAA identifier (4 bits) + vendor/device specific data
+
+2. WWID (World Wide Identifier):
+- Can be 64-bit, 128-bit, or even longer
+- More generic term encompassing various identification schemes
+- Includes SCSI device identifiers, which can use extended formats
+
+
+NAA Type 6 (IEEE Registered Extended):
+- Uses 128 bits instead of 64 bits
+- Structure: 4-bit NAA (6) + 24-bit IEEE Company ID + 100-bit vendor-specific identifier
+- In this example: 60050768 is IBM
+- 108285159000000000000110 = IBM's vendor-specific 100-bit identifier (LUN number, array serial, etc.)
+For the example the 110 is the LUN number.
+
+and IF we define something new, we should be able to cover case like this
+as well. How is not clear yet, I am just asking to not rush but rather have
+something that is flexible enough.
+
+
+> For comparison, IDE seems to have:
+> 
+> - serial
+> - model
+> - wwn (64 bit NAA descriptor)
+> 
+> As virtio-blk is a single-disk device, it probably makes sense to leave
+> out the non-LUN descriptors from SCSI.
+> 
+> It's also unclear to me that serial vs. device_id is something that
+> would make sense in the context of virtio-blk. I don't really know how
+> to explain an additional device_id in the spec and what would make it
+> different from serial.
+> 
+> Maybe something like vendor/product/model would make sense where we
+> would return "QEMU" and other implementations can return a different
+> string (e.g. if guest drivers have to work around bugs in a specific
+> implementation). Probably just a single field.
+> 
+> And then finally the WWID, where scsi-hd and ide-hd agree that it's a
+> 64 bit number, but the SCSI spec is a lot more complicated. I think we
+> want to have this, but the exact format to use in the virtio spec isn't
+> entirely obvious. I've been thinking of maybe just referencing the SPC
+> and adding the SCSI name string to the spec, which can represent the
+> 64 bit NAA identifiers supported by scsi-hd and ide-hd, but can also
+> express a few more things.
+> 
+> Any thoughts on all of this?
+> 
+>> virtio SCSI LUN passthru has that but it is significantly slower
+>> (factors) and that was also real feedback from that customer.
+> 
+> Does this mean that what the emulated scsi-hd offers is actually not
+> good enough, but you have to use passthrough to enable this use case?
+> What is the additional information they need?
+
+for the 128 bit case yes.
 
