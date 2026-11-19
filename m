@@ -1,88 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88BF606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 14:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E397606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 14:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=q3pI1Fwo
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=AwwyP+Ti
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU2jw-0003zK-Se; Thu, 19 Nov 2026 09:03:53 -0500
+	id 1xU2jv-0003yQ-24; Thu, 19 Nov 2026 09:03:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xU2jt-0003yW-ED
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 09:03:50 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1xU2jp-0003wX-N6
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 09:03:45 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xU2jp-0000SO-Fp
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 09:03:47 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-4a358881793so1211504f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 06:03:44 -0800 (PST)
+ id 1xU2jm-0000Rm-5v
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 09:03:44 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-491971ac844so2264944f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 06:03:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795097023; x=1795701823; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=20ZZPMEs1Mta7IBgztmsk/aVB/t8IiEIowQV5vkdB+w=;
- b=q3pI1FwodsA+XBZ6BaCw1tLbFXNUDgGUij4nO9UfTWfbqtM0qSlMNKWI8SQNEEKIf8
- rbp+t+SH2w1KEWoMV8nViSvqJqJm/8iR1RJ6+ZzvH3EIqMYvlOeDcCXDS4PSvrfjLwzD
- mYP5olSwXv6CjrbdBF7rDjnfbYRAnadqOPVEuQM5tu4zHpwTfxIjNTHB6UQbdRAfYxl1
- GltxMaJug/XTjRQULq05xb6KpP0kJp3norAcCS24dJhMnHLs3m+dnEhYOiut5q4X6r2r
- DieWFqIMn5k4UHn8VObxWcE6AKsq+0wfbROdkkxYboiGpPSn/zI2MQTMuVavb5dvvIwf
- eABA==
+ d=linaro.org; s=google; t=1795097020; x=1795701820; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ulEB7tgxg8tSBn0XzVA6Wzlemvf8SZiJ+RKpPC5H+1g=;
+ b=AwwyP+TiG3IOMTn5pRqWtXd1+ADcC2Wwk25SsYnP93h957LcAyxPhI727xOLWou4Qr
+ 7Jg8ew3bzl1w6ZXLQoFq0R48cguyIRdPRxhV3+7d5UIbz+aNMkUIA7KfTPEPbqnARhvT
+ wVavHWdckqHWwUXVOxvvxLEaMLFsY8mVMeEk2+SWZup7M9Nq1l1ZscpL4ZdJhlxVx/cu
+ 6gJ011jO1CTkdveA7Kr1vuUTyaUuXDMy2fjv5xk/nuC6gCkAHVgerCeMvRpaH/PMBOw+
+ aeI2x6GelfodX+3ryegCTZYA7m8yD9rMR9RxMN5lKU9ycvskOCqwJ3SfEDqi8lyPqXg4
+ xrwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795097023; x=1795701823;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=20ZZPMEs1Mta7IBgztmsk/aVB/t8IiEIowQV5vkdB+w=;
- b=E9lcxzPxliBPF2vKDpEVOi2oTP6d7vcgbk1VmfOuZujv+wCCcaUZIFh3As+6Y2kPQl
- YiRVD2u9RsK7twF2jDvMHHTtQUAl9LFZjPCVLZOUISFSgnEol9hlUiltooF0d23opKVe
- BcxcO70g95NZHiRGzgf/V1EvuJU5LprxT9wujFPcvDXvseTE3DIWJHNlv3d/IK92pIB6
- QRCA6z+18PKc/fdGzmNXuZW93gTGiwLfHm3KGYCuH/6ZoUkt4khV8U8gHmX46HfnGRCT
- VSJSqUh0LaFEn9pYFs+InTBymjaqpebgwfXqTDYwwcvqHuvQQsvIISJMqub5al/NE58K
- qsPQ==
-X-Gm-Message-State: APuU4Z+VP6cPCarwpePHbxZKycLGWvZk44TGjctCy0YWg1Tvl+k0znPK
- thR1h7dgaXChkuTMlhwGgQpQZOpWZXO26j0tvYthuDr2KH5F4fxOq75X8jFXvY+rBkMw+yI9cli
- 8S0tlQJ8=
-X-Gm-Gg: AZFdTZcleD5pkV2F2QvtsGlmZygXHWSHRkXqapHsM9remhA6xbQM2vl1EJ2GDZatGWu
- 404xFVOGKmanaqxhW0P2fjqmKeE5fn/CR74WpyyOtd+Cni1KwKKZwbwLc6H/jUAU45E56n50opv
- MxK7M5KazWNl3iaPS4XykZcPqQVUCT/602B14c0USv4L0zGlYwebi4yGFbFBJwOlp22LFrOnPVj
- umm6vjW0xpn641TryNpDT0MIIFFQm1GtNiAAK2Dtj2nTwFjJwlG5eaSc6wB2zAnBJQsxEnczZ2H
- J/mdf6HjL6q91gu99bU/zzX9E7i7GabZRGP/jFkrgkuqJr7vkp+PyDxdXURDNmA/Yyv+MXInFDi
- oRqJCc1YVFa6ovVrkDNteFxjZuVFAnKWVOosZnEyvAQjT4poI54sCIXftLL8Q/k7utZus4ikKaF
- 52AghjP834RHUizAqOqE1VTFknVySZPIodT6ZcKInCiC28A04XmpxzQEzH9N6+ZRP61A59vF8QZ
- O8Dt6l2aCBtCZ8ht/B2Eb+vth7qwtqLY3fa3x1ZP8XSeq38T169x/oa5AF71juSOd92Rm35XKV/
- dABZ/R72hA7/bdgOVcAmj/d5dOUy09KhGp+RiuFMIDR+ONVnGmKafPO2zLAmV1FC8b/7wne/5Q6
- a1sSd7m8s1cFaom9EhEqMs5tyW7reP01NjzqWo05jNtVDDJzGQFZuaQv+
-X-Received: by 2002:a05:6000:1a8d:b0:4a2:ee0f:4fa3 with SMTP id
- ffacd0b85a97d-4a6346da8e3mr13286867f8f.8.1795097022911; 
- Thu, 19 Nov 2026 06:03:42 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795097020; x=1795701820;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ulEB7tgxg8tSBn0XzVA6Wzlemvf8SZiJ+RKpPC5H+1g=;
+ b=LP+m0AOqiaME++jTMFIWedlKNEkRpgwGErixws9/R8En2YFe/roYe0ivkvwgIZjSnU
+ c/RpUb2kA8+dNpwW+KpIvA0d4nXq7F7HiATUiq1EvgZ6W9c+yh6uv5Pqdy7PY8KQ8lNL
+ 9li0DSisEnO/1Ylt15qyzrGqSsBWmMT/d0ktg4U8ZhSy0LM2OwueR1nkhUolBvXE53ic
+ 5YR7VNJqbjdT9Ud3Fwjk51o/J1xbFfsuMAWzFKDp98Lf18g98kiaPh7KFv5LUCQjtq5Q
+ gqhsQ1XYEGxikoe5HDtq0LpVpYRmnSOzfaf/v9Q+i8U/NpfQ1K0ErryXlCvD0T9TTUE+
+ 28TQ==
+X-Gm-Message-State: APuU4Z+9EHSjKN2jQSHU8pHNo+cxa65X/aevp7tTNUvfl3sqSYX1h9Vk
+ TJZXY33PgJek2S+xsXhIcw/RjTxoQYr94FlBH3u227xPEu4RgEg/YRZPfHvcwdRdJFkr8V5qnYo
+ FzoB+hZU=
+X-Gm-Gg: AZFdTZe8HxlPt15KXEaR3DNhSqdQmE/bpGWgIeLzc2el6YIAhNKMGDmEVR+TaznFZ4r
+ CObENuBdSF5+sE6T+x6lsqbAz9NdOgVvLFboVwsr0XXw5gBF0F2G+pNHeY9zsZC3JAw5EtW5VnQ
+ Pa7yoHGUYVKgbAYjJRH6wR4cdyQ4l7nYlQV6zjor7vbwjCMKsn4PZm5Gvo8mIllkTtJAO9e9cah
+ nRYcrke3PmDaelKF73rKN+aLDjLwLuRJy/jmiiJ16l/bT2UffQtU/tjQYaa0Vq0uYnu+DBcrB/t
+ /ZgwAmXInYOX5OzyICV2CYxlTx1WcAnSn5lVHd0T9FlRjd2lWI8562xf0Vyn+Y0R/Mqc6xgsbM5
+ RdJj8QZk+qOpHxRfIDj1SZc+psG3/ecYxtgSW+pxUuis03TaD2BB2B+theshM+wzS5qoNrPN7jL
+ EOWKL+Uazd6Xrogz3Mq/Xy7BcGxhzWnEggUk5JgFMt3PPsZhghFF6FSlZuuTsPEgfc7U0YKM82Z
+ 3uRKGesx6XdN9+raS+SDQfGabAM6CezcoCCv1yDcKuu/rSG6HaonX21xHokEBr9j6mBx08cCNUb
+ GoX2O085VVyc/TJq4MoILyDou1OeU14yD8HYAgBcg4zbHbvMgJGz9o4PtsBJFkUrD3xyZdt6s40
+ +3DXvgIVam8llHbyJjRS1LB5A8WccNyl67g==
+X-Received: by 2002:adf:e9ca:0:b0:4a2:dae8:ca5f with SMTP id
+ ffacd0b85a97d-4a63bdb02f0mr10524234f8f.36.1795097020351; 
+ Thu, 19 Nov 2026 06:03:40 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab53e891d8sm19118f8f.10.2026.11.19.06.03.41
+ ffacd0b85a97d-4ab53e891d8sm19118f8f.10.2026.11.19.06.03.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Nov 2026 06:03:41 -0800 (PST)
+ Thu, 19 Nov 2026 06:03:39 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH for-11.2 2/2] tests/qemu-iotest: Add test for qcow2 image with
- empty reftable
-Date: Thu, 19 Nov 2026 14:03:38 +0000
-Message-ID: <20261119140338.2918386-3-peter.maydell@linaro.org>
+Subject: [PATCH for-11.2 0/2] block/qcow2: Avoid crash in qemu-img amend when
+ reftable is empty
+Date: Thu, 19 Nov 2026 14:03:36 +0000
+Message-ID: <20261119140338.2918386-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261119140338.2918386-1-peter.maydell@linaro.org>
-References: <20261119140338.2918386-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,106 +98,54 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This test creates a qcow2 image, manually zeroes out its entire
-reftable, and then runs 'qemu-img amend -o refcount_bits=64" on it.
-This used to cause qemu-img to crash; now we will report that the
-image can't be opened because it's corrupted.
+In a QCOW2 image, the header is always cluster zero, and so that
+cluster must have a non-zero refcount.  This means that an image where
+the first entry in the refcount table is zero, or where it points to a
+refblock which is empty, must be corrupt.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
+In the "qemu-img amend -o refcount_bits=..." codepath, we were
+implicitly relying on the image not being corrupted in this way.  If
+the entire refcount table was zero, our "walk the table to see how big
+the new reftable size is" loop would say "zero", and we would then not
+allocate any memory for s->refcount_table, and
+update_max_refcount_table_index() would underflow when calculating
+s->refcount_table_size - 1 and then crash.
+
+This patchset fixes that bug, and adds a test case for it.
+
+It would also be possible to refuse to open an image for some of the
+more obvious cases of this corruption (e.g. "on open,
+refcount_table[0] is 0"), but checking the actual refcount of cluster
+0 is a bit trickier as we only read in that refblock on demand. Plus
+some of the existing iotests (060, 098) rely on corrupted images of
+that kind only being detected later.  So I have stuck to fixing the
+immediate bug.
+
+NB: this isn't a security issue because the crash can only be
+provoked for this specific qemu-img amend codepath, so it's a
+self-DoS.
+
+thanks
+-- PMM
+
+Peter Maydell (2):
+  block/qcow2: Detect corrupt images where first refcount block is empty
+  tests/qemu-iotest: Add test for qcow2 image with empty reftable
+
+ block/qcow2-refcount.c     | 15 ++++++++++
  tests/qemu-iotests/315     | 59 ++++++++++++++++++++++++++++++++++++++
  tests/qemu-iotests/315.out |  9 ++++++
- 2 files changed, 68 insertions(+)
+ 3 files changed, 83 insertions(+)
  create mode 100755 tests/qemu-iotests/315
  create mode 100644 tests/qemu-iotests/315.out
 
-diff --git a/tests/qemu-iotests/315 b/tests/qemu-iotests/315
-new file mode 100755
-index 00000000000..ff1a22bddd5
---- /dev/null
-+++ b/tests/qemu-iotests/315
-@@ -0,0 +1,59 @@
-+#!/usr/bin/env bash
-+# group: rw auto quick
-+#
-+# Test handling of corrupt qcow2 file with all-zeroes reftable
-+#
-+# Copyright (c) 2026 Linaro Ltd
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+seq=`basename $0`
-+echo "QA output created by $seq"
-+
-+status=1        # failure is the default!
-+
-+_cleanup()
-+{
-+    _cleanup_test_img
-+}
-+trap "_cleanup; exit \$status" 0 1 2 3 15
-+
-+# get standard environment, filters and checks
-+. ./common.rc
-+. ./common.filter
-+
-+# This tests qcow2-specific low-level functionality
-+_supported_fmt qcow2
-+_supported_proto file
-+_supported_os Linux
-+# We are going to check changing refcount_bits from 16 to 64,
-+# so anything else is not supported
-+_unsupported_imgopts 'refcount_bits=\([^1]\|.\([^6]\|$\)\)'
-+
-+echo
-+echo "=== Testing empty refcount table ==="
-+echo
-+
-+# Create an image, then modify it to zero out the entire reftable.
-+# Check that this corrupted image doesn't cause qemu-img amend to crash.
-+
-+_make_test_img -o 'refcount_bits=16' 64K
-+
-+reftable_ofs=$(peek_file_be "$TEST_IMG" 48 8)
-+reftable_clusters=$(peek_file_be "$TEST_IMG" 56 4)
-+cluster_bits=$(peek_file_be "$TEST_IMG" 20 4)
-+# Cluster size is (1 << cluster_bits). Zero out the data starting
-+# at reftable_ofs for (cluster_size * reftable_clusters) bytes.
-+reftable_size=$(((1 << cluster_bits) * reftable_clusters))
-+
-+dd "of=$TEST_IMG" "bs=1" "seek=$reftable_ofs" "count=$reftable_size" if=/dev/zero conv=notrunc >&/dev/null
-+
-+# This should complain that the image is corrupt
-+$QEMU_IMG amend -f qcow2 -o refcount_bits=64 "$TEST_IMG" 2>&1
-+
-+# success, all done
-+echo
-+echo '*** done'
-+rm -f $seq.full
-+status=0
-+
-diff --git a/tests/qemu-iotests/315.out b/tests/qemu-iotests/315.out
-new file mode 100644
-index 00000000000..91b718df5ca
---- /dev/null
-+++ b/tests/qemu-iotests/315.out
-@@ -0,0 +1,9 @@
-+QA output created by 315
-+
-+=== Testing empty refcount table ===
-+
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=65536
-+qcow2: Marking image as corrupt: first refblock is empty; further corruption events will be suppressed
-+qemu-img: Image is corrupt (first refblock is empty)
-+
-+*** done
 -- 
 2.43.0
 
