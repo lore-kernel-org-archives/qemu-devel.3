@@ -1,137 +1,140 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C46606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 11:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6FF606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 11:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Haa4NNvC;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dCHCZ/sk
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=g6Tdsqd+;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=O8R4wZI9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU0gZ-00042u-Id; Thu, 19 Nov 2026 06:52:15 -0500
+	id 1xU0j8-0004ak-0G; Thu, 19 Nov 2026 06:54:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xU0gV-00042N-2w
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:52:11 -0500
+ id 1xU0j4-0004a3-7r
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:54:50 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xU0gS-0002WL-IR
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:52:09 -0500
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1xU0j1-0002jJ-4G
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:54:49 -0500
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJBkBSN2331718
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 11:52:06 GMT
+ 6AJBkVFn085331
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 11:54:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6L1awVFHnc47newONQa9idSQGjI5CKhtHK/3iZ74hS0=; b=Haa4NNvCIH6TagGF
- SqzLFMd9SkBiJf+8VXJ5CcjHdjCZdanIi5psFGeZMRXqePVCsAbs5wZsDVSrBQCz
- TbIqV3H/RY8i7RPgIDkbhBP5ia6l2oJ4oH00VQMgEnr3p/zhQyCVFvn851R6qJUi
- nrQK2BSYYO3OY7vNI0V70b4HZ/X3505AOWREReVgYRPaeKdaY8ZZfeHFT9zg/JU4
- bUGIu9+dy51WoLXRSS/U9hybdCTg6C3L66EozAwbFad2jmuIqgeCwTpgxFlQzux6
- WFGWT2hH9VmcwYYJ6rfkBGQGz+Fb8vyKV+8NeSrZ5NpBGFSiS4ohofPi3gak2Xza
- BgMisA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1pdctnda-1
+ 6DrLXJY3WP7dMXxe0pWo15AFIPi7stWi+gzRqpoyvGE=; b=g6Tdsqd+e5hTrxvu
+ 6JlsSPAtyAcjl/92xB0sb1Zc6T3fsjfgELPpjt8e6X9GJWIM8r0uLlcI54qwYImh
+ UTs6p4sjRTpnwBrM9JT/9RiOn2PE1/ziOjho5kWFchOZFzihhMXQhAo0/Acnevho
+ itSPDvkBTn87u2Dpq2034eWHTNAbmo7k7IKarVPsKGwZUn/9GJdXMhfZSy8E0hi1
+ tXYRRuR3gWP8+AaEeRFviwwakEvWNmNe8a+0AzIrzOU//i+CxfgvwjMJaP3HHrgw
+ WONaVDVeDuBRzIRBIdUpJ0qh86570c5lHC4DtJ8hfURfb2184Ni/KDniZwetiqOy
+ BR3Pqg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1vv2s3vx-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 11:52:06 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93f559420f3so256264985a.0
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 03:52:06 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 11:54:45 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93cb7f9bb86so456578585a.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 03:54:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795089126; x=1795693926; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795089285; x=1795694085; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6L1awVFHnc47newONQa9idSQGjI5CKhtHK/3iZ74hS0=;
- b=dCHCZ/skZArs0lanDNLDHHXR4KxKplivM4rKa0EOjSp5f2q9A7EyuJzNbk6tzACjDN
- T3BEuFVeY6a6BXJvvTgp+jaSbldf47Yvco6dw5q4Tr72Hv0CLvfnbqrz+nf8vJQNwOg+
- SCtL2fTel36jfKdbBPwOTkT8mNhXzYXZaI62SV06R+hCFjtLkrdvDoloPmDgFtcxtFvc
- zGX5XcntKPl2Z+zYcdabRMxuvv8EtqM5FRgknT0jCdZdB9kZbo32ZbcojG8sfC4ofQ2R
- SWAaGBjgPHFW+WgGRot3ixzLIk4zmbWVXABeU8cm+Qp8ruN7QlAHQPZo53SEkFYsgJcu
- J25Q==
+ bh=6DrLXJY3WP7dMXxe0pWo15AFIPi7stWi+gzRqpoyvGE=;
+ b=O8R4wZI9jx4KsT4waJheWI5jkTmvp+4yih93AEgkUfMSA8i1ceUySFB/IFYx880O2H
+ 1cnBIBjjKg5mv4dsL8om2BJODjQyzCc9c156iBPfE4clzqUz4ugcVExceqg3aJkjBY6i
+ LkS8QJdL6HrbBmQhECotzKMgiaUT/31mFGjGx/BS/2csK03IQAE5vR2ADeYSpLSyaDYW
+ 3OetEUTZh3Kmf74euiDgXZDriRVN3aLUyZr/c9IkUuhwXFG6G9wdxaAAoXemVVj6uTf/
+ VoM3hOiKI1g3ed+KAzDvEvRpTIl+oOix66CzqQAwABYDsul6o+oERHW5913Oi7dW0E3I
+ RUGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795089126; x=1795693926;
+ d=1e100.net; s=20260707; t=1795089285; x=1795694085;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=6L1awVFHnc47newONQa9idSQGjI5CKhtHK/3iZ74hS0=;
- b=gWq4Mtp6o53DHOYeQG+5Rvq47pOqp7jS/OKVa+trf3SrQ5wH6WC7wGKN1krbVb8Y32
- A8W24i/Db9MnJEptOGCupCFXJUaaDVclAmoxZLHGBzgqAlMQvofLqo/lI8wgT11iW298
- qKrGgOzYkAezIA+PX3Om4aANqjdQVC5CIXuahCs1LBLxGr3NsBtOFSR/0DIBclvmXkI4
- AGC6ocWZcctbcbOgDpXM9xjHfGde84TnKMASSM90TxDT/bfXk2/MzAevwI488GPrlNxc
- Tkr9sQycsk5WvP/+I//ynqUgJj8KNbQcJgnQX/itFQUYUmHV6aQsz8bU4o+HcJAEBVJe
- jP5w==
+ bh=6DrLXJY3WP7dMXxe0pWo15AFIPi7stWi+gzRqpoyvGE=;
+ b=WkTVVvQ13OrqyONMt1kL1XYlEk7MI+DP8cV1qeL7+kEmo23knqdC4QFb7NuDZzWNF5
+ l4YuGzZj/77V37skurr3/AWsSLoSUgj3bOpw5RIQUN3A9zFX+eoa+cJw40nqVDTAoEKJ
+ 8ZlpFIreWT9IvwPnz5Na/rGQoEmWaHzo+qkY5Tnj5XBCCL6m7k8O0L9ztnSHwc9PEJTz
+ MWiIyEaE1CRe8vgiN/Hv3ll6RhGaXqE9KezOUAVMpmY14GrFfpfF7p3OQjafdaxSuMau
+ 3ErmGXmpKFaMoq6GnRy7rBQ5KNyiVN4ZR8P4PD3XoOiKO5Ij8hO2rzbEx5vWrsag7pJ/
+ EGUA==
 X-Forwarded-Encrypted: i=1;
- AL+hErHKcZcsPGJ9mPQoMBwM2wsUOVucMV9qPgjBD8DdCZbUX4+adr2WE9jHNA49AfLEqx5onrC8ozuemgiV@nongnu.org
-X-Gm-Message-State: APuU4Z8M4WHb8CMFuoFV6bsCFOw0U1wXM1Xg3AN4COEBLuwIDMHYIMVQ
- VwpdQQnx6lEthHR85EvrktCliid1sSKpagq7i/lEfNcuWPfqMFIt3fubpx/YDcDCLdNdUrsJdWV
- GdX25OCXzZbcE94Antx/aRi3xM1woz3mxewXGTS40EesN9DNvMfvblnYv8g==
-X-Gm-Gg: AYBFou0XSINKlly+GPsh32nwfmIHsC0+yMg3kzYNQ4unQMffZVEOBhEVi2iOT2859x3
- jOeDDWwjby6Tzo/IjYOfCYISob8SQNmyCQIaWeqnR9+TZJDX+nS9xVt9z7s7344VEE7KF5o6LcP
- NqUpniz5w2rUr7MDQNapmdeXXK45XD8Gw4yIL/V8I9K+qAy2CjxBKOcZBAQ9qdoAVmggUapFl6I
- HX3qiBmMpi4FpyGQmrvr3j9/BnOIqFr301NLuUnXQCHOZZHVwUgdT0Et/GHagsLovkiyzUaEx4X
- y7KptjpFBi93LOvWz+PMNWngwTcQIOKhu5lUm4abn/jnuHXANTuC7ML733a1OdxhWcbImzuukkB
- aGTPK3Gi3QxCYgoeYQ0ZfjH7Xqjmdmb9EneGFIjGf1DRbKydyL7DmutgHCgqY1oGfWMsu
-X-Received: by 2002:a05:620a:710b:b0:93e:c12c:fbcd with SMTP id
- af79cd13be357-949996676d3mr1021737985a.73.1795089125981; 
- Thu, 19 Nov 2026 03:52:05 -0800 (PST)
-X-Received: by 2002:a05:620a:710b:b0:93e:c12c:fbcd with SMTP id
- af79cd13be357-949996676d3mr1021735285a.73.1795089125539; 
- Thu, 19 Nov 2026 03:52:05 -0800 (PST)
+ AL+hErH/ACOP1tCi7b7L03p/xJ8Ze9GeXlYuwpXBZzgTAEH89NEIrRafHoePygzeF2JM7vTJHglMA6ZA9siS@nongnu.org
+X-Gm-Message-State: APuU4Z/kwZOw/xDc34ponib9ONtvT1Fp5/SllYbFSWtWwInoYBu0DSY1
+ 2tzLcgc5tuYqKVv/RElMHIl4Vy6bIaMRAZJvmjgRP1EghvRTCgAVZGe1pqH3hOHsZFUFYg9iboQ
+ FYZ2fpa5DBK5xkqr7LjEOBlwtUNrNvNCA1VXH68yxWBpwaKWPu4KIrH+1jA==
+X-Gm-Gg: AYBFou3QKo4tFPi1J/PhucmfF5/SyZuXaKX/2LPR1P3JusLv+ZdbiGMC/ytdJJt2c9K
+ k7S4fFNibst9cXXE2uaDN0yWsombb+Nsg6ReNrXzfjnxORsEUxMO6WI+71hemt5CH/daxdkQ/4p
+ ojEeuIFVAnyiog+fwCrbjVkOY2ySNan6l1SaxCo9sv4+b1LprN+zVd5RKoBw5+sPbYPsS2eiiAI
+ pDzFwi9Y4dy0aNz2lxJ4Cf0AUYc/NUqD+hPeFS/ht+A1f18rCZHf41M8+SavYcTNKis4LYF+jMQ
+ 06LXFN8ZBf+12ieBSbAT/HXf5pysXmawpSoBEM5vfzYlbCVBoEUznzV5Xq1sEdOEYdzyGNFj5TP
+ CZBQi+RMx3vEIvPii5CAWXLT2FzFIA03wjHv6afGiCVT1DXugISZH80TPyLp4HwL+TsaY
+X-Received: by 2002:a05:620a:4802:b0:949:7c43:d54b with SMTP id
+ af79cd13be357-949995a08ffmr1024542585a.30.1795089284635; 
+ Thu, 19 Nov 2026 03:54:44 -0800 (PST)
+X-Received: by 2002:a05:620a:4802:b0:949:7c43:d54b with SMTP id
+ af79cd13be357-949995a08ffmr1024539185a.30.1795089284177; 
+ Thu, 19 Nov 2026 03:54:44 -0800 (PST)
 Received: from [192.168.0.4] ([79.127.134.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4a6573baa9fsm10936066f8f.57.2026.11.19.03.52.03
+ 5b1f17b1804b1-4bb8538b2c5sm30843445e9.5.2026.11.19.03.54.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Nov 2026 03:52:04 -0800 (PST)
-Message-ID: <73a21e12-6d5c-4a81-8e7d-c7e8be8004ca@oss.qualcomm.com>
-Date: Thu, 19 Nov 2026 12:52:02 +0100
+ Thu, 19 Nov 2026 03:54:43 -0800 (PST)
+Message-ID: <eda18b65-ad5e-4985-843a-bbadc5e7f390@oss.qualcomm.com>
+Date: Thu, 19 Nov 2026 12:54:41 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/tcg-ops: Rename cpu_env to tcg_env
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, harshpb@linux.ibm.com
-References: <20261119102319.2618086-1-rathc@linux.ibm.com>
+Subject: Re: [PATCH v2 for-11.2] hostmem: allow building without KVM support
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20261119113309.1205353-1-mjt@tls.msk.ru>
+ <18e8c852-9870-4232-aae7-66db4672fdd9@oss.qualcomm.com>
+ <2fc4fb7c-7d8b-4af9-8ab2-6ce3682acd13@tls.msk.ru>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261119102319.2618086-1-rathc@linux.ibm.com>
+In-Reply-To: <2fc4fb7c-7d8b-4af9-8ab2-6ce3682acd13@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: fCp7zCgTdPGagjdRmE92mYM_GA2XwDch
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA0NyBTYWx0ZWRfX2R/atYCC08MJ
- 4WmRB1lcNkMKjUNRFfI9WJtWl+PIppRrpuhDZlhu13LWsAKJ7eLQvnb63hyoPqm7b+mCCqftbJD
- D+o/sEoN/31S2b54fqsmv9Arsjvb7zo=
-X-Proofpoint-GUID: fCp7zCgTdPGagjdRmE92mYM_GA2XwDch
-X-Authority-Analysis: v=2.4 cv=Ma/5KJ/f c=1 sm=1 tr=0 ts=6afee2e6 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=dMDxPF1GtEdq01UuaR/ERg==:17
+X-Proofpoint-GUID: 6eq9ar4pCMh9jxwfooiOTB_rddmRVl_X
+X-Proofpoint-ORIG-GUID: 6eq9ar4pCMh9jxwfooiOTB_rddmRVl_X
+X-Authority-Analysis: v=2.4 cv=ZZWIpcVA c=1 sm=1 tr=0 ts=6afee385 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=dMDxPF1GtEdq01UuaR/ERg==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA0NyBTYWx0ZWRfX5qJxfd29cgaN
- 58/ADy++Gz43NtUjn0I1k8jyCS0h8AyPoTzWLbJ59vjupRwyxjJkv9fprII+Hn7J09jlJsYtBMF
- tkhi1zbDDszCH6pSMh8FE35arsyUhylfXilLTuF7EEgQEoydhqjoWcNWsnB3Mlb2je0XE4GPS37
- wQ5DVcWeEATnEsn8lFONtMaUpEzBdq5bJV4tfnelYZmnDfVEV9+n0wUKpoogQXZx8BD2aIg80Bo
- kgeDx+SSiYBPksFYhfc+Va4BIUFbZM0A4mpizQ2aufMO8sKmwXWN63dv2vwitS1OCp8hx0Ivpn2
- CSHVGlZpbI6OVgGhqaFlF5kt6RSIhI7Xi4cNcsQaG57i9MxFARd4t4I7v63yNX1AMEDgf9BwfGr
- 84xsP58j5GL3pj/nIRcP9f8joU+xKHH6iD03OC+0ZwDRCMnCgi0Uu/ymQQrs2MD+FSMS5QuBz5c
- qMkSa5j9bvVGcQBmjCg==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=HJvTdP9fkNgUw0tOALIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA0NyBTYWx0ZWRfXxuL24IkcjDi2
+ 0TP4nDAK5FPdQFV7w/O0pxdfUaGSW2KjX3+qel5/DDoXfa+NaI2lDsb05EvWlJHJnG/TvHIz0gD
+ M+X/nJdH4MnqcFnnk8MRDuwLFIrnbCw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA0NyBTYWx0ZWRfX84VZ+OLcxUwi
+ ZBYWtdoEER+UH4+GEHIBP3tvWvFFn/Q1vSAIdS98ABAtbCskIHcegdrESUUuiHS2AUow5aDPHwm
+ 0H6nYADqYXQSfPFYOwWa/Cbgip38gZK3m31PZ+ArMAeln0YQHiOecsS93U8uA+AHmh0MUS27FhJ
+ VRLAsPwkUPtL+oHv3fu2eBYseAW5HQTuO9rQiiTJlXmQJjPxDjDyzOWa9sAlNxgeXkN1n7GVI26
+ gFrWYuI6/OIsCYHqr2SoXwOVm2wEHLU911iBV8Sj0hHnqdMBzrqvg758Osa+SRGmWdqP5phevIL
+ DDsikEAdu5SNJBctAbwAk7AYFChKJ11DbWwBiXVLUKrFD1KMPZIcpyiZGT/7Ox6zRZgXHfpEViS
+ GhN0OanD3OIF7S7bwnUIHKCHF7zRx4QrilElsKpfneaqK1+GY9DRwNGDw7zCbd9GrzDEBh+7aW3
+ ux+KQN1PEKPfeORRWRQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-19_03,2026-11-19_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 clxscore=1015 priorityscore=1501 spamscore=0
- malwarescore=0 impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611190047
+ clxscore=1015 malwarescore=0 phishscore=0 bulkscore=0 spamscore=0
+ adultscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611190047
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -152,23 +155,56 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 2026-11-19 11:23, Chinmay Rath wrote:
-> Commit ad75a51e (tcg: Rename cpu_env to tcg_env) from 2023, renamed
-> cpu_env to tcg_env. However the same was never done in the docs.
-> Updating docs with the necessary renaming.
+On 2026-11-19 12:46, Michael Tokarev wrote:
+> On 11/19/26 14:42, Philippe Mathieu-Daudé wrote:
+>> On 2026-11-19 12:33, Michael Tokarev wrote:
+> ...
+>> We prefer using runtime check (probably providing a stub):
+>>
+>> -- >8 --
+>> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
 > 
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->   docs/devel/tcg-ops.rst | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>> +        if (!kvm_enabled()) {
+>> +            error_setg(errp, "guest-memfd=on requires KVM which is 
+>> not enabled");
+>> +            return false;
+>> +        } else if (!backend->share) {
+> 
+>>>           fd = kvm_create_guest_memfd(backend->size,
+>>>                                       GUEST_MEMFD_FLAG_MMAP |
+>>>                                       GUEST_MEMFD_FLAG_INIT_SHARED,
+>>>                                       errp);
+> 
+> This will fail the same way because GUEST_MEMFD_FLAG_MMAP is still not 
+> defined.
+> This is why I especially made this #ifdef the way I did.
+> 
+> Sure I can add
+> 
+> #ifndef GUEST_MEMFD_FLAG_MMAP  (if you prefer not to use #ifndef 
+> CONFIG_KVM)
+> # define GUEST_MEMFD_FLAG_MMAP 0
+> # define GUEST_MEMFD_FLAG_INIT_SHARED 0
+> #endif
+> 
+> but it much uglier and less understandable than #ifndef CONFIG_KVM.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+As you prefer. That would be the first accelerator check in backends/,
+I'm not sure we want it (then they are hard to remove):
+
+$ git grep CONFIG_KVM backends/
+$
+
+> 
+> Thanks,
+> 
+> /mjt
+
 
