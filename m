@@ -1,68 +1,107 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80520606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EA2606A326
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 15:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=Y3zFIkou
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=QY7Qa2bF;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=T7KI3uY8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU3al-0003gx-Tc; Thu, 19 Nov 2026 09:58:48 -0500
+	id 1xU3bh-0004C5-Ib; Thu, 19 Nov 2026 09:59:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1xU3W7-0007zR-Cf; Thu, 19 Nov 2026 09:53:50 -0500
-Received: from [115.124.30.110] (helo=out30-110.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xU3W7-0007zW-Du
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 09:53:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1xU3Vr-0001I2-UG; Thu, 19 Nov 2026 09:53:37 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xU3Vt-0001Ku-0I
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 09:53:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795099998;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=h8XeLTehm/K55teUc4g8IAfHo2NMdQKlyg3q2YLJK88=;
+ b=QY7Qa2bFAfBDq8KFPl5txcIQy8I9XaWU+qxNfzY/fVYnRpqRAxcYDEtyXl6HkQbIc06tlF
+ 3Sh+zvdV3zS+Uclv7I1UROgK30FUS2Lgql5ODjaFETcmRPfhJ1zPtDelgrtCxBl1b76s1f
+ ciaFagxT19jD1NG8B4Ug0sFNmsoFxYI=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-47-6uXBU4j4O1aMP3DIympjlA-1; Thu, 19 Nov 2026 14:53:16 +0000
+X-MC-Unique: 6uXBU4j4O1aMP3DIympjlA-1
+X-Mimecast-MFC-AGG-ID: 6uXBU4j4O1aMP3DIympjlA_1795099995
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-5c156f01aabso1418731e87.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 06:53:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1795099983; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=Bb+IN3QAeXPKu/t5xgVp6Pjp1hZmDcn80zkwE2ZIs38=;
- b=Y3zFIkougBzN3x/6D4YHjlMTEp6pzAbCHq/KkYoBH4PO5Bq5nJpbkleUQpzMUD3tdQQRGFnyFqnZVgHb/+ufDIoCq179yN6cEZiAesRC30T/CqLebyhQGOxD0ntaMMIVwRal6s8seJ2DFm1O/MNvbyUJVJuWEHtTFEE0Ptl62DY=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
- MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=12; SR=0;
- TI=SMTPD_---0XF3nDqQ_1795099982; 
-Received: from 30.180.144.153(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XF3nDqQ_1795099982 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 19 Nov 2026 22:53:02 +0800
-Message-ID: <d9a849a7-5b3a-45da-8d59-17afc721d1f8@linux.alibaba.com>
-Date: Thu, 19 Nov 2026 22:53:02 +0800
+ d=redhat.com; s=google; t=1795099995; x=1795704795; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=h8XeLTehm/K55teUc4g8IAfHo2NMdQKlyg3q2YLJK88=;
+ b=T7KI3uY8+//mcog9R2l9zmPmq8bsqmwx+FriILyo7UXNPxv6B59zLAl5Anp4iU9qin
+ DM4tXlmdVNaj6TNwTlofkmV/YsyKNNdDmStkDre29Tey7GzucBFYIKL8BJWKkZed2bZu
+ VmAGknaySLnvT8LOV23LZsI1jlsbLAk2kTchhuueG5iopOhg3kYW6jOw0y97XJTLxS/u
+ HPzBcPyvstDP/XQMnizEXXWCJ1RSvuXm9YsuCGHTfvdN7pr1pkgsFlyYQ2YyknJYrqlr
+ uwYFOWJzwClZzyyq7qltfb0s62uOmPJAFlHJs+aESpJ79p5fwoRybBuunTXX9l7AgMzf
+ P8ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795099995; x=1795704795;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=h8XeLTehm/K55teUc4g8IAfHo2NMdQKlyg3q2YLJK88=;
+ b=rj8uOaNEKYwB34//tf84Uf53htUmG98LrzAxDTungre3iRBuHJX5LyK+skZ1d3t0qu
+ CqUkEJN/aBPCd6wSekXzAglfPlgWCyGl2c9qSbG5eJxzUiPg3Z0fV2vzQ+AIE5NwLOnf
+ F3KrbB3oJfDHod5dDEsZ9vyaMSR3BkhH5eUG5gLiShVSHfXxhUnYawMNXPo/qqPIJoDY
+ 2wwb3a1QW+hmcnX7wJM/9Oivqw3ToTqZFhj039UiwpBrfEKbpllycQ9IaAblu/Rlamwl
+ 3Z0qeIeLFr366rm+a+oSXnKTNSqVTmZfSmavCyzy5JfVvH7ZfbnU2N8Rj78Jv9J2PlHZ
+ JDZw==
+X-Gm-Message-State: APuU4Z/iRuXwBGN8v/XR0Tt/xt7rA9O4zVM/3DlerF2n+w2BA3JWaxld
+ yuUIRY+6l0WzMBLW5B9frP6pgmow6TDNmQyGiInAgh9bfDQlU+i6Eo1XOEKY3SCHrhkFUr3876S
+ GjgB6RpUzWxFTZVLtvabiCHt4yNmBDDeL6ZyBk1D7nQ+7tGGUHr8oLC2NT71x15m+t/MqZnFEIJ
+ fVnhCPGmXor/VAz5NL6o7VVmMWTPPBBKH4BXM5hQ==
+X-Gm-Gg: AYBFou03ntLYUD0nfBs4f2tkVwhqyOCvMb6XAaLEaj2yqDxQV9SM0WCXHrwLKn8O0gz
+ KdUdbISKOLQ4ZKrgAuGiaiQpMMHKUeZdrLs8VlkntViLAXIT+40aQVVnTMLLZtUzwIaphrMTNKy
+ kivcufSX902G049yBtumTy9iYbuXUFXIBRMfETK1sknYHeuyZGroT+mnkiaXorBBVwdZY2a5fO+
+ Wc2ZNLkjKTDr953ntBplCsc6FJy1sb0oNq1CcRu6mNcA/uyx8YhBTxqSc2PkdtVkZTECBhPf5eD
+ d0leXv/5Wu7EvFubNqoW9OVuzVMzgc8dHAnciDIHS+zy8KYoHeLnMKB5YdE/m34RpwIZ5gLUWBh
+ D3Tc7boi1Gi+0BFpfhg0klMvG+4E4RccUU+hPrG+qc08Q
+X-Received: by 2002:a05:6512:6891:10b0:5c1:b107:2bb with SMTP id
+ 2adb3069b0e04-5c1b107097dmr753509e87.29.1795099994932; 
+ Thu, 19 Nov 2026 06:53:14 -0800 (PST)
+X-Received: by 2002:a05:6512:6891:10b0:5c1:b107:2bb with SMTP id
+ 2adb3069b0e04-5c1b107097dmr753490e87.29.1795099994285; 
+ Thu, 19 Nov 2026 06:53:14 -0800 (PST)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5c1aa2d9b98sm1591405e87.1.2026.11.19.06.53.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Nov 2026 06:53:13 -0800 (PST)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, Hongyan Xu <getshell@seu.edu.cn>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Subject: [PATCH for-12.0] coroutine: Make yield_until_fd_readable() detach fd
+ handler always
+Date: Thu, 19 Nov 2026 09:53:11 -0500
+Message-ID: <20261119145311.1144878-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.56.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/14] RISC-V TCG PMU correctness fixes
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Zephyr Li <fritchleybohrer@gmail.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20261112-riscv-pmu-correctness-v4-0-e9067bdf4df5@linux.alibaba.com>
- <c95dace6-1c4f-409c-8878-d4c68ec16d62@oss.qualcomm.com>
-From: TianCheng TANG <lyndra@linux.alibaba.com>
-In-Reply-To: <c95dace6-1c4f-409c-8878-d4c68ec16d62@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.110 (deferred)
-Received-SPF: pass client-ip=115.124.30.110;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-110.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,70 +113,69 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-19.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,UNPARSEABLE_RELAY,
-	USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-在 2026/11/19 20:31, Philippe Mathieu-Daudé 写道:
-> Hi,
->
-> On 2026-11-12 10:49, TANG Tiancheng wrote:
->
->> TCG tests cover RV32/RV64 counter accesses, delegated registers, 
->> selector
->> and filter changes, multiple counters per event, overflow notification
->> with and without Sscofpmf, instruction exceptions, and reset. The RV32
->> HPM tests also cover full-width accesses through the shared counter 
->> path.
->
->
->> ---
->> TANG Tiancheng (14):
->>        target/riscv: Preserve PMU state across event selector writes
->>        target/riscv: Support multiple counters per PMU event
->>        target/riscv: Use VM-elapsed sources for fixed PMU events
->>        target/riscv: Preserve MINH on delegated config reads
->>        target/riscv: Preserve minstretcfgh on RV32 minstretcfg writes
->>        target/riscv: Fix RV32 accesses to delegated PMU registers
->>        target/riscv: Preserve fixed counters across PMU state changes
->>        target/riscv: Require Sscofpmf for non-fixed event overflow
->>        target/riscv: Rebuild fixed-event PMU overflow deadlines
->>        target/riscv: Apply minstret exception accounting to HPM counters
->>        target/riscv: Process PMU timer expiry on the owner vCPU
->>        target/riscv: Migrate fixed PMU counter state
->>        target/riscv: Clear virtualization mode on reset
->>        target/riscv: Preserve fixed PMU state across reset
->>   tests/tcg/riscv32/pmu-fixed-rv32.S          |  90 ++++
->>   tests/tcg/riscv32/pmu-minstretcfg-rv32.S    |  52 ++
->>   tests/tcg/riscv32/smcdeleg-minh-rv32.S      |  78 +++
->>   tests/tcg/riscv32/smcdeleg-rv32.S           | 115 ++++
->>   tests/tcg/riscv32/sscofpmf-event-rv32.S     |  99 ++++
->>   tests/tcg/riscv32/system/meson.build        |  35 ++
->>   tests/tcg/riscv64/pmu-cycle-controls.S      | 107 ++++
->>   tests/tcg/riscv64/pmu-lpad.S                |  72 +++
->>   tests/tcg/riscv64/pmu-reset-vs.S            | 105 ++++
->>   tests/tcg/riscv64/smcdeleg-minh.S           |  78 +++
->>   tests/tcg/riscv64/smcdeleg-sxl32.S          | 233 ++++++++
->>   tests/tcg/riscv64/sscofpmf-cycle-overflow.S |  58 ++
->>   tests/tcg/riscv64/sscofpmf-event-overflow.S | 103 ++++
->>   tests/tcg/riscv64/sscofpmf-overflow.S       | 134 +++++
->>   tests/tcg/riscv64/system/meson.build        |  88 +++
->>   tests/tcg/riscv64/test-minstret-ecall.S     |  26 +
-> Do the tests need the 'AI-used-for: Regression tests' mention?
+Hongyan reported a possible use-after-free of RDMA migration code:
 
-Hi Philippe,
+https://lore.kernel.org/all/20260904033130.276-1-getshell@seu.edu.cn
 
-Yes, AI helped write and refine the regression tests. I've added
+The issue seems real, while this patch is a proposal to fix it in a simpler
+way, meanwhile it should be a problem to the yield_until_fd_readable()
+helper in general, so it should make more sense to be fixed there too.
 
-     AI-used-for: Regression tests
+The problem is about the use of the stack allocated FDYieldUntilData where
+we must make sure after yield_until_fd_readable() returns it's not used
+anywhere.  If the coroutine yielded can be entered from outside of this
+helper (fd_coroutine_enter()), then the aio handler might be installed even
+after yield_until_fd_readable() returns, and that makes the stack variable
+accessible by aio codd, even if stack gone.
 
-to the commits that add or extend them for v5.
+Fix it by moving the aio handler removal outside the handler.
 
-Thanks,
-Tiancheng
+Reported-by: Hongyan Xu <getshell@seu.edu.cn>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
+Cc: Hongyan Xu <getshell@seu.edu.cn>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+
+NOTE: I targeted this for 12.0 because the bug was not introduced in 11.2,
+however this seems to be a real bug fix to coroutine in general, I'll leave
+that to maintainers to decide if to pick it for 11.2.
+---
+ util/qemu-coroutine-io.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/util/qemu-coroutine-io.c b/util/qemu-coroutine-io.c
+index 364f4d5abf..3c0a7feafa 100644
+--- a/util/qemu-coroutine-io.c
++++ b/util/qemu-coroutine-io.c
+@@ -74,7 +74,6 @@ typedef struct {
+ static void fd_coroutine_enter(void *opaque)
+ {
+     FDYieldUntilData *data = opaque;
+-    aio_set_fd_handler(data->ctx, data->fd, NULL, NULL, NULL, NULL, NULL);
+     qemu_coroutine_enter(data->co);
+ }
+ 
+@@ -89,4 +88,9 @@ void coroutine_fn yield_until_fd_readable(int fd)
+     aio_set_fd_handler(data.ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
+                        &data);
+     qemu_coroutine_yield();
++    /*
++     * Always remove the fd handler, no matter the re-entering of this
++     * coroutine was caused by fd_coroutine_enter() or something else.
++     */
++    aio_set_fd_handler(data.ctx, fd, NULL, NULL, NULL, NULL, NULL);
+ }
+-- 
+2.56.0
 
 
