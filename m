@@ -1,101 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF6A606A332
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 18:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A8F606A330
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 18:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=qbcDE5o5
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=j6Y7DRLR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU7Gv-0006F8-6r; Thu, 19 Nov 2026 13:54:18 -0500
+	id 1xU7Im-0007HV-Jy; Thu, 19 Nov 2026 13:56:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xU7GI-00067Y-KY
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:53:38 -0500
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xU7Ij-0007Gw-DC
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:56:05 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xU7GH-0002WC-7S
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:53:34 -0500
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-67db89857abso247255d50.0
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 10:53:32 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795114412; cv=none;
- d=google.com; s=arc-20260327;
- b=O0FaYVaQjuoMdth7C1l0frmbR5XdaEoY71BXxd95DW8OpnPnwRoMFIlIA33DsXGFnB
- O2pSJZtGETt1p4HEgtx8T/MFAAJ7TjG21HscrBO8evZF5hGRc9pVsqj6nKOZKQMq+T/d
- /6BHeSjbyh9jpIzaeW1cm/mq6VGIsdadbiZQDW5hbxCEyNsrkGUpS/h15g2Lw1162nZO
- uFZW9Iax2sYk5hnbo87W+VvWsg6A/0mNauZJXGAsioJy4SVCcSEM7BQyjdhL45lHs82f
- iI+oRcK8h0FW9b0Xshwa03wm7hgj6QZSSJ9/gow9kXoWiniHZnm8majMApzG6bsXcI9h
- 751Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Ajw4sIZfpHSpZREWgGfqsqKrqHKvWjtpxRAhQEGR9kM=;
- fh=jis90ebI1LXbWlN2f/uPaYiR3/160S3+nBo5cgb+Jhw=;
- b=id5+BmY/KWXtrZ7qrwGzIGWYSfBYyXpJ281sZUvl4VtTTeV+/khMSYpP7kwTONUk83
- PwXRUfV+g8sBYE3oH+faN4k6n1kHchpdqrhkdrUeI/MNOss+tqkgTogvQHpM5uRCbkmM
- mSplR5PiMd85LUXQKVqej+0UqI8WwXV/LCpSdenFKFC2+cWvux2j3B/QMcZMa1sgqWqw
- zeYSRaAFUTAUxtz0XHHqLMZ5aea7w+ojBxD2mHk8r1LPKj6QPZR51F2LWmQzqIsfMGab
- vbbhEnlRqueEOc1rFKZMw0Q+rQrG4wiIKjETg/8/d+BxaN1xYqq9tgzPoSFoJ/ExXLT2
- WNdg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xU7Ih-0008IM-T6
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:56:05 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8b4c8b51b58so97298b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 10:56:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795114412; x=1795719212; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Ajw4sIZfpHSpZREWgGfqsqKrqHKvWjtpxRAhQEGR9kM=;
- b=qbcDE5o5LkpfpmURjYjmr49to0sZFoXiNUBLuO5jhpJhLvS0Q8jnJp+Aimgsy94u9z
- MYdHJE9o0MCW4E2NKWSP434qvzwywHX/5f9bsFHaFSWUDRt/TyPJfw+PthjaqhFrSpLV
- wMxFCU6kT89RcxY5S4e8piavw0NEVKcbJ+Yk7RIw+CVLuzY90v9/JFL2WOTps5YSy9hR
- z/Ayf3IQRc/iPdQn7VUuV18ELEy6oWibZ773L/l0ub7ktyJgMXCfo7NOg5sz3xSxQnhZ
- 08FnmK22lQckA/ZxPH0QqzYgn7RPTDskCrLn7LHCgRvPr/KrjEXtHfaZJvhZXs1dQPaA
- qaqg==
+ d=linaro.org; s=google; t=1795114562; x=1795719362; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=GYB1dTOmJBuh3HO8sbLhiXZWRlkdiO237Pd86QmoAGk=;
+ b=j6Y7DRLRYxKHGFUuntRNGBu3C6oWAfzRV0djUpB0T5jDBz/r0M//SQ7FA0DM7iD3NW
+ bxfNVAQlp40Rpb6uYnk+JY6lPRvRNlzCA8qa3+Jz3Hgr9dbslgQ6eErEbkfvtID8DN2x
+ mKAspjbAIxjDg901SzFgGa87tQAkq7+t4yzSUK0D5PUxebSgAc5flBVXbvsUTk5Qz2P/
+ xy0gzr8+gOPlKkeu+7xF3lmHgCgiDHrvwhD5Z0O5Mc663uwncAwkm0ZtxoE4P8eYBttT
+ oWqzsgJKNjlXfPBq5W21KcIi5o/boB1uYa9/AZh71CqavvBQ4yd5lgNeD1w7+Jb4kF3d
+ rGHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795114412; x=1795719212;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Ajw4sIZfpHSpZREWgGfqsqKrqHKvWjtpxRAhQEGR9kM=;
- b=CAny4hNNwHYyjLSml7Hg2qGYVykTd+YAod9/qWFQD8mAqAXnOSvn6/NdUadWBWJi8u
- yiEDnu/gsKAhxZM7d04hLDGijDTdA0PGhzQ8czVz6NE2OcwW4aYrP4WWMwSvcU51OZDU
- qzRPYfv2gK8paFB2Fa1ckNAzIpcJ6mnwFJBra+5d1sb9iSzA3Wy9d8loSSz0q4A0Wp1q
- zDEE0pOsbb/l48FW6oYUGH8mnWH/LkIhFoO4pq8QKkU7Ek5HAUNKvT8Vbf71gco+JzSt
- cMyyT+bNAE0F82Gg89Rok0XaZAHZZByWaDtkT2Cl3k/zW5xfiTI0YlWa50HuDeZalXqN
- QkIw==
-X-Gm-Message-State: APuU4Z8asMUFNK4brQuBU5NmSU/2MUAMKonY5dlVl/7ylW2TX2YMt0zb
- wtuhxwd/tmcmFVl0KbS1shWeQZQ1mvPbbXgPQhl+PnkXqTDggcql57XYR4enOwMhqJW+Gs+C8HD
- fAr0+Ij7mB9qh3ENzTjpSHfz8rRLanrc/8omCyXBvFeMzG6xhT5P3vQE=
-X-Gm-Gg: AZFdTZfyeh/hv9U4xnv0FXt63xrtmJ1yhS6/IIt6Y54HGqzLIspcwdHudYIO1wAyx+I
- p0ItSEnXoV11Sus5Rf6uJ01diubszM/lN8VJI0BdyvAuf6CX2qUN7kruW1EAR26Oy8+la82h4FZ
- UL8tcDFKcevKe5jrFXMzYZJTbf2ETKefaal0VrupvIBtvaTik/+sXySxz10CsrBqKw3ztyXxEsN
- 5qEHteYrJ6bq9V0OKtXq/Ye3y1rPG6pvxZZwvxwgF6SY39zbgfK4+gfUmHgnSBUorFDXncpfyZ+
- ipLRaGzXvFqM4XoEL+NWIsdPDtLatfOJ/PQcyPQUAeINsbZkE3O+N40Zv5K5RBJuOtINQqydI3z
- ALlgu8dQqrbUNuR+5TpVm1x5ClqY2ta6/zpe992+5XbyvNDwoMoizK77Fk9A9shFZvpftSod93q
- jkbNfxdo0vhn8c8WgxRGU2
-X-Received: by 2002:a05:690e:1686:b0:67b:bf6b:d9d7 with SMTP id
- 956f58d0204a3-67df452af7fmr134593d50.153.1795114411757; Thu, 19 Nov 2026
- 10:53:31 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795114562; x=1795719362;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=GYB1dTOmJBuh3HO8sbLhiXZWRlkdiO237Pd86QmoAGk=;
+ b=PUScQcoDwum1bHTpfe+8o3f8itLUMB/dGqIwNcog3P3i1DPO43qzWLEvLk6IW2mzKj
+ dXQJLT8ksuiAzfaJwihpTYH4wSVF5H/nv9UP2aWUtCXwqXC3nmTElVItA9D5nKp9XPgl
+ CwN/ypaRL5t/2C2IkN+QshVjxx5QtLcu7aOuy6QLLmgwke0K17sdfTSI9Nvm/o2OUUf3
+ Tg/NVVf72PmKiyIdqcFfWTmXx1+/DWtlnqq7taFGBkyZaQ7KYCue+Ud6UfDlil3gpLUg
+ hvFCV/rod+5m+mwWNiCMsiJ/Hv3G/MchmILSc01M6qWV0ndM0QKayiCu4BMow8kMifmV
+ vcOw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErGRiZur7XPIcfuC48n3o1iiT3OOZbI4cnzFry1AhrucJ0kv+mGKC0X0jTBuLvmaIKawzms9GapK3kgO@nongnu.org
+X-Gm-Message-State: APuU4Z/NgXPcazOBC9hfgyd5cT5pIfHC6jN+dtL4m7EWIifJ4phEwdnF
+ Gg2jqmpFOusDA8UojCTiqSZZeEIXAHinTloxLzixcgdntDtuwufZb7bFbQBC0MxTeT0=
+X-Gm-Gg: AYBFou3FCzVm5q4eBKJ5vFjkjxO89n87f8kDjENHk+D5TnOvF9SqAOJaGcuO7oG3OGs
+ fbX19foJo/PX3QUB8DR/QEIQbDmHKr/Xwek8UKnmiIAyiFqBepWqnmh1x1gbsjC2cHKYaJKFQtR
+ 3XeRjKjnpUJcZ7mVGcO2bjSb4x+BqAHAefXy8srS2CB2uq6kb7xq0KASSOScN8S1Afe2t4ETkC6
+ mXu8bq3/XMzmNBHg1y8laejQ95FgNbJgTKrClr3jpChiSfj4b5e/TN7yvaR4hyYNbpzFqzqeUAd
+ 2/F1t5B8Hqm4nH25JOrjLTio1Odet+HKHRNs3tr/98EVJZqlOuD8ai+/fCB8LhdeBUk3WeqJZzO
+ OdpvpyYAhs/gO41BWAvwVfmYNIU0wZ++ktr4RX2xhgPAm02O4BDa2OtpStscWRcDoA9LLm1Ez7V
+ x85BwJIy8ngxvemmq9McF6DjflOB6jT3UECZnVhNRysJ1PCkcGiBwznN8EqWmID718+mJO2d6T/
+ KQBgyV9odZnAVE0YP40Zj6KBuSp9YL7HrQhgPjXzDGAZPA/jDXQE4fI/xVVqrXs3UrxFvrYbHaF
+ GBY5Nj2e4s6PU5x2FSO1ZFij6pb+JkqqcVXjrlmeG0DUzyrCVptXUgBqGGnMRhXt7svwdEs=
+X-Received: by 2002:a05:6a00:f86:b0:89e:9084:b02c with SMTP id
+ d2e1a72fcca58-8c87d02544fmr515635b3a.48.1795114561683; 
+ Thu, 19 Nov 2026 10:56:01 -0800 (PST)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8c87285c15asm325734b3a.20.2026.11.19.10.56.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Nov 2026 10:56:01 -0800 (PST)
+Message-ID: <b2516ddb-9e26-43ca-b06b-197b6e6feb7e@linaro.org>
+Date: Thu, 19 Nov 2026 10:55:59 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <CAFEAcA-iAdTGc0M4ZV5LYXscVVj2oEr7FN+Ac=oBo2_oxuygzg@mail.gmail.com>
- <av8k8oiG8lRh5bVI@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <CAFEAcA_8EAke9-dk-2HfkQ5BJyuODtcSK+DUcmYKRSKgEf=Wnw@mail.gmail.com>
- <av9D4pVMM989xNcE@zhexu-thinkpadt14gen5.rmtcaon.csb>
-In-Reply-To: <av9D4pVMM989xNcE@zhexu-thinkpadt14gen5.rmtcaon.csb>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Nov 2026 18:53:19 +0000
-X-Gm-Features: AclHuK-MRRH_jueV-A24IeYMa3tUAnes0fe6_qUwD3kN161R9Wct0gs48_auIow
-Message-ID: <CAFEAcA8UWw+CpaS8wyy0A_MSeXhJ3NzJGcLm-iHkzmw5t9Cd_w@mail.gmail.com>
-Subject: Re: VMSTATE_VALIDATE failures on outbound migration
-To: Peter Xu <peterx@redhat.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i386/cpu: mark CPU properties as const
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ kvm@vger.kernel.org, Marcelo Tosatti <mtosatti@redhat.com>
+References: <20261119180859.1044425-1-jsnow@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261119180859.1044425-1-jsnow@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,37 +103,30 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 19 Nov 2026 at 18:45, Peter Xu <peterx@redhat.com> wrote:
-> IMO we have multiple way to achieve the same thing without VALIDATE and
-> without VMS_MUST_EXIST (where I plan to remove both).
->
-> Firstly, just to say if we follow the security update on migration, we
-> trust migration stream so we should have zero concern assuming the
-> num_timers will be trusted and correct in the first place..
+On 11/19/26 10:08, John Snow wrote:
+> Currently, these large property tables are loaded in the read-write
+> `.data` segment; by marking them as const they can be loaded as part
+> of `.rodata` instead, where these tables can be shared between multiple
+> instances of QEMU as RssFile memory instead of RssAnon memory.
+> 
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>   target/i386/cpu-internal.h |  2 +-
+>   target/i386/cpu-system.c   |  2 +-
+>   target/i386/cpu.c          | 30 +++++++++++++++---------------
+>   target/i386/kvm/tdx.c      |  2 +-
+>   4 files changed, 18 insertions(+), 18 deletions(-)
 
-That just says that falling over on a corrupt migration stream
-isn't a security issue; it's still a bug. We should have some way
-to do the validation before using the data value.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> If we don't trust it like above we could have used num_timers in loading
-> the VMSDs with vmstate_hpet_timer, rather than num_timers_save, which will
-> guarantee no buffer overflow possible, then post_load_errp() checks the two
-> integers finally.  Should be functionally the same but safer.
->
-> Or, if we really cared, we can also make the UINT8 num_timers_save to be a
-> STRUCT instead, holding only the UINT8 with a post_load_errp(), that'll do
-> almost exactly what the existing code do too.
+r~
 
-I don't think you can deal with the pcie_aer usage this way though,
-can you ?
-
-thanks
--- PMM
 
