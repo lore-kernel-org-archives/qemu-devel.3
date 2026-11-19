@@ -1,140 +1,145 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6FF606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 11:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A841606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 12:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=g6Tdsqd+;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=O8R4wZI9
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=cSofWuJv;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Y+f081xp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU0j8-0004ak-0G; Thu, 19 Nov 2026 06:54:54 -0500
+	id 1xU0ss-0007H6-BF; Thu, 19 Nov 2026 07:04:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xU0j4-0004a3-7r
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:54:50 -0500
+ id 1xU0se-0007AJ-Dq
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 07:04:45 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xU0j1-0002jJ-4G
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:54:49 -0500
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xU0sc-0003Qw-Lt
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 07:04:44 -0500
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJBkVFn085331
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 11:54:45 GMT
+ 6AJBkARe2331695
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 12:04:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6DrLXJY3WP7dMXxe0pWo15AFIPi7stWi+gzRqpoyvGE=; b=g6Tdsqd+e5hTrxvu
- 6JlsSPAtyAcjl/92xB0sb1Zc6T3fsjfgELPpjt8e6X9GJWIM8r0uLlcI54qwYImh
- UTs6p4sjRTpnwBrM9JT/9RiOn2PE1/ziOjho5kWFchOZFzihhMXQhAo0/Acnevho
- itSPDvkBTn87u2Dpq2034eWHTNAbmo7k7IKarVPsKGwZUn/9GJdXMhfZSy8E0hi1
- tXYRRuR3gWP8+AaEeRFviwwakEvWNmNe8a+0AzIrzOU//i+CxfgvwjMJaP3HHrgw
- WONaVDVeDuBRzIRBIdUpJ0qh86570c5lHC4DtJ8hfURfb2184Ni/KDniZwetiqOy
- BR3Pqg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1vv2s3vx-1
+ /o8u9yuakn0wqKiXg4i2dC8rza35U9W04iigxWwockw=; b=cSofWuJvzUngqLhR
+ 94Bw7DsSMSIYgaqL19pJLhJ91rRuDjC+ytfRQyUxgdogWDivyXJ/7zkuJ9x+TJj4
+ Zqo5XKyWpgg9SxSR8hHxWw6B2jvDTwyEpq5u5j1MeH6SqIC5ELyPnsDZz1wD/usx
+ UcKf8v29EKr2dVESlvIB/BFaX/nbifhOd2NXWrr0BO9zIpWVmSUBxXC5TXobsgVE
+ 0PgEg1GVrTJV8ELuVn3ZcolbpXC1GAJDkSBK5t9CXRDogP75PaNh5LG14lQyGJoP
+ kTcsx5yp/iciRt5YdWBqLnjq5KMMqRwEElWjFTYOlXecL8Yfg0DxNeqtYTxtD70N
+ yPQhtw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1pdctpv7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 11:54:45 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93cb7f9bb86so456578585a.2
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 03:54:45 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 12:04:40 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-949b0d322fcso89850385a.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 04:04:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795089285; x=1795694085; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1795089880; x=1795694680; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6DrLXJY3WP7dMXxe0pWo15AFIPi7stWi+gzRqpoyvGE=;
- b=O8R4wZI9jx4KsT4waJheWI5jkTmvp+4yih93AEgkUfMSA8i1ceUySFB/IFYx880O2H
- 1cnBIBjjKg5mv4dsL8om2BJODjQyzCc9c156iBPfE4clzqUz4ugcVExceqg3aJkjBY6i
- LkS8QJdL6HrbBmQhECotzKMgiaUT/31mFGjGx/BS/2csK03IQAE5vR2ADeYSpLSyaDYW
- 3OetEUTZh3Kmf74euiDgXZDriRVN3aLUyZr/c9IkUuhwXFG6G9wdxaAAoXemVVj6uTf/
- VoM3hOiKI1g3ed+KAzDvEvRpTIl+oOix66CzqQAwABYDsul6o+oERHW5913Oi7dW0E3I
- RUGA==
+ bh=/o8u9yuakn0wqKiXg4i2dC8rza35U9W04iigxWwockw=;
+ b=Y+f081xpwurzxbnpOIXND5J8kFRtiq+F5er2ZDpRc2gaC0wQm1NWKIIpXBYliJT7uT
+ Meb+KjazKm36y5nfEEC49Tp/LpdstchmTZkzQ3PcNMPhK3c8l27X8vMJf8RPVamejoLp
+ 6MRRu5yom9jmHTl4Y1YQGX0Y3adh8hq9P3XfG6uLd0gRQ3vHyXCzCr8r/ArKOcN2zHu9
+ 2FvN9zFVsBWDvj5C24Ht1HgKcI1h5+6K5CGjOLxKSLNG65n6PqVVhzRtaGzoRNjO33kl
+ Ty1Hi5/6TgXRCdKcw2z8cJXXxYioww8G1N7ubjBlLnEu8RP+YH6MtWB4GLrTgupEGOgr
+ tKyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795089285; x=1795694085;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20260707; t=1795089880; x=1795694680;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=6DrLXJY3WP7dMXxe0pWo15AFIPi7stWi+gzRqpoyvGE=;
- b=WkTVVvQ13OrqyONMt1kL1XYlEk7MI+DP8cV1qeL7+kEmo23knqdC4QFb7NuDZzWNF5
- l4YuGzZj/77V37skurr3/AWsSLoSUgj3bOpw5RIQUN3A9zFX+eoa+cJw40nqVDTAoEKJ
- 8ZlpFIreWT9IvwPnz5Na/rGQoEmWaHzo+qkY5Tnj5XBCCL6m7k8O0L9ztnSHwc9PEJTz
- MWiIyEaE1CRe8vgiN/Hv3ll6RhGaXqE9KezOUAVMpmY14GrFfpfF7p3OQjafdaxSuMau
- 3ErmGXmpKFaMoq6GnRy7rBQ5KNyiVN4ZR8P4PD3XoOiKO5Ij8hO2rzbEx5vWrsag7pJ/
- EGUA==
+ bh=/o8u9yuakn0wqKiXg4i2dC8rza35U9W04iigxWwockw=;
+ b=tOqSrhSvxBi/s6jukZddEbyoKeYuTYRBPBbnFNlhk/Sy/Qm22ASELuitj/H4x1TE3V
+ UWBGTNzP7omIAYjfOwXztrZH3V9pAIunWiyn8iSaPWoDbHHylanTi5M0hkmhy/MTV47d
+ ac43FV8NQdpVnN3FEyi4+coLOjs6No8m5ALkBqn6Sp9O4Rms1blY0R2HQKViugQQkWlU
+ as1kbtpypqh9GuXjp7dAsuomtdHX5n747cj0Z+xxvDKwquDNESQCfVc/Y9Hhtuf9wuKL
+ BkxwoHYNkRynQYrSAcwXsHF1m9mnRlMfs6HK03Dft+xl/fPHSzvH3wQD2qkGRfZLBZ9w
+ YMUQ==
 X-Forwarded-Encrypted: i=1;
- AL+hErH/ACOP1tCi7b7L03p/xJ8Ze9GeXlYuwpXBZzgTAEH89NEIrRafHoePygzeF2JM7vTJHglMA6ZA9siS@nongnu.org
-X-Gm-Message-State: APuU4Z/kwZOw/xDc34ponib9ONtvT1Fp5/SllYbFSWtWwInoYBu0DSY1
- 2tzLcgc5tuYqKVv/RElMHIl4Vy6bIaMRAZJvmjgRP1EghvRTCgAVZGe1pqH3hOHsZFUFYg9iboQ
- FYZ2fpa5DBK5xkqr7LjEOBlwtUNrNvNCA1VXH68yxWBpwaKWPu4KIrH+1jA==
-X-Gm-Gg: AYBFou3QKo4tFPi1J/PhucmfF5/SyZuXaKX/2LPR1P3JusLv+ZdbiGMC/ytdJJt2c9K
- k7S4fFNibst9cXXE2uaDN0yWsombb+Nsg6ReNrXzfjnxORsEUxMO6WI+71hemt5CH/daxdkQ/4p
- ojEeuIFVAnyiog+fwCrbjVkOY2ySNan6l1SaxCo9sv4+b1LprN+zVd5RKoBw5+sPbYPsS2eiiAI
- pDzFwi9Y4dy0aNz2lxJ4Cf0AUYc/NUqD+hPeFS/ht+A1f18rCZHf41M8+SavYcTNKis4LYF+jMQ
- 06LXFN8ZBf+12ieBSbAT/HXf5pysXmawpSoBEM5vfzYlbCVBoEUznzV5Xq1sEdOEYdzyGNFj5TP
- CZBQi+RMx3vEIvPii5CAWXLT2FzFIA03wjHv6afGiCVT1DXugISZH80TPyLp4HwL+TsaY
-X-Received: by 2002:a05:620a:4802:b0:949:7c43:d54b with SMTP id
- af79cd13be357-949995a08ffmr1024542585a.30.1795089284635; 
- Thu, 19 Nov 2026 03:54:44 -0800 (PST)
-X-Received: by 2002:a05:620a:4802:b0:949:7c43:d54b with SMTP id
- af79cd13be357-949995a08ffmr1024539185a.30.1795089284177; 
- Thu, 19 Nov 2026 03:54:44 -0800 (PST)
-Received: from [192.168.0.4] ([79.127.134.54])
+ AL+hErEfXtkzdh21DYTqb5GgHeafjPTDIXNz9kkzKN7P4L6kNUguz/6pSXk9gFHvMfQ1NJN6npQIUiG/STqG@nongnu.org
+X-Gm-Message-State: APuU4Z9bR4OoBm6CCp4jGsDNxG9+Z/5tszHMFu5kbkygyJ429fwC3oXm
+ k1tYeJq9s6B1u8DT9G8b7OTtQe+7HW5pbexzvJW9Wnx/yJ4ueEuU17FU2Gvc3jZR9g+VKUCajn8
+ +uVMW6L3vkg0QpTeCMSErjXUGxXHi8HXZWB+YsiGmRxAMVo6Y6g4+o4Yn4g==
+X-Gm-Gg: AYBFou3BBsaUPxzeRZOQeNnKZe7V1CyK3YuYVWZ/1xL1XAbpLvzMCrzguQkrtqwsIQq
+ ObH6oHgrHFXZRlK8ywAcgDjffqfA7KgVqzZyRF6fscs2b1LFaq5yr+efQsbORn1D/F2+n382Cro
+ C3Op0ZYCQkPRafWQ0LflRkyAJH73c4EBCpnvgX8kAI6Cc4ao1Wrsek1U/kDsK0/bkLBD4olpN8t
+ HGVX3oH5DEyiuaElrze0dt3esZj6WX4323HRH+3nEb3su1sijlWGET8IDkvTWurXhpvvbmVzl5S
+ Q9IHZkI/UfvHEPtdTXmfyvKBwOIJMRM+DvLBxgtArcjT43+2ry8qXcl0ftgWdrqfNdkY39/KLPj
+ PzyfTWzr6HgrMDaLgYE8GF/Fibs0w8bX7fU5Qs+J+0Xg0uP9cGXPrhFz95YxmniBJiMtUMEvMlo
+ GhGQDDv0Y=
+X-Received: by 2002:a05:620a:2906:b0:944:dbd:8253 with SMTP id
+ af79cd13be357-949995ee428mr1120632585a.59.1795089879733; 
+ Thu, 19 Nov 2026 04:04:39 -0800 (PST)
+X-Received: by 2002:a05:620a:2906:b0:944:dbd:8253 with SMTP id
+ af79cd13be357-949995ee428mr1120624385a.59.1795089879111; 
+ Thu, 19 Nov 2026 04:04:39 -0800 (PST)
+Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb8538b2c5sm30843445e9.5.2026.11.19.03.54.42
+ ffacd0b85a97d-4a654a8c37fsm10169313f8f.18.2026.11.19.04.04.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Nov 2026 03:54:43 -0800 (PST)
-Message-ID: <eda18b65-ad5e-4985-843a-bbadc5e7f390@oss.qualcomm.com>
-Date: Thu, 19 Nov 2026 12:54:41 +0100
+ Thu, 19 Nov 2026 04:04:38 -0800 (PST)
+Message-ID: <53dcc9c6-474e-430c-abbf-0b667675a497@oss.qualcomm.com>
+Date: Thu, 19 Nov 2026 13:04:36 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 for-11.2] hostmem: allow building without KVM support
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
- Peter Xu <peterx@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <20261119113309.1205353-1-mjt@tls.msk.ru>
- <18e8c852-9870-4232-aae7-66db4672fdd9@oss.qualcomm.com>
- <2fc4fb7c-7d8b-4af9-8ab2-6ce3682acd13@tls.msk.ru>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH 19/19] target/mips: Do not negate NaN results in NMADD.fmt
+ and NMSUB.fmt
 Content-Language: en-US
-In-Reply-To: <2fc4fb7c-7d8b-4af9-8ab2-6ce3682acd13@tls.msk.ru>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Vince Del Vecchio <Vince.DelVecchio@mediatek.com>,
+ Faraz Shahbazker <faraz.shahbazker@mediatek.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Milica Lazarevic <Milica.Lazarevic@Syrmia.com>,
+ James Hilliard <james.hilliard1@gmail.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+References: <20261113161158.25811-1-philmd@oss.qualcomm.com>
+ <20261113161158.25811-20-philmd@oss.qualcomm.com>
+ <3d021b3f-fdd0-4c83-8b3c-3924a5cb42d8@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <3d021b3f-fdd0-4c83-8b3c-3924a5cb42d8@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 6eq9ar4pCMh9jxwfooiOTB_rddmRVl_X
-X-Proofpoint-ORIG-GUID: 6eq9ar4pCMh9jxwfooiOTB_rddmRVl_X
-X-Authority-Analysis: v=2.4 cv=ZZWIpcVA c=1 sm=1 tr=0 ts=6afee385 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=dMDxPF1GtEdq01UuaR/ERg==:17
+X-Proofpoint-ORIG-GUID: zUa6GfuhpyuZLnlqnQ_Xf3diu5QMg3hg
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA0NyBTYWx0ZWRfXxwdPeAyhQqk3
+ fu/lYjXT3oWiBWCi2A01ine6rqWULrcityC0IhqSsHrz/8v7+1fuDBPyf+OUYmWDg8tvANA541j
+ dTEcvnQiJNqMos4ncSWugM4iNk4C4tQ=
+X-Proofpoint-GUID: zUa6GfuhpyuZLnlqnQ_Xf3diu5QMg3hg
+X-Authority-Analysis: v=2.4 cv=Ma/5KJ/f c=1 sm=1 tr=0 ts=6afee5d8 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=HJvTdP9fkNgUw0tOALIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA0NyBTYWx0ZWRfXxuL24IkcjDi2
- 0TP4nDAK5FPdQFV7w/O0pxdfUaGSW2KjX3+qel5/DDoXfa+NaI2lDsb05EvWlJHJnG/TvHIz0gD
- M+X/nJdH4MnqcFnnk8MRDuwLFIrnbCw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA0NyBTYWx0ZWRfX84VZ+OLcxUwi
- ZBYWtdoEER+UH4+GEHIBP3tvWvFFn/Q1vSAIdS98ABAtbCskIHcegdrESUUuiHS2AUow5aDPHwm
- 0H6nYADqYXQSfPFYOwWa/Cbgip38gZK3m31PZ+ArMAeln0YQHiOecsS93U8uA+AHmh0MUS27FhJ
- VRLAsPwkUPtL+oHv3fu2eBYseAW5HQTuO9rQiiTJlXmQJjPxDjDyzOWa9sAlNxgeXkN1n7GVI26
- gFrWYuI6/OIsCYHqr2SoXwOVm2wEHLU911iBV8Sj0hHnqdMBzrqvg758Osa+SRGmWdqP5phevIL
- DDsikEAdu5SNJBctAbwAk7AYFChKJ11DbWwBiXVLUKrFD1KMPZIcpyiZGT/7Ox6zRZgXHfpEViS
- GhN0OanD3OIF7S7bwnUIHKCHF7zRx4QrilElsKpfneaqK1+GY9DRwNGDw7zCbd9GrzDEBh+7aW3
- ux+KQN1PEKPfeORRWRQ==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=ZCQ6zAl_naE_dTWWkOoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA0NyBTYWx0ZWRfX2MwlcvUw5X3+
+ BW8LU43P7J0yR2QZiiLXs/ZHfipJCqnYDW8oPHYiPOfc3J7ygD2Riaw4hIUofv8zeeAwESOCPkY
+ 6ab+RYwQUzd1MUE3UQAOuUAQRgIitUCl+7MkFRLVolFX1Sp369fT3esqQd/JSVgj5MY9teqyMNB
+ fir2kbVq7OYfJ3ZkqCIyF0eVOF/tx/7b2xJWC96wPjEAtLMumsdmaS4Kv6tAkPwxO5Mbsb69gy+
+ YEuiFYdWSEnNC8rk5BQbcpYDfU9Z6z6utIcAMtyWRjUJ/eStMUJl4PhnoL2gqh6V5HPxZqybcny
+ uPWD0Pt+O0gYaczTI806CCc0RRYLTrscCFz+ZMoNINgeSxoX62qnlBhvbnH0Oo+N8pqQPT7zlST
+ AsaTs79/YhRsxQ1N8vW7/SXSCcBUD0RITzyAz3Z0S6O4/igM6mjK/Wbbu6UJFkd94aUVL99QY2Q
+ saBczihbrslgyb4SayQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-19_03,2026-11-19_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 bulkscore=0 spamscore=0
- adultscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611190047
+ bulkscore=0 adultscore=0 clxscore=1015 priorityscore=1501 spamscore=0
+ malwarescore=0 impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611190047
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -155,56 +160,60 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 2026-11-19 12:46, Michael Tokarev wrote:
-> On 11/19/26 14:42, Philippe Mathieu-Daudé wrote:
->> On 2026-11-19 12:33, Michael Tokarev wrote:
-> ...
->> We prefer using runtime check (probably providing a stub):
+On 17/11/26 20:37, Richard Henderson wrote:
+> On 11/13/26 08:11, Philippe Mathieu-Daudé wrote:
+>> The final negation of NMADD.fmt and NMSUB.fmt is arithmetic. With the
+>> legacy NaN encoding (FCSR.NAN2008 = 0) QEMU returns the default NaN
+>> (0x7ff7ffffffffffff for double precision, positive) for a NaN result,
+>> then flipped its sign with float{32,64}_chs().
 >>
->> -- >8 --
->> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+>> Observed on a Cavium Octeon III V0.2 (FPU V0.0, Linux 4.9.79) running
+>> risu: "nmsub.d $f7,$f27,$f23,$f15" with $f27 = 0x7fffffffffffffff (a
+>> signaling NaN in the legacy encoding), $f23 = 0 and
+>> $f15 = 0x472fa6f57f408dcc gives 0x7ff7ffffffffffff on the hardware,
+>> where QEMU gave 0xfff7ffffffffffff. The same was seen for the single
+>> precision "nmsub.s $f1,$f18,$f22,$f21".
+>>
+>> Do not change the sign of a NaN result when NAN2008 is 0. Non-NaN
+>> results and the NAN2008 = 1 behavior are unchanged. NMADD.fmt, which
+>> shares the code, was not exercised on the hardware.
+>>
+>> The hardware (or its kernel FPU emulator) also returns a different NaN
+>> than QEMU for "mul.d" with a signaling NaN operand and a denormal
+>> operand: this is not addressed here.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> ---
+>>   target/mips/tcg/fpu_helper.c | 39 ++++++++++++++++++++++++++++--------
+>>   1 file changed, 31 insertions(+), 8 deletions(-)
 > 
->> +        if (!kvm_enabled()) {
->> +            error_setg(errp, "guest-memfd=on requires KVM which is 
->> not enabled");
->> +            return false;
->> +        } else if (!backend->share) {
+> Isn't the larger problem that this should be using a fused multiply-add 
+> via float64_muladd, and thus the negation via float_muladd_negate_result 
+> (which will not affect NaN results).
 > 
->>>           fd = kvm_create_guest_memfd(backend->size,
->>>                                       GUEST_MEMFD_FLAG_MMAP |
->>>                                       GUEST_MEMFD_FLAG_INIT_SHARED,
->>>                                       errp);
-> 
-> This will fail the same way because GUEST_MEMFD_FLAG_MMAP is still not 
-> defined.
-> This is why I especially made this #ifdef the way I did.
-> 
-> Sure I can add
-> 
-> #ifndef GUEST_MEMFD_FLAG_MMAP  (if you prefer not to use #ifndef 
-> CONFIG_KVM)
-> # define GUEST_MEMFD_FLAG_MMAP 0
-> # define GUEST_MEMFD_FLAG_INIT_SHARED 0
-> #endif
-> 
-> but it much uglier and less understandable than #ifndef CONFIG_KVM.
+> Certainly MD00087 says the product uses infinite precision.
 
-As you prefer. That would be the first accelerator check in backends/,
-I'm not sure we want it (then they are hard to remove):
+MD00087 says the opposite for NMADD/NMSUB... Vol II-A rev 6.06,
+NMADD.fmt (p.376) and NMSUB.fmt (p.378):
 
-$ git grep CONFIG_KVM backends/
-$
+   "The intermediate product is rounded according to the current
+    rounding mode in FCSR [...] The results and flags are as if
+    separate floating-point multiply and add and negate instructions
+    were executed"
 
-> 
-> Thanks,
-> 
-> /mjt
-
+The infinite-precision-product wording is from the Release 6
+MADDF.fmt/MSUBF.fmt (p.324), which the same manual describes as
+replacing the pre-R6 instructions that were "unfused multiply-add,
+with an intermediate rounding".
+Those are already implemented with float_muladd (float_maddf_*/
+float_msubf_*); using it for NMADD/NMSUB would remove the required
+intermediate rounding and change Inexact in double-rounding cases.
 
