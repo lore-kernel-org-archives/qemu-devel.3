@@ -1,120 +1,108 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B273D606A337
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 18:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF6A606A332
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 18:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EYsJN8ZO;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=RrUj3nPW
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=qbcDE5o5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU7Fd-0005ok-IQ; Thu, 19 Nov 2026 13:52:53 -0500
+	id 1xU7Gv-0006F8-6r; Thu, 19 Nov 2026 13:54:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xU7Fa-0005nx-9m
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:52:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xU7FY-0002QB-L9
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:52:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795114367;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3xU1AfNzARCfJJvjM8RgferpX/JP5+MUWt/2XG6xSfM=;
- b=EYsJN8ZO/37mkDHd71uMQ0HVgMSU8rhBicZqUkjZYU0G74k/QDFmE4DEFBZToNVvZeVfPQ
- or9YmBCf+e/ZrDUALdb/YfO1urWnrA9yyzA0h2om2aebNl8brZSrA3xe2ckhKEGYgykMMn
- S/idDCvjHPaD3713r6fEzS+2YBp1PAw=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-IEvsn3R9Oh2JMUh78cPyTw-1; Thu, 19 Nov 2026 13:52:45 -0500
-X-MC-Unique: IEvsn3R9Oh2JMUh78cPyTw-1
-X-Mimecast-MFC-AGG-ID: IEvsn3R9Oh2JMUh78cPyTw_1795114365
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-9210a12765eso3141756d6.0
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 10:52:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xU7GI-00067Y-KY
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:53:38 -0500
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xU7GH-0002WC-7S
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:53:34 -0500
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-67db89857abso247255d50.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 10:53:32 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795114412; cv=none;
+ d=google.com; s=arc-20260327;
+ b=O0FaYVaQjuoMdth7C1l0frmbR5XdaEoY71BXxd95DW8OpnPnwRoMFIlIA33DsXGFnB
+ O2pSJZtGETt1p4HEgtx8T/MFAAJ7TjG21HscrBO8evZF5hGRc9pVsqj6nKOZKQMq+T/d
+ /6BHeSjbyh9jpIzaeW1cm/mq6VGIsdadbiZQDW5hbxCEyNsrkGUpS/h15g2Lw1162nZO
+ uFZW9Iax2sYk5hnbo87W+VvWsg6A/0mNauZJXGAsioJy4SVCcSEM7BQyjdhL45lHs82f
+ iI+oRcK8h0FW9b0Xshwa03wm7hgj6QZSSJ9/gow9kXoWiniHZnm8majMApzG6bsXcI9h
+ 751Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Ajw4sIZfpHSpZREWgGfqsqKrqHKvWjtpxRAhQEGR9kM=;
+ fh=jis90ebI1LXbWlN2f/uPaYiR3/160S3+nBo5cgb+Jhw=;
+ b=id5+BmY/KWXtrZ7qrwGzIGWYSfBYyXpJ281sZUvl4VtTTeV+/khMSYpP7kwTONUk83
+ PwXRUfV+g8sBYE3oH+faN4k6n1kHchpdqrhkdrUeI/MNOss+tqkgTogvQHpM5uRCbkmM
+ mSplR5PiMd85LUXQKVqej+0UqI8WwXV/LCpSdenFKFC2+cWvux2j3B/QMcZMa1sgqWqw
+ zeYSRaAFUTAUxtz0XHHqLMZ5aea7w+ojBxD2mHk8r1LPKj6QPZR51F2LWmQzqIsfMGab
+ vbbhEnlRqueEOc1rFKZMw0Q+rQrG4wiIKjETg/8/d+BxaN1xYqq9tgzPoSFoJ/ExXLT2
+ WNdg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795114365; x=1795719165; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=3xU1AfNzARCfJJvjM8RgferpX/JP5+MUWt/2XG6xSfM=;
- b=RrUj3nPWlCPHgD1iIIB1IJk1gvfQC52muYblCAGWfeRlxC8WfTz+nVdE57Fga2uABz
- JVwkhGv1Mhm/L4K6weEK/GbH+Cnv/ZpXzER4ijsXnIXkXGyhhIgzlqIFgPZWldzz9Hu7
- vpmPFN+nQhyV7gTuOeAtdiUR/RmBLa6S0vXOToa5bU/v9aU+gDRTy4+SJufal3n6SXA6
- I/uWLc/iRxm9ZrtcUBQAR4WZhmM4qrQ0Rs3EGj2/o6AiphCejuIvAkrXH8Emz9I+KtJz
- jHrY17TYS/kgPWYt96MxzEg754bzg0q80B4cOjwzfBdHItHXptiXApXehDrJotDdWjEH
- XS+g==
+ d=linaro.org; s=google; t=1795114412; x=1795719212; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Ajw4sIZfpHSpZREWgGfqsqKrqHKvWjtpxRAhQEGR9kM=;
+ b=qbcDE5o5LkpfpmURjYjmr49to0sZFoXiNUBLuO5jhpJhLvS0Q8jnJp+Aimgsy94u9z
+ MYdHJE9o0MCW4E2NKWSP434qvzwywHX/5f9bsFHaFSWUDRt/TyPJfw+PthjaqhFrSpLV
+ wMxFCU6kT89RcxY5S4e8piavw0NEVKcbJ+Yk7RIw+CVLuzY90v9/JFL2WOTps5YSy9hR
+ z/Ayf3IQRc/iPdQn7VUuV18ELEy6oWibZ773L/l0ub7ktyJgMXCfo7NOg5sz3xSxQnhZ
+ 08FnmK22lQckA/ZxPH0QqzYgn7RPTDskCrLn7LHCgRvPr/KrjEXtHfaZJvhZXs1dQPaA
+ qaqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795114365; x=1795719165;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=3xU1AfNzARCfJJvjM8RgferpX/JP5+MUWt/2XG6xSfM=;
- b=OHITCvHstRmLUd8mG/dlPezQhsxFkvPilfFK3+TLpyJU1cXVNhRQcSyR3x2sgOTa0P
- NLXwoljyWRMHRu/shayGdhdnGz9ztrvWu4RkogAQ9kGTV+EkxLXdzCpiTyE3uO6XPDmX
- XSaaMIBoFQYp7iAdpZZ2Tr+yb5HaAy2MdfJonsDmU+y68TTiTE+mY9ygvYZwi13ki69e
- awbUp5RHB2sU/1Mm4J/LGmaXpkB72Ee+HGeWPY0FU2S38CoArVGsk8wyjBpWQk14NBh1
- 3wm03QzH3Z4Wb/QareFj8iHA22XxDnKvs+D8rer+1jo5FBkd345yW4FuKc4S3KFYkOSH
- J4pQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErHKikYVC5/7dqoSmDYyPB0Uj338pRvHqulGXC2Agjkx9mNKqvwPdt0f3xAud3+AwMDrl/hiRFIyNp4C@nongnu.org
-X-Gm-Message-State: APuU4Z97JAUQe/cU+9pTMctrJ0HSWc8YTFdR36ZsoMMCyc5M5jxUeyHq
- p88y7Tsf6QEDkz05Ly/3yk27HR+5qx3QHFJlSdAr3r8WAzqHdFrBFvk8lMPAd9XpImx7coPid4k
- l6J6orgaOac3CUwhmPVioEbLofX6C8ombNcETTaEQjL3DwY5ajdUAzDOA
-X-Gm-Gg: AZFdTZdv0xv3jgN0evgX67tI7xG9PKjEkm43AinR3DuPbl0xe6ClT4S8XpuViNnEQsP
- IvyrB9vRDi860qalSVkhLjvJC6rL4tu4L3P+a+sO3RNPi3kKW1xjKyQGvh0z2H5rcRMHnEaOR2l
- vyocXdxlRuQ/4XS4WSoCDjapXBcb8hTet/7NMfayMchILyw530F8VvSgIyTIklA5cCPuqYLeuSg
- aZ/isn6MJ4kDNpWW73WTOBAMIJ5XKu8Uplv90viODjXlyRgwwUf9p9xhXRXrGI8+BM7znni1Qwd
- jBpg/Wt3O7MRDk6APpVzxMogsN9xVFekBtLkniMp/q2PxVbpQYVuOM3jQ5JOlm8weTfha47mNVD
- YeGEqD0Y8poUrtPAzw+P3JToh6bxfG9bX3vFPw2zfRKCD
-X-Received: by 2002:a05:6214:62d1:20b0:921:2cb9:4506 with SMTP id
- 6a1803df08f44-92134b73592mr6901276d6.45.1795114364642; 
- Thu, 19 Nov 2026 10:52:44 -0800 (PST)
-X-Received: by 2002:a05:6214:62d1:20b0:921:2cb9:4506 with SMTP id
- 6a1803df08f44-92134b73592mr6900846d6.45.1795114364014; 
- Thu, 19 Nov 2026 10:52:44 -0800 (PST)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-921349cdfbasm5474456d6.17.2026.11.19.10.52.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Nov 2026 10:52:43 -0800 (PST)
-Date: Thu, 19 Nov 2026 13:52:42 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "open list:nvme" <qemu-block@nongnu.org>
-Subject: Re: [RFC PATCH] tests/functional: add migration diagnostics and pace
- nvme activity (HACK!)
-Message-ID: <av9FeuY9pnYHXblq@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260921190345.1709227-1-alex.bennee@linaro.org>
- <asZIy2Rm8QF4TSca@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <CAJqdLrqxJF4tgfRYrm27rGivP-HyLUX=YCNUiaFqq4nDq0a5pQ@mail.gmail.com>
- <as6RsuZP6jkZ8twC@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <CAJqdLrpQLJtXptSURtnT4xo4LJTduhksqAKnoPHCHbbfdVhW0w@mail.gmail.com>
- <as_rOWkhyPnWsMfL@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <CAJqdLrqxmTQeSUziBAtuhb94mVEjU1G_oEx1N1sLwKT3O=gDTA@mail.gmail.com>
+ d=1e100.net; s=20260707; t=1795114412; x=1795719212;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Ajw4sIZfpHSpZREWgGfqsqKrqHKvWjtpxRAhQEGR9kM=;
+ b=CAny4hNNwHYyjLSml7Hg2qGYVykTd+YAod9/qWFQD8mAqAXnOSvn6/NdUadWBWJi8u
+ yiEDnu/gsKAhxZM7d04hLDGijDTdA0PGhzQ8czVz6NE2OcwW4aYrP4WWMwSvcU51OZDU
+ qzRPYfv2gK8paFB2Fa1ckNAzIpcJ6mnwFJBra+5d1sb9iSzA3Wy9d8loSSz0q4A0Wp1q
+ zDEE0pOsbb/l48FW6oYUGH8mnWH/LkIhFoO4pq8QKkU7Ek5HAUNKvT8Vbf71gco+JzSt
+ cMyyT+bNAE0F82Gg89Rok0XaZAHZZByWaDtkT2Cl3k/zW5xfiTI0YlWa50HuDeZalXqN
+ QkIw==
+X-Gm-Message-State: APuU4Z8asMUFNK4brQuBU5NmSU/2MUAMKonY5dlVl/7ylW2TX2YMt0zb
+ wtuhxwd/tmcmFVl0KbS1shWeQZQ1mvPbbXgPQhl+PnkXqTDggcql57XYR4enOwMhqJW+Gs+C8HD
+ fAr0+Ij7mB9qh3ENzTjpSHfz8rRLanrc/8omCyXBvFeMzG6xhT5P3vQE=
+X-Gm-Gg: AZFdTZfyeh/hv9U4xnv0FXt63xrtmJ1yhS6/IIt6Y54HGqzLIspcwdHudYIO1wAyx+I
+ p0ItSEnXoV11Sus5Rf6uJ01diubszM/lN8VJI0BdyvAuf6CX2qUN7kruW1EAR26Oy8+la82h4FZ
+ UL8tcDFKcevKe5jrFXMzYZJTbf2ETKefaal0VrupvIBtvaTik/+sXySxz10CsrBqKw3ztyXxEsN
+ 5qEHteYrJ6bq9V0OKtXq/Ye3y1rPG6pvxZZwvxwgF6SY39zbgfK4+gfUmHgnSBUorFDXncpfyZ+
+ ipLRaGzXvFqM4XoEL+NWIsdPDtLatfOJ/PQcyPQUAeINsbZkE3O+N40Zv5K5RBJuOtINQqydI3z
+ ALlgu8dQqrbUNuR+5TpVm1x5ClqY2ta6/zpe992+5XbyvNDwoMoizK77Fk9A9shFZvpftSod93q
+ jkbNfxdo0vhn8c8WgxRGU2
+X-Received: by 2002:a05:690e:1686:b0:67b:bf6b:d9d7 with SMTP id
+ 956f58d0204a3-67df452af7fmr134593d50.153.1795114411757; Thu, 19 Nov 2026
+ 10:53:31 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJqdLrqxmTQeSUziBAtuhb94mVEjU1G_oEx1N1sLwKT3O=gDTA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <CAFEAcA-iAdTGc0M4ZV5LYXscVVj2oEr7FN+Ac=oBo2_oxuygzg@mail.gmail.com>
+ <av8k8oiG8lRh5bVI@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAFEAcA_8EAke9-dk-2HfkQ5BJyuODtcSK+DUcmYKRSKgEf=Wnw@mail.gmail.com>
+ <av9D4pVMM989xNcE@zhexu-thinkpadt14gen5.rmtcaon.csb>
+In-Reply-To: <av9D4pVMM989xNcE@zhexu-thinkpadt14gen5.rmtcaon.csb>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Nov 2026 18:53:19 +0000
+X-Gm-Features: AclHuK-MRRH_jueV-A24IeYMa3tUAnes0fe6_qUwD3kN161R9Wct0gs48_auIow
+Message-ID: <CAFEAcA8UWw+CpaS8wyy0A_MSeXhJ3NzJGcLm-iHkzmw5t9Cd_w@mail.gmail.com>
+Subject: Re: VMSTATE_VALIDATE failures on outbound migration
+To: Peter Xu <peterx@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,72 +114,37 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Oct 21, 2026 at 06:06:46PM +0200, Alexander Mikhalitsyn wrote:
-> Am Mi., 14. Okt. 2026 um 22:51 Uhr schrieb Peter Xu <peterx@redhat.com>:
-> >
-> > On Wed, Oct 14, 2026 at 10:18:45AM +0200, Alexander Mikhalitsyn wrote:
-> > > > - for this test, should we remove snapshot=on but instead create an
-> > > >   explicit overlay that will be used on both src/dst qemu?
-> > >
-> > > This should solve the issue too, at the same time if test is R/O I'm
-> > > not sure if we really need this.
-> >
-> 
-> Dear Peter,
+On Thu, 19 Nov 2026 at 18:45, Peter Xu <peterx@redhat.com> wrote:
+> IMO we have multiple way to achieve the same thing without VALIDATE and
+> without VMS_MUST_EXIST (where I plan to remove both).
+>
+> Firstly, just to say if we follow the security update on migration, we
+> trust migration stream so we should have zero concern assuming the
+> num_timers will be trusted and correct in the first place..
 
-Hi, Alexander,
+That just says that falling over on a corrupt migration stream
+isn't a security issue; it's still a bug. We should have some way
+to do the validation before using the data value.
 
-> 
-> sorry for such a long delay with reply. Was busy plumbing some other stuff :-(
+> If we don't trust it like above we could have used num_timers in loading
+> the VMSDs with vmstate_hpet_timer, rather than num_timers_save, which will
+> guarantee no buffer overflow possible, then post_load_errp() checks the two
+> integers finally.  Should be functionally the same but safer.
+>
+> Or, if we really cared, we can also make the UINT8 num_timers_save to be a
+> STRUCT instead, holding only the UINT8 with a post_load_errp(), that'll do
+> almost exactly what the existing code do too.
 
-Same here. :(
+I don't think you can deal with the pcie_aer usage this way though,
+can you ?
 
-Let's fix this first, or it'll be forgotten!
-
-> 
-> > Then.. maybe no need to bother. :)
-> >
-> > I think we should better remove snapshot=on no matter what, then whoever
-> > sends a patch add migration blocker for it won't fail this test.  Seems the
-> > /tmp mount is still needed then.
-> 
-> Yeah, if we really gonna make snapshot=on to be a migration blocker (which seems
-> like a clean way to protect users from doing weird stuff like I
-> accidentally did in my test :-D).
-> 
-> I need to look on the option you've earlier suggested with "explicit
-> overlay that will be used on both src/dst qemu".
-> I'll get back to you ;-)
-> 
-> Btw, does my fix with mounting tmpfs actually solves the problem for
-> you? I'm just curious,
-> because I wasn't able to reproduce the problem locally tho... And if
-> so, then probably we should
-> land this tmpfs-mount change for now, while we can prepare a better
-> and generic fix to get rid of snapshot=on,
-> add migration blocker for it and so on. WDYT?
-
-I agree.
-
-I tested your patch, it works for me, used to fail almost certainly but now
-it passes in a seq of runs.  I just thought it wasn't a good enough fix,
-but considering my poor speed on reply (which is this one me to blame), I
-think we should fix it first.
-
-You can send a formal patch and attach:
-
-Tested-by: Peter Xu <peterx@redhat.com>
-
-Thanks,
-
--- 
-Peter Xu
-
+thanks
+-- PMM
 
